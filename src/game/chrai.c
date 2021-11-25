@@ -162,7 +162,7 @@ void * ptr_setup_actions;
 //CODE.bss:80075D18
 struct pad * ptr_0xxxpresets;
 //CODE.bss:80075D1C
-void * ptr_2xxxpresets;
+struct pad3d * ptr_2xxxpresets;
 //CODE.bss:80075D20
 u32 dword_CODE_bss_80075D20;
 //CODE.bss:80075D24

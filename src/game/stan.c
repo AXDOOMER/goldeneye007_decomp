@@ -2884,6 +2884,9 @@ glabel sub_GAME_7F0B0914
 
 
 // 'walkTilesBetweenPoints_NoCallback'
+/**
+ * Address 0x7F0B0BE4.
+*/
 s32 walkTilesBetweenPoints_NoCallback(struct StandTile **tileStack, f32 start_x, f32 start_z, f32 dest_x, f32 dest_z)
 {
     return sub_GAME_7F0B0914(tileStack, start_x, start_z, dest_x, dest_z, 0, 0);

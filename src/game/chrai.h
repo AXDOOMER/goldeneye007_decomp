@@ -171,6 +171,7 @@ struct sfx_register_struct {
 
 extern struct path_table_alt * ptr_setup_path_tbl;
 extern struct pad * ptr_0xxxpresets;
+extern struct pad3d * ptr_2xxxpresets;
 extern u32 monAnimRadarSub1[];
 extern u32 monAnimRadarSub2[];
 extern u32 monAnimRadarSub3[];

@@ -6736,128 +6736,55 @@ bool check_set_actor_standing_still(ChrRecord *self, s32 faceentitytype, s32 fac
 
 
 
-#ifdef NONMATCHING
-void actor_moves_to_preset_at_speed(void) {
-// ai branch
+/**
+ * Address 0x7F02ABB4.
+*/
+bool actor_moves_to_preset_at_speed(ChrRecord *self, s32 padid, SPEED speed)
+{
+    struct pad *pad;
+    struct StandTile *stan2; //sp38
+    struct coord3d region;
+    struct StandTile *stan; //sp28 - wow, deliberate duplicate...
+
+    if ((padid >= 0) && chrIsNotDeadOrShot(self) && (setting_007_5 < 10))
+    {
+        padid = convertPadIf9000(self, padid);
+        if (isNotBoundPad(padid))
+        {
+            pad = &ptr_0xxxpresets[padid];
+        }
+        else
+        {
+            pad = &ptr_2xxxpresets[getBoundPadNum(padid)];
+        }
+
+        stan = pad->stan;
+        if (stan)
+        {
+            //if pad is not vertical
+            if (pad->up.y < 0.5f)
+            {
+                stan2    = stan;
+                region.x = (pad->up.x * (self->chrwidth * 1.1f)) + pad->pos.x;
+                region.y = (pad->up.y * (self->chrwidth * 1.1f)) + pad->pos.y;
+                region.z = (pad->up.z * (self->chrwidth * 1.1f)) + pad->pos.z;
+
+                //if able to reach region surrounding pad?
+                if (walkTilesBetweenPoints_NoCallback(&stan2, pad->pos.x, pad->pos.z, region.x, region.z) &&
+                    plot_course_for_actor(self, &region, stan2, speed))
+                {
+                    return TRUE;
+                }
+            }
+            else if (plot_course_for_actor(self, &pad->pos, stan, speed))
+            {
+                return TRUE;
+            }
+        }
+    }
+
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80051E6C
-.word 0x3f8ccccd /*1.1*/
-.text
-glabel actor_moves_to_preset_at_speed
-/* 05F6E4 7F02ABB4 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 05F6E8 7F02ABB8 AFB10020 */  sw    $s1, 0x20($sp)
-/* 05F6EC 7F02ABBC AFB0001C */  sw    $s0, 0x1c($sp)
-/* 05F6F0 7F02ABC0 00A08025 */  move  $s0, $a1
-/* 05F6F4 7F02ABC4 00808825 */  move  $s1, $a0
-/* 05F6F8 7F02ABC8 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 05F6FC 7F02ABCC 04A0005B */  bltz  $a1, .L7F02AD3C
-/* 05F700 7F02ABD0 AFA60048 */   sw    $a2, 0x48($sp)
-/* 05F704 7F02ABD4 0FC0A896 */  jal   chrIsNotDeadOrShot
-/* 05F708 7F02ABD8 00000000 */   nop   
-/* 05F70C 7F02ABDC 10400057 */  beqz  $v0, .L7F02AD3C
-/* 05F710 7F02ABE0 3C0E8003 */   lui   $t6, %hi(setting_007_5) 
-/* 05F714 7F02ABE4 8DCECE50 */  lw    $t6, %lo(setting_007_5)($t6)
-/* 05F718 7F02ABE8 02202025 */  move  $a0, $s1
-/* 05F71C 7F02ABEC 29C1000A */  slti  $at, $t6, 0xa
-/* 05F720 7F02ABF0 50200053 */  beql  $at, $zero, .L7F02AD40
-/* 05F724 7F02ABF4 00001025 */   move  $v0, $zero
-/* 05F728 7F02ABF8 0FC0CBE5 */  jal   convertPadIf9000
-/* 05F72C 7F02ABFC 02002825 */   move  $a1, $s0
-/* 05F730 7F02AC00 28412710 */  slti  $at, $v0, 0x2710
-/* 05F734 7F02AC04 1020000A */  beqz  $at, .L7F02AC30
-/* 05F738 7F02AC08 0002C900 */   sll   $t9, $v0, 4
-/* 05F73C 7F02AC0C 00027880 */  sll   $t7, $v0, 2
-/* 05F740 7F02AC10 01E27823 */  subu  $t7, $t7, $v0
-/* 05F744 7F02AC14 000F7880 */  sll   $t7, $t7, 2
-/* 05F748 7F02AC18 3C188007 */  lui   $t8, %hi(ptr_0xxxpresets) 
-/* 05F74C 7F02AC1C 8F185D18 */  lw    $t8, %lo(ptr_0xxxpresets)($t8)
-/* 05F750 7F02AC20 01E27823 */  subu  $t7, $t7, $v0
-/* 05F754 7F02AC24 000F7880 */  sll   $t7, $t7, 2
-/* 05F758 7F02AC28 10000009 */  b     .L7F02AC50
-/* 05F75C 7F02AC2C 01F88021 */   addu  $s0, $t7, $t8
-.L7F02AC30:
-/* 05F760 7F02AC30 3C088007 */  lui   $t0, %hi(ptr_2xxxpresets) 
-/* 05F764 7F02AC34 8D085D1C */  lw    $t0, %lo(ptr_2xxxpresets)($t0)
-/* 05F768 7F02AC38 0322C821 */  addu  $t9, $t9, $v0
-/* 05F76C 7F02AC3C 0019C880 */  sll   $t9, $t9, 2
-/* 05F770 7F02AC40 3C01FFF5 */  lui   $at, (0xFFF59FC0 >> 16) # lui $at, 0xfff5
-/* 05F774 7F02AC44 34219FC0 */  ori   $at, (0xFFF59FC0 & 0xFFFF) # ori $at, $at, 0x9fc0
-/* 05F778 7F02AC48 03288021 */  addu  $s0, $t9, $t0
-/* 05F77C 7F02AC4C 02018021 */  addu  $s0, $s0, $at
-.L7F02AC50:
-/* 05F780 7F02AC50 8E090028 */  lw    $t1, 0x28($s0)
-/* 05F784 7F02AC54 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 05F788 7F02AC58 11200038 */  beqz  $t1, .L7F02AD3C
-/* 05F78C 7F02AC5C AFA90028 */   sw    $t1, 0x28($sp)
-/* 05F790 7F02AC60 C6040010 */  lwc1  $f4, 0x10($s0)
-/* 05F794 7F02AC64 44813000 */  mtc1  $at, $f6
-/* 05F798 7F02AC68 3C018005 */  lui   $at, %hi(D_80051E6C)
-/* 05F79C 7F02AC6C 02202025 */  move  $a0, $s1
-/* 05F7A0 7F02AC70 4606203C */  c.lt.s $f4, $f6
-/* 05F7A4 7F02AC74 02002825 */  move  $a1, $s0
-/* 05F7A8 7F02AC78 8FA60028 */  lw    $a2, 0x28($sp)
-/* 05F7AC 7F02AC7C 45000029 */  bc1f  .L7F02AD24
-/* 05F7B0 7F02AC80 00000000 */   nop   
-/* 05F7B4 7F02AC84 AFA90038 */  sw    $t1, 0x38($sp)
-/* 05F7B8 7F02AC88 C4201E6C */  lwc1  $f0, %lo(D_80051E6C)($at)
-/* 05F7BC 7F02AC8C C62A0024 */  lwc1  $f10, 0x24($s1)
-/* 05F7C0 7F02AC90 C608000C */  lwc1  $f8, 0xc($s0)
-/* 05F7C4 7F02AC94 C6040000 */  lwc1  $f4, ($s0)
-/* 05F7C8 7F02AC98 46005402 */  mul.s $f16, $f10, $f0
-/* 05F7CC 7F02AC9C 27A40038 */  addiu $a0, $sp, 0x38
-/* 05F7D0 7F02ACA0 46104482 */  mul.s $f18, $f8, $f16
-/* 05F7D4 7F02ACA4 46049180 */  add.s $f6, $f18, $f4
-/* 05F7D8 7F02ACA8 E7A6002C */  swc1  $f6, 0x2c($sp)
-/* 05F7DC 7F02ACAC C6280024 */  lwc1  $f8, 0x24($s1)
-/* 05F7E0 7F02ACB0 C60A0010 */  lwc1  $f10, 0x10($s0)
-/* 05F7E4 7F02ACB4 C6040004 */  lwc1  $f4, 4($s0)
-/* 05F7E8 7F02ACB8 46004402 */  mul.s $f16, $f8, $f0
-/* 05F7EC 7F02ACBC 44073000 */  mfc1  $a3, $f6
-/* 05F7F0 7F02ACC0 46105482 */  mul.s $f18, $f10, $f16
-/* 05F7F4 7F02ACC4 46049200 */  add.s $f8, $f18, $f4
-/* 05F7F8 7F02ACC8 E7A80030 */  swc1  $f8, 0x30($sp)
-/* 05F7FC 7F02ACCC C6300024 */  lwc1  $f16, 0x24($s1)
-/* 05F800 7F02ACD0 C60A0014 */  lwc1  $f10, 0x14($s0)
-/* 05F804 7F02ACD4 C6080008 */  lwc1  $f8, 8($s0)
-/* 05F808 7F02ACD8 46008482 */  mul.s $f18, $f16, $f0
-/* 05F80C 7F02ACDC 00000000 */  nop   
-/* 05F810 7F02ACE0 46125102 */  mul.s $f4, $f10, $f18
-/* 05F814 7F02ACE4 46082400 */  add.s $f16, $f4, $f8
-/* 05F818 7F02ACE8 E7B00034 */  swc1  $f16, 0x34($sp)
-/* 05F81C 7F02ACEC 8E060008 */  lw    $a2, 8($s0)
-/* 05F820 7F02ACF0 8E050000 */  lw    $a1, ($s0)
-/* 05F824 7F02ACF4 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
-/* 05F828 7F02ACF8 E7B00010 */   swc1  $f16, 0x10($sp)
-/* 05F82C 7F02ACFC 1040000F */  beqz  $v0, .L7F02AD3C
-/* 05F830 7F02AD00 02202025 */   move  $a0, $s1
-/* 05F834 7F02AD04 27A5002C */  addiu $a1, $sp, 0x2c
-/* 05F838 7F02AD08 8FA60038 */  lw    $a2, 0x38($sp)
-/* 05F83C 7F02AD0C 0FC0A377 */  jal   plot_course_for_actor
-/* 05F840 7F02AD10 8FA70048 */   lw    $a3, 0x48($sp)
-/* 05F844 7F02AD14 5040000A */  beql  $v0, $zero, .L7F02AD40
-/* 05F848 7F02AD18 00001025 */   move  $v0, $zero
-/* 05F84C 7F02AD1C 10000008 */  b     .L7F02AD40
-/* 05F850 7F02AD20 24020001 */   li    $v0, 1
-.L7F02AD24:
-/* 05F854 7F02AD24 0FC0A377 */  jal   plot_course_for_actor
-/* 05F858 7F02AD28 8FA70048 */   lw    $a3, 0x48($sp)
-/* 05F85C 7F02AD2C 50400004 */  beql  $v0, $zero, .L7F02AD40
-/* 05F860 7F02AD30 00001025 */   move  $v0, $zero
-/* 05F864 7F02AD34 10000002 */  b     .L7F02AD40
-/* 05F868 7F02AD38 24020001 */   li    $v0, 1
-.L7F02AD3C:
-/* 05F86C 7F02AD3C 00001025 */  move  $v0, $zero
-.L7F02AD40:
-/* 05F870 7F02AD40 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 05F874 7F02AD44 8FB0001C */  lw    $s0, 0x1c($sp)
-/* 05F878 7F02AD48 8FB10020 */  lw    $s1, 0x20($sp)
-/* 05F87C 7F02AD4C 03E00008 */  jr    $ra
-/* 05F880 7F02AD50 27BD0040 */   addiu $sp, $sp, 0x40
-)
-#endif
 
 
 

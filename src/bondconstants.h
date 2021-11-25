@@ -1827,6 +1827,10 @@ typedef enum WATCH_ANIMATION_STATE_IDS {
     WATCH_ANIMATION_0xc = 12
 } WATCH_ANIMATION_STATE;
 
+#define isNotBoundPad(pad)  pad < 10000
+#define getBoundPadNum(pad) pad - 10000
+#define setBoundPadNum(pad) pad + 10000
+
 //macros for FILERECORDS
 #define STR(n) #n
 #define PROPFILERECORD(NAME, SCALE) {&NAME ## _header, STR(P ## NAME ##Z), SCALE},
