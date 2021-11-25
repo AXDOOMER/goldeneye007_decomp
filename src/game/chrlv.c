@@ -97,6 +97,7 @@ void chrlvSneezeRelated(ChrRecord *arg0);
 void chrlvManageGuardFade(ChrRecord *arg0);
 void sub_GAME_7F02BC80(ChrRecord *arg0);
 void chrlvCheckTriggeredOnShotHit(ChrRecord *arg0);
+void sub_GAME_7F02BDA4(ChrRecord *arg0);
 
 void sub_GAME_7F025C40(struct ChrRecord *chr, s32);
 void sub_GAME_7F02587C(struct ChrRecord *chr, s32);
@@ -7638,41 +7639,19 @@ void chrlvCheckTriggeredOnShotHit(ChrRecord *arg0)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02BDA4(void) {
+/**
+ * Address 0x7F02BDA4.
+*/
+void sub_GAME_7F02BDA4(ChrRecord *arg0)
+{
+    Model *model = arg0->model;
 
+    if (objecthandlerGetModelField28(model) >= sub_GAME_7F06F5C4(model))
+    {
+        chrlvSetTargetToPlayer(arg0);
+        chrlvIdleAnimationRelated7F023E14(arg0, 10.0f);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F02BDA4
-/* 0608D4 7F02BDA4 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0608D8 7F02BDA8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0608DC 7F02BDAC AFA40020 */  sw    $a0, 0x20($sp)
-/* 0608E0 7F02BDB0 8C84001C */  lw    $a0, 0x1c($a0)
-/* 0608E4 7F02BDB4 0FC1BD6F */  jal   objecthandlerGetModelField28
-/* 0608E8 7F02BDB8 AFA4001C */   sw    $a0, 0x1c($sp)
-/* 0608EC 7F02BDBC 8FA4001C */  lw    $a0, 0x1c($sp)
-/* 0608F0 7F02BDC0 0FC1BD71 */  jal   sub_GAME_7F06F5C4
-/* 0608F4 7F02BDC4 E7A00018 */   swc1  $f0, 0x18($sp)
-/* 0608F8 7F02BDC8 C7A40018 */  lwc1  $f4, 0x18($sp)
-/* 0608FC 7F02BDCC 4604003E */  c.le.s $f0, $f4
-/* 060900 7F02BDD0 00000000 */  nop   
-/* 060904 7F02BDD4 45020007 */  bc1fl .L7F02BDF4
-/* 060908 7F02BDD8 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 06090C 7F02BDDC 0FC0A6EC */  jal   chrlvSetTargetToPlayer
-/* 060910 7F02BDE0 8FA40020 */   lw    $a0, 0x20($sp)
-/* 060914 7F02BDE4 8FA40020 */  lw    $a0, 0x20($sp)
-/* 060918 7F02BDE8 0FC08F85 */  jal   chrlvIdleAnimationRelated7F023E14
-/* 06091C 7F02BDEC 3C054120 */   lui   $a1, 0x4120
-/* 060920 7F02BDF0 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F02BDF4:
-/* 060924 7F02BDF4 27BD0020 */  addiu $sp, $sp, 0x20
-/* 060928 7F02BDF8 03E00008 */  jr    $ra
-/* 06092C 7F02BDFC 00000000 */   nop   
-)
-#endif
-
 
 
 #ifdef NONMATCHING
