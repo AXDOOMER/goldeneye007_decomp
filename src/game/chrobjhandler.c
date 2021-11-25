@@ -10720,7 +10720,7 @@ glabel object_interaction
 /* 07B9A8 7F046E78 46000086 */  mov.s $f2, $f0
 /* 07B9AC 7F046E7C C7AC04B8 */  lwc1  $f12, 0x4b8($sp)
 .L7F046E80:
-/* 07B9B0 7F046E80 0FC0B491 */  jal   sub_GAME_7F02D244
+/* 07B9B0 7F046E80 0FC0B491 */  jal   chrlvGetAimLimitAngle
 /* 07B9B4 7F046E84 E7A204B4 */   swc1  $f2, 0x4b4($sp)
 /* 07B9B8 7F046E88 E7A004A0 */  swc1  $f0, 0x4a0($sp)
 /* 07B9BC 7F046E8C C6080098 */  lwc1  $f8, 0x98($s0)
@@ -10901,7 +10901,7 @@ glabel object_interaction
 /* 07BC3C 7F04710C 51800007 */  beql  $t4, $zero, .L7F04712C
 /* 07BC40 7F047110 8E0E00D0 */   lw    $t6, 0xd0($s0)
 /* 07BC44 7F047114 C7AC04B8 */  lwc1  $f12, 0x4b8($sp)
-/* 07BC48 7F047118 0FC0B491 */  jal   sub_GAME_7F02D244
+/* 07BC48 7F047118 0FC0B491 */  jal   chrlvGetAimLimitAngle
 /* 07BC4C 7F04711C E7B004D8 */   swc1  $f16, 0x4d8($sp)
 /* 07BC50 7F047120 C7B004D8 */  lwc1  $f16, 0x4d8($sp)
 /* 07BC54 7F047124 E7A004A0 */  swc1  $f0, 0x4a0($sp)
@@ -15826,7 +15826,7 @@ glabel object_interaction
 /* 07BDEC 7F04727C 46000086 */  mov.s $f2, $f0
 /* 07BDF0 7F047280 C7AC04BC */  lwc1  $f12, 0x4bc($sp)
 .Ljp7F047284:
-/* 07BDF4 7F047284 0FC0B553 */  jal   sub_GAME_7F02D244
+/* 07BDF4 7F047284 0FC0B553 */  jal   chrlvGetAimLimitAngle
 /* 07BDF8 7F047288 E7A204B8 */   swc1  $f2, 0x4b8($sp)
 /* 07BDFC 7F04728C E7A004A4 */  swc1  $f0, 0x4a4($sp)
 /* 07BE00 7F047290 C6080098 */  lwc1  $f8, 0x98($s0)
@@ -16007,7 +16007,7 @@ glabel object_interaction
 /* 07C080 7F047510 51000007 */  beql  $t0, $zero, .Ljp7F047530
 /* 07C084 7F047514 8E0900D0 */   lw    $t1, 0xd0($s0)
 /* 07C088 7F047518 C7AC04BC */  lwc1  $f12, 0x4bc($sp)
-/* 07C08C 7F04751C 0FC0B553 */  jal   sub_GAME_7F02D244
+/* 07C08C 7F04751C 0FC0B553 */  jal   chrlvGetAimLimitAngle
 /* 07C090 7F047520 E7B004DC */   swc1  $f16, 0x4dc($sp)
 /* 07C094 7F047524 C7B004DC */  lwc1  $f16, 0x4dc($sp)
 /* 07C098 7F047528 E7A004A4 */  swc1  $f0, 0x4a4($sp)
@@ -20939,7 +20939,7 @@ glabel object_interaction
 /* 079A44 7F047054 46000086 */  mov.s $f2, $f0
 /* 079A48 7F047058 C7AC04BC */  lwc1  $f12, 0x4bc($sp)
 .L7F04705C:
-/* 079A4C 7F04705C 0FC0B49E */  jal   sub_GAME_7F02D244
+/* 079A4C 7F04705C 0FC0B49E */  jal   chrlvGetAimLimitAngle
 /* 079A50 7F047060 E7A204B8 */   swc1  $f2, 0x4b8($sp)
 /* 079A54 7F047064 E7A004A4 */  swc1  $f0, 0x4a4($sp)
 /* 079A58 7F047068 C6080098 */  lwc1  $f8, 0x98($s0)
@@ -21120,7 +21120,7 @@ glabel object_interaction
 /* 079CD8 7F0472E8 51E00007 */  beql  $t7, $zero, .L7F047308
 /* 079CDC 7F0472EC 8E1900D0 */   lw    $t9, 0xd0($s0)
 /* 079CE0 7F0472F0 C7AC04BC */  lwc1  $f12, 0x4bc($sp)
-/* 079CE4 7F0472F4 0FC0B49E */  jal   sub_GAME_7F02D244
+/* 079CE4 7F0472F4 0FC0B49E */  jal   chrlvGetAimLimitAngle
 /* 079CE8 7F0472F8 E7B004DC */   swc1  $f16, 0x4dc($sp)
 /* 079CEC 7F0472FC C7B004DC */  lwc1  $f16, 0x4dc($sp)
 /* 079CF0 7F047300 E7A004A4 */  swc1  $f0, 0x4a4($sp)

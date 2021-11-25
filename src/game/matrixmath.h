@@ -22,6 +22,11 @@ void matrix_4x4_copy(Mtxf *src, Mtxf *dst);
 s32 matrix_4x4_multiply_homogeneous(Mtxf *lhs, Mtxf *rhs, Mtxf *result);
 
 void sub_GAME_7F058C9C(Mtxf *a, Mtxf *b);
+void matrix_4x4_multiply_homogeneous_in_place(Mtxf *lhs, Mtxf *rhs);
+void matrix_4x4_transform_vector_in_place(Mtxf *matrix, vec3 vector);
+
+// tenative guess
+void sub_GAME_7F058E78(Mtx *arg0, Mtx *arg1);
 
 /* matrixmath_misc.h */
 

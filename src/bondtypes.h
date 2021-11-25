@@ -203,8 +203,8 @@ struct modeldata_root
     struct coord3d unk34;
     struct coord3d unk40; // "2" version of unk24
     struct coord3d unk4c; // "2" version of unk34
-    u32 unk58;
-    u32 unk5c;
+    f32 unk58;
+    f32 unk5c;
 };
 
 /**

@@ -3141,6 +3141,7 @@ s32 bondviewGetVisibleToGuardsFlag(void);
 u8 get_bondata_invincible_flag(void);
 void set_bondata_invincible_flag(u32 arg0);
 void bondviewSetVisibleToGuardsFlag(s32 param_1);
+Mtxf *currentPlayerGetMatrix10EC(void);
 
 // unknown pointer arg0
 s32 sub_GAME_7F08BCC0(void *arg0, s32 arg1);

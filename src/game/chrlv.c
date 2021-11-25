@@ -20,6 +20,7 @@
 #include "game/lvl.h"
 #include "game/math_asinfacosf.h"
 #include "game/math_atan2f.h"
+#include "game/matrixmath.h"
 #include "game/objecthandler.h"
 #include "game/player.h"
 #include "game/player_2.h"
@@ -108,6 +109,12 @@ s32 chrlvSetSubroty(ChrRecord *arg0, s32 arg1, f32 arg2, f32 arg3, f32 arg4);
 void sub_GAME_7F025C40(struct ChrRecord *chr, s32);
 void sub_GAME_7F02587C(struct ChrRecord *chr, s32);
 void sub_GAME_7F024CF8(struct ChrRecord *chr, s32);
+
+// ?
+
+// unknown type for arg1, reads offsets 0x30,0x34,0x40,0x44
+// arg2 is only used to compare to zero, either flag or pointer
+void sub_GAME_7F02D048(ChrRecord *, void *, s32, s32, f32);
 
 
 // end forward declarations
@@ -8133,9 +8140,352 @@ s32 chrlvSetSubroty(ChrRecord *arg0, s32 arg1, f32 arg2, f32 arg3, f32 arg4)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F02C4C0(void) {
 
+// tentative
+Mtx* sub_GAME_7F06C660(struct Model *arg0, struct ModelNode *arg1, s32 arg2);
+
+// arg1: read offset 0x38, 0x3c as float
+s32 sub_GAME_7F02C4C0(ChrRecord *arg0, void *arg1, s32 arg2, s32 arg3, f32 arg4)
+{
+    s32 entity_id;
+    s32 sp154;
+    f32 dxdydz_square;
+    f32 ducking_height;
+    struct StandTile *unused_stan;
+    struct coord3d sp120;
+
+    // top of stack
+    f32 sp164; // sp356
+    f32 sp160; // sp352
+    s32 attack_type; // sp348
+    PropRecord *sp24;
+    Model *self_model;
+    f32 dx; // sp336
+    f32 dy; // sp332
+    f32 dz; // sp328
+    Model *weapon_prop_model;
+    f32 temp_f0_6;
+    PropRecord *self_prop; // sp316
+    s32 seen_bond_flag; // sp312
+    struct coord3d *current_player_pos; //sp308
+
+    // end known stack
+    f32 subroty;
+    Model *sp110;
+    f32 *spB8;
+    struct coord3d sp104;
+    struct coord3d spAC;
+    Mtx spBC;
+    f32 sp30;
+    f32 sp2C;
+
+    f32 temp_f0_7;
+    struct coord3d sp5C;
+    Mtx sp68;
+    struct coord3d sp50;
+    struct coord3d sp44;
+    ModelNode *temp_t3_2;
+    ModelNode *temp_t5;
+    PropRecord *player_prop;
+    f32 temp_f0_8;
+    s32 temp_a0;
+    ModelNode **temp_a1;
+    struct modeldata_root *temp_v0_4;
+    PropRecord *weapon_prop;
+    s32 phi_a0;
+    f32 phi_f16_6;
+
+    /////////////////////
+
+    sp154 = 1;
+    sp164 = 0.0f;
+    attack_type = 1;
+    entity_id = 0;
+    sp160 = sp164;
+
+    if (arg0->actiontype == ACT_ATTACK)
+    {
+        attack_type = arg0->act_attack.attacktype;
+        entity_id = arg0->act_attack.entityid;
+    }
+    else if (arg0->actiontype == ACT_STAND)
+    {
+        attack_type = arg0->act_stand.face_entitytype;
+        entity_id = arg0->act_stand.face_entityid;
+    }
+    
+    if ((attack_type & 2) == 0)
+    {
+        //sp160 = sp164;
+        
+        player_prop = get_curplayer_positiondata();
+        self_prop = arg0->prop;
+        current_player_pos = &player_prop->pos;
+
+        dx = player_prop->pos.f[0] - self_prop->pos.f[0];
+        dy = player_prop->pos.f[1] - self_prop->pos.f[1];
+        dz = player_prop->pos.f[2] - self_prop->pos.f[2];
+
+        dxdydz_square = (dx * dx) + (dy * dy) + (dz * dz);
+
+        //flag_sp28 = attack_type & 1;
+
+        if (attack_type & 1)
+        {
+            if ((attack_type & 0x40) != 0)
+            {
+                seen_bond_flag = 1;
+            }
+            else
+            {
+                //sp2C = temp_f2;
+                // sp160 = 0.0f;
+                seen_bond_flag = sub_GAME_7F0294BC(arg0);
+            }
+        }
+        else
+        {
+            seen_bond_flag = 1;
+        }
+
+        if (attack_type & 1)
+        {
+            //sp2C = temp_f10 + temp_f6;
+            // sp160 = 0.0f;
+            ducking_height = bondviewGetPlayerDuckingHeightRelated(g_CurrentPlayer);
+            if ((arg0->chrflags & 0x20) != 0)
+            {
+                if (((dx * dx) + (dy * dy) + (dz * dz)) < 160000.0f)
+                {
+                    if (self_prop->pos.f[1] < (current_player_pos->f[1] - (2.0f * ducking_height)))
+                    {
+                        // sp160 = 0.0f;
+                        dy -= ducking_height * (0.55f + (0.1f * ((f32) (u32)randomGetNext() * (1.0f / UINT_MAX)) * arg4));
+                    }
+                    else if ((current_player_pos->f[1] - (ducking_height * 0.5f)) < self_prop->pos.f[1])
+                    {
+                        // sp160 = 0.0f;
+                        dy -= ducking_height * (0.15f + (0.1f * ((f32) (u32)randomGetNext() * (1.0f / UINT_MAX)) * arg4));
+                    }
+                    else
+                    {
+                        // sp160 = 0.0f;
+                        dy = (((f32) (u32)randomGetNext() * (1.0f / UINT_MAX) * 0.1f * arg4) + 1.0f) * 40.0f;
+                    }
+                }
+                else
+                {
+                    // sp160 = 0.0f;
+                    dy += ducking_height * (1000000.0f - (0.05f * ((f32) (u32)randomGetNext() * (1.0f / UINT_MAX)) * arg4));
+                }
+            }
+            else if (((dx * dx) + (dy * dy) + (dz * dz)) > 160000.0f)
+            {
+                // sp160 = 0.0f;
+                if (((u32)randomGetNext() % 3U) == 0)
+                {
+                    // sp160 = 0.0f;
+                    dy += ducking_height * (0.05f + (0.1f * ((f32) (u32)randomGetNext() * (1.0f / UINT_MAX)) * arg4));
+                }
+                else
+                {
+                    // sp160 = 0.0f;
+                    dy -= ducking_height * (0.05f + (0.55f * ((f32) (u32)randomGetNext() * (1.0f / UINT_MAX)) * arg4));
+                }
+            }
+            else
+            {
+                if (self_prop->pos.f[1] < (current_player_pos->f[1] - ducking_height))
+                {
+                    // sp160 = 0.0f;
+                    dy -= ducking_height * (0.55f + (0.1f * ((f32) (u32)randomGetNext() * (1.0f / UINT_MAX)) * arg4));
+                }
+                else if ((current_player_pos->f[1] - (ducking_height * 0.5f)) < self_prop->pos.f[1])
+                {
+                    // sp160 = 0.0f;
+                    dy -= ducking_height * (0.15f + (0.1f * ((f32) (u32)randomGetNext() * (1.0f / UINT_MAX)) * arg4));
+                }
+                else
+                {
+                    // sp160 = 0.0f;
+                    dy = (((f32) (u32)randomGetNext() * (1.0f / UINT_MAX) * 0.1f * arg4) - 0.05f) * ducking_height;
+                }
+            }
+        }
+        else
+        {
+            // sp160 = 0.0f;
+            getsuboffset(arg0->model, (struct float3 *) &sp120);
+            current_player_pos = sub_GAME_7F032C78(arg0, attack_type, entity_id, unused_stan);
+            dx = current_player_pos->f[0] - sp120.f[0];
+            dy = current_player_pos->f[1] - sp120.f[1];
+            dz = current_player_pos->f[2] - sp120.f[2];
+        }
+
+        if ((attack_type & 0x100) == 0)
+        {
+            //sp160 = 0.0f;
+            sp164 = atan2f(dy, sqrtf((dx * dx) + (dz * dz)));
+
+            if (sp164 >= M_PI_F)
+            {
+                sp164 = sp164 - M_TAU;
+            }
+        }
+
+        //sp160 = sp164;
+
+        //sp160 = 0.0f;
+        if (seen_bond_flag != 0)
+        {
+            subroty = chrlvGetSubrotySideback(arg0);
+
+            if (arg3 != 0)
+            {
+                weapon_prop = something_with_weaponpos_of_guarddata_hand(arg0, RIGHT_HAND);
+            }
+            else
+            {
+                weapon_prop = something_with_weaponpos_of_guarddata_hand(arg0, LEFT_HAND);
+            }
+
+            if ((weapon_prop != 0) && ((weapon_prop->flags & 2) != 0) && (dxdydz_square < 1000000.0f))
+            {
+                weapon_prop_model = weapon_prop->obj->model;
+                temp_a1 = weapon_prop_model->obj->Switches;
+                temp_t5 = temp_a1[0];
+                sp24 = temp_t5;
+                phi_a0 = 0;
+                if (temp_t5 != NULL)
+                {
+                    sp110 = weapon_prop_model;
+                    temp_a0 = sub_GAME_7F06C660(weapon_prop_model, temp_t5, 0);
+                    spB8 = temp_t5->Data;
+                    sub_GAME_7F058E78((Mtx *) temp_a0, &spBC);
+                    matrix_4x4_multiply_homogeneous_in_place(currentPlayerGetMatrix10EC(), &spBC);
+                    spAC.f[0] = spB8[0];
+                    spAC.f[1] = spB8[1];
+                    spAC.f[2] = spB8[2];
+                    matrix_4x4_transform_vector_in_place(&spBC, (f32*) &spAC);
+                    sp104.f[0] = spAC.f[0];
+                    sp104.f[1] = spAC.f[1];
+                    sp104.f[2] = spAC.f[2];
+                    phi_a0 = 1;
+                }
+                else
+                {
+                    temp_t3_2 = temp_a1[1];
+                    sp24 = temp_t3_2;
+                    if (temp_t3_2 != NULL)
+                    {
+                        sub_GAME_7F058E78(sub_GAME_7F06C660(weapon_prop_model, temp_t3_2, 0), &sp68);
+                        matrix_4x4_multiply_homogeneous_in_place(currentPlayerGetMatrix10EC(), &sp68);
+                        sp104.f[0] = sp68.m[2][0];
+                        sp104.f[1] = sp68.m[2][1];
+                        sp104.f[2] = sp68.m[2][2];
+                        phi_a0 = 1;
+                    }
+                }
+
+                if (phi_a0 != 0)
+                {
+                    sp50.f[0] = sinf(subroty);
+                    sp50.f[1] = 0.0f;
+                    sp50.f[2] = cosf(subroty);
+                    sp44.f[0] = self_prop->pos.f[0] - dz;
+                    sp44.f[1] = self_prop->pos.f[1];
+                    sp44.f[2] = self_prop->pos.f[2] + dx;
+                    chrlvLineLineIntersection(&self_prop->pos, &sp44, &sp104, &sp50, &sp5C);
+                    dx = current_player_pos->f[0] - sp5C.f[0];
+                    dz = current_player_pos->f[2] - sp5C.f[2];
+                }
+            }
+
+            phi_f16_6 = atan2f(dx, dz) - subroty;
+
+            if (phi_f16_6 < subroty)
+            {
+                phi_f16_6 = phi_f16_6 + M_TAU;
+            }
+
+            self_model = arg0->model;
+            sp160 = phi_f16_6;
+            temp_v0_4 = (struct modeldata_root*)extract_id_from_object_structure_microcode(self_model, self_model->obj->RootNode);
+
+            if (temp_v0_4->unk5c > 0.0f)
+            {
+                phi_f16_6 = phi_f16_6 - (temp_v0_4->unk5c * temp_v0_4->unk58);
+
+                if (phi_f16_6 < 0.0f)
+                {
+                    phi_f16_6 = phi_f16_6 + M_TAU;
+                }
+
+                if (phi_f16_6 >= M_TAU)
+                {
+                    phi_f16_6 = phi_f16_6 - M_TAU;
+                }
+            }
+
+            if ((attack_type & 1) && ((attack_type & 0x60) == 0))
+            {
+                sp160 = phi_f16_6;
+                sp30 = sinf(((f32) ((s32) ((s32) ((f32) g_GlobalTimer * arg0->model->unka4) + arg0->chrnum) % 60) * M_TAU) / 60.0f);
+                phi_f16_6 = phi_f16_6 + (chrlvGetAimLimitAngle(dxdydz_square) * 0.5f * sp30);
+
+                if (phi_f16_6 < 0.0f)
+                {
+                    phi_f16_6 = phi_f16_6 + M_TAU;
+                }
+
+                if (phi_f16_6 >= M_TAU)
+                {
+                    phi_f16_6 = phi_f16_6 - M_TAU;
+                }
+            }
+
+            if (phi_f16_6 >= M_PI_F)
+            {
+                phi_f16_6 = phi_f16_6 - M_TAU;
+            }
+
+            sp160 = phi_f16_6 + arg0->aimsideback;
+
+            if (arg0->model->unk24 != 0)
+            {
+                // hack: unsure of arg1 type.
+                if (sp160 < -((f32*)arg1)[14])
+                {
+                    sp160 = -((f32*)arg1)[14];
+                }
+                else if (-((f32*)arg1)[15] < sp160)
+                {
+                    sp160 = -((f32*)arg1)[15];
+                }
+            }
+            else
+            {
+                if (((f32*)arg1)[14] < sp160)
+                {
+                    sp160 = ((f32*)arg1)[14];
+                }
+                else if (sp160 < ((f32*)arg1)[15])
+                {
+                    sp160 = ((f32*)arg1)[15];
+                }
+            }
+
+            sp154 = 0;
+        }
+    }
+
+    sub_GAME_7F02D048(arg0, arg1, arg2, arg3, sp164);
+    arg0->aimendcount = 0xA;
+    arg0->aimendsideback = sp160;
+
+    return sp154;
 }
+
 #else
 GLOBAL_ASM(
 .late_rodata
@@ -8880,7 +9230,7 @@ glabel sub_GAME_7F02C4C0
 /* 0619F0 7F02CEC0 0FC15FAB */  jal   sinf
 /* 0619F4 7F02CEC4 46122303 */   div.s $f12, $f4, $f18
 /* 0619F8 7F02CEC8 E7A00030 */  swc1  $f0, 0x30($sp)
-/* 0619FC 7F02CECC 0FC0B491 */  jal   sub_GAME_7F02D244
+/* 0619FC 7F02CECC 0FC0B491 */  jal   chrlvGetAimLimitAngle
 /* 061A00 7F02CED0 C7AC0144 */   lwc1  $f12, 0x144($sp)
 /* 061A04 7F02CED4 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 061A08 7F02CED8 44813000 */  mtc1  $at, $f6
@@ -9209,83 +9559,33 @@ glabel sub_GAME_7F02D1C4
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02D244(void) {
+/**
+ * Address 0x7F02D244.
+*/
+f32 chrlvGetAimLimitAngle(f32 sqdist)
+{
+    if (sqdist > (1600.0f * 1600.0f))
+    {
+        return (M_PI_F / 167.5f);
+    }
 
+    if (sqdist > (800.0f * 800.0f))
+    {
+        return (M_PI_F / 83.5f);
+    }
+
+    if (sqdist > (400.0f * 400.0f))
+    {
+        return (M_PI_F / 42.0f);
+    }
+
+    if (sqdist > (200.0f * 200.0f))
+    {
+        return (M_PI_F / 21.0f);
+    }
+
+    return (M_PI_F / 12.5f);
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80051F2C
-.word 0x4a1c4000 /*2560000.0*/
-glabel D_80051F30
-.word 0x3c99a5b7 /*0.018755777*/
-glabel D_80051F34
-.word 0x491c4000 /*640000.0*/
-glabel D_80051F38
-.word 0x3d1a1b7b /*0.037623864*/
-glabel D_80051F3C
-.word 0x481c4000 /*160000.0*/
-glabel D_80051F40
-.word 0x3d9930a7 /*0.074799828*/
-glabel D_80051F44
-.word 0x471c4000 /*40000.0*/
-glabel D_80051F48
-.word 0x3e1930a7 /*0.14959966*/
-glabel D_80051F4C
-.word 0x3e80adfd /*0.25132743*/
-.text
-glabel sub_GAME_7F02D244
-/* 061D74 7F02D244 3C018005 */  lui   $at, %hi(D_80051F2C)
-/* 061D78 7F02D248 C4241F2C */  lwc1  $f4, %lo(D_80051F2C)($at)
-/* 061D7C 7F02D24C 3C018005 */  lui   $at, %hi(D_80051F34)
-/* 061D80 7F02D250 460C203C */  c.lt.s $f4, $f12
-/* 061D84 7F02D254 00000000 */  nop   
-/* 061D88 7F02D258 45000004 */  bc1f  .L7F02D26C
-/* 061D8C 7F02D25C 00000000 */   nop   
-/* 061D90 7F02D260 3C018005 */  lui   $at, %hi(D_80051F30)
-/* 061D94 7F02D264 03E00008 */  jr    $ra
-/* 061D98 7F02D268 C4201F30 */   lwc1  $f0, %lo(D_80051F30)($at)
-
-.L7F02D26C:
-/* 061D9C 7F02D26C C4261F34 */  lwc1  $f6, %lo(D_80051F34)($at)
-/* 061DA0 7F02D270 3C018005 */  lui   $at, %hi(D_80051F3C)
-/* 061DA4 7F02D274 460C303C */  c.lt.s $f6, $f12
-/* 061DA8 7F02D278 00000000 */  nop   
-/* 061DAC 7F02D27C 45000004 */  bc1f  .L7F02D290
-/* 061DB0 7F02D280 00000000 */   nop   
-/* 061DB4 7F02D284 3C018005 */  lui   $at, %hi(D_80051F38)
-/* 061DB8 7F02D288 03E00008 */  jr    $ra
-/* 061DBC 7F02D28C C4201F38 */   lwc1  $f0, %lo(D_80051F38)($at)
-
-.L7F02D290:
-/* 061DC0 7F02D290 C4281F3C */  lwc1  $f8, %lo(D_80051F3C)($at)
-/* 061DC4 7F02D294 3C018005 */  lui   $at, %hi(D_80051F44)
-/* 061DC8 7F02D298 460C403C */  c.lt.s $f8, $f12
-/* 061DCC 7F02D29C 00000000 */  nop   
-/* 061DD0 7F02D2A0 45000004 */  bc1f  .L7F02D2B4
-/* 061DD4 7F02D2A4 00000000 */   nop   
-/* 061DD8 7F02D2A8 3C018005 */  lui   $at, %hi(D_80051F40)
-/* 061DDC 7F02D2AC 03E00008 */  jr    $ra
-/* 061DE0 7F02D2B0 C4201F40 */   lwc1  $f0, %lo(D_80051F40)($at)
-
-.L7F02D2B4:
-/* 061DE4 7F02D2B4 C42A1F44 */  lwc1  $f10, %lo(D_80051F44)($at)
-/* 061DE8 7F02D2B8 3C018005 */  lui   $at, %hi(D_80051F4C)
-/* 061DEC 7F02D2BC 460C503C */  c.lt.s $f10, $f12
-/* 061DF0 7F02D2C0 00000000 */  nop   
-/* 061DF4 7F02D2C4 45000004 */  bc1f  .L7F02D2D8
-/* 061DF8 7F02D2C8 00000000 */   nop   
-/* 061DFC 7F02D2CC 3C018005 */  lui   $at, %hi(D_80051F48)
-/* 061E00 7F02D2D0 03E00008 */  jr    $ra
-/* 061E04 7F02D2D4 C4201F48 */   lwc1  $f0, %lo(D_80051F48)($at)
-
-.L7F02D2D8:
-/* 061E08 7F02D2D8 C4201F4C */  lwc1  $f0, %lo(D_80051F4C)($at)
-/* 061E0C 7F02D2DC 03E00008 */  jr    $ra
-/* 061E10 7F02D2E0 00000000 */   nop   
-)
-#endif
 
 
 
@@ -9344,7 +9644,7 @@ glabel sub_GAME_7F02D2E4
 /* 061E9C 7F02D36C E7A20040 */  swc1  $f2, 0x40($sp)
 /* 061EA0 7F02D370 46062200 */  add.s $f8, $f4, $f6
 /* 061EA4 7F02D374 460A4300 */  add.s $f12, $f8, $f10
-/* 061EA8 7F02D378 0FC0B491 */  jal   sub_GAME_7F02D244
+/* 061EA8 7F02D378 0FC0B491 */  jal   chrlvGetAimLimitAngle
 /* 061EAC 7F02D37C E7AC001C */   swc1  $f12, 0x1c($sp)
 /* 061EB0 7F02D380 C7A20040 */  lwc1  $f2, 0x40($sp)
 /* 061EB4 7F02D384 44802000 */  mtc1  $zero, $f4
@@ -9587,7 +9887,7 @@ glabel sub_GAME_7F02D2E4
 /* 061E9C 7F02D36C E7A20040 */  swc1  $f2, 0x40($sp)
 /* 061EA0 7F02D370 46062200 */  add.s $f8, $f4, $f6
 /* 061EA4 7F02D374 460A4300 */  add.s $f12, $f8, $f10
-/* 061EA8 7F02D378 0FC0B491 */  jal   sub_GAME_7F02D244
+/* 061EA8 7F02D378 0FC0B491 */  jal   chrlvGetAimLimitAngle
 /* 061EAC 7F02D37C E7AC001C */   swc1  $f12, 0x1c($sp)
 /* 061EB0 7F02D380 C7A20040 */  lwc1  $f2, 0x40($sp)
 /* 061EB4 7F02D384 44802000 */  mtc1  $zero, $f4
@@ -9831,7 +10131,7 @@ glabel sub_GAME_7F02D2E4
 /* 061E9C 7F02D36C E7A20040 */  swc1  $f2, 0x40($sp)
 /* 061EA0 7F02D370 46062200 */  add.s $f8, $f4, $f6
 /* 061EA4 7F02D374 460A4300 */  add.s $f12, $f8, $f10
-/* 061EA8 7F02D378 0FC0B491 */  jal   sub_GAME_7F02D244
+/* 061EA8 7F02D378 0FC0B491 */  jal   chrlvGetAimLimitAngle
 /* 061EAC 7F02D37C E7AC001C */   swc1  $f12, 0x1c($sp)
 /* 061EB0 7F02D380 C7A20040 */  lwc1  $f2, 0x40($sp)
 /* 061EB4 7F02D384 44802000 */  mtc1  $zero, $f4
