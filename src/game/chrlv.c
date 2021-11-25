@@ -94,6 +94,7 @@ s32 sub_GAME_7F02A0EC(ChrRecord *arg0, s32 arg1, f32 arg2);
 void chrlvModelRotyRelated(ChrRecord *arg0, s32 arg1, struct coord3d *arg2);
 s32 chrIsNotDeadOrShot(struct ChrRecord *chr);
 void chrlvSneezeRelated(ChrRecord *arg0);
+void chrlvManageGuardFade(ChrRecord *arg0);
 
 void sub_GAME_7F025C40(struct ChrRecord *chr, s32);
 void sub_GAME_7F02587C(struct ChrRecord *chr, s32);
@@ -7414,57 +7415,30 @@ void chrlvSurrenderAnimationRelated7F02B638(struct ChrRecord *arg0)
 
 
 
-#ifdef NONMATCHING
-void manage_guard_fade(void) {
+/**
+ * Address 0x7F02B774.
+*/
+void chrlvManageGuardFade(ChrRecord *arg0)
+{
+    if (arg0->act_init.padding[0] >= 0)
+    {
+        arg0->act_init.padding[0] += g_ClockTimer;
 
+        if (arg0->act_init.padding[0] >= 90)
+        {
+            arg0->hidden |= 0x20;
+        }
+        else
+        {
+            arg0->fadealpha = (u8) ((s32) ((90 - arg0->act_init.padding[0]) * 0xFF) / 90);
+        }
+
+        return;
+    }
+
+    arg0->act_init.padding[0] = 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel manage_guard_fade
-/* 0602A4 7F02B774 8C82002C */  lw    $v0, 0x2c($a0)
-/* 0602A8 7F02B778 3C0E8005 */  lui   $t6, %hi(g_ClockTimer) 
-/* 0602AC 7F02B77C 0442001E */  bltzl $v0, .L7F02B7F8
-/* 0602B0 7F02B780 AC80002C */   sw    $zero, 0x2c($a0)
-/* 0602B4 7F02B784 8DCE8374 */  lw    $t6, %lo(g_ClockTimer)($t6)
-/* 0602B8 7F02B788 2403005A */  li    $v1, 90
-/* 0602BC 7F02B78C 004E7821 */  addu  $t7, $v0, $t6
-/* 0602C0 7F02B790 29E1005A */  slti  $at, $t7, 0x5a
-/* 0602C4 7F02B794 AC8F002C */  sw    $t7, 0x2c($a0)
-/* 0602C8 7F02B798 14200005 */  bnez  $at, .L7F02B7B0
-/* 0602CC 7F02B79C 01E01025 */   move  $v0, $t7
-/* 0602D0 7F02B7A0 94980012 */  lhu   $t8, 0x12($a0)
-/* 0602D4 7F02B7A4 37190020 */  ori   $t9, $t8, 0x20
-/* 0602D8 7F02B7A8 03E00008 */  jr    $ra
-/* 0602DC 7F02B7AC A4990012 */   sh    $t9, 0x12($a0)
 
-.L7F02B7B0:
-/* 0602E0 7F02B7B0 00624023 */  subu  $t0, $v1, $v0
-/* 0602E4 7F02B7B4 00084A00 */  sll   $t1, $t0, 8
-/* 0602E8 7F02B7B8 01284823 */  subu  $t1, $t1, $t0
-/* 0602EC 7F02B7BC 0123001A */  div   $zero, $t1, $v1
-/* 0602F0 7F02B7C0 00005012 */  mflo  $t2
-/* 0602F4 7F02B7C4 A08A000C */  sb    $t2, 0xc($a0)
-/* 0602F8 7F02B7C8 14600002 */  bnez  $v1, .L7F02B7D4
-/* 0602FC 7F02B7CC 00000000 */   nop   
-/* 060300 7F02B7D0 0007000D */  break 7
-.L7F02B7D4:
-/* 060304 7F02B7D4 2401FFFF */  li    $at, -1
-/* 060308 7F02B7D8 14610004 */  bne   $v1, $at, .L7F02B7EC
-/* 06030C 7F02B7DC 3C018000 */   lui   $at, 0x8000
-/* 060310 7F02B7E0 15210002 */  bne   $t1, $at, .L7F02B7EC
-/* 060314 7F02B7E4 00000000 */   nop   
-/* 060318 7F02B7E8 0006000D */  break 6
-.L7F02B7EC:
-/* 06031C 7F02B7EC 03E00008 */  jr    $ra
-/* 060320 7F02B7F0 00000000 */   nop   
-
-/* 060324 7F02B7F4 AC80002C */  sw    $zero, 0x2c($a0)
-.L7F02B7F8:
-/* 060328 7F02B7F8 03E00008 */  jr    $ra
-/* 06032C 7F02B7FC 00000000 */   nop   
-)
-#endif
 
 
 
@@ -17442,7 +17416,7 @@ glabel manage_actions
 /* 067330 7F032800 10000038 */  b     .L7F0328E4
 /* 067334 7F032804 8E080014 */   lw    $t0, 0x14($s0)
 .L7F032808:
-/* 067338 7F032808 0FC0ADDD */  jal   manage_guard_fade
+/* 067338 7F032808 0FC0ADDD */  jal   chrlvManageGuardFade
 /* 06733C 7F03280C 02002025 */   move  $a0, $s0
 /* 067340 7F032810 10000034 */  b     .L7F0328E4
 /* 067344 7F032814 8E080014 */   lw    $t0, 0x14($s0)
