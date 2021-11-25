@@ -38,5 +38,6 @@ s32 sub_GAME_7F032B68(ChrRecord *);
 s32 chrIsDead(struct ChrRecord *chr);
 bool actor_steps_sideways(ChrRecord *self);
 bool actor_hops_sideways(ChrRecord *self);
+bool actor_jogs_sideways(ChrRecord *self);
 
 #endif

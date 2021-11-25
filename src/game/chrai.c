@@ -3209,7 +3209,7 @@ action0F_Guard_Hops_Sideways_RVL_2:
 /* 06A578 7F035A48 1000FED0 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A57C 7F035A4C 26310002 */   addiu $s1, $s1, 2
 action10_Guard_Runs_Sideways_RVL_2:
-/* 06A580 7F035A50 0FC0A962 */  jal   actor_runs_sideways
+/* 06A580 7F035A50 0FC0A962 */  jal   actor_jogs_sideways
 /* 06A584 7F035A54 02E02025 */   move  $a0, $s7
 /* 06A588 7F035A58 10400007 */  beqz  $v0, .L7F035A78
 /* 06A58C 7F035A5C 02C02025 */   move  $a0, $s6
@@ -9076,7 +9076,7 @@ action0F_Guard_Hops_Sideways_RVL_2:
 /* 06A578 7F035A48 1000FED0 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A57C 7F035A4C 26310002 */   addiu $s1, $s1, 2
 action10_Guard_Runs_Sideways_RVL_2:
-/* 06A580 7F035A50 0FC0A962 */  jal   actor_runs_sideways
+/* 06A580 7F035A50 0FC0A962 */  jal   actor_jogs_sideways
 /* 06A584 7F035A54 02E02025 */   move  $a0, $s7
 /* 06A588 7F035A58 10400007 */  beqz  $v0, .L7F035A78
 /* 06A58C 7F035A5C 02C02025 */   move  $a0, $s6
@@ -14944,7 +14944,7 @@ action0F_Guard_Hops_Sideways_RVL_2:
 /* 06A578 7F035A48 1000FED0 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A57C 7F035A4C 26310002 */   addiu $s1, $s1, 2
 action10_Guard_Runs_Sideways_RVL_2:
-/* 06A580 7F035A50 0FC0A962 */  jal   actor_runs_sideways
+/* 06A580 7F035A50 0FC0A962 */  jal   actor_jogs_sideways
 /* 06A584 7F035A54 02E02025 */   move  $a0, $s7
 /* 06A588 7F035A58 10400007 */  beqz  $v0, .L7F035A78
 /* 06A58C 7F035A5C 02C02025 */   move  $a0, $s6

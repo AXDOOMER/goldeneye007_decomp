@@ -3,6 +3,7 @@
 #include "bondgame.h"
 #include "bondconstants.h"
 #include "chrlv.h"
+#include "include/limits.h"
 #include "include/math.h"
 #include "music.h"
 #include "random.h"
@@ -6486,42 +6487,39 @@ bool actor_hops_sideways(ChrRecord *self)
 
 
 
-#if 1
 /**
- * Unreferenced.
- * 
  * Address 0x7F02A588.
 */
 bool actor_jogs_sideways(ChrRecord *self)
 {
     struct PropRecord *myprop;
     f32 distToRun;
-    struct vec3d TargetVector;
+    struct coord3d TargetVector;
     struct coord3d TargetCoord;
 
-    if (chrIsNotDeadOrShot(self) && ((global_timer - self->lastwalk60) >= 181)) //>3 seconds since last walk
+    if (chrIsNotDeadOrShot(self) && ((g_GlobalTimer - self->lastwalk60) >= 181)) //>3 seconds since last walk
     {
         myprop    = self->prop;
-        distToRun = (randomGetNext() * (1.0f / UINT_MAX) * 200.0f) + 200.0f; //random dist to run between 0 and 200
-        sub_GAME_7F02A044(self, (randomGetNext() & 1) == 0, &TargetVector);  //get vector to run on
+        distToRun = ((u32)randomGetNext() * (1.0f / UINT_MAX) * 200.0f) + 200.0f; //random dist to run between 0 and 200
+        chrlvNormDistanceToPlayer(self, ((u32)randomGetNext() & 1) == 0, &TargetVector);  //get vector to run on
         
-        TargetCoord.x = (TargetVector.x * distToRun) + myprop->pos.x;
-        TargetCoord.y = myprop->pos.y;
-        TargetCoord.z = (TargetVector.z * distToRun) + myprop->pos.z;
+        TargetCoord.f[0] = myprop->pos.f[0] + (TargetVector.f[0] * distToRun);
+        TargetCoord.f[1] = myprop->pos.f[1];
+        TargetCoord.f[2] = myprop->pos.f[2] + (TargetVector.f[2] * distToRun);
 
-        if (sub_GAME_7F02982C(myprop, &TargetCoord, &TargetVector))
+        if (chrlvCall7F0B0E24WithChrWidthHeight(myprop, &TargetCoord, &TargetVector))
         {
             sub_GAME_7F024CF8(self, &TargetCoord);
             return TRUE;
         }
 
-        TargetVector.x = -TargetVector.x;
-        TargetVector.z = -TargetVector.z;
-        TargetCoord.x  = (TargetVector.x * distToRun) + myprop->pos.x;
-        TargetCoord.y  = myprop->pos.y;
-        TargetCoord.z  = (TargetVector.z * distToRun) + myprop->pos.z;
+        TargetVector.f[0] = -TargetVector.f[0];
+        TargetVector.f[2] = -TargetVector.f[2];
+        TargetCoord.f[0]  = myprop->pos.f[0] + (TargetVector.f[0] * distToRun);
+        TargetCoord.f[1]  = myprop->pos.f[1];
+        TargetCoord.f[2]  = myprop->pos.f[2] + (TargetVector.f[2] * distToRun);
 
-        if (sub_GAME_7F02982C(myprop, &TargetCoord, &TargetVector))
+        if (chrlvCall7F0B0E24WithChrWidthHeight(myprop, &TargetCoord, &TargetVector))
         {
             sub_GAME_7F024CF8(self, &TargetCoord);
             return TRUE;
@@ -6530,111 +6528,6 @@ bool actor_jogs_sideways(ChrRecord *self)
 
     return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel actor_runs_sideways
-/* 05F0B8 7F02A588 27BDFFB0 */  addiu $sp, $sp, -0x50
-/* 05F0BC 7F02A58C AFBF0024 */  sw    $ra, 0x24($sp)
-/* 05F0C0 7F02A590 AFB10020 */  sw    $s1, 0x20($sp)
-/* 05F0C4 7F02A594 00808825 */  move  $s1, $a0
-/* 05F0C8 7F02A598 AFB0001C */  sw    $s0, 0x1c($sp)
-/* 05F0CC 7F02A59C 0FC0A896 */  jal   chrIsNotDeadOrShot
-/* 05F0D0 7F02A5A0 F7B40010 */   sdc1  $f20, 0x10($sp)
-/* 05F0D4 7F02A5A4 10400050 */  beqz  $v0, .L7F02A6E8
-/* 05F0D8 7F02A5A8 3C0E8005 */   lui   $t6, %hi(g_GlobalTimer) 
-/* 05F0DC 7F02A5AC 8DCE837C */  lw    $t6, %lo(g_GlobalTimer)($t6)
-/* 05F0E0 7F02A5B0 8E2F00C8 */  lw    $t7, 0xc8($s1)
-/* 05F0E4 7F02A5B4 01CFC023 */  subu  $t8, $t6, $t7
-/* 05F0E8 7F02A5B8 2B0100B5 */  slti  $at, $t8, 0xb5
-/* 05F0EC 7F02A5BC 5420004B */  bnezl $at, .L7F02A6EC
-/* 05F0F0 7F02A5C0 00001025 */   move  $v0, $zero
-/* 05F0F4 7F02A5C4 0C002914 */  jal   randomGetNext
-/* 05F0F8 7F02A5C8 8E300018 */   lw    $s0, 0x18($s1)
-/* 05F0FC 7F02A5CC 44822000 */  mtc1  $v0, $f4
-/* 05F100 7F02A5D0 3C014348 */  li    $at, 0x43480000 # 200.000000
-/* 05F104 7F02A5D4 44810000 */  mtc1  $at, $f0
-/* 05F108 7F02A5D8 04410005 */  bgez  $v0, .L7F02A5F0
-/* 05F10C 7F02A5DC 468021A0 */   cvt.s.w $f6, $f4
-/* 05F110 7F02A5E0 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
-/* 05F114 7F02A5E4 44814000 */  mtc1  $at, $f8
-/* 05F118 7F02A5E8 00000000 */  nop   
-/* 05F11C 7F02A5EC 46083180 */  add.s $f6, $f6, $f8
-.L7F02A5F0:
-/* 05F120 7F02A5F0 3C012F80 */  li    $at, 0x2F800000 # 0.000000
-/* 05F124 7F02A5F4 44815000 */  mtc1  $at, $f10
-/* 05F128 7F02A5F8 00000000 */  nop   
-/* 05F12C 7F02A5FC 460A3402 */  mul.s $f16, $f6, $f10
-/* 05F130 7F02A600 00000000 */  nop   
-/* 05F134 7F02A604 46008482 */  mul.s $f18, $f16, $f0
-/* 05F138 7F02A608 0C002914 */  jal   randomGetNext
-/* 05F13C 7F02A60C 46009500 */   add.s $f20, $f18, $f0
-/* 05F140 7F02A610 30450001 */  andi  $a1, $v0, 1
-/* 05F144 7F02A614 2CB90001 */  sltiu $t9, $a1, 1
-/* 05F148 7F02A618 03202825 */  move  $a1, $t9
-/* 05F14C 7F02A61C 02202025 */  move  $a0, $s1
-/* 05F150 7F02A620 0FC0A811 */  jal   chrlvNormDistanceToPlayer
-/* 05F154 7F02A624 27A6003C */   addiu $a2, $sp, 0x3c
-/* 05F158 7F02A628 C7A4003C */  lwc1  $f4, 0x3c($sp)
-/* 05F15C 7F02A62C C6060008 */  lwc1  $f6, 8($s0)
-/* 05F160 7F02A630 C7B20044 */  lwc1  $f18, 0x44($sp)
-/* 05F164 7F02A634 46142202 */  mul.s $f8, $f4, $f20
-/* 05F168 7F02A638 02002025 */  move  $a0, $s0
-/* 05F16C 7F02A63C 27A50030 */  addiu $a1, $sp, 0x30
-/* 05F170 7F02A640 46149102 */  mul.s $f4, $f18, $f20
-/* 05F174 7F02A644 27A6003C */  addiu $a2, $sp, 0x3c
-/* 05F178 7F02A648 46064280 */  add.s $f10, $f8, $f6
-/* 05F17C 7F02A64C E7AA0030 */  swc1  $f10, 0x30($sp)
-/* 05F180 7F02A650 C610000C */  lwc1  $f16, 0xc($s0)
-/* 05F184 7F02A654 E7B00034 */  swc1  $f16, 0x34($sp)
-/* 05F188 7F02A658 C6080010 */  lwc1  $f8, 0x10($s0)
-/* 05F18C 7F02A65C 46082180 */  add.s $f6, $f4, $f8
-/* 05F190 7F02A660 0FC0A60B */  jal   chrlvCall7F0B0E24WithChrWidthHeight
-/* 05F194 7F02A664 E7A60038 */   swc1  $f6, 0x38($sp)
-/* 05F198 7F02A668 10400006 */  beqz  $v0, .L7F02A684
-/* 05F19C 7F02A66C C7AA003C */   lwc1  $f10, 0x3c($sp)
-/* 05F1A0 7F02A670 02202025 */  move  $a0, $s1
-/* 05F1A4 7F02A674 0FC0933E */  jal   sub_GAME_7F024CF8
-/* 05F1A8 7F02A678 27A50030 */   addiu $a1, $sp, 0x30
-/* 05F1AC 7F02A67C 1000001B */  b     .L7F02A6EC
-/* 05F1B0 7F02A680 24020001 */   li    $v0, 1
-.L7F02A684:
-/* 05F1B4 7F02A684 C7B20044 */  lwc1  $f18, 0x44($sp)
-/* 05F1B8 7F02A688 46005407 */  neg.s $f16, $f10
-/* 05F1BC 7F02A68C 02002025 */  move  $a0, $s0
-/* 05F1C0 7F02A690 46148202 */  mul.s $f8, $f16, $f20
-/* 05F1C4 7F02A694 46009107 */  neg.s $f4, $f18
-/* 05F1C8 7F02A698 E7B0003C */  swc1  $f16, 0x3c($sp)
-/* 05F1CC 7F02A69C E7A40044 */  swc1  $f4, 0x44($sp)
-/* 05F1D0 7F02A6A0 C6060008 */  lwc1  $f6, 8($s0)
-/* 05F1D4 7F02A6A4 46142402 */  mul.s $f16, $f4, $f20
-/* 05F1D8 7F02A6A8 27A50030 */  addiu $a1, $sp, 0x30
-/* 05F1DC 7F02A6AC 46064280 */  add.s $f10, $f8, $f6
-/* 05F1E0 7F02A6B0 27A6003C */  addiu $a2, $sp, 0x3c
-/* 05F1E4 7F02A6B4 E7AA0030 */  swc1  $f10, 0x30($sp)
-/* 05F1E8 7F02A6B8 C612000C */  lwc1  $f18, 0xc($s0)
-/* 05F1EC 7F02A6BC E7B20034 */  swc1  $f18, 0x34($sp)
-/* 05F1F0 7F02A6C0 C6080010 */  lwc1  $f8, 0x10($s0)
-/* 05F1F4 7F02A6C4 46088180 */  add.s $f6, $f16, $f8
-/* 05F1F8 7F02A6C8 0FC0A60B */  jal   chrlvCall7F0B0E24WithChrWidthHeight
-/* 05F1FC 7F02A6CC E7A60038 */   swc1  $f6, 0x38($sp)
-/* 05F200 7F02A6D0 10400005 */  beqz  $v0, .L7F02A6E8
-/* 05F204 7F02A6D4 02202025 */   move  $a0, $s1
-/* 05F208 7F02A6D8 0FC0933E */  jal   sub_GAME_7F024CF8
-/* 05F20C 7F02A6DC 27A50030 */   addiu $a1, $sp, 0x30
-/* 05F210 7F02A6E0 10000002 */  b     .L7F02A6EC
-/* 05F214 7F02A6E4 24020001 */   li    $v0, 1
-.L7F02A6E8:
-/* 05F218 7F02A6E8 00001025 */  move  $v0, $zero
-.L7F02A6EC:
-/* 05F21C 7F02A6EC 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 05F220 7F02A6F0 D7B40010 */  ldc1  $f20, 0x10($sp)
-/* 05F224 7F02A6F4 8FB0001C */  lw    $s0, 0x1c($sp)
-/* 05F228 7F02A6F8 8FB10020 */  lw    $s1, 0x20($sp)
-/* 05F22C 7F02A6FC 03E00008 */  jr    $ra
-/* 05F230 7F02A700 27BD0050 */   addiu $sp, $sp, 0x50
-)
-#endif
 
 
 
