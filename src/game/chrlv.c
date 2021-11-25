@@ -100,6 +100,7 @@ void chrlvCheckTriggeredOnShotHit(ChrRecord *arg0);
 void sub_GAME_7F02BDA4(ChrRecord *arg0);
 void sub_GAME_7F02BE00(ChrRecord *arg0);
 void sub_GAME_7F02BE58(ChrRecord *arg0);
+void sub_GAME_7F02BEA8(ChrRecord *arg0);
 
 void sub_GAME_7F025C40(struct ChrRecord *chr, s32);
 void sub_GAME_7F02587C(struct ChrRecord *chr, s32);
@@ -7644,6 +7645,7 @@ void chrlvCheckTriggeredOnShotHit(ChrRecord *arg0)
 /**
  * @see sub_GAME_7F02BE00
  * @see sub_GAME_7F02BE58
+ * @see sub_GAME_7F02BEA8
  * 
  * Address 0x7F02BDA4.
 */
@@ -7662,6 +7664,7 @@ void sub_GAME_7F02BDA4(ChrRecord *arg0)
 /**
  * @see sub_GAME_7F02BDA4
  * @see sub_GAME_7F02BE58
+ * @see sub_GAME_7F02BEA8
  * 
  * Address 0x7F02BE00.
 */
@@ -7682,6 +7685,7 @@ void sub_GAME_7F02BE00(ChrRecord *arg0)
 /**
  * @see sub_GAME_7F02BDA4
  * @see sub_GAME_7F02BE00
+ * @see sub_GAME_7F02BEA8
  * 
  * Address 0x7F02BE58.
 */
@@ -7697,49 +7701,27 @@ void sub_GAME_7F02BE58(ChrRecord *arg0)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02BEA8(void) {
+/**
+ * @see sub_GAME_7F02BDA4
+ * @see sub_GAME_7F02BE00
+ * @see sub_GAME_7F02BE58
+ * 
+ * Address 0x7F02BEA8.
+*/
+void sub_GAME_7F02BEA8(ChrRecord *arg0)
+{
+    Model *model = arg0->model;
 
+    if (objecthandlerGetModelField28(model) >= 60.0f)
+    {
+        start_alarm();
+    }
+
+    if (objecthandlerGetModelField28(model) >= sub_GAME_7F06F5C4(model))
+    {
+        chrlvKneelingAnimationRelated7F023E48(arg0);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F02BEA8
-/* 0609D8 7F02BEA8 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0609DC 7F02BEAC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0609E0 7F02BEB0 AFA40020 */  sw    $a0, 0x20($sp)
-/* 0609E4 7F02BEB4 8C84001C */  lw    $a0, 0x1c($a0)
-/* 0609E8 7F02BEB8 0FC1BD6F */  jal   objecthandlerGetModelField28
-/* 0609EC 7F02BEBC AFA4001C */   sw    $a0, 0x1c($sp)
-/* 0609F0 7F02BEC0 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 0609F4 7F02BEC4 44812000 */  mtc1  $at, $f4
-/* 0609F8 7F02BEC8 00000000 */  nop   
-/* 0609FC 7F02BECC 4600203E */  c.le.s $f4, $f0
-/* 060A00 7F02BED0 00000000 */  nop   
-/* 060A04 7F02BED4 45000003 */  bc1f  .L7F02BEE4
-/* 060A08 7F02BED8 00000000 */   nop   
-/* 060A0C 7F02BEDC 0FC15772 */  jal   start_alarm
-/* 060A10 7F02BEE0 00000000 */   nop   
-.L7F02BEE4:
-/* 060A14 7F02BEE4 0FC1BD6F */  jal   objecthandlerGetModelField28
-/* 060A18 7F02BEE8 8FA4001C */   lw    $a0, 0x1c($sp)
-/* 060A1C 7F02BEEC E7A00018 */  swc1  $f0, 0x18($sp)
-/* 060A20 7F02BEF0 0FC1BD71 */  jal   sub_GAME_7F06F5C4
-/* 060A24 7F02BEF4 8FA4001C */   lw    $a0, 0x1c($sp)
-/* 060A28 7F02BEF8 C7A60018 */  lwc1  $f6, 0x18($sp)
-/* 060A2C 7F02BEFC 4606003E */  c.le.s $f0, $f6
-/* 060A30 7F02BF00 00000000 */  nop   
-/* 060A34 7F02BF04 45020004 */  bc1fl .L7F02BF18
-/* 060A38 7F02BF08 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 060A3C 7F02BF0C 0FC08F92 */  jal   chrlvKneelingAnimationRelated7F023E48
-/* 060A40 7F02BF10 8FA40020 */   lw    $a0, 0x20($sp)
-/* 060A44 7F02BF14 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F02BF18:
-/* 060A48 7F02BF18 27BD0020 */  addiu $sp, $sp, 0x20
-/* 060A4C 7F02BF1C 03E00008 */  jr    $ra
-/* 060A50 7F02BF20 00000000 */   nop   
-)
-#endif
 
 
 
