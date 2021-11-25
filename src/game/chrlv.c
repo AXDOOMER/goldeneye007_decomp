@@ -91,6 +91,7 @@ s32 sub_GAME_7F029D70(ChrRecord *self);
 void chrlvNormDistanceToPlayer(ChrRecord *arg0, s32 arg1, struct coord3d *arg2);
 s32 sub_GAME_7F02A0EC(ChrRecord *arg0, s32 arg1, f32 arg2);
 void chrlvModelRotyRelated(ChrRecord *arg0, s32 arg1, struct coord3d *arg2);
+s32 chrIsNotDeadOrShot(struct ChrRecord *chr);
 
 // move to chrobjecthandler.h
 
@@ -6343,18 +6344,23 @@ s32 sub_GAME_7F02A1E8(ChrRecord *arg0, s32 arg1, f32 arg2)
 
 
 
-s32 true_if_actor_dying_fading_limping_shot(struct ChrRecord *chr) {
+s32 chrIsNotDeadOrShot(struct ChrRecord *chr)
+{
     s8 currentaction = chr->actiontype;
 
     if ((currentaction == ACT_DIE) || (currentaction == ACT_DEAD) || (currentaction == ACT_PREARGH) 
         || (currentaction == ACT_ARGH) && !(chr->chrflags & CHRFLAG_00000200))
+    {
         return 0;
+    }
+    
     return 1;
 }
 
 
 
-s32 true_if_actor_dying_fading(struct ChrRecord *chr) {
+s32 chrIsDead(struct ChrRecord *chr)
+{
     s8 currentaction = chr->actiontype;
 
     return ((currentaction == ACT_DIE) || (currentaction == ACT_DEAD));
@@ -6384,7 +6390,7 @@ glabel actor_steps_sideways
 /* 05EDF8 7F02A2C8 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 05EDFC 7F02A2CC AFBF001C */  sw    $ra, 0x1c($sp)
 /* 05EE00 7F02A2D0 AFB00018 */  sw    $s0, 0x18($sp)
-/* 05EE04 7F02A2D4 0FC0A896 */  jal   true_if_actor_dying_fading_limping_shot
+/* 05EE04 7F02A2D4 0FC0A896 */  jal   chrIsNotDeadOrShot
 /* 05EE08 7F02A2D8 00808025 */   move  $s0, $a0
 /* 05EE0C 7F02A2DC 5040004D */  beql  $v0, $zero, .L7F02A414
 /* 05EE10 7F02A2E0 00001025 */   move  $v0, $zero
@@ -6501,7 +6507,7 @@ glabel actor_hops_sideways
 /* 05EF58 7F02A428 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 05EF5C 7F02A42C AFBF001C */  sw    $ra, 0x1c($sp)
 /* 05EF60 7F02A430 AFB00018 */  sw    $s0, 0x18($sp)
-/* 05EF64 7F02A434 0FC0A896 */  jal   true_if_actor_dying_fading_limping_shot
+/* 05EF64 7F02A434 0FC0A896 */  jal   chrIsNotDeadOrShot
 /* 05EF68 7F02A438 00808025 */   move  $s0, $a0
 /* 05EF6C 7F02A43C 5040004D */  beql  $v0, $zero, .L7F02A574
 /* 05EF70 7F02A440 00001025 */   move  $v0, $zero
@@ -6609,7 +6615,7 @@ glabel actor_runs_sideways
 /* 05F0C0 7F02A590 AFB10020 */  sw    $s1, 0x20($sp)
 /* 05F0C4 7F02A594 00808825 */  move  $s1, $a0
 /* 05F0C8 7F02A598 AFB0001C */  sw    $s0, 0x1c($sp)
-/* 05F0CC 7F02A59C 0FC0A896 */  jal   true_if_actor_dying_fading_limping_shot
+/* 05F0CC 7F02A59C 0FC0A896 */  jal   chrIsNotDeadOrShot
 /* 05F0D0 7F02A5A0 F7B40010 */   sdc1  $f20, 0x10($sp)
 /* 05F0D4 7F02A5A4 10400050 */  beqz  $v0, .L7F02A6E8
 /* 05F0D8 7F02A5A8 3C0E8005 */   lui   $t6, %hi(g_GlobalTimer) 
@@ -6722,7 +6728,7 @@ glabel actor_walks_and_fires
 /* 05F234 7F02A704 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 05F238 7F02A708 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 05F23C 7F02A70C AFB00018 */  sw    $s0, 0x18($sp)
-/* 05F240 7F02A710 0FC0A896 */  jal   true_if_actor_dying_fading_limping_shot
+/* 05F240 7F02A710 0FC0A896 */  jal   chrIsNotDeadOrShot
 /* 05F244 7F02A714 00808025 */   move  $s0, $a0
 /* 05F248 7F02A718 50400032 */  beql  $v0, $zero, .L7F02A7E4
 /* 05F24C 7F02A71C 00001025 */   move  $v0, $zero
@@ -6802,7 +6808,7 @@ glabel actor_runs_and_fires
 /* 05F328 7F02A7F8 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 05F32C 7F02A7FC AFBF001C */  sw    $ra, 0x1c($sp)
 /* 05F330 7F02A800 AFB00018 */  sw    $s0, 0x18($sp)
-/* 05F334 7F02A804 0FC0A896 */  jal   true_if_actor_dying_fading_limping_shot
+/* 05F334 7F02A804 0FC0A896 */  jal   chrIsNotDeadOrShot
 /* 05F338 7F02A808 00808025 */   move  $s0, $a0
 /* 05F33C 7F02A80C 50400032 */  beql  $v0, $zero, .L7F02A8D8
 /* 05F340 7F02A810 00001025 */   move  $v0, $zero
@@ -6882,7 +6888,7 @@ glabel actor_rolls_fires_crouched
 /* 05F41C 7F02A8EC 27BDFFB8 */  addiu $sp, $sp, -0x48
 /* 05F420 7F02A8F0 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 05F424 7F02A8F4 AFB00018 */  sw    $s0, 0x18($sp)
-/* 05F428 7F02A8F8 0FC0A896 */  jal   true_if_actor_dying_fading_limping_shot
+/* 05F428 7F02A8F8 0FC0A896 */  jal   chrIsNotDeadOrShot
 /* 05F42C 7F02A8FC 00808025 */   move  $s0, $a0
 /* 05F430 7F02A900 50400041 */  beql  $v0, $zero, .L7F02AA08
 /* 05F434 7F02A904 00001025 */   move  $v0, $zero
@@ -6976,7 +6982,7 @@ glabel actor_aim_at_actor
 /* 05F550 7F02AA20 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 05F554 7F02AA24 AFA40018 */  sw    $a0, 0x18($sp)
 /* 05F558 7F02AA28 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 05F55C 7F02AA2C 0FC0A896 */  jal   true_if_actor_dying_fading_limping_shot
+/* 05F55C 7F02AA2C 0FC0A896 */  jal   chrIsNotDeadOrShot
 /* 05F560 7F02AA30 AFA60020 */   sw    $a2, 0x20($sp)
 /* 05F564 7F02AA34 1040000F */  beqz  $v0, .L7F02AA74
 /* 05F568 7F02AA38 8FA40018 */   lw    $a0, 0x18($sp)
@@ -7019,7 +7025,7 @@ glabel actor_kneel_aim_at_actor
 /* 05F5BC 7F02AA8C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 05F5C0 7F02AA90 AFA40018 */  sw    $a0, 0x18($sp)
 /* 05F5C4 7F02AA94 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 05F5C8 7F02AA98 0FC0A896 */  jal   true_if_actor_dying_fading_limping_shot
+/* 05F5C8 7F02AA98 0FC0A896 */  jal   chrIsNotDeadOrShot
 /* 05F5CC 7F02AA9C AFA60020 */   sw    $a2, 0x20($sp)
 /* 05F5D0 7F02AAA0 1040000F */  beqz  $v0, .L7F02AAE0
 /* 05F5D4 7F02AAA4 8FA40018 */   lw    $a0, 0x18($sp)
@@ -7080,7 +7086,7 @@ glabel check_set_actor_standing_still
 /* 05F678 7F02AB48 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 05F67C 7F02AB4C AFA5001C */  sw    $a1, 0x1c($sp)
 /* 05F680 7F02AB50 AFA60020 */  sw    $a2, 0x20($sp)
-/* 05F684 7F02AB54 0FC0A896 */  jal   true_if_actor_dying_fading_limping_shot
+/* 05F684 7F02AB54 0FC0A896 */  jal   chrIsNotDeadOrShot
 /* 05F688 7F02AB58 AFA40018 */   sw    $a0, 0x18($sp)
 /* 05F68C 7F02AB5C 10400010 */  beqz  $v0, .L7F02ABA0
 /* 05F690 7F02AB60 8FA40018 */   lw    $a0, 0x18($sp)
@@ -7131,7 +7137,7 @@ glabel actor_moves_to_preset_at_speed
 /* 05F6F8 7F02ABC8 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 05F6FC 7F02ABCC 04A0005B */  bltz  $a1, .L7F02AD3C
 /* 05F700 7F02ABD0 AFA60048 */   sw    $a2, 0x48($sp)
-/* 05F704 7F02ABD4 0FC0A896 */  jal   true_if_actor_dying_fading_limping_shot
+/* 05F704 7F02ABD4 0FC0A896 */  jal   chrIsNotDeadOrShot
 /* 05F708 7F02ABD8 00000000 */   nop   
 /* 05F70C 7F02ABDC 10400057 */  beqz  $v0, .L7F02AD3C
 /* 05F710 7F02ABE0 3C0E8003 */   lui   $t6, %hi(setting_007_5) 
@@ -7249,7 +7255,7 @@ glabel if_actor_able_set_on_path
 /* 05F888 7F02AD58 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 05F88C 7F02AD5C 10A00009 */  beqz  $a1, .L7F02AD84
 /* 05F890 7F02AD60 AFA40018 */   sw    $a0, 0x18($sp)
-/* 05F894 7F02AD64 0FC0A896 */  jal   true_if_actor_dying_fading_limping_shot
+/* 05F894 7F02AD64 0FC0A896 */  jal   chrIsNotDeadOrShot
 /* 05F898 7F02AD68 AFA5001C */   sw    $a1, 0x1c($sp)
 /* 05F89C 7F02AD6C 10400005 */  beqz  $v0, .L7F02AD84
 /* 05F8A0 7F02AD70 8FA5001C */   lw    $a1, 0x1c($sp)
@@ -19099,7 +19105,7 @@ GLOBAL_ASM(
 glabel check_if_able_to_then_surrender
 /* 067E94 7F033364 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 067E98 7F033368 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 067E9C 7F03336C 0FC0A896 */  jal   true_if_actor_dying_fading_limping_shot
+/* 067E9C 7F03336C 0FC0A896 */  jal   chrIsNotDeadOrShot
 /* 067EA0 7F033370 AFA40018 */   sw    $a0, 0x18($sp)
 /* 067EA4 7F033374 50400006 */  beql  $v0, $zero, .L7F033390
 /* 067EA8 7F033378 00001025 */   move  $v0, $zero
@@ -19263,7 +19269,7 @@ glabel actor_move_to_curplayer_at_speed
 /* 067FD0 7F0334A0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 067FD4 7F0334A4 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 067FD8 7F0334A8 AFA40018 */  sw    $a0, 0x18($sp)
-/* 067FDC 7F0334AC 0FC0A896 */  jal   true_if_actor_dying_fading_limping_shot
+/* 067FDC 7F0334AC 0FC0A896 */  jal   chrIsNotDeadOrShot
 /* 067FE0 7F0334B0 AFA5001C */   sw    $a1, 0x1c($sp)
 /* 067FE4 7F0334B4 10400010 */  beqz  $v0, .L7F0334F8
 /* 067FE8 7F0334B8 3C0E8003 */   lui   $t6, %hi(setting_007_5) 
@@ -19306,7 +19312,7 @@ glabel actor_move_to_actorID_at_speed
 /* 068040 7F033510 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 068044 7F033514 AFA40018 */  sw    $a0, 0x18($sp)
 /* 068048 7F033518 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 06804C 7F03351C 0FC0A896 */  jal   true_if_actor_dying_fading_limping_shot
+/* 06804C 7F03351C 0FC0A896 */  jal   chrIsNotDeadOrShot
 /* 068050 7F033520 AFA60020 */   sw    $a2, 0x20($sp)
 /* 068054 7F033524 1040001A */  beqz  $v0, .L7F033590
 /* 068058 7F033528 3C0E8003 */   lui   $t6, %hi(setting_007_5) 
@@ -19421,7 +19427,7 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0335D4
 /* 068104 7F0335D4 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 068108 7F0335D8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 06810C 7F0335DC 0FC0A896 */  jal   true_if_actor_dying_fading_limping_shot
+/* 06810C 7F0335DC 0FC0A896 */  jal   chrIsNotDeadOrShot
 /* 068110 7F0335E0 AFA40018 */   sw    $a0, 0x18($sp)
 /* 068114 7F0335E4 50400006 */  beql  $v0, $zero, .L7F033600
 /* 068118 7F0335E8 00001025 */   move  $v0, $zero
@@ -19450,7 +19456,7 @@ GLOBAL_ASM(
 glabel check_if_able_to_then_shuffle_feet
 /* 068140 7F033610 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 068144 7F033614 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 068148 7F033618 0FC0A896 */  jal   true_if_actor_dying_fading_limping_shot
+/* 068148 7F033618 0FC0A896 */  jal   chrIsNotDeadOrShot
 /* 06814C 7F03361C AFA40018 */   sw    $a0, 0x18($sp)
 /* 068150 7F033620 50400006 */  beql  $v0, $zero, .L7F03363C
 /* 068154 7F033624 00001025 */   move  $v0, $zero
@@ -19479,7 +19485,7 @@ GLOBAL_ASM(
 glabel check_if_able_to_then_fawn_on_shoulder
 /* 06817C 7F03364C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 068180 7F033650 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 068184 7F033654 0FC0A896 */  jal   true_if_actor_dying_fading_limping_shot
+/* 068184 7F033654 0FC0A896 */  jal   chrIsNotDeadOrShot
 /* 068188 7F033658 AFA40018 */   sw    $a0, 0x18($sp)
 /* 06818C 7F03365C 50400006 */  beql  $v0, $zero, .L7F033678
 /* 068190 7F033660 00001025 */   move  $v0, $zero
@@ -19508,7 +19514,7 @@ GLOBAL_ASM(
 glabel check_if_able_to_then_look_flustered
 /* 0681B8 7F033688 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0681BC 7F03368C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0681C0 7F033690 0FC0A896 */  jal   true_if_actor_dying_fading_limping_shot
+/* 0681C0 7F033690 0FC0A896 */  jal   chrIsNotDeadOrShot
 /* 0681C4 7F033694 AFA40018 */   sw    $a0, 0x18($sp)
 /* 0681C8 7F033698 50400006 */  beql  $v0, $zero, .L7F0336B4
 /* 0681CC 7F03369C 00001025 */   move  $v0, $zero
@@ -19537,7 +19543,7 @@ GLOBAL_ASM(
 glabel check_if_able_to_then_kneel
 /* 0681F4 7F0336C4 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0681F8 7F0336C8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0681FC 7F0336CC 0FC0A896 */  jal   true_if_actor_dying_fading_limping_shot
+/* 0681FC 7F0336CC 0FC0A896 */  jal   chrIsNotDeadOrShot
 /* 068200 7F0336D0 AFA40018 */   sw    $a0, 0x18($sp)
 /* 068204 7F0336D4 50400006 */  beql  $v0, $zero, .L7F0336F0
 /* 068208 7F0336D8 00001025 */   move  $v0, $zero
@@ -19569,7 +19575,7 @@ glabel check_if_able_to_then_perform_animation
 /* 068238 7F033708 AFA40020 */  sw    $a0, 0x20($sp)
 /* 06823C 7F03370C AFA50024 */  sw    $a1, 0x24($sp)
 /* 068240 7F033710 AFA60028 */  sw    $a2, 0x28($sp)
-/* 068244 7F033714 0FC0A896 */  jal   true_if_actor_dying_fading_limping_shot
+/* 068244 7F033714 0FC0A896 */  jal   chrIsNotDeadOrShot
 /* 068248 7F033718 AFA7002C */   sw    $a3, 0x2c($sp)
 /* 06824C 7F03371C 1040000B */  beqz  $v0, .L7F03374C
 /* 068250 7F033720 8FA40020 */   lw    $a0, 0x20($sp)
@@ -19999,7 +20005,7 @@ glabel sub_GAME_7F033B38
 /* 068710 7F033BE0 8E18001C */  lw    $t8, 0x1c($s0)
 /* 068714 7F033BE4 5300002F */  beql  $t8, $zero, .L7F033CA4
 /* 068718 7F033BE8 26310001 */   addiu $s1, $s1, 1
-/* 06871C 7F033BEC 0FC0A8A9 */  jal   true_if_actor_dying_fading
+/* 06871C 7F033BEC 0FC0A8A9 */  jal   chrIsDead
 /* 068720 7F033BF0 02002025 */   move  $a0, $s0
 /* 068724 7F033BF4 5440002B */  bnezl $v0, .L7F033CA4
 /* 068728 7F033BF8 26310001 */   addiu $s1, $s1, 1
@@ -20817,7 +20823,7 @@ glabel removed_animation_routine_2B
     s32 temp_ret;
 
     arg1 = convertPadIf9000();
-    if (true_if_actor_dying_fading_limping_shot(arg0) != 0)
+    if (chrIsNotDeadOrShot(arg0) != 0)
     {
         temp_ret = scan_position_data_table_for_normal_object_at_preset(arg1);
         if (temp_ret != 0)
@@ -20840,7 +20846,7 @@ glabel sub_GAME_7F034514
 /* 06904C 7F03451C 0FC0CBE5 */  jal   convertPadIf9000
 /* 069050 7F034520 AFA40018 */   sw    $a0, 0x18($sp)
 /* 069054 7F034524 AFA2001C */  sw    $v0, 0x1c($sp)
-/* 069058 7F034528 0FC0A896 */  jal   true_if_actor_dying_fading_limping_shot
+/* 069058 7F034528 0FC0A896 */  jal   chrIsNotDeadOrShot
 /* 06905C 7F03452C 8FA40018 */   lw    $a0, 0x18($sp)
 /* 069060 7F034530 5040000E */  beql  $v0, $zero, .L7F03456C
 /* 069064 7F034534 00001025 */   move  $v0, $zero
@@ -20888,7 +20894,7 @@ glabel sub_GAME_7F034514
     {
         return 0;
     }
-    if (true_if_actor_dying_fading_limping_shot(arg0) != 0)
+    if (chrIsNotDeadOrShot(arg0) != 0)
     {
         sp24 = something_with_weaponpos_of_guarddata_hand(arg0, 1);
         temp_ret = something_with_weaponpos_of_guarddata_hand(arg0, 0);
@@ -20968,7 +20974,7 @@ glabel actor_draws_throws_grenade_at_player_if_possible
 /* 069108 7F0345D8 10000043 */  b     .L7F0346E8
 /* 06910C 7F0345DC 00001025 */   move  $v0, $zero
 .L7F0345E0:
-/* 069110 7F0345E0 0FC0A896 */  jal   true_if_actor_dying_fading_limping_shot
+/* 069110 7F0345E0 0FC0A896 */  jal   chrIsNotDeadOrShot
 /* 069114 7F0345E4 02002025 */   move  $a0, $s0
 /* 069118 7F0345E8 1040003E */  beqz  $v0, .L7F0346E4
 /* 06911C 7F0345EC 02002025 */   move  $a0, $s0

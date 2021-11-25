@@ -3129,7 +3129,7 @@ action30_Detect_If_Guard_Killed_RVL_If_So_3:
 /* 06A464 7F035934 92250001 */   lbu   $a1, 1($s1)
 /* 06A468 7F035938 10400004 */  beqz  $v0, .L7F03594C
 /* 06A46C 7F03593C 00402025 */   move  $a0, $v0
-/* 06A470 7F035940 0FC0A8A9 */  jal   true_if_actor_dying_fading
+/* 06A470 7F035940 0FC0A8A9 */  jal   chrIsDead
 /* 06A474 7F035944 00000000 */   nop   
 /* 06A478 7F035948 10400007 */  beqz  $v0, .L7F035968
 .L7F03594C:
@@ -8996,7 +8996,7 @@ action30_Detect_If_Guard_Killed_RVL_If_So_3:
 /* 06A464 7F035934 92250001 */   lbu   $a1, 1($s1)
 /* 06A468 7F035938 10400004 */  beqz  $v0, .L7F03594C
 /* 06A46C 7F03593C 00402025 */   move  $a0, $v0
-/* 06A470 7F035940 0FC0A8A9 */  jal   true_if_actor_dying_fading
+/* 06A470 7F035940 0FC0A8A9 */  jal   chrIsDead
 /* 06A474 7F035944 00000000 */   nop   
 /* 06A478 7F035948 10400007 */  beqz  $v0, .L7F035968
 .L7F03594C:
@@ -14864,7 +14864,7 @@ action30_Detect_If_Guard_Killed_RVL_If_So_3:
 /* 06A464 7F035934 92250001 */   lbu   $a1, 1($s1)
 /* 06A468 7F035938 10400004 */  beqz  $v0, .L7F03594C
 /* 06A46C 7F03593C 00402025 */   move  $a0, $v0
-/* 06A470 7F035940 0FC0A8A9 */  jal   true_if_actor_dying_fading
+/* 06A470 7F035940 0FC0A8A9 */  jal   chrIsDead
 /* 06A474 7F035944 00000000 */   nop   
 /* 06A478 7F035948 10400007 */  beqz  $v0, .L7F035968
 .L7F03594C:
