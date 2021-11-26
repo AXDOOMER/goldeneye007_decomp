@@ -154,24 +154,27 @@ glabel finalize_ramrom_on_hw
 
 
 #ifdef NONMATCHING
+/*
+ * just 2 lines swapped
+ * f48ac:    addiu   s2,s2,-0x48b0    | f48ac:    li      s0,1
+ * f48b0:    li      s0,1             | f48b0:    addiu   s2,s2,-0x48b0
+ *
+ */
 void save_ramrom_to_devtool(void)
 {
-    int i=0;
+    int i=1;
     char indyFileName [256];
     u32 size;
-
-
-
-
-  while( ++i ) {
+    
+    while( TRUE ) {
+        sprintf(indyFileName,"replay/demo.%d",i);
+        if (!indycommHostCheckFileExists(indyFileName,&size)) break;
+        i++;
+    }
     sprintf(indyFileName,"replay/demo.%d",i);
-    if (!indycommHostCheckFileExists(&indyFileName,&size)) break;
-  }
-  sprintf(indyFileName,"replay/demo.%d",i);
-  indycommHostSaveFile(indyFileName,INDY_RAMROM_DEMO_ADDRESS,ptr_active_demofile->filesize);
+    indycommHostSaveFile(indyFileName,0xf00000,ptr_active_demofile->filesize);
+    return;
 }
-
-
 #else
 
 GLOBAL_ASM(
