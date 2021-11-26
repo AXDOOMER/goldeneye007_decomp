@@ -422,16 +422,24 @@ SECTIONS
    _fontdlSegmentEnd = ADDR(.fontdl) + SIZEOF(.fontdl);
    _fontdlSegmentRomEnd = _fontdlSegmentRomStart + SIZEOF(.fontdl);
 
-   _romfiles_117940SegmentStart = ADDR(.romfiles_117940);
-   _romfiles_117940SegmentRomStart = _fontdlSegmentRomEnd;
-   .romfiles_117940 _romfiles_117940SegmentRomStart : AT(_romfiles_117940SegmentRomStart) {
-      build/j/assets/romfiles.o (.data);
+   _jfontcharSegmentStart = ADDR(.jfontchardata);
+   _jfontcharSegmentRomStart = _fontdlSegmentRomEnd;
+   .jfontchardata _jfontcharSegmentRomStart : AT(_jfontcharSegmentRomStart) {
+      build/j/assets/ge007.u.117940.jfont_chardata.o (.data);
    }
-   _romfiles_117940SegmentEnd = ADDR(.romfiles_117940) + SIZEOF(.romfiles_117940);
-   _romfiles_117940SegmentRomEnd = _romfiles_117940SegmentRomStart + SIZEOF(.romfiles_117940);
+   _jfontcharSegmentEnd = ADDR(.jfontchardata) + SIZEOF(.jfontchardata);
+   _jfontcharSegmentRomEnd = _jfontcharSegmentRomStart + SIZEOF(.jfontchardata);
 
+   _efontcharSegmentStart = ADDR(.efontchardata);
+   _efontcharSegmentRomStart = _jfontcharSegmentRomEnd;
+   .efontchardata _efontcharSegmentRomStart : AT(_efontcharSegmentRomStart) {
+      build/j/assets/ge007.u.123040.efont_chardata.o (.data);
+   }
+   _efontcharSegmentEnd = ADDR(.efontchardata) + SIZEOF(.efontchardata);
+   _efontcharSegmentRomEnd = _efontcharSegmentRomStart + SIZEOF(.efontchardata);
+   
    _animation_entriesSegmentStart = ADDR(.animation_entries);
-   _animation_entriesSegmentRomStart = _romfiles_117940SegmentRomEnd;
+   _animation_entriesSegmentRomStart = _efontcharSegmentRomEnd;
    .animation_entries 0x00000000 : AT(_animation_entriesSegmentRomStart) {
       build/j/assets/animationtable_entries.o(.data);
    }
