@@ -440,7 +440,7 @@ SECTIONS
 
    _fontdlSegmentStart = ADDR(.fontdl);
    _fontdlSegmentRomStart = _gameSegmentRomEnd;
-   .fontdl _fontdlSegmentRomStart : AT(_fontdlSegmentRomStart) {
+   .fontdl 0x00000000 : AT(_fontdlSegmentRomStart) {
       build/e/assets/ge007.u.117880.font_dl.o (.data);
    }
    _fontdlSegmentEnd = ADDR(.fontdl) + SIZEOF(.fontdl);
@@ -448,7 +448,7 @@ SECTIONS
 
    _jfontcharSegmentStart = ADDR(.jfontchardata);
    _jfontcharSegmentRomStart = _fontdlSegmentRomEnd;
-   .jfontchardata _jfontcharSegmentRomStart : AT(_jfontcharSegmentRomStart) {
+   .jfontchardata 0x00000000 : AT(_jfontcharSegmentRomStart) {
       build/e/assets/ge007.u.117940.jfont_chardata.o (.data);
    }
    _jfontcharSegmentEnd = ADDR(.jfontchardata) + SIZEOF(.jfontchardata);
@@ -456,7 +456,7 @@ SECTIONS
 
    _efontcharSegmentStart = ADDR(.efontchardata);
    _efontcharSegmentRomStart = _jfontcharSegmentRomEnd;
-   .efontchardata _efontcharSegmentRomStart : AT(_efontcharSegmentRomStart) {
+   .efontchardata 0x00000000 : AT(_efontcharSegmentRomStart) {
       build/e/assets/ge007.u.123040.efont_chardata.o (.data);
    }
    _efontcharSegmentEnd = ADDR(.efontchardata) + SIZEOF(.efontchardata);

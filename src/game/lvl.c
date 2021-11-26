@@ -239,8 +239,8 @@ s16 g_DebugMpGameSoundFxIndex = 0;
 s16 D_800483E6 = 0;
 
 
-extern u8* _fontdlSegmentStart;
-extern u8* _fontdlSegmentEnd;
+extern u8* _fontdlSegmentRomStart;
+extern u8* _fontdlSegmentRomEnd;
 
 extern Gfx *D_01000020;
 extern Gfx *D_01000040;
@@ -266,10 +266,10 @@ void lvInitDebugNoticeList(void)
     s32 size;
 
     debTryAdd(&lvl_c_debug_notice_list, "lv_c_debug");
-    size = (s32)&_fontdlSegmentEnd - (s32)&_fontdlSegmentStart;
+    size = (s32)&_fontdlSegmentRomEnd - (s32)&_fontdlSegmentRomStart;
     lvl_c_debug_notice_list = 1;
     ptr_font_DL = mempAllocBytesInBank(size, 6);
-    romCopy(ptr_font_DL, &_fontdlSegmentStart, size);
+    romCopy(ptr_font_DL, &_fontdlSegmentRomStart, size);
 }
 
 /**
