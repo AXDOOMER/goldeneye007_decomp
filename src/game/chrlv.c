@@ -8294,10 +8294,8 @@ s32 chrlvUpdateAimendsideback(ChrRecord *arg0, void *arg1, s32 arg2, s32 arg3, f
         {
             Model *weapon_prop_model; // sp272
             struct coord3d sp104; // sp260
-
-            /* sp? */ PropRecord *weapon_prop;
-            /* sp? */ struct modeldata_root *temp_v0_4;
-            
+            PropRecord *weapon_prop;
+            struct modeldata_root *temp_v0_4;
             Mtxf spBC; // sp188
             f32 *spB8;  // sp184
             struct coord3d spAC; //sp172
@@ -8306,10 +8304,9 @@ s32 chrlvUpdateAimendsideback(ChrRecord *arg0, void *arg1, s32 arg2, s32 arg3, f
             struct coord3d sp5C; // sp92
             struct coord3d sp50; // sp80
             struct coord3d sp44; // sp68
-
-            /* sp? */ Mtxf *temp_a0;
-            /* sp? */ struct ObjectRecord *obj;
-            /* sp? */ f32 t1;
+            Mtxf *temp_a0;
+            struct ObjectRecord *obj;
+            f32 t1;
             
             ////////////////////////////////////////////
 
