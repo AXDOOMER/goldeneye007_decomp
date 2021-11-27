@@ -26,7 +26,7 @@ void matrix_4x4_multiply_homogeneous_in_place(Mtxf *lhs, Mtxf *rhs);
 void matrix_4x4_transform_vector_in_place(Mtxf *matrix, vec3 vector);
 
 // tenative guess
-void sub_GAME_7F058E78(Mtx *arg0, Mtx *arg1);
+void sub_GAME_7F058E78(Mtxf *arg0, Mtxf *arg1);
 
 /* matrixmath_misc.h */
 
