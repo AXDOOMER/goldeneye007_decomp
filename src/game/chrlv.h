@@ -49,5 +49,7 @@ bool actor_moves_to_preset_at_speed(ChrRecord *self, s32 padid, SPEED speed);
 bool if_actor_able_set_on_path(ChrRecord *self, s32 pathid);
 f32 chrlvGetSubrotySideback(ChrRecord *arg0);
 f32 chrlvGetAimLimitAngle(f32 arg0);
+void chrlvUpdateAimendbackShoulders(ChrRecord *arg0, void *arg1, s32 same, s32 swap, f32 next);
+
 
 #endif

@@ -115,7 +115,7 @@ void sub_GAME_7F024CF8(struct ChrRecord *chr, s32);
 
 // unknown type for arg1, reads offsets 0x30,0x34,0x40,0x44
 // arg2 is only used to compare to zero, either flag or pointer
-void sub_GAME_7F02D048(ChrRecord *, void *, s32, s32, f32);
+void chrlvUpdateAimendbackShoulders(ChrRecord *, void *, s32, s32, f32);
 
 
 // end forward declarations
@@ -8452,7 +8452,7 @@ s32 chrlvUpdateAimendsideback(ChrRecord *arg0, void *arg1, s32 arg2, s32 arg3, f
         }
     }
 
-    sub_GAME_7F02D048(arg0, arg1, arg2, arg3, sp164);
+    chrlvUpdateAimendbackShoulders(arg0, arg1, arg2, arg3, sp164);
     arg0->aimendsideback = calc_aimendsideback;
     arg0->aimendcount = 0xA;
 
@@ -8462,68 +8462,77 @@ s32 chrlvUpdateAimendsideback(ChrRecord *arg0, void *arg1, s32 arg2, s32 arg3, f
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02D048(void) {
+/**
+ * Calculates and sets chr aimendrshoulder, aimendlshoulder, and aimendback.
+ * rshoulder defaults to 0.0f, lshoulder defaults to @param next.
+ * 
+ * @param arg0:
+ * @param arg1: todo/fixme/hack: unsure of arg1 type.
+ * @param same: When set, both shoulders will receive lshoulder value. Only
+ *     applies with @param swap is set.
+ * @param swap: When set, aimendrshoulder will get the calculated lshoulder value,
+ *     and aimendlshoulder will get the rshoulder value. If both @param swap and
+ *     @param same is set they will both be set to lshoulder value.
+ * @param next: Starting aimendlshoulder value.
+ * 
+ * Address 0x7F02D048.
+*/
+void chrlvUpdateAimendbackShoulders(ChrRecord *arg0, void *arg1, s32 same, s32 swap, f32 next)
+{
+    f32 next_lshoulder;
+    f32 next_rshoulder;
+    f32 next_aimendback;
 
+    next_rshoulder = 0.0f;
+    next_aimendback = 0.0f;
+    next_lshoulder = next;
+
+    if (arg1 != NULL)
+    {
+        if (((f32*)arg1)[12] < next)
+        {
+            next_aimendback = next - ((f32*)arg1)[12];
+            next_lshoulder = ((f32*)arg1)[12];
+        }
+
+        else if (next < ((f32*)arg1)[13])
+        {
+            next_aimendback = next - ((f32*)arg1)[13];
+            next_lshoulder = ((f32*)arg1)[13];
+        }
+
+        if (next_lshoulder > 0.0f)
+        {
+            next_rshoulder = ((f32*)arg1)[16] * next_lshoulder;
+        }
+        else
+        {
+            next_rshoulder = ((f32*)arg1)[17] * next_lshoulder;
+        }
+    }
+
+    if (swap != 0)
+    {
+        arg0->aimendrshoulder = next_lshoulder;
+
+        if (same != 0)
+        {
+            arg0->aimendlshoulder = next_lshoulder;
+        }
+        else
+        {
+            arg0->aimendlshoulder = next_rshoulder;
+        }
+    }
+    else
+    {
+        arg0->aimendrshoulder = next_rshoulder;
+        arg0->aimendlshoulder = next_lshoulder;
+    }
+
+    arg0->aimendback = next_aimendback;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F02D048
-/* 061B78 7F02D048 44808000 */  mtc1  $zero, $f16
-/* 061B7C 7F02D04C C7AE0010 */  lwc1  $f14, 0x10($sp)
-/* 061B80 7F02D050 46008006 */  mov.s $f0, $f16
-/* 061B84 7F02D054 46008086 */  mov.s $f2, $f16
-/* 061B88 7F02D058 10A0001B */  beqz  $a1, .L7F02D0C8
-/* 061B8C 7F02D05C 46007306 */   mov.s $f12, $f14
-/* 061B90 7F02D060 C4A00030 */  lwc1  $f0, 0x30($a1)
-/* 061B94 7F02D064 460E003C */  c.lt.s $f0, $f14
-/* 061B98 7F02D068 00000000 */  nop   
-/* 061B9C 7F02D06C 45020005 */  bc1fl .L7F02D084
-/* 061BA0 7F02D070 C4A00034 */   lwc1  $f0, 0x34($a1)
-/* 061BA4 7F02D074 46007081 */  sub.s $f2, $f14, $f0
-/* 061BA8 7F02D078 10000008 */  b     .L7F02D09C
-/* 061BAC 7F02D07C 46000306 */   mov.s $f12, $f0
-/* 061BB0 7F02D080 C4A00034 */  lwc1  $f0, 0x34($a1)
-.L7F02D084:
-/* 061BB4 7F02D084 4600703C */  c.lt.s $f14, $f0
-/* 061BB8 7F02D088 00000000 */  nop   
-/* 061BBC 7F02D08C 45020004 */  bc1fl .L7F02D0A0
-/* 061BC0 7F02D090 460C803C */   c.lt.s $f16, $f12
-/* 061BC4 7F02D094 46007081 */  sub.s $f2, $f14, $f0
-/* 061BC8 7F02D098 46000306 */  mov.s $f12, $f0
-.L7F02D09C:
-/* 061BCC 7F02D09C 460C803C */  c.lt.s $f16, $f12
-.L7F02D0A0:
-/* 061BD0 7F02D0A0 00000000 */  nop   
-/* 061BD4 7F02D0A4 45020006 */  bc1fl .L7F02D0C0
-/* 061BD8 7F02D0A8 C4A60044 */   lwc1  $f6, 0x44($a1)
-/* 061BDC 7F02D0AC C4A40040 */  lwc1  $f4, 0x40($a1)
-/* 061BE0 7F02D0B0 460C2002 */  mul.s $f0, $f4, $f12
-/* 061BE4 7F02D0B4 10000004 */  b     .L7F02D0C8
-/* 061BE8 7F02D0B8 00000000 */   nop   
-/* 061BEC 7F02D0BC C4A60044 */  lwc1  $f6, 0x44($a1)
-.L7F02D0C0:
-/* 061BF0 7F02D0C0 460C3002 */  mul.s $f0, $f6, $f12
-/* 061BF4 7F02D0C4 00000000 */  nop   
-.L7F02D0C8:
-/* 061BF8 7F02D0C8 50E00008 */  beql  $a3, $zero, .L7F02D0EC
-/* 061BFC 7F02D0CC E4800154 */   swc1  $f0, 0x154($a0)
-/* 061C00 7F02D0D0 10C00003 */  beqz  $a2, .L7F02D0E0
-/* 061C04 7F02D0D4 E48C0154 */   swc1  $f12, 0x154($a0)
-/* 061C08 7F02D0D8 10000005 */  b     .L7F02D0F0
-/* 061C0C 7F02D0DC E48C0150 */   swc1  $f12, 0x150($a0)
-.L7F02D0E0:
-/* 061C10 7F02D0E0 10000003 */  b     .L7F02D0F0
-/* 061C14 7F02D0E4 E4800150 */   swc1  $f0, 0x150($a0)
-/* 061C18 7F02D0E8 E4800154 */  swc1  $f0, 0x154($a0)
-.L7F02D0EC:
-/* 061C1C 7F02D0EC E48C0150 */  swc1  $f12, 0x150($a0)
-.L7F02D0F0:
-/* 061C20 7F02D0F0 03E00008 */  jr    $ra
-/* 061C24 7F02D0F4 E4820158 */   swc1  $f2, 0x158($a0)
-)
-#endif
+
 
 
 

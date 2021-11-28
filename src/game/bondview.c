@@ -36097,7 +36097,7 @@ glabel sub_GAME_7F08B0F0
 /* 0C0558 7F08BA28 A48D0012 */  sh    $t5, 0x12($a0)
 /* 0C055C 7F08BA2C C7A8008C */  lwc1  $f8, 0x8c($sp)
 /* 0C0560 7F08BA30 8FA5007C */  lw    $a1, 0x7c($sp)
-/* 0C0564 7F08BA34 0FC0B412 */  jal   sub_GAME_7F02D048
+/* 0C0564 7F08BA34 0FC0B412 */  jal   chrlvUpdateAimendbackShoulders
 /* 0C0568 7F08BA38 E7A80010 */   swc1  $f8, 0x10($sp)
 /* 0C056C 7F08BA3C 10000009 */  b     .L7F08BA64
 /* 0C0570 7F08BA40 8FA200F0 */   lw    $v0, 0xf0($sp)
