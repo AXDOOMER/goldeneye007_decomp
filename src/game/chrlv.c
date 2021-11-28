@@ -8589,33 +8589,15 @@ s32 sub_GAME_7F02D148(ChrRecord *arg0, s32 hand)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02D184(void) {
-
+/**
+ * Address 0x7F02D184.
+*/
+void sub_GAME_7F02D184(struct ChrRecord *arg0)
+{
+    sub_GAME_7F02D118(arg0, RIGHT_HAND, 0);
+    sub_GAME_7F02D118(arg0, LEFT_HAND, 0);
+    chrlvResetAimend(arg0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F02D184
-/* 061CB4 7F02D184 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 061CB8 7F02D188 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 061CBC 7F02D18C AFA40018 */  sw    $a0, 0x18($sp)
-/* 061CC0 7F02D190 00002825 */  move  $a1, $zero
-/* 061CC4 7F02D194 0FC0B446 */  jal   sub_GAME_7F02D118
-/* 061CC8 7F02D198 00003025 */   move  $a2, $zero
-/* 061CCC 7F02D19C 8FA40018 */  lw    $a0, 0x18($sp)
-/* 061CD0 7F02D1A0 24050001 */  li    $a1, 1
-/* 061CD4 7F02D1A4 0FC0B446 */  jal   sub_GAME_7F02D118
-/* 061CD8 7F02D1A8 00003025 */   move  $a2, $zero
-/* 061CDC 7F02D1AC 0FC0B43E */  jal   chrlvResetAimend
-/* 061CE0 7F02D1B0 8FA40018 */   lw    $a0, 0x18($sp)
-/* 061CE4 7F02D1B4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 061CE8 7F02D1B8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 061CEC 7F02D1BC 03E00008 */  jr    $ra
-/* 061CF0 7F02D1C0 00000000 */   nop   
-)
-#endif
-
 
 
 #ifdef NONMATCHING
