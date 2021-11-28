@@ -27,5 +27,6 @@ void set_color_shading_from_tile(struct PropRecord*, u8 *);
 void sub_GAME_7F04BFD0(struct PropRecord *, s32);
 void sub_GAME_7F053A10(ALSoundState *, struct coord3d *);
 void start_alarm(void);
+void sub_GAME_7F052574(PropRecord *, s32);
 
 #endif
