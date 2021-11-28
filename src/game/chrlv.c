@@ -106,6 +106,7 @@ void sub_GAME_7F02BF24(ChrRecord *arg0);
 void sub_GAME_7F02BFE4(ChrRecord *arg0, s32 arg1, s32 arg2);
 s32 chrlvSetSubroty(ChrRecord *arg0, s32 arg1, f32 arg2, f32 arg3, f32 arg4);
 s32 chrlvUpdateAimendsideback(ChrRecord *arg0, void *arg1, s32 arg2, s32 arg3, f32 arg4);
+void chrlvResetAimend(struct ChrRecord *arg0);
 
 void sub_GAME_7F025C40(struct ChrRecord *chr, s32);
 void sub_GAME_7F02587C(struct ChrRecord *chr, s32);
@@ -8536,24 +8537,18 @@ void chrlvUpdateAimendbackShoulders(ChrRecord *arg0, void *arg1, s32 same, s32 s
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02D0F8(void) {
 
+/**
+ * Address 0x7F02D0F8.
+*/
+void chrlvResetAimend(struct ChrRecord *arg0)
+{
+    arg0->aimendcount = 0xA;
+    arg0->aimendrshoulder = 0.0f;
+    arg0->aimendlshoulder = 0.0f;
+    arg0->aimendback = 0.0f;
+    arg0->aimendsideback = 0.0f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F02D0F8
-/* 061C28 7F02D0F8 44800000 */  mtc1  $zero, $f0
-/* 061C2C 7F02D0FC 240E000A */  li    $t6, 10
-/* 061C30 7F02D100 A08E000E */  sb    $t6, 0xe($a0)
-/* 061C34 7F02D104 E4800154 */  swc1  $f0, 0x154($a0)
-/* 061C38 7F02D108 E4800150 */  swc1  $f0, 0x150($a0)
-/* 061C3C 7F02D10C E4800158 */  swc1  $f0, 0x158($a0)
-/* 061C40 7F02D110 03E00008 */  jr    $ra
-/* 061C44 7F02D114 E480015C */   swc1  $f0, 0x15c($a0)
-)
-#endif
 
 
 
@@ -8631,7 +8626,7 @@ glabel sub_GAME_7F02D184
 /* 061CD0 7F02D1A0 24050001 */  li    $a1, 1
 /* 061CD4 7F02D1A4 0FC0B446 */  jal   sub_GAME_7F02D118
 /* 061CD8 7F02D1A8 00003025 */   move  $a2, $zero
-/* 061CDC 7F02D1AC 0FC0B43E */  jal   sub_GAME_7F02D0F8
+/* 061CDC 7F02D1AC 0FC0B43E */  jal   chrlvResetAimend
 /* 061CE0 7F02D1B0 8FA40018 */   lw    $a0, 0x18($sp)
 /* 061CE4 7F02D1B4 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 061CE8 7F02D1B8 27BD0018 */  addiu $sp, $sp, 0x18
@@ -10870,7 +10865,7 @@ glabel sub_GAME_7F02E4C0
 /* 063454 7F02E924 10000004 */  b     .L7F02E938
 /* 063458 7F02E928 00008825 */   move  $s1, $zero
 .L7F02E92C:
-/* 06345C 7F02E92C 0FC0B43E */  jal   sub_GAME_7F02D0F8
+/* 06345C 7F02E92C 0FC0B43E */  jal   chrlvResetAimend
 /* 063460 7F02E930 02002025 */   move  $a0, $s0
 /* 063464 7F02E934 00008825 */  move  $s1, $zero
 .L7F02E938:
@@ -11382,7 +11377,7 @@ glabel sub_GAME_7F02E4C0
 /* 061348 7F02E958 10000004 */  b     .L7F02E96C
 /* 06134C 7F02E95C 00008825 */   move  $s1, $zero
 .L7F02E960:
-/* 061350 7F02E960 0FC0B44B */  jal   sub_GAME_7F02D0F8
+/* 061350 7F02E960 0FC0B44B */  jal   chrlvResetAimend
 /* 061354 7F02E964 02002025 */   move  $a0, $s0
 /* 061358 7F02E968 00008825 */  move  $s1, $zero
 .L7F02E96C:
@@ -11659,7 +11654,7 @@ glabel sub_GAME_7F02EBFC
 /* 063800 7F02ECD0 240F0002 */  li    $t7, 2
 .L7F02ECD4:
 /* 063804 7F02ECD4 AE0F0058 */  sw    $t7, 0x58($s0)
-/* 063808 7F02ECD8 0FC0B43E */  jal   sub_GAME_7F02D0F8
+/* 063808 7F02ECD8 0FC0B43E */  jal   chrlvResetAimend
 /* 06380C 7F02ECDC 02002025 */   move  $a0, $s0
 /* 063810 7F02ECE0 1000007B */  b     .L7F02EED0
 /* 063814 7F02ECE4 8FBF0024 */   lw    $ra, 0x24($sp)
@@ -11868,7 +11863,7 @@ glabel sub_GAME_7F02EBFC
 /* 063B48 7F02EFD8 240F0002 */  li    $t7, 2
 .Ljp7F02EFDC:
 /* 063B4C 7F02EFDC AE0F0058 */  sw    $t7, 0x58($s0)
-/* 063B50 7F02EFE0 0FC0B500 */  jal   sub_GAME_7F02D0F8
+/* 063B50 7F02EFE0 0FC0B500 */  jal   chrlvResetAimend
 /* 063B54 7F02EFE4 02002025 */   move  $a0, $s0
 /* 063B58 7F02EFE8 10000079 */  b     .Ljp7F02F1D0
 /* 063B5C 7F02EFEC 8FBF0024 */   lw    $ra, 0x24($sp)
@@ -12931,7 +12926,7 @@ glabel sub_GAME_7F02F888
 /* 0645CC 7F02FA9C 10000004 */  b     .L7F02FAB0
 /* 0645D0 7F02FAA0 8E080038 */   lw    $t0, 0x38($s0)
 .L7F02FAA4:
-/* 0645D4 7F02FAA4 0FC0B43E */  jal   sub_GAME_7F02D0F8
+/* 0645D4 7F02FAA4 0FC0B43E */  jal   chrlvResetAimend
 /* 0645D8 7F02FAA8 02002025 */   move  $a0, $s0
 /* 0645DC 7F02FAAC 8E080038 */  lw    $t0, 0x38($s0)
 .L7F02FAB0:
