@@ -8324,6 +8324,7 @@ s32 chrlvUpdateAimendsideback(ChrRecord *arg0, void *arg1, s32 arg2, s32 arg3, f
                 weapon_prop = something_with_weaponpos_of_guarddata_hand(arg0, LEFT_HAND);
             }
 
+            // This if block is a slight modification of @see sub_GAME_7F02D630.
             if ((weapon_prop != NULL) && (weapon_prop->flags & 2) && (dxdydz_square < 1000000.0f))
             {
                 obj = weapon_prop->obj;
@@ -8797,84 +8798,63 @@ void chrlvUpdateShotbondsum(ChrRecord *arg0, s32 *arg1, s32 *arg2, ITEM_IDS item
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02D630(void) {
+/**
+ * Slight modification of a part of @see chrlvUpdateAimendsideback.
+ * 
+ * Address 0x7F02D630.
+*/
+s32 sub_GAME_7F02D630(ChrRecord *arg0, HANDEDNESS hand, struct coord3d *arg2)
+{
+    struct ObjectRecord *obj;
+    PropRecord *weapon_prop;
+    Model *weapon_prop_model; // sp188
+    s32 ret;
+    Mtxf *temp_a0; // sp180
+    Mtxf sp74;
+    f32 *spB8;
+    Mtxf *temp_a0_2; // sp108
+    Mtxf sp68; // sp44
+    
+    weapon_prop = something_with_weaponpos_of_guarddata_hand(arg0, hand);
+    ret = 0;
 
+    if ((weapon_prop != NULL) )
+    {
+        obj = weapon_prop->obj;
+        weapon_prop_model = obj->model;
+
+        if ((weapon_prop->flags & 2))
+        {
+            if (weapon_prop_model->obj->Switches[0])
+            {
+                temp_a0 = sub_GAME_7F06C660(weapon_prop_model, weapon_prop_model->obj->Switches[0], 0);
+                spB8 = weapon_prop_model->obj->Switches[0]->Data;
+
+                arg2->f[0] = spB8[0];
+                arg2->f[1] = spB8[1];
+                arg2->f[2] = spB8[2];
+
+                matrix_4x4_multiply_homogeneous(currentPlayerGetMatrix10D4(), temp_a0, &sp74);
+                matrix_4x4_transform_vector_in_place(&sp74, (f32*) arg2);
+
+                ret = 1;
+            }
+            else if (weapon_prop_model->obj->Switches[1])
+            {
+                temp_a0_2 = sub_GAME_7F06C660(weapon_prop_model, weapon_prop_model->obj->Switches[1], 0);
+                matrix_4x4_multiply_homogeneous(currentPlayerGetMatrix10D4(), temp_a0_2, &sp68);
+
+                arg2->f[0] = sp68.m[3][0];
+                arg2->f[1] = sp68.m[3][1];
+                arg2->f[2] = sp68.m[3][2];
+
+                ret = 1;
+            }
+        }
+    }
+
+    return ret;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F02D630
-/* 062160 7F02D630 27BDFF38 */  addiu $sp, $sp, -0xc8
-/* 062164 7F02D634 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 062168 7F02D638 AFB00018 */  sw    $s0, 0x18($sp)
-/* 06216C 7F02D63C 0FC08C0B */  jal   something_with_weaponpos_of_guarddata_hand
-/* 062170 7F02D640 00C08025 */   move  $s0, $a2
-/* 062174 7F02D644 10400036 */  beqz  $v0, .L7F02D720
-/* 062178 7F02D648 00003025 */   move  $a2, $zero
-/* 06217C 7F02D64C 904E0001 */  lbu   $t6, 1($v0)
-/* 062180 7F02D650 8C430004 */  lw    $v1, 4($v0)
-/* 062184 7F02D654 31CF0002 */  andi  $t7, $t6, 2
-/* 062188 7F02D658 11E00031 */  beqz  $t7, .L7F02D720
-/* 06218C 7F02D65C 8C640014 */   lw    $a0, 0x14($v1)
-/* 062190 7F02D660 8C980008 */  lw    $t8, 8($a0)
-/* 062194 7F02D664 8F020008 */  lw    $v0, 8($t8)
-/* 062198 7F02D668 8C450000 */  lw    $a1, ($v0)
-/* 06219C 7F02D66C 50A0001B */  beql  $a1, $zero, .L7F02D6DC
-/* 0621A0 7F02D670 8C450004 */   lw    $a1, 4($v0)
-/* 0621A4 7F02D674 00003025 */  move  $a2, $zero
-/* 0621A8 7F02D678 0FC1B198 */  jal   sub_GAME_7F06C660
-/* 0621AC 7F02D67C AFA400BC */   sw    $a0, 0xbc($sp)
-/* 0621B0 7F02D680 8FA400BC */  lw    $a0, 0xbc($sp)
-/* 0621B4 7F02D684 AFA200B4 */  sw    $v0, 0xb4($sp)
-/* 0621B8 7F02D688 8C990008 */  lw    $t9, 8($a0)
-/* 0621BC 7F02D68C 8F280008 */  lw    $t0, 8($t9)
-/* 0621C0 7F02D690 8D090000 */  lw    $t1, ($t0)
-/* 0621C4 7F02D694 8D230004 */  lw    $v1, 4($t1)
-/* 0621C8 7F02D698 C4640000 */  lwc1  $f4, ($v1)
-/* 0621CC 7F02D69C E6040000 */  swc1  $f4, ($s0)
-/* 0621D0 7F02D6A0 C4660004 */  lwc1  $f6, 4($v1)
-/* 0621D4 7F02D6A4 E6060004 */  swc1  $f6, 4($s0)
-/* 0621D8 7F02D6A8 C4680008 */  lwc1  $f8, 8($v1)
-/* 0621DC 7F02D6AC 0FC1E111 */  jal   currentPlayerGetMatrix10D4
-/* 0621E0 7F02D6B0 E6080008 */   swc1  $f8, 8($s0)
-/* 0621E4 7F02D6B4 00402025 */  move  $a0, $v0
-/* 0621E8 7F02D6B8 8FA500B4 */  lw    $a1, 0xb4($sp)
-/* 0621EC 7F02D6BC 0FC16063 */  jal   matrix_4x4_multiply_homogeneous
-/* 0621F0 7F02D6C0 27A60074 */   addiu $a2, $sp, 0x74
-/* 0621F4 7F02D6C4 27A40074 */  addiu $a0, $sp, 0x74
-/* 0621F8 7F02D6C8 0FC1611D */  jal   matrix_4x4_transform_vector_in_place
-/* 0621FC 7F02D6CC 02002825 */   move  $a1, $s0
-/* 062200 7F02D6D0 10000013 */  b     .L7F02D720
-/* 062204 7F02D6D4 24060001 */   li    $a2, 1
-/* 062208 7F02D6D8 8C450004 */  lw    $a1, 4($v0)
-.L7F02D6DC:
-/* 06220C 7F02D6DC 50A00011 */  beql  $a1, $zero, .L7F02D724
-/* 062210 7F02D6E0 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 062214 7F02D6E4 0FC1B198 */  jal   sub_GAME_7F06C660
-/* 062218 7F02D6E8 00003025 */   move  $a2, $zero
-/* 06221C 7F02D6EC 0FC1E111 */  jal   currentPlayerGetMatrix10D4
-/* 062220 7F02D6F0 AFA2006C */   sw    $v0, 0x6c($sp)
-/* 062224 7F02D6F4 00402025 */  move  $a0, $v0
-/* 062228 7F02D6F8 8FA5006C */  lw    $a1, 0x6c($sp)
-/* 06222C 7F02D6FC 0FC16063 */  jal   matrix_4x4_multiply_homogeneous
-/* 062230 7F02D700 27A6002C */   addiu $a2, $sp, 0x2c
-/* 062234 7F02D704 C7AA005C */  lwc1  $f10, 0x5c($sp)
-/* 062238 7F02D708 24060001 */  li    $a2, 1
-/* 06223C 7F02D70C E60A0000 */  swc1  $f10, ($s0)
-/* 062240 7F02D710 C7B00060 */  lwc1  $f16, 0x60($sp)
-/* 062244 7F02D714 E6100004 */  swc1  $f16, 4($s0)
-/* 062248 7F02D718 C7B20064 */  lwc1  $f18, 0x64($sp)
-/* 06224C 7F02D71C E6120008 */  swc1  $f18, 8($s0)
-.L7F02D720:
-/* 062250 7F02D720 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F02D724:
-/* 062254 7F02D724 8FB00018 */  lw    $s0, 0x18($sp)
-/* 062258 7F02D728 27BD00C8 */  addiu $sp, $sp, 0xc8
-/* 06225C 7F02D72C 03E00008 */  jr    $ra
-/* 062260 7F02D730 00C01025 */   move  $v0, $a2
-)
-#endif
 
 
 

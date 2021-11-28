@@ -51,6 +51,6 @@ f32 chrlvGetSubrotySideback(ChrRecord *arg0);
 f32 chrlvGetAimLimitAngle(f32 arg0);
 void chrlvUpdateAimendbackShoulders(ChrRecord *arg0, void *arg1, s32 same, s32 swap, f32 next);
 void sub_GAME_7F02D118(ChrRecord *arg0, s32 hand, s32 arg2);
-
+s32 sub_GAME_7F02D630(ChrRecord *arg0, HANDEDNESS hand, struct coord3d *arg2);
 
 #endif
