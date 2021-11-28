@@ -8569,34 +8569,24 @@ void sub_GAME_7F02D118(ChrRecord *arg0, s32 hand, s32 arg2)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02D148(void) {
+/**
+ * Unreferenced.
+ * 
+ * Address 0x7F02D148.
+*/
+s32 sub_GAME_7F02D148(ChrRecord *arg0, s32 hand)
+{
+    PropRecord *temp_v0;
 
+    temp_v0 = something_with_weaponpos_of_guarddata_hand(arg0, hand);
+
+    if (temp_v0 != NULL)
+    {
+        return sub_GAME_7F052604(temp_v0);
+    }
+
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F02D148
-/* 061C78 7F02D148 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 061C7C 7F02D14C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 061C80 7F02D150 0FC08C0B */  jal   something_with_weaponpos_of_guarddata_hand
-/* 061C84 7F02D154 00000000 */   nop   
-/* 061C88 7F02D158 10400005 */  beqz  $v0, .L7F02D170
-/* 061C8C 7F02D15C 00402025 */   move  $a0, $v0
-/* 061C90 7F02D160 0FC14981 */  jal   sub_GAME_7F052604
-/* 061C94 7F02D164 00000000 */   nop   
-/* 061C98 7F02D168 10000003 */  b     .L7F02D178
-/* 061C9C 7F02D16C 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F02D170:
-/* 061CA0 7F02D170 00001025 */  move  $v0, $zero
-/* 061CA4 7F02D174 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F02D178:
-/* 061CA8 7F02D178 27BD0018 */  addiu $sp, $sp, 0x18
-/* 061CAC 7F02D17C 03E00008 */  jr    $ra
-/* 061CB0 7F02D180 00000000 */   nop   
-)
-#endif
-
 
 
 #ifdef NONMATCHING
