@@ -4,4 +4,6 @@
 
 u32 sizepropdef(u8 * object);
 
+void sub_GAME_7F056CA0(ObjectRecord *);
+
 #endif

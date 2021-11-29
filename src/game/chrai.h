@@ -225,4 +225,7 @@ void sub_GAME_7F03E18C(struct PropRecord *, struct ChrRecord *);
 void sub_GAME_7F03E27C(struct PropRecord *, struct float3 *, struct float3 *, f32);
 void sub_GAME_7F03E210(struct PropRecord *posData);
 
+void set_current_objposdata_plus_0x28(PropRecord *);
+void set_stateflag_0x04_for_posdata(PropRecord *);
+
 #endif

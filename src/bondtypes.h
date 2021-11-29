@@ -16,6 +16,7 @@ typedef s32 bool;
 struct object_standard;
 struct ChrRecord;
 struct PropRecord;
+struct ObjectRecord;
 
 typedef f32 vec3[3];
 
@@ -866,7 +867,77 @@ typedef struct ChrRecord
 } ChrRecord;
 // ChrRecord *pChrData; //not Global, local to Object or function
 
+struct ObjectRecord_f6c
+{
+    //pointer somewhere at least 0x44 long and the pointer at 0 and 0x44 is also at least 0xb8 long
+    u32 id;
+    struct coord3d pos;
 
+    /**
+     * Offset 0x10
+    */
+    vec3 vec;
+    u32 padding;
+
+    /*
+        {{1, 0, 0, 0},
+        {0, 1, 0, 0},
+        {0, 0, 1, 0},
+        {0, 0, 0, 1}};
+        This is probably not a matrix, only 8 vals are read
+        Offset 0x20.
+    */
+    Mtxf m;
+
+    u32 unk60;
+    u32 unk64;
+    u32 unk68;
+    u32 unk6c;
+
+    u32 unk70;
+    u32 unk74;
+    u32 unk78;
+    u32 unk7c;
+
+    u32 unk80;
+    u32 unk84;
+    // used by sub_GAME_7F05EB0C
+    u32 unk88;
+    u32 unk8c;
+
+    u32 unk90;
+    u32 unk94;
+    u32 unk98;
+    u32 unk9c;
+
+    u32 unka0;
+    u32 unka4;
+    u32 unka8;
+    u32 unkac;
+
+    u32 unkb0;
+    u32 unkb4;
+    u32 unkb8;
+    u32 unkbc;
+
+    u32 unkc0;
+    u32 unkc4;
+    u32 unkc8;
+    u32 unkcc;
+
+    u32 unkd0;
+    u32 unkd4;
+    u32 unkd8;
+    u32 unkdc;
+
+    u32 unke0;
+    /**
+     * Offset 0xe4.
+    */
+    struct ObjectRecord *parent;
+    u32 unke8;
+    u32 unkec;
+};
 
 
 
@@ -1035,7 +1106,9 @@ typedef struct ObjectRecord
                             00000004    removes object when set
                             */
     int ptr_allocated_collisiondata_block;
-    int field_6C;
+
+    struct ObjectRecord_f6c *unk6C;
+
     float field_70;
     short damage;
     short maxdamage;
