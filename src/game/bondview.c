@@ -1,12 +1,12 @@
 #include "ultra64.h"
 #include "include/math.h"
+#include "bondtypes.h"
 #include "boss.h"
 #include "fr.h"
 #include "joy.h"
 #include "music.h"
 #include "snd.h"
 #include "str.h"
-#include "structs.h"
 #include "watch.h"
 #include "game/bg.h"
 #include "game/bondview.h"
@@ -10272,7 +10272,7 @@ glabel cal_player_collision
  * 
  * Address 0x7F07D234.
  */
-s32 bondviewUpdatePlayerCollision(struct coord3d *arg0, struct float3 *arg1, struct float3 *arg2)
+s32 bondviewUpdatePlayerCollision(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *arg2)
 {
     s32 sp1C;
 

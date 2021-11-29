@@ -3137,7 +3137,7 @@ void chrlvStanLineDirIntersection(struct coord3d *line2_p3, struct coord3d *dir,
     struct coord3d sp2C;
     struct coord3d sp20;
 
-    getCollisionEdge_maybe((struct float3 *) &sp2C, (struct float3 *) &sp20);
+    getCollisionEdge_maybe(&sp2C, &sp20);
     chrlvLineLineIntersection(&sp2C, &sp20, line2_p3, dir, result);
 }
 
@@ -3156,7 +3156,7 @@ void chrlvStanPointPointIntersection(struct coord3d *arg0, struct coord3d *arg1,
     struct coord3d sp20;
     f32 v;
 
-    getCollisionEdge_maybe((struct float3 *) &sp2C, (struct float3 *) &sp20);
+    getCollisionEdge_maybe(&sp2C, &sp20);
 
     // see comments in chrlvLineLineIntersection
 
@@ -8276,7 +8276,7 @@ s32 chrlvUpdateAimendsideback(ChrRecord *arg0, void *arg1, s32 arg2, s32 arg3, f
         }
         else
         {
-            getsuboffset(arg0->model, (struct float3 *) &sp120);
+            getsuboffset(arg0->model, &sp120);
             current_player_pos = sub_GAME_7F032C78(arg0, attack_type, entity_id, &pstan);
             dx = current_player_pos->f[0] - sp120.f[0];
             dy = current_player_pos->f[1] - sp120.f[1];
@@ -8866,33 +8866,25 @@ void sub_GAME_7F02D734(ChrRecord *self, s32 hand)
     s32 sp27C;
     s32 sp278;
     ChrRecord *sp274;
-    PropRecord *sp270;
+    PropRecord *player_prop;
     s32 sp268;
     s32 sp264;
-    f32 sp260;
-    f32 sp25C;
-    f32 sp258;
+    struct coord3d sp258;
     StandTile *sp254;
     f32 subroty;
     f32 sp24C;
-    f32 sp248;
-    f32 sp244;
-    f32 sp240;
+    struct coord3d sp240;
     StandTile *self_stan;
     StandTile *sp238;
     s32 sp234;
     s32 sp230;
     s32 sp22C;
-    f32 sp228;
-    f32 sp224;
-    f32 sp220;
+    struct coord3d sp220;
     s32 sp21C;
     f32 sp20C;
     object_standard *sp208;
     Mtxf sp1C8;
-    f32 sp1C4;
-    f32 sp1C0;
-    f32 sp1BC;
+    struct coord3d sp1BC;
     f32 sp1B4;
     f32 sp1B0;
     f32 sp1AC;
@@ -8900,15 +8892,13 @@ void sub_GAME_7F02D734(ChrRecord *self, s32 hand)
     Mtxf sp12C;
     object_standard *sp128;
     Mtxf spE8;
-    f32 spE4;
-    f32 spE0;
-    f32 spDC;
+    struct coord3d spDC;
     f32 sp9C;
     Mtxf sp5C;
     f32 sp4C;
     s32 sp44;
     void *sp40;
-    PropRecord *temp_v0;
+    PropRecord *weapon_prop;
     StandTile **temp_a0;
     f32 temp_f0;
     f32 temp_f0_2;
@@ -8946,14 +8936,14 @@ void sub_GAME_7F02D734(ChrRecord *self, s32 hand)
     s32 phi_a2;
 
     self_prop = self->prop;
-    temp_v0 = something_with_weaponpos_of_guarddata_hand(self, hand);
+    weapon_prop = something_with_weaponpos_of_guarddata_hand(self, hand);
 
-    if (temp_v0 != 0)
+    if (weapon_prop != NULL)
     {
         sp27C = 0;
         sp278 = 0;
-        sp274 = temp_v0->chr;
-        sp270 = get_curplayer_positiondata();
+        sp274 = weapon_prop->chr;
+        player_prop = get_curplayer_positiondata();
         phi_v1 = 1;
 
         if (self->actiontype == 8)
@@ -9004,24 +8994,24 @@ void sub_GAME_7F02D734(ChrRecord *self, s32 hand)
 
                 if (sub_GAME_7F02D630(self, hand, (struct coord3d *) &sp240) == 0)
                 {
-                    sp240 = self_prop->pos.x;
-                    sp244 = self_prop->pos.f[1] + 30.0f;
-                    sp248 = self_prop->pos.f[2];
+                    sp240.f[0] = self_prop->pos.x;
+                    sp240.f[1] = self_prop->pos.f[1] + 30.0f;
+                    sp240.f[2] = self_prop->pos.f[2];
                     if (hand == 1)
                     {
-                        sp240 += cosf(subroty) * 10.0f;
-                        sp248 += -sinf(subroty) * 10.0f;
+                        sp240.f[0] += cosf(subroty) * 10.0f;
+                        sp240.f[2] += -sinf(subroty) * 10.0f;
                     }
                     else
                     {
-                        sp240 += -cosf(subroty) * 10.0f;
-                        sp248 += sinf(subroty) * 10.0f;
+                        sp240.f[0] += -cosf(subroty) * 10.0f;
+                        sp240.f[2] += sinf(subroty) * 10.0f;
                     }
                 }
 
-                temp_f0 = sp244 - self->ground;
+                temp_f0 = sp240.f[1] - self->ground;
 
-                if (sub_GAME_7F0B0E24(&self_stan, self_prop->pos.x, self_prop->pos.f[2], sp240, sp248, 2, temp_f0, temp_f0, 0.0f, 1.0f) != 0)
+                if (sub_GAME_7F0B0E24(&self_stan, self_prop->pos.x, self_prop->pos.f[2], sp240.f[0], sp240.f[2], 2, temp_f0, temp_f0, 0.0f, 1.0f) != 0)
                 {
                     sp238 = self_stan;
                 }
@@ -9036,36 +9026,36 @@ void sub_GAME_7F02D734(ChrRecord *self, s32 hand)
                     sp234 = 0;
                     sp230 = 0;
                     sp22C = 1;
-                    sp21C = chrlvAttackRelated7F0292A8(self, (struct coord3d *) &sp240, sp238);
+                    sp21C = chrlvAttackRelated7F0292A8(self, &sp240, sp238);
                     sp4C = cosf(sp24C);
-                    sp220 = sinf(subroty) * sp4C;
-                    sp224 = sinf(sp24C);
+                    sp220.f[0] = sinf(subroty) * sp4C;
+                    sp220.f[1] = sinf(sp24C);
                     sp4C = cosf(sp24C);
                     temp_f18 = cosf(subroty) * sp4C;
-                    sp228 = temp_f18;
-                    sp258 = (sp220 * 65536.0f) + sp240;
-                    temp_f14 = (sp224 * 65536.0f) + sp244;
-                    sp25C = temp_f14;
-                    sp260 = (temp_f18 * 65536.0f) + sp248;
+                    sp220.f[2] = temp_f18;
+                    sp258.f[0] = (sp220.f[0] * 65536.0f) + sp240.f[0];
+                    temp_f14 = (sp220.f[1] * 65536.0f) + sp240.f[1];
+                    sp258.f[1] = temp_f14;
+                    sp258.f[2] = (temp_f18 * 65536.0f) + sp240.f[2];
                     set_or_unset_GUARDdata_flag(self, 0);
                     sub_GAME_7F0B1CC4();
                     temp_a0 = &self_stan;
                     self_stan = sp238;
 
-                    if (sub_GAME_7F0B0E24(temp_a0, sp240, sp248, sp258, sp260, 0x1B, sp244, sp244, temp_f14, temp_f14) == 0)
+                    if (sub_GAME_7F0B0E24(temp_a0, sp240.f[0], sp240.f[2], sp258.f[0], sp258.f[2], 0x1B, sp240.f[1], sp240.f[1], temp_f14, temp_f14) == 0)
                     {
-                        chrlvStanLineDirIntersection((struct coord3d *) &sp240, (struct coord3d *) &sp220, (struct coord3d *) &sp258);
+                        chrlvStanLineDirIntersection(&sp240, &sp220, &sp258);
                         sp254 = self_stan;
-                        sp258 -= 26.0f * sp220;
-                        sp25C -= 26.0f * sp224;
-                        sp260 -= 26.0f * sp228;
+                        sp258.f[0] -= 26.0f * sp220.f[0];
+                        sp258.f[1] -= 26.0f * sp220.f[1];
+                        sp258.f[2] -= 26.0f * sp220.f[2];
                     }
 
                     set_or_unset_GUARDdata_flag(self, 1);
 
-                    temp_f2 = sp258 - sp240;
-                    temp_f14_2 = sp25C - sp244;
-                    temp_f18_2 = sp260 - sp248;
+                    temp_f2 = sp258.f[0] - sp240.f[0];
+                    temp_f14_2 = sp258.f[1] - sp240.f[1];
+                    temp_f18_2 = sp258.f[2] - sp240.f[2];
                     sp20C = (temp_f2 * temp_f2) + (temp_f14_2 * temp_f14_2) + (temp_f18_2 * temp_f18_2);
                     temp_a3 = sp274->act_bytes.padding[0x54];
 
@@ -9073,7 +9063,7 @@ void sub_GAME_7F02D734(ChrRecord *self, s32 hand)
                     {
                         if (((temp_f2 * temp_f2) + (temp_f14_2 * temp_f14_2) + (temp_f18_2 * temp_f18_2)) > 160000.0f)
                         {
-                            temp_v0_3 = create_new_item_instance_of_model(0xCA, 0x56);
+                            temp_v0_3 = create_new_item_instance_of_model(PROP_chrrocket, 0x56);
                             sp208 = temp_v0_3;
                             if (temp_v0_3 != 0)
                             {
@@ -9081,17 +9071,19 @@ void sub_GAME_7F02D734(ChrRecord *self, s32 hand)
                                 matrix_4x4_set_rotation_around_x(sp24C, (Mtxf *) &sp16C);
                                 matrix_4x4_set_rotation_around_y(subroty, (Mtxf *) &sp12C);
                                 matrix_4x4_multiply_homogeneous_in_place((Mtxf *) &sp12C, (Mtxf *) &sp16C);
-                                temp_f12 = sp220 * 1.111111f;
+                                temp_f12 = sp220.f[0] * 1.111111f;
                                 temp_f0_2 = g_GlobalTimerDelta;
-                                temp_f14_3 = sp224 * 1.111111f;
-                                temp_f16 = sp228 * 1.111111f;
+                                temp_f14_3 = sp220.f[1] * 1.111111f;
+                                temp_f16 = sp220.f[2] * 1.111111f;
                                 sp1B0 = temp_f14_3;
                                 sp1B4 = temp_f16;
                                 sp1AC = temp_f12;
-                                sp1BC = temp_f12 * temp_f0_2;
-                                sp1C0 = temp_f14_3 * temp_f0_2;
-                                sp1C4 = temp_f16 * temp_f0_2;
-                                sub_GAME_7F05EB0C((ObjectRecord *) sp208, (s32) &sp240, (s32) sp238, &sp16C, (struct coord3d *) &sp1BC, (Mtxf *) &sp1C8, (s32) self_prop);
+                                sp1BC.f[0] = temp_f12 * temp_f0_2;
+                                sp1BC.f[1] = temp_f14_3 * temp_f0_2;
+                                sp1BC.f[2] = temp_f16 * temp_f0_2;
+
+                                // fix arg1, should be struct coord3d
+                                sub_GAME_7F05EB0C((ObjectRecord *) sp208, (s32) &sp240, (s32) sp238, &sp16C, &sp1BC, (Mtxf *) &sp1C8, (s32) self_prop);
                                 
                                 if ((sp208->bitflags & 0x80) != 0)
                                 {
@@ -9128,20 +9120,20 @@ void sub_GAME_7F02D734(ChrRecord *self, s32 hand)
                     {
                         if (((temp_f2 * temp_f2) + (temp_f14_2 * temp_f14_2) + (temp_f18_2 * temp_f18_2)) > 160000.0f)
                         {
-                            temp_v0_8 = create_new_item_instance_of_model(0xCB, 0x57);
+                            temp_v0_8 = create_new_item_instance_of_model(PROP_chrgrenaderound, 0x57);
                             sp128 = temp_v0_8;
                             
                             if (temp_v0_8 != 0)
                             {
                                 matrix_4x4_set_identity((Mtxf *) &spE8);
-                                spDC = sp220 * 33.333332f;
-                                spE0 = sp224 * 33.333332f;
-                                spE4 = sp228 * 33.333332f;
+                                spDC.f[0] = sp220.f[0] * 33.333332f;
+                                spDC.f[1] = sp220.f[1] * 33.333332f;
+                                spDC.f[2] = sp220.f[2] * 33.333332f;
                                 matrix_4x4_set_rotation_around_x(sp24C, (Mtxf *) &sp9C);
                                 matrix_4x4_set_rotation_around_y(subroty, (Mtxf *) &sp5C);
                                 matrix_4x4_multiply_homogeneous_in_place((Mtxf *) &sp5C, (Mtxf *) &sp9C);
                                 sp128->unk82 = 0xB4;
-                                sub_GAME_7F05EB0C((ObjectRecord *) sp128, (s32) &sp240, (s32) sp238, &sp9C, (struct coord3d *) &spDC, (Mtxf *) &spE8, (s32) self_prop);
+                                sub_GAME_7F05EB0C((ObjectRecord *) sp128, (s32) &sp240, (s32) sp238, &sp9C, &spDC, (Mtxf *) &spE8, (s32) self_prop);
                                 
                                 if ((sp128->bitflags & 0x80) != 0)
                                 {
@@ -9160,9 +9152,9 @@ void sub_GAME_7F02D734(ChrRecord *self, s32 hand)
                     {
                         if ((sp44 != 0) && (sp21C != 0))
                         {
-                            temp_f0_3 = (sp270->pos.f[0] - sp240) - (sp220 * 15.0f);
-                            temp_f12_2 = (sp270->pos.f[1] - sp244) - (sp224 * 15.0f);
-                            temp_f16_2 = (sp270->pos.f[2] - sp248) - (sp228 * 15.0f);
+                            temp_f0_3 = (player_prop->pos.f[0] - sp240.f[0]) - (sp220.f[0] * 15.0f);
+                            temp_f12_2 = (player_prop->pos.f[1] - sp240.f[1]) - (sp220.f[1] * 15.0f);
+                            temp_f16_2 = (player_prop->pos.f[2] - sp240.f[2]) - (sp220.f[2] * 15.0f);
                             
                             if (((temp_f0_3 * temp_f0_3) + (temp_f12_2 * temp_f12_2) + (temp_f16_2 * temp_f16_2)) <= sp20C)
                             {
@@ -9185,11 +9177,11 @@ void sub_GAME_7F02D734(ChrRecord *self, s32 hand)
 
                         if (sp230 != 0)
                         {
-                            sp258 = sp270->pos.x;
-                            sp25C = sp270->pos.f[1];
-                            sp260 = sp270->pos.f[2];
-                            sp254 = sp270->stan;
-                            recall_joy2_hits_edit_detail_edit_flag((s32) sp274->act_bytes.padding[0x54], &sp270->type, -1);
+                            sp258.f[0] = player_prop->pos.f[0];
+                            sp258.f[1] = player_prop->pos.f[1];
+                            sp258.f[2] = player_prop->pos.f[2];
+                            sp254 = player_prop->stan;
+                            recall_joy2_hits_edit_detail_edit_flag((s32) sp274->act_bytes.padding[0x54], &player_prop->type, -1);
                         }
                         else
                         {
@@ -9208,7 +9200,7 @@ void sub_GAME_7F02D734(ChrRecord *self, s32 hand)
                         {
                             if (sp254 != 0)
                             {
-                                sub_GAME_7F0A3E1C((struct coord3d *) &sp258, 1, 26.0f, (s16) sp254->room);
+                                sub_GAME_7F0A3E1C(&sp258, 1, 26.0f, (s16) sp254->room);
                             }
 
                             //temp_a1 = stanSavedColl_posData;
@@ -9222,18 +9214,20 @@ void sub_GAME_7F02D734(ChrRecord *self, s32 hand)
                                 {
                                     if ((self->chrflags & 0x40) != 0)
                                     {
-                                        handles_shot_actors(stanSavedColl_posData->chr, 0xF, (struct coord3d *) &sp220, (s32) sp274->act_bytes.padding[0x54], 0);
+                                        handles_shot_actors(stanSavedColl_posData->chr, 0xF, &sp220, (s32) sp274->act_bytes.padding[0x54], 0);
                                     }
                                 }
                                 else if ((stanSavedColl_posData->type == PROP_TYPE_OBJ) || (stanSavedColl_posData->type == PROP_TYPE_WEAPON))
                                 {
                                     sp4C = bondwalkItemGetDestructionAmount((s32) sp274->act_bytes.padding[0x54]);
+
+                                    // fix arg2, should be struct coord3d
                                     chrobjMaybeDetonateObjectIfFlags(stanSavedColl_posData->obj, sp4C, (s32) &sp258, (s32) sp274->act_bytes.padding[0x54], get_cur_playernum());
                                 }
                             }
                             else
                             {
-                                recall_joy2_hits_edit_flag((s32) temp_a3_2, (struct coord3d *) &sp258, -1);
+                                recall_joy2_hits_edit_flag((s32) temp_a3_2, &sp258, -1);
                             }
                         }
 
@@ -9267,7 +9261,7 @@ void sub_GAME_7F02D734(ChrRecord *self, s32 hand)
 
                         if (sp264 != 0)
                         {
-                            sub_GAME_7F061948(&self->unk180[hand], (s32) sp274->act_bytes.padding[0x54], (struct coord3d *) &sp240, (struct coord3d *) &sp258);
+                            sub_GAME_7F061948(&self->unk180[hand], (s32) sp274->act_bytes.padding[0x54], &sp240, &sp258);
                         }
                     }
                 }

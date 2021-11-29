@@ -3020,7 +3020,7 @@ glabel sub_GAME_7F05EA94
 /**
  * Address 0x7F05EB0C.
 */
-void sub_GAME_7F05EB0C(ObjectRecord *arg0, s32 arg1, s32 arg2, f32 *arg3, struct coord3d *arg4, Mtxf *arg5, s32 arg6)
+void sub_GAME_7F05EB0C(ObjectRecord *arg0, struct coord3d *arg1, s32 arg2, f32 *arg3, struct coord3d *arg4, Mtxf *arg5, s32 arg6)
 {
     PropRecord *temp_s1;
     struct ObjectRecord_f6c *temp_v0;

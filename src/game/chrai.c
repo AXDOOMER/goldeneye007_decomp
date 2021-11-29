@@ -3,7 +3,6 @@
 #include "boss.h"
 #include "snd.h"
 #include "music.h"
-#include "structs.h"
 #include "game/bondview.h"
 #include "game/chr.h"
 #include "game/chrai.h"

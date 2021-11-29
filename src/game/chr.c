@@ -4216,18 +4216,18 @@ glabel sub_GAME_7F02083C
 void chrPositionRelated7F020D94(struct ChrRecord *arg0)
 {
     struct PropRecord *temp_a0;
-    struct float3 p1;
-    struct float3 p2;
+    struct coord3d p1;
+    struct coord3d p2;
 
     temp_a0 = arg0->prop;
 
-    p1.x = temp_a0->pos.x - 50.0f;
-    p1.y = arg0->ground - 1.0f;
-    p1.z= temp_a0->pos.z - 50.0f;
+    p1.f[0] = temp_a0->pos.x - 50.0f;
+    p1.f[1] = arg0->ground - 1.0f;
+    p1.f[2] = temp_a0->pos.z - 50.0f;
 
-    p2.x = temp_a0->pos.x + 50.0f;
-    p2.y = temp_a0->pos.y + 100.0f;
-    p2.z = temp_a0->pos.z + 50.0f;
+    p2.f[0] = temp_a0->pos.x + 50.0f;
+    p2.f[1] = temp_a0->pos.y + 100.0f;
+    p2.f[2] = temp_a0->pos.z + 50.0f;
 
     sub_GAME_7F03E18C(temp_a0, arg0);
     sub_GAME_7F03E27C(temp_a0, &p1, &p2, 50.0f);

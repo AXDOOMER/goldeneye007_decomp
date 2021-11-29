@@ -37,6 +37,6 @@ void chrobjMaybeDetonateObjectIfFlags(ObjectRecord *arg0, f32 arg1, s32 arg2, s3
 void sub_GAME_7F03FDA8(PropRecord *);
 void sub_GAME_7F03FE14(PropRecord *);
 void sub_GAME_7F040484(ObjectRecord *);
-void sub_GAME_7F040754(ObjectRecord *, s32, f32 *, s32);
+void sub_GAME_7F040754(ObjectRecord *, struct coord3d *, f32 *, s32);
 
 #endif
