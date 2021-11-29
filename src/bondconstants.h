@@ -34,6 +34,8 @@
 /* CHRFLAG */
 #define IMPACT_ALWAYS 0x8000 /* Trev on cradle sets this flag so he can be shot off the platform */
 
+#define CHRHIDDEN_ALERT_GUARD_RELATED 2
+
 // Delete this section when merged.
 #define COUNT_DEATH_AS_CIVILIAN 0x100000
 /***************************************************************************************************************************/

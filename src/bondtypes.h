@@ -738,7 +738,7 @@ typedef struct ChrRecord
     u8 grenadeprob;                       /* 0x0010 */
     s8 flinchcnt;                         /* 0x0011 */
     u16 hidden;                           /* 0x0012 */
-    s32 chrflags;                     /* 0x0014 */
+    s32 chrflags;                         /* 0x0014 */
     PropRecord *prop;                     /* 0x0018 */
     Model *model;                         /* 0x001C */
     /* 0x0020 */

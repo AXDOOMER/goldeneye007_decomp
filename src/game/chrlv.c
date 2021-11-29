@@ -1186,7 +1186,7 @@ void chrlvActorThrowWeaponSurrender(struct ChrRecord *arg0)
                 sub_GAME_7F04BFD0(right, 2);
             }
 
-            arg0->hidden |= 1;
+            arg0->hidden |= CHRHIDDEN_DROP_HELD_ITEMS;
         }
         else
         {
@@ -3501,13 +3501,13 @@ void triggered_on_shot_hit(struct ChrRecord *arg0, struct coord3d *arg1, f32 arg
             if ((arg0->weapons_held[RIGHT_HAND] != NULL) && ((arg0->weapons_held[RIGHT_HAND]->obj->flags & 0x2000) == 0))
             {
                 sub_GAME_7F04BFD0(arg0->weapons_held[RIGHT_HAND], 1);
-                arg0->hidden |= 1;
+                arg0->hidden |= CHRHIDDEN_DROP_HELD_ITEMS;
             }
 
             if ((arg0->weapons_held[LEFT_HAND] != NULL) && ((arg0->weapons_held[LEFT_HAND]->obj->flags & 0x2000) == 0))
             {
                 sub_GAME_7F04BFD0(arg0->weapons_held[LEFT_HAND], 1);
-                arg0->hidden |= 1;
+                arg0->hidden |= CHRHIDDEN_DROP_HELD_ITEMS;
             }
         }
     }
@@ -6116,7 +6116,7 @@ void chrlvAlertGuardToPlayerPosition(struct ChrRecord *arg0)
     struct PropRecord *temp_v0;
 
     temp_v0 = get_curplayer_positiondata();
-    arg0->hidden |= 2;
+    arg0->hidden |= CHRHIDDEN_ALERT_GUARD_RELATED;
     arg0->lastheartarget60 = g_GlobalTimer;
     arg0->lastknowntargetpos.f[0] = temp_v0->pos.x;
     arg0->lastknowntargetpos.f[1] = temp_v0->pos.y;
@@ -7447,7 +7447,7 @@ void chrlvManageGuardFade(ChrRecord *arg0)
 
         if (arg0->act_init.padding[0] >= 90)
         {
-            arg0->hidden |= 0x20;
+            arg0->hidden |= CHRHIDDEN_REMOVE;
         }
         else
         {
@@ -7800,7 +7800,7 @@ void sub_GAME_7F02BFE4(ChrRecord *arg0, s32 arg1, s32 arg2)
     {
         if ((s32) sp33 > 0)
         {
-            if (((arg0->hidden & 0x80) == 0) && arg0->field_178[arg1] < g_GlobalTimer)
+            if (((arg0->hidden & CHRHIDDEN_FIRE_TRACER) == 0) && arg0->field_178[arg1] < g_GlobalTimer)
             {
                 phi_a1 = 1;
             }
@@ -8613,20 +8613,20 @@ void chrlvToggleHiddenRelated(ChrRecord *arg0, s32 arg1, s32 arg2)
     {
         if (arg1 == 1)
         {
-            arg0->hidden |= 4;
+            arg0->hidden |= CHRHIDDEN_FIRE_WEAPON_LEFT;
         }
         else
         {
-            arg0->hidden |= 8;
+            arg0->hidden |= CHRHIDDEN_FIRE_WEAPON_RIGHT;
         }
     }
     else if (arg1 == 1)
     {
-        arg0->hidden &= 0xFFFB;
+        arg0->hidden &= 0xFFFB; // CHRHIDDEN_FIRE_WEAPON_LEFT
     }
     else
     {
-        arg0->hidden &= 0xFFF7;
+        arg0->hidden &= 0xFFF7; // CHRHIDDEN_FIRE_WEAPON_RIGHT
     }
 
     if (arg2 == 0)
@@ -8860,9 +8860,434 @@ s32 sub_GAME_7F02D630(ChrRecord *arg0, HANDEDNESS hand, struct coord3d *arg2)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F02D734(void) {
+void sub_GAME_7F02D734(ChrRecord *self, s32 hand)
+{
+    PropRecord *self_prop;
+    s32 sp27C;
+    s32 sp278;
+    ChrRecord *sp274;
+    PropRecord *sp270;
+    s32 sp268;
+    s32 sp264;
+    f32 sp260;
+    f32 sp25C;
+    f32 sp258;
+    StandTile *sp254;
+    f32 subroty;
+    f32 sp24C;
+    f32 sp248;
+    f32 sp244;
+    f32 sp240;
+    StandTile *self_stan;
+    StandTile *sp238;
+    s32 sp234;
+    s32 sp230;
+    s32 sp22C;
+    f32 sp228;
+    f32 sp224;
+    f32 sp220;
+    s32 sp21C;
+    f32 sp20C;
+    object_standard *sp208;
+    Mtxf sp1C8;
+    f32 sp1C4;
+    f32 sp1C0;
+    f32 sp1BC;
+    f32 sp1B4;
+    f32 sp1B0;
+    f32 sp1AC;
+    f32 sp16C;
+    Mtxf sp12C;
+    object_standard *sp128;
+    Mtxf spE8;
+    f32 spE4;
+    f32 spE0;
+    f32 spDC;
+    f32 sp9C;
+    Mtxf sp5C;
+    f32 sp4C;
+    s32 sp44;
+    void *sp40;
+    PropRecord *temp_v0;
+    StandTile **temp_a0;
+    f32 temp_f0;
+    f32 temp_f0_2;
+    f32 temp_f0_3;
+    f32 temp_f12;
+    f32 temp_f12_2;
+    f32 temp_f14;
+    f32 temp_f14_2;
+    f32 temp_f14_3;
+    f32 temp_f16;
+    f32 temp_f16_2;
+    f32 temp_f18;
+    f32 temp_f18_2;
+    f32 temp_f2;
+    object_standard *temp_v0_3;
+    object_standard *temp_v0_8;
+    s32 temp_a2;
+    s32 temp_t9;
+    s32 temp_v0_4;
+    s32 temp_v0_5;
+    s32 temp_v0_6;
+    s32 temp_v0_7;
+    s8 temp_a3;
+    s8 temp_a3_2;
+    s8 temp_t6;
+    s8 temp_v0_10;
+    s8 temp_v0_9;
+    u8 *temp_a1;
+    u8 *temp_v1;
+    u8 *temp_v1_2;
+    u8 temp_v0_11;
+    u8 temp_v0_12;
+    void *temp_v0_2;
+    s32 phi_v1;
+    s32 phi_a2;
 
+    self_prop = self->prop;
+    temp_v0 = something_with_weaponpos_of_guarddata_hand(self, hand);
+
+    if (temp_v0 != 0)
+    {
+        sp27C = 0;
+        sp278 = 0;
+        sp274 = temp_v0->chr;
+        sp270 = get_curplayer_positiondata();
+        phi_v1 = 1;
+
+        if (self->actiontype == 8)
+        {
+            phi_v1 = self->act_init.padding[8];
+        }
+
+        temp_t9 = phi_v1 & 1;
+        sp44 = temp_t9;
+
+        if (
+            (temp_t9 == 0)
+            || (self->seen_bond_time >= (g_GlobalTimer - 0x78))
+            || (bondwalkItemGetAutomaticFiringRate((s32) sp274->act_bytes.padding[0x54]) < 0))
+        {
+            sp268 = 0;
+            sp264 = 0;
+            temp_v0_2 = self + hand;
+            temp_v0_2->unk4 = (u8) (temp_v0_2->unk4 + 1);
+            sp40 = temp_v0_2;
+
+            if (bondwalkItemGetAutomaticFiringRate((s32) sp274->act_bytes.padding[0x54]) < 0)
+            {
+                sp268 = 1;
+                sp264 = 1;
+            }
+            else if (((s32) sp40->unk4 % bondwalkItemGetAutomaticFiringRate((s32) sp274->act_bytes.padding[0x54])) == 0)
+            {
+                sp268 = 1;
+
+                if ((((s32) sp40->unk4 % (s32) (bondwalkItemGetAutomaticFiringRate((s32) sp274->act_bytes.padding[0x54]) * 2)) == 0) || (sp274->act_bytes.padding[0x54] == 0x16))
+                {
+                    sp264 = 1;
+                }
+            }
+            else
+            {
+                sp278 = 1;
+            }
+
+            if (sp268 != 0)
+            {
+                sp254 = NULL;
+                subroty = chrlvGetSubrotySideback(self);
+                sp24C = sub_GAME_7F02C27C(self);
+                sp27C = 1;
+                self_stan = self_prop->stan;
+
+                if (sub_GAME_7F02D630(self, hand, (struct coord3d *) &sp240) == 0)
+                {
+                    sp240 = self_prop->pos.x;
+                    sp244 = self_prop->pos.f[1] + 30.0f;
+                    sp248 = self_prop->pos.f[2];
+                    if (hand == 1)
+                    {
+                        sp240 += cosf(subroty) * 10.0f;
+                        sp248 += -sinf(subroty) * 10.0f;
+                    }
+                    else
+                    {
+                        sp240 += -cosf(subroty) * 10.0f;
+                        sp248 += sinf(subroty) * 10.0f;
+                    }
+                }
+
+                temp_f0 = sp244 - self->ground;
+
+                if (sub_GAME_7F0B0E24(&self_stan, self_prop->pos.x, self_prop->pos.f[2], sp240, sp248, 2, temp_f0, temp_f0, 0.0f, 1.0f) != 0)
+                {
+                    sp238 = self_stan;
+                }
+                else
+                {
+                    sp40->unk4 = (u8) (sp40->unk4 - 1);
+                    sp27C = 0;
+                }
+
+                if (sp27C != 0)
+                {
+                    sp234 = 0;
+                    sp230 = 0;
+                    sp22C = 1;
+                    sp21C = chrlvAttackRelated7F0292A8(self, (struct coord3d *) &sp240, sp238);
+                    sp4C = cosf(sp24C);
+                    sp220 = sinf(subroty) * sp4C;
+                    sp224 = sinf(sp24C);
+                    sp4C = cosf(sp24C);
+                    temp_f18 = cosf(subroty) * sp4C;
+                    sp228 = temp_f18;
+                    sp258 = (sp220 * 65536.0f) + sp240;
+                    temp_f14 = (sp224 * 65536.0f) + sp244;
+                    sp25C = temp_f14;
+                    sp260 = (temp_f18 * 65536.0f) + sp248;
+                    set_or_unset_GUARDdata_flag(self, 0);
+                    sub_GAME_7F0B1CC4();
+                    temp_a0 = &self_stan;
+                    self_stan = sp238;
+
+                    if (sub_GAME_7F0B0E24(temp_a0, sp240, sp248, sp258, sp260, 0x1B, sp244, sp244, temp_f14, temp_f14) == 0)
+                    {
+                        chrlvStanLineDirIntersection((struct coord3d *) &sp240, (struct coord3d *) &sp220, (struct coord3d *) &sp258);
+                        sp254 = self_stan;
+                        sp258 -= 26.0f * sp220;
+                        sp25C -= 26.0f * sp224;
+                        sp260 -= 26.0f * sp228;
+                    }
+
+                    set_or_unset_GUARDdata_flag(self, 1);
+
+                    temp_f2 = sp258 - sp240;
+                    temp_f14_2 = sp25C - sp244;
+                    temp_f18_2 = sp260 - sp248;
+                    sp20C = (temp_f2 * temp_f2) + (temp_f14_2 * temp_f14_2) + (temp_f18_2 * temp_f18_2);
+                    temp_a3 = sp274->act_bytes.padding[0x54];
+
+                    if (temp_a3 == 0x19)
+                    {
+                        if (((temp_f2 * temp_f2) + (temp_f14_2 * temp_f14_2) + (temp_f18_2 * temp_f18_2)) > 160000.0f)
+                        {
+                            temp_v0_3 = create_new_item_instance_of_model(0xCA, 0x56);
+                            sp208 = temp_v0_3;
+                            if (temp_v0_3 != 0)
+                            {
+                                matrix_4x4_set_identity((Mtxf *) &sp1C8);
+                                matrix_4x4_set_rotation_around_x(sp24C, (Mtxf *) &sp16C);
+                                matrix_4x4_set_rotation_around_y(subroty, (Mtxf *) &sp12C);
+                                matrix_4x4_multiply_homogeneous_in_place((Mtxf *) &sp12C, (Mtxf *) &sp16C);
+                                temp_f12 = sp220 * 1.111111f;
+                                temp_f0_2 = g_GlobalTimerDelta;
+                                temp_f14_3 = sp224 * 1.111111f;
+                                temp_f16 = sp228 * 1.111111f;
+                                sp1B0 = temp_f14_3;
+                                sp1B4 = temp_f16;
+                                sp1AC = temp_f12;
+                                sp1BC = temp_f12 * temp_f0_2;
+                                sp1C0 = temp_f14_3 * temp_f0_2;
+                                sp1C4 = temp_f16 * temp_f0_2;
+                                sub_GAME_7F05EB0C((ObjectRecord *) sp208, (s32) &sp240, (s32) sp238, &sp16C, (struct coord3d *) &sp1BC, (Mtxf *) &sp1C8, (s32) self_prop);
+                                
+                                if ((sp208->bitflags & 0x80) != 0)
+                                {
+                                    temp_v0_4 = sp208->field_6C;
+                                    temp_v0_4->unk0 = (s32) (temp_v0_4->unk0 | 0x80);
+                                    temp_v0_5 = sp208->field_6C;
+                                    sp208->unk82 = -1;
+                                    temp_v0_5->unk0 = (s32) (temp_v0_5->unk0 | 0x20);
+                                    sp208->field_6C->unkB0 = (f32) sp208->yPOS;
+                                    temp_v0_6 = sp208->field_6C;
+                                    temp_v0_6->unkB4 = (f32) temp_v0_6->unk8;
+                                    sp208->field_6C->unk10 = sp1AC;
+                                    sp208->field_6C->unk14 = sp1B0;
+                                    sp208->field_6C->unk18 = sp1B4;
+                                    temp_v0_7 = sp208->field_6C;
+                                    
+                                    if (temp_v0_7->unk98 == 0)
+                                    {
+                                        sndPlaySfx((ALBankAlt_s *) g_musicSfxBufferPtr, 1, temp_v0_7 + 0x98);
+                                    }
+                                    else if (temp_v0_7->unk9C == 0)
+                                    {
+                                        sndPlaySfx((ALBankAlt_s *) g_musicSfxBufferPtr, 1, temp_v0_7 + 0x9C);
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            sp27C = 0;
+                        }
+                    }
+                    else if (temp_a3 == 0x18)
+                    {
+                        if (((temp_f2 * temp_f2) + (temp_f14_2 * temp_f14_2) + (temp_f18_2 * temp_f18_2)) > 160000.0f)
+                        {
+                            temp_v0_8 = create_new_item_instance_of_model(0xCB, 0x57);
+                            sp128 = temp_v0_8;
+                            
+                            if (temp_v0_8 != 0)
+                            {
+                                matrix_4x4_set_identity((Mtxf *) &spE8);
+                                spDC = sp220 * 33.333332f;
+                                spE0 = sp224 * 33.333332f;
+                                spE4 = sp228 * 33.333332f;
+                                matrix_4x4_set_rotation_around_x(sp24C, (Mtxf *) &sp9C);
+                                matrix_4x4_set_rotation_around_y(subroty, (Mtxf *) &sp5C);
+                                matrix_4x4_multiply_homogeneous_in_place((Mtxf *) &sp5C, (Mtxf *) &sp9C);
+                                sp128->unk82 = 0xB4;
+                                sub_GAME_7F05EB0C((ObjectRecord *) sp128, (s32) &sp240, (s32) sp238, &sp9C, (struct coord3d *) &spDC, (Mtxf *) &spE8, (s32) self_prop);
+                                
+                                if ((sp128->bitflags & 0x80) != 0)
+                                {
+                                    sp128->field_6C->unk8C = 0.3f;
+                                    sp128->field_6C->unk94 = 0.13333333f;
+                                    sp128->field_6C->unkBC = 0x3C;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            sp27C = 0;
+                        }
+                    }
+                    else
+                    {
+                        if ((sp44 != 0) && (sp21C != 0))
+                        {
+                            temp_f0_3 = (sp270->pos.f[0] - sp240) - (sp220 * 15.0f);
+                            temp_f12_2 = (sp270->pos.f[1] - sp244) - (sp224 * 15.0f);
+                            temp_f16_2 = (sp270->pos.f[2] - sp248) - (sp228 * 15.0f);
+                            
+                            if (((temp_f0_3 * temp_f0_3) + (temp_f12_2 * temp_f12_2) + (temp_f16_2 * temp_f16_2)) <= sp20C)
+                            {
+                                chrlvUpdateShotbondsum(self, &sp234, &sp230, (s32) temp_a3);
+                                sp22C = sp230 == 0;
+                                
+                                if ((sp234 != 0) && ((self->actiontype == ACT_ATTACK) || (self->actiontype == ACT_ATTACKROLL)))
+                                {
+                                    self->act_init.padding[7] = g_GlobalTimer;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if ((self->actiontype == ACT_ATTACK) || (self->actiontype == ACT_ATTACKROLL))
+                            {
+                                self->act_init.padding[7] = g_GlobalTimer;
+                            }
+                        }
+
+                        if (sp230 != 0)
+                        {
+                            sp258 = sp270->pos.x;
+                            sp25C = sp270->pos.f[1];
+                            sp260 = sp270->pos.f[2];
+                            sp254 = sp270->stan;
+                            recall_joy2_hits_edit_detail_edit_flag((s32) sp274->act_bytes.padding[0x54], &sp270->type, -1);
+                        }
+                        else
+                        {
+                            temp_v1 = stanSavedColl_posData;
+                            if ((
+                                    (stanSavedColl_posData == NULL) 
+                                    || ((stanSavedColl_posData->type != PROP_TYPE_CHR) && (stanSavedColl_posData->type != PROP_TYPE_VIEWER))
+                                ) 
+                                && (sp20C < 10000.0f))
+                            {
+                                sp22C = 0;
+                            }
+                        }
+
+                        if (sp22C != 0)
+                        {
+                            if (sp254 != 0)
+                            {
+                                sub_GAME_7F0A3E1C((struct coord3d *) &sp258, 1, 26.0f, (s16) sp254->room);
+                            }
+
+                            //temp_a1 = stanSavedColl_posData;
+                            temp_a3_2 = sp274->act_bytes.padding[0x54];
+
+                            if (stanSavedColl_posData != NULL)
+                            {
+                                recall_joy2_hits_edit_detail_edit_flag((s32) temp_a3_2, &stanSavedColl_posData->type, -1);
+                                //temp_v1_2 = stanSavedColl_posData;
+                                if (stanSavedColl_posData->type == PROP_TYPE_CHR)
+                                {
+                                    if ((self->chrflags & 0x40) != 0)
+                                    {
+                                        handles_shot_actors(stanSavedColl_posData->chr, 0xF, (struct coord3d *) &sp220, (s32) sp274->act_bytes.padding[0x54], 0);
+                                    }
+                                }
+                                else if ((stanSavedColl_posData->type == PROP_TYPE_OBJ) || (stanSavedColl_posData->type == PROP_TYPE_WEAPON))
+                                {
+                                    sp4C = bondwalkItemGetDestructionAmount((s32) sp274->act_bytes.padding[0x54]);
+                                    chrobjMaybeDetonateObjectIfFlags(stanSavedColl_posData->obj, sp4C, (s32) &sp258, (s32) sp274->act_bytes.padding[0x54], get_cur_playernum());
+                                }
+                            }
+                            else
+                            {
+                                recall_joy2_hits_edit_flag((s32) temp_a3_2, (struct coord3d *) &sp258, -1);
+                            }
+                        }
+
+                        if (sp264 != 0)
+                        {
+                            temp_t6 = sp274->act_bytes.padding[0x54];
+                            switch (temp_t6) {
+                            case 4:
+                            case 5:
+                            case 6:
+                            case 7:
+                            case 8:
+                            case 9:
+                            case 10:
+                            case 11:
+                            case 12:
+                            case 13:
+                            case 14:
+                            case 18:
+                            case 19:
+                            case 20:
+                            case 21:
+                            case 22:
+                                sp264 = 1;
+                                break;
+                            default:
+                                sp264 = 0;
+                                break;
+                            }
+                        }
+
+                        if (sp264 != 0)
+                        {
+                            sub_GAME_7F061948(&self->unk180[hand], (s32) sp274->act_bytes.padding[0x54], (struct coord3d *) &sp240, (struct coord3d *) &sp258);
+                        }
+                    }
+                }
+            }
+
+            temp_a2 = sp27C != 0;
+            phi_a2 = temp_a2;
+
+            if (temp_a2 == 0)
+            {
+                phi_a2 = sp278 != 0;
+            }
+
+            sub_GAME_7F02BFE4(self, hand, phi_a2);
+        }
+
+        sub_GAME_7F02D118(self, hand, sp27C);
+    }
 }
+
 #else
 GLOBAL_ASM(
 .late_rodata
@@ -9672,47 +10097,27 @@ weapon_guard_fires_bullet_no_projectile:
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02E26C(void) {
+/**
+ * Address 0x7F02E26C.
+*/
+void chrlvTriggerFireWeapon(ChrRecord *arg0)
+{
+    arg0->hidden &= 0xFF7F; // CHRHIDDEN_FIRE_WEAPON_RIGHT
 
+    if (arg0->hidden & CHRHIDDEN_FIRE_WEAPON_RIGHT)
+    {
+        sub_GAME_7F02D734(arg0, RIGHT_HAND);
+
+        arg0->hidden &= 0xFFF7; // CHRHIDDEN_FIRE_WEAPON_RIGHT
+    }
+
+     if (arg0->hidden & CHRHIDDEN_FIRE_WEAPON_LEFT)
+    {
+        sub_GAME_7F02D734(arg0, LEFT_HAND);
+
+        arg0->hidden &= 0xFFFB; // CHRHIDDEN_FIRE_WEAPON_LEFT
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F02E26C
-/* 062D9C 7F02E26C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 062DA0 7F02E270 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 062DA4 7F02E274 948E0012 */  lhu   $t6, 0x12($a0)
-/* 062DA8 7F02E278 00002825 */  move  $a1, $zero
-/* 062DAC 7F02E27C 31CFFF7F */  andi  $t7, $t6, 0xff7f
-/* 062DB0 7F02E280 31E2FFFF */  andi  $v0, $t7, 0xffff
-/* 062DB4 7F02E284 30580008 */  andi  $t8, $v0, 8
-/* 062DB8 7F02E288 13000008 */  beqz  $t8, .L7F02E2AC
-/* 062DBC 7F02E28C A48F0012 */   sh    $t7, 0x12($a0)
-/* 062DC0 7F02E290 0FC0B5CD */  jal   sub_GAME_7F02D734
-/* 062DC4 7F02E294 AFA40018 */   sw    $a0, 0x18($sp)
-/* 062DC8 7F02E298 8FA40018 */  lw    $a0, 0x18($sp)
-/* 062DCC 7F02E29C 94990012 */  lhu   $t9, 0x12($a0)
-/* 062DD0 7F02E2A0 3328FFF7 */  andi  $t0, $t9, 0xfff7
-/* 062DD4 7F02E2A4 3102FFFF */  andi  $v0, $t0, 0xffff
-/* 062DD8 7F02E2A8 A4880012 */  sh    $t0, 0x12($a0)
-.L7F02E2AC:
-/* 062DDC 7F02E2AC 30490004 */  andi  $t1, $v0, 4
-/* 062DE0 7F02E2B0 11200007 */  beqz  $t1, .L7F02E2D0
-/* 062DE4 7F02E2B4 24050001 */   li    $a1, 1
-/* 062DE8 7F02E2B8 0FC0B5CD */  jal   sub_GAME_7F02D734
-/* 062DEC 7F02E2BC AFA40018 */   sw    $a0, 0x18($sp)
-/* 062DF0 7F02E2C0 8FA40018 */  lw    $a0, 0x18($sp)
-/* 062DF4 7F02E2C4 948A0012 */  lhu   $t2, 0x12($a0)
-/* 062DF8 7F02E2C8 314BFFFB */  andi  $t3, $t2, 0xfffb
-/* 062DFC 7F02E2CC A48B0012 */  sh    $t3, 0x12($a0)
-.L7F02E2D0:
-/* 062E00 7F02E2D0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 062E04 7F02E2D4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 062E08 7F02E2D8 03E00008 */  jr    $ra
-/* 062E0C 7F02E2DC 00000000 */   nop   
-)
-#endif
 
 
 

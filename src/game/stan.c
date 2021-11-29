@@ -1,6 +1,7 @@
 #include "ultra64.h"
-#include "game/stan.h"
+#include "bondtypes.h"
 #include "structs.h"
+#include "game/stan.h"
 #include "game/bg.h"
 
 // bss
@@ -51,8 +52,9 @@ struct float2 stanSavedColl_pntA;
 struct float2 stanSavedColl_pntB;
 //CODE.bss:8007BA00
 f32 stanSavedColl_someMin;
+
 //CODE.bss:8007BA04
-s32 stanSavedColl_posData;
+PropRecord * stanSavedColl_posData;
 
 
 //CODE.bss:8007BA08
