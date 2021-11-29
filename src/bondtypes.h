@@ -694,6 +694,30 @@ typedef struct PropRecord
     u32 unk44;         /*0x44*/
 } PropRecord;
 
+/**
+ * sizeof = 0x2c = 44 bytes.
+*/
+struct ChrRecord_f180
+{
+    /***/
+    char unk00;
+    char unk01;
+    char unk02;
+    char unk03;
+
+    struct coord3d pos;
+
+    /**
+     * Offset 0x10
+    */
+    vec3 delta;
+    f32 unk1c;
+
+    f32 unk20;
+    f32 unk24;
+    f32 unk28;
+};
+
 /* unfinished struct, WIP */
 typedef struct ChrRecord
 {
@@ -830,39 +854,12 @@ typedef struct ChrRecord
     //int field_17C;
 
     /* 0x0180 */
-    char field_180;
-    char field_181;
-    char field_182;
-    char field_183;
-    int field_184;
-    int field_188;
-    int field_18C;
-    /* 0x0190 */
-    int field_190;
-    int field_194;
-    int field_198;
-    int field_19C;
-    /* 0x01A0 */
-    int field_1A0;
-    int field_1A4;
-    int field_1A8;
-    char field_1AC;
-    char field_1AD;
-    char field_1AE;
-    char field_1AF;
-    /* 0x01B0 */
-    int field_1B0;
-    int field_1B4;
-    int field_1B8;
-    int field_1BC;
-    /* 0x01C0 */
-    int field_1C0;
-    int field_1C4;
-    int field_1C8;
-    int field_1CC;
-    /* 0x01D0 */
-    int field_1D0;
-    int field_1D4;
+    /**
+     * Method sub_GAME_7F02D734 calls sub_GAME_7F061948, and passes an address
+     * which makes it look like this is an array at ChrRecord offset 180.
+    */
+    struct ChrRecord_f180 unk180[2];
+
     PropRecord *handle_positiondata_hat;
 } ChrRecord;
 // ChrRecord *pChrData; //not Global, local to Object or function
