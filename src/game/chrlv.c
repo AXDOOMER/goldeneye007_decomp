@@ -9596,7 +9596,7 @@ glabel sub_GAME_7F02D734
 /* 062CA4 7F02E174 8D640004 */  lw    $a0, 4($t3)
 /* 062CA8 7F02E178 81470080 */  lb    $a3, 0x80($t2)
 /* 062CAC 7F02E17C AFA20010 */  sw    $v0, 0x10($sp)
-/* 062CB0 7F02E180 0FC13833 */  jal   sub_GAME_7F04E0CC
+/* 062CB0 7F02E180 0FC13833 */  jal   chrobjMaybeDetonateObjectIfFlags
 /* 062CB4 7F02E184 27A60258 */   addiu $a2, $sp, 0x258
 /* 062CB8 7F02E188 10000005 */  b     .L7F02E1A0
 /* 062CBC 7F02E18C 8FAC0264 */   lw    $t4, 0x264($sp)

@@ -31977,33 +31977,17 @@ glabel check_if_destroyable_not_invincible
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F04E0CC(void) {
 
+/**
+ * Address 0x7F04E0CC.
+*/
+void chrobjMaybeDetonateObjectIfFlags(ObjectRecord *arg0, f32 arg1, s32 arg2, s32 arg3, s32 arg4)
+{
+    if ((arg0->flags2 & 0x4000) == 0)
+    {
+        maybe_detonate_object(arg0, arg1, arg2, arg3, arg4);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F04E0CC
-/* 082BFC 7F04E0CC 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 082C00 7F04E0D0 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 082C04 7F04E0D4 8C8E000C */  lw    $t6, 0xc($a0)
-/* 082C08 7F04E0D8 44856000 */  mtc1  $a1, $f12
-/* 082C0C 7F04E0DC 8FB80030 */  lw    $t8, 0x30($sp)
-/* 082C10 7F04E0E0 31CF4000 */  andi  $t7, $t6, 0x4000
-/* 082C14 7F04E0E4 55E00005 */  bnezl $t7, .L7F04E0FC
-/* 082C18 7F04E0E8 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 082C1C 7F04E0EC 44056000 */  mfc1  $a1, $f12
-/* 082C20 7F04E0F0 0FC13842 */  jal   maybe_detonate_object
-/* 082C24 7F04E0F4 AFB80010 */   sw    $t8, 0x10($sp)
-/* 082C28 7F04E0F8 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F04E0FC:
-/* 082C2C 7F04E0FC 27BD0020 */  addiu $sp, $sp, 0x20
-/* 082C30 7F04E100 03E00008 */  jr    $ra
-/* 082C34 7F04E104 00000000 */   nop   
-)
-#endif
-
 
 
 
@@ -32976,7 +32960,7 @@ glabel sub_GAME_7F04EA68
 /* 08395C 7F04EE2C 44051000 */  mfc1  $a1, $f2
 /* 083960 7F04EE30 8DC70018 */  lw    $a3, 0x18($t6)
 /* 083964 7F04EE34 AFA20010 */  sw    $v0, 0x10($sp)
-/* 083968 7F04EE38 0FC13833 */  jal   sub_GAME_7F04E0CC
+/* 083968 7F04EE38 0FC13833 */  jal   chrobjMaybeDetonateObjectIfFlags
 /* 08396C 7F04EE3C 27A60060 */   addiu $a2, $sp, 0x60
 /* 083970 7F04EE40 8E380014 */  lw    $t8, 0x14($s1)
 /* 083974 7F04EE44 3C0D8004 */  lui   $t5, %hi(skeleton_door) 

@@ -32,5 +32,7 @@ void sub_GAME_7F052574(PropRecord *, s32);
 s32 sub_GAME_7F052604(PropRecord *);
 
 object_standard *create_new_item_instance_of_model(PROPS propid, s32 arg1);
+void maybe_detonate_object(struct ObjectRecord *arg0, f32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void chrobjMaybeDetonateObjectIfFlags(ObjectRecord *arg0, f32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 #endif

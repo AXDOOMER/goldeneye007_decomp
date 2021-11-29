@@ -459,7 +459,7 @@ u32 D_80035D44[] = {
 };
 
 /**
- * List of (?) sound effects, used by recall_joy2_hits_edit_detail_edit_flag.
+ * List of ricochet(?) sound effects, used by recall_joy2_hits_edit_detail_edit_flag.
  * Address 0x80035E04.
 */
 u16 D_80035E04[] = {
@@ -474,12 +474,21 @@ u16 D_80035E2C[] = {0x2F, 0x30};
 u16 D_80035E30[] = {0x31, 0};
 //D:80035E34
 u16 D_80035E34[] = {0x45, 0x45};
-//D:80035E38
+
+/**
+ * List of ricochet(?) sound effects, used by recall_joy2_hits_edit_flag.
+ * Address 0x80035E38.
+*/
 u16 D_80035E38[] = {0x5C, 0x5D};
-//D:80035E3C
+
+/**
+ * List of ricochet(?) sound effects, used by recall_joy2_hits_edit_flag.
+ * Address 0x80035E3C.
+*/
 u16 D_80035E3C[] = {
 	0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1A, 0x17, 0x18, 0x19, 0x1A, 0x17, 0x18, 0x19, 0x1A, 0x1F, 0x20, 0x20, 0x21, 0x1F, 0x20, 0x20, 0x21, 0x1F, 0x20, 0x20, 0x21, 0x23, 0x24, 0x25, 0x26, 0x27, 0x28, 0x29, 0x2A
 };
+
 //D:80035E84
 u16 D_80035E84[] = {0xA4, 0xA5};
 //D:80035E88
@@ -13338,7 +13347,15 @@ glabel sub_GAME_7F0643A0
 
 
 #ifdef NONMATCHING
-void recall_joy2_hits_edit_detail_edit_flag(void) {
+/**
+ * @param arg0: enum ITEM_IDS, will play sound effect for this item
+ * @param arg1: pointer to integral type, looks like PROP_TYPE
+ * @param arg2: index into image_entries, used to play related sound effect (via D_8004E86C)
+ * 
+ * Address 0x7F06441C.
+*/
+void recall_joy2_hits_edit_detail_edit_flag(s32 arg0, u8 *arg1, s32 arg2)
+{
 
 }
 #else
@@ -14069,7 +14086,15 @@ glabel sub_GAME_7F064720
 
 
 #ifdef NONMATCHING
-void recall_joy2_hits_edit_flag(void) {
+/**
+ * arg0: enum ITEM_IDS, will play sound effect for this item
+ * arg1: 
+ * arg2: index into image_entries, used to play related sound effect (via D_8004E86C)
+ * 
+ * Address 0x7F064774.
+*/
+void recall_joy2_hits_edit_flag(s32 arg0, struct coord3d *arg1, s32 arg2)
+{
 
 }
 #else

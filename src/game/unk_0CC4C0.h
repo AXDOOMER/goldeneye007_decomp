@@ -22,4 +22,6 @@ struct image_sound
     u16 thing2_len;
 };
 
+extern struct image_sound *D_8004E86C[];
+
 #endif

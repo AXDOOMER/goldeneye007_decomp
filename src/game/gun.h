@@ -245,4 +245,7 @@ f32 bondwalkItemGetDestructionAmount(ITEM_IDS item);
 u16 bondwalkItemGetSound(ITEM_IDS item);
 u8 bondwalkItemGetSoundTriggerRate(ITEM_IDS item);
 
+void recall_joy2_hits_edit_detail_edit_flag(s32 arg0, u8 *arg1, s32 arg2);
+void recall_joy2_hits_edit_flag(s32 arg0, struct coord3d *arg1, s32 arg2);
+
 #endif
