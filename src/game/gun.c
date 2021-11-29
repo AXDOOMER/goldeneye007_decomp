@@ -3020,7 +3020,7 @@ glabel sub_GAME_7F05EA94
 /**
  * Address 0x7F05EB0C.
 */
-void sub_GAME_7F05EB0C(ObjectRecord *arg0, struct coord3d *arg1, s32 arg2, f32 *arg3, struct coord3d *arg4, Mtxf *arg5, s32 arg6)
+void sub_GAME_7F05EB0C(ObjectRecord *arg0, struct coord3d *arg1, struct StandTile *arg2, Mtxf *arg3, struct coord3d *arg4, Mtxf *arg5, struct PropRecord *arg6)
 {
     PropRecord *temp_s1;
     struct ObjectRecord_f6c *temp_v0;
@@ -3044,7 +3044,7 @@ void sub_GAME_7F05EB0C(ObjectRecord *arg0, struct coord3d *arg1, s32 arg2, f32 *
         {
             temp_v0 = arg0->unk6C;
             temp_v0->id |= 0x41;
-            arg0->unk6C->unk88 = (u32) arg6;
+            arg0->unk6C->prop = arg6;
             sub_GAME_7F03FE14(temp_s1);
             matrix_4x4_copy(arg5, &arg0->unk6C->m);
             arg0->unk6C->pos.f[0] = arg4->f[0];
@@ -10013,9 +10013,14 @@ void bondwalkFireBothHands(void)
 
 
 /**
+ * @param arg0:
+ * @param item:
+ * @param arg2:
+ * @param arg3:
+ * 
  * Address 0x7F061948.
 */
-void sub_GAME_7F061948(struct ChrRecord_f180 *arg0, s32 arg1, struct coord3d *arg2, struct coord3d *arg3)
+void sub_GAME_7F061948(struct ChrRecord_f180 *arg0, ITEM_IDS item, struct coord3d *arg2, struct coord3d *arg3)
 {
     f32 phi_f12_2;
 
@@ -10033,7 +10038,7 @@ void sub_GAME_7F061948(struct ChrRecord_f180 *arg0, s32 arg1, struct coord3d *ar
     arg0->delta[1] *= 1.0f / phi_f12_2;
     arg0->delta[2] *= 1.0f / phi_f12_2;
 
-    if (arg1 == 0x17)
+    if (item == ITEM_WATCHLASER)
     {
         if (phi_f12_2 > 300.0f)
         {
@@ -10049,7 +10054,7 @@ void sub_GAME_7F061948(struct ChrRecord_f180 *arg0, s32 arg1, struct coord3d *ar
     }
 
     arg0->unk00 = 0;
-    arg0->unk01 = (s8) arg1;
+    arg0->item_id = (s8) item;
     arg0->unk1c = phi_f12_2;
 
     if (phi_f12_2 < 500.0f)
@@ -10057,7 +10062,7 @@ void sub_GAME_7F061948(struct ChrRecord_f180 *arg0, s32 arg1, struct coord3d *ar
         phi_f12_2 = 500.0f;
     }
 
-    if (arg1 == 0x16)
+    if (item == ITEM_LASER)
     {
         arg0->unk20 = 0.25f * phi_f12_2;
         arg0->unk24 = 0.6f * phi_f12_2;
@@ -10069,7 +10074,7 @@ void sub_GAME_7F061948(struct ChrRecord_f180 *arg0, s32 arg1, struct coord3d *ar
 
         arg0->unk28 = (-0.1f - ((f32) (u32)randomGetNext() * (1.0f / UINT_MAX) * 0.3f)) * phi_f12_2;
     }
-    else if (arg1 == 0x17)
+    else if (item == ITEM_WATCHLASER)
     {
         arg0->unk24 = phi_f12_2;
         arg0->unk20 = 2.0f * phi_f12_2;

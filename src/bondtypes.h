@@ -565,11 +565,13 @@ struct act_attack
     u32 unk038;                                                        /*0x38*/
     u32 unk03c;                                                        /*0x3c*/
     u32 unk040;                                                        /*0x40*/
-    u32 unk044;                                                        /*0x44*/
+    u32 attack_time;                                                        /*0x44*/
     u32 unk048;                                                        /*0x48*/
     u32 attacktype;                                                    /*0x4c*/
     u32 entityid;                                                      /*0x50*/
-    u32 unk054;                                                        /*0x54*/
+
+    ITEM_IDS attack_item;                                               /*0x54*/
+
     bool type_of_motion;                                                /*0x58 reaim*/
 };
 
@@ -835,7 +837,7 @@ struct ChrRecord_f180
 {
     /***/
     char unk00;
-    char unk01;
+    s8 item_id; // type ITEM_IDS
     char unk02;
     char unk03;
 
@@ -1033,21 +1035,21 @@ struct ObjectRecord_f6c
     u32 unk80;
     u32 unk84;
     // used by sub_GAME_7F05EB0C
-    u32 unk88;
+    struct PropRecord *prop;
     u32 unk8c;
 
     u32 unk90;
     u32 unk94;
-    u32 unk98;
-    u32 unk9c;
+    ALSoundState * unk98;
+    ALSoundState * unk9c;
 
     u32 unka0;
     u32 unka4;
     u32 unka8;
     u32 unkac;
 
-    u32 unkb0;
-    u32 unkb4;
+    f32 unkb0; // runtime y position?
+    f32 unkb4; // previous pos.y?
     u32 unkb8;
     u32 unkbc;
 

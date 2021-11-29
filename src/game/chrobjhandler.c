@@ -31981,11 +31981,11 @@ glabel check_if_destroyable_not_invincible
 /**
  * Address 0x7F04E0CC.
 */
-void chrobjMaybeDetonateObjectIfFlags(ObjectRecord *arg0, f32 arg1, s32 arg2, s32 arg3, s32 arg4)
+void chrobjMaybeDetonateObjectIfFlags(ObjectRecord *arg0, f32 arg1, struct coord3d *arg2, ITEM_IDS item, s32 arg4)
 {
     if ((arg0->flags2 & 0x4000) == 0)
     {
-        maybe_detonate_object(arg0, arg1, arg2, arg3, arg4);
+        maybe_detonate_object(arg0, arg1, arg2, item, arg4);
     }
 }
 

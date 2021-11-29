@@ -7793,8 +7793,8 @@ void sub_GAME_7F02BFE4(ChrRecord *arg0, s32 arg1, s32 arg2)
     temp_v1 = prop->chr;
     phi_a1 = 0;
 
-    sp33 = bondwalkItemGetSoundTriggerRate((s32) temp_v1->act_bytes.padding[0x54]);
-    sp30 = bondwalkItemGetSound((s32) temp_v1->act_bytes.padding[0x54]);
+    sp33 = bondwalkItemGetSoundTriggerRate((s32) temp_v1->act_attack.attack_item);
+    sp30 = bondwalkItemGetSound((s32) temp_v1->act_attack.attack_item);
 
     if (arg2 != 0)
     {
@@ -8862,10 +8862,10 @@ s32 sub_GAME_7F02D630(ChrRecord *arg0, HANDEDNESS hand, struct coord3d *arg2)
 #ifdef NONMATCHING
 void sub_GAME_7F02D734(ChrRecord *self, s32 hand)
 {
-    PropRecord *self_prop;
+    struct PropRecord *self_prop;
     s32 sp27C;
     s32 sp278;
-    ChrRecord *sp274;
+    ChrRecord *prop_selfchr;
     PropRecord *player_prop;
     s32 sp268;
     s32 sp264;
@@ -8874,64 +8874,39 @@ void sub_GAME_7F02D734(ChrRecord *self, s32 hand)
     f32 subroty;
     f32 sp24C;
     struct coord3d sp240;
-    StandTile *self_stan;
-    StandTile *sp238;
+    struct StandTile *self_stan;
+    struct StandTile *sp238;
     s32 sp234;
     s32 sp230;
     s32 sp22C;
     struct coord3d sp220;
     s32 sp21C;
     f32 sp20C;
-    object_standard *sp208;
+    struct WeaponObjRecord *sp208;
     Mtxf sp1C8;
     struct coord3d sp1BC;
-    f32 sp1B4;
-    f32 sp1B0;
-    f32 sp1AC;
-    f32 sp16C;
+    //f32 sp1B4;
+    //f32 sp1B0;
+    struct coord3d sp1AC;
+    Mtxf sp16C;
     Mtxf sp12C;
-    object_standard *sp128;
+    struct WeaponObjRecord *sp128;
     Mtxf spE8;
     struct coord3d spDC;
-    f32 sp9C;
+    Mtxf sp9C;
     Mtxf sp5C;
     f32 sp4C;
     s32 sp44;
-    void *sp40;
+    u8 *sp40;
     PropRecord *weapon_prop;
-    StandTile **temp_a0;
     f32 temp_f0;
-    f32 temp_f0_2;
-    f32 temp_f0_3;
-    f32 temp_f12;
-    f32 temp_f12_2;
-    f32 temp_f14;
-    f32 temp_f14_2;
-    f32 temp_f14_3;
-    f32 temp_f16;
-    f32 temp_f16_2;
-    f32 temp_f18;
-    f32 temp_f18_2;
-    f32 temp_f2;
-    object_standard *temp_v0_3;
-    object_standard *temp_v0_8;
-    s32 temp_a2;
-    s32 temp_t9;
-    s32 temp_v0_4;
-    s32 temp_v0_5;
-    s32 temp_v0_6;
-    s32 temp_v0_7;
-    s8 temp_a3;
-    s8 temp_a3_2;
-    s8 temp_t6;
-    s8 temp_v0_10;
-    s8 temp_v0_9;
-    u8 *temp_a1;
-    u8 *temp_v1;
-    u8 *temp_v1_2;
-    u8 temp_v0_11;
-    u8 temp_v0_12;
-    void *temp_v0_2;
+    //f32 temp_f0_3;
+    //f32 temp_f12_2;
+    f32 dy;
+    //f32 temp_f16_2;
+    f32 dz;
+    f32 dx;
+    struct ObjectRecord_f6c * temp_v0_4;
     s32 phi_v1;
     s32 phi_a2;
 
@@ -8942,39 +8917,39 @@ void sub_GAME_7F02D734(ChrRecord *self, s32 hand)
     {
         sp27C = 0;
         sp278 = 0;
-        sp274 = weapon_prop->chr;
+        prop_selfchr = weapon_prop->chr;
         player_prop = get_curplayer_positiondata();
         phi_v1 = 1;
 
-        if (self->actiontype == 8)
+        if (self->actiontype == ACT_ATTACK)
         {
-            phi_v1 = self->act_init.padding[8];
+            phi_v1 = self->act_attack.unk048;
         }
 
-        temp_t9 = phi_v1 & 1;
-        sp44 = temp_t9;
+        sp44 = phi_v1 & 1;
 
         if (
-            (temp_t9 == 0)
+            (sp44 == 0)
             || (self->seen_bond_time >= (g_GlobalTimer - 0x78))
-            || (bondwalkItemGetAutomaticFiringRate((s32) sp274->act_bytes.padding[0x54]) < 0))
+            || (bondwalkItemGetAutomaticFiringRate(prop_selfchr->act_attack.attack_item) < 0))
         {
             sp268 = 0;
             sp264 = 0;
-            temp_v0_2 = self + hand;
-            temp_v0_2->unk4 = (u8) (temp_v0_2->unk4 + 1);
-            sp40 = temp_v0_2;
+            
+            sp40 = &self->firecount[hand];
+            *sp40 = *sp40 + 1;
 
-            if (bondwalkItemGetAutomaticFiringRate((s32) sp274->act_bytes.padding[0x54]) < 0)
+            if (bondwalkItemGetAutomaticFiringRate(prop_selfchr->act_attack.attack_item) < 0)
             {
                 sp268 = 1;
                 sp264 = 1;
             }
-            else if (((s32) sp40->unk4 % bondwalkItemGetAutomaticFiringRate((s32) sp274->act_bytes.padding[0x54])) == 0)
+            else if (((s32) *sp40 % bondwalkItemGetAutomaticFiringRate(prop_selfchr->act_attack.attack_item)) == 0)
             {
                 sp268 = 1;
 
-                if ((((s32) sp40->unk4 % (s32) (bondwalkItemGetAutomaticFiringRate((s32) sp274->act_bytes.padding[0x54]) * 2)) == 0) || (sp274->act_bytes.padding[0x54] == 0x16))
+                if ((((s32) *sp40 % (s32) (bondwalkItemGetAutomaticFiringRate(prop_selfchr->act_attack.attack_item) * 2)) == 0) 
+                    || (prop_selfchr->act_attack.attack_item == ITEM_LASER))
                 {
                     sp264 = 1;
                 }
@@ -9017,7 +8992,7 @@ void sub_GAME_7F02D734(ChrRecord *self, s32 hand)
                 }
                 else
                 {
-                    sp40->unk4 = (u8) (sp40->unk4 - 1);
+                    *sp40 = *sp40 - 1;
                     sp27C = 0;
                 }
 
@@ -9026,23 +9001,22 @@ void sub_GAME_7F02D734(ChrRecord *self, s32 hand)
                     sp234 = 0;
                     sp230 = 0;
                     sp22C = 1;
+                    
                     sp21C = chrlvAttackRelated7F0292A8(self, &sp240, sp238);
-                    sp4C = cosf(sp24C);
-                    sp220.f[0] = sinf(subroty) * sp4C;
+                    
+                    sp220.f[0] = cosf(sp24C) * sinf(subroty);
                     sp220.f[1] = sinf(sp24C);
-                    sp4C = cosf(sp24C);
-                    temp_f18 = cosf(subroty) * sp4C;
-                    sp220.f[2] = temp_f18;
+                    sp220.f[2] = cosf(sp24C) * cosf(subroty);
+                    
                     sp258.f[0] = (sp220.f[0] * 65536.0f) + sp240.f[0];
-                    temp_f14 = (sp220.f[1] * 65536.0f) + sp240.f[1];
-                    sp258.f[1] = temp_f14;
-                    sp258.f[2] = (temp_f18 * 65536.0f) + sp240.f[2];
+                    sp258.f[1] = (sp220.f[1] * 65536.0f) + sp240.f[1];
+                    sp258.f[2] = (sp220.f[2] * 65536.0f) + sp240.f[2];
+                    
                     set_or_unset_GUARDdata_flag(self, 0);
                     sub_GAME_7F0B1CC4();
-                    temp_a0 = &self_stan;
                     self_stan = sp238;
 
-                    if (sub_GAME_7F0B0E24(temp_a0, sp240.f[0], sp240.f[2], sp258.f[0], sp258.f[2], 0x1B, sp240.f[1], sp240.f[1], temp_f14, temp_f14) == 0)
+                    if (sub_GAME_7F0B0E24(&self_stan, sp240.f[0], sp240.f[2], sp258.f[0], sp258.f[2], 0x1B, sp240.f[1], sp240.f[1], sp258.f[1], sp258.f[1]) == 0)
                     {
                         chrlvStanLineDirIntersection(&sp240, &sp220, &sp258);
                         sp254 = self_stan;
@@ -9053,60 +9027,55 @@ void sub_GAME_7F02D734(ChrRecord *self, s32 hand)
 
                     set_or_unset_GUARDdata_flag(self, 1);
 
-                    temp_f2 = sp258.f[0] - sp240.f[0];
-                    temp_f14_2 = sp258.f[1] - sp240.f[1];
-                    temp_f18_2 = sp258.f[2] - sp240.f[2];
-                    sp20C = (temp_f2 * temp_f2) + (temp_f14_2 * temp_f14_2) + (temp_f18_2 * temp_f18_2);
-                    temp_a3 = sp274->act_bytes.padding[0x54];
+                    dx = sp258.f[0] - sp240.f[0];
+                    dy = sp258.f[1] - sp240.f[1];
+                    dz = sp258.f[2] - sp240.f[2];
+                    
+                    sp20C = (dx * dx) + (dy * dy) + (dz * dz);
 
-                    if (temp_a3 == 0x19)
+                    if (prop_selfchr->act_attack.attack_item == ITEM_ROCKETLAUNCH)
                     {
-                        if (((temp_f2 * temp_f2) + (temp_f14_2 * temp_f14_2) + (temp_f18_2 * temp_f18_2)) > 160000.0f)
+                        if (((dx * dx) + (dy * dy) + (dz * dz)) > 160000.0f)
                         {
-                            temp_v0_3 = create_new_item_instance_of_model(PROP_chrrocket, 0x56);
-                            sp208 = temp_v0_3;
-                            if (temp_v0_3 != 0)
+                            sp208 = create_new_item_instance_of_model(PROP_chrrocket, 0x56);
+                            if (sp208 != NULL)
                             {
-                                matrix_4x4_set_identity((Mtxf *) &sp1C8);
-                                matrix_4x4_set_rotation_around_x(sp24C, (Mtxf *) &sp16C);
-                                matrix_4x4_set_rotation_around_y(subroty, (Mtxf *) &sp12C);
-                                matrix_4x4_multiply_homogeneous_in_place((Mtxf *) &sp12C, (Mtxf *) &sp16C);
-                                temp_f12 = sp220.f[0] * 1.111111f;
-                                temp_f0_2 = g_GlobalTimerDelta;
-                                temp_f14_3 = sp220.f[1] * 1.111111f;
-                                temp_f16 = sp220.f[2] * 1.111111f;
-                                sp1B0 = temp_f14_3;
-                                sp1B4 = temp_f16;
-                                sp1AC = temp_f12;
-                                sp1BC.f[0] = temp_f12 * temp_f0_2;
-                                sp1BC.f[1] = temp_f14_3 * temp_f0_2;
-                                sp1BC.f[2] = temp_f16 * temp_f0_2;
-
-                                // fix arg1, should be struct coord3d
-                                sub_GAME_7F05EB0C((ObjectRecord *) sp208, (s32) &sp240, (s32) sp238, &sp16C, &sp1BC, (Mtxf *) &sp1C8, (s32) self_prop);
+                                matrix_4x4_set_identity(&sp1C8);
+                                matrix_4x4_set_rotation_around_x(sp24C, &sp16C);
+                                matrix_4x4_set_rotation_around_y(subroty, &sp12C);
+                                matrix_4x4_multiply_homogeneous_in_place(&sp12C, &sp16C);
                                 
-                                if ((sp208->bitflags & 0x80) != 0)
+                                sp1AC.f[0] = sp220.f[0] * 1.111111f;
+                                sp1AC.f[1] = sp220.f[1] * 1.111111f;
+                                sp1AC.f[2] = sp220.f[2] * 1.111111f;
+
+                                sp1BC.f[0] = sp1AC.f[0] * g_GlobalTimerDelta;
+                                sp1BC.f[1] = sp1AC.f[1] * g_GlobalTimerDelta;
+                                sp1BC.f[2] = sp1AC.f[2] * g_GlobalTimerDelta;
+
+                                sub_GAME_7F05EB0C(sp208, &sp240, sp238, &sp16C, &sp1BC, &sp1C8, self_prop);
+                                
+                                if ((sp208->runtime_bitflags & 0x80) != 0)
                                 {
-                                    temp_v0_4 = sp208->field_6C;
-                                    temp_v0_4->unk0 = (s32) (temp_v0_4->unk0 | 0x80);
-                                    temp_v0_5 = sp208->field_6C;
-                                    sp208->unk82 = -1;
-                                    temp_v0_5->unk0 = (s32) (temp_v0_5->unk0 | 0x20);
-                                    sp208->field_6C->unkB0 = (f32) sp208->yPOS;
-                                    temp_v0_6 = sp208->field_6C;
-                                    temp_v0_6->unkB4 = (f32) temp_v0_6->unk8;
-                                    sp208->field_6C->unk10 = sp1AC;
-                                    sp208->field_6C->unk14 = sp1B0;
-                                    sp208->field_6C->unk18 = sp1B4;
-                                    temp_v0_7 = sp208->field_6C;
+                                    temp_v0_4 = sp208->unk6C;
                                     
-                                    if (temp_v0_7->unk98 == 0)
+                                    temp_v0_4->id |= 0x80;
+                                    sp208->timer = -1;
+                                    temp_v0_4->id |= 0x20;
+
+                                    sp208->unk6C->unkb0 = sp208->runtime_y_pos;
+                                    temp_v0_4->unkb4 = temp_v0_4->pos.f[1];
+                                    sp208->unk6C->vec[0] = sp1AC;
+                                    sp208->unk6C->vec[1] = sp1B0;
+                                    sp208->unk6C->vec[2] = sp1B4;
+                                    
+                                    if (temp_v0_4->unk98 == NULL)
                                     {
-                                        sndPlaySfx((ALBankAlt_s *) g_musicSfxBufferPtr, 1, temp_v0_7 + 0x98);
+                                        sndPlaySfx((ALBankAlt_s *) g_musicSfxBufferPtr, 1, &temp_v0_4->unk98);
                                     }
-                                    else if (temp_v0_7->unk9C == 0)
+                                    else if (temp_v0_4->unk9c == NULL)
                                     {
-                                        sndPlaySfx((ALBankAlt_s *) g_musicSfxBufferPtr, 1, temp_v0_7 + 0x9C);
+                                        sndPlaySfx((ALBankAlt_s *) g_musicSfxBufferPtr, 1, &temp_v0_4->unk9c);
                                     }
                                 }
                             }
@@ -9118,22 +9087,20 @@ void sub_GAME_7F02D734(ChrRecord *self, s32 hand)
                     }
                     else if (temp_a3 == 0x18)
                     {
-                        if (((temp_f2 * temp_f2) + (temp_f14_2 * temp_f14_2) + (temp_f18_2 * temp_f18_2)) > 160000.0f)
+                        if (((dx * dx) + (dy * dy) + (dz * dz)) > 160000.0f)
                         {
-                            temp_v0_8 = create_new_item_instance_of_model(PROP_chrgrenaderound, 0x57);
-                            sp128 = temp_v0_8;
-                            
-                            if (temp_v0_8 != 0)
+                            sp128 = create_new_item_instance_of_model(PROP_chrgrenaderound, 0x57);
+                            if (sp128 != NULL)
                             {
-                                matrix_4x4_set_identity((Mtxf *) &spE8);
+                                matrix_4x4_set_identity(&spE8);
                                 spDC.f[0] = sp220.f[0] * 33.333332f;
                                 spDC.f[1] = sp220.f[1] * 33.333332f;
                                 spDC.f[2] = sp220.f[2] * 33.333332f;
-                                matrix_4x4_set_rotation_around_x(sp24C, (Mtxf *) &sp9C);
-                                matrix_4x4_set_rotation_around_y(subroty, (Mtxf *) &sp5C);
-                                matrix_4x4_multiply_homogeneous_in_place((Mtxf *) &sp5C, (Mtxf *) &sp9C);
+                                matrix_4x4_set_rotation_around_x(sp24C, &sp9C);
+                                matrix_4x4_set_rotation_around_y(subroty, &sp5C);
+                                matrix_4x4_multiply_homogeneous_in_place(&sp5C, &sp9C);
                                 sp128->unk82 = 0xB4;
-                                sub_GAME_7F05EB0C((ObjectRecord *) sp128, (s32) &sp240, (s32) sp238, &sp9C, &spDC, (Mtxf *) &spE8, (s32) self_prop);
+                                sub_GAME_7F05EB0C((ObjectRecord *) sp128, &sp240, sp238, &sp9C, &spDC, &spE8, self_prop);
                                 
                                 if ((sp128->bitflags & 0x80) != 0)
                                 {
@@ -9152,18 +9119,18 @@ void sub_GAME_7F02D734(ChrRecord *self, s32 hand)
                     {
                         if ((sp44 != 0) && (sp21C != 0))
                         {
-                            temp_f0_3 = (player_prop->pos.f[0] - sp240.f[0]) - (sp220.f[0] * 15.0f);
-                            temp_f12_2 = (player_prop->pos.f[1] - sp240.f[1]) - (sp220.f[1] * 15.0f);
-                            temp_f16_2 = (player_prop->pos.f[2] - sp240.f[2]) - (sp220.f[2] * 15.0f);
+                            dx = (player_prop->pos.f[0] - sp240.f[0]) - (sp220.f[0] * 15.0f);
+                            dy = (player_prop->pos.f[1] - sp240.f[1]) - (sp220.f[1] * 15.0f);
+                            dz = (player_prop->pos.f[2] - sp240.f[2]) - (sp220.f[2] * 15.0f);
                             
-                            if (((temp_f0_3 * temp_f0_3) + (temp_f12_2 * temp_f12_2) + (temp_f16_2 * temp_f16_2)) <= sp20C)
+                            if (((dx * dx) + (dy * dy) + (dz * dz)) <= sp20C)
                             {
                                 chrlvUpdateShotbondsum(self, &sp234, &sp230, (s32) temp_a3);
                                 sp22C = sp230 == 0;
                                 
                                 if ((sp234 != 0) && ((self->actiontype == ACT_ATTACK) || (self->actiontype == ACT_ATTACKROLL)))
                                 {
-                                    self->act_init.padding[7] = g_GlobalTimer;
+                                    self->act_attack.attack_time = g_GlobalTimer;
                                 }
                             }
                         }
@@ -9171,7 +9138,7 @@ void sub_GAME_7F02D734(ChrRecord *self, s32 hand)
                         {
                             if ((self->actiontype == ACT_ATTACK) || (self->actiontype == ACT_ATTACKROLL))
                             {
-                                self->act_init.padding[7] = g_GlobalTimer;
+                                self->act_attack.attack_time = g_GlobalTimer;
                             }
                         }
 
@@ -9181,11 +9148,10 @@ void sub_GAME_7F02D734(ChrRecord *self, s32 hand)
                             sp258.f[1] = player_prop->pos.f[1];
                             sp258.f[2] = player_prop->pos.f[2];
                             sp254 = player_prop->stan;
-                            recall_joy2_hits_edit_detail_edit_flag((s32) sp274->act_bytes.padding[0x54], &player_prop->type, -1);
+                            recall_joy2_hits_edit_detail_edit_flag(prop_selfchr->act_attack.attack_item, &player_prop->type, -1);
                         }
                         else
                         {
-                            temp_v1 = stanSavedColl_posData;
                             if ((
                                     (stanSavedColl_posData == NULL) 
                                     || ((stanSavedColl_posData->type != PROP_TYPE_CHR) && (stanSavedColl_posData->type != PROP_TYPE_VIEWER))
@@ -9203,77 +9169,68 @@ void sub_GAME_7F02D734(ChrRecord *self, s32 hand)
                                 sub_GAME_7F0A3E1C(&sp258, 1, 26.0f, (s16) sp254->room);
                             }
 
-                            //temp_a1 = stanSavedColl_posData;
-                            temp_a3_2 = sp274->act_bytes.padding[0x54];
-
                             if (stanSavedColl_posData != NULL)
                             {
-                                recall_joy2_hits_edit_detail_edit_flag((s32) temp_a3_2, &stanSavedColl_posData->type, -1);
-                                //temp_v1_2 = stanSavedColl_posData;
+                                recall_joy2_hits_edit_detail_edit_flag(prop_selfchr->act_attack.attack_item, &stanSavedColl_posData->type, -1);
+
                                 if (stanSavedColl_posData->type == PROP_TYPE_CHR)
                                 {
                                     if ((self->chrflags & 0x40) != 0)
                                     {
-                                        handles_shot_actors(stanSavedColl_posData->chr, 0xF, &sp220, (s32) sp274->act_bytes.padding[0x54], 0);
+                                        handles_shot_actors(stanSavedColl_posData->chr, 0xF, &sp220, prop_selfchr->act_attack.attack_item, 0);
                                     }
                                 }
                                 else if ((stanSavedColl_posData->type == PROP_TYPE_OBJ) || (stanSavedColl_posData->type == PROP_TYPE_WEAPON))
                                 {
-                                    sp4C = bondwalkItemGetDestructionAmount((s32) sp274->act_bytes.padding[0x54]);
+                                    sp4C = bondwalkItemGetDestructionAmount(prop_selfchr->act_attack.attack_item);
 
-                                    // fix arg2, should be struct coord3d
-                                    chrobjMaybeDetonateObjectIfFlags(stanSavedColl_posData->obj, sp4C, (s32) &sp258, (s32) sp274->act_bytes.padding[0x54], get_cur_playernum());
+                                    chrobjMaybeDetonateObjectIfFlags(stanSavedColl_posData->obj, sp4C, &sp258, (s32) prop_selfchr->act_attack.attack_item, get_cur_playernum());
                                 }
                             }
                             else
                             {
-                                recall_joy2_hits_edit_flag((s32) temp_a3_2, &sp258, -1);
+                                recall_joy2_hits_edit_flag(prop_selfchr->act_attack.attack_item, &sp258, -1);
                             }
                         }
 
                         if (sp264 != 0)
                         {
-                            temp_t6 = sp274->act_bytes.padding[0x54];
-                            switch (temp_t6) {
-                            case 4:
-                            case 5:
-                            case 6:
-                            case 7:
-                            case 8:
-                            case 9:
-                            case 10:
-                            case 11:
-                            case 12:
-                            case 13:
-                            case 14:
-                            case 18:
-                            case 19:
-                            case 20:
-                            case 21:
-                            case 22:
-                                sp264 = 1;
-                                break;
-                            default:
-                                sp264 = 0;
-                                break;
+                            switch (prop_selfchr->act_attack.attack_item) 
+                            {
+                                case ITEM_WPPK:
+                                case ITEM_WPPKSIL:
+                                case ITEM_TT33:
+                                case ITEM_SKORPION:
+                                case ITEM_AK47:
+                                case ITEM_UZI:
+                                case ITEM_MP5K:
+                                case ITEM_MP5KSIL:
+                                case ITEM_SPECTRE:
+                                case ITEM_M16:
+                                case ITEM_FNP90:
+                                case ITEM_RUGER:
+                                case ITEM_GOLDENGUN:
+                                case ITEM_SILVERWPPK:
+                                case ITEM_GOLDWPPK:
+                                case ITEM_LASER:
+                                    sp264 = 1;
+                                    break;
+
+                                default:
+                                    sp264 = 0;
+                                    break;
                             }
                         }
 
                         if (sp264 != 0)
                         {
-                            sub_GAME_7F061948(&self->unk180[hand], (s32) sp274->act_bytes.padding[0x54], &sp240, &sp258);
+                            sub_GAME_7F061948(&self->unk180[hand], prop_selfchr->act_attack.attack_item, &sp240, &sp258);
                         }
                     }
                 }
             }
 
-            temp_a2 = sp27C != 0;
-            phi_a2 = temp_a2;
-
-            if (temp_a2 == 0)
-            {
-                phi_a2 = sp278 != 0;
-            }
+            phi_a2 = (sp27C != 0) || (sp278 != 0);
 
             sub_GAME_7F02BFE4(self, hand, phi_a2);
         }
