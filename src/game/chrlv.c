@@ -109,6 +109,7 @@ s32 chrlvUpdateAimendsideback(ChrRecord *arg0, void *arg1, s32 arg2, s32 arg3, f
 void chrlvResetAimend(struct ChrRecord *arg0);
 void chrlvToggleHiddenRelated(ChrRecord *arg0, s32 arg1, s32 arg2);
 void chrlvUpdateShotbondsum(ChrRecord *arg0, s32 *arg1, s32 *arg2, ITEM_IDS item);
+f32 sub_GAME_7F02C27C(struct ChrRecord *arg0);
 
 void sub_GAME_7F025C40(struct ChrRecord *chr, s32);
 void sub_GAME_7F02587C(struct ChrRecord *chr, s32);

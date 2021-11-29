@@ -2,6 +2,7 @@
 #define _CHROBJHANDLER_H_
 
 #include "ultra64.h"
+#include "bondconstants.h"
 #include "bondtypes.h"
 #include "snd.h"
 
@@ -29,5 +30,7 @@ void sub_GAME_7F053A10(ALSoundState *, struct coord3d *);
 void start_alarm(void);
 void sub_GAME_7F052574(PropRecord *, s32);
 s32 sub_GAME_7F052604(PropRecord *);
+
+object_standard *create_new_item_instance_of_model(PROPS propid, s32 arg1);
 
 #endif

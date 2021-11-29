@@ -863,27 +863,27 @@ object_standard blank_11_object[] = {
 
 object_weapon blank_08_object_preset_1[] = {
     0x0100,0x0,0x08,
-     0,  1,
+    0,  1,
     0x00000000,
-     0,
-     0,
-     0,
-     1.0f, 0.0f, 0.0f, 0.0f,
-     0.0f, 1.0f, 0.0f, 0.0f,
-     0.0f, 0.0f, 1.0f, 0.0f,
-     0.0f, 0.0f, 0.0f, 1.0f,
-     0.0, 0.0, 0.0,
+    0,
+    0,
+    0,
+    1.0f, 0.0f, 0.0f, 0.0f,
+    0.0f, 1.0f, 0.0f, 0.0f,
+    0.0f, 0.0f, 1.0f, 0.0f,
+    0.0f, 0.0f, 0.0f, 1.0f,
+    0.0, 0.0, 0.0,
     0x00000000,
-     0,
-     0,
-     0.0,
-     0x447A,0x0000,
-     0xFFFFFF00,
-     0xFFFFFF00,
+    0,
+    0,
+    0.0,
+    0x447A,0x0000,
+    0xFFFFFF00,
+    0xFFFFFF00,
     0x0,
-     0xFF,
-     0xFFFF,
-     00000000
+    0xFF,
+    0xFFFF,
+    00000000
 };
 
 object_weapon blank_08_object_preset_4001[] = {
@@ -38937,7 +38937,17 @@ glabel sub_GAME_7F052030
 
 
 #ifdef NONMATCHING
-void create_new_item_instance_of_model(void) {
+/**
+ * @param arg0: index into PitemZ_entries, which is enum PROPS
+ * @param arg1: object_weapon.gun_pickup value
+ * 
+ * Address 0x7F05206C.
+*/
+object_standard *create_new_item_instance_of_model(PROPS propid, s32 arg1) {
+
+    // spB4 = PitemZ_entries[arg0].header;
+    
+    // (result)->unk80 = (s8) arg1; // should be object_weapon.gun_pickup
 
 }
 #else

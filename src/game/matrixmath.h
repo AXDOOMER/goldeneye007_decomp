@@ -24,6 +24,9 @@ s32 matrix_4x4_multiply_homogeneous(Mtxf *lhs, Mtxf *rhs, Mtxf *result);
 void sub_GAME_7F058C9C(Mtxf *a, Mtxf *b);
 void matrix_4x4_multiply_homogeneous_in_place(Mtxf *lhs, Mtxf *rhs);
 void matrix_4x4_transform_vector_in_place(Mtxf *matrix, vec3 vector);
+void matrix_4x4_set_identity(Mtxf *matrix);
+void matrix_4x4_set_rotation_around_x(f32 angle, Mtxf *matrix);
+void matrix_4x4_set_rotation_around_y(f32 angle, Mtxf *matrix);
 
 // tenative guess
 void sub_GAME_7F058E78(Mtxf *arg0, Mtxf *arg1);
