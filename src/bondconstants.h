@@ -38,6 +38,7 @@
 
 // Delete this section when merged.
 #define COUNT_DEATH_AS_CIVILIAN 0x100000
+#define RUNTIMEBITFLAG_DEPOSIT 0x80
 /***************************************************************************************************************************/
 
 typedef u16 PAD;

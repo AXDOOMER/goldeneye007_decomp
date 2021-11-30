@@ -565,14 +565,34 @@ struct act_attack
     u32 unk038;                                                        /*0x38*/
     u32 unk03c;                                                        /*0x3c*/
     u32 unk040;                                                        /*0x40*/
-    u32 attack_time;                                                        /*0x44*/
-    u32 unk048;                                                        /*0x48*/
-    u32 attacktype;                                                    /*0x4c*/
-    u32 entityid;                                                      /*0x50*/
+    u32 unk044;                                                        /*0x44*/
+    u32 attack_time;                                                   /*0x48*/
 
-    ITEM_IDS attack_item;                                               /*0x54*/
+    /**
+     * attack type is the target flag used by the AI fire at target commands.
+     * chr offset 0x4c.
+    */
+    u32 attacktype;
+    u32 entityid;                                                      /*0x50*/
+    u32 unk54;                                                          /*0x54*/
 
     bool type_of_motion;                                                /*0x58 reaim*/
+    u32 unk5C;
+    
+    u32 unk60;
+    u32 unk64;
+    u32 unk68;
+    u32 unk6c;
+    
+    u32 unk70;
+    u32 unk74;
+    u32 unk78;
+    u32 unk7c;
+
+    s8 attack_item;
+    u8 unk81;
+    u8 unk82;
+    u8 unk83;
 };
 
 struct act_attackwalk
@@ -991,7 +1011,7 @@ typedef struct ChrRecord
 
     /* 0x0180 */
     /**
-     * Method sub_GAME_7F02D734 calls sub_GAME_7F061948, and passes an address
+     * Method chrlvFireWeaponRelated calls sub_GAME_7F061948, and passes an address
      * which makes it look like this is an array at ChrRecord offset 180.
     */
     struct ChrRecord_f180 unk180[2];
@@ -1036,10 +1056,10 @@ struct ObjectRecord_f6c
     u32 unk84;
     // used by sub_GAME_7F05EB0C
     struct PropRecord *prop;
-    u32 unk8c;
+    f32 unk8c;
 
     u32 unk90;
-    u32 unk94;
+    f32 unk94;
     ALSoundState * unk98;
     ALSoundState * unk9c;
 
