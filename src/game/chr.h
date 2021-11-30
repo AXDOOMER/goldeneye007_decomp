@@ -62,18 +62,44 @@ struct weapon_firing_animation_table
     f32 anonymous_1;
     f32 anonymous_2;
     f32 anonymous_3;
+
+    /**
+     * Offset 0x10.
+    */
     f32 anonymous_4;
     f32 anonymous_5;
     f32 anonymous_6;
     f32 anonymous_7;
+
+    /**
+     * Offset 0x20.
+    */
     f32 anonymous_8;
     f32 anonymous_9;
     f32 anonymous_10;
     f32 anonymous_11;
+
+    /**
+     * Offset 0x30.
+    */
     f32 anonymous_12;
     f32 anonymous_13;
+
+    /**
+     * Some kind of minimum. See chrlvUpdateAimendsideback.
+     * Offset 0x38.
+    */
     f32 anonymous_14;
+
+    /**
+     * Some kind of maximum. See chrlvUpdateAimendsideback.
+     * Offset 0x3c.
+    */
     f32 anonymous_15;
+
+    /**
+     * Offset 0x40.
+    */
     f32 anonymous_16;
     f32 anonymous_17;
 };
