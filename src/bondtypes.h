@@ -611,8 +611,13 @@ struct act_attackwalk
 
 struct act_attackroll
 {
-    struct weapon_firing_animation_table *animfloats;                                     /*0x2c*/
-    u32 unk030;                                                        /*0x30*/
+    struct weapon_firing_animation_table *animfloats;                   /*0x2c*/
+    
+    s8 unk030;                                                        /*0x30*/
+    s8 unk031;                                                        /*0x31*/
+    s8 unk032;                                                        /*0x32*/
+    s8 unk033;                                                        /*0x33*/
+
     u8 unk034;                                                         /*0x34*/
     s8 unk035;                                                         /*0x35*/
     s8 unk036;                                                         /*0x36*/
