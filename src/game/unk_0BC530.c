@@ -156,16 +156,17 @@ void sub_GAME_7F0BC7D4(void)
 {
     s32 i;
 
-    for(i = 0; i!=300; i++)
+    for(i = 0; i<300; ++i)
     {
-        if (dword_CODE_bss_80083900[i] >= 0)
+        if (dword_CODE_bss_80083900[i] > -1)
         {
-            dword_CODE_bss_80083320[i+1];
-            dword_CODE_bss_80083320[i] = dword_CODE_bss_80083320[i+1];
-            if ((dword_CODE_bss_80083320[i+1] & 0xFF) >= 2)
+            //needed to get close, still wrong temp usage, starts with t8 instead of t7
+            dword_CODE_bss_80083320[i] = dword_CODE_bss_80083320[i];
+            if ((dword_CODE_bss_80083320[i]+1 & 0xFF) > 1)
             {
                 sub_GAME_7F0BC690(i);
             }
+            
         } 
     }
 }
