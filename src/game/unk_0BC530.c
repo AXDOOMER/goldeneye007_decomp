@@ -3,7 +3,7 @@
 #include "game/bg.h"
 #include "game/unk_0BC530.h"
 
-//temp name
+//temp name 
 #define AMT300 300 
 
 // bss
@@ -44,34 +44,11 @@ void sub_GAME_7F0BC624(s32 param_1) {
 }
 
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0BC634(s16 param_1,int param_2)
+void sub_GAME_7F0BC634(int param_1,int param_2)
 {
-    roominformationblock[param_2].field_36 = param_1;
-    (&dword_CODE_bss_80083450)[param_1] = param_2;
-    return;
+    array_room_info[param_2].field_36 = param_1;
+    dword_CODE_bss_80083450[param_1] = param_2;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BC634
-/* 0F1164 7F0BC634 00057080 */  sll   $t6, $a1, 2
-/* 0F1168 7F0BC638 01C57021 */  addu  $t6, $t6, $a1
-/* 0F116C 7F0BC63C 000E7100 */  sll   $t6, $t6, 4
-/* 0F1170 7F0BC640 3C018004 */  lui   $at, %hi(array_room_info + 0x10 +38)
-/* 0F1174 7F0BC644 002E0821 */  addu  $at, $at, $t6
-/* 0F1178 7F0BC648 A424144A */  sh    $a0, %lo(array_room_info + 0x10 +38)($at)
-/* 0F117C 7F0BC64C 3C018008 */  lui   $at, %hi(dword_CODE_bss_80083450)
-/* 0F1180 7F0BC650 00047880 */  sll   $t7, $a0, 2
-/* 0F1184 7F0BC654 002F0821 */  addu  $at, $at, $t7
-/* 0F1188 7F0BC658 03E00008 */  jr    $ra
-/* 0F118C 7F0BC65C AC253450 */   sw    $a1, %lo(dword_CODE_bss_80083450)($at)
-)
-#endif
 
 
 
