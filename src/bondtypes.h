@@ -620,15 +620,20 @@ struct act_attackwalk
     u32 unk038;                                                        /*0x38*/
     struct weapon_firing_animation_table *animfloats;                  /*0x3c*/
     s32 timer40;                                                        /*0x40*/
-    u32 unk044;                                                        /*0x44*/
-    
-    s8 unk48;                                                        /*0x48*/
-    s8 unk49;                                                        /*0x48*/
-    s8 unk4a;                                                        /*0x48*/
-    s8 unk4b;                                                        /*0x48*/
 
-    u16 unk04c;                                                        /*0x4c*/
+    s32 unk044;                                                        /*0x44*/
+    
+    s8 unk48[2];                                                        /*0x48*/
+    //s8 unk49;                                                        /*0x48*/
+    s8 unk4a[2];                                                        /*0x48*/
+    //s8 unk4b;                                                        /*0x48*/
+
+    s8 unk4C[2];                                                        /*0x4c*/
     u8 flip;                                                           /*0x4e*/
+    s8 unk4f;
+
+    s32 unk50;
+    f32 speed;
 };
 
 struct act_attackroll
