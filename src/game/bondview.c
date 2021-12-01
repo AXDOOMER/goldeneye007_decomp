@@ -5091,7 +5091,7 @@ glabel set_camera_mode
 /* 0AF9D0 7F07AEA0 0FC1E73C */  jal   solo_char_load
 /* 0AF9D4 7F07AEA4 00000000 */   nop
 /* 0AF9D8 7F07AEA8 8E040000 */  lw    $a0, ($s0)
-/* 0AF9DC 7F07AEAC 0FC1BD6B */  jal   sub_GAME_7F06F5AC
+/* 0AF9DC 7F07AEAC 0FC1BD6B */  jal   objecthandlerGetModelAnim
 /* 0AF9E0 7F07AEB0 24840598 */   addiu $a0, $a0, 0x598
 /* 0AF9E4 7F07AEB4 8E040000 */  lw    $a0, ($s0)
 /* 0AF9E8 7F07AEB8 AFA20038 */  sw    $v0, 0x38($sp)

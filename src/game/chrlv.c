@@ -874,7 +874,7 @@ void chrlvKneelingAnimationRelated(struct ChrRecord *arg0)
         arg0->act_stand.unk044 = (randomGetNext() % 0x78U) + 0xB4;
         arg0->sleep = 0;
 
-        if ((s32)sub_GAME_7F06F5AC(arg0->model) == (s32)&ANIM_DATA_fire_kneel_forward_one_handed_weapon_slow + (s32)&ptr_animation_table->data)
+        if ((s32)objecthandlerGetModelAnim(arg0->model) == (s32)&ANIM_DATA_fire_kneel_forward_one_handed_weapon_slow + (s32)&ptr_animation_table->data)
         {
             objecthandlerAnimationRelated7F06FCA8(arg0->model, (s32)&ANIM_DATA_fire_kneel_forward_one_handed_weapon_slow + (s32)&ptr_animation_table->data, (s32) arg0->model->gunhand, 109.0f, chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f), 16.0f);
             sub_GAME_7F06FDE8(arg0->model, 140.0f);
@@ -4565,37 +4565,37 @@ f32 chrlvModelScaleAnimationRelated(struct ChrRecord *arg0)
 {
     f32 scale_factor = D_80030984;
 
-    if ((s32)sub_GAME_7F06F5AC(arg0->model) == (s32)&ptr_animation_table->data[(s32)&ANIM_DATA_sprinting])
+    if ((s32)objecthandlerGetModelAnim(arg0->model) == (s32)&ptr_animation_table->data[(s32)&ANIM_DATA_sprinting])
     {
         scale_factor = D_8003098C;
     }
-    else if ((s32)sub_GAME_7F06F5AC(arg0->model) == (s32)&ptr_animation_table->data[(s32)&ANIM_DATA_running])
+    else if ((s32)objecthandlerGetModelAnim(arg0->model) == (s32)&ptr_animation_table->data[(s32)&ANIM_DATA_running])
     {
         scale_factor = D_80030988;
     }
-    else if ((s32)sub_GAME_7F06F5AC(arg0->model) == (s32)&ANIM_DATA_sprinting_one_handed_weapon + (s32)&ptr_animation_table->data[0])
+    else if ((s32)objecthandlerGetModelAnim(arg0->model) == (s32)&ANIM_DATA_sprinting_one_handed_weapon + (s32)&ptr_animation_table->data[0])
     {
         scale_factor = D_80030998;
     }
-    else if ((s32)sub_GAME_7F06F5AC(arg0->model) == (s32)&ptr_animation_table->data[(s32)&ANIM_DATA_running_one_handed_weapon])
+    else if ((s32)objecthandlerGetModelAnim(arg0->model) == (s32)&ptr_animation_table->data[(s32)&ANIM_DATA_running_one_handed_weapon])
     {
         scale_factor = D_80030994;
     }
-    else if ((s32)sub_GAME_7F06F5AC(arg0->model) == (s32)&ptr_animation_table->data[(s32)&ANIM_DATA_walking_unarmed])
+    else if ((s32)objecthandlerGetModelAnim(arg0->model) == (s32)&ptr_animation_table->data[(s32)&ANIM_DATA_walking_unarmed])
     {
         scale_factor = D_80030990;
     }
     // typo/mistake, `ANIM_DATA_sprinting_one_handed_weapon` is duplicate of above.
     // compiler swaps addition order when reading this from the stack, unlike addresses only seen once (seen once means not saved to stack).
-    else if ((s32)sub_GAME_7F06F5AC(arg0->model) == (s32)&ANIM_DATA_sprinting_one_handed_weapon + (s32)&ptr_animation_table->data[0])
+    else if ((s32)objecthandlerGetModelAnim(arg0->model) == (s32)&ANIM_DATA_sprinting_one_handed_weapon + (s32)&ptr_animation_table->data[0])
     {
         scale_factor = D_800309A4;
     }
-    else if ((s32)sub_GAME_7F06F5AC(arg0->model) == (s32)&ptr_animation_table->data[(s32)&ANIM_DATA_running_female])
+    else if ((s32)objecthandlerGetModelAnim(arg0->model) == (s32)&ptr_animation_table->data[(s32)&ANIM_DATA_running_female])
     {
         scale_factor = D_800309A0;
     }
-    else if ((s32)sub_GAME_7F06F5AC(arg0->model) == (s32)&ptr_animation_table->data[(s32)&ANIM_DATA_walking_female])
+    else if ((s32)objecthandlerGetModelAnim(arg0->model) == (s32)&ptr_animation_table->data[(s32)&ANIM_DATA_walking_female])
     {
         scale_factor = D_8003099C;
     }
@@ -6898,7 +6898,7 @@ glabel sub_GAME_7F02AD98
 /* 05F940 7F02AE10 02002025 */  move  $a0, $s0
 /* 05F944 7F02AE14 1300001C */  beqz  $t8, .L7F02AE88
 /* 05F948 7F02AE18 00000000 */   nop   
-/* 05F94C 7F02AE1C 0FC1BD6B */  jal   sub_GAME_7F06F5AC
+/* 05F94C 7F02AE1C 0FC1BD6B */  jal   objecthandlerGetModelAnim
 /* 05F950 7F02AE20 8E04001C */   lw    $a0, 0x1c($s0)
 /* 05F954 7F02AE24 94590004 */  lhu   $t9, 4($v0)
 /* 05F958 7F02AE28 44804000 */  mtc1  $zero, $f8
@@ -7395,7 +7395,7 @@ void chrlvSneezeRelated(ChrRecord *arg0)
     }
 
     if (
-        (sub_GAME_7F06F5AC(arg0->model) == &ptr_animation_table->data[(s32)&ANIM_DATA_sneeze])
+        ((s32)objecthandlerGetModelAnim(arg0->model) == (s32)&ptr_animation_table->data[(s32)&ANIM_DATA_sneeze])
         && (objecthandlerGetModelField28(arg0->model) >= 42.0f)
         && ((arg0->chrflags << 6) >= 0))
     {
@@ -7427,7 +7427,8 @@ void chrlvSurrenderAnimationRelated7F02B638(struct ChrRecord *arg0)
         model = arg0->model;
         arg0->sleep = 0x10;
 
-        if ((sub_GAME_7F06F5AC(model) == &ptr_animation_table->data[(s32)&ANIM_DATA_surrendering_armed_drop_weapon]) && (objecthandlerGetModelField28(model) >= 80.0f))
+        if (((s32)objecthandlerGetModelAnim(model) == (s32)&ptr_animation_table->data[(s32)&ANIM_DATA_surrendering_armed_drop_weapon]) 
+            && (objecthandlerGetModelField28(model) >= 80.0f))
         {
             struct coord3d sp30 = D_80030A44;
 
@@ -7596,7 +7597,7 @@ void guard_body_hit_sfx(ChrRecord *arg0)
 
     if (objecthandlerGetModelField28(model) >= sub_GAME_7F06F5C4(model))
     {
-        if ((s32)sub_GAME_7F06F5AC(model) == (s32)&ptr_animation_table->data[(s32)&ANIM_DATA_death_left_leg])
+        if ((s32)objecthandlerGetModelAnim(model) == (s32)&ptr_animation_table->data[(s32)&ANIM_DATA_death_left_leg])
         {
             objecthandlerAnimationRelated7F06FCA8(
                 model,
@@ -7631,7 +7632,7 @@ void sub_GAME_7F02BC80(ChrRecord *arg0)
     {
         chrlvSetTargetToPlayer(arg0);
 
-        if (sub_GAME_7F06F5AC(model) == &ptr_animation_table->data[(s32)&ANIM_DATA_death_left_leg])
+        if ((s32)objecthandlerGetModelAnim(model) == (s32)&ptr_animation_table->data[(s32)&ANIM_DATA_death_left_leg])
         {
             chrlvIdleAnimationRelated7F023E14(arg0, 26.0f);
         }
@@ -7760,11 +7761,11 @@ void sub_GAME_7F02BF24(ChrRecord *arg0)
 
     if (objecthandlerGetModelField28(model) >= sub_GAME_7F06F5C4(model))
     {
-        if (sub_GAME_7F06F5AC(model) == &ptr_animation_table->data[(s32)&ANIM_DATA_surrendering_armed])
+        if ((s32)objecthandlerGetModelAnim(model) == (s32)&ptr_animation_table->data[(s32)&ANIM_DATA_surrendering_armed])
         {
             chrlvIdleAnimationRelated7F023E14(arg0, 26.0f);
         }
-        else if (sub_GAME_7F06F5AC(model) == &ptr_animation_table->data[(s32)&ANIM_DATA_spotting_bond])
+        else if ((s32)objecthandlerGetModelAnim(model) == (s32)&ptr_animation_table->data[(s32)&ANIM_DATA_spotting_bond])
         {
             chrlvIdleAnimationRelated7F023E14(arg0, 26.0f);
         }
@@ -9325,7 +9326,7 @@ void chrlvAttackrollAnimationRelated7F02E3B8(ChrRecord *arg0)
     {
         objecthandlerAnimationRelated7F06FCA8(
             model,
-            sub_GAME_7F06F5AC(model),
+            objecthandlerGetModelAnim(model),
             (s32) model->gunhand,
             arg0->act_attackroll.animfloats->anonymous_9,
             chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f),
@@ -9335,7 +9336,7 @@ void chrlvAttackrollAnimationRelated7F02E3B8(ChrRecord *arg0)
     {
         objecthandlerAnimationRelated7F06FCA8(
             model,
-            sub_GAME_7F06F5AC(model),
+            objecthandlerGetModelAnim(model),
             (s32) model->gunhand,
             arg0->act_attackroll.animfloats->anonymous_7,
             chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f),
@@ -9417,7 +9418,7 @@ glabel sub_GAME_7F02E4C0
 /* 0630BC 7F02E58C 02002025 */   move  $a0, $s0
 /* 0630C0 7F02E590 1440001E */  bnez  $v0, .L7F02E60C
 /* 0630C4 7F02E594 00000000 */   nop   
-/* 0630C8 7F02E598 0FC1BD6B */  jal   sub_GAME_7F06F5AC
+/* 0630C8 7F02E598 0FC1BD6B */  jal   objecthandlerGetModelAnim
 /* 0630CC 7F02E59C 02602025 */   move  $a0, $s3
 /* 0630D0 7F02E5A0 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 0630D4 7F02E5A4 4481C000 */  mtc1  $at, $f24
@@ -9578,7 +9579,7 @@ glabel sub_GAME_7F02E4C0
 /* 063304 7F02E7D4 A2000031 */  sb    $zero, 0x31($s0)
 .L7F02E7D8:
 /* 063308 7F02E7D8 E7AE005C */  swc1  $f14, 0x5c($sp)
-/* 06330C 7F02E7DC 0FC1BD6B */  jal   sub_GAME_7F06F5AC
+/* 06330C 7F02E7DC 0FC1BD6B */  jal   objecthandlerGetModelAnim
 /* 063310 7F02E7E0 E7AC0060 */   swc1  $f12, 0x60($sp)
 /* 063314 7F02E7E4 C7AE005C */  lwc1  $f14, 0x5c($sp)
 /* 063318 7F02E7E8 3C014100 */  li    $at, 0x41000000 # 8.000000
@@ -9929,7 +9930,7 @@ glabel sub_GAME_7F02E4C0
 /* 060FB0 7F02E5C0 02002025 */   move  $a0, $s0
 /* 060FB4 7F02E5C4 1440001E */  bnez  $v0, .L7F02E640
 /* 060FB8 7F02E5C8 00000000 */   nop   
-/* 060FBC 7F02E5CC 0FC1BDD3 */  jal   sub_GAME_7F06F5AC
+/* 060FBC 7F02E5CC 0FC1BDD3 */  jal   objecthandlerGetModelAnim
 /* 060FC0 7F02E5D0 02602025 */   move  $a0, $s3
 /* 060FC4 7F02E5D4 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 060FC8 7F02E5D8 4481C000 */  mtc1  $at, $f24
@@ -10090,7 +10091,7 @@ glabel sub_GAME_7F02E4C0
 /* 0611F8 7F02E808 A2000031 */  sb    $zero, 0x31($s0)
 .L7F02E80C:
 /* 0611FC 7F02E80C E7AE005C */  swc1  $f14, 0x5c($sp)
-/* 061200 7F02E810 0FC1BDD3 */  jal   sub_GAME_7F06F5AC
+/* 061200 7F02E810 0FC1BDD3 */  jal   objecthandlerGetModelAnim
 /* 061204 7F02E814 E7AC0060 */   swc1  $f12, 0x60($sp)
 /* 061208 7F02E818 C7AE005C */  lwc1  $f14, 0x5c($sp)
 /* 06120C 7F02E81C 3C014100 */  li    $at, 0x41000000 # 8.000000
@@ -10416,7 +10417,7 @@ void chrlvAttackAnimationRelated7F02EBFC(ChrRecord *arg0)
 
             objecthandlerAnimationRelated7F06FCA8(
                 self_model,
-                sub_GAME_7F06F5AC(self_model),
+                objecthandlerGetModelAnim(self_model),
                 (s32) self_model->gunhand,
                 phi_f2,
                 chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f),
@@ -10489,7 +10490,7 @@ void chrlvAttackAnimationRelated7F02EBFC(ChrRecord *arg0)
             {
                 objecthandlerAnimationRelated7F06FCA8(
                     self_model,
-                    sub_GAME_7F06F5AC(self_model),
+                    objecthandlerGetModelAnim(self_model),
                     (s32) self_model->gunhand,
                     arg0->act_attack.animfloats->anonymous_9,
                     chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f),
@@ -10670,7 +10671,7 @@ void chrlvAttackAnimationRelated7F02EEE0(ChrRecord *arg0)
             {
                 if (sub_GAME_7F06F5C4(temp_a0) <= temp_f0)
                 {
-                    objecthandlerAnimationRelated7F06FCA8(temp_a0, sub_GAME_7F06F5AC(temp_a0), (s32) temp_a0->gunhand, arg0->act_attackroll.animfloats->anonymous_9, chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f), 16.0f);
+                    objecthandlerAnimationRelated7F06FCA8(temp_a0, objecthandlerGetModelAnim(temp_a0), (s32) temp_a0->gunhand, arg0->act_attackroll.animfloats->anonymous_9, chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f), 16.0f);
                     
                     if (arg0->act_attackroll.unk37 != 0)
                     {
@@ -10893,9 +10894,146 @@ s32 chrlvApplySpeed(ChrRecord *self, struct coord3d *arg1, s32 arg2, f32 *speedP
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F02F888(void) {
+void sub_GAME_7F02F888(ChrRecord *self)
+{
+    f32 sp34;
+    Model *self_model;
+    PropRecord *temp_v0;
+    f32 temp_f0;
+    f32 temp_f2;
+    f32 temp_f6;
+    f32 temp_f8;
+    s32 temp_s1_2;
+    s32 temp_v0_2;
+    u16 temp_t6;
+    u16 temp_t7;
+    u32 temp_v1;
+    void *self_prop;
+    ChrRecord *phi_s2;
+    s32 phi_s1;
+    f32 phi_f6;
+    f32 phi_f8;
 
+    self_model = self->model;
+    self_prop = self->prop;
+    temp_v0 = get_curplayer_positiondata();
+    self->act_attackwalk.clock_timer30 += g_ClockTimer;
+    self->collision_bounds.points[0].x = g_GlobalTimer;
+
+    if (
+        (self->invalidmove == 1)
+        || (self->collision_bounds.points[0].f[1] < (g_GlobalTimer - 0x3C))
+        || (self->act_attackwalk.clock_timer34 < self->act_attackwalk.clock_timer30))
+    {
+        sp34 = objecthandlerGetModelField28(self_model);
+        temp_t6 = objecthandlerGetModelAnim(self_model)->unk4;
+        temp_f6 = (f32) temp_t6;
+        phi_f6 = temp_f6;
+
+        if ((s32) temp_t6 < 0)
+        {
+            phi_f6 = temp_f6 + 4294967296.0f;
+        }
+
+        if ((phi_f6 * 0.5f) < sp34)
+        {
+            sub_GAME_7F06FE90(self_model, 0.0f, 16.0f);
+        }
+
+        else
+        {
+            temp_t7 = objecthandlerGetModelAnim(self_model)->unk4;
+            temp_f8 = (f32) temp_t7;
+            phi_f8 = temp_f8;
+            if ((s32) temp_t7 < 0)
+            {
+                phi_f8 = temp_f8 + 4294967296.0f;
+            }
+            sub_GAME_7F06FE90(self_model, phi_f8 * 0.5f, 16.0f);
+        }
+        chrlvSetTargetToPlayer(self);
+        chrlvKneelingAnimationRelated7F023E48(self);
+        return;
+    }
+    temp_f0 = temp_v0->pos.x - self_prop->pos.x;
+    temp_f2 = temp_v0->pos.f[2] - self_prop->pos.f[2];
+    if ((temp_f0 < 300.0f) && (temp_f0 > -300.0f) && (temp_f2 < 300.0f) && (temp_f2 > -300.0f))
+    {
+        chrlvSetTargetToPlayer(self);
+        chrlvKneelingAnimationRelated7F023E48(self);
+        return;
+    }
+    if (chrlvApplySpeed(self, &temp_v0->pos, 0, &self->manground) != 0)
+    {
+        self->act_attackwalk.unk038 = 1;
+    }
+    if (self->act_attackwalk.clock_timer30 >= 0x15)
+    {
+        chrlvUpdateAimendsideback(self, self->act_attackwalk.animfloats, (s32) self->act_attackwalk.unk49, (s32) self->act_attackwalk.unk48, 1.0f);
+    }
+    else
+    {
+        chrlvResetAimend(self);
+    }
+    if ((self->act_attackwalk.unk038 != 0) && (phi_s2 = self, phi_s1 = 0, ((self->act_attackwalk.clock_timer30 < 0x1F) == 0)))
+    {
+        do
+        {
+            if (phi_s2->act_attackwalk.unk48 != 0)
+            {
+                if (phi_s2->act_attackwalk.unk4a == 0)
+                {
+                    chrlvToggleHiddenRelated(self, phi_s1, 1);
+                }
+                else
+                {
+                    temp_v0_2 = self->act_attackwalk.clock_timer30;
+                    if ((self->act_attackwalk.timer40 < temp_v0_2) && ((temp_v1 = self->act_attackwalk.unk044, (phi_s1 == temp_v1)) || ((self + temp_v1)->unk4A == 0)))
+                    {
+                        self->act_attackwalk.timer40 = temp_v0_2;
+                        if ((self + -phi_s1)->unk4B != 0)
+                        {
+                            if (phi_s2->unk4C != 0)
+                            {
+                                self->act_attackwalk.timer40 = temp_v0_2 + 0x5A;
+                            }
+                            else
+                            {
+                                self->act_attackwalk.timer40 += 0x14;
+                            }
+                        }
+                        else if (phi_s2->unk4C != 0)
+                        {
+                            self->act_attackwalk.timer40 += 0xB4;
+                        }
+                        else
+                        {
+                            self->act_attackwalk.timer40 += 0x28;
+                        }
+                        self->act_attackwalk.unk044 = 1 - self->act_attackwalk.unk044;
+                        chrlvToggleHiddenRelated(self, phi_s1, 1);
+                    }
+                    else
+                    {
+                        chrlvToggleHiddenRelated(self, phi_s1, 0);
+                    }
+                }
+            }
+            else
+            {
+                chrlvToggleHiddenRelated(self, phi_s1, 0);
+            }
+            temp_s1_2 = phi_s1 + 1;
+            phi_s2 += 1;
+            phi_s1 = temp_s1_2;
+        } while (temp_s1_2 != 2);
+        return;
+    }
+    chrlvToggleHiddenRelated(self, 1, 0);
+    chrlvToggleHiddenRelated(self, 0, 0);
 }
+
+
 #else
 GLOBAL_ASM(
 .text
@@ -10936,7 +11074,7 @@ glabel sub_GAME_7F02F888
 /* 064438 7F02F908 0FC1BD6F */  jal   objecthandlerGetModelField28
 /* 06443C 7F02F90C 02202025 */   move  $a0, $s1
 /* 064440 7F02F910 E7A00034 */  swc1  $f0, 0x34($sp)
-/* 064444 7F02F914 0FC1BD6B */  jal   sub_GAME_7F06F5AC
+/* 064444 7F02F914 0FC1BD6B */  jal   objecthandlerGetModelAnim
 /* 064448 7F02F918 02202025 */   move  $a0, $s1
 /* 06444C 7F02F91C 944E0004 */  lhu   $t6, 4($v0)
 /* 064450 7F02F920 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
@@ -10962,7 +11100,7 @@ glabel sub_GAME_7F02F888
 /* 06449C 7F02F96C 10000013 */  b     .L7F02F9BC
 /* 0644A0 7F02F970 00000000 */   nop   
 .L7F02F974:
-/* 0644A4 7F02F974 0FC1BD6B */  jal   sub_GAME_7F06F5AC
+/* 0644A4 7F02F974 0FC1BD6B */  jal   objecthandlerGetModelAnim
 /* 0644A8 7F02F978 02202025 */   move  $a0, $s1
 /* 0644AC 7F02F97C 944F0004 */  lhu   $t7, 4($v0)
 /* 0644B0 7F02F980 02202025 */  move  $a0, $s1
@@ -11377,7 +11515,7 @@ glabel sub_GAME_7F02FE78
 /* 064A0C 7F02FEDC 10400068 */  beqz  $v0, .L7F030080
 /* 064A10 7F02FEE0 02002025 */   move  $a0, $s0
 .L7F02FEE4:
-/* 064A14 7F02FEE4 0FC1BD6B */  jal   sub_GAME_7F06F5AC
+/* 064A14 7F02FEE4 0FC1BD6B */  jal   objecthandlerGetModelAnim
 /* 064A18 7F02FEE8 02202025 */   move  $a0, $s1
 /* 064A1C 7F02FEEC 0FC1BD6F */  jal   objecthandlerGetModelField28
 /* 064A20 7F02FEF0 02202025 */   move  $a0, $s1
@@ -11388,7 +11526,7 @@ glabel sub_GAME_7F02FE78
 /* 064A34 7F02FF04 46040081 */  sub.s $f2, $f0, $f4
 /* 064A38 7F02FF08 4502000E */  bc1fl .L7F02FF44
 /* 064A3C 7F02FF0C 02202025 */   move  $a0, $s1
-/* 064A40 7F02FF10 0FC1BD6B */  jal   sub_GAME_7F06F5AC
+/* 064A40 7F02FF10 0FC1BD6B */  jal   objecthandlerGetModelAnim
 /* 064A44 7F02FF14 E7A20034 */   swc1  $f2, 0x34($sp)
 /* 064A48 7F02FF18 94490004 */  lhu   $t1, 4($v0)
 /* 064A4C 7F02FF1C C7A20034 */  lwc1  $f2, 0x34($sp)
@@ -11403,7 +11541,7 @@ glabel sub_GAME_7F02FE78
 /* 064A6C 7F02FF3C 460A1080 */  add.s $f2, $f2, $f10
 /* 064A70 7F02FF40 02202025 */  move  $a0, $s1
 .L7F02FF44:
-/* 064A74 7F02FF44 0FC1BD6B */  jal   sub_GAME_7F06F5AC
+/* 064A74 7F02FF44 0FC1BD6B */  jal   objecthandlerGetModelAnim
 /* 064A78 7F02FF48 E7A20034 */   swc1  $f2, 0x34($sp)
 /* 064A7C 7F02FF4C 944A0004 */  lhu   $t2, 4($v0)
 /* 064A80 7F02FF50 C7A20034 */  lwc1  $f2, 0x34($sp)
@@ -11423,7 +11561,7 @@ glabel sub_GAME_7F02FE78
 /* 064AB4 7F02FF84 00000000 */  nop   
 /* 064AB8 7F02FF88 45000014 */  bc1f  .L7F02FFDC
 /* 064ABC 7F02FF8C 00000000 */   nop   
-/* 064AC0 7F02FF90 0FC1BD6B */  jal   sub_GAME_7F06F5AC
+/* 064AC0 7F02FF90 0FC1BD6B */  jal   objecthandlerGetModelAnim
 /* 064AC4 7F02FF94 02202025 */   move  $a0, $s1
 /* 064AC8 7F02FF98 944B0004 */  lhu   $t3, 4($v0)
 /* 064ACC 7F02FF9C 44802000 */  mtc1  $zero, $f4
@@ -11444,7 +11582,7 @@ glabel sub_GAME_7F02FE78
 /* 064B04 7F02FFD4 10000026 */  b     .L7F030070
 /* 064B08 7F02FFD8 00000000 */   nop   
 .L7F02FFDC:
-/* 064B0C 7F02FFDC 0FC1BD6B */  jal   sub_GAME_7F06F5AC
+/* 064B0C 7F02FFDC 0FC1BD6B */  jal   objecthandlerGetModelAnim
 /* 064B10 7F02FFE0 02202025 */   move  $a0, $s1
 /* 064B14 7F02FFE4 944C0004 */  lhu   $t4, 4($v0)
 /* 064B18 7F02FFE8 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
@@ -11466,7 +11604,7 @@ glabel sub_GAME_7F02FE78
 /* 064B54 7F030024 00000000 */  nop   
 /* 064B58 7F030028 4502000E */  bc1fl .L7F030064
 /* 064B5C 7F03002C 44051000 */   mfc1  $a1, $f2
-/* 064B60 7F030030 0FC1BD6B */  jal   sub_GAME_7F06F5AC
+/* 064B60 7F030030 0FC1BD6B */  jal   objecthandlerGetModelAnim
 /* 064B64 7F030034 E7A20034 */   swc1  $f2, 0x34($sp)
 /* 064B68 7F030038 944D0004 */  lhu   $t5, 4($v0)
 /* 064B6C 7F03003C C7A20034 */  lwc1  $f2, 0x34($sp)
@@ -11506,7 +11644,7 @@ glabel sub_GAME_7F02FE78
 .L7F0300B4:
 /* 064BE4 7F0300B4 C4320988 */  lwc1  $f18, %lo(D_80030988)($at)
 /* 064BE8 7F0300B8 02202025 */  move  $a0, $s1
-/* 064BEC 7F0300BC 0FC1BD6B */  jal   sub_GAME_7F06F5AC
+/* 064BEC 7F0300BC 0FC1BD6B */  jal   objecthandlerGetModelAnim
 /* 064BF0 7F0300C0 E7B2002C */   swc1  $f18, 0x2c($sp)
 /* 064BF4 7F0300C4 3C198007 */  lui   $t9, %hi(ptr_animation_table) 
 /* 064BF8 7F0300C8 8F399538 */  lw    $t9, %lo(ptr_animation_table)($t9)
@@ -13644,7 +13782,7 @@ glabel sub_GAME_7F0315A4
 /* 066964 7F031E34 33190010 */  andi  $t9, $t8, 0x10
 /* 066968 7F031E38 1720001C */  bnez  $t9, .L7F031EAC
 /* 06696C 7F031E3C 00000000 */   nop   
-/* 066970 7F031E40 0FC1BD6B */  jal   sub_GAME_7F06F5AC
+/* 066970 7F031E40 0FC1BD6B */  jal   objecthandlerGetModelAnim
 /* 066974 7F031E44 8E44001C */   lw    $a0, 0x1c($s2)
 /* 066978 7F031E48 3C088007 */  lui   $t0, %hi(ptr_animation_table) 
 /* 06697C 7F031E4C 8D089538 */  lw    $t0, %lo(ptr_animation_table)($t0)
@@ -13653,7 +13791,7 @@ glabel sub_GAME_7F0315A4
 /* 066988 7F031E58 01095021 */  addu  $t2, $t0, $t1
 /* 06698C 7F031E5C 104A0013 */  beq   $v0, $t2, .L7F031EAC
 /* 066990 7F031E60 00000000 */   nop   
-/* 066994 7F031E64 0FC1BD6B */  jal   sub_GAME_7F06F5AC
+/* 066994 7F031E64 0FC1BD6B */  jal   objecthandlerGetModelAnim
 /* 066998 7F031E68 8E44001C */   lw    $a0, 0x1c($s2)
 /* 06699C 7F031E6C 3C0B8007 */  lui   $t3, %hi(ptr_animation_table) 
 /* 0669A0 7F031E70 8D6B9538 */  lw    $t3, %lo(ptr_animation_table)($t3)
@@ -13681,7 +13819,7 @@ glabel sub_GAME_7F0315A4
 /* 0669F0 7F031EC0 824E0007 */   lb    $t6, 7($s2)
 .L7F031EC4:
 /* 0669F4 7F031EC4 8E44001C */  lw    $a0, 0x1c($s2)
-/* 0669F8 7F031EC8 0FC1BD6B */  jal   sub_GAME_7F06F5AC
+/* 0669F8 7F031EC8 0FC1BD6B */  jal   objecthandlerGetModelAnim
 /* 0669FC 7F031ECC 26318194 */   addiu $s1, %lo(0x00008194) # addiu $s1, $s1, -0x7e6c
 /* 066A00 7F031ED0 3C198007 */  lui   $t9, %hi(ptr_animation_table) 
 /* 066A04 7F031ED4 8F399538 */  lw    $t9, %lo(ptr_animation_table)($t9)
@@ -13689,7 +13827,7 @@ glabel sub_GAME_7F0315A4
 /* 066A0C 7F031EDC 10480009 */  beq   $v0, $t0, .L7F031F04
 /* 066A10 7F031EE0 3C110000 */   lui   $s1, %hi(0x0000001C) # $s1, 0
 /* 066A14 7F031EE4 8E44001C */  lw    $a0, 0x1c($s2)
-/* 066A18 7F031EE8 0FC1BD6B */  jal   sub_GAME_7F06F5AC
+/* 066A18 7F031EE8 0FC1BD6B */  jal   objecthandlerGetModelAnim
 /* 066A1C 7F031EEC 2631001C */   addiu $s1, %lo(0x0000001C) # addiu $s1, $s1, 0x1c
 /* 066A20 7F031EF0 3C098007 */  lui   $t1, %hi(ptr_animation_table) 
 /* 066A24 7F031EF4 8D299538 */  lw    $t1, %lo(ptr_animation_table)($t1)
@@ -14268,6 +14406,75 @@ glabel sub_GAME_7F032548
 #ifdef NONMATCHING
 void manage_actions(void) {
 
+switch (arg0->actiontype) {
+    case 1:
+        sub_GAME_7F02AD98(arg0);
+        break;
+    case 2:
+        actor_reset_sleep(arg0);
+        break;
+    case 3:
+        chrlvSneezeRelated(arg0);
+        break;
+    case 4:
+        guard_body_hit_sfx(arg0);
+        break;
+    case 6:
+        sub_GAME_7F02BC80(arg0);
+        break;
+    case 7:
+        chrlvCheckTriggeredOnShotHit(arg0);
+        break;
+    case 11:
+        sub_GAME_7F02BDA4(arg0);
+        break;
+    case 12:
+        sub_GAME_7F02BE00(arg0);
+        break;
+    case 5:
+        chrlvManageGuardFade(arg0);
+        break;
+    case 8:
+        chrlvAttackAnimationRelated7F02EBFC(arg0);
+        break;
+    case 9:
+        sub_GAME_7F02F888(arg0);
+        break;
+    case 10:
+        chrlvAttackAnimationRelated7F02EEE0(arg0);
+        break;
+    case 13:
+        sub_GAME_7F02FE78(arg0);
+        break;
+    case 14:
+        sub_GAME_7F032548(arg0);
+        break;
+    case 15:
+        sub_GAME_7F032088(arg0);
+        break;
+    case 16:
+        chrlvSurrenderAnimationRelated7F02B638(arg0);
+        break;
+    case 22:
+        sub_GAME_7F02BE58(arg0);
+        break;
+    case 18:
+        sub_GAME_7F02BF24(arg0);
+        break;
+    case 19:
+        sub_GAME_7F02BEA8(arg0);
+        break;
+    case 20:
+        sub_GAME_7F02F3F8(arg0);
+        break;
+    case 23:
+        chrlvFireStandingAnimationRelated(arg0);
+        break;
+    case 24:
+        chrlvRemoved7F02F688((s32) arg0);
+        break;
+    }
+    
 }
 #else
 GLOBAL_ASM(

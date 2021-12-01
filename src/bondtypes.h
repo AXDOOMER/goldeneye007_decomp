@@ -350,7 +350,7 @@ struct ModelAnimation
     s32 unk00;
     u16 unk04;
     u16 unk06;
-    
+
     // ...
 };
 
@@ -615,13 +615,18 @@ struct act_attack
 struct act_attackwalk
 {
     u32 unk02c;                                                        /*0x2c*/
-    u32 unk30;                                                        /*0x30*/
-    u32 unk034;                                                        /*0x34*/
+    s32 clock_timer30;                                                 /*0x30*/
+    s32 clock_timer34;                                                 /*0x34*/
     u32 unk038;                                                        /*0x38*/
-    struct weapon_firing_animation_table *animfloats;                                     /*0x3c*/
-    u32 unk040;                                                        /*0x40*/
+    struct weapon_firing_animation_table *animfloats;                  /*0x3c*/
+    s32 timer40;                                                        /*0x40*/
     u32 unk044;                                                        /*0x44*/
-    u32 unk048;                                                        /*0x48*/
+    
+    s8 unk48;                                                        /*0x48*/
+    s8 unk49;                                                        /*0x48*/
+    s8 unk4a;                                                        /*0x48*/
+    s8 unk4b;                                                        /*0x48*/
+
     u16 unk04c;                                                        /*0x4c*/
     u8 flip;                                                           /*0x4e*/
 };

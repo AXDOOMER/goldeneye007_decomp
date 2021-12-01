@@ -4359,7 +4359,7 @@ glabel sub_GAME_7F020EF0
 /* 055AD0 7F020FA0 8DCE9D6C */  lw    $t6, %lo(animation_table_ptrs1)($t6)
 /* 055AD4 7F020FA4 11C1001D */  beq   $t6, $at, .L7F02101C
 /* 055AD8 7F020FA8 00000000 */   nop   
-/* 055ADC 7F020FAC 0FC1BD6B */  jal   sub_GAME_7F06F5AC
+/* 055ADC 7F020FAC 0FC1BD6B */  jal   objecthandlerGetModelAnim
 /* 055AE0 7F020FB0 8FA40110 */   lw    $a0, 0x110($sp)
 /* 055AE4 7F020FB4 3C098003 */  lui   $t1, %hi(g_AnimationTablePointerCountRelated) 
 /* 055AE8 7F020FB8 8D29C908 */  lw    $t1, %lo(g_AnimationTablePointerCountRelated)($t1)
@@ -5211,7 +5211,7 @@ glabel sub_GAME_7F020EF0
 /* 055DA8 7F021238 8DCE9DAC */  lw    $t6, %lo(animation_table_ptrs1)($t6)
 /* 055DAC 7F02123C 11C1001D */  beq   $t6, $at, .Ljp7F0212B4
 /* 055DB0 7F021240 00000000 */   nop   
-/* 055DB4 7F021244 0FC1BEE7 */  jal   sub_GAME_7F06F5AC
+/* 055DB4 7F021244 0FC1BEE7 */  jal   objecthandlerGetModelAnim
 /* 055DB8 7F021248 8FA40110 */   lw    $a0, 0x110($sp)
 /* 055DBC 7F02124C 3C098003 */  lui   $t1, %hi(g_AnimationTablePointerCountRelated) # $t1, 0x8003
 /* 055DC0 7F021250 8D29C948 */  lw    $t1, %lo(g_AnimationTablePointerCountRelated)($t1)

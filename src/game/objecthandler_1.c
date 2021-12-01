@@ -5427,19 +5427,12 @@ glabel subcalcmatrices
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F06F5AC(void) {
-
+/**
+ * Address 0x7F06F5AC.
+*/
+struct ModelAnimation * objecthandlerGetModelAnim(struct Model* model) {
+    return model->anim;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06F5AC
-/* 0A40DC 7F06F5AC 03E00008 */  jr    $ra
-/* 0A40E0 7F06F5B0 8C820020 */   lw    $v0, 0x20($a0)
-)
-#endif
-
 
 
 
