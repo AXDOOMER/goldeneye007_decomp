@@ -10,7 +10,7 @@
 u8 dword_CODE_bss_80083320[AMT300];
 s32 dword_CODE_bss_80083450[AMT300];
 s32 dword_CODE_bss_80083900[AMT300];
-char dword_CODE_bss_80083DB0[0x4B00];
+Gfx dword_CODE_bss_80083DB0[AMT300*8];
 
 
 void sub_GAME_7F0BC530(void) 
