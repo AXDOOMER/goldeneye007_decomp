@@ -10,7 +10,7 @@
 u8 dword_CODE_bss_80083320[AMT300];
 s32 dword_CODE_bss_80083450[AMT300];
 s32 dword_CODE_bss_80083900[AMT300];
-Mtx dword_CODE_bss_80083DB0[AMT300];
+Mtx mtx_array_bss_80083DB0[AMT300];
 
 
 void sub_GAME_7F0BC530(void) 
@@ -243,7 +243,7 @@ s32 sub_GAME_7F0BC85C(s32 index)
     mtx[3][0] = (room->pos).x * room_data_float2 - g_CurrentPlayer->current_model_pos.f[0];
     mtx[3][1] = (room->pos).y * room_data_float2 - g_CurrentPlayer->current_model_pos.f[1];
     mtx[3][2] = (room->pos).z * room_data_float2 - g_CurrentPlayer->current_model_pos.f[2];
-    sub_GAME_7F058C9C(mtx,dword_CODE_bss_80083DB0[iVar2]);
+    sub_GAME_7F058C9C(mtx,mtx_array_bss_80083DB0[iVar2]);
   }
   else {
     dword_CODE_bss_80083320[iVar2] = 0;
@@ -323,9 +323,9 @@ glabel sub_GAME_7F0BC85C
 /* 0F1484 7F0BC954 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
 /* 0F1488 7F0BC958 8C42A0B0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
 /* 0F148C 7F0BC95C 46002182 */  mul.s $f6, $f4, $f0
-/* 0F1490 7F0BC960 3C088008 */  lui   $t0, %hi(dword_CODE_bss_80083DB0) 
+/* 0F1490 7F0BC960 3C088008 */  lui   $t0, %hi(mtx_array_bss_80083DB0) 
 /* 0F1494 7F0BC964 C4480038 */  lwc1  $f8, 0x38($v0)
-/* 0F1498 7F0BC968 25083DB0 */  addiu $t0, %lo(dword_CODE_bss_80083DB0) # addiu $t0, $t0, 0x3db0
+/* 0F1498 7F0BC968 25083DB0 */  addiu $t0, %lo(mtx_array_bss_80083DB0) # addiu $t0, $t0, 0x3db0
 /* 0F149C 7F0BC96C 0010C180 */  sll   $t8, $s0, 6
 /* 0F14A0 7F0BC970 03082821 */  addu  $a1, $t8, $t0
 /* 0F14A4 7F0BC974 27A4002C */  addiu $a0, $sp, 0x2c
@@ -361,7 +361,7 @@ Gfx * sub_GAME_7F0BC9C4(Gfx *DL,int index)
     s32 i;
     
     i = sub_GAME_7F0BC85C(index);
-    gSPMatrix(DL++, &dword_CODE_bss_80083DB0[i], G_MTX_MODELVIEW|G_MTX_LOAD|G_MTX_NOPUSH);
+    gSPMatrix(DL++, &mtx_array_bss_80083DB0[i], G_MTX_MODELVIEW|G_MTX_LOAD|G_MTX_NOPUSH);
     return DL;
 }
 
