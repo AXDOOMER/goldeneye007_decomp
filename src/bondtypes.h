@@ -497,7 +497,7 @@ struct act_kneel
 struct act_anim
 {
     u32 unk02c;                                                        /*0x2c*/
-    u32 unk030;                                                        /*0x30*/
+    u32 unk30;                                                        /*0x30*/
     u32 unk034;                                                        /*0x34*/
     u32 unk038;                                                        /*0x38*/
     u32 unk03c;                                                        /*0x3c*/
@@ -537,7 +537,7 @@ struct act_dead
 struct act_argh
 {
     s32 notifychrindex;                                                /*0x2c*/
-    s32 unk030;
+    s32 unk30;
 };
 
 struct act_preargh
@@ -551,18 +551,23 @@ struct act_preargh
 
 struct act_attack
 {
-    f32 *unk02c;                                                       /*0x2c*/
+    struct weapon_firing_animation_table *animfloats;                  /*0x2c*/
     
-    u16 unk030;                                                        /*0x30*/
-    u8 unk032;                                                         /*0x32*/
-    s8 unk033;                                                         /*0x33*/
+    s8 unk30;                                                        /*0x30*/
+    s8 unk31;
+    u8 unk32;                                                         /*0x32*/
+    s8 unk33;                                                         /*0x33*/
     
-    s8 unk034;                                                         /*0x34*/
-    u8 unk035;                                                         /*0x35*/
-    s8 unk036;                                                         /*0x36*/
-    s8 unk037;
+    s8 unk34;                                                         /*0x34*/
+    u8 unk35;                                                         /*0x35*/
+    s8 unk36;                                                         /*0x36*/
+    s8 unk37;
 
-    u32 unk038;                                                        /*0x38*/
+    s8 unk38;                                                        /*0x38*/
+    s8 unk39;
+    s8 unk3a;
+    s8 unk3b;
+
     u32 unk03c;                                                        /*0x3c*/
     u32 unk040;                                                        /*0x40*/
     u32 unk044;                                                        /*0x44*/
@@ -576,7 +581,7 @@ struct act_attack
     u32 entityid;                                                      /*0x50*/
     u32 unk54;                                                          /*0x54*/
 
-    bool type_of_motion;                                                /*0x58 reaim*/
+    s32 type_of_motion;                                                /*0x58 reaim*/
     u32 unk5C;
     
     u32 unk60;
@@ -598,7 +603,7 @@ struct act_attack
 struct act_attackwalk
 {
     u32 unk02c;                                                        /*0x2c*/
-    u32 unk030;                                                        /*0x30*/
+    u32 unk30;                                                        /*0x30*/
     u32 unk034;                                                        /*0x34*/
     u32 unk038;                                                        /*0x38*/
     struct weapon_firing_animation_table *animfloats;                                     /*0x3c*/
@@ -613,14 +618,15 @@ struct act_attackroll
 {
     struct weapon_firing_animation_table *animfloats;                   /*0x2c*/
 
-    s8 unk030;                                                        /*0x30*/
-    s8 unk031;                                                        /*0x31*/
-    s8 unk032;                                                        /*0x32*/
-    s8 unk033;                                                        /*0x33*/
+    s8 unk30;                                                        /*0x30*/
+    s8 unk31;                                                        /*0x31*/
+    s8 unk32;                                                        /*0x32*/
+    s8 unk33;                                                        /*0x33*/
 
-    u8 unk034;                                                         /*0x34*/
-    s8 unk035;                                                         /*0x35*/
-    s8 unk036;                                                         /*0x36*/
+    u8 unk34;                                                         /*0x34*/
+    s8 unk35;                                                         /*0x35*/
+    s8 unk36;                                                         /*0x36*/
+    s8 unk37;
 
     s8 unk38;                                                        /*0x38*/
     s8 unk39;
@@ -638,7 +644,8 @@ struct act_attackroll
 
     u32 unk50;
     u32 unk54;
-    u32 unk58;
+    f32 unk58;
+    f32 unk5c;
 };
 
 struct act_sidestep
@@ -800,7 +807,14 @@ struct act_bonddie
 
 struct act_bondmulti
 {
-    int padding[30];
+    f32 *unk2c; // probably pointer to animation data, similar to weapon_firing_animation_table
+
+    s32 unk30;
+    s32 unk34;
+    s32 unk38;
+    s32 unk3c;
+
+    int padding[25];
 };
 
 struct act_null
