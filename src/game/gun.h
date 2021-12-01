@@ -3,6 +3,7 @@
 #include "ultra64.h"
 #include "game/chrobjdata.h"
 #include "bondconstants.h"
+#include "bondtypes.h"
 
 typedef struct WeaponStats
 {
@@ -244,5 +245,10 @@ void increment_num_kills_display_text_in_MP();
 f32 bondwalkItemGetDestructionAmount(ITEM_IDS item);
 u16 bondwalkItemGetSound(ITEM_IDS item);
 u8 bondwalkItemGetSoundTriggerRate(ITEM_IDS item);
+
+void recall_joy2_hits_edit_detail_edit_flag(s32 arg0, u8 *arg1, s32 arg2);
+void recall_joy2_hits_edit_flag(s32 arg0, struct coord3d *arg1, s32 arg2);
+void sub_GAME_7F05EB0C(ObjectRecord *arg0, struct coord3d *arg1, struct StandTile *arg2, Mtxf *arg3, struct coord3d *arg4, Mtxf *arg5, struct PropRecord *arg6);
+void sub_GAME_7F061948(struct ChrRecord_f180 *arg0, ITEM_IDS item, struct coord3d *arg2, struct coord3d *arg3);
 
 #endif

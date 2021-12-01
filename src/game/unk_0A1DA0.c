@@ -11,8 +11,12 @@ u32 dword_CODE_bss_8007A164;
 u32 dword_CODE_bss_8007A168;
 //CODE.bss:8007A16C
 u32 dword_CODE_bss_8007A16C;
+
+// something explosion related
+// size of each item is 0x2c (see sub_GAME_7F0A3E1C)
 //CODE.bss:8007A170
 u8 dword_CODE_bss_8007A170[0x370];
+
 //CODE.bss:8007A4E0
 u8 dword_CODE_bss_8007A4E0[0xBB8];
 //CODE.bss:8007B098

@@ -259,7 +259,7 @@ s32 grab_rgb_screenshot_flag = 0;
 //D:80037000
 s32 grab_jpeg_screenshot_flag = 0;
 //D:80037004
-struct float3 player_pos_x = {0};
+struct coord3d player_pos_x = {0};
 
 
 void display_debug_menu_text_onscreen(void)

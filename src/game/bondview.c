@@ -1,12 +1,12 @@
 #include "ultra64.h"
 #include "include/math.h"
+#include "bondtypes.h"
 #include "boss.h"
 #include "fr.h"
 #include "joy.h"
 #include "music.h"
 #include "snd.h"
 #include "str.h"
-#include "structs.h"
 #include "watch.h"
 #include "game/bg.h"
 #include "game/bondview.h"
@@ -504,28 +504,28 @@ u16 D_800368B8[] = {0x6E00, 0x006E, 0x6500, 0x6500, 0x73, 0x6500, 0x7300, 0x0073
 //D:800368D8
 struct firing_anim_struct firing_animation_groups[] = {
     {pistol_firing_animation_group1, 0, 0.1, 79.0, 87.0},
-    {&D_800306F0, 0, 0.5, 0.0, -1.0},
-    {&D_80030738, 0, 0.5, 0.0, -1.0},
-    {&D_800308A0, 0, 0.5, 0.0, -1.0},
-    {&D_800308E8, 0, 0.5, 0.0, -1.0},
+    {&D_80030660[2], 0, 0.5, 0.0, -1.0},
+    {&D_80030660[3], 0, 0.5, 0.0, -1.0},
+    {&D_80030660[8], 0, 0.5, 0.0, -1.0},
+    {&D_80030660[9], 0, 0.5, 0.0, -1.0},
     {crouched_pistol_firing_animation_group1, 0, 0.1, 56.0, 68.0},
     {rifle_firing_animation_group1, 0, 0.050000001, 35.0, 40.0},
-    {&D_80030660, 0, 0.5, 0.0, -1.0},
-    {&D_800306A8, 0, 0.5, 0.0, -1.0},
-    {&D_800308A0, 0, 0.5, 0.0, -1.0},
-    {&D_800308E8, 0, 0.5, 0.0, -1.0},
+    {&D_80030660[0], 0, 0.5, 0.0, -1.0},
+    {&D_80030660[1], 0, 0.5, 0.0, -1.0},
+    {&D_80030660[8], 0, 0.5, 0.0, -1.0},
+    {&D_80030660[9], 0, 0.5, 0.0, -1.0},
     {crouched_rifle_firing_animation_groupA, 0, 0.1, 45.0, 55.0},
     {NULL, 0x8194, 0.25, 0.0, -1.0},
     {NULL, 0x8204, 0.5, 0.0, -1.0},
     {NULL, 0x777C, 0.5, 0.0, -1.0},
-    {&D_800308A0, 0, 0.5, 0.0, -1.0},
-    {&D_800308E8, 0, 0.5, 0.0, -1.0},
+    {&D_80030660[8], 0, 0.5, 0.0, -1.0},
+    {&D_80030660[9], 0, 0.5, 0.0, -1.0},
     {NULL, 0x6C18, 0.050000001, 28.0, 29.0},
     {doubles_firing_animation_group1, 0, 0.1, 32.0, 42.0},
-    {&D_80030780, 0, 0.5, 0.0, -1.0},
-    {&D_800307C8, 0, 0.5, 0.0, -1.0},
-    {&D_800308A0, 0, 0.5, 0.0, -1.0},
-    {&D_800308A0, 0, 0.5, 0.0, -1.0},
+    {&D_80030660[4], 0, 0.5, 0.0, -1.0},
+    {&D_80030660[5], 0, 0.5, 0.0, -1.0},
+    {&D_80030660[8], 0, 0.5, 0.0, -1.0},
+    {&D_80030660[8], 0, 0.5, 0.0, -1.0},
     {crouched_doubles_firing_animation_group1, 0, 0.1, 37.0, 47.0}
 };
 
@@ -10272,7 +10272,7 @@ glabel cal_player_collision
  * 
  * Address 0x7F07D234.
  */
-s32 bondviewUpdatePlayerCollision(struct coord3d *arg0, struct float3 *arg1, struct float3 *arg2)
+s32 bondviewUpdatePlayerCollision(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *arg2)
 {
     s32 sp1C;
 

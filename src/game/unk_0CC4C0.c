@@ -109,7 +109,7 @@ u8 D_8004E85C[] = {0x11, 0x12, 0x13, 0x0};
 struct image_sound isnd_glass_xlu = {&D_8004E858, &D_8004E85C, 0x1, 0x3};
 
 //D:8004E86C
-u32 *D_8004E86C[] = { 
+struct image_sound *D_8004E86C[] = { 
     &isnd_default,
     &isnd_stone,
     &isnd_wood,
@@ -122,7 +122,10 @@ u32 *D_8004E86C[] = {
     &isnd_tile,
     &isnd_metalobj,
     &isnd_chr,
-    &isnd_glass_xlu,
+    &isnd_glass_xlu
+};
+
+char * image_sound_names[] = {
     "HIT_DEFAULT",
     "HIT_STONE",
     "HIT_WOOD",

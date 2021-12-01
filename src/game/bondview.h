@@ -2,9 +2,9 @@
 #define _BOND_H_
 
 #include "ultra64.h"
+#include "bondtypes.h"
 #include "game/chr.h"
 #include "game/matrixmath.h"
-#include "structs.h"
 
 typedef struct invitem_weap
 {
@@ -33,7 +33,7 @@ struct collision434 {
     /**
      * Offset 0x00.
      */
-    StandTile *current_tile_ptr;
+    struct StandTile *current_tile_ptr;
 
     /**
      * Offset 0x04.
@@ -385,7 +385,7 @@ struct player
   /**
    * Offset 0x0034.
    */
-  StandTile *room_pointer;
+  struct StandTile *room_pointer;
 
   /**
    * Offset 0x0038.
@@ -2723,7 +2723,7 @@ struct player
    * Collision / clipping related.
    * Offset 0x2a70
    */
-  StandTile *field_2A70;
+  struct StandTile *field_2A70;
 
   s32 field_2A74;
   s32 field_2A78;
@@ -3110,7 +3110,7 @@ void solo_char_load(void);
 void bondviewUpdateYAutoAimTime(s32 auto_aim_time, f32 auto_aim_y);
 void bondviewUpdateXAutoAimTime(s32 auto_aim_time, f32 auto_aim_x);
 void bondviewSet3dCoord7F07CEB0(struct coord3d *arg0);
-f32 bondviewYPositionRelated(StandTile *arg0, f32 arg1, f32 arg2);
+f32 bondviewYPositionRelated(struct StandTile *arg0, f32 arg1, f32 arg2);
 f32 bondviewGetPlayerDuckingHeightRelated(struct player *player);
 void bondviewCollisionRadiusRelated(struct PropRecord* arg0, f32 *arg1, f32 *arg2, f32 *arg3);
 void bondviewUpdatePlayerClipping(s32 use_clipping_height, f32 clipping_height_offset);

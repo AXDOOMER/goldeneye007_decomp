@@ -2,7 +2,6 @@
 #define _BONDTYPES_H_
 #include "ultra64.h"
 #include "bondconstants.h"
-#include "structs.h"
 #include "snd.h"
 #include "game/chrobjdata.h"
 
@@ -16,6 +15,9 @@ typedef s32 bool;
 struct object_standard;
 struct ChrRecord;
 struct PropRecord;
+struct ObjectRecord;
+struct WeaponObjRecord;
+struct WeaponObjRecordExtended;
 
 typedef f32 vec3[3];
 
@@ -178,6 +180,141 @@ struct stagesetup {
     char *(*pad3dnames)[];
 };
 
+typedef struct StandTilePoint {
+    s16 x;
+    s16 y;
+    s16 z;
+    u16 link;
+} StandTilePoint;
+
+typedef struct StandTileHeaderMid {
+    u16 special : 4; 
+    u16 r : 4;
+    u16 g : 4;
+    u16 b : 4;
+} StandTileHeaderMid;
+
+typedef struct StandTileHeaderTail {
+    s16 pointCount : 4; // seen lh, not lhu. Also seen with an explicit unnecessary '& 0xF' 
+    s16 headerC : 4;
+    s16 headerD : 4;
+    s16 headerE : 4;
+} StandTileHeaderTail;
+
+typedef struct StandTile {
+    u32 name1:24;
+
+    u8 room;    // compared to 0xFF, not -1 in a function. Seen LBUs.
+
+    union {
+        StandTileHeaderMid headerMid;
+        s16 half;
+    } mid;
+    
+    /* 0x06 */
+    // They appear to have performed the bit field work themselves here,
+    //   but we provide the StandTileHeaderTail member for clarity - it should be unused I believe.
+    union {
+        StandTileHeaderTail hdrTail;
+        s16 half;
+    } tail;
+
+    /* 0x08 */
+    struct StandTilePoint points[];
+} StandTile;
+
+typedef struct StandFilePoint {
+    u16 x;
+    u16 y;
+    u16 z;
+    u16 link;
+} StandFilePoint;
+
+typedef struct StandFileTile {
+    u32 name1:24;
+    //u8 name2;
+    u8 room;    // compared to 0xFF, not -1 in a function. Seen LBUs.
+    union {
+        StandTileHeaderMid headerMid;
+        s16 half;
+    } mid;
+
+    /* 0x06 */
+    // They appear to have performed the bit field work themselves here,
+    //   but we provide the StandTileHeaderTail member for clarity - it should be unused I believe.
+    union {
+        StandTileHeaderTail hdrTail;
+        s16 half;
+    } tail;
+
+    /* 0x08 */
+    //hack remove for compiling stan files
+    //struct StandTilePoint points[1];
+} StandFileTile;
+
+typedef struct StandFileHeader {
+    void* unk1;
+    StandTile *firstTile;
+    u8 unk2[];
+} StandFileHeader;
+
+// May be internal only, nice here.
+struct StandTileWalkCallbackRecord {
+    s32 * roomBuf;
+    s32 count;
+    s32 bufMax;
+    s32 lastRoom;
+};
+typedef void (*standTileWalkCallback_t)(struct StandTile*, struct StandTile*, struct StandTileWalkCallbackRecord*);
+
+// Very similar but definitely different to the above?
+struct StandTileLocusCallbackRecord {
+    s32 * roomBuf;
+    s32 count;
+    s32 bufMax;
+    s32 nearEdgeCount;
+};
+
+typedef struct StandFileFooter {
+    char strictstring[8];
+    void* unk3;
+    void* unk4;
+    void* unk5;
+    void* unk6;
+} StandFileFooter;
+
+typedef s32 (*standTileLocusCallback_A_t)(struct StandTile*, struct StandTileLocusCallbackRecord*);
+typedef s32 (*standTileLocusCallback_B_t)(struct StandTile*, s32, f32, f32, void, f32*);  // 5th parameter uncertain
+typedef s32 (*standTileLocusCallback_C_t)(struct StandTile**, s32, struct StandTileLocusCallbackRecord*);
+
+typedef s32 (*tilePredicate_t)(struct StandTile*);
+
+/* Beta definitions, to allow citadel stan in .c file to build into .bin */
+
+typedef struct BetaStandFilePoint {
+    f32 x;
+    f32 y;
+    f32 z;
+    u32 link;
+} BetaStandFilePoint;
+
+typedef struct BetaStandTileHeaderTail {
+    u8 pointCount;
+    u8 headerC;
+    u8 headerD;
+    u8 headerE;
+} BetaStandTileHeaderTail;
+
+typedef struct BetaStandTile {
+    const char *debugName;
+    StandTileHeaderMid headerMid;
+    u16 betaUnknown;
+    BetaStandTileHeaderTail hdrTail;
+    struct BetaStandFilePoint points[];
+} BetaStandTile;
+
+StandTilePoint *stanMatchTileName(char*);
+
 //
 typedef struct AIRecord
 {
@@ -226,7 +363,7 @@ typedef struct Model
     // need `struct anim` definition from AI branch.
     void *anim;                                      /*0x20*/
 
-    s8 unk24; // used by ACT_STAND
+    s8 gunhand; // used by ACT_STAND
     s8 unk25;
     s8 unk26;
     s8 unk27;
@@ -362,7 +499,7 @@ struct act_kneel
 struct act_anim
 {
     u32 unk02c;                                                        /*0x2c*/
-    u32 unk030;                                                        /*0x30*/
+    u32 unk30;                                                        /*0x30*/
     u32 unk034;                                                        /*0x34*/
     u32 unk038;                                                        /*0x38*/
     u32 unk03c;                                                        /*0x3c*/
@@ -402,7 +539,7 @@ struct act_dead
 struct act_argh
 {
     s32 notifychrindex;                                                /*0x2c*/
-    s32 unk030;
+    s32 unk30;
 };
 
 struct act_preargh
@@ -416,32 +553,59 @@ struct act_preargh
 
 struct act_attack
 {
-    f32 *unk02c;                                                       /*0x2c*/
+    struct weapon_firing_animation_table *animfloats;                  /*0x2c*/
     
-    u16 unk030;                                                        /*0x30*/
-    u8 unk032;                                                         /*0x32*/
-    s8 unk033;                                                         /*0x33*/
+    s8 unk30;                                                        /*0x30*/
+    s8 unk31;
+    u8 unk32;                                                         /*0x32*/
+    s8 unk33;                                                         /*0x33*/
     
-    s8 unk034;                                                         /*0x34*/
-    u8 unk035;                                                         /*0x35*/
-    s8 unk036;                                                         /*0x36*/
-    s8 unk037;
+    s8 unk34;                                                         /*0x34*/
+    u8 unk35;                                                         /*0x35*/
+    s8 unk36;                                                         /*0x36*/
+    s8 unk37;
 
-    u32 unk038;                                                        /*0x38*/
+    s8 unk38;                                                        /*0x38*/
+    s8 unk39;
+    s8 unk3a;
+    s8 unk3b;
+
     u32 unk03c;                                                        /*0x3c*/
     u32 unk040;                                                        /*0x40*/
     u32 unk044;                                                        /*0x44*/
-    u32 unk048;                                                        /*0x48*/
-    u32 attacktype;                                                    /*0x4c*/
+    u32 attack_time;                                                   /*0x48*/
+
+    /**
+     * attack type is the target flag used by the AI fire at target commands.
+     * chr offset 0x4c.
+    */
+    u32 attacktype;
     u32 entityid;                                                      /*0x50*/
-    u32 unk054;                                                        /*0x54*/
-    bool type_of_motion;                                                /*0x58 reaim*/
+    u32 unk54;                                                          /*0x54*/
+
+    s32 type_of_motion;                                                /*0x58 reaim*/
+    u32 unk5C;
+    
+    u32 unk60;
+    u32 unk64;
+    u32 unk68;
+    u32 unk6c;
+    
+    u32 unk70;
+    u32 unk74;
+    u32 unk78;
+    u32 unk7c;
+
+    s8 attack_item;
+    u8 unk81;
+    u8 unk82;
+    u8 unk83;
 };
 
 struct act_attackwalk
 {
     u32 unk02c;                                                        /*0x2c*/
-    u32 unk030;                                                        /*0x30*/
+    u32 unk30;                                                        /*0x30*/
     u32 unk034;                                                        /*0x34*/
     u32 unk038;                                                        /*0x38*/
     struct weapon_firing_animation_table *animfloats;                                     /*0x3c*/
@@ -454,14 +618,36 @@ struct act_attackwalk
 
 struct act_attackroll
 {
-    struct weapon_firing_animation_table *animfloats;                                     /*0x2c*/
-    u32 unk030;                                                        /*0x30*/
-    u8 unk034;                                                         /*0x34*/
-    s8 unk035;                                                         /*0x35*/
-    s8 unk036;                                                         /*0x36*/
-    u32 unk038;                                                        /*0x38*/
+    struct weapon_firing_animation_table *animfloats;                   /*0x2c*/
+
+    s8 unk30;                                                        /*0x30*/
+    s8 unk31;                                                        /*0x31*/
+    s8 unk32;                                                        /*0x32*/
+    s8 unk33;                                                        /*0x33*/
+
+    u8 unk34;                                                         /*0x34*/
+    s8 unk35;                                                         /*0x35*/
+    s8 unk36;                                                         /*0x36*/
+    s8 unk37;
+
+    s8 unk38;                                                        /*0x38*/
+    s8 unk39;
+    s8 unk3a;
+    s8 unk3b;
+    
     u16 unk03c;                                                        /*0x3c*/
     s8 flip;                                                           /*0x3e*/
+    s8 unk3f;                                                           /*0x3f*/
+
+    u32 unk40;                                                        /*0x40*/
+    u32 unk44;                                                        /*0x44*/
+    u32 unk48;                                                        /*0x48*/
+    u32 flags;                                                        /*0x4c*/
+
+    u32 unk50;
+    u32 unk54;
+    f32 unk58;
+    f32 unk5c;
 };
 
 struct act_sidestep
@@ -623,7 +809,14 @@ struct act_bonddie
 
 struct act_bondmulti
 {
-    int padding[30];
+    f32 *unk2c; // probably pointer to animation data, similar to weapon_firing_animation_table
+
+    s32 unk30;
+    s32 unk34;
+    s32 unk38;
+    s32 unk3c;
+
+    int padding[25];
 };
 
 struct act_null
@@ -693,6 +886,30 @@ typedef struct PropRecord
     u32 unk44;         /*0x44*/
 } PropRecord;
 
+/**
+ * sizeof = 0x2c = 44 bytes.
+*/
+struct ChrRecord_f180
+{
+    /***/
+    char unk00;
+    s8 item_id; // type ITEM_IDS
+    char unk02;
+    char unk03;
+
+    struct coord3d pos;
+
+    /**
+     * Offset 0x10
+    */
+    vec3 delta;
+    f32 unk1c;
+
+    f32 unk20;
+    f32 unk24;
+    f32 unk28;
+};
+
 /* unfinished struct, WIP */
 typedef struct ChrRecord
 {
@@ -713,7 +930,7 @@ typedef struct ChrRecord
     u8 grenadeprob;                       /* 0x0010 */
     s8 flinchcnt;                         /* 0x0011 */
     u16 hidden;                           /* 0x0012 */
-    s32 chrflags;                     /* 0x0014 */
+    s32 chrflags;                         /* 0x0014 */
     PropRecord *prop;                     /* 0x0018 */
     Model *model;                         /* 0x001C */
     /* 0x0020 */
@@ -829,44 +1046,87 @@ typedef struct ChrRecord
     //int field_17C;
 
     /* 0x0180 */
-    char field_180;
-    char field_181;
-    char field_182;
-    char field_183;
-    int field_184;
-    int field_188;
-    int field_18C;
-    /* 0x0190 */
-    int field_190;
-    int field_194;
-    int field_198;
-    int field_19C;
-    /* 0x01A0 */
-    int field_1A0;
-    int field_1A4;
-    int field_1A8;
-    char field_1AC;
-    char field_1AD;
-    char field_1AE;
-    char field_1AF;
-    /* 0x01B0 */
-    int field_1B0;
-    int field_1B4;
-    int field_1B8;
-    int field_1BC;
-    /* 0x01C0 */
-    int field_1C0;
-    int field_1C4;
-    int field_1C8;
-    int field_1CC;
-    /* 0x01D0 */
-    int field_1D0;
-    int field_1D4;
+    /**
+     * Method chrlvFireWeaponRelated calls sub_GAME_7F061948, and passes an address
+     * which makes it look like this is an array at ChrRecord offset 180.
+    */
+    struct ChrRecord_f180 unk180[2];
+
     PropRecord *handle_positiondata_hat;
 } ChrRecord;
 // ChrRecord *pChrData; //not Global, local to Object or function
 
+struct ObjectRecord_f6c
+{
+    //pointer somewhere at least 0x44 long and the pointer at 0 and 0x44 is also at least 0xb8 long
+    u32 id;
+    struct coord3d pos;
 
+    /**
+     * Offset 0x10
+    */
+    vec3 vec;
+    u32 padding;
+
+    /*
+        {{1, 0, 0, 0},
+        {0, 1, 0, 0},
+        {0, 0, 1, 0},
+        {0, 0, 0, 1}};
+        This is probably not a matrix, only 8 vals are read
+        Offset 0x20.
+    */
+    Mtxf m;
+
+    u32 unk60;
+    u32 unk64;
+    u32 unk68;
+    u32 unk6c;
+
+    u32 unk70;
+    u32 unk74;
+    u32 unk78;
+    u32 unk7c;
+
+    u32 unk80;
+    u32 unk84;
+    // used by sub_GAME_7F05EB0C
+    struct PropRecord *prop;
+    f32 unk8c;
+
+    u32 unk90;
+    f32 unk94;
+    ALSoundState * unk98;
+    ALSoundState * unk9c;
+
+    u32 unka0;
+    u32 unka4;
+    u32 unka8;
+    u32 unkac;
+
+    f32 unkb0; // runtime y position?
+    f32 unkb4; // previous pos.y?
+    u32 unkb8;
+    u32 unkbc;
+
+    u32 unkc0;
+    u32 unkc4;
+    u32 unkc8;
+    u32 unkcc;
+
+    u32 unkd0;
+    u32 unkd4;
+    u32 unkd8;
+    u32 unkdc;
+
+    u32 unke0;
+    /**
+     * Offset 0xe4.
+    */
+    struct ObjectRecord *parent;
+    u32 unke8;
+    u32 unkec;
+};
 
 
 
@@ -1035,7 +1295,9 @@ typedef struct ObjectRecord
                             00000004    removes object when set
                             */
     int ptr_allocated_collisiondata_block;
-    int field_6C;
+
+    struct ObjectRecord_f6c *unk6C;
+
     float field_70;
     short damage;
     short maxdamage;

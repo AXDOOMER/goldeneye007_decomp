@@ -2,7 +2,6 @@
 #include "memp.h"
 #include "game/objecthandler.h"
 
-#include "structs.h"
 #include "rmon.h"
 #include "game/math_floor.h"
 #include "game/math_ceil.h"
@@ -2108,11 +2107,12 @@ glabel getinstsize
 
 
 // Also matches with float*s
-void interpolate3dVectors(struct float3 *v,struct float3 *w,float k)
+void interpolate3dVectors(struct coord3d *v, struct coord3d *w, float k)
 {
-  v->x += (w->x - v->x) * k;
-  v->y += (w->y - v->y) * k;
-  v->z += (w->z - v->z) * k;
+  v->f[0] += (w->f[0] - v->f[0]) * k;
+  v->f[1] += (w->f[1] - v->f[1]) * k;
+  v->f[2] += (w->f[2] - v->f[2]) * k;
+
   return;
 }
 

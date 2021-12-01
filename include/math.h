@@ -5,6 +5,7 @@
 
 #define M_PI 3.14159265358979323846
 #define M_PI_F 3.1415927f
+#define M_MINUS_PI_F -3.1415927f
 
 #define M_2PI    6.2831855
 #define M_2PI_F  6.2831855f

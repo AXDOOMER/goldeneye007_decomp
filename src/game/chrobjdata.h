@@ -655,4 +655,6 @@ extern struct ModelFileHeader bollard_header;
 extern struct ChrModelFileRecord c_item_entries[];
 extern ModelSkeleton SKELETON(guard);
 extern ModelSkeleton SKELETON(suit_lf_hand);
+
+extern struct object_weapon blank_08_object_preset_1[];
 #endif
