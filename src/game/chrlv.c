@@ -122,6 +122,7 @@ void sub_GAME_7F02587C(struct ChrRecord *chr, s32);
 void sub_GAME_7F024CF8(struct ChrRecord *chr, s32);
 void sub_GAME_7F02F3F8(ChrRecord *self);
 void chrlvFireStandingAnimationRelated(ChrRecord *arg0);
+void chrlvRemoved7F02F688(s32 arg0);
 
 // ?
 
@@ -10774,18 +10775,13 @@ void chrlvFireStandingAnimationRelated(ChrRecord *arg0)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02F688(void) {
-
+/**
+ * Address 0x7F02F688.
+*/
+void chrlvRemoved7F02F688(s32 arg0)
+{
+    // removed.
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F02F688
-/* 0641B8 7F02F688 03E00008 */  jr    $ra
-/* 0641BC 7F02F68C AFA40000 */   sw    $a0, ($sp)
-)
-#endif
 
 
 
@@ -14542,7 +14538,7 @@ glabel manage_actions
 /* 067400 7F0328D0 10000004 */  b     .L7F0328E4
 /* 067404 7F0328D4 8E080014 */   lw    $t0, 0x14($s0)
 .L7F0328D8:
-/* 067408 7F0328D8 0FC0BDA2 */  jal   sub_GAME_7F02F688
+/* 067408 7F0328D8 0FC0BDA2 */  jal   chrlvRemoved7F02F688
 /* 06740C 7F0328DC 02002025 */   move  $a0, $s0
 def_7F032780:
 .L7F0328E0:
