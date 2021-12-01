@@ -10,7 +10,7 @@
 u8 dword_CODE_bss_80083320[AMT300];
 s32 dword_CODE_bss_80083450[AMT300];
 s32 dword_CODE_bss_80083900[AMT300];
-Gfx dword_CODE_bss_80083DB0[AMT300*8];
+Mtx dword_CODE_bss_80083DB0[AMT300];
 
 
 void sub_GAME_7F0BC530(void) 
@@ -356,40 +356,14 @@ glabel sub_GAME_7F0BC85C
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0BC9C4(void) {
-
+Gfx * sub_GAME_7F0BC9C4(Gfx *DL,int index)
+{
+    s32 i;
+    
+    i = sub_GAME_7F0BC85C(index);
+    gSPMatrix(DL++, &dword_CODE_bss_80083DB0[i], G_MTX_MODELVIEW|G_MTX_LOAD|G_MTX_NOPUSH);
+    return DL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BC9C4
-/* 0F14F4 7F0BC9C4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F14F8 7F0BC9C8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F14FC 7F0BC9CC 00803025 */  move  $a2, $a0
-/* 0F1500 7F0BC9D0 AFA60018 */  sw    $a2, 0x18($sp)
-/* 0F1504 7F0BC9D4 0FC2F217 */  jal   sub_GAME_7F0BC85C
-/* 0F1508 7F0BC9D8 00A02025 */   move  $a0, $a1
-/* 0F150C 7F0BC9DC 8FA30018 */  lw    $v1, 0x18($sp)
-/* 0F1510 7F0BC9E0 3C188008 */  lui   $t8, %hi(dword_CODE_bss_80083DB0) 
-/* 0F1514 7F0BC9E4 27183DB0 */  addiu $t8, %lo(dword_CODE_bss_80083DB0) # addiu $t8, $t8, 0x3db0
-/* 0F1518 7F0BC9E8 3C0E0102 */  lui   $t6, (0x01020040 >> 16) # lui $t6, 0x102
-/* 0F151C 7F0BC9EC 00027980 */  sll   $t7, $v0, 6
-/* 0F1520 7F0BC9F0 01F8C821 */  addu  $t9, $t7, $t8
-/* 0F1524 7F0BC9F4 35CE0040 */  ori   $t6, (0x01020040 & 0xFFFF) # ori $t6, $t6, 0x40
-/* 0F1528 7F0BC9F8 AC6E0000 */  sw    $t6, ($v1)
-/* 0F152C 7F0BC9FC AC790004 */  sw    $t9, 4($v1)
-/* 0F1530 7F0BCA00 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F1534 7F0BCA04 24660008 */  addiu $a2, $v1, 8
-/* 0F1538 7F0BCA08 00C01025 */  move  $v0, $a2
-/* 0F153C 7F0BCA0C 03E00008 */  jr    $ra
-/* 0F1540 7F0BCA10 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
-
-
-
-
 
 
 s32 getRoomIndexPOS(s32 index)
