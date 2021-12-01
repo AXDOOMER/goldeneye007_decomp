@@ -344,6 +344,16 @@ struct modeldata_root
     f32 unk5c;
 };
 
+// unknown struct, unknown size.
+struct ModelAnimation
+{
+    s32 unk00;
+    u16 unk04;
+    u16 unk06;
+    
+    // ...
+};
+
 /**
  * I beleve that "datas" is actually " struct modeldata_root" and that 
  * unk1c is the model node data array
@@ -361,14 +371,14 @@ typedef struct Model
     ModelNode *unk1c;                                       /*0x1c*/
 
     // need `struct anim` definition from AI branch.
-    void *anim;                                      /*0x20*/
+    struct ModelAnimation *anim;                                      /*0x20*/
 
     s8 gunhand; // used by ACT_STAND
     s8 unk25;
     s8 unk26;
     s8 unk27;
 
-    f32 unk28;
+    f32 unk28; // animation related
     s32 unk2c;
     // 0x30
     s32 unk30;
