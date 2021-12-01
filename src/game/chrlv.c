@@ -10786,9 +10786,103 @@ void chrlvRemoved7F02F688(s32 arg0)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F02F690(void) {
+s32 sub_GAME_7F02F690(ChrRecord *self, struct coord3d *arg1, s32 arg2, f32 *speedPtr)
+{
+    f32 maxSpeed;
+    Model *self_model; // 72
+    PropRecord *self_prop;
+    //f32 accel;
+    f32 phi_f0_2;
+    f32 maxFrac; // 60
+    f32 openPosition; // 56
+    f32 phi_f2;
+    s32 unused;
+    s32 sp24;
 
+    self_prop = self->prop;
+    self_model = self->model;
+
+    maxFrac = atan2f(arg1->f[0] - self_prop->pos.f[0], arg1->f[2] - self_prop->pos.f[2]);
+    openPosition = getsubroty(self_model);
+
+    sp24 = 0;
+    phi_f2 = maxFrac - openPosition;
+
+    if (maxFrac < openPosition)
+    {
+        phi_f2 = phi_f2 + 6.2831855f;
+    }
+
+    phi_f0_2 = phi_f2;
+
+    if (phi_f2 > 3.1415927f)
+    {
+        phi_f0_2 = 6.2831855f - phi_f2;
+    }
+
+    if (arg2 == 2)
+    {
+        maxSpeed = 0.2991993f;
+        phi_f0_2 = 0.014959966f;
+    }
+    else if (arg2 == 1)
+    {
+        if (phi_f0_2 < 0.3926991f)
+        {
+            maxSpeed = 0.019634955f;
+        }
+        else if (phi_f0_2 < 1.2566371f)
+        {
+            maxSpeed = 0.09817477f;
+        }
+        else
+        {
+            maxSpeed = 0.19634955f;
+        }
+
+        phi_f0_2 = 0.014959966f;
+    }
+    else
+    {
+        if (phi_f0_2 < 0.3926991f)
+        {
+            maxSpeed = 0.009817477f;
+        }
+        else if (phi_f0_2 < 1.2566371f)
+        {
+            maxSpeed = 0.049087387f;
+        }
+        else
+        {
+            maxSpeed = 0.12566371f;
+        }
+
+        phi_f0_2 = 0.009817477f;
+    }
+
+    maxSpeed *= self_model->unka4;
+    phi_f0_2 *= self_model->unka4;
+
+    // void chrobjCallsApplySpeed(f32 *openPosition, f32 maxFrac, f32 *speedPtr, f32 accel, f32 decel, f32 maxSpeed)
+    chrobjCallsApplySpeed(
+        &openPosition,
+        maxFrac,
+        speedPtr,
+        phi_f0_2,
+        phi_f0_2 * 2.0f,
+        maxSpeed);
+
+    if (openPosition == maxFrac)
+    {
+        sp24 = 1;
+        *speedPtr = 0.0f;
+    }
+
+    setsubroty(self_model, openPosition);
+
+    return sp24;
 }
+
 #else
 GLOBAL_ASM(
 .late_rodata
@@ -10943,7 +11037,7 @@ glabel sub_GAME_7F02F690
 /* 064354 7F02F824 E7AC0014 */  swc1  $f12, 0x14($sp)
 /* 064358 7F02F828 46000480 */  add.s $f18, $f0, $f0
 /* 06435C 7F02F82C 44070000 */  mfc1  $a3, $f0
-/* 064360 7F02F830 0FC10C43 */  jal   sub_GAME_7F04310C
+/* 064360 7F02F830 0FC10C43 */  jal   chrobjCallsApplySpeed
 /* 064364 7F02F834 E7B20010 */   swc1  $f18, 0x10($sp)
 /* 064368 7F02F838 C7AE003C */  lwc1  $f14, 0x3c($sp)
 /* 06436C 7F02F83C C7A40038 */  lwc1  $f4, 0x38($sp)
