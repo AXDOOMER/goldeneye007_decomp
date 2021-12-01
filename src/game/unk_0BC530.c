@@ -72,7 +72,7 @@ s32 sub_GAME_7F0BC6F0(void)
 {
     s32 i;
 
-    for (i = 0; i<300; i++)
+    for (i = 0; i<AMT300; i++)
     {
         if (((s32) dword_CODE_bss_80083320[i] >= 2) && (dword_CODE_bss_80083900[i] == -1))
         {
@@ -89,7 +89,7 @@ void sub_GAME_7F0BC7D4(void)
 {
     s32 i;
 
-    for(i = 0; i<300; ++i)
+    for(i = 0; i<AMT300; ++i)
     {
         if (dword_CODE_bss_80083900[i] > -1)
         {
