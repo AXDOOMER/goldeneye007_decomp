@@ -16,6 +16,8 @@ struct object_standard;
 struct ChrRecord;
 struct PropRecord;
 struct ObjectRecord;
+struct WeaponObjRecord;
+struct WeaponObjRecordExtended;
 
 typedef f32 vec3[3];
 
@@ -361,7 +363,7 @@ typedef struct Model
     // need `struct anim` definition from AI branch.
     void *anim;                                      /*0x20*/
 
-    s8 unk24; // used by ACT_STAND
+    s8 gunhand; // used by ACT_STAND
     s8 unk25;
     s8 unk26;
     s8 unk27;
