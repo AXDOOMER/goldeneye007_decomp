@@ -2062,8 +2062,16 @@ glabel sub_GAME_7F0CDB64
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0CDE18(void) {
-
+Gfx * sub_GAME_7F0CDE18(Gfx *DL,u8 *facemapper_entry,s32 s_flags,s32 t_flags,s32 settilesize_offset)
+{
+   
+    DL = expland_c0DL_psuedocommands(DL,facemapper_entry,0);
+    DL = sub_GAME_7F0CD430(DL,facemapper_entry,s_flags,t_flags,settilesize_offset,0,0);
+    //1029a0:    srl     t8,t7,0x5                      | 1029a0:    sra     t8,t7,0x5
+    if (facemapper_entry[0xb] >> 5 == 1) {
+        DL = sub_GAME_7F0CD430(DL,facemapper_entry,s_flags,t_flags,settilesize_offset,1,0);
+    }
+    return DL;
 }
 #else
 GLOBAL_ASM(
