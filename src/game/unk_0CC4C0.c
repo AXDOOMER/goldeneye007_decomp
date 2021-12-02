@@ -2114,8 +2114,22 @@ glabel sub_GAME_7F0CDE18
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0CDEA8(void) {
+Gfx * sub_GAME_7F0CDEA8(Gfx *DL,u8 *arg1,s32 arg2,s32 arg3,s32 arg4,u32 arg5,u32 arg6,u32 arg7,u32 arg8)
+{
+    u32 uVar1;
 
+    
+    uVar1 = sub_GAME_7F0CC994(arg5,NULL);
+    DL = sub_GAME_7F0CD7AC(DL,arg5);
+    gDPTileSync(DL++);
+    DL = expland_c0DL_psuedocommands(DL,arg1,uVar1);
+    DL = sub_GAME_7F0CCC50(DL,arg5,arg4,arg6,arg7,arg8);
+    DL = sub_GAME_7F0CD430(DL,arg1,arg2,arg3,arg4,1,uVar1);
+    //102a94:    srl     t4,t3,0x5                      | 102a94:    sra     t4,t3,0x5
+    if (arg1[0xb] >> 5 == 1) {
+        DL = sub_GAME_7F0CD430(DL,arg1,arg2,arg3,arg4,2,uVar1);
+    }
+    return DL;
 }
 #else
 GLOBAL_ASM(
@@ -2194,14 +2208,13 @@ glabel sub_GAME_7F0CDEA8
 
 
 #ifdef NONMATCHING
-Gfx * sub_GAME_7F0CDFA8(Gfx *DL,u32 *imageID,s32 arg2,s32 arg3,s32 arg4,u32 arg5,u32 arg6,u32 arg7)
+Gfx * sub_GAME_7F0CDFA8(Gfx *DL,u8 *imageID,s32 arg2,s32 arg3,s32 arg4,u32 arg5,u32 arg6,u32 arg7)
 {
-    
     DL = expland_c0DL_psuedocommands(DL,imageID,0);
     DL = sub_GAME_7F0CCC50(DL,imageID,arg4,arg5,arg6,arg7);
     DL = sub_GAME_7F0CD430(DL,imageID,arg2,arg3,arg4,1,0);
     //102b50:    srl     t1,t0,0x5                      | 102b50:    sra     t1,t0,0x5
-    if (*((u8*)imageID + 0xb) >> 5 == 1) {
+    if (imageID[0xb] >> 5 == 1) {
         DL = sub_GAME_7F0CD430(DL,imageID,arg2,arg3,arg4,2,0);
     }
     return DL;
