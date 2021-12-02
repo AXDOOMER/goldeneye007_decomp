@@ -126,6 +126,7 @@ void chrlvRemoved7F02F688(s32 arg0);
 s32 chrlvApplySpeed(ChrRecord *self, struct coord3d *arg1, s32 arg2, f32 *speedPtr);
 void chrlvAttackWalkRelated(ChrRecord *self);
 void chrlvTickRunPos(ChrRecord *self);
+s32 sub_GAME_7F030128(ChrRecord *arg0, struct coord3d *point, StandTile *arg2, struct coord3d *dest, StandTile * arg4, s32 objflags);
 
 // ?
 
@@ -11185,70 +11186,35 @@ void chrlvTickRunPos(ChrRecord *self)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F030128(void) {
+/**
+ * Address 0x7F030128.
+*/
+s32 sub_GAME_7F030128(ChrRecord *arg0, struct coord3d *point, StandTile *arg2, struct coord3d *dest, StandTile * arg4, s32 objflags)
+{
+    StandTile *sp44;
+    s32 sp40;
+    f32 sp3C;
+    f32 sp38;
+    f32 sp34;
 
+    sp44 = arg2;
+    sp40 = 0;
+    
+    chrGetChrWidthHeight(arg0->prop, &sp34, &sp3C, &sp38);
+    
+    set_or_unset_GUARDdata_flag(arg0, 0);
+    
+    if (
+        sub_GAME_7F0B0E24(&sp44, point->f[0], point->f[2], dest->f[0], dest->f[2], objflags, sp3C, sp38, 0.0f, 1.0f) 
+        && ((arg4 == NULL) || (sp44 == arg4)))
+    {
+        sp40 = 1;
+    }
+
+    set_or_unset_GUARDdata_flag(arg0, 1);
+
+    return sp40;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F030128
-/* 064C58 7F030128 27BDFFB8 */  addiu $sp, $sp, -0x48
-/* 064C5C 7F03012C AFBF002C */  sw    $ra, 0x2c($sp)
-/* 064C60 7F030130 AFA40048 */  sw    $a0, 0x48($sp)
-/* 064C64 7F030134 AFA5004C */  sw    $a1, 0x4c($sp)
-/* 064C68 7F030138 AFA60050 */  sw    $a2, 0x50($sp)
-/* 064C6C 7F03013C AFA70054 */  sw    $a3, 0x54($sp)
-/* 064C70 7F030140 AFA60044 */  sw    $a2, 0x44($sp)
-/* 064C74 7F030144 AFA00040 */  sw    $zero, 0x40($sp)
-/* 064C78 7F030148 8C840018 */  lw    $a0, 0x18($a0)
-/* 064C7C 7F03014C 27A6003C */  addiu $a2, $sp, 0x3c
-/* 064C80 7F030150 27A70038 */  addiu $a3, $sp, 0x38
-/* 064C84 7F030154 0FC08C58 */  jal   chrGetChrWidthHeight
-/* 064C88 7F030158 27A50034 */   addiu $a1, $sp, 0x34
-/* 064C8C 7F03015C 8FA40048 */  lw    $a0, 0x48($sp)
-/* 064C90 7F030160 0FC07D7A */  jal   set_or_unset_GUARDdata_flag
-/* 064C94 7F030164 00002825 */   move  $a1, $zero
-/* 064C98 7F030168 8FA2004C */  lw    $v0, 0x4c($sp)
-/* 064C9C 7F03016C 8FA30054 */  lw    $v1, 0x54($sp)
-/* 064CA0 7F030170 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 064CA4 7F030174 8C450000 */  lw    $a1, ($v0)
-/* 064CA8 7F030178 C4640008 */  lwc1  $f4, 8($v1)
-/* 064CAC 7F03017C 8C460008 */  lw    $a2, 8($v0)
-/* 064CB0 7F030180 8C670000 */  lw    $a3, ($v1)
-/* 064CB4 7F030184 44818000 */  mtc1  $at, $f16
-/* 064CB8 7F030188 8FB8005C */  lw    $t8, 0x5c($sp)
-/* 064CBC 7F03018C C7A6003C */  lwc1  $f6, 0x3c($sp)
-/* 064CC0 7F030190 C7A80038 */  lwc1  $f8, 0x38($sp)
-/* 064CC4 7F030194 44805000 */  mtc1  $zero, $f10
-/* 064CC8 7F030198 27A40044 */  addiu $a0, $sp, 0x44
-/* 064CCC 7F03019C E7A40010 */  swc1  $f4, 0x10($sp)
-/* 064CD0 7F0301A0 AFB80014 */  sw    $t8, 0x14($sp)
-/* 064CD4 7F0301A4 E7B00024 */  swc1  $f16, 0x24($sp)
-/* 064CD8 7F0301A8 E7A60018 */  swc1  $f6, 0x18($sp)
-/* 064CDC 7F0301AC E7A8001C */  swc1  $f8, 0x1c($sp)
-/* 064CE0 7F0301B0 0FC2C389 */  jal   sub_GAME_7F0B0E24
-/* 064CE4 7F0301B4 E7AA0020 */   swc1  $f10, 0x20($sp)
-/* 064CE8 7F0301B8 10400009 */  beqz  $v0, .L7F0301E0
-/* 064CEC 7F0301BC 24050001 */   li    $a1, 1
-/* 064CF0 7F0301C0 8FA20058 */  lw    $v0, 0x58($sp)
-/* 064CF4 7F0301C4 8FB90044 */  lw    $t9, 0x44($sp)
-/* 064CF8 7F0301C8 24080001 */  li    $t0, 1
-/* 064CFC 7F0301CC 50400004 */  beql  $v0, $zero, .L7F0301E0
-/* 064D00 7F0301D0 AFA80040 */   sw    $t0, 0x40($sp)
-/* 064D04 7F0301D4 17220002 */  bne   $t9, $v0, .L7F0301E0
-/* 064D08 7F0301D8 00000000 */   nop   
-/* 064D0C 7F0301DC AFA80040 */  sw    $t0, 0x40($sp)
-.L7F0301E0:
-/* 064D10 7F0301E0 0FC07D7A */  jal   set_or_unset_GUARDdata_flag
-/* 064D14 7F0301E4 8FA40048 */   lw    $a0, 0x48($sp)
-/* 064D18 7F0301E8 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 064D1C 7F0301EC 8FA20040 */  lw    $v0, 0x40($sp)
-/* 064D20 7F0301F0 27BD0048 */  addiu $sp, $sp, 0x48
-/* 064D24 7F0301F4 03E00008 */  jr    $ra
-/* 064D28 7F0301F8 00000000 */   nop   
-)
-#endif
 
 
 
