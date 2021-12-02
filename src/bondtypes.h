@@ -683,8 +683,14 @@ struct act_jumpout
 struct act_runpos
 {
     struct coord3d pos;                                                  /*0x2c*/
+
+    // g_GlobalTimerDelta related
     f32 unk038;                                                        /*0x38*/
+
+    // g_ClockTimer related
     s32 unk03c;                                                        /*0x3c*/
+
+    // maybe turnspeed (if same as PD)
     f32 unk040;                                                        /*0x40*/
 };
 

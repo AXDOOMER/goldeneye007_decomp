@@ -11061,102 +11061,123 @@ s32 chrlvGeometryRelated7F02FC34(struct coord3d *arg0, struct coord3d *arg1, str
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02FD50(void) {
+/**
+ * @param arg0: point in 3d
+ * @param arg1: 3 vec
+ * @param arg0: point in 3d
+ * @param arg0: scalar value
+ * 
+ * Address 0x7F02FD50.
+*/
+s32 chrlvGeometryRelated7F02FD50(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *arg2, f32 arg3)
+{
+    struct coord3d sp34;
 
+    if ((arg0->f[0] <= arg2->f[0] - arg3) && (arg1->f[0] <= arg2->f[0] - arg3))
+    {
+        return 0;
+    }
+
+    if ((arg2->f[0] + arg3 <= arg0->f[0]) && (arg2->f[0] + arg3 <= arg1->f[0]))
+    {
+        return 0;
+    }
+
+    if ((arg0->f[2] <= arg2->f[2] - arg3) && (arg1->f[2] <= arg2->f[2] - arg3))
+    {
+        return 0;
+    }
+
+    if ((arg2->f[2] + arg3 <= arg0->f[2]) && (arg2->f[2] + arg3 <= arg1->f[2]))
+    {
+        return 0;
+    }
+
+    sp34.f[0] = arg1->f[0] - arg0->f[0];
+    sp34.f[1] = 0.0f;
+    sp34.f[2] = arg1->f[2] - arg0->f[2];
+
+    return chrlvGeometryRelated7F02FC34(arg0, &sp34, arg2, arg3);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F02FD50
-/* 064880 7F02FD50 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 064884 7F02FD54 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 064888 7F02FD58 AFB00018 */  sw    $s0, 0x18($sp)
-/* 06488C 7F02FD5C 44876000 */  mtc1  $a3, $f12
-/* 064890 7F02FD60 C4C00000 */  lwc1  $f0, ($a2)
-/* 064894 7F02FD64 C4900000 */  lwc1  $f16, ($a0)
-/* 064898 7F02FD68 00A08025 */  move  $s0, $a1
-/* 06489C 7F02FD6C 460C0081 */  sub.s $f2, $f0, $f12
-/* 0648A0 7F02FD70 4602803E */  c.le.s $f16, $f2
-/* 0648A4 7F02FD74 00000000 */  nop   
-/* 0648A8 7F02FD78 45020009 */  bc1fl .L7F02FDA0
-/* 0648AC 7F02FD7C 460C0080 */   add.s $f2, $f0, $f12
-/* 0648B0 7F02FD80 C4A40000 */  lwc1  $f4, ($a1)
-/* 0648B4 7F02FD84 4602203E */  c.le.s $f4, $f2
-/* 0648B8 7F02FD88 00000000 */  nop   
-/* 0648BC 7F02FD8C 45020004 */  bc1fl .L7F02FDA0
-/* 0648C0 7F02FD90 460C0080 */   add.s $f2, $f0, $f12
-/* 0648C4 7F02FD94 10000033 */  b     .L7F02FE64
-/* 0648C8 7F02FD98 00001025 */   move  $v0, $zero
-/* 0648CC 7F02FD9C 460C0080 */  add.s $f2, $f0, $f12
-.L7F02FDA0:
-/* 0648D0 7F02FDA0 4610103E */  c.le.s $f2, $f16
-/* 0648D4 7F02FDA4 00000000 */  nop   
-/* 0648D8 7F02FDA8 45020009 */  bc1fl .L7F02FDD0
-/* 0648DC 7F02FDAC C4C00008 */   lwc1  $f0, 8($a2)
-/* 0648E0 7F02FDB0 C6060000 */  lwc1  $f6, ($s0)
-/* 0648E4 7F02FDB4 4606103E */  c.le.s $f2, $f6
-/* 0648E8 7F02FDB8 00000000 */  nop   
-/* 0648EC 7F02FDBC 45020004 */  bc1fl .L7F02FDD0
-/* 0648F0 7F02FDC0 C4C00008 */   lwc1  $f0, 8($a2)
-/* 0648F4 7F02FDC4 10000027 */  b     .L7F02FE64
-/* 0648F8 7F02FDC8 00001025 */   move  $v0, $zero
-/* 0648FC 7F02FDCC C4C00008 */  lwc1  $f0, 8($a2)
-.L7F02FDD0:
-/* 064900 7F02FDD0 C48E0008 */  lwc1  $f14, 8($a0)
-/* 064904 7F02FDD4 460C0081 */  sub.s $f2, $f0, $f12
-/* 064908 7F02FDD8 4602703E */  c.le.s $f14, $f2
-/* 06490C 7F02FDDC 00000000 */  nop   
-/* 064910 7F02FDE0 45020009 */  bc1fl .L7F02FE08
-/* 064914 7F02FDE4 460C0080 */   add.s $f2, $f0, $f12
-/* 064918 7F02FDE8 C6080008 */  lwc1  $f8, 8($s0)
-/* 06491C 7F02FDEC 4602403E */  c.le.s $f8, $f2
-/* 064920 7F02FDF0 00000000 */  nop   
-/* 064924 7F02FDF4 45020004 */  bc1fl .L7F02FE08
-/* 064928 7F02FDF8 460C0080 */   add.s $f2, $f0, $f12
-/* 06492C 7F02FDFC 10000019 */  b     .L7F02FE64
-/* 064930 7F02FE00 00001025 */   move  $v0, $zero
-/* 064934 7F02FE04 460C0080 */  add.s $f2, $f0, $f12
-.L7F02FE08:
-/* 064938 7F02FE08 460E103E */  c.le.s $f2, $f14
-/* 06493C 7F02FE0C 00000000 */  nop   
-/* 064940 7F02FE10 45020009 */  bc1fl .L7F02FE38
-/* 064944 7F02FE14 C6120000 */   lwc1  $f18, ($s0)
-/* 064948 7F02FE18 C60A0008 */  lwc1  $f10, 8($s0)
-/* 06494C 7F02FE1C 460A103E */  c.le.s $f2, $f10
-/* 064950 7F02FE20 00000000 */  nop   
-/* 064954 7F02FE24 45020004 */  bc1fl .L7F02FE38
-/* 064958 7F02FE28 C6120000 */   lwc1  $f18, ($s0)
-/* 06495C 7F02FE2C 1000000D */  b     .L7F02FE64
-/* 064960 7F02FE30 00001025 */   move  $v0, $zero
-/* 064964 7F02FE34 C6120000 */  lwc1  $f18, ($s0)
-.L7F02FE38:
-/* 064968 7F02FE38 44803000 */  mtc1  $zero, $f6
-/* 06496C 7F02FE3C 44076000 */  mfc1  $a3, $f12
-/* 064970 7F02FE40 46109101 */  sub.s $f4, $f18, $f16
-/* 064974 7F02FE44 E7A60038 */  swc1  $f6, 0x38($sp)
-/* 064978 7F02FE48 27A50034 */  addiu $a1, $sp, 0x34
-/* 06497C 7F02FE4C E7A40034 */  swc1  $f4, 0x34($sp)
-/* 064980 7F02FE50 C48A0008 */  lwc1  $f10, 8($a0)
-/* 064984 7F02FE54 C6080008 */  lwc1  $f8, 8($s0)
-/* 064988 7F02FE58 460A4481 */  sub.s $f18, $f8, $f10
-/* 06498C 7F02FE5C 0FC0BF0D */  jal   chrlvGeometryRelated7F02FC34
-/* 064990 7F02FE60 E7B2003C */   swc1  $f18, 0x3c($sp)
-.L7F02FE64:
-/* 064994 7F02FE64 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 064998 7F02FE68 8FB00018 */  lw    $s0, 0x18($sp)
-/* 06499C 7F02FE6C 27BD0040 */  addiu $sp, $sp, 0x40
-/* 0649A0 7F02FE70 03E00008 */  jr    $ra
-/* 0649A4 7F02FE74 00000000 */   nop   
-)
-#endif
 
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F02FE78(void) {
+void sub_GAME_7F02FE78(ChrRecord *self)
+{
+    Model *self_model;
+    PropRecord *self_prop;
+    f32 phi_f2;
 
+    // A compile constant of zero gets simplified out (removed) by the compiler,
+    // but this stays resulting in a subtracting zero.
+    f32 offset = 0.0f;
+    f32 sp2C;
+
+    self_model = self->model;
+    self_prop = self->prop;
+    self->lastwalk60 = g_GlobalTimer;
+
+    if ((self->invalidmove == 1)
+        || (self->lastmoveok60 < (g_GlobalTimer - 0x3C))
+        || (chrlvGeometryRelated7F02FD50(&self->prevpos, &self_prop->pos, &self->act_runpos.pos, self->act_runpos.unk038)))
+    {
+        // bug/mistake/mystery. Maybe had debug side effects.
+        objecthandlerGetModelAnim(self_model);
+        
+        offset = 0.0f;
+        phi_f2 = objecthandlerGetModelField28(self_model);
+        phi_f2 = phi_f2 - offset;
+
+        if (phi_f2 < 0.0f)
+        {
+            phi_f2 += (f32)objecthandlerGetModelAnim(self_model)->unk04;
+        }
+
+        if (((f32)objecthandlerGetModelAnim(self_model)->unk04 * 0.5f) < phi_f2)
+        {
+            offset = 0.0f;
+            phi_f2 = (f32)objecthandlerGetModelAnim(self_model)->unk04;
+            sub_GAME_7F06FE90(self_model, phi_f2 - offset, 16.0f);
+        }
+        else
+        {
+            offset = 0.0f;
+            phi_f2 = ((f32)objecthandlerGetModelAnim(self_model)->unk04 * 0.5f);
+            phi_f2 = phi_f2 - offset;
+
+            if (phi_f2 < 0)
+            {
+                phi_f2 += (f32)objecthandlerGetModelAnim(self_model)->unk04;
+            }
+
+            sub_GAME_7F06FE90(self_model, phi_f2, 16.0f);
+        }
+
+        chrlvKneelingAnimationRelated7F023E48(self);
+
+        return;
+    }
+
+    chrlvApplySpeed(self, &self->act_runpos.pos, 1, &self->act_runpos.unk040);
+
+    if (self->act_runpos.unk03c > 0)
+    {
+        self->act_runpos.unk03c -= g_ClockTimer;
+
+        return;
+    }
+
+    sp2C = D_80030988;
+
+    if ((s32)objecthandlerGetModelAnim(self_model) == (s32)&ptr_animation_table->data[(s32)&ANIM_DATA_running_one_handed_weapon])
+    {
+        sp2C = D_80030994;
+    }
+
+    self->act_runpos.unk038 += sp2C * g_GlobalTimerDelta * sub_GAME_7F06F618(self_model);
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -11184,7 +11205,7 @@ glabel sub_GAME_7F02FE78
 /* 0649F8 7F02FEC8 24450008 */   addiu $a1, $v0, 8
 /* 0649FC 7F02FECC 2606002C */  addiu $a2, $s0, 0x2c
 /* 064A00 7F02FED0 8E070038 */  lw    $a3, 0x38($s0)
-/* 064A04 7F02FED4 0FC0BF54 */  jal   sub_GAME_7F02FD50
+/* 064A04 7F02FED4 0FC0BF54 */  jal   chrlvGeometryRelated7F02FD50
 /* 064A08 7F02FED8 AFA60020 */   sw    $a2, 0x20($sp)
 /* 064A0C 7F02FEDC 10400068 */  beqz  $v0, .L7F030080
 /* 064A10 7F02FEE0 02002025 */   move  $a0, $s0
@@ -13763,7 +13784,7 @@ glabel sub_GAME_7F032088
 /* 066D9C 7F03226C AFA0004C */  sw    $zero, 0x4c($sp)
 /* 066DA0 7F032270 260400BC */  addiu $a0, $s0, 0xbc
 /* 066DA4 7F032274 3C0741F0 */  lui   $a3, 0x41f0
-/* 066DA8 7F032278 0FC0BF54 */  jal   sub_GAME_7F02FD50
+/* 066DA8 7F032278 0FC0BF54 */  jal   chrlvGeometryRelated7F02FD50
 /* 066DAC 7F03227C 010A3021 */   addu  $a2, $t0, $t2
 /* 066DB0 7F032280 1040000D */  beqz  $v0, .L7F0322B8
 /* 066DB4 7F032284 8FA3004C */   lw    $v1, 0x4c($sp)
@@ -13772,7 +13793,7 @@ glabel sub_GAME_7F032088
 .L7F032290:
 /* 066DC0 7F032290 3C0741F0 */  lui   $a3, 0x41f0
 /* 066DC4 7F032294 AFA3004C */  sw    $v1, 0x4c($sp)
-/* 066DC8 7F032298 0FC0BF54 */  jal   sub_GAME_7F02FD50
+/* 066DC8 7F032298 0FC0BF54 */  jal   chrlvGeometryRelated7F02FD50
 /* 066DCC 7F03229C AFA5002C */   sw    $a1, 0x2c($sp)
 /* 066DD0 7F0322A0 10400005 */  beqz  $v0, .L7F0322B8
 /* 066DD4 7F0322A4 8FA3004C */   lw    $v1, 0x4c($sp)
@@ -14051,7 +14072,7 @@ glabel sub_GAME_7F032548
 /* 067194 7F032664 AFA9002C */  sw    $t1, 0x2c($sp)
 /* 067198 7F032668 02203025 */  move  $a2, $s1
 /* 06719C 7F03266C 3C0741F0 */  lui   $a3, 0x41f0
-/* 0671A0 7F032670 0FC0BF54 */  jal   sub_GAME_7F02FD50
+/* 0671A0 7F032670 0FC0BF54 */  jal   chrlvGeometryRelated7F02FD50
 /* 0671A4 7F032674 24A50008 */   addiu $a1, $a1, 8
 /* 0671A8 7F032678 50400007 */  beql  $v0, $zero, .L7F032698
 /* 0671AC 7F03267C 02002025 */   move  $a0, $s0

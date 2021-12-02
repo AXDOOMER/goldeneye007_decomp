@@ -5522,6 +5522,10 @@ glabel sub_GAME_7F06F610
 
 
 #ifdef NONMATCHING
+/**
+ * Address 0x7F06F618.
+ * PD: modelGetAbsAnimSpeed
+*/
 f32 sub_GAME_7F06F618(struct Model *arg0)
 {
     f32 phi_f2;
