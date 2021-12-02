@@ -11686,7 +11686,7 @@ glabel object_interaction
 /* 07C88C 7F047D5C 27A50694 */  addiu $a1, $sp, 0x694
 /* 07C890 7F047D60 11000054 */  beqz  $t0, .L7F047EB4
 /* 07C894 7F047D64 01003025 */   move  $a2, $t0
-/* 07C898 7F047D68 0FC0BF54 */  jal   chrlvGeometryRelated7F02FD50
+/* 07C898 7F047D68 0FC0BF54 */  jal   chrlvIsArrivingLaterallyAtPos
 /* 07C89C 7F047D6C 3C0742C8 */   lui   $a3, 0x42c8
 /* 07C8A0 7F047D70 10400050 */  beqz  $v0, .L7F047EB4
 /* 07C8A4 7F047D74 00000000 */   nop   
@@ -16792,7 +16792,7 @@ glabel object_interaction
 /* 07CCD0 7F048160 27A5069C */  addiu $a1, $sp, 0x69c
 /* 07CCD4 7F048164 11400054 */  beqz  $t2, .Ljp7F0482B8
 /* 07CCD8 7F048168 01403025 */   move  $a2, $t2
-/* 07CCDC 7F04816C 0FC0C014 */  jal   chrlvGeometryRelated7F02FD50
+/* 07CCDC 7F04816C 0FC0C014 */  jal   chrlvIsArrivingLaterallyAtPos
 /* 07CCE0 7F048170 3C0742C8 */   lui   $a3, 0x42c8
 /* 07CCE4 7F048174 10400050 */  beqz  $v0, .Ljp7F0482B8
 /* 07CCE8 7F048178 00000000 */   nop   
@@ -21903,7 +21903,7 @@ glabel object_interaction
 /* 07A920 7F047F30 27A5069C */  addiu $a1, $sp, 0x69c
 /* 07A924 7F047F34 11000054 */  beqz  $t0, .L7F048088
 /* 07A928 7F047F38 01003025 */   move  $a2, $t0
-/* 07A92C 7F047F3C 0FC0BF65 */  jal   chrlvGeometryRelated7F02FD50
+/* 07A92C 7F047F3C 0FC0BF65 */  jal   chrlvIsArrivingLaterallyAtPos
 /* 07A930 7F047F40 3C0742C8 */   lui   $a3, 0x42c8
 /* 07A934 7F047F44 10400050 */  beqz  $v0, .L7F048088
 /* 07A938 7F047F48 00000000 */   nop   

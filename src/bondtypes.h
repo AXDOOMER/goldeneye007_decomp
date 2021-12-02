@@ -684,14 +684,20 @@ struct act_runpos
 {
     struct coord3d pos;                                                  /*0x2c*/
 
-    // g_GlobalTimerDelta related
-    f32 unk038;                                                        /*0x38*/
+    /**
+     * chr offset 0x38.
+    */
+    f32 neardist;                                                        /*0x38*/
 
-    // g_ClockTimer related
-    s32 unk03c;                                                        /*0x3c*/
+    /**
+     * chr offset 0x3c.
+    */
+    s32 eta60;                                                        /*0x3c*/
 
-    // maybe turnspeed (if same as PD)
-    f32 unk040;                                                        /*0x40*/
+    /**
+     * chr offset 0x40.
+    */
+    f32 turnspeed;                                                        /*0x40*/
 };
 
 struct act_patrol
