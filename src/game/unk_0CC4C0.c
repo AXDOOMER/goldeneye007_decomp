@@ -747,95 +747,27 @@ s32 sub_GAME_7F0CCAFC(f32 arg0)
 }
 
 
+s32 sub_GAME_7F0CCB38(s32 *arg0)
+{
+    s32 temp_t7;
+    s32 temp_v0;
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0CCB38(void) {
-
+    temp_v0 = sub_GAME_7F0CC8E4(arg0, 0U);
+    temp_t7 = arg0[2] & 3;
+    if (temp_t7 == 3)
+    {
+        return sub_GAME_7F0CCAFC((2.0f / (f32) (temp_v0 * 4)) * 2048.0f);
+    }
+    if (temp_t7 == 2)
+    {
+        return sub_GAME_7F0CCAFC((4.0f / (f32) (temp_v0 * 4)) * 2048.0f);
+    }
+    if (temp_t7 == 1)
+    {
+        return sub_GAME_7F0CCAFC((8.0f / (f32) (temp_v0 * 8)) * 2048.0f);
+    }
+    return sub_GAME_7F0CCAFC((16.0f / (f32) (temp_v0 * 0x10)) * 2048.0f);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0CCB38
-/* 101668 7F0CCB38 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 10166C 7F0CCB3C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 101670 7F0CCB40 AFA40018 */  sw    $a0, 0x18($sp)
-/* 101674 7F0CCB44 0FC33239 */  jal   sub_GAME_7F0CC8E4
-/* 101678 7F0CCB48 00002825 */   move  $a1, $zero
-/* 10167C 7F0CCB4C 8FAE0018 */  lw    $t6, 0x18($sp)
-/* 101680 7F0CCB50 24010003 */  li    $at, 3
-/* 101684 7F0CCB54 00402025 */  move  $a0, $v0
-/* 101688 7F0CCB58 8DC30008 */  lw    $v1, 8($t6)
-/* 10168C 7F0CCB5C 0002C080 */  sll   $t8, $v0, 2
-/* 101690 7F0CCB60 306F0003 */  andi  $t7, $v1, 3
-/* 101694 7F0CCB64 15E1000D */  bne   $t7, $at, .L7F0CCB9C
-/* 101698 7F0CCB68 01E01825 */   move  $v1, $t7
-/* 10169C 7F0CCB6C 44983000 */  mtc1  $t8, $f6
-/* 1016A0 7F0CCB70 3C014000 */  li    $at, 0x40000000 # 2.000000
-/* 1016A4 7F0CCB74 44812000 */  mtc1  $at, $f4
-/* 1016A8 7F0CCB78 46803220 */  cvt.s.w $f8, $f6
-/* 1016AC 7F0CCB7C 3C014500 */  li    $at, 0x45000000 # 2048.000000
-/* 1016B0 7F0CCB80 44818000 */  mtc1  $at, $f16
-/* 1016B4 7F0CCB84 46082283 */  div.s $f10, $f4, $f8
-/* 1016B8 7F0CCB88 46105302 */  mul.s $f12, $f10, $f16
-/* 1016BC 7F0CCB8C 0FC332BF */  jal   sub_GAME_7F0CCAFC
-/* 1016C0 7F0CCB90 00000000 */   nop   
-/* 1016C4 7F0CCB94 1000002B */  b     .L7F0CCC44
-/* 1016C8 7F0CCB98 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0CCB9C:
-/* 1016CC 7F0CCB9C 24010002 */  li    $at, 2
-/* 1016D0 7F0CCBA0 1461000D */  bne   $v1, $at, .L7F0CCBD8
-/* 1016D4 7F0CCBA4 0004C880 */   sll   $t9, $a0, 2
-/* 1016D8 7F0CCBA8 44993000 */  mtc1  $t9, $f6
-/* 1016DC 7F0CCBAC 3C014080 */  li    $at, 0x40800000 # 4.000000
-/* 1016E0 7F0CCBB0 44819000 */  mtc1  $at, $f18
-/* 1016E4 7F0CCBB4 46803120 */  cvt.s.w $f4, $f6
-/* 1016E8 7F0CCBB8 3C014500 */  li    $at, 0x45000000 # 2048.000000
-/* 1016EC 7F0CCBBC 44815000 */  mtc1  $at, $f10
-/* 1016F0 7F0CCBC0 46049203 */  div.s $f8, $f18, $f4
-/* 1016F4 7F0CCBC4 460A4302 */  mul.s $f12, $f8, $f10
-/* 1016F8 7F0CCBC8 0FC332BF */  jal   sub_GAME_7F0CCAFC
-/* 1016FC 7F0CCBCC 00000000 */   nop   
-/* 101700 7F0CCBD0 1000001C */  b     .L7F0CCC44
-/* 101704 7F0CCBD4 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0CCBD8:
-/* 101708 7F0CCBD8 24010001 */  li    $at, 1
-/* 10170C 7F0CCBDC 1461000E */  bne   $v1, $at, .L7F0CCC18
-/* 101710 7F0CCBE0 00044900 */   sll   $t1, $a0, 4
-/* 101714 7F0CCBE4 000440C0 */  sll   $t0, $a0, 3
-/* 101718 7F0CCBE8 44883000 */  mtc1  $t0, $f6
-/* 10171C 7F0CCBEC 3C014100 */  li    $at, 0x41000000 # 8.000000
-/* 101720 7F0CCBF0 44818000 */  mtc1  $at, $f16
-/* 101724 7F0CCBF4 468034A0 */  cvt.s.w $f18, $f6
-/* 101728 7F0CCBF8 3C014500 */  li    $at, 0x45000000 # 2048.000000
-/* 10172C 7F0CCBFC 44814000 */  mtc1  $at, $f8
-/* 101730 7F0CCC00 46128103 */  div.s $f4, $f16, $f18
-/* 101734 7F0CCC04 46082302 */  mul.s $f12, $f4, $f8
-/* 101738 7F0CCC08 0FC332BF */  jal   sub_GAME_7F0CCAFC
-/* 10173C 7F0CCC0C 00000000 */   nop   
-/* 101740 7F0CCC10 1000000C */  b     .L7F0CCC44
-/* 101744 7F0CCC14 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0CCC18:
-/* 101748 7F0CCC18 44893000 */  mtc1  $t1, $f6
-/* 10174C 7F0CCC1C 3C014180 */  li    $at, 0x41800000 # 16.000000
-/* 101750 7F0CCC20 44815000 */  mtc1  $at, $f10
-/* 101754 7F0CCC24 46803420 */  cvt.s.w $f16, $f6
-/* 101758 7F0CCC28 3C014500 */  li    $at, 0x45000000 # 2048.000000
-/* 10175C 7F0CCC2C 44812000 */  mtc1  $at, $f4
-/* 101760 7F0CCC30 46105483 */  div.s $f18, $f10, $f16
-/* 101764 7F0CCC34 46049302 */  mul.s $f12, $f18, $f4
-/* 101768 7F0CCC38 0FC332BF */  jal   sub_GAME_7F0CCAFC
-/* 10176C 7F0CCC3C 00000000 */   nop   
-/* 101770 7F0CCC40 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0CCC44:
-/* 101774 7F0CCC44 27BD0018 */  addiu $sp, $sp, 0x18
-/* 101778 7F0CCC48 03E00008 */  jr    $ra
-/* 10177C 7F0CCC4C 00000000 */   nop   
-)
-#endif
-
 
 
 
