@@ -5427,19 +5427,12 @@ glabel subcalcmatrices
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F06F5AC(void) {
-
+/**
+ * Address 0x7F06F5AC.
+*/
+struct ModelAnimation * objecthandlerGetModelAnim(struct Model* model) {
+    return model->anim;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06F5AC
-/* 0A40DC 7F06F5AC 03E00008 */  jr    $ra
-/* 0A40E0 7F06F5B0 8C820020 */   lw    $v0, 0x20($a0)
-)
-#endif
-
 
 
 
@@ -5529,6 +5522,10 @@ glabel sub_GAME_7F06F610
 
 
 #ifdef NONMATCHING
+/**
+ * Address 0x7F06F618.
+ * PD: modelGetAbsAnimSpeed
+*/
 f32 sub_GAME_7F06F618(struct Model *arg0)
 {
     f32 phi_f2;
@@ -6307,53 +6304,33 @@ glabel sub_GAME_7F06FE4C
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F06FE90(void) {
+/**
+ * @param arg0:
+ * @param arg1:
+ * @param arg2: must be non-zero.
+ * 
+ * Address 0x7F06FE90.
+*/
+s32 sub_GAME_7F06FE90(Model *arg0, f32 arg1, f32 arg2)
+{
+    f32 temp_f0;
+    f32 phi_f2;
+    f32 t;
 
+    temp_f0 = arg0->unk28;
+    
+    if (temp_f0 <= arg1)
+    {
+        phi_f2 = arg1 - temp_f0;
+    }
+    else
+    {
+        phi_f2 = ( (f32)arg0->anim->unk04 - temp_f0) + arg1;
+    }
+    
+    t = arg0->unk40 + ((2.0f * phi_f2) / arg2);
+    return sub_GAME_7F06FE4C(arg0, t, arg2);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06FE90
-/* 0A49C0 7F06FE90 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0A49C4 7F06FE94 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A49C8 7F06FE98 44856000 */  mtc1  $a1, $f12
-/* 0A49CC 7F06FE9C C4800028 */  lwc1  $f0, 0x28($a0)
-/* 0A49D0 7F06FEA0 44867000 */  mtc1  $a2, $f14
-/* 0A49D4 7F06FEA4 460C003E */  c.le.s $f0, $f12
-/* 0A49D8 7F06FEA8 00000000 */  nop   
-/* 0A49DC 7F06FEAC 45020004 */  bc1fl .L7F06FEC0
-/* 0A49E0 7F06FEB0 8C8E0020 */   lw    $t6, 0x20($a0)
-/* 0A49E4 7F06FEB4 1000000C */  b     .L7F06FEE8
-/* 0A49E8 7F06FEB8 46006081 */   sub.s $f2, $f12, $f0
-/* 0A49EC 7F06FEBC 8C8E0020 */  lw    $t6, 0x20($a0)
-.L7F06FEC0:
-/* 0A49F0 7F06FEC0 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
-/* 0A49F4 7F06FEC4 95CF0004 */  lhu   $t7, 4($t6)
-/* 0A49F8 7F06FEC8 448F2000 */  mtc1  $t7, $f4
-/* 0A49FC 7F06FECC 05E10004 */  bgez  $t7, .L7F06FEE0
-/* 0A4A00 7F06FED0 468021A0 */   cvt.s.w $f6, $f4
-/* 0A4A04 7F06FED4 44814000 */  mtc1  $at, $f8
-/* 0A4A08 7F06FED8 00000000 */  nop   
-/* 0A4A0C 7F06FEDC 46083180 */  add.s $f6, $f6, $f8
-.L7F06FEE0:
-/* 0A4A10 7F06FEE0 46003281 */  sub.s $f10, $f6, $f0
-/* 0A4A14 7F06FEE4 460C5080 */  add.s $f2, $f10, $f12
-.L7F06FEE8:
-/* 0A4A18 7F06FEE8 46021480 */  add.s $f18, $f2, $f2
-/* 0A4A1C 7F06FEEC C4900040 */  lwc1  $f16, 0x40($a0)
-/* 0A4A20 7F06FEF0 44067000 */  mfc1  $a2, $f14
-/* 0A4A24 7F06FEF4 460E9103 */  div.s $f4, $f18, $f14
-/* 0A4A28 7F06FEF8 46048000 */  add.s $f0, $f16, $f4
-/* 0A4A2C 7F06FEFC 44050000 */  mfc1  $a1, $f0
-/* 0A4A30 7F06FF00 0FC1BF93 */  jal   sub_GAME_7F06FE4C
-/* 0A4A34 7F06FF04 00000000 */   nop   
-/* 0A4A38 7F06FF08 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0A4A3C 7F06FF0C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0A4A40 7F06FF10 03E00008 */  jr    $ra
-/* 0A4A44 7F06FF14 00000000 */   nop   
-)
-#endif
 
 
 

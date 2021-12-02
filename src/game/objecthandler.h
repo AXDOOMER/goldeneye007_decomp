@@ -19,7 +19,7 @@ void getsuboffset(s32, struct coord3d *);
 void sub_GAME_7F070AEC(struct object_standard *, s32, s32);
 void subcalcpos(struct object_standard *);
 
-void objecthandlerAnimationRelated7F06FCA8(struct Model *, void*, s32, f32, f32, f32);
+void objecthandlerAnimationRelated7F06FCA8(struct Model *, struct ModelAnimation *, s32, f32, f32, f32);
 void sub_GAME_7F06FDCC(struct Model *, f32, f32);
 void sub_GAME_7F06FDE8(struct Model *, f32);
 void sub_GAME_7F06CE84(struct Model *, f32);
@@ -30,12 +30,13 @@ void setsubroty(Model *objinst, f32 radHeading);
 void sub_GAME_7F06FC4C(struct Model *, u8 *, s32, f32, f32, f32, s32);
 f32 objecthandlerGetModelField28(struct Model *model);
 
-void* sub_GAME_7F06F5AC(struct Model *);
+struct ModelAnimation * objecthandlerGetModelAnim(struct Model *);
 f32 sub_GAME_7F06F618(struct Model*);
 s32 sub_GAME_7F06F5B4(Model *);
 f32 sub_GAME_7F06F5C4(Model *);
 s32 sub_GAME_7F06FE4C(Model *, f32, f32);
 f32 sub_GAME_7F06F610(struct Model *);
+s32 sub_GAME_7F06FE90(Model *arg0, f32 arg1, f32 arg2);
 
 // tentative signature
 Mtxf* sub_GAME_7F06C660(struct Model *arg0, struct ModelNode *arg1, s32 arg2);

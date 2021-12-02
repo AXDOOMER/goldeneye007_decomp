@@ -344,6 +344,16 @@ struct modeldata_root
     f32 unk5c;
 };
 
+// unknown struct, unknown size.
+struct ModelAnimation
+{
+    s32 unk00;
+    u16 unk04;
+    u16 unk06;
+
+    // ...
+};
+
 /**
  * I beleve that "datas" is actually " struct modeldata_root" and that 
  * unk1c is the model node data array
@@ -361,14 +371,14 @@ typedef struct Model
     ModelNode *unk1c;                                       /*0x1c*/
 
     // need `struct anim` definition from AI branch.
-    void *anim;                                      /*0x20*/
+    struct ModelAnimation *anim;                                      /*0x20*/
 
     s8 gunhand; // used by ACT_STAND
     s8 unk25;
     s8 unk26;
     s8 unk27;
 
-    f32 unk28;
+    f32 unk28; // animation related
     s32 unk2c;
     // 0x30
     s32 unk30;
@@ -605,15 +615,25 @@ struct act_attack
 struct act_attackwalk
 {
     u32 unk02c;                                                        /*0x2c*/
-    u32 unk30;                                                        /*0x30*/
-    u32 unk034;                                                        /*0x34*/
+    s32 clock_timer30;                                                 /*0x30*/
+    s32 clock_timer34;                                                 /*0x34*/
     u32 unk038;                                                        /*0x38*/
-    struct weapon_firing_animation_table *animfloats;                                     /*0x3c*/
-    u32 unk040;                                                        /*0x40*/
-    u32 unk044;                                                        /*0x44*/
-    u32 unk048;                                                        /*0x48*/
-    u16 unk04c;                                                        /*0x4c*/
+    struct weapon_firing_animation_table *animfloats;                  /*0x3c*/
+    s32 timer40;                                                        /*0x40*/
+
+    s32 unk044;                                                        /*0x44*/
+    
+    s8 unk48[2];                                                        /*0x48*/
+    //s8 unk49;                                                        /*0x48*/
+    s8 unk4a[2];                                                        /*0x48*/
+    //s8 unk4b;                                                        /*0x48*/
+
+    s8 unk4C[2];                                                        /*0x4c*/
     u8 flip;                                                           /*0x4e*/
+    s8 unk4f;
+
+    s32 unk50;
+    f32 speed;
 };
 
 struct act_attackroll
@@ -663,8 +683,14 @@ struct act_jumpout
 struct act_runpos
 {
     struct coord3d pos;                                                  /*0x2c*/
+
+    // g_GlobalTimerDelta related
     f32 unk038;                                                        /*0x38*/
+
+    // g_ClockTimer related
     s32 unk03c;                                                        /*0x3c*/
+
+    // maybe turnspeed (if same as PD)
     f32 unk040;                                                        /*0x40*/
 };
 
