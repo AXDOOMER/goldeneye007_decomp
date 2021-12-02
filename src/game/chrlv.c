@@ -11019,90 +11019,45 @@ void chrlvAttackWalkRelated(ChrRecord *self)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02FC34(void) {
+/**
+ * @param arg0: point in 3d
+ * @param arg1: 3 vec
+ * @param arg0: point in 3d
+ * @param arg0: scalar value
+ * 
+ * Address 0x7F02FC34.
+*/
+s32 chrlvGeometryRelated7F02FC34(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *arg2, f32 arg3)
+{
+    struct coord3d dd;
+    f32 temp_f14;
 
+    dd.f[0] = arg2->f[0] - arg0->f[0];
+    dd.f[2] = arg2->f[2] - arg0->f[2];
+    
+    if ((arg1->f[0] == 0.0f) && (arg1->f[2] == 0.0f))
+    {
+        return ((dd.f[0] * dd.f[0]) + (dd.f[2] * dd.f[2])) <= (arg3 * arg3);
+    }
+
+    temp_f14 = (arg1->f[0] * dd.f[0]) + (arg1->f[2] * dd.f[2]);
+
+    if (temp_f14 > 0.0f)
+    {
+        f32 tf14_2 = temp_f14 * temp_f14;
+        f32 f2 = (arg1->f[0] * arg1->f[0]) + (arg1->f[2] * arg1->f[2]);
+        f32 f3 = (dd.f[0] * dd.f[0]) + (dd.f[2] * dd.f[2]);
+
+        if ((f2 * (f3 - (arg3 * arg3))) <= tf14_2)
+        {
+            return 1;
+        }
+
+        return 0;
+    }
+
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F02FC34
-/* 064764 7F02FC34 C4C40000 */  lwc1  $f4, ($a2)
-/* 064768 7F02FC38 C4860000 */  lwc1  $f6, ($a0)
-/* 06476C 7F02FC3C 27BDFFF0 */  addiu $sp, $sp, -0x10
-/* 064770 7F02FC40 44808000 */  mtc1  $zero, $f16
-/* 064774 7F02FC44 46062201 */  sub.s $f8, $f4, $f6
-/* 064778 7F02FC48 44876000 */  mtc1  $a3, $f12
-/* 06477C 7F02FC4C E7A80004 */  swc1  $f8, 4($sp)
-/* 064780 7F02FC50 C4840008 */  lwc1  $f4, 8($a0)
-/* 064784 7F02FC54 C4CA0008 */  lwc1  $f10, 8($a2)
-/* 064788 7F02FC58 46045181 */  sub.s $f6, $f10, $f4
-/* 06478C 7F02FC5C E7A6000C */  swc1  $f6, 0xc($sp)
-/* 064790 7F02FC60 C4A00000 */  lwc1  $f0, ($a1)
-/* 064794 7F02FC64 C7AA000C */  lwc1  $f10, 0xc($sp)
-/* 064798 7F02FC68 46008032 */  c.eq.s $f16, $f0
-/* 06479C 7F02FC6C 00000000 */  nop   
-/* 0647A0 7F02FC70 45020015 */  bc1fl .L7F02FCC8
-/* 0647A4 7F02FC74 C4A20008 */   lwc1  $f2, 8($a1)
-/* 0647A8 7F02FC78 C4A80008 */  lwc1  $f8, 8($a1)
-/* 0647AC 7F02FC7C C7A2000C */  lwc1  $f2, 0xc($sp)
-/* 0647B0 7F02FC80 46088032 */  c.eq.s $f16, $f8
-/* 0647B4 7F02FC84 00000000 */  nop   
-/* 0647B8 7F02FC88 4502000F */  bc1fl .L7F02FCC8
-/* 0647BC 7F02FC8C C4A20008 */   lwc1  $f2, 8($a1)
-/* 0647C0 7F02FC90 46021282 */  mul.s $f10, $f2, $f2
-/* 0647C4 7F02FC94 C7A00004 */  lwc1  $f0, 4($sp)
-/* 0647C8 7F02FC98 00001025 */  move  $v0, $zero
-/* 0647CC 7F02FC9C 46000102 */  mul.s $f4, $f0, $f0
-/* 0647D0 7F02FCA0 46045180 */  add.s $f6, $f10, $f4
-/* 0647D4 7F02FCA4 460C6202 */  mul.s $f8, $f12, $f12
-/* 0647D8 7F02FCA8 4608303E */  c.le.s $f6, $f8
-/* 0647DC 7F02FCAC 00000000 */  nop   
-/* 0647E0 7F02FCB0 45000025 */  bc1f  .L7F02FD48
-/* 0647E4 7F02FCB4 00000000 */   nop   
-/* 0647E8 7F02FCB8 24020001 */  li    $v0, 1
-/* 0647EC 7F02FCBC 10000022 */  b     .L7F02FD48
-/* 0647F0 7F02FCC0 00000000 */   nop   
-/* 0647F4 7F02FCC4 C4A20008 */  lwc1  $f2, 8($a1)
-.L7F02FCC8:
-/* 0647F8 7F02FCC8 C7A80004 */  lwc1  $f8, 4($sp)
-/* 0647FC 7F02FCCC 00001025 */  move  $v0, $zero
-/* 064800 7F02FCD0 46025102 */  mul.s $f4, $f10, $f2
-/* 064804 7F02FCD4 00000000 */  nop   
-/* 064808 7F02FCD8 46080182 */  mul.s $f6, $f0, $f8
-/* 06480C 7F02FCDC 46062380 */  add.s $f14, $f4, $f6
-/* 064810 7F02FCE0 460E803C */  c.lt.s $f16, $f14
-/* 064814 7F02FCE4 00000000 */  nop   
-/* 064818 7F02FCE8 45000017 */  bc1f  .L7F02FD48
-/* 06481C 7F02FCEC 00000000 */   nop   
-/* 064820 7F02FCF0 46021102 */  mul.s $f4, $f2, $f2
-/* 064824 7F02FCF4 00000000 */  nop   
-/* 064828 7F02FCF8 46000182 */  mul.s $f6, $f0, $f0
-/* 06482C 7F02FCFC 46062400 */  add.s $f16, $f4, $f6
-/* 064830 7F02FD00 460A5102 */  mul.s $f4, $f10, $f10
-/* 064834 7F02FD04 00000000 */  nop   
-/* 064838 7F02FD08 46084182 */  mul.s $f6, $f8, $f8
-/* 06483C 7F02FD0C 00000000 */  nop   
-/* 064840 7F02FD10 460E7282 */  mul.s $f10, $f14, $f14
-/* 064844 7F02FD14 00000000 */  nop   
-/* 064848 7F02FD18 460C6202 */  mul.s $f8, $f12, $f12
-/* 06484C 7F02FD1C 46062480 */  add.s $f18, $f4, $f6
-/* 064850 7F02FD20 46089101 */  sub.s $f4, $f18, $f8
-/* 064854 7F02FD24 46102182 */  mul.s $f6, $f4, $f16
-/* 064858 7F02FD28 460A303E */  c.le.s $f6, $f10
-/* 06485C 7F02FD2C 00000000 */  nop   
-/* 064860 7F02FD30 45000003 */  bc1f  .L7F02FD40
-/* 064864 7F02FD34 00000000 */   nop   
-/* 064868 7F02FD38 10000003 */  b     .L7F02FD48
-/* 06486C 7F02FD3C 24020001 */   li    $v0, 1
-.L7F02FD40:
-/* 064870 7F02FD40 10000001 */  b     .L7F02FD48
-/* 064874 7F02FD44 00001025 */   move  $v0, $zero
-.L7F02FD48:
-/* 064878 7F02FD48 03E00008 */  jr    $ra
-/* 06487C 7F02FD4C 27BD0010 */   addiu $sp, $sp, 0x10
-)
-#endif
 
 
 
@@ -11185,7 +11140,7 @@ glabel sub_GAME_7F02FD50
 /* 064980 7F02FE50 C48A0008 */  lwc1  $f10, 8($a0)
 /* 064984 7F02FE54 C6080008 */  lwc1  $f8, 8($s0)
 /* 064988 7F02FE58 460A4481 */  sub.s $f18, $f8, $f10
-/* 06498C 7F02FE5C 0FC0BF0D */  jal   sub_GAME_7F02FC34
+/* 06498C 7F02FE5C 0FC0BF0D */  jal   chrlvGeometryRelated7F02FC34
 /* 064990 7F02FE60 E7B2003C */   swc1  $f18, 0x3c($sp)
 .L7F02FE64:
 /* 064994 7F02FE64 8FBF001C */  lw    $ra, 0x1c($sp)

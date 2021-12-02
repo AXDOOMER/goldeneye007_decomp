@@ -11339,7 +11339,7 @@ glabel object_interaction
 /* 07C348 7F047818 8FA40070 */  lw    $a0, 0x70($sp)
 /* 07C34C 7F04781C 27A5043C */  addiu $a1, $sp, 0x43c
 /* 07C350 7F047820 8FA60478 */  lw    $a2, 0x478($sp)
-/* 07C354 7F047824 0FC0BF0D */  jal   sub_GAME_7F02FC34
+/* 07C354 7F047824 0FC0BF0D */  jal   chrlvGeometryRelated7F02FC34
 /* 07C358 7F047828 3C074120 */   lui   $a3, 0x4120
 /* 07C35C 7F04782C 10400003 */  beqz  $v0, .L7F04783C
 /* 07C360 7F047830 C7AE0430 */   lwc1  $f14, 0x430($sp)
@@ -16445,7 +16445,7 @@ glabel object_interaction
 /* 07C78C 7F047C1C 8FA40074 */  lw    $a0, 0x74($sp)
 /* 07C790 7F047C20 27A50440 */  addiu $a1, $sp, 0x440
 /* 07C794 7F047C24 8FA6047C */  lw    $a2, 0x47c($sp)
-/* 07C798 7F047C28 0FC0BFCD */  jal   sub_GAME_7F02FC34
+/* 07C798 7F047C28 0FC0BFCD */  jal   chrlvGeometryRelated7F02FC34
 /* 07C79C 7F047C2C 3C074120 */   lui   $a3, 0x4120
 /* 07C7A0 7F047C30 10400003 */  beqz  $v0, .Ljp7F047C40
 /* 07C7A4 7F047C34 C7AE0434 */   lwc1  $f14, 0x434($sp)
@@ -21557,7 +21557,7 @@ glabel object_interaction
 /* 07A3E0 7F0479F0 02002025 */  move  $a0, $s0
 /* 07A3E4 7F0479F4 27A50440 */  addiu $a1, $sp, 0x440
 /* 07A3E8 7F0479F8 8FA6047C */  lw    $a2, 0x47c($sp)
-/* 07A3EC 7F0479FC 0FC0BF1E */  jal   sub_GAME_7F02FC34
+/* 07A3EC 7F0479FC 0FC0BF1E */  jal   chrlvGeometryRelated7F02FC34
 /* 07A3F0 7F047A00 3C074120 */   lui   $a3, 0x4120
 /* 07A3F4 7F047A04 10400003 */  beqz  $v0, .L7F047A14
 /* 07A3F8 7F047A08 C7AE0434 */   lwc1  $f14, 0x434($sp)
