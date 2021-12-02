@@ -22,6 +22,31 @@ struct image_sound
     u16 thing2_len;
 };
 
+typedef struct s_bss_8008D148
+{
+    s32 unk_0;
+    s32 unk_4;
+    s32 unk_8;
+    s32 unk_C;
+    s32 unk_10;
+    s32 unk_14;
+    s32 unk_18;
+    s32 unk_1C;
+    s32 unk_20;
+    s32 unk_24;
+    s32 unk_28;
+} s_bss_8008D148;
+
+typedef struct s_bss_8008D2A8
+{
+    s32 unk_0;
+    s32 unk_4;
+    s32 unk_8;
+    s32 unk_C;
+    s32 unk_10;
+} s_bss_8008D2A8;
+
+
 extern struct image_sound *D_8004E86C[];
 
 #endif
