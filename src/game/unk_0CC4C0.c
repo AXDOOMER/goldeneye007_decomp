@@ -229,103 +229,54 @@ u32 sub_GAME_7F0CC548(s32 arg0) {
     return 1;
 }
 
-s32 sub_GAME_7F0CC574(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9, s32 argA)
+
+s32 sub_GAME_7F0CC574(s32 index, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9, s32 argA)
 {
     s32 retval;
 
     retval = 0;
-    if ((dword_CODE_bss_8008D148[arg0].unk_0 == 0) || (arg1 != dword_CODE_bss_8008D148[arg0].unk_4) || 
-     (arg2 != dword_CODE_bss_8008D148[arg0].unk_8) || (arg3 != dword_CODE_bss_8008D148[arg0].unk_C) || 
-     (arg4 != dword_CODE_bss_8008D148[arg0].unk_10) || (arg5 != dword_CODE_bss_8008D148[arg0].unk_14) || 
-     (arg6 != dword_CODE_bss_8008D148[arg0].unk_18) || (arg7 != dword_CODE_bss_8008D148[arg0].unk_1C) || 
-     (arg8 != dword_CODE_bss_8008D148[arg0].unk_20) || (arg9 != dword_CODE_bss_8008D148[arg0].unk_24) || 
-     (argA != dword_CODE_bss_8008D148[arg0].unk_28))
+    if ((dword_CODE_bss_8008D148[index].unk_0 == 0) || (arg1 != dword_CODE_bss_8008D148[index].unk_4) || 
+     (arg2 != dword_CODE_bss_8008D148[index].unk_8) || (arg3 != dword_CODE_bss_8008D148[index].unk_C) || 
+     (arg4 != dword_CODE_bss_8008D148[index].unk_10) || (arg5 != dword_CODE_bss_8008D148[index].unk_14) || 
+     (arg6 != dword_CODE_bss_8008D148[index].unk_18) || (arg7 != dword_CODE_bss_8008D148[index].unk_1C) || 
+     (arg8 != dword_CODE_bss_8008D148[index].unk_20) || (arg9 != dword_CODE_bss_8008D148[index].unk_24) || 
+     (argA != dword_CODE_bss_8008D148[index].unk_28))
     {
         retval = 1;
-        dword_CODE_bss_8008D148[arg0].unk_0 = 1;
-        dword_CODE_bss_8008D148[arg0].unk_4 = arg1;
-        dword_CODE_bss_8008D148[arg0].unk_8 = arg2;
-        dword_CODE_bss_8008D148[arg0].unk_C = arg3;
-        dword_CODE_bss_8008D148[arg0].unk_10 = arg4;
-        dword_CODE_bss_8008D148[arg0].unk_14 = arg5;
-        dword_CODE_bss_8008D148[arg0].unk_18 = arg6;
-        dword_CODE_bss_8008D148[arg0].unk_1C = arg7;
-        dword_CODE_bss_8008D148[arg0].unk_20 = arg8;
-        dword_CODE_bss_8008D148[arg0].unk_24 = arg9;
-        dword_CODE_bss_8008D148[arg0].unk_28 = argA;
+        dword_CODE_bss_8008D148[index].unk_0 = 1;
+        dword_CODE_bss_8008D148[index].unk_4 = arg1;
+        dword_CODE_bss_8008D148[index].unk_8 = arg2;
+        dword_CODE_bss_8008D148[index].unk_C = arg3;
+        dword_CODE_bss_8008D148[index].unk_10 = arg4;
+        dword_CODE_bss_8008D148[index].unk_14 = arg5;
+        dword_CODE_bss_8008D148[index].unk_18 = arg6;
+        dword_CODE_bss_8008D148[index].unk_1C = arg7;
+        dword_CODE_bss_8008D148[index].unk_20 = arg8;
+        dword_CODE_bss_8008D148[index].unk_24 = arg9;
+        dword_CODE_bss_8008D148[index].unk_28 = argA;
         
     }
     return retval;
 }
 
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0CC690(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-    void *temp_v0;
-    ? phi_v1;
-
-    // Node 0
-    temp_v0 = ((arg0 * 0x14) + &dword_CODE_bss_8008D2A8);
-    if (((((*temp_v0 == 0) || (arg1 != temp_v0->unk4)) || (arg2 != temp_v0->unk8)) || (arg3 != temp_v0->unkC)) || (arg4 != temp_v0->unk10))
+s32 sub_GAME_7F0CC690(s32 index,s32 arg1,s32 arg2,s32 arg3,s32 arg4)
+{
+    s32 retval;
+    
+    retval = 0;
+    if ((((dword_CODE_bss_8008D2A8[index].unk_0 == 0) || (arg1 != dword_CODE_bss_8008D2A8[index].unk_4)) || (arg2 != dword_CODE_bss_8008D2A8[index].unk_8)) ||
+       ((arg3 != dword_CODE_bss_8008D2A8[index].unk_C || (arg4 != dword_CODE_bss_8008D2A8[index].unk_10))))
     {
-        // Node 5
-        *temp_v0 = 1;
-        temp_v0->unk4 = arg1;
-        temp_v0->unk8 = arg2;
-        temp_v0->unkC = arg3;
-        temp_v0->unk10 = arg4;
-        phi_v1 = 1;
+        retval = 1;
+        dword_CODE_bss_8008D2A8[index].unk_0 = 1;
+        dword_CODE_bss_8008D2A8[index].unk_4 = arg1;
+        dword_CODE_bss_8008D2A8[index].unk_8 = arg2;
+        dword_CODE_bss_8008D2A8[index].unk_C = arg3;
+        dword_CODE_bss_8008D2A8[index].unk_10 = arg4;
     }
-    else
-    {
-
-    }
-    // Node 6
-    return phi_v1;
+    return retval;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0CC690
-/* 1011C0 7F0CC690 00047080 */  sll   $t6, $a0, 2
-/* 1011C4 7F0CC694 01C47021 */  addu  $t6, $t6, $a0
-/* 1011C8 7F0CC698 3C0F8009 */  lui   $t7, %hi(dword_CODE_bss_8008D2A8) 
-/* 1011CC 7F0CC69C 25EFD2A8 */  addiu $t7, %lo(dword_CODE_bss_8008D2A8) # addiu $t7, $t7, -0x2d58
-/* 1011D0 7F0CC6A0 000E7080 */  sll   $t6, $t6, 2
-/* 1011D4 7F0CC6A4 01CF1021 */  addu  $v0, $t6, $t7
-/* 1011D8 7F0CC6A8 8C580000 */  lw    $t8, ($v0)
-/* 1011DC 7F0CC6AC 00001825 */  move  $v1, $zero
-/* 1011E0 7F0CC6B0 240C0001 */  li    $t4, 1
-/* 1011E4 7F0CC6B4 5300000F */  beql  $t8, $zero, .L7F0CC6F4
-/* 1011E8 7F0CC6B8 8FAD0010 */   lw    $t5, 0x10($sp)
-/* 1011EC 7F0CC6BC 8C590004 */  lw    $t9, 4($v0)
-/* 1011F0 7F0CC6C0 54B9000C */  bnel  $a1, $t9, .L7F0CC6F4
-/* 1011F4 7F0CC6C4 8FAD0010 */   lw    $t5, 0x10($sp)
-/* 1011F8 7F0CC6C8 8C480008 */  lw    $t0, 8($v0)
-/* 1011FC 7F0CC6CC 54C80009 */  bnel  $a2, $t0, .L7F0CC6F4
-/* 101200 7F0CC6D0 8FAD0010 */   lw    $t5, 0x10($sp)
-/* 101204 7F0CC6D4 8C49000C */  lw    $t1, 0xc($v0)
-/* 101208 7F0CC6D8 8FAA0010 */  lw    $t2, 0x10($sp)
-/* 10120C 7F0CC6DC 54E90005 */  bnel  $a3, $t1, .L7F0CC6F4
-/* 101210 7F0CC6E0 8FAD0010 */   lw    $t5, 0x10($sp)
-/* 101214 7F0CC6E4 8C4B0010 */  lw    $t3, 0x10($v0)
-/* 101218 7F0CC6E8 114B0008 */  beq   $t2, $t3, .L7F0CC70C
-/* 10121C 7F0CC6EC 00000000 */   nop   
-/* 101220 7F0CC6F0 8FAD0010 */  lw    $t5, 0x10($sp)
-.L7F0CC6F4:
-/* 101224 7F0CC6F4 24030001 */  li    $v1, 1
-/* 101228 7F0CC6F8 AC4C0000 */  sw    $t4, ($v0)
-/* 10122C 7F0CC6FC AC450004 */  sw    $a1, 4($v0)
-/* 101230 7F0CC700 AC460008 */  sw    $a2, 8($v0)
-/* 101234 7F0CC704 AC47000C */  sw    $a3, 0xc($v0)
-/* 101238 7F0CC708 AC4D0010 */  sw    $t5, 0x10($v0)
-.L7F0CC70C:
-/* 10123C 7F0CC70C 03E00008 */  jr    $ra
-/* 101240 7F0CC710 00601025 */   move  $v0, $v1
-)
-#endif
 
 
 
