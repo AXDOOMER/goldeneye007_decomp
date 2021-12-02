@@ -741,44 +741,11 @@ u32 sub_GAME_7F0CCACC(s32 arg0) {
 }
 
 
-
-
-
-#ifdef NONMATCHING
 s32 sub_GAME_7F0CCAFC(f32 arg0)
 {
-    s32 temp_f4;
-
-    temp_f4 = (s32) arg0;
-    if ((f32) temp_f4 < arg0)
-    {
-        return temp_f4 + 1;
-    }
-    return temp_f4;
+    return (s32)arg0 < (f32)arg0 ? (s32)arg0+1 : (s32)arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0CCAFC
-/* 10162C 7F0CCAFC 4600610D */  trunc.w.s $f4, $f12
-/* 101630 7F0CCB00 44022000 */  mfc1  $v0, $f4
-/* 101634 7F0CCB04 00000000 */  nop   
-/* 101638 7F0CCB08 44823000 */  mtc1  $v0, $f6
-/* 10163C 7F0CCB0C 00401825 */  move  $v1, $v0
-/* 101640 7F0CCB10 46803220 */  cvt.s.w $f8, $f6
-/* 101644 7F0CCB14 460C403C */  c.lt.s $f8, $f12
-/* 101648 7F0CCB18 00000000 */  nop   
-/* 10164C 7F0CCB1C 45000004 */  bc1f  .L7F0CCB30
-/* 101650 7F0CCB20 00000000 */   nop   
-/* 101654 7F0CCB24 24430001 */  addiu $v1, $v0, 1
-/* 101658 7F0CCB28 03E00008 */  jr    $ra
-/* 10165C 7F0CCB2C 00601025 */   move  $v0, $v1
 
-.L7F0CCB30:
-/* 101660 7F0CCB30 03E00008 */  jr    $ra
-/* 101664 7F0CCB34 00601025 */   move  $v0, $v1
-)
-#endif
 
 
 
