@@ -22,6 +22,7 @@
 /////////////////
 // extern
 
+extern f32 stanSavedColl_someMin;
 extern struct PropRecord *stanSavedColl_posData;
 
 /////////////////
