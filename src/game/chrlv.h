@@ -78,7 +78,7 @@ bool check_if_able_to_then_surrender(ChrRecord *self);
 bool sub_GAME_7F0333A0(ChrRecord *self);
 void reset_and_start_loop_counter(ChrRecord *self);
 f32 get_loop_counter_time_in_seconds(ChrRecord *self);
-
+bool sub_GAME_7F0333F8(ChrRecord *self);
 
 
 
