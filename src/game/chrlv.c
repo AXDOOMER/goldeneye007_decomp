@@ -13642,21 +13642,14 @@ bool sub_GAME_7F0333A0(ChrRecord *self)
 
 
 
-#ifdef NONMATCHING
-void reset_and_start_loop_counter(void) {
-
+/**
+ * Address 0x7F0333C4.
+*/
+void reset_and_start_loop_counter(ChrRecord *self)
+{
+    self->timer60 = 0;
+    self->hidden |= CHRHIDDEN_TIMER_ACTIVE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel reset_and_start_loop_counter
-/* 067EF4 7F0333C4 948E0012 */  lhu   $t6, 0x12($a0)
-/* 067EF8 7F0333C8 AC800110 */  sw    $zero, 0x110($a0)
-/* 067EFC 7F0333CC 35CF0040 */  ori   $t7, $t6, 0x40
-/* 067F00 7F0333D0 03E00008 */  jr    $ra
-/* 067F04 7F0333D4 A48F0012 */   sh    $t7, 0x12($a0)
-)
-#endif
 
 
 

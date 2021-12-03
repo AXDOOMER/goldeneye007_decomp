@@ -76,7 +76,7 @@ bool check_if_objective_bitflags_set(ChrRecord *self, s32 flags);
 bool check_if_actor_02_flag_set(ChrRecord *self);
 bool check_if_able_to_then_surrender(ChrRecord *self);
 bool sub_GAME_7F0333A0(ChrRecord *self);
-
+void reset_and_start_loop_counter(ChrRecord *self);
 
 
 #endif
