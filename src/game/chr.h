@@ -105,14 +105,14 @@ struct weapon_firing_animation_table
 };
 
 extern s32 objectiveregisters1;
-extern s32 objectiveregisters2;
-extern s32 objectiveregisters3;
+extern struct ChrRecord* g_ActiveChrs;
+extern s32 g_ActiveChrsCount;
 
 extern f32 g_AiAccuracyModifier;
 extern f32 g_AiDamageModifier;
 extern f32 g_AiHealthModifier;
 extern f32 g_AiReactionSpeed;
-extern s32 setting_007_5;
+extern s32 g_SeenBondRecentlyGuardCount;
 
 extern struct animation_something D_8002C914[];
 

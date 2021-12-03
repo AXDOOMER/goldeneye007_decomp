@@ -135,7 +135,13 @@ f32 g_AiHealthModifier = 1.0f;
 */
 f32 g_AiReactionSpeed = 1.0f;
 
-s32 setting_007_5 = 0;
+/**
+ * Count of number of guards that have recently seen bond:
+ *     (guard->lastseetarget60 > 0) && (g_GlobalTimer - guard->lastseetarget60 < 120)
+ * Updated every tick.
+ * Address 0x8002CE50.
+*/
+s32 g_SeenBondRecentlyGuardCount = 0;
 
 struct struck_animation_table D_8002CE54[] = {
     {0x35C8, 0, -1.0, 0.5, 0, 27.0, -1.0},
@@ -1074,8 +1080,20 @@ struct weapon_firing_animation_table D_80030660[] = {
 };
 
 s32 objectiveregisters1 = 0;
-s32 objectiveregisters2 = 0;
-s32 objectiveregisters3 = 0;
+
+/**
+ * List of characters updated every tick.
+ * 
+ * Address 0x8003097C.
+*/
+struct ChrRecord* g_ActiveChrs = 0;
+
+/**
+ * Number of items in g_ActiveChrs.
+ * 
+ * Adress 0x0x80030980.
+*/
+s32 g_ActiveChrsCount = 0;
 
 /**
  * Default factor in chrlvModelScaleAnimationRelated.

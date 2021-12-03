@@ -137,6 +137,7 @@ void sub_GAME_7F0315A4(ChrRecord *, struct coord3d *, StandTile *, struct waydat
 void chrlvTickGoPos(ChrRecord *arg0);
 void sub_GAME_7F028494(struct ChrRecord *arg0);
 void sub_GAME_7F0284DC(struct ChrRecord *arg0);
+void chrlvTickPatrol(ChrRecord *arg0);
 
 // ?
 
@@ -6789,7 +6790,7 @@ bool actor_moves_to_preset_at_speed(ChrRecord *self, s32 padid, SPEED speed)
     struct coord3d region;
     struct StandTile *stan; //sp28 - wow, deliberate duplicate...
 
-    if ((padid >= 0) && chrIsNotDeadOrShot(self) && (setting_007_5 < 10))
+    if ((padid >= 0) && chrIsNotDeadOrShot(self) && (g_SeenBondRecentlyGuardCount < 10))
     {
         padid = convertPadIf9000(self, padid);
         if (isNotBoundPad(padid))
@@ -12803,7 +12804,7 @@ void chrlvTickGoPos(ChrRecord *arg0)
         }
     }
 
-    if (setting_007_5 >= 0xA)
+    if (g_SeenBondRecentlyGuardCount >= 0xA)
     {
         chrlvKneelingAnimationRelated7F023E48(arg0);
 
@@ -13097,176 +13098,39 @@ void chrlvActionTick(ChrRecord *arg0)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03291C(void) {
+/**
+ * Calls chrlvActionTick on all characters, and updates count of guards that have recently seen bond.
+ * 
+ * Address 0x7F03291C.
+*/
+void chrlvAllChrTick(void)
+{
+    s32 i;
+    s32 max;
+    struct ChrRecord *guard;
 
+    max = get_numguards();
+
+    for (i=0; i<g_ActiveChrsCount; i++)
+    {
+        chrlvActionTick(&g_ActiveChrs[i]);
+    }
+
+    g_SeenBondRecentlyGuardCount = 0;
+
+    for (i=0; i<max; i++)
+    {
+        guard = &ptr_guard_data[i];
+
+        if (guard->model != NULL)
+        {
+            if ((guard->lastseetarget60 > 0) && (g_GlobalTimer - guard->lastseetarget60 < 0x78))
+            {
+                g_SeenBondRecentlyGuardCount++;
+            }
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03291C
-/* 06744C 7F03291C 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 067450 7F032920 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 067454 7F032924 0FC07D4C */  jal   get_numguards
-/* 067458 7F032928 AFB00018 */   sw    $s0, 0x18($sp)
-/* 06745C 7F03292C 3C0E8003 */  lui   $t6, %hi(objectiveregisters3) 
-/* 067460 7F032930 8DCE0980 */  lw    $t6, %lo(objectiveregisters3)($t6)
-/* 067464 7F032934 00405825 */  move  $t3, $v0
-/* 067468 7F032938 00001825 */  move  $v1, $zero
-/* 06746C 7F03293C 19C00010 */  blez  $t6, .L7F032980
-/* 067470 7F032940 00008025 */   move  $s0, $zero
-.L7F032944:
-/* 067474 7F032944 3C0F8003 */  lui   $t7, %hi(objectiveregisters2) 
-/* 067478 7F032948 8DEF097C */  lw    $t7, %lo(objectiveregisters2)($t7)
-/* 06747C 7F03294C AFA30024 */  sw    $v1, 0x24($sp)
-/* 067480 7F032950 AFAB0020 */  sw    $t3, 0x20($sp)
-/* 067484 7F032954 0FC0C9AF */  jal   chrlvActionTick
-/* 067488 7F032958 020F2021 */   addu  $a0, $s0, $t7
-/* 06748C 7F03295C 8FA30024 */  lw    $v1, 0x24($sp)
-/* 067490 7F032960 3C188003 */  lui   $t8, %hi(objectiveregisters3) 
-/* 067494 7F032964 8F180980 */  lw    $t8, %lo(objectiveregisters3)($t8)
-/* 067498 7F032968 24630001 */  addiu $v1, $v1, 1
-/* 06749C 7F03296C 261001DC */  addiu $s0, $s0, 0x1dc
-/* 0674A0 7F032970 0078082A */  slt   $at, $v1, $t8
-/* 0674A4 7F032974 1420FFF3 */  bnez  $at, .L7F032944
-/* 0674A8 7F032978 8FAB0020 */   lw    $t3, 0x20($sp)
-/* 0674AC 7F03297C 00001825 */  move  $v1, $zero
-.L7F032980:
-/* 0674B0 7F032980 3C048003 */  lui   $a0, %hi(setting_007_5)
-/* 0674B4 7F032984 2484CE50 */  addiu $a0, %lo(setting_007_5) # addiu $a0, $a0, -0x31b0
-/* 0674B8 7F032988 19600072 */  blez  $t3, .L7F032B54
-/* 0674BC 7F03298C AC800000 */   sw    $zero, ($a0)
-/* 0674C0 7F032990 31620003 */  andi  $v0, $t3, 3
-/* 0674C4 7F032994 1040001D */  beqz  $v0, .L7F032A0C
-/* 0674C8 7F032998 00403825 */   move  $a3, $v0
-/* 0674CC 7F03299C 0003C900 */  sll   $t9, $v1, 4
-/* 0674D0 7F0329A0 0323C823 */  subu  $t9, $t9, $v1
-/* 0674D4 7F0329A4 3C0C8003 */  lui   $t4, %hi(ptr_guard_data) 
-/* 0674D8 7F0329A8 8D8CCC64 */  lw    $t4, %lo(ptr_guard_data)($t4)
-/* 0674DC 7F0329AC 0019C8C0 */  sll   $t9, $t9, 3
-/* 0674E0 7F0329B0 0323C823 */  subu  $t9, $t9, $v1
-/* 0674E4 7F0329B4 0019C880 */  sll   $t9, $t9, 2
-/* 0674E8 7F0329B8 3C068005 */  lui   $a2, %hi(g_GlobalTimer)
-/* 0674EC 7F0329BC 24C6837C */  addiu $a2, %lo(g_GlobalTimer) # addiu $a2, $a2, -0x7c84
-/* 0674F0 7F0329C0 032C2821 */  addu  $a1, $t9, $t4
-.L7F0329C4:
-/* 0674F4 7F0329C4 8CAD001C */  lw    $t5, 0x1c($a1)
-/* 0674F8 7F0329C8 24630001 */  addiu $v1, $v1, 1
-/* 0674FC 7F0329CC 11A0000C */  beqz  $t5, .L7F032A00
-/* 067500 7F0329D0 00000000 */   nop   
-/* 067504 7F0329D4 8CA200D4 */  lw    $v0, 0xd4($a1)
-/* 067508 7F0329D8 18400009 */  blez  $v0, .L7F032A00
-/* 06750C 7F0329DC 00000000 */   nop   
-/* 067510 7F0329E0 8CCE0000 */  lw    $t6, ($a2)
-/* 067514 7F0329E4 01C27823 */  subu  $t7, $t6, $v0
-/* 067518 7F0329E8 29E10078 */  slti  $at, $t7, 0x78
-/* 06751C 7F0329EC 10200004 */  beqz  $at, .L7F032A00
-/* 067520 7F0329F0 00000000 */   nop   
-/* 067524 7F0329F4 8C980000 */  lw    $t8, ($a0)
-/* 067528 7F0329F8 27190001 */  addiu $t9, $t8, 1
-/* 06752C 7F0329FC AC990000 */  sw    $t9, ($a0)
-.L7F032A00:
-/* 067530 7F032A00 14E3FFF0 */  bne   $a3, $v1, .L7F0329C4
-/* 067534 7F032A04 24A501DC */   addiu $a1, $a1, 0x1dc
-/* 067538 7F032A08 106B0052 */  beq   $v1, $t3, .L7F032B54
-.L7F032A0C:
-/* 06753C 7F032A0C 00038100 */   sll   $s0, $v1, 4
-/* 067540 7F032A10 02038023 */  subu  $s0, $s0, $v1
-/* 067544 7F032A14 3C0C8003 */  lui   $t4, %hi(ptr_guard_data) 
-/* 067548 7F032A18 8D8CCC64 */  lw    $t4, %lo(ptr_guard_data)($t4)
-/* 06754C 7F032A1C 001080C0 */  sll   $s0, $s0, 3
-/* 067550 7F032A20 02038023 */  subu  $s0, $s0, $v1
-/* 067554 7F032A24 00108080 */  sll   $s0, $s0, 2
-/* 067558 7F032A28 000B5100 */  sll   $t2, $t3, 4
-/* 06755C 7F032A2C 014B5023 */  subu  $t2, $t2, $t3
-/* 067560 7F032A30 020C2821 */  addu  $a1, $s0, $t4
-/* 067564 7F032A34 000A50C0 */  sll   $t2, $t2, 3
-/* 067568 7F032A38 014B5023 */  subu  $t2, $t2, $t3
-/* 06756C 7F032A3C 3C068005 */  lui   $a2, %hi(g_GlobalTimer)
-/* 067570 7F032A40 24C6837C */  addiu $a2, %lo(g_GlobalTimer) # addiu $a2, $a2, -0x7c84
-/* 067574 7F032A44 000A5080 */  sll   $t2, $t2, 2
-/* 067578 7F032A48 24A701DC */  addiu $a3, $a1, 0x1dc
-/* 06757C 7F032A4C 24A803B8 */  addiu $t0, $a1, 0x3b8
-/* 067580 7F032A50 24A90594 */  addiu $t1, $a1, 0x594
-.L7F032A54:
-/* 067584 7F032A54 8CAD001C */  lw    $t5, 0x1c($a1)
-/* 067588 7F032A58 26100770 */  addiu $s0, $s0, 0x770
-/* 06758C 7F032A5C 51A0000D */  beql  $t5, $zero, .L7F032A94
-/* 067590 7F032A60 8CEC001C */   lw    $t4, 0x1c($a3)
-/* 067594 7F032A64 8CA200D4 */  lw    $v0, 0xd4($a1)
-/* 067598 7F032A68 5840000A */  blezl $v0, .L7F032A94
-/* 06759C 7F032A6C 8CEC001C */   lw    $t4, 0x1c($a3)
-/* 0675A0 7F032A70 8CCE0000 */  lw    $t6, ($a2)
-/* 0675A4 7F032A74 01C27823 */  subu  $t7, $t6, $v0
-/* 0675A8 7F032A78 29E10078 */  slti  $at, $t7, 0x78
-/* 0675AC 7F032A7C 50200005 */  beql  $at, $zero, .L7F032A94
-/* 0675B0 7F032A80 8CEC001C */   lw    $t4, 0x1c($a3)
-/* 0675B4 7F032A84 8C980000 */  lw    $t8, ($a0)
-/* 0675B8 7F032A88 27190001 */  addiu $t9, $t8, 1
-/* 0675BC 7F032A8C AC990000 */  sw    $t9, ($a0)
-/* 0675C0 7F032A90 8CEC001C */  lw    $t4, 0x1c($a3)
-.L7F032A94:
-/* 0675C4 7F032A94 00E01025 */  move  $v0, $a3
-/* 0675C8 7F032A98 24E70770 */  addiu $a3, $a3, 0x770
-/* 0675CC 7F032A9C 1180000C */  beqz  $t4, .L7F032AD0
-/* 0675D0 7F032AA0 24A50770 */   addiu $a1, $a1, 0x770
-/* 0675D4 7F032AA4 8C4300D4 */  lw    $v1, 0xd4($v0)
-/* 0675D8 7F032AA8 5860000A */  blezl $v1, .L7F032AD4
-/* 0675DC 7F032AAC 8D19001C */   lw    $t9, 0x1c($t0)
-/* 0675E0 7F032AB0 8CCD0000 */  lw    $t5, ($a2)
-/* 0675E4 7F032AB4 01A37023 */  subu  $t6, $t5, $v1
-/* 0675E8 7F032AB8 29C10078 */  slti  $at, $t6, 0x78
-/* 0675EC 7F032ABC 50200005 */  beql  $at, $zero, .L7F032AD4
-/* 0675F0 7F032AC0 8D19001C */   lw    $t9, 0x1c($t0)
-/* 0675F4 7F032AC4 8C8F0000 */  lw    $t7, ($a0)
-/* 0675F8 7F032AC8 25F80001 */  addiu $t8, $t7, 1
-/* 0675FC 7F032ACC AC980000 */  sw    $t8, ($a0)
-.L7F032AD0:
-/* 067600 7F032AD0 8D19001C */  lw    $t9, 0x1c($t0)
-.L7F032AD4:
-/* 067604 7F032AD4 01001025 */  move  $v0, $t0
-/* 067608 7F032AD8 25080770 */  addiu $t0, $t0, 0x770
-/* 06760C 7F032ADC 5320000D */  beql  $t9, $zero, .L7F032B14
-/* 067610 7F032AE0 8D38001C */   lw    $t8, 0x1c($t1)
-/* 067614 7F032AE4 8C4300D4 */  lw    $v1, 0xd4($v0)
-/* 067618 7F032AE8 5860000A */  blezl $v1, .L7F032B14
-/* 06761C 7F032AEC 8D38001C */   lw    $t8, 0x1c($t1)
-/* 067620 7F032AF0 8CCC0000 */  lw    $t4, ($a2)
-/* 067624 7F032AF4 01836823 */  subu  $t5, $t4, $v1
-/* 067628 7F032AF8 29A10078 */  slti  $at, $t5, 0x78
-/* 06762C 7F032AFC 50200005 */  beql  $at, $zero, .L7F032B14
-/* 067630 7F032B00 8D38001C */   lw    $t8, 0x1c($t1)
-/* 067634 7F032B04 8C8E0000 */  lw    $t6, ($a0)
-/* 067638 7F032B08 25CF0001 */  addiu $t7, $t6, 1
-/* 06763C 7F032B0C AC8F0000 */  sw    $t7, ($a0)
-/* 067640 7F032B10 8D38001C */  lw    $t8, 0x1c($t1)
-.L7F032B14:
-/* 067644 7F032B14 01201025 */  move  $v0, $t1
-/* 067648 7F032B18 1300000C */  beqz  $t8, .L7F032B4C
-/* 06764C 7F032B1C 00000000 */   nop   
-/* 067650 7F032B20 8C4300D4 */  lw    $v1, 0xd4($v0)
-/* 067654 7F032B24 18600009 */  blez  $v1, .L7F032B4C
-/* 067658 7F032B28 00000000 */   nop   
-/* 06765C 7F032B2C 8CD90000 */  lw    $t9, ($a2)
-/* 067660 7F032B30 03236023 */  subu  $t4, $t9, $v1
-/* 067664 7F032B34 29810078 */  slti  $at, $t4, 0x78
-/* 067668 7F032B38 10200004 */  beqz  $at, .L7F032B4C
-/* 06766C 7F032B3C 00000000 */   nop   
-/* 067670 7F032B40 8C8D0000 */  lw    $t5, ($a0)
-/* 067674 7F032B44 25AE0001 */  addiu $t6, $t5, 1
-/* 067678 7F032B48 AC8E0000 */  sw    $t6, ($a0)
-.L7F032B4C:
-/* 06767C 7F032B4C 160AFFC1 */  bne   $s0, $t2, .L7F032A54
-/* 067680 7F032B50 25290770 */   addiu $t1, $t1, 0x770
-.L7F032B54:
-/* 067684 7F032B54 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 067688 7F032B58 8FB00018 */  lw    $s0, 0x18($sp)
-/* 06768C 7F032B5C 27BD0028 */  addiu $sp, $sp, 0x28
-/* 067690 7F032B60 03E00008 */  jr    $ra
-/* 067694 7F032B64 00000000 */   nop   
-)
-#endif
-
 
 
 #ifdef NONMATCHING
@@ -13761,13 +13625,13 @@ glabel get_handle_for_guard_id
 /* 067B8C 7F03305C 8FA6001C */  lw    $a2, 0x1c($sp)
 /* 067B90 7F033060 14400013 */  bnez  $v0, .L7F0330B0
 /* 067B94 7F033064 00404025 */   move  $t0, $v0
-/* 067B98 7F033068 3C058003 */  lui   $a1, %hi(objectiveregisters3)
-/* 067B9C 7F03306C 8CA50980 */  lw    $a1, %lo(objectiveregisters3)($a1)
+/* 067B98 7F033068 3C058003 */  lui   $a1, %hi(g_ActiveChrsCount)
+/* 067B9C 7F03306C 8CA50980 */  lw    $a1, %lo(g_ActiveChrsCount)($a1)
 /* 067BA0 7F033070 00001025 */  move  $v0, $zero
-/* 067BA4 7F033074 3C078003 */  lui   $a3, %hi(objectiveregisters2)
+/* 067BA4 7F033074 3C078003 */  lui   $a3, %hi(g_ActiveChrs)
 /* 067BA8 7F033078 58A0000E */  blezl $a1, .L7F0330B4
 /* 067BAC 7F03307C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 067BB0 7F033080 8CE7097C */  lw    $a3, %lo(objectiveregisters2)($a3)
+/* 067BB0 7F033080 8CE7097C */  lw    $a3, %lo(g_ActiveChrs)($a3)
 /* 067BB4 7F033084 00002025 */  move  $a0, $zero
 /* 067BB8 7F033088 00E01825 */  move  $v1, $a3
 .L7F03308C:
@@ -14302,8 +14166,8 @@ glabel actor_move_to_curplayer_at_speed
 /* 067FDC 7F0334AC 0FC0A896 */  jal   chrIsNotDeadOrShot
 /* 067FE0 7F0334B0 AFA5001C */   sw    $a1, 0x1c($sp)
 /* 067FE4 7F0334B4 10400010 */  beqz  $v0, .L7F0334F8
-/* 067FE8 7F0334B8 3C0E8003 */   lui   $t6, %hi(setting_007_5) 
-/* 067FEC 7F0334BC 8DCECE50 */  lw    $t6, %lo(setting_007_5)($t6)
+/* 067FE8 7F0334B8 3C0E8003 */   lui   $t6, %hi(g_SeenBondRecentlyGuardCount) 
+/* 067FEC 7F0334BC 8DCECE50 */  lw    $t6, %lo(g_SeenBondRecentlyGuardCount)($t6)
 /* 067FF0 7F0334C0 29C1000A */  slti  $at, $t6, 0xa
 /* 067FF4 7F0334C4 5020000D */  beql  $at, $zero, .L7F0334FC
 /* 067FF8 7F0334C8 00001025 */   move  $v0, $zero
@@ -14345,8 +14209,8 @@ glabel actor_move_to_actorID_at_speed
 /* 06804C 7F03351C 0FC0A896 */  jal   chrIsNotDeadOrShot
 /* 068050 7F033520 AFA60020 */   sw    $a2, 0x20($sp)
 /* 068054 7F033524 1040001A */  beqz  $v0, .L7F033590
-/* 068058 7F033528 3C0E8003 */   lui   $t6, %hi(setting_007_5) 
-/* 06805C 7F03352C 8DCECE50 */  lw    $t6, %lo(setting_007_5)($t6)
+/* 068058 7F033528 3C0E8003 */   lui   $t6, %hi(g_SeenBondRecentlyGuardCount) 
+/* 06805C 7F03352C 8DCECE50 */  lw    $t6, %lo(g_SeenBondRecentlyGuardCount)($t6)
 /* 068060 7F033530 8FA40018 */  lw    $a0, 0x18($sp)
 /* 068064 7F033534 29C1000A */  slti  $at, $t6, 0xa
 /* 068068 7F033538 50200016 */  beql  $at, $zero, .L7F033594

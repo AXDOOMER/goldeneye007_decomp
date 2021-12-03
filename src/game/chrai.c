@@ -22978,7 +22978,7 @@ glabel handle_mp_respawn_and_some_things
 /* 071180 7F03C650 AFB30020 */  sw    $s3, 0x20($sp)
 /* 071184 7F03C654 AFB2001C */  sw    $s2, 0x1c($sp)
 /* 071188 7F03C658 AFB10018 */  sw    $s1, 0x18($sp)
-/* 07118C 7F03C65C 0FC0CA47 */  jal   sub_GAME_7F03291C
+/* 07118C 7F03C65C 0FC0CA47 */  jal   chrlvAllChrTick
 /* 071190 7F03C660 AFB00014 */   sw    $s0, 0x14($sp)
 /* 071194 7F03C664 0FC0E909 */  jal   get_ptr_obj_pos_list_current_entry
 /* 071198 7F03C668 00000000 */   nop   
