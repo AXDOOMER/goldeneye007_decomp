@@ -13653,24 +13653,13 @@ void reset_and_start_loop_counter(ChrRecord *self)
 
 
 
-#ifdef NONMATCHING
-void get_loop_counter_time_in_seconds(void) {
-
+/**
+ * Address 0x7F0333D8.
+*/
+f32 get_loop_counter_time_in_seconds(ChrRecord *self)
+{
+    return self->timer60 / 60.0f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_loop_counter_time_in_seconds
-/* 067F08 7F0333D8 8C8E0110 */  lw    $t6, 0x110($a0)
-/* 067F0C 7F0333DC 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 067F10 7F0333E0 44814000 */  mtc1  $at, $f8
-/* 067F14 7F0333E4 448E2000 */  mtc1  $t6, $f4
-/* 067F18 7F0333E8 00000000 */  nop   
-/* 067F1C 7F0333EC 468021A0 */  cvt.s.w $f6, $f4
-/* 067F20 7F0333F0 03E00008 */  jr    $ra
-/* 067F24 7F0333F4 46083003 */   div.s $f0, $f6, $f8
-)
-#endif
 
 
 
