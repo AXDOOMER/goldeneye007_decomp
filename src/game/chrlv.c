@@ -13774,21 +13774,15 @@ s8 get_num_shots_near_actor(ChrRecord *self)
 }
 
 
-#ifdef NONMATCHING
-void check_if_actor_FA_target_set(void) {
-
+/**
+ * Return false if chrseeshot is negative.
+ * 
+ * Address 0x7F0335B4.
+ */
+bool check_if_actor_FA_target_set(ChrRecord *self)
+{
+    return ((self->chrseeshot < 0) ^ 1);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_actor_FA_target_set
-/* 0680E4 7F0335B4 84820118 */  lh    $v0, 0x118($a0)
-/* 0680E8 7F0335B8 284E0000 */  slti  $t6, $v0, 0
-/* 0680EC 7F0335BC 03E00008 */  jr    $ra
-/* 0680F0 7F0335C0 39C20001 */   xori  $v0, $t6, 1
-)
-#endif
-
 
 
 #ifdef NONMATCHING
