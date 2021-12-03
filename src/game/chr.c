@@ -7518,7 +7518,7 @@ void chrCheckGuardsHeardSound(f32 noise)
     {
         if (ptr_guard_data[i].model != NULL)
         {
-            if (distToBond3D(&ptr_guard_data[i]) < ptr_guard_data[i].hearingscale * (noise * 100.0f))
+            if (chrlvDistToBond3D(&ptr_guard_data[i]) < ptr_guard_data[i].hearingscale * (noise * 100.0f))
             {
                 chrlvAlertGuardToPlayerPosition(&ptr_guard_data[i]);
             }

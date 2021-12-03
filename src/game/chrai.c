@@ -4161,7 +4161,7 @@ action48_If_Distance_Between_Bond_And_Guard_GTV_RVL_3:
 /* 06B2B4 7F036784 1000FB81 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B2B8 7F036788 26310003 */   addiu $s1, $s1, 3
 action49_Test_if_Actor_and_Player_CCWAngle_LTV_RVL_Unused_3:
-/* 06B2BC 7F03678C 0FC0CB5C */  jal   get_angle_between_actor_cur_player
+/* 06B2BC 7F03678C 0FC0CB5C */  jal   chrGetAngleFromBond
 /* 06B2C0 7F036790 02E02025 */   move  $a0, $s7
 /* 06B2C4 7F036794 922A0001 */  lbu   $t2, 1($s1)
 /* 06B2C8 7F036798 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
@@ -4193,7 +4193,7 @@ action49_Test_if_Actor_and_Player_CCWAngle_LTV_RVL_Unused_3:
 /* 06B328 7F0367F8 1000FB64 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B32C 7F0367FC 26310003 */   addiu $s1, $s1, 3
 action4A_Test_if_Actor_and_Player_CCWAngle_GTV_RVL_Unused_3:
-/* 06B330 7F036800 0FC0CB5C */  jal   get_angle_between_actor_cur_player
+/* 06B330 7F036800 0FC0CB5C */  jal   chrGetAngleFromBond
 /* 06B334 7F036804 02E02025 */   move  $a0, $s7
 /* 06B338 7F036808 922B0001 */  lbu   $t3, 1($s1)
 /* 06B33C 7F03680C 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
@@ -4234,7 +4234,7 @@ action4B_RVL_If_In_Proximity_Of_Bond_4:
 /* 06B3BC 7F03688C 00000000 */  nop   
 /* 06B3C0 7F036890 468042A0 */  cvt.s.w $f10, $f8
 /* 06B3C4 7F036894 46185402 */  mul.s $f16, $f10, $f24
-/* 06B3C8 7F036898 0FC0CB79 */  jal   distToBond3D
+/* 06B3C8 7F036898 0FC0CB79 */  jal   chrlvDistToBond3D
 /* 06B3CC 7F03689C E7B005FC */   swc1  $f16, 0x5fc($sp)
 /* 06B3D0 7F0368A0 C7B205FC */  lwc1  $f18, 0x5fc($sp)
 /* 06B3D4 7F0368A4 02C02025 */  move  $a0, $s6
@@ -4262,7 +4262,7 @@ action4C_RVL_If_Not_In_Proximity_Of_Bond_4:
 /* 06B424 7F0368F4 00000000 */  nop   
 /* 06B428 7F0368F8 468021A0 */  cvt.s.w $f6, $f4
 /* 06B42C 7F0368FC 46183202 */  mul.s $f8, $f6, $f24
-/* 06B430 7F036900 0FC0CB79 */  jal   distToBond3D
+/* 06B430 7F036900 0FC0CB79 */  jal   chrlvDistToBond3D
 /* 06B434 7F036904 E7A805F4 */   swc1  $f8, 0x5f4($sp)
 /* 06B438 7F036908 C7AA05F4 */  lwc1  $f10, 0x5f4($sp)
 /* 06B43C 7F03690C 02C02025 */  move  $a0, $s6
@@ -10028,7 +10028,7 @@ action48_If_Distance_Between_Bond_And_Guard_GTV_RVL_3:
 /* 06B2B4 7F036784 1000FB81 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B2B8 7F036788 26310003 */   addiu $s1, $s1, 3
 action49_Test_if_Actor_and_Player_CCWAngle_LTV_RVL_Unused_3:
-/* 06B2BC 7F03678C 0FC0CB5C */  jal   get_angle_between_actor_cur_player
+/* 06B2BC 7F03678C 0FC0CB5C */  jal   chrGetAngleFromBond
 /* 06B2C0 7F036790 02E02025 */   move  $a0, $s7
 /* 06B2C4 7F036794 922A0001 */  lbu   $t2, 1($s1)
 /* 06B2C8 7F036798 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
@@ -10060,7 +10060,7 @@ action49_Test_if_Actor_and_Player_CCWAngle_LTV_RVL_Unused_3:
 /* 06B328 7F0367F8 1000FB64 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B32C 7F0367FC 26310003 */   addiu $s1, $s1, 3
 action4A_Test_if_Actor_and_Player_CCWAngle_GTV_RVL_Unused_3:
-/* 06B330 7F036800 0FC0CB5C */  jal   get_angle_between_actor_cur_player
+/* 06B330 7F036800 0FC0CB5C */  jal   chrGetAngleFromBond
 /* 06B334 7F036804 02E02025 */   move  $a0, $s7
 /* 06B338 7F036808 922B0001 */  lbu   $t3, 1($s1)
 /* 06B33C 7F03680C 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
@@ -10101,7 +10101,7 @@ action4B_RVL_If_In_Proximity_Of_Bond_4:
 /* 06B3BC 7F03688C 00000000 */  nop   
 /* 06B3C0 7F036890 468042A0 */  cvt.s.w $f10, $f8
 /* 06B3C4 7F036894 46185402 */  mul.s $f16, $f10, $f24
-/* 06B3C8 7F036898 0FC0CB79 */  jal   distToBond3D
+/* 06B3C8 7F036898 0FC0CB79 */  jal   chrlvDistToBond3D
 /* 06B3CC 7F03689C E7B005FC */   swc1  $f16, 0x5fc($sp)
 /* 06B3D0 7F0368A0 C7B205FC */  lwc1  $f18, 0x5fc($sp)
 /* 06B3D4 7F0368A4 02C02025 */  move  $a0, $s6
@@ -10129,7 +10129,7 @@ action4C_RVL_If_Not_In_Proximity_Of_Bond_4:
 /* 06B424 7F0368F4 00000000 */  nop   
 /* 06B428 7F0368F8 468021A0 */  cvt.s.w $f6, $f4
 /* 06B42C 7F0368FC 46183202 */  mul.s $f8, $f6, $f24
-/* 06B430 7F036900 0FC0CB79 */  jal   distToBond3D
+/* 06B430 7F036900 0FC0CB79 */  jal   chrlvDistToBond3D
 /* 06B434 7F036904 E7A805F4 */   swc1  $f8, 0x5f4($sp)
 /* 06B438 7F036908 C7AA05F4 */  lwc1  $f10, 0x5f4($sp)
 /* 06B43C 7F03690C 02C02025 */  move  $a0, $s6
@@ -15896,7 +15896,7 @@ action48_If_Distance_Between_Bond_And_Guard_GTV_RVL_3:
 /* 06B2B4 7F036784 1000FB81 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B2B8 7F036788 26310003 */   addiu $s1, $s1, 3
 action49_Test_if_Actor_and_Player_CCWAngle_LTV_RVL_Unused_3:
-/* 06B2BC 7F03678C 0FC0CB5C */  jal   get_angle_between_actor_cur_player
+/* 06B2BC 7F03678C 0FC0CB5C */  jal   chrGetAngleFromBond
 /* 06B2C0 7F036790 02E02025 */   move  $a0, $s7
 /* 06B2C4 7F036794 922A0001 */  lbu   $t2, 1($s1)
 /* 06B2C8 7F036798 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
@@ -15928,7 +15928,7 @@ action49_Test_if_Actor_and_Player_CCWAngle_LTV_RVL_Unused_3:
 /* 06B328 7F0367F8 1000FB64 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B32C 7F0367FC 26310003 */   addiu $s1, $s1, 3
 action4A_Test_if_Actor_and_Player_CCWAngle_GTV_RVL_Unused_3:
-/* 06B330 7F036800 0FC0CB5C */  jal   get_angle_between_actor_cur_player
+/* 06B330 7F036800 0FC0CB5C */  jal   chrGetAngleFromBond
 /* 06B334 7F036804 02E02025 */   move  $a0, $s7
 /* 06B338 7F036808 922B0001 */  lbu   $t3, 1($s1)
 /* 06B33C 7F03680C 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
@@ -15969,7 +15969,7 @@ action4B_RVL_If_In_Proximity_Of_Bond_4:
 /* 06B3BC 7F03688C 00000000 */  nop   
 /* 06B3C0 7F036890 468042A0 */  cvt.s.w $f10, $f8
 /* 06B3C4 7F036894 46185402 */  mul.s $f16, $f10, $f24
-/* 06B3C8 7F036898 0FC0CB79 */  jal   distToBond3D
+/* 06B3C8 7F036898 0FC0CB79 */  jal   chrlvDistToBond3D
 /* 06B3CC 7F03689C E7B005FC */   swc1  $f16, 0x5fc($sp)
 /* 06B3D0 7F0368A0 C7B205FC */  lwc1  $f18, 0x5fc($sp)
 /* 06B3D4 7F0368A4 02C02025 */  move  $a0, $s6
@@ -15997,7 +15997,7 @@ action4C_RVL_If_Not_In_Proximity_Of_Bond_4:
 /* 06B424 7F0368F4 00000000 */  nop   
 /* 06B428 7F0368F8 468021A0 */  cvt.s.w $f6, $f4
 /* 06B42C 7F0368FC 46183202 */  mul.s $f8, $f6, $f24
-/* 06B430 7F036900 0FC0CB79 */  jal   distToBond3D
+/* 06B430 7F036900 0FC0CB79 */  jal   chrlvDistToBond3D
 /* 06B434 7F036904 E7A805F4 */   swc1  $f8, 0x5f4($sp)
 /* 06B438 7F036908 C7AA05F4 */  lwc1  $f10, 0x5f4($sp)
 /* 06B43C 7F03690C 02C02025 */  move  $a0, $s6

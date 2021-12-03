@@ -7410,7 +7410,7 @@ void chrlvTickAnim(ChrRecord *arg0)
         && (objecthandlerGetModelField28(arg0->model) >= 42.0f)
         && ((arg0->chrflags << 6) >= 0))
     {
-        if (((D_80048380 & 1) == 0) && (distToBond3D(arg0) < 800.0f))
+        if (((D_80048380 & 1) == 0) && (chrlvDistToBond3D(arg0) < 800.0f))
         {
             sub_GAME_7F053A10(sndPlaySfx(g_musicSfxBufferPtr, 0x101, 0), &arg0->prop->pos);
         }
@@ -13254,66 +13254,44 @@ struct coord3d *chrlvGetChrOrPresetLocation(ChrRecord *self, s32 flags, s32 look
 }
 
 
-#ifdef NONMATCHING
-void get_angle_between_actor_cur_player(void) {
-// ai branch
-}
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_800520D4
-.word 0x40c90fdb /*6.2831855*/
-.text
-glabel get_angle_between_actor_cur_player
-/* 0678A0 7F032D70 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0678A4 7F032D74 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0678A8 7F032D78 0FC227B9 */  jal   get_curplay_horizontal_rotation_in_degrees
-/* 0678AC 7F032D7C AFA40020 */   sw    $a0, 0x20($sp)
-/* 0678B0 7F032D80 8FAE0020 */  lw    $t6, 0x20($sp)
-/* 0678B4 7F032D84 E7A0001C */  swc1  $f0, 0x1c($sp)
-/* 0678B8 7F032D88 8DC30018 */  lw    $v1, 0x18($t6)
-/* 0678BC 7F032D8C 0FC225E6 */  jal   get_curplayer_positiondata
-/* 0678C0 7F032D90 AFA30018 */   sw    $v1, 0x18($sp)
-/* 0678C4 7F032D94 8FA30018 */  lw    $v1, 0x18($sp)
-/* 0678C8 7F032D98 C4460008 */  lwc1  $f6, 8($v0)
-/* 0678CC 7F032D9C C44A0010 */  lwc1  $f10, 0x10($v0)
-/* 0678D0 7F032DA0 C4640008 */  lwc1  $f4, 8($v1)
-/* 0678D4 7F032DA4 C4680010 */  lwc1  $f8, 0x10($v1)
-/* 0678D8 7F032DA8 46062301 */  sub.s $f12, $f4, $f6
-/* 0678DC 7F032DAC 0FC16A8C */  jal   atan2f
-/* 0678E0 7F032DB0 460A4381 */   sub.s $f14, $f8, $f10
-/* 0678E4 7F032DB4 C7AE001C */  lwc1  $f14, 0x1c($sp)
-/* 0678E8 7F032DB8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0678EC 7F032DBC 3C018005 */  lui   $at, %hi(D_800520D4)
-/* 0678F0 7F032DC0 460E003C */  c.lt.s $f0, $f14
-/* 0678F4 7F032DC4 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0678F8 7F032DC8 460E0301 */  sub.s $f12, $f0, $f14
-/* 0678FC 7F032DCC 45000003 */  bc1f  .L7F032DDC
-/* 067900 7F032DD0 46006086 */   mov.s $f2, $f12
-/* 067904 7F032DD4 C43020D4 */  lwc1  $f16, %lo(D_800520D4)($at)
-/* 067908 7F032DD8 46106080 */  add.s $f2, $f12, $f16
-.L7F032DDC:
-/* 06790C 7F032DDC 03E00008 */  jr    $ra
-/* 067910 7F032DE0 46001006 */   mov.s $f0, $f2
-)
-#endif
-
-
-f32 distToBond3D(struct ChrRecord *guardData)
+/**
+ * Address 0x7F032D70.
+*/
+f32 chrGetAngleFromBond(ChrRecord *self)
 {
-  struct PropRecord *guardPosData;
-  struct PropRecord *playerPosData;
-  float xDiff;
-  float yDiff;
-  float zDiff;
-  
-  guardPosData = guardData->prop;
-  playerPosData = get_curplayer_positiondata();
-  xDiff = playerPosData->pos.x - guardPosData->pos.x;
-  yDiff = playerPosData->pos.y - guardPosData->pos.y;
-  zDiff = playerPosData->pos.z - guardPosData->pos.z;
+    f32 radBondHeading   = get_curplay_horizontal_rotation_in_degrees();
+    struct PropRecord *myprop   = self->prop;
+    struct PropRecord *bondprop = get_curplayer_positiondata();
+    f32 angle            = atan2f(myprop->pos.x - bondprop->pos.x, myprop->pos.z - bondprop->pos.z);
+    f32 radFromBond      = angle - radBondHeading;
 
-  return sqrtf(xDiff * xDiff + yDiff * yDiff + zDiff * zDiff);
+    if (angle < radBondHeading)
+    {
+        radFromBond = radFromBond + M_TAU;
+    }
+
+    return radFromBond;
+}
+
+
+/**
+ * Address 0x7F032DE4.
+*/
+f32 chrlvDistToBond3D(struct ChrRecord *guardData)
+{
+    struct PropRecord *guardPosData;
+    struct PropRecord *playerPosData;
+    float xDiff;
+    float yDiff;
+    float zDiff;
+
+    guardPosData = guardData->prop;
+    playerPosData = get_curplayer_positiondata();
+    xDiff = playerPosData->pos.x - guardPosData->pos.x;
+    yDiff = playerPosData->pos.y - guardPosData->pos.y;
+    zDiff = playerPosData->pos.z - guardPosData->pos.z;
+
+    return sqrtf(xDiff * xDiff + yDiff * yDiff + zDiff * zDiff);
 }
 
 
@@ -13606,6 +13584,7 @@ glabel get_distance_between_actor_and_actorID
 #ifdef NONMATCHING
 void get_distance_between_actor_and_preset(void) {
 // ai branch
+// break
 }
 #else
 GLOBAL_ASM(
@@ -15679,7 +15658,7 @@ glabel sub_GAME_7F034514
     {
         return 0;
     }
-    if (distToBond3D(arg0) < 10.0f)
+    if (chrlvDistToBond3D(arg0) < 10.0f)
     {
         return 0;
     }
@@ -15751,7 +15730,7 @@ glabel actor_draws_throws_grenade_at_player_if_possible
 /* 0690DC 7F0345AC 1000004E */  b     .L7F0346E8
 /* 0690E0 7F0345B0 00001025 */   move  $v0, $zero
 .L7F0345B4:
-/* 0690E4 7F0345B4 0FC0CB79 */  jal   distToBond3D
+/* 0690E4 7F0345B4 0FC0CB79 */  jal   chrlvDistToBond3D
 /* 0690E8 7F0345B8 02002025 */   move  $a0, $s0
 /* 0690EC 7F0345BC 3C014120 */  li    $at, 0x41200000 # 10.000000
 /* 0690F0 7F0345C0 44812000 */  mtc1  $at, $f4

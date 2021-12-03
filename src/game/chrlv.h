@@ -21,7 +21,7 @@ s32 get_current_random_body(void);
 s32 select_psuedorandom_heads(s32 id);
 
 s32 get_random_head(s32 id);
-f32 distToBond3D(struct ChrRecord *guardData);
+f32 chrlvDistToBond3D(struct ChrRecord *guardData);
 
 void chrlvAlertGuardToPlayerPosition(struct ChrRecord *);
 void chrlvIdleAnimationRelated7F023A94(struct ChrRecord *arg0, f32 arg1);
@@ -60,5 +60,6 @@ void chrlvAllChrTick(void);
 s32 chrlvSeenWithin600(ChrRecord *arg0);
 s32 chrlvHearWithin600(ChrRecord *arg0);
 ChrRecord *get_handle_for_guard_id(ChrRecord *arg0, s32);
+f32 chrGetAngleFromBond(ChrRecord *self);
 
 #endif
