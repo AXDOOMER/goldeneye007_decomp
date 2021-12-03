@@ -3676,7 +3676,7 @@ action2B_Return_False_Invalid_Type_2:
 action2C_Jog_To_Character_Position_RVL_On_Arrival_3:
 /* 06AC04 7F0360D4 02E02025 */  move  $a0, $s7
 /* 06AC08 7F0360D8 92250001 */  lbu   $a1, 1($s1)
-/* 06AC0C 7F0360DC 0FC0CD43 */  jal   actor_move_to_actorID_at_speed
+/* 06AC0C 7F0360DC 0FC0CD43 */  jal   chrGoToChr
 /* 06AC10 7F0360E0 24060001 */   li    $a2, 1
 /* 06AC14 7F0360E4 10400007 */  beqz  $v0, .L7F036104
 /* 06AC18 7F0360E8 02C02025 */   move  $a0, $s6
@@ -3693,7 +3693,7 @@ action2C_Jog_To_Character_Position_RVL_On_Arrival_3:
 action2D_Walk_To_Character_Position_RVL_On_Arrival_3:
 /* 06AC40 7F036110 02E02025 */  move  $a0, $s7
 /* 06AC44 7F036114 92250001 */  lbu   $a1, 1($s1)
-/* 06AC48 7F036118 0FC0CD43 */  jal   actor_move_to_actorID_at_speed
+/* 06AC48 7F036118 0FC0CD43 */  jal   chrGoToChr
 /* 06AC4C 7F03611C 00003025 */   move  $a2, $zero
 /* 06AC50 7F036120 10400007 */  beqz  $v0, .L7F036140
 /* 06AC54 7F036124 02C02025 */   move  $a0, $s6
@@ -3710,7 +3710,7 @@ action2D_Walk_To_Character_Position_RVL_On_Arrival_3:
 action2E_Run_To_Character_Position_RVL_On_Arrival_3:
 /* 06AC7C 7F03614C 02E02025 */  move  $a0, $s7
 /* 06AC80 7F036150 92250001 */  lbu   $a1, 1($s1)
-/* 06AC84 7F036154 0FC0CD43 */  jal   actor_move_to_actorID_at_speed
+/* 06AC84 7F036154 0FC0CD43 */  jal   chrGoToChr
 /* 06AC88 7F036158 24060002 */   li    $a2, 2
 /* 06AC8C 7F03615C 10400007 */  beqz  $v0, .L7F03617C
 /* 06AC90 7F036160 02C02025 */   move  $a0, $s6
@@ -9543,7 +9543,7 @@ action2B_Return_False_Invalid_Type_2:
 action2C_Jog_To_Character_Position_RVL_On_Arrival_3:
 /* 06AC04 7F0360D4 02E02025 */  move  $a0, $s7
 /* 06AC08 7F0360D8 92250001 */  lbu   $a1, 1($s1)
-/* 06AC0C 7F0360DC 0FC0CD43 */  jal   actor_move_to_actorID_at_speed
+/* 06AC0C 7F0360DC 0FC0CD43 */  jal   chrGoToChr
 /* 06AC10 7F0360E0 24060001 */   li    $a2, 1
 /* 06AC14 7F0360E4 10400007 */  beqz  $v0, .L7F036104
 /* 06AC18 7F0360E8 02C02025 */   move  $a0, $s6
@@ -9560,7 +9560,7 @@ action2C_Jog_To_Character_Position_RVL_On_Arrival_3:
 action2D_Walk_To_Character_Position_RVL_On_Arrival_3:
 /* 06AC40 7F036110 02E02025 */  move  $a0, $s7
 /* 06AC44 7F036114 92250001 */  lbu   $a1, 1($s1)
-/* 06AC48 7F036118 0FC0CD43 */  jal   actor_move_to_actorID_at_speed
+/* 06AC48 7F036118 0FC0CD43 */  jal   chrGoToChr
 /* 06AC4C 7F03611C 00003025 */   move  $a2, $zero
 /* 06AC50 7F036120 10400007 */  beqz  $v0, .L7F036140
 /* 06AC54 7F036124 02C02025 */   move  $a0, $s6
@@ -9577,7 +9577,7 @@ action2D_Walk_To_Character_Position_RVL_On_Arrival_3:
 action2E_Run_To_Character_Position_RVL_On_Arrival_3:
 /* 06AC7C 7F03614C 02E02025 */  move  $a0, $s7
 /* 06AC80 7F036150 92250001 */  lbu   $a1, 1($s1)
-/* 06AC84 7F036154 0FC0CD43 */  jal   actor_move_to_actorID_at_speed
+/* 06AC84 7F036154 0FC0CD43 */  jal   chrGoToChr
 /* 06AC88 7F036158 24060002 */   li    $a2, 2
 /* 06AC8C 7F03615C 10400007 */  beqz  $v0, .L7F03617C
 /* 06AC90 7F036160 02C02025 */   move  $a0, $s6
@@ -15411,7 +15411,7 @@ action2B_Return_False_Invalid_Type_2:
 action2C_Jog_To_Character_Position_RVL_On_Arrival_3:
 /* 06AC04 7F0360D4 02E02025 */  move  $a0, $s7
 /* 06AC08 7F0360D8 92250001 */  lbu   $a1, 1($s1)
-/* 06AC0C 7F0360DC 0FC0CD43 */  jal   actor_move_to_actorID_at_speed
+/* 06AC0C 7F0360DC 0FC0CD43 */  jal   chrGoToChr
 /* 06AC10 7F0360E0 24060001 */   li    $a2, 1
 /* 06AC14 7F0360E4 10400007 */  beqz  $v0, .L7F036104
 /* 06AC18 7F0360E8 02C02025 */   move  $a0, $s6
@@ -15428,7 +15428,7 @@ action2C_Jog_To_Character_Position_RVL_On_Arrival_3:
 action2D_Walk_To_Character_Position_RVL_On_Arrival_3:
 /* 06AC40 7F036110 02E02025 */  move  $a0, $s7
 /* 06AC44 7F036114 92250001 */  lbu   $a1, 1($s1)
-/* 06AC48 7F036118 0FC0CD43 */  jal   actor_move_to_actorID_at_speed
+/* 06AC48 7F036118 0FC0CD43 */  jal   chrGoToChr
 /* 06AC4C 7F03611C 00003025 */   move  $a2, $zero
 /* 06AC50 7F036120 10400007 */  beqz  $v0, .L7F036140
 /* 06AC54 7F036124 02C02025 */   move  $a0, $s6
@@ -15445,7 +15445,7 @@ action2D_Walk_To_Character_Position_RVL_On_Arrival_3:
 action2E_Run_To_Character_Position_RVL_On_Arrival_3:
 /* 06AC7C 7F03614C 02E02025 */  move  $a0, $s7
 /* 06AC80 7F036150 92250001 */  lbu   $a1, 1($s1)
-/* 06AC84 7F036154 0FC0CD43 */  jal   actor_move_to_actorID_at_speed
+/* 06AC84 7F036154 0FC0CD43 */  jal   chrGoToChr
 /* 06AC88 7F036158 24060002 */   li    $a2, 2
 /* 06AC8C 7F03615C 10400007 */  beqz  $v0, .L7F03617C
 /* 06AC90 7F036160 02C02025 */   move  $a0, $s6

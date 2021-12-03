@@ -13724,56 +13724,30 @@ bool chrGoToBond(ChrRecord *self, SPEED speed)
 }
 
 
-#ifdef NONMATCHING
-void actor_move_to_actorID_at_speed(void) {
+/**
+ * Address 0x7F03350C0.
+*/
+bool chrGoToChr(ChrRecord *self, s32 chrid, SPEED speed)
+{
+    struct ChrRecord *chr;
+    struct PropRecord *chrprop;
 
+    if (chrIsNotDeadOrShot(self) && (g_SeenBondRecentlyGuardCount < 10))
+    {
+        chr = chrlvGetHandleForGuardId(self, chrid);
+        if (chr && chr->model && chr->prop)
+        {
+            chrprop = chr->prop;
+
+            if (plot_course_for_actor(self, &chrprop->pos, chrprop->stan, speed))
+            {
+                return TRUE;
+            }
+        }
+    }
+
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel actor_move_to_actorID_at_speed
-/* 06803C 7F03350C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 068040 7F033510 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 068044 7F033514 AFA40018 */  sw    $a0, 0x18($sp)
-/* 068048 7F033518 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 06804C 7F03351C 0FC0A896 */  jal   chrIsNotDeadOrShot
-/* 068050 7F033520 AFA60020 */   sw    $a2, 0x20($sp)
-/* 068054 7F033524 1040001A */  beqz  $v0, .L7F033590
-/* 068058 7F033528 3C0E8003 */   lui   $t6, %hi(g_SeenBondRecentlyGuardCount) 
-/* 06805C 7F03352C 8DCECE50 */  lw    $t6, %lo(g_SeenBondRecentlyGuardCount)($t6)
-/* 068060 7F033530 8FA40018 */  lw    $a0, 0x18($sp)
-/* 068064 7F033534 29C1000A */  slti  $at, $t6, 0xa
-/* 068068 7F033538 50200016 */  beql  $at, $zero, .L7F033594
-/* 06806C 7F03353C 00001025 */   move  $v0, $zero
-/* 068070 7F033540 0FC0CC10 */  jal   chrlvGetHandleForGuardId
-/* 068074 7F033544 8FA5001C */   lw    $a1, 0x1c($sp)
-/* 068078 7F033548 50400012 */  beql  $v0, $zero, .L7F033594
-/* 06807C 7F03354C 00001025 */   move  $v0, $zero
-/* 068080 7F033550 8C4F001C */  lw    $t7, 0x1c($v0)
-/* 068084 7F033554 51E0000F */  beql  $t7, $zero, .L7F033594
-/* 068088 7F033558 00001025 */   move  $v0, $zero
-/* 06808C 7F03355C 8C580018 */  lw    $t8, 0x18($v0)
-/* 068090 7F033560 5300000C */  beql  $t8, $zero, .L7F033594
-/* 068094 7F033564 00001025 */   move  $v0, $zero
-/* 068098 7F033568 8C420018 */  lw    $v0, 0x18($v0)
-/* 06809C 7F03356C 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0680A0 7F033570 8FA70020 */  lw    $a3, 0x20($sp)
-/* 0680A4 7F033574 24450008 */  addiu $a1, $v0, 8
-/* 0680A8 7F033578 0FC0A377 */  jal   plot_course_for_actor
-/* 0680AC 7F03357C 8C460014 */   lw    $a2, 0x14($v0)
-/* 0680B0 7F033580 50400004 */  beql  $v0, $zero, .L7F033594
-/* 0680B4 7F033584 00001025 */   move  $v0, $zero
-/* 0680B8 7F033588 10000002 */  b     .L7F033594
-/* 0680BC 7F03358C 24020001 */   li    $v0, 1
-.L7F033590:
-/* 0680C0 7F033590 00001025 */  move  $v0, $zero
-.L7F033594:
-/* 0680C4 7F033594 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0680C8 7F033598 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0680CC 7F03359C 03E00008 */  jr    $ra
-/* 0680D0 7F0335A0 00000000 */   nop   
-)
-#endif
 
 
 
