@@ -13630,25 +13630,15 @@ bool check_if_able_to_then_surrender(ChrRecord *self)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0333A0(void) {
+/**
+ * Address 0x7F0333A0.
+*/
+bool sub_GAME_7F0333A0(ChrRecord *self)
+{
+    chrlvActorFadeAway(self);
 
+    return TRUE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0333A0
-/* 067ED0 7F0333A0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 067ED4 7F0333A4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 067ED8 7F0333A8 0FC091EE */  jal   chrlvActorFadeAway
-/* 067EDC 7F0333AC 00000000 */   nop   
-/* 067EE0 7F0333B0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 067EE4 7F0333B4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 067EE8 7F0333B8 24020001 */  li    $v0, 1
-/* 067EEC 7F0333BC 03E00008 */  jr    $ra
-/* 067EF0 7F0333C0 00000000 */   nop   
-)
-#endif
 
 
 
