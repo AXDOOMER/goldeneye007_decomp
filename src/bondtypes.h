@@ -706,7 +706,7 @@ struct act_patrol
     s32 nextstep;                                                     /*0x030*/
     bool forward;                                                     /*0x034*/
     struct waydata waydata;                                           /*0x038*/
-    s32 unk78;
+    s32 lastvisible60;
     f32 unk7c;
     s32 unk80;
     s32 unk84;

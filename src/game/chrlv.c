@@ -135,6 +135,8 @@ s32 sub_GAME_7F030D70(ChrRecord *arg0, struct coord3d *arg1, StandTile *arg2, st
 void sub_GAME_7F028600(ChrRecord *arg0, struct waydata *arg1, f32 arg2, struct coord3d *arg3, StandTile *arg4);
 void sub_GAME_7F0315A4(ChrRecord *, struct coord3d *, StandTile *, struct waydata *);
 void chrlvTickGoPos(ChrRecord *arg0);
+void sub_GAME_7F028494(struct ChrRecord *arg0);
+void sub_GAME_7F0284DC(struct ChrRecord *arg0);
 
 // ?
 
@@ -4886,20 +4888,16 @@ glabel sub_GAME_7F028348
 #ifdef NONMATCHING
 // s32 sub_GAME_7F028348(void *arg0, s32 *arg1, s32 arg2);
 
-s32 sub_GAME_7F0283FC(struct ChrRecord *arg0, s32 arg1)
+s32 sub_GAME_7F0283FC(ChrRecord *arg0, s32 arg1)
 {
-    // act_patrol ???
-
     s32 sp20;
     s32 *temp_a1;
 
     temp_a1 = &sp20;
-    sp20 = arg0->unk34;
-
-    // struct path_table_alt * ptr_setup_path_tbl
-
-    return (ptr_setup_path_tbl.unk0[*(*arg0->unk2C + (sub_GAME_7F028348(temp_a1, arg1) * 4))].id * 0x2C) + ptr_setup_path_tbl.unk18;
+    sp20 = arg0->act_patrol.forward;
+    return (ptr_setup_path_tbl.unk0[*(arg0->act_patrol.path->id + (sub_GAME_7F028348(arg0, temp_a1, arg1) * 4))].id * 0x2C) + ptr_setup_path_tbl.unk18;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -12769,7 +12767,6 @@ glabel sub_GAME_7F0315A4
 */
 void chrlvTickGoPos(ChrRecord *arg0)
 {
-    
     struct path_table_alt *wp;
     struct coord3d *wp_pos;
     StandTile *wp_stan;
@@ -12939,117 +12936,59 @@ void chrlvTickGoPos(ChrRecord *arg0)
 
 
 
-#ifdef NONMATCHING
-void chrlvTickPatrol(void) {
+/**
+ * Address 0x7F032548.
+*/
+void chrlvTickPatrol(ChrRecord *arg0)
+{
+    PropRecord *self_prop;
+    s32 unused_1;
+    s32 sp34;
+    struct pad *temp_v0;
 
+    self_prop = arg0->prop;
+    temp_v0 = (struct pad *) sub_GAME_7F028474(arg0);
+    sp34 = 0;
+    arg0->act_patrol.waydata.age += 1;
+    arg0->lastwalk60 = g_GlobalTimer;
+
+    if ((arg0->act_patrol.waydata.mode != 6)
+        && ((arg0->act_patrol.lastvisible60 + 0xB4) < g_GlobalTimer)
+        && chrlvStanRoomRelatedPad(arg0, temp_v0))
+    {
+        sp34 = 1;
+        chrlvSetGoposSegDistTotal(arg0, &arg0->act_patrol.waydata, &temp_v0->pos);
+    }
+
+    if (arg0->act_patrol.waydata.mode == 6)
+    {
+        if ((sp34 == 0)
+            && ((self_prop->flags & PROPFLAG_ONSCREEN) || (chrlvStanRoomRelatedPad(arg0, temp_v0) == 0)))
+        {
+            arg0->act_patrol.lastvisible60 = g_GlobalTimer;
+            sub_GAME_7F028494(arg0);
+        }
+        else
+        {
+            sub_GAME_7F028600(arg0, &arg0->act_patrol.waydata, D_80030984, &temp_v0->pos, temp_v0->stan);
+        }
+    }
+    else
+    {
+        if(1)
+        {
+            // removed
+        }
+
+        if (chrlvIsArrivingLaterallyAtPos(&arg0->prevpos, &self_prop->pos, &temp_v0->pos, 30.0f))
+        {
+            sub_GAME_7F0284DC(arg0);
+            temp_v0 = (struct pad *)sub_GAME_7F028474(arg0);
+        }
+
+        sub_GAME_7F0315A4(arg0, &temp_v0->pos, temp_v0->stan, &arg0->act_patrol.waydata);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel chrlvTickPatrol
-/* 067078 7F032548 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 06707C 7F03254C AFBF0024 */  sw    $ra, 0x24($sp)
-/* 067080 7F032550 AFB10020 */  sw    $s1, 0x20($sp)
-/* 067084 7F032554 AFB0001C */  sw    $s0, 0x1c($sp)
-/* 067088 7F032558 8C8E0018 */  lw    $t6, 0x18($a0)
-/* 06708C 7F03255C 00808025 */  move  $s0, $a0
-/* 067090 7F032560 0FC0A11D */  jal   sub_GAME_7F028474
-/* 067094 7F032564 AFAE003C */   sw    $t6, 0x3c($sp)
-/* 067098 7F032568 AFA00034 */  sw    $zero, 0x34($sp)
-/* 06709C 7F03256C 8E0F0060 */  lw    $t7, 0x60($s0)
-/* 0670A0 7F032570 82080038 */  lb    $t0, 0x38($s0)
-/* 0670A4 7F032574 3C198005 */  lui   $t9, %hi(g_GlobalTimer) 
-/* 0670A8 7F032578 25F80001 */  addiu $t8, $t7, 1
-/* 0670AC 7F03257C AE180060 */  sw    $t8, 0x60($s0)
-/* 0670B0 7F032580 8F39837C */  lw    $t9, %lo(g_GlobalTimer)($t9)
-/* 0670B4 7F032584 24010006 */  li    $at, 6
-/* 0670B8 7F032588 00408825 */  move  $s1, $v0
-/* 0670BC 7F03258C 11010012 */  beq   $t0, $at, .L7F0325D8
-/* 0670C0 7F032590 AE1900C8 */   sw    $t9, 0xc8($s0)
-/* 0670C4 7F032594 8E0A0078 */  lw    $t2, 0x78($s0)
-/* 0670C8 7F032598 3C098005 */  lui   $t1, %hi(g_GlobalTimer) 
-/* 0670CC 7F03259C 8D29837C */  lw    $t1, %lo(g_GlobalTimer)($t1)
-/* 0670D0 7F0325A0 254B00B4 */  addiu $t3, $t2, 0xb4
-/* 0670D4 7F0325A4 02002025 */  move  $a0, $s0
-/* 0670D8 7F0325A8 0169082A */  slt   $at, $t3, $t1
-/* 0670DC 7F0325AC 5020000B */  beql  $at, $zero, .L7F0325DC
-/* 0670E0 7F0325B0 820D0038 */   lb    $t5, 0x38($s0)
-/* 0670E4 7F0325B4 0FC09F9C */  jal   chrlvStanRoomRelatedPad
-/* 0670E8 7F0325B8 00402825 */   move  $a1, $v0
-/* 0670EC 7F0325BC 10400006 */  beqz  $v0, .L7F0325D8
-/* 0670F0 7F0325C0 240C0001 */   li    $t4, 1
-/* 0670F4 7F0325C4 AFAC0034 */  sw    $t4, 0x34($sp)
-/* 0670F8 7F0325C8 02002025 */  move  $a0, $s0
-/* 0670FC 7F0325CC 26050038 */  addiu $a1, $s0, 0x38
-/* 067100 7F0325D0 0FC09FA4 */  jal   chrlvSetGoposSegDistTotal
-/* 067104 7F0325D4 02203025 */   move  $a2, $s1
-.L7F0325D8:
-/* 067108 7F0325D8 820D0038 */  lb    $t5, 0x38($s0)
-.L7F0325DC:
-/* 06710C 7F0325DC 24010006 */  li    $at, 6
-/* 067110 7F0325E0 26090038 */  addiu $t1, $s0, 0x38
-/* 067114 7F0325E4 15A1001E */  bne   $t5, $at, .L7F032660
-/* 067118 7F0325E8 260400BC */   addiu $a0, $s0, 0xbc
-/* 06711C 7F0325EC 8FAE0034 */  lw    $t6, 0x34($sp)
-/* 067120 7F0325F0 8FAF003C */  lw    $t7, 0x3c($sp)
-/* 067124 7F0325F4 55C00011 */  bnezl $t6, .L7F03263C
-/* 067128 7F0325F8 8E2A0028 */   lw    $t2, 0x28($s1)
-/* 06712C 7F0325FC 91F80001 */  lbu   $t8, 1($t7)
-/* 067130 7F032600 02002025 */  move  $a0, $s0
-/* 067134 7F032604 33190002 */  andi  $t9, $t8, 2
-/* 067138 7F032608 17200004 */  bnez  $t9, .L7F03261C
-/* 06713C 7F03260C 00000000 */   nop   
-/* 067140 7F032610 0FC09F9C */  jal   chrlvStanRoomRelatedPad
-/* 067144 7F032614 02202825 */   move  $a1, $s1
-/* 067148 7F032618 14400007 */  bnez  $v0, .L7F032638
-.L7F03261C:
-/* 06714C 7F03261C 3C088005 */   lui   $t0, %hi(g_GlobalTimer) 
-/* 067150 7F032620 8D08837C */  lw    $t0, %lo(g_GlobalTimer)($t0)
-/* 067154 7F032624 02002025 */  move  $a0, $s0
-/* 067158 7F032628 0FC0A125 */  jal   sub_GAME_7F028494
-/* 06715C 7F03262C AE080078 */   sw    $t0, 0x78($s0)
-/* 067160 7F032630 1000001E */  b     .L7F0326AC
-/* 067164 7F032634 8FBF0024 */   lw    $ra, 0x24($sp)
-.L7F032638:
-/* 067168 7F032638 8E2A0028 */  lw    $t2, 0x28($s1)
-.L7F03263C:
-/* 06716C 7F03263C 3C068003 */  lui   $a2, %hi(D_80030984)
-/* 067170 7F032640 8CC60984 */  lw    $a2, %lo(D_80030984)($a2)
-/* 067174 7F032644 02002025 */  move  $a0, $s0
-/* 067178 7F032648 26050038 */  addiu $a1, $s0, 0x38
-/* 06717C 7F03264C 02203825 */  move  $a3, $s1
-/* 067180 7F032650 0FC0A180 */  jal   sub_GAME_7F028600
-/* 067184 7F032654 AFAA0010 */   sw    $t2, 0x10($sp)
-/* 067188 7F032658 10000014 */  b     .L7F0326AC
-/* 06718C 7F03265C 8FBF0024 */   lw    $ra, 0x24($sp)
-.L7F032660:
-/* 067190 7F032660 8FA5003C */  lw    $a1, 0x3c($sp)
-/* 067194 7F032664 AFA9002C */  sw    $t1, 0x2c($sp)
-/* 067198 7F032668 02203025 */  move  $a2, $s1
-/* 06719C 7F03266C 3C0741F0 */  lui   $a3, 0x41f0
-/* 0671A0 7F032670 0FC0BF54 */  jal   chrlvIsArrivingLaterallyAtPos
-/* 0671A4 7F032674 24A50008 */   addiu $a1, $a1, 8
-/* 0671A8 7F032678 50400007 */  beql  $v0, $zero, .L7F032698
-/* 0671AC 7F03267C 02002025 */   move  $a0, $s0
-/* 0671B0 7F032680 0FC0A137 */  jal   sub_GAME_7F0284DC
-/* 0671B4 7F032684 02002025 */   move  $a0, $s0
-/* 0671B8 7F032688 0FC0A11D */  jal   sub_GAME_7F028474
-/* 0671BC 7F03268C 02002025 */   move  $a0, $s0
-/* 0671C0 7F032690 00408825 */  move  $s1, $v0
-/* 0671C4 7F032694 02002025 */  move  $a0, $s0
-.L7F032698:
-/* 0671C8 7F032698 02202825 */  move  $a1, $s1
-/* 0671CC 7F03269C 8E260028 */  lw    $a2, 0x28($s1)
-/* 0671D0 7F0326A0 0FC0C569 */  jal   sub_GAME_7F0315A4
-/* 0671D4 7F0326A4 8FA7002C */   lw    $a3, 0x2c($sp)
-/* 0671D8 7F0326A8 8FBF0024 */  lw    $ra, 0x24($sp)
-.L7F0326AC:
-/* 0671DC 7F0326AC 8FB0001C */  lw    $s0, 0x1c($sp)
-/* 0671E0 7F0326B0 8FB10020 */  lw    $s1, 0x20($sp)
-/* 0671E4 7F0326B4 03E00008 */  jr    $ra
-/* 0671E8 7F0326B8 27BD0040 */   addiu $sp, $sp, 0x40
-)
-#endif
 
 
 
