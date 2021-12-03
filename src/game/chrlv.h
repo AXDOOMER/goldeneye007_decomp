@@ -71,6 +71,7 @@ void chrlvSetGuardBitfieldFlags(ChrRecord *arg0, s32 guard_id, u8 arg2);
 void chrlvClearGuardBitfieldFlags(ChrRecord *arg0, s32 guard_id, u8 arg2);
 s32 chrlvTestGuardBitfieldFlags(ChrRecord *arg0, s32 guard_id, u8 arg2);
 void toggle_objective_bitflags(ChrRecord *arg0, s32 arg1);
+void untoggle_objective_bitflags(ChrRecord *self, u32 flags);
 
 
 #endif

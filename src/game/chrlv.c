@@ -13584,25 +13584,13 @@ void toggle_objective_bitflags(ChrRecord *arg0, s32 arg1)
 
 
 
-#ifdef NONMATCHING
-void untoggle_objective_bitflags(void) {
-
+/**
+ * Address 0x7F033318.
+*/
+void untoggle_objective_bitflags(ChrRecord *self, u32 flags)
+{
+    objectiveregisters1 = ~flags & objectiveregisters1; //shorthand does not match
 }
-#else
-GLOBAL_ASM(
-.text
-glabel untoggle_objective_bitflags
-/* 067E48 7F033318 3C028003 */  lui   $v0, %hi(objectiveregisters1)
-/* 067E4C 7F03331C 24420978 */  addiu $v0, %lo(objectiveregisters1) # addiu $v0, $v0, 0x978
-/* 067E50 7F033320 8C4F0000 */  lw    $t7, ($v0)
-/* 067E54 7F033324 00A07027 */  not   $t6, $a1
-/* 067E58 7F033328 AFA40000 */  sw    $a0, ($sp)
-/* 067E5C 7F03332C 01CFC024 */  and   $t8, $t6, $t7
-/* 067E60 7F033330 03E00008 */  jr    $ra
-/* 067E64 7F033334 AC580000 */   sw    $t8, ($v0)
-)
-#endif
-
 
 
 #ifdef NONMATCHING
