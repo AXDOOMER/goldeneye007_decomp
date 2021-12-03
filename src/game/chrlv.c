@@ -81,7 +81,7 @@ void get_sound_at_range(ChrRecord *arg0, s32 arg1, s32 arg2);
 void chrlvSetGoposSegDistTotal(struct ChrRecord *arg0, struct waydata *arg1, struct coord3d *arg2);
 void chrlvIterateGuardSeeShotDie(ChrRecord *, s32);
 s32 chrlvCall7F02982C(PropRecord *arg0, struct coord3d *arg1, f32 arg2);
-void chrlvSurrenderAnimationRelated7F02B638(struct ChrRecord *arg0);
+void chrlvTickSurrender(struct ChrRecord *arg0);
 void chrlvWalkingAnimationRelated(ChrRecord *arg0);
 void setSeenBondTimeToNow(struct ChrRecord *guardData);
 s32 chrlvAttackRelated7F0292A8(ChrRecord *arg0, struct coord3d *arg1, StandTile *arg2);
@@ -95,15 +95,15 @@ void chrlvNormDistanceToPlayer(ChrRecord *arg0, s32 arg1, struct coord3d *arg2);
 s32 sub_GAME_7F02A0EC(ChrRecord *arg0, s32 arg1, f32 arg2);
 void chrlvModelRotyRelated(ChrRecord *arg0, s32 arg1, struct coord3d *arg2);
 s32 chrIsNotDeadOrShot(struct ChrRecord *chr);
-void chrlvSneezeRelated(ChrRecord *arg0);
-void chrlvManageGuardFade(ChrRecord *arg0);
-void sub_GAME_7F02BC80(ChrRecord *arg0);
-void chrlvCheckTriggeredOnShotHit(ChrRecord *arg0);
-void sub_GAME_7F02BDA4(ChrRecord *arg0);
-void sub_GAME_7F02BE00(ChrRecord *arg0);
-void sub_GAME_7F02BE58(ChrRecord *arg0);
-void sub_GAME_7F02BEA8(ChrRecord *arg0);
-void sub_GAME_7F02BF24(ChrRecord *arg0);
+void chrlvTickAnim(ChrRecord *arg0);
+void chrlvTickDead(ChrRecord *arg0);
+void chrlvTickArgh(ChrRecord *arg0);
+void chrlvTickPreArgh(ChrRecord *arg0);
+void chrlvTickSidestep(ChrRecord *arg0);
+void chrlvTickJumpout(ChrRecord *arg0);
+void chrlvTickTest(ChrRecord *arg0);
+void chrlvTickStartAlarm(ChrRecord *arg0);
+void chrlvTickSurprised(ChrRecord *arg0);
 void sub_GAME_7F02BFE4(ChrRecord *arg0, s32 arg1, s32 arg2);
 s32 chrlvSetSubroty(ChrRecord *arg0, s32 arg1, f32 arg2, f32 arg3, f32 arg4);
 s32 chrlvUpdateAimendsideback(ChrRecord *arg0, struct weapon_firing_animation_table *arg1, s32 arg2, s32 arg3, f32 arg4);
@@ -115,16 +115,16 @@ void chrlvFireWeaponRelated(ChrRecord *self, s32 hand);
 s32 chrlvAttackrollAnimationRelated7F02E2E0(ChrRecord *arg0);
 void chrlvAttackrollAnimationRelated7F02E3B8(ChrRecord *arg0);
 void sub_GAME_7F0256F0(ChrRecord *arg0, s32 arg1, s32 arg2);
-void chrlvAttackAnimationRelated7F02EBFC(ChrRecord *arg0);
+void chrlvTickAttack(ChrRecord *arg0);
 void sub_GAME_7F02E4C0(ChrRecord *);
 void sub_GAME_7F025C40(struct ChrRecord *chr, s32);
 void sub_GAME_7F02587C(struct ChrRecord *chr, s32);
 void sub_GAME_7F024CF8(struct ChrRecord *chr, s32);
-void sub_GAME_7F02F3F8(ChrRecord *self);
-void chrlvFireStandingAnimationRelated(ChrRecord *arg0);
-void chrlvRemoved7F02F688(s32 arg0);
+void chrlvTickThrowGrenade(ChrRecord *self);
+void chrlvTickBondIntro(ChrRecord *arg0);
+void chrlvTickBondDieRemoved(ChrRecord *arg0);
 s32 chrlvApplySpeed(ChrRecord *self, struct coord3d *arg1, s32 arg2, f32 *speedPtr);
-void chrlvAttackWalkRelated(ChrRecord *self);
+void chrlvTickAttackWalk(ChrRecord *self);
 void chrlvTickRunPos(ChrRecord *self);
 s32 sub_GAME_7F030128(ChrRecord *arg0, struct coord3d *point, StandTile *arg2, struct coord3d *dest, StandTile * arg4, s32 objflags);
 s32 sub_GAME_7F0301FC(ChrRecord *arg0, struct coord3d *point, StandTile *arg2, struct coord3d *dest, f32 arg4, s32 arg5);
@@ -6847,7 +6847,7 @@ bool if_actor_able_set_on_path(ChrRecord *self, s32 pathid)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F02AD98(void) {
+void chrlvTickStand(void) {
 
 }
 #else
@@ -6870,7 +6870,7 @@ glabel D_80051E88
 glabel D_80051E8C
 .word 0x40c90fdb /*6.2831855*/
 .text
-glabel sub_GAME_7F02AD98
+glabel chrlvTickStand
 /* 05F8C8 7F02AD98 27BDFF50 */  addiu $sp, $sp, -0xb0
 /* 05F8CC 7F02AD9C AFBF0024 */  sw    $ra, 0x24($sp)
 /* 05F8D0 7F02ADA0 AFB00020 */  sw    $s0, 0x20($sp)
@@ -7379,7 +7379,7 @@ glabel sub_GAME_7F02AD98
 
 
 
-void actor_reset_sleep(struct ChrRecord *actor) {
+void chrlvTickKneel(struct ChrRecord *actor) {
     actor->sleep = 0;
 }
 
@@ -7388,7 +7388,7 @@ void actor_reset_sleep(struct ChrRecord *actor) {
 /**
  * Address 0x7F02B4E8.
 */
-void chrlvSneezeRelated(ChrRecord *arg0)
+void chrlvTickAnim(ChrRecord *arg0)
 {
     s32 unused[1];
 
@@ -7426,7 +7426,7 @@ void chrlvSneezeRelated(ChrRecord *arg0)
 /**
  * Address 0x7F02B638.
 */
-void chrlvSurrenderAnimationRelated7F02B638(struct ChrRecord *arg0)
+void chrlvTickSurrender(struct ChrRecord *arg0)
 {
     Model *model;
 
@@ -7459,7 +7459,7 @@ void chrlvSurrenderAnimationRelated7F02B638(struct ChrRecord *arg0)
 /**
  * Address 0x7F02B774.
 */
-void chrlvManageGuardFade(ChrRecord *arg0)
+void chrlvTickDead(ChrRecord *arg0)
 {
     if (arg0->act_init.padding[0] >= 0)
     {
@@ -7563,7 +7563,7 @@ void chrlvIterateGuardSeeShotDie(ChrRecord *self, s32 flag)
  * Address 0x7F02B9A4.
  * PD: void chrTickDie(struct chrdata *chr).
 */
-void guard_body_hit_sfx(ChrRecord *arg0)
+void chrlvTickDie(ChrRecord *arg0)
 {
     Model *model = arg0->model;
 
@@ -7632,7 +7632,7 @@ void guard_body_hit_sfx(ChrRecord *arg0)
 /**
  * Address 0x7F02BC80.
 */
-void sub_GAME_7F02BC80(ChrRecord *arg0)
+void chrlvTickArgh(ChrRecord *arg0)
 {
     Model *model = arg0->model;
 
@@ -7658,7 +7658,7 @@ void sub_GAME_7F02BC80(ChrRecord *arg0)
 /**
  * Address 0x7F02BD20.
 */
-void chrlvCheckTriggeredOnShotHit(ChrRecord *arg0)
+void chrlvTickPreArgh(ChrRecord *arg0)
 {
     Model *model;
     struct coord3d sp30;
@@ -7678,13 +7678,13 @@ void chrlvCheckTriggeredOnShotHit(ChrRecord *arg0)
 
 
 /**
- * @see sub_GAME_7F02BE00
- * @see sub_GAME_7F02BE58
- * @see sub_GAME_7F02BEA8
+ * @see chrlvTickJumpout
+ * @see chrlvTickTest
+ * @see chrlvTickStartAlarm
  * 
  * Address 0x7F02BDA4.
 */
-void sub_GAME_7F02BDA4(ChrRecord *arg0)
+void chrlvTickSidestep(ChrRecord *arg0)
 {
     Model *model = arg0->model;
 
@@ -7697,13 +7697,13 @@ void sub_GAME_7F02BDA4(ChrRecord *arg0)
 
 
 /**
- * @see sub_GAME_7F02BDA4
- * @see sub_GAME_7F02BE58
- * @see sub_GAME_7F02BEA8
+ * @see chrlvTickSidestep
+ * @see chrlvTickTest
+ * @see chrlvTickStartAlarm
  * 
  * Address 0x7F02BE00.
 */
-void sub_GAME_7F02BE00(ChrRecord *arg0)
+void chrlvTickJumpout(ChrRecord *arg0)
 {
     Model *model = arg0->model;
 
@@ -7718,13 +7718,13 @@ void sub_GAME_7F02BE00(ChrRecord *arg0)
 
 
 /**
- * @see sub_GAME_7F02BDA4
- * @see sub_GAME_7F02BE00
- * @see sub_GAME_7F02BEA8
+ * @see chrlvTickSidestep
+ * @see chrlvTickJumpout
+ * @see chrlvTickStartAlarm
  * 
  * Address 0x7F02BE58.
 */
-void sub_GAME_7F02BE58(ChrRecord *arg0)
+void chrlvTickTest(ChrRecord *arg0)
 {
     Model *model = arg0->model;
 
@@ -7737,13 +7737,13 @@ void sub_GAME_7F02BE58(ChrRecord *arg0)
 
 
 /**
- * @see sub_GAME_7F02BDA4
- * @see sub_GAME_7F02BE00
- * @see sub_GAME_7F02BE58
+ * @see chrlvTickSidestep
+ * @see chrlvTickJumpout
+ * @see chrlvTickTest
  * 
  * Address 0x7F02BEA8.
 */
-void sub_GAME_7F02BEA8(ChrRecord *arg0)
+void chrlvTickStartAlarm(ChrRecord *arg0)
 {
     Model *model = arg0->model;
 
@@ -7763,7 +7763,7 @@ void sub_GAME_7F02BEA8(ChrRecord *arg0)
 /**
  * Address 0x7F02BF24.
 */
-void sub_GAME_7F02BF24(ChrRecord *arg0)
+void chrlvTickSurprised(ChrRecord *arg0)
 {
     Model *model = arg0->model;
 
@@ -10401,7 +10401,7 @@ glabel sub_GAME_7F02E4C0
  * Address 0x7F02EBFC (VERSION_US).
  * Adresss 0x7F02EF04 (other).
 */
-void chrlvAttackAnimationRelated7F02EBFC(ChrRecord *arg0)
+void chrlvTickAttack(ChrRecord *arg0)
 {
     Model *self_model;
     f32 temp_f0;
@@ -10529,7 +10529,7 @@ void chrlvAttackAnimationRelated7F02EBFC(ChrRecord *arg0)
 /**
  * Address 0x7F02EEE0.
 */
-void chrlvAttackAnimationRelated7F02EEE0(ChrRecord *arg0)
+void chrlvTickAttackRoll(ChrRecord *arg0)
 {
     Model *temp_a0; // 68
     f32 temp_f0;
@@ -10705,7 +10705,7 @@ void chrlvAttackAnimationRelated7F02EEE0(ChrRecord *arg0)
 /**
  * Address 0x7F02F3F8.
 */
-void sub_GAME_7F02F3F8(ChrRecord *self)
+void chrlvTickThrowGrenade(ChrRecord *self)
 {
     Model *self_model;
     f32 temp_f2;
@@ -10754,7 +10754,7 @@ void sub_GAME_7F02F3F8(ChrRecord *self)
 /**
  * Address 0x7F02F5A4.
 */
-void chrlvFireStandingAnimationRelated(ChrRecord *arg0)
+void chrlvTickBondIntro(ChrRecord *arg0)
 {
     Model *self_model;
     f32 sp28;
@@ -10788,7 +10788,7 @@ void chrlvFireStandingAnimationRelated(ChrRecord *arg0)
 /**
  * Address 0x7F02F688.
 */
-void chrlvRemoved7F02F688(s32 arg0)
+void chrlvTickBondDieRemoved(ChrRecord *arg0)
 {
     // removed.
 }
@@ -10904,7 +10904,7 @@ s32 chrlvApplySpeed(ChrRecord *self, struct coord3d *arg1, s32 arg2, f32 *speedP
 /**
  * Address 0x7F02F888.
 */
-void chrlvAttackWalkRelated(ChrRecord *self)
+void chrlvTickAttackWalk(ChrRecord *self)
 {
     Model *self_model;
     PropRecord *player_prop;
@@ -11757,9 +11757,33 @@ s32 sub_GAME_7F030D70(ChrRecord *arg0, struct coord3d *arg1, StandTile *arg2, st
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03130C(void) {
+// need to identify arg7
+? sub_GAME_7F03130C(ChrRecord *arg0, struct coord3d *arg1, s32 arg2, struct coord3d *arg3, f32 arg4, s32 arg5, struct coord3d *arg6, void *arg7, f32 arg8, s32 arg9, s32 argA)
+{
+    if ((sub_GAME_7F03081C(arg0, &sp7C->pos, sp7C->stan, (struct coord3d *) temp_a3, sp4C, sp48, arg8, arg0->chrwidth, arg9) != 0) 
+        && ((arg5 == NULL) || (sub_GAME_7F0304AC(arg0, &sp7C->pos, sp7C->stan, (struct coord3d *) &sp64, arg6, NULL, arg9) != 0)))
+    {
+        if (argA != 0)
+        {
+            arg7->unk3 = 1;
+            arg7->unk2C = sp64;
+            arg7->unk30 = sp68;
+            arg7->unk34 = sp6C;
 
+            return 1;
+        }
+
+        arg7->unk2 = 1;
+        arg7->unk4 = sp64;
+        arg7->unk8 = sp68;
+        arg7->unkC = sp6C;
+
+        return 1;
+    }
+
+    return 0;
 }
+
 #else
 GLOBAL_ASM(
 .late_rodata
@@ -12736,7 +12760,7 @@ glabel sub_GAME_7F0315A4
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F032088(void) {
+void chrlvTickGoPos(void) {
 
 }
 #else
@@ -12747,7 +12771,7 @@ glabel D_80052068
 glabel D_8005206C
 .word 0x3f99999a /*1.2*/
 .text
-glabel sub_GAME_7F032088
+glabel chrlvTickGoPos
 /* 066BB8 7F032088 27BDFF78 */  addiu $sp, $sp, -0x88
 /* 066BBC 7F03208C AFBF0024 */  sw    $ra, 0x24($sp)
 /* 066BC0 7F032090 AFB00020 */  sw    $s0, 0x20($sp)
@@ -13079,13 +13103,13 @@ glabel sub_GAME_7F032088
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F032548(void) {
+void chrlvTickPatrol(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F032548
+glabel chrlvTickPatrol
 /* 067078 7F032548 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 06707C 7F03254C AFBF0024 */  sw    $ra, 0x24($sp)
 /* 067080 7F032550 AFB10020 */  sw    $s1, 0x20($sp)
@@ -13192,294 +13216,109 @@ glabel sub_GAME_7F032548
 
 
 
-#ifdef NONMATCHING
-void manage_actions(void) {
+/**
+ * Address 0x7F0326BC.
+*/
+void chrlvActionTick(ChrRecord *arg0)
+{
+    if (g_ClockTimer > 0)
+    {
+        if (arg0->actiontype == ACT_INIT)
+        {
+            arg0->chrflags |= 1;
+            chrlvIdleAnimationRelated7F023A94(arg0, 0.0f);
+            arg0->sleep = 0;
+        }
 
-switch (arg0->actiontype) {
-    case 1:
-        sub_GAME_7F02AD98(arg0);
-        break;
-    case 2:
-        actor_reset_sleep(arg0);
-        break;
-    case 3:
-        chrlvSneezeRelated(arg0);
-        break;
-    case 4:
-        guard_body_hit_sfx(arg0);
-        break;
-    case 6:
-        sub_GAME_7F02BC80(arg0);
-        break;
-    case 7:
-        chrlvCheckTriggeredOnShotHit(arg0);
-        break;
-    case 11:
-        sub_GAME_7F02BDA4(arg0);
-        break;
-    case 12:
-        sub_GAME_7F02BE00(arg0);
-        break;
-    case 5:
-        chrlvManageGuardFade(arg0);
-        break;
-    case 8:
-        chrlvAttackAnimationRelated7F02EBFC(arg0);
-        break;
-    case 9:
-        chrlvAttackWalkRelated(arg0);
-        break;
-    case 10:
-        chrlvAttackAnimationRelated7F02EEE0(arg0);
-        break;
-    case 13:
-        chrlvTickRunPos(arg0);
-        break;
-    case 14:
-        sub_GAME_7F032548(arg0);
-        break;
-    case 15:
-        sub_GAME_7F032088(arg0);
-        break;
-    case 16:
-        chrlvSurrenderAnimationRelated7F02B638(arg0);
-        break;
-    case 22:
-        sub_GAME_7F02BE58(arg0);
-        break;
-    case 18:
-        sub_GAME_7F02BF24(arg0);
-        break;
-    case 19:
-        sub_GAME_7F02BEA8(arg0);
-        break;
-    case 20:
-        sub_GAME_7F02F3F8(arg0);
-        break;
-    case 23:
-        chrlvFireStandingAnimationRelated(arg0);
-        break;
-    case 24:
-        chrlvRemoved7F02F688((s32) arg0);
-        break;
+        if ((arg0->hidden & 0x40) != 0)
+        {
+            arg0->timer60 += g_ClockTimer;
+        }
+
+        arg0->sleep -= g_ClockTimer;
+
+        if (((s32) arg0->sleep < 0) || (arg0->chrflags & 0x40000))
+        {
+            arg0->sleep = 0;
+            parse_handle_actionblocks(arg0, PROP_TYPE_CHR);
+            
+            switch (arg0->actiontype)
+            {
+                case ACT_STAND:
+                    chrlvTickStand(arg0);
+                    break;
+                case ACT_KNEEL:
+                    chrlvTickKneel(arg0);
+                    break;
+                case ACT_ANIM:
+                    chrlvTickAnim(arg0);
+                    break;
+                case ACT_DIE:
+                    chrlvTickDie(arg0);
+                    break;
+                case ACT_ARGH:
+                    chrlvTickArgh(arg0);
+                    break;
+                case ACT_PREARGH:
+                    chrlvTickPreArgh(arg0);
+                    break;
+                case ACT_SIDESTEP:
+                    chrlvTickSidestep(arg0);
+                    break;
+                case ACT_JUMPOUT:
+                    chrlvTickJumpout(arg0);
+                    break;
+                case ACT_DEAD:
+                    chrlvTickDead(arg0);
+                    break;
+                case ACT_ATTACK:
+                    chrlvTickAttack(arg0);
+                    break;
+                case ACT_ATTACKWALK:
+                    chrlvTickAttackWalk(arg0);
+                    break;
+                case ACT_ATTACKROLL:
+                    chrlvTickAttackRoll(arg0);
+                    break;
+                case ACT_RUNPOS:
+                    chrlvTickRunPos(arg0);
+                    break;
+                case ACT_PATROL:
+                    chrlvTickPatrol(arg0);
+                    break;
+                case ACT_GOPOS:
+                    chrlvTickGoPos(arg0);
+                    break;
+                case ACT_SURRENDER:
+                    chrlvTickSurrender(arg0);
+                    break;
+                case ACT_TEST:
+                    chrlvTickTest(arg0);
+                    break;
+                case ACT_SURPRISED:
+                    chrlvTickSurprised(arg0);
+                    break;
+                case ACT_STARTALARM:
+                    chrlvTickStartAlarm(arg0);
+                    break;
+                case ACT_THROWGRENADE:
+                    chrlvTickThrowGrenade(arg0);
+                    break;
+                case ACT_BONDINTRO:
+                    chrlvTickBondIntro(arg0);
+                    break;
+                case ACT_BONDDIE:
+                    chrlvTickBondDieRemoved(arg0);
+                    break;
+            }
+            
+            arg0->chrflags &= -5;
+            arg0->hidden &= 0xFDFD;
+            arg0->chrseeshot = -1;
+            arg0->chrseedie = -1;
+        }
     }
-    
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel jpt_80052070
- .word .L7F032788
- .word .L7F032798
- .word .L7F0327A8
- .word .L7F0327B8
- .word .L7F032808
- .word .L7F0327C8
- .word .L7F0327D8
- .word .L7F032818
- .word .L7F032828
- .word .L7F032838
- .word .L7F0327E8
- .word .L7F0327F8
- .word .L7F032848
- .word .L7F032858
- .word .L7F032868
- .word .L7F032878
- .word def_7F032780
- .word .L7F032898
- .word .L7F0328A8
- .word .L7F0328B8
- .word def_7F032780
- .word .L7F032888
- .word .L7F0328C8
- .word .L7F0328D8
-.text
-glabel manage_actions
-/* 0671EC 7F0326BC 3C028005 */  lui   $v0, %hi(g_ClockTimer)
-/* 0671F0 7F0326C0 8C428374 */  lw    $v0, %lo(g_ClockTimer)($v0)
-/* 0671F4 7F0326C4 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0671F8 7F0326C8 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0671FC 7F0326CC 00808025 */  move  $s0, $a0
-/* 067200 7F0326D0 1840008D */  blez  $v0, .L7F032908
-/* 067204 7F0326D4 AFBF001C */   sw    $ra, 0x1c($sp)
-/* 067208 7F0326D8 808E0007 */  lb    $t6, 7($a0)
-/* 06720C 7F0326DC 55C0000A */  bnezl $t6, .L7F032708
-/* 067210 7F0326E0 96190012 */   lhu   $t9, 0x12($s0)
-/* 067214 7F0326E4 8C8F0014 */  lw    $t7, 0x14($a0)
-/* 067218 7F0326E8 24050000 */  li    $a1, 0
-/* 06721C 7F0326EC 35F80001 */  ori   $t8, $t7, 1
-/* 067220 7F0326F0 0FC08EA5 */  jal   chrlvIdleAnimationRelated7F023A94
-/* 067224 7F0326F4 AC980014 */   sw    $t8, 0x14($a0)
-/* 067228 7F0326F8 A2000008 */  sb    $zero, 8($s0)
-/* 06722C 7F0326FC 3C028005 */  lui   $v0, %hi(g_ClockTimer)
-/* 067230 7F032700 8C428374 */  lw    $v0, %lo(g_ClockTimer)($v0)
-/* 067234 7F032704 96190012 */  lhu   $t9, 0x12($s0)
-.L7F032708:
-/* 067238 7F032708 02002025 */  move  $a0, $s0
-/* 06723C 7F03270C 24050003 */  li    $a1, 3
-/* 067240 7F032710 33280040 */  andi  $t0, $t9, 0x40
-/* 067244 7F032714 51000007 */  beql  $t0, $zero, .L7F032734
-/* 067248 7F032718 820B0008 */   lb    $t3, 8($s0)
-/* 06724C 7F03271C 8E090110 */  lw    $t1, 0x110($s0)
-/* 067250 7F032720 01225021 */  addu  $t2, $t1, $v0
-/* 067254 7F032724 AE0A0110 */  sw    $t2, 0x110($s0)
-/* 067258 7F032728 3C028005 */  lui   $v0, %hi(g_ClockTimer)
-/* 06725C 7F03272C 8C428374 */  lw    $v0, %lo(g_ClockTimer)($v0)
-/* 067260 7F032730 820B0008 */  lb    $t3, 8($s0)
-.L7F032734:
-/* 067264 7F032734 01626023 */  subu  $t4, $t3, $v0
-/* 067268 7F032738 A20C0008 */  sb    $t4, 8($s0)
-/* 06726C 7F03273C 820D0008 */  lb    $t5, 8($s0)
-/* 067270 7F032740 05A00005 */  bltz  $t5, .L7F032758
-/* 067274 7F032744 00000000 */   nop   
-/* 067278 7F032748 8E0E0014 */  lw    $t6, 0x14($s0)
-/* 06727C 7F03274C 000E7B40 */  sll   $t7, $t6, 0xd
-/* 067280 7F032750 05E3006E */  bgezl $t7, .L7F03290C
-/* 067284 7F032754 8FBF001C */   lw    $ra, 0x1c($sp)
-.L7F032758:
-/* 067288 7F032758 0FC0D521 */  jal   parse_handle_actionblocks
-/* 06728C 7F03275C A2000008 */   sb    $zero, 8($s0)
-/* 067290 7F032760 82180007 */  lb    $t8, 7($s0)
-/* 067294 7F032764 2719FFFF */  addiu $t9, $t8, -1
-/* 067298 7F032768 2F210018 */  sltiu $at, $t9, 0x18
-/* 06729C 7F03276C 1020005C */  beqz  $at, .L7F0328E0
-/* 0672A0 7F032770 0019C880 */   sll   $t9, $t9, 2
-/* 0672A4 7F032774 3C018005 */  lui   $at, %hi(jpt_80052070)
-/* 0672A8 7F032778 00390821 */  addu  $at, $at, $t9
-/* 0672AC 7F03277C 8C392070 */  lw    $t9, %lo(jpt_80052070)($at)
-/* 0672B0 7F032780 03200008 */  jr    $t9
-/* 0672B4 7F032784 00000000 */   nop   
-.L7F032788:
-/* 0672B8 7F032788 0FC0AB66 */  jal   sub_GAME_7F02AD98
-/* 0672BC 7F03278C 02002025 */   move  $a0, $s0
-/* 0672C0 7F032790 10000054 */  b     .L7F0328E4
-/* 0672C4 7F032794 8E080014 */   lw    $t0, 0x14($s0)
-.L7F032798:
-/* 0672C8 7F032798 0FC0AD38 */  jal   actor_reset_sleep
-/* 0672CC 7F03279C 02002025 */   move  $a0, $s0
-/* 0672D0 7F0327A0 10000050 */  b     .L7F0328E4
-/* 0672D4 7F0327A4 8E080014 */   lw    $t0, 0x14($s0)
-.L7F0327A8:
-/* 0672D8 7F0327A8 0FC0AD3A */  jal   chrlvSneezeRelated
-/* 0672DC 7F0327AC 02002025 */   move  $a0, $s0
-/* 0672E0 7F0327B0 1000004C */  b     .L7F0328E4
-/* 0672E4 7F0327B4 8E080014 */   lw    $t0, 0x14($s0)
-.L7F0327B8:
-/* 0672E8 7F0327B8 0FC0AE69 */  jal   guard_body_hit_sfx
-/* 0672EC 7F0327BC 02002025 */   move  $a0, $s0
-/* 0672F0 7F0327C0 10000048 */  b     .L7F0328E4
-/* 0672F4 7F0327C4 8E080014 */   lw    $t0, 0x14($s0)
-.L7F0327C8:
-/* 0672F8 7F0327C8 0FC0AF20 */  jal   sub_GAME_7F02BC80
-/* 0672FC 7F0327CC 02002025 */   move  $a0, $s0
-/* 067300 7F0327D0 10000044 */  b     .L7F0328E4
-/* 067304 7F0327D4 8E080014 */   lw    $t0, 0x14($s0)
-.L7F0327D8:
-/* 067308 7F0327D8 0FC0AF48 */  jal   chrlvCheckTriggeredOnShotHit
-/* 06730C 7F0327DC 02002025 */   move  $a0, $s0
-/* 067310 7F0327E0 10000040 */  b     .L7F0328E4
-/* 067314 7F0327E4 8E080014 */   lw    $t0, 0x14($s0)
-.L7F0327E8:
-/* 067318 7F0327E8 0FC0AF69 */  jal   sub_GAME_7F02BDA4
-/* 06731C 7F0327EC 02002025 */   move  $a0, $s0
-/* 067320 7F0327F0 1000003C */  b     .L7F0328E4
-/* 067324 7F0327F4 8E080014 */   lw    $t0, 0x14($s0)
-.L7F0327F8:
-/* 067328 7F0327F8 0FC0AF80 */  jal   sub_GAME_7F02BE00
-/* 06732C 7F0327FC 02002025 */   move  $a0, $s0
-/* 067330 7F032800 10000038 */  b     .L7F0328E4
-/* 067334 7F032804 8E080014 */   lw    $t0, 0x14($s0)
-.L7F032808:
-/* 067338 7F032808 0FC0ADDD */  jal   chrlvManageGuardFade
-/* 06733C 7F03280C 02002025 */   move  $a0, $s0
-/* 067340 7F032810 10000034 */  b     .L7F0328E4
-/* 067344 7F032814 8E080014 */   lw    $t0, 0x14($s0)
-.L7F032818:
-/* 067348 7F032818 0FC0BAFF */  jal   chrlvAttackAnimationRelated7F02EBFC
-/* 06734C 7F03281C 02002025 */   move  $a0, $s0
-/* 067350 7F032820 10000030 */  b     .L7F0328E4
-/* 067354 7F032824 8E080014 */   lw    $t0, 0x14($s0)
-.L7F032828:
-/* 067358 7F032828 0FC0BE22 */  jal   chrlvAttackWalkRelated
-/* 06735C 7F03282C 02002025 */   move  $a0, $s0
-/* 067360 7F032830 1000002C */  b     .L7F0328E4
-/* 067364 7F032834 8E080014 */   lw    $t0, 0x14($s0)
-.L7F032838:
-/* 067368 7F032838 0FC0BBB8 */  jal   chrlvAttackAnimationRelated7F02EEE0
-/* 06736C 7F03283C 02002025 */   move  $a0, $s0
-/* 067370 7F032840 10000028 */  b     .L7F0328E4
-/* 067374 7F032844 8E080014 */   lw    $t0, 0x14($s0)
-.L7F032848:
-/* 067378 7F032848 0FC0BF9E */  jal   chrlvTickRunPos
-/* 06737C 7F03284C 02002025 */   move  $a0, $s0
-/* 067380 7F032850 10000024 */  b     .L7F0328E4
-/* 067384 7F032854 8E080014 */   lw    $t0, 0x14($s0)
-.L7F032858:
-/* 067388 7F032858 0FC0C952 */  jal   sub_GAME_7F032548
-/* 06738C 7F03285C 02002025 */   move  $a0, $s0
-/* 067390 7F032860 10000020 */  b     .L7F0328E4
-/* 067394 7F032864 8E080014 */   lw    $t0, 0x14($s0)
-.L7F032868:
-/* 067398 7F032868 0FC0C822 */  jal   sub_GAME_7F032088
-/* 06739C 7F03286C 02002025 */   move  $a0, $s0
-/* 0673A0 7F032870 1000001C */  b     .L7F0328E4
-/* 0673A4 7F032874 8E080014 */   lw    $t0, 0x14($s0)
-.L7F032878:
-/* 0673A8 7F032878 0FC0AD8E */  jal   chrlvSurrenderAnimationRelated7F02B638
-/* 0673AC 7F03287C 02002025 */   move  $a0, $s0
-/* 0673B0 7F032880 10000018 */  b     .L7F0328E4
-/* 0673B4 7F032884 8E080014 */   lw    $t0, 0x14($s0)
-.L7F032888:
-/* 0673B8 7F032888 0FC0AF96 */  jal   sub_GAME_7F02BE58
-/* 0673BC 7F03288C 02002025 */   move  $a0, $s0
-/* 0673C0 7F032890 10000014 */  b     .L7F0328E4
-/* 0673C4 7F032894 8E080014 */   lw    $t0, 0x14($s0)
-.L7F032898:
-/* 0673C8 7F032898 0FC0AFC9 */  jal   sub_GAME_7F02BF24
-/* 0673CC 7F03289C 02002025 */   move  $a0, $s0
-/* 0673D0 7F0328A0 10000010 */  b     .L7F0328E4
-/* 0673D4 7F0328A4 8E080014 */   lw    $t0, 0x14($s0)
-.L7F0328A8:
-/* 0673D8 7F0328A8 0FC0AFAA */  jal   sub_GAME_7F02BEA8
-/* 0673DC 7F0328AC 02002025 */   move  $a0, $s0
-/* 0673E0 7F0328B0 1000000C */  b     .L7F0328E4
-/* 0673E4 7F0328B4 8E080014 */   lw    $t0, 0x14($s0)
-.L7F0328B8:
-/* 0673E8 7F0328B8 0FC0BCFE */  jal   sub_GAME_7F02F3F8
-/* 0673EC 7F0328BC 02002025 */   move  $a0, $s0
-/* 0673F0 7F0328C0 10000008 */  b     .L7F0328E4
-/* 0673F4 7F0328C4 8E080014 */   lw    $t0, 0x14($s0)
-.L7F0328C8:
-/* 0673F8 7F0328C8 0FC0BD69 */  jal   chrlvFireStandingAnimationRelated
-/* 0673FC 7F0328CC 02002025 */   move  $a0, $s0
-/* 067400 7F0328D0 10000004 */  b     .L7F0328E4
-/* 067404 7F0328D4 8E080014 */   lw    $t0, 0x14($s0)
-.L7F0328D8:
-/* 067408 7F0328D8 0FC0BDA2 */  jal   chrlvRemoved7F02F688
-/* 06740C 7F0328DC 02002025 */   move  $a0, $s0
-def_7F032780:
-.L7F0328E0:
-/* 067410 7F0328E0 8E080014 */  lw    $t0, 0x14($s0)
-.L7F0328E4:
-/* 067414 7F0328E4 960A0012 */  lhu   $t2, 0x12($s0)
-/* 067418 7F0328E8 2402FFFF */  li    $v0, -1
-/* 06741C 7F0328EC 2401FFFB */  li    $at, -5
-/* 067420 7F0328F0 01014824 */  and   $t1, $t0, $at
-/* 067424 7F0328F4 314BFDFD */  andi  $t3, $t2, 0xfdfd
-/* 067428 7F0328F8 AE090014 */  sw    $t1, 0x14($s0)
-/* 06742C 7F0328FC A60B0012 */  sh    $t3, 0x12($s0)
-/* 067430 7F032900 A6020118 */  sh    $v0, 0x118($s0)
-/* 067434 7F032904 A602011A */  sh    $v0, 0x11a($s0)
-.L7F032908:
-/* 067438 7F032908 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F03290C:
-/* 06743C 7F03290C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 067440 7F032910 27BD0020 */  addiu $sp, $sp, 0x20
-/* 067444 7F032914 03E00008 */  jr    $ra
-/* 067448 7F032918 00000000 */   nop   
-)
-#endif
-
 
 
 #ifdef NONMATCHING
@@ -13505,7 +13344,7 @@ glabel sub_GAME_7F03291C
 /* 067478 7F032948 8DEF097C */  lw    $t7, %lo(objectiveregisters2)($t7)
 /* 06747C 7F03294C AFA30024 */  sw    $v1, 0x24($sp)
 /* 067480 7F032950 AFAB0020 */  sw    $t3, 0x20($sp)
-/* 067484 7F032954 0FC0C9AF */  jal   manage_actions
+/* 067484 7F032954 0FC0C9AF */  jal   chrlvActionTick
 /* 067488 7F032958 020F2021 */   addu  $a0, $s0, $t7
 /* 06748C 7F03295C 8FA30024 */  lw    $v1, 0x24($sp)
 /* 067490 7F032960 3C188003 */  lui   $t8, %hi(objectiveregisters3) 

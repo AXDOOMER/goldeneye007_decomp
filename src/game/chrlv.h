@@ -55,5 +55,6 @@ s32 sub_GAME_7F02D630(ChrRecord *arg0, HANDEDNESS hand, struct coord3d *arg2);
 void chrlvTriggerFireWeapon(ChrRecord *arg0);
 s32 chrlvGeometryRelated7F02FC34(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *arg2, f32 arg3);
 s32 chrlvIsArrivingLaterallyAtPos(struct coord3d *prevpos, struct coord3d *curpos, struct coord3d *targetpos, f32 range);
+void chrlvActionTick(ChrRecord *arg0);
 
 #endif
