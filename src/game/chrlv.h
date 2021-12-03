@@ -82,6 +82,7 @@ bool sub_GAME_7F0333F8(ChrRecord *self);
 bool check_if_actor_invisible(ChrRecord *self);
 bool chrGoToBond(ChrRecord *self, SPEED speed);
 bool chrGoToChr(ChrRecord *self, s32 chrid, SPEED speed);
+s8 get_times_actor_shot(ChrRecord *self);
 
 
 

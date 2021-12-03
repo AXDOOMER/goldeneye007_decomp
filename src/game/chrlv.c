@@ -13751,18 +13751,15 @@ bool chrGoToChr(ChrRecord *self, s32 chrid, SPEED speed)
 
 
 
-#ifdef NONMATCHING
-void get_times_actor_shot(void) {
-
+/**
+ * Return number of hits.
+ * 
+ * Address 0x7F0335A4.
+ */
+s8 get_times_actor_shot(ChrRecord *self)
+{
+    return self->numarghs;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_times_actor_shot
-/* 0680D4 7F0335A4 03E00008 */  jr    $ra
-/* 0680D8 7F0335A8 8082000B */   lb    $v0, 0xb($a0)
-)
-#endif
 
 
 
