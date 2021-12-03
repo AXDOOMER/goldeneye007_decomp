@@ -13763,19 +13763,15 @@ s8 get_times_actor_shot(ChrRecord *self)
 
 
 
-#ifdef NONMATCHING
-void get_num_shots_near_actor(void) {
-
+/**
+ * Return number of near misses
+ * 
+ * Address 0x7F0335AC.
+ */
+s8 get_num_shots_near_actor(ChrRecord *self)
+{
+    return self->numclosearghs;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_num_shots_near_actor
-/* 0680DC 7F0335AC 03E00008 */  jr    $ra
-/* 0680E0 7F0335B0 8082000A */   lb    $v0, 0xa($a0)
-)
-#endif
-
 
 
 #ifdef NONMATCHING

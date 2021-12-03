@@ -83,6 +83,7 @@ bool check_if_actor_invisible(ChrRecord *self);
 bool chrGoToBond(ChrRecord *self, SPEED speed);
 bool chrGoToChr(ChrRecord *self, s32 chrid, SPEED speed);
 s8 get_times_actor_shot(ChrRecord *self);
+s8 get_num_shots_near_actor(ChrRecord *self);
 
 
 
