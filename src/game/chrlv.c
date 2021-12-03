@@ -13603,20 +13603,13 @@ bool check_if_objective_bitflags_set(ChrRecord *self, s32 flags)
 
 
 
-#ifdef NONMATCHING
-void check_if_actor_02_flag_set(void) {
-
+/**
+ * Address 0x7F033354.
+*/
+bool check_if_actor_02_flag_set(ChrRecord *self)
+{
+    return (self->hidden & CHRHIDDEN_0002) != 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_actor_02_flag_set
-/* 067E84 7F033354 94820012 */  lhu   $v0, 0x12($a0)
-/* 067E88 7F033358 304E0002 */  andi  $t6, $v0, 2
-/* 067E8C 7F03335C 03E00008 */  jr    $ra
-/* 067E90 7F033360 000E102B */   sltu  $v0, $zero, $t6
-)
-#endif
 
 
 

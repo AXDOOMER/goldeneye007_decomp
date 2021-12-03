@@ -73,6 +73,8 @@ s32 chrlvTestGuardBitfieldFlags(ChrRecord *arg0, s32 guard_id, u8 arg2);
 void toggle_objective_bitflags(ChrRecord *arg0, s32 arg1);
 void untoggle_objective_bitflags(ChrRecord *self, u32 flags);
 bool check_if_objective_bitflags_set(ChrRecord *self, s32 flags);
+bool check_if_actor_02_flag_set(ChrRecord *self);
+
 
 
 #endif
