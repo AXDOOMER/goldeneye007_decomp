@@ -72,7 +72,7 @@ void sub_GAME_7F025560(ChrRecord *arg0, s32 arg1, s32 arg2);
 struct coord3d *chrlvGetChrOrPresetLocation(ChrRecord *self, s32 flags, s32 lookup_id, StandTile **stan);
 void sub_GAME_7F02D184(struct ChrRecord *arg0);
 void sub_GAME_7F0281F4(struct ChrRecord *arg0);
-s32 plot_course_for_actor(ChrRecord *arg0, struct act_gopos *arg1, struct StandTile *stan, s32 arg3);
+s32 plot_course_for_actor(ChrRecord *arg0, struct act_gopos *arg1, struct StandTile *stan, SPEED speed);
 void chrlvPlotCourseRelated(struct ChrRecord *arg0);
 void chrlvActGoposSetTargetPosRelated(ChrRecord *arg0);
 void chrlvActGoposIncCurIndex(struct ChrRecord *arg0);
@@ -5483,7 +5483,7 @@ void play_hit_soundeffect_and_proper_volume(struct ChrRecord *arg0)
 /**
  * Address 0x7F028DDC.
 */
-s32 plot_course_for_actor(ChrRecord *arg0, struct act_gopos *arg1, struct StandTile *stan, s32 arg3)
+s32 plot_course_for_actor(ChrRecord *arg0, struct act_gopos *arg1, struct StandTile *stan, SPEED speed)
 {
     PropRecord *prop; //sp 100
     struct path_table_alt *prop_path; // sp96
@@ -5496,7 +5496,7 @@ s32 plot_course_for_actor(ChrRecord *arg0, struct act_gopos *arg1, struct StandT
 
     prop = arg0->prop;
 
-    phi_v0 = (arg0->actiontype == ACT_GOPOS) && (arg0->act_gopos.unk59 == (u8)arg3);
+    phi_v0 = (arg0->actiontype == ACT_GOPOS) && (arg0->act_gopos.unk59 == (u8)speed);
 
     prop_path = chrlvStanPathRelated(&prop->pos, prop->stan);
     target_path = chrlvStanPathRelated(&arg1->targetpos, stan);
@@ -5516,7 +5516,7 @@ s32 plot_course_for_actor(ChrRecord *arg0, struct act_gopos *arg1, struct StandT
         arg0->act_gopos.target = stan;
         arg0->act_gopos.target_path = target_path;
         arg0->act_gopos.curindex = 0;
-        arg0->act_gopos.unk59 = arg3;
+        arg0->act_gopos.unk59 = speed;
         arg0->act_gopos.unka0 = 0.0f;
         arg0->act_gopos.waydata.age = (s32) (randomGetNext() % 100U);
         arg0->act_gopos.waydata.unk03 = 0;
@@ -13703,46 +13703,25 @@ bool check_if_actor_invisible(ChrRecord *self)
 
 
 
-#ifdef NONMATCHING
-void actor_move_to_curplayer_at_speed(void) {
+/**
+ * Address 0x7F0334A0.
+*/
+bool chrGoToBond(ChrRecord *self, SPEED speed)
+{
+    struct PropRecord *bondprop;
 
+    if (chrIsNotDeadOrShot(self) && (g_SeenBondRecentlyGuardCount < 10))
+    {
+        bondprop = get_curplayer_positiondata();
+
+        if (plot_course_for_actor(self, &bondprop->pos, bondprop->stan, speed))
+        {
+            return TRUE;
+        }
+    }
+
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel actor_move_to_curplayer_at_speed
-/* 067FD0 7F0334A0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 067FD4 7F0334A4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 067FD8 7F0334A8 AFA40018 */  sw    $a0, 0x18($sp)
-/* 067FDC 7F0334AC 0FC0A896 */  jal   chrIsNotDeadOrShot
-/* 067FE0 7F0334B0 AFA5001C */   sw    $a1, 0x1c($sp)
-/* 067FE4 7F0334B4 10400010 */  beqz  $v0, .L7F0334F8
-/* 067FE8 7F0334B8 3C0E8003 */   lui   $t6, %hi(g_SeenBondRecentlyGuardCount) 
-/* 067FEC 7F0334BC 8DCECE50 */  lw    $t6, %lo(g_SeenBondRecentlyGuardCount)($t6)
-/* 067FF0 7F0334C0 29C1000A */  slti  $at, $t6, 0xa
-/* 067FF4 7F0334C4 5020000D */  beql  $at, $zero, .L7F0334FC
-/* 067FF8 7F0334C8 00001025 */   move  $v0, $zero
-/* 067FFC 7F0334CC 0FC225E6 */  jal   get_curplayer_positiondata
-/* 068000 7F0334D0 00000000 */   nop   
-/* 068004 7F0334D4 8FA40018 */  lw    $a0, 0x18($sp)
-/* 068008 7F0334D8 24450008 */  addiu $a1, $v0, 8
-/* 06800C 7F0334DC 8C460014 */  lw    $a2, 0x14($v0)
-/* 068010 7F0334E0 0FC0A377 */  jal   plot_course_for_actor
-/* 068014 7F0334E4 8FA7001C */   lw    $a3, 0x1c($sp)
-/* 068018 7F0334E8 50400004 */  beql  $v0, $zero, .L7F0334FC
-/* 06801C 7F0334EC 00001025 */   move  $v0, $zero
-/* 068020 7F0334F0 10000002 */  b     .L7F0334FC
-/* 068024 7F0334F4 24020001 */   li    $v0, 1
-.L7F0334F8:
-/* 068028 7F0334F8 00001025 */  move  $v0, $zero
-.L7F0334FC:
-/* 06802C 7F0334FC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 068030 7F033500 27BD0018 */  addiu $sp, $sp, 0x18
-/* 068034 7F033504 03E00008 */  jr    $ra
-/* 068038 7F033508 00000000 */   nop   
-)
-#endif
-
 
 
 #ifdef NONMATCHING

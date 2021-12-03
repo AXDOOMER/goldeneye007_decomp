@@ -3612,7 +3612,7 @@ action27_Return_False_Invalid_Type_2:
 /* 06AB24 7F035FF4 26310002 */   addiu $s1, $s1, 2
 action28_Jog_To_Bond_Return_Loop_When_Reached_Bond_2:
 /* 06AB28 7F035FF8 02E02025 */  move  $a0, $s7
-/* 06AB2C 7F035FFC 0FC0CD28 */  jal   actor_move_to_curplayer_at_speed
+/* 06AB2C 7F035FFC 0FC0CD28 */  jal   chrGoToBond
 /* 06AB30 7F036000 24050001 */   li    $a1, 1
 /* 06AB34 7F036004 10400007 */  beqz  $v0, .L7F036024
 /* 06AB38 7F036008 02C02025 */   move  $a0, $s6
@@ -3628,7 +3628,7 @@ action28_Jog_To_Bond_Return_Loop_When_Reached_Bond_2:
 /* 06AB5C 7F03602C 26310002 */   addiu $s1, $s1, 2
 action29_Walk_To_Bond_Return_Loop_When_Reached_Bond_2:
 /* 06AB60 7F036030 02E02025 */  move  $a0, $s7
-/* 06AB64 7F036034 0FC0CD28 */  jal   actor_move_to_curplayer_at_speed
+/* 06AB64 7F036034 0FC0CD28 */  jal   chrGoToBond
 /* 06AB68 7F036038 00002825 */   move  $a1, $zero
 /* 06AB6C 7F03603C 10400007 */  beqz  $v0, .L7F03605C
 /* 06AB70 7F036040 02C02025 */   move  $a0, $s6
@@ -3644,7 +3644,7 @@ action29_Walk_To_Bond_Return_Loop_When_Reached_Bond_2:
 /* 06AB94 7F036064 26310002 */   addiu $s1, $s1, 2
 action2A_Run_To_Bond_Return_Loop_When_Reached_Bond_2:
 /* 06AB98 7F036068 02E02025 */  move  $a0, $s7
-/* 06AB9C 7F03606C 0FC0CD28 */  jal   actor_move_to_curplayer_at_speed
+/* 06AB9C 7F03606C 0FC0CD28 */  jal   chrGoToBond
 /* 06ABA0 7F036070 24050002 */   li    $a1, 2
 /* 06ABA4 7F036074 10400007 */  beqz  $v0, .L7F036094
 /* 06ABA8 7F036078 02C02025 */   move  $a0, $s6
@@ -9479,7 +9479,7 @@ action27_Return_False_Invalid_Type_2:
 /* 06AB24 7F035FF4 26310002 */   addiu $s1, $s1, 2
 action28_Jog_To_Bond_Return_Loop_When_Reached_Bond_2:
 /* 06AB28 7F035FF8 02E02025 */  move  $a0, $s7
-/* 06AB2C 7F035FFC 0FC0CD28 */  jal   actor_move_to_curplayer_at_speed
+/* 06AB2C 7F035FFC 0FC0CD28 */  jal   chrGoToBond
 /* 06AB30 7F036000 24050001 */   li    $a1, 1
 /* 06AB34 7F036004 10400007 */  beqz  $v0, .L7F036024
 /* 06AB38 7F036008 02C02025 */   move  $a0, $s6
@@ -9495,7 +9495,7 @@ action28_Jog_To_Bond_Return_Loop_When_Reached_Bond_2:
 /* 06AB5C 7F03602C 26310002 */   addiu $s1, $s1, 2
 action29_Walk_To_Bond_Return_Loop_When_Reached_Bond_2:
 /* 06AB60 7F036030 02E02025 */  move  $a0, $s7
-/* 06AB64 7F036034 0FC0CD28 */  jal   actor_move_to_curplayer_at_speed
+/* 06AB64 7F036034 0FC0CD28 */  jal   chrGoToBond
 /* 06AB68 7F036038 00002825 */   move  $a1, $zero
 /* 06AB6C 7F03603C 10400007 */  beqz  $v0, .L7F03605C
 /* 06AB70 7F036040 02C02025 */   move  $a0, $s6
@@ -9511,7 +9511,7 @@ action29_Walk_To_Bond_Return_Loop_When_Reached_Bond_2:
 /* 06AB94 7F036064 26310002 */   addiu $s1, $s1, 2
 action2A_Run_To_Bond_Return_Loop_When_Reached_Bond_2:
 /* 06AB98 7F036068 02E02025 */  move  $a0, $s7
-/* 06AB9C 7F03606C 0FC0CD28 */  jal   actor_move_to_curplayer_at_speed
+/* 06AB9C 7F03606C 0FC0CD28 */  jal   chrGoToBond
 /* 06ABA0 7F036070 24050002 */   li    $a1, 2
 /* 06ABA4 7F036074 10400007 */  beqz  $v0, .L7F036094
 /* 06ABA8 7F036078 02C02025 */   move  $a0, $s6
@@ -15347,7 +15347,7 @@ action27_Return_False_Invalid_Type_2:
 /* 06AB24 7F035FF4 26310002 */   addiu $s1, $s1, 2
 action28_Jog_To_Bond_Return_Loop_When_Reached_Bond_2:
 /* 06AB28 7F035FF8 02E02025 */  move  $a0, $s7
-/* 06AB2C 7F035FFC 0FC0CD28 */  jal   actor_move_to_curplayer_at_speed
+/* 06AB2C 7F035FFC 0FC0CD28 */  jal   chrGoToBond
 /* 06AB30 7F036000 24050001 */   li    $a1, 1
 /* 06AB34 7F036004 10400007 */  beqz  $v0, .L7F036024
 /* 06AB38 7F036008 02C02025 */   move  $a0, $s6
@@ -15363,7 +15363,7 @@ action28_Jog_To_Bond_Return_Loop_When_Reached_Bond_2:
 /* 06AB5C 7F03602C 26310002 */   addiu $s1, $s1, 2
 action29_Walk_To_Bond_Return_Loop_When_Reached_Bond_2:
 /* 06AB60 7F036030 02E02025 */  move  $a0, $s7
-/* 06AB64 7F036034 0FC0CD28 */  jal   actor_move_to_curplayer_at_speed
+/* 06AB64 7F036034 0FC0CD28 */  jal   chrGoToBond
 /* 06AB68 7F036038 00002825 */   move  $a1, $zero
 /* 06AB6C 7F03603C 10400007 */  beqz  $v0, .L7F03605C
 /* 06AB70 7F036040 02C02025 */   move  $a0, $s6
@@ -15379,7 +15379,7 @@ action29_Walk_To_Bond_Return_Loop_When_Reached_Bond_2:
 /* 06AB94 7F036064 26310002 */   addiu $s1, $s1, 2
 action2A_Run_To_Bond_Return_Loop_When_Reached_Bond_2:
 /* 06AB98 7F036068 02E02025 */  move  $a0, $s7
-/* 06AB9C 7F03606C 0FC0CD28 */  jal   actor_move_to_curplayer_at_speed
+/* 06AB9C 7F03606C 0FC0CD28 */  jal   chrGoToBond
 /* 06ABA0 7F036070 24050002 */   li    $a1, 2
 /* 06ABA4 7F036074 10400007 */  beqz  $v0, .L7F036094
 /* 06ABA8 7F036078 02C02025 */   move  $a0, $s6
