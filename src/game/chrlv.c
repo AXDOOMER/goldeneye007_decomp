@@ -13323,66 +13323,44 @@ f32 sub_GAME_7F032E48(ChrRecord *self, s32 padID)
 
 
 
-#ifdef NONMATCHING
-void check_if_room_for_preset_loaded(void) {
-// ai branch
+/**
+ * Address 0x7F032EFC.
+*/
+bool check_if_room_for_preset_loaded(struct ChrRecord *self, s32 padnum)
+{
+    struct pad *pad;
+    struct StandTile *padstan;
+
+    padnum = convertPadIf9000(self, padnum);
+
+    if (isNotBoundPad(padnum))
+    {
+        pad = (struct pad *)&ptr_0xxxpresets[padnum];
+    }
+    else
+    {
+        pad = (struct pad *)&ptr_2xxxpresets[getBoundPadNum(padnum)];
+    }
+
+    padstan = pad->stan;
+
+    if (padstan)
+    {
+        return getROOMID_Bitflags(getTileRoom(padstan));
+    }
+
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_room_for_preset_loaded
-/* 067A2C 7F032EFC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 067A30 7F032F00 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 067A34 7F032F04 0FC0CBE5 */  jal   convertPadIf9000
-/* 067A38 7F032F08 00000000 */   nop   
-/* 067A3C 7F032F0C 28412710 */  slti  $at, $v0, 0x2710
-/* 067A40 7F032F10 1020000A */  beqz  $at, .L7F032F3C
-/* 067A44 7F032F14 0002C100 */   sll   $t8, $v0, 4
-/* 067A48 7F032F18 00027080 */  sll   $t6, $v0, 2
-/* 067A4C 7F032F1C 01C27023 */  subu  $t6, $t6, $v0
-/* 067A50 7F032F20 000E7080 */  sll   $t6, $t6, 2
-/* 067A54 7F032F24 3C0F8007 */  lui   $t7, %hi(ptr_0xxxpresets) 
-/* 067A58 7F032F28 8DEF5D18 */  lw    $t7, %lo(ptr_0xxxpresets)($t7)
-/* 067A5C 7F032F2C 01C27023 */  subu  $t6, $t6, $v0
-/* 067A60 7F032F30 000E7080 */  sll   $t6, $t6, 2
-/* 067A64 7F032F34 10000009 */  b     .L7F032F5C
-/* 067A68 7F032F38 01CF1821 */   addu  $v1, $t6, $t7
-.L7F032F3C:
-/* 067A6C 7F032F3C 3C198007 */  lui   $t9, %hi(ptr_2xxxpresets) 
-/* 067A70 7F032F40 8F395D1C */  lw    $t9, %lo(ptr_2xxxpresets)($t9)
-/* 067A74 7F032F44 0302C021 */  addu  $t8, $t8, $v0
-/* 067A78 7F032F48 0018C080 */  sll   $t8, $t8, 2
-/* 067A7C 7F032F4C 3C01FFF5 */  lui   $at, (0xFFF59FC0 >> 16) # lui $at, 0xfff5
-/* 067A80 7F032F50 34219FC0 */  ori   $at, (0xFFF59FC0 & 0xFFFF) # ori $at, $at, 0x9fc0
-/* 067A84 7F032F54 03191821 */  addu  $v1, $t8, $t9
-/* 067A88 7F032F58 00611821 */  addu  $v1, $v1, $at
-.L7F032F5C:
-/* 067A8C 7F032F5C 8C640028 */  lw    $a0, 0x28($v1)
-/* 067A90 7F032F60 00001025 */  move  $v0, $zero
-/* 067A94 7F032F64 10800007 */  beqz  $a0, .L7F032F84
-/* 067A98 7F032F68 00000000 */   nop   
-/* 067A9C 7F032F6C 0FC2CBF6 */  jal   getTileRoom
-/* 067AA0 7F032F70 00000000 */   nop   
-/* 067AA4 7F032F74 0FC2D794 */  jal   getROOMID_Bitflags
-/* 067AA8 7F032F78 00402025 */   move  $a0, $v0
-/* 067AAC 7F032F7C 10000002 */  b     .L7F032F88
-/* 067AB0 7F032F80 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F032F84:
-/* 067AB4 7F032F84 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F032F88:
-/* 067AB8 7F032F88 27BD0018 */  addiu $sp, $sp, 0x18
-/* 067ABC 7F032F8C 03E00008 */  jr    $ra
-/* 067AC0 7F032F90 00000000 */   nop   
-)
-#endif
 
 
 s32 convertPadIf9000(struct ChrRecord *guardData,s32 padNo)
 {
     // Guard's target pad.
-    if (padNo == PAD_PRESET) {
+    if (padNo == PAD_PRESET)
+    {
         padNo = (s32)guardData->padpreset1;
     }
+
     return padNo;
 }
 
