@@ -13149,32 +13149,18 @@ s32 chrlvSeenWithin600(ChrRecord *arg0)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F032BA0(void) {
-// ai branch
-}
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F032BA0
-/* 0676D0 7F032BA0 8C8200F0 */  lw    $v0, 0xf0($a0)
-/* 0676D4 7F032BA4 3C0E8005 */  lui   $t6, %hi(g_GlobalTimer) 
-/* 0676D8 7F032BA8 58400009 */  blezl $v0, .L7F032BD0
-/* 0676DC 7F032BAC 00001025 */   move  $v0, $zero
-/* 0676E0 7F032BB0 8DCE837C */  lw    $t6, %lo(g_GlobalTimer)($t6)
-/* 0676E4 7F032BB4 01C27823 */  subu  $t7, $t6, $v0
-/* 0676E8 7F032BB8 29E10258 */  slti  $at, $t7, 0x258
-/* 0676EC 7F032BBC 50200004 */  beql  $at, $zero, .L7F032BD0
-/* 0676F0 7F032BC0 00001025 */   move  $v0, $zero
-/* 0676F4 7F032BC4 03E00008 */  jr    $ra
-/* 0676F8 7F032BC8 24020001 */   li    $v0, 1
+/**
+ * Address 0x7F032BA0.
+*/
+s32 sub_GAME_7F032BA0(ChrRecord *arg0)
+{
+    if ((arg0->lastheartarget60 > 0) && ((g_GlobalTimer - arg0->lastheartarget60) < 0x258))
+    {
+        return 1;
+    }
 
-/* 0676FC 7F032BCC 00001025 */  move  $v0, $zero
-.L7F032BD0:
-/* 067700 7F032BD0 03E00008 */  jr    $ra
-/* 067704 7F032BD4 00000000 */   nop   
-)
-#endif
+    return 0;
+}
 
 
 
