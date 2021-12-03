@@ -13664,8 +13664,32 @@ f32 get_loop_counter_time_in_seconds(ChrRecord *self)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0333F8(void) {
+/**
+ * Address 0x7F0333F8.
+*/
+bool sub_GAME_7F0333F8(ChrRecord *self)
+{
+    struct Model *mymodel;
+    struct coord3d zeropos;
+    struct coord3d pos;
+    vec3 vec;
+    f32 scale;
 
+    if (chrlvCurrentPlayerCall7F0B0E24(self))
+    {
+        mymodel = self->model;
+        scale   = getinstsize(mymodel) * 0.8f;
+        sub_GAME_7F068190(&zeropos, &pos);
+        getsuboffset(mymodel, &vec);
+        matrix_4x4_transform_vector_in_place(currentPlayerGetMatrix10CC(), &vec);
+
+        if (sub_GAME_7F041074(&zeropos, &pos, &vec, scale))
+        {
+            return TRUE;
+        }
+    }
+
+    return FALSE;
 }
 #else
 GLOBAL_ASM(

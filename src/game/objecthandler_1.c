@@ -2045,52 +2045,41 @@ def_7F06CEF0:
 
 
 
-#ifdef NONMATCHING
-void getinstsize(void) {
+#ifndef VERSION_EU
 
+/**
+ * Address 0x7F06D00C.
+*/
+f32 getinstsize(Model *arg0)
+{
+    if (arg0 == NULL)
+    {
+        osSyncPrintf("getinstsize: no objinst!\n");
+        return_null();
+    }
+    
+    if (arg0->obj == NULL)
+    {
+        osSyncPrintf("getinstsize: no objdesc!\n");
+        return_null();
+    }
+    
+    return arg0->obj->BoundingVolumeRadius * arg0->scale;
 }
 #else
-#ifndef VERSION_EU
-//D:80054820
-const char aGetinstsizeNoObjinst[] = "getinstsize: no objinst!\n";
-//D:8005483C
-const char aGetinstsizeNoObjdesc[] = "getinstsize: no objdesc!\n";
-GLOBAL_ASM(
-.text
-glabel getinstsize
-/* 0A1B3C 7F06D00C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0A1B40 7F06D010 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A1B44 7F06D014 14800006 */  bnez  $a0, .L7F06D030
-/* 0A1B48 7F06D018 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0A1B4C 7F06D01C 3C048005 */  lui   $a0, %hi(aGetinstsizeNoObjinst)
-/* 0A1B50 7F06D020 0C0033D1 */  jal   osSyncPrintf
-/* 0A1B54 7F06D024 24844820 */   addiu $a0, %lo(aGetinstsizeNoObjinst) # addiu $a0, $a0, 0x4820
-/* 0A1B58 7F06D028 0FC1B11B */  jal   return_null
-/* 0A1B5C 7F06D02C 00000000 */   nop   
-.L7F06D030:
-/* 0A1B60 7F06D030 8FAF0018 */  lw    $t7, 0x18($sp)
-/* 0A1B64 7F06D034 3C048005 */  lui   $a0, %hi(aGetinstsizeNoObjdesc)
-/* 0A1B68 7F06D038 8DE20008 */  lw    $v0, 8($t7)
-/* 0A1B6C 7F06D03C 54400008 */  bnezl $v0, .L7F06D060
-/* 0A1B70 7F06D040 8FB90018 */   lw    $t9, 0x18($sp)
-/* 0A1B74 7F06D044 0C0033D1 */  jal   osSyncPrintf
-/* 0A1B78 7F06D048 2484483C */   addiu $a0, %lo(aGetinstsizeNoObjdesc) # addiu $a0, $a0, 0x483c
-/* 0A1B7C 7F06D04C 0FC1B11B */  jal   return_null
-/* 0A1B80 7F06D050 00000000 */   nop   
-/* 0A1B84 7F06D054 8FB80018 */  lw    $t8, 0x18($sp)
-/* 0A1B88 7F06D058 8F020008 */  lw    $v0, 8($t8)
-/* 0A1B8C 7F06D05C 8FB90018 */  lw    $t9, 0x18($sp)
-.L7F06D060:
-/* 0A1B90 7F06D060 C4440010 */  lwc1  $f4, 0x10($v0)
-/* 0A1B94 7F06D064 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0A1B98 7F06D068 C7260014 */  lwc1  $f6, 0x14($t9)
-/* 0A1B9C 7F06D06C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0A1BA0 7F06D070 46062002 */  mul.s $f0, $f4, $f6
-/* 0A1BA4 7F06D074 03E00008 */  jr    $ra
-/* 0A1BA8 7F06D078 00000000 */   nop   
-)
-#endif
-#ifdef VERSION_EU
+
+#ifdef NONMATCHING
+// untested
+
+/**
+ * VERSION_EU.
+ * Address 0x7F06D494.
+*/
+f32 getinstsize(Model *arg0)
+{
+    return arg0->obj->BoundingVolumeRadius * arg0->scale;
+}
+#else
 GLOBAL_ASM(
 .text
 glabel getinstsize

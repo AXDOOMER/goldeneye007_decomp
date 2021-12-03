@@ -37,6 +37,7 @@ f32 sub_GAME_7F06F5C4(Model *);
 s32 sub_GAME_7F06FE4C(Model *, f32, f32);
 f32 sub_GAME_7F06F610(struct Model *);
 s32 sub_GAME_7F06FE90(Model *arg0, f32 arg1, f32 arg2);
+f32 getinstsize(Model *arg0);
 
 // tentative signature
 Mtxf* sub_GAME_7F06C660(struct Model *arg0, struct ModelNode *arg1, s32 arg2);

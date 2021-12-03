@@ -3143,6 +3143,7 @@ void set_bondata_invincible_flag(u32 arg0);
 void bondviewSetVisibleToGuardsFlag(s32 param_1);
 Mtxf *currentPlayerGetMatrix10EC(void);
 f32 get_curplay_horizontal_rotation_in_degrees(void);
+Mtxf *currentPlayerGetMatrix10CC(void);
 
 // unknown pointer arg0
 s32 sub_GAME_7F08BCC0(void *arg0, s32 arg1);
