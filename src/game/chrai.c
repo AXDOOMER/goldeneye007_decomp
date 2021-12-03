@@ -5977,7 +5977,7 @@ action98_Unmask_Guard_Type_Flags_With_Value_3:
 action99_If_Guard_Type_Flags_Set_RVL_4:
 /* 06CC34 7F038104 02E02025 */  move  $a0, $s7
 /* 06CC38 7F038108 92250001 */  lbu   $a1, 1($s1)
-/* 06CC3C 7F03810C 0FC0CCB0 */  jal   sub_GAME_7F0332C0
+/* 06CC3C 7F03810C 0FC0CCB0 */  jal   chrlvTestGuardBitfieldFlags
 /* 06CC40 7F038110 92260002 */   lbu   $a2, 2($s1)
 /* 06CC44 7F038114 10400007 */  beqz  $v0, .L7F038134
 /* 06CC48 7F038118 02C02025 */   move  $a0, $s6
@@ -11844,7 +11844,7 @@ action98_Unmask_Guard_Type_Flags_With_Value_3:
 action99_If_Guard_Type_Flags_Set_RVL_4:
 /* 06CC34 7F038104 02E02025 */  move  $a0, $s7
 /* 06CC38 7F038108 92250001 */  lbu   $a1, 1($s1)
-/* 06CC3C 7F03810C 0FC0CCB0 */  jal   sub_GAME_7F0332C0
+/* 06CC3C 7F03810C 0FC0CCB0 */  jal   chrlvTestGuardBitfieldFlags
 /* 06CC40 7F038110 92260002 */   lbu   $a2, 2($s1)
 /* 06CC44 7F038114 10400007 */  beqz  $v0, .L7F038134
 /* 06CC48 7F038118 02C02025 */   move  $a0, $s6
@@ -17712,7 +17712,7 @@ action98_Unmask_Guard_Type_Flags_With_Value_3:
 action99_If_Guard_Type_Flags_Set_RVL_4:
 /* 06CC34 7F038104 02E02025 */  move  $a0, $s7
 /* 06CC38 7F038108 92250001 */  lbu   $a1, 1($s1)
-/* 06CC3C 7F03810C 0FC0CCB0 */  jal   sub_GAME_7F0332C0
+/* 06CC3C 7F03810C 0FC0CCB0 */  jal   chrlvTestGuardBitfieldFlags
 /* 06CC40 7F038110 92260002 */   lbu   $a2, 2($s1)
 /* 06CC44 7F038114 10400007 */  beqz  $v0, .L7F038134
 /* 06CC48 7F038118 02C02025 */   move  $a0, $s6

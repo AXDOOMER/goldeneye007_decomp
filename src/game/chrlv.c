@@ -13528,7 +13528,7 @@ void chrlvSetGuardBitfieldFlags(ChrRecord *arg0, s32 guard_id, u8 arg2)
 
     guard = chrlvGetHandleForGuardId(arg0, guard_id);
 
-    if (guard != 0)
+    if (guard != NULL)
     {
         chrlvSetBitfieldFlags(guard, arg2);
     }
@@ -13546,7 +13546,7 @@ void chrlvClearGuardBitfieldFlags(ChrRecord *arg0, s32 guard_id, u8 arg2)
 
     guard = chrlvGetHandleForGuardId(arg0, guard_id);
 
-    if (guard != 0)
+    if (guard != NULL)
     {
         chrlvClearBitfieldFlags(guard, arg2);
     }
@@ -13554,53 +13554,33 @@ void chrlvClearGuardBitfieldFlags(ChrRecord *arg0, s32 guard_id, u8 arg2)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0332C0(void) {
-// ai branch
+/**
+ * The property is named "BITFIELD".
+ * Address 0x7F0332C0.
+*/
+s32 chrlvTestGuardBitfieldFlags(ChrRecord *arg0, s32 guard_id, u8 arg2)
+{
+    ChrRecord *guard;
+
+    guard = chrlvGetHandleForGuardId(arg0, guard_id);
+
+    if (guard != NULL)
+    {
+        return chrlvTestBitfieldFlags(guard, arg2);
+    }
+
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0332C0
-/* 067DF0 7F0332C0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 067DF4 7F0332C4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 067DF8 7F0332C8 0FC0CC10 */  jal   chrlvGetHandleForGuardId
-/* 067DFC 7F0332CC AFA60020 */   sw    $a2, 0x20($sp)
-/* 067E00 7F0332D0 10400005 */  beqz  $v0, .L7F0332E8
-/* 067E04 7F0332D4 00402025 */   move  $a0, $v0
-/* 067E08 7F0332D8 0FC0CC91 */  jal   chrlvTestBitfieldFlags
-/* 067E0C 7F0332DC 93A50023 */   lbu   $a1, 0x23($sp)
-/* 067E10 7F0332E0 10000003 */  b     .L7F0332F0
-/* 067E14 7F0332E4 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0332E8:
-/* 067E18 7F0332E8 00001025 */  move  $v0, $zero
-/* 067E1C 7F0332EC 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0332F0:
-/* 067E20 7F0332F0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 067E24 7F0332F4 03E00008 */  jr    $ra
-/* 067E28 7F0332F8 00000000 */   nop   
-)
-#endif
 
 
 
-#ifdef NONMATCHING
-void toggle_objective_bitflags(void) {
-
+/**
+ * Address 0x7F0332FC.
+*/
+void toggle_objective_bitflags(ChrRecord *arg0, s32 arg1)
+{
+    objectiveregisters1 |= arg1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel toggle_objective_bitflags
-/* 067E2C 7F0332FC 3C028003 */  lui   $v0, %hi(objectiveregisters1)
-/* 067E30 7F033300 24420978 */  addiu $v0, %lo(objectiveregisters1) # addiu $v0, $v0, 0x978
-/* 067E34 7F033304 8C4E0000 */  lw    $t6, ($v0)
-/* 067E38 7F033308 AFA40000 */  sw    $a0, ($sp)
-/* 067E3C 7F03330C 01C57825 */  or    $t7, $t6, $a1
-/* 067E40 7F033310 03E00008 */  jr    $ra
-/* 067E44 7F033314 AC4F0000 */   sw    $t7, ($v0)
-)
-#endif
 
 
 
