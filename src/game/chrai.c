@@ -3939,7 +3939,7 @@ action3D___Unused___Unknown___2:
 /* 06AFA0 7F036470 1000FC46 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AFA4 7F036474 26310002 */   addiu $s1, $s1, 2
 action3E_If_Shot_Current_Guard_RVL_2:
-/* 06AFA8 7F036478 0FC0CADA */  jal   sub_GAME_7F032B68
+/* 06AFA8 7F036478 0FC0CADA */  jal   chrlvSeenWithin600
 /* 06AFAC 7F03647C 02E02025 */   move  $a0, $s7
 /* 06AFB0 7F036480 10400007 */  beqz  $v0, .L7F0364A0
 /* 06AFB4 7F036484 02C02025 */   move  $a0, $s6
@@ -9806,7 +9806,7 @@ action3D___Unused___Unknown___2:
 /* 06AFA0 7F036470 1000FC46 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AFA4 7F036474 26310002 */   addiu $s1, $s1, 2
 action3E_If_Shot_Current_Guard_RVL_2:
-/* 06AFA8 7F036478 0FC0CADA */  jal   sub_GAME_7F032B68
+/* 06AFA8 7F036478 0FC0CADA */  jal   chrlvSeenWithin600
 /* 06AFAC 7F03647C 02E02025 */   move  $a0, $s7
 /* 06AFB0 7F036480 10400007 */  beqz  $v0, .L7F0364A0
 /* 06AFB4 7F036484 02C02025 */   move  $a0, $s6
@@ -15674,7 +15674,7 @@ action3D___Unused___Unknown___2:
 /* 06AFA0 7F036470 1000FC46 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AFA4 7F036474 26310002 */   addiu $s1, $s1, 2
 action3E_If_Shot_Current_Guard_RVL_2:
-/* 06AFA8 7F036478 0FC0CADA */  jal   sub_GAME_7F032B68
+/* 06AFA8 7F036478 0FC0CADA */  jal   chrlvSeenWithin600
 /* 06AFAC 7F03647C 02E02025 */   move  $a0, $s7
 /* 06AFB0 7F036480 10400007 */  beqz  $v0, .L7F0364A0
 /* 06AFB4 7F036484 02C02025 */   move  $a0, $s6

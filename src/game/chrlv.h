@@ -34,7 +34,7 @@ void chrlvStanPointPointIntersection(struct coord3d *arg0, struct coord3d *arg1,
 bool handles_shot_actors(struct ChrRecord *self, s32 hitpart, struct coord3d *vector, s32 weaponid, bool isPlayer);
 bool sub_GAME_7F0294BC(ChrRecord *self);
 bool check_if_position_in_same_room(struct ChrRecord *self, struct coord3d *pos, struct StandTile *stan);
-s32 sub_GAME_7F032B68(ChrRecord *);
+s32 chrlvSeenWithin600(ChrRecord *);
 s32 chrIsDead(struct ChrRecord *chr);
 bool actor_steps_sideways(ChrRecord *self);
 bool actor_hops_sideways(ChrRecord *self);
@@ -56,5 +56,7 @@ void chrlvTriggerFireWeapon(ChrRecord *arg0);
 s32 chrlvGeometryRelated7F02FC34(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *arg2, f32 arg3);
 s32 chrlvIsArrivingLaterallyAtPos(struct coord3d *prevpos, struct coord3d *curpos, struct coord3d *targetpos, f32 range);
 void chrlvActionTick(ChrRecord *arg0);
+void chrlvAllChrTick(void);
+s32 chrlvSeenWithin600(ChrRecord *arg0);
 
 #endif

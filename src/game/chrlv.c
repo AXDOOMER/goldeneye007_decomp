@@ -89,7 +89,7 @@ s32 chrlvMaybeSameRoom(ChrRecord *arg0, struct coord3d *arg1, StandTile *arg2);
 s32 chrlvCurrentPlayerCall7F0B0E24(ChrRecord *arg0);
 s32 chrlvCall7F0B0E24WithChrWidthHeight(PropRecord *arg0, struct coord3d *arg1, struct coord3d *arg2);
 void chrlvSetTargetToPlayer(ChrRecord *arg0);
-s32 sub_GAME_7F032B68(ChrRecord *);
+s32 chrlvSeenWithin600(ChrRecord *);
 s32 sub_GAME_7F029D70(ChrRecord *self);
 void chrlvNormDistanceToPlayer(ChrRecord *arg0, s32 arg1, struct coord3d *arg2);
 s32 sub_GAME_7F02A0EC(ChrRecord *arg0, s32 arg1, f32 arg2);
@@ -6210,7 +6210,7 @@ s32 sub_GAME_7F029D70(ChrRecord *self)
         radChangeToFaceBond = rrr + M_TAU;
     }
 
-    if (sub_GAME_7F032B68(self))
+    if (chrlvSeenWithin600(self))
     {
         pass = 1;
     }
@@ -13133,32 +13133,19 @@ void chrlvAllChrTick(void)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F032B68(void) {
+/**
+ * Address 0x7F032B68.
+*/
+s32 chrlvSeenWithin600(ChrRecord *arg0)
+{
+    if ((arg0->lastseetarget60 > 0) && ((g_GlobalTimer - arg0->lastseetarget60) < 0x258))
+    {
+        return 1;
+    }
 
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F032B68
-/* 067698 7F032B68 8C8200D4 */  lw    $v0, 0xd4($a0)
-/* 06769C 7F032B6C 3C0E8005 */  lui   $t6, %hi(g_GlobalTimer) 
-/* 0676A0 7F032B70 58400009 */  blezl $v0, .L7F032B98
-/* 0676A4 7F032B74 00001025 */   move  $v0, $zero
-/* 0676A8 7F032B78 8DCE837C */  lw    $t6, %lo(g_GlobalTimer)($t6)
-/* 0676AC 7F032B7C 01C27823 */  subu  $t7, $t6, $v0
-/* 0676B0 7F032B80 29E10258 */  slti  $at, $t7, 0x258
-/* 0676B4 7F032B84 50200004 */  beql  $at, $zero, .L7F032B98
-/* 0676B8 7F032B88 00001025 */   move  $v0, $zero
-/* 0676BC 7F032B8C 03E00008 */  jr    $ra
-/* 0676C0 7F032B90 24020001 */   li    $v0, 1
 
-/* 0676C4 7F032B94 00001025 */  move  $v0, $zero
-.L7F032B98:
-/* 0676C8 7F032B98 03E00008 */  jr    $ra
-/* 0676CC 7F032B9C 00000000 */   nop   
-)
-#endif
 
 
 
