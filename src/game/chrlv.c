@@ -69,7 +69,7 @@ struct path_table_alt *chrlvStanPathRelated(struct coord3d *arg0, StandTile *arg
 s32 chrlvStanRoomRelatedPad(ChrRecord *arg0, struct pad *arg1);
 void play_sound_for_shot_actor(ChrRecord *);
 void sub_GAME_7F025560(ChrRecord *arg0, s32 arg1, s32 arg2);
-struct coord3d *sub_GAME_7F032C78(ChrRecord *arg0, s32 arg1, s32 arg2, struct StandTile *arg3);
+struct coord3d *chrlvGetChrOrPresetLocation(ChrRecord *self, s32 flags, s32 lookup_id, StandTile **stan);
 void sub_GAME_7F02D184(struct ChrRecord *arg0);
 void sub_GAME_7F0281F4(struct ChrRecord *arg0);
 s32 plot_course_for_actor(ChrRecord *arg0, struct act_gopos *arg1, struct StandTile *stan, s32 arg3);
@@ -1837,7 +1837,7 @@ f32 chrlvDistanceToChrRelated(ChrRecord *arg0, s32 arg1, s32 arg2)
         return ret;
     }
 
-    return get_distance_actor_to_position(arg0, (struct coord3d *)sub_GAME_7F032C78(arg0, arg1, arg2, &out_unused));
+    return get_distance_actor_to_position(arg0, (struct coord3d *)chrlvGetChrOrPresetLocation(arg0, arg1, arg2, &out_unused));
 }
 
 
@@ -5822,7 +5822,7 @@ s32 chrlvAttackRelated7F0292A8(ChrRecord *arg0, struct coord3d *arg1, StandTile 
     else
     {
         stan = arg2;
-        sp3C = sub_GAME_7F032C78(arg0, flags, arg0->act_attack.entityid, &sp40);
+        sp3C = chrlvGetChrOrPresetLocation(arg0, flags, arg0->act_attack.entityid, &sp40);
         set_or_unset_GUARDdata_flag(arg0, 0);
 
         if ((flags & 1) != 0)
@@ -6800,7 +6800,7 @@ bool actor_moves_to_preset_at_speed(ChrRecord *self, s32 padid, SPEED speed)
         }
         else
         {
-            pad = &ptr_2xxxpresets[getBoundPadNum(padid)];
+            pad = (struct pad *)&ptr_2xxxpresets[getBoundPadNum(padid)];
         }
 
         stan = pad->stan;
@@ -8300,7 +8300,7 @@ s32 chrlvUpdateAimendsideback(ChrRecord *arg0, struct weapon_firing_animation_ta
         else
         {
             getsuboffset(arg0->model, &sp120);
-            current_player_pos = sub_GAME_7F032C78(arg0, attack_type, entity_id, &pstan);
+            current_player_pos = chrlvGetChrOrPresetLocation(arg0, attack_type, entity_id, &pstan);
             dx = current_player_pos->f[0] - sp120.f[0];
             dy = current_player_pos->f[1] - sp120.f[1];
             dz = current_player_pos->f[2] - sp120.f[2];
@@ -13199,86 +13199,59 @@ f32 chrGetAngleToBond(struct ChrRecord *self)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F032C78(void) {
+/**
+ * @param self:
+ * @param flags: Lookup mode. 4 == lookup guard. 8 == lookup pad preset. Else, use current player.
+ * @param lookup_id: Lookup id for guard or preset.
+ * @param stan: Out parameter. Will contain found stan.
+ * @returns: Position of found item (depends on lookup mode).
+ * 
+ * Address 0x7F032C78.
+*/
+struct coord3d *chrlvGetChrOrPresetLocation(ChrRecord *self, s32 flags, s32 lookup_id, StandTile **stan)
+{
+    ChrRecord *guard;
+    PropRecord *player_prop;
+    s32 padid;
+    struct pad *preset_pad;
 
+    if ((flags & 4) != 0)
+    {
+        guard = get_handle_for_guard_id(self, lookup_id);
+
+        if ((guard == 0) || (guard->prop == 0))
+        {
+            guard = self;
+        }
+
+        *stan = (StandTile *) self->prop->stan;
+
+        return &guard->prop->pos;
+    }
+
+    if ((flags & 8) != 0)
+    {
+        padid = convertPadIf9000(self, lookup_id);
+
+        if (isNotBoundPad(padid))
+        {
+            preset_pad = &ptr_0xxxpresets[padid];
+        }
+        else
+        {
+            preset_pad = (struct pad *)&ptr_2xxxpresets[getBoundPadNum(padid)];
+        }
+
+        *stan = (StandTile *) preset_pad->stan;
+
+        return &preset_pad->pos;
+    }
+
+    player_prop = get_curplayer_positiondata();
+    *stan = (StandTile *) player_prop->stan;
+    
+    return &player_prop->pos;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F032C78
-/* 0677A8 7F032C78 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0677AC 7F032C7C 30AE0004 */  andi  $t6, $a1, 4
-/* 0677B0 7F032C80 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0677B4 7F032C84 11C00012 */  beqz  $t6, .L7F032CD0
-/* 0677B8 7F032C88 AFA70024 */   sw    $a3, 0x24($sp)
-/* 0677BC 7F032C8C 00C02825 */  move  $a1, $a2
-/* 0677C0 7F032C90 0FC0CC10 */  jal   get_handle_for_guard_id
-/* 0677C4 7F032C94 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0677C8 7F032C98 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0677CC 7F032C9C 10400004 */  beqz  $v0, .L7F032CB0
-/* 0677D0 7F032CA0 00401825 */   move  $v1, $v0
-/* 0677D4 7F032CA4 8C4F0018 */  lw    $t7, 0x18($v0)
-/* 0677D8 7F032CA8 55E00003 */  bnezl $t7, .L7F032CB8
-/* 0677DC 7F032CAC 8C980018 */   lw    $t8, 0x18($a0)
-.L7F032CB0:
-/* 0677E0 7F032CB0 00801825 */  move  $v1, $a0
-/* 0677E4 7F032CB4 8C980018 */  lw    $t8, 0x18($a0)
-.L7F032CB8:
-/* 0677E8 7F032CB8 8FA80024 */  lw    $t0, 0x24($sp)
-/* 0677EC 7F032CBC 8F190014 */  lw    $t9, 0x14($t8)
-/* 0677F0 7F032CC0 AD190000 */  sw    $t9, ($t0)
-/* 0677F4 7F032CC4 8C620018 */  lw    $v0, 0x18($v1)
-/* 0677F8 7F032CC8 10000025 */  b     .L7F032D60
-/* 0677FC 7F032CCC 24420008 */   addiu $v0, $v0, 8
-.L7F032CD0:
-/* 067800 7F032CD0 30A90008 */  andi  $t1, $a1, 8
-/* 067804 7F032CD4 1120001C */  beqz  $t1, .L7F032D48
-/* 067808 7F032CD8 00000000 */   nop   
-/* 06780C 7F032CDC 0FC0CBE5 */  jal   convertPadIf9000
-/* 067810 7F032CE0 00C02825 */   move  $a1, $a2
-/* 067814 7F032CE4 28412710 */  slti  $at, $v0, 0x2710
-/* 067818 7F032CE8 1020000A */  beqz  $at, .L7F032D14
-/* 06781C 7F032CEC 8FAF0024 */   lw    $t7, 0x24($sp)
-/* 067820 7F032CF0 00025080 */  sll   $t2, $v0, 2
-/* 067824 7F032CF4 01425023 */  subu  $t2, $t2, $v0
-/* 067828 7F032CF8 000A5080 */  sll   $t2, $t2, 2
-/* 06782C 7F032CFC 3C0B8007 */  lui   $t3, %hi(ptr_0xxxpresets) 
-/* 067830 7F032D00 8D6B5D18 */  lw    $t3, %lo(ptr_0xxxpresets)($t3)
-/* 067834 7F032D04 01425023 */  subu  $t2, $t2, $v0
-/* 067838 7F032D08 000A5080 */  sll   $t2, $t2, 2
-/* 06783C 7F032D0C 1000000A */  b     .L7F032D38
-/* 067840 7F032D10 014B1821 */   addu  $v1, $t2, $t3
-.L7F032D14:
-/* 067844 7F032D14 3C0D8007 */  lui   $t5, %hi(ptr_2xxxpresets) 
-/* 067848 7F032D18 8DAD5D1C */  lw    $t5, %lo(ptr_2xxxpresets)($t5)
-/* 06784C 7F032D1C 00026100 */  sll   $t4, $v0, 4
-/* 067850 7F032D20 01826021 */  addu  $t4, $t4, $v0
-/* 067854 7F032D24 000C6080 */  sll   $t4, $t4, 2
-/* 067858 7F032D28 3C01FFF5 */  lui   $at, (0xFFF59FC0 >> 16) # lui $at, 0xfff5
-/* 06785C 7F032D2C 34219FC0 */  ori   $at, (0xFFF59FC0 & 0xFFFF) # ori $at, $at, 0x9fc0
-/* 067860 7F032D30 018D1821 */  addu  $v1, $t4, $t5
-/* 067864 7F032D34 00611821 */  addu  $v1, $v1, $at
-.L7F032D38:
-/* 067868 7F032D38 8C6E0028 */  lw    $t6, 0x28($v1)
-/* 06786C 7F032D3C 00601025 */  move  $v0, $v1
-/* 067870 7F032D40 10000007 */  b     .L7F032D60
-/* 067874 7F032D44 ADEE0000 */   sw    $t6, ($t7)
-.L7F032D48:
-/* 067878 7F032D48 0FC225E6 */  jal   get_curplayer_positiondata
-/* 06787C 7F032D4C 00000000 */   nop   
-/* 067880 7F032D50 8C580014 */  lw    $t8, 0x14($v0)
-/* 067884 7F032D54 8FB90024 */  lw    $t9, 0x24($sp)
-/* 067888 7F032D58 24420008 */  addiu $v0, $v0, 8
-/* 06788C 7F032D5C AF380000 */  sw    $t8, ($t9)
-.L7F032D60:
-/* 067890 7F032D60 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 067894 7F032D64 27BD0018 */  addiu $sp, $sp, 0x18
-/* 067898 7F032D68 03E00008 */  jr    $ra
-/* 06789C 7F032D6C 00000000 */   nop   
-)
-#endif
-
 
 
 #ifdef NONMATCHING

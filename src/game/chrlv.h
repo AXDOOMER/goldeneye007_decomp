@@ -59,5 +59,6 @@ void chrlvActionTick(ChrRecord *arg0);
 void chrlvAllChrTick(void);
 s32 chrlvSeenWithin600(ChrRecord *arg0);
 s32 chrlvHearWithin600(ChrRecord *arg0);
+ChrRecord *get_handle_for_guard_id(ChrRecord *arg0, s32);
 
 #endif
