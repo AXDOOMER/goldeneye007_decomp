@@ -25,7 +25,7 @@ f32 distToBond3D(struct ChrRecord *guardData);
 
 void chrlvAlertGuardToPlayerPosition(struct ChrRecord *);
 void chrlvIdleAnimationRelated7F023A94(struct ChrRecord *arg0, f32 arg1);
-f32 sub_GAME_7F032C4C(struct ChrRecord *arg0);
+f32 chrGetAngleToBond(struct ChrRecord *arg0);
 s32 check_if_actor_stationary(struct ChrRecord *);
 s32 convertPadIf9000(struct ChrRecord *guardData,s32 padNo);
 void chrlvLineLineIntersection(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *arg2, struct coord3d *arg3, struct coord3d *result);
@@ -58,5 +58,6 @@ s32 chrlvIsArrivingLaterallyAtPos(struct coord3d *prevpos, struct coord3d *curpo
 void chrlvActionTick(ChrRecord *arg0);
 void chrlvAllChrTick(void);
 s32 chrlvSeenWithin600(ChrRecord *arg0);
+s32 chrlvHearWithin600(ChrRecord *arg0);
 
 #endif

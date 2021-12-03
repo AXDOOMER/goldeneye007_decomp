@@ -3954,7 +3954,7 @@ action3E_If_Shot_Current_Guard_RVL_2:
 /* 06AFD4 7F0364A4 1000FC39 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AFD8 7F0364A8 26310002 */   addiu $s1, $s1, 2
 action3F_If_Heard_Bond_RVL_2:
-/* 06AFDC 7F0364AC 0FC0CAE8 */  jal   sub_GAME_7F032BA0
+/* 06AFDC 7F0364AC 0FC0CAE8 */  jal   chrlvHearWithin600
 /* 06AFE0 7F0364B0 02E02025 */   move  $a0, $s7
 /* 06AFE4 7F0364B4 10400007 */  beqz  $v0, .L7F0364D4
 /* 06AFE8 7F0364B8 02C02025 */   move  $a0, $s6
@@ -4097,7 +4097,7 @@ action46_If_Fired_A_Shot_RVL_2:
 /* 06B1CC 7F03669C 1000FBBB */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B1D0 7F0366A0 26310002 */   addiu $s1, $s1, 2
 action47_If_Distance_Between_Bond_And_Guard_LTV_RVL_3:
-/* 06B1D4 7F0366A4 0FC0CB13 */  jal   sub_GAME_7F032C4C
+/* 06B1D4 7F0366A4 0FC0CB13 */  jal   chrGetAngleToBond
 /* 06B1D8 7F0366A8 02E02025 */   move  $a0, $s7
 /* 06B1DC 7F0366AC 92380001 */  lbu   $t8, 1($s1)
 /* 06B1E0 7F0366B0 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
@@ -4129,7 +4129,7 @@ action47_If_Distance_Between_Bond_And_Guard_LTV_RVL_3:
 /* 06B240 7F036710 1000FB9E */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B244 7F036714 26310003 */   addiu $s1, $s1, 3
 action48_If_Distance_Between_Bond_And_Guard_GTV_RVL_3:
-/* 06B248 7F036718 0FC0CB13 */  jal   sub_GAME_7F032C4C
+/* 06B248 7F036718 0FC0CB13 */  jal   chrGetAngleToBond
 /* 06B24C 7F03671C 02E02025 */   move  $a0, $s7
 /* 06B250 7F036720 92290001 */  lbu   $t1, 1($s1)
 /* 06B254 7F036724 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
@@ -9821,7 +9821,7 @@ action3E_If_Shot_Current_Guard_RVL_2:
 /* 06AFD4 7F0364A4 1000FC39 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AFD8 7F0364A8 26310002 */   addiu $s1, $s1, 2
 action3F_If_Heard_Bond_RVL_2:
-/* 06AFDC 7F0364AC 0FC0CAE8 */  jal   sub_GAME_7F032BA0
+/* 06AFDC 7F0364AC 0FC0CAE8 */  jal   chrlvHearWithin600
 /* 06AFE0 7F0364B0 02E02025 */   move  $a0, $s7
 /* 06AFE4 7F0364B4 10400007 */  beqz  $v0, .L7F0364D4
 /* 06AFE8 7F0364B8 02C02025 */   move  $a0, $s6
@@ -9964,7 +9964,7 @@ action46_If_Fired_A_Shot_RVL_2:
 /* 06B1CC 7F03669C 1000FBBB */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B1D0 7F0366A0 26310002 */   addiu $s1, $s1, 2
 action47_If_Distance_Between_Bond_And_Guard_LTV_RVL_3:
-/* 06B1D4 7F0366A4 0FC0CB13 */  jal   sub_GAME_7F032C4C
+/* 06B1D4 7F0366A4 0FC0CB13 */  jal   chrGetAngleToBond
 /* 06B1D8 7F0366A8 02E02025 */   move  $a0, $s7
 /* 06B1DC 7F0366AC 92380001 */  lbu   $t8, 1($s1)
 /* 06B1E0 7F0366B0 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
@@ -9996,7 +9996,7 @@ action47_If_Distance_Between_Bond_And_Guard_LTV_RVL_3:
 /* 06B240 7F036710 1000FB9E */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B244 7F036714 26310003 */   addiu $s1, $s1, 3
 action48_If_Distance_Between_Bond_And_Guard_GTV_RVL_3:
-/* 06B248 7F036718 0FC0CB13 */  jal   sub_GAME_7F032C4C
+/* 06B248 7F036718 0FC0CB13 */  jal   chrGetAngleToBond
 /* 06B24C 7F03671C 02E02025 */   move  $a0, $s7
 /* 06B250 7F036720 92290001 */  lbu   $t1, 1($s1)
 /* 06B254 7F036724 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
@@ -15689,7 +15689,7 @@ action3E_If_Shot_Current_Guard_RVL_2:
 /* 06AFD4 7F0364A4 1000FC39 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AFD8 7F0364A8 26310002 */   addiu $s1, $s1, 2
 action3F_If_Heard_Bond_RVL_2:
-/* 06AFDC 7F0364AC 0FC0CAE8 */  jal   sub_GAME_7F032BA0
+/* 06AFDC 7F0364AC 0FC0CAE8 */  jal   chrlvHearWithin600
 /* 06AFE0 7F0364B0 02E02025 */   move  $a0, $s7
 /* 06AFE4 7F0364B4 10400007 */  beqz  $v0, .L7F0364D4
 /* 06AFE8 7F0364B8 02C02025 */   move  $a0, $s6
@@ -15832,7 +15832,7 @@ action46_If_Fired_A_Shot_RVL_2:
 /* 06B1CC 7F03669C 1000FBBB */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B1D0 7F0366A0 26310002 */   addiu $s1, $s1, 2
 action47_If_Distance_Between_Bond_And_Guard_LTV_RVL_3:
-/* 06B1D4 7F0366A4 0FC0CB13 */  jal   sub_GAME_7F032C4C
+/* 06B1D4 7F0366A4 0FC0CB13 */  jal   chrGetAngleToBond
 /* 06B1D8 7F0366A8 02E02025 */   move  $a0, $s7
 /* 06B1DC 7F0366AC 92380001 */  lbu   $t8, 1($s1)
 /* 06B1E0 7F0366B0 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
@@ -15864,7 +15864,7 @@ action47_If_Distance_Between_Bond_And_Guard_LTV_RVL_3:
 /* 06B240 7F036710 1000FB9E */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B244 7F036714 26310003 */   addiu $s1, $s1, 3
 action48_If_Distance_Between_Bond_And_Guard_GTV_RVL_3:
-/* 06B248 7F036718 0FC0CB13 */  jal   sub_GAME_7F032C4C
+/* 06B248 7F036718 0FC0CB13 */  jal   chrGetAngleToBond
 /* 06B24C 7F03671C 02E02025 */   move  $a0, $s7
 /* 06B250 7F036720 92290001 */  lbu   $t1, 1($s1)
 /* 06B254 7F036724 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000

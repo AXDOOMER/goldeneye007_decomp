@@ -138,6 +138,7 @@ void chrlvTickGoPos(ChrRecord *arg0);
 void sub_GAME_7F028494(struct ChrRecord *arg0);
 void sub_GAME_7F0284DC(struct ChrRecord *arg0);
 void chrlvTickPatrol(ChrRecord *arg0);
+f32 get_distance_actor_to_position(struct ChrRecord *self, struct coord3d *pos);
 
 // ?
 
@@ -1111,7 +1112,7 @@ void chrlvActorShuffleFeet(struct ChrRecord *arg0)
 {
     f32 temp_f0;
 
-    temp_f0 = sub_GAME_7F032C4C(arg0);
+    temp_f0 = chrGetAngleToBond(arg0);
 
     if ((temp_f0 < 0.17453294f) || (temp_f0 > 6.1086526f))
     {
@@ -13152,7 +13153,7 @@ s32 chrlvSeenWithin600(ChrRecord *arg0)
 /**
  * Address 0x7F032BA0.
 */
-s32 sub_GAME_7F032BA0(ChrRecord *arg0)
+s32 chrlvHearWithin600(ChrRecord *arg0)
 {
     if ((arg0->lastheartarget60 > 0) && ((g_GlobalTimer - arg0->lastheartarget60) < 0x258))
     {
@@ -13188,27 +13189,13 @@ f32 get_distance_actor_to_position(struct ChrRecord *self, struct coord3d *pos)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F032C4C(void) {
-// ai branch
+/**
+ * Address 0x7F032C4C.
+*/
+f32 chrGetAngleToBond(struct ChrRecord *self)
+{
+    return get_distance_actor_to_position(self, &get_curplayer_positiondata()->pos);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F032C4C
-/* 06777C 7F032C4C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 067780 7F032C50 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 067784 7F032C54 0FC225E6 */  jal   get_curplayer_positiondata
-/* 067788 7F032C58 AFA40018 */   sw    $a0, 0x18($sp)
-/* 06778C 7F032C5C 8FA40018 */  lw    $a0, 0x18($sp)
-/* 067790 7F032C60 0FC0CAF6 */  jal   get_distance_actor_to_position
-/* 067794 7F032C64 24450008 */   addiu $a1, $v0, 8
-/* 067798 7F032C68 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 06779C 7F032C6C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0677A0 7F032C70 03E00008 */  jr    $ra
-/* 0677A4 7F032C74 00000000 */   nop   
-)
-#endif
 
 
 
