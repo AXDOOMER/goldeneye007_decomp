@@ -13693,20 +13693,13 @@ bool sub_GAME_7F0333F8(ChrRecord *self)
 
 
 
-#ifdef NONMATCHING
-void check_if_actor_invisible(void) {
-
+/**
+ * Address 0x7F033490.
+*/
+bool check_if_actor_invisible(ChrRecord *self)
+{
+    return (self->chrflags & CHRFLAG_NEAR_MISS) != 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_actor_invisible
-/* 067FC0 7F033490 8C820014 */  lw    $v0, 0x14($a0)
-/* 067FC4 7F033494 304E0004 */  andi  $t6, $v0, 4
-/* 067FC8 7F033498 03E00008 */  jr    $ra
-/* 067FCC 7F03349C 000E102B */   sltu  $v0, $zero, $t6
-)
-#endif
 
 
 
