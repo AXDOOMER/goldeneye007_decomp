@@ -61,5 +61,7 @@ s32 chrlvSeenWithin600(ChrRecord *arg0);
 s32 chrlvHearWithin600(ChrRecord *arg0);
 ChrRecord *get_handle_for_guard_id(ChrRecord *arg0, s32);
 f32 chrGetAngleFromBond(ChrRecord *self);
+f32 sub_GAME_7F032E48(ChrRecord *self, s32 padID);
+bool check_if_room_for_preset_loaded(struct ChrRecord *self, s32 padnum);
 
 #endif

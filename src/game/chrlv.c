@@ -139,6 +139,7 @@ void sub_GAME_7F028494(struct ChrRecord *arg0);
 void sub_GAME_7F0284DC(struct ChrRecord *arg0);
 void chrlvTickPatrol(ChrRecord *arg0);
 f32 get_distance_actor_to_position(struct ChrRecord *self, struct coord3d *pos);
+s32 chrResolveId(ChrRecord *self, s32 id);
 
 // ?
 
@@ -13365,64 +13366,41 @@ s32 convertPadIf9000(struct ChrRecord *guardData,s32 padNo)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F032FAC(void) {
-// ai branch
+/**
+ * Address 0x7F032FAC.
+*/
+s32 chrResolveId(ChrRecord *self, s32 id)
+{
+    if (id == (u8)CHR_SEE_SHOT)
+    {
+        id = self->chrseeshot;
+    }
+    else if (id == (u8)CHR_SEE_DIE)
+    {
+        id = self->chrseedie;
+    }
+    else if (id == (u8)CHR_PRESET)
+    {
+        id = self->chrpreset1;
+    }
+    else if (id == (u8)CHR_SELF)
+    {
+        id = self->chrnum;
+    }
+    else if (id == (u8)CHR_CLONE)
+    {
+        id = self->chrnum + 0x2710;
+    }
+    else if (id == (u8)CHR_BOND_CINEMA)
+    {
+        if (g_CurrentPlayer->prop->chr)
+        {
+            id = g_CurrentPlayer->prop->chr->chrnum;
+        }
+    }
+
+    return id;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F032FAC
-/* 067ADC 7F032FAC 240100FA */  li    $at, 250
-/* 067AE0 7F032FB0 54A10004 */  bnel  $a1, $at, .L7F032FC4
-/* 067AE4 7F032FB4 240100FB */   li    $at, 251
-/* 067AE8 7F032FB8 03E00008 */  jr    $ra
-/* 067AEC 7F032FBC 84820118 */   lh    $v0, 0x118($a0)
-
-/* 067AF0 7F032FC0 240100FB */  li    $at, 251
-.L7F032FC4:
-/* 067AF4 7F032FC4 54A10004 */  bnel  $a1, $at, .L7F032FD8
-/* 067AF8 7F032FC8 240100FC */   li    $at, 252
-/* 067AFC 7F032FCC 03E00008 */  jr    $ra
-/* 067B00 7F032FD0 8482011A */   lh    $v0, 0x11a($a0)
-
-/* 067B04 7F032FD4 240100FC */  li    $at, 252
-.L7F032FD8:
-/* 067B08 7F032FD8 54A10004 */  bnel  $a1, $at, .L7F032FEC
-/* 067B0C 7F032FDC 240100FD */   li    $at, 253
-/* 067B10 7F032FE0 03E00008 */  jr    $ra
-/* 067B14 7F032FE4 84820116 */   lh    $v0, 0x116($a0)
-
-/* 067B18 7F032FE8 240100FD */  li    $at, 253
-.L7F032FEC:
-/* 067B1C 7F032FEC 54A10004 */  bnel  $a1, $at, .L7F033000
-/* 067B20 7F032FF0 240100F9 */   li    $at, 249
-/* 067B24 7F032FF4 03E00008 */  jr    $ra
-/* 067B28 7F032FF8 84820000 */   lh    $v0, ($a0)
-
-/* 067B2C 7F032FFC 240100F9 */  li    $at, 249
-.L7F033000:
-/* 067B30 7F033000 54A10005 */  bnel  $a1, $at, .L7F033018
-/* 067B34 7F033004 240100F8 */   li    $at, 248
-/* 067B38 7F033008 84850000 */  lh    $a1, ($a0)
-/* 067B3C 7F03300C 03E00008 */  jr    $ra
-/* 067B40 7F033010 24A22710 */   addiu $v0, $a1, 0x2710
-
-/* 067B44 7F033014 240100F8 */  li    $at, 248
-.L7F033018:
-/* 067B48 7F033018 14A10007 */  bne   $a1, $at, .L7F033038
-/* 067B4C 7F03301C 3C0E8008 */   lui   $t6, %hi(g_CurrentPlayer) 
-/* 067B50 7F033020 8DCEA0B0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
-/* 067B54 7F033024 8DCF00A8 */  lw    $t7, 0xa8($t6)
-/* 067B58 7F033028 8DE20004 */  lw    $v0, 4($t7)
-/* 067B5C 7F03302C 10400002 */  beqz  $v0, .L7F033038
-/* 067B60 7F033030 00000000 */   nop   
-/* 067B64 7F033034 84450000 */  lh    $a1, ($v0)
-.L7F033038:
-/* 067B68 7F033038 03E00008 */  jr    $ra
-/* 067B6C 7F03303C 00A01025 */   move  $v0, $a1
-)
-#endif
 
 
 
@@ -13436,7 +13414,7 @@ GLOBAL_ASM(
 glabel get_handle_for_guard_id
 /* 067B70 7F033040 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 067B74 7F033044 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 067B78 7F033048 0FC0CBEB */  jal   sub_GAME_7F032FAC
+/* 067B78 7F033048 0FC0CBEB */  jal   chrResolveId
 /* 067B7C 7F03304C 00000000 */   nop   
 /* 067B80 7F033050 00402025 */  move  $a0, $v0
 /* 067B84 7F033054 0FC08BF2 */  jal   chrGetGuardData
@@ -14804,7 +14782,7 @@ GLOBAL_ASM(
 glabel sub_GAME_7F033CF4
 /* 068824 7F033CF4 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 068828 7F033CF8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 06882C 7F033CFC 0FC0CBEB */  jal   sub_GAME_7F032FAC
+/* 06882C 7F033CFC 0FC0CBEB */  jal   chrResolveId
 /* 068830 7F033D00 AFA40018 */   sw    $a0, 0x18($sp)
 /* 068834 7F033D04 8FAE0018 */  lw    $t6, 0x18($sp)
 /* 068838 7F033D08 A5C20116 */  sh    $v0, 0x116($t6)
@@ -14833,7 +14811,7 @@ glabel sub_GAME_7F033D1C
 /* 068860 7F033D30 10400006 */  beqz  $v0, .L7F033D4C
 /* 068864 7F033D34 8FA40020 */   lw    $a0, 0x20($sp)
 /* 068868 7F033D38 8FA50028 */  lw    $a1, 0x28($sp)
-/* 06886C 7F033D3C 0FC0CBEB */  jal   sub_GAME_7F032FAC
+/* 06886C 7F033D3C 0FC0CBEB */  jal   chrResolveId
 /* 068870 7F033D40 AFA2001C */   sw    $v0, 0x1c($sp)
 /* 068874 7F033D44 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 068878 7F033D48 A4620116 */  sh    $v0, 0x116($v1)
