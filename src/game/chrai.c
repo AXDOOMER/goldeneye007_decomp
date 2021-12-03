@@ -5969,7 +5969,7 @@ action97_Mask_Guard_Type_Flags_With_Value_3:
 action98_Unmask_Guard_Type_Flags_With_Value_3:
 /* 06CC18 7F0380E8 02E02025 */  move  $a0, $s7
 /* 06CC1C 7F0380EC 92250001 */  lbu   $a1, 1($s1)
-/* 06CC20 7F0380F0 0FC0CCA4 */  jal   sub_GAME_7F033290
+/* 06CC20 7F0380F0 0FC0CCA4 */  jal   chrlvClearGuardBitfieldFlags
 /* 06CC24 7F0380F4 92260002 */   lbu   $a2, 2($s1)
 /* 06CC28 7F0380F8 26520003 */  addiu $s2, $s2, 3
 /* 06CC2C 7F0380FC 1000F523 */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -11836,7 +11836,7 @@ action97_Mask_Guard_Type_Flags_With_Value_3:
 action98_Unmask_Guard_Type_Flags_With_Value_3:
 /* 06CC18 7F0380E8 02E02025 */  move  $a0, $s7
 /* 06CC1C 7F0380EC 92250001 */  lbu   $a1, 1($s1)
-/* 06CC20 7F0380F0 0FC0CCA4 */  jal   sub_GAME_7F033290
+/* 06CC20 7F0380F0 0FC0CCA4 */  jal   chrlvClearGuardBitfieldFlags
 /* 06CC24 7F0380F4 92260002 */   lbu   $a2, 2($s1)
 /* 06CC28 7F0380F8 26520003 */  addiu $s2, $s2, 3
 /* 06CC2C 7F0380FC 1000F523 */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -17704,7 +17704,7 @@ action97_Mask_Guard_Type_Flags_With_Value_3:
 action98_Unmask_Guard_Type_Flags_With_Value_3:
 /* 06CC18 7F0380E8 02E02025 */  move  $a0, $s7
 /* 06CC1C 7F0380EC 92250001 */  lbu   $a1, 1($s1)
-/* 06CC20 7F0380F0 0FC0CCA4 */  jal   sub_GAME_7F033290
+/* 06CC20 7F0380F0 0FC0CCA4 */  jal   chrlvClearGuardBitfieldFlags
 /* 06CC24 7F0380F4 92260002 */   lbu   $a2, 2($s1)
 /* 06CC28 7F0380F8 26520003 */  addiu $s2, $s2, 3
 /* 06CC2C 7F0380FC 1000F523 */  b     GetByteS1_ParseCommandByte_SwitchCase

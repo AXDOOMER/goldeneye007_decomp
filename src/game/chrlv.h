@@ -68,6 +68,7 @@ f32 get_distance_between_actor_and_preset(ChrRecord *self, s32 padid);
 void chrlvSetBitfieldFlags(ChrRecord *arg0, u8 arg1);
 void chrlvClearBitfieldFlags(ChrRecord *arg0, u8 arg1);
 void chrlvSetGuardBitfieldFlags(ChrRecord *arg0, s32 guard_id, u8 arg2);
+void chrlvClearGuardBitfieldFlags(ChrRecord *arg0, s32 guard_id, u8 arg2);
 
 
 #endif
