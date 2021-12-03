@@ -13613,32 +13613,20 @@ bool check_if_actor_02_flag_set(ChrRecord *self)
 
 
 
-#ifdef NONMATCHING
-void check_if_able_to_then_surrender(void) {
+/**
+ * Address 0x7F033364.
+*/
+bool check_if_able_to_then_surrender(ChrRecord *self)
+{
+    if (chrIsNotDeadOrShot(self))
+    {
+        chrlvActorThrowWeaponSurrender(self);
 
+        return TRUE;
+    }
+
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_able_to_then_surrender
-/* 067E94 7F033364 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 067E98 7F033368 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 067E9C 7F03336C 0FC0A896 */  jal   chrIsNotDeadOrShot
-/* 067EA0 7F033370 AFA40018 */   sw    $a0, 0x18($sp)
-/* 067EA4 7F033374 50400006 */  beql  $v0, $zero, .L7F033390
-/* 067EA8 7F033378 00001025 */   move  $v0, $zero
-/* 067EAC 7F03337C 0FC09192 */  jal   chrlvActorThrowWeaponSurrender
-/* 067EB0 7F033380 8FA40018 */   lw    $a0, 0x18($sp)
-/* 067EB4 7F033384 10000002 */  b     .L7F033390
-/* 067EB8 7F033388 24020001 */   li    $v0, 1
-/* 067EBC 7F03338C 00001025 */  move  $v0, $zero
-.L7F033390:
-/* 067EC0 7F033390 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 067EC4 7F033394 27BD0018 */  addiu $sp, $sp, 0x18
-/* 067EC8 7F033398 03E00008 */  jr    $ra
-/* 067ECC 7F03339C 00000000 */   nop   
-)
-#endif
 
 
 
