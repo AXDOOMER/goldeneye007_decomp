@@ -13295,63 +13295,31 @@ f32 chrlvDistToBond3D(struct ChrRecord *guardData)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F032E48(void) {
-// ai branch
+/**
+ * Address 0x7F032E48.
+*/
+f32 sub_GAME_7F032E48(ChrRecord *self, s32 padID)
+{
+    struct PropRecord *myprop;
+    struct pad *pad;
+
+    myprop = self->prop;
+    padID  = convertPadIf9000(self, padID);
+
+    if (isNotBoundPad(padID))
+    {
+        pad = (struct pad *)&ptr_0xxxpresets[padID];
+    }
+    else
+    {
+        pad = (struct pad *)&ptr_2xxxpresets[getBoundPadNum(padID)];
+    }
+
+    return sqrtf(
+        ((pad->pos.x - myprop->pos.x) * (pad->pos.x - myprop->pos.x)) +
+        ((pad->pos.y - myprop->pos.y) * (pad->pos.y - myprop->pos.y)) +
+        ((pad->pos.z - myprop->pos.z) * (pad->pos.z - myprop->pos.z)));
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F032E48
-/* 067978 7F032E48 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 06797C 7F032E4C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 067980 7F032E50 8C860018 */  lw    $a2, 0x18($a0)
-/* 067984 7F032E54 0FC0CBE5 */  jal   convertPadIf9000
-/* 067988 7F032E58 AFA6001C */   sw    $a2, 0x1c($sp)
-/* 06798C 7F032E5C 28412710 */  slti  $at, $v0, 0x2710
-/* 067990 7F032E60 1020000A */  beqz  $at, .L7F032E8C
-/* 067994 7F032E64 8FA6001C */   lw    $a2, 0x1c($sp)
-/* 067998 7F032E68 00027080 */  sll   $t6, $v0, 2
-/* 06799C 7F032E6C 01C27023 */  subu  $t6, $t6, $v0
-/* 0679A0 7F032E70 000E7080 */  sll   $t6, $t6, 2
-/* 0679A4 7F032E74 3C0F8007 */  lui   $t7, %hi(ptr_0xxxpresets) 
-/* 0679A8 7F032E78 8DEF5D18 */  lw    $t7, %lo(ptr_0xxxpresets)($t7)
-/* 0679AC 7F032E7C 01C27023 */  subu  $t6, $t6, $v0
-/* 0679B0 7F032E80 000E7080 */  sll   $t6, $t6, 2
-/* 0679B4 7F032E84 1000000A */  b     .L7F032EB0
-/* 0679B8 7F032E88 01CF1821 */   addu  $v1, $t6, $t7
-.L7F032E8C:
-/* 0679BC 7F032E8C 3C198007 */  lui   $t9, %hi(ptr_2xxxpresets) 
-/* 0679C0 7F032E90 8F395D1C */  lw    $t9, %lo(ptr_2xxxpresets)($t9)
-/* 0679C4 7F032E94 0002C100 */  sll   $t8, $v0, 4
-/* 0679C8 7F032E98 0302C021 */  addu  $t8, $t8, $v0
-/* 0679CC 7F032E9C 0018C080 */  sll   $t8, $t8, 2
-/* 0679D0 7F032EA0 3C01FFF5 */  lui   $at, (0xFFF59FC0 >> 16) # lui $at, 0xfff5
-/* 0679D4 7F032EA4 34219FC0 */  ori   $at, (0xFFF59FC0 & 0xFFFF) # ori $at, $at, 0x9fc0
-/* 0679D8 7F032EA8 03191821 */  addu  $v1, $t8, $t9
-/* 0679DC 7F032EAC 00611821 */  addu  $v1, $v1, $at
-.L7F032EB0:
-/* 0679E0 7F032EB0 C4640000 */  lwc1  $f4, ($v1)
-/* 0679E4 7F032EB4 C4C60008 */  lwc1  $f6, 8($a2)
-/* 0679E8 7F032EB8 C4680004 */  lwc1  $f8, 4($v1)
-/* 0679EC 7F032EBC C4CA000C */  lwc1  $f10, 0xc($a2)
-/* 0679F0 7F032EC0 46062001 */  sub.s $f0, $f4, $f6
-/* 0679F4 7F032EC4 C4700008 */  lwc1  $f16, 8($v1)
-/* 0679F8 7F032EC8 C4D20010 */  lwc1  $f18, 0x10($a2)
-/* 0679FC 7F032ECC 460A4081 */  sub.s $f2, $f8, $f10
-/* 067A00 7F032ED0 46000102 */  mul.s $f4, $f0, $f0
-/* 067A04 7F032ED4 46128381 */  sub.s $f14, $f16, $f18
-/* 067A08 7F032ED8 46021182 */  mul.s $f6, $f2, $f2
-/* 067A0C 7F032EDC 46062200 */  add.s $f8, $f4, $f6
-/* 067A10 7F032EE0 460E7282 */  mul.s $f10, $f14, $f14
-/* 067A14 7F032EE4 0C007DF8 */  jal   sqrtf
-/* 067A18 7F032EE8 460A4300 */   add.s $f12, $f8, $f10
-/* 067A1C 7F032EEC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 067A20 7F032EF0 27BD0020 */  addiu $sp, $sp, 0x20
-/* 067A24 7F032EF4 03E00008 */  jr    $ra
-/* 067A28 7F032EF8 00000000 */   nop   
-)
-#endif
 
 
 
