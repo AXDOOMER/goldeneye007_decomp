@@ -13496,26 +13496,14 @@ void chrlvSetBitfieldFlags(ChrRecord *arg0, u8 arg1)
 
 
 
-#if 1
 /**
+ * The property is named "BITFIELD".
  * Address 0x7F03322C.
 */
-void sub_GAME_7F03322C(ChrRecord *arg0, u8 arg1)
+void chrlvClearBitfieldFlags(ChrRecord *arg0, u8 arg1)
 {
     arg0->BITFIELD &= ~arg1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03322C
-/* 067D5C 7F03322C AFA50004 */  sw    $a1, 4($sp)
-/* 067D60 7F033230 908F010E */  lbu   $t7, 0x10e($a0)
-/* 067D64 7F033234 00A0C027 */  not   $t8, $a1
-/* 067D68 7F033238 01F8C824 */  and   $t9, $t7, $t8
-/* 067D6C 7F03323C 03E00008 */  jr    $ra
-/* 067D70 7F033240 A099010E */   sb    $t9, 0x10e($a0)
-)
-#endif
 
 
 
@@ -13592,7 +13580,7 @@ void sub_GAME_7F033290(ChrRecord *arg0, s32 guard_id, u8 arg2)
 
     if (guard != 0)
     {
-        sub_GAME_7F03322C(guard, arg2);
+        chrlvClearBitfieldFlags(guard, arg2);
     }
 }
 #else
@@ -13605,7 +13593,7 @@ glabel sub_GAME_7F033290
 /* 067DCC 7F03329C AFA60020 */   sw    $a2, 0x20($sp)
 /* 067DD0 7F0332A0 10400003 */  beqz  $v0, .L7F0332B0
 /* 067DD4 7F0332A4 00402025 */   move  $a0, $v0
-/* 067DD8 7F0332A8 0FC0CC8B */  jal   sub_GAME_7F03322C
+/* 067DD8 7F0332A8 0FC0CC8B */  jal   chrlvClearBitfieldFlags
 /* 067DDC 7F0332AC 93A50023 */   lbu   $a1, 0x23($sp)
 .L7F0332B0:
 /* 067DE0 7F0332B0 8FBF0014 */  lw    $ra, 0x14($sp)
