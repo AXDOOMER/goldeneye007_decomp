@@ -5961,7 +5961,7 @@ action96_If_Guard_Type_Value_Is_Set_RVL_3:
 action97_Mask_Guard_Type_Flags_With_Value_3:
 /* 06CBFC 7F0380CC 02E02025 */  move  $a0, $s7
 /* 06CC00 7F0380D0 92250001 */  lbu   $a1, 1($s1)
-/* 06CC04 7F0380D4 0FC0CC98 */  jal   sub_GAME_7F033260
+/* 06CC04 7F0380D4 0FC0CC98 */  jal   chrlvSetGuardBitfieldFlags
 /* 06CC08 7F0380D8 92260002 */   lbu   $a2, 2($s1)
 /* 06CC0C 7F0380DC 26520003 */  addiu $s2, $s2, 3
 /* 06CC10 7F0380E0 1000F52A */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -11828,7 +11828,7 @@ action96_If_Guard_Type_Value_Is_Set_RVL_3:
 action97_Mask_Guard_Type_Flags_With_Value_3:
 /* 06CBFC 7F0380CC 02E02025 */  move  $a0, $s7
 /* 06CC00 7F0380D0 92250001 */  lbu   $a1, 1($s1)
-/* 06CC04 7F0380D4 0FC0CC98 */  jal   sub_GAME_7F033260
+/* 06CC04 7F0380D4 0FC0CC98 */  jal   chrlvSetGuardBitfieldFlags
 /* 06CC08 7F0380D8 92260002 */   lbu   $a2, 2($s1)
 /* 06CC0C 7F0380DC 26520003 */  addiu $s2, $s2, 3
 /* 06CC10 7F0380E0 1000F52A */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -17696,7 +17696,7 @@ action96_If_Guard_Type_Value_Is_Set_RVL_3:
 action97_Mask_Guard_Type_Flags_With_Value_3:
 /* 06CBFC 7F0380CC 02E02025 */  move  $a0, $s7
 /* 06CC00 7F0380D0 92250001 */  lbu   $a1, 1($s1)
-/* 06CC04 7F0380D4 0FC0CC98 */  jal   sub_GAME_7F033260
+/* 06CC04 7F0380D4 0FC0CC98 */  jal   chrlvSetGuardBitfieldFlags
 /* 06CC08 7F0380D8 92260002 */   lbu   $a2, 2($s1)
 /* 06CC0C 7F0380DC 26520003 */  addiu $s2, $s2, 3
 /* 06CC10 7F0380E0 1000F52A */  b     GetByteS1_ParseCommandByte_SwitchCase

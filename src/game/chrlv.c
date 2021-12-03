@@ -13518,11 +13518,10 @@ s32 chrlvTestBitfieldFlags(ChrRecord *self, u8 arg1)
 
 
 
-#if 1
 /**
  * Address 0x7F033260.
 */
-void sub_GAME_7F033260(ChrRecord *arg0, s32 guard_id, u8 arg2)
+void chrlvSetGuardBitfieldFlags(ChrRecord *arg0, s32 guard_id, u8 arg2)
 {
     ChrRecord *guard;
 
@@ -13533,25 +13532,6 @@ void sub_GAME_7F033260(ChrRecord *arg0, s32 guard_id, u8 arg2)
         chrlvSetBitfieldFlags(guard, arg2);
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F033260
-/* 067D90 7F033260 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 067D94 7F033264 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 067D98 7F033268 0FC0CC10 */  jal   chrlvGetHandleForGuardId
-/* 067D9C 7F03326C AFA60020 */   sw    $a2, 0x20($sp)
-/* 067DA0 7F033270 10400003 */  beqz  $v0, .L7F033280
-/* 067DA4 7F033274 00402025 */   move  $a0, $v0
-/* 067DA8 7F033278 0FC0CC86 */  jal   chrlvSetBitfieldFlags
-/* 067DAC 7F03327C 93A50023 */   lbu   $a1, 0x23($sp)
-.L7F033280:
-/* 067DB0 7F033280 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 067DB4 7F033284 27BD0018 */  addiu $sp, $sp, 0x18
-/* 067DB8 7F033288 03E00008 */  jr    $ra
-/* 067DBC 7F03328C 00000000 */   nop   
-)
-#endif
 
 
 
