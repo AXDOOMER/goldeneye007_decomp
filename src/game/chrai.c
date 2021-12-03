@@ -5944,7 +5944,7 @@ action95_Unmask_Guard_Type_With_Value_2:
 /* 06CBC0 7F038090 26310002 */   addiu $s1, $s1, 2
 action96_If_Guard_Type_Value_Is_Set_RVL_3:
 /* 06CBC4 7F038094 02E02025 */  move  $a0, $s7
-/* 06CBC8 7F038098 0FC0CC91 */  jal   sub_GAME_7F033244
+/* 06CBC8 7F038098 0FC0CC91 */  jal   chrlvTestBitfieldFlags
 /* 06CBCC 7F03809C 92250001 */   lbu   $a1, 1($s1)
 /* 06CBD0 7F0380A0 10400007 */  beqz  $v0, .L7F0380C0
 /* 06CBD4 7F0380A4 02C02025 */   move  $a0, $s6
@@ -11811,7 +11811,7 @@ action95_Unmask_Guard_Type_With_Value_2:
 /* 06CBC0 7F038090 26310002 */   addiu $s1, $s1, 2
 action96_If_Guard_Type_Value_Is_Set_RVL_3:
 /* 06CBC4 7F038094 02E02025 */  move  $a0, $s7
-/* 06CBC8 7F038098 0FC0CC91 */  jal   sub_GAME_7F033244
+/* 06CBC8 7F038098 0FC0CC91 */  jal   chrlvTestBitfieldFlags
 /* 06CBCC 7F03809C 92250001 */   lbu   $a1, 1($s1)
 /* 06CBD0 7F0380A0 10400007 */  beqz  $v0, .L7F0380C0
 /* 06CBD4 7F0380A4 02C02025 */   move  $a0, $s6
@@ -17679,7 +17679,7 @@ action95_Unmask_Guard_Type_With_Value_2:
 /* 06CBC0 7F038090 26310002 */   addiu $s1, $s1, 2
 action96_If_Guard_Type_Value_Is_Set_RVL_3:
 /* 06CBC4 7F038094 02E02025 */  move  $a0, $s7
-/* 06CBC8 7F038098 0FC0CC91 */  jal   sub_GAME_7F033244
+/* 06CBC8 7F038098 0FC0CC91 */  jal   chrlvTestBitfieldFlags
 /* 06CBCC 7F03809C 92250001 */   lbu   $a1, 1($s1)
 /* 06CBD0 7F0380A0 10400007 */  beqz  $v0, .L7F0380C0
 /* 06CBD4 7F0380A4 02C02025 */   move  $a0, $s6
