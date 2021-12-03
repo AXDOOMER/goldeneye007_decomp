@@ -13164,13 +13164,14 @@ s32 sub_GAME_7F032BA0(ChrRecord *arg0)
 
 
 
-#ifdef NONMATCHING
-// copied from ai branch:
-f32 get_distance_actor_to_position(ChrRecord *self, coord3d *pos)
+/**
+ * Address 0x7F032BD8.
+*/
+f32 get_distance_actor_to_position(struct ChrRecord *self, struct coord3d *pos)
 {
     f32 radToPos;
     f32 radMyHeading;
-    PropRecord *myprop;
+    struct PropRecord *myprop;
     f32 angle;
 
     radMyHeading = getsubroty(self->model);
@@ -13182,48 +13183,9 @@ f32 get_distance_actor_to_position(ChrRecord *self, coord3d *pos)
     {
         radToPos = radToPos + M_TAU;
     }
+
     return radToPos;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_800520D0
-.word 0x40c90fdb /*6.2831855*/
-.text
-glabel get_distance_actor_to_position
-/* 067708 7F032BD8 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 06770C 7F032BDC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 067710 7F032BE0 AFA40020 */  sw    $a0, 0x20($sp)
-/* 067714 7F032BE4 AFA50024 */  sw    $a1, 0x24($sp)
-/* 067718 7F032BE8 0FC1B320 */  jal   getsubroty
-/* 06771C 7F032BEC 8C84001C */   lw    $a0, 0x1c($a0)
-/* 067720 7F032BF0 8FAF0020 */  lw    $t7, 0x20($sp)
-/* 067724 7F032BF4 8FA30024 */  lw    $v1, 0x24($sp)
-/* 067728 7F032BF8 8DE20018 */  lw    $v0, 0x18($t7)
-/* 06772C 7F032BFC C4640000 */  lwc1  $f4, ($v1)
-/* 067730 7F032C00 C4680008 */  lwc1  $f8, 8($v1)
-/* 067734 7F032C04 C4460008 */  lwc1  $f6, 8($v0)
-/* 067738 7F032C08 C44A0010 */  lwc1  $f10, 0x10($v0)
-/* 06773C 7F032C0C E7A00018 */  swc1  $f0, 0x18($sp)
-/* 067740 7F032C10 46062301 */  sub.s $f12, $f4, $f6
-/* 067744 7F032C14 0FC16A8C */  jal   atan2f
-/* 067748 7F032C18 460A4381 */   sub.s $f14, $f8, $f10
-/* 06774C 7F032C1C C7A20018 */  lwc1  $f2, 0x18($sp)
-/* 067750 7F032C20 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 067754 7F032C24 3C018005 */  lui   $at, %hi(D_800520D0)
-/* 067758 7F032C28 4602003C */  c.lt.s $f0, $f2
-/* 06775C 7F032C2C 27BD0020 */  addiu $sp, $sp, 0x20
-/* 067760 7F032C30 46020381 */  sub.s $f14, $f0, $f2
-/* 067764 7F032C34 45000003 */  bc1f  .L7F032C44
-/* 067768 7F032C38 46007306 */   mov.s $f12, $f14
-/* 06776C 7F032C3C C43020D0 */  lwc1  $f16, %lo(D_800520D0)($at)
-/* 067770 7F032C40 46107300 */  add.s $f12, $f14, $f16
-.L7F032C44:
-/* 067774 7F032C44 03E00008 */  jr    $ra
-/* 067778 7F032C48 46006006 */   mov.s $f0, $f12
-)
-#endif
-
 
 
 #ifdef NONMATCHING
