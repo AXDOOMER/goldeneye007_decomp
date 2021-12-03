@@ -24452,8 +24452,8 @@ glabel sub_GAME_7F067FBC
 #endif
 
 void get_bullet_angle(f32* horizontal_angle, f32* vertical_angle) {
-	*horizontal_angle = g_CurrentPlayer->field_FE8;
-	*vertical_angle = g_CurrentPlayer->field_FEC;
+	*horizontal_angle = g_CurrentPlayer->crosshair_angle.f[0];
+	*vertical_angle = g_CurrentPlayer->crosshair_angle.f[1];
 }
 
 #ifdef NONMATCHING
@@ -24575,36 +24575,17 @@ glabel sub_GAME_7F0680D4
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F068190(void *arg0) {
-    // Node 0
-    *arg0 = 0.0f;
-    arg0->unk4 = 0.0f;
-    arg0->unk8 = 0.0f;
-    return sub_GAME_7F077EEC((g_CurrentPlayer + 0xfe8), 0x3f800000);
-}
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F068190
-/* 09CCC0 7F068190 44800000 */  mtc1  $zero, $f0
-/* 09CCC4 7F068194 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 09CCC8 7F068198 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09CCCC 7F06819C E4800000 */  swc1  $f0, ($a0)
-/* 09CCD0 7F0681A0 E4800004 */  swc1  $f0, 4($a0)
-/* 09CCD4 7F0681A4 E4800008 */  swc1  $f0, 8($a0)
-/* 09CCD8 7F0681A8 3C048008 */  lui   $a0, %hi(g_CurrentPlayer)
-/* 09CCDC 7F0681AC 8C84A0B0 */  lw    $a0, %lo(g_CurrentPlayer)($a0)
-/* 09CCE0 7F0681B0 3C063F80 */  lui   $a2, 0x3f80
-/* 09CCE4 7F0681B4 0FC1DFBB */  jal   sub_GAME_7F077EEC
-/* 09CCE8 7F0681B8 24840FE8 */   addiu $a0, $a0, 0xfe8
-/* 09CCEC 7F0681BC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09CCF0 7F0681C0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 09CCF4 7F0681C4 03E00008 */  jr    $ra
-/* 09CCF8 7F0681C8 00000000 */   nop
-)
-#endif
+/**
+ * Address 0x7F068190.
+*/
+void sub_GAME_7F068190(struct coord3d *arg0, struct coord3d *arg1)
+{
+    arg0->f[0] = 0.0f;
+    arg0->f[1] = 0.0f;
+    arg0->f[2] = 0.0f;
 
+    sub_GAME_7F077EEC(&g_CurrentPlayer->crosshair_angle, arg1, 1.0f);
+}
 
 
 
@@ -28866,8 +28847,8 @@ void display_in_game_crosshair(s32 *gdl) {
         sp54 = *gdl;
         likely_generate_DL_for_image_declaration(&sp54, crosshairimage, 4, 0, 0);
 
-        xypos[0] = g_CurrentPlayer->field_FE8;
-        xypos[1] = g_CurrentPlayer->field_FEC;
+        xypos[0] = g_CurrentPlayer->crosshair_angle.f[0];
+        xypos[1] = g_CurrentPlayer->crosshair_angle.f[1];
         halfedxy[0] = 16.0f;
         halfedxy[1] = 16.0f;
 

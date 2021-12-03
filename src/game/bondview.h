@@ -988,8 +988,12 @@ struct player
   u8 field_FDF;
   s32 field_FE0;
   s32 field_FE4;
-  f32 field_FE8;
-  f32 field_FEC;
+
+  /**
+   * Crosshair or bullet angle related.
+   * Offset 0xfe8.
+  */
+  struct coord2d crosshair_angle;
   f32 crosshair_x_pos;
   f32 crosshair_y_pos;
   f32 field_FF8;
@@ -3144,6 +3148,7 @@ void bondviewSetVisibleToGuardsFlag(s32 param_1);
 Mtxf *currentPlayerGetMatrix10EC(void);
 f32 get_curplay_horizontal_rotation_in_degrees(void);
 Mtxf *currentPlayerGetMatrix10CC(void);
+void sub_GAME_7F077EEC(struct coord2d *in, struct coord3d *out, f32 value);
 
 // unknown pointer arg0
 s32 sub_GAME_7F08BCC0(void *arg0, s32 arg1);

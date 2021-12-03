@@ -250,5 +250,6 @@ void recall_joy2_hits_edit_detail_edit_flag(s32 arg0, u8 *arg1, s32 arg2);
 void recall_joy2_hits_edit_flag(s32 arg0, struct coord3d *arg1, s32 arg2);
 void sub_GAME_7F05EB0C(ObjectRecord *arg0, struct coord3d *arg1, struct StandTile *arg2, Mtxf *arg3, struct coord3d *arg4, Mtxf *arg5, struct PropRecord *arg6);
 void sub_GAME_7F061948(struct ChrRecord_f180 *arg0, ITEM_IDS item, struct coord3d *arg2, struct coord3d *arg3);
+void sub_GAME_7F068190(struct coord3d *arg0, struct coord3d *arg1);
 
 #endif

@@ -634,7 +634,7 @@ void currentPlayerSetCameraScale(void)
 	g_CurrentPlayer->c_cameraleftnorm.z = -fVar5 * fVar4;
 }
 
-void sub_GAME_7F077EEC(struct coord3d *in, struct coord3d *out, f32 value) {
+void sub_GAME_7F077EEC(struct coord2d *in, struct coord3d *out, f32 value) {
     f32 norm;
     f32 x;
     f32 y;
