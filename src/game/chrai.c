@@ -2927,7 +2927,7 @@ action05_Jump_To_Function_4:
 /* 06A1A4 7F035674 00408825 */   move  $s1, $v0
 .L7F035678:
 /* 06A1A8 7F035678 02E02025 */  move  $a0, $s7
-/* 06A1AC 7F03567C 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06A1AC 7F03567C 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06A1B0 7F035680 A7A30792 */   sh    $v1, 0x792($sp)
 /* 06A1B4 7F035684 97A30792 */  lhu   $v1, 0x792($sp)
 /* 06A1B8 7F035688 10400006 */  beqz  $v0, .L7F0356A4
@@ -3124,7 +3124,7 @@ action2F_When_Guard_Stops_Moving_RVL_2:
 /* 06A458 7F035928 26310002 */   addiu $s1, $s1, 2
 action30_Detect_If_Guard_Killed_RVL_If_So_3:
 /* 06A45C 7F03592C 02E02025 */  move  $a0, $s7
-/* 06A460 7F035930 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06A460 7F035930 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06A464 7F035934 92250001 */   lbu   $a1, 1($s1)
 /* 06A468 7F035938 10400004 */  beqz  $v0, .L7F03594C
 /* 06A46C 7F03593C 00402025 */   move  $a0, $v0
@@ -3145,7 +3145,7 @@ action30_Detect_If_Guard_Killed_RVL_If_So_3:
 /* 06A4A0 7F035970 26310003 */   addiu $s1, $s1, 3
 action31_If_GuardID_Finish_DeathAnimation_RVL_3:
 /* 06A4A4 7F035974 02E02025 */  move  $a0, $s7
-/* 06A4A8 7F035978 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06A4A8 7F035978 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06A4AC 7F03597C 92250001 */   lbu   $a1, 1($s1)
 /* 06A4B0 7F035980 10400003 */  beqz  $v0, .L7F035990
 /* 06A4B4 7F035984 02C02025 */   move  $a0, $s6
@@ -3399,7 +3399,7 @@ action17_Guard_Constantly_Angles_To_Face_RVL_6:
 /* 06A824 7F035CF4 26310006 */   addiu $s1, $s1, 6
 action18_Shoot_Guard_ID_In_Style_With_Weapon_Type_num_4:
 /* 06A828 7F035CF8 02E02025 */  move  $a0, $s7
-/* 06A82C 7F035CFC 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06A82C 7F035CFC 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06A830 7F035D00 92250001 */   lbu   $a1, 1($s1)
 /* 06A834 7F035D04 3C188003 */  lui   $t8, %hi(D_80030A70) 
 /* 06A838 7F035D08 27180A70 */  addiu $t8, %lo(D_80030A70) # addiu $t8, $t8, 0xa70
@@ -3427,11 +3427,11 @@ action18_Shoot_Guard_ID_In_Style_With_Weapon_Type_num_4:
 /* 06A888 7F035D58 26310004 */   addiu $s1, $s1, 4
 action19_Guard_ID1_Shoots_Guard_ID2_In_Style_4:
 /* 06A88C 7F035D5C 02E02025 */  move  $a0, $s7
-/* 06A890 7F035D60 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06A890 7F035D60 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06A894 7F035D64 92250001 */   lbu   $a1, 1($s1)
 /* 06A898 7F035D68 00408025 */  move  $s0, $v0
 /* 06A89C 7F035D6C 02E02025 */  move  $a0, $s7
-/* 06A8A0 7F035D70 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06A8A0 7F035D70 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06A8A4 7F035D74 92250002 */   lbu   $a1, 2($s1)
 /* 06A8A8 7F035D78 1200003C */  beqz  $s0, .L7F035E6C
 /* 06A8AC 7F035D7C AFA206E8 */   sw    $v0, 0x6e8($sp)
@@ -3550,7 +3550,7 @@ action22_Guard_Set_To_Move_Fades_And_Disappear_1:
 /* 06AA4C 7F035F1C 26310001 */   addiu $s1, $s1, 1
 action23_Eliminate_Guard_ID_2:
 /* 06AA50 7F035F20 02E02025 */  move  $a0, $s7
-/* 06AA54 7F035F24 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06AA54 7F035F24 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06AA58 7F035F28 92250001 */   lbu   $a1, 1($s1)
 /* 06AA5C 7F035F2C 10400007 */  beqz  $v0, .L7F035F4C
 /* 06AA60 7F035F30 26520002 */   addiu $s2, $s2, 2
@@ -3970,7 +3970,7 @@ action3F_If_Heard_Bond_RVL_2:
 /* 06B00C 7F0364DC 26310002 */   addiu $s1, $s1, 2
 action40_If_Another_Guard_In_Same_Room_As_Guard_ID_RVL_3:
 /* 06B010 7F0364E0 02E02025 */  move  $a0, $s7
-/* 06B014 7F0364E4 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06B014 7F0364E4 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06B018 7F0364E8 92250001 */   lbu   $a1, 1($s1)
 /* 06B01C 7F0364EC 50400012 */  beql  $v0, $zero, .L7F036538
 /* 06B020 7F0364F0 26520003 */   addiu $s2, $s2, 3
@@ -4282,7 +4282,7 @@ action4C_RVL_If_Not_In_Proximity_Of_Bond_4:
 /* 06B470 7F036940 26310004 */   addiu $s1, $s1, 4
 action4D_When_Guard_In_Proximity_Of_Preset_RVL_7:
 /* 06B474 7F036944 02E02025 */  move  $a0, $s7
-/* 06B478 7F036948 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06B478 7F036948 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06B47C 7F03694C 92250001 */   lbu   $a1, 1($s1)
 /* 06B480 7F036950 922E0002 */  lbu   $t6, 2($s1)
 /* 06B484 7F036954 92380003 */  lbu   $t8, 3($s1)
@@ -4320,7 +4320,7 @@ action4D_When_Guard_In_Proximity_Of_Preset_RVL_7:
 /* 06B500 7F0369D0 26310007 */   addiu $s1, $s1, 7
 action4E_When_Guard_Not_In_Proximity_Of_Preset_RVL_7:
 /* 06B504 7F0369D4 02E02025 */  move  $a0, $s7
-/* 06B508 7F0369D8 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06B508 7F0369D8 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06B50C 7F0369DC 92250001 */   lbu   $a1, 1($s1)
 /* 06B510 7F0369E0 922D0002 */  lbu   $t5, 2($s1)
 /* 06B514 7F0369E4 922F0003 */  lbu   $t7, 3($s1)
@@ -4834,7 +4834,7 @@ action60_Guard_Drops_16_Object_num_2:
 /* 06BC44 7F037114 26310002 */   addiu $s1, $s1, 2
 action61_Kill_Guard_num_2:
 /* 06BC48 7F037118 02E02025 */  move  $a0, $s7
-/* 06BC4C 7F03711C 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06BC4C 7F03711C 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06BC50 7F037120 92250001 */   lbu   $a1, 1($s1)
 /* 06BC54 7F037124 10400006 */  beqz  $v0, .L7F037140
 /* 06BC58 7F037128 00402025 */   move  $a0, $v0
@@ -4850,7 +4850,7 @@ action61_Kill_Guard_num_2:
 /* 06BC78 7F037148 26310002 */   addiu $s1, $s1, 2
 action62_Guard_num_Throws_Equipment_2:
 /* 06BC7C 7F03714C 02E02025 */  move  $a0, $s7
-/* 06BC80 7F037150 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06BC80 7F037150 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06BC84 7F037154 92250001 */   lbu   $a1, 1($s1)
 /* 06BC88 7F037158 10400015 */  beqz  $v0, .L7F0371B0
 /* 06BC8C 7F03715C 00408025 */   move  $s0, $v0
@@ -4904,7 +4904,7 @@ action64_Type_16_Object_Equipped_On_Guard_3:
 /* 06BD30 7F037200 92240001 */   lbu   $a0, 1($s1)
 /* 06BD34 7F037204 00408025 */  move  $s0, $v0
 /* 06BD38 7F037208 02E02025 */  move  $a0, $s7
-/* 06BD3C 7F03720C 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06BD3C 7F03720C 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06BD40 7F037210 92250002 */   lbu   $a1, 2($s1)
 /* 06BD44 7F037214 1200001F */  beqz  $s0, .L7F037294
 /* 06BD48 7F037218 00409825 */   move  $s3, $v0
@@ -5362,7 +5362,7 @@ action7C_If_Guard_Health_Below_Value_RVL_4:
 /* 06C390 7F037860 02E02025 */  move  $a0, $s7
 /* 06C394 7F037864 460A3402 */  mul.s $f16, $f6, $f10
 /* 06C398 7F037868 E7B00438 */  swc1  $f16, 0x438($sp)
-/* 06C39C 7F03786C 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06C39C 7F03786C 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06C3A0 7F037870 92250001 */   lbu   $a1, 1($s1)
 /* 06C3A4 7F037874 50400011 */  beql  $v0, $zero, .L7F0378BC
 /* 06C3A8 7F037878 26520004 */   addiu $s2, $s2, 4
@@ -5400,7 +5400,7 @@ action7D_If_Guard_Health_Above_Value_RVL_4:
 /* 06C41C 7F0378EC 02E02025 */  move  $a0, $s7
 /* 06C420 7F0378F0 46048202 */  mul.s $f8, $f16, $f4
 /* 06C424 7F0378F4 E7A8042C */  swc1  $f8, 0x42c($sp)
-/* 06C428 7F0378F8 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06C428 7F0378F8 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06C42C 7F0378FC 92250001 */   lbu   $a1, 1($s1)
 /* 06C430 7F037900 50400011 */  beql  $v0, $zero, .L7F037948
 /* 06C434 7F037904 26520004 */   addiu $s2, $s2, 4
@@ -5425,7 +5425,7 @@ action7D_If_Guard_Health_Above_Value_RVL_4:
 /* 06C47C 7F03794C 26310004 */   addiu $s1, $s1, 4
 action7E_If_Guard_nums_Bitflag_01000000_Set_RVL_3:
 /* 06C480 7F037950 02E02025 */  move  $a0, $s7
-/* 06C484 7F037954 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06C484 7F037954 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06C488 7F037958 92250001 */   lbu   $a1, 1($s1)
 /* 06C48C 7F03795C 50400011 */  beql  $v0, $zero, .L7F0379A4
 /* 06C490 7F037960 26520003 */   addiu $s2, $s2, 3
@@ -6120,7 +6120,7 @@ actionA0_Set_Guard_ID_Bits_6:
 /* 06CE44 7F038314 01CF4825 */  or    $t1, $t6, $t7
 /* 06CE48 7F038318 02E02025 */  move  $a0, $s7
 /* 06CE4C 7F03831C 92250001 */  lbu   $a1, 1($s1)
-/* 06CE50 7F038320 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06CE50 7F038320 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06CE54 7F038324 012A8025 */   or    $s0, $t1, $t2
 /* 06CE58 7F038328 10400004 */  beqz  $v0, .L7F03833C
 /* 06CE5C 7F03832C 26520006 */   addiu $s2, $s2, 6
@@ -6142,7 +6142,7 @@ actionA1_Unset_Guard_ID_Bits_6:
 /* 06CE94 7F038364 01EA5825 */  or    $t3, $t7, $t2
 /* 06CE98 7F038368 02E02025 */  move  $a0, $s7
 /* 06CE9C 7F03836C 92250001 */  lbu   $a1, 1($s1)
-/* 06CEA0 7F038370 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06CEA0 7F038370 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06CEA4 7F038374 016D8025 */   or    $s0, $t3, $t5
 /* 06CEA8 7F038378 10400005 */  beqz  $v0, .L7F038390
 /* 06CEAC 7F03837C 26520006 */   addiu $s2, $s2, 6
@@ -6165,7 +6165,7 @@ actionA2_Check_Guard_Bits_If_Same_RVL_7:
 /* 06CEE8 7F0383B8 016CC025 */  or    $t8, $t3, $t4
 /* 06CEEC 7F0383BC 02E02025 */  move  $a0, $s7
 /* 06CEF0 7F0383C0 92250001 */  lbu   $a1, 1($s1)
-/* 06CEF4 7F0383C4 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06CEF4 7F0383C4 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06CEF8 7F0383C8 03198025 */   or    $s0, $t8, $t9
 /* 06CEFC 7F0383CC 5040000D */  beql  $v0, $zero, .L7F038404
 /* 06CF00 7F0383D0 26520007 */   addiu $s2, $s2, 7
@@ -6831,7 +6831,7 @@ actionC1_GuardIDDoesAV_If_Gunfire_RVL_WhenComplete_5:
 /* 06D868 7F038D38 0000A025 */   move  $s4, $zero
 /* 06D86C 7F038D3C 00408025 */  move  $s0, $v0
 /* 06D870 7F038D40 02E02025 */  move  $a0, $s7
-/* 06D874 7F038D44 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06D874 7F038D44 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06D878 7F038D48 92250001 */   lbu   $a1, 1($s1)
 /* 06D87C 7F038D4C 10400051 */  beqz  $v0, .L7F038E94
 /* 06D880 7F038D50 0040A825 */   move  $s5, $v0
@@ -6853,7 +6853,7 @@ actionC1_GuardIDDoesAV_If_Gunfire_RVL_WhenComplete_5:
 /* 06D8C0 7F038D90 AFA90218 */  sw    $t1, 0x218($sp)
 /* 06D8C4 7F038D94 86B00000 */  lh    $s0, ($s5)
 /* 06D8C8 7F038D98 26102710 */  addiu $s0, $s0, 0x2710
-/* 06D8CC 7F038D9C 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06D8CC 7F038D9C 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06D8D0 7F038DA0 02002825 */   move  $a1, $s0
 /* 06D8D4 7F038DA4 14400003 */  bnez  $v0, .L7F038DB4
 /* 06D8D8 7F038DA8 02A02025 */   move  $a0, $s5
@@ -7562,7 +7562,7 @@ actionD9_GuardIDMovedToPresetReturnLoopIfSuccessful_5:
 /* 06E2D8 7F0397A8 000BC200 */  sll   $t8, $t3, 8
 /* 06E2DC 7F0397AC 92250001 */  lbu   $a1, 1($s1)
 /* 06E2E0 7F0397B0 0000A025 */  move  $s4, $zero
-/* 06E2E4 7F0397B4 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06E2E4 7F0397B4 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06E2E8 7F0397B8 03199825 */   or    $s3, $t8, $t9
 /* 06E2EC 7F0397BC 1040005E */  beqz  $v0, .L7F039938
 /* 06E2F0 7F0397C0 00408025 */   move  $s0, $v0
@@ -7808,7 +7808,7 @@ actionDF_Open_Type_16_Door_Used_Cut_Scenes_2:
 /* 06E65C 7F039B2C 26310002 */   addiu $s1, $s1, 2
 actionE0_Guard_ID_Draws_Weapon_num_3:
 /* 06E660 7F039B30 02E02025 */  move  $a0, $s7
-/* 06E664 7F039B34 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06E664 7F039B34 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06E668 7F039B38 92250001 */   lbu   $a1, 1($s1)
 /* 06E66C 7F039B3C 10400003 */  beqz  $v0, .L7F039B4C
 /* 06E670 7F039B40 00402025 */   move  $a0, $v0
@@ -8180,7 +8180,7 @@ actionF7_If_Number_Of_Hostages_Scientists_Killed_RVL_3:
 /* 06EBA0 7F03A070 26310003 */   addiu $s1, $s1, 3
 actionF8_If_Guard_ID_00200000_Flag_Set_Unset_And_Return_3:
 /* 06EBA4 7F03A074 02E02025 */  move  $a0, $s7
-/* 06EBA8 7F03A078 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06EBA8 7F03A078 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06EBAC 7F03A07C 92250001 */   lbu   $a1, 1($s1)
 /* 06EBB0 7F03A080 50400012 */  beql  $v0, $zero, .L7F03A0CC
 /* 06EBB4 7F03A084 26520003 */   addiu $s2, $s2, 3
@@ -8794,7 +8794,7 @@ action05_Jump_To_Function_4:
 /* 06A1A4 7F035674 00408825 */   move  $s1, $v0
 .L7F035678:
 /* 06A1A8 7F035678 02E02025 */  move  $a0, $s7
-/* 06A1AC 7F03567C 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06A1AC 7F03567C 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06A1B0 7F035680 A7A30792 */   sh    $v1, 0x792($sp)
 /* 06A1B4 7F035684 97A30792 */  lhu   $v1, 0x792($sp)
 /* 06A1B8 7F035688 10400006 */  beqz  $v0, .L7F0356A4
@@ -8991,7 +8991,7 @@ action2F_When_Guard_Stops_Moving_RVL_2:
 /* 06A458 7F035928 26310002 */   addiu $s1, $s1, 2
 action30_Detect_If_Guard_Killed_RVL_If_So_3:
 /* 06A45C 7F03592C 02E02025 */  move  $a0, $s7
-/* 06A460 7F035930 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06A460 7F035930 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06A464 7F035934 92250001 */   lbu   $a1, 1($s1)
 /* 06A468 7F035938 10400004 */  beqz  $v0, .L7F03594C
 /* 06A46C 7F03593C 00402025 */   move  $a0, $v0
@@ -9012,7 +9012,7 @@ action30_Detect_If_Guard_Killed_RVL_If_So_3:
 /* 06A4A0 7F035970 26310003 */   addiu $s1, $s1, 3
 action31_If_GuardID_Finish_DeathAnimation_RVL_3:
 /* 06A4A4 7F035974 02E02025 */  move  $a0, $s7
-/* 06A4A8 7F035978 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06A4A8 7F035978 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06A4AC 7F03597C 92250001 */   lbu   $a1, 1($s1)
 /* 06A4B0 7F035980 10400003 */  beqz  $v0, .L7F035990
 /* 06A4B4 7F035984 02C02025 */   move  $a0, $s6
@@ -9266,7 +9266,7 @@ action17_Guard_Constantly_Angles_To_Face_RVL_6:
 /* 06A824 7F035CF4 26310006 */   addiu $s1, $s1, 6
 action18_Shoot_Guard_ID_In_Style_With_Weapon_Type_num_4:
 /* 06A828 7F035CF8 02E02025 */  move  $a0, $s7
-/* 06A82C 7F035CFC 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06A82C 7F035CFC 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06A830 7F035D00 92250001 */   lbu   $a1, 1($s1)
 /* 06A834 7F035D04 3C188003 */  lui   $t8, %hi(D_80030A70) 
 /* 06A838 7F035D08 27180A70 */  addiu $t8, %lo(D_80030A70) # addiu $t8, $t8, 0xa70
@@ -9294,11 +9294,11 @@ action18_Shoot_Guard_ID_In_Style_With_Weapon_Type_num_4:
 /* 06A888 7F035D58 26310004 */   addiu $s1, $s1, 4
 action19_Guard_ID1_Shoots_Guard_ID2_In_Style_4:
 /* 06A88C 7F035D5C 02E02025 */  move  $a0, $s7
-/* 06A890 7F035D60 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06A890 7F035D60 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06A894 7F035D64 92250001 */   lbu   $a1, 1($s1)
 /* 06A898 7F035D68 00408025 */  move  $s0, $v0
 /* 06A89C 7F035D6C 02E02025 */  move  $a0, $s7
-/* 06A8A0 7F035D70 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06A8A0 7F035D70 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06A8A4 7F035D74 92250002 */   lbu   $a1, 2($s1)
 /* 06A8A8 7F035D78 1200003C */  beqz  $s0, .L7F035E6C
 /* 06A8AC 7F035D7C AFA206E8 */   sw    $v0, 0x6e8($sp)
@@ -9417,7 +9417,7 @@ action22_Guard_Set_To_Move_Fades_And_Disappear_1:
 /* 06AA4C 7F035F1C 26310001 */   addiu $s1, $s1, 1
 action23_Eliminate_Guard_ID_2:
 /* 06AA50 7F035F20 02E02025 */  move  $a0, $s7
-/* 06AA54 7F035F24 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06AA54 7F035F24 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06AA58 7F035F28 92250001 */   lbu   $a1, 1($s1)
 /* 06AA5C 7F035F2C 10400007 */  beqz  $v0, .L7F035F4C
 /* 06AA60 7F035F30 26520002 */   addiu $s2, $s2, 2
@@ -9837,7 +9837,7 @@ action3F_If_Heard_Bond_RVL_2:
 /* 06B00C 7F0364DC 26310002 */   addiu $s1, $s1, 2
 action40_If_Another_Guard_In_Same_Room_As_Guard_ID_RVL_3:
 /* 06B010 7F0364E0 02E02025 */  move  $a0, $s7
-/* 06B014 7F0364E4 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06B014 7F0364E4 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06B018 7F0364E8 92250001 */   lbu   $a1, 1($s1)
 /* 06B01C 7F0364EC 50400012 */  beql  $v0, $zero, .L7F036538
 /* 06B020 7F0364F0 26520003 */   addiu $s2, $s2, 3
@@ -10149,7 +10149,7 @@ action4C_RVL_If_Not_In_Proximity_Of_Bond_4:
 /* 06B470 7F036940 26310004 */   addiu $s1, $s1, 4
 action4D_When_Guard_In_Proximity_Of_Preset_RVL_7:
 /* 06B474 7F036944 02E02025 */  move  $a0, $s7
-/* 06B478 7F036948 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06B478 7F036948 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06B47C 7F03694C 92250001 */   lbu   $a1, 1($s1)
 /* 06B480 7F036950 922E0002 */  lbu   $t6, 2($s1)
 /* 06B484 7F036954 92380003 */  lbu   $t8, 3($s1)
@@ -10187,7 +10187,7 @@ action4D_When_Guard_In_Proximity_Of_Preset_RVL_7:
 /* 06B500 7F0369D0 26310007 */   addiu $s1, $s1, 7
 action4E_When_Guard_Not_In_Proximity_Of_Preset_RVL_7:
 /* 06B504 7F0369D4 02E02025 */  move  $a0, $s7
-/* 06B508 7F0369D8 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06B508 7F0369D8 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06B50C 7F0369DC 92250001 */   lbu   $a1, 1($s1)
 /* 06B510 7F0369E0 922D0002 */  lbu   $t5, 2($s1)
 /* 06B514 7F0369E4 922F0003 */  lbu   $t7, 3($s1)
@@ -10701,7 +10701,7 @@ action60_Guard_Drops_16_Object_num_2:
 /* 06BC44 7F037114 26310002 */   addiu $s1, $s1, 2
 action61_Kill_Guard_num_2:
 /* 06BC48 7F037118 02E02025 */  move  $a0, $s7
-/* 06BC4C 7F03711C 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06BC4C 7F03711C 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06BC50 7F037120 92250001 */   lbu   $a1, 1($s1)
 /* 06BC54 7F037124 10400006 */  beqz  $v0, .L7F037140
 /* 06BC58 7F037128 00402025 */   move  $a0, $v0
@@ -10717,7 +10717,7 @@ action61_Kill_Guard_num_2:
 /* 06BC78 7F037148 26310002 */   addiu $s1, $s1, 2
 action62_Guard_num_Throws_Equipment_2:
 /* 06BC7C 7F03714C 02E02025 */  move  $a0, $s7
-/* 06BC80 7F037150 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06BC80 7F037150 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06BC84 7F037154 92250001 */   lbu   $a1, 1($s1)
 /* 06BC88 7F037158 10400015 */  beqz  $v0, .L7F0371B0
 /* 06BC8C 7F03715C 00408025 */   move  $s0, $v0
@@ -10771,7 +10771,7 @@ action64_Type_16_Object_Equipped_On_Guard_3:
 /* 06BD30 7F037200 92240001 */   lbu   $a0, 1($s1)
 /* 06BD34 7F037204 00408025 */  move  $s0, $v0
 /* 06BD38 7F037208 02E02025 */  move  $a0, $s7
-/* 06BD3C 7F03720C 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06BD3C 7F03720C 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06BD40 7F037210 92250002 */   lbu   $a1, 2($s1)
 /* 06BD44 7F037214 1200001F */  beqz  $s0, .L7F037294
 /* 06BD48 7F037218 00409825 */   move  $s3, $v0
@@ -11229,7 +11229,7 @@ action7C_If_Guard_Health_Below_Value_RVL_4:
 /* 06C390 7F037860 02E02025 */  move  $a0, $s7
 /* 06C394 7F037864 460A3402 */  mul.s $f16, $f6, $f10
 /* 06C398 7F037868 E7B00438 */  swc1  $f16, 0x438($sp)
-/* 06C39C 7F03786C 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06C39C 7F03786C 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06C3A0 7F037870 92250001 */   lbu   $a1, 1($s1)
 /* 06C3A4 7F037874 50400011 */  beql  $v0, $zero, .L7F0378BC
 /* 06C3A8 7F037878 26520004 */   addiu $s2, $s2, 4
@@ -11267,7 +11267,7 @@ action7D_If_Guard_Health_Above_Value_RVL_4:
 /* 06C41C 7F0378EC 02E02025 */  move  $a0, $s7
 /* 06C420 7F0378F0 46048202 */  mul.s $f8, $f16, $f4
 /* 06C424 7F0378F4 E7A8042C */  swc1  $f8, 0x42c($sp)
-/* 06C428 7F0378F8 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06C428 7F0378F8 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06C42C 7F0378FC 92250001 */   lbu   $a1, 1($s1)
 /* 06C430 7F037900 50400011 */  beql  $v0, $zero, .L7F037948
 /* 06C434 7F037904 26520004 */   addiu $s2, $s2, 4
@@ -11292,7 +11292,7 @@ action7D_If_Guard_Health_Above_Value_RVL_4:
 /* 06C47C 7F03794C 26310004 */   addiu $s1, $s1, 4
 action7E_If_Guard_nums_Bitflag_01000000_Set_RVL_3:
 /* 06C480 7F037950 02E02025 */  move  $a0, $s7
-/* 06C484 7F037954 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06C484 7F037954 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06C488 7F037958 92250001 */   lbu   $a1, 1($s1)
 /* 06C48C 7F03795C 50400011 */  beql  $v0, $zero, .L7F0379A4
 /* 06C490 7F037960 26520003 */   addiu $s2, $s2, 3
@@ -11987,7 +11987,7 @@ actionA0_Set_Guard_ID_Bits_6:
 /* 06CE44 7F038314 01CF4825 */  or    $t1, $t6, $t7
 /* 06CE48 7F038318 02E02025 */  move  $a0, $s7
 /* 06CE4C 7F03831C 92250001 */  lbu   $a1, 1($s1)
-/* 06CE50 7F038320 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06CE50 7F038320 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06CE54 7F038324 012A8025 */   or    $s0, $t1, $t2
 /* 06CE58 7F038328 10400004 */  beqz  $v0, .L7F03833C
 /* 06CE5C 7F03832C 26520006 */   addiu $s2, $s2, 6
@@ -12009,7 +12009,7 @@ actionA1_Unset_Guard_ID_Bits_6:
 /* 06CE94 7F038364 01EA5825 */  or    $t3, $t7, $t2
 /* 06CE98 7F038368 02E02025 */  move  $a0, $s7
 /* 06CE9C 7F03836C 92250001 */  lbu   $a1, 1($s1)
-/* 06CEA0 7F038370 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06CEA0 7F038370 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06CEA4 7F038374 016D8025 */   or    $s0, $t3, $t5
 /* 06CEA8 7F038378 10400005 */  beqz  $v0, .L7F038390
 /* 06CEAC 7F03837C 26520006 */   addiu $s2, $s2, 6
@@ -12032,7 +12032,7 @@ actionA2_Check_Guard_Bits_If_Same_RVL_7:
 /* 06CEE8 7F0383B8 016CC025 */  or    $t8, $t3, $t4
 /* 06CEEC 7F0383BC 02E02025 */  move  $a0, $s7
 /* 06CEF0 7F0383C0 92250001 */  lbu   $a1, 1($s1)
-/* 06CEF4 7F0383C4 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06CEF4 7F0383C4 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06CEF8 7F0383C8 03198025 */   or    $s0, $t8, $t9
 /* 06CEFC 7F0383CC 5040000D */  beql  $v0, $zero, .L7F038404
 /* 06CF00 7F0383D0 26520007 */   addiu $s2, $s2, 7
@@ -12698,7 +12698,7 @@ actionC1_GuardIDDoesAV_If_Gunfire_RVL_WhenComplete_5:
 /* 06D868 7F038D38 0000A025 */   move  $s4, $zero
 /* 06D86C 7F038D3C 00408025 */  move  $s0, $v0
 /* 06D870 7F038D40 02E02025 */  move  $a0, $s7
-/* 06D874 7F038D44 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06D874 7F038D44 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06D878 7F038D48 92250001 */   lbu   $a1, 1($s1)
 /* 06D87C 7F038D4C 10400051 */  beqz  $v0, .L7F038E94
 /* 06D880 7F038D50 0040A825 */   move  $s5, $v0
@@ -12720,7 +12720,7 @@ actionC1_GuardIDDoesAV_If_Gunfire_RVL_WhenComplete_5:
 /* 06D8C0 7F038D90 AFA90218 */  sw    $t1, 0x218($sp)
 /* 06D8C4 7F038D94 86B00000 */  lh    $s0, ($s5)
 /* 06D8C8 7F038D98 26102710 */  addiu $s0, $s0, 0x2710
-/* 06D8CC 7F038D9C 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06D8CC 7F038D9C 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06D8D0 7F038DA0 02002825 */   move  $a1, $s0
 /* 06D8D4 7F038DA4 14400003 */  bnez  $v0, .L7F038DB4
 /* 06D8D8 7F038DA8 02A02025 */   move  $a0, $s5
@@ -13429,7 +13429,7 @@ actionD9_GuardIDMovedToPresetReturnLoopIfSuccessful_5:
 /* 06E2D8 7F0397A8 000BC200 */  sll   $t8, $t3, 8
 /* 06E2DC 7F0397AC 92250001 */  lbu   $a1, 1($s1)
 /* 06E2E0 7F0397B0 0000A025 */  move  $s4, $zero
-/* 06E2E4 7F0397B4 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06E2E4 7F0397B4 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06E2E8 7F0397B8 03199825 */   or    $s3, $t8, $t9
 /* 06E2EC 7F0397BC 1040005E */  beqz  $v0, .L7F039938
 /* 06E2F0 7F0397C0 00408025 */   move  $s0, $v0
@@ -13675,7 +13675,7 @@ actionDF_Open_Type_16_Door_Used_Cut_Scenes_2:
 /* 06E65C 7F039B2C 26310002 */   addiu $s1, $s1, 2
 actionE0_Guard_ID_Draws_Weapon_num_3:
 /* 06E660 7F039B30 02E02025 */  move  $a0, $s7
-/* 06E664 7F039B34 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06E664 7F039B34 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06E668 7F039B38 92250001 */   lbu   $a1, 1($s1)
 /* 06E66C 7F039B3C 10400003 */  beqz  $v0, .L7F039B4C
 /* 06E670 7F039B40 00402025 */   move  $a0, $v0
@@ -14047,7 +14047,7 @@ actionF7_If_Number_Of_Hostages_Scientists_Killed_RVL_3:
 /* 06EBA0 7F03A070 26310003 */   addiu $s1, $s1, 3
 actionF8_If_Guard_ID_00200000_Flag_Set_Unset_And_Return_3:
 /* 06EBA4 7F03A074 02E02025 */  move  $a0, $s7
-/* 06EBA8 7F03A078 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06EBA8 7F03A078 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06EBAC 7F03A07C 92250001 */   lbu   $a1, 1($s1)
 /* 06EBB0 7F03A080 50400012 */  beql  $v0, $zero, .L7F03A0CC
 /* 06EBB4 7F03A084 26520003 */   addiu $s2, $s2, 3
@@ -14662,7 +14662,7 @@ action05_Jump_To_Function_4:
 /* 06A1A4 7F035674 00408825 */   move  $s1, $v0
 .L7F035678:
 /* 06A1A8 7F035678 02E02025 */  move  $a0, $s7
-/* 06A1AC 7F03567C 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06A1AC 7F03567C 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06A1B0 7F035680 A7A30792 */   sh    $v1, 0x792($sp)
 /* 06A1B4 7F035684 97A30792 */  lhu   $v1, 0x792($sp)
 /* 06A1B8 7F035688 10400006 */  beqz  $v0, .L7F0356A4
@@ -14859,7 +14859,7 @@ action2F_When_Guard_Stops_Moving_RVL_2:
 /* 06A458 7F035928 26310002 */   addiu $s1, $s1, 2
 action30_Detect_If_Guard_Killed_RVL_If_So_3:
 /* 06A45C 7F03592C 02E02025 */  move  $a0, $s7
-/* 06A460 7F035930 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06A460 7F035930 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06A464 7F035934 92250001 */   lbu   $a1, 1($s1)
 /* 06A468 7F035938 10400004 */  beqz  $v0, .L7F03594C
 /* 06A46C 7F03593C 00402025 */   move  $a0, $v0
@@ -14880,7 +14880,7 @@ action30_Detect_If_Guard_Killed_RVL_If_So_3:
 /* 06A4A0 7F035970 26310003 */   addiu $s1, $s1, 3
 action31_If_GuardID_Finish_DeathAnimation_RVL_3:
 /* 06A4A4 7F035974 02E02025 */  move  $a0, $s7
-/* 06A4A8 7F035978 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06A4A8 7F035978 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06A4AC 7F03597C 92250001 */   lbu   $a1, 1($s1)
 /* 06A4B0 7F035980 10400003 */  beqz  $v0, .L7F035990
 /* 06A4B4 7F035984 02C02025 */   move  $a0, $s6
@@ -15134,7 +15134,7 @@ action17_Guard_Constantly_Angles_To_Face_RVL_6:
 /* 06A824 7F035CF4 26310006 */   addiu $s1, $s1, 6
 action18_Shoot_Guard_ID_In_Style_With_Weapon_Type_num_4:
 /* 06A828 7F035CF8 02E02025 */  move  $a0, $s7
-/* 06A82C 7F035CFC 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06A82C 7F035CFC 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06A830 7F035D00 92250001 */   lbu   $a1, 1($s1)
 /* 06A834 7F035D04 3C188003 */  lui   $t8, %hi(D_80030A70) 
 /* 06A838 7F035D08 27180A70 */  addiu $t8, %lo(D_80030A70) # addiu $t8, $t8, 0xa70
@@ -15162,11 +15162,11 @@ action18_Shoot_Guard_ID_In_Style_With_Weapon_Type_num_4:
 /* 06A888 7F035D58 26310004 */   addiu $s1, $s1, 4
 action19_Guard_ID1_Shoots_Guard_ID2_In_Style_4:
 /* 06A88C 7F035D5C 02E02025 */  move  $a0, $s7
-/* 06A890 7F035D60 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06A890 7F035D60 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06A894 7F035D64 92250001 */   lbu   $a1, 1($s1)
 /* 06A898 7F035D68 00408025 */  move  $s0, $v0
 /* 06A89C 7F035D6C 02E02025 */  move  $a0, $s7
-/* 06A8A0 7F035D70 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06A8A0 7F035D70 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06A8A4 7F035D74 92250002 */   lbu   $a1, 2($s1)
 /* 06A8A8 7F035D78 1200003C */  beqz  $s0, .L7F035E6C
 /* 06A8AC 7F035D7C AFA206E8 */   sw    $v0, 0x6e8($sp)
@@ -15285,7 +15285,7 @@ action22_Guard_Set_To_Move_Fades_And_Disappear_1:
 /* 06AA4C 7F035F1C 26310001 */   addiu $s1, $s1, 1
 action23_Eliminate_Guard_ID_2:
 /* 06AA50 7F035F20 02E02025 */  move  $a0, $s7
-/* 06AA54 7F035F24 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06AA54 7F035F24 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06AA58 7F035F28 92250001 */   lbu   $a1, 1($s1)
 /* 06AA5C 7F035F2C 10400007 */  beqz  $v0, .L7F035F4C
 /* 06AA60 7F035F30 26520002 */   addiu $s2, $s2, 2
@@ -15705,7 +15705,7 @@ action3F_If_Heard_Bond_RVL_2:
 /* 06B00C 7F0364DC 26310002 */   addiu $s1, $s1, 2
 action40_If_Another_Guard_In_Same_Room_As_Guard_ID_RVL_3:
 /* 06B010 7F0364E0 02E02025 */  move  $a0, $s7
-/* 06B014 7F0364E4 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06B014 7F0364E4 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06B018 7F0364E8 92250001 */   lbu   $a1, 1($s1)
 /* 06B01C 7F0364EC 50400012 */  beql  $v0, $zero, .L7F036538
 /* 06B020 7F0364F0 26520003 */   addiu $s2, $s2, 3
@@ -16017,7 +16017,7 @@ action4C_RVL_If_Not_In_Proximity_Of_Bond_4:
 /* 06B470 7F036940 26310004 */   addiu $s1, $s1, 4
 action4D_When_Guard_In_Proximity_Of_Preset_RVL_7:
 /* 06B474 7F036944 02E02025 */  move  $a0, $s7
-/* 06B478 7F036948 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06B478 7F036948 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06B47C 7F03694C 92250001 */   lbu   $a1, 1($s1)
 /* 06B480 7F036950 922E0002 */  lbu   $t6, 2($s1)
 /* 06B484 7F036954 92380003 */  lbu   $t8, 3($s1)
@@ -16055,7 +16055,7 @@ action4D_When_Guard_In_Proximity_Of_Preset_RVL_7:
 /* 06B500 7F0369D0 26310007 */   addiu $s1, $s1, 7
 action4E_When_Guard_Not_In_Proximity_Of_Preset_RVL_7:
 /* 06B504 7F0369D4 02E02025 */  move  $a0, $s7
-/* 06B508 7F0369D8 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06B508 7F0369D8 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06B50C 7F0369DC 92250001 */   lbu   $a1, 1($s1)
 /* 06B510 7F0369E0 922D0002 */  lbu   $t5, 2($s1)
 /* 06B514 7F0369E4 922F0003 */  lbu   $t7, 3($s1)
@@ -16569,7 +16569,7 @@ action60_Guard_Drops_16_Object_num_2:
 /* 06BC44 7F037114 26310002 */   addiu $s1, $s1, 2
 action61_Kill_Guard_num_2:
 /* 06BC48 7F037118 02E02025 */  move  $a0, $s7
-/* 06BC4C 7F03711C 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06BC4C 7F03711C 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06BC50 7F037120 92250001 */   lbu   $a1, 1($s1)
 /* 06BC54 7F037124 10400006 */  beqz  $v0, .L7F037140
 /* 06BC58 7F037128 00402025 */   move  $a0, $v0
@@ -16585,7 +16585,7 @@ action61_Kill_Guard_num_2:
 /* 06BC78 7F037148 26310002 */   addiu $s1, $s1, 2
 action62_Guard_num_Throws_Equipment_2:
 /* 06BC7C 7F03714C 02E02025 */  move  $a0, $s7
-/* 06BC80 7F037150 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06BC80 7F037150 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06BC84 7F037154 92250001 */   lbu   $a1, 1($s1)
 /* 06BC88 7F037158 10400015 */  beqz  $v0, .L7F0371B0
 /* 06BC8C 7F03715C 00408025 */   move  $s0, $v0
@@ -16639,7 +16639,7 @@ action64_Type_16_Object_Equipped_On_Guard_3:
 /* 06BD30 7F037200 92240001 */   lbu   $a0, 1($s1)
 /* 06BD34 7F037204 00408025 */  move  $s0, $v0
 /* 06BD38 7F037208 02E02025 */  move  $a0, $s7
-/* 06BD3C 7F03720C 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06BD3C 7F03720C 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06BD40 7F037210 92250002 */   lbu   $a1, 2($s1)
 /* 06BD44 7F037214 1200001F */  beqz  $s0, .L7F037294
 /* 06BD48 7F037218 00409825 */   move  $s3, $v0
@@ -17097,7 +17097,7 @@ action7C_If_Guard_Health_Below_Value_RVL_4:
 /* 06C390 7F037860 02E02025 */  move  $a0, $s7
 /* 06C394 7F037864 460A3402 */  mul.s $f16, $f6, $f10
 /* 06C398 7F037868 E7B00438 */  swc1  $f16, 0x438($sp)
-/* 06C39C 7F03786C 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06C39C 7F03786C 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06C3A0 7F037870 92250001 */   lbu   $a1, 1($s1)
 /* 06C3A4 7F037874 50400011 */  beql  $v0, $zero, .L7F0378BC
 /* 06C3A8 7F037878 26520004 */   addiu $s2, $s2, 4
@@ -17135,7 +17135,7 @@ action7D_If_Guard_Health_Above_Value_RVL_4:
 /* 06C41C 7F0378EC 02E02025 */  move  $a0, $s7
 /* 06C420 7F0378F0 46048202 */  mul.s $f8, $f16, $f4
 /* 06C424 7F0378F4 E7A8042C */  swc1  $f8, 0x42c($sp)
-/* 06C428 7F0378F8 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06C428 7F0378F8 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06C42C 7F0378FC 92250001 */   lbu   $a1, 1($s1)
 /* 06C430 7F037900 50400011 */  beql  $v0, $zero, .L7F037948
 /* 06C434 7F037904 26520004 */   addiu $s2, $s2, 4
@@ -17160,7 +17160,7 @@ action7D_If_Guard_Health_Above_Value_RVL_4:
 /* 06C47C 7F03794C 26310004 */   addiu $s1, $s1, 4
 action7E_If_Guard_nums_Bitflag_01000000_Set_RVL_3:
 /* 06C480 7F037950 02E02025 */  move  $a0, $s7
-/* 06C484 7F037954 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06C484 7F037954 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06C488 7F037958 92250001 */   lbu   $a1, 1($s1)
 /* 06C48C 7F03795C 50400011 */  beql  $v0, $zero, .L7F0379A4
 /* 06C490 7F037960 26520003 */   addiu $s2, $s2, 3
@@ -17855,7 +17855,7 @@ actionA0_Set_Guard_ID_Bits_6:
 /* 06CE44 7F038314 01CF4825 */  or    $t1, $t6, $t7
 /* 06CE48 7F038318 02E02025 */  move  $a0, $s7
 /* 06CE4C 7F03831C 92250001 */  lbu   $a1, 1($s1)
-/* 06CE50 7F038320 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06CE50 7F038320 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06CE54 7F038324 012A8025 */   or    $s0, $t1, $t2
 /* 06CE58 7F038328 10400004 */  beqz  $v0, .L7F03833C
 /* 06CE5C 7F03832C 26520006 */   addiu $s2, $s2, 6
@@ -17877,7 +17877,7 @@ actionA1_Unset_Guard_ID_Bits_6:
 /* 06CE94 7F038364 01EA5825 */  or    $t3, $t7, $t2
 /* 06CE98 7F038368 02E02025 */  move  $a0, $s7
 /* 06CE9C 7F03836C 92250001 */  lbu   $a1, 1($s1)
-/* 06CEA0 7F038370 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06CEA0 7F038370 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06CEA4 7F038374 016D8025 */   or    $s0, $t3, $t5
 /* 06CEA8 7F038378 10400005 */  beqz  $v0, .L7F038390
 /* 06CEAC 7F03837C 26520006 */   addiu $s2, $s2, 6
@@ -17900,7 +17900,7 @@ actionA2_Check_Guard_Bits_If_Same_RVL_7:
 /* 06CEE8 7F0383B8 016CC025 */  or    $t8, $t3, $t4
 /* 06CEEC 7F0383BC 02E02025 */  move  $a0, $s7
 /* 06CEF0 7F0383C0 92250001 */  lbu   $a1, 1($s1)
-/* 06CEF4 7F0383C4 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06CEF4 7F0383C4 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06CEF8 7F0383C8 03198025 */   or    $s0, $t8, $t9
 /* 06CEFC 7F0383CC 5040000D */  beql  $v0, $zero, .L7F038404
 /* 06CF00 7F0383D0 26520007 */   addiu $s2, $s2, 7
@@ -18566,7 +18566,7 @@ actionC1_GuardIDDoesAV_If_Gunfire_RVL_WhenComplete_5:
 /* 06D868 7F038D38 0000A025 */   move  $s4, $zero
 /* 06D86C 7F038D3C 00408025 */  move  $s0, $v0
 /* 06D870 7F038D40 02E02025 */  move  $a0, $s7
-/* 06D874 7F038D44 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06D874 7F038D44 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06D878 7F038D48 92250001 */   lbu   $a1, 1($s1)
 /* 06D87C 7F038D4C 10400051 */  beqz  $v0, .L7F038E94
 /* 06D880 7F038D50 0040A825 */   move  $s5, $v0
@@ -18588,7 +18588,7 @@ actionC1_GuardIDDoesAV_If_Gunfire_RVL_WhenComplete_5:
 /* 06D8C0 7F038D90 AFA90218 */  sw    $t1, 0x218($sp)
 /* 06D8C4 7F038D94 86B00000 */  lh    $s0, ($s5)
 /* 06D8C8 7F038D98 26102710 */  addiu $s0, $s0, 0x2710
-/* 06D8CC 7F038D9C 0FC0CC10 */  jal   get_handle_for_guard_id
+/* 06D8CC 7F038D9C 0FC0CC10 */  jal   chrlvGetHandleForGuardId
 /* 06D8D0 7F038DA0 02002825 */   move  $a1, $s0
 /* 06D8D4 7F038DA4 14400003 */  bnez  $v0, .L7F038DB4
 /* 06D8D8 7F038DA8 02A02025 */   move  $a0, $s5
@@ -19329,7 +19329,7 @@ actionD9_GuardIDMovedToPresetReturnLoopIfSuccessful_5:
 /* 06C258 7F039868 000C5A00 */  sll   $t3, $t4, 8
 /* 06C25C 7F03986C 92250001 */  lbu   $a1, 1($s1)
 /* 06C260 7F039870 0000A025 */  move  $s4, $zero
-/* 06C264 7F039874 0FC0CC21 */  jal   get_handle_for_guard_id
+/* 06C264 7F039874 0FC0CC21 */  jal   chrlvGetHandleForGuardId
 /* 06C268 7F039878 01789825 */   or    $s3, $t3, $t8
 /* 06C26C 7F03987C 1040005E */  beqz  $v0, .L7F0399F8
 /* 06C270 7F039880 00408025 */   move  $s0, $v0
@@ -19575,7 +19575,7 @@ actionDF_Open_Type_16_Door_Used_Cut_Scenes_2:
 /* 06C5DC 7F039BEC 26310002 */   addiu $s1, $s1, 2
 actionE0_Guard_ID_Draws_Weapon_num_3:
 /* 06C5E0 7F039BF0 02E02025 */  move  $a0, $s7
-/* 06C5E4 7F039BF4 0FC0CC21 */  jal   get_handle_for_guard_id
+/* 06C5E4 7F039BF4 0FC0CC21 */  jal   chrlvGetHandleForGuardId
 /* 06C5E8 7F039BF8 92250001 */   lbu   $a1, 1($s1)
 /* 06C5EC 7F039BFC 10400003 */  beqz  $v0, .L7F039C0C
 /* 06C5F0 7F039C00 00402025 */   move  $a0, $v0
@@ -19947,7 +19947,7 @@ actionF7_If_Number_Of_Hostages_Scientists_Killed_RVL_3:
 /* 06CB20 7F03A130 26310003 */   addiu $s1, $s1, 3
 actionF8_If_Guard_ID_00200000_Flag_Set_Unset_And_Return_3:
 /* 06CB24 7F03A134 02E02025 */  move  $a0, $s7
-/* 06CB28 7F03A138 0FC0CC21 */  jal   get_handle_for_guard_id
+/* 06CB28 7F03A138 0FC0CC21 */  jal   chrlvGetHandleForGuardId
 /* 06CB2C 7F03A13C 92250001 */   lbu   $a1, 1($s1)
 /* 06CB30 7F03A140 50400012 */  beql  $v0, $zero, .L7F03A18C
 /* 06CB34 7F03A144 26520003 */   addiu $s2, $s2, 3
