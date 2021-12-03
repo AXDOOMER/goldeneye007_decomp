@@ -13485,27 +13485,24 @@ f32 get_distance_between_actor_and_preset(ChrRecord *self, s32 padid)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F033218(void) {
-
+/**
+ * The property is named "BITFIELD".
+ * Address 0x7F033218.
+*/
+void chrlvSetBitfieldFlags(ChrRecord *arg0, u8 arg1)
+{
+    arg0->BITFIELD |= arg1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F033218
-/* 067D48 7F033218 AFA50004 */  sw    $a1, 4($sp)
-/* 067D4C 7F03321C 908F010E */  lbu   $t7, 0x10e($a0)
-/* 067D50 7F033220 01E5C025 */  or    $t8, $t7, $a1
-/* 067D54 7F033224 03E00008 */  jr    $ra
-/* 067D58 7F033228 A098010E */   sb    $t8, 0x10e($a0)
-)
-#endif
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03322C(void) {
-
+#if 1
+/**
+ * Address 0x7F03322C.
+*/
+void sub_GAME_7F03322C(ChrRecord *arg0, u8 arg1)
+{
+    arg0->BITFIELD &= ~arg1;
 }
 #else
 GLOBAL_ASM(
@@ -13522,9 +13519,13 @@ glabel sub_GAME_7F03322C
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F033244(void) {
-
+#if 1
+/**
+ * Address 0x7F033244.
+*/
+s32 sub_GAME_7F033244(ChrRecord *self, u8 arg1)
+{
+    return (self->BITFIELD & arg1) != 0;
 }
 #else
 GLOBAL_ASM(
@@ -13542,9 +13543,20 @@ glabel sub_GAME_7F033244
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F033260(void) {
+#if 1
+/**
+ * Address 0x7F033260.
+*/
+void sub_GAME_7F033260(ChrRecord *arg0, s32 guard_id, u8 arg2)
+{
+    ChrRecord *guard;
 
+    guard = chrlvGetHandleForGuardId(arg0, guard_id);
+
+    if (guard != 0)
+    {
+        chrlvSetBitfieldFlags(guard, arg2);
+    }
 }
 #else
 GLOBAL_ASM(
@@ -13556,7 +13568,7 @@ glabel sub_GAME_7F033260
 /* 067D9C 7F03326C AFA60020 */   sw    $a2, 0x20($sp)
 /* 067DA0 7F033270 10400003 */  beqz  $v0, .L7F033280
 /* 067DA4 7F033274 00402025 */   move  $a0, $v0
-/* 067DA8 7F033278 0FC0CC86 */  jal   sub_GAME_7F033218
+/* 067DA8 7F033278 0FC0CC86 */  jal   chrlvSetBitfieldFlags
 /* 067DAC 7F03327C 93A50023 */   lbu   $a1, 0x23($sp)
 .L7F033280:
 /* 067DB0 7F033280 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -13568,9 +13580,20 @@ glabel sub_GAME_7F033260
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F033290(void) {
+#if 1
+/**
+ * Address 0x7F033290.
+*/
+void sub_GAME_7F033290(ChrRecord *arg0, s32 guard_id, u8 arg2)
+{
+    ChrRecord *guard;
 
+    guard = chrlvGetHandleForGuardId(arg0, guard_id);
+
+    if (guard != 0)
+    {
+        sub_GAME_7F03322C(guard, arg2);
+    }
 }
 #else
 GLOBAL_ASM(

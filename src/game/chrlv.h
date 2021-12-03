@@ -65,5 +65,6 @@ f32 sub_GAME_7F032E48(ChrRecord *self, s32 padID);
 bool check_if_room_for_preset_loaded(struct ChrRecord *self, s32 padnum);
 f32 get_distance_between_actor_and_actorID(struct ChrRecord *self, s32 chrID);
 f32 get_distance_between_actor_and_preset(ChrRecord *self, s32 padid);
+void chrlvSetBitfieldFlags(ChrRecord *arg0, u8 arg1);
 
 #endif
