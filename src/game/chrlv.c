@@ -142,6 +142,7 @@ f32 get_distance_actor_to_position(struct ChrRecord *self, struct coord3d *pos);
 s32 chrResolveId(ChrRecord *self, s32 id);
 s32 sub_GAME_7F033780(s32 *arg0, struct coord3d *arg1, f32 angle);
 s32 chrlvFindPathNeighborRelated(struct coord3d *bondpos, struct StandTile *stan, f32 rot, u8 quadrant);
+s32 sub_GAME_7F033EAC(struct coord3d *arg0, StandTile *arg1);
 
 // ?
 
@@ -14261,65 +14262,31 @@ s32 chrIsTargetNearlyInSight(ChrRecord *arg0)
 
 
 
-#ifdef NONMATCHING
 
-s32 sub_GAME_7F078BF4(struct coord3d *, f32, f32 *);
+/**
+ * Address 0x7F033EAC.
+*/
+s32 sub_GAME_7F033EAC(struct coord3d *arg0, StandTile *arg1)
+{
+    s32 sp2C;
+    struct bbox2d sp1C;
 
-//s32 bgGet2dBboxByRoomId(s32, ? *);                    /* extern */
-//s32 fogPositionIsObscuredByFog(struct coord3d *, ?);         /* extern */
+    sp2C = 1;
 
-void sub_GAME_7F033EAC(void) {
+    if (getROOMID_Bitflags(getTileRoom(arg1)) && fogPositionIsVisibleThroughFog(arg0, 0.0f))
+    {
+        if (bgGet2dBboxByRoomId(getTileRoom(arg1), &sp1C))
+        {
+            sp2C = sub_GAME_7F078BF4(arg0, 200.0f, &sp1C) == 0;
+        }
+        else
+        {
+            sp2C = sub_GAME_7F078A58(arg0, 200.0f) == 0;
+        }
+    }
 
+    return sp2C;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F033EAC
-/* 0689DC 7F033EAC 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0689E0 7F033EB0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0689E4 7F033EB4 AFA40030 */  sw    $a0, 0x30($sp)
-/* 0689E8 7F033EB8 240E0001 */  li    $t6, 1
-/* 0689EC 7F033EBC AFA50034 */  sw    $a1, 0x34($sp)
-/* 0689F0 7F033EC0 AFAE002C */  sw    $t6, 0x2c($sp)
-/* 0689F4 7F033EC4 0FC2CBF6 */  jal   getTileRoom
-/* 0689F8 7F033EC8 00A02025 */   move  $a0, $a1
-/* 0689FC 7F033ECC 0FC2D794 */  jal   getROOMID_Bitflags
-/* 068A00 7F033ED0 00402025 */   move  $a0, $v0
-/* 068A04 7F033ED4 10400017 */  beqz  $v0, .L7F033F34
-/* 068A08 7F033ED8 8FA40030 */   lw    $a0, 0x30($sp)
-/* 068A0C 7F033EDC 0FC2ECB2 */  jal   fogPositionIsObscuredByFog
-/* 068A10 7F033EE0 24050000 */   li    $a1, 0
-/* 068A14 7F033EE4 50400014 */  beql  $v0, $zero, .L7F033F38
-/* 068A18 7F033EE8 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 068A1C 7F033EEC 0FC2CBF6 */  jal   getTileRoom
-/* 068A20 7F033EF0 8FA40034 */   lw    $a0, 0x34($sp)
-/* 068A24 7F033EF4 00402025 */  move  $a0, $v0
-/* 068A28 7F033EF8 0FC2CF03 */  jal   bgGet2dBboxByRoomId
-/* 068A2C 7F033EFC 27A5001C */   addiu $a1, $sp, 0x1c
-/* 068A30 7F033F00 10400008 */  beqz  $v0, .L7F033F24
-/* 068A34 7F033F04 8FA40030 */   lw    $a0, 0x30($sp)
-/* 068A38 7F033F08 8FA40030 */  lw    $a0, 0x30($sp)
-/* 068A3C 7F033F0C 3C054348 */  lui   $a1, 0x4348
-/* 068A40 7F033F10 0FC1E2FD */  jal   sub_GAME_7F078BF4
-/* 068A44 7F033F14 27A6001C */   addiu $a2, $sp, 0x1c
-/* 068A48 7F033F18 2C4F0001 */  sltiu $t7, $v0, 1
-/* 068A4C 7F033F1C 10000005 */  b     .L7F033F34
-/* 068A50 7F033F20 AFAF002C */   sw    $t7, 0x2c($sp)
-.L7F033F24:
-/* 068A54 7F033F24 0FC1E296 */  jal   sub_GAME_7F078A58
-/* 068A58 7F033F28 3C054348 */   lui   $a1, 0x4348
-/* 068A5C 7F033F2C 2C580001 */  sltiu $t8, $v0, 1
-/* 068A60 7F033F30 AFB8002C */  sw    $t8, 0x2c($sp)
-.L7F033F34:
-/* 068A64 7F033F34 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F033F38:
-/* 068A68 7F033F38 8FA2002C */  lw    $v0, 0x2c($sp)
-/* 068A6C 7F033F3C 27BD0030 */  addiu $sp, $sp, 0x30
-/* 068A70 7F033F40 03E00008 */  jr    $ra
-/* 068A74 7F033F44 00000000 */   nop   
-)
-#endif
-
 
 
 #ifdef NONMATCHING

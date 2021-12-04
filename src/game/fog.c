@@ -1094,7 +1094,7 @@ glabel sub_GAME_7F0BB298
 /**
  * Address 0x7F0BB2C8.
 */
-s32 fogPositionIsObscuredByFog(struct coord3d *pos, f32 range)
+s32 fogPositionIsVisibleThroughFog(struct coord3d *pos, f32 range)
 {
     struct coord3d sp24;
     f32 ff;

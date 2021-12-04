@@ -3149,6 +3149,7 @@ Mtxf *currentPlayerGetMatrix10EC(void);
 f32 get_curplay_horizontal_rotation_in_degrees(void);
 Mtxf *currentPlayerGetMatrix10CC(void);
 void sub_GAME_7F077EEC(struct coord2d *in, struct coord3d *out, f32 value);
+s32 sub_GAME_7F078BF4(struct coord3d *, f32, struct bbox2d *);
 
 // unknown pointer arg0
 s32 sub_GAME_7F08BCC0(void *arg0, s32 arg1);

@@ -58,6 +58,6 @@ struct fog_element2 {
 };
 
 f32 square_near_fog_value(void);
-s32 fogPositionIsObscuredByFog(struct coord3d *pos, f32 range);
+s32 fogPositionIsVisibleThroughFog(struct coord3d *pos, f32 range);
 
 #endif
