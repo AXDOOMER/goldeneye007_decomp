@@ -3096,7 +3096,7 @@ action0B_If_Guard_WastingTime_SwatFlies_RVL_2:
 /* 06A3F8 7F0358C8 1000FF30 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A3FC 7F0358CC 26310002 */   addiu $s1, $s1, 2
 action0C_Guard_Gestures_1:
-/* 06A400 7F0358D0 0FC0CD84 */  jal   check_if_able_to_then_shuffle_feet
+/* 06A400 7F0358D0 0FC0CD84 */  jal   chrTrySurprisedOneHand
 /* 06A404 7F0358D4 02E02025 */   move  $a0, $s7
 /* 06A408 7F0358D8 26520001 */  addiu $s2, $s2, 1
 /* 06A40C 7F0358DC 1000FF2B */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -8963,7 +8963,7 @@ action0B_If_Guard_WastingTime_SwatFlies_RVL_2:
 /* 06A3F8 7F0358C8 1000FF30 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A3FC 7F0358CC 26310002 */   addiu $s1, $s1, 2
 action0C_Guard_Gestures_1:
-/* 06A400 7F0358D0 0FC0CD84 */  jal   check_if_able_to_then_shuffle_feet
+/* 06A400 7F0358D0 0FC0CD84 */  jal   chrTrySurprisedOneHand
 /* 06A404 7F0358D4 02E02025 */   move  $a0, $s7
 /* 06A408 7F0358D8 26520001 */  addiu $s2, $s2, 1
 /* 06A40C 7F0358DC 1000FF2B */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -14831,7 +14831,7 @@ action0B_If_Guard_WastingTime_SwatFlies_RVL_2:
 /* 06A3F8 7F0358C8 1000FF30 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A3FC 7F0358CC 26310002 */   addiu $s1, $s1, 2
 action0C_Guard_Gestures_1:
-/* 06A400 7F0358D0 0FC0CD84 */  jal   check_if_able_to_then_shuffle_feet
+/* 06A400 7F0358D0 0FC0CD84 */  jal   chrTrySurprisedOneHand
 /* 06A404 7F0358D4 02E02025 */   move  $a0, $s7
 /* 06A408 7F0358D8 26520001 */  addiu $s2, $s2, 1
 /* 06A40C 7F0358DC 1000FF2B */  b     GetByteS1_ParseCommandByte_SwitchCase

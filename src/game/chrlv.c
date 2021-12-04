@@ -13814,32 +13814,20 @@ bool chraiStopAnimation(ChrRecord *self)
 
 
 
-#ifdef NONMATCHING
-void check_if_able_to_then_shuffle_feet(void) {
+/**
+ * Address 0x7F033610.
+*/
+bool chrTrySurprisedOneHand(ChrRecord *self)
+{
+    if (chrIsNotDeadOrShot(self))
+    {
+        chrlvActorShuffleFeet(self);
 
+        return TRUE;
+    }
+
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_able_to_then_shuffle_feet
-/* 068140 7F033610 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 068144 7F033614 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 068148 7F033618 0FC0A896 */  jal   chrIsNotDeadOrShot
-/* 06814C 7F03361C AFA40018 */   sw    $a0, 0x18($sp)
-/* 068150 7F033620 50400006 */  beql  $v0, $zero, .L7F03363C
-/* 068154 7F033624 00001025 */   move  $v0, $zero
-/* 068158 7F033628 0FC09106 */  jal   chrlvActorShuffleFeet
-/* 06815C 7F03362C 8FA40018 */   lw    $a0, 0x18($sp)
-/* 068160 7F033630 10000002 */  b     .L7F03363C
-/* 068164 7F033634 24020001 */   li    $v0, 1
-/* 068168 7F033638 00001025 */  move  $v0, $zero
-.L7F03363C:
-/* 06816C 7F03363C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 068170 7F033640 27BD0018 */  addiu $sp, $sp, 0x18
-/* 068174 7F033644 03E00008 */  jr    $ra
-/* 068178 7F033648 00000000 */   nop   
-)
-#endif
 
 
 
