@@ -315,12 +315,6 @@ typedef struct BetaStandTile {
 
 StandTilePoint *stanMatchTileName(char*);
 
-//
-typedef struct AIRecord
-{
-    u8 cmd;
-    u8 val[];
-} AIRecord;
 
 /*
  * Model Root Runtime Data (pos, heading, height etc)
@@ -427,6 +421,28 @@ typedef struct Model
     s32 unkbc;
     
 } Model;
+
+typedef struct AIRecord
+{
+    u8 cmd;
+    u8 val[];
+} AIRecord;
+typedef struct AIRecord1
+{
+    u8 cmd;
+    u8 val;
+} AIRecord1;
+typedef struct AIRecord1s
+{
+    u8 cmd;
+    s8 val;
+} AIRecord1s;
+
+typedef struct AIListRecord
+{
+    AIRecord *ailist;
+    int ID;
+} AIListRecord;
 
 struct waypoint;
 

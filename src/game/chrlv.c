@@ -14392,62 +14392,25 @@ struct PropRecord *actionblock_guard_constructor_BDBE(s32 bodynum, s32 headnum, 
 
 
 
-#ifdef NONMATCHING
-void guard_constructor_BD(void) {
-// ai branch
+/**
+ * Address 0x7F034258.
+*/
+struct PropRecord *guard_constructor_BD(struct ChrRecord *self, s32 bodynum, s32 headnum, s32 padid, struct AIListRecord *ailist, s32 flags)
+{
+    struct pad *pad;
+    padid = convertPadIf9000(self, padid);
+
+    if (isNotBoundPad(padid))
+    {
+        pad = (struct pad *)&ptr_0xxxpresets[padid];
+    }
+    else
+    {
+        pad = (struct pad *)&ptr_2xxxpresets[getBoundPadNum(padid)];
+    }
+
+    return actionblock_guard_constructor_BDBE(bodynum, headnum, &pad->pos, pad->stan, atan2f(pad->look.f[0], pad->look.f[2]), ailist, flags);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel guard_constructor_BD
-/* 068D88 7F034258 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 068D8C 7F03425C AFBF0024 */  sw    $ra, 0x24($sp)
-/* 068D90 7F034260 AFA50034 */  sw    $a1, 0x34($sp)
-/* 068D94 7F034264 AFA60038 */  sw    $a2, 0x38($sp)
-/* 068D98 7F034268 0FC0CBE5 */  jal   convertPadIf9000
-/* 068D9C 7F03426C 00E02825 */   move  $a1, $a3
-/* 068DA0 7F034270 28412710 */  slti  $at, $v0, 0x2710
-/* 068DA4 7F034274 1020000A */  beqz  $at, .L7F0342A0
-/* 068DA8 7F034278 0002C100 */   sll   $t8, $v0, 4
-/* 068DAC 7F03427C 00027080 */  sll   $t6, $v0, 2
-/* 068DB0 7F034280 01C27023 */  subu  $t6, $t6, $v0
-/* 068DB4 7F034284 000E7080 */  sll   $t6, $t6, 2
-/* 068DB8 7F034288 3C0F8007 */  lui   $t7, %hi(ptr_0xxxpresets) 
-/* 068DBC 7F03428C 8DEF5D18 */  lw    $t7, %lo(ptr_0xxxpresets)($t7)
-/* 068DC0 7F034290 01C27023 */  subu  $t6, $t6, $v0
-/* 068DC4 7F034294 000E7080 */  sll   $t6, $t6, 2
-/* 068DC8 7F034298 10000009 */  b     .L7F0342C0
-/* 068DCC 7F03429C 01CF3021 */   addu  $a2, $t6, $t7
-.L7F0342A0:
-/* 068DD0 7F0342A0 3C198007 */  lui   $t9, %hi(ptr_2xxxpresets) 
-/* 068DD4 7F0342A4 8F395D1C */  lw    $t9, %lo(ptr_2xxxpresets)($t9)
-/* 068DD8 7F0342A8 0302C021 */  addu  $t8, $t8, $v0
-/* 068DDC 7F0342AC 0018C080 */  sll   $t8, $t8, 2
-/* 068DE0 7F0342B0 3C01FFF5 */  lui   $at, (0xFFF59FC0 >> 16) # lui $at, 0xfff5
-/* 068DE4 7F0342B4 34219FC0 */  ori   $at, (0xFFF59FC0 & 0xFFFF) # ori $at, $at, 0x9fc0
-/* 068DE8 7F0342B8 03193021 */  addu  $a2, $t8, $t9
-/* 068DEC 7F0342BC 00C13021 */  addu  $a2, $a2, $at
-.L7F0342C0:
-/* 068DF0 7F0342C0 C4CC0018 */  lwc1  $f12, 0x18($a2)
-/* 068DF4 7F0342C4 C4CE0020 */  lwc1  $f14, 0x20($a2)
-/* 068DF8 7F0342C8 0FC16A8C */  jal   atan2f
-/* 068DFC 7F0342CC AFA6002C */   sw    $a2, 0x2c($sp)
-/* 068E00 7F0342D0 8FA6002C */  lw    $a2, 0x2c($sp)
-/* 068E04 7F0342D4 8FA80040 */  lw    $t0, 0x40($sp)
-/* 068E08 7F0342D8 8FA90044 */  lw    $t1, 0x44($sp)
-/* 068E0C 7F0342DC 8CC70028 */  lw    $a3, 0x28($a2)
-/* 068E10 7F0342E0 E7A00010 */  swc1  $f0, 0x10($sp)
-/* 068E14 7F0342E4 8FA40034 */  lw    $a0, 0x34($sp)
-/* 068E18 7F0342E8 8FA50038 */  lw    $a1, 0x38($sp)
-/* 068E1C 7F0342EC AFA80014 */  sw    $t0, 0x14($sp)
-/* 068E20 7F0342F0 0FC0D057 */  jal   actionblock_guard_constructor_BDBE
-/* 068E24 7F0342F4 AFA90018 */   sw    $t1, 0x18($sp)
-/* 068E28 7F0342F8 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 068E2C 7F0342FC 27BD0030 */  addiu $sp, $sp, 0x30
-/* 068E30 7F034300 03E00008 */  jr    $ra
-/* 068E34 7F034304 00000000 */   nop   
-)
-#endif
 
 
 
