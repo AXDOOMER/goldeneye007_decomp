@@ -104,6 +104,7 @@ void sub_GAME_7F033D84(ChrRecord *self, s32 chrid, s32 padid);
 s32 chrIsTargetNearlyInSight(ChrRecord *arg0);
 bool sub_GAME_7F033F48(struct coord3d *pos, struct StandTile **arg1, f32 facing, bool b);
 struct PropRecord *guard_constructor_BD(struct ChrRecord *self, s32 bodynum, s32 headnum, s32 padid, struct AIListRecord *ailist, s32 flags);
+struct PropRecord *guard_constructor_BE(struct ChrRecord *self, s32 bodynum, s32 headnum, s32 chrnum, struct AIListRecord *ailist, s32 flags);
 
 
 

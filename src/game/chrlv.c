@@ -14414,9 +14414,21 @@ struct PropRecord *guard_constructor_BD(struct ChrRecord *self, s32 bodynum, s32
 
 
 
-#ifdef NONMATCHING
-void guard_constructor_BE(void) {
-// ai branch
+#if 1
+struct PropRecord *guard_constructor_BE(struct ChrRecord *self, s32 bodynum, s32 headnum, s32 chrnum, struct AIListRecord *ailist, s32 flags)
+{
+    struct ChrRecord *chr;
+    chr = chrlvGetHandleForGuardId(self, chrnum);
+
+    if ((chr->chrflags & CHRFLAG_HAS_BEEN_ON_SCREEN) == 0)
+    {
+        f32 chrRadHeading   = getsubroty(chr->model);
+        PropRecord *chrprop = chr->prop;
+
+        return actionblock_guard_constructor_BDBE(bodynum, headnum, &chrprop->pos, chrprop->stan, chrRadHeading, ailist, flags);
+    }
+
+    return NULL;
 }
 #else
 GLOBAL_ASM(
