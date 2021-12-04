@@ -13831,32 +13831,20 @@ bool chrTrySurprisedOneHand(ChrRecord *self)
 
 
 
-#ifdef NONMATCHING
-void check_if_able_to_then_fawn_on_shoulder(void) {
+/**
+ * Address 0x7F03364C.
+*/
+bool check_if_able_to_then_fawn_on_shoulder(ChrRecord *self)
+{
+    if (chrIsNotDeadOrShot(self))
+    {
+        chrlvSurrenderAnimationRelated(self);
 
+        return TRUE;
+
+    }
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_able_to_then_fawn_on_shoulder
-/* 06817C 7F03364C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 068180 7F033650 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 068184 7F033654 0FC0A896 */  jal   chrIsNotDeadOrShot
-/* 068188 7F033658 AFA40018 */   sw    $a0, 0x18($sp)
-/* 06818C 7F03365C 50400006 */  beql  $v0, $zero, .L7F033678
-/* 068190 7F033660 00001025 */   move  $v0, $zero
-/* 068194 7F033664 0FC0912B */  jal   chrlvSurrenderAnimationRelated
-/* 068198 7F033668 8FA40018 */   lw    $a0, 0x18($sp)
-/* 06819C 7F03366C 10000002 */  b     .L7F033678
-/* 0681A0 7F033670 24020001 */   li    $v0, 1
-/* 0681A4 7F033674 00001025 */  move  $v0, $zero
-.L7F033678:
-/* 0681A8 7F033678 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0681AC 7F03367C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0681B0 7F033680 03E00008 */  jr    $ra
-/* 0681B4 7F033684 00000000 */   nop   
-)
-#endif
 
 
 
