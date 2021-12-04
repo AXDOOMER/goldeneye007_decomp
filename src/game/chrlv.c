@@ -14222,77 +14222,42 @@ void sub_GAME_7F033D84(ChrRecord *self, s32 chrid, s32 padid)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F033DC4(void) {
-// ai branch
+/**
+ * Address 0x7F033DC4.
+*/
+s32 chrIsTargetNearlyInSight(ChrRecord *arg0)
+{
+    struct PropRecord *player_prop;
+    struct PropRecord *self_prop;
+    StandTile *stan;
+    struct coord3d sp48;
+    struct coord3d sp3C;
+
+    player_prop = get_curplayer_positiondata();
+    self_prop = arg0->prop;
+    stan = self_prop->stan;
+
+    sub_GAME_7F0B1CC4();
+
+    if (walkTilesBetweenPoints_NoCallback(&stan, self_prop->pos.f[0], self_prop->pos.f[2], player_prop->pos.f[0], player_prop->pos.f[2]))
+    {
+        return 0;
+    }
+    else
+    {
+        getCollisionEdge_maybe(&sp48, &sp3C);
+
+        if (
+            sub_GAME_7F0304AC(arg0, &self_prop->pos, self_prop->stan, &sp48, &player_prop->pos, player_prop->stan, 0)
+            || sub_GAME_7F0304AC(arg0, &self_prop->pos, self_prop->stan, &sp3C, &player_prop->pos, player_prop->stan, 0))
+        {
+            return 1;
+        }
+    }
+
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F033DC4
-/* 0688F4 7F033DC4 27BDFFA0 */  addiu $sp, $sp, -0x60
-/* 0688F8 7F033DC8 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 0688FC 7F033DCC AFB10028 */  sw    $s1, 0x28($sp)
-/* 068900 7F033DD0 AFB00024 */  sw    $s0, 0x24($sp)
-/* 068904 7F033DD4 0FC225E6 */  jal   get_curplayer_positiondata
-/* 068908 7F033DD8 AFA40060 */   sw    $a0, 0x60($sp)
-/* 06890C 7F033DDC 8FAE0060 */  lw    $t6, 0x60($sp)
-/* 068910 7F033DE0 00408825 */  move  $s1, $v0
-/* 068914 7F033DE4 8DD00018 */  lw    $s0, 0x18($t6)
-/* 068918 7F033DE8 8E0F0014 */  lw    $t7, 0x14($s0)
-/* 06891C 7F033DEC 0FC2C731 */  jal   sub_GAME_7F0B1CC4
-/* 068920 7F033DF0 AFAF0054 */   sw    $t7, 0x54($sp)
-/* 068924 7F033DF4 C6240010 */  lwc1  $f4, 0x10($s1)
-/* 068928 7F033DF8 8E050008 */  lw    $a1, 8($s0)
-/* 06892C 7F033DFC 8E060010 */  lw    $a2, 0x10($s0)
-/* 068930 7F033E00 8E270008 */  lw    $a3, 8($s1)
-/* 068934 7F033E04 27A40054 */  addiu $a0, $sp, 0x54
-/* 068938 7F033E08 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
-/* 06893C 7F033E0C E7A40010 */   swc1  $f4, 0x10($sp)
-/* 068940 7F033E10 10400003 */  beqz  $v0, .L7F033E20
-/* 068944 7F033E14 27A40048 */   addiu $a0, $sp, 0x48
-/* 068948 7F033E18 1000001F */  b     .L7F033E98
-/* 06894C 7F033E1C 00001025 */   move  $v0, $zero
-.L7F033E20:
-/* 068950 7F033E20 0FC2CA2C */  jal   getCollisionEdge_maybe
-/* 068954 7F033E24 27A5003C */   addiu $a1, $sp, 0x3c
-/* 068958 7F033E28 8E060014 */  lw    $a2, 0x14($s0)
-/* 06895C 7F033E2C 26230008 */  addiu $v1, $s1, 8
-/* 068960 7F033E30 AFA30010 */  sw    $v1, 0x10($sp)
-/* 068964 7F033E34 8E380014 */  lw    $t8, 0x14($s1)
-/* 068968 7F033E38 26050008 */  addiu $a1, $s0, 8
-/* 06896C 7F033E3C AFA50038 */  sw    $a1, 0x38($sp)
-/* 068970 7F033E40 AFA30034 */  sw    $v1, 0x34($sp)
-/* 068974 7F033E44 AFA00018 */  sw    $zero, 0x18($sp)
-/* 068978 7F033E48 8FA40060 */  lw    $a0, 0x60($sp)
-/* 06897C 7F033E4C 27A70048 */  addiu $a3, $sp, 0x48
-/* 068980 7F033E50 0FC0C12B */  jal   sub_GAME_7F0304AC
-/* 068984 7F033E54 AFB80014 */   sw    $t8, 0x14($sp)
-/* 068988 7F033E58 8FA30034 */  lw    $v1, 0x34($sp)
-/* 06898C 7F033E5C 1440000B */  bnez  $v0, .L7F033E8C
-/* 068990 7F033E60 8FA50038 */   lw    $a1, 0x38($sp)
-/* 068994 7F033E64 8E060014 */  lw    $a2, 0x14($s0)
-/* 068998 7F033E68 AFA30010 */  sw    $v1, 0x10($sp)
-/* 06899C 7F033E6C 8E390014 */  lw    $t9, 0x14($s1)
-/* 0689A0 7F033E70 AFA00018 */  sw    $zero, 0x18($sp)
-/* 0689A4 7F033E74 8FA40060 */  lw    $a0, 0x60($sp)
-/* 0689A8 7F033E78 27A7003C */  addiu $a3, $sp, 0x3c
-/* 0689AC 7F033E7C 0FC0C12B */  jal   sub_GAME_7F0304AC
-/* 0689B0 7F033E80 AFB90014 */   sw    $t9, 0x14($sp)
-/* 0689B4 7F033E84 50400004 */  beql  $v0, $zero, .L7F033E98
-/* 0689B8 7F033E88 00001025 */   move  $v0, $zero
-.L7F033E8C:
-/* 0689BC 7F033E8C 10000002 */  b     .L7F033E98
-/* 0689C0 7F033E90 24020001 */   li    $v0, 1
-/* 0689C4 7F033E94 00001025 */  move  $v0, $zero
-.L7F033E98:
-/* 0689C8 7F033E98 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 0689CC 7F033E9C 8FB00024 */  lw    $s0, 0x24($sp)
-/* 0689D0 7F033EA0 8FB10028 */  lw    $s1, 0x28($sp)
-/* 0689D4 7F033EA4 03E00008 */  jr    $ra
-/* 0689D8 7F033EA8 27BD0060 */   addiu $sp, $sp, 0x60
-)
-#endif
+
 
 
 
@@ -14511,9 +14476,7 @@ glabel sub_GAME_7F033F48
 
 
 #ifdef NONMATCHING
-void actionblock_guard_constructor_BDBE(void) {
 // ai branch
-}
 #else
 GLOBAL_ASM(
 .text

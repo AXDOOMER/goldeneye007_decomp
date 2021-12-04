@@ -3924,7 +3924,7 @@ action3C_If_Guard_In_Firing_Range_RVL_2:
 /* 06AF6C 7F03643C 1000FC53 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AF70 7F036440 26310002 */   addiu $s1, $s1, 2
 action3D___Unused___Unknown___2:
-/* 06AF74 7F036444 0FC0CF71 */  jal   sub_GAME_7F033DC4
+/* 06AF74 7F036444 0FC0CF71 */  jal   chrIsTargetNearlyInSight
 /* 06AF78 7F036448 02E02025 */   move  $a0, $s7
 /* 06AF7C 7F03644C 10400007 */  beqz  $v0, .L7F03646C
 /* 06AF80 7F036450 02C02025 */   move  $a0, $s6
@@ -9791,7 +9791,7 @@ action3C_If_Guard_In_Firing_Range_RVL_2:
 /* 06AF6C 7F03643C 1000FC53 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AF70 7F036440 26310002 */   addiu $s1, $s1, 2
 action3D___Unused___Unknown___2:
-/* 06AF74 7F036444 0FC0CF71 */  jal   sub_GAME_7F033DC4
+/* 06AF74 7F036444 0FC0CF71 */  jal   chrIsTargetNearlyInSight
 /* 06AF78 7F036448 02E02025 */   move  $a0, $s7
 /* 06AF7C 7F03644C 10400007 */  beqz  $v0, .L7F03646C
 /* 06AF80 7F036450 02C02025 */   move  $a0, $s6
@@ -15659,7 +15659,7 @@ action3C_If_Guard_In_Firing_Range_RVL_2:
 /* 06AF6C 7F03643C 1000FC53 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AF70 7F036440 26310002 */   addiu $s1, $s1, 2
 action3D___Unused___Unknown___2:
-/* 06AF74 7F036444 0FC0CF71 */  jal   sub_GAME_7F033DC4
+/* 06AF74 7F036444 0FC0CF71 */  jal   chrIsTargetNearlyInSight
 /* 06AF78 7F036448 02E02025 */   move  $a0, $s7
 /* 06AF7C 7F03644C 10400007 */  beqz  $v0, .L7F03646C
 /* 06AF80 7F036450 02C02025 */   move  $a0, $s6
