@@ -13785,10 +13785,17 @@ bool check_if_actor_FA_target_set(ChrRecord *self)
 }
 
 
-#ifdef NONMATCHING
-void check_if_actor_FB_target_set(void) {
-
+#if 1
+/**
+ * Return false if chrseedie is negative.
+ * 
+ * Address 0x7F0335C4.
+ */
+bool check_if_actor_FB_target_set(ChrRecord *self)
+{
+    return ((self->chrseedie < 0) ^ 1);
 }
+
 #else
 GLOBAL_ASM(
 .text
