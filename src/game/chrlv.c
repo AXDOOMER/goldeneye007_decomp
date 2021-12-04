@@ -141,7 +141,7 @@ void chrlvTickPatrol(ChrRecord *arg0);
 f32 get_distance_actor_to_position(struct ChrRecord *self, struct coord3d *pos);
 s32 chrResolveId(ChrRecord *self, s32 id);
 s32 sub_GAME_7F033780(s32 *arg0, struct coord3d *arg1, f32 angle);
-s32 chrlvFindPathNeighborRelated(struct coord3d *bondpos, struct StandTile *stan, f32 rot, u8 padnum);
+s32 chrlvFindPathNeighborRelated(struct coord3d *bondpos, struct StandTile *stan, f32 rot, u8 quadrant);
 
 // ?
 
@@ -13757,6 +13757,7 @@ bool chrGoToChr(ChrRecord *self, s32 chrid, SPEED speed)
  * Return number of hits.
  * 
  * Address 0x7F0335A4.
+ * PD: chrGetNumArghs
  */
 s8 get_times_actor_shot(ChrRecord *self)
 {
@@ -13769,6 +13770,7 @@ s8 get_times_actor_shot(ChrRecord *self)
  * Return number of near misses
  * 
  * Address 0x7F0335AC.
+ * PD: chrGetNumCloseArghs
  */
 s8 get_num_shots_near_actor(ChrRecord *self)
 {
@@ -13901,6 +13903,7 @@ s32 check_if_able_to_then_perform_animation(struct ChrRecord *self, s32 animID, 
 
 /**
  * Address 0x7F033760.
+ * PD: chrCanHearAlarm
 */
 bool alarm_timer_related(ChrRecord *self)
 {
@@ -13917,6 +13920,7 @@ bool alarm_timer_related(ChrRecord *self)
 
 /**
  * Address 0x7F033780.
+ * PD: waypointIsWithin90DegreesOfPosAngle
 */
 s32 sub_GAME_7F033780(s32 *arg0, struct coord3d *arg1, f32 angle)
 {
@@ -13950,9 +13954,22 @@ s32 sub_GAME_7F033780(s32 *arg0, struct coord3d *arg1, f32 angle)
 
 
 /**
+ * Attempt to find a waypoint near pos which is in a particular quadrant to pos,
+ * then return its padnum.
+ *
+ * For example, pos is typically the player's position, angle is the direction
+ * the player is facing, and quadrant is which quadrant (front/back/left/right)
+ * that is desired relative to the player's position and angle.
+ *
+ * The function starts by finding the closest waypoint to the pos. If it's not
+ * in the quadrant then its neighouring waypoints are checked too. If none of
+ * those are in the quadrant then no further checks are made and the function
+ * returns -1.
+ *
  * Address 0x7F033834.
+ * PD: chrFindWaypointWithinPosQuadrant
 */
-s32 chrlvFindPathNeighborRelated(struct coord3d *bondpos, struct StandTile *stan, f32 rot, u8 padnum)
+s32 chrlvFindPathNeighborRelated(struct coord3d *bondpos, struct StandTile *stan, f32 rot, u8 quadrant)
 {
     s32 padnum_2;
     s32 temp_s1;
@@ -13965,21 +13982,21 @@ s32 chrlvFindPathNeighborRelated(struct coord3d *bondpos, struct StandTile *stan
 
     if (pad)
     {
-        switch (padnum)
+        switch (quadrant)
         {
-            case 1:
-                rot = rot + 3.1415927f;
+            case QUADRANT_BACK:
+                rot = rot + M_PI_F;
                 break;
 
-            case 2:
-                rot = rot + 1.5707964f;
+            case QUADRANT_SIDE1:
+                rot = rot + M_90_DEG_IN_RAD;
                 break;
 
-            case 4:
-                rot = rot + 4.712389f;
+            case QUADRANT_SIDE2:
+                rot = rot + M_270_DEG_IN_RAD;
                 break;
 
-            case 8:
+            case QUADRANT_FRONT:
                 break;
         }
 
@@ -14011,90 +14028,63 @@ s32 chrlvFindPathNeighborRelated(struct coord3d *bondpos, struct StandTile *stan
 
 
 
-#ifdef NONMATCHING
-void check_2328_preset_set_with_method(void) {
-// ai branch
+/**
+ * Address 0x7F033998.
+*/
+bool check_2328_preset_set_with_method(ChrRecord *self, u8 quadrant)
+{
+    struct PropRecord *myprop;
+    struct PropRecord *bondprop;
+    
+    struct path_table_alt *myclosestpad;
+    struct path_table_alt *bondsclosestpad;
+
+    struct path_table_alt *sp2C[PATH_FINDING_WP_LIMIT];
+    
+    if ((quadrant == QUADRANT_2NDWPTOTARGET) || (quadrant == QUADRANT_20)) //sp20
+    {
+        myprop = self->prop;
+        bondprop = get_curplayer_positiondata();
+        myclosestpad = chrlvStanPathRelated(&myprop->pos, myprop->stan); //sp40
+        bondsclosestpad = chrlvStanPathRelated(&bondprop->pos, bondprop->stan);
+
+        if (myclosestpad != NULL && bondsclosestpad != NULL)
+        {
+            if (quadrant == QUADRANT_2NDWPTOTARGET)
+            {
+                if (sub_GAME_7F08F4F0(myclosestpad, bondsclosestpad, &sp2C, PATH_FINDING_WP_LIMIT) >= PATH_FINDING_WP_LIMIT)
+                {
+                    self->padpreset1 = sp2C[1]->id;
+
+                    return 1;
+                }
+            }
+            else 
+            {
+                myclosestpad = sub_GAME_7F08FB90(myclosestpad, bondsclosestpad);
+                if (myclosestpad != NULL)
+                {
+                    self->padpreset1 = myclosestpad->id;
+
+                    return 1;
+                }
+            }
+        }
+    }
+    else
+    {
+        s32 closestpadid = chrlvFindPathNeighborRelated(&self->prop->pos, self->prop->stan, getsubroty(self->model), quadrant);
+
+        if (closestpadid >= 0)
+        {
+            self->padpreset1 = closestpadid;
+
+            return 1;
+        }
+    }
+
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_2328_preset_set_with_method
-/* 0684C8 7F033998 27BDFFB8 */  addiu $sp, $sp, -0x48
-/* 0684CC 7F03399C AFB00014 */  sw    $s0, 0x14($sp)
-/* 0684D0 7F0339A0 30B000FF */  andi  $s0, $a1, 0xff
-/* 0684D4 7F0339A4 AFB10018 */  sw    $s1, 0x18($sp)
-/* 0684D8 7F0339A8 24010010 */  li    $at, 16
-/* 0684DC 7F0339AC 00808825 */  move  $s1, $a0
-/* 0684E0 7F0339B0 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0684E4 7F0339B4 AFA5004C */  sw    $a1, 0x4c($sp)
-/* 0684E8 7F0339B8 12010004 */  beq   $s0, $at, .L7F0339CC
-/* 0684EC 7F0339BC 02003025 */   move  $a2, $s0
-/* 0684F0 7F0339C0 24010020 */  li    $at, 32
-/* 0684F4 7F0339C4 16010026 */  bne   $s0, $at, .L7F033A60
-/* 0684F8 7F0339C8 00000000 */   nop   
-.L7F0339CC:
-/* 0684FC 7F0339CC 8E300018 */  lw    $s0, 0x18($s1)
-/* 068500 7F0339D0 0FC225E6 */  jal   get_curplayer_positiondata
-/* 068504 7F0339D4 AFA60020 */   sw    $a2, 0x20($sp)
-/* 068508 7F0339D8 8E050014 */  lw    $a1, 0x14($s0)
-/* 06850C 7F0339DC AFA20040 */  sw    $v0, 0x40($sp)
-/* 068510 7F0339E0 0FC09F35 */  jal   chrlvStanPathRelated
-/* 068514 7F0339E4 26040008 */   addiu $a0, $s0, 8
-/* 068518 7F0339E8 8FA30040 */  lw    $v1, 0x40($sp)
-/* 06851C 7F0339EC 00408025 */  move  $s0, $v0
-/* 068520 7F0339F0 24640008 */  addiu $a0, $v1, 8
-/* 068524 7F0339F4 0FC09F35 */  jal   chrlvStanPathRelated
-/* 068528 7F0339F8 8C650014 */   lw    $a1, 0x14($v1)
-/* 06852C 7F0339FC 8FA60020 */  lw    $a2, 0x20($sp)
-/* 068530 7F033A00 12000024 */  beqz  $s0, .L7F033A94
-/* 068534 7F033A04 00402825 */   move  $a1, $v0
-/* 068538 7F033A08 10400022 */  beqz  $v0, .L7F033A94
-/* 06853C 7F033A0C 24010010 */   li    $at, 16
-/* 068540 7F033A10 14C1000B */  bne   $a2, $at, .L7F033A40
-/* 068544 7F033A14 02002025 */   move  $a0, $s0
-/* 068548 7F033A18 27A6002C */  addiu $a2, $sp, 0x2c
-/* 06854C 7F033A1C 0FC23D3C */  jal   sub_GAME_7F08F4F0
-/* 068550 7F033A20 24070003 */   li    $a3, 3
-/* 068554 7F033A24 28410003 */  slti  $at, $v0, 3
-/* 068558 7F033A28 1420001A */  bnez  $at, .L7F033A94
-/* 06855C 7F033A2C 8FAE0030 */   lw    $t6, 0x30($sp)
-/* 068560 7F033A30 8DCF0000 */  lw    $t7, ($t6)
-/* 068564 7F033A34 24020001 */  li    $v0, 1
-/* 068568 7F033A38 10000017 */  b     .L7F033A98
-/* 06856C 7F033A3C A62F0114 */   sh    $t7, 0x114($s1)
-.L7F033A40:
-/* 068570 7F033A40 0FC23EE4 */  jal   sub_GAME_7F08FB90
-/* 068574 7F033A44 02002025 */   move  $a0, $s0
-/* 068578 7F033A48 50400013 */  beql  $v0, $zero, .L7F033A98
-/* 06857C 7F033A4C 00001025 */   move  $v0, $zero
-/* 068580 7F033A50 8C580000 */  lw    $t8, ($v0)
-/* 068584 7F033A54 24020001 */  li    $v0, 1
-/* 068588 7F033A58 1000000F */  b     .L7F033A98
-/* 06858C 7F033A5C A6380114 */   sh    $t8, 0x114($s1)
-.L7F033A60:
-/* 068590 7F033A60 0FC1B320 */  jal   getsubroty
-/* 068594 7F033A64 8E24001C */   lw    $a0, 0x1c($s1)
-/* 068598 7F033A68 8E220018 */  lw    $v0, 0x18($s1)
-/* 06859C 7F033A6C 44060000 */  mfc1  $a2, $f0
-/* 0685A0 7F033A70 320700FF */  andi  $a3, $s0, 0xff
-/* 0685A4 7F033A74 24440008 */  addiu $a0, $v0, 8
-/* 0685A8 7F033A78 0FC0CE0D */  jal   chrlvFindPathNeighborRelated
-/* 0685AC 7F033A7C 8C450014 */   lw    $a1, 0x14($v0)
-/* 0685B0 7F033A80 04420005 */  bltzl $v0, .L7F033A98
-/* 0685B4 7F033A84 00001025 */   move  $v0, $zero
-/* 0685B8 7F033A88 A6220114 */  sh    $v0, 0x114($s1)
-/* 0685BC 7F033A8C 10000002 */  b     .L7F033A98
-/* 0685C0 7F033A90 24020001 */   li    $v0, 1
-.L7F033A94:
-/* 0685C4 7F033A94 00001025 */  move  $v0, $zero
-.L7F033A98:
-/* 0685C8 7F033A98 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0685CC 7F033A9C 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0685D0 7F033AA0 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0685D4 7F033AA4 03E00008 */  jr    $ra
-/* 0685D8 7F033AA8 27BD0048 */   addiu $sp, $sp, 0x48
-)
-#endif
 
 
 

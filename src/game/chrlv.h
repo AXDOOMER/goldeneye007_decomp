@@ -4,7 +4,8 @@
 #include "bondgame.h"
 #include "game/chrobjdata.h"
 
-
+// Value is 3, it just needs to be less than MAX_CHRWAYPOINTS
+#define PATH_FINDING_WP_LIMIT (MAX_CHRWAYPOINTS - 3)
 
 
 
@@ -93,7 +94,7 @@ bool check_if_able_to_then_look_flustered(ChrRecord *self);
 bool check_if_able_to_then_kneel(struct ChrRecord *self);
 s32 check_if_able_to_then_perform_animation(struct ChrRecord *self, s32 animID, s32 b, s32 c, u8 d, s32 e);
 bool alarm_timer_related(ChrRecord *self);
-
+bool check_2328_preset_set_with_method(ChrRecord *self, u8 quadrant);
 
 
 

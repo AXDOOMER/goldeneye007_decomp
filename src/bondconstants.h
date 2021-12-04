@@ -1831,6 +1831,13 @@ typedef enum WATCH_ANIMATION_STATE_IDS {
     WATCH_ANIMATION_0xc = 12
 } WATCH_ANIMATION_STATE;
 
+#define QUADRANT_BACK          0x01
+#define QUADRANT_SIDE1         0x02
+#define QUADRANT_SIDE2         0x04
+#define QUADRANT_FRONT         0x08
+#define QUADRANT_2NDWPTOTARGET 0x10 // second waypoint on route to target
+#define QUADRANT_20            0x20 // second waypoint on route to target
+
 #define isNotBoundPad(pad)  pad < 10000
 #define getBoundPadNum(pad) pad - 10000
 #define setBoundPadNum(pad) pad + 10000
