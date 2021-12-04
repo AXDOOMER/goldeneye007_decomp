@@ -102,6 +102,7 @@ void sub_GAME_7F033D1C(ChrRecord *self, s32 id, s32 id2);
 void sub_GAME_7F033D5C( ChrRecord *self, s32 padid);
 void sub_GAME_7F033D84(ChrRecord *self, s32 chrid, s32 padid);
 s32 chrIsTargetNearlyInSight(ChrRecord *arg0);
+bool sub_GAME_7F033F48(struct coord3d *pos, struct StandTile **arg1, f32 facing, bool b);
 
 
 
