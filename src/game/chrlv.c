@@ -14467,63 +14467,33 @@ bool chrIfInPadRoom(struct ChrRecord *self, s32 chrnum, s32 padnum)
 }
 
 
-#ifdef NONMATCHING
-void check_if_actor_is_at_preset(void) {
-// ai branch
+/**
+ * Address 0x7F03444C.
+*/
+bool check_if_actor_is_at_preset(struct ChrRecord *self, s32 padnum)
+{
+    struct PropRecord *bondprop;
+    struct pad *pad;
+
+    bondprop = get_curplayer_positiondata();
+    padnum   = convertPadIf9000(self, padnum);
+
+    if (isNotBoundPad(padnum))
+    {
+        pad = (struct pad *)&ptr_0xxxpresets[padnum];
+    }
+    else
+    {
+        pad = (struct pad *)&ptr_2xxxpresets[getBoundPadNum(padnum)];
+    }
+
+    if (pad->stan && (pad->stan->room == bondprop->stan->room))
+    {
+        return TRUE;
+    }
+
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_actor_is_at_preset
-/* 068F7C 7F03444C 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 068F80 7F034450 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 068F84 7F034454 AFA40020 */  sw    $a0, 0x20($sp)
-/* 068F88 7F034458 0FC225E6 */  jal   get_curplayer_positiondata
-/* 068F8C 7F03445C AFA50024 */   sw    $a1, 0x24($sp)
-/* 068F90 7F034460 AFA2001C */  sw    $v0, 0x1c($sp)
-/* 068F94 7F034464 8FA40020 */  lw    $a0, 0x20($sp)
-/* 068F98 7F034468 0FC0CBE5 */  jal   convertPadIf9000
-/* 068F9C 7F03446C 8FA50024 */   lw    $a1, 0x24($sp)
-/* 068FA0 7F034470 28412710 */  slti  $at, $v0, 0x2710
-/* 068FA4 7F034474 1020000A */  beqz  $at, .L7F0344A0
-/* 068FA8 7F034478 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 068FAC 7F03447C 00027080 */  sll   $t6, $v0, 2
-/* 068FB0 7F034480 01C27023 */  subu  $t6, $t6, $v0
-/* 068FB4 7F034484 000E7080 */  sll   $t6, $t6, 2
-/* 068FB8 7F034488 3C0F8007 */  lui   $t7, %hi(ptr_0xxxpresets) 
-/* 068FBC 7F03448C 8DEF5D18 */  lw    $t7, %lo(ptr_0xxxpresets)($t7)
-/* 068FC0 7F034490 01C27023 */  subu  $t6, $t6, $v0
-/* 068FC4 7F034494 000E7080 */  sll   $t6, $t6, 2
-/* 068FC8 7F034498 1000000A */  b     .L7F0344C4
-/* 068FCC 7F03449C 01CF1821 */   addu  $v1, $t6, $t7
-.L7F0344A0:
-/* 068FD0 7F0344A0 3C198007 */  lui   $t9, %hi(ptr_2xxxpresets) 
-/* 068FD4 7F0344A4 8F395D1C */  lw    $t9, %lo(ptr_2xxxpresets)($t9)
-/* 068FD8 7F0344A8 0002C100 */  sll   $t8, $v0, 4
-/* 068FDC 7F0344AC 0302C021 */  addu  $t8, $t8, $v0
-/* 068FE0 7F0344B0 0018C080 */  sll   $t8, $t8, 2
-/* 068FE4 7F0344B4 3C01FFF5 */  lui   $at, (0xFFF59FC0 >> 16) # lui $at, 0xfff5
-/* 068FE8 7F0344B8 34219FC0 */  ori   $at, (0xFFF59FC0 & 0xFFFF) # ori $at, $at, 0x9fc0
-/* 068FEC 7F0344BC 03191821 */  addu  $v1, $t8, $t9
-/* 068FF0 7F0344C0 00611821 */  addu  $v1, $v1, $at
-.L7F0344C4:
-/* 068FF4 7F0344C4 8C620028 */  lw    $v0, 0x28($v1)
-/* 068FF8 7F0344C8 8FA8001C */  lw    $t0, 0x1c($sp)
-/* 068FFC 7F0344CC 50400009 */  beql  $v0, $zero, .L7F0344F4
-/* 069000 7F0344D0 00001025 */   move  $v0, $zero
-/* 069004 7F0344D4 8D090014 */  lw    $t1, 0x14($t0)
-/* 069008 7F0344D8 904B0003 */  lbu   $t3, 3($v0)
-/* 06900C 7F0344DC 912A0003 */  lbu   $t2, 3($t1)
-/* 069010 7F0344E0 554B0004 */  bnel  $t2, $t3, .L7F0344F4
-/* 069014 7F0344E4 00001025 */   move  $v0, $zero
-/* 069018 7F0344E8 10000002 */  b     .L7F0344F4
-/* 06901C 7F0344EC 24020001 */   li    $v0, 1
-/* 069020 7F0344F0 00001025 */  move  $v0, $zero
-.L7F0344F4:
-/* 069024 7F0344F4 03E00008 */  jr    $ra
-/* 069028 7F0344F8 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
 
 
 
