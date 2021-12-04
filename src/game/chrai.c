@@ -2996,7 +2996,7 @@ action07_Jump_to_Return_Subroutine_1:
 /* 06A290 7F035760 1000FF8A */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A294 7F035764 02C08825 */   move  $s1, $s6
 action08_Reset_Animation_1:
-/* 06A298 7F035768 0FC0CD75 */  jal   sub_GAME_7F0335D4
+/* 06A298 7F035768 0FC0CD75 */  jal   chraiStopAnimation
 /* 06A29C 7F03576C 02E02025 */   move  $a0, $s7
 /* 06A2A0 7F035770 26520001 */  addiu $s2, $s2, 1
 /* 06A2A4 7F035774 1000FF85 */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -8863,7 +8863,7 @@ action07_Jump_to_Return_Subroutine_1:
 /* 06A290 7F035760 1000FF8A */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A294 7F035764 02C08825 */   move  $s1, $s6
 action08_Reset_Animation_1:
-/* 06A298 7F035768 0FC0CD75 */  jal   sub_GAME_7F0335D4
+/* 06A298 7F035768 0FC0CD75 */  jal   chraiStopAnimation
 /* 06A29C 7F03576C 02E02025 */   move  $a0, $s7
 /* 06A2A0 7F035770 26520001 */  addiu $s2, $s2, 1
 /* 06A2A4 7F035774 1000FF85 */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -14731,7 +14731,7 @@ action07_Jump_to_Return_Subroutine_1:
 /* 06A290 7F035760 1000FF8A */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A294 7F035764 02C08825 */   move  $s1, $s6
 action08_Reset_Animation_1:
-/* 06A298 7F035768 0FC0CD75 */  jal   sub_GAME_7F0335D4
+/* 06A298 7F035768 0FC0CD75 */  jal   chraiStopAnimation
 /* 06A29C 7F03576C 02E02025 */   move  $a0, $s7
 /* 06A2A0 7F035770 26520001 */  addiu $s2, $s2, 1
 /* 06A2A4 7F035774 1000FF85 */  b     GetByteS1_ParseCommandByte_SwitchCase

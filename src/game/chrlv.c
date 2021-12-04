@@ -13785,7 +13785,6 @@ bool check_if_actor_FA_target_set(ChrRecord *self)
 }
 
 
-#if 1
 /**
  * Return false if chrseedie is negative.
  * 
@@ -13796,45 +13795,22 @@ bool check_if_actor_FB_target_set(ChrRecord *self)
     return ((self->chrseedie < 0) ^ 1);
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_actor_FB_target_set
-/* 0680F4 7F0335C4 8482011A */  lh    $v0, 0x11a($a0)
-/* 0680F8 7F0335C8 284E0000 */  slti  $t6, $v0, 0
-/* 0680FC 7F0335CC 03E00008 */  jr    $ra
-/* 068100 7F0335D0 39C20001 */   xori  $v0, $t6, 1
-)
-#endif
 
 
+/**
+ * Address 0x7F0335D4.
+*/
+bool chraiStopAnimation(ChrRecord *self)
+{
+    if (chrIsNotDeadOrShot(self))
+    {
+        chrlvKneelingAnimationRelated7F023E48(self);
 
-#ifdef NONMATCHING
-void sub_GAME_7F0335D4(void) {
+        return TRUE;
+    }
 
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0335D4
-/* 068104 7F0335D4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 068108 7F0335D8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 06810C 7F0335DC 0FC0A896 */  jal   chrIsNotDeadOrShot
-/* 068110 7F0335E0 AFA40018 */   sw    $a0, 0x18($sp)
-/* 068114 7F0335E4 50400006 */  beql  $v0, $zero, .L7F033600
-/* 068118 7F0335E8 00001025 */   move  $v0, $zero
-/* 06811C 7F0335EC 0FC08F92 */  jal   chrlvKneelingAnimationRelated7F023E48
-/* 068120 7F0335F0 8FA40018 */   lw    $a0, 0x18($sp)
-/* 068124 7F0335F4 10000002 */  b     .L7F033600
-/* 068128 7F0335F8 24020001 */   li    $v0, 1
-/* 06812C 7F0335FC 00001025 */  move  $v0, $zero
-.L7F033600:
-/* 068130 7F033600 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 068134 7F033604 27BD0018 */  addiu $sp, $sp, 0x18
-/* 068138 7F033608 03E00008 */  jr    $ra
-/* 06813C 7F03360C 00000000 */   nop   
-)
-#endif
 
 
 

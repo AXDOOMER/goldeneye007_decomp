@@ -86,6 +86,7 @@ s8 get_times_actor_shot(ChrRecord *self);
 s8 get_num_shots_near_actor(ChrRecord *self);
 bool check_if_actor_FA_target_set(ChrRecord *self);
 bool check_if_actor_FB_target_set(ChrRecord *self);
+bool chraiStopAnimation(ChrRecord *self);
 
 
 
