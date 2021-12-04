@@ -140,6 +140,7 @@ void sub_GAME_7F0284DC(struct ChrRecord *arg0);
 void chrlvTickPatrol(ChrRecord *arg0);
 f32 get_distance_actor_to_position(struct ChrRecord *self, struct coord3d *pos);
 s32 chrResolveId(ChrRecord *self, s32 id);
+s32 sub_GAME_7F033780(s32 *arg0, struct coord3d *arg1, f32 angle);
 
 // ?
 
@@ -13913,71 +13914,37 @@ bool alarm_timer_related(ChrRecord *self)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F033780(void) {
+/**
+ * Address 0x7F033780.
+*/
+s32 sub_GAME_7F033780(s32 *arg0, struct coord3d *arg1, f32 angle)
+{
+    f32 temp_f0;
+    struct pad *pad;
+    f32 dx;
+    f32 dz;
+    f32 ff;
 
+    pad = &ptr_0xxxpresets[*arg0];
+    dx = pad->pos.f[0] - arg1->f[0];
+    dz = pad->pos.f[2] - arg1->f[2];
+    
+    temp_f0 = atan2f(dx, dz);
+    ff = angle - temp_f0;
+
+    if (angle < temp_f0)
+    {
+        ff += M_TAU;
+    }
+
+    if ((ff < M_90_DEG_IN_RAD) || (ff > M_270_DEG_IN_RAD))
+    {
+        return 1;
+    }
+
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_800520DC
-.word 0x40c90fdb /*6.2831855*/
-glabel D_800520E0
-.word 0x3fc90fdb /*1.5707964*/
-glabel D_800520E4
-.word 0x4096cbe4 /*4.712389*/
-.text
-glabel sub_GAME_7F033780
-/* 0682B0 7F033780 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0682B4 7F033784 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0682B8 7F033788 AFA60020 */  sw    $a2, 0x20($sp)
-/* 0682BC 7F03378C 8C8E0000 */  lw    $t6, ($a0)
-/* 0682C0 7F033790 3C188007 */  lui   $t8, %hi(ptr_0xxxpresets) 
-/* 0682C4 7F033794 8F185D18 */  lw    $t8, %lo(ptr_0xxxpresets)($t8)
-/* 0682C8 7F033798 000E7880 */  sll   $t7, $t6, 2
-/* 0682CC 7F03379C 01EE7823 */  subu  $t7, $t7, $t6
-/* 0682D0 7F0337A0 000F7880 */  sll   $t7, $t7, 2
-/* 0682D4 7F0337A4 01EE7823 */  subu  $t7, $t7, $t6
-/* 0682D8 7F0337A8 000F7880 */  sll   $t7, $t7, 2
-/* 0682DC 7F0337AC 01F81021 */  addu  $v0, $t7, $t8
-/* 0682E0 7F0337B0 C4440000 */  lwc1  $f4, ($v0)
-/* 0682E4 7F0337B4 C4A60000 */  lwc1  $f6, ($a1)
-/* 0682E8 7F0337B8 C4480008 */  lwc1  $f8, 8($v0)
-/* 0682EC 7F0337BC C4AA0008 */  lwc1  $f10, 8($a1)
-/* 0682F0 7F0337C0 46062301 */  sub.s $f12, $f4, $f6
-/* 0682F4 7F0337C4 0FC16A8C */  jal   atan2f
-/* 0682F8 7F0337C8 460A4381 */   sub.s $f14, $f8, $f10
-/* 0682FC 7F0337CC C7AE0020 */  lwc1  $f14, 0x20($sp)
-/* 068300 7F0337D0 3C018005 */  lui   $at, %hi(D_800520DC)
-/* 068304 7F0337D4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 068308 7F0337D8 4600703C */  c.lt.s $f14, $f0
-/* 06830C 7F0337DC 46007301 */  sub.s $f12, $f14, $f0
-/* 068310 7F0337E0 45000003 */  bc1f  .L7F0337F0
-/* 068314 7F0337E4 46006086 */   mov.s $f2, $f12
-/* 068318 7F0337E8 C43020DC */  lwc1  $f16, %lo(D_800520DC)($at)
-/* 06831C 7F0337EC 46106080 */  add.s $f2, $f12, $f16
-.L7F0337F0:
-/* 068320 7F0337F0 3C018005 */  lui   $at, %hi(D_800520E0)
-/* 068324 7F0337F4 C43220E0 */  lwc1  $f18, %lo(D_800520E0)($at)
-/* 068328 7F0337F8 3C018005 */  lui   $at, %hi(D_800520E4)
-/* 06832C 7F0337FC 4612103C */  c.lt.s $f2, $f18
-/* 068330 7F033800 00000000 */  nop   
-/* 068334 7F033804 45010007 */  bc1t  .L7F033824
-/* 068338 7F033808 00000000 */   nop   
-/* 06833C 7F03380C C42420E4 */  lwc1  $f4, %lo(D_800520E4)($at)
-/* 068340 7F033810 00001025 */  move  $v0, $zero
-/* 068344 7F033814 4602203C */  c.lt.s $f4, $f2
-/* 068348 7F033818 00000000 */  nop   
-/* 06834C 7F03381C 45000003 */  bc1f  .L7F03382C
-/* 068350 7F033820 00000000 */   nop   
-.L7F033824:
-/* 068354 7F033824 10000001 */  b     .L7F03382C
-/* 068358 7F033828 24020001 */   li    $v0, 1
-.L7F03382C:
-/* 06835C 7F03382C 03E00008 */  jr    $ra
-/* 068360 7F033830 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
+
 
 
 
