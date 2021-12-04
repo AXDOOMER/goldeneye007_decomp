@@ -14181,33 +14181,20 @@ void sub_GAME_7F033CF4(ChrRecord *self, s32 id)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F033D1C(void) {
-// ai branch
+/**
+ * Address 0x7F033D1C.
+*/
+void sub_GAME_7F033D1C(ChrRecord *self, s32 id, s32 id2)
+{
+    struct ChrRecord *chr;
+
+    chr = chrlvGetHandleForGuardId(self, id);
+
+    if (chr)
+    {
+        chr->chrpreset1 = chrResolveId(self, id2);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F033D1C
-/* 06884C 7F033D1C 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 068850 7F033D20 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 068854 7F033D24 AFA40020 */  sw    $a0, 0x20($sp)
-/* 068858 7F033D28 0FC0CC10 */  jal   chrlvGetHandleForGuardId
-/* 06885C 7F033D2C AFA60028 */   sw    $a2, 0x28($sp)
-/* 068860 7F033D30 10400006 */  beqz  $v0, .L7F033D4C
-/* 068864 7F033D34 8FA40020 */   lw    $a0, 0x20($sp)
-/* 068868 7F033D38 8FA50028 */  lw    $a1, 0x28($sp)
-/* 06886C 7F033D3C 0FC0CBEB */  jal   chrResolveId
-/* 068870 7F033D40 AFA2001C */   sw    $v0, 0x1c($sp)
-/* 068874 7F033D44 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 068878 7F033D48 A4620116 */  sh    $v0, 0x116($v1)
-.L7F033D4C:
-/* 06887C 7F033D4C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 068880 7F033D50 27BD0020 */  addiu $sp, $sp, 0x20
-/* 068884 7F033D54 03E00008 */  jr    $ra
-/* 068888 7F033D58 00000000 */   nop   
-)
-#endif
 
 
 
