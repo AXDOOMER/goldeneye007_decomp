@@ -14198,28 +14198,13 @@ void sub_GAME_7F033D1C(ChrRecord *self, s32 id, s32 id2)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F033D5C(void) {
-// ai branch
+/**
+ * Address 0x7F033D5C.
+*/
+void sub_GAME_7F033D5C( ChrRecord *self, s32 padid)
+{
+    self->padpreset1 = convertPadIf9000(self, padid);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F033D5C
-/* 06888C 7F033D5C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 068890 7F033D60 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 068894 7F033D64 0FC0CBE5 */  jal   convertPadIf9000
-/* 068898 7F033D68 AFA40018 */   sw    $a0, 0x18($sp)
-/* 06889C 7F033D6C 8FAE0018 */  lw    $t6, 0x18($sp)
-/* 0688A0 7F033D70 A5C20114 */  sh    $v0, 0x114($t6)
-/* 0688A4 7F033D74 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0688A8 7F033D78 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0688AC 7F033D7C 03E00008 */  jr    $ra
-/* 0688B0 7F033D80 00000000 */   nop   
-)
-#endif
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F033D84(void) {

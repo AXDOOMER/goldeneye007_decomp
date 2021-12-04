@@ -99,6 +99,7 @@ bool sub_GAME_7F033AAC(ChrRecord *self, u8 padnum);
 bool sub_GAME_7F033B38(struct ChrRecord *self, f32 distance);
 void sub_GAME_7F033CF4(ChrRecord *self, s32 id);
 void sub_GAME_7F033D1C(ChrRecord *self, s32 id, s32 id2);
+void sub_GAME_7F033D5C( ChrRecord *self, s32 padid);
 
 
 
