@@ -14497,35 +14497,21 @@ bool check_if_actor_is_at_preset(struct ChrRecord *self, s32 padnum)
 
 
 
-#ifdef NONMATCHING
-void removed_animation_routine_27(void) {
-// ai branch
+/**
+ * Address 0x7F0344FC.
+*/
+bool removed_animation_routine_27(ChrRecord *self)
+{
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel removed_animation_routine_27
-/* 06902C 7F0344FC AFA40000 */  sw    $a0, ($sp)
-/* 069030 7F034500 03E00008 */  jr    $ra
-/* 069034 7F034504 00001025 */   move  $v0, $zero
-)
-#endif
 
-
-
-#ifdef NONMATCHING
-void removed_animation_routine_2B(void) {
-// ai branch
+/**
+ * Address 0x7F034508.
+*/
+bool removed_animation_routine_2B(ChrRecord *self)
+{
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel removed_animation_routine_2B
-/* 069038 7F034508 AFA40000 */  sw    $a0, ($sp)
-/* 06903C 7F03450C 03E00008 */  jr    $ra
-/* 069040 7F034510 00001025 */   move  $v0, $zero
-)
-#endif
 
 
 

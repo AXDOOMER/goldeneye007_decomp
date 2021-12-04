@@ -107,6 +107,8 @@ struct PropRecord *guard_constructor_BD(struct ChrRecord *self, s32 bodynum, s32
 struct PropRecord *guard_constructor_BE(struct ChrRecord *self, s32 bodynum, s32 headnum, s32 chrnum, struct AIListRecord *ailist, s32 flags);
 bool chrIfInPadRoom(struct ChrRecord *self, s32 chrnum, s32 padnum);
 bool check_if_actor_is_at_preset(struct ChrRecord *self, s32 padnum);
+bool removed_animation_routine_27(ChrRecord *self);
+bool removed_animation_routine_2B(ChrRecord *self);
 
 
 #endif
