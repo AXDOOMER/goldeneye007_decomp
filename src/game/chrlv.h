@@ -89,6 +89,7 @@ bool check_if_actor_FB_target_set(ChrRecord *self);
 bool chraiStopAnimation(ChrRecord *self);
 bool chrTrySurprisedOneHand(ChrRecord *self);
 bool check_if_able_to_then_fawn_on_shoulder(ChrRecord *self);
+bool check_if_able_to_then_look_flustered(ChrRecord *self);
 
 
 

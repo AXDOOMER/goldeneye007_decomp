@@ -13847,33 +13847,20 @@ bool check_if_able_to_then_fawn_on_shoulder(ChrRecord *self)
 }
 
 
+/**
+ * Address 0x7F033688.
+*/
+bool check_if_able_to_then_look_flustered(ChrRecord *self)
+{
+    if (chrIsNotDeadOrShot(self))
+    {
+        chrlvActorLookFlustered(self);
 
-#ifdef NONMATCHING
-void check_if_able_to_then_look_flustered(void) {
+        return TRUE;
+    }
 
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_able_to_then_look_flustered
-/* 0681B8 7F033688 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0681BC 7F03368C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0681C0 7F033690 0FC0A896 */  jal   chrIsNotDeadOrShot
-/* 0681C4 7F033694 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0681C8 7F033698 50400006 */  beql  $v0, $zero, .L7F0336B4
-/* 0681CC 7F03369C 00001025 */   move  $v0, $zero
-/* 0681D0 7F0336A0 0FC09152 */  jal   chrlvActorLookFlustered
-/* 0681D4 7F0336A4 8FA40018 */   lw    $a0, 0x18($sp)
-/* 0681D8 7F0336A8 10000002 */  b     .L7F0336B4
-/* 0681DC 7F0336AC 24020001 */   li    $v0, 1
-/* 0681E0 7F0336B0 00001025 */  move  $v0, $zero
-.L7F0336B4:
-/* 0681E4 7F0336B4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0681E8 7F0336B8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0681EC 7F0336BC 03E00008 */  jr    $ra
-/* 0681F0 7F0336C0 00000000 */   nop   
-)
-#endif
 
 
 
