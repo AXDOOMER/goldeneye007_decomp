@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "memp.h"
+#include "game/chrlv.h"
 #include "game/math_atan2f.h"
 #include "game/prop.h"
 

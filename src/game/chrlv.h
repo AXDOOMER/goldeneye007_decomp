@@ -112,6 +112,6 @@ bool removed_animation_routine_2B(ChrRecord *self);
 bool sub_GAME_7F034514(struct ChrRecord *self, s32 PadId);
 bool actor_draws_throws_grenade_at_player_if_possible(struct ChrRecord *self);
 bool actor_drops_itemtype_setting_timer(struct ChrRecord *self, s32 modelnum, u8 weaponid);
-
+void expand_09_characters(s32 arg0, GuardRecord *arg1, s32 arg2);
 
 #endif

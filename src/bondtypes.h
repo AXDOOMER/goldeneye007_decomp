@@ -2083,6 +2083,23 @@ typedef struct KeyRecord
     u32 keyflags;
 } KeyRecord;
 
+// objtype 9 Guard
+typedef struct GuardRecord
+{
+    struct ObjHeaderData Head;
+    u16 chrnum;         /*0x4*/
+    u16 PadID;      /*0x6*/
+    u16 BodyID;     /*0x8*/
+    u16 AIListID;   /*0xa*/
+    u16 Preset;     /*0xc*/
+    u16 unk0a;      /*0xe*/
+    u16 health;     /*0x10*/
+    u16 ReactionTime; /*0x12*/
+    u16 unk10;        /*0x14*/
+    s16 HeadID;       /*0x16*/
+    struct ChrRecord *Data;  /*0x18*/
+} GuardRecord;
+
 
 typedef struct object_standard {
     s16 scale;

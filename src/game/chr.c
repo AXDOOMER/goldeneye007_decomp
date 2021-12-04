@@ -3093,7 +3093,7 @@ glabel init_GUARDdata_with_set_values
 /**
  * Address 0x7F0203B8.
  */
-struct PropRecord * replace_GUARDdata_with_actual_values(struct Model * arg0, struct coord3d * arg1, f32 arg2, struct StandTile * arg3, s32 arg4)
+struct PropRecord * replace_GUARDdata_with_actual_values(struct Model * arg0, struct pad * arg1, f32 arg2, struct StandTile * arg3, s32 arg4)
 {
     struct PropRecord * ret;
     s32 phi_a0;
