@@ -13880,42 +13880,20 @@ bool check_if_able_to_then_kneel(struct ChrRecord *self)
 }
 
 
-#ifdef NONMATCHING
-void check_if_able_to_then_perform_animation(void) {
-// ai branch
+/**
+ * Address 0x7F033700.
+*/
+s32 check_if_able_to_then_perform_animation(struct ChrRecord *self, s32 animID, s32 b, s32 c, u8 d, s32 e)
+{
+    if (chrIsNotDeadOrShot(self))
+    {
+        chrlvPerformAnimationForActor(self, animID, b, c, d, e);
+
+        return TRUE;
+    }
+
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_able_to_then_perform_animation
-/* 068230 7F033700 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 068234 7F033704 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 068238 7F033708 AFA40020 */  sw    $a0, 0x20($sp)
-/* 06823C 7F03370C AFA50024 */  sw    $a1, 0x24($sp)
-/* 068240 7F033710 AFA60028 */  sw    $a2, 0x28($sp)
-/* 068244 7F033714 0FC0A896 */  jal   chrIsNotDeadOrShot
-/* 068248 7F033718 AFA7002C */   sw    $a3, 0x2c($sp)
-/* 06824C 7F03371C 1040000B */  beqz  $v0, .L7F03374C
-/* 068250 7F033720 8FA40020 */   lw    $a0, 0x20($sp)
-/* 068254 7F033724 93AE0033 */  lbu   $t6, 0x33($sp)
-/* 068258 7F033728 8FAF0034 */  lw    $t7, 0x34($sp)
-/* 06825C 7F03372C 8FA50024 */  lw    $a1, 0x24($sp)
-/* 068260 7F033730 8FA60028 */  lw    $a2, 0x28($sp)
-/* 068264 7F033734 8FA7002C */  lw    $a3, 0x2c($sp)
-/* 068268 7F033738 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 06826C 7F03373C 0FC08FF9 */  jal   chrlvPerformAnimationForActor
-/* 068270 7F033740 AFAF0014 */   sw    $t7, 0x14($sp)
-/* 068274 7F033744 10000002 */  b     .L7F033750
-/* 068278 7F033748 24020001 */   li    $v0, 1
-.L7F03374C:
-/* 06827C 7F03374C 00001025 */  move  $v0, $zero
-.L7F033750:
-/* 068280 7F033750 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 068284 7F033754 27BD0020 */  addiu $sp, $sp, 0x20
-/* 068288 7F033758 03E00008 */  jr    $ra
-/* 06828C 7F03375C 00000000 */   nop   
-)
-#endif
 
 
 
