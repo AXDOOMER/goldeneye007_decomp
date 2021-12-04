@@ -3,61 +3,31 @@
 #include "game/chrai.h"
 #include "game/chrobjdata.h"
 #include "game/loadobjectmodel.h"
+#include "game/stan.h"
 
-#ifdef NONMATCHING
-void sub_GAME_7F056850(void) {
-
+/**
+ * Address 0x7F056850.
+*/
+s32 sub_GAME_7F056850(struct pad *arg0, StandTile *arg1, f32 arg2, struct pad *arg3, StandTile **arg4)
+{
+    arg3->pos.f[0] = arg0->pos.f[0];
+    arg3->pos.f[1] = arg0->pos.f[1];
+    arg3->pos.f[2] = arg0->pos.f[2];
+    
+    *arg4 = arg1;
+    
+    if (arg1 == 0)
+    {
+        return 0;
+    }
+    
+    if ((arg2 > 0.0f) && (sub_GAME_7F0B18B8(arg4, arg3->pos.f[0], arg3->pos.f[2], arg2, 0x1F, 0.0f, 1.0f) >= 0))
+    {
+        return 0;
+    }
+    
+    return 1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F056850
-/* 08B380 7F056850 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 08B384 7F056854 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 08B388 7F056858 AFB00028 */  sw    $s0, 0x28($sp)
-/* 08B38C 7F05685C C4840000 */  lwc1  $f4, ($a0)
-/* 08B390 7F056860 44866000 */  mtc1  $a2, $f12
-/* 08B394 7F056864 00E08025 */  move  $s0, $a3
-/* 08B398 7F056868 E4E40000 */  swc1  $f4, ($a3)
-/* 08B39C 7F05686C C4860004 */  lwc1  $f6, 4($a0)
-/* 08B3A0 7F056870 E4E60004 */  swc1  $f6, 4($a3)
-/* 08B3A4 7F056874 C4880008 */  lwc1  $f8, 8($a0)
-/* 08B3A8 7F056878 E4E80008 */  swc1  $f8, 8($a3)
-/* 08B3AC 7F05687C 8FAE0040 */  lw    $t6, 0x40($sp)
-/* 08B3B0 7F056880 14A00003 */  bnez  $a1, .L7F056890
-/* 08B3B4 7F056884 ADC50000 */   sw    $a1, ($t6)
-/* 08B3B8 7F056888 10000015 */  b     .L7F0568E0
-/* 08B3BC 7F05688C 00001025 */   move  $v0, $zero
-.L7F056890:
-/* 08B3C0 7F056890 44800000 */  mtc1  $zero, $f0
-/* 08B3C4 7F056894 8FA40040 */  lw    $a0, 0x40($sp)
-/* 08B3C8 7F056898 240F001F */  li    $t7, 31
-/* 08B3CC 7F05689C 460C003C */  c.lt.s $f0, $f12
-/* 08B3D0 7F0568A0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 08B3D4 7F0568A4 4502000E */  bc1fl .L7F0568E0
-/* 08B3D8 7F0568A8 24020001 */   li    $v0, 1
-/* 08B3DC 7F0568AC 44815000 */  mtc1  $at, $f10
-/* 08B3E0 7F0568B0 8E050000 */  lw    $a1, ($s0)
-/* 08B3E4 7F0568B4 8E060008 */  lw    $a2, 8($s0)
-/* 08B3E8 7F0568B8 44076000 */  mfc1  $a3, $f12
-/* 08B3EC 7F0568BC E7A00014 */  swc1  $f0, 0x14($sp)
-/* 08B3F0 7F0568C0 AFAF0010 */  sw    $t7, 0x10($sp)
-/* 08B3F4 7F0568C4 0FC2C62E */  jal   sub_GAME_7F0B18B8
-/* 08B3F8 7F0568C8 E7AA0018 */   swc1  $f10, 0x18($sp)
-/* 08B3FC 7F0568CC 04420004 */  bltzl $v0, .L7F0568E0
-/* 08B400 7F0568D0 24020001 */   li    $v0, 1
-/* 08B404 7F0568D4 10000002 */  b     .L7F0568E0
-/* 08B408 7F0568D8 00001025 */   move  $v0, $zero
-/* 08B40C 7F0568DC 24020001 */  li    $v0, 1
-.L7F0568E0:
-/* 08B410 7F0568E0 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 08B414 7F0568E4 8FB00028 */  lw    $s0, 0x28($sp)
-/* 08B418 7F0568E8 27BD0030 */  addiu $sp, $sp, 0x30
-/* 08B41C 7F0568EC 03E00008 */  jr    $ra
-/* 08B420 7F0568F0 00000000 */   nop   
-)
-#endif
-
 
 
 //
