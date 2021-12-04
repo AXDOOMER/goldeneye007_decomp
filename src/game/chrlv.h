@@ -90,6 +90,7 @@ bool chraiStopAnimation(ChrRecord *self);
 bool chrTrySurprisedOneHand(ChrRecord *self);
 bool check_if_able_to_then_fawn_on_shoulder(ChrRecord *self);
 bool check_if_able_to_then_look_flustered(ChrRecord *self);
+bool check_if_able_to_then_kneel(struct ChrRecord *self);
 
 
 

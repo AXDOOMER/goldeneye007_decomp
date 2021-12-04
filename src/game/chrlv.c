@@ -13864,33 +13864,20 @@ bool check_if_able_to_then_look_flustered(ChrRecord *self)
 
 
 
-#ifdef NONMATCHING
-void check_if_able_to_then_kneel(void) {
+/**
+ * Address 0x7F0336C4.
+*/
+bool check_if_able_to_then_kneel(struct ChrRecord *self)
+{
+    if (chrIsNotDeadOrShot(self) != 0)
+    {
+        chrlvActorKneel(self);
 
+        return TRUE;
+    }
+
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_able_to_then_kneel
-/* 0681F4 7F0336C4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0681F8 7F0336C8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0681FC 7F0336CC 0FC0A896 */  jal   chrIsNotDeadOrShot
-/* 068200 7F0336D0 AFA40018 */   sw    $a0, 0x18($sp)
-/* 068204 7F0336D4 50400006 */  beql  $v0, $zero, .L7F0336F0
-/* 068208 7F0336D8 00001025 */   move  $v0, $zero
-/* 06820C 7F0336DC 0FC08F9D */  jal   chrlvActorKneel
-/* 068210 7F0336E0 8FA40018 */   lw    $a0, 0x18($sp)
-/* 068214 7F0336E4 10000002 */  b     .L7F0336F0
-/* 068218 7F0336E8 24020001 */   li    $v0, 1
-/* 06821C 7F0336EC 00001025 */  move  $v0, $zero
-.L7F0336F0:
-/* 068220 7F0336F0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 068224 7F0336F4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 068228 7F0336F8 03E00008 */  jr    $ra
-/* 06822C 7F0336FC 00000000 */   nop   
-)
-#endif
-
 
 
 #ifdef NONMATCHING
