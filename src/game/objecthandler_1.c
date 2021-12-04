@@ -753,124 +753,75 @@ glabel sub_GAME_7F06C768
 
 
 
-#ifdef NONMATCHING
-void extract_id_from_object_structure_microcode(void) {
+/**
+ * Address 0x7F06C79C.
+*/
+void *extract_id_from_object_structure_microcode(Model *Objinst, ModelNode *root)
+{
+    s32 number  = 0;
+    void **data = Objinst->datas;
 
+    switch (root->Opcode & 0xff)
+    { // get "number" from each node, number = dataseg? - always 0
+        case MODELNODE_OPCODE_HEADERRECORD:
+        {
+            number = ((ModelNode_HeaderRecord *)root->Data)->number;
+            break;
+        }
+        case MODELNODE_OPCODE_MODELNODE_DISPLAYLIST_COLLISIONRECORD:
+        {
+            number = ((ModelNode_DisplayList_CollisionRecord *)root->Data)->unknown;
+            break;
+        }
+        case MODELNODE_OPCODE_OP07RECORD:
+        {
+            number = ((ModelNode_Op07Record *)root->Data)->number;
+            break;
+        }
+        case MODELNODE_OPCODE_LODRECORD:
+        {
+            number = ((ModelNode_LODRecord *)root->Data)->number;
+            break;
+        }
+        case MODELNODE_OPCODE_SWITCHRECORD:
+        {
+            number = ((ModelNode_SwitchRecord *)root->Data)->number;
+            break;
+        }
+        case MODELNODE_OPCODE_BSPRECORD:
+        {
+            number = ((ModelNode_BSPRecord *)root->Data)->number;
+            break;
+        }
+        case MODELNODE_OPCODE_OP11RECORD:
+        {
+            number = ((ModelNode_Op11Record *)root->Data)->number;
+            break;
+        }
+        case MODELNODE_OPCODE_GUNFIRERECORD:
+        {
+            number = ((ModelNode_GunfireRecord *)root->Data)->number;
+            break;
+        }
+        case MODELNODE_OPCODE_HEADPLACEHOLDERRECORD:
+        {
+            number = ((ModelNode_HeadPlaceholderRecord *)root->Data)->number;
+            break;
+        }
+    }
+
+    while (root->Parent)
+    {
+        root = root->Parent;
+        if ((root->Opcode & 0xFF) == MODELNODE_OPCODE_HEADPLACEHOLDERRECORD)
+        {
+            data = ((ModelNode_HeaderRecord *)extract_id_from_object_structure_microcode(Objinst, root))->FirstGroup;
+            break;
+        }
+    }
+
+    return &data[number];
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-/*D:80054AF8*/
-glabel jpt_obj_struct_microcode_id
-.word .L7F06C7D8
-.word .L7F06C840
-.word .L7F06C840
-.word .L7F06C840
-.word .L7F06C840
-.word .L7F06C840
-.word .L7F06C7F0
-.word .L7F06C7FC
-.word .L7F06C814
-.word .L7F06C840
-.word .L7F06C820
-.word .L7F06C82C
-.word .L7F06C840
-.word .L7F06C840
-.word .L7F06C840
-.word .L7F06C840
-.word .L7F06C840
-.word .L7F06C808
-.word .L7F06C840
-.word .L7F06C840
-/*.word .L7F06C840*/
-/*.word .L7F06C840*/
-/*.word .L7F06C838*/
-/*.word .L7F06C7E4*/
-
-.text
-glabel extract_id_from_object_structure_microcode
-/* 0A12CC 7F06C79C 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0A12D0 7F06C7A0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A12D4 7F06C7A4 94AE0000 */  lhu   $t6, ($a1)
-/* 0A12D8 7F06C7A8 00003025 */  move  $a2, $zero
-/* 0A12DC 7F06C7AC 8C870010 */  lw    $a3, 0x10($a0)
-/* 0A12E0 7F06C7B0 31CF00FF */  andi  $t7, $t6, 0xff
-/* 0A12E4 7F06C7B4 25F8FFFF */  addiu $t8, $t7, -1
-/* 0A12E8 7F06C7B8 2F010018 */  sltiu $at, $t8, 0x18
-/* 0A12EC 7F06C7BC 10200020 */  beqz  $at, .L7F06C840
-/* 0A12F0 7F06C7C0 0018C080 */   sll   $t8, $t8, 2
-/* 0A12F4 7F06C7C4 3C018005 */  lui   $at, %hi(jpt_obj_struct_microcode_id)
-/* 0A12F8 7F06C7C8 00380821 */  addu  $at, $at, $t8
-/* 0A12FC 7F06C7CC 8C384AF8 */  lw    $t8, %lo(jpt_obj_struct_microcode_id)($at)
-.L7F06C7D0:
-/* 0A1300 7F06C7D0 03000008 */  jr    $t8
-/* 0A1304 7F06C7D4 00000000 */   nop   
-.L7F06C7D8:
-/* 0A1308 7F06C7D8 8CB90004 */  lw    $t9, 4($a1)
-/* 0A130C 7F06C7DC 10000018 */  b     .L7F06C840
-/* 0A1310 7F06C7E0 9726000C */   lhu   $a2, 0xc($t9)
-.L7F06C7E4:
-/* 0A1314 7F06C7E4 8CA80004 */  lw    $t0, 4($a1)
-/* 0A1318 7F06C7E8 10000015 */  b     .L7F06C840
-/* 0A131C 7F06C7EC 9506001A */   lhu   $a2, 0x1a($t0)
-.L7F06C7F0:
-/* 0A1320 7F06C7F0 8CA90004 */  lw    $t1, 4($a1)
-/* 0A1324 7F06C7F4 10000012 */  b     .L7F06C840
-/* 0A1328 7F06C7F8 952601AA */   lhu   $a2, 0x1aa($t1)
-.L7F06C7FC:
-/* 0A132C 7F06C7FC 8CAA0004 */  lw    $t2, 4($a1)
-/* 0A1330 7F06C800 1000000F */  b     .L7F06C840
-/* 0A1334 7F06C804 9546000C */   lhu   $a2, 0xc($t2)
-.L7F06C808:
-/* 0A1338 7F06C808 8CAB0004 */  lw    $t3, 4($a1)
-/* 0A133C 7F06C80C 1000000C */  b     .L7F06C840
-/* 0A1340 7F06C810 95660004 */   lhu   $a2, 4($t3)
-.L7F06C814:
-/* 0A1344 7F06C814 8CAC0004 */  lw    $t4, 4($a1)
-/* 0A1348 7F06C818 10000009 */  b     .L7F06C840
-/* 0A134C 7F06C81C 95860022 */   lhu   $a2, 0x22($t4)
-.L7F06C820:
-/* 0A1350 7F06C820 8CAD0004 */  lw    $t5, 4($a1)
-/* 0A1354 7F06C824 10000006 */  b     .L7F06C840
-/* 0A1358 7F06C828 95A60044 */   lhu   $a2, 0x44($t5)
-.L7F06C82C:
-/* 0A135C 7F06C82C 8CAE0004 */  lw    $t6, 4($a1)
-/* 0A1360 7F06C830 10000003 */  b     .L7F06C840
-/* 0A1364 7F06C834 95C60020 */   lhu   $a2, 0x20($t6)
-.L7F06C838:
-/* 0A1368 7F06C838 8CAF0004 */  lw    $t7, 4($a1)
-/* 0A136C 7F06C83C 95E60000 */  lhu   $a2, ($t7)
-def_7F06C7D0:
-.L7F06C840:
-/* 0A1370 7F06C840 8CA20008 */  lw    $v0, 8($a1)
-/* 0A1374 7F06C844 24030017 */  li    $v1, 23
-/* 0A1378 7F06C848 5040000F */  beql  $v0, $zero, .L7F06C888
-/* 0A137C 7F06C84C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0A1380 7F06C850 94580000 */  lhu   $t8, ($v0)
-.L7F06C854:
-/* 0A1384 7F06C854 00402825 */  move  $a1, $v0
-/* 0A1388 7F06C858 331900FF */  andi  $t9, $t8, 0xff
-/* 0A138C 7F06C85C 54790007 */  bnel  $v1, $t9, .L7F06C87C
-/* 0A1390 7F06C860 8CA20008 */   lw    $v0, 8($a1)
-/* 0A1394 7F06C864 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
-/* 0A1398 7F06C868 AFA6001C */   sw    $a2, 0x1c($sp)
-/* 0A139C 7F06C86C 8FA6001C */  lw    $a2, 0x1c($sp)
-/* 0A13A0 7F06C870 10000004 */  b     .L7F06C884
-/* 0A13A4 7F06C874 8C470004 */   lw    $a3, 4($v0)
-/* 0A13A8 7F06C878 8CA20008 */  lw    $v0, 8($a1)
-.L7F06C87C:
-/* 0A13AC 7F06C87C 5440FFF5 */  bnezl $v0, .L7F06C854
-/* 0A13B0 7F06C880 94580000 */   lhu   $t8, ($v0)
-.L7F06C884:
-/* 0A13B4 7F06C884 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F06C888:
-/* 0A13B8 7F06C888 00064080 */  sll   $t0, $a2, 2
-/* 0A13BC 7F06C88C 01071021 */  addu  $v0, $t0, $a3
-/* 0A13C0 7F06C890 03E00008 */  jr    $ra
-/* 0A13C4 7F06C894 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
-
 
 
 
@@ -886,13 +837,6 @@ const char aGetpartoffsetNoObjinst[] = "getpartoffset: no objinst!";
 //D:80054660
 const char aGetpartoffsetNoPartdesc[] = "getpartoffset: no partdesc!";
 GLOBAL_ASM(
-.late_rodata
-/*HACKY, above jtable too big*/
-.word .L7F06C840
-.word .L7F06C840
-.word .L7F06C838
-.word .L7F06C7E4
-
 .text
 glabel getpartoffset
 /* 0A13C8 7F06C898 27BDFFE8 */  addiu $sp, $sp, -0x18

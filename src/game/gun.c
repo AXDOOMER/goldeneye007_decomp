@@ -939,7 +939,7 @@ void copy_item_in_hand(struct coord3d *pos)
 }
 
 
-void copy_item_in_hand_to_main_list(struct Coord3d *pos) {
+void copy_item_in_hand_to_main_list(struct coord3d *pos) {
     
     WeaponStats *stats;
     ITEM_IDS item;

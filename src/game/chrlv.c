@@ -169,58 +169,82 @@ s32 load_body_head_if_not_loaded(s32 model)
 
 
 #ifdef NONMATCHING
-Model * makeonebody(int body,int head,ModelFileHeader *bodyheader,ModelFileHeader *headheader, int sunglasses,Model *model)
+Model *get_aircraft_obj_instance_controller(ModelFileHeader *); /* extern */
+void sub_GAME_7F06C3B4(Model *, s32, ModelFileHeader *); /* extern */
+
+Model *makeonebody(s32 arg0, s32 arg1, ModelFileHeader *arg2, ModelFileHeader *arg3, s32 arg4, Model *arg5)
 {
-  //uint cheatcheck;
-  undefined4 *id;
-  float pov;
-  ModelNode *node;
-  float scale;
-  
-  pov = c_item_entries[body].pov;
-  scale = c_item_entries[body].scale * 0.1;
-  node = 0x0;
-  if (cheatCheckIfOn(CHEAT_DKMODE) != 0) {
-    scale = scale * 0.8;
-  }
-  if (bodyheader->RootNode == 0x0) {
-    load_object_into_memory(bodyheader,c_item_entries[body].name);
-  }
-  set_objuse_flag_compute_grp_nums_set_obj_loaded(bodyheader);
-  if (((c_item_entries[body].HasHead == '\0') && (-1 < head)) &&
-     (node = bodyheader->Switches[4], node != 0x0)) {
-    if (headheader->RootNode == 0x0) {
-      load_object_into_memory(headheader,c_item_entries[head].name);
-      //sprintf("makeonebody: no head attachment for body number %d!\n",lVar3);
+    f32 sp34;
+    f32 sp30;
+    s32 sp2C;
+    struct ChrModelFileRecord *sp24;
+    struct ModelNode_GroupRecord *temp_a1;
+    s32 temp_t4;
+    struct ChrModelFileRecord * cmfr;
+
+    sp34 = c_item_entries[arg0].scale * 0.10000001f;
+    sp2C = 0;
+    sp24 = &c_item_entries[arg0];
+    sp30 = c_item_entries[arg0].pov;
+
+    if (cheatCheckIfOn(CHEAT_DK_MODE))
+    {
+        sp34 *= 0.8f;
     }
-    set_objuse_flag_compute_grp_nums_set_obj_loaded(headheader);
-    bodyheader->numRecords = bodyheader->numRecords + headheader->numRecords;
-  }
-  if (model == 0x0) {
-    model = get_aircraft_obj_instance_controller(bodyheader);
-  }
-  //
-  //        if (*&pMStack0000003c->field_0x2 < pMStack00000024->numRecords) {
-  //        assertPrint_8291E690
-  //                  (".\\ported\\chrlv.cpp",0xc4,
-  //                   "Assertion failed: chrsub->inst.savesize>=bodyobj->savesize");
-  //        }
-  //
-  //
-  if (model != 0x0) {
-    set_obj_instance_controller_scale(model,scale);
-    proc_7F06CE84(model,pov);
-    if ((headheader != 0x0) && (c_item_entries[body].HasHead == '\0')) {
-      bodyheader->numRecords = bodyheader->numRecords - headheader->numRecords;
-      proc_7F06C3B4(model,node,headheader);
-      if ((sunglasses == 0) && ((0 < headheader->numSwitches && (*headheader->Switches != 0x0)))) {
-        id = extract_id_from_object_structure_microcode(model,*headheader->Switches);
-        *id = 0;
-      }
+
+    if (arg2->RootNode == 0)
+    {
+        load_object_into_memory(arg2, sp24->filename);
     }
-  }
-  return model;
+
+    set_objuse_flag_compute_grp_nums_set_obj_loaded(arg2);
+
+    if ((sp24->hasHead == 0) && (arg1 >= 0))
+    {
+        sp2C = arg2->Switches[0]->Next;
+        if (sp2C != 0)
+        {
+            if (arg3->RootNode == 0)
+            {
+                cmfr = &c_item_entries[arg1];
+                load_object_into_memory(arg3, cmfr->filename);
+            }
+
+            set_objuse_flag_compute_grp_nums_set_obj_loaded(arg3);
+
+            arg2->numRecords += arg3->numRecords;
+        }
+    }
+
+    if (arg5 == 0)
+    {
+        arg5 = get_aircraft_obj_instance_controller(arg2);
+    }
+
+    if (arg5 != 0)
+    {
+        set_obj_instance_controller_scale(arg5, sp34);
+        sub_GAME_7F06CE84(arg5, sp30);
+
+        if ((arg3 != 0) && (sp24->hasHead == 0))
+        {
+            arg2->numRecords -= arg3->numRecords;
+            sub_GAME_7F06C3B4(arg5, sp2C, arg3);
+
+            if ((arg4 == 0) && ((s32) arg3->numSwitches > 0))
+            {
+                if (arg3->Switches[0] != 0)
+                {
+                    temp_a1 = extract_id_from_object_structure_microcode(arg5, arg3->Switches[0]);
+                    temp_a1->unk00 = 0;
+                }
+            }
+        }
+    }
+
+    return arg5;
 }
+
 #else
 
 #ifdef VERSION_US

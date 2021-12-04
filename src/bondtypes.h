@@ -59,6 +59,23 @@ struct coord2d {
     };
 };
 
+/**
+ 16bit Co-Ordinate used for Integer co-ordinates eg, pumping straight to RSP.
+ */
+typedef struct coord16
+{
+    union
+    {
+        struct
+        {
+            s16 x;
+            s16 y;
+            s16 z;
+        };
+        s16 AsArray[3];
+    };
+} coord16;
+
 struct bbox2d
 {
     union {
@@ -315,6 +332,472 @@ typedef struct BetaStandTile {
 
 StandTilePoint *stanMatchTileName(char*);
 
+typedef struct ModelJoint {
+    u16 NodeType;
+    u16 mtxA;
+    u16 mtxB;
+} ModelJoint;
+
+typedef struct ModelSkeleton {
+    short numjoints;
+    short pad1; //pad
+    struct ModelJoint* Joints;
+    short SkeletonSize;
+    short pad2;
+} ModelSkeleton;
+
+typedef struct ModelFileHeader {
+    struct ModelNode* RootNode;
+    struct ModelSkeleton* Skeleton;
+    struct ModelNode** Switches;
+    s16 numSwitches; 
+    s16 numMatrices; 
+    f32 BoundingVolumeRadius; 
+    s16 numRecords;
+    s16 numtextures;
+    struct ModelFileTextures* Textures;
+    s32 isLoaded;
+} ModelFileHeader;
+
+typedef struct ItemModelFileRecord {
+    struct ModelFileHeader* header;
+    char * filename;
+    float scale;
+} ItemModelFileRecord;
+
+struct ChrModelFileRecord {
+    struct ModelFileHeader* header;
+    char * filename;
+    float scale;
+    float pov;
+    u8 isMale;
+    u8 hasHead;
+    u8 pad1;
+    u8 pad2;
+};
+
+
+#pragma region ModelTypes
+
+typedef struct Vertex
+{
+    coord16 coord;
+    s16 index; /*0x6 Collisions Only - points to vertex*/
+    union
+    {
+        struct
+        {
+            s16 s; /*0x8*/
+            s16 t; /*0xa*/
+        };
+        struct Vertex *LinkedTo;
+    };
+    union
+    {
+        u8 r; /*0xc*/
+        u8 nx;
+    };
+    union
+    {
+        u8 g; /*0xd*/
+        u8 ny;
+    };
+    union
+    {
+        u8 b; /*0xe*/
+        u8 nz;
+    };
+    u8 a; /*0xf*/
+} Vertex;
+
+#pragma region OpenFlight Records
+/*
+ The following structures are derived from the MultiGen OpenFlight binary data
+ format for use in GE/PD.
+ Databases in this format can be created and edited using PerfectGold
+ The format supports variable levels of detail, degrees of freedom, instancing
+ (both within a file and to external files), animation sequences, bounding
+ volumes (box for collision, sphere for culling), shadows, and several other
+ features.
+ The OpenFlight database hierarchy allows the visual database to be organized
+ in logical groupings and is designed to facilitate real-time functions such
+ as level of detail switching and instancing. The OpenFlight database is
+ organized in a tree structure. Each node (or bead) of the tree can point down
+ and/or across (see Figure 1-1).
+ Header: There is one header record per file. It is always the first record in
+ the file and represents the top of the database hierarchy and tree structure.
+ The header always points down to a group.
+ Group: A group node is used to organize a logical subset of a database.
+ MultiGen allows groups to be manipulated (translated, rotated, scaled, etc.)
+ as a single entity. Groups can point down and across to other groups, level
+ of detail nodes, or objects.
+ Level of Detail: A level of detail (LOD) node is similar to a group, but
+ serves as a switch to turn the display of everything below it on or off based
+ on range (the switch in/switch out distance and center location).
+ Switch: A switch node is a more general case of an LOD node. It allows the
+ selection of multiple children by invoking a selector mask.
+ Object: An object node contains a logical collection of polygons. An object
+ can point across to another object, group or LOD.
+ Bounding Volume: A Bounding Volume can be used by the real-time software to
+ determine if a particular group is in view. The (optional) bounding volume
+ opcode records are placed immediately after the group record and include the
+ extents created by instancing and replication. A bounding volume can be
+ either a box, a sphere, or a cylinder. Each group node can have only one
+ bounding volume.
+ Pointers:
+ Pointers are offsets relative to model root.
+ eg, the first child of the model has an offset of
+*/
+
+typedef struct ModelFileTextures
+{
+    u32 TextureID;
+    u8 Width;
+    u8 Height;
+    u8 MipMapTiles;
+    u8 Type;
+    u8 RenderDepth; /*use G_IM_SIZ_ Note: CI uses 16bit*/
+    u8 sflags;      /*use G_TX_*/
+    u8 tflags;      /*use G_TX_*/
+
+} ModelFileTextures;
+
+/*
+ Handy Union for each type of Node
+ More Verbose than void *Data
+ Note: Probably cant actually use this since would need to know the type before hand
+union ModelNode_Data
+{
+    struct ModelNode_HeaderRecord Header;
+    struct ModelNode_GroupRecord Group;
+    struct ModelNode_DisplayListRecord DisplayList;
+    struct ModelNode_LODRecord LOD;
+    struct ModelNode_BSPRecord BSP;
+    struct ModelNode_BoundingBoxRecord BoundingBox;
+    struct ModelNode_GunfireRecord Gunfire;
+    struct ModelNode_ShadowRecord Shadow;
+    struct ModelNode_InterlinkageRecord Interlinkage;
+    struct ModelNode_SwitchRecord Switch;
+    struct ModelNode_GroupSimpleRecord GroupSimple;
+    struct ModelNode_DisplayListPrimaryRecord DisplayListPrimary;
+    struct ModelNode_HeadPlaceholderRecord HeadPlaceholder;
+    struct ModelNode_DisplayList_CollisionRecord DisplayListCollisions;
+};
+ */
+
+/*
+ This defines each row of the Node Table
+ */
+typedef struct ModelNode
+{
+    //u8 UseAdditionalMatrices; //1 = group use MatrixID1 also. not actually used
+    u16 Opcode;                 /*0x00*/
+    void *Data;                 /*0x04 Node Data*/
+    struct ModelNode *Parent;   /*0x08*/
+    struct ModelNode *Next;     /*0x0c*/
+    struct ModelNode *Prev;     /*0x10*/
+    struct ModelNode *Child;    /*0x14*/
+} ModelNode;
+
+    #pragma region Model Node OpCode Definitions
+
+    /**
+     *  Opcode 1
+     *  The header record is found at the beginning of the database file.
+     *  Used on Character Bodies Only
+     */
+    typedef struct ModelNode_HeaderRecord
+    {
+        u32 ModelType;                            /*0x0 Legnth of Record (4)*/
+        struct ModelNode_GroupRecord *FirstGroup;        /*0x4 First group in tree*/
+        u16 Group1;                               /*0x8*/
+        u16 Group2;                               /*0xA*/
+        u16 number;                               /*0xC*/
+        u16 reserved;                             /*0xE padding*/
+        //below seems to be required but has no documentation so is a guess copied from PD
+        //vec3 vector;
+    } ModelNode_HeaderRecord;
+
+    /**
+     * Opcode 2
+     * Positions Child nodes reletivly.
+     * Used for character joints with assosiated Matrices
+     *
+     * Group flags are available to the real-time software as follows:
+     * The animation flags specify that the nodes directly below the group are an
+     * animation sequence, each node being one frame of the sequence.
+     * The special effects IDs are normally zero, but can be set to support an
+     * application program's interpretation of the data.
+     * The group's relative priority specifies a fixed ordering of the object
+     * relative to the other groups at this level.
+     * Since MultiGen sorts based on this field before saving the database, it can
+     * be ignored by the real-time software.
+     */
+    typedef struct ModelNode_GroupRecord
+    {
+        struct coord3d Origin;                                /*0x0*/
+        u16 JointID;                              /*0xC*/
+        u16 MatrixID0;                               /*0xE*/
+        u16 MatrixID1;                            /*0x10*/
+        u16 MatrixID2;                               /*0x12 never used*/
+        struct ModelNode_GroupRecord *ChildGroup; /*0x14*/
+        f32 BoundingVolumeRadius;                 /*0x18*/
+    } ModelNode_GroupRecord;
+
+
+    /**
+     *  Opcode 3
+     *  unused
+     */
+
+    /**
+     *  Opcode 4
+     *  Collisionless Display List used primarely for guns
+     */
+    typedef struct ModelNode_DisplayListRecord
+    {
+        Gfx *Primary;           /*0x0*/
+        Gfx *Secondary; /*0x4*/ // optional
+        u32 reserved;           /*0x8*/
+        Vertex *Vertices;       /*0xC*/
+        u16 numVertices;        /*0x10*/
+        u8 ModelType;           /*0x12 0 = NoSetup
+                                                   1 = 1Cycle No Sec
+                               2 = 2Cycle No Sec
+                               3 = GunLighting - Reduced Secondary Commands (guns)
+                               4 = Normal Fog/Lighting object*/
+    } ModelNode_DisplayListRecord;
+
+
+    /**
+     *  Opcode 5
+     *  unused
+     */
+
+
+    /**
+     *  Opcode 6
+     *  unused
+     */
+
+
+    /**
+     *  Opcode 7
+     *  unused but referenced
+     */
+    typedef struct ModelNode_Op07Record
+    {
+        u32 unk00[106];  /*0x0*/
+        u16 unk1A8;     /*0x1A8*/
+        u16 number; /*0x1AA*/
+    } ModelNode_Op07Record;
+
+
+    /**
+     *  Opcode 8
+     *  Level of Detail Record
+     *  The distance is calculated by the real-time software by using the distance
+     *  from the eye-point to the LOD center found
+     */
+    typedef struct ModelNode_LODRecord
+    {
+        f32 MinDistance;               /*0x0 Switch in distance*/
+        f32 MaxDistance;               /*0x4 Switch out distance*/
+        ModelNode *Affects;            /*0x8 Affects this node (Must be child)*/
+        u16 number;                    /*0xC*/
+        u16 reserved;                  /*0xE padding*/
+    } ModelNode_LODRecord;
+
+    /**
+     *  Opcode 9
+     *  Binary Separating Plane
+     *  BSPs allow you to model 3D databases with the Z buffer turned off.
+     */
+    typedef struct ModelNode_BSPRecord
+    {
+        struct coord3d Point;                 /*0x0*/
+        struct coord3d Vector;                /*0xC*/
+        ModelNode *leftChild;      /*0x18 back/first */
+        ModelNode *rightChild;     /*0x1C front/last */
+        u16 reserved;                /*0x20 padding or u32*/
+        u16 number;                  /*0x22*/
+    } ModelNode_BSPRecord;
+
+    /**
+     *  Opcode 10 0xA
+     *  Box within which collisions are tested
+     */
+    typedef struct ModelNode_BoundingBoxRecord
+    {
+        u32 ModelNumber; /*0x0*/
+        struct bbox Bounds;     /*0x4*/
+    } ModelNode_BoundingBoxRecord;
+
+    /**
+     *  Opcode 11
+     *  unused but referenced
+     */
+    typedef struct ModelNode_Op11Record
+    {
+        u32 unk0c[16]; /*0x0*/
+        f32 BoundingVolumeRadius;
+        u16 number;    /*0x44*/
+    } ModelNode_Op11Record;
+
+    /**
+     *  Opcode 12 0xC
+     */
+    typedef struct ModelNode_GunfireRecord
+    {
+        struct coord3d Offset;  /*0x0*/
+        struct coord3d Size;    /*0xC*/
+        void *Image;   /*0x18*/
+        f32 Scale;     /*0x1c*/
+        u16 number;    /*0x20*/
+        u16 reserved;  /*0x22 padding*/
+        u32 reserved2; /*0x24 padding*/
+    } ModelNode_GunfireRecord;
+
+    /**
+     *  Opcode 13 0xD
+     *  Draws a shadow under character only
+     */
+    typedef struct ModelNode_ShadowRecord
+    {
+        struct coord2d pos;                       /*0x0*/
+        struct coord2d size;                      /*0x8*/
+        void *image;                    /*0x10*/
+        ModelNode_HeaderRecord *Header; /*0x14*/
+        f32 Scale;                    /*0x18*/
+        u16 number;                     /*0x1C*/
+        u16 reserved;                   /*0x1E padding*/
+    } ModelNode_ShadowRecord;
+
+    /**
+     *  Opcode 14
+     *  unused
+     */
+    typedef struct ModelNode_Op14Record
+    {
+        struct coord3d pos;  /*0x0*/
+        f32 Scale; /*0xC*/
+
+    } ModelNode_Op14Record;
+
+    /**
+     *  Opcode 15 0xF
+     *  Database linkages use key table records.
+     *  Linkage data consists of two different constructs: nodes and arcs.
+     *  Nodes usually contain data pertaining to database entities such as
+     *  degrees of freedom (DOFs).
+     *  In addition, the nodes may represent modeling driver functions and code nodes.
+     *  The arcs contain information on how all the nodes are connected to each other.
+     *  The key value is used to represent a node, an arc, or a node name, if the
+     *  node represents a database entity
+     */
+    typedef struct ModelNode_InterlinkageRecord
+    {
+        struct coord3d pos;    /*0x0*/
+        u32 unknown1; /*0xC*/
+        u32 unknown2; /*0x10*/
+        u32 unknown3; /*0x14*/
+        f32 Scale; /*0x18*/
+    } ModelNode_InterlinkageRecord;
+
+    /**
+     *  Opcode 16
+     *  unused
+     */
+    typedef struct ModelNode_Op16Record
+    {
+        struct coord3d pos;  /*0x0*/
+        u32 unknown1; /*0xC*/
+        u32 unknown2; /*0x10*/
+        f32 Scale; /*0x14*/
+    } ModelNode_Op16Record;
+
+    /**
+     *  Opcode 17
+     *  unused
+     */
+
+    /**
+     *  Opcode 18 0x12
+     *  A switch node is a set of masks that controls the display of its children.
+     *  The mask may inhibit the display of some, none, or all of the switch node
+     *  children.
+     */
+    typedef struct ModelNode_SwitchRecord
+    {
+        ModelNode *Controls; /*0x0 Which node to display (Must be Child)*/
+        u16 number;                    /*0x4*/
+        u16 reserved;                  /*0x6 padding*/
+    } ModelNode_SwitchRecord;
+
+    /**
+     *  Opcode 19
+     *  unused
+     */
+
+    /**
+     *  Opcode 20
+     *  unused
+     */
+
+    /**
+     *  Opcode 21 0x15
+     *  Simple Group used to position Cartridge ejection and held items
+     */
+    typedef struct ModelNode_GroupSimpleRecord
+    {
+        struct coord3d Origin;                /*0x0*/
+        u16 Group1;               /*0xC*/
+        u16 Group2;               /*0xE*/
+        f32 BoundingVolumeRadius; /*0x10*/
+    } ModelNode_GroupSimpleRecord;
+
+    /**
+     *  Opcode 22 0x16
+     *  Primary Display List Only
+     */
+    typedef struct ModelNode_DisplayListPrimaryRecord
+    {
+        u16 numVertices;  /*0x0*/
+        Vertex *Vertices; /*0x4*/
+        Gfx *Primary;     /*0x8*/
+        u32 reserved;     /*0xC*/
+    } ModelNode_DisplayListPrimaryRecord;
+
+    /**
+     *  Opcode 23 0x17
+     *  Head Placeholder for Random Heads
+     */
+    typedef struct ModelNode_HeadPlaceholderRecord
+    {
+        u16 number; //referenced by extract_id_from_object_structure_microcode()
+    } ModelNode_HeadPlaceholderRecord;
+
+    /**
+     *  Opcode 24 0x18
+     *  Full Display List with Collision Table
+     */
+    typedef struct ModelNode_DisplayList_CollisionRecord
+    {
+        Gfx *Primary;           /*0x0*/
+        Gfx *Secondary; /*0x4*/ // optional
+        Vertex *Vertices;       /*0x8*/
+        u16 numVertices;        /*0xC*/
+        u16 numCollisionVertices;  /*0xE*/
+        Vertex *CollisionVertices; /*0x10 Table of vertices with unique point in space (UV's and Colour are disregarded). */
+        s16 *PointUsage;          /*0x14*/
+        u16 ModelType;          /*0x18*/
+        u16 unknown;            /*0x1A*/
+        u16 number;             /*0x1C*/
+        u16 reserved;           /*0x1E*/
+    } ModelNode_DisplayList_CollisionRecord;
+
+    #pragma endregion
+#pragma endregion
 
 /*
  * Model Root Runtime Data (pos, heading, height etc)
@@ -357,7 +840,7 @@ typedef struct Model
     u8 unk00;                                               /*0x00*/
     u8 Type;                                               /*0x01*/
     struct ChrRecord *chr;                                    /*0x04*/
-    ModelFileHeader *obj;                                /*0x08 GE Name confirmed*/
+    struct ModelFileHeader *obj;                                /*0x08 GE Name confirmed*/
     Mtxf *unk0c;                                            /*0x0c*/
     void **datas; // array of pointers to modeldata structs /*0x10*/
     f32 scale;                                              /*0x14*/
