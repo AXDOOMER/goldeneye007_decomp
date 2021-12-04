@@ -14262,6 +14262,12 @@ s32 chrIsTargetNearlyInSight(ChrRecord *arg0)
 
 
 #ifdef NONMATCHING
+
+s32 sub_GAME_7F078BF4(struct coord3d *, f32, f32 *);
+
+//s32 bgGet2dBboxByRoomId(s32, ? *);                    /* extern */
+//s32 sub_GAME_7F0BB2C8(struct coord3d *, ?);         /* extern */
+
 void sub_GAME_7F033EAC(void) {
 
 }
@@ -14288,7 +14294,7 @@ glabel sub_GAME_7F033EAC
 /* 068A1C 7F033EEC 0FC2CBF6 */  jal   getTileRoom
 /* 068A20 7F033EF0 8FA40034 */   lw    $a0, 0x34($sp)
 /* 068A24 7F033EF4 00402025 */  move  $a0, $v0
-/* 068A28 7F033EF8 0FC2CF03 */  jal   sub_GAME_7F0B3C0C
+/* 068A28 7F033EF8 0FC2CF03 */  jal   bgGet2dBboxByRoomId
 /* 068A2C 7F033EFC 27A5001C */   addiu $a1, $sp, 0x1c
 /* 068A30 7F033F00 10400008 */  beqz  $v0, .L7F033F24
 /* 068A34 7F033F04 8FA40030 */   lw    $a0, 0x30($sp)

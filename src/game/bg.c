@@ -925,52 +925,39 @@ glabel sub_GAME_7F0B3BC4
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0B3C0C(void) {
+/**
+ * Searches dword_CODE_bss_8007FFA0 for matching id.
+ * If found, sets result to 2d bbox and returns 1.
+ * Otherwise result is set to empty 2d bbox and returns 0.
+ * 
+ * @param room_id: room id to search for.
+ * @param result: Out parameter. Contains result 2d bbox.
+ * 
+ * Address 0x7F0B3C0C.
+*/
+s32 bgGet2dBboxByRoomId(s32 room_id, struct bbox2d *result)
+{
+    s32 i;
+    for (i=0; i<NumberOfRoomsDrawn; i++)
+    {
+        if (room_id == dword_CODE_bss_8007FFA0[i].index)
+        {
+            result->f[0][0] = dword_CODE_bss_8007FFA0[i].bbox.f[0][0];
+            result->f[0][1] = dword_CODE_bss_8007FFA0[i].bbox.f[0][1];
+            result->f[1][0] = dword_CODE_bss_8007FFA0[i].bbox.f[1][0];
+            result->f[1][1] = dword_CODE_bss_8007FFA0[i].bbox.f[1][1];
 
+            return 1;
+        }
+    }
+
+    result->f[0][0] = 0.0f;
+    result->f[0][1] = 0.0f;
+    result->f[1][0] = 0.0f;
+    result->f[1][1] = 0.0f;
+
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B3C0C
-/* 0E873C 7F0B3C0C 3C038004 */  lui   $v1, %hi(NumberOfRoomsDrawn)
-/* 0E8740 7F0B3C10 8C63483C */  lw    $v1, %lo(NumberOfRoomsDrawn)($v1)
-/* 0E8744 7F0B3C14 00A03025 */  move  $a2, $a1
-/* 0E8748 7F0B3C18 3C058008 */  lui   $a1, %hi(dword_CODE_bss_8007FFA0)
-/* 0E874C 7F0B3C1C 18600013 */  blez  $v1, .L7F0B3C6C
-/* 0E8750 7F0B3C20 00001025 */   move  $v0, $zero
-/* 0E8754 7F0B3C24 24A5FFA0 */  addiu $a1, %lo(dword_CODE_bss_8007FFA0) # addiu $a1, $a1, -0x60
-.L7F0B3C28:
-/* 0E8758 7F0B3C28 8CAE0000 */  lw    $t6, ($a1)
-/* 0E875C 7F0B3C2C 24420001 */  addiu $v0, $v0, 1
-/* 0E8760 7F0B3C30 0043082A */  slt   $at, $v0, $v1
-/* 0E8764 7F0B3C34 148E000B */  bne   $a0, $t6, .L7F0B3C64
-/* 0E8768 7F0B3C38 00000000 */   nop   
-/* 0E876C 7F0B3C3C C4A40008 */  lwc1  $f4, 8($a1)
-/* 0E8770 7F0B3C40 24020001 */  li    $v0, 1
-/* 0E8774 7F0B3C44 E4C40000 */  swc1  $f4, ($a2)
-/* 0E8778 7F0B3C48 C4A6000C */  lwc1  $f6, 0xc($a1)
-/* 0E877C 7F0B3C4C E4C60004 */  swc1  $f6, 4($a2)
-/* 0E8780 7F0B3C50 C4A80010 */  lwc1  $f8, 0x10($a1)
-/* 0E8784 7F0B3C54 E4C80008 */  swc1  $f8, 8($a2)
-/* 0E8788 7F0B3C58 C4AA0014 */  lwc1  $f10, 0x14($a1)
-/* 0E878C 7F0B3C5C 03E00008 */  jr    $ra
-/* 0E8790 7F0B3C60 E4CA000C */   swc1  $f10, 0xc($a2)
-
-.L7F0B3C64:
-/* 0E8794 7F0B3C64 1420FFF0 */  bnez  $at, .L7F0B3C28
-/* 0E8798 7F0B3C68 24A5001C */   addiu $a1, $a1, 0x1c
-.L7F0B3C6C:
-/* 0E879C 7F0B3C6C 44800000 */  mtc1  $zero, $f0
-/* 0E87A0 7F0B3C70 00001025 */  move  $v0, $zero
-/* 0E87A4 7F0B3C74 E4C00000 */  swc1  $f0, ($a2)
-/* 0E87A8 7F0B3C78 E4C00004 */  swc1  $f0, 4($a2)
-/* 0E87AC 7F0B3C7C E4C00008 */  swc1  $f0, 8($a2)
-/* 0E87B0 7F0B3C80 E4C0000C */  swc1  $f0, 0xc($a2)
-/* 0E87B4 7F0B3C84 03E00008 */  jr    $ra
-/* 0E87B8 7F0B3C88 00000000 */   nop   
-)
-#endif
 
 
 

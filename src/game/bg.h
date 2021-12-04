@@ -107,5 +107,6 @@ void sub_GAME_7F0B4FB4(s32 arg0);
 void sub_GAME_7F0B4FF4(s32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4);
 f32 get_room_data_float1(void);
 u8 * getROOMID_Bitflags(int roomID);
+s32 bgGet2dBboxByRoomId(s32 room_id, struct bbox2d *result);
 
 #endif
