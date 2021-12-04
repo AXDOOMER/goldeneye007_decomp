@@ -143,6 +143,7 @@ s32 chrResolveId(ChrRecord *self, s32 id);
 s32 sub_GAME_7F033780(s32 *arg0, struct coord3d *arg1, f32 angle);
 s32 chrlvFindPathNeighborRelated(struct coord3d *bondpos, struct StandTile *stan, f32 rot, u8 quadrant);
 s32 sub_GAME_7F033EAC(struct coord3d *arg0, StandTile *arg1);
+struct PropRecord *actionblock_guard_constructor_BDBE(s32 bodynum, s32 headnum, struct coord3d *pos, struct StandTile *stan, f32 yrot, s32 arg4, s32 arg5);
 
 // ?
 
@@ -14341,80 +14342,53 @@ bool sub_GAME_7F033F48(struct coord3d *pos, struct StandTile **arg1, f32 facing,
 
 
 
-#ifdef NONMATCHING
-// ai branch
-#else
-GLOBAL_ASM(
-.text
-glabel actionblock_guard_constructor_BDBE
-/* 068C8C 7F03415C 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 068C90 7F034160 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 068C94 7F034164 AFA40040 */  sw    $a0, 0x40($sp)
-/* 068C98 7F034168 AFA50044 */  sw    $a1, 0x44($sp)
-/* 068C9C 7F03416C AFA60048 */  sw    $a2, 0x48($sp)
-/* 068CA0 7F034170 0FC07FF0 */  jal   chrGetNumFree
-/* 068CA4 7F034174 AFA7004C */   sw    $a3, 0x4c($sp)
-/* 068CA8 7F034178 28410003 */  slti  $at, $v0, 3
-/* 068CAC 7F03417C 14200031 */  bnez  $at, .L7F034244
-/* 068CB0 7F034180 8FA30048 */   lw    $v1, 0x48($sp)
-/* 068CB4 7F034184 8FAE0044 */  lw    $t6, 0x44($sp)
-/* 068CB8 7F034188 05C30006 */  bgezl $t6, .L7F0341A4
-/* 068CBC 7F03418C C4640000 */   lwc1  $f4, ($v1)
-/* 068CC0 7F034190 0FC08D6B */  jal   select_psuedorandom_heads
-/* 068CC4 7F034194 8FA40040 */   lw    $a0, 0x40($sp)
-/* 068CC8 7F034198 8FA30048 */  lw    $v1, 0x48($sp)
-/* 068CCC 7F03419C AFA20044 */  sw    $v0, 0x44($sp)
-/* 068CD0 7F0341A0 C4640000 */  lwc1  $f4, ($v1)
-.L7F0341A4:
-/* 068CD4 7F0341A4 8FA70058 */  lw    $a3, 0x58($sp)
-/* 068CD8 7F0341A8 8FAF004C */  lw    $t7, 0x4c($sp)
-/* 068CDC 7F0341AC E7A40030 */  swc1  $f4, 0x30($sp)
-/* 068CE0 7F0341B0 C4660004 */  lwc1  $f6, 4($v1)
-/* 068CE4 7F0341B4 30F80010 */  andi  $t8, $a3, 0x10
-/* 068CE8 7F0341B8 0018382B */  sltu  $a3, $zero, $t8
-/* 068CEC 7F0341BC E7A60034 */  swc1  $f6, 0x34($sp)
-/* 068CF0 7F0341C0 C4680008 */  lwc1  $f8, 8($v1)
-/* 068CF4 7F0341C4 27A40030 */  addiu $a0, $sp, 0x30
-/* 068CF8 7F0341C8 27A50028 */  addiu $a1, $sp, 0x28
-/* 068CFC 7F0341CC 8FA60050 */  lw    $a2, 0x50($sp)
-/* 068D00 7F0341D0 AFAF0028 */  sw    $t7, 0x28($sp)
-/* 068D04 7F0341D4 0FC0CFD2 */  jal   sub_GAME_7F033F48
-/* 068D08 7F0341D8 E7A80038 */   swc1  $f8, 0x38($sp)
-/* 068D0C 7F0341DC 10400019 */  beqz  $v0, .L7F034244
-/* 068D10 7F0341E0 8FA40040 */   lw    $a0, 0x40($sp)
-/* 068D14 7F0341E4 8FA50044 */  lw    $a1, 0x44($sp)
-/* 068D18 7F0341E8 0FC08D34 */  jal   retrieve_header_for_body_and_head
-/* 068D1C 7F0341EC 8FA60058 */   lw    $a2, 0x58($sp)
-/* 068D20 7F0341F0 10400014 */  beqz  $v0, .L7F034244
-/* 068D24 7F0341F4 00402025 */   move  $a0, $v0
-/* 068D28 7F0341F8 8FA80054 */  lw    $t0, 0x54($sp)
-/* 068D2C 7F0341FC 27A50030 */  addiu $a1, $sp, 0x30
-/* 068D30 7F034200 8FA60050 */  lw    $a2, 0x50($sp)
-/* 068D34 7F034204 8FA70028 */  lw    $a3, 0x28($sp)
-/* 068D38 7F034208 0FC080EE */  jal   replace_GUARDdata_with_actual_values
-/* 068D3C 7F03420C AFA80010 */   sw    $t0, 0x10($sp)
-/* 068D40 7F034210 1040000C */  beqz  $v0, .L7F034244
-/* 068D44 7F034214 00402025 */   move  $a0, $v0
-/* 068D48 7F034218 0FC0E93C */  jal   sub_GAME_7F03A4F0
-/* 068D4C 7F03421C AFA2003C */   sw    $v0, 0x3c($sp)
-/* 068D50 7F034220 0FC0E901 */  jal   set_stateflag_0x04_for_posdata
-/* 068D54 7F034224 8FA4003C */   lw    $a0, 0x3c($sp)
-/* 068D58 7F034228 8FA2003C */  lw    $v0, 0x3c($sp)
-/* 068D5C 7F03422C 8FA90044 */  lw    $t1, 0x44($sp)
-/* 068D60 7F034230 8C430004 */  lw    $v1, 4($v0)
-/* 068D64 7F034234 A0690006 */  sb    $t1, 6($v1)
-/* 068D68 7F034238 8FAA0040 */  lw    $t2, 0x40($sp)
-/* 068D6C 7F03423C 10000002 */  b     .L7F034248
-/* 068D70 7F034240 A06A000F */   sb    $t2, 0xf($v1)
-.L7F034244:
-/* 068D74 7F034244 00001025 */  move  $v0, $zero
-.L7F034248:
-/* 068D78 7F034248 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 068D7C 7F03424C 27BD0040 */  addiu $sp, $sp, 0x40
-/* 068D80 7F034250 03E00008 */  jr    $ra
-/* 068D84 7F034254 00000000 */   nop   
-)
-#endif
+/**
+ * Address 0x7F03415C.
+*/
+struct PropRecord *actionblock_guard_constructor_BDBE(s32 bodynum, s32 headnum, struct coord3d *pos, struct StandTile *stan, f32 yrot, s32 arg4, s32 arg5)
+{
+    struct PropRecord *chrprop;
+    struct coord3d newpos; //struct copy here would have been more efficient
+    struct ChrRecord *chr;
+    struct StandTile *stancopy;
+    struct Model *chrHeader;
+
+    if (chrGetNumFree() >= 3)
+    {
+        if (headnum < 0)
+        {
+            headnum = select_psuedorandom_heads(bodynum);
+        }
+
+        newpos.f[0] = pos->f[0];
+        newpos.f[1] = pos->f[1];
+        newpos.f[2] = pos->f[2];
+        stancopy = stan;
+
+        if (sub_GAME_7F033F48(&newpos, &stancopy, yrot, ((arg5 & 0x10) != 0)))
+        {
+            chrHeader = retrieve_header_for_body_and_head(bodynum, headnum, arg5);
+
+            if (chrHeader != NULL)
+            {
+                chrprop = replace_GUARDdata_with_actual_values(chrHeader, &newpos, yrot, stancopy, arg4);
+
+                if (chrprop != NULL)
+                {
+                    sub_GAME_7F03A4F0(chrprop);
+                    set_stateflag_0x04_for_posdata(chrprop);
+                    chr          = chrprop->chr;
+                    chr->headnum = headnum;
+                    chr->bodynum = bodynum;
+
+                    return chrprop;
+                }
+            }
+        }
+    }
+
+    return NULL;
+}
 
 
 

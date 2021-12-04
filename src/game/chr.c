@@ -3090,9 +3090,9 @@ glabel init_GUARDdata_with_set_values
 /**
  * Address 0x7F0203B8.
  */
-s32 replace_GUARDdata_with_actual_values(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
+struct PropRecord * replace_GUARDdata_with_actual_values(struct Model * arg0, struct coord3d * arg1, f32 arg2, struct StandTile * arg3, s32 arg4)
 {
-    s32 ret;
+    struct PropRecord * ret;
     s32 phi_a0;
 
     ret = remove_last_obj_pos_data_entry();
