@@ -14206,33 +14206,19 @@ void sub_GAME_7F033D5C( ChrRecord *self, s32 padid)
     self->padpreset1 = convertPadIf9000(self, padid);
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F033D84(void) {
-// ai branch
+
+/**
+ * Address 0x7F033D84.
+*/
+void sub_GAME_7F033D84(ChrRecord *self, s32 chrid, s32 padid)
+{
+    ChrRecord *chr = chrlvGetHandleForGuardId(self, chrid);
+
+    if (chr)
+    {
+        chr->padpreset1 = convertPadIf9000(self, padid);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F033D84
-/* 0688B4 7F033D84 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0688B8 7F033D88 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0688BC 7F033D8C AFA40020 */  sw    $a0, 0x20($sp)
-/* 0688C0 7F033D90 0FC0CC10 */  jal   chrlvGetHandleForGuardId
-/* 0688C4 7F033D94 AFA60028 */   sw    $a2, 0x28($sp)
-/* 0688C8 7F033D98 10400006 */  beqz  $v0, .L7F033DB4
-/* 0688CC 7F033D9C 8FA40020 */   lw    $a0, 0x20($sp)
-/* 0688D0 7F033DA0 8FA50028 */  lw    $a1, 0x28($sp)
-/* 0688D4 7F033DA4 0FC0CBE5 */  jal   convertPadIf9000
-/* 0688D8 7F033DA8 AFA2001C */   sw    $v0, 0x1c($sp)
-/* 0688DC 7F033DAC 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 0688E0 7F033DB0 A4620114 */  sh    $v0, 0x114($v1)
-.L7F033DB4:
-/* 0688E4 7F033DB4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0688E8 7F033DB8 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0688EC 7F033DBC 03E00008 */  jr    $ra
-/* 0688F0 7F033DC0 00000000 */   nop   
-)
-#endif
 
 
 
