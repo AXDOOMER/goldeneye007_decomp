@@ -83,7 +83,9 @@ extern s_room_info array_room_info[0x96];
 
 void bgInitDebugNoticeList(void);
 
-s32 sub_GAME_7F0B8FD0(u8 roomA, u8 roomB);
+// sub_GAME_7F033B38 requres arg be s32
+s32 sub_GAME_7F0B8FD0(s32 roomA, u8 roomB);
+
 s32 sub_GAME_7F0B4F9C(u8 room); // u8 not s32 for sub_GAME_7F0B2FE0
 u32 bgDecompress(u8* source, u8 *target);
 void sub_GAME_7F0B65C4(s32 roomID);
