@@ -14515,61 +14515,29 @@ bool removed_animation_routine_2B(ChrRecord *self)
 
 
 
-#ifdef NONMATCHING
-// ai branch
-? sub_GAME_7F034514(s32 arg0, s32 arg1)
+/**
+ * Address 0x7F034514.
+*/
+bool sub_GAME_7F034514(struct ChrRecord *self, s32 PadId)
 {
-    s32 temp_ret;
+    struct ObjectRecord *objinst;
 
-    arg1 = convertPadIf9000();
-    if (chrIsNotDeadOrShot(arg0) != 0)
+    PadId = convertPadIf9000(self, PadId);
+
+    if (chrIsNotDeadOrShot(self))
     {
-        temp_ret = scan_position_data_table_for_normal_object_at_preset(arg1);
-        if (temp_ret != 0)
+        objinst = scan_position_data_table_for_normal_object_at_preset(PadId);
+
+        if (objinst && check_if_object_has_not_been_destroyed(objinst))
         {
-            if (check_if_object_has_not_been_destroyed(temp_ret) != 0)
-            {
-                chrlvExtendLeftHandAnimationRelated(arg0);
-                return 1;
-            }
+            chrlvExtendLeftHandAnimationRelated(self);
+
+            return TRUE;
         }
     }
-    return 0;
+
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F034514
-/* 069044 7F034514 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 069048 7F034518 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 06904C 7F03451C 0FC0CBE5 */  jal   convertPadIf9000
-/* 069050 7F034520 AFA40018 */   sw    $a0, 0x18($sp)
-/* 069054 7F034524 AFA2001C */  sw    $v0, 0x1c($sp)
-/* 069058 7F034528 0FC0A896 */  jal   chrIsNotDeadOrShot
-/* 06905C 7F03452C 8FA40018 */   lw    $a0, 0x18($sp)
-/* 069060 7F034530 5040000E */  beql  $v0, $zero, .L7F03456C
-/* 069064 7F034534 00001025 */   move  $v0, $zero
-/* 069068 7F034538 0FC0FE91 */  jal   scan_position_data_table_for_normal_object_at_preset
-/* 06906C 7F03453C 8FA4001C */   lw    $a0, 0x1c($sp)
-/* 069070 7F034540 10400009 */  beqz  $v0, .L7F034568
-/* 069074 7F034544 00402025 */   move  $a0, $v0
-/* 069078 7F034548 0FC13BCD */  jal   check_if_object_has_not_been_destroyed
-/* 06907C 7F03454C 00000000 */   nop   
-/* 069080 7F034550 50400006 */  beql  $v0, $zero, .L7F03456C
-/* 069084 7F034554 00001025 */   move  $v0, $zero
-/* 069088 7F034558 0FC09054 */  jal   chrlvExtendLeftHandAnimationRelated
-/* 06908C 7F03455C 8FA40018 */   lw    $a0, 0x18($sp)
-/* 069090 7F034560 10000002 */  b     .L7F03456C
-/* 069094 7F034564 24020001 */   li    $v0, 1
-.L7F034568:
-/* 069098 7F034568 00001025 */  move  $v0, $zero
-.L7F03456C:
-/* 06909C 7F03456C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0690A0 7F034570 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0690A4 7F034574 03E00008 */  jr    $ra
-/* 0690A8 7F034578 00000000 */   nop   
-)
-#endif
 
 
 
