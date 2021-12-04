@@ -14612,76 +14612,23 @@ bool actor_draws_throws_grenade_at_player_if_possible(struct ChrRecord *self)
 }
 
 
-#ifdef NONMATCHING
-// ai branch
-? actor_drops_itemtype_setting_timer(void *arg0, s32 arg1, s32 arg2)
+/**
+ * Address 0x7F0346FC.
+*/
+bool actor_drops_itemtype_setting_timer(struct ChrRecord *self, s32 modelnum, u8 weaponid)
 {
-    s32 sp1C;
-    s32 temp_ret;
-    void *temp_a0;
-
-    temp_ret = create_new_item_instance_of_model(arg1, arg2 & 0xff);
-    if (temp_ret != 0)
+    struct WeaponObjRecord *NewModel = create_new_item_instance_of_model(modelnum, weaponid);
+    
+    if (NewModel && NewModel->base.prop)
     {
-        if (temp_ret->unk10 != 0)
-        {
-            temp_a0 = temp_ret->unk14;
-            sp1C = temp_ret;
-            set_obj_instance_controller_scale(temp_a0, temp_a0->unk14);
-            attachNewChild(sp1C->unk10, arg0->unk18);
-            sp1C->unk82 = (u16)0xb4;
-            sub_GAME_7F04BFD0(sp1C->unk10, 1);
-            arg0->unk12 = (s16) (arg0->unk12 | 1);
-            return 1;
-        }
-    }
-    return 0;
-}
-#else
-GLOBAL_ASM(
-.text
-glabel actor_drops_itemtype_setting_timer
-/* 06922C 7F0346FC 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 069230 7F034700 AFA40020 */  sw    $a0, 0x20($sp)
-/* 069234 7F034704 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 069238 7F034708 30CE00FF */  andi  $t6, $a2, 0xff
-/* 06923C 7F03470C 00A02025 */  move  $a0, $a1
-/* 069240 7F034710 AFA60028 */  sw    $a2, 0x28($sp)
-/* 069244 7F034714 0FC1481B */  jal   create_new_item_instance_of_model
-/* 069248 7F034718 01C02825 */   move  $a1, $t6
-/* 06924C 7F03471C 5040001A */  beql  $v0, $zero, .L7F034788
-/* 069250 7F034720 00001025 */   move  $v0, $zero
-/* 069254 7F034724 8C4F0010 */  lw    $t7, 0x10($v0)
-/* 069258 7F034728 51E00017 */  beql  $t7, $zero, .L7F034788
-/* 06925C 7F03472C 00001025 */   move  $v0, $zero
-/* 069260 7F034730 8C440014 */  lw    $a0, 0x14($v0)
-/* 069264 7F034734 8C850014 */  lw    $a1, 0x14($a0)
-/* 069268 7F034738 0FC1B39E */  jal   set_obj_instance_controller_scale
-/* 06926C 7F03473C AFA2001C */   sw    $v0, 0x1c($sp)
-/* 069270 7F034740 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 069274 7F034744 8FB80020 */  lw    $t8, 0x20($sp)
-/* 069278 7F034748 8C640010 */  lw    $a0, 0x10($v1)
-/* 06927C 7F03474C 0FC0E969 */  jal   attachNewChild
-/* 069280 7F034750 8F050018 */   lw    $a1, 0x18($t8)
-/* 069284 7F034754 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 069288 7F034758 241900B4 */  li    $t9, 180
-/* 06928C 7F03475C 24050001 */  li    $a1, 1
-/* 069290 7F034760 A4790082 */  sh    $t9, 0x82($v1)
-/* 069294 7F034764 0FC12FF4 */  jal   sub_GAME_7F04BFD0
-/* 069298 7F034768 8C640010 */   lw    $a0, 0x10($v1)
-/* 06929C 7F03476C 8FA80020 */  lw    $t0, 0x20($sp)
-/* 0692A0 7F034770 24020001 */  li    $v0, 1
-/* 0692A4 7F034774 95090012 */  lhu   $t1, 0x12($t0)
-/* 0692A8 7F034778 352A0001 */  ori   $t2, $t1, 1
-/* 0692AC 7F03477C 10000002 */  b     .L7F034788
-/* 0692B0 7F034780 A50A0012 */   sh    $t2, 0x12($t0)
-/* 0692B4 7F034784 00001025 */  move  $v0, $zero
-.L7F034788:
-/* 0692B8 7F034788 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0692BC 7F03478C 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0692C0 7F034790 03E00008 */  jr    $ra
-/* 0692C4 7F034794 00000000 */   nop   
-)
-#endif
-  
+        set_obj_instance_controller_scale(NewModel->base.model, NewModel->base.model->scale);
+        attachNewChild(NewModel->base.prop, self->prop);
+        NewModel->timer = 0xB4;
+        sub_GAME_7F04BFD0(NewModel->base.prop, 1);
+        self->hidden = self->hidden | 1;
 
+        return TRUE;
+    }
+
+    return FALSE;
+}

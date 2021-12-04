@@ -228,5 +228,6 @@ void sub_GAME_7F03E210(struct PropRecord *posData);
 void set_current_objposdata_plus_0x28(PropRecord *);
 void set_stateflag_0x04_for_posdata(PropRecord *);
 void sub_GAME_7F03A4F0(struct Model*);
+void attachNewChild(struct PropRecord *newChild, struct PropRecord *host);
 
 #endif
