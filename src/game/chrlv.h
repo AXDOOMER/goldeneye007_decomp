@@ -110,6 +110,7 @@ bool check_if_actor_is_at_preset(struct ChrRecord *self, s32 padnum);
 bool removed_animation_routine_27(ChrRecord *self);
 bool removed_animation_routine_2B(ChrRecord *self);
 bool sub_GAME_7F034514(struct ChrRecord *self, s32 PadId);
+bool actor_draws_throws_grenade_at_player_if_possible(struct ChrRecord *self);
 
 
 #endif
