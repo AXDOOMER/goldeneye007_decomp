@@ -97,6 +97,7 @@ bool alarm_timer_related(ChrRecord *self);
 bool check_2328_preset_set_with_method(ChrRecord *self, u8 quadrant);
 bool sub_GAME_7F033AAC(ChrRecord *self, u8 padnum);
 bool sub_GAME_7F033B38(struct ChrRecord *self, f32 distance);
+void sub_GAME_7F033CF4(ChrRecord *self, s32 id);
 
 
 

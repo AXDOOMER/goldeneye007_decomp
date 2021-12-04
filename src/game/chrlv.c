@@ -14172,27 +14172,13 @@ bool sub_GAME_7F033B38(struct ChrRecord *self, f32 distance)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F033CF4(void) {
-// ai branch
+/**
+ * Address 0x7F033CF4.
+*/
+void sub_GAME_7F033CF4(ChrRecord *self, s32 id)
+{
+    self->chrpreset1 = chrResolveId(self, id);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F033CF4
-/* 068824 7F033CF4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 068828 7F033CF8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 06882C 7F033CFC 0FC0CBEB */  jal   chrResolveId
-/* 068830 7F033D00 AFA40018 */   sw    $a0, 0x18($sp)
-/* 068834 7F033D04 8FAE0018 */  lw    $t6, 0x18($sp)
-/* 068838 7F033D08 A5C20116 */  sh    $v0, 0x116($t6)
-/* 06883C 7F033D0C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 068840 7F033D10 27BD0018 */  addiu $sp, $sp, 0x18
-/* 068844 7F033D14 03E00008 */  jr    $ra
-/* 068848 7F033D18 00000000 */   nop   
-)
-#endif
-
 
 
 #ifdef NONMATCHING
