@@ -42,6 +42,8 @@ f32 getinstsize(Model *arg0);
 void load_object_into_memory(struct ModelFileHeader *header,char *name);
 void load_object_into_memory_unused_maybe(struct ModelFileHeader *header,int *recallstring,int *targetloc,int sizeleft);
 void set_objuse_flag_compute_grp_nums_set_obj_loaded(struct ModelFileHeader *objheader);
+struct Model *get_aircraft_obj_instance_controller(struct ModelFileHeader *);
+void sub_GAME_7F06C3B4(struct Model *, s32, struct  ModelFileHeader *);
 
 // tentative signature
 Mtxf* sub_GAME_7F06C660(struct Model *arg0, struct ModelNode *arg1, s32 arg2);

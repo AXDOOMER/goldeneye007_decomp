@@ -1,5 +1,7 @@
 #include "ultra64.h"
 #include "bondgame.h"
+#include "game/chr.h"
+#include "game/chr_b.h"
 #include "game/title.h"
 #include "game/blood_animation.h"
 #include "fr.h"

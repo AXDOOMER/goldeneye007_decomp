@@ -1,7 +1,8 @@
 #include "ultra64.h"
 #include "bondconstants.h"
 #include "memp.h"
-#include "chr.h"
+#include "game/chr.h"
+#include "game/chr_b.h"
 #include "deb_loadallmodels.h"
 //i belong in a header, probably to another file
 

@@ -514,8 +514,6 @@ typedef struct ModelNode
         u16 Group2;                               /*0xA*/
         u16 number;                               /*0xC*/
         u16 reserved;                             /*0xE padding*/
-        //below seems to be required but has no documentation so is a guess copied from PD
-        //vec3 vector;
     } ModelNode_HeaderRecord;
 
     /**

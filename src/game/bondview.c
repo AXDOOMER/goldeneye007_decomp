@@ -12,6 +12,7 @@
 #include "game/bondview.h"
 #include "game/bondinv.h"
 #include "game/chr.h"
+#include "game/chr_b.h"
 #include "game/chrlv.h"
 #include "game/chrobjhandler.h"
 #include "game/debugmenu_handler.h"

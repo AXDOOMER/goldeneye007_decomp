@@ -1,12 +1,15 @@
 #include "ultra64.h"
 #include "bondgame.h"
+#include "bondconstants.h"
 #include "bondtypes.h"
 #include "random.h"
 #include "snd.h"
 #include "include/math.h"
+#include "game/cheat_buttons.h"
 #include "game/chr.h"
 #include "game/chrai.h"
 #include "game/chrlv.h"
+#include "game/chrobjdata.h"
 #include "game/chrobjhandler.h"
 #include "game/gun.h"
 #include "game/initanitable.h"
@@ -7743,5 +7746,7 @@ glabel sub_GAME_7F023194
 /* 057DBC 7F02328C 00000000 */   nop   
 )
 #endif
+
+
 
 //filesplit

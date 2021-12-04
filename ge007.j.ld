@@ -335,6 +335,7 @@ SECTIONS
       build/j/src/game/file.o (.text);
       build/j/src/game/file2.o (.text);
       build/j/src/game/chr.o (.text);
+      build/j/src/game/chr_b.o (.text);
       build/j/src/game/chrlv.o (.text);
       build/j/src/game/chrai.o (.text);
       build/j/src/game/chrobjhandler.o (.text);
@@ -3714,6 +3715,7 @@ SECTIONS
       build/j/src/game/file.o (.data);
       build/j/src/game/file2.o (.data);
       build/j/src/game/chr.o (.data);
+      build/j/src/game/chr_b.o (.data);
       build/j/src/game/chrlv.o (.data);
       build/j/src/game/chrai.o (.data);
       build/j/src/game/chrobjhandler.o (.data);
@@ -3841,6 +3843,7 @@ SECTIONS
       build/j/src/game/file.o (.rodata);
       build/j/src/game/file2.o (.rodata);
       build/j/src/game/chr.o (.rodata);
+      build/j/src/game/chr_b.o (.rodata);
       build/j/src/game/chrlv.o (.rodata);
       build/j/src/game/chrai.o (.rodata);
       build/j/src/game/chrobjhandler.o (.rodata);
@@ -4185,6 +4188,7 @@ SECTIONS
       build/j/src/game/file.o (.bss);
       build/j/src/game/file2.o (.bss);
       build/j/src/game/chr.o (.bss);
+      build/j/src/game/chr_b.o (.bss);
       build/j/src/game/chrlv.o (.bss);
       build/j/src/game/chrai.o (.bss);
       build/j/src/game/chrobjhandler.o (.bss);
