@@ -13897,24 +13897,19 @@ s32 check_if_able_to_then_perform_animation(struct ChrRecord *self, s32 animID, 
 
 
 
-#ifdef NONMATCHING
-void alarm_timer_related(void) {
-// ai branch
+/**
+ * Address 0x7F033760.
+*/
+bool alarm_timer_related(ChrRecord *self)
+{
+    /*
+     possibly this was to be more advanced than simply
+     a stub to alarmIsActive.
+     It could have for example done a room check
+     since this has a "self" reference.
+     */
+    return is_alarm_on();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel alarm_timer_related
-/* 068290 7F033760 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 068294 7F033764 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 068298 7F033768 0FC15794 */  jal   is_alarm_on
-/* 06829C 7F03376C AFA40018 */   sw    $a0, 0x18($sp)
-/* 0682A0 7F033770 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0682A4 7F033774 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0682A8 7F033778 03E00008 */  jr    $ra
-/* 0682AC 7F03377C 00000000 */   nop   
-)
-#endif
 
 
 

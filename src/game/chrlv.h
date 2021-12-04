@@ -92,6 +92,7 @@ bool check_if_able_to_then_fawn_on_shoulder(ChrRecord *self);
 bool check_if_able_to_then_look_flustered(ChrRecord *self);
 bool check_if_able_to_then_kneel(struct ChrRecord *self);
 s32 check_if_able_to_then_perform_animation(struct ChrRecord *self, s32 animID, s32 b, s32 c, u8 d, s32 e);
+bool alarm_timer_related(ChrRecord *self);
 
 
 
