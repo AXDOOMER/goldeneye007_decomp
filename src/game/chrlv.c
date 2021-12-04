@@ -14266,7 +14266,7 @@ s32 chrIsTargetNearlyInSight(ChrRecord *arg0)
 s32 sub_GAME_7F078BF4(struct coord3d *, f32, f32 *);
 
 //s32 bgGet2dBboxByRoomId(s32, ? *);                    /* extern */
-//s32 sub_GAME_7F0BB2C8(struct coord3d *, ?);         /* extern */
+//s32 fogPositionIsObscuredByFog(struct coord3d *, ?);         /* extern */
 
 void sub_GAME_7F033EAC(void) {
 
@@ -14287,7 +14287,7 @@ glabel sub_GAME_7F033EAC
 /* 068A00 7F033ED0 00402025 */   move  $a0, $v0
 /* 068A04 7F033ED4 10400017 */  beqz  $v0, .L7F033F34
 /* 068A08 7F033ED8 8FA40030 */   lw    $a0, 0x30($sp)
-/* 068A0C 7F033EDC 0FC2ECB2 */  jal   sub_GAME_7F0BB2C8
+/* 068A0C 7F033EDC 0FC2ECB2 */  jal   fogPositionIsObscuredByFog
 /* 068A10 7F033EE0 24050000 */   li    $a1, 0
 /* 068A14 7F033EE4 50400014 */  beql  $v0, $zero, .L7F033F38
 /* 068A18 7F033EE8 8FBF0014 */   lw    $ra, 0x14($sp)

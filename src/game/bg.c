@@ -4550,7 +4550,7 @@ void sub_GAME_7F0B6368(s32 rooms) {
                     phi_v1_3 = phi_v1_2;
                 }
                 // Node 20
-                if (sky_enabled != 0)
+                if (g_FogSkyIsEnabled != 0)
                 {
                     // Node 21
                     temp_a0 = phi_v1_3->unk8;
@@ -4706,8 +4706,8 @@ glabel sub_GAME_7F0B6368
 /* 0EB044 7F0B6514 AFA3001C */   sw    $v1, 0x1c($sp)
 /* 0EB048 7F0B6518 8FA3001C */  lw    $v1, 0x1c($sp)
 .L7F0B651C:
-/* 0EB04C 7F0B651C 3C0C8008 */  lui   $t4, %hi(sky_enabled) 
-/* 0EB050 7F0B6520 8D8C25C0 */  lw    $t4, %lo(sky_enabled)($t4)
+/* 0EB04C 7F0B651C 3C0C8008 */  lui   $t4, %hi(g_FogSkyIsEnabled) 
+/* 0EB050 7F0B6520 8D8C25C0 */  lw    $t4, %lo(g_FogSkyIsEnabled)($t4)
 /* 0EB054 7F0B6524 24060006 */  li    $a2, 6
 /* 0EB058 7F0B6528 51800012 */  beql  $t4, $zero, .L7F0B6574
 /* 0EB05C 7F0B652C 8C640008 */   lw    $a0, 8($v1)

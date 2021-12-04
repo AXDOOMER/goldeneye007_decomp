@@ -1,9 +1,13 @@
 #include "ultra64.h"
+
+#include "bondtypes.h"
+#include "bondconstants.h"
+#include "game/bondview.h"
 #include "game/fog.h"
 
 // bss
 //CODE.bss:800825C0
-s32 sky_enabled;
+s32 g_FogSkyIsEnabled;
 //CODE.bss:800825C4
 u32 *ptr_nearfog_enviroment_values;
 //CODE.bss:800825C8
@@ -114,7 +118,7 @@ u8 byte_CODE_bss_8008265f;
 //D:80044DC0
 s32 D_80044DC0 = 0;
 //D:80044DC4
-f32 near_fog_value = 3.4028235e38;
+f32 g_FogNearFogValue = 3.4028235e38;
 //D:80044DC8
 f32 near_fog_times_intensity = 0.0;
 //D:80044DCC
@@ -193,11 +197,11 @@ s32 get_ptr_currentdata(void){
 }
 
 f32 get_near_fog_value(void) {
-    return near_fog_value;
+    return g_FogNearFogValue;
 }
 
 f32 square_near_fog_value(void) {
-    return near_fog_value * near_fog_value;
+    return g_FogNearFogValue * g_FogNearFogValue;
 }
 
 
@@ -245,7 +249,7 @@ glabel copy_table1_env_to_current
 /* 0EF300 7F0BA7D0 468021A0 */  cvt.s.w $f6, $f4
 /* 0EF304 7F0BA7D4 46083283 */  div.s $f10, $f6, $f8
 /* 0EF308 7F0BA7D8 44814000 */  mtc1  $at, $f8
-/* 0EF30C 7F0BA7DC 3C018004 */  lui   $at, %hi(near_fog_value)
+/* 0EF30C 7F0BA7DC 3C018004 */  lui   $at, %hi(g_FogNearFogValue)
 /* 0EF310 7F0BA7E0 E48A0000 */  swc1  $f10, ($a0)
 /* 0EF314 7F0BA7E4 8CAF0024 */  lw    $t7, 0x24($a1)
 /* 0EF318 7F0BA7E8 448F2000 */  mtc1  $t7, $f4
@@ -259,7 +263,7 @@ glabel copy_table1_env_to_current
 /* 0EF338 7F0BA808 C4D00000 */  lwc1  $f16, ($a2)
 /* 0EF33C 7F0BA80C 46107202 */  mul.s $f8, $f14, $f16
 /* 0EF340 7F0BA810 46083280 */  add.s $f10, $f6, $f8
-/* 0EF344 7F0BA814 E42A4DC4 */  swc1  $f10, %lo(near_fog_value)($at)
+/* 0EF344 7F0BA814 E42A4DC4 */  swc1  $f10, %lo(g_FogNearFogValue)($at)
 /* 0EF348 7F0BA818 C4820000 */  lwc1  $f2, ($a0)
 /* 0EF34C 7F0BA81C 3C018004 */  lui   $at, %hi(near_fog_times_intensity)
 /* 0EF350 7F0BA820 46027102 */  mul.s $f4, $f14, $f2
@@ -368,8 +372,8 @@ glabel copy_table1_env_to_current
 /* 0EF4E8 7F0BA9B8 AC2F25C4 */  sw    $t7, %lo(ptr_nearfog_enviroment_values)($at)
 .L7F0BA9BC:
 /* 0EF4EC 7F0BA9BC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0EF4F0 7F0BA9C0 3C018008 */  lui   $at, %hi(sky_enabled)
-/* 0EF4F4 7F0BA9C4 AC3825C0 */  sw    $t8, %lo(sky_enabled)($at)
+/* 0EF4F0 7F0BA9C0 3C018008 */  lui   $at, %hi(g_FogSkyIsEnabled)
+/* 0EF4F4 7F0BA9C4 AC3825C0 */  sw    $t8, %lo(g_FogSkyIsEnabled)($at)
 /* 0EF4F8 7F0BA9C8 03E00008 */  jr    $ra
 /* 0EF4FC 7F0BA9CC 27BD0038 */   addiu $sp, $sp, 0x38
 )
@@ -468,9 +472,9 @@ glabel load_enviroment
 /* 0EF5C4 7F0BAA94 3C018006 */  lui   $at, %hi(default_near_fog)
 /* 0EF5C8 7F0BAA98 C4248D70 */  lwc1  $f4, %lo(default_near_fog)($at)
 /* 0EF5CC 7F0BAA9C 8FAE002C */  lw    $t6, 0x2c($sp)
-/* 0EF5D0 7F0BAAA0 3C018004 */  lui   $at, %hi(near_fog_value)
+/* 0EF5D0 7F0BAAA0 3C018004 */  lui   $at, %hi(g_FogNearFogValue)
 /* 0EF5D4 7F0BAAA4 44803000 */  mtc1  $zero, $f6
-/* 0EF5D8 7F0BAAA8 E4244DC4 */  swc1  $f4, %lo(near_fog_value)($at)
+/* 0EF5D8 7F0BAAA8 E4244DC4 */  swc1  $f4, %lo(g_FogNearFogValue)($at)
 /* 0EF5DC 7F0BAAAC 3C018004 */  lui   $at, %hi(near_fog_times_intensity)
 /* 0EF5E0 7F0BAAB0 11C0001A */  beqz  $t6, .L7F0BAB1C
 /* 0EF5E4 7F0BAAB4 E4264DC8 */   swc1  $f6, %lo(near_fog_times_intensity)($at)
@@ -578,9 +582,9 @@ glabel load_enviroment
 /* 0EF754 7F0BAC24 0C001194 */  jal   viSetZRange
 /* 0EF758 7F0BAC28 AFA70028 */   sw    $a3, 0x28($sp)
 /* 0EF75C 7F0BAC2C 3C048004 */  lui   $a0, %hi(fog_tables2)
-/* 0EF760 7F0BAC30 3C018008 */  lui   $at, %hi(sky_enabled)
+/* 0EF760 7F0BAC30 3C018008 */  lui   $at, %hi(g_FogSkyIsEnabled)
 /* 0EF764 7F0BAC34 24845F50 */  addiu $a0, %lo(fog_tables2) # addiu $a0, $a0, 0x5f50
-/* 0EF768 7F0BAC38 AC2025C0 */  sw    $zero, %lo(sky_enabled)($at)
+/* 0EF768 7F0BAC38 AC2025C0 */  sw    $zero, %lo(g_FogSkyIsEnabled)($at)
 /* 0EF76C 7F0BAC3C 8C8F0000 */  lw    $t7, ($a0)
 /* 0EF770 7F0BAC40 8FA6001C */  lw    $a2, 0x1c($sp)
 /* 0EF774 7F0BAC44 8FA70028 */  lw    $a3, 0x28($sp)
@@ -901,8 +905,8 @@ void sub_GAME_7F0BB070(void) {
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0BB070
-/* 0EFBA0 7F0BB070 3C0E8008 */  lui   $t6, %hi(sky_enabled) 
-/* 0EFBA4 7F0BB074 8DCE25C0 */  lw    $t6, %lo(sky_enabled)($t6)
+/* 0EFBA0 7F0BB070 3C0E8008 */  lui   $t6, %hi(g_FogSkyIsEnabled) 
+/* 0EFBA4 7F0BB074 8DCE25C0 */  lw    $t6, %lo(g_FogSkyIsEnabled)($t6)
 /* 0EFBA8 7F0BB078 15C00003 */  bnez  $t6, .L7F0BB088
 /* 0EFBAC 7F0BB07C 00000000 */   nop   
 /* 0EFBB0 7F0BB080 03E00008 */  jr    $ra
@@ -1066,8 +1070,8 @@ void sub_GAME_7F0BB298(void) {
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0BB298
-/* 0EFDC8 7F0BB298 3C0E8008 */  lui   $t6, %hi(sky_enabled) 
-/* 0EFDCC 7F0BB29C 8DCE25C0 */  lw    $t6, %lo(sky_enabled)($t6)
+/* 0EFDC8 7F0BB298 3C0E8008 */  lui   $t6, %hi(g_FogSkyIsEnabled) 
+/* 0EFDCC 7F0BB29C 8DCE25C0 */  lw    $t6, %lo(g_FogSkyIsEnabled)($t6)
 /* 0EFDD0 7F0BB2A0 24820008 */  addiu $v0, $a0, 8
 /* 0EFDD4 7F0BB2A4 3C0FB600 */  lui   $t7, 0xb600
 /* 0EFDD8 7F0BB2A8 15C00003 */  bnez  $t6, .L7F0BB2B8
@@ -1087,70 +1091,37 @@ glabel sub_GAME_7F0BB298
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0BB2C8(void) {
+/**
+ * Address 0x7F0BB2C8.
+*/
+s32 fogPositionIsObscuredByFog(struct coord3d *pos, f32 range)
+{
+    struct coord3d sp24;
+    f32 ff;
+    struct coord3d *player_pos;
+    Mtxf *player_mtx;
 
+    if (g_FogSkyIsEnabled == 0)
+    {
+        return 1;
+    }
+
+    player_pos = bondviewGetCurrentPlayersPosition();
+    player_mtx = currentPlayerGetMatrix10CC();
+
+    sp24.f[0] = pos->f[0] - player_pos->f[0];
+    sp24.f[1] = pos->f[1] - player_pos->f[1];
+    sp24.f[2] = pos->f[2] - player_pos->f[2];
+
+    ff = (((sp24.f[0] * player_mtx->m[0][0]) + (sp24.f[1] * player_mtx->m[0][1]) + (sp24.f[2] * player_mtx->m[0][2])));
+
+    if (ff > (g_FogNearFogValue + range))
+    {
+        return 0;
+    }
+
+    return 1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BB2C8
-/* 0EFDF8 7F0BB2C8 3C0E8008 */  lui   $t6, %hi(sky_enabled) 
-/* 0EFDFC 7F0BB2CC 8DCE25C0 */  lw    $t6, %lo(sky_enabled)($t6)
-/* 0EFE00 7F0BB2D0 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0EFE04 7F0BB2D4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0EFE08 7F0BB2D8 15C00003 */  bnez  $t6, .L7F0BB2E8
-/* 0EFE0C 7F0BB2DC AFA50034 */   sw    $a1, 0x34($sp)
-/* 0EFE10 7F0BB2E0 10000029 */  b     .L7F0BB388
-/* 0EFE14 7F0BB2E4 24020001 */   li    $v0, 1
-.L7F0BB2E8:
-/* 0EFE18 7F0BB2E8 0FC227F5 */  jal   bondviewGetCurrentPlayersPosition
-/* 0EFE1C 7F0BB2EC AFA40030 */   sw    $a0, 0x30($sp)
-/* 0EFE20 7F0BB2F0 0FC1E0F1 */  jal   currentPlayerGetMatrix10CC
-/* 0EFE24 7F0BB2F4 AFA2001C */   sw    $v0, 0x1c($sp)
-/* 0EFE28 7F0BB2F8 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 0EFE2C 7F0BB2FC 8FA40030 */  lw    $a0, 0x30($sp)
-/* 0EFE30 7F0BB300 3C018004 */  lui   $at, %hi(near_fog_value)
-/* 0EFE34 7F0BB304 C4660000 */  lwc1  $f6, ($v1)
-/* 0EFE38 7F0BB308 C4840000 */  lwc1  $f4, ($a0)
-/* 0EFE3C 7F0BB30C 46062201 */  sub.s $f8, $f4, $f6
-/* 0EFE40 7F0BB310 E7A80024 */  swc1  $f8, 0x24($sp)
-/* 0EFE44 7F0BB314 C4700004 */  lwc1  $f16, 4($v1)
-/* 0EFE48 7F0BB318 C48A0004 */  lwc1  $f10, 4($a0)
-/* 0EFE4C 7F0BB31C 46105481 */  sub.s $f18, $f10, $f16
-/* 0EFE50 7F0BB320 C7AA0024 */  lwc1  $f10, 0x24($sp)
-/* 0EFE54 7F0BB324 E7B20028 */  swc1  $f18, 0x28($sp)
-/* 0EFE58 7F0BB328 C4660008 */  lwc1  $f6, 8($v1)
-/* 0EFE5C 7F0BB32C C4840008 */  lwc1  $f4, 8($a0)
-/* 0EFE60 7F0BB330 46062201 */  sub.s $f8, $f4, $f6
-/* 0EFE64 7F0BB334 C7A40028 */  lwc1  $f4, 0x28($sp)
-/* 0EFE68 7F0BB338 E7A8002C */  swc1  $f8, 0x2c($sp)
-/* 0EFE6C 7F0BB33C C4500000 */  lwc1  $f16, ($v0)
-/* 0EFE70 7F0BB340 C4460004 */  lwc1  $f6, 4($v0)
-/* 0EFE74 7F0BB344 46105482 */  mul.s $f18, $f10, $f16
-/* 0EFE78 7F0BB348 C4500008 */  lwc1  $f16, 8($v0)
-/* 0EFE7C 7F0BB34C 24020001 */  li    $v0, 1
-/* 0EFE80 7F0BB350 46062202 */  mul.s $f8, $f4, $f6
-/* 0EFE84 7F0BB354 C7A4002C */  lwc1  $f4, 0x2c($sp)
-/* 0EFE88 7F0BB358 46048182 */  mul.s $f6, $f16, $f4
-/* 0EFE8C 7F0BB35C 46089280 */  add.s $f10, $f18, $f8
-/* 0EFE90 7F0BB360 C7A80034 */  lwc1  $f8, 0x34($sp)
-/* 0EFE94 7F0BB364 C4324DC4 */  lwc1  $f18, %lo(near_fog_value)($at)
-/* 0EFE98 7F0BB368 460A3000 */  add.s $f0, $f6, $f10
-/* 0EFE9C 7F0BB36C 46089400 */  add.s $f16, $f18, $f8
-/* 0EFEA0 7F0BB370 4600803C */  c.lt.s $f16, $f0
-/* 0EFEA4 7F0BB374 00000000 */  nop   
-/* 0EFEA8 7F0BB378 45000003 */  bc1f  .L7F0BB388
-/* 0EFEAC 7F0BB37C 00000000 */   nop   
-/* 0EFEB0 7F0BB380 10000001 */  b     .L7F0BB388
-/* 0EFEB4 7F0BB384 00001025 */   move  $v0, $zero
-.L7F0BB388:
-/* 0EFEB8 7F0BB388 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0EFEBC 7F0BB38C 27BD0030 */  addiu $sp, $sp, 0x30
-/* 0EFEC0 7F0BB390 03E00008 */  jr    $ra
-/* 0EFEC4 7F0BB394 00000000 */   nop   
-)
-#endif
 
 
 
@@ -1173,8 +1144,8 @@ void if_sky_present_convert_values(void) {
 GLOBAL_ASM(
 .text
 glabel if_sky_present_convert_values
-/* 0EFED4 7F0BB3A4 3C0E8008 */  lui   $t6, %hi(sky_enabled) 
-/* 0EFED8 7F0BB3A8 8DCE25C0 */  lw    $t6, %lo(sky_enabled)($t6)
+/* 0EFED4 7F0BB3A4 3C0E8008 */  lui   $t6, %hi(g_FogSkyIsEnabled) 
+/* 0EFED8 7F0BB3A8 8DCE25C0 */  lw    $t6, %lo(g_FogSkyIsEnabled)($t6)
 /* 0EFEDC 7F0BB3AC 55C00004 */  bnezl $t6, .L7F0BB3C0
 /* 0EFEE0 7F0BB3B0 44801000 */   mtc1  $zero, $f2
 /* 0EFEE4 7F0BB3B4 03E00008 */  jr    $ra
