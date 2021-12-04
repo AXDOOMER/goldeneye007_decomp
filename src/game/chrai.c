@@ -4510,7 +4510,7 @@ action54_GoIntoRVLIf_Guard_Is_At_Preset_5:
 /* 06B7C4 7F036C94 000A5A00 */  sll   $t3, $t2, 8
 /* 06B7C8 7F036C98 016C1025 */  or    $v0, $t3, $t4
 /* 06B7CC 7F036C9C 3046FFFF */  andi  $a2, $v0, 0xffff
-/* 06B7D0 7F036CA0 0FC0D0E2 */  jal   check_if_actorID_is_at_preset
+/* 06B7D0 7F036CA0 0FC0D0E2 */  jal   chrIfInPadRoom
 /* 06B7D4 7F036CA4 92250001 */   lbu   $a1, 1($s1)
 /* 06B7D8 7F036CA8 10400007 */  beqz  $v0, .L7F036CC8
 /* 06B7DC 7F036CAC 02C02025 */   move  $a0, $s6
@@ -10377,7 +10377,7 @@ action54_GoIntoRVLIf_Guard_Is_At_Preset_5:
 /* 06B7C4 7F036C94 000A5A00 */  sll   $t3, $t2, 8
 /* 06B7C8 7F036C98 016C1025 */  or    $v0, $t3, $t4
 /* 06B7CC 7F036C9C 3046FFFF */  andi  $a2, $v0, 0xffff
-/* 06B7D0 7F036CA0 0FC0D0E2 */  jal   check_if_actorID_is_at_preset
+/* 06B7D0 7F036CA0 0FC0D0E2 */  jal   chrIfInPadRoom
 /* 06B7D4 7F036CA4 92250001 */   lbu   $a1, 1($s1)
 /* 06B7D8 7F036CA8 10400007 */  beqz  $v0, .L7F036CC8
 /* 06B7DC 7F036CAC 02C02025 */   move  $a0, $s6
@@ -16245,7 +16245,7 @@ action54_GoIntoRVLIf_Guard_Is_At_Preset_5:
 /* 06B7C4 7F036C94 000A5A00 */  sll   $t3, $t2, 8
 /* 06B7C8 7F036C98 016C1025 */  or    $v0, $t3, $t4
 /* 06B7CC 7F036C9C 3046FFFF */  andi  $a2, $v0, 0xffff
-/* 06B7D0 7F036CA0 0FC0D0E2 */  jal   check_if_actorID_is_at_preset
+/* 06B7D0 7F036CA0 0FC0D0E2 */  jal   chrIfInPadRoom
 /* 06B7D4 7F036CA4 92250001 */   lbu   $a1, 1($s1)
 /* 06B7D8 7F036CA8 10400007 */  beqz  $v0, .L7F036CC8
 /* 06B7DC 7F036CAC 02C02025 */   move  $a0, $s6
