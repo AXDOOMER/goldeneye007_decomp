@@ -14088,56 +14088,34 @@ bool check_2328_preset_set_with_method(ChrRecord *self, u8 quadrant)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F033AAC(void) {
-// ai branch
+
+/**
+ * Address 0x7F033AAC.
+*/
+bool sub_GAME_7F033AAC(ChrRecord *self, u8 padnum)
+{
+    f32 sp1C;
+    s32 bondnearestpad;
+    PropRecord *bondprop;
+
+    if ((padnum == 16) || (padnum == 32))
+    {
+        return check_2328_preset_set_with_method(self, padnum);
+    }
+
+    sp1C           = get_curplay_horizontal_rotation_in_degrees();
+    bondprop       = get_curplayer_positiondata();
+    bondnearestpad = chrlvFindPathNeighborRelated(&bondprop->pos, bondprop->stan, sp1C, padnum);
+
+    if (bondnearestpad >= 0)
+    {
+        self->padpreset1 = bondnearestpad;
+
+        return TRUE;
+    }
+
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F033AAC
-/* 0685DC 7F033AAC 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0685E0 7F033AB0 30A700FF */  andi  $a3, $a1, 0xff
-/* 0685E4 7F033AB4 24010010 */  li    $at, 16
-/* 0685E8 7F033AB8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0685EC 7F033ABC AFA40020 */  sw    $a0, 0x20($sp)
-/* 0685F0 7F033AC0 AFA50024 */  sw    $a1, 0x24($sp)
-/* 0685F4 7F033AC4 10E10004 */  beq   $a3, $at, .L7F033AD8
-/* 0685F8 7F033AC8 00E01025 */   move  $v0, $a3
-/* 0685FC 7F033ACC 24010020 */  li    $at, 32
-/* 068600 7F033AD0 14410006 */  bne   $v0, $at, .L7F033AEC
-/* 068604 7F033AD4 00000000 */   nop   
-.L7F033AD8:
-/* 068608 7F033AD8 8FA40020 */  lw    $a0, 0x20($sp)
-/* 06860C 7F033ADC 0FC0CE66 */  jal   check_2328_preset_set_with_method
-/* 068610 7F033AE0 30E500FF */   andi  $a1, $a3, 0xff
-/* 068614 7F033AE4 10000011 */  b     .L7F033B2C
-/* 068618 7F033AE8 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F033AEC:
-/* 06861C 7F033AEC 0FC227B9 */  jal   get_curplay_horizontal_rotation_in_degrees
-/* 068620 7F033AF0 A3A70027 */   sb    $a3, 0x27($sp)
-/* 068624 7F033AF4 0FC225E6 */  jal   get_curplayer_positiondata
-/* 068628 7F033AF8 E7A0001C */   swc1  $f0, 0x1c($sp)
-/* 06862C 7F033AFC 93A70027 */  lbu   $a3, 0x27($sp)
-/* 068630 7F033B00 24440008 */  addiu $a0, $v0, 8
-/* 068634 7F033B04 8C450014 */  lw    $a1, 0x14($v0)
-/* 068638 7F033B08 0FC0CE0D */  jal   chrlvFindPathNeighborRelated
-/* 06863C 7F033B0C 8FA6001C */   lw    $a2, 0x1c($sp)
-/* 068640 7F033B10 04400004 */  bltz  $v0, .L7F033B24
-/* 068644 7F033B14 8FAE0020 */   lw    $t6, 0x20($sp)
-/* 068648 7F033B18 A5C20114 */  sh    $v0, 0x114($t6)
-/* 06864C 7F033B1C 10000002 */  b     .L7F033B28
-/* 068650 7F033B20 24020001 */   li    $v0, 1
-.L7F033B24:
-/* 068654 7F033B24 00001025 */  move  $v0, $zero
-.L7F033B28:
-/* 068658 7F033B28 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F033B2C:
-/* 06865C 7F033B2C 27BD0020 */  addiu $sp, $sp, 0x20
-/* 068660 7F033B30 03E00008 */  jr    $ra
-/* 068664 7F033B34 00000000 */   nop   
-)
-#endif
 
 
 
