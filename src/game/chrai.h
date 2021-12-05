@@ -233,5 +233,6 @@ void attachNewChild(struct PropRecord *newChild, struct PropRecord *host);
 s32 LoadNext_PrevActionBlock(u16);
 void chraiGetCollisionBounds(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *arg3, f32 *arg4);
 void chraiGetCollisionBoundsWithoutY(PropRecord *arg0, struct rect4f **arg1, s32 *arg2);
+s32 sub_GAME_7F03CCD8(struct rect4f *arg0, struct rect4f *arg1, s32 arg2);
 
 #endif
