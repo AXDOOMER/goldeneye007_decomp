@@ -40,5 +40,6 @@ void sub_GAME_7F03FE14(PropRecord *);
 void sub_GAME_7F040484(ObjectRecord *);
 void sub_GAME_7F040754(ObjectRecord *, struct coord3d *, Mtxf *, struct StandTile *);
 s32 sub_GAME_7F041074(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *arg2, f32 arg3);
+void sub_GAME_7F04F244(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *arg3, f32 *arg4);
 
 #endif

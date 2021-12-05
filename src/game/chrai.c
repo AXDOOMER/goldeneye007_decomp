@@ -23429,65 +23429,53 @@ glabel sub_GAME_7F03CB8C
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03CC20(void) {
+/**
+ * Address 0x7F03CC20.
+*/
+void sub_GAME_7F03CC20(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *arg3, f32 *arg4)
+{
+    *arg1 = NULL;
+    *arg2 = 0;
 
+    if (arg0->type == PROP_TYPE_CHR)
+    {
+        chrUpdateCollisionBounds(arg0, arg1, arg2, arg3, arg4);
+    }
+    else if (arg0->type == PROP_TYPE_VIEWER)
+    {
+        bondviewGetPropHeightRelatedValues(arg0, arg1, arg2, arg3, arg4);
+    }
+    else if (arg0->type == PROP_TYPE_WEAPON)
+    {
+        // nothing to do
+    }
+    else if ((arg0->type == PROP_TYPE_OBJ) || (arg0->type == PROP_TYPE_DOOR))
+    {
+        sub_GAME_7F04F244(arg0, arg1, arg2, arg3, arg4);
+    }
+    else if (arg0->type == PROP_TYPE_PLAYER)
+    {
+        // nothing to do
+    }
+    else if (arg0->type == PROP_TYPE_NUL)
+    {
+        // nothing to do
+    }
+
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03CC20
-/* 071750 7F03CC20 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 071754 7F03CC24 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 071758 7F03CC28 ACA00000 */  sw    $zero, ($a1)
-/* 07175C 7F03CC2C ACC00000 */  sw    $zero, ($a2)
-/* 071760 7F03CC30 90820000 */  lbu   $v0, ($a0)
-/* 071764 7F03CC34 24010003 */  li    $at, 3
-/* 071768 7F03CC38 8FAE0030 */  lw    $t6, 0x30($sp)
-/* 07176C 7F03CC3C 54410006 */  bnel  $v0, $at, .L7F03CC58
-/* 071770 7F03CC40 24010006 */   li    $at, 6
-/* 071774 7F03CC44 0FC08C23 */  jal   chrUpdateCollisionBounds
-/* 071778 7F03CC48 AFAE0010 */   sw    $t6, 0x10($sp)
-/* 07177C 7F03CC4C 10000015 */  b     .L7F03CCA4
-/* 071780 7F03CC50 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 071784 7F03CC54 24010006 */  li    $at, 6
-.L7F03CC58:
-/* 071788 7F03CC58 14410005 */  bne   $v0, $at, .L7F03CC70
-/* 07178C 7F03CC5C 8FAF0030 */   lw    $t7, 0x30($sp)
-/* 071790 7F03CC60 0FC2282C */  jal   bondviewGetPropHeightRelatedValues
-/* 071794 7F03CC64 AFAF0010 */   sw    $t7, 0x10($sp)
-/* 071798 7F03CC68 1000000E */  b     .L7F03CCA4
-/* 07179C 7F03CC6C 8FBF001C */   lw    $ra, 0x1c($sp)
-.L7F03CC70:
-/* 0717A0 7F03CC70 24010004 */  li    $at, 4
-/* 0717A4 7F03CC74 1041000A */  beq   $v0, $at, .L7F03CCA0
-/* 0717A8 7F03CC78 24010001 */   li    $at, 1
-/* 0717AC 7F03CC7C 10410004 */  beq   $v0, $at, .L7F03CC90
-/* 0717B0 7F03CC80 8FB80030 */   lw    $t8, 0x30($sp)
-/* 0717B4 7F03CC84 24010002 */  li    $at, 2
-/* 0717B8 7F03CC88 14410005 */  bne   $v0, $at, .L7F03CCA0
-/* 0717BC 7F03CC8C 00000000 */   nop   
-.L7F03CC90:
-/* 0717C0 7F03CC90 0FC13C91 */  jal   sub_GAME_7F04F244
-/* 0717C4 7F03CC94 AFB80010 */   sw    $t8, 0x10($sp)
-/* 0717C8 7F03CC98 10000002 */  b     .L7F03CCA4
-/* 0717CC 7F03CC9C 8FBF001C */   lw    $ra, 0x1c($sp)
-.L7F03CCA0:
-/* 0717D0 7F03CCA0 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F03CCA4:
-/* 0717D4 7F03CCA4 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0717D8 7F03CCA8 03E00008 */  jr    $ra
-/* 0717DC 7F03CCAC 00000000 */   nop   
-)
-#endif
 
 
 
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03CCB0(void) {
+void sub_GAME_7F03CCB0(PropRecord *arg0, struct rect4f **arg1, s32 *arg2)
+{
+    f32 sp24;
+    f32 sp20;
 
+    sub_GAME_7F03CC20(arg0, arg1, arg2, &sp24, &sp20);
 }
 #else
 GLOBAL_ASM(
