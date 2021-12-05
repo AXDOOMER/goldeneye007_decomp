@@ -1208,9 +1208,17 @@ struct act_runpos
     f32 turnspeed;                                                        /*0x40*/
 };
 
+struct patrol_path
+{
+    s32 *data;
+    u8 unk04;
+    u8 flags;
+    u16 len;
+};
+
 struct act_patrol
 {
-    s32 *path;                                                /*0x02c*/
+    struct patrol_path *path;                                                /*0x02c*/
     s32 nextstep;                                                     /*0x030*/
     bool forward;                                                     /*0x034*/
     struct waydata waydata;                                           /*0x038*/

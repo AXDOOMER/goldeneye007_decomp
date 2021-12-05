@@ -147,6 +147,8 @@ s32 chrlvFindPathNeighborRelated(struct coord3d *bondpos, struct StandTile *stan
 s32 sub_GAME_7F033EAC(struct coord3d *arg0, StandTile *arg1);
 struct PropRecord *actionblock_guard_constructor_BDBE(s32 bodynum, s32 headnum, struct coord3d *pos, struct StandTile *stan, f32 yrot, s32 arg4, s32 arg5);
 void sub_GAME_7F02516C(ChrRecord *arg0, void ** arg1, s32 arg2, struct point2d *arg3, s32 arg4, s32 arg5, s32 arg6);
+s32 chrlvPatrolCalculateStep(ChrRecord *arg0, bool *forward, s32 numsteps);
+
 
 // ?
 
@@ -4109,17 +4111,19 @@ void chrlvActGoposIncCurIndex(struct ChrRecord *arg0)
 
 
 
-#ifdef NONMATCHING
-//void sub_GAME_7F028348(void) {
-// param arg0: unknown. If this is chrrecord, need to know action type. doesn't look like gopos.
-// param arg1: out parameter, integral type
-// param arg2: integral type
-// tentative signature: s32 sub_GAME_7F028348(void *arg0, s32 *arg1, s32 arg2)
-
 /**
+ * Determines which step index the chr will be at given their current index, the
+ * number of steps to take and in which direction (forward or back).
+ *
+ * Returns the step index and populates *forward with true or false depending on
+ * whether the chr will be traversing the path in the forward direction at that
+ * point.
+ * 
+ * Address 0x7F028348.
+ *
  * PD: chrPatrolCalculateStep
  */
-s32 sub_GAME_7F028348(ChrRecord *arg0, bool *forward, s32 numsteps)
+s32 chrlvPatrolCalculateStep(ChrRecord *arg0, bool *forward, s32 numsteps)
 {
     s32 nextstep = arg0->act_patrol.nextstep;
 	bool isforward = *forward;
@@ -4138,25 +4142,20 @@ s32 sub_GAME_7F028348(ChrRecord *arg0, bool *forward, s32 numsteps)
         {
             nextstep++;
 
-            if (arg0->act_patrol.path[nextstep] < 0)
+            if (arg0->act_patrol.path->data[nextstep] < 0)
             {
+                nextstep -= 2;
+
 				// Reached the end of the list
-				if (arg0->act_patrol.forward & 1)
+				if (arg0->act_patrol.path->flags & 1)
                 {
 					nextstep = 0;
 				}
                 else
                 {
 					isforward = FALSE;
-					nextstep -= 2;
-
-					if (nextstep < 0)
-                    {
-						nextstep = 0;
-					}
 				}
 			}
-
         }
         else
         {
@@ -4164,24 +4163,18 @@ s32 sub_GAME_7F028348(ChrRecord *arg0, bool *forward, s32 numsteps)
 
             if (nextstep < 0)
             {
+                nextstep = 1;
+
 				// Reached the start of the list
-				if (arg0->act_patrol.forward & 1)
+				if (arg0->act_patrol.path->flags & 1)
                 {
-					nextstep = arg0->act_patrol.forward - 1;
+					nextstep = arg0->act_patrol.path->len - 1;
 				}
                 else
                 {
 					isforward = TRUE;
-					nextstep = 1;
-
-					if (arg0->act_patrol.forward - 1 <= 0)
-                    {
-						nextstep = arg0->act_patrol.forward - 1;
-					}
 				}
-
             }
-
         }
     }
 
@@ -4191,68 +4184,10 @@ s32 sub_GAME_7F028348(ChrRecord *arg0, bool *forward, s32 numsteps)
 }
 
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F028348
-/* 05CE78 7F028348 8C830030 */  lw    $v1, 0x30($a0)
-/* 05CE7C 7F02834C 04C10004 */  bgez  $a2, .L7F028360
-/* 05CE80 7F028350 8CA70000 */   lw    $a3, ($a1)
-/* 05CE84 7F028354 2CEE0001 */  sltiu $t6, $a3, 1
-/* 05CE88 7F028358 01C03825 */  move  $a3, $t6
-/* 05CE8C 7F02835C 00063023 */  negu  $a2, $a2
-.L7F028360:
-/* 05CE90 7F028360 58C00024 */  blezl $a2, .L7F0283F4
-/* 05CE94 7F028364 ACA70000 */   sw    $a3, ($a1)
-.L7F028368:
-/* 05CE98 7F028368 10E00012 */  beqz  $a3, .L7F0283B4
-/* 05CE9C 7F02836C 24C6FFFF */   addiu $a2, $a2, -1
-/* 05CEA0 7F028370 8C82002C */  lw    $v0, 0x2c($a0)
-/* 05CEA4 7F028374 24630001 */  addiu $v1, $v1, 1
-/* 05CEA8 7F028378 0003C080 */  sll   $t8, $v1, 2
-/* 05CEAC 7F02837C 8C4F0000 */  lw    $t7, ($v0)
-/* 05CEB0 7F028380 01F8C821 */  addu  $t9, $t7, $t8
-/* 05CEB4 7F028384 8F280000 */  lw    $t0, ($t9)
-/* 05CEB8 7F028388 05010017 */  bgez  $t0, .L7F0283E8
-/* 05CEBC 7F02838C 00000000 */   nop   
-/* 05CEC0 7F028390 90490005 */  lbu   $t1, 5($v0)
-/* 05CEC4 7F028394 2463FFFE */  addiu $v1, $v1, -2
-/* 05CEC8 7F028398 312A0001 */  andi  $t2, $t1, 1
-/* 05CECC 7F02839C 11400003 */  beqz  $t2, .L7F0283AC
-/* 05CED0 7F0283A0 00000000 */   nop   
-/* 05CED4 7F0283A4 10000010 */  b     .L7F0283E8
-/* 05CED8 7F0283A8 00001825 */   move  $v1, $zero
-.L7F0283AC:
-/* 05CEDC 7F0283AC 1000000E */  b     .L7F0283E8
-/* 05CEE0 7F0283B0 00003825 */   move  $a3, $zero
-.L7F0283B4:
-/* 05CEE4 7F0283B4 2463FFFF */  addiu $v1, $v1, -1
-/* 05CEE8 7F0283B8 0461000B */  bgez  $v1, .L7F0283E8
-/* 05CEEC 7F0283BC 00000000 */   nop   
-/* 05CEF0 7F0283C0 8C82002C */  lw    $v0, 0x2c($a0)
-/* 05CEF4 7F0283C4 24030001 */  li    $v1, 1
-/* 05CEF8 7F0283C8 904B0005 */  lbu   $t3, 5($v0)
-/* 05CEFC 7F0283CC 316C0001 */  andi  $t4, $t3, 1
-/* 05CF00 7F0283D0 51800005 */  beql  $t4, $zero, .L7F0283E8
-/* 05CF04 7F0283D4 24070001 */   li    $a3, 1
-/* 05CF08 7F0283D8 94430006 */  lhu   $v1, 6($v0)
-/* 05CF0C 7F0283DC 10000002 */  b     .L7F0283E8
-/* 05CF10 7F0283E0 2463FFFF */   addiu $v1, $v1, -1
-/* 05CF14 7F0283E4 24070001 */  li    $a3, 1
-.L7F0283E8:
-/* 05CF18 7F0283E8 1CC0FFDF */  bgtz  $a2, .L7F028368
-/* 05CF1C 7F0283EC 00000000 */   nop   
-/* 05CF20 7F0283F0 ACA70000 */  sw    $a3, ($a1)
-.L7F0283F4:
-/* 05CF24 7F0283F4 03E00008 */  jr    $ra
-/* 05CF28 7F0283F8 00601025 */   move  $v0, $v1
-)
-#endif
-
 
 
 #ifdef NONMATCHING
-// s32 sub_GAME_7F028348(void *arg0, s32 *arg1, s32 arg2);
+// s32 chrlvPatrolCalculateStep(void *arg0, s32 *arg1, s32 arg2);
 
 s32 sub_GAME_7F0283FC(ChrRecord *arg0, s32 arg1)
 {
@@ -4261,7 +4196,7 @@ s32 sub_GAME_7F0283FC(ChrRecord *arg0, s32 arg1)
 
     temp_a1 = &sp20;
     sp20 = arg0->act_patrol.forward;
-    return (ptr_setup_path_tbl.unk0[*(arg0->act_patrol.path->id + (sub_GAME_7F028348(arg0, temp_a1, arg1) * 4))].id * 0x2C) + ptr_setup_path_tbl.unk18;
+    return (ptr_setup_path_tbl.unk0[*(arg0->act_patrol.path->id + (chrlvPatrolCalculateStep(arg0, temp_a1, arg1) * 4))].id * 0x2C) + ptr_setup_path_tbl.unk18;
 }
 
 #else
@@ -4274,7 +4209,7 @@ glabel sub_GAME_7F0283FC
 /* 05CF38 7F028408 00A03025 */  move  $a2, $a1
 /* 05CF3C 7F02840C 27A50020 */  addiu $a1, $sp, 0x20
 /* 05CF40 7F028410 AFA40028 */  sw    $a0, 0x28($sp)
-/* 05CF44 7F028414 0FC0A0D2 */  jal   sub_GAME_7F028348
+/* 05CF44 7F028414 0FC0A0D2 */  jal   chrlvPatrolCalculateStep
 /* 05CF48 7F028418 AFAE0020 */   sw    $t6, 0x20($sp)
 /* 05CF4C 7F02841C 8FA70028 */  lw    $a3, 0x28($sp)
 /* 05CF50 7F028420 0002C880 */  sll   $t9, $v0, 2
@@ -4338,7 +4273,7 @@ void sub_GAME_7F028494(struct ChrRecord *arg0)
 */
 void sub_GAME_7F0284DC(struct ChrRecord *arg0)
 {
-    arg0->act_patrol.nextstep = sub_GAME_7F028348(arg0, &arg0->act_patrol.forward, 1);
+    arg0->act_patrol.nextstep = chrlvPatrolCalculateStep(arg0, &arg0->act_patrol.forward, 1);
     sub_GAME_7F028494(arg0);
 }
 
