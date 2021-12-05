@@ -10882,7 +10882,7 @@ glabel sub_GAME_7F07D960
 /* 0B2508 7F07D9D8 8CE7644C */  lw    $a3, %lo(D_8003644C)($a3)
 /* 0B250C 7F07D9DC 10E00084 */  beqz  $a3, .L7F07DBF0
 /* 0B2510 7F07D9E0 00E02025 */   move  $a0, $a3
-/* 0B2514 7F07D9E4 0FC0F32C */  jal   sub_GAME_7F03CCB0
+/* 0B2514 7F07D9E4 0FC0F32C */  jal   chraiGetCollisionBoundsWithoutY
 /* 0B2518 7F07D9E8 27A60094 */   addiu $a2, $sp, 0x94
 /* 0B251C 7F07D9EC 3C0F8003 */  lui   $t7, %hi(in_tank_flag)
 /* 0B2520 7F07D9F0 8DEF6448 */  lw    $t7, %lo(in_tank_flag)($t7)
@@ -22241,7 +22241,7 @@ glabel MoveBond
 /* 0BB3E0 7F0868B0 1441001A */  bne   $v0, $at, .L7F08691C
 /* 0BB3E4 7F0868B4 02002025 */   move  $a0, $s0
 /* 0BB3E8 7F0868B8 27A50064 */  addiu $a1, $sp, 0x64
-/* 0BB3EC 7F0868BC 0FC0F32C */  jal   sub_GAME_7F03CCB0
+/* 0BB3EC 7F0868BC 0FC0F32C */  jal   chraiGetCollisionBoundsWithoutY
 /* 0BB3F0 7F0868C0 27A60060 */   addiu $a2, $sp, 0x60
 /* 0BB3F4 7F0868C4 8FA50060 */  lw    $a1, 0x60($sp)
 /* 0BB3F8 7F0868C8 8FA40064 */  lw    $a0, 0x64($sp)
@@ -24788,7 +24788,7 @@ glabel MoveBond
 /* 0BBAEC 7F086F7C 1441001A */  bne   $v0, $at, .Ljp7F086FE8
 /* 0BBAF0 7F086F80 02002025 */   move  $a0, $s0
 /* 0BBAF4 7F086F84 27A50064 */  addiu $a1, $sp, 0x64
-/* 0BBAF8 7F086F88 0FC0F3EC */  jal   sub_GAME_7F03CCB0
+/* 0BBAF8 7F086F88 0FC0F3EC */  jal   chraiGetCollisionBoundsWithoutY
 /* 0BBAFC 7F086F8C 27A60060 */   addiu $a2, $sp, 0x60
 /* 0BBB00 7F086F90 8FA50060 */  lw    $a1, 0x60($sp)
 /* 0BBB04 7F086F94 8FA40064 */  lw    $a0, 0x64($sp)
@@ -27318,7 +27318,7 @@ glabel MoveBond
 /* 0B93C0 7F0869D0 1441001A */  bne   $v0, $at, .L7F086A3C
 /* 0B93C4 7F0869D4 02002025 */   move  $a0, $s0
 /* 0B93C8 7F0869D8 27A50064 */  addiu $a1, $sp, 0x64
-/* 0B93CC 7F0869DC 0FC0F35C */  jal   sub_GAME_7F03CCB0
+/* 0B93CC 7F0869DC 0FC0F35C */  jal   chraiGetCollisionBoundsWithoutY
 /* 0B93D0 7F0869E0 27A60060 */   addiu $a2, $sp, 0x60
 /* 0B93D4 7F0869E4 8FA50060 */  lw    $a1, 0x60($sp)
 /* 0B93D8 7F0869E8 8FA40064 */  lw    $a0, 0x64($sp)

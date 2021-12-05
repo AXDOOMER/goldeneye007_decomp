@@ -231,5 +231,7 @@ void set_stateflag_0x04_for_posdata(PropRecord *);
 void sub_GAME_7F03A4F0(struct Model*);
 void attachNewChild(struct PropRecord *newChild, struct PropRecord *host);
 s32 LoadNext_PrevActionBlock(u16);
+void chraiGetCollisionBounds(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *arg3, f32 *arg4);
+void chraiGetCollisionBoundsWithoutY(PropRecord *arg0, struct rect4f **arg1, s32 *arg2);
 
 #endif

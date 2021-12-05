@@ -23430,9 +23430,15 @@ glabel sub_GAME_7F03CB8C
 
 
 /**
+ * @param arg0:
+ * @param arg1: out parameter. Bounding coords (x,z) by (x,z).
+ * @param arg2: out parameter.
+ * @param arg3: out parameter. Maybe ymin. (ground)
+ * @param arg4: out parameter. Maybe ymax. (ground + chr/object height)
+ * 
  * Address 0x7F03CC20.
 */
-void sub_GAME_7F03CC20(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *arg3, f32 *arg4)
+void chraiGetCollisionBounds(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *arg3, f32 *arg4)
 {
     *arg1 = NULL;
     *arg2 = 0;
@@ -23469,30 +23475,22 @@ void sub_GAME_7F03CC20(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *a
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03CCB0(PropRecord *arg0, struct rect4f **arg1, s32 *arg2)
+/**
+ * Same as @see chraiGetCollisionBounds, but throws away arg3 and arg4.
+ * 
+ * @param arg0:
+ * @param arg1: out parameter. Bounding coords (x,z) by (x,z).
+ * @param arg2: out parameter.
+ * 
+ * Address 0x7F03CCB0.
+*/
+void chraiGetCollisionBoundsWithoutY(PropRecord *arg0, struct rect4f **arg1, s32 *arg2)
 {
     f32 sp24;
     f32 sp20;
 
-    sub_GAME_7F03CC20(arg0, arg1, arg2, &sp24, &sp20);
+    chraiGetCollisionBounds(arg0, arg1, arg2, &sp24, &sp20);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03CCB0
-/* 0717E0 7F03CCB0 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0717E4 7F03CCB4 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0717E8 7F03CCB8 27AE0020 */  addiu $t6, $sp, 0x20
-/* 0717EC 7F03CCBC AFAE0010 */  sw    $t6, 0x10($sp)
-/* 0717F0 7F03CCC0 0FC0F308 */  jal   sub_GAME_7F03CC20
-/* 0717F4 7F03CCC4 27A70024 */   addiu $a3, $sp, 0x24
-/* 0717F8 7F03CCC8 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0717FC 7F03CCCC 27BD0028 */  addiu $sp, $sp, 0x28
-/* 071800 7F03CCD0 03E00008 */  jr    $ra
-/* 071804 7F03CCD4 00000000 */   nop   
-)
-#endif
 
 
 
@@ -27437,7 +27435,7 @@ glabel sub_GAME_7F03FAB0
 /* 074638 7F03FB08 91F80003 */  lbu   $t8, 3($t7)
 /* 07463C 7F03FB0C 5638000C */  bnel  $s1, $t8, .L7F03FB40
 /* 074640 7F03FB10 8E100024 */   lw    $s0, 0x24($s0)
-/* 074644 7F03FB14 0FC0F32C */  jal   sub_GAME_7F03CCB0
+/* 074644 7F03FB14 0FC0F32C */  jal   chraiGetCollisionBoundsWithoutY
 /* 074648 7F03FB18 02A03025 */   move  $a2, $s5
 /* 07464C 7F03FB1C 02402025 */  move  $a0, $s2
 /* 074650 7F03FB20 8FA50038 */  lw    $a1, 0x38($sp)

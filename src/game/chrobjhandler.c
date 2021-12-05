@@ -2243,7 +2243,7 @@ glabel sub_GAME_7F04088C
 /* 075560 7F040A30 E7A2009C */  swc1  $f2, 0x9c($sp)
 /* 075564 7F040A34 27A5003C */  addiu $a1, $sp, 0x3c
 /* 075568 7F040A38 27A60038 */  addiu $a2, $sp, 0x38
-/* 07556C 7F040A3C 0FC0F308 */  jal   sub_GAME_7F03CC20
+/* 07556C 7F040A3C 0FC0F308 */  jal   chraiGetCollisionBounds
 /* 075570 7F040A40 27A70034 */   addiu $a3, $sp, 0x34
 /* 075574 7F040A44 C7AC0040 */  lwc1  $f12, 0x40($sp)
 /* 075578 7F040A48 C7A80034 */  lwc1  $f8, 0x34($sp)
@@ -3060,7 +3060,7 @@ glabel sub_GAME_7F041400
 /* 075F84 7F041454 AFAF0010 */  sw    $t7, 0x10($sp)
 /* 075F88 7F041458 27A700CC */  addiu $a3, $sp, 0xcc
 /* 075F8C 7F04145C 27A500D4 */  addiu $a1, $sp, 0xd4
-/* 075F90 7F041460 0FC0F308 */  jal   sub_GAME_7F03CC20
+/* 075F90 7F041460 0FC0F308 */  jal   chraiGetCollisionBounds
 /* 075F94 7F041464 27A600D0 */   addiu $a2, $sp, 0xd0
 /* 075F98 7F041468 8FB800D0 */  lw    $t8, 0xd0($sp)
 /* 075F9C 7F04146C C7A400CC */  lwc1  $f4, 0xcc($sp)
@@ -7921,7 +7921,7 @@ glabel sub_GAME_7F0448A8
 /* 079400 7F0448D0 AFAE0010 */  sw    $t6, 0x10($sp)
 /* 079404 7F0448D4 27A50098 */  addiu $a1, $sp, 0x98
 /* 079408 7F0448D8 27A60094 */  addiu $a2, $sp, 0x94
-/* 07940C 7F0448DC 0FC0F308 */  jal   sub_GAME_7F03CC20
+/* 07940C 7F0448DC 0FC0F308 */  jal   chraiGetCollisionBounds
 /* 079410 7F0448E0 27A70090 */   addiu $a3, $sp, 0x90
 /* 079414 7F0448E4 8FAF0094 */  lw    $t7, 0x94($sp)
 /* 079418 7F0448E8 27B0006C */  addiu $s0, $sp, 0x6c
@@ -8046,7 +8046,7 @@ glabel sub_GAME_7F0448A8
 .L7F044A9C:
 /* 0795CC 7F044A9C 27B80040 */   addiu $t8, $sp, 0x40
 /* 0795D0 7F044AA0 AFB80010 */  sw    $t8, 0x10($sp)
-/* 0795D4 7F044AA4 0FC0F308 */  jal   sub_GAME_7F03CC20
+/* 0795D4 7F044AA4 0FC0F308 */  jal   chraiGetCollisionBounds
 /* 0795D8 7F044AA8 27A70044 */   addiu $a3, $sp, 0x44
 /* 0795DC 7F044AAC 8FA50048 */  lw    $a1, 0x48($sp)
 /* 0795E0 7F044AB0 C7B00090 */  lwc1  $f16, 0x90($sp)
@@ -30071,7 +30071,7 @@ glabel sub_GAME_7F04CD04
 /* 081860 7F04CD30 8C940004 */  lw    $s4, 4($a0)
 /* 081864 7F04CD34 27A50048 */  addiu $a1, $sp, 0x48
 /* 081868 7F04CD38 27A60044 */  addiu $a2, $sp, 0x44
-/* 08186C 7F04CD3C 0FC0F32C */  jal   sub_GAME_7F03CCB0
+/* 08186C 7F04CD3C 0FC0F32C */  jal   chraiGetCollisionBoundsWithoutY
 /* 081870 7F04CD40 91D50003 */   lbu   $s5, 3($t6)
 /* 081874 7F04CD44 8FAF0044 */  lw    $t7, 0x44($sp)
 /* 081878 7F04CD48 59E00027 */  blezl $t7, .L7F04CDE8

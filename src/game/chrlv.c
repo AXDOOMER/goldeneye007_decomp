@@ -4336,7 +4336,7 @@ glabel sub_GAME_7F028510
 /* 05D0B8 7F028588 90990000 */  lbu   $t9, ($a0)
 /* 05D0BC 7F02858C 5699000E */  bnel  $s4, $t9, .L7F0285C8
 /* 05D0C0 7F028590 86020002 */   lh    $v0, 2($s0)
-/* 05D0C4 7F028594 0FC0F32C */  jal   sub_GAME_7F03CCB0
+/* 05D0C4 7F028594 0FC0F32C */  jal   chraiGetCollisionBoundsWithoutY
 /* 05D0C8 7F028598 02C03025 */   move  $a2, $s6
 /* 05D0CC 7F02859C 8FA60040 */  lw    $a2, 0x40($sp)
 /* 05D0D0 7F0285A0 02202025 */  move  $a0, $s1
