@@ -226,7 +226,7 @@ extern f32 D_800309A0;
 extern f32 D_800309A4;
 
 extern struct point2d D_800309B8;
-//extern s32 D_800309BC;
+extern struct point2d D_800309C0;
 
 extern u32 num_bodies;
 extern u32 num_male_heads;

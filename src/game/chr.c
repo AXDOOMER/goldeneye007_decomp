@@ -1157,13 +1157,17 @@ s32 D_800309AC = 0;
 s32 D_800309B0 = 0;
 s32 D_800309B4 = 0;
 
-// D_800309B8 is probably a struct of some kind. (2 words)
-struct point2d D_800309B8 = {0,0};
-//s32 D_800309BC = 0;
+/**
+ * Default firing state, left and right hand.
+ * Address 0x800309B8.
+*/
+struct point2d D_800309B8 = {0, 0};
 
-// D_800309C0 is the same type as above (2 words)
-s32 D_800309C0 = 0;
-s32 D_800309C4 = 0;
+/**
+ * Default firing state when crouched, left and right hand.
+ * Address 0x800309C0.
+*/
+struct point2d D_800309C0 = {0, 0};
 
 s32 D_800309C8 = 0;
 s32 D_800309CC = 0;

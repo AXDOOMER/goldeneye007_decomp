@@ -1660,123 +1660,75 @@ void sub_GAME_7F025560(ChrRecord *arg0, s32 arg1, s32 arg2)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0256F0(void) {
-// very similar to sub_GAME_7F025560.
-}
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0256F0
-/* 05A220 7F0256F0 27BDFFB0 */  addiu $sp, $sp, -0x50
-/* 05A224 7F0256F4 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 05A228 7F0256F8 AFA50054 */  sw    $a1, 0x54($sp)
-/* 05A22C 7F0256FC AFA40050 */  sw    $a0, 0x50($sp)
-/* 05A230 7F025700 AFA60058 */  sw    $a2, 0x58($sp)
-/* 05A234 7F025704 0FC08C0B */  jal   something_with_weaponpos_of_guarddata_hand
-/* 05A238 7F025708 24050001 */   li    $a1, 1
-/* 05A23C 7F02570C AFA2004C */  sw    $v0, 0x4c($sp)
-/* 05A240 7F025710 8FA40050 */  lw    $a0, 0x50($sp)
-/* 05A244 7F025714 0FC08C0B */  jal   something_with_weaponpos_of_guarddata_hand
-/* 05A248 7F025718 00002825 */   move  $a1, $zero
-/* 05A24C 7F02571C 3C0F8003 */  lui   $t7, %hi(D_800309C0) 
-/* 05A250 7F025720 25EF09C0 */  addiu $t7, %lo(D_800309C0) # addiu $t7, $t7, 0x9c0
-/* 05A254 7F025724 8FA4004C */  lw    $a0, 0x4c($sp)
-/* 05A258 7F025728 8DE10000 */  lw    $at, ($t7)
-/* 05A25C 7F02572C 8DE80004 */  lw    $t0, 4($t7)
-/* 05A260 7F025730 27AE0038 */  addiu $t6, $sp, 0x38
-/* 05A264 7F025734 00402825 */  move  $a1, $v0
-/* 05A268 7F025738 ADC10000 */  sw    $at, ($t6)
-/* 05A26C 7F02573C 1080002C */  beqz  $a0, .L7F0257F0
-/* 05A270 7F025740 ADC80004 */   sw    $t0, 4($t6)
-/* 05A274 7F025744 1040002A */  beqz  $v0, .L7F0257F0
-/* 05A278 7F025748 00000000 */   nop   
-/* 05A27C 7F02574C 8FA40050 */  lw    $a0, 0x50($sp)
-/* 05A280 7F025750 0FC08C0F */  jal   is_weapon_in_guarddata_hand
-/* 05A284 7F025754 24050001 */   li    $a1, 1
-/* 05A288 7F025758 AFA20034 */  sw    $v0, 0x34($sp)
-/* 05A28C 7F02575C 8FA40050 */  lw    $a0, 0x50($sp)
-/* 05A290 7F025760 0FC08C0F */  jal   is_weapon_in_guarddata_hand
-/* 05A294 7F025764 00002825 */   move  $a1, $zero
-/* 05A298 7F025768 8FA90034 */  lw    $t1, 0x34($sp)
-/* 05A29C 7F02576C 3C058003 */  lui   $a1, %hi(ptr_crouched_pistol_firing_animation_groups)
-/* 05A2A0 7F025770 2C460001 */  sltiu $a2, $v0, 1
-/* 05A2A4 7F025774 1120001A */  beqz  $t1, .L7F0257E0
-/* 05A2A8 7F025778 24A5FCD8 */   addiu $a1, %lo(ptr_crouched_pistol_firing_animation_groups) # addiu $a1, $a1, -0x328
-/* 05A2AC 7F02577C 50400019 */  beql  $v0, $zero, .L7F0257E4
-/* 05A2B0 7F025780 2CD90001 */   sltiu $t9, $a2, 1
-/* 05A2B4 7F025784 0C002914 */  jal   randomGetNext
-/* 05A2B8 7F025788 00000000 */   nop   
-/* 05A2BC 7F02578C 30460001 */  andi  $a2, $v0, 1
-/* 05A2C0 7F025790 0C002914 */  jal   randomGetNext
-/* 05A2C4 7F025794 AFA60044 */   sw    $a2, 0x44($sp)
-/* 05A2C8 7F025798 24010003 */  li    $at, 3
-/* 05A2CC 7F02579C 0041001B */  divu  $zero, $v0, $at
-/* 05A2D0 7F0257A0 00005010 */  mfhi  $t2
-/* 05A2D4 7F0257A4 8FA60044 */  lw    $a2, 0x44($sp)
-/* 05A2D8 7F0257A8 15400007 */  bnez  $t2, .L7F0257C8
-/* 05A2DC 7F0257AC 3C058003 */   lui   $a1, %hi(ptr_crouched_doubles_firing_animation_groups)
-/* 05A2E0 7F0257B0 3C058003 */  lui   $a1, %hi(ptr_crouched_pistol_firing_animation_groups)
-/* 05A2E4 7F0257B4 2CCB0001 */  sltiu $t3, $a2, 1
-/* 05A2E8 7F0257B8 24A5FCD8 */  addiu $a1, %lo(ptr_crouched_pistol_firing_animation_groups) # addiu $a1, $a1, -0x328
-/* 05A2EC 7F0257BC AFA6003C */  sw    $a2, 0x3c($sp)
-/* 05A2F0 7F0257C0 10000022 */  b     .L7F02584C
-/* 05A2F4 7F0257C4 AFAB0038 */   sw    $t3, 0x38($sp)
-.L7F0257C8:
-/* 05A2F8 7F0257C8 240C0001 */  li    $t4, 1
-/* 05A2FC 7F0257CC 240D0001 */  li    $t5, 1
-/* 05A300 7F0257D0 24A5FFF8 */  addiu $a1, $a1, %lo(ptr_crouched_doubles_firing_animation_groups)
-/* 05A304 7F0257D4 AFAC003C */  sw    $t4, 0x3c($sp)
-/* 05A308 7F0257D8 1000001C */  b     .L7F02584C
-/* 05A30C 7F0257DC AFAD0038 */   sw    $t5, 0x38($sp)
-.L7F0257E0:
-/* 05A310 7F0257E0 2CD90001 */  sltiu $t9, $a2, 1
-.L7F0257E4:
-/* 05A314 7F0257E4 AFA6003C */  sw    $a2, 0x3c($sp)
-/* 05A318 7F0257E8 10000018 */  b     .L7F02584C
-/* 05A31C 7F0257EC AFB90038 */   sw    $t9, 0x38($sp)
-.L7F0257F0:
-/* 05A320 7F0257F0 0FC08E44 */  jal   check_if_item_held_like_pistol
-/* 05A324 7F0257F4 AFA50048 */   sw    $a1, 0x48($sp)
-/* 05A328 7F0257F8 14400005 */  bnez  $v0, .L7F025810
-/* 05A32C 7F0257FC 8FA50048 */   lw    $a1, 0x48($sp)
-/* 05A330 7F025800 0FC08E44 */  jal   check_if_item_held_like_pistol
-/* 05A334 7F025804 00A02025 */   move  $a0, $a1
-/* 05A338 7F025808 5040000A */  beql  $v0, $zero, .L7F025834
-/* 05A33C 7F02580C 8FA2004C */   lw    $v0, 0x4c($sp)
-.L7F025810:
-/* 05A340 7F025810 8FA2004C */  lw    $v0, 0x4c($sp)
-/* 05A344 7F025814 3C058003 */  lui   $a1, %hi(ptr_crouched_pistol_firing_animation_groups)
-/* 05A348 7F025818 24A5FCD8 */  addiu $a1, %lo(ptr_crouched_pistol_firing_animation_groups) # addiu $a1, $a1, -0x328
-/* 05A34C 7F02581C 0002302B */  sltu  $a2, $zero, $v0
-/* 05A350 7F025820 2CCE0001 */  sltiu $t6, $a2, 1
-/* 05A354 7F025824 AFA6003C */  sw    $a2, 0x3c($sp)
-/* 05A358 7F025828 10000008 */  b     .L7F02584C
-/* 05A35C 7F02582C AFAE0038 */   sw    $t6, 0x38($sp)
-/* 05A360 7F025830 8FA2004C */  lw    $v0, 0x4c($sp)
-.L7F025834:
-/* 05A364 7F025834 3C058003 */  lui   $a1, %hi(ptr_crouched_rifle_firing_animation_groups)
-/* 05A368 7F025838 24A5F970 */  addiu $a1, %lo(ptr_crouched_rifle_firing_animation_groups) # addiu $a1, $a1, -0x690
-/* 05A36C 7F02583C 0002302B */  sltu  $a2, $zero, $v0
-/* 05A370 7F025840 2CC80001 */  sltiu $t0, $a2, 1
-/* 05A374 7F025844 AFA6003C */  sw    $a2, 0x3c($sp)
-/* 05A378 7F025848 AFA80038 */  sw    $t0, 0x38($sp)
-.L7F02584C:
-/* 05A37C 7F02584C 8FA90054 */  lw    $t1, 0x54($sp)
-/* 05A380 7F025850 8FAA0058 */  lw    $t2, 0x58($sp)
-/* 05A384 7F025854 8FA40050 */  lw    $a0, 0x50($sp)
-/* 05A388 7F025858 27A70038 */  addiu $a3, $sp, 0x38
-/* 05A38C 7F02585C AFA00018 */  sw    $zero, 0x18($sp)
-/* 05A390 7F025860 AFA90010 */  sw    $t1, 0x10($sp)
-/* 05A394 7F025864 0FC0945B */  jal   sub_GAME_7F02516C
-/* 05A398 7F025868 AFAA0014 */   sw    $t2, 0x14($sp)
-/* 05A39C 7F02586C 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 05A3A0 7F025870 27BD0050 */  addiu $sp, $sp, 0x50
-/* 05A3A4 7F025874 03E00008 */  jr    $ra
-/* 05A3A8 7F025878 00000000 */   nop   
-)
-#endif
+/**
+ * Address 0x7F0256F0.
+ * PD: chrAttackKneel.
+*/
+void sub_GAME_7F0256F0(ChrRecord *arg0, s32 arg1, s32 arg2)
+{
+    PropRecord *left;
+    PropRecord *right;
+    s32 last_arg2;
+    void ** animation_pointer;
+    struct point2d sp;
+    PropRecord * left2;
+    PropRecord * right2;
 
+    left = something_with_weaponpos_of_guarddata_hand(arg0, LEFT_HAND);
+    right = something_with_weaponpos_of_guarddata_hand(arg0, RIGHT_HAND);
+
+    sp = D_800309C0;
+
+    if ((left != NULL) && (right != NULL))
+    {
+        left2 = is_weapon_in_guarddata_hand(arg0, LEFT_HAND);
+        right2 = is_weapon_in_guarddata_hand(arg0, RIGHT_HAND);
+
+        if ((left2 != NULL) && (right2 != NULL))
+        {
+            last_arg2 = (u32)randomGetNext() & (u32)1;
+
+            if (((u32)randomGetNext() % 3U) == 0)
+            {
+                animation_pointer = ptr_crouched_pistol_firing_animation_groups;
+                sp.p[LEFT_HAND] = last_arg2;
+                sp.p[RIGHT_HAND] = !last_arg2;
+            }
+            else
+            {
+                animation_pointer = ptr_crouched_doubles_firing_animation_groups;
+                sp.p[LEFT_HAND] = 1;
+                sp.p[RIGHT_HAND] = 1;
+            }
+        }
+        else
+        {
+            last_arg2 = right2 == 0;
+            animation_pointer = ptr_crouched_pistol_firing_animation_groups;
+            sp.p[LEFT_HAND] = last_arg2;
+            sp.p[RIGHT_HAND] = !last_arg2;
+        }
+    }
+    else
+    {
+        if ((check_if_item_held_like_pistol(left) != 0) || (check_if_item_held_like_pistol(right) != 0))
+        {
+            last_arg2 = left != 0;
+            animation_pointer = ptr_crouched_pistol_firing_animation_groups;
+            sp.p[LEFT_HAND] = last_arg2;
+            sp.p[RIGHT_HAND] = !last_arg2;
+        }
+        else
+        {
+            last_arg2 = left != 0;
+            animation_pointer = ptr_crouched_rifle_firing_animation_groups;
+            sp.p[LEFT_HAND] = last_arg2;
+            sp.p[RIGHT_HAND] = !last_arg2;
+        }
+    }
+
+    sub_GAME_7F02516C(arg0, animation_pointer, last_arg2, &sp, arg1, arg2, 0);
+}
 
 
 #ifdef NONMATCHING
@@ -4158,12 +4110,87 @@ void chrlvActGoposIncCurIndex(struct ChrRecord *arg0)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F028348(void) {
+//void sub_GAME_7F028348(void) {
 // param arg0: unknown. If this is chrrecord, need to know action type. doesn't look like gopos.
 // param arg1: out parameter, integral type
 // param arg2: integral type
 // tentative signature: s32 sub_GAME_7F028348(void *arg0, s32 *arg1, s32 arg2)
+
+/**
+ * PD: chrPatrolCalculateStep
+ */
+s32 sub_GAME_7F028348(ChrRecord *arg0, bool *forward, s32 numsteps)
+{
+    s32 nextstep = arg0->act_patrol.nextstep;
+	bool isforward = *forward;
+
+	if (numsteps < 0)
+    {
+		isforward = !isforward;
+		numsteps = -numsteps;
+	}
+
+    while (numsteps > 0)
+    {
+        numsteps--;
+
+        if (isforward)
+        {
+            nextstep++;
+
+            if (arg0->act_patrol.path[nextstep] < 0)
+            {
+				// Reached the end of the list
+				if (arg0->act_patrol.forward & 1)
+                {
+					nextstep = 0;
+				}
+                else
+                {
+					isforward = FALSE;
+					nextstep -= 2;
+
+					if (nextstep < 0)
+                    {
+						nextstep = 0;
+					}
+				}
+			}
+
+        }
+        else
+        {
+            nextstep--;
+
+            if (nextstep < 0)
+            {
+				// Reached the start of the list
+				if (arg0->act_patrol.forward & 1)
+                {
+					nextstep = arg0->act_patrol.forward - 1;
+				}
+                else
+                {
+					isforward = TRUE;
+					nextstep = 1;
+
+					if (arg0->act_patrol.forward - 1 <= 0)
+                    {
+						nextstep = arg0->act_patrol.forward - 1;
+					}
+				}
+
+            }
+
+        }
+    }
+
+    *forward = isforward;
+
+	return nextstep;
 }
+
+
 #else
 GLOBAL_ASM(
 .text
