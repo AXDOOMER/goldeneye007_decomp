@@ -137,7 +137,7 @@ s32 sub_GAME_7F030D70(ChrRecord *arg0, struct coord3d *arg1, StandTile *arg2, st
 void sub_GAME_7F028600(ChrRecord *arg0, struct waydata *arg1, f32 arg2, struct coord3d *arg3, StandTile *arg4);
 void sub_GAME_7F0315A4(ChrRecord *, struct coord3d *, StandTile *, struct waydata *);
 void chrlvTickGoPos(ChrRecord *arg0);
-void sub_GAME_7F028494(struct ChrRecord *arg0);
+void chrlvSetNextActPatrolStepPadPos(struct ChrRecord *arg0);
 void sub_GAME_7F0284DC(struct ChrRecord *arg0);
 void chrlvTickPatrol(ChrRecord *arg0);
 f32 get_distance_actor_to_position(struct ChrRecord *self, struct coord3d *pos);
@@ -4187,22 +4187,37 @@ s32 chrlvPatrolCalculateStep(ChrRecord *arg0, bool *forward, s32 numsteps)
 
 
 #ifdef NONMATCHING
-// s32 chrlvPatrolCalculateStep(void *arg0, s32 *arg1, s32 arg2);
 
-s32 sub_GAME_7F0283FC(ChrRecord *arg0, s32 arg1)
+// notes: struct SetupPtrs isn't (currently defined), it's theoretical update
+// to struct stagesetup. Requires AI Branch merge first.
+
+/**
+ * Address 0x7F0283FC.
+*/
+struct pad * chrlvGetPatrolStepPad(ChrRecord *arg0, s32 arg1)
 {
-    s32 sp20;
-    s32 *temp_a1;
+    //struct patrol_path *path;
+    s32 forward;
+    s32 step;
+    //s32 nextstep;
 
-    temp_a1 = &sp20;
-    sp20 = arg0->act_patrol.forward;
-    return (ptr_setup_path_tbl.unk0[*(arg0->act_patrol.path->id + (chrlvPatrolCalculateStep(arg0, temp_a1, arg1) * 4))].id * 0x2C) + ptr_setup_path_tbl.unk18;
+    forward = arg0->act_patrol.forward;
+
+    step = chrlvPatrolCalculateStep(arg0, &forward, arg1);
+
+    //path = arg0->act_patrol.path;
+
+    step = arg0->act_patrol.path->data[step];
+
+     return &((struct SetupPtrs *)&ptr_setup_path_tbl)->padlist[
+         ((struct SetupPtrs *)&ptr_setup_path_tbl)->pathtbl[step].id
+         ];
 }
 
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0283FC
+glabel chrlvGetPatrolStepPad
 /* 05CF2C 7F0283FC 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 05CF30 7F028400 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 05CF34 7F028404 8C8E0034 */  lw    $t6, 0x34($a0)
@@ -4243,26 +4258,26 @@ glabel sub_GAME_7F0283FC
  * 
  * Address 0x7F028474.
 */
-void * sub_GAME_7F028474(struct ChrRecord *arg0)
+struct pad * chrlvGetNextPatrolStepPad(struct ChrRecord *arg0)
 {
-    return sub_GAME_7F0283FC(arg0, 0);
+    return chrlvGetPatrolStepPad(arg0, 0);
 }
 
 
 /**
  * Address 0x7F028494.
 */
-void sub_GAME_7F028494(struct ChrRecord *arg0)
+void chrlvSetNextActPatrolStepPadPos(struct ChrRecord *arg0)
 {
-    struct coord3d *temp_v0; // or maybe struct pad.
+    struct pad *temp_v0;
 
-    temp_v0 = sub_GAME_7F028474(arg0);
+    temp_v0 = chrlvGetNextPatrolStepPad(arg0);
     arg0->act_patrol.waydata.mode = 0;
     arg0->act_patrol.waydata.unk01 = 0;
     arg0->act_patrol.waydata.unk02 = 0;
-    arg0->act_patrol.waydata.pos.f[0] = temp_v0->f[0];
-    arg0->act_patrol.waydata.pos.f[1] = temp_v0->f[1];
-    arg0->act_patrol.waydata.pos.f[2] = temp_v0->f[2];
+    arg0->act_patrol.waydata.pos.f[0] = temp_v0->pos.f[0];
+    arg0->act_patrol.waydata.pos.f[1] = temp_v0->pos.f[1];
+    arg0->act_patrol.waydata.pos.f[2] = temp_v0->pos.f[2];
 }
 
 
@@ -4274,7 +4289,7 @@ void sub_GAME_7F028494(struct ChrRecord *arg0)
 void sub_GAME_7F0284DC(struct ChrRecord *arg0)
 {
     arg0->act_patrol.nextstep = chrlvPatrolCalculateStep(arg0, &arg0->act_patrol.forward, 1);
-    sub_GAME_7F028494(arg0);
+    chrlvSetNextActPatrolStepPadPos(arg0);
 }
 
 
@@ -4446,7 +4461,7 @@ glabel sub_GAME_7F028600
 /* 05D26C 7F02873C 2401000F */   li    $at, 15
 /* 05D270 7F028740 0FC0A137 */  jal   sub_GAME_7F0284DC
 /* 05D274 7F028744 02002025 */   move  $a0, $s0
-/* 05D278 7F028748 0FC0A11D */  jal   sub_GAME_7F028474
+/* 05D278 7F028748 0FC0A11D */  jal   chrlvGetNextPatrolStepPad
 /* 05D27C 7F02874C 02002025 */   move  $a0, $s0
 /* 05D280 7F028750 02002025 */  move  $a0, $s0
 /* 05D284 7F028754 8FA5006C */  lw    $a1, 0x6c($sp)
@@ -4517,7 +4532,7 @@ glabel sub_GAME_7F028600
 /* 05D378 7F028848 00000000 */   nop   
 /* 05D37C 7F02884C 8D08837C */  lw    $t0, %lo(g_GlobalTimer)($t0)
 /* 05D380 7F028850 02002025 */  move  $a0, $s0
-/* 05D384 7F028854 0FC0A125 */  jal   sub_GAME_7F028494
+/* 05D384 7F028854 0FC0A125 */  jal   chrlvSetNextActPatrolStepPadPos
 /* 05D388 7F028858 AE080078 */   sw    $t0, 0x78($s0)
 /* 05D38C 7F02885C 10000006 */  b     .L7F028878
 /* 05D390 7F028860 02002025 */   move  $a0, $s0
@@ -4561,7 +4576,7 @@ glabel sub_GAME_7F028894
 /* 05D3E8 7F0288B8 55C1002B */  bnel  $t6, $at, .L7F028968
 /* 05D3EC 7F0288BC 2401000F */   li    $at, 15
 /* 05D3F0 7F0288C0 AFA40040 */  sw    $a0, 0x40($sp)
-/* 05D3F4 7F0288C4 0FC0A11D */  jal   sub_GAME_7F028474
+/* 05D3F4 7F0288C4 0FC0A11D */  jal   chrlvGetNextPatrolStepPad
 /* 05D3F8 7F0288C8 AFA50044 */   sw    $a1, 0x44($sp)
 /* 05D3FC 7F0288CC 8FA40040 */  lw    $a0, 0x40($sp)
 /* 05D400 7F0288D0 8FA70044 */  lw    $a3, 0x44($sp)
@@ -4950,10 +4965,10 @@ void set_actor_on_path(ChrRecord *self, s32 **pathid)
     self->act_init.padding[0x13] = -1;
 
     self->act_patrol.unk7c = 0.0f;
-    sub_GAME_7F028494(self);
+    chrlvSetNextActPatrolStepPadPos(self);
     self->sleep = 0;
     chrlvWalkingAnimationRelated(self);
-    pad = sub_GAME_7F028474(self);
+    pad = chrlvGetNextPatrolStepPad(self);
 
     if ((self->prop->flags & 2) == 0)
     {
@@ -5054,12 +5069,12 @@ glabel set_actor_on_path
 /* 05DD54 7F029224 A200003B */  sb    $zero, 0x3b($s0)
 /* 05DD58 7F029228 AE0E0078 */  sw    $t6, 0x78($s0)
 /* 05DD5C 7F02922C 02002025 */  move  $a0, $s0
-/* 05DD60 7F029230 0FC0A125 */  jal   sub_GAME_7F028494
+/* 05DD60 7F029230 0FC0A125 */  jal   chrlvSetNextActPatrolStepPadPos
 /* 05DD64 7F029234 E606007C */   swc1  $f6, 0x7c($s0)
 /* 05DD68 7F029238 A2000008 */  sb    $zero, 8($s0)
 /* 05DD6C 7F02923C 0FC0A3EB */  jal   chrlvWalkingAnimationRelated
 /* 05DD70 7F029240 02002025 */   move  $a0, $s0
-/* 05DD74 7F029244 0FC0A11D */  jal   sub_GAME_7F028474
+/* 05DD74 7F029244 0FC0A11D */  jal   chrlvGetNextPatrolStepPad
 /* 05DD78 7F029248 02002025 */   move  $a0, $s0
 /* 05DD7C 7F02924C 8E0F0018 */  lw    $t7, 0x18($s0)
 /* 05DD80 7F029250 02002025 */  move  $a0, $s0
@@ -12248,7 +12263,7 @@ void chrlvTickPatrol(ChrRecord *arg0)
     struct pad *temp_v0;
 
     self_prop = arg0->prop;
-    temp_v0 = (struct pad *) sub_GAME_7F028474(arg0);
+    temp_v0 = (struct pad *) chrlvGetNextPatrolStepPad(arg0);
     sp34 = 0;
     arg0->act_patrol.waydata.age += 1;
     arg0->lastwalk60 = g_GlobalTimer;
@@ -12267,7 +12282,7 @@ void chrlvTickPatrol(ChrRecord *arg0)
             && ((self_prop->flags & PROPFLAG_ONSCREEN) || (chrlvStanRoomRelatedPad(arg0, temp_v0) == 0)))
         {
             arg0->act_patrol.lastvisible60 = g_GlobalTimer;
-            sub_GAME_7F028494(arg0);
+            chrlvSetNextActPatrolStepPadPos(arg0);
         }
         else
         {
@@ -12284,7 +12299,7 @@ void chrlvTickPatrol(ChrRecord *arg0)
         if (chrlvIsArrivingLaterallyAtPos(&arg0->prevpos, &self_prop->pos, &temp_v0->pos, 30.0f))
         {
             sub_GAME_7F0284DC(arg0);
-            temp_v0 = (struct pad *)sub_GAME_7F028474(arg0);
+            temp_v0 = (struct pad *)chrlvGetNextPatrolStepPad(arg0);
         }
 
         sub_GAME_7F0315A4(arg0, &temp_v0->pos, temp_v0->stan, &arg0->act_patrol.waydata);
