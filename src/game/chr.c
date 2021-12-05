@@ -1158,8 +1158,8 @@ s32 D_800309B0 = 0;
 s32 D_800309B4 = 0;
 
 // D_800309B8 is probably a struct of some kind. (2 words)
-s32 D_800309B8 = 0;
-s32 D_800309BC = 0;
+struct point2d D_800309B8 = {0,0};
+//s32 D_800309BC = 0;
 
 // D_800309C0 is the same type as above (2 words)
 s32 D_800309C0 = 0;

@@ -146,6 +146,7 @@ s32 sub_GAME_7F033780(s32 *arg0, struct coord3d *arg1, f32 angle);
 s32 chrlvFindPathNeighborRelated(struct coord3d *bondpos, struct StandTile *stan, f32 rot, u8 quadrant);
 s32 sub_GAME_7F033EAC(struct coord3d *arg0, StandTile *arg1);
 struct PropRecord *actionblock_guard_constructor_BDBE(s32 bodynum, s32 headnum, struct coord3d *pos, struct StandTile *stan, f32 yrot, s32 arg4, s32 arg5);
+void sub_GAME_7F02516C(ChrRecord *arg0, void ** arg1, s32 arg2, struct point2d *arg3, s32 arg4, s32 arg5, s32 arg6);
 
 // ?
 
@@ -1588,186 +1589,74 @@ glabel sub_GAME_7F02516C
 
 
 
-#ifdef NONMATCHING
+/**
+ * Address 0x7F025560.
+*/
 void sub_GAME_7F025560(ChrRecord *arg0, s32 arg1, s32 arg2)
 {
     PropRecord *left;
     PropRecord *right;
-    s32 sp[4];
-    s32 animation_pointer;
     s32 last_arg2;
+    void ** animation_pointer;
+    struct point2d sp;
+    PropRecord * left2;
+    PropRecord * right2;
 
     left = something_with_weaponpos_of_guarddata_hand(arg0, LEFT_HAND);
     right = something_with_weaponpos_of_guarddata_hand(arg0, RIGHT_HAND);
 
-    // this is probably a struct copy
-    sp[0] = D_800309B8;
-    sp[1] = D_800309BC;
+    sp = D_800309B8;
 
     if ((left != NULL) && (right != NULL))
     {
-        left = is_weapon_in_guarddata_hand(arg0, LEFT_HAND);
-        right = is_weapon_in_guarddata_hand(arg0, RIGHT_HAND);
+        left2 = is_weapon_in_guarddata_hand(arg0, LEFT_HAND);
+        right2 = is_weapon_in_guarddata_hand(arg0, RIGHT_HAND);
 
-        last_arg2 = right == NULL;
-        animation_pointer = (s32) ptr_pistol_firing_animation_groups;
-
-        if ((left != NULL) && (right != NULL))
+        if ((left2 != NULL) && (right2 != NULL))
         {
-            sp[2] = randomGetNext() & 1;
+            last_arg2 = (u32)randomGetNext() & (u32)1;
 
-            if ((randomGetNext() % 3U) == 0)
+            if (((u32)randomGetNext() % 3U) == 0)
             {
-                sp[1] = sp[2];
-                sp[0] = sp[2] == 0;
-                animation_pointer = (s32) ptr_pistol_firing_animation_groups;
+                animation_pointer = ptr_pistol_firing_animation_groups;
+                sp.p[LEFT_HAND] = last_arg2;
+                sp.p[RIGHT_HAND] = !last_arg2;
             }
             else
             {
-                sp[1] = last_arg2;
-                sp[0] = last_arg2;
-                animation_pointer = (s32) ptr_doubles_firing_animation_groups;
+                animation_pointer = ptr_doubles_firing_animation_groups;
+                sp.p[LEFT_HAND] = 1;
+                sp.p[RIGHT_HAND] = 1;
             }
         }
         else
         {
-            sp[1] = last_arg2;
-            sp[0] = last_arg2 == 0;
+            last_arg2 = right2 == 0;
+            animation_pointer = ptr_pistol_firing_animation_groups;
+            sp.p[LEFT_HAND] = last_arg2;
+            sp.p[RIGHT_HAND] = !last_arg2;
         }
     }
     else
     {
         if ((check_if_item_held_like_pistol(left) != 0) || (check_if_item_held_like_pistol(right) != 0))
         {
-            last_arg2 = left != NULL;
-            sp[1] = last_arg2;
-            sp[0] = last_arg2 == 0;
-            animation_pointer = (s32) ptr_pistol_firing_animation_groups;
+            last_arg2 = left != 0;
+            animation_pointer = ptr_pistol_firing_animation_groups;
+            sp.p[LEFT_HAND] = last_arg2;
+            sp.p[RIGHT_HAND] = !last_arg2;
         }
         else
         {
-            last_arg2 = left != NULL;
-            sp[1] = last_arg2;
-            sp[0] = last_arg2 == 0;
-            animation_pointer = (s32) ptr_rifle_firing_animation_groups;
+            last_arg2 = left != 0;
+            animation_pointer = ptr_rifle_firing_animation_groups;
+            sp.p[LEFT_HAND] = last_arg2;
+            sp.p[RIGHT_HAND] = !last_arg2;
         }
     }
 
     sub_GAME_7F02516C(arg0, animation_pointer, last_arg2, &sp, arg1, arg2, 1);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F025560
-/* 05A090 7F025560 27BDFFB0 */  addiu $sp, $sp, -0x50
-/* 05A094 7F025564 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 05A098 7F025568 AFA50054 */  sw    $a1, 0x54($sp)
-/* 05A09C 7F02556C AFA40050 */  sw    $a0, 0x50($sp)
-/* 05A0A0 7F025570 AFA60058 */  sw    $a2, 0x58($sp)
-/* 05A0A4 7F025574 0FC08C0B */  jal   something_with_weaponpos_of_guarddata_hand
-/* 05A0A8 7F025578 24050001 */   li    $a1, 1
-/* 05A0AC 7F02557C AFA2004C */  sw    $v0, 0x4c($sp)
-/* 05A0B0 7F025580 8FA40050 */  lw    $a0, 0x50($sp)
-/* 05A0B4 7F025584 0FC08C0B */  jal   something_with_weaponpos_of_guarddata_hand
-/* 05A0B8 7F025588 00002825 */   move  $a1, $zero
-/* 05A0BC 7F02558C 3C0F8003 */  lui   $t7, %hi(D_800309B8) 
-/* 05A0C0 7F025590 25EF09B8 */  addiu $t7, %lo(D_800309B8) # addiu $t7, $t7, 0x9b8
-/* 05A0C4 7F025594 8FA4004C */  lw    $a0, 0x4c($sp)
-/* 05A0C8 7F025598 8DE10000 */  lw    $at, ($t7)
-/* 05A0CC 7F02559C 8DE80004 */  lw    $t0, 4($t7)
-/* 05A0D0 7F0255A0 27AE0038 */  addiu $t6, $sp, 0x38
-/* 05A0D4 7F0255A4 00402825 */  move  $a1, $v0
-/* 05A0D8 7F0255A8 ADC10000 */  sw    $at, ($t6)
-/* 05A0DC 7F0255AC 1080002C */  beqz  $a0, .L7F025660
-/* 05A0E0 7F0255B0 ADC80004 */   sw    $t0, 4($t6)
-/* 05A0E4 7F0255B4 1040002A */  beqz  $v0, .L7F025660
-/* 05A0E8 7F0255B8 00000000 */   nop   
-/* 05A0EC 7F0255BC 8FA40050 */  lw    $a0, 0x50($sp)
-/* 05A0F0 7F0255C0 0FC08C0F */  jal   is_weapon_in_guarddata_hand
-/* 05A0F4 7F0255C4 24050001 */   li    $a1, 1
-/* 05A0F8 7F0255C8 AFA20034 */  sw    $v0, 0x34($sp)
-/* 05A0FC 7F0255CC 8FA40050 */  lw    $a0, 0x50($sp)
-/* 05A100 7F0255D0 0FC08C0F */  jal   is_weapon_in_guarddata_hand
-/* 05A104 7F0255D4 00002825 */   move  $a1, $zero
-/* 05A108 7F0255D8 8FA90034 */  lw    $t1, 0x34($sp)
-/* 05A10C 7F0255DC 3C058003 */  lui   $a1, %hi(ptr_pistol_firing_animation_groups)
-/* 05A110 7F0255E0 2C460001 */  sltiu $a2, $v0, 1
-/* 05A114 7F0255E4 1120001A */  beqz  $t1, .L7F025650
-/* 05A118 7F0255E8 24A5F408 */   addiu $a1, %lo(ptr_pistol_firing_animation_groups) # addiu $a1, $a1, -0xbf8
-/* 05A11C 7F0255EC 50400019 */  beql  $v0, $zero, .L7F025654
-/* 05A120 7F0255F0 2CD90001 */   sltiu $t9, $a2, 1
-/* 05A124 7F0255F4 0C002914 */  jal   randomGetNext
-/* 05A128 7F0255F8 00000000 */   nop   
-/* 05A12C 7F0255FC 30460001 */  andi  $a2, $v0, 1
-/* 05A130 7F025600 0C002914 */  jal   randomGetNext
-/* 05A134 7F025604 AFA60044 */   sw    $a2, 0x44($sp)
-/* 05A138 7F025608 24010003 */  li    $at, 3
-/* 05A13C 7F02560C 0041001B */  divu  $zero, $v0, $at
-/* 05A140 7F025610 00005010 */  mfhi  $t2
-/* 05A144 7F025614 8FA60044 */  lw    $a2, 0x44($sp)
-/* 05A148 7F025618 15400007 */  bnez  $t2, .L7F025638
-/* 05A14C 7F02561C 3C058003 */   lui   $a1, %hi(ptr_doubles_firing_animation_groups)
-/* 05A150 7F025620 3C058003 */  lui   $a1, %hi(ptr_pistol_firing_animation_groups)
-/* 05A154 7F025624 2CCB0001 */  sltiu $t3, $a2, 1
-/* 05A158 7F025628 24A5F408 */  addiu $a1, %lo(ptr_pistol_firing_animation_groups) # addiu $a1, $a1, -0xbf8
-/* 05A15C 7F02562C AFA6003C */  sw    $a2, 0x3c($sp)
-/* 05A160 7F025630 10000022 */  b     .L7F0256BC
-/* 05A164 7F025634 AFAB0038 */   sw    $t3, 0x38($sp)
-.L7F025638:
-/* 05A168 7F025638 240C0001 */  li    $t4, 1
-/* 05A16C 7F02563C 240D0001 */  li    $t5, 1
-/* 05A170 7F025640 24A5F6E0 */  addiu $a1, $a1, %lo(ptr_doubles_firing_animation_groups)
-/* 05A174 7F025644 AFAC003C */  sw    $t4, 0x3c($sp)
-/* 05A178 7F025648 1000001C */  b     .L7F0256BC
-/* 05A17C 7F02564C AFAD0038 */   sw    $t5, 0x38($sp)
-.L7F025650:
-/* 05A180 7F025650 2CD90001 */  sltiu $t9, $a2, 1
-.L7F025654:
-/* 05A184 7F025654 AFA6003C */  sw    $a2, 0x3c($sp)
-/* 05A188 7F025658 10000018 */  b     .L7F0256BC
-/* 05A18C 7F02565C AFB90038 */   sw    $t9, 0x38($sp)
-.L7F025660:
-/* 05A190 7F025660 0FC08E44 */  jal   check_if_item_held_like_pistol
-/* 05A194 7F025664 AFA50048 */   sw    $a1, 0x48($sp)
-/* 05A198 7F025668 14400005 */  bnez  $v0, .L7F025680
-/* 05A19C 7F02566C 8FA50048 */   lw    $a1, 0x48($sp)
-/* 05A1A0 7F025670 0FC08E44 */  jal   check_if_item_held_like_pistol
-/* 05A1A4 7F025674 00A02025 */   move  $a0, $a1
-/* 05A1A8 7F025678 5040000A */  beql  $v0, $zero, .L7F0256A4
-/* 05A1AC 7F02567C 8FA2004C */   lw    $v0, 0x4c($sp)
-.L7F025680:
-/* 05A1B0 7F025680 8FA2004C */  lw    $v0, 0x4c($sp)
-/* 05A1B4 7F025684 3C058003 */  lui   $a1, %hi(ptr_pistol_firing_animation_groups)
-/* 05A1B8 7F025688 24A5F408 */  addiu $a1, %lo(ptr_pistol_firing_animation_groups) # addiu $a1, $a1, -0xbf8
-/* 05A1BC 7F02568C 0002302B */  sltu  $a2, $zero, $v0
-/* 05A1C0 7F025690 2CCE0001 */  sltiu $t6, $a2, 1
-/* 05A1C4 7F025694 AFA6003C */  sw    $a2, 0x3c($sp)
-/* 05A1C8 7F025698 10000008 */  b     .L7F0256BC
-/* 05A1CC 7F02569C AFAE0038 */   sw    $t6, 0x38($sp)
-/* 05A1D0 7F0256A0 8FA2004C */  lw    $v0, 0x4c($sp)
-.L7F0256A4:
-/* 05A1D4 7F0256A4 3C058003 */  lui   $a1, %hi(ptr_rifle_firing_animation_groups)
-/* 05A1D8 7F0256A8 24A5ED28 */  addiu $a1, %lo(ptr_rifle_firing_animation_groups) # addiu $a1, $a1, -0x12d8
-/* 05A1DC 7F0256AC 0002302B */  sltu  $a2, $zero, $v0
-/* 05A1E0 7F0256B0 2CC80001 */  sltiu $t0, $a2, 1
-/* 05A1E4 7F0256B4 AFA6003C */  sw    $a2, 0x3c($sp)
-/* 05A1E8 7F0256B8 AFA80038 */  sw    $t0, 0x38($sp)
-.L7F0256BC:
-/* 05A1EC 7F0256BC 8FA90054 */  lw    $t1, 0x54($sp)
-/* 05A1F0 7F0256C0 8FAA0058 */  lw    $t2, 0x58($sp)
-/* 05A1F4 7F0256C4 240B0001 */  li    $t3, 1
-/* 05A1F8 7F0256C8 AFAB0018 */  sw    $t3, 0x18($sp)
-/* 05A1FC 7F0256CC 8FA40050 */  lw    $a0, 0x50($sp)
-/* 05A200 7F0256D0 27A70038 */  addiu $a3, $sp, 0x38
-/* 05A204 7F0256D4 AFA90010 */  sw    $t1, 0x10($sp)
-/* 05A208 7F0256D8 0FC0945B */  jal   sub_GAME_7F02516C
-/* 05A20C 7F0256DC AFAA0014 */   sw    $t2, 0x14($sp)
-/* 05A210 7F0256E0 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 05A214 7F0256E4 27BD0050 */  addiu $sp, $sp, 0x50
-/* 05A218 7F0256E8 03E00008 */  jr    $ra
-/* 05A21C 7F0256EC 00000000 */   nop   
-)
-#endif
 
 
 

@@ -59,6 +59,17 @@ struct coord2d {
     };
 };
 
+struct point2d
+{
+    union {
+        struct {
+            s32 x;
+            s32 y;
+        };
+        s32 p[2];
+    }
+};
+
 /**
  16bit Co-Ordinate used for Integer co-ordinates eg, pumping straight to RSP.
  */
