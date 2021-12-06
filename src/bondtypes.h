@@ -1416,22 +1416,24 @@ typedef struct PropRecord
     struct PropRecord *child; /*0x20*/
     struct PropRecord *prev;   /*0x24*/
     struct PropRecord *next;  /*0x28*/
-    s16 rooms[2];              /*0x2c* /
-    u16 unk38;         /*0x38* /
-    s16 unk3a;         /*0x3a* /
-    u8 unk3c;          /*0x3c* /
-    u8 propstateindex; /*0x3d* /
-    u8 unk3e;          /*0x3e* /
-    u8 unk3f_00 : 1;   /*0x3f* /
-    u8 unk3f_01 : 1;   /*0x3f* /
-    u8 unk3f_02 : 1;   /*0x3f* /
-    u8 unk3f_03 : 1;   /*0x3f* /
-    u8 unk3f_04 : 1;   /*0x3f* /
-    u8 unk3f_05 : 1;   /*0x3f* /
-    u8 unk3f_06 : 1;   /*0x3f* /
-    u8 unk3f_07 : 1;   /*0x3f* /
-    u32 unk40;         /*0x40* /
-    u32 unk44;         /*0x44*/
+    s16 rooms[2];              /*0x2c*/
+    s32 unk30;
+
+    // u16 unk38;         /*0x38* /
+    // s16 unk3a;         /*0x3a* /
+    // u8 unk3c;          /*0x3c* /
+    // u8 propstateindex; /*0x3d* /
+    // u8 unk3e;          /*0x3e* /
+    // u8 unk3f_00 : 1;   /*0x3f* /
+    // u8 unk3f_01 : 1;   /*0x3f* /
+    // u8 unk3f_02 : 1;   /*0x3f* /
+    // u8 unk3f_03 : 1;   /*0x3f* /
+    // u8 unk3f_04 : 1;   /*0x3f* /
+    // u8 unk3f_05 : 1;   /*0x3f* /
+    // u8 unk3f_06 : 1;   /*0x3f* /
+    // u8 unk3f_07 : 1;   /*0x3f* /
+    // u32 unk40;         /*0x40* /
+    // u32 unk44;         /*0x44*/
 } PropRecord;
 
 /**

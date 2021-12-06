@@ -148,9 +148,8 @@ s32 sub_GAME_7F033EAC(struct coord3d *arg0, StandTile *arg1);
 struct PropRecord *actionblock_guard_constructor_BDBE(s32 bodynum, s32 headnum, struct coord3d *pos, struct StandTile *stan, f32 yrot, s32 arg4, s32 arg5);
 void sub_GAME_7F02516C(ChrRecord *arg0, void ** arg1, s32 arg2, struct point2d *arg3, s32 arg4, s32 arg5, s32 arg6);
 s32 chrlvPatrolCalculateStep(ChrRecord *arg0, bool *forward, s32 numsteps);
+s32 sub_GAME_7F028510(struct rect4f *arg0, struct ObjHeaderData *arg1);
 
-
-// ?
 
 // unknown type for arg1, reads offsets 0x30,0x34,0x40,0x44
 // arg2 is only used to compare to zero, either flag or pointer
@@ -4294,81 +4293,38 @@ void sub_GAME_7F0284DC(struct ChrRecord *arg0)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F028510(void) {
+/**
+ * Address 0x7F028510.
+*/
+s32 sub_GAME_7F028510(struct rect4f *arg0, struct ObjHeaderData *arg1)
+{
+    s32 sp50[8];
+    s16 *temp_s0;
+    struct PropRecord *propss = &pos_data_entry;
+    struct rect4f *prect4f; // 68
+    s32 sp40;
+    
+    sp50[0] = arg1->type;
+    sp50[1] = -1;
+    sub_GAME_7F03E3FC(&sp50);
+    
+    for (temp_s0 = ptr_list_object_lookup_indices; *temp_s0 >= 0; temp_s0++)
+    {
+        struct PropRecord *prop = &propss[*temp_s0];
 
+        if (prop->type == PROP_TYPE_OBJ)
+        {
+            chraiGetCollisionBoundsWithoutY(prop, &prect4f, &sp40);
+
+            if ((sp40 > 0) && sub_GAME_7F03CCD8(arg0, prect4f, sp40))
+            {
+                return 0;
+            }
+        }
+    }
+
+    return 1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F028510
-/* 05D040 7F028510 27BDFF90 */  addiu $sp, $sp, -0x70
-/* 05D044 7F028514 AFBF0034 */  sw    $ra, 0x34($sp)
-/* 05D048 7F028518 AFB60030 */  sw    $s6, 0x30($sp)
-/* 05D04C 7F02851C AFB5002C */  sw    $s5, 0x2c($sp)
-/* 05D050 7F028520 AFB40028 */  sw    $s4, 0x28($sp)
-/* 05D054 7F028524 AFB30024 */  sw    $s3, 0x24($sp)
-/* 05D058 7F028528 AFB20020 */  sw    $s2, 0x20($sp)
-/* 05D05C 7F02852C AFB1001C */  sw    $s1, 0x1c($sp)
-/* 05D060 7F028530 AFB00018 */  sw    $s0, 0x18($sp)
-/* 05D064 7F028534 90AE0003 */  lbu   $t6, 3($a1)
-/* 05D068 7F028538 00808825 */  move  $s1, $a0
-/* 05D06C 7F02853C 240FFFFF */  li    $t7, -1
-/* 05D070 7F028540 AFAF0054 */  sw    $t7, 0x54($sp)
-/* 05D074 7F028544 27A40050 */  addiu $a0, $sp, 0x50
-/* 05D078 7F028548 0FC0F8FF */  jal   sub_GAME_7F03E3FC
-/* 05D07C 7F02854C AFAE0050 */   sw    $t6, 0x50($sp)
-/* 05D080 7F028550 3C108007 */  lui   $s0, %hi(ptr_list_object_lookup_indices)
-/* 05D084 7F028554 8E109C30 */  lw    $s0, %lo(ptr_list_object_lookup_indices)($s0)
-/* 05D088 7F028558 3C138007 */  lui   $s3, %hi(pos_data_entry)
-/* 05D08C 7F02855C 26739C38 */  addiu $s3, %lo(pos_data_entry) # addiu $s3, $s3, -0x63c8
-/* 05D090 7F028560 86020000 */  lh    $v0, ($s0)
-/* 05D094 7F028564 27B60040 */  addiu $s6, $sp, 0x40
-/* 05D098 7F028568 27B50044 */  addiu $s5, $sp, 0x44
-/* 05D09C 7F02856C 04400019 */  bltz  $v0, .L7F0285D4
-/* 05D0A0 7F028570 24140001 */   li    $s4, 1
-/* 05D0A4 7F028574 24120034 */  li    $s2, 52
-.L7F028578:
-/* 05D0A8 7F028578 00520019 */  multu $v0, $s2
-/* 05D0AC 7F02857C 02A02825 */  move  $a1, $s5
-/* 05D0B0 7F028580 0000C012 */  mflo  $t8
-/* 05D0B4 7F028584 03132021 */  addu  $a0, $t8, $s3
-/* 05D0B8 7F028588 90990000 */  lbu   $t9, ($a0)
-/* 05D0BC 7F02858C 5699000E */  bnel  $s4, $t9, .L7F0285C8
-/* 05D0C0 7F028590 86020002 */   lh    $v0, 2($s0)
-/* 05D0C4 7F028594 0FC0F32C */  jal   chraiGetCollisionBoundsWithoutY
-/* 05D0C8 7F028598 02C03025 */   move  $a2, $s6
-/* 05D0CC 7F02859C 8FA60040 */  lw    $a2, 0x40($sp)
-/* 05D0D0 7F0285A0 02202025 */  move  $a0, $s1
-/* 05D0D4 7F0285A4 58C00008 */  blezl $a2, .L7F0285C8
-/* 05D0D8 7F0285A8 86020002 */   lh    $v0, 2($s0)
-/* 05D0DC 7F0285AC 0FC0F336 */  jal   sub_GAME_7F03CCD8
-/* 05D0E0 7F0285B0 8FA50044 */   lw    $a1, 0x44($sp)
-/* 05D0E4 7F0285B4 50400004 */  beql  $v0, $zero, .L7F0285C8
-/* 05D0E8 7F0285B8 86020002 */   lh    $v0, 2($s0)
-/* 05D0EC 7F0285BC 10000006 */  b     .L7F0285D8
-/* 05D0F0 7F0285C0 00001025 */   move  $v0, $zero
-/* 05D0F4 7F0285C4 86020002 */  lh    $v0, 2($s0)
-.L7F0285C8:
-/* 05D0F8 7F0285C8 26100002 */  addiu $s0, $s0, 2
-/* 05D0FC 7F0285CC 0441FFEA */  bgez  $v0, .L7F028578
-/* 05D100 7F0285D0 00000000 */   nop   
-.L7F0285D4:
-/* 05D104 7F0285D4 24020001 */  li    $v0, 1
-.L7F0285D8:
-/* 05D108 7F0285D8 8FBF0034 */  lw    $ra, 0x34($sp)
-/* 05D10C 7F0285DC 8FB00018 */  lw    $s0, 0x18($sp)
-/* 05D110 7F0285E0 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 05D114 7F0285E4 8FB20020 */  lw    $s2, 0x20($sp)
-/* 05D118 7F0285E8 8FB30024 */  lw    $s3, 0x24($sp)
-/* 05D11C 7F0285EC 8FB40028 */  lw    $s4, 0x28($sp)
-/* 05D120 7F0285F0 8FB5002C */  lw    $s5, 0x2c($sp)
-/* 05D124 7F0285F4 8FB60030 */  lw    $s6, 0x30($sp)
-/* 05D128 7F0285F8 03E00008 */  jr    $ra
-/* 05D12C 7F0285FC 27BD0070 */   addiu $sp, $sp, 0x70
-)
-#endif
-
 
 
 #ifdef NONMATCHING

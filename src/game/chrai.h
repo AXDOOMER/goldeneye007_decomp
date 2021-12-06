@@ -210,6 +210,11 @@ extern f32 gas_damage_flag;
 extern u32 gas_cutoff_flag;
 extern f32 difficulty ;
 extern struct object_standard * ptr_setup_objects;
+extern s16 * ptr_list_object_lookup_indices;
+extern struct PropRecord pos_data_entry[];
+
+
+
 void stop_alarm(void);
 
 void check_deactivate_gas_sound(void);
@@ -234,5 +239,6 @@ s32 LoadNext_PrevActionBlock(u16);
 void chraiGetCollisionBounds(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *arg3, f32 *arg4);
 void chraiGetCollisionBoundsWithoutY(PropRecord *arg0, struct rect4f **arg1, s32 *arg2);
 s32 sub_GAME_7F03CCD8(struct rect4f *arg0, struct rect4f *arg1, s32 arg2);
+void sub_GAME_7F03E3FC(s32 *);
 
 #endif

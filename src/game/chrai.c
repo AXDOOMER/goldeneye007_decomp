@@ -16,46 +16,13 @@
 //CODE.bss:80069B70
 struct sfx_register_struct sfx_related[8];
 //CODE.bss:80069C30
-void * ptr_list_object_lookup_indices;
+s16 * ptr_list_object_lookup_indices;
 //CODE.bss:80069C34
 u32 num_obj_position_data_entries;
 
 //CODE.bss:80069C38
-u8 pos_data_entry[0x24];
-//CODE.bss:80069C5C
-u8 dword_CODE_bss_80069C5C;
-u8 dword_CODE_bss_80069C5D;
-u8 dword_CODE_bss_80069C5E;
-u8 dword_CODE_bss_80069C5F;
-u8 dword_CODE_bss_80069C60;
-u8 dword_CODE_bss_80069C61;
-u8 dword_CODE_bss_80069C62;
-u8 dword_CODE_bss_80069C63;
-u8 dword_CODE_bss_80069C64;
-u8 dword_CODE_bss_80069C65;
-u8 dword_CODE_bss_80069C66;
-u8 dword_CODE_bss_80069C67;
-u8 dword_CODE_bss_80069C68;
-u8 dword_CODE_bss_80069C69;
-u8 dword_CODE_bss_80069C6A;
-u8 dword_CODE_bss_80069C6B;
-//CODE.bss:80069C6C
-u8 dword_CODE_bss_80069C6C;
-u8 dword_CODE_bss_80069C6D;
-u8 dword_CODE_bss_80069C6E;
-u8 dword_CODE_bss_80069C6F;
-u8 dword_CODE_bss_80069C70[0x20];
-//CODE.bss:80069C90
-u8 dword_CODE_bss_80069C90[0xC];
-//CODE.bss:80069C94
-//u8 dword_CODE_bss_80069C94[8];
-//CODE.bss:80069CA0
-u8 dword_CODE_bss_80069CA0[0x24];
-//CODE.bss:80069CC4
-u32 dword_CODE_bss_80069CC4;
-u32 dword_CODE_bss_80069CC8;
-u32 dword_CODE_bss_80069CCC;
-u32 dword_CODE_bss_80069CD0;
+struct PropRecord pos_data_entry[3];
+
 //CODE.bss:80069CD4
 u32 dword_CODE_bss_80069CD4;
 u32 dword_CODE_bss_80069CD8;
