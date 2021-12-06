@@ -4511,137 +4511,73 @@ glabel sub_GAME_7F028600
 #endif
 
 
+/**
+ * Gets character segment percent completed.
+ * If action type is ACT_PATROL, computes distance between chr and target pad.
+ * If action type is ACT_GOPOS, computes distance between chr and target position.
+ * Otherwise result is chr->prop position.
+ * 
+ * @param arg0:
+ * @param arg1: Out parameter. Contains result.
+ * 
+ * Address 0x7F028894.
+ * PD: chrCalculatePosition.
+*/
+void chrlvGetPatrolPercentOrPosition(ChrRecord *arg0, struct coord3d *arg1)
+{
+    struct pad *pad;
+    f32 percent;
+    struct coord3d sp2C; // 44
+    StandTile *stan;
 
-#ifdef NONMATCHING
-void sub_GAME_7F028894(void) {
+    if ((arg0->actiontype == ACT_PATROL) && (arg0->act_patrol.waydata.mode == 6))
+    {
+        pad = chrlvGetNextPatrolStepPad(arg0);
 
+        if (arg0->act_patrol.waydata.segdisttotal <= arg0->act_patrol.waydata.segdistdone)
+        {
+            arg1->f[0] = pad->pos.f[0];
+            arg1->f[1] = pad->pos.f[1];
+            arg1->f[2] = pad->pos.f[2];
+
+            return;
+        }
+
+        percent = arg0->act_patrol.waydata.segdistdone / arg0->act_patrol.waydata.segdisttotal;
+
+        arg1->f[0] = arg0->prop->pos.f[0] + ((pad->pos.f[0] - arg0->prop->pos.f[0]) * percent);
+        arg1->f[1] = arg0->prop->pos.f[1] + ((pad->pos.f[1] - arg0->prop->pos.f[1]) * percent);
+        arg1->f[2] = arg0->prop->pos.f[2] + ((pad->pos.f[2] - arg0->prop->pos.f[2]) * percent);
+
+        return;
+    }
+    
+    if ((arg0->actiontype == ACT_GOPOS) && (arg0->act_gopos.waydata.mode == 6))
+    {
+        chrlvActGoposRelated(arg0, &sp2C, &stan);
+
+        if (arg0->act_gopos.waydata.segdisttotal <= arg0->act_gopos.waydata.segdistdone)
+        {
+            arg1->f[0] = sp2C.f[0];
+            arg1->f[1] = sp2C.f[1];
+            arg1->f[2] = sp2C.f[2];
+
+            return;
+        }
+
+        percent = arg0->act_gopos.waydata.segdistdone / arg0->act_gopos.waydata.segdisttotal;
+
+        arg1->f[0] = arg0->prop->pos.f[0] + ((sp2C.f[0] - arg0->prop->pos.f[0]) * percent);
+        arg1->f[1] = arg0->prop->pos.f[1] + ((sp2C.f[1] - arg0->prop->pos.f[1]) * percent);
+        arg1->f[2] = arg0->prop->pos.f[2] + ((sp2C.f[2] - arg0->prop->pos.f[2]) * percent);
+
+        return;
+    }
+
+    arg1->f[0] = arg0->prop->pos.f[0];
+    arg1->f[1] = arg0->prop->pos.f[1];
+    arg1->f[2] = arg0->prop->pos.f[2];
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F028894
-/* 05D3C4 7F028894 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 05D3C8 7F028898 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05D3CC 7F02889C 80820007 */  lb    $v0, 7($a0)
-/* 05D3D0 7F0288A0 2401000E */  li    $at, 14
-/* 05D3D4 7F0288A4 00A03825 */  move  $a3, $a1
-/* 05D3D8 7F0288A8 5441002F */  bnel  $v0, $at, .L7F028968
-/* 05D3DC 7F0288AC 2401000F */   li    $at, 15
-/* 05D3E0 7F0288B0 808E0038 */  lb    $t6, 0x38($a0)
-/* 05D3E4 7F0288B4 24010006 */  li    $at, 6
-/* 05D3E8 7F0288B8 55C1002B */  bnel  $t6, $at, .L7F028968
-/* 05D3EC 7F0288BC 2401000F */   li    $at, 15
-/* 05D3F0 7F0288C0 AFA40040 */  sw    $a0, 0x40($sp)
-/* 05D3F4 7F0288C4 0FC0A11D */  jal   chrlvGetNextPatrolStepPad
-/* 05D3F8 7F0288C8 AFA50044 */   sw    $a1, 0x44($sp)
-/* 05D3FC 7F0288CC 8FA40040 */  lw    $a0, 0x40($sp)
-/* 05D400 7F0288D0 8FA70044 */  lw    $a3, 0x44($sp)
-/* 05D404 7F0288D4 C4900070 */  lwc1  $f16, 0x70($a0)
-/* 05D408 7F0288D8 C4920074 */  lwc1  $f18, 0x74($a0)
-/* 05D40C 7F0288DC 4610903E */  c.le.s $f18, $f16
-/* 05D410 7F0288E0 00000000 */  nop   
-/* 05D414 7F0288E4 45020009 */  bc1fl .L7F02890C
-/* 05D418 7F0288E8 46128003 */   div.s $f0, $f16, $f18
-/* 05D41C 7F0288EC C4440000 */  lwc1  $f4, ($v0)
-/* 05D420 7F0288F0 E4E40000 */  swc1  $f4, ($a3)
-/* 05D424 7F0288F4 C4460004 */  lwc1  $f6, 4($v0)
-/* 05D428 7F0288F8 E4E60004 */  swc1  $f6, 4($a3)
-/* 05D42C 7F0288FC C4480008 */  lwc1  $f8, 8($v0)
-/* 05D430 7F028900 10000052 */  b     .L7F028A4C
-/* 05D434 7F028904 E4E80008 */   swc1  $f8, 8($a3)
-/* 05D438 7F028908 46128003 */  div.s $f0, $f16, $f18
-.L7F02890C:
-/* 05D43C 7F02890C 8C8F0018 */  lw    $t7, 0x18($a0)
-/* 05D440 7F028910 C44A0000 */  lwc1  $f10, ($v0)
-/* 05D444 7F028914 C5E20008 */  lwc1  $f2, 8($t7)
-/* 05D448 7F028918 46025101 */  sub.s $f4, $f10, $f2
-/* 05D44C 7F02891C 46002182 */  mul.s $f6, $f4, $f0
-/* 05D450 7F028920 46023200 */  add.s $f8, $f6, $f2
-/* 05D454 7F028924 E4E80000 */  swc1  $f8, ($a3)
-/* 05D458 7F028928 8C980018 */  lw    $t8, 0x18($a0)
-/* 05D45C 7F02892C C44A0004 */  lwc1  $f10, 4($v0)
-/* 05D460 7F028930 C70C000C */  lwc1  $f12, 0xc($t8)
-/* 05D464 7F028934 460C5101 */  sub.s $f4, $f10, $f12
-/* 05D468 7F028938 46002182 */  mul.s $f6, $f4, $f0
-/* 05D46C 7F02893C 460C3200 */  add.s $f8, $f6, $f12
-/* 05D470 7F028940 E4E80004 */  swc1  $f8, 4($a3)
-/* 05D474 7F028944 8C990018 */  lw    $t9, 0x18($a0)
-/* 05D478 7F028948 C44A0008 */  lwc1  $f10, 8($v0)
-/* 05D47C 7F02894C C72E0010 */  lwc1  $f14, 0x10($t9)
-/* 05D480 7F028950 460E5101 */  sub.s $f4, $f10, $f14
-/* 05D484 7F028954 46002182 */  mul.s $f6, $f4, $f0
-/* 05D488 7F028958 460E3200 */  add.s $f8, $f6, $f14
-/* 05D48C 7F02895C 1000003B */  b     .L7F028A4C
-/* 05D490 7F028960 E4E80008 */   swc1  $f8, 8($a3)
-/* 05D494 7F028964 2401000F */  li    $at, 15
-.L7F028968:
-/* 05D498 7F028968 54410030 */  bnel  $v0, $at, .L7F028A2C
-/* 05D49C 7F02896C 8C8C0018 */   lw    $t4, 0x18($a0)
-/* 05D4A0 7F028970 8088005C */  lb    $t0, 0x5c($a0)
-/* 05D4A4 7F028974 24010006 */  li    $at, 6
-/* 05D4A8 7F028978 27A5002C */  addiu $a1, $sp, 0x2c
-/* 05D4AC 7F02897C 1501002A */  bne   $t0, $at, .L7F028A28
-/* 05D4B0 7F028980 27A60028 */   addiu $a2, $sp, 0x28
-/* 05D4B4 7F028984 AFA40040 */  sw    $a0, 0x40($sp)
-/* 05D4B8 7F028988 0FC09FC8 */  jal   chrlvActGoposRelated
-/* 05D4BC 7F02898C AFA70044 */   sw    $a3, 0x44($sp)
-/* 05D4C0 7F028990 8FA40040 */  lw    $a0, 0x40($sp)
-/* 05D4C4 7F028994 8FA70044 */  lw    $a3, 0x44($sp)
-/* 05D4C8 7F028998 C7AA002C */  lwc1  $f10, 0x2c($sp)
-/* 05D4CC 7F02899C C4900094 */  lwc1  $f16, 0x94($a0)
-/* 05D4D0 7F0289A0 C4920098 */  lwc1  $f18, 0x98($a0)
-/* 05D4D4 7F0289A4 4610903E */  c.le.s $f18, $f16
-/* 05D4D8 7F0289A8 00000000 */  nop   
-/* 05D4DC 7F0289AC 45020008 */  bc1fl .L7F0289D0
-/* 05D4E0 7F0289B0 46128003 */   div.s $f0, $f16, $f18
-/* 05D4E4 7F0289B4 E4EA0000 */  swc1  $f10, ($a3)
-/* 05D4E8 7F0289B8 C7A40030 */  lwc1  $f4, 0x30($sp)
-/* 05D4EC 7F0289BC E4E40004 */  swc1  $f4, 4($a3)
-/* 05D4F0 7F0289C0 C7A60034 */  lwc1  $f6, 0x34($sp)
-/* 05D4F4 7F0289C4 10000021 */  b     .L7F028A4C
-/* 05D4F8 7F0289C8 E4E60008 */   swc1  $f6, 8($a3)
-/* 05D4FC 7F0289CC 46128003 */  div.s $f0, $f16, $f18
-.L7F0289D0:
-/* 05D500 7F0289D0 8C890018 */  lw    $t1, 0x18($a0)
-/* 05D504 7F0289D4 C7A8002C */  lwc1  $f8, 0x2c($sp)
-/* 05D508 7F0289D8 C5220008 */  lwc1  $f2, 8($t1)
-/* 05D50C 7F0289DC 46024281 */  sub.s $f10, $f8, $f2
-/* 05D510 7F0289E0 46005102 */  mul.s $f4, $f10, $f0
-/* 05D514 7F0289E4 46022180 */  add.s $f6, $f4, $f2
-/* 05D518 7F0289E8 E4E60000 */  swc1  $f6, ($a3)
-/* 05D51C 7F0289EC 8C8A0018 */  lw    $t2, 0x18($a0)
-/* 05D520 7F0289F0 C7A80030 */  lwc1  $f8, 0x30($sp)
-/* 05D524 7F0289F4 C54C000C */  lwc1  $f12, 0xc($t2)
-/* 05D528 7F0289F8 460C4281 */  sub.s $f10, $f8, $f12
-/* 05D52C 7F0289FC 46005102 */  mul.s $f4, $f10, $f0
-/* 05D530 7F028A00 460C2180 */  add.s $f6, $f4, $f12
-/* 05D534 7F028A04 E4E60004 */  swc1  $f6, 4($a3)
-/* 05D538 7F028A08 8C8B0018 */  lw    $t3, 0x18($a0)
-/* 05D53C 7F028A0C C7A80034 */  lwc1  $f8, 0x34($sp)
-/* 05D540 7F028A10 C56E0010 */  lwc1  $f14, 0x10($t3)
-/* 05D544 7F028A14 460E4281 */  sub.s $f10, $f8, $f14
-/* 05D548 7F028A18 46005102 */  mul.s $f4, $f10, $f0
-/* 05D54C 7F028A1C 460E2180 */  add.s $f6, $f4, $f14
-/* 05D550 7F028A20 1000000A */  b     .L7F028A4C
-/* 05D554 7F028A24 E4E60008 */   swc1  $f6, 8($a3)
-.L7F028A28:
-/* 05D558 7F028A28 8C8C0018 */  lw    $t4, 0x18($a0)
-.L7F028A2C:
-/* 05D55C 7F028A2C C5880008 */  lwc1  $f8, 8($t4)
-/* 05D560 7F028A30 E4E80000 */  swc1  $f8, ($a3)
-/* 05D564 7F028A34 8C8D0018 */  lw    $t5, 0x18($a0)
-/* 05D568 7F028A38 C5AA000C */  lwc1  $f10, 0xc($t5)
-/* 05D56C 7F028A3C E4EA0004 */  swc1  $f10, 4($a3)
-/* 05D570 7F028A40 8C8E0018 */  lw    $t6, 0x18($a0)
-/* 05D574 7F028A44 C5C40010 */  lwc1  $f4, 0x10($t6)
-/* 05D578 7F028A48 E4E40008 */  swc1  $f4, 8($a3)
-.L7F028A4C:
-/* 05D57C 7F028A4C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 05D580 7F028A50 27BD0040 */  addiu $sp, $sp, 0x40
-/* 05D584 7F028A54 03E00008 */  jr    $ra
-/* 05D588 7F028A58 00000000 */   nop   
-)
-#endif
 
 
 
@@ -4874,21 +4810,23 @@ void chrlvWalkingAnimationRelated(ChrRecord *arg0)
 #ifdef NONMATCHING
 
 // arg1 is probably a struct
-void set_actor_on_path(ChrRecord *self, s32 **pathid)
+void set_actor_on_path(ChrRecord *self, struct patrol_path *path)
 {
     struct pad * pad;
     s32 next_step = -1;
     struct PropRecord *prop = self->prop;
     s32 count = 0;
-    s32 *arr = *pathid;
+    s32 index;
 
     // decomp problem area: can't seem to get arr[count] to dereference the correct number of times.
-    for ( ; arr[count] >= 0; count++)
+    for (index = path->data[count] ; index >= 0; count++, index = path->data[count])
     {
-        s32 aa;
+        //s32 aa;
 
-        aa = ptr_setup_path_tbl[arr[count]].id;
-        pad = &ptr_0xxxpresets[aa];
+        //aa = ptr_setup_path_tbl[index].id;
+        //pad = &ptr_0xxxpresets[aa];
+        struct path_table_alt *pta = &ptr_setup_path_tbl[index];
+        pad = &ptr_0xxxpresets[pta->id];
 
         if ((pad->stan != NULL) && (prop->stan == pad->stan))
         {
@@ -4911,7 +4849,7 @@ void set_actor_on_path(ChrRecord *self, s32 **pathid)
 
     sub_GAME_7F02D184(self);
     self->actiontype = ACT_PATROL;
-    self->act_patrol.path = pathid;
+    self->act_patrol.path = path;
 
     self->act_patrol.nextstep = next_step;
     self->act_patrol.forward = TRUE;

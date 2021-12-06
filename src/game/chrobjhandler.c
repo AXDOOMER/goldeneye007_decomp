@@ -38535,7 +38535,7 @@ glabel check_guard_detonate_proxmine
 /* 086858 7F051D28 33190200 */  andi  $t9, $t8, 0x200
 /* 08685C 7F051D2C 53200006 */  beql  $t9, $zero, .L7F051D48
 /* 086860 7F051D30 261001DC */   addiu $s0, $s0, 0x1dc
-/* 086864 7F051D34 0FC0A225 */  jal   sub_GAME_7F028894
+/* 086864 7F051D34 0FC0A225 */  jal   chrlvGetPatrolPercentOrPosition
 /* 086868 7F051D38 02202825 */   move  $a1, $s1
 /* 08686C 7F051D3C 0FC146F3 */  jal   detonate_proxmine_In_range
 /* 086870 7F051D40 02202025 */   move  $a0, $s1
