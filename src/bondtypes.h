@@ -962,8 +962,20 @@ struct waydata
 
     s8 mode;                 /*0x00 */
     u8 unk01;                /*0x01 */
-    u8 unk02;                /*0x02 */
-    u8 unk03;                /*0x03 */
+
+    /**
+     * Related to pos field.
+     * Set/unset flag?
+     * Offset 0x2.
+    */
+    u8 unk02;
+
+    /**
+     * Related to pos_copy field.
+     * Set/unset flag?
+     * Offset 0x3.
+    */
+    u8 unk03;
 
     struct coord3d pos;      /*0x04 */
 
