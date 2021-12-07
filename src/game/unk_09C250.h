@@ -30,14 +30,14 @@ typedef struct s_explosiontype {
     u16 propagationrate;
     f32 flareanimspeed;
     u16 numshrapnelbits;
-    u16 field_0x26;
+    //u16 field_0x26;
     f32 shrapnel_size;
     f32 shrapnel_scatter_dist;
     f32 shrapnel_hvel;
     f32 shrapnel_vvel;
     u8 smoketype;
     u8 sndID;
-    u16 field_0x3a;
+    //u16 field_0x3a;
     f32 damage;
 } s_explosiontype;
 
