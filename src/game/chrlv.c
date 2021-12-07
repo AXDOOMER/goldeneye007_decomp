@@ -11218,12 +11218,12 @@ void chrlvTravelTick(ChrRecord *arg0, struct coord3d *arg1, StandTile *arg2, str
 
             if (atan_pos2_a < 0.0f)
             {
-                atan_pos2_a = atan_pos2_a + 6.2831855f;
+                atan_pos2_a = atan_pos2_a + M_TAU;
             }
 
-            if (atan_pos2_a >= 3.1415927f)
+            if (atan_pos2_a >= M_PI_F)
             {
-                atan_pos2_a = atan_pos2_a - 6.2831855f;
+                atan_pos2_a = atan_pos2_a - M_TAU;
             }
 
             if (atan_pos2_a < 0.0f)
@@ -11233,12 +11233,12 @@ void chrlvTravelTick(ChrRecord *arg0, struct coord3d *arg1, StandTile *arg2, str
 
             if (atan_pos3_a < 0.0f)
             {
-                atan_pos3_a = atan_pos3_a + 6.2831855f;
+                atan_pos3_a = atan_pos3_a + M_TAU;
             }
 
-            if (atan_pos3_a >= 3.1415927f)
+            if (atan_pos3_a >= M_PI_F)
             {
-                atan_pos3_a = atan_pos3_a - 6.2831855f;
+                atan_pos3_a = atan_pos3_a - M_TAU;
             }
 
             if (atan_pos3_a < 0.0f)
@@ -11260,11 +11260,11 @@ void chrlvTravelTick(ChrRecord *arg0, struct coord3d *arg1, StandTile *arg2, str
 
                     if (atan_pos2_b < 0.0f)
                     {
-                        atan_pos2_b = atan_pos2_b + 6.2831855f;
+                        atan_pos2_b = atan_pos2_b + M_TAU;
                     }
-                    if (atan_pos2_b >= 3.1415927f)
+                    if (atan_pos2_b >= M_PI_F)
                     {
-                        atan_pos2_b = atan_pos2_b - 6.2831855f;
+                        atan_pos2_b = atan_pos2_b - M_TAU;
                     }
                     if (atan_pos2_b < 0.0f)
                     {
@@ -11273,11 +11273,11 @@ void chrlvTravelTick(ChrRecord *arg0, struct coord3d *arg1, StandTile *arg2, str
 
                     if (atan_pos3_b < 0.0f)
                     {
-                        atan_pos3_b = atan_pos3_b + 6.2831855f;
+                        atan_pos3_b = atan_pos3_b + M_TAU;
                     }
-                    if (atan_pos3_b >= 3.1415927f)
+                    if (atan_pos3_b >= M_PI_F)
                     {
-                        atan_pos3_b = atan_pos3_b - 6.2831855f;
+                        atan_pos3_b = atan_pos3_b - M_TAU;
                     }
                     if (atan_pos3_b < 0.0f)
                     {
@@ -11305,11 +11305,11 @@ void chrlvTravelTick(ChrRecord *arg0, struct coord3d *arg1, StandTile *arg2, str
                     
                     if (atan_pos2_c < 0.0f)
                     {
-                        atan_pos2_c = atan_pos2_c + 6.2831855f;
+                        atan_pos2_c = atan_pos2_c + M_TAU;
                     }
-                    if (atan_pos2_c >= 3.1415927f)
+                    if (atan_pos2_c >= M_PI_F)
                     {
-                        atan_pos2_c = atan_pos2_c - 6.2831855f;
+                        atan_pos2_c = atan_pos2_c - M_TAU;
                     }
                     if (atan_pos2_c < 0.0f)
                     {
@@ -11318,11 +11318,11 @@ void chrlvTravelTick(ChrRecord *arg0, struct coord3d *arg1, StandTile *arg2, str
 
                     if (atan_pos3_c < 0.0f)
                     {
-                        atan_pos3_c = atan_pos3_c + 6.2831855f;
+                        atan_pos3_c = atan_pos3_c + M_TAU;
                     }
-                    if (atan_pos3_c >= 3.1415927f)
+                    if (atan_pos3_c >= M_PI_F)
                     {
-                        atan_pos3_c = atan_pos3_c - 6.2831855f;
+                        atan_pos3_c = atan_pos3_c - M_TAU;
                     }
                     if (atan_pos3_c < 0.0f)
                     {
