@@ -54,5 +54,6 @@ s32 sub_GAME_7F0B0D0C(struct StandTile *tile, f32 start_x, f32 start_z, struct S
 s32 sub_GAME_7F0B0C24(struct StandTile **tileStack, f32 start_x, f32 start_z, f32 dest_x, f32 dest_z, s32 *roomBuffer, s32 *rtnCountSize, s32 maxBufSize);
 s32 sub_GAME_7F0B18B8(StandTile **, f32, f32, f32, s32, f32, f32);
 u8 getTileRoom(struct StandTile* tile);
+PropRecord *sub_GAME_7F0B1410(StandTile *arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, s32 arg5);
 
 #endif
