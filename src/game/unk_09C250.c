@@ -5953,40 +5953,14 @@ glabel sub_GAME_7F0A0AB4
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0A0C74(void) {
-
+s32 sub_GAME_7F0A0C74(f32 arg0)
+{
+    if (arg0 >= 0.0f)
+    {
+        return (s32) (arg0 + 0.5f);
+    }
+    return (s32) (arg0 - 0.5f);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A0C74
-/* 0D57A4 7F0A0C74 44802000 */  mtc1  $zero, $f4
-/* 0D57A8 7F0A0C78 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 0D57AC 7F0A0C7C 460C203E */  c.le.s $f4, $f12
-/* 0D57B0 7F0A0C80 00000000 */  nop   
-/* 0D57B4 7F0A0C84 4502000A */  bc1fl .L7F0A0CB0
-/* 0D57B8 7F0A0C88 44818000 */   mtc1  $at, $f16
-/* 0D57BC 7F0A0C8C 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 0D57C0 7F0A0C90 44813000 */  mtc1  $at, $f6
-/* 0D57C4 7F0A0C94 00000000 */  nop   
-/* 0D57C8 7F0A0C98 46066200 */  add.s $f8, $f12, $f6
-/* 0D57CC 7F0A0C9C 4600428D */  trunc.w.s $f10, $f8
-/* 0D57D0 7F0A0CA0 44025000 */  mfc1  $v0, $f10
-/* 0D57D4 7F0A0CA4 03E00008 */  jr    $ra
-/* 0D57D8 7F0A0CA8 00000000 */   nop   
-
-/* 0D57DC 7F0A0CAC 44818000 */  mtc1  $at, $f16
-.L7F0A0CB0:
-/* 0D57E0 7F0A0CB0 00000000 */  nop   
-/* 0D57E4 7F0A0CB4 46106481 */  sub.s $f18, $f12, $f16
-/* 0D57E8 7F0A0CB8 4600910D */  trunc.w.s $f4, $f18
-/* 0D57EC 7F0A0CBC 44022000 */  mfc1  $v0, $f4
-/* 0D57F0 7F0A0CC0 00000000 */  nop   
-/* 0D57F4 7F0A0CC4 03E00008 */  jr    $ra
-/* 0D57F8 7F0A0CC8 00000000 */   nop   
-)
-#endif
 
 
 
