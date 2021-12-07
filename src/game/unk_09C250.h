@@ -12,10 +12,10 @@ typedef struct s_smoketype {
     u8 r;
     u8 g;
     u8 b;
-    u8 a;
+    //u8 a;
     f32 fg_rotrate;
     s16 propagated_clouds;
-    u16 field_0x16;
+    //u16 field_0x16;
 } s_smoketype;
 
 typedef struct s_explosiontype {
