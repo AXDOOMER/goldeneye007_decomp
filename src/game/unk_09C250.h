@@ -41,6 +41,14 @@ typedef struct s_explosiontype {
     f32 damage;
 } s_explosiontype;
 
+typedef struct s_impacttype{
+    f32 width;
+    f32 height;
+    u8 apptype;
+    u8 unk1;
+    u8 unk2;
+} s_impacttype;
+
 extern struct PropRecord *ptr_smoke_buf;
 extern struct PropRecord *ptr_explosion_buf;
 extern s32 numExplosionEntries;
