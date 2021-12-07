@@ -36,10 +36,24 @@
 
 #define CHRHIDDEN_ALERT_GUARD_RELATED 2
 
+/**
+ * The only time 0x10 flag is kept is when the enemy is standing.
+ * Moving, patrolling or going to pad always clears 0x10.
+ * A guard can keep the 0x10 flag when moving, but only if it's been
+ * off screen and using the cheap movement logic where it doesn't
+ * calculate collision. It'll keep the 0x10 flag until the guard
+ * appears on screen.
+*/
+#define CHRHIDDEN_OFFSCREEN_PATROL 0x0010
+
+#define PROPFLAG_NO_AI_INTERACTION 0x20000000
+#define PROPFLAG2 PROPFLAG_NO_AI_INTERACTION
+
 // Delete this section when merged.
 #define COUNT_DEATH_AS_CIVILIAN 0x100000
 #define RUNTIMEBITFLAG_DEPOSIT 0x80
 #define PROPFLAG_ONSCREEN 0x02
+#define CHRFLAG_INCREASE_RUNNING_SPEED 0x80000
 /***************************************************************************************************************************/
 
 typedef u16 PAD;
@@ -1858,6 +1872,18 @@ typedef enum MODELNODE_OPCODE {
     MODELNODE_OPCODE_HEADPLACEHOLDERRECORD = 23,
     MODELNODE_OPCODE_MODELNODE_DISPLAYLIST_COLLISIONRECORD = 24
 } MODELNODE_OPCODE;
+
+typedef enum WAYMODE {
+    WAYMODE_0 = 0,
+    WAYMODE_1 = 1,
+    WAYMODE_2 = 2,
+    WAYMODE_3 = 3,
+    WAYMODE_4 = 4,
+    WAYMODE_5 = 5,
+    WAYMODE_MAGIC = 6
+} WAYMODE;
+
+#define MAX_WAYMODE ((s32)WAYMODE_MAGIC)
 
 #define QUADRANT_BACK          0x01
 #define QUADRANT_SIDE1         0x02

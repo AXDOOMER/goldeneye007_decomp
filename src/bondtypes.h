@@ -961,30 +961,30 @@ struct waydata
     */
 
     s8 mode;                 /*0x00 */
-    u8 unk01;                /*0x01 */
+
+    // next mode?
+    s8 unk01;                /*0x01 */
 
     /**
      * Related to pos field.
      * Set/unset flag?
      * Offset 0x2.
     */
-    u8 unk02;
+    s8 unk02;
 
     /**
      * Related to pos_copy field.
      * Set/unset flag?
      * Offset 0x3.
     */
-    u8 unk03;
+    s8 unk03;
 
     struct coord3d pos;      /*0x04 */
 
     // from PD - unverified/unmatched
     struct coord3d pos2;     /*0x10 */
 
-    u32 unk1c;               /*0x1c */
-    u32 unk20;               /*0x20 */
-    u32 unk24;               /*0x24 */
+    struct coord3d pos3;               /*0x1c */
 
     // from PD - unverified/unmatched
     s32 age;                 /*0x28 */
@@ -1235,7 +1235,12 @@ struct act_patrol
     bool forward;                                                     /*0x034*/
     struct waydata waydata;                                           /*0x038*/
     s32 lastvisible60;
-    f32 unk7c;
+
+    /**
+     * Offset 0x7c.
+    */
+    f32 speed;
+
     s32 unk80;
     s32 unk84;
     s32 unk88;
@@ -1275,7 +1280,10 @@ struct act_gopos
 
     s32 unk9c;
 
-    f32 unka0;
+    /**
+     * Offset 0x9a.
+    */
+    f32 speed;
 
     // PD reference below:
 
