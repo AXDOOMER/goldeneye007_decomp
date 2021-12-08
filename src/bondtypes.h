@@ -1011,12 +1011,12 @@ struct act_init
 struct act_stand
 {
     s32 unk02c;                                                        /*0x2c*/
-    u32 face_entitytype;                                               /*0x30*/
+    s32 face_entitytype;                                               /*0x30*/
     s32 face_entityid;                                                 /*0x34*/
-    u32 unk038;                                                        /*0x38*/
+    s32 unk038;                                                        /*0x38*/
     s32 unk03c;                                                        /*0x3c*/
     u32 unk040;                                                        /*0x40*/
-    u32 unk044;                                                        /*0x44*/
+    s32 unk044;                                                        /*0x44*/
     f32 unk048;                                                        /*0x48*/
     s8 face_target;                                                    /*0x4c*/
 };
