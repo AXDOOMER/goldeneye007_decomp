@@ -1087,7 +1087,7 @@ struct act_attack
     
     s8 unk30;                                                        /*0x30*/
     s8 unk31;
-    u8 unk32;                                                         /*0x32*/
+    s8 unk32;                                                         /*0x32*/
     s8 unk33;                                                         /*0x33*/
     
     s8 unk34;                                                         /*0x34*/
@@ -1095,15 +1095,24 @@ struct act_attack
     s8 unk36;                                                         /*0x36*/
     s8 unk37;
 
-    s8 unk38;                                                        /*0x38*/
-    s8 unk39;
-    s8 unk3a;
-    s8 unk3b;
+    s8 unk38[2];                                                        /*0x38*/
+    //s8 unk39;
+    s8 unk3a[2];
+    //s8 unk3b;
 
     u32 unk03c;                                                        /*0x3c*/
     u32 unk040;                                                        /*0x40*/
-    u32 unk044;                                                        /*0x44*/
-    u32 attack_time;                                                   /*0x48*/
+
+    /**
+     * Related to attack_time, maybe previous attack time?
+     * Offset 0x44.
+    */
+    s32 unk044;
+
+    /**
+     * Offset 0x48.
+    */
+    s32 attack_time;
 
     /**
      * attack type is the target flag used by the AI fire at target commands.
