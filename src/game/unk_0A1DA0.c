@@ -4,9 +4,9 @@
 
 // bss
 //CODE.bss:8007A160
-u32 bufferentrycount_8007A160;
+s32 bufferentrycount_8007A160;
 //CODE.bss:8007A164
-u32 dword_CODE_bss_8007A164;
+s_something_explosiony* dword_CODE_bss_8007A164;
 //CODE.bss:8007A168
 u32 dword_CODE_bss_8007A168;
 //CODE.bss:8007A16C
@@ -25,10 +25,15 @@ u8 dword_CODE_bss_8007B098[8];
 
 // data
 //D:80040940
-u32 D_80040940[] = {
-    0, 0, 0, 0,
-    0, 0, 0, 0
-};
+u32 D_80040940 = 0;
+u32 D_80040944 = 0;
+u32 D_80040948 = 0;
+u32 D_8004094C = 0;
+u32 D_80040950 = 0;
+u32 D_80040954 = 0;
+u32 D_80040958 = 0;
+u32 D_8004095C = 0;
+
 
 //D:80040960
 u32 D_80040960[] = {
