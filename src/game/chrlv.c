@@ -70,7 +70,7 @@ f32 chrlvPadPresetRelated(struct coord3d *arg0, struct path_table_alt *arg1);
 struct path_table_alt *chrlvStanPathRelated(struct coord3d *arg0, StandTile *arg1);
 s32 chrlvStanRoomRelatedPad(ChrRecord *arg0, struct pad *arg1);
 void play_sound_for_shot_actor(ChrRecord *);
-void sub_GAME_7F025560(ChrRecord *arg0, s32 arg1, s32 arg2);
+void sub_GAME_7F025560(ChrRecord *arg0, s32 attack_type, s32 arg2);
 struct coord3d *chrlvGetChrOrPresetLocation(ChrRecord *self, s32 flags, s32 lookup_id, StandTile **stan);
 void sub_GAME_7F02D184(struct ChrRecord *arg0);
 void sub_GAME_7F0281F4(struct ChrRecord *arg0);
@@ -116,7 +116,7 @@ f32 sub_GAME_7F02C27C(struct ChrRecord *arg0);
 void chrlvFireWeaponRelated(ChrRecord *self, s32 hand);
 s32 chrlvAttackrollAnimationRelated7F02E2E0(ChrRecord *arg0);
 void chrlvAttackrollAnimationRelated7F02E3B8(ChrRecord *arg0);
-void sub_GAME_7F0256F0(ChrRecord *arg0, s32 arg1, s32 arg2);
+void sub_GAME_7F0256F0(ChrRecord *arg0, s32 attack_type, s32 arg2);
 void chrlvTickAttack(ChrRecord *arg0);
 void chrlvTickAttackCommon(ChrRecord *);
 void chrlvInitActAttackRoll(struct ChrRecord *chr, s32);
@@ -146,7 +146,7 @@ s32 sub_GAME_7F033780(s32 *arg0, struct coord3d *arg1, f32 angle);
 s32 chrlvFindPathNeighborRelated(struct coord3d *bondpos, struct StandTile *stan, f32 rot, u8 quadrant);
 s32 sub_GAME_7F033EAC(struct coord3d *arg0, StandTile *arg1);
 struct PropRecord *actionblock_guard_constructor_BDBE(s32 bodynum, s32 headnum, struct coord3d *pos, struct StandTile *stan, f32 yrot, s32 arg4, s32 arg5);
-void sub_GAME_7F02516C(ChrRecord *arg0, void ** arg1, s32 arg2, struct point2d *arg3, s32 arg4, s32 arg5, s32 arg6);
+void sub_GAME_7F02516C(ChrRecord *arg0, struct weapon_firing_animation_table ** arg1, s32 arg2, struct point2d *arg3, s32 attack_type, s32 arg5, s32 arg6);
 s32 chrlvPatrolCalculateStep(ChrRecord *arg0, bool *forward, s32 numsteps);
 s32 sub_GAME_7F028510(struct rect4f *arg0, struct ObjHeaderData *arg1);
 s32 sub_GAME_7F03130C(ChrRecord *arg0,struct coord3d *arg1,s32 arg2,struct coord3d *arg3,f32 arg4,s32 arg5,struct coord3d *arg6,struct waydata *arg7,f32 arg8,s32 arg9,s32 set_copy);
@@ -1294,16 +1294,180 @@ f32 chrlvDistanceToChrRelated(ChrRecord *arg0, s32 arg1, s32 arg2)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02516C(void) {
+#ifdef NONTMATCHING
  /**
   * @param arg0:
   * @param arg1: address of array of firing animations (example: ptr_pistol_firing_animation_groups)
   * @param arg2:
-  * @param arg3: s32 array, seems to only have 2-4 elements? (not sure...)
+  * @param arg3: 
   */
- // tenative signature: void sub_GAME_7F02516C(ChrRecord *arg0, s32 arg1, s32 arg2, s32 *arg3, s32 arg4, s32 arg5, s32 arg6)
- // mostly setting a bunch of the struct act_* properties, unsure of type
+void sub_GAME_7F02516C(ChrRecord *arg0, struct weapon_firing_animation_table **arg1, s32 arg2, struct point2d *arg3, s32 attack_type, s32 arg5, s32 arg6)
+{
+    Model *self_model;
+    struct weapon_firing_animation_table *sp80;
+    struct point2d sp60;
+    struct point2d sp58;
+    f32 temp_f0;
+    struct weapon_firing_animation_table * temp_a2;
+    s32 temp_s1;
+    struct weapon_firing_animation_table *temp_a3;
+    u32 temp_a1;
+    u32 temp_hi;
+    struct ChrRecord *temp_s0;
+    struct weapon_firing_animation_table *temp_v1;
+    s32 phi_s0;
+    //s32 phi_s0_2;
+    struct weapon_firing_animation_table *phi_a3;
+    //struct point2d *phi_s3;
+    //s32 phi_s1;
+    //s32 phi_s2;
+    s8 phi_s6;
+    s8 phi_s7;
+    //s8 phi_s6_2;
+    //s8 phi_s7_2;
+    s32 i;
+
+    self_model = arg0->model;
+    sp60 = D_800309A8;
+    sp58 = D_800309B0;
+    arg0->actiontype = ACT_ATTACK;
+    temp_f0 = chrlvDistanceToChrRelated(arg0, attack_type, arg5);
+    phi_s6 = 1;
+    phi_s7 = 0;
+
+    if (arg2 != 0)
+    {
+        phi_s0 = (s32) ((((6.2831855f - temp_f0) * 32.0f) / 6.2831855f) + 0.5f);
+    }
+    else
+    {
+        phi_s0 = (s32) (((temp_f0 * 32.0f) / 6.2831855f) + 0.5f);
+    }
+
+    //phi_s0_2 = phi_s0;
+
+    if (phi_s0 >= 0x20)
+    {
+        phi_s0 = 0;
+    }
+
+    temp_v1 = arg1[phi_s0];
+    temp_a1 = temp_v1->anonymous_1;
+    temp_a2 = (struct weapon_firing_animation_table *)temp_v1->anonymous_0;
+    temp_hi = randomGetNext() % temp_a1;
+    temp_a3 = &temp_a2[temp_hi];
+    // phi_a3 = temp_a3;
+    // phi_s3 = arg3;
+    // phi_s1 = 0;
+    // phi_s2 = 0;
+
+    if (((arg0->chrflags & 0x20) != 0)
+        && ((s32)&ptr_animation_table->data[(s32)&ANIM_DATA_fire_hip] == (s32)temp_a3->anonymous_0))
+    {
+        //phi_a3 = (((s32) (temp_hi + 1) % (s32) temp_a1) * 0x48) + temp_a2;
+        phi_a3 = &temp_a2[(s32) (temp_hi + 1) % (s32) temp_a1];
+    }
+
+    sp80 = phi_a3;
+
+    for (i=0; i<2; i++)
+    {
+        // phi_s6 = phi_s6_2;
+        // phi_s7 = phi_s7_2;
+        // phi_s6 = phi_s6_2;
+        // phi_s7 = phi_s7_2;
+        if (arg3->p[i] != 0)
+        {
+            temp_s0 = something_with_weaponpos_of_guarddata_hand(arg0, i)->chr;
+
+            if (bondwalkItemGetAutomaticFiringRate((s32) temp_s0->act_attack.attack_item) < 0)
+            {
+                sp60.p[i] = 1;
+                if (temp_s0->act_attack.attack_item == 0x16)
+                {
+                    phi_s6 = 0;
+                }
+            }
+            else
+            {
+                phi_s6 = 0;
+                phi_s7 = (s8) 1;
+            }
+
+            if ((temp_s0->act_attack.attack_item == 0x19) || (temp_s0->act_attack.attack_item == 0x18))
+            {
+                sp58.p[i] = 1;
+            }
+        }
+    //     temp_s1 = phi_s1 + 1;
+    //     phi_s3 += 4;
+    //     phi_s1 = temp_s1;
+    //     phi_s2 += 4;
+    //     phi_s6_2 = phi_s6;
+    //     phi_s7_2 = phi_s7;
+    // } while (temp_s1 != 2);
+    }
+
+    arg0->act_attack.unk30 = 1;
+    arg0->act_attack.unk31 = 0;
+    arg0->act_attack.animfloats = sp80;
+    arg0->act_attack.unk32 = (u32)randomGetNext() & 1U;
+    arg0->act_attack.unk38[1] = arg3->p[1];
+    arg0->act_attack.unk38[0] = arg3->p[0];
+    arg0->act_attack.unk3a[1] = sp60.p[1];
+    arg0->act_attack.unk3a[0] = sp60.p[0];
+    arg0->act_attack.unk3c[1] = sp58.p[1];
+    arg0->act_attack.unk36 = phi_s6;
+    arg0->act_attack.unk37 = phi_s7;
+    arg0->act_attack.unk40 = 0;
+    arg0->act_attack.unk33 = 0;
+    arg0->act_attack.unk3c[0] = sp58.p[0];
+
+    if ((sp58.p[1] != 0) || (sp58.p[0] != 0))
+    {
+        if ((sp58.p[1] != 0) && (sp58.p[0] != 0))
+        {
+            arg0->act_attack.unk34 = 2;
+        }
+        else
+        {
+            arg0->act_attack.unk34 = 1;
+        }
+    }
+    else
+    {
+        if ((attack_type & 0x80) != 0)
+        {
+            arg0->act_attack.unk34 = 1;
+        }
+        else
+        {
+            arg0->act_attack.unk34 = (randomGetNext() & 3) + 2;
+        }
+
+        if ((arg3->p[0] != 0) && (arg3->p[1] != 0))
+        {
+            arg0->act_attack.unk34 += (randomGetNext() & 3) + 2;
+        }
+    }
+
+    arg0->act_attack.attacktype = attack_type;
+    arg0->act_attack.entityid = arg5;
+    arg0->act_attack.type_of_motion = 0;
+    arg0->act_attack.unk44 = 0;
+    arg0->act_attack.attack_time = 0;
+    arg0->sleep = 0;
+    arg0->act_attack.unk54 = arg6;
+
+    objecthandlerAnimationRelated7F06FCA8(
+        self_model,
+        (struct ModelAnimation *) sp80->anonymous_0,
+        arg2,
+        sp80->anonymous_4,
+        chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f),
+        16.0f);
+
+    chrlvAttackActionRelated(arg0);
 }
 #else
 GLOBAL_ASM(
@@ -1595,7 +1759,7 @@ glabel sub_GAME_7F02516C
 /**
  * Address 0x7F025560.
 */
-void sub_GAME_7F025560(ChrRecord *arg0, s32 arg1, s32 arg2)
+void sub_GAME_7F025560(ChrRecord *arg0, s32 attack_type, s32 arg2)
 {
     PropRecord *left;
     PropRecord *right;
@@ -1658,7 +1822,7 @@ void sub_GAME_7F025560(ChrRecord *arg0, s32 arg1, s32 arg2)
         }
     }
 
-    sub_GAME_7F02516C(arg0, animation_pointer, last_arg2, &sp, arg1, arg2, 1);
+    sub_GAME_7F02516C(arg0, animation_pointer, last_arg2, &sp, attack_type, arg2, 1);
 }
 
 
@@ -1667,7 +1831,7 @@ void sub_GAME_7F025560(ChrRecord *arg0, s32 arg1, s32 arg2)
  * Address 0x7F0256F0.
  * PD: chrAttackKneel.
 */
-void sub_GAME_7F0256F0(ChrRecord *arg0, s32 arg1, s32 arg2)
+void sub_GAME_7F0256F0(ChrRecord *arg0, s32 attack_type, s32 arg2)
 {
     PropRecord *left;
     PropRecord *right;
@@ -1730,7 +1894,7 @@ void sub_GAME_7F0256F0(ChrRecord *arg0, s32 arg1, s32 arg2)
         }
     }
 
-    sub_GAME_7F02516C(arg0, animation_pointer, last_arg2, &sp, arg1, arg2, 0);
+    sub_GAME_7F02516C(arg0, animation_pointer, last_arg2, &sp, attack_type, arg2, 0);
 }
 
 
@@ -5764,12 +5928,12 @@ bool actor_rolls_fires_crouched(ChrRecord *self)
 /**
  * Address 0x7F02AA1C.
 */
-bool actor_aim_at_actor(ChrRecord *self, s32 a, s32 b)
+bool actor_aim_at_actor(ChrRecord *self, s32 attack_type, s32 b)
 {
     if ((chrIsNotDeadOrShot(self)) &&
         ((is_weapon_in_guarddata_hand(self, RIGHT_HAND)) || (is_weapon_in_guarddata_hand(self, LEFT_HAND))))
     {
-        sub_GAME_7F025560(self, a, b);
+        sub_GAME_7F025560(self, attack_type, b);
         return TRUE;
     }
 

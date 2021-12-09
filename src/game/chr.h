@@ -104,6 +104,12 @@ struct weapon_firing_animation_table
     f32 anonymous_17;
 };
 
+struct anim_group_info
+{
+    struct weapon_firing_animation_table (*table)[];
+    s32 len;
+};
+
 extern s32 objectiveregisters1;
 extern struct ChrRecord* g_ActiveChrs;
 extern s32 g_ActiveChrsCount;
@@ -184,18 +190,12 @@ extern struct weapon_firing_animation_table crouched_doubles_firing_animation_gr
 extern struct weapon_firing_animation_table D_80030078[];
 extern struct weapon_firing_animation_table D_80030660[];
 
-extern void * ptr_rifle_firing_animation_group4[];
-extern void * ptr_rifle_firing_animation_groups[];
-extern void *  ptr_pistol_firing_animation_group5[];
-extern void * ptr_pistol_firing_animation_groups[];
-extern void * ptr_doubles_firing_animation_group3[];
-extern void * ptr_doubles_firing_animation_groups[];
-extern void * ptr_crouched_rifle_firing_animation_group3[];
-extern void * ptr_crouched_rifle_firing_animation_groups[];
-extern void * ptr_crouched_pistol_firing_animation_group3[];
-extern void * ptr_crouched_pistol_firing_animation_groups[];
-extern void * ptr_crouched_doubles_firing_animation_group3[];
-extern void * ptr_crouched_doubles_firing_animation_groups[];
+extern struct anim_group_info *ptr_rifle_firing_animation_groups[];
+extern struct anim_group_info *ptr_pistol_firing_animation_groups[];
+extern struct anim_group_info *ptr_doubles_firing_animation_groups[];
+extern struct anim_group_info *ptr_crouched_rifle_firing_animation_groups[];
+extern struct anim_group_info *ptr_crouched_pistol_firing_animation_groups[];
+extern struct anim_group_info *ptr_crouched_doubles_firing_animation_groups[];
 
 extern f32 animation_rate;
 extern s32 D_8002C904;
@@ -225,6 +225,8 @@ extern f32 D_8003099C;
 extern f32 D_800309A0;
 extern f32 D_800309A4;
 
+extern struct point2d D_800309A8;
+extern struct point2d D_800309B0;
 extern struct point2d D_800309B8;
 extern struct point2d D_800309C0;
 extern struct point2d D_800309E0;
