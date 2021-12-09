@@ -231,9 +231,13 @@ extern struct point2d D_800309A8;
 extern struct point2d D_800309B0;
 extern struct point2d D_800309B8;
 extern struct point2d D_800309C0;
+extern struct point2d D_800309C8;
+extern struct point2d D_800309D0;
+extern struct point2d D_800309D8;
 extern struct point2d D_800309E0;
 extern struct point2d D_800309E8;
 extern struct point2d D_800309F0;
+
 
 extern u32 num_bodies;
 extern u32 num_male_heads;

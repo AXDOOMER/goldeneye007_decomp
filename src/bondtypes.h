@@ -1154,9 +1154,7 @@ struct act_attackwalk
     s32 unk044;                                                        /*0x44*/
     
     s8 unk48[2];                                                        /*0x48*/
-    //s8 unk49;                                                        /*0x48*/
     s8 unk4a[2];                                                        /*0x48*/
-    //s8 unk4b;                                                        /*0x48*/
 
     s8 unk4C[2];                                                        /*0x4c*/
     u8 flip;                                                           /*0x4e*/
@@ -1164,6 +1162,24 @@ struct act_attackwalk
 
     s32 unk50;
     f32 speed;
+
+    u32 unk58;
+    u32 unk5C;
+    
+    u32 unk60;
+    u32 unk64;
+    u32 unk68;
+    u32 unk6c;
+    
+    u32 unk70;
+    u32 unk74;
+    u32 unk78;
+    u32 unk7c;
+
+    s8 attack_item;
+    u8 unk81;
+    u8 unk82;
+    u8 unk83;
 };
 
 struct act_attackroll

@@ -1100,12 +1100,9 @@ struct point2d D_800309B8 = {0, 0};
 */
 struct point2d D_800309C0 = {0, 0};
 
-s32 D_800309C8 = 0;
-s32 D_800309CC = 0;
-s32 D_800309D0 = 0;
-s32 D_800309D4 = 0;
-s32 D_800309D8 = 0;
-s32 D_800309DC = 0;
+struct point2d D_800309C8 = {0, 0};
+struct point2d D_800309D0 = {0, 0};
+struct point2d D_800309D8 = {0, 0};
 
 struct point2d D_800309E0 = {0, 0};
 
