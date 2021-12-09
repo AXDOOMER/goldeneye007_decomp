@@ -448,7 +448,7 @@ void sub_GAME_7F0915BC(float scale)
 }
 
 
-void sub_GAME_7F091618(void)
+void handle_debug_intropos(void)
 {
     struct coord3d* pos; //needed to be declared but not used to match
     f32 x;
