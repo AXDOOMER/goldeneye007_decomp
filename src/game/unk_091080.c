@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "bondtypes.h"
 #include "game/unk_091080.h"
+#include "game/bondview.h"
 
 // bss
 //CODE.bss:80079E20
@@ -447,52 +448,19 @@ void sub_GAME_7F0915BC(float scale)
 }
 
 
-
-
-
-#ifdef NONMATCHING
-void handle_debug_intropos(void)
+void sub_GAME_7F091618(void)
 {
-    float __x;
-    
-    bondviewGetCurrentPlayersPosition();
-    __x = 6.2831855f -  get_curplay_horizontal_rotation_in_degrees();
-    cosf(__x);
-    sinf(__x);
-    cosf(__x);
-    sinf(__x);
+    struct coord3d* pos; //needed to be declared but not used to match
+    f32 x;
+
+    bondviewGetCurrentPlayersPosition();  //normally would return a coord3d pos but not here
+    x = 6.2831855f -  get_curplay_horizontal_rotation_in_degrees();
+    cosf(x);
+    sinf(x);
+    cosf(x);
+    sinf(x);
     return;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80055860
-.word 0x40c90fdb /*6.2831855*/
-.text
-glabel sub_GAME_7F091618
-/* 0C6148 7F091618 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0C614C 7F09161C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C6150 7F091620 0FC227F5 */  jal   bondviewGetCurrentPlayersPosition
-/* 0C6154 7F091624 00000000 */   nop   
-/* 0C6158 7F091628 0FC227B9 */  jal   get_curplay_horizontal_rotation_in_degrees
-/* 0C615C 7F09162C 00000000 */   nop   
-/* 0C6160 7F091630 3C018005 */  lui   $at, %hi(D_80055860)
-/* 0C6164 7F091634 C4245860 */  lwc1  $f4, %lo(D_80055860)($at)
-/* 0C6168 7F091638 46002301 */  sub.s $f12, $f4, $f0
-/* 0C616C 7F09163C 0FC15FA8 */  jal   cosf
-/* 0C6170 7F091640 E7AC0018 */   swc1  $f12, 0x18($sp)
-/* 0C6174 7F091644 0FC15FAB */  jal   sinf
-/* 0C6178 7F091648 C7AC0018 */   lwc1  $f12, 0x18($sp)
-/* 0C617C 7F09164C 0FC15FA8 */  jal   cosf
-/* 0C6180 7F091650 C7AC0018 */   lwc1  $f12, 0x18($sp)
-/* 0C6184 7F091654 0FC15FAB */  jal   sinf
-/* 0C6188 7F091658 C7AC0018 */   lwc1  $f12, 0x18($sp)
-/* 0C618C 7F09165C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C6190 7F091660 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0C6194 7F091664 03E00008 */  jr    $ra
-/* 0C6198 7F091668 00000000 */   nop   
-)
-#endif
 
 
 
