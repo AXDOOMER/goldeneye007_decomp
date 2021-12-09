@@ -5,6 +5,8 @@
 #include "chrai.h"
 #include "bondtypes.h"
 
+#define EXPLOSION_ANIMATION_TABLE_LEN 8
+
 struct struck_animation_table;
 
 struct animation_something
@@ -41,19 +43,19 @@ struct struck_animation_table
 
 struct explosion_death_animation
 {
-  s32 anonymous_0;
-  s32 anonymous_1;
-  f32 anonymous_2;
-  f32 anonymous_3;
-  f32 anonymous_4;
-  f32 anonymous_5;
-  f32 anonymous_6;
+    s32 anonymous_0;
+    s32 anonymous_1;
+    f32 anonymous_2;
+    f32 anonymous_3;
+    f32 anonymous_4;
+    f32 anonymous_5;
+    f32 anonymous_6;
 };
 
-struct explosion_animation
+struct explosion_anim_group_info
 {
-  void *explosion_death_animation;
-  s32 count;
+    s8 *table;
+    s32 count;
 };
 
 struct weapon_firing_animation_table
@@ -250,6 +252,9 @@ extern s16 male_guard_yelps[];
 
 extern struct coord3d D_80030A44;
 extern s16 metal_ricochet_SFX[3];
+
+extern struct explosion_anim_group_info explosion_animation_table[];
+extern struct explosion_death_animation D_8002E648[];
 
 void sub_GAME_7F022EE0(s32 param_1);
 void sub_GAME_7F022E24(s32 param_1);
