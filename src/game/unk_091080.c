@@ -459,11 +459,7 @@ void sub_GAME_7F091618(void)
     sinf(x);
     cosf(x);
     sinf(x);
-    return;
 }
-
-
-
 
 
 void debugSetWorldPos(void)
@@ -477,11 +473,6 @@ void debugSetWorldPos(void)
     D_80037060.z = stanbondx.z;
 }
 
-
-
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F0916F4(void)
 {
     struct coord3d *pos;
@@ -491,31 +482,7 @@ void sub_GAME_7F0916F4(void)
     stanbondx.y = pos->y;
     stanbondx.z = pos->z;
     dword_CODE_bss_80079E20 = 0;
-    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0916F4
-/* 0C6224 7F0916F4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C6228 7F0916F8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C622C 7F0916FC 0FC227F5 */  jal   bondviewGetCurrentPlayersPosition
-/* 0C6230 7F091700 00000000 */   nop   
-/* 0C6234 7F091704 C4440000 */  lwc1  $f4, ($v0)
-/* 0C6238 7F091708 3C038003 */  lui   $v1, %hi(stanbondx)
-/* 0C623C 7F09170C 24637014 */  addiu $v1, %lo(stanbondx) # addiu $v1, $v1, 0x7014
-/* 0C6240 7F091710 E4640000 */  swc1  $f4, ($v1)
-/* 0C6244 7F091714 C4460004 */  lwc1  $f6, 4($v0)
-/* 0C6248 7F091718 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C624C 7F09171C 3C018008 */  lui   $at, %hi(dword_CODE_bss_80079E20)
-/* 0C6250 7F091720 E4660004 */  swc1  $f6, 4($v1)
-/* 0C6254 7F091724 C4480008 */  lwc1  $f8, 8($v0)
-/* 0C6258 7F091728 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C625C 7F09172C E4680008 */  swc1  $f8, 8($v1)
-/* 0C6260 7F091730 03E00008 */  jr    $ra
-/* 0C6264 7F091734 AC209E20 */   sw    $zero, %lo(dword_CODE_bss_80079E20)($at)
-)
-#endif
 
 
 
