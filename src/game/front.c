@@ -4059,7 +4059,7 @@ void *constructor_menu05_fileselect(void *arg0)
     temp_v0_2->unk0 = 0x6000000;
     temp_t4 = arg0;
     arg0 = (void *) (temp_t4 + 8);
-    temp_t4->unk4 = &D_01000040;
+    temp_t4->unk4 = &fontDL_0x040;
     temp_t4->unk0 = 0x6000000;
     phi_s2 = &D_8002A968;
 loop_1:

@@ -16,11 +16,11 @@ ge007.*.dump
 assets/animationtable_data.bin
 assets/animationtable_entries.bin
 assets/font/*.bin
-assets/ge007.e.118660.jfont_chardata.bin
-assets/ge007.j.118660.jfont_chardata.bin
-assets/ge007.u.117880.jfont_dl.bin
-assets/ge007.u.117940.jfont_chardata.bin
-assets/ge007.u.123040.efont_chardata.bin
+assets/ge007.e.118660.font_chardataj.bin
+assets/ge007.j.118660.font_chardataj.bin
+assets/jfont_dl.bin
+assets/font_chardataj.bin
+assets/font_chardatae.bin
 assets/ge007.u.29D160.Globalimagetable.bin
 assets/ge007.u.29E560.Globalimagetable_commandblock.bin
 assets/ge007.u.2A4D50.usedby7F008DE4.bin

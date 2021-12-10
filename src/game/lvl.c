@@ -59,6 +59,7 @@
 #include "game/unk_0C0A70.h"
 #include "game/chr.h"
 #include "token.h"
+#include "assets/font_dl.h"
 
 // bss
 //CODE.bss:8008C260
@@ -242,8 +243,6 @@ s16 D_800483E6 = 0;
 extern u8* _fontdlSegmentRomStart;
 extern u8* _fontdlSegmentRomEnd;
 
-extern Gfx *D_01000020;
-extern Gfx *D_01000040;
 
 // forward declarations
 
@@ -1888,13 +1887,14 @@ glabel lvlPortalDebug7F0BDF10
  * 
  * Address 0x7F0BE30C (VERSION_US).
  */
+
 Gfx* lvlRender(Gfx* DL)
 {
     gSPSegment(DL++, 0, NULL);
     gSPSegment(DL++, 1, osVirtualToPhysical(ptr_font_DL));
 
-    gSPDisplayList(DL++, &D_01000040);
-    gSPDisplayList(DL++, &D_01000020);
+    gSPDisplayList(DL++, &fontDL_0x040);
+    gSPDisplayList(DL++, &fontDL_0x020);
 
     if (g_CurrentStageToLoad == LEVELID_TITLE)
     {
@@ -1924,17 +1924,17 @@ Gfx* lvlRender(Gfx* DL)
             DL = viClearZBufCurrentPlayer(DL);
             DL = video_related_F(DL);
             
-            if (get_debug_render_raster() == 0)
+            if (get_debug_render_raster() == DEB_MOVE_VIEW)
             {
                 DL = sub_GAME_7F091580(DL);
             }
 
-            if (get_debug_render_raster() == 1)
+            if (get_debug_render_raster() == DEB_STAN_VIEW)
             {
                 DL = sub_GAME_7F0B2D48(DL);
             }
 
-            if (get_debug_render_raster() == 2)
+            if (get_debug_render_raster() == DEB_BOND_VIEW)
             {
                 DL = sub_GAME_7F087A08(DL);
             }
@@ -1947,7 +1947,7 @@ Gfx* lvlRender(Gfx* DL)
             sub_GAME_7F03D78C();
             sub_GAME_7F03C294();
 
-            if (sub_GAME_7F089F38() && sub_GAME_7F03C4F0())
+            if (bond_pressed_reload_activate() && bond_interact_object())
             {
                 attempt_reload_item_in_hand(RIGHT_HAND);
                 attempt_reload_item_in_hand(LEFT_HAND);
@@ -2008,7 +2008,7 @@ Gfx* lvlRender(Gfx* DL)
                 }
             }
 
-            sub_GAME_7F022E24(get_debug_limit_controller_input() == 8);
+            setanimationdebugflag(getDebugMode() == DEB_SELANIM);
             DL = sub_GAME_7F049B58(DL);
 
 #if defined(VERSION_EU)
@@ -2035,7 +2035,7 @@ Gfx* lvlRender(Gfx* DL)
                 set_max_ammo_for_cur_player();
             }
 
-            if (get_debug_render_raster() == 2)
+            if (get_debug_render_raster() == DEB_BOND_VIEW)
             {
                 DL = maybe_mp_interface(DL);
             }
@@ -2516,7 +2516,7 @@ void lvlManageMpGame(void)
             lvlPortalDebug7F0BDF10(0);
         }
 
-        switch (get_debug_limit_controller_input())
+        switch (getDebugMode())
         {
             case 4:
             {
@@ -2558,7 +2558,7 @@ void lvlManageMpGame(void)
 
     }
 
-    switch (get_debug_limit_controller_input())
+    switch (getDebugMode())
     {
         case 0x38:
         {
@@ -3329,7 +3329,7 @@ glabel lvlManageMpGame
 /* 0F403C 7F0BF50C 0FC2F7C4 */  jal   lvlPortalDebug7F0BDF10
 /* 0F4040 7F0BF510 00002025 */   move  $a0, $zero
 .L7F0BF514:
-/* 0F4044 7F0BF514 0FC243C5 */  jal   get_debug_limit_controller_input
+/* 0F4044 7F0BF514 0FC243C5 */  jal   getDebugMode
 /* 0F4048 7F0BF518 00000000 */   nop
 /* 0F404C 7F0BF51C 24010004 */  li    $at, 4
 /* 0F4050 7F0BF520 10410006 */  beq   $v0, $at, .L7F0BF53C
@@ -3394,7 +3394,7 @@ glabel lvlManageMpGame
 /* 0F4124 7F0BF5F4 0FC08BB8 */  jal   sub_GAME_7F022EE0
 /* 0F4128 7F0BF5F8 0002202B */   sltu  $a0, $zero, $v0
 .L7F0BF5FC:
-/* 0F412C 7F0BF5FC 0FC243C5 */  jal   get_debug_limit_controller_input
+/* 0F412C 7F0BF5FC 0FC243C5 */  jal   getDebugMode
 /* 0F4130 7F0BF600 00000000 */   nop
 /* 0F4134 7F0BF604 2401000C */  li    $at, 12
 /* 0F4138 7F0BF608 1041002E */  beq   $v0, $at, .L7F0BF6C4
@@ -4220,7 +4220,7 @@ glabel lvlManageMpGame
 /* 0F4CB4 7F0C0144 0FC2FAB4 */  jal   lvlPortalDebug7F0BDF10
 /* 0F4CB8 7F0C0148 00002025 */   move  $a0, $zero
 .Ljp7F0C014C:
-/* 0F4CBC 7F0C014C 0FC2467D */  jal   get_debug_limit_controller_input
+/* 0F4CBC 7F0C014C 0FC2467D */  jal   getDebugMode
 /* 0F4CC0 7F0C0150 00000000 */   nop
 /* 0F4CC4 7F0C0154 24010004 */  li    $at, 4
 /* 0F4CC8 7F0C0158 10410006 */  beq   $v0, $at, .Ljp7F0C0174
@@ -4285,7 +4285,7 @@ glabel lvlManageMpGame
 /* 0F4D9C 7F0C022C 0FC08C72 */  jal   sub_GAME_7F022EE0
 /* 0F4DA0 7F0C0230 0002202B */   sltu  $a0, $zero, $v0
 .Ljp7F0C0234:
-/* 0F4DA4 7F0C0234 0FC2467D */  jal   get_debug_limit_controller_input
+/* 0F4DA4 7F0C0234 0FC2467D */  jal   getDebugMode
 /* 0F4DA8 7F0C0238 00000000 */   nop
 /* 0F4DAC 7F0C023C 2401000C */  li    $at, 12
 /* 0F4DB0 7F0C0240 1041002E */  beq   $v0, $at, .Ljp7F0C02FC
@@ -5100,7 +5100,7 @@ glabel lvlManageMpGame
 /* 0F403C 7F0BF50C 0FC2F7C4 */  jal   lvlPortalDebug7F0BDF10
 /* 0F4040 7F0BF510 00002025 */   move  $a0, $zero
 .L7F0BF514:
-/* 0F4044 7F0BF514 0FC243C5 */  jal   get_debug_limit_controller_input
+/* 0F4044 7F0BF514 0FC243C5 */  jal   getDebugMode
 /* 0F4048 7F0BF518 00000000 */   nop
 /* 0F404C 7F0BF51C 24010004 */  li    $at, 4
 /* 0F4050 7F0BF520 10410006 */  beq   $v0, $at, .L7F0BF53C
@@ -5165,7 +5165,7 @@ glabel lvlManageMpGame
 /* 0F4124 7F0BF5F4 0FC08BB8 */  jal   sub_GAME_7F022EE0
 /* 0F4128 7F0BF5F8 0002202B */   sltu  $a0, $zero, $v0
 .L7F0BF5FC:
-/* 0F412C 7F0BF5FC 0FC243C5 */  jal   get_debug_limit_controller_input
+/* 0F412C 7F0BF5FC 0FC243C5 */  jal   getDebugMode
 /* 0F4130 7F0BF600 00000000 */   nop
 /* 0F4134 7F0BF604 2401000C */  li    $at, 12
 /* 0F4138 7F0BF608 1041002E */  beq   $v0, $at, .L7F0BF6C4
@@ -5345,7 +5345,7 @@ void lvlUpdateMpPlayerData(void)
     {
         case 0:
         {
-            if ((get_debug_limit_controller_input() == 0) || ((get_debug_limit_controller_input() == 0x3B) && (D_80036ABC < 0)))
+            if ((getDebugMode() == DEB_MOVE_VIEW) || ((getDebugMode() == DEB_INTRO_EDIT) && (D_80036ABC < 0)))
             {
                 sub_GAME_7F091080(joyGetStickX(local_player_number), joyGetStickY(local_player_number), joyGetButtons(local_player_number, ANY_BUTTON));
             }
@@ -5358,7 +5358,7 @@ void lvlUpdateMpPlayerData(void)
 
         case 1:
         {
-            if (get_debug_limit_controller_input() == 1)
+            if (getDebugMode() == DEB_STAN_VIEW)
             {
                 sub_GAME_7F0B2D38(joyGetStickX(local_player_number), joyGetStickY(local_player_number), joyGetButtons(local_player_number, ANY_BUTTON));
             }
@@ -5371,7 +5371,7 @@ void lvlUpdateMpPlayerData(void)
 
         case 2:
         {
-            if (get_debug_limit_controller_input() == 2)
+            if (getDebugMode() == DEB_BOND_VIEW)
             {
                 bondviewMovePlayerUpdateViewport(joyGetStickX(local_player_number), joyGetStickY(local_player_number), joyGetButtons(local_player_number, ANY_BUTTON));
             }
@@ -5451,11 +5451,11 @@ glabel lvlUpdateMpPlayerData
 /* 0F4368 7F0BF838 1000006B */  b     .L7F0BF9E8
 /* 0F436C 7F0BF83C 00000000 */   nop
 .L7F0BF840:
-/* 0F4370 7F0BF840 0FC243C5 */  jal   get_debug_limit_controller_input
+/* 0F4370 7F0BF840 0FC243C5 */  jal   getDebugMode
 /* 0F4374 7F0BF844 00000000 */   nop
 /* 0F4378 7F0BF848 10400009 */  beqz  $v0, .L7F0BF870
 /* 0F437C 7F0BF84C 00000000 */   nop
-/* 0F4380 7F0BF850 0FC243C5 */  jal   get_debug_limit_controller_input
+/* 0F4380 7F0BF850 0FC243C5 */  jal   getDebugMode
 /* 0F4384 7F0BF854 00000000 */   nop
 /* 0F4388 7F0BF858 2401003B */  li    $at, 59
 /* 0F438C 7F0BF85C 14410013 */  bne   $v0, $at, .L7F0BF8AC
@@ -5494,7 +5494,7 @@ glabel lvlUpdateMpPlayerData
 /* 0F4408 7F0BF8D8 10000043 */  b     .L7F0BF9E8
 /* 0F440C 7F0BF8DC 00000000 */   nop
 .L7F0BF8E0:
-/* 0F4410 7F0BF8E0 0FC243C5 */  jal   get_debug_limit_controller_input
+/* 0F4410 7F0BF8E0 0FC243C5 */  jal   getDebugMode
 /* 0F4414 7F0BF8E4 00000000 */   nop
 /* 0F4418 7F0BF8E8 24010001 */  li    $at, 1
 /* 0F441C 7F0BF8EC 14410010 */  bne   $v0, $at, .L7F0BF930
@@ -5529,7 +5529,7 @@ glabel lvlUpdateMpPlayerData
 /* 0F448C 7F0BF95C 10000022 */  b     .L7F0BF9E8
 /* 0F4490 7F0BF960 00000000 */   nop
 .L7F0BF964:
-/* 0F4494 7F0BF964 0FC243C5 */  jal   get_debug_limit_controller_input
+/* 0F4494 7F0BF964 0FC243C5 */  jal   getDebugMode
 /* 0F4498 7F0BF968 00000000 */   nop
 /* 0F449C 7F0BF96C 24010002 */  li    $at, 2
 /* 0F44A0 7F0BF970 14410010 */  bne   $v0, $at, .L7F0BF9B4
@@ -5666,7 +5666,7 @@ void lvlUnloadStageTextData(void)
         }
     }
 
-    if (g_CurrentStageToLoad != 0x5a)
+    if (g_CurrentStageToLoad != LEVELID_TITLE)
     {
         blank_text_bank(get_textbank_number_for_stagenum(g_CurrentStageToLoad));
         sub_GAME_7F007770();

@@ -3104,7 +3104,7 @@ void display_string_in_lower_left_corner(char *string);
 #endif
 
 Gfx * sub_GAME_7F087A08(Gfx *arg0);
-s32 sub_GAME_7F089F38(void);
+s32 bond_pressed_reload_activate(void);
 Gfx* write_stan_tiles_in_yellow(Gfx *arg0);
 Gfx * maybe_mp_interface(Gfx *arg0);
 Gfx * bondviewRemoved7F08BCB8(Gfx *arg0);

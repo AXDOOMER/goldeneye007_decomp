@@ -7441,7 +7441,7 @@ void chrRemoved7F022E1C(f32 arg0)
 
 
 
-void sub_GAME_7F022E24(s32 param_1){
+void setanimationdebugflag(s32 param_1){
   D_8002C904 = param_1;
   return;
 }

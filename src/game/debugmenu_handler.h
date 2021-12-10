@@ -9,15 +9,15 @@ struct mcm_layout {
 
 
 
-extern s32 debug_limit_controller_input;
+extern s32 debug_mode;
 extern s32 debHighlightedOption;
 
 extern s32 show_debug_menu_flag;
 
 s32 get_debug_render_raster(void);
 s32 get_debug_freeze_processing(void);
-s32 get_debug_limit_controller_input(void);
-void set_debug_limit_controller_input(void);
+s32 getDebugMode(void);
+void setDebugMode(void);
 s32 get_memusage_display_flag(void);
 s32 get_debug_do_draw_bg(void);
 s32 get_debug_do_draw_obj(void);

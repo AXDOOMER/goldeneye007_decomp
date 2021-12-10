@@ -223,7 +223,7 @@ void determing_type_of_object_and_detection(void);
 void sub_GAME_7F03A240(void);
 void sub_GAME_7F03D78C(void);
 void sub_GAME_7F03C294(void);
-s32 sub_GAME_7F03C4F0(void);
+s32 bond_interact_object(void);
 void sub_GAME_7F03D0D4(void);
 void sub_GAME_7F03DD9C(struct PropRecord *, s16, struct player *);
 s32 remove_last_obj_pos_data_entry();

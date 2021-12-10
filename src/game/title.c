@@ -11,6 +11,7 @@
 #include "ramrom.h"
 #include "game/math_floor.h"
 #include "macro.h"
+#include "assets/font_dl.h"
 
 // bss
 //CODE.bss:80069550
@@ -96,12 +97,10 @@ u32 D_8002A8B0 = 0;
                 .word 0
 */
 
-extern Gfx *D_01000000;
-extern Gfx *D_01000040;
 Gfx *something_with_gunbarrel_and_rareware_logo_matrix_manip(Gfx *gdl) {
     guTranslate(&matrix_buffer_rarelogo_2[D_8002A7D0], x, y, -5.0f);
     guTranslate(&matrix_buffer_gunbarrel_1[D_8002A7D0], dword_CODE_bss_8006957C, dword_CODE_bss_80069580, -5.0f);
-    gSPDisplayList(gdl++, &D_01000000);
+    gSPDisplayList(gdl++, &fontDL_0x000);
 
     gdl = sub_GAME_7F01C1A4(insert_imageDL(gdl));
 
@@ -117,8 +116,8 @@ Gfx *something_with_gunbarrel_and_rareware_logo_matrix_manip(Gfx *gdl) {
 Gfx *insert_sight_backdrop_eye_intro(Gfx *gdl) {
     guTranslate(&matrix_buffer_rarelogo_2[D_8002A7D0], x + 768.0f, y - 40.0f, -5.0f);
     guScale(&matrix_buffer_gunbarrel_1[D_8002A7D0], 2.7f, 2.57f, 1.0f);
-    gSPDisplayList(gdl++, &D_01000000);
-    gSPDisplayList(gdl++, &D_01000040);
+    gSPDisplayList(gdl++, &fontDL_0x000);
+    gSPDisplayList(gdl++, &fontDL_0x040);
 
     gdl = sub_GAME_7F01C1A4(gdl);
 
@@ -143,7 +142,7 @@ Gfx *insert_sniper_sight_eye_intro(Gfx *gdl) {
     s32 sp3C[3] = D_8002A7DC;
     s32 sp30[3] = D_8002A7E8;
 
-    gSPDisplayList(gdl++, &D_01000000);
+    gSPDisplayList(gdl++, &fontDL_0x000);
 
     gdl = insert_imageDL(gdl);
 
@@ -448,7 +447,7 @@ void guLookAt(Mtx *m, float xEye, float yEye, float zEye, float xAt, float yAt, 
 void guRotate(Mtx *m, float a, float x, float y, float z);
 Gfx *load_display_rare_logo(Gfx *gdl, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     D_8002A878[2] = arg3;
-    gSPDisplayList(gdl++, &D_01000000);
+    gSPDisplayList(gdl++, &fontDL_0x000);
     gdl = insert_imageDL(gdl);
     {
         u16 perspNorm;
@@ -1129,7 +1128,7 @@ Gfx *sub_GAME_7F009254(Gfx *gdl) {
 
     case 1:
         #ifndef VERSION_EU
-        gSPDisplayList(gdl++, &D_01000000);
+        gSPDisplayList(gdl++, &fontDL_0x000);
         gdl = insert_sight_backdrop_eye_intro(insert_sniper_sight_eye_intro(insert_imageDL(insert_imageDL(insert_imageDL(insert_imageDL(insert_imageDL(gdl)))))));
         #else
         gdl = insert_sight_backdrop_eye_intro(insert_sniper_sight_eye_intro(gdl));
@@ -1195,7 +1194,7 @@ Gfx *sub_GAME_7F009254(Gfx *gdl) {
         break;
 
     case 6:
-        gSPDisplayList(gdl++, &D_01000000);
+        gSPDisplayList(gdl++, &fontDL_0x000);
         gdl = insert_imageDL(gdl);
         if (intro_eye_counter++ >= 0x1E) {
             intro_eye_counter = 0;
