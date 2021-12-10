@@ -67,7 +67,7 @@ struct point2d
             s32 y;
         };
         s32 p[2];
-    }
+    };
 };
 
 /**
@@ -1714,8 +1714,8 @@ struct ObjectRecord_f6c
 
     u32 unk90;
     f32 unk94;
-    ALSoundState * unk98;
-    ALSoundState * unk9c;
+    ALSoundState * unk98[2];
+    //ALSoundState * unk9c;
 
     u32 unka0;
     u32 unka4;
