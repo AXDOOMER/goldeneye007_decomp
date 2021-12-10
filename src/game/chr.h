@@ -5,6 +5,8 @@
 #include "chrai.h"
 #include "bondtypes.h"
 
+#define EXPLOSION_ANIMATION_TABLE_LEN 8
+
 struct struck_animation_table;
 
 struct animation_something
@@ -41,19 +43,19 @@ struct struck_animation_table
 
 struct explosion_death_animation
 {
-  s32 anonymous_0;
-  s32 anonymous_1;
-  f32 anonymous_2;
-  f32 anonymous_3;
-  f32 anonymous_4;
-  f32 anonymous_5;
-  f32 anonymous_6;
+    s32 anonymous_0;
+    s32 anonymous_1;
+    f32 anonymous_2;
+    f32 anonymous_3;
+    f32 anonymous_4;
+    f32 anonymous_5;
+    f32 anonymous_6;
 };
 
-struct explosion_animation
+struct explosion_anim_group_info
 {
-  void *explosion_death_animation;
-  s32 count;
+    s8 *table;
+    s32 count;
 };
 
 struct weapon_firing_animation_table
@@ -102,6 +104,12 @@ struct weapon_firing_animation_table
     */
     f32 anonymous_16;
     f32 anonymous_17;
+};
+
+struct anim_group_info
+{
+    struct weapon_firing_animation_table (*table)[];
+    s32 len;
 };
 
 extern s32 objectiveregisters1;
@@ -184,18 +192,12 @@ extern struct weapon_firing_animation_table crouched_doubles_firing_animation_gr
 extern struct weapon_firing_animation_table D_80030078[];
 extern struct weapon_firing_animation_table D_80030660[];
 
-extern void * ptr_rifle_firing_animation_group4[];
-extern void * ptr_rifle_firing_animation_groups[];
-extern void *  ptr_pistol_firing_animation_group5[];
-extern void * ptr_pistol_firing_animation_groups[];
-extern void * ptr_doubles_firing_animation_group3[];
-extern void * ptr_doubles_firing_animation_groups[];
-extern void * ptr_crouched_rifle_firing_animation_group3[];
-extern void * ptr_crouched_rifle_firing_animation_groups[];
-extern void * ptr_crouched_pistol_firing_animation_group3[];
-extern void * ptr_crouched_pistol_firing_animation_groups[];
-extern void * ptr_crouched_doubles_firing_animation_group3[];
-extern void * ptr_crouched_doubles_firing_animation_groups[];
+extern struct anim_group_info *ptr_rifle_firing_animation_groups[];
+extern struct anim_group_info *ptr_pistol_firing_animation_groups[];
+extern struct anim_group_info *ptr_doubles_firing_animation_groups[];
+extern struct anim_group_info *ptr_crouched_rifle_firing_animation_groups[];
+extern struct anim_group_info *ptr_crouched_pistol_firing_animation_groups[];
+extern struct anim_group_info *ptr_crouched_doubles_firing_animation_groups[];
 
 extern f32 animation_rate;
 extern s32 D_8002C904;
@@ -225,8 +227,17 @@ extern f32 D_8003099C;
 extern f32 D_800309A0;
 extern f32 D_800309A4;
 
+extern struct point2d D_800309A8;
+extern struct point2d D_800309B0;
 extern struct point2d D_800309B8;
 extern struct point2d D_800309C0;
+extern struct point2d D_800309C8;
+extern struct point2d D_800309D0;
+extern struct point2d D_800309D8;
+extern struct point2d D_800309E0;
+extern struct point2d D_800309E8;
+extern struct point2d D_800309F0;
+
 
 extern u32 num_bodies;
 extern u32 num_male_heads;
@@ -246,6 +257,9 @@ extern s16 male_guard_yelps[];
 extern struct coord3d D_80030A44;
 extern s16 metal_ricochet_SFX[3];
 
+extern struct explosion_anim_group_info explosion_animation_table[];
+extern struct explosion_death_animation D_8002E648[];
+
 void sub_GAME_7F022EE0(s32 param_1);
 void setanimationdebugflag(s32 param_1);
 void disable_sounds_attached_to_player_then_something(struct PropRecord* prop);
@@ -254,8 +268,8 @@ void set_or_unset_GUARDdata_flag(struct ChrRecord *guard,s32 param_2);
 s32 sub_GAME_7F021BFC();
 f32 get_animation_rate(void);
 void animation_speed_related(f32);
-struct PropRecord * init_GUARDdata_with_set_values(struct PropRecord *, struct Model *, struct pad *, f32 arg2, struct StandTile * arg3, s32 arg4);
-struct PropRecord * replace_GUARDdata_with_actual_values(struct Model * arg0, struct pad * arg1, f32 arg2, struct StandTile * arg3, s32 arg4);
+struct PropRecord * init_GUARDdata_with_set_values(struct PropRecord *, struct Model *, struct coord3d *, f32 arg2, struct StandTile * arg3, s32 arg4);
+struct PropRecord * replace_GUARDdata_with_actual_values(struct Model * arg0, struct coord3d * arg1, f32 arg2, struct StandTile * arg3, s32 arg4);
 void chrSetHiddenToRandom(struct ChrRecord *arg0);
 void  chrRemoved7F022E1C(f32 arg0);
 void chrDecrementAnimationTablePointerCount(void);
@@ -271,6 +285,8 @@ f32 chrGetChrGround(struct PropRecord *arg0);
 void sub_GAME_7F021B20(struct ChrRecord *arg0);
 s32 get_numguards(void);
 
+//tentative signature
+s32 sub_GAME_7F01FC10(Model *, struct coord3d *, struct coord3d *, f32 *);
 
 #ifndef VERSION_US
 s32 not_in_us_7F0209EC(s32 bodynum, s32 headnum);

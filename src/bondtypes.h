@@ -67,7 +67,7 @@ struct point2d
             s32 y;
         };
         s32 p[2];
-    }
+    };
 };
 
 /**
@@ -1087,23 +1087,33 @@ struct act_attack
     
     s8 unk30;                                                        /*0x30*/
     s8 unk31;
-    u8 unk32;                                                         /*0x32*/
+    s8 unk32;                                                         /*0x32*/
     s8 unk33;                                                         /*0x33*/
     
     s8 unk34;                                                         /*0x34*/
-    u8 unk35;                                                         /*0x35*/
+    s8 unk35;                                                         /*0x35*/
     s8 unk36;                                                         /*0x36*/
     s8 unk37;
 
-    s8 unk38;                                                        /*0x38*/
-    s8 unk39;
-    s8 unk3a;
-    s8 unk3b;
+    s8 unk38[2];                                                        /*0x38*/
+    s8 unk3a[2];
 
-    u32 unk03c;                                                        /*0x3c*/
-    u32 unk040;                                                        /*0x40*/
-    u32 unk044;                                                        /*0x44*/
-    u32 attack_time;                                                   /*0x48*/
+    s8 unk3c[2];                                                       /*0x3c*/
+    s8 unk3e;
+    s8 unk3f;
+    
+    u32 unk40;                                                        /*0x40*/
+
+    /**
+     * Related to attack_time, maybe previous attack time?
+     * Offset 0x44.
+    */
+    s32 unk44;
+
+    /**
+     * Offset 0x48.
+    */
+    s32 attack_time;
 
     /**
      * attack type is the target flag used by the AI fire at target commands.
@@ -1144,9 +1154,7 @@ struct act_attackwalk
     s32 unk044;                                                        /*0x44*/
     
     s8 unk48[2];                                                        /*0x48*/
-    //s8 unk49;                                                        /*0x48*/
     s8 unk4a[2];                                                        /*0x48*/
-    //s8 unk4b;                                                        /*0x48*/
 
     s8 unk4C[2];                                                        /*0x4c*/
     u8 flip;                                                           /*0x4e*/
@@ -1154,40 +1162,79 @@ struct act_attackwalk
 
     s32 unk50;
     f32 speed;
+
+    u32 unk58;
+    u32 unk5C;
+    
+    u32 unk60;
+    u32 unk64;
+    u32 unk68;
+    u32 unk6c;
+    
+    u32 unk70;
+    u32 unk74;
+    u32 unk78;
+    u32 unk7c;
+
+    s8 attack_item;
+    u8 unk81;
+    u8 unk82;
+    u8 unk83;
 };
 
 struct act_attackroll
 {
-    struct weapon_firing_animation_table *animfloats;                   /*0x2c*/
-
+    struct weapon_firing_animation_table *animfloats;                  /*0x2c*/
+    
     s8 unk30;                                                        /*0x30*/
-    s8 unk31;                                                        /*0x31*/
-    s8 unk32;                                                        /*0x32*/
-    s8 unk33;                                                        /*0x33*/
-
-    u8 unk34;                                                         /*0x34*/
+    s8 unk31;
+    s8 unk32;                                                         /*0x32*/
+    s8 unk33;                                                         /*0x33*/
+    
+    s8 unk34;                                                         /*0x34*/
     s8 unk35;                                                         /*0x35*/
     s8 unk36;                                                         /*0x36*/
     s8 unk37;
 
-    s8 unk38;                                                        /*0x38*/
-    s8 unk39;
-    s8 unk3a;
-    s8 unk3b;
-    
-    u16 unk03c;                                                        /*0x3c*/
-    s8 flip;                                                           /*0x3e*/
-    s8 unk3f;                                                           /*0x3f*/
+    s8 unk38[2];                                                        /*0x38*/
+    s8 unk3a[2];
+
+    s8 unk3c[2];                                                       /*0x3c*/
+    s8 unk3e;
+    s8 unk3f;
 
     u32 unk40;                                                        /*0x40*/
-    u32 unk44;                                                        /*0x44*/
-    u32 unk48;                                                        /*0x48*/
-    u32 flags;                                                        /*0x4c*/
 
-    u32 unk50;
-    u32 unk54;
-    f32 unk58;
-    f32 unk5c;
+    /**
+     * Related to attack_time, maybe previous attack time?
+     * Offset 0x44.
+    */
+    s32 unk44;
+
+    /**
+     * Offset 0x48.
+    */
+    s32 attack_time;
+    
+    s32 unk4c[2];
+    s32 unk54[2];
+
+    u32 unk5C;
+    
+    u32 unk60;
+    u32 unk64;
+    u32 unk68;
+    u32 unk6c;
+    
+    u32 unk70;
+    u32 unk74;
+    u32 unk78;
+    u32 unk7c;
+
+    s8 attack_item;
+    u8 unk81;
+    u8 unk82;
+    u8 unk83;
 };
 
 struct act_sidestep
@@ -1278,6 +1325,7 @@ struct act_gopos
     // offset 0x5c
     struct waydata waydata;
 
+    // last update time?
     s32 unk9c;
 
     /**
@@ -1666,8 +1714,8 @@ struct ObjectRecord_f6c
 
     u32 unk90;
     f32 unk94;
-    ALSoundState * unk98;
-    ALSoundState * unk9c;
+    ALSoundState * unk98[2];
+    //ALSoundState * unk9c;
 
     u32 unka0;
     u32 unka4;

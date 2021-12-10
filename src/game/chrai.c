@@ -23466,7 +23466,7 @@ void chraiGetCollisionBoundsWithoutY(PropRecord *arg0, struct rect4f **arg1, s32
 /**
  * Address 0x7F03CCD8.
 */
-s32 sub_GAME_7F03CCD8(struct rect4f *arg0, struct rect4f *arg1, s32 arg2)
+s32 sub_GAME_7F03CCD8(struct coord3d *arg0, struct rect4f *arg1, s32 arg2)
 {
     f32 diff;
     s32 i;
@@ -23480,8 +23480,8 @@ s32 sub_GAME_7F03CCD8(struct rect4f *arg0, struct rect4f *arg1, s32 arg2)
     for (i=0; i<arg2; i++)
     {
         // curse you compiler loop unroller
-        diff = (    (arg1->points[(i+1) % arg2].f[1] - arg1->points[i].f[1]) * (arg0->points[0].f[0] - arg1->points[i].f[0])) 
-                 - ((arg1->points[(i+1) % arg2].f[0] - arg1->points[i].f[0]) * (arg0->points[1].f[0] - arg1->points[i].f[1]));
+        diff = (    (arg1->points[(i+1) % arg2].f[1] - arg1->points[i].f[1]) * (arg0->f[0] - arg1->points[i].f[0])) 
+                 - ((arg1->points[(i+1) % arg2].f[0] - arg1->points[i].f[0]) * (arg0->f[2] - arg1->points[i].f[1]));
 
         if (diff != 0.0f)
         {

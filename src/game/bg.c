@@ -3910,15 +3910,15 @@ s32 getMaxNumRooms(void) {
 }
 
 
-u8 * getROOMID_Bitflags(int roomID)
+s32 getROOMID_Bitflags(int roomID)
 {
-    return *&array_room_info[roomID].bitflags;
+    return (s32)array_room_info[roomID].bitflags;
 }
 
 
-u8* getROOMID_Bitflags1(s32 roomID)
+s32 getROOMID_Bitflags1(s32 roomID)
 {
-    return *&array_room_info[roomID].bitflags1;
+    return (s32)array_room_info[roomID].bitflags1;
 }
 
 

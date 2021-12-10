@@ -15,7 +15,7 @@ extern s32 vtxallocator;
 void sub_GAME_7F070090(void *arg0, f32 arg1, f32 arg2);
 void sub_GAME_7F06FF18(struct object_standard *, f32, f32);
 void set_obj_instance_controller_scale(struct Model*, f32);
-void getsuboffset(s32, struct coord3d *);
+void getsuboffset(struct Model *, struct coord3d *);
 void sub_GAME_7F070AEC(struct object_standard *, s32, s32);
 void subcalcpos(struct object_standard *);
 
@@ -44,6 +44,15 @@ void load_object_into_memory_unused_maybe(struct ModelFileHeader *header,int *re
 void set_objuse_flag_compute_grp_nums_set_obj_loaded(struct ModelFileHeader *objheader);
 struct Model *get_aircraft_obj_instance_controller(struct ModelFileHeader *);
 void sub_GAME_7F06C3B4(struct Model *, s32, struct  ModelFileHeader *);
+
+// tentative signature
+void setpartoffset(Model *, ModelNode *, struct coord3d *);
+
+// tentative signature
+void setsuboffset(Model *arg0, struct coord3d *arg1);
+
+// tentative signature
+struct PropRecord *actor_draws_weapon_with_model(struct ChrRecord *arg0, s32 arg1, s32 item_id, s32 flags);
 
 // tentative signature
 Mtxf* sub_GAME_7F06C660(struct Model *arg0, struct ModelNode *arg1, s32 arg2);

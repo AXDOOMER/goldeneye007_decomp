@@ -43,7 +43,7 @@ bool actor_jogs_sideways(ChrRecord *self);
 bool actor_walks_and_fires(ChrRecord *self);
 bool actor_runs_and_fires(ChrRecord *self);
 bool actor_rolls_fires_crouched(ChrRecord *self);
-bool actor_aim_at_actor(ChrRecord *self, s32 a, s32 b);
+bool actor_aim_at_actor(ChrRecord *self, s32 attack_type, s32 b);
 bool actor_kneel_aim_at_actor(ChrRecord *self, s32 targettype, s32 targetid);
 bool check_set_actor_standing_still(ChrRecord *self, s32 faceentitytype, s32 faceentityid);
 bool actor_moves_to_preset_at_speed(ChrRecord *self, s32 padid, SPEED speed);
@@ -114,5 +114,6 @@ bool actor_draws_throws_grenade_at_player_if_possible(struct ChrRecord *self);
 bool actor_drops_itemtype_setting_timer(struct ChrRecord *self, s32 modelnum, u8 weaponid);
 void expand_09_characters(s32 arg0, GuardRecord *arg1, s32 arg2);
 void chrlvGetPatrolPercentOrPosition(ChrRecord *arg0, struct coord3d *arg1);
+s32 chrlvExplosionDamage(ChrRecord *arg0, struct coord3d *arg1, f32 arg2, s32 arg3);
 
 #endif

@@ -22232,7 +22232,7 @@ glabel MoveBond
 /* 0BB3C0 7F086890 E7AA0074 */  swc1  $f10, 0x74($sp)
 /* 0BB3C4 7F086894 C5460060 */  lwc1  $f6, 0x60($t2)
 /* 0BB3C8 7F086898 E7A60078 */  swc1  $f6, 0x78($sp)
-/* 0BB3CC 7F08689C 0FC09E01 */  jal   sub_GAME_7F027804
+/* 0BB3CC 7F08689C 0FC09E01 */  jal   chrlvExplosionDamage
 /* 0BB3D0 7F0868A0 8E040004 */   lw    $a0, 4($s0)
 /* 0BB3D4 7F0868A4 1000001E */  b     .L7F086920
 /* 0BB3D8 7F0868A8 8FAF008C */   lw    $t7, 0x8c($sp)
@@ -24779,7 +24779,7 @@ glabel MoveBond
 /* 0BBACC 7F086F5C E7AA0074 */  swc1  $f10, 0x74($sp)
 /* 0BBAD0 7F086F60 C7260060 */  lwc1  $f6, 0x60($t9)
 /* 0BBAD4 7F086F64 E7A60078 */  swc1  $f6, 0x78($sp)
-/* 0BBAD8 7F086F68 0FC09EC3 */  jal   sub_GAME_7F027804
+/* 0BBAD8 7F086F68 0FC09EC3 */  jal   chrlvExplosionDamage
 /* 0BBADC 7F086F6C 8E040004 */   lw    $a0, 4($s0)
 /* 0BBAE0 7F086F70 1000001E */  b     .Ljp7F086FEC
 /* 0BBAE4 7F086F74 8FAC008C */   lw    $t4, 0x8c($sp)
@@ -27309,7 +27309,7 @@ glabel MoveBond
 /* 0B93A0 7F0869B0 E7A80074 */  swc1  $f8, 0x74($sp)
 /* 0B93A4 7F0869B4 C5CA0060 */  lwc1  $f10, 0x60($t6)
 /* 0B93A8 7F0869B8 E7AA0078 */  swc1  $f10, 0x78($sp)
-/* 0B93AC 7F0869BC 0FC09E07 */  jal   sub_GAME_7F027804
+/* 0B93AC 7F0869BC 0FC09E07 */  jal   chrlvExplosionDamage
 /* 0B93B0 7F0869C0 8E040004 */   lw    $a0, 4($s0)
 /* 0B93B4 7F0869C4 1000001E */  b     .L7F086A40
 /* 0B93B8 7F0869C8 8FAA008C */   lw    $t2, 0x8c($sp)
