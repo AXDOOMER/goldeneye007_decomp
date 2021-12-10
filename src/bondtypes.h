@@ -1325,6 +1325,7 @@ struct act_gopos
     // offset 0x5c
     struct waydata waydata;
 
+    // last update time?
     s32 unk9c;
 
     /**

@@ -285,6 +285,8 @@ f32 chrGetChrGround(struct PropRecord *arg0);
 void sub_GAME_7F021B20(struct ChrRecord *arg0);
 s32 get_numguards(void);
 
+//tentative signature
+s32 sub_GAME_7F01FC10(Model *, struct coord3d *, struct coord3d *, f32 *);
 
 #ifndef VERSION_US
 s32 not_in_us_7F0209EC(s32 bodynum, s32 headnum);

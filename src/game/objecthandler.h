@@ -46,6 +46,12 @@ struct Model *get_aircraft_obj_instance_controller(struct ModelFileHeader *);
 void sub_GAME_7F06C3B4(struct Model *, s32, struct  ModelFileHeader *);
 
 // tentative signature
+void setpartoffset(Model *, ModelNode *, struct coord3d *);
+
+// tentative signature
+void setsuboffset(Model *arg0, struct coord3d *arg1);
+
+// tentative signature
 Mtxf* sub_GAME_7F06C660(struct Model *arg0, struct ModelNode *arg1, s32 arg2);
 
 #ifndef VERSION_EU
