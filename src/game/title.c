@@ -488,15 +488,15 @@ Gfx *load_display_rare_logo(Gfx *gdl, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 }
 
 extern void *_GlobalimagetablecmdblkSegmentRomStart;
-extern void *D_02000000;
-extern void *D_020067F0;
+extern void *_GlobalimagetablecmdblkSegmentStart;
+extern void *_GlobalimagetablecmdblkSegmentEnd; 
 void sub_GAME_7F008B58(s32 address, s32 size) {
     gunbarrel_mode = 0;
     x = 880.0f;
     D_8002A89C = -40.0f;
     intro_eye_counter = 0;
     virtualaddress = address;
-    romCopy(virtualaddress, &_GlobalimagetablecmdblkSegmentRomStart, ALIGN64_V2((u32)&D_020067F0 - (u32)&D_02000000));
+    romCopy(virtualaddress, &_GlobalimagetablecmdblkSegmentRomStart, ALIGN64_V2((u32)&_GlobalimagetablecmdblkSegmentEnd - (u32)&_GlobalimagetablecmdblkSegmentStart));
 }
 
 Gfx *retrieve_display_rareware_logo(Gfx *gdl) {
