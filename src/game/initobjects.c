@@ -54,13 +54,13 @@ glabel init_load_objpos_table
 /* 036028 7F0014F8 AC400000 */  sw    $zero, ($v0)
 /* 03602C 7F0014FC 3C018003 */  lui   $at, %hi(ptr_obj_pos_list_current_entry)
 /* 036030 7F001500 AC200AA0 */  sw    $zero, %lo(ptr_obj_pos_list_current_entry)($at)
-/* 036034 7F001504 3C018007 */  lui   $at, %hi(dword_CODE_bss_80071DF4)
-/* 036038 7F001508 3C038007 */  lui   $v1, %hi(dword_CODE_bss_80071620)
-/* 03603C 7F00150C AC201DF4 */  sw    $zero, %lo(dword_CODE_bss_80071DF4)($at)
-/* 036040 7F001510 24631620 */  addiu $v1, %lo(dword_CODE_bss_80071620) # addiu $v1, $v1, 0x1620
+/* 036034 7F001504 3C018007 */  lui   $at, %hi(g_OnScreenPropCount)
+/* 036038 7F001508 3C038007 */  lui   $v1, %hi(g_OnScreenPropList)
+/* 03603C 7F00150C AC201DF4 */  sw    $zero, %lo(g_OnScreenPropCount)($at)
+/* 036040 7F001510 24631620 */  addiu $v1, %lo(g_OnScreenPropList) # addiu $v1, $v1, 0x1620
 /* 036044 7F001514 AC600000 */  sw    $zero, ($v1)
-/* 036048 7F001518 3C018007 */  lui   $at, %hi(dword_CODE_bss_80071DF0)
-/* 03604C 7F00151C AC231DF0 */  sw    $v1, %lo(dword_CODE_bss_80071DF0)($at)
+/* 036048 7F001518 3C018007 */  lui   $at, %hi(g_LastOnScreenProp)
+/* 03604C 7F00151C AC231DF0 */  sw    $v1, %lo(g_LastOnScreenProp)($at)
 /* 036050 7F001520 3C0F8007 */  lui   $t7, %hi(pos_data_entry) 
 /* 036054 7F001524 25EF9C38 */  addiu $t7, %lo(pos_data_entry) # addiu $t7, $t7, -0x63c8
 /* 036058 7F001528 3C018003 */  lui   $at, %hi(ptr_obj_pos_list_final_entry)

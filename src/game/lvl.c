@@ -1943,7 +1943,7 @@ Gfx* lvlRender(Gfx* DL)
             DL = sub_GAME_7F094488(DL);
             sub_GAME_7F0B4884();
             determing_type_of_object_and_detection();
-            sub_GAME_7F03A240();
+            chraiUpdateOnscreenPropCount();
             sub_GAME_7F03D78C();
             sub_GAME_7F03C294();
 

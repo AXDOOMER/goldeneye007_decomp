@@ -213,6 +213,13 @@ extern struct object_standard * ptr_setup_objects;
 extern s16 * ptr_list_object_lookup_indices;
 extern struct PropRecord pos_data_entry[];
 
+extern struct PropRecord *ptr_obj_pos_list_current_entry;
+extern struct PropRecord *ptr_obj_pos_list_first_entry;
+extern struct PropRecord *ptr_obj_pos_list_final_entry;
+
+extern s32 g_OnScreenPropCount;
+extern struct PropRecord *g_LastOnScreenProp;
+extern struct PropRecord *g_OnScreenPropList[];
 
 
 void stop_alarm(void);
@@ -220,7 +227,7 @@ void stop_alarm(void);
 void check_deactivate_gas_sound(void);
 void handle_mp_respawn_and_some_things(void);
 void determing_type_of_object_and_detection(void);
-void sub_GAME_7F03A240(void);
+void chraiUpdateOnscreenPropCount(void);
 void sub_GAME_7F03D78C(void);
 void sub_GAME_7F03C294(void);
 s32 sub_GAME_7F03C4F0(void);
@@ -242,5 +249,6 @@ s32 sub_GAME_7F03CCD8(struct coord3d *arg0, struct rect4f *arg1, s32 arg2);
 void sub_GAME_7F03E3FC(s32 *);
 struct ObjectRecord *scan_position_data_table_for_normal_object_at_preset(s32 arg0);
 Gfx *sub_GAME_7F03A6F4(Gfx *arg0, s32 arg1, s32 arg2);
+struct PropRecord *get_ptr_obj_pos_list_current_entry(void);
 
 #endif
