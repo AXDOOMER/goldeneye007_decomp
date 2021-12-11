@@ -4190,7 +4190,7 @@ def_7F0C40C0:
 /* 0FAA54 7F0C5F24 50200043 */  beql  $at, $zero, .L7F0C6034
 /* 0FAA58 7F0C5F28 02201025 */   move  $v0, $s1
 .L7F0C5F2C:
-/* 0FAA5C 7F0C5F2C 0FC2D3ED */  jal   sub_GAME_7F0B4FB4
+/* 0FAA5C 7F0C5F2C 0FC2D3ED */  jal   bgScissorCurrentPlayerViewDefault
 /* 0FAA60 7F0C5F30 02202025 */   move  $a0, $s1
 /* 0FAA64 7F0C5F34 0FC2B366 */  jal   microcode_constructor
 /* 0FAA68 7F0C5F38 00402025 */   move  $a0, $v0
@@ -6365,7 +6365,7 @@ def_7F0C40C0:
 /* 0FB744 7F0C6BD4 50200050 */  beql  $at, $zero, .Ljp7F0C6D18
 /* 0FB748 7F0C6BD8 02201025 */   move  $v0, $s1
 .Ljp7F0C6BDC:
-/* 0FB74C 7F0C6BDC 0FC2D6D9 */  jal   sub_GAME_7F0B4FB4
+/* 0FB74C 7F0C6BDC 0FC2D6D9 */  jal   bgScissorCurrentPlayerViewDefault
 /* 0FB750 7F0C6BE0 02202025 */   move  $a0, $s1
 /* 0FB754 7F0C6BE4 0FC2B652 */  jal   microcode_constructor
 /* 0FB758 7F0C6BE8 00402025 */   move  $a0, $v0
@@ -8553,7 +8553,7 @@ def_7F0C40C0:
 /* 0FAA54 7F0C5F24 50200043 */  beql  $at, $zero, .L7F0C6034
 /* 0FAA58 7F0C5F28 02201025 */   move  $v0, $s1
 .L7F0C5F2C:
-/* 0FAA5C 7F0C5F2C 0FC2D3ED */  jal   sub_GAME_7F0B4FB4
+/* 0FAA5C 7F0C5F2C 0FC2D3ED */  jal   bgScissorCurrentPlayerViewDefault
 /* 0FAA60 7F0C5F30 02202025 */   move  $a0, $s1
 /* 0FAA64 7F0C5F34 0FC2B366 */  jal   microcode_constructor
 /* 0FAA68 7F0C5F38 00402025 */   move  $a0, $v0

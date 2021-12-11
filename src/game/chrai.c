@@ -20708,7 +20708,7 @@ glabel sub_GAME_7F03A6F4
 /* 06F470 7F03A940 5420FFD4 */  bnezl $at, .L7F03A894
 /* 06F474 7F03A944 8E720000 */   lw    $s2, ($s3)
 .L7F03A948:
-/* 06F478 7F03A948 0FC2D3ED */  jal   sub_GAME_7F0B4FB4
+/* 06F478 7F03A948 0FC2D3ED */  jal   bgScissorCurrentPlayerViewDefault
 /* 06F47C 7F03A94C 02802025 */   move  $a0, $s4
 .L7F03A950:
 /* 06F480 7F03A950 8FBF0034 */  lw    $ra, 0x34($sp)

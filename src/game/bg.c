@@ -261,7 +261,7 @@ Gfx *sub_GAME_7F0B3C8C(Gfx *arg0);
 // second parameter is almost certainly a struct
 void sub_GAME_7F0B96CC(f32 arg0, f32 *arg1);
 s32 sub_GAME_7F0B993C(f32 arg0);
-s32 sub_GAME_7F0B5058(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+Gfx *bgScissorCurrentPlayerView(Gfx *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 // end forward declarations
 
@@ -1066,7 +1066,7 @@ glabel sub_GAME_7F0B3C8C
 /* 0E88FC 7F0B3DCC 8E46000C */  lw    $a2, 0xc($s2)
 /* 0E8900 7F0B3DD0 8E450008 */  lw    $a1, 8($s2)
 /* 0E8904 7F0B3DD4 02002025 */  move  $a0, $s0
-/* 0E8908 7F0B3DD8 0FC2D3FD */  jal   sub_GAME_7F0B4FF4
+/* 0E8908 7F0B3DD8 0FC2D3FD */  jal   bgScissorCurrentPlayerViewF
 /* 0E890C 7F0B3DDC E7A40010 */   swc1  $f4, 0x10($sp)
 /* 0E8910 7F0B3DE0 00402025 */  move  $a0, $v0
 /* 0E8914 7F0B3DE4 0FC2EC1C */  jal   sub_GAME_7F0BB070
@@ -1123,7 +1123,7 @@ glabel sub_GAME_7F0B3C8C
 /* 0E89C8 7F0B3E98 36940040 */  ori   $s4, (0x01030040 & 0xFFFF) # ori $s4, $s4, 0x40
 /* 0E89CC 7F0B3E9C 0FC2ECA6 */  jal   sub_GAME_7F0BB298
 /* 0E89D0 7F0B3EA0 02002025 */   move  $a0, $s0
-/* 0E89D4 7F0B3EA4 0FC2D3ED */  jal   sub_GAME_7F0B4FB4
+/* 0E89D4 7F0B3EA4 0FC2D3ED */  jal   bgScissorCurrentPlayerViewDefault
 /* 0E89D8 7F0B3EA8 00402025 */   move  $a0, $v0
 /* 0E89DC 7F0B3EAC 00408825 */  move  $s1, $v0
 /* 0E89E0 7F0B3EB0 24500008 */  addiu $s0, $v0, 8
@@ -1168,7 +1168,7 @@ glabel sub_GAME_7F0B3C8C
 /* 0E8A70 7F0B3F40 8E46000C */  lw    $a2, 0xc($s2)
 /* 0E8A74 7F0B3F44 8E450008 */  lw    $a1, 8($s2)
 /* 0E8A78 7F0B3F48 02002025 */  move  $a0, $s0
-/* 0E8A7C 7F0B3F4C 0FC2D3FD */  jal   sub_GAME_7F0B4FF4
+/* 0E8A7C 7F0B3F4C 0FC2D3FD */  jal   bgScissorCurrentPlayerViewF
 /* 0E8A80 7F0B3F50 E7A60010 */   swc1  $f6, 0x10($sp)
 /* 0E8A84 7F0B3F54 00402025 */  move  $a0, $v0
 /* 0E8A88 7F0B3F58 0FC2EC1C */  jal   sub_GAME_7F0BB070
@@ -2418,7 +2418,7 @@ Gfx *bgLevelRender(Gfx *arg0)
     }
     else
     {
-        arg0 = sub_GAME_7F0BB298(sub_GAME_7F0B4FB4(sub_GAME_7F0B8D78(sub_GAME_7F0BB070(arg0, 0))));
+        arg0 = sub_GAME_7F0BB298(bgScissorCurrentPlayerViewDefault(sub_GAME_7F0B8D78(sub_GAME_7F0BB070(arg0, 0))));
     }
 
     gSPMatrix(arg0++, g_viProjectionMatrix, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
@@ -2452,11 +2452,12 @@ glabel sub_GAME_7F0B4F9C
 
 
 /**
+ * Calls @see bgScissorCurrentPlayerView with default current player values.
  * Address 0x7F0B4FB4.
  */
-Gfx* sub_GAME_7F0B4FB4(Gfx* arg0)
+Gfx* bgScissorCurrentPlayerViewDefault(Gfx* arg0)
 {
-    return sub_GAME_7F0B5058(
+    return bgScissorCurrentPlayerView(
         arg0,
         g_CurrentPlayer->viewleft,
         g_CurrentPlayer->viewtop,
@@ -2469,11 +2470,12 @@ Gfx* sub_GAME_7F0B4FB4(Gfx* arg0)
 
 
 /**
+ * Same as @see bgScissorCurrentPlayerView, but accepts float parameters.
  * Address 0x7F0B4FF4.
  */
-Gfx* sub_GAME_7F0B4FF4(Gfx* arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
+Gfx* bgScissorCurrentPlayerViewF(Gfx* arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
 {
-    return sub_GAME_7F0B5058(
+    return bgScissorCurrentPlayerView(
         arg0,
         (s32)arg1,
         (s32)arg2,
@@ -2485,89 +2487,48 @@ Gfx* sub_GAME_7F0B4FF4(Gfx* arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0B5058(void) {
+/**
+ * Specifies the drawing area (the scissoring box).
+ * View is bound to current player view properties, but parameters can clip to smaller area.
+ * 
+ * @param arg0: Display list pointer
+ * @param left: Screen's left edge coordinates. Must be >= g_CurrentPlayer->viewleft otherwise ignored.
+ * @param top: Screen's top edge coordinates. Must be >= g_CurrentPlayer->viewtop otherwise ignored.
+ * @param width: Screen's right edge coordinates. Must be <= g_CurrentPlayer->viewleft+viewx otherwise ignored.
+ * @param height: Screen's left bottom coordinates. Must be <= g_CurrentPlayer->viewtop+viewy otherwise ignored.
+ * 
+ * Address 0x7F0B5058.
+*/
+Gfx *bgScissorCurrentPlayerView(Gfx *arg0, s32 left, s32 top, s32 width, s32 height)
+{
+    struct player *temp_v0;
 
+    temp_v0 = g_CurrentPlayer;
+
+    if (left < (s32) temp_v0->viewleft)
+    {
+        left = (s32) temp_v0->viewleft;
+    }
+
+    if (top < (s32) temp_v0->viewtop)
+    {
+        top = (s32) temp_v0->viewtop;
+    }
+
+    if (temp_v0->viewleft + temp_v0->viewx < width)
+    {
+        width = temp_v0->viewleft + temp_v0->viewx;
+    }
+
+    if (temp_v0->viewtop + temp_v0->viewy < height)
+    {
+        height = temp_v0->viewtop + temp_v0->viewy;
+    }
+
+    gDPSetScissor(arg0++, G_SC_NON_INTERLACE, left, top, width, height);
+
+    return arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B5058
-/* 0E9B88 7F0B5058 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
-/* 0E9B8C 7F0B505C 8C42A0B0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
-/* 0E9B90 7F0B5060 AFA40000 */  sw    $a0, ($sp)
-/* 0E9B94 7F0B5064 AFA7000C */  sw    $a3, 0xc($sp)
-/* 0E9B98 7F0B5068 844307F4 */  lh    $v1, 0x7f4($v0)
-/* 0E9B9C 7F0B506C 00A3082A */  slt   $at, $a1, $v1
-/* 0E9BA0 7F0B5070 50200003 */  beql  $at, $zero, .L7F0B5080
-/* 0E9BA4 7F0B5074 844407F6 */   lh    $a0, 0x7f6($v0)
-/* 0E9BA8 7F0B5078 00602825 */  move  $a1, $v1
-/* 0E9BAC 7F0B507C 844407F6 */  lh    $a0, 0x7f6($v0)
-.L7F0B5080:
-/* 0E9BB0 7F0B5080 44852000 */  mtc1  $a1, $f4
-/* 0E9BB4 7F0B5084 00C4082A */  slt   $at, $a2, $a0
-/* 0E9BB8 7F0B5088 10200002 */  beqz  $at, .L7F0B5094
-/* 0E9BBC 7F0B508C 468021A0 */   cvt.s.w $f6, $f4
-/* 0E9BC0 7F0B5090 00803025 */  move  $a2, $a0
-.L7F0B5094:
-/* 0E9BC4 7F0B5094 844E07F0 */  lh    $t6, 0x7f0($v0)
-/* 0E9BC8 7F0B5098 8FAF000C */  lw    $t7, 0xc($sp)
-/* 0E9BCC 7F0B509C 44868000 */  mtc1  $a2, $f16
-/* 0E9BD0 7F0B50A0 006E3821 */  addu  $a3, $v1, $t6
-/* 0E9BD4 7F0B50A4 00EF082A */  slt   $at, $a3, $t7
-/* 0E9BD8 7F0B50A8 10200002 */  beqz  $at, .L7F0B50B4
-/* 0E9BDC 7F0B50AC 468084A0 */   cvt.s.w $f18, $f16
-/* 0E9BE0 7F0B50B0 AFA7000C */  sw    $a3, 0xc($sp)
-.L7F0B50B4:
-/* 0E9BE4 7F0B50B4 845807F2 */  lh    $t8, 0x7f2($v0)
-/* 0E9BE8 7F0B50B8 8FA70010 */  lw    $a3, 0x10($sp)
-/* 0E9BEC 7F0B50BC 00981821 */  addu  $v1, $a0, $t8
-/* 0E9BF0 7F0B50C0 0067082A */  slt   $at, $v1, $a3
-/* 0E9BF4 7F0B50C4 50200003 */  beql  $at, $zero, .L7F0B50D4
-/* 0E9BF8 7F0B50C8 3C014080 */   lui   $at, 0x4080
-/* 0E9BFC 7F0B50CC 00603825 */  move  $a3, $v1
-/* 0E9C00 7F0B50D0 3C014080 */  li    $at, 0x40800000 # 4.000000
-.L7F0B50D4:
-/* 0E9C04 7F0B50D4 44810000 */  mtc1  $at, $f0
-/* 0E9C08 7F0B50D8 8FA30000 */  lw    $v1, ($sp)
-/* 0E9C0C 7F0B50DC 3C01ED00 */  lui   $at, 0xed00
-/* 0E9C10 7F0B50E0 46003202 */  mul.s $f8, $f6, $f0
-/* 0E9C14 7F0B50E4 24680008 */  addiu $t0, $v1, 8
-/* 0E9C18 7F0B50E8 AFA80000 */  sw    $t0, ($sp)
-/* 0E9C1C 7F0B50EC 46009102 */  mul.s $f4, $f18, $f0
-/* 0E9C20 7F0B50F0 4600428D */  trunc.w.s $f10, $f8
-/* 0E9C24 7F0B50F4 4600218D */  trunc.w.s $f6, $f4
-/* 0E9C28 7F0B50F8 440A5000 */  mfc1  $t2, $f10
-/* 0E9C2C 7F0B50FC 44872000 */  mtc1  $a3, $f4
-/* 0E9C30 7F0B5100 440F3000 */  mfc1  $t7, $f6
-/* 0E9C34 7F0B5104 314B0FFF */  andi  $t3, $t2, 0xfff
-/* 0E9C38 7F0B5108 000B6300 */  sll   $t4, $t3, 0xc
-/* 0E9C3C 7F0B510C 01816825 */  or    $t5, $t4, $at
-/* 0E9C40 7F0B5110 31F80FFF */  andi  $t8, $t7, 0xfff
-/* 0E9C44 7F0B5114 01B8C825 */  or    $t9, $t5, $t8
-/* 0E9C48 7F0B5118 AC790000 */  sw    $t9, ($v1)
-/* 0E9C4C 7F0B511C 8FA8000C */  lw    $t0, 0xc($sp)
-/* 0E9C50 7F0B5120 468021A0 */  cvt.s.w $f6, $f4
-/* 0E9C54 7F0B5124 44884000 */  mtc1  $t0, $f8
-/* 0E9C58 7F0B5128 00000000 */  nop   
-/* 0E9C5C 7F0B512C 468042A0 */  cvt.s.w $f10, $f8
-/* 0E9C60 7F0B5130 46005402 */  mul.s $f16, $f10, $f0
-/* 0E9C64 7F0B5134 00000000 */  nop   
-/* 0E9C68 7F0B5138 46003202 */  mul.s $f8, $f6, $f0
-/* 0E9C6C 7F0B513C 4600848D */  trunc.w.s $f18, $f16
-/* 0E9C70 7F0B5140 4600428D */  trunc.w.s $f10, $f8
-/* 0E9C74 7F0B5144 440A9000 */  mfc1  $t2, $f18
-/* 0E9C78 7F0B5148 440F5000 */  mfc1  $t7, $f10
-/* 0E9C7C 7F0B514C 314B0FFF */  andi  $t3, $t2, 0xfff
-/* 0E9C80 7F0B5150 000B6300 */  sll   $t4, $t3, 0xc
-/* 0E9C84 7F0B5154 31ED0FFF */  andi  $t5, $t7, 0xfff
-/* 0E9C88 7F0B5158 018DC025 */  or    $t8, $t4, $t5
-/* 0E9C8C 7F0B515C AC780004 */  sw    $t8, 4($v1)
-/* 0E9C90 7F0B5160 03E00008 */  jr    $ra
-/* 0E9C94 7F0B5164 8FA20000 */   lw    $v0, ($sp)
-)
-#endif
-
 
 
 
@@ -8616,7 +8577,7 @@ Gfx *sub_GAME_7F0B8D78(Gfx *arg0)
         }
     }
 
-    return sub_GAME_7F0B4FB4(sub_GAME_7F0B3C8C(arg0));
+    return bgScissorCurrentPlayerViewDefault(sub_GAME_7F0B3C8C(arg0));
 }
 
 

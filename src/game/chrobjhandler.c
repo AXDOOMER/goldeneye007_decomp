@@ -27522,13 +27522,13 @@ glabel sub_GAME_7F04B150
 /* 07FE00 7F04B2D0 C7A60064 */  lwc1  $f6, 0x64($sp)
 /* 07FE04 7F04B2D4 8FA70060 */  lw    $a3, 0x60($sp)
 /* 07FE08 7F04B2D8 AFA30044 */  sw    $v1, 0x44($sp)
-/* 07FE0C 7F04B2DC 0FC2D3FD */  jal   sub_GAME_7F0B4FF4
+/* 07FE0C 7F04B2DC 0FC2D3FD */  jal   bgScissorCurrentPlayerViewF
 /* 07FE10 7F04B2E0 E7A60010 */   swc1  $f6, 0x10($sp)
 /* 07FE14 7F04B2E4 10000005 */  b     .L7F04B2FC
 /* 07FE18 7F04B2E8 8FA30044 */   lw    $v1, 0x44($sp)
 .L7F04B2EC:
 /* 07FE1C 7F04B2EC 8FA400C4 */  lw    $a0, 0xc4($sp)
-/* 07FE20 7F04B2F0 0FC2D3ED */  jal   sub_GAME_7F0B4FB4
+/* 07FE20 7F04B2F0 0FC2D3ED */  jal   bgScissorCurrentPlayerViewDefault
 /* 07FE24 7F04B2F4 AFA30044 */   sw    $v1, 0x44($sp)
 /* 07FE28 7F04B2F8 8FA30044 */  lw    $v1, 0x44($sp)
 .L7F04B2FC:

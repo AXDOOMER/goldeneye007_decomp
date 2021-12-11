@@ -6175,12 +6175,12 @@ glabel sub_GAME_7F021BFC
 /* 0568C4 7F021D94 8FA60064 */   lw    $a2, 0x64($sp)
 /* 0568C8 7F021D98 C7B0006C */  lwc1  $f16, 0x6c($sp)
 /* 0568CC 7F021D9C 8FA70068 */  lw    $a3, 0x68($sp)
-/* 0568D0 7F021DA0 0FC2D3FD */  jal   sub_GAME_7F0B4FF4
+/* 0568D0 7F021DA0 0FC2D3FD */  jal   bgScissorCurrentPlayerViewF
 /* 0568D4 7F021DA4 E7B00010 */   swc1  $f16, 0x10($sp)
 /* 0568D8 7F021DA8 10000004 */  b     .L7F021DBC
 /* 0568DC 7F021DAC 8FAD00B8 */   lw    $t5, 0xb8($sp)
 .L7F021DB0:
-/* 0568E0 7F021DB0 0FC2D3ED */  jal   sub_GAME_7F0B4FB4
+/* 0568E0 7F021DB0 0FC2D3ED */  jal   bgScissorCurrentPlayerViewDefault
 /* 0568E4 7F021DB4 8FA400DC */   lw    $a0, 0xdc($sp)
 /* 0568E8 7F021DB8 8FAD00B8 */  lw    $t5, 0xb8($sp)
 .L7F021DBC:
