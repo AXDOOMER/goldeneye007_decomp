@@ -1,15 +1,19 @@
 #include "ultra64.h"
+#include "libultra/os.h"
 #include "include/PR/gbi.h"
 #include "bondconstants.h"
 #include "fr.h"
 #include "memp.h"
 #include "game/bg.h"
 #include "game/bondview.h"
+#include "game/debugmenu_handler.h"
 #include "game/decompress.h"
 #include "game/fog.h"
 #include "game/math_ceil.h"
 #include "game/matrixmath.h"
 #include "game/player.h"
+#include "game/unk_09C250.h"
+#include "game/unk_0BC530.h"
 
 #define BG_STACK_SIZE 20
 
@@ -257,6 +261,9 @@ u32 D_80044924 = 0;
 void unload_rooms(void);
 Gfx *sub_GAME_7F0B8D78(Gfx *arg0);
 Gfx *sub_GAME_7F0B3C8C(Gfx *arg0);
+s32 bgCheckIfRoomModelNeedsLoad(s32 roomID);
+void sub_GAME_7F0B6368(s32 room);
+Gfx *sub_GAME_7F0B677C(Gfx *arg0, s32 room_index);
 
 // second parameter is almost certainly a struct
 void sub_GAME_7F0B96CC(f32 arg0, f32 *arg1);
@@ -968,8 +975,235 @@ s32 bgGet2dBboxByRoomId(s32 room_id, struct bbox2d *result)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B3C8C(void) {
 
+sub_GAME_7F0A0AB4
+sub_GAME_7F0B6898
+sub_GAME_7F0B677C
+
+Gfx *sub_GAME_7F0B3C8C(Gfx *arg0)
+{
+    s32 sp44;
+    Gfx *temp_s0;
+    Gfx *temp_s0_2;
+    Gfx *temp_s0_3;
+    Gfx *temp_s0_4;
+    Gfx *temp_s0_5;
+    Gfx *temp_s0_6;
+    Gfx *temp_s1;
+    Gfx *temp_v0_2;
+    s32 temp_s3;
+    s32 temp_s3_2;
+    s32 temp_s5;
+    s32 temp_s5_2;
+    s32 temp_v0;
+    s32 temp_v1;
+    s_bound_info *temp_s2;
+    s32 phi_s6;
+    s_bound_info *phi_s2;
+    s32 phi_s7;
+    s32 phi_s6_2;
+    s32 phi_s7_2;
+    s32 phi_v0;
+    s32 phi_s5;
+    s_bound_info *phi_s2_2;
+    Gfx *phi_s0;
+    Gfx *phi_s0_2;
+    Gfx *phi_s0_3;
+    s32 phi_s3;
+    s32 phi_v0_2;
+    Gfx *phi_s0_4;
+    s32 phi_v0_3;
+    s32 phi_s5_2;
+    s_bound_info *phi_s2_3;
+    Gfx *phi_s0_5;
+    Gfx *phi_s0_6;
+    s32 phi_s3_2;
+    s32 phi_v0_4;
+    Gfx *phi_s0_7;
+    s32 phi_s6_3;
+    s32 phi_s7_3;
+    Gfx *phi_s0_8;
+    Gfx *phi_s0_9;
+    Gfx *phi_s0_10;
+    Gfx *phi_s0_11;
+    Gfx *phi_s0_12;
+    Gfx *phi_s0_13;
+    Gfx *phi_s0_14;
+
+    temp_v0 = g_BgNumberOfRoomsDrawn;
+    phi_s6 = 0;
+    phi_s7 = 99999999;
+    phi_s6_2 = 0;
+    phi_s7_2 = 99999999;
+    phi_v0 = temp_v0;
+    phi_s0_4 = arg0;
+    phi_s0_8 = arg0;
+    if (temp_v0 > 0)
+    {
+        phi_s2 = dword_CODE_bss_8007FFA0;
+        do
+        {
+            temp_v1 = phi_s2->unk1;
+            temp_s2 = phi_s2 + 0x1C;
+            phi_s2 = temp_s2;
+            phi_s6_3 = phi_s6;
+            phi_s7_3 = phi_s7;
+            if (phi_s6 < temp_v1)
+            {
+                phi_s6_3 = temp_v1;
+            }
+            phi_s6 = phi_s6_3;
+            phi_s6_2 = phi_s6_3;
+            if (temp_v1 < phi_s7)
+            {
+                phi_s7_3 = temp_v1;
+            }
+            phi_s7 = phi_s7_3;
+            phi_s7_2 = phi_s7_3;
+        } while ((u32) temp_s2 < (u32) &dword_CODE_bss_8007FFA0[temp_v0]);
+    }
+
+    phi_s5 = phi_s7_2;
+    if (phi_s6_2 >= phi_s7_2)
+    {
+        sp44 = phi_s6_2 + 1;
+        do
+        {
+            phi_s0 = phi_s0_8;
+            phi_s3 = 0;
+            phi_v0_2 = phi_v0;
+            phi_s0_10 = phi_s0_8;
+            if (phi_v0 > 0)
+            {
+                phi_s2_2 = dword_CODE_bss_8007FFA0;
+                do
+                {
+                    phi_s0_9 = phi_s0;
+                    if (phi_s5 == phi_s2_2->unk1)
+                    {
+                        phi_s0->words.w0 = 0x1030040;
+                        phi_s0->words.w1 = osVirtualToPhysical(currentPlayerGetProjectionMatrix());
+                        temp_s0 = sub_GAME_7F0BB298(phi_s0 + 8);
+                        phi_s0_2 = temp_s0;
+                        if (get_debug_do_draw_obj() != 0)
+                        {
+                            phi_s0_2 = temp_s0;
+                            if (sub_GAME_7F0BD8F0() != 0)
+                            {
+                                phi_s0_2 = sub_GAME_7F03A6F4(temp_s0, phi_s2_2->index, 0);
+                            }
+                        }
+                        phi_s0_2->words.w0 = 0x1030040;
+                        phi_s0_2->words.w1 = osVirtualToPhysical(get_BONDdata_field_10E0());
+                        temp_s0_2 = sub_GAME_7F0BB070(bgScissorCurrentPlayerViewF(phi_s0_2 + 8, phi_s2_2->bbox.min.x, phi_s2_2->bbox.min.f[1], phi_s2_2->bbox.f[1][0], phi_s2_2->bbox.f[1][1]), 0);
+                        phi_s0_3 = temp_s0_2;
+                        if (get_debug_do_draw_bg() != 0)
+                        {
+                            phi_s0_3 = temp_s0_2;
+                            if (sub_GAME_7F0BD8F0() != 0)
+                            {
+                                phi_s0_3 = sub_GAME_7F0B677C(temp_s0_2, phi_s2_2->index);
+                            }
+                        }
+                        phi_s0_3->words.w0 = 0x1030040;
+                        phi_s0_3->words.w1 = osVirtualToPhysical(currentPlayerGetProjectionMatrix());
+                        temp_s0_3 = sub_GAME_7F0BB298(phi_s0_3 + 8);
+                        phi_s0_9 = temp_s0_3;
+                        if (get_debug_do_draw_obj() != 0)
+                        {
+                            phi_s0_9 = temp_s0_3;
+                            if (sub_GAME_7F0BD8F0() != 0)
+                            {
+                                phi_s0_9 = sub_GAME_7F03A6F4(temp_s0_3, phi_s2_2->index, 2);
+                            }
+                        }
+                        phi_v0_2 = g_BgNumberOfRoomsDrawn;
+                    }
+                    temp_s3 = phi_s3 + 1;
+                    phi_s2_2 += 0x1C;
+                    phi_s0 = phi_s0_9;
+                    phi_s3 = temp_s3;
+                    phi_v0 = phi_v0_2;
+                    phi_s0_10 = phi_s0_9;
+                } while (temp_s3 < phi_v0_2);
+            }
+            temp_s5 = phi_s5 + 1;
+            phi_s5 = temp_s5;
+            phi_s0_4 = phi_s0_10;
+            phi_s0_8 = phi_s0_10;
+        } while (sp44 != temp_s5);
+    }
+    temp_v0_2 = bgScissorCurrentPlayerViewDefault(sub_GAME_7F0BB298(phi_s0_4));
+    temp_s1 = temp_v0_2;
+    temp_s0_4 = temp_v0_2 + 8;
+    temp_v0_2->words.w0 = 0x1030040;
+    temp_s1->words.w1 = osVirtualToPhysical(get_BONDdata_field_10E0());
+    phi_s0_13 = temp_s0_4;
+    if (sub_GAME_7F0BD8F0() != 0)
+    {
+        phi_s0_13 = sub_GAME_7F0A1D78(sub_GAME_7F0A0AB4(temp_s0_4));
+    }
+    phi_v0_3 = g_BgNumberOfRoomsDrawn;
+    phi_s5_2 = phi_s6_2;
+    phi_s0_7 = phi_s0_13;
+    phi_s0_11 = phi_s0_13;
+    if (phi_s6_2 >= phi_s7_2)
+    {
+        do
+        {
+            phi_s0_5 = phi_s0_11;
+            phi_s3_2 = 0;
+            phi_v0_4 = phi_v0_3;
+            phi_s0_14 = phi_s0_11;
+            if (phi_v0_3 > 0)
+            {
+                phi_s2_3 = dword_CODE_bss_8007FFA0;
+                do
+                {
+                    phi_s0_12 = phi_s0_5;
+                    if (phi_s5_2 == phi_s2_3->unk1)
+                    {
+                        phi_s0_5->words.w0 = 0x1030040;
+                        phi_s0_5->words.w1 = osVirtualToPhysical(get_BONDdata_field_10E0());
+                        temp_s0_5 = sub_GAME_7F0BB070(bgScissorCurrentPlayerViewF(phi_s0_5 + 8, phi_s2_3->bbox.min.x, phi_s2_3->bbox.min.f[1], phi_s2_3->bbox.f[1][0], phi_s2_3->bbox.f[1][1]), 1);
+                        phi_s0_6 = temp_s0_5;
+                        if (get_debug_do_draw_bg() != 0)
+                        {
+                            phi_s0_6 = temp_s0_5;
+                            if (sub_GAME_7F0BD8F0() != 0)
+                            {
+                                phi_s0_6 = sub_GAME_7F0B6898(temp_s0_5, phi_s2_3->index);
+                            }
+                        }
+                        phi_s0_6->words.w0 = 0x1030040;
+                        phi_s0_6->words.w1 = osVirtualToPhysical(currentPlayerGetProjectionMatrix());
+                        temp_s0_6 = sub_GAME_7F0BB298(phi_s0_6 + 8);
+                        phi_s0_12 = temp_s0_6;
+                        if (get_debug_do_draw_obj() != 0)
+                        {
+                            phi_s0_12 = temp_s0_6;
+                            if (sub_GAME_7F0BD8F0() != 0)
+                            {
+                                phi_s0_12 = sub_GAME_7F03A6F4(temp_s0_6, phi_s2_3->index, 1);
+                            }
+                        }
+                        phi_v0_4 = g_BgNumberOfRoomsDrawn;
+                    }
+                    temp_s3_2 = phi_s3_2 + 1;
+                    phi_s2_3 += 0x1C;
+                    phi_s0_5 = phi_s0_12;
+                    phi_s3_2 = temp_s3_2;
+                    phi_v0_3 = phi_v0_4;
+                    phi_s0_14 = phi_s0_12;
+                } while (temp_s3_2 < phi_v0_4);
+            }
+            temp_s5_2 = phi_s5_2 - 1;
+            phi_s5_2 = temp_s5_2;
+            phi_s0_7 = phi_s0_14;
+            phi_s0_11 = phi_s0_14;
+        } while (temp_s5_2 != (phi_s7_2 - 1));
+    }
+    return phi_s0_7;
 }
 #else
 GLOBAL_ASM(
@@ -4250,7 +4484,6 @@ glabel sub_GAME_7F0B61DC
 
 
 
-
 s32 bgCheckIfRoomModelNeedsLoad(s32 roomID)
 {
     array_room_info[roomID].field_35 = 1;
@@ -4732,95 +4965,44 @@ void sub_GAME_7F0B66E8(void)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0B677C(void) {
+/**
+ * Address 0x7F0B677C.
+*/
+Gfx *sub_GAME_7F0B677C(Gfx *arg0, s32 room_index)
+{
+    if (room_index >= MaxNumRooms)
+    {
+        return arg0;
+    }
 
+    if ((D_8004485C != 0) || (D_80044858 == (room_index % 10)))
+    {
+        if (array_room_info[room_index].model_bin_loaded == 0)
+        {
+            if (D_800442F8 > 0)
+            {
+                D_800442F8--;
+                sub_GAME_7F0B6368(room_index);
+            }
+        }
+
+        if (array_room_info[room_index].model_bin_loaded == 0)
+        {
+            return arg0;
+        }
+        else
+        {
+            arg0 = sub_GAME_7F0BC9C4(arg0, room_index);
+
+            gSPSegment(arg0++, 0x0E, OS_K0_TO_PHYSICAL(array_room_info[room_index].ptr_point_index));
+            gSPDisplayList(arg0++, OS_K0_TO_PHYSICAL(array_room_info[room_index].ptr_expanded_mapping_info));
+
+            array_room_info[room_index].model_bin_loaded = 1;
+        }
+    }
+
+    return arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B677C
-/* 0EB2AC 7F0B677C 3C0E8004 */  lui   $t6, %hi(MaxNumRooms) 
-/* 0EB2B0 7F0B6780 8DCE42F4 */  lw    $t6, %lo(MaxNumRooms)($t6)
-/* 0EB2B4 7F0B6784 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0EB2B8 7F0B6788 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0EB2BC 7F0B678C 00AE082A */  slt   $at, $a1, $t6
-/* 0EB2C0 7F0B6790 00803825 */  move  $a3, $a0
-/* 0EB2C4 7F0B6794 14200003 */  bnez  $at, .L7F0B67A4
-/* 0EB2C8 7F0B6798 00A03025 */   move  $a2, $a1
-/* 0EB2CC 7F0B679C 1000003A */  b     .L7F0B6888
-/* 0EB2D0 7F0B67A0 00801025 */   move  $v0, $a0
-.L7F0B67A4:
-/* 0EB2D4 7F0B67A4 3C0F8004 */  lui   $t7, %hi(D_8004485C) 
-/* 0EB2D8 7F0B67A8 8DEF485C */  lw    $t7, %lo(D_8004485C)($t7)
-/* 0EB2DC 7F0B67AC 3C188004 */  lui   $t8, %hi(D_80044858) 
-/* 0EB2E0 7F0B67B0 2401000A */  li    $at, 10
-/* 0EB2E4 7F0B67B4 15E00005 */  bnez  $t7, .L7F0B67CC
-/* 0EB2E8 7F0B67B8 00064880 */   sll   $t1, $a2, 2
-/* 0EB2EC 7F0B67BC 00C1001A */  div   $zero, $a2, $at
-/* 0EB2F0 7F0B67C0 8F184858 */  lw    $t8, %lo(D_80044858)($t8)
-/* 0EB2F4 7F0B67C4 0000C810 */  mfhi  $t9
-/* 0EB2F8 7F0B67C8 1719002E */  bne   $t8, $t9, .L7F0B6884
-.L7F0B67CC:
-/* 0EB2FC 7F0B67CC 01264821 */   addu  $t1, $t1, $a2
-/* 0EB300 7F0B67D0 3C0A8004 */  lui   $t2, %hi(array_room_info) 
-/* 0EB304 7F0B67D4 254A1414 */  addiu $t2, %lo(array_room_info) # addiu $t2, $t2, 0x1414
-/* 0EB308 7F0B67D8 00094900 */  sll   $t1, $t1, 4
-/* 0EB30C 7F0B67DC 012A1821 */  addu  $v1, $t1, $t2
-/* 0EB310 7F0B67E0 90620002 */  lbu   $v0, 2($v1)
-/* 0EB314 7F0B67E4 3C088004 */  lui   $t0, %hi(D_800442F8) 
-/* 0EB318 7F0B67E8 250842F8 */  addiu $t0, %lo(D_800442F8) # addiu $t0, $t0, 0x42f8
-/* 0EB31C 7F0B67EC 1440000E */  bnez  $v0, .L7F0B6828
-/* 0EB320 7F0B67F0 00000000 */   nop   
-/* 0EB324 7F0B67F4 8D050000 */  lw    $a1, ($t0)
-/* 0EB328 7F0B67F8 00C02025 */  move  $a0, $a2
-/* 0EB32C 7F0B67FC 18A0000A */  blez  $a1, .L7F0B6828
-/* 0EB330 7F0B6800 24ABFFFF */   addiu $t3, $a1, -1
-/* 0EB334 7F0B6804 AD0B0000 */  sw    $t3, ($t0)
-/* 0EB338 7F0B6808 AFA3001C */  sw    $v1, 0x1c($sp)
-/* 0EB33C 7F0B680C AFA6002C */  sw    $a2, 0x2c($sp)
-/* 0EB340 7F0B6810 0FC2D8DA */  jal   sub_GAME_7F0B6368
-/* 0EB344 7F0B6814 AFA70028 */   sw    $a3, 0x28($sp)
-/* 0EB348 7F0B6818 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 0EB34C 7F0B681C 8FA6002C */  lw    $a2, 0x2c($sp)
-/* 0EB350 7F0B6820 8FA70028 */  lw    $a3, 0x28($sp)
-/* 0EB354 7F0B6824 90620002 */  lbu   $v0, 2($v1)
-.L7F0B6828:
-/* 0EB358 7F0B6828 14400003 */  bnez  $v0, .L7F0B6838
-/* 0EB35C 7F0B682C 00E02025 */   move  $a0, $a3
-/* 0EB360 7F0B6830 10000015 */  b     .L7F0B6888
-/* 0EB364 7F0B6834 00E01025 */   move  $v0, $a3
-.L7F0B6838:
-/* 0EB368 7F0B6838 00C02825 */  move  $a1, $a2
-/* 0EB36C 7F0B683C 0FC2F271 */  jal   sub_GAME_7F0BC9C4
-/* 0EB370 7F0B6840 AFA3001C */   sw    $v1, 0x1c($sp)
-/* 0EB374 7F0B6844 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 0EB378 7F0B6848 3C0CBC00 */  lui   $t4, (0xBC003806 >> 16) # lui $t4, 0xbc00
-/* 0EB37C 7F0B684C 358C3806 */  ori   $t4, (0xBC003806 & 0xFFFF) # ori $t4, $t4, 0x3806
-/* 0EB380 7F0B6850 AC4C0000 */  sw    $t4, ($v0)
-/* 0EB384 7F0B6854 8C6D0004 */  lw    $t5, 4($v1)
-/* 0EB388 7F0B6858 3C048000 */  lui   $a0, 0x8000
-/* 0EB38C 7F0B685C 3C0F0600 */  lui   $t7, 0x600
-/* 0EB390 7F0B6860 01A47021 */  addu  $t6, $t5, $a0
-/* 0EB394 7F0B6864 AC4E0004 */  sw    $t6, 4($v0)
-/* 0EB398 7F0B6868 AC4F0008 */  sw    $t7, 8($v0)
-/* 0EB39C 7F0B686C 8C780008 */  lw    $t8, 8($v1)
-/* 0EB3A0 7F0B6870 24090001 */  li    $t1, 1
-/* 0EB3A4 7F0B6874 24470010 */  addiu $a3, $v0, 0x10
-/* 0EB3A8 7F0B6878 0304C821 */  addu  $t9, $t8, $a0
-/* 0EB3AC 7F0B687C AC59000C */  sw    $t9, 0xc($v0)
-/* 0EB3B0 7F0B6880 A0690002 */  sb    $t1, 2($v1)
-.L7F0B6884:
-/* 0EB3B4 7F0B6884 00E01025 */  move  $v0, $a3
-.L7F0B6888:
-/* 0EB3B8 7F0B6888 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0EB3BC 7F0B688C 27BD0028 */  addiu $sp, $sp, 0x28
-/* 0EB3C0 7F0B6890 03E00008 */  jr    $ra
-/* 0EB3C4 7F0B6894 00000000 */   nop   
-)
-#endif
-
-
 
 
 

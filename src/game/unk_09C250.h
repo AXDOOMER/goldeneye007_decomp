@@ -59,5 +59,6 @@ extern char dword_CODE_bss_8007A100[];
 
 void sub_GAME_7F09FD3C(void);
 Gfx * sub_GAME_7F0A0034(Gfx *arg0);
+void sub_GAME_7F0A1D78(u32 *param_1);
 
 #endif

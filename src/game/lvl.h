@@ -70,5 +70,6 @@ void lvlSetControlsLockedFlag(s32 arg0);
 s32 lvlGetControlsLockedFlag(void);
 void lvlSetMultipliersForDifficulty(void);
 s32 lvlGetCurrentStageToLoad(void);
+s32 sub_GAME_7F0BD8F0(void);
 
 #endif
