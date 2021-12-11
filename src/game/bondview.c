@@ -788,7 +788,8 @@ void sub_GAME_7F078464(s32 arg0) {
     g_CurrentPlayer->field_10E4 = arg0;
 }
 
-s32 sub_GAME_7F078474(void) {
+s32 sub_GAME_7F078474(void)
+{
     return g_CurrentPlayer->field_10E4;
 }
 
@@ -36294,11 +36295,11 @@ Gfx * bondviewRemoved7F08BCB8(Gfx *arg0)
 /**
  * Address 0x7F08BCC0.
  */
-s32 sub_GAME_7F08BCC0(void *arg0, s32 arg1)
+s32 sub_GAME_7F08BCC0(void *arg0, s32 arg1, s32 arg2)
 {
     if (((s32*)(arg0))[1] != 0)
     {
-        arg1 = sub_GAME_7F021BFC();
+        arg1 = sub_GAME_7F021BFC(arg0, arg1, arg2);
     }
 
     return arg1;

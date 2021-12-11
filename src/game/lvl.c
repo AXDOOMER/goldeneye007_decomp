@@ -1954,7 +1954,7 @@ Gfx* lvlRender(Gfx* DL)
             }
 
             sub_GAME_7F03D0D4();
-            DL = sub_GAME_7F0B4E40(DL);
+            DL = bgLevelRender(DL);
 
             if (get_debug_portal_flag())
             {

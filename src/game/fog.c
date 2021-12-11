@@ -5,23 +5,34 @@
 #include "game/bondview.h"
 #include "game/fog.h"
 
+struct pervasiveness {
+    f32 unk00;
+    f32 unk04;
+    u32 unk08;
+    u32 unk0c;
+    f32 unk10;
+    f32 unk14;
+};
+
 // bss
 //CODE.bss:800825C0
 s32 g_FogSkyIsEnabled;
 //CODE.bss:800825C4
 u32 *ptr_nearfog_enviroment_values;
 //CODE.bss:800825C8
-s32 buffer_far_pervasiveness;
-//CODE.bss:800825CC
-s32 far_fog;
-//CODE.bss:800825D0
-s32 D_800825D0;
-//CODE.bss:800825D4
-s32 D_800825D4;
-//CODE.bss:800825D8
-s32 flt_CODE_bss_800825D8;
-//CODE.bss:800825DC
-s32 flt_CODE_bss_800825DC;
+
+struct pervasiveness buffer_far_pervasiveness;
+// //CODE.bss:800825CC
+// s32 far_fog;
+// //CODE.bss:800825D0
+// s32 D_800825D0;
+// //CODE.bss:800825D4
+// s32 D_800825D4;
+// //CODE.bss:800825D8
+// s32 flt_CODE_bss_800825D8;
+// //CODE.bss:800825DC
+// s32 flt_CODE_bss_800825DC;
+
 //CODE.bss:800825E0
 s32 buffer_far_ambiant;
 //CODE.bss:800825E4
@@ -122,7 +133,29 @@ f32 g_FogNearFogValue = 3.4028235e38;
 //D:80044DC8
 f32 near_fog_times_intensity = 0.0;
 //D:80044DCC
-s32 ptr_current_data[] = {0x384, 0x3E8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+struct fog_loaded ptr_current_data = { 
+    0x384, // s32 dif_in_light;
+    0x3e8, // u32 far_ambiantlight;
+    0,     // u8  red;
+    0,     // u8  green;
+    0,     // u8  blue;
+    0,     // u8  clouds;
+    0.0f,  // f32 cloudrepeat;
+    0,     // s16 skyimageid;
+    0.0f,  // f32 cloudred;
+    0.0f,  // f32 cloudgreen;
+    0.0f,  // f32 cloudblue;
+    0,     // u8  iswater;
+    0.0f,  // f32 waterrepeat;
+    0,     // s16 waterimageid;
+    0.0f,  // f32 waterred;
+    0.0f,  // f32 watergreen;
+    0.0f,  // f32 waterblue;
+    0.0f,  // f32 waterconcavity;
+    0,
+    0
+};
 
 //D:80044E10
 struct fog_element fog_tables[] = {
@@ -192,8 +225,9 @@ void sub_GAME_7F0BA720(s32 a, s32 b) {
     return;
 }
 
-s32 get_ptr_currentdata(void){
-    return ptr_current_data;
+struct fog_loaded *get_ptr_currentdata(void)
+{
+    return &ptr_current_data;
 }
 
 f32 get_near_fog_value(void) {
@@ -209,9 +243,79 @@ f32 square_near_fog_value(void) {
 
 
 #ifdef NONMATCHING
-void copy_table1_env_to_current(void) {
+void copy_table1_env_to_current(struct fog_element *arg0)
+{
+    f32 sp34;
+    f32 sp30;
+    f32 sp20;
+    f32 sp1C;
+    f32 sp18;
+    f32 temp_f0;
+    f32 temp_f10;
+    f32 temp_f12;
+    f32 temp_f14;
+    f32 temp_f4;
+    f32 temp_f6;
+    f32 temp_f8;
+    s32 temp_f16;
+    s32 temp_f18;
+    s32 temp_f2;
 
+    viSetZRange(arg0->blendmultiplier, arg0->farfog);
+    viGetZRange(&sp30);
+    temp_f0 = sub_GAME_7F0B4878();
+    temp_f6 = sp30 / temp_f0;
+    temp_f10 = sp34 / temp_f0;
+    sp30 = temp_f6;
+    sp34 = temp_f10;
+    bg_dif_light = (bitwise s32) ((f32) arg0->dif_in_light / 1000.0f);
+    temp_f14 = sp34 - temp_f6;
+    buffer_far_ambiant = (bitwise s32) ((f32) arg0->far_ambiantlight / 1000.0f);
+    temp_f16 = buffer_far_ambiant;
+    g_FogNearFogValue = temp_f6 + (temp_f14 * (bitwise f32) temp_f16);
+    temp_f2 = bg_dif_light;
+    near_fog_times_intensity = temp_f6 + (temp_f14 * (bitwise f32) temp_f2);
+    buffer_far_pervasiveness.unk0 = (bitwise s32) (arg0->blendmultiplier / temp_f0);
+    sp18 = (bitwise f32) temp_f16 - (bitwise f32) temp_f2;
+    temp_f4 = sp18;
+    temp_f18 = buffer_far_pervasiveness.unk0;
+    buffer_far_pervasiveness.unk4 = (f32) (arg0->farfog / temp_f0);
+    temp_f12 = buffer_far_pervasiveness.unk4;
+    sp20 = 128.0f / temp_f4;
+    temp_f8 = temp_f12 - (bitwise f32) temp_f18;
+    sp18 = temp_f8;
+    sp1C = ((0.5f - (bitwise f32) temp_f2) * 256.0f) / temp_f4;
+    buffer_far_pervasiveness.unk10 = (f32) (((-sp20 * temp_f12 * ((bitwise f32) temp_f18 + 1.0f)) / temp_f8) / 255.0f);
+    buffer_far_pervasiveness.unk14 = (f32) (((((temp_f12 + 1.0f) * sp20) / temp_f8) + sp1C) / 255.0f);
+    ptr_current_data.dif_in_light = (s32) arg0->dif_in_light;
+    ptr_current_data.far_ambiantlight = arg0->far_ambiantlight;
+    ptr_current_data.red = arg0->red;
+    ptr_current_data.green = arg0->green;
+    ptr_current_data.blue = arg0->blue;
+    ptr_current_data.clouds = arg0->clouds;
+    ptr_current_data.cloudrepeat = arg0->cloudrepeat;
+    ptr_current_data.skyimageid = (s16) arg0->skyimageid;
+    ptr_current_data.cloudred = arg0->cloudred;
+    ptr_current_data.cloudgreen = arg0->cloudgreen;
+    ptr_current_data.cloudblue = arg0->cloudblue;
+    ptr_current_data.iswater = arg0->iswater;
+    ptr_current_data.waterrepeat = arg0->waterrepeat;
+    ptr_current_data.waterimageid = (s16) arg0->waterimageid;
+    ptr_current_data.waterred = arg0->waterred;
+    ptr_current_data.watergreen = arg0->watergreen;
+    ptr_current_data.waterblue = arg0->waterblue;
+    ptr_current_data.waterconcavity = arg0->waterconcavity;
+    if (arg0->nearfog == 0.0f)
+    {
+        ptr_nearfog_enviroment_values = NULL;
+    }
+    else
+    {
+        ptr_nearfog_enviroment_values = (u32 *) &arg0->nearfog;
+    }
+    g_FogSkyIsEnabled = 1;
 }
+
 #else
 GLOBAL_ASM(
 .text

@@ -102,11 +102,12 @@ void bgSetDataPortalsControlBytes1Bit2(s32 index);
 s32 sub_GAME_7F0B9A7C(s32 arg0);
 s32 sub_GAME_7F0B9A2C(s32 arg0);
 void sub_GAME_7F0B4884(void);
-Gfx* sub_GAME_7F0B4E40(Gfx *arg0);
-void sub_GAME_7F0B4FB4(s32 arg0);
-void sub_GAME_7F0B4FF4(s32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4);
+Gfx* bgLevelRender(Gfx *arg0);
+Gfx* sub_GAME_7F0B4FB4(Gfx* arg0);
+Gfx* sub_GAME_7F0B4FF4(Gfx* arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4);
 f32 get_room_data_float1(void);
 s32 getROOMID_Bitflags(int roomID);
 s32 bgGet2dBboxByRoomId(s32 room_id, struct bbox2d *result);
+f32 sub_GAME_7F0B4878(void);
 
 #endif

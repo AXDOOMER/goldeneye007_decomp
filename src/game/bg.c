@@ -1,13 +1,15 @@
 #include "ultra64.h"
 #include "include/PR/gbi.h"
+#include "bondconstants.h"
 #include "fr.h"
 #include "memp.h"
 #include "game/bg.h"
-#include "game/math_ceil.h"
+#include "game/bondview.h"
 #include "game/decompress.h"
+#include "game/fog.h"
+#include "game/math_ceil.h"
 #include "game/matrixmath.h"
 #include "game/player.h"
-#include "game/math_ceil.h"
 
 #define BG_STACK_SIZE 20
 
@@ -253,6 +255,7 @@ u32 D_80044924 = 0;
 // forward declarations
 
 void unload_rooms(void);
+Gfx *sub_GAME_7F0B8D78(Gfx *arg0);
 
 // second parameter is almost certainly a struct
 void sub_GAME_7F0B96CC(f32 arg0, f32 *arg1);
@@ -2399,145 +2402,28 @@ glabel sub_GAME_7F0B4AB4
 
 
 
-#ifdef NONMATCHING
-Gfx* sub_GAME_7F0B4E40(Gfx *arg0) {
-    void *temp_v1;
-    void *temp_a1;
-    void *temp_a2;
-    void *temp_a0;
-    void *temp_v0;
-    void *phi_a0;
+/**
+ * Address 0x7F0B4E40.
+*/
+Gfx *bgLevelRender(Gfx *arg0)
+{
+    gSPSetLights1(arg0++, GlobalLight);
+    gSPLookAt(arg0++, sub_GAME_7F078474());
+    gSPSegment(arg0++, 0x0F, ptr_bg_data);
 
-    // Node 0
-    temp_v1 = (arg0 + 8);
-    *arg0 = 0xbc000002;
-    arg0->unk4 = 0x80000040;
-    temp_a1 = (temp_v1 + 8);
-    *temp_v1 = 0x3860010;
-    temp_v1->unk4 = &GlobalLight.l[0];// D_80044848;
-    temp_a2 = (temp_a1 + 8);
-    *temp_a1 = 0x3880010;
-    temp_a1->unk4 = &//GlobalLight.a; //D_80044840;
-    *temp_a2 = 0x3840010;
-    sp20->unk4 = sub_GAME_7F078474((temp_a2 + 8), temp_a1, temp_a2);
-    *arg0 = 0x3820010;
-    sp1C->unk4 = (s32) (sub_GAME_7F078474((arg0 + 8), arg0, sp20) + 0x10);
-    *arg0 = 0xbc003c06;
-    arg0->unk4 = (s32) ptr_bg_data;
-    temp_a0 = (arg0 + 8);
     if (dword_CODE_bss_8007FF88 == 1)
     {
-        // Node 1
-        *temp_a0 = 0x6000000;
-        temp_a0->unk4 = (?32) dword_CODE_bss_8007BF98;
-        phi_a0 = (temp_a0 + 8);
+        gSPDisplayList(arg0++, dword_CODE_bss_8007BF98);
     }
     else
     {
-        // Node 2
-        phi_a0 = sub_GAME_7F0BB298(sub_GAME_7F0B4FB4(sub_GAME_7F0B8D78(sub_GAME_7F0BB070(temp_a0, 0))));
+        arg0 = sub_GAME_7F0BB298(sub_GAME_7F0B4FB4(sub_GAME_7F0B8D78(sub_GAME_7F0BB070(arg0, 0))));
     }
-    // Node 3
-    temp_v0 = phi_a0;
-    *temp_v0 = 0x1030040;
-    temp_v0->unk4 = (?32) m;
-    return bondviewGfxPlayerField5cMatrix((phi_a0 + 8));
+
+    gSPMatrix(arg0++, g_viProjectionMatrix, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+
+    return bondviewGfxPlayerField5cMatrix(arg0++);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B4E40
-/* 0E9970 7F0B4E40 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0E9974 7F0B4E44 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0E9978 7F0B4E48 00801025 */  move  $v0, $a0
-/* 0E997C 7F0B4E4C 3C0EBC00 */  lui   $t6, (0xBC000002 >> 16) # lui $t6, 0xbc00
-/* 0E9980 7F0B4E50 3C0F8000 */  lui   $t7, (0x80000040 >> 16) 
-/* 0E9984 7F0B4E54 35EF0040 */  ori   $t7, (0x80000040 & 0xFFFF) # ori $t7, $t7, 0x40
-/* 0E9988 7F0B4E58 35CE0002 */  ori   $t6, (0xBC000002 & 0xFFFF) # ori $t6, $t6, 2
-/* 0E998C 7F0B4E5C 24830008 */  addiu $v1, $a0, 8
-/* 0E9990 7F0B4E60 AC4E0000 */  sw    $t6, ($v0)
-/* 0E9994 7F0B4E64 AC4F0004 */  sw    $t7, 4($v0)
-/* 0E9998 7F0B4E68 3C180386 */  lui   $t8, (0x03860010 >> 16) # lui $t8, 0x386
-/* 0E999C 7F0B4E6C 3C198004 */  lui   $t9, %hi(GlobalLight+0x8) 
-/* 0E99A0 7F0B4E70 27394848 */  addiu $t9, %lo(GlobalLight+0x8) # addiu $t9, $t9, 0x4848
-/* 0E99A4 7F0B4E74 37180010 */  ori   $t8, (0x03860010 & 0xFFFF) # ori $t8, $t8, 0x10
-/* 0E99A8 7F0B4E78 24650008 */  addiu $a1, $v1, 8
-/* 0E99AC 7F0B4E7C AC780000 */  sw    $t8, ($v1)
-/* 0E99B0 7F0B4E80 AC790004 */  sw    $t9, 4($v1)
-/* 0E99B4 7F0B4E84 3C080388 */  lui   $t0, (0x03880010 >> 16) # lui $t0, 0x388
-/* 0E99B8 7F0B4E88 3C098004 */  lui   $t1, %hi(GlobalLight) 
-/* 0E99BC 7F0B4E8C 25294840 */  addiu $t1, %lo(GlobalLight) # addiu $t1, $t1, 0x4840
-/* 0E99C0 7F0B4E90 35080010 */  ori   $t0, (0x03880010 & 0xFFFF) # ori $t0, $t0, 0x10
-/* 0E99C4 7F0B4E94 24A60008 */  addiu $a2, $a1, 8
-/* 0E99C8 7F0B4E98 3C0A0384 */  lui   $t2, (0x03840010 >> 16) # lui $t2, 0x384
-/* 0E99CC 7F0B4E9C ACA80000 */  sw    $t0, ($a1)
-/* 0E99D0 7F0B4EA0 ACA90004 */  sw    $t1, 4($a1)
-/* 0E99D4 7F0B4EA4 354A0010 */  ori   $t2, (0x03840010 & 0xFFFF) # ori $t2, $t2, 0x10
-/* 0E99D8 7F0B4EA8 ACCA0000 */  sw    $t2, ($a2)
-/* 0E99DC 7F0B4EAC 24C40008 */  addiu $a0, $a2, 8
-/* 0E99E0 7F0B4EB0 AFA40030 */  sw    $a0, 0x30($sp)
-/* 0E99E4 7F0B4EB4 0FC1E11D */  jal   sub_GAME_7F078474
-/* 0E99E8 7F0B4EB8 AFA60020 */   sw    $a2, 0x20($sp)
-/* 0E99EC 7F0B4EBC 8FA50030 */  lw    $a1, 0x30($sp)
-/* 0E99F0 7F0B4EC0 8FA60020 */  lw    $a2, 0x20($sp)
-/* 0E99F4 7F0B4EC4 3C0B0382 */  lui   $t3, (0x03820010 >> 16) # lui $t3, 0x382
-/* 0E99F8 7F0B4EC8 356B0010 */  ori   $t3, (0x03820010 & 0xFFFF) # ori $t3, $t3, 0x10
-/* 0E99FC 7F0B4ECC ACC20004 */  sw    $v0, 4($a2)
-/* 0E9A00 7F0B4ED0 ACAB0000 */  sw    $t3, ($a1)
-/* 0E9A04 7F0B4ED4 24A40008 */  addiu $a0, $a1, 8
-/* 0E9A08 7F0B4ED8 AFA40030 */  sw    $a0, 0x30($sp)
-/* 0E9A0C 7F0B4EDC 0FC1E11D */  jal   sub_GAME_7F078474
-/* 0E9A10 7F0B4EE0 AFA5001C */   sw    $a1, 0x1c($sp)
-/* 0E9A14 7F0B4EE4 8FA40030 */  lw    $a0, 0x30($sp)
-/* 0E9A18 7F0B4EE8 8FA5001C */  lw    $a1, 0x1c($sp)
-/* 0E9A1C 7F0B4EEC 244C0010 */  addiu $t4, $v0, 0x10
-/* 0E9A20 7F0B4EF0 3C0DBC00 */  lui   $t5, (0xBC003C06 >> 16) # lui $t5, 0xbc00
-/* 0E9A24 7F0B4EF4 35AD3C06 */  ori   $t5, (0xBC003C06 & 0xFFFF) # ori $t5, $t5, 0x3c06
-/* 0E9A28 7F0B4EF8 00801825 */  move  $v1, $a0
-/* 0E9A2C 7F0B4EFC ACAC0004 */  sw    $t4, 4($a1)
-/* 0E9A30 7F0B4F00 AC6D0000 */  sw    $t5, ($v1)
-/* 0E9A34 7F0B4F04 3C0E8008 */  lui   $t6, %hi(ptr_bg_data) 
-/* 0E9A38 7F0B4F08 8DCEBF90 */  lw    $t6, %lo(ptr_bg_data)($t6)
-/* 0E9A3C 7F0B4F0C 3C0F8008 */  lui   $t7, %hi(dword_CODE_bss_8007FF88) 
-/* 0E9A40 7F0B4F10 24010001 */  li    $at, 1
-/* 0E9A44 7F0B4F14 AC6E0004 */  sw    $t6, 4($v1)
-/* 0E9A48 7F0B4F18 8DEFFF88 */  lw    $t7, %lo(dword_CODE_bss_8007FF88)($t7)
-/* 0E9A4C 7F0B4F1C 24840008 */  addiu $a0, $a0, 8
-/* 0E9A50 7F0B4F20 00801025 */  move  $v0, $a0
-/* 0E9A54 7F0B4F24 15E10007 */  bne   $t7, $at, .L7F0B4F44
-/* 0E9A58 7F0B4F28 3C180600 */   lui   $t8, 0x600
-/* 0E9A5C 7F0B4F2C AC580000 */  sw    $t8, ($v0)
-/* 0E9A60 7F0B4F30 3C198008 */  lui   $t9, %hi(dword_CODE_bss_8007BF98) 
-/* 0E9A64 7F0B4F34 8F39BF98 */  lw    $t9, %lo(dword_CODE_bss_8007BF98)($t9)
-/* 0E9A68 7F0B4F38 24840008 */  addiu $a0, $a0, 8
-/* 0E9A6C 7F0B4F3C 1000000A */  b     .L7F0B4F68
-/* 0E9A70 7F0B4F40 AC590004 */   sw    $t9, 4($v0)
-.L7F0B4F44:
-/* 0E9A74 7F0B4F44 0FC2EC1C */  jal   sub_GAME_7F0BB070
-/* 0E9A78 7F0B4F48 00002825 */   move  $a1, $zero
-/* 0E9A7C 7F0B4F4C 0FC2E35E */  jal   sub_GAME_7F0B8D78
-/* 0E9A80 7F0B4F50 00402025 */   move  $a0, $v0
-/* 0E9A84 7F0B4F54 0FC2D3ED */  jal   sub_GAME_7F0B4FB4
-/* 0E9A88 7F0B4F58 00402025 */   move  $a0, $v0
-/* 0E9A8C 7F0B4F5C 0FC2ECA6 */  jal   sub_GAME_7F0BB298
-/* 0E9A90 7F0B4F60 00402025 */   move  $a0, $v0
-/* 0E9A94 7F0B4F64 00402025 */  move  $a0, $v0
-.L7F0B4F68:
-/* 0E9A98 7F0B4F68 3C080103 */  lui   $t0, (0x01030040 >> 16) # lui $t0, 0x103
-/* 0E9A9C 7F0B4F6C 35080040 */  ori   $t0, (0x01030040 & 0xFFFF) # ori $t0, $t0, 0x40
-/* 0E9AA0 7F0B4F70 00801025 */  move  $v0, $a0
-/* 0E9AA4 7F0B4F74 AC480000 */  sw    $t0, ($v0)
-/* 0E9AA8 7F0B4F78 3C098006 */  lui   $t1, %hi(g_viProjectionMatrix) 
-/* 0E9AAC 7F0B4F7C 8D290820 */  lw    $t1, %lo(g_viProjectionMatrix)($t1)
-/* 0E9AB0 7F0B4F80 24840008 */  addiu $a0, $a0, 8
-/* 0E9AB4 7F0B4F84 0FC22F3D */  jal   bondviewGfxPlayerField5cMatrix
-/* 0E9AB8 7F0B4F88 AC490004 */   sw    $t1, 4($v0)
-/* 0E9ABC 7F0B4F8C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0E9AC0 7F0B4F90 27BD0030 */  addiu $sp, $sp, 0x30
-/* 0E9AC4 7F0B4F94 03E00008 */  jr    $ra
-/* 0E9AC8 7F0B4F98 00000000 */   nop   
-)
-#endif
 
 
 
@@ -2567,9 +2453,9 @@ glabel sub_GAME_7F0B4F9C
 /**
  * Address 0x7F0B4FB4.
  */
-void sub_GAME_7F0B4FB4(s32 arg0)
+Gfx* sub_GAME_7F0B4FB4(Gfx* arg0)
 {
-    sub_GAME_7F0B5058(
+    return sub_GAME_7F0B5058(
         arg0,
         g_CurrentPlayer->viewleft,
         g_CurrentPlayer->viewtop,
@@ -2584,9 +2470,9 @@ void sub_GAME_7F0B4FB4(s32 arg0)
 /**
  * Address 0x7F0B4FF4.
  */
-void sub_GAME_7F0B4FF4(s32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
+Gfx* sub_GAME_7F0B4FF4(Gfx* arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
 {
-    sub_GAME_7F0B5058(
+    return sub_GAME_7F0B5058(
         arg0,
         (s32)arg1,
         (s32)arg2,
