@@ -9,6 +9,7 @@
 #include "game/debugmenu_handler.h"
 #include "game/decompress.h"
 #include "game/fog.h"
+#include "game/lvl.h"
 #include "game/math_ceil.h"
 #include "game/matrixmath.h"
 #include "game/player.h"
@@ -976,235 +977,129 @@ s32 bgGet2dBboxByRoomId(s32 room_id, struct bbox2d *result)
 
 
 #ifdef NONMATCHING
-
-sub_GAME_7F0A0AB4
-sub_GAME_7F0B6898
-sub_GAME_7F0B677C
-
+/**
+ * Address 0x7F0B3C8C.
+ * 
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical instructions: fail
+ * - identical registers: fail
+ * 
+ * notes: can't read g_BgNumberOfRoomsDrawn the correct number of times.
+*/
 Gfx *sub_GAME_7F0B3C8C(Gfx *arg0)
 {
-    s32 sp44;
-    Gfx *temp_s0;
-    Gfx *temp_s0_2;
-    Gfx *temp_s0_3;
-    Gfx *temp_s0_4;
-    Gfx *temp_s0_5;
-    Gfx *temp_s0_6;
-    Gfx *temp_s1;
-    Gfx *temp_v0_2;
-    s32 temp_s3;
-    s32 temp_s3_2;
-    s32 temp_s5;
-    s32 temp_s5_2;
-    s32 temp_v0;
-    s32 temp_v1;
-    s_bound_info *temp_s2;
-    s32 phi_s6;
-    s_bound_info *phi_s2;
-    s32 phi_s7;
-    s32 phi_s6_2;
-    s32 phi_s7_2;
-    s32 phi_v0;
-    s32 phi_s5;
-    s_bound_info *phi_s2_2;
-    Gfx *phi_s0;
-    Gfx *phi_s0_2;
-    Gfx *phi_s0_3;
-    s32 phi_s3;
-    s32 phi_v0_2;
-    Gfx *phi_s0_4;
-    s32 phi_v0_3;
-    s32 phi_s5_2;
-    s_bound_info *phi_s2_3;
-    Gfx *phi_s0_5;
-    Gfx *phi_s0_6;
-    s32 phi_s3_2;
-    s32 phi_v0_4;
-    Gfx *phi_s0_7;
-    s32 phi_s6_3;
-    s32 phi_s7_3;
-    Gfx *phi_s0_8;
-    Gfx *phi_s0_9;
-    Gfx *phi_s0_10;
-    Gfx *phi_s0_11;
-    Gfx *phi_s0_12;
-    Gfx *phi_s0_13;
-    Gfx *phi_s0_14;
+    s32 i;
+    s32 j;
+    s32 b_max;
+    s32 b_min;
 
-    temp_v0 = g_BgNumberOfRoomsDrawn;
-    phi_s6 = 0;
-    phi_s7 = 99999999;
-    phi_s6_2 = 0;
-    phi_s7_2 = 99999999;
-    phi_v0 = temp_v0;
-    phi_s0_4 = arg0;
-    phi_s0_8 = arg0;
-    if (temp_v0 > 0)
+    b_min = 99999999;
+    b_max = 0;
+
+    for (i=0; i<g_BgNumberOfRoomsDrawn; i++)
     {
-        phi_s2 = dword_CODE_bss_8007FFA0;
-        do
-        {
-            temp_v1 = phi_s2->unk1;
-            temp_s2 = phi_s2 + 0x1C;
-            phi_s2 = temp_s2;
-            phi_s6_3 = phi_s6;
-            phi_s7_3 = phi_s7;
-            if (phi_s6 < temp_v1)
-            {
-                phi_s6_3 = temp_v1;
-            }
-            phi_s6 = phi_s6_3;
-            phi_s6_2 = phi_s6_3;
-            if (temp_v1 < phi_s7)
-            {
-                phi_s7_3 = temp_v1;
-            }
-            phi_s7 = phi_s7_3;
-            phi_s7_2 = phi_s7_3;
-        } while ((u32) temp_s2 < (u32) &dword_CODE_bss_8007FFA0[temp_v0]);
+        b_max = (b_max < dword_CODE_bss_8007FFA0[i].unk1) ? dword_CODE_bss_8007FFA0[i].unk1 : b_max;
+        b_min = (dword_CODE_bss_8007FFA0[i].unk1 < b_min) ? dword_CODE_bss_8007FFA0[i].unk1 : b_min;
     }
 
-    phi_s5 = phi_s7_2;
-    if (phi_s6_2 >= phi_s7_2)
+    for (i=b_min; i < b_max + 1; i++)
     {
-        sp44 = phi_s6_2 + 1;
-        do
+        for (j=0; j<g_BgNumberOfRoomsDrawn; j++)
         {
-            phi_s0 = phi_s0_8;
-            phi_s3 = 0;
-            phi_v0_2 = phi_v0;
-            phi_s0_10 = phi_s0_8;
-            if (phi_v0 > 0)
+            if (i == dword_CODE_bss_8007FFA0[j].unk1)
             {
-                phi_s2_2 = dword_CODE_bss_8007FFA0;
-                do
+                gSPMatrix(arg0++, osVirtualToPhysical((void*)currentPlayerGetProjectionMatrix()), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION));
+                arg0 = sub_GAME_7F0BB298(arg0);
+
+                if (get_debug_do_draw_obj())
                 {
-                    phi_s0_9 = phi_s0;
-                    if (phi_s5 == phi_s2_2->unk1)
+                    if (sub_GAME_7F0BD8F0())
                     {
-                        phi_s0->words.w0 = 0x1030040;
-                        phi_s0->words.w1 = osVirtualToPhysical(currentPlayerGetProjectionMatrix());
-                        temp_s0 = sub_GAME_7F0BB298(phi_s0 + 8);
-                        phi_s0_2 = temp_s0;
-                        if (get_debug_do_draw_obj() != 0)
-                        {
-                            phi_s0_2 = temp_s0;
-                            if (sub_GAME_7F0BD8F0() != 0)
-                            {
-                                phi_s0_2 = sub_GAME_7F03A6F4(temp_s0, phi_s2_2->index, 0);
-                            }
-                        }
-                        phi_s0_2->words.w0 = 0x1030040;
-                        phi_s0_2->words.w1 = osVirtualToPhysical(get_BONDdata_field_10E0());
-                        temp_s0_2 = sub_GAME_7F0BB070(bgScissorCurrentPlayerViewF(phi_s0_2 + 8, phi_s2_2->bbox.min.x, phi_s2_2->bbox.min.f[1], phi_s2_2->bbox.f[1][0], phi_s2_2->bbox.f[1][1]), 0);
-                        phi_s0_3 = temp_s0_2;
-                        if (get_debug_do_draw_bg() != 0)
-                        {
-                            phi_s0_3 = temp_s0_2;
-                            if (sub_GAME_7F0BD8F0() != 0)
-                            {
-                                phi_s0_3 = sub_GAME_7F0B677C(temp_s0_2, phi_s2_2->index);
-                            }
-                        }
-                        phi_s0_3->words.w0 = 0x1030040;
-                        phi_s0_3->words.w1 = osVirtualToPhysical(currentPlayerGetProjectionMatrix());
-                        temp_s0_3 = sub_GAME_7F0BB298(phi_s0_3 + 8);
-                        phi_s0_9 = temp_s0_3;
-                        if (get_debug_do_draw_obj() != 0)
-                        {
-                            phi_s0_9 = temp_s0_3;
-                            if (sub_GAME_7F0BD8F0() != 0)
-                            {
-                                phi_s0_9 = sub_GAME_7F03A6F4(temp_s0_3, phi_s2_2->index, 2);
-                            }
-                        }
-                        phi_v0_2 = g_BgNumberOfRoomsDrawn;
+                        arg0 = sub_GAME_7F03A6F4(arg0, dword_CODE_bss_8007FFA0[j].roomid, 0);
                     }
-                    temp_s3 = phi_s3 + 1;
-                    phi_s2_2 += 0x1C;
-                    phi_s0 = phi_s0_9;
-                    phi_s3 = temp_s3;
-                    phi_v0 = phi_v0_2;
-                    phi_s0_10 = phi_s0_9;
-                } while (temp_s3 < phi_v0_2);
+                }
+
+                gSPMatrix(arg0++, osVirtualToPhysical((void*)get_BONDdata_field_10E0()), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION));
+                arg0 = sub_GAME_7F0BB070(
+                    bgScissorCurrentPlayerViewF(
+                        arg0++,
+                        dword_CODE_bss_8007FFA0[j].bbox.f[0][0],
+                        dword_CODE_bss_8007FFA0[j].bbox.f[0][1],
+                        dword_CODE_bss_8007FFA0[j].bbox.f[1][0],
+                        dword_CODE_bss_8007FFA0[j].bbox.f[1][1]),
+                    0);
+                
+                if (get_debug_do_draw_bg())
+                {
+                    if (sub_GAME_7F0BD8F0())
+                    {
+                        arg0 = sub_GAME_7F0B677C(arg0, dword_CODE_bss_8007FFA0[j].roomid);
+                    }
+                }
+
+                gSPMatrix(arg0++, osVirtualToPhysical((void*)currentPlayerGetProjectionMatrix()), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION));
+                arg0 = sub_GAME_7F0BB298(arg0);
+
+                if (get_debug_do_draw_obj())
+                {
+                    if (sub_GAME_7F0BD8F0())
+                    {
+                        arg0 = sub_GAME_7F03A6F4(arg0, dword_CODE_bss_8007FFA0[j].roomid, 2);
+                    }
+                }
             }
-            temp_s5 = phi_s5 + 1;
-            phi_s5 = temp_s5;
-            phi_s0_4 = phi_s0_10;
-            phi_s0_8 = phi_s0_10;
-        } while (sp44 != temp_s5);
+        }
     }
-    temp_v0_2 = bgScissorCurrentPlayerViewDefault(sub_GAME_7F0BB298(phi_s0_4));
-    temp_s1 = temp_v0_2;
-    temp_s0_4 = temp_v0_2 + 8;
-    temp_v0_2->words.w0 = 0x1030040;
-    temp_s1->words.w1 = osVirtualToPhysical(get_BONDdata_field_10E0());
-    phi_s0_13 = temp_s0_4;
-    if (sub_GAME_7F0BD8F0() != 0)
+
+    arg0 = bgScissorCurrentPlayerViewDefault(sub_GAME_7F0BB298(arg0));
+    gSPMatrix(arg0++, osVirtualToPhysical((void*)get_BONDdata_field_10E0()), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION));
+
+    if (sub_GAME_7F0BD8F0())
     {
-        phi_s0_13 = sub_GAME_7F0A1D78(sub_GAME_7F0A0AB4(temp_s0_4));
+        arg0 = sub_GAME_7F0A1D78(sub_GAME_7F0A0AB4(arg0));
     }
-    phi_v0_3 = g_BgNumberOfRoomsDrawn;
-    phi_s5_2 = phi_s6_2;
-    phi_s0_7 = phi_s0_13;
-    phi_s0_11 = phi_s0_13;
-    if (phi_s6_2 >= phi_s7_2)
+
+    for (i=b_max; i > b_min - 1; i--)
     {
-        do
+        for (j=0; j<g_BgNumberOfRoomsDrawn; j++)
         {
-            phi_s0_5 = phi_s0_11;
-            phi_s3_2 = 0;
-            phi_v0_4 = phi_v0_3;
-            phi_s0_14 = phi_s0_11;
-            if (phi_v0_3 > 0)
+            if (i == dword_CODE_bss_8007FFA0[j].unk1)
             {
-                phi_s2_3 = dword_CODE_bss_8007FFA0;
-                do
+                gSPMatrix(arg0++, osVirtualToPhysical((void*)get_BONDdata_field_10E0()), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION));
+                arg0 = sub_GAME_7F0BB070(
+                    bgScissorCurrentPlayerViewF(
+                        arg0++,
+                        dword_CODE_bss_8007FFA0[j].bbox.f[0][0],
+                        dword_CODE_bss_8007FFA0[j].bbox.f[0][1],
+                        dword_CODE_bss_8007FFA0[j].bbox.f[1][0],
+                        dword_CODE_bss_8007FFA0[j].bbox.f[1][1]),
+                    0);
+                
+                if (get_debug_do_draw_bg())
                 {
-                    phi_s0_12 = phi_s0_5;
-                    if (phi_s5_2 == phi_s2_3->unk1)
+                    if (sub_GAME_7F0BD8F0())
                     {
-                        phi_s0_5->words.w0 = 0x1030040;
-                        phi_s0_5->words.w1 = osVirtualToPhysical(get_BONDdata_field_10E0());
-                        temp_s0_5 = sub_GAME_7F0BB070(bgScissorCurrentPlayerViewF(phi_s0_5 + 8, phi_s2_3->bbox.min.x, phi_s2_3->bbox.min.f[1], phi_s2_3->bbox.f[1][0], phi_s2_3->bbox.f[1][1]), 1);
-                        phi_s0_6 = temp_s0_5;
-                        if (get_debug_do_draw_bg() != 0)
-                        {
-                            phi_s0_6 = temp_s0_5;
-                            if (sub_GAME_7F0BD8F0() != 0)
-                            {
-                                phi_s0_6 = sub_GAME_7F0B6898(temp_s0_5, phi_s2_3->index);
-                            }
-                        }
-                        phi_s0_6->words.w0 = 0x1030040;
-                        phi_s0_6->words.w1 = osVirtualToPhysical(currentPlayerGetProjectionMatrix());
-                        temp_s0_6 = sub_GAME_7F0BB298(phi_s0_6 + 8);
-                        phi_s0_12 = temp_s0_6;
-                        if (get_debug_do_draw_obj() != 0)
-                        {
-                            phi_s0_12 = temp_s0_6;
-                            if (sub_GAME_7F0BD8F0() != 0)
-                            {
-                                phi_s0_12 = sub_GAME_7F03A6F4(temp_s0_6, phi_s2_3->index, 1);
-                            }
-                        }
-                        phi_v0_4 = g_BgNumberOfRoomsDrawn;
+                        arg0 = sub_GAME_7F0B6898(arg0, dword_CODE_bss_8007FFA0[j].roomid);
                     }
-                    temp_s3_2 = phi_s3_2 + 1;
-                    phi_s2_3 += 0x1C;
-                    phi_s0_5 = phi_s0_12;
-                    phi_s3_2 = temp_s3_2;
-                    phi_v0_3 = phi_v0_4;
-                    phi_s0_14 = phi_s0_12;
-                } while (temp_s3_2 < phi_v0_4);
+                }
+
+                gSPMatrix(arg0++, osVirtualToPhysical((void*)currentPlayerGetProjectionMatrix()), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION));
+                arg0 = sub_GAME_7F0BB298(arg0);
+
+                if (get_debug_do_draw_obj())
+                {
+                    if (sub_GAME_7F0BD8F0())
+                    {
+                        arg0 = sub_GAME_7F03A6F4(arg0, dword_CODE_bss_8007FFA0[j].roomid, 1);
+                    }
+                }
             }
-            temp_s5_2 = phi_s5_2 - 1;
-            phi_s5_2 = temp_s5_2;
-            phi_s0_7 = phi_s0_14;
-            phi_s0_11 = phi_s0_14;
-        } while (temp_s5_2 != (phi_s7_2 - 1));
+        }
     }
-    return phi_s0_7;
+
+    return arg0;
 }
 #else
 GLOBAL_ASM(

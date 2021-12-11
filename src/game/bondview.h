@@ -3156,5 +3156,6 @@ s32 sub_GAME_7F08BCC0(void *arg0, s32 arg1, s32 arg2);
 void sub_GAME_7F08BD48(Mtxf *arg0, s32 arg1);
 s32 sub_GAME_7F078474(void);
 s32 get_BONDdata_field_10E0(void);
+Mtx *currentPlayerGetProjectionMatrix(void);
 
 #endif

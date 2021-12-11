@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "libultra/os.h"
 #include "include/PR/gbi.h"
+#include "include/gbi_extention.h"
 #include "bondconstants.h"
 #include "bondtypes.h"
 #include "game/bg.h"
@@ -5892,7 +5893,7 @@ Gfx *sub_GAME_7F0A0AB4(Gfx *arg0)
 
                 {
                     // todo/fixme
-                    // ??
+                    // should use gSP2Triangles from include/gbi_extention.h (typo: extension)
                     Gfx *_g = (Gfx *)(arg0++); _g->words.w0 = 0xB1000032; _g->words.w1 = 0x2010;
                     // or ??
                     //gDma1p(arg0++, 0xb1, 0x2010, 0x32, 0);

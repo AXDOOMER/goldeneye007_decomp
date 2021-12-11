@@ -241,5 +241,6 @@ void chraiGetCollisionBoundsWithoutY(PropRecord *arg0, struct rect4f **arg1, s32
 s32 sub_GAME_7F03CCD8(struct coord3d *arg0, struct rect4f *arg1, s32 arg2);
 void sub_GAME_7F03E3FC(s32 *);
 struct ObjectRecord *scan_position_data_table_for_normal_object_at_preset(s32 arg0);
+Gfx *sub_GAME_7F03A6F4(Gfx *arg0, s32 arg1, s32 arg2);
 
 #endif
