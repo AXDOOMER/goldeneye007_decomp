@@ -1,20 +1,47 @@
 #include "ultra64.h"
+#include "libultra/os.h"
+#include "include/PR/gbi.h"
+#include "bondconstants.h"
+#include "bondtypes.h"
+#include "game/bg.h"
+#include "game/image_bank.h"
+#include "game/othermodemicrocode.h"
 #include "game/unk_09C250.h"
+#include "game/unk_0BC530.h"
 #include "assets/GlobalImageTable.h"
+
 // bss
 //CODE.bss:8007A100
 char dword_CODE_bss_8007A100[0x40];
-//CODE.bss:8007A140
+
+/**
+ * ptr_smoke_buf = mempAllocBytesInBank(0x1FE0, 4);
+ * Address 0x8007A140.
+*/
 struct PropRecord *ptr_smoke_buf;
-//CODE.bss:8007A144
+
+/**
+ * ptr_explosion_buf = mempAllocBytesInBank(0x1740, 4);
+ * Address 0x8007A144.
+*/
 struct PropRecord *ptr_explosion_buf;
+
 //CODE.bss:8007A148
 s32 max_casings;
 //CODE.bss:8007A14C
 u8 *ptr_ejected_casing_buf;
-//CODE.bss:8007A150
-u8 *ptr_scorch_buf;
-//CODE.bss:8007A154
+
+/**
+ * ptr_scorch_buf = mempAllocBytesInBank(0x6E0, 4);
+ * sizeof each entry == 0x58
+ * Address 0x8007A150.
+*/
+struct scorch_unk *ptr_scorch_buf;
+
+/**
+ * ptr_bullet_impact_buf = mempAllocBytesInBank(0x1F40, 4);
+ * Address 0x8007A154.
+*/
 u8 *ptr_bullet_impact_buf;
 
 // data
@@ -5822,133 +5849,62 @@ glabel sub_GAME_7F0A027C
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0A0AB4(void) {
+/**
+ * Address 0x7F0A0AB4.
+*/
+Gfx *sub_GAME_7F0A0AB4(Gfx *arg0)
+{
+    //temp_t6 = arg0;
+    s32 i;
+    s32 phi_s3 = -1;
 
+    if (getPlayerCount() >= 2)
+    {
+        return arg0;
+    }
+    else
+    {
+        gSPSetGeometryMode(arg0++, G_CULL_BACK);
+        gSPClearGeometryMode(arg0++, G_CULL_FRONT | G_FOG);
+        gDPSetColorDither(arg0++, G_CD_NOISE);
+
+        likely_generate_DL_for_image_declaration(&arg0, genericimage, 4, 1, 2);
+
+        for (i=0; i<20; i++)
+        {
+            if (ptr_scorch_buf[i].roomid >= 0 && getROOMID_Bitflags(ptr_scorch_buf[i].roomid))
+            {
+                if (phi_s3 != ptr_scorch_buf[i].roomid)
+                {
+                    phi_s3 = ptr_scorch_buf[i].roomid;
+                    arg0 = sub_GAME_7F0BC9C4(arg0, ptr_scorch_buf[i].roomid);
+                }
+
+                /**
+                 * Loads into the RSP vertex buffer the vertices that will be used by the gSP1Triangle commands that generates polygons. 
+                 * 
+                 * param v: the segment address of vertex list. 
+                 * param n: the number of vertices (1~32) 
+                 * param v0: Starting index in vertex buffer where vertices are to be loaded 
+                 * gSPVertex(Gfx *gdl, Vtx *v, u32 n, u32 v0)
+                */
+                gSPVertex(arg0++, osVirtualToPhysical((void*)ptr_scorch_buf[i].vertex_list), 4, 0);
+
+                {
+                    // todo/fixme
+                    // ??
+                    Gfx *_g = (Gfx *)(arg0++); _g->words.w0 = 0xB1000032; _g->words.w1 = 0x2010;
+                    // or ??
+                    //gDma1p(arg0++, 0xb1, 0x2010, 0x32, 0);
+                }
+            }
+        }
+
+        gDPSetColorDither(arg0++, G_CD_BAYER);
+    }
+
+    return arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A0AB4
-/* 0D55E4 7F0A0AB4 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 0D55E8 7F0A0AB8 AFBF003C */  sw    $ra, 0x3c($sp)
-/* 0D55EC 7F0A0ABC AFB30028 */  sw    $s3, 0x28($sp)
-/* 0D55F0 7F0A0AC0 AFB70038 */  sw    $s7, 0x38($sp)
-/* 0D55F4 7F0A0AC4 AFB60034 */  sw    $s6, 0x34($sp)
-/* 0D55F8 7F0A0AC8 AFB50030 */  sw    $s5, 0x30($sp)
-/* 0D55FC 7F0A0ACC AFB4002C */  sw    $s4, 0x2c($sp)
-/* 0D5600 7F0A0AD0 AFB20024 */  sw    $s2, 0x24($sp)
-/* 0D5604 7F0A0AD4 AFB10020 */  sw    $s1, 0x20($sp)
-/* 0D5608 7F0A0AD8 AFB0001C */  sw    $s0, 0x1c($sp)
-/* 0D560C 7F0A0ADC AFA40040 */  sw    $a0, 0x40($sp)
-/* 0D5610 7F0A0AE0 0FC26919 */  jal   getPlayerCount
-/* 0D5614 7F0A0AE4 2413FFFF */   li    $s3, -1
-/* 0D5618 7F0A0AE8 28410002 */  slti  $at, $v0, 2
-/* 0D561C 7F0A0AEC 14200003 */  bnez  $at, .L7F0A0AFC
-/* 0D5620 7F0A0AF0 8FAE0040 */   lw    $t6, 0x40($sp)
-/* 0D5624 7F0A0AF4 10000054 */  b     .L7F0A0C48
-/* 0D5628 7F0A0AF8 8FA20040 */   lw    $v0, 0x40($sp)
-.L7F0A0AFC:
-/* 0D562C 7F0A0AFC 25CF0008 */  addiu $t7, $t6, 8
-/* 0D5630 7F0A0B00 AFAF0040 */  sw    $t7, 0x40($sp)
-/* 0D5634 7F0A0B04 3C18B700 */  lui   $t8, 0xb700
-/* 0D5638 7F0A0B08 24192000 */  li    $t9, 8192
-/* 0D563C 7F0A0B0C ADD90004 */  sw    $t9, 4($t6)
-/* 0D5640 7F0A0B10 ADD80000 */  sw    $t8, ($t6)
-/* 0D5644 7F0A0B14 8FA90040 */  lw    $t1, 0x40($sp)
-/* 0D5648 7F0A0B18 3C0C0001 */  lui   $t4, (0x00011000 >> 16) # lui $t4, 1
-/* 0D564C 7F0A0B1C 358C1000 */  ori   $t4, (0x00011000 & 0xFFFF) # ori $t4, $t4, 0x1000
-/* 0D5650 7F0A0B20 252A0008 */  addiu $t2, $t1, 8
-/* 0D5654 7F0A0B24 AFAA0040 */  sw    $t2, 0x40($sp)
-/* 0D5658 7F0A0B28 3C0BB600 */  lui   $t3, 0xb600
-/* 0D565C 7F0A0B2C AD2B0000 */  sw    $t3, ($t1)
-/* 0D5660 7F0A0B30 AD2C0004 */  sw    $t4, 4($t1)
-/* 0D5664 7F0A0B34 8FAD0040 */  lw    $t5, 0x40($sp)
-/* 0D5668 7F0A0B38 3C0FBA00 */  lui   $t7, (0xBA000602 >> 16) # lui $t7, 0xba00
-/* 0D566C 7F0A0B3C 35EF0602 */  ori   $t7, (0xBA000602 & 0xFFFF) # ori $t7, $t7, 0x602
-/* 0D5670 7F0A0B40 25AE0008 */  addiu $t6, $t5, 8
-/* 0D5674 7F0A0B44 AFAE0040 */  sw    $t6, 0x40($sp)
-/* 0D5678 7F0A0B48 24180080 */  li    $t8, 128
-/* 0D567C 7F0A0B4C 24190002 */  li    $t9, 2
-/* 0D5680 7F0A0B50 3C058009 */  lui   $a1, %hi(genericimage)
-/* 0D5684 7F0A0B54 ADB80004 */  sw    $t8, 4($t5)
-/* 0D5688 7F0A0B58 ADAF0000 */  sw    $t7, ($t5)
-/* 0D568C 7F0A0B5C AFB90010 */  sw    $t9, 0x10($sp)
-/* 0D5690 7F0A0B60 8CA5D0B8 */  lw    $a1, %lo(genericimage)($a1)
-/* 0D5694 7F0A0B64 27A40040 */  addiu $a0, $sp, 0x40
-/* 0D5698 7F0A0B68 24060004 */  li    $a2, 4
-/* 0D569C 7F0A0B6C 0FC1DB5A */  jal   likely_generate_DL_for_image_declaration
-/* 0D56A0 7F0A0B70 24070001 */   li    $a3, 1
-/* 0D56A4 7F0A0B74 3C15B100 */  lui   $s5, (0xB1000032 >> 16) # lui $s5, 0xb100
-/* 0D56A8 7F0A0B78 3C140430 */  lui   $s4, (0x04300040 >> 16) # lui $s4, 0x430
-/* 0D56AC 7F0A0B7C 3C128008 */  lui   $s2, %hi(ptr_scorch_buf)
-/* 0D56B0 7F0A0B80 2652A150 */  addiu $s2, %lo(ptr_scorch_buf) # addiu $s2, $s2, -0x5eb0
-/* 0D56B4 7F0A0B84 36940040 */  ori   $s4, (0x04300040 & 0xFFFF) # ori $s4, $s4, 0x40
-/* 0D56B8 7F0A0B88 36B50032 */  ori   $s5, (0xB1000032 & 0xFFFF) # ori $s5, $s5, 0x32
-/* 0D56BC 7F0A0B8C 00008025 */  move  $s0, $zero
-/* 0D56C0 7F0A0B90 241706E0 */  li    $s7, 1760
-/* 0D56C4 7F0A0B94 24162010 */  li    $s6, 8208
-/* 0D56C8 7F0A0B98 8E490000 */  lw    $t1, ($s2)
-.L7F0A0B9C:
-/* 0D56CC 7F0A0B9C 01305021 */  addu  $t2, $t1, $s0
-/* 0D56D0 7F0A0BA0 85450000 */  lh    $a1, ($t2)
-/* 0D56D4 7F0A0BA4 04A2001D */  bltzl $a1, .L7F0A0C1C
-/* 0D56D8 7F0A0BA8 26100058 */   addiu $s0, $s0, 0x58
-/* 0D56DC 7F0A0BAC 0FC2D794 */  jal   getROOMID_Bitflags
-/* 0D56E0 7F0A0BB0 00A02025 */   move  $a0, $a1
-/* 0D56E4 7F0A0BB4 50400019 */  beql  $v0, $zero, .L7F0A0C1C
-/* 0D56E8 7F0A0BB8 26100058 */   addiu $s0, $s0, 0x58
-/* 0D56EC 7F0A0BBC 8E4B0000 */  lw    $t3, ($s2)
-/* 0D56F0 7F0A0BC0 8FA40040 */  lw    $a0, 0x40($sp)
-/* 0D56F4 7F0A0BC4 01706021 */  addu  $t4, $t3, $s0
-/* 0D56F8 7F0A0BC8 85850000 */  lh    $a1, ($t4)
-/* 0D56FC 7F0A0BCC 52650005 */  beql  $s3, $a1, .L7F0A0BE4
-/* 0D5700 7F0A0BD0 8FB10040 */   lw    $s1, 0x40($sp)
-/* 0D5704 7F0A0BD4 0FC2F271 */  jal   sub_GAME_7F0BC9C4
-/* 0D5708 7F0A0BD8 00A09825 */   move  $s3, $a1
-/* 0D570C 7F0A0BDC AFA20040 */  sw    $v0, 0x40($sp)
-/* 0D5710 7F0A0BE0 8FB10040 */  lw    $s1, 0x40($sp)
-.L7F0A0BE4:
-/* 0D5714 7F0A0BE4 262E0008 */  addiu $t6, $s1, 8
-/* 0D5718 7F0A0BE8 AFAE0040 */  sw    $t6, 0x40($sp)
-/* 0D571C 7F0A0BEC AE340000 */  sw    $s4, ($s1)
-/* 0D5720 7F0A0BF0 8E4F0000 */  lw    $t7, ($s2)
-/* 0D5724 7F0A0BF4 01F02021 */  addu  $a0, $t7, $s0
-/* 0D5728 7F0A0BF8 0C003A2C */  jal   osVirtualToPhysical
-/* 0D572C 7F0A0BFC 24840018 */   addiu $a0, $a0, 0x18
-/* 0D5730 7F0A0C00 AE220004 */  sw    $v0, 4($s1)
-/* 0D5734 7F0A0C04 8FB80040 */  lw    $t8, 0x40($sp)
-/* 0D5738 7F0A0C08 27190008 */  addiu $t9, $t8, 8
-/* 0D573C 7F0A0C0C AFB90040 */  sw    $t9, 0x40($sp)
-/* 0D5740 7F0A0C10 AF160004 */  sw    $s6, 4($t8)
-/* 0D5744 7F0A0C14 AF150000 */  sw    $s5, ($t8)
-/* 0D5748 7F0A0C18 26100058 */  addiu $s0, $s0, 0x58
-.L7F0A0C1C:
-/* 0D574C 7F0A0C1C 5617FFDF */  bnel  $s0, $s7, .L7F0A0B9C
-/* 0D5750 7F0A0C20 8E490000 */   lw    $t1, ($s2)
-/* 0D5754 7F0A0C24 8FA90040 */  lw    $t1, 0x40($sp)
-/* 0D5758 7F0A0C28 3C0BBA00 */  lui   $t3, (0xBA000602 >> 16) # lui $t3, 0xba00
-/* 0D575C 7F0A0C2C 356B0602 */  ori   $t3, (0xBA000602 & 0xFFFF) # ori $t3, $t3, 0x602
-/* 0D5760 7F0A0C30 252A0008 */  addiu $t2, $t1, 8
-/* 0D5764 7F0A0C34 AFAA0040 */  sw    $t2, 0x40($sp)
-/* 0D5768 7F0A0C38 240C0040 */  li    $t4, 64
-/* 0D576C 7F0A0C3C AD2C0004 */  sw    $t4, 4($t1)
-/* 0D5770 7F0A0C40 AD2B0000 */  sw    $t3, ($t1)
-/* 0D5774 7F0A0C44 8FA20040 */  lw    $v0, 0x40($sp)
-.L7F0A0C48:
-/* 0D5778 7F0A0C48 8FBF003C */  lw    $ra, 0x3c($sp)
-/* 0D577C 7F0A0C4C 8FB0001C */  lw    $s0, 0x1c($sp)
-/* 0D5780 7F0A0C50 8FB10020 */  lw    $s1, 0x20($sp)
-/* 0D5784 7F0A0C54 8FB20024 */  lw    $s2, 0x24($sp)
-/* 0D5788 7F0A0C58 8FB30028 */  lw    $s3, 0x28($sp)
-/* 0D578C 7F0A0C5C 8FB4002C */  lw    $s4, 0x2c($sp)
-/* 0D5790 7F0A0C60 8FB50030 */  lw    $s5, 0x30($sp)
-/* 0D5794 7F0A0C64 8FB60034 */  lw    $s6, 0x34($sp)
-/* 0D5798 7F0A0C68 8FB70038 */  lw    $s7, 0x38($sp)
-/* 0D579C 7F0A0C6C 03E00008 */  jr    $ra
-/* 0D57A0 7F0A0C70 27BD0040 */   addiu $sp, $sp, 0x40
-)
-#endif
 
 
 
@@ -7157,9 +7113,9 @@ glabel sub_GAME_7F0A1A94
 
 
 
-void sub_GAME_7F0A1D78(u32 *param_1)
+Gfx * sub_GAME_7F0A1D78(Gfx *arg0)
 {
-    sub_GAME_7F0A1A94(param_1,0,0);
+    return sub_GAME_7F0A1A94(arg0, NULL, 0);
 }
 
 

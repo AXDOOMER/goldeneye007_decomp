@@ -9,7 +9,7 @@
 #include "game/quaternion.h"
 #include "game/image_bank.h"
 #include "game/bondwalk2.h"
-#include "game/othermodemicrodode.h"
+#include "game/othermodemicrocode.h"
 #include "bondgame.h"
 #include "game/player.h"
 #include "music.h"

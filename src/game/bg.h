@@ -45,7 +45,8 @@ typedef struct s_room_info {
 
 typedef struct s_bound_info 
 {
-    s32 index;
+    s32 roomid;
+    // could be draw order?
     s32 unk1;
     struct bbox2d bbox;
     void* next;

@@ -49,16 +49,58 @@ typedef struct s_impacttype{
     u8 unk2;
 } s_impacttype;
 
+struct scorch_unk {
+    s16 roomid;
+    s16 unk02;
+    u32 unk04;
+    u32 unk08;
+    u32 unk0C;
+
+    u32 unk10;
+    u32 unk14;
+    u32 vertex_list[4];
+    //u32 unk1C;
+
+    //u32 unk20;
+    //u32 unk24;
+    u32 unk28;
+    u32 unk2C;
+
+    u32 unk30;
+    u32 unk34;
+    u32 unk38;
+    u32 unk3C;
+
+    u32 unk40;
+    u32 unk44;
+    u32 unk48;
+    u32 unk4C;
+
+    u32 unk50;
+    u32 unk54;
+};
+
 extern struct PropRecord *ptr_smoke_buf;
 extern struct PropRecord *ptr_explosion_buf;
 extern s32 numExplosionEntries;
 extern f32 D_80040178;
 extern char dword_CODE_bss_8007A100[];
+extern struct scorch_unk *ptr_scorch_buf;
 
 
 
 void sub_GAME_7F09FD3C(void);
 Gfx * sub_GAME_7F0A0034(Gfx *arg0);
-void sub_GAME_7F0A1D78(u32 *param_1);
+Gfx * sub_GAME_7F0A1D78(Gfx *arg0);
+Gfx *sub_GAME_7F0A0AB4(Gfx *arg0);
+
+/**
+ * tentative signature
+ * 
+ * @param arg0: GDL
+ * @param arg1: pointer to struct or array, at least two words. Offset zero is integral type, offset 4 is pointer.
+ * @param arg2: integral type (parameter to <<)
+*/
+Gfx *sub_GAME_7F0A1A94(Gfx *arg0, void *arg1, s32 arg2);
 
 #endif

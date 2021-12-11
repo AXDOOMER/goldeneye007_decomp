@@ -952,7 +952,7 @@ s32 bgGet2dBboxByRoomId(s32 room_id, struct bbox2d *result)
     s32 i;
     for (i=0; i<g_BgNumberOfRoomsDrawn; i++)
     {
-        if (room_id == dword_CODE_bss_8007FFA0[i].index)
+        if (room_id == dword_CODE_bss_8007FFA0[i].roomid)
         {
             result->f[0][0] = dword_CODE_bss_8007FFA0[i].bbox.f[0][0];
             result->f[0][1] = dword_CODE_bss_8007FFA0[i].bbox.f[0][1];
@@ -8704,8 +8704,11 @@ Gfx *sub_GAME_7F0B8D78(Gfx *arg0)
     {
         for (i=0; i<g_BgNumberOfRoomsDrawn; i++)
         {
-            if (dword_CODE_bss_8007FFA0[i].index == 0x23)
+            // The lake in dam is a single giant room, id 0x23
+            if (dword_CODE_bss_8007FFA0[i].roomid == 0x23)
             {
+                // speculation in discord: unk1 is probably draw order or similar,
+                // this is a hack to draw the lake first.
                 dword_CODE_bss_8007FFA0[i].unk1 = 0;
                 break;
             }
