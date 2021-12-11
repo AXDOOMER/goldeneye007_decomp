@@ -665,6 +665,7 @@ u32 imgwaRE_0x2060[] = {
     0x7AC80000, 0x00000000
 };
 
+//split me into 28 groups of verts per the gsSPVertex calls
 u32 maybeverts2B18[] = {
     0x008E008E, 0x000B0000, 0x03620317, 0x08097E00,
     0x008A009D, 0x000B0000, 0x03590335, 0x07097E00,
@@ -1192,7 +1193,7 @@ Gfx D_02004758[] = {
     gsSPSetGeometryMode(G_LIGHTING |  G_TEXTURE_GEN ),
     gsSPTexture(0x1C81, 0x1426, 0, 0, 1),
     gsDPSetTileSize(0, 46, 116, 124, 124),
-    
+
     gsSPVertex(0x02002CF8, 16, 0),
     gsSP1Triangle(7, 0, 1, 0),
     gsSP1Triangle(7, 1, 2, 0),
