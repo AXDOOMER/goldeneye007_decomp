@@ -438,7 +438,7 @@ Gfx *insert_bond_eye_intro(Gfx *gdl) {
 }
 
 extern Gfx *D_020043E8;
-extern Gfx *D_020044B0;
+extern Gfx *DL_RAREWARETEXT;
 extern Gfx *D_02004758;
 extern u8 *D_02004FE8;
 extern u8 *D_02005FF0;
@@ -479,7 +479,7 @@ Gfx *load_display_rare_logo(Gfx *gdl, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     gDPLoadTextureBlock(gdl++, &D_02004FE8, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, (G_TX_NOMIRROR | G_TX_WRAP), (G_TX_NOMIRROR | G_TX_WRAP), 5, 5, G_TX_NOLOD, G_TX_NOLOD);
     gDPSetPrimColor(gdl++, 0, 0, arg4, arg4, arg4, 0xFF);
     gSPDisplayList(gdl++, &D_020043E8);
-    gSPDisplayList(gdl++, &D_020044B0);
+    gSPDisplayList(gdl++, &DL_RAREWARETEXT);
     gDPLoadTextureBlock(gdl++, &D_02005FF0, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, (G_TX_NOMIRROR | G_TX_WRAP), (G_TX_NOMIRROR | G_TX_WRAP), 5, 5, G_TX_NOLOD, G_TX_NOLOD);
     gDPSetPrimColor(gdl++, 0, 0, ((arg4 * 0xF0) / 0xFF), ((arg4 * 0xD0) / 0xFF), ((arg4 * 0xF0) / 0xFF), 0xFF);
     gSPDisplayList(gdl++, &D_02004758);
