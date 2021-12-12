@@ -72,16 +72,32 @@ u32 temp_mine_table[30];
 f32 gas_damage_flag;
 //CODE.bss:80071E7C
 u32 gas_cutoff_flag;
-//CODE.bss:80071E80
-char ProjectileData_start_address[0xFF0];
-//CODE.bss:80072E70
-char dword_CODE_bss_80072E70[0x500];
-//CODE.bss:80073370
-char dword_CODE_bss_80073370[0xA50];
-//CODE.bss:80073DC0
-char dword_CODE_bss_80073DC0[0x1270];
-//CODE.bss:80075030
-char dword_CODE_bss_80075030[0xB40];
+
+/**
+ * Address 0x80071E80.
+*/
+struct projectile_data ProjectileData_start_address[PROJECTILEDATA_START_ADDRESS_LEN];
+
+/**
+ * Address 0x80072E70.
+*/
+struct bss_80072E70 dword_CODE_bss_80072E70[BSS_80072E70_DATA_LEN];
+
+/**
+ * Address 0x80073370.
+*/
+struct bss_80073370 dword_CODE_bss_80073370[BSS_80073370_DATA_LEN];
+
+/**
+ * Address 0x80073DC0.
+*/
+struct bss_80073DC0 dword_CODE_bss_80073DC0[BSS_80073DC0_DATA_LEN];
+
+/**
+ * Address 0x80075030.
+*/
+struct bss_80075030 dword_CODE_bss_80075030[BSS_80075030_DATA_LEN];
+
 //CODE.bss:80075B70
 u32 objinst;
 //CODE.bss:80075B74

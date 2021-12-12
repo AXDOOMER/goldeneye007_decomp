@@ -6,7 +6,32 @@
 #include "bondtypes.h"
 #include "snd.h"
 
-extern s32 D_80030B00;
+extern f32 F_80030B14;
+extern f32 F_80030B18;
+extern f32 F_80030B1C;
+extern f32 F_80030B20;
+extern f32 F_80030B24;
+extern f32 g_SoloAmmoMultiplier;
+
+extern s32 alarm_timer;
+extern s32 *ptr_alarm_sfx;
+extern f32 toxic_gas_sound_timer;
+extern s32 activate_gas_sound_timer;
+extern struct coord3d D_80030AD0;
+extern s32 D_80030ADC;
+extern f32 D_80030AE0;
+extern ALSoundState *ptr_gas_sound;
+extern s32 clock_drawn_flag;
+extern s32 clock_enable;
+extern f32 clock_time;
+extern s32 D_80030AF4;
+extern s32 D_80030AF8;
+extern s32 D_80030AFC;
+extern void * D_80030B00;
+extern void * D_80030B04;
+extern void * D_80030B08;
+extern s32 D_80030B0C;
+extern s32 bodypartshot;
 extern f32 F_80030B14;
 extern f32 F_80030B18;
 extern f32 F_80030B1C;

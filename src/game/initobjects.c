@@ -15,6 +15,8 @@ f32 scale_1_0_item_related = 1.0f;
 // forward declarations
 
 void alloc_lookup_buffers();
+void write_monitor_ani_control_blocks();
+void initialize_temp_mine_table();
 
 // end forward declarations
 
@@ -90,133 +92,73 @@ void alloc_lookup_buffers(void)
 
 
 
-#ifdef NONMATCHING
-void reinit_between_menus(void) {
+/**
+ * Address 0x7F001750.
+*/
+void reinit_between_menus(void)
+{
+    s32 i;
 
+    write_monitor_ani_control_blocks();
+    initialize_temp_mine_table();
+    alarm_timer = 0;
+    ptr_alarm_sfx = 0;
+    toxic_gas_sound_timer = 0.0f;
+    activate_gas_sound_timer = 0;
+    D_80030AD0.f[0] = 0.0f;
+    D_80030AD0.f[1] = 0.0f;
+    D_80030AD0.f[2] = 0.0f;
+    D_80030ADC = 0;
+    D_80030AE0 = 0.0f;
+    ptr_gas_sound = 0;
+    clock_drawn_flag = 1;
+    clock_enable = 0;
+    clock_time = 0.0f;
+    D_80030AF4 = 0;
+
+    for (i=0; i<PROJECTILEDATA_START_ADDRESS_LEN; i++)
+    {
+        ProjectileData_start_address[i].unk10 = 0;
+    }
+
+    D_80030AF8 = 0;
+
+    for (i=0; i<BSS_80072E70_DATA_LEN; i++)
+    {
+        dword_CODE_bss_80072E70[i].unk10 = 0;
+    }
+    
+    D_80030AFC = 0;
+
+    for (i=0; i<BSS_80073370_DATA_LEN; i++)
+    {
+        dword_CODE_bss_80073370[i].unk10 = 0;
+    }
+
+    for (i=0; i<BSS_80073DC0_DATA_LEN; i++)
+    {
+        dword_CODE_bss_80073DC0[i].unk00 = 0x80000000;
+        dword_CODE_bss_80073DC0[i].unk98 = 0;
+        dword_CODE_bss_80073DC0[i].unk9C = 0;
+    }
+
+    for (i=0; i<BSS_80075030_DATA_LEN; i++)
+    {
+        dword_CODE_bss_80075030[i].unk00 = 1;
+    }
+
+    D_80030B00 = NULL;
+    D_80030B04 = NULL;
+    D_80030B08 = NULL;
+    D_80030B0C = 0;
+    bodypartshot = -1;
+    F_80030B14 = 1.0f;
+    F_80030B18 = 1.0f;
+    F_80030B1C = 1.0f;
+    F_80030B20 = 1.0f;
+    F_80030B24 = 1.0f;
+    g_SoloAmmoMultiplier = 1.0f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel reinit_between_menus
-/* 036280 7F001750 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 036284 7F001754 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 036288 7F001758 0FC00656 */  jal   write_monitor_ani_control_blocks
-/* 03628C 7F00175C 00000000 */   nop   
-/* 036290 7F001760 0FC006C2 */  jal   initialize_temp_mine_table
-/* 036294 7F001764 00000000 */   nop   
-/* 036298 7F001768 3C018003 */  lui   $at, %hi(alarm_timer)
-/* 03629C 7F00176C AC200AC0 */  sw    $zero, %lo(alarm_timer)($at)
-/* 0362A0 7F001770 44800000 */  mtc1  $zero, $f0
-/* 0362A4 7F001774 3C018003 */  lui   $at, %hi(ptr_alarm_sfx)
-/* 0362A8 7F001778 AC200AC4 */  sw    $zero, %lo(ptr_alarm_sfx)($at)
-/* 0362AC 7F00177C 3C018003 */  lui   $at, %hi(toxic_gas_sound_timer)
-/* 0362B0 7F001780 E4200AC8 */  swc1  $f0, %lo(toxic_gas_sound_timer)($at)
-/* 0362B4 7F001784 3C018003 */  lui   $at, %hi(activate_gas_sound_timer)
-/* 0362B8 7F001788 3C048003 */  lui   $a0, %hi(D_80030AD0)
-/* 0362BC 7F00178C AC200ACC */  sw    $zero, %lo(activate_gas_sound_timer)($at)
-/* 0362C0 7F001790 24840AD0 */  addiu $a0, %lo(D_80030AD0) # addiu $a0, $a0, 0xad0
-/* 0362C4 7F001794 3C018003 */  lui   $at, %hi(D_80030ADC)
-/* 0362C8 7F001798 E4800000 */  swc1  $f0, ($a0)
-/* 0362CC 7F00179C E4800004 */  swc1  $f0, 4($a0)
-/* 0362D0 7F0017A0 E4800008 */  swc1  $f0, 8($a0)
-/* 0362D4 7F0017A4 AC200ADC */  sw    $zero, %lo(D_80030ADC)($at)
-/* 0362D8 7F0017A8 3C018003 */  lui   $at, %hi(D_80030AE0)
-/* 0362DC 7F0017AC E4200AE0 */  swc1  $f0, %lo(D_80030AE0)($at)
-/* 0362E0 7F0017B0 3C018003 */  lui   $at, %hi(ptr_gas_sound)
-/* 0362E4 7F0017B4 AC200AE4 */  sw    $zero, %lo(ptr_gas_sound)($at)
-/* 0362E8 7F0017B8 24050001 */  li    $a1, 1
-/* 0362EC 7F0017BC 3C018003 */  lui   $at, %hi(clock_drawn_flag)
-/* 0362F0 7F0017C0 AC250AE8 */  sw    $a1, %lo(clock_drawn_flag)($at)
-/* 0362F4 7F0017C4 3C018003 */  lui   $at, %hi(clock_enable)
-/* 0362F8 7F0017C8 AC200AEC */  sw    $zero, %lo(clock_enable)($at)
-/* 0362FC 7F0017CC 3C018003 */  lui   $at, %hi(clock_time)
-/* 036300 7F0017D0 E4200AF0 */  swc1  $f0, %lo(clock_time)($at)
-/* 036304 7F0017D4 3C018003 */  lui   $at, %hi(D_80030AF4)
-/* 036308 7F0017D8 3C028007 */  lui   $v0, %hi(ProjectileData_start_address)
-/* 03630C 7F0017DC 3C038007 */  lui   $v1, %hi(dword_CODE_bss_80072E70)
-/* 036310 7F0017E0 AC200AF4 */  sw    $zero, %lo(D_80030AF4)($at)
-/* 036314 7F0017E4 24632E70 */  addiu $v1, %lo(dword_CODE_bss_80072E70) # addiu $v1, $v1, 0x2e70
-/* 036318 7F0017E8 24421E80 */  addiu $v0, %lo(ProjectileData_start_address) # addiu $v0, $v0, 0x1e80
-.L7F0017EC:
-/* 03631C 7F0017EC 24420088 */  addiu $v0, $v0, 0x88
-/* 036320 7F0017F0 0043082B */  sltu  $at, $v0, $v1
-/* 036324 7F0017F4 1420FFFD */  bnez  $at, .L7F0017EC
-/* 036328 7F0017F8 AC40FF88 */   sw    $zero, -0x78($v0)
-/* 03632C 7F0017FC 3C018003 */  lui   $at, %hi(D_80030AF8)
-/* 036330 7F001800 3C028007 */  lui   $v0, %hi(dword_CODE_bss_80072E70)
-/* 036334 7F001804 3C038007 */  lui   $v1, %hi(dword_CODE_bss_80073370)
-/* 036338 7F001808 AC200AF8 */  sw    $zero, %lo(D_80030AF8)($at)
-/* 03633C 7F00180C 24633370 */  addiu $v1, %lo(dword_CODE_bss_80073370) # addiu $v1, $v1, 0x3370
-/* 036340 7F001810 24422E70 */  addiu $v0, %lo(dword_CODE_bss_80072E70) # addiu $v0, $v0, 0x2e70
-.L7F001814:
-/* 036344 7F001814 24420080 */  addiu $v0, $v0, 0x80
-/* 036348 7F001818 0043082B */  sltu  $at, $v0, $v1
-/* 03634C 7F00181C 1420FFFD */  bnez  $at, .L7F001814
-/* 036350 7F001820 AC40FF90 */   sw    $zero, -0x70($v0)
-/* 036354 7F001824 3C018003 */  lui   $at, %hi(D_80030AFC)
-/* 036358 7F001828 3C028007 */  lui   $v0, %hi(dword_CODE_bss_80073370)
-/* 03635C 7F00182C 3C038007 */  lui   $v1, %hi(dword_CODE_bss_80073DC0)
-/* 036360 7F001830 AC200AFC */  sw    $zero, %lo(D_80030AFC)($at)
-/* 036364 7F001834 24633DC0 */  addiu $v1, %lo(dword_CODE_bss_80073DC0) # addiu $v1, $v1, 0x3dc0
-/* 036368 7F001838 24423370 */  addiu $v0, %lo(dword_CODE_bss_80073370) # addiu $v0, $v0, 0x3370
-.L7F00183C:
-/* 03636C 7F00183C 24420084 */  addiu $v0, $v0, 0x84
-/* 036370 7F001840 0043082B */  sltu  $at, $v0, $v1
-/* 036374 7F001844 1420FFFD */  bnez  $at, .L7F00183C
-/* 036378 7F001848 AC40FF8C */   sw    $zero, -0x74($v0)
-/* 03637C 7F00184C 3C028007 */  lui   $v0, %hi(dword_CODE_bss_80073DC0)
-/* 036380 7F001850 3C048007 */  lui   $a0, %hi(dword_CODE_bss_80075030)
-/* 036384 7F001854 24845030 */  addiu $a0, %lo(dword_CODE_bss_80075030) # addiu $a0, $a0, 0x5030
-/* 036388 7F001858 24423DC0 */  addiu $v0, %lo(dword_CODE_bss_80073DC0) # addiu $v0, $v0, 0x3dc0
-/* 03638C 7F00185C 3C038000 */  lui   $v1, 0x8000
-.L7F001860:
-/* 036390 7F001860 244200EC */  addiu $v0, $v0, 0xec
-/* 036394 7F001864 0044082B */  sltu  $at, $v0, $a0
-/* 036398 7F001868 AC43FF14 */  sw    $v1, -0xec($v0)
-/* 03639C 7F00186C AC40FFAC */  sw    $zero, -0x54($v0)
-/* 0363A0 7F001870 1420FFFB */  bnez  $at, .L7F001860
-/* 0363A4 7F001874 AC40FFB0 */   sw    $zero, -0x50($v0)
-/* 0363A8 7F001878 3C028007 */  lui   $v0, %hi(dword_CODE_bss_80075030)
-/* 0363AC 7F00187C 3C038007 */  lui   $v1, %hi(objinst)
-/* 0363B0 7F001880 24635B70 */  addiu $v1, %lo(objinst) # addiu $v1, $v1, 0x5b70
-/* 0363B4 7F001884 24425030 */  addiu $v0, %lo(dword_CODE_bss_80075030) # addiu $v0, $v0, 0x5030
-.L7F001888:
-/* 0363B8 7F001888 24420120 */  addiu $v0, $v0, 0x120
-/* 0363BC 7F00188C AC45FF28 */  sw    $a1, -0xd8($v0)
-/* 0363C0 7F001890 AC45FF70 */  sw    $a1, -0x90($v0)
-/* 0363C4 7F001894 AC45FFB8 */  sw    $a1, -0x48($v0)
-/* 0363C8 7F001898 1443FFFB */  bne   $v0, $v1, .L7F001888
-/* 0363CC 7F00189C AC45FEE0 */   sw    $a1, -0x120($v0)
-/* 0363D0 7F0018A0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0363D4 7F0018A4 44810000 */  mtc1  $at, $f0
-/* 0363D8 7F0018A8 3C018003 */  lui   $at, %hi(D_80030B00)
-/* 0363DC 7F0018AC AC200B00 */  sw    $zero, %lo(D_80030B00)($at)
-/* 0363E0 7F0018B0 3C018003 */  lui   $at, %hi(D_80030B04)
-/* 0363E4 7F0018B4 AC200B04 */  sw    $zero, %lo(D_80030B04)($at)
-/* 0363E8 7F0018B8 3C018003 */  lui   $at, %hi(D_80030B08)
-/* 0363EC 7F0018BC AC200B08 */  sw    $zero, %lo(D_80030B08)($at)
-/* 0363F0 7F0018C0 3C018003 */  lui   $at, %hi(D_80030B0C)
-/* 0363F4 7F0018C4 AC200B0C */  sw    $zero, %lo(D_80030B0C)($at)
-/* 0363F8 7F0018C8 3C018003 */  lui   $at, %hi(bodypartshot)
-/* 0363FC 7F0018CC 240EFFFF */  li    $t6, -1
-/* 036400 7F0018D0 AC2E0B10 */  sw    $t6, %lo(bodypartshot)($at)
-/* 036404 7F0018D4 3C018003 */  lui   $at, %hi(F_80030B14)
-/* 036408 7F0018D8 E4200B14 */  swc1  $f0, %lo(F_80030B14)($at)
-/* 03640C 7F0018DC 3C018003 */  lui   $at, %hi(F_80030B18)
-/* 036410 7F0018E0 E4200B18 */  swc1  $f0, %lo(F_80030B18)($at)
-/* 036414 7F0018E4 3C018003 */  lui   $at, %hi(F_80030B1C)
-/* 036418 7F0018E8 E4200B1C */  swc1  $f0, %lo(F_80030B1C)($at)
-/* 03641C 7F0018EC 3C018003 */  lui   $at, %hi(F_80030B20)
-/* 036420 7F0018F0 E4200B20 */  swc1  $f0, %lo(F_80030B20)($at)
-/* 036424 7F0018F4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 036428 7F0018F8 3C018003 */  lui   $at, %hi(F_80030B24)
-/* 03642C 7F0018FC E4200B24 */  swc1  $f0, %lo(F_80030B24)($at)
-/* 036430 7F001900 3C018003 */  lui   $at, %hi(g_SoloAmmoMultiplier)
-/* 036434 7F001904 27BD0018 */  addiu $sp, $sp, 0x18
-/* 036438 7F001908 03E00008 */  jr    $ra
-/* 03643C 7F00190C E4200B28 */   swc1  $f0, %lo(g_SoloAmmoMultiplier)($at)
-)
-#endif
 
 #ifdef NONMATCHING
 void sub_GAME_7F001910(struct object_standard *object)

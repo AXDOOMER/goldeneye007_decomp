@@ -165,6 +165,11 @@ Rotate Image:
 #define PTR_LIST_OBJECT_LOOKUP_INDICES_LEN 512
 #define BSS_8007161C_LEN 256
 #define BSS_8007161C_DATA_LEN 16
+#define PROJECTILEDATA_START_ADDRESS_LEN 30
+#define BSS_80072E70_DATA_LEN 10
+#define BSS_80073370_DATA_LEN 20
+#define BSS_80073DC0_DATA_LEN 20
+#define BSS_80075030_DATA_LEN 40
 
 struct sfx_register_struct {
     u32 field_0x0;
@@ -182,6 +187,238 @@ struct sfx_register_struct {
 struct unk_8007161c
 {
     s16 data[16];
+};
+
+struct projectile_data {
+    u32 unk00;
+    u32 unk04;
+    u32 unk08;
+    u32 unk0C;
+
+    u32 unk10;
+    u32 unk14;
+    u32 unk18;
+    u32 unk1C;
+
+    u32 unk20;
+    u32 unk24;
+    u32 unk28;
+    u32 unk2C;
+
+    u32 unk30;
+    u32 unk34;
+    u32 unk38;
+    u32 unk3C;
+
+    u32 unk40;
+    u32 unk44;
+    u32 unk48;
+    u32 unk4C;
+
+    u32 unk50;
+    u32 unk54;
+    u32 unk58;
+    u32 unk5C;
+
+    u32 unk60;
+    u32 unk64;
+    u32 unk68;
+    u32 unk6C;
+
+    u32 unk70;
+    u32 unk74;
+    u32 unk78;
+    u32 unk7C;
+
+    u32 unk80;
+    u32 unk84;
+};
+
+struct bss_80072E70 {
+    u32 unk00;
+    u32 unk04;
+    u32 unk08;
+    u32 unk0C;
+
+    u32 unk10;
+    u32 unk14;
+    u32 unk18;
+    u32 unk1C;
+
+    u32 unk20;
+    u32 unk24;
+    u32 unk28;
+    u32 unk2C;
+
+    u32 unk30;
+    u32 unk34;
+    u32 unk38;
+    u32 unk3C;
+
+    u32 unk40;
+    u32 unk44;
+    u32 unk48;
+    u32 unk4C;
+
+    u32 unk50;
+    u32 unk54;
+    u32 unk58;
+    u32 unk5C;
+
+    u32 unk60;
+    u32 unk64;
+    u32 unk68;
+    u32 unk6C;
+
+    u32 unk70;
+    u32 unk74;
+    u32 unk78;
+    u32 unk7C;
+};
+
+struct bss_80073370 {
+    u32 unk00;
+    u32 unk04;
+    u32 unk08;
+    u32 unk0C;
+
+    u32 unk10;
+    u32 unk14;
+    u32 unk18;
+    u32 unk1C;
+
+    u32 unk20;
+    u32 unk24;
+    u32 unk28;
+    u32 unk2C;
+
+    u32 unk30;
+    u32 unk34;
+    u32 unk38;
+    u32 unk3C;
+
+    u32 unk40;
+    u32 unk44;
+    u32 unk48;
+    u32 unk4C;
+
+    u32 unk50;
+    u32 unk54;
+    u32 unk58;
+    u32 unk5C;
+
+    u32 unk60;
+    u32 unk64;
+    u32 unk68;
+    u32 unk6C;
+
+    u32 unk70;
+    u32 unk74;
+    u32 unk78;
+    u32 unk7C;
+
+    u32 unk80;
+};
+
+struct bss_80073DC0 {
+    u32 unk00;
+    u32 unk04;
+    u32 unk08;
+    u32 unk0C;
+
+    u32 unk10;
+    u32 unk14;
+    u32 unk18;
+    u32 unk1C;
+
+    u32 unk20;
+    u32 unk24;
+    u32 unk28;
+    u32 unk2C;
+
+    u32 unk30;
+    u32 unk34;
+    u32 unk38;
+    u32 unk3C;
+
+    u32 unk40;
+    u32 unk44;
+    u32 unk48;
+    u32 unk4C;
+
+    u32 unk50;
+    u32 unk54;
+    u32 unk58;
+    u32 unk5C;
+
+    u32 unk60;
+    u32 unk64;
+    u32 unk68;
+    u32 unk6C;
+
+    u32 unk70;
+    u32 unk74;
+    u32 unk78;
+    u32 unk7C;
+
+    u32 unk80;
+    u32 unk84;
+    u32 unk88;
+    u32 unk8C; 
+
+    u32 unk90;
+    u32 unk94;
+    u32 unk98;
+    u32 unk9C;
+
+    u32 unkA0;
+    u32 unkA4;
+    u32 unkA8;
+    u32 unkAC;
+
+    u32 unkB0;
+    u32 unkB4;
+    u32 unkB8;
+    u32 unkBC;
+
+    u32 unkC0;
+    u32 unkC4;
+    u32 unkC8;
+    u32 unkCC;
+
+    u32 unkD0;
+    u32 unkD4;
+    u32 unkD8;
+    u32 unkDC;
+
+    u32 unkE0;
+    u32 unkE4;
+    u32 unkE8;
+};
+
+struct bss_80075030 {
+    s32 unk00;
+    u32 unk04;
+    u32 unk08;
+    u32 unk0C;
+
+    u32 unk10;
+    u32 unk14;
+    u32 unk18;
+    u32 unk1C;
+
+    u32 unk20;
+    u32 unk24;
+    u32 unk28;
+    u32 unk2C;
+
+    u32 unk30;
+    u32 unk34;
+    u32 unk38;
+    u32 unk3C;
+
+    u32 unk40;
+    u32 unk44;
 };
 
 extern struct path_table_alt * ptr_setup_path_tbl;
@@ -238,6 +475,11 @@ extern struct PropRecord *g_OnScreenPropList[];
 extern s16 *ptr_room_lookup_buffer_maybe;
 extern struct unk_8007161c *dword_CODE_bss_8007161C;
 extern struct sfx_register_struct sfx_related[];
+extern struct projectile_data ProjectileData_start_address[];
+extern struct bss_80072E70 dword_CODE_bss_80072E70[];
+extern struct bss_80073370 dword_CODE_bss_80073370[];
+extern struct bss_80073DC0 dword_CODE_bss_80073DC0[];
+extern struct bss_80075030 dword_CODE_bss_80075030[];
 
 void stop_alarm(void);
 
