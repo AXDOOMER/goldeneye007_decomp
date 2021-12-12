@@ -22118,7 +22118,7 @@ glabel MoveBond
 /* 0BB20C 7F0866DC 8FAF0138 */  lw    $t7, 0x138($sp)
 /* 0BB210 7F0866E0 27B00094 */  addiu $s0, $sp, 0x94
 /* 0BB214 7F0866E4 02002825 */  move  $a1, $s0
-/* 0BB218 7F0866E8 0FC0F2E3 */  jal   sub_GAME_7F03CB8C
+/* 0BB218 7F0866E8 0FC0F2E3 */  jal   chraiGetPropRoomIds
 /* 0BB21C 7F0866EC 8DE40010 */   lw    $a0, 0x10($t7)
 /* 0BB220 7F0866F0 0FC0F8FF */  jal   sub_GAME_7F03E3FC
 /* 0BB224 7F0866F4 02002025 */   move  $a0, $s0
@@ -24659,7 +24659,7 @@ glabel MoveBond
 /* 0BB900 7F086D90 8FB90138 */  lw    $t9, 0x138($sp)
 /* 0BB904 7F086D94 27B00094 */  addiu $s0, $sp, 0x94
 /* 0BB908 7F086D98 02002825 */  move  $a1, $s0
-/* 0BB90C 7F086D9C 0FC0F3A3 */  jal   sub_GAME_7F03CB8C
+/* 0BB90C 7F086D9C 0FC0F3A3 */  jal   chraiGetPropRoomIds
 /* 0BB910 7F086DA0 8F240010 */   lw    $a0, 0x10($t9)
 /* 0BB914 7F086DA4 0FC0F9BF */  jal   sub_GAME_7F03E3FC
 /* 0BB918 7F086DA8 02002025 */   move  $a0, $s0
@@ -27189,7 +27189,7 @@ glabel MoveBond
 /* 0B91D4 7F0867E4 8FAE0138 */  lw    $t6, 0x138($sp)
 /* 0B91D8 7F0867E8 27B00094 */  addiu $s0, $sp, 0x94
 /* 0B91DC 7F0867EC 02002825 */  move  $a1, $s0
-/* 0B91E0 7F0867F0 0FC0F313 */  jal   sub_GAME_7F03CB8C
+/* 0B91E0 7F0867F0 0FC0F313 */  jal   chraiGetPropRoomIds
 /* 0B91E4 7F0867F4 8DC40010 */   lw    $a0, 0x10($t6)
 /* 0B91E8 7F0867F8 0FC0F92F */  jal   sub_GAME_7F03E3FC
 /* 0B91EC 7F0867FC 02002025 */   move  $a0, $s0

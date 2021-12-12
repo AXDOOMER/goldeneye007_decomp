@@ -41,14 +41,7 @@ struct unk_8007161c *dword_CODE_bss_8007161C;
  * 
  * Address 0x80071620.
 */
-struct PropRecord *g_OnScreenPropList[37];
-
-//CODE.bss:800716B4
-char dword_CODE_bss_800716B4;
-char dword_CODE_bss_800716B5;
-char dword_CODE_bss_800716B6;
-char dword_CODE_bss_800716B7;
-char dword_CODE_bss_800716B8[0x738];
+struct PropRecord *g_OnScreenPropList[ONSCREEN_PROP_LIST_LEN];
 
 /**
  * Pointer to last onscreen prop.
@@ -20566,7 +20559,7 @@ Gfx *sub_GAME_7F03A6F4(Gfx *arg0, s32 arg1, s32 arg2)
 
                     if (phi_s1_2 != 0)
                     {
-                        sub_GAME_7F03CB8C(temp_s2_2, &sp48);
+                        chraiGetPropRoomIds(temp_s2_2, &sp48);
                         phi_s0_2 = &sp48;
                         if (sp48 >= 0)
                         {
@@ -20616,7 +20609,7 @@ loop_18:
                 phi_s4_5 = phi_s4;
                 if (temp_s2 != 0)
                 {
-                    sub_GAME_7F03CB8C(temp_s2, &sp48);
+                    chraiGetPropRoomIds(temp_s2, &sp48);
                     phi_s0 = &sp48;
                     if (sp48 >= 0)
                     {
@@ -20730,7 +20723,7 @@ glabel sub_GAME_7F03A6F4
 /* 06F308 7F03A7D8 02402025 */   move  $a0, $s2
 /* 06F30C 7F03A7DC 00008825 */  move  $s1, $zero
 /* 06F310 7F03A7E0 02C02825 */  move  $a1, $s6
-/* 06F314 7F03A7E4 0FC0F2E3 */  jal   sub_GAME_7F03CB8C
+/* 06F314 7F03A7E4 0FC0F2E3 */  jal   chraiGetPropRoomIds
 /* 06F318 7F03A7E8 02C08025 */   move  $s0, $s6
 /* 06F31C 7F03A7EC 8FA90048 */  lw    $t1, 0x48($sp)
 /* 06F320 7F03A7F0 27AA0048 */  addiu $t2, $sp, 0x48
@@ -20784,7 +20777,7 @@ glabel sub_GAME_7F03A6F4
 /* 06F3C8 7F03A898 02C02825 */  move  $a1, $s6
 /* 06F3CC 7F03A89C 12400025 */  beqz  $s2, .L7F03A934
 /* 06F3D0 7F03A8A0 02402025 */   move  $a0, $s2
-/* 06F3D4 7F03A8A4 0FC0F2E3 */  jal   sub_GAME_7F03CB8C
+/* 06F3D4 7F03A8A4 0FC0F2E3 */  jal   chraiGetPropRoomIds
 /* 06F3D8 7F03A8A8 02C08025 */   move  $s0, $s6
 /* 06F3DC 7F03A8AC 8FAF0048 */  lw    $t7, 0x48($sp)
 /* 06F3E0 7F03A8B0 27B80048 */  addiu $t8, $sp, 0x48
@@ -23462,60 +23455,41 @@ glabel determing_type_of_object_and_detection
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03CB8C(void) {
+/**
+ * Copies stan roomids from prop to array. The list is terminated
+ * with an entry of -1.
+ * 
+ * @param self: prop
+ * @param roomids: out parameter. Must contain enough space to store room ids.
+ * 
+ * Address 0x7F03CB8C.
+*/
+void chraiGetPropRoomIds(PropRecord *self, s32 *roomids)
+{
+    struct StandTile *stan;
+    s32 i;
 
+    stan = self->stan;
+
+    if (stan == NULL)
+    {
+        roomids[0] = -1;
+    }
+    else if ((self->type == PROP_TYPE_VIEWER) && (self->obj == NULL))
+    {
+        roomids[0] = stan->room;
+        roomids[1] = -1;
+    }
+    else
+    {
+        for (i=0; self->rooms[i] != 0xff; i++)
+        {
+            roomids[i] = self->rooms[i];
+        }
+        
+        roomids[i] = -1;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03CB8C
-/* 0716BC 7F03CB8C 8C820014 */  lw    $v0, 0x14($a0)
-/* 0716C0 7F03CB90 240EFFFF */  li    $t6, -1
-/* 0716C4 7F03CB94 54400004 */  bnezl $v0, .L7F03CBA8
-/* 0716C8 7F03CB98 908F0000 */   lbu   $t7, ($a0)
-/* 0716CC 7F03CB9C 03E00008 */  jr    $ra
-/* 0716D0 7F03CBA0 ACAE0000 */   sw    $t6, ($a1)
-
-/* 0716D4 7F03CBA4 908F0000 */  lbu   $t7, ($a0)
-.L7F03CBA8:
-/* 0716D8 7F03CBA8 24010006 */  li    $at, 6
-/* 0716DC 7F03CBAC 240BFFFF */  li    $t3, -1
-/* 0716E0 7F03CBB0 55E1000A */  bnel  $t7, $at, .L7F03CBDC
-/* 0716E4 7F03CBB4 908A002C */   lbu   $t2, 0x2c($a0)
-/* 0716E8 7F03CBB8 8C980004 */  lw    $t8, 4($a0)
-/* 0716EC 7F03CBBC 2409FFFF */  li    $t1, -1
-/* 0716F0 7F03CBC0 57000006 */  bnezl $t8, .L7F03CBDC
-/* 0716F4 7F03CBC4 908A002C */   lbu   $t2, 0x2c($a0)
-/* 0716F8 7F03CBC8 90590003 */  lbu   $t9, 3($v0)
-/* 0716FC 7F03CBCC ACA90004 */  sw    $t1, 4($a1)
-/* 071700 7F03CBD0 03E00008 */  jr    $ra
-/* 071704 7F03CBD4 ACB90000 */   sw    $t9, ($a1)
-
-/* 071708 7F03CBD8 908A002C */  lbu   $t2, 0x2c($a0)
-.L7F03CBDC:
-/* 07170C 7F03CBDC 240800FF */  li    $t0, 255
-/* 071710 7F03CBE0 00001025 */  move  $v0, $zero
-/* 071714 7F03CBE4 110A0009 */  beq   $t0, $t2, .L7F03CC0C
-/* 071718 7F03CBE8 00A01825 */   move  $v1, $a1
-/* 07171C 7F03CBEC 00803025 */  move  $a2, $a0
-/* 071720 7F03CBF0 9087002C */  lbu   $a3, 0x2c($a0)
-.L7F03CBF4:
-/* 071724 7F03CBF4 AC670000 */  sw    $a3, ($v1)
-/* 071728 7F03CBF8 90C7002D */  lbu   $a3, 0x2d($a2)
-/* 07172C 7F03CBFC 24420001 */  addiu $v0, $v0, 1
-/* 071730 7F03CC00 24630004 */  addiu $v1, $v1, 4
-/* 071734 7F03CC04 1507FFFB */  bne   $t0, $a3, .L7F03CBF4
-/* 071738 7F03CC08 24C60001 */   addiu $a2, $a2, 1
-.L7F03CC0C:
-/* 07173C 7F03CC0C 00026080 */  sll   $t4, $v0, 2
-/* 071740 7F03CC10 00AC6821 */  addu  $t5, $a1, $t4
-/* 071744 7F03CC14 ADAB0000 */  sw    $t3, ($t5)
-/* 071748 7F03CC18 03E00008 */  jr    $ra
-/* 07174C 7F03CC1C 00000000 */   nop   
-)
-#endif
-
 
 
 

@@ -170,6 +170,7 @@ Rotate Image:
 #define BSS_80073370_DATA_LEN 20
 #define BSS_80073DC0_DATA_LEN 20
 #define BSS_80075030_DATA_LEN 40
+#define ONSCREEN_PROP_LIST_LEN 500
 
 struct sfx_register_struct {
     u32 field_0x0;
@@ -514,5 +515,6 @@ void sub_GAME_7F03E3FC(s32 *);
 struct ObjectRecord *scan_position_data_table_for_normal_object_at_preset(s32 arg0);
 Gfx *sub_GAME_7F03A6F4(Gfx *arg0, s32 arg1, s32 arg2);
 struct PropRecord *get_ptr_obj_pos_list_current_entry(void);
+void chraiGetPropRoomIds(PropRecord *self, s32 *roomids);
 
 #endif

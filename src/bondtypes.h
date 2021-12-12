@@ -1484,7 +1484,7 @@ typedef struct PropRecord
     struct PropRecord *child; /*0x20*/
     struct PropRecord *prev;   /*0x24*/
     struct PropRecord *next;  /*0x28*/
-    s16 rooms[2];              /*0x2c*/
+    u8 rooms[4];              /*0x2c*/
     s32 unk30;
 
     // u16 unk38;         /*0x38* /
