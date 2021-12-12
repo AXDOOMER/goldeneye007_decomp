@@ -471,7 +471,7 @@ extern struct PropRecord *ptr_obj_pos_list_first_entry;
 extern struct PropRecord *ptr_obj_pos_list_final_entry;
 
 extern s32 g_OnScreenPropCount;
-extern struct PropRecord *g_LastOnScreenProp;
+extern struct PropRecord **g_LastOnScreenProp;
 extern struct PropRecord *g_OnScreenPropList[];
 extern s16 *ptr_room_lookup_buffer_maybe;
 extern struct unk_8007161c *dword_CODE_bss_8007161C;

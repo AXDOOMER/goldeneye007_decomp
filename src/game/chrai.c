@@ -4,6 +4,7 @@
 #include "boss.h"
 #include "snd.h"
 #include "music.h"
+#include "game/bg.h"
 #include "game/bondview.h"
 #include "game/chr.h"
 #include "game/chrai.h"
@@ -47,7 +48,7 @@ struct PropRecord *g_OnScreenPropList[ONSCREEN_PROP_LIST_LEN];
  * Pointer to last onscreen prop.
  * Address 0x80071DF0.
 */
-struct PropRecord *g_LastOnScreenProp;
+struct PropRecord **g_LastOnScreenProp;
 
 /**
  * Count of onscreen props.
@@ -191,6 +192,12 @@ s32 D_80030AB0 = 0;
 s32 D_80030AB4 = 0;
 s32 D_80030AB8 = 0;
 s32 D_80030ABC = 0;
+
+// forward declarations
+
+Gfx *sub_GAME_7F03A62C(Gfx *arg0, PropRecord *arg1, s32 arg2);
+
+// end forward declarations
 
 
 
@@ -20487,37 +20494,29 @@ glabel sub_GAME_7F03A62C
 
 
 #ifdef NONMATCHING
-Gfx *sub_GAME_7F03A6F4(Gfx *arg0, s32 arg1, s32 arg2)
-{
-    s32 sp48;
-    PropRecord **temp_s3;
-    PropRecord **temp_s3_2;
-    PropRecord **temp_s3_3;
-    PropRecord *temp_s2;
-    PropRecord *temp_s2_2;
-    s32 temp_a0;
-    s32 temp_a0_2;
-    s32 phi_s5;
-    PropRecord **phi_s3;
-    s32 phi_a0;
-    s32 *phi_s0;
-    s32 phi_s1;
-    Gfx *phi_s4;
-    Gfx *phi_s4_2;
-    PropRecord **phi_s3_2;
-    s32 phi_s1_2;
-    s32 phi_a0_2;
-    s32 *phi_s0_2;
-    s32 phi_s1_3;
-    Gfx *phi_s4_3;
-    Gfx *phi_s4_4;
-    Gfx *phi_s4_5;
-    Gfx *phi_s4_6;
 
-    phi_s5 = arg2;
-    phi_s4 = arg0;
-    phi_s4_3 = arg0;
-    phi_s4_4 = arg0;
+/**
+ * Address 0x7F03A6F4.
+ * 
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical instructions: fail
+ * - identical registers: fail
+ * 
+ * notes: can't seem to iterate the prop lists correctly. Maybe type definitions are wrong?
+*/
+Gfx *sub_GAME_7F03A6F4(Gfx *arg0, s32 roomid, s32 arg2)
+{
+    s32 flag;
+    struct PropRecord **pp;
+    struct PropRecord *prop;
+    s32 i;
+    s32* rp;
+    s32 unused2;
+    s32 sp48[PROPRECORD_STAN_ROOM_LEN]; // 72
+    s32 unused3;
+    s32 unused4;
 
     if (bossGetStageNum() == LEVELID_CUBA)
     {
@@ -20525,132 +20524,103 @@ Gfx *sub_GAME_7F03A6F4(Gfx *arg0, s32 arg1, s32 arg2)
         {
             return arg0;
         }
-
-        if (arg2 == 2)
+        else if (arg2 == 2)
         {
             arg2 = 0;
         }
-
-        goto block_5;
     }
 
     if ((arg2 == 0) || (arg2 == 2))
     {
-        temp_s3_2 = g_LastOnScreenProp - 4;
-        phi_s3_2 = temp_s3_2;
-        if ((u32) temp_s3_2 >= (u32) g_OnScreenPropList)
+        for (pp = g_LastOnScreenProp; --pp >= g_OnScreenPropList; )
         {
-            do
+            prop = *pp;
+
+            if (prop != NULL)
             {
-                temp_s2_2 = *phi_s3_2;
-                phi_s4_6 = phi_s4_3;
-                if (temp_s2_2 != 0)
+                flag = 0;
+
+                if ((arg2 == 0) && ((prop->flags & 0x21) == 0))
                 {
-                    phi_s1_2 = 0;
-                    phi_s1_3 = 0;
-                    if ((arg2 == 0) && ((temp_s2_2->flags & 0x21) == 0))
+                    flag = 1;
+                }
+                else if ((arg2 == 2) && ((prop->flags & 0x21) == 1))
+                {
+                    flag = 1;
+                }
+
+                if (flag != 0)
+                {
+                    flag=0;
+
+                    chraiGetPropRoomIds(prop, &sp48);
+
+                    for (rp = sp48; *rp >= 0; rp++)
                     {
-                        phi_s1_2 = 1;
-                    }
-                    else if ((arg2 == 2) && ((temp_s2_2->flags & 0x21) == 1))
-                    {
-                        phi_s1_2 = 1;
+                        if (getROOMID_Bitflags(*rp))
+                        {
+                            if (roomid == *rp)
+                            {
+                                flag = 1;
+                            }
+
+                            break;
+                        }
                     }
 
-                    if (phi_s1_2 != 0)
+                    if (flag)
                     {
-                        chraiGetPropRoomIds(temp_s2_2, &sp48);
-                        phi_s0_2 = &sp48;
-                        if (sp48 >= 0)
-                        {
-                            phi_a0_2 = sp48;
-loop_18:
-                            if (getROOMID_Bitflags(phi_a0_2) != 0)
-                            {
-                                if (arg1 == phi_s0_2->unk0)
-                                {
-                                    phi_s1_3 = 1;
-                                }
-                            }
-                            else
-                            {
-                                temp_a0_2 = phi_s0_2->unk4;
-                                phi_a0_2 = temp_a0_2;
-                                phi_s0_2 += 4;
-                                if (temp_a0_2 >= 0)
-                                {
-                                    goto loop_18;
-                                }
-                            }
-                        }
-                        if (phi_s1_3 != 0)
-                        {
-                            phi_s4_6 = sub_GAME_7F03A62C(phi_s4_3, temp_s2_2, 0);
-                        }
+                        arg0 = sub_GAME_7F03A62C(arg0, prop, 0);
                     }
                 }
-                temp_s3_3 = phi_s3_2 - 4;
-                phi_s3_2 = temp_s3_3;
-                phi_s4_3 = phi_s4_6;
-                phi_s4_4 = phi_s4_6;
-            } while ((u32) temp_s3_3 >= (u32) g_OnScreenPropList);
+            }
         }
     }
     else
     {
-        phi_s3 = g_OnScreenPropList;
-        if ((u32) g_LastOnScreenProp >= (u32) (g_OnScreenPropList + 1))
+        /**
+         * decomp problem area.
+         * (target) precurser loop comparison seems to be loading g_OnScreenPropList address plus one byte.
+         * This code generates a `beqzl` at the end of the loop (and `bnez` at start), while target
+         * uses `bnezl` (and `bnez` at start). 
+         * 
+        */
+        for (pp = g_OnScreenPropList; pp <= g_LastOnScreenProp; pp++)
         {
-            do
+            prop = *pp;
+            flag = 0;
+
+            if (prop != NULL)
             {
-                temp_s2 = *phi_s3;
-                phi_s1 = 0;
-                phi_s4_2 = phi_s4;
-                phi_s4_5 = phi_s4;
-                if (temp_s2 != 0)
+                chraiGetPropRoomIds(prop, &sp48);
+
+                for (rp = sp48; *rp >= 0; rp++)
                 {
-                    chraiGetPropRoomIds(temp_s2, &sp48);
-                    phi_s0 = &sp48;
-                    if (sp48 >= 0)
+                    if (getROOMID_Bitflags(*rp))
                     {
-                        phi_a0 = sp48;
-loop_31:
-                        if (getROOMID_Bitflags(phi_a0) != 0)
+                        if (roomid == *rp)
                         {
-                            if (arg1 == phi_s0->unk0)
-                            {
-                                phi_s1 = 1;
-                            }
+                            flag = 1;
                         }
-                        else
-                        {
-                            temp_a0 = phi_s0->unk4;
-                            phi_a0 = temp_a0;
-                            phi_s0 += 4;
-                            if (temp_a0 >= 0)
-                            {
-                                goto loop_31;
-                            }
-                        }
-                    }
-                    if (phi_s1 != 0)
-                    {
-                        if ((temp_s2->flags & 0x20) != 0)
-                        {
-                            phi_s4_2 = sub_GAME_7F03A62C(phi_s4, temp_s2, 0);
-                        }
-                        phi_s4_5 = sub_GAME_7F03A62C(phi_s4_2, temp_s2, 1);
+
+                        break;
                     }
                 }
-                temp_s3 = phi_s3 + 4;
-                phi_s3 = temp_s3;
-                phi_s4 = phi_s4_5;
-                phi_s4_4 = phi_s4_5;
-            } while ((u32) temp_s3 < (u32) g_LastOnScreenProp);
+
+                if (flag)
+                {
+                    if (prop->flags & 0x20)
+                    {
+                        arg0 = sub_GAME_7F03A62C(arg0, prop, 0);
+                    }
+
+                    arg0 = sub_GAME_7F03A62C(arg0, prop, 1);
+                }
+            }
         }
     }
 
-    return bgScissorCurrentPlayerViewDefault(phi_s4_4);
+    return bgScissorCurrentPlayerViewDefault(arg0);
 }
 #else
 GLOBAL_ASM(

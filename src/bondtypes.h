@@ -9,6 +9,7 @@
 #define _mkword(a, b) ((a << 16) | (b & 0xffff))
 
 #define MAX_CHRWAYPOINTS 6
+#define PROPRECORD_STAN_ROOM_LEN 4
 
 typedef s32 bool;
 
@@ -1484,7 +1485,7 @@ typedef struct PropRecord
     struct PropRecord *child; /*0x20*/
     struct PropRecord *prev;   /*0x24*/
     struct PropRecord *next;  /*0x28*/
-    u8 rooms[4];              /*0x2c*/
+    u8 rooms[PROPRECORD_STAN_ROOM_LEN];              /*0x2c*/
     s32 unk30;
 
     // u16 unk38;         /*0x38* /
