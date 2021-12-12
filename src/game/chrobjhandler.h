@@ -29,7 +29,7 @@ extern s32 D_80030AF8;
 extern s32 D_80030AFC;
 extern struct ObjectRecord *g_LevelLoadPropSwitch;
 extern struct ObjectRecord *g_LevelLoadPropLockDoor;
-extern struct ObjectRecord *D_80030B08;
+extern struct ObjectRecord *g_LevelLoadPropSafeItem;
 extern s32 D_80030B0C;
 extern s32 bodypartshot;
 extern f32 F_80030B14;

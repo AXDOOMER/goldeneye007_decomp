@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "bondgame.h"
+#include "bondtypes.h"
 #include "boss.h"
 #include "snd.h"
 #include "music.h"
@@ -118,16 +119,39 @@ f32 flt_CODE_bss_80075B8C;
 f32 flt_CODE_bss_80075B90;
 //CODE.bss:80075B94
 f32 flt_CODE_bss_80075B94;
-//CODE.bss:80075B98
-char dword_CODE_bss_80075B98[0x6C];
-//CODE.bss:80075C04
-u32 dword_CODE_bss_80075C04;
-u32 dword_CODE_bss_80075C08;
-u32 dword_CODE_bss_80075C0C;
-//CODE.bss:80075C10
-char dword_CODE_bss_80075C10[0x78];
-//CODE.bss:80075C88
-char dword_CODE_bss_80075C88[0x78];
+
+/**
+ * Address 0x80075B98.
+*/
+struct object_animation_controller g_MonitorAnimController;
+
+/**
+ * Unused / unreferenced (from padding / align?)
+ * Address 0x80075C0C.
+*/
+s32 bss_80075C0C;
+
+/**
+ * Address 0x80075C10.
+*/
+struct object_animation_controller g_UnknownAnimController;
+
+/**
+ * Unused / unreferenced (from padding / align?)
+ * Address 0x80075C84.
+*/
+s32 bss_80075C84;
+
+/**
+ * Unused / unreferenced (from padding / align?)
+ * Address 0x80075C88.
+*/
+struct object_animation_controller g_TaserAnimController;
+
+/**
+ * Address 0x80075CFC.
+*/
+s32 bss_80075CFC;
 
 //CODE.bss:80075D00
 struct path_table_alt * ptr_setup_path_tbl;
@@ -25695,11 +25719,11 @@ GLOBAL_ASM(
 .text
 glabel sub_GAME_7F03E7AC
 /* 0732DC 7F03E7AC 8C8E000C */  lw    $t6, 0xc($a0)
-/* 0732E0 7F03E7B0 3C028003 */  lui   $v0, %hi(D_80030B08)
+/* 0732E0 7F03E7B0 3C028003 */  lui   $v0, %hi(g_LevelLoadPropSafeItem)
 /* 0732E4 7F03E7B4 31CF0400 */  andi  $t7, $t6, 0x400
 /* 0732E8 7F03E7B8 51E0001B */  beql  $t7, $zero, .L7F03E828
 /* 0732EC 7F03E7BC 24020001 */   li    $v0, 1
-/* 0732F0 7F03E7C0 8C420B08 */  lw    $v0, %lo(D_80030B08)($v0)
+/* 0732F0 7F03E7C0 8C420B08 */  lw    $v0, %lo(g_LevelLoadPropSafeItem)($v0)
 /* 0732F4 7F03E7C4 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 0732F8 7F03E7C8 50400017 */  beql  $v0, $zero, .L7F03E828
 /* 0732FC 7F03E7CC 24020001 */   li    $v0, 1

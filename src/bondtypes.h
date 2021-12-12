@@ -2326,4 +2326,85 @@ typedef struct CreditsEntry_s {
 
 } CreditsEntry;
 
+struct object_animation_controller {
+    // 0x00
+    void * ptranimation;
+    // 0x04
+    u16 offsettocurcmd;
+    // 0x06
+    u16 waitcounter;
+    // 0x08
+    u32 imagenum;
+    // 0x0C
+    f32 rotation;
+    // 0x10
+    f32 curzoomx;
+    // 0x14
+    f32 startzoomx;
+    // 0x18
+    f32 zoomxtimer;
+    // 0x1C
+    f32 initialzoomx;
+    // 0x20
+    f32 finalzoomx;
+    // 0x24
+    f32 curzoomy;
+    // 0x28
+    f32 startzoomy;
+    // 0x2C
+    f32 zoomytimer;
+    // 0x30
+    f32 initialzoomy;
+    // 0x34
+    f32 finalzoomy;
+    // 0x38
+    f32 curhorizontalpos;
+    // 0x3C
+    f32 starthorscroll;
+    // 0x40
+    f32 horscrolltimer;
+    // 0x44
+    f32 horinitpos;
+    // 0x48
+    f32 horfinalpos;
+    // 0x4C
+    f32 curverpos;
+    // 0x50
+    f32 startverscroll;
+    // 0x54
+    f32 verscrolltimer;
+    // 0x58
+    f32 verinitpos;
+    // 0x5C
+    f32 verfinalpos;
+    // 0x60
+    u8 curredcomponant;
+    // 0x61
+    u8 initredcomponant;
+    // 0x62
+    u8 finalredcomponant;
+    // 0x63
+    u8 curgreencomponant;
+    // 0x64
+    u8 initgreencomponant;
+    // 0x65
+    u8 finalgreencomponant;
+    // 0x66
+    u8 curbluecomponant;
+    // 0x67
+    u8 initbluecomponant;
+    // 0x68
+    u8 finalbluecomponant;
+    // 0x69
+    u8 curalphacomponant;
+    // 0x6A
+    u8 initalphacomponant;
+    // 0x6B
+    u8 finalalphacomponant;
+    // 0x6C
+    f32 startcolorshift;
+    // 0x70
+    f32 colorshifttimer;
+};
+
 #endif

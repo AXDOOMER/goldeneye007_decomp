@@ -11510,16 +11510,16 @@ glabel sub_GAME_7F062BE4
 .L7F062DE4:
 /* 097914 7F062DE4 16810013 */  bne   $s4, $at, .L7F062E34
 /* 097918 7F062DE8 02202025 */   move  $a0, $s1
-/* 09791C 7F062DEC 3C048007 */  lui   $a0, %hi(dword_CODE_bss_80075C10)
+/* 09791C 7F062DEC 3C048007 */  lui   $a0, %hi(g_UnknownAnimController)
 /* 097920 7F062DF0 3C058009 */  lui   $a1, %hi(crosshairimage)
 /* 097924 7F062DF4 8CA5D114 */  lw    $a1, %lo(crosshairimage)($a1)
 /* 097928 7F062DF8 0FC127D0 */  jal   save_img_index_to_obj_ani_slot
-/* 09792C 7F062DFC 24845C10 */   addiu $a0, %lo(dword_CODE_bss_80075C10) # addiu $a0, $a0, 0x5c10
+/* 09792C 7F062DFC 24845C10 */   addiu $a0, %lo(g_UnknownAnimController) # addiu $a0, $a0, 0x5c10
 /* 097930 7F062E00 8E790300 */  lw    $t9, 0x300($s3)
-/* 097934 7F062E04 3C068007 */  lui   $a2, %hi(dword_CODE_bss_80075C10)
+/* 097934 7F062E04 3C068007 */  lui   $a2, %hi(g_UnknownAnimController)
 /* 097938 7F062E08 24080004 */  li    $t0, 4
 /* 09793C 7F062E0C 8F380008 */  lw    $t8, 8($t9)
-/* 097940 7F062E10 24C65C10 */  addiu $a2, %lo(dword_CODE_bss_80075C10) # addiu $a2, $a2, 0x5c10
+/* 097940 7F062E10 24C65C10 */  addiu $a2, %lo(g_UnknownAnimController) # addiu $a2, $a2, 0x5c10
 /* 097944 7F062E14 02202025 */  move  $a0, $s1
 /* 097948 7F062E18 8F050040 */  lw    $a1, 0x40($t8)
 /* 09794C 7F062E1C AFA80014 */  sw    $t0, 0x14($sp)
@@ -11530,10 +11530,10 @@ glabel sub_GAME_7F062BE4
 /* 097960 7F062E30 00408025 */   move  $s0, $v0
 .L7F062E34:
 /* 097964 7F062E34 8E6F0300 */  lw    $t7, 0x300($s3)
-/* 097968 7F062E38 3C068007 */  lui   $a2, %hi(dword_CODE_bss_80075C88)
+/* 097968 7F062E38 3C068007 */  lui   $a2, %hi(g_TaserAnimController)
 /* 09796C 7F062E3C 240A0001 */  li    $t2, 1
 /* 097970 7F062E40 8DE90008 */  lw    $t1, 8($t7)
-/* 097974 7F062E44 24C65C88 */  addiu $a2, %lo(dword_CODE_bss_80075C88) # addiu $a2, $a2, 0x5c88
+/* 097974 7F062E44 24C65C88 */  addiu $a2, %lo(g_TaserAnimController) # addiu $a2, $a2, 0x5c88
 /* 097978 7F062E48 02003825 */  move  $a3, $s0
 /* 09797C 7F062E4C 8D250040 */  lw    $a1, 0x40($t1)
 /* 097980 7F062E50 AFAA0014 */  sw    $t2, 0x14($sp)
