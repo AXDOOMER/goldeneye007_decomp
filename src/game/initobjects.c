@@ -147,7 +147,7 @@ void reinit_between_menus(void)
         dword_CODE_bss_80075030[i].unk00 = 1;
     }
 
-    D_80030B00 = NULL;
+    g_LevelLoadPropSwitch = NULL;
     D_80030B04 = NULL;
     D_80030B08 = NULL;
     D_80030B0C = 0;
@@ -160,28 +160,22 @@ void reinit_between_menus(void)
     g_SoloAmmoMultiplier = 1.0f;
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F001910(struct object_standard *object)
+/**
+ * Called from lvreset2 when PROPDEF type is PROPDEF_SWITCH.
+ * Address 0x7F001910.
+*/
+void initSetLevelLoadPropSwitch(struct ObjectRecord *arg0)
 {
-    object->flags2 = (u32)D_80030B00;
-    D_80030B00 = object;
+    *((struct ObjectRecord **)&arg0->flags2) = g_LevelLoadPropSwitch;
+    g_LevelLoadPropSwitch = arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F001910
-/* 036440 7F001910 3C028003 */  lui   $v0, %hi(D_80030B00)
-/* 036444 7F001914 24420B00 */  addiu $v0, %lo(D_80030B00) # addiu $v0, $v0, 0xb00
-/* 036448 7F001918 8C4E0000 */  lw    $t6, ($v0)
-/* 03644C 7F00191C AC8E000C */  sw    $t6, 0xc($a0)
-/* 036450 7F001920 03E00008 */  jr    $ra
-/* 036454 7F001924 AC440000 */   sw    $a0, ($v0)
-)
-#endif
 
 #ifdef NONMATCHING
-void sub_GAME_7F001928(void) {
-
+// PROPDEF_LOCK_DOOR
+void sub_GAME_7F001928(struct ObjectRecord *arg0)
+{
+    arg0->flags2 = D_80030B04;
+    D_80030B04 = arg0;
 }
 #else
 GLOBAL_ASM(
@@ -197,8 +191,11 @@ glabel sub_GAME_7F001928
 #endif
 
 #ifdef NONMATCHING
-void sub_GAME_7F001940(void) {
-
+// PROPDEF_SAFE_ITEM
+void sub_GAME_7F001940(struct ObjectRecord *arg0)
+{
+    arg0->ptrPOSData = D_80030B08;
+    D_80030B08 = arg0;
 }
 #else
 GLOBAL_ASM(

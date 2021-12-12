@@ -4646,7 +4646,7 @@ other_obj_expand:
 /* 0397B0 7F004C80 AE430004 */  sw    $v1, 4($s2)
 /* 0397B4 7F004C84 8C4A0010 */  lw    $t2, 0x10($v0)
 /* 0397B8 7F004C88 02402025 */  move  $a0, $s2
-/* 0397BC 7F004C8C 0FC00644 */  jal   sub_GAME_7F001910
+/* 0397BC 7F004C8C 0FC00644 */  jal   initSetLevelLoadPropSwitch
 /* 0397C0 7F004C90 AE4A0008 */   sw    $t2, 8($s2)
 /* 0397C4 7F004C94 8E0B0064 */  lw    $t3, 0x64($s0)
 /* 0397C8 7F004C98 356D0001 */  ori   $t5, $t3, 1
@@ -6044,7 +6044,7 @@ other_obj_expand:
 /* 039800 7F004C90 AE430004 */  sw    $v1, 4($s2)
 /* 039804 7F004C94 8C4B0010 */  lw    $t3, 0x10($v0)
 /* 039808 7F004C98 02402025 */  move  $a0, $s2
-/* 03980C 7F004C9C 0FC00644 */  jal   sub_GAME_7F001910
+/* 03980C 7F004C9C 0FC00644 */  jal   initSetLevelLoadPropSwitch
 /* 039810 7F004CA0 AE4B0008 */   sw    $t3, 8($s2)
 /* 039814 7F004CA4 8E0D0064 */  lw    $t5, 0x64($s0)
 /* 039818 7F004CA8 35AC0001 */  ori   $t4, $t5, 1
@@ -7440,7 +7440,7 @@ other_obj_expand:
 /* 037604 7F004C14 AE430004 */  sw    $v1, 4($s2)
 /* 037608 7F004C18 8C4B0010 */  lw    $t3, 0x10($v0)
 /* 03760C 7F004C1C 02402025 */  move  $a0, $s2
-/* 037610 7F004C20 0FC00644 */  jal   sub_GAME_7F001910
+/* 037610 7F004C20 0FC00644 */  jal   initSetLevelLoadPropSwitch
 /* 037614 7F004C24 AE4B0008 */   sw    $t3, 8($s2)
 /* 037618 7F004C28 8E0D0064 */  lw    $t5, 0x64($s0)
 /* 03761C 7F004C2C 35AC0001 */  ori   $t4, $t5, 1

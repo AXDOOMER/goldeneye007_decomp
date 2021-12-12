@@ -25597,12 +25597,12 @@ glabel sub_GAME_7F03E6A0
 /* 0731DC 7F03E6AC AFB00014 */  sw    $s0, 0x14($sp)
 /* 0731E0 7F03E6B0 8C820004 */  lw    $v0, 4($a0)
 /* 0731E4 7F03E6B4 00808825 */  move  $s1, $a0
-/* 0731E8 7F03E6B8 3C108003 */  lui   $s0, %hi(D_80030B00)
+/* 0731E8 7F03E6B8 3C108003 */  lui   $s0, %hi(g_LevelLoadPropSwitch)
 /* 0731EC 7F03E6BC 8C4E0064 */  lw    $t6, 0x64($v0)
 /* 0731F0 7F03E6C0 31CF0001 */  andi  $t7, $t6, 1
 /* 0731F4 7F03E6C4 51E00010 */  beql  $t7, $zero, .L7F03E708
 /* 0731F8 7F03E6C8 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 0731FC 7F03E6CC 8E100B00 */  lw    $s0, %lo(D_80030B00)($s0)
+/* 0731FC 7F03E6CC 8E100B00 */  lw    $s0, %lo(g_LevelLoadPropSwitch)($s0)
 /* 073200 7F03E6D0 5200000D */  beql  $s0, $zero, .L7F03E708
 /* 073204 7F03E6D4 8FBF001C */   lw    $ra, 0x1c($sp)
 /* 073208 7F03E6D8 8E180004 */  lw    $t8, 4($s0)
