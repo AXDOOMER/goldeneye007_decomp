@@ -148,7 +148,7 @@ void reinit_between_menus(void)
     }
 
     g_LevelLoadPropSwitch = NULL;
-    D_80030B04 = NULL;
+    g_LevelLoadPropLockDoor = NULL;
     D_80030B08 = NULL;
     D_80030B0C = 0;
     bodypartshot = -1;
@@ -170,25 +170,15 @@ void initSetLevelLoadPropSwitch(struct ObjectRecord *arg0)
     g_LevelLoadPropSwitch = arg0;
 }
 
-#ifdef NONMATCHING
-// PROPDEF_LOCK_DOOR
-void sub_GAME_7F001928(struct ObjectRecord *arg0)
+/**
+ * Called from lvreset2 when PROPDEF type is PROPDEF_LOCK_DOOR.
+ * Address 0x7F001928.
+*/
+void initSetLevelLoadPropLockDoor(struct ObjectRecord *arg0)
 {
-    arg0->flags2 = D_80030B04;
-    D_80030B04 = arg0;
+    *((struct ObjectRecord **)&arg0->flags2) = g_LevelLoadPropLockDoor;
+    g_LevelLoadPropLockDoor = arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F001928
-/* 036458 7F001928 3C028003 */  lui   $v0, %hi(D_80030B04)
-/* 03645C 7F00192C 24420B04 */  addiu $v0, %lo(D_80030B04) # addiu $v0, $v0, 0xb04
-/* 036460 7F001930 8C4E0000 */  lw    $t6, ($v0)
-/* 036464 7F001934 AC8E000C */  sw    $t6, 0xc($a0)
-/* 036468 7F001938 03E00008 */  jr    $ra
-/* 03646C 7F00193C AC440000 */   sw    $a0, ($v0)
-)
-#endif
 
 #ifdef NONMATCHING
 // PROPDEF_SAFE_ITEM
