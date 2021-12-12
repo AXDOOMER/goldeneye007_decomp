@@ -14,7 +14,7 @@
 
 // bss
 //CODE.bss:80069B70
-struct sfx_register_struct sfx_related[8];
+struct sfx_register_struct sfx_related[SFX_RELATED_LEN];
 //CODE.bss:80069C30
 s16 * ptr_list_object_lookup_indices;
 //CODE.bss:80069C34
@@ -20470,7 +20470,168 @@ glabel sub_GAME_7F03A62C
 #ifdef NONMATCHING
 Gfx *sub_GAME_7F03A6F4(Gfx *arg0, s32 arg1, s32 arg2)
 {
-    
+    s32 sp48;
+    PropRecord **temp_s3;
+    PropRecord **temp_s3_2;
+    PropRecord **temp_s3_3;
+    PropRecord *temp_s2;
+    PropRecord *temp_s2_2;
+    s32 temp_a0;
+    s32 temp_a0_2;
+    s32 phi_s5;
+    PropRecord **phi_s3;
+    s32 phi_a0;
+    s32 *phi_s0;
+    s32 phi_s1;
+    Gfx *phi_s4;
+    Gfx *phi_s4_2;
+    PropRecord **phi_s3_2;
+    s32 phi_s1_2;
+    s32 phi_a0_2;
+    s32 *phi_s0_2;
+    s32 phi_s1_3;
+    Gfx *phi_s4_3;
+    Gfx *phi_s4_4;
+    Gfx *phi_s4_5;
+    Gfx *phi_s4_6;
+
+    phi_s5 = arg2;
+    phi_s4 = arg0;
+    phi_s4_3 = arg0;
+    phi_s4_4 = arg0;
+
+    if (bossGetStageNum() == LEVELID_CUBA)
+    {
+        if (arg2 == 0)
+        {
+            return arg0;
+        }
+
+        if (arg2 == 2)
+        {
+            arg2 = 0;
+        }
+
+        goto block_5;
+    }
+
+    if ((arg2 == 0) || (arg2 == 2))
+    {
+        temp_s3_2 = g_LastOnScreenProp - 4;
+        phi_s3_2 = temp_s3_2;
+        if ((u32) temp_s3_2 >= (u32) g_OnScreenPropList)
+        {
+            do
+            {
+                temp_s2_2 = *phi_s3_2;
+                phi_s4_6 = phi_s4_3;
+                if (temp_s2_2 != 0)
+                {
+                    phi_s1_2 = 0;
+                    phi_s1_3 = 0;
+                    if ((arg2 == 0) && ((temp_s2_2->flags & 0x21) == 0))
+                    {
+                        phi_s1_2 = 1;
+                    }
+                    else if ((arg2 == 2) && ((temp_s2_2->flags & 0x21) == 1))
+                    {
+                        phi_s1_2 = 1;
+                    }
+
+                    if (phi_s1_2 != 0)
+                    {
+                        sub_GAME_7F03CB8C(temp_s2_2, &sp48);
+                        phi_s0_2 = &sp48;
+                        if (sp48 >= 0)
+                        {
+                            phi_a0_2 = sp48;
+loop_18:
+                            if (getROOMID_Bitflags(phi_a0_2) != 0)
+                            {
+                                if (arg1 == phi_s0_2->unk0)
+                                {
+                                    phi_s1_3 = 1;
+                                }
+                            }
+                            else
+                            {
+                                temp_a0_2 = phi_s0_2->unk4;
+                                phi_a0_2 = temp_a0_2;
+                                phi_s0_2 += 4;
+                                if (temp_a0_2 >= 0)
+                                {
+                                    goto loop_18;
+                                }
+                            }
+                        }
+                        if (phi_s1_3 != 0)
+                        {
+                            phi_s4_6 = sub_GAME_7F03A62C(phi_s4_3, temp_s2_2, 0);
+                        }
+                    }
+                }
+                temp_s3_3 = phi_s3_2 - 4;
+                phi_s3_2 = temp_s3_3;
+                phi_s4_3 = phi_s4_6;
+                phi_s4_4 = phi_s4_6;
+            } while ((u32) temp_s3_3 >= (u32) g_OnScreenPropList);
+        }
+    }
+    else
+    {
+        phi_s3 = g_OnScreenPropList;
+        if ((u32) g_LastOnScreenProp >= (u32) (g_OnScreenPropList + 1))
+        {
+            do
+            {
+                temp_s2 = *phi_s3;
+                phi_s1 = 0;
+                phi_s4_2 = phi_s4;
+                phi_s4_5 = phi_s4;
+                if (temp_s2 != 0)
+                {
+                    sub_GAME_7F03CB8C(temp_s2, &sp48);
+                    phi_s0 = &sp48;
+                    if (sp48 >= 0)
+                    {
+                        phi_a0 = sp48;
+loop_31:
+                        if (getROOMID_Bitflags(phi_a0) != 0)
+                        {
+                            if (arg1 == phi_s0->unk0)
+                            {
+                                phi_s1 = 1;
+                            }
+                        }
+                        else
+                        {
+                            temp_a0 = phi_s0->unk4;
+                            phi_a0 = temp_a0;
+                            phi_s0 += 4;
+                            if (temp_a0 >= 0)
+                            {
+                                goto loop_31;
+                            }
+                        }
+                    }
+                    if (phi_s1 != 0)
+                    {
+                        if ((temp_s2->flags & 0x20) != 0)
+                        {
+                            phi_s4_2 = sub_GAME_7F03A62C(phi_s4, temp_s2, 0);
+                        }
+                        phi_s4_5 = sub_GAME_7F03A62C(phi_s4_2, temp_s2, 1);
+                    }
+                }
+                temp_s3 = phi_s3 + 4;
+                phi_s3 = temp_s3;
+                phi_s4 = phi_s4_5;
+                phi_s4_4 = phi_s4_5;
+            } while ((u32) temp_s3 < (u32) g_LastOnScreenProp);
+        }
+    }
+
+    return bgScissorCurrentPlayerViewDefault(phi_s4_4);
 }
 #else
 GLOBAL_ASM(

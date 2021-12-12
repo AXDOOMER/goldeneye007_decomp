@@ -12,29 +12,19 @@ f32 unused_8002a3bc = 0.0f;
 f32 scale_1_0_item_related = 1.0f;
 
 
-#ifdef NONMATCHING
-void init_sound_effects_registers(void) {
+/**
+ * Address 0x7F0014B0.
+*/
+void init_sound_effects_registers(void)
+{
+    s32 i;
+
+    for (i=0; i<SFX_RELATED_LEN; i++)
+    {
+        sfx_related[i].field_0x0 = 0;
+    }
 
 }
-#else
-GLOBAL_ASM(
-.text
-glabel init_sound_effects_registers
-/* 035FE0 7F0014B0 3C038007 */  lui   $v1, %hi(sfx_related)
-/* 035FE4 7F0014B4 3C028007 */  lui   $v0, %hi(ptr_list_object_lookup_indices)
-/* 035FE8 7F0014B8 24429C30 */  addiu $v0, %lo(ptr_list_object_lookup_indices) # addiu $v0, $v0, -0x63d0
-/* 035FEC 7F0014BC 24639B70 */  addiu $v1, %lo(sfx_related) # addiu $v1, $v1, -0x6490
-.L7F0014C0:
-/* 035FF0 7F0014C0 24630060 */  addiu $v1, $v1, 0x60
-/* 035FF4 7F0014C4 AC60FFB8 */  sw    $zero, -0x48($v1)
-/* 035FF8 7F0014C8 AC60FFD0 */  sw    $zero, -0x30($v1)
-/* 035FFC 7F0014CC AC60FFE8 */  sw    $zero, -0x18($v1)
-/* 036000 7F0014D0 1462FFFB */  bne   $v1, $v0, .L7F0014C0
-/* 036004 7F0014D4 AC60FFA0 */   sw    $zero, -0x60($v1)
-/* 036008 7F0014D8 03E00008 */  jr    $ra
-/* 03600C 7F0014DC 00000000 */   nop   
-)
-#endif
 
 
 #ifdef NONMATCHING

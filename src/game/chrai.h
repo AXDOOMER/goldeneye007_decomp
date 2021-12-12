@@ -160,6 +160,8 @@ Rotate Image:
 #define SIXTY_PERCENT_CHANCE 0x9999
 #define HUNDRED_PERCENT_CHANCE 0xFFFF
 
+#define SFX_RELATED_LEN 8
+
 struct sfx_register_struct {
     u32 field_0x0;
     u32 field_0x4;
@@ -221,6 +223,7 @@ extern s32 g_OnScreenPropCount;
 extern struct PropRecord *g_LastOnScreenProp;
 extern struct PropRecord *g_OnScreenPropList[];
 
+extern struct sfx_register_struct sfx_related[];
 
 void stop_alarm(void);
 
