@@ -11,6 +11,12 @@ struct object_animation_controller taser_object_animation_controller = {&monAnim
 f32 unused_8002a3bc = 0.0f;
 f32 scale_1_0_item_related = 1.0f;
 
+// forward declarations
+
+void alloc_lookup_buffers();
+
+// end forward declarations
+
 
 /**
  * Address 0x7F0014B0.
@@ -27,77 +33,28 @@ void init_sound_effects_registers(void)
 }
 
 
-#ifdef NONMATCHING
-void init_load_objpos_table(void) {
+/**
+ * Address 0x7F0014E0.
+*/
+void init_load_objpos_table(void)
+{
+    s32 i;
 
+    difficulty = 1.0f;
+    ptr_obj_pos_list_current_entry = 
+        ptr_obj_pos_list_first_entry = NULL;
+    g_OnScreenPropCount = 0;
+    g_OnScreenPropList[0] = NULL;
+    g_LastOnScreenProp = (PropRecord *) g_OnScreenPropList;
+    ptr_obj_pos_list_final_entry = pos_data_entry;
+
+    for (i=0; i<(POS_DATA_ENTRY_LEN-1); i++)
+    {
+        pos_data_entry[i].prev = &pos_data_entry[i+1];
+    }
+
+    alloc_lookup_buffers();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel init_load_objpos_table
-/* 036010 7F0014E0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 036014 7F0014E4 44812000 */  mtc1  $at, $f4
-/* 036018 7F0014E8 3C018003 */  lui   $at, %hi(difficulty)
-/* 03601C 7F0014EC 3C028003 */  lui   $v0, %hi(ptr_obj_pos_list_first_entry)
-/* 036020 7F0014F0 E4240AAC */  swc1  $f4, %lo(difficulty)($at)
-/* 036024 7F0014F4 24420AA4 */  addiu $v0, %lo(ptr_obj_pos_list_first_entry) # addiu $v0, $v0, 0xaa4
-/* 036028 7F0014F8 AC400000 */  sw    $zero, ($v0)
-/* 03602C 7F0014FC 3C018003 */  lui   $at, %hi(ptr_obj_pos_list_current_entry)
-/* 036030 7F001500 AC200AA0 */  sw    $zero, %lo(ptr_obj_pos_list_current_entry)($at)
-/* 036034 7F001504 3C018007 */  lui   $at, %hi(g_OnScreenPropCount)
-/* 036038 7F001508 3C038007 */  lui   $v1, %hi(g_OnScreenPropList)
-/* 03603C 7F00150C AC201DF4 */  sw    $zero, %lo(g_OnScreenPropCount)($at)
-/* 036040 7F001510 24631620 */  addiu $v1, %lo(g_OnScreenPropList) # addiu $v1, $v1, 0x1620
-/* 036044 7F001514 AC600000 */  sw    $zero, ($v1)
-/* 036048 7F001518 3C018007 */  lui   $at, %hi(g_LastOnScreenProp)
-/* 03604C 7F00151C AC231DF0 */  sw    $v1, %lo(g_LastOnScreenProp)($at)
-/* 036050 7F001520 3C0F8007 */  lui   $t7, %hi(pos_data_entry) 
-/* 036054 7F001524 25EF9C38 */  addiu $t7, %lo(pos_data_entry) # addiu $t7, $t7, -0x63c8
-/* 036058 7F001528 3C018003 */  lui   $at, %hi(ptr_obj_pos_list_final_entry)
-/* 03605C 7F00152C AC2F0AA8 */  sw    $t7, %lo(ptr_obj_pos_list_final_entry)($at)
-/* 036060 7F001530 3C188007 */  lui   $t8, %hi(pos_data_entry + 0x34) 
-/* 036064 7F001534 27189C6C */  addiu $t8, %lo(pos_data_entry + 0x34) # addiu $t8, $t8, -0x6394
-/* 036068 7F001538 3C018007 */  lui   $at, %hi(pos_data_entry + 0x24)
-/* 03606C 7F00153C AC389C5C */  sw    $t8, %lo(pos_data_entry + 0x24)($at)
-/* 036070 7F001540 3C198007 */  lui   $t9, %hi(pos_data_entry + 0x68) 
-/* 036074 7F001544 27399CA0 */  addiu $t9, %lo(pos_data_entry + 0x68) # addiu $t9, $t9, -0x6360
-/* 036078 7F001548 3C018007 */  lui   $at, %hi(pos_data_entry + 0x58)
-/* 03607C 7F00154C AC399C90 */  sw    $t9, %lo(pos_data_entry + 0x58)($at)
-/* 036080 7F001550 3C088007 */  lui   $t0, %hi(pos_data_entry + 0x9c)
-/* 036084 7F001554 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 036088 7F001558 25029CD4 */  addiu $v0, $t0, %lo(pos_data_entry + 0x9c)
-/* 03608C 7F00155C 3C018007 */  lui   $at, %hi(pos_data_entry + 0x8c)
-/* 036090 7F001560 3C038007 */  lui   $v1, %hi(dword_CODE_bss_80069DA4)
-/* 036094 7F001564 3C048007 */  lui   $a0, %hi(dword_CODE_bss_80069D08)
-/* 036098 7F001568 3C058007 */  lui   $a1, %hi(dword_CODE_bss_80069D3C)
-/* 03609C 7F00156C 3C068007 */  lui   $a2, %hi(dword_CODE_bss_80069D70)
-/* 0360A0 7F001570 3C078007 */  lui   $a3, %hi(dword_CODE_bss_800716B4)
-/* 0360A4 7F001574 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0360A8 7F001578 24E716B4 */  addiu $a3, %lo(dword_CODE_bss_800716B4) # addiu $a3, $a3, 0x16b4
-/* 0360AC 7F00157C 24C69D70 */  addiu $a2, %lo(dword_CODE_bss_80069D70) # addiu $a2, $a2, -0x6290
-/* 0360B0 7F001580 24A59D3C */  addiu $a1, %lo(dword_CODE_bss_80069D3C) # addiu $a1, $a1, -0x62c4
-/* 0360B4 7F001584 24849D08 */  addiu $a0, %lo(dword_CODE_bss_80069D08) # addiu $a0, $a0, -0x62f8
-/* 0360B8 7F001588 24639DA4 */  addiu $v1, %lo(dword_CODE_bss_80069DA4) # addiu $v1, $v1, -0x625c
-/* 0360BC 7F00158C AC229CC4 */  sw    $v0, %lo(pos_data_entry + 0x8c)($at)
-.L7F001590:
-/* 0360C0 7F001590 AC4300C0 */  sw    $v1, 0xc0($v0)
-/* 0360C4 7F001594 246300D0 */  addiu $v1, $v1, 0xd0
-/* 0360C8 7F001598 AC450058 */  sw    $a1, 0x58($v0)
-/* 0360CC 7F00159C AC46008C */  sw    $a2, 0x8c($v0)
-/* 0360D0 7F0015A0 AC440024 */  sw    $a0, 0x24($v0)
-/* 0360D4 7F0015A4 248400D0 */  addiu $a0, $a0, 0xd0
-/* 0360D8 7F0015A8 24C600D0 */  addiu $a2, $a2, 0xd0
-/* 0360DC 7F0015AC 24A500D0 */  addiu $a1, $a1, 0xd0
-/* 0360E0 7F0015B0 1467FFF7 */  bne   $v1, $a3, .L7F001590
-/* 0360E4 7F0015B4 244200D0 */   addiu $v0, $v0, 0xd0
-/* 0360E8 7F0015B8 0FC00574 */  jal   alloc_lookup_buffers
-/* 0360EC 7F0015BC 00000000 */   nop   
-/* 0360F0 7F0015C0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0360F4 7F0015C4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0360F8 7F0015C8 03E00008 */  jr    $ra
-/* 0360FC 7F0015CC 00000000 */   nop   
-)
-#endif
 
 
 #ifdef NONMATCHING

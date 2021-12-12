@@ -13,39 +13,25 @@
 #include "game/math_atan2f.h"
 
 // bss
-//CODE.bss:80069B70
+/**
+ * Address 0x80069B70.
+*/
 struct sfx_register_struct sfx_related[SFX_RELATED_LEN];
+
 //CODE.bss:80069C30
 s16 * ptr_list_object_lookup_indices;
+
 //CODE.bss:80069C34
 u32 num_obj_position_data_entries;
 
-//CODE.bss:80069C38
-struct PropRecord pos_data_entry[3];
+/**
+ * Address 0x80069C38.
+*/
+struct PropRecord pos_data_entry[POS_DATA_ENTRY_LEN];
 
-//CODE.bss:80069CD4
-u32 dword_CODE_bss_80069CD4;
-u32 dword_CODE_bss_80069CD8;
-u32 dword_CODE_bss_80069CDC;
-u8 dword_CODE_bss_80069CE0[0x28];
-//CODE.bss:80069D08
-u8 dword_CODE_bss_80069D08[0x34];
-//CODE.bss:80069D3C
-u8 dword_CODE_bss_80069D3C;
-u8 dword_CODE_bss_80069D3D;
-u8 dword_CODE_bss_80069D3E;
-u8 dword_CODE_bss_80069D3F;
-u8 dword_CODE_bss_80069D40[0x30];
-//CODE.bss:80069D70
-u8 dword_CODE_bss_80069D70[0x34];
-//CODE.bss:80069DA4
-u8 dword_CODE_bss_80069DA4;
-u8 dword_CODE_bss_80069DA5;
-u8 dword_CODE_bss_80069DA6;
-u8 dword_CODE_bss_80069DA7;
-u8 dword_CODE_bss_80069DA8[0x7870];
 //CODE.bss:80071618
 void *ptr_room_lookup_buffer_maybe;
+
 //CODE.bss:8007161C
 u32 dword_CODE_bss_8007161C;
 

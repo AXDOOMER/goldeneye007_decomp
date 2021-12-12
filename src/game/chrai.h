@@ -161,6 +161,7 @@ Rotate Image:
 #define HUNDRED_PERCENT_CHANCE 0xFFFF
 
 #define SFX_RELATED_LEN 8
+#define POS_DATA_ENTRY_LEN 600
 
 struct sfx_register_struct {
     u32 field_0x0;
