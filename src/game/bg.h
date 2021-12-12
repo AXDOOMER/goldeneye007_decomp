@@ -76,6 +76,7 @@ typedef struct bg_room_data
     struct coord3d pos;
 } bg_room_data;
 
+extern s32 MaxNumRooms;
 extern f32 room_data_float2;
 
 extern bg_room_data * ptr_bgdata_room_fileposition_list;

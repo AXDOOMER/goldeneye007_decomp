@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "memp.h"
+#include "game/bg.h"
 #include "game/initobjects.h"
 #include "game/chrai.h"
 #include "game/chrobjhandler.h"
@@ -57,116 +58,35 @@ void init_load_objpos_table(void)
 }
 
 
-#ifdef NONMATCHING
-void alloc_lookup_buffers(void) {
+/**
+ * Address 0x7F0015D0.
+*/
+void alloc_lookup_buffers(void)
+{
+    s32 j;
+    s32 i;
 
+    ptr_list_object_lookup_indices = (s16*)mempAllocBytesInBank(PTR_LIST_OBJECT_LOOKUP_INDICES_LEN * sizeof(s16), 4);
+    ptr_room_lookup_buffer_maybe = (s16*)mempAllocBytesInBank((((MaxNumRooms * 4) + 0xF) | 0xF) ^ 0xF, 4);
+    dword_CODE_bss_8007161C = (s16*)mempAllocBytesInBank(BSS_8007161C_LEN * sizeof(struct unk_8007161c), 4);
+
+    ptr_list_object_lookup_indices[0] = -1;
+
+    for (i=0; i<MaxNumRooms; i++)
+    {
+        ptr_room_lookup_buffer_maybe[i] = -1;
+    }
+
+    for (i=0; i<BSS_8007161C_LEN; i++)
+    {
+        dword_CODE_bss_8007161C[i].data[0] = -2;
+
+        for (j=1; j<BSS_8007161C_DATA_LEN; j++)
+        {
+            dword_CODE_bss_8007161C[i].data[j] = -1;
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel alloc_lookup_buffers
-/* 036100 7F0015D0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 036104 7F0015D4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 036108 7F0015D8 24040400 */  li    $a0, 1024
-/* 03610C 7F0015DC 0C0025C8 */  jal   mempAllocBytesInBank
-/* 036110 7F0015E0 24050004 */   li    $a1, 4
-/* 036114 7F0015E4 3C068004 */  lui   $a2, %hi(MaxNumRooms)
-/* 036118 7F0015E8 3C018007 */  lui   $at, %hi(ptr_list_object_lookup_indices)
-/* 03611C 7F0015EC AC229C30 */  sw    $v0, %lo(ptr_list_object_lookup_indices)($at)
-/* 036120 7F0015F0 24C642F4 */  addiu $a2, %lo(MaxNumRooms) # addiu $a2, $a2, 0x42f4
-/* 036124 7F0015F4 8CC40000 */  lw    $a0, ($a2)
-/* 036128 7F0015F8 24050004 */  li    $a1, 4
-/* 03612C 7F0015FC 00047080 */  sll   $t6, $a0, 2
-/* 036130 7F001600 25C4000F */  addiu $a0, $t6, 0xf
-/* 036134 7F001604 348F000F */  ori   $t7, $a0, 0xf
-/* 036138 7F001608 0C0025C8 */  jal   mempAllocBytesInBank
-/* 03613C 7F00160C 39E4000F */   xori  $a0, $t7, 0xf
-/* 036140 7F001610 3C078007 */  lui   $a3, %hi(ptr_room_lookup_buffer_maybe)
-/* 036144 7F001614 24E71618 */  addiu $a3, %lo(ptr_room_lookup_buffer_maybe) # addiu $a3, $a3, 0x1618
-/* 036148 7F001618 ACE20000 */  sw    $v0, ($a3)
-/* 03614C 7F00161C 24042000 */  li    $a0, 8192
-/* 036150 7F001620 0C0025C8 */  jal   mempAllocBytesInBank
-/* 036154 7F001624 24050004 */   li    $a1, 4
-/* 036158 7F001628 3C048007 */  lui   $a0, %hi(dword_CODE_bss_8007161C)
-/* 03615C 7F00162C 2484161C */  addiu $a0, %lo(dword_CODE_bss_8007161C) # addiu $a0, $a0, 0x161c
-/* 036160 7F001630 AC820000 */  sw    $v0, ($a0)
-/* 036164 7F001634 3C198007 */  lui   $t9, %hi(ptr_list_object_lookup_indices) 
-/* 036168 7F001638 8F399C30 */  lw    $t9, %lo(ptr_list_object_lookup_indices)($t9)
-/* 03616C 7F00163C 2405FFFF */  li    $a1, -1
-/* 036170 7F001640 3C068004 */  lui   $a2, %hi(MaxNumRooms)
-/* 036174 7F001644 24C642F4 */  addiu $a2, %lo(MaxNumRooms) # addiu $a2, $a2, 0x42f4
-/* 036178 7F001648 A7250000 */  sh    $a1, ($t9)
-/* 03617C 7F00164C 8CCB0000 */  lw    $t3, ($a2)
-/* 036180 7F001650 3C078007 */  lui   $a3, %hi(ptr_room_lookup_buffer_maybe)
-/* 036184 7F001654 24E71618 */  addiu $a3, %lo(ptr_room_lookup_buffer_maybe) # addiu $a3, $a3, 0x1618
-/* 036188 7F001658 1960000C */  blez  $t3, .L7F00168C
-/* 03618C 7F00165C 00001825 */   move  $v1, $zero
-/* 036190 7F001660 00001025 */  move  $v0, $zero
-/* 036194 7F001664 8CEC0000 */  lw    $t4, ($a3)
-.L7F001668:
-/* 036198 7F001668 24630001 */  addiu $v1, $v1, 1
-/* 03619C 7F00166C 01826821 */  addu  $t5, $t4, $v0
-/* 0361A0 7F001670 A5A50000 */  sh    $a1, ($t5)
-/* 0361A4 7F001674 8CCE0000 */  lw    $t6, ($a2)
-/* 0361A8 7F001678 24420002 */  addiu $v0, $v0, 2
-/* 0361AC 7F00167C 006E082A */  slt   $at, $v1, $t6
-/* 0361B0 7F001680 5420FFF9 */  bnezl $at, .L7F001668
-/* 0361B4 7F001684 8CEC0000 */   lw    $t4, ($a3)
-/* 0361B8 7F001688 00001825 */  move  $v1, $zero
-.L7F00168C:
-/* 0361BC 7F00168C 00003825 */  move  $a3, $zero
-/* 0361C0 7F001690 240A0100 */  li    $t2, 256
-/* 0361C4 7F001694 2409FFFE */  li    $t1, -2
-/* 0361C8 7F001698 24060020 */  li    $a2, 32
-.L7F00169C:
-/* 0361CC 7F00169C 8C8F0000 */  lw    $t7, ($a0)
-/* 0361D0 7F0016A0 00035940 */  sll   $t3, $v1, 5
-/* 0361D4 7F0016A4 00037140 */  sll   $t6, $v1, 5
-/* 0361D8 7F0016A8 01E7C021 */  addu  $t8, $t7, $a3
-/* 0361DC 7F0016AC A7090000 */  sh    $t1, ($t8)
-/* 0361E0 7F0016B0 8C990000 */  lw    $t9, ($a0)
-/* 0361E4 7F0016B4 24020008 */  li    $v0, 8
-/* 0361E8 7F0016B8 032B6021 */  addu  $t4, $t9, $t3
-/* 0361EC 7F0016BC A5850002 */  sh    $a1, 2($t4)
-/* 0361F0 7F0016C0 8C8D0000 */  lw    $t5, ($a0)
-/* 0361F4 7F0016C4 0003C940 */  sll   $t9, $v1, 5
-/* 0361F8 7F0016C8 01AE7821 */  addu  $t7, $t5, $t6
-/* 0361FC 7F0016CC A5E50004 */  sh    $a1, 4($t7)
-/* 036200 7F0016D0 8C980000 */  lw    $t8, ($a0)
-/* 036204 7F0016D4 03195821 */  addu  $t3, $t8, $t9
-/* 036208 7F0016D8 A5650006 */  sh    $a1, 6($t3)
-.L7F0016DC:
-/* 03620C 7F0016DC 8C8C0000 */  lw    $t4, ($a0)
-/* 036210 7F0016E0 00036940 */  sll   $t5, $v1, 5
-/* 036214 7F0016E4 0003C940 */  sll   $t9, $v1, 5
-/* 036218 7F0016E8 018D7021 */  addu  $t6, $t4, $t5
-/* 03621C 7F0016EC 01C27821 */  addu  $t7, $t6, $v0
-/* 036220 7F0016F0 A5E50000 */  sh    $a1, ($t7)
-/* 036224 7F0016F4 8C980000 */  lw    $t8, ($a0)
-/* 036228 7F0016F8 00037140 */  sll   $t6, $v1, 5
-/* 03622C 7F0016FC 03195821 */  addu  $t3, $t8, $t9
-/* 036230 7F001700 01626021 */  addu  $t4, $t3, $v0
-/* 036234 7F001704 A5850002 */  sh    $a1, 2($t4)
-/* 036238 7F001708 8C8D0000 */  lw    $t5, ($a0)
-/* 03623C 7F00170C 00035940 */  sll   $t3, $v1, 5
-/* 036240 7F001710 01AE7821 */  addu  $t7, $t5, $t6
-/* 036244 7F001714 01E2C021 */  addu  $t8, $t7, $v0
-/* 036248 7F001718 A7050004 */  sh    $a1, 4($t8)
-/* 03624C 7F00171C 8C990000 */  lw    $t9, ($a0)
-/* 036250 7F001720 032B6021 */  addu  $t4, $t9, $t3
-/* 036254 7F001724 01826821 */  addu  $t5, $t4, $v0
-/* 036258 7F001728 24420008 */  addiu $v0, $v0, 8
-/* 03625C 7F00172C 1446FFEB */  bne   $v0, $a2, .L7F0016DC
-/* 036260 7F001730 A5A50006 */   sh    $a1, 6($t5)
-/* 036264 7F001734 24630001 */  addiu $v1, $v1, 1
-/* 036268 7F001738 146AFFD8 */  bne   $v1, $t2, .L7F00169C
-/* 03626C 7F00173C 24E70020 */   addiu $a3, $a3, 0x20
-/* 036270 7F001740 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 036274 7F001744 27BD0018 */  addiu $sp, $sp, 0x18
-/* 036278 7F001748 03E00008 */  jr    $ra
-/* 03627C 7F00174C 00000000 */   nop   
-)
-#endif
 
 
 

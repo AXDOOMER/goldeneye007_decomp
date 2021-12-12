@@ -162,6 +162,9 @@ Rotate Image:
 
 #define SFX_RELATED_LEN 8
 #define POS_DATA_ENTRY_LEN 600
+#define PTR_LIST_OBJECT_LOOKUP_INDICES_LEN 512
+#define BSS_8007161C_LEN 256
+#define BSS_8007161C_DATA_LEN 16
 
 struct sfx_register_struct {
     u32 field_0x0;
@@ -170,6 +173,15 @@ struct sfx_register_struct {
     u32 field_0xc;
     u32 field_0x10;
     u32 field_0x14;
+};
+
+/**
+ * Getting a match on alloc_lookup_buffers makes it seem
+ * the struct is just one continuous array. (or maybe there's no struct....)
+*/
+struct unk_8007161c
+{
+    s16 data[16];
 };
 
 extern struct path_table_alt * ptr_setup_path_tbl;
@@ -223,7 +235,8 @@ extern struct PropRecord *ptr_obj_pos_list_final_entry;
 extern s32 g_OnScreenPropCount;
 extern struct PropRecord *g_LastOnScreenProp;
 extern struct PropRecord *g_OnScreenPropList[];
-
+extern s16 *ptr_room_lookup_buffer_maybe;
+extern struct unk_8007161c *dword_CODE_bss_8007161C;
 extern struct sfx_register_struct sfx_related[];
 
 void stop_alarm(void);

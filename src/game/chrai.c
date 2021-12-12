@@ -30,10 +30,10 @@ u32 num_obj_position_data_entries;
 struct PropRecord pos_data_entry[POS_DATA_ENTRY_LEN];
 
 //CODE.bss:80071618
-void *ptr_room_lookup_buffer_maybe;
+s16 *ptr_room_lookup_buffer_maybe;
 
 //CODE.bss:8007161C
-u32 dword_CODE_bss_8007161C;
+struct unk_8007161c *dword_CODE_bss_8007161C;
 
 /**
  * Array of pointers, containing onscreen props.
