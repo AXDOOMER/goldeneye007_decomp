@@ -22849,7 +22849,7 @@ glabel sub_GAME_7F03C3FC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03C4F0(void) {
+void bond_interact_object(void) {
 
 }
 #else
@@ -22867,7 +22867,7 @@ glabel jpt_80052980
 .word def_7F03C52C
 
 .text
-glabel sub_GAME_7F03C4F0
+glabel bond_interact_object
 /* 071020 7F03C4F0 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 071024 7F03C4F4 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 071028 7F03C4F8 0FC0F0FF */  jal   sub_GAME_7F03C3FC

@@ -111,7 +111,7 @@ GAMEOBJECTS := $(foreach file,$(GAMEFILES_S),$(BUILD_DIR)/$(file:.s=.o)) \
 				$(foreach file,$(GAMEFILES_C),$(BUILD_DIR)/$(file:.c=.o))
 
 
-ASSET_DATAFILES := assets/ge007.u.117940.jfont_chardata.c assets/ge007.u.123040.efont_chardata.c assets/GlobalImageTable.c assets/animationtable_data.c assets/animationtable_entries.c assets/ge007.u.117880.font_dl.c assets/ge007.u.117940.jfont_chardata.c assets/ge007.u.123040.efont_chardata.c
+ASSET_DATAFILES := assets/GlobalImageTable.c assets/animationtable_data.c assets/animationtable_entries.c assets/font_dl.c assets/font_chardataj.c assets/font_chardatae.c assets/Globalimagetable_commandblock.c
 ASSET_DATAOBJECTS := $(foreach file,$(ASSET_DATAFILES),$(BUILD_DIR)/$(file:.c=.o))
 
 ROMFILES2 := assets/romfiles2.s

@@ -32814,7 +32814,7 @@ f32 get_curplay_vertical_rotation_in_degrees(void) {
 
 
 
-s32 sub_GAME_7F089F38(void) {
+s32 bond_pressed_reload_activate(void) {
     return g_CurrentPlayer->field_D0;
 }
 

@@ -261,7 +261,7 @@ extern struct explosion_anim_group_info explosion_animation_table[];
 extern struct explosion_death_animation D_8002E648[];
 
 void sub_GAME_7F022EE0(s32 param_1);
-void sub_GAME_7F022E24(s32 param_1);
+void setanimationdebugflag(s32 param_1);
 void disable_sounds_attached_to_player_then_something(struct PropRecord* prop);
 void chrPositionRelated7F020D94(struct ChrRecord *);
 void set_or_unset_GUARDdata_flag(struct ChrRecord *guard,s32 param_2);

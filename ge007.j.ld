@@ -417,8 +417,8 @@ SECTIONS
 
    _fontdlSegmentStart = ADDR(.fontdl);
    _fontdlSegmentRomStart = _gameSegmentRomEnd;
-   .fontdl 0x00000000 : AT(_fontdlSegmentRomStart) {
-      build/j/assets/ge007.u.117880.font_dl.o (.data);
+   .fontdl 0x01000000 : AT(_fontdlSegmentRomStart) {
+      build/j/assets/font_dl.o (.data);
    }
    _fontdlSegmentEnd = ADDR(.fontdl) + SIZEOF(.fontdl);
    _fontdlSegmentRomEnd = _fontdlSegmentRomStart + SIZEOF(.fontdl);
@@ -426,7 +426,7 @@ SECTIONS
    _jfontcharSegmentStart = ADDR(.jfontchardata);
    _jfontcharSegmentRomStart = _fontdlSegmentRomEnd;
    .jfontchardata 0x00000000 : AT(_jfontcharSegmentRomStart) {
-      build/j/assets/ge007.u.117940.jfont_chardata.o (.data);
+      build/j/assets/font_chardataj.o (.data);
    }
    _jfontcharSegmentEnd = ADDR(.jfontchardata) + SIZEOF(.jfontchardata);
    _jfontcharSegmentRomEnd = _jfontcharSegmentRomStart + SIZEOF(.jfontchardata);
@@ -434,7 +434,7 @@ SECTIONS
    _efontcharSegmentStart = ADDR(.efontchardata);
    _efontcharSegmentRomStart = _jfontcharSegmentRomEnd;
    .efontchardata 0x00000000 : AT(_efontcharSegmentRomStart) {
-      build/j/assets/ge007.u.123040.efont_chardata.o (.data);
+      build/j/assets/font_chardatae.o (.data);
    }
    _efontcharSegmentEnd = ADDR(.efontchardata) + SIZEOF(.efontchardata);
    _efontcharSegmentRomEnd = _efontcharSegmentRomStart + SIZEOF(.efontchardata);
@@ -463,10 +463,17 @@ SECTIONS
    _GlobalimagetableSegmentEnd = ADDR(.romfiles_29d160) + SIZEOF(.romfiles_29d160);
    _GlobalimagetableSegmentRomEnd = _GlobalimagetableSegmentRomStart + SIZEOF(.romfiles_29d160);
 
+   _GlobalimagetablecmdblkSegmentStart = ADDR(.Globalimagetablecmdblk);
+   _GlobalimagetablecmdblkSegmentRomStart = _GlobalimagetableSegmentRomEnd;
+   .Globalimagetablecmdblk 0x02000000 : AT(_GlobalimagetablecmdblkSegmentRomStart) {
+      build/j/assets/Globalimagetable_commandblock.o (.data);
+   }
+   _GlobalimagetablecmdblkSegmentEnd = ADDR(.Globalimagetablecmdblk) + SIZEOF(.Globalimagetablecmdblk);
+   _GlobalimagetablecmdblkSegmentRomEnd = _GlobalimagetablecmdblkSegmentRomStart + SIZEOF(.Globalimagetablecmdblk);
 
 
    _romfiles2SegmentStart = ADDR(.romfiles2);
-   _romfiles2SegmentRomStart = _GlobalimagetableSegmentRomEnd;
+   _romfiles2SegmentRomStart = _GlobalimagetablecmdblkSegmentRomEnd;
    .romfiles2 _romfiles2SegmentRomStart : AT(_romfiles2SegmentRomStart) {
       build/j/assets/romfiles2.o (.data);
    }
