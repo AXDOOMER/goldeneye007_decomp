@@ -316,7 +316,7 @@ void joyRumblePakTick(void)
                 {
                     set_rumble_pak_init_state_not_ready(i);
                 }
-#ifdef VERSION_JP
+#ifndef VERSION_US
             }
             else if (g_ContRumblePakTargetState[i] == RUMBLEPAKSTATE_UNKNOWN)
             {

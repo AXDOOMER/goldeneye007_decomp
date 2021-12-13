@@ -8,4 +8,5 @@ extern s32 ptrFirstFontTableLarge;
 extern s32 ptrSecondFontTableLarge;
 
 void textrelatedInit_REMOVED(void);
+void load_font_tables(void);
 #endif

@@ -4109,7 +4109,7 @@ glabel leoDiskStack
 .byte 0
 .byte 0
 
-
+.ifndef VERSION_EU
 .section .text
 glabel __osLeoInterrupt
 /* 018930 70017D30 3C0E8002 */  lui   $t6, %hi(osDiskExist) 
@@ -4717,6 +4717,13 @@ glabel __osLeoInterrupt_sub2
 /* 0191DC 700185DC 27BD0030 */  addiu $sp, $sp, 0x30
 /* 0191E0 700185E0 03E00008 */  jr    $ra
 /* 0191E4 700185E4 00000000 */   nop   
+.endif
+.ifdef VERSION_EU
+.section .text
+glabel __osLeoInterrupt
+/* 0191E0 700185E0 03E00008 */  jr    $ra
+/* 0191E4 700185E4 00000000 */   nop  
+.endif
 
 /* 0191E8 700185E8 00000000 */  nop   
-/* 0191EC 700185EC 00000000 */  nop   
+/* 0191EC 700185EC 00000000 */  nop

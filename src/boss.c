@@ -1,13 +1,13 @@
 #include "game/debugmenu_handler.h"
-#include "game/mainmenu.h"
+#include "game/front.h"
 #include "game/ramromreplay.h"
 #include "game/room_model_buffer.h"
 #include "game/rsp.h"
 #include "game/stan.h"
-#include "game/unk_093880.h"
+#include "game/player.h"
 #include "game/unk_0C0A70.h"
 #include "game/unk_0C0A70.h"
-#include "bond.h"
+#include "bondview.h"
 #include "bondconstants.h"
 #include "bondgame.h"
 #include "boss.h"
@@ -15,13 +15,13 @@
 #include "debugmenu.h"
 #include "dyn.h"
 #include "game_debug.h"
-#include "gamefile.h"
-#include "gamefile2.h"
+#include "file.h"
+#include "file2.h"
 #include "indy_comms.h"
 #include "init.h"
 #include "joy.h"
 #include "lvl.h"
-#include "mainmenu.h"
+#include "front.h"
 #include "mema.h"
 #include "memp.h"
 #include "music.h"
@@ -33,31 +33,33 @@
 #include "token.h"
 #include "tlb_manage.h"
 #include "ultra64.h"
-#include "video.h"
+#include "fr.h"
 #include "image.h"
 
 /**
  * @file boss.c
- * This file contains the main game loop code. 
+ * This file contains the main game loop code.
  */
-
+#ifndef VERSION_EU
 #define MAIN_LOOP_TICK_INTERVAL 0x5eb61U
-
+#else
+#define MAIN_LOOP_TICK_INTERVAL D_800484B4 * 0xe34ea - 0x71a75U
+#endif
 /**
  * Copied from n64devkit\ultra\usr\src\pr\demos_old\simple\gfx.h
  */
-typedef union {    
+typedef union {
 
     struct {
         short   type;
     } gen;
-    
+
     struct {
         short   type;
     } done;
-    
+
     OSScMsg      app;
-    
+
 } GFXMsg;
 
 // forward declarations
@@ -121,7 +123,7 @@ s32 g_DebugFeatureFlag = 0;
 OSScMsg g_bossGfxDoneMsg = { OS_SC_DONE_MSG };
 
 // extern declarations
-extern struct player *pPlayer;
+extern struct player *g_CurrentPlayer;
 
 /**
  * 6930    70005D30
@@ -208,7 +210,7 @@ void bossInitMainthreadData(void)
     null_init_main_3();
     init_player_gait_object();
     initGameData();
-    sub_GAME_7F01D6E0();
+    fileResetRamRomSave();
     clear_ramrom_block_buffer_heading_ptrs();
 }
 
@@ -239,17 +241,17 @@ void bossEntry(void) {
     musicSeqPlayerInit();
     while(1){
        bossMainloop();
-    }    
+    }
 }
 
 /**
  * Main program loop.
- * 
+ *
  * 6C60    70006060
- * 
+ *
  * Seems to have been based on devkit example at one point,
  * n64devkit\ultra\usr\src\pr\demos_old\simple\simple.c
- * 
+ *
  * loop:
  *         70006090 tests memstring for "-level_##"
  *         700060DC if not title, tests memstring for "-hard#"
@@ -313,7 +315,7 @@ void bossMainloop(void)
 
     if (g_StageNum != LEVELID_TITLE)
     {
-        sub_GAME_7F01DF90();
+        fileValidateSaves();
         set_selected_folder_num(0);
         set_selected_difficulty(DIFFICULTY_AGENT);
         set_solo_and_ptr_briefing(g_StageNum);
@@ -322,7 +324,7 @@ void bossMainloop(void)
         {
             // convert ASCII difficulty value to int in set difficulty calls
             set_selected_difficulty(*(const unsigned char*)tokenFind(1, "-hard") - '0');
-            set_difficulty(*(const unsigned char*)tokenFind(1, "-hard") - '0');
+            lvlSetSelectedDifficulty(*(const unsigned char*)tokenFind(1, "-hard") - '0');
         }
     }
 
@@ -332,12 +334,12 @@ void bossMainloop(void)
     // 'done' value never changes, and control never breaks -- infinite loop
     while (!done)
     {
-        localGfxFrameMsg = NULL; 
+        localGfxFrameMsg = NULL;
         localGfxDoneMsg = g_bossGfxDoneMsg;
         toggleFlag = 0;
         pendingGfx = 0;
-        
-        test_if_recording_demos_this_stage_load(g_StageNum, get_current_difficulty());
+
+        test_if_recording_demos_this_stage_load(g_StageNum, lvlGetSelectedDifficulty());
         if (g_DebugAndUpdateStageFlag)
         {
             stringIndex = -1;
@@ -355,7 +357,7 @@ void bossMainloop(void)
 
                     stringIndex++;
                 }
-                
+
                 if (memallocstringtable[stringIndex].id == 0)
                 {
                     stringIndex = -1;
@@ -404,11 +406,11 @@ void bossMainloop(void)
                 localSelectedNumPlayers = get_selected_num_players();
             }
         }
-        
+
         init_player_data_ptrs_construct_viewports(localSelectedNumPlayers);
         dynInitMemory();
         joyCheckStatusThreadSafe();
-        stage_load(g_StageNum);
+        lvlStageLoad(g_StageNum);
         viInitBuffers();
         debmenuInit();
         sub_GAME_7F0C0B4C();
@@ -467,13 +469,13 @@ void bossMainloop(void)
                             permit_stderr(0);
 
                             gdl = firstGdl = dynGetMasterDisplayList();
-                            
+
                             //leaving commented till final build defines are picked as its not required for matching
                             //
                             //#ifdef ENABLE_DEBUG_MENU
                             //    g_DebugFeatureFlag = (joyGetButtons(0, U_CBUTTONS & D_CBUTTONS)!=0xC);
                             //#endif
-                            
+
                             if (g_DebugFeatureFlag)
                             {
                                     joyStickXPos = joyGetStickX(0);
@@ -482,26 +484,26 @@ void bossMainloop(void)
                                     g_DebugFeatureFlag = debug_menu_processor(joyStickXPos, joyStickYPos, joyButtons, joyGetButtonsPressedThisFrame(0, ANY_BUTTON));
                             }
 
-                            manage_mp_game();
-                            sub_GAME_7F09B41C();
+                            lvlManageMpGame();
+                            shuffle_player_ids();
 
                             if (g_StageNum != LEVELID_TITLE)
                             {
                                 for (i = 0; i < getPlayerCount(); i++)
                                 {
-                                    set_cur_player(sub_GAME_7F09B528(i));
+                                    set_cur_player(get_nth_player_from_shuffled(i));
 
-                                    localPlayer = pPlayer;
+                                    localPlayer = g_CurrentPlayer;
                                     viSetViewSize(localPlayer->viewx, localPlayer->viewy);
 
-                                    localPlayer = pPlayer;
+                                    localPlayer = g_CurrentPlayer;
                                     viSetViewPosition(localPlayer->viewleft, localPlayer->viewtop);
 
-                                    sub_GAME_7F0BF800();
+                                    lvlUpdateMpPlayerData();
                                 }
                             }
 
-                            gdl = lvRender(gdl);
+                            gdl = lvlRender(gdl);
 
                             // Lets Visualise the Coverage Value used for Scilohete Anti-Ailising (edges)
                             // (done on the VI), also produces a cool looking linemode - providing AA is working.
@@ -579,6 +581,9 @@ void bossMainloop(void)
 
                             pendingGfx++;
                             memaIterateAndMerge();
+                            #ifdef VERSION_EU
+                            eu_sub_7f0c00a4();
+                            #endif
                             toggleFlag ^= 1;
                             speedGraphVideoRelated_3(0x10000);
                         }
@@ -596,7 +601,7 @@ void bossMainloop(void)
             }
         }
 
-        unload_stage_text_data();
+        lvlUnloadStageTextData();
         stop_demo_playback();
         mempNullNextEntryInBank(4);
         obBlankResourcesLoadedInBank(4);
@@ -626,8 +631,8 @@ void bossRunTitleStage(void) {
  * 7550    70006950
  *     A0->loaded stage# [800242FC]; fry AT
  *     0x5A jumps to folder select
- *     0x5B 
- *     0x63 
+ *     0x5B
+ *     0x63
  */
 void bossSetLoadedStage(LEVELID stage){
     g_MainStageNum = stage;
@@ -646,7 +651,7 @@ LEVELID bossGetStageNum() {
  *     return to title screen from stage
  */
 void bossReturnTitleStage(void) {
-#ifdef VERSION_JP
+#ifndef VERSION_US
     display_objective_status_text_on_status_change();
     FUN_7f057a40();
 #endif

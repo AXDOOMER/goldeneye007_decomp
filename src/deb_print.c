@@ -1,7 +1,7 @@
 #include "ultra64.h"
 #include "deb_print.h"
 #include "bondgame.h"
-#include "video.h"
+#include "fr.h"
 #include "PR/R4300.h"
 
 // Padding

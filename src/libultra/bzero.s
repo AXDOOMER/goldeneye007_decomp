@@ -12,6 +12,7 @@
 .section .text, "ax" 
 .section .text 
 glabel bzero
+glabel memset
 /* 018840 70017C40 28A1000C */  slti  $at, $a1, 0xc
 /* 018844 70017C44 1420001D */  bnez  $at, .L70017CBC
 /* 018848 70017C48 00041823 */   negu  $v1, $a0

@@ -1,7 +1,9 @@
 #include "ultra64.h"
 #include "bondconstants.h"
 #include "memp.h"
-#include "chr.h"
+#include "game/chr.h"
+#include "game/chr_b.h"
+#include "deb_loadallmodels.h"
 //i belong in a header, probably to another file
 
 
@@ -23,11 +25,11 @@ s32 weapon_models_for_weapon_load[] = {
 
 void init_obj_register_difficulty_vals(void) {
     objectiveregisters1 = 0;
-    ai_accuracy_modifier = 1.0f;
-    ai_damage_modifier = 1.0f;
-    ai_health_modifier = 1.0f;
-    ai_reaction_speed = 1.0f;
-    setting_007_5 = 0;
+    g_AiAccuracyModifier = 1.0f;
+    g_AiDamageModifier = 1.0f;
+    g_AiHealthModifier = 1.0f;
+    g_AiReactionSpeed = 1.0f;
+    g_SeenBondRecentlyGuardCount = 0;
 }
 
 
@@ -43,10 +45,10 @@ glabel alloc_false_GUARDdata_to_exec_global_action
 /* 035B8C 7F00105C 3C0D8007 */  lui   $t5, %hi(ptr_setup_path_tbl) 
 /* 035B90 7F001060 25AD5D00 */  addiu $t5, %lo(ptr_setup_path_tbl) # addiu $t5, $t5, 0x5d00
 /* 035B94 7F001064 8DA50014 */  lw    $a1, 0x14($t5)
-/* 035B98 7F001068 3C028003 */  lui   $v0, %hi(objectiveregisters3)
-/* 035B9C 7F00106C 3C068003 */  lui   $a2, %hi(objectiveregisters2)
-/* 035BA0 7F001070 24C6097C */  addiu $a2, %lo(objectiveregisters2) # addiu $a2, $a2, 0x97c
-/* 035BA4 7F001074 24420980 */  addiu $v0, %lo(objectiveregisters3) # addiu $v0, $v0, 0x980
+/* 035B98 7F001068 3C028003 */  lui   $v0, %hi(g_ActiveChrsCount)
+/* 035B9C 7F00106C 3C068003 */  lui   $a2, %hi(g_ActiveChrs)
+/* 035BA0 7F001070 24C6097C */  addiu $a2, %lo(g_ActiveChrs) # addiu $a2, $a2, 0x97c
+/* 035BA4 7F001074 24420980 */  addiu $v0, %lo(g_ActiveChrsCount) # addiu $v0, $v0, 0x980
 /* 035BA8 7F001078 27BDFDF8 */  addiu $sp, $sp, -0x208
 /* 035BAC 7F00107C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 035BB0 7F001080 ACC00000 */  sw    $zero, ($a2)
@@ -87,8 +89,8 @@ glabel alloc_false_GUARDdata_to_exec_global_action
 /* 035C30 7F001100 3C0D8007 */  lui   $t5, %hi(ptr_setup_path_tbl) 
 /* 035C34 7F001104 25AD5D00 */  addiu $t5, %lo(ptr_setup_path_tbl) # addiu $t5, $t5, 0x5d00
 /* 035C38 7F001108 8DA50014 */  lw    $a1, 0x14($t5)
-/* 035C3C 7F00110C 3C068003 */  lui   $a2, %hi(objectiveregisters2)
-/* 035C40 7F001110 24C6097C */  addiu $a2, %lo(objectiveregisters2) # addiu $a2, $a2, 0x97c
+/* 035C3C 7F00110C 3C068003 */  lui   $a2, %hi(g_ActiveChrs)
+/* 035C40 7F001110 24C6097C */  addiu $a2, %lo(g_ActiveChrs) # addiu $a2, $a2, 0x97c
 /* 035C44 7F001114 ACC20000 */  sw    $v0, ($a2)
 /* 035C48 7F001118 8CB90000 */  lw    $t9, ($a1)
 /* 035C4C 7F00111C 8FA70200 */  lw    $a3, 0x200($sp)

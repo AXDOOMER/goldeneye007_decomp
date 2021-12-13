@@ -2,6 +2,56 @@
 #define _UNK_0A1DA0_H_
 #include "ultra64.h"
 
+typedef struct s_something_explosiony {
+    s32 field_0x0;
+    f32 x;
+    f32 y;
+    f32 z;
+    f32 field_0x10;
+    f32 field_0x14;
+    s32 field_0x18;
+    f32 field_0x1c;
+    f32 field_0x20;
+    f32 field_0x24;
+    f32 field_0x28;
+    f32 field_0x2c;
+    f32 field_0x30;
+    u32 field_0x34;
+    s16 field_0x38;
+    s16 field_0x3a;
+    s16 field_0x3c;
+    s16 field_0x3e;
+    s16 field_0x40;
+    s16 field_0x42;
+    u8 field_0x44;
+    u8 field_0x45;
+    u8 field_0x46;
+    u8 field_0x47;
+    s16 field_0x48;
+    s16 field_0x4a;
+    s16 field_0x4c;
+    s16 field_0x4e;
+    s16 field_0x50;
+    s16 field_0x52;
+    u8 field_0x54;
+    u8 field_0x55;
+    u8 field_0x56;
+    u8 field_0x57;
+    s16 field_0x58;
+    s16 field_0x5a;
+    s16 field_0x5c;
+    s16 field_0x5e;
+    s16 field_0x60;
+    s16 field_0x62;
+    u8 field_0x64;
+    u8 field_0x65;
+    u8 field_0x66;
+    u8 field_0x67;
+} s_something_explosiony;
+
+extern s32 bufferentrycount_8007A160;
+extern s_something_explosiony* dword_CODE_bss_8007A164;
+extern u32 D_80040940;
 extern u32 D_80040960[];
 
 extern u32 D_80040980;
@@ -12,5 +62,15 @@ extern u32 D_80040990;
 extern u32 watch_screen_index;
 extern u32 controller_options_index;
 extern u32 game_options_index;
+
+void sub_GAME_7F0A47D4(void);
+void sub_GAME_7F0A47FC(void);
+void sub_GAME_7F0A28D4(void);
+void sub_GAME_7F0A4528(Gfx *arg0, s32 arg1);
+void sub_GAME_7F0A4824(Gfx *arg0, s32 arg1);
+Gfx * sub_GAME_7F0A2C44(Gfx *arg0);
+
+// tentative signature
+void *sub_GAME_7F0A3E1C(struct coord3d *arg0, s32 arg1, f32 arg2, s16 arg3);
 
 #endif

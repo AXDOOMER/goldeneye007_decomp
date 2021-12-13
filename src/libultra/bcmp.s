@@ -11,6 +11,7 @@
 
 .section .text, "ax" 
 .section .text
+glabel memcmp
 glabel _bcmp
 /* 017970 70016D70 28C10010 */  slti  $at, $a2, 0x10
 /* 017974 70016D74 14200037 */  bnez  $at, .L70016E54

@@ -5,7 +5,7 @@
 #include "sched.h"
 #include "bondgame.h"
 #include "deb_print.h"
-#include "video.h"
+#include "fr.h"
 #include "joy.h"
 #include "music.h"
 #include "speed_graph.h"

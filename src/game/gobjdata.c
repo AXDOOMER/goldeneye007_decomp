@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "bondgame.h"
+#include "bondtypes.h"
 #include "game/chrobjdata.h"
 
 //FIXME File split likely

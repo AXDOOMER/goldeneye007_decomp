@@ -56,8 +56,8 @@ glabel init_player_BONDdata_stats
 /* 039C44 7F005114 8C84245C */  lw    $a0, %lo(size_item_buffer)($a0)
 /* 039C48 7F005118 0C0025C8 */  jal   mempAllocBytesInBank
 /* 039C4C 7F00511C 24050004 */   li    $a1, 4
-/* 039C50 7F005120 3C108008 */  lui   $s0, %hi(pPlayer)
-/* 039C54 7F005124 2610A0B0 */  addiu $s0, %lo(pPlayer) # addiu $s0, $s0, -0x5f50
+/* 039C50 7F005120 3C108008 */  lui   $s0, %hi(g_CurrentPlayer)
+/* 039C54 7F005124 2610A0B0 */  addiu $s0, %lo(g_CurrentPlayer) # addiu $s0, $s0, -0x5f50
 /* 039C58 7F005128 8E090000 */  lw    $t1, ($s0)
 /* 039C5C 7F00512C 0FC26919 */  jal   getPlayerCount
 /* 039C60 7F005130 AD220808 */   sw    $v0, 0x808($t1)
@@ -90,10 +90,10 @@ glabel init_player_BONDdata_stats
 /* 039CC8 7F005198 AD052A48 */  sw    $a1, 0x2a48($t0)
 /* 039CCC 7F00519C 8E0F0000 */  lw    $t7, ($s0)
 /* 039CD0 7F0051A0 00604025 */  move  $t0, $v1
-/* 039CD4 7F0051A4 3C038008 */  lui   $v1, %hi(pPlayersPerm)
+/* 039CD4 7F0051A4 3C038008 */  lui   $v1, %hi(g_playerPerm)
 /* 039CD8 7F0051A8 ADE02A50 */  sw    $zero, 0x2a50($t7)
 /* 039CDC 7F0051AC 8E0E0000 */  lw    $t6, ($s0)
-/* 039CE0 7F0051B0 2463A0B4 */  addiu $v1, %lo(pPlayersPerm) # addiu $v1, $v1, -0x5f4c
+/* 039CE0 7F0051B0 2463A0B4 */  addiu $v1, %lo(g_playerPerm) # addiu $v1, $v1, -0x5f4c
 /* 039CE4 7F0051B4 ADC02A54 */  sw    $zero, 0x2a54($t6)
 /* 039CE8 7F0051B8 8E090000 */  lw    $t1, ($s0)
 .L7F0051BC:

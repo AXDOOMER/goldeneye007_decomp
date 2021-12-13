@@ -2,7 +2,7 @@
 #include "game/debugmenu_handler.h"
 #include "game/initgamedata.h"
 #include "boss.h"
-#include "video.h"
+#include "fr.h"
 
 // data
 //D:80036BA0
@@ -182,7 +182,7 @@ s32 debug_render_raster = 2;
 //D:80036F68
 s32 debug_freeze_processing = 2;
 //D:80036F6C
-s32 debug_limit_controller_input = 2;
+s32 debug_mode = 2;
 //D:80036F70
 s32 debHighlightedOption = 2;
 //D:80036F74
@@ -259,14 +259,16 @@ s32 grab_rgb_screenshot_flag = 0;
 //D:80037000
 s32 grab_jpeg_screenshot_flag = 0;
 //D:80037004
-struct float3 player_pos_x = {0};
+struct coord3d player_pos_x = {0};
 
 
 void display_debug_menu_text_onscreen(void)
 {
+    #ifndef VERSION_EU
     init_debug_menu_values(&mcm_strings, &mcm_onscreen_positions, &mcm_column_groupings);
+    #endif
 }
-
+#ifndef VERSION_EU
 void debmenuHandleMoveView(void)
 {
     sub_GAME_7F0916F4();
@@ -295,7 +297,7 @@ void removed_do_debug_profile_flag_false(void) {
 void removed_do_debug_profile_flag_true(void) {
     return;
 }
-
+#endif
 
 
 
@@ -312,7 +314,7 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
 //    f32 tempz;
 //    f32 tempy;
     s32 debug_profile_flag;
-    struct prop *playerprop;
+    struct PropRecord *playerprop;
 
 
     if (grab_rgb_screenshot_flag != 0)
@@ -355,38 +357,38 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
     else
     {
 
-        if (debug_limit_controller_input != -2U)
+        if (debug_mode != -2U)
         {
-            debHighlightedOption = debug_limit_controller_input;
-            debug_limit_controller_input = -2U;
+            debHighlightedOption = debug_mode;
+            debug_mode = -2U;
         }
         button_pressed = (s32) button_pressed;
         if ((button_pressed & L_JPAD) != 0)
         {
-            sub_GAME_7F09039C(debug_limit_controller_input);
-            debug_limit_controller_input = -2U;
+            gotoLeftDebugOption(debug_mode);
+            debug_mode = -2U;
         }
 
         if ((button_pressed & R_JPAD) != 0)
         {
-            sub_GAME_7F0902C0(debug_limit_controller_input);
-            debug_limit_controller_input = -2U;
+            gotoRightDebugOption(debug_mode);
+            debug_mode = -2U;
         }
 
         if ((button_pressed & U_JPAD) != 0)
         {
-            sub_GAME_7F0901C8(debug_limit_controller_input);
-            debug_limit_controller_input = -2U;
+            gotoAboveDebugOption(debug_mode);
+            debug_mode = -2U;
         }
 
         if ((button_pressed & D_JPAD) != 0)
         {
-            sub_GAME_7F090248(debug_limit_controller_input);
-            debug_limit_controller_input = -2U;
+            gotoBelowDebugOption(debug_mode);
+            debug_mode = -2U;
         }
         if ((button_pressed & START_BUTTON|A_BUTTON) != 0)
         {
-            switch (get_highlighted_debug_option(debug_limit_controller_input)) {
+            switch (get_highlighted_debug_option(debug_mode)) {
             case 0: // move view
                 debmenuHandleMoveView();
                 break;
@@ -444,7 +446,7 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
                 set_bondata_invincible_flag(get_bondata_invincible_flag() == 0);
                 break;
             case 15: // visible
-                set_invisible_to_guards_flag(get_invisible_to_guards_flag() == 0);
+                bondviewSetVisibleToGuardsFlag(bondviewGetVisibleToGuardsFlag() == 0);
                 break;
             case 16: // collisions
                 set_obj_collision_flag(get_obj_collision_flag() == 0);
@@ -496,7 +498,7 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
                 bossSetLoadedStage(0x5A);
                 break;
             case 7: // bond die
-                kill_current_player();
+                bondviewKillCurrentPlayer();
                 break;
             case 29: // pr room loads
                 debug_prroomloads_flag ^= 1;
@@ -576,7 +578,7 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
             case 60: // intro pos
                 if (debug_render_raster == 0)
                 {
-                    sub_GAME_7F091618();
+                    handle_debug_intropos();
                 }
                 break;
             case 61: // world pos
@@ -685,6 +687,7 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
     return show_debug_menu_flag;
 }
 #else
+#ifndef VERSION_EU
 GLOBAL_ASM(
 .late_rodata
 /*D:800556FC*/
@@ -817,10 +820,10 @@ glabel debug_menu_processor
 .L7F090630:
 /* 0C5160 7F090630 3C0E8003 */  lui   $t6, %hi(show_debug_menu_flag) 
 /* 0C5164 7F090634 8DCE6FF8 */  lw    $t6, %lo(show_debug_menu_flag)($t6)
-/* 0C5168 7F090638 3C048003 */  lui   $a0, %hi(debug_limit_controller_input)
+/* 0C5168 7F090638 3C048003 */  lui   $a0, %hi(debug_mode)
 /* 0C516C 7F09063C 3C018003 */  lui   $at, %hi(show_debug_menu_flag)
 /* 0C5170 7F090640 15C00010 */  bnez  $t6, .L7F090684
-/* 0C5174 7F090644 24846F6C */   addiu $a0, %lo(debug_limit_controller_input) # addiu $a0, $a0, 0x6f6c
+/* 0C5174 7F090644 24846F6C */   addiu $a0, %lo(debug_mode) # addiu $a0, $a0, 0x6f6c
 /* 0C5178 7F090648 97A4006A */  lhu   $a0, 0x6a($sp)
 /* 0C517C 7F09064C 30830008 */  andi  $v1, $a0, 8
 /* 0C5180 7F090650 0003102B */  sltu  $v0, $zero, $v1
@@ -851,10 +854,10 @@ glabel debug_menu_processor
 /* 0C51D4 7F0906A4 33280200 */  andi  $t0, $t9, 0x200
 /* 0C51D8 7F0906A8 11000007 */  beqz  $t0, .L7F0906C8
 /* 0C51DC 7F0906AC AFB90018 */   sw    $t9, 0x18($sp)
-/* 0C51E0 7F0906B0 0FC240E7 */  jal   sub_GAME_7F09039C
+/* 0C51E0 7F0906B0 0FC240E7 */  jal   gotoLeftDebugOption
 /* 0C51E4 7F0906B4 00000000 */   nop   
-/* 0C51E8 7F0906B8 3C048003 */  lui   $a0, %hi(debug_limit_controller_input)
-/* 0C51EC 7F0906BC 24846F6C */  addiu $a0, %lo(debug_limit_controller_input) # addiu $a0, $a0, 0x6f6c
+/* 0C51E8 7F0906B8 3C048003 */  lui   $a0, %hi(debug_mode)
+/* 0C51EC 7F0906BC 24846F6C */  addiu $a0, %lo(debug_mode) # addiu $a0, $a0, 0x6f6c
 /* 0C51F0 7F0906C0 2403FFFE */  li    $v1, -2
 /* 0C51F4 7F0906C4 AC830000 */  sw    $v1, ($a0)
 .L7F0906C8:
@@ -862,10 +865,10 @@ glabel debug_menu_processor
 /* 0C51FC 7F0906CC 312A0100 */  andi  $t2, $t1, 0x100
 /* 0C5200 7F0906D0 51400008 */  beql  $t2, $zero, .L7F0906F4
 /* 0C5204 7F0906D4 8FAB0018 */   lw    $t3, 0x18($sp)
-/* 0C5208 7F0906D8 0FC240B0 */  jal   sub_GAME_7F0902C0
+/* 0C5208 7F0906D8 0FC240B0 */  jal   gotoRightDebugOption
 /* 0C520C 7F0906DC 00000000 */   nop   
-/* 0C5210 7F0906E0 3C048003 */  lui   $a0, %hi(debug_limit_controller_input)
-/* 0C5214 7F0906E4 24846F6C */  addiu $a0, %lo(debug_limit_controller_input) # addiu $a0, $a0, 0x6f6c
+/* 0C5210 7F0906E0 3C048003 */  lui   $a0, %hi(debug_mode)
+/* 0C5214 7F0906E4 24846F6C */  addiu $a0, %lo(debug_mode) # addiu $a0, $a0, 0x6f6c
 /* 0C5218 7F0906E8 2403FFFE */  li    $v1, -2
 /* 0C521C 7F0906EC AC830000 */  sw    $v1, ($a0)
 /* 0C5220 7F0906F0 8FAB0018 */  lw    $t3, 0x18($sp)
@@ -873,10 +876,10 @@ glabel debug_menu_processor
 /* 0C5224 7F0906F4 316C0800 */  andi  $t4, $t3, 0x800
 /* 0C5228 7F0906F8 51800008 */  beql  $t4, $zero, .L7F09071C
 /* 0C522C 7F0906FC 8FAD0018 */   lw    $t5, 0x18($sp)
-/* 0C5230 7F090700 0FC24072 */  jal   sub_GAME_7F0901C8
+/* 0C5230 7F090700 0FC24072 */  jal   gotoAboveDebugOption
 /* 0C5234 7F090704 00000000 */   nop   
-/* 0C5238 7F090708 3C048003 */  lui   $a0, %hi(debug_limit_controller_input)
-/* 0C523C 7F09070C 24846F6C */  addiu $a0, %lo(debug_limit_controller_input) # addiu $a0, $a0, 0x6f6c
+/* 0C5238 7F090708 3C048003 */  lui   $a0, %hi(debug_mode)
+/* 0C523C 7F09070C 24846F6C */  addiu $a0, %lo(debug_mode) # addiu $a0, $a0, 0x6f6c
 /* 0C5240 7F090710 2403FFFE */  li    $v1, -2
 /* 0C5244 7F090714 AC830000 */  sw    $v1, ($a0)
 /* 0C5248 7F090718 8FAD0018 */  lw    $t5, 0x18($sp)
@@ -884,10 +887,10 @@ glabel debug_menu_processor
 /* 0C524C 7F09071C 31AE0400 */  andi  $t6, $t5, 0x400
 /* 0C5250 7F090720 51C00008 */  beql  $t6, $zero, .L7F090744
 /* 0C5254 7F090724 8FAF0018 */   lw    $t7, 0x18($sp)
-/* 0C5258 7F090728 0FC24092 */  jal   sub_GAME_7F090248
+/* 0C5258 7F090728 0FC24092 */  jal   gotoBelowDebugOption
 /* 0C525C 7F09072C 00000000 */   nop   
-/* 0C5260 7F090730 3C048003 */  lui   $a0, %hi(debug_limit_controller_input)
-/* 0C5264 7F090734 24846F6C */  addiu $a0, %lo(debug_limit_controller_input) # addiu $a0, $a0, 0x6f6c
+/* 0C5260 7F090730 3C048003 */  lui   $a0, %hi(debug_mode)
+/* 0C5264 7F090734 24846F6C */  addiu $a0, %lo(debug_mode) # addiu $a0, $a0, 0x6f6c
 /* 0C5268 7F090738 2403FFFE */  li    $v1, -2
 /* 0C526C 7F09073C AC830000 */  sw    $v1, ($a0)
 /* 0C5270 7F090740 8FAF0018 */  lw    $t7, 0x18($sp)
@@ -1001,9 +1004,9 @@ debug_invincible:
 /* 0C53DC 7F0908AC 10000172 */  b     .L7F090E78
 /* 0C53E0 7F0908B0 8FB80018 */   lw    $t8, 0x18($sp)
 debug_visible:
-/* 0C53E4 7F0908B4 0FC227DD */  jal   get_invisible_to_guards_flag
+/* 0C53E4 7F0908B4 0FC227DD */  jal   bondviewGetVisibleToGuardsFlag
 /* 0C53E8 7F0908B8 00000000 */   nop   
-/* 0C53EC 7F0908BC 0FC227DA */  jal   set_invisible_to_guards_flag
+/* 0C53EC 7F0908BC 0FC227DA */  jal   bondviewSetVisibleToGuardsFlag
 /* 0C53F0 7F0908C0 2C440001 */   sltiu $a0, $v0, 1
 /* 0C53F4 7F0908C4 1000016C */  b     .L7F090E78
 /* 0C53F8 7F0908C8 8FB80018 */   lw    $t8, 0x18($sp)
@@ -1128,7 +1131,7 @@ debug_playtitle:
 /* 0C5598 7F090A68 10000103 */  b     .L7F090E78
 /* 0C559C 7F090A6C 8FB80018 */   lw    $t8, 0x18($sp)
 debug_bonddie:
-/* 0C55A0 7F090A70 0FC225EA */  jal   kill_current_player
+/* 0C55A0 7F090A70 0FC225EA */  jal   bondviewKillCurrentPlayer
 /* 0C55A4 7F090A74 00000000 */   nop   
 /* 0C55A8 7F090A78 100000FF */  b     .L7F090E78
 /* 0C55AC 7F090A7C 8FB80018 */   lw    $t8, 0x18($sp)
@@ -1277,7 +1280,7 @@ debug_intropos:
 /* 0C578C 7F090C5C 8F396F64 */  lw    $t9, %lo(debug_render_raster)($t9)
 /* 0C5790 7F090C60 57200085 */  bnezl $t9, .L7F090E78
 /* 0C5794 7F090C64 8FB80018 */   lw    $t8, 0x18($sp)
-/* 0C5798 7F090C68 0FC24586 */  jal   sub_GAME_7F091618
+/* 0C5798 7F090C68 0FC24586 */  jal   handle_debug_intropos
 /* 0C579C 7F090C6C 00000000 */   nop   
 /* 0C57A0 7F090C70 10000081 */  b     .L7F090E78
 /* 0C57A4 7F090C74 8FB80018 */   lw    $t8, 0x18($sp)
@@ -1471,77 +1474,152 @@ def_7F090EA8:
 /* 0C5A28 7F090EF8 00000000 */   nop   
 )
 #endif
+#ifdef VERSION_EU
+s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pressed)
+{
+    return 0;
+}
+#endif
+#endif
 
 s32 get_debug_render_raster(void) {
+#ifndef VERSION_EU
     return debug_render_raster;
+#else
+    return 2;
+#endif
 }
 
 s32 get_debug_freeze_processing(void) {
+#ifndef VERSION_EU
     return debug_freeze_processing;
+#else
+    return 2;
+#endif
 }
 
-s32 get_debug_limit_controller_input(void) {
-    return debug_limit_controller_input;
+s32 getDebugMode(void) {
+#ifndef VERSION_EU
+    return debug_mode;
+#else
+    return 2;
+#endif
 }
 
-void set_debug_limit_controller_input(void) {
-    debug_limit_controller_input = debHighlightedOption;
+void setDebugMode(void) {
+#ifndef VERSION_EU
+    debug_mode = debHighlightedOption;
+#endif
 }
 
 s32 get_memusage_display_flag(void) {
+#ifndef VERSION_EU
     return memusage_display_flag;
+#else
+    return 0;
+#endif
 }
 
 s32 get_debug_do_draw_bg(void) {
+#ifndef VERSION_EU
     return debug_do_draw_bg;
+#else
+    return 1;
+#endif
 }
 
 s32 get_debug_do_draw_obj(void) {
+#ifndef VERSION_EU
     return debug_do_draw_obj;
+#else
+    return 1;
+#endif
 }
 
 s32 get_debug_stanhit_flag(void) {
+#ifndef VERSION_EU
     return debug_stanhit_flag;
+#else
+    return 0;
+#endif
 }
 
 s32 get_debug_stanregion_flag(void) {
+#ifndef VERSION_EU
     return debug_stanregion_flag;
+#else
+    return 0;
+#endif
 }
 
 s32 get_debug_stan_problems_flag(void) {
+#ifndef VERSION_EU
     return debug_stan_problems_flag;
+#else
+    return 0;
+#endif
 }
 
 s32 get_debug_man_pos_flag(void) {
+#ifndef VERSION_EU
     return debug_man_pos_flag;
+#else
+    return 0;
+#endif
 }
 
 s32 get_debug_testingmanpos_flag(void) {
+#ifndef VERSION_EU
     return debug_testingmanpos_flag;
+#else
+    return 0;
+#endif
 }
 
 void set_debug_testingmanpos_flag(s32 flag) {
+#ifndef VERSION_EU
     debug_testingmanpos_flag = flag;
+#endif
 }
 
 s32 get_debug_joy2skyedit_flag(void) {
+#ifndef VERSION_EU
     return debug_joy2skyedit_flag;
+#else
+    return 0;
+#endif
 }
 
 s32 get_debug_joy2hitsedit_flag(void) {
+#ifndef VERSION_EU
     return debug_joy2hitsedit_flag;
+#else
+    return 0;
+#endif
 }
 
 s32 get_debug_joy2detailedit_flag(void) {
+#ifndef VERSION_EU
     return debug_joy2detailedit_flag;
+#else
+    return 0;
+#endif
 }
 
 s32 get_debug_explosioninfo_flag(void) {
+#ifndef VERSION_EU
     return debug_explosioninfo_flag;
+#else
+    return 0;
+#endif
 }
 
 s32 get_debug_prroomloads_flag(void) {
+#ifndef VERSION_EU
     return debug_prroomloads_flag;
+#else
+    return 0;
+#endif
 }
 
 // Get Current Status of VisCVG (True/False)
@@ -1554,18 +1632,76 @@ void set_debug_VisCVG_flag(s32 flag) {
     debug_VisCVG_flag = flag;
 }
 
+
 s32 get_debug_007_unlock_flag(void) {
+#ifndef VERSION_EU
     return debug_007_unlock_flag;
+#else
+    return 0;
+#endif
 }
 
 s32 get_debug_enable_agent_levels_flag(void) {
+#ifndef VERSION_EU
     return debug_enable_agent_levels_flag;
+#else
+    return 0;
+#endif
 }
 
 s32 get_debug_enable_all_levels_flag(void) {
+#ifndef VERSION_EU
     return debug_enable_all_levels_flag;
+#else
+    return 0;
+#endif
 }
 
+
+
+
+
+#ifdef VERSION_EU
+s32 get_debug_chrnum_flag(void) {
+    return 0;
+}
+s32 get_debug_gunwatchpos_flag(void) {
+    return 0;
+}
+s32  get_debug_profile_flag(void) {
+    return 0;
+}
+s32 get_debug_taskgrab_val(void) {
+    return 0;
+}
+s32 func_7F0904C0(void)
+{
+    return 0;
+}
+s32 func_7F0904C8(void)
+{
+    return 0;
+}
+s32 get_debug_fast_bond_flag(void) {
+    return debug_fast_bond_flag;
+}
+void set_debug_fast_bond_flag(s32 flag) {
+    debug_fast_bond_flag = flag;
+}
+s32 get_debug_all_obj_complete_flag(void) {
+    return 0;
+}
+s32 get_debug_portal_flag(void) {
+    return 0;
+}
+s32 func_7F0904F8(void)
+{
+    return 0;
+}
+#endif
+
+
+#ifndef VERSION_EU
 s32 get_debug_fast_bond_flag(void) {
     return debug_fast_bond_flag;
 }
@@ -1573,6 +1709,8 @@ s32 get_debug_fast_bond_flag(void) {
 void set_debug_fast_bond_flag(s32 flag) {
     debug_fast_bond_flag = flag;
 }
+
+
 
 s32 get_debug_all_obj_complete_flag(void) {
     return debug_all_obj_complete_flag;
@@ -1582,6 +1720,8 @@ s32 get_debug_portal_flag(void) {
     return debug_portal_flag;
 }
 
+
+
 s32 get_debug_chrnum_flag(void) {
     return debug_chrnum_flag;
 }
@@ -1590,6 +1730,7 @@ s32 get_debug_gunwatchpos_flag(void) {
     return debug_gunwatchpos_flags;
 }
 
+
 s32  get_debug_profile_flag(void) {
     return debug_profile_flag;
 }
@@ -1597,7 +1738,7 @@ s32  get_debug_profile_flag(void) {
 s32 get_debug_taskgrab_val(void) {
     return debug_enable_taskgrab_flag;
 }
-
+#endif
 
 
 

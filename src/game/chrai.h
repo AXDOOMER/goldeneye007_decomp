@@ -2,6 +2,8 @@
 #define _CHRAI_H_
 #include "ultra64.h"
 
+#include "bondtypes.h"
+
 
 
 /*
@@ -158,6 +160,18 @@ Rotate Image:
 #define SIXTY_PERCENT_CHANCE 0x9999
 #define HUNDRED_PERCENT_CHANCE 0xFFFF
 
+#define SFX_RELATED_LEN 8
+#define POS_DATA_ENTRY_LEN 600
+#define PTR_LIST_OBJECT_LOOKUP_INDICES_LEN 512
+#define BSS_8007161C_LEN 256
+#define BSS_8007161C_DATA_LEN 16
+#define PROJECTILEDATA_START_ADDRESS_LEN 30
+#define BSS_80072E70_DATA_LEN 10
+#define BSS_80073370_DATA_LEN 20
+#define BSS_80073DC0_DATA_LEN 20
+#define BSS_80075030_DATA_LEN 40
+#define ONSCREEN_PROP_LIST_LEN 500
+
 struct sfx_register_struct {
     u32 field_0x0;
     u32 field_0x4;
@@ -167,15 +181,251 @@ struct sfx_register_struct {
     u32 field_0x14;
 };
 
-
-struct Pad {
-    u32 padNumber;
-    s32* neighbours;
-    u32 pathSetIndex;
-    s32 dist_tmp;
+/**
+ * Getting a match on alloc_lookup_buffers makes it seem
+ * the struct is just one continuous array. (or maybe there's no struct....)
+*/
+struct unk_8007161c
+{
+    s16 data[16];
 };
 
-extern struct Pad * ptr_setup_path_tbl;
+struct projectile_data {
+    u32 unk00;
+    u32 unk04;
+    u32 unk08;
+    u32 unk0C;
+
+    u32 unk10;
+    u32 unk14;
+    u32 unk18;
+    u32 unk1C;
+
+    u32 unk20;
+    u32 unk24;
+    u32 unk28;
+    u32 unk2C;
+
+    u32 unk30;
+    u32 unk34;
+    u32 unk38;
+    u32 unk3C;
+
+    u32 unk40;
+    u32 unk44;
+    u32 unk48;
+    u32 unk4C;
+
+    u32 unk50;
+    u32 unk54;
+    u32 unk58;
+    u32 unk5C;
+
+    u32 unk60;
+    u32 unk64;
+    u32 unk68;
+    u32 unk6C;
+
+    u32 unk70;
+    u32 unk74;
+    u32 unk78;
+    u32 unk7C;
+
+    u32 unk80;
+    u32 unk84;
+};
+
+struct bss_80072E70 {
+    u32 unk00;
+    u32 unk04;
+    u32 unk08;
+    u32 unk0C;
+
+    u32 unk10;
+    u32 unk14;
+    u32 unk18;
+    u32 unk1C;
+
+    u32 unk20;
+    u32 unk24;
+    u32 unk28;
+    u32 unk2C;
+
+    u32 unk30;
+    u32 unk34;
+    u32 unk38;
+    u32 unk3C;
+
+    u32 unk40;
+    u32 unk44;
+    u32 unk48;
+    u32 unk4C;
+
+    u32 unk50;
+    u32 unk54;
+    u32 unk58;
+    u32 unk5C;
+
+    u32 unk60;
+    u32 unk64;
+    u32 unk68;
+    u32 unk6C;
+
+    u32 unk70;
+    u32 unk74;
+    u32 unk78;
+    u32 unk7C;
+};
+
+struct bss_80073370 {
+    u32 unk00;
+    u32 unk04;
+    u32 unk08;
+    u32 unk0C;
+
+    u32 unk10;
+    u32 unk14;
+    u32 unk18;
+    u32 unk1C;
+
+    u32 unk20;
+    u32 unk24;
+    u32 unk28;
+    u32 unk2C;
+
+    u32 unk30;
+    u32 unk34;
+    u32 unk38;
+    u32 unk3C;
+
+    u32 unk40;
+    u32 unk44;
+    u32 unk48;
+    u32 unk4C;
+
+    u32 unk50;
+    u32 unk54;
+    u32 unk58;
+    u32 unk5C;
+
+    u32 unk60;
+    u32 unk64;
+    u32 unk68;
+    u32 unk6C;
+
+    u32 unk70;
+    u32 unk74;
+    u32 unk78;
+    u32 unk7C;
+
+    u32 unk80;
+};
+
+struct bss_80073DC0 {
+    u32 unk00;
+    u32 unk04;
+    u32 unk08;
+    u32 unk0C;
+
+    u32 unk10;
+    u32 unk14;
+    u32 unk18;
+    u32 unk1C;
+
+    u32 unk20;
+    u32 unk24;
+    u32 unk28;
+    u32 unk2C;
+
+    u32 unk30;
+    u32 unk34;
+    u32 unk38;
+    u32 unk3C;
+
+    u32 unk40;
+    u32 unk44;
+    u32 unk48;
+    u32 unk4C;
+
+    u32 unk50;
+    u32 unk54;
+    u32 unk58;
+    u32 unk5C;
+
+    u32 unk60;
+    u32 unk64;
+    u32 unk68;
+    u32 unk6C;
+
+    u32 unk70;
+    u32 unk74;
+    u32 unk78;
+    u32 unk7C;
+
+    u32 unk80;
+    u32 unk84;
+    u32 unk88;
+    u32 unk8C; 
+
+    u32 unk90;
+    u32 unk94;
+    u32 unk98;
+    u32 unk9C;
+
+    u32 unkA0;
+    u32 unkA4;
+    u32 unkA8;
+    u32 unkAC;
+
+    u32 unkB0;
+    u32 unkB4;
+    u32 unkB8;
+    u32 unkBC;
+
+    u32 unkC0;
+    u32 unkC4;
+    u32 unkC8;
+    u32 unkCC;
+
+    u32 unkD0;
+    u32 unkD4;
+    u32 unkD8;
+    u32 unkDC;
+
+    u32 unkE0;
+    u32 unkE4;
+    u32 unkE8;
+};
+
+struct bss_80075030 {
+    s32 unk00;
+    u32 unk04;
+    u32 unk08;
+    u32 unk0C;
+
+    u32 unk10;
+    u32 unk14;
+    u32 unk18;
+    u32 unk1C;
+
+    u32 unk20;
+    u32 unk24;
+    u32 unk28;
+    u32 unk2C;
+
+    u32 unk30;
+    u32 unk34;
+    u32 unk38;
+    u32 unk3C;
+
+    u32 unk40;
+    u32 unk44;
+};
+
+extern struct path_table_alt * ptr_setup_path_tbl;
+extern struct SetupPtrs g_SetupPtrs;
+extern struct pad * ptr_0xxxpresets;
+extern struct pad3d * ptr_2xxxpresets;
 extern u32 monAnimRadarSub1[];
 extern u32 monAnimRadarSub2[];
 extern u32 monAnimRadarSub3[];
@@ -211,9 +461,60 @@ extern u32 monAnim35Taser[];
 extern u32 temp_mine_table[30];
 extern f32 gas_damage_flag;
 extern u32 gas_cutoff_flag;
+extern f32 difficulty ;
 extern struct object_standard * ptr_setup_objects;
+extern s16 * ptr_list_object_lookup_indices;
+extern struct PropRecord pos_data_entry[];
+
+extern struct PropRecord *ptr_obj_pos_list_current_entry;
+extern struct PropRecord *ptr_obj_pos_list_first_entry;
+extern struct PropRecord *ptr_obj_pos_list_final_entry;
+
+extern s32 g_OnScreenPropCount;
+extern struct PropRecord **g_LastOnScreenProp;
+extern struct PropRecord *g_OnScreenPropList[];
+extern s16 *ptr_room_lookup_buffer_maybe;
+extern struct unk_8007161c *dword_CODE_bss_8007161C;
+extern struct sfx_register_struct sfx_related[];
+extern struct projectile_data ProjectileData_start_address[];
+extern struct bss_80072E70 dword_CODE_bss_80072E70[];
+extern struct bss_80073370 dword_CODE_bss_80073370[];
+extern struct bss_80073DC0 dword_CODE_bss_80073DC0[];
+extern struct bss_80075030 dword_CODE_bss_80075030[];
+
+
+extern struct object_animation_controller g_MonitorAnimController;
+extern struct object_animation_controller g_UnknownAnimController;
+extern struct object_animation_controller g_TaserAnimController;
+
 void stop_alarm(void);
 
 void check_deactivate_gas_sound(void);
+void handle_mp_respawn_and_some_things(void);
+void determing_type_of_object_and_detection(void);
+void chraiUpdateOnscreenPropCount(void);
+void sub_GAME_7F03D78C(void);
+void sub_GAME_7F03C294(void);
+s32 bond_interact_object(void);
+void sub_GAME_7F03D0D4(void);
+void sub_GAME_7F03DD9C(struct PropRecord *, s16, struct player *);
+s32 remove_last_obj_pos_data_entry();
+void sub_GAME_7F03E18C(struct PropRecord *, struct ChrRecord *);
+void sub_GAME_7F03E27C(struct PropRecord *, struct coord3d *, struct coord3d *, f32);
+void sub_GAME_7F03E210(struct PropRecord *posData);
+
+void set_current_objposdata_plus_0x28(PropRecord *);
+void set_stateflag_0x04_for_posdata(PropRecord *);
+void sub_GAME_7F03A4F0(struct Model*);
+void attachNewChild(struct PropRecord *newChild, struct PropRecord *host);
+s32 LoadNext_PrevActionBlock(u16);
+void chraiGetCollisionBounds(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *arg3, f32 *arg4);
+void chraiGetCollisionBoundsWithoutY(PropRecord *arg0, struct rect4f **arg1, s32 *arg2);
+s32 sub_GAME_7F03CCD8(struct coord3d *arg0, struct rect4f *arg1, s32 arg2);
+void sub_GAME_7F03E3FC(s32 *);
+struct ObjectRecord *scan_position_data_table_for_normal_object_at_preset(s32 arg0);
+Gfx *sub_GAME_7F03A6F4(Gfx *arg0, s32 roomid, s32 arg2);
+struct PropRecord *get_ptr_obj_pos_list_current_entry(void);
+void chraiGetPropRoomIds(PropRecord *self, s32 *roomids);
 
 #endif

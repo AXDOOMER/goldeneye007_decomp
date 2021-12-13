@@ -15,5 +15,6 @@ void bossInitDebugNoticeList(void);
 void bossEnableShowMemUseFlag(void);
 void bossMemBarsFlagToggle(void);
 void bossRunTitleStage(void);
+void bossReturnTitleStage(void);
 
 #endif

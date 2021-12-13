@@ -48,22 +48,22 @@ SECTIONS
       build/e/src/init.o (.text);
       build/e/src/sched.o (.text);
       build/e/src/osMapTLB.o (.text);
-      
+
       build/e/src/libultra/vimgr.o (.text);
       build/e/src/libultra/pimgr.o (.text);
-      
+
       build/e/src/tlb_manage.o (.text);
       build/e/src/tlb_random.o (.text);
       build/e/src/tlb_resolve.o (.text);
       build/e/src/tlb_hardwire.o (.text);
       build/e/src/audi.o (.text);
       build/e/src/speed_graph.o (.text);
-      build/e/src/video.o (.text);
+      build/e/src/fr.o (.text);
       build/e/src/deb.o (.text);
-      build/e/src/tlb_paging.o (.text);
-      build/e/src/unused_fp.o (.text);
+      build/e/src/fault.o (.text);
+      /*deb_print may be part of fault per pd beta (.text);*/
       build/e/src/deb_print.o (.text);
-      build/e/src/debug_getlastRA.o (.text);
+      build/e/src/getra.o (.text);
       build/e/src/ramrom.o (.text);
       build/e/src/boss.o (.text);
       build/e/src/music.o (.text);
@@ -79,6 +79,7 @@ SECTIONS
       build/e/src/debugmenu.o (.text);
       build/e/src/joy.o (.text);
       build/e/src/motor.o (.text);
+      build/e/src/libultra/leointerrupt.o (.text);
       build/e/src/rmon.o (.text);
 
       /*build/e/src/libultra/osPiRawStartDma.o (.text);*/
@@ -118,6 +119,21 @@ SECTIONS
       build/e/src/libultra/sptask.o (.text);
       build/e/src/libultra/dpsetnextbuf.o (.text);
       build/e/src/libultra/sptaskyield.o (.text);
+      build/e/src/libultra/timerintr.o (.text);
+      build/e/src/libultra/getthreadpri.o (.text);
+      build/e/src/libultra/interrupt.o (.text);
+      build/e/src/libultra/vi.o (.text);
+      build/e/src/libultra/vigetcurrcontext.o (.text);
+      build/e/src/libultra/viswapcontext.o (.text);
+      build/e/src/libultra/piacs.o (.text);
+      build/e/src/libultra/epirawdma.o (.text);
+      build/e/src/libultra/devmgr.o (.text);
+
+
+
+
+
+
       build/e/src/libultra/gettlbhi.o (.text);
       build/e/src/libultra/virtualtophysical.o (.text);
       build/e/src/libultra/aisetfreq.o (.text);
@@ -198,20 +214,24 @@ SECTIONS
       build/e/src/libultra/pirawread.o (.text);
       build/e/src/libultra/bzero.o (.text);
       build/e/src/libultra/sethwinterrupt.o (.text);
-      build/e/src/libultra/leointerrupt.o (.text);
-      build/e/src/libultra/interrupt.o (.text);
-      build/e/src/libultra/timerintr.o (.text);
+      /*build/e/src/libultra/leointerrupt.o (.text);*/
+      /*build/e/src/libultra/interrupt.o (.text);*/
+      /*build/e/src/libultra/timerintr.o (.text);*/
       build/e/src/libultra/kdebugserver.o (.text);
-      build/e/src/libultra/getthreadpri.o (.text);
-      build/e/src/libultra/vi.o (.text); /*edited*/
-      build/e/src/libultra/vigetcurrcontext.o (.text);
-      build/e/src/libultra/viswapcontext.o (.text);
+      /*build/e/src/libultra/getthreadpri.o (.text);*/
+      /*build/e/src/libultra/vi.o (.text);*/ /*edited*/
+      /*build/e/src/libultra/vigetcurrcontext.o (.text);*/
+      /*build/e/src/libultra/viswapcontext.o (.text);*/
       build/e/src/libultra/spgetstat.o (.text);
       build/e/src/libultra/spsetstat.o (.text);
       build/e/src/libultra/spsetpc.o (.text);
       build/e/src/libultra/sprawdma.o (.text);
       build/e/src/libultra/sp.o (.text);
       build/e/src/libultra/dp.o (.text);
+      build/e/src/libultra/setcompare.o (.text);
+      build/e/src/libultra/resetglobalintmask.o (.text);
+      build/e/src/libultra/epirawwrite.o (.text);
+
       build/e/src/libultra/probetlb.o (.text);
       build/e/src/libultra/syndelete.o (.text);
       build/e/src/libultra/ai.o (.text);
@@ -231,25 +251,25 @@ SECTIONS
       build/e/src/libultra/seqplayer.o (.text);
       build/e/src/libultra/synstartvoiceparam.o (.text);
       build/e/src/libultra/copy.o (.text);
-      build/e/src/libultra/piacs.o (.text);
+      /*build/e/src/libultra/piacs.o (.text);*/
       build/e/src/libultra/xlitob.o (.text);
       build/e/src/libultra/xldtob.o (.text);
-      build/e/src/libultra/epirawdma.o (.text);
-      build/e/src/libultra/devmgr.o (.text);
+      /*build/e/src/libultra/epirawdma.o (.text);*/
+      /*build/e/src/libultra/devmgr.o (.text);*/
       build/e/src/libultra/contpfs.o (.text);
       build/e/src/libultra/si.o (.text);
       build/e/src/libultra/normalize.o (.text);
       build/e/src/libultra/sqrtf.o (.text);
-      build/e/src/libultra/leodiskinit.o (.text);
-      build/e/src/libultra/setcompare.o (.text);
+      /*build/e/src/libultra/leodiskinit.o (.text);*/
+      /*build/e/src/libultra/setcompare.o (.text);*/
       build/e/src/libultra/filter.o (.text);
       build/e/src/libultra/reverb.o (.text); /*edited*/
       build/e/src/libultra/libm_vals.o (.text); /*edited*/
       build/e/src/libultra/seq.o (.text);
       build/e/src/libultra/synsetpriority.o (.text);
       build/e/src/libultra/ldiv.o (.text);
-      build/e/src/libultra/resetglobalintmask.o (.text);
-      build/e/src/libultra/epirawwrite.o (.text);
+      /*build/e/src/libultra/resetglobalintmask.o (.text);*/
+      /*build/e/src/libultra/epirawwrite.o (.text);*/
       build/e/src/libultra/vimodentsclan1.o (.text);
       build/e/src/libultra/vimodepallan1.o (.text);
       build/e/src/libultra/ultra80069080.o (.text); /*edited*/
@@ -267,7 +287,7 @@ SECTIONS
    }
    _cdataSegmentEnd = ADDR(.cdata) + SIZEOF(.cdata);
    _cdataSegmentRomEnd = _cdataSegmentRomStart + SIZEOF(.cdata);
-   
+
 
 
    /* (0x70200000, 0x702029BC, 0x701CCA70), // 033590-035F4D [29BD] */
@@ -281,8 +301,8 @@ SECTIONS
    _inflateSegmentRomEnd = _inflateSegmentRomStart + SIZEOF(.inflate);
 
 
-   
-   
+
+
    /* (0x7F000000, 0x7F0E2D50, 0x7EFCB4D0), // 034B30-117881 [E2D51] */
    _gameSegmentStart = ADDR(.game);
    _gameSegmentRomStart = _inflateSegmentRomEnd;
@@ -308,7 +328,7 @@ SECTIONS
       build/e/src/game/initBondDATA.o (.text);
       build/e/src/game/initunk_005450.o (.text);
       build/e/src/game/initunk_005520.o (.text);
-      build/e/src/game/initcameraandthrown.o (.text);
+      build/e/src/game/bondview_r.o (.text);
       build/e/src/game/inititemslots.o (.text);
       build/e/src/game/initBondDATAdefaults.o (.text);
       build/e/src/game/initpathtablesomething.o (.text);
@@ -329,17 +349,18 @@ SECTIONS
       build/e/src/game/unk_007920.o (.text);
       build/e/src/game/null_007970.o (.text);
       build/e/src/game/unk_007980.o (.text);
-      build/e/src/game/intro_logos.o (.text);
-      build/e/src/game/mainmenu.o (.text);
+      build/e/src/game/title.o (.text);
+      build/e/src/game/front.o (.text);
       build/e/src/game/unk_01B0E0.o (.text);
       build/e/src/game/unk_01B240.o (.text);
       build/e/src/game/unk_01BAE0.o (.text);
       build/e/src/game/blood_animation.o (.text);
       build/e/src/game/blood_decrypt.o (.text);
-      build/e/src/game/gamefile.o (.text);
-      build/e/src/game/gamefile2.o (.text);
+      build/e/src/game/file.o (.text);
+      build/e/src/game/file2.o (.text);
       build/e/src/game/chr.o (.text);
-      build/e/src/game/chr2.o (.text);
+      build/e/src/game/chr_b.o (.text);
+      build/e/src/game/chrlv.o (.text);
       build/e/src/game/chrai.o (.text);
       build/e/src/game/chrobjhandler.o (.text);
       build/e/src/game/loadobjectmodel.o (.text);
@@ -355,12 +376,13 @@ SECTIONS
       build/e/src/game/quaternion.o (.text);
       build/e/src/game/math_floor.o (.text);
       build/e/src/game/math_ceil.o (.text);
-      build/e/src/game/bondwalk.o (.text);
+      build/e/src/game/gun.o (.text);
       build/e/src/game/bondwalk2.o (.text);
       build/e/src/game/objecthandler.o (.text);
+      build/e/src/game/objecthandler_1.o (.text);
       build/e/src/game/objecthandler_2.o (.text);
       build/e/src/game/othermodemicrocode.o (.text);
-      build/e/src/game/bond.o (.text);
+      build/e/src/game/bondview.o (.text);
       build/e/src/game/bondinv.o (.text);
       build/e/src/game/unk_08DBB0.o (.text);
       build/e/src/game/debugmenu_08FE00.o (.text);
@@ -373,8 +395,9 @@ SECTIONS
       build/e/src/game/cheat_buttons.o (.text);
       build/e/src/game/unk_092890.o (.text);
       build/e/src/game/unk_092E50.o (.text);
-      build/e/src/game/unk_093880.o (.text);
-      build/e/src/game/unk_09B600.o (.text);
+      build/e/src/game/player.o (.text);
+      build/e/src/game/player_2.o (.text);
+      build/e/src/game/crc.o (.text);
       build/e/src/game/chrObjRandom.o (.text);
       build/e/src/game/unk_09B7A0.o (.text);
       build/e/src/game/unk_09C250.o (.text);
@@ -416,30 +439,65 @@ SECTIONS
    _gameSegmentRomEnd = _gameSegmentRomStart + SIZEOF(.game);
 
 
-
-
-   _romfiles_117880SegmentStart = ADDR(.romfiles_117880);
-   _romfiles_117880SegmentRomStart = _gameSegmentRomEnd;
-   .romfiles_117880 _romfiles_117880SegmentRomStart : AT(_romfiles_117880SegmentRomStart) {
-      build/e/assets/romfiles.o (.data);
+   _fontdlSegmentStart = ADDR(.fontdl);
+   _fontdlSegmentRomStart = _gameSegmentRomEnd;
+   .fontdl 0x01000000 : AT(_fontdlSegmentRomStart) {
+      build/e/assets/font_dl.o (.data);
    }
-   _romfiles_117880SegmentEnd = ADDR(.romfiles_117880) + SIZEOF(.romfiles_117880);
-   _romfiles_117880SegmentRomEnd = _romfiles_117880SegmentRomStart + SIZEOF(.romfiles_117880);
+   _fontdlSegmentEnd = ADDR(.fontdl) + SIZEOF(.fontdl);
+   _fontdlSegmentRomEnd = _fontdlSegmentRomStart + SIZEOF(.fontdl);
 
+   _jfontcharSegmentStart = ADDR(.jfontchardata);
+   _jfontcharSegmentRomStart = _fontdlSegmentRomEnd;
+   .jfontchardata 0x00000000 : AT(_jfontcharSegmentRomStart) {
+      build/e/assets/font_chardataj.o (.data);
+   }
+   _jfontcharSegmentEnd = ADDR(.jfontchardata) + SIZEOF(.jfontchardata);
+   _jfontcharSegmentRomEnd = _jfontcharSegmentRomStart + SIZEOF(.jfontchardata);
 
+   _efontcharSegmentStart = ADDR(.efontchardata);
+   _efontcharSegmentRomStart = _jfontcharSegmentRomEnd;
+   .efontchardata 0x00000000 : AT(_efontcharSegmentRomStart) {
+      build/e/assets/font_chardatae.o (.data);
+   }
+   _efontcharSegmentEnd = ADDR(.efontchardata) + SIZEOF(.efontchardata);
+   _efontcharSegmentRomEnd = _efontcharSegmentRomStart + SIZEOF(.efontchardata);
+   
+   _animation_entriesSegmentStart = ADDR(.animation_entries);
+   _animation_entriesSegmentRomStart = _efontcharSegmentRomEnd;
+   .animation_entries 0x00000000 : AT(_animation_entriesSegmentRomStart) {
+      build/e/assets/animationtable_entries.o(.data);
+   }
+   _animation_entriesSegmentEnd = ADDR(.animation_entries) + SIZEOF(.animation_entries);
+   _animation_entriesSegmentRomEnd = _animation_entriesSegmentRomStart + SIZEOF(.animation_entries);
 
-   _G_I_TSegmentStart = ADDR(.romfiles_29d160);
-   _G_I_TSegmentRomStart = _romfiles_117880SegmentRomEnd;
-   .romfiles_29d160 0x02000000 : AT(_G_I_TSegmentRomStart) {
+   _animation_dataSegmentStart = ADDR(.animation_data);
+   _animation_dataSegmentRomStart = _animation_entriesSegmentRomEnd;
+   .animation_data 0x00000000 : AT(_animation_dataSegmentRomStart) {
+      build/e/assets/animationtable_data.o(.data);
+   }
+   _animation_dataSegmentEnd = ADDR(.animation_data) + SIZEOF(.animation_data);
+   _animation_dataSegmentRomEnd = _animation_dataSegmentRomStart + SIZEOF(.animation_data);
+
+   _GlobalimagetableSegmentStart = ADDR(.romfiles_29d160);
+   _GlobalimagetableSegmentRomStart = _animation_dataSegmentRomEnd;
+   .romfiles_29d160 0x02000000 : AT(_GlobalimagetableSegmentRomStart) {
       build/e/assets/GlobalImageTable.o (.data);
    }
-   _G_I_TSegmentEnd = ADDR(.romfiles_29d160) + SIZEOF(.romfiles_29d160);
-   _G_I_TSegmentRomEnd = _G_I_TSegmentRomStart + SIZEOF(.romfiles_29d160);
+   _GlobalimagetableSegmentEnd = ADDR(.romfiles_29d160) + SIZEOF(.romfiles_29d160);
+   _GlobalimagetableSegmentRomEnd = _GlobalimagetableSegmentRomStart + SIZEOF(.romfiles_29d160);
 
+   _GlobalimagetablecmdblkSegmentStart = ADDR(.Globalimagetablecmdblk);
+   _GlobalimagetablecmdblkSegmentRomStart = _GlobalimagetableSegmentRomEnd;
+   .Globalimagetablecmdblk 0x02000000 : AT(_GlobalimagetablecmdblkSegmentRomStart) {
+      build/e/assets/Globalimagetable_commandblock.o (.data);
+   }
+   _GlobalimagetablecmdblkSegmentEnd = ADDR(.Globalimagetablecmdblk) + SIZEOF(.Globalimagetablecmdblk);
+   _GlobalimagetablecmdblkSegmentRomEnd = _GlobalimagetablecmdblkSegmentRomStart + SIZEOF(.Globalimagetablecmdblk);
 
 
    _romfiles2SegmentStart = ADDR(.romfiles2);
-   _romfiles2SegmentRomStart = _G_I_TSegmentRomEnd;
+   _romfiles2SegmentRomStart = _GlobalimagetablecmdblkSegmentRomEnd;
    .romfiles2 _romfiles2SegmentRomStart : AT(_romfiles2SegmentRomStart) {
       build/e/assets/romfiles2.o (.data);
    }
@@ -487,7 +545,7 @@ SECTIONS
 
 
 
-   
+
    _obsegSegmentStart = ADDR(.obseg);
    _obsegSegmentRomStart = _musicfilesSegmentRomEnd;
    .obseg _obsegSegmentRomStart : AT(_obsegSegmentRomStart) {
@@ -3225,22 +3283,22 @@ SECTIONS
       build/e/src/init.o (.data);
       build/e/src/sched.o (.data);
       build/e/src/osMapTLB.o (.data);
-      
+
       build/e/src/libultra/vimgr.o (.data);
       build/e/src/libultra/pimgr.o (.data);
-      
+
       build/e/src/tlb_manage.o (.data);
       build/e/src/tlb_random.o (.data);
       build/e/src/tlb_resolve.o (.data);
       build/e/src/tlb_hardwire.o (.data);
       build/e/src/audi.o (.data);
       build/e/src/speed_graph.o (.data);
-      build/e/src/video.o (.data);
+      build/e/src/fr.o (.data);
       build/e/src/deb.o (.data);
-      build/e/src/tlb_paging.o (.data);
-      build/e/src/unused_fp.o (.data);
+      build/e/src/fault.o (.data);
+      /*deb_print may be part of fault per pd beta (.data);*/
       build/e/src/deb_print.o (.data);
-      build/e/src/debug_getlastRA.o (.data);
+      build/e/src/getra.o (.data);
       build/e/src/ramrom.o (.data);
       build/e/src/boss.o (.data);
       build/e/src/music.o (.data);
@@ -3256,6 +3314,7 @@ SECTIONS
       build/e/src/debugmenu.o (.data);
       build/e/src/joy.o (.data);
       build/e/src/motor.o (.data);
+      build/e/src/libultra/leointerrupt.o (.data);
       build/e/src/rmon.o (.data);
 
       /*build/e/src/libultra/osPiRawStartDma.o (.data);*/
@@ -3295,6 +3354,20 @@ SECTIONS
       build/e/src/libultra/sptask.o (.data);
       build/e/src/libultra/dpsetnextbuf.o (.data);
       build/e/src/libultra/sptaskyield.o (.data);
+      build/e/src/libultra/timerintr.o (.data);
+      build/e/src/libultra/getthreadpri.o (.data);
+      build/e/src/libultra/interrupt.o (.data);
+      build/e/src/libultra/vi.o (.data);
+      build/e/src/libultra/vigetcurrcontext.o (.data);
+      build/e/src/libultra/viswapcontext.o (.data);
+      build/e/src/libultra/piacs.o (.data);
+      build/e/src/libultra/epirawdma.o (.data);
+      build/e/src/libultra/devmgr.o (.data);
+
+
+
+
+
       build/e/src/libultra/gettlbhi.o (.data);
       build/e/src/libultra/virtualtophysical.o (.data);
       build/e/src/libultra/aisetfreq.o (.data);
@@ -3375,20 +3448,24 @@ SECTIONS
       build/e/src/libultra/pirawread.o (.data);
       build/e/src/libultra/bzero.o (.data);
       build/e/src/libultra/sethwinterrupt.o (.data);
-      build/e/src/libultra/leointerrupt.o (.data);
-      build/e/src/libultra/interrupt.o (.data);
-      build/e/src/libultra/timerintr.o (.data);
+      /*build/e/src/libultra/leointerrupt.o (.data);*/
+      /*build/e/src/libultra/interrupt.o (.data);*/
+      /*build/e/src/libultra/timerintr.o (.data);*/
       build/e/src/libultra/kdebugserver.o (.data);
-      build/e/src/libultra/getthreadpri.o (.data);
-      build/e/src/libultra/vi.o (.data); /*edited*/
-      build/e/src/libultra/vigetcurrcontext.o (.data);
-      build/e/src/libultra/viswapcontext.o (.data);
+      /*build/e/src/libultra/getthreadpri.o (.data);*/
+      /*build/e/src/libultra/vi.o (.data);*/ /*edited*/
+      /*build/e/src/libultra/vigetcurrcontext.o (.data);*/
+      /*build/e/src/libultra/viswapcontext.o (.data);*/
       build/e/src/libultra/spgetstat.o (.data);
       build/e/src/libultra/spsetstat.o (.data);
       build/e/src/libultra/spsetpc.o (.data);
       build/e/src/libultra/sprawdma.o (.data);
       build/e/src/libultra/sp.o (.data);
       build/e/src/libultra/dp.o (.data);
+      build/e/src/libultra/setcompare.o (.data);
+      build/e/src/libultra/resetglobalintmask.o (.data);
+      build/e/src/libultra/epirawwrite.o (.data);
+
       build/e/src/libultra/probetlb.o (.data);
       build/e/src/libultra/syndelete.o (.data);
       build/e/src/libultra/ai.o (.data);
@@ -3408,25 +3485,25 @@ SECTIONS
       build/e/src/libultra/seqplayer.o (.data);
       build/e/src/libultra/synstartvoiceparam.o (.data);
       build/e/src/libultra/copy.o (.data);
-      build/e/src/libultra/piacs.o (.data);
+      /*build/e/src/libultra/piacs.o (.data);*/
       build/e/src/libultra/xlitob.o (.data);
       build/e/src/libultra/xldtob.o (.data);
-      build/e/src/libultra/epirawdma.o (.data);
-      build/e/src/libultra/devmgr.o (.data);
+      /*build/e/src/libultra/epirawdma.o (.data);*/
+      /*build/e/src/libultra/devmgr.o (.data);*/
       build/e/src/libultra/contpfs.o (.data);
       build/e/src/libultra/si.o (.data);
       build/e/src/libultra/normalize.o (.data);
       build/e/src/libultra/sqrtf.o (.data);
-      build/e/src/libultra/leodiskinit.o (.data);
-      build/e/src/libultra/setcompare.o (.data);
+      /*build/e/src/libultra/leodiskinit.o (.data);*/
+      /*build/e/src/libultra/setcompare.o (.data);*/
       build/e/src/libultra/filter.o (.data);
       build/e/src/libultra/reverb.o (.data); /*edited*/
       build/e/src/libultra/libm_vals.o (.data); /*edited*/
       build/e/src/libultra/seq.o (.data);
       build/e/src/libultra/synsetpriority.o (.data);
       build/e/src/libultra/ldiv.o (.data);
-      build/e/src/libultra/resetglobalintmask.o (.data);
-      build/e/src/libultra/epirawwrite.o (.data);
+      /*build/e/src/libultra/resetglobalintmask.o (.data);*/
+      /*build/e/src/libultra/epirawwrite.o (.data);*/
       build/e/src/libultra/vimodentsclan1.o (.data);
       build/e/src/libultra/vimodepallan1.o (.data);
       build/e/src/libultra/ultra80069080.o (.data); /*edited*/
@@ -3437,22 +3514,22 @@ SECTIONS
       build/e/src/init.o (.rodata);
       build/e/src/sched.o (.rodata);
       build/e/src/osMapTLB.o (.rodata);
-      
+
       build/e/src/libultra/vimgr.o (.rodata);
       build/e/src/libultra/pimgr.o (.rodata);
-      
+
       build/e/src/tlb_manage.o (.rodata);
       build/e/src/tlb_random.o (.rodata);
       build/e/src/tlb_resolve.o (.rodata);
       build/e/src/tlb_hardwire.o (.rodata);
       build/e/src/audi.o (.rodata);
       build/e/src/speed_graph.o (.rodata);
-      build/e/src/video.o (.rodata);
+      build/e/src/fr.o (.rodata);
       build/e/src/deb.o (.rodata);
-      build/e/src/tlb_paging.o (.rodata);
-      build/e/src/unused_fp.o (.rodata);
+      build/e/src/fault.o (.rodata);
+      /*deb_print may be part of fault per pd beta (.rodata);*/
       build/e/src/deb_print.o (.rodata);
-      build/e/src/debug_getlastRA.o (.rodata);
+      build/e/src/getra.o (.rodata);
       build/e/src/ramrom.o (.rodata);
       build/e/src/boss.o (.rodata);
       build/e/src/music.o (.rodata);
@@ -3468,6 +3545,7 @@ SECTIONS
       build/e/src/debugmenu.o (.rodata);
       build/e/src/joy.o (.rodata);
       build/e/src/motor.o (.rodata);
+      build/e/src/libultra/leointerrupt.o (.rodata);
       build/e/src/rmon.o (.rodata);
 
       /*build/e/src/libultra/osPiRawStartDma.o (.rodata);*/
@@ -3507,6 +3585,20 @@ SECTIONS
       build/e/src/libultra/sptask.o (.rodata);
       build/e/src/libultra/dpsetnextbuf.o (.rodata);
       build/e/src/libultra/sptaskyield.o (.rodata);
+      build/e/src/libultra/timerintr.o (.rodata);
+      build/e/src/libultra/getthreadpri.o (.rodata);
+      build/e/src/libultra/interrupt.o (.rodata);
+      build/e/src/libultra/vi.o (.rodata);
+      build/e/src/libultra/vigetcurrcontext.o (.rodata);
+      build/e/src/libultra/viswapcontext.o (.rodata);
+      build/e/src/libultra/piacs.o (.rodata);
+      build/e/src/libultra/epirawdma.o (.rodata);
+      build/e/src/libultra/devmgr.o (.rodata);
+
+
+
+
+
       build/e/src/libultra/gettlbhi.o (.rodata);
       build/e/src/libultra/virtualtophysical.o (.rodata);
       build/e/src/libultra/aisetfreq.o (.rodata);
@@ -3587,20 +3679,24 @@ SECTIONS
       build/e/src/libultra/pirawread.o (.rodata);
       build/e/src/libultra/bzero.o (.rodata);
       build/e/src/libultra/sethwinterrupt.o (.rodata);
-      build/e/src/libultra/leointerrupt.o (.rodata);
-      build/e/src/libultra/interrupt.o (.rodata);
-      build/e/src/libultra/timerintr.o (.rodata);
+      /*build/e/src/libultra/leointerrupt.o (.rodata);*/
+      /*build/e/src/libultra/interrupt.o (.rodata);*/
+      /*build/e/src/libultra/timerintr.o (.rodata);*/
       build/e/src/libultra/kdebugserver.o (.rodata);
-      build/e/src/libultra/getthreadpri.o (.rodata);
-      build/e/src/libultra/vi.o (.rodata); /*edited*/
-      build/e/src/libultra/vigetcurrcontext.o (.rodata);
-      build/e/src/libultra/viswapcontext.o (.rodata);
+      /*build/e/src/libultra/getthreadpri.o (.rodata);*/
+      /*build/e/src/libultra/vi.o (.rodata);*/ /*edited*/
+/*      build/e/src/libultra/vigetcurrcontext.o (.rodata);*/
+      /*build/e/src/libultra/viswapcontext.o (.rodata);*/
       build/e/src/libultra/spgetstat.o (.rodata);
       build/e/src/libultra/spsetstat.o (.rodata);
       build/e/src/libultra/spsetpc.o (.rodata);
       build/e/src/libultra/sprawdma.o (.rodata);
       build/e/src/libultra/sp.o (.rodata);
       build/e/src/libultra/dp.o (.rodata);
+      build/e/src/libultra/setcompare.o (.rodata);
+      build/e/src/libultra/resetglobalintmask.o (.rodata);
+      build/e/src/libultra/epirawwrite.o (.rodata);
+
       build/e/src/libultra/probetlb.o (.rodata);
       build/e/src/libultra/syndelete.o (.rodata);
       build/e/src/libultra/ai.o (.rodata);
@@ -3620,25 +3716,25 @@ SECTIONS
       build/e/src/libultra/seqplayer.o (.rodata);
       build/e/src/libultra/synstartvoiceparam.o (.rodata);
       build/e/src/libultra/copy.o (.rodata);
-      build/e/src/libultra/piacs.o (.rodata);
+      /*build/e/src/libultra/piacs.o (.rodata);*/
       build/e/src/libultra/xlitob.o (.rodata);
       build/e/src/libultra/xldtob.o (.rodata);
-      build/e/src/libultra/epirawdma.o (.rodata);
-      build/e/src/libultra/devmgr.o (.rodata);
+      /*build/e/src/libultra/epirawdma.o (.rodata);*/
+      /*build/e/src/libultra/devmgr.o (.rodata);*/
       build/e/src/libultra/contpfs.o (.rodata);
       build/e/src/libultra/si.o (.rodata);
       build/e/src/libultra/normalize.o (.rodata);
       build/e/src/libultra/sqrtf.o (.rodata);
-      build/e/src/libultra/leodiskinit.o (.rodata);
-      build/e/src/libultra/setcompare.o (.rodata);
+      /*build/e/src/libultra/leodiskinit.o (.rodata);*/
+      /*build/e/src/libultra/setcompare.o (.rodata);*/
       build/e/src/libultra/filter.o (.rodata);
       build/e/src/libultra/reverb.o (.rodata); /*edited*/
       build/e/src/libultra/libm_vals.o (.rodata); /*edited*/
       build/e/src/libultra/seq.o (.rodata);
       build/e/src/libultra/synsetpriority.o (.rodata);
       build/e/src/libultra/ldiv.o (.rodata);
-      build/e/src/libultra/resetglobalintmask.o (.rodata);
-      build/e/src/libultra/epirawwrite.o (.rodata);
+      /*build/e/src/libultra/resetglobalintmask.o (.rodata);*/
+      /*build/e/src/libultra/epirawwrite.o (.rodata);*/
       build/e/src/libultra/vimodentsclan1.o (.rodata);
       build/e/src/libultra/vimodepallan1.o (.rodata);
       build/e/src/libultra/ultra80069080.o (.rodata); /*edited*/
@@ -3665,7 +3761,7 @@ SECTIONS
       build/e/src/game/initBondDATA.o (.data);
       build/e/src/game/initunk_005450.o (.data);
       build/e/src/game/initunk_005520.o (.data);
-      build/e/src/game/initcameraandthrown.o (.data);
+      build/e/src/game/bondview_r.o (.data);
       build/e/src/game/inititemslots.o (.data);
       build/e/src/game/initBondDATAdefaults.o (.data);
       build/e/src/game/initpathtablesomething.o (.data);
@@ -3686,17 +3782,18 @@ SECTIONS
       build/e/src/game/unk_007920.o (.data);
       build/e/src/game/null_007970.o (.data);
       build/e/src/game/unk_007980.o (.data);
-      build/e/src/game/intro_logos.o (.data);
-      build/e/src/game/mainmenu.o (.data);
+      build/e/src/game/title.o (.data);
+      build/e/src/game/front.o (.data);
       build/e/src/game/unk_01B0E0.o (.data);
       build/e/src/game/unk_01B240.o (.data);
       build/e/src/game/unk_01BAE0.o (.data);
       build/e/src/game/blood_animation.o (.data);
       build/e/src/game/blood_decrypt.o (.data);
-      build/e/src/game/gamefile.o (.data);
-      build/e/src/game/gamefile2.o (.data);
+      build/e/src/game/file.o (.data);
+      build/e/src/game/file2.o (.data);
       build/e/src/game/chr.o (.data);
-      build/e/src/game/chr2.o (.data);
+      build/e/src/game/chr_b.o (.data);
+      build/e/src/game/chrlv.o (.data);
       build/e/src/game/chrai.o (.data);
       build/e/src/game/chrobjhandler.o (.data);
       build/e/src/game/loadobjectmodel.o (.data);
@@ -3712,12 +3809,13 @@ SECTIONS
       build/e/src/game/quaternion.o (.data);
       build/e/src/game/math_floor.o (.data);
       build/e/src/game/math_ceil.o (.data);
-      build/e/src/game/bondwalk.o (.data);
+      build/e/src/game/gun.o (.data);
       build/e/src/game/bondwalk2.o (.data);
       build/e/src/game/objecthandler.o (.data);
+      build/e/src/game/objecthandler_1.o (.data);
       build/e/src/game/objecthandler_2.o (.data);
       build/e/src/game/othermodemicrocode.o (.data);
-      build/e/src/game/bond.o (.data);
+      build/e/src/game/bondview.o (.data);
       build/e/src/game/bondinv.o (.data);
       build/e/src/game/unk_08DBB0.o (.data);
       build/e/src/game/debugmenu_08FE00.o (.data);
@@ -3730,8 +3828,9 @@ SECTIONS
       build/e/src/game/cheat_buttons.o (.data);
       build/e/src/game/unk_092890.o (.data);
       build/e/src/game/unk_092E50.o (.data);
-      build/e/src/game/unk_093880.o (.data);
-      build/e/src/game/unk_09B600.o (.data);
+      build/e/src/game/player.o (.data);
+      build/e/src/game/player_2.o (.data);
+      build/e/src/game/crc.o (.data);
       build/e/src/game/chrObjRandom.o (.data);
       build/e/src/game/unk_09B7A0.o (.data);
       build/e/src/game/unk_09C250.o (.data);
@@ -3790,7 +3889,7 @@ SECTIONS
       build/e/src/game/initBondDATA.o (.rodata);
       build/e/src/game/initunk_005450.o (.rodata);
       build/e/src/game/initunk_005520.o (.rodata);
-      build/e/src/game/initcameraandthrown.o (.rodata);
+      build/e/src/game/bondview_r.o (.rodata);
       build/e/src/game/inititemslots.o (.rodata);
       build/e/src/game/initBondDATAdefaults.o (.rodata);
       build/e/src/game/initpathtablesomething.o (.rodata);
@@ -3811,17 +3910,18 @@ SECTIONS
       build/e/src/game/unk_007920.o (.rodata);
       build/e/src/game/null_007970.o (.rodata);
       build/e/src/game/unk_007980.o (.rodata);
-      build/e/src/game/intro_logos.o (.rodata);
-      build/e/src/game/mainmenu.o (.rodata);
+      build/e/src/game/title.o (.rodata);
+      build/e/src/game/front.o (.rodata);
       build/e/src/game/unk_01B0E0.o (.rodata);
       build/e/src/game/unk_01B240.o (.rodata);
       build/e/src/game/unk_01BAE0.o (.rodata);
       build/e/src/game/blood_animation.o (.rodata);
       build/e/src/game/blood_decrypt.o (.rodata);
-      build/e/src/game/gamefile.o (.rodata);
-      build/e/src/game/gamefile2.o (.rodata);
+      build/e/src/game/file.o (.rodata);
+      build/e/src/game/file2.o (.rodata);
       build/e/src/game/chr.o (.rodata);
-      build/e/src/game/chr2.o (.rodata);
+      build/e/src/game/chr_b.o (.rodata);
+      build/e/src/game/chrlv.o (.rodata);
       build/e/src/game/chrai.o (.rodata);
       build/e/src/game/chrobjhandler.o (.rodata);
       build/e/src/game/loadobjectmodel.o (.rodata);
@@ -3837,12 +3937,13 @@ SECTIONS
       build/e/src/game/quaternion.o (.rodata);
       build/e/src/game/math_floor.o (.rodata);
       build/e/src/game/math_ceil.o (.rodata);
-      build/e/src/game/bondwalk.o (.rodata);
+      build/e/src/game/gun.o (.rodata);
       build/e/src/game/bondwalk2.o (.rodata);
       build/e/src/game/objecthandler.o (.rodata);
+      build/e/src/game/objecthandler_1.o (.rodata);
       build/e/src/game/objecthandler_2.o (.rodata);
       build/e/src/game/othermodemicrocode.o (.rodata);
-      build/e/src/game/bond.o (.rodata);
+      build/e/src/game/bondview.o (.rodata);
       build/e/src/game/bondinv.o (.rodata);
       build/e/src/game/unk_08DBB0.o (.rodata);
       build/e/src/game/debugmenu_08FE00.o (.rodata);
@@ -3855,8 +3956,9 @@ SECTIONS
       build/e/src/game/cheat_buttons.o (.rodata);
       build/e/src/game/unk_092890.o (.rodata);
       build/e/src/game/unk_092E50.o (.rodata);
-      build/e/src/game/unk_093880.o (.rodata);
-      build/e/src/game/unk_09B600.o (.rodata);
+      build/e/src/game/player.o (.rodata);
+      build/e/src/game/player_2.o (.rodata);
+      build/e/src/game/crc.o (.rodata);
       build/e/src/game/chrObjRandom.o (.rodata);
       build/e/src/game/unk_09B7A0.o (.rodata);
       build/e/src/game/unk_09C250.o (.rodata);
@@ -3903,27 +4005,27 @@ SECTIONS
    __dataSegmentVaddrEnd = _csegmentSegmentRomEnd;
 
    _bssSegmentStart = ADDR(.bss);
-   _bssSegmentRomStart = _csegmentSegmentRomEnd;
-   .bss _csegmentSegmentEnd : AT(_bssSegmentRomStart){
+   .bss (NOLOAD) :
+   {
       build/e/src/boot.o (.bss);
       build/e/src/init.o (.bss);
       build/e/src/sched.o (.bss);
       build/e/src/osMapTLB.o (.bss);
-      
+
       build/e/src/libultra/vimgr.o (.bss);
       build/e/src/libultra/pimgr.o (.bss);
-      
+
       build/e/src/tlb_manage.o (.bss);
       build/e/src/tlb_random.o (.bss);
       build/e/src/tlb_resolve.o (.bss);
       build/e/src/audi.o (.bss);
       build/e/src/speed_graph.o (.bss);
-      build/e/src/video.o (.bss);
+      build/e/src/fr.o (.bss);
       build/e/src/deb.o (.bss);
-      build/e/src/tlb_paging.o (.bss);
-      build/e/src/unused_fp.o (.bss);
+      build/e/src/fault.o (.bss);
+      /*deb_print may be part of fault per pd beta (.bss);*/
       build/e/src/deb_print.o (.bss);
-      build/e/src/debug_getlastRA.o (.bss);
+      build/e/src/getra.o (.bss);
       build/e/src/ramrom.o (.bss);
       build/e/src/boss.o (.bss);
       build/e/src/music.o (.bss);
@@ -3939,6 +4041,7 @@ SECTIONS
       build/e/src/debugmenu.o (.bss);
       build/e/src/joy.o (.bss);
       build/e/src/motor.o (.bss);
+      build/e/src/libultra/leointerrupt.o (.bss);
       build/e/src/rmon.o (.bss);
 
       /*build/e/src/libultra/osPiRawStartDma.o (.bss);*/
@@ -3978,6 +4081,19 @@ SECTIONS
       build/e/src/libultra/sptask.o (.bss);
       build/e/src/libultra/dpsetnextbuf.o (.bss);
       build/e/src/libultra/sptaskyield.o (.bss);
+      build/e/src/libultra/timerintr.o (.bss);
+      build/e/src/libultra/getthreadpri.o (.bss);
+      build/e/src/libultra/interrupt.o (.bss);
+      build/e/src/libultra/vi.o (.bss); /*edited*/
+      build/e/src/libultra/vigetcurrcontext.o (.bss);
+      build/e/src/libultra/viswapcontext.o (.bss);
+      build/e/src/libultra/piacs.o (.bss);
+      build/e/src/libultra/epirawdma.o (.bss);
+      build/e/src/libultra/devmgr.o (.bss);
+
+
+
+
       build/e/src/libultra/gettlbhi.o (.bss);
       build/e/src/libultra/virtualtophysical.o (.bss);
       build/e/src/libultra/aisetfreq.o (.bss);
@@ -4058,20 +4174,24 @@ SECTIONS
       build/e/src/libultra/pirawread.o (.bss);
       build/e/src/libultra/bzero.o (.bss);
       build/e/src/libultra/sethwinterrupt.o (.bss);
-      build/e/src/libultra/leointerrupt.o (.bss);
-      build/e/src/libultra/interrupt.o (.bss);
-      build/e/src/libultra/timerintr.o (.bss);
+      /*build/e/src/libultra/leointerrupt.o (.bss);*/
+      /*build/e/src/libultra/interrupt.o (.bss);*/
+      /*build/e/src/libultra/timerintr.o (.bss);*/
       build/e/src/libultra/kdebugserver.o (.bss);
-      build/e/src/libultra/getthreadpri.o (.bss);
-      build/e/src/libultra/vi.o (.bss); /*edited*/
-      build/e/src/libultra/vigetcurrcontext.o (.bss);
-      build/e/src/libultra/viswapcontext.o (.bss);
+      /*build/e/src/libultra/getthreadpri.o (.bss);*/
+      /*build/e/src/libultra/vi.o (.bss);*/ /*edited*/
+      /*build/e/src/libultra/vigetcurrcontext.o (.bss);*/
+      /*build/e/src/libultra/viswapcontext.o (.bss);*/
       build/e/src/libultra/spgetstat.o (.bss);
       build/e/src/libultra/spsetstat.o (.bss);
       build/e/src/libultra/spsetpc.o (.bss);
       build/e/src/libultra/sprawdma.o (.bss);
       build/e/src/libultra/sp.o (.bss);
       build/e/src/libultra/dp.o (.bss);
+      build/e/src/libultra/setcompare.o (.bss);
+      build/e/src/libultra/resetglobalintmask.o (.bss);
+      build/e/src/libultra/epirawwrite.o (.bss);
+
       build/e/src/libultra/probetlb.o (.bss);
       build/e/src/libultra/syndelete.o (.bss);
       build/e/src/libultra/ai.o (.bss);
@@ -4091,25 +4211,26 @@ SECTIONS
       build/e/src/libultra/seqplayer.o (.bss);
       build/e/src/libultra/synstartvoiceparam.o (.bss);
       build/e/src/libultra/copy.o (.bss);
-      build/e/src/libultra/piacs.o (.bss);
+      /*build/e/src/libultra/piacs.o (.bss);*/
       build/e/src/libultra/xlitob.o (.bss);
       build/e/src/libultra/xldtob.o (.bss);
-      build/e/src/libultra/epirawdma.o (.bss);
-      build/e/src/libultra/devmgr.o (.bss);
+      /*build/e/src/libultra/epirawdma.o (.bss);*/
+
+      /*build/e/src/libultra/devmgr.o (.bss);*/
       build/e/src/libultra/contpfs.o (.bss);
       build/e/src/libultra/si.o (.bss);
       build/e/src/libultra/normalize.o (.bss);
       build/e/src/libultra/sqrtf.o (.bss);
-      build/e/src/libultra/leodiskinit.o (.bss);
-      build/e/src/libultra/setcompare.o (.bss);
+      /*build/e/src/libultra/leodiskinit.o (.bss);*/
+      /*build/e/src/libultra/setcompare.o (.bss);*/
       build/e/src/libultra/filter.o (.bss);
       build/e/src/libultra/reverb.o (.bss); /*edited*/
       build/e/src/libultra/libm_vals.o (.bss); /*edited*/
       build/e/src/libultra/seq.o (.bss);
       build/e/src/libultra/synsetpriority.o (.bss);
       build/e/src/libultra/ldiv.o (.bss);
-      build/e/src/libultra/resetglobalintmask.o (.bss);
-      build/e/src/libultra/epirawwrite.o (.bss);
+      /*build/e/src/libultra/resetglobalintmask.o (.bss);*/
+      /*build/e/src/libultra/epirawwrite.o (.bss);*/
       build/e/src/libultra/vimodentsclan1.o (.bss);
       build/e/src/libultra/vimodepallan1.o (.bss);
       build/e/src/libultra/ultra80069080.o (.bss); /*edited*/
@@ -4136,7 +4257,7 @@ SECTIONS
       build/e/src/game/initBondDATA.o (.bss);
       build/e/src/game/initunk_005450.o (.bss);
       build/e/src/game/initunk_005520.o (.bss);
-      build/e/src/game/initcameraandthrown.o (.bss);
+      build/e/src/game/bondview_r.o (.bss);
       build/e/src/game/inititemslots.o (.bss);
       build/e/src/game/initBondDATAdefaults.o (.bss);
       build/e/src/game/initpathtablesomething.o (.bss);
@@ -4157,17 +4278,18 @@ SECTIONS
       build/e/src/game/unk_007920.o (.bss);
       build/e/src/game/null_007970.o (.bss);
       build/e/src/game/unk_007980.o (.bss);
-      build/e/src/game/intro_logos.o (.bss);
-      build/e/src/game/mainmenu.o (.bss);
+      build/e/src/game/title.o (.bss);
+      build/e/src/game/front.o (.bss);
       build/e/src/game/unk_01B0E0.o (.bss);
       build/e/src/game/unk_01B240.o (.bss);
       build/e/src/game/unk_01BAE0.o (.bss);
       build/e/src/game/blood_animation.o (.bss);
       build/e/src/game/blood_decrypt.o (.bss);
-      build/e/src/game/gamefile.o (.bss);
-      build/e/src/game/gamefile2.o (.bss);
+      build/e/src/game/file.o (.bss);
+      build/e/src/game/file2.o (.bss);
       build/e/src/game/chr.o (.bss);
-      build/e/src/game/chr2.o (.bss);
+      build/e/src/game/chr_b.o (.bss);
+      build/e/src/game/chrlv.o (.bss);
       build/e/src/game/chrai.o (.bss);
       build/e/src/game/chrobjhandler.o (.bss);
       build/e/src/game/loadobjectmodel.o (.bss);
@@ -4183,12 +4305,13 @@ SECTIONS
       build/e/src/game/quaternion.o (.bss);
       build/e/src/game/math_floor.o (.bss);
       build/e/src/game/math_ceil.o (.bss);
-      build/e/src/game/bondwalk.o (.bss);
+      build/e/src/game/gun.o (.bss);
       build/e/src/game/bondwalk2.o (.bss);
       build/e/src/game/objecthandler.o (.bss);
+      build/e/src/game/objecthandler_1.o (.bss);
       build/e/src/game/objecthandler_2.o (.bss);
       build/e/src/game/othermodemicrocode.o (.bss);
-      build/e/src/game/bond.o (.bss);
+      build/e/src/game/bondview.o (.bss);
       build/e/src/game/bondinv.o (.bss);
       build/e/src/game/unk_08DBB0.o (.bss);
       build/e/src/game/debugmenu_08FE00.o (.bss);
@@ -4201,8 +4324,9 @@ SECTIONS
       build/e/src/game/cheat_buttons.o (.bss);
       build/e/src/game/unk_092890.o (.bss);
       build/e/src/game/unk_092E50.o (.bss);
-      build/e/src/game/unk_093880.o (.bss);
-      build/e/src/game/unk_09B600.o (.bss);
+      build/e/src/game/player.o (.bss);
+      build/e/src/game/player_2.o (.bss);
+      build/e/src/game/crc.o (.bss);
       build/e/src/game/chrObjRandom.o (.bss);
       build/e/src/game/unk_09B7A0.o (.bss);
       build/e/src/game/unk_09C250.o (.bss);
@@ -4242,48 +4366,34 @@ SECTIONS
    }
    _bssSegmentEnd = ADDR(.bss) + SIZEOF(.bss);
    _bssSegmentSize = SIZEOF(.bss);
-   _bssSegmentRomEnd = _bssSegmentRomStart + SIZEOF(.bss);
 
    _roombufSegmentStart = ADDR(.roombuf);
-   _roombufSegmentRomStart = _bssSegmentRomEnd;
-   .roombuf _bssSegmentEnd : AT(_roombufSegmentRomStart){
+   .roombuf (NOLOAD) :
+   {
       build/e/src/game/room_model_buffer.o (.bss);
    }
    _roombufSegmentEnd = ADDR(.roombuf) + SIZEOF(.roombuf);
-   _roombufSegmentRomEnd = _roombufSegmentRomStart + SIZEOF(.roombuf);
-
-   _tlbbufSegmentStart = ADDR(.tlbbuf);
-   _tlbbufSegmentRomStart = _roombufSegmentRomEnd;
-   .tlbbuf _roombufSegmentEnd : AT(_tlbbufSegmentRomStart){
-      build/e/src/tlb_buffer.o (.bss);
-   }
-   _tlbbufSegmentEnd = ADDR(.tlbbuf) + SIZEOF(.tlbbuf);
-   _tlbbufSegmentRomEnd = _tlbbufSegmentRomStart + SIZEOF(.tlbbuf);
-
 
    _decompbufSegmentStart = ADDR(.decompbuf);
-   _decompbufSegmentRomStart = _tlbbufSegmentRomEnd;
-   .decompbuf 0x80300000 : AT(_decompbufSegmentRomStart){
+   .decompbuf 0x80300000 :
+   {
       build/e/src/decompressbuffer.o (.bss);
    }
    _decompbufSegmentEnd = ADDR(.decompbuf) + SIZEOF(.decompbuf);
-   _decompbufSegmentRomEnd = _decompbufSegmentRomStart + SIZEOF(.decompbuf);
 
    _stacksSegmentStart = ADDR(.stacks);
-   _stacksSegmentRomStart = _decompbufSegmentRomEnd;
-   .stacks 0x803ab400 : AT(_stacksSegmentRomStart){
+   .stacks (NOLOAD) :
+   {
       build/e/src/stacks.o (.bss);
    }
    _stacksSegmentEnd = ADDR(.stacks) + SIZEOF(.stacks);
-   _stacksSegmentRomEnd = _stacksSegmentRomStart + SIZEOF(.stacks);
 
    _cfbSegmentStart = ADDR(.cfb);
-   _cfbSegmentRomStart = _stacksSegmentRomEnd;
-   .cfb 0x803b5000 : AT(_cfbSegmentRomStart){
+   .cfb (NOLOAD) :
+   {
       build/e/src/cfb.o (.bss);
    }
    _cfbSegmentEnd = ADDR(.cfb) + SIZEOF(.cfb);
-   _cfbSegmentRomEnd = _cfbSegmentRomStart + SIZEOF(.cfb);
 
    /*move em to end, out of the way*/
    /DISCARD/ : {
@@ -4296,6 +4406,6 @@ SECTIONS
       * (.gptab.bss);
       * (.gptab.data);
       * (.reginfo);
-      
+
 }
 }

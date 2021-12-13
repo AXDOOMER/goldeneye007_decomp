@@ -104,7 +104,9 @@ void rmon7000CEE0(void) {
 /**
  * rmonprout
  */
+ 
 char *rmonprout(char *dst, const char *src, size_t count) {
+
     s32 i = 0;
     while (i != count) {
         deboutWriteChar(src[i++]);

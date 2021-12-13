@@ -56,12 +56,12 @@ SECTIONS
       build/u/src/tlb_hardwire.o (.text);
       build/u/src/audi.o (.text);
       build/u/src/speed_graph.o (.text);
-      build/u/src/video.o (.text);
+      build/u/src/fr.o (.text);
       build/u/src/deb.o (.text);
-      build/u/src/tlb_paging.o (.text);
-      build/u/src/unused_fp.o (.text);
+      build/u/src/fault.o (.text);
+      /*deb_print may be part of fault per pd beta (.text);*/
       build/u/src/deb_print.o (.text);
-      build/u/src/debug_getlastRA.o (.text);
+      build/u/src/getra.o (.text);
       build/u/src/ramrom.o (.text);
       build/u/src/boss.o (.text);
       build/u/src/music.o (.text);
@@ -261,7 +261,7 @@ SECTIONS
       build/u/src/c_data_filler.o (.data);
    }
    END_SEG(cdata)
-  
+
 
 
    /* (0x70200000, 0x702029BC, 0x701CCA70), // 033590-035F4D [29BD] */
@@ -274,8 +274,8 @@ SECTIONS
 
 
 
-   
-   
+
+
    /* (0x7F000000, 0x7F0E2D50, 0x7EFCB4D0), // 034B30-117881 [E2D51] */
    BEGIN_SEG(game, _inflateSegmentRomEnd, 0x7F000000)
    {
@@ -300,7 +300,7 @@ SECTIONS
       build/u/src/game/initBondDATA.o (.text);
       build/u/src/game/initunk_005450.o (.text);
       build/u/src/game/initunk_005520.o (.text);
-      build/u/src/game/initcameraandthrown.o (.text);
+      build/u/src/game/bondview_r.o (.text);
       build/u/src/game/inititemslots.o (.text);
       build/u/src/game/initBondDATAdefaults.o (.text);
       build/u/src/game/initpathtablesomething.o (.text);
@@ -321,17 +321,17 @@ SECTIONS
       build/u/src/game/unk_007920.o (.text);
       build/u/src/game/null_007970.o (.text);
       build/u/src/game/unk_007980.o (.text);
-      build/u/src/game/intro_logos.o (.text);
-      build/u/src/game/mainmenu.o (.text);
+      build/u/src/game/title.o (.text);
+      build/u/src/game/front.o (.text);
       build/u/src/game/unk_01B0E0.o (.text);
       build/u/src/game/unk_01B240.o (.text);
       build/u/src/game/unk_01BAE0.o (.text);
       build/u/src/game/blood_animation.o (.text);
       build/u/src/game/blood_decrypt.o (.text);
-      build/u/src/game/gamefile.o (.text);
-      build/u/src/game/gamefile2.o (.text);
+      build/u/src/game/file.o (.text);
+      build/u/src/game/file2.o (.text);
       build/u/src/game/chr.o (.text);
-      build/u/src/game/chr2.o (.text);
+      build/u/src/game/chrlv.o (.text);
       build/u/src/game/chrai.o (.text);
       build/u/src/game/chrobjhandler.o (.text);
       build/u/src/game/loadobjectmodel.o (.text);
@@ -347,12 +347,13 @@ SECTIONS
       build/u/src/game/quaternion.o (.text);
       build/u/src/game/math_floor.o (.text);
       build/u/src/game/math_ceil.o (.text);
-      build/u/src/game/bondwalk.o (.text);
+      build/u/src/game/gun.o (.text);
       build/u/src/game/bondwalk2.o (.text);
       build/u/src/game/objecthandler.o (.text);
+      build/u/src/game/objecthandler_1.o (.text);
       build/u/src/game/objecthandler_2.o (.text);
       build/u/src/game/othermodemicrocode.o (.text);
-      build/u/src/game/bond.o (.text);
+      build/u/src/game/bondview.o (.text);
       build/u/src/game/bondinv.o (.text);
       build/u/src/game/unk_08DBB0.o (.text);
       build/u/src/game/debugmenu_08FE00.o (.text);
@@ -365,8 +366,9 @@ SECTIONS
       build/u/src/game/cheat_buttons.o (.text);
       build/u/src/game/unk_092890.o (.text);
       build/u/src/game/unk_092E50.o (.text);
-      build/u/src/game/unk_093880.o (.text);
-      build/u/src/game/unk_09B600.o (.text);
+      build/u/src/game/player.o (.text);
+      build/u/src/game/player_2.o (.text);
+      build/u/src/game/crc.o (.text);
       build/u/src/game/chrObjRandom.o (.text);
       build/u/src/game/unk_09B7A0.o (.text);
       build/u/src/game/unk_09C250.o (.text);
@@ -3200,12 +3202,12 @@ SECTIONS
       build/u/src/tlb_hardwire.o (.data);
       build/u/src/audi.o (.data);
       build/u/src/speed_graph.o (.data);
-      build/u/src/video.o (.data);
+      build/u/src/fr.o (.data);
       build/u/src/deb.o (.data);
-      build/u/src/tlb_paging.o (.data);
-      build/u/src/unused_fp.o (.data);
+      build/u/src/fault.o (.data);
+      /*deb_print may be part of fault per pd beta (.data);*/
       build/u/src/deb_print.o (.data);
-      build/u/src/debug_getlastRA.o (.data);
+      build/u/src/getra.o (.data);
       build/u/src/ramrom.o (.data);
       build/u/src/boss.o (.data);
       build/u/src/music.o (.data);
@@ -3408,12 +3410,12 @@ SECTIONS
       build/u/src/tlb_hardwire.o (.rodata);
       build/u/src/audi.o (.rodata);
       build/u/src/speed_graph.o (.rodata);
-      build/u/src/video.o (.rodata);
+      build/u/src/fr.o (.rodata);
       build/u/src/deb.o (.rodata);
-      build/u/src/tlb_paging.o (.rodata);
-      build/u/src/unused_fp.o (.rodata);
+      build/u/src/fault.o (.rodata);
+      /*deb_print may be part of fault per pd beta (.rodata);*/
       build/u/src/deb_print.o (.rodata);
-      build/u/src/debug_getlastRA.o (.rodata);
+      build/u/src/getra.o (.rodata);
       build/u/src/ramrom.o (.rodata);
       build/u/src/boss.o (.rodata);
       build/u/src/music.o (.rodata);
@@ -3626,7 +3628,7 @@ SECTIONS
       build/u/src/game/initBondDATA.o (.data);
       build/u/src/game/initunk_005450.o (.data);
       build/u/src/game/initunk_005520.o (.data);
-      build/u/src/game/initcameraandthrown.o (.data);
+      build/u/src/game/bondview_r.o (.data);
       build/u/src/game/inititemslots.o (.data);
       build/u/src/game/initBondDATAdefaults.o (.data);
       build/u/src/game/initpathtablesomething.o (.data);
@@ -3647,17 +3649,17 @@ SECTIONS
       build/u/src/game/unk_007920.o (.data);
       build/u/src/game/null_007970.o (.data);
       build/u/src/game/unk_007980.o (.data);
-      build/u/src/game/intro_logos.o (.data);
-      build/u/src/game/mainmenu.o (.data);
+      build/u/src/game/title.o (.data);
+      build/u/src/game/front.o (.data);
       build/u/src/game/unk_01B0E0.o (.data);
       build/u/src/game/unk_01B240.o (.data);
       build/u/src/game/unk_01BAE0.o (.data);
       build/u/src/game/blood_animation.o (.data);
       build/u/src/game/blood_decrypt.o (.data);
-      build/u/src/game/gamefile.o (.data);
-      build/u/src/game/gamefile2.o (.data);
+      build/u/src/game/file.o (.data);
+      build/u/src/game/file2.o (.data);
       build/u/src/game/chr.o (.data);
-      build/u/src/game/chr2.o (.data);
+      build/u/src/game/chrlv.o (.data);
       build/u/src/game/chrai.o (.data);
       build/u/src/game/chrobjhandler.o (.data);
       build/u/src/game/loadobjectmodel.o (.data);
@@ -3673,12 +3675,13 @@ SECTIONS
       build/u/src/game/quaternion.o (.data);
       build/u/src/game/math_floor.o (.data);
       build/u/src/game/math_ceil.o (.data);
-      build/u/src/game/bondwalk.o (.data);
+      build/u/src/game/gun.o (.data);
       build/u/src/game/bondwalk2.o (.data);
       build/u/src/game/objecthandler.o (.data);
+      build/u/src/game/objecthandler_1.o (.data);
       build/u/src/game/objecthandler_2.o (.data);
       build/u/src/game/othermodemicrocode.o (.data);
-      build/u/src/game/bond.o (.data);
+      build/u/src/game/bondview.o (.data);
       build/u/src/game/bondinv.o (.data);
       build/u/src/game/unk_08DBB0.o (.data);
       build/u/src/game/debugmenu_08FE00.o (.data);
@@ -3691,8 +3694,9 @@ SECTIONS
       build/u/src/game/cheat_buttons.o (.data);
       build/u/src/game/unk_092890.o (.data);
       build/u/src/game/unk_092E50.o (.data);
-      build/u/src/game/unk_093880.o (.data);
-      build/u/src/game/unk_09B600.o (.data);
+      build/u/src/game/player.o (.data);
+      build/u/src/game/player_2.o (.data);
+      build/u/src/game/crc.o (.data);
       build/u/src/game/chrObjRandom.o (.data);
       build/u/src/game/unk_09B7A0.o (.data);
       build/u/src/game/unk_09C250.o (.data);
@@ -3751,7 +3755,7 @@ SECTIONS
       build/u/src/game/initBondDATA.o (.rodata);
       build/u/src/game/initunk_005450.o (.rodata);
       build/u/src/game/initunk_005520.o (.rodata);
-      build/u/src/game/initcameraandthrown.o (.rodata);
+      build/u/src/game/bondview_r.o (.rodata);
       build/u/src/game/inititemslots.o (.rodata);
       build/u/src/game/initBondDATAdefaults.o (.rodata);
       build/u/src/game/initpathtablesomething.o (.rodata);
@@ -3772,17 +3776,17 @@ SECTIONS
       build/u/src/game/unk_007920.o (.rodata);
       build/u/src/game/null_007970.o (.rodata);
       build/u/src/game/unk_007980.o (.rodata);
-      build/u/src/game/intro_logos.o (.rodata);
-      build/u/src/game/mainmenu.o (.rodata);
+      build/u/src/game/title.o (.rodata);
+      build/u/src/game/front.o (.rodata);
       build/u/src/game/unk_01B0E0.o (.rodata);
       build/u/src/game/unk_01B240.o (.rodata);
       build/u/src/game/unk_01BAE0.o (.rodata);
       build/u/src/game/blood_animation.o (.rodata);
       build/u/src/game/blood_decrypt.o (.rodata);
-      build/u/src/game/gamefile.o (.rodata);
-      build/u/src/game/gamefile2.o (.rodata);
+      build/u/src/game/file.o (.rodata);
+      build/u/src/game/file2.o (.rodata);
       build/u/src/game/chr.o (.rodata);
-      build/u/src/game/chr2.o (.rodata);
+      build/u/src/game/chrlv.o (.rodata);
       build/u/src/game/chrai.o (.rodata);
       build/u/src/game/chrobjhandler.o (.rodata);
       build/u/src/game/loadobjectmodel.o (.rodata);
@@ -3798,12 +3802,13 @@ SECTIONS
       build/u/src/game/quaternion.o (.rodata);
       build/u/src/game/math_floor.o (.rodata);
       build/u/src/game/math_ceil.o (.rodata);
-      build/u/src/game/bondwalk.o (.rodata);
+      build/u/src/game/gun.o (.rodata);
       build/u/src/game/bondwalk2.o (.rodata);
       build/u/src/game/objecthandler.o (.rodata);
+      build/u/src/game/objecthandler_1.o (.rodata);
       build/u/src/game/objecthandler_2.o (.rodata);
       build/u/src/game/othermodemicrocode.o (.rodata);
-      build/u/src/game/bond.o (.rodata);
+      build/u/src/game/bondview.o (.rodata);
       build/u/src/game/bondinv.o (.rodata);
       build/u/src/game/unk_08DBB0.o (.rodata);
       build/u/src/game/debugmenu_08FE00.o (.rodata);
@@ -3816,8 +3821,9 @@ SECTIONS
       build/u/src/game/cheat_buttons.o (.rodata);
       build/u/src/game/unk_092890.o (.rodata);
       build/u/src/game/unk_092E50.o (.rodata);
-      build/u/src/game/unk_093880.o (.rodata);
-      build/u/src/game/unk_09B600.o (.rodata);
+      build/u/src/game/player.o (.rodata);
+      build/u/src/game/player_2.o (.rodata);
+      build/u/src/game/crc.o (.rodata);
       build/u/src/game/chrObjRandom.o (.rodata);
       build/u/src/game/unk_09B7A0.o (.rodata);
       build/u/src/game/unk_09C250.o (.rodata);
@@ -3875,12 +3881,12 @@ SECTIONS
       build/u/src/tlb_resolve.o (.bss);
       build/u/src/audi.o (.bss);
       build/u/src/speed_graph.o (.bss);
-      build/u/src/video.o (.bss);
+      build/u/src/fr.o (.bss);
       build/u/src/deb.o (.bss);
-      build/u/src/tlb_paging.o (.bss);
-      build/u/src/unused_fp.o (.bss);
+      build/u/src/fault.o (.bss);
+      /*deb_print may be part of fault per pd beta (.bss);*/
       build/u/src/deb_print.o (.bss);
-      build/u/src/debug_getlastRA.o (.bss);
+      build/u/src/getra.o (.bss);
       build/u/src/ramrom.o (.bss);
       build/u/src/boss.o (.bss);
       build/u/src/music.o (.bss);
@@ -4093,7 +4099,7 @@ SECTIONS
       build/u/src/game/initBondDATA.o (.bss);
       build/u/src/game/initunk_005450.o (.bss);
       build/u/src/game/initunk_005520.o (.bss);
-      build/u/src/game/initcameraandthrown.o (.bss);
+      build/u/src/game/bondview_r.o (.bss);
       build/u/src/game/inititemslots.o (.bss);
       build/u/src/game/initBondDATAdefaults.o (.bss);
       build/u/src/game/initpathtablesomething.o (.bss);
@@ -4114,17 +4120,17 @@ SECTIONS
       build/u/src/game/unk_007920.o (.bss);
       build/u/src/game/null_007970.o (.bss);
       build/u/src/game/unk_007980.o (.bss);
-      build/u/src/game/intro_logos.o (.bss);
-      build/u/src/game/mainmenu.o (.bss);
+      build/u/src/game/title.o (.bss);
+      build/u/src/game/front.o (.bss);
       build/u/src/game/unk_01B0E0.o (.bss);
       build/u/src/game/unk_01B240.o (.bss);
       build/u/src/game/unk_01BAE0.o (.bss);
       build/u/src/game/blood_animation.o (.bss);
       build/u/src/game/blood_decrypt.o (.bss);
-      build/u/src/game/gamefile.o (.bss);
-      build/u/src/game/gamefile2.o (.bss);
+      build/u/src/game/file.o (.bss);
+      build/u/src/game/file2.o (.bss);
       build/u/src/game/chr.o (.bss);
-      build/u/src/game/chr2.o (.bss);
+      build/u/src/game/chrlv.o (.bss);
       build/u/src/game/chrai.o (.bss);
       build/u/src/game/chrobjhandler.o (.bss);
       build/u/src/game/loadobjectmodel.o (.bss);
@@ -4140,12 +4146,13 @@ SECTIONS
       build/u/src/game/quaternion.o (.bss);
       build/u/src/game/math_floor.o (.bss);
       build/u/src/game/math_ceil.o (.bss);
-      build/u/src/game/bondwalk.o (.bss);
+      build/u/src/game/gun.o (.bss);
       build/u/src/game/bondwalk2.o (.bss);
       build/u/src/game/objecthandler.o (.bss);
+      build/u/src/game/objecthandler_1.o (.bsst);
       build/u/src/game/objecthandler_2.o (.bss);
       build/u/src/game/othermodemicrocode.o (.bss);
-      build/u/src/game/bond.o (.bss);
+      build/u/src/game/bondview.o (.bss);
       build/u/src/game/bondinv.o (.bss);
       build/u/src/game/unk_08DBB0.o (.bss);
       build/u/src/game/debugmenu_08FE00.o (.bss);
@@ -4158,8 +4165,9 @@ SECTIONS
       build/u/src/game/cheat_buttons.o (.bss);
       build/u/src/game/unk_092890.o (.bss);
       build/u/src/game/unk_092E50.o (.bss);
-      build/u/src/game/unk_093880.o (.bss);
-      build/u/src/game/unk_09B600.o (.bss);
+      build/u/src/game/player.o (.bss);
+      build/u/src/game/player_2.o (.bss);
+      build/u/src/game/crc.o (.bss);
       build/u/src/game/chrObjRandom.o (.bss);
       build/u/src/game/unk_09B7A0.o (.bss);
       build/u/src/game/unk_09C250.o (.bss);

@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "memp.h"
+#include "game/initunk_005520.h"
 
 
 extern s32 D_80036070;

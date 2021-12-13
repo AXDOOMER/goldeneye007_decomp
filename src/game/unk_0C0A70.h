@@ -4,7 +4,13 @@
 
 extern s32 D_80048490;
 extern s32 D_80048494;
-extern s32 D_80048498;
+extern s32 speedgraphframes;
+
+#ifdef VERSION_JP
+extern f32 jpD_800484CC;
+extern f32 jpD_800484D0;
+#endif
+
 extern s32 D_8004849C;
 extern s32 D_800484A0;
 extern s32 D_800484A4;

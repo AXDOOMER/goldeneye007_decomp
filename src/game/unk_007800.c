@@ -1,6 +1,6 @@
 #include "ultra64.h"
 #include "game/unk_09C250.h"
-#include "video.h"
+#include "fr.h"
 
 #ifdef NONMATCHING
 //come back once prop for explosions and smoke is merged from AIListLogic branch

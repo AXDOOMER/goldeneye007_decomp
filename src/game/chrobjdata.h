@@ -1,95 +1,12 @@
 #ifndef _CHROBJDATA_H_
 #define _CHROBJDATA_H_
+
 #include "ultra64.h"
+#include "bondconstants.h"
+#include "bondtypes.h"
 
-struct Coord3d {
-    float x;
-    float y;
-    float z;
-};
 
-typedef struct ModelFileTextures {
-    u32 TextureID;
-    u8 Width;
-    u8 Height;
-    u8 MipMapTiles;
-    u8 Type;
-    u8 RenderDepth;
-    u8 sflags;
-    u8 tflags;
-} ModelFileTextures;
 
-typedef struct ModelJoint {
-    u16 NodeType;
-    u16 mtxA;
-    u16 mtxB;
-} ModelJoint;
-
-typedef struct ModelSkeleton {
-    short numjoints;
-    short pad1; //pad
-    ModelJoint* Joints;
-    short SkeletonSize;
-    short pad2;
-} ModelSkeleton;
-
-typedef struct ModelNode {
-    short Opcode;
-    void * Data;
-    struct ModelNode * Parent;
-    struct ModelNode * Next;
-    struct ModelNode * Previous;
-    struct ModelNode * Child;
-} ModelNode;
-
-typedef struct ModelNode_GroupRecord {
-    struct Coord3d coord;
-    u16 JointId;
-    u16 MatrixID0;
-    u16 MatrixID1;
-    u16 MatrixID2;
-    struct ModelNode * ChildGroup;
-    float BoundingVolumeRadius;
-} ModelNode_GroupRecord;
-
-typedef struct ModelNode_HeaderRecord {
-    u32 ModelType;
-    struct ModelNode_GroupRecord * FirstGroup;
-    u16 Group1;
-    u16 Group2;
-    u16 number;
-    u16 reserved;
-} ModelNode_HeaderRecord;
-
-typedef struct ModelFileHeader {
-    ModelNode* RootNode;
-    ModelSkeleton* Skeleton;
-    ModelNode** Switches;
-    s16 numSwitches; 
-    s16 numMatrices; 
-    f32 BoundingVolumeRadius; 
-    s16 numRecords;
-    s16 numtextures;
-    ModelFileTextures* Textures;
-    s32 isLoaded;
-} ModelFileHeader;
-
-typedef struct ItemModelFileRecord {
-    ModelFileHeader* header;
-    char * filename;
-    float scale;
-} ItemModelFileRecord;
-
-struct ChrModelFileRecord {
-    ModelFileHeader* header;
-    char * filename;
-    float scale;
-    float pov;
-    u8 isMale;
-    u8 hasHead;
-    u8 pad1;
-    u8 pad2;
-};
 
 
 struct struct_13 {
@@ -109,30 +26,30 @@ struct headHat
 
 extern struct ItemModelFileRecord PitemZ_entries[];
 
-extern ModelSkeleton SKELETON(cctv);
-extern ModelSkeleton SKELETON(console_one_screen);
-extern ModelSkeleton SKELETON(console_four_screen);
-extern ModelSkeleton SKELETON(tv_holder);
-extern ModelSkeleton SKELETON(rotating_stuff);
-extern ModelSkeleton SKELETON(eyelid_door);
-extern ModelSkeleton SKELETON(iris_door);
-extern ModelSkeleton SKELETON(walletbond);
-extern ModelSkeleton SKELETON(car);
-extern ModelSkeleton SKELETON(flying);
-extern ModelSkeleton SKELETON(door);
-extern ModelSkeleton SKELETON(tank);
-extern ModelSkeleton SKELETON(hat);
-extern ModelSkeleton SKELETON(standard_object);
-extern ModelSkeleton SKELETON(prop_weapon);
-extern ModelSkeleton SKELETON(guard);
-extern ModelNode player_gait_hdr;
-extern ModelNode player_gait_pos_hdr_1;
-extern ModelNode player_gait_pos_hdr_2;
-extern ModelNode player_gait_pos_hdr_3;
-extern ModelNode_HeaderRecord player_gait_obj;
-extern ModelNode_GroupRecord player_gait_pos_1;
-extern ModelNode_GroupRecord player_gait_pos_2;
-extern ModelNode_GroupRecord player_gait_pos_3;
+extern struct ModelSkeleton SKELETON(cctv);
+extern struct ModelSkeleton SKELETON(console_one_screen);
+extern struct ModelSkeleton SKELETON(console_four_screen);
+extern struct ModelSkeleton SKELETON(tv_holder);
+extern struct ModelSkeleton SKELETON(rotating_stuff);
+extern struct ModelSkeleton SKELETON(eyelid_door);
+extern struct ModelSkeleton SKELETON(iris_door);
+extern struct ModelSkeleton SKELETON(walletbond);
+extern struct ModelSkeleton SKELETON(car);
+extern struct ModelSkeleton SKELETON(flying);
+extern struct ModelSkeleton SKELETON(door);
+extern struct ModelSkeleton SKELETON(tank);
+extern struct ModelSkeleton SKELETON(hat);
+extern struct ModelSkeleton SKELETON(standard_object);
+extern struct ModelSkeleton SKELETON(prop_weapon);
+extern struct ModelSkeleton SKELETON(guard);
+extern struct ModelNode player_gait_hdr;
+extern struct ModelNode player_gait_pos_hdr_1;
+extern struct ModelNode player_gait_pos_hdr_2;
+extern struct ModelNode player_gait_pos_hdr_3;
+extern struct ModelNode_HeaderRecord player_gait_obj;
+extern struct ModelNode_GroupRecord player_gait_pos_1;
+extern struct ModelNode_GroupRecord player_gait_pos_2;
+extern struct ModelNode_GroupRecord player_gait_pos_3;
 
 extern struct ModelFileHeader player_gait_object_header;
 
@@ -228,7 +145,7 @@ extern struct ModelFileHeader lectre_header;
 extern struct ModelFileHeader money_header;
 extern struct ModelFileHeader goldbar_header;
 extern struct ModelFileHeader heroin_header;
-extern ModelSkeleton SKELETON(g_weapon);
+extern struct ModelSkeleton SKELETON(g_weapon);
 
 extern struct ModelFileHeader camguard_header;
 extern struct ModelFileHeader greyguard_header;
@@ -653,6 +570,8 @@ extern struct ModelFileHeader chrtesttube_header;
 extern struct ModelFileHeader bollard_header;
 
 extern struct ChrModelFileRecord c_item_entries[];
-extern ModelSkeleton SKELETON(guard);
-extern ModelSkeleton SKELETON(suit_lf_hand);
+extern struct ModelSkeleton SKELETON(guard);
+extern struct ModelSkeleton SKELETON(suit_lf_hand);
+
+extern struct object_weapon blank_08_object_preset_1[];
 #endif

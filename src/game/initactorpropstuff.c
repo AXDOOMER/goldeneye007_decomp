@@ -1,7 +1,7 @@
 #include "ultra64.h"
 #include "game/initactorpropstuff.h"
 #include "game/chr.h"
-#include "game/bondwalk.h"
+#include "game/gun.h"
 #include "game/math_floor.h"
 
 

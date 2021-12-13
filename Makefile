@@ -64,6 +64,13 @@ LCDEFS := -DVERSION_JP
 ASMDEFS := --defsym VERSION_JP=1
 endif
 
+ALLOWED_VERSIONS := US EU JP
+ifneq ($(filter $(VERSION),$(ALLOWED_VERSIONS)),)
+$(info VERSION=$(VERSION))
+else
+$(error VERSION "$(VERSION)" not supported")
+endif
+
 BUILD_DIR_BASE := build
 # BUILD_DIR is the location where all build artifacts are placed
 BUILD_DIR      := $(BUILD_DIR_BASE)/$(COUNTRYCODE)
@@ -103,11 +110,9 @@ GAMEFILES_S := $(foreach dir,src/game,$(wildcard $(dir)/*.s))
 GAMEOBJECTS := $(foreach file,$(GAMEFILES_S),$(BUILD_DIR)/$(file:.s=.o)) \
 				$(foreach file,$(GAMEFILES_C),$(BUILD_DIR)/$(file:.c=.o))
 
-ROMFILES := assets/romfiles.s
-ROMOBJECTS := $(BUILD_DIR)/assets/romfiles.o
 
-GLOBALIMAGETABLEFILES := assets/GlobalImageTable.c
-GLOBALIMAGETABLEOBJECTS := $(BUILD_DIR)/assets/GlobalImageTable.o
+ASSET_DATAFILES := assets/GlobalImageTable.c assets/animationtable_data.c assets/animationtable_entries.c assets/font_dl.c assets/font_chardataj.c assets/font_chardatae.c assets/Globalimagetable_commandblock.c
+ASSET_DATAOBJECTS := $(foreach file,$(ASSET_DATAFILES),$(BUILD_DIR)/$(file:.c=.o))
 
 ROMFILES2 := assets/romfiles2.s
 ROMOBJECTS2 := $(BUILD_DIR)/assets/romfiles2.o
@@ -144,8 +149,8 @@ ifeq ($(IDO_RECOMP), NO)
 else
   CC := $(IRIX_ROOT)/cc
 endif
-CFLAGS := 0 -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821,838 -signed $(INCLUDE) -mips2 $(LCDEFS) -DTARGET_N64
-CFLAGS_LIBULTRA := 0 -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821,838 -signed $(INCLUDE) -mips2 $(LCDEFS) -DTARGET_N64
+CFLAGS := 0 -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821,838,649 -signed $(INCLUDE) -mips2 $(LCDEFS) -DTARGET_N64
+CFLAGS_LIBULTRA := 0 -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821,838,649 -signed $(INCLUDE) -mips2 $(LCDEFS) -DTARGET_N64
 
 LD := $(TOOLCHAIN)ld
 LD_SCRIPT := ge007.$(COUNTRYCODE).ld
@@ -245,7 +250,7 @@ $(BUILD_DIR)/src/%.o: src/%.c
 $(BUILD_DIR)/$(OBSEGMENT): $(OBSEG_RZ) $(IMAGE_OBJS)
 	
 
-$(APPELF): $(RSPOBJECTS) $(ULTRAOBJECTS) $(HEADEROBJECTS) $(OBSEG_RZ) $(BUILD_DIR)/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(GLOBALIMAGETABLEOBJECTS) $(ROMOBJECTS2) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS)
+$(APPELF): $(RSPOBJECTS) $(ULTRAOBJECTS) $(HEADEROBJECTS) $(OBSEG_RZ) $(BUILD_DIR)/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(ASSET_DATAOBJECTS) $(ROMOBJECTS2) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS)
 	$(LD) $(LDFLAGS) -o $@ 
 
 $(APPBIN): $(APPELF)

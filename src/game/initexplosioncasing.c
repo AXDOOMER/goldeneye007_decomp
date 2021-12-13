@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "memp.h"
+#include "game/initexplosioncasing.h"
 
 
 
@@ -225,13 +226,13 @@ glabel alloc_explosion_smoke_casing_scorch_impact_buffers
 .L7F0070BC:
 /* 03BBEC 7F0070BC 0000C812 */  mflo  $t9
 /* 03BBF0 7F0070C0 ACD90000 */  sw    $t9, ($a2)
-/* 03BBF4 7F0070C4 0FC2F7C1 */  jal   sub_GAME_7F0BDF04
+/* 03BBF4 7F0070C4 0FC2F7C1 */  jal   lvlGetCurrentStageToLoad
 /* 03BBF8 7F0070C8 00000000 */   nop   
 /* 03BBFC 7F0070CC 3C068008 */  lui   $a2, %hi(max_casings)
 /* 03BC00 7F0070D0 2401001D */  li    $at, 29
 /* 03BC04 7F0070D4 10410007 */  beq   $v0, $at, .L7F0070F4
 /* 03BC08 7F0070D8 24C6A148 */   addiu $a2, %lo(max_casings) # addiu $a2, $a2, -0x5eb8
-/* 03BC0C 7F0070DC 0FC2F7C1 */  jal   sub_GAME_7F0BDF04
+/* 03BC0C 7F0070DC 0FC2F7C1 */  jal   lvlGetCurrentStageToLoad
 /* 03BC10 7F0070E0 00000000 */   nop   
 /* 03BC14 7F0070E4 3C068008 */  lui   $a2, %hi(max_casings)
 /* 03BC18 7F0070E8 2401001E */  li    $at, 30
