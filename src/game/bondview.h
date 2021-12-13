@@ -3151,11 +3151,10 @@ Mtxf *currentPlayerGetMatrix10CC(void);
 void sub_GAME_7F077EEC(struct coord2d *in, struct coord3d *out, f32 value);
 s32 sub_GAME_7F078BF4(struct coord3d *, f32, struct bbox2d *);
 
-// unknown pointer arg0
-s32 sub_GAME_7F08BCC0(void *arg0, s32 arg1, s32 arg2);
 void sub_GAME_7F08BD48(Mtxf *arg0, s32 arg1);
 s32 sub_GAME_7F078474(void);
 s32 get_BONDdata_field_10E0(void);
 Mtx *currentPlayerGetProjectionMatrix(void);
+Gfx *bondviewRenderProp(PropRecord *arg0, Gfx *arg1, s32 arg2);
 
 #endif

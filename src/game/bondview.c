@@ -36295,11 +36295,11 @@ Gfx * bondviewRemoved7F08BCB8(Gfx *arg0)
 /**
  * Address 0x7F08BCC0.
  */
-s32 sub_GAME_7F08BCC0(void *arg0, s32 arg1, s32 arg2)
+Gfx *bondviewRenderProp(PropRecord *arg0, Gfx *arg1, s32 arg2)
 {
-    if (((s32*)(arg0))[1] != 0)
+    if (arg0->chr != NULL)
     {
-        arg1 = sub_GAME_7F021BFC(arg0, arg1, arg2);
+        arg1 = chrRenderProp(arg0, arg1, arg2);
     }
 
     return arg1;

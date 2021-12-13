@@ -2117,13 +2117,13 @@ glabel sub_GAME_7F09D4EC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F09D5A0(void) {
+void unk09c250RenderPropExplosion(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F09D5A0
+glabel unk09c250RenderPropExplosion
 /* 0D20D0 7F09D5A0 27BDFF70 */  addiu $sp, $sp, -0x90
 /* 0D20D4 7F09D5A4 AFB0001C */  sw    $s0, 0x1c($sp)
 /* 0D20D8 7F09D5A8 AFBF003C */  sw    $ra, 0x3c($sp)
@@ -4007,13 +4007,13 @@ glabel sub_GAME_7F09EF9C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F09F03C(void) {
+void unk09c250RenderPropSmoke(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F09F03C
+glabel unk09c250RenderPropSmoke
 /* 0D3B6C 7F09F03C 27BDFF70 */  addiu $sp, $sp, -0x90
 /* 0D3B70 7F09F040 AFB00024 */  sw    $s0, 0x24($sp)
 /* 0D3B74 7F09F044 AFBF003C */  sw    $ra, 0x3c($sp)

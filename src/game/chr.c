@@ -6053,13 +6053,13 @@ void chrGetD_8002CCB8(u8 *arg0)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F021BFC(void) {
+void chrRenderProp(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F021BFC
+glabel chrRenderProp
 /* 05672C 7F021BFC 27BDFF28 */  addiu $sp, $sp, -0xd8
 /* 056730 7F021C00 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 056734 7F021C04 AFB00020 */  sw    $s0, 0x20($sp)

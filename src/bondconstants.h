@@ -769,7 +769,9 @@ typedef enum PROP_TYPE
     PROP_TYPE_CHR       = 3,
     PROP_TYPE_WEAPON    = 4,
     PROP_TYPE_PLAYER    = 5,
-    PROP_TYPE_VIEWER    = 6
+    PROP_TYPE_VIEWER    = 6,
+    PROP_TYPE_EXPLOSTION= 7,
+    PROP_TYPE_SMOKE     = 8
 } PROP_TYPE;
 
 typedef enum INTRO_TYPE

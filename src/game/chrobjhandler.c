@@ -27404,13 +27404,13 @@ glabel sub_GAME_7F04AC20
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F04B150(void) {
+void chrobjRenderProp(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F04B150
+glabel chrobjRenderProp
 /* 07FC80 7F04B150 27BDFF40 */  addiu $sp, $sp, -0xc0
 /* 07FC84 7F04B154 3C0F8003 */  lui   $t7, %hi(D_80031FD0) 
 /* 07FC88 7F04B158 AFBF0024 */  sw    $ra, 0x24($sp)
