@@ -2,6 +2,8 @@
 
 #include "bondtypes.h"
 #include "bondconstants.h"
+#include "fr.h"
+#include "game/bg.h"
 #include "game/bondview.h"
 #include "game/fog.h"
 
@@ -18,7 +20,7 @@ struct pervasiveness {
 //CODE.bss:800825C0
 s32 g_FogSkyIsEnabled;
 //CODE.bss:800825C4
-u32 *ptr_nearfog_enviroment_values;
+f32 *ptr_nearfog_enviroment_values;
 //CODE.bss:800825C8
 
 struct pervasiveness buffer_far_pervasiveness;
@@ -34,9 +36,9 @@ struct pervasiveness buffer_far_pervasiveness;
 // s32 flt_CODE_bss_800825DC;
 
 //CODE.bss:800825E0
-s32 buffer_far_ambiant;
+f32 buffer_far_ambiant;
 //CODE.bss:800825E4
-s32 bg_dif_light;
+f32 bg_dif_light;
 //CODE.bss:800825E8
 s32 env_table_hit;
 //CODE.bss:800825EC
@@ -216,25 +218,32 @@ struct fog_element2 fog_tables2[] = {
     {0}
 };
 
-// rodata
+// forward declarations
+
+void copy_table1_env_to_current(struct fog_element *arg0);
+
+// end forward declarations
 
 
-
-
-void sub_GAME_7F0BA720(s32 a, s32 b) {
+// no change
+void sub_GAME_7F0BA720(s32 a, s32 b)
+{
     return;
 }
 
+// name change
 struct fog_loaded *get_ptr_currentdata(void)
 {
     return &ptr_current_data;
 }
 
-f32 get_near_fog_value(void) {
+f32 get_near_fog_value(void)
+{
     return g_FogNearFogValue;
 }
 
-f32 square_near_fog_value(void) {
+f32 square_near_fog_value(void)
+{
     return g_FogNearFogValue * g_FogNearFogValue;
 }
 
@@ -242,51 +251,44 @@ f32 square_near_fog_value(void) {
 
 
 
-#ifdef NONMATCHING
+
+/**
+ * Address 0x7F0BA758.
+*/
 void copy_table1_env_to_current(struct fog_element *arg0)
 {
-    f32 sp34;
-    f32 sp30;
-    f32 sp20;
-    f32 sp1C;
-    f32 sp18;
+    f32 zrange[2]; // 48
+    f32 pk0;
+    f32 pk4;
     f32 temp_f0;
-    f32 temp_f10;
-    f32 temp_f12;
-    f32 temp_f14;
-    f32 temp_f4;
-    f32 temp_f6;
-    f32 temp_f8;
-    s32 temp_f16;
-    s32 temp_f18;
-    s32 temp_f2;
+    f32 sp20; // 32
+    f32 sp1C; // 28
 
     viSetZRange(arg0->blendmultiplier, arg0->farfog);
-    viGetZRange(&sp30);
+    viGetZRange(&zrange);
+
     temp_f0 = sub_GAME_7F0B4878();
-    temp_f6 = sp30 / temp_f0;
-    temp_f10 = sp34 / temp_f0;
-    sp30 = temp_f6;
-    sp34 = temp_f10;
-    bg_dif_light = (bitwise s32) ((f32) arg0->dif_in_light / 1000.0f);
-    temp_f14 = sp34 - temp_f6;
-    buffer_far_ambiant = (bitwise s32) ((f32) arg0->far_ambiantlight / 1000.0f);
-    temp_f16 = buffer_far_ambiant;
-    g_FogNearFogValue = temp_f6 + (temp_f14 * (bitwise f32) temp_f16);
-    temp_f2 = bg_dif_light;
-    near_fog_times_intensity = temp_f6 + (temp_f14 * (bitwise f32) temp_f2);
-    buffer_far_pervasiveness.unk0 = (bitwise s32) (arg0->blendmultiplier / temp_f0);
-    sp18 = (bitwise f32) temp_f16 - (bitwise f32) temp_f2;
-    temp_f4 = sp18;
-    temp_f18 = buffer_far_pervasiveness.unk0;
-    buffer_far_pervasiveness.unk4 = (f32) (arg0->farfog / temp_f0);
-    temp_f12 = buffer_far_pervasiveness.unk4;
-    sp20 = 128.0f / temp_f4;
-    temp_f8 = temp_f12 - (bitwise f32) temp_f18;
-    sp18 = temp_f8;
-    sp1C = ((0.5f - (bitwise f32) temp_f2) * 256.0f) / temp_f4;
-    buffer_far_pervasiveness.unk10 = (f32) (((-sp20 * temp_f12 * ((bitwise f32) temp_f18 + 1.0f)) / temp_f8) / 255.0f);
-    buffer_far_pervasiveness.unk14 = (f32) (((((temp_f12 + 1.0f) * sp20) / temp_f8) + sp1C) / 255.0f);
+    zrange[0] /= temp_f0;
+    zrange[1] /= temp_f0;
+
+    bg_dif_light = ((f32) arg0->dif_in_light / 1000.0f);
+    buffer_far_ambiant = ((f32) arg0->far_ambiantlight / 1000.0f);
+
+    g_FogNearFogValue = ((zrange[1] - zrange[0]) *  buffer_far_ambiant) + zrange[0];
+    near_fog_times_intensity = ((zrange[1] - zrange[0]) * bg_dif_light) + zrange[0];
+
+    buffer_far_pervasiveness.unk00 = (arg0->blendmultiplier / temp_f0);
+    pk0 = buffer_far_pervasiveness.unk00;
+    buffer_far_pervasiveness.unk04 = (arg0->farfog / temp_f0);
+    pk4 = buffer_far_pervasiveness.unk04;
+
+    // numerator is constant 128.0f
+    sp20 = (256.0f * (0.5f -         0.0f)) / (buffer_far_ambiant - bg_dif_light);
+    sp1C = (256.0f * (0.5f - bg_dif_light)) / (buffer_far_ambiant - bg_dif_light);
+
+    buffer_far_pervasiveness.unk10 = ((pk4 * -sp20 * (pk0 + 1.0f)) / (pk4 - pk0)) / 255.0f;
+    buffer_far_pervasiveness.unk14 = ((sp20 * (pk4 + 1.0f) / (pk4 - pk0)) + sp1C) / 255.0f;
+
     ptr_current_data.dif_in_light = (s32) arg0->dif_in_light;
     ptr_current_data.far_ambiantlight = arg0->far_ambiantlight;
     ptr_current_data.red = arg0->red;
@@ -305,189 +307,24 @@ void copy_table1_env_to_current(struct fog_element *arg0)
     ptr_current_data.watergreen = arg0->watergreen;
     ptr_current_data.waterblue = arg0->waterblue;
     ptr_current_data.waterconcavity = arg0->waterconcavity;
+
     if (arg0->nearfog == 0.0f)
     {
         ptr_nearfog_enviroment_values = NULL;
     }
     else
     {
-        ptr_nearfog_enviroment_values = (u32 *) &arg0->nearfog;
+        ptr_nearfog_enviroment_values = &arg0->nearfog;
     }
+
     g_FogSkyIsEnabled = 1;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel copy_table1_env_to_current
-/* 0EF288 7F0BA758 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 0EF28C 7F0BA75C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0EF290 7F0BA760 C48E0008 */  lwc1  $f14, 8($a0)
-/* 0EF294 7F0BA764 C48C0004 */  lwc1  $f12, 4($a0)
-/* 0EF298 7F0BA768 0C001194 */  jal   viSetZRange
-/* 0EF29C 7F0BA76C AFA40038 */   sw    $a0, 0x38($sp)
-/* 0EF2A0 7F0BA770 0C0011AB */  jal   viGetZRange
-/* 0EF2A4 7F0BA774 27A40030 */   addiu $a0, $sp, 0x30
-/* 0EF2A8 7F0BA778 0FC2D21E */  jal   sub_GAME_7F0B4878
-/* 0EF2AC 7F0BA77C 00000000 */   nop   
-/* 0EF2B0 7F0BA780 C7A40030 */  lwc1  $f4, 0x30($sp)
-/* 0EF2B4 7F0BA784 C7A80034 */  lwc1  $f8, 0x34($sp)
-/* 0EF2B8 7F0BA788 8FA50038 */  lw    $a1, 0x38($sp)
-/* 0EF2BC 7F0BA78C 46002183 */  div.s $f6, $f4, $f0
-/* 0EF2C0 7F0BA790 3C01447A */  li    $at, 0x447A0000 # 1000.000000
-/* 0EF2C4 7F0BA794 3C048008 */  lui   $a0, %hi(bg_dif_light)
-/* 0EF2C8 7F0BA798 248425E4 */  addiu $a0, %lo(bg_dif_light) # addiu $a0, $a0, 0x25e4
-/* 0EF2CC 7F0BA79C 3C068008 */  lui   $a2, %hi(buffer_far_ambiant)
-/* 0EF2D0 7F0BA7A0 24C625E0 */  addiu $a2, %lo(buffer_far_ambiant) # addiu $a2, $a2, 0x25e0
-/* 0EF2D4 7F0BA7A4 3C038008 */  lui   $v1, %hi(buffer_far_pervasiveness)
-/* 0EF2D8 7F0BA7A8 246325C8 */  addiu $v1, %lo(buffer_far_pervasiveness) # addiu $v1, $v1, 0x25c8
-/* 0EF2DC 7F0BA7AC 3C028004 */  lui   $v0, %hi(ptr_current_data)
-/* 0EF2E0 7F0BA7B0 24424DCC */  addiu $v0, %lo(ptr_current_data) # addiu $v0, $v0, 0x4dcc
-/* 0EF2E4 7F0BA7B4 46004283 */  div.s $f10, $f8, $f0
-/* 0EF2E8 7F0BA7B8 E7A60030 */  swc1  $f6, 0x30($sp)
-/* 0EF2EC 7F0BA7BC 44814000 */  mtc1  $at, $f8
-/* 0EF2F0 7F0BA7C0 E7AA0034 */  swc1  $f10, 0x34($sp)
-/* 0EF2F4 7F0BA7C4 8CAE0020 */  lw    $t6, 0x20($a1)
-/* 0EF2F8 7F0BA7C8 448E2000 */  mtc1  $t6, $f4
-/* 0EF2FC 7F0BA7CC 00000000 */  nop   
-/* 0EF300 7F0BA7D0 468021A0 */  cvt.s.w $f6, $f4
-/* 0EF304 7F0BA7D4 46083283 */  div.s $f10, $f6, $f8
-/* 0EF308 7F0BA7D8 44814000 */  mtc1  $at, $f8
-/* 0EF30C 7F0BA7DC 3C018004 */  lui   $at, %hi(g_FogNearFogValue)
-/* 0EF310 7F0BA7E0 E48A0000 */  swc1  $f10, ($a0)
-/* 0EF314 7F0BA7E4 8CAF0024 */  lw    $t7, 0x24($a1)
-/* 0EF318 7F0BA7E8 448F2000 */  mtc1  $t7, $f4
-/* 0EF31C 7F0BA7EC 24AF000C */  addiu $t7, $a1, 0xc
-/* 0EF320 7F0BA7F0 468021A0 */  cvt.s.w $f6, $f4
-/* 0EF324 7F0BA7F4 C7A40034 */  lwc1  $f4, 0x34($sp)
-/* 0EF328 7F0BA7F8 46083283 */  div.s $f10, $f6, $f8
-/* 0EF32C 7F0BA7FC C7A60030 */  lwc1  $f6, 0x30($sp)
-/* 0EF330 7F0BA800 46062381 */  sub.s $f14, $f4, $f6
-/* 0EF334 7F0BA804 E4CA0000 */  swc1  $f10, ($a2)
-/* 0EF338 7F0BA808 C4D00000 */  lwc1  $f16, ($a2)
-/* 0EF33C 7F0BA80C 46107202 */  mul.s $f8, $f14, $f16
-/* 0EF340 7F0BA810 46083280 */  add.s $f10, $f6, $f8
-/* 0EF344 7F0BA814 E42A4DC4 */  swc1  $f10, %lo(g_FogNearFogValue)($at)
-/* 0EF348 7F0BA818 C4820000 */  lwc1  $f2, ($a0)
-/* 0EF34C 7F0BA81C 3C018004 */  lui   $at, %hi(near_fog_times_intensity)
-/* 0EF350 7F0BA820 46027102 */  mul.s $f4, $f14, $f2
-/* 0EF354 7F0BA824 46043200 */  add.s $f8, $f6, $f4
-/* 0EF358 7F0BA828 E4284DC8 */  swc1  $f8, %lo(near_fog_times_intensity)($at)
-/* 0EF35C 7F0BA82C C4AA0004 */  lwc1  $f10, 4($a1)
-/* 0EF360 7F0BA830 3C014300 */  li    $at, 0x43000000 # 128.000000
-/* 0EF364 7F0BA834 46005183 */  div.s $f6, $f10, $f0
-/* 0EF368 7F0BA838 46028281 */  sub.s $f10, $f16, $f2
-/* 0EF36C 7F0BA83C E4660000 */  swc1  $f6, ($v1)
-/* 0EF370 7F0BA840 C4A40008 */  lwc1  $f4, 8($a1)
-/* 0EF374 7F0BA844 E7AA0018 */  swc1  $f10, 0x18($sp)
-/* 0EF378 7F0BA848 44813000 */  mtc1  $at, $f6
-/* 0EF37C 7F0BA84C 46002203 */  div.s $f8, $f4, $f0
-/* 0EF380 7F0BA850 C7A40018 */  lwc1  $f4, 0x18($sp)
-/* 0EF384 7F0BA854 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 0EF388 7F0BA858 44815000 */  mtc1  $at, $f10
-/* 0EF38C 7F0BA85C 3C014380 */  li    $at, 0x43800000 # 256.000000
-/* 0EF390 7F0BA860 C4720000 */  lwc1  $f18, ($v1)
-/* 0EF394 7F0BA864 E4680004 */  swc1  $f8, 4($v1)
-/* 0EF398 7F0BA868 46043203 */  div.s $f8, $f6, $f4
-/* 0EF39C 7F0BA86C C46C0004 */  lwc1  $f12, 4($v1)
-/* 0EF3A0 7F0BA870 46025181 */  sub.s $f6, $f10, $f2
-/* 0EF3A4 7F0BA874 E7A80020 */  swc1  $f8, 0x20($sp)
-/* 0EF3A8 7F0BA878 44814000 */  mtc1  $at, $f8
-/* 0EF3AC 7F0BA87C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0EF3B0 7F0BA880 46083282 */  mul.s $f10, $f6, $f8
-/* 0EF3B4 7F0BA884 46126201 */  sub.s $f8, $f12, $f18
-/* 0EF3B8 7F0BA888 E7A80018 */  swc1  $f8, 0x18($sp)
-/* 0EF3BC 7F0BA88C 44814000 */  mtc1  $at, $f8
-/* 0EF3C0 7F0BA890 46045183 */  div.s $f6, $f10, $f4
-/* 0EF3C4 7F0BA894 C7AA0020 */  lwc1  $f10, 0x20($sp)
-/* 0EF3C8 7F0BA898 3C01437F */  li    $at, 0x437F0000 # 255.000000
-/* 0EF3CC 7F0BA89C 46005107 */  neg.s $f4, $f10
-/* 0EF3D0 7F0BA8A0 46089280 */  add.s $f10, $f18, $f8
-/* 0EF3D4 7F0BA8A4 C7A80018 */  lwc1  $f8, 0x18($sp)
-/* 0EF3D8 7F0BA8A8 E7A6001C */  swc1  $f6, 0x1c($sp)
-/* 0EF3DC 7F0BA8AC 460C2182 */  mul.s $f6, $f4, $f12
-/* 0EF3E0 7F0BA8B0 00000000 */  nop   
-/* 0EF3E4 7F0BA8B4 460A3102 */  mul.s $f4, $f6, $f10
-/* 0EF3E8 7F0BA8B8 44815000 */  mtc1  $at, $f10
-/* 0EF3EC 7F0BA8BC 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0EF3F0 7F0BA8C0 46082183 */  div.s $f6, $f4, $f8
-/* 0EF3F4 7F0BA8C4 44814000 */  mtc1  $at, $f8
-/* 0EF3F8 7F0BA8C8 3C01437F */  li    $at, 0x437F0000 # 255.000000
-/* 0EF3FC 7F0BA8CC 460A3103 */  div.s $f4, $f6, $f10
-/* 0EF400 7F0BA8D0 C7AA0020 */  lwc1  $f10, 0x20($sp)
-/* 0EF404 7F0BA8D4 46086180 */  add.s $f6, $f12, $f8
-/* 0EF408 7F0BA8D8 C7A80018 */  lwc1  $f8, 0x18($sp)
-/* 0EF40C 7F0BA8DC E4640010 */  swc1  $f4, 0x10($v1)
-/* 0EF410 7F0BA8E0 460A3102 */  mul.s $f4, $f6, $f10
-/* 0EF414 7F0BA8E4 C7AA001C */  lwc1  $f10, 0x1c($sp)
-/* 0EF418 7F0BA8E8 46082183 */  div.s $f6, $f4, $f8
-/* 0EF41C 7F0BA8EC 44814000 */  mtc1  $at, $f8
-/* 0EF420 7F0BA8F0 3C018008 */  lui   $at, %hi(ptr_nearfog_enviroment_values)
-/* 0EF424 7F0BA8F4 460A3100 */  add.s $f4, $f6, $f10
-/* 0EF428 7F0BA8F8 46082183 */  div.s $f6, $f4, $f8
-/* 0EF42C 7F0BA8FC E4660014 */  swc1  $f6, 0x14($v1)
-/* 0EF430 7F0BA900 8CB80020 */  lw    $t8, 0x20($a1)
-/* 0EF434 7F0BA904 AC580000 */  sw    $t8, ($v0)
-/* 0EF438 7F0BA908 8CB90024 */  lw    $t9, 0x24($a1)
-/* 0EF43C 7F0BA90C 24180001 */  li    $t8, 1
-/* 0EF440 7F0BA910 AC590004 */  sw    $t9, 4($v0)
-/* 0EF444 7F0BA914 90A80028 */  lbu   $t0, 0x28($a1)
-/* 0EF448 7F0BA918 A0480008 */  sb    $t0, 8($v0)
-/* 0EF44C 7F0BA91C 90A90029 */  lbu   $t1, 0x29($a1)
-/* 0EF450 7F0BA920 A0490009 */  sb    $t1, 9($v0)
-/* 0EF454 7F0BA924 90AA002A */  lbu   $t2, 0x2a($a1)
-/* 0EF458 7F0BA928 A04A000A */  sb    $t2, 0xa($v0)
-/* 0EF45C 7F0BA92C 90AB002B */  lbu   $t3, 0x2b($a1)
-/* 0EF460 7F0BA930 A04B000B */  sb    $t3, 0xb($v0)
-/* 0EF464 7F0BA934 C4AA002C */  lwc1  $f10, 0x2c($a1)
-/* 0EF468 7F0BA938 E44A000C */  swc1  $f10, 0xc($v0)
-/* 0EF46C 7F0BA93C 84AC0030 */  lh    $t4, 0x30($a1)
-/* 0EF470 7F0BA940 A44C0010 */  sh    $t4, 0x10($v0)
-/* 0EF474 7F0BA944 C4A40034 */  lwc1  $f4, 0x34($a1)
-/* 0EF478 7F0BA948 E4440014 */  swc1  $f4, 0x14($v0)
-/* 0EF47C 7F0BA94C C4A80038 */  lwc1  $f8, 0x38($a1)
-/* 0EF480 7F0BA950 E4480018 */  swc1  $f8, 0x18($v0)
-/* 0EF484 7F0BA954 C4A6003C */  lwc1  $f6, 0x3c($a1)
-/* 0EF488 7F0BA958 E446001C */  swc1  $f6, 0x1c($v0)
-/* 0EF48C 7F0BA95C 90AD0040 */  lbu   $t5, 0x40($a1)
-/* 0EF490 7F0BA960 A04D0020 */  sb    $t5, 0x20($v0)
-/* 0EF494 7F0BA964 C4AA0044 */  lwc1  $f10, 0x44($a1)
-/* 0EF498 7F0BA968 E44A0024 */  swc1  $f10, 0x24($v0)
-/* 0EF49C 7F0BA96C 84AE0048 */  lh    $t6, 0x48($a1)
-/* 0EF4A0 7F0BA970 A44E0028 */  sh    $t6, 0x28($v0)
-/* 0EF4A4 7F0BA974 C4A4004C */  lwc1  $f4, 0x4c($a1)
-/* 0EF4A8 7F0BA978 E444002C */  swc1  $f4, 0x2c($v0)
-/* 0EF4AC 7F0BA97C C4A80050 */  lwc1  $f8, 0x50($a1)
-/* 0EF4B0 7F0BA980 44802000 */  mtc1  $zero, $f4
-/* 0EF4B4 7F0BA984 E4480030 */  swc1  $f8, 0x30($v0)
-/* 0EF4B8 7F0BA988 C4A60054 */  lwc1  $f6, 0x54($a1)
-/* 0EF4BC 7F0BA98C E4460034 */  swc1  $f6, 0x34($v0)
-/* 0EF4C0 7F0BA990 C4AA0058 */  lwc1  $f10, 0x58($a1)
-/* 0EF4C4 7F0BA994 E44A0038 */  swc1  $f10, 0x38($v0)
-/* 0EF4C8 7F0BA998 C4A8000C */  lwc1  $f8, 0xc($a1)
-/* 0EF4CC 7F0BA99C 46082032 */  c.eq.s $f4, $f8
-/* 0EF4D0 7F0BA9A0 00000000 */  nop   
-/* 0EF4D4 7F0BA9A4 45000004 */  bc1f  .L7F0BA9B8
-/* 0EF4D8 7F0BA9A8 00000000 */   nop   
-/* 0EF4DC 7F0BA9AC 3C018008 */  lui   $at, %hi(ptr_nearfog_enviroment_values)
-/* 0EF4E0 7F0BA9B0 10000002 */  b     .L7F0BA9BC
-/* 0EF4E4 7F0BA9B4 AC2025C4 */   sw    $zero, %lo(ptr_nearfog_enviroment_values)($at)
-.L7F0BA9B8:
-/* 0EF4E8 7F0BA9B8 AC2F25C4 */  sw    $t7, %lo(ptr_nearfog_enviroment_values)($at)
-.L7F0BA9BC:
-/* 0EF4EC 7F0BA9BC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0EF4F0 7F0BA9C0 3C018008 */  lui   $at, %hi(g_FogSkyIsEnabled)
-/* 0EF4F4 7F0BA9C4 AC3825C0 */  sw    $t8, %lo(g_FogSkyIsEnabled)($at)
-/* 0EF4F8 7F0BA9C8 03E00008 */  jr    $ra
-/* 0EF4FC 7F0BA9CC 27BD0038 */   addiu $sp, $sp, 0x38
-)
-#endif
-
 
 
 
 
 #ifdef NONMATCHING
+// nothing in ai branch
 void copy_table2_env_to_current(void) {
 
 }
@@ -538,6 +375,7 @@ glabel copy_table2_env_to_current
 
 
 
+// no change
 void sub_GAME_7F0BAA5C(s32 a) {
     return;
 }
@@ -548,6 +386,8 @@ void sub_GAME_7F0BAA5C(s32 a) {
 
 
 #ifdef NONMATCHING
+// fog.c - no code
+// test.c - lots of code
 void load_enviroment(void) {
 
 }
@@ -729,6 +569,8 @@ glabel load_enviroment
 
 
 #ifdef NONMATCHING
+// fog.c - nonmatch with code
+// test.c - lots of code
 void switch_to_solosky2(void) {
 
 }
@@ -1002,6 +844,7 @@ glabel switch_to_solosky2
 
 
 #ifdef NONMATCHING
+// nothing in ai branch
 void sub_GAME_7F0BB070(void) {
 
 }
@@ -1167,6 +1010,7 @@ glabel sub_GAME_7F0BB070
 
 
 #ifdef NONMATCHING
+// nothing in ai branch
 void sub_GAME_7F0BB298(void) {
 
 }
@@ -1231,7 +1075,9 @@ s32 fogPositionIsVisibleThroughFog(struct coord3d *pos, f32 range)
 
 
 
-u32 return_nearfog_values(void){
+// no change
+u32 return_nearfog_values(void)
+{
   return ptr_nearfog_enviroment_values;
 }
 
@@ -1241,6 +1087,7 @@ u32 return_nearfog_values(void){
 
 
 #ifdef NONMATCHING
+// nothing in ai branch
 void if_sky_present_convert_values(void) {
 
 }
