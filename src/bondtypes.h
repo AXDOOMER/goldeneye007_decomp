@@ -109,6 +109,7 @@ struct rgba_u8 {
             u8 a;
         };
         u8 rgba[4];
+        s32 word;
     };
 };
 
@@ -124,6 +125,30 @@ struct rgba_f32 {
     };
 };
 
+
+struct rgba_s32 {
+    union {
+        struct {
+            s32 r;
+            s32 g;
+            s32 b;
+            s32 a;
+        };
+        s32 rgba[4];
+    };
+};
+
+struct rgb_s32 {
+    union {
+        struct {
+            s32 r;
+            s32 g;
+            s32 b;
+        };
+        s32 rgb[3];
+    };
+};
+
 struct bbox
 {
     float xmin;
@@ -132,6 +157,34 @@ struct bbox
     float ymax;
     float zmin;
     float zmax;
+};
+
+struct view4s32
+{
+    union {
+        struct {
+            s32 left;
+            s32 top;
+            s32 width;
+            s32 height;
+        };
+        s32 v[4];
+        f32 f[4];
+    };
+};
+
+struct view4f
+{
+    union {
+        struct {
+            f32 left;
+            f32 top;
+            f32 width;
+            f32 height;
+        };
+        s32 v[4];
+        f32 f[4];
+    };
 };
 
 struct rect4f
@@ -1480,7 +1533,11 @@ typedef struct PropRecord
     };                         /*0x04*/
     struct coord3d pos;                 /*0x08*/
     struct StandTile *stan;           /*0x14 name confirmed?*/
-    void *Unk18;                 /*0x18*/
+
+    /**
+     * Maybe float. Something related to draw (render) distance.
+    */
+    void *Unk18;
     struct PropRecord *parent;   /*0x1c*/
     struct PropRecord *child; /*0x20*/
     struct PropRecord *prev;   /*0x24*/
@@ -1611,8 +1668,8 @@ typedef struct ChrRecord
     f32 hearingscale;           /*0xEC increases when shot at*/
     s32 lastheartarget60;       /*0xF0 increases after hearing bond (NOTE s32 not u32) */
     /* this next block MUST exist here */
-    u8 shadecol[4];   /*0xF4 stan colour eg, white = 0,0,0,0, grey = 0,0,0,64, black = 0,0,0,128, red = 255,0,0,128*/
-    u8 nextcol[4];    /*0xF8 (allows gradual transition) Stan colour is applied via "FOG" colour reg*/
+    struct rgba_u8 shadecol;   /*0xF4 stan colour eg, white = 0,0,0,0, grey = 0,0,0,64, black = 0,0,0,128, red = 255,0,0,128*/
+    struct rgba_u8 nextcol;    /*0xF8 (allows gradual transition) Stan colour is applied via "FOG" colour reg*/
     f32 damage;       /* 0x00FC confirmed*/
     f32 maxdamage;    /* 0x0100 confirmed*/
     AIRecord *ailist;       /* 0x0104 confirmed*/

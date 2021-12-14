@@ -112,6 +112,28 @@ struct anim_group_info
     s32 len;
 };
 
+struct unk_join_list {
+    u32 unk00;
+    s32 unk04;
+    s32 unk08;
+    Gfx *gdl;
+
+    u32 unk10;
+    u32 unk14;
+    u32 unk18;
+    u32 unk1C;
+
+    u32 unk20;
+    u32 unk24;
+    u32 unk28;
+    u32 unk2C;
+
+    s32 unk30;
+    s32 unk34;
+    struct rgba_u8 unk38;
+    u32 unk3C;
+};
+
 extern s32 objectiveregisters1;
 extern struct ChrRecord* g_ActiveChrs;
 extern s32 g_ActiveChrsCount;
@@ -215,7 +237,7 @@ extern s32 D_8002CCA8;
 extern s32 D_8002CCAC;
 extern s32 D_8002CCB0;
 extern s32 D_8002CCB4;
-extern u8 D_8002CCB8[4];
+extern struct rgba_u8 D_8002CCB8;
 
 extern f32 D_80030984;
 extern f32 D_80030988;

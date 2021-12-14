@@ -50,7 +50,7 @@ void sub_GAME_7F041024(struct object_standard * arg0, s32 arg1);
 void chrobjApplySpeed(f32 *openPosition, f32 maxFrac, f32 *speedPtr, f32 accel, f32 decel, f32 maxSpeed);
 void chrobjCallsApplySpeed(f32 *openPosition, f32 maxFrac, f32 *speedPtr, f32 accel, f32 decel, f32 maxSpeed);
 Gfx * sub_GAME_7F049B58(Gfx *arg0);
-void set_color_shading_from_tile(struct PropRecord*, u8 *);
+void set_color_shading_from_tile(struct PropRecord*, struct rgba_u8 *);
 void sub_GAME_7F04BFD0(struct PropRecord *, s32);
 void sub_GAME_7F053A10(ALSoundState *, struct coord3d *);
 void start_alarm(void);
@@ -70,5 +70,11 @@ void set_door_state(struct DoorRecord *arg0, s32 arg1);
 s32 sub_GAME_7F055A70(PropRecord *arg0, DoorRecord *arg1);
 void sub_GAME_7F055B78(PropRecord *arg0, DoorRecord *arg1);
 Gfx *chrobjRenderProp(PropRecord *arg0, Gfx *arg1);
+
+f32 sub_GAME_7F054B80(PropRecord *, f32);
+s32 sub_GAME_7F054A64(PropRecord *, struct view4s32 *, PropRecord *, ObjectRecord *);
+
+// note: rgba to rgb
+void sub_GAME_7F040384(struct rgba_s32 *arg0, s32 arg1, struct rgb_s32 *arg2);
 
 #endif
