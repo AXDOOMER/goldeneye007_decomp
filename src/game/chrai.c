@@ -22561,7 +22561,7 @@ void chraiCheckUseHeldItem(s32 hand)
         }
         else if (item_id == ITEM_SHOTGUN || item_id == ITEM_AUTOSHOT)
         {
-            inc_curplayer_hitcount_with_weapon(item_id, 0);
+            inc_curplayer_hitcount_with_weapon(item_id, SHOTS_FIRED);
 
             for (i=0; i<NUMBER_SHOTGUN_BULLETS; i++)
             {
@@ -22578,7 +22578,7 @@ void chraiCheckUseHeldItem(s32 hand)
         }
         else
         {
-            inc_curplayer_hitcount_with_weapon(item_id, 0);
+            inc_curplayer_hitcount_with_weapon(item_id, SHOTS_FIRED);
             chraiDefaultWeaponFireHandler(hand);
         }
     }
@@ -22588,26 +22588,14 @@ void chraiCheckUseHeldItem(s32 hand)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03C294(void) {
-
+/**
+ * Address 0x7F03C294.
+*/
+void chraiCheckUseHeldItems(void)
+{
+    chraiCheckUseHeldItem(RIGHT_HAND);
+    chraiCheckUseHeldItem(LEFT_HAND);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03C294
-/* 070DC4 7F03C294 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 070DC8 7F03C298 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 070DCC 7F03C29C 0FC0F03C */  jal   chraiCheckUseHeldItem
-/* 070DD0 7F03C2A0 00002025 */   move  $a0, $zero
-/* 070DD4 7F03C2A4 0FC0F03C */  jal   chraiCheckUseHeldItem
-/* 070DD8 7F03C2A8 24040001 */   li    $a0, 1
-/* 070DDC 7F03C2AC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 070DE0 7F03C2B0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 070DE4 7F03C2B4 03E00008 */  jr    $ra
-/* 070DE8 7F03C2B8 00000000 */   nop   
-)
-#endif
 
 
 
