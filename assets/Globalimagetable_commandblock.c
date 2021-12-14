@@ -10,6 +10,7 @@ u8 rgba0014[4] = { 0x00, 0x00, 0x00, 0x00 };
 Gfx DL_0x0018[] = {
     gsSPEndDisplayList(),
 };
+//G_IM_FMT_RGBA,  G_IM_SIZ_16b
 u32 imgRAre_0x0020[] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 
@@ -132,6 +133,7 @@ u32 imgRAre_0x0020[] = {
 Gfx DL_0x0AD8[] = {
     gsSPEndDisplayList(),
 };
+//G_IM_FMT_RGBA,  G_IM_SIZ_16b
 u32 img_raRE_0x0AE0[] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
@@ -311,6 +313,7 @@ u32 img_raRE_0x0AE0[] = {
 Gfx DL_0x1598[] = {
     gsSPEndDisplayList(),
 };
+//G_IM_FMT_RGBA,  G_IM_SIZ_16b
 u32 imgWAre_0x15A0[] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
@@ -490,6 +493,7 @@ u32 imgWAre_0x15A0[] = {
 Gfx DL_0x2058[] = {
     gsSPEndDisplayList(),
 };
+//G_IM_FMT_RGBA,  G_IM_SIZ_16b
 u32 imgwaRE_0x2060[] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
@@ -1489,7 +1493,7 @@ Gfx DL_0x4FE0[] = {
     gsSPEndDisplayList(),
 };
 
-//everything seems to be 16 bit, maybe verts?
+// G_IM_FMT_RGBA, G_IM_SIZ_16b, 32x32
 u32 D_02004FE8[] = {
     0x00950095, 0x00950095, 0x00950095, 0x00950095,
     0x00930053, 0x00530051, 0x00510051, 0x0051004F,
@@ -1753,7 +1757,7 @@ Gfx DL_0x5FE8[] = {
     gsSPEndDisplayList(),
 };
 
-//seems to have a pattern to it
+//G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32
 u32 D_02005FF0[] = {
     0xEE4DEE0D, 0xEDCBBB07, 0x89459145, 0xDD4BF68F,
     0xEE8FEE8F, 0xE58BB9C5, 0x9943A945, 0xB145DAC7,
