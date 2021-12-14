@@ -69,12 +69,12 @@ void sub_GAME_7F04F244(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *a
 void set_door_state(struct DoorRecord *arg0, s32 arg1);
 s32 sub_GAME_7F055A70(PropRecord *arg0, DoorRecord *arg1);
 void sub_GAME_7F055B78(PropRecord *arg0, DoorRecord *arg1);
-Gfx *chrobjRenderProp(PropRecord *arg0, Gfx *arg1);
+Gfx *chrobjRenderProp(PropRecord *arg0, Gfx *arg1, s32 arg2);
 
 f32 sub_GAME_7F054B80(PropRecord *, f32);
-s32 sub_GAME_7F054A64(PropRecord *, struct view4s32 *, PropRecord *, ObjectRecord *);
+s32 sub_GAME_7F054A64(PropRecord *, struct view4s32 *);
 
 // note: rgba to rgb
-void sub_GAME_7F040384(struct rgba_s32 *arg0, s32 arg1, struct rgb_s32 *arg2);
+void sub_GAME_7F040384(struct rgba_s32 *arg0, s32 arg1, struct rgba_f32 *arg2);
 
 #endif

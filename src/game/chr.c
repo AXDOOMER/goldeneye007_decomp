@@ -82,7 +82,7 @@ struct rgba_u8 D_8002CCB8 = { 0x5a, 0, 0, 0};
 /**
  * Address 0x8002CCBC.
 */
-struct unk_join_list D_8002CCBC = {0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
+struct unk_joint_list D_8002CCBC = {0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
 //s32 D_8002CCF8 = 0;
 s32 D_8002CCFC = 0;
 u32 num_bodies = 0;
@@ -6064,13 +6064,12 @@ Gfx *chrRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
 {
     ChrRecord *chr;
     Model *chrmodel;
-    f32 spCC; // 204
-    struct rgb_s32 spC0; // 192
+    struct rgba_f32 spC0; // 192
     s32 spBC; // 188
     s32 spB8; // 184
     s32 spB4; // 180
     struct rgba_u8 temp_v1_2;
-    struct unk_join_list jlist; // 112
+    struct unk_joint_list jlist; // 112
     struct view4f sp60; // -?? 96
     struct rgba_s32 sp50;
     s32 sp4C; // 76
@@ -6148,7 +6147,7 @@ Gfx *chrRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
                 held_hat_obj = prop_held_hat->obj;
             }
 
-            if ((sub_GAME_7F054A64(prop, &sp60, prop_held_hat, held_right_obj) > 0) && ((chr->chrflags << 8) >= 0))
+            if ((sub_GAME_7F054A64(prop, &sp60) > 0) && ((chr->chrflags << 8) >= 0))
             {
                 gdl = bgScissorCurrentPlayerViewF(gdl, sp60.left, sp60.top, sp60.width, sp60.height);
             }
@@ -6167,7 +6166,7 @@ Gfx *chrRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
             }
             else if (spBC == 1)
             {
-                sp4C = ((1.0f - spCC) * (f32)(sp4C));
+                sp4C = ((1.0f - spC0.a) * (f32)(sp4C));
             }
 
             sub_GAME_7F073FC8(sp4C);

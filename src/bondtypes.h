@@ -1977,10 +1977,7 @@ typedef struct ObjectRecord
     float field_70;
     short damage;
     short maxdamage;
-    char field_78;
-    char field_79;
-    char field_7A;
-    char field_7B;
+    struct rgba_u8 field_78;
     char field_7C;
     char field_7D;
     char field_7E;
@@ -2139,6 +2136,8 @@ typedef struct DoorRecord
     s8 state;
 
     u8 unkbd;                       /*0xbd*/
+
+    // something related to rendering
     s16 unkbe;                      /*0xbe*/
     s32 unkc0;                      /*0xc0*/
     s16 unkc4;                      /*0xc4*/
@@ -2246,6 +2245,17 @@ typedef struct GuardRecord
     s16 HeadID;       /*0x16*/
     struct ChrRecord *Data;  /*0x18*/
 } GuardRecord;
+
+// objtype 47
+typedef struct TintedGlassRecord
+{
+    ObjectRecord base;
+    s32 TintDist;
+    s32 CullDist;
+    s32 unk88;
+    s32 unk8c;
+    s32 unk90;
+} GlassData;
 
 
 typedef struct object_standard {

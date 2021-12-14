@@ -87,6 +87,6 @@ f32 square_near_fog_value(void);
 s32 fogPositionIsVisibleThroughFog(struct coord3d *pos, f32 range);
 Gfx *sub_GAME_7F0BB070(Gfx *arg0, s32 arg1);
 Gfx *sub_GAME_7F0BB298(Gfx *arg0);
-s32 if_sky_present_convert_values(PropRecord *prop, struct rgb_s32 *color);
+s32 if_sky_present_convert_values(PropRecord *prop, struct rgba_f32 *color);
 
 #endif

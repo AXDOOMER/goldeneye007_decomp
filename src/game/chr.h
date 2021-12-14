@@ -112,7 +112,7 @@ struct anim_group_info
     s32 len;
 };
 
-struct unk_join_list {
+struct unk_joint_list {
     u32 unk00;
     s32 unk04;
     s32 unk08;
@@ -131,7 +131,7 @@ struct unk_join_list {
     s32 unk30;
     s32 unk34;
     struct rgba_u8 unk38;
-    u32 unk3C;
+    s32 unk3C;
 };
 
 extern s32 objectiveregisters1;

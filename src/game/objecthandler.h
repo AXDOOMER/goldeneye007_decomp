@@ -59,7 +59,7 @@ Mtxf* sub_GAME_7F06C660(struct Model *arg0, struct ModelNode *arg1, s32 arg2);
 
 // called with struct ChrRecord->field_20
 void sub_GAME_7F06B248(void *arg0);
-void drawjointlist(struct unk_join_list *arg0, void* arg1);
+void drawjointlist(struct unk_joint_list *arg0, void* arg1);
 void sub_GAME_7F073FC8(s32);
 
 #ifndef VERSION_EU
