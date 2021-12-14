@@ -20438,7 +20438,7 @@ Gfx *chraiResolveRenderProp(Gfx * arg0, PropRecord *arg1, s32 arg2)
     }
     else if ((temp_v0 == PROP_TYPE_OBJ) || (temp_v0 == PROP_TYPE_WEAPON) || (temp_v0 == PROP_TYPE_DOOR))
     {
-        arg0 = chrobjRenderProp(arg1, arg0);
+        arg0 = chrobjRenderProp(arg1, arg0, arg2);
     }
     else if (temp_v0 == PROP_TYPE_EXPLOSTION)
     {

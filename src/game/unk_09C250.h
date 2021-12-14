@@ -96,13 +96,7 @@ Gfx *sub_GAME_7F0A0AB4(Gfx *arg0);
 Gfx *unk09c250RenderPropExplosion(PropRecord *arg0, Gfx *arg1);
 Gfx *unk09c250RenderPropSmoke(PropRecord *arg0, Gfx *arg1);
 
-/**
- * tentative signature
- * 
- * @param arg0: GDL
- * @param arg1: pointer to struct or array, at least two words. Offset zero is integral type, offset 4 is pointer.
- * @param arg2: integral type (parameter to <<)
-*/
-Gfx *sub_GAME_7F0A1A94(Gfx *arg0, void *arg1, s32 arg2);
+
+Gfx *sub_GAME_7F0A1A94(Gfx *arg0, struct PropRecord *arg1, s32 arg2);
 
 #endif
