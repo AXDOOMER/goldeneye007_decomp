@@ -221,6 +221,7 @@ struct fog_element2 fog_tables2[] = {
 // forward declarations
 
 void copy_table1_env_to_current(struct fog_element *arg0);
+void copy_table2_env_to_current(struct fog_element2 *arg0);
 
 // end forward declarations
 
@@ -323,60 +324,36 @@ void copy_table1_env_to_current(struct fog_element *arg0)
 
 
 
-#ifdef NONMATCHING
-// nothing in ai branch
-void copy_table2_env_to_current(void) {
-
+/**
+ * Address 0x7F0BA9D0.
+*/
+void copy_table2_env_to_current(struct fog_element2 *arg0)
+{
+    ptr_current_data.red = arg0->red;
+    ptr_current_data.green = arg0->green;
+    ptr_current_data.blue = arg0->blue;
+    ptr_current_data.clouds = arg0->clouds;
+    ptr_current_data.cloudrepeat = arg0->cloudrepeat;
+    ptr_current_data.skyimageid = arg0->skyimageid;
+    ptr_current_data.cloudred = arg0->cloudred;
+    ptr_current_data.cloudgreen = arg0->cloudgreen;
+    ptr_current_data.cloudblue = arg0->cloudblue;
+    ptr_current_data.iswater = arg0->iswater;
+    ptr_current_data.waterrepeat = arg0->waterrepeat;
+    ptr_current_data.waterimageid = arg0->waterimageid;
+    ptr_current_data.waterred = arg0->waterred;
+    ptr_current_data.watergreen = arg0->watergreen;
+    ptr_current_data.waterblue = arg0->waterblue;
+    ptr_current_data.waterconcavity = arg0->waterconcavity;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel copy_table2_env_to_current
-/* 0EF500 7F0BA9D0 908E0004 */  lbu   $t6, 4($a0)
-/* 0EF504 7F0BA9D4 3C028004 */  lui   $v0, %hi(ptr_current_data)
-/* 0EF508 7F0BA9D8 24424DCC */  addiu $v0, %lo(ptr_current_data) # addiu $v0, $v0, 0x4dcc
-/* 0EF50C 7F0BA9DC A04E0008 */  sb    $t6, 8($v0)
-/* 0EF510 7F0BA9E0 908F0005 */  lbu   $t7, 5($a0)
-/* 0EF514 7F0BA9E4 A04F0009 */  sb    $t7, 9($v0)
-/* 0EF518 7F0BA9E8 90980006 */  lbu   $t8, 6($a0)
-/* 0EF51C 7F0BA9EC A058000A */  sb    $t8, 0xa($v0)
-/* 0EF520 7F0BA9F0 90990007 */  lbu   $t9, 7($a0)
-/* 0EF524 7F0BA9F4 A059000B */  sb    $t9, 0xb($v0)
-/* 0EF528 7F0BA9F8 C4840008 */  lwc1  $f4, 8($a0)
-/* 0EF52C 7F0BA9FC E444000C */  swc1  $f4, 0xc($v0)
-/* 0EF530 7F0BAA00 8488000C */  lh    $t0, 0xc($a0)
-/* 0EF534 7F0BAA04 A4480010 */  sh    $t0, 0x10($v0)
-/* 0EF538 7F0BAA08 C4860010 */  lwc1  $f6, 0x10($a0)
-/* 0EF53C 7F0BAA0C E4460014 */  swc1  $f6, 0x14($v0)
-/* 0EF540 7F0BAA10 C4880014 */  lwc1  $f8, 0x14($a0)
-/* 0EF544 7F0BAA14 E4480018 */  swc1  $f8, 0x18($v0)
-/* 0EF548 7F0BAA18 C48A0018 */  lwc1  $f10, 0x18($a0)
-/* 0EF54C 7F0BAA1C E44A001C */  swc1  $f10, 0x1c($v0)
-/* 0EF550 7F0BAA20 9089001C */  lbu   $t1, 0x1c($a0)
-/* 0EF554 7F0BAA24 A0490020 */  sb    $t1, 0x20($v0)
-/* 0EF558 7F0BAA28 C4900020 */  lwc1  $f16, 0x20($a0)
-/* 0EF55C 7F0BAA2C E4500024 */  swc1  $f16, 0x24($v0)
-/* 0EF560 7F0BAA30 848A0024 */  lh    $t2, 0x24($a0)
-/* 0EF564 7F0BAA34 A44A0028 */  sh    $t2, 0x28($v0)
-/* 0EF568 7F0BAA38 C4920028 */  lwc1  $f18, 0x28($a0)
-/* 0EF56C 7F0BAA3C E452002C */  swc1  $f18, 0x2c($v0)
-/* 0EF570 7F0BAA40 C484002C */  lwc1  $f4, 0x2c($a0)
-/* 0EF574 7F0BAA44 E4440030 */  swc1  $f4, 0x30($v0)
-/* 0EF578 7F0BAA48 C4860030 */  lwc1  $f6, 0x30($a0)
-/* 0EF57C 7F0BAA4C E4460034 */  swc1  $f6, 0x34($v0)
-/* 0EF580 7F0BAA50 C4880034 */  lwc1  $f8, 0x34($a0)
-/* 0EF584 7F0BAA54 03E00008 */  jr    $ra
-/* 0EF588 7F0BAA58 E4480038 */   swc1  $f8, 0x38($v0)
-)
-#endif
 
 
 
 
 
 
-// no change
-void sub_GAME_7F0BAA5C(s32 a) {
+void sub_GAME_7F0BAA5C(s32 a)
+{
     return;
 }
 
