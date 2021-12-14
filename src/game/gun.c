@@ -4319,7 +4319,7 @@ glabel sub_GAME_7F05FB00
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F05FB64(void) {
+void gunFireTankShell(void) {
 
 }
 #else
@@ -4330,7 +4330,7 @@ glabel D_80053DD8
 glabel D_80053DDC
 .word 0x3f8e38e3 /*1.111111*/
 .text
-glabel sub_GAME_7F05FB64
+glabel gunFireTankShell
 /* 094694 7F05FB64 000470C0 */  sll   $t6, $a0, 3
 /* 094698 7F05FB68 01C47023 */  subu  $t6, $t6, $a0
 /* 09469C 7F05FB6C 000E7080 */  sll   $t6, $t6, 2
@@ -6365,7 +6365,7 @@ weapon_bullet_type_shotgun_mine:
 /* 096380 7F061850 24010019 */  li    $at, 25
 /* 096384 7F061854 15A10005 */  bne   $t5, $at, .L7F06186C
 /* 096388 7F061858 8FAF00FC */   lw    $t7, 0xfc($sp)
-/* 09638C 7F06185C 0FC17ED9 */  jal   sub_GAME_7F05FB64
+/* 09638C 7F06185C 0FC17ED9 */  jal   gunFireTankShell
 /* 096390 7F061860 8FA402A8 */   lw    $a0, 0x2a8($sp)
 /* 096394 7F061864 1000002A */  b     .L7F061910
 /* 096398 7F061868 8FBF0034 */   lw    $ra, 0x34($sp)
@@ -8151,7 +8151,7 @@ weapon_bullet_type_shotgun_mine:
 /* 0968EC 7F061D7C 24010019 */  li    $at, 25
 /* 0968F0 7F061D80 17210005 */  bne   $t9, $at, .Ljp7F061D98
 /* 0968F4 7F061D84 8FAE00FC */   lw    $t6, 0xfc($sp)
-/* 0968F8 7F061D88 0FC18021 */  jal   sub_GAME_7F05FB64
+/* 0968F8 7F061D88 0FC18021 */  jal   gunFireTankShell
 /* 0968FC 7F061D8C 8FA402A8 */   lw    $a0, 0x2a8($sp)
 /* 096900 7F061D90 1000002A */  b     .Ljp7F061E3C
 /* 096904 7F061D94 8FBF0034 */   lw    $ra, 0x34($sp)
@@ -9939,7 +9939,7 @@ weapon_bullet_type_shotgun_mine:
 /* 094704 7F061D14 24010019 */  li    $at, 25
 /* 094708 7F061D18 15A10005 */  bne   $t5, $at, .L7F061D30
 /* 09470C 7F061D1C 8FB800FC */   lw    $t8, 0xfc($sp)
-/* 094710 7F061D20 0FC18007 */  jal   sub_GAME_7F05FB64
+/* 094710 7F061D20 0FC18007 */  jal   gunFireTankShell
 /* 094714 7F061D24 8FA402A8 */   lw    $a0, 0x2a8($sp)
 /* 094718 7F061D28 1000002A */  b     .L7F061DD4
 /* 09471C 7F061D2C 8FBF0034 */   lw    $ra, 0x34($sp)
