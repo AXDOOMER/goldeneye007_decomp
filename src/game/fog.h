@@ -6,15 +6,25 @@
 
 struct fog_element {
     u32 stageID;
+    // 4
     f32 blendmultiplier;
+    // 8
     f32 farfog;
+    // 0x0c
     f32 nearfog;
+    // 0x10
     f32 maxvisrange;
+    // 0x14
     f32 maxobfuscationrange;
+    // 0x18
     f32 minvisrange;
+    // 0x1c
     u32 intensity;
+    // 0x20
     s32 dif_in_light;
+    // 0x24
     s32 far_ambiantlight;
+    // 0x28
     u8 red;
     u8 green;
     u8 blue;
