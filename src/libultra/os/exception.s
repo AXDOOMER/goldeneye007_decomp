@@ -1,3 +1,6 @@
+# asm file.
+# modified version of "exceptasm.s"
+
 # assembler directives
 .set noat      # allow manual use of $at
 .set noreorder # don't insert nops after branches

@@ -1,6 +1,6 @@
 #include "ultra64.h"
 #include "joy.h"
-#include "libultra/os.h"
+#include "PR/os.h"
 
 /**
  * Number of samples in contdata.

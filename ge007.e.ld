@@ -127,7 +127,7 @@ SECTIONS
       build/e/src/libultra/io/viswapcontext.o (.text);
       build/e/src/libultra/io/piacs.o (.text);
       build/e/src/libultra/io/epirawdma.o (.text);
-      build/e/src/libultra/devmgr.o (.text);
+      build/e/src/libultra/io/devmgr.o (.text);
 
 
 
@@ -150,7 +150,7 @@ SECTIONS
       build/e/src/libultra/gu/perspective.o (.text);
       build/e/src/libultra/gu/mtxutil.o (.text);
       build/e/src/libultra/os/getcurrfaultthread.o (.text);
-      build/e/src/libultra/exception.o (.text); /*edited*/
+      build/e/src/libultra/os/exception.o (.text); /*edited*/
       build/e/src/libultra/os/thread.o (.text);
       build/e/src/libultra/os/yieldthread.o (.text);
       build/e/src/libultra/os/invaldcache.o (.text);
@@ -255,7 +255,7 @@ SECTIONS
       build/e/src/libultra/libc/xlitob.o (.text);
       build/e/src/libultra/libc/xldtob.o (.text);
       /*build/e/src/libultra/io/epirawdma.o (.text);*/
-      /*build/e/src/libultra/devmgr.o (.text);*/
+      /*build/e/src/libultra/io/devmgr.o (.text);*/
       build/e/src/libultra/io/contpfs.o (.text);
       build/e/src/libultra/io/si.o (.text);
       build/e/src/libultra/gu/normalize.o (.text);
@@ -3362,7 +3362,7 @@ SECTIONS
       build/e/src/libultra/io/viswapcontext.o (.data);
       build/e/src/libultra/io/piacs.o (.data);
       build/e/src/libultra/io/epirawdma.o (.data);
-      build/e/src/libultra/devmgr.o (.data);
+      build/e/src/libultra/io/devmgr.o (.data);
 
 
 
@@ -3384,7 +3384,7 @@ SECTIONS
       build/e/src/libultra/gu/perspective.o (.data);
       build/e/src/libultra/gu/mtxutil.o (.data);
       build/e/src/libultra/os/getcurrfaultthread.o (.data);
-      build/e/src/libultra/exception.o (.data); /*edited*/
+      build/e/src/libultra/os/exception.o (.data); /*edited*/
       build/e/src/libultra/os/thread.o (.data);
       build/e/src/libultra/os/yieldthread.o (.data);
       build/e/src/libultra/os/invaldcache.o (.data);
@@ -3489,7 +3489,7 @@ SECTIONS
       build/e/src/libultra/libc/xlitob.o (.data);
       build/e/src/libultra/libc/xldtob.o (.data);
       /*build/e/src/libultra/io/epirawdma.o (.data);*/
-      /*build/e/src/libultra/devmgr.o (.data);*/
+      /*build/e/src/libultra/io/devmgr.o (.data);*/
       build/e/src/libultra/io/contpfs.o (.data);
       build/e/src/libultra/io/si.o (.data);
       build/e/src/libultra/gu/normalize.o (.data);
@@ -3593,7 +3593,7 @@ SECTIONS
       build/e/src/libultra/io/viswapcontext.o (.rodata);
       build/e/src/libultra/io/piacs.o (.rodata);
       build/e/src/libultra/io/epirawdma.o (.rodata);
-      build/e/src/libultra/devmgr.o (.rodata);
+      build/e/src/libultra/io/devmgr.o (.rodata);
 
 
 
@@ -3615,7 +3615,7 @@ SECTIONS
       build/e/src/libultra/gu/perspective.o (.rodata);
       build/e/src/libultra/gu/mtxutil.o (.rodata);
       build/e/src/libultra/os/getcurrfaultthread.o (.rodata);
-      build/e/src/libultra/exception.o (.rodata); /*edited*/
+      build/e/src/libultra/os/exception.o (.rodata); /*edited*/
       build/e/src/libultra/os/thread.o (.rodata);
       build/e/src/libultra/os/yieldthread.o (.rodata);
       build/e/src/libultra/os/invaldcache.o (.rodata);
@@ -3720,7 +3720,7 @@ SECTIONS
       build/e/src/libultra/libc/xlitob.o (.rodata);
       build/e/src/libultra/libc/xldtob.o (.rodata);
       /*build/e/src/libultra/io/epirawdma.o (.rodata);*/
-      /*build/e/src/libultra/devmgr.o (.rodata);*/
+      /*build/e/src/libultra/io/devmgr.o (.rodata);*/
       build/e/src/libultra/io/contpfs.o (.rodata);
       build/e/src/libultra/io/si.o (.rodata);
       build/e/src/libultra/gu/normalize.o (.rodata);
@@ -4089,7 +4089,7 @@ SECTIONS
       build/e/src/libultra/io/viswapcontext.o (.bss);
       build/e/src/libultra/io/piacs.o (.bss);
       build/e/src/libultra/io/epirawdma.o (.bss);
-      build/e/src/libultra/devmgr.o (.bss);
+      build/e/src/libultra/io/devmgr.o (.bss);
 
 
 
@@ -4110,7 +4110,7 @@ SECTIONS
       build/e/src/libultra/gu/perspective.o (.bss);
       build/e/src/libultra/gu/mtxutil.o (.bss);
       build/e/src/libultra/os/getcurrfaultthread.o (.bss);
-      build/e/src/libultra/exception.o (.bss); /*edited*/
+      build/e/src/libultra/os/exception.o (.bss); /*edited*/
       build/e/src/libultra/os/thread.o (.bss);
       build/e/src/libultra/os/yieldthread.o (.bss);
       build/e/src/libultra/os/invaldcache.o (.bss);
@@ -4216,7 +4216,7 @@ SECTIONS
       build/e/src/libultra/libc/xldtob.o (.bss);
       /*build/e/src/libultra/io/epirawdma.o (.bss);*/
 
-      /*build/e/src/libultra/devmgr.o (.bss);*/
+      /*build/e/src/libultra/io/devmgr.o (.bss);*/
       build/e/src/libultra/io/contpfs.o (.bss);
       build/e/src/libultra/io/si.o (.bss);
       build/e/src/libultra/gu/normalize.o (.bss);

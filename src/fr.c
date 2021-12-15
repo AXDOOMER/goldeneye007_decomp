@@ -6,7 +6,7 @@
 #include "player.h" // g_CurrentPlayer
 #include "sched.h"
 #include "rsp.h"
-#include "libultra/os.h"
+#include "PR/os.h"
 #include "include/PR/os_vi.h"
 #include "indy_comms.h"
 #include "game/bondview.h"

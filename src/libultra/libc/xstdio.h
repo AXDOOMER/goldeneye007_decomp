@@ -1,6 +1,11 @@
-#ifndef _PRINTF_H_
-#define _PRINTF_H_
+#ifndef _XSTDIO_H
+#define _XSTDIO_H
+#include "libultra/libultra_internal.h"
 #include <stdarg.h>
+
+/**
+ * xstdio.h aka printf.h
+*/
 
 typedef struct
 {

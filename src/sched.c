@@ -1,5 +1,5 @@
 #include <ultra64.h>
-#include "libultra/os.h"
+#include "PR/os.h"
 #include "include/PR/os_vi.h"
 #include "init.h"
 #include "sched.h"

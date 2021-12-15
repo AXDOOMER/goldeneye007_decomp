@@ -1,5 +1,6 @@
 #include <stdarg.h>
 #include "ultra64.h"
+#include "libultra/libc/xstdio.h"
 #include "deb_print.h"
 #include "rmon.h"
 /**

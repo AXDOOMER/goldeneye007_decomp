@@ -1,5 +1,5 @@
 #include "ultra64.h"
-#include "libultra/os.h"
+#include "PR/os.h"
 #include "include/PR/gbi.h"
 #include "bondconstants.h"
 #include "fr.h"

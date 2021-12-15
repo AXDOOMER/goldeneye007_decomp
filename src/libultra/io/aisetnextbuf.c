@@ -1,5 +1,5 @@
 #include "libultra_internal.h"
-#include "osAi.h"
+#include "include/PR/os.h"
 #include "hardware.h"
 
 u8 D_80334820 = 0;
