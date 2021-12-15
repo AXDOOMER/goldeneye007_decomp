@@ -106,10 +106,15 @@ struct memallocstring memallocstringtable[] = {
 { LEVELID_BASEMENT,     "-ml0 -me0 -mgfx130 -mvtx100 -mt400 -ma100"},
 { LEVELID_STACK,        "-ml0 -me0 -mgfx130 -mvtx100 -mt400 -ma100"},
 { LEVELID_CAVES,        "-ml0 -me0 -mgfx130 -mvtx100 -mt400 -ma300"},
+//LEVELID_BUNKER2 + 400
 { 0x1AB,                "-ml0 -me0 -mgfx130 -mvtx100 -mt550 -ma170"},
+//LEVELID_ARCHIVES + 400
 { 0x1A8,                "-ml0 -me0 -mgfx80  -mvtx100 -mt550 -ma250"},
+//LEVELID_CAVERNS + 400
 { 0x1B7,                "-ml0 -me0 -mgfx130 -mvtx100 -mt440 -ma220"},
+//LEVELID_FACILITY + 400
 { 0x1B2,                "-ml0 -me0 -mgfx90  -mvtx100 -mt550 -ma230"},
+//LEVELID_EGYPT + 400
 { 0x1B0,                "-ml0 -me0 -mgfx110 -mvtx100 -mt350 -ma400"},
 {   0x0,                "-ml0 -me0 -mgfx100 -mvtx50 -mt700 -ma400"},
 { 0x0, },
