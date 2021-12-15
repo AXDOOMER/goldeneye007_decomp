@@ -1075,7 +1075,7 @@ Gfx D_020043E8[] = {
     gsDPSetRenderMode(G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2),
     gsDPSetCombineLERP(TEXEL0, 0, PRIMITIVE, 0,  TEXEL0, 0, PRIMITIVE, 0,  TEXEL0, 0, PRIMITIVE, 0,  TEXEL0, 0, PRIMITIVE, 0),
     gsSPSetGeometryMode(G_LIGHTING |  G_TEXTURE_GEN ),
-    gsSPVertex(0x02002B18, 16, 0),
+    gsSPVertex(maybeverts2B18, 16, 0),
     gsSP1Triangle(8, 9, 10, 0),
     gsSP1Triangle(8, 10, 11, 0),
     gsSP1Triangle(8, 11, 15, 0),
