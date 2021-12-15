@@ -1,0 +1,92 @@
+
+
+CFLAGS_LIBULTRA := 0 -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821,838,649 -signed $(INCLUDE) -mips2 $(LCDEFS) -DTARGET_N64
+
+ULTRAFILES_S := $(foreach dir,src/libultra,$(wildcard $(dir)/*.s))
+ULTRAFILES_C := $(foreach dir,src/libultra,$(wildcard $(dir)/*.c))
+
+ULTRAFILES_AUDIO_S := $(foreach dir,src/libultra/audio,$(wildcard $(dir)/*.s))
+ULTRAFILES_AUDIO_C := $(foreach dir,src/libultra/audio,$(wildcard $(dir)/*.c))
+
+ULTRAFILES_GT_S := $(foreach dir,src/libultra/gt,$(wildcard $(dir)/*.s))
+ULTRAFILES_GT_C := $(foreach dir,src/libultra/gt,$(wildcard $(dir)/*.c))
+
+ULTRAFILES_GU_S := $(foreach dir,src/libultra/gu,$(wildcard $(dir)/*.s))
+ULTRAFILES_GU_C := $(foreach dir,src/libultra/gu,$(wildcard $(dir)/*.c))
+
+ULTRAFILES_IO_S := $(foreach dir,src/libultra/io,$(wildcard $(dir)/*.s))
+ULTRAFILES_IO_C := $(foreach dir,src/libultra/io,$(wildcard $(dir)/*.c))
+
+ULTRAFILES_LIBC_S := $(foreach dir,src/libultra/libc,$(wildcard $(dir)/*.s))
+ULTRAFILES_LIBC_C := $(foreach dir,src/libultra/libc,$(wildcard $(dir)/*.c))
+
+ULTRAFILES_LOG_S := $(foreach dir,src/libultra/log,$(wildcard $(dir)/*.s))
+ULTRAFILES_LOG_C := $(foreach dir,src/libultra/log,$(wildcard $(dir)/*.c))
+
+ULTRAFILES_OS_S := $(foreach dir,src/libultra/os,$(wildcard $(dir)/*.s))
+ULTRAFILES_OS_C := $(foreach dir,src/libultra/os,$(wildcard $(dir)/*.c))
+
+ULTRAFILES_RG_S := $(foreach dir,src/libultra/rg,$(wildcard $(dir)/*.s))
+ULTRAFILES_RG_C := $(foreach dir,src/libultra/rg,$(wildcard $(dir)/*.c))
+
+ULTRAFILES_SCHED_S := $(foreach dir,src/libultra/sched,$(wildcard $(dir)/*.s))
+ULTRAFILES_SCHED_C := $(foreach dir,src/libultra/sched,$(wildcard $(dir)/*.c))
+
+ULTRAFILES_SP_S := $(foreach dir,src/libultra/sp,$(wildcard $(dir)/*.s))
+ULTRAFILES_SP_C := $(foreach dir,src/libultra/sp,$(wildcard $(dir)/*.c))
+
+ULTRAOBJECTS := $(foreach file,$(ULTRAFILES_S),$(BUILD_DIR)/$(file:.s=.o)) \
+				$(foreach file,$(ULTRAFILES_C),$(BUILD_DIR)/$(file:.c=.o)) \
+				$(foreach file,$(ULTRAFILES_AUDIO_S),$(BUILD_DIR)/$(file:.s=.o)) \
+				$(foreach file,$(ULTRAFILES_AUDIO_C),$(BUILD_DIR)/$(file:.c=.o)) \
+				$(foreach file,$(ULTRAFILES_GT_S),$(BUILD_DIR)/$(file:.s=.o)) \
+				$(foreach file,$(ULTRAFILES_GT_C),$(BUILD_DIR)/$(file:.c=.o)) \
+				$(foreach file,$(ULTRAFILES_GU_S),$(BUILD_DIR)/$(file:.s=.o)) \
+				$(foreach file,$(ULTRAFILES_GU_C),$(BUILD_DIR)/$(file:.c=.o)) \
+				$(foreach file,$(ULTRAFILES_IO_S),$(BUILD_DIR)/$(file:.s=.o)) \
+				$(foreach file,$(ULTRAFILES_IO_C),$(BUILD_DIR)/$(file:.c=.o)) \
+				$(foreach file,$(ULTRAFILES_LIBC_S),$(BUILD_DIR)/$(file:.s=.o)) \
+				$(foreach file,$(ULTRAFILES_LIBC_C),$(BUILD_DIR)/$(file:.c=.o)) \
+				$(foreach file,$(ULTRAFILES_LOG_S),$(BUILD_DIR)/$(file:.s=.o)) \
+				$(foreach file,$(ULTRAFILES_LOG_C),$(BUILD_DIR)/$(file:.c=.o)) \
+				$(foreach file,$(ULTRAFILES_OS_S),$(BUILD_DIR)/$(file:.s=.o)) \
+				$(foreach file,$(ULTRAFILES_OS_C),$(BUILD_DIR)/$(file:.c=.o)) \
+				$(foreach file,$(ULTRAFILES_RG_S),$(BUILD_DIR)/$(file:.s=.o)) \
+				$(foreach file,$(ULTRAFILES_RG_C),$(BUILD_DIR)/$(file:.c=.o)) \
+				$(foreach file,$(ULTRAFILES_SCHED_S),$(BUILD_DIR)/$(file:.s=.o)) \
+				$(foreach file,$(ULTRAFILES_SCHED_C),$(BUILD_DIR)/$(file:.c=.o)) \
+				$(foreach file,$(ULTRAFILES_SP_S),$(BUILD_DIR)/$(file:.s=.o)) \
+				$(foreach file,$(ULTRAFILES_SP_C),$(BUILD_DIR)/$(file:.c=.o))
+
+$(BUILD_DIR)/src/libultra/%.o: src/libultra/%.c
+	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
+
+$(BUILD_DIR)/src/libultra/audio/%.o: src/libultra/audio/%.c
+	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
+
+$(BUILD_DIR)/src/libultra/gt/%.o: src/libultra/gt/%.c
+	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
+
+$(BUILD_DIR)/src/libultra/gu/%.o: src/libultra/gu/%.c
+	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
+
+$(BUILD_DIR)/src/libultra/io/%.o: src/libultra/io/%.c
+	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
+
+$(BUILD_DIR)/src/libultra/libc/%.o: src/libultra/libc/%.c
+	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
+
+$(BUILD_DIR)/src/libultra/log/%.o: src/libultra/log/%.c
+	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
+
+$(BUILD_DIR)/src/libultra/os/%.o: src/libultra/os/%.c
+	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
+
+$(BUILD_DIR)/src/libultra/rg/%.o: src/libultra/rg/%.c
+	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
+
+$(BUILD_DIR)/src/libultra/sched/%.o: src/libultra/sched/%.c
+	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
+
+$(BUILD_DIR)/src/libultra/sp/%.o: src/libultra/sp/%.c
+	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<

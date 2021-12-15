@@ -1,3 +1,5 @@
+# asm file.
+
 # assembler directives
 .set noat      # allow manual use of $at
 .set noreorder # don't insert nops after branches
@@ -7,7 +9,8 @@
 
 
 .section .text, "ax" 
-glabel osGetCount
-/* 00E4E0 7000D8E0 40024800 */  mfc0  $v0, $9
-/* 00E4E4 7000D8E4 03E00008 */  jr    $ra
-/* 00E4E8 7000D8E8 00000000 */   nop   
+glabel __osGetFpcCsr
+/* 00E010 7000D410 4442F800 */  cfc1  $v0, $31
+/* 00E014 7000D414 03E00008 */  jr    $ra
+/* 00E018 7000D418 00000000 */   nop   
+ 

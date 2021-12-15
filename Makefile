@@ -77,7 +77,10 @@ BUILD_DIR      := $(BUILD_DIR_BASE)/$(COUNTRYCODE)
 include assets/Makefile.obseg
 include assets/Makefile.music
 BUILD_SUB_DIRS := \
-	rsp src src/game src/inflate src/libultra assets assets/obseg \
+	rsp src src/game src/inflate \
+	src/libultra src/libultra/audio src/libultra/gt src/libultra/gu src/libultra/io \
+	src/libultra/libc src/libultra/os src/libultra/rg src/libultra/sched src/libultra/sp \
+	assets assets/obseg \
 	assets/obseg/brief assets/obseg/chr assets/obseg/gun assets/obseg/prop \
 	assets/obseg/text assets/obseg/bg assets/obseg/setup assets/obseg/setup/$(COUNTRYCODE) assets/obseg/stan \
 	assets/music assets/ramrom assets/images assets/images/split assets/font \
@@ -98,12 +101,6 @@ RSPOBJECTS := $(foreach file,$(RSPCODE),$(BUILD_DIR)/$(file:.s=.bin))
 
 CODEFILES := $(foreach dir,src,$(wildcard $(dir)/*.c))
 CODEOBJECTS := $(foreach file,$(CODEFILES),$(BUILD_DIR)/$(file:.c=.o))
-
-LIBULTRA := lib/libultra_rom.a
-ULTRAFILES_S := $(foreach dir,src/libultra,$(wildcard $(dir)/*.s))
-ULTRAFILES_C := $(foreach dir,src/libultra,$(wildcard $(dir)/*.c))
-ULTRAOBJECTS := $(foreach file,$(ULTRAFILES_S),$(BUILD_DIR)/$(file:.s=.o)) \
-				$(foreach file,$(ULTRAFILES_C),$(BUILD_DIR)/$(file:.c=.o))
 
 GAMEFILES_C := $(foreach dir,src/game,$(wildcard $(dir)/*.c))
 GAMEFILES_S := $(foreach dir,src/game,$(wildcard $(dir)/*.s))
@@ -150,7 +147,6 @@ else
   CC := $(IRIX_ROOT)/cc
 endif
 CFLAGS := 0 -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821,838,649 -signed $(INCLUDE) -mips2 $(LCDEFS) -DTARGET_N64
-CFLAGS_LIBULTRA := 0 -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821,838,649 -signed $(INCLUDE) -mips2 $(LCDEFS) -DTARGET_N64
 
 LD := $(TOOLCHAIN)ld
 LD_SCRIPT := ge007.$(COUNTRYCODE).ld
@@ -183,6 +179,10 @@ ifeq ($(filter clean dataclean codeclean stanclean setupclean print-%,$(MAKECMDG
 
 endif
 
+# this file references variables defined above: BUILD_DIR, CFLAGWARNING, INCLUDE, LCDEFS
+# this file defines $(ULTRAOBJECTS)
+include src/libultra/Makefile.libultra
+
 setupclean:
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
 	$(SETUP_BUILD_FILES)
@@ -190,6 +190,10 @@ setupclean:
 stanclean:
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
 	$(STAN_BUILD_FILES)
+
+libultraclean:
+	rm -f $(APPELF) $(APPROM) $(APPBIN) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
+	$(ULTRAOBJECTS)
 
 codeclean:
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
@@ -205,9 +209,6 @@ clean:
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) $(RSPOBJECTS) \
 	$(STAN_BUILD_FILES) $(SETUP_BUILD_FILES)
-
-$(BUILD_DIR)/src/libultra/%.o: src/libultra/%.c
-	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
 
 $(BUILD_DIR)/rsp/%.bin: rsp/*.s
 	$(ARMIPS) -sym $@.sym -strequ CODE_FILE $(BUILD_DIR)/rsp/$*.bin -strequ DATA_FILE $(BUILD_DIR)/rsp/$*_data.bin $<
