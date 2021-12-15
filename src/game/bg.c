@@ -1011,7 +1011,7 @@ Gfx *sub_GAME_7F0B3C8C(Gfx *arg0)
             if (i == dword_CODE_bss_8007FFA0[j].unk1)
             {
                 gSPMatrix(arg0++, osVirtualToPhysical((void*)currentPlayerGetProjectionMatrix()), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION));
-                arg0 = sub_GAME_7F0BB298(arg0);
+                arg0 = fogRenderClearFogMode(arg0);
 
                 if (get_debug_do_draw_obj())
                 {
@@ -1022,7 +1022,7 @@ Gfx *sub_GAME_7F0B3C8C(Gfx *arg0)
                 }
 
                 gSPMatrix(arg0++, osVirtualToPhysical((void*)get_BONDdata_field_10E0()), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION));
-                arg0 = sub_GAME_7F0BB070(
+                arg0 = fogSetRenderFogColor(
                     bgScissorCurrentPlayerViewF(
                         arg0++,
                         dword_CODE_bss_8007FFA0[j].bbox.f[0][0],
@@ -1040,7 +1040,7 @@ Gfx *sub_GAME_7F0B3C8C(Gfx *arg0)
                 }
 
                 gSPMatrix(arg0++, osVirtualToPhysical((void*)currentPlayerGetProjectionMatrix()), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION));
-                arg0 = sub_GAME_7F0BB298(arg0);
+                arg0 = fogRenderClearFogMode(arg0);
 
                 if (get_debug_do_draw_obj())
                 {
@@ -1053,7 +1053,7 @@ Gfx *sub_GAME_7F0B3C8C(Gfx *arg0)
         }
     }
 
-    arg0 = bgScissorCurrentPlayerViewDefault(sub_GAME_7F0BB298(arg0));
+    arg0 = bgScissorCurrentPlayerViewDefault(fogRenderClearFogMode(arg0));
     gSPMatrix(arg0++, osVirtualToPhysical((void*)get_BONDdata_field_10E0()), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION));
 
     if (sub_GAME_7F0BD8F0())
@@ -1068,7 +1068,7 @@ Gfx *sub_GAME_7F0B3C8C(Gfx *arg0)
             if (i == dword_CODE_bss_8007FFA0[j].unk1)
             {
                 gSPMatrix(arg0++, osVirtualToPhysical((void*)get_BONDdata_field_10E0()), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION));
-                arg0 = sub_GAME_7F0BB070(
+                arg0 = fogSetRenderFogColor(
                     bgScissorCurrentPlayerViewF(
                         arg0++,
                         dword_CODE_bss_8007FFA0[j].bbox.f[0][0],
@@ -1086,7 +1086,7 @@ Gfx *sub_GAME_7F0B3C8C(Gfx *arg0)
                 }
 
                 gSPMatrix(arg0++, osVirtualToPhysical((void*)currentPlayerGetProjectionMatrix()), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION));
-                arg0 = sub_GAME_7F0BB298(arg0);
+                arg0 = fogRenderClearFogMode(arg0);
 
                 if (get_debug_do_draw_obj())
                 {
@@ -1168,7 +1168,7 @@ glabel sub_GAME_7F0B3C8C
 /* 0E8894 7F0B3D64 0C003A2C */  jal   osVirtualToPhysical
 /* 0E8898 7F0B3D68 00402025 */   move  $a0, $v0
 /* 0E889C 7F0B3D6C AE220004 */  sw    $v0, 4($s1)
-/* 0E88A0 7F0B3D70 0FC2ECA6 */  jal   sub_GAME_7F0BB298
+/* 0E88A0 7F0B3D70 0FC2ECA6 */  jal   fogRenderClearFogMode
 /* 0E88A4 7F0B3D74 02002025 */   move  $a0, $s0
 /* 0E88A8 7F0B3D78 0FC243D3 */  jal   get_debug_do_draw_obj
 /* 0E88AC 7F0B3D7C 00408025 */   move  $s0, $v0
@@ -1199,7 +1199,7 @@ glabel sub_GAME_7F0B3C8C
 /* 0E8908 7F0B3DD8 0FC2D3FD */  jal   bgScissorCurrentPlayerViewF
 /* 0E890C 7F0B3DDC E7A40010 */   swc1  $f4, 0x10($sp)
 /* 0E8910 7F0B3DE0 00402025 */  move  $a0, $v0
-/* 0E8914 7F0B3DE4 0FC2EC1C */  jal   sub_GAME_7F0BB070
+/* 0E8914 7F0B3DE4 0FC2EC1C */  jal   fogSetRenderFogColor
 /* 0E8918 7F0B3DE8 00002825 */   move  $a1, $zero
 /* 0E891C 7F0B3DEC 0FC243D0 */  jal   get_debug_do_draw_bg
 /* 0E8920 7F0B3DF0 00408025 */   move  $s0, $v0
@@ -1221,7 +1221,7 @@ glabel sub_GAME_7F0B3C8C
 /* 0E8958 7F0B3E28 0C003A2C */  jal   osVirtualToPhysical
 /* 0E895C 7F0B3E2C 00402025 */   move  $a0, $v0
 /* 0E8960 7F0B3E30 AE220004 */  sw    $v0, 4($s1)
-/* 0E8964 7F0B3E34 0FC2ECA6 */  jal   sub_GAME_7F0BB298
+/* 0E8964 7F0B3E34 0FC2ECA6 */  jal   fogRenderClearFogMode
 /* 0E8968 7F0B3E38 02002025 */   move  $a0, $s0
 /* 0E896C 7F0B3E3C 0FC243D3 */  jal   get_debug_do_draw_obj
 /* 0E8970 7F0B3E40 00408025 */   move  $s0, $v0
@@ -1251,7 +1251,7 @@ glabel sub_GAME_7F0B3C8C
 .L7F0B3E94:
 /* 0E89C4 7F0B3E94 3C140103 */  lui   $s4, (0x01030040 >> 16) # lui $s4, 0x103
 /* 0E89C8 7F0B3E98 36940040 */  ori   $s4, (0x01030040 & 0xFFFF) # ori $s4, $s4, 0x40
-/* 0E89CC 7F0B3E9C 0FC2ECA6 */  jal   sub_GAME_7F0BB298
+/* 0E89CC 7F0B3E9C 0FC2ECA6 */  jal   fogRenderClearFogMode
 /* 0E89D0 7F0B3EA0 02002025 */   move  $a0, $s0
 /* 0E89D4 7F0B3EA4 0FC2D3ED */  jal   bgScissorCurrentPlayerViewDefault
 /* 0E89D8 7F0B3EA8 00402025 */   move  $a0, $v0
@@ -1301,7 +1301,7 @@ glabel sub_GAME_7F0B3C8C
 /* 0E8A7C 7F0B3F4C 0FC2D3FD */  jal   bgScissorCurrentPlayerViewF
 /* 0E8A80 7F0B3F50 E7A60010 */   swc1  $f6, 0x10($sp)
 /* 0E8A84 7F0B3F54 00402025 */  move  $a0, $v0
-/* 0E8A88 7F0B3F58 0FC2EC1C */  jal   sub_GAME_7F0BB070
+/* 0E8A88 7F0B3F58 0FC2EC1C */  jal   fogSetRenderFogColor
 /* 0E8A8C 7F0B3F5C 24050001 */   li    $a1, 1
 /* 0E8A90 7F0B3F60 0FC243D0 */  jal   get_debug_do_draw_bg
 /* 0E8A94 7F0B3F64 00408025 */   move  $s0, $v0
@@ -1323,7 +1323,7 @@ glabel sub_GAME_7F0B3C8C
 /* 0E8ACC 7F0B3F9C 0C003A2C */  jal   osVirtualToPhysical
 /* 0E8AD0 7F0B3FA0 00402025 */   move  $a0, $v0
 /* 0E8AD4 7F0B3FA4 AE220004 */  sw    $v0, 4($s1)
-/* 0E8AD8 7F0B3FA8 0FC2ECA6 */  jal   sub_GAME_7F0BB298
+/* 0E8AD8 7F0B3FA8 0FC2ECA6 */  jal   fogRenderClearFogMode
 /* 0E8ADC 7F0B3FAC 02002025 */   move  $a0, $s0
 /* 0E8AE0 7F0B3FB0 0FC243D3 */  jal   get_debug_do_draw_obj
 /* 0E8AE4 7F0B3FB4 00408025 */   move  $s0, $v0
@@ -2001,7 +2001,7 @@ glabel load_bg_file
 /* 0E92C4 7F0B4794 0FC2CDFB */  jal   sub_GAME_7F0B37EC
 /* 0E92C8 7F0B4798 00000000 */   nop   
 .L7F0B479C:
-/* 0E92CC 7F0B479C 0FC2EA97 */  jal   sub_GAME_7F0BAA5C
+/* 0E92CC 7F0B479C 0FC2EA97 */  jal   fogRemoved7F0BAA5C
 /* 0E92D0 7F0B47A0 8FA400B8 */   lw    $a0, 0xb8($sp)
 /* 0E92D4 7F0B47A4 8FBF003C */  lw    $ra, 0x3c($sp)
 /* 0E92D8 7F0B47A8 240900C8 */  li    $t1, 200
@@ -2548,7 +2548,7 @@ Gfx *bgLevelRender(Gfx *arg0)
     }
     else
     {
-        arg0 = sub_GAME_7F0BB298(bgScissorCurrentPlayerViewDefault(sub_GAME_7F0B8D78(sub_GAME_7F0BB070(arg0, 0))));
+        arg0 = fogRenderClearFogMode(bgScissorCurrentPlayerViewDefault(sub_GAME_7F0B8D78(fogSetRenderFogColor(arg0, 0))));
     }
 
     gSPMatrix(arg0++, g_viProjectionMatrix, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);

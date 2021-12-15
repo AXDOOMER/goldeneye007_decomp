@@ -1537,7 +1537,7 @@ typedef struct PropRecord
     /**
      * Maybe float. Something related to draw (render) distance.
     */
-    void *Unk18;
+    f32 Unk18;
     struct PropRecord *parent;   /*0x1c*/
     struct PropRecord *child; /*0x20*/
     struct PropRecord *prev;   /*0x24*/

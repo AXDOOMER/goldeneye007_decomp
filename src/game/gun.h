@@ -252,4 +252,8 @@ void sub_GAME_7F05EB0C(ObjectRecord *arg0, struct coord3d *arg1, struct StandTil
 void sub_GAME_7F061948(struct ChrRecord_f180 *arg0, ITEM_IDS item, struct coord3d *arg2, struct coord3d *arg3);
 void sub_GAME_7F068190(struct coord3d *arg0, struct coord3d *arg1);
 
+void inc_curplayer_hitcount_with_weapon(ITEM_IDS item, SHOT_REGISTER shot_register);
+s8 get_hands_firing_status(HANDEDNESS hand);
+void gunFireTankShell(s32 hand);
+
 #endif

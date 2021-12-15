@@ -4825,7 +4825,7 @@ s32 sub_GAME_7F029D70(ChrRecord *self)
             )
         )
         {
-            if (vec2rd < square_near_fog_value())
+            if (vec2rd < fogGetScaledFarFogIntensitySquared())
             {
                 distance = (s32)((sqrtf(vec2rd) * 30.0f) / 16000.0f);
 

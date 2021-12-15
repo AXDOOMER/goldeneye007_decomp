@@ -1,17 +1,9 @@
 #ifndef _PLAYER_H_
 #define _PLAYER_H_
 #include "ultra64.h"
+#include "bondconstants.h"
+#include "bondtypes.h"
 #include "game/bondview.h"
-
-typedef enum SHOT_REGISTER {
-    SHOTS_FIRED = 0,
-    HEAD_HITS,
-    BODY_HITS,
-    LEG_HITS,
-    OTHER_HIT_WEAPON,
-    OTHER_HIT_HAT,
-    OTHER_HIT_OBJECTS
-} SHOT_REGISTER;
 
 struct player_data {
     /* 0x0 */

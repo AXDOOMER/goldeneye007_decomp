@@ -71,10 +71,11 @@ s32 sub_GAME_7F055A70(PropRecord *arg0, DoorRecord *arg1);
 void sub_GAME_7F055B78(PropRecord *arg0, DoorRecord *arg1);
 Gfx *chrobjRenderProp(PropRecord *arg0, Gfx *arg1, s32 arg2);
 
-f32 sub_GAME_7F054B80(PropRecord *, f32);
+f32 chrobjFogVisRangeRelated(PropRecord *prop, f32 size);
 s32 sub_GAME_7F054A64(PropRecord *, struct view4s32 *);
 
 // note: rgba to rgb
 void sub_GAME_7F040384(struct rgba_s32 *arg0, s32 arg1, struct rgba_f32 *arg2);
+void trigger_remote_mine_detonation(void);
 
 #endif

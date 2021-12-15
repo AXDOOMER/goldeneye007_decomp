@@ -15,6 +15,7 @@
 #include "game/chrlv.h"
 #include "game/chrobjdata.h"
 #include "game/chrobjhandler.h"
+#include "game/fog.h"
 #include "game/lvl.h"
 #include "game/lvl_text.h"
 #include "game/math_floor.h"
@@ -27430,7 +27431,7 @@ Gfx *chrobjRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
     jlist = D_80031FD0;
 
     sp3C = 0xFF;
-    spAC = if_sky_present_convert_values(prop, &spB0);
+    spAC = fogGetPropDistColor(prop, &spB0);
 
     if (spAC == 0)
     {
@@ -27439,7 +27440,7 @@ Gfx *chrobjRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
 
     if ((u8) obj->head.type != PROPDEF_TINTED_GLASS)
     {
-        temp_f0 = sub_GAME_7F054B80(prop, getinstsize(obj->model));
+        temp_f0 = chrobjFogVisRangeRelated(prop, getinstsize(obj->model));
 
         if (((s32) prop->timetoregen > 0) && ((s32) prop->timetoregen < 0x3C))
         {
@@ -42434,74 +42435,38 @@ glabel sub_GAME_7F054A64
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F054B80(void) {
+/**
+ * Address 0x7F054B80.
+*/
+f32 chrobjFogVisRangeRelated(PropRecord *prop, f32 size)
+{
+    f32 ret;
+    struct NearFogData *nfd;
+    f32 temp_f12;
 
+    ret = 1.0f;
+    nfd = fogGetNearFogValuesP();
+
+    if ((nfd != NULL) && (nfd->MaxObfuscationRange < prop->Unk18))
+    {
+        temp_f12 = getPlayer_c_lodscalez();
+        temp_f12 = ((((prop->Unk18 - nfd->MaxObfuscationRange) * 100.0f) / size) + nfd->MaxObfuscationRange) * temp_f12;
+        
+        if (nfd->MaxVisRange <= temp_f12)
+        {
+            ret = 0.0f;
+        }
+        else
+        {
+            if (nfd->NearFog < temp_f12)
+            {
+                ret = (nfd->MaxVisRange - temp_f12) / (nfd->MaxVisRange - nfd->NearFog);
+            }
+        }
+    }
+
+    return ret;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F054B80
-/* 0896B0 7F054B80 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0896B4 7F054B84 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0896B8 7F054B88 44818000 */  mtc1  $at, $f16
-/* 0896BC 7F054B8C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0896C0 7F054B90 AFA40020 */  sw    $a0, 0x20($sp)
-/* 0896C4 7F054B94 AFA50024 */  sw    $a1, 0x24($sp)
-/* 0896C8 7F054B98 0FC2ECE6 */  jal   return_nearfog_values
-/* 0896CC 7F054B9C E7B0001C */   swc1  $f16, 0x1c($sp)
-/* 0896D0 7F054BA0 10400028 */  beqz  $v0, .L7F054C44
-/* 0896D4 7F054BA4 C7B0001C */   lwc1  $f16, 0x1c($sp)
-/* 0896D8 7F054BA8 8FAE0020 */  lw    $t6, 0x20($sp)
-/* 0896DC 7F054BAC C4440008 */  lwc1  $f4, 8($v0)
-/* 0896E0 7F054BB0 C5C60018 */  lwc1  $f6, 0x18($t6)
-/* 0896E4 7F054BB4 4606203C */  c.lt.s $f4, $f6
-/* 0896E8 7F054BB8 00000000 */  nop   
-/* 0896EC 7F054BBC 45020022 */  bc1fl .L7F054C48
-/* 0896F0 7F054BC0 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0896F4 7F054BC4 AFA20018 */  sw    $v0, 0x18($sp)
-/* 0896F8 7F054BC8 0FC1E121 */  jal   getPlayer_c_lodscalez
-/* 0896FC 7F054BCC E7B0001C */   swc1  $f16, 0x1c($sp)
-/* 089700 7F054BD0 8FA30018 */  lw    $v1, 0x18($sp)
-/* 089704 7F054BD4 8FAF0020 */  lw    $t7, 0x20($sp)
-/* 089708 7F054BD8 3C0142C8 */  li    $at, 0x42C80000 # 100.000000
-/* 08970C 7F054BDC C4620008 */  lwc1  $f2, 8($v1)
-/* 089710 7F054BE0 C5E80018 */  lwc1  $f8, 0x18($t7)
-/* 089714 7F054BE4 44819000 */  mtc1  $at, $f18
-/* 089718 7F054BE8 C7A60024 */  lwc1  $f6, 0x24($sp)
-/* 08971C 7F054BEC 46024281 */  sub.s $f10, $f8, $f2
-/* 089720 7F054BF0 C46E0004 */  lwc1  $f14, 4($v1)
-/* 089724 7F054BF4 C7B0001C */  lwc1  $f16, 0x1c($sp)
-/* 089728 7F054BF8 46125102 */  mul.s $f4, $f10, $f18
-/* 08972C 7F054BFC 46062203 */  div.s $f8, $f4, $f6
-/* 089730 7F054C00 46024280 */  add.s $f10, $f8, $f2
-/* 089734 7F054C04 46005302 */  mul.s $f12, $f10, $f0
-/* 089738 7F054C08 460C703E */  c.le.s $f14, $f12
-/* 08973C 7F054C0C 00000000 */  nop   
-/* 089740 7F054C10 45020005 */  bc1fl .L7F054C28
-/* 089744 7F054C14 C4600000 */   lwc1  $f0, ($v1)
-/* 089748 7F054C18 44808000 */  mtc1  $zero, $f16
-/* 08974C 7F054C1C 1000000A */  b     .L7F054C48
-/* 089750 7F054C20 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 089754 7F054C24 C4600000 */  lwc1  $f0, ($v1)
-.L7F054C28:
-/* 089758 7F054C28 460C003C */  c.lt.s $f0, $f12
-/* 08975C 7F054C2C 00000000 */  nop   
-/* 089760 7F054C30 45020005 */  bc1fl .L7F054C48
-/* 089764 7F054C34 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 089768 7F054C38 460C7481 */  sub.s $f18, $f14, $f12
-/* 08976C 7F054C3C 46007101 */  sub.s $f4, $f14, $f0
-/* 089770 7F054C40 46049403 */  div.s $f16, $f18, $f4
-.L7F054C44:
-/* 089774 7F054C44 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F054C48:
-/* 089778 7F054C48 27BD0020 */  addiu $sp, $sp, 0x20
-/* 08977C 7F054C4C 46008006 */  mov.s $f0, $f16
-/* 089780 7F054C50 03E00008 */  jr    $ra
-/* 089784 7F054C54 00000000 */   nop   
-)
-#endif
-
 
 
 
@@ -42519,7 +42484,7 @@ glabel sub_GAME_7F054C58
 /* 089790 7F054C60 240E0001 */  li    $t6, 1
 /* 089794 7F054C64 AFA40038 */  sw    $a0, 0x38($sp)
 /* 089798 7F054C68 AFA5003C */  sw    $a1, 0x3c($sp)
-/* 08979C 7F054C6C 0FC2ECE6 */  jal   return_nearfog_values
+/* 08979C 7F054C6C 0FC2ECE6 */  jal   fogGetNearFogValuesP
 /* 0897A0 7F054C70 AFAE0034 */   sw    $t6, 0x34($sp)
 /* 0897A4 7F054C74 50400039 */  beql  $v0, $zero, .L7F054D5C
 /* 0897A8 7F054C78 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -44237,7 +44202,7 @@ void handle_gas_damage(void)
     {
         if (disable_player_pickups_flag == 0)
         {
-            switch_to_solosky2(toxic_gas_sound_timer / gas_damage_flag);
+            fogSwitchToSolosky2(toxic_gas_sound_timer / gas_damage_flag);
             if (gas_cutoff_flag != 0)
             {
                 if (D_80030ADC < (g_GlobalTimer - 0xe1))
@@ -44323,7 +44288,7 @@ glabel handle_gas_damage
 /* 08AB18 7F055FE8 55E0005A */  bnezl $t7, .L7F056154
 /* 08AB1C 7F055FEC 8FBF001C */   lw    $ra, 0x1c($sp)
 /* 08AB20 7F055FF0 C4321E78 */  lwc1  $f18, %lo(gas_damage_flag)($at)
-/* 08AB24 7F055FF4 0FC2EB2A */  jal   switch_to_solosky2
+/* 08AB24 7F055FF4 0FC2EB2A */  jal   fogSwitchToSolosky2
 /* 08AB28 7F055FF8 46120303 */   div.s $f12, $f0, $f18
 /* 08AB2C 7F055FFC 3C188007 */  lui   $t8, %hi(gas_cutoff_flag) 
 /* 08AB30 7F056000 8F181E7C */  lw    $t8, %lo(gas_cutoff_flag)($t8)

@@ -4801,7 +4801,7 @@ glabel set_camera_mode
 /* 0AF578 7F07AA48 0C001A57 */  jal   bossGetStageNum
 /* 0AF57C 7F07AA4C 00000000 */   nop
 /* 0AF580 7F07AA50 00402025 */  move  $a0, $v0
-/* 0AF584 7F07AA54 0FC2EA99 */  jal   load_enviroment
+/* 0AF584 7F07AA54 0FC2EA99 */  jal   fogLoadLevelEnvironment
 /* 0AF588 7F07AA58 24050001 */   li    $a1, 1
 /* 0AF58C 7F07AA5C 3C108008 */  lui   $s0, %hi(g_CurrentPlayer)
 /* 0AF590 7F07AA60 2610A0B0 */  addiu $s0, %lo(g_CurrentPlayer) # addiu $s0, $s0, -0x5f50
@@ -4847,7 +4847,7 @@ glabel set_camera_mode
 /* 0AF624 7F07AAF4 0C001A57 */  jal   bossGetStageNum
 /* 0AF628 7F07AAF8 E4289E10 */   swc1  $f8, %lo(flt_CODE_bss_80079E10)($at)
 /* 0AF62C 7F07AAFC 00402025 */  move  $a0, $v0
-/* 0AF630 7F07AB00 0FC2EA99 */  jal   load_enviroment
+/* 0AF630 7F07AB00 0FC2EA99 */  jal   fogLoadLevelEnvironment
 /* 0AF634 7F07AB04 00002825 */   move  $a1, $zero
 /* 0AF638 7F07AB08 100001A2 */  b     .L7F07B194
 /* 0AF63C 7F07AB0C 8FBF002C */   lw    $ra, 0x2c($sp)
@@ -4869,7 +4869,7 @@ glabel set_camera_mode
 /* 0AF678 7F07AB48 0C001A57 */  jal   bossGetStageNum
 /* 0AF67C 7F07AB4C 00000000 */   nop
 /* 0AF680 7F07AB50 00402025 */  move  $a0, $v0
-/* 0AF684 7F07AB54 0FC2EA99 */  jal   load_enviroment
+/* 0AF684 7F07AB54 0FC2EA99 */  jal   fogLoadLevelEnvironment
 /* 0AF688 7F07AB58 00002825 */   move  $a1, $zero
 /* 0AF68C 7F07AB5C 3C188003 */  lui   $t8, %hi(D_800364AC)
 /* 0AF690 7F07AB60 8F1864AC */  lw    $t8, %lo(D_800364AC)($t8)
@@ -4988,7 +4988,7 @@ glabel set_camera_mode
 /* 0AF840 7F07AD10 0C001A57 */  jal   bossGetStageNum
 /* 0AF844 7F07AD14 00000000 */   nop
 /* 0AF848 7F07AD18 00402025 */  move  $a0, $v0
-/* 0AF84C 7F07AD1C 0FC2EA99 */  jal   load_enviroment
+/* 0AF84C 7F07AD1C 0FC2EA99 */  jal   fogLoadLevelEnvironment
 /* 0AF850 7F07AD20 00002825 */   move  $a1, $zero
 .L7F07AD24:
 /* 0AF854 7F07AD24 3C108008 */  lui   $s0, %hi(g_CurrentPlayer)

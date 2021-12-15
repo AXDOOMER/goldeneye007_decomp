@@ -10,10 +10,12 @@
 #include "game/chrai.h"
 #include "game/chrlv.h"
 #include "game/chrobjhandler.h"
+#include "game/gun.h"
 #include "game/lvl_text.h"
 #include "game/math_floor.h"
 #include "game/math_ceil.h"
 #include "game/math_atan2f.h"
+#include "game/player.h"
 
 // bss
 /**
@@ -197,6 +199,9 @@ s32 D_80030ABC = 0;
 // forward declarations
 
 Gfx *chraiResolveRenderProp(Gfx *arg0, PropRecord *arg1, s32 arg2);
+void chraiCheckUseHeldItem(s32 hand);
+void chraiDefaultWeaponFireHandler(s32);
+void chraiFistAttackHandler(s32, s32);
 
 // end forward declarations
 
@@ -7957,7 +7962,7 @@ actionE6_If_16_Object_And_Preset_Are_In_Same_Room_RVL_5:
 actionE9_Instantly_Switch_Sky_To_Sky_2_1:
 /* 06E85C 7F039D2C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 06E860 7F039D30 44816000 */  mtc1  $at, $f12
-/* 06E864 7F039D34 0FC2EB2A */  jal   switch_to_solosky2
+/* 06E864 7F039D34 0FC2EB2A */  jal   fogSwitchToSolosky2
 /* 06E868 7F039D38 00000000 */   nop   
 /* 06E86C 7F039D3C 26520001 */  addiu $s2, $s2, 1
 /* 06E870 7F039D40 1000EE12 */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -13824,7 +13829,7 @@ actionE6_If_16_Object_And_Preset_Are_In_Same_Room_RVL_5:
 actionE9_Instantly_Switch_Sky_To_Sky_2_1:
 /* 06E85C 7F039D2C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 06E860 7F039D30 44816000 */  mtc1  $at, $f12
-/* 06E864 7F039D34 0FC2EB2A */  jal   switch_to_solosky2
+/* 06E864 7F039D34 0FC2EB2A */  jal   fogSwitchToSolosky2
 /* 06E868 7F039D38 00000000 */   nop   
 /* 06E86C 7F039D3C 26520001 */  addiu $s2, $s2, 1
 /* 06E870 7F039D40 1000EE12 */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -19724,7 +19729,7 @@ actionE6_If_16_Object_And_Preset_Are_In_Same_Room_RVL_5:
 actionE9_Instantly_Switch_Sky_To_Sky_2_1:
 /* 06C7DC 7F039DEC 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 06C7E0 7F039DF0 44816000 */  mtc1  $at, $f12
-/* 06C7E4 7F039DF4 0FC2E81E */  jal   switch_to_solosky2
+/* 06C7E4 7F039DF4 0FC2E81E */  jal   fogSwitchToSolosky2
 /* 06C7E8 7F039DF8 00000000 */   nop   
 /* 06C7EC 7F039DFC 26520001 */  addiu $s2, $s2, 1
 /* 06C7F0 7F039E00 1000EDF2 */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -20132,7 +20137,7 @@ void chraiUpdateOnscreenPropCount(void)
 
         for (j = i; j < count; j++)
         {
-            f32 f = *(f32*)&g_OnScreenPropList[j]->Unk18;
+            f32 f = g_OnScreenPropList[j]->Unk18;
 
             if (phi_f12 < f)
             {
@@ -21392,13 +21397,13 @@ glabel sub_GAME_7F03AF5C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03B15C(void) {
+void chraiDefaultWeaponFireHandler(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F03B15C
+glabel chraiDefaultWeaponFireHandler
 /* 06FC8C 7F03B15C 27BDFA88 */  addiu $sp, $sp, -0x578
 /* 06FC90 7F03B160 AFBF0034 */  sw    $ra, 0x34($sp)
 /* 06FC94 7F03B164 AFB00028 */  sw    $s0, 0x28($sp)
@@ -22293,13 +22298,13 @@ glabel sub_GAME_7F03B9C0
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03BDEC(void) {
+void chraiFistAttackHandler(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F03BDEC
+glabel chraiFistAttackHandler
 /* 07091C 7F03BDEC 27BDFF38 */  addiu $sp, $sp, -0xc8
 /* 070920 7F03BDF0 AFBF0064 */  sw    $ra, 0x64($sp)
 /* 070924 7F03BDF4 AFB60060 */  sw    $s6, 0x60($sp)
@@ -22510,157 +22515,87 @@ glabel sub_GAME_7F03BDEC
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03C0F0(void) {
 
+/**
+ * Address 0x7F03C0F0.
+*/
+void chraiCheckUseHeldItem(s32 hand)
+{
+    s32 item_id;
+    s32 i;
+
+    if (get_hands_firing_status(hand) != 0)
+    {
+        item_id = get_item_in_hand(hand);
+
+        if (item_id == ITEM_TRIGGER)
+        {
+            trigger_remote_mine_detonation();
+        }
+        else if (item_id == ITEM_GRENADELAUNCH
+            || item_id == ITEM_ROCKETLAUNCH
+            || item_id == ITEM_GRENADE
+            || item_id == ITEM_THROWKNIFE
+            || item_id == ITEM_REMOTEMINE
+            || item_id == ITEM_PROXIMITYMINE
+            || item_id == ITEM_TIMEDMINE
+            || item_id == ITEM_FLAREPISTOL
+            || item_id == ITEM_PITONGUN
+            || item_id == ITEM_BOMBCASE
+            || item_id == ITEM_BUG
+            || item_id == ITEM_MICROCAMERA
+            || item_id == ITEM_GOLDENEYEKEY
+            || item_id == ITEM_TOKEN
+            || item_id == ITEM_PLASTIQUE
+        )
+        {
+            // nothing to do
+        }
+        else if (item_id == ITEM_TANKSHELLS)
+        {
+            gunFireTankShell(hand);
+        }
+        else if (item_id == ITEM_FIST || item_id == ITEM_KNIFE)
+        {
+            chraiFistAttackHandler(hand, item_id);
+        }
+        else if (item_id == ITEM_SHOTGUN || item_id == ITEM_AUTOSHOT)
+        {
+            inc_curplayer_hitcount_with_weapon(item_id, SHOTS_FIRED);
+
+            for (i=0; i<NUMBER_SHOTGUN_BULLETS; i++)
+            {
+                chraiDefaultWeaponFireHandler(hand);
+            }
+        }
+        else if (item_id == ITEM_CAMERA)
+        {
+            objectiveTakePictureHandler();
+        }
+        else if (item_id == ITEM_WATCHMAGNETATTRACT)
+        {
+            g_CurrentPlayer->index_time_spent_using_item = 0;
+        }
+        else
+        {
+            inc_curplayer_hitcount_with_weapon(item_id, SHOTS_FIRED);
+            chraiDefaultWeaponFireHandler(hand);
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03C0F0
-/* 070C20 7F03C0F0 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 070C24 7F03C0F4 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 070C28 7F03C0F8 AFB00018 */  sw    $s0, 0x18($sp)
-/* 070C2C 7F03C0FC 0FC17722 */  jal   get_hands_firing_status
-/* 070C30 7F03C100 00808025 */   move  $s0, $a0
-/* 070C34 7F03C104 5040005F */  beql  $v0, $zero, .L7F03C284
-/* 070C38 7F03C108 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 070C3C 7F03C10C 0FC17674 */  jal   get_item_in_hand
-/* 070C40 7F03C110 02002025 */   move  $a0, $s0
-/* 070C44 7F03C114 2401001E */  li    $at, 30
-/* 070C48 7F03C118 14410005 */  bne   $v0, $at, .L7F03C130
-/* 070C4C 7F03C11C 00403025 */   move  $a2, $v0
-/* 070C50 7F03C120 0FC14686 */  jal   trigger_remote_mine_detonation
-/* 070C54 7F03C124 00000000 */   nop   
-/* 070C58 7F03C128 10000056 */  b     .L7F03C284
-/* 070C5C 7F03C12C 8FBF001C */   lw    $ra, 0x1c($sp)
-.L7F03C130:
-/* 070C60 7F03C130 24010018 */  li    $at, 24
-/* 070C64 7F03C134 10410052 */  beq   $v0, $at, .L7F03C280
-/* 070C68 7F03C138 24010019 */   li    $at, 25
-/* 070C6C 7F03C13C 10410050 */  beq   $v0, $at, .L7F03C280
-/* 070C70 7F03C140 2401001A */   li    $at, 26
-/* 070C74 7F03C144 1041004E */  beq   $v0, $at, .L7F03C280
-/* 070C78 7F03C148 24010003 */   li    $at, 3
-/* 070C7C 7F03C14C 1041004C */  beq   $v0, $at, .L7F03C280
-/* 070C80 7F03C150 2401001D */   li    $at, 29
-/* 070C84 7F03C154 1041004A */  beq   $v0, $at, .L7F03C280
-/* 070C88 7F03C158 2401001C */   li    $at, 28
-/* 070C8C 7F03C15C 10410048 */  beq   $v0, $at, .L7F03C280
-/* 070C90 7F03C160 2401001B */   li    $at, 27
-/* 070C94 7F03C164 10410046 */  beq   $v0, $at, .L7F03C280
-/* 070C98 7F03C168 24010023 */   li    $at, 35
-/* 070C9C 7F03C16C 10410044 */  beq   $v0, $at, .L7F03C280
-/* 070CA0 7F03C170 24010024 */   li    $at, 36
-/* 070CA4 7F03C174 10410042 */  beq   $v0, $at, .L7F03C280
-/* 070CA8 7F03C178 24010021 */   li    $at, 33
-/* 070CAC 7F03C17C 10410040 */  beq   $v0, $at, .L7F03C280
-/* 070CB0 7F03C180 2401002F */   li    $at, 47
-/* 070CB4 7F03C184 1041003E */  beq   $v0, $at, .L7F03C280
-/* 070CB8 7F03C188 24010030 */   li    $at, 48
-/* 070CBC 7F03C18C 1041003C */  beq   $v0, $at, .L7F03C280
-/* 070CC0 7F03C190 2401003D */   li    $at, 61
-/* 070CC4 7F03C194 1041003A */  beq   $v0, $at, .L7F03C280
-/* 070CC8 7F03C198 24010058 */   li    $at, 88
-/* 070CCC 7F03C19C 10410038 */  beq   $v0, $at, .L7F03C280
-/* 070CD0 7F03C1A0 24010022 */   li    $at, 34
-/* 070CD4 7F03C1A4 10410036 */  beq   $v0, $at, .L7F03C280
-/* 070CD8 7F03C1A8 24010020 */   li    $at, 32
-/* 070CDC 7F03C1AC 54410006 */  bnel  $v0, $at, .L7F03C1C8
-/* 070CE0 7F03C1B0 24010001 */   li    $at, 1
-/* 070CE4 7F03C1B4 0FC17ED9 */  jal   sub_GAME_7F05FB64
-/* 070CE8 7F03C1B8 02002025 */   move  $a0, $s0
-/* 070CEC 7F03C1BC 10000031 */  b     .L7F03C284
-/* 070CF0 7F03C1C0 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 070CF4 7F03C1C4 24010001 */  li    $at, 1
-.L7F03C1C8:
-/* 070CF8 7F03C1C8 10410004 */  beq   $v0, $at, .L7F03C1DC
-/* 070CFC 7F03C1CC 02002025 */   move  $a0, $s0
-/* 070D00 7F03C1D0 24010002 */  li    $at, 2
-/* 070D04 7F03C1D4 54410006 */  bnel  $v0, $at, .L7F03C1F0
-/* 070D08 7F03C1D8 2401000F */   li    $at, 15
-.L7F03C1DC:
-/* 070D0C 7F03C1DC 0FC0EF7B */  jal   sub_GAME_7F03BDEC
-/* 070D10 7F03C1E0 00C02825 */   move  $a1, $a2
-/* 070D14 7F03C1E4 10000027 */  b     .L7F03C284
-/* 070D18 7F03C1E8 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 070D1C 7F03C1EC 2401000F */  li    $at, 15
-.L7F03C1F0:
-/* 070D20 7F03C1F0 10410004 */  beq   $v0, $at, .L7F03C204
-/* 070D24 7F03C1F4 00C02025 */   move  $a0, $a2
-/* 070D28 7F03C1F8 24010010 */  li    $at, 16
-/* 070D2C 7F03C1FC 5441000F */  bnel  $v0, $at, .L7F03C23C
-/* 070D30 7F03C200 24010028 */   li    $at, 40
-.L7F03C204:
-/* 070D34 7F03C204 0FC1A9BE */  jal   inc_curplayer_hitcount_with_weapon
-/* 070D38 7F03C208 00002825 */   move  $a1, $zero
-/* 070D3C 7F03C20C 00001025 */  move  $v0, $zero
-/* 070D40 7F03C210 02002025 */  move  $a0, $s0
-.L7F03C214:
-/* 070D44 7F03C214 0FC0EC57 */  jal   sub_GAME_7F03B15C
-/* 070D48 7F03C218 AFA20020 */   sw    $v0, 0x20($sp)
-/* 070D4C 7F03C21C 8FA20020 */  lw    $v0, 0x20($sp)
-/* 070D50 7F03C220 24010005 */  li    $at, 5
-/* 070D54 7F03C224 24420001 */  addiu $v0, $v0, 1
-/* 070D58 7F03C228 5441FFFA */  bnel  $v0, $at, .L7F03C214
-/* 070D5C 7F03C22C 02002025 */   move  $a0, $s0
-/* 070D60 7F03C230 10000014 */  b     .L7F03C284
-/* 070D64 7F03C234 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 070D68 7F03C238 24010028 */  li    $at, 40
-.L7F03C23C:
-/* 070D6C 7F03C23C 54410006 */  bnel  $v0, $at, .L7F03C258
-/* 070D70 7F03C240 2401003C */   li    $at, 60
-/* 070D74 7F03C244 0FC15E26 */  jal   sub_GAME_7F057898
-/* 070D78 7F03C248 00000000 */   nop   
-/* 070D7C 7F03C24C 1000000D */  b     .L7F03C284
-/* 070D80 7F03C250 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 070D84 7F03C254 2401003C */  li    $at, 60
-.L7F03C258:
-/* 070D88 7F03C258 14410005 */  bne   $v0, $at, .L7F03C270
-/* 070D8C 7F03C25C 00C02025 */   move  $a0, $a2
-/* 070D90 7F03C260 3C0E8008 */  lui   $t6, %hi(g_CurrentPlayer) 
-/* 070D94 7F03C264 8DCEA0B0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
-/* 070D98 7F03C268 10000005 */  b     .L7F03C280
-/* 070D9C 7F03C26C ADC01270 */   sw    $zero, 0x1270($t6)
-.L7F03C270:
-/* 070DA0 7F03C270 0FC1A9BE */  jal   inc_curplayer_hitcount_with_weapon
-/* 070DA4 7F03C274 00002825 */   move  $a1, $zero
-/* 070DA8 7F03C278 0FC0EC57 */  jal   sub_GAME_7F03B15C
-/* 070DAC 7F03C27C 02002025 */   move  $a0, $s0
-.L7F03C280:
-/* 070DB0 7F03C280 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F03C284:
-/* 070DB4 7F03C284 8FB00018 */  lw    $s0, 0x18($sp)
-/* 070DB8 7F03C288 27BD0028 */  addiu $sp, $sp, 0x28
-/* 070DBC 7F03C28C 03E00008 */  jr    $ra
-/* 070DC0 7F03C290 00000000 */   nop   
-)
-#endif
 
 
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03C294(void) {
-
+/**
+ * Address 0x7F03C294.
+*/
+void chraiCheckUseHeldItems(void)
+{
+    chraiCheckUseHeldItem(RIGHT_HAND);
+    chraiCheckUseHeldItem(LEFT_HAND);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03C294
-/* 070DC4 7F03C294 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 070DC8 7F03C298 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 070DCC 7F03C29C 0FC0F03C */  jal   sub_GAME_7F03C0F0
-/* 070DD0 7F03C2A0 00002025 */   move  $a0, $zero
-/* 070DD4 7F03C2A4 0FC0F03C */  jal   sub_GAME_7F03C0F0
-/* 070DD8 7F03C2A8 24040001 */   li    $a0, 1
-/* 070DDC 7F03C2AC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 070DE0 7F03C2B0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 070DE4 7F03C2B4 03E00008 */  jr    $ra
-/* 070DE8 7F03C2B8 00000000 */   nop   
-)
-#endif
 
 
 

@@ -6088,7 +6088,7 @@ Gfx *chrRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
 
     if ((chr->chrflags << 5) >= 0)
     {
-        f32 f = sub_GAME_7F054B80(prop, getinstsize(chrmodel));
+        f32 f = chrobjFogVisRangeRelated(prop, getinstsize(chrmodel));
         spB4 = (s32) (f * (f32) spB4);
     }
 
@@ -6116,7 +6116,7 @@ Gfx *chrRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
         }
     }
 
-    spBC = if_sky_present_convert_values(prop, &spC0);
+    spBC = fogGetPropDistColor(prop, &spC0);
     if (spBC != 0)
     {
         if (spB4 > 0)

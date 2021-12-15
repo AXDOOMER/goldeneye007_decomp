@@ -494,7 +494,7 @@ void handle_mp_respawn_and_some_things(void);
 void determing_type_of_object_and_detection(void);
 void chraiUpdateOnscreenPropCount(void);
 void sub_GAME_7F03D78C(void);
-void sub_GAME_7F03C294(void);
+void chraiCheckUseHeldItems(void);
 s32 bond_interact_object(void);
 void sub_GAME_7F03D0D4(void);
 void sub_GAME_7F03DD9C(struct PropRecord *, s16, struct player *);
