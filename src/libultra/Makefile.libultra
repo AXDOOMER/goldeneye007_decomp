@@ -71,7 +71,7 @@ $(BUILD_DIR)/src/libultra/gu/%.o: src/libultra/gu/%.c
 	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
 
 $(BUILD_DIR)/src/libultra/io/%.o: src/libultra/io/%.c
-	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
+	$(CC) -c $(CFLAGS_LIBULTRA) -I src/libultra -I src/libultra/io -o $@ $<
 
 $(BUILD_DIR)/src/libultra/libc/%.o: src/libultra/libc/%.c
 	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
