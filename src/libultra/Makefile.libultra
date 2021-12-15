@@ -80,7 +80,7 @@ $(BUILD_DIR)/src/libultra/log/%.o: src/libultra/log/%.c
 	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
 
 $(BUILD_DIR)/src/libultra/os/%.o: src/libultra/os/%.c
-	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
+	$(CC) -c $(CFLAGS_LIBULTRA) -I src/libultra -I src/libultra/os -o $@ $<
 
 $(BUILD_DIR)/src/libultra/rg/%.o: src/libultra/rg/%.c
 	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
