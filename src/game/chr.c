@@ -6116,7 +6116,7 @@ Gfx *chrRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
         }
     }
 
-    spBC = if_sky_present_convert_values(prop, &spC0);
+    spBC = fogGetPropDistColor(prop, &spC0);
     if (spBC != 0)
     {
         if (spB4 > 0)

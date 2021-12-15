@@ -27430,7 +27430,7 @@ Gfx *chrobjRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
     jlist = D_80031FD0;
 
     sp3C = 0xFF;
-    spAC = if_sky_present_convert_values(prop, &spB0);
+    spAC = fogGetPropDistColor(prop, &spB0);
 
     if (spAC == 0)
     {
@@ -42448,7 +42448,7 @@ glabel sub_GAME_7F054B80
 /* 0896BC 7F054B8C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0896C0 7F054B90 AFA40020 */  sw    $a0, 0x20($sp)
 /* 0896C4 7F054B94 AFA50024 */  sw    $a1, 0x24($sp)
-/* 0896C8 7F054B98 0FC2ECE6 */  jal   return_nearfog_values
+/* 0896C8 7F054B98 0FC2ECE6 */  jal   fogGetNearFogValuesP
 /* 0896CC 7F054B9C E7B0001C */   swc1  $f16, 0x1c($sp)
 /* 0896D0 7F054BA0 10400028 */  beqz  $v0, .L7F054C44
 /* 0896D4 7F054BA4 C7B0001C */   lwc1  $f16, 0x1c($sp)
@@ -42519,7 +42519,7 @@ glabel sub_GAME_7F054C58
 /* 089790 7F054C60 240E0001 */  li    $t6, 1
 /* 089794 7F054C64 AFA40038 */  sw    $a0, 0x38($sp)
 /* 089798 7F054C68 AFA5003C */  sw    $a1, 0x3c($sp)
-/* 08979C 7F054C6C 0FC2ECE6 */  jal   return_nearfog_values
+/* 08979C 7F054C6C 0FC2ECE6 */  jal   fogGetNearFogValuesP
 /* 0897A0 7F054C70 AFAE0034 */   sw    $t6, 0x34($sp)
 /* 0897A4 7F054C74 50400039 */  beql  $v0, $zero, .L7F054D5C
 /* 0897A8 7F054C78 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -44237,7 +44237,7 @@ void handle_gas_damage(void)
     {
         if (disable_player_pickups_flag == 0)
         {
-            switch_to_solosky2(toxic_gas_sound_timer / gas_damage_flag);
+            fogSwitchToSolosky2(toxic_gas_sound_timer / gas_damage_flag);
             if (gas_cutoff_flag != 0)
             {
                 if (D_80030ADC < (g_GlobalTimer - 0xe1))
@@ -44323,7 +44323,7 @@ glabel handle_gas_damage
 /* 08AB18 7F055FE8 55E0005A */  bnezl $t7, .L7F056154
 /* 08AB1C 7F055FEC 8FBF001C */   lw    $ra, 0x1c($sp)
 /* 08AB20 7F055FF0 C4321E78 */  lwc1  $f18, %lo(gas_damage_flag)($at)
-/* 08AB24 7F055FF4 0FC2EB2A */  jal   switch_to_solosky2
+/* 08AB24 7F055FF4 0FC2EB2A */  jal   fogSwitchToSolosky2
 /* 08AB28 7F055FF8 46120303 */   div.s $f12, $f0, $f18
 /* 08AB2C 7F055FFC 3C188007 */  lui   $t8, %hi(gas_cutoff_flag) 
 /* 08AB30 7F056000 8F181E7C */  lw    $t8, %lo(gas_cutoff_flag)($t8)

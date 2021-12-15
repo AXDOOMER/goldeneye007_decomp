@@ -7962,7 +7962,7 @@ actionE6_If_16_Object_And_Preset_Are_In_Same_Room_RVL_5:
 actionE9_Instantly_Switch_Sky_To_Sky_2_1:
 /* 06E85C 7F039D2C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 06E860 7F039D30 44816000 */  mtc1  $at, $f12
-/* 06E864 7F039D34 0FC2EB2A */  jal   switch_to_solosky2
+/* 06E864 7F039D34 0FC2EB2A */  jal   fogSwitchToSolosky2
 /* 06E868 7F039D38 00000000 */   nop   
 /* 06E86C 7F039D3C 26520001 */  addiu $s2, $s2, 1
 /* 06E870 7F039D40 1000EE12 */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -13829,7 +13829,7 @@ actionE6_If_16_Object_And_Preset_Are_In_Same_Room_RVL_5:
 actionE9_Instantly_Switch_Sky_To_Sky_2_1:
 /* 06E85C 7F039D2C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 06E860 7F039D30 44816000 */  mtc1  $at, $f12
-/* 06E864 7F039D34 0FC2EB2A */  jal   switch_to_solosky2
+/* 06E864 7F039D34 0FC2EB2A */  jal   fogSwitchToSolosky2
 /* 06E868 7F039D38 00000000 */   nop   
 /* 06E86C 7F039D3C 26520001 */  addiu $s2, $s2, 1
 /* 06E870 7F039D40 1000EE12 */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -19729,7 +19729,7 @@ actionE6_If_16_Object_And_Preset_Are_In_Same_Room_RVL_5:
 actionE9_Instantly_Switch_Sky_To_Sky_2_1:
 /* 06C7DC 7F039DEC 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 06C7E0 7F039DF0 44816000 */  mtc1  $at, $f12
-/* 06C7E4 7F039DF4 0FC2E81E */  jal   switch_to_solosky2
+/* 06C7E4 7F039DF4 0FC2E81E */  jal   fogSwitchToSolosky2
 /* 06C7E8 7F039DF8 00000000 */   nop   
 /* 06C7EC 7F039DFC 26520001 */  addiu $s2, $s2, 1
 /* 06C7F0 7F039E00 1000EDF2 */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -20137,7 +20137,7 @@ void chraiUpdateOnscreenPropCount(void)
 
         for (j = i; j < count; j++)
         {
-            f32 f = *(f32*)&g_OnScreenPropList[j]->Unk18;
+            f32 f = g_OnScreenPropList[j]->Unk18;
 
             if (phi_f12 < f)
             {
