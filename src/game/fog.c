@@ -435,167 +435,37 @@ void switch_to_solosky2(f32 arg0)
 
 
 
-#ifdef NONMATCHING
+/**
+ * @param gdl:
+ * @param arg1: not used?
+ * 
+ * Address 0x7F0BB070.
+*/
+Gfx *sub_GAME_7F0BB070(Gfx *gdl, s32 arg1)
+{
+    if (g_FogSkyIsEnabled == 0)
+    {
+        return gdl;
+    }
 
-void sub_GAME_7F0BB070(void) {
+    // note: both branches are exactly the same.
+    // maybe one has debug code?
+    if (arg1)
+    {
+        gDPSetFogColor(gdl++, ptr_current_data.red, ptr_current_data.green, ptr_current_data.blue, 0xff);
+        gSPFogPosition(gdl++, ptr_current_data.dif_in_light, ptr_current_data.far_ambiantlight);
+    }
+    else
+    {
+        gDPSetFogColor(gdl++, ptr_current_data.red, ptr_current_data.green, ptr_current_data.blue, 0xff);
+        gSPFogPosition(gdl++, ptr_current_data.dif_in_light, ptr_current_data.far_ambiantlight);
+    }
 
+    gSPSetGeometryMode(gdl++, G_FOG);
+    gDPSetAlphaDither(gdl++, G_AD_NOISE);
+
+    return gdl;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BB070
-/* 0EFBA0 7F0BB070 3C0E8008 */  lui   $t6, %hi(g_FogSkyIsEnabled) 
-/* 0EFBA4 7F0BB074 8DCE25C0 */  lw    $t6, %lo(g_FogSkyIsEnabled)($t6)
-/* 0EFBA8 7F0BB078 15C00003 */  bnez  $t6, .L7F0BB088
-/* 0EFBAC 7F0BB07C 00000000 */   nop   
-/* 0EFBB0 7F0BB080 03E00008 */  jr    $ra
-/* 0EFBB4 7F0BB084 00801025 */   move  $v0, $a0
-
-.L7F0BB088:
-/* 0EFBB8 7F0BB088 10A0003D */  beqz  $a1, .L7F0BB180
-/* 0EFBBC 7F0BB08C 3C078004 */   lui   $a3, %hi(ptr_current_data)
-/* 0EFBC0 7F0BB090 3C078004 */  lui   $a3, %hi(ptr_current_data)
-/* 0EFBC4 7F0BB094 00801025 */  move  $v0, $a0
-/* 0EFBC8 7F0BB098 3C0FF800 */  lui   $t7, 0xf800
-/* 0EFBCC 7F0BB09C 24E74DCC */  addiu $a3, %lo(ptr_current_data) # addiu $a3, $a3, 0x4dcc
-/* 0EFBD0 7F0BB0A0 AC4F0000 */  sw    $t7, ($v0)
-/* 0EFBD4 7F0BB0A4 90ED000A */  lbu   $t5, 0xa($a3)
-/* 0EFBD8 7F0BB0A8 90EA0009 */  lbu   $t2, 9($a3)
-/* 0EFBDC 7F0BB0AC 90F90008 */  lbu   $t9, 8($a3)
-/* 0EFBE0 7F0BB0B0 01A07025 */  move  $t6, $t5
-/* 0EFBE4 7F0BB0B4 000A5C00 */  sll   $t3, $t2, 0x10
-/* 0EFBE8 7F0BB0B8 00194600 */  sll   $t0, $t9, 0x18
-/* 0EFBEC 7F0BB0BC 010B6025 */  or    $t4, $t0, $t3
-/* 0EFBF0 7F0BB0C0 000E7A00 */  sll   $t7, $t6, 8
-/* 0EFBF4 7F0BB0C4 018FC025 */  or    $t8, $t4, $t7
-/* 0EFBF8 7F0BB0C8 371900FF */  ori   $t9, $t8, 0xff
-/* 0EFBFC 7F0BB0CC 24840008 */  addiu $a0, $a0, 8
-/* 0EFC00 7F0BB0D0 3C09BC00 */  lui   $t1, (0xBC000008 >> 16) # lui $t1, 0xbc00
-/* 0EFC04 7F0BB0D4 AC590004 */  sw    $t9, 4($v0)
-/* 0EFC08 7F0BB0D8 35290008 */  ori   $t1, (0xBC000008 & 0xFFFF) # ori $t1, $t1, 8
-/* 0EFC0C 7F0BB0DC 00801825 */  move  $v1, $a0
-/* 0EFC10 7F0BB0E0 AC690000 */  sw    $t1, ($v1)
-/* 0EFC14 7F0BB0E4 8CEA0004 */  lw    $t2, 4($a3)
-/* 0EFC18 7F0BB0E8 8CE50000 */  lw    $a1, ($a3)
-/* 0EFC1C 7F0BB0EC 3C080001 */  lui   $t0, (0x0001F400 >> 16) # lui $t0, 1
-/* 0EFC20 7F0BB0F0 3508F400 */  ori   $t0, (0x0001F400 & 0xFFFF) # ori $t0, $t0, 0xf400
-/* 0EFC24 7F0BB0F4 01453023 */  subu  $a2, $t2, $a1
-/* 0EFC28 7F0BB0F8 0106001A */  div   $zero, $t0, $a2
-/* 0EFC2C 7F0BB0FC 00056023 */  negu  $t4, $a1
-/* 0EFC30 7F0BB100 000C7A00 */  sll   $t7, $t4, 8
-/* 0EFC34 7F0BB104 01E8C021 */  addu  $t8, $t7, $t0
-/* 0EFC38 7F0BB108 00005812 */  mflo  $t3
-/* 0EFC3C 7F0BB10C 316DFFFF */  andi  $t5, $t3, 0xffff
-/* 0EFC40 7F0BB110 000D7400 */  sll   $t6, $t5, 0x10
-/* 0EFC44 7F0BB114 0306001A */  div   $zero, $t8, $a2
-/* 0EFC48 7F0BB118 0000C812 */  mflo  $t9
-/* 0EFC4C 7F0BB11C 3329FFFF */  andi  $t1, $t9, 0xffff
-/* 0EFC50 7F0BB120 01C95025 */  or    $t2, $t6, $t1
-/* 0EFC54 7F0BB124 AC6A0004 */  sw    $t2, 4($v1)
-/* 0EFC58 7F0BB128 24840008 */  addiu $a0, $a0, 8
-/* 0EFC5C 7F0BB12C 14C00002 */  bnez  $a2, .L7F0BB138
-/* 0EFC60 7F0BB130 00000000 */   nop   
-/* 0EFC64 7F0BB134 0007000D */  break 7
-.L7F0BB138:
-/* 0EFC68 7F0BB138 2401FFFF */  li    $at, -1
-/* 0EFC6C 7F0BB13C 14C10004 */  bne   $a2, $at, .L7F0BB150
-/* 0EFC70 7F0BB140 3C018000 */   lui   $at, 0x8000
-/* 0EFC74 7F0BB144 15010002 */  bne   $t0, $at, .L7F0BB150
-/* 0EFC78 7F0BB148 00000000 */   nop   
-/* 0EFC7C 7F0BB14C 0006000D */  break 6
-.L7F0BB150:
-/* 0EFC80 7F0BB150 01000821 */  addu  $at, $t0, $zero
-/* 0EFC84 7F0BB154 14C00002 */  bnez  $a2, .L7F0BB160
-/* 0EFC88 7F0BB158 00000000 */   nop   
-/* 0EFC8C 7F0BB15C 0007000D */  break 7
-.L7F0BB160:
-/* 0EFC90 7F0BB160 2401FFFF */  li    $at, -1
-/* 0EFC94 7F0BB164 14C10004 */  bne   $a2, $at, .L7F0BB178
-/* 0EFC98 7F0BB168 3C018000 */   lui   $at, 0x8000
-/* 0EFC9C 7F0BB16C 17010002 */  bne   $t8, $at, .L7F0BB178
-/* 0EFCA0 7F0BB170 00000000 */   nop   
-/* 0EFCA4 7F0BB174 0006000D */  break 6
-.L7F0BB178:
-/* 0EFCA8 7F0BB178 1000003B */  b     .L7F0BB268
-/* 0EFCAC 7F0BB17C 24850008 */   addiu $a1, $a0, 8
-.L7F0BB180:
-/* 0EFCB0 7F0BB180 00801025 */  move  $v0, $a0
-/* 0EFCB4 7F0BB184 3C08F800 */  lui   $t0, 0xf800
-/* 0EFCB8 7F0BB188 24E74DCC */  addiu $a3, $a3, %lo(ptr_current_data)
-/* 0EFCBC 7F0BB18C AC480000 */  sw    $t0, ($v0)
-/* 0EFCC0 7F0BB190 90E9000A */  lbu   $t1, 0xa($a3)
-/* 0EFCC4 7F0BB194 90F80009 */  lbu   $t8, 9($a3)
-/* 0EFCC8 7F0BB198 90ED0008 */  lbu   $t5, 8($a3)
-/* 0EFCCC 7F0BB19C 01205025 */  move  $t2, $t1
-/* 0EFCD0 7F0BB1A0 0018CC00 */  sll   $t9, $t8, 0x10
-/* 0EFCD4 7F0BB1A4 000D6600 */  sll   $t4, $t5, 0x18
-/* 0EFCD8 7F0BB1A8 01997025 */  or    $t6, $t4, $t9
-/* 0EFCDC 7F0BB1AC 000A4200 */  sll   $t0, $t2, 8
-/* 0EFCE0 7F0BB1B0 01C85825 */  or    $t3, $t6, $t0
-/* 0EFCE4 7F0BB1B4 356D00FF */  ori   $t5, $t3, 0xff
-/* 0EFCE8 7F0BB1B8 24840008 */  addiu $a0, $a0, 8
-/* 0EFCEC 7F0BB1BC 3C0FBC00 */  lui   $t7, (0xBC000008 >> 16) # lui $t7, 0xbc00
-/* 0EFCF0 7F0BB1C0 AC4D0004 */  sw    $t5, 4($v0)
-/* 0EFCF4 7F0BB1C4 35EF0008 */  ori   $t7, (0xBC000008 & 0xFFFF) # ori $t7, $t7, 8
-/* 0EFCF8 7F0BB1C8 00801825 */  move  $v1, $a0
-/* 0EFCFC 7F0BB1CC AC6F0000 */  sw    $t7, ($v1)
-/* 0EFD00 7F0BB1D0 8CF80004 */  lw    $t8, 4($a3)
-/* 0EFD04 7F0BB1D4 8CE50000 */  lw    $a1, ($a3)
-/* 0EFD08 7F0BB1D8 3C0C0001 */  lui   $t4, (0x0001F400 >> 16) # lui $t4, 1
-/* 0EFD0C 7F0BB1DC 358CF400 */  ori   $t4, (0x0001F400 & 0xFFFF) # ori $t4, $t4, 0xf400
-/* 0EFD10 7F0BB1E0 03053023 */  subu  $a2, $t8, $a1
-/* 0EFD14 7F0BB1E4 0186001A */  div   $zero, $t4, $a2
-/* 0EFD18 7F0BB1E8 00057023 */  negu  $t6, $a1
-/* 0EFD1C 7F0BB1EC 000E4200 */  sll   $t0, $t6, 8
-/* 0EFD20 7F0BB1F0 010C5821 */  addu  $t3, $t0, $t4
-/* 0EFD24 7F0BB1F4 0000C812 */  mflo  $t9
-/* 0EFD28 7F0BB1F8 3329FFFF */  andi  $t1, $t9, 0xffff
-/* 0EFD2C 7F0BB1FC 00095400 */  sll   $t2, $t1, 0x10
-/* 0EFD30 7F0BB200 0166001A */  div   $zero, $t3, $a2
-/* 0EFD34 7F0BB204 00006812 */  mflo  $t5
-/* 0EFD38 7F0BB208 31AFFFFF */  andi  $t7, $t5, 0xffff
-/* 0EFD3C 7F0BB20C 014FC025 */  or    $t8, $t2, $t7
-/* 0EFD40 7F0BB210 AC780004 */  sw    $t8, 4($v1)
-/* 0EFD44 7F0BB214 24840008 */  addiu $a0, $a0, 8
-/* 0EFD48 7F0BB218 14C00002 */  bnez  $a2, .L7F0BB224
-/* 0EFD4C 7F0BB21C 00000000 */   nop   
-/* 0EFD50 7F0BB220 0007000D */  break 7
-.L7F0BB224:
-/* 0EFD54 7F0BB224 2401FFFF */  li    $at, -1
-/* 0EFD58 7F0BB228 14C10004 */  bne   $a2, $at, .L7F0BB23C
-/* 0EFD5C 7F0BB22C 3C018000 */   lui   $at, 0x8000
-/* 0EFD60 7F0BB230 15810002 */  bne   $t4, $at, .L7F0BB23C
-/* 0EFD64 7F0BB234 00000000 */   nop   
-/* 0EFD68 7F0BB238 0006000D */  break 6
-.L7F0BB23C:
-/* 0EFD6C 7F0BB23C 01800821 */  addu  $at, $t4, $zero
-/* 0EFD70 7F0BB240 14C00002 */  bnez  $a2, .L7F0BB24C
-/* 0EFD74 7F0BB244 00000000 */   nop   
-/* 0EFD78 7F0BB248 0007000D */  break 7
-.L7F0BB24C:
-/* 0EFD7C 7F0BB24C 2401FFFF */  li    $at, -1
-/* 0EFD80 7F0BB250 14C10004 */  bne   $a2, $at, .L7F0BB264
-/* 0EFD84 7F0BB254 3C018000 */   lui   $at, 0x8000
-/* 0EFD88 7F0BB258 15610002 */  bne   $t3, $at, .L7F0BB264
-/* 0EFD8C 7F0BB25C 00000000 */   nop   
-/* 0EFD90 7F0BB260 0006000D */  break 6
-.L7F0BB264:
-/* 0EFD94 7F0BB264 24850008 */  addiu $a1, $a0, 8
-.L7F0BB268:
-/* 0EFD98 7F0BB268 3C0CB700 */  lui   $t4, 0xb700
-/* 0EFD9C 7F0BB26C 3C190001 */  lui   $t9, 1
-/* 0EFDA0 7F0BB270 AC990004 */  sw    $t9, 4($a0)
-/* 0EFDA4 7F0BB274 AC8C0000 */  sw    $t4, ($a0)
-/* 0EFDA8 7F0BB278 3C09BA00 */  lui   $t1, (0xBA000402 >> 16) # lui $t1, 0xba00
-/* 0EFDAC 7F0BB27C 35290402 */  ori   $t1, (0xBA000402 & 0xFFFF) # ori $t1, $t1, 0x402
-/* 0EFDB0 7F0BB280 240E0020 */  li    $t6, 32
-/* 0EFDB4 7F0BB284 ACAE0004 */  sw    $t6, 4($a1)
-/* 0EFDB8 7F0BB288 ACA90000 */  sw    $t1, ($a1)
-/* 0EFDBC 7F0BB28C 24A20008 */  addiu $v0, $a1, 8
-/* 0EFDC0 7F0BB290 03E00008 */  jr    $ra
-/* 0EFDC4 7F0BB294 00000000 */   nop   
-)
-#endif
 
 
 
