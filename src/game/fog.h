@@ -84,6 +84,7 @@ struct fog_loaded {
 
 struct fog_loaded *get_ptr_currentdata(void);
 f32 square_near_fog_value(void);
+void load_enviroment(s32 level_id, s32 arg1);
 s32 fogPositionIsVisibleThroughFog(struct coord3d *pos, f32 range);
 Gfx *sub_GAME_7F0BB070(Gfx *arg0, s32 arg1);
 Gfx *sub_GAME_7F0BB298(Gfx *arg0);
