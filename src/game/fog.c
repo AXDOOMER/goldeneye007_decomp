@@ -471,31 +471,20 @@ Gfx *sub_GAME_7F0BB070(Gfx *gdl, s32 arg1)
 
 
 
-#ifdef NONMATCHING
+/**
+ * Address 0x7F0BB298.
+*/
+Gfx *sub_GAME_7F0BB298(Gfx *gdl)
+{
+    if (g_FogSkyIsEnabled == 0)
+    {
+        return gdl;
+    }
 
-void sub_GAME_7F0BB298(void) {
+    gSPClearGeometryMode(gdl++, G_FOG);
 
+    return gdl;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BB298
-/* 0EFDC8 7F0BB298 3C0E8008 */  lui   $t6, %hi(g_FogSkyIsEnabled) 
-/* 0EFDCC 7F0BB29C 8DCE25C0 */  lw    $t6, %lo(g_FogSkyIsEnabled)($t6)
-/* 0EFDD0 7F0BB2A0 24820008 */  addiu $v0, $a0, 8
-/* 0EFDD4 7F0BB2A4 3C0FB600 */  lui   $t7, 0xb600
-/* 0EFDD8 7F0BB2A8 15C00003 */  bnez  $t6, .L7F0BB2B8
-/* 0EFDDC 7F0BB2AC 3C180001 */   lui   $t8, 1
-/* 0EFDE0 7F0BB2B0 03E00008 */  jr    $ra
-/* 0EFDE4 7F0BB2B4 00801025 */   move  $v0, $a0
-
-.L7F0BB2B8:
-/* 0EFDE8 7F0BB2B8 AC8F0000 */  sw    $t7, ($a0)
-/* 0EFDEC 7F0BB2BC AC980004 */  sw    $t8, 4($a0)
-/* 0EFDF0 7F0BB2C0 03E00008 */  jr    $ra
-/* 0EFDF4 7F0BB2C4 00000000 */   nop   
-)
-#endif
 
 
 
