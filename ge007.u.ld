@@ -127,8 +127,8 @@ SECTIONS
       build/u/src/libultra/pidma.o (.text);
       build/u/src/libultra/visetspecial.o (.text);
       build/u/src/libultra/libc/bcopy.o (.text);
-      build/u/src/libultra/perspective.o (.text);
-      build/u/src/libultra/mtxutil.o (.text);
+      build/u/src/libultra/gu/perspective.o (.text);
+      build/u/src/libultra/gu/mtxutil.o (.text);
       build/u/src/libultra/getcurrfaultthread.o (.text);
       build/u/src/libultra/exception.o (.text); /*edited*/
       build/u/src/libultra/thread.o (.text);
@@ -176,16 +176,16 @@ SECTIONS
       build/u/src/libultra/crc.o (.text);
       build/u/src/libultra/contramwrite.o (.text);
       build/u/src/libultra/contramread.o (.text);
-      build/u/src/libultra/align.o (.text);
-      build/u/src/libultra/ortho.o (.text);
-      build/u/src/libultra/coss.o (.text);
-      build/u/src/libultra/sins.o (.text);
-      build/u/src/libultra/translate.o (.text);
+      build/u/src/libultra/gu/align.o (.text);
+      build/u/src/libultra/gu/ortho.o (.text);
+      build/u/src/libultra/gu/coss.o (.text);
+      build/u/src/libultra/gu/sins.o (.text);
+      build/u/src/libultra/gu/translate.o (.text);
       build/u/src/libultra/libc/bcmp.o (.text);
-      build/u/src/libultra/scale.o (.text);
-      build/u/src/libultra/lookatref.o (.text);
-      build/u/src/libultra/lookat.o (.text);
-      build/u/src/libultra/rotate.o (.text);
+      build/u/src/libultra/gu/scale.o (.text);
+      build/u/src/libultra/gu/lookatref.o (.text);
+      build/u/src/libultra/gu/lookat.o (.text);
+      build/u/src/libultra/gu/rotate.o (.text);
       build/u/src/libultra/llcvt.o (.text); /*edited*/
       build/u/src/libultra/setsr.o (.text);
       build/u/src/libultra/os/getsr.o (.text);
@@ -234,7 +234,7 @@ SECTIONS
       build/u/src/libultra/devmgr.o (.text);
       build/u/src/libultra/contpfs.o (.text);
       build/u/src/libultra/si.o (.text);
-      build/u/src/libultra/normalize.o (.text);
+      build/u/src/libultra/gu/normalize.o (.text);
       build/u/src/libultra/gu/sqrtf.o (.text);
       build/u/src/libultra/leodiskinit.o (.text);
       build/u/src/libultra/setcompare.o (.text);
@@ -3339,8 +3339,8 @@ SECTIONS
       build/u/src/libultra/pidma.o (.data);
       build/u/src/libultra/visetspecial.o (.data);
       build/u/src/libultra/libc/bcopy.o (.data);
-      build/u/src/libultra/perspective.o (.data);
-      build/u/src/libultra/mtxutil.o (.data);
+      build/u/src/libultra/gu/perspective.o (.data);
+      build/u/src/libultra/gu/mtxutil.o (.data);
       build/u/src/libultra/getcurrfaultthread.o (.data);
       build/u/src/libultra/exception.o (.data); /*edited*/
       build/u/src/libultra/thread.o (.data);
@@ -3388,16 +3388,16 @@ SECTIONS
       build/u/src/libultra/crc.o (.data);
       build/u/src/libultra/contramwrite.o (.data);
       build/u/src/libultra/contramread.o (.data);
-      build/u/src/libultra/align.o (.data);
-      build/u/src/libultra/ortho.o (.data);
-      build/u/src/libultra/coss.o (.data);
-      build/u/src/libultra/sins.o (.data);
-      build/u/src/libultra/translate.o (.data);
+      build/u/src/libultra/gu/align.o (.data);
+      build/u/src/libultra/gu/ortho.o (.data);
+      build/u/src/libultra/gu/coss.o (.data);
+      build/u/src/libultra/gu/sins.o (.data);
+      build/u/src/libultra/gu/translate.o (.data);
       build/u/src/libultra/libc/bcmp.o (.data);
-      build/u/src/libultra/scale.o (.data);
-      build/u/src/libultra/lookatref.o (.data);
-      build/u/src/libultra/lookat.o (.data);
-      build/u/src/libultra/rotate.o (.data);
+      build/u/src/libultra/gu/scale.o (.data);
+      build/u/src/libultra/gu/lookatref.o (.data);
+      build/u/src/libultra/gu/lookat.o (.data);
+      build/u/src/libultra/gu/rotate.o (.data);
       build/u/src/libultra/llcvt.o (.data); /*edited*/
       build/u/src/libultra/setsr.o (.data);
       build/u/src/libultra/os/getsr.o (.data);
@@ -3446,7 +3446,7 @@ SECTIONS
       build/u/src/libultra/devmgr.o (.data);
       build/u/src/libultra/contpfs.o (.data);
       build/u/src/libultra/si.o (.data);
-      build/u/src/libultra/normalize.o (.data);
+      build/u/src/libultra/gu/normalize.o (.data);
       build/u/src/libultra/gu/sqrtf.o (.data);
       build/u/src/libultra/leodiskinit.o (.data);
       build/u/src/libultra/setcompare.o (.data);
@@ -3547,8 +3547,8 @@ SECTIONS
       build/u/src/libultra/pidma.o (.rodata);
       build/u/src/libultra/visetspecial.o (.rodata);
       build/u/src/libultra/libc/bcopy.o (.rodata);
-      build/u/src/libultra/perspective.o (.rodata);
-      build/u/src/libultra/mtxutil.o (.rodata);
+      build/u/src/libultra/gu/perspective.o (.rodata);
+      build/u/src/libultra/gu/mtxutil.o (.rodata);
       build/u/src/libultra/getcurrfaultthread.o (.rodata);
       build/u/src/libultra/exception.o (.rodata); /*edited*/
       build/u/src/libultra/thread.o (.rodata);
@@ -3596,16 +3596,16 @@ SECTIONS
       build/u/src/libultra/crc.o (.rodata);
       build/u/src/libultra/contramwrite.o (.rodata);
       build/u/src/libultra/contramread.o (.rodata);
-      build/u/src/libultra/align.o (.rodata);
-      build/u/src/libultra/ortho.o (.rodata);
-      build/u/src/libultra/coss.o (.rodata);
-      build/u/src/libultra/sins.o (.rodata);
-      build/u/src/libultra/translate.o (.rodata);
+      build/u/src/libultra/gu/align.o (.rodata);
+      build/u/src/libultra/gu/ortho.o (.rodata);
+      build/u/src/libultra/gu/coss.o (.rodata);
+      build/u/src/libultra/gu/sins.o (.rodata);
+      build/u/src/libultra/gu/translate.o (.rodata);
       build/u/src/libultra/libc/bcmp.o (.rodata);
-      build/u/src/libultra/scale.o (.rodata);
-      build/u/src/libultra/lookatref.o (.rodata);
-      build/u/src/libultra/lookat.o (.rodata);
-      build/u/src/libultra/rotate.o (.rodata);
+      build/u/src/libultra/gu/scale.o (.rodata);
+      build/u/src/libultra/gu/lookatref.o (.rodata);
+      build/u/src/libultra/gu/lookat.o (.rodata);
+      build/u/src/libultra/gu/rotate.o (.rodata);
       build/u/src/libultra/llcvt.o (.rodata); /*edited*/
       build/u/src/libultra/setsr.o (.rodata);
       build/u/src/libultra/os/getsr.o (.rodata);
@@ -3654,7 +3654,7 @@ SECTIONS
       build/u/src/libultra/devmgr.o (.rodata);
       build/u/src/libultra/contpfs.o (.rodata);
       build/u/src/libultra/si.o (.rodata);
-      build/u/src/libultra/normalize.o (.rodata);
+      build/u/src/libultra/gu/normalize.o (.rodata);
       build/u/src/libultra/gu/sqrtf.o (.rodata);
       build/u/src/libultra/leodiskinit.o (.rodata);
       build/u/src/libultra/setcompare.o (.rodata);
@@ -4020,8 +4020,8 @@ SECTIONS
       build/u/src/libultra/pidma.o (.bss);
       build/u/src/libultra/visetspecial.o (.bss);
       build/u/src/libultra/libc/bcopy.o (.bss);
-      build/u/src/libultra/perspective.o (.bss);
-      build/u/src/libultra/mtxutil.o (.bss);
+      build/u/src/libultra/gu/perspective.o (.bss);
+      build/u/src/libultra/gu/mtxutil.o (.bss);
       build/u/src/libultra/getcurrfaultthread.o (.bss);
       build/u/src/libultra/exception.o (.bss); /*edited*/
       build/u/src/libultra/thread.o (.bss);
@@ -4069,16 +4069,16 @@ SECTIONS
       build/u/src/libultra/crc.o (.bss);
       build/u/src/libultra/contramwrite.o (.bss);
       build/u/src/libultra/contramread.o (.bss);
-      build/u/src/libultra/align.o (.bss);
-      build/u/src/libultra/ortho.o (.bss);
-      build/u/src/libultra/coss.o (.bss);
-      build/u/src/libultra/sins.o (.bss);
-      build/u/src/libultra/translate.o (.bss);
+      build/u/src/libultra/gu/align.o (.bss);
+      build/u/src/libultra/gu/ortho.o (.bss);
+      build/u/src/libultra/gu/coss.o (.bss);
+      build/u/src/libultra/gu/sins.o (.bss);
+      build/u/src/libultra/gu/translate.o (.bss);
       build/u/src/libultra/libc/bcmp.o (.bss);
-      build/u/src/libultra/scale.o (.bss);
-      build/u/src/libultra/lookatref.o (.bss);
-      build/u/src/libultra/lookat.o (.bss);
-      build/u/src/libultra/rotate.o (.bss);
+      build/u/src/libultra/gu/scale.o (.bss);
+      build/u/src/libultra/gu/lookatref.o (.bss);
+      build/u/src/libultra/gu/lookat.o (.bss);
+      build/u/src/libultra/gu/rotate.o (.bss);
       build/u/src/libultra/llcvt.o (.bss); /*edited*/
       build/u/src/libultra/setsr.o (.bss);
       build/u/src/libultra/os/getsr.o (.bss);
@@ -4127,7 +4127,7 @@ SECTIONS
       build/u/src/libultra/devmgr.o (.bss);
       build/u/src/libultra/contpfs.o (.bss);
       build/u/src/libultra/si.o (.bss);
-      build/u/src/libultra/normalize.o (.bss);
+      build/u/src/libultra/gu/normalize.o (.bss);
       build/u/src/libultra/gu/sqrtf.o (.bss);
       build/u/src/libultra/leodiskinit.o (.bss);
       build/u/src/libultra/setcompare.o (.bss);
