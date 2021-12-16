@@ -221,8 +221,8 @@ SECTIONS
       build/j/src/libultra/audio/save.o (.text);
       build/j/src/libultra/os/jammesg.o (.text);
       build/j/src/libultra/io/pigetcmdq.o (.text);
-      build/j/src/libultra/ultra7001B830.o (.text); /*edited*/
-      build/j/src/libultra/ultra7001B9A0.o (.text); /*edited*/
+      build/j/src/libultra/gu/cosf.o (.text); /*edited*/
+      build/j/src/libultra/gu/sinf.o (.text); /*edited*/
       build/j/src/libultra/os/destroythread.o (.text);
       build/j/src/libultra/audio/seqplayer.o (.text);
       build/j/src/libultra/audio/synstartvoiceparam.o (.text);
@@ -3430,8 +3430,8 @@ SECTIONS
       build/j/src/libultra/audio/save.o (.data);
       build/j/src/libultra/os/jammesg.o (.data);
       build/j/src/libultra/io/pigetcmdq.o (.data);
-      build/j/src/libultra/ultra7001B830.o (.data); /*edited*/
-      build/j/src/libultra/ultra7001B9A0.o (.data); /*edited*/
+      build/j/src/libultra/gu/cosf.o (.data); /*edited*/
+      build/j/src/libultra/gu/sinf.o (.data); /*edited*/
       build/j/src/libultra/os/destroythread.o (.data);
       build/j/src/libultra/audio/seqplayer.o (.data);
       build/j/src/libultra/audio/synstartvoiceparam.o (.data);
@@ -3640,8 +3640,8 @@ SECTIONS
       build/j/src/libultra/audio/save.o (.rodata);
       build/j/src/libultra/os/jammesg.o (.rodata);
       build/j/src/libultra/io/pigetcmdq.o (.rodata);
-      build/j/src/libultra/ultra7001B830.o (.rodata); /*edited*/
-      build/j/src/libultra/ultra7001B9A0.o (.rodata); /*edited*/
+      build/j/src/libultra/gu/cosf.o (.rodata); /*edited*/
+      build/j/src/libultra/gu/sinf.o (.rodata); /*edited*/
       build/j/src/libultra/os/destroythread.o (.rodata);
       build/j/src/libultra/audio/seqplayer.o (.rodata);
       build/j/src/libultra/audio/synstartvoiceparam.o (.rodata);
@@ -4113,8 +4113,8 @@ SECTIONS
       build/j/src/libultra/audio/save.o (.bss);
       build/j/src/libultra/os/jammesg.o (.bss);
       build/j/src/libultra/io/pigetcmdq.o (.bss);
-      build/j/src/libultra/ultra7001B830.o (.bss); /*edited*/
-      build/j/src/libultra/ultra7001B9A0.o (.bss); /*edited*/
+      build/j/src/libultra/gu/cosf.o (.bss); /*edited*/
+      build/j/src/libultra/gu/sinf.o (.bss); /*edited*/
       build/j/src/libultra/os/destroythread.o (.bss);
       build/j/src/libultra/audio/seqplayer.o (.bss);
       build/j/src/libultra/audio/synstartvoiceparam.o (.bss);
