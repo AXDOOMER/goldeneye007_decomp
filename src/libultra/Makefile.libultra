@@ -3,7 +3,10 @@
 LIBULTRA_INCLUDE := -I . -I include -I include/PR -I src/libultra
 LIBULTRA_OPTIMIZATION := -O1
 
-CFLAGS_LIBULTRA = -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821,838,649 -signed $(LIBULTRA_INCLUDE) $(LCDEFS) -DTARGET_N64 $(MIPSISET) $(LIBULTRA_OPTIMIZATION)
+# disable trying to link to __assert function
+ASSERT_FLAG := -DNDEBUG
+
+CFLAGS_LIBULTRA = -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821,838,649 -signed $(LIBULTRA_INCLUDE) $(LCDEFS) $(ASSERT_FLAG) -DTARGET_N64 $(MIPSISET) $(LIBULTRA_OPTIMIZATION)
 
 
 ULTRAFILES_S := $(foreach dir,src/libultra,$(wildcard $(dir)/*.s))
@@ -67,6 +70,11 @@ $(BUILD_DIR)/src/libultra/%.o: src/libultra/%.c
 
 $(BUILD_DIR)/src/libultra/audio/auxbus.o: LIBULTRA_OPTIMIZATION := -O3
 $(BUILD_DIR)/src/libultra/audio/bnkf.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/cents2ratio.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/copy.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/cseq.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/cspgetstate.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/csplayer.o: LIBULTRA_OPTIMIZATION := -O3
 
 $(BUILD_DIR)/src/libultra/audio/%.o: src/libultra/audio/%.c
 	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
