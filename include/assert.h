@@ -39,12 +39,15 @@ extern "C" {
 
 #else
 
-extern void __assert(const char *, const char *, int);
-#ifdef __ANSI_CPP__
-#define assert(EX)  ((EX)?((void)0):__assert( # EX , __FILE__, __LINE__))
-#else
-#define assert(EX)  ((EX)?((void)0):__assert("EX", __FILE__, __LINE__))
-#endif
+extern s32		osSyncPrintf(const char *fmt, ...);
+#define assert(EX)  if(EX)osSyncPrintf("\n--- ASSERTION FAULT - %s - %s, line %d\n\n", # EX , __FILE__, __LINE__)
+
+// extern void __assert(const char *, const char *, int);
+// #ifdef __ANSI_CPP__
+// #define assert(EX)  ((EX)?((void)0):__assert( # EX , __FILE__, __LINE__))
+// #else
+// #define assert(EX)  ((EX)?((void)0):__assert("EX", __FILE__, __LINE__))
+// #endif
 #endif /* NDEBUG */
 
 #ifdef __cplusplus
