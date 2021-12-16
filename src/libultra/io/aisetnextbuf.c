@@ -1,6 +1,6 @@
 #include "libultra_internal.h"
 #include "include/PR/os.h"
-#include "hardware.h"
+#include "include/PR/rcp.h"
 
 u8 D_80334820 = 0;
 
@@ -34,7 +34,7 @@ s32 osAiSetNextBuffer(void *buff, u32 len) {
         return -1;
     }
 
-    HW_REG(AI_DRAM_ADDR_REG, void *) = (void *) osVirtualToPhysical(sp1c);
-    HW_REG(AI_LEN_REG, u32) = len;
+    IO_WRITE(AI_DRAM_ADDR_REG, osVirtualToPhysical(sp1c));
+    IO_WRITE(AI_LEN_REG, len);
     return 0;
 }

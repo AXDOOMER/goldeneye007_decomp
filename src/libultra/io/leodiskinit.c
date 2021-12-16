@@ -1,5 +1,5 @@
 #include "libultra_internal.h"
-#include "hardware.h"
+#include "include/PR/rcp.h"
 
 // this file must include some globally referenced data because it is not called anywhere
 // data, comes shortly before _Ldtob I think, before crash_screen
@@ -20,10 +20,10 @@ OSPiHandle *osLeoDiskInit(void) {
 #ifdef VERSION_SH
     LeoDiskHandle.domain = 1;
 #endif
-    HW_REG(PI_BSD_DOM2_LAT_REG, u32) = LeoDiskHandle.latency;
-    HW_REG(PI_BSD_DOM2_PWD_REG, u32) = LeoDiskHandle.pulse;
-    HW_REG(PI_BSD_DOM2_PGS_REG, u32) = LeoDiskHandle.pageSize;
-    HW_REG(PI_BSD_DOM2_RLS_REG, u32) = LeoDiskHandle.relDuration;
+    IO_WRITE(PI_BSD_DOM2_LAT_REG, LeoDiskHandle.latency);
+    IO_WRITE(PI_BSD_DOM2_PWD_REG, LeoDiskHandle.pulse);
+    IO_WRITE(PI_BSD_DOM2_PGS_REG, LeoDiskHandle.pageSize);
+    IO_WRITE(PI_BSD_DOM2_RLS_REG, LeoDiskHandle.relDuration);
     bzero(&LeoDiskHandle.transferInfo, sizeof(__OSTranxInfo));
     sp1c = __osDisableInt();
     LeoDiskHandle.next = __osPiTable;
