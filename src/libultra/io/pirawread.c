@@ -1,4 +1,3 @@
-#include "libultra_internal.h"
 #include "include/PR/rcp.h"
 #include "piint.h"
 

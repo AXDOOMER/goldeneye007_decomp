@@ -1,5 +1,6 @@
-#include "libultra_internal.h"
+#include "include/PR/os.h"
 #include "controller.h"
+#include "ultra64.h"
 
 s32 __osPackEepReadData(u8);
 OSPifRam __osEepPifRam;

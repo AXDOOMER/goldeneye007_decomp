@@ -1,4 +1,6 @@
-#include "libultra_internal.h"
+#include "include/PR/os.h"
+#include "ultra64.h"
+#include "osint.h"
 
 s32 osRecvMesg(OSMesgQueue *mq, OSMesg *msg, s32 flag) {
     register u32 int_disabled;

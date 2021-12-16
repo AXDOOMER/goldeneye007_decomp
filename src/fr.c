@@ -7,7 +7,7 @@
 #include "sched.h"
 #include "rsp.h"
 #include "PR/os.h"
-#include "include/PR/os_vi.h"
+#include "include/PR/os.h"
 #include "indy_comms.h"
 #include "game/bondview.h"
 #include "game/viewport.h"

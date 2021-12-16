@@ -1,6 +1,5 @@
 #ifndef _XSTDIO_H
 #define _XSTDIO_H
-#include "libultra/libultra_internal.h"
 #include <stdarg.h>
 
 /**

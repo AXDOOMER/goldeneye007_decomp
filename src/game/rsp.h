@@ -5,7 +5,7 @@
 
 #include "sched.h"
 #include "PR/gbi.h"
-#include "PR/os_message.h"
+#include "PR/os.h"
 #include "PR/sptask.h"
 
 /**

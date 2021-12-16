@@ -1,4 +1,5 @@
-#include "libultra_internal.h"
+#include "include/PR/os.h"
+#include "ultra64.h"
 
 void __osCleanupThread(void);
 extern struct __osThreadTail* __osActiveQueue;

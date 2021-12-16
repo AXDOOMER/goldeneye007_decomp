@@ -1,4 +1,6 @@
-#include "libultra_internal.h"
+#include "include/PR/os.h"
+#include "ultra64.h"
+#include "osint.h"
 
 void osStartThread(OSThread *thread) {
     register u32 int_disabled;

@@ -1,4 +1,5 @@
-#include "libultra_internal.h"
+#include "include/PR/os.h"
+#include "ultra64.h"
 
 uintptr_t osVirtualToPhysical(void *addr) {
     if ((uintptr_t) addr >= 0x80000000 && (uintptr_t) addr < 0xa0000000) {

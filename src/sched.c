@@ -1,6 +1,5 @@
 #include <ultra64.h>
-#include "PR/os.h"
-#include "include/PR/os_vi.h"
+#include "include/PR/os.h"
 #include "init.h"
 #include "sched.h"
 #include "bondgame.h"

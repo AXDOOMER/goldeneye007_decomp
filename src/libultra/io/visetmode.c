@@ -1,6 +1,8 @@
-#include "libultra_internal.h"
+#include "include/PR/os.h"
+#include "ultra64.h"
+#include "viint.h"
 
-extern OSViContext *__osViNext;
+extern __OSViContext *__osViNext;
 
 /**
  * Currently, there is a global VI mode table (osViModeTable) that contains register settings for
@@ -47,7 +49,7 @@ extern OSViContext *__osViNext;
 void osViSetMode(OSViMode *mode) {
     register u32 int_disabled = __osDisableInt();
     __osViNext->modep = mode;
-    __osViNext->unk00 = 1;
-    __osViNext->features = __osViNext->modep->comRegs.ctrl;
+    __osViNext->state = 1;
+    __osViNext->control = __osViNext->modep->comRegs.ctrl;
     __osRestoreInt(int_disabled);
 }

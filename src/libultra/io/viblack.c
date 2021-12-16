@@ -1,6 +1,8 @@
-#include "libultra_internal.h"
+#include "include/PR/os.h"
+#include "ultra64.h"
+#include "viint.h"
 
-extern OSViContext *__osViNext;
+extern __OSViContext *__osViNext;
 
 // TODO: name magic constants
 
@@ -26,9 +28,9 @@ extern OSViContext *__osViNext;
 void osViBlack(u8 active) {
     register u32 int_disabled = __osDisableInt();
     if (active) {
-        __osViNext->unk00 |= 0x20;
+        __osViNext->state |= 0x20;
     } else {
-        __osViNext->unk00 &= ~0x20;
+        __osViNext->state &= ~0x20;
     }
     __osRestoreInt(int_disabled);
 }

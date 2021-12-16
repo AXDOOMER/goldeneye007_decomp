@@ -1,4 +1,5 @@
-#include "libultra_internal.h"
+#include "include/PR/os.h"
+#include "ultra64.h"
 
 typedef struct OSEventMessageStruct_0_s {
     OSMesgQueue *queue;

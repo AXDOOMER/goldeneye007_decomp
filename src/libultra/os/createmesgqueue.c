@@ -1,4 +1,6 @@
-#include "libultra_internal.h"
+#include "include/PR/os.h"
+#include "ultra64.h"
+
 extern struct __osThreadTail __osThreadTail;
 
 void osCreateMesgQueue(OSMesgQueue *mq, OSMesg *msgBuf, s32 count) {

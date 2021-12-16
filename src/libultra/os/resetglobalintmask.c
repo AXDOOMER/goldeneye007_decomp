@@ -1,4 +1,3 @@
-#include "libultra_internal.h"
 #include "include/PR/os.h"
 
 void __osResetGlobalIntMask(u32 mask) {

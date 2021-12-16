@@ -1,6 +1,6 @@
 #ifndef _CONTROLLER_H
 #define _CONTROLLER_H
-#include "PR/os_internal.h"
+#include "PR/os.h"
 #include "PR/os.h"
 #include "PR/rcp.h"
 

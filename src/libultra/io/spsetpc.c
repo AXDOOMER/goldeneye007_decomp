@@ -1,5 +1,6 @@
-#include "libultra_internal.h"
+#include "include/PR/os.h"
 #include "include/PR/rcp.h"
+#include "ultra64.h"
 
 s32 __osSpSetPc(void *pc) {
     register u32 status = IO_READ(SP_STATUS_REG);

@@ -1,4 +1,5 @@
-#include "libultra_internal.h"
+#include "include/PR/os.h"
+#include "ultra64.h"
 
 extern OSTime __osCurrentTime;
 extern u32 __osBaseCounter;

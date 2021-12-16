@@ -1,5 +1,6 @@
-#include "libultra_internal.h"
 #include "include/PR/rcp.h"
+#include "include/PR/os.h"
+#include "ultra64.h"
 
 s32 __osSpDeviceBusy() {
     register u32 status = IO_READ(SP_STATUS_REG);

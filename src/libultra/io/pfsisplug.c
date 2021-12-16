@@ -1,6 +1,7 @@
-#include "PR/os_pi.h"
-#include "libultra_internal.h"
+#include "PR/os.h"
+#include "include/PR/os.h"
 #include "controller.h"
+#include "ultra64.h"
 
 extern u8 __osMaxControllers;
 
@@ -36,7 +37,7 @@ s32 osPfsIsPlug(OSMesgQueue *queue, u8 *pattern) {
         }
         if (crc_error_cnt < 1) {
             for (channel = 0; channel < __osMaxControllers; channel++) {
-                if (data[channel].errnum == 0 && (data[channel].status & CONT_CARD_ON) != 0) {
+                if (data[channel].errno == 0 && (data[channel].status & CONT_CARD_ON) != 0) {
                     bits |= 1 << channel;
                 }
             }
@@ -85,8 +86,8 @@ void __osPfsGetInitData(u8 *pattern, OSContStatus *data) {
     ptr = (u8 *)&__osPfsPifRam;
     for (i = 0; i < __osMaxControllers; i++, ptr += sizeof(__OSContRequesFormat)) {
         requestformat = *(__OSContRequesFormat *)ptr;
-        data->errnum = CHNL_ERR(requestformat);
-        if (data->errnum == 0) {
+        data->errno = CHNL_ERR(requestformat);
+        if (data->errno == 0) {
             data->type = (requestformat.typel << 8) | (requestformat.typeh);
             data->status = requestformat.status;
             bits |= 1 << i;

@@ -1,4 +1,4 @@
-#include "libultra_internal.h"
+#include "ultra64.h"l
 
 u8 __osContAddressCrc(u16 addr) {
     u8 temp;

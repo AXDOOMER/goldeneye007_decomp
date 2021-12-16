@@ -1,6 +1,7 @@
 #ifndef _OSINT_H
 #define _OSINT_H
-#include "libultra_internal.h"
+
+#include "include/PR/os.h"
 
 typedef struct __OSEventState
 {
