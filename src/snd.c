@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "PR/libaudio.h"
+#include "include/os_extension.h"
 #include "music.h"
 #include "snd.h"
 

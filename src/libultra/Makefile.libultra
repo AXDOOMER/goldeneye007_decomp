@@ -66,6 +66,7 @@ $(BUILD_DIR)/src/libultra/%.o: src/libultra/%.c
 	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
 
 $(BUILD_DIR)/src/libultra/audio/auxbus.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/bnkf.o: LIBULTRA_OPTIMIZATION := -O3
 
 $(BUILD_DIR)/src/libultra/audio/%.o: src/libultra/audio/%.c
 	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
