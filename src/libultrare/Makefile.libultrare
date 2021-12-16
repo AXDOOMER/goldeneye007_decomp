@@ -77,15 +77,35 @@ LIBULTRARE_AUDIO_S_FILES := \
 # gt
 # #################
 
-ULTRAFILES_GT_S := $(foreach dir,src/libultra/gt,$(wildcard $(dir)/*.s))
-ULTRAFILES_GT_C := $(foreach dir,src/libultra/gt,$(wildcard $(dir)/*.c))
+# nothing to do
 
 # #################
 # gu
 # #################
 
-ULTRAFILES_GU_S := $(foreach dir,src/libultra/gu,$(wildcard $(dir)/*.s))
-ULTRAFILES_GU_C := $(foreach dir,src/libultra/gu,$(wildcard $(dir)/*.c))
+LIBULTRA_GU_C_FILES := \
+    align \
+    cosf \
+    coss \
+    lookat \
+    lookatref \
+    mtxutil \
+    normalize \
+    ortho \
+    perspective \
+    rotate \
+    scale \
+    sinf \
+    sins \
+    translate
+
+LIBULTRA_GU_S_FILES := \
+    libm_vals \
+    sqrtf
+
+LIBULTRARE_GU_C_FILES := 
+
+LIBULTRARE_GU_S_FILES := 
 
 # #################
 # io
@@ -137,14 +157,17 @@ ULTRAFILES_S := $(foreach dir,src/libultrare,$(wildcard $(dir)/*.s))
 
 ULTRAOBJECTS := $(foreach file,$(ULTRAFILES_S),$(BUILD_DIR)/$(file:.s=.o)) \
 				$(foreach file,$(ULTRAFILES_C),$(BUILD_DIR)/$(file:.c=.o)) \
+                \
 				$(foreach file,$(LIBULTRA_AUDIO_C_FILES),$(BUILD_DIR)/src/libultra/audio/$(file).o) \
 				$(foreach file,$(LIBULTRA_AUDIO_S_FILES),$(BUILD_DIR)/src/libultra/audio/$(file).o) \
 				$(foreach file,$(LIBULTRARE_AUDIO_C_FILES),$(BUILD_DIR)/src/libultrare/audio/$(file).o) \
 				$(foreach file,$(LIBULTRARE_AUDIO_S_FILES),$(BUILD_DIR)/src/libultrare/audio/$(file).o) \
-				$(foreach file,$(ULTRAFILES_GT_S),$(BUILD_DIR)/$(file:.s=.o)) \
-				$(foreach file,$(ULTRAFILES_GT_C),$(BUILD_DIR)/$(file:.c=.o)) \
-				$(foreach file,$(ULTRAFILES_GU_S),$(BUILD_DIR)/$(file:.s=.o)) \
-				$(foreach file,$(ULTRAFILES_GU_C),$(BUILD_DIR)/$(file:.c=.o)) \
+                \
+				$(foreach file,$(LIBULTRA_GU_C_FILES),$(BUILD_DIR)/src/libultra/gu/$(file).o) \
+				$(foreach file,$(LIBULTRA_GU_S_FILES),$(BUILD_DIR)/src/libultra/gu/$(file).o) \
+				$(foreach file,$(LIBULTRARE_GU_C_FILES),$(BUILD_DIR)/src/libultrare/gu/$(file).o) \
+				$(foreach file,$(LIBULTRARE_GU_S_FILES),$(BUILD_DIR)/src/libultrare/gu/$(file).o) \
+                \
 				$(foreach file,$(ULTRAFILES_IO_S),$(BUILD_DIR)/$(file:.s=.o)) \
 				$(foreach file,$(ULTRAFILES_IO_C),$(BUILD_DIR)/$(file:.c=.o)) \
 				$(foreach file,$(ULTRAFILES_LIBC_S),$(BUILD_DIR)/$(file:.s=.o)) \
@@ -200,8 +223,19 @@ $(BUILD_DIR)/src/libultra/gt/%.o: src/libultra/gt/%.c
 # gu
 # #################
 
+$(BUILD_DIR)/src/libultra/gu/%.o: LIBULTRA_OPTIMIZATION := -O3
+
 $(BUILD_DIR)/src/libultra/gu/%.o: src/libultra/gu/%.c
 	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
+
+$(BUILD_DIR)/src/libultra/gu/%.o: src/libultra/gu/%.s
+	$(AS) $(ASFLAGS) -o $@ $<
+
+$(BUILD_DIR)/src/libultrare/gu/%.o: src/libultrare/gu/%.c
+	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
+
+$(BUILD_DIR)/src/libultrare/gu/%.o: src/libultrare/gu/%.s
+	$(AS) $(ASFLAGS) -o $@ $<
 
 # #################
 # io
