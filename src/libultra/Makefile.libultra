@@ -75,6 +75,17 @@ $(BUILD_DIR)/src/libultra/audio/copy.o: LIBULTRA_OPTIMIZATION := -O3
 $(BUILD_DIR)/src/libultra/audio/cseq.o: LIBULTRA_OPTIMIZATION := -O3
 $(BUILD_DIR)/src/libultra/audio/cspgetstate.o: LIBULTRA_OPTIMIZATION := -O3
 $(BUILD_DIR)/src/libultra/audio/csplayer.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/cspplay.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/cspsetseq.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/cspsetvol.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/cspstop.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/drvrNew.o: LIBULTRA_OPTIMIZATION := -O3
+#$(BUILD_DIR)/src/libultra/audio/env.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/event.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/filter.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/heapalloc.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/heapinit.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/load.o: LIBULTRA_OPTIMIZATION := -O3
 
 $(BUILD_DIR)/src/libultra/audio/%.o: src/libultra/audio/%.c
 	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
