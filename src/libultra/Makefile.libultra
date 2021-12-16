@@ -86,6 +86,27 @@ $(BUILD_DIR)/src/libultra/audio/filter.o: LIBULTRA_OPTIMIZATION := -O3
 $(BUILD_DIR)/src/libultra/audio/heapalloc.o: LIBULTRA_OPTIMIZATION := -O3
 $(BUILD_DIR)/src/libultra/audio/heapinit.o: LIBULTRA_OPTIMIZATION := -O3
 $(BUILD_DIR)/src/libultra/audio/load.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/mainbus.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/resample.o: LIBULTRA_OPTIMIZATION := -O3
+#$(BUILD_DIR)/src/libultra/audio/reverb.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/save.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/seq.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/seqpsetbank.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/sl.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/synaddplayer.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/synallocfx.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/synallocvoice.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/syndelete.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/synfreevoice.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/synsetfxmix.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/synsetpan.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/synsetpitch.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/synsetpriority.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/synsetvol.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/synstartvoice.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/synstartvoiceparam.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/synstopvoice.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultra/audio/synthesizer.o: LIBULTRA_OPTIMIZATION := -O3
 
 $(BUILD_DIR)/src/libultra/audio/%.o: src/libultra/audio/%.c
 	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<

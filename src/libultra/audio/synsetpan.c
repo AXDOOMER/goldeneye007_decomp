@@ -1,5 +1,5 @@
 /*====================================================================
- * heapalloc.c
+ * synsetpan.c
  *
  * Copyright 1995, Silicon Graphics, Inc.
  * All Rights Reserved.
@@ -19,47 +19,32 @@
  *====================================================================*/
 
 #include "synthInternals.h"
-#include <libaudio.h>
-#include <os.h>
+#include <os_internal.h>
 #include <ultraerror.h>
 
-void *alHeapDBAlloc(u8 *file, s32 line, ALHeap *hp, s32 num, s32 size)
+void alSynSetPan(ALSynth *synth, ALVoice *v, u8 pan)
 {
-    s32 bytes;
-    u8 *ptr = 0;
+    ALParam  *update;
+    ALFilter *f;
 
-    bytes = (num*size + AL_CACHE_ALIGN) & ~AL_CACHE_ALIGN;
-    
-#ifdef _DEBUG
-    hp->count++;    
-    bytes += sizeof(HeapInfo);
-#endif
-    
-    if ((hp->cur + bytes) <= (hp->base + hp->len)) {
+    if (v->pvoice) {
 
-        ptr = hp->cur;
-        hp->cur += bytes;
+        /*
+         * get new update struct from the free list
+         */
+        update = __allocParam();
+        ALFailIf(update == 0, ERR_ALSYN_NO_UPDATE);
 
-#ifdef _DEBUG    
-        ((HeapInfo *)ptr)->magic = AL_HEAP_MAGIC;
-        ((HeapInfo *)ptr)->size  = bytes;
-        ((HeapInfo *)ptr)->count = hp->count;
-        if (file) {
-            ((HeapInfo *)ptr)->file  = file;
-            ((HeapInfo *)ptr)->line  = line;
-        } else {
-            ((HeapInfo *)ptr)->file  = (u8 *) "unknown";
-            ((HeapInfo *)ptr)->line  = 0;
-        }
-        
-        ptr += sizeof(HeapInfo);        
-#endif
+        /*
+         * set offset and pan data
+         */
+        update->delta  = synth->paramSamples + v->pvoice->offset;
+        update->type   = AL_FILTER_SET_PAN;
+        update->data.i = pan;
+        update->next   = 0;
 
-    } else {
-#ifdef _DEBUG
-        __osError(ERR_ALHEAPNOFREE, 1, size);
-#endif        
+        f = v->pvoice->channelKnob;
+        (*f->setParam)(f, AL_FILTER_ADD_UPDATE, update);        
     }
-
-    return ptr;
 }
+

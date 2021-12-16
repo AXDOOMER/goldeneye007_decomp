@@ -19,7 +19,7 @@
  *====================================================================*/
 
 #include <libaudio.h>
-#include "include/PR/os.h"
+#include <os.h>
 #include <ultraerror.h>
 
 

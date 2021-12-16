@@ -1,5 +1,5 @@
 /*====================================================================
- * heapalloc.c
+ * synfreevoice.c
  *
  * Copyright 1995, Silicon Graphics, Inc.
  * All Rights Reserved.
@@ -18,48 +18,37 @@
  * Copyright Laws of the United States.
  *====================================================================*/
 
-#include "synthInternals.h"
-#include <libaudio.h>
-#include <os.h>
 #include <ultraerror.h>
+#include <os_internal.h>
+#include "synthInternals.h"
 
-void *alHeapDBAlloc(u8 *file, s32 line, ALHeap *hp, s32 num, s32 size)
+#include <os.h>
+
+void alSynFreeVoice(ALSynth *drvr, ALVoice *voice)
 {
-    s32 bytes;
-    u8 *ptr = 0;
+    ALFilter *f;
+    ALFreeParam *update;
 
-    bytes = (num*size + AL_CACHE_ALIGN) & ~AL_CACHE_ALIGN;
-    
-#ifdef _DEBUG
-    hp->count++;    
-    bytes += sizeof(HeapInfo);
-#endif
-    
-    if ((hp->cur + bytes) <= (hp->base + hp->len)) {
+    if (voice->pvoice) {
 
-        ptr = hp->cur;
-        hp->cur += bytes;
+        if (voice->pvoice->offset) { /* if voice was stolen */
+            update = (ALFreeParam *)__allocParam();
+            ALFailIf(update == 0, ERR_ALSYN_NO_UPDATE);
 
-#ifdef _DEBUG    
-        ((HeapInfo *)ptr)->magic = AL_HEAP_MAGIC;
-        ((HeapInfo *)ptr)->size  = bytes;
-        ((HeapInfo *)ptr)->count = hp->count;
-        if (file) {
-            ((HeapInfo *)ptr)->file  = file;
-            ((HeapInfo *)ptr)->line  = line;
+            /*
+             * set voice data
+             */
+            update->delta  = drvr->paramSamples + voice->pvoice->offset;
+            update->type   = AL_FILTER_FREE_VOICE;
+            update->pvoice = voice->pvoice;
+
+            f = voice->pvoice->channelKnob;
+            (*f->setParam)(f, AL_FILTER_ADD_UPDATE, update);
         } else {
-            ((HeapInfo *)ptr)->file  = (u8 *) "unknown";
-            ((HeapInfo *)ptr)->line  = 0;
+            _freePVoice(drvr, voice->pvoice);
         }
-        
-        ptr += sizeof(HeapInfo);        
-#endif
 
-    } else {
-#ifdef _DEBUG
-        __osError(ERR_ALHEAPNOFREE, 1, size);
-#endif        
+        voice->pvoice = 0;
+
     }
-
-    return ptr;
 }

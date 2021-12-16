@@ -1,5 +1,5 @@
 /*====================================================================
- * heapalloc.c
+ * synstopvoice.c
  *
  * Copyright 1995, Silicon Graphics, Inc.
  * All Rights Reserved.
@@ -19,47 +19,26 @@
  *====================================================================*/
 
 #include "synthInternals.h"
-#include <libaudio.h>
-#include <os.h>
+#include <os_internal.h>
 #include <ultraerror.h>
 
-void *alHeapDBAlloc(u8 *file, s32 line, ALHeap *hp, s32 num, s32 size)
+
+void alSynStopVoice(ALSynth *synth, ALVoice *v)
 {
-    s32 bytes;
-    u8 *ptr = 0;
-
-    bytes = (num*size + AL_CACHE_ALIGN) & ~AL_CACHE_ALIGN;
+    ALParam  *update;
+    ALFilter *f;
     
-#ifdef _DEBUG
-    hp->count++;    
-    bytes += sizeof(HeapInfo);
-#endif
-    
-    if ((hp->cur + bytes) <= (hp->base + hp->len)) {
-
-        ptr = hp->cur;
-        hp->cur += bytes;
-
-#ifdef _DEBUG    
-        ((HeapInfo *)ptr)->magic = AL_HEAP_MAGIC;
-        ((HeapInfo *)ptr)->size  = bytes;
-        ((HeapInfo *)ptr)->count = hp->count;
-        if (file) {
-            ((HeapInfo *)ptr)->file  = file;
-            ((HeapInfo *)ptr)->line  = line;
-        } else {
-            ((HeapInfo *)ptr)->file  = (u8 *) "unknown";
-            ((HeapInfo *)ptr)->line  = 0;
-        }
+    if (v->pvoice) {
         
-        ptr += sizeof(HeapInfo);        
-#endif
+        update = __allocParam();
+        ALFailIf(update == 0, ERR_ALSYN_NO_UPDATE);
 
-    } else {
-#ifdef _DEBUG
-        __osError(ERR_ALHEAPNOFREE, 1, size);
-#endif        
+        update->delta  = synth->paramSamples + v->pvoice->offset;
+        update->type   = AL_FILTER_STOP_VOICE;
+        update->next   = 0;
+
+        f = v->pvoice->channelKnob;
+        (*f->setParam)(f, AL_FILTER_ADD_UPDATE, update);        
     }
-
-    return ptr;
 }
+

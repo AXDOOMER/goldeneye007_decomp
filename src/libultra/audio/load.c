@@ -19,7 +19,7 @@
  *====================================================================*/
 
 #include <libaudio.h>
-#include "include/PR/abi.h"
+#include <abi.h>
 #include "synthInternals.h"
 #include <os.h>
 #include <R4300.h>
