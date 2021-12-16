@@ -218,7 +218,7 @@ SECTIONS
       build/u/src/libultra/audio/mainbus.o (.text);
       build/u/src/libultra/audio/load.o (.text);
       build/u/src/libultra/audio/resample.o (.text);
-      build/u/src/libultra/audio/env.o (.text); /*edited*/
+      build/u/src/libultrare/audio/env.o (.text); /*edited*/
       build/u/src/libultra/audio/auxbus.o (.text);
       build/u/src/libultra/audio/save.o (.text);
       build/u/src/libultra/os/jammesg.o (.text);
@@ -226,7 +226,7 @@ SECTIONS
       build/u/src/libultra/gu/cosf.o (.text); /*edited*/
       build/u/src/libultra/gu/sinf.o (.text); /*edited*/
       build/u/src/libultra/os/destroythread.o (.text);
-      build/u/src/libultra/audio/seqplayer.o (.text);
+      build/u/src/libultrare/audio/seqplayer.o (.text);
       build/u/src/libultra/audio/synstartvoiceparam.o (.text);
       build/u/src/libultra/audio/copy.o (.text);
       build/u/src/libultra/io/piacs.o (.text);
@@ -241,7 +241,7 @@ SECTIONS
       build/u/src/libultra/io/leodiskinit.o (.text);
       build/u/src/libultra/os/setcompare.o (.text);
       build/u/src/libultra/audio/filter.o (.text);
-      build/u/src/libultra/audio/reverb.o (.text); /*edited*/
+      build/u/src/libultrare/audio/reverb.o (.text); /*edited*/
       build/u/src/libultra/GU/libm_vals.o (.text); /*edited*/
       build/u/src/libultra/audio/seq.o (.text);
       build/u/src/libultra/audio/synsetpriority.o (.text);
@@ -250,7 +250,7 @@ SECTIONS
       build/u/src/libultra/io/epirawwrite.o (.text);
       build/u/src/libultra/io/vimodentsclan1.o (.text);
       build/u/src/libultra/io/vimodepallan1.o (.text);
-      build/u/src/libultra/ultra80069080.o (.text); /*edited*/
+      build/u/src/libultrare/ultra80069080.o (.text); /*edited*/
       /*build/u/src/libultra/libultra.a:libultra.o (.text);*/
    }
    END_SEG(code)
@@ -3364,7 +3364,7 @@ SECTIONS
       build/u/src/libultra/audio/mainbus.o (.data);
       build/u/src/libultra/audio/load.o (.data);
       build/u/src/libultra/audio/resample.o (.data);
-      build/u/src/libultra/audio/env.o (.data); /*edited*/
+      build/u/src/libultrare/audio/env.o (.data); /*edited*/
       build/u/src/libultra/audio/auxbus.o (.data);
       build/u/src/libultra/audio/save.o (.data);
       build/u/src/libultra/os/jammesg.o (.data);
@@ -3372,7 +3372,7 @@ SECTIONS
       build/u/src/libultra/gu/cosf.o (.data); /*edited*/
       build/u/src/libultra/gu/sinf.o (.data); /*edited*/
       build/u/src/libultra/os/destroythread.o (.data);
-      build/u/src/libultra/audio/seqplayer.o (.data);
+      build/u/src/libultrare/audio/seqplayer.o (.data);
       build/u/src/libultra/audio/synstartvoiceparam.o (.data);
       build/u/src/libultra/audio/copy.o (.data);
       build/u/src/libultra/io/piacs.o (.data);
@@ -3387,7 +3387,7 @@ SECTIONS
       build/u/src/libultra/io/leodiskinit.o (.data);
       build/u/src/libultra/os/setcompare.o (.data);
       build/u/src/libultra/audio/filter.o (.data);
-      build/u/src/libultra/audio/reverb.o (.data); /*edited*/
+      build/u/src/libultrare/audio/reverb.o (.data); /*edited*/
       build/u/src/libultra/GU/libm_vals.o (.data); /*edited*/
       build/u/src/libultra/audio/seq.o (.data);
       build/u/src/libultra/audio/synsetpriority.o (.data);
@@ -3396,7 +3396,7 @@ SECTIONS
       build/u/src/libultra/io/epirawwrite.o (.data);
       build/u/src/libultra/io/vimodentsclan1.o (.data);
       build/u/src/libultra/io/vimodepallan1.o (.data);
-      build/u/src/libultra/ultra80069080.o (.data); /*edited*/
+      build/u/src/libultrare/ultra80069080.o (.data); /*edited*/
       /*build/u/src/libultra/libultra.a:libultra.o (.data);*/
 
       build/u/src/aspboot.o (.rodata);
@@ -3572,7 +3572,7 @@ SECTIONS
       build/u/src/libultra/audio/mainbus.o (.rodata);
       build/u/src/libultra/audio/load.o (.rodata);
       build/u/src/libultra/audio/resample.o (.rodata);
-      build/u/src/libultra/audio/env.o (.rodata); /*edited*/
+      build/u/src/libultrare/audio/env.o (.rodata); /*edited*/
       build/u/src/libultra/audio/auxbus.o (.rodata);
       build/u/src/libultra/audio/save.o (.rodata);
       build/u/src/libultra/os/jammesg.o (.rodata);
@@ -3580,7 +3580,7 @@ SECTIONS
       build/u/src/libultra/gu/cosf.o (.rodata); /*edited*/
       build/u/src/libultra/gu/sinf.o (.rodata); /*edited*/
       build/u/src/libultra/os/destroythread.o (.rodata);
-      build/u/src/libultra/audio/seqplayer.o (.rodata);
+      build/u/src/libultrare/audio/seqplayer.o (.rodata);
       build/u/src/libultra/audio/synstartvoiceparam.o (.rodata);
       build/u/src/libultra/audio/copy.o (.rodata);
       build/u/src/libultra/io/piacs.o (.rodata);
@@ -3595,7 +3595,7 @@ SECTIONS
       build/u/src/libultra/io/leodiskinit.o (.rodata);
       build/u/src/libultra/os/setcompare.o (.rodata);
       build/u/src/libultra/audio/filter.o (.rodata);
-      build/u/src/libultra/audio/reverb.o (.rodata); /*edited*/
+      build/u/src/libultrare/audio/reverb.o (.rodata); /*edited*/
       build/u/src/libultra/GU/libm_vals.o (.rodata); /*edited*/
       build/u/src/libultra/audio/seq.o (.rodata);
       build/u/src/libultra/audio/synsetpriority.o (.rodata);
@@ -3604,7 +3604,7 @@ SECTIONS
       build/u/src/libultra/io/epirawwrite.o (.rodata);
       build/u/src/libultra/io/vimodentsclan1.o (.rodata);
       build/u/src/libultra/io/vimodepallan1.o (.rodata);
-      build/u/src/libultra/ultra80069080.o (.rodata); /*edited*/
+      build/u/src/libultrare/ultra80069080.o (.rodata); /*edited*/
       /*build/u/src/libultra/libultra.a:libultra.o (.rodata);*/
 
       build/u/src/game/initgamedata.o (.data);
@@ -4043,7 +4043,7 @@ SECTIONS
       build/u/src/libultra/audio/mainbus.o (.bss);
       build/u/src/libultra/audio/load.o (.bss);
       build/u/src/libultra/audio/resample.o (.bss);
-      build/u/src/libultra/audio/env.o (.bss); /*edited*/
+      build/u/src/libultrare/audio/env.o (.bss); /*edited*/
       build/u/src/libultra/audio/auxbus.o (.bss);
       build/u/src/libultra/audio/save.o (.bss);
       build/u/src/libultra/os/jammesg.o (.bss);
@@ -4051,7 +4051,7 @@ SECTIONS
       build/u/src/libultra/gu/cosf.o (.bss); /*edited*/
       build/u/src/libultra/gu/sinf.o (.bss); /*edited*/
       build/u/src/libultra/os/destroythread.o (.bss);
-      build/u/src/libultra/audio/seqplayer.o (.bss);
+      build/u/src/libultrare/audio/seqplayer.o (.bss);
       build/u/src/libultra/audio/synstartvoiceparam.o (.bss);
       build/u/src/libultra/audio/copy.o (.bss);
       build/u/src/libultra/io/piacs.o (.bss);
@@ -4066,7 +4066,7 @@ SECTIONS
       build/u/src/libultra/io/leodiskinit.o (.bss);
       build/u/src/libultra/os/setcompare.o (.bss);
       build/u/src/libultra/audio/filter.o (.bss);
-      build/u/src/libultra/audio/reverb.o (.bss); /*edited*/
+      build/u/src/libultrare/audio/reverb.o (.bss); /*edited*/
       build/u/src/libultra/GU/libm_vals.o (.bss); /*edited*/
       build/u/src/libultra/audio/seq.o (.bss);
       build/u/src/libultra/audio/synsetpriority.o (.bss);
@@ -4075,7 +4075,7 @@ SECTIONS
       build/u/src/libultra/io/epirawwrite.o (.bss);
       build/u/src/libultra/io/vimodentsclan1.o (.bss);
       build/u/src/libultra/io/vimodepallan1.o (.bss);
-      build/u/src/libultra/ultra80069080.o (.bss); /*edited*/
+      build/u/src/libultrare/ultra80069080.o (.bss); /*edited*/
       /*build/u/src/libultra/libultra.a:libultra.o (.bss);*/
 
       build/u/src/game/initgamedata.o (.bss);
