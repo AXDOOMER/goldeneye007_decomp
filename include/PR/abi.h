@@ -21,6 +21,8 @@
  *
  **************************************************************************/
 
+#include "include/PR/mbi.h"
+
 /*
  * Header file for the Audio Binary Interface.
  * This is included in the Media Binary Interface file

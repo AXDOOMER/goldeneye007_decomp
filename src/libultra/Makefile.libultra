@@ -1,6 +1,10 @@
 
 
-CFLAGS_LIBULTRA := 0 -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821,838,649 -signed $(INCLUDE) -mips2 $(LCDEFS) -DTARGET_N64
+LIBULTRA_INCLUDE := -I . -I include -I include/PR -I src/libultra
+LIBULTRA_OPTIMIZATION := -O1
+
+CFLAGS_LIBULTRA = -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821,838,649 -signed $(LIBULTRA_INCLUDE) $(LCDEFS) -DTARGET_N64 $(MIPSISET) $(LIBULTRA_OPTIMIZATION)
+
 
 ULTRAFILES_S := $(foreach dir,src/libultra,$(wildcard $(dir)/*.s))
 ULTRAFILES_C := $(foreach dir,src/libultra,$(wildcard $(dir)/*.c))
@@ -60,6 +64,8 @@ ULTRAOBJECTS := $(foreach file,$(ULTRAFILES_S),$(BUILD_DIR)/$(file:.s=.o)) \
 
 $(BUILD_DIR)/src/libultra/%.o: src/libultra/%.c
 	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
+
+$(BUILD_DIR)/src/libultra/audio/auxbus.o: LIBULTRA_OPTIMIZATION := -O3
 
 $(BUILD_DIR)/src/libultra/audio/%.o: src/libultra/audio/%.c
 	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
