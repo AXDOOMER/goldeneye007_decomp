@@ -152,6 +152,7 @@ CFLAGS := -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819
 
 LD := $(TOOLCHAIN)ld
 LD_SCRIPT := ge007.$(COUNTRYCODE).ld
+
 # --no-warn-mismatch is needed to link -mips3 object files (some libultra math) with the regular files compiled with -mips2
 LDFLAGS := -T undefined_syms.txt -T $(LD_SCRIPT) -Map build/ge007.$(COUNTRYCODE).map --no-warn-mismatch
 

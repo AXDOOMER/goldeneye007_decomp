@@ -1,6 +1,10 @@
 # asm file.
 # modified version of "exceptasm.s"
 
+# asm file.
+#
+# TODO: this is an -mips2 match, the libultra version is instruction set `-mips3 -o32`.
+
 # assembler directives
 .set noat      # allow manual use of $at
 .set noreorder # don't insert nops after branches
