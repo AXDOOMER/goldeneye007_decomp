@@ -1,5 +1,6 @@
 #ifndef _XSTDIO_H
 #define _XSTDIO_H
+#include <ultratypes.h>
 #include <stdarg.h>
 
 /**
@@ -15,8 +16,8 @@ typedef struct
         u32 u32;
         u16 u16;
     } value;
-    /* 08 */ char *buff;
-    /* 0c */ s32 part1_len;
+    /* 08 */ u8 *buff;
+    /* 0c */ s32 n0;
     /* 10 */ s32 num_leading_zeros;
     /* 14 */ s32 part2_len;
     /* 18 */ s32 num_mid_zeros;
@@ -34,7 +35,11 @@ typedef struct
 #define FLAGS_MINUS 4
 #define FLAGS_HASH 8
 #define FLAGS_ZERO 16
-s32 _Printf(char *(*prout)(char *, const char *, size_t), char *dst, const char *fmt, va_list args);
+
+typedef u8 *outfun(u8*,const u8*,size_t);
+
+int _Printf(outfun prout, u8 *arg, const u8 *fmt, va_list args);
 void _Litob(printf_struct *args, u8 type);
 void _Ldtob(printf_struct *args, u8 type);
+
 #endif

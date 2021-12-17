@@ -159,7 +159,7 @@ SECTIONS
       build/u/src/libultra/audio/cents2ratio.o (.text);
       build/u/src/libultra/io/piread.o (.text);
       build/u/src/libultra/libc/string.o (.text);
-      build/u/src/libultra/libc/xprintf.o (.text);
+      build/u/src/libultrare/libc/xprintf.o (.text);
       build/u/src/libultrare/io/pimgr.o (.text);
       build/u/src/libultrare/io/pfsinit.o (.text);
       build/u/src/libultrare/io/controller.o (.text);
@@ -3371,7 +3371,7 @@ SECTIONS
       build/u/src/libultra/audio/cents2ratio.o (.data);
       build/u/src/libultra/io/piread.o (.data);
       build/u/src/libultra/libc/string.o (.data);
-      build/u/src/libultra/libc/xprintf.o (.data);
+      build/u/src/libultrare/libc/xprintf.o (.data);
       build/u/src/libultrare/io/pimgr.o (.data);
       build/u/src/libultrare/io/pfsinit.o (.data);
       build/u/src/libultrare/io/controller.o (.data);
@@ -3579,7 +3579,7 @@ SECTIONS
       build/u/src/libultra/audio/cents2ratio.o (.rodata);
       build/u/src/libultra/io/piread.o (.rodata);
       build/u/src/libultra/libc/string.o (.rodata);
-      build/u/src/libultra/libc/xprintf.o (.rodata);
+      build/u/src/libultrare/libc/xprintf.o (.rodata);
       build/u/src/libultrare/io/pimgr.o (.rodata);
       build/u/src/libultrare/io/pfsinit.o (.rodata);
       build/u/src/libultrare/io/controller.o (.rodata);
@@ -4052,7 +4052,7 @@ SECTIONS
       build/u/src/libultra/audio/cents2ratio.o (.bss);
       build/u/src/libultra/io/piread.o (.bss);
       build/u/src/libultra/libc/string.o (.bss);
-      build/u/src/libultra/libc/xprintf.o (.bss);
+      build/u/src/libultrare/libc/xprintf.o (.bss);
       build/u/src/libultrare/io/pimgr.o (.bss);
       build/u/src/libultrare/io/pfsinit.o (.bss);
       build/u/src/libultrare/io/controller.o (.bss);

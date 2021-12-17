@@ -1,4 +1,6 @@
 # asm file.
+#
+# TODO: this is an -O1 match, the libultra version is -O2 using IDO `as` toolchain.
 
 # assembler directives
 .set noat      # allow manual use of $at

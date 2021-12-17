@@ -2,6 +2,16 @@
 #include <rcp.h>
 #include "src/libultra/io/viint.h"
 
+/**
+ * Rare implemented their own FPAL mode, which was later added to libultra.
+ * 
+ * In the FPAL mode, 48 more lines than the conventional PAL mode are added to
+ * the number of scan lines according to the difference in resolution between
+ * PAL and NTSC. However, since only a 320x240 frame buffer is prepared with
+ * NTSC, when an FPAL 320x288 display is performed, the area at the bottom of
+ * the screen not considered in NTSC is displayed.
+*/
+
 OSViMode osViModePalLan1 = {
     OS_VI_PAL_LAN1,  // type
     {
