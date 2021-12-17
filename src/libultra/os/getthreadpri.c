@@ -1,10 +1,9 @@
-#include "include/PR/os.h"
-#include "ultra64.h"
-#include "osint.h"
+#include <os_internal.h>
 
-OSPri osGetThreadPri(OSThread *thread) {
-    if (thread == NULL) {
+extern OSThread *__osRunningThread;
+OSPri osGetThreadPri(OSThread *thread)
+{
+    if (thread == NULL)
         thread = __osRunningThread;
-    }
     return thread->priority;
 }

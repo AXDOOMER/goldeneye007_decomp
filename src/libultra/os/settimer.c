@@ -1,24 +1,19 @@
-#include "include/PR/os.h"
-#include "ultra64.h"
-
-extern OSTimer *__osTimerList;
-extern u64 __osInsertTimer(OSTimer *);
-
-int osSetTimer(OSTimer *a0, OSTime a1, OSTime a2, OSMesgQueue *a3, OSMesg a4) {
-    u64 sp18;
-    a0->next = NULL;
-    a0->prev = NULL;
-    a0->interval = a2;
-    if (a1 != 0) {
-        a0->value = a1;
-    } else {
-        a0->value = a2;
-    }
-    a0->mq = a3;
-    a0->msg = a4;
-    sp18 = __osInsertTimer(a0);
-    if (__osTimerList->next == a0) {
-        __osSetTimerIntr(sp18);
+#include <os_internal.h>
+#include "osint.h"
+int osSetTimer(OSTimer *t, OSTime value, OSTime interval, OSMesgQueue *mq, OSMesg msg)
+{
+    OSTime time;
+    t->next = NULL;
+    t->prev = NULL;
+    t->interval = interval;
+    if(value != 0) t->value = value;
+    else t->value = interval;
+    t->mq = mq;
+    t->msg = msg;
+    time = __osInsertTimer(t);
+    if(__osTimerList->next == t) {
+        __osSetTimerIntr(time);
     }
     return 0;
 }
+

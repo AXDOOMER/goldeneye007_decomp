@@ -1,19 +1,13 @@
-#include "include/PR/os.h"
-#include "ultra64.h"
+#include <os_internal.h>
+#include "osint.h"
+__OSEventState __osEventStateTab[OS_NUM_EVENTS];
+void osSetEventMesg(OSEvent event, OSMesgQueue *mq, OSMesg msg)
+{
+	register u32 saveMask = __osDisableInt();
+	__OSEventState *es;
 
-typedef struct OSEventMessageStruct_0_s {
-    OSMesgQueue *queue;
-    OSMesg msg;
-} OSEventMessageStruct_0;
-
-OSEventMessageStruct_0 __osEventStateTab[16];
-
-void osSetEventMesg(OSEvent e, OSMesgQueue *mq, OSMesg msg) {
-    register u32 int_disabled;
-    OSEventMessageStruct_0 *msgs;
-    int_disabled = __osDisableInt();
-    msgs = __osEventStateTab + e;
-    msgs->queue = mq;
-    msgs->msg = msg;
-    __osRestoreInt(int_disabled);
+	es = &__osEventStateTab[event];
+	es->messageQueue = mq;
+	es->message = msg;
+	__osRestoreInt(saveMask);
 }

@@ -70,6 +70,7 @@ LIBULTRA_AUDIO_C_FILES := \
 
 LIBULTRA_AUDIO_S_FILES := 
 
+
 LIBULTRARE_AUDIO_C_FILES := 
 
 LIBULTRARE_AUDIO_S_FILES := \
@@ -106,6 +107,7 @@ LIBULTRA_GU_C_FILES := \
 LIBULTRA_GU_S_FILES := \
     libm_vals \
     sqrtf
+
 
 LIBULTRARE_GU_C_FILES := 
 
@@ -160,6 +162,7 @@ LIBULTRA_IO_C_FILES := \
     viswapcontext 
 
 LIBULTRA_IO_S_FILES := 
+
 
 LIBULTRARE_IO_C_FILES := \
     aisetnextbuf \
@@ -216,8 +219,53 @@ LIBULTRARE_LIBC_S_FILES := \
 # os
 # #################
 
-ULTRAFILES_OS_S := $(foreach dir,src/libultra/os,$(wildcard $(dir)/*.s))
-ULTRAFILES_OS_C := $(foreach dir,src/libultra/os,$(wildcard $(dir)/*.c))
+LIBULTRA_OS_C_FILES := \
+    createmesgqueue \
+    createthread \
+    getcurrfaultthread \
+    getthreadpri \
+    gettime \
+    jammesg \
+    recvmesg \
+    resetglobalintmask \
+    sendmesg \
+    seteventmesg \
+    setthreadpri \
+    settimer \
+    startthread \
+    stopthread \
+    timerintr \
+    virtualtophysical 
+
+LIBULTRA_OS_S_FILES := \
+    exception \
+    getcount \
+    getfpccsr \
+    getsr \
+    gettlbhi \
+    interrupt \
+    invaldcache \
+    invalicache \
+    kdebugserver \
+    parameters \
+    probetlb \
+    setcompare \
+    setfpccsr \
+    sethwinterrupt \
+    setintmask \
+    setsr \
+    thread \
+    unmaptlb \
+    writebackdcacheall \
+    writebackdcache \
+    yieldthread 
+
+
+LIBULTRARE_OS_C_FILES := \
+    destroythread 
+
+LIBULTRARE_OS_S_FILES := \
+    initialize 
 
 # #################
 # rg
@@ -266,8 +314,10 @@ ULTRAOBJECTS := $(foreach file,$(ULTRAFILES_S),$(BUILD_DIR)/$(file:.s=.o)) \
 				$(foreach file,$(LIBULTRARE_LIBC_C_FILES),$(BUILD_DIR)/src/libultrare/libc/$(file).o) \
 				$(foreach file,$(LIBULTRARE_LIBC_S_FILES),$(BUILD_DIR)/src/libultrare/libc/$(file).o) \
                 \
-				$(foreach file,$(ULTRAFILES_OS_S),$(BUILD_DIR)/$(file:.s=.o)) \
-				$(foreach file,$(ULTRAFILES_OS_C),$(BUILD_DIR)/$(file:.c=.o)) 
+				$(foreach file,$(LIBULTRA_OS_C_FILES),$(BUILD_DIR)/src/libultra/os/$(file).o) \
+				$(foreach file,$(LIBULTRA_OS_S_FILES),$(BUILD_DIR)/src/libultra/os/$(file).o) \
+				$(foreach file,$(LIBULTRARE_OS_C_FILES),$(BUILD_DIR)/src/libultrare/os/$(file).o) \
+				$(foreach file,$(LIBULTRARE_OS_S_FILES),$(BUILD_DIR)/src/libultrare/os/$(file).o) 
 
 # #############################################################################################
 # build specifications
@@ -277,7 +327,16 @@ ULTRAOBJECTS := $(foreach file,$(ULTRAFILES_S),$(BUILD_DIR)/$(file:.s=.o)) \
 # Optimization or iset adjustments are made here.
 #
 
+$(BUILD_DIR)/src/libultra/%.o: src/libultra/%.c
+	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
+
+$(BUILD_DIR)/src/libultra/%.o: src/libultra/%.s
+	$(AS) $(ASFLAGS) -o $@ $<
+
 $(BUILD_DIR)/src/libultrare/%.o: src/libultrare/%.c
+	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
+
+$(BUILD_DIR)/src/libultrare/%.o: src/libultrare/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
 
 # #################
@@ -344,7 +403,6 @@ $(BUILD_DIR)/src/libultrare/io/%.o: src/libultrare/io/%.s
 # libc
 # #################
 
-
 $(BUILD_DIR)/src/libultra/libc/%.o: LIBULTRA_OPTIMIZATION := -O3
 
 $(BUILD_DIR)/src/libultra/libc/ll.o: LIBULTRA_OPTIMIZATION := -O1
@@ -369,8 +427,21 @@ $(BUILD_DIR)/src/libultrare/libc/%.o: src/libultrare/libc/%.s
 # os
 # #################
 
+# os is -O1, except for `exception`
+
+# note that `_FINALROM` is defined, this is for the declaration of `__osEventStateTab[OS_NUM_EVENTS]`
+
 $(BUILD_DIR)/src/libultra/os/%.o: src/libultra/os/%.c
-	$(CC) -c $(CFLAGS_LIBULTRA) -I src/libultra -I src/libultra/os -o $@ $<
+	$(CC) -c $(CFLAGS_LIBULTRA) -D_FINALROM -o $@ $<
+
+$(BUILD_DIR)/src/libultra/os/%.o: src/libultra/os/%.s
+	$(AS) $(ASFLAGS_LIBULTRA) -o $@ $<
+
+$(BUILD_DIR)/src/libultrare/os/%.o: src/libultrare/os/%.c
+	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
+
+$(BUILD_DIR)/src/libultrare/os/%.o: src/libultrare/os/%.s
+	$(AS) $(ASFLAGS_LIBULTRA) -o $@ $<
 
 # #################
 # rg

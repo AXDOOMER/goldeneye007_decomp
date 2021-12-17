@@ -1,12 +1,19 @@
-#include "include/PR/os.h"
-#include "ultra64.h"
+#include <os_internal.h>
+#include <R4300.h>
+#include "osint.h"
 
-uintptr_t osVirtualToPhysical(void *addr) {
-    if ((uintptr_t) addr >= 0x80000000 && (uintptr_t) addr < 0xa0000000) {
-        return ((uintptr_t) addr & 0x1fffffff);
-    } else if ((uintptr_t) addr >= 0xa0000000 && (uintptr_t) addr < 0xc0000000) {
-        return ((uintptr_t) addr & 0x1fffffff);
-    } else {
+u32 osVirtualToPhysical(void *addr)
+{
+    if (IS_KSEG0(addr))
+    {
+        return K0_TO_PHYS(addr);
+    }
+    else if (IS_KSEG1(addr))
+    {
+        return K1_TO_PHYS(addr);
+    }
+    else
+    {
         return __osProbeTLB(addr);
     }
 }

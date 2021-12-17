@@ -85,7 +85,7 @@ SECTIONS
       /*build/e/src/libultra/osPiRawStartDma.o (.text);*/
       build/e/src/libultra/io/pirawdma.o (.text);
       build/e/src/libultra/io/pigetstat.o (.text);
-      build/e/src/libultra/os/initialize.o (.text);
+      build/e/src/libultrare/os/initialize.o (.text);
       build/e/src/libultra/os/writebackdcacheall.o (.text);
       build/e/src/libultra/os/invalicache.o (.text);
       build/e/src/libultra/os/unmaptlb.o (.text);
@@ -247,7 +247,7 @@ SECTIONS
       build/e/src/libultra/io/pigetcmdq.o (.text);
       build/e/src/libultra/gu/cosf.o (.text); /*edited*/
       build/e/src/libultra/gu/sinf.o (.text); /*edited*/
-      build/e/src/libultra/os/destroythread.o (.text);
+      build/e/src/libultrare/os/destroythread.o (.text);
       build/e/src/libultrare/audio/seqplayer.o (.text);
       build/e/src/libultra/audio/synstartvoiceparam.o (.text);
       build/e/src/libultra/audio/copy.o (.text);
@@ -3320,7 +3320,7 @@ SECTIONS
       /*build/e/src/libultra/osPiRawStartDma.o (.data);*/
       build/e/src/libultra/io/pirawdma.o (.data);
       build/e/src/libultra/io/pigetstat.o (.data);
-      build/e/src/libultra/os/initialize.o (.data);
+      build/e/src/libultrare/os/initialize.o (.data);
       build/e/src/libultra/os/writebackdcacheall.o (.data);
       build/e/src/libultra/os/invalicache.o (.data);
       build/e/src/libultra/os/unmaptlb.o (.data);
@@ -3481,7 +3481,7 @@ SECTIONS
       build/e/src/libultra/io/pigetcmdq.o (.data);
       build/e/src/libultra/gu/cosf.o (.data); /*edited*/
       build/e/src/libultra/gu/sinf.o (.data); /*edited*/
-      build/e/src/libultra/os/destroythread.o (.data);
+      build/e/src/libultrare/os/destroythread.o (.data);
       build/e/src/libultrare/audio/seqplayer.o (.data);
       build/e/src/libultra/audio/synstartvoiceparam.o (.data);
       build/e/src/libultra/audio/copy.o (.data);
@@ -3551,7 +3551,7 @@ SECTIONS
       /*build/e/src/libultra/osPiRawStartDma.o (.rodata);*/
       build/e/src/libultra/io/pirawdma.o (.rodata);
       build/e/src/libultra/io/pigetstat.o (.rodata);
-      build/e/src/libultra/os/initialize.o (.rodata);
+      build/e/src/libultrare/os/initialize.o (.rodata);
       build/e/src/libultra/os/writebackdcacheall.o (.rodata);
       build/e/src/libultra/os/invalicache.o (.rodata);
       build/e/src/libultra/os/unmaptlb.o (.rodata);
@@ -3712,7 +3712,7 @@ SECTIONS
       build/e/src/libultra/io/pigetcmdq.o (.rodata);
       build/e/src/libultra/gu/cosf.o (.rodata); /*edited*/
       build/e/src/libultra/gu/sinf.o (.rodata); /*edited*/
-      build/e/src/libultra/os/destroythread.o (.rodata);
+      build/e/src/libultrare/os/destroythread.o (.rodata);
       build/e/src/libultrare/audio/seqplayer.o (.rodata);
       build/e/src/libultra/audio/synstartvoiceparam.o (.rodata);
       build/e/src/libultra/audio/copy.o (.rodata);
@@ -4047,7 +4047,7 @@ SECTIONS
       /*build/e/src/libultra/osPiRawStartDma.o (.bss);*/
       build/e/src/libultra/io/pirawdma.o (.bss);
       build/e/src/libultra/io/pigetstat.o (.bss);
-      build/e/src/libultra/os/initialize.o (.bss);
+      build/e/src/libultrare/os/initialize.o (.bss);
       build/e/src/libultra/os/writebackdcacheall.o (.bss);
       build/e/src/libultra/os/invalicache.o (.bss);
       build/e/src/libultra/os/unmaptlb.o (.bss);
@@ -4207,7 +4207,7 @@ SECTIONS
       build/e/src/libultra/io/pigetcmdq.o (.bss);
       build/e/src/libultra/gu/cosf.o (.bss); /*edited*/
       build/e/src/libultra/gu/sinf.o (.bss); /*edited*/
-      build/e/src/libultra/os/destroythread.o (.bss);
+      build/e/src/libultrare/os/destroythread.o (.bss);
       build/e/src/libultrare/audio/seqplayer.o (.bss);
       build/e/src/libultra/audio/synstartvoiceparam.o (.bss);
       build/e/src/libultra/audio/copy.o (.bss);

@@ -1,19 +1,17 @@
-#include "include/PR/os.h"
-#include "ultra64.h"
+#include <os_internal.h>
+#include "osint.h"
 
-extern OSTime __osCurrentTime;
-extern u32 __osBaseCounter;
 
-OSTime osGetTime() {
-    u32 sp34;
-    u32 sp30;
-    OSTime sp28;
-    register u32 int_disabled;
-    int_disabled = __osDisableInt();
-    sp34 = osGetCount();
-    sp30 = sp34 - __osBaseCounter;
-    sp28 = __osCurrentTime;
-    __osRestoreInt(int_disabled);
-    return sp28 + sp30;
+OSTime osGetTime()
+{
+    u32 tmptime;
+    u32 elapseCount;
+    OSTime currentCount;
+    register u32 saveMask;
+    saveMask = __osDisableInt();
+    tmptime = osGetCount();
+    elapseCount = tmptime - __osBaseCounter;
+    currentCount = __osCurrentTime;
+    __osRestoreInt(saveMask);
+    return currentCount + elapseCount;
 }
-

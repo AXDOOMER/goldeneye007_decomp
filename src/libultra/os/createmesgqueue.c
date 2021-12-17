@@ -1,14 +1,11 @@
-#include "include/PR/os.h"
-#include "ultra64.h"
-
-extern struct __osThreadTail __osThreadTail;
-
-void osCreateMesgQueue(OSMesgQueue *mq, OSMesg *msgBuf, s32 count) {
-    mq->mtqueue = (OSThread *) &__osThreadTail; //?
-    mq->fullqueue = (OSThread *) &__osThreadTail;
+#include <os_internal.h>
+#include "osint.h"
+void osCreateMesgQueue(OSMesgQueue *mq, OSMesg *msg, s32 msgCount)
+{
+    mq->mtqueue = (OSThread *)&__osThreadTail;
+    mq->fullqueue = (OSThread *)&__osThreadTail;
     mq->validCount = 0;
     mq->first = 0;
-    mq->msgCount = count;
-    mq->msg = msgBuf;
-    return;
+    mq->msgCount = msgCount;
+    mq->msg = msg;
 }
