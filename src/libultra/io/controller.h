@@ -1,8 +1,7 @@
 #ifndef _CONTROLLER_H
 #define _CONTROLLER_H
-#include "PR/os.h"
-#include "PR/os.h"
-#include "PR/rcp.h"
+#include <os_internal.h>
+#include <rcp.h>
 
 //should go somewhere else but
 #define ARRLEN(x) ((s32)(sizeof(x) / sizeof(x[0])))
@@ -176,7 +175,7 @@ extern OSMesgQueue __osEepromTimerQ;
 extern OSPifRam __osEepPifRam;
 extern OSPifRam __osContPifRam;
 extern OSPifRam __osPfsPifRam;
-extern u8 _osContNumControllers;
+extern u8 __osMaxControllers;
 
 //some version of this almost certainly existed since there's plenty of times where it's used right before a return 0
 #define ERRCK(fn) \

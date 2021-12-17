@@ -1,7 +1,6 @@
-#include "include/PR/os.h"
-#include "include/PR/rcp.h"
-
-u8 D_80334820 = 0;
+#include <os_internal.h>
+#include <rcp.h>
+#include "src/libultra/os/osint.h"
 
 /**
  * It is worth noting that a previous hardware bug has been fixed by a software
@@ -16,24 +15,22 @@ u8 D_80334820 = 0;
  * the audio output. This bug no longer requires special handling by the application
  * because it is now patched by osAiSetNextBuffer.
  */
+s32 osAiSetNextBuffer(void *bufPtr, u32 size)
+{
+	static u8 hdwrBugFlag = 0;
+	char *bptr = bufPtr;
+	if (hdwrBugFlag != 0)
+		bptr -= 0x2000;
 
-s32 osAiSetNextBuffer(void *buff, u32 len) {
-    u8 *sp1c = buff;
-    if (D_80334820 != 0) {
-        sp1c -= 0x2000;
-    }
+	if ((((u32)bufPtr + size) & 0x3fff) == 0x2000)
+		hdwrBugFlag = 1;
+	else
+		hdwrBugFlag = 0;
 
-    if ((((uintptr_t) buff + len) & 0x3fff) == 0x2000) {
-        D_80334820 = 1;
-    } else {
-        D_80334820 = 0;
-    }
+	if (__osAiDeviceBusy())
+		return -1;
 
-    if (__osAiDeviceBusy()) {
-        return -1;
-    }
-
-    IO_WRITE(AI_DRAM_ADDR_REG, osVirtualToPhysical(sp1c));
-    IO_WRITE(AI_LEN_REG, len);
-    return 0;
+	IO_WRITE(AI_DRAM_ADDR_REG, osVirtualToPhysical(bptr));
+	IO_WRITE(AI_LEN_REG, size);
+	return 0;
 }

@@ -111,8 +111,78 @@ LIBULTRARE_GU_S_FILES :=
 # io
 # #################
 
-ULTRAFILES_IO_S := $(foreach dir,src/libultra/io,$(wildcard $(dir)/*.s))
-ULTRAFILES_IO_C := $(foreach dir,src/libultra/io,$(wildcard $(dir)/*.c))
+LIBULTRA_IO_C_FILES := \
+    ai \
+    aigetlen \
+    aisetfreq \
+    contpfs \
+    contquery \
+    crc \
+    leodiskinit \
+    pfsisplug \
+    piacs \
+    pigetcmdq \
+    pirawdma \
+    pirawread \
+    siacs \
+    si \
+    sirawdma \
+    sirawread \
+    sirawwrite \
+    sp \
+    spgetstat \
+    sprawdma \
+    spsetpc \
+    spsetstat \
+    sptaskyield \
+    sptaskyielded \
+    viblack \
+    visetevent \
+    visetmode \
+    viswapbuf
+
+LIBULTRA_IO_S_FILES := \
+    controller \
+    devmgr \
+    dpctr \
+    dp \
+    dpsetnextbuf \
+    dpsetstat \
+    epirawdma \
+    epirawwrite \
+    leointerrupt \
+    pfsinit \
+    pidma \
+    pigetstat \
+    pimgr \
+    piread \
+    sptask \
+    vigetcurrcontext \
+    vigetcurrframebuf \
+    vigetnextframebuf \
+    vimgr \
+    vimodentsclan1 \
+    vimodepallan1 \
+    virepeatline \
+    vi \
+    visetspecial \
+    visetxscale \
+    visetyscale \
+    viswapcontext \
+    vitbl
+
+LIBULTRARE_IO_C_FILES := \
+    aisetnextbuf \
+    conteeplongread \
+    conteeplongwrite \
+    conteepprobe \
+    conteepread 
+
+LIBULTRARE_IO_S_FILES := \
+    conteepwrite \
+    contramread \
+    contramwrite \
+    contreaddata 
 
 # #################
 # libc
@@ -167,6 +237,11 @@ ULTRAOBJECTS := $(foreach file,$(ULTRAFILES_S),$(BUILD_DIR)/$(file:.s=.o)) \
 				$(foreach file,$(LIBULTRA_GU_S_FILES),$(BUILD_DIR)/src/libultra/gu/$(file).o) \
 				$(foreach file,$(LIBULTRARE_GU_C_FILES),$(BUILD_DIR)/src/libultrare/gu/$(file).o) \
 				$(foreach file,$(LIBULTRARE_GU_S_FILES),$(BUILD_DIR)/src/libultrare/gu/$(file).o) \
+                \
+				$(foreach file,$(LIBULTRA_IO_C_FILES),$(BUILD_DIR)/src/libultra/io/$(file).o) \
+				$(foreach file,$(LIBULTRA_IO_S_FILES),$(BUILD_DIR)/src/libultra/io/$(file).o) \
+				$(foreach file,$(LIBULTRARE_IO_C_FILES),$(BUILD_DIR)/src/libultrare/io/$(file).o) \
+				$(foreach file,$(LIBULTRARE_IO_S_FILES),$(BUILD_DIR)/src/libultrare/io/$(file).o) \
                 \
 				$(foreach file,$(ULTRAFILES_IO_S),$(BUILD_DIR)/$(file:.s=.o)) \
 				$(foreach file,$(ULTRAFILES_IO_C),$(BUILD_DIR)/$(file:.c=.o)) \
@@ -241,8 +316,19 @@ $(BUILD_DIR)/src/libultrare/gu/%.o: src/libultrare/gu/%.s
 # io
 # #################
 
+# io is -O1
+
 $(BUILD_DIR)/src/libultra/io/%.o: src/libultra/io/%.c
-	$(CC) -c $(CFLAGS_LIBULTRA) -I src/libultra -I src/libultra/io -o $@ $<
+	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
+
+$(BUILD_DIR)/src/libultra/io/%.o: src/libultra/io/%.s
+	$(AS) $(ASFLAGS) -o $@ $<
+
+$(BUILD_DIR)/src/libultrare/io/%.o: src/libultrare/io/%.c
+	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
+
+$(BUILD_DIR)/src/libultrare/io/%.o: src/libultrare/io/%.s
+	$(AS) $(ASFLAGS) -o $@ $<
 
 # #################
 # libc

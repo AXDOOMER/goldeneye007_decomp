@@ -1,6 +1,6 @@
-#include "include/PR/os.h"
-#include "include/PR/rcp.h"
+#include <rcp.h>
 
-u32 osAiGetLength() {
+u32 osAiGetLength(void)
+{
     return IO_READ(AI_LEN_REG);
 }

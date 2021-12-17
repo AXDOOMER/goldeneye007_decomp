@@ -1,10 +1,12 @@
-#include "include/PR/rcp.h"
+#include <os_internal.h>
+#include <rcp.h>
 
-s32 __osAiDeviceBusy(void) {
+s32 __osAiDeviceBusy(void)
+{
     register s32 status = IO_READ(AI_STATUS_REG);
-    if ((status & AI_STATUS_FIFO_FULL) != 0) {
+    if (status & AI_STATUS_FIFO_FULL)
+
         return 1;
-    } else {
-        return 0;
-    }
+
+    return 0;
 }

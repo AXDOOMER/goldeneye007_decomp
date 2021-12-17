@@ -141,7 +141,7 @@ OBJECTS := $(RSPOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(OBSEGMENT)
 
 MIPSISET := -mips2
 
-INCLUDE := -I . -I include -I include/ultra64 -I src -I src/game -I src/inflate
+INCLUDE := -I . -I include -I include/ultra64 -I include/PR -I src -I src/game -I src/inflate
 
 ifeq ($(IDO_RECOMP), NO)
   CC := $(QEMU_IRIX) -silent -L $(IRIX_ROOT) $(IRIX_ROOT)/usr/bin/cc
