@@ -1,26 +1,23 @@
-#include "include/PR/os.h"
-#include "ultra64.h"
+#include <os_internal.h>
 
-#define SIAccessQueueSize 2
-
-OSMesg __osSiAccessBuf[SIAccessQueueSize];
-OSMesgQueue __osSiAccessQueue;
+#define SI_Q_BUF_LEN 1
 u32 __osSiAccessQueueEnabled = 0;
-
-void __osSiCreateAccessQueue() {
-    __osSiAccessQueueEnabled = 1;
-    osCreateMesgQueue(&__osSiAccessQueue, &__osSiAccessBuf[0], SIAccessQueueSize - 1);
-    osSendMesg(&__osSiAccessQueue, NULL, OS_MESG_NOBLOCK);
+static OSMesg siAccessBuf[SI_Q_BUF_LEN];
+OSMesgQueue __osSiAccessQueue;
+void __osSiCreateAccessQueue(void)
+{
+	__osSiAccessQueueEnabled = 1;
+	osCreateMesgQueue(&__osSiAccessQueue, siAccessBuf, SI_Q_BUF_LEN);
+	osSendMesg(&__osSiAccessQueue, NULL, OS_MESG_NOBLOCK);
 }
-
-void __osSiGetAccess(void) {
-    OSMesg sp1c;
-    if (!__osSiAccessQueueEnabled) {
-        __osSiCreateAccessQueue();
-    }
-    osRecvMesg(&__osSiAccessQueue, &sp1c, OS_MESG_BLOCK);
+void __osSiGetAccess(void)
+{
+	OSMesg dummyMesg;
+	if (!__osSiAccessQueueEnabled)
+		__osSiCreateAccessQueue();
+	osRecvMesg(&__osSiAccessQueue, &dummyMesg, OS_MESG_BLOCK);
 }
-
-void __osSiRelAccess(void) {
-    osSendMesg(&__osSiAccessQueue, NULL, OS_MESG_NOBLOCK);
+void __osSiRelAccess(void)
+{
+	osSendMesg(&__osSiAccessQueue, NULL, OS_MESG_NOBLOCK);
 }

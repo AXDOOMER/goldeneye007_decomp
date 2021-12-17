@@ -118,12 +118,17 @@ LIBULTRA_IO_C_FILES := \
     contpfs \
     contquery \
     crc \
-    leodiskinit \
-    pfsisplug \
+    dp \
+    dpctr \
+    dpsetnextbuf \
+    dpsetstat \
     piacs \
+    pidma \
     pigetcmdq \
+    pigetstat \
     pirawdma \
     pirawread \
+    piread \
     siacs \
     si \
     sirawdma \
@@ -137,52 +142,47 @@ LIBULTRA_IO_C_FILES := \
     sptaskyield \
     sptaskyielded \
     viblack \
-    visetevent \
-    visetmode \
-    viswapbuf
-
-LIBULTRA_IO_S_FILES := \
-    controller \
-    devmgr \
-    dpctr \
-    dp \
-    dpsetnextbuf \
-    dpsetstat \
-    epirawdma \
-    epirawwrite \
-    leointerrupt \
-    pfsinit \
-    pidma \
-    pigetstat \
-    pimgr \
-    piread \
-    sptask \
     vigetcurrcontext \
     vigetcurrframebuf \
     vigetnextframebuf \
-    vimgr \
     vimodentsclan1 \
-    vimodepallan1 \
     virepeatline \
-    vi \
     visetspecial \
     visetxscale \
     visetyscale \
-    viswapcontext \
-    vitbl
+    visetevent \
+    visetmode \
+    viswapbuf \
+    viswapcontext 
+
+LIBULTRA_IO_S_FILES := 
 
 LIBULTRARE_IO_C_FILES := \
     aisetnextbuf \
     conteeplongread \
     conteeplongwrite \
     conteepprobe \
-    conteepread 
+    conteepread \
+    leodiskinit \
+    pfsisplug \
+    vimodepallan1 
 
 LIBULTRARE_IO_S_FILES := \
     conteepwrite \
     contramread \
     contramwrite \
-    contreaddata 
+    contreaddata \
+    controller \
+    devmgr \
+    epirawdma \
+    epirawwrite \
+    pimgr \
+    leointerrupt \
+    pfsinit \
+    sptask \
+    vi \
+    vimgr \
+    vitbl
 
 # #################
 # libc
@@ -202,22 +202,19 @@ ULTRAFILES_OS_C := $(foreach dir,src/libultra/os,$(wildcard $(dir)/*.c))
 # rg
 # #################
 
-ULTRAFILES_RG_S := $(foreach dir,src/libultra/rg,$(wildcard $(dir)/*.s))
-ULTRAFILES_RG_C := $(foreach dir,src/libultra/rg,$(wildcard $(dir)/*.c))
+# nothing to do
 
 # #################
 # sched
 # #################
 
-ULTRAFILES_SCHED_S := $(foreach dir,src/libultra/sched,$(wildcard $(dir)/*.s))
-ULTRAFILES_SCHED_C := $(foreach dir,src/libultra/sched,$(wildcard $(dir)/*.c))
+# nothing to do
 
 # #################
 # sp
 # #################
 
-ULTRAFILES_SP_S := $(foreach dir,src/libultra/sp,$(wildcard $(dir)/*.s))
-ULTRAFILES_SP_C := $(foreach dir,src/libultra/sp,$(wildcard $(dir)/*.c))
+# nothing to do
 
 # #################
 # "all"
@@ -243,20 +240,10 @@ ULTRAOBJECTS := $(foreach file,$(ULTRAFILES_S),$(BUILD_DIR)/$(file:.s=.o)) \
 				$(foreach file,$(LIBULTRARE_IO_C_FILES),$(BUILD_DIR)/src/libultrare/io/$(file).o) \
 				$(foreach file,$(LIBULTRARE_IO_S_FILES),$(BUILD_DIR)/src/libultrare/io/$(file).o) \
                 \
-				$(foreach file,$(ULTRAFILES_IO_S),$(BUILD_DIR)/$(file:.s=.o)) \
-				$(foreach file,$(ULTRAFILES_IO_C),$(BUILD_DIR)/$(file:.c=.o)) \
 				$(foreach file,$(ULTRAFILES_LIBC_S),$(BUILD_DIR)/$(file:.s=.o)) \
 				$(foreach file,$(ULTRAFILES_LIBC_C),$(BUILD_DIR)/$(file:.c=.o)) \
-				$(foreach file,$(ULTRAFILES_LOG_S),$(BUILD_DIR)/$(file:.s=.o)) \
-				$(foreach file,$(ULTRAFILES_LOG_C),$(BUILD_DIR)/$(file:.c=.o)) \
 				$(foreach file,$(ULTRAFILES_OS_S),$(BUILD_DIR)/$(file:.s=.o)) \
-				$(foreach file,$(ULTRAFILES_OS_C),$(BUILD_DIR)/$(file:.c=.o)) \
-				$(foreach file,$(ULTRAFILES_RG_S),$(BUILD_DIR)/$(file:.s=.o)) \
-				$(foreach file,$(ULTRAFILES_RG_C),$(BUILD_DIR)/$(file:.c=.o)) \
-				$(foreach file,$(ULTRAFILES_SCHED_S),$(BUILD_DIR)/$(file:.s=.o)) \
-				$(foreach file,$(ULTRAFILES_SCHED_C),$(BUILD_DIR)/$(file:.c=.o)) \
-				$(foreach file,$(ULTRAFILES_SP_S),$(BUILD_DIR)/$(file:.s=.o)) \
-				$(foreach file,$(ULTRAFILES_SP_C),$(BUILD_DIR)/$(file:.c=.o))
+				$(foreach file,$(ULTRAFILES_OS_C),$(BUILD_DIR)/$(file:.c=.o)) 
 
 # #############################################################################################
 # build specifications
@@ -291,8 +278,7 @@ $(BUILD_DIR)/src/libultrare/audio/%.o: src/libultrare/audio/%.s
 # gt
 # #################
 
-$(BUILD_DIR)/src/libultra/gt/%.o: src/libultra/gt/%.c
-	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
+# nothing to do
 
 # #################
 # gu
@@ -348,19 +334,16 @@ $(BUILD_DIR)/src/libultra/os/%.o: src/libultra/os/%.c
 # rg
 # #################
 
-$(BUILD_DIR)/src/libultra/rg/%.o: src/libultra/rg/%.c
-	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
+# nothing to do
 
 # #################
 # sched
 # #################
 
-$(BUILD_DIR)/src/libultra/sched/%.o: src/libultra/sched/%.c
-	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
+# nothing to do
 
 # #################
 # sp
 # #################
 
-$(BUILD_DIR)/src/libultra/sp/%.o: src/libultra/sp/%.c
-	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
+# nothing to do

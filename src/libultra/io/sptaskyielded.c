@@ -1,17 +1,20 @@
-#include "ultra64.h"
+#include <os_internal.h>
+#include <rcp.h>
+#include <sptask.h>
 
-OSYieldResult osSpTaskYielded(OSTask *task) {
-    s32 status;
-    u32 int_disabledult;
+OSYieldResult osSpTaskYielded(OSTask *tp)
+{
+    u32 status;
+    OSYieldResult result;
     status = __osSpGetStatus();
-    if (status & SPSTATUS_SIGNAL1_SET) {
-        int_disabledult = 1;
-    } else {
-        int_disabledult = 0;
+    if (status & SP_STATUS_YIELDED)
+        result = OS_TASK_YIELDED;
+    else
+        result = 0;
+    if (status & SP_STATUS_YIELD)
+    {
+        tp->t.flags |= result;
+        tp->t.flags &= ~(OS_TASK_DP_WAIT);
     }
-    if (status & SPSTATUS_SIGNAL0_SET) {
-        task->t.flags |= int_disabledult;
-        task->t.flags &= ~(M_TASK_FLAG1);
-    }
-    return int_disabledult;
+    return result;
 }

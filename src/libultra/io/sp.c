@@ -1,11 +1,12 @@
-#include "include/PR/rcp.h"
-#include "include/PR/os.h"
-#include "ultra64.h"
+#include <os_internal.h>
+#include <rcp.h>
+#include <sptask.h>
+#include "../os/osint.h"
 
-s32 __osSpDeviceBusy() {
-    register u32 status = IO_READ(SP_STATUS_REG);
-    if (status & (SPSTATUS_IO_FULL | SPSTATUS_DMA_FULL | SPSTATUS_DMA_BUSY)) {
+int __osSpDeviceBusy()
+{
+    register u32 stat = IO_READ(SP_STATUS_REG);
+    if (stat & (SP_STATUS_DMA_BUSY | SP_STATUS_DMA_FULL | SP_STATUS_IO_FULL))
         return 1;
-    }
     return 0;
 }

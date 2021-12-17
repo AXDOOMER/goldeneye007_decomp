@@ -25,9 +25,9 @@ extern "C" {
 
 #ident "$Revision: 1.4 $"
 
-extern void    bcopy(const void *, void *, size_t);
+extern void    bcopy(const void *, void *, int);
 extern int    bcmp(const void *, const void *, int);
-extern void    bzero(void *, size_t);
+extern void    bzero(void *, int);
 
 #ifdef __cplusplus
 }

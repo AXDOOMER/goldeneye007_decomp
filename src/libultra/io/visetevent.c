@@ -1,13 +1,12 @@
-#include "include/PR/os.h"
-#include "ultra64.h"
+#include <os_internal.h>
 #include "viint.h"
 
-extern __OSViContext *__osViNext;
-
-void osViSetEvent(OSMesgQueue *mq, OSMesg msg, u32 retraceCount) {
-    register u32 int_disabled = __osDisableInt();
-    (__osViNext)->msgq = mq;
-    (__osViNext)->msg = msg;
-    (__osViNext)->retraceCount = retraceCount;
-    __osRestoreInt(int_disabled);
+void osViSetEvent(OSMesgQueue *mq, OSMesg m, u32 retraceCount)
+{
+    register u32 saveMask;
+    saveMask = __osDisableInt();
+    __osViNext->msgq = mq;
+    __osViNext->msg = m;
+    __osViNext->retraceCount = retraceCount;
+    __osRestoreInt(saveMask);
 }

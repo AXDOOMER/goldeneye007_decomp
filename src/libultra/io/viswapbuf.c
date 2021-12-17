@@ -1,12 +1,9 @@
-#include "include/PR/os.h"
-#include "ultra64.h"
+#include <os_internal.h>
 #include "viint.h"
 
-extern __OSViContext *__osViNext;
-
-void osViSwapBuffer(void *vaddr) {
-    u32 int_disabled = __osDisableInt();
-    __osViNext->framep = vaddr;
-    __osViNext->state |= 0x10; // TODO: figure out what this flag means
-    __osRestoreInt(int_disabled);
+void osViSwapBuffer(void* frameBufPtr){
+    u32 saveMask = __osDisableInt();
+    __osViNext->framep = frameBufPtr;
+    __osViNext->state |= VI_STATE_10;
+    __osRestoreInt(saveMask);
 }

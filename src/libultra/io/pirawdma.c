@@ -1,50 +1,22 @@
-#include "include/PR/rcp.h"
+#include <os_internal.h>
 #include "piint.h"
 
-extern u32 osRomBase; // TODO: figure out why this is like this
-
-s32 osPiRawStartDma(s32 dir, u32 cart_addr, void *dram_addr, size_t size) {
-    register int status;
-    WAIT_ON_IOBUSY(status);
-
-    IO_WRITE(PI_DRAM_ADDR_REG, osVirtualToPhysical(dram_addr));
-
-    IO_WRITE(PI_CART_ADDR_REG, (((uintptr_t) osRomBase | cart_addr) & 0x1fffffff));
-
-    switch (dir) {
-        case 0:
-            IO_WRITE(PI_WR_LEN_REG, size - 1);
-            break;
-        case 1:
-            IO_WRITE(PI_RD_LEN_REG, size - 1);
-            break;
-        default:
-            return -1;
-            break;
+s32 osPiRawStartDma(s32 direction, u32 devAddr, void *dramAddr, u32 size)
+{
+    register u32 stat;
+    WAIT_ON_IOBUSY(stat);
+    IO_WRITE(PI_DRAM_ADDR_REG, osVirtualToPhysical(dramAddr));
+    IO_WRITE(PI_CART_ADDR_REG, K1_TO_PHYS((u32)osRomBase | devAddr));
+    switch (direction)
+    {
+    case OS_READ:
+        IO_WRITE(PI_WR_LEN_REG, size - 1);
+        break;
+    case OS_WRITE:
+        IO_WRITE(PI_RD_LEN_REG, size - 1);
+        break;
+    default:
+        return -1;
     }
     return 0;
 }
-
-#ifdef VERSION_EU
-/*s32 osPiRawStartDma_2(s32 dir, u32 cart_addr, void *dram_addr, size_t size) {
-    register int status;
-    WAIT_ON_IOBUSY(status);
-
-    IO_WRITE(PI_DRAM_ADDR_REG, osVirtualToPhysical(dram_addr));
-
-    IO_WRITE(PI_CART_ADDR_REG, (((uintptr_t) osRomBase | cart_addr) & 0x1fffffff));
-
-    switch (dir) {
-        case 0:
-            IO_WRITE(PI_WR_LEN_REG, size - 1);
-            break;
-        case 1:
-            IO_WRITE(PI_RD_LEN_REG, size - 1);
-            break;
-        default:
-            return -1;
-            break;
-    }
-    return 0;
-}*/
-#endif

@@ -1,9 +1,10 @@
-#include "include/PR/rcp.h"
+#include <os_internal.h>
+#include "siint.h"
+s32 __osSiRawWriteIo(u32 devAddr, u32 data)
+{
 
-s32 __osSiRawWriteIo(void *a0, u32 a1) {
-    if (__osSiDeviceBusy()) {
+    if (__osSiDeviceBusy())
         return -1;
-    }
-    IO_WRITE((uintptr_t) a0, a1);
+    IO_WRITE(devAddr, data);
     return 0;
 }

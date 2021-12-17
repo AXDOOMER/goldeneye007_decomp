@@ -1,11 +1,9 @@
-#include "include/PR/rcp.h"
+#include <os_internal.h>
 #include "piint.h"
-
-extern u32 osRomBase;
-
-s32 osPiRawReadIo(u32 a0, u32 *a1) {
-    register int status;
-    WAIT_ON_IOBUSY(status);
-    *a1 = IO_READ(osRomBase | a0);
+s32 osPiRawReadIo(u32 devAddr, u32 *data)
+{
+    register u32 stat;
+    WAIT_ON_IOBUSY(stat);
+    *data = IO_READ((u32)osRomBase | devAddr);
     return 0;
 }

@@ -1,6 +1,6 @@
 #ifndef _VIINT_H
 #define _VIINT_H
-#include "include/PR/os.h"
+#include <os_internal.h>
 
 #define OS_TV_TYPE_PAL 0
 #define OS_TV_TYPE_NTSC 1

@@ -1,6 +1,7 @@
-#include "include/PR/os.h"
-#include "ultra64.h"
+#include <os_internal.h>
+#include <rcp.h>
 
-void osSpTaskYield(void) {
-    __osSpSetStatus(SPSTATUS_SET_SIGNAL0);
+void osSpTaskYield(void)
+{
+    __osSpSetStatus(SP_SET_YIELD);
 }

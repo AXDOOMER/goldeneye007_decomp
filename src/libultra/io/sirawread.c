@@ -1,9 +1,10 @@
-#include "include/PR/rcp.h"
+#include <os_internal.h>
+#include "siint.h"
 
-s32 __osSiRawReadIo(void *a0, u32 *a1) {
-    if (__osSiDeviceBusy()) {
+s32 __osSiRawReadIo(u32 devAddr, u32 *data)
+{
+    if (__osSiDeviceBusy())
         return -1;
-    }
-    *a1 = IO_READ((uintptr_t) a0);
+    *data = IO_READ(devAddr);
     return 0;
 }

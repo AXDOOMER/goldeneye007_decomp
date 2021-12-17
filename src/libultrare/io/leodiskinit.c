@@ -18,9 +18,7 @@ OSPiHandle *osLeoDiskInit(void) {
     LeoDiskHandle.pulse = 6;
     LeoDiskHandle.pageSize = 6;
     LeoDiskHandle.relDuration = 2;
-#ifdef VERSION_SH
-    LeoDiskHandle.domain = 1;
-#endif
+
     IO_WRITE(PI_BSD_DOM2_LAT_REG, LeoDiskHandle.latency);
     IO_WRITE(PI_BSD_DOM2_PWD_REG, LeoDiskHandle.pulse);
     IO_WRITE(PI_BSD_DOM2_PGS_REG, LeoDiskHandle.pageSize);

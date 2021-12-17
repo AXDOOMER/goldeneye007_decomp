@@ -1,13 +1,14 @@
-#include "include/PR/os.h"
-#include "include/PR/rcp.h"
-#include "ultra64.h"
+#include <os_internal.h>
+#include <rcp.h>
 
-s32 __osSpSetPc(void *pc) {
-    register u32 status = IO_READ(SP_STATUS_REG);
-    if (!(status & SPSTATUS_HALT)) {
+s32 __osSpSetPc(u32 data)
+{
+    register u32 stat = IO_READ(SP_STATUS_REG);
+    if (!(stat & SP_STATUS_HALT))
         return -1;
-    } else {
-        IO_WRITE(SP_PC_REG, pc);
-        return 0;
+    else
+    {
+        IO_WRITE(SP_PC_REG, data);
     }
+    return 0;
 }

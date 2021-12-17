@@ -1,6 +1,6 @@
 #include "PR/os.h"
 #include "include/PR/os.h"
-#include "controller.h"
+#include "src/libultra/io/controller.h"
 #include "ultra64.h"
 
 extern u8 __osMaxControllers;
