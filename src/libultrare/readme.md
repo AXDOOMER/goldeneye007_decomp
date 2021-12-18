@@ -6,6 +6,5 @@ It is perhaps a bit awkward, but (unmodified) `#include`s should refer back to t
 
 Things to note (see makefile for latest):
 
-- Rare removed libultra files they didn't use  
 - Some of the original assembly files were compiled with optimization, but currently all asm is `-O1`  
 - Preprocessor `_FINALROM` is defined to correctly build a matching ROM; this only applies to `os/` files.
