@@ -159,6 +159,9 @@ class SearchDir:
 
 class StatResults:
     def __init__(self):
+        # "now" starting point, modification times must be before this datetime.
+        # Only applies to git log, OS modified time is unaffected.
+        # This is a fudge factor to workaround github actions not including history.
         self.now = datetime.datetime.now() - datetime.timedelta(minutes=5)
         self.search_dirs = []
         # reference to SourceFileContent with highest mtime
@@ -184,14 +187,17 @@ def mtime_os(file, now):
 
 
 def mtime_git(file, now):
-    #try:
-    date_str = now.strftime('%Y-%m-%dT%H:%M:%S%z')
-    result = subprocess.run(['git', 'log', '-1', '--format=\"%ct\"', '--before=\"' + date_str + '\"', '--', file], stdout=subprocess.PIPE, universal_newlines=True)
-    timestamp = int(result.stdout.rstrip().replace('"', ''))
-    return timestamp
-    #except:
-    #    print ('fatal error reading git log history, maybe use OS modified time resolver, --mtime_os option. File: "' + file + '", date_str: "' + date_str + '"')
-    #    sys.exit(7)
+    try:
+        date_str = now.strftime('%Y-%m-%dT%H:%M:%S%z')
+        result = subprocess.run(['git', 'log', '-1', '--format=\"%ct\"', '--before=\"' + date_str + '\"', '--', file], stdout=subprocess.PIPE, universal_newlines=True)
+    except:
+        print ('fatal error reading git log history, maybe use OS modified time resolver, --mtime_os option. File: "' + file + '", date_str: "' + date_str + '"')
+        sys.exit(7)
+
+    log_out = result.stdout.strip().replace('"', '')
+    if not log_out:
+        return 0
+    return int(log_out)
 
 
 def process_source_files(search, stats: StatResults, mtime_resolver):
@@ -417,6 +423,11 @@ def generate_default_stats(stats: StatResults):
             file.parent.completed_file_count += 1
             stats.total_completed_file_count += 1
 
+    # If it wasn't possible to determine recently modified file (i.e., github actions)
+    # then fallback to "ge.u.z64"
+    if stats.last_modified_file.mtime == 0:
+        stats.last_modified_file = SourceFileContent('ge.u.z64')
+
 
 def print_default_stats(stats: StatResults, version):
 
@@ -623,6 +634,10 @@ def main():
         if not os.path.isfile(__report_bin):
             print('fatal: file not found: ' + __report_bin)
             sys.exit(6)
+
+    # if this is just getting status on nonmatching files, ignore modified time lookup.
+    if print_method == 'non_matching' and not run_report:
+        mtime_use_os = True
 
     # Default to using git log to get the file's modified date.
     # Git log will be much slower, but cloning a new repo (i.e., github actions online)
