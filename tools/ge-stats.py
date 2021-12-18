@@ -42,6 +42,9 @@ __report_template = __report_dir + os.path.sep + "template.html"
 __report_out_us =   __report_dir + os.path.sep + "index.html"
 __report_out_jp =   __report_dir + os.path.sep + "JPN.htm"
 
+# default fallback if recently modified timestamps don't work
+__mtime_fallback_filename = 'ge.u.z64'
+
 class FunctionInfo:
     """
     Info about a function
@@ -82,7 +85,7 @@ class SourceFileContent:
 
         # reference to SearchDir
         self.parent = None
-        # last modified time, in floating point seconds since epoch
+        # last modified time, in seconds since epoch
         self.mtime = 0
 
     def __str__(self):
@@ -166,6 +169,8 @@ class StatResults:
         self.search_dirs = []
         # reference to SourceFileContent with highest mtime
         self.last_modified_file = None
+        # status flag. Used to determine if last modified timestamps are valid.
+        self.last_mtime_valid = False
         # count of all functions
         self.total_function_count = 0
         # length in bytes for all functions
@@ -182,14 +187,14 @@ class StatResults:
 
 
 def mtime_os(file, now):
-    return os.path.getmtime(file)
+    return int(os.path.getmtime(file))
 
 
 
 def mtime_git(file, now):
     try:
         date_str = now.strftime('%Y-%m-%dT%H:%M:%S%z')
-        result = subprocess.run(['git', 'log', '-1', '--format=\"%ct\"', '--before=\"' + date_str + '\"', '--', file], stdout=subprocess.PIPE, universal_newlines=True)
+        result = subprocess.run(['git', 'log', '-1', '--format=\"%ct\"', '--date=local', '--before=\"' + date_str + '\"', '--', file], stdout=subprocess.PIPE, universal_newlines=True)
     except:
         print ('fatal error reading git log history, maybe use OS modified time resolver, --mtime_os option. File: "' + file + '", date_str: "' + date_str + '"')
         sys.exit(7)
@@ -396,6 +401,10 @@ def generate_default_stats(stats: StatResults):
     the total bytes/functions/files in each searchdir, and sum
     the totals for the entire search.
     """
+    
+    # track unique modification times
+    seen_mtime = set()
+    
     for file in stats.source_files:
         # if this file comes from the .map file and does not have the
         # parent association setup then it should be ignored.
@@ -404,6 +413,8 @@ def generate_default_stats(stats: StatResults):
 
         if stats.last_modified_file is None or stats.last_modified_file.mtime < file.mtime:
             stats.last_modified_file = file
+        
+        seen_mtime.add(file.mtime)
 
         for func in file.all_functions:
             file.parent.function_count += 1
@@ -422,11 +433,18 @@ def generate_default_stats(stats: StatResults):
         if len(file.asm_functions) == 0:
             file.parent.completed_file_count += 1
             stats.total_completed_file_count += 1
+            
+    # More hacks to check for valid modification times.
+    # 10 is an arbitrary number, but this says that if there are
+    # at least 10 unique modification times, assume the timestamps
+    # are valid. Otherwise this will fallbac kto show the default file.
+    if len(seen_mtime) > 10:
+        stats.last_mtime_valid = True
 
     # If it wasn't possible to determine recently modified file (i.e., github actions)
     # then fallback to "ge.u.z64"
-    if stats.last_modified_file.mtime == 0:
-        stats.last_modified_file = SourceFileContent('ge.u.z64')
+    if not stats.last_mtime_valid:
+        stats.last_modified_file = SourceFileContent(__mtime_fallback_filename)
 
 
 def print_default_stats(stats: StatResults, version):
@@ -438,9 +456,12 @@ def print_default_stats(stats: StatResults, version):
 
     print('FILES')
     print('\trecently modified:')
-    recent_files = sorted(stats.source_files, key=lambda x: x.mtime, reverse=True)[:5]
-    for rf in recent_files:
-        print('\t\t' + rf.path)
+    if stats.last_mtime_valid:
+        recent_files = sorted(stats.source_files, key=lambda x: x.mtime, reverse=True)[:5]
+        for rf in recent_files:
+            print('\t\t' + rf.path)
+    else:
+        print('\t\t' + __mtime_fallback_filename)
     print()
     for s in stats.search_dirs:
         print('\t{:12}\t{:5,} / {:5,} \t{:6.2f}%'.format(s.path, int(s.completed_file_count), int(s.file_count), (percent_complete(s.completed_file_count, s.file_count) * 100)))
@@ -650,7 +671,7 @@ def main():
         else:
             # ok, do one last check (for github actions)
             try:
-                result = subprocess.run(['git', 'log', '-1', '--format=\"%ct\"', '--', 'readme.me'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+                result = subprocess.run(['git', 'log', '-1', '--format=\"%ct\"', '--', 'readme.md'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
                 if result.returncode == 0:
                     mtime_resolver = mtime_git
             except:
