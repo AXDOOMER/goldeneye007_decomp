@@ -190,7 +190,7 @@ def mtime_git(file, now):
         timestamp = int(result.stdout.rstrip().replace('"', ''))
         return timestamp
     except:
-        print ('fatal error reading git log history, maybe use OS modified time resolver, --mtime_os option')
+        print ('fatal error reading git log history, maybe use OS modified time resolver, --mtime_os option. File: "' + file + '", date_str: "' + date_str + '"')
         sys.exit(7)
 
 
