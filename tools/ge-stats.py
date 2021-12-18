@@ -184,14 +184,14 @@ def mtime_os(file, now):
 
 
 def mtime_git(file, now):
-    try:
-        date_str = now.strftime('%Y-%m-%dT%H:%M:%S%z')
-        result = subprocess.run(['git', 'log', '-1', '--format=\"%ct\"', '--before=\"' + date_str + '\"', '--', file], stdout=subprocess.PIPE, universal_newlines=True)
-        timestamp = int(result.stdout.rstrip().replace('"', ''))
-        return timestamp
-    except:
-        print ('fatal error reading git log history, maybe use OS modified time resolver, --mtime_os option. File: "' + file + '", date_str: "' + date_str + '"')
-        sys.exit(7)
+    #try:
+    date_str = now.strftime('%Y-%m-%dT%H:%M:%S%z')
+    result = subprocess.run(['git', 'log', '-1', '--format=\"%ct\"', '--before=\"' + date_str + '\"', '--', file], stdout=subprocess.PIPE, universal_newlines=True)
+    timestamp = int(result.stdout.rstrip().replace('"', ''))
+    return timestamp
+    #except:
+    #    print ('fatal error reading git log history, maybe use OS modified time resolver, --mtime_os option. File: "' + file + '", date_str: "' + date_str + '"')
+    #    sys.exit(7)
 
 
 def process_source_files(search, stats: StatResults, mtime_resolver):
