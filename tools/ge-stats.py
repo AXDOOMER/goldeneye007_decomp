@@ -182,9 +182,13 @@ def mtime_os(file):
 
 
 def mtime_git(file):
-    result = subprocess.run(['git', 'log', '-1', '--format=\"%ct\"', '--', file], stdout=subprocess.PIPE, universal_newlines=True)
-    timestamp = int(result.stdout.rstrip().replace('"', ''))
-    return timestamp
+    try:
+        result = subprocess.run(['git', 'log', '-1', '--format=\"%ct\"', '--', file], stdout=subprocess.PIPE, universal_newlines=True)
+        timestamp = int(result.stdout.rstrip().replace('"', ''))
+        return timestamp
+    except:
+        print ('fatal error reading git log history, maybe use OS modified time resolver, --mtime_os option')
+        sys.exit(7)
 
 
 def process_source_files(search, stats: StatResults, mtime_resolver):
@@ -582,6 +586,7 @@ def print_help():
     print('  -v, --version=CODE     generate decomp stats for version CODE (us or jp). Default is us')
     print('  -r, --report           generate html report using report tool')
     print('  -n, --non_matching     print csv of all non matching function definitions')
+    print('  --mtime_os             use OS last modified time instead of git log')
     print('  -h, --help             display this help text and exit')
 
 def main():
@@ -589,9 +594,10 @@ def main():
     version = 'us'
     run_report = False
     print_method = 'default'
+    mtime_use_os = False
 
     if (len(sys.argv) > 1):
-        arguments, values = getopt.getopt(sys.argv[1:], "hv:rn", ["help", "version=", "report", "non_matching"])
+        arguments, values = getopt.getopt(sys.argv[1:], "hv:rn", ["help", "version=", "report", "non_matching", "mtime_os"])
 
         for current_argument, current_value in arguments:
             if current_argument in ("-h", "--help"):
@@ -603,6 +609,8 @@ def main():
                 run_report = True
             elif current_argument in ("-n", "--non_matching"):
                 print_method = 'non_matching'
+            elif current_argument in ("--mtime_os"):
+                mtime_use_os = True
 
     if version not in __supported_versions:
         print('fatal: version', version, 'not supported! Supported versions are: ', ', '.join(__supported_versions))
@@ -613,22 +621,13 @@ def main():
             print('fatal: file not found: ' + __report_bin)
             sys.exit(6)
 
-    # Default to using OS modified time to measure file last modified date.
-    # If this is a git repo, use git log to get the file's modified date.
+    # Default to using git log to get the file's modified date.
     # Git log will be much slower, but cloning a new repo (i.e., github actions online)
     # will reset all the modified timestamps to the same value, so will need to
     # resolve the last modified time from git history.
-    mtime_resolver = mtime_os
-    if os.path.isdir('.git'):
-        mtime_resolver = mtime_git
-    else:
-        # ok, this may be a bare repository, do one last check (for github actions)
-        try:
-            result = subprocess.run(['git', 'log', '-1', '--format=\"%ct\"', '--', 'readme.me'], stdout=subprocess.PIPE, universal_newlines=True)
-            if result.returncode == 0:
-                mtime_resolver = mtime_git
-        except:
-            pass
+    mtime_resolver = mtime_git
+    if mtime_use_os:
+        mtime_resolver = mtime_os
     
     # files to count as complete, in src/ directory
     src_completed_list = [
