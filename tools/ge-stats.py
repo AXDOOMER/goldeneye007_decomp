@@ -621,6 +621,15 @@ def main():
     mtime_resolver = mtime_os
     if os.path.isdir('.git'):
         mtime_resolver = mtime_git
+    else:
+    if True:
+        # ok, this may be a bare repository, do one last check (for github actions)
+        try:
+            result = subprocess.run(['git', 'log', '-1', '--format=\"%ct\"', '--', 'readme.me'], stdout=subprocess.PIPE, universal_newlines=True)
+            if result.returncode == 0:
+                mtime_resolver = mtime_git
+        except:
+            pass
     
     # files to count as complete, in src/ directory
     src_completed_list = [
