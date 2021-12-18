@@ -1,3 +1,4 @@
+import datetime
 import errno
 import functools
 import getopt
@@ -158,6 +159,7 @@ class SearchDir:
 
 class StatResults:
     def __init__(self):
+        self.now = datetime.datetime.now() - datetime.timedelta(minutes=5)
         self.search_dirs = []
         # reference to SourceFileContent with highest mtime
         self.last_modified_file = None
@@ -176,14 +178,15 @@ class StatResults:
 
 
 
-def mtime_os(file):
+def mtime_os(file, now):
     return os.path.getmtime(file)
 
 
 
-def mtime_git(file):
+def mtime_git(file, now):
     try:
-        result = subprocess.run(['git', 'log', '-1', '--format=\"%ct\"', '--', file], stdout=subprocess.PIPE, universal_newlines=True)
+        date_str = now.strftime('%Y-%m-%dT%H:%M:%S%z')
+        result = subprocess.run(['git', 'log', '-1', '--format=\"%ct\"', '--before="' + date_str + '"', '--', file], stdout=subprocess.PIPE, universal_newlines=True)
         timestamp = int(result.stdout.rstrip().replace('"', ''))
         return timestamp
     except:
@@ -222,7 +225,7 @@ def process_source_files(search, stats: StatResults, mtime_resolver):
 
                 sfc.asm_functions = set()
                 sfc.parent = s
-                sfc.mtime = mtime_resolver(file)
+                sfc.mtime = mtime_resolver(file, stats.now)
 
                 # The `completed` list is manually configured to specify which files should not be
                 # counted against the total. This is done by simply not adding asm function
@@ -625,9 +628,18 @@ def main():
     # Git log will be much slower, but cloning a new repo (i.e., github actions online)
     # will reset all the modified timestamps to the same value, so will need to
     # resolve the last modified time from git history.
-    mtime_resolver = mtime_git
-    if mtime_use_os:
-        mtime_resolver = mtime_os
+    mtime_resolver = mtime_os
+    if not mtime_use_os:
+        if os.path.isdir('.git'):
+            mtime_resolver = mtime_git
+        else:
+            # ok, do one last check (for github actions)
+            try:
+                result = subprocess.run(['git', 'log', '-1', '--format=\"%ct\"', '--', 'readme.me'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+                if result.returncode == 0:
+                    mtime_resolver = mtime_git
+            except:
+                pass
     
     # files to count as complete, in src/ directory
     src_completed_list = [
