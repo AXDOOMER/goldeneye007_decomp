@@ -164,8 +164,7 @@ class StatResults:
     def __init__(self):
         # "now" starting point, modification times must be before this datetime.
         # Only applies to git log, OS modified time is unaffected.
-        # This is a fudge factor to workaround github actions not including history.
-        self.now = datetime.datetime.now() - datetime.timedelta(minutes=5)
+        self.now = datetime.datetime.now()
         self.search_dirs = []
         # reference to SourceFileContent with highest mtime
         self.last_modified_file = None
