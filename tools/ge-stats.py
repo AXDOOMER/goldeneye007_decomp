@@ -186,7 +186,7 @@ def mtime_os(file, now):
 def mtime_git(file, now):
     try:
         date_str = now.strftime('%Y-%m-%dT%H:%M:%S%z')
-        result = subprocess.run(['git', 'log', '-1', '--format=\"%ct\"', '--before="' + date_str + '"', '--', file], stdout=subprocess.PIPE, universal_newlines=True)
+        result = subprocess.run(['git', 'log', '-1', '--format=\"%ct\"', '--before=\"' + date_str + '\"', '--', file], stdout=subprocess.PIPE, universal_newlines=True)
         timestamp = int(result.stdout.rstrip().replace('"', ''))
         return timestamp
     except:
