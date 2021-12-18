@@ -86,7 +86,7 @@ SECTIONS
       build/u/src/libultra/os/writebackdcacheall.o (.text);
       build/u/src/libultra/os/invalicache.o (.text);
       build/u/src/libultra/os/unmaptlb.o (.text);
-      build/u/src/libultra/OS/getfpccsr.o (.text);
+      build/u/src/libultra/os/getfpccsr.o (.text);
       build/u/src/libultra/os/setfpccsr.o (.text);
       build/u/src/libultra/os/createthread.o (.text);
       build/u/src/libultra/os/startthread.o (.text);
@@ -94,7 +94,7 @@ SECTIONS
       build/u/src/libultra/os/parameters.o (.text);
       build/u/src/libultra/os/stopthread.o (.text);
       build/u/src/libultra/os/setthreadpri.o (.text);
-      build/u/src/libultra/OS/getcount.o (.text);
+      build/u/src/libultra/os/getcount.o (.text);
       build/u/src/libultrare/io/vimgr.o (.text);
       build/u/src/libultrare/io/vitbl.o (.text); /*edited*/
       build/u/src/libultra/os/seteventmesg.o (.text);
@@ -190,7 +190,7 @@ SECTIONS
       build/u/src/libultra/gu/rotate.o (.text);
       build/u/src/libultra/libc/llcvt.o (.text); /*edited*/
       build/u/src/libultra/os/setsr.o (.text);
-      build/u/src/libultra/OS/getsr.o (.text);
+      build/u/src/libultra/os/getsr.o (.text);
       build/u/src/libultra/io/sirawread.o (.text);
       build/u/src/libultra/io/sirawwrite.o (.text);
       build/u/src/libultra/io/pirawread.o (.text);
@@ -3232,7 +3232,7 @@ SECTIONS
       build/u/src/libultra/os/writebackdcacheall.o (.data);
       build/u/src/libultra/os/invalicache.o (.data);
       build/u/src/libultra/os/unmaptlb.o (.data);
-      build/u/src/libultra/OS/getfpccsr.o (.data);
+      build/u/src/libultra/os/getfpccsr.o (.data);
       build/u/src/libultra/os/setfpccsr.o (.data);
       build/u/src/libultra/os/createthread.o (.data);
       build/u/src/libultra/os/startthread.o (.data);
@@ -3240,7 +3240,7 @@ SECTIONS
       build/u/src/libultra/os/parameters.o (.data);
       build/u/src/libultra/os/stopthread.o (.data);
       build/u/src/libultra/os/setthreadpri.o (.data);
-      build/u/src/libultra/OS/getcount.o (.data);
+      build/u/src/libultra/os/getcount.o (.data);
       build/u/src/libultrare/io/vimgr.o (.data);
       build/u/src/libultrare/io/vitbl.o (.data); /*edited*/
       build/u/src/libultra/os/seteventmesg.o (.data);
@@ -3336,7 +3336,7 @@ SECTIONS
       build/u/src/libultra/gu/rotate.o (.data);
       build/u/src/libultra/libc/llcvt.o (.data); /*edited*/
       build/u/src/libultra/os/setsr.o (.data);
-      build/u/src/libultra/OS/getsr.o (.data);
+      build/u/src/libultra/os/getsr.o (.data);
       build/u/src/libultra/io/sirawread.o (.data);
       build/u/src/libultra/io/sirawwrite.o (.data);
       build/u/src/libultra/io/pirawread.o (.data);
@@ -3440,7 +3440,7 @@ SECTIONS
       build/u/src/libultra/os/writebackdcacheall.o (.rodata);
       build/u/src/libultra/os/invalicache.o (.rodata);
       build/u/src/libultra/os/unmaptlb.o (.rodata);
-      build/u/src/libultra/OS/getfpccsr.o (.rodata);
+      build/u/src/libultra/os/getfpccsr.o (.rodata);
       build/u/src/libultra/os/setfpccsr.o (.rodata);
       build/u/src/libultra/os/createthread.o (.rodata);
       build/u/src/libultra/os/startthread.o (.rodata);
@@ -3448,7 +3448,7 @@ SECTIONS
       build/u/src/libultra/os/parameters.o (.rodata);
       build/u/src/libultra/os/stopthread.o (.rodata);
       build/u/src/libultra/os/setthreadpri.o (.rodata);
-      build/u/src/libultra/OS/getcount.o (.rodata);
+      build/u/src/libultra/os/getcount.o (.rodata);
       build/u/src/libultrare/io/vimgr.o (.rodata);
       build/u/src/libultrare/io/vitbl.o (.rodata); /*edited*/
       build/u/src/libultra/os/seteventmesg.o (.rodata);
@@ -3544,7 +3544,7 @@ SECTIONS
       build/u/src/libultra/gu/rotate.o (.rodata);
       build/u/src/libultra/libc/llcvt.o (.rodata); /*edited*/
       build/u/src/libultra/os/setsr.o (.rodata);
-      build/u/src/libultra/OS/getsr.o (.rodata);
+      build/u/src/libultra/os/getsr.o (.rodata);
       build/u/src/libultra/io/sirawread.o (.rodata);
       build/u/src/libultra/io/sirawwrite.o (.rodata);
       build/u/src/libultra/io/pirawread.o (.rodata);
@@ -3911,7 +3911,7 @@ SECTIONS
       build/u/src/libultra/os/writebackdcacheall.o (.bss);
       build/u/src/libultra/os/invalicache.o (.bss);
       build/u/src/libultra/os/unmaptlb.o (.bss);
-      build/u/src/libultra/OS/getfpccsr.o (.bss);
+      build/u/src/libultra/os/getfpccsr.o (.bss);
       build/u/src/libultra/os/setfpccsr.o (.bss);
       build/u/src/libultra/os/createthread.o (.bss);
       build/u/src/libultra/os/startthread.o (.bss);
@@ -3919,7 +3919,7 @@ SECTIONS
       build/u/src/libultra/os/parameters.o (.bss);
       build/u/src/libultra/os/stopthread.o (.bss);
       build/u/src/libultra/os/setthreadpri.o (.bss);
-      build/u/src/libultra/OS/getcount.o (.bss);
+      build/u/src/libultra/os/getcount.o (.bss);
       build/u/src/libultrare/io/vimgr.o (.bss);
       build/u/src/libultrare/io/vitbl.o (.bss); /*edited*/
       build/u/src/libultra/os/seteventmesg.o (.bss);
@@ -4015,7 +4015,7 @@ SECTIONS
       build/u/src/libultra/gu/rotate.o (.bss);
       build/u/src/libultra/libc/llcvt.o (.bss); /*edited*/
       build/u/src/libultra/os/setsr.o (.bss);
-      build/u/src/libultra/OS/getsr.o (.bss);
+      build/u/src/libultra/os/getsr.o (.bss);
       build/u/src/libultra/io/sirawread.o (.bss);
       build/u/src/libultra/io/sirawwrite.o (.bss);
       build/u/src/libultra/io/pirawread.o (.bss);
