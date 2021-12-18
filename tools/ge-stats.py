@@ -175,7 +175,19 @@ class StatResults:
         self.source_files = []
 
 
-def process_source_files(search, stats: StatResults):
+
+def mtime_os(file):
+    return os.path.getmtime(file)
+
+
+
+def mtime_git(file):
+    result = subprocess.run(['git', 'log', '-1', '--format=\"%ct\"', '--', file], stdout=subprocess.PIPE, universal_newlines=True)
+    timestamp = int(result.stdout.rstrip().replace('"', ''))
+    return timestamp
+
+
+def process_source_files(search, stats: StatResults, mtime_resolver):
 
     stats.search_dirs = search
 
@@ -206,7 +218,7 @@ def process_source_files(search, stats: StatResults):
 
                 sfc.asm_functions = set()
                 sfc.parent = s
-                sfc.mtime = os.path.getmtime(file)
+                sfc.mtime = mtime_resolver(file)
 
                 # The `completed` list is manually configured to specify which files should not be
                 # counted against the total. This is done by simply not adding asm function
@@ -230,6 +242,7 @@ def process_source_files(search, stats: StatResults):
                 break
 
     return stats
+
 
 def apply_build_map(stats: StatResults, version: str):
     """
@@ -599,6 +612,15 @@ def main():
         if not os.path.isfile(__report_bin):
             print('fatal: file not found: ' + __report_bin)
             sys.exit(6)
+
+    # Default to using OS modified time to measure file last modified date.
+    # If this is a git repo, use git log to get the file's modified date.
+    # Git log will be much slower, but cloning a new repo (i.e., github actions online)
+    # will reset all the modified timestamps to the same value, so will need to
+    # resolve the last modified time from git history.
+    mtime_resolver = mtime_os
+    if os.path.isdir('.git'):
+        mtime_resolver = mtime_git
     
     # files to count as complete, in src/ directory
     src_completed_list = [
@@ -621,7 +643,7 @@ def main():
 
     stats = StatResults()
 
-    process_source_files(search, stats)
+    process_source_files(search, stats, mtime_resolver)
     apply_build_map(stats, version)
     generate_default_stats(stats)
 
