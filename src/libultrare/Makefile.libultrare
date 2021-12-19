@@ -176,12 +176,12 @@ LIBULTRARE_IO_C_FILES := \
     contramwrite \
     contreaddata \
     controller \
+    devmgr \
     leodiskinit \
     pfsisplug \
     vimodepallan1 
 
 LIBULTRARE_IO_S_FILES := \
-    devmgr \
     epirawdma \
     epirawwrite \
     pimgr \
