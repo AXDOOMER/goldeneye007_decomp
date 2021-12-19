@@ -187,10 +187,10 @@ LIBULTRARE_IO_C_FILES := \
     sptask \
     vi \
     vimgr \
-    vimodepallan1 
-
-LIBULTRARE_IO_S_FILES := \
+    vimodepallan1 \
     vitbl
+
+LIBULTRARE_IO_S_FILES := 
 
 # #################
 # libc
