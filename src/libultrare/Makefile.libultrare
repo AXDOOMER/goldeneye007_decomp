@@ -186,10 +186,10 @@ LIBULTRARE_IO_C_FILES := \
     pimgr \
     sptask \
     vi \
+    vimgr \
     vimodepallan1 
 
 LIBULTRARE_IO_S_FILES := \
-    vimgr \
     vitbl
 
 # #################
