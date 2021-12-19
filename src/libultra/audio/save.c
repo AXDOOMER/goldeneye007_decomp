@@ -21,7 +21,7 @@
 #include <libaudio.h>
 #include "synthInternals.h"
 #include <os.h>
-#include <assert.h>
+#include "include/assert.h"
 
 Acmd *alSavePull(void *filter, s16 *outp, s32 outCount, s32 sampleOffset,
                  Acmd *p) 

@@ -20,7 +20,7 @@
 
 #include "synthInternals.h"
 #include <libaudio.h>
-#include <assert.h>
+#include "include/assert.h"
 #include <ultraerror.h>
 #include <os_internal.h>
 

@@ -72,11 +72,11 @@ LIBULTRA_AUDIO_S_FILES :=
 
 
 LIBULTRARE_AUDIO_C_FILES := \
-    reverb 
+    reverb \
+    seqplayer
 
 LIBULTRARE_AUDIO_S_FILES := \
-    env \
-    seqplayer
+    env 
 
 # #################
 # gt
@@ -346,8 +346,8 @@ $(BUILD_DIR)/src/libultrare/%.o: src/libultrare/%.s
 $(BUILD_DIR)/src/libultra/audio/%.o: LIBULTRA_OPTIMIZATION := -O3
 $(BUILD_DIR)/src/libultrare/audio/%.o: LIBULTRA_OPTIMIZATION := -O3
 
-# assert is used in audio
-$(BUILD_DIR)/src/libultrare/audio/%.o: ASSERT_FLAG :=
+# assert is used in env.c
+$(BUILD_DIR)/src/libultrare/audio/env.o: ASSERT_FLAG :=
 
 $(BUILD_DIR)/src/libultra/audio/%.o: src/libultra/audio/%.c
 	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<

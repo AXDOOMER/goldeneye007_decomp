@@ -71,7 +71,7 @@ Acmd *alFxPull(void *filter, s16 *outp, s32 outCount, s32 sampleOffset,
     lastCnt[++cnt_index] = osGetCount();
 #endif
     
-    //assert(source);
+    assert(source);
     /*
      * pull channels going into this effect first
      */

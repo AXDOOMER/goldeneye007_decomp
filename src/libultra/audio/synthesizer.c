@@ -19,7 +19,7 @@
  *====================================================================*/
 
 #include "synthInternals.h"
-#include <assert.h>
+#include "include/assert.h"
 
 #ifdef AUD_PROFILE
 #include <os.h>
