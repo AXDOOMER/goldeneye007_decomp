@@ -5,7 +5,7 @@
 #include "game/title.h"
 #include "game/blood_animation.h"
 #include "fr.h"
-#include "libultra/os.h"
+#include "PR/os.h"
 #include "include/PR/gbi.h"
 #include "matrixmath.h"
 #include "ramrom.h"

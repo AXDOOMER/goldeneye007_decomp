@@ -1,7 +1,7 @@
 #include "ultra64.h"
 #include "memp.h"
 #include "game/bondview.h"
-#include "libultra/os.h"
+#include "PR/os.h"
 #include "include/PR/gbi.h"
 #include "macro.h"
 #include "game/player_2.h"

@@ -4,7 +4,7 @@
 #include "title.h"
 #include "blood_decrypt.h"
 #include "player.h"
-#include "libultra/os.h"
+#include "PR/os.h"
 
 
 u8 die_blood_image_1[] = {

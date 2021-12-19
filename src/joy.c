@@ -1,6 +1,6 @@
 #include "ultra64.h"
 #include "joy.h"
-#include "libultra/os.h"
+#include "PR/os.h"
 
 /**
  * Number of samples in contdata.
@@ -152,7 +152,7 @@ void joyInit(void)
             g_ContData[i].samples[0].pads[j].button = 0;
             g_ContData[i].samples[0].pads[j].stick_x = 0;
             g_ContData[i].samples[0].pads[j].stick_y = 0;
-            g_ContData[i].samples[0].pads[j].errnum = 0;
+            g_ContData[i].samples[0].pads[j].errno = 0;
         }
     }
 }
@@ -230,7 +230,7 @@ void joyCheckStatus(void)
 
         for (i = 0; i < MAXCONTROLLERS; i++)
         {
-            if (g_ContStatus[i].errnum & CONT_NO_RESPONSE_ERROR)
+            if (g_ContStatus[i].errno & CONT_NO_RESPONSE_ERROR)
             {
                 slots -= 1 << i;
             }
@@ -254,7 +254,7 @@ void joyCheckStatus(void)
     {
         if ((g_ConnectedControllers & (1 << i))
             && (g_ContStatus[i].type & (CONT_ABSOLUTE | CONT_RELATIVE))
-            && !(g_ContStatus[i].errnum))
+            && !(g_ContStatus[i].errno))
         {
             // This seems like a typo in the original, doing a bitwise AND
             // between a logical test on the left and a bitshift on the right.
@@ -484,8 +484,8 @@ void joyPoll(void)
 
             for (i = 0; i < MAXCONTROLLERS; i++)
             {
-                if (((g_ContData[CONTDATA_REGULAR].samples[g_ContData[CONTDATA_REGULAR].nextlast].pads[i].errnum == 0) && (g_ContData[CONTDATA_REGULAR].samples[g_ContData[CONTDATA_REGULAR].nextsecondlast].pads[i].errnum != 0)) ||
-                    ((g_ContData[CONTDATA_REGULAR].samples[g_ContData[CONTDATA_REGULAR].nextlast].pads[i].errnum != 0) && (g_ContData[CONTDATA_REGULAR].samples[g_ContData[CONTDATA_REGULAR].nextsecondlast].pads[i].errnum == 0)))
+                if (((g_ContData[CONTDATA_REGULAR].samples[g_ContData[CONTDATA_REGULAR].nextlast].pads[i].errno == 0) && (g_ContData[CONTDATA_REGULAR].samples[g_ContData[CONTDATA_REGULAR].nextsecondlast].pads[i].errno != 0)) ||
+                    ((g_ContData[CONTDATA_REGULAR].samples[g_ContData[CONTDATA_REGULAR].nextlast].pads[i].errno != 0) && (g_ContData[CONTDATA_REGULAR].samples[g_ContData[CONTDATA_REGULAR].nextsecondlast].pads[i].errno == 0)))
                     {
                     joyCheckStatus();
                     break;
