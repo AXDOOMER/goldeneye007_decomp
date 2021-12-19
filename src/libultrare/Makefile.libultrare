@@ -181,12 +181,12 @@ LIBULTRARE_IO_C_FILES := \
     epirawwrite \
     leodiskinit \
     leointerrupt \
+    pfsinit \
     pfsisplug \
     vimodepallan1 
 
 LIBULTRARE_IO_S_FILES := \
     pimgr \
-    pfsinit \
     sptask \
     vi \
     vimgr \
