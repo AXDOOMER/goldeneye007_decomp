@@ -133,7 +133,7 @@ typedef struct OSPiHandle_s {
         u8                      pageSize;       /* domain page size */
         u8                      relDuration;    /* domain release duration */
         u8                      pulse;          /* domain pulse width */
-	u8			domain;		/* which domain */
+	    u8                      domain;         /* which domain */
         u32                     baseAddress;    /* Domain address */
         u32                     speed;          /* for roms only */
         /* The following are "private" elements" */

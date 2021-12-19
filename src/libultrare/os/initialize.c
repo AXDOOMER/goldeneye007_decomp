@@ -68,7 +68,7 @@ void osInitialize()
     }
 
     pistatus = IO_READ(PI_STATUS_REG);
-    while ((pistatus & 3) != 0)
+    while ((pistatus & (PI_STATUS_IO_BUSY | PI_STATUS_DMA_BUSY)) != 0)
     {
         pistatus = IO_READ(PI_STATUS_REG);
     }

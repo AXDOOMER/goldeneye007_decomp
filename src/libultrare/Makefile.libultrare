@@ -177,12 +177,12 @@ LIBULTRARE_IO_C_FILES := \
     contreaddata \
     controller \
     devmgr \
+    epirawdma \
     leodiskinit \
     pfsisplug \
     vimodepallan1 
 
 LIBULTRARE_IO_S_FILES := \
-    epirawdma \
     epirawwrite \
     pimgr \
     leointerrupt \
@@ -400,7 +400,8 @@ $(BUILD_DIR)/src/libultra/io/%.o: src/libultra/io/%.s
 	$(AS) $(ASFLAGS_LIBULTRA) -o $@ $<
 
 $(BUILD_DIR)/src/libultrare/io/%.o: src/libultrare/io/%.c
-	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
+	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS_LIBULTRA) tools/asmpreproc/include-stdin.c -o $@ $(LIBULTRA_OPTIMIZATION)
+	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
 
 $(BUILD_DIR)/src/libultrare/io/%.o: src/libultrare/io/%.s
 	$(AS) $(ASFLAGS_LIBULTRA) -o $@ $<
