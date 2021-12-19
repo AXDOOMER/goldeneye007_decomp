@@ -14,7 +14,7 @@ ASSERT_FLAG := -DNDEBUG
 
 CFLAGS_LIBULTRA = -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821,838,649 -signed $(LIBULTRA_INCLUDE) $(LCDEFS) $(ASSERT_FLAG) -DTARGET_N64 $(MIPSISET) $(LIBULTRA_OPTIMIZATION)
 
-ASFLAGS_LIBULTRA := -march=vr4300 -mabi=32 $(INCLUDE) $(ASMDEFS) $(LIBULTRA_ASM_OPTIMIZATION)
+ASFLAGS_LIBULTRA = -march=vr4300 -mabi=32 $(INCLUDE) $(ASMDEFS) $(LIBULTRA_ASM_OPTIMIZATION)
 
 # #############################################################################################
 # file definitions
@@ -344,6 +344,10 @@ $(BUILD_DIR)/src/libultrare/%.o: src/libultrare/%.s
 # #################
 
 $(BUILD_DIR)/src/libultra/audio/%.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultrare/audio/%.o: LIBULTRA_OPTIMIZATION := -O3
+
+# assert is used in audio
+$(BUILD_DIR)/src/libultrare/audio/%.o: ASSERT_FLAG :=
 
 $(BUILD_DIR)/src/libultra/audio/%.o: src/libultra/audio/%.c
 	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
@@ -368,6 +372,7 @@ $(BUILD_DIR)/src/libultrare/audio/%.o: src/libultrare/audio/%.s
 # #################
 
 $(BUILD_DIR)/src/libultra/gu/%.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultrare/gu/%.o: LIBULTRA_OPTIMIZATION := -O3
 
 $(BUILD_DIR)/src/libultra/gu/%.o: src/libultra/gu/%.c
 	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
@@ -404,6 +409,7 @@ $(BUILD_DIR)/src/libultrare/io/%.o: src/libultrare/io/%.s
 # #################
 
 $(BUILD_DIR)/src/libultra/libc/%.o: LIBULTRA_OPTIMIZATION := -O3
+$(BUILD_DIR)/src/libultrare/libc/%.o: LIBULTRA_OPTIMIZATION := -O3
 
 $(BUILD_DIR)/src/libultra/libc/ll.o: LIBULTRA_OPTIMIZATION := -O1
 $(BUILD_DIR)/src/libultra/libc/llcvt.o: LIBULTRA_OPTIMIZATION := -O1
@@ -438,7 +444,7 @@ $(BUILD_DIR)/src/libultra/os/%.o: src/libultra/os/%.s
 	$(AS) $(ASFLAGS_LIBULTRA) -o $@ $<
 
 $(BUILD_DIR)/src/libultrare/os/%.o: src/libultrare/os/%.c
-	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
+	$(CC) -c $(CFLAGS_LIBULTRA) -D_FINALROM -o $@ $<
 
 $(BUILD_DIR)/src/libultrare/os/%.o: src/libultrare/os/%.s
 	$(AS) $(ASFLAGS_LIBULTRA) -o $@ $<

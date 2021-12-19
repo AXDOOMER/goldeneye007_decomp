@@ -269,23 +269,23 @@ typedef struct ALEnvMixer_s {
     ENVMIX_STATE	*state;
     s16		        pan;
     s16		        volume;
-    s16		        cvolL;
-    s16		        cvolR;
-    s16		        dryamt;
-    s16		        wetamt;
-    u16                 lratl;
-    s16                 lratm;
-    s16                 ltgt;
-    u16                 rratl;
-    s16                 rratm;
-    s16                 rtgt;
-    s32                 delta;
-    s32                 segEnd;
-    s32			first;
-    ALParam		*ctrlList;
-    ALParam		*ctrlTail;
-    ALFilter            **sources;
-    s32                 motion;
+    s16		        cvolL; // 0x1c
+    s16		        cvolR; // 0x1e
+    s16		        dryamt; // 0x20
+    s16		        wetamt; // 0x22
+    u16                 lratl;  // 0x24
+    s16                 lratm; // 0x26
+    s16                 ltgt; // 0x28
+    u16                 rratl; // 0x2a
+    s16                 rratm; // 0x2c
+    s16                 rtgt; // 0x2e
+    s32                 delta; // 0x30
+    s32                 segEnd; // 0x34
+    s32			first; // 0x38
+    ALParam		*ctrlList; // 0x3c
+    ALParam		*ctrlTail; // 0x40
+    ALFilter            **sources; // 0x44
+    s32                 motion; // 0x48
 } ALEnvMixer;
 
 void    alEnvmixerNew(ALEnvMixer *e, ALHeap *hp);
