@@ -71,11 +71,11 @@ LIBULTRA_AUDIO_C_FILES := \
 LIBULTRA_AUDIO_S_FILES := 
 
 
-LIBULTRARE_AUDIO_C_FILES := 
+LIBULTRARE_AUDIO_C_FILES := \
+    reverb 
 
 LIBULTRARE_AUDIO_S_FILES := \
     env \
-    reverb \
     seqplayer
 
 # #################
