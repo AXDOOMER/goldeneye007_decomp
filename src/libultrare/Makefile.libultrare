@@ -184,10 +184,10 @@ LIBULTRARE_IO_C_FILES := \
     pfsinit \
     pfsisplug \
     pimgr \
+    sptask \
     vimodepallan1 
 
 LIBULTRARE_IO_S_FILES := \
-    sptask \
     vi \
     vimgr \
     vitbl
