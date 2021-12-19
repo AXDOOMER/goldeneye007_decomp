@@ -13,7 +13,7 @@
 
 ALVoiceState    *__mapVoice(ALSeqPlayer *, u8, u8, u8);
 void            __unmapVoice(ALSeqPlayer *seqp, ALVoice *voice);
-unsigned char		__voiceNeedsNoteKill(ALSeqPlayer *seqp, ALVoice *voice, ALMicroTime killTime);	/* sct 1/5/96 */
+char		__voiceNeedsNoteKill(ALSeqPlayer *seqp, ALVoice *voice, ALMicroTime killTime);	/* sct 1/5/96 */
 
 ALVoiceState    *__lookupVoice(ALSeqPlayer *, u8, u8);
 ALSound         *__lookupSound(ALSeqPlayer *, u8, u8, u8);

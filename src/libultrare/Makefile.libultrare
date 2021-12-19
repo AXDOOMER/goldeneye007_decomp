@@ -52,6 +52,7 @@ LIBULTRA_AUDIO_C_FILES := \
     resample \
     save \
     seq \
+    seqplayer \
     seqpsetbank \
     sl \
     synaddplayer \
@@ -73,8 +74,7 @@ LIBULTRA_AUDIO_S_FILES :=
 
 
 LIBULTRARE_AUDIO_C_FILES := \
-    reverb \
-    seqplayer
+    reverb 
 
 LIBULTRARE_AUDIO_S_FILES := \
     env 

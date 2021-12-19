@@ -40,8 +40,8 @@
 #include <os_internal.h>
 #include <ultraerror.h>
 #include "include/assert.h"
-#include "src/libultra/audio/seqp.h"
-#include "src/libultra/audio/seq.h"
+#include "seqp.h"
+#include "seq.h"
 
 
 static  ALMicroTime     __seqpVoiceHandler(void *node);
@@ -1030,13 +1030,13 @@ void __seqpReleaseVoice(ALSeqPlayer *seqp, ALVoice *voice,
 
 #define VOICENEEDSNOTEKILL_DEBUG	_DEBUG_INTERNAL&&0	/* For debugging voiceNeedsNoteKill routine. */
 
-unsigned char __voiceNeedsNoteKill (ALSeqPlayer *seqp, ALVoice *voice, ALMicroTime killTime)
+char __voiceNeedsNoteKill (ALSeqPlayer *seqp, ALVoice *voice, ALMicroTime killTime)
 {
     ALLink              *thisNode;
     ALLink              *nextNode;
     ALEventListItem     *thisItem;
     ALMicroTime		itemTime = 0;
-    unsigned char		needsNoteKill = TRUE;
+    char		needsNoteKill = TRUE;
 
 #if VOICENEEDSNOTEKILL_DEBUG
     alEvtqPrintAllocEvts (&seqp->evtq);
