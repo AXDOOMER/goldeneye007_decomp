@@ -1,4 +1,5 @@
 #include "include/os_extension.h"
+#include "include/PR/os.h"
 #include "bondview.h"
 #include "bondconstants.h"
 #include "bondgame.h"
@@ -134,7 +135,7 @@ extern struct player *g_CurrentPlayer;
  * 6930    70005D30
  *     ??? - uses "-level_", "-m" strings
  */
-#define OS_USEC_TO_CYCLES(n)    (((u64)(n)*(osClockRate))/1000000LL)
+
 
 void bossInitMainthreadData(void)
 {
