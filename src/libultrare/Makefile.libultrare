@@ -178,12 +178,12 @@ LIBULTRARE_IO_C_FILES := \
     controller \
     devmgr \
     epirawdma \
+    epirawwrite \
     leodiskinit \
     pfsisplug \
     vimodepallan1 
 
 LIBULTRARE_IO_S_FILES := \
-    epirawwrite \
     pimgr \
     leointerrupt \
     pfsinit \
