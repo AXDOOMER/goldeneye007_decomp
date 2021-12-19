@@ -248,7 +248,7 @@ SECTIONS
       build/e/src/libultra/gu/cosf.o (.text); /*edited*/
       build/e/src/libultra/gu/sinf.o (.text); /*edited*/
       build/e/src/libultrare/os/destroythread.o (.text);
-      build/e/src/libultrare/audio/seqplayer.o (.text);
+      build/e/src/libultra/audio/seqplayer.o (.text);
       build/e/src/libultra/audio/synstartvoiceparam.o (.text);
       build/e/src/libultra/audio/copy.o (.text);
       /*build/e/src/libultra/io/piacs.o (.text);*/
@@ -3482,7 +3482,7 @@ SECTIONS
       build/e/src/libultra/gu/cosf.o (.data); /*edited*/
       build/e/src/libultra/gu/sinf.o (.data); /*edited*/
       build/e/src/libultrare/os/destroythread.o (.data);
-      build/e/src/libultrare/audio/seqplayer.o (.data);
+      build/e/src/libultra/audio/seqplayer.o (.data);
       build/e/src/libultra/audio/synstartvoiceparam.o (.data);
       build/e/src/libultra/audio/copy.o (.data);
       /*build/e/src/libultra/io/piacs.o (.data);*/
@@ -3713,7 +3713,7 @@ SECTIONS
       build/e/src/libultra/gu/cosf.o (.rodata); /*edited*/
       build/e/src/libultra/gu/sinf.o (.rodata); /*edited*/
       build/e/src/libultrare/os/destroythread.o (.rodata);
-      build/e/src/libultrare/audio/seqplayer.o (.rodata);
+      build/e/src/libultra/audio/seqplayer.o (.rodata);
       build/e/src/libultra/audio/synstartvoiceparam.o (.rodata);
       build/e/src/libultra/audio/copy.o (.rodata);
       /*build/e/src/libultra/io/piacs.o (.rodata);*/
@@ -4208,7 +4208,7 @@ SECTIONS
       build/e/src/libultra/gu/cosf.o (.bss); /*edited*/
       build/e/src/libultra/gu/sinf.o (.bss); /*edited*/
       build/e/src/libultrare/os/destroythread.o (.bss);
-      build/e/src/libultrare/audio/seqplayer.o (.bss);
+      build/e/src/libultra/audio/seqplayer.o (.bss);
       build/e/src/libultra/audio/synstartvoiceparam.o (.bss);
       build/e/src/libultra/audio/copy.o (.bss);
       /*build/e/src/libultra/io/piacs.o (.bss);*/
