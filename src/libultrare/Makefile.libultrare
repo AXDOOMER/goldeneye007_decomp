@@ -262,10 +262,10 @@ LIBULTRA_OS_S_FILES := \
 
 
 LIBULTRARE_OS_C_FILES := \
-    destroythread 
-
-LIBULTRARE_OS_S_FILES := \
+    destroythread \
     initialize 
+
+LIBULTRARE_OS_S_FILES := 
 
 # #################
 # rg
