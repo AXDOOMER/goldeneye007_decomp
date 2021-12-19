@@ -180,12 +180,12 @@ LIBULTRARE_IO_C_FILES := \
     epirawdma \
     epirawwrite \
     leodiskinit \
+    leointerrupt \
     pfsisplug \
     vimodepallan1 
 
 LIBULTRARE_IO_S_FILES := \
     pimgr \
-    leointerrupt \
     pfsinit \
     sptask \
     vi \

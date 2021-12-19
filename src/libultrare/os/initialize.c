@@ -2,6 +2,8 @@
 #include <os_internal.h>
 #include <R4300.h>
 #include <rcp.h>
+#include "src/libultra/io/piint.h"
+#include "src/libultrare/libultrare.h"
 
 typedef struct
 {
@@ -13,9 +15,6 @@ typedef struct
 
 extern s32 osViClock;
 extern __osExceptionVector __osExceptionPreamble;
-
-//extern s32 ASIC_STATUS;
-#define ASIC_STATUS_BASE 0x05000508
 
 OSTime osClockRate = OS_CLOCK_RATE;
 u32 __osShutdown = 0;
@@ -73,7 +72,7 @@ void osInitialize()
         pistatus = IO_READ(PI_STATUS_REG);
     }
 
-    local_asic_status = IO_READ(ASIC_STATUS_BASE);
+    local_asic_status = IO_READ(LEO_STATUS);
     
     if ((local_asic_status & 0xffff) == 0)
     {
