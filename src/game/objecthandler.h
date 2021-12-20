@@ -72,6 +72,7 @@ void sub_GAME_7F06D2E4(s32, s32, struct ModelSkeleton*, void* anim, s32, s16*);
 void sub_GAME_7F075FAC(struct Model *, struct ModelFileHeader *, void *);
 void sub_GAME_7F06FE3C(Model **, void (*)());
 void subcalcmatrices(struct unk_joint_list *, struct Model *);
+void instcalcmatrices(struct unk_joint_list *arg0, struct Model *arg1);
 
 #ifndef VERSION_EU
 void return_null(void);

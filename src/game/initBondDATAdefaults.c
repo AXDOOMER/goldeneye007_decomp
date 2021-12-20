@@ -164,7 +164,7 @@ void sets_a_bunch_of_BONDdata_values_to_default(void)
     matrix_4x4_set_identity(&sp50);
 
     sp90.unk_matrix = &sp50;
-    sp90.unk10 = &g_CurrentPlayer->field_6D0;
+    sp90.mtxlist = &g_CurrentPlayer->field_6D0;
 
     subcalcmatrices(&sp90, &g_CurrentPlayer->field_598);
 

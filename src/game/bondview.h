@@ -859,7 +859,7 @@ struct player
   s32 field_6C8;
   s32 field_6CC;
 
-  // struct? this gets pointed to.
+  // struct? this gets pointed to. Pointer called "mtxlist" takes address of this property.
   s32 field_6D0;
   s32 field_6D4;
   s32 field_6D8;

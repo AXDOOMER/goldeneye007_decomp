@@ -119,7 +119,7 @@ struct unk_joint_list {
     Gfx *gdl;
 
     // unknown type
-    void *unk10;
+    void *mtxlist;
     u32 unk14;
     u32 unk18;
     u32 unk1C;

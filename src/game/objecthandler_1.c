@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "memp.h"
 #include "rmon.h"
+#include "game/chr.h"
 #include "game/objecthandler.h"
 #include "game/math_floor.h"
 #include "game/math_ceil.h"
@@ -13,6 +14,8 @@
 // forward declarations
 
 void sub_GAME_7F06D490(struct Model *arg0, struct ModelNode *arg1);
+void sub_GAME_7F0755B0(void);
+s32 sub_GAME_7F0754BC(struct ModelAnimation *, s16, struct ModelSkeleton*);
 
 // end forward declarations
 
@@ -5028,292 +5031,120 @@ glabel instcalcmatrices
 
 
 
-#ifdef NONMATCHING
-void subcalcmatrices(void) {
 
-}
-#else
+
+
+
+/**
+ * Address 0x7F06F2F8 (VERSION_US, VERSION_JP)
+ * Address 0x7F06F670 (VERSION_EU)
+*/
+void subcalcmatrices(struct unk_joint_list *arg0, struct Model *arg1)
+{
 #ifndef VERSION_EU
-//D:800548F0
-const char aSubcalcmatricesNoObjanim[] = "subcalcmatrices: no objanim!\n";
-//D:80054910
-const char aSubcalcmatricesNoBasemtx[] = "subcalcmatrices: no basemtx!\n";
-//D:80054930
-const char aSubcalcmatricesNoMtxlist[] = "subcalcmatrices: no mtxlist!\n";
-//D:80054950
-const char aSubcalcmatricesNoAttachForObjinst[] = "subcalcmatrices: no attach for objinst!\n";
-//D:8005497C
-const char aSubcalcmatricesFrameaOutOfRange[] = "subcalcmatrices: framea out of range!\n";
-//D:800549A4
-const char aSubcalcmatricesFramebOutOfRange[] = "subcalcmatrices: frameb out of range!\n";
-//D:800549CC
-const char aSubcalcmatricesNoAnim2[] = "subcalcmatrices: no anim2!\n";
-//D:800549E8
-const char aSubcalcmatricesFrame2aOutOfRange[] = "subcalcmatrices: frame2a out of range!\n";
-//D:80054A10
-const char aSubcalcmatricesFrame2bOutOfRange[] = "subcalcmatrices: frame2b out of range!\n";
-GLOBAL_ASM(
-.text
-glabel subcalcmatrices
-/* 0A3E28 7F06F2F8 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0A3E2C 7F06F2FC AFB00018 */  sw    $s0, 0x18($sp)
-/* 0A3E30 7F06F300 00A08025 */  move  $s0, $a1
-/* 0A3E34 7F06F304 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0A3E38 7F06F308 14A00006 */  bnez  $a1, .L7F06F324
-/* 0A3E3C 7F06F30C AFA40020 */   sw    $a0, 0x20($sp)
-/* 0A3E40 7F06F310 3C048005 */  lui   $a0, %hi(aSubcalcmatricesNoObjanim)
-/* 0A3E44 7F06F314 0C0033D1 */  jal   osSyncPrintf
-/* 0A3E48 7F06F318 248448F0 */   addiu $a0, %lo(aSubcalcmatricesNoObjanim) # addiu $a0, $a0, 0x48f0
-/* 0A3E4C 7F06F31C 0FC1B11B */  jal   return_null
-/* 0A3E50 7F06F320 00000000 */   nop   
-.L7F06F324:
-/* 0A3E54 7F06F324 8FAE0020 */  lw    $t6, 0x20($sp)
-/* 0A3E58 7F06F328 3C048005 */  lui   $a0, %hi(aSubcalcmatricesNoBasemtx)
-/* 0A3E5C 7F06F32C 8DCF0000 */  lw    $t7, ($t6)
-/* 0A3E60 7F06F330 55E00006 */  bnezl $t7, .L7F06F34C
-/* 0A3E64 7F06F334 8FB80020 */   lw    $t8, 0x20($sp)
-/* 0A3E68 7F06F338 0C0033D1 */  jal   osSyncPrintf
-/* 0A3E6C 7F06F33C 24844910 */   addiu $a0, %lo(aSubcalcmatricesNoBasemtx) # addiu $a0, $a0, 0x4910
-/* 0A3E70 7F06F340 0FC1B11B */  jal   return_null
-/* 0A3E74 7F06F344 00000000 */   nop   
-/* 0A3E78 7F06F348 8FB80020 */  lw    $t8, 0x20($sp)
-.L7F06F34C:
-/* 0A3E7C 7F06F34C 3C048005 */  lui   $a0, %hi(aSubcalcmatricesNoMtxlist)
-/* 0A3E80 7F06F350 8F190010 */  lw    $t9, 0x10($t8)
-/* 0A3E84 7F06F354 57200006 */  bnezl $t9, .L7F06F370
-/* 0A3E88 7F06F358 8E080020 */   lw    $t0, 0x20($s0)
-/* 0A3E8C 7F06F35C 0C0033D1 */  jal   osSyncPrintf
-/* 0A3E90 7F06F360 24844930 */   addiu $a0, %lo(aSubcalcmatricesNoMtxlist) # addiu $a0, $a0, 0x4930
-/* 0A3E94 7F06F364 0FC1B11B */  jal   return_null
-/* 0A3E98 7F06F368 00000000 */   nop   
-/* 0A3E9C 7F06F36C 8E080020 */  lw    $t0, 0x20($s0)
-.L7F06F370:
-/* 0A3EA0 7F06F370 51000087 */  beql  $t0, $zero, .L7F06F590
-/* 0A3EA4 7F06F374 8FA40020 */   lw    $a0, 0x20($sp)
-/* 0A3EA8 7F06F378 8E090018 */  lw    $t1, 0x18($s0)
-/* 0A3EAC 7F06F37C 5120000A */  beql  $t1, $zero, .L7F06F3A8
-/* 0A3EB0 7F06F380 86050030 */   lh    $a1, 0x30($s0)
-/* 0A3EB4 7F06F384 8E0A001C */  lw    $t2, 0x1c($s0)
-/* 0A3EB8 7F06F388 3C048005 */  lui   $a0, %hi(aSubcalcmatricesNoAttachForObjinst)
-/* 0A3EBC 7F06F38C 55400006 */  bnezl $t2, .L7F06F3A8
-/* 0A3EC0 7F06F390 86050030 */   lh    $a1, 0x30($s0)
-/* 0A3EC4 7F06F394 0C0033D1 */  jal   osSyncPrintf
-/* 0A3EC8 7F06F398 24844950 */   addiu $a0, %lo(aSubcalcmatricesNoAttachForObjinst) # addiu $a0, $a0, 0x4950
-/* 0A3ECC 7F06F39C 0FC1B11B */  jal   return_null
-/* 0A3ED0 7F06F3A0 00000000 */   nop   
-/* 0A3ED4 7F06F3A4 86050030 */  lh    $a1, 0x30($s0)
-.L7F06F3A8:
-/* 0A3ED8 7F06F3A8 3C048005 */  lui   $a0, %hi(aSubcalcmatricesFrameaOutOfRange)
-/* 0A3EDC 7F06F3AC 04A00006 */  bltz  $a1, .L7F06F3C8
-/* 0A3EE0 7F06F3B0 00000000 */   nop   
-/* 0A3EE4 7F06F3B4 8E0B0020 */  lw    $t3, 0x20($s0)
-/* 0A3EE8 7F06F3B8 956C0004 */  lhu   $t4, 4($t3)
-/* 0A3EEC 7F06F3BC 00AC082A */  slt   $at, $a1, $t4
-/* 0A3EF0 7F06F3C0 54200006 */  bnezl $at, .L7F06F3DC
-/* 0A3EF4 7F06F3C4 86020032 */   lh    $v0, 0x32($s0)
-.L7F06F3C8:
-/* 0A3EF8 7F06F3C8 0C0033D1 */  jal   osSyncPrintf
-/* 0A3EFC 7F06F3CC 2484497C */   addiu $a0, %lo(aSubcalcmatricesFrameaOutOfRange) # addiu $a0, $a0, 0x497c
-/* 0A3F00 7F06F3D0 0FC1B11B */  jal   return_null
-/* 0A3F04 7F06F3D4 00000000 */   nop   
-/* 0A3F08 7F06F3D8 86020032 */  lh    $v0, 0x32($s0)
-.L7F06F3DC:
-/* 0A3F0C 7F06F3DC 3C048005 */  lui   $a0, %hi(aSubcalcmatricesFramebOutOfRange)
-/* 0A3F10 7F06F3E0 04400006 */  bltz  $v0, .L7F06F3FC
-/* 0A3F14 7F06F3E4 00000000 */   nop   
-/* 0A3F18 7F06F3E8 8E0D0020 */  lw    $t5, 0x20($s0)
-/* 0A3F1C 7F06F3EC 95AE0004 */  lhu   $t6, 4($t5)
-/* 0A3F20 7F06F3F0 004E082A */  slt   $at, $v0, $t6
-/* 0A3F24 7F06F3F4 54200006 */  bnezl $at, .L7F06F410
-/* 0A3F28 7F06F3F8 44801000 */   mtc1  $zero, $f2
-.L7F06F3FC:
-/* 0A3F2C 7F06F3FC 0C0033D1 */  jal   osSyncPrintf
-/* 0A3F30 7F06F400 248449A4 */   addiu $a0, %lo(aSubcalcmatricesFramebOutOfRange) # addiu $a0, $a0, 0x49a4
-/* 0A3F34 7F06F404 0FC1B11B */  jal   return_null
-/* 0A3F38 7F06F408 00000000 */   nop   
-/* 0A3F3C 7F06F40C 44801000 */  mtc1  $zero, $f2
-.L7F06F410:
-/* 0A3F40 7F06F410 C6000084 */  lwc1  $f0, 0x84($s0)
-/* 0A3F44 7F06F414 46001032 */  c.eq.s $f2, $f0
-/* 0A3F48 7F06F418 00000000 */  nop   
-/* 0A3F4C 7F06F41C 45010008 */  bc1t  .L7F06F440
-/* 0A3F50 7F06F420 00000000 */   nop   
-/* 0A3F54 7F06F424 46001032 */  c.eq.s $f2, $f0
-/* 0A3F58 7F06F428 3C048005 */  lui   $a0, %hi(aSubcalcmatricesNoAnim2)
-/* 0A3F5C 7F06F42C 45010006 */  bc1t  .L7F06F448
-/* 0A3F60 7F06F430 00000000 */   nop   
-/* 0A3F64 7F06F434 8E0F0054 */  lw    $t7, 0x54($s0)
-/* 0A3F68 7F06F438 11E00003 */  beqz  $t7, .L7F06F448
-/* 0A3F6C 7F06F43C 00000000 */   nop   
-.L7F06F440:
-/* 0A3F70 7F06F440 10000006 */  b     .L7F06F45C
-/* 0A3F74 7F06F444 8E040054 */   lw    $a0, 0x54($s0)
-.L7F06F448:
-/* 0A3F78 7F06F448 0C0033D1 */  jal   osSyncPrintf
-/* 0A3F7C 7F06F44C 248449CC */   addiu $a0, $a0, %lo(aSubcalcmatricesNoAnim2)
-/* 0A3F80 7F06F450 0FC1B11B */  jal   return_null
-/* 0A3F84 7F06F454 00000000 */   nop   
-/* 0A3F88 7F06F458 8E040054 */  lw    $a0, 0x54($s0)
-.L7F06F45C:
-/* 0A3F8C 7F06F45C 10800010 */  beqz  $a0, .L7F06F4A0
-/* 0A3F90 7F06F460 00000000 */   nop   
-/* 0A3F94 7F06F464 10800008 */  beqz  $a0, .L7F06F488
-/* 0A3F98 7F06F468 00000000 */   nop   
-/* 0A3F9C 7F06F46C 86020060 */  lh    $v0, 0x60($s0)
-/* 0A3FA0 7F06F470 04400005 */  bltz  $v0, .L7F06F488
-/* 0A3FA4 7F06F474 00000000 */   nop   
-/* 0A3FA8 7F06F478 94980004 */  lhu   $t8, 4($a0)
-/* 0A3FAC 7F06F47C 0058082A */  slt   $at, $v0, $t8
-/* 0A3FB0 7F06F480 14200007 */  bnez  $at, .L7F06F4A0
-/* 0A3FB4 7F06F484 00000000 */   nop   
-.L7F06F488:
-/* 0A3FB8 7F06F488 3C048005 */  lui   $a0, %hi(aSubcalcmatricesFrame2aOutOfRange)
-/* 0A3FBC 7F06F48C 0C0033D1 */  jal   osSyncPrintf
-/* 0A3FC0 7F06F490 248449E8 */   addiu $a0, %lo(aSubcalcmatricesFrame2aOutOfRange) # addiu $a0, $a0, 0x49e8
-/* 0A3FC4 7F06F494 0FC1B11B */  jal   return_null
-/* 0A3FC8 7F06F498 00000000 */   nop   
-/* 0A3FCC 7F06F49C 8E040054 */  lw    $a0, 0x54($s0)
-.L7F06F4A0:
-/* 0A3FD0 7F06F4A0 5080000B */  beql  $a0, $zero, .L7F06F4D0
-/* 0A3FD4 7F06F4A4 8E040020 */   lw    $a0, 0x20($s0)
-/* 0A3FD8 7F06F4A8 1080000B */  beqz  $a0, .L7F06F4D8
-/* 0A3FDC 7F06F4AC 00000000 */   nop   
-/* 0A3FE0 7F06F4B0 86020062 */  lh    $v0, 0x62($s0)
-/* 0A3FE4 7F06F4B4 04400008 */  bltz  $v0, .L7F06F4D8
-/* 0A3FE8 7F06F4B8 00000000 */   nop   
-/* 0A3FEC 7F06F4BC 94990004 */  lhu   $t9, 4($a0)
-/* 0A3FF0 7F06F4C0 0059082A */  slt   $at, $v0, $t9
-/* 0A3FF4 7F06F4C4 10200004 */  beqz  $at, .L7F06F4D8
-/* 0A3FF8 7F06F4C8 00000000 */   nop   
-/* 0A3FFC 7F06F4CC 8E040020 */  lw    $a0, 0x20($s0)
-.L7F06F4D0:
-/* 0A4000 7F06F4D0 10000008 */  b     .L7F06F4F4
-/* 0A4004 7F06F4D4 86050030 */   lh    $a1, 0x30($s0)
-.L7F06F4D8:
-/* 0A4008 7F06F4D8 3C048005 */  lui   $a0, %hi(aSubcalcmatricesFrame2bOutOfRange)
-/* 0A400C 7F06F4DC 0C0033D1 */  jal   osSyncPrintf
-/* 0A4010 7F06F4E0 24844A10 */   addiu $a0, %lo(aSubcalcmatricesFrame2bOutOfRange) # addiu $a0, $a0, 0x4a10
-/* 0A4014 7F06F4E4 0FC1B11B */  jal   return_null
-/* 0A4018 7F06F4E8 00000000 */   nop   
-/* 0A401C 7F06F4EC 8E040020 */  lw    $a0, 0x20($s0)
-/* 0A4020 7F06F4F0 86050030 */  lh    $a1, 0x30($s0)
-.L7F06F4F4:
-/* 0A4024 7F06F4F4 8E080008 */  lw    $t0, 8($s0)
-/* 0A4028 7F06F4F8 0FC1D52F */  jal   sub_GAME_7F0754BC
-/* 0A402C 7F06F4FC 8D060004 */   lw    $a2, 4($t0)
-/* 0A4030 7F06F500 44802000 */  mtc1  $zero, $f4
-/* 0A4034 7F06F504 C606002C */  lwc1  $f6, 0x2c($s0)
-/* 0A4038 7F06F508 AE020034 */  sw    $v0, 0x34($s0)
-/* 0A403C 7F06F50C 46062032 */  c.eq.s $f4, $f6
-/* 0A4040 7F06F510 00000000 */  nop   
-/* 0A4044 7F06F514 45030008 */  bc1tl .L7F06F538
-/* 0A4048 7F06F518 8E040054 */   lw    $a0, 0x54($s0)
-/* 0A404C 7F06F51C 8E090008 */  lw    $t1, 8($s0)
-/* 0A4050 7F06F520 8E040020 */  lw    $a0, 0x20($s0)
-/* 0A4054 7F06F524 86050032 */  lh    $a1, 0x32($s0)
-/* 0A4058 7F06F528 0FC1D52F */  jal   sub_GAME_7F0754BC
-/* 0A405C 7F06F52C 8D260004 */   lw    $a2, 4($t1)
-/* 0A4060 7F06F530 AE020038 */  sw    $v0, 0x38($s0)
-/* 0A4064 7F06F534 8E040054 */  lw    $a0, 0x54($s0)
-.L7F06F538:
-/* 0A4068 7F06F538 10800012 */  beqz  $a0, .L7F06F584
-/* 0A406C 7F06F53C 00000000 */   nop   
-/* 0A4070 7F06F540 8E0A0008 */  lw    $t2, 8($s0)
-/* 0A4074 7F06F544 86050060 */  lh    $a1, 0x60($s0)
-/* 0A4078 7F06F548 0FC1D52F */  jal   sub_GAME_7F0754BC
-/* 0A407C 7F06F54C 8D460004 */   lw    $a2, 4($t2)
-/* 0A4080 7F06F550 44804000 */  mtc1  $zero, $f8
-/* 0A4084 7F06F554 C60A005C */  lwc1  $f10, 0x5c($s0)
-/* 0A4088 7F06F558 AE020064 */  sw    $v0, 0x64($s0)
-/* 0A408C 7F06F55C 460A4032 */  c.eq.s $f8, $f10
-/* 0A4090 7F06F560 00000000 */  nop   
-/* 0A4094 7F06F564 45010007 */  bc1t  .L7F06F584
-/* 0A4098 7F06F568 00000000 */   nop   
-/* 0A409C 7F06F56C 8E0B0008 */  lw    $t3, 8($s0)
-/* 0A40A0 7F06F570 8E040054 */  lw    $a0, 0x54($s0)
-/* 0A40A4 7F06F574 86050062 */  lh    $a1, 0x62($s0)
-/* 0A40A8 7F06F578 0FC1D52F */  jal   sub_GAME_7F0754BC
-/* 0A40AC 7F06F57C 8D660004 */   lw    $a2, 4($t3)
-/* 0A40B0 7F06F580 AE020068 */  sw    $v0, 0x68($s0)
-.L7F06F584:
-/* 0A40B4 7F06F584 0FC1D56C */  jal   sub_GAME_7F0755B0
-/* 0A40B8 7F06F588 00000000 */   nop   
-/* 0A40BC 7F06F58C 8FA40020 */  lw    $a0, 0x20($sp)
-.L7F06F590:
-/* 0A40C0 7F06F590 0FC1BC92 */  jal   instcalcmatrices
-/* 0A40C4 7F06F594 02002825 */   move  $a1, $s0
-/* 0A40C8 7F06F598 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0A40CC 7F06F59C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0A40D0 7F06F5A0 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0A40D4 7F06F5A4 03E00008 */  jr    $ra
-/* 0A40D8 7F06F5A8 00000000 */   nop   
-)
+    if (arg1 == NULL)
+    {
+        osSyncPrintf("subcalcmatrices: no objanim!\n");
+        return_null();
+    }
+
+    if (arg0->unk_matrix == NULL)
+    {
+        osSyncPrintf("subcalcmatrices: no basemtx!\n");
+        return_null();
+    }
+
+    if (arg0->mtxlist == NULL)
+    {
+        osSyncPrintf("subcalcmatrices: no mtxlist!\n");
+        return_null();
+    }
 #endif
-#ifdef VERSION_EU
-GLOBAL_ASM(
-.text
-glabel subcalcmatrices
-/* 0A2060 7F06F670 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0A2064 7F06F674 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0A2068 7F06F678 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0A206C 7F06F67C AFA40020 */  sw    $a0, 0x20($sp)
-/* 0A2070 7F06F680 8CA70020 */  lw    $a3, 0x20($a1)
-/* 0A2074 7F06F684 00A08025 */  move  $s0, $a1
-/* 0A2078 7F06F688 10E00028 */  beqz  $a3, .L7F06F72C
-/* 0A207C 7F06F68C 00E02025 */   move  $a0, $a3
-/* 0A2080 7F06F690 8E0E0008 */  lw    $t6, 8($s0)
-/* 0A2084 7F06F694 84A50030 */  lh    $a1, 0x30($a1)
-/* 0A2088 7F06F698 0FC1D551 */  jal   sub_GAME_7F0754BC
-/* 0A208C 7F06F69C 8DC60004 */   lw    $a2, 4($t6)
-/* 0A2090 7F06F6A0 44802000 */  mtc1  $zero, $f4
-/* 0A2094 7F06F6A4 C606002C */  lwc1  $f6, 0x2c($s0)
-/* 0A2098 7F06F6A8 AE020034 */  sw    $v0, 0x34($s0)
-/* 0A209C 7F06F6AC 46062032 */  c.eq.s $f4, $f6
-/* 0A20A0 7F06F6B0 00000000 */  nop   
-/* 0A20A4 7F06F6B4 45030008 */  bc1tl .L7F06F6D8
-/* 0A20A8 7F06F6B8 8E040054 */   lw    $a0, 0x54($s0)
-/* 0A20AC 7F06F6BC 8E0F0008 */  lw    $t7, 8($s0)
-/* 0A20B0 7F06F6C0 8E040020 */  lw    $a0, 0x20($s0)
-/* 0A20B4 7F06F6C4 86050032 */  lh    $a1, 0x32($s0)
-/* 0A20B8 7F06F6C8 0FC1D551 */  jal   sub_GAME_7F0754BC
-/* 0A20BC 7F06F6CC 8DE60004 */   lw    $a2, 4($t7)
-/* 0A20C0 7F06F6D0 AE020038 */  sw    $v0, 0x38($s0)
-/* 0A20C4 7F06F6D4 8E040054 */  lw    $a0, 0x54($s0)
-.L7F06F6D8:
-/* 0A20C8 7F06F6D8 10800012 */  beqz  $a0, .L7F06F724
-/* 0A20CC 7F06F6DC 00000000 */   nop   
-/* 0A20D0 7F06F6E0 8E180008 */  lw    $t8, 8($s0)
-/* 0A20D4 7F06F6E4 86050060 */  lh    $a1, 0x60($s0)
-/* 0A20D8 7F06F6E8 0FC1D551 */  jal   sub_GAME_7F0754BC
-/* 0A20DC 7F06F6EC 8F060004 */   lw    $a2, 4($t8)
-/* 0A20E0 7F06F6F0 44804000 */  mtc1  $zero, $f8
-/* 0A20E4 7F06F6F4 C60A005C */  lwc1  $f10, 0x5c($s0)
-/* 0A20E8 7F06F6F8 AE020064 */  sw    $v0, 0x64($s0)
-/* 0A20EC 7F06F6FC 460A4032 */  c.eq.s $f8, $f10
-/* 0A20F0 7F06F700 00000000 */  nop   
-/* 0A20F4 7F06F704 45010007 */  bc1t  .L7F06F724
-/* 0A20F8 7F06F708 00000000 */   nop   
-/* 0A20FC 7F06F70C 8E190008 */  lw    $t9, 8($s0)
-/* 0A2100 7F06F710 8E040054 */  lw    $a0, 0x54($s0)
-/* 0A2104 7F06F714 86050062 */  lh    $a1, 0x62($s0)
-/* 0A2108 7F06F718 0FC1D551 */  jal   sub_GAME_7F0754BC
-/* 0A210C 7F06F71C 8F260004 */   lw    $a2, 4($t9)
-/* 0A2110 7F06F720 AE020068 */  sw    $v0, 0x68($s0)
-.L7F06F724:
-/* 0A2114 7F06F724 0FC1D58E */  jal   sub_GAME_7F0755B0
-/* 0A2118 7F06F728 00000000 */   nop   
-.L7F06F72C:
-/* 0A211C 7F06F72C 8FA40020 */  lw    $a0, 0x20($sp)
-/* 0A2120 7F06F730 0FC1BD8D */  jal   instcalcmatrices
-/* 0A2124 7F06F734 02002825 */   move  $a1, $s0
-/* 0A2128 7F06F738 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0A212C 7F06F73C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0A2130 7F06F740 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0A2134 7F06F744 03E00008 */  jr    $ra
-/* 0A2138 7F06F748 00000000 */   nop   
-)
+
+    if (arg1->anim != NULL)
+    {
+#ifndef VERSION_EU
+        if ((arg1->attachedto != NULL) && (arg1->attachedto_objinst == NULL))
+        {
+            osSyncPrintf("subcalcmatrices: no attach for objinst!\n");
+            return_null();
+        }
+
+        if (((s32) arg1->framea < 0) || ((s32) arg1->framea >= (s32) arg1->anim->unk04))
+        {
+            osSyncPrintf("subcalcmatrices: framea out of range!\n");
+            return_null();
+        }
+
+        if (((s32) arg1->frameb < 0) || ((s32) arg1->frameb >= (s32) arg1->anim->unk04))
+        {
+            osSyncPrintf("subcalcmatrices: frameb out of range!\n");
+            return_null();
+        }
+
+        if ((arg1->unk84 == 0) || ((arg1->unk84 != 0) && (arg1->anim2 != NULL)))
+        {
+            //
+        }
+        else
+        {
+            osSyncPrintf("subcalcmatrices: no anim2!\n");
+            return_null();
+        }
+
+        if (
+            (arg1->anim2 != NULL)
+            && (
+                (arg1->anim2 == NULL)
+                || (arg1->frame2a < 0)
+                || ((s32) arg1->frame2a >= (s32) arg1->anim2->unk04)
+                )
+            )
+        {
+            osSyncPrintf("subcalcmatrices: frame2a out of range!\n");
+            return_null();
+        }
+
+        if (
+            (arg1->anim2 == NULL) 
+            || (
+                (arg1->anim2 != NULL)
+                 && (arg1->frame2b >= 0)
+                 && ((s32) arg1->frame2b < (s32) arg1->anim2->unk04)
+                )
+            )
+        {
+            //
+        }
+        else
+        {
+            osSyncPrintf("subcalcmatrices: frame2b out of range!\n");
+            return_null();
+        }
 #endif
-#endif
+
+        arg1->unk34 = sub_GAME_7F0754BC(arg1->anim, arg1->framea, arg1->obj->Skeleton);
+
+        if (arg1->unk2c != 0.0f)
+        {
+            arg1->unk38 = sub_GAME_7F0754BC(arg1->anim, arg1->frameb, arg1->obj->Skeleton);
+        }
+
+        if (arg1->anim2 != NULL)
+        {
+            arg1->unk64 = sub_GAME_7F0754BC(arg1->anim2, arg1->frame2a, arg1->obj->Skeleton);
+
+            if (arg1->unk5c != 0.0f)
+            {
+                arg1->unk68 = sub_GAME_7F0754BC(arg1->anim2, arg1->frame2b, arg1->obj->Skeleton);
+            }
+        }
+
+        sub_GAME_7F0755B0();
+    }
+
+    instcalcmatrices(arg0, arg1);
+}
 
 
 
