@@ -113,12 +113,13 @@ struct anim_group_info
 };
 
 struct unk_joint_list {
-    u32 unk00;
+    Mtxf * unk_matrix;
     s32 unk04;
     s32 unk08;
     Gfx *gdl;
 
-    u32 unk10;
+    // unknown type
+    void *unk10;
     u32 unk14;
     u32 unk18;
     u32 unk1C;

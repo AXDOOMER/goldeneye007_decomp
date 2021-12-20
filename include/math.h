@@ -26,6 +26,11 @@
 
 #define M_U16_MAX_VALUE_F 65536.0f
 
+/**
+ * 0.1f
+*/
+#define IDO_POINT_ONE 0.10000001f
+
 float sinf(float);
 double sin(double);
 float cosf(float);

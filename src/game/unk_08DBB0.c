@@ -16,9 +16,9 @@
 */
 struct init_bond_anim_unk g_BondMoveAnimationSetup[2] = {
     // address 0x80036AD0 = g_BondMoveAnimationSetup + 0
-    {PTR_ANIM_bond_eye_walk, 9.5f, 27.0f, 0, 0.0f, 1.5f},
+    {PTR_ANIM_bond_eye_walk, 9.5f, 27.0f, 0.0f, 0.0f, 1.5f},
     // address 0x80036AE8 = g_BondMoveAnimationSetup + 24
-    {PTR_ANIM_sprinting, 7.5f, 17.0f, 0, 1.5f, 100.0f}
+    {PTR_ANIM_sprinting, 7.5f, 17.0f, 0.0f, 1.5f, 100.0f}
 };
 
 
@@ -59,7 +59,7 @@ u32 D_80036B68 = 0;
 u32 D_80036B6C = 0;
 
 
-void currentPlayerUpdateIdleHeadRoll();
+
 void currentPlayerUpdateHeadPos(vec3 vel);
 void currentPlayerUpdateHeadRot(vec3 lookvel, vec3 upvel);
 void currentPlayerSetHeadDamp(f32 headdamp);

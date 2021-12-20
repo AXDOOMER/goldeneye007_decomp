@@ -14,7 +14,7 @@ extern s32 vtxallocator;
 
 // arg0 unknown pointer
 void sub_GAME_7F070090(void *arg0, f32 arg1, f32 arg2);
-void sub_GAME_7F06FF18(struct object_standard *, f32, f32);
+void sub_GAME_7F06FF18(struct Model *, f32, f32);
 void set_obj_instance_controller_scale(struct Model*, f32);
 void getsuboffset(struct Model *, struct coord3d *);
 void sub_GAME_7F070AEC(struct Model *, s32, s32);
@@ -67,6 +67,11 @@ u32 sub_GAME_7F0701E0(void);
 
 // arg0: unknown type. arg1: unknown type. arg5: unknown type, maybe struct.
 void sub_GAME_7F06D2E4(s32, s32, struct ModelSkeleton*, void* anim, s32, s16*);
+
+// arg2 unknown type.
+void sub_GAME_7F075FAC(struct Model *, struct ModelFileHeader *, void *);
+void sub_GAME_7F06FE3C(Model **, void (*)());
+void subcalcmatrices(struct unk_joint_list *, struct Model *);
 
 #ifndef VERSION_EU
 void return_null(void);

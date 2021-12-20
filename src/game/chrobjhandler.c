@@ -784,7 +784,7 @@ u32 monAnim35Taser[] = {
 /**
  * Address 0x80031FD0.
 */
-struct unk_joint_list D_80031FD0 = {0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
+struct unk_joint_list D_80031FD0 = {NULL, 1, 3, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
 
 u32 D_80032010 = 0;
 u32 D_80032014 = 0;
