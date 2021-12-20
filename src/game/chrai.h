@@ -516,5 +516,7 @@ struct ObjectRecord *scan_position_data_table_for_normal_object_at_preset(s32 ar
 Gfx *sub_GAME_7F03A6F4(Gfx *arg0, s32 roomid, s32 arg2);
 struct PropRecord *get_ptr_obj_pos_list_current_entry(void);
 void chraiGetPropRoomIds(PropRecord *self, s32 *roomids);
+void propFree(struct PropRecord *prop);
+void propHide(struct PropRecord *prop);
 
 #endif
