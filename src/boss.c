@@ -1,12 +1,5 @@
-#include "game/debugmenu_handler.h"
-#include "game/front.h"
-#include "game/ramromreplay.h"
-#include "game/room_model_buffer.h"
-#include "game/rsp.h"
-#include "game/stan.h"
-#include "game/player.h"
-#include "game/unk_0C0A70.h"
-#include "game/unk_0C0A70.h"
+#include "include/os_extension.h"
+#include "include/PR/os.h"
 #include "bondview.h"
 #include "bondconstants.h"
 #include "bondgame.h"
@@ -28,6 +21,7 @@
 #include "ob.h"
 #include "ramrom.h"
 #include "random.h"
+#include "rmon.h"
 #include "sched.h"
 #include "speed_graph.h"
 #include "token.h"
@@ -35,6 +29,18 @@
 #include "ultra64.h"
 #include "fr.h"
 #include "image.h"
+#include "vi.h"
+#include "game/bg.h"
+#include "game/debugmenu_handler.h"
+#include "game/front.h"
+#include "game/ramromreplay.h"
+#include "game/room_model_buffer.h"
+#include "game/rsp.h"
+#include "game/stan.h"
+#include "game/textrelated.h"
+#include "game/player.h"
+#include "game/unk_0C0A70.h"
+#include "game/unk_0C0A70.h"
 
 /**
  * @file boss.c
@@ -134,7 +140,7 @@ extern struct player *g_CurrentPlayer;
  * 6930    70005D30
  *     ??? - uses "-level_", "-m" strings
  */
-#define OS_USEC_TO_CYCLES(n)    (((u64)(n)*(osClockRate))/1000000LL)
+
 
 void bossInitMainthreadData(void)
 {

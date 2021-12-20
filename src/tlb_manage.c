@@ -2,7 +2,7 @@
 #include "ramrom.h"
 #include "tlb_manage.h"
 #include "tlb_random.h"
-#include "PR/os_cache.h"
+#include "PR/os.h"
 
 /**
  * @file tlb_manage.c

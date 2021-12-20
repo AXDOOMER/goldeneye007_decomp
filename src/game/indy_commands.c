@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "game/indy_commands.h"
+#include "include/PR/os.h"
 
 // data
 //D:8004EAC0
@@ -12,6 +13,9 @@ s32 indy_ready = 0;
 s32 D_8004EACC = 0x0;
 //D:8004EAD0
 s32 D_8004EAD0 = 0x0;
+
+#pragma weak rmonOsReadHost = osReadHost
+#pragma weak rmonOsWriteHost = osWriteHost
 
 
 

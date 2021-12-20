@@ -39,7 +39,6 @@ s32 g_AnimationTablePointerCountRelated = 0;
 s32 D_8002C90C = 0;
 s32 D_8002C910 = 0;
 
-
 //D:8002C914
 struct animation_something D_8002C914[] = {
     {0         , 0, 0,    0, 0, 0,    0,       NULL, 0,       NULL, 0},

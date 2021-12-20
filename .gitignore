@@ -8,6 +8,7 @@
 *.z64
 *.o
 branchdiff.sh
+branchdiff_report.txt
 baserom.*.dump
 ge007.*.dump
 /.vs
@@ -144,3 +145,5 @@ assets/obseg/text/e/LtraE.c
 assets/obseg/text/e/LtraJ.c
 assets/obseg/text/e/LtraP.c
 assets/obseg/text/e/LwaxP.c
+tools/report/index.html
+tools/report/JPN.htm

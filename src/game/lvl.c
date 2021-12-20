@@ -1,3 +1,4 @@
+#include "include/os_extension.h"
 #include "ultra64.h"
 #include "game/debugmenu_handler.h"
 #include "game/lvl.h"
