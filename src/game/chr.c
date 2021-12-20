@@ -70,8 +70,7 @@ s32 show_patrols_flag = FALSE;
 s32 player1_guardID = 5000;
 struct ChrRecord *ptr_guard_data = 0;
 s32 num_guards = 0;
-s32 D_8002CC6C[] = {0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-s32 D_8002CCA8 = 0;
+struct unk_joint_list D_8002CC6C = {0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
 s32 D_8002CCAC = 0;
 s32 D_8002CCB0 = 0;
 s32 D_8002CCB4 = 0;
@@ -81,6 +80,7 @@ struct rgba_u8 D_8002CCB8 = { 0x5a, 0, 0, 0};
 /**
  * Address 0x8002CCBC.
 */
+
 struct unk_joint_list D_8002CCBC = {0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
 //s32 D_8002CCF8 = 0;
 s32 D_8002CCFC = 0;

@@ -1,77 +1,49 @@
 #include "ultra64.h"
+#include "bondtypes.h"
+#include "game/chr.h"
 #include "game/initBondDATAdefaults.h"
+#include "game/objecthandler.h"
+#include "game/unk_08DBB0.h"
 
 
 //data
-s32 D_8002A790[] = { 0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+struct unk_joint_list D_8002A790 = {0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
+
+// forward declarations
+
+void sub_GAME_7F0062C0(void *anim, s32 arg1, s32 arg2, s32 *arg3);
+
+// end forward declarations
 
 
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0062C0(void) {
+/**
+ * @param anim:
+ * @param arg1:
+ * @param arg2:
+ * @param arg3: unknown type.
+ * 
+ * Address 0x7F0062C0.
+*/
+void sub_GAME_7F0062C0(void *anim, s32 arg1, s32 arg2, s32 *arg3)
+{
+    // todo: is this a struct? see: sub_GAME_7F06D2E4
+    s16 sp40[6];
 
+    arg3[0] = 0;
+    arg3[1] = 0;
+    arg3[2] = 0;
+
+    for (; arg1<arg2; arg1++)
+    {
+        sub_GAME_7F06D2E4(0, 0, &skeleton_guard, anim, arg1, &sp40[2]);
+        arg3[0] += sp40[2];
+        arg3[1] += sp40[3];
+        arg3[2] += sp40[4];
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0062C0
-/* 03ADF0 7F0062C0 27BDFFB8 */  addiu $sp, $sp, -0x48
-/* 03ADF4 7F0062C4 AFB30028 */  sw    $s3, 0x28($sp)
-/* 03ADF8 7F0062C8 AFB20024 */  sw    $s2, 0x24($sp)
-/* 03ADFC 7F0062CC AFB10020 */  sw    $s1, 0x20($sp)
-/* 03AE00 7F0062D0 AFB0001C */  sw    $s0, 0x1c($sp)
-/* 03AE04 7F0062D4 AFBF0034 */  sw    $ra, 0x34($sp)
-/* 03AE08 7F0062D8 AFB50030 */  sw    $s5, 0x30($sp)
-/* 03AE0C 7F0062DC AFB4002C */  sw    $s4, 0x2c($sp)
-/* 03AE10 7F0062E0 00A6082A */  slt   $at, $a1, $a2
-/* 03AE14 7F0062E4 00E08025 */  move  $s0, $a3
-/* 03AE18 7F0062E8 00A08825 */  move  $s1, $a1
-/* 03AE1C 7F0062EC 00C09025 */  move  $s2, $a2
-/* 03AE20 7F0062F0 00809825 */  move  $s3, $a0
-/* 03AE24 7F0062F4 ACE00000 */  sw    $zero, ($a3)
-/* 03AE28 7F0062F8 ACE00004 */  sw    $zero, 4($a3)
-/* 03AE2C 7F0062FC 1020001A */  beqz  $at, .L7F006368
-/* 03AE30 7F006300 ACE00008 */   sw    $zero, 8($a3)
-/* 03AE34 7F006304 3C148004 */  lui   $s4, %hi(skeleton_guard)
-/* 03AE38 7F006308 2694D400 */  addiu $s4, %lo(skeleton_guard) # addiu $s4, $s4, -0x2c00
-/* 03AE3C 7F00630C 27B50040 */  addiu $s5, $sp, 0x40
-.L7F006310:
-/* 03AE40 7F006310 00002025 */  move  $a0, $zero
-/* 03AE44 7F006314 00002825 */  move  $a1, $zero
-/* 03AE48 7F006318 02803025 */  move  $a2, $s4
-/* 03AE4C 7F00631C 02603825 */  move  $a3, $s3
-/* 03AE50 7F006320 AFB10010 */  sw    $s1, 0x10($sp)
-/* 03AE54 7F006324 0FC1B4B9 */  jal   sub_GAME_7F06D2E4
-/* 03AE58 7F006328 AFB50014 */   sw    $s5, 0x14($sp)
-/* 03AE5C 7F00632C 8E0E0000 */  lw    $t6, ($s0)
-/* 03AE60 7F006330 87AF0040 */  lh    $t7, 0x40($sp)
-/* 03AE64 7F006334 8E190004 */  lw    $t9, 4($s0)
-/* 03AE68 7F006338 8E0A0008 */  lw    $t2, 8($s0)
-/* 03AE6C 7F00633C 01CFC021 */  addu  $t8, $t6, $t7
-/* 03AE70 7F006340 AE180000 */  sw    $t8, ($s0)
-/* 03AE74 7F006344 87A80042 */  lh    $t0, 0x42($sp)
-/* 03AE78 7F006348 26310001 */  addiu $s1, $s1, 1
-/* 03AE7C 7F00634C 0232082A */  slt   $at, $s1, $s2
-/* 03AE80 7F006350 03284821 */  addu  $t1, $t9, $t0
-/* 03AE84 7F006354 AE090004 */  sw    $t1, 4($s0)
-/* 03AE88 7F006358 87AB0044 */  lh    $t3, 0x44($sp)
-/* 03AE8C 7F00635C 014B6021 */  addu  $t4, $t2, $t3
-/* 03AE90 7F006360 1420FFEB */  bnez  $at, .L7F006310
-/* 03AE94 7F006364 AE0C0008 */   sw    $t4, 8($s0)
-.L7F006368:
-/* 03AE98 7F006368 8FBF0034 */  lw    $ra, 0x34($sp)
-/* 03AE9C 7F00636C 8FB0001C */  lw    $s0, 0x1c($sp)
-/* 03AEA0 7F006370 8FB10020 */  lw    $s1, 0x20($sp)
-/* 03AEA4 7F006374 8FB20024 */  lw    $s2, 0x24($sp)
-/* 03AEA8 7F006378 8FB30028 */  lw    $s3, 0x28($sp)
-/* 03AEAC 7F00637C 8FB4002C */  lw    $s4, 0x2c($sp)
-/* 03AEB0 7F006380 8FB50030 */  lw    $s5, 0x30($sp)
-/* 03AEB4 7F006384 03E00008 */  jr    $ra
-/* 03AEB8 7F006388 27BD0048 */   addiu $sp, $sp, 0x48
-)
-#endif
 
 
 
@@ -135,7 +107,7 @@ glabel sets_a_bunch_of_BONDdata_values_to_default
 /* 03AF58 7F006428 24020001 */  li    $v0, 1
 /* 03AF5C 7F00642C E70404EC */  swc1  $f4, 0x4ec($t8)
 /* 03AF60 7F006430 8E390000 */  lw    $t9, ($s1)
-/* 03AF64 7F006434 3C108003 */  lui   $s0, %hi(D_80036AD0)
+/* 03AF64 7F006434 3C108003 */  lui   $s0, %hi(g_BondMoveAnimationSetup)
 /* 03AF68 7F006438 3C148007 */  lui   $s4, %hi(ptr_animation_table)
 /* 03AF6C 7F00643C AF2004F0 */  sw    $zero, 0x4f0($t9)
 /* 03AF70 7F006440 8E280000 */  lw    $t0, ($s1)
@@ -144,7 +116,7 @@ glabel sets_a_bunch_of_BONDdata_values_to_default
 /* 03AF7C 7F00644C E50004F4 */  swc1  $f0, 0x4f4($t0)
 /* 03AF80 7F006450 8E290000 */  lw    $t1, ($s1)
 /* 03AF84 7F006454 26949538 */  addiu $s4, %lo(ptr_animation_table) # addiu $s4, $s4, -0x6ac8
-/* 03AF88 7F006458 26106AD0 */  addiu $s0, %lo(D_80036AD0) # addiu $s0, $s0, 0x6ad0
+/* 03AF88 7F006458 26106AD0 */  addiu $s0, %lo(g_BondMoveAnimationSetup) # addiu $s0, $s0, 0x6ad0
 /* 03AF8C 7F00645C E52004F8 */  swc1  $f0, 0x4f8($t1)
 /* 03AF90 7F006460 8E2A0000 */  lw    $t2, ($s1)
 /* 03AF94 7F006464 27B200D0 */  addiu $s2, $sp, 0xd0
@@ -300,9 +272,9 @@ glabel sets_a_bunch_of_BONDdata_values_to_default
 /* 03B1E4 7F0066B4 26050598 */   addiu $a1, $s0, 0x598
 /* 03B1E8 7F0066B8 8E300000 */  lw    $s0, ($s1)
 /* 03B1EC 7F0066BC 24130018 */  li    $s3, 24
-/* 03B1F0 7F0066C0 3C128003 */  lui   $s2, %hi(D_80036AD0)
+/* 03B1F0 7F0066C0 3C128003 */  lui   $s2, %hi(g_BondMoveAnimationSetup)
 /* 03B1F4 7F0066C4 C6040704 */  lwc1  $f4, 0x704($s0)
-/* 03B1F8 7F0066C8 26526AD0 */  addiu $s2, %lo(D_80036AD0) # addiu $s2, $s2, 0x6ad0
+/* 03B1F8 7F0066C8 26526AD0 */  addiu $s2, %lo(g_BondMoveAnimationSetup) # addiu $s2, $s2, 0x6ad0
 /* 03B1FC 7F0066CC 00003025 */  move  $a2, $zero
 /* 03B200 7F0066D0 E6040550 */  swc1  $f4, 0x550($s0)
 /* 03B204 7F0066D4 8E2E0000 */  lw    $t6, ($s1)
@@ -426,7 +398,7 @@ glabel sets_a_bunch_of_BONDdata_values_to_default
 /* 03AFAC 7F00643C C424F228 */  lwc1  $f4, %lo(D_8004F1F8)($at)
 /* 03AFB0 7F006440 8E380000 */  lw    $t8, ($s1)
 /* 03AFB4 7F006444 24020001 */  li    $v0, 1
-/* 03AFB8 7F006448 3C108003 */  lui   $s0, %hi(D_80036AD0) # $s0, 0x8003
+/* 03AFB8 7F006448 3C108003 */  lui   $s0, %hi(g_BondMoveAnimationSetup) # $s0, 0x8003
 /* 03AFBC 7F00644C E70404EC */  swc1  $f4, 0x4ec($t8)
 /* 03AFC0 7F006450 8E390000 */  lw    $t9, ($s1)
 /* 03AFC4 7F006454 3C148007 */  lui   $s4, %hi(ptr_animation_table) # $s4, 0x8007
@@ -437,7 +409,7 @@ glabel sets_a_bunch_of_BONDdata_values_to_default
 /* 03AFD8 7F006468 26949578 */  addiu $s4, %lo(ptr_animation_table) # addiu $s4, $s4, -0x6a88
 /* 03AFDC 7F00646C E50004F4 */  swc1  $f0, 0x4f4($t0)
 /* 03AFE0 7F006470 8E290000 */  lw    $t1, ($s1)
-/* 03AFE4 7F006474 26106B00 */  addiu $s0, %lo(D_80036AD0) # addiu $s0, $s0, 0x6b00
+/* 03AFE4 7F006474 26106B00 */  addiu $s0, %lo(g_BondMoveAnimationSetup) # addiu $s0, $s0, 0x6b00
 /* 03AFE8 7F006478 27B200D0 */  addiu $s2, $sp, 0xd0
 /* 03AFEC 7F00647C E52004F8 */  swc1  $f0, 0x4f8($t1)
 /* 03AFF0 7F006480 8E2A0000 */  lw    $t2, ($s1)
@@ -593,9 +565,9 @@ glabel sets_a_bunch_of_BONDdata_values_to_default
 /* 03B240 7F0066D0 26050598 */   addiu $a1, $s0, 0x598
 /* 03B244 7F0066D4 8E300000 */  lw    $s0, ($s1)
 /* 03B248 7F0066D8 24130018 */  li    $s3, 24
-/* 03B24C 7F0066DC 3C128003 */  lui   $s2, %hi(D_80036AD0) # $s2, 0x8003
+/* 03B24C 7F0066DC 3C128003 */  lui   $s2, %hi(g_BondMoveAnimationSetup) # $s2, 0x8003
 /* 03B250 7F0066E0 C6040704 */  lwc1  $f4, 0x704($s0)
-/* 03B254 7F0066E4 26526B00 */  addiu $s2, %lo(D_80036AD0) # addiu $s2, $s2, 0x6b00
+/* 03B254 7F0066E4 26526B00 */  addiu $s2, %lo(g_BondMoveAnimationSetup) # addiu $s2, $s2, 0x6b00
 /* 03B258 7F0066E8 00003025 */  move  $a2, $zero
 /* 03B25C 7F0066EC E6040550 */  swc1  $f4, 0x550($s0)
 /* 03B260 7F0066F0 8E2E0000 */  lw    $t6, ($s1)
@@ -711,7 +683,7 @@ glabel sets_a_bunch_of_BONDdata_values_to_default
 /* 038D90 7F0063A0 C4247648 */  lwc1  $f4, %lo(D_80047648)($at)
 /* 038D94 7F0063A4 8E2F0000 */  lw    $t7, ($s1)
 /* 038D98 7F0063A8 24020001 */  li    $v0, 1
-/* 038D9C 7F0063AC 3C108003 */  lui   $s0, %hi(D_80036AD0) # $s0, 0x8003
+/* 038D9C 7F0063AC 3C108003 */  lui   $s0, %hi(g_BondMoveAnimationSetup) # $s0, 0x8003
 /* 038DA0 7F0063B0 E5E404EC */  swc1  $f4, 0x4ec($t7)
 /* 038DA4 7F0063B4 8E380000 */  lw    $t8, ($s1)
 /* 038DA8 7F0063B8 3C148006 */  lui   $s4, %hi(ptr_animation_table) # $s4, 0x8006
@@ -722,7 +694,7 @@ glabel sets_a_bunch_of_BONDdata_values_to_default
 /* 038DBC 7F0063CC 26948478 */  addiu $s4, %lo(ptr_animation_table) # addiu $s4, $s4, -0x7b88
 /* 038DC0 7F0063D0 E72004F4 */  swc1  $f0, 0x4f4($t9)
 /* 038DC4 7F0063D4 8E280000 */  lw    $t0, ($s1)
-/* 038DC8 7F0063D8 26102010 */  addiu $s0, %lo(D_80036AD0) # addiu $s0, $s0, 0x2010
+/* 038DC8 7F0063D8 26102010 */  addiu $s0, %lo(g_BondMoveAnimationSetup) # addiu $s0, $s0, 0x2010
 /* 038DCC 7F0063DC 27B200D0 */  addiu $s2, $sp, 0xd0
 /* 038DD0 7F0063E0 E50004F8 */  swc1  $f0, 0x4f8($t0)
 /* 038DD4 7F0063E4 8E290000 */  lw    $t1, ($s1)
@@ -878,9 +850,9 @@ glabel sets_a_bunch_of_BONDdata_values_to_default
 /* 039024 7F006634 26050598 */   addiu $a1, $s0, 0x598
 /* 039028 7F006638 8E300000 */  lw    $s0, ($s1)
 /* 03902C 7F00663C 24130018 */  li    $s3, 24
-/* 039030 7F006640 3C128003 */  lui   $s2, %hi(D_80036AD0) # $s2, 0x8003
+/* 039030 7F006640 3C128003 */  lui   $s2, %hi(g_BondMoveAnimationSetup) # $s2, 0x8003
 /* 039034 7F006644 C6040704 */  lwc1  $f4, 0x704($s0)
-/* 039038 7F006648 26522010 */  addiu $s2, %lo(D_80036AD0) # addiu $s2, $s2, 0x2010
+/* 039038 7F006648 26522010 */  addiu $s2, %lo(g_BondMoveAnimationSetup) # addiu $s2, $s2, 0x2010
 /* 03903C 7F00664C 00003025 */  move  $a2, $zero
 /* 039040 7F006650 E6040550 */  swc1  $f4, 0x550($s0)
 /* 039044 7F006654 8E2D0000 */  lw    $t5, ($s1)

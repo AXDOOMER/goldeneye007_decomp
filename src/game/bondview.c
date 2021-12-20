@@ -28,6 +28,7 @@
 #include "game/quaternion.h"
 #include "game/stan.h"
 #include "game/textrelated.h"
+#include "game/unk_08DBB0.h"
 #include "game/unk_0C0A70.h"
 #include "game/unk_0BC530.h"
 
@@ -463,9 +464,7 @@ s32 D_80036834 = 0;
 //D:80036838
 s32 D_80036838 = 0;
 //D:8003683C
-s32 D_8003683C[] = {0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-//D:80036878
-s32 D_80036878 = 0;
+struct unk_joint_list D_8003683C = {0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
 //D:8003687C
 s32 D_8003687C = 0;
 
@@ -21372,8 +21371,8 @@ glabel MoveBond
 .L7F085BD4:
 /* 0BA704 7F085BD4 3C018005 */  lui   $at, %hi(g_GlobalTimerDelta)
 /* 0BA708 7F085BD8 C42E8378 */  lwc1  $f14, %lo(g_GlobalTimerDelta)($at)
-/* 0BA70C 7F085BDC 3C018003 */  lui   $at, %hi(D_80036AF4)
-/* 0BA710 7F085BE0 C42A6AF4 */  lwc1  $f10, %lo(D_80036AF4)($at)
+/* 0BA70C 7F085BDC 3C018003 */  lui   $at, %hi(g_BondMoveAnimationSetup + 36)
+/* 0BA710 7F085BE0 C42A6AF4 */  lwc1  $f10, %lo(g_BondMoveAnimationSetup + 36)($at)
 /* 0BA714 7F085BE4 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 0BA718 7F085BE8 44813000 */  mtc1  $at, $f6
 /* 0BA71C 7F085BEC 8E280000 */  lw    $t0, ($s1)
@@ -23913,8 +23912,8 @@ glabel MoveBond
 .Ljp7F086288:
 /* 0BADF8 7F086288 3C018005 */  lui   $at, %hi(g_GlobalTimerDelta) # $at, 0x8005
 /* 0BADFC 7F08628C C42E83B4 */  lwc1  $f14, %lo(g_GlobalTimerDelta)($at)
-/* 0BAE00 7F086290 3C018003 */  lui   $at, %hi(D_80036AF4) # $at, 0x8003
-/* 0BAE04 7F086294 C42A6B24 */  lwc1  $f10, %lo(D_80036AF4)($at)
+/* 0BAE00 7F086290 3C018003 */  lui   $at, %hi(g_BondMoveAnimationSetup + 36) # $at, 0x8003
+/* 0BAE04 7F086294 C42A6B24 */  lwc1  $f10, %lo(g_BondMoveAnimationSetup + 36)($at)
 /* 0BAE08 7F086298 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 0BAE0C 7F08629C 44813000 */  mtc1  $at, $f6
 /* 0BAE10 7F0862A0 8E280000 */  lw    $t0, ($s1)
@@ -26444,8 +26443,8 @@ glabel MoveBond
 .L7F085CE0:
 /* 0B86D0 7F085CE0 3C018004 */  lui   $at, %hi(g_GlobalTimerDelta) # $at, 0x8004
 /* 0B86D4 7F085CE4 C42E1004 */  lwc1  $f14, %lo(g_GlobalTimerDelta)($at)
-/* 0B86D8 7F085CE8 3C018003 */  lui   $at, %hi(D_80036AF4) # $at, 0x8003
-/* 0B86DC 7F085CEC C4282034 */  lwc1  $f8, %lo(D_80036AF4)($at)
+/* 0B86D8 7F085CE8 3C018003 */  lui   $at, %hi(g_BondMoveAnimationSetup + 36) # $at, 0x8003
+/* 0B86DC 7F085CEC C4282034 */  lwc1  $f8, %lo(g_BondMoveAnimationSetup + 36)($at)
 /* 0B86E0 7F085CF0 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 0B86E4 7F085CF4 44813000 */  mtc1  $at, $f6
 /* 0B86E8 7F085CF8 8E280000 */  lw    $t0, ($s1)

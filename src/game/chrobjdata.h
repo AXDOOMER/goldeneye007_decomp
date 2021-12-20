@@ -26,22 +26,22 @@ struct headHat
 
 extern struct ItemModelFileRecord PitemZ_entries[];
 
-extern struct ModelSkeleton SKELETON(cctv);
-extern struct ModelSkeleton SKELETON(console_one_screen);
-extern struct ModelSkeleton SKELETON(console_four_screen);
-extern struct ModelSkeleton SKELETON(tv_holder);
-extern struct ModelSkeleton SKELETON(rotating_stuff);
-extern struct ModelSkeleton SKELETON(eyelid_door);
-extern struct ModelSkeleton SKELETON(iris_door);
-extern struct ModelSkeleton SKELETON(walletbond);
-extern struct ModelSkeleton SKELETON(car);
-extern struct ModelSkeleton SKELETON(flying);
-extern struct ModelSkeleton SKELETON(door);
-extern struct ModelSkeleton SKELETON(tank);
-extern struct ModelSkeleton SKELETON(hat);
-extern struct ModelSkeleton SKELETON(standard_object);
-extern struct ModelSkeleton SKELETON(prop_weapon);
-extern struct ModelSkeleton SKELETON(guard);
+extern struct ModelSkeleton SKELETON(cctv);  /* macro declaration for skeleton_cctv */
+extern struct ModelSkeleton SKELETON(console_one_screen);  /* macro declaration for skeleton_console_one_screen */
+extern struct ModelSkeleton SKELETON(console_four_screen);  /* macro declaration for skeleton_console_four_screen */
+extern struct ModelSkeleton SKELETON(tv_holder);  /* macro declaration for skeleton_tv_holder */
+extern struct ModelSkeleton SKELETON(rotating_stuff);  /* macro declaration for skeleton_rotating_stuff */
+extern struct ModelSkeleton SKELETON(eyelid_door);  /* macro declaration for skeleton_eyelid_door */
+extern struct ModelSkeleton SKELETON(iris_door);  /* macro declaration for skeleton_iris_door */
+extern struct ModelSkeleton SKELETON(walletbond);  /* macro declaration for skeleton_walletbond */
+extern struct ModelSkeleton SKELETON(car);  /* macro declaration for skeleton_car */
+extern struct ModelSkeleton SKELETON(flying);  /* macro declaration for skeleton_flying */
+extern struct ModelSkeleton SKELETON(door);  /* macro declaration for skeleton_door */
+extern struct ModelSkeleton SKELETON(tank);  /* macro declaration for skeleton_tank */
+extern struct ModelSkeleton SKELETON(hat);  /* macro declaration for skeleton_hat */
+extern struct ModelSkeleton SKELETON(standard_object);  /* macro declaration for skeleton_standard_object */
+extern struct ModelSkeleton SKELETON(prop_weapon);  /* macro declaration for skeleton_prop_weapon */
+extern struct ModelSkeleton SKELETON(guard);  /* macro declaration for skeleton_guard */
 extern struct ModelNode player_gait_hdr;
 extern struct ModelNode player_gait_pos_hdr_1;
 extern struct ModelNode player_gait_pos_hdr_2;

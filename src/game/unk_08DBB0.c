@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "include/limits.h"
+#include "assets/animationtable_data.h"
 #include "random.h"
 #include "game/lvl.h"
 #include "game/player.h"
@@ -9,23 +10,18 @@
 #include "game/unk_08DBB0.h"
 
 // data
-//D:80036AD0
-u32 D_80036AD0 = 0x4144;
-u32 D_80036AD4 = 0x41180000;
-u32 D_80036AD8 = 0x41D80000;
-u32 D_80036ADC = 0;
-u32 D_80036AE0 = 0;
 
-//D:80036AE4
-u32 D_80036AE4 = 0x3FC00000;
-u32 D_80036AE8 = 0x4070;
-u32 D_80036AEC = 0x40F00000;
-u32 D_80036AF0 = 0x41880000;
-u32 D_80036AF4 = 0;
-//D:80036AF8
-u32 D_80036AF8 = 0x3FC00000;
-//D:80036AFC
-u32 D_80036AFC =  0x42C80000;
+/**
+ * Address 0x80036AD0.
+*/
+struct init_bond_anim_unk g_BondMoveAnimationSetup[2] = {
+    // address 0x80036AD0 = g_BondMoveAnimationSetup + 0
+    {PTR_ANIM_bond_eye_walk, 9.5f, 27.0f, 0, 0.0f, 1.5f},
+    // address 0x80036AE8 = g_BondMoveAnimationSetup + 24
+    {PTR_ANIM_sprinting, 7.5f, 17.0f, 0, 1.5f, 100.0f}
+};
+
+
 
 //D:80036B00
 u32 D_80036B00 = 0;
@@ -649,15 +645,15 @@ void sub_GAME_7F08E8BC(void) {
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F08E8BC
-/* 0C33EC 7F08E8BC 3C058003 */  lui   $a1, %hi(D_80036AD0)
-/* 0C33F0 7F08E8C0 24A56AD0 */  addiu $a1, %lo(D_80036AD0) # addiu $a1, $a1, 0x6ad0
+/* 0C33EC 7F08E8BC 3C058003 */  lui   $a1, %hi(g_BondMoveAnimationSetup)
+/* 0C33F0 7F08E8C0 24A56AD0 */  addiu $a1, %lo(g_BondMoveAnimationSetup) # addiu $a1, $a1, 0x6ad0
 /* 0C33F4 7F08E8C4 C4A40024 */  lwc1  $f4, 0x24($a1)
 /* 0C33F8 7F08E8C8 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 0C33FC 7F08E8CC AFB00020 */  sw    $s0, 0x20($sp)
-/* 0C3400 7F08E8D0 3C108003 */  lui   $s0, %hi(D_80036AD0)
+/* 0C3400 7F08E8D0 3C108003 */  lui   $s0, %hi(g_BondMoveAnimationSetup)
 /* 0C3404 7F08E8D4 46046302 */  mul.s $f12, $f12, $f4
 /* 0C3408 7F08E8D8 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0C340C 7F08E8DC 26106AD0 */  addiu $s0, %lo(D_80036AD0) # addiu $s0, $s0, 0x6ad0
+/* 0C340C 7F08E8DC 26106AD0 */  addiu $s0, %lo(g_BondMoveAnimationSetup) # addiu $s0, $s0, 0x6ad0
 /* 0C3410 7F08E8E0 00001025 */  move  $v0, $zero
 /* 0C3414 7F08E8E4 24030002 */  li    $v1, 2
 .L7F08E8E8:
@@ -878,8 +874,8 @@ glabel sub_GAME_7F08EAF8
 /* 0C368C 7F08EB5C 45000014 */  bc1f  .L7F08EBB0
 /* 0C3690 7F08EB60 00000000 */   nop   
 /* 0C3694 7F08EB64 8F18A0B0 */  lw    $t8, %lo(g_CurrentPlayer)($t8)
-/* 0C3698 7F08EB68 3C098003 */  lui   $t1, %hi(D_80036AD0) 
-/* 0C369C 7F08EB6C 25296AD0 */  addiu $t1, %lo(D_80036AD0) # addiu $t1, $t1, 0x6ad0
+/* 0C3698 7F08EB68 3C098003 */  lui   $t1, %hi(g_BondMoveAnimationSetup) 
+/* 0C369C 7F08EB6C 25296AD0 */  addiu $t1, %lo(g_BondMoveAnimationSetup) # addiu $t1, $t1, 0x6ad0
 /* 0C36A0 7F08EB70 8F1904E8 */  lw    $t9, 0x4e8($t8)
 /* 0C36A4 7F08EB74 00194080 */  sll   $t0, $t9, 2
 /* 0C36A8 7F08EB78 01194023 */  subu  $t0, $t0, $t9

@@ -65,6 +65,9 @@ void sub_GAME_7F073FC8(s32);
 void sub_GAME_7F0701D4(s32 arg0);
 u32 sub_GAME_7F0701E0(void);
 
+// arg0: unknown type. arg1: unknown type. arg5: unknown type, maybe struct.
+void sub_GAME_7F06D2E4(s32, s32, struct ModelSkeleton*, void* anim, s32, s16*);
+
 #ifndef VERSION_EU
 void return_null(void);
 #endif
