@@ -943,10 +943,10 @@ glabel getpartoffset
 GLOBAL_ASM(
 .late_rodata
 /*HACKY, above jtable too big*/
-.word .L7F06C840
-.word .L7F06C840
-.word .L7F06C838
-.word .L7F06C7E4
+.word 0
+.word 0
+.word 0
+.word 0
 
 .text
 glabel getpartoffset

@@ -3214,7 +3214,7 @@ void animation_speed_related(f32 arg0)
         if (ptr_guard_data[i].model != NULL)
         {
 #if defined(VERSION_EU)
-            sub_GAME_7F06FF18(ptr_guard_data[i].model * D_80047E4C, animation_rate, 600.0f);
+            sub_GAME_7F06FF18(ptr_guard_data[i].model, animation_rate * 1.2f, 600.0f);
 #else
             sub_GAME_7F06FF18(ptr_guard_data[i].model, animation_rate, 600.0f);
 #endif

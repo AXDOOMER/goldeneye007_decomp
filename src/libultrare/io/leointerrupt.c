@@ -235,7 +235,6 @@ s32 __osLeoInterrupt()
 
 	return 1;
 }
-#endif
 
 static void __osLeoAbnormalResume(void)
 {
@@ -265,3 +264,4 @@ static void __osLeoResume(void)
 	if (mq->mtqueue->next != NULL)
 		__osEnqueueThread(&__osRunQueue, __osPopThread(&mq->mtqueue));
 }
+#endif

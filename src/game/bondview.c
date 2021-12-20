@@ -33310,7 +33310,7 @@ glabel display_string_in_lower_left_corner
 
 #endif
 
-#ifndef VERSION_US
+#ifdef VERSION_JP
 void jp_display_string_in_lower_left_corner(char *string)
 {
   display_string_in_lower_left_corner(string, ptrSecondFontTableSmall, ptrFirstFontTableSmall);

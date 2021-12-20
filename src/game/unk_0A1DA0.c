@@ -3729,9 +3729,9 @@ glabel sub_GAME_7F0A46A0
 )
 #endif
 #ifdef VERSION_EU
-void sub_GAME_7F0A46A0()
+void sub_GAME_7F0A46A0(Gfx *arg0, s32 arg1)
 {
-    sub_GAME_7F0A4528();
+    sub_GAME_7F0A4528(arg0, arg1);
 }
 #endif
 #endif

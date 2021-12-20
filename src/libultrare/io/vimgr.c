@@ -122,30 +122,14 @@ static void viMgrMain(void *arg)
 #else
 
 /*vimgr asm VERSION_EU*/
-
-.section .data
-glabel __osViDevMgr
-.word 0
-glabel D_800269A4
-.word 0
-glabel D_800269A8
-.word 0
-glabel D_800269AC
-.word 0
-glabel D_800269B0
-.word 0
-glabel D_800269B4
-.word 0
-glabel D_800269B8
-.word 0
+GLOBAL_ASM(
 
 
 
 
-.section .rodata
 
 
-.section .bss
+.bss
 glabel viThread
 .word 0
 .word 0
@@ -257,7 +241,7 @@ glabel viThread
 .word 0
 
 glabel viThreadStack
-        #[4096]
+
 .word 0
 .word 0
 .word 0
@@ -1296,9 +1280,9 @@ glabel viCounterMsg
 .word 0, 0, 0, 0, 0, 0
 
 glabel retrace
-.half 0
+.word 0
 
-
+.text
 glabel osCreateViManager
 /* 0023E0 700017E0 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 0023E4 700017E4 AFB00020 */  sw    $s0, 0x20($sp)
@@ -1506,7 +1490,7 @@ glabel viMgrMain
 /* 0026E0 70001AE0 8FB70030 */  lw    $s7, 0x30($sp)
 /* 0026E4 70001AE4 03E00008 */  jr    $ra
 /* 0026E8 70001AE8 27BD0050 */   addiu $sp, $sp, 0x50
-
+)
 #endif
 
 #endif
