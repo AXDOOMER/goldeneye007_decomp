@@ -1,14 +1,24 @@
 #include "ultra64.h"
 #include "memp.h"
-#include "game/objecthandler.h"
-
 #include "rmon.h"
+#include "game/objecthandler.h"
 #include "game/math_floor.h"
 #include "game/math_ceil.h"
 #include "game/quaternion.h"
 #include "game/math_asinfacosf.h"
 #include "game/math_unk_05A9E0.h"
 #include "game/chrobjdata.h"
+
+
+// forward declarations
+
+void sub_GAME_7F06D490(struct Model *arg0, struct ModelNode *arg1);
+
+// end forward declarations
+
+
+
+
 
 //newfile per EU
 #ifdef NONMATCHING
@@ -2550,85 +2560,33 @@ glabel sub_GAME_7F06D490
 
 
 
-#ifdef NONMATCHING
-void subcalcpos(void) {
 
-}
-#else
+
+
+void subcalcpos(Model *arg0)
+{
+    struct ModelNode *root;
+
 #ifndef VERSION_EU
-//D:80054858
-const char aSubcalcposNoObjanim[] = "subcalcpos: no objanim!\n";
-//D:80054874
-const char aSubcalcposNoObjdesc[] = "subcalcpos: no objdesc!\n";
-GLOBAL_ASM(
-.text
-glabel subcalcpos
-/* 0A21E0 7F06D6B0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0A21E4 7F06D6B4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A21E8 7F06D6B8 14800006 */  bnez  $a0, .L7F06D6D4
-/* 0A21EC 7F06D6BC AFA40018 */   sw    $a0, 0x18($sp)
-/* 0A21F0 7F06D6C0 3C048005 */  lui   $a0, %hi(aSubcalcposNoObjanim)
-/* 0A21F4 7F06D6C4 0C0033D1 */  jal   osSyncPrintf
-/* 0A21F8 7F06D6C8 24844858 */   addiu $a0, %lo(aSubcalcposNoObjanim) # addiu $a0, $a0, 0x4858
-/* 0A21FC 7F06D6CC 0FC1B11B */  jal   return_null
-/* 0A2200 7F06D6D0 00000000 */   nop   
-.L7F06D6D4:
-/* 0A2204 7F06D6D4 8FAF0018 */  lw    $t7, 0x18($sp)
-/* 0A2208 7F06D6D8 3C048005 */  lui   $a0, %hi(aSubcalcposNoObjdesc)
-/* 0A220C 7F06D6DC 8DE20008 */  lw    $v0, 8($t7)
-/* 0A2210 7F06D6E0 54400008 */  bnezl $v0, .L7F06D704
-/* 0A2214 7F06D6E4 8C450000 */   lw    $a1, ($v0)
-/* 0A2218 7F06D6E8 0C0033D1 */  jal   osSyncPrintf
-/* 0A221C 7F06D6EC 24844874 */   addiu $a0, %lo(aSubcalcposNoObjdesc) # addiu $a0, $a0, 0x4874
-/* 0A2220 7F06D6F0 0FC1B11B */  jal   return_null
-/* 0A2224 7F06D6F4 00000000 */   nop   
-/* 0A2228 7F06D6F8 8FB80018 */  lw    $t8, 0x18($sp)
-/* 0A222C 7F06D6FC 8F020008 */  lw    $v0, 8($t8)
-/* 0A2230 7F06D700 8C450000 */  lw    $a1, ($v0)
-.L7F06D704:
-/* 0A2234 7F06D704 50A00009 */  beql  $a1, $zero, .L7F06D72C
-/* 0A2238 7F06D708 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0A223C 7F06D70C 94B90000 */  lhu   $t9, ($a1)
-/* 0A2240 7F06D710 24010001 */  li    $at, 1
-/* 0A2244 7F06D714 332800FF */  andi  $t0, $t9, 0xff
-/* 0A2248 7F06D718 55010004 */  bnel  $t0, $at, .L7F06D72C
-/* 0A224C 7F06D71C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0A2250 7F06D720 0FC1B524 */  jal   sub_GAME_7F06D490
-/* 0A2254 7F06D724 8FA40018 */   lw    $a0, 0x18($sp)
-/* 0A2258 7F06D728 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F06D72C:
-/* 0A225C 7F06D72C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0A2260 7F06D730 03E00008 */  jr    $ra
-/* 0A2264 7F06D734 00000000 */   nop   
-)
-#endif
-#ifdef VERSION_EU
-GLOBAL_ASM(
-.text
-glabel subcalcpos
-/* 0A04D0 7F06DAE0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0A04D4 7F06DAE4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A04D8 7F06DAE8 8C8E0008 */  lw    $t6, 8($a0)
-/* 0A04DC 7F06DAEC 8DC50000 */  lw    $a1, ($t6)
-/* 0A04E0 7F06DAF0 50A00009 */  beql  $a1, $zero, .L7F06DB18
-/* 0A04E4 7F06DAF4 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0A04E8 7F06DAF8 94AF0000 */  lhu   $t7, ($a1)
-/* 0A04EC 7F06DAFC 24010001 */  li    $at, 1
-/* 0A04F0 7F06DB00 31F800FF */  andi  $t8, $t7, 0xff
-/* 0A04F4 7F06DB04 57010004 */  bnel  $t8, $at, .L7F06DB18
-/* 0A04F8 7F06DB08 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0A04FC 7F06DB0C 0FC1B630 */  jal   sub_GAME_7F06D490
-/* 0A0500 7F06DB10 00000000 */   nop   
-/* 0A0504 7F06DB14 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F06DB18:
-/* 0A0508 7F06DB18 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0A050C 7F06DB1C 03E00008 */  jr    $ra
-/* 0A0510 7F06DB20 00000000 */   nop   
-)
-#endif
+    if (arg0 == NULL)
+    {
+        osSyncPrintf("subcalcpos: no objanim!\n");
+        return_null();
+    }
+
+    if (arg0->obj == 0)
+    {
+        osSyncPrintf("subcalcpos: no objdesc!\n");
+        return_null();
+    }
 #endif
 
-
+    root = arg0->obj->RootNode;
+    if ((root != NULL) && ((root->Opcode & 0xFF) == 1))
+    {
+        sub_GAME_7F06D490(arg0, root);
+    }
+}
 
 
 
