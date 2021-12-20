@@ -17,8 +17,8 @@ void sub_GAME_7F070090(void *arg0, f32 arg1, f32 arg2);
 void sub_GAME_7F06FF18(struct object_standard *, f32, f32);
 void set_obj_instance_controller_scale(struct Model*, f32);
 void getsuboffset(struct Model *, struct coord3d *);
-void sub_GAME_7F070AEC(struct object_standard *, s32, s32);
-void subcalcpos(struct object_standard *);
+void sub_GAME_7F070AEC(struct Model *, s32, s32);
+void subcalcpos(struct Model *);
 
 void objecthandlerAnimationRelated7F06FCA8(struct Model *, struct ModelAnimation *, s32, f32, f32, f32);
 void sub_GAME_7F06FDCC(struct Model *, f32, f32);

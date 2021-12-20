@@ -5,6 +5,7 @@
 #include "game/player.h"
 #include "game/chrai.h"
 #include "game/matrixmath.h"
+#include "game/objecthandler.h"
 #include "game/unk_08DBB0.h"
 
 // data

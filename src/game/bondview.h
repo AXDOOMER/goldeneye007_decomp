@@ -768,7 +768,7 @@ struct player
   vec3 standlook[2];
   vec3 standup[2];
   s32 standcnt;
-  s32 field_598;
+  struct Model *field_598;
   s32 field_59C;
   s32 field_5A0;
   s32 field_5A4;

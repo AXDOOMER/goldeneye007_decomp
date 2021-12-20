@@ -4233,7 +4233,7 @@ void chrPositionRelated7F020D94(struct ChrRecord *arg0)
  */
 void chrPositionRelated7F020E40(struct ChrRecord *chr, s32 arg1)
 {
-    struct object_standard *model;
+    struct Model *model;
     struct PropRecord* prop;
 
     model = chr->model;
