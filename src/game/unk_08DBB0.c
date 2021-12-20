@@ -83,10 +83,13 @@ void currentPlayerUpdateIdleHeadRoll()
 	g_CurrentPlayer->standup[g_CurrentPlayer->standcnt][0] = ((f32)randomGetNext() * mult - 0.5f) * 0.02f;
 	g_CurrentPlayer->standup[g_CurrentPlayer->standcnt][1] = 1;
 
-	if (g_CurrentPlayer->standcnt) {
+	if (g_CurrentPlayer->standcnt)
+    {
 		g_CurrentPlayer->standlook[g_CurrentPlayer->standcnt][1] = (f32)randomGetNext() * mult * 0.01f;
 		g_CurrentPlayer->standup[g_CurrentPlayer->standcnt][2] = (f32)randomGetNext() * mult * -0.01f;
-	} else {
+	}
+    else
+    {
 		g_CurrentPlayer->standlook[g_CurrentPlayer->standcnt][1] = (f32)randomGetNext() * mult * -0.01f;
 		g_CurrentPlayer->standup[g_CurrentPlayer->standcnt][2] = (f32)randomGetNext() * mult * 0.01f;
 	}
@@ -98,7 +101,8 @@ void currentPlayerUpdateHeadPos(vec3 vel)
 {
     s32 i;
 
-    if (g_CurrentPlayer->resetheadpos) {
+    if (g_CurrentPlayer->resetheadpos)
+    {
         g_CurrentPlayer->headpossum[0] = 0.0f;
         g_CurrentPlayer->headpossum[1] = (vel[1] / (1.0f - 0.93f));
         g_CurrentPlayer->headpossum[2] = 0.0f;
@@ -106,7 +110,8 @@ void currentPlayerUpdateHeadPos(vec3 vel)
         g_CurrentPlayer->resetheadpos = FALSE;
     }
 
-    for (i = 0; i < g_ClockTimer; i++) {
+    for (i = 0; i < g_ClockTimer; i++)
+    {
         g_CurrentPlayer->headpossum[0] = ((0.93f * g_CurrentPlayer->headpossum[0]) + vel[0]);
         g_CurrentPlayer->headpossum[1] = ((0.93f * g_CurrentPlayer->headpossum[1]) + vel[1]);
         g_CurrentPlayer->headpossum[2] = ((0.93f * g_CurrentPlayer->headpossum[2]) + vel[2]);
@@ -121,7 +126,8 @@ void currentPlayerUpdateHeadRot(vec3 lookvel, vec3 upvel)
 {
 	s32 i;
 
-	if (g_CurrentPlayer->resetheadrot) {
+	if (g_CurrentPlayer->resetheadrot)
+    {
 		g_CurrentPlayer->headlooksum[0] = lookvel[0] / (1.0f - g_CurrentPlayer->headdamp);
 		g_CurrentPlayer->headlooksum[1] = lookvel[1] / (1.0f - g_CurrentPlayer->headdamp);
 		g_CurrentPlayer->headlooksum[2] = lookvel[2] / (1.0f - g_CurrentPlayer->headdamp);
@@ -132,7 +138,8 @@ void currentPlayerUpdateHeadRot(vec3 lookvel, vec3 upvel)
 		g_CurrentPlayer->resetheadrot = FALSE;
 	}
 
-	for (i = 0; i < g_ClockTimer; i++) {
+	for (i = 0; i < g_ClockTimer; i++)
+    {
 		g_CurrentPlayer->headlooksum[0] = g_CurrentPlayer->headdamp * g_CurrentPlayer->headlooksum[0] + lookvel[0];
 		g_CurrentPlayer->headlooksum[1] = g_CurrentPlayer->headdamp * g_CurrentPlayer->headlooksum[1] + lookvel[1];
 		g_CurrentPlayer->headlooksum[2] = g_CurrentPlayer->headdamp * g_CurrentPlayer->headlooksum[2] + lookvel[2];
@@ -151,7 +158,8 @@ void currentPlayerUpdateHeadRot(vec3 lookvel, vec3 upvel)
 
 void currentPlayerSetHeadDamp(f32 headdamp)
 {
-	if (headdamp != g_CurrentPlayer->headdamp) {
+	if (headdamp != g_CurrentPlayer->headdamp)
+    {
 		f32 divisor = 1.0f - headdamp;
 		g_CurrentPlayer->headlooksum[0] = (g_CurrentPlayer->headlooksum[0] * (1.0f - g_CurrentPlayer->headdamp)) / divisor;
 		g_CurrentPlayer->headlooksum[1] = (g_CurrentPlayer->headlooksum[1] * (1.0f - g_CurrentPlayer->headdamp)) / divisor;

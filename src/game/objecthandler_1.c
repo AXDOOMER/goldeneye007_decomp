@@ -6517,38 +6517,22 @@ glabel sub_GAME_7F070090
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0701D4(void) {
-
+/**
+ * Address 0x7F0701D4.
+*/
+void sub_GAME_7F0701D4(s32 arg0)
+{
+    D_80036250 = arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0701D4
-/* 0A4D04 7F0701D4 3C018003 */  lui   $at, %hi(D_80036250)
-/* 0A4D08 7F0701D8 03E00008 */  jr    $ra
-/* 0A4D0C 7F0701DC AC246250 */   sw    $a0, %lo(D_80036250)($at)
-)
-#endif
 
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0701E0(void) {
-
+/**
+ * Address 0x7F0701E0.
+*/
+u32 sub_GAME_7F0701E0(void)
+{
+    return D_80036250;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0701E0
-/* 0A4D10 7F0701E0 3C028003 */  lui   $v0, %hi(D_80036250)
-/* 0A4D14 7F0701E4 03E00008 */  jr    $ra
-/* 0A4D18 7F0701E8 8C426250 */   lw    $v0, %lo(D_80036250)($v0)
-)
-#endif
-
 
 
 

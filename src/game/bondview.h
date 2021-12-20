@@ -3157,5 +3157,6 @@ s32 get_BONDdata_field_10E0(void);
 Mtx *currentPlayerGetProjectionMatrix(void);
 Gfx *bondviewRenderProp(PropRecord *arg0, Gfx *arg1, s32 arg2);
 f32 getPlayer_c_lodscalez(void);
+f32 get_BONDdata_bondfadefracnew(void);
 
 #endif

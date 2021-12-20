@@ -3,12 +3,13 @@
 #include "ultra64.h"
 #include "bondtypes.h"
 
+extern s32 D_80036084;
+extern f32 D_80036088;
+extern u32 D_80036250;
 extern s32 D_80036410;
 extern s32 D_80036414;
 extern s32 D_80036418;
 extern s32 D_8003641C;
-extern s32 D_80036084;
-extern f32 D_80036088;
 extern s32 vtxallocator;
 
 // arg0 unknown pointer
@@ -61,6 +62,8 @@ Mtxf* sub_GAME_7F06C660(struct Model *arg0, struct ModelNode *arg1, s32 arg2);
 void sub_GAME_7F06B248(void *arg0);
 void drawjointlist(struct unk_joint_list *arg0, void* arg1);
 void sub_GAME_7F073FC8(s32);
+void sub_GAME_7F0701D4(s32 arg0);
+u32 sub_GAME_7F0701E0(void);
 
 #ifndef VERSION_EU
 void return_null(void);

@@ -32791,7 +32791,8 @@ int bondviewGetIfCurrentPlayerHealthShowTime(void)
 
 
 
-f32 get_BONDdata_bondfadefracnew(void) {
+f32 get_BONDdata_bondfadefracnew(void)
+{
     return g_CurrentPlayer->field_19C;
 }
 
