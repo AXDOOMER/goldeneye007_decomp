@@ -1,4 +1,6 @@
 #include "ultra64.h"
+#include "include/limits.h"
+#include "random.h"
 #include "game/lvl.h"
 #include "game/player.h"
 #include "game/chrai.h"
@@ -60,17 +62,21 @@ u32 D_80036B68 = 0;
 u32 D_80036B6C = 0;
 
 
+void currentPlayerUpdateIdleHeadRoll();
+void currentPlayerUpdateHeadPos(vec3 vel);
+void currentPlayerUpdateHeadRot(vec3 lookvel, vec3 upvel);
+void currentPlayerSetHeadDamp(f32 headdamp);
 
 // rodata
 
-void currentPlayerToggle5BC() {
+void currentPlayerToggle5BC()
+{
     g_CurrentPlayer->field_5BC = !g_CurrentPlayer->field_5BC;
 }
 
-u32 randomGetNext();
-#define U32_MAX 4294967295
-void currentPlayerUpdateIdleHeadRoll() {
-    f32 mult = 1.0f / U32_MAX;
+void currentPlayerUpdateIdleHeadRoll()
+{
+    f32 mult = 1.0f / UINT_MAX;
 
 	g_CurrentPlayer->standlook[g_CurrentPlayer->standcnt][0] = ((f32)randomGetNext() * mult - 0.5f) * 0.02f;
 	g_CurrentPlayer->standlook[g_CurrentPlayer->standcnt][2] = 1;
@@ -88,7 +94,8 @@ void currentPlayerUpdateIdleHeadRoll() {
 	g_CurrentPlayer->standcnt = 1 - g_CurrentPlayer->standcnt;
 }
 
-void currentPlayerUpdateHeadPos(vec3 vel) {
+void currentPlayerUpdateHeadPos(vec3 vel)
+{
     s32 i;
 
     if (g_CurrentPlayer->resetheadpos) {

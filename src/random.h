@@ -3,6 +3,7 @@
 #include "ultra64.h"
 
 void randomSetSeed(u32 param_1);
-s32 randomGetNext(void);
+u32 randomGetNext(void);
+u32 randomGetNextFrom(u64 *param_1);
 
 #endif

@@ -1,13 +1,14 @@
 #include "ultra64.h"
-#include "game/unk_0C0A70.h"
-#include "game/player.h"
-#include "game/mp_watch.h"
 #include "music.h"
 #include "bondgame.h"
 #include "bondconstants.h"
 #include "boss.h"
 #include "joy.h"
+#include "random.h"
 #include "textrelated.h"
+#include "game/unk_0C0A70.h"
+#include "game/player.h"
+#include "game/mp_watch.h"
 
 // bss
 s32 g_stopPlayFlag;

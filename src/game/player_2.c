@@ -1,10 +1,11 @@
 #include "ultra64.h"
 #include "memp.h"
+#include "fr.h"
+#include "random.h"
 #include "game/player.h"
 #include "game/unk_092E50.h"
 #include "game/bondview.h"
 #include "game/lvl.h"
-#include "fr.h"
 #include "game/player_2.h"
 
 

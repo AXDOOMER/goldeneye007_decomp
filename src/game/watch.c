@@ -1,4 +1,9 @@
 #include "ultra64.h"
+#include "music.h"
+#include "bondconstants.h"
+#include "boss.h"
+#include "random.h"
+#include "snd.h"
 #include "game/watch.h"
 #include "game/player.h"
 #include "game/unk_0A1DA0.h"
@@ -7,10 +12,6 @@
 #include "game/lvl_text.h"
 #include "game/textrelated.h"
 #include "game/bondview.h"
-#include "music.h"
-#include "bondconstants.h"
-#include "boss.h"
-#include "snd.h"
 
 // bss
 char dword_CODE_bss_8007B0A0[0x40];
