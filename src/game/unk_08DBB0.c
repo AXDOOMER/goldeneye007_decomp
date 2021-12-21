@@ -402,35 +402,13 @@ void sub_GAME_7F08EA48(struct ModelAnimation *arg0, s32 arg1, f32 arg2, f32 arg3
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F08EAB8(f32 param_1)
+/**
+ * Address 0x7F08EAB8.
+*/
+void sub_GAME_7F08EAB8(f32 arg0)
 {
-    sub_GAME_7F06FE4C(g_CurrentPlayer->field_598, param_1 * 0.5f, 0);
-    return;
+    sub_GAME_7F06FE4C(&g_CurrentPlayer->field_598, arg0 * 0.5f, 0.0f);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08EAB8
-/* 0C35E8 7F08EAB8 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 0C35EC 7F08EABC 44812000 */  mtc1  $at, $f4
-/* 0C35F0 7F08EAC0 3C048008 */  lui   $a0, %hi(g_CurrentPlayer)
-/* 0C35F4 7F08EAC4 8C84A0B0 */  lw    $a0, %lo(g_CurrentPlayer)($a0)
-/* 0C35F8 7F08EAC8 46046182 */  mul.s $f6, $f12, $f4
-/* 0C35FC 7F08EACC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C3600 7F08EAD0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C3604 7F08EAD4 24060000 */  li    $a2, 0
-/* 0C3608 7F08EAD8 24840598 */  addiu $a0, $a0, 0x598
-/* 0C360C 7F08EADC 44053000 */  mfc1  $a1, $f6
-/* 0C3610 7F08EAE0 0FC1BF93 */  jal   sub_GAME_7F06FE4C
-/* 0C3614 7F08EAE4 00000000 */   nop   
-/* 0C3618 7F08EAE8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C361C 7F08EAEC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C3620 7F08EAF0 03E00008 */  jr    $ra
-/* 0C3624 7F08EAF4 00000000 */   nop   
-)
-#endif
-
 
 
 
