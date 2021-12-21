@@ -1324,6 +1324,8 @@ Gfx *sub_GAME_7F0B3C8C(Gfx *arg0)
     return arg0;
 }
 #else
+
+#if defined(VERSION_US) || defined(VERSION_JP)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B3C8C
@@ -1585,6 +1587,281 @@ glabel sub_GAME_7F0B3C8C
 /* 0E8B5C 7F0B402C 03E00008 */  jr    $ra
 /* 0E8B60 7F0B4030 27BD0080 */   addiu $sp, $sp, 0x80
 )
+#endif
+
+#if defined(VERSION_EU)
+GLOBAL_ASM(
+.text
+glabel sub_GAME_7F0B3C8C
+/* 0E5994 7F0B2FA4 27BDFFC0 */  addiu $sp, $sp, -0x40
+/* 0E5998 7F0B2FA8 3C028004 */  lui   $v0, %hi(g_BgNumberOfRoomsDrawn) # $v0, 0x8004
+/* 0E599C 7F0B2FAC 8C42DD1C */  lw    $v0, %lo(g_BgNumberOfRoomsDrawn)($v0)
+/* 0E59A0 7F0B2FB0 AFB70038 */  sw    $s7, 0x38($sp)
+/* 0E59A4 7F0B2FB4 AFB60034 */  sw    $s6, 0x34($sp)
+/* 0E59A8 7F0B2FB8 AFB0001C */  sw    $s0, 0x1c($sp)
+/* 0E59AC 7F0B2FBC 00808025 */  move  $s0, $a0
+/* 0E59B0 7F0B2FC0 AFBF003C */  sw    $ra, 0x3c($sp)
+/* 0E59B4 7F0B2FC4 AFB50030 */  sw    $s5, 0x30($sp)
+/* 0E59B8 7F0B2FC8 AFB4002C */  sw    $s4, 0x2c($sp)
+/* 0E59BC 7F0B2FCC AFB30028 */  sw    $s3, 0x28($sp)
+/* 0E59C0 7F0B2FD0 AFB20024 */  sw    $s2, 0x24($sp)
+/* 0E59C4 7F0B2FD4 AFB10020 */  sw    $s1, 0x20($sp)
+/* 0E59C8 7F0B2FD8 0000B025 */  move  $s6, $zero
+/* 0E59CC 7F0B2FDC 18400018 */  blez  $v0, .L7F0B3040
+/* 0E59D0 7F0B2FE0 24177FFF */   li    $s7, 32767
+/* 0E59D4 7F0B2FE4 00027880 */  sll   $t7, $v0, 2
+/* 0E59D8 7F0B2FE8 01E27823 */  subu  $t7, $t7, $v0
+/* 0E59DC 7F0B2FEC 3C0E8007 */  lui   $t6, %hi(dword_CODE_bss_8007FFA0)
+/* 0E59E0 7F0B2FF0 25D2B3E0 */  addiu $s2, $t6, %lo(dword_CODE_bss_8007FFA0)
+/* 0E59E4 7F0B2FF4 000F78C0 */  sll   $t7, $t7, 3
+/* 0E59E8 7F0B2FF8 01F22021 */  addu  $a0, $t7, $s2
+/* 0E59EC 7F0B2FFC 86430002 */  lh    $v1, 2($s2)
+.L7F0B3000:
+/* 0E59F0 7F0B3000 26520018 */  addiu $s2, $s2, 0x18
+/* 0E59F4 7F0B3004 02C3082A */  slt   $at, $s6, $v1
+/* 0E59F8 7F0B3008 50200005 */  beql  $at, $zero, .L7F0B3020
+/* 0E59FC 7F0B300C 0077082A */   slt   $at, $v1, $s7
+/* 0E5A00 7F0B3010 0003B400 */  sll   $s6, $v1, 0x10
+/* 0E5A04 7F0B3014 0016C403 */  sra   $t8, $s6, 0x10
+/* 0E5A08 7F0B3018 0300B025 */  move  $s6, $t8
+/* 0E5A0C 7F0B301C 0077082A */  slt   $at, $v1, $s7
+.L7F0B3020:
+/* 0E5A10 7F0B3020 50200005 */  beql  $at, $zero, .L7F0B3038
+/* 0E5A14 7F0B3024 0244082B */   sltu  $at, $s2, $a0
+/* 0E5A18 7F0B3028 0003BC00 */  sll   $s7, $v1, 0x10
+/* 0E5A1C 7F0B302C 0017CC03 */  sra   $t9, $s7, 0x10
+/* 0E5A20 7F0B3030 0320B825 */  move  $s7, $t9
+/* 0E5A24 7F0B3034 0244082B */  sltu  $at, $s2, $a0
+.L7F0B3038:
+/* 0E5A28 7F0B3038 5420FFF1 */  bnezl $at, .L7F0B3000
+/* 0E5A2C 7F0B303C 86430002 */   lh    $v1, 2($s2)
+.L7F0B3040:
+/* 0E5A30 7F0B3040 0017AC00 */  sll   $s5, $s7, 0x10
+/* 0E5A34 7F0B3044 00154403 */  sra   $t0, $s5, 0x10
+/* 0E5A38 7F0B3048 02D7082A */  slt   $at, $s6, $s7
+/* 0E5A3C 7F0B304C 1420005C */  bnez  $at, .L7F0B31C0
+/* 0E5A40 7F0B3050 0100A825 */   move  $s5, $t0
+/* 0E5A44 7F0B3054 3C140103 */  lui   $s4, (0x01030040 >> 16) # lui $s4, 0x103
+/* 0E5A48 7F0B3058 36940040 */  ori   $s4, (0x01030040 & 0xFFFF) # ori $s4, $s4, 0x40
+.L7F0B305C:
+/* 0E5A4C 7F0B305C 18400052 */  blez  $v0, .L7F0B31A8
+/* 0E5A50 7F0B3060 00009825 */   move  $s3, $zero
+/* 0E5A54 7F0B3064 3C128007 */  lui   $s2, %hi(dword_CODE_bss_8007FFA0) # $s2, 0x8007
+/* 0E5A58 7F0B3068 2652B3E0 */  addiu $s2, %lo(dword_CODE_bss_8007FFA0) # addiu $s2, $s2, -0x4c20
+.L7F0B306C:
+/* 0E5A5C 7F0B306C 86490002 */  lh    $t1, 2($s2)
+/* 0E5A60 7F0B3070 02008825 */  move  $s1, $s0
+/* 0E5A64 7F0B3074 56A90049 */  bnel  $s5, $t1, .L7F0B319C
+/* 0E5A68 7F0B3078 26730001 */   addiu $s3, $s3, 1
+/* 0E5A6C 7F0B307C 26100008 */  addiu $s0, $s0, 8
+/* 0E5A70 7F0B3080 0FC1E0FD */  jal   currentPlayerGetProjectionMatrix
+/* 0E5A74 7F0B3084 AE340000 */   sw    $s4, ($s1)
+/* 0E5A78 7F0B3088 0C003838 */  jal   osVirtualToPhysical
+/* 0E5A7C 7F0B308C 00402025 */   move  $a0, $v0
+/* 0E5A80 7F0B3090 AE220004 */  sw    $v0, 4($s1)
+/* 0E5A84 7F0B3094 0FC2E9A6 */  jal   fogRenderClearFogMode
+/* 0E5A88 7F0B3098 02002025 */   move  $a0, $s0
+/* 0E5A8C 7F0B309C 0FC24104 */  jal   get_debug_do_draw_obj
+/* 0E5A90 7F0B30A0 00408025 */   move  $s0, $v0
+/* 0E5A94 7F0B30A4 5040000A */  beql  $v0, $zero, .L7F0B30D0
+/* 0E5A98 7F0B30A8 02008825 */   move  $s1, $s0
+/* 0E5A9C 7F0B30AC 0FC2F328 */  jal   sub_GAME_7F0BD8F0
+/* 0E5AA0 7F0B30B0 00000000 */   nop   
+/* 0E5AA4 7F0B30B4 10400005 */  beqz  $v0, .L7F0B30CC
+/* 0E5AA8 7F0B30B8 02002025 */   move  $a0, $s0
+/* 0E5AAC 7F0B30BC 92450000 */  lbu   $a1, ($s2)
+/* 0E5AB0 7F0B30C0 0FC0E9ED */  jal   sub_GAME_7F03A6F4
+/* 0E5AB4 7F0B30C4 00003025 */   move  $a2, $zero
+/* 0E5AB8 7F0B30C8 00408025 */  move  $s0, $v0
+.L7F0B30CC:
+/* 0E5ABC 7F0B30CC 02008825 */  move  $s1, $s0
+.L7F0B30D0:
+/* 0E5AC0 7F0B30D0 AE340000 */  sw    $s4, ($s1)
+/* 0E5AC4 7F0B30D4 0FC1E105 */  jal   get_BONDdata_field_10E0
+/* 0E5AC8 7F0B30D8 26100008 */   addiu $s0, $s0, 8
+/* 0E5ACC 7F0B30DC 0C003838 */  jal   osVirtualToPhysical
+/* 0E5AD0 7F0B30E0 00402025 */   move  $a0, $v0
+/* 0E5AD4 7F0B30E4 AE220004 */  sw    $v0, 4($s1)
+/* 0E5AD8 7F0B30E8 C6440014 */  lwc1  $f4, 0x14($s2)
+/* 0E5ADC 7F0B30EC 8E470010 */  lw    $a3, 0x10($s2)
+/* 0E5AE0 7F0B30F0 8E46000C */  lw    $a2, 0xc($s2)
+/* 0E5AE4 7F0B30F4 8E450008 */  lw    $a1, 8($s2)
+/* 0E5AE8 7F0B30F8 02002025 */  move  $a0, $s0
+/* 0E5AEC 7F0B30FC 0FC2D0CC */  jal   bgScissorCurrentPlayerViewF
+/* 0E5AF0 7F0B3100 E7A40010 */   swc1  $f4, 0x10($sp)
+/* 0E5AF4 7F0B3104 00402025 */  move  $a0, $v0
+/* 0E5AF8 7F0B3108 0FC2E91C */  jal   fogSetRenderFogColor
+/* 0E5AFC 7F0B310C 00002825 */   move  $a1, $zero
+/* 0E5B00 7F0B3110 0FC24102 */  jal   get_debug_do_draw_bg
+/* 0E5B04 7F0B3114 00408025 */   move  $s0, $v0
+/* 0E5B08 7F0B3118 50400009 */  beql  $v0, $zero, .L7F0B3140
+/* 0E5B0C 7F0B311C 02008825 */   move  $s1, $s0
+/* 0E5B10 7F0B3120 0FC2F328 */  jal   sub_GAME_7F0BD8F0
+/* 0E5B14 7F0B3124 00000000 */   nop   
+/* 0E5B18 7F0B3128 10400004 */  beqz  $v0, .L7F0B313C
+/* 0E5B1C 7F0B312C 02002025 */   move  $a0, $s0
+/* 0E5B20 7F0B3130 0FC2D6AE */  jal   sub_GAME_7F0B677C
+/* 0E5B24 7F0B3134 92450000 */   lbu   $a1, ($s2)
+/* 0E5B28 7F0B3138 00408025 */  move  $s0, $v0
+.L7F0B313C:
+/* 0E5B2C 7F0B313C 02008825 */  move  $s1, $s0
+.L7F0B3140:
+/* 0E5B30 7F0B3140 AE340000 */  sw    $s4, ($s1)
+/* 0E5B34 7F0B3144 0FC1E0FD */  jal   currentPlayerGetProjectionMatrix
+/* 0E5B38 7F0B3148 26100008 */   addiu $s0, $s0, 8
+/* 0E5B3C 7F0B314C 0C003838 */  jal   osVirtualToPhysical
+/* 0E5B40 7F0B3150 00402025 */   move  $a0, $v0
+/* 0E5B44 7F0B3154 AE220004 */  sw    $v0, 4($s1)
+/* 0E5B48 7F0B3158 0FC2E9A6 */  jal   fogRenderClearFogMode
+/* 0E5B4C 7F0B315C 02002025 */   move  $a0, $s0
+/* 0E5B50 7F0B3160 0FC24104 */  jal   get_debug_do_draw_obj
+/* 0E5B54 7F0B3164 00408025 */   move  $s0, $v0
+/* 0E5B58 7F0B3168 10400009 */  beqz  $v0, .L7F0B3190
+/* 0E5B5C 7F0B316C 00000000 */   nop   
+/* 0E5B60 7F0B3170 0FC2F328 */  jal   sub_GAME_7F0BD8F0
+/* 0E5B64 7F0B3174 00000000 */   nop   
+/* 0E5B68 7F0B3178 10400005 */  beqz  $v0, .L7F0B3190
+/* 0E5B6C 7F0B317C 02002025 */   move  $a0, $s0
+/* 0E5B70 7F0B3180 92450000 */  lbu   $a1, ($s2)
+/* 0E5B74 7F0B3184 0FC0E9ED */  jal   sub_GAME_7F03A6F4
+/* 0E5B78 7F0B3188 24060002 */   li    $a2, 2
+/* 0E5B7C 7F0B318C 00408025 */  move  $s0, $v0
+.L7F0B3190:
+/* 0E5B80 7F0B3190 3C028004 */  lui   $v0, %hi(g_BgNumberOfRoomsDrawn) # $v0, 0x8004
+/* 0E5B84 7F0B3194 8C42DD1C */  lw    $v0, %lo(g_BgNumberOfRoomsDrawn)($v0)
+/* 0E5B88 7F0B3198 26730001 */  addiu $s3, $s3, 1
+.L7F0B319C:
+/* 0E5B8C 7F0B319C 0262082A */  slt   $at, $s3, $v0
+/* 0E5B90 7F0B31A0 1420FFB2 */  bnez  $at, .L7F0B306C
+/* 0E5B94 7F0B31A4 26520018 */   addiu $s2, $s2, 0x18
+.L7F0B31A8:
+/* 0E5B98 7F0B31A8 26B50001 */  addiu $s5, $s5, 1
+/* 0E5B9C 7F0B31AC 00155400 */  sll   $t2, $s5, 0x10
+/* 0E5BA0 7F0B31B0 000AAC03 */  sra   $s5, $t2, 0x10
+/* 0E5BA4 7F0B31B4 02D5082A */  slt   $at, $s6, $s5
+/* 0E5BA8 7F0B31B8 1020FFA8 */  beqz  $at, .L7F0B305C
+/* 0E5BAC 7F0B31BC 00000000 */   nop   
+.L7F0B31C0:
+/* 0E5BB0 7F0B31C0 3C140103 */  lui   $s4, (0x01030040 >> 16) # lui $s4, 0x103
+/* 0E5BB4 7F0B31C4 36940040 */  ori   $s4, (0x01030040 & 0xFFFF) # ori $s4, $s4, 0x40
+/* 0E5BB8 7F0B31C8 0FC2E9A6 */  jal   fogRenderClearFogMode
+/* 0E5BBC 7F0B31CC 02002025 */   move  $a0, $s0
+/* 0E5BC0 7F0B31D0 0FC2D0BC */  jal   bgScissorCurrentPlayerViewDefault
+/* 0E5BC4 7F0B31D4 00402025 */   move  $a0, $v0
+/* 0E5BC8 7F0B31D8 00408825 */  move  $s1, $v0
+/* 0E5BCC 7F0B31DC 24500008 */  addiu $s0, $v0, 8
+/* 0E5BD0 7F0B31E0 0FC1E105 */  jal   get_BONDdata_field_10E0
+/* 0E5BD4 7F0B31E4 AC540000 */   sw    $s4, ($v0)
+/* 0E5BD8 7F0B31E8 0C003838 */  jal   osVirtualToPhysical
+/* 0E5BDC 7F0B31EC 00402025 */   move  $a0, $v0
+/* 0E5BE0 7F0B31F0 0FC2F328 */  jal   sub_GAME_7F0BD8F0
+/* 0E5BE4 7F0B31F4 AE220004 */   sw    $v0, 4($s1)
+/* 0E5BE8 7F0B31F8 50400007 */  beql  $v0, $zero, .L7F0B3218
+/* 0E5BEC 7F0B31FC 0016AC00 */   sll   $s5, $s6, 0x10
+/* 0E5BF0 7F0B3200 0FC27FFE */  jal   sub_GAME_7F0A0AB4
+/* 0E5BF4 7F0B3204 02002025 */   move  $a0, $s0
+/* 0E5BF8 7F0B3208 0FC284AF */  jal   sub_GAME_7F0A1D78
+/* 0E5BFC 7F0B320C 00402025 */   move  $a0, $v0
+/* 0E5C00 7F0B3210 00408025 */  move  $s0, $v0
+/* 0E5C04 7F0B3214 0016AC00 */  sll   $s5, $s6, 0x10
+.L7F0B3218:
+/* 0E5C08 7F0B3218 3C028004 */  lui   $v0, %hi(g_BgNumberOfRoomsDrawn) # $v0, 0x8004
+/* 0E5C0C 7F0B321C 00156403 */  sra   $t4, $s5, 0x10
+/* 0E5C10 7F0B3220 02D7082A */  slt   $at, $s6, $s7
+/* 0E5C14 7F0B3224 8C42DD1C */  lw    $v0, %lo(g_BgNumberOfRoomsDrawn)($v0)
+/* 0E5C18 7F0B3228 14200045 */  bnez  $at, .L7F0B3340
+/* 0E5C1C 7F0B322C 0180A825 */   move  $s5, $t4
+.L7F0B3230:
+/* 0E5C20 7F0B3230 1840003D */  blez  $v0, .L7F0B3328
+/* 0E5C24 7F0B3234 00009825 */   move  $s3, $zero
+/* 0E5C28 7F0B3238 3C128007 */  lui   $s2, %hi(dword_CODE_bss_8007FFA0) # $s2, 0x8007
+/* 0E5C2C 7F0B323C 2652B3E0 */  addiu $s2, %lo(dword_CODE_bss_8007FFA0) # addiu $s2, $s2, -0x4c20
+.L7F0B3240:
+/* 0E5C30 7F0B3240 864D0002 */  lh    $t5, 2($s2)
+/* 0E5C34 7F0B3244 02008825 */  move  $s1, $s0
+/* 0E5C38 7F0B3248 56AD0034 */  bnel  $s5, $t5, .L7F0B331C
+/* 0E5C3C 7F0B324C 26730001 */   addiu $s3, $s3, 1
+/* 0E5C40 7F0B3250 26100008 */  addiu $s0, $s0, 8
+/* 0E5C44 7F0B3254 0FC1E105 */  jal   get_BONDdata_field_10E0
+/* 0E5C48 7F0B3258 AE340000 */   sw    $s4, ($s1)
+/* 0E5C4C 7F0B325C 0C003838 */  jal   osVirtualToPhysical
+/* 0E5C50 7F0B3260 00402025 */   move  $a0, $v0
+/* 0E5C54 7F0B3264 AE220004 */  sw    $v0, 4($s1)
+/* 0E5C58 7F0B3268 C6460014 */  lwc1  $f6, 0x14($s2)
+/* 0E5C5C 7F0B326C 8E470010 */  lw    $a3, 0x10($s2)
+/* 0E5C60 7F0B3270 8E46000C */  lw    $a2, 0xc($s2)
+/* 0E5C64 7F0B3274 8E450008 */  lw    $a1, 8($s2)
+/* 0E5C68 7F0B3278 02002025 */  move  $a0, $s0
+/* 0E5C6C 7F0B327C 0FC2D0CC */  jal   bgScissorCurrentPlayerViewF
+/* 0E5C70 7F0B3280 E7A60010 */   swc1  $f6, 0x10($sp)
+/* 0E5C74 7F0B3284 00402025 */  move  $a0, $v0
+/* 0E5C78 7F0B3288 0FC2E91C */  jal   fogSetRenderFogColor
+/* 0E5C7C 7F0B328C 24050001 */   li    $a1, 1
+/* 0E5C80 7F0B3290 0FC24102 */  jal   get_debug_do_draw_bg
+/* 0E5C84 7F0B3294 00408025 */   move  $s0, $v0
+/* 0E5C88 7F0B3298 50400009 */  beql  $v0, $zero, .L7F0B32C0
+/* 0E5C8C 7F0B329C 02008825 */   move  $s1, $s0
+/* 0E5C90 7F0B32A0 0FC2F328 */  jal   sub_GAME_7F0BD8F0
+/* 0E5C94 7F0B32A4 00000000 */   nop   
+/* 0E5C98 7F0B32A8 10400004 */  beqz  $v0, .L7F0B32BC
+/* 0E5C9C 7F0B32AC 02002025 */   move  $a0, $s0
+/* 0E5CA0 7F0B32B0 0FC2D6F5 */  jal   sub_GAME_7F0B6898
+/* 0E5CA4 7F0B32B4 92450000 */   lbu   $a1, ($s2)
+/* 0E5CA8 7F0B32B8 00408025 */  move  $s0, $v0
+.L7F0B32BC:
+/* 0E5CAC 7F0B32BC 02008825 */  move  $s1, $s0
+.L7F0B32C0:
+/* 0E5CB0 7F0B32C0 AE340000 */  sw    $s4, ($s1)
+/* 0E5CB4 7F0B32C4 0FC1E0FD */  jal   currentPlayerGetProjectionMatrix
+/* 0E5CB8 7F0B32C8 26100008 */   addiu $s0, $s0, 8
+/* 0E5CBC 7F0B32CC 0C003838 */  jal   osVirtualToPhysical
+/* 0E5CC0 7F0B32D0 00402025 */   move  $a0, $v0
+/* 0E5CC4 7F0B32D4 AE220004 */  sw    $v0, 4($s1)
+/* 0E5CC8 7F0B32D8 0FC2E9A6 */  jal   fogRenderClearFogMode
+/* 0E5CCC 7F0B32DC 02002025 */   move  $a0, $s0
+/* 0E5CD0 7F0B32E0 0FC24104 */  jal   get_debug_do_draw_obj
+/* 0E5CD4 7F0B32E4 00408025 */   move  $s0, $v0
+/* 0E5CD8 7F0B32E8 10400009 */  beqz  $v0, .L7F0B3310
+/* 0E5CDC 7F0B32EC 00000000 */   nop   
+/* 0E5CE0 7F0B32F0 0FC2F328 */  jal   sub_GAME_7F0BD8F0
+/* 0E5CE4 7F0B32F4 00000000 */   nop   
+/* 0E5CE8 7F0B32F8 10400005 */  beqz  $v0, .L7F0B3310
+/* 0E5CEC 7F0B32FC 02002025 */   move  $a0, $s0
+/* 0E5CF0 7F0B3300 92450000 */  lbu   $a1, ($s2)
+/* 0E5CF4 7F0B3304 0FC0E9ED */  jal   sub_GAME_7F03A6F4
+/* 0E5CF8 7F0B3308 24060001 */   li    $a2, 1
+/* 0E5CFC 7F0B330C 00408025 */  move  $s0, $v0
+.L7F0B3310:
+/* 0E5D00 7F0B3310 3C028004 */  lui   $v0, %hi(g_BgNumberOfRoomsDrawn) # $v0, 0x8004
+/* 0E5D04 7F0B3314 8C42DD1C */  lw    $v0, %lo(g_BgNumberOfRoomsDrawn)($v0)
+/* 0E5D08 7F0B3318 26730001 */  addiu $s3, $s3, 1
+.L7F0B331C:
+/* 0E5D0C 7F0B331C 0262082A */  slt   $at, $s3, $v0
+/* 0E5D10 7F0B3320 1420FFC7 */  bnez  $at, .L7F0B3240
+/* 0E5D14 7F0B3324 26520018 */   addiu $s2, $s2, 0x18
+.L7F0B3328:
+/* 0E5D18 7F0B3328 26B5FFFF */  addiu $s5, $s5, -1
+/* 0E5D1C 7F0B332C 00157C00 */  sll   $t7, $s5, 0x10
+/* 0E5D20 7F0B3330 000FAC03 */  sra   $s5, $t7, 0x10
+/* 0E5D24 7F0B3334 02B7082A */  slt   $at, $s5, $s7
+/* 0E5D28 7F0B3338 1020FFBD */  beqz  $at, .L7F0B3230
+/* 0E5D2C 7F0B333C 00000000 */   nop   
+.L7F0B3340:
+/* 0E5D30 7F0B3340 8FBF003C */  lw    $ra, 0x3c($sp)
+/* 0E5D34 7F0B3344 02001025 */  move  $v0, $s0
+/* 0E5D38 7F0B3348 8FB0001C */  lw    $s0, 0x1c($sp)
+/* 0E5D3C 7F0B334C 8FB10020 */  lw    $s1, 0x20($sp)
+/* 0E5D40 7F0B3350 8FB20024 */  lw    $s2, 0x24($sp)
+/* 0E5D44 7F0B3354 8FB30028 */  lw    $s3, 0x28($sp)
+/* 0E5D48 7F0B3358 8FB4002C */  lw    $s4, 0x2c($sp)
+/* 0E5D4C 7F0B335C 8FB50030 */  lw    $s5, 0x30($sp)
+/* 0E5D50 7F0B3360 8FB60034 */  lw    $s6, 0x34($sp)
+/* 0E5D54 7F0B3364 8FB70038 */  lw    $s7, 0x38($sp)
+/* 0E5D58 7F0B3368 03E00008 */  jr    $ra
+/* 0E5D5C 7F0B336C 27BD0040 */   addiu $sp, $sp, 0x40
+)
+#endif
+
 #endif
 
 
