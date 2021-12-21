@@ -32769,20 +32769,12 @@ void bondviewCallRecordDamageKills(f32 arg0, f32 rad, s32 arg2, s32 arg3)
 
 int bondviewGetIfCurrentPlayerDamageShowTime(void)
 {
-#ifdef VERSION_US
-    return (g_CurrentPlayer->damageshowtime >= 0);
-#else
-    return (g_CurrentPlayer->damageshowtime >= 0.0f);
-#endif
+    return (g_CurrentPlayer->damageshowtime >= (s32)0);
 }
 
 int bondviewGetIfCurrentPlayerHealthShowTime(void)
 {
-#ifdef VERSION_US
-    return (g_CurrentPlayer->healthshowtime > 0);
-#else
-    return (g_CurrentPlayer->healthshowtime > 0.0f);
-#endif
+    return (g_CurrentPlayer->healthshowtime > (s32)0);
 }
 
 

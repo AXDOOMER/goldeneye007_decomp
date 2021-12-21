@@ -482,7 +482,7 @@ struct player
   /* 0x00ec */ f32 apparenthealth;
   /* 0x00f0 */ f32 apparentarmour;
 
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined (VERSION_EU)
 /* 0x00f4 */ f32 damageshowtime;
 /* 0x00f8 */ f32 healthshowtime;
 #else
@@ -797,7 +797,7 @@ struct player
   s8 field_5BF;
   
   f32 field_5C0;
-  
+
   s32 field_5C4;
   s32 field_5C8;
   s32 field_5CC;
