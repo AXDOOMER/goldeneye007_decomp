@@ -21,5 +21,6 @@ struct path_table_alt * sub_GAME_7F08FB90(struct path_table_alt *, struct path_t
 void currentPlayerToggle5BC();
 void currentPlayerUpdateIdleHeadRoll();
 void sub_GAME_7F08E240(f32 arg0, f32 arg1);
+void sub_GAME_7F08E8BC(f32 arg0);
 
 #endif

@@ -795,7 +795,9 @@ struct player
   s8 field_5BD;
   s8 field_5BE;
   s8 field_5BF;
-  s32 field_5C0;
+  
+  f32 field_5C0;
+  
   s32 field_5C4;
   s32 field_5C8;
   s32 field_5CC;
@@ -873,7 +875,7 @@ struct player
   f32 field_6E0;
   f32 field_6E4;
   f32 field_6E8;
-  
+
   s32 field_6EC;
   
   f32 field_6F0;
