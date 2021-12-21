@@ -774,8 +774,13 @@ struct player
   f32 field_55C;
   f32 field_560;
 
+  // offset 0x564
   vec3 standlook[2];
+
+  // offset 0x57C
   vec3 standup[2];
+
+  // offset 0x594
   s32 standcnt;
   struct Model *field_598;
   s32 field_59C;
@@ -864,18 +869,22 @@ struct player
   s32 field_6D4;
   s32 field_6D8;
   s32 field_6DC;
-  s32 field_6E0;
-  s32 field_6E4;
-  s32 field_6E8;
+  
+  f32 field_6E0;
+  f32 field_6E4;
+  f32 field_6E8;
+  
   s32 field_6EC;
-  s32 field_6F0;
-  s32 field_6F4;
-  s32 field_6F8;
-  s32 field_6FC;
-  s32 field_700;
+  
+  f32 field_6F0;
+  f32 field_6F4;
+  f32 field_6F8;
 
-  // related to stationary_ground_offset
-  f32 field_704;
+  s32 field_6FC;
+
+
+  f32 field_700;
+  f32 field_704;  // related to stationary_ground_offset
   f32 field_708;
 
   s32 field_70C;
