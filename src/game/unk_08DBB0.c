@@ -388,44 +388,14 @@ void sub_GAME_7F08E8BC(f32 arg0)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F08EA48(void) {
-
+/**
+ * Address 0x7F08EA48.
+*/
+void sub_GAME_7F08EA48(struct ModelAnimation *arg0, s32 arg1, f32 arg2, f32 arg3)
+{
+    objecthandlerAnimationRelated7F06FCA8(&g_CurrentPlayer->field_598, arg0, arg1, arg2, arg3 * 0.5f, 12.0f);
+    g_CurrentPlayer->field_4E8 = -1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08EA48
-/* 0C3578 7F08EA48 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 0C357C 7F08EA4C 44877000 */  mtc1  $a3, $f14
-/* 0C3580 7F08EA50 44812000 */  mtc1  $at, $f4
-/* 0C3584 7F08EA54 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0C3588 7F08EA58 AFA50024 */  sw    $a1, 0x24($sp)
-/* 0C358C 7F08EA5C 46047182 */  mul.s $f6, $f14, $f4
-/* 0C3590 7F08EA60 44866000 */  mtc1  $a2, $f12
-/* 0C3594 7F08EA64 00802825 */  move  $a1, $a0
-/* 0C3598 7F08EA68 AFA40020 */  sw    $a0, 0x20($sp)
-/* 0C359C 7F08EA6C 3C048008 */  lui   $a0, %hi(g_CurrentPlayer)
-/* 0C35A0 7F08EA70 3C014140 */  li    $at, 0x41400000 # 12.000000
-/* 0C35A4 7F08EA74 44814000 */  mtc1  $at, $f8
-/* 0C35A8 7F08EA78 8C84A0B0 */  lw    $a0, %lo(g_CurrentPlayer)($a0)
-/* 0C35AC 7F08EA7C AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0C35B0 7F08EA80 44076000 */  mfc1  $a3, $f12
-/* 0C35B4 7F08EA84 8FA60024 */  lw    $a2, 0x24($sp)
-/* 0C35B8 7F08EA88 E7A60010 */  swc1  $f6, 0x10($sp)
-/* 0C35BC 7F08EA8C 24840598 */  addiu $a0, $a0, 0x598
-/* 0C35C0 7F08EA90 0FC1BF2A */  jal   objecthandlerAnimationRelated7F06FCA8
-/* 0C35C4 7F08EA94 E7A80014 */   swc1  $f8, 0x14($sp)
-/* 0C35C8 7F08EA98 3C0F8008 */  lui   $t7, %hi(g_CurrentPlayer) 
-/* 0C35CC 7F08EA9C 8DEFA0B0 */  lw    $t7, %lo(g_CurrentPlayer)($t7)
-/* 0C35D0 7F08EAA0 240EFFFF */  li    $t6, -1
-/* 0C35D4 7F08EAA4 ADEE04E8 */  sw    $t6, 0x4e8($t7)
-/* 0C35D8 7F08EAA8 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0C35DC 7F08EAAC 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0C35E0 7F08EAB0 03E00008 */  jr    $ra
-/* 0C35E4 7F08EAB4 00000000 */   nop   
-)
-#endif
 
 
 
