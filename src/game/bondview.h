@@ -3121,11 +3121,10 @@ f32 bondviewGetCurrentPlayerHealth(void);
 f32 get_BONDdata_watch_armor(void);
 void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2);
 
-#ifdef VERSION_JP
-// VERSION_JP
+#if defined(VERSION_JP) || defined(VERSION_EU)
 void display_string_in_lower_left_corner(char *string, s32 arg1, s32 arg2);
 #else
-// VERSION_US, VERSION_EU
+// VERSION_US
 void display_string_in_lower_left_corner(char *string);
 #endif
 

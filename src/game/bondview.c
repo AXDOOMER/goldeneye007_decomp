@@ -33302,10 +33302,10 @@ glabel display_string_in_lower_left_corner
 
 #endif
 
-#ifdef VERSION_JP
+#if defined(VERSION_JP) || defined(VERSION_EU)
 void jp_display_string_in_lower_left_corner(char *string)
 {
-  display_string_in_lower_left_corner(string, ptrSecondFontTableSmall, ptrFirstFontTableSmall);
+    display_string_in_lower_left_corner(string, ptrSecondFontTableSmall, ptrFirstFontTableSmall);
 }
 #endif
 
