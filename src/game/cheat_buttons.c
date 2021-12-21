@@ -1142,7 +1142,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_INVINCIBILITY:
             if (get_bondata_invincible_flag() == 0)
             {
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
             jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB00F));
 #else
             display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB00F));
@@ -1155,7 +1155,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_ALLGUNS:
             if (get_BONDdata_allguns_flag() == 0)
             {
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
                 jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB010));
 #else
                 display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB010));
@@ -1166,7 +1166,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             return;
 
         case CHEAT_MAXAMMO:
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
             jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB011));
 #else
             display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB011));
@@ -1214,7 +1214,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_2X_HEALTH:
             if ((g_CurrentPlayer->actual_health == 1.0f) || (g_CurrentPlayer->bondhealth < 1.0f))
             {
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
                 jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB012));
 #else
                 display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB012));
@@ -1227,7 +1227,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_2X_ARMOR:
             if ((g_CurrentPlayer->actual_armor == 1.0f) || (g_CurrentPlayer->bondarmour < 1.0f))
             {
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
                 jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB013));
                 if(1)
                 {
@@ -1244,7 +1244,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_INVISIBILITY:
             if (bondviewGetVisibleToGuardsFlag() != 0)
             {
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
                 jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB014));
 #else
                 display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB014));
@@ -1255,7 +1255,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             return;
 
         case CHEAT_INFINITE_AMMO:
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
             jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB016));
 #else
             display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB016));
@@ -1266,7 +1266,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             return;
 
         case CHEAT_DK_MODE:
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
             jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB017));
 #else
             display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB017));
@@ -1291,7 +1291,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
 
                 if (vvv > 0)
                 {
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
                     jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB018));
 #else
                     display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB018));
@@ -1304,7 +1304,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_TINY_BOND:
             if ((player_count == 1) && (g_playerPerm->player_perspective_height == 1.0f))
             {
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
                 jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB019));
 #else
                 display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB019));
@@ -1320,7 +1320,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             return;
 
         case CHEAT_PAINTBALL:
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
             jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB01A));
 #else
             display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB01A));
@@ -1330,7 +1330,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_10X_HEALTH:
             if ((g_CurrentPlayer->actual_health == 1.0f) || (g_CurrentPlayer->bondhealth < 1.0f))
             {
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
                 jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB01B));
                 if(1)
                 {
@@ -1396,7 +1396,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_TURBO_MODE:
             if (get_debug_fast_bond_flag() == 0)
             {
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
                 jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB01D));
 #else
                 display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB01D));
@@ -1417,7 +1417,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_FAST_ANIMATION:
             if (get_animation_rate() < 4.0f)
             {
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
                 jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB034));
 #else
                 display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB034));
@@ -1430,7 +1430,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_SLOW_ANIMATION:
             if (get_animation_rate() > 0.25f)
             {
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
                 jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB032));
 #else
                 display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB032));
@@ -1443,7 +1443,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_2X_ROCKET_LAUNCHER:
             if (player_count == 1)
             {
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
                 add_item_to_inventory(ITEM_ROCKETLAUNCH);
 #endif
                 add_doubles_item_to_inventory(ITEM_ROCKETLAUNCH, ITEM_ROCKETLAUNCH);
@@ -1455,7 +1455,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_2X_GRENADE_LAUNCHER:
             if (player_count == 1)
             {
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
                 add_item_to_inventory(ITEM_GRENADELAUNCH);
 #endif
                 add_doubles_item_to_inventory(ITEM_GRENADELAUNCH, ITEM_GRENADELAUNCH);
@@ -1467,7 +1467,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_2X_RCP90:
             if (player_count == 1)
             {
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
                 add_item_to_inventory(ITEM_FNP90);
 #endif
                 add_doubles_item_to_inventory(ITEM_FNP90, ITEM_FNP90);
@@ -1479,7 +1479,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_2X_THROWING_KNIFE:
             if (player_count == 1)
             {
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
                 add_item_to_inventory(ITEM_THROWKNIFE);
 #endif
                 add_doubles_item_to_inventory(ITEM_THROWKNIFE, ITEM_THROWKNIFE);
@@ -1491,7 +1491,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_2X_HUNTING_KNIFE:
             if (player_count == 1)
             {
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
                 if (j_text_trigger != 0)
                 {
                     add_item_to_inventory(ITEM_ROCKETLAUNCH);
@@ -1511,7 +1511,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_2X_LASER:
             if (player_count == 1)
             {
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
                 add_item_to_inventory(ITEM_LASER);
 #endif
                 add_doubles_item_to_inventory(ITEM_LASER, ITEM_LASER);
@@ -1631,7 +1631,7 @@ void cheatButtonHandleCheatsTurnedOff(s32 cheat_id)
         case CHEAT_INVINCIBILITY:
             if (get_bondata_invincible_flag() != 0)
             {
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
                 jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB01E));
 #else
                 display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB01E));
@@ -1644,7 +1644,7 @@ void cheatButtonHandleCheatsTurnedOff(s32 cheat_id)
         case CHEAT_ALLGUNS:
             if (get_BONDdata_allguns_flag() != 0)
             {
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
                 jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB01F));
 #else
                 display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB01F));
@@ -1661,7 +1661,7 @@ void cheatButtonHandleCheatsTurnedOff(s32 cheat_id)
         case CHEAT_INVISIBILITY:
             if (bondviewGetVisibleToGuardsFlag() == 0)
             {
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
                 jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB020));
 #else
                 display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB020));
@@ -1672,7 +1672,7 @@ void cheatButtonHandleCheatsTurnedOff(s32 cheat_id)
             return;
 
         case CHEAT_INFINITE_AMMO:
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
             jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB022));
 #else
             display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB022));
@@ -1680,7 +1680,7 @@ void cheatButtonHandleCheatsTurnedOff(s32 cheat_id)
             return;
             
         case CHEAT_DK_MODE:
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
             jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB023));
 #else
             display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB023));
@@ -1691,7 +1691,7 @@ void cheatButtonHandleCheatsTurnedOff(s32 cheat_id)
         case CHEAT_TINY_BOND:
             if ((player_count == 1) && (g_playerPerm->player_perspective_height != 1.0f))
             {
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
                 jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB024));
 #else
                 display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB024));
@@ -1706,7 +1706,7 @@ void cheatButtonHandleCheatsTurnedOff(s32 cheat_id)
             return;
 
         case CHEAT_PAINTBALL:
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
             jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB025));
 #else
             display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB025));
@@ -1720,7 +1720,7 @@ void cheatButtonHandleCheatsTurnedOff(s32 cheat_id)
         case CHEAT_TURBO_MODE:
             if (get_debug_fast_bond_flag() != 0)
             {
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
                 jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB027));
 #else
                 display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB027));
