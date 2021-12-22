@@ -34860,7 +34860,7 @@ void display_text_for_weapon_in_lower_left_corner(ITEM_IDS weaponid)
     char acStack100 [100];
     
     generate_language_specific_text_for_weapon(acStack100,weaponid);
-#ifdef VERSION_JP
+#if defined(VERSION_JP) || defined(VERSION_EU)
     jp_display_string_in_lower_left_corner(acStack100);
 #else
     display_string_in_lower_left_corner(acStack100);

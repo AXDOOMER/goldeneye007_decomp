@@ -23139,10 +23139,10 @@ void analyzeGEKey(void)
 {
     if (checkHasGEKey())
     {
-	    #ifndef VERSION_JP
-    	    display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LGUN, 0xD8))); //Analyzing the GoldenEye key...
-		#else
+	    #if defined(VERSION_JP) || defined(VERSION_EU)
 		    jp_display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LGUN, 0xD8))); //Analyzing the GoldenEye key...
+		#else
+    	    display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LGUN, 0xD8))); //Analyzing the GoldenEye key...
 		#endif
     	g_CurrentPlayer->copiedgoldeneye = 1;
     	sndPlaySfx(g_musicSfxBufferPtr, 0xf5, 0x0);
@@ -23151,10 +23151,10 @@ void analyzeGEKey(void)
   	}
   	else
   	{
-		#ifndef VERSION_JP
-	        display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LGUN, 0xD9))); //You do not have the GoldenEye key.
-		#else
+		#if defined(VERSION_JP) || defined(VERSION_EU)
 		    jp_display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LGUN, 0xD9))); //You do not have the GoldenEye key.
+		#else
+	        display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LGUN, 0xD9))); //You do not have the GoldenEye key.
 		#endif
 	    sub_GAME_7F05D690();
   	}
