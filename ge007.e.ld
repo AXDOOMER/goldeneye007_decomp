@@ -407,6 +407,7 @@ SECTIONS
       build/e/src/game/stan.o (.text);
       build/e/src/game/unk_0B3200.o (.text);
       build/e/src/game/bg.o (.text);
+      build/e/src/game/bg2.o (.text);
       build/e/src/game/fog.o (.text);
       build/e/src/game/lightfixture.o (.text);
       build/e/src/game/unk_0BC530.o (.text);
@@ -3840,6 +3841,7 @@ SECTIONS
       build/e/src/game/stan.o (.data);
       build/e/src/game/unk_0B3200.o (.data);
       build/e/src/game/bg.o (.data);
+      build/e/src/game/bg2.o (.data);
       build/e/src/game/fog.o (.data);
       build/e/src/game/lightfixture.o (.data);
       build/e/src/game/unk_0BC530.o (.data);
@@ -3968,6 +3970,7 @@ SECTIONS
       build/e/src/game/stan.o (.rodata);
       build/e/src/game/unk_0B3200.o (.rodata);
       build/e/src/game/bg.o (.rodata);
+      build/e/src/game/bg2.o (.rodata);
       build/e/src/game/fog.o (.rodata);
       build/e/src/game/lightfixture.o (.rodata);
       build/e/src/game/unk_0BC530.o (.rodata);
@@ -4336,6 +4339,7 @@ SECTIONS
       build/e/src/game/stan.o (.bss);
       build/e/src/game/unk_0B3200.o (.bss);
       build/e/src/game/bg.o (.bss);
+      build/e/src/game/bg2.o (.bss);
       build/e/src/game/fog.o (.bss);
       build/e/src/game/lightfixture.o (.bss);
       build/e/src/game/unk_0BC530.o (.bss);
