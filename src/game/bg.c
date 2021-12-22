@@ -7969,6 +7969,8 @@ void sub_GAME_7F0B7EE4(void) {
 
 }
 #else
+
+#if defined(VERSION_US) || defined(VERSION_JP)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B7EE4
@@ -8016,6 +8018,51 @@ glabel sub_GAME_7F0B7EE4
 /* 0ECAAC 7F0B7F7C 03E00008 */  jr    $ra
 /* 0ECAB0 7F0B7F80 00000000 */   nop   
 )
+#endif
+
+#if defined(VERSION_EU)
+GLOBAL_ASM(
+.text
+glabel sub_GAME_7F0B7EE4
+/* 0E9C10 7F0B7220 3C038004 */  lui   $v1, %hi(D_800448A4) # $v1, 0x8004
+/* 0E9C14 7F0B7224 2463DD8C */  addiu $v1, %lo(D_800448A4) # addiu $v1, $v1, -0x2274
+/* 0E9C18 7F0B7228 3C0E8004 */  lui   $t6, %hi(D_800448A0) # $t6, 0x8004
+/* 0E9C1C 7F0B722C 8DCEDD88 */  lw    $t6, %lo(D_800448A0)($t6)
+/* 0E9C20 7F0B7230 8C680000 */  lw    $t0, ($v1)
+/* 0E9C24 7F0B7234 27BDFFE8 */  addiu $sp, $sp, -0x18
+/* 0E9C28 7F0B7238 AFBF0014 */  sw    $ra, 0x14($sp)
+/* 0E9C2C 7F0B723C 15C80003 */  bne   $t6, $t0, .Leu7F0B724C
+/* 0E9C30 7F0B7240 00087880 */   sll   $t7, $t0, 2
+/* 0E9C34 7F0B7244 10000014 */  b     .L7F0B7298
+/* 0E9C38 7F0B7248 00001025 */   move  $v0, $zero
+.Leu7F0B724C:
+/* 0E9C3C 7F0B724C 01E87821 */  addu  $t7, $t7, $t0
+/* 0E9C40 7F0B7250 3C188007 */  lui   $t8, %hi(dword_CODE_bss_8007C100) # $t8, 0x8007
+/* 0E9C44 7F0B7254 2718A040 */  addiu $t8, %lo(dword_CODE_bss_8007C100) # addiu $t8, $t8, -0x5fc0
+/* 0E9C48 7F0B7258 000F7880 */  sll   $t7, $t7, 2
+/* 0E9C4C 7F0B725C 01F81021 */  addu  $v0, $t7, $t8
+/* 0E9C50 7F0B7260 90440000 */  lbu   $a0, ($v0)
+/* 0E9C54 7F0B7264 90450001 */  lbu   $a1, 1($v0)
+/* 0E9C58 7F0B7268 84460002 */  lh    $a2, 2($v0)
+/* 0E9C5C 7F0B726C 0FC2DCAA */  jal   sub_GAME_7F0B7F84
+/* 0E9C60 7F0B7270 24470004 */   addiu $a3, $v0, 4
+/* 0E9C64 7F0B7274 3C038004 */  lui   $v1, %hi(D_800448A4) # $v1, 0x8004
+/* 0E9C68 7F0B7278 2463DD8C */  addiu $v1, %lo(D_800448A4) # addiu $v1, $v1, -0x2274
+/* 0E9C6C 7F0B727C 8C790000 */  lw    $t9, ($v1)
+/* 0E9C70 7F0B7280 240100FA */  li    $at, 250
+/* 0E9C74 7F0B7284 24020001 */  li    $v0, 1
+/* 0E9C78 7F0B7288 27290001 */  addiu $t1, $t9, 1
+/* 0E9C7C 7F0B728C 15210002 */  bne   $t1, $at, .L7F0B7298
+/* 0E9C80 7F0B7290 AC690000 */   sw    $t1, ($v1)
+/* 0E9C84 7F0B7294 AC600000 */  sw    $zero, ($v1)
+.L7F0B7298:
+/* 0E9C88 7F0B7298 8FBF0014 */  lw    $ra, 0x14($sp)
+/* 0E9C8C 7F0B729C 27BD0018 */  addiu $sp, $sp, 0x18
+/* 0E9C90 7F0B72A0 03E00008 */  jr    $ra
+/* 0E9C94 7F0B72A4 00000000 */   nop   
+)
+#endif
+
 #endif
 
 
