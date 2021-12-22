@@ -2030,13 +2030,13 @@ Gfx* lvlRender(Gfx* DL)
 
             if (
 
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
                 cheatCheckIfOn(CHEAT_INFINITE_AMMO) != 0
                 && (
                     (get_item_in_hand(RIGHT_HAND) != ITEM_WATCHLASER)
                     || (g_CurrentPlayer->field_FCC == 0)
                 )
-#else /* VERSION_US, VERSION_EU, unspecified */
+#else /* VERSION_US */
                 cheatCheckIfOn(CHEAT_INFINITE_AMMO) != 0
 #endif
                 )
@@ -2110,7 +2110,7 @@ void lvlSetMultipliersForDifficulty(void)
         g_AiHealthModifier = 1.0f;
         D_80040178 = 0.75f;
 
-#ifdef VERSION_JP
+#if defined(VERSION_JP) || defined(VERSION_EU)
         if (j_text_trigger)
         {
             difficulty = 1.1f;
@@ -2120,7 +2120,7 @@ void lvlSetMultipliersForDifficulty(void)
             difficulty = 0.75f;
         }
 #else
-        // VERSION_US, VERSION_EU
+        // VERSION_US
         difficulty = 0.75f;
 #endif
 
@@ -2139,7 +2139,7 @@ void lvlSetMultipliersForDifficulty(void)
         g_AiHealthModifier = 1.0f;
         D_80040178 = 1.0f;
 
-#ifdef VERSION_JP
+#if defined(VERSION_JP) || defined(VERSION_EU)
         if (j_text_trigger)
         {
             difficulty = 0.75f;
@@ -2149,7 +2149,7 @@ void lvlSetMultipliersForDifficulty(void)
             difficulty = 0.2f;
         }
 #else
-        // VERSION_US, VERSION_EU
+        // VERSION_US
         difficulty = 0.2f;
 #endif
 
@@ -4442,7 +4442,11 @@ glabel lvlManageMpGame
 
 #ifdef VERSION_EU
 GLOBAL_ASM(
-    .rdata
+.late_rodata
+glabel D_80050308
+.word 0x3fcccccd
+
+.rdata
 #const char aOneMinuteLeft[] = "One minute left";
 glabel aOneMinuteLeft
 .word 0x4f6e6520
@@ -4480,33 +4484,40 @@ glabel lvlManageMpGame
 /* 0F3718 7F0BEBE8 27190001 */  addiu $t9, $t8, 1
 /* 0F371C 7F0BEBEC AC590000 */  sw    $t9, ($v0)
 .L7F0BEBF0:
-/* 0F3720 7F0BEBF0 3C028005 */  lui   $v0, %hi(g_ClockTimer)
-/* 0F3724 7F0BEBF4 8C428374 */  lw    $v0, %lo(g_ClockTimer)($v0)
-/* 0F3728 7F0BEBF8 3C038005 */  lui   $v1, %hi(g_GlobalTimer)
-/* 0F372C 7F0BEBFC 3C018005 */  lui   $at, %hi(g_GlobalTimerDelta)
-/* 0F3730 7F0BEC00 44822000 */  mtc1  $v0, $f4
-/* 0F3734 7F0BEC04 2463837C */  addiu $v1, %lo(g_GlobalTimer) # addiu $v1, $v1, -0x7c84
-/* 0F3738 7F0BEC08 3C188005 */  lui   $t8, %hi(g_CurrentStageToLoad)
-/* 0F373C 7F0BEC0C 468021A0 */  cvt.s.w $f6, $f4
-/* 0F3740 7F0BEC10 3C198005 */  lui   $t9, %hi(D_80048394)
-/* 0F3744 7F0BEC14 E4268378 */  swc1  $f6, %lo(g_GlobalTimerDelta)($at)
-/* 0F3748 7F0BEC18 8C6E0000 */  lw    $t6, ($v1)
-/* 0F374C 7F0BEC1C 2401005A */  li    $at, 90
-/* 0F3750 7F0BEC20 01C27821 */  addu  $t7, $t6, $v0
-/* 0F3754 7F0BEC24 AC6F0000 */  sw    $t7, ($v1)
-/* 0F3758 7F0BEC28 8F188364 */  lw    $t8, %lo(g_CurrentStageToLoad)($t8)
-/* 0F375C 7F0BEC2C 1301001D */  beq   $t8, $at, .L7F0BECA4
-/* 0F3760 7F0BEC30 00000000 */   nop
-/* 0F3764 7F0BEC34 8F398394 */  lw    $t9, %lo(D_80048394)($t9)
-/* 0F3768 7F0BEC38 1720001A */  bnez  $t9, .L7F0BECA4
-/* 0F376C 7F0BEC3C 00000000 */   nop
-/* 0F3770 7F0BEC40 18400018 */  blez  $v0, .L7F0BECA4
-/* 0F3774 7F0BEC44 3C0E8003 */   lui   $t6, %hi(g_AppendCheatSinglePlayer)
-/* 0F3778 7F0BEC48 8DCEA900 */  lw    $t6, %lo(g_AppendCheatSinglePlayer)($t6)
-/* 0F377C 7F0BEC4C 3C038007 */  lui   $v1, %hi(g_CheatActivated + 1)
-/* 0F3780 7F0BEC50 246396A1 */  addiu $v1, %lo(g_CheatActivated + 1) # addiu $v1, $v1, -0x695f
-/* 0F3784 7F0BEC54 11C00013 */  beqz  $t6, .L7F0BECA4
-/* 0F3788 7F0BEC58 24040001 */   li    $a0, 1
+/* 0F0A04 7F0BE014 3C028004 */  lui   $v0, %hi(g_ClockTimer) # $v0, 0x8004
+/* 0F0A08 7F0BE018 8C420FF4 */  lw    $v0, %lo(g_ClockTimer)($v0)
+/* 0F0A0C 7F0BE01C 3C038004 */  lui   $v1, %hi(g_GlobalTimerDelta) # $v1, 0x8004
+/* 0F0A10 7F0BE020 24630FF8 */  addiu $v1, %lo(g_GlobalTimerDelta) # addiu $v1, $v1, 0xff8
+/* 0F0A14 7F0BE024 44822000 */  mtc1  $v0, $f4
+/* 0F0A18 7F0BE028 3C018005 */  lui   $at, %hi(D_80050308) # $at, 0x8005
+/* 0F0A1C 7F0BE02C 3C048004 */  lui   $a0, %hi(g_GlobalTimer) # $a0, 0x8004
+/* 0F0A20 7F0BE030 468021A0 */  cvt.s.w $f6, $f4
+/* 0F0A24 7F0BE034 24840FFC */  addiu $a0, %lo(g_GlobalTimer) # addiu $a0, $a0, 0xffc
+/* 0F0A28 7F0BE038 3C188004 */  lui   $t8, %hi(g_CurrentStageToLoad) # $t8, 0x8004
+/* 0F0A2C 7F0BE03C 3C198004 */  lui   $t9, %hi(D_80048394) # $t9, 0x8004
+/* 0F0A30 7F0BE040 E4660000 */  swc1  $f6, ($v1)
+/* 0F0A34 7F0BE044 C42A0308 */  lwc1  $f10, %lo(D_80050308)($at)
+/* 0F0A38 7F0BE048 C4680000 */  lwc1  $f8, ($v1)
+/* 0F0A3C 7F0BE04C 3C018004 */  lui   $at, %hi(D_80048394) # $at, 0x8004
+/* 0F0A40 7F0BE050 460A4402 */  mul.s $f16, $f8, $f10
+/* 0F0A44 7F0BE054 E4301004 */  swc1  $f16, %lo(D_80048394)($at)
+/* 0F0A48 7F0BE058 8C8E0000 */  lw    $t6, ($a0)
+/* 0F0A4C 7F0BE05C 2401005A */  li    $at, 90
+/* 0F0A50 7F0BE060 01C27821 */  addu  $t7, $t6, $v0
+/* 0F0A54 7F0BE064 AC8F0000 */  sw    $t7, ($a0)
+/* 0F0A58 7F0BE068 8F180FE4 */  lw    $t8, %lo(g_CurrentStageToLoad)($t8)
+/* 0F0A5C 7F0BE06C 1301001D */  beq   $t8, $at, .L7F0BECA4
+/* 0F0A60 7F0BE070 00000000 */   nop   
+/* 0F0A64 7F0BE074 8F391018 */  lw    $t9, %lo(D_80048394)($t9)
+/* 0F0A68 7F0BE078 1720001A */  bnez  $t9, .L7F0BECA4
+/* 0F0A6C 7F0BE07C 00000000 */   nop   
+/* 0F0A70 7F0BE080 18400018 */  blez  $v0, .L7F0BECA4
+/* 0F0A74 7F0BE084 3C0E8002 */   lui   $t6, %hi(g_AppendCheatSinglePlayer) # $t6, 0x8002
+/* 0F0A78 7F0BE088 8DCE5E50 */  lw    $t6, %lo(g_AppendCheatSinglePlayer)($t6)
+/* 0F0A7C 7F0BE08C 3C038006 */  lui   $v1, %hi(g_CheatActivated + 1) # $v1, 0x8006
+/* 0F0A80 7F0BE090 246385E1 */  addiu $v1, %lo(g_CheatActivated + 1) # addiu $v1, $v1, -0x7a1f
+/* 0F0A84 7F0BE094 11C00013 */  beqz  $t6, .L7F0BECA4
+/* 0F0A88 7F0BE098 24040001 */   li    $a0, 1
 .L7F0BEC5C:
 /* 0F378C 7F0BEC5C 906F0000 */  lbu   $t7, ($v1)
 /* 0F3790 7F0BEC60 51E0000D */  beql  $t7, $zero, .L7F0BEC98
@@ -4609,19 +4620,20 @@ glabel lvlManageMpGame
 /* 0F38F8 7F0BEDC8 1840000E */  blez  $v0, .L7F0BEE04
 /* 0F38FC 7F0BEDCC 00000000 */   nop
 .L7F0BEDD0:
-/* 0F3900 7F0BEDD0 0FC26C43 */  jal   set_cur_player
-/* 0F3904 7F0BEDD4 8FA4017C */   lw    $a0, 0x17c($sp)
-/* 0F3908 7F0BEDD8 3C048006 */  lui   $a0, %hi(aOneMinuteLeft)
-/* 0F390C 7F0BEDDC 0FC228F2 */  jal   display_string_in_lower_left_corner
-/* 0F3910 7F0BEDE0 2484B704 */   addiu $a0, %lo(aOneMinuteLeft) # addiu $a0, $a0, -0x48fc
-/* 0F3914 7F0BEDE4 8FAF017C */  lw    $t7, 0x17c($sp)
-/* 0F3918 7F0BEDE8 25F80001 */  addiu $t8, $t7, 1
-/* 0F391C 7F0BEDEC 0FC26919 */  jal   getPlayerCount
-/* 0F3920 7F0BEDF0 AFB8017C */   sw    $t8, 0x17c($sp)
-/* 0F3924 7F0BEDF4 8FB9017C */  lw    $t9, 0x17c($sp)
-/* 0F3928 7F0BEDF8 0322082A */  slt   $at, $t9, $v0
-/* 0F392C 7F0BEDFC 1420FFF4 */  bnez  $at, .L7F0BEDD0
-/* 0F3930 7F0BEE00 00000000 */   nop
+/* 0F0C00 7F0BE210 0FC26993 */  jal   set_cur_player
+/* 0F0C04 7F0BE214 8FA4017C */   lw    $a0, 0x17c($sp)
+/* 0F0C08 7F0BE218 0FC304AE */  jal   get_textptr_for_textID
+/* 0F0C0C 7F0BE21C 3404B044 */   li    $a0, 45124
+/* 0F0C10 7F0BE220 0FC229B5 */  jal   jp_display_string_in_lower_left_corner
+/* 0F0C14 7F0BE224 00402025 */   move  $a0, $v0
+/* 0F0C18 7F0BE228 8FAF017C */  lw    $t7, 0x17c($sp)
+/* 0F0C1C 7F0BE22C 25F80001 */  addiu $t8, $t7, 1
+/* 0F0C20 7F0BE230 0FC26669 */  jal   getPlayerCount
+/* 0F0C24 7F0BE234 AFB8017C */   sw    $t8, 0x17c($sp)
+/* 0F0C28 7F0BE238 8FB9017C */  lw    $t9, 0x17c($sp)
+/* 0F0C2C 7F0BE23C 0322082A */  slt   $at, $t9, $v0
+/* 0F0C30 7F0BE240 1420FFF3 */  bnez  $at, .L7F0BEDD0
+/* 0F0C34 7F0BE244 00000000 */   nop   
 .L7F0BEE04:
 /* 0F3934 7F0BEE04 3C0F8005 */  lui   $t7, %hi(g_MpTime)
 /* 0F3938 7F0BEE08 8DEF8398 */  lw    $t7, %lo(g_MpTime)($t7)
@@ -5699,7 +5711,7 @@ void lvlUnloadStageTextData(void)
 
 void lvlSetControlsLockedFlag(s32 arg0)
 {
-    #ifdef VERSION_JP
+    #if defined(VERSION_JP) || defined(VERSION_EU)
     if ((arg0 != 0) && (g_ControlsLockedFlag == 0))
     {
         joyRumblePakStop();
