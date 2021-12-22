@@ -9,10 +9,15 @@ s32 D_80048494 = 0;
  * Appears to be rendered framerate, or some kind of counter since the last frame update.
  */
 s32 speedgraphframes = 1;
-#ifdef VERSION_JP
+
+#if defined(VERSION_JP) || defined(VERSION_EU)
+// EU address D_8004111C
 f32 jpD_800484CC = 1.0f;
+
+// EU address D_80041120
 f32 jpD_800484D0 = 1.0f;
 #endif
+
 s32 D_8004849C = -1;
 s32 D_800484A0 = 0;
 s32 D_800484A4 = 0;
@@ -39,10 +44,17 @@ void sub_GAME_7F0C0AA0(s32 arg0)
     D_80048490 = D_80048494;
     D_80048494 = (s32) (D_80048494 + arg0);
     speedgraphframes = arg0;
+
     #ifdef VERSION_JP
     jpD_800484CC = (f32) arg0;
     jpD_800484D0 = (f32) jpD_800484CC;
     #endif
+
+    #if defined(VERSION_EU)
+    jpD_800484CC = (f32) arg0;
+    jpD_800484D0 = (jpD_800484CC * 60.0f) / 50.0f;
+    #endif
+
     D_8004849C = (s32) D_800484A0;
     D_800484A0 = (s32) (D_80048494 / 2);
     D_800484A4 = (s32) (D_80048494 & 1);
@@ -68,7 +80,7 @@ void sub_GAME_7F0C0B4C(void)
 
 
 void sub_GAME_7F0C0BE4(s32 arg0) {
-  #ifndef VERSION_EU
+    #ifndef VERSION_EU
     D_800484B4 = arg0;
     #endif
 }
