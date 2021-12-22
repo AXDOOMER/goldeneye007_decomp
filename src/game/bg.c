@@ -7807,6 +7807,8 @@ void sub_GAME_7F0B7DE4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, void *arg4) {
     return;
 }
 #else
+
+#if defined(VERSION_US) || defined(VERSION_JP)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B7DE4
@@ -7879,6 +7881,83 @@ glabel sub_GAME_7F0B7DE4
 /* 0ECA0C 7F0B7EDC 03E00008 */  jr    $ra
 /* 0ECA10 7F0B7EE0 00000000 */   nop   
 )
+#endif
+
+#if defined(VERSION_EU)
+GLOBAL_ASM(
+.text
+glabel sub_GAME_7F0B7DE4
+/* 0E9B10 7F0B7120 3C088004 */  lui   $t0, %hi(D_800448A0) # $t0, 0x8004
+/* 0E9B14 7F0B7124 2508DD88 */  addiu $t0, %lo(D_800448A0) # addiu $t0, $t0, -0x2278
+/* 0E9B18 7F0B7128 8D0E0000 */  lw    $t6, ($t0)
+/* 0E9B1C 7F0B712C 27BDFFE0 */  addiu $sp, $sp, -0x20
+/* 0E9B20 7F0B7130 3C188007 */  lui   $t8, %hi(dword_CODE_bss_8007C100) # $t8, 0x8007
+/* 0E9B24 7F0B7134 000E7880 */  sll   $t7, $t6, 2
+/* 0E9B28 7F0B7138 01EE7821 */  addu  $t7, $t7, $t6
+/* 0E9B2C 7F0B713C 000F7880 */  sll   $t7, $t7, 2
+/* 0E9B30 7F0B7140 2718A040 */  addiu $t8, %lo(dword_CODE_bss_8007C100) # addiu $t8, $t8, -0x5fc0
+/* 0E9B34 7F0B7144 28C10002 */  slti  $at, $a2, 2
+/* 0E9B38 7F0B7148 AFBF0014 */  sw    $ra, 0x14($sp)
+/* 0E9B3C 7F0B714C AFA40020 */  sw    $a0, 0x20($sp)
+/* 0E9B40 7F0B7150 AFA50024 */  sw    $a1, 0x24($sp)
+/* 0E9B44 7F0B7154 14200014 */  bnez  $at, .L7F0B71A8
+/* 0E9B48 7F0B7158 01F81821 */   addu  $v1, $t7, $t8
+/* 0E9B4C 7F0B715C 3C198007 */  lui   $t9, %hi(ptr_bgdata_portals) # $t9, 0x8007
+/* 0E9B50 7F0B7160 8F39B3C8 */  lw    $t9, %lo(ptr_bgdata_portals)($t9)
+/* 0E9B54 7F0B7164 000550C0 */  sll   $t2, $a1, 3
+/* 0E9B58 7F0B7168 032A1021 */  addu  $v0, $t9, $t2
+/* 0E9B5C 7F0B716C 904B0004 */  lbu   $t3, 4($v0)
+/* 0E9B60 7F0B7170 904C0005 */  lbu   $t4, 5($v0)
+/* 0E9B64 7F0B7174 AFA7002C */  sw    $a3, 0x2c($sp)
+/* 0E9B68 7F0B7178 AFA60028 */  sw    $a2, 0x28($sp)
+/* 0E9B6C 7F0B717C 016C6826 */  xor   $t5, $t3, $t4
+/* 0E9B70 7F0B7180 01A42026 */  xor   $a0, $t5, $a0
+/* 0E9B74 7F0B7184 0FC2DC39 */  jal   sub_GAME_7F0B7DA8
+/* 0E9B78 7F0B7188 AFA3001C */   sw    $v1, 0x1c($sp)
+/* 0E9B7C 7F0B718C 3C088004 */  lui   $t0, %hi(D_800448A0) # $t0, 0x8004
+/* 0E9B80 7F0B7190 28410009 */  slti  $at, $v0, 9
+/* 0E9B84 7F0B7194 2508DD88 */  addiu $t0, %lo(D_800448A0) # addiu $t0, $t0, -0x2278
+/* 0E9B88 7F0B7198 8FA3001C */  lw    $v1, 0x1c($sp)
+/* 0E9B8C 7F0B719C 8FA60028 */  lw    $a2, 0x28($sp)
+/* 0E9B90 7F0B71A0 1020001B */  beqz  $at, .L7F0B7210
+/* 0E9B94 7F0B71A4 8FA7002C */   lw    $a3, 0x2c($sp)
+.L7F0B71A8:
+/* 0E9B98 7F0B71A8 8FAF0020 */  lw    $t7, 0x20($sp)
+/* 0E9B9C 7F0B71AC 240100FA */  li    $at, 250
+/* 0E9BA0 7F0B71B0 3C0A8004 */  lui   $t2, %hi(D_800448A4) # $t2, 0x8004
+/* 0E9BA4 7F0B71B4 A06F0000 */  sb    $t7, ($v1)
+/* 0E9BA8 7F0B71B8 8FB80024 */  lw    $t8, 0x24($sp)
+/* 0E9BAC 7F0B71BC A4660002 */  sh    $a2, 2($v1)
+/* 0E9BB0 7F0B71C0 A0780001 */  sb    $t8, 1($v1)
+/* 0E9BB4 7F0B71C4 C4E40000 */  lwc1  $f4, ($a3)
+/* 0E9BB8 7F0B71C8 E4640004 */  swc1  $f4, 4($v1)
+/* 0E9BBC 7F0B71CC C4E60004 */  lwc1  $f6, 4($a3)
+/* 0E9BC0 7F0B71D0 E4660008 */  swc1  $f6, 8($v1)
+/* 0E9BC4 7F0B71D4 C4E80008 */  lwc1  $f8, 8($a3)
+/* 0E9BC8 7F0B71D8 E468000C */  swc1  $f8, 0xc($v1)
+/* 0E9BCC 7F0B71DC C4EA000C */  lwc1  $f10, 0xc($a3)
+/* 0E9BD0 7F0B71E0 E46A0010 */  swc1  $f10, 0x10($v1)
+/* 0E9BD4 7F0B71E4 8D090000 */  lw    $t1, ($t0)
+/* 0E9BD8 7F0B71E8 25220001 */  addiu $v0, $t1, 1
+/* 0E9BDC 7F0B71EC 14410003 */  bne   $v0, $at, .L7F0B71FC
+/* 0E9BE0 7F0B71F0 AD020000 */   sw    $v0, ($t0)
+/* 0E9BE4 7F0B71F4 AD000000 */  sw    $zero, ($t0)
+/* 0E9BE8 7F0B71F8 00001025 */  move  $v0, $zero
+.L7F0B71FC:
+/* 0E9BEC 7F0B71FC 8D4ADD8C */  lw    $t2, %lo(D_800448A4)($t2)
+/* 0E9BF0 7F0B7200 244BFFFF */  addiu $t3, $v0, -1
+/* 0E9BF4 7F0B7204 55420003 */  bnel  $t2, $v0, .L7F0B7214
+/* 0E9BF8 7F0B7208 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 0E9BFC 7F0B720C AD0B0000 */  sw    $t3, ($t0)
+.L7F0B7210:
+/* 0E9C00 7F0B7210 8FBF0014 */  lw    $ra, 0x14($sp)
+.L7F0B7214:
+/* 0E9C04 7F0B7214 27BD0020 */  addiu $sp, $sp, 0x20
+/* 0E9C08 7F0B7218 03E00008 */  jr    $ra
+/* 0E9C0C 7F0B721C 00000000 */   nop   
+)
+#endif
+
 #endif
 
 
