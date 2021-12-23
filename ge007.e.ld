@@ -3277,6 +3277,9 @@ SECTIONS
    _csegmentSegmentStart = ADDR(.csegment);
    _csegmentSegmentRomStart = __csegtempPos;
    .csegment __dataSegmentVaddrStart : AT(_csegmentSegmentRomStart) {
+
+       /* comments are offset from start of data segment */
+
       build/e/src/rspboot.o (.text);
       build/e/src/gspboot.o (.text);
       build/e/src/aspboot.o (.text);
@@ -3470,7 +3473,7 @@ SECTIONS
       build/e/src/libultra/os/probetlb.o (.data);
       build/e/src/libultra/audio/syndelete.o (.data);
       build/e/src/libultra/io/ai.o (.data);
-      build/e/src/libultrare/audio/drvrNew.o (.data);
+      build/e/src/libultrare/audio/drvrNew.o (.data);          /* 0x4e60 */
       build/e/src/libultra/audio/synallocfx.o (.data);
       build/e/src/libultra/audio/mainbus.o (.data);
       build/e/src/libultra/audio/load.o (.data);
@@ -3487,7 +3490,7 @@ SECTIONS
       build/e/src/libultra/audio/synstartvoiceparam.o (.data);
       build/e/src/libultra/audio/copy.o (.data);
       /*build/e/src/libultra/io/piacs.o (.data);*/
-      build/e/src/libultra/libc/xlitob.o (.data);
+      build/e/src/libultra/libc/xlitob.o (.data);               /* 0x5190 */
       build/e/src/libultra/libc/xldtob.o (.data);
       /*build/e/src/libultrare/io/epirawdma.o (.data);*/
       /*build/e/src/libultrare/io/devmgr.o (.data);*/
@@ -3498,21 +3501,21 @@ SECTIONS
       /*build/e/src/libultrare/io/leodiskinit.o (.data);*/
       /*build/e/src/libultra/os/setcompare.o (.data);*/
       build/e/src/libultra/audio/filter.o (.data);
-      build/e/src/libultrare/audio/reverb.o (.data); /*edited*/
+      build/e/src/libultrare/audio/reverb.o (.data); /*edited*/           /* 0x51c0 */
       build/e/src/libultra/gu/libm_vals.o (.data); /*edited*/
       build/e/src/libultra/audio/seq.o (.data);
       build/e/src/libultra/audio/synsetpriority.o (.data);
       build/e/src/libultra/libc/ldiv.o (.data);
       /*build/e/src/libultra/os/resetglobalintmask.o (.data);*/
       /*build/e/src/libultrare/io/epirawwrite.o (.data);*/
-      build/e/src/libultra/io/vimodentsclan1.o (.data);
-      build/e/src/libultrare/io/vimodepallan1.o (.data);
+      /*build/e/src/libultra/io/vimodentsclan1.o (.data);*/
+      /*build/e/src/libultrare/io/vimodepallan1.o (.data);*/
       build/e/src/libultrare/ultra80069080.o (.data); /*edited*/
       /*build/e/src/libultra/libultra.a:libultra.o (.data);*/
 
       build/e/src/aspboot.o (.rodata);
       build/e/src/boot.o (.rodata);
-      build/e/src/init.o (.rodata);
+      build/e/src/init.o (.rodata);                 /* 0x51d0 */
       build/e/src/sched.o (.rodata);
       build/e/src/osMapTLB.o (.rodata);
 
