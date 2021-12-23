@@ -50,7 +50,7 @@ s_800231D4 D_800231D4[5] = {
     {0x00000003, 0x00009200, 0x00000004, 0xFFFFFFFF},
     {0x00000004, 0xDB000000, 0x00000004, 0xFFFFFFFF}
 };
-#endif
+
 
 /**
  * 80023224. Seems to accumulate speedgraphframes in speedGraphDisplay. Once above the threshold COUNT_REQUIRED_FOR_OUTPUT,
@@ -78,7 +78,7 @@ u32 g_speedGraphCounterForFrames = 0;
  * 80023234.
  */
 s32 D_80023234 = 1;
-
+#endif
 // forward declarations
 void speedGraphVideoRelated_2(void);
 
