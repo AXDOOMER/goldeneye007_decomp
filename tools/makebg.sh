@@ -1,4 +1,3 @@
 #!/bin/bash
-echo $1
-echo $2
+echo "makebg: cp $1 $2"
 cp -f $1 $2

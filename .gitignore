@@ -35,6 +35,7 @@ assets/music/*.bin
 assets/music/*.ctl
 assets/music/*.tbl
 assets/obseg/bg/*.bin
+assets/obseg/bg/e/*.bin
 assets/obseg/chr/*.bin
 assets/obseg/gun/*.bin
 assets/obseg/ob__ob_end.seg

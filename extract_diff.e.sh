@@ -5,7 +5,7 @@ if [ -z "$1" ]; then
 fi
 
 true="1"
-mkdir -p assets assets/font assets/images assets/images/split assets/music assets/ramrom/e assets/obseg assets/obseg/bg assets/obseg/brief assets/obseg/chr assets/obseg/gun assets/obseg/prop assets/obseg/setup assets/obseg/setup/e assets/obseg/stan assets/obseg/text assets/obseg/text/e
+mkdir -p assets assets/font assets/images assets/images/split assets/music assets/ramrom/e assets/obseg assets/obseg/bg/e assets/obseg/brief assets/obseg/chr assets/obseg/gun assets/obseg/prop assets/obseg/setup assets/obseg/setup/e assets/obseg/stan assets/obseg/text assets/obseg/text/e
 
 if [ "$DOALL" == "1" ] || [ $1 == 'files' ]; then
     echo "Processing Files"

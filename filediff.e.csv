@@ -12,9 +12,11 @@
 2969936,10816,assets/ramrom/e/ramrom_Frigate_1.bin,0,1
 2980752,8224,assets/ramrom/e/ramrom_Frigate_2.bin,0,1
 2988976,11392,assets/ramrom/e/ramrom_Train.bin,0,1
+5836336,105520,assets/obseg/bg/e/bg_pete_all_p.bin,0,1
+6806352,86256,assets/obseg/bg/e/bg_jun_all_p.bin,0,1
 1148512,46848,assets/ge007.e.118660.jfont_chardata.bin,0,0
 9000160,11680,assets/obseg/setup/e/Ump_setuparchZ,1,1
-9030672,2400,assets/obseg/setup/e/UsetupcradZ,1,1
+9124336,7216,assets/obseg/setup/e/UsetupcradZ,1,0
 9168656,9040,assets/obseg/setup/e/UsetupdestZ,1,1
 9177696,14096,assets/obseg/setup/e/UsetupjunZ,1,1
 9191792,1520,assets/obseg/setup/e/UsetuplenZ,1,1
