@@ -14,6 +14,10 @@
 #include "game/dyn.h"
 
 /**
+ * EU .data, offset from start of data_seg : 0x2484
+*/
+
+/**
  * @file video.c
  * This file contains video handling code. 
  */
@@ -42,11 +46,19 @@
  */
 u32 g_unused80023240 = 0;
 
+#if defined(VERSION_EU)
+struct VideoSettings_s g_videoSettings[NUM_VIDEO_SETTINGS] = 
+{
+    {0, 0, 0, 0, 320, 272, 60.0f, 1.17647063732f, 30.0f, 10000.0f, SCREEN_WIDTH, SCREEN_HEIGHT_EU, 320, 272, 0, 0, 1, NULL},
+    {0, 0, 0, 0, 320, 272, 60.0f, 1.17647063732f, 30.0f, 10000.0f, SCREEN_WIDTH, SCREEN_HEIGHT_EU, 320, 272, 0, 0, 1, NULL}
+};
+#else
 struct VideoSettings_s g_videoSettings[NUM_VIDEO_SETTINGS] = 
 {
     {0, 0, 0, 0, 320, 240, 60.0f, 1.3333334f, 30.0f, 10000.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 320, 240, 0, 0, 1, NULL},
     {0, 0, 0, 0, 320, 240, 60.0f, 1.3333334f, 30.0f, 10000.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 320, 240, 0, 0, 1, NULL}
 };
+#endif
 
 /**
  * Address 8002329C.

@@ -5,6 +5,10 @@
 #include "thread_config.h"
 
 /**
+ * EU .data, offset from start of data_seg : 0x23A0
+*/
+
+/**
  * @file audi.c
  * This file contains audio code. Starts main audio thread, handles some audio DMA.
  */

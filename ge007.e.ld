@@ -3282,7 +3282,7 @@ SECTIONS
       build/e/src/aspboot.o (.text);
       build/e/src/boot.o (.data);
       build/e/src/init.o (.data);
-      build/e/src/sched.o (.data);
+      build/e/src/sched.o (.data); /* 0x2300 */
       build/e/src/osMapTLB.o (.data);
 
       build/e/src/libultrare/io/vimgr.o (.data);
@@ -3292,9 +3292,9 @@ SECTIONS
       build/e/src/tlb_random.o (.data);
       build/e/src/tlb_resolve.o (.data);
       build/e/src/tlb_hardwire.o (.data);
-      build/e/src/audi.o (.data);
-      build/e/src/speed_graph.o (.data);
-      build/e/src/fr.o (.data);
+      build/e/src/audi.o (.data); /* 0x23a0 */
+      build/e/src/speed_graph.o (.data); /* (none) */
+      build/e/src/fr.o (.data); /* 0x2484 */
       build/e/src/deb.o (.data);
       build/e/src/fault.o (.data);
       /*deb_print may be part of fault per pd beta (.data);*/

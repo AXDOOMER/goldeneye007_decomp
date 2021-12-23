@@ -42,6 +42,8 @@ typedef struct {
     s32 unk8;
     s32 unkC;
 } s_800231D4;
+
+#if defined(VERSION_US) || defined(VERSION_JP)
 s_800231D4 D_800231D4[5] = {
     {0x00000000, 0x00000000, 0x00000002, 0x00000000},
     {0x00000001, 0x00000000, 0x00000002, 0x00000000},
@@ -76,6 +78,8 @@ u32 g_speedGraphCounterForFrames = 0;
  * 80023234.
  */
 s32 D_80023234 = 1;
+
+#endif
 
 // forward declarations
 void speedGraphVideoRelated_2(void);
