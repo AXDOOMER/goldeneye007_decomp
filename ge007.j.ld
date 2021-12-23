@@ -367,6 +367,7 @@ SECTIONS
       build/j/src/game/chraidata.o (.text);
       build/j/src/game/pobjdata.o (.text);
       build/j/src/game/gobjdata.o (.text);
+      build/j/src/game/gobjdata2.o (.text);
       build/j/src/game/cobjdata.o (.text);
       build/j/src/game/cheat_buttons.o (.text);
       build/j/src/game/unk_092890.o (.text);
@@ -3755,6 +3756,7 @@ SECTIONS
       build/j/src/game/chraidata.o (.data);
       build/j/src/game/pobjdata.o (.data);
       build/j/src/game/gobjdata.o (.data);
+      build/j/src/game/gobjdata2.o (.data);
       build/j/src/game/cobjdata.o (.data);
       build/j/src/game/cheat_buttons.o (.data);
       build/j/src/game/unk_092890.o (.data);
@@ -3884,6 +3886,7 @@ SECTIONS
       build/j/src/game/chraidata.o (.rodata);
       build/j/src/game/pobjdata.o (.rodata);
       build/j/src/game/gobjdata.o (.rodata);
+      build/j/src/game/gobjdata2.o (.rodata);
       build/j/src/game/cobjdata.o (.rodata);
       build/j/src/game/cheat_buttons.o (.rodata);
       build/j/src/game/unk_092890.o (.rodata);
@@ -4230,6 +4233,7 @@ SECTIONS
       build/j/src/game/chraidata.o (.bss);
       build/j/src/game/pobjdata.o (.bss);
       build/j/src/game/gobjdata.o (.bss);
+      build/j/src/game/gobjdata2.o (.bss);
       build/j/src/game/cobjdata.o (.bss);
       build/j/src/game/cheat_buttons.o (.bss);
       build/j/src/game/unk_092890.o (.bss);
