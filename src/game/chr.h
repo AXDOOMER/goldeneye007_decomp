@@ -113,12 +113,13 @@ struct anim_group_info
 };
 
 struct unk_joint_list {
-    u32 unk00;
+    Mtxf * unk_matrix;
     s32 unk04;
     s32 unk08;
     Gfx *gdl;
 
-    u32 unk10;
+    // unknown type
+    void *mtxlist;
     u32 unk14;
     u32 unk18;
     u32 unk1C;
@@ -232,8 +233,7 @@ extern s32 show_patrols_flag;
 extern s32 player1_guardID;
 extern struct ChrRecord *ptr_guard_data;
 extern s32 num_guards;
-extern s32 D_8002CC6C[];
-extern s32 D_8002CCA8;
+extern struct unk_joint_list D_8002CC6C;
 extern s32 D_8002CCAC;
 extern s32 D_8002CCB0;
 extern s32 D_8002CCB4;

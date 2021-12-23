@@ -784,7 +784,7 @@ u32 monAnim35Taser[] = {
 /**
  * Address 0x80031FD0.
 */
-struct unk_joint_list D_80031FD0 = {0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
+struct unk_joint_list D_80031FD0 = {NULL, 1, 3, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
 
 u32 D_80032010 = 0;
 u32 D_80032014 = 0;
@@ -34860,7 +34860,7 @@ void display_text_for_weapon_in_lower_left_corner(ITEM_IDS weaponid)
     char acStack100 [100];
     
     generate_language_specific_text_for_weapon(acStack100,weaponid);
-#ifdef VERSION_JP
+#if defined(VERSION_JP) || defined(VERSION_EU)
     jp_display_string_in_lower_left_corner(acStack100);
 #else
     display_string_in_lower_left_corner(acStack100);

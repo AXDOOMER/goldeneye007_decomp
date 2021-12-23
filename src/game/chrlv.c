@@ -7670,7 +7670,7 @@ void chrlvTickAttackCommon(ChrRecord *arg0)
 #else
         (arg0->act_attack.attack_time < (arg0->act_attack.unk44 - 0x1E)) 
 #endif
-        && (self_model->unk54 == 0))
+        && (self_model->anim2 == NULL))
     {
         if (((arg0->act_attack.animfloats->anonymous_6 + 10.0f) < phi_f20)
             && (phi_f20 < arg0->act_attack.animfloats->anonymous_7))

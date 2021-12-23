@@ -70,8 +70,7 @@ s32 show_patrols_flag = FALSE;
 s32 player1_guardID = 5000;
 struct ChrRecord *ptr_guard_data = 0;
 s32 num_guards = 0;
-s32 D_8002CC6C[] = {0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-s32 D_8002CCA8 = 0;
+struct unk_joint_list D_8002CC6C = {NULL, 1, 3, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
 s32 D_8002CCAC = 0;
 s32 D_8002CCB0 = 0;
 s32 D_8002CCB4 = 0;
@@ -81,7 +80,8 @@ struct rgba_u8 D_8002CCB8 = { 0x5a, 0, 0, 0};
 /**
  * Address 0x8002CCBC.
 */
-struct unk_joint_list D_8002CCBC = {0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
+
+struct unk_joint_list D_8002CCBC = {NULL, 1, 3, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
 //s32 D_8002CCF8 = 0;
 s32 D_8002CCFC = 0;
 u32 num_bodies = 0;
@@ -3214,7 +3214,7 @@ void animation_speed_related(f32 arg0)
         if (ptr_guard_data[i].model != NULL)
         {
 #if defined(VERSION_EU)
-            sub_GAME_7F06FF18(ptr_guard_data[i].model * D_80047E4C, animation_rate, 600.0f);
+            sub_GAME_7F06FF18(ptr_guard_data[i].model, animation_rate * 1.2f, 600.0f);
 #else
             sub_GAME_7F06FF18(ptr_guard_data[i].model, animation_rate, 600.0f);
 #endif
@@ -4233,7 +4233,7 @@ void chrPositionRelated7F020D94(struct ChrRecord *arg0)
  */
 void chrPositionRelated7F020E40(struct ChrRecord *chr, s32 arg1)
 {
-    struct object_standard *model;
+    struct Model *model;
     struct PropRecord* prop;
 
     model = chr->model;

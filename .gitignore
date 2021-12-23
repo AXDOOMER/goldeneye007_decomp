@@ -1,4 +1,5 @@
 .*~
+__pycache__/*
 .vscode/c_cpp_properties.json
 .vscode/ipch/*
 .vscode/launch.json
@@ -48,6 +49,7 @@ assets/obseg/text/e/*.bin
 assets/obseg/text/j/*.bin
 assets/obseg/text/u/*.bin
 assets/ramrom/*.bin
+assets/ramrom/e/*.bin
 build/*
 build-*/*
 tools/extractor/*.o

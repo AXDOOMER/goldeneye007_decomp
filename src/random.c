@@ -13,7 +13,7 @@ u64 g_randomSeed = 0xAB8D9F7781280783;
  * Iterates the current random seed and returns a 32 bit value.
  * Same assembly instructions as tlbRandomGetNext and chrObjRandomGetNext, but different globals.
  */ 
-s32 randomGetNext(void) {
+u32 randomGetNext(void) {
     // best -O1 guess
     // g_randomSeed ^= (((((g_randomSeed << 0x3f) >> 0x1f) | ((g_randomSeed << 0x1f) >> 0x20)) ^ ((g_randomSeed << 0x2c) >> 0x20)) >> 0x14) & 0xfff;
     // return (s32)(g_randomSeed);
@@ -84,7 +84,7 @@ glabel randomSetSeed
  * Iterates the parameter as if it were the random seed and returns the next 32 bit random value.
  * This uses the same logic as randomGetNext.
  */ 
-s32 randomGetNextFrom(u64 *param_1) {
+u32 randomGetNextFrom(u64 *param_1) {
     // best -O1 guess
     // *param_1 ^= (((((*param_1 << 0x3f) >> 0x1f) | ((*param_1 << 0x1f) >> 0x20)) ^ ((*param_1 << 0x2c) >> 0x20)) >> 0x14) & 0xfff;
     // return (s32)(*param_1);

@@ -446,8 +446,12 @@ u32 D_80035CB8 = 0;
 u32 D_80035CBC = 0;
 //D:80035CC0
 u32 D_80035CC0 = 0;
+
+
+
 //D:80035CC4
-u32 D_80035CC4[] = {1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+u32 D_80035CC4[] =                      { 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,           0,  0};
+// struct unk_joint_list D_8002CCBC = {0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
 //D:80035D00
 u32 D_80035D00 = 0;
 //D:80035D04
@@ -23135,10 +23139,10 @@ void analyzeGEKey(void)
 {
     if (checkHasGEKey())
     {
-	    #ifndef VERSION_JP
-    	    display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LGUN, 0xD8))); //Analyzing the GoldenEye key...
-		#else
+	    #if defined(VERSION_JP) || defined(VERSION_EU)
 		    jp_display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LGUN, 0xD8))); //Analyzing the GoldenEye key...
+		#else
+    	    display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LGUN, 0xD8))); //Analyzing the GoldenEye key...
 		#endif
     	g_CurrentPlayer->copiedgoldeneye = 1;
     	sndPlaySfx(g_musicSfxBufferPtr, 0xf5, 0x0);
@@ -23147,10 +23151,10 @@ void analyzeGEKey(void)
   	}
   	else
   	{
-		#ifndef VERSION_JP
-	        display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LGUN, 0xD9))); //You do not have the GoldenEye key.
-		#else
+		#if defined(VERSION_JP) || defined(VERSION_EU)
 		    jp_display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LGUN, 0xD9))); //You do not have the GoldenEye key.
+		#else
+	        display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LGUN, 0xD9))); //You do not have the GoldenEye key.
 		#endif
 	    sub_GAME_7F05D690();
   	}

@@ -20238,7 +20238,6 @@ glabel remove_last_obj_pos_data_entry
 
 
 void propFree(struct PropRecord *prop)
-
 {
     prop->prev = ptr_obj_pos_list_final_entry;
     prop->next = 0x0;

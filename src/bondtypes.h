@@ -906,9 +906,10 @@ typedef struct Model
     struct ModelFileHeader *obj;                                /*0x08 GE Name confirmed*/
     Mtxf *unk0c;                                            /*0x0c*/
     void **datas; // array of pointers to modeldata structs /*0x10*/
+
     f32 scale;                                              /*0x14*/
     struct Model *attachedto;                               /*0x18*/
-    ModelNode *unk1c;                                       /*0x1c*/
+    ModelNode *attachedto_objinst;                                       /*0x1c*/
 
     // need `struct anim` definition from AI branch.
     struct ModelAnimation *anim;                                      /*0x20*/
@@ -919,9 +920,19 @@ typedef struct Model
     s8 unk27;
 
     f32 unk28; // animation related
-    s32 unk2c;
-    // 0x30
-    s32 unk30;
+    f32 unk2c;
+
+    /**
+     * Animation framea (per debug message)
+     * Offset 0x30.
+    */
+    s16 framea;
+
+    /**
+     * Animation frameb (per debug message)
+     * Offset 0x32.
+    */
+    s16 frameb;
     s32 unk34;
     s32 unk38;
     s32 unk3c;
@@ -932,11 +943,24 @@ typedef struct Model
     s32 unk4c;
     // 0x50
     s32 unk50;
-    s32 unk54;
+
+    struct ModelAnimation *anim2;
+
     s32 unk58;
-    s32 unk5c;
-    // 0x60
-    s32 unk60;
+    f32 unk5c;
+
+    /**
+     * Animation frame2a (per debug message)
+     * Offset 0x60.
+    */
+    s16 frame2a;
+
+    /**
+     * Animation frame2b (per debug message)
+     * Offset 0x62.
+    */
+    s16 frame2b;
+
     s32 unk64;
     s32 unk68;
     s32 unk6c;
@@ -947,7 +971,12 @@ typedef struct Model
     s32 unk7c;
     // 0x80
     s32 unk80;
-    s32 unk84;
+
+    /**
+     * Related to "anim2", per debug message.
+    */
+    f32 unk84;
+
     s32 unk88;
     s32 unk8c;
     // 0x90

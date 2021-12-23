@@ -19,31 +19,31 @@ char dword_CODE_bss_8007A100[0x40];
  * ptr_smoke_buf = mempAllocBytesInBank(0x1FE0, 4);
  * Address 0x8007A140.
 */
-struct PropRecord *ptr_smoke_buf;
+struct Smoke *ptr_smoke_buf;
 
 /**
  * ptr_explosion_buf = mempAllocBytesInBank(0x1740, 4);
  * Address 0x8007A144.
 */
-struct PropRecord *ptr_explosion_buf;
+struct Explosion *ptr_explosion_buf;
 
 //CODE.bss:8007A148
 s32 max_casings;
 //CODE.bss:8007A14C
-u8 *ptr_ejected_casing_buf;
+struct EjectedCasing *ptr_ejected_casing_buf;
 
 /**
  * ptr_scorch_buf = mempAllocBytesInBank(0x6E0, 4);
  * sizeof each entry == 0x58
  * Address 0x8007A150.
 */
-struct scorch_unk *ptr_scorch_buf;
+struct Scorch *ptr_scorch_buf;
 
 /**
  * ptr_bullet_impact_buf = mempAllocBytesInBank(0x1F40, 4);
  * Address 0x8007A154.
 */
-u8 *ptr_bullet_impact_buf;
+struct BulletImpact *ptr_bullet_impact_buf;
 
 // data
 //D:80040170
@@ -109,9 +109,9 @@ u32 array_explosion_dl_ptrs[] = {
     &globalDL_0x900,
     &globalDL_0x9a8       
 };
-u32 numCasingEntries = 0;
-u32 numScorchEntries = 0;
-u32 numImpactEntries = 0;
+s32 numCasingEntries = 0;
+s32 numScorchEntries = 0;
+s32 numImpactEntries = 0;
 //D:8004080C
 s_impacttype D_8004080C[] = {
     {10.0f, 10.0f, 1, 2, 8},
