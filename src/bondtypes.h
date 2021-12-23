@@ -2355,6 +2355,15 @@ typedef struct ExplosionDetailsRecord {
     s16 Seed[6];
 } ExplosionDetailsRecord;
 
+struct ExplosionDetailsRecordSeed {
+    s16 seed[6];
+};
+
+typedef struct ExplosionDetailsRecordEuList {
+    u8 typeids[344];
+    struct ExplosionDetailsRecordSeed seeds[105];
+} ExplosionDetailsRecordEuList;
+
 typedef struct CreditsEntry_s {
     u16 TextId1;
     u16 TextId2;
