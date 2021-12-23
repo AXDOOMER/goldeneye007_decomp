@@ -49,6 +49,7 @@ assets/obseg/text/e/*.bin
 assets/obseg/text/j/*.bin
 assets/obseg/text/u/*.bin
 assets/ramrom/*.bin
+assets/ramrom/e/*.bin
 build/*
 build-*/*
 tools/extractor/*.o
