@@ -3821,12 +3821,12 @@ SECTIONS
       build/e/src/game/othermodemicrocode.o (.data);
       build/e/src/game/bondview.o (.data);                        /* 0x12d20 */
       build/e/src/game/bondinv.o (.data);
-      build/e/src/game/unk_08DBB0.o (.data);
+      build/e/src/game/unk_08DBB0.o (.data);                /* around 0x133d0 */
       build/e/src/game/debugmenu_08FE00.o (.data);
-      build/e/src/game/debugmenu_handler.o (.data);
+      build/e/src/game/debugmenu_handler.o (.data);         /* around 0x133a0 */
       build/e/src/game/unk_091080.o (.data);
       build/e/src/game/chraidata.o (.data);
-      build/e/src/game/pobjdata.o (.data);
+      build/e/src/game/pobjdata.o (.data);          /* 0x13a30 */
       build/e/src/game/gobjdata.o (.data);
       build/e/src/game/cobjdata.o (.data);
       build/e/src/game/cheat_buttons.o (.data);

@@ -1,6 +1,6 @@
 #include "ultra64.h"
 
-
+#ifndef VERSION_EU
 // data
 //D:80036B70
 s32 highlighted_debug_option = 0;
@@ -29,7 +29,7 @@ D:80036B9C                     .word 0
 // rodata
 //D:80055340
 //const char aMenu_cErrorTriedToCallFont_makegt[] = "menu.c: ERROR! Tried to call font_makegt\n";
-
+#endif
 
 
 #ifndef VERSION_EU

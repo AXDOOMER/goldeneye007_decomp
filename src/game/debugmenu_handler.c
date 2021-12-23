@@ -4,6 +4,8 @@
 #include "boss.h"
 #include "fr.h"
 
+#ifndef VERSION_EU
+
 // data
 //D:80036BA0
 u32 D_80036BA0 = 0;
@@ -211,8 +213,12 @@ s32 debug_joy2hitsedit_flag = 0;
 s32 debug_joy2detailedit_flag = 0;
 //D:80036FA4
 s32 debug_explosioninfo_flag = 0;
+#endif
+
 //D:80036FA8
 s32 debug_VisCVG_flag = 0;
+
+#ifndef VERSION_EU
 //D:80036FAC
 s32 debug_007_unlock_flag = 0;
 //D:80036FB0
@@ -230,8 +236,12 @@ s32 debug_profile_flag = 0;
 s32 debug_enable_taskgrab_flag = 0;
 //D:80036FC8
 s32 debug_testingmanpos_flag = 0;
+#endif
+
 //D:80036FCC
 s32 debug_fast_bond_flag = 0;
+
+#ifndef VERSION_EU
 //D:80036FD0
 s32 debug_all_obj_complete_flag = 0 ;
 //D:80036FD4
@@ -260,6 +270,8 @@ s32 grab_rgb_screenshot_flag = 0;
 s32 grab_jpeg_screenshot_flag = 0;
 //D:80037004
 struct coord3d player_pos_x = {0};
+
+#endif
 
 
 void display_debug_menu_text_onscreen(void)
