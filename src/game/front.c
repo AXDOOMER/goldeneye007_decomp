@@ -444,7 +444,12 @@ u32 D_8002AFC4 = 0;
 f32 D_8002AFC8 = 190.0;
 f32 D_8002AFCC = -3300.0;
 u32 cursor_xpos_table_mission_select[] = {73, 142, 212, 282, 352};
+
+#if defined(VERSION_EU)
+u32 cursor_ypos_table_mission_select[] = {62, 130, 201, 270};
+#else
 u32 cursor_ypos_table_mission_select[] = {62, 131, 201, 270};
+#endif
 
 struct MP_game_length_settings multi_game_lengths[] = {
     {TEXT(LTITLE, 0x2D), 0, 0, 0},                    /* unlimited */

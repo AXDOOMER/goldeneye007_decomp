@@ -3529,10 +3529,10 @@ SECTIONS
       build/e/src/audi.o (.rodata);
       build/e/src/speed_graph.o (.rodata);
       build/e/src/fr.o (.rodata);
-      build/e/src/deb.o (.rodata);
+      build/e/src/deb.o (.rodata);               /* 0x5230 */
       build/e/src/fault.o (.rodata);
       /*deb_print may be part of fault per pd beta (.rodata);*/
-      build/e/src/deb_print.o (.rodata);
+      build/e/src/deb_print.o (.rodata);                               /* 0x5240 */
       build/e/src/getra.o (.rodata);
       build/e/src/ramrom.o (.rodata);
       build/e/src/boss.o (.rodata);
@@ -3762,7 +3762,7 @@ SECTIONS
       build/e/src/game/prop.o (.data);
       build/e/src/game/objective.o (.data);
       build/e/src/game/ejectedcartridges.o (.data);
-      build/e/src/game/initBondDATA.o (.data);
+      build/e/src/game/initBondDATA.o (.data);          /* 0x6cd0 */
       build/e/src/game/initunk_005450.o (.data);
       build/e/src/game/initunk_005520.o (.data);
       build/e/src/game/bondview_r.o (.data);
@@ -3787,7 +3787,7 @@ SECTIONS
       build/e/src/game/null_007970.o (.data);
       build/e/src/game/unk_007980.o (.data);
       build/e/src/game/title.o (.data);
-      build/e/src/game/front.o (.data);
+      build/e/src/game/front.o (.data);                     /* around 0x7800 + */
       build/e/src/game/unk_01B0E0.o (.data);
       build/e/src/game/unk_01B240.o (.data);
       build/e/src/game/unk_01BAE0.o (.data);

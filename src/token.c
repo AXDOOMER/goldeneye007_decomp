@@ -13,13 +13,15 @@ u32 g_TokenString[160];
 s32 g_TokenCount = 1;
 
 #if defined(VERSION_EU)
+/* hack, need a pointer in index 20, not sure what it points to yet. */
+extern s32 ptr_char_data_buf;
 const char *g_Tokens[35] = {
     NULL, NULL, NULL, NULL,
     NULL, NULL, NULL, NULL,
     NULL, NULL, NULL, NULL,
     NULL, NULL, NULL, NULL,
     NULL, NULL, NULL, NULL,
-    "some EU string or pointer", NULL, NULL, NULL,
+    (const char*)&ptr_char_data_buf, NULL, NULL, NULL,
     NULL, NULL, NULL, NULL,
     NULL, NULL, NULL, NULL,
     NULL, NULL, NULL

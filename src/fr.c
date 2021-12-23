@@ -173,7 +173,11 @@ const s16 g_viRuntimeScreenWidths[] = {SCREEN_WIDTH_MIN, SCREEN_WIDTH, SCREEN_WI
  * Address 80028488.
  * Const runtime supported screen heights.
  */
+#ifndef VERSION_EU
 const s16 g_viRuntimeScreenHeights[] = {SCREEN_HEIGHT_MIN, SCREEN_HEIGHT, SCREEN_HEIGHT_MAX};
+#else
+const s16 g_viRuntimeScreenHeights[] = {SCREEN_HEIGHT_272, SCREEN_HEIGHT_272, SCREEN_HEIGHT_MAX_EU};
+#endif
 
 /**
  * 3C60	70003060
