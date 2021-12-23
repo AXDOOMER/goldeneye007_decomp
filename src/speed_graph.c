@@ -42,6 +42,7 @@ typedef struct {
     s32 unk8;
     s32 unkC;
 } s_800231D4;
+#ifndef VERSION_EU
 s_800231D4 D_800231D4[5] = {
     {0x00000000, 0x00000000, 0x00000002, 0x00000000},
     {0x00000001, 0x00000000, 0x00000002, 0x00000000},
@@ -49,6 +50,7 @@ s_800231D4 D_800231D4[5] = {
     {0x00000003, 0x00009200, 0x00000004, 0xFFFFFFFF},
     {0x00000004, 0xDB000000, 0x00000004, 0xFFFFFFFF}
 };
+#endif
 
 /**
  * 80023224. Seems to accumulate speedgraphframes in speedGraphDisplay. Once above the threshold COUNT_REQUIRED_FOR_OUTPUT,
