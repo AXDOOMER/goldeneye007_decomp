@@ -3049,8 +3049,6 @@ extern s32 display_upper_text_window;
 //D:800368B0
 extern s32 upper_text_window_timer;
 extern s32 D_800368B4;
-//D:800368B8
-extern u16 D_800368B8[];
 /*
 D:800368D8     firing_animation_groups:firing_anim_struct <pistol_firing_animation_group1, 0, 0.1, 79.0, 87.0>
 D:800368D8                                              # DATA XREF: sub_CODE_7F08B0F0+720o

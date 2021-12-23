@@ -3819,7 +3819,7 @@ SECTIONS
       build/e/src/game/objecthandler_1.o (.data);
       build/e/src/game/objecthandler_2.o (.data);
       build/e/src/game/othermodemicrocode.o (.data);
-      build/e/src/game/bondview.o (.data);
+      build/e/src/game/bondview.o (.data);                        /* 0x12d20 */
       build/e/src/game/bondinv.o (.data);
       build/e/src/game/unk_08DBB0.o (.data);
       build/e/src/game/debugmenu_08FE00.o (.data);
