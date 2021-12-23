@@ -4,6 +4,9 @@
 #include "music.h"
 #include "snd.h"
 
+/**
+ * EU .data, offset from start of data_seg : 0x3620
+*/
 
 /**
  * @file snd.c

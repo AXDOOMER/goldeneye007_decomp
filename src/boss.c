@@ -43,6 +43,10 @@
 #include "game/unk_0C0A70.h"
 
 /**
+ * EU .data, offset from start of data_seg : 0x33e0
+*/
+
+/**
  * @file boss.c
  * This file contains the main game loop code.
  */

@@ -19,9 +19,9 @@
  *====================================================================*/
 
 #include <libaudio.h>
-#include "synthInternals.h"
+#include "src/libultra/audio/synthInternals.h"
 #include <os.h>
-#include "initfx.h"
+#include "src/libultra/audio/initfx.h"
 
 /*
  * WARNING: THE FOLLOWING CONSTANT MUST BE KEPT IN SYNC
@@ -34,7 +34,21 @@
  * a few hopefully useful effects.
  */
 #define ms *(((s32)((f32)44.1))&~0x7)
- 
+
+#ifdef VERSION_EU
+s32 unk_eu_audio_params[40] = {
+    0x02000000, 0x0000311E, 0x00000140, 0x03E52239,
+    0x0000020D, 0x00000C15, 0x0C150C15, 0x006C02EC,
+    0x00000200, 0x00000000, 0x00000280, 0x00000400,
+    0x002501FF, 0x000E0204, 0x00000002, 0x00000280,
+    0x00000400, 0x002501FF, 0x000E0204, 0x00000002,
+    0x10000000, 0x0000311E, 0x00000140, 0x0404233A,
+    0x00000271, 0x00150C69, 0x0C6F0C6E, 0x00800300,
+    0x00000200, 0x00000000, 0x00000280, 0x00000400,
+    0x005F0239, 0x0009026B, 0x00000002, 0x00000280,
+    0x00000400, 0x005F0239, 0x0009026B, 0x00000002
+};
+#endif
 
 static s32 SMALLROOM_PARAMS[26] = {
     /* sections	   length */

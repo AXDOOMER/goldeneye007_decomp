@@ -1,6 +1,11 @@
 #include "ultra64.h"
 #include "memp.h"
 #include "game/lvl_text.h"
+
+/**
+ * EU .data, offset from start of data_seg : 0x3640
+*/
+
 /**
  * @file memp.c
  * This file contains code for memp.

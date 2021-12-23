@@ -1,6 +1,10 @@
 #include "ultra64.h"
 
 /**
+ * EU .data, offset from start of data_seg : 0x36a0
+*/
+
+/**
  * @file random.c
  * This file contains code to get a random value and set the next seed.
  * The methods here are the same as in tlb_random and chrObjRandom (but different globals).

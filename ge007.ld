@@ -213,7 +213,7 @@ SECTIONS
       build/u/src/libultra/os/probetlb.o (.text);
       build/u/src/libultra/audio/syndelete.o (.text);
       build/u/src/libultra/io/ai.o (.text);
-      build/u/src/libultra/audio/drvrNew.o (.text);
+      build/u/src/libultrare/audio/drvrNew.o (.text);
       build/u/src/libultra/audio/synallocfx.o (.text);
       build/u/src/libultra/audio/mainbus.o (.text);
       build/u/src/libultra/audio/load.o (.text);
@@ -3360,7 +3360,7 @@ SECTIONS
       build/u/src/libultra/os/probetlb.o (.data);
       build/u/src/libultra/audio/syndelete.o (.data);
       build/u/src/libultra/io/ai.o (.data);
-      build/u/src/libultra/audio/drvrNew.o (.data);
+      build/u/src/libultrare/audio/drvrNew.o (.data);
       build/u/src/libultra/audio/synallocfx.o (.data);
       build/u/src/libultra/audio/mainbus.o (.data);
       build/u/src/libultra/audio/load.o (.data);
@@ -3568,7 +3568,7 @@ SECTIONS
       build/u/src/libultra/os/probetlb.o (.rodata);
       build/u/src/libultra/audio/syndelete.o (.rodata);
       build/u/src/libultra/io/ai.o (.rodata);
-      build/u/src/libultra/audio/drvrNew.o (.rodata);
+      build/u/src/libultrare/audio/drvrNew.o (.rodata);
       build/u/src/libultra/audio/synallocfx.o (.rodata);
       build/u/src/libultra/audio/mainbus.o (.rodata);
       build/u/src/libultra/audio/load.o (.rodata);
@@ -4041,7 +4041,7 @@ SECTIONS
       build/u/src/libultra/os/probetlb.o (.bss);
       build/u/src/libultra/audio/syndelete.o (.bss);
       build/u/src/libultra/io/ai.o (.bss);
-      build/u/src/libultra/audio/drvrNew.o (.bss);
+      build/u/src/libultrare/audio/drvrNew.o (.bss);
       build/u/src/libultra/audio/synallocfx.o (.bss);
       build/u/src/libultra/audio/mainbus.o (.bss);
       build/u/src/libultra/audio/load.o (.bss);

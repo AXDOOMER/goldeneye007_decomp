@@ -42,7 +42,6 @@ LIBULTRA_AUDIO_C_FILES := \
     cspsetseq \
     cspsetvol \
     cspstop \
-    drvrNew \
     event \
     filter \
     heapalloc \
@@ -74,6 +73,7 @@ LIBULTRA_AUDIO_S_FILES :=
 
 
 LIBULTRARE_AUDIO_C_FILES := \
+    drvrNew \
     reverb 
 
 LIBULTRARE_AUDIO_S_FILES := \

@@ -4,6 +4,10 @@
 #include "fr.h"
 #include "PR/R4300.h"
 
+/**
+ * EU .data, offset from start of data_seg : 0x2540
+*/
+
 // Padding
 u32 D_80023300 = 0;
 

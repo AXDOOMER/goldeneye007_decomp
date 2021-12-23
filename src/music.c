@@ -11,6 +11,10 @@
 #include "snd.h"
 
 /**
+ * EU .data, offset from start of data_seg : 0x3570
+*/
+
+/**
  * @file music.c
  * This file contains code to init/load music from
  * ROM; play/stop specific tracks; and to fade in/out.

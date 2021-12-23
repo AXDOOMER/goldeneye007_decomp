@@ -3,6 +3,9 @@
 #include "vi.h"
 #include "game/dyn.h"
 
+
+#ifndef VERSION_EU
+
 u32 g_DebugMenuTexture[] = {
     0x00000000, 0x00227A00, 0x007A348B, 0x00223434, 0x00115811, 0x00696900, 0x00000000, 0x00009C00,
     0x00004600, 0x00460000, 0x00004600, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000046,
@@ -177,6 +180,8 @@ Gfx g_DebugMenuNoOp = gsDPNoOp();
 Gfx g_DebugMenuPrimitiveColor = gsDPSetPrimColor(0, 0, 255, 255, 255, 0);
 Gfx g_DebugMenuEnvironmentColor = gsDPSetEnvColor(0, 0, 0, 0);
 u32 g_DebugMenuRandomThreshold = 0xFF; // Static?
+
+#endif
 
 /**
  * Removed
