@@ -421,7 +421,10 @@ typedef struct ModelFileHeader {
     s16 numRecords;
     s16 numtextures;
     struct ModelFileTextures* Textures;
+#if defined(VERSION_EU)
+#else
     s32 isLoaded;
+#endif
 } ModelFileHeader;
 
 typedef struct ItemModelFileRecord {
