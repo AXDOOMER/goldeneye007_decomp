@@ -3985,7 +3985,7 @@ SECTIONS
       build/e/src/game/lvl.o (.rodata);
       build/e/src/game/ramromreplay.o (.rodata);
       build/e/src/game/unk_0C0A70.o (.rodata);
-      build/e/src/game/mp_music.o (.rodata);
+      build/e/src/game/mp_music.o (.rodata);        /* around 0x31700 */
       build/e/src/game/lvl_text.o (.rodata);
       build/e/src/game/mp_watch.o (.rodata);
       build/e/src/game/radar.o (.rodata);

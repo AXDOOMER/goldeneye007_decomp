@@ -1294,11 +1294,11 @@ glabel jpt_8005B790
 
 /*D:8005B7AC*/
 glabel jpt_8005B7AC
-.word .L7F0C11EC
-.word .L7F0C0C94
+.word .L7F0C11EC_01  /***/
+.word .L7F0C0C94_01  /***/
 .word .L7F0C0D28
 .word .L7F0C0D28
-.word .L7F0C0C94
+.word .L7F0C0C94_02 /***/
 .word .L7F0C0D28
 .word .L7F0C0D28
 
@@ -1391,6 +1391,7 @@ glabel set_missionstate
 /* 0F57B8 7F0C0C88 8C2FB7AC */  lw    $t7, %lo(jpt_8005B7AC)($at)
 /* 0F57BC 7F0C0C8C 01E00008 */  jr    $t7
 /* 0F57C0 7F0C0C90 00000000 */   nop
+.L7F0C11EC_01:
 .L7F0C0C94:
 /* 0F2B44 7F0C0154 0C00190C */  jal   musicTrack1Stop
 /* 0F2B48 7F0C0158 00000000 */   nop   
@@ -1400,6 +1401,7 @@ glabel set_missionstate
 /* 0F2B58 7F0C0168 00000000 */   nop   
 /* 0F2B5C 7F0C016C 10000158 */  b     .L7F0C11F0
 /* 0F2B60 7F0C0170 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C0C94_01:
 /* 0F2B64 7F0C0174 0FC3002C */  jal   sub_GAME_7F0C0BF0
 /* 0F2B68 7F0C0178 00000000 */   nop   
 /* 0F2B6C 7F0C017C 0C001927 */  jal   musicTrack1ApplySeqpVol
@@ -1413,6 +1415,7 @@ glabel set_missionstate
 /* 0F2B8C 7F0C019C 00402025 */   move  $a0, $v0
 /* 0F2B90 7F0C01A0 1000014B */  b     .L7F0C11F0
 /* 0F2B94 7F0C01A4 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C0C94_02:
 /* 0F2B98 7F0C01A8 0FC3002C */  jal   sub_GAME_7F0C0BF0
 /* 0F2B9C 7F0C01AC 00000000 */   nop   
 /* 0F2BA0 7F0C01B0 0C001927 */  jal   musicTrack1ApplySeqpVol
