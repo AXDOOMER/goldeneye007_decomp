@@ -3918,7 +3918,7 @@ SECTIONS
       build/e/src/game/null_007970.o (.rodata);
       build/e/src/game/unk_007980.o (.rodata);
       build/e/src/game/title.o (.rodata);                /* around 0x28ad0 */
-      build/e/src/game/front.o (.rodata);
+      build/e/src/game/front.o (.rodata);                /* 0x28b10 */
       build/e/src/game/unk_01B0E0.o (.rodata);
       build/e/src/game/unk_01B240.o (.rodata);
       build/e/src/game/unk_01BAE0.o (.rodata);
@@ -3926,7 +3926,7 @@ SECTIONS
       build/e/src/game/blood_decrypt.o (.rodata);
       build/e/src/game/file.o (.rodata);
       build/e/src/game/file2.o (.rodata);
-      build/e/src/game/chr.o (.rodata);
+      build/e/src/game/chr.o (.rodata);                 /* around 0x291e0 */
       build/e/src/game/chr_b.o (.rodata);
       build/e/src/game/chrlv.o (.rodata);
       build/e/src/game/chrai.o (.rodata);
