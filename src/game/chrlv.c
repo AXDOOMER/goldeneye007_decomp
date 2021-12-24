@@ -30,6 +30,7 @@
 #include "game/unk_08DBB0.h"
 #include "game/unk_0A1DA0.h"
 
+
 // forward declarations
 
 u32 check_if_item_held_like_pistol(struct PropRecord *arg0);
@@ -367,6 +368,7 @@ void chrlvIdleAnimationRelated(struct ChrRecord *arg0, f32 arg1)
 
 
 
+#if defined(VERSION_US) || defined(VERSION_JP)
 /**
  * Address 0x7F023A94 (VERSION_US).
  * Address 0x7F023D94 (other)
@@ -405,6 +407,70 @@ void chrlvIdleAnimationRelated7F023A94(struct ChrRecord *arg0, f32 arg1)
     arg0->sleep = (s8) (s32) f2;
     chrlvIdleAnimationRelated(arg0, arg1);
 }
+#endif
+#if defined(VERSION_EU)
+GLOBAL_ASM(
+.late_rodata
+glabel D_80047ED0
+.word 0x3f99999a
+.text
+glabel chrlvIdleAnimationRelated7F023A94
+/* 056464 7F023A74 27BDFFE8 */  addiu $sp, $sp, -0x18
+/* 056468 7F023A78 AFBF0014 */  sw    $ra, 0x14($sp)
+/* 05646C 7F023A7C AFA5001C */  sw    $a1, 0x1c($sp)
+/* 056470 7F023A80 0FC0B46E */  jal   sub_GAME_7F02D184
+/* 056474 7F023A84 AFA40018 */   sw    $a0, 0x18($sp)
+/* 056478 7F023A88 8FA40018 */  lw    $a0, 0x18($sp)
+/* 05647C 7F023A8C 240E0001 */  li    $t6, 1
+/* 056480 7F023A90 240F0002 */  li    $t7, 2
+/* 056484 7F023A94 A08E0007 */  sb    $t6, 7($a0)
+/* 056488 7F023A98 AC80002C */  sw    $zero, 0x2c($a0)
+/* 05648C 7F023A9C AC800030 */  sw    $zero, 0x30($a0)
+/* 056490 7F023AA0 AC800034 */  sw    $zero, 0x34($a0)
+/* 056494 7F023AA4 AC800038 */  sw    $zero, 0x38($a0)
+/* 056498 7F023AA8 AC8F003C */  sw    $t7, 0x3c($a0)
+/* 05649C 7F023AAC 0C00262C */  jal   randomGetNext
+/* 0564A0 7F023AB0 AC800040 */   sw    $zero, 0x40($a0)
+/* 0564A4 7F023AB4 3C018004 */  li    $at, 0x80040000 # -0.000000
+/* 0564A8 7F023AB8 C42E7ED0 */  lwc1  $f14, %lo(D_80047ED0)($at)
+/* 0564AC 7F023ABC 24010078 */  li    $at, 120
+/* 0564B0 7F023AC0 0041001B */  divu  $zero, $v0, $at
+/* 0564B4 7F023AC4 8FA40018 */  lw    $a0, 0x18($sp)
+/* 0564B8 7F023AC8 0000C010 */  mfhi  $t8
+/* 0564BC 7F023ACC C7AC001C */  lwc1  $f12, 0x1c($sp)
+/* 0564C0 7F023AD0 8C88001C */  lw    $t0, 0x1c($a0)
+/* 0564C4 7F023AD4 271900B4 */  addiu $t9, $t8, 0xb4
+/* 0564C8 7F023AD8 AC990044 */  sw    $t9, 0x44($a0)
+/* 0564CC 7F023ADC C50200A4 */  lwc1  $f2, 0xa4($t0)
+/* 0564D0 7F023AE0 3C0142FE */  li    $at, 0x42FE0000 # 127.000000
+/* 0564D4 7F023AE4 46006006 */  mov.s $f0, $f12
+/* 0564D8 7F023AE8 46027032 */  c.eq.s $f14, $f2
+/* 0564DC 7F023AEC 00000000 */  nop   
+/* 0564E0 7F023AF0 45030005 */  bc1tl .L7F023B08
+/* 0564E4 7F023AF4 44811000 */   mtc1  $at, $f2
+/* 0564E8 7F023AF8 46027103 */  div.s $f4, $f14, $f2
+/* 0564EC 7F023AFC 46046002 */  mul.s $f0, $f12, $f4
+/* 0564F0 7F023B00 00000000 */  nop   
+/* 0564F4 7F023B04 44811000 */  mtc1  $at, $f2
+.L7F023B08:
+/* 0564F8 7F023B08 00000000 */  nop   
+/* 0564FC 7F023B0C 4600103C */  c.lt.s $f2, $f0
+/* 056500 7F023B10 00000000 */  nop   
+/* 056504 7F023B14 45020003 */  bc1fl .L7F023B24
+/* 056508 7F023B18 4600018D */   trunc.w.s $f6, $f0
+/* 05650C 7F023B1C 46001006 */  mov.s $f0, $f2
+/* 056510 7F023B20 4600018D */  trunc.w.s $f6, $f0
+.L7F023B24:
+/* 056514 7F023B24 44056000 */  mfc1  $a1, $f12
+/* 056518 7F023B28 440A3000 */  mfc1  $t2, $f6
+/* 05651C 7F023B2C 0FC08E4A */  jal   chrlvIdleAnimationRelated
+/* 056520 7F023B30 A08A0008 */   sb    $t2, 8($a0)
+/* 056524 7F023B34 8FBF0014 */  lw    $ra, 0x14($sp)
+/* 056528 7F023B38 27BD0018 */  addiu $sp, $sp, 0x18
+/* 05652C 7F023B3C 03E00008 */  jr    $ra
+/* 056530 7F023B40 00000000 */   nop   
+)
+#endif
 
 
 /**
@@ -664,7 +730,7 @@ void chrlvThrowGrenadeAnimationRelated(struct ChrRecord *arg0, struct PropRecord
 
 
 /**
- * Addres 0x7F024334.
+ * Address 0x7F024334.
  */
 void chrlvSpotBondAnimationRelated(struct ChrRecord *arg0, f32 arg1)
 {
@@ -1763,7 +1829,11 @@ void chrlvInitActAttackWalk(ChrRecord *chr, s32 arg1)
 
     chr->actiontype = ACT_ATTACKWALK;
     chr->act_attackwalk.clock_timer30 = 0;
+    #if defined(VERSION_EU)
+    chr->act_attackwalk.clock_timer34 = ((u32) randomGetNext() % (u32) (s32) (333.333343506f * g_AiReactionSpeed)) + 0x78;
+    #else
     chr->act_attackwalk.clock_timer34 = ((u32) randomGetNext() % (u32) (s32) (400.0f * g_AiReactionSpeed)) + 0x78;
+    #endif
     chr->act_attackwalk.unk038 = 0;
     chr->act_attackwalk.animfloats = panim_float;
     chr->act_attackwalk.timer40 = 0;

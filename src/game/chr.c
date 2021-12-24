@@ -2247,15 +2247,15 @@ glabel sub_GAME_7F01FC10
 GLOBAL_ASM(
 .late_rodata
 glabel D_80051D10
-.word 0x3dccccd0 /*0.10000002*/
+.word 0x3DF34D68 /* 0.118799984455109 */
 glabel D_80051D14
-.word 0x3dccccd0 /*0.10000002*/
+.word 0x3DF34D68 /* 0.118799984455109 */
 glabel D_80051D18
-.word 0x3f666666 /*0.89999998*/
+.word 0x3F619653 /* 0.881200015544891 */
 glabel D_80051D1C
 .word 0x3dcccccd /*0.1*/
 glabel D_80051D20
-.word 0x3dccccd0 /*0.10000002*/
+.word 0x3DF34D68 /* 0.118799984455109 */
 glabel D_80051D24
 .word 0xbdcccccd /*-0.1*/
 glabel D_80047E48
@@ -3198,7 +3198,7 @@ glabel disable_sounds_attached_to_player_then_something
 #endif
 
 
-
+#if defined(VERSION_US) || defined(VERSION_JP)
 /**
  * Address 0x7F020540 (VERSION_US, VERSION_JP).
  * Address 0x7F0203B4 (VERSION_EU).
@@ -3214,6 +3214,7 @@ void animation_speed_related(f32 arg0)
         if (ptr_guard_data[i].model != NULL)
         {
 #if defined(VERSION_EU)
+/* should reference D_80047E4C (1.2f) */
             sub_GAME_7F06FF18(ptr_guard_data[i].model, animation_rate * 1.2f, 600.0f);
 #else
             sub_GAME_7F06FF18(ptr_guard_data[i].model, animation_rate, 600.0f);
@@ -3221,6 +3222,65 @@ void animation_speed_related(f32 arg0)
         }
     }
 }
+#endif
+
+#if defined(VERSION_EU)
+GLOBAL_ASM(
+.text
+glabel animation_speed_related
+/* 052DA4 7F0203B4 27BDFFC8 */  addiu $sp, $sp, -0x38
+/* 052DA8 7F0203B8 AFB30030 */  sw    $s3, 0x30($sp)
+/* 052DAC 7F0203BC 3C138002 */  lui   $s3, %hi(animation_rate) # $s3, 0x8002
+/* 052DB0 7F0203C0 26737E50 */  addiu $s3, %lo(animation_rate) # addiu $s3, $s3, 0x7e50
+/* 052DB4 7F0203C4 E66C0000 */  swc1  $f12, ($s3)
+/* 052DB8 7F0203C8 3C028003 */  lui   $v0, %hi(num_guards) # $v0, 0x8003
+/* 052DBC 7F0203CC 8C4281B8 */  lw    $v0, %lo(num_guards)($v0)
+/* 052DC0 7F0203D0 AFB10028 */  sw    $s1, 0x28($sp)
+/* 052DC4 7F0203D4 AFBF0034 */  sw    $ra, 0x34($sp)
+/* 052DC8 7F0203D8 AFB2002C */  sw    $s2, 0x2c($sp)
+/* 052DCC 7F0203DC AFB00024 */  sw    $s0, 0x24($sp)
+/* 052DD0 7F0203E0 F7B60018 */  sdc1  $f22, 0x18($sp)
+/* 052DD4 7F0203E4 F7B40010 */  sdc1  $f20, 0x10($sp)
+/* 052DD8 7F0203E8 18400019 */  blez  $v0, .L7F020450
+/* 052DDC 7F0203EC 00008825 */   move  $s1, $zero
+/* 052DE0 7F0203F0 3C014416 */  li    $at, 0x44160000 # 600.000000
+/* 052DE4 7F0203F4 4481B000 */  mtc1  $at, $f22
+/* 052DE8 7F0203F8 3C018004 */  lui   $at, %hi(D_80047E4C) # $at, 0x8004
+/* 052DEC 7F0203FC 3C128003 */  lui   $s2, %hi(ptr_guard_data) # $s2, 0x8003
+/* 052DF0 7F020400 265281B4 */  addiu $s2, %lo(ptr_guard_data) # addiu $s2, $s2, -0x7e4c
+/* 052DF4 7F020404 C4347E4C */  lwc1  $f20, %lo(D_80047E4C)($at)
+/* 052DF8 7F020408 00008025 */  move  $s0, $zero
+.L7F02040C:
+/* 052DFC 7F02040C 8E4E0000 */  lw    $t6, ($s2)
+/* 052E00 7F020410 01D07821 */  addu  $t7, $t6, $s0
+/* 052E04 7F020414 8DE4001C */  lw    $a0, 0x1c($t7)
+/* 052E08 7F020418 5080000A */  beql  $a0, $zero, .L7F020444
+/* 052E0C 7F02041C 26310001 */   addiu $s1, $s1, 1
+/* 052E10 7F020420 C6640000 */  lwc1  $f4, ($s3)
+/* 052E14 7F020424 4406B000 */  mfc1  $a2, $f22
+/* 052E18 7F020428 46142182 */  mul.s $f6, $f4, $f20
+/* 052E1C 7F02042C 44053000 */  mfc1  $a1, $f6
+/* 052E20 7F020430 0FC1C02E */  jal   sub_GAME_7F06FF18
+/* 052E24 7F020434 00000000 */   nop   
+/* 052E28 7F020438 3C028003 */  lui   $v0, %hi(num_guards) # $v0, 0x8003
+/* 052E2C 7F02043C 8C4281B8 */  lw    $v0, %lo(num_guards)($v0)
+/* 052E30 7F020440 26310001 */  addiu $s1, $s1, 1
+.L7F020444:
+/* 052E34 7F020444 0222082A */  slt   $at, $s1, $v0
+/* 052E38 7F020448 1420FFF0 */  bnez  $at, .L7F02040C
+/* 052E3C 7F02044C 261001DC */   addiu $s0, $s0, 0x1dc
+.L7F020450:
+/* 052E40 7F020450 8FBF0034 */  lw    $ra, 0x34($sp)
+/* 052E44 7F020454 D7B40010 */  ldc1  $f20, 0x10($sp)
+/* 052E48 7F020458 D7B60018 */  ldc1  $f22, 0x18($sp)
+/* 052E4C 7F02045C 8FB00024 */  lw    $s0, 0x24($sp)
+/* 052E50 7F020460 8FB10028 */  lw    $s1, 0x28($sp)
+/* 052E54 7F020464 8FB2002C */  lw    $s2, 0x2c($sp)
+/* 052E58 7F020468 8FB30030 */  lw    $s3, 0x30($sp)
+/* 052E5C 7F02046C 03E00008 */  jr    $ra
+/* 052E60 7F020470 27BD0038 */   addiu $sp, $sp, 0x38
+)
+#endif
 
 
 
