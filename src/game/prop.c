@@ -964,6 +964,7 @@ glabel jpt_8004EEB8
 .word .L7F0027C8
 .word .L7F0027C8
 .word .L7F0027C8
+
 glabel jpt_mp_ammo_crate_expansion
 .word .L7F002870
 .word .L7F002870
@@ -1182,14 +1183,14 @@ glabel jpt_8004EEB8
 .word .L7F0027C8
 .word .L7F0027C8
 glabel jpt_mp_ammo_crate_expansion
-.word .L7F00285C
-.word .L7F00285C
-.word .L7F00285C
-.word .L7F00285C
-.word .L7F00285C
-.word .L7F00285C
-.word .L7F00285C
-.word .L7F00285C
+.word .L7F002870
+.word .L7F002870
+.word .L7F002870
+.word .L7F002870
+.word .L7F002870
+.word .L7F002870
+.word .L7F002870
+.word .L7F002870
 .text
 glabel expand_08_obj_set_guard_MP_weapons
 /* 035128 7F002738 27BDFFD8 */  addiu $sp, $sp, -0x28
@@ -1274,6 +1275,7 @@ glabel expand_08_obj_set_guard_MP_weapons
 /* 035254 7F002864 AFA50018 */   sw    $a1, 0x18($sp)
 /* 035258 7F002868 1000001B */  b     .L7F0028D8
 /* 03525C 7F00286C 80E40080 */   lb    $a0, 0x80($a3)
+.L7F002870:
 /* 035260 7F002870 0FC316CD */  jal   getPtrMPWeaponSetData
 /* 035264 7F002874 AFA7002C */   sw    $a3, 0x2c($sp)
 /* 035268 7F002878 8FA7002C */  lw    $a3, 0x2c($sp)
@@ -1753,7 +1755,7 @@ GLOBAL_ASM(
 glabel D_80047394
 .word 0x40c90fdb #6.2831855
 glabel D_80047398
-.word 0x3ebba866 #7.5398226
+.word 0x40f1463a #7.53982257843
 
 
 .text
@@ -6214,7 +6216,7 @@ glabel jpt_object_type_expansion
 .word actor_attr_expand
 .word other_obj_expand
 .word ammo_box_expand
-.word body_armor_expand
+.word .L7F00454C
 .word tag_expand
 .word type17_objective_expand
 .word other_obj_expand
@@ -6245,7 +6247,7 @@ glabel jpt_object_type_expansion
 glabel D_8004F024
 .word 0x40c90fdb
 glabel D_8004F028
-.word 0x3e2e147c
+.word 0x3e4d35a8
 
 glabel jpt_8004F02C
 .word .L7F004B7C
@@ -6972,6 +6974,7 @@ multi_screen_display_expand:
 /* 036F30 7F004540 02603025 */   move  $a2, $s3
 /* 036F34 7F004544 10000152 */  b     other_obj_expand
 /* 036F38 7F004548 00000000 */   nop   
+.L7F00454C:
 /* 036F3C 7F00454C 13C00150 */  beqz  $fp, other_obj_expand
 /* 036F40 7F004550 00000000 */   nop   
 body_armor_expand:

@@ -3890,7 +3890,7 @@ SECTIONS
       build/e/src/game/initguards.o (.rodata);
       build/e/src/game/deb_loadallmodels.o (.rodata);
       build/e/src/game/initobjects.o (.rodata);
-      build/e/src/game/prop.o (.rodata);
+      build/e/src/game/prop.o (.rodata);                /* 0x28580 */
       build/e/src/game/objective.o (.rodata);
       build/e/src/game/ejectedcartridges.o (.rodata);
       build/e/src/game/initBondDATA.o (.rodata);
