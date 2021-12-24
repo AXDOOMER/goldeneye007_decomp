@@ -93,12 +93,17 @@ void currentPlayerUpdateIdleHeadRoll()
 
 void currentPlayerUpdateHeadPos(struct coord3d *vel)
 {
+#if defined(VERSION_EU)
+#define CURRENTPLAYERUPDATEHEADPOS_SCALE 0.916599988937f
+#else
+#define CURRENTPLAYERUPDATEHEADPOS_SCALE 0.93f
+#endif
     s32 i;
 
     if (g_CurrentPlayer->resetheadpos)
     {
         g_CurrentPlayer->headpossum[0] = 0.0f;
-        g_CurrentPlayer->headpossum[1] = (vel->f[1] / (1.0f - 0.93f));
+        g_CurrentPlayer->headpossum[1] = (vel->f[1] / (1.0f - CURRENTPLAYERUPDATEHEADPOS_SCALE));
         g_CurrentPlayer->headpossum[2] = 0.0f;
 
         g_CurrentPlayer->resetheadpos = FALSE;
@@ -106,14 +111,15 @@ void currentPlayerUpdateHeadPos(struct coord3d *vel)
 
     for (i = 0; i < g_ClockTimer; i++)
     {
-        g_CurrentPlayer->headpossum[0] = ((0.93f * g_CurrentPlayer->headpossum[0]) + vel->f[0]);
-        g_CurrentPlayer->headpossum[1] = ((0.93f * g_CurrentPlayer->headpossum[1]) + vel->f[1]);
-        g_CurrentPlayer->headpossum[2] = ((0.93f * g_CurrentPlayer->headpossum[2]) + vel->f[2]);
+        g_CurrentPlayer->headpossum[0] = ((CURRENTPLAYERUPDATEHEADPOS_SCALE * g_CurrentPlayer->headpossum[0]) + vel->f[0]);
+        g_CurrentPlayer->headpossum[1] = ((CURRENTPLAYERUPDATEHEADPOS_SCALE * g_CurrentPlayer->headpossum[1]) + vel->f[1]);
+        g_CurrentPlayer->headpossum[2] = ((CURRENTPLAYERUPDATEHEADPOS_SCALE * g_CurrentPlayer->headpossum[2]) + vel->f[2]);
     }
 
-    g_CurrentPlayer->headpos[0] = (g_CurrentPlayer->headpossum[0] * (1.0f - 0.93f));
-    g_CurrentPlayer->headpos[1] = (g_CurrentPlayer->headpossum[1] * (1.0f - 0.93f));
-    g_CurrentPlayer->headpos[2] = (g_CurrentPlayer->headpossum[2] * (1.0f - 0.93f));
+    g_CurrentPlayer->headpos[0] = (g_CurrentPlayer->headpossum[0] * (1.0f - CURRENTPLAYERUPDATEHEADPOS_SCALE));
+    g_CurrentPlayer->headpos[1] = (g_CurrentPlayer->headpossum[1] * (1.0f - CURRENTPLAYERUPDATEHEADPOS_SCALE));
+    g_CurrentPlayer->headpos[2] = (g_CurrentPlayer->headpossum[2] * (1.0f - CURRENTPLAYERUPDATEHEADPOS_SCALE));
+#undef CURRENTPLAYERUPDATEHEADPOS_SCALE
 }
 
 void currentPlayerUpdateHeadRot(struct coord3d *lookvel, struct coord3d *upvel)
@@ -270,11 +276,19 @@ void sub_GAME_7F08E240(f32 arg0, f32 arg1)
 
             if (g_CurrentPlayer->field_4F0 >= 0x3D)
             {
+#if defined(VERSION_EU)
+                currentPlayerSetHeadDamp(0.916599988937f);
+#else
                 currentPlayerSetHeadDamp(0.93f);
+#endif
             }
             else
             {
-                currentPlayerSetHeadDamp(0.99f);
+#if defined(VERSION_EU)
+        currentPlayerSetHeadDamp(0.987999975681f);
+#else
+        currentPlayerSetHeadDamp(0.99f);
+#endif
             }
         }
         else
@@ -301,7 +315,11 @@ void sub_GAME_7F08E240(f32 arg0, f32 arg1)
         spDC.f[2] = 0.0f;
 
         g_CurrentPlayer->field_4F0 = 0;
+#if defined(VERSION_EU)
+        currentPlayerSetHeadDamp(0.987999975681f);
+#else
         currentPlayerSetHeadDamp(0.99f);
+#endif
         g_CurrentPlayer->field_560 += (0.008333334f + (0.025000002f * get_BONDdata_bondfadefracnew())) * g_GlobalTimerDelta;
 
         if (g_CurrentPlayer->field_560 >= 1.0f)
