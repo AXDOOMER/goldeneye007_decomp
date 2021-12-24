@@ -3439,6 +3439,9 @@ SECTIONS
       build/e/src/libultra/gu/ortho.o (.data);
       build/e/src/libultra/gu/coss.o (.data);
       build/e/src/libultra/gu/sins.o (.data);               /* 0x4660 */
+      
+      build/e/src/libultra/io/vimodentsclan1.o (.data);
+      build/e/src/libultrare/io/vimodepallan1.o (.data);
       build/e/src/libultra/gu/translate.o (.data);
       build/e/src/libultra/libc/bcmp.o (.data);
       build/e/src/libultra/gu/scale.o (.data);
@@ -3509,8 +3512,6 @@ SECTIONS
       build/e/src/libultra/libc/ldiv.o (.data);
       /*build/e/src/libultra/os/resetglobalintmask.o (.data);*/
       /*build/e/src/libultrare/io/epirawwrite.o (.data);*/
-      /*build/e/src/libultra/io/vimodentsclan1.o (.data);*/
-      /*build/e/src/libultrare/io/vimodepallan1.o (.data);*/
       build/e/src/libultrare/ultra80069080.o (.data); /*edited*/
       /*build/e/src/libultra/libultra.a:libultra.o (.data);*/
 
