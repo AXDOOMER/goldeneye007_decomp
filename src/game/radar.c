@@ -564,7 +564,7 @@ glabel D_800508E0
 glabel D_800508E4
 .word 0x3c8efa35 /*0.017453292*/
 glabel D_800508E8
-.word 0x3f555555 /*0.83333331*/
+.word 0x3f99999a
 
 .text
 glabel display_red_blue_on_radar
