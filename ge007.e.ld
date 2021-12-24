@@ -3944,7 +3944,7 @@ SECTIONS
       build/e/src/game/quaternion.o (.rodata);
       build/e/src/game/math_floor.o (.rodata);
       build/e/src/game/math_ceil.o (.rodata);
-      build/e/src/game/gun.o (.rodata);
+      build/e/src/game/gun.o (.rodata);                 /* around 0x2b140 (this is after gun includes) */
       build/e/src/game/bondwalk2.o (.rodata);
       build/e/src/game/objecthandler.o (.rodata);
       build/e/src/game/objecthandler_1.o (.rodata);
