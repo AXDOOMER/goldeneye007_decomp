@@ -1149,8 +1149,23 @@ glabel lvlStageLoad
 #ifdef VERSION_EU
 GLOBAL_ASM(
 .late_rodata
+
+/* not sure this is the right location ... */
+#const char aSetdetailDDDDDDDDD[] = "setdetail %d %d %d %d %d %d %d %d %d";
+glabel aSetdetailDDDDDDDDD
+.word 0x73657464
+.word 0x65746169
+.word 0x6c202564
+.word 0x20256420
+.word 0x25642025
+.word 0x64202564
+.word 0x20256420
+.word 0x25642025
+.word 0x64202564
+.word 0x00000000
+
 glabel D_800502EC
-.word 0x3d888889 /*0.06666667*/
+.word 0x3f99999a
 
 .text
 glabel lvlStageLoad
@@ -4444,15 +4459,7 @@ glabel lvlManageMpGame
 GLOBAL_ASM(
 .late_rodata
 glabel D_80050308
-.word 0x3fcccccd
-
-.rdata
-#const char aOneMinuteLeft[] = "One minute left";
-glabel aOneMinuteLeft
-.word 0x4f6e6520
-.word 0x6d696e75
-.word 0x7465206c
-.word 0x65667400
+.word 0x3f99999a
 .text
 glabel lvlManageMpGame
 /* 0F36B8 7F0BEB88 27BDFE68 */  addiu $sp, $sp, -0x198
