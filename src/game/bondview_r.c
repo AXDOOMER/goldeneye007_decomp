@@ -1540,9 +1540,9 @@ glabel D_8004F1D4
 glabel D_8004F1D8
 .word 0x40c90fdb
 glabel D_8004F1DC
-.word 0x3e2e147c
+.word 0x3e4d35a8
 glabel D_8004F1E0
-.word 0x3dccccd0
+.word 0x3df34d68
 .text
 glabel load_camera_intro_type_values
 /* 03A354 7F0057E4 27BDFF60 */  addiu $sp, $sp, -0xa0

@@ -3896,7 +3896,7 @@ SECTIONS
       build/e/src/game/initBondDATA.o (.rodata);
       build/e/src/game/initunk_005450.o (.rodata);
       build/e/src/game/initunk_005520.o (.rodata);
-      build/e/src/game/bondview_r.o (.rodata);
+      build/e/src/game/bondview_r.o (.rodata);           /* around 0x289a0 */
       build/e/src/game/inititemslots.o (.rodata);
       build/e/src/game/initBondDATAdefaults.o (.rodata);
       build/e/src/game/initpathtablesomething.o (.rodata);
@@ -3917,7 +3917,7 @@ SECTIONS
       build/e/src/game/unk_007920.o (.rodata);
       build/e/src/game/null_007970.o (.rodata);
       build/e/src/game/unk_007980.o (.rodata);
-      build/e/src/game/title.o (.rodata);
+      build/e/src/game/title.o (.rodata);                /* around 0x28ad0 */
       build/e/src/game/front.o (.rodata);
       build/e/src/game/unk_01B0E0.o (.rodata);
       build/e/src/game/unk_01B240.o (.rodata);

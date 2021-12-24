@@ -844,7 +844,9 @@ glabel sub_GAME_7F008E80
 GLOBAL_ASM(
 .late_rodata
 glabel D_8004F2DC
-.word 0x3f68f5c3
+.word 0x4019999a
+glabel eu_cdata_0x38ae0
+.word 0x3f68f5c3 /* 0.910000026226 */
 .text
 glabel sub_GAME_7F008E80
 /* 03B7F0 7F008E00 240E0002 */  li    $t6, 2
@@ -1102,7 +1104,7 @@ void sub_GAME_7F00920C(void)
     #define XINC 7.0f
     #define XDEC 14.0f
     #define XDEC2 6
-    #define XDEC3 3.636436f
+    #define XDEC3 3.63643622398f
     #define INCVAL 0x444
 #endif
 
