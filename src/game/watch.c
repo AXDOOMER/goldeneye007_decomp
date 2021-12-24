@@ -250,6 +250,7 @@ const char a3d[] =  "(3D)\n";
 //D:800577C0
 const char D_800577C0[] =  "\n";
 
+#if defined(VERSION_US) || defined(VERSION_JP)
 //D:800577C4
 const u32 D_800577C4[] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -276,7 +277,7 @@ const u32 D_800577C4[] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0
 };
-
+#endif
 
 
 
@@ -1002,14 +1003,22 @@ void watch_screen0_navigation(void)
         {
             watch_screen_index = WATCH_INDEX_MISSION_BRIEFING;
             sub_GAME_7F0A5210();
+#if defined(VERSION_EU)
+            trigger_watch_zoom(4.80000019073f, 15.0f);
+#else
             trigger_watch_zoom(4.6f, 15.0f);
+#endif
         }
 
         if (goto_watch_screen_index_1)
         {
             watch_screen_index = WATCH_INDEX_INVENTORY;
             sub_GAME_7F0A5210();
+#if defined(VERSION_EU)
+            trigger_watch_zoom(4.80000019073f, 15.0f);
+#else
             trigger_watch_zoom(4.6f, 15.0f);
+#endif
             return;
         }
     }
@@ -1061,7 +1070,11 @@ void watch_screen1_navigation(void)
             watch_screen_index = WATCH_INDEX_MISSION_STATUS;
             zero_D_800409A4();
             sub_GAME_7F0A5210();
+#if defined(VERSION_EU)
+            trigger_watch_zoom(6.09999990463f, 15.0f);
+#else
             trigger_watch_zoom(5.9f, 15.0f);
+#endif
         }
 
         if (goto_watch_screen_index_2)
@@ -1069,7 +1082,12 @@ void watch_screen1_navigation(void)
             watch_screen_index = WATCH_INDEX_CONTROL_OPTIONS;
             set_controlstick_lr_disabled();
             sub_GAME_7F0A5210();
+            
+#if defined(VERSION_EU)
+            trigger_watch_zoom(4.15000009537f, 15.0f);
+#else
             trigger_watch_zoom(3.95f, 15.0f);
+#endif
         }
     }
 }
@@ -1093,7 +1111,11 @@ void unused_watch_screen_navigation(void) {
             watch_screen_index = WATCH_INDEX_CONTROL_OPTIONS;
             reset_controller_options_index();
             sub_GAME_7F0A5210();
+#if defined(VERSION_EU)
+            trigger_watch_zoom(4.15000009537f, 15.0f);
+#else
             trigger_watch_zoom(3.95f, 15.0f);
+#endif
         }
     }
 }
@@ -1107,7 +1129,11 @@ void watch_screen2_navigation(void) {
         {
             watch_screen_index = WATCH_INDEX_INVENTORY;
             sub_GAME_7F0A5210();
+#if defined(VERSION_EU)
+            trigger_watch_zoom(4.80000019073f, 15.0f);
+#else
             trigger_watch_zoom(4.6f, 15.0f);
+#endif
             return;
         }
     }
@@ -1141,7 +1167,11 @@ void watch_screen3_navigation(void) {
         {
             watch_screen_index = WATCH_INDEX_MISSION_BRIEFING;
             sub_GAME_7F0A5210();
+#if defined(VERSION_EU)
+            trigger_watch_zoom(4.80000019073f, 15.0f);
+#else
             trigger_watch_zoom(4.6f, 15.0f);
+#endif
         }
     }
 }
@@ -1156,7 +1186,11 @@ void watch_screen4_navigation(void) {
             watch_screen_index = WATCH_INDEX_GAME_OPTIONS;
             reset_game_options_index();
             sub_GAME_7F0A5210();
+#if defined(VERSION_EU)
+            trigger_watch_zoom(4.15000009537f, 15.0f);
+#else
             trigger_watch_zoom(3.95f, 15.0f);
+#endif
             return;
         }
     }
@@ -1167,7 +1201,11 @@ void watch_screen4_navigation(void) {
             watch_screen_index = WATCH_INDEX_MISSION_STATUS;
             zero_D_800409A4();
             sub_GAME_7F0A5210();
+#if defined(VERSION_EU)
+            trigger_watch_zoom(6.09999990463f, 15.0f);
+#else
             trigger_watch_zoom(5.9f, 15.0f);
+#endif
         }
     }
 }
@@ -2769,8 +2807,7 @@ GLOBAL_ASM(
 .late_rodata
 glabel D_8003A76C
 .word 0x40c90fdb /*6.2831855*/
-glabel D_80041120
-.word 0x40c90fdb /*6.2831855*/
+
 
 /*D:8003A5E4*/
 glabel D_8003A5E4
@@ -2945,8 +2982,8 @@ glabel sub_GAME_7F0A6A80
 .L7F0A5FC4:
 /* 0D89B4 7F0A5FC4 3C018004 */  lui   $at, %hi(D_8003A76C) # $at, 0x8004
 /* 0D89B8 7F0A5FC8 C424A76C */  lwc1  $f4, %lo(D_8003A76C)($at)
-/* 0D89BC 7F0A5FCC 3C018004 */  lui   $at, %hi(D_80041120) # $at, 0x8004
-/* 0D89C0 7F0A5FD0 C4261120 */  lwc1  $f6, %lo(D_80041120)($at)
+/* 0D89BC 7F0A5FCC 3C018004 */  lui   $at, %hi(D_8003A76C) # $at, 0x8004
+/* 0D89C0 7F0A5FD0 C4261120 */  lwc1  $f6, %lo(D_8003A76C)($at)
 /* 0D89C4 7F0A5FD4 3C018005 */  lui   $at, %hi(D_8003A76C) # $at, 0x8005
 /* 0D89C8 7F0A5FD8 C42ACF1C */  lwc1  $f10, %lo(D_8003A76C)($at)
 /* 0D89CC 7F0A5FDC 46062202 */  mul.s $f8, $f4, $f6
@@ -10200,6 +10237,7 @@ void draw_watch_mission_briefing_page(void) {
 }
 #else
 
+#if defined(VERSION_US) || defined(VERSION_JP)
 //D:80057FC0
 const u32 D_80057FC0[] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -10216,6 +10254,7 @@ const u32 D_80057FC0[] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
+#endif
 //D:80058440
 const char D_80058440[] = " \n";
 //D:80058444
@@ -10845,10 +10884,7 @@ glabel draw_watch_mission_briefing_page
 GLOBAL_ASM(
 .late_rodata
 
-glabel D_8004CE90
-.word 0x3fcccccd
-glabel D_8004CE9C
-.word 0x3fcccccd
+/* .rodata references a variable defined above. */
 
 /*D:80058570*/
 glabel jpt_80058570
@@ -10931,9 +10967,9 @@ glabel draw_watch_mission_briefing_page
 /* 0DDF8C 7F0AB59C AFA20164 */  sw    $v0, 0x164($sp)
 /* 0DDF90 7F0AB5A0 0FC15CF9 */  jal   microcode_constructor
 /* 0DDF94 7F0AB5A4 00002025 */   move  $a0, $zero
-/* 0DDF98 7F0AB5A8 3C058005 */  lui   $a1, %hi(D_8004CE90) # $a1, 0x8005
+/* 0DDF98 7F0AB5A8 3C058005 */  lui   $a1, %hi(D_8003A76C) # $a1, 0x8005
 /* 0DDF9C 7F0AB5AC 00408025 */  move  $s0, $v0
-/* 0DDFA0 7F0AB5B0 24A5CE90 */  addiu $a1, %lo(D_8004CE90) # addiu $a1, $a1, -0x3170
+/* 0DDFA0 7F0AB5B0 24A5CE90 */  addiu $a1, %lo(D_8003A76C) # addiu $a1, $a1, -0x3170
 /* 0DDFA4 7F0AB5B4 0C0026F4 */  jal   strcpy
 /* 0DDFA8 7F0AB5B8 27A40190 */   addiu $a0, $sp, 0x190
 /* 0DDFAC 7F0AB5BC 0FC2B016 */  jal   microcode_constructor
@@ -11146,9 +11182,9 @@ glabel draw_watch_mission_briefing_page
 /* 0DE2B4 7F0AB8C4 02202025 */   move  $a0, $s1
 /* 0DE2B8 7F0AB8C8 8FA60074 */  lw    $a2, 0x74($sp)
 /* 0DE2BC 7F0AB8CC 00512021 */  addu  $a0, $v0, $s1
-/* 0DE2C0 7F0AB8D0 3C058005 */  lui   $a1, %hi(D_8004CE9C) # $a1, 0x8005
+/* 0DE2C0 7F0AB8D0 3C058005 */  lui   $a1, %hi(D_8003A76C) # $a1, 0x8005
 /* 0DE2C4 7F0AB8D4 AFA4006C */  sw    $a0, 0x6c($sp)
-/* 0DE2C8 7F0AB8D8 24A5CE9C */  addiu $a1, %lo(D_8004CE9C) # addiu $a1, $a1, -0x3164
+/* 0DE2C8 7F0AB8D8 24A5CE9C */  addiu $a1, %lo(D_8003A76C) # addiu $a1, $a1, -0x3164
 /* 0DE2CC 7F0AB8DC 0C00283D */  jal   sprintf
 /* 0DE2D0 7F0AB8E0 24C60061 */   addiu $a2, $a2, 0x61
 /* 0DE2D4 7F0AB8E4 02202025 */  move  $a0, $s1

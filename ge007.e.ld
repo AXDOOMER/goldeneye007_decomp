@@ -3965,13 +3965,13 @@ SECTIONS
       build/e/src/game/unk_092890.o (.rodata);
       build/e/src/game/unk_092E50.o (.rodata);
       build/e/src/game/player.o (.rodata);
-      build/e/src/game/player_2.o (.rodata);
+      build/e/src/game/player_2.o (.rodata);        /* around 0x2e000 */
       build/e/src/game/crc.o (.rodata);
       build/e/src/game/chrObjRandom.o (.rodata);
       build/e/src/game/unk_09B7A0.o (.rodata);
       build/e/src/game/unk_09C250.o (.rodata);
       build/e/src/game/unk_0A1DA0.o (.rodata);
-      build/e/src/game/watch.o (.rodata);
+      build/e/src/game/watch.o (.rodata);           /* around 0x2e250 */
       build/e/src/game/textrelated.o (.rodata);
       build/e/src/game/stan.o (.rodata);
       build/e/src/game/unk_0B3200.o (.rodata);
