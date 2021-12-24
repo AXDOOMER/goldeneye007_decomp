@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "include/PR/libaudio.h"
+#include "game/cleanup_objects.h"
 
 
 

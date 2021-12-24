@@ -1,7 +1,10 @@
 #include <stdarg.h>
 #include "ultra64.h"
+#include "libultra/libc/xstdio.h"
 #include "deb_print.h"
 #include "rmon.h"
+
+
 /**
  * Removed
  * rmonMain
@@ -35,27 +38,44 @@ s32 rmonStatus(void) {
 
 }
 
-/**
- * Removed
- * rmonHostWriteData
- * writes data to the host
- */
-void rmonHostWriteData(void) {
-    #ifdef DEBUG
-        //removed
-    #endif
-}
 
+#ifdef NONMATCHING
 /**
- * Removed
- * rmonHostReadData
- * reads data from the host
- */
-void rmonHostReadData(void) {
-    #ifdef DEBUG
-        //removed
-    #endif
+ * todo/hack/fixme:
+ * Incompatible function definition. indy_commands requires the os.h definition,
+ * but the function here has no arguments.
+*/
+void osWriteHost(void)
+{
+    // removed
 }
+#else
+GLOBAL_ASM(
+.text
+glabel osWriteHost
+jr $ra
+nop
+)
+#endif
+
+#ifdef NONMATCHING
+/**
+ * todo/hack/fixme:
+ * Incompatible function definition. indy_commands requires the os.h definition,
+ * but the function here has no arguments.
+*/
+void osReadHost(void)
+{
+    // removed
+}
+#else
+GLOBAL_ASM(
+.text
+glabel osReadHost
+jr $ra
+nop
+)
+#endif
 
 /**
  * Removed
@@ -104,12 +124,14 @@ void rmon7000CEE0(void) {
 /**
  * rmonprout
  */
+ 
 char *rmonprout(char *dst, const char *src, size_t count) {
+
     s32 i = 0;
     while (i != count) {
         deboutWriteChar(src[i++]);
     }    
-    return 1;
+    return (char *)1;
 }
 
 /**

@@ -5,9 +5,30 @@
 #include "rmon.h"
 #include "str.h"
 
+/**
+ * EU .data, offset from start of data_seg : 0x36b0
+*/
+
 u32 g_TokenString[160];
 s32 g_TokenCount = 1;
+
+#if defined(VERSION_EU)
+/* hack, need a pointer in index 20, not sure what it points to yet. */
+extern s32 ptr_char_data_buf;
+const char *g_Tokens[35] = {
+    NULL, NULL, NULL, NULL,
+    NULL, NULL, NULL, NULL,
+    NULL, NULL, NULL, NULL,
+    NULL, NULL, NULL, NULL,
+    NULL, NULL, NULL, NULL,
+    (const char*)&ptr_char_data_buf, NULL, NULL, NULL,
+    NULL, NULL, NULL, NULL,
+    NULL, NULL, NULL, NULL,
+    NULL, NULL, NULL
+    };
+#else
 const char *g_Tokens[35] = {0};
+#endif
 
 // Splits a string into tokens delimited by spaces and stores 
 // them in g_Tokens.

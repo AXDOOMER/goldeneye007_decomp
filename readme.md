@@ -26,6 +26,13 @@ Install the package after download:
 sudo dpkg -i qemu-irix-2.11.0-2169-g32ab296eef_amd64.deb
 ```
 
+Optionally for increased compile speed you may recompile ido for your platform:
+```bash
+sudo apt install libcapstone-dev pkg-config
+cd tools/ido5.3_recomp 
+make
+```
+
 Make sure you cloned the repo with git otherwise it won't build!!
 
 Place an unmodified USA rom in project root named 
@@ -65,7 +72,10 @@ Run make to build the ROM (defaults to VERSION=us). Other examples:
 make VERSION=jp -j4       # build (J) version instead with 4 jobs
 make VERSION=eu COMPARE=0 # build (EU) version but do not compare ROM hashes
 ```
-
+If you recompiled IDO, you must use IDO_RECOMP flag
+```bash
+make IDO_RECOMP=YES VERSION=US -j
+```
 
 Resulting artifacts can be found in the build directory.
 

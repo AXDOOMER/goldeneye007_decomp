@@ -9,6 +9,10 @@
 #include "thread_config.h"
 
 /**
+ * EU .data, offset from start of data_seg : 0x22B0
+*/
+
+/**
  * @file init.c
  * This file contains the initial non bootstrap code ran. 
  * 
@@ -19,6 +23,7 @@
  */
 
 #define NUM_FIELDS  1
+
 
 u32 unknown_val_80023040 = 0;
 /*D:80023044*/
@@ -59,6 +64,9 @@ u32 __osGetFpcCsr(void);
  *	copies compressed 21990 to virtual address 701EE400, using 70200000 to decompress
  */
 #ifdef NONMATCHING
+//
+// https://decomp.me/scratch/vhVzi
+//
 
 // left to fix:
 // minor reg swapping

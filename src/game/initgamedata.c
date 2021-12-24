@@ -1,5 +1,5 @@
 #include "ultra64.h"
-#include "game/mainmenu.h"
+#include "game/front.h"
 #include "bondconstants.h"
  /**
   * initGameData

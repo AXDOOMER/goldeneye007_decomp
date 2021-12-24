@@ -150,6 +150,10 @@
 #define HIT_RIGHT_ARM                   0x0D // right arm - 1x damage
 #define HIT_RIGHT_SHOULDER              0x0E // right shoulder - 1x damage
 #define HIT_CHEST                       0x0F // chest - 2x damage
+#define HIT_GUN                       0x64 /* GUN - 0x damage*/
+#define HIT_HAT                       0x6E /* HAT - 0x damage*/
+#define HIT_GENERAL                     0xC8
+#define HIT_GENERALHALF                 0xC9
 
 // command 68 - door states
 #define DOOR_STATE_CLOSED               0x01 // closed

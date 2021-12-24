@@ -2,6 +2,8 @@
 #include "game/lightfixture.h"
 #include "assets/image_externs.h"
 
+
+
 // bss
 //CODE.bss:80082660
 s_lightfixture light_fixture_table[0x64];
@@ -18,7 +20,11 @@ s32 dword_CODE_bss_80083318;
 
 // data
 //D:80046030
-s32 D_80046030[] = {0, 0, 0, 0, 0, 0, 0, 0};
+s32 D_80046030 = 0; 
+
+#ifndef VERSION_EU
+s32 D_80046034[] = {0, 0, 0, 0, 0, 0, 0};
+#endif
 
 //this mostly matches 4 bytes different
 #ifdef NONMATCHING

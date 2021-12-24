@@ -1,8 +1,12 @@
 #include "ultra64.h"
 #include "PR/libaudio.h"
+#include "include/os_extension.h"
 #include "music.h"
 #include "snd.h"
 
+/**
+ * EU .data, offset from start of data_seg : 0x3620
+*/
 
 /**
  * @file snd.c
@@ -126,8 +130,6 @@ ALSoundState *sndSetupSound(struct ALBankAlt_s *soundBank, ALSound* sound);
 void sndUnlinkClearSound(ALSoundState *state);
 void sndSetPriority(ALSoundState *state, u8 priority);
 u8 sndGetPlayingState(ALSoundState *state);
-ALSoundState *sndPlaySfx(struct ALBankAlt_s *soundBank, s16 soundIndex, ALSoundState *pendingState);
-void sndDeactivate(ALSoundState *state);
 void sndDeactivateAllSfxByFlag(u8 flag);
 void sndDeactivateAllSfxByFlag_1(void);
 void sndDeactivateAllSfxByFlag_11(void);

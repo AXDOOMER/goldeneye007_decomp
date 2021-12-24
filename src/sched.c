@@ -1,15 +1,18 @@
 #include <ultra64.h>
-#include "libultra/os.h"
-#include "include/PR/os_vi.h"
+#include "include/PR/os.h"
 #include "init.h"
 #include "sched.h"
 #include "bondgame.h"
 #include "deb_print.h"
-#include "video.h"
+#include "fr.h"
 #include "joy.h"
 #include "music.h"
 #include "speed_graph.h"
 #include "thread_config.h"
+
+/**
+ * EU .data, offset from start of data_seg : 0x2300
+*/
 
 /**
  * @file sched.c
@@ -50,6 +53,10 @@ u32 stderr_unused = 0;
 u32 stderr_enabled = 0;
 u32 stderr_active = 0;
 u32 stderr_permitted = 0;
+
+/**
+ * EU .data, offset from start of data_seg : 0x2310
+*/
 u32 userCompareValue = 45000000;
 u32 currentcount = 0;
 u32 dp_busy = 0;

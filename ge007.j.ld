@@ -54,12 +54,12 @@ SECTIONS
       build/j/src/tlb_hardwire.o (.text);
       build/j/src/audi.o (.text);
       build/j/src/speed_graph.o (.text);
-      build/j/src/video.o (.text);
+      build/j/src/fr.o (.text);
       build/j/src/deb.o (.text);
-      build/j/src/tlb_paging.o (.text);
-      build/j/src/unused_fp.o (.text);
+      build/j/src/fault.o (.text);
+      /*deb_print may be part of fault per pd beta (.text);*/
       build/j/src/deb_print.o (.text);
-      build/j/src/debug_getlastRA.o (.text);
+      build/j/src/getra.o (.text);
       build/j/src/ramrom.o (.text);
       build/j/src/boss.o (.text);
       build/j/src/music.o (.text);
@@ -78,177 +78,177 @@ SECTIONS
       build/j/src/rmon.o (.text);
 
       /*build/j/src/libultra/osPiRawStartDma.o (.text);*/
-      build/j/src/libultra/pirawdma.o (.text);
-      build/j/src/libultra/pigetstat.o (.text);
-      build/j/src/libultra/initialize.o (.text);
-      build/j/src/libultra/writebackdcacheall.o (.text);
-      build/j/src/libultra/invalicache.o (.text);
-      build/j/src/libultra/unmaptlb.o (.text);
-      build/j/src/libultra/getfpccsr.o (.text);
-      build/j/src/libultra/setfpccsr.o (.text);
-      build/j/src/libultra/createthread.o (.text);
-      build/j/src/libultra/startthread.o (.text);
-      build/j/src/libultra/createmesgqueue.o (.text);
-      build/j/src/libultra/parameters.o (.text);
-      build/j/src/libultra/stopthread.o (.text);
-      build/j/src/libultra/setthreadpri.o (.text);
-      build/j/src/libultra/getcount.o (.text);
-      build/j/src/libultra/vimgr.o (.text);
-      build/j/src/libultra/vitbl.o (.text); /*edited*/
-      build/j/src/libultra/seteventmesg.o (.text);
-      build/j/src/libultra/visetevent.o (.text);
-      build/j/src/libultra/setintmask.o (.text);
-      build/j/src/libultra/recvmesg.o (.text);
-      build/j/src/libultra/sendmesg.o (.text);
-      build/j/src/libultra/visetmode.o (.text);
-      build/j/src/libultra/visetxscale.o (.text);
-      build/j/src/libultra/visetyscale.o (.text);
-      build/j/src/libultra/virepeatline.o (.text);
-      build/j/src/libultra/viblack.o (.text);
-      build/j/src/libultra/sptaskyielded.o (.text);
-      build/j/src/libultra/dpctr.o (.text);
-      build/j/src/libultra/vigetcurrframebuf.o (.text);
-      build/j/src/libultra/vigetnextframebuf.o (.text);
-      build/j/src/libultra/viswapbuf.o (.text);
-      build/j/src/libultra/dpsetstat.o (.text);
-      build/j/src/libultra/sptask.o (.text);
-      build/j/src/libultra/dpsetnextbuf.o (.text);
-      build/j/src/libultra/sptaskyield.o (.text);
-      build/j/src/libultra/gettlbhi.o (.text);
-      build/j/src/libultra/virtualtophysical.o (.text);
-      build/j/src/libultra/aisetfreq.o (.text);
-      build/j/src/libultra/sl.o (.text);
-      build/j/src/libultra/heapalloc.o (.text);
-      build/j/src/libultra/gettime.o (.text);
-      build/j/src/libultra/ll.o (.text); /*edited*/
-      build/j/src/libultra/aisetnextbuf.o (.text);
-      build/j/src/libultra/aigetlen.o (.text);
-      build/j/src/libultra/synthesizer.o (.text);
-      build/j/src/libultra/pidma.o (.text);
-      build/j/src/libultra/visetspecial.o (.text);
-      build/j/src/libultra/bcopy.o (.text);
-      build/j/src/libultra/perspective.o (.text);
-      build/j/src/libultra/mtxutil.o (.text);
-      build/j/src/libultra/getcurrfaultthread.o (.text);
-      build/j/src/libultra/exception.o (.text); /*edited*/
-      build/j/src/libultra/thread.o (.text);
-      build/j/src/libultra/yieldthread.o (.text);
-      build/j/src/libultra/invaldcache.o (.text);
-      build/j/src/libultra/writebackdcache.o (.text);
-      build/j/src/libultra/settimer.o (.text);
-      build/j/src/libultra/heapinit.o (.text);
-      build/j/src/libultra/bnkf.o (.text);
-      build/j/src/libultra/csplayer.o (.text);
-      build/j/src/libultra/seqpsetbank.o (.text);
-      build/j/src/libultra/cspgetstate.o (.text);
-      build/j/src/libultra/cseq.o (.text);
-      build/j/src/libultra/cspsetseq.o (.text);
-      build/j/src/libultra/cspplay.o (.text);
-      build/j/src/libultra/cspstop.o (.text);
-      build/j/src/libultra/cspsetvol.o (.text);
-      build/j/src/libultra/event.o (.text);
-      build/j/src/libultra/synaddplayer.o (.text);
-      build/j/src/libultra/synallocvoice.o (.text);
-      build/j/src/libultra/synsetvol.o (.text);
-      build/j/src/libultra/synstartvoice.o (.text);
-      build/j/src/libultra/synsetpan.o (.text);
-      build/j/src/libultra/synsetpitch.o (.text);
-      build/j/src/libultra/synsetfxmix.o (.text);
-      build/j/src/libultra/synstopvoice.o (.text);
-      build/j/src/libultra/synfreevoice.o (.text);
-      build/j/src/libultra/cents2ratio.o (.text);
-      build/j/src/libultra/piread.o (.text);
-      build/j/src/libultra/string.o (.text);
-      build/j/src/libultra/xprintf.o (.text);
-      build/j/src/libultra/pimgr.o (.text);
-      build/j/src/libultra/pfsinit.o (.text);
-      build/j/src/libultra/controller.o (.text);
-      build/j/src/libultra/contquery.o (.text);
-      build/j/src/libultra/contreaddata.o (.text);
-      build/j/src/libultra/conteepprobe.o (.text);
-      build/j/src/libultra/conteepread.o (.text);
-      build/j/src/libultra/conteepwrite.o (.text);
-      build/j/src/libultra/conteeplongread.o (.text);
-      build/j/src/libultra/conteeplongwrite.o (.text);
-      build/j/src/libultra/pfsisplug.o (.text);
-      build/j/src/libultra/siacs.o (.text);
-      build/j/src/libultra/sirawdma.o (.text);
-      build/j/src/libultra/crc.o (.text);
-      build/j/src/libultra/contramwrite.o (.text);
-      build/j/src/libultra/contramread.o (.text);
-      build/j/src/libultra/align.o (.text);
-      build/j/src/libultra/ortho.o (.text);
-      build/j/src/libultra/coss.o (.text);
-      build/j/src/libultra/sins.o (.text);
-      build/j/src/libultra/translate.o (.text);
-      build/j/src/libultra/bcmp.o (.text);
-      build/j/src/libultra/scale.o (.text);
-      build/j/src/libultra/lookatref.o (.text);
-      build/j/src/libultra/lookat.o (.text);
-      build/j/src/libultra/rotate.o (.text);
-      build/j/src/libultra/llcvt.o (.text); /*edited*/
-      build/j/src/libultra/setsr.o (.text);
-      build/j/src/libultra/getsr.o (.text);
-      build/j/src/libultra/sirawread.o (.text);
-      build/j/src/libultra/sirawwrite.o (.text);
-      build/j/src/libultra/pirawread.o (.text);
-      build/j/src/libultra/bzero.o (.text);
-      build/j/src/libultra/sethwinterrupt.o (.text);
-      build/j/src/libultra/leointerrupt.o (.text);
-      build/j/src/libultra/interrupt.o (.text);
-      build/j/src/libultra/timerintr.o (.text);
-      build/j/src/libultra/kdebugserver.o (.text);
-      build/j/src/libultra/getthreadpri.o (.text);
-      build/j/src/libultra/vi.o (.text); /*edited*/
-      build/j/src/libultra/vigetcurrcontext.o (.text);
-      build/j/src/libultra/viswapcontext.o (.text);
-      build/j/src/libultra/spgetstat.o (.text);
-      build/j/src/libultra/spsetstat.o (.text);
-      build/j/src/libultra/spsetpc.o (.text);
-      build/j/src/libultra/sprawdma.o (.text);
-      build/j/src/libultra/sp.o (.text);
-      build/j/src/libultra/dp.o (.text);
-      build/j/src/libultra/probetlb.o (.text);
-      build/j/src/libultra/syndelete.o (.text);
-      build/j/src/libultra/ai.o (.text);
-      build/j/src/libultra/drvrNew.o (.text);
-      build/j/src/libultra/synallocfx.o (.text);
-      build/j/src/libultra/mainbus.o (.text);
-      build/j/src/libultra/load.o (.text);
-      build/j/src/libultra/resample.o (.text);
-      build/j/src/libultra/env.o (.text); /*edited*/
-      build/j/src/libultra/auxbus.o (.text);
-      build/j/src/libultra/save.o (.text);
-      build/j/src/libultra/jammesg.o (.text);
-      build/j/src/libultra/pigetcmdq.o (.text);
-      build/j/src/libultra/ultra7001B830.o (.text); /*edited*/
-      build/j/src/libultra/ultra7001B9A0.o (.text); /*edited*/
-      build/j/src/libultra/destroythread.o (.text);
-      build/j/src/libultra/seqplayer.o (.text);
-      build/j/src/libultra/synstartvoiceparam.o (.text);
-      build/j/src/libultra/copy.o (.text);
-      build/j/src/libultra/piacs.o (.text);
-      build/j/src/libultra/xlitob.o (.text);
-      build/j/src/libultra/xldtob.o (.text);
-      build/j/src/libultra/epirawdma.o (.text);
-      build/j/src/libultra/devmgr.o (.text);
-      build/j/src/libultra/contpfs.o (.text);
-      build/j/src/libultra/si.o (.text);
-      build/j/src/libultra/normalize.o (.text);
-      build/j/src/libultra/sqrtf.o (.text);
-      build/j/src/libultra/leodiskinit.o (.text);
-      build/j/src/libultra/setcompare.o (.text);
-      build/j/src/libultra/filter.o (.text);
-      build/j/src/libultra/reverb.o (.text); /*edited*/
-      build/j/src/libultra/libm_vals.o (.text); /*edited*/
-      build/j/src/libultra/seq.o (.text);
-      build/j/src/libultra/synsetpriority.o (.text);
-      build/j/src/libultra/ldiv.o (.text);
-      build/j/src/libultra/resetglobalintmask.o (.text);
-      build/j/src/libultra/epirawwrite.o (.text);
-      build/j/src/libultra/vimodentsclan1.o (.text);
-      build/j/src/libultra/vimodepallan1.o (.text);
-      build/j/src/libultra/ultra80069080.o (.text); /*edited*/
+      build/j/src/libultra/io/pirawdma.o (.text);
+      build/j/src/libultra/io/pigetstat.o (.text);
+      build/j/src/libultrare/os/initialize.o (.text);
+      build/j/src/libultra/os/writebackdcacheall.o (.text);
+      build/j/src/libultra/os/invalicache.o (.text);
+      build/j/src/libultra/os/unmaptlb.o (.text);
+      build/j/src/libultra/os/getfpccsr.o (.text);
+      build/j/src/libultra/os/setfpccsr.o (.text);
+      build/j/src/libultra/os/createthread.o (.text);
+      build/j/src/libultra/os/startthread.o (.text);
+      build/j/src/libultra/os/createmesgqueue.o (.text);
+      build/j/src/libultra/os/parameters.o (.text);
+      build/j/src/libultra/os/stopthread.o (.text);
+      build/j/src/libultra/os/setthreadpri.o (.text);
+      build/j/src/libultra/os/getcount.o (.text);
+      build/j/src/libultrare/io/vimgr.o (.text);
+      build/j/src/libultrare/io/vitbl.o (.text); /*edited*/
+      build/j/src/libultra/os/seteventmesg.o (.text);
+      build/j/src/libultra/io/visetevent.o (.text);
+      build/j/src/libultra/os/setintmask.o (.text);
+      build/j/src/libultra/os/recvmesg.o (.text);
+      build/j/src/libultra/os/sendmesg.o (.text);
+      build/j/src/libultra/io/visetmode.o (.text);
+      build/j/src/libultra/io/visetxscale.o (.text);
+      build/j/src/libultra/io/visetyscale.o (.text);
+      build/j/src/libultra/io/virepeatline.o (.text);
+      build/j/src/libultra/io/viblack.o (.text);
+      build/j/src/libultra/io/sptaskyielded.o (.text);
+      build/j/src/libultra/io/dpctr.o (.text);
+      build/j/src/libultra/io/vigetcurrframebuf.o (.text);
+      build/j/src/libultra/io/vigetnextframebuf.o (.text);
+      build/j/src/libultra/io/viswapbuf.o (.text);
+      build/j/src/libultra/io/dpsetstat.o (.text);
+      build/j/src/libultrare/io/sptask.o (.text);
+      build/j/src/libultra/io/dpsetnextbuf.o (.text);
+      build/j/src/libultra/io/sptaskyield.o (.text);
+      build/j/src/libultra/os/gettlbhi.o (.text);
+      build/j/src/libultra/os/virtualtophysical.o (.text);
+      build/j/src/libultra/io/aisetfreq.o (.text);
+      build/j/src/libultra/audio/sl.o (.text);
+      build/j/src/libultra/audio/heapalloc.o (.text);
+      build/j/src/libultra/os/gettime.o (.text);
+      build/j/src/libultra/libc/ll.o (.text); /*edited*/
+      build/j/src/libultrare/io/aisetnextbuf.o (.text);
+      build/j/src/libultra/io/aigetlen.o (.text);
+      build/j/src/libultra/audio/synthesizer.o (.text);
+      build/j/src/libultra/io/pidma.o (.text);
+      build/j/src/libultra/io/visetspecial.o (.text);
+      build/j/src/libultra/libc/bcopy.o (.text);
+      build/j/src/libultra/gu/perspective.o (.text);
+      build/j/src/libultra/gu/mtxutil.o (.text);
+      build/j/src/libultra/os/getcurrfaultthread.o (.text);
+      build/j/src/libultra/os/exception.o (.text); /*edited*/
+      build/j/src/libultra/os/thread.o (.text);
+      build/j/src/libultra/os/yieldthread.o (.text);
+      build/j/src/libultra/os/invaldcache.o (.text);
+      build/j/src/libultra/os/writebackdcache.o (.text);
+      build/j/src/libultra/os/settimer.o (.text);
+      build/j/src/libultra/audio/heapinit.o (.text);
+      build/j/src/libultra/audio/bnkf.o (.text);
+      build/j/src/libultra/audio/csplayer.o (.text);
+      build/j/src/libultra/audio/seqpsetbank.o (.text);
+      build/j/src/libultra/audio/cspgetstate.o (.text);
+      build/j/src/libultra/audio/cseq.o (.text);
+      build/j/src/libultra/audio/cspsetseq.o (.text);
+      build/j/src/libultra/audio/cspplay.o (.text);
+      build/j/src/libultra/audio/cspstop.o (.text);
+      build/j/src/libultra/audio/cspsetvol.o (.text);
+      build/j/src/libultra/audio/event.o (.text);
+      build/j/src/libultra/audio/synaddplayer.o (.text);
+      build/j/src/libultra/audio/synallocvoice.o (.text);
+      build/j/src/libultra/audio/synsetvol.o (.text);
+      build/j/src/libultra/audio/synstartvoice.o (.text);
+      build/j/src/libultra/audio/synsetpan.o (.text);
+      build/j/src/libultra/audio/synsetpitch.o (.text);
+      build/j/src/libultra/audio/synsetfxmix.o (.text);
+      build/j/src/libultra/audio/synstopvoice.o (.text);
+      build/j/src/libultra/audio/synfreevoice.o (.text);
+      build/j/src/libultra/audio/cents2ratio.o (.text);
+      build/j/src/libultra/io/piread.o (.text);
+      build/j/src/libultra/libc/string.o (.text);
+      build/j/src/libultrare/libc/xprintf.o (.text);
+      build/j/src/libultrare/io/pimgr.o (.text);
+      build/j/src/libultrare/io/pfsinit.o (.text);
+      build/j/src/libultrare/io/controller.o (.text);
+      build/j/src/libultra/io/contquery.o (.text);
+      build/j/src/libultrare/io/contreaddata.o (.text);
+      build/j/src/libultrare/io/conteepprobe.o (.text);
+      build/j/src/libultrare/io/conteepread.o (.text);
+      build/j/src/libultrare/io/conteepwrite.o (.text);
+      build/j/src/libultrare/io/conteeplongread.o (.text);
+      build/j/src/libultrare/io/conteeplongwrite.o (.text);
+      build/j/src/libultrare/io/pfsisplug.o (.text);
+      build/j/src/libultra/io/siacs.o (.text);
+      build/j/src/libultra/io/sirawdma.o (.text);
+      build/j/src/libultra/io/crc.o (.text);
+      build/j/src/libultrare/io/contramwrite.o (.text);
+      build/j/src/libultrare/io/contramread.o (.text);
+      build/j/src/libultra/gu/align.o (.text);
+      build/j/src/libultra/gu/ortho.o (.text);
+      build/j/src/libultra/gu/coss.o (.text);
+      build/j/src/libultra/gu/sins.o (.text);
+      build/j/src/libultra/gu/translate.o (.text);
+      build/j/src/libultra/libc/bcmp.o (.text);
+      build/j/src/libultra/gu/scale.o (.text);
+      build/j/src/libultra/gu/lookatref.o (.text);
+      build/j/src/libultra/gu/lookat.o (.text);
+      build/j/src/libultra/gu/rotate.o (.text);
+      build/j/src/libultra/libc/llcvt.o (.text); /*edited*/
+      build/j/src/libultra/os/setsr.o (.text);
+      build/j/src/libultra/os/getsr.o (.text);
+      build/j/src/libultra/io/sirawread.o (.text);
+      build/j/src/libultra/io/sirawwrite.o (.text);
+      build/j/src/libultra/io/pirawread.o (.text);
+      build/j/src/libultra/libc/bzero.o (.text);
+      build/j/src/libultra/os/sethwinterrupt.o (.text);
+      build/j/src/libultrare/io/leointerrupt.o (.text);
+      build/j/src/libultra/os/interrupt.o (.text);
+      build/j/src/libultra/os/timerintr.o (.text);
+      build/j/src/libultra/os/kdebugserver.o (.text);
+      build/j/src/libultra/os/getthreadpri.o (.text);
+      build/j/src/libultrare/io/vi.o (.text); /*edited*/
+      build/j/src/libultra/io/vigetcurrcontext.o (.text);
+      build/j/src/libultra/io/viswapcontext.o (.text);
+      build/j/src/libultra/io/spgetstat.o (.text);
+      build/j/src/libultra/io/spsetstat.o (.text);
+      build/j/src/libultra/io/spsetpc.o (.text);
+      build/j/src/libultra/io/sprawdma.o (.text);
+      build/j/src/libultra/io/sp.o (.text);
+      build/j/src/libultra/io/dp.o (.text);
+      build/j/src/libultra/os/probetlb.o (.text);
+      build/j/src/libultra/audio/syndelete.o (.text);
+      build/j/src/libultra/io/ai.o (.text);
+      build/j/src/libultrare/audio/drvrNew.o (.text);
+      build/j/src/libultra/audio/synallocfx.o (.text);
+      build/j/src/libultra/audio/mainbus.o (.text);
+      build/j/src/libultra/audio/load.o (.text);
+      build/j/src/libultra/audio/resample.o (.text);
+      build/j/src/libultrare/audio/env.o (.text); /*edited*/
+      build/j/src/libultra/audio/auxbus.o (.text);
+      build/j/src/libultra/audio/save.o (.text);
+      build/j/src/libultra/os/jammesg.o (.text);
+      build/j/src/libultra/io/pigetcmdq.o (.text);
+      build/j/src/libultra/gu/cosf.o (.text); /*edited*/
+      build/j/src/libultra/gu/sinf.o (.text); /*edited*/
+      build/j/src/libultrare/os/destroythread.o (.text);
+      build/j/src/libultra/audio/seqplayer.o (.text);
+      build/j/src/libultra/audio/synstartvoiceparam.o (.text);
+      build/j/src/libultra/audio/copy.o (.text);
+      build/j/src/libultra/io/piacs.o (.text);
+      build/j/src/libultra/libc/xlitob.o (.text);
+      build/j/src/libultra/libc/xldtob.o (.text);
+      build/j/src/libultrare/io/epirawdma.o (.text);
+      build/j/src/libultrare/io/devmgr.o (.text);
+      build/j/src/libultra/io/contpfs.o (.text);
+      build/j/src/libultra/io/si.o (.text);
+      build/j/src/libultra/gu/normalize.o (.text);
+      build/j/src/libultra/gu/sqrtf.o (.text);
+      build/j/src/libultrare/io/leodiskinit.o (.text);
+      build/j/src/libultra/os/setcompare.o (.text);
+      build/j/src/libultra/audio/filter.o (.text);
+      build/j/src/libultrare/audio/reverb.o (.text); /*edited*/
+      build/j/src/libultra/gu/libm_vals.o (.text); /*edited*/
+      build/j/src/libultra/audio/seq.o (.text);
+      build/j/src/libultra/audio/synsetpriority.o (.text);
+      build/j/src/libultra/libc/ldiv.o (.text);
+      build/j/src/libultra/os/resetglobalintmask.o (.text);
+      build/j/src/libultrare/io/epirawwrite.o (.text);
+      build/j/src/libultra/io/vimodentsclan1.o (.text);
+      build/j/src/libultrare/io/vimodepallan1.o (.text);
+      build/j/src/libultrare/ultra80069080.o (.text); /*edited*/
       /*build/j/src/libultra/libultra.a:libultra.o (.text);*/
    }
    _codeSegmentEnd = ADDR(.code) + SIZEOF(.code);
@@ -263,7 +263,7 @@ SECTIONS
    }
    _cdataSegmentEnd = ADDR(.cdata) + SIZEOF(.cdata);
    _cdataSegmentRomEnd = _cdataSegmentRomStart + SIZEOF(.cdata);
-   
+
 
 
    /* (0x70200000, 0x702029BC, 0x701CCA70), // 033590-035F4D [29BD] */
@@ -277,8 +277,8 @@ SECTIONS
    _inflateSegmentRomEnd = _inflateSegmentRomStart + SIZEOF(.inflate);
 
 
-   
-   
+
+
    /* (0x7F000000, 0x7F0E2D50, 0x7EFCB4D0), // 034B30-117881 [E2D51] */
    _gameSegmentStart = ADDR(.game);
    _gameSegmentRomStart = _inflateSegmentRomEnd;
@@ -304,7 +304,7 @@ SECTIONS
       build/j/src/game/initBondDATA.o (.text);
       build/j/src/game/initunk_005450.o (.text);
       build/j/src/game/initunk_005520.o (.text);
-      build/j/src/game/initcameraandthrown.o (.text);
+      build/j/src/game/bondview_r.o (.text);
       build/j/src/game/inititemslots.o (.text);
       build/j/src/game/initBondDATAdefaults.o (.text);
       build/j/src/game/initpathtablesomething.o (.text);
@@ -325,17 +325,18 @@ SECTIONS
       build/j/src/game/unk_007920.o (.text);
       build/j/src/game/null_007970.o (.text);
       build/j/src/game/unk_007980.o (.text);
-      build/j/src/game/intro_logos.o (.text);
-      build/j/src/game/mainmenu.o (.text);
+      build/j/src/game/title.o (.text);
+      build/j/src/game/front.o (.text);
       build/j/src/game/unk_01B0E0.o (.text);
       build/j/src/game/unk_01B240.o (.text);
       build/j/src/game/unk_01BAE0.o (.text);
       build/j/src/game/blood_animation.o (.text);
       build/j/src/game/blood_decrypt.o (.text);
-      build/j/src/game/gamefile.o (.text);
-      build/j/src/game/gamefile2.o (.text);
+      build/j/src/game/file.o (.text);
+      build/j/src/game/file2.o (.text);
       build/j/src/game/chr.o (.text);
-      build/j/src/game/chr2.o (.text);
+      build/j/src/game/chr_b.o (.text);
+      build/j/src/game/chrlv.o (.text);
       build/j/src/game/chrai.o (.text);
       build/j/src/game/chrobjhandler.o (.text);
       build/j/src/game/loadobjectmodel.o (.text);
@@ -351,26 +352,29 @@ SECTIONS
       build/j/src/game/quaternion.o (.text);
       build/j/src/game/math_floor.o (.text);
       build/j/src/game/math_ceil.o (.text);
-      build/j/src/game/bondwalk.o (.text);
+      build/j/src/game/gun.o (.text);
       build/j/src/game/bondwalk2.o (.text);
       build/j/src/game/objecthandler.o (.text);
+      build/j/src/game/objecthandler_1.o (.text);
       build/j/src/game/objecthandler_2.o (.text);
       build/j/src/game/othermodemicrocode.o (.text);
-      build/j/src/game/bond.o (.text);
+      build/j/src/game/bondview.o (.text);
       build/j/src/game/bondinv.o (.text);
       build/j/src/game/unk_08DBB0.o (.text);
       build/j/src/game/debugmenu_08FE00.o (.text);
-      build/j/src/game/debugmenu_090490.o (.text);
+      build/j/src/game/debugmenu_handler.o (.text);
       build/j/src/game/unk_091080.o (.text);
       build/j/src/game/chraidata.o (.text);
       build/j/src/game/pobjdata.o (.text);
       build/j/src/game/gobjdata.o (.text);
+      build/j/src/game/gobjdata2.o (.text);
       build/j/src/game/cobjdata.o (.text);
       build/j/src/game/cheat_buttons.o (.text);
       build/j/src/game/unk_092890.o (.text);
       build/j/src/game/unk_092E50.o (.text);
-      build/j/src/game/unk_093880.o (.text);
-      build/j/src/game/unk_09B600.o (.text);
+      build/j/src/game/player.o (.text);
+      build/j/src/game/player_2.o (.text);
+      build/j/src/game/crc.o (.text);
       build/j/src/game/chrObjRandom.o (.text);
       build/j/src/game/unk_09B7A0.o (.text);
       build/j/src/game/unk_09C250.o (.text);
@@ -380,6 +384,7 @@ SECTIONS
       build/j/src/game/stan.o (.text);
       build/j/src/game/unk_0B3200.o (.text);
       build/j/src/game/bg.o (.text);
+      build/j/src/game/bg2.o (.text);
       build/j/src/game/fog.o (.text);
       build/j/src/game/lightfixture.o (.text);
       build/j/src/game/unk_0BC530.o (.text);
@@ -412,30 +417,65 @@ SECTIONS
    _gameSegmentRomEnd = _gameSegmentRomStart + SIZEOF(.game);
 
 
-
-
-   _romfiles_117880SegmentStart = ADDR(.romfiles_117880);
-   _romfiles_117880SegmentRomStart = _gameSegmentRomEnd;
-   .romfiles_117880 _romfiles_117880SegmentRomStart : AT(_romfiles_117880SegmentRomStart) {
-      build/j/assets/romfiles.o (.data);
+   _fontdlSegmentStart = ADDR(.fontdl);
+   _fontdlSegmentRomStart = _gameSegmentRomEnd;
+   .fontdl 0x01000000 : AT(_fontdlSegmentRomStart) {
+      build/j/assets/font_dl.o (.data);
    }
-   _romfiles_117880SegmentEnd = ADDR(.romfiles_117880) + SIZEOF(.romfiles_117880);
-   _romfiles_117880SegmentRomEnd = _romfiles_117880SegmentRomStart + SIZEOF(.romfiles_117880);
+   _fontdlSegmentEnd = ADDR(.fontdl) + SIZEOF(.fontdl);
+   _fontdlSegmentRomEnd = _fontdlSegmentRomStart + SIZEOF(.fontdl);
 
+   _jfontcharSegmentStart = ADDR(.jfontchardata);
+   _jfontcharSegmentRomStart = _fontdlSegmentRomEnd;
+   .jfontchardata 0x00000000 : AT(_jfontcharSegmentRomStart) {
+      build/j/assets/font_chardataj.o (.data);
+   }
+   _jfontcharSegmentEnd = ADDR(.jfontchardata) + SIZEOF(.jfontchardata);
+   _jfontcharSegmentRomEnd = _jfontcharSegmentRomStart + SIZEOF(.jfontchardata);
 
+   _efontcharSegmentStart = ADDR(.efontchardata);
+   _efontcharSegmentRomStart = _jfontcharSegmentRomEnd;
+   .efontchardata 0x00000000 : AT(_efontcharSegmentRomStart) {
+      build/j/assets/font_chardatae.o (.data);
+   }
+   _efontcharSegmentEnd = ADDR(.efontchardata) + SIZEOF(.efontchardata);
+   _efontcharSegmentRomEnd = _efontcharSegmentRomStart + SIZEOF(.efontchardata);
+   
+   _animation_entriesSegmentStart = ADDR(.animation_entries);
+   _animation_entriesSegmentRomStart = _efontcharSegmentRomEnd;
+   .animation_entries 0x00000000 : AT(_animation_entriesSegmentRomStart) {
+      build/j/assets/animationtable_entries.o(.data);
+   }
+   _animation_entriesSegmentEnd = ADDR(.animation_entries) + SIZEOF(.animation_entries);
+   _animation_entriesSegmentRomEnd = _animation_entriesSegmentRomStart + SIZEOF(.animation_entries);
 
-   _G_I_TSegmentStart = ADDR(.romfiles_29d160);
-   _G_I_TSegmentRomStart = _romfiles_117880SegmentRomEnd;
-   .romfiles_29d160 0x02000000 : AT(_G_I_TSegmentRomStart) {
+   _animation_dataSegmentStart = ADDR(.animation_data);
+   _animation_dataSegmentRomStart = _animation_entriesSegmentRomEnd;
+   .animation_data 0x00000000 : AT(_animation_dataSegmentRomStart) {
+      build/j/assets/animationtable_data.o(.data);
+   }
+   _animation_dataSegmentEnd = ADDR(.animation_data) + SIZEOF(.animation_data);
+   _animation_dataSegmentRomEnd = _animation_dataSegmentRomStart + SIZEOF(.animation_data);
+
+   _GlobalimagetableSegmentStart = ADDR(.romfiles_29d160);
+   _GlobalimagetableSegmentRomStart = _animation_dataSegmentRomEnd;
+   .romfiles_29d160 0x02000000 : AT(_GlobalimagetableSegmentRomStart) {
       build/j/assets/GlobalImageTable.o (.data);
    }
-   _G_I_TSegmentEnd = ADDR(.romfiles_29d160) + SIZEOF(.romfiles_29d160);
-   _G_I_TSegmentRomEnd = _G_I_TSegmentRomStart + SIZEOF(.romfiles_29d160);
+   _GlobalimagetableSegmentEnd = ADDR(.romfiles_29d160) + SIZEOF(.romfiles_29d160);
+   _GlobalimagetableSegmentRomEnd = _GlobalimagetableSegmentRomStart + SIZEOF(.romfiles_29d160);
 
+   _GlobalimagetablecmdblkSegmentStart = ADDR(.Globalimagetablecmdblk);
+   _GlobalimagetablecmdblkSegmentRomStart = _GlobalimagetableSegmentRomEnd;
+   .Globalimagetablecmdblk 0x02000000 : AT(_GlobalimagetablecmdblkSegmentRomStart) {
+      build/j/assets/Globalimagetable_commandblock.o (.data);
+   }
+   _GlobalimagetablecmdblkSegmentEnd = ADDR(.Globalimagetablecmdblk) + SIZEOF(.Globalimagetablecmdblk);
+   _GlobalimagetablecmdblkSegmentRomEnd = _GlobalimagetablecmdblkSegmentRomStart + SIZEOF(.Globalimagetablecmdblk);
 
 
    _romfiles2SegmentStart = ADDR(.romfiles2);
-   _romfiles2SegmentRomStart = _G_I_TSegmentRomEnd;
+   _romfiles2SegmentRomStart = _GlobalimagetablecmdblkSegmentRomEnd;
    .romfiles2 _romfiles2SegmentRomStart : AT(_romfiles2SegmentRomStart) {
       build/j/assets/romfiles2.o (.data);
    }
@@ -483,7 +523,7 @@ SECTIONS
 
 
 
-   
+
    _obsegSegmentStart = ADDR(.obseg);
    _obsegSegmentRomStart = _musicfilesSegmentRomEnd;
    .obseg _obsegSegmentRomStart : AT(_obsegSegmentRomStart) {
@@ -3225,12 +3265,12 @@ SECTIONS
       build/j/src/tlb_hardwire.o (.data);
       build/j/src/audi.o (.data);
       build/j/src/speed_graph.o (.data);
-      build/j/src/video.o (.data);
+      build/j/src/fr.o (.data);
       build/j/src/deb.o (.data);
-      build/j/src/tlb_paging.o (.data);
-      build/j/src/unused_fp.o (.data);
+      build/j/src/fault.o (.data);
+      /*deb_print may be part of fault per pd beta (.data);*/
       build/j/src/deb_print.o (.data);
-      build/j/src/debug_getlastRA.o (.data);
+      build/j/src/getra.o (.data);
       build/j/src/ramrom.o (.data);
       build/j/src/boss.o (.data);
       build/j/src/music.o (.data);
@@ -3249,177 +3289,177 @@ SECTIONS
       build/j/src/rmon.o (.data);
 
       /*build/j/src/libultra/osPiRawStartDma.o (.data);*/
-      build/j/src/libultra/pirawdma.o (.data);
-      build/j/src/libultra/pigetstat.o (.data);
-      build/j/src/libultra/initialize.o (.data);
-      build/j/src/libultra/writebackdcacheall.o (.data);
-      build/j/src/libultra/invalicache.o (.data);
-      build/j/src/libultra/unmaptlb.o (.data);
-      build/j/src/libultra/getfpccsr.o (.data);
-      build/j/src/libultra/setfpccsr.o (.data);
-      build/j/src/libultra/createthread.o (.data);
-      build/j/src/libultra/startthread.o (.data);
-      build/j/src/libultra/createmesgqueue.o (.data);
-      build/j/src/libultra/parameters.o (.data);
-      build/j/src/libultra/stopthread.o (.data);
-      build/j/src/libultra/setthreadpri.o (.data);
-      build/j/src/libultra/getcount.o (.data);
-      build/j/src/libultra/vimgr.o (.data);
-      build/j/src/libultra/vitbl.o (.data); /*edited*/
-      build/j/src/libultra/seteventmesg.o (.data);
-      build/j/src/libultra/visetevent.o (.data);
-      build/j/src/libultra/setintmask.o (.data);
-      build/j/src/libultra/recvmesg.o (.data);
-      build/j/src/libultra/sendmesg.o (.data);
-      build/j/src/libultra/visetmode.o (.data);
-      build/j/src/libultra/visetxscale.o (.data);
-      build/j/src/libultra/visetyscale.o (.data);
-      build/j/src/libultra/virepeatline.o (.data);
-      build/j/src/libultra/viblack.o (.data);
-      build/j/src/libultra/sptaskyielded.o (.data);
-      build/j/src/libultra/dpctr.o (.data);
-      build/j/src/libultra/vigetcurrframebuf.o (.data);
-      build/j/src/libultra/vigetnextframebuf.o (.data);
-      build/j/src/libultra/viswapbuf.o (.data);
-      build/j/src/libultra/dpsetstat.o (.data);
-      build/j/src/libultra/sptask.o (.data);
-      build/j/src/libultra/dpsetnextbuf.o (.data);
-      build/j/src/libultra/sptaskyield.o (.data);
-      build/j/src/libultra/gettlbhi.o (.data);
-      build/j/src/libultra/virtualtophysical.o (.data);
-      build/j/src/libultra/aisetfreq.o (.data);
-      build/j/src/libultra/sl.o (.data);
-      build/j/src/libultra/heapalloc.o (.data);
-      build/j/src/libultra/gettime.o (.data);
-      build/j/src/libultra/ll.o (.data); /*edited*/
-      build/j/src/libultra/aisetnextbuf.o (.data);
-      build/j/src/libultra/aigetlen.o (.data);
-      build/j/src/libultra/synthesizer.o (.data);
-      build/j/src/libultra/pidma.o (.data);
-      build/j/src/libultra/visetspecial.o (.data);
-      build/j/src/libultra/bcopy.o (.data);
-      build/j/src/libultra/perspective.o (.data);
-      build/j/src/libultra/mtxutil.o (.data);
-      build/j/src/libultra/getcurrfaultthread.o (.data);
-      build/j/src/libultra/exception.o (.data); /*edited*/
-      build/j/src/libultra/thread.o (.data);
-      build/j/src/libultra/yieldthread.o (.data);
-      build/j/src/libultra/invaldcache.o (.data);
-      build/j/src/libultra/writebackdcache.o (.data);
-      build/j/src/libultra/settimer.o (.data);
-      build/j/src/libultra/heapinit.o (.data);
-      build/j/src/libultra/bnkf.o (.data);
-      build/j/src/libultra/csplayer.o (.data);
-      build/j/src/libultra/seqpsetbank.o (.data);
-      build/j/src/libultra/cspgetstate.o (.data);
-      build/j/src/libultra/cseq.o (.data);
-      build/j/src/libultra/cspsetseq.o (.data);
-      build/j/src/libultra/cspplay.o (.data);
-      build/j/src/libultra/cspstop.o (.data);
-      build/j/src/libultra/cspsetvol.o (.data);
-      build/j/src/libultra/event.o (.data);
-      build/j/src/libultra/synaddplayer.o (.data);
-      build/j/src/libultra/synallocvoice.o (.data);
-      build/j/src/libultra/synsetvol.o (.data);
-      build/j/src/libultra/synstartvoice.o (.data);
-      build/j/src/libultra/synsetpan.o (.data);
-      build/j/src/libultra/synsetpitch.o (.data);
-      build/j/src/libultra/synsetfxmix.o (.data);
-      build/j/src/libultra/synstopvoice.o (.data);
-      build/j/src/libultra/synfreevoice.o (.data);
-      build/j/src/libultra/cents2ratio.o (.data);
-      build/j/src/libultra/piread.o (.data);
-      build/j/src/libultra/string.o (.data);
-      build/j/src/libultra/xprintf.o (.data);
-      build/j/src/libultra/pimgr.o (.data);
-      build/j/src/libultra/pfsinit.o (.data);
-      build/j/src/libultra/controller.o (.data);
-      build/j/src/libultra/contquery.o (.data);
-      build/j/src/libultra/contreaddata.o (.data);
-      build/j/src/libultra/conteepprobe.o (.data);
-      build/j/src/libultra/conteepread.o (.data);
-      build/j/src/libultra/conteepwrite.o (.data);
-      build/j/src/libultra/conteeplongread.o (.data);
-      build/j/src/libultra/conteeplongwrite.o (.data);
-      build/j/src/libultra/pfsisplug.o (.data);
-      build/j/src/libultra/siacs.o (.data);
-      build/j/src/libultra/sirawdma.o (.data);
-      build/j/src/libultra/crc.o (.data);
-      build/j/src/libultra/contramwrite.o (.data);
-      build/j/src/libultra/contramread.o (.data);
-      build/j/src/libultra/align.o (.data);
-      build/j/src/libultra/ortho.o (.data);
-      build/j/src/libultra/coss.o (.data);
-      build/j/src/libultra/sins.o (.data);
-      build/j/src/libultra/translate.o (.data);
-      build/j/src/libultra/bcmp.o (.data);
-      build/j/src/libultra/scale.o (.data);
-      build/j/src/libultra/lookatref.o (.data);
-      build/j/src/libultra/lookat.o (.data);
-      build/j/src/libultra/rotate.o (.data);
-      build/j/src/libultra/llcvt.o (.data); /*edited*/
-      build/j/src/libultra/setsr.o (.data);
-      build/j/src/libultra/getsr.o (.data);
-      build/j/src/libultra/sirawread.o (.data);
-      build/j/src/libultra/sirawwrite.o (.data);
-      build/j/src/libultra/pirawread.o (.data);
-      build/j/src/libultra/bzero.o (.data);
-      build/j/src/libultra/sethwinterrupt.o (.data);
-      build/j/src/libultra/leointerrupt.o (.data);
-      build/j/src/libultra/interrupt.o (.data);
-      build/j/src/libultra/timerintr.o (.data);
-      build/j/src/libultra/kdebugserver.o (.data);
-      build/j/src/libultra/getthreadpri.o (.data);
-      build/j/src/libultra/vi.o (.data); /*edited*/
-      build/j/src/libultra/vigetcurrcontext.o (.data);
-      build/j/src/libultra/viswapcontext.o (.data);
-      build/j/src/libultra/spgetstat.o (.data);
-      build/j/src/libultra/spsetstat.o (.data);
-      build/j/src/libultra/spsetpc.o (.data);
-      build/j/src/libultra/sprawdma.o (.data);
-      build/j/src/libultra/sp.o (.data);
-      build/j/src/libultra/dp.o (.data);
-      build/j/src/libultra/probetlb.o (.data);
-      build/j/src/libultra/syndelete.o (.data);
-      build/j/src/libultra/ai.o (.data);
-      build/j/src/libultra/drvrNew.o (.data);
-      build/j/src/libultra/synallocfx.o (.data);
-      build/j/src/libultra/mainbus.o (.data);
-      build/j/src/libultra/load.o (.data);
-      build/j/src/libultra/resample.o (.data);
-      build/j/src/libultra/env.o (.data); /*edited*/
-      build/j/src/libultra/auxbus.o (.data);
-      build/j/src/libultra/save.o (.data);
-      build/j/src/libultra/jammesg.o (.data);
-      build/j/src/libultra/pigetcmdq.o (.data);
-      build/j/src/libultra/ultra7001B830.o (.data); /*edited*/
-      build/j/src/libultra/ultra7001B9A0.o (.data); /*edited*/
-      build/j/src/libultra/destroythread.o (.data);
-      build/j/src/libultra/seqplayer.o (.data);
-      build/j/src/libultra/synstartvoiceparam.o (.data);
-      build/j/src/libultra/copy.o (.data);
-      build/j/src/libultra/piacs.o (.data);
-      build/j/src/libultra/xlitob.o (.data);
-      build/j/src/libultra/xldtob.o (.data);
-      build/j/src/libultra/epirawdma.o (.data);
-      build/j/src/libultra/devmgr.o (.data);
-      build/j/src/libultra/contpfs.o (.data);
-      build/j/src/libultra/si.o (.data);
-      build/j/src/libultra/normalize.o (.data);
-      build/j/src/libultra/sqrtf.o (.data);
-      build/j/src/libultra/leodiskinit.o (.data);
-      build/j/src/libultra/setcompare.o (.data);
-      build/j/src/libultra/filter.o (.data);
-      build/j/src/libultra/reverb.o (.data); /*edited*/
-      build/j/src/libultra/libm_vals.o (.data); /*edited*/
-      build/j/src/libultra/seq.o (.data);
-      build/j/src/libultra/synsetpriority.o (.data);
-      build/j/src/libultra/ldiv.o (.data);
-      build/j/src/libultra/resetglobalintmask.o (.data);
-      build/j/src/libultra/epirawwrite.o (.data);
-      build/j/src/libultra/vimodentsclan1.o (.data);
-      build/j/src/libultra/vimodepallan1.o (.data);
-      build/j/src/libultra/ultra80069080.o (.data); /*edited*/
+      build/j/src/libultra/io/pirawdma.o (.data);
+      build/j/src/libultra/io/pigetstat.o (.data);
+      build/j/src/libultrare/os/initialize.o (.data);
+      build/j/src/libultra/os/writebackdcacheall.o (.data);
+      build/j/src/libultra/os/invalicache.o (.data);
+      build/j/src/libultra/os/unmaptlb.o (.data);
+      build/j/src/libultra/os/getfpccsr.o (.data);
+      build/j/src/libultra/os/setfpccsr.o (.data);
+      build/j/src/libultra/os/createthread.o (.data);
+      build/j/src/libultra/os/startthread.o (.data);
+      build/j/src/libultra/os/createmesgqueue.o (.data);
+      build/j/src/libultra/os/parameters.o (.data);
+      build/j/src/libultra/os/stopthread.o (.data);
+      build/j/src/libultra/os/setthreadpri.o (.data);
+      build/j/src/libultra/os/getcount.o (.data);
+      build/j/src/libultrare/io/vimgr.o (.data);
+      build/j/src/libultrare/io/vitbl.o (.data); /*edited*/
+      build/j/src/libultra/os/seteventmesg.o (.data);
+      build/j/src/libultra/io/visetevent.o (.data);
+      build/j/src/libultra/os/setintmask.o (.data);
+      build/j/src/libultra/os/recvmesg.o (.data);
+      build/j/src/libultra/os/sendmesg.o (.data);
+      build/j/src/libultra/io/visetmode.o (.data);
+      build/j/src/libultra/io/visetxscale.o (.data);
+      build/j/src/libultra/io/visetyscale.o (.data);
+      build/j/src/libultra/io/virepeatline.o (.data);
+      build/j/src/libultra/io/viblack.o (.data);
+      build/j/src/libultra/io/sptaskyielded.o (.data);
+      build/j/src/libultra/io/dpctr.o (.data);
+      build/j/src/libultra/io/vigetcurrframebuf.o (.data);
+      build/j/src/libultra/io/vigetnextframebuf.o (.data);
+      build/j/src/libultra/io/viswapbuf.o (.data);
+      build/j/src/libultra/io/dpsetstat.o (.data);
+      build/j/src/libultrare/io/sptask.o (.data);
+      build/j/src/libultra/io/dpsetnextbuf.o (.data);
+      build/j/src/libultra/io/sptaskyield.o (.data);
+      build/j/src/libultra/os/gettlbhi.o (.data);
+      build/j/src/libultra/os/virtualtophysical.o (.data);
+      build/j/src/libultra/io/aisetfreq.o (.data);
+      build/j/src/libultra/audio/sl.o (.data);
+      build/j/src/libultra/audio/heapalloc.o (.data);
+      build/j/src/libultra/os/gettime.o (.data);
+      build/j/src/libultra/libc/ll.o (.data); /*edited*/
+      build/j/src/libultrare/io/aisetnextbuf.o (.data);
+      build/j/src/libultra/io/aigetlen.o (.data);
+      build/j/src/libultra/audio/synthesizer.o (.data);
+      build/j/src/libultra/io/pidma.o (.data);
+      build/j/src/libultra/io/visetspecial.o (.data);
+      build/j/src/libultra/libc/bcopy.o (.data);
+      build/j/src/libultra/gu/perspective.o (.data);
+      build/j/src/libultra/gu/mtxutil.o (.data);
+      build/j/src/libultra/os/getcurrfaultthread.o (.data);
+      build/j/src/libultra/os/exception.o (.data); /*edited*/
+      build/j/src/libultra/os/thread.o (.data);
+      build/j/src/libultra/os/yieldthread.o (.data);
+      build/j/src/libultra/os/invaldcache.o (.data);
+      build/j/src/libultra/os/writebackdcache.o (.data);
+      build/j/src/libultra/os/settimer.o (.data);
+      build/j/src/libultra/audio/heapinit.o (.data);
+      build/j/src/libultra/audio/bnkf.o (.data);
+      build/j/src/libultra/audio/csplayer.o (.data);
+      build/j/src/libultra/audio/seqpsetbank.o (.data);
+      build/j/src/libultra/audio/cspgetstate.o (.data);
+      build/j/src/libultra/audio/cseq.o (.data);
+      build/j/src/libultra/audio/cspsetseq.o (.data);
+      build/j/src/libultra/audio/cspplay.o (.data);
+      build/j/src/libultra/audio/cspstop.o (.data);
+      build/j/src/libultra/audio/cspsetvol.o (.data);
+      build/j/src/libultra/audio/event.o (.data);
+      build/j/src/libultra/audio/synaddplayer.o (.data);
+      build/j/src/libultra/audio/synallocvoice.o (.data);
+      build/j/src/libultra/audio/synsetvol.o (.data);
+      build/j/src/libultra/audio/synstartvoice.o (.data);
+      build/j/src/libultra/audio/synsetpan.o (.data);
+      build/j/src/libultra/audio/synsetpitch.o (.data);
+      build/j/src/libultra/audio/synsetfxmix.o (.data);
+      build/j/src/libultra/audio/synstopvoice.o (.data);
+      build/j/src/libultra/audio/synfreevoice.o (.data);
+      build/j/src/libultra/audio/cents2ratio.o (.data);
+      build/j/src/libultra/io/piread.o (.data);
+      build/j/src/libultra/libc/string.o (.data);
+      build/j/src/libultrare/libc/xprintf.o (.data);
+      build/j/src/libultrare/io/pimgr.o (.data);
+      build/j/src/libultrare/io/pfsinit.o (.data);
+      build/j/src/libultrare/io/controller.o (.data);
+      build/j/src/libultra/io/contquery.o (.data);
+      build/j/src/libultrare/io/contreaddata.o (.data);
+      build/j/src/libultrare/io/conteepprobe.o (.data);
+      build/j/src/libultrare/io/conteepread.o (.data);
+      build/j/src/libultrare/io/conteepwrite.o (.data);
+      build/j/src/libultrare/io/conteeplongread.o (.data);
+      build/j/src/libultrare/io/conteeplongwrite.o (.data);
+      build/j/src/libultrare/io/pfsisplug.o (.data);
+      build/j/src/libultra/io/siacs.o (.data);
+      build/j/src/libultra/io/sirawdma.o (.data);
+      build/j/src/libultra/io/crc.o (.data);
+      build/j/src/libultrare/io/contramwrite.o (.data);
+      build/j/src/libultrare/io/contramread.o (.data);
+      build/j/src/libultra/gu/align.o (.data);
+      build/j/src/libultra/gu/ortho.o (.data);
+      build/j/src/libultra/gu/coss.o (.data);
+      build/j/src/libultra/gu/sins.o (.data);
+      build/j/src/libultra/gu/translate.o (.data);
+      build/j/src/libultra/libc/bcmp.o (.data);
+      build/j/src/libultra/gu/scale.o (.data);
+      build/j/src/libultra/gu/lookatref.o (.data);
+      build/j/src/libultra/gu/lookat.o (.data);
+      build/j/src/libultra/gu/rotate.o (.data);
+      build/j/src/libultra/libc/llcvt.o (.data); /*edited*/
+      build/j/src/libultra/os/setsr.o (.data);
+      build/j/src/libultra/os/getsr.o (.data);
+      build/j/src/libultra/io/sirawread.o (.data);
+      build/j/src/libultra/io/sirawwrite.o (.data);
+      build/j/src/libultra/io/pirawread.o (.data);
+      build/j/src/libultra/libc/bzero.o (.data);
+      build/j/src/libultra/os/sethwinterrupt.o (.data);
+      build/j/src/libultrare/io/leointerrupt.o (.data);
+      build/j/src/libultra/os/interrupt.o (.data);
+      build/j/src/libultra/os/timerintr.o (.data);
+      build/j/src/libultra/os/kdebugserver.o (.data);
+      build/j/src/libultra/os/getthreadpri.o (.data);
+      build/j/src/libultrare/io/vi.o (.data); /*edited*/
+      build/j/src/libultra/io/vigetcurrcontext.o (.data);
+      build/j/src/libultra/io/viswapcontext.o (.data);
+      build/j/src/libultra/io/spgetstat.o (.data);
+      build/j/src/libultra/io/spsetstat.o (.data);
+      build/j/src/libultra/io/spsetpc.o (.data);
+      build/j/src/libultra/io/sprawdma.o (.data);
+      build/j/src/libultra/io/sp.o (.data);
+      build/j/src/libultra/io/dp.o (.data);
+      build/j/src/libultra/os/probetlb.o (.data);
+      build/j/src/libultra/audio/syndelete.o (.data);
+      build/j/src/libultra/io/ai.o (.data);
+      build/j/src/libultrare/audio/drvrNew.o (.data);
+      build/j/src/libultra/audio/synallocfx.o (.data);
+      build/j/src/libultra/audio/mainbus.o (.data);
+      build/j/src/libultra/audio/load.o (.data);
+      build/j/src/libultra/audio/resample.o (.data);
+      build/j/src/libultrare/audio/env.o (.data); /*edited*/
+      build/j/src/libultra/audio/auxbus.o (.data);
+      build/j/src/libultra/audio/save.o (.data);
+      build/j/src/libultra/os/jammesg.o (.data);
+      build/j/src/libultra/io/pigetcmdq.o (.data);
+      build/j/src/libultra/gu/cosf.o (.data); /*edited*/
+      build/j/src/libultra/gu/sinf.o (.data); /*edited*/
+      build/j/src/libultrare/os/destroythread.o (.data);
+      build/j/src/libultra/audio/seqplayer.o (.data);
+      build/j/src/libultra/audio/synstartvoiceparam.o (.data);
+      build/j/src/libultra/audio/copy.o (.data);
+      build/j/src/libultra/io/piacs.o (.data);
+      build/j/src/libultra/libc/xlitob.o (.data);
+      build/j/src/libultra/libc/xldtob.o (.data);
+      build/j/src/libultrare/io/epirawdma.o (.data);
+      build/j/src/libultrare/io/devmgr.o (.data);
+      build/j/src/libultra/io/contpfs.o (.data);
+      build/j/src/libultra/io/si.o (.data);
+      build/j/src/libultra/gu/normalize.o (.data);
+      build/j/src/libultra/gu/sqrtf.o (.data);
+      build/j/src/libultrare/io/leodiskinit.o (.data);
+      build/j/src/libultra/os/setcompare.o (.data);
+      build/j/src/libultra/audio/filter.o (.data);
+      build/j/src/libultrare/audio/reverb.o (.data); /*edited*/
+      build/j/src/libultra/gu/libm_vals.o (.data); /*edited*/
+      build/j/src/libultra/audio/seq.o (.data);
+      build/j/src/libultra/audio/synsetpriority.o (.data);
+      build/j/src/libultra/libc/ldiv.o (.data);
+      build/j/src/libultra/os/resetglobalintmask.o (.data);
+      build/j/src/libultrare/io/epirawwrite.o (.data);
+      build/j/src/libultra/io/vimodentsclan1.o (.data);
+      build/j/src/libultrare/io/vimodepallan1.o (.data);
+      build/j/src/libultrare/ultra80069080.o (.data); /*edited*/
       /*build/j/src/libultra/libultra.a:libultra.o (.data);*/
 
 
@@ -3434,12 +3474,12 @@ SECTIONS
       build/j/src/tlb_hardwire.o (.rodata);
       build/j/src/audi.o (.rodata);
       build/j/src/speed_graph.o (.rodata);
-      build/j/src/video.o (.rodata);
+      build/j/src/fr.o (.rodata);
       build/j/src/deb.o (.rodata);
-      build/j/src/tlb_paging.o (.rodata);
-      build/j/src/unused_fp.o (.rodata);
+      build/j/src/fault.o (.rodata);
+      /*deb_print may be part of fault per pd beta (.rodata);*/
       build/j/src/deb_print.o (.rodata);
-      build/j/src/debug_getlastRA.o (.rodata);
+      build/j/src/getra.o (.rodata);
       build/j/src/ramrom.o (.rodata);
       build/j/src/boss.o (.rodata);
       build/j/src/music.o (.rodata);
@@ -3459,177 +3499,177 @@ SECTIONS
 
 
       /*build/j/src/libultra/osPiRawStartDma.o (.rodata);*/
-      build/j/src/libultra/pirawdma.o (.rodata);
-      build/j/src/libultra/pigetstat.o (.rodata);
-      build/j/src/libultra/initialize.o (.rodata);
-      build/j/src/libultra/writebackdcacheall.o (.rodata);
-      build/j/src/libultra/invalicache.o (.rodata);
-      build/j/src/libultra/unmaptlb.o (.rodata);
-      build/j/src/libultra/getfpccsr.o (.rodata);
-      build/j/src/libultra/setfpccsr.o (.rodata);
-      build/j/src/libultra/createthread.o (.rodata);
-      build/j/src/libultra/startthread.o (.rodata);
-      build/j/src/libultra/createmesgqueue.o (.rodata);
-      build/j/src/libultra/parameters.o (.rodata);
-      build/j/src/libultra/stopthread.o (.rodata);
-      build/j/src/libultra/setthreadpri.o (.rodata);
-      build/j/src/libultra/getcount.o (.rodata);
-      build/j/src/libultra/vimgr.o (.rodata);
-      build/j/src/libultra/vitbl.o (.rodata); /*edited*/
-      build/j/src/libultra/seteventmesg.o (.rodata);
-      build/j/src/libultra/visetevent.o (.rodata);
-      build/j/src/libultra/setintmask.o (.rodata);
-      build/j/src/libultra/recvmesg.o (.rodata);
-      build/j/src/libultra/sendmesg.o (.rodata);
-      build/j/src/libultra/visetmode.o (.rodata);
-      build/j/src/libultra/visetxscale.o (.rodata);
-      build/j/src/libultra/visetyscale.o (.rodata);
-      build/j/src/libultra/virepeatline.o (.rodata);
-      build/j/src/libultra/viblack.o (.rodata);
-      build/j/src/libultra/sptaskyielded.o (.rodata);
-      build/j/src/libultra/dpctr.o (.rodata);
-      build/j/src/libultra/vigetcurrframebuf.o (.rodata);
-      build/j/src/libultra/vigetnextframebuf.o (.rodata);
-      build/j/src/libultra/viswapbuf.o (.rodata);
-	   build/j/src/libultra/dpsetstat.o (.rodata);
-      build/j/src/libultra/sptask.o (.rodata);
-      build/j/src/libultra/dpsetnextbuf.o (.rodata);
-      build/j/src/libultra/sptaskyield.o (.rodata);
-      build/j/src/libultra/gettlbhi.o (.rodata);
-      build/j/src/libultra/virtualtophysical.o (.rodata);
-      build/j/src/libultra/aisetfreq.o (.rodata);
-      build/j/src/libultra/sl.o (.rodata);
-      build/j/src/libultra/heapalloc.o (.rodata);
-      build/j/src/libultra/gettime.o (.rodata);
-      build/j/src/libultra/ll.o (.rodata); /*edited*/
-      build/j/src/libultra/aisetnextbuf.o (.rodata);
-      build/j/src/libultra/aigetlen.o (.rodata);
-      build/j/src/libultra/synthesizer.o (.rodata);
-      build/j/src/libultra/pidma.o (.rodata);
-      build/j/src/libultra/visetspecial.o (.rodata);
-      build/j/src/libultra/bcopy.o (.rodata);
-      build/j/src/libultra/perspective.o (.rodata);
-      build/j/src/libultra/mtxutil.o (.rodata);
-      build/j/src/libultra/getcurrfaultthread.o (.rodata);
-      build/j/src/libultra/exception.o (.rodata); /*edited*/
-      build/j/src/libultra/thread.o (.rodata);
-      build/j/src/libultra/yieldthread.o (.rodata);
-      build/j/src/libultra/invaldcache.o (.rodata);
-      build/j/src/libultra/writebackdcache.o (.rodata);
-      build/j/src/libultra/settimer.o (.rodata);
-      build/j/src/libultra/heapinit.o (.rodata);
-      build/j/src/libultra/bnkf.o (.rodata);
-      build/j/src/libultra/csplayer.o (.rodata);
-      build/j/src/libultra/seqpsetbank.o (.rodata);
-      build/j/src/libultra/cspgetstate.o (.rodata);
-      build/j/src/libultra/cseq.o (.rodata);
-      build/j/src/libultra/cspsetseq.o (.rodata);
-      build/j/src/libultra/cspplay.o (.rodata);
-      build/j/src/libultra/cspstop.o (.rodata);
-      build/j/src/libultra/cspsetvol.o (.rodata);
-      build/j/src/libultra/event.o (.rodata);
-      build/j/src/libultra/synaddplayer.o (.rodata);
-      build/j/src/libultra/synallocvoice.o (.rodata);
-      build/j/src/libultra/synsetvol.o (.rodata);
-      build/j/src/libultra/synstartvoice.o (.rodata);
-      build/j/src/libultra/synsetpan.o (.rodata);
-      build/j/src/libultra/synsetpitch.o (.rodata);
-      build/j/src/libultra/synsetfxmix.o (.rodata);
-      build/j/src/libultra/synstopvoice.o (.rodata);
-      build/j/src/libultra/synfreevoice.o (.rodata);
-      build/j/src/libultra/cents2ratio.o (.rodata);
-      build/j/src/libultra/piread.o (.rodata);
-      build/j/src/libultra/string.o (.rodata);
-      build/j/src/libultra/xprintf.o (.rodata);
-      build/j/src/libultra/pimgr.o (.rodata);
-      build/j/src/libultra/pfsinit.o (.rodata);
-      build/j/src/libultra/controller.o (.rodata);
-      build/j/src/libultra/contquery.o (.rodata);
-      build/j/src/libultra/contreaddata.o (.rodata);
-      build/j/src/libultra/conteepprobe.o (.rodata);
-      build/j/src/libultra/conteepread.o (.rodata);
-      build/j/src/libultra/conteepwrite.o (.rodata);
-      build/j/src/libultra/conteeplongread.o (.rodata);
-      build/j/src/libultra/conteeplongwrite.o (.rodata);
-      build/j/src/libultra/pfsisplug.o (.rodata);
-      build/j/src/libultra/siacs.o (.rodata);
-      build/j/src/libultra/sirawdma.o (.rodata);
-      build/j/src/libultra/crc.o (.rodata);
-      build/j/src/libultra/contramwrite.o (.rodata);
-      build/j/src/libultra/contramread.o (.rodata);
-      build/j/src/libultra/align.o (.rodata);
-      build/j/src/libultra/ortho.o (.rodata);
-      build/j/src/libultra/coss.o (.rodata);
-      build/j/src/libultra/sins.o (.rodata);
-      build/j/src/libultra/translate.o (.rodata);
-      build/j/src/libultra/bcmp.o (.rodata);
-      build/j/src/libultra/scale.o (.rodata);
-      build/j/src/libultra/lookatref.o (.rodata);
-      build/j/src/libultra/lookat.o (.rodata);
-      build/j/src/libultra/rotate.o (.rodata);
-      build/j/src/libultra/llcvt.o (.rodata); /*edited*/
-      build/j/src/libultra/setsr.o (.rodata);
-      build/j/src/libultra/getsr.o (.rodata);
-      build/j/src/libultra/sirawread.o (.rodata);
-      build/j/src/libultra/sirawwrite.o (.rodata);
-      build/j/src/libultra/pirawread.o (.rodata);
-      build/j/src/libultra/bzero.o (.rodata);
-      build/j/src/libultra/sethwinterrupt.o (.rodata);
-      build/j/src/libultra/leointerrupt.o (.rodata);
-      build/j/src/libultra/interrupt.o (.rodata);
-      build/j/src/libultra/timerintr.o (.rodata);
-      build/j/src/libultra/kdebugserver.o (.rodata);
-      build/j/src/libultra/getthreadpri.o (.rodata);
-      build/j/src/libultra/vi.o (.rodata); /*edited*/
-      build/j/src/libultra/vigetcurrcontext.o (.rodata);
-      build/j/src/libultra/viswapcontext.o (.rodata);
-      build/j/src/libultra/spgetstat.o (.rodata);
-      build/j/src/libultra/spsetstat.o (.rodata);
-      build/j/src/libultra/spsetpc.o (.rodata);
-      build/j/src/libultra/sprawdma.o (.rodata);
-      build/j/src/libultra/sp.o (.rodata);
-      build/j/src/libultra/dp.o (.rodata);
-      build/j/src/libultra/probetlb.o (.rodata);
-      build/j/src/libultra/syndelete.o (.rodata);
-      build/j/src/libultra/ai.o (.rodata);
-      build/j/src/libultra/drvrNew.o (.rodata);
-      build/j/src/libultra/synallocfx.o (.rodata);
-      build/j/src/libultra/mainbus.o (.rodata);
-      build/j/src/libultra/load.o (.rodata);
-      build/j/src/libultra/resample.o (.rodata);
-      build/j/src/libultra/env.o (.rodata); /*edited*/
-      build/j/src/libultra/auxbus.o (.rodata);
-      build/j/src/libultra/save.o (.rodata);
-      build/j/src/libultra/jammesg.o (.rodata);
-      build/j/src/libultra/pigetcmdq.o (.rodata);
-      build/j/src/libultra/ultra7001B830.o (.rodata); /*edited*/
-      build/j/src/libultra/ultra7001B9A0.o (.rodata); /*edited*/
-      build/j/src/libultra/destroythread.o (.rodata);
-      build/j/src/libultra/seqplayer.o (.rodata);
-      build/j/src/libultra/synstartvoiceparam.o (.rodata);
-      build/j/src/libultra/copy.o (.rodata);
-      build/j/src/libultra/piacs.o (.rodata);
-      build/j/src/libultra/xlitob.o (.rodata);
-      build/j/src/libultra/xldtob.o (.rodata);
-      build/j/src/libultra/epirawdma.o (.rodata);
-      build/j/src/libultra/devmgr.o (.rodata);
-      build/j/src/libultra/contpfs.o (.rodata);
-      build/j/src/libultra/si.o (.rodata);
-      build/j/src/libultra/normalize.o (.rodata);
-      build/j/src/libultra/sqrtf.o (.rodata);
-      build/j/src/libultra/leodiskinit.o (.rodata);
-      build/j/src/libultra/setcompare.o (.rodata);
-      build/j/src/libultra/filter.o (.rodata);
-      build/j/src/libultra/reverb.o (.rodata); /*edited*/
-      build/j/src/libultra/libm_vals.o (.rodata); /*edited*/
-      build/j/src/libultra/seq.o (.rodata);
-      build/j/src/libultra/synsetpriority.o (.rodata);
-      build/j/src/libultra/ldiv.o (.rodata);
-      build/j/src/libultra/resetglobalintmask.o (.rodata);
-      build/j/src/libultra/epirawwrite.o (.rodata);
-      build/j/src/libultra/vimodentsclan1.o (.rodata);
-      build/j/src/libultra/vimodepallan1.o (.rodata);
-      build/j/src/libultra/ultra80069080.o (.rodata); /*edited*/
+      build/j/src/libultra/io/pirawdma.o (.rodata);
+      build/j/src/libultra/io/pigetstat.o (.rodata);
+      build/j/src/libultrare/os/initialize.o (.rodata);
+      build/j/src/libultra/os/writebackdcacheall.o (.rodata);
+      build/j/src/libultra/os/invalicache.o (.rodata);
+      build/j/src/libultra/os/unmaptlb.o (.rodata);
+      build/j/src/libultra/os/getfpccsr.o (.rodata);
+      build/j/src/libultra/os/setfpccsr.o (.rodata);
+      build/j/src/libultra/os/createthread.o (.rodata);
+      build/j/src/libultra/os/startthread.o (.rodata);
+      build/j/src/libultra/os/createmesgqueue.o (.rodata);
+      build/j/src/libultra/os/parameters.o (.rodata);
+      build/j/src/libultra/os/stopthread.o (.rodata);
+      build/j/src/libultra/os/setthreadpri.o (.rodata);
+      build/j/src/libultra/os/getcount.o (.rodata);
+      build/j/src/libultrare/io/vimgr.o (.rodata);
+      build/j/src/libultrare/io/vitbl.o (.rodata); /*edited*/
+      build/j/src/libultra/os/seteventmesg.o (.rodata);
+      build/j/src/libultra/io/visetevent.o (.rodata);
+      build/j/src/libultra/os/setintmask.o (.rodata);
+      build/j/src/libultra/os/recvmesg.o (.rodata);
+      build/j/src/libultra/os/sendmesg.o (.rodata);
+      build/j/src/libultra/io/visetmode.o (.rodata);
+      build/j/src/libultra/io/visetxscale.o (.rodata);
+      build/j/src/libultra/io/visetyscale.o (.rodata);
+      build/j/src/libultra/io/virepeatline.o (.rodata);
+      build/j/src/libultra/io/viblack.o (.rodata);
+      build/j/src/libultra/io/sptaskyielded.o (.rodata);
+      build/j/src/libultra/io/dpctr.o (.rodata);
+      build/j/src/libultra/io/vigetcurrframebuf.o (.rodata);
+      build/j/src/libultra/io/vigetnextframebuf.o (.rodata);
+      build/j/src/libultra/io/viswapbuf.o (.rodata);
+	   build/j/src/libultra/io/dpsetstat.o (.rodata);
+      build/j/src/libultrare/io/sptask.o (.rodata);
+      build/j/src/libultra/io/dpsetnextbuf.o (.rodata);
+      build/j/src/libultra/io/sptaskyield.o (.rodata);
+      build/j/src/libultra/os/gettlbhi.o (.rodata);
+      build/j/src/libultra/os/virtualtophysical.o (.rodata);
+      build/j/src/libultra/io/aisetfreq.o (.rodata);
+      build/j/src/libultra/audio/sl.o (.rodata);
+      build/j/src/libultra/audio/heapalloc.o (.rodata);
+      build/j/src/libultra/os/gettime.o (.rodata);
+      build/j/src/libultra/libc/ll.o (.rodata); /*edited*/
+      build/j/src/libultrare/io/aisetnextbuf.o (.rodata);
+      build/j/src/libultra/io/aigetlen.o (.rodata);
+      build/j/src/libultra/audio/synthesizer.o (.rodata);
+      build/j/src/libultra/io/pidma.o (.rodata);
+      build/j/src/libultra/io/visetspecial.o (.rodata);
+      build/j/src/libultra/libc/bcopy.o (.rodata);
+      build/j/src/libultra/gu/perspective.o (.rodata);
+      build/j/src/libultra/gu/mtxutil.o (.rodata);
+      build/j/src/libultra/os/getcurrfaultthread.o (.rodata);
+      build/j/src/libultra/os/exception.o (.rodata); /*edited*/
+      build/j/src/libultra/os/thread.o (.rodata);
+      build/j/src/libultra/os/yieldthread.o (.rodata);
+      build/j/src/libultra/os/invaldcache.o (.rodata);
+      build/j/src/libultra/os/writebackdcache.o (.rodata);
+      build/j/src/libultra/os/settimer.o (.rodata);
+      build/j/src/libultra/audio/heapinit.o (.rodata);
+      build/j/src/libultra/audio/bnkf.o (.rodata);
+      build/j/src/libultra/audio/csplayer.o (.rodata);
+      build/j/src/libultra/audio/seqpsetbank.o (.rodata);
+      build/j/src/libultra/audio/cspgetstate.o (.rodata);
+      build/j/src/libultra/audio/cseq.o (.rodata);
+      build/j/src/libultra/audio/cspsetseq.o (.rodata);
+      build/j/src/libultra/audio/cspplay.o (.rodata);
+      build/j/src/libultra/audio/cspstop.o (.rodata);
+      build/j/src/libultra/audio/cspsetvol.o (.rodata);
+      build/j/src/libultra/audio/event.o (.rodata);
+      build/j/src/libultra/audio/synaddplayer.o (.rodata);
+      build/j/src/libultra/audio/synallocvoice.o (.rodata);
+      build/j/src/libultra/audio/synsetvol.o (.rodata);
+      build/j/src/libultra/audio/synstartvoice.o (.rodata);
+      build/j/src/libultra/audio/synsetpan.o (.rodata);
+      build/j/src/libultra/audio/synsetpitch.o (.rodata);
+      build/j/src/libultra/audio/synsetfxmix.o (.rodata);
+      build/j/src/libultra/audio/synstopvoice.o (.rodata);
+      build/j/src/libultra/audio/synfreevoice.o (.rodata);
+      build/j/src/libultra/audio/cents2ratio.o (.rodata);
+      build/j/src/libultra/io/piread.o (.rodata);
+      build/j/src/libultra/libc/string.o (.rodata);
+      build/j/src/libultrare/libc/xprintf.o (.rodata);
+      build/j/src/libultrare/io/pimgr.o (.rodata);
+      build/j/src/libultrare/io/pfsinit.o (.rodata);
+      build/j/src/libultrare/io/controller.o (.rodata);
+      build/j/src/libultra/io/contquery.o (.rodata);
+      build/j/src/libultrare/io/contreaddata.o (.rodata);
+      build/j/src/libultrare/io/conteepprobe.o (.rodata);
+      build/j/src/libultrare/io/conteepread.o (.rodata);
+      build/j/src/libultrare/io/conteepwrite.o (.rodata);
+      build/j/src/libultrare/io/conteeplongread.o (.rodata);
+      build/j/src/libultrare/io/conteeplongwrite.o (.rodata);
+      build/j/src/libultrare/io/pfsisplug.o (.rodata);
+      build/j/src/libultra/io/siacs.o (.rodata);
+      build/j/src/libultra/io/sirawdma.o (.rodata);
+      build/j/src/libultra/io/crc.o (.rodata);
+      build/j/src/libultrare/io/contramwrite.o (.rodata);
+      build/j/src/libultrare/io/contramread.o (.rodata);
+      build/j/src/libultra/gu/align.o (.rodata);
+      build/j/src/libultra/gu/ortho.o (.rodata);
+      build/j/src/libultra/gu/coss.o (.rodata);
+      build/j/src/libultra/gu/sins.o (.rodata);
+      build/j/src/libultra/gu/translate.o (.rodata);
+      build/j/src/libultra/libc/bcmp.o (.rodata);
+      build/j/src/libultra/gu/scale.o (.rodata);
+      build/j/src/libultra/gu/lookatref.o (.rodata);
+      build/j/src/libultra/gu/lookat.o (.rodata);
+      build/j/src/libultra/gu/rotate.o (.rodata);
+      build/j/src/libultra/libc/llcvt.o (.rodata); /*edited*/
+      build/j/src/libultra/os/setsr.o (.rodata);
+      build/j/src/libultra/os/getsr.o (.rodata);
+      build/j/src/libultra/io/sirawread.o (.rodata);
+      build/j/src/libultra/io/sirawwrite.o (.rodata);
+      build/j/src/libultra/io/pirawread.o (.rodata);
+      build/j/src/libultra/libc/bzero.o (.rodata);
+      build/j/src/libultra/os/sethwinterrupt.o (.rodata);
+      build/j/src/libultrare/io/leointerrupt.o (.rodata);
+      build/j/src/libultra/os/interrupt.o (.rodata);
+      build/j/src/libultra/os/timerintr.o (.rodata);
+      build/j/src/libultra/os/kdebugserver.o (.rodata);
+      build/j/src/libultra/os/getthreadpri.o (.rodata);
+      build/j/src/libultrare/io/vi.o (.rodata); /*edited*/
+      build/j/src/libultra/io/vigetcurrcontext.o (.rodata);
+      build/j/src/libultra/io/viswapcontext.o (.rodata);
+      build/j/src/libultra/io/spgetstat.o (.rodata);
+      build/j/src/libultra/io/spsetstat.o (.rodata);
+      build/j/src/libultra/io/spsetpc.o (.rodata);
+      build/j/src/libultra/io/sprawdma.o (.rodata);
+      build/j/src/libultra/io/sp.o (.rodata);
+      build/j/src/libultra/io/dp.o (.rodata);
+      build/j/src/libultra/os/probetlb.o (.rodata);
+      build/j/src/libultra/audio/syndelete.o (.rodata);
+      build/j/src/libultra/io/ai.o (.rodata);
+      build/j/src/libultrare/audio/drvrNew.o (.rodata);
+      build/j/src/libultra/audio/synallocfx.o (.rodata);
+      build/j/src/libultra/audio/mainbus.o (.rodata);
+      build/j/src/libultra/audio/load.o (.rodata);
+      build/j/src/libultra/audio/resample.o (.rodata);
+      build/j/src/libultrare/audio/env.o (.rodata); /*edited*/
+      build/j/src/libultra/audio/auxbus.o (.rodata);
+      build/j/src/libultra/audio/save.o (.rodata);
+      build/j/src/libultra/os/jammesg.o (.rodata);
+      build/j/src/libultra/io/pigetcmdq.o (.rodata);
+      build/j/src/libultra/gu/cosf.o (.rodata); /*edited*/
+      build/j/src/libultra/gu/sinf.o (.rodata); /*edited*/
+      build/j/src/libultrare/os/destroythread.o (.rodata);
+      build/j/src/libultra/audio/seqplayer.o (.rodata);
+      build/j/src/libultra/audio/synstartvoiceparam.o (.rodata);
+      build/j/src/libultra/audio/copy.o (.rodata);
+      build/j/src/libultra/io/piacs.o (.rodata);
+      build/j/src/libultra/libc/xlitob.o (.rodata);
+      build/j/src/libultra/libc/xldtob.o (.rodata);
+      build/j/src/libultrare/io/epirawdma.o (.rodata);
+      build/j/src/libultrare/io/devmgr.o (.rodata);
+      build/j/src/libultra/io/contpfs.o (.rodata);
+      build/j/src/libultra/io/si.o (.rodata);
+      build/j/src/libultra/gu/normalize.o (.rodata);
+      build/j/src/libultra/gu/sqrtf.o (.rodata);
+      build/j/src/libultrare/io/leodiskinit.o (.rodata);
+      build/j/src/libultra/os/setcompare.o (.rodata);
+      build/j/src/libultra/audio/filter.o (.rodata);
+      build/j/src/libultrare/audio/reverb.o (.rodata); /*edited*/
+      build/j/src/libultra/gu/libm_vals.o (.rodata); /*edited*/
+      build/j/src/libultra/audio/seq.o (.rodata);
+      build/j/src/libultra/audio/synsetpriority.o (.rodata);
+      build/j/src/libultra/libc/ldiv.o (.rodata);
+      build/j/src/libultra/os/resetglobalintmask.o (.rodata);
+      build/j/src/libultrare/io/epirawwrite.o (.rodata);
+      build/j/src/libultra/io/vimodentsclan1.o (.rodata);
+      build/j/src/libultrare/io/vimodepallan1.o (.rodata);
+      build/j/src/libultrare/ultra80069080.o (.rodata); /*edited*/
       /*build/j/src/libultra/libultra.a:libultra.o (.rodata);*/
 
       build/j/src/game/initgamedata.o (.data);
@@ -3653,7 +3693,7 @@ SECTIONS
       build/j/src/game/initBondDATA.o (.data);
       build/j/src/game/initunk_005450.o (.data);
       build/j/src/game/initunk_005520.o (.data);
-      build/j/src/game/initcameraandthrown.o (.data);
+      build/j/src/game/bondview_r.o (.data);
       build/j/src/game/inititemslots.o (.data);
       build/j/src/game/initBondDATAdefaults.o (.data);
       build/j/src/game/initpathtablesomething.o (.data);
@@ -3674,17 +3714,18 @@ SECTIONS
       build/j/src/game/unk_007920.o (.data);
       build/j/src/game/null_007970.o (.data);
       build/j/src/game/unk_007980.o (.data);
-      build/j/src/game/intro_logos.o (.data);
-      build/j/src/game/mainmenu.o (.data);
+      build/j/src/game/title.o (.data);
+      build/j/src/game/front.o (.data);
       build/j/src/game/unk_01B0E0.o (.data);
       build/j/src/game/unk_01B240.o (.data);
       build/j/src/game/unk_01BAE0.o (.data);
       build/j/src/game/blood_animation.o (.data);
       build/j/src/game/blood_decrypt.o (.data);
-      build/j/src/game/gamefile.o (.data);
-      build/j/src/game/gamefile2.o (.data);
+      build/j/src/game/file.o (.data);
+      build/j/src/game/file2.o (.data);
       build/j/src/game/chr.o (.data);
-      build/j/src/game/chr2.o (.data);
+      build/j/src/game/chr_b.o (.data);
+      build/j/src/game/chrlv.o (.data);
       build/j/src/game/chrai.o (.data);
       build/j/src/game/chrobjhandler.o (.data);
       build/j/src/game/loadobjectmodel.o (.data);
@@ -3700,26 +3741,29 @@ SECTIONS
       build/j/src/game/quaternion.o (.data);
       build/j/src/game/math_floor.o (.data);
       build/j/src/game/math_ceil.o (.data);
-      build/j/src/game/bondwalk.o (.data);
+      build/j/src/game/gun.o (.data);
       build/j/src/game/bondwalk2.o (.data);
       build/j/src/game/objecthandler.o (.data);
+      build/j/src/game/objecthandler_1.o (.data);
       build/j/src/game/objecthandler_2.o (.data);
       build/j/src/game/othermodemicrocode.o (.data);
-      build/j/src/game/bond.o (.data);
+      build/j/src/game/bondview.o (.data);
       build/j/src/game/bondinv.o (.data);
       build/j/src/game/unk_08DBB0.o (.data);
       build/j/src/game/debugmenu_08FE00.o (.data);
-      build/j/src/game/debugmenu_090490.o (.data);
+      build/j/src/game/debugmenu_handler.o (.data);
       build/j/src/game/unk_091080.o (.data);
       build/j/src/game/chraidata.o (.data);
       build/j/src/game/pobjdata.o (.data);
       build/j/src/game/gobjdata.o (.data);
+      build/j/src/game/gobjdata2.o (.data);
       build/j/src/game/cobjdata.o (.data);
       build/j/src/game/cheat_buttons.o (.data);
       build/j/src/game/unk_092890.o (.data);
       build/j/src/game/unk_092E50.o (.data);
-      build/j/src/game/unk_093880.o (.data);
-      build/j/src/game/unk_09B600.o (.data);
+      build/j/src/game/player.o (.data);
+      build/j/src/game/player_2.o (.data);
+      build/j/src/game/crc.o (.data);
       build/j/src/game/chrObjRandom.o (.data);
       build/j/src/game/unk_09B7A0.o (.data);
       build/j/src/game/unk_09C250.o (.data);
@@ -3729,6 +3773,7 @@ SECTIONS
       build/j/src/game/stan.o (.data);
       build/j/src/game/unk_0B3200.o (.data);
       build/j/src/game/bg.o (.data);
+      build/j/src/game/bg2.o (.data);
       build/j/src/game/fog.o (.data);
       build/j/src/game/lightfixture.o (.data);
       build/j/src/game/unk_0BC530.o (.data);
@@ -3778,7 +3823,7 @@ SECTIONS
       build/j/src/game/initBondDATA.o (.rodata);
       build/j/src/game/initunk_005450.o (.rodata);
       build/j/src/game/initunk_005520.o (.rodata);
-      build/j/src/game/initcameraandthrown.o (.rodata);
+      build/j/src/game/bondview_r.o (.rodata);
       build/j/src/game/inititemslots.o (.rodata);
       build/j/src/game/initBondDATAdefaults.o (.rodata);
       build/j/src/game/initpathtablesomething.o (.rodata);
@@ -3799,17 +3844,18 @@ SECTIONS
       build/j/src/game/unk_007920.o (.rodata);
       build/j/src/game/null_007970.o (.rodata);
       build/j/src/game/unk_007980.o (.rodata);
-      build/j/src/game/intro_logos.o (.rodata);
-      build/j/src/game/mainmenu.o (.rodata);
+      build/j/src/game/title.o (.rodata);
+      build/j/src/game/front.o (.rodata);
       build/j/src/game/unk_01B0E0.o (.rodata);
       build/j/src/game/unk_01B240.o (.rodata);
       build/j/src/game/unk_01BAE0.o (.rodata);
       build/j/src/game/blood_animation.o (.rodata);
       build/j/src/game/blood_decrypt.o (.rodata);
-      build/j/src/game/gamefile.o (.rodata);
-      build/j/src/game/gamefile2.o (.rodata);
+      build/j/src/game/file.o (.rodata);
+      build/j/src/game/file2.o (.rodata);
       build/j/src/game/chr.o (.rodata);
-      build/j/src/game/chr2.o (.rodata);
+      build/j/src/game/chr_b.o (.rodata);
+      build/j/src/game/chrlv.o (.rodata);
       build/j/src/game/chrai.o (.rodata);
       build/j/src/game/chrobjhandler.o (.rodata);
       build/j/src/game/loadobjectmodel.o (.rodata);
@@ -3825,26 +3871,29 @@ SECTIONS
       build/j/src/game/quaternion.o (.rodata);
       build/j/src/game/math_floor.o (.rodata);
       build/j/src/game/math_ceil.o (.rodata);
-      build/j/src/game/bondwalk.o (.rodata);
+      build/j/src/game/gun.o (.rodata);
       build/j/src/game/bondwalk2.o (.rodata);
       build/j/src/game/objecthandler.o (.rodata);
+      build/j/src/game/objecthandler_1.o (.rodata);
       build/j/src/game/objecthandler_2.o (.rodata);
       build/j/src/game/othermodemicrocode.o (.rodata);
-      build/j/src/game/bond.o (.rodata);
+      build/j/src/game/bondview.o (.rodata);
       build/j/src/game/bondinv.o (.rodata);
       build/j/src/game/unk_08DBB0.o (.rodata);
       build/j/src/game/debugmenu_08FE00.o (.rodata);
-      build/j/src/game/debugmenu_090490.o (.rodata);
+      build/j/src/game/debugmenu_handler.o (.rodata);
       build/j/src/game/unk_091080.o (.rodata);
       build/j/src/game/chraidata.o (.rodata);
       build/j/src/game/pobjdata.o (.rodata);
       build/j/src/game/gobjdata.o (.rodata);
+      build/j/src/game/gobjdata2.o (.rodata);
       build/j/src/game/cobjdata.o (.rodata);
       build/j/src/game/cheat_buttons.o (.rodata);
       build/j/src/game/unk_092890.o (.rodata);
       build/j/src/game/unk_092E50.o (.rodata);
-      build/j/src/game/unk_093880.o (.rodata);
-      build/j/src/game/unk_09B600.o (.rodata);
+      build/j/src/game/player.o (.rodata);
+      build/j/src/game/player_2.o (.rodata);
+      build/j/src/game/crc.o (.rodata);
       build/j/src/game/chrObjRandom.o (.rodata);
       build/j/src/game/unk_09B7A0.o (.rodata);
       build/j/src/game/unk_09C250.o (.rodata);
@@ -3854,6 +3903,7 @@ SECTIONS
       build/j/src/game/stan.o (.rodata);
       build/j/src/game/unk_0B3200.o (.rodata);
       build/j/src/game/bg.o (.rodata);
+      build/j/src/game/bg2.o (.rodata);
       build/j/src/game/fog.o (.rodata);
       build/j/src/game/lightfixture.o (.rodata);
       build/j/src/game/unk_0BC530.o (.rodata);
@@ -3891,8 +3941,8 @@ SECTIONS
    __dataSegmentVaddrEnd = _csegmentSegmentRomEnd;
 
    _bssSegmentStart = ADDR(.bss);
-   _bssSegmentRomStart = _csegmentSegmentRomEnd;
-   .bss _csegmentSegmentEnd : AT(_bssSegmentRomStart){
+   .bss (NOLOAD) :
+   {
       build/j/src/boot.o (.bss);
       build/j/src/init.o (.bss);
       build/j/src/sched.o (.bss);
@@ -3902,12 +3952,12 @@ SECTIONS
       build/j/src/tlb_resolve.o (.bss);
       build/j/src/audi.o (.bss);
       build/j/src/speed_graph.o (.bss);
-      build/j/src/video.o (.bss);
+      build/j/src/fr.o (.bss);
       build/j/src/deb.o (.bss);
-      build/j/src/tlb_paging.o (.bss);
-      build/j/src/unused_fp.o (.bss);
+      build/j/src/fault.o (.bss);
+      /*deb_print may be part of fault per pd beta (.bss);*/
       build/j/src/deb_print.o (.bss);
-      build/j/src/debug_getlastRA.o (.bss);
+      build/j/src/getra.o (.bss);
       build/j/src/ramrom.o (.bss);
       build/j/src/boss.o (.bss);
       build/j/src/music.o (.bss);
@@ -3926,177 +3976,177 @@ SECTIONS
       build/j/src/rmon.o (.bss);
 
       /*build/j/src/libultra/osPiRawStartDma.o (.bss);*/
-      build/j/src/libultra/pirawdma.o (.bss);
-      build/j/src/libultra/pigetstat.o (.bss);
-      build/j/src/libultra/initialize.o (.bss);
-      build/j/src/libultra/writebackdcacheall.o (.bss);
-      build/j/src/libultra/invalicache.o (.bss);
-      build/j/src/libultra/unmaptlb.o (.bss);
-      build/j/src/libultra/getfpccsr.o (.bss);
-      build/j/src/libultra/setfpccsr.o (.bss);
-      build/j/src/libultra/createthread.o (.bss);
-      build/j/src/libultra/startthread.o (.bss);
-      build/j/src/libultra/createmesgqueue.o (.bss);
-      build/j/src/libultra/parameters.o (.bss);
-      build/j/src/libultra/stopthread.o (.bss);
-      build/j/src/libultra/setthreadpri.o (.bss);
-      build/j/src/libultra/getcount.o (.bss);
-      build/j/src/libultra/vimgr.o (.bss);
-      build/j/src/libultra/vitbl.o (.bss); /*edited*/
-      build/j/src/libultra/seteventmesg.o (.bss);
-      build/j/src/libultra/visetevent.o (.bss);
-      build/j/src/libultra/setintmask.o (.bss);
-      build/j/src/libultra/recvmesg.o (.bss);
-      build/j/src/libultra/sendmesg.o (.bss);
-      build/j/src/libultra/visetmode.o (.bss);
-      build/j/src/libultra/visetxscale.o (.bss);
-      build/j/src/libultra/visetyscale.o (.bss);
-      build/j/src/libultra/virepeatline.o (.bss);
-      build/j/src/libultra/viblack.o (.bss);
-      build/j/src/libultra/sptaskyielded.o (.bss);
-      build/j/src/libultra/dpctr.o (.bss);
-      build/j/src/libultra/vigetcurrframebuf.o (.bss);
-      build/j/src/libultra/vigetnextframebuf.o (.bss);
-      build/j/src/libultra/viswapbuf.o (.bss);
-      build/j/src/libultra/dpsetstat.o (.bss);
-      build/j/src/libultra/sptask.o (.bss);
-      build/j/src/libultra/dpsetnextbuf.o (.bss);
-      build/j/src/libultra/sptaskyield.o (.bss);
-      build/j/src/libultra/gettlbhi.o (.bss);
-      build/j/src/libultra/virtualtophysical.o (.bss);
-      build/j/src/libultra/aisetfreq.o (.bss);
-      build/j/src/libultra/sl.o (.bss);
-      build/j/src/libultra/heapalloc.o (.bss);
-      build/j/src/libultra/gettime.o (.bss);
-      build/j/src/libultra/ll.o (.bss); /*edited*/
-      build/j/src/libultra/aisetnextbuf.o (.bss);
-      build/j/src/libultra/aigetlen.o (.bss);
-      build/j/src/libultra/synthesizer.o (.bss);
-      build/j/src/libultra/pidma.o (.bss);
-      build/j/src/libultra/visetspecial.o (.bss);
-      build/j/src/libultra/bcopy.o (.bss);
-      build/j/src/libultra/perspective.o (.bss);
-      build/j/src/libultra/mtxutil.o (.bss);
-      build/j/src/libultra/getcurrfaultthread.o (.bss);
-      build/j/src/libultra/exception.o (.bss); /*edited*/
-      build/j/src/libultra/thread.o (.bss);
-      build/j/src/libultra/yieldthread.o (.bss);
-      build/j/src/libultra/invaldcache.o (.bss);
-      build/j/src/libultra/writebackdcache.o (.bss);
-      build/j/src/libultra/settimer.o (.bss);
-      build/j/src/libultra/heapinit.o (.bss);
-      build/j/src/libultra/bnkf.o (.bss);
-      build/j/src/libultra/csplayer.o (.bss);
-      build/j/src/libultra/seqpsetbank.o (.bss);
-      build/j/src/libultra/cspgetstate.o (.bss);
-      build/j/src/libultra/cseq.o (.bss);
-      build/j/src/libultra/cspsetseq.o (.bss);
-      build/j/src/libultra/cspplay.o (.bss);
-      build/j/src/libultra/cspstop.o (.bss);
-      build/j/src/libultra/cspsetvol.o (.bss);
-      build/j/src/libultra/event.o (.bss);
-      build/j/src/libultra/synaddplayer.o (.bss);
-      build/j/src/libultra/synallocvoice.o (.bss);
-      build/j/src/libultra/synsetvol.o (.bss);
-      build/j/src/libultra/synstartvoice.o (.bss);
-      build/j/src/libultra/synsetpan.o (.bss);
-      build/j/src/libultra/synsetpitch.o (.bss);
-      build/j/src/libultra/synsetfxmix.o (.bss);
-      build/j/src/libultra/synstopvoice.o (.bss);
-      build/j/src/libultra/synfreevoice.o (.bss);
-      build/j/src/libultra/cents2ratio.o (.bss);
-      build/j/src/libultra/piread.o (.bss);
-      build/j/src/libultra/string.o (.bss);
-      build/j/src/libultra/xprintf.o (.bss);
-      build/j/src/libultra/pimgr.o (.bss);
-      build/j/src/libultra/pfsinit.o (.bss);
-      build/j/src/libultra/controller.o (.bss);
-      build/j/src/libultra/contquery.o (.bss);
-      build/j/src/libultra/contreaddata.o (.bss);
-      build/j/src/libultra/conteepprobe.o (.bss);
-      build/j/src/libultra/conteepread.o (.bss);
-      build/j/src/libultra/conteepwrite.o (.bss);
-      build/j/src/libultra/conteeplongread.o (.bss);
-      build/j/src/libultra/conteeplongwrite.o (.bss);
-      build/j/src/libultra/pfsisplug.o (.bss);
-      build/j/src/libultra/siacs.o (.bss);
-      build/j/src/libultra/sirawdma.o (.bss);
-      build/j/src/libultra/crc.o (.bss);
-      build/j/src/libultra/contramwrite.o (.bss);
-      build/j/src/libultra/contramread.o (.bss);
-      build/j/src/libultra/align.o (.bss);
-      build/j/src/libultra/ortho.o (.bss);
-      build/j/src/libultra/coss.o (.bss);
-      build/j/src/libultra/sins.o (.bss);
-      build/j/src/libultra/translate.o (.bss);
-      build/j/src/libultra/bcmp.o (.bss);
-      build/j/src/libultra/scale.o (.bss);
-      build/j/src/libultra/lookatref.o (.bss);
-      build/j/src/libultra/lookat.o (.bss);
-      build/j/src/libultra/rotate.o (.bss);
-      build/j/src/libultra/llcvt.o (.bss); /*edited*/
-      build/j/src/libultra/setsr.o (.bss);
-      build/j/src/libultra/getsr.o (.bss);
-      build/j/src/libultra/sirawread.o (.bss);
-      build/j/src/libultra/sirawwrite.o (.bss);
-      build/j/src/libultra/pirawread.o (.bss);
-      build/j/src/libultra/bzero.o (.bss);
-      build/j/src/libultra/sethwinterrupt.o (.bss);
-      build/j/src/libultra/leointerrupt.o (.bss);
-      build/j/src/libultra/interrupt.o (.bss);
-      build/j/src/libultra/timerintr.o (.bss);
-      build/j/src/libultra/kdebugserver.o (.bss);
-      build/j/src/libultra/getthreadpri.o (.bss);
-      build/j/src/libultra/vi.o (.bss); /*edited*/
-      build/j/src/libultra/vigetcurrcontext.o (.bss);
-      build/j/src/libultra/viswapcontext.o (.bss);
-      build/j/src/libultra/spgetstat.o (.bss);
-      build/j/src/libultra/spsetstat.o (.bss);
-      build/j/src/libultra/spsetpc.o (.bss);
-      build/j/src/libultra/sprawdma.o (.bss);
-      build/j/src/libultra/sp.o (.bss);
-      build/j/src/libultra/dp.o (.bss);
-      build/j/src/libultra/probetlb.o (.bss);
-      build/j/src/libultra/syndelete.o (.bss);
-      build/j/src/libultra/ai.o (.bss);
-      build/j/src/libultra/drvrNew.o (.bss);
-      build/j/src/libultra/synallocfx.o (.bss);
-      build/j/src/libultra/mainbus.o (.bss);
-      build/j/src/libultra/load.o (.bss);
-      build/j/src/libultra/resample.o (.bss);
-      build/j/src/libultra/env.o (.bss); /*edited*/
-      build/j/src/libultra/auxbus.o (.bss);
-      build/j/src/libultra/save.o (.bss);
-      build/j/src/libultra/jammesg.o (.bss);
-      build/j/src/libultra/pigetcmdq.o (.bss);
-      build/j/src/libultra/ultra7001B830.o (.bss); /*edited*/
-      build/j/src/libultra/ultra7001B9A0.o (.bss); /*edited*/
-      build/j/src/libultra/destroythread.o (.bss);
-      build/j/src/libultra/seqplayer.o (.bss);
-      build/j/src/libultra/synstartvoiceparam.o (.bss);
-      build/j/src/libultra/copy.o (.bss);
-      build/j/src/libultra/piacs.o (.bss);
-      build/j/src/libultra/xlitob.o (.bss);
-      build/j/src/libultra/xldtob.o (.bss);
-      build/j/src/libultra/epirawdma.o (.bss);
-      build/j/src/libultra/devmgr.o (.bss);
-      build/j/src/libultra/contpfs.o (.bss);
-      build/j/src/libultra/si.o (.bss);
-      build/j/src/libultra/normalize.o (.bss);
-      build/j/src/libultra/sqrtf.o (.bss);
-      build/j/src/libultra/leodiskinit.o (.bss);
-      build/j/src/libultra/setcompare.o (.bss);
-      build/j/src/libultra/filter.o (.bss);
-      build/j/src/libultra/reverb.o (.bss); /*edited*/
-      build/j/src/libultra/libm_vals.o (.bss); /*edited*/
-      build/j/src/libultra/seq.o (.bss);
-      build/j/src/libultra/synsetpriority.o (.bss);
-      build/j/src/libultra/ldiv.o (.bss);
-      build/j/src/libultra/resetglobalintmask.o (.bss);
-      build/j/src/libultra/epirawwrite.o (.bss);
-      build/j/src/libultra/vimodentsclan1.o (.bss);
-      build/j/src/libultra/vimodepallan1.o (.bss);
-      build/j/src/libultra/ultra80069080.o (.bss); /*edited*/
+      build/j/src/libultra/io/pirawdma.o (.bss);
+      build/j/src/libultra/io/pigetstat.o (.bss);
+      build/j/src/libultrare/os/initialize.o (.bss);
+      build/j/src/libultra/os/writebackdcacheall.o (.bss);
+      build/j/src/libultra/os/invalicache.o (.bss);
+      build/j/src/libultra/os/unmaptlb.o (.bss);
+      build/j/src/libultra/os/getfpccsr.o (.bss);
+      build/j/src/libultra/os/setfpccsr.o (.bss);
+      build/j/src/libultra/os/createthread.o (.bss);
+      build/j/src/libultra/os/startthread.o (.bss);
+      build/j/src/libultra/os/createmesgqueue.o (.bss);
+      build/j/src/libultra/os/parameters.o (.bss);
+      build/j/src/libultra/os/stopthread.o (.bss);
+      build/j/src/libultra/os/setthreadpri.o (.bss);
+      build/j/src/libultra/os/getcount.o (.bss);
+      build/j/src/libultrare/io/vimgr.o (.bss);
+      build/j/src/libultrare/io/vitbl.o (.bss); /*edited*/
+      build/j/src/libultra/os/seteventmesg.o (.bss);
+      build/j/src/libultra/io/visetevent.o (.bss);
+      build/j/src/libultra/os/setintmask.o (.bss);
+      build/j/src/libultra/os/recvmesg.o (.bss);
+      build/j/src/libultra/os/sendmesg.o (.bss);
+      build/j/src/libultra/io/visetmode.o (.bss);
+      build/j/src/libultra/io/visetxscale.o (.bss);
+      build/j/src/libultra/io/visetyscale.o (.bss);
+      build/j/src/libultra/io/virepeatline.o (.bss);
+      build/j/src/libultra/io/viblack.o (.bss);
+      build/j/src/libultra/io/sptaskyielded.o (.bss);
+      build/j/src/libultra/io/dpctr.o (.bss);
+      build/j/src/libultra/io/vigetcurrframebuf.o (.bss);
+      build/j/src/libultra/io/vigetnextframebuf.o (.bss);
+      build/j/src/libultra/io/viswapbuf.o (.bss);
+      build/j/src/libultra/io/dpsetstat.o (.bss);
+      build/j/src/libultrare/io/sptask.o (.bss);
+      build/j/src/libultra/io/dpsetnextbuf.o (.bss);
+      build/j/src/libultra/io/sptaskyield.o (.bss);
+      build/j/src/libultra/os/gettlbhi.o (.bss);
+      build/j/src/libultra/os/virtualtophysical.o (.bss);
+      build/j/src/libultra/io/aisetfreq.o (.bss);
+      build/j/src/libultra/audio/sl.o (.bss);
+      build/j/src/libultra/audio/heapalloc.o (.bss);
+      build/j/src/libultra/os/gettime.o (.bss);
+      build/j/src/libultra/libc/ll.o (.bss); /*edited*/
+      build/j/src/libultrare/io/aisetnextbuf.o (.bss);
+      build/j/src/libultra/io/aigetlen.o (.bss);
+      build/j/src/libultra/audio/synthesizer.o (.bss);
+      build/j/src/libultra/io/pidma.o (.bss);
+      build/j/src/libultra/io/visetspecial.o (.bss);
+      build/j/src/libultra/libc/bcopy.o (.bss);
+      build/j/src/libultra/gu/perspective.o (.bss);
+      build/j/src/libultra/gu/mtxutil.o (.bss);
+      build/j/src/libultra/os/getcurrfaultthread.o (.bss);
+      build/j/src/libultra/os/exception.o (.bss); /*edited*/
+      build/j/src/libultra/os/thread.o (.bss);
+      build/j/src/libultra/os/yieldthread.o (.bss);
+      build/j/src/libultra/os/invaldcache.o (.bss);
+      build/j/src/libultra/os/writebackdcache.o (.bss);
+      build/j/src/libultra/os/settimer.o (.bss);
+      build/j/src/libultra/audio/heapinit.o (.bss);
+      build/j/src/libultra/audio/bnkf.o (.bss);
+      build/j/src/libultra/audio/csplayer.o (.bss);
+      build/j/src/libultra/audio/seqpsetbank.o (.bss);
+      build/j/src/libultra/audio/cspgetstate.o (.bss);
+      build/j/src/libultra/audio/cseq.o (.bss);
+      build/j/src/libultra/audio/cspsetseq.o (.bss);
+      build/j/src/libultra/audio/cspplay.o (.bss);
+      build/j/src/libultra/audio/cspstop.o (.bss);
+      build/j/src/libultra/audio/cspsetvol.o (.bss);
+      build/j/src/libultra/audio/event.o (.bss);
+      build/j/src/libultra/audio/synaddplayer.o (.bss);
+      build/j/src/libultra/audio/synallocvoice.o (.bss);
+      build/j/src/libultra/audio/synsetvol.o (.bss);
+      build/j/src/libultra/audio/synstartvoice.o (.bss);
+      build/j/src/libultra/audio/synsetpan.o (.bss);
+      build/j/src/libultra/audio/synsetpitch.o (.bss);
+      build/j/src/libultra/audio/synsetfxmix.o (.bss);
+      build/j/src/libultra/audio/synstopvoice.o (.bss);
+      build/j/src/libultra/audio/synfreevoice.o (.bss);
+      build/j/src/libultra/audio/cents2ratio.o (.bss);
+      build/j/src/libultra/io/piread.o (.bss);
+      build/j/src/libultra/libc/string.o (.bss);
+      build/j/src/libultrare/libc/xprintf.o (.bss);
+      build/j/src/libultrare/io/pimgr.o (.bss);
+      build/j/src/libultrare/io/pfsinit.o (.bss);
+      build/j/src/libultrare/io/controller.o (.bss);
+      build/j/src/libultra/io/contquery.o (.bss);
+      build/j/src/libultrare/io/contreaddata.o (.bss);
+      build/j/src/libultrare/io/conteepprobe.o (.bss);
+      build/j/src/libultrare/io/conteepread.o (.bss);
+      build/j/src/libultrare/io/conteepwrite.o (.bss);
+      build/j/src/libultrare/io/conteeplongread.o (.bss);
+      build/j/src/libultrare/io/conteeplongwrite.o (.bss);
+      build/j/src/libultrare/io/pfsisplug.o (.bss);
+      build/j/src/libultra/io/siacs.o (.bss);
+      build/j/src/libultra/io/sirawdma.o (.bss);
+      build/j/src/libultra/io/crc.o (.bss);
+      build/j/src/libultrare/io/contramwrite.o (.bss);
+      build/j/src/libultrare/io/contramread.o (.bss);
+      build/j/src/libultra/gu/align.o (.bss);
+      build/j/src/libultra/gu/ortho.o (.bss);
+      build/j/src/libultra/gu/coss.o (.bss);
+      build/j/src/libultra/gu/sins.o (.bss);
+      build/j/src/libultra/gu/translate.o (.bss);
+      build/j/src/libultra/libc/bcmp.o (.bss);
+      build/j/src/libultra/gu/scale.o (.bss);
+      build/j/src/libultra/gu/lookatref.o (.bss);
+      build/j/src/libultra/gu/lookat.o (.bss);
+      build/j/src/libultra/gu/rotate.o (.bss);
+      build/j/src/libultra/libc/llcvt.o (.bss); /*edited*/
+      build/j/src/libultra/os/setsr.o (.bss);
+      build/j/src/libultra/os/getsr.o (.bss);
+      build/j/src/libultra/io/sirawread.o (.bss);
+      build/j/src/libultra/io/sirawwrite.o (.bss);
+      build/j/src/libultra/io/pirawread.o (.bss);
+      build/j/src/libultra/libc/bzero.o (.bss);
+      build/j/src/libultra/os/sethwinterrupt.o (.bss);
+      build/j/src/libultrare/io/leointerrupt.o (.bss);
+      build/j/src/libultra/os/interrupt.o (.bss);
+      build/j/src/libultra/os/timerintr.o (.bss);
+      build/j/src/libultra/os/kdebugserver.o (.bss);
+      build/j/src/libultra/os/getthreadpri.o (.bss);
+      build/j/src/libultrare/io/vi.o (.bss); /*edited*/
+      build/j/src/libultra/io/vigetcurrcontext.o (.bss);
+      build/j/src/libultra/io/viswapcontext.o (.bss);
+      build/j/src/libultra/io/spgetstat.o (.bss);
+      build/j/src/libultra/io/spsetstat.o (.bss);
+      build/j/src/libultra/io/spsetpc.o (.bss);
+      build/j/src/libultra/io/sprawdma.o (.bss);
+      build/j/src/libultra/io/sp.o (.bss);
+      build/j/src/libultra/io/dp.o (.bss);
+      build/j/src/libultra/os/probetlb.o (.bss);
+      build/j/src/libultra/audio/syndelete.o (.bss);
+      build/j/src/libultra/io/ai.o (.bss);
+      build/j/src/libultrare/audio/drvrNew.o (.bss);
+      build/j/src/libultra/audio/synallocfx.o (.bss);
+      build/j/src/libultra/audio/mainbus.o (.bss);
+      build/j/src/libultra/audio/load.o (.bss);
+      build/j/src/libultra/audio/resample.o (.bss);
+      build/j/src/libultrare/audio/env.o (.bss); /*edited*/
+      build/j/src/libultra/audio/auxbus.o (.bss);
+      build/j/src/libultra/audio/save.o (.bss);
+      build/j/src/libultra/os/jammesg.o (.bss);
+      build/j/src/libultra/io/pigetcmdq.o (.bss);
+      build/j/src/libultra/gu/cosf.o (.bss); /*edited*/
+      build/j/src/libultra/gu/sinf.o (.bss); /*edited*/
+      build/j/src/libultrare/os/destroythread.o (.bss);
+      build/j/src/libultra/audio/seqplayer.o (.bss);
+      build/j/src/libultra/audio/synstartvoiceparam.o (.bss);
+      build/j/src/libultra/audio/copy.o (.bss);
+      build/j/src/libultra/io/piacs.o (.bss);
+      build/j/src/libultra/libc/xlitob.o (.bss);
+      build/j/src/libultra/libc/xldtob.o (.bss);
+      build/j/src/libultrare/io/epirawdma.o (.bss);
+      build/j/src/libultrare/io/devmgr.o (.bss);
+      build/j/src/libultra/io/contpfs.o (.bss);
+      build/j/src/libultra/io/si.o (.bss);
+      build/j/src/libultra/gu/normalize.o (.bss);
+      build/j/src/libultra/gu/sqrtf.o (.bss);
+      build/j/src/libultrare/io/leodiskinit.o (.bss);
+      build/j/src/libultra/os/setcompare.o (.bss);
+      build/j/src/libultra/audio/filter.o (.bss);
+      build/j/src/libultrare/audio/reverb.o (.bss); /*edited*/
+      build/j/src/libultra/gu/libm_vals.o (.bss); /*edited*/
+      build/j/src/libultra/audio/seq.o (.bss);
+      build/j/src/libultra/audio/synsetpriority.o (.bss);
+      build/j/src/libultra/libc/ldiv.o (.bss);
+      build/j/src/libultra/os/resetglobalintmask.o (.bss);
+      build/j/src/libultrare/io/epirawwrite.o (.bss);
+      build/j/src/libultra/io/vimodentsclan1.o (.bss);
+      build/j/src/libultrare/io/vimodepallan1.o (.bss);
+      build/j/src/libultrare/ultra80069080.o (.bss); /*edited*/
       /*build/j/src/libultra/libultra.a:libultra.o (.bss);*/
 
       build/j/src/game/initgamedata.o (.bss);
@@ -4120,7 +4170,7 @@ SECTIONS
       build/j/src/game/initBondDATA.o (.bss);
       build/j/src/game/initunk_005450.o (.bss);
       build/j/src/game/initunk_005520.o (.bss);
-      build/j/src/game/initcameraandthrown.o (.bss);
+      build/j/src/game/bondview_r.o (.bss);
       build/j/src/game/inititemslots.o (.bss);
       build/j/src/game/initBondDATAdefaults.o (.bss);
       build/j/src/game/initpathtablesomething.o (.bss);
@@ -4141,17 +4191,18 @@ SECTIONS
       build/j/src/game/unk_007920.o (.bss);
       build/j/src/game/null_007970.o (.bss);
       build/j/src/game/unk_007980.o (.bss);
-      build/j/src/game/intro_logos.o (.bss);
-      build/j/src/game/mainmenu.o (.bss);
+      build/j/src/game/title.o (.bss);
+      build/j/src/game/front.o (.bss);
       build/j/src/game/unk_01B0E0.o (.bss);
       build/j/src/game/unk_01B240.o (.bss);
       build/j/src/game/unk_01BAE0.o (.bss);
       build/j/src/game/blood_animation.o (.bss);
       build/j/src/game/blood_decrypt.o (.bss);
-      build/j/src/game/gamefile.o (.bss);
-      build/j/src/game/gamefile2.o (.bss);
+      build/j/src/game/file.o (.bss);
+      build/j/src/game/file2.o (.bss);
       build/j/src/game/chr.o (.bss);
-      build/j/src/game/chr2.o (.bss);
+      build/j/src/game/chr_b.o (.bss);
+      build/j/src/game/chrlv.o (.bss);
       build/j/src/game/chrai.o (.bss);
       build/j/src/game/chrobjhandler.o (.bss);
       build/j/src/game/loadobjectmodel.o (.bss);
@@ -4167,26 +4218,29 @@ SECTIONS
       build/j/src/game/quaternion.o (.bss);
       build/j/src/game/math_floor.o (.bss);
       build/j/src/game/math_ceil.o (.bss);
-      build/j/src/game/bondwalk.o (.bss);
+      build/j/src/game/gun.o (.bss);
       build/j/src/game/bondwalk2.o (.bss);
       build/j/src/game/objecthandler.o (.bss);
+      build/j/src/game/objecthandler_1.o (.bss);
       build/j/src/game/objecthandler_2.o (.bss);
       build/j/src/game/othermodemicrocode.o (.bss);
-      build/j/src/game/bond.o (.bss);
+      build/j/src/game/bondview.o (.bss);
       build/j/src/game/bondinv.o (.bss);
       build/j/src/game/unk_08DBB0.o (.bss);
       build/j/src/game/debugmenu_08FE00.o (.bss);
-      build/j/src/game/debugmenu_090490.o (.bss);
+      build/j/src/game/debugmenu_handler.o (.bss);
       build/j/src/game/unk_091080.o (.bss);
       build/j/src/game/chraidata.o (.bss);
       build/j/src/game/pobjdata.o (.bss);
       build/j/src/game/gobjdata.o (.bss);
+      build/j/src/game/gobjdata2.o (.bss);
       build/j/src/game/cobjdata.o (.bss);
       build/j/src/game/cheat_buttons.o (.bss);
       build/j/src/game/unk_092890.o (.bss);
       build/j/src/game/unk_092E50.o (.bss);
-      build/j/src/game/unk_093880.o (.bss);
-      build/j/src/game/unk_09B600.o (.bss);
+      build/j/src/game/player.o (.bss);
+      build/j/src/game/player_2.o (.bss);
+      build/j/src/game/crc.o (.bss);
       build/j/src/game/chrObjRandom.o (.bss);
       build/j/src/game/unk_09B7A0.o (.bss);
       build/j/src/game/unk_09C250.o (.bss);
@@ -4196,6 +4250,7 @@ SECTIONS
       build/j/src/game/stan.o (.bss);
       build/j/src/game/unk_0B3200.o (.bss);
       build/j/src/game/bg.o (.bss);
+      build/j/src/game/bg2.o (.bss);
       build/j/src/game/fog.o (.bss);
       build/j/src/game/lightfixture.o (.bss);
       build/j/src/game/unk_0BC530.o (.bss);
@@ -4226,48 +4281,34 @@ SECTIONS
    }
    _bssSegmentEnd = ADDR(.bss) + SIZEOF(.bss);
    _bssSegmentSize = SIZEOF(.bss);
-   _bssSegmentRomEnd = _bssSegmentRomStart + SIZEOF(.bss);
 
    _roombufSegmentStart = ADDR(.roombuf);
-   _roombufSegmentRomStart = _bssSegmentRomEnd;
-   .roombuf _bssSegmentEnd : AT(_roombufSegmentRomStart){
+   .roombuf (NOLOAD) :
+   {
       build/j/src/game/room_model_buffer.o (.bss);
    }
    _roombufSegmentEnd = ADDR(.roombuf) + SIZEOF(.roombuf);
-   _roombufSegmentRomEnd = _roombufSegmentRomStart + SIZEOF(.roombuf);
-
-   _tlbbufSegmentStart = ADDR(.tlbbuf);
-   _tlbbufSegmentRomStart = _roombufSegmentRomEnd;
-   .tlbbuf _roombufSegmentEnd : AT(_tlbbufSegmentRomStart){
-      build/j/src/tlb_buffer.o (.bss);
-   }
-   _tlbbufSegmentEnd = ADDR(.tlbbuf) + SIZEOF(.tlbbuf);
-   _tlbbufSegmentRomEnd = _tlbbufSegmentRomStart + SIZEOF(.tlbbuf);
 
    _decompbufSegmentStart = ADDR(.decompbuf);
-   _decompbufSegmentRomStart = _roombufSegmentRomEnd;
-   .decompbuf 0x80300000 : AT(_decompbufSegmentRomStart){
+   .decompbuf 0x80300000 :
+   {
       build/j/src/decompressbuffer.o (.bss);
    }
    _decompbufSegmentEnd = ADDR(.decompbuf) + SIZEOF(.decompbuf);
-   _decompbufSegmentRomEnd = _decompbufSegmentRomStart + SIZEOF(.decompbuf);
 
    _stacksSegmentStart = ADDR(.stacks);
-   _stacksSegmentRomStart = _decompbufSegmentRomEnd;
-   .stacks 0x803ab400 : AT(_stacksSegmentRomStart){
+   .stacks (NOLOAD) :
+   {
       build/j/src/stacks.o (.bss);
    }
    _stacksSegmentEnd = ADDR(.stacks) + SIZEOF(.stacks);
-   _stacksSegmentRomEnd = _stacksSegmentRomStart + SIZEOF(.stacks);
 
    _cfbSegmentStart = ADDR(.cfb);
-   _cfbSegmentRomStart = _stacksSegmentRomEnd;
-   .cfb 0x803b5000 : AT(_cfbSegmentRomStart){
+   .cfb (NOLOAD) :
+   {
       build/j/src/cfb.o (.bss);
    }
    _cfbSegmentEnd = ADDR(.cfb) + SIZEOF(.cfb);
-   _cfbSegmentRomEnd = _cfbSegmentRomStart + SIZEOF(.cfb);
-
 
    /*move em to end, out of the way*/
    /DISCARD/ : {
@@ -4280,7 +4321,7 @@ SECTIONS
       * (.gptab.bss);
       * (.gptab.data);
       * (.reginfo);
-      
+
 
 }
 }

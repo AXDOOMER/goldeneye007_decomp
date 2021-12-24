@@ -2,7 +2,7 @@
 #include "ramrom.h"
 #include "tlb_manage.h"
 #include "tlb_random.h"
-#include "PR/os_cache.h"
+#include "PR/os.h"
 
 /**
  * @file tlb_manage.c
@@ -69,7 +69,6 @@ u32 g_tlbmanageMappingTableEnd;
 u8 (*g_tlbmanageTlbAllocatedBlock) [TLB_ALLOCATION_BLOCK_SIZE];
 
 extern u8 *_gameSegmentRomStart;
-extern u8 *_tlbbufSegmentStart;
 extern u8 *sp_boot;
 
 #ifndef VERSION_EU

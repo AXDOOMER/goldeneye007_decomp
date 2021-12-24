@@ -1,5 +1,8 @@
 # To learn more about .editorconfig see https://aka.ms/editorconfigdocs
 
+# top-most EditorConfig file
+root = true
+
 # All files
 [*]
 indent_style = space
@@ -13,3 +16,15 @@ curly_bracket_next_line = true
 spaces_around_operators  = true
 indent_brace_style = Allman
 continuation_indent_size = 4
+vc_generate_documentation_comments = doxygen_slash_star
+
+[Makefile]
+indent_style = tab
+
+[ge007.u.old.elf.c]
+generated_code=true
+
+[*.{mips,s,asm}]
+indent_style = tab
+indent_size = 12
+tab_width = 12

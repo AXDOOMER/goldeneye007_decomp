@@ -1,10 +1,10 @@
-1148320,192,assets/ge007.u.117880.jfont_dl.bin,0,1
-1148512,46848,assets/ge007.j.118660.jfont_chardata.bin,0,1
-1195360,6784,assets/ge007.u.123040.efont_chardata.bin,0,1
-1202144,1482432,assets/animationtable_entries.bin,0,1
-2684576,59360,assets/animationtable_data.bin,0,1
+1148320,192,assets/ge007.u.117880.jfont_dl.bin,0,0
+1148512,46848,assets/ge007.j.118660.jfont_chardata.bin,0,0
+1195360,6784,assets/ge007.u.123040.efont_chardata.bin,0,0
+1202144,1482432,assets/animationtable_entries.bin,0,0
+2684576,59360,assets/animationtable_data.bin,0,0
 2743936,5120,assets/ge007.u.29D160.Globalimagetable.bin,0,0
-2749056,26608,assets/ge007.u.29E560.Globalimagetable_commandblock.bin,0,1
+2749056,26608,assets/Globalimagetable_commandblock.bin,0,0
 2775664,107904,assets/ge007.u.2A4D50.usedby7F008DE4.bin,0,1
 2883568,20992,assets/ramrom/ramrom_Dam_1.bin,0,1
 2904560,8144,assets/ramrom/ramrom_Dam_2.bin,0,1
@@ -96,8 +96,8 @@
 4428672,69104,assets/obseg/bg/bg_sev_all_p.bin,0,0
 4497776,331584,assets/obseg/bg/bg_silo_all_p.bin,0,0
 4829360,139472,assets/obseg/bg/bg_stat_all_p.bin,0,1
-4968832,189312,assets/obseg/bg/bg_arec_all_p.bin,0,1
-5158144,154352,assets/obseg/bg/bg_arch_all_p.bin,0,1
+4968832,189312,assets/obseg/bg/bg_arec_all_p.bin,0,0
+5158144,154352,assets/obseg/bg/bg_arch_all_p.bin,0,0
 5312496,132464,assets/obseg/bg/bg_tra_all_p.bin,0,1
 5444960,186816,assets/obseg/bg/bg_dest_all_p.bin,0,1
 5631776,109984,assets/obseg/bg/bg_sevb_all_p.bin,0,0

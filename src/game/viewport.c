@@ -1,8 +1,11 @@
 #include "ultra64.h"
 #include "memp.h"
-#include "game/bond.h"
-#include "libultra/os.h"
+#include "game/bondview.h"
+#include "PR/os.h"
 #include "include/PR/gbi.h"
+#include "macro.h"
+#include "game/player_2.h"
+#include "fr.h"
 
 // bss
 s32 z_buffer_width;
@@ -15,9 +18,6 @@ void zbufDeallocate(void) {
     z_buffer = 0;
 }
 
-#define ALIGN64(val) (((val) + 0x3F) & ~0x3F)
-u32 mempAllocBytesInBank(u32 bytes,u8 bank);
-s32 getPlayerCount(void);
 void zbufAllocate(void) {
     if (resolution != 0) {
         z_buffer_width = 440;
@@ -31,7 +31,7 @@ void zbufAllocate(void) {
         }
     }
     z_buffer = mempAllocBytesInBank((z_buffer_width * z_buffer_height * 2) + 64, 4);
-    z_buffer = ALIGN64(z_buffer);
+    z_buffer = ALIGN64_V1(z_buffer);
 }
 
 void zbufSetBuffer(s32 buffer, s32 width, s32 height) {
@@ -58,8 +58,6 @@ Gfx *zbufInit(Gfx *gdl) {
     return gdl;
 }
 
-s16 viGetX(void);
-s16 viGetY(void);
 Gfx *zbufClearCurrentPlayer(Gfx *gdl) {
     s32 start_x;
     s32 end_x;

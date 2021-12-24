@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "memp.h"
+#include "game/textrelated.h"
 
 
 // data

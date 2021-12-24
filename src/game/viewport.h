@@ -8,4 +8,6 @@
 Gfx *zbufClearCurrentPlayer(Gfx *gdl);
 Gfx *zbufInit(Gfx *gdl);
 
+void zbufDeallocate(void);
+
 #endif

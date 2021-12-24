@@ -3,7 +3,7 @@
 #include "debugmenu.h"
 
 /**
-* Used in speedGraphDisplay to check if D_80048498 and g_speedGraphCountAccumulator are
+* Used in speedGraphDisplay to check if speedgraphframes and g_speedGraphCountAccumulator are
 * over the threshold for output.
 */
 #define COUNT_REQUIRED_FOR_OUTPUT 20
@@ -42,6 +42,8 @@ typedef struct {
     s32 unk8;
     s32 unkC;
 } s_800231D4;
+
+#if defined(VERSION_US) || defined(VERSION_JP)
 s_800231D4 D_800231D4[5] = {
     {0x00000000, 0x00000000, 0x00000002, 0x00000000},
     {0x00000001, 0x00000000, 0x00000002, 0x00000000},
@@ -51,13 +53,13 @@ s_800231D4 D_800231D4[5] = {
 };
 
 /**
- * 80023224. Seems to accumulate D_80048498 in speedGraphDisplay. Once above the threshold COUNT_REQUIRED_FOR_OUTPUT,
+ * 80023224. Seems to accumulate speedgraphframes in speedGraphDisplay. Once above the threshold COUNT_REQUIRED_FOR_OUTPUT,
  * the value COUNT_REQUIRED_FOR_OUTPUT is repeatedly subtracted until below the threshold.
  */
 u32 g_speedGraphCountAccumulator = 0;
 
 /**
- * 80023228. Stores max value of D_80048498 seen in speedGraphDisplay. Resets to zero once
+ * 80023228. Stores max value of speedgraphframes seen in speedGraphDisplay. Resets to zero once
  * output is rendered.
  */
 s32 g_speedGraphMaxSeenCount = 0;
@@ -76,6 +78,8 @@ u32 g_speedGraphCounterForFrames = 0;
  * 80023234.
  */
 s32 D_80023234 = 1;
+
+#endif
 
 // forward declarations
 void speedGraphVideoRelated_2(void);
@@ -180,11 +184,11 @@ Gfx *speedGraphDisplay(Gfx *gdl)
     char buffer[12];
     volatile u32 *pcountAccumulator = &g_speedGraphCountAccumulator;
     
-    localCountAccumulator += D_80048498;
+    localCountAccumulator += speedgraphframes;
 
-    if (*pmaxSeenCount < D_80048498)
+    if (*pmaxSeenCount < speedgraphframes)
     {
-        *pmaxSeenCount = D_80048498;
+        *pmaxSeenCount = speedgraphframes;
     }
 
     *pcountAccumulator = localCountAccumulator;
@@ -227,16 +231,16 @@ Gfx *speedGraphDisplay(Gfx *gdl)
         // hz (60 / framerate)
         // -- or 50 for PAL
         debmenuSetPosition(28, 5);
-        sprintf(buffer, "%2d hz", ((D_80048498 == 0) ? 0 : (VICLOCK / D_80048498)));
+        sprintf(buffer, "%2d hz", ((speedgraphframes == 0) ? 0 : (VICLOCK / speedgraphframes)));
         debmenuWriteString(buffer);
 
         // framerate
         debmenuSetPosition(28, 6);
-        sprintf(buffer, "%2d frames", D_80048498);
+        sprintf(buffer, "%2d frames", speedgraphframes);
         debmenuWriteString(buffer);
 
         // (continues framerate output)
-        if (D_80048498 != g_speedGraphMaxSeenCount)
+        if (speedgraphframes != g_speedGraphMaxSeenCount)
         {
             sprintf(buffer, " [%2d]", *pmaxSeenCount);
         }
@@ -263,7 +267,7 @@ Gfx *sub_GAME_7F0D1BD0(Gfx *gdl, f32 arg1, s32 r, s32 g, s32 b, s32 arg5, s32 ar
 void sub_GAME_7F0D2320(void);
 Gfx *sub_GAME_7F0D1E98(Gfx *gdl, s32 r, s32 g, s32 b);
 void video_DL_related_4(void) {
-    g_speedGraphCounterForFrames += D_80048498;
+    g_speedGraphCounterForFrames += speedgraphframes;
     if (g_speedGraphCounterForFrames > 200) {
         g_speedGraphCounterForFrames -= 200;
         D_80023234 ^= 1;
@@ -332,9 +336,9 @@ glabel aIL0
 glabel video_DL_related_4
 /* 0038D8 70002CD8 27BDFF30 */  addiu $sp, $sp, -0xd0
 /* 0038DC 70002CDC 3C028002 */  lui   $v0, %hi(g_speedGraphCounterForFrames)
-/* 0038E0 70002CE0 3C0E8005 */  lui   $t6, %hi(D_80048498) 
+/* 0038E0 70002CE0 3C0E8005 */  lui   $t6, %hi(speedgraphframes) 
 /* 0038E4 70002CE4 8C423230 */  lw    $v0, %lo(g_speedGraphCounterForFrames)($v0)
-/* 0038E8 70002CE8 8DCE8498 */  lw    $t6, %lo(D_80048498)($t6)
+/* 0038E8 70002CE8 8DCE8498 */  lw    $t6, %lo(speedgraphframes)($t6)
 /* 0038EC 70002CEC 3C018002 */  lui   $at, %hi(g_speedGraphCounterForFrames)
 /* 0038F0 70002CF0 AFBF005C */  sw    $ra, 0x5c($sp)
 /* 0038F4 70002CF4 004E1021 */  addu  $v0, $v0, $t6

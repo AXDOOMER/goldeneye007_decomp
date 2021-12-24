@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "game/indy_commands.h"
+#include "include/PR/os.h"
 
 // data
 //D:8004EAC0
@@ -13,6 +14,9 @@ s32 D_8004EACC = 0x0;
 //D:8004EAD0
 s32 D_8004EAD0 = 0x0;
 
+#pragma weak rmonOsReadHost = osReadHost
+#pragma weak rmonOsWriteHost = osWriteHost
+
 
 
 void indy_buffer_read_command(u8 *buffer,u32 size)
@@ -21,7 +25,7 @@ void indy_buffer_read_command(u8 *buffer,u32 size)
 
     for (i = 0; i != 100000; i += 4) { }
 
-    rmonHostReadData(buffer, size);
+    osReadHost(buffer, size);
 
     for (i = 0; i != 100000; i += 1) { }
 }
@@ -33,7 +37,7 @@ void indy_buffer_write_command(u8 *buffer,u32 size)
   
     for (i = 0; i != 100000; i += 4){}
 
-    rmonHostWriteData(buffer, size);
+    osWriteHost(buffer, size);
 
     for (i = 0; i != 100000; i += 1){}
 }

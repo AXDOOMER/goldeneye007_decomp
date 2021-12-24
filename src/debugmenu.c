@@ -3,6 +3,9 @@
 #include "vi.h"
 #include "game/dyn.h"
 
+
+#ifndef VERSION_EU
+
 u32 g_DebugMenuTexture[] = {
     0x00000000, 0x00227A00, 0x007A348B, 0x00223434, 0x00115811, 0x00696900, 0x00000000, 0x00009C00,
     0x00004600, 0x00460000, 0x00004600, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000046,
@@ -178,28 +181,36 @@ Gfx g_DebugMenuPrimitiveColor = gsDPSetPrimColor(0, 0, 255, 255, 255, 0);
 Gfx g_DebugMenuEnvironmentColor = gsDPSetEnvColor(0, 0, 0, 0);
 u32 g_DebugMenuRandomThreshold = 0xFF; // Static?
 
+#endif
+
 /**
  * Removed
  */
+#ifndef VERSION_EU
 u32 debmenu7000AD80(s32 arg0, s32 arg1) {
     // Removed
     return 0;
 }
+#endif
 
 /**
  * Removed
  */
+#ifndef VERSION_EU
 u32 debmenu7000AD90(s32 arg0, s32 arg1) {
     // Removed
     return 0;
 }
+#endif
 
 /**
  * Removed
  */
+#ifndef VERSION_EU
 void debmenu7000ADA0(void) {
     // Removed
 }
+#endif
 
 /**
  * Removed
@@ -209,9 +220,12 @@ void debmenu7000ADA8(void) {
 }
 
 void debmenuInit(void) {
+    #ifndef VERSION_EU
     debmenuReset();
+    #endif
 }
 
+#ifndef VERSION_EU
 void debmenuWriteCharAtPos(s32 x, s32 y, unsigned char c) {
     s32 i;
     for (i = 0; i < 32; i++) {
@@ -228,13 +242,17 @@ end:
     g_DebugMenuTextBuffer[x][y].chr = c;
     g_DebugMenuTextBuffer[x][y].color = i;
 }
+#endif
 
 void debmenuResetPosition(void) {
+    #ifndef VERSION_EU
     g_DebugMenuTextCurrentX = g_DebugMenuTextStartX;
     g_DebugMenuTextCurrentY = g_DebugMenuTextStartY;
+    #endif
 }
 
 void debmenuReset(void) {
+    #ifndef VERSION_EU
     s32 x;
     s32 y;  
     for (y = 0; y < 35; y++) {
@@ -245,15 +263,18 @@ void debmenuReset(void) {
     debmenuResetPosition();
     debmenu7000ADA0();
     g_DebugMenuCurrentColorIndex = 0;
+    #endif
 }
 
 /**
  * Removed.
  * Called from debmenu7000AF98
  */
+ #ifndef VERSION_EU
 void debmenu7000AF84(s32 x1, s32 y1, s32 x2, s32 y2) {
     // Removed
 }
+#endif
 
 #ifdef NONMATCHING
 s32 debmenu7000AF98(s32 height) {
@@ -274,6 +295,11 @@ s32 debmenu7000AF98(s32 height) {
         ret = y;
     }
     return ret;
+}
+#else
+#ifdef VERSION_EU
+s32 debmenu7000AF98(s32 height) {
+
 }
 #else
 GLOBAL_ASM(
@@ -328,23 +354,31 @@ glabel debmenu7000AF98
 /* 00BC3C 7000B03C 27BD0028 */   addiu $sp, $sp, 0x28
 )
 #endif
+#endif
 
 void debmenuSetPosition(s32 x, s32 y) {
+    #ifndef VERSION_EU
     x += g_DebugMenuTextStartX;
     y += g_DebugMenuTextStartY;
     g_DebugMenuTextCurrentX = x;
     g_DebugMenuTextCurrentY = y;
+    #endif
 }
 
 void debmenuSetPrimColor(s32 r, s32 g, s32 b, s32 a) {
+    #ifndef VERSION_EU
     g_DebugMenuPrimitiveColor.words.w1 = ((r << 24) | (g << 16) | (b << 8) | (255 - a));
+    #endif
 }
 
 void debmenuSetEnvColor(s32 r, s32 g, s32 b, s32 a) {
+    #ifndef VERSION_EU
     g_DebugMenuEnvironmentColor.words.w1 = ((r << 24) | (g << 16) | (b << 8) | (255 - a));
+    #endif
 }
 
 void debmenuWriteChar(unsigned char c) {
+    #ifndef VERSION_EU
     s32 width = ((viGetX() - 13) / 4);
     s32 height = ((viGetY() - 10) / 7);
     if ((c == '\0') || ((c >= ' ') && (c <= '~'))) {
@@ -358,25 +392,32 @@ void debmenuWriteChar(unsigned char c) {
             g_DebugMenuTextCurrentY = g_DebugMenuTextStartY;
         }
     }
+    #endif
 }
 
 void debmenuSetPositionAndWriteChar(s32 x, s32 y, unsigned char c)
 {
+    #ifndef VERSION_EU 
     debmenuSetPosition(x, y);
     debmenuWriteChar(c);
+    #endif
 }
 
 void debmenuWriteString(const unsigned char *str) {
+    #ifndef VERSION_EU 
     while (*str != '\0') {
         debmenuWriteChar(*str++);
     }
+    #endif
 }
 
-void debmenuSetPositionAndWriteString(s32 x, s32 y, const unsigned char *str) {  
+void debmenuSetPositionAndWriteString(s32 x, s32 y, const unsigned char *str) { 
+    #ifndef VERSION_EU 
     debmenuSetPosition(x, y);
     while (*str != '\0') {
         debmenuWriteChar(*str++);
     }
+    #endif
 }
 
 #ifdef NONMATCHING
@@ -440,6 +481,7 @@ Gfx *debmenuDraw(Gfx *gdl) {
     return gdl;
 }
 #else
+#ifndef VERSION_EU
 GLOBAL_ASM(
 .text
 glabel debmenuDraw
@@ -643,4 +685,10 @@ glabel debmenuDraw
 /* 00C150 7000B550 03E00008 */  jr    $ra
 /* 00C154 7000B554 27BD0088 */   addiu $sp, $sp, 0x88
 )
+#else
+Gfx *debmenuDraw(Gfx *gdl) 
+{
+    return gdl;
+}
+#endif
 #endif

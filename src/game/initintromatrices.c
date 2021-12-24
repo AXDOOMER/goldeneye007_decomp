@@ -1,8 +1,10 @@
 #include "ultra64.h"
 #include "memp.h"
-#include "game/intro_logos.h"
+#include "game/title.h"
+#include "game/initintromatrices.h"
 
-void alloc_intro_matrices(void) {
+void alloc_intro_matrices(void)
+{
     D_8002A7D0 = 0;
     matrix_buffer_rarelogo_0 = mempAllocBytesInBank(0x80, 4);
     matrix_buffer_gunbarrel_0 = mempAllocBytesInBank(0x40, 4);

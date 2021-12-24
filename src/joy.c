@@ -1,6 +1,6 @@
 #include "ultra64.h"
 #include "joy.h"
-#include "libultra/os.h"
+#include "PR/os.h"
 
 /**
  * Number of samples in contdata.
@@ -66,9 +66,18 @@ OSMesgQueue g_ContEnablePollReceiveMessageQueue;
 OSContStatus g_ContStatus[MAXCONTROLLERS];
 OSPfs g_ContPfs[MAXCONTROLLERS];
 s32 g_ContDebugData = 0;
+
+#ifdef VERSION_EU
+/* EU .data match hack, not sure if this is correct */
+struct contdata *g_ContDataPtr = NULL;
+s32 g_ContBusy = 0;
+s32 g_ContPollDisableCount = 1;
+#else
 struct contdata *g_ContDataPtr = &g_ContData[CONTDATA_REGULAR];
 s32 g_ContBusy = 0;
 s32 g_ContPollDisableCount = 0;
+#endif
+
 u8 g_ConnectedControllers = 0;
 
 /**
@@ -98,8 +107,14 @@ s32 g_ContRumblePakInitState[MAXCONTROLLERS] = {0};
 #define set_rumble_pak_init_state_not_ready(i) do { g_ContRumblePakInitState[i] = RUMBLEPAKINITSTATE_NOT_READY; } while (0)
 
 s32 g_ContRumblePakCurrentState[MAXCONTROLLERS] = {0};
+#if defined(VERSION_EU)
+/* EU .data match hack, not sure if this is correct, but need to cut out some zeroes */
+s32 g_ContRumblePakTimer60[MAXCONTROLLERS];
+s32 g_ContRumblePakTargetState[MAXCONTROLLERS];
+#else
 s32 g_ContRumblePakTimer60[MAXCONTROLLERS] = {0};
 s32 g_ContRumblePakTargetState[MAXCONTROLLERS] = {0};
+#endif
 
 s32 g_ContQueuesCreated = 0;
 s32 g_ContInitDone = 0;
@@ -111,12 +126,24 @@ contrecordfunc g_ContRecordFunc = NULL;
 /**
  * Startup flag, cleared after first call to joyCheckStatus.
  */
+#if defined(VERSION_EU)
+s32 g_ContNeedsInit = 0;
+#else
 s32 g_ContNeedsInit = 1;
+#endif
 
+#if defined(VERSION_EU)
+/* EU .data match hack, not sure if this is correct, but need to cut out some zeroes */
+u32 g_ContBadReadsStickX[MAXCONTROLLERS];
+u32 g_ContBadReadsStickY[MAXCONTROLLERS];
+u32 g_ContBadReadsButtons[MAXCONTROLLERS];
+u32 g_ContBadReadsButtonsPressed[MAXCONTROLLERS];
+#else
 u32 g_ContBadReadsStickX[MAXCONTROLLERS] = {0};
 u32 g_ContBadReadsStickY[MAXCONTROLLERS] = {0};
 u32 g_ContBadReadsButtons[MAXCONTROLLERS] = {0};
 u32 g_ContBadReadsButtonsPressed[MAXCONTROLLERS] = {0};
+#endif
 
 s32 g_ContBadReadTimer60 = 0; // Static variable?
 
@@ -152,7 +179,7 @@ void joyInit(void)
             g_ContData[i].samples[0].pads[j].button = 0;
             g_ContData[i].samples[0].pads[j].stick_x = 0;
             g_ContData[i].samples[0].pads[j].stick_y = 0;
-            g_ContData[i].samples[0].pads[j].errnum = 0;
+            g_ContData[i].samples[0].pads[j].errno = 0;
         }
     }
 }
@@ -230,7 +257,7 @@ void joyCheckStatus(void)
 
         for (i = 0; i < MAXCONTROLLERS; i++)
         {
-            if (g_ContStatus[i].errnum & CONT_NO_RESPONSE_ERROR)
+            if (g_ContStatus[i].errno & CONT_NO_RESPONSE_ERROR)
             {
                 slots -= 1 << i;
             }
@@ -254,7 +281,7 @@ void joyCheckStatus(void)
     {
         if ((g_ConnectedControllers & (1 << i))
             && (g_ContStatus[i].type & (CONT_ABSOLUTE | CONT_RELATIVE))
-            && !(g_ContStatus[i].errnum))
+            && !(g_ContStatus[i].errno))
         {
             // This seems like a typo in the original, doing a bitwise AND
             // between a logical test on the left and a bitshift on the right.
@@ -316,7 +343,7 @@ void joyRumblePakTick(void)
                 {
                     set_rumble_pak_init_state_not_ready(i);
                 }
-#ifdef VERSION_JP
+#ifndef VERSION_US
             }
             else if (g_ContRumblePakTargetState[i] == RUMBLEPAKSTATE_UNKNOWN)
             {
@@ -484,8 +511,8 @@ void joyPoll(void)
 
             for (i = 0; i < MAXCONTROLLERS; i++)
             {
-                if (((g_ContData[CONTDATA_REGULAR].samples[g_ContData[CONTDATA_REGULAR].nextlast].pads[i].errnum == 0) && (g_ContData[CONTDATA_REGULAR].samples[g_ContData[CONTDATA_REGULAR].nextsecondlast].pads[i].errnum != 0)) ||
-                    ((g_ContData[CONTDATA_REGULAR].samples[g_ContData[CONTDATA_REGULAR].nextlast].pads[i].errnum != 0) && (g_ContData[CONTDATA_REGULAR].samples[g_ContData[CONTDATA_REGULAR].nextsecondlast].pads[i].errnum == 0)))
+                if (((g_ContData[CONTDATA_REGULAR].samples[g_ContData[CONTDATA_REGULAR].nextlast].pads[i].errno == 0) && (g_ContData[CONTDATA_REGULAR].samples[g_ContData[CONTDATA_REGULAR].nextsecondlast].pads[i].errno != 0)) ||
+                    ((g_ContData[CONTDATA_REGULAR].samples[g_ContData[CONTDATA_REGULAR].nextlast].pads[i].errno != 0) && (g_ContData[CONTDATA_REGULAR].samples[g_ContData[CONTDATA_REGULAR].nextsecondlast].pads[i].errno == 0)))
                     {
                     joyCheckStatus();
                     break;

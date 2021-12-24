@@ -1,12 +1,15 @@
 #include "ultra64.h"
+#include "deb_loadallmodels.h"
 #include "memp.h"
+#include "random.h"
 #include "game/chr.h"
 #include "game/chrobjdata.h"
+#include "game/initguards.h"
 
 void init_guards(void) {
     animation_rate = 1.0f;
     D_8002C904 = 0;
-    D_8002C908 = 0;
+    g_AnimationTablePointerCountRelated = 0;
     D_8002C90C = 0;
     D_8002C910 = 0;
     D_8002CC58 = 0;

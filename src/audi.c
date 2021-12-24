@@ -1,7 +1,12 @@
 #include "ultra64.h"
+#include "include/PR/os.h"
 #include "sched.h"
 #include "audi.h"
 #include "thread_config.h"
+
+/**
+ * EU .data, offset from start of data_seg : 0x23A0
+*/
 
 /**
  * @file audi.c

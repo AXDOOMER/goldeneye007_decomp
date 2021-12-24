@@ -1,9 +1,60 @@
 #include "ultra64.h"
 
+#include "bondtypes.h"
+#include "game/chrai.h"
+#include "game/cleanup_objects.h"
+#include "game/loadobjectmodel.h"
+
 
 #ifdef NONMATCHING
-void cleanupObjects(s32 stage) {
+/**
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical instructions: fail
+ * - identical registers: fail
+ * 
+ * notes: something wrong with the comparison to 0x38. Also the first compare to NULL is wrong.
+ */
+void cleanupObjects(s32 stage)
+{
+    object_standard *obj = ptr_setup_objects;
 
+    if (obj != NULL)
+    {
+        for (; obj->type != 0x30;)
+        {
+            switch (obj->type)
+            {
+                case 1:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 10:
+                case 11:
+                case 12:
+                case 13:
+                case 17:
+                case 20:
+                case 21:
+                case 36:
+                case 39:
+                case 40:
+                case 41:
+                case 42:
+                case 43:
+                case 45:
+                case 47:
+                    sub_GAME_7F041024((object_standard *)obj, 1);
+                    break;
+            }
+
+            obj = &(((s32*)obj)[sizepropdef(obj)]);
+        }
+    }
 }
 #else
 GLOBAL_ASM(
@@ -84,7 +135,7 @@ glabel cleanupObjects
 /* 03C084 7F007554 0FC10409 */  jal   sub_GAME_7F041024
 /* 03C088 7F007558 24050001 */   li    $a1, 1
 .L7F00755C:
-/* 03C08C 7F00755C 0FC15A3D */  jal   get_size_of_setup_object_type
+/* 03C08C 7F00755C 0FC15A3D */  jal   sizepropdef
 /* 03C090 7F007560 02002025 */   move  $a0, $s0
 /* 03C094 7F007564 00027880 */  sll   $t7, $v0, 2
 /* 03C098 7F007568 01F08021 */  addu  $s0, $t7, $s0
