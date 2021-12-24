@@ -6,6 +6,7 @@
 *.rz
 *.tmp
 *.z64
+*.N64
 *.o
 branchdiff.sh
 baserom.*.dump
@@ -45,6 +46,7 @@ assets/obseg/text/u/*.bin
 assets/ramrom/*.bin
 build/*
 build-*/*
+notes
 tools/extractor/*.o
 tools/extractor/extractor
 tools/aaa_rip/main.o
