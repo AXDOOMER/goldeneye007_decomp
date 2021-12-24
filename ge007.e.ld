@@ -3950,13 +3950,13 @@ SECTIONS
       build/e/src/game/objecthandler_1.o (.rodata);
       build/e/src/game/objecthandler_2.o (.rodata);
       build/e/src/game/othermodemicrocode.o (.rodata);
-      build/e/src/game/bondview.o (.rodata);
+      build/e/src/game/bondview.o (.rodata);            /* around 0x2c000 up to 0x2c258 */
       build/e/src/game/bondinv.o (.rodata);
       build/e/src/game/unk_08DBB0.o (.rodata);
       build/e/src/game/debugmenu_08FE00.o (.rodata);
       build/e/src/game/debugmenu_handler.o (.rodata);
       build/e/src/game/unk_091080.o (.rodata);
-      build/e/src/game/chraidata.o (.rodata);
+      build/e/src/game/chraidata.o (.rodata);       /* around 0x2c2e0 */
       build/e/src/game/pobjdata.o (.rodata);
       build/e/src/game/gobjdata.o (.rodata);
       build/e/src/game/gobjdata2.o (.rodata);
