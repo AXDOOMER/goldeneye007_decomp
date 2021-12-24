@@ -3833,19 +3833,19 @@ SECTIONS
       build/e/src/game/cobjdata.o (.data);
       build/e/src/game/cheat_buttons.o (.data);
       build/e/src/game/unk_092890.o (.data);
-      build/e/src/game/unk_092E50.o (.data);
+      build/e/src/game/unk_092E50.o (.data);        /* around 0x01ae90 */
       build/e/src/game/player.o (.data);
       build/e/src/game/player_2.o (.data);
       build/e/src/game/crc.o (.data);
-      build/e/src/game/chrObjRandom.o (.data);
+      build/e/src/game/chrObjRandom.o (.data);  /* 0x01b160 */
       build/e/src/game/unk_09B7A0.o (.data);
-      build/e/src/game/unk_09C250.o (.data);
+      build/e/src/game/unk_09C250.o (.data);    /* around 0x01b170 */
       build/e/src/game/unk_0A1DA0.o (.data);
       build/e/src/game/watch.o (.data);
-      build/e/src/game/textrelated.o (.data);
-      build/e/src/game/stan.o (.data);
+      build/e/src/game/textrelated.o (.data);   /* 0x1be80 */
+      build/e/src/game/stan.o (.data);          /* 0x1bf30 */
       build/e/src/game/unk_0B3200.o (.data);
-      build/e/src/game/bg.o (.data);
+      build/e/src/game/bg.o (.data);            /* 0x1bff0 */
       build/e/src/game/bg2.o (.data);
       build/e/src/game/fog.o (.data);
       build/e/src/game/lightfixture.o (.data);

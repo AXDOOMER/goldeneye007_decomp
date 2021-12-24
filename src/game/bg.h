@@ -80,7 +80,7 @@ extern s32 MaxNumRooms;
 extern f32 room_data_float2;
 
 extern bg_room_data * ptr_bgdata_room_fileposition_list;
-extern s_room_info array_room_info[0x96];
+extern s_room_info array_room_info[];
 
 
 void bgInitDebugNoticeList(void);

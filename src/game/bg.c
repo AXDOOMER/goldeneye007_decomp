@@ -16,6 +16,8 @@
 #include "game/unk_09C250.h"
 #include "game/unk_0BC530.h"
 
+
+
 #define BG_STACK_SIZE 20
 
 // bss
@@ -98,11 +100,16 @@ s32 levelentry_index = 1;
  */
 s32 bgViewRelated[] = { 1, 1, -1, -1 };
 
+#if defined(VERSION_EU)
+s_room_info array_room_info[0x8b] = {0};
+s32 MaxNumRooms = 0x8b ;
+#else
 //D:80041414
 s_room_info array_room_info[0x96] = {0};
-
 //D:800442F4
 s32 MaxNumRooms = 0x96 ;
+#endif
+
 //D:800442F8
 s32 D_800442F8 = 0;
 //D:800442FC
@@ -115,6 +122,8 @@ s32 D_800443C4[] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
+
+
 
 //D:8004448C
 struct levelentry levelinfotable[] = {
@@ -167,6 +176,11 @@ u32 D_80044824[] = {0x32C2E32, 0x373E3F4E, 0x56595D72, 0x76797AFF, 0x11003AFF};
 s32 current_room_maybe = 1;
 //D:8004483C
 s32 g_BgNumberOfRoomsDrawn = 0;
+
+#if defined(VERSION_EU)
+s32 eu_cdata_0x1f0d0 = 0;
+s32 eu_cdata_0x1f0d4 = 0;
+#endif
 
 //D:80044840
 Lights1 GlobalLight = gdSPDefLights1(
@@ -256,6 +270,11 @@ u32 D_8004491C = 0;
 u32 D_80044920 = 0;
 //D:80044924
 u32 D_80044924 = 0;
+
+#if defined(VERSION_EU)
+s32 eu_cdata_0x1f1c0 = 0;
+s32 eu_cdata_0x1f1c4 = 0;
+#endif
 
 // forward declarations
 
@@ -12746,8 +12765,6 @@ glabel sub_GAME_7F0BA2D4
 /* 0EF0EC 7F0BA5BC 27BD00B8 */   addiu $sp, $sp, 0xb8
 )
 #endif
-
-
 
 
 
