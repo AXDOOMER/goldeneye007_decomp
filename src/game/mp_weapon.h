@@ -5,16 +5,30 @@
 struct s_mp_weapon_set
 {
 #if defined(VERSION_EU)
+    /**
+     * enum ITEM_IDS
+    */
     s8 itemID;
     s8 ammotype;
     s8 ammoamount;
     s8 allowpickup;
-    s8 unk_04;
-    s8 propID;
+    /**
+     * enum PROPS
+    */
+    s16 propID;
     s8 size;
-    s8 unk_07;
+    /**
+     * Decimal portion of size, normalized to one byte. That is, 0x80 means 0.5.
+    */
+    s8 size_frac;
 #else
+    /**
+     * enum ITEM_IDS
+    */
     s32 itemID;
+    /**
+     * enum PROPS
+    */
     s32 propID;
     f32 size;
     s32 ammotype;
@@ -22,6 +36,12 @@ struct s_mp_weapon_set
     s32 allowpickup;
 #endif
 };
+
+#if defined(VERSION_EU)
+#define INLINE_S_MP_WEAPON_SET(item_id, prop_id, size, ammo_type, ammo_amount, allow_pickup) { (s8)(item_id), (s8)(ammo_type), (s8)(ammo_amount), (s8)(allow_pickup), (s16)(prop_id), (s8)(size), (s8)((((f32)size) - (f32)((s32)size)) * 256) }
+#else
+#define INLINE_S_MP_WEAPON_SET(item_id, prop_id, size, ammo_type, ammo_amount, allow_pickup) { (s32)(item_id), (s32)(prop_id), (f32)(size), (s32)(ammo_type), (s32)(ammo_amount), (s32)(allow_pickup) }
+#endif
 
 struct s_mp_weapon_set_text
 {

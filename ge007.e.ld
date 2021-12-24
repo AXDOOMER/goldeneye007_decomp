@@ -3858,8 +3858,8 @@ SECTIONS
       build/e/src/game/mp_music.o (.data);
       build/e/src/game/lvl_text.o (.data);      /* 0x22500 */
       build/e/src/game/mp_watch.o (.data);
-      build/e/src/game/radar.o (.data);
-      build/e/src/game/mp_weapon.o (.data);
+      build/e/src/game/radar.o (.data); 
+      build/e/src/game/mp_weapon.o (.data);     /* 0x226a0 */
       build/e/src/game/image.o (.data);
       build/e/src/game/image_bank.o (.data);
       build/e/src/game/unk_0CC4C0.o (.data);
