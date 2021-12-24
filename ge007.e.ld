@@ -3932,7 +3932,7 @@ SECTIONS
       build/e/src/game/chrai.o (.rodata);
       build/e/src/game/chrobjhandler.o (.rodata);       /* around 0x29f10 */
       build/e/src/game/loadobjectmodel.o (.rodata);
-      build/e/src/game/objective_status.o (.rodata);
+      build/e/src/game/objective_status.o (.rodata);    /* around 0x2ab40 */
       build/e/src/game/objective_status2.o (.rodata);
       build/e/src/game/math_sincos.o (.rodata);
       build/e/src/game/matrixmath.o (.rodata);
