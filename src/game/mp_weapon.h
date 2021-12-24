@@ -4,12 +4,23 @@
 
 struct s_mp_weapon_set
 {
-  s32 itemID;
-  s32 propID;
-  f32 size;
-  s32 ammotype;
-  s32 ammoamount;
-  s32 allowpickup;
+#if defined(VERSION_EU)
+    s8 itemID;
+    s8 ammotype;
+    s8 ammoamount;
+    s8 allowpickup;
+    s8 unk_04;
+    s8 propID;
+    s8 size;
+    s8 unk_07;
+#else
+    s32 itemID;
+    s32 propID;
+    f32 size;
+    s32 ammotype;
+    s32 ammoamount;
+    s32 allowpickup;
+#endif
 };
 
 struct s_mp_weapon_set_text

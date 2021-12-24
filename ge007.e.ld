@@ -3850,13 +3850,13 @@ SECTIONS
       build/e/src/game/fog.o (.data);
       build/e/src/game/lightfixture.o (.data);  /* 0x1fe60 */
       build/e/src/game/unk_0BC530.o (.data);
-      build/e/src/game/ob.o (.data);
+      build/e/src/game/ob.o (.data);            /* 0x1fe70 */
       build/e/src/game/dyn.o (.data);
-      build/e/src/game/lvl.o (.data);
+      build/e/src/game/lvl.o (.data);           /* 0x22390 */
       build/e/src/game/ramromreplay.o (.data);
       build/e/src/game/unk_0C0A70.o (.data);
       build/e/src/game/mp_music.o (.data);
-      build/e/src/game/lvl_text.o (.data);
+      build/e/src/game/lvl_text.o (.data);      /* 0x22500 */
       build/e/src/game/mp_watch.o (.data);
       build/e/src/game/radar.o (.data);
       build/e/src/game/mp_weapon.o (.data);

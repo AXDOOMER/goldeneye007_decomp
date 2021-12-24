@@ -8,6 +8,8 @@
 #include "ramrom.h"
 //D:800483F0
 
+
+
 //move me to better home
 extern u32* ramrom_Dam_1;
 extern u32* ramrom_Dam_2;
