@@ -5,9 +5,15 @@
 #include "bondtypes.h"
 
 struct NearFogData {
+#if defined(VERSION_EU)
+    s16 NearFog;
+    s16 MaxVisRange;
+    s16 MaxObfuscationRange;
+#else
     f32 NearFog;
     f32 MaxVisRange;
     f32 MaxObfuscationRange;
+#endif
 };
 
 //New Definitions below
@@ -16,6 +22,81 @@ struct NearFogData {
 // Skybox and Water Plane
 typedef struct SkyBoxData
 {
+    u8 Red;
+    u8 Green;
+    u8 Blue;
+    u8 Clouds;
+#if defined(VERSION_EU)
+    s16 CloudRepeat;
+    u8 SkyImageId;
+    u8 CloudRed;
+    u8 CloudGreen;
+    u8 CloudBlue;
+    u8 IsWater;
+    s16 WaterRepeat;
+    u8 WaterImageId;
+    u8 WaterRed;
+    u8 WaterGreen;
+    u8 WaterBlue;
+    u8 WaterConcavity;
+    u8 unknown;
+#else
+    f32 CloudRepeat;
+    s16 SkyImageId;
+    u16 Reserved;
+    f32 CloudRed;
+    f32 CloudGreen;
+    f32 CloudBlue;
+    u8 IsWater;
+    u8 Padding[3];
+    f32 WaterRepeat;
+    s16 WaterImageId;
+    u16 Reserved2;
+    f32 WaterRed;
+    f32 WaterGreen;
+    f32 WaterBlue;
+    f32 WaterConcavity;
+#endif
+} SkyBoxData;
+
+// Fog intensity
+typedef struct FogData
+{
+#if defined(VERSION_EU)
+    s16 DifferenceFromFarIntensity;
+    s16 FarIntensity;
+#else
+    /**
+     * Inverse NearFog
+    */
+    s32 DifferenceFromFarIntensity;
+    s32 FarIntensity;
+#endif
+} FogData;
+
+// Visibility distances and Z-Buffer accuriacy
+typedef struct VisibilityData
+{
+#if defined(VERSION_EU)
+    s16 BlendMultiplier;
+    s16 FarFog;
+    struct NearFogData Nfd;
+#else
+    f32 BlendMultiplier;
+    f32 FarFog;
+    struct NearFogData Nfd;
+    f32 MinVisrange;
+    u32 Intensity;
+#endif
+} VisibilityData;
+
+//Main Records
+
+// Current Environment for rendering
+typedef struct CurrentEnvData
+{
+    s32 DifferenceFromFarIntensity;
+    s32 FarIntensity;
     u8 Red;
     u8 Green;
     u8 Blue;
@@ -35,36 +116,6 @@ typedef struct SkyBoxData
     f32 WaterGreen;
     f32 WaterBlue;
     f32 WaterConcavity;
-} SkyBoxData;
-
-// Fog intensity
-typedef struct FogData
-{
-    /**
-     * Inverse NearFog
-    */
-    s32 DifferenceFromFarIntensity;
-    s32 FarIntensity;
-
-} FogData;
-
-// Visibility distances and Z-Buffer accuriacy
-typedef struct VisibilityData
-{
-    f32 BlendMultiplier;
-    f32 FarFog;
-    struct NearFogData Nfd;
-    f32 MinVisrange;
-    u32 Intensity;
-} VisibilityData;
-
-//Main Records
-
-// Current Environment for rendering
-typedef struct CurrentEnvData
-{
-    FogData Fog;
-    SkyBoxData Sky;
 } CurrentEnvData;
 
 // Environment Record, Holds Visibility, Fog and Skybox
@@ -73,7 +124,11 @@ typedef struct EnvironmentData
     /**
      * ID = StageID + Token eg, Bunker Cinema is 9 + 900 = 909
     */
+#if defined(VERSION_EU)
+    u16 Id;
+#else
     u32 Id;
+#endif
     VisibilityData Visibility;
     FogData Fog;
     SkyBoxData Sky;
@@ -86,7 +141,25 @@ typedef struct EnvironmentData_Fogless
      * ID = StageID + Token eg, Bunker Cinema is 9 + 900 = 909
     */
     u32 Id;
-    SkyBoxData Sky;
+    u8 Red;
+    u8 Green;
+    u8 Blue;
+    u8 Clouds;
+    f32 CloudRepeat;
+    s16 SkyImageId;
+    u16 Reserved;
+    f32 CloudRed;
+    f32 CloudGreen;
+    f32 CloudBlue;
+    u8 IsWater;
+    u8 Padding[3];
+    f32 WaterRepeat;
+    s16 WaterImageId;
+    u16 Reserved2;
+    f32 WaterRed;
+    f32 WaterGreen;
+    f32 WaterBlue;
+    f32 WaterConcavity;
 } EnvironmentData_Fogless;
 
 extern s32 g_FogSkyIsEnabled;

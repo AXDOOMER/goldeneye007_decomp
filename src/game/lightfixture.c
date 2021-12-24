@@ -2,6 +2,8 @@
 #include "game/lightfixture.h"
 #include "assets/image_externs.h"
 
+
+
 // bss
 //CODE.bss:80082660
 s_lightfixture light_fixture_table[0x64];

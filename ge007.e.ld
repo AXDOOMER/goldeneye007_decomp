@@ -3848,7 +3848,7 @@ SECTIONS
       build/e/src/game/bg.o (.data);            /* 0x1bff0 */
       build/e/src/game/bg2.o (.data);
       build/e/src/game/fog.o (.data);
-      build/e/src/game/lightfixture.o (.data);
+      build/e/src/game/lightfixture.o (.data);  /* 0x1fe60 */
       build/e/src/game/unk_0BC530.o (.data);
       build/e/src/game/ob.o (.data);
       build/e/src/game/dyn.o (.data);
