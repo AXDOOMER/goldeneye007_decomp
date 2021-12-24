@@ -941,12 +941,6 @@ glabel getpartoffset
 #endif
 #ifdef VERSION_EU
 GLOBAL_ASM(
-.late_rodata
-/*HACKY, above jtable too big*/
-.word 0
-.word 0
-.word 0
-.word 0
 
 .text
 glabel getpartoffset
