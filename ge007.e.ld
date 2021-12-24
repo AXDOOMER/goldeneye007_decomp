@@ -3930,7 +3930,7 @@ SECTIONS
       build/e/src/game/chr_b.o (.rodata);               /* 0x29270 */
       build/e/src/game/chrlv.o (.rodata);               /* 0x29280 */
       build/e/src/game/chrai.o (.rodata);
-      build/e/src/game/chrobjhandler.o (.rodata);
+      build/e/src/game/chrobjhandler.o (.rodata);       /* around 0x29f10 */
       build/e/src/game/loadobjectmodel.o (.rodata);
       build/e/src/game/objective_status.o (.rodata);
       build/e/src/game/objective_status2.o (.rodata);

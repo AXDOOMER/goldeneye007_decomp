@@ -8910,6 +8910,37 @@ void chrlvTickBondDieRemoved(ChrRecord *arg0)
 }
 
 
+#if defined(VERSION_US) || defined(VERSION_JP)
+/* NTSC */
+#define MAX_SPEED_A 0.2991993f
+#define ACCEL_A 0.014959966f
+
+#define MAX_SPEED_B1 0.019634955f
+#define MAX_SPEED_B2 0.09817477f
+#define MAX_SPEED_B3 0.19634955f
+#define ACCEL_B 0.014959966f
+
+#define MAX_SPEED_C1 0.009817477f
+#define MAX_SPEED_C2 0.049087387f
+#define MAX_SPEED_C3 0.12566371f
+#define ACCEL_C 0.009817477f
+#endif
+
+#if defined(VERSION_EU)
+/* PAL */
+#define MAX_SPEED_A 0.359039157629013f
+#define ACCEL_A 0.0179519578814507f
+
+#define MAX_SPEED_B1 0.0235619451850653f
+#define MAX_SPEED_B2 0.117809727787972f
+#define MAX_SPEED_B3 0.235619455575943f
+#define ACCEL_B 0.0179519578814507f
+
+#define MAX_SPEED_C1 0.0117809725925326f
+#define MAX_SPEED_C2 0.0589048638939858f
+#define MAX_SPEED_C3 0.150796458125114f
+#define ACCEL_C 0.0117809725925326f
+#endif
 
 /**
  * Address 0x7F02F690.
@@ -8954,42 +8985,42 @@ s32 chrlvApplySpeed(ChrRecord *self, struct coord3d *arg1, s32 arg2, f32 *speedP
 
     if (arg2 == 2)
     {
-        maxSpeed = 0.2991993f;
-        accel = 0.014959966f;
+        maxSpeed = MAX_SPEED_A;
+        accel = ACCEL_A;
     }
     else if (arg2 == 1)
     {
         if (f0f0 < 0.3926991f)
         {
-            maxSpeed = 0.019634955f;
+            maxSpeed = MAX_SPEED_B1;
         }
         else if (f0f0 < 1.2566371f)
         {
-            maxSpeed = 0.09817477f;
+            maxSpeed = MAX_SPEED_B2;
         }
         else
         {
-            maxSpeed = 0.19634955f;
+            maxSpeed = MAX_SPEED_B3;
         }
 
-        accel = 0.014959966f;
+        accel = ACCEL_B;
     }
     else
     {
         if (f0f0 < 0.3926991f)
         {
-            maxSpeed = 0.009817477f;
+            maxSpeed = MAX_SPEED_C1;
         }
         else if (f0f0 < 1.2566371f)
         {
-            maxSpeed = 0.049087387f;
+            maxSpeed = MAX_SPEED_C2;
         }
         else
         {
-            maxSpeed = 0.12566371f;
+            maxSpeed = MAX_SPEED_C3;
         }
 
-        accel = 0.009817477f;
+        accel = ACCEL_C;
     }
 
     maxSpeed *= self_model->unka4;
