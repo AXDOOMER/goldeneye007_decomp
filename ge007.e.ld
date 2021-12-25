@@ -3299,7 +3299,7 @@ SECTIONS
       build/e/src/audi.o (.data);          /* 0x23a0 */
       build/e/src/speed_graph.o (.data);   /* (none) */
       build/e/src/fr.o (.data);            /* 0x2484 */
-      build/e/src/deb.o (.data);
+      build/e/src/deb.o (.data);           /* 0x2520 */
       build/e/src/fault.o (.data);
       /*deb_print may be part of fault per pd beta (.data);*/
       build/e/src/deb_print.o (.data);    /* 0x2540 */

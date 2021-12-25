@@ -123,10 +123,15 @@ static regDesc_t fpcsrDesc[] = {
 };
 
 void *g_StackPtrs1[STACK_POINTER_COUNT] = {&sp_rmon, &sp_idle, &sp_shed, &sp_main, &sp_audi};
+
+#ifndef VERSION_EU
 void *g_StackPtrs2[STACK_POINTER_COUNT] = {&sp_idle, &sp_shed, &sp_main, &sp_audi, &sp_debug};
+#else
+// no sp_debug
+void *g_StackPtrs2[STACK_POINTER_COUNT] = {&sp_idle, &sp_shed, &sp_main, &sp_audi, &cfb_16};
+#endif
+
 void *g_StackPtrs3[STACK_POINTER_COUNT] = {&sp_rmon, &sp_idle, &sp_shed, &sp_main, &sp_audi};
-
-
 
 // 71 x 32 text buffer (32th line is not drawn)
 unsigned char g_DebugOutputTextBuffer[32][71] = {0};
