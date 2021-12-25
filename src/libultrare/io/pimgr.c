@@ -1,15 +1,15 @@
 #include <os_internal.h>
 #include "src/libultra/io/piint.h"
 
-
 OSDevMgr __osPiDevMgr = {0};
 OSPiHandle *__osPiTable = NULL;
+
+
+#ifndef VERSION_EU
 static OSThread piThread;
 static char piThreadStack[OS_PIM_STACKSIZE];
 static OSMesgQueue piEventQueue;
 static OSMesg piEventBuf[1];
-
-#ifndef VERSION_EU
 void osCreatePiManager(OSPri pri, OSMesgQueue *cmdQ, OSMesg *cmdBuf, s32 cmdMsgCnt)
 {
 	u32 savedMask;

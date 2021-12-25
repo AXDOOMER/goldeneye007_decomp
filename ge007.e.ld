@@ -3286,7 +3286,7 @@ SECTIONS
       build/e/src/aspboot.o (.text);
       build/e/src/boot.o (.data);
       build/e/src/init.o (.data);
-      build/e/src/sched.o (.data); /* 0x2300 */
+      build/e/src/sched.o (.data);                /* 0x2300 */
       build/e/src/osMapTLB.o (.data);
 
       build/e/src/libultrare/io/vimgr.o (.data);
@@ -3296,22 +3296,22 @@ SECTIONS
       build/e/src/tlb_random.o (.data);
       build/e/src/tlb_resolve.o (.data);
       build/e/src/tlb_hardwire.o (.data);
-      build/e/src/audi.o (.data); /* 0x23a0 */
-      build/e/src/speed_graph.o (.data); /* (none) */
-      build/e/src/fr.o (.data); /* 0x2484 */
+      build/e/src/audi.o (.data);          /* 0x23a0 */
+      build/e/src/speed_graph.o (.data);   /* (none) */
+      build/e/src/fr.o (.data);            /* 0x2484 */
       build/e/src/deb.o (.data);
       build/e/src/fault.o (.data);
       /*deb_print may be part of fault per pd beta (.data);*/
-      build/e/src/deb_print.o (.data); /* 0x2540 */
+      build/e/src/deb_print.o (.data);    /* 0x2540 */
       build/e/src/getra.o (.data);
       build/e/src/ramrom.o (.data);
-      build/e/src/boss.o (.data); /* 0x33e0 */
-      build/e/src/music.o (.data); /* 0x3570 */
-      build/e/src/snd.o (.data); /* 0x3620 */
-      build/e/src/memp.o (.data); /* 0x3640 */
+      build/e/src/boss.o (.data);         /* 0x33e0 */
+      build/e/src/music.o (.data);        /* 0x3570 */
+      build/e/src/snd.o (.data);          /* 0x3620 */
+      build/e/src/memp.o (.data);         /* 0x3640 */
       build/e/src/mema.o (.data);
-      build/e/src/random.o (.data); /* 0x36a0 */
-      build/e/src/token.o (.data); /* 0x36b0 */
+      build/e/src/random.o (.data);       /* 0x36a0 */
+      build/e/src/token.o (.data);        /* 0x36b0 */
       build/e/src/str.o (.data);
       build/e/src/sprintf.o (.data);
       build/e/src/pi.o (.data);
@@ -3439,7 +3439,7 @@ SECTIONS
       build/e/src/libultra/gu/ortho.o (.data);
       build/e/src/libultra/gu/coss.o (.data);
       build/e/src/libultra/gu/sins.o (.data);               /* 0x4660 */
-      
+
       build/e/src/libultra/io/vimodentsclan1.o (.data);
       build/e/src/libultrare/io/vimodepallan1.o (.data);
       build/e/src/libultra/gu/translate.o (.data);

@@ -391,7 +391,11 @@ $(BUILD_DIR)/src/libultrare/gu/%.o: src/libultrare/gu/%.s
 # io
 # #################
 
-# io is -O1
+# io is -O1, except for EU which is -O2
+
+ifeq ($(VERSION), EU)
+$(BUILD_DIR)/src/libultrare/io/vimgr.o: LIBULTRA_OPTIMIZATION := -O2
+endif
 
 $(BUILD_DIR)/src/libultra/io/%.o: src/libultra/io/%.c
 	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
@@ -400,8 +404,8 @@ $(BUILD_DIR)/src/libultra/io/%.o: src/libultra/io/%.s
 	$(AS) $(ASFLAGS_LIBULTRA) -o $@ $<
 
 $(BUILD_DIR)/src/libultrare/io/%.o: src/libultrare/io/%.c
-	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS_LIBULTRA) tools/asmpreproc/include-stdin.c -o $@ $(LIBULTRA_OPTIMIZATION)
-	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
+	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
+
 
 $(BUILD_DIR)/src/libultrare/io/%.o: src/libultrare/io/%.s
 	$(AS) $(ASFLAGS_LIBULTRA) -o $@ $<

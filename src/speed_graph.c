@@ -17,23 +17,27 @@
 #define VICLOCK 60
 #endif
 
+#ifndef VERSION_EU
 s32 dword_CODE_bss_8005F3F0[3];
 Gfx g_speedGraphDisplayList[2][266];
 s32 g_speedGraphDisplayListBank;
 u32 g_speedGraphLastOsCount;
 u32 g_speedGraphCurrentOsCount;
 u32 dword_CODE_bss_800604AC;
+#endif
 
 typedef struct {
     u32 unk0;
     u32 osCount;
 } unknown_s;
 
+#ifndef VERSION_EU
 unknown_s dword_CODE_bss_800604B0[3][32];
 s32 dword_CODE_bss_800607B0[3];
 s32 dword_CODE_bss_800607C0[3];
 s32 dword_CODE_bss_800607D0[3];
 
+#endif
 s32 D_800231D0 = 0;
 
 typedef struct {
