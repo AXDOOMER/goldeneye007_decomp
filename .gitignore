@@ -7,6 +7,7 @@ __pycache__/*
 *.rz
 *.tmp
 *.z64
+*.N64
 *.o
 branchdiff.sh
 branchdiff_report.txt
@@ -53,6 +54,7 @@ assets/ramrom/*.bin
 assets/ramrom/e/*.bin
 build/*
 build-*/*
+notes
 tools/extractor/*.o
 tools/extractor/extractor
 tools/aaa_rip/main.o
