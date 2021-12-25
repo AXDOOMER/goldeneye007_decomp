@@ -1,4 +1,6 @@
 #include <ultra64.h>
+#include "include/PR/os.h"
+#include "include/PR/os_internal.h"
 #include "bondgame.h"
 #include "boot.h"
 #include "sched.h"
@@ -55,9 +57,6 @@ void mainproc(void *args);
 extern u8 * _inflateSegmentStart;
 
 
-u32         osPiGetStatus(void);
-void __osSetFpcCsr(u32);
-u32 __osGetFpcCsr(void);
 /**
  * 1110	70000510
  * ???	initializes TLB index...

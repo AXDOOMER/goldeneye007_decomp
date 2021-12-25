@@ -126,10 +126,9 @@ void CheckDisplayErrorBuffer(u32 *buffer)
 }
 
 /**
- * 15F8	700009F8
+ * Address 0x700009F8.
  * test to display stderr every 16th frame
  */
-
 void CheckDisplayErrorBufferEvery16Frames(u32 framecount)
 {
 	if (!(framecount & 0xf))
@@ -138,8 +137,8 @@ void CheckDisplayErrorBufferEvery16Frames(u32 framecount)
         {
 			if (userCompareValue < (osGetCount() - currentcount))
             {
-				deboutDrawToBuffer((u32*)cfb_16[0]);
-				deboutDrawToBuffer((u32*)cfb_16[1]);
+				deboutDrawToBuffer((u16*)cfb_16[0]);
+				deboutDrawToBuffer((u16*)cfb_16[1]);
 			}
 		}
 	}
@@ -150,7 +149,8 @@ void CheckDisplayErrorBufferEvery16Frames(u32 framecount)
  * 1688	70000A88
  * store current Count to 800230A4
  */
-void osCreateLog(void){
+void osCreateLog(void)
+{
 	currentcount=osGetCount();
 }
 
