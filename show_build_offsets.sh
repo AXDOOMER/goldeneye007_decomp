@@ -57,16 +57,16 @@ SECTION_START_LINE=$(grep -n -e '^\s*_bssSegmentStart\s*=' "${LD_FILE}" | cut -d
 SECTION_END_LINE=$(grep -n -e '^\s*_bssSegmentEnd\s*=' "${LD_FILE}" | cut -d: -f1)
 
 digits_re='^[0-9]+$'
-if ! [[ ${SECTION_START_LINE} =~ $re ]] ; then
+if ! [[ ${SECTION_START_LINE} =~ $digits_re ]] ; then
    echo "error: could not find start of .bss section in ld file" >&2; exit 1
 fi
-if ! [[ ${SECTION_END_LINE} =~ $re ]] ; then
-   echo "error: could not find start of .bss section in ld file" >&2; exit 1
+if ! [[ ${SECTION_END_LINE} =~ $digits_re ]] ; then
+   echo "error: could not find end of .bss section in ld file" >&2; exit 1
 fi
 
 echo "reading lines ${SECTION_START_LINE}-${SECTION_END_LINE} in ${LD_FILE} ... "
 
-echo "file" "start" "offset" | awk '{ printf "%-49s %-14s %-12s\n", $1, $2, $3}'
+echo "file" "size" "offset" | awk '{ printf "%-49s %-14s %-12s\n", $1, $2, $3}'
 
 TOTAL_OFFSET=0
 
