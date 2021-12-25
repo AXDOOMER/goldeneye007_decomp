@@ -49,8 +49,14 @@
 #define VIEWPORT_ULY_CINEMA_OFFSET     52
 #define VIEWPORT_ULY_DEFAULT           VIEWPORT_ULY_2P_PLAYER_1
 
+#if defined(VERSION_EU)
+/* PAL */
+#define	SCREEN_HEIGHT     SCREEN_HEIGHT_272
+#else
+/* NTSC */
 #define	SCREEN_HEIGHT     SCREEN_HEIGHT_240
-#define	SCREEN_HEIGHT_EU  SCREEN_HEIGHT_272
+#endif
+
 #define SCREEN_WIDTH      SCREEN_WIDTH_320
 
 #define XSCALE_MAX      0x400
@@ -94,15 +100,8 @@ extern u32 g_viOriginalVstart0;
 extern u32 g_viOriginalVstart1;
 extern Mtx *g_viProjectionMatrix;
 
-#if defined(VERSION_US) || defined(VERSION_JP)
-/* NTSC */
+/* SCREEN_HEIGHT #define changes based on version (PAL or NTSC) */
 extern u8 cfb_16[NUM_VIDEO_FRAME_BUFFERS][SCREEN_WIDTH * SCREEN_HEIGHT * 2];
-#endif
-
-#if defined(VERSION_EU)
-/* PAL */
-extern u8 cfb_16[NUM_VIDEO_FRAME_BUFFERS][SCREEN_WIDTH * SCREEN_HEIGHT_EU * 2];
-#endif
 
 void viSet800232B4(f32 param_1);
 

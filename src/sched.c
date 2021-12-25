@@ -73,6 +73,10 @@ OSScClient gfxClient[3];
 //char gfxClient[0x18];
 
 u32 g_DisplayPerformanceCounters[4]; // clock, cmc, pipe, tmem
+
+/**
+ * EU .bss 0x80051f00.
+*/
 OSViMode g_ViModes[NUM_VIDEO_FRAME_BUFFERS];
 OSViMode *g_ViModePtrs[NUM_VIDEO_FRAME_BUFFERS];
 
@@ -342,7 +346,11 @@ void __scHandleRSP(OSSched *sc) {
     s32 state;
     t = sc->curRSPTask;
     sc->curRSPTask = 0;
+#if defined(VERSION_EU)
+    speedGraphDisplay(0x10001);
+#else
     speedGraphVideoRelated_3(0x10001);
+#endif
     if ((t->state & OS_SC_YIELD) && osSpTaskYielded(&t->list)) {
         t->state |= OS_SC_YIELDED;
         if ((t->flags & OS_SC_TYPE_MASK) == OS_SC_XBUS) {
@@ -372,7 +380,11 @@ void __scHandleRDP(OSSched *sc)
     OSScTask *t, *sp = NULL, *dp = NULL; 
     s32 state;
     if (sc->curRDPTask != NULL) {
-        speedGraphVideoRelated_3(0x10002);
+#if defined(VERSION_EU)
+    speedGraphDisplay(0x10002);
+#else
+    speedGraphVideoRelated_3(0x10002);
+#endif
         osDpGetCounters(g_DisplayPerformanceCounters);
         t = sc->curRDPTask;
         sc->curRDPTask = NULL;
@@ -472,12 +484,21 @@ void __scExec(OSSched *sc, OSScTask *sp, OSScTask *dp)
         
         if (sp->list.t.type == 2)
         {
+#if defined(VERSION_EU)
+            speedGraphDisplay(0x30001);
+#else
             speedGraphVideoRelated_3(0x30001);
+#endif
         }
         else
         {
+#if defined(VERSION_EU)
+            speedGraphDisplay(0x40001);
+            speedGraphDisplay(0x20002);
+#else
             speedGraphVideoRelated_3(0x40001);
             speedGraphVideoRelated_3(0x20002);
+#endif
         }
         sp->state &= ~(OS_SC_YIELD | OS_SC_YIELDED); 
         osSpTaskLoad(&sp->list);

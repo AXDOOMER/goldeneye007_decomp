@@ -49,8 +49,8 @@ u32 g_unused80023240 = 0;
 #if defined(VERSION_EU)
 struct VideoSettings_s g_videoSettings[NUM_VIDEO_SETTINGS] = 
 {
-    {0, 0, 0, 0, 320, 272, 60.0f, 1.17647063732f, 30.0f, 10000.0f, SCREEN_WIDTH, SCREEN_HEIGHT_EU, 320, 272, 0, 0, 1, NULL},
-    {0, 0, 0, 0, 320, 272, 60.0f, 1.17647063732f, 30.0f, 10000.0f, SCREEN_WIDTH, SCREEN_HEIGHT_EU, 320, 272, 0, 0, 1, NULL}
+    {0, 0, 0, 0, 320, 272, 60.0f, 1.17647063732f, 30.0f, 10000.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 320, 272, 0, 0, 1, NULL},
+    {0, 0, 0, 0, 320, 272, 60.0f, 1.17647063732f, 30.0f, 10000.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 320, 272, 0, 0, 1, NULL}
 };
 #else
 struct VideoSettings_s g_videoSettings[NUM_VIDEO_SETTINGS] = 
@@ -1128,11 +1128,11 @@ glabel video_related_8
 /* 003A7C 70002E7C 3C038005 */  lui   $v1, %hi(viMode) # $v1, 0x8005
 /* 003A80 70002E80 24633E4C */  addiu $v1, %lo(viMode) # addiu $v1, $v1, 0x3e4c
 /* 003A84 70002E84 13000014 */  beqz  $t8, .L70002ED8
-/* 003A88 70002E88 3C0F8005 */   lui   $t7, %hi(D_80053DF8) # $t7, 0x8005
-/* 003A8C 70002E8C 3C0E8002 */  lui   $t6, %hi(osViModeTable + 2720) # $t6, 0x8002
-/* 003A90 70002E90 25CE2930 */  addiu $t6, %lo(osViModeTable + 2720) # addiu $t6, $t6, 0x2930
-/* 003A94 70002E94 3C198005 */  lui   $t9, %hi(D_80053DF8) # $t9, 0x8005
-/* 003A98 70002E98 27393DF8 */  addiu $t9, %lo(D_80053DF8) # addiu $t9, $t9, 0x3df8
+/* 003A88 70002E88 3C0F8005 */   lui   $t7, %hi(g_viOriginalVideoMode) # $t7, 0x8005
+/* 003A8C 70002E8C 3C0E8002 */  lui   $t6, %hi(osViModeTable + 1280) # $t6, 0x8002
+/* 003A90 70002E90 25CE2930 */  addiu $t6, %lo(osViModeTable + 1280) # addiu $t6, $t6, 0x2930
+/* 003A94 70002E94 3C198005 */  lui   $t9, %hi(g_viOriginalVideoMode) # $t9, 0x8005
+/* 003A98 70002E98 27393DF8 */  addiu $t9, %lo(g_viOriginalVideoMode) # addiu $t9, $t9, 0x3df8
 /* 003A9C 70002E9C 25D80048 */  addiu $t8, $t6, 0x48
 .L70002EA0:
 /* 003AA0 70002EA0 8DC10000 */  lw    $at, ($t6)
@@ -1150,10 +1150,10 @@ glabel video_related_8
 /* 003AD0 70002ED0 10000012 */  b     .L70002F1C
 /* 003AD4 70002ED4 AF380004 */   sw    $t8, 4($t9)
 .L70002ED8:
-/* 003AD8 70002ED8 3C188002 */  lui   $t8, %hi(osViModeTable + 480) # $t8, 0x8002
-/* 003ADC 70002EDC 27182A70 */  addiu $t8, %lo(osViModeTable + 480) # addiu $t8, $t8, 0x2a70
+/* 003AD8 70002ED8 3C188002 */  lui   $t8, %hi(osViModeTable + 1600) # $t8, 0x8002
+/* 003ADC 70002EDC 27182A70 */  addiu $t8, %lo(osViModeTable + 1600) # addiu $t8, $t8, 0x2a70
 /* 003AE0 70002EE0 27190048 */  addiu $t9, $t8, 0x48
-/* 003AE4 70002EE4 25EF3DF8 */  addiu $t7, %lo(D_80053DF8) # addiu $t7, $t7, 0x3df8
+/* 003AE4 70002EE4 25EF3DF8 */  addiu $t7, %lo(g_viOriginalVideoMode) # addiu $t7, $t7, 0x3df8
 .L70002EE8:
 /* 003AE8 70002EE8 8F010000 */  lw    $at, ($t8)
 /* 003AEC 70002EEC 2718000C */  addiu $t8, $t8, 0xc
@@ -1169,8 +1169,8 @@ glabel video_related_8
 /* 003B14 70002F14 ADE10000 */  sw    $at, ($t7)
 /* 003B18 70002F18 ADF90004 */  sw    $t9, 4($t7)
 .L70002F1C:
-/* 003B1C 70002F1C 3C0E8005 */  lui   $t6, %hi(D_80053DF8) # $t6, 0x8005
-/* 003B20 70002F20 25CE3DF8 */  addiu $t6, %lo(D_80053DF8) # addiu $t6, $t6, 0x3df8
+/* 003B1C 70002F1C 3C0E8005 */  lui   $t6, %hi(g_viOriginalVideoMode) # $t6, 0x8005
+/* 003B20 70002F20 25CE3DF8 */  addiu $t6, %lo(g_viOriginalVideoMode) # addiu $t6, $t6, 0x3df8
 /* 003B24 70002F24 AC6E0000 */  sw    $t6, ($v1)
 /* 003B28 70002F28 8DD9001C */  lw    $t9, 0x1c($t6)
 /* 003B2C 70002F2C 3C018005 */  lui   $at, %hi(viMode+0x4) # $at, 0x8005
@@ -1217,11 +1217,11 @@ glabel video_related_8
 /* 003BC4 70002FC4 468021A0 */  cvt.s.w $f6, $f4
 /* 003BC8 70002FC8 44988000 */  mtc1  $t8, $f16
 /* 003BCC 70002FCC 448F2000 */  mtc1  $t7, $f4
-/* 003BD0 70002FD0 3C198005 */  lui   $t9, %hi(D_80053DF8) # $t9, 0x8005
+/* 003BD0 70002FD0 3C198005 */  lui   $t9, %hi(g_viOriginalVideoMode) # $t9, 0x8005
 /* 003BD4 70002FD4 3C1F8002 */  lui   $ra, %hi(D_800232C0) # $ra, 0x8002
 /* 003BD8 70002FD8 468042A0 */  cvt.s.w $f10, $f8
 /* 003BDC 70002FDC 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 003BE0 70002FE0 27393DF8 */  addiu $t9, %lo(D_80053DF8) # addiu $t9, $t9, 0x3df8
+/* 003BE0 70002FE0 27393DF8 */  addiu $t9, %lo(g_viOriginalVideoMode) # addiu $t9, $t9, 0x3df8
 /* 003BE4 70002FE4 3C0D8002 */  lui   $t5, %hi(g_viColorOutputMode) # $t5, 0x8002
 /* 003BE8 70002FE8 340AFFFF */  li    $t2, 65535
 /* 003BEC 70002FEC 468084A0 */  cvt.s.w $f18, $f16
@@ -1256,8 +1256,8 @@ glabel video_related_8
 /* 003C5C 7000305C 25EF1F00 */  addiu $t7, %lo(g_ViModes) # addiu $t7, $t7, 0x1f00
 /* 003C60 70003060 0018C100 */  sll   $t8, $t8, 4
 /* 003C64 70003064 030F2021 */  addu  $a0, $t8, $t7
-/* 003C68 70003068 3C0E8002 */  lui   $t6, %hi(osViModeTable + 2720) # $t6, 0x8002
-/* 003C6C 7000306C 25CE2930 */  addiu $t6, %lo(osViModeTable + 2720) # addiu $t6, $t6, 0x2930
+/* 003C68 70003068 3C0E8002 */  lui   $t6, %hi(osViModeTable + 1280) # $t6, 0x8002
+/* 003C6C 7000306C 25CE2930 */  addiu $t6, %lo(osViModeTable + 1280) # addiu $t6, $t6, 0x2930
 /* 003C70 70003070 25D80048 */  addiu $t8, $t6, 0x48
 /* 003C74 70003074 00807825 */  move  $t7, $a0
 .L70003078:
@@ -1282,8 +1282,8 @@ glabel video_related_8
 /* 003CBC 700030BC 27181F00 */  addiu $t8, %lo(g_ViModes) # addiu $t8, $t8, 0x1f00
 /* 003CC0 700030C0 0019C900 */  sll   $t9, $t9, 4
 /* 003CC4 700030C4 03382021 */  addu  $a0, $t9, $t8
-/* 003CC8 700030C8 3C0E8002 */  lui   $t6, %hi(osViModeTable + 480) # $t6, 0x8002
-/* 003CCC 700030CC 25CE2A70 */  addiu $t6, %lo(osViModeTable + 480) # addiu $t6, $t6, 0x2a70
+/* 003CC8 700030C8 3C0E8002 */  lui   $t6, %hi(osViModeTable + 1600) # $t6, 0x8002
+/* 003CCC 700030CC 25CE2A70 */  addiu $t6, %lo(osViModeTable + 1600) # addiu $t6, $t6, 0x2a70
 /* 003CD0 700030D0 25D90048 */  addiu $t9, $t6, 0x48
 /* 003CD4 700030D4 0080C025 */  move  $t8, $a0
 .L700030D8:

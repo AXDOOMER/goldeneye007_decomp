@@ -137,8 +137,9 @@ void speedGraphVideoRelated_2(void) {
     #endif
 }
 
-void speedGraphVideoRelated_3(s32 arg0) {
-    #ifndef VERSION_EU
+#ifndef VERSION_EU
+void speedGraphVideoRelated_3(s32 arg0)
+{
     s32 index;
     s32 var2;
     OSIntMask mask;
@@ -176,8 +177,13 @@ void speedGraphVideoRelated_3(s32 arg0) {
     dword_CODE_bss_800607D0[index] = index2;
 
     osSetIntMask(mask);
-    #endif
 }
+#endif
+#ifdef VERSION_EU
+void speedGraphVideoRelated_3(void)
+{
+}
+#endif
 
 Gfx *speedGraphDisplay(Gfx *gdl)
 {
