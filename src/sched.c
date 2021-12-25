@@ -154,7 +154,8 @@ void osCreateLog(void)
 	currentcount=osGetCount();
 }
 
-void osCreateScheduler (OSSched * sc, void * stack, u8 mode, u32 numFields) {
+void osCreateScheduler (OSSched * sc, void * stack, u8 mode, u32 numFields)
+{
     sc->curRSPTask = 0;
     sc->curRDPTask = 0;
     sc->clientList = 0;

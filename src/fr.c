@@ -140,24 +140,28 @@ u8 g_viVideoSettings2FrameBufferIndex;
 
 /**
  * Current vi mode pointer.
+ * EU .bss 0x80053E4C
  */
 OSViMode *viMode;
 
 /**
  * Address 80060880.
  * Original viMode->comRegs.hStart.
+ * EU .bss 0x80053E50
  */
 u32 g_viOriginalHstart;
 
 /**
  * Address 80060884.
  * Original viMode->fldRegs[0].vStart.
+ * EU .bss 0x80053E54
  */
 u32 g_viOriginalVstart0;
 
 /**
  * Address 80060888.
  * Original viMode->fldRegs[1].vStart.
+ * EU .bss 0x80053E58
  */
 u32 g_viOriginalVstart1;
 

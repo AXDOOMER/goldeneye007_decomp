@@ -6,6 +6,8 @@ LD_FILE=""
 SECTION_START_LINE=
 SECTION_END_LINE=
 
+trap "exit 0" PIPE
+
 usage() {
     echo "$0 usage:"
     echo ""
@@ -74,7 +76,7 @@ while read in; do {
     #echo "while: $in"
     
     # extract first .bss section size
-    FILE_SECTION_SIZE=$(mips-linux-gnu-objdump -h "${in}" | grep bss | head -1 | cut -c 19-28)
+    FILE_SECTION_SIZE=$(mips-linux-gnu-objdump -h "${in}" | grep '\.bss' | head -1 | cut -c 19-28)
     
     # if there's no .bss, set size to zero
     if [ -z "${FILE_SECTION_SIZE}" ] ; then
@@ -93,6 +95,9 @@ while read in; do {
     TOTAL_OFFSET=$((${TOTAL_OFFSET} + ${FILE_SECTION_SIZE}))
 
     echo "${in}" ${FILE_SECTION_SIZE} ${FILE_SECTION_START_OFFSET} | awk '{ printf "%-49s 0x%-12x 0x%-12x\n", $1, $2, $3}'
+    
+    # exit if pipe is broken, e.g., command was run through `head`
+    if [ $? -ne 0 ] ; then exit 0 ; fi
 
 # subprocess:
 # read ld file, from start line to end line
