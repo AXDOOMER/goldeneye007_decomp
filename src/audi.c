@@ -15,7 +15,16 @@
 
 // 0x5622 = 22050
 #define OUTPUT_RATE                    0x5622
+
+#ifdef VERSION_EU
+/* PAL */
+#define MAYBE_FRAME_RATE                   50
+#else
+/* NTSC */
 #define MAYBE_FRAME_RATE                   60
+#endif
+
+
 #define FRAMES_PER_FIELD_AS_POW2            1
 #define AUDIO_FRAME_MESSAGE_QUEUE_SIZE      8
 #define AUDIO_REPLY_MESSAGE_QUEUE_SIZE      8
