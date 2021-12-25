@@ -395,6 +395,7 @@ $(BUILD_DIR)/src/libultrare/gu/%.o: src/libultrare/gu/%.s
 
 ifeq ($(VERSION), EU)
 $(BUILD_DIR)/src/libultrare/io/vimgr.o: LIBULTRA_OPTIMIZATION := -O2
+$(BUILD_DIR)/src/libultrare/io/pimgr.o: LIBULTRA_OPTIMIZATION := -O2
 endif
 
 $(BUILD_DIR)/src/libultra/io/%.o: src/libultra/io/%.c
