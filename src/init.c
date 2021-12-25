@@ -320,15 +320,15 @@ void schedulerInitThread(void)
     osCreateMesgQueue(&gfxFrameMsgQ, &gfxFrameMsgBuf, 32);
     if (osTvType == 2) //OS_TV_MPAL
     { 
-        osCreateScheduler(&sc, &shedThread, OS_VI_MPAL_LAN1, NUM_FIELDS);
+        osCreateScheduler(&os_scheduler, &shedThread, OS_VI_MPAL_LAN1, NUM_FIELDS);
     }
     else 
     {
-        osCreateScheduler(&sc, &shedThread, OS_VI_NTSC_LAN1, NUM_FIELDS);
+        osCreateScheduler(&os_scheduler, &shedThread, OS_VI_NTSC_LAN1, NUM_FIELDS);
 	}
 
-    osScAddClient(&sc, &gfxClient, &gfxFrameMsgQ, 0);
-    sched_cmdQ = osScGetCmdQ(&sc);
+    osScAddClient(&os_scheduler, &gfxClient, &gfxFrameMsgQ, 0);
+    sched_cmdQ = osScGetCmdQ(&os_scheduler);
 }
 
 /**

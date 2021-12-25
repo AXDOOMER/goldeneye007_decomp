@@ -450,7 +450,7 @@ void amMain(void* arg)
     AudioInfo *lastInfo = 0;
     u64 localDelta;
 
-    osScAddClient(&sc, &(g_AudioClient[0]), &(g_AudioManager.frameMessageQueue), (void*)1);
+    osScAddClient(&os_scheduler, &(g_AudioClient[0]), &(g_AudioManager.frameMessageQueue), (void*)1);
 
     while (!done)
     {
@@ -524,7 +524,7 @@ glabel amMain
 /* 002B90 70001F90 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 002B94 70001F94 AFB20020 */  sw    $s2, 0x20($sp)
 /* 002B98 70001F98 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 002B9C 70001F9C 3C048006 */  lui   $a0, %hi(sc)
+/* 002B9C 70001F9C 3C048006 */  lui   $a0, %hi(os_scheduler)
 /* 002BA0 70001FA0 3C058006 */  lui   $a1, %hi(g_AudioClient)
 /* 002BA4 70001FA4 AFBE0038 */  sw    $fp, 0x38($sp)
 /* 002BA8 70001FA8 AFB70034 */  sw    $s7, 0x34($sp)
@@ -537,7 +537,7 @@ glabel amMain
 /* 002BC4 70001FC4 AFA00064 */  sw    $zero, 0x64($sp)
 /* 002BC8 70001FC8 AFA00060 */  sw    $zero, 0x60($sp)
 /* 002BCC 70001FCC 24A5E7A0 */  addiu $a1, %lo(g_AudioClient) # addiu $a1, $a1, -0x1860
-/* 002BD0 70001FD0 2484DA40 */  addiu $a0, %lo(sc) # addiu $a0, $a0, -0x25c0
+/* 002BD0 70001FD0 2484DA40 */  addiu $a0, %lo(os_scheduler) # addiu $a0, $a0, -0x25c0
 /* 002BD4 70001FD4 02C03025 */  move  $a2, $s6
 /* 002BD8 70001FD8 0C000305 */  jal   osScAddClient
 /* 002BDC 70001FDC 24070001 */   li    $a3, 1
@@ -780,7 +780,7 @@ void amHandleFrameMessage(AudioInfo *info, AudioInfo *lastInfo)
     info->task.list.t.yield_data_ptr = NULL; // 50
     info->task.list.t.yield_data_size = 0; // 54
     
-    osSendMesg(osScGetCmdQ(&sc), (OSMesg)&info->task, OS_MESG_NOBLOCK);
+    osSendMesg(osScGetCmdQ(&os_scheduler), (OSMesg)&info->task, OS_MESG_NOBLOCK);
 
     /* swap which acmd list you use each frame */
     g_CurrentAcmdList ^= 1;

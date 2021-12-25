@@ -3,6 +3,13 @@
 #include "src/libultra/io/viint.h"
 #include "src/libultra/os/osint.h"
 
+#define EU_OS_VIM_STACKSIZE 256
+
+#if defined(VERSION_EU)
+#undef OS_VIM_STACKSIZE
+#define OS_VIM_STACKSIZE EU_OS_VIM_STACKSIZE
+#endif
+
 
 OSDevMgr __osViDevMgr = {0};
 
