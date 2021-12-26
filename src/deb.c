@@ -33,33 +33,37 @@ struct deblistentry *debFind(const char *name)
 }
 
 u8 *debAllocate(s32 size) {
-    #ifndef VERSION_EU
+#ifndef VERSION_EU
     u8 **pos = &g_DebMemPos;
     u8 *curr = *pos;
     u8 *prev = curr;
     curr += size;
-    if (curr > (g_DebBuffer + 0x400)) {
+
+    if (curr > (g_DebBuffer + 0x400))
+    {
         curr -= size;
         *pos = curr;
         return mempAllocBytesInBank(size, 6);
-    } else {
+    }
+    else
+    {
         *pos = curr;
     }
-    return prev;
-    #else
 
-    return &g_DebMemPos;
-    #endif
+    return prev;
+#else
+    return &g_DebBuffer;
+#endif
 }
 
 void debAdd(const char *name, u32 data) {
-    #ifndef VERSION_EU
+#ifndef VERSION_EU
     struct deblistentry *entry = debAllocate(sizeof(struct deblistentry));
     entry->next = g_DebList;
     entry->data = data;
     entry->name = name;
     g_DebList = entry;
-    #endif
+#endif
 }
 
 void debInit(void) {
