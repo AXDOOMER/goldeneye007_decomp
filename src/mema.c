@@ -11,7 +11,7 @@
 
 s32 g_MemoryAllocationBuffer;
 s32 g_MemoryAllocationBufferSize;
-allocation g_MemoryAllocations[512];
+allocation g_MemoryAllocations[ALLOCATIONS_LENGTH+3];
 void *g_MemoryAllocationDebugData = NULL;
 
 // Swap two allocations.

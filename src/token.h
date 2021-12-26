@@ -3,6 +3,12 @@
 
 #include "ultra64.h"
 
+#if defined(VERSION_EU)
+#define G_TOKEN_STRING_LEN 15
+#else
+#define G_TOKEN_STRING_LEN 160
+#endif
+
 void tokenSetString(const char *str);
 s32 tokenReadIo(void);
 
