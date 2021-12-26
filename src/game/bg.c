@@ -2,6 +2,7 @@
 #include "PR/os.h"
 #include "include/PR/gbi.h"
 #include "bondconstants.h"
+#include "deb.h"
 #include "fr.h"
 #include "memp.h"
 #include "game/bg.h"

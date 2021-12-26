@@ -3315,9 +3315,9 @@ SECTIONS
       build/e/src/str.o (.data);
       build/e/src/sprintf.o (.data);
       build/e/src/pi.o (.data);
-      build/e/src/vi.o (.data); /* 0x3740 */
+      build/e/src/vi.o (.data);            
       build/e/src/debugmenu.o (.data);
-      build/e/src/joy.o (.data);
+      build/e/src/joy.o (.data);           /* 0x3700 */
       build/e/src/motor.o (.data);
       build/e/src/libultrare/io/leointerrupt.o (.data);
       build/e/src/rmon.o (.data);

@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "game/dyn.h"
+#include "deb.h"
 #include "token.h"
 #include "str.h"
 #include "memp.h"

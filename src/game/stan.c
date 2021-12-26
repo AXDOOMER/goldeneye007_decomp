@@ -1,5 +1,6 @@
 #include "ultra64.h"
 //#include "bondtypes.h"
+#include "deb.h"
 #include "game/stan.h"
 #include "game/bg.h"
 

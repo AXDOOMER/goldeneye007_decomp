@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "game/ob.h"
+#include "deb.h"
 #include "memp.h"
 #include "assets/obseg/obseg.h"
 #include "game/decompress.h"
