@@ -132,6 +132,7 @@ s32 g_DebugFeatureFlag = 0;
 
 OSScMsg g_bossGfxDoneMsg = { OS_SC_DONE_MSG };
 
+
 // extern declarations
 extern struct player *g_CurrentPlayer;
 
@@ -674,7 +675,7 @@ glabel boss_c_debug
 
 .data
 glabel taskgrab_ramdump_num
-.word 0
+.word 0x1
 
 .text
 glabel bossMainloop
