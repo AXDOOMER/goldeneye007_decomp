@@ -3359,10 +3359,10 @@ SECTIONS
       build/e/src/libultrare/io/sptask.o (.data);
       build/e/src/libultra/io/dpsetnextbuf.o (.data);
       build/e/src/libultra/io/sptaskyield.o (.data);
-      build/e/src/libultra/os/timerintr.o (.data);
+      build/e/src/libultra/os/timerintr.o (.data);                  /* 0x4500 */
       build/e/src/libultra/os/getthreadpri.o (.data);
       build/e/src/libultra/os/interrupt.o (.data);
-      build/e/src/libultrare/io/vi.o (.data);
+      build/e/src/libultrare/io/vi.o (.data);                       /* 0x4510 */
       build/e/src/libultra/io/vigetcurrcontext.o (.data);
       build/e/src/libultra/io/viswapcontext.o (.data);
       build/e/src/libultra/io/piacs.o (.data);
@@ -4091,6 +4091,7 @@ SECTIONS
       build/e/src/libultrare/io/sptask.o (.bss);
       build/e/src/libultra/io/dpsetnextbuf.o (.bss);
       build/e/src/libultra/io/sptaskyield.o (.bss);
+
       build/e/src/libultra/os/timerintr.o (.bss);
       build/e/src/libultra/os/getthreadpri.o (.bss);
       build/e/src/libultra/os/interrupt.o (.bss);
@@ -4152,6 +4153,7 @@ SECTIONS
       build/e/src/libultrare/libc/xprintf.o (.bss);
       /*build/e/src/libultrare/io/pimgr.o (.bss);*/
       build/e/src/libultrare/io/pfsinit.o (.bss);
+      
       build/e/src/libultrare/io/controller.o (.bss);
       build/e/src/libultra/io/contquery.o (.bss);
       build/e/src/libultrare/io/contreaddata.o (.bss);
