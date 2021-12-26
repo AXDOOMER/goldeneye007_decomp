@@ -68,10 +68,7 @@ f32 g_ViYScales[NUM_VIDEO_FRAME_BUFFERS] = {1.0, 1.0};
 s32 g_ViChangeVideoModes[NUM_VIDEO_FRAME_BUFFERS] = {0, 0}; // boolean
 
 OSSched os_scheduler;
-//temporary until i get proper sized structs
 OSScClient gfxClient[3];
-//char gfxClient[0x18];
-
 u32 g_DisplayPerformanceCounters[4]; // clock, cmc, pipe, tmem
 
 /**

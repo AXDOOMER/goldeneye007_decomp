@@ -3537,7 +3537,7 @@ SECTIONS
       build/e/src/deb_print.o (.rodata);                               /* 0x5240 */
       build/e/src/getra.o (.rodata);
       build/e/src/ramrom.o (.rodata);
-      build/e/src/boss.o (.rodata);
+      build/e/src/boss.o (.rodata);             /* around 0x5b84 */
       build/e/src/music.o (.rodata);
       build/e/src/snd.o (.rodata);
       build/e/src/memp.o (.rodata);

@@ -8,10 +8,11 @@ void speedGraphVideoRelated_2(void);
 
 #if defined(VERSION_EU)
 void speedGraphVideoRelated_3(void);
+Gfx *video_DL_related_4(Gfx *gdl);
 #else
 void speedGraphVideoRelated_3(s32 arg0);
+void video_DL_related_4(void);
 #endif
 
-void video_DL_related_4(void);
 
 #endif
