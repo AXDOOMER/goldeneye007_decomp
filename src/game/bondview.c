@@ -137,7 +137,7 @@ s32 watch_time_0;
 //CODE.bss:80079A28
 char stringbuffer_lowerleft[0x200];
 
-#ifdef VERSION_JP
+#if defined(VERSION_JP) || defined(VERSION_EU)
 //CODE.bss:80079Cd8
 char dword_CODE_bss_jp80079Cd8[0x30];
 #endif
