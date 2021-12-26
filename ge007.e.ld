@@ -4153,7 +4153,7 @@ SECTIONS
       build/e/src/libultrare/libc/xprintf.o (.bss);
       /*build/e/src/libultrare/io/pimgr.o (.bss);*/
       build/e/src/libultrare/io/pfsinit.o (.bss);
-      
+
       build/e/src/libultrare/io/controller.o (.bss);
       build/e/src/libultra/io/contquery.o (.bss);
       build/e/src/libultrare/io/contreaddata.o (.bss);

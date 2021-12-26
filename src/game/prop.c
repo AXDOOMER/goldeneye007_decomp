@@ -4,6 +4,9 @@
 #include "game/math_atan2f.h"
 #include "game/prop.h"
 
+/**
+ * EU .bss 0x80068480
+*/
 s32 lastmpweaponnum;
 
 //.section .rodata

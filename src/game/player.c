@@ -6,7 +6,12 @@
 #include "game/lvl.h"
 
 // bss
+
+/**
+ * EU .bss 800789A0
+*/
 s32 copyof_stagenum;
+
 s32 dword_CODE_bss_80079E94;
 char dword_CODE_bss_80079E98[0x48];
 
