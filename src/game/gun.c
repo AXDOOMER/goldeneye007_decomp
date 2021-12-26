@@ -25,7 +25,13 @@ s32 dword_CODE_bss_80075DB8;
 s32 dword_CODE_bss_80075DBC;
 s32 dword_CODE_bss_80075DC0;
 s32 dword_CODE_bss_80075DC4;
+
+#if defined(VERSION_EU)
+char dword_CODE_bss_80075DC8[20][104];
+#else
 char dword_CODE_bss_80075DC8[20][160];
+#endif
+
 s32 dword_CODE_bss_80076A48;
 
 

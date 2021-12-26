@@ -48,7 +48,11 @@ s32 dword_CODE_bss_80069588;
 s32 dword_CODE_bss_8006958C;
 //CODE.bss:80069590
 s32 virtualaddress;
-//CODE.bss:80069594
+
+/**
+ * Address 80069594
+ * EU .bss 800684D4
+*/
 s32 dword_CODE_bss_80069594;
 
 

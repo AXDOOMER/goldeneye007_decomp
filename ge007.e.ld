@@ -4256,6 +4256,7 @@ SECTIONS
       build/e/src/game/initanitable.o (.bss);
       build/e/src/game/initplayergaitobject.o (.bss);
       build/e/src/game/setguscale.o (.bss);
+
       build/e/src/game/initnull_000BC0.o (.bss);
       build/e/src/game/initimages.o (.bss);
       build/e/src/game/initintromatrices.o (.bss);
@@ -4342,6 +4343,7 @@ SECTIONS
       build/e/src/game/crc.o (.bss);
       build/e/src/game/chrObjRandom.o (.bss);
       build/e/src/game/unk_09B7A0.o (.bss);
+
       build/e/src/game/unk_09C250.o (.bss);
       build/e/src/game/unk_0A1DA0.o (.bss);
       build/e/src/game/watch.o (.bss);

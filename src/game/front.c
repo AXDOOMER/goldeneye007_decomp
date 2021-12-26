@@ -206,7 +206,10 @@ s32 highlight_controlstyle;
 s32 highlight_aimadjustment;
 //CODE.bss:800697EC                     .align 4
 
-//CODE.bss:800697F0
+/**
+ * Address 0x800697F0
+ * EU .bss 0x80058730
+*/
 u32 arrayUnlockedCheats[0x4b];
 
 
