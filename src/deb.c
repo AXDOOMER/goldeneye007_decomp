@@ -14,7 +14,15 @@ struct deblistentry
     s32 unused;
 };
 
+/**
+ * EU .bss 80053e60
+*/
+#if defined(VERSION_EU)
+u8 g_DebBuffer[0x10];
+#else
 u8 g_DebBuffer[0x400];
+#endif
+
 u32 g_DebDebugData[] = {0, 0};
 struct deblistentry *g_DebList = NULL;
 s32 D_800232EC[] = {0, 0, 0};
