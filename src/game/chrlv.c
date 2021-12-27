@@ -575,6 +575,7 @@ void chrlvKneelingAnimationRelated(struct ChrRecord *arg0)
         arg0->act_stand.unk038 = 0;
         arg0->act_stand.unk03c = 2;
         arg0->act_stand.unk040 = 0;
+        // bug/typo??: this is the only code like this not adjusted for VERSION_EU
         arg0->act_stand.unk044 = (randomGetNext() % 0x78U) + 0xB4;
         arg0->sleep = 0;
 
@@ -6136,6 +6137,7 @@ void chrlvTickStartAlarm(ChrRecord *arg0)
 {
     Model *model = arg0->model;
 
+    // bug/typo, should be 50.0f on VERSION_EU
     if (objecthandlerGetModelField28(model) >= 60.0f)
     {
         start_alarm();
