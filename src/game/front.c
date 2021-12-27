@@ -30,11 +30,7 @@
 // is different from the 80 here ...
 #define CHEATS_TRACKED 80
 
-struct point {
-    f32 x;
-    f32 y;
-    f32 z;
-};
+
 // bss
 //CODE.bss:800695A0
 f32 flt_CODE_bss_800695A0;
@@ -293,7 +289,7 @@ u32 D_8002A9B0 = 0xA0000000;
 u32 D_8002A9B4 = 0x96000000;
 u32 D_8002A9B8 = 0x28000000;
 u32 D_8002A9BC = 0x8C000000;
-struct point D_8002A9C0 = {0.0f, 0.0f, 0.0f};
+struct coord3d D_8002A9C0 = {0.0f, 0.0f, 0.0f};
 
 struct legal_screen_text D_8002A9CC[] = {
     {220,  30, 1, 1, TEXT(LTITLE, 0x07), 0},
