@@ -30,6 +30,40 @@
 #include "game/unk_08DBB0.h"
 #include "game/unk_0A1DA0.h"
 
+#ifdef VERSION_EU
+#define CHRLV_RECENT_TIME_CHECK 151
+#define CHRLV_TICK_DEAD_CHECK 75
+#define CHRLV_SEEN_RECENT_CHECK 100
+#define CHRLV_LASTMOVEOK60_CHECK 50
+#define CHRLV_ATTACKWALK_CLOCK_TIMER30_MIN 0x11
+#define CHRLV_ATTACKWALK_CLOCK_TIMER30_MAX 0x1a
+#define CHRLV_ATTACKWALK_TIMER40_A 0x4b
+#define CHRLV_ATTACKWALK_TIMER40_B 0x10
+#define CHRLV_ATTACKWALK_TIMER40_C 0x96
+#define CHRLV_ATTACKWALK_TIMER40_D 0x21
+
+#define CHRLV_DEFAULT_TIMER 0x96
+#define CHRLV_10_SEC_TIMER 0x1f4 /* 500 */
+#define CHRLV_FRAMERATE_F 50.0f
+
+#else
+
+#define CHRLV_RECENT_TIME_CHECK 181
+#define CHRLV_TICK_DEAD_CHECK 90
+#define CHRLV_SEEN_RECENT_CHECK 120
+#define CHRLV_LASTMOVEOK60_CHECK 60
+#define CHRLV_ATTACKWALK_CLOCK_TIMER30_MIN 0x15
+#define CHRLV_ATTACKWALK_CLOCK_TIMER30_MAX 0x1F
+#define CHRLV_ATTACKWALK_TIMER40_A 0x5a
+#define CHRLV_ATTACKWALK_TIMER40_B 0x14
+#define CHRLV_ATTACKWALK_TIMER40_C 0xb4
+#define CHRLV_ATTACKWALK_TIMER40_D 0x28
+
+#define CHRLV_DEFAULT_TIMER 0xb4
+#define CHRLV_10_SEC_TIMER 0x258 /* 600 */
+#define CHRLV_FRAMERATE_F 60.0f
+#endif
+
 
 // forward declarations
 
@@ -386,7 +420,7 @@ void chrlvIdleAnimationRelated7F023A94(struct ChrRecord *arg0, f32 arg1)
     arg0->act_stand.unk038 = 0;
     arg0->act_stand.unk03c = 2;
     arg0->act_stand.unk040 = 0;
-    arg0->act_stand.unk044 = (randomGetNext() % 0x78U) + 0xB4;
+    arg0->act_stand.unk044 = (randomGetNext() % (u32)CHRLV_SEEN_RECENT_CHECK) + CHRLV_DEFAULT_TIMER;
 
     f2 = arg1;
 
@@ -1830,9 +1864,9 @@ void chrlvInitActAttackWalk(ChrRecord *chr, s32 arg1)
     chr->actiontype = ACT_ATTACKWALK;
     chr->act_attackwalk.clock_timer30 = 0;
     #if defined(VERSION_EU)
-    chr->act_attackwalk.clock_timer34 = ((u32) randomGetNext() % (u32) (s32) (333.333343506f * g_AiReactionSpeed)) + 0x78;
+    chr->act_attackwalk.clock_timer34 = ((u32) randomGetNext() % (u32) (s32) (333.333343506f * g_AiReactionSpeed)) + CHRLV_SEEN_RECENT_CHECK;
     #else
-    chr->act_attackwalk.clock_timer34 = ((u32) randomGetNext() % (u32) (s32) (400.0f * g_AiReactionSpeed)) + 0x78;
+    chr->act_attackwalk.clock_timer34 = ((u32) randomGetNext() % (u32) (s32) (400.0f * g_AiReactionSpeed)) + CHRLV_SEEN_RECENT_CHECK;
     #endif
     chr->act_attackwalk.unk038 = 0;
     chr->act_attackwalk.animfloats = panim_float;
@@ -5206,7 +5240,7 @@ bool actor_jogs_sideways(ChrRecord *self)
     struct coord3d TargetVector;
     struct coord3d TargetCoord;
 
-    if (chrIsNotDeadOrShot(self) && ((g_GlobalTimer - self->lastwalk60) >= 181)) //>3 seconds since last walk
+    if (chrIsNotDeadOrShot(self) && ((g_GlobalTimer - self->lastwalk60) >= CHRLV_RECENT_TIME_CHECK)) //>3 seconds since last walk
     {
         myprop    = self->prop;
         distToRun = ((u32)randomGetNext() * (1.0f / UINT_MAX) * 200.0f) + 200.0f; //random dist to run between 0 and 200
@@ -5256,7 +5290,7 @@ bool actor_walks_and_fires(ChrRecord *self)
         if (
             (is_weapon_in_guarddata_hand(self, RIGHT_HAND) || is_weapon_in_guarddata_hand(self, LEFT_HAND))
             &&
-            ((g_GlobalTimer - self->lastwalk60) >= 181)
+            ((g_GlobalTimer - self->lastwalk60) >= CHRLV_RECENT_TIME_CHECK)
             )
         {
             f32 dx = bondprop->pos.f[0] - myprop->pos.f[0];
@@ -5292,7 +5326,7 @@ bool actor_runs_and_fires(ChrRecord *self)
         if (
             (is_weapon_in_guarddata_hand(self, RIGHT_HAND) || is_weapon_in_guarddata_hand(self, LEFT_HAND))
             &&
-            ((g_GlobalTimer - self->lastwalk60) >= 181)
+            ((g_GlobalTimer - self->lastwalk60) >= CHRLV_RECENT_TIME_CHECK)
             )
         {
             f32 dx = bondprop->pos.f[0] - myprop->pos.f[0];
@@ -5820,13 +5854,13 @@ void chrlvTickDead(ChrRecord *arg0)
     {
         arg0->act_init.padding[0] += g_ClockTimer;
 
-        if (arg0->act_init.padding[0] >= 90)
+        if (arg0->act_init.padding[0] >= CHRLV_TICK_DEAD_CHECK)
         {
             arg0->hidden |= CHRHIDDEN_REMOVE;
         }
         else
         {
-            arg0->fadealpha = (u8) ((s32) ((90 - arg0->act_init.padding[0]) * 0xFF) / 90);
+            arg0->fadealpha = (u8) ((s32) ((CHRLV_TICK_DEAD_CHECK - arg0->act_init.padding[0]) * 0xFF) / CHRLV_TICK_DEAD_CHECK);
         }
 
         return;
@@ -6447,9 +6481,9 @@ s32 chrlvSetSubroty(ChrRecord *arg0, s32 arg1, f32 arg2, f32 arg3, f32 arg4)
         sp28 = objecthandlerGetModelField28(model);
         roty = getsubroty(model);
 
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined(VERSION_EU)
         temp_f14 = 0.06283186f * arg3 * g_JP_GlobalTimerDelta * model->unka4;
-#else /* VERSION_US, VERSION_EU */
+#else /* VERSION_US */
         temp_f14 = 0.06283186f * arg3 * g_GlobalTimerDelta * model->unka4;
 #endif
 
@@ -7299,7 +7333,7 @@ void chrlvFireWeaponRelated(ChrRecord *self, s32 hand)
 
         if (
             (sp44 == 0)
-            || (self->seen_bond_time >= (g_GlobalTimer - 0x78))
+            || (self->seen_bond_time >= (g_GlobalTimer - CHRLV_SEEN_RECENT_CHECK))
             || (bondwalkItemGetAutomaticFiringRate(prop_selfchr->act_attack.attack_item) < 0))
         {
             sp268 = 0;
@@ -7465,14 +7499,18 @@ void chrlvFireWeaponRelated(ChrRecord *self, s32 hand)
                                 matrix_4x4_set_rotation_around_x(sp24C, &sp9C);
                                 matrix_4x4_set_rotation_around_y(subroty, &sp5C);
                                 matrix_4x4_multiply_homogeneous_in_place(&sp5C, &sp9C);
-                                sp128->timer = 0xB4;
+                                sp128->timer = CHRLV_DEFAULT_TIMER;
                                 sub_GAME_7F05EB0C((ObjectRecord *) sp128, &sp240, sp238, &sp9C, &spDC, &spE8, self_prop);
                                 
                                 if (sp128->base.runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)
                                 {
                                     sp128->base.unk6C->unk8c = 0.3f;
                                     sp128->base.unk6C->unk94 = 0.13333333f;
+#ifdef VERSION_EU
+                                    sp128->base.unk6C->unkbc = 0x32;
+#else
                                     sp128->base.unk6C->unkbc = 0x3C;
+#endif
                                 }
                             }
                         }
@@ -8842,7 +8880,7 @@ void chrlvTickThrowGrenade(ChrRecord *self)
     if ((temp_f2 >= 61.0f) && (held_prop != NULL))
     {
         struct WeaponObjRecord *weap = held_prop->weapon;
-        weap->timer = 0xB4;
+        weap->timer = CHRLV_DEFAULT_TIMER;
     }
 
     if ((temp_f2 >= 119.0f) && (held_prop != NULL))
@@ -9068,7 +9106,7 @@ void chrlvTickAttackWalk(ChrRecord *self)
 
     if (
         (self->invalidmove == 1)
-        || (self->lastmoveok60 < (g_GlobalTimer - 0x3C))
+        || (self->lastmoveok60 < (g_GlobalTimer - CHRLV_LASTMOVEOK60_CHECK))
         || (self->act_attackwalk.clock_timer34 < self->act_attackwalk.clock_timer30))
     {
         if (objecthandlerGetModelField28(self_model) > ((f32)objecthandlerGetModelAnim(self_model)->unk04 * 0.5f))
@@ -9101,7 +9139,7 @@ void chrlvTickAttackWalk(ChrRecord *self)
         self->act_attackwalk.unk038 = 1;
     }
 
-    if (self->act_attackwalk.clock_timer30 >= 0x15)
+    if (self->act_attackwalk.clock_timer30 >= CHRLV_ATTACKWALK_CLOCK_TIMER30_MIN)
     {
         chrlvUpdateAimendsideback(self, self->act_attackwalk.animfloats, (s32) self->act_attackwalk.unk48[1], (s32) self->act_attackwalk.unk48[0], 1.0f);
     }
@@ -9110,7 +9148,7 @@ void chrlvTickAttackWalk(ChrRecord *self)
         chrlvResetAimend(self);
     }
 
-    if (self->act_attackwalk.unk038 && !(self->act_attackwalk.clock_timer30 < 0x1F))
+    if (self->act_attackwalk.unk038 && !(self->act_attackwalk.clock_timer30 < CHRLV_ATTACKWALK_CLOCK_TIMER30_MAX))
     {
         for (i=0; i<2; i++)
         {
@@ -9131,20 +9169,20 @@ void chrlvTickAttackWalk(ChrRecord *self)
                         {
                             if (self->act_attackwalk.unk4C[i])
                             {
-                                self->act_attackwalk.timer40 += 0x5A;
+                                self->act_attackwalk.timer40 += CHRLV_ATTACKWALK_TIMER40_A;
                             }
                             else
                             {
-                                self->act_attackwalk.timer40 += 0x14;
+                                self->act_attackwalk.timer40 += CHRLV_ATTACKWALK_TIMER40_B;
                             }
                         }
                         else if (self->act_attackwalk.unk4C[i])
                         {
-                            self->act_attackwalk.timer40 += 0xB4;
+                            self->act_attackwalk.timer40 += CHRLV_ATTACKWALK_TIMER40_C;
                         }
                         else
                         {
-                            self->act_attackwalk.timer40 += 0x28;
+                            self->act_attackwalk.timer40 += CHRLV_ATTACKWALK_TIMER40_D;
                         }
 
                         self->act_attackwalk.unk044 = 1 - self->act_attackwalk.unk044;
@@ -9278,7 +9316,7 @@ void chrlvTickRunPos(ChrRecord *self)
     }
 
     if ((self->invalidmove == 1)
-        || (self->lastmoveok60 < (g_GlobalTimer - 0x3C))
+        || (self->lastmoveok60 < (g_GlobalTimer - CHRLV_LASTMOVEOK60_CHECK))
         || (chrlvIsArrivingLaterallyAtPos(&self->prevpos, &self_prop->pos, &self->act_runpos.pos, self->act_runpos.neardist)))
     {
         f32 offset = 0;
@@ -10415,14 +10453,14 @@ void chrlvTickGoPos(ChrRecord *arg0)
     arg0->act_gopos.waydata.age += 1;
     arg0->lastwalk60 = g_GlobalTimer;
 
-    if (arg0->lastmoveok60 < (g_GlobalTimer - 0x3C))
+    if (arg0->lastmoveok60 < (g_GlobalTimer - CHRLV_LASTMOVEOK60_CHECK))
     {
         plot_course_for_actor(arg0, &arg0->act_gopos.targetpos, arg0->act_gopos.target, (s32) arg0->act_gopos.unk59);
     }
 
     chrlvPlotCourseRelated(arg0);
 
-    if ((arg0->act_gopos.waydata.mode != WAYMODE_MAGIC) && ((arg0->act_gopos.unk9c + 0xB4) < g_GlobalTimer))
+    if ((arg0->act_gopos.waydata.mode != WAYMODE_MAGIC) && ((arg0->act_gopos.unk9c + CHRLV_DEFAULT_TIMER) < g_GlobalTimer))
     {
         chrlvActGoposRelated(arg0, &sp68, &sp64);
 
@@ -10583,7 +10621,7 @@ void chrlvTickPatrol(ChrRecord *arg0)
     arg0->lastwalk60 = g_GlobalTimer;
 
     if ((arg0->act_patrol.waydata.mode != WAYMODE_MAGIC)
-        && ((arg0->act_patrol.lastvisible60 + 0xB4) < g_GlobalTimer)
+        && ((arg0->act_patrol.lastvisible60 + CHRLV_DEFAULT_TIMER) < g_GlobalTimer)
         && chrlvStanRoomRelatedPad(arg0, temp_v0))
     {
         sp34 = 1;
@@ -10753,7 +10791,7 @@ void chrlvAllChrTick(void)
 
         if (guard->model != NULL)
         {
-            if ((guard->lastseetarget60 > 0) && (g_GlobalTimer - guard->lastseetarget60 < 0x78))
+            if ((guard->lastseetarget60 > 0) && (g_GlobalTimer - guard->lastseetarget60 < CHRLV_SEEN_RECENT_CHECK))
             {
                 g_SeenBondRecentlyGuardCount++;
             }
@@ -10767,7 +10805,7 @@ void chrlvAllChrTick(void)
 */
 s32 chrlvSeenWithin600(ChrRecord *arg0)
 {
-    if ((arg0->lastseetarget60 > 0) && ((g_GlobalTimer - arg0->lastseetarget60) < 0x258))
+    if ((arg0->lastseetarget60 > 0) && ((g_GlobalTimer - arg0->lastseetarget60) < CHRLV_10_SEC_TIMER))
     {
         return 1;
     }
@@ -10783,7 +10821,7 @@ s32 chrlvSeenWithin600(ChrRecord *arg0)
 */
 s32 chrlvHearWithin600(ChrRecord *arg0)
 {
-    if ((arg0->lastheartarget60 > 0) && ((g_GlobalTimer - arg0->lastheartarget60) < 0x258))
+    if ((arg0->lastheartarget60 > 0) && ((g_GlobalTimer - arg0->lastheartarget60) < CHRLV_10_SEC_TIMER))
     {
         return 1;
     }
@@ -11285,7 +11323,7 @@ void reset_and_start_loop_counter(ChrRecord *self)
 */
 f32 get_loop_counter_time_in_seconds(ChrRecord *self)
 {
-    return self->timer60 / 60.0f;
+    return self->timer60 / CHRLV_FRAMERATE_F;
 }
 
 
@@ -12246,7 +12284,7 @@ bool actor_drops_itemtype_setting_timer(struct ChrRecord *self, s32 modelnum, u8
     {
         set_obj_instance_controller_scale(NewModel->base.model, NewModel->base.model->scale);
         attachNewChild(NewModel->base.prop, self->prop);
-        NewModel->timer = 0xB4;
+        NewModel->timer = CHRLV_DEFAULT_TIMER;
         sub_GAME_7F04BFD0(NewModel->base.prop, 1);
         self->hidden = self->hidden | 1;
 
