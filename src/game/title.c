@@ -694,7 +694,11 @@ Gfx *insert_bond_eye_intro(Gfx *gdl) {
     
     matrix_4x4_7F059694(&matrix, D_8002A83C[0], D_8002A83C[1], D_8002A83C[2], (D_8002A83C[0] + D_8002A848[0]), (D_8002A83C[1] + D_8002A848[1]), (D_8002A83C[2] + D_8002A848[2]), D_8002A854[0], D_8002A854[1], D_8002A854[2]);
 
+#if defined VERSION_EU
+    return sub_GAME_7F007F30(gdl, 1, &matrix);
+#else
     return sub_GAME_7F007F30(gdl, 2, &matrix);
+#endif
 }
 
 extern Gfx *D_020043E8;
@@ -720,7 +724,11 @@ Gfx *load_display_rare_logo(Gfx *gdl, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     guLookAt(&matrix_buffer_rarelogo_1[D_8002A7D0], D_8002A878[0], D_8002A878[1], D_8002A878[2], (D_8002A878[0] + D_8002A884[0]), (D_8002A878[1] + D_8002A884[1]), (D_8002A878[2] + D_8002A884[2]), D_8002A890[0], D_8002A890[1], D_8002A890[2]);
     gSPMatrix(gdl++,  osVirtualToPhysical(&matrix_buffer_rarelogo_1[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW));
     guRotate(&matrix_buffer_rarelogo_2[D_8002A7D0], D_8002A89C, 0.0f, 1.0f, 0.0f);
+#if defined(VERSION_EU)
+    D_8002A89C += 2.4f;
+#else
     D_8002A89C += 2.0f;
+#endif
     gSPMatrix(gdl++, osVirtualToPhysical(&matrix_buffer_rarelogo_2[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW));
     gSPSetLights1(gdl++, D_8002A860);
     D_8002A860.a.l.col[0] = D_8002A860.a.l.col[1] = D_8002A860.a.l.col[2] = D_8002A860.a.l.colc[0] = D_8002A860.a.l.colc[1] = D_8002A860.a.l.colc[2] = arg4;
@@ -759,20 +767,34 @@ void sub_GAME_7F008B58(s32 address, s32 size) {
     romCopy(virtualaddress, &_GlobalimagetablecmdblkSegmentRomStart, ALIGN64_V2((u32)&_GlobalimagetablecmdblkSegmentEnd - (u32)&_GlobalimagetablecmdblkSegmentStart));
 }
 
-Gfx *retrieve_display_rareware_logo(Gfx *gdl) {
+Gfx *retrieve_display_rareware_logo(Gfx *gdl)
+{
+#if defined(VERSION_EU)
+#define RAREWARE_LOGO_DEN 58
+#define RAREWARE_LOGO_SUB 33915
+#define RAREWARE_LOGO_EYE_COUNT1 216
+#define RAREWARE_LOGO_EYE_COUNT2 241
+#else
+#define RAREWARE_LOGO_DEN 70
+#define RAREWARE_LOGO_SUB 40800
+#define RAREWARE_LOGO_EYE_COUNT1 260
+#define RAREWARE_LOGO_EYE_COUNT2 290
+#endif
+
     D_8002A7D0 = (1 - D_8002A7D0);
     gSPSegment(gdl++, 2, osVirtualToPhysical(virtualaddress));
     if ((gunbarrel_mode == 0) || (gunbarrel_mode == 1)) {
         s32 var1;
         s32 var2;
-        var1 = (intro_eye_counter * 255) / 70;
+        var1 = (intro_eye_counter * 255) / RAREWARE_LOGO_DEN;
         if (var1 > 255) {
             var1 = 255;
         }
         if (var1 < 0) {
             var1 = 0;
         }
-        var2 = 255 - (((intro_eye_counter * 255) - 40800) / 70);
+
+        var2 = 255 - (((intro_eye_counter * 255) - RAREWARE_LOGO_SUB) / RAREWARE_LOGO_DEN);
         if (var2 > 255) {
             var2 = 255;
         }
@@ -780,8 +802,8 @@ Gfx *retrieve_display_rareware_logo(Gfx *gdl) {
             var2 = 0;
         }
         gdl = load_display_rare_logo(gdl, 403, 488, x, (var1 * var2) / 255);
-        if (intro_eye_counter++ >= 260) {
-            if (intro_eye_counter >= 290) {
+        if (intro_eye_counter++ >= RAREWARE_LOGO_EYE_COUNT1) {
+            if (intro_eye_counter >= RAREWARE_LOGO_EYE_COUNT2) {
                 intro_eye_counter = 0;
                 gunbarrel_mode++;
                 gunbarrel_mode++;
@@ -1103,9 +1125,7 @@ glabel sub_GAME_7F008E80
 #ifdef VERSION_EU
 GLOBAL_ASM(
 .late_rodata
-glabel D_8004F2DC
-.word 0x4019999a
-glabel eu_cdata_0x38ae0
+glabel eu_cdata_0x28ae0
 .word 0x3f68f5c3 /* 0.910000026226 */
 .text
 glabel sub_GAME_7F008E80
@@ -1281,8 +1301,8 @@ glabel sub_GAME_7F008E80
 /* 03BA90 7F0090A0 00431021 */   addu  $v0, $v0, $v1
 /* 03BA94 7F0090A4 44822000 */  mtc1  $v0, $f4
 .L7F0090A8:
-/* 03BA98 7F0090A8 3C018004 */  lui   $at, %hi(D_8004F2DC) # $at, 0x8004
-/* 03BA9C 7F0090AC C4267730 */  lwc1  $f6, %lo(D_8004F2DC)($at)
+/* 03BA98 7F0090A8 3C018004 */  lui   $at, %hi(eu_cdata_0x28ae0) # $at, 0x8004
+/* 03BA9C 7F0090AC C4267730 */  lwc1  $f6, %lo(eu_cdata_0x28ae0)($at)
 /* 03BAA0 7F0090B0 46802120 */  cvt.s.w $f4, $f4
 /* 03BAA4 7F0090B4 44804000 */  mtc1  $zero, $f8
 /* 03BAA8 7F0090B8 8E240000 */  lw    $a0, ($s1)
@@ -1346,12 +1366,15 @@ glabel sub_GAME_7F008E80
 
 void sub_GAME_7F00920C(void)
 {
-  if (D_8002A7F4) {
-    set_aircraft_obj_inst_scale_to_zero(D_8002A7F4);
-  }
-  if (D_8002A7F8) {
-    set_obj_instance_scale_to_zero(D_8002A7F8);
-  }
+    if (D_8002A7F4)
+    {
+        set_aircraft_obj_inst_scale_to_zero(D_8002A7F4);
+    }
+
+    if (D_8002A7F8)
+    {
+        set_obj_instance_scale_to_zero(D_8002A7F8);
+    }
 }
 
 #ifndef VERSION_EU
@@ -1360,12 +1383,18 @@ void sub_GAME_7F00920C(void)
     #define XDEC2 6
     #define XDEC3 5.8183274f
     #define INCVAL 0x38E
+    #define INTRO_EYE_COUNTER_CASE_4 0x6c
+    #define INTRO_EYE_COUNTER_CASE_5_ADD 8
+    #define INTRO_EYE_COUNTER_CASE_6 0x1e
 #else
     #define XINC 7.0f
     #define XDEC 14.0f
     #define XDEC2 6
     #define XDEC3 3.63643622398f
     #define INCVAL 0x444
+    #define INTRO_EYE_COUNTER_CASE_4 0x5a
+    #define INTRO_EYE_COUNTER_CASE_5_ADD 9
+    #define INTRO_EYE_COUNTER_CASE_6 0x19
 #endif
 
 signed short sins(unsigned short x);
@@ -1380,7 +1409,11 @@ Gfx *sub_GAME_7F009254(Gfx *gdl) {
             word_CODE_bss_80069584 = 200;
             dword_CODE_bss_8006957C = (x - XDEC);
         } else {
+#if defined(VERSION_EU)
+            word_CODE_bss_80069584 -= 7;
+#else
             word_CODE_bss_80069584 -= 6;
+#endif
         }
         if (x > 1390.0f) {
             gunbarrel_mode++;
@@ -1437,7 +1470,8 @@ Gfx *sub_GAME_7F009254(Gfx *gdl) {
         intro_eye_counter++;
         x = ((sins(word_CODE_bss_80069584) * 64.0f) / 32768.0f) + dword_CODE_bss_8006957C;
         gdl = sub_GAME_7F01CA18(insert_bond_eye_intro(insert_sight_backdrop_eye_intro(insert_sniper_sight_eye_intro(gdl))));
-        if (intro_eye_counter >= 0x6C) {
+        if (intro_eye_counter >= INTRO_EYE_COUNTER_CASE_4)
+        {
             intro_eye_counter = 0;
             gunbarrel_mode++;
         }
@@ -1447,7 +1481,9 @@ Gfx *sub_GAME_7F009254(Gfx *gdl) {
         word_CODE_bss_80069584 += INCVAL;
         x = ((sins(word_CODE_bss_80069584) * 64.0f) / 32768.0f) + dword_CODE_bss_8006957C;
         gdl = sub_GAME_7F01CA18(insert_bond_eye_intro(insert_sight_backdrop_eye_intro(insert_sniper_sight_eye_intro(gdl))));
-        intro_eye_counter += 8;
+        
+        intro_eye_counter += INTRO_EYE_COUNTER_CASE_5_ADD;
+        
         gdl = sub_GAME_7F007E70(gdl, intro_eye_counter);
         if (intro_eye_counter >= 0xF7) {
             intro_eye_counter = 0;
@@ -1458,7 +1494,7 @@ Gfx *sub_GAME_7F009254(Gfx *gdl) {
     case 6:
         gSPDisplayList(gdl++, &fontDL_0x000);
         gdl = insert_imageDL(gdl);
-        if (intro_eye_counter++ >= 0x1E) {
+        if (intro_eye_counter++ >= INTRO_EYE_COUNTER_CASE_6) {
             intro_eye_counter = 0;
             gunbarrel_mode++;
         }
