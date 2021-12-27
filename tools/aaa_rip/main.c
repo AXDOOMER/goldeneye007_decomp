@@ -49,11 +49,6 @@ int main(int argc, char **argv)
 		printf("\n  Error: Aborted, could not find length of input file");
 		goto error_input;
 	}
-	if(fseek(input, offset_input, SEEK_SET) != 0)
-	{
-		printf("\n  Error: Aborted, could not set offset position");
-		goto error_input;
-	}
 	if(length_input <= 0)
 	{
 		length_input = filesize - offset_input;
@@ -79,6 +74,11 @@ int main(int argc, char **argv)
 	if(in_buf == NULL)
 	{
 		printf("\n  Error: Aborted, not enough memory to load input");
+		goto error_input;
+	}
+	if(fseek(input, offset_input, SEEK_SET) != 0)
+	{
+		printf("\n  Error: Aborted, could not set offset position");
 		goto error_input;
 	}
 	fread(in_buf, (size_t)length_input, 1, input);
@@ -121,8 +121,9 @@ int main(int argc, char **argv)
 			goto error_offset_output;
 		}
 		fread(out_buf, (size_t)filesize, 1, output);
-		memcpy(&out_buf[offset_output], in_buf, (size_t)length_input);
 		fclose(output);
+
+		memcpy(&out_buf[offset_output], in_buf, (size_t)length_input);
 
 		output = fopen(argv[2], "wb");
 		if(output == NULL)
