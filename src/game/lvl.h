@@ -51,7 +51,7 @@ extern s32 record_slot_num;
 extern s32 address_demo_loaded;
 extern s32 dword_CODE_bss_8008C5F8;
 
-#ifdef VERSION_JP
+#if defined(VERSION_JP) || defined(VERSION_EU)
 extern f32 g_JP_GlobalTimerDelta;
 #endif
 
