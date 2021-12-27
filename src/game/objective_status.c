@@ -920,7 +920,7 @@ glabel display_objective_status_text_on_status_change
 /* 08A3B8 7F0579C8 0C002717 */  jal   strcat
 /* 08A3BC 7F0579CC 00402825 */   move  $a1, $v0
 .L7F0579D0:
-/* 08A3C0 7F0579D0 0FC229B5 */  jal   display_string_in_lower_left_corner
+/* 08A3C0 7F0579D0 0FC229B5 */  jal   jp_display_string_in_lower_left_corner
 /* 08A3C4 7F0579D4 02602025 */   move  $a0, $s3
 .L7F0579D8:
 /* 08A3C8 7F0579D8 0FC15D39 */  jal   get_difficulty_for_objective
