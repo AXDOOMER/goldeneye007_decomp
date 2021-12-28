@@ -16,6 +16,9 @@ s32 ptr_char_registry;
 #ifdef VERSION_JP
 s32 j_text_trigger = 1;
 #else
+/**
+ * EU .data 80041150
+*/
 s32 j_text_trigger = 0;
 #endif
 
