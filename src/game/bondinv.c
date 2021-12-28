@@ -510,14 +510,14 @@ glabel add_weapon_by_prop
 /* 0BF534 7F08CB44 07230008 */  bgezl $t9, .L7F08CB68
 /* 0BF538 7F08CB48 80C50080 */   lb    $a1, 0x80($a2)
 /* 0BF53C 7F08CB4C 80C40080 */  lb    $a0, 0x80($a2)
-/* 0BF540 7F08CB50 0FC231AB */  jal   add_doubles_item_to_inventory
+/* 0BF540 7F08CB50 0FC231AB */  jal   is_dual_weapon_in_inventory
 /* 0BF544 7F08CB54 AFA30024 */   sw    $v1, 0x24($sp)
 /* 0BF548 7F08CB58 8FA30024 */  lw    $v1, 0x24($sp)
 /* 0BF54C 7F08CB5C 10000006 */  b     .L7F08CB78
 /* 0BF550 7F08CB60 2C450001 */   sltiu $a1, $v0, 1
 /* 0BF554 7F08CB64 80C50080 */  lb    $a1, 0x80($a2)
 .L7F08CB68:
-/* 0BF558 7F08CB68 0FC231AB */  jal   add_doubles_item_to_inventory
+/* 0BF558 7F08CB68 0FC231AB */  jal   is_dual_weapon_in_inventory
 /* 0BF55C 7F08CB6C AFA30024 */   sw    $v1, 0x24($sp)
 /* 0BF560 7F08CB70 8FA30024 */  lw    $v1, 0x24($sp)
 /* 0BF564 7F08CB74 2C450001 */  sltiu $a1, $v0, 1
@@ -538,12 +538,12 @@ glabel add_weapon_by_prop
 /* 0BF598 7F08CBA8 000A58C0 */  sll   $t3, $t2, 3
 /* 0BF59C 7F08CBAC 05610005 */  bgez  $t3, .L7F08CBC4eu
 /* 0BF5A0 7F08CBB0 00000000 */   nop   
-/* 0BF5A4 7F08CBB4 0FC23221 */  jal   is_dual_weapon_in_inventory
+/* 0BF5A4 7F08CBB4 0FC23221 */  jal   add_doubles_item_to_inventory
 /* 0BF5A8 7F08CBB8 00C02025 */   move  $a0, $a2
 /* 0BF5AC 7F08CBBC 10000004 */  b     .L7F08CBD0
 /* 0BF5B0 7F08CBC0 00402825 */   move  $a1, $v0
 .L7F08CBC4eu:
-/* 0BF5B4 7F08CBC4 0FC23221 */  jal   is_dual_weapon_in_inventory
+/* 0BF5B4 7F08CBC4 0FC23221 */  jal   add_doubles_item_to_inventory
 /* 0BF5B8 7F08CBC8 00C02825 */   move  $a1, $a2
 /* 0BF5BC 7F08CBCC 00402825 */  move  $a1, $v0
 .L7F08CBD0:
