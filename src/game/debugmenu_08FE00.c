@@ -304,7 +304,7 @@ glabel print_debug_mcm_to_stdout
 #ifdef VERSION_EU
 s32 print_debug_mcm_to_stdout(s32 arg0)
 {
-
+    return arg0;
 }
 #endif
 #endif

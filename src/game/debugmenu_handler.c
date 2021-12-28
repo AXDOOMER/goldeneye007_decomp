@@ -215,6 +215,15 @@ s32 debug_joy2detailedit_flag = 0;
 s32 debug_explosioninfo_flag = 0;
 #endif
 
+#ifdef VERSION_EU
+/**
+ * The .data debug_VisCVG_flag needs to be at address 0x800320b4, which means
+ * there needs to be another .data word. Probably one of the above values,
+ * but not sure which one. Declaring new word here until this is resolved.
+*/
+s32 eu_D_800320b0 = 0;
+#endif
+
 //D:80036FA8
 s32 debug_VisCVG_flag = 0;
 
@@ -1686,13 +1695,13 @@ s32  get_debug_profile_flag(void) {
 s32 get_debug_taskgrab_val(void) {
     return 0;
 }
-s32 func_7F0904C0(void)
+void func_7F0904C0(void)
 {
-    return 0;
+    // removed
 }
-s32 func_7F0904C8(void)
+void func_7F0904C8(void)
 {
-    return 0;
+    // removed
 }
 s32 get_debug_fast_bond_flag(void) {
     return debug_fast_bond_flag;
@@ -1706,9 +1715,9 @@ s32 get_debug_all_obj_complete_flag(void) {
 s32 get_debug_portal_flag(void) {
     return 0;
 }
-s32 func_7F0904F8(void)
+void func_7F0904F8(s32 arg0)
 {
-    return 0;
+    // removed
 }
 #endif
 
