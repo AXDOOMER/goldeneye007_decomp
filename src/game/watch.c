@@ -291,6 +291,7 @@ void nullsub_7F0A4860(void) {
 
 
 #ifdef NONMATCHING
+//regalloc and j_text_trigger check should use b instead of bnez v0
 void init_watch_at_start_of_stage(void)
 {
     watch_screen_index = WATCH_INDEX_MISSION_STATUS;
@@ -310,18 +311,18 @@ void init_watch_at_start_of_stage(void)
     D_800409CC = 0.0f;
     D_800409D0 = -1;
     D_800409D4 = 0.0f;
-    if (!j_text_trigger)
-    {;}
-    else
+
+    //im likely a weirdly left in if statement, but this matches more closely
+    while(j_text_trigger)
     {
+        continue; 
+    }
+
     g_CurrentPlayer->neg_vspacing_for_control_type_entry = 0;
     g_CurrentPlayer->cur_player_control_type_1 = 0;
     g_CurrentPlayer->cur_player_control_type_0 = 0;
     g_CurrentPlayer->cur_player_control_type_2 = 0.0f;
     g_CurrentPlayer->has_set_control_type_data = 1;
-    }
-
-
     D_800409D8 = 8;
     controlstick_lr_enabled = 0;
     D_80040AE0 = 0;
@@ -354,9 +355,10 @@ void init_watch_at_start_of_stage(void)
     D_80040B4C = 0x32;
     D_80040B50 = 0x32;
     D_80040B54 = 0x32;
-    fileLoadSaveSettingsForSelectedFolder(1,0xa);
+    fileLoadSaveSettingsForSelectedFolder();
     mission_failed_or_aborted = FALSE;
 }
+
 #else
 #if defined(VERSION_US) || defined(VERSION_JP)
 GLOBAL_ASM(
