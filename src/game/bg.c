@@ -6671,8 +6671,8 @@ glabel sub_GAME_7F0B6368
 /* 0E8240 7F0B5850 AFA3001C */   sw    $v1, 0x1c($sp)
 /* 0E8244 7F0B5854 8FA3001C */  lw    $v1, 0x1c($sp)
 .L7F0B5858:
-/* 0E8248 7F0B5858 3C0C8007 */  lui   $t4, %hi(table_for_portals) # $t4, 0x8007
-/* 0E824C 7F0B585C 8D8CCF60 */  lw    $t4, %lo(table_for_portals)($t4)
+/* 0E8248 7F0B5858 3C0C8007 */  lui   $t4, %hi(g_FogSkyIsEnabled) # $t4, 0x8007
+/* 0E824C 7F0B585C 8D8CCF60 */  lw    $t4, %lo(g_FogSkyIsEnabled)($t4)
 /* 0E8250 7F0B5860 24060006 */  li    $a2, 6
 /* 0E8254 7F0B5864 51800012 */  beql  $t4, $zero, .L7F0B58B0
 /* 0E8258 7F0B5868 8C640008 */   lw    $a0, 8($v1)

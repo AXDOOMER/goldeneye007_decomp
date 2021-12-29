@@ -111,6 +111,8 @@ void sub_GAME_7F0BC7D4(void)
     }
 }
 #else
+
+#if defined(VERSION_US) || defined(VERSION_JP)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0BC7D4
@@ -152,6 +154,51 @@ glabel sub_GAME_7F0BC7D4
 /* 0F1384 7F0BC854 03E00008 */  jr    $ra
 /* 0F1388 7F0BC858 27BD0028 */   addiu $sp, $sp, 0x28
 )
+#endif
+
+#if defined(VERSION_EU)
+GLOBAL_ASM(
+.text
+glabel sub_GAME_7F0BC7D4
+/* 0EE5C4 7F0BBBD4 27BDFFD8 */  addiu $sp, $sp, -0x28
+/* 0EE5C8 7F0BBBD8 AFB2001C */  sw    $s2, 0x1c($sp)
+/* 0EE5CC 7F0BBBDC AFB10018 */  sw    $s1, 0x18($sp)
+/* 0EE5D0 7F0BBBE0 AFB30020 */  sw    $s3, 0x20($sp)
+/* 0EE5D4 7F0BBBE4 AFB00014 */  sw    $s0, 0x14($sp)
+/* 0EE5D8 7F0BBBE8 3C118007 */  lui   $s1, %hi(dword_CODE_bss_80083900) # $s1, 0x8007
+/* 0EE5DC 7F0BBBEC 3C128007 */  lui   $s2, %hi(dword_CODE_bss_80083320) # $s2, 0x8007
+/* 0EE5E0 7F0BBBF0 AFBF0024 */  sw    $ra, 0x24($sp)
+/* 0EE5E4 7F0BBBF4 2652DC90 */  addiu $s2, %lo(dword_CODE_bss_80083320) # addiu $s2, $s2, -0x2370
+/* 0EE5E8 7F0BBBF8 2631DE88 */  addiu $s1, %lo(dword_CODE_bss_80083900) # addiu $s1, $s1, -0x2178
+/* 0EE5EC 7F0BBBFC 00008025 */  move  $s0, $zero
+/* 0EE5F0 7F0BBC00 24130064 */  li    $s3, 100
+.L7F0BBC04:
+/* 0EE5F4 7F0BBC04 8E2E0000 */  lw    $t6, ($s1)
+/* 0EE5F8 7F0BBC08 02501021 */  addu  $v0, $s2, $s0
+/* 0EE5FC 7F0BBC0C 05C2000A */  bltzl $t6, .L7F0BBC38
+/* 0EE600 7F0BBC10 26100001 */   addiu $s0, $s0, 1
+/* 0EE604 7F0BBC14 904F0000 */  lbu   $t7, ($v0)
+/* 0EE608 7F0BBC18 25F80001 */  addiu $t8, $t7, 1
+/* 0EE60C 7F0BBC1C 331900FF */  andi  $t9, $t8, 0xff
+/* 0EE610 7F0BBC20 2B210002 */  slti  $at, $t9, 2
+/* 0EE614 7F0BBC24 14200003 */  bnez  $at, .L7F0BBC34
+/* 0EE618 7F0BBC28 A0580000 */   sb    $t8, ($v0)
+/* 0EE61C 7F0BBC2C 0FC2EEA4 */  jal   sub_GAME_7F0BC690
+/* 0EE620 7F0BBC30 02002025 */   move  $a0, $s0
+.L7F0BBC34:
+/* 0EE624 7F0BBC34 26100001 */  addiu $s0, $s0, 1
+.L7F0BBC38:
+/* 0EE628 7F0BBC38 1613FFF2 */  bne   $s0, $s3, .L7F0BBC04
+/* 0EE62C 7F0BBC3C 26310004 */   addiu $s1, $s1, 4
+/* 0EE630 7F0BBC40 8FBF0024 */  lw    $ra, 0x24($sp)
+/* 0EE634 7F0BBC44 8FB00014 */  lw    $s0, 0x14($sp)
+/* 0EE638 7F0BBC48 8FB10018 */  lw    $s1, 0x18($sp)
+/* 0EE63C 7F0BBC4C 8FB2001C */  lw    $s2, 0x1c($sp)
+/* 0EE640 7F0BBC50 8FB30020 */  lw    $s3, 0x20($sp)
+/* 0EE644 7F0BBC54 03E00008 */  jr    $ra
+/* 0EE648 7F0BBC58 27BD0028 */   addiu $sp, $sp, 0x28
+)
+#endif
 #endif
 
 

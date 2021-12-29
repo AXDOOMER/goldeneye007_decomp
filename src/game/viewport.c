@@ -18,18 +18,27 @@ void zbufDeallocate(void) {
     z_buffer = 0;
 }
 
-void zbufAllocate(void) {
-    if (resolution != 0) {
-        z_buffer_width = 440;
-        z_buffer_height = 330;
-    } else {
-        z_buffer_width = 320;
-        if (getPlayerCount() == 1) {
-            z_buffer_height = 240;
-        } else {
-            z_buffer_height = 120;
+void zbufAllocate(void)
+{
+    if (resolution != 0)
+    {
+        z_buffer_width = Z_BUFFER_4_3_WIDTH;
+        z_buffer_height = Z_BUFFER_4_3_HEIGHT;
+    }
+    else
+    {
+        z_buffer_width = SCREEN_WIDTH;
+
+        if (getPlayerCount() == 1)
+        {
+            z_buffer_height = SCREEN_HEIGHT;
+        }
+        else
+        {
+            z_buffer_height = Z_BUFFER_HEIGHT;
         }
     }
+
     z_buffer = mempAllocBytesInBank((z_buffer_width * z_buffer_height * 2) + 64, 4);
     z_buffer = ALIGN64_V1(z_buffer);
 }

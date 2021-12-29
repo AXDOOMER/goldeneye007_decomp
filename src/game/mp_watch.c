@@ -9072,13 +9072,13 @@ text_exit:
 /* 0F7444 7F0C4A54 1000001A */  b     .L7F0C4AC0
 /* 0F7448 7F0C4A58 00408825 */   move  $s1, $v0
 .L7F0C4A5C:
-/* 0F744C 7F0C4A5C 3C0B8007 */  lui   $t3, %hi(g_stopPlayFlag) # $t3, 0x8007
-/* 0F7450 7F0C4A60 8D6B8A98 */  lw    $t3, %lo(g_stopPlayFlag)($t3)
+/* 0F744C 7F0C4A5C 3C0B8007 */  lui   $t3, %hi(g_playerPlayerData + 0x98) # $t3, 0x8007
+/* 0F7450 7F0C4A60 8D6B8A98 */  lw    $t3, %lo(g_playerPlayerData + 0x98)($t3)
 /* 0F7454 7F0C4A64 8FAD00D4 */  lw    $t5, 0xd4($sp)
-/* 0F7458 7F0C4A68 3C0F8007 */  lui   $t7, %hi(g_playerPlayerData+0x70+0x70 + 0x2C)  # $t7, 0x8007
+/* 0F7458 7F0C4A68 3C0F8007 */  lui   $t7, %hi(g_playerPlayerData)  # $t7, 0x8007
 /* 0F745C 7F0C4A6C 19600014 */  blez  $t3, .L7F0C4AC0
 /* 0F7460 7F0C4A70 000D7080 */   sll   $t6, $t5, 2
-/* 0F7464 7F0C4A74 25EF8A00 */  addiu $t7, %lo(g_playerPlayerData+0x70+0x70 + 0x2C) # addiu $t7, $t7, -0x7600
+/* 0F7464 7F0C4A74 25EF8A00 */  addiu $t7, %lo(g_playerPlayerData) # addiu $t7, $t7, -0x7600
 /* 0F7468 7F0C4A78 01CFC021 */  addu  $t8, $t6, $t7
 /* 0F746C 7F0C4A7C 0C000FD9 */  jal   viGetViewLeft
 /* 0F7470 7F0C4A80 AFB80044 */   sw    $t8, 0x44($sp)

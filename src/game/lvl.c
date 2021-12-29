@@ -1184,8 +1184,8 @@ glabel lvlStageLoad
 /* 0EF87C 7F0BCE8C AC200FF0 */  sw    $zero, %lo(g_ControlsLockedFlag)($at)
 /* 0EF880 7F0BCE90 26310FF4 */  addiu $s1, %lo(g_ClockTimer) # addiu $s1, $s1, 0xff4
 /* 0EF884 7F0BCE94 AE220000 */  sw    $v0, ($s1)
-/* 0EF888 7F0BCE98 3C018004 */  lui   $at, %hi(g_GlobalTimerDelta) # $at, 0x8004
-/* 0EF88C 7F0BCE9C E42C0FF8 */  swc1  $f12, %lo(g_GlobalTimerDelta)($at)
+/* 0EF888 7F0BCE98 3C018004 */  lui   $at, %hi(g_JP_GlobalTimerDelta) # $at, 0x8004
+/* 0EF88C 7F0BCE9C E42C0FF8 */  swc1  $f12, %lo(g_JP_GlobalTimerDelta)($at)
 /* 0EF890 7F0BCEA0 3C018004 */  lui   $at, %hi(D_80048380) # $at, 0x8004
 /* 0EF894 7F0BCEA4 AC201000 */  sw    $zero, %lo(D_80048380)($at)
 /* 0EF898 7F0BCEA8 3C018004 */  lui   $at, %hi(g_GlobalTimer) # $at, 0x8004
@@ -4494,8 +4494,8 @@ glabel lvlManageMpGame
 .L7F0BE014:
 /* 0F0A04 7F0BE014 3C028004 */  lui   $v0, %hi(g_ClockTimer) # $v0, 0x8004
 /* 0F0A08 7F0BE018 8C420FF4 */  lw    $v0, %lo(g_ClockTimer)($v0)
-/* 0F0A0C 7F0BE01C 3C038004 */  lui   $v1, %hi(D_80048394) # $v1, 0x8004
-/* 0F0A10 7F0BE020 24630FF8 */  addiu $v1, %lo(D_80048394) # addiu $v1, $v1, 0xff8
+/* 0F0A0C 7F0BE01C 3C038004 */  lui   $v1, %hi(g_JP_GlobalTimerDelta) # $v1, 0x8004
+/* 0F0A10 7F0BE020 24630FF8 */  addiu $v1, %lo(g_JP_GlobalTimerDelta) # addiu $v1, $v1, 0xff8
 /* 0F0A14 7F0BE024 44822000 */  mtc1  $v0, $f4
 /* 0F0A18 7F0BE028 3C018005 */  lui   $at, %hi(D_80050308) # $at, 0x8005
 /* 0F0A1C 7F0BE02C 3C048004 */  lui   $a0, %hi(g_GlobalTimer) # $a0, 0x8004
@@ -5288,8 +5288,8 @@ glabel lvlManageMpGame
 /* 0F1578 7F0BEB88 3C058004 */   lui   $a1, %hi(g_DebugMpGameSoundFxIndex) # $a1, 0x8004
 /* 0F157C 7F0BEB8C 84A51068 */  lh    $a1, %lo(g_DebugMpGameSoundFxIndex)($a1)
 /* 0F1580 7F0BEB90 3C048005 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8005
-/* 0F1584 7F0BEB94 3C018004 */  lui   $at, %hi(g_musicSfxBufferPtr) # $at, 0x8004
-/* 0F1588 7F0BEB98 24A5FFFF */  addiu $a1, %lo(g_DebugMpGameSoundFxIndex) # addiu $a1, $a1, -1
+/* 0F1584 7F0BEB94 3C018004 */  lui   $at, %hi(g_DebugMpGameSoundFxIndex) # $at, 0x8004
+/* 0F1588 7F0BEB98 24A5FFFF */  addiu $a1, 0xffff # addiu $a1, $a1, -1
 /* 0F158C 7F0BEB9C 00057400 */  sll   $t6, $a1, 0x10
 /* 0F1590 7F0BEBA0 000E2C03 */  sra   $a1, $t6, 0x10
 /* 0F1594 7F0BEBA4 A4251068 */  sh    $a1, %lo(g_DebugMpGameSoundFxIndex)($at)
@@ -5304,8 +5304,8 @@ glabel lvlManageMpGame
 /* 0F15B4 7F0BEBC4 3C058004 */   lui   $a1, %hi(g_DebugMpGameSoundFxIndex) # $a1, 0x8004
 /* 0F15B8 7F0BEBC8 84A51068 */  lh    $a1, %lo(g_DebugMpGameSoundFxIndex)($a1)
 /* 0F15BC 7F0BEBCC 3C048005 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8005
-/* 0F15C0 7F0BEBD0 3C018004 */  lui   $at, %hi(g_musicSfxBufferPtr) # $at, 0x8004
-/* 0F15C4 7F0BEBD4 24A50001 */  addiu $a1, %lo(g_DebugMpGameSoundFxIndex) # addiu $a1, $a1, 1
+/* 0F15C0 7F0BEBD0 3C018004 */  lui   $at, %hi(g_DebugMpGameSoundFxIndex) # $at, 0x8004
+/* 0F15C4 7F0BEBD4 24A50001 */  addiu $a1, 1 # addiu $a1, $a1, 1
 /* 0F15C8 7F0BEBD8 0005C400 */  sll   $t8, $a1, 0x10
 /* 0F15CC 7F0BEBDC 00182C03 */  sra   $a1, $t8, 0x10
 /* 0F15D0 7F0BEBE0 A4251068 */  sh    $a1, %lo(g_DebugMpGameSoundFxIndex)($at)

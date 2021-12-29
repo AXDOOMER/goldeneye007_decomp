@@ -30217,7 +30217,7 @@ glabel sub_GAME_7F0681CC
 GLOBAL_ASM(
 .late_rodata
 glabel D_800543B0
-.word 0x3faaaaab /*1.3333334*/
+.word 0x3f969697
 .text
 glabel sub_GAME_7F0681CC
 /* 09B364 7F068974 27BDFFC8 */  addiu $sp, $sp, -0x38

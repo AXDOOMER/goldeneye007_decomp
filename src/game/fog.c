@@ -565,8 +565,8 @@ glabel fogLoadCurrentEnvironment
 /* 0EC734 7F0B9D44 AC20CF64 */   sw    $zero, %lo(g_NearFogValuesP)($at)
 /* 0EC738 7F0B9D48 44832000 */  mtc1  $v1, $f4
 .L7F0B9D4C:
-/* 0EC73C 7F0B9D4C 3C028007 */  lui   $v0, %hi(D_80044DC0) # $v0, 0x8007
-/* 0EC740 7F0B9D50 2442CF98 */  addiu $v0, %lo(D_80044DC0) # addiu $v0, $v0, -0x3068
+/* 0EC73C 7F0B9D4C 3C028007 */  lui   $v0, %hi(dword_CODE_bss_800825F8) # $v0, 0x8007
+/* 0EC740 7F0B9D50 2442CF98 */  addiu $v0, %lo(dword_CODE_bss_800825F8) # addiu $v0, $v0, -0x3068
 /* 0EC744 7F0B9D54 46802220 */  cvt.s.w $f8, $f4
 /* 0EC748 7F0B9D58 3C018007 */  lui   $at, %hi(g_NearFogValuesP) # $at, 0x8007
 /* 0EC74C 7F0B9D5C E4480000 */  swc1  $f8, ($v0)
