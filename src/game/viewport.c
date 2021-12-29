@@ -47,7 +47,7 @@ Gfx *zbufInit(Gfx *gdl) {
         zbufAllocate();
     }
     if (!(get_cur_playernum() < 2) || ((getPlayerCount() == 2) && (get_cur_playernum() == 1))) {
-        phi_a3 = 320 * 240;
+        phi_a3 = SCREEN_WIDTH * SCREEN_HEIGHT;
     } else {
         phi_a3 = 0;
     }
