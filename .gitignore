@@ -12,6 +12,7 @@ __pycache__/*
 branchdiff.sh
 branchdiff_report.txt
 baserom.*.dump
+baserom.*.cdata*
 ge007.*.dump
 /.vs
 021990.bin
