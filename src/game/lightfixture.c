@@ -17,14 +17,12 @@ s16 word_CODE_bss_80082B18[0x400];
 //CODE.bss:80083318
 s32 dword_CODE_bss_80083318;
 
-
 // data
 //D:80046030
 s32 D_80046030 = 0; 
 
-#ifndef VERSION_EU
 s32 D_80046034[] = {0, 0, 0, 0, 0, 0, 0};
-#endif
+
 
 //this mostly matches 4 bytes different
 #ifdef NONMATCHING

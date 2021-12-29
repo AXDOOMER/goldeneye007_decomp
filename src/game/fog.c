@@ -72,6 +72,7 @@ s32 D_800825F4;
 */
 s32 D_80044DC0 = 0;
 
+
 /**
  * Address 0x80044DC4.
 */
@@ -228,7 +229,6 @@ struct EnvironmentData_Fogless fog_tables2[] = {
     {LEVELID_CUBA   ,    0x30,    0x40,    0x10,    0,        5000.0,        0,        0,        255.0,        255.0,        255.0,        0,        0,        0,        0,           0.0,        0,        0,          0.0,          0.0,          0.0,        0.0},
     {ENVIRONMENTDATA_END}
 };
-
 
 // forward declarations
 
@@ -944,17 +944,27 @@ void fogSwitchToSolosky2(f32 arg0)
 }
 #endif
 #if defined(VERSION_EU)
+
+/**
+ * hack:
+ * variables referenced in the following asm are wrong, just used
+ * to get matching addresses.
+*/
 GLOBAL_ASM(
-.data
+
+
+.bss
 glabel dword_CODE_bss_800825F8
-.word 0
+.word 0,0,0,0
+.word 0,0,0,0
+.word 0,0,0,0
 
 .text
 glabel fogSwitchToSolosky2
 /* 0ECA68 7F0BA078 3C028007 */  lui   $v0, %hi(g_EnvironmentMainp) # $v0, 0x8007
 /* 0ECA6C 7F0BA07C 8C42CF8C */  lw    $v0, %lo(g_EnvironmentMainp)($v0)
-/* 0ECA70 7F0BA080 3C048007 */  lui   $a0, %hi(g_CurFogDetails) # $a0, 0x8007
-/* 0ECA74 7F0BA084 2484CFA8 */  addiu $a0, %lo(g_CurFogDetails) # addiu $a0, $a0, -0x3058
+/* 0ECA70 7F0BA080 3C048007 */  lui   $a0, %hi(g_EnvironmentMainp + 0x1c) # $a0, 0x8007
+/* 0ECA74 7F0BA084 2484CFA8 */  addiu $a0, %lo(g_EnvironmentMainp + 0x1c) # addiu $a0, $a0, -0x3058
 /* 0ECA78 7F0BA088 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0ECA7C 7F0BA08C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0ECA80 7F0BA090 00804025 */  move  $t0, $a0
@@ -973,10 +983,10 @@ glabel fogSwitchToSolosky2
 /* 0ECAB0 7F0BA0C0 9B21FFFF */  lwr   $at, -1($t9)
 /* 0ECAB4 7F0BA0C4 1738FFF5 */  bne   $t9, $t8, .L7F0BA09C
 /* 0ECAB8 7F0BA0C8 AD01FFFC */   sw    $at, -4($t0)
-/* 0ECABC 7F0BA0CC 3C038007 */  lui   $v1, %hi(g_EnvironmentAltp) # $v1, 0x8007
-/* 0ECAC0 7F0BA0D0 8C63CF90 */  lw    $v1, %lo(g_EnvironmentAltp)($v1)
+/* 0ECABC 7F0BA0CC 3C038007 */  lui   $v1, %hi(g_EnvironmentMainp) # $v1, 0x8007
+/* 0ECAC0 7F0BA0D0 8C63CF90 */  lw    $v1, %lo(g_EnvironmentMainp+4)($v1)
 /* 0ECAC4 7F0BA0D4 84490002 */  lh    $t1, 2($v0)
-/* 0ECAC8 7F0BA0D8 3C018007 */  lui   $at, %hi(g_CurFogDetails+4) # $at, 0x8007
+/* 0ECAC8 7F0BA0D8 3C018007 */  lui   $at, %hi(g_EnvironmentMainp+4) # $at, 0x8007
 /* 0ECACC 7F0BA0DC 846A0002 */  lh    $t2, 2($v1)
 /* 0ECAD0 7F0BA0E0 44892000 */  mtc1  $t1, $f4
 /* 0ECAD4 7F0BA0E4 448A3000 */  mtc1  $t2, $f6
@@ -988,7 +998,7 @@ glabel fogSwitchToSolosky2
 /* 0ECAEC 7F0BA0FC 4600320D */  trunc.w.s $f8, $f6
 /* 0ECAF0 7F0BA100 440C4000 */  mfc1  $t4, $f8
 /* 0ECAF4 7F0BA104 00000000 */  nop   
-/* 0ECAF8 7F0BA108 A42CCFAA */  sh    $t4, %lo(g_CurFogDetails+8)($at)
+/* 0ECAF8 7F0BA108 A42CCFAA */  sh    $t4, %lo(g_EnvironmentMainp+0x1e)($at)
 /* 0ECAFC 7F0BA10C 844D0004 */  lh    $t5, 4($v0)
 /* 0ECB00 7F0BA110 846F0004 */  lh    $t7, 4($v1)
 /* 0ECB04 7F0BA114 448D5000 */  mtc1  $t5, $f10
@@ -1001,10 +1011,10 @@ glabel fogSwitchToSolosky2
 /* 0ECB20 7F0BA130 4600218D */  trunc.w.s $f6, $f4
 /* 0ECB24 7F0BA134 44183000 */  mfc1  $t8, $f6
 /* 0ECB28 7F0BA138 00000000 */  nop   
-/* 0ECB2C 7F0BA13C A438CFAC */  sh    $t8, %lo(g_CurFogDetails+4)($at)
+/* 0ECB2C 7F0BA13C A438CFAC */  sh    $t8, %lo(g_EnvironmentMainp+0x20)($at)
 /* 0ECB30 7F0BA140 8459000C */  lh    $t9, 0xc($v0)
 /* 0ECB34 7F0BA144 8468000C */  lh    $t0, 0xc($v1)
-/* 0ECB38 7F0BA148 3C018007 */  lui   $at, %hi(g_CurFogDetails+0x20) # $at, 0x8007
+/* 0ECB38 7F0BA148 3C018007 */  lui   $at, %hi(g_EnvironmentMainp+0x20) # $at, 0x8007
 /* 0ECB3C 7F0BA14C 44994000 */  mtc1  $t9, $f8
 /* 0ECB40 7F0BA150 44885000 */  mtc1  $t0, $f10
 /* 0ECB44 7F0BA154 468043A0 */  cvt.s.w $f14, $f8
@@ -1015,7 +1025,7 @@ glabel fogSwitchToSolosky2
 /* 0ECB58 7F0BA168 4600510D */  trunc.w.s $f4, $f10
 /* 0ECB5C 7F0BA16C 440A2000 */  mfc1  $t2, $f4
 /* 0ECB60 7F0BA170 00000000 */  nop   
-/* 0ECB64 7F0BA174 A42ACFB4 */  sh    $t2, %lo(g_CurFogDetails+0x24)($at)
+/* 0ECB64 7F0BA174 A42ACFB4 */  sh    $t2, %lo(g_EnvironmentMainp+0x28)($at)
 /* 0ECB68 7F0BA178 844B000E */  lh    $t3, 0xe($v0)
 /* 0ECB6C 7F0BA17C 846C000E */  lh    $t4, 0xe($v1)
 /* 0ECB70 7F0BA180 448B3000 */  mtc1  $t3, $f6
@@ -1028,7 +1038,7 @@ glabel fogSwitchToSolosky2
 /* 0ECB8C 7F0BA19C 4600428D */  trunc.w.s $f10, $f8
 /* 0ECB90 7F0BA1A0 440F5000 */  mfc1  $t7, $f10
 /* 0ECB94 7F0BA1A4 00000000 */  nop   
-/* 0ECB98 7F0BA1A8 A42FCFB6 */  sh    $t7, %lo(g_CurFogDetails+0x20)($at)
+/* 0ECB98 7F0BA1A8 A42FCFB6 */  sh    $t7, %lo(g_EnvironmentMainp+0x2a)($at)
 /* 0ECB9C 7F0BA1AC 904E0010 */  lbu   $t6, 0x10($v0)
 /* 0ECBA0 7F0BA1B0 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
 /* 0ECBA4 7F0BA1B4 448E2000 */  mtc1  $t6, $f4
@@ -1085,8 +1095,8 @@ glabel fogSwitchToSolosky2
 /* 0ECC60 7F0BA270 0500FFFB */  bltz  $t0, .L7F0BA260
 /* 0ECC64 7F0BA274 00000000 */   nop   
 .L7F0BA278:
-/* 0ECC68 7F0BA278 3C018007 */  lui   $at, %hi(g_CurFogDetails+0x28) # $at, 0x8007
-/* 0ECC6C 7F0BA27C A028CFB8 */  sb    $t0, %lo(g_CurFogDetails+0x28)($at)
+/* 0ECC68 7F0BA278 3C018007 */  lui   $at, %hi(g_EnvironmentMainp+0x2c) # $at, 0x8007
+/* 0ECC6C 7F0BA27C A028CFB8 */  sb    $t0, %lo(g_EnvironmentMainp+0x2c)($at)
 /* 0ECC70 7F0BA280 90490011 */  lbu   $t1, 0x11($v0)
 /* 0ECC74 7F0BA284 44D9F800 */  ctc1  $t9, $31
 /* 0ECC78 7F0BA288 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
@@ -1147,8 +1157,8 @@ glabel fogSwitchToSolosky2
 /* 0ECD44 7F0BA354 0580FFFB */  bltz  $t4, .L7F0BA344
 /* 0ECD48 7F0BA358 00000000 */   nop   
 .L7F0BA35C:
-/* 0ECD4C 7F0BA35C 3C018007 */  lui   $at, %hi(g_CurFogDetails+0x29) # $at, 0x8007
-/* 0ECD50 7F0BA360 A02CCFB9 */  sb    $t4, %lo(g_CurFogDetails+0x29)($at)
+/* 0ECD4C 7F0BA35C 3C018007 */  lui   $at, %hi(g_EnvironmentMainp+0x2d) # $at, 0x8007
+/* 0ECD50 7F0BA360 A02CCFB9 */  sb    $t4, %lo(g_EnvironmentMainp+0x2d)($at)
 /* 0ECD54 7F0BA364 904D0012 */  lbu   $t5, 0x12($v0)
 /* 0ECD58 7F0BA368 44CBF800 */  ctc1  $t3, $31
 /* 0ECD5C 7F0BA36C 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
@@ -1209,14 +1219,14 @@ glabel fogSwitchToSolosky2
 /* 0ECE28 7F0BA438 0700FFFB */  bltz  $t8, .L7F0BA428
 /* 0ECE2C 7F0BA43C 00000000 */   nop   
 .L7F0BA440:
-/* 0ECE30 7F0BA440 3C018007 */  lui   $at, %hi(g_CurFogDetails+0x2a) # $at, 0x8007
-/* 0ECE34 7F0BA444 A038CFBA */  sb    $t8, %lo(g_CurFogDetails+0x2a)($at)
+/* 0ECE30 7F0BA440 3C018007 */  lui   $at, %hi(g_EnvironmentMainp+0x2e) # $at, 0x8007
+/* 0ECE34 7F0BA444 A038CFBA */  sb    $t8, %lo(g_EnvironmentMainp+0x2e)($at)
 /* 0ECE38 7F0BA448 44CEF800 */  ctc1  $t6, $31
 /* 0ECE3C 7F0BA44C 330F00F8 */  andi  $t7, $t8, 0xf8
-/* 0ECE40 7F0BA450 A029CFB8 */  sb    $t1, %lo(g_CurFogDetails+0x28)($at)
-/* 0ECE44 7F0BA454 A02BCFB9 */  sb    $t3, %lo(g_CurFogDetails+0x29)($at)
+/* 0ECE40 7F0BA450 A029CFB8 */  sb    $t1, %lo(g_EnvironmentMainp+0x2c)($at)
+/* 0ECE44 7F0BA454 A02BCFB9 */  sb    $t3, %lo(g_EnvironmentMainp+0x2d)($at)
 /* 0ECE48 7F0BA458 0FC2E67E */  jal   fogLoadCurrentEnvironment
-/* 0ECE4C 7F0BA45C A02FCFBA */   sb    $t7, %lo(g_CurFogDetails+0x2a)($at)
+/* 0ECE4C 7F0BA45C A02FCFBA */   sb    $t7, %lo(g_EnvironmentMainp+0x2e)($at)
 /* 0ECE50 7F0BA460 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0ECE54 7F0BA464 27BD0020 */  addiu $sp, $sp, 0x20
 /* 0ECE58 7F0BA468 03E00008 */  jr    $ra
