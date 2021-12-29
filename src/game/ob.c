@@ -9,7 +9,12 @@
 
 //bss
 //800888b0
-struct resource_lookup_data_entry resource_lookup_data_array[736];
+#ifdef VERSION_EU
+/* EU is actually larger here */
+struct resource_lookup_data_entry resource_lookup_data_array[0x30c]; /* 0x30c = 780 */
+#else
+struct resource_lookup_data_entry resource_lookup_data_array[0x2e0]; /* 0x2e0 = 736 */
+#endif
 
 // data
 //D:80046050
