@@ -2,7 +2,7 @@ This is a working Goldeneye 007 decompilation!
 
 [![NTSC-Status](https://github.com/kholdfuzion/goldeneye_src/workflows/NTSC-Status/badge.svg)](https://kholdfuzion.github.io/goldeneyestatus/)
 [![JP-Status](https://github.com/kholdfuzion/goldeneye_src/workflows/JP-Status/badge.svg)](https://kholdfuzion.github.io/goldeneyestatus/JPN.htm)
-[![PAL-Status](https://github.com/kholdfuzion/goldeneye_src/workflows/PAL-Status/badge.svg)](https://kholdfuzion.github.io/goldeneyestatus/PAL.htm)
+[![PAL-Status](https://github.com/kholdfuzion/goldeneye_src/workflows/EU-Status/badge.svg)](https://kholdfuzion.github.io/goldeneyestatus/EU.htm)
 
 This repo builds a matching USA. JPN or PAL ROM.
 
