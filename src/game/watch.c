@@ -12,6 +12,7 @@
 #include "game/lvl_text.h"
 #include "game/textrelated.h"
 #include "game/bondview.h"
+#include "fr.h"
 
 // bss
 char dword_CODE_bss_8007B0A0[0x40];
@@ -3250,8 +3251,24 @@ glabel sub_GAME_7F0A6A80
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0A6EE8(void) {
-
+Gfx * sub_GAME_7F0A6EE8(Gfx *DL)
+{
+    gSPSetGeometryMode(DL++, G_CULL_BACK);
+    gDPSetCycleType(DL++, G_CYC_1CYCLE);
+    gDPPipelineMode(DL++, G_PM_1PRIMITIVE);
+    gDPSetScissor(DL++, G_SC_NON_INTERLACE, 0, 0,viGetX(), viGetY() );
+    gDPSetTextureLOD(DL++, G_TL_TILE);
+    gDPSetTextureLUT(DL++, G_TT_NONE);
+    gDPSetTextureDetail(DL++, G_TD_CLAMP);
+    
+    gDPSetTexturePersp(DL++, G_TP_PERSP);
+    gDPSetTextureFilter(DL++, G_TF_BILERP);
+    gDPSetTextureConvert(DL++, G_TC_FILT);
+    gDPSetCombineLERP(DL++, 0, 0, 0, SHADE,  0, 0, 0, SHADE,  0, 0, 0, SHADE,  0, 0, 0, SHADE);
+    gDPSetCombineKey(DL++, G_CK_NONE);
+    gDPSetAlphaCompare(DL++, G_AC_NONE);
+    gDPSetRenderMode(DL++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
+    gDPSetColorDither(DL++, G_CD_MAGICSQ);
 }
 #else
 GLOBAL_ASM(
