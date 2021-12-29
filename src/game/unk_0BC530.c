@@ -3,11 +3,18 @@
 #include "game/bg.h"
 #include "game/unk_0BC530.h"
 
-//temp name 
+#ifdef VERSION_EU
+#define AMT300 100
+#else
 #define AMT300 300 
+#endif
 
 // bss
+/**
+ * EU .bss 8007DC90
+*/
 u8 dword_CODE_bss_80083320[AMT300];
+
 s32 dword_CODE_bss_80083450[AMT300];
 s32 dword_CODE_bss_80083900[AMT300];
 Mtx mtx_array_bss_80083DB0[AMT300];
