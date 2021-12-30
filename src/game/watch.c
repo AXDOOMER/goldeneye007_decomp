@@ -4193,7 +4193,6 @@ Gfx *empty_draw_function(Gfx *gdl) {
 }
 
 
-#if defined(VERSION_US) || defined(VERSION_JP)
 Gfx *draw_text_q_watch_v201_beta(Gfx *gdl)
 {
     s32 txtptr;
@@ -4216,7 +4215,7 @@ Gfx *draw_text_q_watch_v201_beta(Gfx *gdl)
         joffset = 0;
     }
     sp50 = joffset + 0x65;
-    sp4C = 0x31;
+    sp4C = YOFFSET_7;
     sp48 = 0;
     sp44 = 0;
     pFirstFontTable = ptrFirstFontTableSmall;
@@ -4226,72 +4225,9 @@ Gfx *draw_text_q_watch_v201_beta(Gfx *gdl)
     gdl = en_text_write_stuff(gdl, &sp50, &sp4C, txtptr, pSecondFontTable, pFirstFontTable, 0xFF00B0, sp44, sp48, 0, 0);
     return gdl;
 }
-#endif
-#if defined(VERSION_EU)
-GLOBAL_ASM(
-.text
-glabel draw_text_q_watch_v201_beta
-/* 0D9ACC 7F0A70DC 27BDFFA8 */  addiu $sp, $sp, -0x58
-/* 0D9AD0 7F0A70E0 AFBF0034 */  sw    $ra, 0x34($sp)
-/* 0D9AD4 7F0A70E4 AFA40058 */  sw    $a0, 0x58($sp)
-/* 0D9AD8 7F0A70E8 0FC304AE */  jal   get_textptr_for_textID
-/* 0D9ADC 7F0A70EC 3404AC2B */   li    $a0, 44075
-/* 0D9AE0 7F0A70F0 3C0E8004 */  lui   $t6, %hi(j_text_trigger) # $t6, 0x8004
-/* 0D9AE4 7F0A70F4 8DCE1150 */  lw    $t6, %lo(j_text_trigger)($t6)
-/* 0D9AE8 7F0A70F8 AFA20054 */  sw    $v0, 0x54($sp)
-/* 0D9AEC 7F0A70FC 24180033 */  li    $t8, 51
-/* 0D9AF0 7F0A7100 11C00003 */  beqz  $t6, .L7F0A7110
-/* 0D9AF4 7F0A7104 3C198004 */   lui   $t9, %hi(ptrFirstFontTableSmall) # $t9, 0x8004
-/* 0D9AF8 7F0A7108 10000002 */  b     .Leu7F0A7114
-/* 0D9AFC 7F0A710C 2402FFFB */   li    $v0, -5
-.L7F0A7110:
-/* 0D9B00 7F0A7110 00001025 */  move  $v0, $zero
-.Leu7F0A7114:
-/* 0D9B04 7F0A7114 3C088004 */  lui   $t0, %hi(ptrSecondFontTableSmall) # $t0, 0x8004
-/* 0D9B08 7F0A7118 8F39AAFC */  lw    $t9, %lo(ptrFirstFontTableSmall)($t9)
-/* 0D9B0C 7F0A711C 8D08AB00 */  lw    $t0, %lo(ptrSecondFontTableSmall)($t0)
-/* 0D9B10 7F0A7120 244F0065 */  addiu $t7, $v0, 0x65
-/* 0D9B14 7F0A7124 AFAF0050 */  sw    $t7, 0x50($sp)
-/* 0D9B18 7F0A7128 AFB8004C */  sw    $t8, 0x4c($sp)
-/* 0D9B1C 7F0A712C AFA00048 */  sw    $zero, 0x48($sp)
-/* 0D9B20 7F0A7130 AFA00044 */  sw    $zero, 0x44($sp)
-/* 0D9B24 7F0A7134 8FA40058 */  lw    $a0, 0x58($sp)
-/* 0D9B28 7F0A7138 AFB90040 */  sw    $t9, 0x40($sp)
-/* 0D9B2C 7F0A713C 0FC2B016 */  jal   microcode_constructor
-/* 0D9B30 7F0A7140 AFA8003C */   sw    $t0, 0x3c($sp)
-/* 0D9B34 7F0A7144 8FA90040 */  lw    $t1, 0x40($sp)
-/* 0D9B38 7F0A7148 AFA20058 */  sw    $v0, 0x58($sp)
-/* 0D9B3C 7F0A714C 27A40048 */  addiu $a0, $sp, 0x48
-/* 0D9B40 7F0A7150 27A50044 */  addiu $a1, $sp, 0x44
-/* 0D9B44 7F0A7154 8FA60054 */  lw    $a2, 0x54($sp)
-/* 0D9B48 7F0A7158 8FA7003C */  lw    $a3, 0x3c($sp)
-/* 0D9B4C 7F0A715C AFA00014 */  sw    $zero, 0x14($sp)
-/* 0D9B50 7F0A7160 0FC2B713 */  jal   sub_GAME_7F0AE98C
-/* 0D9B54 7F0A7164 AFA90010 */   sw    $t1, 0x10($sp)
-/* 0D9B58 7F0A7168 8FAA003C */  lw    $t2, 0x3c($sp)
-/* 0D9B5C 7F0A716C 8FAB0040 */  lw    $t3, 0x40($sp)
-/* 0D9B60 7F0A7170 8FAD0044 */  lw    $t5, 0x44($sp)
-/* 0D9B64 7F0A7174 8FAE0048 */  lw    $t6, 0x48($sp)
-/* 0D9B68 7F0A7178 3C0C00FF */  lui   $t4, (0x00FF00B0 >> 16) # lui $t4, 0xff
-/* 0D9B6C 7F0A717C 358C00B0 */  ori   $t4, (0x00FF00B0 & 0xFFFF) # ori $t4, $t4, 0xb0
-/* 0D9B70 7F0A7180 AFAC0018 */  sw    $t4, 0x18($sp)
-/* 0D9B74 7F0A7184 8FA40058 */  lw    $a0, 0x58($sp)
-/* 0D9B78 7F0A7188 27A50050 */  addiu $a1, $sp, 0x50
-/* 0D9B7C 7F0A718C 27A6004C */  addiu $a2, $sp, 0x4c
-/* 0D9B80 7F0A7190 8FA70054 */  lw    $a3, 0x54($sp)
-/* 0D9B84 7F0A7194 AFA00024 */  sw    $zero, 0x24($sp)
-/* 0D9B88 7F0A7198 AFA00028 */  sw    $zero, 0x28($sp)
-/* 0D9B8C 7F0A719C AFAA0010 */  sw    $t2, 0x10($sp)
-/* 0D9B90 7F0A71A0 AFAB0014 */  sw    $t3, 0x14($sp)
-/* 0D9B94 7F0A71A4 AFAD001C */  sw    $t5, 0x1c($sp)
-/* 0D9B98 7F0A71A8 0FC2B35F */  jal   en_text_write_stuff
-/* 0D9B9C 7F0A71AC AFAE0020 */   sw    $t6, 0x20($sp)
-/* 0D9BA0 7F0A71B0 8FBF0034 */  lw    $ra, 0x34($sp)
-/* 0D9BA4 7F0A71B4 27BD0058 */  addiu $sp, $sp, 0x58
-/* 0D9BA8 7F0A71B8 03E00008 */  jr    $ra
-/* 0D9BAC 7F0A71BC 00000000 */   nop   
-)
-#endif
+
+
+
 
 #ifdef NONMATCHING
 void draw_current_hand_item_and_ammo(void) {
@@ -4953,6 +4889,7 @@ Gfx *draw_watch_mission_status_page(Gfx *gdl, s32 param_2)
 
     return gdl;
 }
+
 
 void sub_GAME_7F0A8378(void)
 {
@@ -11020,7 +10957,7 @@ Gfx *draw_watch_control_options_page(Gfx *gdl, s32 param_2) {
         gdl = microcode_constructor(gdl);
         textptr = get_textptr_for_textID(TEXT(LOPTIONS, 0x32)); //control style
     
-        sp5C = XOFFSET;
+        sp5C = XOFFSET_1;
         sp58 = 0x1A;
         phi_s1 = 0xFF00B0;
         if (controller_options_index == 0)
@@ -11051,7 +10988,7 @@ Gfx *draw_watch_control_options_page(Gfx *gdl, s32 param_2) {
         {
             textptr = get_textptr_for_textID(TEXT(LOPTIONS, 0x34)); //controllers;
         }
-        sp5C = XOFFSET;
+        sp5C = XOFFSET_1;
         sp58 = 0x2B;
         
         if (controller_options_index == 1)
@@ -11501,23 +11438,23 @@ Gfx *draw_toggle_options(Gfx *gdl)
 
     gdl = microcode_constructor(gdl);
 
-    for (i = 0, y_offset = YOFFSET; i < 8; i = i + 1, y_offset = y_offset + YINC) {
+    for (i = 0, y_offset = YOFFSET_1; i < 8; i = i + 1, y_offset = y_offset + YINC) {
 
         if ( i == game_options_index - 2)
         {
             if (watch_soundrelated_maybe)
             {
-                gdl = sub_GAME_7F0AB908(sub_GAME_7F0A9398(gdl, XOFFSET, y_offset, get_textptr_for_textID(game_options_entries[i].text[0]), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0), y_offset, i, 2);
+                gdl = sub_GAME_7F0AB908(sub_GAME_7F0A9398(gdl, XOFFSET_1, y_offset, get_textptr_for_textID(game_options_entries[i].text[0]), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0), y_offset, i, 2);
             }
             else
             {
 
-                gdl = sub_GAME_7F0AB908(sub_GAME_7F0A9398(gdl, XOFFSET, y_offset, get_textptr_for_textID(game_options_entries[i].text[0]), 0xA0FFA0F0, 0, -1, 0, 0, 0x3000B0, 0), y_offset, i, 1);
+                gdl = sub_GAME_7F0AB908(sub_GAME_7F0A9398(gdl, XOFFSET_1, y_offset, get_textptr_for_textID(game_options_entries[i].text[0]), 0xA0FFA0F0, 0, -1, 0, 0, 0x3000B0, 0), y_offset, i, 1);
             }
         }
         else
         {
-            gdl = sub_GAME_7F0AB908(sub_GAME_7F0A9398(gdl, XOFFSET, y_offset, get_textptr_for_textID(game_options_entries[i].text[0]), 0xFF00B0, 0, -1, 0, 0, 0x3000B0, 0), y_offset, i, 0);
+            gdl = sub_GAME_7F0AB908(sub_GAME_7F0A9398(gdl, XOFFSET_1, y_offset, get_textptr_for_textID(game_options_entries[i].text[0]), 0xFF00B0, 0, -1, 0, 0, 0x3000B0, 0), y_offset, i, 0);
         }
 
     }
@@ -11549,14 +11486,9 @@ Gfx *draw_watch_game_options_page(Gfx *gdl, s32 param_2) {
 
         textptr = get_textptr_for_textID(TEXT(LOPTIONS, 0x35)); //music
 
-        #ifdef VERSION_EU
-        sp54 = 0x41;
-        sp50 = 0x26;
-        #else
-        sp54 = 0x40;
-        sp50 = 0x25;
-        #endif
-
+        sp54 = XOFFSET_1;
+        sp50 = YOFFSET_8;
+        
         sp5C = 0xFF00B0;
 
         if (game_options_index == 0)
@@ -11582,13 +11514,9 @@ Gfx *draw_watch_game_options_page(Gfx *gdl, s32 param_2) {
         sp5C = 0xFF00B0;
         textptr = get_textptr_for_textID(TEXT(LOPTIONS, 0x36)); //fx
 
-        #ifdef VERSION_EU
-        sp54 = 0x41;
-        sp50 = 0x41;
-        #else
-        sp54 = 0x40;
-        sp50 = 0x3B;
-        #endif
+        sp54 = XOFFSET_1;
+        sp50 = YOFFSET_9;
+
 
         if (game_options_index == 1)
         {
