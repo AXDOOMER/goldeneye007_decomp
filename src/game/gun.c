@@ -32675,7 +32675,7 @@ s32 check_cur_player_ammo_amount_in_inventory(AMMOTYPES ammotype) {
     return g_CurrentPlayer->ammoheldarr[ammotype];
 }
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+
 s32 check_cur_player_ammo_amount_total(AMMOTYPES ammotype) {
 
     s32 total_ammo = check_cur_player_ammo_amount_in_inventory(ammotype);
@@ -32690,46 +32690,7 @@ s32 check_cur_player_ammo_amount_total(AMMOTYPES ammotype) {
 
     return total_ammo;
 }
-#endif
-#if defined(VERSION_EU)
-GLOBAL_ASM(
-.text
-glabel check_cur_player_ammo_amount_total
-/* 09C3DC 7F0699EC 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 09C3E0 7F0699F0 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 09C3E4 7F0699F4 AFB00018 */  sw    $s0, 0x18($sp)
-/* 09C3E8 7F0699F8 0FC1A675 */  jal   check_cur_player_ammo_amount_in_inventory
-/* 09C3EC 7F0699FC AFA40020 */   sw    $a0, 0x20($sp)
-/* 09C3F0 7F069A00 00408025 */  move  $s0, $v0
-/* 09C3F4 7F069A04 0FC177A2 */  jal   get_item_in_hand
-/* 09C3F8 7F069A08 00002025 */   move  $a0, $zero
-/* 09C3FC 7F069A0C 0FC1A6F0 */  jal   get_ammo_type_for_weapon
-/* 09C400 7F069A10 00402025 */   move  $a0, $v0
-/* 09C404 7F069A14 8FAE0020 */  lw    $t6, 0x20($sp)
-/* 09C408 7F069A18 144E0004 */  bne   $v0, $t6, .L7F069A2C
-/* 09C40C 7F069A1C 00000000 */   nop   
-/* 09C410 7F069A20 0FC1A6B6 */  jal   get_ammo_in_hands_magazine
-/* 09C414 7F069A24 00002025 */   move  $a0, $zero
-/* 09C418 7F069A28 02028021 */  addu  $s0, $s0, $v0
-.L7F069A2C:
-/* 09C41C 7F069A2C 0FC177A2 */  jal   get_item_in_hand
-/* 09C420 7F069A30 24040001 */   li    $a0, 1
-/* 09C424 7F069A34 0FC1A6F0 */  jal   get_ammo_type_for_weapon
-/* 09C428 7F069A38 00402025 */   move  $a0, $v0
-/* 09C42C 7F069A3C 8FAF0020 */  lw    $t7, 0x20($sp)
-/* 09C430 7F069A40 544F0005 */  bnel  $v0, $t7, .L7F069A58
-/* 09C434 7F069A44 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 09C438 7F069A48 0FC1A6B6 */  jal   get_ammo_in_hands_magazine
-/* 09C43C 7F069A4C 24040001 */   li    $a0, 1
-/* 09C440 7F069A50 02028021 */  addu  $s0, $s0, $v0
-/* 09C444 7F069A54 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F069A58:
-/* 09C448 7F069A58 02001025 */  move  $v0, $s0
-/* 09C44C 7F069A5C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 09C450 7F069A60 03E00008 */  jr    $ra
-/* 09C454 7F069A64 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
+
 
 
 #ifdef NONMATCHING
