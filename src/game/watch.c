@@ -12263,7 +12263,7 @@ glabel sub_GAME_7F0AB908
 #define YINC 17
 #else
 #define XOFFSET 64
-#define YOFFSET 90
+#define YOFFSET 80
 #define YINC 15
 #endif
 
