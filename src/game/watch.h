@@ -3,6 +3,16 @@
 #include "ultra64.h"
 #include "bondconstants.h"
 
+#ifdef VERSION_EU
+#define XOFFSET 65
+#define YOFFSET 90
+#define YINC 17
+#else
+#define XOFFSET 64
+#define YOFFSET 80
+#define YINC 15
+#endif
+
 typedef enum WATCH_INDEX {
     WATCH_INDEX_MISSION_STATUS = 0,
     WATCH_INDEX_INVENTORY,
