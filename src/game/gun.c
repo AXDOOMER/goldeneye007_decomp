@@ -1842,26 +1842,11 @@ glabel get_ptr_itemheader_in_hand
 #endif
 
 
-#ifndef VERSION_EU
+
 u8 * getPlayerWeaponBufferForHand(HANDEDNESS hand)
 {
     return g_CurrentPlayer->ptr_hand_weapon_buffer[hand];
 }
-#endif
-#ifdef VERSION_EU
-GLOBAL_ASM(
-.text
-glabel getPlayerWeaponBufferForHand
-/* 08FDD8 7F05D3E8 3C0E8007 */  lui   $t6, %hi(g_CurrentPlayer) # $t6, 0x8007
-/* 08FDDC 7F05D3EC 8DCE8BC0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
-/* 08FDE0 7F05D3F0 00047880 */  sll   $t7, $a0, 2
-/* 08FDE4 7F05D3F4 01CFC021 */  addu  $t8, $t6, $t7
-/* 08FDE8 7F05D3F8 03E00008 */  jr    $ra
-/* 08FDEC 7F05D3FC 8F020808 */   lw    $v0, 0x808($t8)
-)
-#endif
-
-
 
 
 u32 getSizeBufferWeaponInHand(int hand)
