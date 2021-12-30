@@ -134,9 +134,9 @@ s32 D_80040B40 = 0;
 //D:80040B44
 u16 D_80040B44 = 0x1;
 //D:80040B48
-u32 D_80040B48 = 0x32;
+u32 maybecursorX = 0x32;
 //D:80040B4C
-u32 D_80040B4C = 0x32;
+u32 maybecursorY = 0x32;
 //D:80040B50
 u32 D_80040B50 = 0x32;
 //D:80040B54
@@ -299,8 +299,8 @@ void init_watch_at_start_of_stage(int a)
     D_80040B3C = 0;
     D_80040B40 = 0;
     D_80040B44 = 1;
-    D_80040B48 = 0x32;
-    D_80040B4C = 0x32;
+    maybecursorX = 0x32;
+    maybecursorY = 0x32;
     D_80040B50 = 0x32;
     D_80040B54 = 0x32;
     fileLoadSaveSettingsForSelectedFolder(a);
@@ -334,50 +334,45 @@ void controller_deadzone_related(void)
 
 
 #ifdef NONMATCHING
-
-void proc_7F0A4B40(undefined4 *param_1)
+//code seems to match, can't seem to get data lined up correctly
+Gfx * sub_GAME_7F0A4B40(Gfx *DL)
 {
-    s32 sVar1;
-    undefined4 *puVar2;
-    int iStack52;
-    int iStack48;
-    int iStack44;
-    int *piStack40;
-    byte abStack36 [36];
+    u8 buffer [0x16];
+    int *fontTBL1;
+    int *fontTBL2;
+    
+    u32 y;
+    u32 x;
+    
+    if (10 < joyGetStickX('\0')) {
+        maybecursorX += 1;
+    }
 
-    sVar1 = joyGetStickX('\0');
-    if (10 < sVar1) {
-        D_80040B48 = D_80040B48 + 1;
+    if (joyGetStickX('\0') < -10) {
+        maybecursorX -= 1;
     }
-    sVar1 = joyGetStickX('\0');
-    if (sVar1 < -10) {
-        D_80040B48 = D_80040B48 - 1;
+
+    if (10 < joyGetStickY('\0')) {
+        maybecursorY -= 1;
     }
-    sVar1 = joyGetStickY('\0');
-    if (10 < sVar1) {
-        D_80040B4C = D_80040B4C - 1;
+
+    if (joyGetStickY('\0') < -10) {
+        maybecursorY += 1;
     }
-    sVar1 = joyGetStickY('\0');
-    if (sVar1 < -10) {
-        D_80040B4C = D_80040B4C + 1;
-    }
-    *param_1 = 0xb900031d;
-    param_1[1] = 0x504240;
-    param_1[2] = 0xfcffffff;
-    param_1[3] = 0xfffdf6fb;
-    param_1[4] = 0xfa000000;
-    param_1[5] = 0xff0000ff;
-    param_1[6] = (D_80040B48 + 1 & 0x3ff) << 0xe | 0xf6000000 | (D_80040B4C + 1 & 0x3ff) << 2;
-    param_1[7] = (D_80040B48 & 0x3ff) << 0xe | (D_80040B4C & 0x3ff) << 2;
-    piStack40 = ptrFirstFontTableSmall;
-    iStack44 = ptrSecondFontTableSmall;
-    sprintf((char *)abStack36,"%d, %d\n",D_80040B48,D_80040B4C);
-    puVar2 = microcode_constructor(param_1 + 8);
-    proc_7F0AE98C(&iStack52,&iStack48,abStack36,iStack44,piStack40,0);
-    en_text_write_stuff(puVar2,&D_80040B48,&D_80040B4C,abStack36,iStack44,(int)piStack40,0xff0000ff,
-                        iStack48,iStack52,0,0);
-    D_80040B4C = (D_80040B4C - *(int *)(iStack44 + 0x890)) + 1;
-    return;
+    gDPSetRenderMode(DL++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
+    gDPSetCombineMode(DL++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
+    gDPSetPrimColor(DL++, 0, 0, 0xFF, 0x00, 0x00, 0xFF);
+    gDPFillRectangle(DL++, maybecursorX, maybecursorY, maybecursorX+1, maybecursorY+1);
+
+    fontTBL1 = ptrFirstFontTableSmall;
+    fontTBL2 = ptrSecondFontTableSmall;
+    sprintf(buffer,"%d, %d\n",maybecursorX,maybecursorY);
+
+    DL = microcode_constructor(DL++);
+    sub_GAME_7F0AE98C(x,y,buffer,fontTBL2,fontTBL1,0);
+    DL = en_text_write_stuff(DL,&maybecursorX,&maybecursorY,buffer,fontTBL2,fontTBL1, 0xff0000ff,y,x,0,0);
+    maybecursorY = (maybecursorY - fontTBL2[0x224]) + 1;
+    return DL;
 }
 #else
 // rodata
@@ -398,15 +393,15 @@ glabel sub_GAME_7F0A4B40
 /* 0D9690 7F0A4B60 2841000B */  slti  $at, $v0, 0xb
 /* 0D9694 7F0A4B64 14200006 */  bnez  $at, .L7F0A4B80
 /* 0D9698 7F0A4B68 00002025 */   move  $a0, $zero
-/* 0D969C 7F0A4B6C 3C128004 */  lui   $s2, %hi(D_80040B48)
-/* 0D96A0 7F0A4B70 26520B48 */  addiu $s2, %lo(D_80040B48) # addiu $s2, $s2, 0xb48
+/* 0D969C 7F0A4B6C 3C128004 */  lui   $s2, %hi(maybecursorX)
+/* 0D96A0 7F0A4B70 26520B48 */  addiu $s2, %lo(maybecursorX) # addiu $s2, $s2, 0xb48
 /* 0D96A4 7F0A4B74 8E4E0000 */  lw    $t6, ($s2)
 /* 0D96A8 7F0A4B78 25CF0001 */  addiu $t7, $t6, 1
 /* 0D96AC 7F0A4B7C AE4F0000 */  sw    $t7, ($s2)
 .L7F0A4B80:
-/* 0D96B0 7F0A4B80 3C128004 */  lui   $s2, %hi(D_80040B48)
+/* 0D96B0 7F0A4B80 3C128004 */  lui   $s2, %hi(maybecursorX)
 /* 0D96B4 7F0A4B84 0C00303B */  jal   joyGetStickX
-/* 0D96B8 7F0A4B88 26520B48 */   addiu $s2, %lo(D_80040B48) # addiu $s2, $s2, 0xb48
+/* 0D96B8 7F0A4B88 26520B48 */   addiu $s2, %lo(maybecursorX) # addiu $s2, $s2, 0xb48
 /* 0D96BC 7F0A4B8C 2841FFF6 */  slti  $at, $v0, -0xa
 /* 0D96C0 7F0A4B90 10200004 */  beqz  $at, .L7F0A4BA4
 /* 0D96C4 7F0A4B94 00000000 */   nop
@@ -419,15 +414,15 @@ glabel sub_GAME_7F0A4B40
 /* 0D96DC 7F0A4BAC 2841000B */  slti  $at, $v0, 0xb
 /* 0D96E0 7F0A4BB0 14200006 */  bnez  $at, .L7F0A4BCC
 /* 0D96E4 7F0A4BB4 00002025 */   move  $a0, $zero
-/* 0D96E8 7F0A4BB8 3C118004 */  lui   $s1, %hi(D_80040B4C)
-/* 0D96EC 7F0A4BBC 26310B4C */  addiu $s1, %lo(D_80040B4C) # addiu $s1, $s1, 0xb4c
+/* 0D96E8 7F0A4BB8 3C118004 */  lui   $s1, %hi(maybecursorY)
+/* 0D96EC 7F0A4BBC 26310B4C */  addiu $s1, %lo(maybecursorY) # addiu $s1, $s1, 0xb4c
 /* 0D96F0 7F0A4BC0 8E2A0000 */  lw    $t2, ($s1)
 /* 0D96F4 7F0A4BC4 254BFFFF */  addiu $t3, $t2, -1
 /* 0D96F8 7F0A4BC8 AE2B0000 */  sw    $t3, ($s1)
 .L7F0A4BCC:
-/* 0D96FC 7F0A4BCC 3C118004 */  lui   $s1, %hi(D_80040B4C)
+/* 0D96FC 7F0A4BCC 3C118004 */  lui   $s1, %hi(maybecursorY)
 /* 0D9700 7F0A4BD0 0C00307F */  jal   joyGetStickY
-/* 0D9704 7F0A4BD4 26310B4C */   addiu $s1, %lo(D_80040B4C) # addiu $s1, $s1, 0xb4c
+/* 0D9704 7F0A4BD4 26310B4C */   addiu $s1, %lo(maybecursorY) # addiu $s1, $s1, 0xb4c
 /* 0D9708 7F0A4BD8 2841FFF6 */  slti  $at, $v0, -0xa
 /* 0D970C 7F0A4BDC 10200004 */  beqz  $at, .L7F0A4BF0
 /* 0D9710 7F0A4BE0 02001025 */   move  $v0, $s0
