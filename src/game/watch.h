@@ -74,7 +74,7 @@ u16 get_mTrack2Vol(void);
 void set_mTrack2Vol(u16 param_1);
 void sub_GAME_7F0A91A0(u16 arg0);
 void cur_player_set_control_type(int type);
-void init_watch_at_start_of_stage(void);
+void init_watch_at_start_of_stage(int a);
 
 Gfx *draw_watch_game_options_page(Gfx *gdl, s32 param_2);
 Gfx *draw_watch_control_options_page(Gfx *gdl, s32 param_2);
