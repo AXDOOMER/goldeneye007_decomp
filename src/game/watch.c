@@ -13,6 +13,7 @@
 #include "game/textrelated.h"
 #include "game/bondview.h"
 #include "fr.h"
+#include "os_extension.h"
 
 
 // bss
@@ -311,19 +312,19 @@ void init_watch_at_start_of_stage(int a)
 
 void controller_deadzone_related(void)
 {
-    if (10 < joyGetStickX('\0'))
+    if (10 < joyGetStickX(PLAYER_1))
     {
         D_80040B50 = D_80040B50 + 1;
     }
-    if (joyGetStickX('\0') < -10)
+    if (joyGetStickX(PLAYER_1) < -10)
     {
         D_80040B50 = D_80040B50 + -1;
     }
-    if (10 < joyGetStickY('\0'))
+    if (10 < joyGetStickY(PLAYER_1))
     {
         D_80040B54 = D_80040B54 + -1;
     }
-    if (joyGetStickY('\0') < -10)
+    if (joyGetStickY(PLAYER_1) < -10)
     {
         D_80040B54 = D_80040B54 + 1;
     }
@@ -344,19 +345,19 @@ Gfx * sub_GAME_7F0A4B40(Gfx *DL)
     u32 y;
     u32 x;
     
-    if (10 < joyGetStickX('\0')) {
+    if (10 < joyGetStickX(PLAYER_1)) {
         D_80040B48 += 1;
     }
 
-    if (joyGetStickX('\0') < -10) {
+    if (joyGetStickX(PLAYER_1) < -10) {
         D_80040B48 -= 1;
     }
 
-    if (10 < joyGetStickY('\0')) {
+    if (10 < joyGetStickY(PLAYER_1)) {
         D_80040B4C -= 1;
     }
 
-    if (joyGetStickY('\0') < -10) {
+    if (joyGetStickY(PLAYER_1) < -10) {
         D_80040B4C += 1;
     }
     gDPSetRenderMode(DL++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
@@ -663,12 +664,12 @@ void reset_watch_soundrelated_maybe(void){
 
 u32 is_holding_greater_than_2E_left_on_stick(void)
 {
-    return (joyGetStickX('\0') < -0x2d);
+    return (joyGetStickX(PLAYER_1) < -0x2d);
 }
 
 u32 is_holding_greater_than_2E_right_on_stick(void)
 {
-    return ((joyGetStickX('\0') < 0x2e) ^ 1);
+    return ((joyGetStickX(PLAYER_1) < 0x2e) ^ 1);
 }
 
 u32 get_controlstick_lr_enabled(void) {
@@ -691,12 +692,12 @@ s32 sub_GAME_7F0A4FEC(void)
 
 u32 is_holding_greater_than_2E_up_on_stick(void)
 {
-  return (joyGetStickY('\0') < 0x2e) ^ 1;
+  return (joyGetStickY(PLAYER_1) < 0x2e) ^ 1;
 }
 
 u32 is_holding_greater_than_2E_down_on_stick(void)
 {
-  return (joyGetStickY('\0') < -0x2d);
+  return (joyGetStickY(PLAYER_1) < -0x2d);
 }
 
 u32 get_D_80040AE0(void)
@@ -721,12 +722,12 @@ s32 sub_GAME_7F0A50C4(void)
 
 u32 is_holding_less_than_10_up_on_stick(void)
 {
-  return (joyGetStickY('\0') < 0x10) ^ 1;
+  return (joyGetStickY(PLAYER_1) < 0x10) ^ 1;
 }
 
 u32 is_holding_less_than_10_down_on_stick(void)
 {
-  return (joyGetStickY('\0') < -0xf);
+  return (joyGetStickY(PLAYER_1) < -0xf);
 }
 
 u32 get_D_80040AE4(void) {
@@ -777,22 +778,22 @@ void watch_screen0_navigation(void)
 
         if (get_debug_gunwatchpos_flag() == 0)
         {
-            if (joyGetButtonsPressedThisFrame(0, L_TRIG|L_CBUTTONS))
+            if (joyGetButtonsPressedThisFrame(PLAYER_1, L_TRIG|L_CBUTTONS))
             {
                 goto_watch_screen_index_4 = TRUE;
             }
-            if (joyGetButtonsPressedThisFrame(0, R_TRIG|R_CBUTTONS))
+            if (joyGetButtonsPressedThisFrame(PLAYER_1, R_TRIG|R_CBUTTONS))
             {
                 goto_watch_screen_index_1 = TRUE;
             }
         }
 
-        if ((joyGetButtonsPressedThisFrame(0, L_JPAD)) || (sub_GAME_7F0A4FB0()))
+        if ((joyGetButtonsPressedThisFrame(PLAYER_1, L_JPAD)) || (sub_GAME_7F0A4FB0()))
         {
             goto_watch_screen_index_4 = TRUE;
         }
 
-        if ((joyGetButtonsPressedThisFrame(0, R_JPAD)) || (sub_GAME_7F0A4FEC()))
+        if ((joyGetButtonsPressedThisFrame(PLAYER_1, R_JPAD)) || (sub_GAME_7F0A4FEC()))
         {
             goto_watch_screen_index_1 = TRUE;
         }
@@ -820,7 +821,7 @@ void watch_screen0_navigation(void)
             return;
         }
     }
-    else if ((D_800409A4) && (joyGetButtonsPressedThisFrame(0, Z_TRIG|A_BUTTON)))
+    else if ((D_800409A4) && (joyGetButtonsPressedThisFrame(PLAYER_1, Z_TRIG|A_BUTTON)))
     {
         D_800409A4 = 0;
         set_missionstate(MISSION_STATE_0);
@@ -843,22 +844,22 @@ void watch_screen1_navigation(void)
 
         if (get_debug_gunwatchpos_flag() == FALSE)
         {
-            if (joyGetButtonsPressedThisFrame(0, L_TRIG|L_CBUTTONS))
+            if (joyGetButtonsPressedThisFrame(PLAYER_1, L_TRIG|L_CBUTTONS))
             {
                 goto_watch_screen_index_0 = TRUE;
             }
-            if (joyGetButtonsPressedThisFrame(0, R_TRIG|R_CBUTTONS))
+            if (joyGetButtonsPressedThisFrame(PLAYER_1, R_TRIG|R_CBUTTONS))
             {
                 goto_watch_screen_index_2 = TRUE;
             }
         }
 
-        if ((joyGetButtonsPressedThisFrame(0, L_JPAD)) || (sub_GAME_7F0A4FB0()))
+        if ((joyGetButtonsPressedThisFrame(PLAYER_1, L_JPAD)) || (sub_GAME_7F0A4FB0()))
         {
             goto_watch_screen_index_0 = TRUE;
         }
 
-        if ((joyGetButtonsPressedThisFrame(0, R_JPAD)) || (sub_GAME_7F0A4FEC()))
+        if ((joyGetButtonsPressedThisFrame(PLAYER_1, R_JPAD)) || (sub_GAME_7F0A4FEC()))
         {
             goto_watch_screen_index_2 = TRUE;
         }
@@ -893,7 +894,7 @@ void watch_screen1_navigation(void)
 
 void unused_watch_screen_navigation(void) {
 
-    if ((joyGetButtonsPressedThisFrame(0, L_CBUTTONS|L_TRIG|L_JPAD)) || (sub_GAME_7F0A4FB0()))
+    if ((joyGetButtonsPressedThisFrame(PLAYER_1, L_CBUTTONS|L_TRIG|L_JPAD)) || (sub_GAME_7F0A4FB0()))
     {
         if (watch_soundrelated_maybe == 0)
         {
@@ -902,7 +903,7 @@ void unused_watch_screen_navigation(void) {
             return;
         }
     }
-    if ((joyGetButtonsPressedThisFrame(0, R_CBUTTONS|R_TRIG|R_JPAD)) || (sub_GAME_7F0A4FEC()))
+    if ((joyGetButtonsPressedThisFrame(PLAYER_1, R_CBUTTONS|R_TRIG|R_JPAD)) || (sub_GAME_7F0A4FEC()))
     {
         if (watch_soundrelated_maybe == 0)
         {
@@ -921,9 +922,9 @@ void unused_watch_screen_navigation(void) {
 
 void watch_screen2_navigation(void) {
 
-    if ((joyGetButtonsPressedThisFrame(0, L_CBUTTONS|L_TRIG|L_JPAD)) || (sub_GAME_7F0A4FB0()))
+    if ((joyGetButtonsPressedThisFrame(PLAYER_1, L_CBUTTONS|L_TRIG|L_JPAD)) || (sub_GAME_7F0A4FB0()))
     {
-        if ((joyGetButtons(0, Z_TRIG) == 0) && (watch_soundrelated_maybe == 0))
+        if ((joyGetButtons(PLAYER_1, Z_TRIG) == 0) && (watch_soundrelated_maybe == 0))
         {
             watch_screen_index = WATCH_INDEX_INVENTORY;
             sub_GAME_7F0A5210();
@@ -935,9 +936,9 @@ void watch_screen2_navigation(void) {
             return;
         }
     }
-    if ((joyGetButtonsPressedThisFrame(0, R_CBUTTONS|R_TRIG|R_JPAD)) || (sub_GAME_7F0A4FEC()))
+    if ((joyGetButtonsPressedThisFrame(PLAYER_1, R_CBUTTONS|R_TRIG|R_JPAD)) || (sub_GAME_7F0A4FEC()))
     {
-        if ((joyGetButtons(0, Z_TRIG) == 0) && (watch_soundrelated_maybe == 0))
+        if ((joyGetButtons(PLAYER_1, Z_TRIG) == 0) && (watch_soundrelated_maybe == 0))
         {
             watch_screen_index = WATCH_INDEX_GAME_OPTIONS;
             reset_game_options_index();
@@ -949,9 +950,9 @@ void watch_screen2_navigation(void) {
 
 void watch_screen3_navigation(void) {
 
-    if ((joyGetButtonsPressedThisFrame(0, L_CBUTTONS|L_TRIG|L_JPAD)) || (sub_GAME_7F0A4FB0()))
+    if ((joyGetButtonsPressedThisFrame(PLAYER_1, L_CBUTTONS|L_TRIG|L_JPAD)) || (sub_GAME_7F0A4FB0()))
     {
-        if ((joyGetButtons(0, Z_TRIG) == 0) && (watch_soundrelated_maybe == 0))
+        if ((joyGetButtons(PLAYER_1, Z_TRIG) == 0) && (watch_soundrelated_maybe == 0))
         {
             watch_screen_index = WATCH_INDEX_CONTROL_OPTIONS;
             reset_controller_options_index();
@@ -959,9 +960,9 @@ void watch_screen3_navigation(void) {
             return;
         }
     }
-    if ((joyGetButtonsPressedThisFrame(0, R_CBUTTONS|R_TRIG|R_JPAD)) || (sub_GAME_7F0A4FEC()))
+    if ((joyGetButtonsPressedThisFrame(PLAYER_1, R_CBUTTONS|R_TRIG|R_JPAD)) || (sub_GAME_7F0A4FEC()))
     {
-        if ((joyGetButtons(0, Z_TRIG) == 0) && (watch_soundrelated_maybe == 0))
+        if ((joyGetButtons(PLAYER_1, Z_TRIG) == 0) && (watch_soundrelated_maybe == 0))
         {
             watch_screen_index = WATCH_INDEX_MISSION_BRIEFING;
             sub_GAME_7F0A5210();
@@ -977,7 +978,7 @@ void watch_screen3_navigation(void) {
 
 void watch_screen4_navigation(void) {
 
-    if ((joyGetButtonsPressedThisFrame(0, L_CBUTTONS|L_TRIG|L_JPAD)) || (sub_GAME_7F0A4FB0()))
+    if ((joyGetButtonsPressedThisFrame(PLAYER_1, L_CBUTTONS|L_TRIG|L_JPAD)) || (sub_GAME_7F0A4FB0()))
     {
         if (watch_soundrelated_maybe == 0)
         {
@@ -992,7 +993,7 @@ void watch_screen4_navigation(void) {
             return;
         }
     }
-    if ((joyGetButtonsPressedThisFrame(0, R_CBUTTONS|R_TRIG|R_JPAD)) || (sub_GAME_7F0A4FEC()))
+    if ((joyGetButtonsPressedThisFrame(PLAYER_1, R_CBUTTONS|R_TRIG|R_JPAD)) || (sub_GAME_7F0A4FEC()))
     {
         if (watch_soundrelated_maybe == 0)
         {
@@ -1011,7 +1012,7 @@ void watch_screen4_navigation(void) {
 
 void controller_options_controlstyle_navigation(void)
 {
-    if ((joyGetButtonsPressedThisFrame(0, U_CBUTTONS|U_JPAD)) || (sub_GAME_7F0A5088()))
+    if ((joyGetButtonsPressedThisFrame(PLAYER_1, U_CBUTTONS|U_JPAD)) || (sub_GAME_7F0A5088()))
     {
         if (watch_soundrelated_maybe == 0)
         {
@@ -1020,7 +1021,7 @@ void controller_options_controlstyle_navigation(void)
             return;
         }
     }
-    if ((joyGetButtonsPressedThisFrame(0, D_CBUTTONS|D_JPAD)) || (sub_GAME_7F0A50C4()))
+    if ((joyGetButtonsPressedThisFrame(PLAYER_1, D_CBUTTONS|D_JPAD)) || (sub_GAME_7F0A50C4()))
     {
         if (watch_soundrelated_maybe == 0)
         {
@@ -1032,7 +1033,7 @@ void controller_options_controlstyle_navigation(void)
 
 void controller_options_inputs_navigation(void)
 {
-    if ((joyGetButtonsPressedThisFrame(0, U_CBUTTONS|U_JPAD)) || (sub_GAME_7F0A5088()))
+    if ((joyGetButtonsPressedThisFrame(PLAYER_1, U_CBUTTONS|U_JPAD)) || (sub_GAME_7F0A5088()))
     {
         if (watch_soundrelated_maybe == 0)
         {
@@ -1041,7 +1042,7 @@ void controller_options_inputs_navigation(void)
             return;
         }
     }
-    if ((joyGetButtonsPressedThisFrame(0, D_CBUTTONS|D_JPAD)) || (sub_GAME_7F0A50C4()))
+    if ((joyGetButtonsPressedThisFrame(PLAYER_1, D_CBUTTONS|D_JPAD)) || (sub_GAME_7F0A50C4()))
     {
         if (watch_soundrelated_maybe == 0)
         {
@@ -1055,13 +1056,13 @@ void sub_GAME_7F0A5998(void)
 {
     s32 aux;
 
-    if ((joyGetButtonsPressedThisFrame(0, U_CBUTTONS|U_JPAD)) || (sub_GAME_7F0A5088()))
+    if ((joyGetButtonsPressedThisFrame(PLAYER_1, U_CBUTTONS|U_JPAD)) || (sub_GAME_7F0A5088()))
     {
         game_options_index = game_options_index - 1;
         set_D_80040AE0_0();
         reset_watch_soundrelated_maybe();
     }
-    else if ((joyGetButtonsPressedThisFrame(0, D_CBUTTONS|D_JPAD)) || (sub_GAME_7F0A50C4()))
+    else if ((joyGetButtonsPressedThisFrame(PLAYER_1, D_CBUTTONS|D_JPAD)) || (sub_GAME_7F0A50C4()))
     {
         game_options_index = game_options_index + 1;
         set_D_80040AE0_0();
@@ -1084,7 +1085,7 @@ void sub_GAME_7F0A5998(void)
 
 void game_options_music_volume_navigation(void)
 {
-    if (joyGetButtonsPressedThisFrame(0, U_CBUTTONS|U_JPAD) || sub_GAME_7F0A5088())
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, U_CBUTTONS|U_JPAD) || sub_GAME_7F0A5088())
     {
         game_options_index = GAME_OPTIONS_INDEX_RATIO;
         set_D_80040AE0_0();
@@ -1092,7 +1093,7 @@ void game_options_music_volume_navigation(void)
         return;
     }
 
-    if (joyGetButtonsPressedThisFrame(0, D_CBUTTONS|D_JPAD) || sub_GAME_7F0A50C4())
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, D_CBUTTONS|D_JPAD) || sub_GAME_7F0A50C4())
     {
         game_options_index = GAME_OPTIONS_INDEX_FX;
         set_D_80040AE0_0();
@@ -1102,7 +1103,7 @@ void game_options_music_volume_navigation(void)
 
 void game_options_fx_volume_navigation(void)
 {
-    if (joyGetButtonsPressedThisFrame(0, U_CBUTTONS|U_JPAD) || sub_GAME_7F0A5088())
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, U_CBUTTONS|U_JPAD) || sub_GAME_7F0A5088())
     {
         game_options_index = GAME_OPTIONS_INDEX_MUSIC;
         set_D_80040AE0_0();
@@ -1110,7 +1111,7 @@ void game_options_fx_volume_navigation(void)
         return;
     }
 
-    if (joyGetButtonsPressedThisFrame(0, D_CBUTTONS|D_JPAD) || sub_GAME_7F0A50C4())
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, D_CBUTTONS|D_JPAD) || sub_GAME_7F0A50C4())
     {
         game_options_index = GAME_OPTIONS_INDEX_LOOK_UPDOWN;
         set_D_80040AE0_0();
@@ -1120,8 +1121,125 @@ void game_options_fx_volume_navigation(void)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0A5B80(void) {
+//logically this is close, likely just finish reordering the if logic
+void sub_GAME_7F0A5B80(void)
+{
+    f32 fVar1;
+    int invItems;
+    int watchDebugFlag;
+    
+    invItems = count_total_items_in_inventory();
+    watchDebugFlag = get_debug_gunwatchpos_flag();
+    if (watchDebugFlag == 0)
+    {    
+        if ((joyGetButtonsPressedThisFrame(PLAYER_1,U_CBUTTONS|U_JPAD) != 0) && (joyGetStickY(PLAYER_1) >= 0x47))
+        {
+            if ((D_800409BC > 0) && (watch_soundrelated_maybe == 0))
+            {
+                D_800409BC -= 1.0f;
+            }
+        }
+        else
+        {
+            if ((((joyGetButtonsPressedThisFrame(PLAYER_1,D_CBUTTONS|D_JPAD) != 0) || (joyGetStickY(PLAYER_1) < -0x46)) && (D_800409BC < invItems - 1)) && (watch_soundrelated_maybe == 0))
+            {
+                D_800409BC += 1.0f;
+            }
+        }
+        
 
+        if (joyGetButtons(PLAYER_1,U_CBUTTONS|U_JPAD) != 0)
+        {
+            if ((0 < D_800409BC) && (watch_soundrelated_maybe == 0))
+            {
+                D_800409BC -= 0.1f;
+            }
+        }
+        else
+        {
+            if (((joyGetButtons(PLAYER_1,D_CBUTTONS|D_JPAD) != 0) && (D_800409BC < invItems + -1)) && (watch_soundrelated_maybe == 0))
+            {
+                D_800409BC += 0.1f;
+            }
+        }
+    }
+    
+
+
+    if ((joyGetStickY(PLAYER_1) >= 0x1F) && (joyGetStickY(PLAYER_1) < 0x46) && (D_800409B8 > 0) && (watch_soundrelated_maybe == 0))
+    {
+        D_800409BC -= joyGetStickY(PLAYER_1) / 300.0f;
+    }
+    else if ((joyGetStickY(PLAYER_1) < -0x1E) && (joyGetStickY(PLAYER_1) >= -0x45) && (D_800409BC < (invItems - 1)) && (watch_soundrelated_maybe == 0))
+    {
+        D_800409BC -= joyGetStickY(PLAYER_1) / 300.0f;
+    }
+
+
+    if ((sub_GAME_7F0A5160() != 0) && (D_800409B8 > 0) && (watch_soundrelated_maybe == 0))
+    {
+        D_800409BC -= 1.0f;
+    }
+    else if ((sub_GAME_7F0A519C() != 0) && (D_800409B8 < (invItems - 1)) && (watch_soundrelated_maybe == 0))
+    {
+        D_800409BC += 1.0f;
+    }
+
+
+
+    if ((is_holding_less_than_10_up_on_stick() == 0) && (is_holding_less_than_10_down_on_stick() == 0))
+    {
+        D_80040AE4 = 0;
+    }
+    else
+    {
+        D_80040AE4 = 1;
+    }
+    fVar1 = invItems - 0.5f;
+    if (D_800409BC <= invItems - 0.5f)
+    {
+        fVar1 = D_800409BC;
+    }
+    D_800409BC = fVar1;
+    if (D_800409BC < -0.5f)
+    {
+        D_800409BC = -0.5f;
+    }
+    D_800409B8 = D_800409BC;
+    if (j_text_trigger == 0)
+    {
+        invItems = 0xc;
+        watchDebugFlag = 0xc;
+    }
+    else {
+        invItems = 0xe;
+        watchDebugFlag = 0xe;
+    }
+    D_800409B4 = watchDebugFlag * 2 + -D_800409B8 * invItems;
+    if (D_800409B4 < D_800409B0) {
+        D_800409B0 = (D_800409B0 - (D_800409B0 - D_800409B4) / 3) + -1;
+        D_800409C0 = 0;
+    }
+    else {
+        if (D_800409B0 < D_800409B4) {
+            D_800409B0 = D_800409B0 + (D_800409B4 - D_800409B0) / 3 + 1;
+            D_800409C0 = 0;
+        }
+        else {
+            D_800409C0 = 1;
+        }
+    }
+    if ((D_800409BC <= D_800409B8 + 0.55f) || (joyGetButtons(PLAYER_1,ANY_BUTTON) != 0)) 
+    {
+        if ((D_800409BC <= D_800409B8 + 0.45f) && (joyGetButtons(PLAYER_1,ANY_BUTTON) == 0)) 
+        {
+            D_800409BC = D_800409BC + 0.1f;
+        }
+    }
+    else {
+        D_800409BC = D_800409BC - 0.1f;
+    }
+    return;
 }
 #else
 GLOBAL_ASM(
@@ -1904,14 +2022,14 @@ glabel sub_GAME_7F0A611C
 
 void mission_brief_background_navigation(void)
 {
-    if ((joyGetButtonsPressedThisFrame(0, U_CBUTTONS|U_JPAD)) || (sub_GAME_7F0A5088()))
+    if ((joyGetButtonsPressedThisFrame(PLAYER_1, U_CBUTTONS|U_JPAD)) || (sub_GAME_7F0A5088()))
     {
         mission_brief_index = BRIEF_INDEX_OBJECTIVES;
         set_D_80040AE0_0();
         reset_watch_soundrelated_maybe();
     }
 
-    if ((joyGetButtonsPressedThisFrame(0, D_CBUTTONS|D_JPAD)) || (sub_GAME_7F0A50C4()))
+    if ((joyGetButtonsPressedThisFrame(PLAYER_1, D_CBUTTONS|D_JPAD)) || (sub_GAME_7F0A50C4()))
     {
         mission_brief_index = BRIEF_INDEX_M;
         set_D_80040AE0_0();
@@ -1922,7 +2040,7 @@ void mission_brief_background_navigation(void)
 
 void mission_brief_m_briefing_navigation(void)
 {
-    if (joyGetButtonsPressedThisFrame(0, U_CBUTTONS|U_JPAD) || sub_GAME_7F0A5088())
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, U_CBUTTONS|U_JPAD) || sub_GAME_7F0A5088())
     {
         mission_brief_index = BRIEF_INDEX_BACKGROUND;
         set_D_80040AE0_0();
@@ -1930,7 +2048,7 @@ void mission_brief_m_briefing_navigation(void)
         return;
     }
 
-    if (joyGetButtonsPressedThisFrame(0, D_CBUTTONS|D_JPAD) || sub_GAME_7F0A50C4())
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, D_CBUTTONS|D_JPAD) || sub_GAME_7F0A50C4())
     {
         mission_brief_index = BRIEF_INDEX_Q;
         set_D_80040AE0_0();
@@ -1941,7 +2059,7 @@ void mission_brief_m_briefing_navigation(void)
 
 void mission_brief_q_branch_navigation(void)
 {
-    if (joyGetButtonsPressedThisFrame(0, U_CBUTTONS|U_JPAD) || sub_GAME_7F0A5088())
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, U_CBUTTONS|U_JPAD) || sub_GAME_7F0A5088())
     {
         mission_brief_index = BRIEF_INDEX_M;
         set_D_80040AE0_0();
@@ -1949,7 +2067,7 @@ void mission_brief_q_branch_navigation(void)
         return;
     }
 
-    if (joyGetButtonsPressedThisFrame(0, D_CBUTTONS|D_JPAD) || sub_GAME_7F0A50C4())
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, D_CBUTTONS|D_JPAD) || sub_GAME_7F0A50C4())
     {
         mission_brief_index = BRIEF_INDEX_MONEYPENNY;
         set_D_80040AE0_0();
@@ -1959,7 +2077,7 @@ void mission_brief_q_branch_navigation(void)
 
 void mission_brief_moneypenny_navigation(void)
 {
-    if (joyGetButtonsPressedThisFrame(0, U_CBUTTONS|U_JPAD) || sub_GAME_7F0A5088())
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, U_CBUTTONS|U_JPAD) || sub_GAME_7F0A5088())
     {
         mission_brief_index = BRIEF_INDEX_Q;
         set_D_80040AE0_0();
@@ -1967,7 +2085,7 @@ void mission_brief_moneypenny_navigation(void)
         return;
     }
 
-    if (joyGetButtonsPressedThisFrame(0, D_CBUTTONS|D_JPAD) || sub_GAME_7F0A50C4())
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, D_CBUTTONS|D_JPAD) || sub_GAME_7F0A50C4())
     {
         mission_brief_index = BRIEF_INDEX_OBJECTIVES;
         set_D_80040AE0_0();
@@ -1977,7 +2095,7 @@ void mission_brief_moneypenny_navigation(void)
 
 void mission_brief_objectives_navigation(void)
 {
-    if (joyGetButtonsPressedThisFrame(0, U_CBUTTONS|U_JPAD) || sub_GAME_7F0A5088())
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, U_CBUTTONS|U_JPAD) || sub_GAME_7F0A5088())
     {
         mission_brief_index = BRIEF_INDEX_MONEYPENNY;
         set_D_80040AE0_0();
@@ -1985,7 +2103,7 @@ void mission_brief_objectives_navigation(void)
         return;
     }
 
-    if (joyGetButtonsPressedThisFrame(0, D_CBUTTONS|D_JPAD) || sub_GAME_7F0A50C4())
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, D_CBUTTONS|D_JPAD) || sub_GAME_7F0A50C4())
     {
         mission_brief_index = BRIEF_INDEX_BACKGROUND;
         set_D_80040AE0_0();
@@ -2108,22 +2226,22 @@ void sub_GAME_7F0A6A80(void)
     s32 temp_3;
     u32 random_value;
 
-    if (joyGetButtonsPressedThisFrame(0, 0x1000))
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, 0x1000))
     {
         set_open_close_solo_watch_menu_to1();
     }
 
     if (controlstick_lr_enabled == 0)
     {
-        if ((joyGetStickX(0) >= -0xA) && (joyGetStickX(0) < 0xB))
+        if ((joyGetStickX(PLAYER_1) >= -0xA) && (joyGetStickX(PLAYER_1) < 0xB))
         {
             controlstick_lr_enabled = 1;
         }
-        else if ((joyGetStickX(0) < 0xB) && (joy7000C174(0) >= 0xB))
+        else if ((joyGetStickX(PLAYER_1) < 0xB) && (joy7000C174(PLAYER_1) >= 0xB))
         {
             controlstick_lr_enabled = 1;
         }
-        else if ((joyGetStickX(0) >= -0xA) && (joy7000C174(0) < -0xA))
+        else if ((joyGetStickX(PLAYER_1) >= -0xA) && (joy7000C174(PLAYER_1) < -0xA))
         {
             controlstick_lr_enabled = 1;
         }
@@ -2131,15 +2249,15 @@ void sub_GAME_7F0A6A80(void)
 
     if (D_80040AE0 == 0)
     {
-        if ((joyGetStickY(0) >= -0xA) && (joyGetStickY(0) < 0xB))
+        if ((joyGetStickY(PLAYER_1) >= -0xA) && (joyGetStickY(PLAYER_1) < 0xB))
         {
             D_80040AE0 = 1;
         }
-        else if ((joyGetStickY(0) < 0xB) && (joy7000C284(0) >= 0xB))
+        else if ((joyGetStickY(PLAYER_1) < 0xB) && (joy7000C284(PLAYER_1) >= 0xB))
         {
             D_80040AE0 = 1;
         }
-        else if ((joyGetStickY(0) >= -0xA) && (joy7000C284(0) < -0xA))
+        else if ((joyGetStickY(PLAYER_1) >= -0xA) && (joy7000C284(PLAYER_1) < -0xA))
         {
             D_80040AE0 = 1;
         }
@@ -3407,7 +3525,7 @@ Gfx *sub_GAME_7F0A77C8(Gfx *arg0)
     {
         if (D_800409A4 == 0)
         {
-            if ((joyGetStickX(0) >= 0x2e) || (joyGetButtons(0, 0x111) != 0))
+            if ((joyGetStickX(PLAYER_1) >= 0x2e) || (joyGetButtons(PLAYER_1, 0x111) != 0))
             {
                 D_800409A4 = 1;
             }
@@ -3417,7 +3535,7 @@ Gfx *sub_GAME_7F0A77C8(Gfx *arg0)
         {
             if (D_800409A4 != 0)
             {
-                if ((joyGetStickX(0) < -0x2d) || (joyGetButtons(0, 0x222) != 0))
+                if ((joyGetStickX(PLAYER_1) < -0x2d) || (joyGetButtons(PLAYER_1, 0x222) != 0))
                 {
                     D_800409A4 = 0;
                 }
@@ -4989,8 +5107,8 @@ Gfx *draw_watch_mission_status_page(Gfx *gdl, s32 param_2)
 
 void sub_GAME_7F0A8378(void)
 {
-    if (joyGetButtonsPressedThisFrame(0, Z_TRIG|A_BUTTON) == 0) {
-        if (joyGetButtonsPressedThisFrame(0, START_BUTTON) == 0)
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, Z_TRIG|A_BUTTON) == 0) {
+        if (joyGetButtonsPressedThisFrame(PLAYER_1, START_BUTTON) == 0)
         {
             return;
         }
@@ -6683,12 +6801,12 @@ void sub_GAME_7F0A8ED0(u16* arg0) {
     s32 sp1C;
     s32 temp_v1;
 
-    sp1C = joyGetStickX(0);
+    sp1C = joyGetStickX(PLAYER_1);
     temp_v1 = *arg0;
     
-    if (joyGetButtons(0, R_CBUTTONS|R_TRIG|R_JPAD)) {
+    if (joyGetButtons(PLAYER_1, R_CBUTTONS|R_TRIG|R_JPAD)) {
         temp_v1 = temp_v1 + 0x400;
-    } else if (joyGetButtons(0, L_CBUTTONS|L_TRIG|L_JPAD)) {
+    } else if (joyGetButtons(PLAYER_1, L_CBUTTONS|L_TRIG|L_JPAD)) {
         temp_v1 = temp_v1 - 0x400;
     }
 
@@ -9492,7 +9610,7 @@ Gfx *display_text_buttons_dual_control(Gfx *gdl)
 
     gdl = microcode_constructor(gdl);
 
-    if (joyGetButtons(0, A_BUTTON))
+    if (joyGetButtons(PLAYER_1, A_BUTTON))
     {
         gdl = sub_GAME_7F0A9398(gdl, 0x5A, 0xA7, get_textptr_for_textID(TEXT(LOPTIONS, 0x03)), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0); //weapon
     }
@@ -9501,7 +9619,7 @@ Gfx *display_text_buttons_dual_control(Gfx *gdl)
         gdl = sub_GAME_7F0A9398(gdl, 0x5A, 0xA7, get_textptr_for_textID(TEXT(LOPTIONS, 0x03)), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0); //weapon
     }
 
-    if (joyGetButtons(0, B_BUTTON))
+    if (joyGetButtons(PLAYER_1, B_BUTTON))
     {
         gdl = sub_GAME_7F0A9398(gdl, 0x5A, 0x95, get_textptr_for_textID(TEXT(LOPTIONS, 0x02)), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0); //action
     }
@@ -9519,7 +9637,7 @@ Gfx *display_text_buttons_dual_control(Gfx *gdl)
         textptr_aux = get_textptr_for_textID(TEXT(LOPTIONS, 0x01)); //aim
     }
 
-    if (joyGetButtons(0, Z_TRIG))
+    if (joyGetButtons(PLAYER_1, Z_TRIG))
     {
         gdl = sub_GAME_7F0A9398(gdl, 0x5A, 0xB9, textptr_aux, -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0);
     }
@@ -11735,7 +11853,7 @@ void game_option_select_value(u32 *param_1, u32 param_2)
 
 void game_option_toggle_input(s32 option_index)
 {
-    if ( (joyGetButtonsPressedThisFrame(0, L_CBUTTONS|L_TRIG|L_JPAD) || sub_GAME_7F0A4FB0()) && watch_soundrelated_maybe )
+    if ( (joyGetButtonsPressedThisFrame(PLAYER_1, L_CBUTTONS|L_TRIG|L_JPAD) || sub_GAME_7F0A4FB0()) && watch_soundrelated_maybe )
     {
         if (game_options_entries[option_index].current_value == 1)
         {
@@ -11748,7 +11866,7 @@ void game_option_toggle_input(s32 option_index)
     }
     else
     {
-        if ( (joyGetButtonsPressedThisFrame(0, R_CBUTTONS|R_TRIG|R_JPAD) || sub_GAME_7F0A4FEC()) && watch_soundrelated_maybe )
+        if ( (joyGetButtonsPressedThisFrame(PLAYER_1, R_CBUTTONS|R_TRIG|R_JPAD) || sub_GAME_7F0A4FEC()) && watch_soundrelated_maybe )
         {
             if (game_options_entries[option_index].current_value == 0)
             {
@@ -13942,7 +14060,7 @@ Gfx *sub_GAME_7F0ACA28(Gfx *gdl, s32 arg1, s32 watch_transitioning)
         sub_GAME_7F0BD8FC(0);
 
         // Handle A or Z button click when in any page but inventory page
-        if ((watch_screen_index != WATCH_INDEX_INVENTORY) && (joyGetButtonsPressedThisFrame(0, Z_TRIG|A_BUTTON)))
+        if ((watch_screen_index != WATCH_INDEX_INVENTORY) && (joyGetButtonsPressedThisFrame(PLAYER_1, Z_TRIG|A_BUTTON)))
         {
             watch_play_beep_sound();
         }
