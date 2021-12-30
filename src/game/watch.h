@@ -6,11 +6,19 @@
 #ifdef VERSION_EU
 #define XOFFSET 65
 #define YOFFSET 90
+#define YOFFSET_WEAPTEXT 193
+#define YOFFSET_ACTIONTEXT 172
+#define YOFFSET_4 235
+#define YOFFSET_5 214
 #define YINC 17
 #else
 #define XOFFSET 64
 #define YOFFSET 80
 #define YINC 15
+#define YOFFSET_WEAPTEXT 167
+#define YOFFSET_ACTIONTEXT 149
+#define YOFFSET_4 203
+#define YOFFSET_5 185
 #endif
 
 typedef enum WATCH_INDEX {
