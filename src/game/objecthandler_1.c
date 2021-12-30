@@ -6053,7 +6053,8 @@ s32 sub_GAME_7F06FE90(Model *arg0, f32 arg1, f32 arg2)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F06FF18(void) {
+void sub_GAME_7F06FF18(Model *param_1,s32 ani_rate,s32 param_3)
+{
 
 }
 #else

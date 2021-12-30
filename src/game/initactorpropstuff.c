@@ -627,30 +627,18 @@ void sub_GAME_7F000980(void) {
     sub_GAME_7F0009A0();
 }
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined (VERSION_EU)
+#define POS 0x19
+#else
+#define POS 0x27
+#endif
+
 void sub_GAME_7F0009A0(void) {
     u32 *end = &dword_CODE_bss_80075DC8[20];
     u32 *ptr = &dword_CODE_bss_80075DC8[0];
     while(end > ptr) {
-        ptr[39] = 0;
-        ptr += 0x28;
+        ptr[POS] = 0;
+        ptr += POS+1;
     }
 }
-#endif
-#if defined(VERSION_EU)
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0009A0
-/* 033390 7F0009A0 3C028006 */  lui   $v0, %hi(dword_CODE_bss_80075DC8 + 0x820) # $v0, 0x8006
-/* 033394 7F0009A4 3C038006 */  lui   $v1, %hi(dword_CODE_bss_80075DC8) # $v1, 0x8006
-/* 033398 7F0009A8 24425528 */  addiu $v0, %lo(dword_CODE_bss_80075DC8 + 0x820) # addiu $v0, $v0, 0x5528
-/* 03339C 7F0009AC 24634D08 */  addiu $v1, %lo(dword_CODE_bss_80075DC8) # addiu $v1, $v1, 0x4d08
-.L7F0009B0:
-/* 0333A0 7F0009B0 24630068 */  addiu $v1, $v1, 0x68
-/* 0333A4 7F0009B4 0062082B */  sltu  $at, $v1, $v0
-/* 0333A8 7F0009B8 1420FFFD */  bnez  $at, .L7F0009B0
-/* 0333AC 7F0009BC AC60FFFC */   sw    $zero, -4($v1)
-/* 0333B0 7F0009C0 03E00008 */  jr    $ra
-/* 0333B4 7F0009C4 00000000 */   nop   
-)
-#endif
+
