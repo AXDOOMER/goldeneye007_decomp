@@ -1820,26 +1820,12 @@ s32 get_itemtype_in_hand(HANDEDNESS hand)
     return g_CurrentPlayer->hand_item[hand];
 }
 
-#ifndef VERSION_EU
+
 ModelFileHeader *get_ptr_itemheader_in_hand(HANDEDNESS hand)
 {
     return &g_CurrentPlayer->copy_of_body_obj_header[hand];
 }
-#endif
-#ifdef VERSION_EU
-GLOBAL_ASM(
-.text
-glabel get_ptr_itemheader_in_hand
-/* 08FDB8 7F05D3C8 3C0E8007 */  lui   $t6, %hi(g_CurrentPlayer) # $t6, 0x8007
-/* 08FDBC 7F05D3CC 8DCE8BC0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
-/* 08FDC0 7F05D3D0 000478C0 */  sll   $t7, $a0, 3
-/* 08FDC4 7F05D3D4 01E47823 */  subu  $t7, $t7, $a0
-/* 08FDC8 7F05D3D8 000F7880 */  sll   $t7, $t7, 2
-/* 08FDCC 7F05D3DC 01CF1021 */  addu  $v0, $t6, $t7
-/* 08FDD0 7F05D3E0 03E00008 */  jr    $ra
-/* 08FDD4 7F05D3E4 24420810 */   addiu $v0, $v0, 0x810
-)
-#endif
+
 
 
 
