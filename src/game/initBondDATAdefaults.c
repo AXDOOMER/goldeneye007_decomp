@@ -51,7 +51,15 @@ void sub_GAME_7F0062C0(void *anim, s32 arg1, s32 arg2, s32 *arg3)
 
 
 
-
+#ifdef VERSION_EU
+#define ANIMRATE 1.2f
+#define DAMPVAL 0.9166f
+#define HEADSUM 11.990406f
+#else
+#define ANIMRATE 1.0f
+#define DAMPVAL 0.93f
+#define HEADSUM 14.285716f
+#endif
 
 
 void sets_a_bunch_of_BONDdata_values_to_default(void)
@@ -71,20 +79,13 @@ void sets_a_bunch_of_BONDdata_values_to_default(void)
     sub_GAME_7F075FAC(&g_CurrentPlayer->field_598, &player_gait_object_header, &g_CurrentPlayer->field_654);
     set_obj_instance_controller_scale(&g_CurrentPlayer->field_598, IDO_POINT_ONE);
 
-#ifdef VERSION_JP
-    sub_GAME_7F06FF18(&g_CurrentPlayer->field_598, 1.0f, 0.0f);
-#endif
-#ifdef VERSION_EU
-    sub_GAME_7F06FF18(&g_CurrentPlayer->field_598, 1.2f, 0.0f);
+#if defined (VERSION_JP) || defined (VERSION_EU)
+    sub_GAME_7F06FF18(&g_CurrentPlayer->field_598, ANIMRATE, 0.0f);
 #endif
 
     g_CurrentPlayer->field_4E8 = 0;
 
-#ifdef VERSION_EU
-    g_CurrentPlayer->headdamp = 0.9166f;
-#else
-    g_CurrentPlayer->headdamp = 0.93f;
-#endif
+    g_CurrentPlayer->headdamp = DAMPVAL;
 
     g_CurrentPlayer->field_4F0 = 0;
     g_CurrentPlayer->field_4F4 = 1.0f;
@@ -104,19 +105,15 @@ void sets_a_bunch_of_BONDdata_values_to_default(void)
     g_CurrentPlayer->headlooksum[0] = 0.0f;
     g_CurrentPlayer->headlooksum[1] = 0.0f;
 
-#ifdef VERSION_EU
-    g_CurrentPlayer->headlooksum[2] = 11.990406f; /* NTSC->PAL conversion rate: 5/6 */
-#else
-    g_CurrentPlayer->headlooksum[2] = 14.285716f;
-#endif
+
+    g_CurrentPlayer->headlooksum[2] = HEADSUM;
+
 
     g_CurrentPlayer->headupsum[0] = 0.0f;
 
-#ifdef VERSION_EU
-    g_CurrentPlayer->headupsum[1] = 11.990406f; /* NTSC->PAL conversion rate: 5/6 */
-#else
-    g_CurrentPlayer->headupsum[1] = 14.285716f;
-#endif
+
+    g_CurrentPlayer->headupsum[1] = HEADSUM;
+
 
     g_CurrentPlayer->headupsum[2] = 0.0f;
     g_CurrentPlayer->resetheadpos = 1;

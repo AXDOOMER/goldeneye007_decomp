@@ -94,7 +94,7 @@ s32 g_ControlsLockedFlag = 0;
 //D:80048374
 s32 g_ClockTimer = 0;
 
-#ifdef VERSION_US
+#if defined (VERSION_US)
 //D:80048378
 f32 g_GlobalTimerDelta = 0;
 //D:8004837C
@@ -103,7 +103,7 @@ s32 g_GlobalTimer = 0;
 s32 D_80048380 = 0;
 //D:80048384
 #endif
-#ifdef VERSION_JP
+#if defined (VERSION_JP) || defined (VERSION_EU)
 // addresses updated, per build\ge007.j.map
 // 800483a8
 f32 g_JP_GlobalTimerDelta = 0;
@@ -112,13 +112,6 @@ s32 g_GlobalTimer = 0;
 // 800483b0
 s32 D_80048380 = 0;
 // 800483b4
-f32 g_GlobalTimerDelta = 0;
-#endif
-#ifdef VERSION_EU
-f32 g_JP_GlobalTimerDelta = 0;
-s32 g_GlobalTimer = 0;
-s32 D_80048380 = 0;
-// EU .bss 80041004
 f32 g_GlobalTimerDelta = 0;
 #endif
 
