@@ -25,6 +25,7 @@
 #include "game/player.h"
 #include "game/spectrum.h"
 #include "game/textrelated.h"
+#include "game/blood_animation.h"
 
 // lvl.c checks for enabled cheats up to the "invalid" index of 0x4b (=75), which
 // is different from the 80 here ...
@@ -28330,42 +28331,52 @@ void interface_menu19_spectrum(void)
 
 
 #ifdef NONMATCHING
-void constructor_menu19_spectrum(void) {
-    s32 temp_ret;
-
-    // Node 0
-    temp_ret = insert_imageDL();
-    *temp_ret = 0xba001402;
-    temp_ret->unk14 = 0x204;
-    temp_ret->unk10 = 0xb6000000;
-    temp_ret->unk1C = 0xfffcf87c;
-    temp_ret->unk8 = 0xb900031d;
-    temp_ret->unkC = 0x552048;
-    temp_ret->unk18 = 0xfcffffff;
-    temp_ret->unk20 = 0xba000c02;
-    temp_ret->unk4 = 0;
-    temp_ret->unk24 = 0;
-    temp_ret->unk28 = 0xfd500000;
-    temp_ret->unk2C = &color_palette_entries_50_percent;
-    temp_ret->unk34 = 0x7000000;
-    temp_ret->unk30 = 0xf5000300;
-    temp_ret->unk38 = 0xe6000000;
-    temp_ret->unk3C = 0;
-    temp_ret->unk40 = 0xf0000ff0;
-    temp_ret->unk44 = 0x701cff0;
-    temp_ret->unk48 = 0xe7000000;
-    temp_ret->unk4C = 0;
-    temp_ret->unk54 = 0x8000;
-    temp_ret->unk50 = 0xba000e02;
-    spectrum_draw_screen((temp_ret + 0x58));
-    return;
-    // (possible return value: spectrum_draw_screen((temp_ret + 0x58)))
+Gfx * constructor_menu19_spectrum(Gfx *DL)
+{
+    #ifndef VERSION_EU
+    DL = insert_imageDL(DL);
+    //DL[0]->w0 = 0xba001402;
+    //DL[0]->w1 = 0;    
+    gDPSetCycleType(DL++, G_CYC_1CYCLE);
+    //DL[1].w0 = 0xb900031d;
+    //DL[1].w1 = &DAT_00552048;
+    gDPSetRenderMode(DL++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
+    //DL[2].w0 = 0xb6000000;
+    //DL[2].w1 = 0x204;
+    gSPClearGeometryMode(DL++, G_SHADE | G_SHADING_SMOOTH);
+    //DL[3].w0 = 0xfcffffff;
+    //DL[3].w1 = 0xfffcf87c;
+    gDPSetCombineMode(DL++, G_CC_DECALRGB, G_CC_DECALRGB);
+    //DL[4].w0 = 0xba000c02;
+    //DL[4].w1 = 0;
+    gDPSetTextureFilter(DL++, G_TF_POINT);
+    //DL[5].w0 = 0xfd500000;
+    //DL[5].w1 = color_palette_entries_50_percent;
+    gDPSetTextureImage(DL++, G_IM_FMT_CI, G_IM_SIZ_16b, 1, &color_palette_entries_50_percent);
+    //DL[6].w0 = 0xf5000300;
+    //DL[6].w1 = 0x07000000;
+    gDPSetTile(DL++, G_IM_FMT_RGBA, G_IM_SIZ_4b, 1, 0x0100, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+    //DL[7].w0 = 0xe6000000;
+    //DL[7].w1 = 0;
+    gDPLoadSync(DL++);
+    //DL[8].w0 = 0xf0000ff0;
+    //DL[8].w1 = 0x0701cff0;
+    gDPLoadTLUTCmd(DL++, G_TX_LOADTILE, 7);
+    //DL[9].w0 = 0xe7000000;
+    //DL[9].w1 = 0;
+    gDPPipeSync(DL++);
+    //DL[10].w0 = 0xba000e02;
+    //DL[10].w1 = 0x00008000;
+    gDPSetTextureLUT(DL++, G_TT_RGBA16);
+    DL = spectrum_draw_screen(DL++);
+    #endif
+    return DL;
 }
 #else
 #ifdef VERSION_EU
-s32 constructor_menu19_spectrum(s32 var)
+Gfx* constructor_menu19_spectrum(Gfx* DL)
 {
-    return var;
+    return DL;
 }
 #else
 GLOBAL_ASM(
