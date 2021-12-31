@@ -3160,7 +3160,7 @@ void animation_speed_related(f32 arg0)
     {
         if (ptr_guard_data[i].model != NULL)
         {
-#if defined(VERSION_EU)
+#if defined(REFRESH_PAL)
 /* should reference D_80047E4C (1.2f) */
             sub_GAME_7F06FF18(ptr_guard_data[i].model, animation_rate * 1.2f, 600.0f);
 #else
@@ -3187,7 +3187,7 @@ void chrAimGlobalTimerTickRelated(struct ChrRecord *arg0)
 
     if (arg0->aimendcount >= 2)
     {
-#if defined(VERSION_JP) || defined(VERSION_EU)
+#if defined(BUGFIX_R1)
         temp_f0 = g_JP_GlobalTimerDelta / (f32) arg0->aimendcount;
 #else
         temp_f0 = g_GlobalTimerDelta / (f32) arg0->aimendcount;

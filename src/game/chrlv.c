@@ -30,7 +30,7 @@
 #include "game/unk_08DBB0.h"
 #include "game/unk_0A1DA0.h"
 
-#ifdef VERSION_EU
+#ifdef REFRESH_PAL
 #define CHRLV_RECENT_TIME_CHECK 151
 #define CHRLV_TICK_DEAD_CHECK 75
 #define CHRLV_SEEN_RECENT_CHECK 100
@@ -402,11 +402,17 @@ void chrlvIdleAnimationRelated(struct ChrRecord *arg0, f32 arg1)
 
 
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+//#if defined(VERSION_US) || defined(VERSION_JP)
 /**
  * Address 0x7F023A94 (VERSION_US).
  * Address 0x7F023D94 (other)
  */
+#ifdef REFRESH_PAL
+#define RATE 1.2f
+#else
+#define RATE 1.0f
+#endif
+
 void chrlvIdleAnimationRelated7F023A94(struct ChrRecord *arg0, f32 arg1)
 {
     f32 f2;
@@ -420,14 +426,15 @@ void chrlvIdleAnimationRelated7F023A94(struct ChrRecord *arg0, f32 arg1)
     arg0->act_stand.unk038 = 0;
     arg0->act_stand.unk03c = 2;
     arg0->act_stand.unk040 = 0;
-    arg0->act_stand.unk044 = (randomGetNext() % (u32)CHRLV_SEEN_RECENT_CHECK) + CHRLV_DEFAULT_TIMER;
-
+    //eu bug, doesnt use pal version of CHRLV_SEEN_RECENT_CHECK) + CHRLV_DEFAULT_TIMER;
+    //so temp hardcoded to 120) + 180;
+    arg0->act_stand.unk044 = (randomGetNext() % (u32)120) + 180; 
     f2 = arg1;
 
-    if (arg0->model->unka4 != 1.0f)
+    if (arg0->model->unka4 != RATE)
     {
-#if defined(VERSION_JP) || defined(VERSION_EU)
-        f2 *= (1.0f / arg0->model->unka4);
+#if defined(BUGFIX_R1)
+        f2 *= (RATE / arg0->model->unka4);
 #else
         f2 = arg1 / arg0->model->unka4;
 #endif
@@ -441,70 +448,6 @@ void chrlvIdleAnimationRelated7F023A94(struct ChrRecord *arg0, f32 arg1)
     arg0->sleep = (s8) (s32) f2;
     chrlvIdleAnimationRelated(arg0, arg1);
 }
-#endif
-#if defined(VERSION_EU)
-GLOBAL_ASM(
-.late_rodata
-glabel D_80047ED0
-.word 0x3f99999a
-.text
-glabel chrlvIdleAnimationRelated7F023A94
-/* 056464 7F023A74 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 056468 7F023A78 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05646C 7F023A7C AFA5001C */  sw    $a1, 0x1c($sp)
-/* 056470 7F023A80 0FC0B46E */  jal   sub_GAME_7F02D184
-/* 056474 7F023A84 AFA40018 */   sw    $a0, 0x18($sp)
-/* 056478 7F023A88 8FA40018 */  lw    $a0, 0x18($sp)
-/* 05647C 7F023A8C 240E0001 */  li    $t6, 1
-/* 056480 7F023A90 240F0002 */  li    $t7, 2
-/* 056484 7F023A94 A08E0007 */  sb    $t6, 7($a0)
-/* 056488 7F023A98 AC80002C */  sw    $zero, 0x2c($a0)
-/* 05648C 7F023A9C AC800030 */  sw    $zero, 0x30($a0)
-/* 056490 7F023AA0 AC800034 */  sw    $zero, 0x34($a0)
-/* 056494 7F023AA4 AC800038 */  sw    $zero, 0x38($a0)
-/* 056498 7F023AA8 AC8F003C */  sw    $t7, 0x3c($a0)
-/* 05649C 7F023AAC 0C00262C */  jal   randomGetNext
-/* 0564A0 7F023AB0 AC800040 */   sw    $zero, 0x40($a0)
-/* 0564A4 7F023AB4 3C018004 */  li    $at, 0x80040000 # -0.000000
-/* 0564A8 7F023AB8 C42E7ED0 */  lwc1  $f14, %lo(D_80047ED0)($at)
-/* 0564AC 7F023ABC 24010078 */  li    $at, 120
-/* 0564B0 7F023AC0 0041001B */  divu  $zero, $v0, $at
-/* 0564B4 7F023AC4 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0564B8 7F023AC8 0000C010 */  mfhi  $t8
-/* 0564BC 7F023ACC C7AC001C */  lwc1  $f12, 0x1c($sp)
-/* 0564C0 7F023AD0 8C88001C */  lw    $t0, 0x1c($a0)
-/* 0564C4 7F023AD4 271900B4 */  addiu $t9, $t8, 0xb4
-/* 0564C8 7F023AD8 AC990044 */  sw    $t9, 0x44($a0)
-/* 0564CC 7F023ADC C50200A4 */  lwc1  $f2, 0xa4($t0)
-/* 0564D0 7F023AE0 3C0142FE */  li    $at, 0x42FE0000 # 127.000000
-/* 0564D4 7F023AE4 46006006 */  mov.s $f0, $f12
-/* 0564D8 7F023AE8 46027032 */  c.eq.s $f14, $f2
-/* 0564DC 7F023AEC 00000000 */  nop   
-/* 0564E0 7F023AF0 45030005 */  bc1tl .L7F023B08
-/* 0564E4 7F023AF4 44811000 */   mtc1  $at, $f2
-/* 0564E8 7F023AF8 46027103 */  div.s $f4, $f14, $f2
-/* 0564EC 7F023AFC 46046002 */  mul.s $f0, $f12, $f4
-/* 0564F0 7F023B00 00000000 */  nop   
-/* 0564F4 7F023B04 44811000 */  mtc1  $at, $f2
-.L7F023B08:
-/* 0564F8 7F023B08 00000000 */  nop   
-/* 0564FC 7F023B0C 4600103C */  c.lt.s $f2, $f0
-/* 056500 7F023B10 00000000 */  nop   
-/* 056504 7F023B14 45020003 */  bc1fl .L7F023B24
-/* 056508 7F023B18 4600018D */   trunc.w.s $f6, $f0
-/* 05650C 7F023B1C 46001006 */  mov.s $f0, $f2
-/* 056510 7F023B20 4600018D */  trunc.w.s $f6, $f0
-.L7F023B24:
-/* 056514 7F023B24 44056000 */  mfc1  $a1, $f12
-/* 056518 7F023B28 440A3000 */  mfc1  $t2, $f6
-/* 05651C 7F023B2C 0FC08E4A */  jal   chrlvIdleAnimationRelated
-/* 056520 7F023B30 A08A0008 */   sb    $t2, 8($a0)
-/* 056524 7F023B34 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 056528 7F023B38 27BD0018 */  addiu $sp, $sp, 0x18
-/* 05652C 7F023B3C 03E00008 */  jr    $ra
-/* 056530 7F023B40 00000000 */   nop   
-)
-#endif
 
 
 /**
@@ -1064,8 +1007,6 @@ void chrlvFireJumpToSideAnimationRelated(struct ChrRecord *arg0, s32 arg1)
 
 
 
-
-#ifndef VERSION_EU
 /**
  * Address 0x7F024CF8 (not EU).
  * Address 0x7F024CE0 (VERSION_EU).
@@ -1120,7 +1061,7 @@ void sub_GAME_7F024CF8(struct ChrRecord *arg0, struct coord3d *arg1)
 
     if (sp2C)
     {
-#ifdef VERSION_EU
+#ifdef REFRESH_PAL
         arg0->act_runpos.eta60 = (s32) (((sq / (D_80030988 * 0.5f)) * 50.0f) / 60.0f);
 #else
         arg0->act_runpos.eta60 = (s32) (sq / (D_80030988 * 0.5f));
@@ -1129,7 +1070,7 @@ void sub_GAME_7F024CF8(struct ChrRecord *arg0, struct coord3d *arg1)
     }
     else
     {
-#ifdef VERSION_EU
+#ifdef REFRESH_PAL
         arg0->act_runpos.eta60 = (s32) (((sq / (D_80030994 * 0.5f)) * 50.0f) / 60.0f);
 #else
         arg0->act_runpos.eta60 = (s32) (sq / (D_80030994 * 0.5f));
@@ -1137,168 +1078,7 @@ void sub_GAME_7F024CF8(struct ChrRecord *arg0, struct coord3d *arg1)
         objecthandlerAnimationRelated7F06FCA8(arg0->model, (struct ModelAnimation*)&ptr_animation_table->data[(s32)&ANIM_DATA_running_one_handed_weapon], phi_a2, 0, 0.5f, 16.0f);
     }
 }
-#else
 
-#ifdef NONMATCHING
-    // should be implemented above, but untested.
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F024CF8
-/* 0576D0 7F024CE0 27BDFFB8 */  addiu $sp, $sp, -0x48
-/* 0576D4 7F024CE4 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0576D8 7F024CE8 AFB00020 */  sw    $s0, 0x20($sp)
-/* 0576DC 7F024CEC 8C820018 */  lw    $v0, 0x18($a0)
-/* 0576E0 7F024CF0 C4A60000 */  lwc1  $f6, ($a1)
-/* 0576E4 7F024CF4 C4AA0008 */  lwc1  $f10, 8($a1)
-/* 0576E8 7F024CF8 C4440008 */  lwc1  $f4, 8($v0)
-/* 0576EC 7F024CFC C4480010 */  lwc1  $f8, 0x10($v0)
-/* 0576F0 7F024D00 00808025 */  move  $s0, $a0
-/* 0576F4 7F024D04 46062001 */  sub.s $f0, $f4, $f6
-/* 0576F8 7F024D08 AFA5004C */  sw    $a1, 0x4c($sp)
-/* 0576FC 7F024D0C 460A4081 */  sub.s $f2, $f8, $f10
-/* 057700 7F024D10 46000402 */  mul.s $f16, $f0, $f0
-/* 057704 7F024D14 00000000 */  nop   
-/* 057708 7F024D18 46021482 */  mul.s $f18, $f2, $f2
-/* 05770C 7F024D1C 0C007614 */  jal   sqrtf
-/* 057710 7F024D20 46128300 */   add.s $f12, $f16, $f18
-/* 057714 7F024D24 E7A00038 */  swc1  $f0, 0x38($sp)
-/* 057718 7F024D28 02002025 */  move  $a0, $s0
-/* 05771C 7F024D2C 0FC08BFD */  jal   something_with_weaponpos_of_guarddata_hand
-/* 057720 7F024D30 24050001 */   li    $a1, 1
-/* 057724 7F024D34 02002025 */  move  $a0, $s0
-/* 057728 7F024D38 00002825 */  move  $a1, $zero
-/* 05772C 7F024D3C 0FC08BFD */  jal   something_with_weaponpos_of_guarddata_hand
-/* 057730 7F024D40 AFA20034 */   sw    $v0, 0x34($sp)
-/* 057734 7F024D44 8FA70034 */  lw    $a3, 0x34($sp)
-/* 057738 7F024D48 240E0001 */  li    $t6, 1
-/* 05773C 7F024D4C 00402825 */  move  $a1, $v0
-/* 057740 7F024D50 10E00003 */  beqz  $a3, .L7F024D60
-/* 057744 7F024D54 AFAE002C */   sw    $t6, 0x2c($sp)
-/* 057748 7F024D58 14400005 */  bnez  $v0, .L7F024D70
-/* 05774C 7F024D5C 00000000 */   nop   
-.L7F024D60:
-/* 057750 7F024D60 14E00007 */  bnez  $a3, .L7F024D80
-/* 057754 7F024D64 00E02025 */   move  $a0, $a3
-/* 057758 7F024D68 54400006 */  bnezl $v0, .L7F024D84
-/* 05775C 7F024D6C AFA50030 */   sw    $a1, 0x30($sp)
-.L7F024D70:
-/* 057760 7F024D70 0C00262C */  jal   randomGetNext
-/* 057764 7F024D74 AFA0002C */   sw    $zero, 0x2c($sp)
-/* 057768 7F024D78 10000010 */  b     .L7F024DBC
-/* 05776C 7F024D7C 30460001 */   andi  $a2, $v0, 1
-.L7F024D80:
-/* 057770 7F024D80 AFA50030 */  sw    $a1, 0x30($sp)
-.L7F024D84:
-/* 057774 7F024D84 0FC08E3C */  jal   check_if_item_held_like_pistol
-/* 057778 7F024D88 AFA70034 */   sw    $a3, 0x34($sp)
-/* 05777C 7F024D8C 8FA50030 */  lw    $a1, 0x30($sp)
-/* 057780 7F024D90 14400006 */  bnez  $v0, .L7F024DAC
-/* 057784 7F024D94 8FA70034 */   lw    $a3, 0x34($sp)
-/* 057788 7F024D98 00A02025 */  move  $a0, $a1
-/* 05778C 7F024D9C 0FC08E3C */  jal   check_if_item_held_like_pistol
-/* 057790 7F024DA0 AFA70034 */   sw    $a3, 0x34($sp)
-/* 057794 7F024DA4 10400004 */  beqz  $v0, .L7F024DB8
-/* 057798 7F024DA8 8FA70034 */   lw    $a3, 0x34($sp)
-.L7F024DAC:
-/* 05779C 7F024DAC AFA0002C */  sw    $zero, 0x2c($sp)
-/* 0577A0 7F024DB0 10000002 */  b     .L7F024DBC
-/* 0577A4 7F024DB4 0007302B */   sltu  $a2, $zero, $a3
-.L7F024DB8:
-/* 0577A8 7F024DB8 0007302B */  sltu  $a2, $zero, $a3
-.L7F024DBC:
-/* 0577AC 7F024DBC 02002025 */  move  $a0, $s0
-/* 0577B0 7F024DC0 0FC0B46E */  jal   sub_GAME_7F02D184
-/* 0577B4 7F024DC4 AFA60028 */   sw    $a2, 0x28($sp)
-/* 0577B8 7F024DC8 8FA2004C */  lw    $v0, 0x4c($sp)
-/* 0577BC 7F024DCC 8FA60028 */  lw    $a2, 0x28($sp)
-/* 0577C0 7F024DD0 240F000D */  li    $t7, 13
-/* 0577C4 7F024DD4 A20F0007 */  sb    $t7, 7($s0)
-/* 0577C8 7F024DD8 C4440000 */  lwc1  $f4, ($v0)
-/* 0577CC 7F024DDC 3C0141F0 */  li    $at, 0x41F00000 # 30.000000
-/* 0577D0 7F024DE0 44800000 */  mtc1  $zero, $f0
-/* 0577D4 7F024DE4 E604002C */  swc1  $f4, 0x2c($s0)
-/* 0577D8 7F024DE8 C4460004 */  lwc1  $f6, 4($v0)
-/* 0577DC 7F024DEC 44815000 */  mtc1  $at, $f10
-/* 0577E0 7F024DF0 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 0577E4 7F024DF4 E6060030 */  swc1  $f6, 0x30($s0)
-/* 0577E8 7F024DF8 C4480008 */  lwc1  $f8, 8($v0)
-/* 0577EC 7F024DFC A2000008 */  sb    $zero, 8($s0)
-/* 0577F0 7F024E00 E6000040 */  swc1  $f0, 0x40($s0)
-/* 0577F4 7F024E04 E60A0038 */  swc1  $f10, 0x38($s0)
-/* 0577F8 7F024E08 E6080034 */  swc1  $f8, 0x34($s0)
-/* 0577FC 7F024E0C 8FB8002C */  lw    $t8, 0x2c($sp)
-/* 057800 7F024E10 53000021 */  beql  $t8, $zero, .L7F024E98
-/* 057804 7F024E14 44811000 */   mtc1  $at, $f2
-/* 057808 7F024E18 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 05780C 7F024E1C 44811000 */  mtc1  $at, $f2
-/* 057810 7F024E20 3C018003 */  lui    $at, %hi(D_80030988) # -0.000000
-/* 057814 7F024E24 C432BED8 */  lwc1  $f18, %lo(D_80030988)($at)
-/* 057818 7F024E28 C7B00038 */  lwc1  $f16, 0x38($sp)
-/* 05781C 7F024E2C 3C014248 */  li    $at, 0x42480000 # 50.000000
-/* 057820 7F024E30 46029102 */  mul.s $f4, $f18, $f2
-/* 057824 7F024E34 44814000 */  mtc1  $at, $f8
-/* 057828 7F024E38 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 05782C 7F024E3C 44819000 */  mtc1  $at, $f18
-/* 057830 7F024E40 3C014180 */  li    $at, 0x41800000 # 16.000000
-/* 057834 7F024E44 3C098006 */  lui   $t1, %hi(ptr_animation_table) # $t1, 0x8006
-/* 057838 7F024E48 3C0A0000 */  lui   $t2, %hi(0x000040D4) # $t2, 0
-/* 05783C 7F024E4C 46048183 */  div.s $f6, $f16, $f4
-/* 057840 7F024E50 254A40D4 */  addiu $t2, %lo(0x000040D4) # addiu $t2, $t2, 0x40d4
-/* 057844 7F024E54 8E04001C */  lw    $a0, 0x1c($s0)
-/* 057848 7F024E58 44070000 */  mfc1  $a3, $f0
-/* 05784C 7F024E5C 46083282 */  mul.s $f10, $f6, $f8
-/* 057850 7F024E60 44813000 */  mtc1  $at, $f6
-/* 057854 7F024E64 46125403 */  div.s $f16, $f10, $f18
-/* 057858 7F024E68 4600810D */  trunc.w.s $f4, $f16
-/* 05785C 7F024E6C 44082000 */  mfc1  $t0, $f4
-/* 057860 7F024E70 00000000 */  nop   
-/* 057864 7F024E74 AE08003C */  sw    $t0, 0x3c($s0)
-/* 057868 7F024E78 8D298478 */  lw    $t1, %lo(ptr_animation_table)($t1)
-/* 05786C 7F024E7C E7A20010 */  swc1  $f2, 0x10($sp)
-/* 057870 7F024E80 E7A60014 */  swc1  $f6, 0x14($sp)
-/* 057874 7F024E84 0FC1BF92 */  jal   objecthandlerAnimationRelated7F06FCA8
-/* 057878 7F024E88 012A2821 */   addu  $a1, $t1, $t2
-/* 05787C 7F024E8C 1000001E */  b     .L7F024F08
-/* 057880 7F024E90 8FBF0024 */   lw    $ra, 0x24($sp)
-/* 057884 7F024E94 44811000 */  mtc1  $at, $f2
-.L7F024E98:
-/* 057888 7F024E98 3C018003 */  lui   $at, %hi(D_80030994) # $at, 0x8003
-/* 05788C 7F024E9C C42ABEE4 */  lwc1  $f10, %lo(D_80030994)($at)
-/* 057890 7F024EA0 C7A80038 */  lwc1  $f8, 0x38($sp)
-/* 057894 7F024EA4 3C014248 */  li    $at, 0x42480000 # 50.000000
-/* 057898 7F024EA8 46025482 */  mul.s $f18, $f10, $f2
-/* 05789C 7F024EAC 44812000 */  mtc1  $at, $f4
-/* 0578A0 7F024EB0 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 0578A4 7F024EB4 44815000 */  mtc1  $at, $f10
-/* 0578A8 7F024EB8 3C014180 */  li    $at, 0x41800000 # 16.000000
-/* 0578AC 7F024EBC 3C0D8006 */  lui   $t5, %hi(ptr_animation_table) # $t5, 0x8006
-/* 0578B0 7F024EC0 3C0E0000 */  lui   $t6, %hi(0x0000777C) # $t6, 0
-/* 0578B4 7F024EC4 46124403 */  div.s $f16, $f8, $f18
-/* 0578B8 7F024EC8 25CE777C */  addiu $t6, %lo(0x0000777C) # addiu $t6, $t6, 0x777c
-/* 0578BC 7F024ECC 8E04001C */  lw    $a0, 0x1c($s0)
-/* 0578C0 7F024ED0 44070000 */  mfc1  $a3, $f0
-/* 0578C4 7F024ED4 46048182 */  mul.s $f6, $f16, $f4
-/* 0578C8 7F024ED8 44818000 */  mtc1  $at, $f16
-/* 0578CC 7F024EDC 460A3203 */  div.s $f8, $f6, $f10
-/* 0578D0 7F024EE0 4600448D */  trunc.w.s $f18, $f8
-/* 0578D4 7F024EE4 440C9000 */  mfc1  $t4, $f18
-/* 0578D8 7F024EE8 00000000 */  nop   
-/* 0578DC 7F024EEC AE0C003C */  sw    $t4, 0x3c($s0)
-/* 0578E0 7F024EF0 8DAD8478 */  lw    $t5, %lo(ptr_animation_table)($t5)
-/* 0578E4 7F024EF4 E7A20010 */  swc1  $f2, 0x10($sp)
-/* 0578E8 7F024EF8 E7B00014 */  swc1  $f16, 0x14($sp)
-/* 0578EC 7F024EFC 0FC1BF92 */  jal   objecthandlerAnimationRelated7F06FCA8
-/* 0578F0 7F024F00 01AE2821 */   addu  $a1, $t5, $t6
-/* 0578F4 7F024F04 8FBF0024 */  lw    $ra, 0x24($sp)
-.L7F024F08:
-/* 0578F8 7F024F08 8FB00020 */  lw    $s0, 0x20($sp)
-/* 0578FC 7F024F0C 27BD0048 */  addiu $sp, $sp, 0x48
-/* 057900 7F024F10 03E00008 */  jr    $ra
-/* 057904 7F024F14 00000000 */   nop   
-)
-#endif
-#endif
 
 
 void chrlvDeathStaggerAnimationRelated(struct ChrRecord *arg0)
@@ -1864,7 +1644,7 @@ void chrlvInitActAttackWalk(ChrRecord *chr, s32 arg1)
 
     chr->actiontype = ACT_ATTACKWALK;
     chr->act_attackwalk.clock_timer30 = 0;
-    #if defined(VERSION_EU)
+    #if defined(REFRESH_PAL)
     chr->act_attackwalk.clock_timer34 = ((u32) randomGetNext() % (u32) (s32) (333.333343506f * g_AiReactionSpeed)) + CHRLV_SEEN_RECENT_CHECK;
     #else
     chr->act_attackwalk.clock_timer34 = ((u32) randomGetNext() % (u32) (s32) (400.0f * g_AiReactionSpeed)) + CHRLV_SEEN_RECENT_CHECK;
@@ -3527,8 +3307,6 @@ void sub_GAME_7F0281F4(struct ChrRecord *arg0)
 }
 
 
-/* VERSION_US, VERSION_JP */
-#ifndef VERSION_EU
 /**
  * Address 0x7F0281FC (US,JP)
  * Address 0x7F028214 (VERSION_EU)
@@ -3545,7 +3323,7 @@ void chrlvPlotCourseRelated(struct ChrRecord *arg0)
 
         if (temp_v0 == 0)
         {
-#ifndef VERSION_EU
+#ifndef REFRESH_PAL
             temp_a1 = (chrlvMovementTargetRelated(arg0) * 2) + 300;
 #else
             temp_a1 = ((chrlvMovementTargetRelated(arg0) * 100) + 15000) / 60;
@@ -3573,67 +3351,6 @@ void chrlvPlotCourseRelated(struct ChrRecord *arg0)
         arg0->act_gopos.unk5a = (u16) (temp_v0 - temp_v1);
     }
 }
-#else
-/* VERSION_EU */
-
-#ifdef NONMATCHING
-// implemented above, but untested
-#else
-
-GLOBAL_ASM(
-.text
-glabel chrlvPlotCourseRelated
-/* 05AC04 7F028214 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 05AC08 7F028218 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05AC0C 7F02821C 808E005C */  lb    $t6, 0x5c($a0)
-/* 05AC10 7F028220 24010006 */  li    $at, 6
-/* 05AC14 7F028224 51C10023 */  beql  $t6, $at, .L7F0282B4
-/* 05AC18 7F028228 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 05AC1C 7F02822C 9482005A */  lhu   $v0, 0x5a($a0)
-/* 05AC20 7F028230 3C038004 */  lui   $v1, %hi(g_ClockTimer+2)
-/* 05AC24 7F028234 14400013 */  bnez  $v0, .L7F028284
-/* 05AC28 7F028238 00000000 */   nop   
-/* 05AC2C 7F02823C 0FC0A057 */  jal   chrlvMovementTargetRelated
-/* 05AC30 7F028240 AFA40018 */   sw    $a0, 0x18($sp)
-/* 05AC34 7F028244 00021880 */  sll   $v1, $v0, 2
-/* 05AC38 7F028248 00621823 */  subu  $v1, $v1, $v0
-/* 05AC3C 7F02824C 000318C0 */  sll   $v1, $v1, 3
-/* 05AC40 7F028250 00621821 */  addu  $v1, $v1, $v0
-/* 05AC44 7F028254 00031880 */  sll   $v1, $v1, 2
-/* 05AC48 7F028258 24633A98 */  addiu $v1, $v1, 0x3a98
-/* 05AC4C 7F02825C 2401003C */  li    $at, 60
-/* 05AC50 7F028260 0061001A */  div   $zero, $v1, $at
-/* 05AC54 7F028264 00002812 */  mflo  $a1
-/* 05AC58 7F028268 3C010001 */  lui   $at, 1
-/* 05AC5C 7F02826C 00A1082A */  slt   $at, $a1, $at
-/* 05AC60 7F028270 14200002 */  bnez  $at, .L7F02827C
-/* 05AC64 7F028274 8FA40018 */   lw    $a0, 0x18($sp)
-/* 05AC68 7F028278 3405FFFF */  li    $a1, 65535
-.L7F02827C:
-/* 05AC6C 7F02827C 1000000C */  b     .L7F0282B0
-/* 05AC70 7F028280 A485005A */   sh    $a1, 0x5a($a0)
-.L7F028284:
-/* 05AC74 7F028284 94630FF6 */  lhu   $v1, %lo(g_ClockTimer+2)($v1)
-/* 05AC78 7F028288 2485002C */  addiu $a1, $a0, 0x2c
-/* 05AC7C 7F02828C 0062082A */  slt   $at, $v1, $v0
-/* 05AC80 7F028290 14200006 */  bnez  $at, .L7F0282AC
-/* 05AC84 7F028294 0043C023 */   subu  $t8, $v0, $v1
-/* 05AC88 7F028298 8C860038 */  lw    $a2, 0x38($a0)
-/* 05AC8C 7F02829C 0FC0A384 */  jal   plot_course_for_actor
-/* 05AC90 7F0282A0 90870059 */   lbu   $a3, 0x59($a0)
-/* 05AC94 7F0282A4 10000003 */  b     .L7F0282B4
-/* 05AC98 7F0282A8 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0282AC:
-/* 05AC9C 7F0282AC A498005A */  sh    $t8, 0x5a($a0)
-.L7F0282B0:
-/* 05ACA0 7F0282B0 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0282B4:
-/* 05ACA4 7F0282B4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 05ACA8 7F0282B8 03E00008 */  jr    $ra
-/* 05ACAC 7F0282BC 00000000 */   nop   
-)
-#endif
-#endif
 
 
 
@@ -6483,7 +6200,7 @@ s32 chrlvSetSubroty(ChrRecord *arg0, s32 arg1, f32 arg2, f32 arg3, f32 arg4)
         sp28 = objecthandlerGetModelField28(model);
         roty = getsubroty(model);
 
-#if defined(VERSION_JP) || defined(VERSION_EU)
+#if defined(BUGFIX_R1)
         temp_f14 = 0.06283186f * arg3 * g_JP_GlobalTimerDelta * model->unka4;
 #else /* VERSION_US */
         temp_f14 = 0.06283186f * arg3 * g_GlobalTimerDelta * model->unka4;
@@ -7508,10 +7225,10 @@ void chrlvFireWeaponRelated(ChrRecord *self, s32 hand)
                                 {
                                     sp128->base.unk6C->unk8c = 0.3f;
                                     sp128->base.unk6C->unk94 = 0.13333333f;
-#ifdef VERSION_EU
-                                    sp128->base.unk6C->unkbc = 0x32;
+#ifdef REFRESH_PAL
+                                    sp128->base.unk6C->refreshrate = 50;
 #else
-                                    sp128->base.unk6C->unkbc = 0x3C;
+                                    sp128->base.unk6C->refreshrate = 60;
 #endif
                                 }
                             }
@@ -7754,7 +7471,6 @@ void chrlvAttackrollAnimationRelated7F02E3B8(ChrRecord *arg0)
 
 
 
-#ifndef VERSION_EU
 /**
  * Address 0x7F02E4C0.
  * Address 0x7F02E4F4 (VERSION_EU).
@@ -7775,10 +7491,10 @@ void chrlvTickAttackCommon(ChrRecord *arg0)
     phi_f20 = objecthandlerGetModelField28(self_model);
 
     if (
-#ifdef VERSION_EU
-        (arg0->act_attack.attack_time < (arg0->act_attack.unk44 - 0x19)) 
+#ifdef REFRESH_PAL
+        (arg0->act_attack.attack_time < (arg0->act_attack.unk44 - 25)) 
 #else
-        (arg0->act_attack.attack_time < (arg0->act_attack.unk44 - 0x1E)) 
+        (arg0->act_attack.attack_time < (arg0->act_attack.unk44 - 30)) 
 #endif
         && (self_model->anim2 == NULL))
     {
@@ -7947,7 +7663,7 @@ void chrlvTickAttackCommon(ChrRecord *arg0)
 
                     if (arg0->actiontype == ACT_ATTACKROLL)
                     {
-#ifdef VERSION_EU
+#ifdef REFRESH_PAL
                         df = ((arg0->act_attack.animfloats->anonymous_7 - arg0->act_attack.animfloats->anonymous_6) * 50.0f) / 60.0f;
 #else
                         df = arg0->act_attack.animfloats->anonymous_7 - arg0->act_attack.animfloats->anonymous_6;
@@ -7955,10 +7671,10 @@ void chrlvTickAttackCommon(ChrRecord *arg0)
 
                         if (df < 30.0f)
                         {
-#ifdef VERSION_EU
-                            if ((s32) arg0->act_attack.unk40 >= (0x32 - ((s32) df * 2)))
+#ifdef REFRESH_PAL
+                            if ((s32) arg0->act_attack.unk40 >= (50 - ((s32) df * 2)))
 #else
-                            if ((s32) arg0->act_attack.unk40 >= (0x3C - ((s32) df * 2)))
+                            if ((s32) arg0->act_attack.unk40 >= (60 - ((s32) df * 2)))
 #endif
                             {
                                 sub_GAME_7F06FE4C(self_model, 0.5f, 0.0f);
@@ -8026,11 +7742,11 @@ void chrlvTickAttackCommon(ChrRecord *arg0)
     }
 }
 
-#else
+//#else
 
 #ifdef NONMATCHING
     // should be implemented above, but untested.
-#else
+//#else
 
 GLOBAL_ASM(
 .late_rodata
@@ -8550,7 +8266,7 @@ glabel chrlvTickAttackCommon
 )
 #endif
 
-#endif
+//#endif
 
 
 /**

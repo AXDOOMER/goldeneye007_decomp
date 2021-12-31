@@ -51,7 +51,7 @@ void sub_GAME_7F0062C0(void *anim, s32 arg1, s32 arg2, s32 *arg3)
 
 
 
-#ifdef VERSION_EU
+#ifdef REFRESH_PAL
 #define ANIMRATE 1.2f
 #define DAMPVAL 0.9166f
 #define HEADSUM 11.990406f
@@ -69,7 +69,7 @@ void sets_a_bunch_of_BONDdata_values_to_default(void)
     struct unk_joint_list sp90;
     Mtxf sp50;
 
-#ifndef VERSION_EU
+#ifdef LEFTOVERDEBUG
     if ((s32) player_gait_object_header.numRecords >= 0x1F)
     {
         return_null();
@@ -79,7 +79,7 @@ void sets_a_bunch_of_BONDdata_values_to_default(void)
     sub_GAME_7F075FAC(&g_CurrentPlayer->field_598, &player_gait_object_header, &g_CurrentPlayer->field_654);
     set_obj_instance_controller_scale(&g_CurrentPlayer->field_598, IDO_POINT_ONE);
 
-#if defined (VERSION_JP) || defined (VERSION_EU)
+#if defined (BUGFIX_R1)
     sub_GAME_7F06FF18(&g_CurrentPlayer->field_598, ANIMRATE, 0.0f);
 #endif
 

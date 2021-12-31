@@ -10,7 +10,7 @@ s32 D_80048494 = 0;
  */
 s32 speedgraphframes = 1;
 
-#if defined(VERSION_JP) || defined(VERSION_EU)
+#if defined(BUGFIX_R1)
 // EU address D_8004111C
 f32 jpD_800484CC = 1.0f;
 
@@ -45,14 +45,13 @@ void sub_GAME_7F0C0AA0(s32 arg0)
     D_80048494 = (s32) (D_80048494 + arg0);
     speedgraphframes = arg0;
 
-    #ifdef VERSION_JP
+    #ifdef BUGFIX_R1
     jpD_800484CC = (f32) arg0;
+    #ifdef REFRESH_PAL
+    jpD_800484D0 = (jpD_800484CC * 60.0f) / 50.0f;
+    #else
     jpD_800484D0 = (f32) jpD_800484CC;
     #endif
-
-    #if defined(VERSION_EU)
-    jpD_800484CC = (f32) arg0;
-    jpD_800484D0 = (jpD_800484CC * 60.0f) / 50.0f;
     #endif
 
     D_8004849C = (s32) D_800484A0;
@@ -67,10 +66,10 @@ void sub_GAME_7F0C0B4C(void)
   u32 uVar1;
   
   do {
-    #ifndef VERSION_EU
-    uVar1 = ((osGetCount() - copy_of_osgetcount_value_1) + 0x5eb61) / 0xbd6c3;
+    #ifdef REFRESH_PAL
+    uVar1 = ((osGetCount() - copy_of_osgetcount_value_1) + 465525) / 931050;
     #else
-    uVar1 = ((osGetCount() - copy_of_osgetcount_value_1) + 0x71a75) / 0xe34ea;
+    uVar1 = ((osGetCount() - copy_of_osgetcount_value_1) + 387937) / 775875;
     #endif
   } while (uVar1 < D_800484B4);
 
@@ -80,7 +79,7 @@ void sub_GAME_7F0C0B4C(void)
 
 
 void sub_GAME_7F0C0BE4(s32 arg0) {
-    #ifndef VERSION_EU
+    #ifdef LEFTOVERDEBUG
     D_800484B4 = arg0;
     #endif
 }

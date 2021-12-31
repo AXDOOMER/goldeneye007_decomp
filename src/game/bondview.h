@@ -3119,10 +3119,13 @@ f32 bondviewGetCurrentPlayerHealth(void);
 f32 get_BONDdata_watch_armor(void);
 void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2);
 
-#if defined(VERSION_JP) || defined(VERSION_EU)
+#if defined(BUGFIX_R1)
+#define DISPLAYSTRINGLOWERLEFT jp_display_string_in_lower_left_corner
 void display_string_in_lower_left_corner(char *string, s32 arg1, s32 arg2);
+void jp_display_string_in_lower_left_corner(char *string);
 #else
 // VERSION_US
+#define DISPLAYSTRINGLOWERLEFT display_string_in_lower_left_corner
 void display_string_in_lower_left_corner(char *string);
 #endif
 

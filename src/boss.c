@@ -50,11 +50,12 @@
  * @file boss.c
  * This file contains the main game loop code.
  */
-#ifndef VERSION_EU
-#define MAIN_LOOP_TICK_INTERVAL 0x5eb61U
-#else
+#ifdef REFRESH_PAL
 #define MAIN_LOOP_TICK_INTERVAL D_800484B4 * 0xe34ea - 0x71a75U
+#else
+#define MAIN_LOOP_TICK_INTERVAL 0x5eb61U
 #endif
+
 /**
  * Copied from n64devkit\ultra\usr\src\pr\demos_old\simple\gfx.h
  */

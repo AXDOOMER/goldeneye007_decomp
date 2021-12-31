@@ -16,7 +16,7 @@
 // 0x5622 = 22050
 #define OUTPUT_RATE                    0x5622
 
-#ifdef VERSION_EU
+#ifdef REFRESH_PAL
 /* PAL */
 #define MAYBE_FRAME_RATE                   50
 #else

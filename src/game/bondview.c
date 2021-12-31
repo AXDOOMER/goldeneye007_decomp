@@ -166,7 +166,7 @@ s32 watch_time_0;
 */
 char stringbuffer_lowerleft[0x200];
 
-#if defined(VERSION_JP) || defined(VERSION_EU)
+#if defined(BUGFIX_R1)
 //CODE.bss:80079Cd8
 char dword_CODE_bss_jp80079Cd8[0x14];
 char dword_CODE_bss_jp80079CEC[0x14];
@@ -183,7 +183,7 @@ s32 startpadcount;
 //CODE.bss:80079C6C
 s32 dword_CODE_bss_80079C6C;
 
-#ifndef VERSION_EU
+#if defined LEFTOVERDEBUG
 //CODE.bss:80079C70
 /***/
 char stringbuffer_top[0x130];
@@ -372,36 +372,7 @@ u32 dummy_08_pp7_obj[] = {
 };
 //D:80036630
 u32 D_80036630 = 0;
-#ifdef VERSION_US
-//D:80036634
-u32 D_80036634[] = {
-           0x0,           0xA,          0x3C,    0x3F19999A,
-           0x0,           0x5,          0x28,    0x3F800000,
-          0xFF,          0xFF,          0xFF,
-           0x0,           0xA,          0x3C,    0x3F19999A,
-           0x0,           0x5,          0x28,    0x3F800000,
-          0xFF,          0xFF,          0xFF,
-           0x0,           0xA,          0x32,    0x3F19999A,
-           0x0,           0x5,          0x1E,    0x3F4CCCCD,
-          0xFF,          0xFF,          0xFF,
-           0x0,           0xA,          0x28,    0x3F19999A,
-           0x0,           0x5,          0x19,    0x3F19999A,
-          0xFF,          0xFF,          0xFF,
-           0x0,           0xA,          0x23,    0x3F19999A,
-           0x0,           0x5,          0x16,    0x3F0CCCCD,
-          0xFF,          0xFF,          0xFF,
-           0x0,           0xA,          0x1E,    0x3F19999A,
-           0x0,           0x5,          0x13,    0x3F000000,
-          0xFF,          0xFF,          0xFF,
-           0x0,           0xA,          0x1E,    0x3F19999A,
-           0x0,           0x5,          0x11,    0x3EE66666,
-          0xFF,          0xFF,          0xFF,
-           0x0,           0xA,          0x1E,    0x3F19999A,
-           0x0,           0x5,           0xF,    0x3ECCCCCD,
-          0xFF,          0xFF,          0xFF
-};
-#endif
-#ifdef VERSION_JP
+#ifdef BUGFIX_R1
 //D:80036634
 u32 D_80036634[] = {
            0x0,    0x41200000,    0x42700000,    0x3F19999A,
@@ -429,34 +400,33 @@ u32 D_80036634[] = {
            0x0,    0x40A00000,    0x41700000,    0x3ECCCCCD,
           0xFF,          0xFF,          0xFF
 };
-#endif
-#ifdef VERSION_EU
+#else
 //D:80036634
 u32 D_80036634[] = {
-    0x00000000, 0x41200000, 0x42700000, 0x3F19999A,
-    0x00000000, 0x40A00000, 0x42200000, 0x3F800000,
-    0x000000FF, 0x000000FF, 0x000000FF,
-    0x00000000, 0x41200000, 0x42700000, 0x3F19999A,
-    0x00000000, 0x40A00000, 0x42200000, 0x3F800000,
-    0x000000FF, 0x000000FF, 0x000000FF,
-    0x00000000, 0x41200000, 0x42480000, 0x3F19999A,
-    0x00000000, 0x40A00000, 0x41F00000, 0x3F4CCCCD,
-    0x000000FF, 0x000000FF, 0x000000FF,
-    0x00000000, 0x41200000, 0x42200000, 0x3F19999A,
-    0x00000000, 0x40A00000, 0x41C80000, 0x3F19999A,
-    0x000000FF, 0x000000FF, 0x000000FF,
-    0x00000000, 0x41200000, 0x420C0000, 0x3F19999A,
-    0x00000000, 0x40A00000, 0x41B00000, 0x3F0CCCCD,
-    0x000000FF, 0x000000FF, 0x000000FF,
-    0x00000000, 0x41200000, 0x41F00000, 0x3F19999A,
-    0x00000000, 0x40A00000, 0x41980000, 0x3F000000,
-    0x000000FF, 0x000000FF, 0x000000FF,
-    0x00000000, 0x41200000, 0x41F00000, 0x3F19999A,
-    0x00000000, 0x40A00000, 0x41880000, 0x3EE66666,
-    0x000000FF, 0x000000FF, 0x000000FF,
-    0x00000000, 0x41200000, 0x41F00000, 0x3F19999A,
-    0x00000000, 0x40A00000, 0x41700000, 0x3ECCCCCD,
-    0x000000FF, 0x000000FF, 0x000000FF
+           0x0,           0xA,          0x3C,    0x3F19999A,
+           0x0,           0x5,          0x28,    0x3F800000,
+          0xFF,          0xFF,          0xFF,
+           0x0,           0xA,          0x3C,    0x3F19999A,
+           0x0,           0x5,          0x28,    0x3F800000,
+          0xFF,          0xFF,          0xFF,
+           0x0,           0xA,          0x32,    0x3F19999A,
+           0x0,           0x5,          0x1E,    0x3F4CCCCD,
+          0xFF,          0xFF,          0xFF,
+           0x0,           0xA,          0x28,    0x3F19999A,
+           0x0,           0x5,          0x19,    0x3F19999A,
+          0xFF,          0xFF,          0xFF,
+           0x0,           0xA,          0x23,    0x3F19999A,
+           0x0,           0x5,          0x16,    0x3F0CCCCD,
+          0xFF,          0xFF,          0xFF,
+           0x0,           0xA,          0x1E,    0x3F19999A,
+           0x0,           0x5,          0x13,    0x3F000000,
+          0xFF,          0xFF,          0xFF,
+           0x0,           0xA,          0x1E,    0x3F19999A,
+           0x0,           0x5,          0x11,    0x3EE66666,
+          0xFF,          0xFF,          0xFF,
+           0x0,           0xA,          0x1E,    0x3F19999A,
+           0x0,           0x5,           0xF,    0x3ECCCCCD,
+          0xFF,          0xFF,          0xFF
 };
 #endif
 
@@ -13349,22 +13319,18 @@ void bondviewUpdateWatchZoomIn(void)
     {
         if ((g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x5) || (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0xc))
         {
-#if defined(VERSION_US)
-            g_CurrentPlayer->zoomintime = g_CurrentPlayer->zoomintime + (f32) speedgraphframes;
-#elif defined(VERSION_JP) || defined(VERSION_EU)
-            g_CurrentPlayer->zoomintime = g_CurrentPlayer->zoomintime + (f32) jpD_800484D0;
+#if defined(BUGFIX_R1)
+            g_CurrentPlayer->zoomintime = g_CurrentPlayer->zoomintime + (f32) jpD_800484D0;      
 #else
-#error version not specified
+            g_CurrentPlayer->zoomintime = g_CurrentPlayer->zoomintime + (f32) speedgraphframes;
 #endif
         }
         else
         {
-#if defined(VERSION_US)
-            g_CurrentPlayer->zoomintime = g_CurrentPlayer->zoomintime + (speedgraphframes * watch_transition_time);
-#elif defined(VERSION_JP) || defined(VERSION_EU)
+#if defined(BUGFIX_R1)
             g_CurrentPlayer->zoomintime = g_CurrentPlayer->zoomintime + (jpD_800484D0 * watch_transition_time);
 #else
-#error version not specified
+            g_CurrentPlayer->zoomintime = g_CurrentPlayer->zoomintime + (speedgraphframes * watch_transition_time);
 #endif
         }
 
@@ -41833,7 +41799,7 @@ glabel display_string_in_lower_left_corner
 
 #endif
 
-#if defined(VERSION_JP) || defined(VERSION_EU)
+#if defined(BUGFIX_R1)
 void jp_display_string_in_lower_left_corner(char *string)
 {
     display_string_in_lower_left_corner(string, ptrSecondFontTableSmall, ptrFirstFontTableSmall);

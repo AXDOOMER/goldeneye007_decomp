@@ -94,16 +94,8 @@ s32 g_ControlsLockedFlag = 0;
 //D:80048374
 s32 g_ClockTimer = 0;
 
-#if defined (VERSION_US)
-//D:80048378
-f32 g_GlobalTimerDelta = 0;
-//D:8004837C
-s32 g_GlobalTimer = 0;
-//D:80048380
-s32 D_80048380 = 0;
-//D:80048384
-#endif
-#if defined (VERSION_JP) || defined (VERSION_EU)
+
+#if defined (BUGFIX_R1)
 // addresses updated, per build\ge007.j.map
 // 800483a8
 f32 g_JP_GlobalTimerDelta = 0;
@@ -113,8 +105,15 @@ s32 g_GlobalTimer = 0;
 s32 D_80048380 = 0;
 // 800483b4
 f32 g_GlobalTimerDelta = 0;
+#else
+//D:80048378
+f32 g_GlobalTimerDelta = 0;
+//D:8004837C
+s32 g_GlobalTimer = 0;
+//D:80048380
+s32 D_80048380 = 0;
+//D:80048384
 #endif
-
 /*
 * Selected difficulty mode.
 * 0x80048384
@@ -2039,7 +2038,7 @@ Gfx* lvlRender(Gfx* DL)
 
             if (
 
-#if defined(VERSION_JP) || defined(VERSION_EU)
+#if defined(BUGFIX_R1)
                 cheatCheckIfOn(CHEAT_INFINITE_AMMO) != 0
                 && (
                     (get_item_in_hand(RIGHT_HAND) != ITEM_WATCHLASER)
@@ -2119,7 +2118,7 @@ void lvlSetMultipliersForDifficulty(void)
         g_AiHealthModifier = 1.0f;
         D_80040178 = 0.75f;
 
-#if defined(VERSION_JP) || defined(VERSION_EU)
+#if defined(BUGFIX_R1)
         if (j_text_trigger)
         {
             difficulty = 1.1f;
@@ -2148,7 +2147,7 @@ void lvlSetMultipliersForDifficulty(void)
         g_AiHealthModifier = 1.0f;
         D_80040178 = 1.0f;
 
-#if defined(VERSION_JP) || defined(VERSION_EU)
+#if defined(BUGFIX_R1)
         if (j_text_trigger)
         {
             difficulty = 0.75f;
@@ -5937,7 +5936,7 @@ void lvlUnloadStageTextData(void)
 
 void lvlSetControlsLockedFlag(s32 arg0)
 {
-    #if defined(VERSION_JP) || defined(VERSION_EU)
+    #if defined(BUGFIX_R1)
     if ((arg0 != 0) && (g_ControlsLockedFlag == 0))
     {
         joyRumblePakStop();

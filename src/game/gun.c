@@ -27383,11 +27383,7 @@ void analyzeGEKey(void)
 {
     if (checkHasGEKey())
     {
-	    #if defined(VERSION_JP) || defined(VERSION_EU)
-		    jp_display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LGUN, 0xD8))); //Analyzing the GoldenEye key...
-		#else
-    	    display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LGUN, 0xD8))); //Analyzing the GoldenEye key...
-		#endif
+   	    DISPLAYSTRINGLOWERLEFT(get_textptr_for_textID(TEXT(LGUN, 0xD8))); //Analyzing the GoldenEye key...
     	g_CurrentPlayer->copiedgoldeneye = 1;
     	sndPlaySfx(g_musicSfxBufferPtr, 0xf5, 0x0);
     	draw_item_in_hand_has_more_ammo(RIGHT_HAND, ITEM_GOLDENEYEKEY);
@@ -27395,11 +27391,7 @@ void analyzeGEKey(void)
   	}
   	else
   	{
-		#if defined(VERSION_JP) || defined(VERSION_EU)
-		    jp_display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LGUN, 0xD9))); //You do not have the GoldenEye key.
-		#else
-	        display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LGUN, 0xD9))); //You do not have the GoldenEye key.
-		#endif
+	    DISPLAYSTRINGLOWERLEFT(get_textptr_for_textID(TEXT(LGUN, 0xD9))); //You do not have the GoldenEye key.
 	    sub_GAME_7F05D690();
   	}
   	return;

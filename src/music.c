@@ -20,7 +20,7 @@
  * ROM; play/stop specific tracks; and to fade in/out.
  */
 
-#ifdef VERSION_EU
+#ifdef REFRESH_PAL
 #define FADE_FRAMERATE 50.0f
 #else
 #define FADE_FRAMERATE 60.0f

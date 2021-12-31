@@ -94,7 +94,7 @@ s32 stanLoaded = 0;
 //D:80040FB4
 s32 stanlinelog_flag = 0;
 
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
 
 s32 D_80040FB8[] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

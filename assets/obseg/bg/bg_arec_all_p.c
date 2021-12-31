@@ -285,7 +285,7 @@ struct portal_data_table_entry portal_data_table[] = {
     {&portal_97, 0x3E, 0x49, 0x0000},
     {&portal_98, 0x42, 0x43, 0x0000},
 
-#if defined(VERSION_EU)
+#if defined(BUGFIX_R2)
     {&portal_99, 0x3F, 0x42, 0x0019},
     {&portal_100, 0x3F, 0x41, 0x0019},
     {&portal_101, 0x41, 0x42, 0x0019},

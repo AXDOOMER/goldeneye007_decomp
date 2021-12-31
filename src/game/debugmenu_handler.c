@@ -4,7 +4,7 @@
 #include "boss.h"
 #include "fr.h"
 
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
 
 // data
 //D:80036BA0
@@ -215,7 +215,7 @@ s32 debug_joy2detailedit_flag = 0;
 s32 debug_explosioninfo_flag = 0;
 #endif
 
-#ifdef VERSION_EU
+#if !defined(LEFTOVERDEBUG)
 /**
  * The .data debug_VisCVG_flag needs to be at address 0x800320b4, which means
  * there needs to be another .data word. Probably one of the above values,
@@ -227,7 +227,7 @@ s32 eu_D_800320b0 = 0;
 //D:80036FA8
 s32 debug_VisCVG_flag = 0;
 
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
 //D:80036FAC
 s32 debug_007_unlock_flag = 0;
 //D:80036FB0
@@ -250,7 +250,7 @@ s32 debug_testingmanpos_flag = 0;
 //D:80036FCC
 s32 debug_fast_bond_flag = 0;
 
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
 //D:80036FD0
 s32 debug_all_obj_complete_flag = 0 ;
 //D:80036FD4
@@ -285,36 +285,45 @@ struct coord3d player_pos_x = {0};
 
 void display_debug_menu_text_onscreen(void)
 {
-    #ifndef VERSION_EU
+    #if defined(LEFTOVERDEBUG)
     init_debug_menu_values(&mcm_strings, &mcm_onscreen_positions, &mcm_column_groupings);
     #endif
 }
-#ifndef VERSION_EU
+
+#if defined(LEFTOVERDEBUG)
 void debmenuHandleMoveView(void)
 {
     sub_GAME_7F0916F4();
     debHighlightedOption = get_highlighted_debug_option();
     debug_render_raster = debug_freeze_processing = debHighlightedOption;
 }
+#endif
 
+#if defined(LEFTOVERDEBUG)
 void debmenuHandleStanView(void)
 {
     maybe_solo_intro_camera_handler();
     debHighlightedOption = get_highlighted_debug_option();
     debug_render_raster = debug_freeze_processing = debHighlightedOption;
 }
+#endif
 
+#if defined(LEFTOVERDEBUG)
 void debmenuHandleBondView(void)
 {
     maybe_solo_intro_camera_handler();
     debHighlightedOption = get_highlighted_debug_option();
     debug_render_raster = debug_freeze_processing = debHighlightedOption;
 }
+#endif
 
+#if defined(LEFTOVERDEBUG)
 void removed_do_debug_profile_flag_false(void) {
     return;
 }
+#endif
 
+#if defined(LEFTOVERDEBUG)
 void removed_do_debug_profile_flag_true(void) {
     return;
 }
@@ -708,7 +717,7 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
     return show_debug_menu_flag;
 }
 #else
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 /*D:800556FC*/
@@ -1494,8 +1503,7 @@ def_7F090EA8:
 /* 0C5A24 7F090EF4 03E00008 */  jr    $ra
 /* 0C5A28 7F090EF8 00000000 */   nop   
 )
-#endif
-#ifdef VERSION_EU
+#else
 s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pressed)
 {
     return 0;
@@ -1504,7 +1512,7 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
 #endif
 
 s32 get_debug_render_raster(void) {
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
     return debug_render_raster;
 #else
     return 2;
@@ -1512,7 +1520,7 @@ s32 get_debug_render_raster(void) {
 }
 
 s32 get_debug_freeze_processing(void) {
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
     return debug_freeze_processing;
 #else
     return 2;
@@ -1520,7 +1528,7 @@ s32 get_debug_freeze_processing(void) {
 }
 
 s32 getDebugMode(void) {
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
     return debug_mode;
 #else
     return 2;
@@ -1528,13 +1536,13 @@ s32 getDebugMode(void) {
 }
 
 void setDebugMode(void) {
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
     debug_mode = debHighlightedOption;
 #endif
 }
 
 s32 get_memusage_display_flag(void) {
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
     return memusage_display_flag;
 #else
     return 0;
@@ -1542,7 +1550,7 @@ s32 get_memusage_display_flag(void) {
 }
 
 s32 get_debug_do_draw_bg(void) {
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
     return debug_do_draw_bg;
 #else
     return 1;
@@ -1550,7 +1558,7 @@ s32 get_debug_do_draw_bg(void) {
 }
 
 s32 get_debug_do_draw_obj(void) {
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
     return debug_do_draw_obj;
 #else
     return 1;
@@ -1558,7 +1566,7 @@ s32 get_debug_do_draw_obj(void) {
 }
 
 s32 get_debug_stanhit_flag(void) {
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
     return debug_stanhit_flag;
 #else
     return 0;
@@ -1566,7 +1574,7 @@ s32 get_debug_stanhit_flag(void) {
 }
 
 s32 get_debug_stanregion_flag(void) {
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
     return debug_stanregion_flag;
 #else
     return 0;
@@ -1574,7 +1582,7 @@ s32 get_debug_stanregion_flag(void) {
 }
 
 s32 get_debug_stan_problems_flag(void) {
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
     return debug_stan_problems_flag;
 #else
     return 0;
@@ -1582,7 +1590,7 @@ s32 get_debug_stan_problems_flag(void) {
 }
 
 s32 get_debug_man_pos_flag(void) {
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
     return debug_man_pos_flag;
 #else
     return 0;
@@ -1590,7 +1598,7 @@ s32 get_debug_man_pos_flag(void) {
 }
 
 s32 get_debug_testingmanpos_flag(void) {
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
     return debug_testingmanpos_flag;
 #else
     return 0;
@@ -1598,13 +1606,13 @@ s32 get_debug_testingmanpos_flag(void) {
 }
 
 void set_debug_testingmanpos_flag(s32 flag) {
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
     debug_testingmanpos_flag = flag;
 #endif
 }
 
 s32 get_debug_joy2skyedit_flag(void) {
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
     return debug_joy2skyedit_flag;
 #else
     return 0;
@@ -1612,7 +1620,7 @@ s32 get_debug_joy2skyedit_flag(void) {
 }
 
 s32 get_debug_joy2hitsedit_flag(void) {
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
     return debug_joy2hitsedit_flag;
 #else
     return 0;
@@ -1620,7 +1628,7 @@ s32 get_debug_joy2hitsedit_flag(void) {
 }
 
 s32 get_debug_joy2detailedit_flag(void) {
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
     return debug_joy2detailedit_flag;
 #else
     return 0;
@@ -1628,7 +1636,7 @@ s32 get_debug_joy2detailedit_flag(void) {
 }
 
 s32 get_debug_explosioninfo_flag(void) {
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
     return debug_explosioninfo_flag;
 #else
     return 0;
@@ -1636,7 +1644,7 @@ s32 get_debug_explosioninfo_flag(void) {
 }
 
 s32 get_debug_prroomloads_flag(void) {
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
     return debug_prroomloads_flag;
 #else
     return 0;
@@ -1655,7 +1663,7 @@ void set_debug_VisCVG_flag(s32 flag) {
 
 
 s32 get_debug_007_unlock_flag(void) {
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
     return debug_007_unlock_flag;
 #else
     return 0;
@@ -1663,7 +1671,7 @@ s32 get_debug_007_unlock_flag(void) {
 }
 
 s32 get_debug_enable_agent_levels_flag(void) {
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
     return debug_enable_agent_levels_flag;
 #else
     return 0;
@@ -1671,7 +1679,7 @@ s32 get_debug_enable_agent_levels_flag(void) {
 }
 
 s32 get_debug_enable_all_levels_flag(void) {
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
     return debug_enable_all_levels_flag;
 #else
     return 0;
@@ -1682,7 +1690,7 @@ s32 get_debug_enable_all_levels_flag(void) {
 
 
 
-#ifdef VERSION_EU
+#if !defined(LEFTOVERDEBUG)
 s32 get_debug_chrnum_flag(void) {
     return 0;
 }
@@ -1722,40 +1730,49 @@ void func_7F0904F8(s32 arg0)
 #endif
 
 
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
 s32 get_debug_fast_bond_flag(void) {
     return debug_fast_bond_flag;
 }
+#endif
 
+#if defined(LEFTOVERDEBUG)
 void set_debug_fast_bond_flag(s32 flag) {
     debug_fast_bond_flag = flag;
 }
+#endif
 
-
-
+#if defined(LEFTOVERDEBUG)
 s32 get_debug_all_obj_complete_flag(void) {
     return debug_all_obj_complete_flag;
 }
+#endif
 
+#if defined(LEFTOVERDEBUG)
 s32 get_debug_portal_flag(void) {
     return debug_portal_flag;
 }
+#endif
 
-
-
+#if defined(LEFTOVERDEBUG)
 s32 get_debug_chrnum_flag(void) {
     return debug_chrnum_flag;
 }
+#endif
 
+#if defined(LEFTOVERDEBUG)
 s32 get_debug_gunwatchpos_flag(void) {
     return debug_gunwatchpos_flags;
 }
+#endif
 
-
+#if defined(LEFTOVERDEBUG)
 s32  get_debug_profile_flag(void) {
     return debug_profile_flag;
 }
+#endif
 
+#if defined(LEFTOVERDEBUG)
 s32 get_debug_taskgrab_val(void) {
     return debug_enable_taskgrab_flag;
 }

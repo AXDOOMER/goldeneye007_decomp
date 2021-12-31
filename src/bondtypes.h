@@ -1815,7 +1815,7 @@ struct ObjectRecord_f6c
     f32 unkb0; // runtime y position?
     f32 unkb4; // previous pos.y?
     u32 unkb8;
-    u32 unkbc;
+    u32 refreshrate;
 
     u32 unkc0;
     u32 unkc4;
