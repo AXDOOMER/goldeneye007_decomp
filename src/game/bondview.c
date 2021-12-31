@@ -13339,7 +13339,7 @@ s32 check_watch_page_transistion_running(void)
     return (g_CurrentPlayer->zoomintime < g_CurrentPlayer->zoomintimemax);
 }
 
-#ifndef VERSION_EU
+
 /**
  * Address 0x7F07E62C.
  */
@@ -13351,7 +13351,7 @@ void bondviewUpdateWatchZoomIn(void)
         {
 #if defined(VERSION_US)
             g_CurrentPlayer->zoomintime = g_CurrentPlayer->zoomintime + (f32) speedgraphframes;
-#elif defined(VERSION_JP)
+#elif defined(VERSION_JP) || defined(VERSION_EU)
             g_CurrentPlayer->zoomintime = g_CurrentPlayer->zoomintime + (f32) jpD_800484D0;
 #else
 #error version not specified
@@ -13361,7 +13361,7 @@ void bondviewUpdateWatchZoomIn(void)
         {
 #if defined(VERSION_US)
             g_CurrentPlayer->zoomintime = g_CurrentPlayer->zoomintime + (speedgraphframes * watch_transition_time);
-#elif defined(VERSION_JP)
+#elif defined(VERSION_JP) || defined(VERSION_EU)
             g_CurrentPlayer->zoomintime = g_CurrentPlayer->zoomintime + (jpD_800484D0 * watch_transition_time);
 #else
 #error version not specified
@@ -13391,83 +13391,6 @@ void bondviewUpdateWatchZoomIn(void)
     set_cur_player_fovy(g_CurrentPlayer->zoominfovy);
     viSetFovY(g_CurrentPlayer->zoominfovy);
 }
-
-#else /* else this is VERSION_EU */
-GLOBAL_ASM(
-.text
-glabel bondviewUpdateWatchZoomIn
-/* 0B10F0 7F07E700 3C048007 */  lui   $a0, %hi(g_CurrentPlayer) # $a0, 0x8007
-/* 0B10F4 7F07E704 24848BC0 */  addiu $a0, %lo(g_CurrentPlayer) # addiu $a0, $a0, -0x7440
-/* 0B10F8 7F07E708 8C820000 */  lw    $v0, ($a0)
-/* 0B10FC 7F07E70C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0B1100 7F07E710 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0B1104 7F07E714 C44011B8 */  lwc1  $f0, 0x11b8($v0)
-/* 0B1108 7F07E718 C44C11B4 */  lwc1  $f12, 0x11b4($v0)
-/* 0B110C 7F07E71C 4600603C */  c.lt.s $f12, $f0
-/* 0B1110 7F07E720 00000000 */  nop
-/* 0B1114 7F07E724 45020026 */  bc1fl .L7F07E7C0
-/* 0B1118 7F07E728 E44011B4 */   swc1  $f0, 0x11b4($v0)
-/* 0B111C 7F07E72C 8C4301C8 */  lw    $v1, 0x1c8($v0)
-/* 0B1120 7F07E730 24010005 */  li    $at, 5
-/* 0B1124 7F07E734 10610002 */  beq   $v1, $at, .L7F07E740
-/* 0B1128 7F07E738 2401000C */   li    $at, 12
-/* 0B112C 7F07E73C 14610005 */  bne   $v1, $at, .L7F07E754
-.L7F07E740:
-/* 0B1130 7F07E740 3C018004 */   lui   $at, %hi(jpD_800484D0) # $at, 0x8004
-/* 0B1134 7F07E744 C4241120 */  lwc1  $f4, %lo(jpD_800484D0)($at)
-/* 0B1138 7F07E748 46046180 */  add.s $f6, $f12, $f4
-/* 0B113C 7F07E74C 10000008 */  b     .L7F07E770
-/* 0B1140 7F07E750 E44611B4 */   swc1  $f6, 0x11b4($v0)
-.L7F07E754:
-/* 0B1144 7F07E754 3C018004 */  lui   $at, %hi(jpD_800484D0) # $at, 0x8004
-/* 0B1148 7F07E758 C4281120 */  lwc1  $f8, %lo(jpD_800484D0)($at)
-/* 0B114C 7F07E75C 3C018003 */  lui   $at, %hi(watch_transition_time) # $at, 0x8003
-/* 0B1150 7F07E760 C42A1AF8 */  lwc1  $f10, %lo(watch_transition_time)($at)
-/* 0B1154 7F07E764 460A4402 */  mul.s $f16, $f8, $f10
-/* 0B1158 7F07E768 46106480 */  add.s $f18, $f12, $f16
-/* 0B115C 7F07E76C E45211B4 */  swc1  $f18, 0x11b4($v0)
-.L7F07E770:
-/* 0B1160 7F07E770 8C820000 */  lw    $v0, ($a0)
-/* 0B1164 7F07E774 C44011B8 */  lwc1  $f0, 0x11b8($v0)
-/* 0B1168 7F07E778 C44C11B4 */  lwc1  $f12, 0x11b4($v0)
-/* 0B116C 7F07E77C 460C003C */  c.lt.s $f0, $f12
-/* 0B1170 7F07E780 00000000 */  nop
-/* 0B1174 7F07E784 45020006 */  bc1fl .L7F07E7A0eu
-/* 0B1178 7F07E788 C44211C0 */   lwc1  $f2, 0x11c0($v0)
-/* 0B117C 7F07E78C E44011B4 */  swc1  $f0, 0x11b4($v0)
-/* 0B1180 7F07E790 8C820000 */  lw    $v0, ($a0)
-/* 0B1184 7F07E794 C44C11B4 */  lwc1  $f12, 0x11b4($v0)
-/* 0B1188 7F07E798 C44011B8 */  lwc1  $f0, 0x11b8($v0)
-/* 0B118C 7F07E79C C44211C0 */  lwc1  $f2, 0x11c0($v0)
-.L7F07E7A0eu:
-/* 0B1190 7F07E7A0 C44411C4 */  lwc1  $f4, 0x11c4($v0)
-/* 0B1194 7F07E7A4 46022181 */  sub.s $f6, $f4, $f2
-/* 0B1198 7F07E7A8 46066202 */  mul.s $f8, $f12, $f6
-/* 0B119C 7F07E7AC 46004283 */  div.s $f10, $f8, $f0
-/* 0B11A0 7F07E7B0 460A1400 */  add.s $f16, $f2, $f10
-/* 0B11A4 7F07E7B4 10000005 */  b     .L7F07E7CC
-/* 0B11A8 7F07E7B8 E45011BC */   swc1  $f16, 0x11bc($v0)
-/* 0B11AC 7F07E7BC E44011B4 */  swc1  $f0, 0x11b4($v0)
-.L7F07E7C0:
-/* 0B11B0 7F07E7C0 8C820000 */  lw    $v0, ($a0)
-/* 0B11B4 7F07E7C4 C45211C4 */  lwc1  $f18, 0x11c4($v0)
-/* 0B11B8 7F07E7C8 E45211BC */  swc1  $f18, 0x11bc($v0)
-.L7F07E7CC:
-/* 0B11BC 7F07E7CC 8C8E0000 */  lw    $t6, ($a0)
-/* 0B11C0 7F07E7D0 0FC269D5 */  jal   set_cur_player_fovy
-/* 0B11C4 7F07E7D4 C5CC11BC */   lwc1  $f12, 0x11bc($t6)
-/* 0B11C8 7F07E7D8 3C048007 */  lui   $a0, %hi(g_CurrentPlayer) # $a0, 0x8007
-/* 0B11CC 7F07E7DC 24848BC0 */  addiu $a0, %lo(g_CurrentPlayer) # addiu $a0, $a0, -0x7440
-/* 0B11D0 7F07E7E0 8C8F0000 */  lw    $t7, ($a0)
-/* 0B11D4 7F07E7E4 0C000FE5 */  jal   viSetFovY
-/* 0B11D8 7F07E7E8 C5EC11BC */   lwc1  $f12, 0x11bc($t7)
-/* 0B11DC 7F07E7EC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0B11E0 7F07E7F0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0B11E4 7F07E7F4 03E00008 */  jr    $ra
-/* 0B11E8 7F07E7F8 00000000 */   nop
-)
-#endif
-
 
 
 
