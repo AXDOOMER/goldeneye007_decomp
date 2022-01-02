@@ -108,7 +108,7 @@ u32 D_800232BC = 3;
  */
 s32 D_800232C0 = 0;
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 s32 g_indyJpg16BitGrabnum = 1;
 s32 g_indyJpg32BitGrabnum = 1;
 s32 g_indyRgb16BitGrabnum = 1;
