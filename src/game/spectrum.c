@@ -25,11 +25,11 @@ s8 byte_CODE_bss_8008E345;
 s8 byte_CODE_bss_8008E346;
 s8 byte_CODE_bss_8008E347;
 s8 spec_I;
-s8 byte_CODE_bss_8008E349;
+s8 spec_R;
 s8 spec_IFF2_lower;
 s8 spec_IFF2_upper;
 s8 spec_IM;
-s8 byte_CODE_bss_8008E34D;
+s8 spec_cur_rom_id;
 s16 spec_IX;
 s16 spec_IY;
 s16 spec_SP;
@@ -38,30 +38,39 @@ s16 spec_PC;
 
 // data
 s8 D_8004EC30 = 0x0;
-s8 D_8004EC34[] = {0xFF, 0xFF, 0xFF, 0xFF};
-
-s8 D_8004EC38[] = {0xFF, 0xFF, 0xFF, 0xFF};
-
-s8 D_8004EC3C[] = {0xFF, 0x0, 0x0, 0x0};
-
-s16 D_8004EC40[] = {
-        0,     0, 0x7FE, 0x3FE, 0x3FD, 0x3FB, 0x3F7, 0x3EF, 0x4F7, 0x3FD,
-    0x4FD, 0x4FE, 0x4FB, 0x6FB, 0x7F7, 0x6F7, 0x8FB,  0xEF, 0x4FE, 0x3FE,
-    0x3FD, 0x3FB, 0x3F7, 0x3EF, 0x4EF, 0x4F7, 0x4FB, 0x4FD,  0xFD, 0x5FD,
-    0x7F7, 0x6FB, 0x8FB,  0xEF, 0x3FD, 0x1FE, 0x7EF,  0xF7, 0x1FB, 0x2FB,
-    0x1F7, 0x1EF, 0x6EF, 0x5FB, 0x6F7, 0x6FB, 0x6FD, 0x7FB, 0x7F7, 0x5FD,
-    0x5FE, 0x2FE, 0x2F7, 0x1FD, 0x2EF, 0x5F7,  0xEF, 0x2FD,  0xFB, 0x5EF,
-     0xFD, 0x8FF, 0x8FF, 0x8FF, 0x4EF, 0x6F7, 0x8FF, 0x1FE, 0x7EF,  0xF7,
-    0x1FB, 0x2FB, 0x1F7, 0x1EF, 0x6EF, 0x5FB, 0x6F7, 0x6FB, 0x6FD, 0x7FB,
-    0x7F7, 0x5FD, 0x5FE, 0x2FE, 0x2F7, 0x1FD, 0x2EF, 0x5F7,  0xEF, 0x2FD,
-     0xFB, 0x5EF,  0xFD, 0x8FF, 0x8FF, 0x8FF, 0x8FF, 0x8FF,     0,     0
+s8 spec_keyboard_buffer[] = 
+{
+    0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF
 };
 
-s32 D_8004ED08 = 0;
+u8 D_8004EC40 = 0;
 
-s16 D_8004ED0C[] = {
-    1,  0x21,0x8001,0x8021, 0x401, 0x421,0x8401,0x8421,
-    1,  0x3F,0xF801,0xF83F, 0x7C1, 0x7FF,0xFFC1,0xFFFF
+s16 D_8004EC44[] = 
+{
+    0x7FE, 0x3FE, 0x3FD, 0x3FB, 0x3F7, 0x3EF, 0x4F7, 0x3FD,
+    0x4FD, 0x4FE, 0x4FB, 0x6FB, 0x7F7, 0x6F7, 0x8FB,  0xEF,
+    0x4FE, 0x3FE, 0x3FD, 0x3FB, 0x3F7, 0x3EF, 0x4EF, 0x4F7,
+    0x4FB, 0x4FD,  0xFD, 0x5FD, 0x7F7, 0x6FB, 0x8FB,  0xEF,
+    0x3FD, 0x1FE, 0x7EF,  0xF7, 0x1FB, 0x2FB, 0x1F7, 0x1EF,
+    0x6EF, 0x5FB, 0x6F7, 0x6FB, 0x6FD, 0x7FB, 0x7F7, 0x5FD,
+    0x5FE, 0x2FE, 0x2F7, 0x1FD, 0x2EF, 0x5F7,  0xEF, 0x2FD,
+     0xFB, 0x5EF,  0xFD, 0x8FF, 0x8FF, 0x8FF, 0x4EF, 0x6F7,
+    0x8FF, 0x1FE, 0x7EF,  0xF7, 0x1FB, 0x2FB, 0x1F7, 0x1EF,
+    0x6EF, 0x5FB, 0x6F7, 0x6FB, 0x6FD, 0x7FB, 0x7F7, 0x5FD,
+    0x5FE, 0x2FE, 0x2F7, 0x1FD, 0x2EF, 0x5F7,  0xEF, 0x2FD,
+     0xFB, 0x5EF,  0xFD, 0x8FF, 0x8FF, 0x8FF, 0x8FF, 0x8FF
+};
+
+s32 D_8004ED04 = 0;
+s8 D_8004ED08 = 0;
+
+s16 spec_palette[] = {
+    0x0001, 0x0021, 0x8001, 0x8021, 
+    0x0401, 0x0421, 0x8401, 0x8421,
+    0x0001, 0x003F, 0xF801, 0xF83F, 
+    0x07C1, 0x07FF, 0xFFC1, 0xFFFF
 };
 //
 char* romnames[] = {
@@ -77,7 +86,13 @@ char* romnames[] = {
     "em/data/cookie.seg.rz"
 };
 
-u32 D_8004ED54[] = {0x7000000, 0x0,0xFF000000,0xFF000000};
+u8 spec_OUT_port[] = 
+{
+    0x07, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0xFF, 0x00, 0x00, 0x00,
+    0xFF, 0x00, 0x00, 0x00
+};
 
 // rodata
 //8005C114
@@ -408,14 +423,14 @@ glabel spectrum_p1controller_to_kempston
 /* 107800 7F0D2CD0 0C00314A */  jal   joyGetStickYInRange
 /* 107804 7F0D2CD4 AFA2001C */   sw    $v0, 0x1c($sp)
 /* 107808 7F0D2CD8 240E00FF */  li    $t6, 255
-/* 10780C 7F0D2CDC 3C018005 */  lui   $at, %hi(D_8004EC34)
-/* 107810 7F0D2CE0 3C048005 */  lui   $a0, %hi(D_8004EC34+1)
-/* 107814 7F0D2CE4 3C058005 */  lui   $a1, %hi(D_8004EC3C+1)
+/* 10780C 7F0D2CDC 3C018005 */  lui   $at, %hi(spec_keyboard_buffer)
+/* 107810 7F0D2CE0 3C048005 */  lui   $a0, %hi(spec_keyboard_buffer+1)
+/* 107814 7F0D2CE4 3C058005 */  lui   $a1, %hi(spec_keyboard_buffer+9)
 /* 107818 7F0D2CE8 8FA70020 */  lw    $a3, 0x20($sp)
 /* 10781C 7F0D2CEC 8FA8001C */  lw    $t0, 0x1c($sp)
-/* 107820 7F0D2CF0 24A5EC3D */  addiu $a1, %lo(D_8004EC3C+1) # addiu $a1, $a1, -0x13c3
-/* 107824 7F0D2CF4 2484EC35 */  addiu $a0, %lo(D_8004EC34+1) # addiu $a0, $a0, -0x13cb
-/* 107828 7F0D2CF8 A02EEC34 */  sb    $t6, %lo(D_8004EC34)($at)
+/* 107820 7F0D2CF0 24A5EC3D */  addiu $a1, %lo(spec_keyboard_buffer+9) # addiu $a1, $a1, -0x13c3
+/* 107824 7F0D2CF4 2484EC35 */  addiu $a0, %lo(spec_keyboard_buffer+1) # addiu $a0, $a0, -0x13cb
+/* 107828 7F0D2CF8 A02EEC34 */  sb    $t6, %lo(spec_keyboard_buffer)($at)
 /* 10782C 7F0D2CFC 240300FF */  li    $v1, 255
 .L7F0D2D00:
 /* 107830 7F0D2D00 24840004 */  addiu $a0, $a0, 4
@@ -462,8 +477,8 @@ glabel spectrum_p1controller_to_kempston
 /* 1078B4 7F0D2D84 24060001 */   li    $a2, 1
 /* 1078B8 7F0D2D88 AFA60030 */  sw    $a2, 0x30($sp)
 .L7F0D2D8C:
-/* 1078BC 7F0D2D8C 3C038009 */  lui   $v1, %hi(byte_CODE_bss_8008E34D)
-/* 1078C0 7F0D2D90 9063E34D */  lbu   $v1, %lo(byte_CODE_bss_8008E34D)($v1)
+/* 1078BC 7F0D2D8C 3C038009 */  lui   $v1, %hi(spec_cur_rom_id)
+/* 1078C0 7F0D2D90 9063E34D */  lbu   $v1, %lo(spec_cur_rom_id)($v1)
 /* 1078C4 7F0D2D94 24040002 */  li    $a0, 2
 /* 1078C8 7F0D2D98 8FA60030 */  lw    $a2, 0x30($sp)
 /* 1078CC 7F0D2D9C 14830005 */  bne   $a0, $v1, .L7F0D2DB4
@@ -497,15 +512,15 @@ glabel spectrum_p1controller_to_kempston
 /* 10792C 7F0D2DFC 30F8C000 */   andi  $t8, $a3, 0xc000
 .L7F0D2E00:
 /* 107930 7F0D2E00 13000005 */  beqz  $t8, .L7F0D2E18
-/* 107934 7F0D2E04 3C028005 */   lui   $v0, %hi(D_8004EC34)
-/* 107938 7F0D2E08 2442EC34 */  addiu $v0, %lo(D_8004EC34) # addiu $v0, $v0, -0x13cc
+/* 107934 7F0D2E04 3C028005 */   lui   $v0, %hi(spec_keyboard_buffer)
+/* 107938 7F0D2E08 2442EC34 */  addiu $v0, %lo(spec_keyboard_buffer) # addiu $v0, $v0, -0x13cc
 /* 10793C 7F0D2E0C 90590004 */  lbu   $t9, 4($v0)
 /* 107940 7F0D2E10 332900FE */  andi  $t1, $t9, 0xfe
 /* 107944 7F0D2E14 A0490004 */  sb    $t1, 4($v0)
 .L7F0D2E18:
-/* 107948 7F0D2E18 3C028005 */  lui   $v0, %hi(D_8004EC34)
+/* 107948 7F0D2E18 3C028005 */  lui   $v0, %hi(spec_keyboard_buffer)
 /* 10794C 7F0D2E1C 10830003 */  beq   $a0, $v1, .L7F0D2E2C
-/* 107950 7F0D2E20 2442EC34 */   addiu $v0, %lo(D_8004EC34) # addiu $v0, $v0, -0x13cc
+/* 107950 7F0D2E20 2442EC34 */   addiu $v0, %lo(spec_keyboard_buffer) # addiu $v0, $v0, -0x13cc
 /* 107954 7F0D2E24 24010008 */  li    $at, 8
 /* 107958 7F0D2E28 14610006 */  bne   $v1, $at, .L7F0D2E44
 .L7F0D2E2C:
@@ -733,8 +748,8 @@ glabel init_spectrum_game
 /* 107C30 7F0D3100 1420FFF8 */  bnez  $at, .L7F0D30E4
 /* 107C34 7F0D3104 A1380000 */   sb    $t8, ($t1)
 /* 107C38 7F0D3108 8FAA0018 */  lw    $t2, 0x18($sp)
-/* 107C3C 7F0D310C 3C038009 */  lui   $v1, %hi(byte_CODE_bss_8008E34D)
-/* 107C40 7F0D3110 2463E34D */  addiu $v1, %lo(byte_CODE_bss_8008E34D) # addiu $v1, $v1, -0x1cb3
+/* 107C3C 7F0D310C 3C038009 */  lui   $v1, %hi(spec_cur_rom_id)
+/* 107C40 7F0D3110 2463E34D */  addiu $v1, %lo(spec_cur_rom_id) # addiu $v1, $v1, -0x1cb3
 /* 107C44 7F0D3114 314200FF */  andi  $v0, $t2, 0xff
 /* 107C48 7F0D3118 28410005 */  slti  $at, $v0, 5
 /* 107C4C 7F0D311C 14200003 */  bnez  $at, .L7F0D312C
@@ -855,8 +870,8 @@ glabel init_spectrum_game
 /* 107E10 7F0D32E0 A0AD0000 */  sb    $t5, ($a1)
 /* 107E14 7F0D32E4 A02DE34A */  sb    $t5, %lo(spec_IFF2_lower)($at)
 /* 107E18 7F0D32E8 904F0014 */  lbu   $t7, 0x14($v0)
-/* 107E1C 7F0D32EC 3C018009 */  lui   $at, %hi(byte_CODE_bss_8008E349)
-/* 107E20 7F0D32F0 A02FE349 */  sb    $t7, %lo(byte_CODE_bss_8008E349)($at)
+/* 107E1C 7F0D32EC 3C018009 */  lui   $at, %hi(spec_R)
+/* 107E20 7F0D32F0 A02FE349 */  sb    $t7, %lo(spec_R)($at)
 /* 107E24 7F0D32F4 90590015 */  lbu   $t9, 0x15($v0)
 /* 107E28 7F0D32F8 3C018009 */  lui   $at, %hi(byte_CODE_bss_8008E339)
 /* 107E2C 7F0D32FC A039E339 */  sb    $t9, %lo(byte_CODE_bss_8008E339)($at)
@@ -897,39 +912,22 @@ glabel init_spectrum_game
 
 
 
-#ifdef NONMATCHING
-void run_spectrum_game(void) {
 
+void run_spectrum_game(void)
+{
+    spectrum_p1controller_to_kempston();
+    spectrum_hw_emulation();
+    sub_GAME_7F0D2A84(ptr_spectrum_roms + 0x4000,ptr_6000alloc);
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel run_spectrum_game
-/* 107EA4 7F0D3374 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 107EA8 7F0D3378 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 107EAC 7F0D337C 0FC34B21 */  jal   spectrum_p1controller_to_kempston
-/* 107EB0 7F0D3380 00000000 */   nop   
-/* 107EB4 7F0D3384 0FC34E0B */  jal   spectrum_hw_emulation
-/* 107EB8 7F0D3388 00000000 */   nop   
-/* 107EBC 7F0D338C 3C048009 */  lui   $a0, %hi(ptr_spectrum_roms)
-/* 107EC0 7F0D3390 8C84E328 */  lw    $a0, %lo(ptr_spectrum_roms)($a0)
-/* 107EC4 7F0D3394 3C058009 */  lui   $a1, %hi(ptr_6000alloc)
-/* 107EC8 7F0D3398 8CA5E330 */  lw    $a1, %lo(ptr_6000alloc)($a1)
-/* 107ECC 7F0D339C 0FC34AA1 */  jal   sub_GAME_7F0D2A84
-/* 107ED0 7F0D33A0 24844000 */   addiu $a0, $a0, 0x4000
-/* 107ED4 7F0D33A4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 107ED8 7F0D33A8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 107EDC 7F0D33AC 03E00008 */  jr    $ra
-/* 107EE0 7F0D33B0 00000000 */   nop   
-)
-#endif
+
 
 
 
 
 
 #ifdef NONMATCHING
-void spectrum_draw_screen(void) {
+Gfx* spectrum_draw_screen(Gfx* DL) {
 
 }
 #else
@@ -953,8 +951,8 @@ glabel spectrum_draw_screen
 /* 107F1C 7F0D33EC AC4B0000 */  sw    $t3, ($v0)
 /* 107F20 7F0D33F0 AC400004 */  sw    $zero, 4($v0)
 /* 107F24 7F0D33F4 00801825 */  move  $v1, $a0
-/* 107F28 7F0D33F8 3C0E8005 */  lui   $t6, %hi(D_8004ED0C) 
-/* 107F2C 7F0D33FC 25CEED0C */  addiu $t6, %lo(D_8004ED0C) # addiu $t6, $t6, -0x12f4
+/* 107F28 7F0D33F8 3C0E8005 */  lui   $t6, %hi(spec_palette) 
+/* 107F2C 7F0D33FC 25CEED0C */  addiu $t6, %lo(spec_palette) # addiu $t6, $t6, -0x12f4
 /* 107F30 7F0D3400 24840008 */  addiu $a0, $a0, 8
 /* 107F34 7F0D3404 3C10FD10 */  lui   $s0, 0xfd10
 /* 107F38 7F0D3408 AC6E0004 */  sw    $t6, 4($v1)
@@ -1147,8 +1145,58 @@ glabel spectrum_draw_screen
 
 
 #ifdef NONMATCHING
-void spectrum_input_handling(void) {
+//just a quick copy paste from decomp me
+//looks like loop got partly unrolled
+u16 spectrum_input_handling(u32 arg0, u8 arg1, u8 arg2) {
+    s32 temp_v0;
+    s32 temp_v0_2;
+    u32 temp_a0;
+    u32 temp_a0_2;
+    u32 temp_a0_3;
+    u32 phi_a1;
+    s32 phi_v0;
+    u16 phi_v1;
+    u16 phi_v1_2;
+    u16 phi_v1_3;
+    u16 phi_v1_4;
+    u16 phi_v1_5;
 
+    temp_v0 = arg2 & 0xFF;
+    phi_a1 = arg1 & 0xFF;
+    if (temp_v0 == 0xFE) {
+        phi_v0 = 0;
+        phi_v1_5 = 0xFFU;
+        do {
+            phi_v1_4 = phi_v1_5;
+            if ((phi_a1 & 1) == 0) {
+                phi_v1_4 = phi_v1_5 & (u8) spec_keyboard_buffer[phi_v0] & 0xFF;
+            }
+            temp_a0 = (phi_a1 >> 1) & 0xFF;
+            phi_v1_3 = phi_v1_4;
+            if ((temp_a0 & 1) == 0) {
+                phi_v1_3 = phi_v1_4 & spec_keyboard_buffer[phi_v0+1] & 0xFF;
+            }
+            temp_a0_2 = (temp_a0 >> 1) & 0xFF;
+            phi_v1_2 = phi_v1_3;
+            if ((temp_a0_2 & 1) == 0) {
+                phi_v1_2 = phi_v1_3 & spec_keyboard_buffer[phi_v0+2] & 0xFF;
+            }
+            temp_a0_3 = (temp_a0_2 >> 1) & 0xFF;
+            phi_v1 = phi_v1_2;
+            if ((temp_a0_3 & 1) == 0) {
+                phi_v1 = phi_v1_2 & spec_keyboard_buffer[phi_v0+3] & 0xFF;
+            }
+            temp_v0_2 = phi_v0 + 4;
+            phi_a1 = (temp_a0_3 >> 1) & 0xFF;
+            phi_v0 = temp_v0_2;
+            phi_v1_5 = phi_v1;
+        } while (temp_v0_2 != 8);
+        return phi_v1;
+    }
+    if (temp_v0 == 0x1F) {
+        return (u16) D_8004EC40;
+    }
+    return 0xFFU;
 }
 #else
 GLOBAL_ASM(
@@ -1162,9 +1210,9 @@ glabel spectrum_input_handling
 /* 10821C 7F0D36EC AFA40000 */  sw    $a0, ($sp)
 /* 108220 7F0D36F0 14410030 */  bne   $v0, $at, .L7F0D37B4
 /* 108224 7F0D36F4 AFA60008 */   sw    $a2, 8($sp)
-/* 108228 7F0D36F8 3C068005 */  lui   $a2, %hi(D_8004EC34)
+/* 108228 7F0D36F8 3C068005 */  lui   $a2, %hi(spec_keyboard_buffer)
 /* 10822C 7F0D36FC 240300FF */  li    $v1, 255
-/* 108230 7F0D3700 24C6EC34 */  addiu $a2, %lo(D_8004EC34) # addiu $a2, $a2, -0x13cc
+/* 108230 7F0D3700 24C6EC34 */  addiu $a2, %lo(spec_keyboard_buffer) # addiu $a2, $a2, -0x13cc
 /* 108234 7F0D3704 00001025 */  move  $v0, $zero
 /* 108238 7F0D3708 24070008 */  li    $a3, 8
 .L7F0D370C:
@@ -1239,11 +1287,26 @@ void nullsub_50(void) {
 
 
 
-
-
 #ifdef NONMATCHING
-void sub_GAME_7F0D37DC(void) {
+//correct code wrong register t8/t0 for spec_OUT_port
+u8 sub_GAME_7F0D37DC(u32 arg0, u8 arg1, u8 arg2, u8 arg3)
+{
+  u8 temp_v0;
+  if (arg2 == 0xFE)
+  {
+    temp_v0 = (arg3 & 0xFF) & 7;
+    if (temp_v0 != spec_OUT_port[0 & 0xFF])
+    {
+    //came from permuter
+      if ((arg3 && arg3) && arg3)
+      {
+      }
 
+      spec_OUT_port[0] = temp_v0;
+ } return 0;
+  }
+
+  return 0;
 }
 #else
 GLOBAL_ASM(
@@ -1257,13 +1320,13 @@ glabel sub_GAME_7F0D37DC
 /* 108320 7F0D37F0 AFA7000C */  sw    $a3, 0xc($sp)
 /* 108324 7F0D37F4 15C1000A */  bne   $t6, $at, .L7F0D3820
 /* 108328 7F0D37F8 30EF00FF */   andi  $t7, $a3, 0xff
-/* 10832C 7F0D37FC 3C188005 */  lui   $t8, %hi(D_8004ED54) 
-/* 108330 7F0D3800 9318ED54 */  lbu   $t8, %lo(D_8004ED54)($t8)
+/* 10832C 7F0D37FC 3C188005 */  lui   $t8, %hi(spec_OUT_port) 
+/* 108330 7F0D3800 9318ED54 */  lbu   $t8, %lo(spec_OUT_port)($t8)
 /* 108334 7F0D3804 31E20007 */  andi  $v0, $t7, 7
-/* 108338 7F0D3808 3C018005 */  lui   $at, %hi(D_8004ED54)
+/* 108338 7F0D3808 3C018005 */  lui   $at, %hi(spec_OUT_port)
 /* 10833C 7F0D380C 10580002 */  beq   $v0, $t8, .L7F0D3818
 /* 108340 7F0D3810 00000000 */   nop   
-/* 108344 7F0D3814 A022ED54 */  sb    $v0, %lo(D_8004ED54)($at)
+/* 108344 7F0D3814 A022ED54 */  sb    $v0, %lo(spec_OUT_port)($at)
 .L7F0D3818:
 /* 108348 7F0D3818 03E00008 */  jr    $ra
 /* 10834C 7F0D381C 00001025 */   move  $v0, $zero
@@ -1781,14 +1844,14 @@ glabel spectrum_hw_emulation
 /* 1083B8 7F0D3888 A3A002A4 */  sb    $zero, 0x2a4($sp)
 /* 1083BC 7F0D388C A3A002A6 */  sb    $zero, 0x2a6($sp)
 /* 1083C0 7F0D3890 A3AE02A5 */  sb    $t6, 0x2a5($sp)
-/* 1083C4 7F0D3894 3C0E8009 */  lui   $t6, %hi(byte_CODE_bss_8008E349) 
+/* 1083C4 7F0D3894 3C0E8009 */  lui   $t6, %hi(spec_R) 
 /* 1083C8 7F0D3898 A3AD02A6 */  sb    $t5, 0x2a6($sp)
 /* 1083CC 7F0D389C A3AF02A4 */  sb    $t7, 0x2a4($sp)
 /* 1083D0 7F0D38A0 A3B802A3 */  sb    $t8, 0x2a3($sp)
 /* 1083D4 7F0D38A4 A3B902A2 */  sb    $t9, 0x2a2($sp)
 /* 1083D8 7F0D38A8 A3A802A1 */  sb    $t0, 0x2a1($sp)
 /* 1083DC 7F0D38AC A3A902A0 */  sb    $t1, 0x2a0($sp)
-/* 1083E0 7F0D38B0 91CEE349 */  lbu   $t6, %lo(byte_CODE_bss_8008E349)($t6)
+/* 1083E0 7F0D38B0 91CEE349 */  lbu   $t6, %lo(spec_R)($t6)
 /* 1083E4 7F0D38B4 3C0A8009 */  lui   $t2, %hi(byte_CODE_bss_8008E347) 
 /* 1083E8 7F0D38B8 3C0B8009 */  lui   $t3, %hi(spec_IFF2_lower) 
 /* 1083EC 7F0D38BC 3C0C8009 */  lui   $t4, %hi(spec_IFF2_upper) 
@@ -18528,8 +18591,8 @@ spectrum_op_FF:
 /* 1177F8 7F0E2CC8 3C018009 */  lui   $at, %hi(spec_I)
 /* 1177FC 7F0E2CCC A028E348 */  sb    $t0, %lo(spec_I)($at)
 /* 117800 7F0E2CD0 93AA029B */  lbu   $t2, 0x29b($sp)
-/* 117804 7F0E2CD4 3C018009 */  lui   $at, %hi(byte_CODE_bss_8008E349)
-/* 117808 7F0E2CD8 A02EE349 */  sb    $t6, %lo(byte_CODE_bss_8008E349)($at)
+/* 117804 7F0E2CD4 3C018009 */  lui   $at, %hi(spec_R)
+/* 117808 7F0E2CD8 A02EE349 */  sb    $t6, %lo(spec_R)($at)
 /* 11780C 7F0E2CDC 97AC0296 */  lhu   $t4, 0x296($sp)
 /* 117810 7F0E2CE0 3C018009 */  lui   $at, %hi(spec_IM)
 /* 117814 7F0E2CE4 A02AE34C */  sb    $t2, %lo(spec_IM)($at)
