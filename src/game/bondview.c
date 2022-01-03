@@ -33944,7 +33944,7 @@ void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2)
         sub_GAME_7F086990(arg0, arg1, arg2, (u16) g_CurrentPlayer->field_3B4);
     }
     
-#if defined(VERSION_JP) || defined(VERSION_EU)
+#if defined(BUGFIX_R1)
     watch_time_0 += jpD_800484D0;
 #else
     // VERSION_US
