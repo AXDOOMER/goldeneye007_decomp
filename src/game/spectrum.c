@@ -1,10 +1,11 @@
 #include "ultra64.h"
 #include "memp.h"
+#include "spectrum.h"
 
 // bss
 s32 ptr_sectrum_monitor_data_temp_buf;
 s32 ptr_sectrum_game_data_temp_buf;
-s32 ptr_spectrum_roms;
+u8* ptr_spectrum_roms;
 s32 ptr_300alloc;
 s32 ptr_6000alloc;
 s32 ptr_pc_keyboard_table_alloc;
@@ -29,7 +30,7 @@ s8 spec_R;
 s8 spec_IFF2_lower;
 s8 spec_IFF2_upper;
 s8 spec_IM;
-s8 spec_cur_rom_id;
+u8 spec_cur_rom_id;
 s16 spec_IX;
 s16 spec_IY;
 s16 spec_SP;
@@ -38,7 +39,7 @@ s16 spec_PC;
 
 // data
 s8 D_8004EC30 = 0x0;
-s8 spec_keyboard_buffer[] = 
+u8 spec_keyboard_buffer[] = 
 {
     0xFF, 0xFF, 0xFF, 0xFF,
     0xFF, 0xFF, 0xFF, 0xFF,
@@ -395,7 +396,112 @@ glabel sub_GAME_7F0D2A84
 
 #ifdef NONMATCHING
 void spectrum_p1controller_to_kempston(void) {
+    u32 goUp;
+    u32 goDown;
+    u32 goLeft;
+    u32 goRight;
+    u32 goBack;
+    u32 btns;
+    s32 stickX;
+    s32 stickY;
+    s32 i;
 
+
+    goUp = 0;
+    goDown = 0;
+    goLeft = 0;
+    goRight = 0;
+    goBack = 0;
+    joyConsumeSamplesWrapper();
+    btns = joyGetButtons(0, 0xFFFF);
+    stickX = joyGetStickXInRange(0, -3, 3);
+    stickY = joyGetStickYInRange(0, -3, 3);
+    
+    //im having a dumb moment here, match this and reg usage should match for rest
+    for(i=0;i!=9;++i)
+    {
+        spec_keyboard_buffer[i] = (u32)0xFF;
+    }
+    
+
+
+    if ((btns & Z_TRIG)) {
+        goBack = 1;
+    }
+    if ((btns & (L_CBUTTONS|L_JPAD)) || (stickX < -1)) {
+        goLeft = 1;
+    }
+    if ((btns & (R_CBUTTONS|R_JPAD)) || (stickX >= 2)) {
+        goRight = 1;
+    }
+    if ((btns & (U_CBUTTONS|U_JPAD)) || (stickY >= 2)) {
+        goUp = 1;
+    }
+    if ((btns & (D_CBUTTONS|D_JPAD)) || (stickY < -1)) {
+        goDown = 1;
+    }
+
+    if ((spec_cur_rom_id == ROM_JETPAC) && (btns & (B_BUTTON|A_BUTTON))) {
+        goUp = 1;
+    }
+
+    if (((spec_cur_rom_id == ROM_ALIEN8) || (spec_cur_rom_id == ROM_KNIGHTLORE)) && (btns & (B_BUTTON|A_BUTTON)))
+    {
+        goDown = 1;
+    }
+
+    if (((spec_cur_rom_id == ROM_SABRE) || (spec_cur_rom_id == ROM_ATIC) || (spec_cur_rom_id == ROM_UNDER) ||  (spec_cur_rom_id == ROM_COOKIE) || 
+    (spec_cur_rom_id == ROM_ALIEN8) || (spec_cur_rom_id == ROM_KNIGHTLORE)) && (btns & (B_BUTTON|A_BUTTON)))
+    {
+        spec_keyboard_buffer[0x4] = (u8) (spec_keyboard_buffer[0x4] & 0xFE);
+    }
+
+    if (((spec_cur_rom_id == ROM_JETPAC) || (spec_cur_rom_id == ROM_PSSST)) && (btns & (B_BUTTON|A_BUTTON))) {
+        spec_keyboard_buffer[0x3] = (u8) (spec_keyboard_buffer[0x3] & 0xEF);
+    }
+    if ((spec_cur_rom_id == ROM_GUNFRIGHT) && (btns & (B_BUTTON|A_BUTTON))) {
+        spec_keyboard_buffer[0x3] = (u8) (spec_keyboard_buffer[0x3] & 0xFB);
+    }
+    if (spec_cur_rom_id == ROM_JETMAN) {
+        if (btns & (B_BUTTON|A_BUTTON)) {
+            spec_keyboard_buffer[0x4] = (u8) (spec_keyboard_buffer[0x4] & 0xEF);
+        }
+        if (btns & A_BUTTON) {
+            spec_keyboard_buffer[0x0] = (u8) spec_keyboard_buffer[0x0] & 0xFD;
+        }
+        if (btns & B_BUTTON) {
+            spec_keyboard_buffer[0x7] = (u8) (spec_keyboard_buffer[0x7] & 0xFE);
+        }
+    }
+    if (spec_cur_rom_id == ROM_UNDER) {
+        if (btns & A_BUTTON) {
+            goUp = 1;
+        }
+        if (btns & B_BUTTON) {
+            spec_keyboard_buffer[0x7] = (u8) (spec_keyboard_buffer[0x7] & 0xFE);
+        }
+    }
+    if (spec_cur_rom_id == ROM_ATIC) {
+        if ((btns & (B_BUTTON|A_BUTTON)) != 0) {
+            spec_keyboard_buffer[0x0] = (u8) spec_keyboard_buffer[0x0] & 0xFD;
+        }
+        if ((btns & L_JPAD) != 0) {
+            spec_keyboard_buffer[0x3] = (u8) (spec_keyboard_buffer[0x3] & 0xF7);
+        }
+        if ((btns & D_JPAD) != 0) {
+            spec_keyboard_buffer[0x3] = (u8) (spec_keyboard_buffer[0x3] & 0xEF);
+        }
+        if ((btns & R_JPAD) != 0) {
+            spec_keyboard_buffer[0x4] = (u8) (spec_keyboard_buffer[0x4] & 0xEF);
+        }
+    }
+    if (btns & L_TRIG) {
+        for(i=0; i<0x4000; i++) 
+        {
+            ptr_spectrum_roms[i] = 0;
+        }
+    }
+    D_8004EC40 = (goBack * 0x10) | (goUp * 8) | (goDown * 4) | (goLeft * 2) | goRight;
 }
 #else
 GLOBAL_ASM(
@@ -1285,58 +1391,22 @@ void nullsub_50(void) {
 }
 
 
-
-
-#ifdef NONMATCHING
-//correct code wrong register t8/t0 for spec_OUT_port
 u8 sub_GAME_7F0D37DC(u32 arg0, u8 arg1, u8 arg2, u8 arg3)
 {
-  u8 temp_v0;
+  int temp_v0;
   if (arg2 == 0xFE)
   {
-    temp_v0 = (arg3 & 0xFF) & 7;
-    if (temp_v0 != spec_OUT_port[0 & 0xFF])
+    temp_v0 = arg3 & 7;
+    if (temp_v0 != spec_OUT_port[0])
     {
-    //came from permuter
-      if ((arg3 && arg3) && arg3)
-      {
-      }
-
       spec_OUT_port[0] = temp_v0;
- } return 0;
+    }
+
+    return 0;
   }
 
   return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0D37DC
-/* 10830C 7F0D37DC 30CE00FF */  andi  $t6, $a2, 0xff
-/* 108310 7F0D37E0 240100FE */  li    $at, 254
-/* 108314 7F0D37E4 AFA40000 */  sw    $a0, ($sp)
-/* 108318 7F0D37E8 AFA50004 */  sw    $a1, 4($sp)
-/* 10831C 7F0D37EC AFA60008 */  sw    $a2, 8($sp)
-/* 108320 7F0D37F0 AFA7000C */  sw    $a3, 0xc($sp)
-/* 108324 7F0D37F4 15C1000A */  bne   $t6, $at, .L7F0D3820
-/* 108328 7F0D37F8 30EF00FF */   andi  $t7, $a3, 0xff
-/* 10832C 7F0D37FC 3C188005 */  lui   $t8, %hi(spec_OUT_port) 
-/* 108330 7F0D3800 9318ED54 */  lbu   $t8, %lo(spec_OUT_port)($t8)
-/* 108334 7F0D3804 31E20007 */  andi  $v0, $t7, 7
-/* 108338 7F0D3808 3C018005 */  lui   $at, %hi(spec_OUT_port)
-/* 10833C 7F0D380C 10580002 */  beq   $v0, $t8, .L7F0D3818
-/* 108340 7F0D3810 00000000 */   nop   
-/* 108344 7F0D3814 A022ED54 */  sb    $v0, %lo(spec_OUT_port)($at)
-.L7F0D3818:
-/* 108348 7F0D3818 03E00008 */  jr    $ra
-/* 10834C 7F0D381C 00001025 */   move  $v0, $zero
-
-.L7F0D3820:
-/* 108350 7F0D3820 00001025 */  move  $v0, $zero
-/* 108354 7F0D3824 03E00008 */  jr    $ra
-/* 108358 7F0D3828 00000000 */   nop   
-)
-#endif
 
 
 
