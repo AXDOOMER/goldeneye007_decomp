@@ -1,8 +1,18 @@
 # Goldeneye 007
 
-[![NTSC-Status](https://github.com/kholdfuzion/goldeneye_src/workflows/NTSC-Status/badge.svg)](https://kholdfuzion.github.io/goldeneyestatus/)
-[![JP-Status](https://github.com/kholdfuzion/goldeneye_src/workflows/JP-Status/badge.svg)](https://kholdfuzion.github.io/goldeneyestatus/JPN.htm)
-[![PAL-Status](https://github.com/kholdfuzion/goldeneye_src/workflows/EU-Status/badge.svg)](https://kholdfuzion.github.io/goldeneyestatus/EU.htm)
+[![NTSC-Status][NTCS-badge]][NTCS-link]
+[![JP-Status][JP-badge]][JP-link]
+[![PAL-Status][PAL-badge]][PAL-link]
+
+[NTCS-link]: https://kholdfuzion.github.io/goldeneyestatus/
+[NTCS-badge]: https://github.com/kholdfuzion/goldeneye_src/workflows/NTSC-Status/badge.svg
+
+[JP-link]: https://kholdfuzion.github.io/goldeneyestatus/JPN.htm
+[JP-badge]: https://github.com/kholdfuzion/goldeneye_src/workflows/JP-Status/badge.svg
+
+[PAL-link]: https://kholdfuzion.github.io/goldeneyestatus/EU.htm
+[PAL-badge]: https://github.com/kholdfuzion/goldeneye_src/workflows/EU-Status/badge.svg
+
 
 This is a WIP decompilation of Goldeneye 007!
 
@@ -64,7 +74,7 @@ To extract the baserom assets run:
 ./extract_baserom.u.sh
 ```
 
-For JP and PAL versions support, place each existing ROM in the root of this repository with the name `baserom.<VERSION>.z64` (where `<VERSION>` is the country code, `j`, or `e`).
+For JP and PAL (EU) versions support, place each existing ROM in the root of this repository with the name `baserom.<VERSION>.z64` (where `<VERSION>` is the country code, `j`, or `e`).
 
 Extracting NTSC (US) baserom assets is mandatory before extracting JP or PAL assets.
 
@@ -112,8 +122,8 @@ build/u/ge007.u.z64: OK
 Other examples:
 
 ```bash
-make VERSION=JP -j4       # build (JP) version instead with 4 jobs
-make VERSION=EU COMPARE=0 # build (EU) version but do not compare ROM hashes
+make VERSION=JP -j4       # build JP version instead with 4 jobs
+make VERSION=EU COMPARE=0 # build PAL (EU) version but do not compare ROM hashes
 ```
 
 Note: If you recompiled IDO in Step 1, you must use `IDO_RECOMP` flag:
