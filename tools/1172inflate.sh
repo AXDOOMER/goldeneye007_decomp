@@ -2,7 +2,7 @@
 
 usage()
 {
-    echo "Rare 1172 compression script"
+    echo "Rare 1172 decompression script"
     echo "Usage: $0 input output" 1>&2;
     exit 1;
 }
@@ -15,7 +15,7 @@ if [ -z "$2" ]; then
     usage
 fi;
 
-# input file to compress
+# input file to decompress
 INPUT_FILE="$1"
 # output file result
 OUTPUT_FILE="$2"
@@ -49,6 +49,11 @@ if [ ! -f "${INPUT_FILE}" ]; then
     usage
 fi
 
-# create
-echo -n -e \\x11\\x72 > "${OUTPUT_FILE}"
-cat "${INPUT_FILE}" | $GZ --no-name --best | tail --bytes=+11 | head --bytes=-8 >> "${OUTPUT_FILE}"
+# explanation of commands:
+# use process substitution to cat contentes together to send to gzip.
+# the first cat argument supplies the standard gzip header
+# the next cat argument prints the input file, and chops the "1172" prefix
+# this is sent to the gzip command for decompression, and the expected "unexpected end of file" error is filtered out
+
+cat <(echo -n -e \\x1F\\x8B\\x08\\x00\\x00\\x00\\x00\\x00\\x02\\x03) <(cat "${INPUT_FILE}" | tail --bytes=+3) | $GZ --decompress 2> >(sed '/gzip: stdin: unexpected end of file/d' >&2) > "${OUTPUT_FILE}"
+echo "Successfully Decompressed ${INPUT_FILE}"

@@ -66,9 +66,11 @@ endif
 
 ALLOWED_VERSIONS := US EU JP
 ifneq ($(filter $(VERSION),$(ALLOWED_VERSIONS)),)
-$(info VERSION=$(VERSION))
+  ifneq ($(filter "help",$(MAKECMDGOALS)),)
+    $(info VERSION=$(VERSION))
+  endif
 else
-$(error VERSION "$(VERSION)" not supported")
+  $(error VERSION "$(VERSION)" not supported)
 endif
 
 BUILD_DIR_BASE := build
@@ -174,12 +176,14 @@ endif
 ifeq ($(filter clean dataclean codeclean stanclean setupclean print-%,$(MAKECMDGOALS)),)
 
   # Make tools if out of date
-  $(info Building tools...)
-  DUMMY != make -s -C tools >&2 || echo FAIL
-    ifeq ($(DUMMY),FAIL)
-      $(error Failed to build tools)
-    endif
-  $(info Building ROM...)
+  ifneq ($(filter "help",$(MAKECMDGOALS)),)
+	$(info Building tools...)
+	DUMMY != make -s -C tools >&2 || echo FAIL
+		ifeq ($(DUMMY),FAIL)
+		$(error Failed to build tools)
+		endif
+	$(info Building ROM...)
+  endif
 
 endif
 
@@ -213,6 +217,26 @@ clean:
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) $(RSPOBJECTS) \
 	$(STAN_BUILD_FILES) $(SETUP_BUILD_FILES)
+
+help:
+	@echo "makefile help"
+	@echo ""
+	@echo "  supported targets:"
+	@echo ""
+	@echo "    all                             build all (default)"
+	@echo "    clean                           rm all build artifacts"
+	@echo "    dataclean                       rm only asset build artifacts"
+	@echo "    codeclean                       rm only code (asm, .c) build artifacts"
+	@echo "    libultraclean                   rm only code (asm, .c) build artifacts from Rare's"
+	@echo "                                    libultra files"
+	@echo "    stanclean                       rm only stan build artifacts"
+	@echo "    setupclean                      rm only setup build artifacts"
+	@echo ""
+	@echo ""
+	@echo "  options:"
+	@echo ""
+	@echo "    VERSION=v                       region version. Supported values: ${ALLOWED_VERSIONS}"
+	@echo "                                    US is default"
 
 $(BUILD_DIR)/rsp/%.bin: rsp/*.s
 	$(ARMIPS) -sym $@.sym -strequ CODE_FILE $(BUILD_DIR)/rsp/$*.bin -strequ DATA_FILE $(BUILD_DIR)/rsp/$*_data.bin $<
@@ -270,7 +294,6 @@ $(APPBIN): $(APPELF)
 $(APPROM):	$(APPBIN)
 	$(DATASEG_COMP) $< $(COUNTRYCODE)
 	$(N64CKSUM) $< $@
-	rm header.tmp
 
 .PRECIOUS: %.bin  %.o
 
