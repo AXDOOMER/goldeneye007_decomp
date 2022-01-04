@@ -50,7 +50,7 @@ typedef struct
      * will be allocated from ALHeap at runtime.
      */
     RareALSeqData seqArray[1];
-} RareALSeqFile;
+} RareALSeqBankFile;
 
 typedef enum MUSIC_FADESTATE_e {
     /**

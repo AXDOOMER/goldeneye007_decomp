@@ -481,7 +481,7 @@ ALCSPlayer *g_musicXTrack1SeqPlayer;
 ALCSPlayer *g_musicXTrack2SeqPlayer;
 ALCSPlayer *g_musicXTrack3SeqPlayer;
 
-RareALSeqFile *g_musicDataTable;
+RareALSeqBankFile *g_musicDataTable;
 
 /**
  * Length of music track after uncompressed.
@@ -604,7 +604,7 @@ extern u32 _musicsampletblSegmentRomStart;
  * Patch the file so that offsets are pointers.
  * This is a copy of alSeqFileNew from n64devkit\ultra\usr\src\pr\libsrc\libultra\audio\bnkf.c
  */
-void musicSeqFileNew(RareALSeqFile *file, u8 *base)
+void musicSeqFileNew(RareALSeqBankFile *file, u8 *base)
 {
     s32 offset = (s32) base;
     s32 i;
@@ -681,7 +681,7 @@ void musicSeqPlayerInit(void)
 
     // this area based on auReadSeqFileHeader
 
-    // is this sizeof(RareALSeqFile) ? which implies the struct isn't right...
+    // is this sizeof(RareALSeqBankFile) ? which implies the struct isn't right...
     size = 0x10;
     g_musicDataTable = alHeapAlloc(&g_musicHeap, 1, size);
     romCopy(g_musicDataTable, (void *)tblSegmentRomStartAddress, size);
