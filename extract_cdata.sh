@@ -58,7 +58,7 @@ if [ -f "${ROM_FILENAME}" ]; then
         GZ=gzip tools/1172inflate.sh "${OUT_FILENAME}" "${OUT_FILENAME}.bin"
         rm "${OUT_FILENAME}"
     else
-        echo "cannot extract compressed data segment from ${ROM_FILENAME}, md5=${ROM_MD5}, expected ${MD5_US}"
+        echo "cannot extract compressed data segment from ${ROM_FILENAME}, md5=${ROM_MD5}, expected ${MD5_JP}"
     fi
 else
     echo "${ROM_FILENAME} not found"
@@ -76,7 +76,7 @@ if [ -f "${ROM_FILENAME}" ]; then
         GZ=gzip tools/1172inflate.sh "${OUT_FILENAME}" "${OUT_FILENAME}.bin"
         rm "${OUT_FILENAME}"
     else
-        echo "cannot extract compressed data segment from ${ROM_FILENAME}, md5=${ROM_MD5}, expected ${MD5_US}"
+        echo "cannot extract compressed data segment from ${ROM_FILENAME}, md5=${ROM_MD5}, expected ${MD5_EU}"
     fi
 else
     echo "${ROM_FILENAME} not found"
