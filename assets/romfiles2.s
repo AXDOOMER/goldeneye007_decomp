@@ -1,12 +1,5 @@
 .section .data, "a"
-.global _GlobalimagetableSegmentRomEnd
-_GlobalimagetableSegmentRomEnd:
 
-.global _GlobalimagetablecmdblkSegmentRomStart
-_GlobalimagetablecmdblkSegmentRomStart:
-.incbin "assets/ge007.u.29E560.Globalimagetable_commandblock.bin"
-.global _GlobalimagetablecmdblkSegmentRomEnd
-_GlobalimagetablecmdblkSegmentRomEnd:
 
 .global unknown2
 unknown2:

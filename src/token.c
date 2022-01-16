@@ -5,9 +5,18 @@
 #include "rmon.h"
 #include "str.h"
 
-u32 g_TokenString[160];
+/**
+ * EU .data, offset from start of data_seg : 0x36b0
+*/
+
+u32 g_TokenString[G_TOKEN_STRING_LEN];
 s32 g_TokenCount = 1;
+
+#if defined(LEFTOVERDEBUG)
 const char *g_Tokens[35] = {0};
+#else
+const char *g_Tokens[10] = {0};
+#endif
 
 // Splits a string into tokens delimited by spaces and stores 
 // them in g_Tokens.
@@ -46,7 +55,7 @@ s32 tokenReadIo(void)
     if (rmonIsFinalBuild()) {
         g_TokenString[0] = 0;
     } else {
-        for (ptr = g_TokenString, end = (g_TokenString + 160); (ptr != end); ptr++) {
+        for (ptr = g_TokenString, end = (g_TokenString + G_TOKEN_STRING_LEN); (ptr != end); ptr++) {
             osPiReadIo(address, ptr);
             address += sizeof(u32);
         }

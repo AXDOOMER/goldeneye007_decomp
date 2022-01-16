@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "bondconstants.h"
 #include "bondtypes.h"
+#include "game/objective_status.h"
 
 // bss
 //CODE.bss:80075D30
@@ -919,7 +920,7 @@ glabel display_objective_status_text_on_status_change
 /* 08A3B8 7F0579C8 0C002717 */  jal   strcat
 /* 08A3BC 7F0579CC 00402825 */   move  $a1, $v0
 .L7F0579D0:
-/* 08A3C0 7F0579D0 0FC229B5 */  jal   display_string_in_lower_left_corner
+/* 08A3C0 7F0579D0 0FC229B5 */  jal   jp_display_string_in_lower_left_corner
 /* 08A3C4 7F0579D4 02602025 */   move  $a0, $s3
 .L7F0579D8:
 /* 08A3C8 7F0579D8 0FC15D39 */  jal   get_difficulty_for_objective
@@ -1084,13 +1085,13 @@ glabel sub_GAME_7F0577E8
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F057898(void) {
+void objectiveTakePictureHandler(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F057898
+glabel objectiveTakePictureHandler
 /* 08C3C8 7F057898 27BDFF68 */  addiu $sp, $sp, -0x98
 /* 08C3CC 7F05789C AFB10034 */  sw    $s1, 0x34($sp)
 /* 08C3D0 7F0578A0 3C118007 */  lui   $s1, %hi(ptr_last_photo_obj_in_room_subobject_entry_type1E)

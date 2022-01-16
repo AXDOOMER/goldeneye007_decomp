@@ -6,7 +6,7 @@ extern s32 D_80048490;
 extern s32 D_80048494;
 extern s32 speedgraphframes;
 
-#ifdef VERSION_JP
+#if defined (BUGFIX_R1)
 extern f32 jpD_800484CC;
 extern f32 jpD_800484D0;
 #endif

@@ -1,6 +1,6 @@
 #include "ultra64.h"
 
-
+#if defined(LEFTOVERDEBUG)
 // data
 //D:80036B70
 s32 highlighted_debug_option = 0;
@@ -29,17 +29,17 @@ D:80036B9C                     .word 0
 // rodata
 //D:80055340
 //const char aMenu_cErrorTriedToCallFont_makegt[] = "menu.c: ERROR! Tried to call font_makegt\n";
+#endif
 
 
-
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
 void nullsub_32(void) {
     return;
 }
 #endif
 
 void sub_GAME_7F08FE08(s32 param_1) {
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
     num_mcm_something = param_1;
 #endif
 }
@@ -85,7 +85,7 @@ void init_debug_menu_values(char *strings,mcm_layout *positions,u32 *columns)
 
 //*/
 #else
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel init_debug_menu_values
@@ -116,8 +116,7 @@ glabel init_debug_menu_values
 /* 0C499C 7F08FE6C 03E00008 */  jr    $ra
 /* 0C49A0 7F08FE70 AC226B80 */   sw    $v0, %lo(number_groups)($at)
 )
-#endif
-#ifdef VERSION_EU
+#else
 void init_debug_menu_values(char *strings, void *positions,u32 *columns)
 {
 
@@ -186,7 +185,7 @@ s32 print_debug_mcm_to_stdout(s32 arg0)
 
 //*/
 #else
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel print_debug_mcm_to_stdout
@@ -300,11 +299,10 @@ glabel print_debug_mcm_to_stdout
 /* 0C4B34 7F090004 03E00008 */  jr    $ra
 /* 0C4B38 7F090008 27BD0040 */   addiu $sp, $sp, 0x40
 )
-#endif
-#ifdef VERSION_EU
+#else
 s32 print_debug_mcm_to_stdout(s32 arg0)
 {
-
+    return arg0;
 }
 #endif
 #endif
@@ -371,7 +369,7 @@ void sub_GAME_7F09000C(s32 arg0, ? arg1, ? arg2)
 
 //*/
 #else
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
 const char aMenu_cErrorTriedToCallFont_makegt[] = "menu.c: ERROR! Tried to call font_makegt\n";
 GLOBAL_ASM(
 .text
@@ -489,8 +487,7 @@ glabel sub_GAME_7F09000C
 /* 0C4CD8 7F0901A8 03E00008 */  jr    $ra
 /* 0C4CDC 7F0901AC 27BD0040 */   addiu $sp, $sp, 0x40
 )
-#endif
-#ifdef VERSION_EU
+#else
 void sub_GAME_7F09000C(s32 param_1, s32 param_2, s32 param_3)
 {
 
@@ -501,7 +498,7 @@ void sub_GAME_7F09000C(s32 param_1, s32 param_2, s32 param_3)
 
 
 s32 get_highlighted_debug_option(void) {
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
     return highlighted_debug_option;
 #else
     return 0;
@@ -509,7 +506,7 @@ s32 get_highlighted_debug_option(void) {
 }
 
 void set_highlighted_debug_option(s32 value) {
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
     highlighted_debug_option = value;
 #endif
 }
@@ -524,7 +521,7 @@ void gotoAboveDebugOption(void) {
 
 }
 #else
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel gotoAboveDebugOption
@@ -567,8 +564,7 @@ glabel gotoAboveDebugOption
 /* 0C4D70 7F090240 03E00008 */  jr    $ra
 /* 0C4D74 7F090244 00000000 */   nop   
 )
-#endif
-#ifdef VERSION_EU
+#else
 void gotoAboveDebugOption(void)
 {
 
@@ -584,7 +580,7 @@ void gotoBelowDebugOption(void) {
 
 }
 #else
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel gotoBelowDebugOption
@@ -625,8 +621,7 @@ glabel gotoBelowDebugOption
 /* 0C4DE8 7F0902B8 03E00008 */  jr    $ra
 /* 0C4DEC 7F0902BC 00000000 */   nop   
 )
-#endif
-#ifdef VERSION_EU
+#else
 void gotoBelowDebugOption(void)
 {
 
@@ -642,7 +637,7 @@ void gotoRightDebugOption(void) {
 
 }
 #else
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel gotoRightDebugOption
@@ -710,8 +705,7 @@ glabel gotoRightDebugOption
 /* 0C4EC4 7F090394 03E00008 */  jr    $ra
 /* 0C4EC8 7F090398 00000000 */   nop   
 )
-#endif
-#ifdef VERSION_EU
+#else
 void gotoRightDebugOption(void)
 {
 
@@ -727,7 +721,7 @@ void gotoLeftDebugOption(void) {
 
 }
 #else
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel gotoLeftDebugOption
@@ -799,8 +793,7 @@ glabel gotoLeftDebugOption
 /* 0C4FB0 7F090480 03E00008 */  jr    $ra
 /* 0C4FB4 7F090484 00000000 */   nop   
 )
-#endif
-#ifdef VERSION_EU
+#else
 void gotoLeftDebugOption(void)
 {
 

@@ -1,4 +1,6 @@
 #include <ultra64.h>
+#include "include/PR/os.h"
+#include "include/PR/os_internal.h"
 #include "bondgame.h"
 #include "boot.h"
 #include "sched.h"
@@ -7,6 +9,10 @@
 #include "tlb_hardwire.h"
 #include "init.h"
 #include "thread_config.h"
+
+/**
+ * EU .data, offset from start of data_seg : 0x22B0
+*/
 
 /**
  * @file init.c
@@ -19,6 +25,7 @@
  */
 
 #define NUM_FIELDS  1
+
 
 u32 unknown_val_80023040 = 0;
 /*D:80023044*/
@@ -50,9 +57,6 @@ void mainproc(void *args);
 extern u8 * _inflateSegmentStart;
 
 
-u32         osPiGetStatus(void);
-void __osSetFpcCsr(u32);
-u32 __osGetFpcCsr(void);
 /**
  * 1110	70000510
  * ???	initializes TLB index...
@@ -316,15 +320,15 @@ void schedulerInitThread(void)
     osCreateMesgQueue(&gfxFrameMsgQ, &gfxFrameMsgBuf, 32);
     if (osTvType == 2) //OS_TV_MPAL
     { 
-        osCreateScheduler(&sc, &shedThread, OS_VI_MPAL_LAN1, NUM_FIELDS);
+        osCreateScheduler(&os_scheduler, &shedThread, OS_VI_MPAL_LAN1, NUM_FIELDS);
     }
     else 
     {
-        osCreateScheduler(&sc, &shedThread, OS_VI_NTSC_LAN1, NUM_FIELDS);
+        osCreateScheduler(&os_scheduler, &shedThread, OS_VI_NTSC_LAN1, NUM_FIELDS);
 	}
 
-    osScAddClient(&sc, &gfxClient, &gfxFrameMsgQ, 0);
-    sched_cmdQ = osScGetCmdQ(&sc);
+    osScAddClient(&os_scheduler, &gfxClient, &gfxFrameMsgQ, 0);
+    sched_cmdQ = osScGetCmdQ(&os_scheduler);
 }
 
 /**

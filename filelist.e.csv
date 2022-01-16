@@ -1,8 +1,8 @@
 4385440,69104,assets/obseg/bg/bg_sev_all_p.bin,0,0
 4454544,331584,assets/obseg/bg/bg_silo_all_p.bin,0,0
 4786128,139472,assets/obseg/bg/bg_stat_all_p.bin,0,1
-4925600,189312,assets/obseg/bg/bg_arec_all_p.bin,0,1
-5114912,154352,assets/obseg/bg/bg_arch_all_p.bin,0,1
+4925600,189312,assets/obseg/bg/bg_arec_all_p.bin,0,0
+5114912,154352,assets/obseg/bg/bg_arch_all_p.bin,0,0
 5269264,132464,assets/obseg/bg/bg_tra_all_p.bin,0,1
 5401728,186816,assets/obseg/bg/bg_dest_all_p.bin,0,1
 5588544,109984,assets/obseg/bg/bg_sevb_all_p.bin,0,0

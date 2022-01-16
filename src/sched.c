@@ -1,6 +1,5 @@
 #include <ultra64.h>
-#include "libultra/os.h"
-#include "include/PR/os_vi.h"
+#include "include/PR/os.h"
 #include "init.h"
 #include "sched.h"
 #include "bondgame.h"
@@ -10,6 +9,10 @@
 #include "music.h"
 #include "speed_graph.h"
 #include "thread_config.h"
+
+/**
+ * EU .data, offset from start of data_seg : 0x2300
+*/
 
 /**
  * @file sched.c
@@ -50,6 +53,10 @@ u32 stderr_unused = 0;
 u32 stderr_enabled = 0;
 u32 stderr_active = 0;
 u32 stderr_permitted = 0;
+
+/**
+ * EU .data, offset from start of data_seg : 0x2310
+*/
 u32 userCompareValue = 45000000;
 u32 currentcount = 0;
 u32 dp_busy = 0;
@@ -60,12 +67,13 @@ f32 g_ViXScales[NUM_VIDEO_FRAME_BUFFERS] = {1.0, 1.0};
 f32 g_ViYScales[NUM_VIDEO_FRAME_BUFFERS] = {1.0, 1.0};
 s32 g_ViChangeVideoModes[NUM_VIDEO_FRAME_BUFFERS] = {0, 0}; // boolean
 
-OSSched sc;
-//temporary until i get proper sized structs
+OSSched os_scheduler;
 OSScClient gfxClient[3];
-//char gfxClient[0x18];
-
 u32 g_DisplayPerformanceCounters[4]; // clock, cmc, pipe, tmem
+
+/**
+ * EU .bss 0x80051f00.
+*/
 OSViMode g_ViModes[NUM_VIDEO_FRAME_BUFFERS];
 OSViMode *g_ViModePtrs[NUM_VIDEO_FRAME_BUFFERS];
 
@@ -119,10 +127,9 @@ void CheckDisplayErrorBuffer(u32 *buffer)
 }
 
 /**
- * 15F8	700009F8
+ * Address 0x700009F8.
  * test to display stderr every 16th frame
  */
-
 void CheckDisplayErrorBufferEvery16Frames(u32 framecount)
 {
 	if (!(framecount & 0xf))
@@ -131,8 +138,8 @@ void CheckDisplayErrorBufferEvery16Frames(u32 framecount)
         {
 			if (userCompareValue < (osGetCount() - currentcount))
             {
-				deboutDrawToBuffer((u32*)cfb_16[0]);
-				deboutDrawToBuffer((u32*)cfb_16[1]);
+				deboutDrawToBuffer((u16*)cfb_16[0]);
+				deboutDrawToBuffer((u16*)cfb_16[1]);
 			}
 		}
 	}
@@ -143,11 +150,13 @@ void CheckDisplayErrorBufferEvery16Frames(u32 framecount)
  * 1688	70000A88
  * store current Count to 800230A4
  */
-void osCreateLog(void){
+void osCreateLog(void)
+{
 	currentcount=osGetCount();
 }
 
-void osCreateScheduler (OSSched * sc, void * stack, u8 mode, u32 numFields) {
+void osCreateScheduler (OSSched * sc, void * stack, u8 mode, u32 numFields)
+{
     sc->curRSPTask = 0;
     sc->curRDPTask = 0;
     sc->clientList = 0;
@@ -334,7 +343,11 @@ void __scHandleRSP(OSSched *sc) {
     s32 state;
     t = sc->curRSPTask;
     sc->curRSPTask = 0;
+#if defined(VERSION_EU)
+    speedGraphDisplay(0x10001);
+#else
     speedGraphVideoRelated_3(0x10001);
+#endif
     if ((t->state & OS_SC_YIELD) && osSpTaskYielded(&t->list)) {
         t->state |= OS_SC_YIELDED;
         if ((t->flags & OS_SC_TYPE_MASK) == OS_SC_XBUS) {
@@ -364,7 +377,11 @@ void __scHandleRDP(OSSched *sc)
     OSScTask *t, *sp = NULL, *dp = NULL; 
     s32 state;
     if (sc->curRDPTask != NULL) {
-        speedGraphVideoRelated_3(0x10002);
+#if defined(VERSION_EU)
+    speedGraphDisplay(0x10002);
+#else
+    speedGraphVideoRelated_3(0x10002);
+#endif
         osDpGetCounters(g_DisplayPerformanceCounters);
         t = sc->curRDPTask;
         sc->curRDPTask = NULL;
@@ -464,12 +481,21 @@ void __scExec(OSSched *sc, OSScTask *sp, OSScTask *dp)
         
         if (sp->list.t.type == 2)
         {
+#if defined(VERSION_EU)
+            speedGraphDisplay(0x30001);
+#else
             speedGraphVideoRelated_3(0x30001);
+#endif
         }
         else
         {
+#if defined(VERSION_EU)
+            speedGraphDisplay(0x40001);
+            speedGraphDisplay(0x20002);
+#else
             speedGraphVideoRelated_3(0x40001);
             speedGraphVideoRelated_3(0x20002);
+#endif
         }
         sp->state &= ~(OS_SC_YIELD | OS_SC_YIELDED); 
         osSpTaskLoad(&sp->list);

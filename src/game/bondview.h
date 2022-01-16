@@ -482,7 +482,7 @@ struct player
   /* 0x00ec */ f32 apparenthealth;
   /* 0x00f0 */ f32 apparentarmour;
 
-#if defined(VERSION_JP)
+#if defined(VERSION_JP) || defined (VERSION_EU)
 /* 0x00f4 */ f32 damageshowtime;
 /* 0x00f8 */ f32 healthshowtime;
 #else
@@ -745,30 +745,44 @@ struct player
 
   u32 resetheadpos; // bool
   u32 resetheadrot; // bool
-  s32 field_4E4;
-  s32 field_4E8;
+  u32 field_4E4; // bool
+
+  s32 field_4E8; // index into array of pointers. Pointers are for animations.
+
+  // has NTSC<->PAL difference, but not (5/6)
   f32 headdamp;
   s32 field_4F0;
-  s32 field_4F4;
-  s32 field_4F8;
+  f32 field_4F4;
+  f32 field_4F8;
   vec3 headpos;
   vec3 headlook;
+
   vec3 headup;
   vec3 headpossum;
+
+  // headlooksum[2] has NTSC->PAL conversion rate (5/6)
   vec3 headlooksum;
+
+  // headupsum[1] has NTSC->PAL conversion rate (5/6)
   vec3 headupsum;
-  s32 field_544;
-  s32 field_548;
-  s32 field_54C;
-  s32 stationary_ground_offset;
-  s32 field_554;
-  s32 field_558;
-  s32 field_55C;
-  s32 field_560;
+  vec3 field_544;
+  f32 stationary_ground_offset;
+
+  // f32[4] ?? or 2 x f32[2] ??
+  f32 field_554;
+  f32 field_558;
+  f32 field_55C;
+  f32 field_560;
+
+  // offset 0x564
   vec3 standlook[2];
+
+  // offset 0x57C
   vec3 standup[2];
+
+  // offset 0x594
   s32 standcnt;
-  s32 field_598;
+  struct Model *field_598;
   s32 field_59C;
   s32 field_5A0;
   s32 field_5A4;
@@ -781,7 +795,9 @@ struct player
   s8 field_5BD;
   s8 field_5BE;
   s8 field_5BF;
-  s32 field_5C0;
+  
+  f32 field_5C0;
+
   s32 field_5C4;
   s32 field_5C8;
   s32 field_5CC;
@@ -849,21 +865,30 @@ struct player
   s32 field_6C4;
   s32 field_6C8;
   s32 field_6CC;
+
+  // struct? this gets pointed to. Pointer called "mtxlist" takes address of this property.
   s32 field_6D0;
   s32 field_6D4;
   s32 field_6D8;
   s32 field_6DC;
-  s32 field_6E0;
-  s32 field_6E4;
-  s32 field_6E8;
+  
+  f32 field_6E0;
+  f32 field_6E4;
+  f32 field_6E8;
+
   s32 field_6EC;
-  s32 field_6F0;
-  s32 field_6F4;
-  s32 field_6F8;
+  
+  f32 field_6F0;
+  f32 field_6F4;
+  f32 field_6F8;
+
   s32 field_6FC;
-  s32 field_700;
-  s32 field_704;
-  s32 field_708;
+
+
+  f32 field_700;
+  f32 field_704;  // related to stationary_ground_offset
+  f32 field_708;
+
   s32 field_70C;
   s32 field_710;
   s32 field_714;
@@ -878,8 +903,10 @@ struct player
   s32 field_738;
   s32 field_73C;
   s32 field_740;
-  s32 field_744;
-  s32 field_748;
+
+  f32 field_744;
+  f32 field_748;
+
   s32 field_74C;
   s32 field_750;
   s32 field_754;
@@ -2991,9 +3018,8 @@ extern s32 D_80036834;
 //D:80036838
 extern s32 D_80036838;
 //D:8003683C
-extern s32 D_8003683C[];
-//D:80036878
-extern s32 D_80036878;
+extern struct unk_joint_list D_8003683C;
+
 //D:8003687C
 extern s32 D_8003687C;
 //D:80036880
@@ -3023,8 +3049,6 @@ extern s32 display_upper_text_window;
 //D:800368B0
 extern s32 upper_text_window_timer;
 extern s32 D_800368B4;
-//D:800368B8
-extern u16 D_800368B8[];
 /*
 D:800368D8     firing_animation_groups:firing_anim_struct <pistol_firing_animation_group1, 0, 0.1, 79.0, 87.0>
 D:800368D8                                              # DATA XREF: sub_CODE_7F08B0F0+720o
@@ -3095,16 +3119,18 @@ f32 bondviewGetCurrentPlayerHealth(void);
 f32 get_BONDdata_watch_armor(void);
 void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2);
 
-#ifdef VERSION_JP
-// VERSION_JP
+#if defined(BUGFIX_R1)
+#define DISPLAYSTRINGLOWERLEFT jp_display_string_in_lower_left_corner
 void display_string_in_lower_left_corner(char *string, s32 arg1, s32 arg2);
+void jp_display_string_in_lower_left_corner(char *string);
 #else
-// VERSION_US, VERSION_EU
+// VERSION_US
+#define DISPLAYSTRINGLOWERLEFT display_string_in_lower_left_corner
 void display_string_in_lower_left_corner(char *string);
 #endif
 
 Gfx * sub_GAME_7F087A08(Gfx *arg0);
-s32 sub_GAME_7F089F38(void);
+s32 bond_pressed_reload_activate(void);
 Gfx* write_stan_tiles_in_yellow(Gfx *arg0);
 Gfx * maybe_mp_interface(Gfx *arg0);
 Gfx * bondviewRemoved7F08BCB8(Gfx *arg0);
@@ -3151,8 +3177,12 @@ Mtxf *currentPlayerGetMatrix10CC(void);
 void sub_GAME_7F077EEC(struct coord2d *in, struct coord3d *out, f32 value);
 s32 sub_GAME_7F078BF4(struct coord3d *, f32, struct bbox2d *);
 
-// unknown pointer arg0
-s32 sub_GAME_7F08BCC0(void *arg0, s32 arg1);
 void sub_GAME_7F08BD48(Mtxf *arg0, s32 arg1);
+s32 sub_GAME_7F078474(void);
+s32 get_BONDdata_field_10E0(void);
+Mtx *currentPlayerGetProjectionMatrix(void);
+Gfx *bondviewRenderProp(PropRecord *arg0, Gfx *arg1, s32 arg2);
+f32 getPlayer_c_lodscalez(void);
+f32 get_BONDdata_bondfadefracnew(void);
 
 #endif

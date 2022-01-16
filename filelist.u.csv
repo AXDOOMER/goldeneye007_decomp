@@ -4,7 +4,7 @@
 1198784,1482432,assets/animationtable_entries.bin,0,0
 2681216,59360,assets/animationtable_data.bin,0,0
 2740576,2760,assets/ge007.u.29D160.Globalimagetable.bin,0,0
-2745696,26608,assets/ge007.u.29E560.Globalimagetable_commandblock.bin,0,1
+2745696,26608,assets/Globalimagetable_commandblock.bin,0,0
 2772304,107904,assets/ge007.u.2A4D50.usedby7F008DE4.bin,0,1
 2880208,20992,assets/ramrom/ramrom_Dam_1.bin,0,1
 2901200,8144,assets/ramrom/ramrom_Dam_2.bin,0,1
@@ -96,8 +96,8 @@
 4425312,69104,assets/obseg/bg/bg_sev_all_p.bin,0,0
 4494416,331584,assets/obseg/bg/bg_silo_all_p.bin,0,0
 4826000,139472,assets/obseg/bg/bg_stat_all_p.bin,0,1
-4965472,189312,assets/obseg/bg/bg_arec_all_p.bin,0,1
-5154784,154352,assets/obseg/bg/bg_arch_all_p.bin,0,1
+4965472,189312,assets/obseg/bg/bg_arec_all_p.bin,0,0
+5154784,154352,assets/obseg/bg/bg_arch_all_p.bin,0,0
 5309136,132464,assets/obseg/bg/bg_tra_all_p.bin,0,1
 5441600,186816,assets/obseg/bg/bg_dest_all_p.bin,0,1
 5628416,109984,assets/obseg/bg/bg_sevb_all_p.bin,0,0

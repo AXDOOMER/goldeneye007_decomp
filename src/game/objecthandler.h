@@ -3,21 +3,22 @@
 #include "ultra64.h"
 #include "bondtypes.h"
 
+extern s32 D_80036084;
+extern f32 D_80036088;
+extern u32 D_80036250;
 extern s32 D_80036410;
 extern s32 D_80036414;
 extern s32 D_80036418;
 extern s32 D_8003641C;
-extern s32 D_80036084;
-extern f32 D_80036088;
 extern s32 vtxallocator;
 
 // arg0 unknown pointer
 void sub_GAME_7F070090(void *arg0, f32 arg1, f32 arg2);
-void sub_GAME_7F06FF18(struct object_standard *, f32, f32);
+void sub_GAME_7F06FF18(struct Model *, f32, f32);
 void set_obj_instance_controller_scale(struct Model*, f32);
-void getsuboffset(s32, struct coord3d *);
-void sub_GAME_7F070AEC(struct object_standard *, s32, s32);
-void subcalcpos(struct object_standard *);
+void getsuboffset(struct Model *, struct coord3d *);
+void sub_GAME_7F070AEC(struct Model *, s32, s32);
+void subcalcpos(struct Model *);
 
 void objecthandlerAnimationRelated7F06FCA8(struct Model *, struct ModelAnimation *, s32, f32, f32, f32);
 void sub_GAME_7F06FDCC(struct Model *, f32, f32);
@@ -52,7 +53,26 @@ void setpartoffset(Model *, ModelNode *, struct coord3d *);
 void setsuboffset(Model *arg0, struct coord3d *arg1);
 
 // tentative signature
+struct PropRecord *actor_draws_weapon_with_model(struct ChrRecord *arg0, s32 arg1, s32 item_id, s32 flags);
+
+// tentative signature
 Mtxf* sub_GAME_7F06C660(struct Model *arg0, struct ModelNode *arg1, s32 arg2);
+
+// called with struct ChrRecord->field_20
+void sub_GAME_7F06B248(void *arg0);
+void drawjointlist(struct unk_joint_list *arg0, void* arg1);
+void sub_GAME_7F073FC8(s32);
+void sub_GAME_7F0701D4(s32 arg0);
+u32 sub_GAME_7F0701E0(void);
+
+// arg0: unknown type. arg1: unknown type. arg5: unknown type, maybe struct.
+void sub_GAME_7F06D2E4(s32, s32, struct ModelSkeleton*, void* anim, s32, s16*);
+
+// arg2 unknown type.
+void sub_GAME_7F075FAC(struct Model *, struct ModelFileHeader *, void *);
+void sub_GAME_7F06FE3C(Model **, void (*)());
+void subcalcmatrices(struct unk_joint_list *, struct Model *);
+void instcalcmatrices(struct unk_joint_list *arg0, struct Model *arg1);
 
 #ifndef VERSION_EU
 void return_null(void);

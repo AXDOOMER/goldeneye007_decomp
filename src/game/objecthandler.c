@@ -437,6 +437,7 @@ s32 D_80036418 =  0;
 s32 D_8003641C =  0;
 
 
+#if defined(VERSION_US) || defined(VERSION_JP)
 // rodata
 //D:80054420
 const char aDrawjointlistNoGfxlist[] = "drawjointlist: no gfxlist!\n";
@@ -444,6 +445,7 @@ const char aDrawjointlistNoGfxlist[] = "drawjointlist: no gfxlist!\n";
 const char aDrawjointlistNoObject0xX[] = "drawjointlist: no object! (0x%X)\n";
 //D:80054460
 const char aDrawjointlistObjectNotInitialised0[] = "drawjointlist: object not initialised! (0x%X)\n";
+#endif
 
 /*
 */

@@ -51,7 +51,7 @@ extern s32 record_slot_num;
 extern s32 address_demo_loaded;
 extern s32 dword_CODE_bss_8008C5F8;
 
-#ifdef VERSION_JP
+#if defined(BUGFIX_R1)
 extern f32 g_JP_GlobalTimerDelta;
 #endif
 
@@ -70,5 +70,6 @@ void lvlSetControlsLockedFlag(s32 arg0);
 s32 lvlGetControlsLockedFlag(void);
 void lvlSetMultipliersForDifficulty(void);
 s32 lvlGetCurrentStageToLoad(void);
+s32 sub_GAME_7F0BD8F0(void);
 
 #endif

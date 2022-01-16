@@ -208,8 +208,11 @@ typedef struct CartridgeModelFileRecord {
     char * text;
 } CartridgeModelFileRecord;
 
-
+#if defined(VERSION_EU)
+extern char dword_CODE_bss_80075DC8[20][104];
+#else
 extern char dword_CODE_bss_80075DC8[20][160];
+#endif
 
 f32 bondwalkItemGetForceOfImpact(ITEM_IDS item);
 
@@ -251,5 +254,9 @@ void recall_joy2_hits_edit_flag(s32 arg0, struct coord3d *arg1, s32 arg2);
 void sub_GAME_7F05EB0C(ObjectRecord *arg0, struct coord3d *arg1, struct StandTile *arg2, Mtxf *arg3, struct coord3d *arg4, Mtxf *arg5, struct PropRecord *arg6);
 void sub_GAME_7F061948(struct ChrRecord_f180 *arg0, ITEM_IDS item, struct coord3d *arg2, struct coord3d *arg3);
 void sub_GAME_7F068190(struct coord3d *arg0, struct coord3d *arg1);
+
+void inc_curplayer_hitcount_with_weapon(ITEM_IDS item, SHOT_REGISTER shot_register);
+s8 get_hands_firing_status(HANDEDNESS hand);
+void gunFireTankShell(s32 hand);
 
 #endif

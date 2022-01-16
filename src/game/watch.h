@@ -3,6 +3,38 @@
 #include "ultra64.h"
 #include "bondconstants.h"
 
+#ifdef VERSION_EU
+#define XOFFSET_1 65
+#define YOFFSET_1 90
+#define YOFFSET_WEAPTEXT 193
+#define YOFFSET_ACTIONTEXT 172
+#define YOFFSET_4 235
+#define YOFFSET_5 214
+#define YOFFSET_MISSIONSTATUS 0x43
+#define YOFFSET_7 0x33
+#define YOFFSET_8 0x26
+#define YOFFSET_9 0x41
+#define YINC 17
+#define WATCHZOOM1 4.80000019073f
+#define WATCHZOOM2 6.09999990463f
+#define WATCHZOOM3 4.15000009537f
+#else
+#define XOFFSET_1 64
+#define YOFFSET_1 80
+#define YINC 15
+#define YOFFSET_WEAPTEXT 167
+#define YOFFSET_ACTIONTEXT 149
+#define YOFFSET_4 203
+#define YOFFSET_5 185
+#define YOFFSET_MISSIONSTATUS 0x41
+#define YOFFSET_7 0x31
+#define YOFFSET_8 0x25
+#define YOFFSET_9 0x3B
+#define WATCHZOOM1 4.6f
+#define WATCHZOOM2 5.9f
+#define WATCHZOOM3 3.95f
+#endif
+
 typedef enum WATCH_INDEX {
     WATCH_INDEX_MISSION_STATUS = 0,
     WATCH_INDEX_INVENTORY,
@@ -74,7 +106,7 @@ u16 get_mTrack2Vol(void);
 void set_mTrack2Vol(u16 param_1);
 void sub_GAME_7F0A91A0(u16 arg0);
 void cur_player_set_control_type(int type);
-void init_watch_at_start_of_stage(void);
+void init_watch_at_start_of_stage(int a);
 
 Gfx *draw_watch_game_options_page(Gfx *gdl, s32 param_2);
 Gfx *draw_watch_control_options_page(Gfx *gdl, s32 param_2);

@@ -1,21 +1,49 @@
 #include "ultra64.h"
+#include "PR/os.h"
+#include "include/PR/gbi.h"
+#include "include/gbi_extention.h"
+#include "bondconstants.h"
+#include "bondtypes.h"
+#include "game/bg.h"
+#include "game/image_bank.h"
+#include "game/othermodemicrocode.h"
 #include "game/unk_09C250.h"
+#include "game/unk_0BC530.h"
 #include "assets/GlobalImageTable.h"
+
 // bss
 //CODE.bss:8007A100
 char dword_CODE_bss_8007A100[0x40];
-//CODE.bss:8007A140
-struct PropRecord *ptr_smoke_buf;
-//CODE.bss:8007A144
-struct PropRecord *ptr_explosion_buf;
+
+/**
+ * ptr_smoke_buf = mempAllocBytesInBank(0x1FE0, 4);
+ * Address 0x8007A140.
+*/
+struct Smoke *ptr_smoke_buf;
+
+/**
+ * ptr_explosion_buf = mempAllocBytesInBank(0x1740, 4);
+ * Address 0x8007A144.
+*/
+struct Explosion *ptr_explosion_buf;
+
 //CODE.bss:8007A148
 s32 max_casings;
 //CODE.bss:8007A14C
-u8 *ptr_ejected_casing_buf;
-//CODE.bss:8007A150
-u8 *ptr_scorch_buf;
-//CODE.bss:8007A154
-u8 *ptr_bullet_impact_buf;
+struct EjectedCasing *ptr_ejected_casing_buf;
+
+/**
+ * ptr_scorch_buf = mempAllocBytesInBank(0x6E0, 4);
+ * sizeof each entry == 0x58
+ * Address 0x8007A150.
+*/
+struct Scorch *ptr_scorch_buf;
+
+/**
+ * ptr_bullet_impact_buf = mempAllocBytesInBank(0x1F40, 4);
+ * Address 0x8007A154.
+*/
+struct BulletImpact *ptr_bullet_impact_buf;
 
 // data
 //D:80040170
@@ -24,6 +52,23 @@ s32 numExplosionEntries = 0;
 s32 numSmokeEntries = 0;
 //D:80040178
 f32 D_80040178 = 1.0;
+
+#if defined(VERSION_EU)
+s_smoketype array_smoke_types[] = {
+    // dur,   appr,    dis,   size,    bgrate,             r,  g,    b,    fgrate,         propclouds
+    { 0x0001, 0x0032, 0x0063, 0x0000, 0.0f,              0x80, 0x80, 0x80, 0.300000011921f, 0x0096 },
+    { 0x0190, 0x0032, 0x0025, 0x003C, 0.019999999553f,   0x50, 0x50, 0x60, 0.300000011921f, 0x0096 },
+    { 0x0190, 0x0032, 0x002A, 0x0014, 0.00999999977648f, 0x80, 0x80, 0x80, 0.300000011921f, 0x0096 },
+    { 0x020D, 0x0032, 0x0064, 0x0064, 0.00999999977648f, 0xC0, 0xC0, 0xC0, 0.300000011921f, 0x0096 },
+    { 0x020D, 0x0032, 0x0032, 0x0050, 0.019999999553f,   0x40, 0x40, 0x40, 0.300000011921f, 0x0096 },
+    { 0x0280, 0x0032, 0x002A, 0x00BE, 0.15000000596f,    0x40, 0x40, 0x40, 0.300000011921f, 0x0096 },
+    { 0x02EE, 0x0032, 0x003A, 0x012C, 0.00999999977648f, 0x40, 0x40, 0x40, 0.300000011921f, 0x0096 },
+    { 0x0032, 0x0032, 0x0007, 0x000F, 0.0299999993294f,  0xFF, 0xFF, 0xFF, 0.300000011921f, 0x0096 },
+    { 0x0011, 0x0001, 0x0005, 0x001E, 0.0299999993294f,  0xFF, 0xFF, 0xFF, 2.0f,            0x0019 },
+    { 0x0015, 0x0001, 0x0006, 0x0010, 0.0299999993294f,  0xE0, 0xE0, 0xE0, 3.0f,            0x0019 },
+    { 0x02EE, 0x0032, 0x003A, 0x0384, 0.00999999977648f, 0x40, 0x40, 0x40, 0.300000011921f, 0x0096 }
+};
+#else
 //D:8004017C
 s_smoketype array_smoke_types[] = {
    // dur, appr, dis,size, bgrate,   r,  g,    b, fgrate, propclouds
@@ -39,6 +84,34 @@ s_smoketype array_smoke_types[] = {
     {  25,    1,   7,  16,  0.03f, 224, 224, 224,   3.0f,      30},
     { 900,   60,  70, 900,  0.01f,  64,  64,  64,   0.3f,     180}
 };
+#endif
+
+#if defined(VERSION_EU)
+s_explosiontype array_explosion_types[] = {
+   //hrange, vrange,    hchg,               vchg,           expsize, exprang, dmgrang,   dur, proprate, flarespd, nbits,  bitsize, bitdist, bithvel, bitvvel, smoketype,             sndid, damage
+    {  0.1f,   0.1f,    0.0f,               0.0f,                   0.1f,    0.0f,    0.0f,     1,        1,     1.0f,     0,     0.1f,    0.0f,    0.0f,    0.0f,         0,              0x00,   0.0f},
+    {  1.0f,   1.0f,    0.0f,               0.0f,                   1.0f,    0.0f,    0.0f,    25,        1,     1.0f,    10,     5.0f,    0.0f,    2.0f,    6.0f,         7,              0x00,   0.0f},
+    { 20.0f,  20.0f,    0.0f,               0.0f,                  30.0f,   50.0f,   50.0f,    67,        1,     3.0f,    40,     6.0f,    5.0f,    0.7f,    6.0f,         2,  EXPLOSION_1B_SFX, 0.125f},
+    { 50.0f,  50.0f,    0.0f,               0.0f,                  50.0f,  100.0f,  100.0f,    75,        1,     4.0f,    50,     6.0f,   10.0f,    1.0f,    6.0f,         2,  EXPLOSION_1C_SFX,   0.5f},
+    { 60.0f,  80.0f,    1.20000004768f,     0.360000014305f,      100.0f,  150.0f,  280.0f,   100,        2,     5.0f,    80,     8.0f,   30.0f,    2.0f,    6.0f,         1,  EXPLOSION_4A_SFX,   1.0f},
+    { 60.0f, 120.0f,    1.20000004768f,     0.360000014305f,      150.0f,  200.0f,  310.0f,   100,        2,     5.0f,    80,     8.0f,   30.0f,    2.0f,    6.0f,         1,  EXPLOSION_4A_SFX,   2.0f},
+    { 20.0f,  20.0f,    0.0f,               0.0f,                  22.0f,   40.0f,   40.0f,    67,        1,     3.0f,    40,     6.0f,    5.0f,    0.7f,    6.0f,         2,  EXPLOSION_1B_SFX,   0.5f},
+    { 35.0f,  40.0f,    0.0f,               0.0f,                  35.0f,   70.0f,   70.0f,    75,        1,     4.0f,    50,     6.0f,   10.0f,    1.0f,    6.0f,         2,  EXPLOSION_1C_SFX,   1.0f},
+    { 50.0f,  80.0f,    1.20000004768f,     0.360000014305f,       50.0f,  100.0f,  220.0f,   100,        2,     5.0f,    80,     8.0f,   30.0f,    2.0f,    6.0f,         1,  EXPLOSION_4A_SFX,   2.0f},
+    { 60.0f, 120.0f,    1.20000004768f,     0.360000014305f,       50.0f,  130.0f,  230.0f,   100,        2,     5.0f,    80,     8.0f,   30.0f,    2.0f,    6.0f,         1,  EXPLOSION_4A_SFX,   2.0f},
+    { 40.0f,  40.0f,    0.5f,               0.239999994635582f,    70.0f,  100.0f,  180.0f,   162,        4,     5.0f,   120,     6.0f,   30.0f,    2.5f,    6.0f,         4,  EXPLOSION_5A_SFX,   1.0f},
+    { 50.0f,  50.0f,    0.699999988079071f, 0.5f,                 100.0f,  150.0f,  260.0f,   150,        1,     4.0f,   150,     6.0f,   30.0f,    3.0f,    6.0f,         4,  EXPLOSION_4A_SFX,   2.0f},
+    { 70.0f,  60.0f,    1.20000004768372f,  0.699999988079071f,   150.0f,  225.0f,  320.0f,   150,        2,     5.0f,   150,     6.0f,   30.0f,    4.0f,   12.0f,         5,  EXPLOSION_4A_SFX,   4.0f},
+    { 80.0f,  60.0f,    2.40000009536743f,  0.899999976158142f,   200.0f,  300.0f,  480.0f,   150,        2,     5.0f,   200,     6.0f,   30.0f,    6.0f,   15.0f,         6,  EXPLOSION_4B_SFX,   4.0f},
+    { 50.0f,  50.0f,    0.0f,               0.0f,                 120.0f,  200.0f,  400.0f,   125,        4,     4.0f,   150,     6.0f,   30.0f,    3.0f,    6.0f,         4,  EXPLOSION_4B_SFX,   4.0f},
+    {  1.0f,   1.0f,    0.0f,               0.0f,                   1.0f,    0.0f,    0.0f,     1,        1,     1.0f,   150,     6.0f,   30.0f,    2.5f,    6.0f,         7,  EXPLOSION_2B_SFX,   0.0f},
+    {  1.0f,   1.0f,    0.0f,               0.0f,                   1.0f,    0.0f,    0.0f,     1,        1,     1.0f,   100,     6.0f,   30.0f,    2.5f,    6.0f,         7,  EXPLOSION_2B_SFX,   0.0f},
+    { 80.0f,  60.0f,   18.0f,               6.0f,                1500.0f, 2200.0f, 3600.0f,   250,        1,     2.0f,     0,     0.0f,    0.0f,    0.0f,    0.0f,         0,  EXPLOSION_4B_SFX,   4.0f},
+    { 80.0f,  60.0f,    3.59999990463257f,  1.20000004768372f,    300.0f,  450.0f,  640.0f,    50,        1,     2.0f,     0,     0.0f,    0.0f,    0.0f,    0.0f,         0,  EXPLOSION_4B_SFX,   4.0f},
+    { 90.0f,  75.0f,    3.0f,               1.0f,                 250.0f,  375.0f,  600.0f,   150,        2,     5.0f,   200,     6.0f,   30.0f,    6.0f,   15.0f,         6,  EXPLOSION_4B_SFX,   4.0f},
+    {160.0f, 120.0f,    7.19999980926514f,  2.40000009536743f,    600.0f,  450.0f,  640.0f,    50,        1,     2.0f,     0,     0.0f,    0.0f,    0.0f,    0.0f,         0,  EXPLOSION_4B_SFX,   4.0f},
+};
+#else
 s_explosiontype array_explosion_types[] = {
    //hrange, vrange,    hchg,  vchg,  expsize, exprang, dmgrang,   dur, proprate, flarespd, nbits,  bitsize, bitdist, bithvel, bitvvel, smoketype,             sndid, damage
     {  0.1f,   0.1f,    0.0f,  0.0f,     0.1f,    0.0f,    0.0f,     1,        1,     1.0f,     0,     0.1f,    0.0f,    0.0f,    0.0f,         0,              0x00,   0.0f},
@@ -63,6 +136,7 @@ s_explosiontype array_explosion_types[] = {
     { 90.0f,  75.0f,    2.5f, 0.87f,   250.0f,  375.0f,  600.0f,   180,        2,     5.0f,   200,     6.0f,   30.0f,    6.0f,   15.0f,         6,  EXPLOSION_4B_SFX,   4.0f},
     {160.0f, 120.0f,    6.0f,  2.0f,   600.0f,  450.0f,  640.0f,    60,        1,     2.0f,     0,     0.0f,    0.0f,    0.0f,    0.0f,         0,  EXPLOSION_4B_SFX,   4.0f},
 };
+#endif
 
 u32 array_explosion_dl_ptrs[] = {
     &globalDL_0x078,
@@ -81,9 +155,9 @@ u32 array_explosion_dl_ptrs[] = {
     &globalDL_0x900,
     &globalDL_0x9a8       
 };
-u32 numCasingEntries = 0;
-u32 numScorchEntries = 0;
-u32 numImpactEntries = 0;
+s32 numCasingEntries = 0;
+s32 numScorchEntries = 0;
+s32 numImpactEntries = 0;
 //D:8004080C
 s_impacttype D_8004080C[] = {
     {10.0f, 10.0f, 1, 2, 8},
@@ -1266,7 +1340,7 @@ glabel sub_GAME_7F09C9D8
 /* 0D1570 7F09CA40 14200119 */  bnez  $at, .L7F09CEA8
 /* 0D1574 7F09CA44 01F8B021 */   addu  $s6, $t7, $t8
 /* 0D1578 7F09CA48 27B000E0 */  addiu $s0, $sp, 0xe0
-/* 0D157C 7F09CA4C 0FC0F2E3 */  jal   sub_GAME_7F03CB8C
+/* 0D157C 7F09CA4C 0FC0F2E3 */  jal   chraiGetPropRoomIds
 /* 0D1580 7F09CA50 02002825 */   move  $a1, $s0
 /* 0D1584 7F09CA54 0FC0F8FF */  jal   sub_GAME_7F03E3FC
 /* 0D1588 7F09CA58 02002025 */   move  $a0, $s0
@@ -2089,13 +2163,13 @@ glabel sub_GAME_7F09D4EC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F09D5A0(void) {
+void unk09c250RenderPropExplosion(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F09D5A0
+glabel unk09c250RenderPropExplosion
 /* 0D20D0 7F09D5A0 27BDFF70 */  addiu $sp, $sp, -0x90
 /* 0D20D4 7F09D5A4 AFB0001C */  sw    $s0, 0x1c($sp)
 /* 0D20D8 7F09D5A8 AFBF003C */  sw    $ra, 0x3c($sp)
@@ -2128,12 +2202,12 @@ glabel sub_GAME_7F09D5A0
 /* 0D2140 7F09D610 8FA50070 */  lw    $a1, 0x70($sp)
 /* 0D2144 7F09D614 8FA60074 */  lw    $a2, 0x74($sp)
 /* 0D2148 7F09D618 8FA70078 */  lw    $a3, 0x78($sp)
-/* 0D214C 7F09D61C 0FC2D3FD */  jal   sub_GAME_7F0B4FF4
+/* 0D214C 7F09D61C 0FC2D3FD */  jal   bgScissorCurrentPlayerViewF
 /* 0D2150 7F09D620 E7A40010 */   swc1  $f4, 0x10($sp)
 /* 0D2154 7F09D624 10000004 */  b     .L7F09D638
 /* 0D2158 7F09D628 0040A025 */   move  $s4, $v0
 .L7F09D62C:
-/* 0D215C 7F09D62C 0FC2D3ED */  jal   sub_GAME_7F0B4FB4
+/* 0D215C 7F09D62C 0FC2D3ED */  jal   bgScissorCurrentPlayerViewDefault
 /* 0D2160 7F09D630 02802025 */   move  $a0, $s4
 /* 0D2164 7F09D634 0040A025 */  move  $s4, $v0
 .L7F09D638:
@@ -3979,13 +4053,13 @@ glabel sub_GAME_7F09EF9C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F09F03C(void) {
+void unk09c250RenderPropSmoke(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F09F03C
+glabel unk09c250RenderPropSmoke
 /* 0D3B6C 7F09F03C 27BDFF70 */  addiu $sp, $sp, -0x90
 /* 0D3B70 7F09F040 AFB00024 */  sw    $s0, 0x24($sp)
 /* 0D3B74 7F09F044 AFBF003C */  sw    $ra, 0x3c($sp)
@@ -4017,12 +4091,12 @@ glabel sub_GAME_7F09F03C
 /* 0D3BD8 7F09F0A8 8FA50078 */  lw    $a1, 0x78($sp)
 /* 0D3BDC 7F09F0AC 8FA6007C */  lw    $a2, 0x7c($sp)
 /* 0D3BE0 7F09F0B0 8FA70080 */  lw    $a3, 0x80($sp)
-/* 0D3BE4 7F09F0B4 0FC2D3FD */  jal   sub_GAME_7F0B4FF4
+/* 0D3BE4 7F09F0B4 0FC2D3FD */  jal   bgScissorCurrentPlayerViewF
 /* 0D3BE8 7F09F0B8 E7A40010 */   swc1  $f4, 0x10($sp)
 /* 0D3BEC 7F09F0BC 10000004 */  b     .L7F09F0D0
 /* 0D3BF0 7F09F0C0 00409025 */   move  $s2, $v0
 .L7F09F0C4:
-/* 0D3BF4 7F09F0C4 0FC2D3ED */  jal   sub_GAME_7F0B4FB4
+/* 0D3BF4 7F09F0C4 0FC2D3ED */  jal   bgScissorCurrentPlayerViewDefault
 /* 0D3BF8 7F09F0C8 02402025 */   move  $a0, $s2
 /* 0D3BFC 7F09F0CC 00409025 */  move  $s2, $v0
 .L7F09F0D0:
@@ -5822,133 +5896,62 @@ glabel sub_GAME_7F0A027C
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0A0AB4(void) {
+/**
+ * Address 0x7F0A0AB4.
+*/
+Gfx *sub_GAME_7F0A0AB4(Gfx *arg0)
+{
+    //temp_t6 = arg0;
+    s32 i;
+    s32 phi_s3 = -1;
 
+    if (getPlayerCount() >= 2)
+    {
+        return arg0;
+    }
+    else
+    {
+        gSPSetGeometryMode(arg0++, G_CULL_BACK);
+        gSPClearGeometryMode(arg0++, G_CULL_FRONT | G_FOG);
+        gDPSetColorDither(arg0++, G_CD_NOISE);
+
+        likely_generate_DL_for_image_declaration(&arg0, genericimage, 4, 1, 2);
+
+        for (i=0; i<20; i++)
+        {
+            if (ptr_scorch_buf[i].roomid >= 0 && getROOMID_Bitflags(ptr_scorch_buf[i].roomid))
+            {
+                if (phi_s3 != ptr_scorch_buf[i].roomid)
+                {
+                    phi_s3 = ptr_scorch_buf[i].roomid;
+                    arg0 = sub_GAME_7F0BC9C4(arg0, ptr_scorch_buf[i].roomid);
+                }
+
+                /**
+                 * Loads into the RSP vertex buffer the vertices that will be used by the gSP1Triangle commands that generates polygons. 
+                 * 
+                 * param v: the segment address of vertex list. 
+                 * param n: the number of vertices (1~32) 
+                 * param v0: Starting index in vertex buffer where vertices are to be loaded 
+                 * gSPVertex(Gfx *gdl, Vtx *v, u32 n, u32 v0)
+                */
+                gSPVertex(arg0++, osVirtualToPhysical((void*)ptr_scorch_buf[i].vertex_list), 4, 0);
+
+                {
+                    // todo/fixme
+                    // should use gSP2Triangles from include/gbi_extention.h (typo: extension)
+                    Gfx *_g = (Gfx *)(arg0++); _g->words.w0 = 0xB1000032; _g->words.w1 = 0x2010;
+                    // or ??
+                    //gDma1p(arg0++, 0xb1, 0x2010, 0x32, 0);
+                }
+            }
+        }
+
+        gDPSetColorDither(arg0++, G_CD_BAYER);
+    }
+
+    return arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A0AB4
-/* 0D55E4 7F0A0AB4 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 0D55E8 7F0A0AB8 AFBF003C */  sw    $ra, 0x3c($sp)
-/* 0D55EC 7F0A0ABC AFB30028 */  sw    $s3, 0x28($sp)
-/* 0D55F0 7F0A0AC0 AFB70038 */  sw    $s7, 0x38($sp)
-/* 0D55F4 7F0A0AC4 AFB60034 */  sw    $s6, 0x34($sp)
-/* 0D55F8 7F0A0AC8 AFB50030 */  sw    $s5, 0x30($sp)
-/* 0D55FC 7F0A0ACC AFB4002C */  sw    $s4, 0x2c($sp)
-/* 0D5600 7F0A0AD0 AFB20024 */  sw    $s2, 0x24($sp)
-/* 0D5604 7F0A0AD4 AFB10020 */  sw    $s1, 0x20($sp)
-/* 0D5608 7F0A0AD8 AFB0001C */  sw    $s0, 0x1c($sp)
-/* 0D560C 7F0A0ADC AFA40040 */  sw    $a0, 0x40($sp)
-/* 0D5610 7F0A0AE0 0FC26919 */  jal   getPlayerCount
-/* 0D5614 7F0A0AE4 2413FFFF */   li    $s3, -1
-/* 0D5618 7F0A0AE8 28410002 */  slti  $at, $v0, 2
-/* 0D561C 7F0A0AEC 14200003 */  bnez  $at, .L7F0A0AFC
-/* 0D5620 7F0A0AF0 8FAE0040 */   lw    $t6, 0x40($sp)
-/* 0D5624 7F0A0AF4 10000054 */  b     .L7F0A0C48
-/* 0D5628 7F0A0AF8 8FA20040 */   lw    $v0, 0x40($sp)
-.L7F0A0AFC:
-/* 0D562C 7F0A0AFC 25CF0008 */  addiu $t7, $t6, 8
-/* 0D5630 7F0A0B00 AFAF0040 */  sw    $t7, 0x40($sp)
-/* 0D5634 7F0A0B04 3C18B700 */  lui   $t8, 0xb700
-/* 0D5638 7F0A0B08 24192000 */  li    $t9, 8192
-/* 0D563C 7F0A0B0C ADD90004 */  sw    $t9, 4($t6)
-/* 0D5640 7F0A0B10 ADD80000 */  sw    $t8, ($t6)
-/* 0D5644 7F0A0B14 8FA90040 */  lw    $t1, 0x40($sp)
-/* 0D5648 7F0A0B18 3C0C0001 */  lui   $t4, (0x00011000 >> 16) # lui $t4, 1
-/* 0D564C 7F0A0B1C 358C1000 */  ori   $t4, (0x00011000 & 0xFFFF) # ori $t4, $t4, 0x1000
-/* 0D5650 7F0A0B20 252A0008 */  addiu $t2, $t1, 8
-/* 0D5654 7F0A0B24 AFAA0040 */  sw    $t2, 0x40($sp)
-/* 0D5658 7F0A0B28 3C0BB600 */  lui   $t3, 0xb600
-/* 0D565C 7F0A0B2C AD2B0000 */  sw    $t3, ($t1)
-/* 0D5660 7F0A0B30 AD2C0004 */  sw    $t4, 4($t1)
-/* 0D5664 7F0A0B34 8FAD0040 */  lw    $t5, 0x40($sp)
-/* 0D5668 7F0A0B38 3C0FBA00 */  lui   $t7, (0xBA000602 >> 16) # lui $t7, 0xba00
-/* 0D566C 7F0A0B3C 35EF0602 */  ori   $t7, (0xBA000602 & 0xFFFF) # ori $t7, $t7, 0x602
-/* 0D5670 7F0A0B40 25AE0008 */  addiu $t6, $t5, 8
-/* 0D5674 7F0A0B44 AFAE0040 */  sw    $t6, 0x40($sp)
-/* 0D5678 7F0A0B48 24180080 */  li    $t8, 128
-/* 0D567C 7F0A0B4C 24190002 */  li    $t9, 2
-/* 0D5680 7F0A0B50 3C058009 */  lui   $a1, %hi(genericimage)
-/* 0D5684 7F0A0B54 ADB80004 */  sw    $t8, 4($t5)
-/* 0D5688 7F0A0B58 ADAF0000 */  sw    $t7, ($t5)
-/* 0D568C 7F0A0B5C AFB90010 */  sw    $t9, 0x10($sp)
-/* 0D5690 7F0A0B60 8CA5D0B8 */  lw    $a1, %lo(genericimage)($a1)
-/* 0D5694 7F0A0B64 27A40040 */  addiu $a0, $sp, 0x40
-/* 0D5698 7F0A0B68 24060004 */  li    $a2, 4
-/* 0D569C 7F0A0B6C 0FC1DB5A */  jal   likely_generate_DL_for_image_declaration
-/* 0D56A0 7F0A0B70 24070001 */   li    $a3, 1
-/* 0D56A4 7F0A0B74 3C15B100 */  lui   $s5, (0xB1000032 >> 16) # lui $s5, 0xb100
-/* 0D56A8 7F0A0B78 3C140430 */  lui   $s4, (0x04300040 >> 16) # lui $s4, 0x430
-/* 0D56AC 7F0A0B7C 3C128008 */  lui   $s2, %hi(ptr_scorch_buf)
-/* 0D56B0 7F0A0B80 2652A150 */  addiu $s2, %lo(ptr_scorch_buf) # addiu $s2, $s2, -0x5eb0
-/* 0D56B4 7F0A0B84 36940040 */  ori   $s4, (0x04300040 & 0xFFFF) # ori $s4, $s4, 0x40
-/* 0D56B8 7F0A0B88 36B50032 */  ori   $s5, (0xB1000032 & 0xFFFF) # ori $s5, $s5, 0x32
-/* 0D56BC 7F0A0B8C 00008025 */  move  $s0, $zero
-/* 0D56C0 7F0A0B90 241706E0 */  li    $s7, 1760
-/* 0D56C4 7F0A0B94 24162010 */  li    $s6, 8208
-/* 0D56C8 7F0A0B98 8E490000 */  lw    $t1, ($s2)
-.L7F0A0B9C:
-/* 0D56CC 7F0A0B9C 01305021 */  addu  $t2, $t1, $s0
-/* 0D56D0 7F0A0BA0 85450000 */  lh    $a1, ($t2)
-/* 0D56D4 7F0A0BA4 04A2001D */  bltzl $a1, .L7F0A0C1C
-/* 0D56D8 7F0A0BA8 26100058 */   addiu $s0, $s0, 0x58
-/* 0D56DC 7F0A0BAC 0FC2D794 */  jal   getROOMID_Bitflags
-/* 0D56E0 7F0A0BB0 00A02025 */   move  $a0, $a1
-/* 0D56E4 7F0A0BB4 50400019 */  beql  $v0, $zero, .L7F0A0C1C
-/* 0D56E8 7F0A0BB8 26100058 */   addiu $s0, $s0, 0x58
-/* 0D56EC 7F0A0BBC 8E4B0000 */  lw    $t3, ($s2)
-/* 0D56F0 7F0A0BC0 8FA40040 */  lw    $a0, 0x40($sp)
-/* 0D56F4 7F0A0BC4 01706021 */  addu  $t4, $t3, $s0
-/* 0D56F8 7F0A0BC8 85850000 */  lh    $a1, ($t4)
-/* 0D56FC 7F0A0BCC 52650005 */  beql  $s3, $a1, .L7F0A0BE4
-/* 0D5700 7F0A0BD0 8FB10040 */   lw    $s1, 0x40($sp)
-/* 0D5704 7F0A0BD4 0FC2F271 */  jal   sub_GAME_7F0BC9C4
-/* 0D5708 7F0A0BD8 00A09825 */   move  $s3, $a1
-/* 0D570C 7F0A0BDC AFA20040 */  sw    $v0, 0x40($sp)
-/* 0D5710 7F0A0BE0 8FB10040 */  lw    $s1, 0x40($sp)
-.L7F0A0BE4:
-/* 0D5714 7F0A0BE4 262E0008 */  addiu $t6, $s1, 8
-/* 0D5718 7F0A0BE8 AFAE0040 */  sw    $t6, 0x40($sp)
-/* 0D571C 7F0A0BEC AE340000 */  sw    $s4, ($s1)
-/* 0D5720 7F0A0BF0 8E4F0000 */  lw    $t7, ($s2)
-/* 0D5724 7F0A0BF4 01F02021 */  addu  $a0, $t7, $s0
-/* 0D5728 7F0A0BF8 0C003A2C */  jal   osVirtualToPhysical
-/* 0D572C 7F0A0BFC 24840018 */   addiu $a0, $a0, 0x18
-/* 0D5730 7F0A0C00 AE220004 */  sw    $v0, 4($s1)
-/* 0D5734 7F0A0C04 8FB80040 */  lw    $t8, 0x40($sp)
-/* 0D5738 7F0A0C08 27190008 */  addiu $t9, $t8, 8
-/* 0D573C 7F0A0C0C AFB90040 */  sw    $t9, 0x40($sp)
-/* 0D5740 7F0A0C10 AF160004 */  sw    $s6, 4($t8)
-/* 0D5744 7F0A0C14 AF150000 */  sw    $s5, ($t8)
-/* 0D5748 7F0A0C18 26100058 */  addiu $s0, $s0, 0x58
-.L7F0A0C1C:
-/* 0D574C 7F0A0C1C 5617FFDF */  bnel  $s0, $s7, .L7F0A0B9C
-/* 0D5750 7F0A0C20 8E490000 */   lw    $t1, ($s2)
-/* 0D5754 7F0A0C24 8FA90040 */  lw    $t1, 0x40($sp)
-/* 0D5758 7F0A0C28 3C0BBA00 */  lui   $t3, (0xBA000602 >> 16) # lui $t3, 0xba00
-/* 0D575C 7F0A0C2C 356B0602 */  ori   $t3, (0xBA000602 & 0xFFFF) # ori $t3, $t3, 0x602
-/* 0D5760 7F0A0C30 252A0008 */  addiu $t2, $t1, 8
-/* 0D5764 7F0A0C34 AFAA0040 */  sw    $t2, 0x40($sp)
-/* 0D5768 7F0A0C38 240C0040 */  li    $t4, 64
-/* 0D576C 7F0A0C3C AD2C0004 */  sw    $t4, 4($t1)
-/* 0D5770 7F0A0C40 AD2B0000 */  sw    $t3, ($t1)
-/* 0D5774 7F0A0C44 8FA20040 */  lw    $v0, 0x40($sp)
-.L7F0A0C48:
-/* 0D5778 7F0A0C48 8FBF003C */  lw    $ra, 0x3c($sp)
-/* 0D577C 7F0A0C4C 8FB0001C */  lw    $s0, 0x1c($sp)
-/* 0D5780 7F0A0C50 8FB10020 */  lw    $s1, 0x20($sp)
-/* 0D5784 7F0A0C54 8FB20024 */  lw    $s2, 0x24($sp)
-/* 0D5788 7F0A0C58 8FB30028 */  lw    $s3, 0x28($sp)
-/* 0D578C 7F0A0C5C 8FB4002C */  lw    $s4, 0x2c($sp)
-/* 0D5790 7F0A0C60 8FB50030 */  lw    $s5, 0x30($sp)
-/* 0D5794 7F0A0C64 8FB60034 */  lw    $s6, 0x34($sp)
-/* 0D5798 7F0A0C68 8FB70038 */  lw    $s7, 0x38($sp)
-/* 0D579C 7F0A0C6C 03E00008 */  jr    $ra
-/* 0D57A0 7F0A0C70 27BD0040 */   addiu $sp, $sp, 0x40
-)
-#endif
 
 
 
@@ -7157,9 +7160,9 @@ glabel sub_GAME_7F0A1A94
 
 
 
-void sub_GAME_7F0A1D78(u32 *param_1)
+Gfx * sub_GAME_7F0A1D78(Gfx *arg0)
 {
-    sub_GAME_7F0A1A94(param_1,0,0);
+    return sub_GAME_7F0A1A94(arg0, NULL, 0);
 }
 
 

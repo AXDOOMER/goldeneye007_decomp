@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "game/ob.h"
+#include "deb.h"
 #include "memp.h"
 #include "assets/obseg/obseg.h"
 #include "game/decompress.h"
@@ -8,7 +9,12 @@
 
 //bss
 //800888b0
-struct resource_lookup_data_entry resource_lookup_data_array[736];
+#ifdef VERSION_EU
+/* EU is actually larger here */
+struct resource_lookup_data_entry resource_lookup_data_array[0x30c]; /* 0x30c = 780 */
+#else
+struct resource_lookup_data_entry resource_lookup_data_array[0x2e0]; /* 0x2e0 = 736 */
+#endif
 
 // data
 //D:80046050
@@ -158,17 +164,70 @@ glabel obInitDebugNoticeList
 #endif
 
 
+#if defined(VERSION_EU)
+/* VERSION_EU only */
+GLOBAL_ASM(
+.text
+glabel sub_GAME_7F0BC0BC
+/* 0EEAAC 7F0BC0BC 27BDFFE8 */  addiu $sp, $sp, -0x18
+/* 0EEAB0 7F0BC0C0 AFBF0014 */  sw    $ra, 0x14($sp)
+/* 0EEAB4 7F0BC0C4 AFA5001C */  sw    $a1, 0x1c($sp)
+/* 0EEAB8 7F0BC0C8 AFA60020 */  sw    $a2, 0x20($sp)
+/* 0EEABC 7F0BC0CC 0FC2F183 */  jal   get_index_num_of_named_resource
+/* 0EEAC0 7F0BC0D0 AFA70024 */   sw    $a3, 0x24($sp)
+/* 0EEAC4 7F0BC0D4 0002C080 */  sll   $t8, $v0, 2
+/* 0EEAC8 7F0BC0D8 0302C021 */  addu  $t8, $t8, $v0
+/* 0EEACC 7F0BC0DC 0018C080 */  sll   $t8, $t8, 2
+/* 0EEAD0 7F0BC0E0 3C038007 */  lui   $v1, 0x8007
+/* 0EEAD4 7F0BC0E4 00781821 */  addu  $v1, $v1, $t8
+/* 0EEAD8 7F0BC0E8 8C63F920 */  lw    $v1, -0x6e0($v1)
+/* 0EEADC 7F0BC0EC 00027080 */  sll   $t6, $v0, 2
+/* 0EEAE0 7F0BC0F0 01C27023 */  subu  $t6, $t6, $v0
+/* 0EEAE4 7F0BC0F4 3C0F8004 */  lui   $t7, %hi(file_resource_table) # $t7, 0x8004
+/* 0EEAE8 7F0BC0F8 25EFEAC4 */  addiu $t7, %lo(file_resource_table) # addiu $t7, $t7, -0x153c
+/* 0EEAEC 7F0BC0FC 000E7080 */  sll   $t6, $t6, 2
+/* 0EEAF0 7F0BC100 8FA60024 */  lw    $a2, 0x24($sp)
+/* 0EEAF4 7F0BC104 8FA80020 */  lw    $t0, 0x20($sp)
+/* 0EEAF8 7F0BC108 1060000C */  beqz  $v1, .L7F0BC13C
+/* 0EEAFC 7F0BC10C 01CF3821 */   addu  $a3, $t6, $t7
+/* 0EEB00 7F0BC110 0106C821 */  addu  $t9, $t0, $a2
+/* 0EEB04 7F0BC114 2469000F */  addiu $t1, $v1, 0xf
+/* 0EEB08 7F0BC118 0139082B */  sltu  $at, $t1, $t9
+/* 0EEB0C 7F0BC11C 50200004 */  beql  $at, $zero, .L7F0BC130
+/* 0EEB10 7F0BC120 8CEA0008 */   lw    $t2, 8($a3)
+.L7F0BC124:
+/* 0EEB14 7F0BC124 1000FFFF */  b     .L7F0BC124
+/* 0EEB18 7F0BC128 00000000 */   nop   
+/* 0EEB1C 7F0BC12C 8CEA0008 */  lw    $t2, 8($a3)
+.L7F0BC130:
+/* 0EEB20 7F0BC130 8FA4001C */  lw    $a0, 0x1c($sp)
+/* 0EEB24 7F0BC134 0C00140F */  jal   romCopy
+/* 0EEB28 7F0BC138 01482821 */   addu  $a1, $t2, $t0
+.L7F0BC13C:
+/* 0EEB2C 7F0BC13C 8FBF0014 */  lw    $ra, 0x14($sp)
+/* 0EEB30 7F0BC140 27BD0018 */  addiu $sp, $sp, 0x18
+/* 0EEB34 7F0BC144 03E00008 */  jr    $ra
+/* 0EEB38 7F0BC148 00000000 */   nop   
+)
+#endif
 
 
 
-
-void _load_rom_index_to_membank(s32 index,s32 param_2,s32 size,u8 bank) {
+#if defined(LEFTOVERDEBUG)
+/* no VERSION_EU */
+void _load_rom_index_to_membank(s32 index,s32 param_2,s32 size,u8 bank)
+{
     load_rom_resource_index_to_membank(index, param_2, size, bank);
 }
+#endif
 
-void _load_resource_index_to_membank(int index,s32 param_2,u8 *ptrdata,int size) {
+#if defined(LEFTOVERDEBUG)
+/* no VERSION_EU */
+void _load_resource_index_to_membank(int index,s32 param_2,u8 *ptrdata,int size)
+{
     load_resource_index_to_buffer(index, param_2, ptrdata, size);
 }
+#endif
 
 void _load_resource_named_to_membank(u8 *filename,s32 param_2,s32 size,u8 bank)
 {
@@ -180,6 +239,8 @@ void _load_resource_named_to_buffer(u8 *filename,s32 bank,u8 *ptrdata,int size)
     load_resource_index_to_buffer(get_index_num_of_named_resource(filename), bank, ptrdata, size);
 }
 
+#if defined(LEFTOVERDEBUG)
+/* no VERSION_EU */
 /**
  * 0F18AC 7F0BCD7C
  * loads data stored at an offset of a bg file
@@ -203,6 +264,7 @@ void obLoadBGFileBytesAtOffset(u8 *bgname, u8 *target, s32 offset, s32 len)
   }
 
 }
+#endif
 
 
 
@@ -670,6 +732,8 @@ int get_index_num_of_named_resource(u8 *resname)
     return i;
 }
 #else
+
+#if defined(VERSION_US) || defined(VERSION_JP)
 GLOBAL_ASM(
 .text
 glabel get_index_num_of_named_resource
@@ -756,6 +820,96 @@ glabel get_index_num_of_named_resource
 /* 0F1EAC 7F0BD37C 03E00008 */  jr    $ra
 /* 0F1EB0 7F0BD380 27BD0040 */   addiu $sp, $sp, 0x40
 )
+#endif
+
+#if defined(VERSION_EU)
+GLOBAL_ASM(
+.text
+glabel get_index_num_of_named_resource
+/* 0EEFFC 7F0BC60C 27BDFFC0 */  addiu $sp, $sp, -0x40
+/* 0EF000 7F0BC610 AFB2001C */  sw    $s2, 0x1c($sp)
+/* 0EF004 7F0BC614 3C128004 */  lui   $s2, %hi(file_entry_max) # $s2, 0x8004
+/* 0EF008 7F0BC618 26520F54 */  addiu $s2, %lo(file_entry_max) # addiu $s2, $s2, 0xf54
+/* 0EF00C 7F0BC61C 8E420000 */  lw    $v0, ($s2)
+/* 0EF010 7F0BC620 AFB30020 */  sw    $s3, 0x20($sp)
+/* 0EF014 7F0BC624 AFB10018 */  sw    $s1, 0x18($sp)
+/* 0EF018 7F0BC628 28410002 */  slti  $at, $v0, 2
+/* 0EF01C 7F0BC62C 00809825 */  move  $s3, $a0
+/* 0EF020 7F0BC630 AFBF0024 */  sw    $ra, 0x24($sp)
+/* 0EF024 7F0BC634 AFB00014 */  sw    $s0, 0x14($sp)
+/* 0EF028 7F0BC638 14200012 */  bnez  $at, .L7F0BC684
+/* 0EF02C 7F0BC63C 24110001 */   li    $s1, 1
+/* 0EF030 7F0BC640 3C108004 */  lui   $s0, %hi(file_resource_table + 0xC) # $s0, 0x8004
+/* 0EF034 7F0BC644 2610EAD0 */  addiu $s0, %lo(file_resource_table + 0xC) # addiu $s0, $s0, -0x1530
+/* 0EF038 7F0BC648 8E050004 */  lw    $a1, 4($s0)
+.L7F0BC64C:
+/* 0EF03C 7F0BC64C 50A00008 */  beql  $a1, $zero, .L7F0BC670
+/* 0EF040 7F0BC650 8E420000 */   lw    $v0, ($s2)
+/* 0EF044 7F0BC654 0C00272B */  jal   strcmp
+/* 0EF048 7F0BC658 02602025 */   move  $a0, $s3
+/* 0EF04C 7F0BC65C 54400004 */  bnezl $v0, .L7F0BC670
+/* 0EF050 7F0BC660 8E420000 */   lw    $v0, ($s2)
+/* 0EF054 7F0BC664 1000002E */  b     .L7F0BC720
+/* 0EF058 7F0BC668 02201025 */   move  $v0, $s1
+/* 0EF05C 7F0BC66C 8E420000 */  lw    $v0, ($s2)
+.L7F0BC670:
+/* 0EF060 7F0BC670 26310001 */  addiu $s1, $s1, 1
+/* 0EF064 7F0BC674 2610000C */  addiu $s0, $s0, 0xc
+/* 0EF068 7F0BC678 0222082A */  slt   $at, $s1, $v0
+/* 0EF06C 7F0BC67C 5420FFF3 */  bnezl $at, .L7F0BC64C
+/* 0EF070 7F0BC680 8E050004 */   lw    $a1, 4($s0)
+.L7F0BC684:
+/* 0EF074 7F0BC684 2841030C */  slti  $at, $v0, 0x30c
+/* 0EF078 7F0BC688 14200003 */  bnez  $at, .L7F0BC698
+/* 0EF07C 7F0BC68C 00408825 */   move  $s1, $v0
+/* 0EF080 7F0BC690 10000023 */  b     .L7F0BC720
+/* 0EF084 7F0BC694 00001025 */   move  $v0, $zero
+.L7F0BC698:
+/* 0EF088 7F0BC698 244E0001 */  addiu $t6, $v0, 1
+/* 0EF08C 7F0BC69C AE4E0000 */  sw    $t6, ($s2)
+/* 0EF090 7F0BC6A0 02602025 */  move  $a0, $s3
+/* 0EF094 7F0BC6A4 0FC33D6E */  jal   indycommHostCheckFileExists
+/* 0EF098 7F0BC6A8 27A50034 */   addiu $a1, $sp, 0x34
+/* 0EF09C 7F0BC6AC 14400003 */  bnez  $v0, .L7F0BC6BC
+/* 0EF0A0 7F0BC6B0 00117880 */   sll   $t7, $s1, 2
+/* 0EF0A4 7F0BC6B4 1000001A */  b     .L7F0BC720
+/* 0EF0A8 7F0BC6B8 00001025 */   move  $v0, $zero
+.L7F0BC6BC:
+/* 0EF0AC 7F0BC6BC 01F17823 */  subu  $t7, $t7, $s1
+/* 0EF0B0 7F0BC6C0 3C188004 */  lui   $t8, %hi(file_resource_table) # $t8, 0x8004
+/* 0EF0B4 7F0BC6C4 2718EAC4 */  addiu $t8, %lo(file_resource_table) # addiu $t8, $t8, -0x153c
+/* 0EF0B8 7F0BC6C8 000F7880 */  sll   $t7, $t7, 2
+/* 0EF0BC 7F0BC6CC 0011C880 */  sll   $t9, $s1, 2
+/* 0EF0C0 7F0BC6D0 01F88021 */  addu  $s0, $t7, $t8
+/* 0EF0C4 7F0BC6D4 0331C821 */  addu  $t9, $t9, $s1
+/* 0EF0C8 7F0BC6D8 3C088007 */  lui   $t0, %hi(resource_lookup_data_array) # $t0, 0x8007
+/* 0EF0CC 7F0BC6DC 2508F920 */  addiu $t0, %lo(resource_lookup_data_array) # addiu $t0, $t0, -0x6e0
+/* 0EF0D0 7F0BC6E0 0019C880 */  sll   $t9, $t9, 2
+/* 0EF0D4 7F0BC6E4 AE110000 */  sw    $s1, ($s0)
+/* 0EF0D8 7F0BC6E8 AE130004 */  sw    $s3, 4($s0)
+/* 0EF0DC 7F0BC6EC 03281821 */  addu  $v1, $t9, $t0
+/* 0EF0E0 7F0BC6F0 A0600011 */  sb    $zero, 0x11($v1)
+/* 0EF0E4 7F0BC6F4 AE000008 */  sw    $zero, 8($s0)
+/* 0EF0E8 7F0BC6F8 AC600000 */  sw    $zero, ($v1)
+/* 0EF0EC 7F0BC6FC AC600004 */  sw    $zero, 4($v1)
+/* 0EF0F0 7F0BC700 8FA90034 */  lw    $t1, 0x34($sp)
+/* 0EF0F4 7F0BC704 AC60000C */  sw    $zero, 0xc($v1)
+/* 0EF0F8 7F0BC708 A0600010 */  sb    $zero, 0x10($v1)
+/* 0EF0FC 7F0BC70C 252A000F */  addiu $t2, $t1, 0xf
+/* 0EF100 7F0BC710 354B000F */  ori   $t3, $t2, 0xf
+/* 0EF104 7F0BC714 396C000F */  xori  $t4, $t3, 0xf
+/* 0EF108 7F0BC718 AC6C0008 */  sw    $t4, 8($v1)
+/* 0EF10C 7F0BC71C 02201025 */  move  $v0, $s1
+.L7F0BC720:
+/* 0EF110 7F0BC720 8FBF0024 */  lw    $ra, 0x24($sp)
+/* 0EF114 7F0BC724 8FB00014 */  lw    $s0, 0x14($sp)
+/* 0EF118 7F0BC728 8FB10018 */  lw    $s1, 0x18($sp)
+/* 0EF11C 7F0BC72C 8FB2001C */  lw    $s2, 0x1c($sp)
+/* 0EF120 7F0BC730 8FB30020 */  lw    $s3, 0x20($sp)
+/* 0EF124 7F0BC734 03E00008 */  jr    $ra
+/* 0EF128 7F0BC738 27BD0040 */   addiu $sp, $sp, 0x40
+)
+#endif
 #endif
 
 

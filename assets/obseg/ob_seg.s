@@ -21,12 +21,15 @@
   .global \name
   \name:
   .ifdef VERSION_US
+    #.warning "obseg_file_Z: build\/u\/assets\/obseg\/\path\/\name\.rz"
     .incbin "build\/u\/assets\/obseg\/\path\/\name\.rz"
   .endif
   .ifdef VERSION_JP
+    #.warning "obseg_file_Z: build\/j\/assets\/obseg\/\path\/\name\.rz"
     .incbin "build\/j\/assets\/obseg\/\path\/\name\.rz"
   .endif
   .ifdef VERSION_EU
+    #.warning "obseg_file_Z: build\/e\/assets\/obseg\/\path\/\name\.rz"
     .incbin "build\/e\/assets\/obseg\/\path\/\name\.rz"
   .endif
     .balign 16

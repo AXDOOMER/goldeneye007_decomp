@@ -4,6 +4,9 @@
 #include "game/math_atan2f.h"
 #include "game/prop.h"
 
+/**
+ * EU .bss 0x80068480
+*/
 s32 lastmpweaponnum;
 
 //.section .rodata
@@ -964,6 +967,7 @@ glabel jpt_8004EEB8
 .word .L7F0027C8
 .word .L7F0027C8
 .word .L7F0027C8
+
 glabel jpt_mp_ammo_crate_expansion
 .word .L7F002870
 .word .L7F002870
@@ -1182,14 +1186,14 @@ glabel jpt_8004EEB8
 .word .L7F0027C8
 .word .L7F0027C8
 glabel jpt_mp_ammo_crate_expansion
-.word .L7F00285C
-.word .L7F00285C
-.word .L7F00285C
-.word .L7F00285C
-.word .L7F00285C
-.word .L7F00285C
-.word .L7F00285C
-.word .L7F00285C
+.word .L7F002870
+.word .L7F002870
+.word .L7F002870
+.word .L7F002870
+.word .L7F002870
+.word .L7F002870
+.word .L7F002870
+.word .L7F002870
 .text
 glabel expand_08_obj_set_guard_MP_weapons
 /* 035128 7F002738 27BDFFD8 */  addiu $sp, $sp, -0x28
@@ -1274,6 +1278,7 @@ glabel expand_08_obj_set_guard_MP_weapons
 /* 035254 7F002864 AFA50018 */   sw    $a1, 0x18($sp)
 /* 035258 7F002868 1000001B */  b     .L7F0028D8
 /* 03525C 7F00286C 80E40080 */   lb    $a0, 0x80($a3)
+.L7F002870:
 /* 035260 7F002870 0FC316CD */  jal   getPtrMPWeaponSetData
 /* 035264 7F002874 AFA7002C */   sw    $a3, 0x2c($sp)
 /* 035268 7F002878 8FA7002C */  lw    $a3, 0x2c($sp)
@@ -1753,7 +1758,7 @@ GLOBAL_ASM(
 glabel D_80047394
 .word 0x40c90fdb #6.2831855
 glabel D_80047398
-.word 0x3ebba866 #7.5398226
+.word 0x40f1463a #7.53982257843
 
 
 .text
@@ -1905,10 +1910,10 @@ glabel D_8004EF60
 glabel sub_GAME_7F002E3C
 /* 03796C 7F002E3C 27BDFFC8 */  addiu $sp, $sp, -0x38
 /* 037970 7F002E40 AFA40038 */  sw    $a0, 0x38($sp)
-/* 037974 7F002E44 3C0E8007 */  lui   $t6, %hi(dword_CODE_bss_80075B98) 
+/* 037974 7F002E44 3C0E8007 */  lui   $t6, %hi(g_MonitorAnimController) 
 /* 037978 7F002E48 AFB10018 */  sw    $s1, 0x18($sp)
 /* 03797C 7F002E4C AFB00014 */  sw    $s0, 0x14($sp)
-/* 037980 7F002E50 25CE5B98 */  addiu $t6, %lo(dword_CODE_bss_80075B98) # addiu $t6, $t6, 0x5b98
+/* 037980 7F002E50 25CE5B98 */  addiu $t6, %lo(g_MonitorAnimController) # addiu $t6, $t6, 0x5b98
 /* 037984 7F002E54 24A40080 */  addiu $a0, $a1, 0x80
 /* 037988 7F002E58 00A08025 */  move  $s0, $a1
 /* 03798C 7F002E5C 00C08825 */  move  $s1, $a2
@@ -2092,9 +2097,9 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0030D0
 /* 037C00 7F0030D0 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 037C04 7F0030D4 AFA40020 */  sw    $a0, 0x20($sp)
-/* 037C08 7F0030D8 3C0E8007 */  lui   $t6, %hi(dword_CODE_bss_80075B98) 
+/* 037C08 7F0030D8 3C0E8007 */  lui   $t6, %hi(g_MonitorAnimController) 
 /* 037C0C 7F0030DC AFB00018 */  sw    $s0, 0x18($sp)
-/* 037C10 7F0030E0 25CE5B98 */  addiu $t6, %lo(dword_CODE_bss_80075B98) # addiu $t6, $t6, 0x5b98
+/* 037C10 7F0030E0 25CE5B98 */  addiu $t6, %lo(g_MonitorAnimController) # addiu $t6, $t6, 0x5b98
 /* 037C14 7F0030E4 24A40080 */  addiu $a0, $a1, 0x80
 /* 037C18 7F0030E8 00A08025 */  move  $s0, $a1
 /* 037C1C 7F0030EC AFBF001C */  sw    $ra, 0x1c($sp)
@@ -2117,8 +2122,8 @@ glabel sub_GAME_7F0030D0
 /* 037C5C 7F00312C AD190004 */  sw    $t9, 4($t0)
 /* 037C60 7F003130 0FC12726 */  jal   set_ptr_monitor_img_to_obj_ani_slot
 /* 037C64 7F003134 92050250 */   lbu   $a1, 0x250($s0)
-/* 037C68 7F003138 3C098007 */  lui   $t1, %hi(dword_CODE_bss_80075B98) 
-/* 037C6C 7F00313C 25295B98 */  addiu $t1, %lo(dword_CODE_bss_80075B98) # addiu $t1, $t1, 0x5b98
+/* 037C68 7F003138 3C098007 */  lui   $t1, %hi(g_MonitorAnimController) 
+/* 037C6C 7F00313C 25295B98 */  addiu $t1, %lo(g_MonitorAnimController) # addiu $t1, $t1, 0x5b98
 /* 037C70 7F003140 260400F4 */  addiu $a0, $s0, 0xf4
 /* 037C74 7F003144 00806825 */  move  $t5, $a0
 /* 037C78 7F003148 252C006C */  addiu $t4, $t1, 0x6c
@@ -2138,8 +2143,8 @@ glabel sub_GAME_7F0030D0
 /* 037CAC 7F00317C ADAC0004 */  sw    $t4, 4($t5)
 /* 037CB0 7F003180 0FC12726 */  jal   set_ptr_monitor_img_to_obj_ani_slot
 /* 037CB4 7F003184 92050251 */   lbu   $a1, 0x251($s0)
-/* 037CB8 7F003188 3C188007 */  lui   $t8, %hi(dword_CODE_bss_80075B98) 
-/* 037CBC 7F00318C 27185B98 */  addiu $t8, %lo(dword_CODE_bss_80075B98) # addiu $t8, $t8, 0x5b98
+/* 037CB8 7F003188 3C188007 */  lui   $t8, %hi(g_MonitorAnimController) 
+/* 037CBC 7F00318C 27185B98 */  addiu $t8, %lo(g_MonitorAnimController) # addiu $t8, $t8, 0x5b98
 /* 037CC0 7F003190 26040168 */  addiu $a0, $s0, 0x168
 /* 037CC4 7F003194 00804025 */  move  $t0, $a0
 /* 037CC8 7F003198 270E006C */  addiu $t6, $t8, 0x6c
@@ -2159,8 +2164,8 @@ glabel sub_GAME_7F0030D0
 /* 037CFC 7F0031CC AD0E0004 */  sw    $t6, 4($t0)
 /* 037D00 7F0031D0 0FC12726 */  jal   set_ptr_monitor_img_to_obj_ani_slot
 /* 037D04 7F0031D4 92050252 */   lbu   $a1, 0x252($s0)
-/* 037D08 7F0031D8 3C0B8007 */  lui   $t3, %hi(dword_CODE_bss_80075B98) 
-/* 037D0C 7F0031DC 256B5B98 */  addiu $t3, %lo(dword_CODE_bss_80075B98) # addiu $t3, $t3, 0x5b98
+/* 037D08 7F0031D8 3C0B8007 */  lui   $t3, %hi(g_MonitorAnimController) 
+/* 037D0C 7F0031DC 256B5B98 */  addiu $t3, %lo(g_MonitorAnimController) # addiu $t3, $t3, 0x5b98
 /* 037D10 7F0031E0 260401DC */  addiu $a0, $s0, 0x1dc
 /* 037D14 7F0031E4 00806825 */  move  $t5, $a0
 /* 037D18 7F0031E8 2569006C */  addiu $t1, $t3, 0x6c
@@ -4646,7 +4651,7 @@ other_obj_expand:
 /* 0397B0 7F004C80 AE430004 */  sw    $v1, 4($s2)
 /* 0397B4 7F004C84 8C4A0010 */  lw    $t2, 0x10($v0)
 /* 0397B8 7F004C88 02402025 */  move  $a0, $s2
-/* 0397BC 7F004C8C 0FC00644 */  jal   sub_GAME_7F001910
+/* 0397BC 7F004C8C 0FC00644 */  jal   initSetLevelLoadPropSwitch
 /* 0397C0 7F004C90 AE4A0008 */   sw    $t2, 8($s2)
 /* 0397C4 7F004C94 8E0B0064 */  lw    $t3, 0x64($s0)
 /* 0397C8 7F004C98 356D0001 */  ori   $t5, $t3, 1
@@ -4694,7 +4699,7 @@ other_obj_expand:
 /* 03986C 7F004D3C AE500004 */  sw    $s0, 4($s2)
 /* 039870 7F004D40 AE510008 */  sw    $s1, 8($s2)
 /* 039874 7F004D44 AE42000C */  sw    $v0, 0xc($s2)
-/* 039878 7F004D48 0FC00650 */  jal   sub_GAME_7F001940
+/* 039878 7F004D48 0FC00650 */  jal   initSetLevelLoadPropSafeItem
 /* 03987C 7F004D4C AFA20074 */   sw    $v0, 0x74($sp)
 /* 039880 7F004D50 8E0A000C */  lw    $t2, 0xc($s0)
 /* 039884 7F004D54 8FA30074 */  lw    $v1, 0x74($sp)
@@ -4729,7 +4734,7 @@ other_obj_expand:
 /* 0398F4 7F004DC4 16980007 */  bne   $s4, $t8, .L7F004DE4
 /* 0398F8 7F004DC8 00000000 */   nop   
 /* 0398FC 7F004DCC AE500004 */  sw    $s0, 4($s2)
-/* 039900 7F004DD0 0FC0064A */  jal   sub_GAME_7F001928
+/* 039900 7F004DD0 0FC0064A */  jal   initSetLevelLoadPropLockDoor
 /* 039904 7F004DD4 AE420008 */   sw    $v0, 8($s2)
 /* 039908 7F004DD8 8E080064 */  lw    $t0, 0x64($s0)
 /* 03990C 7F004DDC 35092000 */  ori   $t1, $t0, 0x2000
@@ -6044,7 +6049,7 @@ other_obj_expand:
 /* 039800 7F004C90 AE430004 */  sw    $v1, 4($s2)
 /* 039804 7F004C94 8C4B0010 */  lw    $t3, 0x10($v0)
 /* 039808 7F004C98 02402025 */  move  $a0, $s2
-/* 03980C 7F004C9C 0FC00644 */  jal   sub_GAME_7F001910
+/* 03980C 7F004C9C 0FC00644 */  jal   initSetLevelLoadPropSwitch
 /* 039810 7F004CA0 AE4B0008 */   sw    $t3, 8($s2)
 /* 039814 7F004CA4 8E0D0064 */  lw    $t5, 0x64($s0)
 /* 039818 7F004CA8 35AC0001 */  ori   $t4, $t5, 1
@@ -6092,7 +6097,7 @@ other_obj_expand:
 /* 0398BC 7F004D4C AE500004 */  sw    $s0, 4($s2)
 /* 0398C0 7F004D50 AE510008 */  sw    $s1, 8($s2)
 /* 0398C4 7F004D54 AE42000C */  sw    $v0, 0xc($s2)
-/* 0398C8 7F004D58 0FC00650 */  jal   sub_GAME_7F001940
+/* 0398C8 7F004D58 0FC00650 */  jal   initSetLevelLoadPropSafeItem
 /* 0398CC 7F004D5C AFA20074 */   sw    $v0, 0x74($sp)
 /* 0398D0 7F004D60 8E0B000C */  lw    $t3, 0xc($s0)
 /* 0398D4 7F004D64 8FA30074 */  lw    $v1, 0x74($sp)
@@ -6127,7 +6132,7 @@ other_obj_expand:
 /* 039944 7F004DD4 16880007 */  bne   $s4, $t0, .L7F004DF4
 /* 039948 7F004DD8 00000000 */   nop   
 /* 03994C 7F004DDC AE500004 */  sw    $s0, 4($s2)
-/* 039950 7F004DE0 0FC0064A */  jal   sub_GAME_7F001928
+/* 039950 7F004DE0 0FC0064A */  jal   initSetLevelLoadPropLockDoor
 /* 039954 7F004DE4 AE420008 */   sw    $v0, 8($s2)
 /* 039958 7F004DE8 8E090064 */  lw    $t1, 0x64($s0)
 /* 03995C 7F004DEC 35392000 */  ori   $t9, $t1, 0x2000
@@ -6214,7 +6219,7 @@ glabel jpt_object_type_expansion
 .word actor_attr_expand
 .word other_obj_expand
 .word ammo_box_expand
-.word body_armor_expand
+.word .L7F00454C
 .word tag_expand
 .word type17_objective_expand
 .word other_obj_expand
@@ -6245,7 +6250,7 @@ glabel jpt_object_type_expansion
 glabel D_8004F024
 .word 0x40c90fdb
 glabel D_8004F028
-.word 0x3e2e147c
+.word 0x3e4d35a8
 
 glabel jpt_8004F02C
 .word .L7F004B7C
@@ -6759,7 +6764,7 @@ glabel proplvreset2
 .L7F004230:
 /* 036C20 7F004230 0FC01538 */  jal   sub_GAME_7F005540
 /* 036C24 7F004234 02602025 */   move  $a0, $s3
-/* 036C28 7F004238 0FC01571 */  jal   sub_GAME_7F005540
+/* 036C28 7F004238 0FC01571 */  jal   sub_GAME_7F005624
 /* 036C2C 7F00423C 02802025 */   move  $a0, $s4
 /* 036C30 7F004240 0FC26669 */  jal   getPlayerCount
 /* 036C34 7F004244 00008025 */   move  $s0, $zero
@@ -6972,6 +6977,7 @@ multi_screen_display_expand:
 /* 036F30 7F004540 02603025 */   move  $a2, $s3
 /* 036F34 7F004544 10000152 */  b     other_obj_expand
 /* 036F38 7F004548 00000000 */   nop   
+.L7F00454C:
 /* 036F3C 7F00454C 13C00150 */  beqz  $fp, other_obj_expand
 /* 036F40 7F004550 00000000 */   nop   
 body_armor_expand:
@@ -7440,7 +7446,7 @@ other_obj_expand:
 /* 037604 7F004C14 AE430004 */  sw    $v1, 4($s2)
 /* 037608 7F004C18 8C4B0010 */  lw    $t3, 0x10($v0)
 /* 03760C 7F004C1C 02402025 */  move  $a0, $s2
-/* 037610 7F004C20 0FC00644 */  jal   sub_GAME_7F001910
+/* 037610 7F004C20 0FC00644 */  jal   initSetLevelLoadPropSwitch
 /* 037614 7F004C24 AE4B0008 */   sw    $t3, 8($s2)
 /* 037618 7F004C28 8E0D0064 */  lw    $t5, 0x64($s0)
 /* 03761C 7F004C2C 35AC0001 */  ori   $t4, $t5, 1
@@ -7488,7 +7494,7 @@ other_obj_expand:
 /* 0376C0 7F004CD0 AE500004 */  sw    $s0, 4($s2)
 /* 0376C4 7F004CD4 AE510008 */  sw    $s1, 8($s2)
 /* 0376C8 7F004CD8 AE42000C */  sw    $v0, 0xc($s2)
-/* 0376CC 7F004CDC 0FC00650 */  jal   sub_GAME_7F001940
+/* 0376CC 7F004CDC 0FC00650 */  jal   initSetLevelLoadPropSafeItem
 /* 0376D0 7F004CE0 AFA20074 */   sw    $v0, 0x74($sp)
 /* 0376D4 7F004CE4 8E0B000C */  lw    $t3, 0xc($s0)
 /* 0376D8 7F004CE8 8FA30074 */  lw    $v1, 0x74($sp)
@@ -7523,7 +7529,7 @@ other_obj_expand:
 /* 037748 7F004D58 16880007 */  bne   $s4, $t0, .L7F004DF4
 /* 03774C 7F004D5C 00000000 */   nop   
 /* 037750 7F004D60 AE500004 */  sw    $s0, 4($s2)
-/* 037754 7F004D64 0FC0064A */  jal   sub_GAME_7F001928
+/* 037754 7F004D64 0FC0064A */  jal   initSetLevelLoadPropLockDoor
 /* 037758 7F004D68 AE420008 */   sw    $v0, 8($s2)
 /* 03775C 7F004D6C 8E090064 */  lw    $t1, 0x64($s0)
 /* 037760 7F004D70 35392000 */  ori   $t9, $t1, 0x2000
@@ -7565,7 +7571,7 @@ other_obj_expand:
 /* 0377E8 7F004DF8 00002025 */   move  $a0, $zero
 /* 0377EC 7F004DFC 0FC01538 */  jal   sub_GAME_7F005540
 /* 0377F0 7F004E00 00002025 */   move  $a0, $zero
-/* 0377F4 7F004E04 0FC01571 */  jal   sub_GAME_7F005540
+/* 0377F4 7F004E04 0FC01571 */  jal   sub_GAME_7F005624
 /* 0377F8 7F004E08 00002025 */   move  $a0, $zero
 .L7F004E88:
 /* 0377FC 7F004E0C 0FC00417 */  jal   alloc_false_GUARDdata_to_exec_global_action

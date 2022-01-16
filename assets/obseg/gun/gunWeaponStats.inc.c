@@ -1,3 +1,4 @@
+//as this file is included c, not standalone object, save the parent: gun.c to rebuild the object
 #ifdef VERSION_US
 #define SCALEVAL1 0.80000001
 #define SCALEVAL_KNIFE 0.80000001
@@ -9,15 +10,16 @@
 #define SCALEVAL_LAUNCHER 0.80000001
 #endif
 #ifdef VERSION_EU
-//!FIXME temp copy of us data
-#define SCALEVAL1 0.80000001
-#define SCALEVAL_KNIFE 0.80000001
-#define SCALEVAL_SKORPION 0.80000001
-#define SCALEVAL_AK47 0.80000001
-#define SCALEVAL_UZI 0.80000001
-#define SCALEVAL_P90 0.80000001
-#define SCALEVAL_RUGER 0.80000001
-#define SCALEVAL_LAUNCHER 0.80000001
+
+#define SCALEVAL1 0.881200015545f
+#define SCALEVAL_KNIFE 0.82279998064f
+#define SCALEVAL_SKORPION 0.869499981403f
+#define SCALEVAL_AK47 0.893000006676f
+#define SCALEVAL_UZI 0.857800006866f
+#define SCALEVAL_P90 0.846099972725
+#define SCALEVAL_RUGER 0.834399998188
+#define SCALEVAL_LAUNCHER 0.904799997807
+
 #endif
 #ifdef VERSION_JP
 #define SCALEVAL1 0.8812
@@ -56,34 +58,84 @@ WeaponStats wppksil_stats = {
 WeaponStats tt33_stats = {
 	1.0, 11.0, -20.799999, -33.5, 3.0, 3.0, 8.5, 1, 8, 0xFF, 0x10, 1, 0, 0x70, &cartridge_header, 1.0, 6.0, 0.0, SCALEVAL_KNIFE, 0.85000002, 1.0, 0x4080300, 5.0, 10.0, 59.999996, 2.0, 16.0, 3.0, 2.0, 4.0, 0.0, 0x170FB9
 };
+
+#if defined(VERSION_EU)
+WeaponStats skorpion_stats = {
+	2.0, 11.5, -25.0, -27.5, 3.0, 5.0, 10.0, 1, 0x14, 0x03, 0x00, 1, 0x9, 0x6A, &cartridge_header, 0.60000002, 15.0, 0.0, SCALEVAL_SKORPION, 0.88999999, 1.0, 6, 0.0, 0.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0x170B79
+};
+#else
 //D:800327A4
 WeaponStats skorpion_stats = {
 	2.0, 11.5, -25.0, -27.5, 3.0, 5.0, 10.0, 1, 0x14, 0x03, 0x00, 1, 0xB, 0x6A, &cartridge_header, 0.60000002, 15.0, 0.0, SCALEVAL_SKORPION, 0.88999999, 1.0, 6, 0.0, 0.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0x170B79
 };
+#endif
+
+#if defined(VERSION_EU)
+WeaponStats ak47_stats = {
+	2.0, 11.0, -19.0, -16.0, 3.0, 3.0, 8.5, 3, 0x1E, 0x03, 0x00, 1, 3, 0x6D, &cartrifle_header, 1.0, 10.0, 30.0, SCALEVAL_AK47, 0.91000003, 1.0, 0x40C0006,4.5, 2.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 3.0, 0x171A7C
+};
+#else
 //D:80032814
 WeaponStats ak47_stats = {
 	2.0, 11.0, -19.0, -16.0, 3.0, 3.0, 8.5, 3, 0x1E, 0x03, 0x00, 1, 4, 0x6D, &cartrifle_header, 1.0, 10.0, 30.0, SCALEVAL_AK47, 0.91000003, 1.0, 0x40C0006,4.5, 2.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 3.0, 0x171A7C
 };
+#endif
+
+#if defined(VERSION_EU)
+WeaponStats uzi_stats = {
+	3.0, 11.0, -24.5, -37.0, 3.0, 8.0, 15.0, 1, 0x20, 0x02, 0x00, 1, 3, 0x6E, &cartridge_header, 1.0, 9.0, 0.0, SCALEVAL_UZI, 0.88, 1.0, 0x6120006, 4.0, 3.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0x171B79
+};
+#else
 //D:80032884
 WeaponStats uzi_stats = {
 	3.0, 11.0, -24.5, -37.0, 3.0, 8.0, 15.0, 1, 0x20, 0x02, 0x00, 1, 4, 0x6E, &cartridge_header, 1.0, 9.0, 0.0, SCALEVAL_UZI, 0.88, 1.0, 0x6120006, 4.0, 3.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0x171B79
 };
+#endif
+
+#if defined(VERSION_EU)
+WeaponStats mp5k_stats = {
+	2.0, 11.0, -26.4, -35.0, 3.0, 8.0, 15.0, 1, 0x1E, 0x03, 0x00, 1, 3, 0x75, &cartridge_header, 1.0, 7.0, 0.0, SCALEVAL_SKORPION, 0.88999999, 1.0, 0x6120006, 4.0, 3.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0x171A79
+};
+#else
 //D:800328F4
 WeaponStats mp5k_stats = {
 	2.0, 11.0, -26.4, -35.0, 3.0, 8.0, 15.0, 1, 0x1E, 0x03, 0x00, 1, 4, 0x75, &cartridge_header, 1.0, 7.0, 0.0, SCALEVAL_SKORPION, 0.88999999, 1.0, 0x6120006, 4.0, 3.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0x171A79
 };
+#endif
+
+#if defined(VERSION_EU)
+WeaponStats mp5ksil_stats = {
+	2.0, 11.0, -26.4, -35.0, 3.0, 8.0, 15.0, 1, 0x1E, 0x03, 0x00, 1, 3, 0x2E, &cartridge_header, 1.0, 9.0, 0.0, SCALEVAL_SKORPION, 0.88999999, 1.0, 0x6120006, 3.5, 2.0, 0.0, 0.0, 7.0, 1.2, 2.0, 4.0, 0.0, 0x171A79
+};
+#else
 //D:80032964
 WeaponStats mp5ksil_stats = {
 	2.0, 11.0, -26.4, -35.0, 3.0, 8.0, 15.0, 1, 0x1E, 0x03, 0x00, 1, 4, 0x2E, &cartridge_header, 1.0, 9.0, 0.0, SCALEVAL_SKORPION, 0.88999999, 1.0, 0x6120006, 3.5, 2.0, 0.0, 0.0, 7.0, 1.2, 2.0, 4.0, 0.0, 0x171A79
 };
+#endif
+
+#if defined(VERSION_EU)
+WeaponStats spectre_stats = {
+	2.0, 11.0, -21.9, -35.0, 3.0, 8.0, 15.0, 1, 0x32, 0x03, 0x00, 1, 3, 0x6D, &cartridge_header, 1.4, 12.0, 0.0, SCALEVAL_SKORPION, 0.88999999, 1.0, 0x40C0006, 4.5, 2.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0x171A79
+};
+#else
 //D:800329D4
 WeaponStats spectre_stats = {
 	2.0, 11.0, -21.9, -35.0, 3.0, 8.0, 15.0, 1, 0x32, 0x03, 0x00, 1, 4, 0x6D, &cartridge_header, 1.4, 12.0, 0.0, SCALEVAL_SKORPION, 0.88999999, 1.0, 0x40C0006, 4.5, 2.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0x171A79
 };
+#endif
+
+#if defined(VERSION_EU)
+WeaponStats m16_stats = {
+	6.0, 11.0, -19.200001, -21.5, 3.0, 3.0, 8.5, 3, 0x1E, 0x02, 0x00, 2, 4, 0x71, &cartblue_header, 1.4, 6.0, 20.0, SCALEVAL_AK47, 0.91000003, 0.5, 0x6120208, 5.0, 2.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 4.0, 0x171A7C
+};
+#else
 //D:80032A44
 WeaponStats m16_stats = {
 	6.0, 11.0, -19.200001, -21.5, 3.0, 3.0, 8.5, 3, 0x1E, 0x02, 0x00, 2, 5, 0x71, &cartblue_header, 1.4, 6.0, 20.0, SCALEVAL_AK47, 0.91000003, 0.5, 0x6120208, 5.0, 2.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 4.0, 0x171A7C
 };
+#endif
+
 //D:80032AB4
 WeaponStats fnp90_stats = {
 	4.0, 12.5, -25.299999, -32.5, 3.0, 8.0, 15.0, 1, 0x50, 0x02, 0x00, 3, 2, 0xFD, &cartridge_header, 1.8, 6.0, 0.0, SCALEVAL_P90, 0.87, 1.0, 0x4080003, 3.5, 2.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 4.0, 0x171A78

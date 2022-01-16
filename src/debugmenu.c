@@ -3,6 +3,9 @@
 #include "vi.h"
 #include "game/dyn.h"
 
+
+#ifdef LEFTOVERDEBUG
+
 u32 g_DebugMenuTexture[] = {
     0x00000000, 0x00227A00, 0x007A348B, 0x00223434, 0x00115811, 0x00696900, 0x00000000, 0x00009C00,
     0x00004600, 0x00460000, 0x00004600, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000046,
@@ -178,10 +181,12 @@ Gfx g_DebugMenuPrimitiveColor = gsDPSetPrimColor(0, 0, 255, 255, 255, 0);
 Gfx g_DebugMenuEnvironmentColor = gsDPSetEnvColor(0, 0, 0, 0);
 u32 g_DebugMenuRandomThreshold = 0xFF; // Static?
 
+#endif
+
 /**
  * Removed
  */
-#ifndef VERSION_EU
+#ifdef LEFTOVERDEBUG
 u32 debmenu7000AD80(s32 arg0, s32 arg1) {
     // Removed
     return 0;
@@ -191,7 +196,7 @@ u32 debmenu7000AD80(s32 arg0, s32 arg1) {
 /**
  * Removed
  */
-#ifndef VERSION_EU
+#ifdef LEFTOVERDEBUG
 u32 debmenu7000AD90(s32 arg0, s32 arg1) {
     // Removed
     return 0;
@@ -201,7 +206,7 @@ u32 debmenu7000AD90(s32 arg0, s32 arg1) {
 /**
  * Removed
  */
-#ifndef VERSION_EU
+#ifdef LEFTOVERDEBUG
 void debmenu7000ADA0(void) {
     // Removed
 }
@@ -215,12 +220,12 @@ void debmenu7000ADA8(void) {
 }
 
 void debmenuInit(void) {
-    #ifndef VERSION_EU
+    #ifdef LEFTOVERDEBUG
     debmenuReset();
     #endif
 }
 
-#ifndef VERSION_EU
+#ifdef LEFTOVERDEBUG
 void debmenuWriteCharAtPos(s32 x, s32 y, unsigned char c) {
     s32 i;
     for (i = 0; i < 32; i++) {
@@ -240,14 +245,14 @@ end:
 #endif
 
 void debmenuResetPosition(void) {
-    #ifndef VERSION_EU
+    #ifdef LEFTOVERDEBUG
     g_DebugMenuTextCurrentX = g_DebugMenuTextStartX;
     g_DebugMenuTextCurrentY = g_DebugMenuTextStartY;
     #endif
 }
 
 void debmenuReset(void) {
-    #ifndef VERSION_EU
+    #ifdef LEFTOVERDEBUG
     s32 x;
     s32 y;  
     for (y = 0; y < 35; y++) {
@@ -265,7 +270,7 @@ void debmenuReset(void) {
  * Removed.
  * Called from debmenu7000AF98
  */
- #ifndef VERSION_EU
+#ifdef LEFTOVERDEBUG
 void debmenu7000AF84(s32 x1, s32 y1, s32 x2, s32 y2) {
     // Removed
 }
@@ -292,7 +297,7 @@ s32 debmenu7000AF98(s32 height) {
     return ret;
 }
 #else
-#ifdef VERSION_EU
+#ifndef LEFTOVERDEBUG
 s32 debmenu7000AF98(s32 height) {
 
 }
@@ -352,7 +357,7 @@ glabel debmenu7000AF98
 #endif
 
 void debmenuSetPosition(s32 x, s32 y) {
-    #ifndef VERSION_EU
+    #ifdef LEFTOVERDEBUG
     x += g_DebugMenuTextStartX;
     y += g_DebugMenuTextStartY;
     g_DebugMenuTextCurrentX = x;
@@ -361,19 +366,19 @@ void debmenuSetPosition(s32 x, s32 y) {
 }
 
 void debmenuSetPrimColor(s32 r, s32 g, s32 b, s32 a) {
-    #ifndef VERSION_EU
+    #ifdef LEFTOVERDEBUG
     g_DebugMenuPrimitiveColor.words.w1 = ((r << 24) | (g << 16) | (b << 8) | (255 - a));
     #endif
 }
 
 void debmenuSetEnvColor(s32 r, s32 g, s32 b, s32 a) {
-    #ifndef VERSION_EU
+    #ifdef LEFTOVERDEBUG
     g_DebugMenuEnvironmentColor.words.w1 = ((r << 24) | (g << 16) | (b << 8) | (255 - a));
     #endif
 }
 
 void debmenuWriteChar(unsigned char c) {
-    #ifndef VERSION_EU
+    #ifdef LEFTOVERDEBUG
     s32 width = ((viGetX() - 13) / 4);
     s32 height = ((viGetY() - 10) / 7);
     if ((c == '\0') || ((c >= ' ') && (c <= '~'))) {
@@ -392,14 +397,14 @@ void debmenuWriteChar(unsigned char c) {
 
 void debmenuSetPositionAndWriteChar(s32 x, s32 y, unsigned char c)
 {
-    #ifndef VERSION_EU 
+    #ifdef LEFTOVERDEBUG
     debmenuSetPosition(x, y);
     debmenuWriteChar(c);
     #endif
 }
 
 void debmenuWriteString(const unsigned char *str) {
-    #ifndef VERSION_EU 
+    #ifdef LEFTOVERDEBUG
     while (*str != '\0') {
         debmenuWriteChar(*str++);
     }
@@ -407,7 +412,7 @@ void debmenuWriteString(const unsigned char *str) {
 }
 
 void debmenuSetPositionAndWriteString(s32 x, s32 y, const unsigned char *str) { 
-    #ifndef VERSION_EU 
+    #ifdef LEFTOVERDEBUG
     debmenuSetPosition(x, y);
     while (*str != '\0') {
         debmenuWriteChar(*str++);

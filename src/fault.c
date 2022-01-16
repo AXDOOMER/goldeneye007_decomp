@@ -1,6 +1,5 @@
 #include "ultra64.h"
-#include "libultra/libultra_internal.h"
-#include "PR/os_thread.h"
+#include "PR/os.h"
 #include "bondgame.h"
 #include "tlb_manage.h"
 #include "deb_print.h"

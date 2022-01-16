@@ -13,11 +13,17 @@ s32 ptr_char_data_buf;
 s32 ptr_char_registry;
 
 
-#ifdef VERSION_JP
+#ifdef LANG_JP
 s32 j_text_trigger = 1;
 #else
+/**
+ * EU .data 80041150
+*/
 s32 j_text_trigger = 0;
 #endif
+
+
+#if defined(LANG_US) || defined(LANG_JP)
 
 void *LnameX_lookuptable[45][2] = {
     {NULL, NULL},                    /* Null (unused) */
@@ -65,6 +71,57 @@ void *LnameX_lookuptable[45][2] = {
     {"LmpweaponsE", "LmpweaponsJ"},  /* Multi weapon select */
     {"LoptionsE", "LoptionsJ"},      /* Solo in-game menus */
     {"LmiscE", "LmiscJ"}};           /* Cheat options */
+
+#endif
+
+#if defined(LANG_EU)
+void *LnameX_lookuptable[45][2] = {
+    {NULL, NULL},                    /* Null (unused) */
+    {"LameP", "LameJ"},              /* Library (multi) */
+    {"LarchP", "LarchJ"},            /* Archives */
+    {"LarkP", "LarkJ"},              /* Facility */
+    {"LashP", "LashJ"},              /* Stack (multi) */
+    {"LaztP", "LaztJ"},              /* Aztec */
+    {"LcatP", "LcatJ"},              /* Citadel (multi) */
+    {"LcaveP", "LcaveJ"},            /* Caverns */
+    {"LarecP", "LarecJ"},            /* Control */
+    {"LcradP", "LcradJ"},            /* Cradle */
+    {"LcrypP", "LcrypJ"},            /* Egypt */
+    {"LdamP", "LdamJ"},              /* Dam */
+    {"LdepoP", "LdepoJ"},            /* Depot */
+    {"LdestP", "LdestJ"},            /* Frigate */
+    {"LdishP", "LdishJ"},            /* Temple (multi) */
+    {"LearP", "LearJ"},              /* Ear (unused) */
+    {"LeldP", "LeldJ"},              /* Eld (unused) */
+    {"LimpP", "LimpJ"},              /* Basement (multi) */
+    {"LjunP", "LjunJ"},              /* Jungle */
+    {"LleeP", "LleeJ"},              /* Lee (unused) */
+    {"LlenP", "LlenJ"},              /* Cuba */
+    {"LlipP", "LlipJ"},              /* Lip (unused) */
+    {"LlueP", "LlueJ"},              /* Lue (unused) */
+    {"LoatP", "LoatJ"},              /* Cave (multi) */
+    {"LpamP", "LpamJ"},              /* Pam (unused) */
+    {"LpeteP", "LpeteJ"},            /* Streets */
+    {"LrefP", "LrefJ"},              /* Complex (multi) */
+    {"LritP", "LritJ"},              /* Rit (unused) */
+    {"LrunP", "LrunJ"},              /* Runway */
+    {"LsevbP", "LsevbJ"},            /* Bunker 2 */
+    {"LsevP", "LsevJ"},              /* Bunker 1 */
+    {"LsevxP", "LsevxJ"},            /* Surface 1 */
+    {"LsevxbP", "LsevxbJ"},          /* Surface 2 */
+    {"LshoP", "LshoJ"},              /* Shooting Range (unused) */
+    {"LsiloP", "LsiloJ"},            /* Silo */
+    {"LstatP", "LstatJ"},            /* Statue */
+    {"LtraP", "LtraJ"},              /* Train */
+    {"LwaxP", "LwaxJ"},              /* Wax (unused) */
+    {"LgunP", "LgunJ"},              /* Guns */
+    {"LtitleP", "LtitleJ"},          /* Stage and menu titles */
+    {"LmpmenuP", "LmpmenuJ"},        /* Multi menus */
+    {"LpropobjP", "LpropobjJ"},      /* In-game pickups */
+    {"LmpweaponsP", "LmpweaponsJ"},  /* Multi weapon select */
+    {"LoptionsP", "LoptionsJ"},      /* Solo in-game menus */
+    {"LmiscP", "LmiscJ"}};           /* Cheat options */
+#endif
 
 LEVELID get_textbank_number_for_stagenum(LEVELID level)
 {

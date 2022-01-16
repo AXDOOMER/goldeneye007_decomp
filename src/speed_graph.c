@@ -11,29 +11,33 @@
 /**
  * Used in speedGraphDisplay to calculate display Hz.
  */
-#ifdef VERSION_EU
+#ifdef REFRESH_PAL
 #define VICLOCK 50
 #else
 #define VICLOCK 60
 #endif
 
+#if defined(LEFTOVERDEBUG)
 s32 dword_CODE_bss_8005F3F0[3];
 Gfx g_speedGraphDisplayList[2][266];
 s32 g_speedGraphDisplayListBank;
 u32 g_speedGraphLastOsCount;
 u32 g_speedGraphCurrentOsCount;
 u32 dword_CODE_bss_800604AC;
+#endif
 
 typedef struct {
     u32 unk0;
     u32 osCount;
 } unknown_s;
 
+#if defined(LEFTOVERDEBUG)
 unknown_s dword_CODE_bss_800604B0[3][32];
 s32 dword_CODE_bss_800607B0[3];
 s32 dword_CODE_bss_800607C0[3];
 s32 dword_CODE_bss_800607D0[3];
 
+#endif
 s32 D_800231D0 = 0;
 
 typedef struct {
@@ -42,6 +46,8 @@ typedef struct {
     s32 unk8;
     s32 unkC;
 } s_800231D4;
+
+#if defined(LEFTOVERDEBUG)
 s_800231D4 D_800231D4[5] = {
     {0x00000000, 0x00000000, 0x00000002, 0x00000000},
     {0x00000001, 0x00000000, 0x00000002, 0x00000000},
@@ -77,6 +83,8 @@ u32 g_speedGraphCounterForFrames = 0;
  */
 s32 D_80023234 = 1;
 
+#endif
+
 // forward declarations
 void speedGraphVideoRelated_2(void);
 
@@ -86,7 +94,7 @@ u32 *get_counters(void);
 
 void speedGraphDisplayListRelated(void)
 {
-    #ifndef VERSION_EU
+    #if defined(LEFTOVERDEBUG)
     s32 i;
 
     gSPEndDisplayList(g_speedGraphDisplayList[0]);
@@ -104,7 +112,7 @@ void speedGraphDisplayListRelated(void)
 }
 
 void speedGraphVideoRelated_1(void) {
-    #ifndef VERSION_EU
+    #if defined(LEFTOVERDEBUG)
     s32 i;
 
     g_speedGraphCurrentOsCount = osGetCount();
@@ -117,7 +125,7 @@ void speedGraphVideoRelated_1(void) {
 }
 
 void speedGraphVideoRelated_2(void) {
-    #ifndef VERSION_EU
+    #if defined(LEFTOVERDEBUG)
     s32 i;
 
     g_speedGraphLastOsCount = g_speedGraphCurrentOsCount;
@@ -129,8 +137,9 @@ void speedGraphVideoRelated_2(void) {
     #endif
 }
 
-void speedGraphVideoRelated_3(s32 arg0) {
-    #ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
+void speedGraphVideoRelated_3(s32 arg0)
+{
     s32 index;
     s32 var2;
     OSIntMask mask;
@@ -168,12 +177,16 @@ void speedGraphVideoRelated_3(s32 arg0) {
     dword_CODE_bss_800607D0[index] = index2;
 
     osSetIntMask(mask);
-    #endif
 }
+#else
+void speedGraphVideoRelated_3(void)
+{
+}
+#endif
 
 Gfx *speedGraphDisplay(Gfx *gdl)
 {
-    #ifndef VERSION_EU
+    #if defined(LEFTOVERDEBUG)
     u32 *counters;
     u32 localCountAccumulator = g_speedGraphCountAccumulator;
     s32 *pmaxSeenCount = &g_speedGraphMaxSeenCount;
@@ -321,7 +334,7 @@ void video_DL_related_4(void) {
     }
 }
 #else
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel aIL0

@@ -112,6 +112,29 @@ struct anim_group_info
     s32 len;
 };
 
+struct unk_joint_list {
+    Mtxf * unk_matrix;
+    s32 unk04;
+    s32 unk08;
+    Gfx *gdl;
+
+    // unknown type
+    void *mtxlist;
+    u32 unk14;
+    u32 unk18;
+    u32 unk1C;
+
+    u32 unk20;
+    u32 unk24;
+    u32 unk28;
+    u32 unk2C;
+
+    s32 unk30;
+    s32 unk34;
+    struct rgba_u8 unk38;
+    s32 unk3C;
+};
+
 extern s32 objectiveregisters1;
 extern struct ChrRecord* g_ActiveChrs;
 extern s32 g_ActiveChrsCount;
@@ -210,12 +233,11 @@ extern s32 show_patrols_flag;
 extern s32 player1_guardID;
 extern struct ChrRecord *ptr_guard_data;
 extern s32 num_guards;
-extern s32 D_8002CC6C[];
-extern s32 D_8002CCA8;
+extern struct unk_joint_list D_8002CC6C;
 extern s32 D_8002CCAC;
 extern s32 D_8002CCB0;
 extern s32 D_8002CCB4;
-extern u8 D_8002CCB8[4];
+extern struct rgba_u8 D_8002CCB8;
 
 extern f32 D_80030984;
 extern f32 D_80030988;
@@ -261,15 +283,14 @@ extern struct explosion_anim_group_info explosion_animation_table[];
 extern struct explosion_death_animation D_8002E648[];
 
 void sub_GAME_7F022EE0(s32 param_1);
-void sub_GAME_7F022E24(s32 param_1);
+void setanimationdebugflag(s32 param_1);
 void disable_sounds_attached_to_player_then_something(struct PropRecord* prop);
 void chrPositionRelated7F020D94(struct ChrRecord *);
 void set_or_unset_GUARDdata_flag(struct ChrRecord *guard,s32 param_2);
-s32 sub_GAME_7F021BFC();
 f32 get_animation_rate(void);
 void animation_speed_related(f32);
-struct PropRecord * init_GUARDdata_with_set_values(struct PropRecord *, struct Model *, struct pad *, f32 arg2, struct StandTile * arg3, s32 arg4);
-struct PropRecord * replace_GUARDdata_with_actual_values(struct Model * arg0, struct pad * arg1, f32 arg2, struct StandTile * arg3, s32 arg4);
+struct PropRecord * init_GUARDdata_with_set_values(struct PropRecord *, struct Model *, struct coord3d *, f32 arg2, struct StandTile * arg3, s32 arg4);
+struct PropRecord * replace_GUARDdata_with_actual_values(struct Model * arg0, struct coord3d * arg1, f32 arg2, struct StandTile * arg3, s32 arg4);
 void chrSetHiddenToRandom(struct ChrRecord *arg0);
 void  chrRemoved7F022E1C(f32 arg0);
 void chrDecrementAnimationTablePointerCount(void);
@@ -284,6 +305,7 @@ void chrGetChrWidthHeight(struct PropRecord *arg0, f32 *width, f32 *height, f32 
 f32 chrGetChrGround(struct PropRecord *arg0);
 void sub_GAME_7F021B20(struct ChrRecord *arg0);
 s32 get_numguards(void);
+Gfx *chrRenderProp(PropRecord *arg0, Gfx *arg1, s32 arg2);
 
 //tentative signature
 s32 sub_GAME_7F01FC10(Model *, struct coord3d *, struct coord3d *, f32 *);

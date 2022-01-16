@@ -9,6 +9,7 @@
 #define _mkword(a, b) ((a << 16) | (b & 0xffff))
 
 #define MAX_CHRWAYPOINTS 6
+#define PROPRECORD_STAN_ROOM_LEN 4
 
 typedef s32 bool;
 
@@ -67,7 +68,7 @@ struct point2d
             s32 y;
         };
         s32 p[2];
-    }
+    };
 };
 
 /**
@@ -108,6 +109,7 @@ struct rgba_u8 {
             u8 a;
         };
         u8 rgba[4];
+        s32 word;
     };
 };
 
@@ -123,6 +125,30 @@ struct rgba_f32 {
     };
 };
 
+
+struct rgba_s32 {
+    union {
+        struct {
+            s32 r;
+            s32 g;
+            s32 b;
+            s32 a;
+        };
+        s32 rgba[4];
+    };
+};
+
+struct rgb_s32 {
+    union {
+        struct {
+            s32 r;
+            s32 g;
+            s32 b;
+        };
+        s32 rgb[3];
+    };
+};
+
 struct bbox
 {
     float xmin;
@@ -131,6 +157,34 @@ struct bbox
     float ymax;
     float zmin;
     float zmax;
+};
+
+struct view4s32
+{
+    union {
+        struct {
+            s32 left;
+            s32 top;
+            s32 width;
+            s32 height;
+        };
+        s32 v[4];
+        f32 f[4];
+    };
+};
+
+struct view4f
+{
+    union {
+        struct {
+            f32 left;
+            f32 top;
+            f32 width;
+            f32 height;
+        };
+        s32 v[4];
+        f32 f[4];
+    };
 };
 
 struct rect4f
@@ -367,7 +421,10 @@ typedef struct ModelFileHeader {
     s16 numRecords;
     s16 numtextures;
     struct ModelFileTextures* Textures;
+#if defined(VERSION_EU)
+#else
     s32 isLoaded;
+#endif
 } ModelFileHeader;
 
 typedef struct ItemModelFileRecord {
@@ -852,9 +909,10 @@ typedef struct Model
     struct ModelFileHeader *obj;                                /*0x08 GE Name confirmed*/
     Mtxf *unk0c;                                            /*0x0c*/
     void **datas; // array of pointers to modeldata structs /*0x10*/
+
     f32 scale;                                              /*0x14*/
     struct Model *attachedto;                               /*0x18*/
-    ModelNode *unk1c;                                       /*0x1c*/
+    ModelNode *attachedto_objinst;                                       /*0x1c*/
 
     // need `struct anim` definition from AI branch.
     struct ModelAnimation *anim;                                      /*0x20*/
@@ -865,9 +923,19 @@ typedef struct Model
     s8 unk27;
 
     f32 unk28; // animation related
-    s32 unk2c;
-    // 0x30
-    s32 unk30;
+    f32 unk2c;
+
+    /**
+     * Animation framea (per debug message)
+     * Offset 0x30.
+    */
+    s16 framea;
+
+    /**
+     * Animation frameb (per debug message)
+     * Offset 0x32.
+    */
+    s16 frameb;
     s32 unk34;
     s32 unk38;
     s32 unk3c;
@@ -878,11 +946,24 @@ typedef struct Model
     s32 unk4c;
     // 0x50
     s32 unk50;
-    s32 unk54;
+
+    struct ModelAnimation *anim2;
+
     s32 unk58;
-    s32 unk5c;
-    // 0x60
-    s32 unk60;
+    f32 unk5c;
+
+    /**
+     * Animation frame2a (per debug message)
+     * Offset 0x60.
+    */
+    s16 frame2a;
+
+    /**
+     * Animation frame2b (per debug message)
+     * Offset 0x62.
+    */
+    s16 frame2b;
+
     s32 unk64;
     s32 unk68;
     s32 unk6c;
@@ -893,7 +974,12 @@ typedef struct Model
     s32 unk7c;
     // 0x80
     s32 unk80;
-    s32 unk84;
+
+    /**
+     * Related to "anim2", per debug message.
+    */
+    f32 unk84;
+
     s32 unk88;
     s32 unk8c;
     // 0x90
@@ -1479,12 +1565,16 @@ typedef struct PropRecord
     };                         /*0x04*/
     struct coord3d pos;                 /*0x08*/
     struct StandTile *stan;           /*0x14 name confirmed?*/
-    void *Unk18;                 /*0x18*/
+
+    /**
+     * Maybe float. Something related to draw (render) distance.
+    */
+    f32 Unk18;
     struct PropRecord *parent;   /*0x1c*/
     struct PropRecord *child; /*0x20*/
     struct PropRecord *prev;   /*0x24*/
     struct PropRecord *next;  /*0x28*/
-    s16 rooms[2];              /*0x2c*/
+    u8 rooms[PROPRECORD_STAN_ROOM_LEN];              /*0x2c*/
     s32 unk30;
 
     // u16 unk38;         /*0x38* /
@@ -1610,8 +1700,8 @@ typedef struct ChrRecord
     f32 hearingscale;           /*0xEC increases when shot at*/
     s32 lastheartarget60;       /*0xF0 increases after hearing bond (NOTE s32 not u32) */
     /* this next block MUST exist here */
-    u8 shadecol[4];   /*0xF4 stan colour eg, white = 0,0,0,0, grey = 0,0,0,64, black = 0,0,0,128, red = 255,0,0,128*/
-    u8 nextcol[4];    /*0xF8 (allows gradual transition) Stan colour is applied via "FOG" colour reg*/
+    struct rgba_u8 shadecol;   /*0xF4 stan colour eg, white = 0,0,0,0, grey = 0,0,0,64, black = 0,0,0,128, red = 255,0,0,128*/
+    struct rgba_u8 nextcol;    /*0xF8 (allows gradual transition) Stan colour is applied via "FOG" colour reg*/
     f32 damage;       /* 0x00FC confirmed*/
     f32 maxdamage;    /* 0x0100 confirmed*/
     AIRecord *ailist;       /* 0x0104 confirmed*/
@@ -1714,8 +1804,8 @@ struct ObjectRecord_f6c
 
     u32 unk90;
     f32 unk94;
-    ALSoundState * unk98;
-    ALSoundState * unk9c;
+    ALSoundState * unk98[2];
+    //ALSoundState * unk9c;
 
     u32 unka0;
     u32 unka4;
@@ -1725,7 +1815,7 @@ struct ObjectRecord_f6c
     f32 unkb0; // runtime y position?
     f32 unkb4; // previous pos.y?
     u32 unkb8;
-    u32 unkbc;
+    u32 refreshrate;
 
     u32 unkc0;
     u32 unkc4;
@@ -1919,10 +2009,7 @@ typedef struct ObjectRecord
     float field_70;
     short damage;
     short maxdamage;
-    char field_78;
-    char field_79;
-    char field_7A;
-    char field_7B;
+    struct rgba_u8 field_78;
     char field_7C;
     char field_7D;
     char field_7E;
@@ -2081,6 +2168,8 @@ typedef struct DoorRecord
     s8 state;
 
     u8 unkbd;                       /*0xbd*/
+
+    // something related to rendering
     s16 unkbe;                      /*0xbe*/
     s32 unkc0;                      /*0xc0*/
     s16 unkc4;                      /*0xc4*/
@@ -2189,6 +2278,17 @@ typedef struct GuardRecord
     struct ChrRecord *Data;  /*0x18*/
 } GuardRecord;
 
+// objtype 47
+typedef struct TintedGlassRecord
+{
+    ObjectRecord base;
+    s32 TintDist;
+    s32 CullDist;
+    s32 unk88;
+    s32 unk8c;
+    s32 unk90;
+} GlassData;
+
 
 typedef struct object_standard {
     s16 scale;
@@ -2255,57 +2355,14 @@ typedef struct ExplosionDetailsRecord {
     s16 Seed[6];
 } ExplosionDetailsRecord;
 
-typedef struct sGlobalImageTable {
-    u32 globalDL_0x000[30];
-    u32 globalDL_0x078[42];
-    u32 globalDL_0x120[42];
-    u32 globalDL_0x1c8[42];
-    u32 globalDL_0x270[42];
-    u32 globalDL_0x318[42];
-    u32 globalDL_0x3c0[42];
-    u32 globalDL_0x468[42];
-    u32 globalDL_0x510[42];
-    u32 globalDL_0x5b8[42];
-    u32 globalDL_0x660[42];
-    u32 globalDL_0x708[42];
-    u32 globalDL_0x7b0[42];
-    u32 globalDL_0x858[42];
-    u32 globalDL_0x900[42];
-    u32 globalDL_0x9a8[42];
-    u32 globalDL_0xa50[30];
-    struct sImageTableEntry s_genericimage[1];
-    struct sImageTableEntry s_impactimages[20];
-    struct sImageTableEntry s_explosion_smokeimages[6];
-    struct sImageTableEntry s_scattered_explosions[5];
-    struct sImageTableEntry s_flareimage1[1];
-    struct sImageTableEntry s_flareimage2[1];
-    struct sImageTableEntry s_flareimage3[1];
-    struct sImageTableEntry s_flareimage4[1];
-    struct sImageTableEntry s_flareimage5[1];
-    struct sImageTableEntry s_ammo9mmimage[1];
-    struct sImageTableEntry s_rifleammoimage[1];
-    struct sImageTableEntry s_shotgunammoimage[1];
-    struct sImageTableEntry s_knifeammoimage[1];
-    struct sImageTableEntry s_glammoimage[1];
-    struct sImageTableEntry s_rocketammoimage[1];
-    struct sImageTableEntry s_genericmineammoimage[1];
-    struct sImageTableEntry s_grenadeammoimage[1];
-    struct sImageTableEntry s_magnumammoimage[1];
-    struct sImageTableEntry s_goldengunammoimage[1];
-    struct sImageTableEntry s_remotemineammoimage[1];
-    struct sImageTableEntry s_timedmineammoimage[1];
-    struct sImageTableEntry s_proxmineammoimage[1];
-    struct sImageTableEntry s_tankammoimage[1];
-    struct sImageTableEntry s_crosshairimage[1];
-    struct sImageTableEntry s_betacrosshairimage[1];
-    struct sImageTableEntry s_glassoverlayimage[2];
-    struct sImageTableEntry s_monitorimages[50];
-    struct sImageTableEntry s_skywaterimages[3];
-    struct sImageTableEntry s_mainfolderimages[6];
-    struct sImageTableEntry s_mpradarimages[1];
-    struct sImageTableEntry s_mpcharselimages[64];
-    struct sImageTableEntry s_mpstageselimages[17];
-} sGlobalImageTable;
+struct ExplosionDetailsRecordSeed {
+    s16 seed[6];
+};
+
+typedef struct ExplosionDetailsRecordEuList {
+    u8 typeids[344];
+    struct ExplosionDetailsRecordSeed seeds[105];
+} ExplosionDetailsRecordEuList;
 
 typedef struct CreditsEntry_s {
     u16 TextId1;
@@ -2325,5 +2382,86 @@ typedef struct CreditsEntry_s {
     u16 Alignment2;
 
 } CreditsEntry;
+
+struct object_animation_controller {
+    // 0x00
+    void * ptranimation;
+    // 0x04
+    u16 offsettocurcmd;
+    // 0x06
+    u16 waitcounter;
+    // 0x08
+    u32 imagenum;
+    // 0x0C
+    f32 rotation;
+    // 0x10
+    f32 curzoomx;
+    // 0x14
+    f32 startzoomx;
+    // 0x18
+    f32 zoomxtimer;
+    // 0x1C
+    f32 initialzoomx;
+    // 0x20
+    f32 finalzoomx;
+    // 0x24
+    f32 curzoomy;
+    // 0x28
+    f32 startzoomy;
+    // 0x2C
+    f32 zoomytimer;
+    // 0x30
+    f32 initialzoomy;
+    // 0x34
+    f32 finalzoomy;
+    // 0x38
+    f32 curhorizontalpos;
+    // 0x3C
+    f32 starthorscroll;
+    // 0x40
+    f32 horscrolltimer;
+    // 0x44
+    f32 horinitpos;
+    // 0x48
+    f32 horfinalpos;
+    // 0x4C
+    f32 curverpos;
+    // 0x50
+    f32 startverscroll;
+    // 0x54
+    f32 verscrolltimer;
+    // 0x58
+    f32 verinitpos;
+    // 0x5C
+    f32 verfinalpos;
+    // 0x60
+    u8 curredcomponant;
+    // 0x61
+    u8 initredcomponant;
+    // 0x62
+    u8 finalredcomponant;
+    // 0x63
+    u8 curgreencomponant;
+    // 0x64
+    u8 initgreencomponant;
+    // 0x65
+    u8 finalgreencomponant;
+    // 0x66
+    u8 curbluecomponant;
+    // 0x67
+    u8 initbluecomponant;
+    // 0x68
+    u8 finalbluecomponant;
+    // 0x69
+    u8 curalphacomponant;
+    // 0x6A
+    u8 initalphacomponant;
+    // 0x6B
+    u8 finalalphacomponant;
+    // 0x6C
+    f32 startcolorshift;
+    // 0x70
+    f32 colorshifttimer;
+};
 
 #endif

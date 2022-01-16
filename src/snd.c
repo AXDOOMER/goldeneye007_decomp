@@ -1,8 +1,12 @@
 #include "ultra64.h"
 #include "PR/libaudio.h"
+#include "include/os_extension.h"
 #include "music.h"
 #include "snd.h"
 
+/**
+ * EU .data, offset from start of data_seg : 0x3620
+*/
 
 /**
  * @file snd.c

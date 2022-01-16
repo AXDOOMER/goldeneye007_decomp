@@ -45,10 +45,25 @@ typedef struct s_room_info {
 
 typedef struct s_bound_info 
 {
-    s32 index;
+    #if defined(VERSION_EU)
+    //eu is 0x18 total len
+    u8 roomid;
+    u8 pad1;
+    // could be draw order?
+    s16 unk1;
+    void* next;
+    struct bbox2d bbox;
+    
+    #else
+    //us is 0x1C total len
+    s32 roomid;
+    // could be draw order?
     s32 unk1;
     struct bbox2d bbox;
     void* next;
+    #endif
+
+    
 } s_bound_info;
 
 typedef struct bg_portal_entry
@@ -75,10 +90,11 @@ typedef struct bg_room_data
     struct coord3d pos;
 } bg_room_data;
 
+extern s32 MaxNumRooms;
 extern f32 room_data_float2;
 
 extern bg_room_data * ptr_bgdata_room_fileposition_list;
-extern s_room_info array_room_info[0x96];
+extern s_room_info array_room_info[];
 
 
 void bgInitDebugNoticeList(void);
@@ -102,11 +118,13 @@ void bgSetDataPortalsControlBytes1Bit2(s32 index);
 s32 sub_GAME_7F0B9A7C(s32 arg0);
 s32 sub_GAME_7F0B9A2C(s32 arg0);
 void sub_GAME_7F0B4884(void);
-Gfx* sub_GAME_7F0B4E40(Gfx *arg0);
-void sub_GAME_7F0B4FB4(s32 arg0);
-void sub_GAME_7F0B4FF4(s32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4);
+Gfx* bgLevelRender(Gfx *arg0);
+Gfx *bgScissorCurrentPlayerView(Gfx *arg0, s32 left, s32 top, s32 width, s32 height);
+Gfx* bgScissorCurrentPlayerViewDefault(Gfx* arg0);
+Gfx* bgScissorCurrentPlayerViewF(Gfx* arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4);
 f32 get_room_data_float1(void);
-u8 * getROOMID_Bitflags(int roomID);
+s32 getROOMID_Bitflags(int roomID);
 s32 bgGet2dBboxByRoomId(s32 room_id, struct bbox2d *result);
+f32 sub_GAME_7F0B4878(void);
 
 #endif
