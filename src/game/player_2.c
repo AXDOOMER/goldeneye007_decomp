@@ -2498,73 +2498,27 @@ void shuffle_player_ids(void) {
 
 
 
-#ifdef NONMATCHING
-s32 sub_GAME_7F09B4D8(s32 arg0) {
-    s32 temp_v0;
-    void *temp_a1;
-    void *phi_a1;
-    s32 phi_v1;
-    s32 phi_v1_2;
-    s32 phi_v1_3;
+s32 sub_GAME_7F09B4D8(s32 current_player_num) {
+    s32 i;
+    s32 position = 0;
 
-    // Node 0
-    phi_a1 = &array_PLAYER_IDs;
-    phi_v1_3 = 0;
-loop_1:
-    // Node 1
-    temp_v0 = *phi_a1;
-    temp_a1 = (phi_a1 + 4);
-    phi_v1 = phi_v1_3;
-    if (arg0 != temp_v0)
-    {
-        // Node 2
-        phi_v1_2 = phi_v1_3;
-        if (*(&g_playerPointers + (temp_v0 * 4)) != 0)
+    for (i = 0; i < 4; i++) {
+        if (current_player_num != array_PLAYER_IDs[i])
         {
-            // Node 3
-            phi_v1_2 = (phi_v1_3 + 1);
+            if (g_playerPointers[array_PLAYER_IDs[i]] != NULL)
+            {
+                position++;
+            }
         }
-        // Node 4
-        phi_a1 = temp_a1;
-        phi_v1 = phi_v1_2;
-        phi_v1_3 = phi_v1_2;
-        if (temp_a1 != &dword_CODE_bss_8007A0D0)
+        else
         {
-            goto loop_1;
+            break;
         }
     }
-    // Node 5
-    return phi_v1;
+
+    return position;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F09B4D8
-/* 0D0008 7F09B4D8 3C058008 */  lui   $a1, %hi(array_PLAYER_IDs)
-/* 0D000C 7F09B4DC 3C078008 */  lui   $a3, %hi(dword_CODE_bss_8007A0D0)
-/* 0D0010 7F09B4E0 3C068008 */  lui   $a2, %hi(g_playerPointers)
-/* 0D0014 7F09B4E4 00001825 */  move  $v1, $zero
-/* 0D0018 7F09B4E8 24C69EE0 */  addiu $a2, %lo(g_playerPointers) # addiu $a2, $a2, -0x6120
-/* 0D001C 7F09B4EC 24E7A0D0 */  addiu $a3, %lo(dword_CODE_bss_8007A0D0) # addiu $a3, $a3, -0x5f30
-/* 0D0020 7F09B4F0 24A5A0C0 */  addiu $a1, %lo(array_PLAYER_IDs) # addiu $a1, $a1, -0x5f40
-/* 0D0024 7F09B4F4 8CA20000 */  lw    $v0, ($a1)
-.L7F09B4F8:
-/* 0D0028 7F09B4F8 24A50004 */  addiu $a1, $a1, 4
-/* 0D002C 7F09B4FC 10820008 */  beq   $a0, $v0, .L7F09B520
-/* 0D0030 7F09B500 00027080 */   sll   $t6, $v0, 2
-/* 0D0034 7F09B504 00CE7821 */  addu  $t7, $a2, $t6
-/* 0D0038 7F09B508 8DF80000 */  lw    $t8, ($t7)
-/* 0D003C 7F09B50C 13000002 */  beqz  $t8, .L7F09B518
-/* 0D0040 7F09B510 00000000 */   nop
-/* 0D0044 7F09B514 24630001 */  addiu $v1, $v1, 1
-.L7F09B518:
-/* 0D0048 7F09B518 54A7FFF7 */  bnel  $a1, $a3, .L7F09B4F8
-/* 0D004C 7F09B51C 8CA20000 */   lw    $v0, ($a1)
-.L7F09B520:
-/* 0D0050 7F09B520 03E00008 */  jr    $ra
-/* 0D0054 7F09B524 00601025 */   move  $v0, $v1
-)
-#endif
+
 
 
 
