@@ -1,31 +1,31 @@
 /*
 * This file was automatically generated
 * 
-* Thursday, August 26, 2021 9:53:23 PM
-* Getools.Lib: 21.8.26.1
+* Monday, January 17, 2022 9:36:08 AM
+* Getools.Lib: 21.9.18.1
 */
 
-#include <ultra64.h>
-#include <bondtypes.h>
+#include "ultra64.h"
+#include "bondtypes.h"
 
 // forward declarations
 PadRecord padlist[];
 BoundPadRecord pad3dlist[];
-s32 objlist[];
+s32 propDefs[];
 s32 intro[];
-waygroup pathlist[];
+waygroup pathsets[];
 char *pad3dnames[];
-struct s_pathTbl pathtbl[];
+waypoint pathwaypoints[];
 char *padnames[];
-struct s_pathSet paths[];
-struct ailist ailists[];
+PathRecord patrolpaths[];
+AIListRecord ailists[];
 
-struct stagesetup setup = {
-    &pathtbl,
-    &pathlist,
+stagesetup Ump_setupsevbZ = {
+    &pathwaypoints,
+    &pathsets,
     &intro,
-    &objlist,
-    &paths,
+    &propDefs,
+    &patrolpaths,
     &ailists,
     &padlist,
     &pad3dlist,
@@ -274,7 +274,7 @@ BoundPadRecord pad3dlist[] = {
 };
 
 
-s32 objlist[] = {
+s32 propDefs[] = {
     /* Type = Collectable; index = 0 */
     _mkword(256, _mkshort(0, 8)), _mkword(333, 10046), 0x00000001, 0x00000000, 0x00000000, 0x00000000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x00000000, 0x00000000, 0, 0, _mkword(1000, 0), 0, 0, _mkword(_mkshort(0x58, 0xff), 0xffff), 0,
     /* Type = Glass; index = 1 */
@@ -451,7 +451,7 @@ s32 intro[] = {
 s32 unknown_setup_block_0[] = { -1, -1 };
 
 
-waygroup pathlist[] = {
+waygroup pathsets[] = {
     { NULL, NULL, 0 }
 };
 
@@ -464,8 +464,8 @@ char *pad3dnames[] = {
 s32 unknown_setup_block_1[] = { -1 };
 
 
-struct s_pathTbl pathtbl[] = {
-    { 0xffff, 0xffff, NULL, 0x00000000, 0x00000000 }
+waypoint pathwaypoints[] = {
+    { 0xffffffff, NULL, 0x00000000, 0x00000000 }
 };
 
 
@@ -474,19 +474,15 @@ char *padnames[] = {
 };
 
 
-struct s_pathSet paths[] = {
-    { NULL, 0x00000000 }
+PathRecord patrolpaths[] = {
+    { NULL, 0x00, 0x00, 0x0000 }
 };
 
 
-struct ailist ailists[] = {
+AIListRecord ailists[] = {
     /* index = 0 */
     { NULL, 0x00000000 }
 };
-
-
-
-
 
 
 

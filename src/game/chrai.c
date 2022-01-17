@@ -1923,11 +1923,11 @@ PathRecord *get_ptr_path_for_pathnum(s32 ID)
 {
     int i;
 
-        for  (i=0;setup.paths[i].waypoints;i++)
+        for  (i=0;setup.patrolpaths[i].waypoints;i++)
         {
-            if ( ID == setup.paths[i].ID )
+            if ( ID == setup.patrolpaths[i].ID )
             {
-                return &setup.paths[i];
+                return &setup.patrolpaths[i];
             }
            
         }

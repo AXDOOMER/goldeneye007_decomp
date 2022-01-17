@@ -3507,8 +3507,8 @@ PadRecord * chrlvGetPatrolStepPad(ChrRecord *self, s32 arg1)
 
     step = self->act_patrol.path->data[step];
 
-     return &((struct SetupPtrs *)&ptr_setup_path_tbl)->padlist[
-         ((struct SetupPtrs *)&ptr_setup_path_tbl)->pathtbl[step].padID
+     return &((struct SetupPtrs *)&ptr_setup_path_tbl)->pads[
+         ((struct SetupPtrs *)&ptr_setup_path_tbl)->pathwaypoints[step].padID
          ];
 }
 

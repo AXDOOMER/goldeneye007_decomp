@@ -276,6 +276,7 @@ ifeq ($(VERBOSE),1)
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(RSPOBJECTS)
 else
 	@clear
+	@echo Deleting All Code Binaries Only (Assets will be left from previous compile)
 	@rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map
 	@$(call DrawProgressBar,50)
 	@rm -f $(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(RSPOBJECTS)
@@ -296,6 +297,7 @@ ifeq ($(VERBOSE),1)
 	$(STAN_BUILD_FILES) $(SETUP_BUILD_FILES)
 else
 	@clear
+	@echo Deleting All Code and Asset Binaries
 	@$(call DrawProgressBar,0)
 	@rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map
 	@$(call DrawProgressBar,1,4)
@@ -306,7 +308,7 @@ else
 	@rm -f $(IMAGE_OBJS) $(MUSIC_RZ_FILES) $(RSPOBJECTS) $(STAN_BUILD_FILES) $(SETUP_BUILD_FILES)
 	@$(call DrawProgressBar,100)
 endif
-	@echo "\n\n All Code and Data Binaries Cleared! Make will Re-Build these next time.\n"
+	@echo "\n\n All Code and Asset Binaries Cleared! Make will Re-Build these next time.\n"
 
 
 $(BUILD_DIR)/rsp/%.bin: rsp/*.s

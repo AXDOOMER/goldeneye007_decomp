@@ -3300,17 +3300,24 @@ typedef union
 #pragma region stagesetup.h
         typedef struct stagesetup
         {
-            struct s_pathTbl (*pathtbl)[];
-            waygroup (*pathlink)[];
-            s32 (*intro)[];
-            s32 (*objlist)[];
-            struct s_pathSet (*paths)[];
-            struct ailist (*ailists)[];
-            PadRecord (*padlist)[];
-            BoundPadRecord (*pad3dlist)[];
-            char *(*padnames)[];
-            char *(*pad3dnames)[];
+            waypoint       *pathwaypoints;
+            waygroup       *waypointgroups;
+            s32            *intro;
+            s32            *propDefs;
+            PathRecord     *patrolpaths;
+            AIListRecord   *ailists;
+            PadRecord      *pads;
+            BoundPadRecord *boundpads;
+            char           *padnames;
+            char           *boundpadnames;
         } stagesetup;
+
+        #define setAiGlobalID(ID) ((ID) + 0)
+        #define setAiStageID(ID)  ((ID) + 4096)
+        #define setAiChrID(ID)    ((ID) + 1024)
+        #define getAiGlobalID(ID) ((ID) - 0)
+        #define getAiStageID(ID)  ((ID) - 4096)
+        #define getAiChrID(ID)    ((ID) - 1024)
 #pragma endregion stagesetup.h
 
 
