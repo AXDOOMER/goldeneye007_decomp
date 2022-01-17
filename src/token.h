@@ -3,10 +3,10 @@
 
 #include "ultra64.h"
 
-#if defined(VERSION_EU)
-#define G_TOKEN_STRING_LEN 15
-#else
+#if defined(LEFTOVERDEBUG)
 #define G_TOKEN_STRING_LEN 160
+#else
+#define G_TOKEN_STRING_LEN 15
 #endif
 
 void tokenSetString(const char *str);

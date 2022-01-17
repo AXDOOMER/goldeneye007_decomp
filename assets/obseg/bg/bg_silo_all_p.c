@@ -164,7 +164,7 @@ struct portal_data_table_entry portal_data_table[] = {
     {&portal_11, 0x0D, 0x0E, 0x0000},
     {&portal_33, 0x24, 0x27, 0x0000},
 
-#if defined(VERSION_EU)
+#if defined(BUGFIX_R2)
     {&portal_34, 0x24, 0x0C, 0x0008},
 #else
     {&portal_34, 0x24, 0x0C, 0x0000},

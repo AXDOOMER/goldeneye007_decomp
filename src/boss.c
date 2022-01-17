@@ -50,11 +50,12 @@
  * @file boss.c
  * This file contains the main game loop code.
  */
-#ifndef VERSION_EU
-#define MAIN_LOOP_TICK_INTERVAL 0x5eb61U
-#else
+#ifdef REFRESH_PAL
 #define MAIN_LOOP_TICK_INTERVAL D_800484B4 * 0xe34ea - 0x71a75U
+#else
+#define MAIN_LOOP_TICK_INTERVAL 0x5eb61U
 #endif
+
 /**
  * Copied from n64devkit\ultra\usr\src\pr\demos_old\simple\gfx.h
  */
@@ -653,7 +654,7 @@ GLOBAL_ASM(
 
 
 
-.late_rodata
+.rdata
 glabel aLevel__0
 .word 0x2d6c6576, 0x656c5f00 /*"-level_"*/
 glabel aLevel__1
@@ -670,8 +671,7 @@ glabel aMa_0
 .word 0x2d6d6100 /*"-ma"*/
 glabel aU64_taskgrab_D_core
 .word 0x7536342e, 0x7461736b, 0x67726162, 0x2e25642e, 0x636f7265, 0x00000000 /*"u64.taskgrab.%d.core"*/
-glabel boss_c_debug
-.word 0x626F7373, 0x5F635F64, 0x65627567, 0x00000000 /* "boss_c_debug" */
+
 
 .data
 glabel taskgrab_ramdump_num
@@ -1342,7 +1342,7 @@ s32 bossGetDebugParseFlag(void) {
     return g_DebugFeatureFlag;
 }
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+
 /**
  * 75C0    700069C0
  *     V0= p->debug.notice.list entry for boss_c_debug using data at 800241A0
@@ -1350,22 +1350,3 @@ s32 bossGetDebugParseFlag(void) {
 void bossInitDebugNoticeList(void) {
     debTryAdd(&g_BossDebugNoticeEntry, "boss_c_debug");
 }
-#endif
-
-#if defined(VERSION_EU)
-GLOBAL_ASM(
-.text
-glabel bossInitDebugNoticeList
-/* 006A18 70005E18 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 006A1C 70005E1C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 006A20 70005E20 3C048002 */  lui   $a0, %hi(g_BossDebugNoticeEntry) # $a0, 0x8002
-/* 006A24 70005E24 3C058002 */  lui   $a1, %hi(boss_c_debug) # $a1, 0x8002
-/* 006A28 70005E28 24A5481C */  addiu $a1, %lo(boss_c_debug) # addiu $a1, $a1, 0x481c
-/* 006A2C 70005E2C 0C0010A0 */  jal   debTryAdd
-/* 006A30 70005E30 24842030 */   addiu $a0, %lo(g_BossDebugNoticeEntry) # addiu $a0, $a0, 0x2030
-/* 006A34 70005E34 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 006A38 70005E38 27BD0018 */  addiu $sp, $sp, 0x18
-/* 006A3C 70005E3C 03E00008 */  jr    $ra
-/* 006A40 70005E40 00000000 */   nop   
-)
-#endif

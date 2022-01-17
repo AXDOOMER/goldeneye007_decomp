@@ -108,7 +108,7 @@ u32 D_800232BC = 3;
  */
 s32 D_800232C0 = 0;
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 s32 g_indyJpg16BitGrabnum = 1;
 s32 g_indyJpg32BitGrabnum = 1;
 s32 g_indyRgb16BitGrabnum = 1;
@@ -1934,7 +1934,7 @@ Gfx *viSetFillColor(Gfx *gdl, s32 r, s32 g, s32 b)
  */
 void indyGrabJpg16bit(void)
 {
-    #ifndef VERSION_EU
+    #ifdef LEFTOVERDEBUG
     s32 *pgrabnum = &g_indyJpg16BitGrabnum;
     char buffer[250];
     s32 filesize;
@@ -1976,7 +1976,7 @@ void indyGrabJpg16bit(void)
  */
 void indyGrabJpg32bit(void)
 {
-    #ifndef VERSION_EU
+    #ifdef LEFTOVERDEBUG
     s32 *pgrabnum = &g_indyJpg32BitGrabnum;
     char buffer[250];
     s32 filesize;
@@ -2018,7 +2018,7 @@ void indyGrabJpg32bit(void)
  */
 void indyGrabRgb16bit(void)
 {
-    #ifndef VERSION_EU
+    #ifdef LEFTOVERDEBUG
     s32 *pgrabnum = &g_indyRgb16BitGrabnum;
     char buffer[250];
     s32 filesize;
@@ -2057,7 +2057,7 @@ void indyGrabRgb16bit(void)
  */
 void indyGrabRgb32bit(void)
 {
-    #ifndef VERSION_EU
+    #ifdef LEFTOVERDEBUG
     s32 *pgrabnum = &g_indyRgb32BitGrabnum;
     char buffer[250];
     s32 filesize;

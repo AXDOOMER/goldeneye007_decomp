@@ -17,10 +17,10 @@ struct deblistentry
 /**
  * EU .bss 80053e60
 */
-#if defined(VERSION_EU)
-u8 g_DebBuffer[0x10];
-#else
+#if defined(LEFTOVERDEBUG)
 u8 g_DebBuffer[0x400];
+#else
+u8 g_DebBuffer[0x10];
 #endif
 
 u32 g_DebDebugData[] = {0, 0};
@@ -41,7 +41,7 @@ struct deblistentry *debFind(const char *name)
 }
 
 u8 *debAllocate(s32 size) {
-#ifndef VERSION_EU
+#ifdef LEFTOVERDEBUG
     u8 **pos = &g_DebMemPos;
     u8 *curr = *pos;
     u8 *prev = curr;
@@ -65,7 +65,7 @@ u8 *debAllocate(s32 size) {
 }
 
 void debAdd(const char *name, u32 data) {
-#ifndef VERSION_EU
+#ifdef LEFTOVERDEBUG
     struct deblistentry *entry = debAllocate(sizeof(struct deblistentry));
     entry->next = g_DebList;
     entry->data = data;

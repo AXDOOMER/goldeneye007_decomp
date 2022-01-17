@@ -701,7 +701,7 @@ Gfx *insert_bond_eye_intro(Gfx *gdl) {
     
     matrix_4x4_7F059694(&matrix, D_8002A83C[0], D_8002A83C[1], D_8002A83C[2], (D_8002A83C[0] + D_8002A848[0]), (D_8002A83C[1] + D_8002A848[1]), (D_8002A83C[2] + D_8002A848[2]), D_8002A854[0], D_8002A854[1], D_8002A854[2]);
 
-#if defined VERSION_EU
+#if defined REFRESH_PAL
     return sub_GAME_7F007F30(gdl, 1, &matrix);
 #else
     return sub_GAME_7F007F30(gdl, 2, &matrix);
@@ -728,7 +728,7 @@ Gfx *load_display_rare_logo(Gfx *gdl, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     guLookAt(&matrix_buffer_rarelogo_1[D_8002A7D0], D_8002A878[0], D_8002A878[1], D_8002A878[2], (D_8002A878[0] + D_8002A884[0]), (D_8002A878[1] + D_8002A884[1]), (D_8002A878[2] + D_8002A884[2]), D_8002A890[0], D_8002A890[1], D_8002A890[2]);
     gSPMatrix(gdl++,  osVirtualToPhysical(&matrix_buffer_rarelogo_1[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW));
     guRotate(&matrix_buffer_rarelogo_2[D_8002A7D0], D_8002A89C, 0.0f, 1.0f, 0.0f);
-#if defined(VERSION_EU)
+#if defined(REFRESH_PAL)
     D_8002A89C += 2.4f;
 #else
     D_8002A89C += 2.0f;
@@ -773,7 +773,7 @@ void sub_GAME_7F008B58(s32 address, s32 size) {
 
 Gfx *retrieve_display_rareware_logo(Gfx *gdl)
 {
-#if defined(VERSION_EU)
+#if defined(REFRESH_PAL)
 #define RAREWARE_LOGO_DEN 58
 #define RAREWARE_LOGO_SUB 33915
 #define RAREWARE_LOGO_EYE_COUNT1 216
@@ -1381,13 +1381,13 @@ void sub_GAME_7F00920C(void)
     }
 }
 
-#ifndef VERSION_EU
+#ifndef REFRESH_PAL
     #define XINC 6.0f
     #define XDEC 12.0f
     #define XDEC2 6
     #define XDEC3 5.8183274f
     #define INCVAL 0x38E
-    #define INTRO_EYE_COUNTER_CASE_4 0x6c
+    #define INTRO_EYE_COUNTER_CASE_4 108
     #define INTRO_EYE_COUNTER_CASE_5_ADD 8
     #define INTRO_EYE_COUNTER_CASE_6 0x1e
 #else
@@ -1396,7 +1396,7 @@ void sub_GAME_7F00920C(void)
     #define XDEC2 6
     #define XDEC3 3.63643622398f
     #define INCVAL 0x444
-    #define INTRO_EYE_COUNTER_CASE_4 0x5a
+    #define INTRO_EYE_COUNTER_CASE_4 90
     #define INTRO_EYE_COUNTER_CASE_5_ADD 9
     #define INTRO_EYE_COUNTER_CASE_6 0x19
 #endif
@@ -1426,13 +1426,17 @@ Gfx *sub_GAME_7F009254(Gfx *gdl) {
         break;
 
     case 1:
-        #ifndef VERSION_EU
+        #if defined(LEFTOVERDEBUG)
         gSPDisplayList(gdl++, &fontDL_0x000);
-        gdl = insert_sight_backdrop_eye_intro(insert_sniper_sight_eye_intro(insert_imageDL(insert_imageDL(insert_imageDL(insert_imageDL(insert_imageDL(gdl)))))));
-        #else
-        gdl = insert_sight_backdrop_eye_intro(insert_sniper_sight_eye_intro(gdl));
+        gdl = insert_imageDL(gdl++);
+        gdl = insert_imageDL(gdl++);
+        gdl = insert_imageDL(gdl++);
+        gdl = insert_imageDL(gdl++);
+        gdl = insert_imageDL(gdl++);
         #endif
-
+        gdl = insert_sniper_sight_eye_intro(gdl++);
+        gdl = insert_sight_backdrop_eye_intro(gdl++);
+        
         if (g_TitleX < 600.0f) {
             gdl = insert_bond_eye_intro(gdl);
         }

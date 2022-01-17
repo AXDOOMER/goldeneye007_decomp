@@ -416,7 +416,7 @@ void set_vtxallocator(s32 param_1) {
   vtxallocator = param_1;
 }
 
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
 void return_null(void) {
   return;
 }
@@ -1393,7 +1393,6 @@ glabel setsuboffset
 
 
 
-#ifndef VERSION_EU
 /**
  * Address 0x7F06CC80.
  */
@@ -1401,6 +1400,7 @@ f32 getsubroty(Model *objinst)
 {
     ModelNode *root;
     
+    #if defined(LEFTOVERDEBUG)
     if(0)
     {
         // removed
@@ -1438,6 +1438,7 @@ f32 getsubroty(Model *objinst)
     {
         // removed
     }
+    #endif
 
     root = objinst->obj->RootNode;
     if ((root->Opcode & 0xFF) == 1)
@@ -1447,53 +1448,6 @@ f32 getsubroty(Model *objinst)
 
     return 0.0f;
 }
-
-
-
-#else
-
-#ifdef NONMATCHING
-// untested
-// f32 getsubroty(Model *arg0)
-// {
-//     ModelNode *root;
-//    
-//     root = arg0->obj->RootNode;
-//     if ((root->Opcode & 0xFF) == 1)
-//     {
-//         return ((struct modeldata_root *)extract_id_from_object_structure_microcode(arg0, root))->subroty;
-//     }
-//
-//     return 0.0f;
-// }
-#else
-GLOBAL_ASM(
-.text
-glabel getsubroty
-/* 09FC18 7F06D228 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 09FC1C 7F06D22C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09FC20 7F06D230 8C8E0008 */  lw    $t6, 8($a0)
-/* 09FC24 7F06D234 24010001 */  li    $at, 1
-/* 09FC28 7F06D238 8DC50000 */  lw    $a1, ($t6)
-/* 09FC2C 7F06D23C 94AF0000 */  lhu   $t7, ($a1)
-/* 09FC30 7F06D240 31F800FF */  andi  $t8, $t7, 0xff
-/* 09FC34 7F06D244 57010006 */  bnel  $t8, $at, .L7F06D260eu
-/* 09FC38 7F06D248 44800000 */   mtc1  $zero, $f0
-/* 09FC3C 7F06D24C 0FC1B3A3 */  jal   extract_id_from_object_structure_microcode
-/* 09FC40 7F06D250 00000000 */   nop   
-/* 09FC44 7F06D254 10000003 */  b     .L7F06D264
-/* 09FC48 7F06D258 C4400014 */   lwc1  $f0, 0x14($v0)
-/* 09FC4C 7F06D25C 44800000 */  mtc1  $zero, $f0
-.L7F06D260eu:
-/* 09FC50 7F06D260 00000000 */  nop   
-.L7F06D264:
-/* 09FC54 7F06D264 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09FC58 7F06D268 27BD0018 */  addiu $sp, $sp, 0x18
-/* 09FC5C 7F06D26C 03E00008 */  jr    $ra
-/* 09FC60 7F06D270 00000000 */   nop   
-)
-#endif /* end eu NONMATCHING */
-#endif 
 
 
 
@@ -1996,13 +1950,12 @@ def_7F06CEF0:
 
 
 
-#ifndef VERSION_EU
-
 /**
  * Address 0x7F06D00C.
 */
 f32 getinstsize(Model *arg0)
 {
+    #if defined(LEFTOVERDEBUG)
     if (arg0 == NULL)
     {
         osSyncPrintf("getinstsize: no objinst!\n");
@@ -2014,35 +1967,10 @@ f32 getinstsize(Model *arg0)
         osSyncPrintf("getinstsize: no objdesc!\n");
         return_null();
     }
+    #endif
     
     return arg0->obj->BoundingVolumeRadius * arg0->scale;
 }
-#else
-
-#ifdef NONMATCHING
-// untested
-
-/**
- * VERSION_EU.
- * Address 0x7F06D494.
-*/
-f32 getinstsize(Model *arg0)
-{
-    return arg0->obj->BoundingVolumeRadius * arg0->scale;
-}
-#else
-GLOBAL_ASM(
-.text
-glabel getinstsize
-/* 09FE84 7F06D494 8C8E0008 */  lw    $t6, 8($a0)
-/* 09FE88 7F06D498 C4860014 */  lwc1  $f6, 0x14($a0)
-/* 09FE8C 7F06D49C C5C40010 */  lwc1  $f4, 0x10($t6)
-/* 09FE90 7F06D4A0 46062002 */  mul.s $f0, $f4, $f6
-/* 09FE94 7F06D4A4 03E00008 */  jr    $ra
-/* 09FE98 7F06D4A8 00000000 */   nop   
-)
-#endif
-#endif
 
 
 
@@ -2564,7 +2492,7 @@ void subcalcpos(Model *arg0)
 {
     struct ModelNode *root;
 
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
     if (arg0 == NULL)
     {
         osSyncPrintf("subcalcpos: no objanim!\n");
@@ -5035,7 +4963,7 @@ glabel instcalcmatrices
 */
 void subcalcmatrices(struct unk_joint_list *arg0, struct Model *arg1)
 {
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
     if (arg1 == NULL)
     {
         osSyncPrintf("subcalcmatrices: no objanim!\n");
@@ -5057,7 +4985,7 @@ void subcalcmatrices(struct unk_joint_list *arg0, struct Model *arg1)
 
     if (arg1->anim != NULL)
     {
-#ifndef VERSION_EU
+#if defined(LEFTOVERDEBUG)
         if ((arg1->attachedto != NULL) && (arg1->attachedto_objinst == NULL))
         {
             osSyncPrintf("subcalcmatrices: no attach for objinst!\n");
@@ -6053,7 +5981,8 @@ s32 sub_GAME_7F06FE90(Model *arg0, f32 arg1, f32 arg2)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F06FF18(void) {
+void sub_GAME_7F06FF18(Model *param_1,s32 ani_rate,s32 param_3)
+{
 
 }
 #else
@@ -15056,7 +14985,7 @@ def_7F075B60:
 
 void set_objuse_flag_compute_grp_nums_set_obj_loaded(struct ModelFileHeader *objheader)
 {
-  #ifndef VERSION_EU
+  #if defined(LEFTOVERDEBUG)
     objheader->isLoaded = 1;
   #endif
     objheader->numRecords = set_microcode_entry_numbers(objheader->RootNode);

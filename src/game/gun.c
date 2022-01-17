@@ -1820,48 +1820,19 @@ s32 get_itemtype_in_hand(HANDEDNESS hand)
     return g_CurrentPlayer->hand_item[hand];
 }
 
-#ifndef VERSION_EU
+
 ModelFileHeader *get_ptr_itemheader_in_hand(HANDEDNESS hand)
 {
     return &g_CurrentPlayer->copy_of_body_obj_header[hand];
 }
-#endif
-#ifdef VERSION_EU
-GLOBAL_ASM(
-.text
-glabel get_ptr_itemheader_in_hand
-/* 08FDB8 7F05D3C8 3C0E8007 */  lui   $t6, %hi(g_CurrentPlayer) # $t6, 0x8007
-/* 08FDBC 7F05D3CC 8DCE8BC0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
-/* 08FDC0 7F05D3D0 000478C0 */  sll   $t7, $a0, 3
-/* 08FDC4 7F05D3D4 01E47823 */  subu  $t7, $t7, $a0
-/* 08FDC8 7F05D3D8 000F7880 */  sll   $t7, $t7, 2
-/* 08FDCC 7F05D3DC 01CF1021 */  addu  $v0, $t6, $t7
-/* 08FDD0 7F05D3E0 03E00008 */  jr    $ra
-/* 08FDD4 7F05D3E4 24420810 */   addiu $v0, $v0, 0x810
-)
-#endif
 
 
-#ifndef VERSION_EU
+
+
 u8 * getPlayerWeaponBufferForHand(HANDEDNESS hand)
 {
     return g_CurrentPlayer->ptr_hand_weapon_buffer[hand];
 }
-#endif
-#ifdef VERSION_EU
-GLOBAL_ASM(
-.text
-glabel getPlayerWeaponBufferForHand
-/* 08FDD8 7F05D3E8 3C0E8007 */  lui   $t6, %hi(g_CurrentPlayer) # $t6, 0x8007
-/* 08FDDC 7F05D3EC 8DCE8BC0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
-/* 08FDE0 7F05D3F0 00047880 */  sll   $t7, $a0, 2
-/* 08FDE4 7F05D3F4 01CFC021 */  addu  $t8, $t6, $t7
-/* 08FDE8 7F05D3F8 03E00008 */  jr    $ra
-/* 08FDEC 7F05D3FC 8F020808 */   lw    $v0, 0x808($t8)
-)
-#endif
-
-
 
 
 u32 getSizeBufferWeaponInHand(int hand)
@@ -27412,11 +27383,7 @@ void analyzeGEKey(void)
 {
     if (checkHasGEKey())
     {
-	    #if defined(VERSION_JP) || defined(VERSION_EU)
-		    jp_display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LGUN, 0xD8))); //Analyzing the GoldenEye key...
-		#else
-    	    display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LGUN, 0xD8))); //Analyzing the GoldenEye key...
-		#endif
+   	    DISPLAYSTRINGLOWERLEFT(get_textptr_for_textID(TEXT(LGUN, 0xD8))); //Analyzing the GoldenEye key...
     	g_CurrentPlayer->copiedgoldeneye = 1;
     	sndPlaySfx(g_musicSfxBufferPtr, 0xf5, 0x0);
     	draw_item_in_hand_has_more_ammo(RIGHT_HAND, ITEM_GOLDENEYEKEY);
@@ -27424,11 +27391,7 @@ void analyzeGEKey(void)
   	}
   	else
   	{
-		#if defined(VERSION_JP) || defined(VERSION_EU)
-		    jp_display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LGUN, 0xD9))); //You do not have the GoldenEye key.
-		#else
-	        display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LGUN, 0xD9))); //You do not have the GoldenEye key.
-		#endif
+	    DISPLAYSTRINGLOWERLEFT(get_textptr_for_textID(TEXT(LGUN, 0xD9))); //You do not have the GoldenEye key.
 	    sub_GAME_7F05D690();
   	}
   	return;
@@ -32675,7 +32638,7 @@ s32 check_cur_player_ammo_amount_in_inventory(AMMOTYPES ammotype) {
     return g_CurrentPlayer->ammoheldarr[ammotype];
 }
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+
 s32 check_cur_player_ammo_amount_total(AMMOTYPES ammotype) {
 
     s32 total_ammo = check_cur_player_ammo_amount_in_inventory(ammotype);
@@ -32690,46 +32653,7 @@ s32 check_cur_player_ammo_amount_total(AMMOTYPES ammotype) {
 
     return total_ammo;
 }
-#endif
-#if defined(VERSION_EU)
-GLOBAL_ASM(
-.text
-glabel check_cur_player_ammo_amount_total
-/* 09C3DC 7F0699EC 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 09C3E0 7F0699F0 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 09C3E4 7F0699F4 AFB00018 */  sw    $s0, 0x18($sp)
-/* 09C3E8 7F0699F8 0FC1A675 */  jal   check_cur_player_ammo_amount_in_inventory
-/* 09C3EC 7F0699FC AFA40020 */   sw    $a0, 0x20($sp)
-/* 09C3F0 7F069A00 00408025 */  move  $s0, $v0
-/* 09C3F4 7F069A04 0FC177A2 */  jal   get_item_in_hand
-/* 09C3F8 7F069A08 00002025 */   move  $a0, $zero
-/* 09C3FC 7F069A0C 0FC1A6F0 */  jal   get_ammo_type_for_weapon
-/* 09C400 7F069A10 00402025 */   move  $a0, $v0
-/* 09C404 7F069A14 8FAE0020 */  lw    $t6, 0x20($sp)
-/* 09C408 7F069A18 144E0004 */  bne   $v0, $t6, .L7F069A2C
-/* 09C40C 7F069A1C 00000000 */   nop   
-/* 09C410 7F069A20 0FC1A6B6 */  jal   get_ammo_in_hands_magazine
-/* 09C414 7F069A24 00002025 */   move  $a0, $zero
-/* 09C418 7F069A28 02028021 */  addu  $s0, $s0, $v0
-.L7F069A2C:
-/* 09C41C 7F069A2C 0FC177A2 */  jal   get_item_in_hand
-/* 09C420 7F069A30 24040001 */   li    $a0, 1
-/* 09C424 7F069A34 0FC1A6F0 */  jal   get_ammo_type_for_weapon
-/* 09C428 7F069A38 00402025 */   move  $a0, $v0
-/* 09C42C 7F069A3C 8FAF0020 */  lw    $t7, 0x20($sp)
-/* 09C430 7F069A40 544F0005 */  bnel  $v0, $t7, .L7F069A58
-/* 09C434 7F069A44 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 09C438 7F069A48 0FC1A6B6 */  jal   get_ammo_in_hands_magazine
-/* 09C43C 7F069A4C 24040001 */   li    $a0, 1
-/* 09C440 7F069A50 02028021 */  addu  $s0, $s0, $v0
-/* 09C444 7F069A54 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F069A58:
-/* 09C448 7F069A58 02001025 */  move  $v0, $s0
-/* 09C44C 7F069A5C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 09C450 7F069A60 03E00008 */  jr    $ra
-/* 09C454 7F069A64 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
+
 
 
 #ifdef NONMATCHING

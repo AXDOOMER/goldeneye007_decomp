@@ -116,9 +116,10 @@ void end_of_mission_briefing(void)
     }
 }
 
-void fileLoadSaveSettingsForSelectedFolder(void)
+void fileLoadSaveSettingsForSelectedFolder(int a)
 {
-  fileLoadSettingsForFolder(selected_folder_num);
+    if(a){}
+    fileLoadSettingsForFolder(selected_folder_num);
 }
 
 void deleteCurrentSelectedFolder(void)

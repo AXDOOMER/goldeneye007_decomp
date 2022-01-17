@@ -213,7 +213,7 @@ glabel sub_GAME_7F0BC0BC
 
 
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 /* no VERSION_EU */
 void _load_rom_index_to_membank(s32 index,s32 param_2,s32 size,u8 bank)
 {
@@ -221,7 +221,7 @@ void _load_rom_index_to_membank(s32 index,s32 param_2,s32 size,u8 bank)
 }
 #endif
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 /* no VERSION_EU */
 void _load_resource_index_to_membank(int index,s32 param_2,u8 *ptrdata,int size)
 {
@@ -239,7 +239,7 @@ void _load_resource_named_to_buffer(u8 *filename,s32 bank,u8 *ptrdata,int size)
     load_resource_index_to_buffer(get_index_num_of_named_resource(filename), bank, ptrdata, size);
 }
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 /* no VERSION_EU */
 /**
  * 0F18AC 7F0BCD7C

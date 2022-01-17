@@ -35331,7 +35331,7 @@ void add_ammo_to_inventory(AMMOTYPES ammotype, int amount, int doplaysound, int 
         {
             curammo = check_cur_player_ammo_amount_in_inventory(ammotype);
             give_cur_player_ammo(ammotype,curammo + amount);
-#if defined(VERSION_JP) || defined(VERSION_EU)
+#if defined(BUGFIX_R1)
         }
 #endif
             if (dodisplaytext != 0)
@@ -35389,7 +35389,7 @@ void add_ammo_to_inventory(AMMOTYPES ammotype, int amount, int doplaysound, int 
             {
                 add_item_to_inventory(ITEM_PLASTIQUE);
             }
-#if !defined(VERSION_JP) && !defined(VERSION_EU)
+#if !defined(BUGFIX_R1)
         }
 #endif
     }
@@ -36172,11 +36172,7 @@ void display_text_for_weapon_in_lower_left_corner(ITEM_IDS weaponid)
     char acStack100 [100];
     
     generate_language_specific_text_for_weapon(acStack100,weaponid);
-#if defined(VERSION_JP) || defined(VERSION_EU)
-    jp_display_string_in_lower_left_corner(acStack100);
-#else
-    display_string_in_lower_left_corner(acStack100);
-#endif
+    DISPLAYSTRINGLOWERLEFT(acStack100);
     return;
 }
 

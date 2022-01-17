@@ -25,6 +25,7 @@
 #include "game/player.h"
 #include "game/spectrum.h"
 #include "game/textrelated.h"
+#include "game/blood_animation.h"
 
 // lvl.c checks for enabled cheats up to the "invalid" index of 0x4b (=75), which
 // is different from the 80 here ...
@@ -596,7 +597,7 @@ struct MP_selectable_chars mp_chr_setup[] = {
     {TEXT(LTITLE, 0xE2), FEMALE, 0xE, BODY_Tuxedo,                   HEAD_Female_Vivien, 1.0446}
 };
 #endif
-#ifdef VERSION_JP
+#if defined(BUGFIX_R1)
 struct MP_selectable_chars mp_chr_setup[] = {
     {TEXT(LTITLE, 0xB8), MALE,     0, BODY_Tuxedo,                   HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
     {TEXT(LTITLE, 0xBF), FEMALE,   9, BODY_Natalya_Skirt,            HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 0.96609998},
@@ -664,74 +665,7 @@ struct MP_selectable_chars mp_chr_setup[] = {
     {TEXT(LTITLE, 0xE2), FEMALE, 0xE, BODY_Tuxedo,                   HEAD_Female_Vivien, 1.0446}
 };
 #endif
-#ifdef VERSION_EU
-struct MP_selectable_chars mp_chr_setup[] = {
-    {TEXT(LTITLE, 0xB8), MALE,     0, BODY_Tuxedo,                   HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
-    {TEXT(LTITLE, 0xBF), FEMALE,   9, BODY_Natalya_Skirt,            HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 0.96609998},
-    {TEXT(LTITLE, 0xBC), MALE,     6, BODY_Trevelyan_Janus,          HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
-    {TEXT(LTITLE, 0xBE), FEMALE,   8, BODY_Xenia,                    HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
-    {TEXT(LTITLE, 0xBB), MALE,     5, BODY_Ourumov,                  HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0778},
-    {TEXT(LTITLE, 0xBA), MALE,     4, BODY_Boris,                    HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 0.9702},
-    {TEXT(LTITLE, 0xBD), MALE,     7, BODY_Valentin_,                HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 0.93239999},
-    {TEXT(LTITLE, 0xB9), MALE,   0xF, BODY_Siberian_Guard_1_Mishkin, HEAD_Male_Mishkin, 1.0},
-    {TEXT(LTITLE, 0xC2), FEMALE, 0xC, BODY_Mayday,                   HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
-    {TEXT(LTITLE, 0xC1), MALE,   0xB, BODY_Jaws,                     HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.199},
-    {TEXT(LTITLE, 0xC3), MALE,   0xD, BODY_Oddjob,                   HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT,0.78780001},
-    {TEXT(LTITLE, 0xC0), MALE,   0xA, BODY_Baron_Samedi,             HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
-    {TEXT(LTITLE, 0x11F), MALE,   0xE, BODY_Russian_Soldier,          HEAD_Male_Mark, 1.0},
-    {TEXT(LTITLE, 0x120), MALE,   0xE, BODY_Russian_Infantry,         HEAD_Male_Karl, 1.0},
-    {TEXT(LTITLE, 0x121), MALE,   0xE, BODY_Scientist_1_Male,         HEAD_Male_Dave_Dr_Doak, 1.0},
-    {TEXT(LTITLE, 0x121), FEMALE, 0xE, BODY_Scientist_2_Female,       HEAD_Female_Sally, 1.0},
-    {TEXT(LTITLE, 0x122), MALE,   0xE, BODY_Russian_Commandant,       HEAD_Male_Martin, 1.0},
-    {TEXT(LTITLE, 0x123), MALE,   0xE, BODY_Janus_Marine,             HEAD_Male_Steve_Ellis, 1.0},
-    {TEXT(LTITLE, 0x124), MALE,   0xE, BODY_Naval_Officer,            HEAD_Male_Duncan, 1.0},
-    {TEXT(LTITLE, 0x125), MALE,   0xE, BODY_Helicopter_Pilot,         HEAD_Male_Pete, 1.0},
-    {TEXT(LTITLE, 0x126), MALE,   0xE, BODY_St_Petersburg_Guard,      HEAD_Male_Ken, 1.0},
-    {TEXT(LTITLE, 0x127), FEMALE, 0xE, BODY_Civilian_1_Female,        HEAD_Female_Marion_Rosika, 1.0},
-    {TEXT(LTITLE, 0x127), MALE,   0xE, BODY_Civilian_2,               HEAD_Male_Graeme, 1.0},
-    {TEXT(LTITLE, 0x127), MALE,   0xE, BODY_Civilian_3,               HEAD_Male_Grant, 1.0},
-    {TEXT(LTITLE, 0x127), MALE,   0xE, BODY_Civilian_4,               HEAD_Male_Dwayne, 1.0},
-    {TEXT(LTITLE, 0x128), MALE,   0xE, BODY_Siberian_Guard_1_Mishkin, HEAD_Male_Lee, 1.0},
-    {TEXT(LTITLE, 0x129), MALE,   0xE, BODY_Arctic_Commando,          HEAD_Male_Chris, 1.0},
-    {TEXT(LTITLE, 0x128), MALE,   0xE, BODY_Siberian_Guard_2,         HEAD_Male_Scott, 1.0},
-    {TEXT(LTITLE, 0x12A), MALE,   0xE, BODY_Siberian_Special_Forces,  HEAD_Male_Alan, 1.0},
-    {TEXT(LTITLE, 0x12B), MALE,   0xE, BODY_Jungle_Commando,          HEAD_Male_Joel, 1.0},
-    {TEXT(LTITLE, 0x12C), MALE,   0xE, BODY_Janus_Special_Forces,     HEAD_Male_B, 1.0},
-    {TEXT(LTITLE, 0x12D), MALE,   0xE, BODY_Moonraker_Elite_1_Male,   HEAD_Male_Neil, 1.0},
-    {TEXT(LTITLE, 0x12D), FEMALE, 0xE, BODY_Moonraker_Elite_2_Female, HEAD_Female_Vivien, 1.0},
-    {TEXT(LTITLE, 0xC4), FEMALE, 0xE, BODY_Rosika,                   HEAD_Female_Marion_Rosika, 0.88529998},
-    {TEXT(LTITLE, 0xC5), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Karl, 1.0446},
-    {TEXT(LTITLE, 0xC6), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Martin, 1.0446},
-    {TEXT(LTITLE, 0xC7), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Mark, 1.0446},
-    {TEXT(LTITLE, 0xC8), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Dave_Dr_Doak, 1.0446},
-    {TEXT(LTITLE, 0xC9), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Duncan, 1.0446},
-    {TEXT(LTITLE, 0xCA), FEMALE, 0xE, BODY_Tuxedo,                   HEAD_Male_B, 1.0446},
-    {TEXT(LTITLE, 0xCB), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Steve_Ellis, 1.0446},
-    {TEXT(LTITLE, 0xCC), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Grant, 1.0446},
-    {TEXT(LTITLE, 0xCD), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Graeme, 1.0446},
-    {TEXT(LTITLE, 0xCE), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Ken, 1.0446},
-    {TEXT(LTITLE, 0xCF), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Alan, 1.0446},
-    {TEXT(LTITLE, 0xD0), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Pete, 1.0446},
-    {TEXT(LTITLE, 0xD1), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Shaun, 1.0446},
-    {TEXT(LTITLE, 0xD2), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Dwayne, 1.0446},
-    {TEXT(LTITLE, 0xD3), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Des, 1.0446},
-    {TEXT(LTITLE, 0xD4), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Chris, 1.0446},
-    {TEXT(LTITLE, 0xD5), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Lee, 1.0446},
-    {TEXT(LTITLE, 0xD6), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Neil, 1.0446},
-    {TEXT(LTITLE, 0xD7), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Jim, 1.0446},
-    {TEXT(LTITLE, 0xD8), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Robin, 1.0446},
-    {TEXT(LTITLE, 0xD9), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Steve_H, 1.0446},
-    {TEXT(LTITLE, 0xDA), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Terrorist, 1.0446},
-    {TEXT(LTITLE, 0xDB), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Biker, 1.0446},
-    {TEXT(LTITLE, 0xDC), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Joel, 1.0446},
-    {TEXT(LTITLE, 0xDD), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Scott, 1.0446},
-    {TEXT(LTITLE, 0xDE), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Joe, 1.0446},
-    {TEXT(LTITLE, 0xDF), FEMALE, 0xE, BODY_Tuxedo,                   HEAD_Female_Sally, 1.0446},
-    {TEXT(LTITLE, 0xE0), FEMALE, 0xE, BODY_Tuxedo,                   HEAD_Female_Marion_Rosika, 1.0446},
-    {TEXT(LTITLE, 0xE1), FEMALE, 0xE, BODY_Tuxedo,                   HEAD_Female_Mandy, 1.0446},
-    {TEXT(LTITLE, 0xE2), FEMALE, 0xE, BODY_Tuxedo,                   HEAD_Female_Vivien, 1.0446}
-};
-#endif
+
 
 struct MP_handicap_menu MP_handicap_table[] = {
     {TEXT(LTITLE, 0x3D), 0, 10.0},
@@ -1520,10 +1454,10 @@ void update_menu00_legalscreen(void)
 
 void interface_menu00_legalscreen(void)
 {
-#ifdef VERSION_EU
-#define MENU_LEGALSCREEN_MENU_TIMER_MAX 0xc9
+#ifdef REFRESH_PAL
+#define MENU_LEGALSCREEN_MENU_TIMER_MAX (50*4+1)
 #else
-#define MENU_LEGALSCREEN_MENU_TIMER_MAX 0xF1
+#define MENU_LEGALSCREEN_MENU_TIMER_MAX (60*4+1)
 #endif
 
     viSetFovY(60.0f);
@@ -1932,10 +1866,12 @@ void update_menu01_nintendo(void)
 
 void interface_menu01_nintendo(void)
 {
-#ifdef VERSION_EU
-#define MENU01_NINTENDO_MENU_TIMER_MAX 0x1a1
+#ifdef REFRESH_PAL
+/*~= 8.32 * 50 + 1*/
+#define MENU01_NINTENDO_MENU_TIMER_MAX 417
 #else
-#define MENU01_NINTENDO_MENU_TIMER_MAX 0x1F5
+/*~= 8.32 * 60 + 1*/
+#define MENU01_NINTENDO_MENU_TIMER_MAX 501
 #endif
 
     viSetFovY(60.0f);
@@ -2621,12 +2557,12 @@ void update_menu04_goldeneye(void) {
 
 void interface_menu04_goldeneyelogo(void)
 {
-#ifdef VERSION_EU
-#define MENU04_GOLDENEYELOGO_MENU_TIMER_1 0x96
-#define MENU04_GOLDENEYELOGO_MENU_TIMER_2 0x4b
+#ifdef REFRESH_PAL
+#define MENU04_GOLDENEYELOGO_MENU_TIMER_1 50*3
+#define MENU04_GOLDENEYELOGO_MENU_TIMER_2 (50/2)*3
 #else
-#define MENU04_GOLDENEYELOGO_MENU_TIMER_1 0xb4
-#define MENU04_GOLDENEYELOGO_MENU_TIMER_2 0x5a
+#define MENU04_GOLDENEYELOGO_MENU_TIMER_1 60*3
+#define MENU04_GOLDENEYELOGO_MENU_TIMER_2 (60/2)*3
 #endif
 
     viSetFovY(60.0f);
@@ -12978,7 +12914,7 @@ void constructor_menu0E_mpoptions(Gfx *DL)
 
   DL = viSetFillColor(DL,0,0,0);
   DL = viFillScreen(DL);
-  #ifdef VERSION_EU
+  #if defined(BUGFIX_R2)
   DL = viFillScreen(DL);
   DL = viFillScreen(DL);
   #endif
@@ -21033,7 +20969,7 @@ Gfx * constructor_menu0C_missionfailed(Gfx *DL)
 
     DL = viSetFillColor(DL, 0, 0, 0);
     DL = viFillScreen(DL);
-    #ifdef VERSION_EU
+    #if defined(BUGFIX_R2)
     DL = viFillScreen(DL);
     DL = viFillScreen(DL);
     #endif
@@ -28266,7 +28202,7 @@ glabel constructor_menu18_displaycast
 
 void init_menu19_spectrum(void)
 {
-    #ifndef VERSION_EU
+    #if defined(LEFTOVERSPECTRUM)
     SPECTRUMROMS rom = ROM_SABRE;
 
     if (!joyGetButtons(2, L_CBUTTONS))
@@ -28316,7 +28252,7 @@ void update_menu19_spectrum(void) {
 
 void interface_menu19_spectrum(void)
 {
-    #ifndef VERSION_EU
+    #if defined(LEFTOVERSPECTRUM)
     viSetFovY(60.0f);
     viSetAspect(1.3333334f);
     viSetZRange(100.0f, 10000.0f);
@@ -28330,42 +28266,52 @@ void interface_menu19_spectrum(void)
 
 
 #ifdef NONMATCHING
-void constructor_menu19_spectrum(void) {
-    s32 temp_ret;
-
-    // Node 0
-    temp_ret = insert_imageDL();
-    *temp_ret = 0xba001402;
-    temp_ret->unk14 = 0x204;
-    temp_ret->unk10 = 0xb6000000;
-    temp_ret->unk1C = 0xfffcf87c;
-    temp_ret->unk8 = 0xb900031d;
-    temp_ret->unkC = 0x552048;
-    temp_ret->unk18 = 0xfcffffff;
-    temp_ret->unk20 = 0xba000c02;
-    temp_ret->unk4 = 0;
-    temp_ret->unk24 = 0;
-    temp_ret->unk28 = 0xfd500000;
-    temp_ret->unk2C = &color_palette_entries_50_percent;
-    temp_ret->unk34 = 0x7000000;
-    temp_ret->unk30 = 0xf5000300;
-    temp_ret->unk38 = 0xe6000000;
-    temp_ret->unk3C = 0;
-    temp_ret->unk40 = 0xf0000ff0;
-    temp_ret->unk44 = 0x701cff0;
-    temp_ret->unk48 = 0xe7000000;
-    temp_ret->unk4C = 0;
-    temp_ret->unk54 = 0x8000;
-    temp_ret->unk50 = 0xba000e02;
-    spectrum_draw_screen((temp_ret + 0x58));
-    return;
-    // (possible return value: spectrum_draw_screen((temp_ret + 0x58)))
+Gfx * constructor_menu19_spectrum(Gfx *DL)
+{
+    #if defined(LEFTOVERSPECTRUM)
+    DL = insert_imageDL(DL);
+    //DL[0]->w0 = 0xba001402;
+    //DL[0]->w1 = 0;    
+    gDPSetCycleType(DL++, G_CYC_1CYCLE);
+    //DL[1].w0 = 0xb900031d;
+    //DL[1].w1 = &DAT_00552048;
+    gDPSetRenderMode(DL++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
+    //DL[2].w0 = 0xb6000000;
+    //DL[2].w1 = 0x204;
+    gSPClearGeometryMode(DL++, G_SHADE | G_SHADING_SMOOTH);
+    //DL[3].w0 = 0xfcffffff;
+    //DL[3].w1 = 0xfffcf87c;
+    gDPSetCombineMode(DL++, G_CC_DECALRGB, G_CC_DECALRGB);
+    //DL[4].w0 = 0xba000c02;
+    //DL[4].w1 = 0;
+    gDPSetTextureFilter(DL++, G_TF_POINT);
+    //DL[5].w0 = 0xfd500000;
+    //DL[5].w1 = color_palette_entries_50_percent;
+    gDPSetTextureImage(DL++, G_IM_FMT_CI, G_IM_SIZ_16b, 1, &color_palette_entries_50_percent);
+    //DL[6].w0 = 0xf5000300;
+    //DL[6].w1 = 0x07000000;
+    gDPSetTile(DL++, G_IM_FMT_RGBA, G_IM_SIZ_4b, 1, 0x0100, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+    //DL[7].w0 = 0xe6000000;
+    //DL[7].w1 = 0;
+    gDPLoadSync(DL++);
+    //DL[8].w0 = 0xf0000ff0;
+    //DL[8].w1 = 0x0701cff0;
+    gDPLoadTLUTCmd(DL++, G_TX_LOADTILE, 7);
+    //DL[9].w0 = 0xe7000000;
+    //DL[9].w1 = 0;
+    gDPPipeSync(DL++);
+    //DL[10].w0 = 0xba000e02;
+    //DL[10].w1 = 0x00008000;
+    gDPSetTextureLUT(DL++, G_TT_RGBA16);
+    DL = spectrum_draw_screen(DL++);
+    #endif
+    return DL;
 }
 #else
-#ifdef VERSION_EU
-s32 constructor_menu19_spectrum(s32 var)
+#if !defined(LEFTOVERSPECTRUM)
+Gfx* constructor_menu19_spectrum(Gfx* DL)
 {
-    return var;
+    return DL;
 }
 #else
 GLOBAL_ASM(
