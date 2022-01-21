@@ -1,15 +1,15 @@
-#include "ultra64.h"
-#include "include/limits.h"
-#include "assets/animationtable_data.h"
-#include "random.h"
-#include "game/bondview.h"
-#include "game/chrai.h"
-#include "game/initanitable.h"
-#include "game/lvl.h"
-#include "game/matrixmath.h"
-#include "game/objecthandler.h"
-#include "game/player.h"
-#include "game/unk_08DBB0.h"
+#include <ultra64.h>
+#include <limits.h>
+#include "../../assets/animationtable_data.h"
+#include "../random.h"
+#include "bondview.h"
+#include "chrai.h"
+#include "initanitable.h"
+#include "lvl.h"
+#include "matrixmath.h"
+#include "objecthandler.h"
+#include "player.h"
+#include "unk_08DBB0.h"
 
 
 /**
@@ -25,17 +25,17 @@ struct init_bond_anim_unk g_BondMoveAnimationSetup[2] = {
 /**
  * Address 0x80036B00.
 */
-struct coord3d D_80036B00 = { 0.0f, 0.0f, 0.0f };
+coord3d D_80036B00 = { 0.0f, 0.0f, 0.0f };
 
 /**
  * Address 0x80036B0C.
 */
-struct coord3d D_80036B0C = { 0.0f, 0.0f, 1.0f };
+coord3d D_80036B0C = { 0.0f, 0.0f, 1.0f };
 
 /**
  * Address 0x80036B18.
 */
-struct coord3d D_80036B18 = { 0.0f, 1.0f, 0.0f };
+coord3d D_80036B18 = { 0.0f, 1.0f, 0.0f };
 
 /**
  * Address 0x80036B24.
@@ -45,7 +45,7 @@ struct unk_joint_list D_80036B24 = {NULL, 1, 3, NULL, NULL, 0, 0, 0, 0, 0, 0, 0,
 /**
  * Address 0x80036B64.
 */
-struct coord3d D_80036B64 = { 0.0f, 0.0f, 0.0f };
+coord3d D_80036B64 = { 0.0f, 0.0f, 0.0f };
 
 
 
@@ -53,8 +53,8 @@ struct coord3d D_80036B64 = { 0.0f, 0.0f, 0.0f };
 
 // forward declarations
 
-void currentPlayerUpdateHeadPos(struct coord3d *vel);
-void currentPlayerUpdateHeadRot(struct coord3d *lookvel, struct coord3d *upvel);
+void currentPlayerUpdateHeadPos(coord3d *vel);
+void currentPlayerUpdateHeadRot(coord3d *lookvel, coord3d *upvel);
 void currentPlayerSetHeadDamp(f32 headdamp);
 
 // end forward declarations
@@ -91,7 +91,7 @@ void currentPlayerUpdateIdleHeadRoll()
 	g_CurrentPlayer->standcnt = 1 - g_CurrentPlayer->standcnt;
 }
 
-void currentPlayerUpdateHeadPos(struct coord3d *vel)
+void currentPlayerUpdateHeadPos(coord3d *vel)
 {
 #if defined(VERSION_EU)
 #define CURRENTPLAYERUPDATEHEADPOS_SCALE 0.916599988937f
@@ -122,7 +122,7 @@ void currentPlayerUpdateHeadPos(struct coord3d *vel)
 #undef CURRENTPLAYERUPDATEHEADPOS_SCALE
 }
 
-void currentPlayerUpdateHeadRot(struct coord3d *lookvel, struct coord3d *upvel)
+void currentPlayerUpdateHeadRot(coord3d *lookvel, coord3d *upvel)
 {
 	s32 i;
 
@@ -173,13 +173,13 @@ void currentPlayerSetHeadDamp(f32 headdamp)
 
 void sub_GAME_7F08E240(f32 arg0, f32 arg1)
 {
-    struct coord3d spDC;
-    struct coord3d spD0;
-    struct coord3d spC4;
+    coord3d spDC;
+    coord3d spD0;
+    coord3d spC4;
     f32 spC0;
     struct unk_joint_list sp80;
     Mtxf sp40;
-    struct coord3d sp34;
+    coord3d sp34;
     u32 sp30;
 
     spDC = D_80036B00;
@@ -245,7 +245,7 @@ void sub_GAME_7F08E240(f32 arg0, f32 arg1)
     sp34.f[0] -= g_CurrentPlayer->field_700;
     sp34.f[2] -= g_CurrentPlayer->field_708;
     
-    setsuboffset(&g_CurrentPlayer->field_598, (struct coord3d *) &sp34);
+    setsuboffset(&g_CurrentPlayer->field_598, (coord3d *) &sp34);
 
     if (spC0 > 0.0f)
     {

@@ -1,8 +1,9 @@
 #ifndef _FILEIDS_H_
 #define _FILEIDS_H_
 
-typedef enum FILEINDEXID {
-    NULLFILE = 0x0,
+typedef enum FILEINDEXID
+{
+    NULLFILE,
     BG_SEV_ALL_P,
     BG_SILO_ALL_P,
     BG_STAT_ALL_P,
@@ -868,6 +869,6 @@ typedef enum FILEINDEXID {
     WAXP,
 #endif
     OBENDSEG
-};
+} FILEINDEXID;
 
 #endif

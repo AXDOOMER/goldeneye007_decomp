@@ -1,8 +1,8 @@
 #ifndef _FOG_H_
 #define _FOG_H_
 
-#include "ultra64.h"
-#include "bondtypes.h"
+#include <ultra64.h>
+#include <bondtypes.h>
 
 struct NearFogData {
 #if defined(VERSION_EU)
@@ -167,7 +167,7 @@ extern s32 g_FogSkyIsEnabled;
 struct CurrentEnvData *fogGetCurrentEnvironmentp(void);
 f32 fogGetScaledFarFogIntensitySquared(void);
 void fogLoadLevelEnvironment(s32 level_id, s32 arg1);
-s32 fogPositionIsVisibleThroughFog(struct coord3d *pos, f32 range);
+s32 fogPositionIsVisibleThroughFog(coord3d *pos, f32 range);
 Gfx *fogSetRenderFogColor(Gfx *arg0, s32 arg1);
 Gfx *fogRenderClearFogMode(Gfx *gdl);
 s32 fogGetPropDistColor(PropRecord *prop, struct rgba_f32 *color);

@@ -1,8 +1,8 @@
 #ifndef _CHRAI_H_
 #define _CHRAI_H_
-#include "ultra64.h"
+#include <ultra64.h>
 
-#include "bondtypes.h"
+#include <bondtypes.h>
 
 
 
@@ -422,10 +422,10 @@ struct bss_80075030 {
     u32 unk44;
 };
 
-extern struct path_table_alt * ptr_setup_path_tbl;
+extern waypoint * ptr_setup_path_tbl;
 extern struct SetupPtrs g_SetupPtrs;
-extern struct pad * ptr_0xxxpresets;
-extern struct pad3d * ptr_2xxxpresets;
+extern PadRecord * ptr_0xxxpresets;
+extern BoundPadRecord * ptr_2xxxpresets;
 extern u32 monAnimRadarSub1[];
 extern u32 monAnimRadarSub2[];
 extern u32 monAnimRadarSub3[];
@@ -464,15 +464,15 @@ extern u32 gas_cutoff_flag;
 extern f32 difficulty ;
 extern struct object_standard * ptr_setup_objects;
 extern s16 * ptr_list_object_lookup_indices;
-extern struct PropRecord pos_data_entry[];
+extern PropRecord pos_data_entry[];
 
-extern struct PropRecord *ptr_obj_pos_list_current_entry;
-extern struct PropRecord *ptr_obj_pos_list_first_entry;
-extern struct PropRecord *ptr_obj_pos_list_final_entry;
+extern PropRecord *ptr_obj_pos_list_current_entry;
+extern PropRecord *ptr_obj_pos_list_first_entry;
+extern PropRecord *ptr_obj_pos_list_final_entry;
 
 extern s32 g_OnScreenPropCount;
-extern struct PropRecord **g_LastOnScreenProp;
-extern struct PropRecord *g_OnScreenPropList[];
+extern PropRecord **g_LastOnScreenProp;
+extern PropRecord *g_OnScreenPropList[];
 extern s16 *ptr_room_lookup_buffer_maybe;
 extern struct unk_8007161c *dword_CODE_bss_8007161C;
 extern struct sfx_register_struct sfx_related[];
@@ -497,26 +497,26 @@ void sub_GAME_7F03D78C(void);
 void chraiCheckUseHeldItems(void);
 s32 bond_interact_object(void);
 void sub_GAME_7F03D0D4(void);
-void sub_GAME_7F03DD9C(struct PropRecord *, s16, struct player *);
+void sub_GAME_7F03DD9C(PropRecord *, s16, struct player *);
 s32 remove_last_obj_pos_data_entry();
-void sub_GAME_7F03E18C(struct PropRecord *, struct ChrRecord *);
-void sub_GAME_7F03E27C(struct PropRecord *, struct coord3d *, struct coord3d *, f32);
-void sub_GAME_7F03E210(struct PropRecord *posData);
+void sub_GAME_7F03E18C(PropRecord *, ChrRecord *);
+void sub_GAME_7F03E27C(PropRecord *, coord3d *, coord3d *, f32);
+void sub_GAME_7F03E210(PropRecord *posData);
 
 void set_current_objposdata_plus_0x28(PropRecord *);
 void set_stateflag_0x04_for_posdata(PropRecord *);
-void sub_GAME_7F03A4F0(struct Model*);
-void attachNewChild(struct PropRecord *newChild, struct PropRecord *host);
+void sub_GAME_7F03A4F0(Model*);
+void attachNewChild(PropRecord *newChild, PropRecord *host);
 s32 LoadNext_PrevActionBlock(u16);
 void chraiGetCollisionBounds(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *arg3, f32 *arg4);
 void chraiGetCollisionBoundsWithoutY(PropRecord *arg0, struct rect4f **arg1, s32 *arg2);
-s32 sub_GAME_7F03CCD8(struct coord3d *arg0, struct rect4f *arg1, s32 arg2);
+s32 sub_GAME_7F03CCD8(coord3d *arg0, struct rect4f *arg1, s32 arg2);
 void sub_GAME_7F03E3FC(s32 *);
 struct ObjectRecord *scan_position_data_table_for_normal_object_at_preset(s32 arg0);
 Gfx *sub_GAME_7F03A6F4(Gfx *arg0, s32 roomid, s32 arg2);
-struct PropRecord *get_ptr_obj_pos_list_current_entry(void);
+PropRecord *get_ptr_obj_pos_list_current_entry(void);
 void chraiGetPropRoomIds(PropRecord *self, s32 *roomids);
-void propFree(struct PropRecord *prop);
-void propHide(struct PropRecord *prop);
+void propFree(PropRecord *prop);
+void propHide(PropRecord *prop);
 
 #endif

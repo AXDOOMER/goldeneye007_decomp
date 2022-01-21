@@ -1,7 +1,7 @@
-#include "ultra64.h"
-#include "bondtypes.h"
-#include "game/unk_091080.h"
-#include "game/bondview.h"
+#include <ultra64.h>
+#include <bondtypes.h>
+#include "unk_091080.h"
+#include "bondview.h"
 
 // bss
 //CODE.bss:80079E20
@@ -12,12 +12,12 @@ s32 dword_CODE_bss_80079E20;
 //D:80037010
 s32 D_80037010 = 0;
 //D:80037014
-struct coord3d stanbondx = {0.0f,0.0f,0.0f};
+coord3d stanbondx = {0.0f,0.0f,0.0f};
 //D:80037018
 //s32 stanbondy = 0;
 //D:8003701C
 //s32 stanbondz = 0;
-struct coord3d D_80037020 = {0.0f,0.0f,-1.0f};
+coord3d D_80037020 = {0.0f,0.0f,-1.0f};
 //D:80037020
 //s32 D_80037020 = 0;
 //D:80037024
@@ -26,7 +26,7 @@ struct coord3d D_80037020 = {0.0f,0.0f,-1.0f};
 //f32 D_80037028 = -1.0;
 
 //D:8003702C
-struct coord3d D_8003702C = {0.0f,1.0f,0.0f};
+coord3d D_8003702C = {0.0f,1.0f,0.0f};
 //s32 D_8003702C = 0; 
 //D:80037030
 //f32 D_80037030 = 1.0;
@@ -56,7 +56,7 @@ f32 D_80037058 = 1.0f;
 //D:8003705C
 f32 D_8003705C = 1.0f;
 //D:80037060
-struct coord3d D_80037060 = {0.0f,0.0f,0.0f};
+coord3d D_80037060 = {0.0f,0.0f,0.0f};
 //D:80037064
 //s32 D_80037064 = 0;
 //D:80037068
@@ -456,7 +456,7 @@ void sub_GAME_7F0915BC(float scale)
 
 void handle_debug_intropos(void)
 {
-    struct coord3d* pos; //needed to be declared but not used to match
+    coord3d* pos; //needed to be declared but not used to match
     f32 x;
 
     bondviewGetCurrentPlayersPosition();  //normally would return a coord3d pos but not here
@@ -481,7 +481,7 @@ void debugSetWorldPos(void)
 
 void sub_GAME_7F0916F4(void)
 {
-    struct coord3d *pos;
+    coord3d *pos;
     
     pos = bondviewGetCurrentPlayersPosition();
     stanbondx.x = pos->x;

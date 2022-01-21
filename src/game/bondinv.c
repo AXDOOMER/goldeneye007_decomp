@@ -1,14 +1,14 @@
-#include "ultra64.h"
-#include "game/bondview.h"
-#include "game/chr.h"
-#include "game/player.h"
-#include "game/textrelated.h"
-#include "bondconstants.h"
-#include "game/lvl_text.h"
-#include "game/bondinv.h"
-#include "game/gun.h"
-#include "game/lvl.h"
-#include "bondtypes.h"
+#include <ultra64.h>
+#include "bondview.h"
+#include "chr.h"
+#include "player.h"
+#include "textrelated.h"
+#include <bondconstants.h>
+#include "lvl_text.h"
+#include "bondinv.h"
+#include "gun.h"
+#include "lvl.h"
+#include <bondtypes.h>
 
 void reinit_inventory(void) {
     s32 i;
@@ -348,7 +348,7 @@ WeaponObjRecord *inventory_remove_prop_weapon_by_id(ITEM_IDS weaponnum)
                 if (prop->type == PROP_TYPE_WEAPON) {
                     ObjectRecord *obj = prop->obj;
                     
-                    if (obj->head.type == PROPDEF_COLLECTABLE) {
+                    if (obj->type == PROPDEF_COLLECTABLE) {
                         WeaponObjRecord *weapon = (WeaponObjRecord *)prop->obj;
 
                         if (weapon->weaponnum == weaponnum) {
@@ -384,7 +384,7 @@ void inventory_remove_item_by_id(ITEM_IDS weaponnum)
                 if (prop->type == PROP_TYPE_WEAPON) {
                     ObjectRecord *obj = prop->obj;
 
-                    if (obj->head.type == PROPDEF_COLLECTABLE) {
+                    if (obj->type == PROPDEF_COLLECTABLE) {
                         WeaponObjRecord *weapon = (WeaponObjRecord *)prop->obj;
                         
                         if (weapon->weaponnum == weaponnum) {
@@ -433,7 +433,7 @@ int add_weapon_by_prop(PropRecord *prop)
     {
         ObjectRecord *obj = prop->obj;
 
-        if (obj->head.type == PROPDEF_COLLECTABLE)
+        if (obj->type == PROPDEF_COLLECTABLE)
         {
             WeaponObjRecord *weapon = (WeaponObjRecord *)prop->obj;
             WeaponObjRecord *otherweapon;
@@ -444,7 +444,7 @@ int add_weapon_by_prop(PropRecord *prop)
             otherweapon = weapon->dualweapon;
             if (otherweapon != 0)
             {
-                if (weapon->base.flags & PROPFLAG_10000000)
+                if (weapon->flags & PROPFLAG_10000000)
                 {
                     added = is_dual_weapon_in_inventory(otherweapon->weaponnum, weaponnum) == 0;
                 }
@@ -460,7 +460,7 @@ int add_weapon_by_prop(PropRecord *prop)
             {
                 if (weapon->LinkedWeaponType >= 0)
                 {
-                    if (weapon->base.flags & PROPFLAG_10000000)
+                    if (weapon->flags & PROPFLAG_10000000)
                     {
                         added = add_doubles_item_to_inventory(weapon->LinkedWeaponType, weaponnum);
                     }
@@ -770,7 +770,7 @@ s32 inv_has_key_flags(u32 wantkeyflags)
             if (prop->type == PROP_TYPE_OBJ) {
                 ObjectRecord *obj = prop->obj;
 
-                if (obj->head.type == PROPDEF_KEY) {
+                if (obj->type == PROPDEF_KEY) {
                     KeyRecord *key = (KeyRecord *)prop->obj;
 
                     heldkeyflags |= key->keyflags;
@@ -1420,7 +1420,7 @@ void calculate_equip_cur_item(void) {
     s32 current_weapon;
     s32 i;
 
-    current_weapon = get_item_in_hand(RIGHT_HAND);
+    current_weapon = get_item_in_hand(GUNRIGHT);
     
     g_CurrentPlayer->equipcuritem = 0;
 

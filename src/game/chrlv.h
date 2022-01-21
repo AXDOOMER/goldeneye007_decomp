@@ -1,7 +1,7 @@
 #ifndef _CHR2_H_
 #define _CHR2_H_
-#include "ultra64.h"
-#include "bondgame.h"
+#include <ultra64.h>
+#include <bondgame.h>
 #include "game/chrobjdata.h"
 
 // Value is 3, it just needs to be less than MAX_CHRWAYPOINTS
@@ -22,21 +22,21 @@ s32 get_current_random_body(void);
 s32 select_psuedorandom_heads(s32 id);
 
 s32 get_random_head(s32 id);
-f32 chrlvDistToBond3D(struct ChrRecord *guardData);
+f32 chrlvDistToBond3D(ChrRecord *guardData);
 
-void chrlvAlertGuardToPlayerPosition(struct ChrRecord *);
-void chrlvIdleAnimationRelated7F023A94(struct ChrRecord *arg0, f32 arg1);
-f32 chrGetAngleToBond(struct ChrRecord *arg0);
-s32 check_if_actor_stationary(struct ChrRecord *);
-s32 convertPadIf9000(struct ChrRecord *guardData,s32 padNo);
-void chrlvLineLineIntersection(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *arg2, struct coord3d *arg3, struct coord3d *result);
-void chrlvStanLineDirIntersection(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *result);
-void chrlvStanPointPointIntersection(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *result);
-bool handles_shot_actors(struct ChrRecord *self, s32 hitpart, struct coord3d *vector, s32 weaponid, bool isPlayer);
+void chrlvAlertGuardToPlayerPosition(ChrRecord *);
+void chrlvIdleAnimationRelated7F023A94(ChrRecord *arg0, f32 arg1);
+f32 chrGetAngleToBond(ChrRecord *arg0);
+s32 check_if_actor_stationary(ChrRecord *);
+s32 convertPadIf9000(ChrRecord *guardData,s32 padNo);
+void chrlvLineLineIntersection(coord3d *arg0, coord3d *arg1, coord3d *arg2, coord3d *arg3, coord3d *result);
+void chrlvStanLineDirIntersection(coord3d *arg0, coord3d *arg1, coord3d *result);
+void chrlvStanPointPointIntersection(coord3d *arg0, coord3d *arg1, coord3d *result);
+bool handles_shot_actors(ChrRecord *self, s32 hitpart, coord3d *vector, s32 weaponid, bool isPlayer);
 bool sub_GAME_7F0294BC(ChrRecord *self);
-bool check_if_position_in_same_room(struct ChrRecord *self, struct coord3d *pos, struct StandTile *stan);
+bool check_if_position_in_same_room(ChrRecord *self, coord3d *pos, StandTile *stan);
 s32 chrlvSeenWithin600(ChrRecord *);
-s32 chrIsDead(struct ChrRecord *chr);
+s32 chrIsDead(ChrRecord *chr);
 bool actor_steps_sideways(ChrRecord *self);
 bool actor_hops_sideways(ChrRecord *self);
 bool actor_jogs_sideways(ChrRecord *self);
@@ -52,10 +52,10 @@ f32 chrlvGetSubrotySideback(ChrRecord *arg0);
 f32 chrlvGetAimLimitAngle(f32 arg0);
 void chrlvUpdateAimendbackShoulders(ChrRecord *arg0, void *arg1, s32 same, s32 swap, f32 next);
 void sub_GAME_7F02D118(ChrRecord *arg0, s32 hand, s32 arg2);
-s32 sub_GAME_7F02D630(ChrRecord *arg0, HANDEDNESS hand, struct coord3d *arg2);
+s32 sub_GAME_7F02D630(ChrRecord *arg0, GUNHAND hand, coord3d *arg2);
 void chrlvTriggerFireWeapon(ChrRecord *arg0);
-s32 chrlvGeometryRelated7F02FC34(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *arg2, f32 arg3);
-s32 chrlvIsArrivingLaterallyAtPos(struct coord3d *prevpos, struct coord3d *curpos, struct coord3d *targetpos, f32 range);
+s32 chrlvGeometryRelated7F02FC34(coord3d *arg0, coord3d *arg1, coord3d *arg2, f32 arg3);
+s32 chrlvIsArrivingLaterallyAtPos(coord3d *prevpos, coord3d *curpos, coord3d *targetpos, f32 range);
 void chrlvActionTick(ChrRecord *arg0);
 void chrlvAllChrTick(void);
 s32 chrlvSeenWithin600(ChrRecord *arg0);
@@ -63,8 +63,8 @@ s32 chrlvHearWithin600(ChrRecord *arg0);
 ChrRecord *chrlvGetHandleForGuardId(ChrRecord *arg0, s32);
 f32 chrGetAngleFromBond(ChrRecord *self);
 f32 sub_GAME_7F032E48(ChrRecord *self, s32 padID);
-bool check_if_room_for_preset_loaded(struct ChrRecord *self, s32 padnum);
-f32 get_distance_between_actor_and_actorID(struct ChrRecord *self, s32 chrID);
+bool check_if_room_for_preset_loaded(ChrRecord *self, s32 padnum);
+f32 get_distance_between_actor_and_actorID(ChrRecord *self, s32 chrID);
 f32 get_distance_between_actor_and_preset(ChrRecord *self, s32 padid);
 void chrlvSetBitfieldFlags(ChrRecord *arg0, u8 arg1);
 void chrlvClearBitfieldFlags(ChrRecord *arg0, u8 arg1);
@@ -91,29 +91,29 @@ bool chraiStopAnimation(ChrRecord *self);
 bool chrTrySurprisedOneHand(ChrRecord *self);
 bool check_if_able_to_then_fawn_on_shoulder(ChrRecord *self);
 bool check_if_able_to_then_look_flustered(ChrRecord *self);
-bool check_if_able_to_then_kneel(struct ChrRecord *self);
-s32 check_if_able_to_then_perform_animation(struct ChrRecord *self, s32 animID, s32 b, s32 c, u8 d, s32 e);
+bool check_if_able_to_then_kneel(ChrRecord *self);
+s32 check_if_able_to_then_perform_animation(ChrRecord *self, s32 animID, s32 b, s32 c, u8 d, s32 e);
 bool alarm_timer_related(ChrRecord *self);
 bool check_2328_preset_set_with_method(ChrRecord *self, u8 quadrant);
 bool sub_GAME_7F033AAC(ChrRecord *self, u8 padnum);
-bool sub_GAME_7F033B38(struct ChrRecord *self, f32 distance);
+bool sub_GAME_7F033B38(ChrRecord *self, f32 distance);
 void sub_GAME_7F033CF4(ChrRecord *self, s32 id);
 void sub_GAME_7F033D1C(ChrRecord *self, s32 id, s32 id2);
 void sub_GAME_7F033D5C( ChrRecord *self, s32 padid);
 void sub_GAME_7F033D84(ChrRecord *self, s32 chrid, s32 padid);
 s32 chrIsTargetNearlyInSight(ChrRecord *arg0);
-bool sub_GAME_7F033F48(struct coord3d *pos, struct StandTile **arg1, f32 facing, bool b);
-struct PropRecord *guard_constructor_BD(struct ChrRecord *self, s32 bodynum, s32 headnum, s32 padid, struct AIListRecord *ailist, s32 flags);
-struct PropRecord *guard_constructor_BE(struct ChrRecord *self, s32 bodynum, s32 headnum, s32 chrnum, struct AIListRecord *ailist, s32 flags);
-bool chrIfInPadRoom(struct ChrRecord *self, s32 chrnum, s32 padnum);
-bool check_if_actor_is_at_preset(struct ChrRecord *self, s32 padnum);
+bool sub_GAME_7F033F48(coord3d *pos, StandTile **arg1, f32 facing, bool b);
+PropRecord *guard_constructor_BD(ChrRecord *self, s32 bodynum, s32 headnum, s32 padid, AIListRecord *ailist, s32 flags);
+PropRecord *guard_constructor_BE(ChrRecord *self, s32 bodynum, s32 headnum, s32 chrnum, AIListRecord *ailist, s32 flags);
+bool chrIfInPadRoom(ChrRecord *self, s32 chrnum, s32 padnum);
+bool check_if_actor_is_at_preset(ChrRecord *self, s32 padnum);
 bool removed_animation_routine_27(ChrRecord *self);
 bool removed_animation_routine_2B(ChrRecord *self);
-bool sub_GAME_7F034514(struct ChrRecord *self, s32 PadId);
-bool actor_draws_throws_grenade_at_player_if_possible(struct ChrRecord *self);
-bool actor_drops_itemtype_setting_timer(struct ChrRecord *self, s32 modelnum, u8 weaponid);
+bool sub_GAME_7F034514(ChrRecord *self, s32 PadId);
+bool actor_draws_throws_grenade_at_player_if_possible(ChrRecord *self);
+bool actor_drops_itemtype_setting_timer(ChrRecord *self, s32 modelnum, u8 weaponid);
 void expand_09_characters(s32 arg0, GuardRecord *arg1, s32 arg2);
-void chrlvGetPatrolPercentOrPosition(ChrRecord *arg0, struct coord3d *arg1);
-s32 chrlvExplosionDamage(ChrRecord *arg0, struct coord3d *arg1, f32 arg2, s32 arg3);
+void chrlvGetPatrolPercentOrPosition(ChrRecord *arg0, coord3d *arg1);
+s32 chrlvExplosionDamage(ChrRecord *arg0, coord3d *arg1, f32 arg2, s32 arg3);
 
 #endif

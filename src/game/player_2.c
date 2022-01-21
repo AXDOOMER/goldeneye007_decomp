@@ -1,12 +1,12 @@
-#include "ultra64.h"
-#include "memp.h"
-#include "fr.h"
-#include "random.h"
-#include "game/player.h"
-#include "game/unk_092E50.h"
-#include "game/bondview.h"
-#include "game/lvl.h"
-#include "game/player_2.h"
+#include <ultra64.h>
+#include "../memp.h"
+#include "../fr.h"
+#include "../random.h"
+#include "player.h"
+#include "unk_092E50.h"
+#include "bondview.h"
+#include "lvl.h"
+#include "player_2.h"
 
 
 //newfile per EU
@@ -2927,7 +2927,7 @@ s32 get_cur_playernum(void) {
 }
 
 
-s32 sub_GAME_7F09B15C(struct PropRecord* prop)
+s32 sub_GAME_7F09B15C( PropRecord* prop)
 {
     s32 i;
 
@@ -3219,7 +3219,7 @@ glabel sub_GAME_7F09B368
 // NOTE: i think the return value from
 // something_with_generating_object is supposed
 // to be returned here?
-void sub_GAME_7F09B398(HANDEDNESS hand) {
+void sub_GAME_7F09B398(GUNHAND hand) {
     struct ChrRecord* temp_v0;
     ITEM_IDS weaponNum;
     s32 weaponIdMaybe;
@@ -3229,7 +3229,7 @@ void sub_GAME_7F09B398(HANDEDNESS hand) {
         weaponNum = get_item_in_hand(hand);
         weaponIdMaybe = sub_GAME_7F09B244(weaponNum);
         if (weaponIdMaybe >= 0) {
-            something_with_generating_object(temp_v0, weaponIdMaybe, weaponNum, hand == RIGHT_HAND ? 0 : 0x10000000, 0, 0);
+            something_with_generating_object(temp_v0, weaponIdMaybe, weaponNum, hand == GUNRIGHT ? 0 : 0x10000000, 0, 0);
         }
     }
 }

@@ -1,5 +1,5 @@
-#include "ultra64.h"
-#include "game/math_atan2f.h"
+#include <ultra64.h>
+#include "math_atan2f.h"
 
 
 // rodata
@@ -26,8 +26,8 @@ Gfx *display_red_blue_on_radar(Gfx *DL)
     s32 temp_v0_6;
     struct player *temp_a0_2;
     //struct player *g_CurrentPlayer;
-    struct PropRecord *temp_v0_4;
-    struct PropRecord *temp_v1;
+     PropRecord *temp_v0_4;
+     PropRecord *temp_v1;
     void *temp_a0;
     void *temp_t3;
     void *temp_t7;

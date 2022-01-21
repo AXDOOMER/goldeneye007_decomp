@@ -1,8 +1,8 @@
-#include "ultra64.h"
-#include "game/debugmenu_handler.h"
-#include "game/initgamedata.h"
-#include "boss.h"
-#include "fr.h"
+#include <ultra64.h>
+#include "debugmenu_handler.h"
+#include "initgamedata.h"
+#include "../boss.h"
+#include "../fr.h"
 
 #ifndef VERSION_EU
 
@@ -269,7 +269,7 @@ s32 grab_rgb_screenshot_flag = 0;
 //D:80037000
 s32 grab_jpeg_screenshot_flag = 0;
 //D:80037004
-struct coord3d player_pos_x = {0};
+coord3d player_pos_x = {0};
 
 #endif
 
@@ -326,7 +326,7 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
 //    f32 tempz;
 //    f32 tempy;
     s32 debug_profile_flag;
-    struct PropRecord *playerprop;
+    PropRecord *playerprop;
 
 
     if (grab_rgb_screenshot_flag != 0)

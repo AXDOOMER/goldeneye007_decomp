@@ -1,15 +1,15 @@
-#include "ultra64.h"
-#include "PR/os.h"
-#include "include/PR/gbi.h"
-#include "include/gbi_extention.h"
-#include "bondconstants.h"
-#include "bondtypes.h"
-#include "game/bg.h"
-#include "game/image_bank.h"
-#include "game/othermodemicrocode.h"
-#include "game/unk_09C250.h"
-#include "game/unk_0BC530.h"
-#include "assets/GlobalImageTable.h"
+#include <ultra64.h>
+#include <PR/os.h>
+#include <PR/gbi.h>
+#include <gbi_extention.h>
+#include <bondconstants.h>
+#include <bondtypes.h>
+#include "bg.h"
+#include "image_bank.h"
+#include "othermodemicrocode.h"
+#include "unk_09C250.h"
+#include "unk_0BC530.h"
+#include "../../assets/GlobalImageTable.h"
 
 // bss
 //CODE.bss:8007A100

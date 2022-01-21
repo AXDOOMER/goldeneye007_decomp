@@ -1,6 +1,6 @@
 #ifndef _BONDAICOMMANDS_H_
 #define _BONDAICOMMANDS_H_
-#include "ultra64.h"
+#include <ultra64.h>
 
 #define chararray16(input) (input & 0xFF00) >> 8, input & 0x00FF
 #define chararray24(input) (input & 0xFF0000) >> 16, (input & 0x00FF00) >> 8, input & 0x0000FF
@@ -1686,7 +1686,7 @@
 // info: makes chr hold tagged object
 //=============================================================================
 // note: if chr's hands are occupied, object will be equipped as an concealed
-// attachment. but if tagged object's handedness flag is free on guard then
+// attachment. but if tagged object's GUNHAND flag is free on guard then
 // guard will equip weapon. tagged object's prop must have a holding position
 // command within the model file
 //===========================================================================*/

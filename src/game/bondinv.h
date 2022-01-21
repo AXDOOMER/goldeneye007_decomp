@@ -1,8 +1,8 @@
 #ifndef _BONDINV_H_
 #define _BONDINV_H_
-#include "ultra64.h"
-#include "bondconstants.h"
-#include "game/bondview.h"
+#include <ultra64.h>
+#include <bondconstants.h>
+#include "bondview.h"
 
 void reinit_inventory(void);
 s32 bondinvIsAliveWithFlag(void);

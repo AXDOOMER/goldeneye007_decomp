@@ -1,19 +1,19 @@
-#include "ultra64.h"
-#include "bondtypes.h"
+#include <ultra64.h>
+#include <bondtypes.h>
 #include "stan.h"
 
 
 
 
 #ifdef NONMATCHING
-typedef struct coord3d_s32 {
+typedef coord3d_s32 {
     s32 x;
     s32 y;
     s32 z;
 };
-s32 init_pathtable_something( struct coord3d_s32 *tilepos, u8 *tilename, StandTilePoint *tilestack)
+s32 init_pathtable_something( coord3d_s32 *tilepos, u8 *tilename, StandTilePoint *tilestack)
 {
-    struct Coord3d coord;
+    coord3d coord;
 
    
     tilestack = stanMatchTileName(tilename);

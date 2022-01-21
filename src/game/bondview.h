@@ -1,10 +1,10 @@
 #ifndef _BOND_H_
 #define _BOND_H_
 
-#include "ultra64.h"
-#include "bondtypes.h"
-#include "game/chr.h"
-#include "game/matrixmath.h"
+#include <ultra64.h>
+#include <bondtypes.h>
+#include "chr.h"
+#include "matrixmath.h"
 
 typedef struct invitem_weap
 {
@@ -13,7 +13,7 @@ typedef struct invitem_weap
 
 typedef struct invitem_prop
 {
-  struct PropRecord *prop;
+  PropRecord *prop;
 } invitem_prop;
 
 typedef struct invitem_dual
@@ -38,7 +38,7 @@ struct collision434 {
     /**
      * Offset 0x04.
      */
-    struct coord3d collision_position;
+    coord3d collision_position;
 
     /**
      * Offset 0x10.
@@ -51,7 +51,7 @@ struct collision434 {
      * Some kind of alternative to pos3 (in player struct).
      * Offset 0x20.
      */
-    struct coord3d pos3;
+    coord3d pos3;
 
     /**
      * Offset 0x2c.
@@ -62,7 +62,7 @@ struct collision434 {
      * Some kind of alternative to pos (in player struct).
      * Offset 0x30.
      */
-    struct coord3d pos;
+    coord3d pos;
 
     /**
      * Offset 0x3c.
@@ -365,42 +365,42 @@ struct player
   /**
    * Offset 0x0004.
    */
-  struct coord3d pos;
+  coord3d pos;
 
   /**
    * Offset 0x0010.
    */
-  struct coord3d pos2;
+  coord3d pos2;
 
   /**
    * Offset 0x001c.
    */
-  struct coord3d offset;
+  coord3d offset;
 
   /**
    * Offset 0x0028.
    */
-  struct coord3d pos3;
+  coord3d pos3;
 
   /**
    * Offset 0x0034.
    */
-  struct StandTile *room_pointer;
+  StandTile *room_pointer;
 
   /**
    * Offset 0x0038.
    */
-  struct coord3d current_model_pos;
+  coord3d current_model_pos;
 
   /**
    * Offset 0x0044.
    */
-  struct coord3d previous_model_pos;
+  coord3d previous_model_pos;
 
   /**
    * Offset 0x0050.
    */
-  struct coord3d current_room_pos;
+  coord3d current_room_pos;
 
   /**
    * Used as parameter to gbi macro.
@@ -464,7 +464,7 @@ struct player
   /* 0x009c */ s32 crouchpos;
   /* 0x00a0 */ f32 ducking_height_offset;
   /* 0x00a4 */ f32 field_A4;
-  /* 0x00a8 */ struct PropRecord* prop;
+  /* 0x00a8 */ PropRecord* prop;
   /* 0x00ac */ s32 field_AC;
 
   /**
@@ -782,7 +782,7 @@ struct player
 
   // offset 0x594
   s32 standcnt;
-  struct Model *field_598;
+  Model *field_598;
   s32 field_59C;
   s32 field_5A0;
   s32 field_5A4;
@@ -1020,7 +1020,7 @@ struct player
    * Crosshair or bullet angle related.
    * Offset 0xfe8.
   */
-  struct coord2d crosshair_angle;
+  coord2d crosshair_angle;
   f32 crosshair_x_pos;
   f32 crosshair_y_pos;
   f32 field_FF8;
@@ -1141,8 +1141,8 @@ struct player
   f32 c_scalelod;
   f32 c_lodscalez;
   u32 c_lodscalezu32;
-  struct coord3d c_cameratopnorm;
-  struct coord3d c_cameraleftnorm;
+  coord3d c_cameratopnorm;
+  coord3d c_cameraleftnorm;
 
   /**
    * Offset 0x1118.
@@ -3092,7 +3092,7 @@ void bondviewTriggerWatchZoom(f32 zoominfovy);
 
 void trigger_watch_zoom(f32 final, f32 time);
 
-struct PropRecord* get_curplayer_positiondata(void);
+PropRecord* get_curplayer_positiondata(void);
 
 void currentPlayerSetScreenSize(f32 width, f32 height);
 void currentPlayerSetCameraScale(void);
@@ -3131,15 +3131,15 @@ s32 bond_pressed_reload_activate(void);
 Gfx* write_stan_tiles_in_yellow(Gfx *arg0);
 Gfx * maybe_mp_interface(Gfx *arg0);
 Gfx * bondviewRemoved7F08BCB8(Gfx *arg0);
-s32 sub_GAME_7F078A58(struct coord3d *vec_scale, f32 norm_scale);
+s32 sub_GAME_7F078A58(coord3d *vec_scale, f32 norm_scale);
 s32 getMissiontimer(void);
 void solo_char_load(void);
 void bondviewUpdateYAutoAimTime(s32 auto_aim_time, f32 auto_aim_y);
 void bondviewUpdateXAutoAimTime(s32 auto_aim_time, f32 auto_aim_x);
-void bondviewSet3dCoord7F07CEB0(struct coord3d *arg0);
+void bondviewSet3dCoord7F07CEB0(coord3d *arg0);
 f32 bondviewYPositionRelated(struct StandTile *arg0, f32 arg1, f32 arg2);
 f32 bondviewGetPlayerDuckingHeightRelated(struct player *player);
-void bondviewCollisionRadiusRelated(struct PropRecord* arg0, f32 *arg1, f32 *arg2, f32 *arg3);
+void bondviewCollisionRadiusRelated(PropRecord* arg0, f32 *arg1, f32 *arg2, f32 *arg3);
 void bondviewUpdatePlayerClipping(s32 use_clipping_height, f32 clipping_height_offset);
 void currentPlayerSetFadeColour(s32 r, s32 g, s32 b, f32 frac);
 void currentPlayerSetFadeFrac(f32 maxfadetime, f32 frac);
@@ -3153,9 +3153,9 @@ void bondviewCallRecordDamageKills(f32 arg0, f32 rad, s32 arg2, s32 arg3);
 int bondviewGetIfCurrentPlayerDamageShowTime(void);
 int bondviewGetIfCurrentPlayerHealthShowTime(void);
 u8 bondviewGetCurrentPlayersRoom(void);
-struct coord3d *bondviewGetCurrentPlayersPosition(void);
-void bondviewUpdateGuardTankFlagsRelated(struct PropRecord *arg0, s32 flags);
-void bondviewGetPropHeightRelatedValues(struct PropRecord *arg0, struct rect4f **field_B0, s32 *arg2, f32 *height_related, f32 *collision);
+coord3d *bondviewGetCurrentPlayersPosition(void);
+void bondviewUpdateGuardTankFlagsRelated(PropRecord *arg0, s32 flags);
+void bondviewGetPropHeightRelatedValues(PropRecord *arg0, struct rect4f **field_B0, s32 *arg2, f32 *height_related, f32 *collision);
 void bondviewAddCurrentPlayerArmor(f32 arg0);
 void bondviewResetIntroCameraMessageDialogs(void);
 void bondviewUnsetIntroCameraFlags(s32 flag);
@@ -3171,8 +3171,8 @@ void bondviewSetVisibleToGuardsFlag(s32 param_1);
 Mtxf *currentPlayerGetMatrix10EC(void);
 f32 get_curplay_horizontal_rotation_in_degrees(void);
 Mtxf *currentPlayerGetMatrix10CC(void);
-void sub_GAME_7F077EEC(struct coord2d *in, struct coord3d *out, f32 value);
-s32 sub_GAME_7F078BF4(struct coord3d *, f32, struct bbox2d *);
+void sub_GAME_7F077EEC(struct coord2d *in, coord3d *out, f32 value);
+s32 sub_GAME_7F078BF4(coord3d *, f32, struct bbox2d *);
 
 void sub_GAME_7F08BD48(Mtxf *arg0, s32 arg1);
 s32 sub_GAME_7F078474(void);

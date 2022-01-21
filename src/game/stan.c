@@ -1,7 +1,7 @@
-#include "ultra64.h"
-//#include "bondtypes.h"
-#include "game/stan.h"
-#include "game/bg.h"
+#include <ultra64.h>
+//#include <bondtypes.h>
+#include "stan.h"
+#include "bg.h"
 
 // bss
 struct StanPrefixRecord {
@@ -1299,7 +1299,7 @@ glabel sub_GAME_7F0AF808
 // Making midPnt a f32* did nothing.
 
 // I'm out of ideas.
-void getTileMidPoint(struct StandTile *tile, struct coord3d *midPnt)
+void getTileMidPoint(struct StandTile *tile, coord3d *midPnt)
 {
     short headerTail;
     // may be RGB
@@ -1394,9 +1394,9 @@ glabel getTileMidPoint
 #ifdef NONMATCHING
 // Saves a1 (tripleIndex) to the stack completely unnecessarily
 // Otherwise just regalloc, but maybe that alone fixes it.
-void getPointJustInsideOfTileTriple(struct StandTile* tile, s32 tripleIndex, struct coord3d* pnt)
+void getPointJustInsideOfTileTriple(struct StandTile* tile, s32 tripleIndex, coord3d* pnt)
 {
-    struct coord3d midPoint;
+    coord3d midPoint;
     s32 pntIndex;
 
     pntIndex = STAN_TRIPLE_TO_PNT_INDEX(tile, tripleIndex);
@@ -1496,7 +1496,7 @@ glabel getPointJustInsideOfTileTriple
 
 #ifdef NONMATCHING
 // Missing addiu sp, sp, -0x10 : I can't get it to use the stack at all. 
-f32 sub_GAME_7F0AFB1C(struct coord3d *p,struct coord3d *q)
+f32 sub_GAME_7F0AFB1C(coord3d *p,coord3d *q)
 {
   f32 xDiff = q->x - p->x;
   f32 yDiff = q->y - p->y;
@@ -4236,11 +4236,11 @@ s32 sub_GAME_7F0B1CEC(void) {
 
 
 // sig for caller matches
-void getTileEdgePoints(struct StandTile *tile, s32 pointI, struct coord3d *currPntRtn, struct coord3d *nextPointRtn);
+void getTileEdgePoints(struct StandTile *tile, s32 pointI, coord3d *currPntRtn, coord3d *nextPointRtn);
 
 #ifdef NONMATCHING
 // Not debugged at all - can't be far wrong though.
-void getTileEdgePoints(struct StandTile *tile, s32 pointI, struct coord3d *currPntRtn, struct coord3d *nextPointRtn)
+void getTileEdgePoints(struct StandTile *tile, s32 pointI, coord3d *currPntRtn, coord3d *nextPointRtn)
 {
   struct StandTilePoint *tilePntA;
   struct StandTilePoint *tilePntB;
@@ -4903,7 +4903,7 @@ glabel sub_GAME_7F0B23A4
 #ifdef NONMATCHING
 // regalloc only really
 // Duplicating the macro does nothing
-void sub_GAME_7F0B23AC(struct StandTile *tile, s32 tripleIndex, struct coord3d *pnt)
+void sub_GAME_7F0B23AC(struct StandTile *tile, s32 tripleIndex, coord3d *pnt)
 {
     s32 pntIndex = STAN_TRIPLE_TO_PNT_INDEX(tile, tripleIndex);
 
@@ -5439,7 +5439,7 @@ glabel sub_GAME_7F0B2718
  * @param pntA: out parameter, will contain stanSavedColl_pntA (x,z)
  * @param pntB: out parameter, will contain stanSavedColl_pntB (x,z)
  */
-s32 getCollisionEdge_maybe(struct coord3d *pntA, struct coord3d *pntB)
+s32 getCollisionEdge_maybe(coord3d *pntA, coord3d *pntB)
 {
     if (stanSavedColl_tile)
     {

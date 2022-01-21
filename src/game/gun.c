@@ -1,22 +1,22 @@
-#include "ultra64.h"
+#include <ultra64.h>
 #include "include/limits.h"
-#include "bondconstants.h"
-#include "bondtypes.h"
-#include "game/bondview.h"
-#include "game/bondinv.h"
-#include "game/gun.h"
-#include "game/chrobjdata.h"
-#include "game/quaternion.h"
-#include "game/image_bank.h"
-#include "game/bondwalk2.h"
-#include "game/othermodemicrocode.h"
-#include "bondgame.h"
-#include "game/player.h"
-#include "music.h"
-#include "game/lvl.h"
-#include "snd.h"
-#include "game/math_asinfacosf.h"
-#include "game/loadobjectmodel.h"
+#include <bondconstants.h>
+#include <bondtypes.h>
+#include "bondview.h"
+#include "bondinv.h"
+#include "gun.h"
+#include "chrobjdata.h"
+#include "quaternion.h"
+#include "image_bank.h"
+#include "bondwalk2.h"
+#include "othermodemicrocode.h"
+#include <bondgame.h>
+#include "player.h"
+#include "../music.h"
+#include "lvl.h"
+#include "../snd.h"
+#include "math_asinfacosf.h"
+#include "loadobjectmodel.h"
 
 // bss
 s32 dword_CODE_bss_80075DB0;
@@ -929,7 +929,7 @@ WeaponStats *get_ptr_item_statistics(ITEM_IDS item) {
 
 
 
-void copy_item_in_hand(struct coord3d *pos)
+void copy_item_in_hand(coord3d *pos)
 {
     ITEM_IDS item;
     WeaponStats *stats;
@@ -943,7 +943,7 @@ void copy_item_in_hand(struct coord3d *pos)
 }
 
 
-void copy_item_in_hand_to_main_list(struct coord3d *pos) {
+void copy_item_in_hand_to_main_list(coord3d *pos) {
     
     WeaponStats *stats;
     ITEM_IDS item;
@@ -1361,13 +1361,13 @@ glabel sub_GAME_7F05CEBC
 
 
 
-s32 get_itemtype_in_hand(HANDEDNESS hand)
+s32 get_itemtype_in_hand(GUNHAND hand)
 {
     return g_CurrentPlayer->hand_item[hand];
 }
 
 #ifndef VERSION_EU
-ModelFileHeader *get_ptr_itemheader_in_hand(HANDEDNESS hand)
+ModelFileHeader *get_ptr_itemheader_in_hand(GUNHAND hand)
 {
     return &g_CurrentPlayer->copy_of_body_obj_header[hand];
 }
@@ -1389,7 +1389,7 @@ glabel get_ptr_itemheader_in_hand
 
 
 #ifndef VERSION_EU
-u8 * getPlayerWeaponBufferForHand(HANDEDNESS hand)
+u8 * getPlayerWeaponBufferForHand(GUNHAND hand)
 {
     return g_CurrentPlayer->ptr_hand_weapon_buffer[hand];
 }
@@ -1416,7 +1416,7 @@ u32 getSizeBufferWeaponInHand(int hand)
 }
 
 
-void remove_item_in_hand(HANDEDNESS hand)
+void remove_item_in_hand(GUNHAND hand)
 {
   g_CurrentPlayer->hand_invisible[hand] = 0;
   g_CurrentPlayer->hand_item[hand] = ITEM_UNARMED;
@@ -1972,7 +1972,7 @@ glabel sub_GAME_7F05D334
 )
 #endif
 
-s32 get_next_weapon_in_cycle_for_hand(HANDEDNESS hand, s32 direction)
+s32 get_next_weapon_in_cycle_for_hand(GUNHAND hand, s32 direction)
 {
 	if (g_CurrentPlayer->hands[hand].when_detonating_mines_is_0 == 5) {
 		if (
@@ -2103,8 +2103,8 @@ void sub_GAME_7F05D650(int param_1)
 
 void sub_GAME_7F05D690(void)
 {
-    draw_item_in_hand_has_more_ammo(RIGHT_HAND, g_CurrentPlayer->hands[RIGHT_HAND].previous_weapon);
-    draw_item_in_hand_has_more_ammo(LEFT_HAND, g_CurrentPlayer->hands[LEFT_HAND].previous_weapon);
+    draw_item_in_hand_has_more_ammo(GUNRIGHT, g_CurrentPlayer->hands[GUNRIGHT].previous_weapon);
+    draw_item_in_hand_has_more_ammo(GUNLEFT, g_CurrentPlayer->hands[GUNLEFT].previous_weapon);
 }
 
 
@@ -2113,21 +2113,21 @@ void advance_through_inventory(void)
     ITEM_IDS nextright;
     ITEM_IDS nextleft;
 
-    nextright = get_next_weapon_in_cycle_for_hand(RIGHT_HAND, 1);
-    nextleft = get_next_weapon_in_cycle_for_hand(LEFT_HAND, 1);
+    nextright = get_next_weapon_in_cycle_for_hand(GUNRIGHT, 1);
+    nextleft = get_next_weapon_in_cycle_for_hand(GUNLEFT, 1);
 
     if ((nextright >= ITEM_BOMBCASE) || (nextleft >= ITEM_BOMBCASE))
     {
-        nextright = g_CurrentPlayer->hands[RIGHT_HAND].previous_weapon;
-        nextleft = g_CurrentPlayer->hands[LEFT_HAND].previous_weapon;
+        nextright = g_CurrentPlayer->hands[GUNRIGHT].previous_weapon;
+        nextleft = g_CurrentPlayer->hands[GUNLEFT].previous_weapon;
     }
     else
     {
         choose_cycle_forward_weapon(&nextright, &nextleft, FALSE);
     }
 
-    likely_change_weapon_in_hand(RIGHT_HAND, nextright, 1);
-    likely_change_weapon_in_hand(LEFT_HAND, nextleft, 1);
+    likely_change_weapon_in_hand(GUNRIGHT, nextright, 1);
+    likely_change_weapon_in_hand(GUNLEFT, nextleft, 1);
 }
 
 
@@ -2136,21 +2136,21 @@ void backstep_through_inventory(void)
     ITEM_IDS nextright;
     ITEM_IDS nextleft;
 
-    nextright = get_next_weapon_in_cycle_for_hand(RIGHT_HAND, -1);
-    nextleft = get_next_weapon_in_cycle_for_hand(LEFT_HAND, -1);
+    nextright = get_next_weapon_in_cycle_for_hand(GUNRIGHT, -1);
+    nextleft = get_next_weapon_in_cycle_for_hand(GUNLEFT, -1);
 
     if ((nextright >= ITEM_BOMBCASE) || (nextleft >= ITEM_BOMBCASE))
     {
-        nextright = g_CurrentPlayer->hands[RIGHT_HAND].previous_weapon;
-        nextleft = g_CurrentPlayer->hands[LEFT_HAND].previous_weapon;
+        nextright = g_CurrentPlayer->hands[GUNRIGHT].previous_weapon;
+        nextleft = g_CurrentPlayer->hands[GUNLEFT].previous_weapon;
     }
     else
     {
         choose_cycle_back_weapon(&nextright, &nextleft, FALSE);
     }
 
-    likely_change_weapon_in_hand(RIGHT_HAND, nextright, -1);
-    likely_change_weapon_in_hand(LEFT_HAND, nextleft, -1);
+    likely_change_weapon_in_hand(GUNRIGHT, nextright, -1);
+    likely_change_weapon_in_hand(GUNLEFT, nextleft, -1);
 }
 
 void autoadvance_on_deplete_all_ammo(void)
@@ -2160,16 +2160,16 @@ void autoadvance_on_deplete_all_ammo(void)
 	ITEM_IDS duperight;
 	ITEM_IDS dupeleft;
 
-    nextright = get_next_weapon_in_cycle_for_hand(RIGHT_HAND, 1);
+    nextright = get_next_weapon_in_cycle_for_hand(GUNRIGHT, 1);
     duperight = nextright;
 
-    nextleft = get_next_weapon_in_cycle_for_hand(LEFT_HAND, 1);
+    nextleft = get_next_weapon_in_cycle_for_hand(GUNLEFT, 1);
     dupeleft = nextleft;
 
     if ((duperight >= ITEM_BOMBCASE) || (dupeleft >= ITEM_BOMBCASE))
     {
-        duperight = g_CurrentPlayer->hands[RIGHT_HAND].previous_weapon;
-        dupeleft = g_CurrentPlayer->hands[LEFT_HAND].previous_weapon;
+        duperight = g_CurrentPlayer->hands[GUNRIGHT].previous_weapon;
+        dupeleft = g_CurrentPlayer->hands[GUNLEFT].previous_weapon;
     }
     else if ((duperight == ITEM_REMOTEMINE) && ((check_if_item_available(ITEM_TRIGGER))))
     {
@@ -2188,17 +2188,17 @@ void autoadvance_on_deplete_all_ammo(void)
         }
     }
 
-    likely_change_weapon_in_hand(RIGHT_HAND, duperight, 1);
-    likely_change_weapon_in_hand(LEFT_HAND, dupeleft, 1);
+    likely_change_weapon_in_hand(GUNRIGHT, duperight, 1);
+    likely_change_weapon_in_hand(GUNLEFT, dupeleft, 1);
 }
 
-s32 draw_item_in_hand_has_more_ammo(HANDEDNESS hand, s32 next_weapon) {
+s32 draw_item_in_hand_has_more_ammo(GUNHAND hand, s32 next_weapon) {
     g_CurrentPlayer->hands[hand].weapon_current_animation = 5;
     g_CurrentPlayer->hands[hand].weapon_next_weapon = next_weapon;
     g_CurrentPlayer->hands[hand].weapon_animation_trigger = 0;
 }
 
-void attempt_reload_item_in_hand(HANDEDNESS hand) {
+void attempt_reload_item_in_hand(GUNHAND hand) {
     s32 ammo_type = get_ammo_type_for_weapon(get_item_in_hand(hand));
     if (ammo_type != 0) {
         if (g_CurrentPlayer->hands[hand].weapon_current_animation == 0) {
@@ -2207,16 +2207,16 @@ void attempt_reload_item_in_hand(HANDEDNESS hand) {
     }
 }
 
-s32 get_item_in_hand(HANDEDNESS hand) {
+s32 get_item_in_hand(GUNHAND hand) {
     return g_CurrentPlayer->hands[hand].weaponnum;
 }
 
-void draw_item_in_hand(HANDEDNESS hand, s32 next_weapon) {
+void draw_item_in_hand(GUNHAND hand, s32 next_weapon) {
 	g_CurrentPlayer->hands[hand].weapon_current_animation = 0xE;
 	g_CurrentPlayer->hands[hand].weapon_next_weapon = next_weapon;
 }
 
-s32 get_item_in_hand_or_watch_menu(HANDEDNESS hand) {
+s32 get_item_in_hand_or_watch_menu(GUNHAND hand) {
 	if (g_CurrentPlayer->hands[hand].weaponnum_watchmenu >= 0) {
 		return g_CurrentPlayer->hands[hand].weaponnum_watchmenu;
 	} else {
@@ -2224,12 +2224,12 @@ s32 get_item_in_hand_or_watch_menu(HANDEDNESS hand) {
 	}
 }
 
-void sub_GAME_7F05DA8C(HANDEDNESS hand, s32 weaponnum_watchmenu) {
+void sub_GAME_7F05DA8C(GUNHAND hand, s32 weaponnum_watchmenu) {
     place_item_in_hand_swap_and_make_visible();
 	g_CurrentPlayer->hands[hand].weaponnum_watchmenu = weaponnum_watchmenu;
 }
 
-void sub_GAME_7F05DAE4(HANDEDNESS hand) {
+void sub_GAME_7F05DAE4(GUNHAND hand) {
     if (g_CurrentPlayer->hands[hand].weaponnum_watchmenu >= 0) {
         place_item_in_hand_swap_and_make_visible(hand, g_CurrentPlayer->hands[hand].weaponnum);
 		g_CurrentPlayer->hands[hand].weaponnum_watchmenu = -1;
@@ -2328,43 +2328,43 @@ glabel remove_hands_item
 )
 #endif
 
-s8 get_hands_firing_status(HANDEDNESS hand) {
+s8 get_hands_firing_status(GUNHAND hand) {
     return g_CurrentPlayer->hands[hand].weapon_firing_status;
 }
 
-f32 sub_GAME_7F05DCB8(HANDEDNESS hand) {
+f32 sub_GAME_7F05DCB8(GUNHAND hand) {
 	return g_CurrentPlayer->hands[hand].field_A34;
 }
 
-f32 sub_GAME_7F05DCE8(HANDEDNESS hand)
+f32 sub_GAME_7F05DCE8(GUNHAND hand)
 {
 	f32 ret;
 
-	if (hand == RIGHT_HAND)
+	if (hand == GUNRIGHT)
 	{
-		ret = get_ptr_item_statistics(get_item_in_hand_or_watch_menu(RIGHT_HAND))->PosX;
+		ret = get_ptr_item_statistics(get_item_in_hand_or_watch_menu(GUNRIGHT))->PosX;
 	}
 	else
 	{
-		ret = -get_ptr_item_statistics(get_item_in_hand_or_watch_menu(LEFT_HAND))->PosX;
+		ret = -get_ptr_item_statistics(get_item_in_hand_or_watch_menu(GUNLEFT))->PosX;
 	}
 
 	return ret;
 }
 
 f32 get_item_in_hand_zoom(void) {
-    if (get_item_in_hand_or_watch_menu(RIGHT_HAND) == ITEM_SNIPERRIFLE) {
+    if (get_item_in_hand_or_watch_menu(GUNRIGHT) == ITEM_SNIPERRIFLE) {
         return g_CurrentPlayer->sniper_zoom;
     }
-    if (get_item_in_hand_or_watch_menu(RIGHT_HAND) == ITEM_CAMERA) {
+    if (get_item_in_hand_or_watch_menu(GUNRIGHT) == ITEM_CAMERA) {
         return g_CurrentPlayer->camera_zoom;
     }
-    return get_ptr_item_statistics(get_item_in_hand_or_watch_menu(RIGHT_HAND))->Zoom;
+    return get_ptr_item_statistics(get_item_in_hand_or_watch_menu(GUNRIGHT))->Zoom;
 }
 
 void camera_sniper_zoom_in(f32 zoom)
 {
-	if (get_item_in_hand_or_watch_menu(RIGHT_HAND) == ITEM_SNIPERRIFLE) {
+	if (get_item_in_hand_or_watch_menu(GUNRIGHT) == ITEM_SNIPERRIFLE) {
 		g_CurrentPlayer->sniper_zoom *= (1.0f + (zoom * 0.1f));
 		if (g_CurrentPlayer->sniper_zoom > 60.0f) {
 			g_CurrentPlayer->sniper_zoom = 60.0f;
@@ -2372,7 +2372,7 @@ void camera_sniper_zoom_in(f32 zoom)
 	}
 	else
 	{
-		if (get_item_in_hand_or_watch_menu(RIGHT_HAND) == ITEM_CAMERA) {
+		if (get_item_in_hand_or_watch_menu(GUNRIGHT) == ITEM_CAMERA) {
 			g_CurrentPlayer->camera_zoom *= (1.0f + (zoom * 0.1f));
 			if (g_CurrentPlayer->camera_zoom > 60.0f) {
 				g_CurrentPlayer->camera_zoom = 60.0f;
@@ -2383,7 +2383,7 @@ void camera_sniper_zoom_in(f32 zoom)
 
 void camera_sniper_zoom_out(f32 zoom)
 {
-	if (get_item_in_hand_or_watch_menu(RIGHT_HAND) == ITEM_SNIPERRIFLE) {
+	if (get_item_in_hand_or_watch_menu(GUNRIGHT) == ITEM_SNIPERRIFLE) {
 		g_CurrentPlayer->sniper_zoom /= (1.0f + (zoom * 0.1f));
 		if (g_CurrentPlayer->sniper_zoom < 7.0f) {
 			g_CurrentPlayer->sniper_zoom = 7.0f;
@@ -2391,7 +2391,7 @@ void camera_sniper_zoom_out(f32 zoom)
 	}
 	else
 	{
-		if (get_item_in_hand_or_watch_menu(RIGHT_HAND) == ITEM_CAMERA) {
+		if (get_item_in_hand_or_watch_menu(GUNRIGHT) == ITEM_CAMERA) {
 			g_CurrentPlayer->camera_zoom /= (1.0f + (zoom * 0.1f));
 			if (g_CurrentPlayer->camera_zoom < 7.0f) {
 				g_CurrentPlayer->camera_zoom = 7.0f;
@@ -3249,8 +3249,8 @@ glabel sub_GAME_7F05E0E4
 
 void sub_GAME_7F05E5F0(f32 param_1)
 {
-    g_CurrentPlayer->hands[RIGHT_HAND].field_A30 = (1.0f - cosf(param_1)) * 5.0f;
-    g_CurrentPlayer->hands[LEFT_HAND].field_A30 = (1.0f - cosf(param_1)) * 5.0f;
+    g_CurrentPlayer->hands[GUNRIGHT].field_A30 = (1.0f - cosf(param_1)) * 5.0f;
+    g_CurrentPlayer->hands[GUNLEFT].field_A30 = (1.0f - cosf(param_1)) * 5.0f;
 }
 
 
@@ -3374,7 +3374,7 @@ glabel sub_GAME_7F05E6B4
 )
 #endif
 
-void sub_GAME_7F05E808(HANDEDNESS hand) {
+void sub_GAME_7F05E808(GUNHAND hand) {
 	g_CurrentPlayer->hands[hand].field_A8C = 1;
 }
 
@@ -3623,7 +3623,7 @@ glabel sub_GAME_7F05EA94
 /**
  * Address 0x7F05EB0C.
 */
-void sub_GAME_7F05EB0C(ObjectRecord *arg0, struct coord3d *arg1, struct StandTile *arg2, Mtxf *arg3, struct coord3d *arg4, Mtxf *arg5, struct PropRecord *arg6)
+void sub_GAME_7F05EB0C(ObjectRecord *arg0, coord3d *arg1, StandTile *arg2, Mtxf *arg3, coord3d *arg4, Mtxf *arg5, PropRecord *arg6)
 {
     PropRecord *temp_s1;
     struct ObjectRecord_f6c *temp_v0;
@@ -10606,8 +10606,8 @@ weapon_bullet_type_shotgun_mine:
 
 void bondwalkFireBothHands(void)
 {
-    handles_firing_or_throwing_weapon_in_hand(RIGHT_HAND);
-    handles_firing_or_throwing_weapon_in_hand(LEFT_HAND);
+    handles_firing_or_throwing_weapon_in_hand(GUNRIGHT);
+    handles_firing_or_throwing_weapon_in_hand(GUNLEFT);
 }
 
 
@@ -10623,10 +10623,25 @@ void bondwalkFireBothHands(void)
  * 
  * Address 0x7F061948.
 */
-void sub_GAME_7F061948(struct ChrRecord_f180 *arg0, ITEM_IDS item, struct coord3d *arg2, struct coord3d *arg3)
+void sub_GAME_7F061948(struct ChrRecord_f180 *arg0, ITEM_IDS item, coord3d *arg2, coord3d *arg3)
 {
     f32 phi_f12_2;
 
+    //arg0->pos.x = arg2->x;
+    //arg0->pos.y = arg2->y;
+    //arg0->pos.z = arg2->z;
+
+    //arg0->delta.x = arg3->x - arg2->x;
+    //arg0->delta.y = arg3->y - arg2->y;
+    //arg0->delta.z = arg3->z - arg2->z;
+
+    //phi_f12_2 = sqrtf((arg0->delta.f[0] * arg0->delta.f[0]) + (arg0->delta.f[1] * arg0->delta.f[1]) + (arg0->delta.f[2] * arg0->delta.f[2]));
+ 
+    //arg0->delta.x *= 1.0f / phi_f12_2;
+    //arg0->delta.y *= 1.0f / phi_f12_2;
+    //arg0->delta.z *= 1.0f / phi_f12_2;
+
+    
     arg0->pos.f[0] = arg2->f[0];
     arg0->pos.f[1] = arg2->f[1];
     arg0->pos.f[2] = arg2->f[2];
@@ -14535,7 +14550,7 @@ glabel sub_GAME_7F064720
  * 
  * Address 0x7F064774.
 */
-void recall_joy2_hits_edit_flag(s32 arg0, struct coord3d *arg1, s32 arg2)
+void recall_joy2_hits_edit_flag(s32 arg0, coord3d *arg1, s32 arg2)
 {
 
 }
@@ -23745,8 +23760,8 @@ void analyzeGEKey(void)
 		#endif
     	g_CurrentPlayer->copiedgoldeneye = 1;
     	sndPlaySfx(g_musicSfxBufferPtr, 0xf5, 0x0);
-    	draw_item_in_hand_has_more_ammo(RIGHT_HAND, ITEM_GOLDENEYEKEY);
-    	draw_item_in_hand_has_more_ammo(LEFT_HAND, ITEM_UNARMED);
+    	draw_item_in_hand_has_more_ammo(GUNRIGHT, ITEM_GOLDENEYEKEY);
+    	draw_item_in_hand_has_more_ammo(GUNLEFT, ITEM_UNARMED);
   	}
   	else
   	{
@@ -23777,8 +23792,8 @@ void give_weapon_case_items(void)
   display_text_for_weapon_in_lower_left_corner(ITEM_SNIPERRIFLE);
   give_cur_player_ammo(sniperrifle_stats.AmmoType, check_cur_player_ammo_amount_in_inventory(sniperrifle_stats.AmmoType) + sniperrifle_stats.MagSize);
   inventory_remove_item_by_id(ITEM_WEAPONCASE);
-  draw_item_in_hand_has_more_ammo(RIGHT_HAND,ITEM_SNIPERRIFLE);
-  draw_item_in_hand_has_more_ammo(LEFT_HAND,ITEM_UNARMED);
+  draw_item_in_hand_has_more_ammo(GUNRIGHT,ITEM_SNIPERRIFLE);
+  draw_item_in_hand_has_more_ammo(GUNLEFT,ITEM_UNARMED);
 }
 
 
@@ -24610,15 +24625,15 @@ void sub_GAME_7F067AA4(s32 param_1)
 }
 
 
-void sub_GAME_7F067AB4(struct coord3d *param_1)
+void sub_GAME_7F067AB4(coord3d *param_1)
 {
-  g_CurrentPlayer->hands[RIGHT_HAND].field_A38 = sub_GAME_7F05DCB8(RIGHT_HAND) + param_1->x;
-  g_CurrentPlayer->hands[RIGHT_HAND].field_A3C = param_1->y;
-  g_CurrentPlayer->hands[RIGHT_HAND].field_A40 = param_1->z;
+  g_CurrentPlayer->hands[GUNRIGHT].field_A38 = sub_GAME_7F05DCB8(GUNRIGHT) + param_1->x;
+  g_CurrentPlayer->hands[GUNRIGHT].field_A3C = param_1->y;
+  g_CurrentPlayer->hands[GUNRIGHT].field_A40 = param_1->z;
 
-  g_CurrentPlayer->hands[LEFT_HAND].field_A38 = sub_GAME_7F05DCB8(LEFT_HAND) + param_1->x;
-  g_CurrentPlayer->hands[LEFT_HAND].field_A3C = param_1->y;
-  g_CurrentPlayer->hands[LEFT_HAND].field_A40 = param_1->z;
+  g_CurrentPlayer->hands[GUNLEFT].field_A38 = sub_GAME_7F05DCB8(GUNLEFT) + param_1->x;
+  g_CurrentPlayer->hands[GUNLEFT].field_A3C = param_1->y;
+  g_CurrentPlayer->hands[GUNLEFT].field_A40 = param_1->z;
 
 }
 
@@ -25181,7 +25196,7 @@ glabel sub_GAME_7F0680D4
 /**
  * Address 0x7F068190.
 */
-void sub_GAME_7F068190(struct coord3d *arg0, struct coord3d *arg1)
+void sub_GAME_7F068190(coord3d *arg0, coord3d *arg1)
 {
     arg0->f[0] = 0.0f;
     arg0->f[1] = 0.0f;
@@ -27509,20 +27524,20 @@ glabel give_cur_player_ammo
 
 
 
-s32 check_cur_player_ammo_amount_in_inventory(AMMOTYPES ammotype) {
+s32 check_cur_player_ammo_amount_in_inventory(AMMOTYPE ammotype) {
     return g_CurrentPlayer->ammoheldarr[ammotype];
 }
 
-s32 check_cur_player_ammo_amount_total(AMMOTYPES ammotype) {
+s32 check_cur_player_ammo_amount_total(AMMOTYPE ammotype) {
 
     s32 total_ammo = check_cur_player_ammo_amount_in_inventory(ammotype);
 
-    if (get_ammo_type_for_weapon(get_item_in_hand(RIGHT_HAND)) == ammotype) {
-        total_ammo += get_ammo_in_hands_magazine(RIGHT_HAND);
+    if (get_ammo_type_for_weapon(get_item_in_hand(GUNRIGHT)) == ammotype) {
+        total_ammo += get_ammo_in_hands_magazine(GUNRIGHT);
     }
 
-    if (get_ammo_type_for_weapon(get_item_in_hand(LEFT_HAND)) == ammotype) {
-        total_ammo += get_ammo_in_hands_magazine(LEFT_HAND);
+    if (get_ammo_type_for_weapon(get_item_in_hand(GUNLEFT)) == ammotype) {
+        total_ammo += get_ammo_in_hands_magazine(GUNLEFT);
     }
 
     return total_ammo;

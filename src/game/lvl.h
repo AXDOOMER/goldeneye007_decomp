@@ -1,7 +1,7 @@
 #ifndef _LVL_H_
 #define _LVL_H_
-#include "ultra64.h"
-#include "bondconstants.h"
+#include <ultra64.h>
+#include <bondconstants.h>
 
 #define DEFAULT_AGENT_AI_ACCURACY_MODIFIER 0.6f
 #define DEFAULT_AGENT_AI_DAMAGE_MODIFIER 0.5f

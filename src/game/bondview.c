@@ -1,45 +1,45 @@
-#include "ultra64.h"
-#include "include/math.h"
-#include "bondtypes.h"
-#include "boss.h"
-#include "fr.h"
-#include "joy.h"
-#include "music.h"
-#include "snd.h"
-#include "str.h"
-#include "watch.h"
-#include "game/bg.h"
-#include "game/bondview.h"
-#include "game/bondinv.h"
-#include "game/chr.h"
-#include "game/chr_b.h"
-#include "game/chrlv.h"
-#include "game/chrobjhandler.h"
-#include "game/debugmenu_handler.h"
-#include "game/front.h"
-#include "game/gun.h"
-#include "game/initanitable.h"
-#include "game/objecthandler.h"
-#include "game/lvl.h"
-#include "game/math_atan2f.h"
-#include "game/matrixmath.h"
-#include "game/player.h"
-#include "game/player_2.h"
-#include "game/quaternion.h"
-#include "game/stan.h"
-#include "game/textrelated.h"
-#include "game/unk_08DBB0.h"
-#include "game/unk_0C0A70.h"
-#include "game/unk_0BC530.h"
+#include <ultra64.h>
+#include <math.h>
+#include <bondtypes.h>
+#include <boss.h>
+#include <fr.h>
+#include <joy.h>
+#include <music.h>
+#include <snd.h>
+#include <str.h>
+#include <watch.h>
+#include "bg.h"
+#include "bondview.h"
+#include "bondinv.h"
+#include "chr.h"
+#include "chr_b.h"
+#include "chrlv.h"
+#include "chrobjhandler.h"
+#include "debugmenu_handler.h"
+#include "front.h"
+#include "gun.h"
+#include "initanitable.h"
+#include "objecthandler.h"
+#include "lvl.h"
+#include "math_atan2f.h"
+#include "matrixmath.h"
+#include "player.h"
+#include "player_2.h"
+#include "quaternion.h"
+#include "stan.h"
+#include "textrelated.h"
+#include "unk_08DBB0.h"
+#include "unk_0C0A70.h"
+#include "unk_0BC530.h"
 
 // bss
-struct coord3d flt_CODE_bss_80079940;
+coord3d flt_CODE_bss_80079940;
 f32 flt_CODE_bss_8007994C;
-struct coord3d flt_CODE_bss_80079950;
+coord3d flt_CODE_bss_80079950;
 f32 flt_CODE_bss_8007995C;
-struct coord3d flt_CODE_bss_80079960;
+coord3d flt_CODE_bss_80079960;
 f32 flt_CODE_bss_8007996C;
-struct coord3d flt_CODE_bss_80079970;
+coord3d flt_CODE_bss_80079970;
 f32 flt_CODE_bss_8007997C;
 //CODE.bss:80079980
 f32 flt_CODE_bss_80079980;
@@ -565,7 +565,7 @@ void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2);
 void bondviewUpdateCurrentRoomPosition(s32 arg0);
 void trigger_solo_watch_menu(s32 arg0);
 void bondviewUpdatePlayerCollisionBounds(void);
-void sub_GAME_7F07C888(struct rect4f *, struct coord3d *, f32);
+void sub_GAME_7F07C888(struct rect4f *, coord3d *, f32);
 void bondviewIntroCameraTextTick(void);
 void bondviewUpperTextWindowTimerTick(void);
 
@@ -604,14 +604,14 @@ void currentPlayerSetCameraScale(void)
 	f32 fVar5;
 	f32 fVar2;
 
-	g_CurrentPlayer->c_scaley = sinf(DEG2RAD(g_CurrentPlayer->c_perspfovy)) / (cosf(DEG2RAD(g_CurrentPlayer->c_perspfovy)) * g_CurrentPlayer->c_halfheight);
+	g_CurrentPlayer->c_scaley = sinf(mDegToHalfRad(g_CurrentPlayer->c_perspfovy)) / (cosf(mDegToHalfRad(g_CurrentPlayer->c_perspfovy)) * g_CurrentPlayer->c_halfheight);
 	g_CurrentPlayer->c_scalex = (g_CurrentPlayer->c_scaley * g_CurrentPlayer->c_perspaspect * g_CurrentPlayer->c_halfheight) / g_CurrentPlayer->c_halfwidth;
 
 	g_CurrentPlayer->c_recipscalex = 1.0f / g_CurrentPlayer->c_scalex;
 	g_CurrentPlayer->c_recipscaley = 1.0f / g_CurrentPlayer->c_scaley;
 
     g_CurrentPlayer->c_scalelod = g_CurrentPlayer->c_scaley;
-	g_CurrentPlayer->c_scalelod60 = sinf(0.52359879f/*DEG2RAD(30)*/) / (cosf(0.52359879f/*DEG2RAD(30)*/) * 120.0f);
+	g_CurrentPlayer->c_scalelod60 = sinf(0.52359879f/*mDegToHalfRad(30)*/) / (cosf(0.52359879f/*mDegToHalfRad(30)*/) * 120.0f);
 	g_CurrentPlayer->c_lodscalez = g_CurrentPlayer->c_scalelod / g_CurrentPlayer->c_scalelod60;
 	tmp = (g_CurrentPlayer->c_lodscalez * 65536.0f);
 
@@ -634,7 +634,7 @@ void currentPlayerSetCameraScale(void)
 	g_CurrentPlayer->c_cameraleftnorm.z = -fVar5 * fVar4;
 }
 
-void sub_GAME_7F077EEC(struct coord2d *in, struct coord3d *out, f32 value) {
+void sub_GAME_7F077EEC(struct coord2d *in, coord3d *out, f32 value) {
     f32 norm;
     f32 x;
     f32 y;
@@ -648,18 +648,18 @@ void sub_GAME_7F077EEC(struct coord2d *in, struct coord3d *out, f32 value) {
     out->z = (-1.0f * norm);
 }
 
-void sub_GAME_7F077FB4(struct coord3d *in, f32 value, struct coord3d *out) {
+void sub_GAME_7F077FB4(coord3d *in, f32 value, coord3d *out) {
     out->y = ((in->y * value) * g_CurrentPlayer->c_scaley);
     out->x = ((in->x * value) * g_CurrentPlayer->c_scalex);
 }
 
-void sub_GAME_7F077FF4(struct coord3d *in, struct coord3d *out) {
+void sub_GAME_7F077FF4(coord3d *in, coord3d *out) {
     f32 inv_z = (1.0f / in->z);
     out->y = (in->y * inv_z * g_CurrentPlayer->c_recipscaley) + (g_CurrentPlayer->c_screentop + g_CurrentPlayer->c_halfheight);
     out->x = (g_CurrentPlayer->c_screenleft + g_CurrentPlayer->c_halfwidth) - (in->x * inv_z * g_CurrentPlayer->c_recipscalex);
 }
 
-void sub_GAME_7F078060(struct coord3d *in, struct coord3d *out)
+void sub_GAME_7F078060(coord3d *in, coord3d *out)
 {
 	f32 inv_z;
 
@@ -673,18 +673,18 @@ void sub_GAME_7F078060(struct coord3d *in, struct coord3d *out)
 	out->x = (g_CurrentPlayer->c_screenleft + g_CurrentPlayer->c_halfwidth) - in->x * inv_z * g_CurrentPlayer->c_recipscalex;
 }
 
-void sub_GAME_7F0780F0(struct coord3d *in, f32 divisor, struct coord3d *out)
+void sub_GAME_7F0780F0(coord3d *in, f32 divisor, coord3d *out)
 {
 	out->y = in->y * (1.0f / divisor) * g_CurrentPlayer->c_recipscaley;
 	out->x = in->x * (1.0f / divisor) * g_CurrentPlayer->c_recipscalex;
 }
 
-void sub_GAME_7F078140(struct coord3d *in, struct coord3d *out, f32 value1, f32 angle, f32 value2) {
+void sub_GAME_7F078140(coord3d *in, coord3d *out, f32 value1, f32 angle, f32 value2) {
     f32 var1;
     f32 x;
     f32 y;
     f32 z;
-    f32 var2 = sinf(DEG2RAD(angle)) / (cosf(DEG2RAD(angle)) * g_CurrentPlayer->c_halfheight);
+    f32 var2 = sinf(mDegToHalfRad(angle)) / (cosf(mDegToHalfRad(angle)) * g_CurrentPlayer->c_halfheight);
     f32 var3 = (var2 * value2 * g_CurrentPlayer->c_halfheight) / g_CurrentPlayer->c_halfwidth;
     y = (g_CurrentPlayer->c_halfheight - (in->y - g_CurrentPlayer->c_screentop)) * var2;
     x = ((in->x - g_CurrentPlayer->c_screenleft) - g_CurrentPlayer->c_halfwidth) * var3;
@@ -700,9 +700,9 @@ void sub_GAME_7F078140(struct coord3d *in, struct coord3d *out, f32 value1, f32 
  * 
  * Address 0x7F078258.
  */
-void sub_GAME_7F078258(struct coord3d *in, struct coord3d *out, f32 angle, f32 value)
+void sub_GAME_7F078258(coord3d *in, coord3d *out, f32 angle, f32 value)
 {
-    f32 var1 = (cosf(DEG2RAD(angle)) * g_CurrentPlayer->c_halfheight) / (sinf(DEG2RAD(angle)) * in->f[2]);
+    f32 var1 = (cosf(mDegToHalfRad(angle)) * g_CurrentPlayer->c_halfheight) / (sinf(mDegToHalfRad(angle)) * in->f[2]);
     f32 var2 = (var1 * g_CurrentPlayer->c_halfwidth) / (value * g_CurrentPlayer->c_halfheight);
 
     out->f[1] = (in->f[1] * var1) + (g_CurrentPlayer->c_screentop + g_CurrentPlayer->c_halfheight);
@@ -832,28 +832,28 @@ f32 getPlayer_c_perspaspect(void)
     return g_CurrentPlayer->c_perspaspect;
 }
 
-void getPlayer_c_cameratopnorm(struct coord3d *out)
+void getPlayer_c_cameratopnorm(coord3d *out)
 {
     out->x = (g_CurrentPlayer->c_cameratopnorm).x;
     out->y = (g_CurrentPlayer->c_cameratopnorm).y;
     out->z = (g_CurrentPlayer->c_cameratopnorm).z;
 }
 
-void getPlayer_c_cameratopnorm_inverted_y(struct coord3d *out)
+void getPlayer_c_cameratopnorm_inverted_y(coord3d *out)
 {
     out->x = (g_CurrentPlayer->c_cameratopnorm).x;
     out->y = -(g_CurrentPlayer->c_cameratopnorm).y;
     out->z = (g_CurrentPlayer->c_cameratopnorm).z;
 }
 
-void getPlayer_c_cameraleftnorm(struct coord3d *out)
+void getPlayer_c_cameraleftnorm(coord3d *out)
 {
     out->x = (g_CurrentPlayer->c_cameraleftnorm).x;
     out->y = (g_CurrentPlayer->c_cameraleftnorm).y;
     out->z = (g_CurrentPlayer->c_cameraleftnorm).z;
 }
 
-void getPlayer_c_cameraleftnorm_inverted_x(struct coord3d *out)
+void getPlayer_c_cameraleftnorm_inverted_x(coord3d *out)
 {
     out->x = -(g_CurrentPlayer->c_cameraleftnorm).x;
     out->y = (g_CurrentPlayer->c_cameraleftnorm).y;
@@ -1127,35 +1127,35 @@ glabel sub_GAME_7F0785DC
 )
 #endif
 
-void sub_GAME_7F078950(struct coord3d *arg0, f32 *arg1) {
+void sub_GAME_7F078950(coord3d *arg0, f32 *arg1) {
     arg0->x = flt_CODE_bss_80079940.x;
     arg0->y = flt_CODE_bss_80079940.y;
     arg0->z = flt_CODE_bss_80079940.z;
     *arg1 = flt_CODE_bss_8007994C;
 }
 
-void sub_GAME_7F078980(struct coord3d *arg0, f32 *arg1) {
+void sub_GAME_7F078980(coord3d *arg0, f32 *arg1) {
     arg0->x = flt_CODE_bss_80079950.x;
     arg0->y = flt_CODE_bss_80079950.y;
     arg0->z = flt_CODE_bss_80079950.z;
     *arg1 = flt_CODE_bss_8007995C;
 }
 
-void sub_GAME_7F0789B0(struct coord3d *arg0, f32 *arg1) {
+void sub_GAME_7F0789B0(coord3d *arg0, f32 *arg1) {
     arg0->x = flt_CODE_bss_80079960.x;
     arg0->y = flt_CODE_bss_80079960.y;
     arg0->z = flt_CODE_bss_80079960.z;
     *arg1 = flt_CODE_bss_8007996C;
 }
 
-void sub_GAME_7F0789E0(struct coord3d *arg0, f32 *arg1) {
+void sub_GAME_7F0789E0(coord3d *arg0, f32 *arg1) {
     arg0->x = flt_CODE_bss_80079970.x;
     arg0->y = flt_CODE_bss_80079970.y;
     arg0->z = flt_CODE_bss_80079970.z;
     *arg1 = flt_CODE_bss_8007997C;
 }
 
-void sub_GAME_7F078A10(struct coord3d *arg0, f32 *arg1) {
+void sub_GAME_7F078A10(coord3d *arg0, f32 *arg1) {
     arg0->x = g_CurrentPlayer->field_10D4->m[2][0];
     arg0->y = g_CurrentPlayer->field_10D4->m[2][1];
     arg0->z = g_CurrentPlayer->field_10D4->m[2][2];
@@ -1174,7 +1174,7 @@ void sub_GAME_7F078A10(struct coord3d *arg0, f32 *arg1) {
  * 
  * Address 0x7F078A58.
  */
-s32 sub_GAME_7F078A58(struct coord3d *vec_scale, f32 norm_scale)
+s32 sub_GAME_7F078A58(coord3d *vec_scale, f32 norm_scale)
 {
     if (flt_CODE_bss_80079980 + norm_scale < (g_CurrentPlayer->field_10D4->m[2][0] * vec_scale->f[0]) + (g_CurrentPlayer->field_10D4->m[2][1] * vec_scale->f[1]) + (g_CurrentPlayer->field_10D4->m[2][2] * vec_scale->f[2]))
     {
@@ -1207,7 +1207,7 @@ s32 sub_GAME_7F078A58(struct coord3d *vec_scale, f32 norm_scale)
 
 
 #ifdef NONMATCHING
-s32 sub_GAME_7F078BF4(struct coord3d *arg0, f32 arg1, f32 *arg2)
+s32 sub_GAME_7F078BF4(coord3d *arg0, f32 arg1, f32 *arg2)
 {
     f32 temp_f2;
     f32 temp_f12;
@@ -2467,8 +2467,8 @@ void bondviewPlayerSpawnRelated(void)
 
     if (getPlayerCount() >= 2)
     {
-        draw_item_in_hand_has_more_ammo(LEFT_HAND, starting_left_weapon);
-        draw_item_in_hand_has_more_ammo(RIGHT_HAND, starting_right_weapon);
+        draw_item_in_hand_has_more_ammo(GUNLEFT, starting_left_weapon);
+        draw_item_in_hand_has_more_ammo(GUNRIGHT, starting_right_weapon);
 
         if (g_CurrentPlayer->ptr_char_objectinstance == NULL)
         {
@@ -2513,7 +2513,7 @@ void currentPlayerSetField00(s32 value) {
  * 
  * Address 0x7F079A60.
  */
-void bondviewUpdateCurrentPlayerPosition(struct coord3d *pos, struct coord3d *pos2, struct coord3d *offset, StandTile *tile, struct coord3d *arg4)
+void bondviewUpdateCurrentPlayerPosition(coord3d *pos, coord3d *pos2, coord3d *offset, StandTile *tile, coord3d *arg4)
 {
     StandTile *sp34;
     StandTile *sp30;
@@ -9877,7 +9877,7 @@ s32 get_ptr_for_players_tank(void)
  * 
  * Address 0x7F07CEB0.
  */
-void bondviewSet3dCoord7F07CEB0(struct coord3d *arg0)
+void bondviewSet3dCoord7F07CEB0(coord3d *arg0)
 {
     f32 f;
 
@@ -9917,10 +9917,10 @@ f32 bondviewGet8003646CRad(void)
 
 
 
-s32 cal_player_collision(struct coord3d *arg0, void *arg1);
+s32 cal_player_collision(coord3d *arg0, void *arg1);
 
 #ifdef NONMATCHING
-s32 cal_player_collision(struct coord3d *arg0, void *arg1) {
+s32 cal_player_collision(coord3d *arg0, void *arg1) {
     ? sp3C;
     s32 sp7C;
     ? sp80;
@@ -10273,7 +10273,7 @@ glabel cal_player_collision
  * 
  * Address 0x7F07D234.
  */
-s32 bondviewUpdatePlayerCollision(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *arg2)
+s32 bondviewUpdatePlayerCollision(coord3d *arg0, coord3d *arg1, coord3d *arg2)
 {
     s32 sp1C;
 
@@ -14702,8 +14702,8 @@ f32 bondviewYPositionRelated(StandTile *arg0, f32 arg1, f32 arg2)
 
     if (ptr_playerstank != 0)
     {
-        ObjectRecord * obj = ((struct PropRecord *)ptr_playerstank)->obj;
-        struct PropRecord *p = obj->prop;
+        ObjectRecord * obj = ((PropRecord *)ptr_playerstank)->obj;
+        PropRecord *p = obj->prop;
 
         ret = stanGetPositionYValue(p->stan, p->pos.x, p->pos.z);
             
@@ -31404,8 +31404,8 @@ void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2)
     {
         if (g_CurrentPlayer->field_424 == 0)
         {
-            draw_item_in_hand_has_more_ammo(LEFT_HAND, 0);
-            draw_item_in_hand_has_more_ammo(RIGHT_HAND, 0);
+            draw_item_in_hand_has_more_ammo(GUNLEFT, 0);
+            draw_item_in_hand_has_more_ammo(GUNRIGHT, 0);
 
             if (0)
             {
@@ -31862,7 +31862,7 @@ void store_BONDdata_curpos_to_previous(void) {
     g_CurrentPlayer->previous_model_pos.f[0] = g_CurrentPlayer->current_model_pos.f[0];
     g_CurrentPlayer->previous_model_pos.f[1] = g_CurrentPlayer->current_model_pos.f[1];
     g_CurrentPlayer->previous_model_pos.f[2] = g_CurrentPlayer->current_model_pos.f[2];
-    matrix_4x4_rotate_vector_in_place(currentPlayerGetMatrix10CC(), g_CurrentPlayer->previous_model_pos.f);
+    matrix_4x4_rotate_vector_in_place(currentPlayerGetMatrix10CC(), &g_CurrentPlayer->previous_model_pos);
 }
 
 #ifdef NONMATCHING
@@ -35699,7 +35699,7 @@ f32 bondviewGetPlayerDuckingHeightRelated(struct player *player)
 
 
 
-struct PropRecord* get_curplayer_positiondata(void) {
+PropRecord* get_curplayer_positiondata(void) {
     return g_CurrentPlayer->prop;
 }
 
@@ -35732,8 +35732,8 @@ void bondviewKillCurrentPlayer(void)
             D_8003648C = 1;
         }
 
-        draw_item_in_hand_has_more_ammo(LEFT_HAND, 0);
-        draw_item_in_hand_has_more_ammo(RIGHT_HAND, 0);
+        draw_item_in_hand_has_more_ammo(GUNLEFT, 0);
+        draw_item_in_hand_has_more_ammo(GUNRIGHT, 0);
 
         if ((getMissiontimer() - g_CurrentPlayer->field_29F4) < g_playerPerm->shortest_inning)
         {
@@ -36641,7 +36641,7 @@ u8 bondviewGetCurrentPlayersRoom(void)
 /**
  * Address 0x7F089FD4.
  */
-struct coord3d *bondviewGetCurrentPlayersPosition(void)
+coord3d *bondviewGetCurrentPlayersPosition(void)
 {
     if (g_CurrentPlayer->unknown == 1)
     {
@@ -36653,7 +36653,7 @@ struct coord3d *bondviewGetCurrentPlayersPosition(void)
 
 
 
-struct coord3d * bondviewGetCurrentPlayersPosition3(void)
+coord3d * bondviewGetCurrentPlayersPosition3(void)
 {
 
     if (g_CurrentPlayer->unknown == 1)
@@ -36672,7 +36672,7 @@ int get_BONDdata_field408(void) {
 /**
  * Address 0x7F08A03C.
  */
-void bondviewUpdateGuardTankFlagsRelated(struct PropRecord *arg0, s32 flags)
+void bondviewUpdateGuardTankFlagsRelated(PropRecord *arg0, s32 flags)
 {
     s32 sp1C;
 
@@ -36698,7 +36698,7 @@ void bondviewUpdateGuardTankFlagsRelated(struct PropRecord *arg0, s32 flags)
 /**
  * Address 0x7F08A0B0.
  */
-void bondviewGetPropHeightRelatedValues(struct PropRecord *arg0, struct rect4f **field_B0, s32 *arg2, f32 *height_related, f32 *collision)
+void bondviewGetPropHeightRelatedValues(PropRecord *arg0, struct rect4f **field_B0, s32 *arg2, f32 *height_related, f32 *collision)
 {
     s32 temp_v0;
 
@@ -36755,7 +36755,7 @@ void bondviewUpdatePlayerCollisionBounds(void)
 /**
  * Address 0x7F08A274.
  */
-void bondviewCollisionRadiusRelated(struct PropRecord* arg0, f32 *arg1, f32 *arg2, f32 *arg3)
+void bondviewCollisionRadiusRelated(PropRecord* arg0, f32 *arg1, f32 *arg2, f32 *arg3)
 {
     struct player **temp_v1;
 

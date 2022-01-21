@@ -1,9 +1,9 @@
 #ifndef _BG_H_
 #define _BG_H_
-#include "ultra64.h"
-#include "bondgame.h"
-#include "bondtypes.h"
-#include "bondconstants.h"
+#include <ultra64.h>
+#include <bondgame.h>
+#include <bondtypes.h>
+#include <bondconstants.h>
 
 struct levelentry
 {
@@ -56,7 +56,7 @@ typedef struct bg_portal_entry
 {
     u8 numPoints;
     u8 padding[3];
-    struct coord3d point;
+    coord3d point;
 } bg_portal_entry;
 
 typedef struct bg_portal_data_entry
@@ -73,7 +73,7 @@ typedef struct bg_room_data
     void* pPointTableBin;
     void* pPriMappingBin;
     void* pSecMappingBin;
-    struct coord3d pos;
+    coord3d pos;
 } bg_room_data;
 
 extern s32 MaxNumRooms;

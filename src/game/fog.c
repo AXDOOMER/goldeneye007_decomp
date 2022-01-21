@@ -1,11 +1,11 @@
-#include "ultra64.h"
+#include <ultra64.h>
 
-#include "bondtypes.h"
-#include "bondconstants.h"
-#include "fr.h"
-#include "game/bg.h"
-#include "game/bondview.h"
-#include "game/fog.h"
+#include <bondtypes.h>
+#include <bondconstants.h>
+#include "../fr.h"
+#include "bg.h"
+#include "bondview.h"
+#include "fog.h"
 
 // internal struct
 struct FogDetails
@@ -1105,11 +1105,11 @@ Gfx *fogRenderClearFogMode(Gfx *gdl)
 /**
  * Address 0x7F0BB2C8.
 */
-s32 fogPositionIsVisibleThroughFog(struct coord3d *pos, f32 range)
+s32 fogPositionIsVisibleThroughFog(coord3d *pos, f32 range)
 {
-    struct coord3d sp24;
+    coord3d sp24;
     f32 ff;
-    struct coord3d *player_pos;
+    coord3d *player_pos;
     Mtxf *player_mtx;
 
     if (g_FogSkyIsEnabled == 0)

@@ -1,34 +1,34 @@
-#include "ultra64.h"
-#include "include/math.h"
-#include "include/PR/libaudio.h"
-#include "assets/GlobalImageTable.h"
-#include "bondgame.h"
-#include "boss.h"
-#include "snd.h"
-#include "music.h"
-#include "memp.h"
-#include "game/bg.h"
-#include "game/bondview.h"
-#include "game/bondinv.h"
-#include "game/chr.h"
-#include "game/chrai.h"
-#include "game/chrlv.h"
-#include "game/chrobjdata.h"
-#include "game/chrobjhandler.h"
-#include "game/fog.h"
-#include "game/lvl.h"
-#include "game/lvl_text.h"
-#include "game/math_floor.h"
-#include "game/math_asinfacosf.h"
-#include "game/math_atan2f.h"
-#include "game/objecthandler.h"
-#include "game/quaternion.h"
+#include <ultra64.h>
+#include <math.h>
+#include <PR/libaudio.h>
+#include "../../assets/GlobalImageTable.h"
+#include <bondgame.h>
+#include <boss.h>
+#include <snd.h>
+#include <music.h>
+#include <memp.h>
+#include "bg.h"
+#include "bondview.h"
+#include "bondinv.h"
+#include "chr.h"
+#include "chrai.h"
+#include "chrlv.h"
+#include "chrobjdata.h"
+#include "chrobjhandler.h"
+#include "fog.h"
+#include "lvl.h"
+#include "lvl_text.h"
+#include "math_floor.h"
+#include "math_asinfacosf.h"
+#include "math_atan2f.h"
+#include "objecthandler.h"
+#include "quaternion.h"
 
 s32 alarm_timer = 0;
 s32 *ptr_alarm_sfx = 0;
 f32 toxic_gas_sound_timer = 0.0;
 s32 activate_gas_sound_timer = FALSE;
-struct coord3d D_80030AD0 = { 0.0f, 0.0f, 0.0f };
+coord3d D_80030AD0 = { 0.0f, 0.0f, 0.0f };
 s32 D_80030ADC = 0;
 f32 D_80030AE0 = 0.0f;
 ALSoundState *ptr_gas_sound = NULL;
@@ -1304,7 +1304,7 @@ glabel sub_GAME_7F03FE98
 #ifdef NONMATCHING
 s32 sub_GAME_7F03FF60(ObjectRecord *arg0)
 {
-    if ((arg0->head.hidden2 & 0x80) == 0)
+    if ((arg0->state & 0x80) == 0)
     {
         return (s32) ((arg0->field_70 * 3.0f) / (f32)(arg0->damage));
     }
@@ -1349,7 +1349,7 @@ glabel sub_GAME_7F03FF60
 
 s32 do_something_if_object_destroyed(ObjectRecord *arg0)
 {
-    if ((arg0->head.hidden2 & 0x80) == 0)
+    if ((arg0->state & 0x80) == 0)
     {
         return 0;
     }
@@ -27438,7 +27438,7 @@ Gfx *chrobjRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
         return gdl;
     }
 
-    if ((u8) obj->head.type != PROPDEF_TINTED_GLASS)
+    if ((u8) obj->type != PROPDEF_TINTED_GLASS)
     {
         temp_f0 = chrobjFogVisRangeRelated(prop, getinstsize(obj->model));
 
@@ -27493,11 +27493,11 @@ Gfx *chrobjRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
     {
         jlist.unk30 = 9;
 
-        if (obj->head.type == PROPDEF_TINTED_GLASS)
+        if (obj->type == PROPDEF_TINTED_GLASS)
         {
             jlist.unk34 = ((struct TintedGlassRecord*)obj)->unk88 << 8;
         }
-        else if ((obj->head.type == PROPDEF_DOOR) && ((((struct DoorRecord*)obj)->doorFlags & 2) != 0))
+        else if ((obj->type == PROPDEF_DOOR) && ((((struct DoorRecord*)obj)->doorFlags & 2) != 0))
         {
             jlist.unk34 = ((struct DoorRecord*)obj)->unkbe << 8;
         }
@@ -32967,7 +32967,7 @@ glabel check_if_destroyable_not_invincible
 /**
  * Address 0x7F04E0CC.
 */
-void chrobjMaybeDetonateObjectIfFlags(ObjectRecord *arg0, f32 arg1, struct coord3d *arg2, ITEM_IDS item, s32 arg4)
+void chrobjMaybeDetonateObjectIfFlags(ObjectRecord *arg0, f32 arg1, coord3d *arg2, ITEM_IDS item, s32 arg4)
 {
     if ((arg0->flags2 & 0x4000) == 0)
     {
@@ -34379,8 +34379,7 @@ void append_text_picked_up(u8 *buffer,u8 * param2,u8 * param3)
 
 
 
-void append_text_ammo_amount_word(u8 *buffer,AMMOTYPES ammotype,u32 amount)
-
+void append_text_ammo_amount_word(u8 *buffer, AMMOTYPE ammotype,u32 amount)
 {
     u8 *textfiletext;
     
@@ -34449,7 +34448,7 @@ void append_text_ammo_amount_word(u8 *buffer,AMMOTYPES ammotype,u32 amount)
 
 
 #ifdef NONMATCHING//
-void apped_text_ammotype(u8 *buffer,AMMOTYPES ammotype,u32 amount)
+void apped_text_ammotype(u8 *buffer,AMMOTYPE ammotype,u32 amount)
 {
     u8 *textfiletext;
     
@@ -34867,7 +34866,7 @@ pluralize_multiples:
 
 
 
-void set_sound_effect_for_ammo_collection(AMMOTYPES ammotype)
+void set_sound_effect_for_ammo_collection(AMMOTYPE ammotype)
 
 {
     switch(ammotype) {
@@ -34946,7 +34945,7 @@ void set_sound_effect_for_weapontype_collection(ITEM_IDS weapontype)
 extern char * D_800529D0;
 extern char * D_800529D4;
 
-void prepare_ammo_type_collection_text(u8 *finaltext, AMMOTYPES ammotype, u32 quantity)
+void prepare_ammo_type_collection_text(u8 *finaltext, AMMOTYPE ammotype, u32 quantity)
 {
     *finaltext = 0;
     if (j_text_trigger != 0)
@@ -35165,7 +35164,7 @@ glabel display_text_when_ammo_collected
 
 
 
-void add_ammo_to_inventory(AMMOTYPES ammotype,int amount,int doplaysound,int dodisplaytext)
+void add_ammo_to_inventory(AMMOTYPE ammotype,int amount,int doplaysound,int dodisplaytext)
 {
     int curammo;
     int maxammo;
@@ -35428,7 +35427,7 @@ void generate_language_specific_text_for_weapon(char *finalstring,ITEM_IDS itemt
 {
     u32 morethan2players;
     //u32 numplayers;
-    //AMMOTYPES ammotype;
+    //AMMOTYPE ammotype;
     //char *textfiletext;
     //size_t strlength;
     
@@ -43893,7 +43892,7 @@ s32 updateDoorDisplacement(DoorRecord* door)
 {
     int isMoving = 0;
 
-    if (door->state == DOORSTATE_OPENING)
+    if (door->openstate == DOORSTATE_OPENING)
     {
         chrobjApplySpeed(&door->openPosition, door->maxFrac, &door->speed, door->accel, door->decel, door->maxSpeed);
 
@@ -43911,7 +43910,7 @@ s32 updateDoorDisplacement(DoorRecord* door)
 
         isMoving = 1;
     }
-    else if (door->state == DOORSTATE_CLOSING)
+    else if (door->openstate == DOORSTATE_CLOSING)
     {
         chrobjApplySpeed(&door->openPosition, 0.0f, &door->speed, door->accel, door->decel, door->maxSpeed);
 

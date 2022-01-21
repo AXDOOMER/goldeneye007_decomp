@@ -1,10 +1,10 @@
-#include "ultra64.h"
-#include "bondtypes.h"
-#include "game/cheat_buttons.h"
-#include "game/chr.h"
-#include "game/chr_b.h"
-#include "game/chrobjdata.h"
-#include "game/objecthandler.h"
+#include <ultra64.h>
+#include <bondtypes.h>
+#include "cheat_buttons.h"
+#include "chr.h"
+#include "chr_b.h"
+#include "chrobjdata.h"
+#include "objecthandler.h"
 
 s32 load_body_head_if_not_loaded(s32 model)
 {

@@ -1,30 +1,30 @@
 #include "include/os_extension.h"
 #include "assets/GlobalImageTable.h"
-#include "ultra64.h"
-#include "bondgame.h"
-#include "bondconstants.h"
-#include "boss.h"
-#include "fr.h"
+#include <ultra64.h>
+#include <bondgame.h>
+#include <bondconstants.h>
+#include "../boss.h"
+#include "../fr.h"
 #include "lvl_text.h"
-#include "joy.h"
-#include "music.h"
-#include "random.h"
-#include "snd.h"
-#include "game/bondview.h"
-#include "game/chr.h"
-#include "game/chr_b.h"
-#include "game/chrlv.h"
-#include "game/cheat_buttons.h"
-#include "game/chrobjdata.h"
-#include "game/file2.h"
-#include "game/front.h"
-#include "game/image_bank.h"
-#include "game/lvl.h"
-#include "game/mp_weapon.h"
-#include "game/math_floor.h"
-#include "game/player.h"
-#include "game/spectrum.h"
-#include "game/textrelated.h"
+#include "../joy.h"
+#include "../music.h"
+#include "../random.h"
+#include "../snd.h"
+#include "bondview.h"
+#include "chr.h"
+#include "chr_b.h"
+#include "chrlv.h"
+#include "cheat_buttons.h"
+#include "chrobjdata.h"
+#include "file2.h"
+#include "front.h"
+#include "image_bank.h"
+#include "lvl.h"
+#include "mp_weapon.h"
+#include "math_floor.h"
+#include "player.h"
+#include "spectrum.h"
+#include "textrelated.h"
 
 // lvl.c checks for enabled cheats up to the "invalid" index of 0x4b (=75), which
 // is different from the 80 here ...
@@ -101,7 +101,7 @@ f32 flt_CODE_bss_80069618;
 //CODE.bss:8006961C
 f32 flt_CODE_bss_8006961C;
 //CODE.bss:80069620
-struct coord3d dword_CODE_bss_80069620[0x4];
+coord3d dword_CODE_bss_80069620[0x4];
 
 //CODE.bss:80069650
 u8 cheat_available[CHEATS_TRACKED];
@@ -324,7 +324,7 @@ u32 D_8002AAEC = 0;
 u32 D_8002AAF0 = 0;
 u32 D_8002AAF4 = 0;
 u32 D_8002AAF8 = 0;
-struct coord3d D_8002AAFC = {0};
+coord3d D_8002AAFC = {0};
 //u32 D_8002AB00 = 0;
 //u32 D_8002AB04 = 0;
 u32 D_8002AB08 = 0;
@@ -1789,7 +1789,7 @@ void constructor_menu17_switchscreens(Gfx * DL)
 #ifdef NONMATCHING
 void init_menu01_nintendo(void)
 {
-    struct coord3d local_c;
+    coord3d local_c;
 
     menu_timer = 0;
     local_c.x = D_8002AAFC.x;

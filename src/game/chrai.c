@@ -1,21 +1,21 @@
-#include "ultra64.h"
-#include "bondgame.h"
-#include "bondtypes.h"
-#include "boss.h"
-#include "snd.h"
-#include "music.h"
-#include "game/bg.h"
-#include "game/bondview.h"
-#include "game/chr.h"
-#include "game/chrai.h"
-#include "game/chrlv.h"
-#include "game/chrobjhandler.h"
-#include "game/gun.h"
-#include "game/lvl_text.h"
-#include "game/math_floor.h"
-#include "game/math_ceil.h"
-#include "game/math_atan2f.h"
-#include "game/player.h"
+#include <ultra64.h>
+#include <bondgame.h>
+#include <bondtypes.h>
+#include <boss.h>
+#include <snd.h>
+#include <music.h>
+#include "bg.h"
+#include "bondview.h"
+#include "chr.h"
+#include "chrai.h"
+#include "chrlv.h"
+#include "chrobjhandler.h"
+#include "gun.h"
+#include "lvl_text.h"
+#include "math_floor.h"
+#include "math_ceil.h"
+#include "math_atan2f.h"
+#include "player.h"
 
 // bss
 /**
@@ -32,7 +32,7 @@ u32 num_obj_position_data_entries;
 /**
  * Address 0x80069C38.
 */
-struct PropRecord pos_data_entry[POS_DATA_ENTRY_LEN];
+PropRecord pos_data_entry[POS_DATA_ENTRY_LEN];
 
 //CODE.bss:80071618
 s16 *ptr_room_lookup_buffer_maybe;
@@ -45,13 +45,13 @@ struct unk_8007161c *dword_CODE_bss_8007161C;
  * 
  * Address 0x80071620.
 */
-struct PropRecord *g_OnScreenPropList[ONSCREEN_PROP_LIST_LEN];
+PropRecord *g_OnScreenPropList[ONSCREEN_PROP_LIST_LEN];
 
 /**
  * Pointer to last onscreen prop.
  * Address 0x80071DF0.
 */
-struct PropRecord **g_LastOnScreenProp;
+PropRecord **g_LastOnScreenProp;
 
 /**
  * Count of onscreen props.
@@ -151,7 +151,7 @@ struct object_animation_controller g_TaserAnimController;
 s32 bss_80075CFC;
 
 //CODE.bss:80075D00
-struct path_table_alt * ptr_setup_path_tbl;
+waypoint * ptr_setup_path_tbl;
 //CODE.bss:80075D04
 void * ptr_setup_path_link;
 //CODE.bss:80075D08
@@ -163,9 +163,9 @@ void * ptr_setup_path_sets;
 //CODE.bss:80075D14
 void * ptr_setup_actions;
 //CODE.bss:80075D18
-struct pad * ptr_0xxxpresets;
+PadRecord * ptr_0xxxpresets;
 //CODE.bss:80075D1C
-struct pad3d * ptr_2xxxpresets;
+BoundPadRecord * ptr_2xxxpresets;
 //CODE.bss:80075D20
 u32 dword_CODE_bss_80075D20;
 //CODE.bss:80075D24
@@ -187,9 +187,9 @@ s32 D_80030A90 = 0;
 s32 D_80030A94 = 0;
 s32 D_80030A98 = 0;
 s32 D_80030A9C = 0;
-struct PropRecord *ptr_obj_pos_list_current_entry = 0;
-struct PropRecord *ptr_obj_pos_list_first_entry = 0;
-struct PropRecord *ptr_obj_pos_list_final_entry = 0;
+PropRecord *ptr_obj_pos_list_current_entry = 0;
+PropRecord *ptr_obj_pos_list_first_entry = 0;
+PropRecord *ptr_obj_pos_list_final_entry = 0;
 f32 difficulty = 1.0;
 s32 D_80030AB0 = 0;
 s32 D_80030AB4 = 0;
@@ -20103,7 +20103,7 @@ void chraiUpdateOnscreenPropCount(void)
     s32 i;
     s32 j;
     s32 count;
-    struct PropRecord *prop;
+    PropRecord *prop;
     s32 phi_a0;
     f32 phi_f12;
 
@@ -20113,7 +20113,7 @@ void chraiUpdateOnscreenPropCount(void)
 
     for (; prop != NULL; prop = prop->prev)
     {
-        if ((prop->flags & (PROPFLAG4 | PROPFLAG_ONSCREEN)) == (PROPFLAG4 | PROPFLAG_ONSCREEN))
+        if ((prop->flags & (PROPFLAG_00000004 | PROPFLAG_ONSCREEN)) == (PROPFLAG_00000004 | PROPFLAG_ONSCREEN))
         {
             g_OnScreenPropList[count] = prop;
             count++;
@@ -20128,7 +20128,7 @@ void chraiUpdateOnscreenPropCount(void)
         // removed
     }
 
-    g_LastOnScreenProp = (struct PropRecord *)&g_OnScreenPropList[count];
+    g_LastOnScreenProp = (PropRecord *)&g_OnScreenPropList[count];
     
     for (i=0; i<count; i++)
     {
@@ -20177,7 +20177,7 @@ glabel set_stateflag_0x04_for_posdata
 
 
 
-void propHide(struct PropRecord *prop)
+void propHide(PropRecord *prop)
 {
     prop->flags = prop->flags & 0xfffb;
 }
@@ -20188,7 +20188,7 @@ void propHide(struct PropRecord *prop)
 
 
 
-struct PropRecord *get_ptr_obj_pos_list_current_entry(void)
+PropRecord *get_ptr_obj_pos_list_current_entry(void)
 {
     return ptr_obj_pos_list_current_entry;
 }
@@ -20237,7 +20237,7 @@ glabel remove_last_obj_pos_data_entry
 
 
 
-void propFree(struct PropRecord *prop)
+void propFree(PropRecord *prop)
 {
     prop->prev = ptr_obj_pos_list_final_entry;
     prop->next = 0x0;
@@ -20444,7 +20444,7 @@ Gfx *chraiResolveRenderProp(Gfx * arg0, PropRecord *arg1, s32 arg2)
     {
         arg0 = chrobjRenderProp(arg1, arg0, arg2);
     }
-    else if (temp_v0 == PROP_TYPE_EXPLOSTION)
+    else if (temp_v0 == PROP_TYPE_EXPLOSION)
     {
         arg0 = unk09c250RenderPropExplosion(arg1, arg0);
     }
@@ -20479,8 +20479,8 @@ Gfx *chraiResolveRenderProp(Gfx * arg0, PropRecord *arg1, s32 arg2)
 Gfx *sub_GAME_7F03A6F4(Gfx *arg0, s32 roomid, s32 arg2)
 {
     s32 flag;
-    struct PropRecord **pp;
-    struct PropRecord *prop;
+    PropRecord **pp;
+    PropRecord *prop;
     s32 i;
     s32* rp;
     s32 unused2;
@@ -22560,7 +22560,7 @@ void chraiCheckUseHeldItem(s32 hand)
         }
         else if (item_id == ITEM_SHOTGUN || item_id == ITEM_AUTOSHOT)
         {
-            inc_curplayer_hitcount_with_weapon(item_id, SHOTS_FIRED);
+            inc_curplayer_hitcount_with_weapon(item_id, SHOT_REGISTER_TOTAL);
 
             for (i=0; i<NUMBER_SHOTGUN_BULLETS; i++)
             {
@@ -22577,7 +22577,7 @@ void chraiCheckUseHeldItem(s32 hand)
         }
         else
         {
-            inc_curplayer_hitcount_with_weapon(item_id, SHOTS_FIRED);
+            inc_curplayer_hitcount_with_weapon(item_id, SHOT_REGISTER_TOTAL);
             chraiDefaultWeaponFireHandler(hand);
         }
     }
@@ -22592,8 +22592,8 @@ void chraiCheckUseHeldItem(s32 hand)
 */
 void chraiCheckUseHeldItems(void)
 {
-    chraiCheckUseHeldItem(RIGHT_HAND);
-    chraiCheckUseHeldItem(LEFT_HAND);
+    chraiCheckUseHeldItem(GUNRIGHT);
+    chraiCheckUseHeldItem(GUNLEFT);
 }
 
 
@@ -23336,7 +23336,7 @@ glabel determing_type_of_object_and_detection
 */
 void chraiGetPropRoomIds(PropRecord *self, s32 *roomids)
 {
-    struct StandTile *stan;
+    StandTile *stan;
     s32 i;
 
     stan = self->stan;
@@ -23434,7 +23434,7 @@ void chraiGetCollisionBoundsWithoutY(PropRecord *arg0, struct rect4f **arg1, s32
 /**
  * Address 0x7F03CCD8.
 */
-s32 sub_GAME_7F03CCD8(struct coord3d *arg0, struct rect4f *arg1, s32 arg2)
+s32 sub_GAME_7F03CCD8(coord3d *arg0, struct rect4f *arg1, s32 arg2)
 {
     f32 diff;
     s32 i;
@@ -25039,7 +25039,7 @@ Main missing these kinds of instructions:
 So it looks like a conversion from u32 to u16, but we're reading a u8?
 I tried u32 room but no joy.
 */
-void sub_GAME_7F03E210(struct PropRecord *posData)
+void sub_GAME_7F03E210(PropRecord *posData)
 {
   u8 room;
   u8 *roomIter;

@@ -1,4 +1,4 @@
-#include "ultra64.h"
+#include <ultra64.h>
 #include "game/file.h"
 #include "game/file2.h"
 #include "game/front.h"
@@ -193,7 +193,7 @@ void store_favorite_weapon_current_player(u32 right,u32 left)
   u32 playerNum;
 
   playerNum = get_cur_playernum();
-  array_favweapon[playerNum][RIGHT_HAND] = right;
-  array_favweapon[playerNum][LEFT_HAND] = left;
+  array_favweapon[playerNum][GUNRIGHT] = right;
+  array_favweapon[playerNum][GUNLEFT] = left;
 }
 

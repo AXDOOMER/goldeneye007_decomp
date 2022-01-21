@@ -1,6 +1,6 @@
 #ifndef _BONDGAME_H_
 #define _BONDGAME_H_
-#include "ultra64.h"
+#include <ultra64.h>
 
 extern u32 *_codeSegmentStart;
 extern u32 *_codeSegmentEnd;
@@ -31,8 +31,8 @@ extern u8 sp_main[];
 extern u8 sp_audi[];
 extern u8 sp_debug[];
 
-#include "bondaicommands.h" // game ai commands
-#include "bondconstants.h" // game constants
-#include "bondtypes.h" // game structs and types
+#include <bondaicommands.h> // game ai commands
+#include <bondconstants.h>  // game constants
+#include <bondtypes.h>      // game structs and types
 
 #endif

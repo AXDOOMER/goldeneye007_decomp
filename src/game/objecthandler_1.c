@@ -1,14 +1,14 @@
-#include "ultra64.h"
-#include "memp.h"
-#include "rmon.h"
-#include "game/chr.h"
-#include "game/objecthandler.h"
-#include "game/math_floor.h"
-#include "game/math_ceil.h"
-#include "game/quaternion.h"
-#include "game/math_asinfacosf.h"
-#include "game/math_unk_05A9E0.h"
-#include "game/chrobjdata.h"
+#include <ultra64.h>
+#include "../memp.h"
+#include "../rmon.h" /*<PR/rmon.h>*/
+#include "chr.h"
+#include "objecthandler.h"
+#include "math_floor.h"
+#include "math_ceil.h"
+#include "quaternion.h"
+#include "math_asinfacosf.h"
+#include "math_unk_05A9E0.h"
+#include "chrobjdata.h"
 
 
 // forward declarations
@@ -781,7 +781,7 @@ void *extract_id_from_object_structure_microcode(Model *Objinst, ModelNode *root
             number = ((ModelNode_HeaderRecord *)root->Data)->number;
             break;
         }
-        case MODELNODE_OPCODE_MODELNODE_DISPLAYLIST_COLLISIONRECORD:
+        case MODELNODE_OPCODE_DISPLAYLIST_COLLISIONRECORD:
         {
             number = ((ModelNode_DisplayList_CollisionRecord *)root->Data)->unknown;
             break;
@@ -2047,7 +2047,7 @@ glabel getinstsize
 
 
 // Also matches with float*s
-void interpolate3dVectors(struct coord3d *v, struct coord3d *w, float k)
+void interpolate3dVectors(coord3d *v, coord3d *w, float k)
 {
   v->f[0] += (w->f[0] - v->f[0]) * k;
   v->f[1] += (w->f[1] - v->f[1]) * k;
