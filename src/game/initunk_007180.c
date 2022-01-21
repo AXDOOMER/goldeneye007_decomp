@@ -1,8 +1,8 @@
-#include "ultra64.h"
-#include "bondconstants.h"
-#include "memp.h"
-#include "game/initunk_007180.h"
-#include "game/unk_0A1DA0.h"
+#include <ultra64.h>
+#include <bondconstants.h>
+#include <memp.h>
+#include "initunk_007180.h"
+#include "unk_0A1DA0.h"
 
 
 

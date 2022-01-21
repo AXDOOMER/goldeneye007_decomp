@@ -1,4 +1,4 @@
-#include "ultra64.h"
+#include <ultra64.h>
 #include "unk_0C0A70.h"
 #include "debugmenu.h"
 

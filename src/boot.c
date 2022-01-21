@@ -1,6 +1,6 @@
 #include <ultra64.h>
 #include "boot.h"
-#include "bondgame.h"
+#include <bondgame.h>
 #include "inflate/inflate.h"
 
 /**

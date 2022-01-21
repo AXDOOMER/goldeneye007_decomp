@@ -2,7 +2,7 @@
 #define _CHR2_H_
 #include <ultra64.h>
 #include <bondgame.h>
-#include "game/chrobjdata.h"
+#include "chrobjdata.h"
 
 // Value is 3, it just needs to be less than MAX_CHRWAYPOINTS
 #define PATH_FINDING_WP_LIMIT (MAX_CHRWAYPOINTS - 3)

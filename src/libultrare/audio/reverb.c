@@ -18,13 +18,13 @@
  * Copyright Laws of the United States.
  *====================================================================*/
 
-#include <libaudio.h>
-#include <ultraerror.h>
-#include "src/libultra/audio/synthInternals.h"
-#include <os.h>
-#include <os_internal.h>
-#include "include/assert.h"
-#include "src/libultra/audio/initfx.h"
+#include <PR/libaudio.h>
+#include <PR/ultraerror.h>
+#include <audio/synthInternals.h>
+#include <PR/os.h>
+#include <PR/os_internal.h>
+#include <assert.h>
+#include <audio/initfx.h>
 
 #define RANGE 2.0
 extern ALGlobals *alGlobals;

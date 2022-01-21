@@ -1,7 +1,7 @@
 #ifndef _QUATERNION_H_
 #define _QUATERNION_H_
 
-#include "ultra64.h"
+#include <ultra64.h>
 
 typedef u16 vec3u[3];
 typedef f32 vec3f[3];

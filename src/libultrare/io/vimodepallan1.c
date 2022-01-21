@@ -1,6 +1,6 @@
-#include <os.h>
-#include <rcp.h>
-#include "src/libultra/io/viint.h"
+#include <PR/os.h>
+#include <PR/rcp.h>
+#include <io/viint.h>
 
 /**
  * Rare implemented their own FPAL mode, which was later added to libultra.

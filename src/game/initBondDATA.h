@@ -1,6 +1,6 @@
 #ifndef _INITBONDDATA_H_
 #define _INITBONDDATA_H_
-#include "ultra64.h"
+#include <ultra64.h>
 
 struct BONDdata_item_control_blocks {
     int BONDdata_item_control_blocks_initdata;

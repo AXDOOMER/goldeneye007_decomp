@@ -1,10 +1,10 @@
-#include "ultra64.h"
-#include "fr.h"
+#include <ultra64.h>
+#include <fr.h>
 #include "dyn.h"
 #include "title.h"
 #include "blood_decrypt.h"
 #include "player.h"
-#include "PR/os.h"
+#include <PR/os.h>
 
 
 u8 die_blood_image_1[] = {

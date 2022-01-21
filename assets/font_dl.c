@@ -1,4 +1,4 @@
-#include "ultra64.h"
+#include <ultra64.h>
 
 Gfx fontDL_0x000[4] = { 
     gsSPClearGeometryMode(G_SHADE |  G_SHADING_SMOOTH |  G_CULL_FRONT |  G_CULL_BACK |  G_FOG |  G_LIGHTING |  G_TEXTURE_GEN |  G_TEXTURE_GEN_LINEAR | G_LOD),

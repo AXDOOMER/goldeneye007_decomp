@@ -1,4 +1,4 @@
-#include "ultra64.h"
+#include <ultra64.h>
 
 #if defined(VERSION_US)
 u32 jchardata_0[] =

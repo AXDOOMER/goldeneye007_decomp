@@ -1,7 +1,7 @@
 #include <ultra64.h>
-#include "../memp.h"
-#include "../fr.h"
-#include "../random.h"
+#include <memp.h>
+#include <fr.h>
+#include <random.h>
 #include "player.h"
 #include "unk_092E50.h"
 #include "bondview.h"

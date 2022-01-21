@@ -1,8 +1,8 @@
 #ifndef _FILE_H_
 #define _FILE_H_
-#include "ultra64.h"
+#include <ultra64.h>
 
-#include "bondconstants.h"
+#include <bondconstants.h>
 
 // unknown/unused struct. Adding so that a definition exists.
 struct save_file { s32* data; };

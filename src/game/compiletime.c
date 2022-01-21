@@ -1,5 +1,5 @@
-#include "ultra64.h"
-#include "game/compiletime.h"
+#include <ultra64.h>
+#include "compiletime.h"
 
 #ifdef VERSION_US
 char *get_compile_time(void) {

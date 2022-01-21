@@ -1,5 +1,5 @@
 #include <ultra64.h>
-#include "../memp.h"
+#include <memp.h>
 #include "../rmon.h" /*<PR/rmon.h>*/
 #include "chr.h"
 #include "objecthandler.h"

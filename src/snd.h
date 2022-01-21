@@ -1,8 +1,8 @@
 #ifndef _SND_H_
 #define _SND_H_
 
-#include "ultra64.h"
-#include "PR/libaudio.h"
+#include <ultra64.h>
+#include <PR/libaudio.h>
 
 #define DELTA_1_MS   1000
 #define DELTA_33_MS 33333

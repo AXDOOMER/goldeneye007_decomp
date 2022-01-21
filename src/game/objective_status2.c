@@ -1,4 +1,4 @@
-#include "ultra64.h"
+#include <ultra64.h>
 
 //D:80032300
 u32 D_80032300 = 0;

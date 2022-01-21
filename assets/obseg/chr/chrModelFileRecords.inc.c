@@ -1,5 +1,5 @@
 struct ChrModelFileRecord c_item_entries[] = {
-    #include "assets/obseg/chr/camguard/chrModelFileRecord.inc.c"
+    #include <assets/obseg/chr/camguard/chrModelFileRecord.inc.c>
     {&greyguard_header, "CgreyguardZ", 1.0, 1.0, 0x1, 0x00, 0x00, 0x00},
     {&oliveguard_header, "ColiveguardZ", 1.0, 1.0, 0x1, 0x00, 0x00, 0x00},
     {&rusguard_header, "CrusguardZ", 1.0, 1.0, 0x1, 0x00, 0x00, 0x00},

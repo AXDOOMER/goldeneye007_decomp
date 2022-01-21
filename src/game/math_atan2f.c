@@ -1,7 +1,12 @@
-#include "ultra64.h"
-#include "../../include/math.h"
-#include "game/math_asinfacosf.h"
-#include "game/math_atan2f.h"
+/**
+* Isnt atan2f a libc file? 
+* there doesnt seem to be any source for it (SDK or IRIX) so maybe part of cc itself?
+*/
+
+#include <ultra64.h>
+#include <math.h>
+#include "math_asinfacosf.h"
+#include "math_atan2f.h"
 
 f32 atan2f(f32 y, f32 x)
 {

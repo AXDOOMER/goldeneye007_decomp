@@ -1,4 +1,4 @@
-#include "ultra64.h"
+#include <ultra64.h>
 #include "c_data_filler.h"
 
 //this defines the size of blank area to store compressed code at

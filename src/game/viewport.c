@@ -1,11 +1,11 @@
-#include "ultra64.h"
-#include "memp.h"
-#include "game/bondview.h"
-#include "PR/os.h"
-#include "include/PR/gbi.h"
-#include "macro.h"
-#include "game/player_2.h"
-#include "fr.h"
+#include <ultra64.h>
+#include <memp.h>
+#include "bondview.h"
+#include <PR/os.h>
+#include <PR/gbi.h>
+#include <macro.h>
+#include "player_2.h"
+#include <fr.h>
 
 // bss
 s32 z_buffer_width;

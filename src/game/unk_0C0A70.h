@@ -1,6 +1,6 @@
 #ifndef _UNK_0C0A70_H_
 #define _UNK_0C0A70_H_
-#include "ultra64.h"
+#include <ultra64.h>
 
 extern s32 D_80048490;
 extern s32 D_80048494;

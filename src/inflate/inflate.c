@@ -1,5 +1,5 @@
-#include "ultra64.h"
-#include "inflate/inflate.h"
+#include <ultra64.h>
+#include "inflate.h"
 
 #define GETBYTE()   (inbuf[inptr++])
 #define NEXTBYTE()  (u8)GETBYTE()

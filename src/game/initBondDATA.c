@@ -1,6 +1,6 @@
-#include "ultra64.h"
-#include "memp.h"
-#include "game/initBondDATA.h"
+#include <ultra64.h>
+#include <memp.h>
+#include "initBondDATA.h"
 
 #ifndef VERSION_EU
 struct  BONDdata_item_control_blocks BONDdata_item_control_blocks_initdata = {        

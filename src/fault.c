@@ -1,10 +1,10 @@
-#include "ultra64.h"
-#include "PR/os.h"
-#include "bondgame.h"
+#include <ultra64.h>
+#include <PR/os.h>
+#include <bondgame.h>
 #include "tlb_manage.h"
 #include "deb_print.h"
 #include "ramrom.h"
-#include "PR/R4300.h"
+#include <PR/R4300.h>
 #include "thread_config.h"
 
 /**

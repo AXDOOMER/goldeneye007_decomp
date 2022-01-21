@@ -12,9 +12,9 @@
 #include "othermodemicrocode.h"
 #include <bondgame.h>
 #include "player.h"
-#include "../music.h"
+#include <music.h>
 #include "lvl.h"
-#include "../snd.h"
+#include <snd.h>
 #include "math_asinfacosf.h"
 #include "loadobjectmodel.h"
 
@@ -65,10 +65,10 @@ CartridgeModelFileRecord ejected_cartridge[] = {
 	{0, ""}
 };
 
-#include "assets/obseg/gun/gunWeaponStats.inc.c"
+#include <assets/obseg/gun/gunWeaponStats.inc.c>
 
 //D:80033924
-#include "assets/obseg/gun/gunModelFileRecord.inc.c"
+#include <assets/obseg/gun/gunModelFileRecord.inc.c>
 
 //D:80034C9C
 u32 cartridges_eject = 0;

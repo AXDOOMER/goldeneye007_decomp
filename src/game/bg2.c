@@ -1,20 +1,20 @@
-#include "ultra64.h"
-#include "PR/os.h"
-#include "include/PR/gbi.h"
-#include "bondconstants.h"
-#include "fr.h"
-#include "memp.h"
-#include "game/bg.h"
-#include "game/bondview.h"
-#include "game/debugmenu_handler.h"
-#include "game/decompress.h"
-#include "game/fog.h"
-#include "game/lvl.h"
-#include "game/math_ceil.h"
-#include "game/matrixmath.h"
-#include "game/player.h"
-#include "game/unk_09C250.h"
-#include "game/unk_0BC530.h"
+#include <ultra64.h>
+#include <PR/os.h>
+#include <PR/gbi.h>
+#include <bondconstants.h>
+#include <fr.h>
+#include <memp.h>
+#include "bg.h"
+#include "bondview.h"
+#include "debugmenu_handler.h"
+#include "decompress.h"
+#include "fog.h"
+#include "lvl.h"
+#include "math_ceil.h"
+#include "matrixmath.h"
+#include "player.h"
+#include "unk_09C250.h"
+#include "unk_0BC530.h"
 
 // new file, per EU
 

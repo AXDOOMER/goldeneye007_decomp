@@ -1,7 +1,7 @@
 #include <ultra64.h>
-#include "game/file.h"
-#include "game/file2.h"
-#include "game/front.h"
+#include "file.h"
+#include "file2.h"
+#include "front.h"
 
 /* EEPROM masks for in-game settings */
 #define OPTION_INVERTLOOK    0x0001

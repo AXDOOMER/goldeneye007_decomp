@@ -1,5 +1,5 @@
-#include "ultra64.h"
-#include "music.h"
+#include <ultra64.h>
+#include <music.h>
 #include "music_0D2720.h"
 #include "watch.h"
 #include "mp_music.h"

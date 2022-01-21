@@ -2,6 +2,7 @@
 #define _XSTDIO_H
 #include <ultratypes.h>
 #include <stdarg.h>
+/*#include <stddef.h>*/
 
 /**
  * xstdio.h aka printf.h

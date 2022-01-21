@@ -1,8 +1,8 @@
 #include <ultra64.h>
-#include "include/PR/os.h"
+#include <PR/os.h>
 #include "init.h"
 #include "sched.h"
-#include "bondgame.h"
+#include <bondgame.h>
 #include "deb_print.h"
 #include "fr.h"
 #include "joy.h"

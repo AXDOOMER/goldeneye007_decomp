@@ -1,6 +1,6 @@
-#include <os.h>
-#include <rcp.h>
-#include "src/libultra/io/viint.h"
+#include <PR/os.h>
+#include <PR/rcp.h>
+#include <io/viint.h>
 
 OSViMode osViModeTable[42] = {
     {OS_VI_NTSC_LPN1, //type

@@ -1,7 +1,7 @@
 #ifndef _INITANITABLE_H_
 #define _INITANITABLE_H_
-#include "ultra64.h"
-#include "assets/animationtable_data.h"
+#include <ultra64.h>
+#include <assets/animationtable_data.h>
 
 
 

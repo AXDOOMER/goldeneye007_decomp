@@ -17,8 +17,7 @@
                 "DEBUG",
                 "TRI4_Ext",
                 "VERSION_US",
-                "TARGET_N64",
-                "GLOBAL_ASM(s)", /* IDO 5.3 Defs below */
+                "TARGET_N64", /* IDO 5.3 Defs below */
                 "_MIPS_FPSET=16",
                 "_MIPS_ISA=2",
                 "_ABIO32=1",
@@ -61,13 +60,12 @@
                 "${workspaceRoot}\\include",
                 "${workspaceRoot}\\src",
                 "${workspaceRoot}\\src\\game",
-                "${workspaceRoot}\\src\\inflate" /*include -I include/PR -I src/libultra*/
+                "${workspaceRoot}\\src\\inflate" 
             ],
             "defines": [
                 "TRI4_Ext",
                 "VERSION_US",
-                "TARGET_N64",
-                "GLOBAL_ASM", /* IDO 5.3 Defs below */
+                "TARGET_N64", /* IDO 5.3 Defs below */
 
                 "_MIPS_FPSET=16",
                 "_MIPS_ISA=2",
@@ -100,25 +98,24 @@
                 "__STDC__=1"
             ],
             "undefines": [ "__cplusplus" ]
-
         },
         {
             "name": "LibUltra-Debug",
             "configurationType": "Release",
             "generator": "Unix Makefiles",
             "cStandard": "c89",
-            "includePath": [
+            "includePath": [/*include -I include/PR -I src/libultra*/
                 "${workspaceRoot}",
                 "${workspaceRoot}\\include",
                 "${workspaceRoot}\\include\\PR",
+                "${workspaceRoot}\\src\\libultrare",
                 "${workspaceRoot}\\src\\libultra"
             ],
             "defines": [
                 "_DEBUG",
                 "TRI4_Ext",
                 "VERSION_US",
-                "TARGET_N64",
-                "GLOBAL_ASM", /* IDO 5.3 Defs below */
+                "TARGET_N64", /* IDO 5.3 Defs below */
 
                 "_MIPS_FPSET=16",
                 "_MIPS_ISA=2",
@@ -151,7 +148,6 @@
                 "__STDC__=1"
             ],
             "undefines": [ "__cplusplus" ]
-
         },
         {
             "name": "LibUltra-FINAL",
@@ -162,14 +158,14 @@
                 "${workspaceRoot}",
                 "${workspaceRoot}\\include",
                 "${workspaceRoot}\\include\\PR",
+                "${workspaceRoot}\\src\\libultrare",
                 "${workspaceRoot}\\src\\libultra"
             ],
             "defines": [
                 "_FINALROM",
                 "TRI4_Ext",
                 "VERSION_US",
-                "TARGET_N64",
-                "GLOBAL_ASM", /* IDO 5.3 Defs below */
+                "TARGET_N64",/* IDO 5.3 Defs below */
 
                 "_MIPS_FPSET=16",
                 "_MIPS_ISA=2",
@@ -202,8 +198,6 @@
                 "__STDC__=1"
             ],
             "undefines": [ "__cplusplus" ]
-
         }
-
     ]
 }

@@ -1,5 +1,5 @@
-#include "ultra64.h"
-#include "game/initpathtablelinks.h"
+#include <ultra64.h>
+#include "initpathtablelinks.h"
 
 
 

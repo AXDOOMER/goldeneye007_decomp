@@ -1,6 +1,6 @@
-#include "ultra64.h"
-#include "memp.h"
-#include "game/initanitable.h"
+#include <ultra64.h>
+#include <memp.h>
+#include "initanitable.h"
 
 
 //bss

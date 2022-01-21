@@ -1,8 +1,8 @@
-#include "ultra64.h"
-#include "include/PR/libaudio.h"
+#include <ultra64.h>
+#include <PR/libaudio.h>
 #include "inflate/inflate.h"
 #include "audi.h"
-#include "bondconstants.h"
+#include <bondconstants.h>
 #include "decompress.h"
 #include "dyn.h"
 #include "memp.h"

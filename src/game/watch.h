@@ -1,7 +1,7 @@
 #ifndef _WATCH_H_
 #define _WATCH_H_
-#include "ultra64.h"
-#include "bondconstants.h"
+#include <ultra64.h>
+#include <bondconstants.h>
 
 typedef enum WATCH_INDEX {
     WATCH_INDEX_MISSION_STATUS = 0,

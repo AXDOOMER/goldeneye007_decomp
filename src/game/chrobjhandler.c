@@ -1,7 +1,7 @@
 #include <ultra64.h>
 #include <math.h>
 #include <PR/libaudio.h>
-#include "../../assets/GlobalImageTable.h"
+#include <assets/GlobalImageTable.h>
 #include <bondgame.h>
 #include <boss.h>
 #include <snd.h>

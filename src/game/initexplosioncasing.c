@@ -1,7 +1,7 @@
-#include "ultra64.h"
-#include "memp.h"
-#include "game/initexplosioncasing.h"
-#include "game/unk_09C250.h"
+#include <ultra64.h>
+#include <memp.h>
+#include "initexplosioncasing.h"
+#include "unk_09C250.h"
 
 
 

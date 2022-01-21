@@ -1,4 +1,4 @@
-#include "ultra64.h"
+#include <ultra64.h>
 
 extern u8 bg_sev_all_p_seg[];
 extern u8 bg_silo_all_p_seg[];

@@ -1,9 +1,9 @@
-#include "ultra64.h"
+#include <ultra64.h>
 
-#include "bondtypes.h"
-#include "game/chrai.h"
-#include "game/cleanup_objects.h"
-#include "game/loadobjectmodel.h"
+#include <bondtypes.h>
+#include "chrai.h"
+#include "cleanup_objects.h"
+#include "loadobjectmodel.h"
 
 
 #ifdef NONMATCHING

@@ -1,4 +1,4 @@
-#include "ultra64.h"
+#include <ultra64.h>
 
 
 s32 D_8002BB00 = 0;

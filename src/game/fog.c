@@ -2,7 +2,7 @@
 
 #include <bondtypes.h>
 #include <bondconstants.h>
-#include "../fr.h"
+#include <fr.h>
 #include "bg.h"
 #include "bondview.h"
 #include "fog.h"

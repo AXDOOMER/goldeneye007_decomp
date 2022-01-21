@@ -1,6 +1,6 @@
-#include "ultra64.h"
-#include "boss.h"
-#include "game/objective.h"
+#include <ultra64.h>
+#include <boss.h>
+#include "objective.h"
 
 
 #ifdef NONMATCHING

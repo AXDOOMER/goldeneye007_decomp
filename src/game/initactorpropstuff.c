@@ -1,8 +1,8 @@
-#include "ultra64.h"
-#include "game/initactorpropstuff.h"
-#include "game/chr.h"
-#include "game/gun.h"
-#include "game/math_floor.h"
+#include <ultra64.h>
+#include "initactorpropstuff.h"
+#include "chr.h"
+#include "gun.h"
+#include "math_floor.h"
 
 
 void reset_counter_rand_body_head(void) {

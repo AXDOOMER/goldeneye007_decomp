@@ -1,10 +1,10 @@
-#include "ultra64.h"
-#include "memp.h"
-#include "bondconstants.h"
-#include "boss.h"
-#include "game/math_atan2f.h"
-#include "game/bondview_r.h"
-#include "game/bondview.h"
+#include <ultra64.h>
+#include <memp.h>
+#include <bondconstants.h>
+#include <boss.h>
+#include "math_atan2f.h"
+#include "bondview_r.h"
+#include "bondview.h"
 
 
 // data

@@ -1,4 +1,4 @@
-#include "ultra64.h"
+#include <ultra64.h>
 #include "libultra/io/controller.h"
 
 OSPifRam  _MotorStopData[MAXCONTROLLERS];

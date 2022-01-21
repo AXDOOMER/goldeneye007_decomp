@@ -1,4 +1,4 @@
-#include "ultra64.h"
+#include <ultra64.h>
 #include "memp.h"
 #include "game/lvl_text.h"
 

@@ -1,6 +1,6 @@
 #ifndef _OB_H_
 #define _OB_H_
-#include "ultra64.h"
+#include <ultra64.h>
 
 struct resource_lookup_data_entry {
     u32 rom_size;

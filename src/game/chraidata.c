@@ -1,6 +1,6 @@
-#include "ultra64.h"
-#include "bondgame.h"
-#include "game/chrobjdata.h"
+#include <ultra64.h>
+#include <bondgame.h>
+#include "chrobjdata.h"
 // bss
 
 

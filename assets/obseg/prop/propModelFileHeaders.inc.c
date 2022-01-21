@@ -1,4 +1,4 @@
-#include "assets/obseg/prop/alarm1/ModelFileHeader.inc.c"
+#include <assets/obseg/prop/alarm1/ModelFileHeader.inc.c>
 MODELFILEHEADER(alarm2, 0, &SKELETON(standard_object), 0, 0, 1, 208.22205, 0, 3)
 MODELFILEHEADER(explosionbit, 0, &SKELETON(standard_object), 0, 0, 1, 208.22205, 0, 0)
 MODELFILEHEADER(ammo_crate1, 0, &SKELETON(standard_object), 0, 0, 1, 691.83429, 0, 3)

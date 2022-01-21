@@ -1,20 +1,20 @@
-#include "ultra64.h"
-#include "PR/os.h"
-#include "include/PR/gbi.h"
-#include "bondconstants.h"
-#include "fr.h"
-#include "memp.h"
-#include "game/bg.h"
-#include "game/bondview.h"
-#include "game/debugmenu_handler.h"
-#include "game/decompress.h"
-#include "game/fog.h"
-#include "game/lvl.h"
-#include "game/math_ceil.h"
-#include "game/matrixmath.h"
-#include "game/player.h"
-#include "game/unk_09C250.h"
-#include "game/unk_0BC530.h"
+#include <ultra64.h>
+#include <PR/os.h>
+#include <PR/gbi.h>
+#include <bondconstants.h>
+#include <fr.h>
+#include <memp.h>
+#include "bg.h"
+#include "bondview.h"
+#include "debugmenu_handler.h"
+#include "decompress.h"
+#include "fog.h"
+#include "lvl.h"
+#include "math_ceil.h"
+#include "matrixmath.h"
+#include "player.h"
+#include "unk_09C250.h"
+#include "unk_0BC530.h"
 
 
 
@@ -184,8 +184,8 @@ s32 eu_cdata_0x1f0d4 = 0;
 
 //D:80044840
 Lights1 GlobalLight = gdSPDefLights1(
-	150,150,150,        /* ambient color grey */ //D:80044840
-	255,255,255,
+    150,150,150,        /* ambient color grey */ //D:80044840
+    255,255,255,
     77,77,46    /* white light from the upper west-south-west (42 up, 244') */ //D:80044848
 );
 
@@ -299,9 +299,9 @@ Gfx *bgScissorCurrentPlayerView(Gfx *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 // eg 0x0C192078 = C8112078, or had they used macros gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2 )
 // The reason for this LUT is to dynamicly change the rendermode and combiner to FOG / NoFog or any other setting they might have wanted to test during development as it applies during runtime
 /*Reminder:
-	1cycle combiners repeat both cycles gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA2)
-				            (       -  )*     +  ,  (       -  )*     +
-	G_CC_MODULATERGBA2	    COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, 0 
+    1cycle combiners repeat both cycles gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA2)
+                            (       -  )*     +  ,  (       -  )*     +
+    G_CC_MODULATERGBA2	    COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, 0 
 */
 /*
 //New Defines to be added to gbi.h
@@ -456,20 +456,20 @@ Gfx BillboardDL_80044C00[] = {
 Gfx ParticleDL_80044C28[] = {
     0xB900031D, 0x00552078, 0xB900031D, 0x00502078, 
     0xB900031D, 0x0C192078, 0xB900031D, 0x0C182078,
-	/*
-	//1 Cycle Opa to Particle
-	gDPSetRenderMode(RM_AA_ZB_OPA_SURF, RM_AA_ZB_OPA_SURF2), gDPSetRenderMode(G_RM_AA_ZB_PCL_SURF, G_RM_AA_ZB_PCL_SURF2),
-	//2 cycle Opa to Particle
-	gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_OPA_SURF2), gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_PCL_SURF2),
-	*/
+    /*
+    //1 Cycle Opa to Particle
+    gDPSetRenderMode(RM_AA_ZB_OPA_SURF, RM_AA_ZB_OPA_SURF2), gDPSetRenderMode(G_RM_AA_ZB_PCL_SURF, G_RM_AA_ZB_PCL_SURF2),
+    //2 cycle Opa to Particle
+    gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_OPA_SURF2), gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_PCL_SURF2),
+    */
     0x0, 0
 };
 
 //D:80044C50
 Gfx transparent2cloudDL_80044C50[] = {
-	//Transparent to Cloud (Saves AA - Stops Jaggies from appearing behind BillBoard)
-	gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_SURF2), gsDPSetRenderMode(G_RM_PASS, G_RM_ZB_CLD_SURF2),
-	0,0
+    //Transparent to Cloud (Saves AA - Stops Jaggies from appearing behind BillBoard)
+    gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_SURF2), gsDPSetRenderMode(G_RM_PASS, G_RM_ZB_CLD_SURF2),
+    0,0
 };
 
 //D:80044C68
@@ -482,17 +482,17 @@ Gfx WalletBondDL_80044C68[] = {
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE,  TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE,  0, 0, 0, COMBINED,  0, 0, 0, COMBINED),
     /*
-	//1 Cycle particle Surface to 2 Cycle colour + 1-a*Fog ???
-	gsDPSetCycleType(G_CYC_2CYCLE),
-	gDPSetRenderMode(G_RM_AA_PCL_SURF, G_RM_AA_PCL_SURF2), gDPSetRenderMode(AA_EN | IM_RD | CVG_DST_CLAMP | ALPHA_CVG_SEL | ZMODE_OPA | GBL_c1(G_BL_CLR_IN, G_BL_A_SHADE, G_BL_CLR_FOG, G_BL_1MA) | GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_1MA)),
-	gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_PASS2), gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2),
-	*/
-	0x0, 0
+    //1 Cycle particle Surface to 2 Cycle colour + 1-a*Fog ???
+    gsDPSetCycleType(G_CYC_2CYCLE),
+    gDPSetRenderMode(G_RM_AA_PCL_SURF, G_RM_AA_PCL_SURF2), gDPSetRenderMode(AA_EN | IM_RD | CVG_DST_CLAMP | ALPHA_CVG_SEL | ZMODE_OPA | GBL_c1(G_BL_CLR_IN, G_BL_A_SHADE, G_BL_CLR_FOG, G_BL_1MA) | GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_1MA)),
+    gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_PASS2), gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2),
+    */
+    0x0, 0
 };
 
 //D:80044CA0
 Gfx D_80044CA0[] = {
-	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE,  TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE,  TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE),
     gsDPSetCombineLERP(TEXEL0, 0, SCALE, 0,  0, 0, 0, ENVIRONMENT,  TEXEL0, 0, SCALE, 0,  0, 0, 0, ENVIRONMENT),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0),
     gsDPSetCombineLERP(TEXEL0, 0, SCALE, 0,  TEXEL0, 0, ENVIRONMENT, 0,  TEXEL0, 0, SCALE, 0,  TEXEL0, 0, ENVIRONMENT, 0),
@@ -520,7 +520,7 @@ Gfx D_80044CA0[] = {
     gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  1, 0, TEXEL1, 0,  COMBINED, 0, SCALE, 0,  COMBINED, 0, ENVIRONMENT, 0),
     gsDPSetCombineLERP(0, 0, 0, SHADE,  0, 0, 0, SHADE,  0, 0, 0, COMBINED,  0, 0, 0, COMBINED),
     gsDPSetCombineLERP(CENTER, 0, SCALE, 0,  0, 0, 0, ENVIRONMENT,  0, 0, 0, COMBINED,  0, 0, 0, COMBINED),
-	0,0
+    0,0
 };
 
 //D:80044D88

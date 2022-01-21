@@ -1,6 +1,6 @@
-#include "include/PR/os.h"
-#include "include/PR/rcp.h"
-#include "ultra64.h"
+#include <PR/os.h>
+#include <PR/rcp.h>
+#include <ultra64.h>
 
 // this file must include some globally referenced data because it is not called anywhere
 // data, comes shortly before _Ldtob I think, before crash_screen

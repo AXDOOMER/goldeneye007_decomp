@@ -1,7 +1,7 @@
 GunModelFileRecord gitem_structs[] = {
 	{                       NULL,                NULL, TRUE,                      NULL,           0x9883,           0x9811,   0.0,   0.0, 1000.0,   0.0, 0.0,           0x9811,           0x9811, 10.0,  10.0, 1000.0},
-	#include "assets/obseg/gun/fist/gunFileRecord.inc.c"
-	#include "assets/obseg/gun/knife/gunFileRecord.inc.c"
+	#include <assets/obseg/gun/fist/gunFileRecord.inc.c>
+	#include <assets/obseg/gun/knife/gunFileRecord.inc.c>
 	GUNFILERECORD(    throwknife,                         0,      GUNSTATS(throwknife), TEXT(LGUN, 0x71), TEXT(LGUN, 0x06), 200.0,  51.0, 1327.0,   0.0, 0.0, TEXT(LGUN, 0x70), TEXT(LGUN, 0xCA), 38.0, 118.0, 800.0)
 	GUNFILERECORD(          wppk,                         0,            GUNSTATS(wppk), TEXT(LGUN, 0x57), TEXT(LGUN, 0x01),  20.0,  97.0,  579.0,   0.0, 0.0, TEXT(LGUN, 0x56), TEXT(LGUN, 0xBA), 94.0,   2.0, 356.0)
 	GUNFILERECORD(       wppksil,                         0,         GUNSTATS(wppksil), TEXT(LGUN, 0x03), TEXT(LGUN, 0x10),  26.0, 162.0,  668.0,   0.0, 0.0, TEXT(LGUN, 0x55), TEXT(LGUN, 0xB9), 169.0,  5.0, 535.0)

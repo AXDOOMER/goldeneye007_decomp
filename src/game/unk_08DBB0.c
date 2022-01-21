@@ -1,7 +1,7 @@
 #include <ultra64.h>
 #include <limits.h>
-#include "../../assets/animationtable_data.h"
-#include "../random.h"
+#include <assets/animationtable_data.h>
+#include <random.h>
 #include "bondview.h"
 #include "chrai.h"
 #include "initanitable.h"

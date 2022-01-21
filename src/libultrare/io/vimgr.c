@@ -1,7 +1,7 @@
-#include <os_internal.h>
-#include <rcp.h>
-#include "src/libultra/io/viint.h"
-#include "src/libultra/os/osint.h"
+#include <PR/os_internal.h>
+#include <PR/rcp.h>
+#include <io/viint.h>
+#include <os/osint.h>
 
 
 OSDevMgr __osViDevMgr = {0};

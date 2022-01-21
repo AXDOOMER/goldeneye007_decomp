@@ -1,17 +1,17 @@
-#include "ultra64.h"
-#include "bondgame.h"
-#include "game/chr.h"
-#include "game/chr_b.h"
-#include "game/title.h"
-#include "game/blood_animation.h"
-#include "fr.h"
-#include "PR/os.h"
-#include "include/PR/gbi.h"
+#include <ultra64.h>
+#include <bondgame.h>
+#include "chr.h"
+#include "chr_b.h"
+#include "title.h"
+#include "blood_animation.h"
+#include <fr.h>
+#include <PR/os.h>
+#include <PR/gbi.h>
 #include "matrixmath.h"
-#include "ramrom.h"
-#include "game/math_floor.h"
-#include "macro.h"
-#include "assets/font_dl.h"
+#include <ramrom.h>
+#include "math_floor.h"
+#include <macro.h>
+#include <assets/font_dl.h>
 
 // bss
 //CODE.bss:80069550

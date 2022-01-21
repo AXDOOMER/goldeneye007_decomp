@@ -1,5 +1,5 @@
-#include "ultra64.h"
-#include "bondgame.h"
+#include <ultra64.h>
+#include <bondgame.h>
 #include "ramrom.h"
 #include "deb.h"
 #include "str.h"

@@ -1,4 +1,4 @@
-#include "ultra64.h"
+#include <ultra64.h>
 
 u32 font_first_font_table_controller_large[] = 
 {

@@ -1,11 +1,11 @@
 
-#include "ultra64.h"
-#include "game/debugmenu_handler.h"
-#include "game/lvl.h"
-#include "game/initunk_0072B0.h"
-#include "game/front.h"
-#include "game/ramromreplay.h"
-#include "ramrom.h"
+#include <ultra64.h>
+#include "debugmenu_handler.h"
+#include "lvl.h"
+#include "initunk_0072B0.h"
+#include "front.h"
+#include "ramromreplay.h"
+#include <ramrom.h>
 //D:800483F0
 
 

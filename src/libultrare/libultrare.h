@@ -5,7 +5,7 @@
  * header file specific to Rare libultra modifications.
 */
 
-#include "include/PR/ultratypes.h"
+#include <PR/ultratypes.h>
 
 
 #define WAIT_ON_ONLY_IOBUSY(stat)       \

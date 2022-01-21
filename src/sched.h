@@ -1,7 +1,7 @@
 #ifndef _scheduler_h_
 #define _scheduler_h_
 
-#include "ultra64.h"
+#include <ultra64.h>
 
 #define OS_SC_STACKSIZE      0x2000
 

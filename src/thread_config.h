@@ -1,8 +1,8 @@
 #ifndef _THREAD_CONFIG_H_
 #define _THREAD_CONFIG_H_
 
-#include "ultra64.h"
-#include "PR/os.h"
+#include <ultra64.h>
+#include <PR/os.h>
 
 
 #define RMON_THREAD_ID   (OSId)0

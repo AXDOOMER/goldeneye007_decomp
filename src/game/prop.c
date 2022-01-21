@@ -1,8 +1,8 @@
-#include "ultra64.h"
-#include "memp.h"
-#include "game/chrlv.h"
-#include "game/math_atan2f.h"
-#include "game/prop.h"
+#include <ultra64.h>
+#include <memp.h>
+#include "chrlv.h"
+#include "math_atan2f.h"
+#include "prop.h"
 
 s32 lastmpweaponnum;
 

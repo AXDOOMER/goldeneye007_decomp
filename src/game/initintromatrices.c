@@ -1,7 +1,7 @@
-#include "ultra64.h"
-#include "memp.h"
-#include "game/title.h"
-#include "game/initintromatrices.h"
+#include <ultra64.h>
+#include <memp.h>
+#include "title.h"
+#include "initintromatrices.h"
 
 void alloc_intro_matrices(void)
 {

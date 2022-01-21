@@ -1,5 +1,5 @@
 ExplosionDetailsRecord object_explosion_details[] = {
-    #include "assets/obseg/prop/alarm1/ExplosionDetailsRecord.inc.c"
+    #include <assets/obseg/prop/alarm1/ExplosionDetailsRecord.inc.c>
     {
         EXPLOSION_SMALL,
         {0x2afe, 0xcb3e, 0x73f4, 0x278f, 0x6d3a, 0x44c8}

@@ -1,6 +1,6 @@
-#include "ultra64.h"
-#include "game/lightfixture.h"
-#include "assets/image_externs.h"
+#include <ultra64.h>
+#include "lightfixture.h"
+#include <assets/image_externs.h>
 
 
 

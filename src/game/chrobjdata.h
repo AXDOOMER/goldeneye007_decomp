@@ -1,9 +1,9 @@
 #ifndef _CHROBJDATA_H_
 #define _CHROBJDATA_H_
 
-#include "ultra64.h"
-#include "bondconstants.h"
-#include "bondtypes.h"
+#include <ultra64.h>
+#include <bondconstants.h>
+#include <bondtypes.h>
 
 
 

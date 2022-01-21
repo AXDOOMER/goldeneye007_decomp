@@ -9,7 +9,7 @@
 #include "othermodemicrocode.h"
 #include "unk_09C250.h"
 #include "unk_0BC530.h"
-#include "../../assets/GlobalImageTable.h"
+#include <assets/GlobalImageTable.h>
 
 // bss
 //CODE.bss:8007A100

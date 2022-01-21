@@ -4,7 +4,7 @@
 #include <ultra64.h>
 #include <bondconstants.h>
 #include <bondtypes.h>
-#include "../snd.h"
+#include <snd.h>
 
 extern f32 F_80030B14;
 extern f32 F_80030B18;

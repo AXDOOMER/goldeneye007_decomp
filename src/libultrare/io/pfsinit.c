@@ -1,6 +1,6 @@
-#include <os_internal.h>
-#include "src/libultra/io/controller.h"
-#include "src/libultra/io/siint.h"
+#include <PR/os_internal.h>
+#include <io/controller.h>
+#include <io/siint.h>
 
 s32 osPfsInit(OSMesgQueue *queue, OSPfs *pfs, int channel)
 {

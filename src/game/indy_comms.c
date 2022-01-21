@@ -1,6 +1,6 @@
-#include "ultra64.h"
-#include "game/indy_commands.h"
-#include "game/indy_comms.h"
+#include <ultra64.h>
+#include "indy_commands.h"
+#include "indy_comms.h"
 
 s32 indycommInit(void) {
     if (indy_ready != 1)

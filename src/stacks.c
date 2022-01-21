@@ -1,4 +1,4 @@
-#include "ultra64.h"
+#include <ultra64.h>
 
 u8 sp_boot[0x10];
 u8 sp_rmon[0x300];

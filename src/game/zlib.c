@@ -1,4 +1,4 @@
-#include "ultra64.h"
+#include <ultra64.h>
 #include "zlib.h"
 
 #define GETBYTE()   (rz_inbuf[rz_inptr++])

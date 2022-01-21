@@ -1,5 +1,5 @@
-#include "ultra64.h"
-#include "bondconstants.h"
+#include <ultra64.h>
+#include <bondconstants.h>
 #include "debugmenu_handler.h"
 #include "joy.h"
 #include "player.h"

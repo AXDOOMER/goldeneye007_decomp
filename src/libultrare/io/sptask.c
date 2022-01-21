@@ -1,8 +1,8 @@
-#include <os_internal.h>
-#include <sptask.h>
+#include <PR/os_internal.h>
+#include <PR/sptask.h>
 #include <bstring.h>
-#include <rcp.h>
-#include "src/libultra/os/osint.h"
+#include <PR/rcp.h>
+#include <os/osint.h>
 
 #define _osVirtualToPhysical(ptr)               \
 	if (ptr != NULL)                            \

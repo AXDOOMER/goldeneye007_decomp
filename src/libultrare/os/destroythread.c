@@ -1,5 +1,5 @@
-#include <os_internal.h>
-#include "src/libultra/os/osint.h"
+#include <PR/os_internal.h>
+#include <os/osint.h>
 
 void osDestroyThread(OSThread *t)
 {

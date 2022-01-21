@@ -1,8 +1,8 @@
-#include "ultra64.h"
-#include "memp.h"
-#include "game/player.h"
-#include "game/bondinv.h"
-#include "game/inititemslots.h"
+#include <ultra64.h>
+#include <memp.h>
+#include "player.h"
+#include "bondinv.h"
+#include "inititemslots.h"
 
 void reinit_gunheld_totaltime(void) {
     s32 i;

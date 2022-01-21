@@ -1,6 +1,6 @@
 #ifndef _CHEAT_BUTTONS_H_
 #define _CHEAT_BUTTONS_H_
-#include "ultra64.h"
+#include <ultra64.h>
 
 enum CHEAT_MASK {
     CHEAT_MASK_0 = 0,

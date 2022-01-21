@@ -1,4 +1,4 @@
-#include "ultra64.h"
+#include <ultra64.h>
 #include "debugmenu.h"
 #include "vi.h"
 #include "game/dyn.h"

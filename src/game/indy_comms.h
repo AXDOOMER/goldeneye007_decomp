@@ -1,6 +1,6 @@
 #ifndef _INDY_COMMS_H_
 #define _INDY_COMMS_H_
-#include "ultra64.h"
+#include <ultra64.h>
 
 s32 indycommInit(void);
 void indycommHostinit(void);

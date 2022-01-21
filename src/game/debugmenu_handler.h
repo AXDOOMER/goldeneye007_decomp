@@ -1,6 +1,6 @@
 #ifndef _debugmenu_handler_H_
 #define _debugmenu_handler_H_
-#include "ultra64.h"
+#include <ultra64.h>
 
 struct mcm_layout {
     int xpos;

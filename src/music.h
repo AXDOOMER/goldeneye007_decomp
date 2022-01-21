@@ -1,7 +1,7 @@
 #ifndef _MUSIC_H_
 #define _MUSIC_H_
-#include "ultra64.h"
-#include "include/PR/libaudio.h"
+#include <ultra64.h>
+#include <PR/libaudio.h>
 
 #define VOLUME_MAX 0x7fff
 

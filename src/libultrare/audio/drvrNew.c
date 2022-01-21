@@ -18,10 +18,10 @@
  * Copyright Laws of the United States.
  *====================================================================*/
 
-#include <libaudio.h>
-#include "src/libultra/audio/synthInternals.h"
-#include <os.h>
-#include "src/libultra/audio/initfx.h"
+#include <PR/libaudio.h>
+#include <audio/synthInternals.h>
+#include <PR/os.h>
+#include <audio/initfx.h>
 
 /*
  * WARNING: THE FOLLOWING CONSTANT MUST BE KEPT IN SYNC

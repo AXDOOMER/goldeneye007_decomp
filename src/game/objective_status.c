@@ -1,7 +1,7 @@
-#include "ultra64.h"
-#include "bondconstants.h"
-#include "bondtypes.h"
-#include "game/objective_status.h"
+#include <ultra64.h>
+#include <bondconstants.h>
+#include <bondtypes.h>
+#include "objective_status.h"
 
 // bss
 //CODE.bss:80075D30

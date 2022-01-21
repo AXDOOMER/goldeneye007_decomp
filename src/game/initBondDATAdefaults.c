@@ -1,13 +1,13 @@
-#include "ultra64.h"
-#include "include/math.h"
-#include "bondtypes.h"
-#include "game/chr.h"
-#include "game/chrobjdata.h"
-#include "game/initanitable.h"
-#include "game/initBondDATAdefaults.h"
-#include "game/objecthandler.h"
-#include "game/player.h"
-#include "game/unk_08DBB0.h"
+#include <ultra64.h>
+#include <math.h>
+#include <bondtypes.h>
+#include "chr.h"
+#include "chrobjdata.h"
+#include "initanitable.h"
+#include "initBondDATAdefaults.h"
+#include "objecthandler.h"
+#include "player.h"
+#include "unk_08DBB0.h"
 
 
 //data

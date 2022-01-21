@@ -1,23 +1,23 @@
-#include "include/os_extension.h"
-#include "ultra64.h"
-#include "bondgame.h"
-#include "bondconstants.h"
-#include "joy.h"
-#include "music.h"
-#include "snd.h"
-#include "game/bondinv.h"
-#include "game/bondview.h"
-#include "game/cheat_buttons.h"
-#include "game/chr.h"
-#include "game/debugmenu_handler.h"
-#include "game/file2.h"
-#include "game/front.h"
-#include "game/gun.h"
-#include "game/lvl_text.h"
-#include "game/objecthandler.h"
-#include "game/player.h"
-#include "game/player_2.h"
-//#include "game/chraicommands.h" /* needed for ai list commands, remove when moving global ai lists to chraicommands/chrai */
+#include <os_extension.h>
+#include <ultra64.h>
+#include <bondgame.h>
+#include <bondconstants.h>
+#include <joy.h>
+#include <music.h>
+#include <snd.h>
+#include "bondinv.h"
+#include "bondview.h"
+#include "cheat_buttons.h"
+#include "chr.h"
+#include "debugmenu_handler.h"
+#include "file2.h"
+#include "front.h"
+#include "gun.h"
+#include "lvl_text.h"
+#include "objecthandler.h"
+#include "player.h"
+#include "player_2.h"
+//#include "chraicommands.h" /* needed for ai list commands, remove when moving global ai lists to chraicommands/chrai */
 // bss
 
 // This shows up a lot but not quite sure what it represents.

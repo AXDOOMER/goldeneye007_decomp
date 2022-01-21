@@ -1,7 +1,7 @@
 #ifndef _MEMP_H_
 #define _MEMP_H_
 
-#include "ultra64.h"
+#include <ultra64.h>
 
 /*
 * Align to 16 bit boundary. Version "b", without preliminary addition.
