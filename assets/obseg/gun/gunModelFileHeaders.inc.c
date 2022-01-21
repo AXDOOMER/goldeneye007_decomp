@@ -1,3 +1,50 @@
+#ifdef DEBUG
+char* weapon_gun_kf7_SwitchNames[] = {
+    "CARTRIDGE",
+    "SW_FLASH",
+    "FLASH",
+    "MUZZLE",
+    "EXTRAFLASH" };
+#endif
+#ifdef DEBUG
+char* weapon_gun_revolver_SwitchNames[] = {
+    "CARTRIDGE",
+    "SW_FLASH",
+    "FLASH",
+    "MUZZLE",
+    "DRUM",
+    "HAMMER",
+    "FINGER",
+    "SLIDE",
+    "SW_HANDOFF1",
+    "SW_HANDOFF2",
+    "SW_HANDOFF3",
+    "SW_HANDOFF4",
+    "SW_HANDOFF5",
+    "SW_HANDOFF6",
+    "SW_GUNOFF1",
+    "SW_GUNOFF2",
+    "GFXHIT_SCREEN",
+    "SW_SCREEN",
+    "SW_cart1",
+    "SW_cart2",
+    "SW_cart3",
+    "SW_cart4",
+    "SW_cart5",
+    "SW_case1",
+    "SW_case2",
+    "SW_case3",
+    "SW_case4",
+    "SW_case5",
+    "2PT_FINGER",
+    "SW_BOILER",
+    "SW_DINNER",
+    "SW_CONNERY",
+    "SW_SUIT",
+    "SW_TIMBER",
+    "SW_SNOW",
+    "SW_HANDOFF7" };
+#endif
 //D:8003C7C0 
 //tank
 //token

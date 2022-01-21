@@ -1,3 +1,5 @@
+//No Joint Names
+
 //D:8003C4F0
 ModelJoint JOINTLIST(prop_weapon)[] = {
     {0x0015, 0x0000, 0x0000},

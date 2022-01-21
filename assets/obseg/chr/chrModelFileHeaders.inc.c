@@ -1,3 +1,21 @@
+#ifdef DEBUG
+char* suit_lf_hand_SwitchNames[] = {
+    "HOUR",
+    "MINUTE",
+    "SECOND",
+    "SW_ticks",
+    "SW_BOILER",
+    "SW_DINNER",
+    "SW_CONNERY",
+    "SW_SUIT",
+    "SW_TIMBER",
+    "SW_SNOW" };
+
+char* HeadSwitchNames[] = {
+    "SW_SPECS",
+    "SW_HEAD" };
+#endif
+
 //D:8003D410
 #include "assets/obseg/chr/camguard/modelFileHeader.inc.c"
 MODELFILEHEADER(greyguard, 0, &SKELETON(guard), 0, 7, 0x14, 1292.6892, 0, 0xD)

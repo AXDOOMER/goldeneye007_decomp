@@ -1,19 +1,14 @@
 .*~
 __pycache__/*
-.vscode/c_cpp_properties.json
-.vscode/ipch/*
-.vscode/launch.json
-.vscode/settings.json
+.vscode/
 *.rz
 *.tmp
-*.z64
-*.N64
 *.o
 branchdiff.sh
 branchdiff_report.txt
-baserom.*.dump
-ge007.*.dump
-/.vs
+*.dump
+*.[zZnN]64
+.[vV][sS]/
 021990.bin
 0219D0.bin
 assets/animationtable_data.bin
@@ -42,19 +37,17 @@ assets/obseg/gun/*.bin
 assets/obseg/ob__ob_end.seg
 assets/obseg/prop/*.bin
 assets/obseg/setup/*.bin
-assets/obseg/setup/e/*.bin
-assets/obseg/setup/j/*.bin
-assets/obseg/setup/u/*.bin
+assets/obseg/setup/[eju]/*.bin
 assets/obseg/stan/*.bin
 assets/obseg/text/*.bin
-assets/obseg/text/e/*.bin
-assets/obseg/text/j/*.bin
-assets/obseg/text/u/*.bin
+assets/obseg/text/[eju]/*.bin
 assets/ramrom/*.bin
-assets/ramrom/e/*.bin
+assets/ramrom/[eju]/*.bin
 build/*
 build-*/*
-notes
+notes/*
+!build/test.c
+!notes/StyleGuide.md
 tools/extractor/*.o
 tools/extractor/extractor
 tools/aaa_rip/main.o
@@ -64,7 +57,7 @@ tools/armips
 tools/gzipsrc/gzip
 tools/gzipsrc/*.o
 tools/report/report
-
+/StructLayoutSettings.json
 
 
 
@@ -152,3 +145,5 @@ assets/obseg/text/e/LtraP.c
 assets/obseg/text/e/LwaxP.c
 tools/report/index.html
 tools/report/JPN.htm
+bondtypes_AI.h
+baserom*

@@ -1,3 +1,23 @@
+#ifdef DEBUG
+char* player_gait_object_JointNames[] = {
+    "SKEL_POSITION",
+    "SKEL_BASE",
+    "SKEL_BACK",
+    "SKEL_LF_HIP",
+    "SKEL_RT_HIP",
+    "SKEL_LF_KNEE",
+    "SKEL_LF_SHOULDER",
+    "SKEL_NECK",
+    "SKEL_RT_KNEE",
+    "SKEL_RT_SHOULDER",
+    "SKEL_LF_ANKLE",
+    "SKEL_LF_ELBOW",
+    "SKEL_RT_ANKLE",
+    "SKEL_RT_ELBOW",
+    "SKEL_LF_WRIST",
+    "SKEL_RT_WRIST"
+};
+#endif
 //D:8003C510
 ModelJoint JOINTLIST(player_gait_object)[] = {
     {0x0401, 0x0000, 0x0000}, //"SKEL_POSITION"

@@ -2,6 +2,7 @@
 ModelJoint JOINTLIST(standard_object)[] = {
     {0x0002, 0x0000, 0x0000}
 };
+//No Joint Names
 //D:8003C4D8
 MODELSKELETON(standard_object, 1, 3)
 

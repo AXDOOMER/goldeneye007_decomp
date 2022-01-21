@@ -20,5 +20,17 @@ ModelJoint JOINTLIST(suit_lf_hand)[] = {
     {0x0015, 0x002E, 0x002E},
     {0x0015, 0x002F, 0x002F},
 };
+#ifdef DEBUG
+char* suit_lf_hand_JointNames[] = {
+    "SKEL_LF_WRIST_ER",
+    "SKEL_HOUR",
+    "SKEL_MINUTE",
+    "SKEL_SECOND",
+    "SKEL_POSITION__R",
+    "SKEL_BACK_W",
+    "SKEL_BASE_P",
+    "SKEL_LF_SHOULDER",
+    "SKEL_LF_ELBOW_ER" };
+#endif
 //D:8003C6E4
 MODELSKELETON(suit_lf_hand, 19, 45)
