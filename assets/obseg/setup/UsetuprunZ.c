@@ -5,15 +5,15 @@
 * Getools.Lib: 21.8.26.1
 */
 
-#include "ultra64.h"
-#include "bondtypes.h"
+#include <ultra64.h>
+#include <bondtypes.h>
 
 // forward declarations
-struct pad padlist[];
-struct pad3d pad3dlist[];
+PadRecord padlist[];
+BoundPadRecord pad3dlist[];
 s32 objlist[];
 s32 intro[];
-struct s_pathLink pathlist[];
+waygroup pathlist[];
 char *pad3dnames[];
 struct s_pathTbl pathtbl[];
 char *padnames[];
@@ -33,7 +33,7 @@ struct stagesetup setup = {
     &pad3dnames
 };
 
-struct pad padlist[] = {
+PadRecord padlist[] = {
     { {675.0f, -38.0f, -461.0f}, {0.0f, 1.0f, 0.0f}, {0.708905f, 0.0f, 0.705304f}, "p3833a", 0 },
     { {709.0f, -38.0f, -451.0f}, {0.0f, 1.0f, 0.0f}, {-0.708912f, 0.0f, -0.705296f}, "p3831a1", 0 },
     { {735.0f, -38.0f, -457.0f}, {0.0f, 1.0f, 0.0f}, {-0.999997f, 0.0f, 0.002546f}, "p3831a1", 0 },
@@ -214,7 +214,7 @@ struct pad padlist[] = {
 };
 
 
-struct pad3d pad3dlist[] = {
+BoundPadRecord pad3dlist[] = {
     { {646.0f, -43.0f, -1478.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f}, "p2169a", 0, {-2.0f, 1.0f, -2.0f, -2.0f, -1.0f, 2.0f} },
     { {1012.0f, -19.0f, -1779.0f}, {0.0f, 1.0f, 0.0f}, {-0.707168f, 1e-06, -0.707046f}, "p2216a2", 0, {-14.850645f, 13.436069f, -4e-06, 30.000004f, -12.019656f, 16.264635f} },
     { {935.0f, -35.0f, -1881.0f}, {0.142935f, 0.986286f, 0.082524f}, {-0.854148f, 0.165048f, -0.493143f}, "p1632a2", 0, {-6.813465f, 7.349367f, -27.120205f, 4.91059f, -59.638824f, 59.063366f} },
@@ -583,7 +583,7 @@ s32 path_indeces_0[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1
 s32 path_indeces_1[] = { 68, 69, 70, -1 };
 s32 path_indeces_2[] = { 71, 72, -1 };
 
-struct s_pathLink pathlist[] = {
+waygroup pathlist[] = {
     { &path_neighbors_0, &path_indeces_0, 0 },
     { &path_neighbors_1, &path_indeces_1, 0 },
     { &path_neighbors_2, &path_indeces_2, 0 },

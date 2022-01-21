@@ -5,15 +5,15 @@
 * Getools.Lib: 21.8.26.1
 */
 
-#include "ultra64.h"
-#include "bondtypes.h"
+#include <ultra64.h>
+#include <bondtypes.h>
 
 // forward declarations
-struct pad padlist[];
-struct pad3d pad3dlist[];
+PadRecord padlist[];
+BoundPadRecord pad3dlist[];
 s32 objlist[];
 s32 intro[];
-struct s_pathLink pathlist[];
+waygroup pathlist[];
 struct s_pathTbl pathtbl[];
 struct s_pathSet paths[];
 struct ailist ailists[];
@@ -31,7 +31,7 @@ struct stagesetup setup = {
     NULL
 };
 
-struct pad padlist[] = {
+PadRecord padlist[] = {
     { {-300.0f, 320.0f, 518.0f}, {0.0f, 1.0f, 0.0f}, {-1.0f, 0.0f, -1e-06}, "p256d2", 0 },
     { {15.0f, 320.0f, 521.0f}, {0.0f, 1.0f, 0.0f}, {-1.0f, 0.0f, 1e-06}, "p279d", 0 },
     { {304.0f, 320.0f, 519.0f}, {0.0f, 1.0f, 0.0f}, {-1.0f, 0.0f, 0.0f}, "p241d2", 0 },
@@ -188,7 +188,7 @@ struct pad padlist[] = {
 };
 
 
-struct pad3d pad3dlist[] = {
+BoundPadRecord pad3dlist[] = {
     { {277.0f, 4.0f, -72.0f}, {0.0f, 1.0f, 0.000122f}, {0.002218f, 0.000116f, -0.999997f}, "p28c", 0, {-8.017714f, 8.024393f, -0.001342f, 35.000973f, -8.013667f, 11.021776f} },
     { {200.0f, 17.0f, 75.0f}, {0.0f, 0.0f, 1.0f}, {0.0f, 1.0f, 0.0f}, "p131b1", 0, {-1.0f, 1.0f, -7.0f, 27.0f, -13.0f, 51.999996f} },
     { {482.0f, 17.0f, 6.0f}, {0.0f, 0.0f, -1.0f}, {0.0f, 1.0f, 0.0f}, "p213b2", 0, {-1.0f, 2.0f, -8.0f, 29.0f, -13.0f, 51.999996f} },
@@ -298,7 +298,7 @@ s32 intro[] = {
 s32 unknown_setup_block_0[] = { -1, -1 };
 
 
-struct s_pathLink pathlist[] = {
+waygroup pathlist[] = {
     { NULL, NULL, 0 }
 };
 

@@ -5,15 +5,15 @@
 * Getools.Lib: 21.8.26.1
 */
 
-#include "ultra64.h"
-#include "bondtypes.h"
+#include <ultra64.h>
+#include <bondtypes.h>
 
 // forward declarations
-struct pad padlist[];
-struct pad3d pad3dlist[];
+PadRecord padlist[];
+BoundPadRecord pad3dlist[];
 s32 objlist[];
 s32 intro[];
-struct s_pathLink pathlist[];
+waygroup pathlist[];
 char *pad3dnames[];
 struct s_pathTbl pathtbl[];
 char *padnames[];
@@ -33,7 +33,7 @@ struct stagesetup setup = {
     &pad3dnames
 };
 
-struct pad padlist[] = {
+PadRecord padlist[] = {
     { {-1408.0f, 162.0f, -1439.0f}, {0.0f, 1.0f, 0.0f}, {-1.0f, 0.0f, -1e-06}, "p208d", 0 },
     { {-1542.0f, 162.0f, -1389.0f}, {0.0f, 1.0f, 0.0f}, {-1.0f, 0.0f, -1e-06}, "p198d", 0 },
     { {-1737.0f, 162.0f, -1145.0f}, {0.0f, 1.0f, 0.0f}, {-1.0f, 0.0f, -1e-06}, "p300d", 0 },
@@ -248,7 +248,7 @@ struct pad padlist[] = {
 };
 
 
-struct pad3d pad3dlist[] = {
+BoundPadRecord pad3dlist[] = {
     { {-51.0f, 81.0f, -621.0f}, {-1.0f, 0.0f, 5e-06}, {0.0f, 1.0f, 0.0f}, "p166a1", 0, {-28.000168f, 21.999834f, -33.00011f, -32.99986f, -21.999998f, 18.999998f} },
     { {-51.0f, 81.0f, -399.0f}, {-1.0f, 0.0f, 5e-06}, {0.0f, 1.0f, 0.0f}, "p385a1", 0, {-28.000168f, 21.999834f, -33.00011f, -32.99986f, -21.999998f, 18.999998f} },
     { {-51.0f, 81.0f, -186.0f}, {-1.0f, 0.0f, 5e-06}, {0.0f, 1.0f, 0.0f}, "p378a1", 0, {-27.000168f, 21.999834f, -33.00011f, -32.999863f, -21.999998f, 18.999998f} },
@@ -1502,7 +1502,7 @@ s32 path_indeces_18[] = { 156, -1 };
 s32 path_indeces_19[] = { 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, -1 };
 s32 path_indeces_20[] = { 168, 169, 170, 171, 172, -1 };
 
-struct s_pathLink pathlist[] = {
+waygroup pathlist[] = {
     { &path_neighbors_0, &path_indeces_0, 0 },
     { &path_neighbors_1, &path_indeces_1, 0 },
     { &path_neighbors_2, &path_indeces_2, 0 },
@@ -1557,6 +1557,7 @@ char *pad3dnames[] = {
 s32 path_table_0[] = { 1, -1 };
 s32 path_table_1[] = { 0, 2, -1 };
 s32 path_table_2[] = { 1, -1 };
+
 s32 path_table_3[] = { 4, 135, -1 };
 s32 path_table_4[] = { 3, 6, 7, 9, 12, -1 };
 s32 path_table_5[] = { 6, 8, 10, 13, -1 };

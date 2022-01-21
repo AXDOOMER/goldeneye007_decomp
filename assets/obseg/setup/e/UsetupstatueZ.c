@@ -5,15 +5,15 @@
 * Getools.Lib: 21.8.26.1
 */
 
-#include "ultra64.h"
-#include "bondtypes.h"
+#include <ultra64.h>
+#include <bondtypes.h>
 
 // forward declarations
-struct pad padlist[];
-struct pad3d pad3dlist[];
+PadRecord padlist[];
+BoundPadRecord pad3dlist[];
 s32 objlist[];
 s32 intro[];
-struct s_pathLink pathlist[];
+waygroup pathlist[];
 struct s_pathTbl pathtbl[];
 struct s_pathSet paths[];
 struct ailist ailists[];
@@ -31,7 +31,7 @@ struct stagesetup setup = {
     NULL
 };
 
-struct pad padlist[] = {
+PadRecord padlist[] = {
     { {-629.0f, 31.0f, 90.0f}, {0.0f, 1.0f, 0.0f}, {-0.720307f, 0.0f, 0.693655f}, "p5671c1", 0 },
     { {35.0f, 31.0f, 416.0f}, {0.0f, 1.0f, 0.0f}, {2e-06, 0.0f, 1.0f}, "p2164a", 0 },
     { {-57.0f, 31.0f, 491.0f}, {0.0f, 1.0f, 0.0f}, {2e-06, 0.0f, 1.0f}, "p2139a", 0 },
@@ -264,7 +264,7 @@ struct pad padlist[] = {
 };
 
 
-struct pad3d pad3dlist[] = {
+BoundPadRecord pad3dlist[] = {
     { {-705.0f, -12.0f, 480.0f}, {-0.662449f, 0.033863f, -0.748342f}, {0.203025f, 0.969705f, -0.135843f}, "p5865c", 0, {-1.615254f, 1.708657f, -1.478706f, 27.776981f, -14.050579f, 45.816116f} },
     { {-740.0f, -10.0f, 440.0f}, {0.662449f, -0.033863f, 0.748342f}, {0.203025f, 0.969705f, -0.135843f}, "p5866c", 0, {-1.459784f, 1.902518f, -4.336241f, 25.581896f, -14.319309f, 45.548878f} },
     { {-428.0f, -11.0f, 544.0f}, {-0.267354f, 0.033863f, -0.963003f}, {0.009059f, 0.999426f, 0.032629f}, "p5839c", 0, {-2.194619f, 0.963556f, -1.097829f, 29.001957f, -13.987675f, 45.06302f} },
@@ -464,7 +464,7 @@ s32 path_indeces_1[] = { 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49,
 s32 path_indeces_2[] = { 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, -1 };
 s32 path_indeces_3[] = { 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, -1 };
 
-struct s_pathLink pathlist[] = {
+waygroup pathlist[] = {
     { &path_neighbors_0, &path_indeces_0, 0 },
     { &path_neighbors_1, &path_indeces_1, 0 },
     { &path_neighbors_2, &path_indeces_2, 0 },
