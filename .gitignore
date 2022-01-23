@@ -4,6 +4,7 @@ __pycache__/*
 .vscode/ipch/*
 .vscode/launch.json
 .vscode/settings.json
+.vscode/*
 *.rz
 *.tmp
 *.z64
