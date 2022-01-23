@@ -9,9 +9,9 @@
 struct deblistentry
 {
     struct deblistentry *next;
-    u32 data;
-    const char *name;
-    s32 unused;
+    void                *data;
+    const char          *name;
+    s32                  unused;
 };
 
 u8 g_DebBuffer[0x400];
@@ -52,7 +52,7 @@ u8 *debAllocate(s32 size) {
     #endif
 }
 
-void debAdd(const char *name, u32 data) {
+void debAdd(const char *name, void *data) {
     #ifndef VERSION_EU
     struct deblistentry *entry = debAllocate(sizeof(struct deblistentry));
     entry->next = g_DebList;

@@ -142,13 +142,21 @@ OBJECTS := $(RSPOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(OBSEGMENT)
 MIPSISET := -mips2 -32
 
 INCLUDE := -I . -I include -I include/ultra64 -I include/PR -I src -I src/game -I src/inflate
+# ignore warnings:
+# 609 : The number of arguments in the macro invocation does not match the definition - disabled because CPPLib uses "VarArgs" which wasnt invented till c99
+# 649 : Missing member name in structure / union                                      - used for "Inheritance"
+# 709 : Incompatible pointer type assignment                                          - could be fixed by casting, but implicit is fine.
+# 712 : illegal combination of pointer and integer                                    - could be fixed by casting, but implicit is fine.
+# 807 : member cannot be of function or incomplete type                               - Variable length structs
+# 838 : Microsoft extension (unnamed structs)                                         - used for "Inheritance" and member/array call swapping
+WOFF :=  -woff 609,649,709,712,807,838
 
 ifeq ($(IDO_RECOMP), NO)
   CC := $(QEMU_IRIX) -silent -L $(IRIX_ROOT) $(IRIX_ROOT)/usr/bin/cc
 else
   CC := $(IRIX_ROOT)/cc
 endif
-CFLAGS := -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 609,709,807,819,820,852,821,838,649 -signed $(INCLUDE) $(MIPSISET) $(LCDEFS) -DTARGET_N64
+CFLAGS := -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) $(WOFF) -signed $(INCLUDE) $(MIPSISET) $(LCDEFS) -DTARGET_N64
 
 LD := $(TOOLCHAIN)ld
 LD_SCRIPT := ge007.$(COUNTRYCODE).ld

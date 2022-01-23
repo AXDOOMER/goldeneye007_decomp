@@ -6,6 +6,7 @@
 #include "bg.h"
 #include "bondview.h"
 #include "fog.h"
+#include <limits.h>
 
 // internal struct
 struct FogDetails
@@ -75,7 +76,7 @@ s32 D_80044DC0 = 0;
 /**
  * Address 0x80044DC4.
 */
-f32 g_ScaledFarFogIntensity = 3.4028235e38;
+f32 g_ScaledFarFogIntensity = FLT_MAX;//3.4028235e38;
 
 /**
  * Address 0x80044DC8.
@@ -643,7 +644,7 @@ void fogLoadLevelEnvironment(s32 level_id, s32 arg1)
         num_players = 0;
     }
 
-    g_ScaledFarFogIntensity = 3.4028235e38f;
+    g_ScaledFarFogIntensity = FLT_MAX;
     g_ScaledDifferenceFromFarFogIntensity = 0.0f;
 
     if (arg1)

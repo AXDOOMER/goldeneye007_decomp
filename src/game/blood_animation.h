@@ -10,3 +10,4 @@ Gfx *sub_GAME_7F01C400(Gfx *gdl);
 Gfx *sub_GAME_7F01CA18(Gfx *gdl);
 
 #endif
+

@@ -35,6 +35,18 @@
 #    define ULONGLONG_MAX 18446744073709551615LLU        /* max "unsigned long long int" */
 #endif
 
+#define DBL_DIG 15                      /* digits of precision of a "double" */
+#define DBL_MAX 1.7976931348623157E+308 /* max decimal value of a "double"*/
+#define DBL_MIN 2.2250738585072014E-308 /* min decimal value of a "double"*/
+#define FLT_DIG 6                       /* digits of precision of a "float" */
+#ifdef __STDC__
+#    define FLT_MAX 3.40282347E+38F /* max decimal value of a "float" */
+#    define FLT_MIN 1.17549435E-38F /* min decimal value of a "float" */
+#else
+#    define FLT_MAX 3.40282347E+38 /* max decimal value of a "float" */
+#    define FLT_MIN 1.17549435E-38 /* min decimal value of a "float" */
+#endif                             /* __STDC__ */
+
 #endif
 
 #if 0

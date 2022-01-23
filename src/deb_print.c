@@ -302,8 +302,8 @@ void deboutDrawChar(s32 x, s32 y, unsigned char c)
  */
 void deboutSetBuffers(u16 *buffer1, u16 *buffer2)
 {
-    g_DebugOutputVideoBuffer1 = K0_TO_K1(buffer1);
-    g_DebugOutputVideoBuffer2 = K0_TO_K1(buffer2);
+    g_DebugOutputVideoBuffer1 = (void *)K0_TO_K1(buffer1);
+    g_DebugOutputVideoBuffer2 = (void *)K0_TO_K1(buffer2);
 }
 
 /**
@@ -328,7 +328,7 @@ void deboutDrawToBuffer(u16 *buffer)
     s32 x;
     s32 y;
     deboutInitBuffers();
-    g_DebugOutputVideoBuffer1 = K0_TO_K1(buffer); // overwrite cfba
+    g_DebugOutputVideoBuffer1 = (void *)K0_TO_K1(buffer); // overwrite cfba
     screen_w                  = ((viGetX() - 13) / 4);
     screen_h                  = ((viGetY() - 10) / 7);
     output_w                  = screen_w - 5; // - margin_w

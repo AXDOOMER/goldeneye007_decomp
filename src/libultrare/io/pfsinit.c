@@ -40,7 +40,7 @@ s32 __osPfsGetStatus(OSMesgQueue *queue, int channel)
     osRecvMesg(queue, &dummy, OS_MESG_BLOCK);
     ret = __osSiRawStartDma(OS_READ, &__osPfsPifRam);
     osRecvMesg(queue, &dummy, OS_MESG_BLOCK);
-    __osPfsGetInitData(&bitpattern, &data);
+    __osPfsGetInitData(&bitpattern, data);
 
     if ((data[channel].status & CONT_CARD_ON) && (data[channel].status & CONT_CARD_PULL))
     {

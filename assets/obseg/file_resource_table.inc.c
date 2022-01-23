@@ -885,3 +885,4 @@ struct fileentry file_resource_table[] = {
 //and easy to generate at compile time
 #define OBJ_INDEX_END OBENDSEG+1
 #define OBJ_INDEX_MAX OBENDSEG+10
+

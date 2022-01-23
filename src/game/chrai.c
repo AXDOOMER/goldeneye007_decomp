@@ -1244,7 +1244,7 @@ glabel jpt_actionblock_lengths
 glabel get_length_of_action_block #(CurrentActionByte)
 /* 06952C 7F0349FC 00851021 */  addu  $v0, $a0, $a1      #v0 = CurrentActionByte
 /* 069530 7F034A00 904E0000 */  lbu   $t6, ($v0)         #t6= Action = byte(v0)
-/* 069534 7F034A04 2DC100FD */  sltiu $at, $t6, 0xfd               #if not Action less than AI_CMDS_TOTAL
+/* 069534 7F034A04 2DC100FD */  sltiu $at, $t6, 0xfd               #if not Action less than AI_CMD_COUNT
 /* 069538 7F034A08 1020020B */  beqz  $at, ActionLengthSwitchElse  #   Action << 2
 /* 06953C 7F034A0C 000E7080 */   sll   $t6, $t6, 2                 #   return 1 //goto ActionLengthSwitchElse
 /* 069540 7F034A10 3C018005 */  lui   $at, %hi(jpt_actionblock_lengths)                  #else
@@ -2433,7 +2433,7 @@ void parse_handle_actionblocks(*s1, 1, 0) // s1 = AIListp, 1 = true? (a1 is alwa
 
         do
         {
-            if (cmd < AI_CMDS_TOTAL)
+            if (cmd < AI_CMD_COUNT)
             {
                 switch Byte(cmd)
                 case 0:
@@ -2874,7 +2874,7 @@ GetByteS1_ParseCommandByte_SwitchCase:								/*GetCommandByte(cmd)*/
 /* 06A0BC 7F03558C 922E0000 */  lbu   $t6, ($s1) #t6 = byte(s1)
 ParseCommandByte_SwitchCase:
 /* 06A0C0 7F035590 02C02025 */  move  $a0, $s6
-/* 06A0C4 7F035594 2DC100FD */  sltiu $at, $t6, 0xfd				# if Cmd !< AI_CMDS_TOTAL  then 
+/* 06A0C4 7F035594 2DC100FD */  sltiu $at, $t6, 0xfd				# if Cmd !< AI_CMD_COUNT  then 
 /* 06A0C8 7F035598 10201314 */  beqz  $at, GetCmdLength				#    Cmd<<2  goto GetCmdLength
 /* 06A0CC 7F03559C 000E7080 */   sll   $t6, $t6, 2
 /* 06A0D0 7F0355A0 3C018005 */  lui   $at, %hi(jpt_800524F8)
@@ -8741,7 +8741,7 @@ GetByteS1_ParseCommandByte_SwitchCase:								/*GetCommandByte(cmd)*/
 /* 06A0BC 7F03558C 922E0000 */  lbu   $t6, ($s1) #t6 = byte(s1)
 ParseCommandByte_SwitchCase:
 /* 06A0C0 7F035590 02C02025 */  move  $a0, $s6
-/* 06A0C4 7F035594 2DC100FD */  sltiu $at, $t6, 0xfd				# if Cmd !< AI_CMDS_TOTAL  then 
+/* 06A0C4 7F035594 2DC100FD */  sltiu $at, $t6, 0xfd				# if Cmd !< AI_CMD_COUNT  then 
 /* 06A0C8 7F035598 10201314 */  beqz  $at, GetCmdLength				#    Cmd<<2  goto GetCmdLength
 /* 06A0CC 7F03559C 000E7080 */   sll   $t6, $t6, 2
 /* 06A0D0 7F0355A0 3C018005 */  lui   $at, %hi(jpt_800524F8)
@@ -14609,7 +14609,7 @@ GetByteS1_ParseCommandByte_SwitchCase:								/*GetCommandByte(cmd)*/
 /* 06A0BC 7F03558C 922E0000 */  lbu   $t6, ($s1) #t6 = byte(s1)
 ParseCommandByte_SwitchCase:
 /* 06A0C0 7F035590 02C02025 */  move  $a0, $s6
-/* 06A0C4 7F035594 2DC100FD */  sltiu $at, $t6, 0xfd				# if Cmd !< AI_CMDS_TOTAL  then 
+/* 06A0C4 7F035594 2DC100FD */  sltiu $at, $t6, 0xfd				# if Cmd !< AI_CMD_COUNT  then 
 /* 06A0C8 7F035598 10201314 */  beqz  $at, GetCmdLength				#    Cmd<<2  goto GetCmdLength
 /* 06A0CC 7F03559C 000E7080 */   sll   $t6, $t6, 2
 /* 06A0D0 7F0355A0 3C018005 */  lui   $at, %hi(jpt_800524F8)
