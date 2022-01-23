@@ -5093,23 +5093,23 @@ void chrobjCallsApplySpeed(f32 *openPosition, f32 maxFrac, f32 *speedPtr, f32 ac
 {
     if (maxFrac - *openPosition < -M_PI_F)
     {
-        maxFrac += M_TAU;
+        maxFrac += M_TAU_F;
     }
     else if (maxFrac - *openPosition >= M_PI_F)
     {
-        maxFrac -= M_TAU;
+        maxFrac -= M_TAU_F;
     }
 
     chrobjApplySpeed(openPosition, maxFrac, speedPtr, accel, decel, maxSpeed);
 
     if (*openPosition < 0.0f)
     {
-        *openPosition = *openPosition + M_TAU;
+        *openPosition = *openPosition + M_TAU_F;
     }
 
-    if (*openPosition >= M_TAU)
+    if (*openPosition >= M_TAU_F)
     {
-        *openPosition = *openPosition - M_TAU;
+        *openPosition = *openPosition - M_TAU_F;
     }
 }
 

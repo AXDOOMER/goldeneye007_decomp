@@ -1404,11 +1404,11 @@ void chrlvInitActAttack(ChrRecord *arg0, struct anim_group_info **arg1, s32 arg2
 
     if (arg2 != 0)
     {
-        anim_index = (s32) ((((M_TAU - dist) * 32.0f) / M_TAU) + 0.5f);
+        anim_index = (s32) ((((M_TAU_F - dist) * 32.0f) / M_TAU_F) + 0.5f);
     }
     else
     {
-        anim_index = (s32) (((dist * 32.0f) / M_TAU) + 0.5f);
+        anim_index = (s32) (((dist * 32.0f) / M_TAU_F) + 0.5f);
     }
 
     if (anim_index >= 0x20)
@@ -3094,10 +3094,10 @@ s32 chrlvExplosionDamage(ChrRecord *arg0, coord3d *arg1, f32 damage, s32 arg3)
 
         if (atan < subroty)
         {
-            phi_f12 += M_TAU;
+            phi_f12 += M_TAU_F;
         }
 
-        sp40 = (s32) (((phi_f12 * 8.0f) / M_TAU) + 0.5f);
+        sp40 = (s32) (((phi_f12 * 8.0f) / M_TAU_F) + 0.5f);
 
         if (sp40 >= EXPLOSION_ANIMATION_TABLE_LEN)
         {
@@ -4607,8 +4607,8 @@ s32 chrlvMaybeSameRoom(ChrRecord *arg0, coord3d *arg1, StandTile *arg2)
     {
         df += M_TAU_F;
     }
-
-    if ((df < M_100_DEG_IN_RAD) || (df > M_260_DEG_IN_RAD))
+    // if NOT in rear left quadrant?
+    if ((df < DegToRad(100)) || (df > DegToRad(260)))
     {
         return check_if_position_in_same_room(arg0, arg1, arg2);
     }
@@ -4870,7 +4870,7 @@ s32 sub_GAME_7F029D70(ChrRecord *self)
     radChangeToFaceBond = rrr;
     if (atn < myRadDirection)
     {
-        radChangeToFaceBond = rrr + M_TAU;
+        radChangeToFaceBond = rrr + M_TAU_F;
     }
 
     if (chrlvSeenWithin600(self))
@@ -4885,13 +4885,13 @@ s32 sub_GAME_7F029D70(ChrRecord *self)
             /*within 220 degrees of forward and within range*/
             (
                 (vec2rd < (self->visionrange * self->visionrange * 100.0f * 100.0f))
-                && ((radChangeToFaceBond < M_110_DEG_IN_RAD) || (radChangeToFaceBond > M_250_DEG_IN_RAD))
+                && ((radChangeToFaceBond < DegToRad(110)) || (radChangeToFaceBond > DegToRad(250)))
             )
             ||
             /*or within clamped minimum of 200*/
             (
                 (vec2rd < (200 * 200))
-                && ((radChangeToFaceBond < M_110_DEG_IN_RAD) || (radChangeToFaceBond > M_250_DEG_IN_RAD))
+                && ((radChangeToFaceBond < DegToRad(110)) || (radChangeToFaceBond > DegToRad(250)))
             )
         )
         {
@@ -4900,18 +4900,18 @@ s32 sub_GAME_7F029D70(ChrRecord *self)
                 distance = (s32)((sqrtf(vec2rd) * 30.0f) / 16000.0f);
 
                 //Not facing bond
-                if ((radChangeToFaceBond > M_45_DEG_IN_RAD) && (radChangeToFaceBond < M_315_DEG_IN_RAD))
+                if ((radChangeToFaceBond > DegToRad(45)) && (radChangeToFaceBond < DegToRad(315.00001)))
                 {
                     f32 f0 = radChangeToFaceBond;
                     if (radChangeToFaceBond > M_PI_F)
                     {
                         //confine/wrap to half
-                        f0 = M_TAU - radChangeToFaceBond;
+                        f0 = M_TAU_F - radChangeToFaceBond;
                     }
 
-                    f0 -= M_45_DEG_IN_RAD;
+                    f0 -= DegToRad(45);
 
-                    distance *= (s32)((f0 * 24.0f) / M_TAU) + 1;
+                    distance *= (s32)((f0 * 24.0f) / M_TAU_F) + 1;
                 }
 
                 distance = chrlvGetGuard007SpeedRatingInt(self, distance) + 1;
@@ -5105,12 +5105,12 @@ bool actor_steps_sideways(ChrRecord *self)
 
         if (myRadDirectionToBond < myRadDirection) //avoid negative radians
         {
-            myNormalizedRadToBond = radChangeToFaceBond + M_TAU;
+            myNormalizedRadToBond = radChangeToFaceBond + M_TAU_F;
         }
 
-        if ((myNormalizedRadToBond < M_45_DEG_IN_RAD)                                             /*0-45*/
-            || (myNormalizedRadToBond > M_315_DEG_IN_RAD)                                          /*-45-0*/
-            || ((myNormalizedRadToBond > M_135_DEG_IN_RAD) && (myNormalizedRadToBond < M_225_DEG_IN_RAD)) /*135-225*/
+        if ((myNormalizedRadToBond < DegToRad(45))                                             /*0-45*/
+            || (myNormalizedRadToBond > DegToRad(315.00001))                                          /*-45-0*/
+            || ((myNormalizedRadToBond > DegToRad(135)) && (myNormalizedRadToBond < DegToRad(225.00001))) /*135-225*/
         )
         {
             HopDirection = (randomGetNext() & 1) == 0;         //Hop Left or Right
@@ -5162,15 +5162,15 @@ bool actor_hops_sideways(ChrRecord *self)
 
         if (myRadDirectionToBond < myRadDirection) //avoid negative radians
         {
-            myNormalizedRadToBond = radChangeToFaceBond + M_TAU;
+            myNormalizedRadToBond = radChangeToFaceBond + M_TAU_F;
         }
 
         /*DegToRad(45)*/
-        if ((myNormalizedRadToBond < M_45_DEG_IN_RAD)            
+        if ((myNormalizedRadToBond < DegToRad(45))            
             /*DegToRad(360-45)*/
-            || (myNormalizedRadToBond > M_315_DEG_IN_RAD)                 
+            || (myNormalizedRadToBond > DegToRad(315.00001))                 
             /*DegToRad(180-45) && DegToRad(180+45)*/
-            || ((myNormalizedRadToBond > M_135_DEG_IN_RAD) && (myNormalizedRadToBond < M_225_DEG_IN_RAD))
+            || ((myNormalizedRadToBond > DegToRad(135)) && (myNormalizedRadToBond < DegToRad(225.00001)))
         )
         {
             HopDirection = (randomGetNext() & 1) == 0;         //Hop Left or Right
@@ -5646,11 +5646,11 @@ void chrlvTickStand(ChrRecord *arg0)
             temp_f0 = subroty;
             for (i = 0; i < 8; i++)
             {
-                temp_f0 += M_45_DEG_IN_RAD;
+                temp_f0 += DegToRad(45);
                 
-                if (temp_f0 >= M_TAU)
+                if (temp_f0 >= M_TAU_F)
                 {
-                    temp_f0 -= M_TAU;
+                    temp_f0 -= M_TAU_F;
                 }
 
                 sp74[i] = chrlvPathingCollisionRelated(arg0->prop, temp_f0, 1000.0f, 0, 0.0f, 1.0f);
@@ -5715,14 +5715,14 @@ void chrlvTickStand(ChrRecord *arg0)
             if (index >= 0)
             {
                 i = sp44[index];
-                temp_f0 = ((f32)i * M_TAU * 0.125f) + subroty;
+                temp_f0 = ((f32)i * M_TAU_F * 0.125f) + subroty;
                 
-                if (temp_f0 >= M_TAU)
+                if (temp_f0 >= M_TAU_F)
                 {
-                    temp_f0 -= M_TAU;
+                    temp_f0 -= M_TAU_F;
                 }
                 
-                check_set_actor_standing_still(arg0, 0x10, (s32) ((temp_f0 * M_U16_MAX_VALUE_F) / M_TAU));
+                check_set_actor_standing_still(arg0, 0x10, (s32) ((temp_f0 * M_U16_MAX_VALUE_F) / M_TAU_F));
             }
             else
             {
@@ -6369,13 +6369,13 @@ f32 chrlvGetSubrotySideback(ChrRecord *arg0)
     ret = getsubroty(model) + arg0->aimsideback;
     phi_f12 = 0.0f;
 
-    if (ret >= M_TAU)
+    if (ret >= M_TAU_F)
     {
-        ret = ret - M_TAU;
+        ret = ret - M_TAU_F;
     }
     else if (ret < 0.0f)
     {
-        ret = ret + M_TAU;
+        ret = ret + M_TAU_F;
     }
 
     if ((arg0->actiontype == ACT_ATTACK) || (arg0->actiontype == ACT_ATTACKROLL))
@@ -6394,14 +6394,14 @@ f32 chrlvGetSubrotySideback(ChrRecord *arg0)
     {
         if (arg0->model->gunhand != GUNRIGHT)
         {
-            phi_f12 = M_TAU - phi_f12;
+            phi_f12 = M_TAU_F - phi_f12;
         }
 
         ret = ret + phi_f12;
 
-        if (ret >= M_TAU)
+        if (ret >= M_TAU_F)
         {
-            ret = ret - M_TAU;
+            ret = ret - M_TAU_F;
         }
     }
 
@@ -6421,7 +6421,7 @@ f32 sub_GAME_7F02C27C(ChrRecord *arg0)
     temp_f2 = arg0->aimuprshoulder + arg0->aimupback;
     if (temp_f2 < 0.0f)
     {
-        temp_f2 = temp_f2 + M_TAU;
+        temp_f2 = temp_f2 + M_TAU_F;
     }
 
     return temp_f2;
@@ -6472,15 +6472,15 @@ s32 chrlvSetSubroty(ChrRecord *arg0, s32 arg1, f32 arg2, f32 arg3, f32 arg4)
 
         if (dist < 0.0f)
         {
-            dist = dist + M_TAU;
+            dist = dist + M_TAU_F;
         }
 
-        if ((dist < temp_f14) || ((M_TAU - temp_f14) < dist))
+        if ((dist < temp_f14) || ((M_TAU_F - temp_f14) < dist))
         {
             roty += dist;
-            if (roty >= M_TAU)
+            if (roty >= M_TAU_F)
             {
-                roty -= M_TAU;
+                roty -= M_TAU_F;
             }
 
             setsubroty(model, roty);
@@ -6489,9 +6489,9 @@ s32 chrlvSetSubroty(ChrRecord *arg0, s32 arg1, f32 arg2, f32 arg3, f32 arg4)
         else if (dist < M_PI_F)
         {
             roty += temp_f14;
-            if (roty >= M_TAU)
+            if (roty >= M_TAU_F)
             {
-                roty -= M_TAU;
+                roty -= M_TAU_F;
             }
 
             setsubroty(model, roty);
@@ -6502,7 +6502,7 @@ s32 chrlvSetSubroty(ChrRecord *arg0, s32 arg1, f32 arg2, f32 arg3, f32 arg4)
             
             if (roty < 0.0f)
             {
-                roty += M_TAU;
+                roty += M_TAU_F;
             }
 
             setsubroty(model, roty);
@@ -6665,7 +6665,7 @@ s32 chrlvUpdateAimendsideback(ChrRecord *arg0, struct weapon_firing_animation_ta
 
             if (sp164 >= M_PI_F)
             {
-                sp164 = sp164 - M_TAU;
+                sp164 = sp164 - M_TAU_F;
             }
         }
 
@@ -6758,7 +6758,7 @@ s32 chrlvUpdateAimendsideback(ChrRecord *arg0, struct weapon_firing_animation_ta
             calc_aimendsideback = t1 - subroty;
             if (t1 < subroty)
             {
-                calc_aimendsideback = t1 - subroty + M_TAU;
+                calc_aimendsideback = t1 - subroty + M_TAU_F;
             }
 
             temp_v0_4 = (struct modeldata_root*)extract_id_from_object_structure_microcode(arg0->model, arg0->model->obj->RootNode);
@@ -6769,35 +6769,35 @@ s32 chrlvUpdateAimendsideback(ChrRecord *arg0, struct weapon_firing_animation_ta
 
                 if (calc_aimendsideback < 0.0f)
                 {
-                    calc_aimendsideback = calc_aimendsideback + M_TAU;
+                    calc_aimendsideback = calc_aimendsideback + M_TAU_F;
                 }
 
-                if (calc_aimendsideback >= M_TAU)
+                if (calc_aimendsideback >= M_TAU_F)
                 {
-                    calc_aimendsideback = calc_aimendsideback - M_TAU;
+                    calc_aimendsideback = calc_aimendsideback - M_TAU_F;
                 }
             }
 
             if ((attack_type & 1) && ((attack_type & 0x60) == 0))
             {
-                t1 = (((f32) ((s32) ((s32) ((f32) g_GlobalTimer * arg0->model->unka4) + arg0->chrnum) % 60) * M_TAU) / 60.0f);
+                t1 = (((f32) ((s32) ((s32) ((f32) g_GlobalTimer * arg0->model->unka4) + arg0->chrnum) % 60) * M_TAU_F) / 60.0f);
                 t1 = sinf(t1) * (chrlvGetAimLimitAngle(dxdydz_square) * 0.5f);
                 calc_aimendsideback += t1;
 
                 if (calc_aimendsideback < 0.0f)
                 {
-                    calc_aimendsideback = calc_aimendsideback + M_TAU;
+                    calc_aimendsideback = calc_aimendsideback + M_TAU_F;
                 }
 
-                if (calc_aimendsideback >= M_TAU)
+                if (calc_aimendsideback >= M_TAU_F)
                 {
-                    calc_aimendsideback = calc_aimendsideback - M_TAU;
+                    calc_aimendsideback = calc_aimendsideback - M_TAU_F;
                 }
             }
 
             if (calc_aimendsideback >= M_PI_F)
             {
-                calc_aimendsideback = calc_aimendsideback - M_TAU;
+                calc_aimendsideback = calc_aimendsideback - M_TAU_F;
             }
 
             calc_aimendsideback += arg0->aimsideback;
@@ -7084,14 +7084,14 @@ void chrlvUpdateShotbondsum(ChrRecord *arg0, s32 *arg1, s32 *arg2, ITEM_IDS item
 
     if (phi_f2 < 0.0f)
     {
-        phi_f2 += M_TAU;
+        phi_f2 += M_TAU_F;
     }
 
     phi_v1 = (phi_f2 < limit_angle);
 
     if ((phi_f2 < limit_angle) == 0)
     {
-        phi_v1 = ((M_TAU - limit_angle) < phi_f2);
+        phi_v1 = ((M_TAU_F - limit_angle) < phi_f2);
     }
 
     *arg1 = phi_v1;
@@ -8976,14 +8976,14 @@ s32 chrlvApplySpeed(ChrRecord *self, coord3d *arg1, s32 arg2, f32 *speedPtr)
 
     if (maxFrac < openPosition)
     {
-        phi_f2 = phi_f2 + M_TAU;
+        phi_f2 = phi_f2 + M_TAU_F;
     }
 
     f0f0 = phi_f2;
 
     if (phi_f2 > M_PI_F)
     {
-        f0f0 = M_TAU - phi_f2;
+        f0f0 = M_TAU_F - phi_f2;
     }
 
     if (arg2 == 2)
@@ -9955,7 +9955,7 @@ s32 sub_GAME_7F03130C(
 
     if (arg4 * norm > 1.0f)
     {
-        phi_f12 = M_45_DEG_IN_RAD;
+        phi_f12 = DegToRad(45);
     }
     else
     {
@@ -9964,7 +9964,7 @@ s32 sub_GAME_7F03130C(
 
     if ((arg2 == 0) && (phi_f12 != 0.0f))
     {
-        phi_f12 = M_TAU - phi_f12;
+        phi_f12 = M_TAU_F - phi_f12;
     }
 
     sp50.f[0] = (-cosf(phi_f12) * dd.f[0]) + (sinf(phi_f12) * dd.f[2]);
@@ -10158,12 +10158,12 @@ void chrlvTravelTick(ChrRecord *arg0, coord3d *arg1, StandTile *arg2, struct way
 
             if (atan_pos2_a < 0.0f)
             {
-                atan_pos2_a = atan_pos2_a + M_TAU;
+                atan_pos2_a = atan_pos2_a + M_TAU_F;
             }
 
             if (atan_pos2_a >= M_PI_F)
             {
-                atan_pos2_a = atan_pos2_a - M_TAU;
+                atan_pos2_a = atan_pos2_a - M_TAU_F;
             }
 
             if (atan_pos2_a < 0.0f)
@@ -10173,12 +10173,12 @@ void chrlvTravelTick(ChrRecord *arg0, coord3d *arg1, StandTile *arg2, struct way
 
             if (atan_pos3_a < 0.0f)
             {
-                atan_pos3_a = atan_pos3_a + M_TAU;
+                atan_pos3_a = atan_pos3_a + M_TAU_F;
             }
 
             if (atan_pos3_a >= M_PI_F)
             {
-                atan_pos3_a = atan_pos3_a - M_TAU;
+                atan_pos3_a = atan_pos3_a - M_TAU_F;
             }
 
             if (atan_pos3_a < 0.0f)
@@ -10200,11 +10200,11 @@ void chrlvTravelTick(ChrRecord *arg0, coord3d *arg1, StandTile *arg2, struct way
 
                     if (atan_pos2_b < 0.0f)
                     {
-                        atan_pos2_b = atan_pos2_b + M_TAU;
+                        atan_pos2_b = atan_pos2_b + M_TAU_F;
                     }
                     if (atan_pos2_b >= M_PI_F)
                     {
-                        atan_pos2_b = atan_pos2_b - M_TAU;
+                        atan_pos2_b = atan_pos2_b - M_TAU_F;
                     }
                     if (atan_pos2_b < 0.0f)
                     {
@@ -10213,11 +10213,11 @@ void chrlvTravelTick(ChrRecord *arg0, coord3d *arg1, StandTile *arg2, struct way
 
                     if (atan_pos3_b < 0.0f)
                     {
-                        atan_pos3_b = atan_pos3_b + M_TAU;
+                        atan_pos3_b = atan_pos3_b + M_TAU_F;
                     }
                     if (atan_pos3_b >= M_PI_F)
                     {
-                        atan_pos3_b = atan_pos3_b - M_TAU;
+                        atan_pos3_b = atan_pos3_b - M_TAU_F;
                     }
                     if (atan_pos3_b < 0.0f)
                     {
@@ -10245,11 +10245,11 @@ void chrlvTravelTick(ChrRecord *arg0, coord3d *arg1, StandTile *arg2, struct way
                     
                     if (atan_pos2_c < 0.0f)
                     {
-                        atan_pos2_c = atan_pos2_c + M_TAU;
+                        atan_pos2_c = atan_pos2_c + M_TAU_F;
                     }
                     if (atan_pos2_c >= M_PI_F)
                     {
-                        atan_pos2_c = atan_pos2_c - M_TAU;
+                        atan_pos2_c = atan_pos2_c - M_TAU_F;
                     }
                     if (atan_pos2_c < 0.0f)
                     {
@@ -10258,11 +10258,11 @@ void chrlvTravelTick(ChrRecord *arg0, coord3d *arg1, StandTile *arg2, struct way
 
                     if (atan_pos3_c < 0.0f)
                     {
-                        atan_pos3_c = atan_pos3_c + M_TAU;
+                        atan_pos3_c = atan_pos3_c + M_TAU_F;
                     }
                     if (atan_pos3_c >= M_PI_F)
                     {
-                        atan_pos3_c = atan_pos3_c - M_TAU;
+                        atan_pos3_c = atan_pos3_c - M_TAU_F;
                     }
                     if (atan_pos3_c < 0.0f)
                     {
@@ -10813,7 +10813,7 @@ f32 get_distance_actor_to_position(ChrRecord *self, coord3d *pos)
 
     if (angle < radMyHeading)
     {
-        radToPos = radToPos + M_TAU;
+        radToPos = radToPos + M_TAU_F;
     }
 
     return radToPos;
@@ -10898,7 +10898,7 @@ f32 chrGetAngleFromBond(ChrRecord *self)
 
     if (angle < radBondHeading)
     {
-        radFromBond = radFromBond + M_TAU;
+        radFromBond = radFromBond + M_TAU_F;
     }
 
     return radFromBond;
@@ -11567,10 +11567,10 @@ s32 sub_GAME_7F033780(waypoint *arg0, coord3d *arg1, f32 angle)
 
     if (angle < temp_f0)
     {
-        ff += M_TAU;
+        ff += M_TAU_F;
     }
 
-    if ((ff < M_90_DEG_IN_RAD) || (ff > M_270_DEG_IN_RAD))
+    if ((ff < DegToRad(90)) || (ff > DegToRad(270)))
     {
         return 1;
     }
@@ -11617,20 +11617,20 @@ s32 chrlvFindPathNeighborRelated(coord3d *bondpos, StandTile *stan, f32 rot, u8 
                 break;
 
             case QUADRANT_SIDE1:
-                rot = rot + M_90_DEG_IN_RAD;
+                rot = rot + DegToRad(90);
                 break;
 
             case QUADRANT_SIDE2:
-                rot = rot + M_270_DEG_IN_RAD;
+                rot = rot + DegToRad(270);
                 break;
 
             case QUADRANT_FRONT:
                 break;
         }
 
-        if (rot >= M_TAU)
+        if (rot >= M_TAU_F)
         {
-            rot = rot - M_TAU;
+            rot = rot - M_TAU_F;
         }
 
         if (sub_GAME_7F033780(waypoint, bondpos, rot))
@@ -11957,9 +11957,9 @@ bool sub_GAME_7F033F48(coord3d *pos, StandTile **arg1, f32 facing, bool b)
 
         facing += 0.7853982f;
 
-        if (facing >= M_TAU) //clamp to 1 revolution
+        if (facing >= M_TAU_F) //clamp to 1 revolution
         {
-            facing -= M_TAU;
+            facing -= M_TAU_F;
         }
     }
 

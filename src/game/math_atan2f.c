@@ -28,7 +28,7 @@ f32 atan2f(f32 y, f32 x)
         if (x < y) {
             angle = acosf(x / angle);
             if (y < 0.0f) {
-                angle = M_TAU - angle;
+                angle = M_TAU_F - angle;
             }
         } else {
             angle = M_HALF_PI - acosf(y / angle);
@@ -36,7 +36,7 @@ f32 atan2f(f32 y, f32 x)
                 angle = M_PI_F - angle;
             }
             if (angle < 0.0f) {
-                angle += M_TAU;
+                angle += M_TAU_F;
             }
         }
     }

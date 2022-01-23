@@ -1,17 +1,16 @@
+/*
+ * THIS FILE IS AN OS FILE (include\PR\rmon.h)
+ * needs moving to libultrare since its modified
+ * apparently they ifdeffed out func contents rather than while file?
+ */
 #ifndef _RMON_H_
 #define _RMON_H_
-
-#ifdef DEBUG
-    #define ISFINALBUILD 0
-#else
-    #define ISFINALBUILD 1
-#endif
 
 void rmonMain(void);
 s32 rmonIsFinalBuild(void);
 s32 rmonStatus(void);
 void osWriteHost(void * arg0, u32 arg1);
 void osReadHost(void * arg0, u32 arg1);
-s32 osSyncPrintf(const char *fmt, ...);
+void osSyncPrintf(const char *fmt, ...);
 
 #endif

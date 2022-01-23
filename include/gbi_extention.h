@@ -7,7 +7,7 @@
  * changes should the OS ever be updated.
  */
 
-#ifdef TRI4
+#ifdef TRI4_Ext
 #    define G_TRI4 (G_IMMFIRST - 14)
 #    define G_SETTEX 0xc0 /*   0 */
 #endif
@@ -37,7 +37,7 @@
 #define G_RM_CUSTOM_AA_ZB_XLU_SURF2 RM_CUSTOM_AA_ZB_XLU_SURF(2)
 
 
-#ifdef TRI4
+#ifdef TRI4_Ext
 /***
  ***  4 Triangles
  ***/

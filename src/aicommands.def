@@ -8309,7 +8309,7 @@ _AI_CMD(
     {
         AIRecord * ai = AiListp + Offset;
         f32       speedtime = ai->val[3] | (ai->val[2] << 8);
-        f32       speedaim = (ai->val[1] | (ai->val[0] << 8)) * M_TAU / 3600.0f;
+        f32       speedaim = (ai->val[1] | (ai->val[0] << 8)) * M_TAU_F / 3600.0f;
         if (AircraftEntityp)
         {
             AircraftEntityp->rotaryspeedaim = speedaim;
@@ -9640,8 +9640,8 @@ _AI_CMD(
         speed = ai->val[11] | ai->val[10] << 8;
         dword_CODE_bss_800799F8 = NULL;
         dword_CODE_bss_800799FC = NULL;
-        flt_CODE_bss_80079A00 = (speed * M_TAU) / 65536.0f; 
-        flt_CODE_bss_80079A04 = (a * M_TAU) / 65536.0f;
+        flt_CODE_bss_80079A00 = (speed * M_TAU_F) / 65536.0f; 
+        flt_CODE_bss_80079A04 = (a * M_TAU_F) / 65536.0f;
         flt_CODE_bss_80079A08 = b;
         flt_CODE_bss_80079A0C = height; 
         flt_CODE_bss_80079A10 = c;

@@ -39,7 +39,7 @@ extern "C" {
 
 #else
 
-extern s32		osSyncPrintf(const char *fmt, ...);
+extern void		osSyncPrintf(const char *fmt, ...);
 #define assert(EX)  if(!(EX))osSyncPrintf("\n--- ASSERTION FAULT - %s - %s, line %d\n\n", # EX , __FILE__, __LINE__)
 
 // extern void __assert(const char *, const char *, int);

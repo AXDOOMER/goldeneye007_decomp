@@ -32,7 +32,7 @@ void osViSetSpecialFeatures(u32 func){
         __osViNext->control &= ~VI_CTRL_DITHER_FILTER_ON;
         __osViNext->control |= __osViNext->modep->comRegs.ctrl & VI_CTRL_ANTIALIAS_MASK;
     }
-    __osViNext->state |= VI_STATE_08;
+    __osViNext->state |= VI_STATE_CONTROL;
 
     __osRestoreInt(saveMask);
 }
