@@ -111,8 +111,8 @@ struct Model *makeonebody(s32 arg0, s32 arg1, struct ModelFileHeader *arg2, stru
     return arg5;
 }
 
-
-Model * setup_chr_instance(int body,int head,ModelFileHeader *body_header, ModelFileHeader *head_header,int sunglasses)
+//sub_GAME_7F0234A8
+Model *setup_chr_instance(int body,int head,ModelFileHeader *body_header, ModelFileHeader *head_header,int sunglasses)
 {
   return makeonebody(body,head,body_header,head_header,sunglasses,0x0);
 }

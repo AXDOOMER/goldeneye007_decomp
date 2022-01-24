@@ -72,11 +72,14 @@
 /* Gets the angle in radians represented by a byte */
 #define ByteToRadian(Byte)    ((Byte * M_TAU_F) * (1.0f / 256.0f))
 
-/*
-  Inline Abs function - Not Needed, Compiler does this automatically
- */
-#define ABS_F(val)    (val) < 0 ? (float)(val) + 4294967296.0f /* -1.0f */ : (float)(val)
-#define ABS(x)        ((x) < 0 ? -(x) : (x))
+/* Macro Versions of functions */
+
+#define ABS(x)    ((x) < 0 ? -(x) : (x))          /* absolute value of x */
+#define SGN(x)    ((x) < 0 ? -1 : (x) > 0 ? 1 : 0)/* sign of x */
+#define MIN(x, y) ((x) < (y) ? (x) : (y))         /* minimum of x and y */
+#define MAX(x, y) ((x) > (y) ? (x) : (y))         /* maximum of x and y */
+#define SQR(x)    ((x) * (x))                     /* square of x */
+
 /**
  * 0.1f
 */

@@ -1119,7 +1119,7 @@ typedef union
 #endif
         } ItemModelFileRecord;
 
-        struct ChrModelFileRecord
+        typedef struct ChrModelFileRecord
         {
             ModelFileHeader *header;
             char            *filename;
@@ -1132,7 +1132,7 @@ typedef union
 #ifdef DEBUG
             char           **SwitchNames;
 #endif
-        };
+        } ChrModelFileRecord;
         /*
         typedef struct GunModelFileRecord
         {

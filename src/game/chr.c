@@ -7458,7 +7458,7 @@ PropRecord *is_weapon_in_guarddata_hand(ChrRecord *self, GUNHAND hand)
  * 
  * Address 0x7F02308C.
  */
-void chrUpdateCollisionBounds(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *y_out, f32 *ground)
+void chrUpdateCollisionBounds(PropRecord *arg0, rect4f **arg1, s32 *arg2, f32 *y_out, f32 *ground)
 {
     ChrRecord *chr;
 
@@ -7472,6 +7472,8 @@ void chrUpdateCollisionBounds(PropRecord *arg0, struct rect4f **arg1, s32 *arg2,
     {
         *arg2 = 4;
         *arg1 = &chr->collision_bounds;
+
+        //collision box is a diamond around chr
 
         chr->collision_bounds.f[0] = arg0->pos.x + chr->chrwidth;
         chr->collision_bounds.f[1] = arg0->pos.z;

@@ -3,11 +3,52 @@
 ### Default target ###
 default: all
 
+#(call DrawProgressBar,Percent)
+# OR
+#(call DrawProgressBar,NumberOfItemsDone,TotalNumberOfItems)
+DrawProgressBar =\
+	{\
+		$(if $(2), if [ "$(1)" -ne "$(2)" ]; then percent=`expr 100 / $(2) `; _pdone=`expr $$percent \* $(1)`; else _pdone=100; fi ,_pdone=$(1));\
+		pdone=`expr $$_pdone \* 76 / 100`; \
+		pdoneb=0; \
+		printf "\033[1;37;47m%80s\r\033[1;44m" " "; \
+		if [ "$$pdone" -lt "40" ]; \
+		then \
+			printf "%$${pdone}s"; \
+			printf "\033[47m"; \
+			pdoneb=`expr 38 - $$pdone`; \
+			printf "%$${pdoneb}s%3d%% \r" "" $$_pdone; \
+		else \
+			pdoneb=`expr $$pdone - 38`; \
+			printf "%38s%3d%%%$${pdoneb}s" "" $$_pdone; \
+			printf "\r"; \
+		fi; \
+		printf "\033[0m";\
+	}\
+
+OrigDrawProgressBar =\
+	{\
+		pbar="[";\
+		$(if $(2), if [ "$(1)" -ne "$(2)" ]; then percent=`expr 100 / $(2) `; _pdone=`expr $$percent \* $(1)`; else _pdone=100; fi ,_pdone=$(1));\
+		pdone=`expr $$_pdone / 4`;\
+		for i in $$(seq 0 $$pdone);\
+		do \
+			pbar="$${pbar}=";\
+		done;\
+		for i in $$(seq $$pdone 24);\
+		do \
+			pbar="$$pbar ";\
+		done;\
+		printf "$$pbar]%3d%%\r" "" "$$_pdone";\
+	}
+
+
 ### Build Options ###
 # Version of the game to build
 FINAL := YES
 VERSION := US
 IDO_RECOMP := NO
+VERBOSE := 0
 # If COMPARE is 1, check the output sha1sum when building 'all'
 COMPARE := 1
 
@@ -172,9 +213,16 @@ ASM_PREPROC := python3 tools/asmpreproc/asm-processor.py
 OBJCOPY := $(TOOLCHAIN)objcopy
 
 all: $(APPROM)
+	@$(call DrawProgressBar,100)
 ifeq ($(COMPARE),1)
+	@echo "\n"
 	@$(SHA1SUM) -c ge007.$(COUNTRYCODE).sha1
+	@printf "\033[5;42;1;37m%80s\n" "|"
+	@printf "%43s%37s\n%80s\n" "MATCH!" "|"	"|" 
+	@# beep
+	@echo -ne '\007\033[0;0m'
 endif
+	@echo "\n Rom File Generated in Build Directory. \n\n"
 .SECONDARY:
 	$(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
@@ -206,9 +254,19 @@ libultraclean:
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
 	$(ULTRAOBJECTS)
 
+
 codeclean:
+ifeq ($(VERBOSE),1)
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(RSPOBJECTS)
+else
+	@clear
+	@rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map
+	@$(call DrawProgressBar,50)
+	@rm -f $(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(RSPOBJECTS)
+	@$(call DrawProgressBar,100)
+endif
+	@echo "\n\n Code Binaries Cleared! Make will Re-Build these next time.\n"
 
 dataclean: 
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
@@ -216,40 +274,65 @@ dataclean:
 	$(STAN_BUILD_FILES) $(SETUP_BUILD_FILES)
 
 clean:
+ifeq ($(VERBOSE),1)
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) $(RSPOBJECTS) \
 	$(STAN_BUILD_FILES) $(SETUP_BUILD_FILES)
+else
+	@clear
+	@$(call DrawProgressBar,0)
+	@rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map
+	@$(call DrawProgressBar,1,4)
+	@rm -f $(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS)
+	@$(call DrawProgressBar,2,4)
+	@rm -f $(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS)
+	@$(call DrawProgressBar,3,4)
+	@rm -f $(IMAGE_OBJS) $(MUSIC_RZ_FILES) $(RSPOBJECTS) $(STAN_BUILD_FILES) $(SETUP_BUILD_FILES)
+	@$(call DrawProgressBar,100)
+endif
+	@echo "\n\n All Code and Data Binaries Cleared! Make will Re-Build these next time.\n"
+
 
 $(BUILD_DIR)/rsp/%.bin: rsp/*.s
 	$(ARMIPS) -sym $@.sym -strequ CODE_FILE $(BUILD_DIR)/rsp/$*.bin -strequ DATA_FILE $(BUILD_DIR)/rsp/$*_data.bin $<
+# @$(call DrawProgressBar,1,15)
 
 $(BUILD_DIR)/%.o: src/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
+# @$(call DrawProgressBar,2,15)
 
 $(BUILD_DIR)/src/%.o: src/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
+# @$(call DrawProgressBar,3,15)
 
 $(BUILD_DIR)/assets/%.o: assets/%.c
 	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
 	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
+# @$(call DrawProgressBar,4,15)
 
 $(BUILD_DIR)/assets/%.o: assets/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
+# @$(call DrawProgressBar,5,15)
 
 $(BUILD_DIR)/src/rspboot.o: $(BUILD_DIR)/rsp/rspboot.bin 
+# @$(call DrawProgressBar,6,15)
 
 $(BUILD_DIR)/assets/ramrom/%.o: assets/ramrom/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
+# @$(call DrawProgressBar,7,15)
 
 $(BUILD_DIR)/assets/font/%.o: assets/font/%.c
 	$(CC) -c $(CFLAGS) -o $@ $(OPTIMIZATION) $<
+# @$(call DrawProgressBar,8,15)
 
 $(BUILD_DIR)/assets/obseg/%.o: assets/obseg/%.s $(OBSEG_RZ)
 	$(AS) $(ASFLAGS) -o $@ $<
+# @$(call DrawProgressBar,9,15)
 
 $(BUILD_DIR)/assets/images/split/%.o: assets/images/split/%.bin
 	$(LD) -r -b binary $< -o $@
+# @$(call DrawProgressBar,10,15)
 
 #$(BUILD_DIR)/src/random.o: OPTIMIZATION := -O3
 #$(BUILD_DIR)/src/random.o: INCLUDE := -I . -I include -I include/PR
@@ -260,16 +343,20 @@ $(BUILD_DIR)/assets/images/split/%.o: assets/images/split/%.bin
 $(BUILD_DIR)/%.o: src/%.c
 	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
 	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
+# @$(call DrawProgressBar,11,15)
 
 $(BUILD_DIR)/src/%.o: src/%.c
 	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
 	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
+# @$(call DrawProgressBar,12,15)
 
 $(BUILD_DIR)/$(OBSEGMENT): $(OBSEG_RZ) $(IMAGE_OBJS)
+# @$(call DrawProgressBar,13,15)
 	
 
 $(APPELF): $(RSPOBJECTS) $(ULTRAOBJECTS) $(HEADEROBJECTS) $(OBSEG_RZ) $(BUILD_DIR)/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(ASSET_DATAOBJECTS) $(ROMOBJECTS2) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS)
 	$(LD) $(LDFLAGS) -o $@ 
+# @$(call DrawProgressBar,14,15)
 
 $(APPBIN): $(APPELF)
 	$(OBJCOPY) $< $@ -O binary --gap-fill=0xff
@@ -324,24 +411,6 @@ AI_CMD_LIST_H2_HEADER := \
 *                                                                            *\n\
 *****************************************************************************/\n\n"
 
-#(call DrawProgressBar,Percent)
-# OR
-#(call DrawProgressBar,NumberOfItemsDone,TotalNumberOfItems)
-DrawProgressBar =\
-	{\
-		pbar="[";\
-		$(if $(2), if [ "$(1)" -ne "$(2)" ]; then percent=`expr 100 / $(2) `; _pdone=`expr $$percent \* $(1)`; else _pdone=100; fi ,_pdone=$(1));\
-		pdone=`expr $$_pdone / 4`;\
-		for i in $$(seq 0 $$pdone);\
-		do \
-			pbar="$${pbar}=";\
-		done;\
-		for i in $$(seq $$pdone 24);\
-		do \
-			pbar="$$pbar ";\
-		done;\
-		printf "$$pbar]%3d%%\r" "$$_pdone";\
-	}
 
 cmdbuilder:
 	@clear
