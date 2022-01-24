@@ -3687,7 +3687,7 @@ glabel sub_GAME_7F05EC1C
 /* 093780 7F05EC50 00000000 */   nop
 /* 093784 7F05EC54 3C048008 */  lui   $a0, %hi(g_CurrentPlayer)
 /* 093788 7F05EC58 00408025 */  move  $s0, $v0
-/* 09378C 7F05EC5C 0FC225DE */  jal   bondviewGetPlayerClippingHeight
+/* 09378C 7F05EC5C 0FC225DE */  jal   bondviewGetPlayerStanHeight
 /* 093790 7F05EC60 8C84A0B0 */   lw    $a0, %lo(g_CurrentPlayer)($a0)
 /* 093794 7F05EC64 AFA000B0 */  sw    $zero, 0xb0($sp)
 /* 093798 7F05EC68 C60C000C */  lwc1  $f12, 0xc($s0)
@@ -6942,7 +6942,7 @@ weapon_bullet_type_shotgun_mine:
 /* 096320 7F0617F0 3C048008 */  lui   $a0, %hi(g_CurrentPlayer)
 /* 096324 7F0617F4 53200046 */  beql  $t9, $zero, .L7F061910
 /* 096328 7F0617F8 8FBF0034 */   lw    $ra, 0x34($sp)
-/* 09632C 7F0617FC 0FC225DE */  jal   bondviewGetPlayerClippingHeight
+/* 09632C 7F0617FC 0FC225DE */  jal   bondviewGetPlayerStanHeight
 /* 096330 7F061800 8C84A0B0 */   lw    $a0, %lo(g_CurrentPlayer)($a0)
 /* 096334 7F061804 44050000 */  mfc1  $a1, $f0
 /* 096338 7F061808 0FC1A142 */  jal   sub_GAME_7F068508
@@ -8728,7 +8728,7 @@ weapon_bullet_type_shotgun_mine:
 /* 09688C 7F061D1C 3C048008 */  lui   $a0, %hi(g_CurrentPlayer) # $a0, 0x8008
 /* 096890 7F061D20 53000046 */  beql  $t8, $zero, .Ljp7F061E3C
 /* 096894 7F061D24 8FBF0034 */   lw    $ra, 0x34($sp)
-/* 096898 7F061D28 0FC22793 */  jal   bondviewGetPlayerClippingHeight
+/* 096898 7F061D28 0FC22793 */  jal   bondviewGetPlayerStanHeight
 /* 09689C 7F061D2C 8C84A120 */   lw    $a0, %lo(g_CurrentPlayer)($a0)
 /* 0968A0 7F061D30 44050000 */  mfc1  $a1, $f0
 /* 0968A4 7F061D34 0FC1A2B8 */  jal   sub_GAME_7F068508
@@ -10516,7 +10516,7 @@ weapon_bullet_type_shotgun_mine:
 /* 0946A4 7F061CB4 3C048007 */  lui   $a0, %hi(g_CurrentPlayer) # $a0, 0x8007
 /* 0946A8 7F061CB8 51E00046 */  beql  $t7, $zero, .L7F061DD4
 /* 0946AC 7F061CBC 8FBF0034 */   lw    $ra, 0x34($sp)
-/* 0946B0 7F061CC0 0FC22638 */  jal   bondviewGetPlayerClippingHeight
+/* 0946B0 7F061CC0 0FC22638 */  jal   bondviewGetPlayerStanHeight
 /* 0946B4 7F061CC4 8C848BC0 */   lw    $a0, %lo(g_CurrentPlayer)($a0)
 /* 0946B8 7F061CC8 44050000 */  mfc1  $a1, $f0
 /* 0946BC 7F061CCC 0FC1A31A */  jal   sub_GAME_7F068508
@@ -25248,7 +25248,7 @@ void sub_GAME_7F0681CC(void *arg0, s32 arg1, s32 arg2) {
     if (sp1C < 0)
     {
         // Node 4
-        phi_f10 = (temp_f10 + 4294967296.0f);
+        phi_f10 = (temp_f10 + M_U32_MAX_VALUE_F);
     }
     // Node 5
     temp_f16 = (f32) temp_ret;
@@ -25256,7 +25256,7 @@ void sub_GAME_7F0681CC(void *arg0, s32 arg1, s32 arg2) {
     if (temp_ret < 0)
     {
         // Node 6
-        phi_f16 = (temp_f16 + 4294967296.0f);
+        phi_f16 = (temp_f16 + M_U32_MAX_VALUE_F);
     }
     // Node 7
     sp20 = (f32) ((phi_f16 * 2.3283064365386963e-10f) * ((phi_f10 * 2.3283064365386963e-10f) - 0.5f));
@@ -25269,7 +25269,7 @@ void sub_GAME_7F0681CC(void *arg0, s32 arg1, s32 arg2) {
     if (sp1C < 0)
     {
         // Node 8
-        phi_f8 = (temp_f8 + 4294967296.0f);
+        phi_f8 = (temp_f8 + M_U32_MAX_VALUE_F);
     }
     // Node 9
     temp_f16_2 = (f32) temp_ret_2;
@@ -25277,7 +25277,7 @@ void sub_GAME_7F0681CC(void *arg0, s32 arg1, s32 arg2) {
     if (temp_ret_2 < 0)
     {
         // Node 10
-        phi_f16_2 = (temp_f16_2 + 4294967296.0f);
+        phi_f16_2 = (temp_f16_2 + M_U32_MAX_VALUE_F);
     }
     // Node 11
     sp20 = (f32) ((phi_f16_2 * 2.3283064365386963e-10f) * ((phi_f8 * 2.3283064365386963e-10f) - 0.5f));
@@ -27800,7 +27800,7 @@ void *microcode_generation_ammo_related(void *arg0, void *arg1, f32 arg2, f32 ar
         if (arg1->unk5 < 0)
         {
             // Node 6
-            phi_f4 = (temp_f4_2 + 4294967296.0f);
+            phi_f4 = (temp_f4_2 + M_U32_MAX_VALUE_F);
         }
         // Node 7
         spB4 = (f32) (arg3 - (phi_f4 * 0.5f));
@@ -27813,7 +27813,7 @@ void *microcode_generation_ammo_related(void *arg0, void *arg1, f32 arg2, f32 ar
         if (arg1->unk5 < 0)
         {
             // Node 9
-            phi_f18 = (temp_f18 + 4294967296.0f);
+            phi_f18 = (temp_f18 + M_U32_MAX_VALUE_F);
         }
         // Node 10
         phi_t2 = ((s32) arg1->unk5 >> 1);
@@ -27835,7 +27835,7 @@ void *microcode_generation_ammo_related(void *arg0, void *arg1, f32 arg2, f32 ar
     if (arg1->unk4 < 0)
     {
         // Node 14
-        phi_f18_2 = (temp_f18_2 + 4294967296.0f);
+        phi_f18_2 = (temp_f18_2 + M_U32_MAX_VALUE_F);
     }
     // Node 15
     spA8 = (f32) (phi_f18_2 * 0.5f);
@@ -27844,7 +27844,7 @@ void *microcode_generation_ammo_related(void *arg0, void *arg1, f32 arg2, f32 ar
     if (arg1->unk5 < 0)
     {
         // Node 16
-        phi_f16 = (temp_f16 + 4294967296.0f);
+        phi_f16 = (temp_f16 + M_U32_MAX_VALUE_F);
     }
     // Node 17
     arg0 = (void *) (arg0 + 8);

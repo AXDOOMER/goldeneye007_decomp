@@ -8658,7 +8658,7 @@ _AI_CMD(
             {
                 CutsceneRecord *cdef = sub_GAME_7F056A88(tag->OffsetToObj + TagIndex); 
                 dword_CODE_bss_800799F8 = NULL;
-                dword_CODE_bss_800799FC = cdef;
+                gBondViewCutscene = cdef;
                 dword_CODE_bss_80079A18 = ai->val[2] | (ai->val[1] << 8);
                 dword_CODE_bss_80079A1C = ai->val[4] | (ai->val[3] << 8);
                 set_camera_mode(CAMERAMODE_POSEND);
@@ -9639,9 +9639,9 @@ _AI_CMD(
         c = (s16) (ai->val[9] | ai->val[8] << 8);
         speed = ai->val[11] | ai->val[10] << 8;
         dword_CODE_bss_800799F8 = NULL;
-        dword_CODE_bss_800799FC = NULL;
-        flt_CODE_bss_80079A00 = (speed * M_TAU_F) / 65536.0f; 
-        flt_CODE_bss_80079A04 = (a * M_TAU_F) / 65536.0f;
+        gBondViewCutscene = NULL;
+        flt_CODE_bss_80079A00   = (speed * M_TAU_F) / M_U16_MAX_VALUE_F; 
+        flt_CODE_bss_80079A04   = (a * M_TAU_F) / M_U16_MAX_VALUE_F;
         flt_CODE_bss_80079A08 = b;
         flt_CODE_bss_80079A0C = height; 
         flt_CODE_bss_80079A10 = c;

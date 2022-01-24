@@ -7465,8 +7465,8 @@ actionD5_Go_To_Camera_Position_6:
 /* 06E148 7F039618 01822021 */   addu  $a0, $t4, $v0
 /* 06E14C 7F03961C 3C018008 */  lui   $at, %hi(dword_CODE_bss_800799F8)
 /* 06E150 7F039620 AC2099F8 */  sw    $zero, %lo(dword_CODE_bss_800799F8)($at)
-/* 06E154 7F039624 3C018008 */  lui   $at, %hi(dword_CODE_bss_800799FC)
-/* 06E158 7F039628 AC2299FC */  sw    $v0, %lo(dword_CODE_bss_800799FC)($at)
+/* 06E154 7F039624 3C018008 */  lui   $at, %hi(gBondViewCutscene)
+/* 06E158 7F039628 AC2299FC */  sw    $v0, %lo(gBondViewCutscene)($at)
 /* 06E15C 7F03962C 922B0002 */  lbu   $t3, 2($s1)
 /* 06E160 7F039630 92390003 */  lbu   $t9, 3($s1)
 /* 06E164 7F039634 3C018008 */  lui   $at, %hi(dword_CODE_bss_80079A18)
@@ -8047,8 +8047,8 @@ actionEE_Cuba_Circular_Camera_Aim_D:
 /* 06E990 7F039E60 3C018008 */  lui   $at, %hi(dword_CODE_bss_800799F8)
 /* 06E994 7F039E64 AC2099F8 */  sw    $zero, %lo(dword_CODE_bss_800799F8)($at)
 /* 06E998 7F039E68 461A5482 */  mul.s $f18, $f10, $f26
-/* 06E99C 7F039E6C 3C018008 */  lui   $at, %hi(dword_CODE_bss_800799FC)
-/* 06E9A0 7F039E70 AC2099FC */  sw    $zero, %lo(dword_CODE_bss_800799FC)($at)
+/* 06E99C 7F039E6C 3C018008 */  lui   $at, %hi(gBondViewCutscene)
+/* 06E9A0 7F039E70 AC2099FC */  sw    $zero, %lo(gBondViewCutscene)($at)
 /* 06E9A4 7F039E74 000A4A00 */  sll   $t1, $t2, 8
 /* 06E9A8 7F039E78 3C018008 */  lui   $at, %hi(flt_CODE_bss_80079A00)
 /* 06E9AC 7F039E7C 012C3825 */  or    $a3, $t1, $t4
@@ -13332,8 +13332,8 @@ actionD5_Go_To_Camera_Position_6:
 /* 06E148 7F039618 01822021 */   addu  $a0, $t4, $v0
 /* 06E14C 7F03961C 3C018008 */  lui   $at, %hi(dword_CODE_bss_800799F8)
 /* 06E150 7F039620 AC2099F8 */  sw    $zero, %lo(dword_CODE_bss_800799F8)($at)
-/* 06E154 7F039624 3C018008 */  lui   $at, %hi(dword_CODE_bss_800799FC)
-/* 06E158 7F039628 AC2299FC */  sw    $v0, %lo(dword_CODE_bss_800799FC)($at)
+/* 06E154 7F039624 3C018008 */  lui   $at, %hi(gBondViewCutscene)
+/* 06E158 7F039628 AC2299FC */  sw    $v0, %lo(gBondViewCutscene)($at)
 /* 06E15C 7F03962C 922B0002 */  lbu   $t3, 2($s1)
 /* 06E160 7F039630 92390003 */  lbu   $t9, 3($s1)
 /* 06E164 7F039634 3C018008 */  lui   $at, %hi(dword_CODE_bss_80079A18)
@@ -13914,8 +13914,8 @@ actionEE_Cuba_Circular_Camera_Aim_D:
 /* 06E990 7F039E60 3C018008 */  lui   $at, %hi(dword_CODE_bss_800799F8)
 /* 06E994 7F039E64 AC2099F8 */  sw    $zero, %lo(dword_CODE_bss_800799F8)($at)
 /* 06E998 7F039E68 461A5482 */  mul.s $f18, $f10, $f26
-/* 06E99C 7F039E6C 3C018008 */  lui   $at, %hi(dword_CODE_bss_800799FC)
-/* 06E9A0 7F039E70 AC2099FC */  sw    $zero, %lo(dword_CODE_bss_800799FC)($at)
+/* 06E99C 7F039E6C 3C018008 */  lui   $at, %hi(gBondViewCutscene)
+/* 06E9A0 7F039E70 AC2099FC */  sw    $zero, %lo(gBondViewCutscene)($at)
 /* 06E9A4 7F039E74 000A4A00 */  sll   $t1, $t2, 8
 /* 06E9A8 7F039E78 3C018008 */  lui   $at, %hi(flt_CODE_bss_80079A00)
 /* 06E9AC 7F039E7C 012C3825 */  or    $a3, $t1, $t4
@@ -19232,8 +19232,8 @@ actionD5_Go_To_Camera_Position_6:
 /* 06C0C8 7F0396D8 01222021 */   addu  $a0, $t1, $v0
 /* 06C0CC 7F0396DC 3C018007 */  lui   $at, %hi(dword_CODE_bss_800799F8) # $at, 0x8007
 /* 06C0D0 7F0396E0 AC2084D8 */  sw    $zero, %lo(dword_CODE_bss_800799F8)($at)
-/* 06C0D4 7F0396E4 3C018007 */  lui   $at, %hi(dword_CODE_bss_800799FC) # $at, 0x8007
-/* 06C0D8 7F0396E8 AC2284DC */  sw    $v0, %lo(dword_CODE_bss_800799FC)($at)
+/* 06C0D4 7F0396E4 3C018007 */  lui   $at, %hi(gBondViewCutscene) # $at, 0x8007
+/* 06C0D8 7F0396E8 AC2284DC */  sw    $v0, %lo(gBondViewCutscene)($at)
 /* 06C0DC 7F0396EC 922C0002 */  lbu   $t4, 2($s1)
 /* 06C0E0 7F0396F0 92380003 */  lbu   $t8, 3($s1)
 /* 06C0E4 7F0396F4 3C018007 */  lui   $at, %hi(dword_CODE_bss_80079A18) # $at, 0x8007
@@ -19814,8 +19814,8 @@ actionEE_Cuba_Circular_Camera_Aim_D:
 /* 06C910 7F039F20 3C018007 */  lui   $at, %hi(dword_CODE_bss_800799F8) # $at, 0x8007
 /* 06C914 7F039F24 AC2084D8 */  sw    $zero, %lo(dword_CODE_bss_800799F8)($at)
 /* 06C918 7F039F28 461A5482 */  mul.s $f18, $f10, $f26
-/* 06C91C 7F039F2C 3C018007 */  lui   $at, %hi(dword_CODE_bss_800799FC) # $at, 0x8007
-/* 06C920 7F039F30 AC2084DC */  sw    $zero, %lo(dword_CODE_bss_800799FC)($at)
+/* 06C91C 7F039F2C 3C018007 */  lui   $at, %hi(gBondViewCutscene) # $at, 0x8007
+/* 06C920 7F039F30 AC2084DC */  sw    $zero, %lo(gBondViewCutscene)($at)
 /* 06C924 7F039F34 000F5200 */  sll   $t2, $t7, 8
 /* 06C928 7F039F38 3C018007 */  lui   $at, %hi(flt_CODE_bss_80079A00) # $at, 0x8007
 /* 06C92C 7F039F3C 01493825 */  or    $a3, $t2, $t1
@@ -20873,7 +20873,7 @@ glabel sub_GAME_7F03AA44
 /* 06F598 7F03AA68 AFB00018 */  sw    $s0, 0x18($sp)
 /* 06F59C 7F03AA6C 0FC2D20F */  jal   get_room_data_float1
 /* 06F5A0 7F03AA70 AFA40058 */   sw    $a0, 0x58($sp)
-/* 06F5A4 7F03AA74 0FC2D21E */  jal   sub_GAME_7F0B4878
+/* 06F5A4 7F03AA74 0FC2D21E */  jal   bgGetLevelVisibilityScale
 /* 06F5A8 7F03AA78 E7A00034 */   swc1  $f0, 0x34($sp)
 /* 06F5AC 7F03AA7C C6440000 */  lwc1  $f4, ($s2)
 /* 06F5B0 7F03AA80 C6260000 */  lwc1  $f6, ($s1)
@@ -21499,7 +21499,7 @@ glabel chraiDefaultWeaponFireHandler
 /* 06FDFC 7F03B2CC 8FB901AC */   lw    $t9, 0x1ac($sp)
 /* 06FE00 7F03B2D0 0FC2D20F */  jal   get_room_data_float1
 /* 06FE04 7F03B2D4 00000000 */   nop   
-/* 06FE08 7F03B2D8 0FC2D21E */  jal   sub_GAME_7F0B4878
+/* 06FE08 7F03B2D8 0FC2D21E */  jal   bgGetLevelVisibilityScale
 /* 06FE0C 7F03B2DC E7A00048 */   swc1  $f0, 0x48($sp)
 /* 06FE10 7F03B2E0 C7A20048 */  lwc1  $f2, 0x48($sp)
 /* 06FE14 7F03B2E4 46020202 */  mul.s $f8, $f0, $f2
@@ -23550,7 +23550,7 @@ glabel sub_GAME_7F03CFE8
 /* 071B54 7F03D024 00027080 */  sll   $t6, $v0, 2
 /* 071B58 7F03D028 3C048008 */  lui   $a0, %hi(g_playerPointers)
 /* 071B5C 7F03D02C 008E2021 */  addu  $a0, $a0, $t6
-/* 071B60 7F03D030 0FC225DE */  jal   bondviewGetPlayerClippingHeight
+/* 071B60 7F03D030 0FC225DE */  jal   bondviewGetPlayerStanHeight
 /* 071B64 7F03D034 8C849EE0 */   lw    $a0, %lo(g_playerPointers)($a0)
 /* 071B68 7F03D038 10000004 */  b     .L7F03D04C
 /* 071B6C 7F03D03C 8FBF0014 */   lw    $ra, 0x14($sp)

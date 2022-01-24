@@ -257,7 +257,7 @@ f32 square_near_fog_value(void)
 }
 extern void set_page_height();
 extern void video_related_27();
-extern int sub_GAME_7F0B4878();
+extern int bgGetLevelVisibilityScale();
 
 void copy_table1_env_to_current(EnvironmentData *fog_tables_Entry)
 {
@@ -275,7 +275,7 @@ void copy_table1_env_to_current(EnvironmentData *fog_tables_Entry)
     set_page_height(fog_tables_Entry->Visibility.blendmultiplier,
                     fog_tables_Entry->Visibility.farfog); // 30, 15000
     video_related_27(&sp30);
-    temp_ret = sub_GAME_7F0B4878();
+    temp_ret = bgGetLevelVisibilityScale();
     temp_f6  = sp30 / temp_ret;
     sp30     = temp_f6;
     sp34     = (f32)(sp34 / temp_ret);
@@ -857,7 +857,7 @@ extern s32 D_8003643C;                   //bond.c credits state? 0=none, 1 = rol
 extern s32 camera_8003642C;              //bond.c
 extern s32 camera_80036434;              //bond.c
 extern PadRecord *dword_CODE_bss_800799F8; //bond.c
-extern CutsceneRecord *dword_CODE_bss_800799FC; //bond.c 
+extern CutsceneRecord *gBondViewCutscene; //bond.c 
 extern s32 dword_CODE_bss_80079A18;      //bond.c
 extern s32 dword_CODE_bss_80079A1C;      //bond.c
 extern bool D_800364B0;                  //bond.c
@@ -4462,7 +4462,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                             assert(cdef->type == PROPDEF_CAMERAPOS);
 #            endif
                             dword_CODE_bss_800799F8 = NULL;
-                            dword_CODE_bss_800799FC = cdef;
+                            gBondViewCutscene = cdef;
                             dword_CODE_bss_80079A18 = ai->val[2] | (ai->val[1] << 8);
                             dword_CODE_bss_80079A1C = ai->val[4] | (ai->val[3] << 8);
                             set_camera_mode(CAMERAMODE_POSEND);
@@ -4818,7 +4818,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                     c                       = (s16)(ai->val[9] | ai->val[8] << 8);
                     speed                   = ai->val[11] | ai->val[10] << 8;
                     dword_CODE_bss_800799F8 = NULL;
-                    dword_CODE_bss_800799FC = NULL;
+                    gBondViewCutscene = NULL;
                     flt_CODE_bss_80079A00   = (speed * M_TAU) / 65536.0f; //speed
                     flt_CODE_bss_80079A04   = (a * M_TAU) / 65536.0f;
                     flt_CODE_bss_80079A08   = b;

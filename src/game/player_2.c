@@ -131,7 +131,7 @@ void initBONDdataforPlayer(PLAYER_ID player)
     (*ppPVar3)->current_room_zpos = 0.00000000;
     (*ppPVar3)->field_6C = 0.00000000;
     (*ppPVar3)->field_70 = 0.00000000;
-    (*ppPVar3)->clipping_height = 0.00000000;
+    (*ppPVar3)->stanHeight = 0.00000000;
     (*ppPVar3)->field_78 = 0.00000000;
     (*ppPVar3)->field_7C = 0.00000000;
     (*ppPVar3)->field_80 = 0.00000000;

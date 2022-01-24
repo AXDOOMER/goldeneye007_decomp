@@ -106,7 +106,7 @@ s32 dword_CODE_bss_800799F4;
 //CODE.bss:800799F8
 s32 dword_CODE_bss_800799F8;
 //CODE.bss:800799FC
-s32 dword_CODE_bss_800799FC;
+s32 gBondViewCutscene;
 //CODE.bss:80079A00
 f32 flt_CODE_bss_80079A00;
 //CODE.bss:80079A04
@@ -558,7 +558,7 @@ void currentPlayerUpdateColourScreenProperties(void);
 s16 getWidth320or440(void);
 s16 getHeight330or240(void);
 void sub_GAME_7F07B1A4(void);
-s32 /*bool*/ currentPlayerIsFadeComplete(void);
+bool currentPlayerIsFadeComplete(void);
 s16 get_curplayer_viewport_ulx(void);
 void sub_GAME_7F086990(s8, s8, u16, u16);
 void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2);
@@ -611,11 +611,11 @@ void currentPlayerSetCameraScale(void)
 	g_CurrentPlayer->c_recipscaley = 1.0f / g_CurrentPlayer->c_scaley;
 
     g_CurrentPlayer->c_scalelod = g_CurrentPlayer->c_scaley;
-	g_CurrentPlayer->c_scalelod60 = sinf(0.52359879f/*mDegToHalfRad(30)*/) / (cosf(0.52359879f/*mDegToHalfRad(30)*/) * 120.0f);
+    g_CurrentPlayer->c_scalelod60 = sinf(DegToRad(30)) / (cosf(DegToRad(30)) * 120.0f);
 	g_CurrentPlayer->c_lodscalez = g_CurrentPlayer->c_scalelod / g_CurrentPlayer->c_scalelod60;
-	tmp = (g_CurrentPlayer->c_lodscalez * 65536.0f);
+	tmp = (g_CurrentPlayer->c_lodscalez * M_U16_MAX_VALUE_F);
 
-	if (tmp > 4294967296.0f) {
+	if (tmp > M_U32_MAX_VALUE_F) {
 		g_CurrentPlayer->c_lodscalezu32 = -1;
 	} else {
 		g_CurrentPlayer->c_lodscalezu32 = tmp;
@@ -634,7 +634,7 @@ void currentPlayerSetCameraScale(void)
 	g_CurrentPlayer->c_cameraleftnorm.z = -fVar5 * fVar4;
 }
 
-void sub_GAME_7F077EEC(struct coord2d *in, coord3d *out, f32 value) {
+void sub_GAME_7F077EEC(coord2d *in, coord3d *out, f32 value) {
     f32 norm;
     f32 x;
     f32 y;
@@ -4754,8 +4754,265 @@ glabel sub_GAME_7F07A534
 
 
 #ifdef NONMATCHING
-void set_camera_mode(void) {
+void set_camera_mode(s32 arg0)
+{
+    f32 sp78;
+    void *sp64;
+    f32 sp60;
+    f32 sp5C;
+    f32 sp58;
+    f32 sp50;
+    f32 sp4C;
+    f32 sp48;
+    void *sp38;
+    f32 temp_f12;
+    s32 temp_s0;
+    s32 temp_v0;
+    s32 temp_v0_4;
+    void *temp_a0;
+    void *temp_a0_2;
+    void *temp_t8;
+    void *temp_t9;
+    void *temp_t9_2;
+    void *temp_v0_10;
+    void *temp_v0_11;
+    void *temp_v0_12;
+    void *temp_v0_2;
+    void *temp_v0_3;
+    void *temp_v0_5;
+    void *temp_v0_6;
+    void *temp_v0_7;
+    void *temp_v0_8;
+    void *temp_v0_9;
+    void *temp_v1;
+    void *phi_t8;
+    void *phi_t9;
+    s32 phi_v0;
+    void *phi_a2;
+    s32 phi_v1;
+    f32 phi_f0;
+    s32 phi_s0;
 
+    cameramode               = arg0;
+    enable_move_after_cinema = 0;
+    temp_v0                  = cameramode;
+    if (temp_v0 == 1)
+    {
+        if ((ptr_random06cam_entry != 0) && (get_recording_ramrom_flag() == 0) && (get_is_ramrom_flag() == 0))
+        {
+            D_800364A4 = 0.0f;
+            currentPlayerSetFadeColour(0, 0, 0, 0x3F800000);
+            currentPlayerSetFadeFrac(0x42700000, 0);
+            load_enviroment(bossGetStageNum(), 1);
+            pPlayer->unk34 = 0;
+            return;
+        }
+        set_camera_mode(3);
+        return;
+    }
+    if (temp_v0 == 2)
+    {
+        currentPlayerSetFadeColour(0, 0, 0, 0);
+        currentPlayerSetFadeFrac(0x42700000, 0x3F800000);
+        return;
+    }
+    if (temp_v0 == 9)
+    {
+        flt_CODE_bss_80079E04 = 0.0f;
+        flt_CODE_bss_80079E08 = -90.0f;
+        flt_CODE_bss_80079E0C = 0.0f;
+        flt_CODE_bss_80079E10 = 80.0f;
+        load_enviroment(bossGetStageNum(0), 0);
+        return;
+    }
+    if (temp_v0 == 3)
+    {
+        D_8003649C = 0;
+        currentPlayerSetFadeColour(0, 0, 0, 0x3F800000);
+        currentPlayerSetFadeFrac(0x42700000, 0);
+        load_enviroment(bossGetStageNum(), 0);
+        if ((D_800364AC != 0) && (get_recording_ramrom_flag() == 0) && (get_is_ramrom_flag() == 0))
+        {
+            D_800364A4 = 0.0f;
+            D_800364A8 = 1;
+            currentPlayerStartChrFade(0.0f, 0x3F800000);
+            solo_char_load();
+            temp_v0_2 = (D_80036514 * 0x10) + &stage_intro_anim_table;
+            temp_f12  = temp_v0_2->unk8;
+            sp78      = temp_f12;
+            sub_GAME_7F06FCA8(pPlayer->unkD4, temp_v0_2->unk0 + ptr_animation_table, 0, temp_v0_2->unk4, temp_v0_2->unkC, 0.0f);
+            if (temp_f12 > 0.0f)
+            {
+                sub_GAME_7F06FDE8(pPlayer->unkD4, temp_f12);
+            }
+            temp_v0_3       = pPlayer->unkA8->unk4;
+            temp_v0_3->unk7 = 0x17;
+            temp_v0_3->unk8 = 0;
+            pPlayer->unk34  = 0;
+            return;
+        }
+        set_camera_mode(4);
+        return;
+    }
+    if (temp_v0 == 4)
+    {
+        if (bossGetStageNum(0) == 0x36)
+        {
+            currentPlayerSetFadeColour(0, 0, 0, 0x3F800000);
+            currentPlayerSetFadeFrac(0, 0x3F800000);
+        }
+        else if (D_8003649C != 0)
+        {
+            currentPlayerSetFadeColour(0, 0, 0, 0x3F800000);
+            currentPlayerSetFadeFrac(0x42700000, 0);
+        }
+        if (getPlayerCount() >= 2)
+        {
+            load_enviroment(bossGetStageNum(), 0);
+        }
+        if (pPlayer->unk1C8 == 0)
+        {
+            draw_item_in_hand_has_more_ammo(1, starting_right_weapon.unk4);
+            draw_item_in_hand_has_more_ammo(0, starting_right_weapon.unk0);
+        }
+        stop_time_flag = 0;
+        return;
+    }
+    if (temp_v0 == 5)
+    {
+        D_800364A4 = 0.0f;
+        D_800364A8 = 1;
+        currentPlayerSetFadeColour(0, 0, 0, 0x3F800000);
+        currentPlayerSetFadeFrac(0x42700000, 0);
+        temp_v0_4 = D_8003648C;
+        phi_v0    = temp_v0_4;
+        if ((temp_v0_4 != 0) && (ptr_playerstank != 0))
+        {
+        }
+        else
+        {
+            in_tank_flag = 0;
+            temp_t9      = pPlayer;
+            phi_t8       = temp_t9;
+            phi_t9       = temp_t9;
+            do
+            {
+                temp_t8           = phi_t8 + 0xC;
+                temp_t9_2         = phi_t9 + 0xC;
+                temp_t9_2->unk47C = phi_t8->unk434;
+                temp_t9_2->unk480 = temp_t8->unk42C;
+                temp_t9_2->unk484 = temp_t8->unk430;
+                phi_t8            = temp_t8;
+                phi_t9            = temp_t9_2;
+            } while (temp_t8 != (temp_t9 + 0x54));
+            temp_v0_5                = pPlayer;
+            temp_v0_5->unk148        = temp_v0_5->unk414;
+            temp_v0_6                = pPlayer;
+            temp_v0_6->unk158        = temp_v0_6->unk418;
+            temp_v0_7                = pPlayer;
+            temp_v0_7->unkA8->unk8   = temp_v0_7->unk48C;
+            temp_v0_8                = pPlayer;
+            temp_v0_8->unkA8->unkC   = temp_v0_8->unk490;
+            temp_v0_9                = pPlayer;
+            temp_v0_9->unkA8->unk10  = temp_v0_9->unk494;
+            temp_v0_10               = pPlayer;
+            temp_v0_10->unkA8->unk14 = temp_v0_10->unk488;
+            sub_GAME_7F081790();
+            sub_GAME_7F080B34(0, 0, 0);
+            sub_GAME_7F081478();
+            currentPlayerStartChrFade(0.0f, 0x3F800000);
+            solo_char_load();
+            sp38 = sub_GAME_7F06F5AC(pPlayer + 0x598);
+            sub_GAME_7F06FCA8(pPlayer->unkD4, sp38, sub_GAME_7F06F5B4(pPlayer + 0x598), 0.0f, 0.5f, 0.0f);
+            temp_v1        = pPlayer->unkA8->unk4;
+            temp_v1->unk7  = 0x18;
+            temp_v1->unk8  = 0;
+            temp_v1->unk14 = temp_v1->unk14 | 1;
+            temp_v0_11     = pPlayer;
+            setsuboffset(temp_v0_11->unkD4, temp_v0_11->unkA8 + 8);
+            setsubroty(pPlayer->unkD4, get_curplay_horizontal_rotation_in_degrees());
+            phi_v0 = D_8003648C;
+        }
+        if ((phi_v0 != 0) && (temp_a0 = ptr_playerstank, (temp_a0 != 0)))
+        {
+            sp64   = temp_a0;
+            sp58   = temp_a0->unk8;
+            sp5C   = temp_a0->unkC;
+            sp60   = temp_a0->unk10;
+            sp48   = temp_a0->unk8;
+            sp4C   = temp_a0->unkC;
+            sp50   = temp_a0->unk10;
+            phi_a2 = temp_a0;
+            phi_v1 = temp_a0->unk14;
+            phi_f0 = 500.0f;
+        }
+        else
+        {
+            temp_v0_12 = pPlayer;
+            sp64       = temp_v0_12->unkA8;
+            sp58       = temp_v0_12->unk3C4;
+            sp5C       = temp_v0_12->unk3C8;
+            sp60       = temp_v0_12->unk3CC;
+            sp48       = temp_v0_12->unk48C;
+            sp4C       = temp_v0_12->unk490;
+            sp50       = temp_v0_12->unk494;
+            phi_a2     = temp_v0_12->unkA8;
+            phi_v1     = temp_v0_12->unk488;
+            phi_f0     = 200.0f;
+        }
+        if (sub_GAME_7F07A534(sp64, &sp58, phi_a2, &sp48, phi_v1, phi_f0) != 0)
+        {
+            if (D_80036510 == 0)
+            {
+                musicTrack1Play(0x2C);
+                sndSetScalerApplyVolumeAllSfxSlot(0x3F000000);
+            }
+            if ((D_8003648C != 0) && (ptr_playerstank != 0))
+            {
+                temp_a0_2 = ptr_playerstank;
+                sub_GAME_7F09C250(temp_a0_2, temp_a0_2 + 8, temp_a0_2->unk14, 0xD, 0, get_cur_playernum(), temp_a0_2 + 0x2C, 0);
+                return;
+            }
+            // Duplicate return node #56. Try simplifying control flow for better match
+            return;
+        }
+        bossRunTitleStage();
+        return;
+    }
+    if (temp_v0 == 6)
+    {
+        currentPlayerSetFadeColour(0, 0, 0, 0);
+        currentPlayerSetFadeFrac(0x42700000, 0x3F800000);
+        return;
+    }
+    if (temp_v0 == 7)
+    {
+        solo_char_load(0);
+        pPlayer->unk34 = 0;
+        return;
+    }
+    if (temp_v0 == 8)
+    {
+        maybe_solo_intro_camera_handler(0);
+        cameramode = 4;
+        return;
+    }
+    if (temp_v0 == 0xA)
+    {
+        phi_s0 = 0;
+        if (getPlayerCount(0) > 0)
+        {
+            do
+            {
+                set_cur_player(phi_s0);
+                currentPlayerSetFadeColour(0, 0, 0, 0);
+                currentPlayerSetFadeFrac(0x42700000, 0x3F800000);
+                temp_s0 = phi_s0 + 1;
+                phi_s0  = temp_s0;
+            } while (temp_s0 < getPlayerCount());
+        }
+        set_cur_player(0);
+    }
 }
 #else
 GLOBAL_ASM(
@@ -6436,8 +6693,8 @@ glabel sub_GAME_7F07B56C
 /* 0B0CA4 7F07C174 100000EE */  b     .L7F07C530
 /* 0B0CA8 7F07C178 E46A0008 */   swc1  $f10, 8($v1)
 .L7F07C17C:
-/* 0B0CAC 7F07C17C 3C058008 */  lui   $a1, %hi(dword_CODE_bss_800799FC)
-/* 0B0CB0 7F07C180 24A599FC */  addiu $a1, %lo(dword_CODE_bss_800799FC) # addiu $a1, $a1, -0x6604
+/* 0B0CAC 7F07C17C 3C058008 */  lui   $a1, %hi(gBondViewCutscene)
+/* 0B0CB0 7F07C180 24A599FC */  addiu $a1, %lo(gBondViewCutscene) # addiu $a1, $a1, -0x6604
 /* 0B0CB4 7F07C184 8CA40000 */  lw    $a0, ($a1)
 /* 0B0CB8 7F07C188 10800063 */  beqz  $a0, .L7F07C318
 /* 0B0CBC 7F07C18C 00000000 */   nop
@@ -6504,8 +6761,8 @@ glabel sub_GAME_7F07B56C
 .L7F07C278:
 /* 0B0DA8 7F07C278 0FC15FA8 */  jal   cosf
 /* 0B0DAC 7F07C27C C70C0014 */   lwc1  $f12, 0x14($t8)
-/* 0B0DB0 7F07C280 3C0D8008 */  lui   $t5, %hi(dword_CODE_bss_800799FC)
-/* 0B0DB4 7F07C284 8DAD99FC */  lw    $t5, %lo(dword_CODE_bss_800799FC)($t5)
+/* 0B0DB0 7F07C280 3C0D8008 */  lui   $t5, %hi(gBondViewCutscene)
+/* 0B0DB4 7F07C284 8DAD99FC */  lw    $t5, %lo(gBondViewCutscene)($t5)
 /* 0B0DB8 7F07C288 E7A0001C */  swc1  $f0, 0x1c($sp)
 /* 0B0DBC 7F07C28C 0FC15FAB */  jal   sinf
 /* 0B0DC0 7F07C290 C5AC0010 */   lwc1  $f12, 0x10($t5)
@@ -6514,23 +6771,23 @@ glabel sub_GAME_7F07B56C
 /* 0B0DCC 7F07C29C 8FB9004C */  lw    $t9, 0x4c($sp)
 /* 0B0DD0 7F07C2A0 46060202 */  mul.s $f8, $f0, $f6
 /* 0B0DD4 7F07C2A4 C5CA0000 */  lwc1  $f10, ($t6)
-/* 0B0DD8 7F07C2A8 3C0F8008 */  lui   $t7, %hi(dword_CODE_bss_800799FC)
+/* 0B0DD8 7F07C2A8 3C0F8008 */  lui   $t7, %hi(gBondViewCutscene)
 /* 0B0DDC 7F07C2AC 460A4100 */  add.s $f4, $f8, $f10
 /* 0B0DE0 7F07C2B0 E7240000 */  swc1  $f4, ($t9)
-/* 0B0DE4 7F07C2B4 8DEF99FC */  lw    $t7, %lo(dword_CODE_bss_800799FC)($t7)
+/* 0B0DE4 7F07C2B4 8DEF99FC */  lw    $t7, %lo(gBondViewCutscene)($t7)
 /* 0B0DE8 7F07C2B8 0FC15FAB */  jal   sinf
 /* 0B0DEC 7F07C2BC C5EC0014 */   lwc1  $f12, 0x14($t7)
 /* 0B0DF0 7F07C2C0 8FAC0048 */  lw    $t4, 0x48($sp)
 /* 0B0DF4 7F07C2C4 8FB8004C */  lw    $t8, 0x4c($sp)
-/* 0B0DF8 7F07C2C8 3C0D8008 */  lui   $t5, %hi(dword_CODE_bss_800799FC)
+/* 0B0DF8 7F07C2C8 3C0D8008 */  lui   $t5, %hi(gBondViewCutscene)
 /* 0B0DFC 7F07C2CC C5860004 */  lwc1  $f6, 4($t4)
 /* 0B0E00 7F07C2D0 46060200 */  add.s $f8, $f0, $f6
 /* 0B0E04 7F07C2D4 E7080004 */  swc1  $f8, 4($t8)
-/* 0B0E08 7F07C2D8 8DAD99FC */  lw    $t5, %lo(dword_CODE_bss_800799FC)($t5)
+/* 0B0E08 7F07C2D8 8DAD99FC */  lw    $t5, %lo(gBondViewCutscene)($t5)
 /* 0B0E0C 7F07C2DC 0FC15FA8 */  jal   cosf
 /* 0B0E10 7F07C2E0 C5AC0014 */   lwc1  $f12, 0x14($t5)
-/* 0B0E14 7F07C2E4 3C0E8008 */  lui   $t6, %hi(dword_CODE_bss_800799FC)
-/* 0B0E18 7F07C2E8 8DCE99FC */  lw    $t6, %lo(dword_CODE_bss_800799FC)($t6)
+/* 0B0E14 7F07C2E4 3C0E8008 */  lui   $t6, %hi(gBondViewCutscene)
+/* 0B0E18 7F07C2E8 8DCE99FC */  lw    $t6, %lo(gBondViewCutscene)($t6)
 /* 0B0E1C 7F07C2EC E7A0001C */  swc1  $f0, 0x1c($sp)
 /* 0B0E20 7F07C2F0 0FC15FA8 */  jal   cosf
 /* 0B0E24 7F07C2F4 C5CC0010 */   lwc1  $f12, 0x10($t6)
@@ -7528,8 +7785,8 @@ glabel sub_GAME_7F07B56C
 /* 0B1308 7F07C798 100000EE */  b     .Ljp7F07CB54
 /* 0B130C 7F07C79C E46A0008 */   swc1  $f10, 8($v1)
 .Ljp7F07C7A0:
-/* 0B1310 7F07C7A0 3C058008 */  lui   $a1, %hi(dword_CODE_bss_800799FC) # $a1, 0x8008
-/* 0B1314 7F07C7A4 24A59A3C */  addiu $a1, %lo(dword_CODE_bss_800799FC) # addiu $a1, $a1, -0x65c4
+/* 0B1310 7F07C7A0 3C058008 */  lui   $a1, %hi(gBondViewCutscene) # $a1, 0x8008
+/* 0B1314 7F07C7A4 24A59A3C */  addiu $a1, %lo(gBondViewCutscene) # addiu $a1, $a1, -0x65c4
 /* 0B1318 7F07C7A8 8CA40000 */  lw    $a0, ($a1)
 /* 0B131C 7F07C7AC 10800063 */  beqz  $a0, .Ljp7F07C93C
 /* 0B1320 7F07C7B0 00000000 */   nop
@@ -7596,8 +7853,8 @@ glabel sub_GAME_7F07B56C
 .Ljp7F07C89C:
 /* 0B140C 7F07C89C 0FC160F0 */  jal   cosf
 /* 0B1410 7F07C8A0 C70C0014 */   lwc1  $f12, 0x14($t8)
-/* 0B1414 7F07C8A4 3C0D8008 */  lui   $t5, %hi(dword_CODE_bss_800799FC) # $t5, 0x8008
-/* 0B1418 7F07C8A8 8DAD9A3C */  lw    $t5, %lo(dword_CODE_bss_800799FC)($t5)
+/* 0B1414 7F07C8A4 3C0D8008 */  lui   $t5, %hi(gBondViewCutscene) # $t5, 0x8008
+/* 0B1418 7F07C8A8 8DAD9A3C */  lw    $t5, %lo(gBondViewCutscene)($t5)
 /* 0B141C 7F07C8AC E7A0001C */  swc1  $f0, 0x1c($sp)
 /* 0B1420 7F07C8B0 0FC160F3 */  jal   sinf
 /* 0B1424 7F07C8B4 C5AC0010 */   lwc1  $f12, 0x10($t5)
@@ -7606,23 +7863,23 @@ glabel sub_GAME_7F07B56C
 /* 0B1430 7F07C8C0 8FB9004C */  lw    $t9, 0x4c($sp)
 /* 0B1434 7F07C8C4 46060202 */  mul.s $f8, $f0, $f6
 /* 0B1438 7F07C8C8 C5CA0000 */  lwc1  $f10, ($t6)
-/* 0B143C 7F07C8CC 3C0F8008 */  lui   $t7, %hi(dword_CODE_bss_800799FC) # $t7, 0x8008
+/* 0B143C 7F07C8CC 3C0F8008 */  lui   $t7, %hi(gBondViewCutscene) # $t7, 0x8008
 /* 0B1440 7F07C8D0 460A4100 */  add.s $f4, $f8, $f10
 /* 0B1444 7F07C8D4 E7240000 */  swc1  $f4, ($t9)
-/* 0B1448 7F07C8D8 8DEF9A3C */  lw    $t7, %lo(dword_CODE_bss_800799FC)($t7)
+/* 0B1448 7F07C8D8 8DEF9A3C */  lw    $t7, %lo(gBondViewCutscene)($t7)
 /* 0B144C 7F07C8DC 0FC160F3 */  jal   sinf
 /* 0B1450 7F07C8E0 C5EC0014 */   lwc1  $f12, 0x14($t7)
 /* 0B1454 7F07C8E4 8FAC0048 */  lw    $t4, 0x48($sp)
 /* 0B1458 7F07C8E8 8FB8004C */  lw    $t8, 0x4c($sp)
-/* 0B145C 7F07C8EC 3C0D8008 */  lui   $t5, %hi(dword_CODE_bss_800799FC) # $t5, 0x8008
+/* 0B145C 7F07C8EC 3C0D8008 */  lui   $t5, %hi(gBondViewCutscene) # $t5, 0x8008
 /* 0B1460 7F07C8F0 C5860004 */  lwc1  $f6, 4($t4)
 /* 0B1464 7F07C8F4 46060200 */  add.s $f8, $f0, $f6
 /* 0B1468 7F07C8F8 E7080004 */  swc1  $f8, 4($t8)
-/* 0B146C 7F07C8FC 8DAD9A3C */  lw    $t5, %lo(dword_CODE_bss_800799FC)($t5)
+/* 0B146C 7F07C8FC 8DAD9A3C */  lw    $t5, %lo(gBondViewCutscene)($t5)
 /* 0B1470 7F07C900 0FC160F0 */  jal   cosf
 /* 0B1474 7F07C904 C5AC0014 */   lwc1  $f12, 0x14($t5)
-/* 0B1478 7F07C908 3C0E8008 */  lui   $t6, %hi(dword_CODE_bss_800799FC) # $t6, 0x8008
-/* 0B147C 7F07C90C 8DCE9A3C */  lw    $t6, %lo(dword_CODE_bss_800799FC)($t6)
+/* 0B1478 7F07C908 3C0E8008 */  lui   $t6, %hi(gBondViewCutscene) # $t6, 0x8008
+/* 0B147C 7F07C90C 8DCE9A3C */  lw    $t6, %lo(gBondViewCutscene)($t6)
 /* 0B1480 7F07C910 E7A0001C */  swc1  $f0, 0x1c($sp)
 /* 0B1484 7F07C914 0FC160F0 */  jal   cosf
 /* 0B1488 7F07C918 C5CC0010 */   lwc1  $f12, 0x10($t6)
@@ -8633,8 +8890,8 @@ glabel sub_GAME_7F07B56C
 /* 0AEC34 7F07C244 100000EF */  b     .L7F07C604
 /* 0AEC38 7F07C248 E48A0008 */   swc1  $f10, 8($a0)
 .L7F07C24C:
-/* 0AEC3C 7F07C24C 3C058007 */  lui   $a1, %hi(dword_CODE_bss_800799FC) # $a1, 0x8007
-/* 0AEC40 7F07C250 24A584DC */  addiu $a1, %lo(dword_CODE_bss_800799FC) # addiu $a1, $a1, -0x7b24
+/* 0AEC3C 7F07C24C 3C058007 */  lui   $a1, %hi(gBondViewCutscene) # $a1, 0x8007
+/* 0AEC40 7F07C250 24A584DC */  addiu $a1, %lo(gBondViewCutscene) # addiu $a1, $a1, -0x7b24
 /* 0AEC44 7F07C254 8CA30000 */  lw    $v1, ($a1)
 /* 0AEC48 7F07C258 10600064 */  beqz  $v1, .L7F07C3EC
 /* 0AEC4C 7F07C25C 00000000 */   nop
@@ -8702,8 +8959,8 @@ glabel sub_GAME_7F07B56C
 .L7F07C34C:
 /* 0AED3C 7F07C34C 0FC16068 */  jal   cosf
 /* 0AED40 7F07C350 C58C0014 */   lwc1  $f12, 0x14($t4)
-/* 0AED44 7F07C354 3C188007 */  lui   $t8, %hi(dword_CODE_bss_800799FC) # $t8, 0x8007
-/* 0AED48 7F07C358 8F1884DC */  lw    $t8, %lo(dword_CODE_bss_800799FC)($t8)
+/* 0AED44 7F07C354 3C188007 */  lui   $t8, %hi(gBondViewCutscene) # $t8, 0x8007
+/* 0AED48 7F07C358 8F1884DC */  lw    $t8, %lo(gBondViewCutscene)($t8)
 /* 0AED4C 7F07C35C E7A0001C */  swc1  $f0, 0x1c($sp)
 /* 0AED50 7F07C360 0FC1606B */  jal   sinf
 /* 0AED54 7F07C364 C70C0010 */   lwc1  $f12, 0x10($t8)
@@ -8712,23 +8969,23 @@ glabel sub_GAME_7F07B56C
 /* 0AED60 7F07C370 8FAE004C */  lw    $t6, 0x4c($sp)
 /* 0AED64 7F07C374 46060202 */  mul.s $f8, $f0, $f6
 /* 0AED68 7F07C378 C72A0000 */  lwc1  $f10, ($t9)
-/* 0AED6C 7F07C37C 3C0F8007 */  lui   $t7, %hi(dword_CODE_bss_800799FC) # $t7, 0x8007
+/* 0AED6C 7F07C37C 3C0F8007 */  lui   $t7, %hi(gBondViewCutscene) # $t7, 0x8007
 /* 0AED70 7F07C380 460A4100 */  add.s $f4, $f8, $f10
 /* 0AED74 7F07C384 E5C40000 */  swc1  $f4, ($t6)
-/* 0AED78 7F07C388 8DEF84DC */  lw    $t7, %lo(dword_CODE_bss_800799FC)($t7)
+/* 0AED78 7F07C388 8DEF84DC */  lw    $t7, %lo(gBondViewCutscene)($t7)
 /* 0AED7C 7F07C38C 0FC1606B */  jal   sinf
 /* 0AED80 7F07C390 C5EC0014 */   lwc1  $f12, 0x14($t7)
 /* 0AED84 7F07C394 8FAD0048 */  lw    $t5, 0x48($sp)
 /* 0AED88 7F07C398 8FAC004C */  lw    $t4, 0x4c($sp)
-/* 0AED8C 7F07C39C 3C188007 */  lui   $t8, %hi(dword_CODE_bss_800799FC) # $t8, 0x8007
+/* 0AED8C 7F07C39C 3C188007 */  lui   $t8, %hi(gBondViewCutscene) # $t8, 0x8007
 /* 0AED90 7F07C3A0 C5A60004 */  lwc1  $f6, 4($t5)
 /* 0AED94 7F07C3A4 46060200 */  add.s $f8, $f0, $f6
 /* 0AED98 7F07C3A8 E5880004 */  swc1  $f8, 4($t4)
-/* 0AED9C 7F07C3AC 8F1884DC */  lw    $t8, %lo(dword_CODE_bss_800799FC)($t8)
+/* 0AED9C 7F07C3AC 8F1884DC */  lw    $t8, %lo(gBondViewCutscene)($t8)
 /* 0AEDA0 7F07C3B0 0FC16068 */  jal   cosf
 /* 0AEDA4 7F07C3B4 C70C0014 */   lwc1  $f12, 0x14($t8)
-/* 0AEDA8 7F07C3B8 3C198007 */  lui   $t9, %hi(dword_CODE_bss_800799FC) # $t9, 0x8007
-/* 0AEDAC 7F07C3BC 8F3984DC */  lw    $t9, %lo(dword_CODE_bss_800799FC)($t9)
+/* 0AEDA8 7F07C3B8 3C198007 */  lui   $t9, %hi(gBondViewCutscene) # $t9, 0x8007
+/* 0AEDAC 7F07C3BC 8F3984DC */  lw    $t9, %lo(gBondViewCutscene)($t9)
 /* 0AEDB0 7F07C3C0 E7A0001C */  swc1  $f0, 0x1c($sp)
 /* 0AEDB4 7F07C3C4 0FC16068 */  jal   cosf
 /* 0AEDB8 7F07C3C8 C72C0010 */   lwc1  $f12, 0x10($t9)
@@ -14440,84 +14697,91 @@ void currentPlayerSetFadeColour(s32 r, s32 g, s32 b, f32 frac) {
     g_CurrentPlayer->colourscreenfrac = frac;
 }
 
-void currentPlayerAdjustFade(f32 maxfadetime, s32 r, s32 g, s32 b, f32 frac) {
-    g_CurrentPlayer->colourfadetime60 = 0;
+void currentPlayerAdjustFade(f32 maxfadetime, s32 r, s32 g, s32 b, f32 frac)
+{
+    g_CurrentPlayer->colourfadetime60    = 0;
     g_CurrentPlayer->colourfadetimemax60 = maxfadetime;
-    g_CurrentPlayer->colourfaderedold = g_CurrentPlayer->colourscreenred;
-    g_CurrentPlayer->colourfaderednew = r;
-    g_CurrentPlayer->colourfadegreenold = g_CurrentPlayer->colourscreengreen;
-    g_CurrentPlayer->colourfadegreennew = g;
-    g_CurrentPlayer->colourfadeblueold = g_CurrentPlayer->colourscreenblue;
-    g_CurrentPlayer->colourfadebluenew = b;
-    g_CurrentPlayer->colourfadefracold = g_CurrentPlayer->colourscreenfrac;
-    g_CurrentPlayer->colourfadefracnew = frac;
+    g_CurrentPlayer->colourfaderedold    = g_CurrentPlayer->colourscreenred;
+    g_CurrentPlayer->colourfaderednew    = r;
+    g_CurrentPlayer->colourfadegreenold  = g_CurrentPlayer->colourscreengreen;
+    g_CurrentPlayer->colourfadegreennew  = g;
+    g_CurrentPlayer->colourfadeblueold   = g_CurrentPlayer->colourscreenblue;
+    g_CurrentPlayer->colourfadebluenew   = b;
+    g_CurrentPlayer->colourfadefracold   = g_CurrentPlayer->colourscreenfrac;
+    g_CurrentPlayer->colourfadefracnew   = frac;
 }
 
-void currentPlayerSetFadeFrac(f32 maxfadetime, f32 frac) {
+void currentPlayerSetFadeFrac(f32 maxfadetime, f32 frac)
+{
     currentPlayerAdjustFade(maxfadetime, g_CurrentPlayer->colourscreenred, g_CurrentPlayer->colourscreengreen, g_CurrentPlayer->colourscreenblue, frac);
 }
 
-s32 /*bool*/ currentPlayerIsFadeComplete(void)
+bool currentPlayerIsFadeComplete(void)
 {
 	return g_CurrentPlayer->colourfadetimemax60 < 0;
 }
 
 void currentPlayerUpdateColourScreenProperties(void)
 {
-	if (g_CurrentPlayer->colourfadetimemax60 >= 0) {
-		g_CurrentPlayer->colourfadetime60 += g_GlobalTimerDelta;
+    if (g_CurrentPlayer->colourfadetimemax60 >= 0)
+    {
+        g_CurrentPlayer->colourfadetime60 += g_GlobalTimerDelta;
 
-		if (g_CurrentPlayer->colourfadetime60 < g_CurrentPlayer->colourfadetimemax60) {
-			f32 mult = g_CurrentPlayer->colourfadetime60 / g_CurrentPlayer->colourfadetimemax60;
-			g_CurrentPlayer->colourscreenfrac = g_CurrentPlayer->colourfadefracold + (g_CurrentPlayer->colourfadefracnew - g_CurrentPlayer->colourfadefracold) * mult;
-			g_CurrentPlayer->colourscreenred = g_CurrentPlayer->colourfaderedold + (s32)((g_CurrentPlayer->colourfaderednew - g_CurrentPlayer->colourfaderedold) * mult);
-			g_CurrentPlayer->colourscreengreen = g_CurrentPlayer->colourfadegreenold + (s32)((g_CurrentPlayer->colourfadegreennew - g_CurrentPlayer->colourfadegreenold) * mult);
-			g_CurrentPlayer->colourscreenblue = g_CurrentPlayer->colourfadeblueold + (s32)((g_CurrentPlayer->colourfadebluenew - g_CurrentPlayer->colourfadeblueold) * mult);
-			return;
-		}
+        if (g_CurrentPlayer->colourfadetime60 < g_CurrentPlayer->colourfadetimemax60)
+        {
+            f32 mult                           = g_CurrentPlayer->colourfadetime60 / g_CurrentPlayer->colourfadetimemax60;
+            g_CurrentPlayer->colourscreenfrac  = g_CurrentPlayer->colourfadefracold + (g_CurrentPlayer->colourfadefracnew - g_CurrentPlayer->colourfadefracold) * mult;
+            g_CurrentPlayer->colourscreenred   = g_CurrentPlayer->colourfaderedold + (s32)((g_CurrentPlayer->colourfaderednew - g_CurrentPlayer->colourfaderedold) * mult);
+            g_CurrentPlayer->colourscreengreen = g_CurrentPlayer->colourfadegreenold + (s32)((g_CurrentPlayer->colourfadegreennew - g_CurrentPlayer->colourfadegreenold) * mult);
+            g_CurrentPlayer->colourscreenblue  = g_CurrentPlayer->colourfadeblueold + (s32)((g_CurrentPlayer->colourfadebluenew - g_CurrentPlayer->colourfadeblueold) * mult);
+            return;
+        }
 
-		g_CurrentPlayer->colourscreenfrac = g_CurrentPlayer->colourfadefracnew;
-		g_CurrentPlayer->colourscreenred = g_CurrentPlayer->colourfaderednew;
-		g_CurrentPlayer->colourscreengreen = g_CurrentPlayer->colourfadegreennew;
-		g_CurrentPlayer->colourscreenblue = g_CurrentPlayer->colourfadebluenew;
-		g_CurrentPlayer->colourfadetimemax60 = -1;
-	}
+        g_CurrentPlayer->colourscreenfrac    = g_CurrentPlayer->colourfadefracnew;
+        g_CurrentPlayer->colourscreenred     = g_CurrentPlayer->colourfaderednew;
+        g_CurrentPlayer->colourscreengreen   = g_CurrentPlayer->colourfadegreennew;
+        g_CurrentPlayer->colourscreenblue    = g_CurrentPlayer->colourfadebluenew;
+        g_CurrentPlayer->colourfadetimemax60 = -1;
+    }
 }
 
 void currentPlayerStartChrFade(f32 duration60, f32 targetfrac)
 {
-	struct ChrRecord* chr = g_CurrentPlayer->prop->chr;
+    ChrRecord *chr = g_CurrentPlayer->prop->chr;
 
-	if (chr) {
-		g_CurrentPlayer->bondfadetime60 = 0;
-		g_CurrentPlayer->bondfadetimemax60 = duration60;
-		g_CurrentPlayer->bondfadefracold = chr->fadealpha / 255.0f;
-		g_CurrentPlayer->bondfadefracnew = targetfrac;
-	}
+    if (chr)
+    {
+        g_CurrentPlayer->bondfadetime60    = 0;
+        g_CurrentPlayer->bondfadetimemax60 = duration60;
+        g_CurrentPlayer->bondfadefracold   = chr->fadealpha / 255.0f;
+        g_CurrentPlayer->bondfadefracnew   = targetfrac;
+    }
 }
 
 void currentPlayerTickChrFade(void)
 {
-	if (g_CurrentPlayer->bondfadetimemax60 >= 0) {
-		struct ChrRecord *chr = (struct ChrRecord *)g_CurrentPlayer->prop->chr;
-		f32 frac;
+    if (g_CurrentPlayer->bondfadetimemax60 >= 0)
+    {
+        ChrRecord *chr = g_CurrentPlayer->prop->chr;
+        f32        frac;
 
-		g_CurrentPlayer->bondfadetime60 += g_GlobalTimerDelta;
+        g_CurrentPlayer->bondfadetime60 += g_GlobalTimerDelta;
 
-		if (g_CurrentPlayer->bondfadetime60 < g_CurrentPlayer->bondfadetimemax60) {
-			frac = g_CurrentPlayer->bondfadefracold
-				+ (g_CurrentPlayer->bondfadefracnew - g_CurrentPlayer->bondfadefracold)
-				* g_CurrentPlayer->bondfadetime60
-				/ g_CurrentPlayer->bondfadetimemax60;
-		} else {
-			frac = g_CurrentPlayer->bondfadefracnew;
-			g_CurrentPlayer->bondfadetimemax60 = -1;
-		}
+        if (g_CurrentPlayer->bondfadetime60 < g_CurrentPlayer->bondfadetimemax60)
+        {
+            frac = g_CurrentPlayer->bondfadefracold + (g_CurrentPlayer->bondfadefracnew - g_CurrentPlayer->bondfadefracold) * g_CurrentPlayer->bondfadetime60 / g_CurrentPlayer->bondfadetimemax60;
+        }
+        else
+        {
+            frac = g_CurrentPlayer->bondfadefracnew;
+            g_CurrentPlayer->bondfadetimemax60 = -1;
+        }
 
-		if (chr) {
-			chr->fadealpha = (s8)(frac * 255);
-		}
-	}
+        if (chr)
+        {
+            chr->fadealpha = (s8)(frac * 255);
+        }
+    }
 }
 
 #ifdef NONMATCHING
@@ -14695,6 +14959,8 @@ glabel sub_GAME_7F080B34
  * - identical registers: fail
  * 
  * notes: two regalloc issues
+ * 
+ * //!Um... is this still an issue? seems to build OK - Trev
  */
 f32 bondviewYPositionRelated(StandTile *arg0, f32 arg1, f32 arg2)
 {
@@ -14739,7 +15005,7 @@ f32 bondviewYPositionRelated(StandTile *arg0, f32 arg1, f32 arg2)
  * notes: one large wrong section. There's a load that's swapped near the beginning.
  *     Rest of the function just has regalloc issues.
  */
-void bondviewUpdatePlayerClipping(s32 use_clipping_height, f32 clipping_height_offset)
+void bondviewUpdatePlayerClipping(s32 use_stanHeight, f32 stanHeight_offset)
 {
     s32 i;
     f32 temp_f0;
@@ -14754,7 +15020,7 @@ void bondviewUpdatePlayerClipping(s32 use_clipping_height, f32 clipping_height_o
 
     if (in_tank_flag == 1)
     {
-        g_CurrentPlayer->clipping_height = bondviewYPositionRelated(
+        g_CurrentPlayer->stanHeight = bondviewYPositionRelated(
             g_CurrentPlayer->field_488.current_tile_ptr,
             g_CurrentPlayer->field_488.collision_position.f[0],
             g_CurrentPlayer->field_488.collision_position.f[2]);
@@ -14766,25 +15032,25 @@ void bondviewUpdatePlayerClipping(s32 use_clipping_height, f32 clipping_height_o
 
         for (i=0; i<g_ClockTimer; i++)
         {
-            g_CurrentPlayer->field_6C = (g_CurrentPlayer->field_6C * 0.83f) + g_CurrentPlayer->clipping_height;
+            g_CurrentPlayer->field_6C = (g_CurrentPlayer->field_6C * 0.83f) + g_CurrentPlayer->stanHeight;
         }
 
         g_CurrentPlayer->field_70 = g_CurrentPlayer->field_6C * 0.17f;
     }
     else
     {
-        if (use_clipping_height != 0)
+        if (use_stanHeight != 0)
         {
-            g_CurrentPlayer->clipping_height = g_CurrentPlayer->clipping_height + clipping_height_offset;
+            g_CurrentPlayer->stanHeight = g_CurrentPlayer->stanHeight + stanHeight_offset;
 
             temp_f0 = bondviewYPositionRelated(
                 g_CurrentPlayer->field_488.current_tile_ptr,
                 g_CurrentPlayer->field_488.collision_position.f[0],
                 g_CurrentPlayer->field_488.collision_position.f[2]);
             
-            if (g_CurrentPlayer->clipping_height < temp_f0)
+            if (g_CurrentPlayer->stanHeight < temp_f0)
             {
-                g_CurrentPlayer->clipping_height = temp_f0;
+                g_CurrentPlayer->stanHeight = temp_f0;
             }
         }
         else
@@ -14805,32 +15071,32 @@ void bondviewUpdatePlayerClipping(s32 use_clipping_height, f32 clipping_height_o
                 sp5C,
                 bondviewGetPlayerDuckingHeightRelated(g_CurrentPlayer) + sp64) >= 0)
             {
-                if (sp64 < g_CurrentPlayer->clipping_height)
+                if (sp64 < g_CurrentPlayer->stanHeight)
                 {
-                    sp64 = g_CurrentPlayer->clipping_height;
+                    sp64 = g_CurrentPlayer->stanHeight;
                 }
             }
             
-            g_CurrentPlayer->clipping_height = sp64;
+            g_CurrentPlayer->stanHeight = sp64;
         }
 
-        if ((g_CurrentPlayer->field_2A6C != 0) && (g_CurrentPlayer->field_70 < g_CurrentPlayer->clipping_height))
+        if ((g_CurrentPlayer->field_2A6C != 0) && (g_CurrentPlayer->field_70 < g_CurrentPlayer->stanHeight))
         {
             g_CurrentPlayer->field_2A6C = 0;
             g_CurrentPlayer->field_488.current_tile_ptr = g_CurrentPlayer->field_2A70;
             g_CurrentPlayer->field_2A70 = NULL;
         }
 
-        if ((g_CurrentPlayer->field_7C >= 0.0f) || (g_CurrentPlayer->field_70 < g_CurrentPlayer->clipping_height))
+        if ((g_CurrentPlayer->field_7C >= 0.0f) || (g_CurrentPlayer->field_70 < g_CurrentPlayer->stanHeight))
         {
             g_CurrentPlayer->field_6C = g_CurrentPlayer->field_70 / 0.17f;
 
             for (i=0; i<g_ClockTimer; i++)
             {
-                g_CurrentPlayer->field_6C = (g_CurrentPlayer->field_6C * 0.83f) + g_CurrentPlayer->clipping_height;
+                g_CurrentPlayer->field_6C = (g_CurrentPlayer->field_6C * 0.83f) + g_CurrentPlayer->stanHeight;
             }
 
-            if (g_CurrentPlayer->field_70 < g_CurrentPlayer->clipping_height)
+            if (g_CurrentPlayer->field_70 < g_CurrentPlayer->stanHeight)
             {
                 g_CurrentPlayer->field_70 = g_CurrentPlayer->field_6C * 0.17f;
             }
@@ -14839,7 +15105,7 @@ void bondviewUpdatePlayerClipping(s32 use_clipping_height, f32 clipping_height_o
         // decomp issue: begin very wrong section
         save_field_7C = g_CurrentPlayer->field_7C;
 
-        if (g_CurrentPlayer->clipping_height < g_CurrentPlayer->field_70)
+        if (g_CurrentPlayer->stanHeight < g_CurrentPlayer->field_70)
         {
             if ((get_debug_fast_bond_flag() != 0) && (flt_CODE_bss_80079990[0] == 0.0f) && (flt_CODE_bss_80079990[2] == 0.0f))
             {
@@ -14853,15 +15119,15 @@ void bondviewUpdatePlayerClipping(s32 use_clipping_height, f32 clipping_height_o
             new_field_7c = save_field_7C - (g_GlobalTimerDelta * sp40);
             new_field_70 = g_CurrentPlayer->field_70 + (g_GlobalTimerDelta * (save_field_7C + new_field_7c) * 0.5f);
 
-            if (new_field_70 < g_CurrentPlayer->clipping_height)
+            if (new_field_70 < g_CurrentPlayer->stanHeight)
             {
                 f32 f_7c_square = (g_CurrentPlayer->field_7C * g_CurrentPlayer->field_7C);
-                f32 td = (g_CurrentPlayer->field_70 - g_CurrentPlayer->clipping_height);
+                f32 td = (g_CurrentPlayer->field_70 - g_CurrentPlayer->stanHeight);
                 f32 td2 = (2.0f * td * 0.2777778f);
                 f32 tsq = f_7c_square + ((td2 / 60.0f) * 60.0f);
                 new_field_7c = -sqrtf(tsq);
 
-                new_field_70 = g_CurrentPlayer->clipping_height;
+                new_field_70 = g_CurrentPlayer->stanHeight;
 
                 if (g_CurrentPlayer->field_2A6C != 0)
                 {
@@ -14878,7 +15144,7 @@ void bondviewUpdatePlayerClipping(s32 use_clipping_height, f32 clipping_height_o
 
         // end very wrong section
 
-        if ((save_field_7C < 0.0f) && (g_CurrentPlayer->field_70 <= g_CurrentPlayer->clipping_height))
+        if ((save_field_7C < 0.0f) && (g_CurrentPlayer->field_70 <= g_CurrentPlayer->stanHeight))
         {
             if (save_field_7C < -13.333333f)
             {
@@ -31953,7 +32219,7 @@ loop_2:
     // Node 8
     guMtxF2L(-32000.0f, &sp60, temp_s0, &spA0);
     set_BONDdata_field_10E0(temp_s0);
-    matrix_scalar_multiply(sub_GAME_7F0B4878(), &spC4);
+    matrix_scalar_multiply(bgGetLevelVisibilityScale(), &spC4);
     guMtxF2L(&spC4, g_CurrentPlayer->field_5C);
     sub_GAME_7F059334(g_CurrentPlayer->field_5C, g_CurrentPlayer->field_60);
     currentPlayerSetMatrix10C8(g_CurrentPlayer->field_5C);
@@ -32144,7 +32410,7 @@ glabel sub_GAME_7F0876C4
 /* 0BC498 7F087968 02002825 */   move  $a1, $s0
 /* 0BC49C 7F08796C 0FC1E0E1 */  jal   set_BONDdata_field_10E0
 /* 0BC4A0 7F087970 02002025 */   move  $a0, $s0
-/* 0BC4A4 7F087974 0FC2D21E */  jal   sub_GAME_7F0B4878
+/* 0BC4A4 7F087974 0FC2D21E */  jal   bgGetLevelVisibilityScale
 /* 0BC4A8 7F087978 00000000 */   nop
 /* 0BC4AC 7F08797C 46000306 */  mov.s $f12, $f0
 /* 0BC4B0 7F087980 0FC1629F */  jal   matrix_scalar_multiply
@@ -34055,25 +34321,25 @@ s32 sub_GAME_7F088618(void *arg0) {
     temp_s0_2 = (temp_s0 + 8);
     temp_s0->unk4 = osVirtualToPhysical(spBC);
     temp_s0_3 = (temp_s0_2 + 8);
-    *temp_s0_2 = 0xe7000000;
+    *temp_s0_2 = 0xe7000000;//gDPPipeSync(glistp++);
     temp_s0_2->unk4 = 0;
     temp_s0_4 = (temp_s0_3 + 8);
-    *temp_s0_3 = 0xba001402;
+    *temp_s0_3 = 0xba001402; //gDPSetCyceType(glistp++, G_CYC_1CYCLE);
     temp_s0_3->unk4 = 0;
     temp_s0_5 = (temp_s0_4 + 8);
-    *temp_s0_4 = 0xb900031d;
+    *temp_s0_4 = 0xb900031d; //gDPSetRenderMode(G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
     temp_s0_4->unk4 = 0x5041c8;
     temp_s0_6 = (temp_s0_5 + 8);
     *temp_s0_5 = 0xb9000002;
     *temp_s0_5 = 0;
     temp_s0_7 = (temp_s0_6 + 8);
-    *temp_s0_6 = 0xfcffffff;
+    *temp_s0_6 = 0xfcffffff;//gDPSetCombineMode(glistp++,SHADE, SHADE2);
     temp_s0_6->unk4 = 0xfffe793c;
     temp_s0_8 = (temp_s0_7 + 8);
-    *temp_s0_7 = 0xfa000000;
+    *temp_s0_7 = 0xfa000000;//gDPSetPrimColor(glistp++, 0, 0, 230, 230, 230, 0);
     temp_s0_7->unk4 = 0xe6e6e600;
     temp_s0_9 = (temp_s0_8 + 8);
-    *temp_s0_8 = 0xb6000000;
+    *temp_s0_8 = 0xb6000000;//gDPClearGeometryMode(glistp++, G_CULL_FRONT | G_CULL_BACK );
     temp_s0_8->unk4 = 0x3000;
     *temp_s0_9 = 0x6000000;
     temp_s0_10 = (temp_s0_9 + 8);
@@ -35678,9 +35944,9 @@ void sub_GAME_7F08976C(f32 param_1) {
 /**
  * Address 0x7F089778.
  */
-f32 bondviewGetPlayerClippingHeight(struct player *player)
+f32 bondviewGetPlayerStanHeight(struct player *player)
 {
-    return player->clipping_height;
+    return player->stanHeight;
 }
 
 
@@ -36553,18 +36819,24 @@ f32 get_BONDdata_bondfadefracnew(void)
 
 
 
-
-f32 get_curplay_horizontal_rotation_in_degrees(void) {
-    return ((360.0f - g_CurrentPlayer->vv_theta) * 6.2831855f) / 360.0f;
+/**
+ * Get the Current Heading of Current Player in Radians
+ * @return f32 Heading in Radians
+*/
+f32 get_curplay_horizontal_rotation_in_degrees(void)
+{
+    return DegToRad(360.0f - g_CurrentPlayer->vv_theta);
 }
 
 
 
-
-
-
-f32 get_curplay_vertical_rotation_in_degrees(void) {
-    return (g_CurrentPlayer->vv_verta * 6.2831855f) / 360.0f;
+/**
+ * Get the Current Pitch of Current Player in Radians
+ * @return f32 Pitch in Radians
+*/
+f32 get_curplay_vertical_rotation_in_degrees(void)
+{
+    return DegToRad(g_CurrentPlayer->vv_verta);
 }
 
 
@@ -37808,8 +38080,9 @@ void sub_GAME_7F08A928(int param_1)
 }
 
 
-void sub_GAME_7F08A944(int param) {
-    D_800368B4 = D_800368B4 | param;
+void sub_GAME_7F08A944(PLAYERFLAG flag)
+{
+    D_800368B4 |= flag;
 }
 
 #ifdef NONMATCHING

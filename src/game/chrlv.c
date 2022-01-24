@@ -7375,9 +7375,9 @@ void chrlvFireWeaponRelated(ChrRecord *self, s32 hand)
                     sp220.f[1] = sinf(sp24C);
                     sp220.f[2] = cosf(sp24C) * cosf(subroty);
                     
-                    sp258.f[0] = sp240.f[0] + (sp220.f[0] * 65536.0f);
-                    sp258.f[1] = sp240.f[1] + (sp220.f[1] * 65536.0f);
-                    sp258.f[2] = sp240.f[2] + (sp220.f[2] * 65536.0f);
+                    sp258.f[0] = sp240.f[0] + (sp220.f[0] * M_U16_MAX_VALUE_F);
+                    sp258.f[1] = sp240.f[1] + (sp220.f[1] * M_U16_MAX_VALUE_F);
+                    sp258.f[2] = sp240.f[2] + (sp220.f[2] * M_U16_MAX_VALUE_F);
                     
                     set_or_unset_GUARDdata_flag(self, 0);
                     sub_GAME_7F0B1CC4();

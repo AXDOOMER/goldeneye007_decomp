@@ -167,15 +167,71 @@ glabel sub_GAME_7F0BA5C0
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0BA640(void) {
+void LoadFromDynamicCCRMLUT(Gfx *glistp, int DLSize, int LUTToUse)
+{
+    char cVar1;
+    int *piVar2;
+    int  iVar3;
+    int  iVar4;
 
+    if ((param_2 != NULL) && (param_1 < param_2))
+        goto code_r0x7f0ba66c;
+    if (param_2 == NULL)
+    {
+        cVar1 = *(char *)param_1;
+        while (cVar1 != -0x48)
+        {
+code_r0x7f0ba66c:
+            do
+            {
+                piVar2 = (int *)(&gDynamic_CC_RM_LUTp)[param_3];
+                iVar3  = *piVar2;
+                if (iVar3 != 0)
+                {
+                    iVar4 = *param_1;
+                    while (true)
+                    {
+                        if (iVar4 == iVar3)
+                        {
+                            if (param_1[1] == piVar2[1])
+                            {
+                                dword_80044DB0 += 1;
+                                *param_1   = piVar2[2];
+                                param_1[1] = piVar2[3];
+                                iVar3      = piVar2[4];
+                            }
+                            else
+                            {
+                                iVar3 = piVar2[4];
+                            }
+                        }
+                        else
+                        {
+                            iVar3 = piVar2[4];
+                        }
+                        piVar2 = piVar2 + 4;
+                        if (iVar3 == 0)
+                            break;
+                        iVar4 = *param_1;
+                    }
+                }
+                param_1 = param_1 + 2;
+            } while ((param_2 != NULL) && (param_1 < param_2));
+            if (param_2 != NULL)
+            {
+                return;
+            }
+            cVar1 = *(char *)param_1;
+        }
+    }
+    return;
 }
 #else
 
 #if defined(VERSION_US) || defined(VERSION_JP)
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0BA640 /*DynamicCCRMLUT(Int DLSize (a0), Gfx GBICommand(a1), Gfx ReplacementGBICommand (a2))*/
+glabel bgLoadFromDynamicCCRMLUT /*DynamicCCRMLUT(Int DLSize (a0), Gfx GBICommand(a1), Gfx ReplacementGBICommand (a2))*/
 /* 0EF170 7F0BA640 10A00004 */  beqz  $a1, .L7F0BA654   /*if a1 = 0 goto L7F0BA654*/
 /* 0EF174 7F0BA644 00801025 */   move  $v0, $a0         /*v0 = a0*/
 /* 0EF178 7F0BA648 0045082B */  sltu  $at, $v0, $a1     /*if a1 < v0   then goto L7F0BA668*/
@@ -243,7 +299,7 @@ glabel sub_GAME_7F0BA640 /*DynamicCCRMLUT(Int DLSize (a0), Gfx GBICommand(a1), G
 #if defined(VERSION_EU)
 GLOBAL_ASM(
     .text
-glabel sub_GAME_7F0BA640 /*DynamicCCRMLUT(Int DLSize (a0), Gfx GBICommand(a1), Gfx ReplacementGBICommand (a2))*/
+glabel bgLoadFromDynamicCCRMLUT /*DynamicCCRMLUT(Int DLSize (a0), Gfx GBICommand(a1), Gfx ReplacementGBICommand (a2))*/
 /* 0EC2D0 7F0B98E0 10A00004 */  beqz  $a1, .L7F0B98F4
 /* 0EC2D4 7F0B98E4 00801025 */   move  $v0, $a0
 /* 0EC2D8 7F0B98E8 0045082B */  sltu  $at, $v0, $a1

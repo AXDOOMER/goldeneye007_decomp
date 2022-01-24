@@ -3045,7 +3045,7 @@ loop_2:
         }
         if (PitemZ_entries.unkD08->unk8->unk54 != 0)
         {
-            sub_GAME_7F0BA640(PitemZ_entries.unkD08->unk8->unk54->unk4->unk1C + (PitemZ_entries.unkD08->unk8->unk54->unk4->unk0 & 0xffffff), 0, 8);
+            bgLoadFromDynamicCCRMLUT(PitemZ_entries.unkD08->unk8->unk54->unk4->unk1C + (PitemZ_entries.unkD08->unk8->unk54->unk4->unk0 & 0xffffff), 0, 8);
         }
     }
 }
@@ -3102,7 +3102,7 @@ glabel load_walletbond
 /* 040490 7F00B960 8C59001C */  lw    $t9, 0x1c($v0)
 /* 040494 7F00B964 24060008 */  li    $a2, 8
 /* 040498 7F00B968 01014824 */  and   $t1, $t0, $at
-/* 04049C 7F00B96C 0FC2E990 */  jal   sub_GAME_7F0BA640
+/* 04049C 7F00B96C 0FC2E990 */  jal   bgLoadFromDynamicCCRMLUT
 /* 0404A0 7F00B970 03292021 */   addu  $a0, $t9, $t1
 .L7F00B974:
 /* 0404A4 7F00B974 8FBF0034 */  lw    $ra, 0x34($sp)
@@ -4496,14 +4496,14 @@ loop_24:
     phi_f6 = temp_f6;
     if (mainfolderimages->unk10 < 0)
     {
-        phi_f6 = temp_f6 + 4294967296.0f;
+        phi_f6 = temp_f6 + M_U32_MAX_VALUE_F;
     }
     sp94 = (f32) (phi_f6 * 0.5f);
     temp_f18 = (f32) mainfolderimages->unk11;
     phi_f18 = temp_f18;
     if (mainfolderimages->unk11 < 0)
     {
-        phi_f18 = temp_f18 + 4294967296.0f;
+        phi_f18 = temp_f18 + M_U32_MAX_VALUE_F;
     }
     sp98 = (f32) (phi_f18 * 0.5f);
     likely_generate_DL_for_image_declaration(&arg0, mainfolderimages + 0xc, 4, 0, 0);
@@ -4517,14 +4517,14 @@ loop_24:
     phi_f6_2 = temp_f6_2;
     if (mainfolderimages->unk1C < 0)
     {
-        phi_f6_2 = temp_f6_2 + 4294967296.0f;
+        phi_f6_2 = temp_f6_2 + M_U32_MAX_VALUE_F;
     }
     sp84 = (f32) (phi_f6_2 * 0.5f);
     temp_f10_2 = (f32) mainfolderimages->unk1D;
     phi_f10 = temp_f10_2;
     if (mainfolderimages->unk1D < 0)
     {
-        phi_f10 = temp_f10_2 + 4294967296.0f;
+        phi_f10 = temp_f10_2 + M_U32_MAX_VALUE_F;
     }
     sp88 = (f32) (phi_f10 * 0.5f);
     likely_generate_DL_for_image_declaration(&arg0, mainfolderimages + 0x18, 4, 0, 0);
@@ -8916,14 +8916,14 @@ loop_37:
             phi_f16 = temp_f16;
             if (temp_s0->unk4 < 0)
             {
-                phi_f16 = temp_f16 + 4294967296.0f;
+                phi_f16 = temp_f16 + M_U32_MAX_VALUE_F;
             }
             sp88 = (f32) (phi_f16 * 0.5f);
             temp_f8 = (f32) temp_s0->unk5;
             phi_f8 = temp_f8;
             if (temp_s0->unk5 < 0)
             {
-                phi_f8 = temp_f8 + 4294967296.0f;
+                phi_f8 = temp_f8 + M_U32_MAX_VALUE_F;
             }
             sp8C = (f32) (phi_f8 * 0.5f);
             likely_generate_DL_for_image_declaration(&arg0, temp_s0, 4, 0, 0);

@@ -288,7 +288,7 @@ void fogLoadCurrentEnvironment(struct EnvironmentData *arg0)
     viSetZRange(arg0->Visibility.BlendMultiplier, arg0->Visibility.FarFog);
     viGetZRange(&zrange);
 
-    temp_f0 = sub_GAME_7F0B4878();
+    temp_f0 = bgGetLevelVisibilityScale();
     zrange[0] /= temp_f0;
     zrange[1] /= temp_f0;
 
@@ -357,7 +357,7 @@ glabel fogLoadCurrentEnvironment
 /* 0EC40C 7F0B9A1C 46802320 */   cvt.s.w $f12, $f4
 /* 0EC410 7F0B9A20 0C00103F */  jal   viGetZRange
 /* 0EC414 7F0B9A24 27A40030 */   addiu $a0, $sp, 0x30
-/* 0EC418 7F0B9A28 0FC2CEED */  jal   sub_GAME_7F0B4878
+/* 0EC418 7F0B9A28 0FC2CEED */  jal   bgGetLevelVisibilityScale
 /* 0EC41C 7F0B9A2C 00000000 */   nop   
 /* 0EC420 7F0B9A30 C7A80030 */  lwc1  $f8, 0x30($sp)
 /* 0EC424 7F0B9A34 C7A40034 */  lwc1  $f4, 0x34($sp)

@@ -16,7 +16,7 @@ struct levelentry
 };
 
 typedef struct s_room_info {
-    u8 bitflags;
+    u8 bitflags0;
     u8 bitflags1;
     u8 model_bin_loaded;
     u8 bitflags2;
@@ -109,8 +109,8 @@ Gfx *bgScissorCurrentPlayerView(Gfx *arg0, s32 left, s32 top, s32 width, s32 hei
 Gfx* bgScissorCurrentPlayerViewDefault(Gfx* arg0);
 Gfx* bgScissorCurrentPlayerViewF(Gfx* arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4);
 f32 get_room_data_float1(void);
-s32 getROOMID_Bitflags(int roomID);
+u8 getROOMID_Bitflags(int roomID);
 s32 bgGet2dBboxByRoomId(s32 room_id, struct bbox2d *result);
-f32 sub_GAME_7F0B4878(void);
+f32 bgGetLevelVisibilityScale(void);
 
 #endif

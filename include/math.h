@@ -51,6 +51,7 @@
 
 
 #define M_U16_MAX_VALUE_F 65536.0f
+#define M_U32_MAX_VALUE_F 4294967296.0f
 
 
 /*Inline Math Funcs*/
@@ -63,7 +64,7 @@
 /* Gets the byte representation of an angle (radians) */
 #define RAD2BYTE(RAD)         (char)(256.0f / M_TAU_F * (RAD))
 /* Converts an angle from Degrees to Radians */
-#define DegToRad(DEG)         (float)((DEG) * M_TAU_F / 360.0)
+#define DegToRad(DEG)         (float)((DEG) * M_TAU_F / 360.0f)
 /* Converts and halves an angle from Degrees to Radians */
 #define mDegToHalfRad(x)      ((x * M_PI_F) / 360.0f)
 /* Converts an angle from Radians to Degrees */

@@ -424,7 +424,7 @@ struct player
    */
   /* 0x0070 */ f32 field_70;
 
-  /* 0x0074 */ f32 clipping_height;
+  /* 0x0074 */ f32 stanHeight;
 
   /* 0x0078 */ s32 field_78;
 
@@ -3140,14 +3140,14 @@ void bondviewSet3dCoord7F07CEB0(coord3d *arg0);
 f32 bondviewYPositionRelated(struct StandTile *arg0, f32 arg1, f32 arg2);
 f32 bondviewGetPlayerDuckingHeightRelated(struct player *player);
 void bondviewCollisionRadiusRelated(PropRecord* arg0, f32 *arg1, f32 *arg2, f32 *arg3);
-void bondviewUpdatePlayerClipping(s32 use_clipping_height, f32 clipping_height_offset);
+void bondviewUpdatePlayerClipping(s32 use_stanHeight, f32 stanHeight_offset);
 void currentPlayerSetFadeColour(s32 r, s32 g, s32 b, f32 frac);
 void currentPlayerSetFadeFrac(f32 maxfadetime, f32 frac);
 void set_BONDdata_autoaim_x(s32 param_1);
 s32 get_BONDdata_autoaim_x(void);
 void set_BONDdata_autoaim_y(s32 param_1);
 void set_BONDdata_lookahead_setting(s32 arg0);
-f32 bondviewGetPlayerClippingHeight(struct player *player);
+f32 bondviewGetPlayerStanHeight(struct player *player);
 void record_damage_kills(f32, f32, f32, s32, s32);
 void bondviewCallRecordDamageKills(f32 arg0, f32 rad, s32 arg2, s32 arg3);
 int bondviewGetIfCurrentPlayerDamageShowTime(void);

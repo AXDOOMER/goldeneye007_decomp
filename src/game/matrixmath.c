@@ -12,7 +12,7 @@ f32 flt_CODE_bss_80075DA0;
 
 // data
 //D:80032310
-f32 D_80032310[2] = {65536.0f, 65536.0f};
+f32 D_80032310[2] = {M_U16_MAX_VALUE_F, M_U16_MAX_VALUE_F};
 
 
 
@@ -585,13 +585,13 @@ void matrix_scalar_multiply_3(f32 scalar, f32 *matrix)
 
 void matrix_4x4_7F058C4C(f32 arg0)
 {
-    D_80032310[0] = (65536.0f * arg0);
+    D_80032310[0] = (M_U16_MAX_VALUE_F * arg0);
 }
 
 void matrix_4x4_7F058C64(void)
 {
     flt_CODE_bss_80075DA0 = D_80032310[0];
-    D_80032310[0]         = 65536.0f;
+    D_80032310[0]         = M_U16_MAX_VALUE_F;
 }
 
 void matrix_4x4_7F058C88(void)
@@ -937,7 +937,7 @@ void matrix_4x4_7F059044(Mtxf *arg0, Mtx* arg1) {
     s32 i, j;
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 4; j++) {
-            arg1->m[i][j] = arg0->m[i][j] * 65536.0f;
+            arg1->m[i][j] = arg0->m[i][j] * M_U16_MAX_VALUE_F;
         }
     }
 }
@@ -946,7 +946,7 @@ void matrix_4x4_7F05914C(Mtx* arg0, Mtxf *arg1) {
     s32 i, j;
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 4; j++) {
-            arg1->m[i][j] = arg0->m[i][j] / 65536.0f;
+            arg1->m[i][j] = arg0->m[i][j] / M_U16_MAX_VALUE_F;
         }
     }
 }
@@ -1675,7 +1675,7 @@ glabel sub_GAME_7F05997C
 
 void matrix_4x4_7F059A48(Mtxf *matrix, u16* arg1, f32 angle, f32 arg3, f32 arg4, f32 arg5, f32 arg6) {
     f32 temp_f12_2 = cosf(angle * 0.5f) / sinf(angle * 0.5f);
-    arg6 *= 65536.0f;
+    arg6 *= M_U16_MAX_VALUE_F;
     matrix->m[0][0] = ((temp_f12_2 / arg3) * arg6);
     matrix->m[1][1] = (temp_f12_2 * arg6);
     matrix->m[1][0] = 0.0f;
