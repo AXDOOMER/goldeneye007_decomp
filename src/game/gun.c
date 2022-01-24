@@ -31,13 +31,13 @@ s32 dword_CODE_bss_80076A48;
 
 // data
 //D:80032440
-struct rgba_u8 D_80032440[] = {
+rgba_u8 D_80032440[] = {
 	{0x96, 0x96, 0x96, 0},
 	{0x96, 0x96, 0x96, 0}
 };
 
 //D:80032448
-struct rgba_u8 D_80032448[] = {
+rgba_u8 D_80032448[] = {
 	{0xFF, 0xFF, 0xFF, 0},
 	{0xFF, 0xFF, 0xFF, 0},
 	{0xB2, 0x4D, 0x2E, 0}
@@ -2237,8 +2237,41 @@ void sub_GAME_7F05DAE4(GUNHAND hand) {
 }
 
 #ifdef NONMATCHING
-void remove_hands_item(void) {
+void remove_hands_item(GUNHAND hand, s32 weapid) 
+{
+    s32      ammomag;
+    AMMOTYPE ammotype;
 
+    void *   ammocount;
+
+    ammotype = get_ammo_type_for_weapon(&pPlayer->hands[hand]);
+
+    if (pPlayer->hands[hand].weaponnum_watchmenu < 0)
+    {
+        place_item_in_hand_swap_and_make_visible(hand, weapid, &pPlayer->hands[hand], ammotype);
+    }
+
+    ammomag   = pPlayer->hands[hand].weapon_ammo_in_magazine;
+    ammocount = pPlayer->AmmoHeld[ammotype];
+    if (ammomag > 0)
+    {
+        //ammocount->unk1130 = ammocount->unk1130 + ammomag;
+    }
+    if (pPlayer->hands[hand].weaponnum < 0x21)
+    {
+        //pPlayer->hands[hand].weapon_firing_status=2;
+        pPlayer->AmmoHeld[ammotype] += weapid;
+    }
+    if (getPlayerCount(&pPlayer->hands[hand], ammomag, &pPlayer->hands[hand], ammotype) >= 2)
+    {
+        sub_GAME_7F09B368(hand);
+    }
+    sub_GAME_7F05FB00(hand);
+    pPlayer->hands[hand].weaponnum               = weapid;
+    pPlayer->hands[hand].weapon_ammo_in_magazine = 0;
+    pPlayer->hands[hand].field_A4C               = 0;
+    pPlayer->hands[hand].field_A50               = 0;
+    calculate_equip_cur_item();
 }
 #else
 GLOBAL_ASM(
@@ -3664,8 +3697,95 @@ void sub_GAME_7F05EB0C(ObjectRecord *arg0, coord3d *arg1, StandTile *arg2, Mtxf 
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F05EC1C(void) {
+void sub_GAME_7F05EC1C(void)
+{
+    f32 spD0;
+    f32 spCC;
+    f32 spC8;
+    s32 spC4;
+    f32 spB8;
+    f32 spB4;
+    s32 spB0;
+    s8  spA9;
+    s8  spA8;
+    ? sp54;
+    ? sp50;
+    f32   temp_f0;
+    f32   temp_f14;
+    void *temp_s0;
+    f32   phi_f16;
+    f32   phi_f14;
+    s32   phi_return;
 
+    phi_return = arg0->unk10;
+    if (arg0->unk10 != 0)
+    {
+        temp_s0 = get_curplayer_positiondata();
+        temp_f0 = sub_GAME_7F089778(pPlayer);
+        spB0    = 0;
+        if (arg1->unk4 < temp_s0->unkC)
+        {
+            phi_f16 = arg1->unk4 - temp_f0;
+            phi_f14 = temp_s0->unkC - temp_f0;
+        }
+        else
+        {
+            phi_f16 = temp_s0->unkC - temp_f0;
+            phi_f14 = arg1->unk4 - temp_f0;
+        }
+        spB4 = phi_f16;
+        spB8 = phi_f14;
+        spC4 = temp_s0->unk14;
+        sub_GAME_7F08A03C(temp_s0->unkC, phi_f14, temp_s0, 0);
+        temp_f14 = phi_f14;
+        if (sub_GAME_7F0B0E24(temp_f14,
+                              &spC4,
+                              temp_s0->unk8,
+                              temp_s0->unk10,
+                              arg1->unk0,
+                              arg1->unk8,
+                              0x1F,
+                              temp_f14,
+                              phi_f16,
+                              0.0f,
+                              1.0f) != 0)
+        {
+            spC8 = (bitwise f32)arg1->unk0;
+            spCC = arg1->unk4;
+            spD0 = arg1->unk8;
+        }
+        else
+        {
+            spC4 = temp_s0->unk14;
+            spC8 = (bitwise f32)temp_s0->unk8;
+            spCC = temp_s0->unkC;
+            spB0 = 1;
+            spD0 = (bitwise f32)temp_s0->unk10;
+        }
+        sub_GAME_7F08A03C(temp_s0, 1);
+        phi_return =
+            sub_GAME_7F05EB0C(arg0, &spC8, spC4, arg2, arg3, arg4, temp_s0);
+        if ((arg0->unk64 & 0x80) != 0)
+        {
+            if (spB0 != 0)
+            {
+                arg0->unk6C->unk0  = (s32)(arg0->unk6C->unk0 | 0x100);
+                arg0->unk6C->unkD4 = (bitwise f32)arg1->unk0;
+                arg0->unk6C->unkD8 = (f32)arg1->unk4;
+                arg0->unk6C->unkDC = (f32)arg1->unk8;
+            }
+            spA8       = get_cur_players_room();
+            spA9       = (u8)0xFF;
+            phi_return = sub_GAME_7F0B4AB4(get_BONDdata_position3(),
+                                           &spC8,
+                                           &spA8,
+                                           arg0->unk6C + 0xCC,
+                                           &sp54,
+                                           &sp50,
+                                           0x14);
+        }
+    }
+    return phi_return;
 }
 #else
 GLOBAL_ASM(
@@ -4207,7 +4327,158 @@ glabel sub_GAME_7F05F09C
         assertPrint_8291E690(".\\ported\\gun.cpp",0x8df,"throwmineremote - Not a mine!");
     }
 //*/
-void generate_player_thrown_object(void) {
+void generate_player_thrown_object(void)
+{
+    ? spFC;
+    f32 spF8;
+    f32 spF4;
+    f32 spF0;
+    f32 spEC;
+    f32 spE8;
+    f32 spE4;
+    f32 spE0;
+    ? spA0;
+    ? sp94;
+    f32   sp88;
+    void *sp84;
+    void *sp80;
+    f32   sp78;
+    f32   sp74;
+    f32   sp70;
+    ? sp40;
+    s32   sp38;
+    s32   sp2C;
+    f32   temp_f10;
+    f32   temp_f16;
+    f32   temp_f6;
+    s32   temp_t7;
+    s32   temp_v0;
+    s32   temp_v0_4;
+    void *temp_s0;
+    void *temp_v0_2;
+    void *temp_v0_3;
+    void *phi_s0;
+    void *phi_s0_2;
+    s32   phi_a1;
+
+    spEC    = D_80053CA8;
+    sp84    = get_curplayer_positiondata();
+    sp80    = get_BONDdata_field408();
+    temp_v0 = get_item_in_hand(arg0);
+    sp38    = temp_v0;
+    if (temp_v0 == 0x3D)
+    {
+        spEC = D_80053CAC;
+    }
+    sub_GAME_7F057C14(&spF0, &spFC);
+    sub_GAME_7F0681CC(&sp94, &sp88, arg0);
+    sub_GAME_7F0583D8(sub_GAME_7F078444(), &sp88);
+    temp_f10 = sp88 * spEC;
+    temp_f16 = sp90 * spEC;
+    spF0     = temp_f10;
+    temp_f6  = (sp8C * spEC) + 5.0f;
+    spF8     = temp_f16;
+    spF4     = temp_f6;
+    if (clock_timer > 0)
+    {
+        spF0 = temp_f10 + ((sp84->unk8 - sp80->unk0) / global_timer_delta);
+        spF4 = temp_f6 + ((sp84->unkC - sp80->unk4) / global_timer_delta);
+        spF8 = temp_f16 + ((sp84->unk10 - sp80->unk8) / global_timer_delta);
+    }
+    temp_t7   = arg0 * 0x3A8;
+    temp_v0_2 = pPlayer + temp_t7;
+    spE0      = temp_v0_2->unkB08;
+    spE4      = temp_v0_2->unkB0C;
+    sp2C      = temp_t7;
+    spE8      = temp_v0_2->unkB10;
+    reset_array_of_0x10_floats(&spA0);
+    sub_GAME_7F058020((pPlayer + sp2C) + 0xAD8, &sp40);
+    sp70 = 0.0f;
+    sp74 = 0.0f;
+    sp78 = 0.0f;
+    sub_GAME_7F058068(&sp40, &spA0);
+    phi_s0 = NULL;
+    if (sp38 == 0x3D)
+    {
+        temp_s0 = sub_GAME_7F08C570(sp38, sp38);
+        sub_GAME_7F08C61C(sp38);
+        if (temp_s0 != 0)
+        {
+            sub_GAME_7F04C044(temp_s0->unk10);
+        }
+        sub_GAME_7F05D690();
+        phi_s0 = temp_s0;
+    }
+    phi_s0_2 = phi_s0;
+    phi_a1   = sp38;
+    if (phi_s0 == 0)
+    {
+        if ((u32)(sp38 - 0x1B) < 0x23U)
+        {
+            switch
+            ///* 09408C 7F05F55C 01000008 */ jr $t0
+            //    /* 094090 7F05F560 00000000 */ nop
+            case thrown_item_proximity_mine:
+                a0                                   = 200
+                    //    /* 094094 7F05F564 1000000C */ b.L7F05F598
+                    //        /* 094098 7F05F568 240400C8 */ li $a0,
+                    case thrown_item_timed_mine : a0 = 201
+
+                                                  //    /* 09409C 7F05F56C 1000000A */ b.L7F05F598
+                                                  //        /* 0940A0 7F05F570 240400C9 */ li $a0,
+                                                  case thrown_item_bombcase : a0                                                                                                               = 226
+                                                                              //    /* 0940A4 7F05F574 10000008 */ b.L7F05F598
+                                                                              //        /* 0940A8 7F05F578 240400E2 */ li $a0,
+                                                                              case thrown_item_bug : a0                                                                                        = 245
+                                                                                                     //    /* 0940AC 7F05F57C 10000006 */ b.L7F05F598
+                                                                                                     //        /* 0940B0 7F05F580 240400F5 */ li $a0,
+                                                                                                     case thrown_item_micro_camera : a0                                                        = 246
+                                                                                                                                     //    /* 0940B4 7F05F584 10000004 */ b.L7F05F598
+                                                                                                                                     //        /* 0940B8 7F05F588 240400F6 */ li $a0,
+                                                                                                                                     case thrown_item_GE_key : a0                              = 248
+                                                                                                                                                               //    /* 0940BC 7F05F58C 10000002 */ b.L7F05F598
+                                                                                                                                                               //        /* 0940C0 7F05F590 240400F8 */ li $a0,
+                                                                                                                                                               case thrown_item_plastique : a0 = 273
+            //    /* 0940C4 7F05F594 24040111 */ li $a0,
+        }
+        phi_s0_2 = create_new_item_instance_of_model(0xC7, sp38);
+        phi_a1   = sp38;
+    }
+    if (phi_s0_2 != 0)
+    {
+        //set timers
+        switch
+            case generate_temp_remote_mine
+                if (get_num_players != 1)
+                    timer = 180
+                else phi_s0_2.timer = 300 
+            case generate_temp_proximity_mine
+                     if (get_num_players != 1) timer = 180 else timer =                          300
+            case generate_temp_timed_mine
+                     if (get_num_players != 1) timer = 180 else timer =                          300
+            case generate_temp_bombcase
+                     if (get_num_players != 1) timer = 180 else timer =                          300
+            case generate_temp_startic thrown
+                     if (get_num_players != 1) timer = 180 else timer =                          300
+            default
+                     if (get_num_players != 1) timer = 180 else timer =                          300
+        phi_s0_2->unk64 = (s32)(phi_s0_2->unk64 & 0xFFF9FFFF);
+        phi_s0_2->unk64 =
+            (s32)(phi_s0_2->unk64 | (get_cur_playernum(phi_a1) << 0x11));
+        sub_GAME_7F05EC1C(phi_s0_2, &spE0, &spA0, &spF0, &spFC);
+        if ((phi_s0_2->unk64 & 0x80) != 0)
+        {
+            temp_v0_3              = phi_s0_2->unk6C;
+            temp_v0_3->unk0        = (s32)(temp_v0_3->unk0 | 2);
+            phi_s0_2->unk6C->unk8C = (f32)D_80053DC8;
+            phi_s0_2->unk6C->unkBC = 0x3C;
+            temp_v0_4              = play_sfx_a1(ptr_sfx_buf, 4, 0);
+            if (temp_v0_4 != 0)
+            {
+                sub_GAME_7F053A10(temp_v0_4, phi_s0_2 + 0x58);
+            }
+        }
+    }
 
 }
 #else
@@ -25196,13 +25467,13 @@ glabel sub_GAME_7F0680D4
 /**
  * Address 0x7F068190.
 */
-void sub_GAME_7F068190(coord3d *arg0, coord3d *arg1)
+void sub_GAME_7F068190(coord3d *zeropos, coord3d *vec)
 {
-    arg0->f[0] = 0.0f;
-    arg0->f[1] = 0.0f;
-    arg0->f[2] = 0.0f;
+    zeropos->x = 0.0f;
+    zeropos->y = 0.0f;
+    zeropos->z = 0.0f;
 
-    sub_GAME_7F077EEC(&g_CurrentPlayer->crosshair_angle, arg1, 1.0f);
+    sub_GAME_7F077EEC(&g_CurrentPlayer->crosshair_angle, vec, 1.0f);
 }
 
 
@@ -27429,14 +27700,15 @@ glabel sub_GAME_7F06908C
 )
 #endif
 
-void set_unset_ammo_on_screen_setting(s32 flags, s32 isset) {
+void set_unset_ammo_on_screen_setting(s32 flags, bool unset) {
 
-	if (isset) {
-		g_CurrentPlayer->somekinda_flags = (g_CurrentPlayer->somekinda_flags & ~flags);
+	if (unset)
+    {
+		g_CurrentPlayer->somekinda_flags &= ~flags;
 		return;
 	}
 
-	g_CurrentPlayer->somekinda_flags = (g_CurrentPlayer->somekinda_flags | flags);
+	g_CurrentPlayer->somekinda_flags |= flags;
 }
 
 #ifdef NONMATCHING
@@ -27757,25 +28029,25 @@ void *microcode_generation_ammo_related(void *arg0, void *arg1, f32 arg2, f32 ar
     // Node 0
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0xc0;
-    *arg0 = 0xba000602;
+    *arg0 = 0xba000602; //gDPSetColorDither(glistp++, G_CD_MAGICSQ);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0;
-    *arg0 = 0xba001301;
+    *arg0 = 0xba001301;//gDPSetTexturePersp(glistp++, G_TP_NONE);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0;
     *arg0 = 0xb9000002;
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0;
-    *arg0 = 0xba001001;
+    *arg0 = 0xba001001;//gDPSetTextureLOD(glistp++, G_TL_TILE);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0;
-    *arg0 = 0xba000c02;
+    *arg0 = 0xba000c02;//gDPSetTextureFilter(glistp++, G_TF_POINT);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0xc00;
-    *arg0 = 0xba000903;
+    *arg0 = 0xba000903;//gDPSetTextureConvert(glistp++, G_TC_CONV);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0;
-    *arg0 = 0xba000e02;
+    *arg0 = 0xba000e02;//gDPSetTextureLUT(glistp++, G_TT_NONE);
     phi_t9 = ((s32) arg1->unk4 >> 1);
     if (arg1->unk4 < 0)
     {
@@ -27850,16 +28122,16 @@ void *microcode_generation_ammo_related(void *arg0, void *arg1, f32 arg2, f32 ar
     arg0 = (void *) (arg0 + 8);
     spAC = (f32) (phi_f16 * 0.5f);
     arg0->unk4 = 0;
-    *arg0 = 0xe7000000;
+    *arg0 = 0xe7000000;//gDPPipeSync(glistp++);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0;
-    *arg0 = 0xba001402;
+    *arg0 = 0xba001402;//gDPSetCyceType(glistp++, G_CYC_1CYCLE);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0x504240;
-    *arg0 = 0xb900031d;
+    *arg0 = 0xb900031d;//gDPSetRenderMode(glistp++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0xfffdf6fb;
-    *arg0 = 0xfcffffff;
+    *arg0 = 0xfcffffff;//gDPSetCombineMode(glistp++, PRIMITIVE, PRIMITIVE2);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0;
     *arg0 = 0xfa000000;
@@ -27877,25 +28149,25 @@ void *microcode_generation_ammo_related(void *arg0, void *arg1, f32 arg2, f32 ar
     display_image_at_on_screen_coord(&arg0, &spB0, &spA8, arg1->unk4, (s32) arg1->unk5, 0, 0, 1, arg8, arg9, argA, argB, (s32) (0 < arg1->unk6), 0);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0;
-    *arg0 = 0xe7000000;
+    *arg0 = 0xe7000000;//gDPPipeSync(glistp++);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0x40;
-    *arg0 = 0xba000602;
+    *arg0 = 0xba000602;//gDPSetColorDither(glistp++, G_CD_BAYER);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0x80000;
-    *arg0 = 0xba001301;
+    *arg0 = 0xba001301;//gDPSetTexturePersp(glistp++, G_TP_PERSP);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0;
     *arg0 = 0xb9000002;
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0x10000;
-    *arg0 = 0xba001001;
+    *arg0 = 0xba001001;//gDPSetTextureLOD(glistp++, G_TL_LOD);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0x2000;
-    *arg0 = 0xba000c02;
+    *arg0 = 0xba000c02;//gDPSetTextureFilter(glistp++, G_TF_BILERP);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0xc00;
-    *arg0 = 0xba000903;
+    *arg0 = 0xba000903;//gDPSetTextureConvert(glistp++, G_TC_FILT);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0;
     *arg0 = 0xba000e02;
@@ -29615,14 +29887,15 @@ glabel sub_GAME_7F06A334
 
 
 
-void set_unset_bitflags(s32 bitflags, s32 flag) {
-
-    if (flag != 0) {
-        g_CurrentPlayer->somekinda_bitflags = (g_CurrentPlayer->somekinda_bitflags & ~bitflags);
+void set_unset_bitflags(s32 bitflags, bool unset)
+{
+    if (unset)
+    {
+        g_CurrentPlayer->somekinda_bitflags &= ~bitflags;
         return;
     }
 
-    g_CurrentPlayer->somekinda_bitflags = (g_CurrentPlayer->somekinda_bitflags | bitflags);
+    g_CurrentPlayer->somekinda_bitflags |= bitflags;
 }
 
 
