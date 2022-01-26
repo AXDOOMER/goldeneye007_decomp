@@ -31,7 +31,7 @@ extern u8 sp_main[];
 extern u8 sp_audi[];
 extern u8 sp_debug[];
 
-#include <bondaicommands.h> // game ai commands
+//#include <bondaicommands.h> // game ai commands actually... this shouldnt be here as they are only needed by setups
 #include <bondconstants.h>  // game constants
 #include <bondtypes.h>      // game structs and types
 

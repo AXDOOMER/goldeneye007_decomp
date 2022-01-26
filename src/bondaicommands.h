@@ -100,24 +100,27 @@
 /*=============================================================================
 // global ai lists - glists
 //===========================================================================*/
-#define GLIST_AIM_AT_BOND                              0x0000 // continuously aim at bond with weapon
-#define GLIST_END_ROUTINE                              0x0001 // end routine (loop forever)
-#define GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE 0x0002 // wait for bond detection (spawn clone when heard bond)
-#define GLIST_IDLE_RAND_ANIM_SUBROUTINE                0x0003 // play idle animation (subroutine)
-#define GLIST_KEYBOARD_RAND_ANIM_SUBROUTINE            0x0004 // play use keyboard animation (subroutine)
-#define GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM   0x0005 // wait for bond detection (deaf/no clones/no idling)
-#define GLIST_FIRE_RAND_ANIM_SUBROUTINE                0x0006 // fire at bond with random animation (subroutine)
-#define GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM        0x0007 // wait for bond detection (no clones/no idling)
-#define GLIST_RUN_TO_BOND_SUBROUTINE                   0x0008 // run to bond and fire (subroutine)
-#define GLIST_RUN_TO_CHR_PADPRESET_AND_ACTIVATE_ALARM  0x0009 // run to chr->padpreset1 and activate alarm
-#define GLIST_STARTLE_CHR_AND_RUN_TO_BOND_SUBROUTINE   0x000A // startle character (subroutine)
-#define GLIST_SPAWN_CLONE_OR_RUN_TO_BOND               0x000B // if chr has been seen, run to bond - else spawn clone
-#define GLIST_RUN_TO_BOND_AND_FIRE                     0x000C // run to bond and fire
-#define GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY   0x000D // forever chase bond and fire (halt randomly)
-#define GLIST_WAIT_ONE_SECOND_SUBROUTINE               0x000E // wait for one second (subroutine)
-#define GLIST_EXIT_LEVEL                               0x000F // exit level
-#define GLIST_DRAW_DD44_AND_FIRE                       0x0010 // draw dd44 and fire
-#define GLIST_REMOVE_CHR                               0x0011 // remove chr
+typedef enum GLISTID
+{
+    GLIST_AIM_AT_BOND,                              // Continuously aim at bond with weapon
+    GLIST_END_ROUTINE,                              // End routine (loop forever)
+    GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE, // Wait for bond detection (spawn clone when heard bond)
+    GLIST_IDLE_RAND_ANIM_SUBROUTINE,                // Play idle animation (subroutine)
+    GLIST_KEYBOARD_RAND_ANIM_SUBROUTINE,            // Play use keyboard animation (subroutine)
+    GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM,   // Wait for bond detection (deaf/no clones/no idling)
+    GLIST_FIRE_RAND_ANIM_SUBROUTINE,                // Fire at bond with random animation (subroutine)
+    GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM,        // Wait for bond detection (no clones/no idling)
+    GLIST_RUN_TO_BOND_SUBROUTINE,                   // Run to bond and fire (subroutine)
+    GLIST_RUN_TO_CHR_PADPRESET_AND_ACTIVATE_ALARM,  // Run to chr->padpreset1 and activate alarm
+    GLIST_STARTLE_CHR_AND_RUN_TO_BOND_SUBROUTINE,   // Startle character (subroutine)
+    GLIST_SPAWN_CLONE_OR_RUN_TO_BOND,               // If chr has been seen, run to bond - else spawn clone
+    GLIST_RUN_TO_BOND_AND_FIRE,                     // Jog to bond and fire
+    GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY,   // Forever chase bond and fire (halt randomly)
+    GLIST_WAIT_ONE_SECOND_SUBROUTINE,               // Wait for one second (subroutine)
+    GLIST_EXIT_LEVEL,                               // Exit level
+    GLIST_DRAW_DD44_AND_FIRE,                       // Draw DD44 and fire
+    GLIST_REMOVE_CHR                               // Remove chr
+} GLISTID;
 /*===========================================================================*/
 
 /*=============================================================================
@@ -230,13 +233,33 @@ typedef enum HITTARGET
         label(label_id) \
         ai_sleep
 
+#define DO(label_id) \
+        label(label_id) \
+        ai_sleep
+
 #define goto_loop_repeat(label) \
+        goto_first(label)
+
+#define LOOP(label) \
+        goto_first(label)
+
+#define CONTINUE(label) \
         goto_first(label)
 
 #define goto_loop_infinite(label_id) \
         label(label_id) \
         ai_sleep \
         goto_first(label_id)
+
+#define LOOP_FOREVER(label_id) \
+        label(label_id) \
+        ai_sleep \
+        goto_first(label_id)
+
+#define RETURN(label_id)\
+        label(label_id) \
+            jump_to_return_ai_list \
+            ai_list_end
 
 #define random_generate_greater_than(byte, label) \
         random_generate_seed \

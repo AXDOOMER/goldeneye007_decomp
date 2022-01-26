@@ -216,11 +216,9 @@ all: $(APPROM)
 	@$(call DrawProgressBar,100)
 ifeq ($(COMPARE),1)
 	@echo "\n"
-	@$(SHA1SUM) -c ge007.$(COUNTRYCODE).sha1
-	@printf "\033[5;42;1;37m%80s\n" "|"
-	@printf "%43s%37s\n%80s\n" "MATCH!" "|"	"|" 
-	@# beep
-	@echo -ne '\007\033[0;0m'
+#   Calculate Checksum                        if fail   UP 1 ln  Flash Red White 80ch  midway  80ch Bell Reset Colour
+	@$(SHA1SUM) -c ge007.$(COUNTRYCODE).sha1 || (printf "\033[1A\033[5;41;1;37m%80s\n%45s%35s\n%80s\007\033[0;0m\n" "|" "NOT MATCH!" "|" "|" && exit 1)
+	@printf                                                    "\033[5;42;1;37m%80s\n%43s%37s\n%80s\007\033[0;0m\n" "|" "MATCH!" "|" "|" 
 endif
 	@echo "\n Rom File Generated in Build Directory. \n\n"
 .SECONDARY:

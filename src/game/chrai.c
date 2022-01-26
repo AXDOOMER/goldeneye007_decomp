@@ -1,6 +1,7 @@
 #include <ultra64.h>
 #include <bondgame.h>
 #include <bondtypes.h>
+#include <bondaicommands.h>
 #include <boss.h>
 #include <snd.h>
 #include <music.h>
@@ -2068,7 +2069,7 @@ glabel sub_GAME_7F035244
 /* 069D78 7F035248 25085D00 */  addiu $t0, %lo(ptr_setup_path_tbl) # addiu $t0, $t0, 0x5d00
 /* 069D7C 7F03524C 8D020014 */  lw    $v0, 0x14($t0) #v0 = ptr_setup_actions
 /* 069D80 7F035250 00A03825 */  move  $a3, $a1
-/* 069D84 7F035254 3C198003 */  lui   $t9, %hi(D_8003744C)
+/* 069D84 7F035254 3C198003 */  lui   $t9, %hi(gGlobalAILists)
 /* 069D88 7F035258 10400013 */  beqz  $v0, .L7F0352A8
 /* 069D8C 7F03525C 00000000 */   nop   
 /* 069D90 7F035260 8C4E0000 */  lw    $t6, ($v0)
@@ -2093,9 +2094,9 @@ glabel sub_GAME_7F035244
 /* 069DD0 7F0352A0 14C0FFF5 */  bnez  $a2, .L7F035278
 /* 069DD4 7F0352A4 00000000 */   nop   
 .L7F0352A8:
-/* 069DD8 7F0352A8 8F39744C */  lw    $t9, %lo(D_8003744C)($t9)
-/* 069DDC 7F0352AC 3C098003 */  lui   $t1, %hi(D_8003744C)
-/* 069DE0 7F0352B0 2523744C */  addiu $v1, $t1, %lo(D_8003744C)
+/* 069DD8 7F0352A8 8F39744C */  lw    $t9, %lo(gGlobalAILists)($t9)
+/* 069DDC 7F0352AC 3C098003 */  lui   $t1, %hi(gGlobalAILists)
+/* 069DE0 7F0352B0 2523744C */  addiu $v1, $t1, %lo(gGlobalAILists)
 /* 069DE4 7F0352B4 1320000B */  beqz  $t9, .L7F0352E4
 /* 069DE8 7F0352B8 240A0001 */   li    $t2, 1
 /* 069DEC 7F0352BC 8C620000 */  lw    $v0, ($v1)
@@ -2286,7 +2287,7 @@ GLOBAL_ASM(
 glabel LoadNext_PrevActionBlock
 /* 069EC8 7F035398 28810401 */  slti  $at, $a0, 0x401
 /* 069ECC 7F03539C 14200014 */  bnez  $at, .L7F0353F0
-/* 069ED0 7F0353A0 3C198003 */   lui   $t9, %hi(D_8003744C)
+/* 069ED0 7F0353A0 3C198003 */   lui   $t9, %hi(gGlobalAILists)
 /* 069ED4 7F0353A4 3C028007 */  lui   $v0, %hi(ptr_setup_actions)
 /* 069ED8 7F0353A8 8C425D14 */  lw    $v0, %lo(ptr_setup_actions)($v0)
 /* 069EDC 7F0353AC 5040001F */  beql  $v0, $zero, .L7F03542C #if <= 0 return
@@ -2310,9 +2311,9 @@ glabel LoadNext_PrevActionBlock
 /* 069F18 7F0353E8 10000010 */  b     .L7F03542C
 /* 069F1C 7F0353EC 00001025 */   move  $v0, $zero
 .L7F0353F0:
-/* 069F20 7F0353F0 8F39744C */  lw    $t9, %lo(D_8003744C)($t9)
-/* 069F24 7F0353F4 3C038003 */  lui   $v1, %hi(D_8003744C)
-/* 069F28 7F0353F8 2463744C */  addiu $v1, %lo(D_8003744C) # addiu $v1, $v1, 0x744c
+/* 069F20 7F0353F0 8F39744C */  lw    $t9, %lo(gGlobalAILists)($t9)
+/* 069F24 7F0353F4 3C038003 */  lui   $v1, %hi(gGlobalAILists)
+/* 069F28 7F0353F8 2463744C */  addiu $v1, %lo(gGlobalAILists) # addiu $v1, $v1, 0x744c
 /* 069F2C 7F0353FC 5320000B */  beql  $t9, $zero, .L7F03542C
 /* 069F30 7F035400 00001025 */   move  $v0, $zero
 /* 069F34 7F035404 8C680004 */  lw    $t0, 4($v1)
