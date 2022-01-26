@@ -169,8 +169,9 @@ MacroBlockEnd : "#pragma endregion"
 NamespaceIndentation: None
 
 # pointer is each variable not type so stick * to variable
-# PointerAlignment: Right
-# ReferenceAlignment: Pointer
+PointerAlignment: Right
+DerivePointerAlignment: false
+#ReferenceAlignment: Pointer
 
 # qualifier should be left of type (volatile int)
 # QualifierAlignment: Left
@@ -184,6 +185,7 @@ SortUsingDeclarations: true
 # spacings
 SpaceAfterCStyleCast: false
 SpaceAfterLogicalNot: false
+SpaceAroundPointerQualifiers: After
 SpaceBeforeAssignmentOperators: true
 SpaceBeforeCaseColon: false
 SpaceBeforeInheritanceColon: true

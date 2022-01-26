@@ -53,7 +53,7 @@ void setpartoffset(Model *, ModelNode *, coord3d *);
 void setsuboffset(Model *arg0, coord3d *arg1);
 
 // tentative signature
-PropRecord *actor_draws_weapon_with_model(ChrRecord *arg0, s32 arg1, s32 item_id, s32 flags);
+PropRecord *actor_draws_weapon_with_model(ChrRecord *self, s32 PropID, ITEM_IDS ItemID, s32 flags);
 
 // tentative signature
 Mtxf* sub_GAME_7F06C660(Model *arg0, ModelNode *arg1, s32 arg2);

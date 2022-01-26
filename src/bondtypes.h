@@ -2621,7 +2621,7 @@ typedef union
          * Portal number.
          * Offset 0xf0.
          */
-        u32                portalNumber;
+        s32                portalNumber;
 
         /**
          * Unknown. Changes at runtime. Appears to be set to a pointer
@@ -2629,9 +2629,9 @@ typedef union
          * If you reset this to 0 (NULL pointer), then the door opening
          * sound never stops playing.
          */
-        u32               *unkf4;
+        void              *unkf4; // ALSoundState *openSoundState;
 
-        u32                unkf8;
+        void              *unkf8; // ALSoundState *closeSoundState;
 
         /**
          * Copy of global timer value.
@@ -2668,6 +2668,7 @@ typedef union
     typedef struct KeyRecord
     {
         inherits ObjectRecord;
+        s8       keyID;
         u32      keyflags;
     } KeyRecord;
 
@@ -2802,7 +2803,7 @@ typedef union
         s32 image;      // 0x80	4	image pointer for this monitor
         u16 offset;     // 0x84	2	[runtime] cur. #commands from start of routine
         u16 pause60;    // 0x86	2	[runtime] loop counter
-        f32 unk88;      //0x88	4	[runtime] monitor image# or p->image header
+        void *unk88;      //0x88	4	[runtime] monitor image# or p->image header
         f32 rot;        // 0x8C 4 [runtime][float] rotation
         f32 xscale;     // 0x90	4	[runtime] [float] cur. horizontal zoom
         f32 xscalefrac; // 0x94	4	[runtime] [float] cur. h.zoom time

@@ -87,8 +87,12 @@ typedef struct ALSoundState_s {
     // 0x40 = ?
     // 0x80 = ?
     u8 unk3e;
-
-    u8 unk3f; // playing state?
+    /*
+      AL_STOPPED
+      AL_PLAYING
+      AL_STOPPING
+    */
+    u8 playingState; 
 
 } ALSoundState;
 

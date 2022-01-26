@@ -66,7 +66,7 @@ void sub_GAME_7F040484(ObjectRecord *);
 void sub_GAME_7F040754(ObjectRecord *, coord3d *, Mtxf *, StandTile *);
 s32 sub_GAME_7F041074(coord3d *arg0, coord3d *arg1, coord3d *arg2, f32 arg3);
 void sub_GAME_7F04F244(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *arg3, f32 *arg4);
-void set_door_state(DoorRecord *arg0, s32 arg1);
+void set_door_state(DoorRecord *door, DOORSTATE State);
 s32 sub_GAME_7F055A70(PropRecord *arg0, DoorRecord *arg1);
 void sub_GAME_7F055B78(PropRecord *arg0, DoorRecord *arg1);
 Gfx *chrobjRenderProp(PropRecord *arg0, Gfx *arg1, s32 arg2);
