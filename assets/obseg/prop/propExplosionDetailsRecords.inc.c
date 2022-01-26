@@ -1,3 +1,6 @@
+#include <bondconstants.h>
+#include <bondtypes.h>
+
 ExplosionDetailsRecord object_explosion_details[] = {
     #include <assets/obseg/prop/alarm1/ExplosionDetailsRecord.inc.c>
     {
