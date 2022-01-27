@@ -91,7 +91,7 @@ u32 fileGetSaveFolder(save_data *save)
  */
 void fileSetSaveFoldernum(save_data *save, u32 folder)
 {
-    save->completion_bitflags &= 0xFFF8;
+    save->completion_bitflags &= ~7;
     save->completion_bitflags |= folder & 7;
 }
 
@@ -114,7 +114,7 @@ u32 fileSetSaveFlag_0x18(save_data *folder)
  */
 void fileResetSaveFlag_0x18(save_data *folder, s32 arg1)
 {
-    folder->completion_bitflags &= 0xFFE7;
+    folder->completion_bitflags &= ~0x18;
     folder->completion_bitflags |= ((arg1 * 8) & 0x18);
 }
 
@@ -137,7 +137,7 @@ u32 fileGetSelectedBond(save_data *folder)
  */
 void fileSetSelectedBond(save_data *folder, s32 arg1)
 {
-    folder->completion_bitflags &= 0xFF9F;
+    folder->completion_bitflags &= ~0x60;
     folder->completion_bitflags |= ((arg1 << 5) & 0x60);
 }
 
@@ -145,7 +145,7 @@ void fileSetSelectedBond(save_data *folder, s32 arg1)
  * Check if save has flag 0x80
  *
  * @param folder
- * @return u32
+ * @return TRUE/FALSE
  */
 bool fileGetSaveFlag_0x80(save_data *folder)
 {
@@ -159,7 +159,7 @@ bool fileGetSaveFlag_0x80(save_data *folder)
  * @param folder: folder to enable or disable flag
  * @param set: Enable flag if TRUE, Disable flag if FALSE
  */
-void fileSetSaveFlag_0x80(save_data *folder, s32 enable)
+void fileSetSaveFlag_0x80(save_data *folder, bool enable)
 {
     if (enable)
     {

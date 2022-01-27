@@ -22,8 +22,8 @@ struct BONDdata_item_control_blocks {
     int field_40;
     int field_44;
     int field_48;
-    int field_4C;
-    int field_50;
+    int field_4C;//targetflag
+    int field_50;//targettoshoot
     int field_54;
     int field_58;
     int field_5C;
