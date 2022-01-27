@@ -147,16 +147,16 @@ s32 buffer_far_ambiant;
 // CODE.bss:800825E4
 s32 bg_dif_light;
 // CODE.bss:800825E8
-EnvironmentData *gEnvironmentFoundp;
+EnvironmentRecord *gEnvironmentFoundp;
 // CODE.bss:800825EC
-EnvironmentData *gEnvironmentMainp;
+EnvironmentRecord *gEnvironmentMainp;
 // CODE.bss:800825F0
-EnvironmentData *gEnvironmentAltp;
+EnvironmentRecord *gEnvironmentAltp;
 // CODE.bss:800825F4
 s32 D_800825F4;
 // CODE.bss:800825F8
 // u32 dword_CODE_bss_800825F8;
-// static EnvironmentData PreviousEnvironment; //tempCurrentEnvp
+// static EnvironmentRecord PreviousEnvironment; //tempCurrentEnvp
 u32 TransitionEnvironmentID;        // 0 22 during fac gas = Fac Previous ID
 f32 TransitionEnvironmentBlendMult; // 4 4120 during fac gas blendmult /
                                     // buffer_far_pervasiveness2
@@ -209,7 +209,7 @@ f32 near_fog_value = 3.4028235e38;
 f32 near_fog_times_intensity = 0.0;
 // D:80044DCC
 // Default Environment
-CurrentEnvData CurrentEnvironment = {
+CurrentEnvironmentRecord CurrentEnvironment = {
     0x384, // 0 dif_in_light
     0x3E8, // 4 far_ambiantlight
     0,     // 8,9,a,b RGBC
@@ -229,7 +229,7 @@ CurrentEnvData CurrentEnvironment = {
     0      // 40*
 };
 
-EnvironmentData fog_tables[] = {
+EnvironmentRecord fog_tables[] = {
 
     {0x16, 15.0, 3500.0,  2000.0, 2500.0, 2000.0, 0.0,   0x3E7, 0x3E4, 0x3E8, 0,
      0,    8,    1,       5000.0, 0,      0,      170.0, 100.0, 40.0,  0,     0,
@@ -241,7 +241,7 @@ EnvironmentData fog_tables[] = {
 
 };
 
-CurrentEnvData *get_ptr_currentdata(void)
+CurrentEnvironmentRecord *get_ptr_currentdata(void)
 {
     return &CurrentEnvironment;
 }
@@ -259,7 +259,7 @@ extern void set_page_height();
 extern void video_related_27();
 extern int bgGetLevelVisibilityScale();
 
-void copy_table1_env_to_current(EnvironmentData *fog_tables_Entry)
+void copy_table1_env_to_current(EnvironmentRecord *fog_tables_Entry)
 {
     f32 sp34;
     f32 sp30;
@@ -356,9 +356,9 @@ void load_enviroment(int StageID, int param_2)
 {
     s32 NumPlayers;
     u32 EnvironmentUID;
-    EnvironmentData *FogTablep;
-    EnvironmentData_Fogless *FogTableFoglessp;
-    EnvironmentData_Fogless *FogTableFoglessFoundp;
+    EnvironmentRecord *FogTablep;
+    EnvironmentFoglessRecord *FogTableFoglessp;
+    EnvironmentFoglessRecord *FogTableFoglessFoundp;
 
     NumPlayers = get_num_players();
     if (NumPlayers == 1)
@@ -466,10 +466,10 @@ void switch_to_solosky2(f32 Opacity)
      */
 
     // cast static variables to EnvData
-    EnvironmentData *TransitionEnvironmentp =
-        (EnvironmentData *)&TransitionEnvironmentID;
+    EnvironmentRecord *TransitionEnvironmentp =
+        (EnvironmentRecord *)&TransitionEnvironmentID;
 
-    // EnvironmentData *gEnvironmentAltp = 0;
+    // EnvironmentRecord *gEnvironmentAltp = 0;
 
     *TransitionEnvironmentp = *gEnvironmentMainp; // copy values from 1st sky
 

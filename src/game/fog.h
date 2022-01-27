@@ -4,7 +4,7 @@
 #include <ultra64.h>
 #include <bondtypes.h>
 
-struct NearFogData {
+typedef struct NearFogRecord {
 #if defined(VERSION_EU)
     s16 NearFog;
     s16 MaxVisRange;
@@ -14,13 +14,13 @@ struct NearFogData {
     f32 MaxVisRange;
     f32 MaxObfuscationRange;
 #endif
-};
+} NearFogRecord;
 
 //New Definitions below
 // SubRecords
 
 // Skybox and Water Plane
-typedef struct SkyBoxData
+typedef struct SkyBoxRecord
 {
     u8 Red;
     u8 Green;
@@ -57,10 +57,10 @@ typedef struct SkyBoxData
     f32 WaterBlue;
     f32 WaterConcavity;
 #endif
-} SkyBoxData;
+} SkyBoxRecord;
 
 // Fog intensity
-typedef struct FogData
+typedef struct FogRecord
 {
 #if defined(VERSION_EU)
     s16 DifferenceFromFarIntensity;
@@ -72,28 +72,28 @@ typedef struct FogData
     s32 DifferenceFromFarIntensity;
     s32 FarIntensity;
 #endif
-} FogData;
+} FogRecord;
 
 // Visibility distances and Z-Buffer accuriacy
-typedef struct VisibilityData
+typedef struct VisibilityRecord
 {
 #if defined(VERSION_EU)
     s16 BlendMultiplier;
     s16 FarFog;
-    struct NearFogData Nfd;
+    NearFogRecord Nfd;
 #else
     f32 BlendMultiplier;
     f32 FarFog;
-    struct NearFogData Nfd;
+    NearFogRecord Nfd;
     f32 MinVisrange;
     u32 Intensity;
 #endif
-} VisibilityData;
+} VisibilityRecord;
 
 //Main Records
 
 // Current Environment for rendering
-typedef struct CurrentEnvData
+typedef struct CurrentEnvironmentRecord
 {
     s32 DifferenceFromFarIntensity;
     s32 FarIntensity;
@@ -116,10 +116,10 @@ typedef struct CurrentEnvData
     f32 WaterGreen;
     f32 WaterBlue;
     f32 WaterConcavity;
-} CurrentEnvData;
+} CurrentEnvironmentRecord;
 
 // Environment Record, Holds Visibility, Fog and Skybox
-typedef struct EnvironmentData
+typedef struct EnvironmentRecord
 {
     /**
      * ID = StageID + Token eg, Bunker Cinema is 9 + 900 = 909
@@ -129,13 +129,13 @@ typedef struct EnvironmentData
 #else
     u32 Id;
 #endif
-    VisibilityData Visibility;
-    FogData Fog;
-    SkyBoxData Sky;
-} EnvironmentData;
+    VisibilityRecord Visibility;
+    FogRecord Fog;
+    SkyBoxRecord Sky;
+} EnvironmentRecord;
 
 // Environment Record, Holds only Skybox
-typedef struct EnvironmentData_Fogless
+typedef struct EnvironmentFoglessRecord
 {
     /**
      * ID = StageID + Token eg, Bunker Cinema is 9 + 900 = 909
@@ -160,11 +160,11 @@ typedef struct EnvironmentData_Fogless
     f32 WaterGreen;
     f32 WaterBlue;
     f32 WaterConcavity;
-} EnvironmentData_Fogless;
+} EnvironmentFoglessRecord;
 
 extern s32 g_FogSkyIsEnabled;
 
-struct CurrentEnvData *fogGetCurrentEnvironmentp(void);
+struct CurrentEnvironmentRecord *fogGetCurrentEnvironmentp(void);
 f32 fogGetScaledFarFogIntensitySquared(void);
 void fogLoadLevelEnvironment(s32 level_id, s32 arg1);
 s32 fogPositionIsVisibleThroughFog(coord3d *pos, f32 range);
@@ -173,6 +173,6 @@ Gfx *fogRenderClearFogMode(Gfx *gdl);
 s32 fogGetPropDistColor(PropRecord *prop, struct rgba_f32 *color);
 void fogSwitchToSolosky2(f32 arg0);
 void fogRemoved7F0BAA5C(s32 a);
-struct NearFogData *fogGetNearFogValuesP(void);
+struct NearFogRecord *fogGetNearFogValuesP(void);
 
 #endif

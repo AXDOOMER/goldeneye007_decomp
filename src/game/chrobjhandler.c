@@ -45084,7 +45084,7 @@ glabel sub_GAME_7F054A64
 f32 chrobjFogVisRangeRelated(PropRecord *prop, f32 size)
 {
     f32 ret;
-    struct NearFogData *nfd;
+    struct NearFogRecord *nfd;
     f32 temp_f12;
 
     ret = 1.0f;
