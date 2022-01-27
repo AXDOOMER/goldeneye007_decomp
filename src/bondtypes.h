@@ -2651,7 +2651,7 @@ typedef union
      * Why they ever made it is beyond me.
      * @param Scale: Fixed-Point converted to float and divided by 65536 (0x10000)
      */
-    typedef struct GlobalDoorScaleRecord
+    typedef struct GlobalDoorScaleRecord 
     {
         inherits PropDefHeaderRecord;
         u32      Scale;
@@ -2775,7 +2775,7 @@ typedef union
             New_PropDefHeaderRecord(8), 0, pad + 0 \
         }
 
-    // PROPDEF_GUARD (9)
+    // PROPDEF_GUARD (9) (7 words)
     typedef struct GuardRecord
     {
         inherits   PropDefHeaderRecord;

@@ -46,8 +46,26 @@ void set_new_rand_head_bodies(u32 stagenum)
     {
         c_item_entries[i].header->RootNode = (ModelNode*)0;
     }
+#if defined(ISGOLDFINGER) || defined(IS_NSNA)
+    {
+        s32 rnext = randomGetNext();
 
+        for (i = 0; i < 8; i++)
+        {
+            if (i == 0)
+            {
+                current_random_male_head[i] = 0;
+            }
+            else
+            {
+                current_random_male_head[i] = rnext % i;
+            }
+            rnext >>= 1;
+        };
+    }
+#else
     current_random_male_head = randomGetNext() % num_male_heads;
     current_random_female_head = randomGetNext() % num_female_heads;
+#endif
     current_random_body = randomGetNext() % num_bodies;
 }

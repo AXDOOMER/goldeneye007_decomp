@@ -29,160 +29,133 @@ s32 sub_GAME_7F056850(PadRecord *arg0, StandTile *arg1, f32 arg2, PadRecord *arg
     return 1;
 }
 
-
-//
-
-u32 sizepropdef(u8 * object)
+//Todo: finish this func
+/**
+ * Get Size of Prop Definition 
+ * @param pdef:  Prop Defenition to get size of
+ * @return Size of prop in Words (32bit)
+*/
+s32 sizepropdef(PropDefHeaderRecord *pdef)
 {
-    switch(object[3]) {
-    case 9:
-        return 7;
-    case 1:
-        return 0x40;
-    case 2:
-        return 2;
-    case 3:
-        return 0x20;
-    case 0x2a:
-        return 0x20;
-    case 0x2f:
-        return 0x25;
-    case 0x2b:
-        return 0x20;
-    case 0x24:
-        return 0x20;
-    case 4:
-        return 0x21;
-    case 5:
-        return 0x20;
-    case 6:
-        return 0x3b;
-    case 7:
-        return 0x21;
-    case 8:
-        return 0x22;
-    case 10:
-        return 0x40;
-    case 0xb:
-        return 0x95;
-    case 0xc:
-        return 0x20;
-    case 0xd:
-        return 0x36;
-    case 0xe:
-        return 3;
-    case 0x11:
-        return 0x20;
-    case 0x12:
-        return 3;
-    case 0x13:
-        return 4;
-    case 0x2c:
-        return 5;
-    case 0x14:
-        return 0x2d;
-    case 0x15:
-        return 0x22;
-    case 0x16:
-        return 4;
-    case 0x25:
-        return 10;
-    case 0x17:
-        return 4;
-    case 0x18:
-        return 1;
-    case 0x19:
-        return 2;
-    case 0x1a:
-        return 2;
-    case 0x1b:
-        return 2;
-    case 0x1c:
-        return 2;
-    case 0x1d:
-        return 2;
-    case 0x1e:
-        return 4;
-    case 0x1f:
-        return 1;
-    case 0x20:
-        return 4;
-    case 0x21:
-        return 5;
-    case 0x22:
-        return 1;
-    case 0x23:
-        return 4;
-    case 0x26:
-        return 4;
-    case 0x27:
-        return 0x2c;
-    case 0x28:
-        return 0x2d;
-    case 0x2d:
-        return 0x38;
-    case 0x2e:
-        return 7;
-    default:
-        return 1;
+    switch(pdef->type)
+    {
+        case PROPDEF_GUARD:
+            return sizeof(GuardRecord) / 4;
+        case PROPDEF_DOOR:
+            return sizeof(DoorRecord) / 4;
+        case PROPDEF_DOOR_SCALE:
+            return sizeof(GlobalDoorScaleRecord) / 4;
+        case PROPDEF_PROP:
+            return sizeof(ObjectRecord) / 4;
+        case PROPDEF_GLASS:
+            return 0x20;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_TINTED_GLASS:
+            return 0x25;//return sizeof(TintedGlassRecord) / 4;
+        case PROPDEF_SAFE:
+            return 0x20;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_GAS_RELEASING:
+            return 0x20;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_KEY:
+            return 0x21;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_ALARM:
+            return 0x20;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_CCTV:
+            return 0x3b;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_MAGAZINE:
+            return 0x21;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_COLLECTABLE:
+            return 0x22;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_MONITOR:
+            return 0x40;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_MULTI_MONITOR:
+            return 0x95;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_RACK:
+            return 0x20;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_AUTOGUN:
+            return 0x36;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_LINK:
+            return 3;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_HAT:
+            return 0x20;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_GUARD_ATTRIBUTE:
+            return 3;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_SWITCH:
+            return 4;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_SAFE_ITEM:
+            return 5;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_AMMO:
+            return 0x2d;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_ARMOUR:
+            return 0x22;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_TAG:
+            return 4;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_RENAME:
+            return 10;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_OBJECTIVE_START:
+            return 4;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_OBJECTIVE_END:
+            return 1;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_OBJECTIVE_DESTROY_OBJECT:
+            return 2;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_OBJECTIVE_COMPLETE_CONDITION:
+            return 2;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_OBJECTIVE_FAIL_CONDITION:
+            return 2;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_OBJECTIVE_COLLECT_OBJECT:
+            return 2;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_OBJECTIVE_DEPOSIT_OBJECT:
+            return 2;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_OBJECTIVE_PHOTOGRAPH:
+            return 4;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_OBJECTIVE_NULL:
+            return 1;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_OBJECTIVE_ENTER_ROOM:
+            return 4;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_OBJECTIVE_DEPOSIT_OBJECT_IN_ROOM:
+            return 5;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_OBJECTIVE_COPY_ITEM:
+            return 1;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_WATCH_MENU_OBJECTIVE_TEXT:
+            return 4;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_LOCK_DOOR:
+            return 4;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_VEHICHLE:
+            return 0x2c;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_AIRCRAFT:
+            return 0x2d;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_TANK:
+            return 0x38;//return sizeof(GlassRecord) / 4;
+        case PROPDEF_CAMERAPOS:
+            return 7;//return sizeof(GlassRecord) / 4;
+        default:
+            return sizeof(PropDefHeaderRecord) / 4;;
     }
 }
 
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F056A88(void) {
-
+/*
+ *Return Item by Setup index
+ *Setup Array is most likley PropDefHeaderRecord since size was 4
+ */
+ObjectRecord *sub_GAME_7F056A88(s32 index) //#MATCH
+{
+    PropDefHeaderRecord *object = ptr_setup_objects; //wow, first use of header, cool
+    if (index >= 0 && object)
+    {
+        s32 i;
+        for (i = 0; object->type != PROPDEF_END; i++)
+        {
+            if (i == index)
+            {
+                return object;
+            }
+            object = sizepropdef(object) + object; //This is correct order, using += swaps t7/s1
+        }
+    }
+    return NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F056A88
-/* 08B5B8 7F056A88 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 08B5BC 7F056A8C AFB10018 */  sw    $s1, 0x18($sp)
-/* 08B5C0 7F056A90 AFB30020 */  sw    $s3, 0x20($sp)
-/* 08B5C4 7F056A94 3C118007 */  lui   $s1, %hi(ptr_setup_objects)
-/* 08B5C8 7F056A98 00809825 */  move  $s3, $a0
-/* 08B5CC 7F056A9C AFBF0024 */  sw    $ra, 0x24($sp)
-/* 08B5D0 7F056AA0 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 08B5D4 7F056AA4 AFB00014 */  sw    $s0, 0x14($sp)
-/* 08B5D8 7F056AA8 04800014 */  bltz  $a0, .L7F056AFC
-/* 08B5DC 7F056AAC 8E315D0C */   lw    $s1, %lo(ptr_setup_objects)($s1)
-/* 08B5E0 7F056AB0 52200013 */  beql  $s1, $zero, .L7F056B00
-/* 08B5E4 7F056AB4 00001025 */   move  $v0, $zero
-/* 08B5E8 7F056AB8 922E0003 */  lbu   $t6, 3($s1)
-/* 08B5EC 7F056ABC 24120030 */  li    $s2, 48
-/* 08B5F0 7F056AC0 00008025 */  move  $s0, $zero
-/* 08B5F4 7F056AC4 524E000E */  beql  $s2, $t6, .L7F056B00
-/* 08B5F8 7F056AC8 00001025 */   move  $v0, $zero
-.L7F056ACC:
-/* 08B5FC 7F056ACC 16130003 */  bne   $s0, $s3, .L7F056ADC
-/* 08B600 7F056AD0 00000000 */   nop   
-/* 08B604 7F056AD4 1000000A */  b     .L7F056B00
-/* 08B608 7F056AD8 02201025 */   move  $v0, $s1
-.L7F056ADC:
-/* 08B60C 7F056ADC 0FC15A3D */  jal   sizepropdef
-/* 08B610 7F056AE0 02202025 */   move  $a0, $s1
-/* 08B614 7F056AE4 00027880 */  sll   $t7, $v0, 2
-/* 08B618 7F056AE8 01F18821 */  addu  $s1, $t7, $s1
-/* 08B61C 7F056AEC 92380003 */  lbu   $t8, 3($s1)
-/* 08B620 7F056AF0 26100001 */  addiu $s0, $s0, 1
-/* 08B624 7F056AF4 1658FFF5 */  bne   $s2, $t8, .L7F056ACC
-/* 08B628 7F056AF8 00000000 */   nop   
-.L7F056AFC:
-/* 08B62C 7F056AFC 00001025 */  move  $v0, $zero
-.L7F056B00:
-/* 08B630 7F056B00 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 08B634 7F056B04 8FB00014 */  lw    $s0, 0x14($sp)
-/* 08B638 7F056B08 8FB10018 */  lw    $s1, 0x18($sp)
-/* 08B63C 7F056B0C 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 08B640 7F056B10 8FB30020 */  lw    $s3, 0x20($sp)
-/* 08B644 7F056B14 03E00008 */  jr    $ra
-/* 08B648 7F056B18 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
-
 
 
 
@@ -327,8 +300,100 @@ s32 load_model(u32 modelid)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F056CA0(void) {
+//https://decomp.me/scratch/FPpor
+void sub_GAME_7F056CA0(ObjectRecord *obj)
+{
+    f32         sp48;
+    f32         sp44;
+    f32         sp40;
+    f32         sp3C;
+    f32         sp38;
+    f32         sp34;
+    s32         sp30;
+    void      **sp28;
+    PropRecord *temp_s1;
+    StandTile  *temp_v0;
+    f32         temp_f0;
+    f32         temp_f12;
+    f32         temp_f2;
+    f32        *temp_a1_2;
+    f32        *temp_a2;
+    s32         temp_a0;
+    s32         temp_cond;
+    s32         temp_v0_2;
+    void      **temp_a1;
+    f32         phi_f20;
+    f32         phi_f20_2;
+    f32         phi_f20_3;
+    f32         phi_f20_4;
 
+    temp_s1 = obj->prop;
+    sub_GAME_7F03E18C(temp_s1);
+    phi_f20 = 0.0f;
+    if (obj->flags2 & 0x20000)
+    {
+        temp_v0 = temp_s1->stan;
+        if (temp_v0 != 0)
+        {
+            temp_s1->rooms[1] = (u8)-1;
+            temp_s1->rooms[0] = temp_v0->RoomID;
+        }
+        else
+        {
+            temp_s1->rooms[0] = (u8)-1;
+        }
+    }
+    else
+    {
+        temp_v0_2 = sub_GAME_7F040078(obj);
+        temp_a0   = temp_v0_2;
+        if (temp_v0_2 != 0)
+        {
+            temp_a1  = &obj->mtx;
+            sp28     = temp_a1;
+            sp30     = temp_v0_2;
+            sp40     = sub_GAME_7F03E87C(temp_a0, temp_a1) - 30.0f;
+            sp44     = sub_GAME_7F03E9BC(sp30, temp_a1);
+            sp48     = sub_GAME_7F03EAFC(sp30, temp_a1) - 30.0f;
+            sp34     = sub_GAME_7F03E91C(sp30, temp_a1) + 30.0f;
+            sp38     = sub_GAME_7F03EA5C(sp30, temp_a1);
+            temp_f2  = -sp40;
+            temp_f12 = sub_GAME_7F03EB9C(sp30, temp_a1) + 30.0f;
+            if (temp_f2 > 0.0f)
+            {
+                phi_f20 = temp_f2;
+            }
+            temp_f0   = -sp48;
+            phi_f20_2 = phi_f20;
+            if (phi_f20 < temp_f0)
+            {
+                phi_f20_2 = temp_f0;
+            }
+            phi_f20_3 = phi_f20_2;
+            if (phi_f20_2 < sp34)
+            {
+                phi_f20_3 = sp34;
+            }
+            temp_cond = phi_f20_3 < temp_f12;
+            sp3C      = temp_f12;
+            phi_f20_4 = phi_f20_3;
+            if (temp_cond)
+            {
+                sp3C      = temp_f12;
+                phi_f20_4 = temp_f12;
+            }
+            temp_a1_2 = &sp40;
+            sp40 += obj->mtx.m[0][0];
+            temp_a2 = &sp34;
+            sp44 += obj->mtx.m[0][1];
+            sp48 += obj->mtx.m[0][2];
+            sp34 += obj->mtx.m[0][0];
+            sp38 += obj->mtx.m[0][1];
+            sp3C += obj->mtx.m[0][2];
+            sub_GAME_7F03E27C(temp_f12, temp_s1, temp_a1_2, temp_a2, phi_f20_4);
+        }
+    }
+    sub_GAME_7F03E210(temp_s1);
 }
 #else
 GLOBAL_ASM(
