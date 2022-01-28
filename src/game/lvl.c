@@ -2201,26 +2201,26 @@ void lvlSetMultipliersForDifficulty(void)
  */
 void lvlManageMpGame(void)
 {
-    s32 sp184;
+    s32 current_time_copy;
     s32 sp180;
     s32 sp30;
     s32 sp2C;
-    s32 temp_a0_3;
+    s32 time_limit_minus_60_seconds;
     s32 var_player_count2_again;
     s32 temp_t6;
     s32 temp_v0;
-    s32 temp_v0_3;
+    s32 current_time;
     s32 var_player_count1;
     s32 var_player_count2;
-    s32 temp_v1_2;
-    s32 temp_v1_3;
+    s32 mp_game_time_limit;
+    s32 mp_game_time_limit_2;
     s32 temp_v1_7;
     s32 mp_alive_count;
     s32 mp_player_field424_count;
-    s32 mp_something_count1;
+    s32 mp_player_currently_in_dying_animation;
     s32 phi_a2_5;
     s32 copy_g_clockTimer;
-    s32 mp_points_count1;
+    s32 mp_players_over_point_limit;
     s32 phi_ra_2;
     s32 phi_ra_3;
 
@@ -2290,16 +2290,16 @@ void lvlManageMpGame(void)
             }
         }
 
-        temp_v1_2 = g_MpTime;
-        if (temp_v1_2 > 0)
+        mp_game_time_limit = g_MpTime;
+        if (mp_game_time_limit > 0)
         {
-            temp_v0_3 = D_80048394;
-            temp_a0_3 = temp_v1_2 - 0xE10;
-            temp_t6 = g_ClockTimer + temp_v0_3;
+            current_time = D_80048394;
+            time_limit_minus_60_seconds = mp_game_time_limit - 0xE10;
+            temp_t6 = g_ClockTimer + current_time;
             sp180 = temp_t6;
-            sp184 = temp_v0_3;
+            current_time_copy = current_time;
 
-            if ((temp_v0_3 < temp_a0_3) && (temp_t6 >= temp_a0_3))
+            if ((current_time < time_limit_minus_60_seconds) && (temp_t6 >= time_limit_minus_60_seconds))
             {
                 s32 i = 0;
                 for (i=0; i<getPlayerCount(); i++)
@@ -2309,11 +2309,13 @@ void lvlManageMpGame(void)
                 }
             }
 
+            // sound alarm when game is about to end (10 seconds before end)
             if ((sp180 >= (g_MpTime - 0x258)) && (g_MpSoundStateRelated == 0) && (lvlGetControlsLockedFlag() == 0))
             {
                 sndPlaySfx(g_musicSfxBufferPtr, 0xA1, &g_MpSoundStateRelated);
             }
 
+            // stop alarm
             if (lvlGetControlsLockedFlag() != 0)
             {
                 if ((g_MpSoundStateRelated != NULL) && (sndGetPlayingState(g_MpSoundStateRelated) != 0))
@@ -2322,21 +2324,22 @@ void lvlManageMpGame(void)
                 }
             }
 
-            temp_v1_3 = g_MpTime;
-            if ((sp184 < temp_v1_3) && (sp180 >= temp_v1_3))
+            mp_game_time_limit_2 = g_MpTime;
+            if ((current_time_copy < mp_game_time_limit_2) && (sp180 >= mp_game_time_limit_2))
             {
                 end_game_and_show_game_over_menu(0);
             }
         }
 
+        // when playing with a kill limit, g_MpPoint is not zero
         if ((g_MpPoint > 0) && (g_ClockTimer != 0))
         {
             s32 i;
             struct player* p;
 
             var_player_count1 = getPlayerCount();
-            mp_points_count1 = 0;
-            mp_something_count1 = 0;
+            mp_players_over_point_limit = 0;
+            mp_player_currently_in_dying_animation = 0;
 
             for (i=0; i<var_player_count1; i++)
             {
@@ -2345,23 +2348,26 @@ void lvlManageMpGame(void)
                 if (p->bonddead != 0 &&
                     (p->field_424 == 0 || p->field_428 == 0 || p->colourfadetimemax60 >= 0.0f))
                 {
-                    mp_something_count1++;
+                    mp_player_currently_in_dying_animation++;
                 }
 
                 if (get_points_for_mp_player(i) >= g_MpPoint)
                 {
-                    mp_points_count1++;
+                    // counts players over kill limit
+                    mp_players_over_point_limit++;
                 }
             }
 
-            if (mp_points_count1 > 0)
+            if (mp_players_over_point_limit > 0)
             {
-                if (mp_something_count1 == 0)
+                if (mp_player_currently_in_dying_animation == 0)
                 {
+                    // end game after dying players are finished dying
                     end_game_and_show_game_over_menu(0);
                 }
                 else
                 {
+                    // this will cause the game to freeze players, to stop them from moving once game ended
                     mpwatchSetStopPlayFlag();
                 }
             }
