@@ -294,7 +294,7 @@ void mpwatchSetStopPlayFlag(void) {
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0C2530(int arg0) {
+void end_game_and_show_game_over_menu(int arg0) {
 
 }
 #else
@@ -306,7 +306,7 @@ glabel D_8005BC80
 glabel D_8005BC84
 .word 0x47c35000 /*100000.0*/
 .text
-glabel sub_GAME_7F0C2530
+glabel end_game_and_show_game_over_menu
 /* 0F7060 7F0C2530 27BDFE98 */  addiu $sp, $sp, -0x168
 /* 0F7064 7F0C2534 AFBF0044 */  sw    $ra, 0x44($sp)
 /* 0F7068 7F0C2538 AFB10024 */  sw    $s1, 0x24($sp)
@@ -960,7 +960,7 @@ glabel D_8005BC80
 glabel D_8005BC84
 .word 0x47c35000 /*100000.0*/
 .text
-glabel sub_GAME_7F0C2530
+glabel end_game_and_show_game_over_menu
 /* 0F4400 7F0C1A10 27BDFE98 */  addiu $sp, $sp, -0x168
 /* 0F4404 7F0C1A14 AFBF0044 */  sw    $ra, 0x44($sp)
 /* 0F4408 7F0C1A18 AFB10024 */  sw    $s1, 0x24($sp)
@@ -2070,7 +2070,7 @@ glabel sub_GAME_7F0C2E80
 /* 0F8024 7F0C34F4 00002025 */  move  $a0, $zero
 /* 0F8028 7F0C34F8 AD2029C4 */  sw    $zero, 0x29c4($t1)
 /* 0F802C 7F0C34FC 8CEA0000 */  lw    $t2, ($a3)
-/* 0F8030 7F0C3500 0FC3094C */  jal   sub_GAME_7F0C2530
+/* 0F8030 7F0C3500 0FC3094C */  jal   end_game_and_show_game_over_menu
 /* 0F8034 7F0C3504 AD402A00 */   sw    $zero, 0x2a00($t2)
 .L7F0C3508:
 /* 0F8038 7F0C3508 8FA2002C */  lw    $v0, 0x2c($sp)
@@ -2573,7 +2573,7 @@ glabel sub_GAME_7F0C2E80
 /* 0F53C4 7F0C29D4 00002025 */  move  $a0, $zero
 /* 0F53C8 7F0C29D8 AD2029BC */  sw    $zero, 0x29bc($t1)
 /* 0F53CC 7F0C29DC 8CEA0000 */  lw    $t2, ($a3)
-/* 0F53D0 7F0C29E0 0FC30684 */  jal   sub_GAME_7F0C2530
+/* 0F53D0 7F0C29E0 0FC30684 */  jal   end_game_and_show_game_over_menu
 /* 0F53D4 7F0C29E4 AD4029F8 */   sw    $zero, 0x29f8($t2)
 .L7F0C29E8:
 /* 0F53D8 7F0C29E8 8FA2002C */  lw    $v0, 0x2c($sp)
