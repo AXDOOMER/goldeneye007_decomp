@@ -630,8 +630,21 @@ glabel sub_GAME_7F06C660
 
 //rejoined per EU
 #ifdef NONMATCHING
-int getsubmatrix(Model* objinst)
+void *getsubmatrix(Model *objinst)
 {
+    if (!objinst)
+    {
+        osSyncPrintf("getsubmatrix: no objinst!\n");
+        return_null();
+    }
+    if (!objinst->obj)
+    {
+        osSyncPrintf("getsubmatrix: objinst has no object!\n");
+        return_null();
+    }
+    return sub_GAME_7F06C660(objinst, objinst->obj, NULL);
+    {
+    }
 }
 #else
 #ifndef VERSION_EU
@@ -698,8 +711,21 @@ glabel getsubmatrix
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F06C710(void) {
+void sub_GAME_7F06C710(Model *objinst, coord3d *arg1)
+{
+    void *temp_v0;
 
+    temp_v0 = getsubmatrix(objinst);
+    if (temp_v0)
+    {
+        arg1->x = temp_v0->unk30;
+        arg1->y = temp_v0->unk34;
+        arg1->z = temp_v0->unk38;
+        return;
+    }
+    arg1->x = 0.0f;
+    arg1->y = 0.0f;
+    arg1->z = 0.0f;
 }
 #else
 GLOBAL_ASM(
@@ -737,8 +763,16 @@ glabel sub_GAME_7F06C710
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F06C768(void) {
+f32 sub_GAME_7F06C768(Model *objinst)
+{
+    void *temp_v0;
 
+    temp_v0 = getsubmatrix(objinst);
+    if (temp_v0 != 0)
+    {
+        return -temp_v0->unk38;
+    }
+    return 0.0f;
 }
 #else
 GLOBAL_ASM(
@@ -839,106 +873,63 @@ void *extract_id_from_object_structure_microcode(Model *Objinst, ModelNode *root
 
 
 
-#ifdef NONMATCHING
-void getpartoffset(void) {
+void getpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#MATCH - however OPCODE 3 needs defining
+{
+    if (!objinst)
+    {
+        osSyncPrintf("getpartoffset: no objinst!");
+        return_null();
+    }
+    if (!part)
+    {
+        osSyncPrintf("getpartoffset: no partdesc!");
+        return_null();
+    }
 
+    switch (part->Opcode & 0xFF)
+    {
+        case 1:
+        {
+            struct modeldata_root *root = extract_id_from_object_structure_microcode(objinst, part);
+            offset->x                   = root->pos.x;
+            offset->y                   = root->pos.y;
+            offset->z                   = root->pos.z;
+            break;
+        }
+        case 2:
+        {
+            ModelNode_GroupRecord *prt = part->Data;
+            offset->x                  = prt->Origin.x;
+            offset->y                  = prt->Origin.y;
+            offset->z                  = prt->Origin.z;
+            break;
+        }
+        case 3:
+        {
+            ModelNode_GroupSimpleRecord *prt = part->Data; //UNUSED at this time
+            offset->x                        = prt->Origin.x;
+            offset->y                        = prt->Origin.y;
+            offset->z                        = prt->Origin.z;
+            break;
+        }
+        case 21:
+        {
+            ModelNode_GroupSimpleRecord *prt = part->Data;
+            offset->x                        = prt->Origin.x;
+            offset->y                        = prt->Origin.y;
+            offset->z                        = prt->Origin.z;
+            break;
+        }
+        default:
+        {
+            offset->x = 0.0f;
+            offset->y = 0.0f;
+            offset->z = 0.0f;
+            break;
+        }
+    }
 }
-#else
-#ifndef VERSION_EU
-//D:80054644
-const char aGetpartoffsetNoObjinst[] = "getpartoffset: no objinst!";
-//D:80054660
-const char aGetpartoffsetNoPartdesc[] = "getpartoffset: no partdesc!";
-GLOBAL_ASM(
-.text
-glabel getpartoffset
-/* 0A13C8 7F06C898 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0A13CC 7F06C89C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A13D0 7F06C8A0 1480000A */  bnez  $a0, .L7F06C8CC
-/* 0A13D4 7F06C8A4 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0A13D8 7F06C8A8 3C048005 */  lui   $a0, %hi(aGetpartoffsetNoObjinst)
-/* 0A13DC 7F06C8AC 24844644 */  addiu $a0, %lo(aGetpartoffsetNoObjinst) # addiu $a0, $a0, 0x4644
-/* 0A13E0 7F06C8B0 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 0A13E4 7F06C8B4 0C0033D1 */  jal   osSyncPrintf
-/* 0A13E8 7F06C8B8 AFA60020 */   sw    $a2, 0x20($sp)
-/* 0A13EC 7F06C8BC 0FC1B11B */  jal   return_null
-/* 0A13F0 7F06C8C0 00000000 */   nop   
-/* 0A13F4 7F06C8C4 8FA5001C */  lw    $a1, 0x1c($sp)
-/* 0A13F8 7F06C8C8 8FA60020 */  lw    $a2, 0x20($sp)
-.L7F06C8CC:
-/* 0A13FC 7F06C8CC 14A00009 */  bnez  $a1, .L7F06C8F4
-/* 0A1400 7F06C8D0 3C048005 */   lui   $a0, %hi(aGetpartoffsetNoPartdesc)
-/* 0A1404 7F06C8D4 24844660 */  addiu $a0, %lo(aGetpartoffsetNoPartdesc) # addiu $a0, $a0, 0x4660
-/* 0A1408 7F06C8D8 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 0A140C 7F06C8DC 0C0033D1 */  jal   osSyncPrintf
-/* 0A1410 7F06C8E0 AFA60020 */   sw    $a2, 0x20($sp)
-/* 0A1414 7F06C8E4 0FC1B11B */  jal   return_null
-/* 0A1418 7F06C8E8 00000000 */   nop   
-/* 0A141C 7F06C8EC 8FA5001C */  lw    $a1, 0x1c($sp)
-/* 0A1420 7F06C8F0 8FA60020 */  lw    $a2, 0x20($sp)
-.L7F06C8F4:
-/* 0A1424 7F06C8F4 94A20000 */  lhu   $v0, ($a1)
-/* 0A1428 7F06C8F8 24010001 */  li    $at, 1
-/* 0A142C 7F06C8FC 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0A1430 7F06C900 304F00FF */  andi  $t7, $v0, 0xff
-/* 0A1434 7F06C904 11E1000D */  beq   $t7, $at, .L7F06C93C
-/* 0A1438 7F06C908 24010002 */   li    $at, 2
-/* 0A143C 7F06C90C 11E10015 */  beq   $t7, $at, .L7F06C964
-/* 0A1440 7F06C910 24010003 */   li    $at, 3
-/* 0A1444 7F06C914 11E1001B */  beq   $t7, $at, .L7F06C984
-/* 0A1448 7F06C918 24010015 */   li    $at, 21
-/* 0A144C 7F06C91C 51E10022 */  beql  $t7, $at, .L7F06C9A8
-/* 0A1450 7F06C920 8CA20004 */   lw    $v0, 4($a1)
-/* 0A1454 7F06C924 44800000 */  mtc1  $zero, $f0
-/* 0A1458 7F06C928 00000000 */  nop   
-/* 0A145C 7F06C92C E4C00000 */  swc1  $f0, ($a2)
-/* 0A1460 7F06C930 E4C00004 */  swc1  $f0, 4($a2)
-/* 0A1464 7F06C934 10000022 */  b     .L7F06C9C0
-/* 0A1468 7F06C938 E4C00008 */   swc1  $f0, 8($a2)
-.L7F06C93C:
-/* 0A146C 7F06C93C 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
-/* 0A1470 7F06C940 AFA60020 */   sw    $a2, 0x20($sp)
-/* 0A1474 7F06C944 8FA60020 */  lw    $a2, 0x20($sp)
-/* 0A1478 7F06C948 C4440008 */  lwc1  $f4, 8($v0)
-/* 0A147C 7F06C94C E4C40000 */  swc1  $f4, ($a2)
-/* 0A1480 7F06C950 C446000C */  lwc1  $f6, 0xc($v0)
-/* 0A1484 7F06C954 E4C60004 */  swc1  $f6, 4($a2)
-/* 0A1488 7F06C958 C4480010 */  lwc1  $f8, 0x10($v0)
-/* 0A148C 7F06C95C 10000018 */  b     .L7F06C9C0
-/* 0A1490 7F06C960 E4C80008 */   swc1  $f8, 8($a2)
-.L7F06C964:
-/* 0A1494 7F06C964 8CA20004 */  lw    $v0, 4($a1)
-/* 0A1498 7F06C968 C44A0000 */  lwc1  $f10, ($v0)
-/* 0A149C 7F06C96C E4CA0000 */  swc1  $f10, ($a2)
-/* 0A14A0 7F06C970 C4500004 */  lwc1  $f16, 4($v0)
-/* 0A14A4 7F06C974 E4D00004 */  swc1  $f16, 4($a2)
-/* 0A14A8 7F06C978 C4520008 */  lwc1  $f18, 8($v0)
-/* 0A14AC 7F06C97C 10000010 */  b     .L7F06C9C0
-/* 0A14B0 7F06C980 E4D20008 */   swc1  $f18, 8($a2)
-.L7F06C984:
-/* 0A14B4 7F06C984 8CA20004 */  lw    $v0, 4($a1)
-/* 0A14B8 7F06C988 C4440000 */  lwc1  $f4, ($v0)
-/* 0A14BC 7F06C98C E4C40000 */  swc1  $f4, ($a2)
-/* 0A14C0 7F06C990 C4460004 */  lwc1  $f6, 4($v0)
-/* 0A14C4 7F06C994 E4C60004 */  swc1  $f6, 4($a2)
-/* 0A14C8 7F06C998 C4480008 */  lwc1  $f8, 8($v0)
-/* 0A14CC 7F06C99C 10000008 */  b     .L7F06C9C0
-/* 0A14D0 7F06C9A0 E4C80008 */   swc1  $f8, 8($a2)
-/* 0A14D4 7F06C9A4 8CA20004 */  lw    $v0, 4($a1)
-.L7F06C9A8:
-/* 0A14D8 7F06C9A8 C44A0000 */  lwc1  $f10, ($v0)
-/* 0A14DC 7F06C9AC E4CA0000 */  swc1  $f10, ($a2)
-/* 0A14E0 7F06C9B0 C4500004 */  lwc1  $f16, 4($v0)
-/* 0A14E4 7F06C9B4 E4D00004 */  swc1  $f16, 4($a2)
-/* 0A14E8 7F06C9B8 C4520008 */  lwc1  $f18, 8($v0)
-/* 0A14EC 7F06C9BC E4D20008 */  swc1  $f18, 8($a2)
-.L7F06C9C0:
-/* 0A14F0 7F06C9C0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0A14F4 7F06C9C4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0A14F8 7F06C9C8 03E00008 */  jr    $ra
-/* 0A14FC 7F06C9CC 00000000 */   nop   
-)
-#endif
+
 #ifdef VERSION_EU
 GLOBAL_ASM(
 
@@ -1007,13 +998,72 @@ glabel getpartoffset
 /* 09FA54 7F06D064 00000000 */   nop   
 )
 #endif
-#endif
 
 
 
 #ifdef NONMATCHING
-void setpartoffset(void) {
+//https://decomp.me/scratch/S3JNh
+void setpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#75% s0 should not be used
+{
+    if (!objinst)
+    {
+        osSyncPrintf("setpartoffset: no objinst!");
+        return_null();
+    }
+    if (!part)
+    {
+        osSyncPrintf("setpartoffset: no partdesc!");
+        return_null();
+    }
 
+    switch (part->Opcode & 0xFF)
+    {
+        case 1:
+        {
+            volatile float         deltay, deltax;
+            struct modeldata_root *objinstroot = extract_id_from_object_structure_microcode(objinst, part);
+
+            deltax = offset->x - objinstroot->pos.x;
+            deltay = offset->z - objinstroot->pos.z;
+
+            objinstroot->pos.x = offset->x;
+            objinstroot->pos.y = offset->y;
+            objinstroot->pos.z = offset->z;
+            objinstroot->unk24.x += deltax;
+            objinstroot->unk24.z += deltay;
+            objinstroot->unk34.x += deltax;
+            objinstroot->unk34.z += deltay;
+            objinstroot->unk40.x += deltax;
+            objinstroot->unk40.z += deltay;
+            objinstroot->unk4c.x += deltax;
+            objinstroot->unk4c.z += deltay;
+            return;
+        }
+        case 2:
+        {
+            ModelNode_GroupRecord *prt = part->Data;
+            prt->Origin.x              = offset->x;
+            prt->Origin.y              = offset->y;
+            prt->Origin.z              = offset->z;
+            return;
+        }
+        case 3:
+        {
+            ModelNode_GroupSimpleRecord *prt = part->Data; //UNUSED at this time
+            prt->Origin.x                    = offset->x;
+            prt->Origin.y                    = offset->y;
+            prt->Origin.z                    = offset->z;
+            return;
+        }
+        case 21:
+        {
+            ModelNode_GroupSimpleRecord *prt = part->Data;
+            prt->Origin.x                    = offset->x;
+            prt->Origin.y                    = offset->y;
+            prt->Origin.z                    = offset->z;
+            return;
+        }
+    }
 }
 #else
 #ifndef VERSION_EU
@@ -1259,52 +1309,22 @@ glabel setpartoffset
 
 
 
-#ifdef NONMATCHING
-void getsuboffset(void) {
+void getsuboffset(Model *objinst, coord3d *offset) //#MATCH
+{
+    if (!objinst)
+    {
+        osSyncPrintf("getsuboffset: no objinst!");
+        return_null();
+    }
 
+    if (!objinst->obj)
+    {
+        osSyncPrintf("getsuboffset: objinst has no object!");
+        return_null();
+    }
+    getpartoffset(objinst, objinst->obj->RootNode, offset);
 }
-#else
-#ifndef VERSION_EU
-//D:800546B4
-const char aGetsuboffsetNoObjinst[] = "getsuboffset: no objinst!";
-//D:800546D0
-const char aGetsuboffsetObjinstHasNoObject[] = "getsuboffset: objinst has no object!";
-GLOBAL_ASM(
-.text
-glabel getsuboffset
-/* 0A16C8 7F06CB98 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0A16CC 7F06CB9C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A16D0 7F06CBA0 AFA40018 */  sw    $a0, 0x18($sp)
-/* 0A16D4 7F06CBA4 14800006 */  bnez  $a0, .L7F06CBC0
-/* 0A16D8 7F06CBA8 AFA5001C */   sw    $a1, 0x1c($sp)
-/* 0A16DC 7F06CBAC 3C048005 */  lui   $a0, %hi(aGetsuboffsetNoObjinst)
-/* 0A16E0 7F06CBB0 0C0033D1 */  jal   osSyncPrintf
-/* 0A16E4 7F06CBB4 248446B4 */   addiu $a0, %lo(aGetsuboffsetNoObjinst) # addiu $a0, $a0, 0x46b4
-/* 0A16E8 7F06CBB8 0FC1B11B */  jal   return_null
-/* 0A16EC 7F06CBBC 00000000 */   nop   
-.L7F06CBC0:
-/* 0A16F0 7F06CBC0 8FAF0018 */  lw    $t7, 0x18($sp)
-/* 0A16F4 7F06CBC4 3C048005 */  lui   $a0, %hi(aGetsuboffsetObjinstHasNoObject)
-/* 0A16F8 7F06CBC8 8DE20008 */  lw    $v0, 8($t7)
-/* 0A16FC 7F06CBCC 54400008 */  bnezl $v0, .L7F06CBF0
-/* 0A1700 7F06CBD0 8FA40018 */   lw    $a0, 0x18($sp)
-/* 0A1704 7F06CBD4 0C0033D1 */  jal   osSyncPrintf
-/* 0A1708 7F06CBD8 248446D0 */   addiu $a0, $a0, %lo(aGetsuboffsetObjinstHasNoObject)
-/* 0A170C 7F06CBDC 0FC1B11B */  jal   return_null
-/* 0A1710 7F06CBE0 00000000 */   nop   
-/* 0A1714 7F06CBE4 8FB80018 */  lw    $t8, 0x18($sp)
-/* 0A1718 7F06CBE8 8F020008 */  lw    $v0, 8($t8)
-/* 0A171C 7F06CBEC 8FA40018 */  lw    $a0, 0x18($sp)
-.L7F06CBF0:
-/* 0A1720 7F06CBF0 8C450000 */  lw    $a1, ($v0)
-/* 0A1724 7F06CBF4 0FC1B226 */  jal   getpartoffset
-/* 0A1728 7F06CBF8 8FA6001C */   lw    $a2, 0x1c($sp)
-/* 0A172C 7F06CBFC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0A1730 7F06CC00 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0A1734 7F06CC04 03E00008 */  jr    $ra
-/* 0A1738 7F06CC08 00000000 */   nop   
-)
-#endif
+
 #ifdef VERSION_EU
 GLOBAL_ASM(
 .text
@@ -1321,57 +1341,25 @@ glabel getsuboffset
 /* 09FBEC 7F06D1FC 00000000 */   nop   
 )
 #endif
-#endif
 
 
 
 
-#ifdef NONMATCHING
-void setsuboffset(void) {
-
+void setsuboffset(Model *objinst, coord3d *offset) //#MATCH
+{
+    if (!objinst)
+    {
+        osSyncPrintf("setsuboffset: no objinst!");
+        return_null();
+    }
+    if (!objinst->obj)
+    {
+        osSyncPrintf("setsuboffset: objinst has no object!");
+        return_null();
+    }
+    setpartoffset(objinst, objinst->obj->RootNode, offset);
 }
-#else
-#ifndef VERSION_EU
-//D:800546F8
-const char aSetsuboffsetNoObjinst[] = "setsuboffset: no objinst!";
-//D:80054714
-const char aSetsuboffsetObjinstHasNoObject[] = "setsuboffset: objinst has no object!";
-GLOBAL_ASM(
-.text
-glabel setsuboffset
-/* 0A173C 7F06CC0C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0A1740 7F06CC10 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A1744 7F06CC14 AFA40018 */  sw    $a0, 0x18($sp)
-/* 0A1748 7F06CC18 14800006 */  bnez  $a0, .L7F06CC34
-/* 0A174C 7F06CC1C AFA5001C */   sw    $a1, 0x1c($sp)
-/* 0A1750 7F06CC20 3C048005 */  lui   $a0, %hi(aSetsuboffsetNoObjinst)
-/* 0A1754 7F06CC24 0C0033D1 */  jal   osSyncPrintf
-/* 0A1758 7F06CC28 248446F8 */   addiu $a0, %lo(aSetsuboffsetNoObjinst) # addiu $a0, $a0, 0x46f8
-/* 0A175C 7F06CC2C 0FC1B11B */  jal   return_null
-/* 0A1760 7F06CC30 00000000 */   nop   
-.L7F06CC34:
-/* 0A1764 7F06CC34 8FAF0018 */  lw    $t7, 0x18($sp)
-/* 0A1768 7F06CC38 3C048005 */  lui   $a0, %hi(aSetsuboffsetObjinstHasNoObject)
-/* 0A176C 7F06CC3C 8DE20008 */  lw    $v0, 8($t7)
-/* 0A1770 7F06CC40 54400008 */  bnezl $v0, .L7F06CC64
-/* 0A1774 7F06CC44 8FA40018 */   lw    $a0, 0x18($sp)
-/* 0A1778 7F06CC48 0C0033D1 */  jal   osSyncPrintf
-/* 0A177C 7F06CC4C 24844714 */   addiu $a0, $a0, %lo(aSetsuboffsetObjinstHasNoObject)
-/* 0A1780 7F06CC50 0FC1B11B */  jal   return_null
-/* 0A1784 7F06CC54 00000000 */   nop   
-/* 0A1788 7F06CC58 8FB80018 */  lw    $t8, 0x18($sp)
-/* 0A178C 7F06CC5C 8F020008 */  lw    $v0, 8($t8)
-/* 0A1790 7F06CC60 8FA40018 */  lw    $a0, 0x18($sp)
-.L7F06CC64:
-/* 0A1794 7F06CC64 8C450000 */  lw    $a1, ($v0)
-/* 0A1798 7F06CC68 0FC1B274 */  jal   setpartoffset
-/* 0A179C 7F06CC6C 8FA6001C */   lw    $a2, 0x1c($sp)
-/* 0A17A0 7F06CC70 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0A17A4 7F06CC74 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0A17A8 7F06CC78 03E00008 */  jr    $ra
-/* 0A17AC 7F06CC7C 00000000 */   nop   
-)
-#endif
+
 #ifdef VERSION_EU
 GLOBAL_ASM(
 .text
@@ -1387,7 +1375,6 @@ glabel setsuboffset
 /* 09FC10 7F06D220 03E00008 */  jr    $ra
 /* 09FC14 7F06D224 00000000 */   nop   
 )
-#endif
 #endif
 
 
@@ -1499,8 +1486,52 @@ glabel getsubroty
 
 
 #ifdef NONMATCHING
-void setsubroty(void) {
+//https://decomp.me/scratch/4syS1
+/*
+ * Sets the Heading (in Radians) of the Object Instance
+ */
+void setsubroty(Model *objinst, f32 radHeading) //#95%
+{
+    if (!objinst)
+    {
+        osSyncPrintf("setsubroty: no objinst!");
+        return_null();
+    }
+    if (!objinst->obj) //< needs to be v1 not a1
+    {
+        osSyncPrintf("setsubroty: objinst has no object!");
+        return_null();
+    }
 
+    if (!objinst->obj->RootNode)
+    {
+        osSyncPrintf("setsubroty: objinst has no root part!");
+        return_null();
+    }
+
+    if ((objinst->obj->RootNode->Opcode & 0xff) == 1)
+    {
+        struct modeldata_root *objinstroot      = extract_id_from_object_structure_microcode(objinst, objinst->obj->RootNode); //< needs to move v1 to a1
+        f32                    radHeadingChange = radHeading - objinstroot->subroty;
+
+        if (radHeadingChange < 0)
+        {
+            radHeadingChange += M_TAU_F;
+        }
+
+        objinstroot->unk30 += radHeadingChange;
+        if (objinstroot->unk30 >= M_TAU_F)
+        {
+            objinstroot->unk30 -= M_TAU_F;
+        }
+
+        objinstroot->unk20 += radHeadingChange;
+        if (objinstroot->unk20 >= M_TAU_F)
+        {
+            objinstroot->unk20 -= M_TAU_F;
+        }
+        objinstroot->subroty = radHeading; //roty
+    }
 }
 #else
 #ifndef VERSION_EU
@@ -1677,27 +1708,19 @@ glabel setsubroty
 
 
 
-#ifdef NONMATCHING
-void set_obj_instance_controller_scale(void) {
-
+void set_obj_instance_controller_scale(Model *objinst, f32 scale)
+{
+    objinst->scale = scale;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_obj_instance_controller_scale
-/* 0A19A8 7F06CE78 44856000 */  mtc1  $a1, $f12
-/* 0A19AC 7F06CE7C 03E00008 */  jr    $ra
-/* 0A19B0 7F06CE80 E48C0014 */   swc1  $f12, 0x14($a0)
-)
-#endif
 
 
 
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F06CE84(void) {
-
+void sub_GAME_7F06CE84(Model *objinst, f32 arg1)
+{
+    objinst->b8 = arg1;
 }
 #else
 GLOBAL_ASM(
@@ -1714,8 +1737,83 @@ glabel sub_GAME_7F06CE84
 
 
 #ifdef NONMATCHING
-void getjointsize(void) {
+//https://decomp.me/scratch/LR3SV
+f32 getjointsize(Model *objinst, ModelNode *part) //#76%
+{
+    Model *    temp_a2;
+    ModelNode *temp_a1;
+    s32        temp_t7;
+    //ModelNode *part;
 
+    if (!objinst)
+    {
+        osSyncPrintf("getjointsize: no objinst!\n");
+        return_null();
+    }
+    part = part;
+    if (part)
+    {
+        do
+        {
+            switch (part->Opcode & 0xFF)
+            {
+                case 1:
+                {
+                    ModelNode_HeaderRecord *prt = part->Data;
+                    return prt->Group1 * objinst->scale;
+                }
+                case 2:
+                {
+                    ModelNode_GroupRecord *prt = part->Data;
+                    return prt->BoundingVolumeRadius * objinst->scale;
+                }
+                case 3:
+                {
+                    ModelNode_GroupRecord *prt = part->Data;
+                    return prt->BoundingVolumeRadius * objinst->scale;
+                }
+                case 21:
+                {
+                    ModelNode_GroupSimpleRecord *prt = part->Data;
+                    return prt->BoundingVolumeRadius * objinst->scale;
+                }
+                case 11:
+                {
+                    ModelNode_Op11Record *prt = part->Data;
+                    return prt->BoundingVolumeRadius * objinst->scale;
+                }
+                case 12:
+                {
+                    ModelNode_GunfireRecord *prt = part->Data;
+                    return prt->Scale * objinst->scale;
+                }
+                case 13:
+                {
+                    ModelNode_ShadowRecord *prt = part->Data;
+                    return prt->Scale * objinst->scale;
+                }
+                case 14:
+                {
+                    ModelNode_Op14Record *prt = part->Data;
+                    return prt->Scale * objinst->scale;
+                }
+                case 15:
+                {
+                    ModelNode_InterlinkageRecord *prt = part->Data;
+                    return prt->Scale * objinst->scale;
+                }
+                case 16:
+                {
+                    ModelNode_Op16Record *prt = part->Data;
+                    return prt->Scale * objinst->scale;
+                }
+                default:
+                    part = part->Parent;
+            }
+        } while (part);
+    }
+
+    return 0.0f;
 }
 #else
 #ifndef VERSION_EU
@@ -2046,13 +2144,11 @@ glabel getinstsize
 
 
 
-// Also matches with float*s
-void interpolate3dVectors(coord3d *v, coord3d *w, float k)
+void interpolate3dVectors(vec3d *v, vec3d *w, float k)
 {
-  v->f[0] += (w->f[0] - v->f[0]) * k;
-  v->f[1] += (w->f[1] - v->f[1]) * k;
-  v->f[2] += (w->f[2] - v->f[2]) * k;
-
+    v->x += (w->x - v->x) * k;
+    v->y += (w->y - v->y) * k;
+    v->z += (w->z - v->z) * k;
   return;
 }
 
@@ -2060,8 +2156,38 @@ void interpolate3dVectors(coord3d *v, coord3d *w, float k)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F06D0CC(void) {
+f32 sub_GAME_7F06D0CC(f32 arg0, f32 arg1, f32 arg2)
+{
+    f32 temp_f12;
+    f32 temp_f12_2;
+    f32 temp_f2;
+    f32 phi_f0;
+    f32 phi_f12;
 
+    temp_f2 = arg1 - arg0;
+    phi_f0  = temp_f2;
+    if (arg1 < arg0)
+    {
+        phi_f0 = temp_f2 + M_TAU;
+    }
+    if (phi_f0 < M_PI)
+    {
+        temp_f12 = arg0 + (phi_f0 * arg2);
+        phi_f12  = temp_f12;
+        if (temp_f12 >= M_TAU)
+        {
+            return temp_f12 - M_TAU;
+        }
+        // Duplicate return node #7. Try simplifying control flow for better match
+        return phi_f12;
+    }
+    temp_f12_2 = arg0 - ((M_TAU - phi_f0) * arg2);
+    phi_f12    = temp_f12_2;
+    if (temp_f12_2 < 0.0f)
+    {
+        phi_f12 = temp_f12_2 + M_TAU;
+    }
+    return phi_f12;
 }
 #else
 GLOBAL_ASM(
@@ -5397,8 +5523,55 @@ glabel sub_GAME_7F06F66C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F06F780(void) {
+void sub_GAME_7F06F780(Model *model, f32 arg1)
+{
+    ModelNode      *temp_a1;
+    f32             temp_f10;
+    f32             temp_f16;
+    f32             temp_f18;
+    f32             temp_f4;
+    f32             temp_f6;
+    f32             temp_f8;
+    modeldata_root *temp_v0_2;
+    void           *temp_v0;
 
+    if ((arg1 > 0.0f) && (temp_v0 = model->anim, (temp_v0 != 0)))
+    {
+        temp_a1      = model->obj->RootNode;
+        model->unk58 = model->unk28;
+        model->unk5C = model->unk2C;
+        model->unk54 = temp_v0;
+        model->unk25 = model->unk24;
+        model->unk60 = model->unk30;
+        model->unk62 = model->unk32;
+        model->unk70 = model->unk40;
+        model->unk74 = model->unk44;
+        model->unk78 = model->unk48;
+        model->unk7C = model->unk4C;
+        model->unk80 = model->unk50;
+        model->unk6C = model->unk3C;
+        if ((temp_a1->Opcode & 0xFF) == 1)
+        {
+            temp_v0_2                   = extract_id_from_object_structure_microcode(model, temp_a1);
+            temp_f10                    = temp_v0_2->unk34.x;
+            temp_f16                    = temp_v0_2->unk34.AsArray[1];
+            temp_f18                    = temp_v0_2->unk34.AsArray[2];
+            temp_f4                     = temp_v0_2->unk24.x;
+            temp_f6                     = temp_v0_2->unk24.AsArray[1];
+            temp_f8                     = temp_v0_2->unk24.AsArray[2];
+            temp_v0_2->unk02            = 1;
+            temp_v0_2->unk4c.x          = temp_f10;
+            temp_v0_2->unk4c.AsArray[1] = temp_f16;
+            temp_v0_2->unk4c.AsArray[2] = temp_f18;
+            temp_v0_2->unk40.x          = temp_f4;
+            temp_v0_2->unk40.AsArray[1] = temp_f6;
+            temp_v0_2->unk40.AsArray[2] = temp_f8;
+            return;
+        }
+        // Duplicate return node #5. Try simplifying control flow for better match
+        return;
+    }
+    model->unk54 = NULL;
 }
 #else
 GLOBAL_ASM(
@@ -5475,8 +5648,146 @@ glabel sub_GAME_7F06F780
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F06F878(void) {
+void sub_GAME_7F06F878(Model *model, void *anim, s32 arg2, f32 startframe, f32 half, f32 arg5)
+{
+    void           *sp80;
+    f32             sp70;
+    f32             sp6C;
+    f32             sp64;
+    f32             sp60;
+    f32             sp5C;
+    f32             sp58;
+    f32             sp54;
+    f32             sp50;
+    f32             sp4C;
+    f32             sp48;
+    f32             sp44;
+    f32             sp40;
+    f32             sp30;
+    s32             sp2C;
+    ModelNode      *temp_a1;
+    f32             temp_f0;
+    f32             temp_f0_2;
+    f32             temp_f0_3;
+    f32             temp_f10;
+    f32             temp_f12;
+    f32             temp_f12_2;
+    f32             temp_f14;
+    f32             temp_f14_2;
+    f32             temp_f2;
+    f32             temp_f2_2;
+    f32             temp_f2_3;
+    f32             temp_f2_4;
+    f32             temp_f4;
+    f32             temp_f6;
+    modeldata_root *temp_v0;
+    f32             phi_f14;
 
+    sp2C = model->anim == 0;
+    if (model->unk54 != 0)
+    {
+        model->unk88 = arg5;
+        model->unk8C = 0.0f;
+        model->unk84 = 1.0f;
+    }
+    else
+    {
+        model->unk88 = 0.0f;
+        model->unk84 = 0.0f;
+    }
+    model->anim  = anim;
+    model->unk24 = arg2;
+    model->unk3C = -1.0f;
+    model->unk40 = half;
+    model->unk4C = 0.0f;
+    sub_GAME_7F06FF64(startframe, model, startframe, anim);
+    model->unk26 = 0;
+    temp_a1      = model->obj->RootNode;
+    if ((temp_a1->Opcode & 0xFF) == 1)
+    {
+        sp80      = temp_a1->Data;
+        temp_v0   = extract_id_from_object_structure_microcode(model, temp_a1);
+        sp5C.unk0 = D_80036244.unk0;
+        temp_f2   = model->scale * model->unkB8;
+        sp5C.unk4 = D_80036244.unk4;
+        sp5C.unk8 = D_80036244.unk8;
+        sp70      = temp_f2;
+        sp58      = sub_GAME_7F06D3F4(*sp80, model->unk24, model->obj->Skeleton, model->anim, model->unk32, &sp5C);
+        if (temp_f2 != 1.0f)
+        {
+            sp5C *= temp_f2;
+            sp60 *= temp_f2;
+            sp64 *= temp_f2;
+        }
+        sp6C      = cosf(temp_v0->unk14);
+        temp_f0   = sinf(temp_v0->unk14);
+        temp_f2_2 = model->unk2C;
+        if (temp_f2_2 == 0.0f)
+        {
+            temp_f2_3                 = temp_v0->pos.x;
+            temp_v0->unk34.x          = temp_f2_3;
+            temp_v0->unk34.AsArray[2] = temp_v0->pos.AsArray[2];
+            temp_v0->unk34.AsArray[1] = temp_v0->pos.AsArray[1] - temp_v0->ground;
+            temp_v0->unk30            = temp_v0->unk14;
+            temp_f4                   = (sp64 * temp_f0) + (temp_f2_3 + (sp5C * sp6C));
+            sp4C                      = temp_f4;
+            sp50                      = sp60;
+            sp54                      = (sp64 * sp6C) + (temp_v0->unk34.AsArray[2] - (sp5C * temp_f0));
+            temp_v0->unk24.x          = temp_f4;
+            temp_v0->unk24.AsArray[1] = sp50;
+            temp_v0->unk24.AsArray[2] = sp54;
+            if (temp_v0->unk18 == 0.0f)
+            {
+                temp_f0_2      = temp_v0->unk30 + sp58;
+                temp_v0->unk20 = temp_f0_2;
+                if (temp_f0_2 >= 6.2831855f)
+                {
+                    temp_v0->unk20 -= 6.2831855f;
+                }
+            }
+            temp_v0->unk1 = 1;
+        }
+        else
+        {
+            temp_f14                  = (sp64 * temp_f0) + (sp5C * sp6C);
+            temp_f10                  = (sp64 * sp6C) + (-sp5C * temp_f0);
+            sp30                      = temp_f10;
+            sp44                      = sp60;
+            temp_f6                   = temp_v0->pos.x + (temp_f14 * (1.0f - temp_f2_2));
+            sp40                      = temp_f6;
+            sp48                      = temp_v0->pos.AsArray[2] + (temp_f10 * (1.0f - model->unk2C));
+            temp_v0->unk24.x          = temp_f6;
+            temp_v0->unk24.AsArray[1] = sp44;
+            temp_v0->unk24.AsArray[2] = sp48;
+            temp_v0->unk34.x          = temp_v0->unk24.x - temp_f14;
+            temp_f12                  = temp_v0->pos.AsArray[1] - temp_v0->ground;
+            temp_f2_4                 = model->unk2C;
+            temp_f12_2                = temp_v0->unk14;
+            temp_v0->unk34.AsArray[1] = temp_f12 - (((sp60 - temp_f12) * temp_f2_4) / (1.0f - temp_f2_4));
+            temp_v0->unk34.AsArray[2] = temp_v0->unk24.AsArray[2] - sp30;
+            temp_f14_2                = temp_f12_2 - sp58;
+            phi_f14                   = temp_f14_2;
+            if (temp_f14_2 < 0.0f)
+            {
+                phi_f14 = temp_f14_2 + 6.2831855f;
+            }
+            temp_v0->unk30 = sub_GAME_7F06D0CC(temp_f12_2, phi_f14, model->unk2C);
+            if (temp_v0->unk18 == 0.0f)
+            {
+                temp_f0_3      = temp_v0->unk30 + sp58;
+                temp_v0->unk20 = temp_f0_3;
+                if (temp_f0_3 >= 6.2831855f)
+                {
+                    temp_v0->unk20 -= 6.2831855f;
+                }
+            }
+            temp_v0->unk1 = 1;
+        }
+        if (sp2C != 0)
+        {
+            temp_v0->unk34.AsArray[1] = temp_v0->unk24.AsArray[1];
+        }
+    }
 }
 #else
 GLOBAL_ASM(
@@ -5915,7 +6226,17 @@ glabel sub_GAME_7F06FDCC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F06FDE8(void) {
+void sub_GAME_7F06FDE8(Model *model, f32 endframe)
+{
+    void *temp_v0;
+
+    temp_v0 = model->anim;
+    if ((temp_v0 != 0) && (endframe < (temp_v0->unk4 - 1)))
+    {
+        model->unk3C = endframe;
+        return;
+    }
+    model->unk3C = -1.0f;
 
 }
 #else
@@ -12938,7 +13259,14 @@ void sub_GAME_7F074524(Gfx *param_1,struct Model *param_2, struct ModelNode *par
 
 #ifdef NONMATCHING
 void sub_GAME_7F074534(void) {
-
+    /*
+     switch case modeltype
+     case 0
+     parse type0(model)
+     case1
+     parsetype1(model)
+     ...
+     */
 }
 #else
 GLOBAL_ASM(

@@ -2668,8 +2668,11 @@ typedef union
     typedef struct KeyRecord
     {
         inherits ObjectRecord;
-        s8       keyID;
-        u32      keyflags;
+        union
+        {
+            s8  keyID;
+            u32 keyflags;
+        };
     } KeyRecord;
 
     #define New_KeyRecord              \
@@ -2944,14 +2947,25 @@ typedef union
         New_PropDefHeaderRecord(22), 0, Object + 0 \
     }
 
-    // PROPDEF_OBJECTIVE_x (23,24 )
+    // PROPDEF_WATCH_MENU_OBJECTIVE_TEXT (35)
+    typedef struct WatchMenuObjectiveTextRecord
+    {
+        inherits PropDefHeaderRecord;
+        u16      unk4;
+    } WatchMenuObjectiveTextRecord;
+#define New_CollectObjectRecord(TagID)         \
+    {                                          \
+        New_PropDefHeaderRecord(28), TagID + 0 \
+    }
+
+    // PROPDEF_OBJECTIVE_x (23,24 ) - maybe wrong...
     typedef struct MissionObjectiveRecord
     {
-        inherits                       PropDefHeaderRecord; /*0*/
-        u8                             ID;                  /*4*/
-        u32                            TextID;              /*8*/
-        DIFFICULTY                     MinDificulty;        /*c*/
-        struct WatchMenuObjectiveText *nextentry;           /*10*/
+        inherits                      PropDefHeaderRecord; /*0*/
+        s32                           ObjRefID;            /*4*/
+        u32                           TextID;              /*8*/
+        DIFFICULTY                    MinDificulty;        /*c*/
+        WatchMenuObjectiveTextRecord *nextentry;           /*10*/
     } MissionObjectiveRecord;
     #define New_MissionObjectiveRecord(TextID)         \
         {                                              \
@@ -3066,17 +3080,6 @@ typedef union
         inherits PropDefHeaderRecord;
         u16      unk4;
     } CoopyObjectRecord;
-    #define New_CollectObjectRecord(TagID)         \
-        {                                          \
-            New_PropDefHeaderRecord(28), TagID + 0 \
-        }
-
-    // PROPDEF_WATCH_MENU_OBJECTIVE_TEXT (35)
-    typedef struct WatchMenuObjectiveTextRecord
-    {
-        inherits PropDefHeaderRecord;
-        u16      unk4;
-    } WatchMenuObjectiveTextRecord;
     #define New_CollectObjectRecord(TagID)         \
         {                                          \
             New_PropDefHeaderRecord(28), TagID + 0 \
@@ -3252,7 +3255,7 @@ typedef union
 #pragma endregion
 
 #pragma region Objectives
-
+    // PROPDEF_WATCH_MENU_OBJECTIVE_TEXT (35)
     struct watchMenuObjectiveText
     {
         u32                            id;
@@ -3261,14 +3264,15 @@ typedef union
         u16                            text;
         struct watchMenuObjectiveText *nextentry;
     };
+    // PROPDEF_OBJECTIVE_x (23,24 ) - maybe not a propdef
     //!FIXME all but text field cannot be trusted
     struct objective_entry
     {
-        u32                            id;
-        enum WATCH_BRIEFING_PAGE       menu;
-        u16                            reserved;
-        u16                            text;
-        struct watchMenuObjectiveText *nextentry;
+        u32                            id; //0
+        enum WATCH_BRIEFING_PAGE       menu;//4
+        u16                            reserved;//8
+        u16                            text; //a
+        struct watchMenuObjectiveText *nextentry; //c
     };
 #pragma endregion Objectives
 

@@ -11,11 +11,11 @@ DrawProgressBar =\
 		$(if $(2), if [ "$(1)" -ne "$(2)" ]; then percent=`expr 100 / $(2) `; _pdone=`expr $$percent \* $(1)`; else _pdone=100; fi ,_pdone=$(1));\
 		pdone=`expr $$_pdone \* 76 / 100`; \
 		pdoneb=0; \
-		printf "\033[1;37;47m%80s\r\033[1;44m" " "; \
+		printf "\033[1;97;100m%80s\r\033[1;44m" " "; \
 		if [ "$$pdone" -lt "40" ]; \
 		then \
 			printf "%$${pdone}s"; \
-			printf "\033[47m"; \
+			printf "\033[100m"; \
 			pdoneb=`expr 38 - $$pdone`; \
 			printf "%$${pdoneb}s%3d%% \r" "" $$_pdone; \
 		else \
@@ -217,8 +217,8 @@ all: $(APPROM)
 ifeq ($(COMPARE),1)
 	@echo "\n"
 #   Calculate Checksum                        if fail   UP 1 ln  Flash Red White 80ch  midway  80ch Bell Reset Colour
-	@$(SHA1SUM) -c ge007.$(COUNTRYCODE).sha1 || (printf "\033[1A\033[5;41;1;37m%80s\n%45s%35s\n%80s\007\033[0;0m\n" "|" "NOT MATCH!" "|" "|" && exit 1)
-	@printf                                                    "\033[5;42;1;37m%80s\n%43s%37s\n%80s\007\033[0;0m\n" "|" "MATCH!" "|" "|" 
+	@$(SHA1SUM) -c ge007.$(COUNTRYCODE).sha1 || (printf "\033[1A\033[5;41;97m%80s\n%45s%35s\n%80s\007\033[0;0m\n" "" "NOT MATCH!" "" "" && exit 1)
+	@printf                                                    "\033[5;42;97m%80s\n%43s%37s\n%80s\007\033[0;0m\n" "" "MATCH!" "" "" 
 endif
 	@echo "\n Rom File Generated in Build Directory. \n\n"
 .SECONDARY:
@@ -330,7 +330,9 @@ $(BUILD_DIR)/assets/obseg/%.o: assets/obseg/%.s $(OBSEG_RZ)
 
 $(BUILD_DIR)/assets/images/split/%.o: assets/images/split/%.bin
 	$(LD) -r -b binary $< -o $@
-# @$(call DrawProgressBar,10,15)
+#	@printf "\033[40B\r"
+#	@$(call DrawProgressBar,10,15)
+#	@printf "\033[40A\r"
 
 #$(BUILD_DIR)/src/random.o: OPTIMIZATION := -O3
 #$(BUILD_DIR)/src/random.o: INCLUDE := -I . -I include -I include/PR

@@ -1488,7 +1488,13 @@ void interface_menu00_legalscreen(void)
     viSetAspect(1.3333334f);
     viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(0);
-
+#if defined(ISGOLDFINGER) || defined(USEEXPANSION)
+    if (osGetMemSize != 0x00800000)
+    {
+        set_menu_to_mode(MENU_NO_CONTROLLERS, 1); //double up as No expansion pak window
+        return;
+    }
+#endif
     menu_timer += g_ClockTimer;
     if (menu_timer >= 0xF1)
     {
@@ -16945,7 +16951,7 @@ loop_1:
     temp_ret_5 = combiner_bayer_lod_perspective(temp_v0);
     arg0 = (s32) (temp_ret_5 + 8);
     temp_v0_2 = temp_ret_5;
-    temp_v0_2->unk0 = 0xba000c02;
+    temp_v0_2->unk0 = 0xba000c02; //gDPSet...
     temp_v0_2->unk4 = 0;
     temp_s3 = &arg0;
     temp_s0_2 = mainfolderimages + 0x3c;
@@ -16986,15 +16992,15 @@ loop_6:
         {
             arg0 = (s32) (temp_t5 + 8);
             temp_t5->unk4 = 0x100000;
-            temp_t5->unk0 = 0xba001402;
+            temp_t5->unk0 = 0xba001402; //gDPSetCyceType(glistp++, G_CYC_2CYCLE);
             temp_t9 = arg0;
             arg0 = (s32) (temp_t9 + 8);
             temp_t9->unk4 = -0xf6;
-            temp_t9->unk0 = 0xf8000000;
+            temp_t9->unk0 = 0xf8000000; //gDPSetFogColor(glistp++, 0, 0, 0, 246);
             temp_t4 = arg0;
             arg0 = (s32) (temp_t4 + 8);
             temp_t4->unk4 = 0xc4112048;
-            temp_t4->unk0 = 0xb900031d;
+            temp_t4->unk0 = 0xb900031d; //gDPSetRenderMode(glistp++, G_RM_FOG_PRIM_A, G_RM_AA_OPA_SURF2);
             display_image_at_on_screen_coord(temp_s3, temp_s4_2, temp_s5, 0x44, 0x2c, 0, 0, 1, 0xff, 0xff, 0xff, 0xff, (s32) (0 < temp_s0_3->unk6), 1);
         }
         else

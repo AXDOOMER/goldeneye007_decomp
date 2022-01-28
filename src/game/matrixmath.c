@@ -1,9 +1,10 @@
 #include "matrixmath.h"
 #include "math_atan2f.h"
 #include <PR/gu.h>
+#include <math.h>
 
-#define EPSILON 0.0000019073486f
-#define RAD2DEG(x) x * 57.295776f
+/* Avoid Gimble Lock? */
+#define EPSILON FLT_EPSILON * 16
 
 // bss
 //CODE.bss:80075DA0
@@ -467,7 +468,7 @@ void matrix_4x4_get_rotation_around_xyz(Mtxf *matrix, vec3 angles)
     f32 norm;
     f32 sin_x_cos_y = matrix->m[1][2];
     f32 cos_x_cos_y = matrix->m[2][2];
-    norm            = sqrtf((sin_x_cos_y * sin_x_cos_y) + (cos_x_cos_y * cos_x_cos_y));
+    norm            = sqrtf(SQR(sin_x_cos_y) + SQR(cos_x_cos_y));
     if (EPSILON < norm)
     {
         angles[0] = atan2f(matrix->m[1][2], matrix->m[2][2]);
@@ -1738,7 +1739,7 @@ void matrix_4x4_7F059B58(Mtxf *matrix, f32 angle, f32 x, f32 y, f32 z) {
 }
 
 void matrix_4x4_align(Mtxf *matrix, f32 angle, f32 x, f32 y, f32 z) {
-    angle = RAD2DEG(angle);
+    angle = RadToDeg(angle);
     guAlignF(matrix->m, angle, x, y, z);
 }
 

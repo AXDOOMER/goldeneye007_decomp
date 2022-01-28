@@ -3,12 +3,12 @@
 #include <bondtypes.h>
 #include "objective_status.h"
 
+//Public variables - move to header
 // bss
 //CODE.bss:80075D30
 struct objective_entry * objective_ptrs[10];
-u32 dword_CODE_bss_80075D58;
-u32 dword_CODE_bss_80075D5C;
-char dword_CODE_bss_80075D60[0x20];
+OBJECTIVESTATUS         dword_CODE_bss_80075D58[10]; //This is an array of 10 OBJECTIVESTATUS,
+
 //CODE.bss:80075D80
 u32 *ptr_last_tag_entry_type16;
 //CODE.bss:80075D84
@@ -34,71 +34,47 @@ const char aSC[] = "%s %c: ";
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F057080(void) {
-
+/*
+ * Return Tag with TagID
+ */
+TagObjectRecord *sub_GAME_7F057080(s32 TagID) //#MATCH
+{
+    u16              ID  = TagID;
+    TagObjectRecord *tag = ptr_last_tag_entry_type16;
+    while (tag)
+    {
+        if (tag->ID == ID)
+        {
+            return tag;
+        }
+        tag = tag->NextTag;
+    }
+    return NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F057080
-/* 08BBB0 7F057080 3C038007 */  lui   $v1, %hi(ptr_last_tag_entry_type16)
-/* 08BBB4 7F057084 8C635D80 */  lw    $v1, %lo(ptr_last_tag_entry_type16)($v1)
-/* 08BBB8 7F057088 3082FFFF */  andi  $v0, $a0, 0xffff
-/* 08BBBC 7F05708C 5060000A */  beql  $v1, $zero, .L7F0570B8
-/* 08BBC0 7F057090 00001025 */   move  $v0, $zero
-/* 08BBC4 7F057094 946E0004 */  lhu   $t6, 4($v1)
-.L7F057098:
-/* 08BBC8 7F057098 544E0004 */  bnel  $v0, $t6, .L7F0570AC
-/* 08BBCC 7F05709C 8C630008 */   lw    $v1, 8($v1)
-/* 08BBD0 7F0570A0 03E00008 */  jr    $ra
-/* 08BBD4 7F0570A4 00601025 */   move  $v0, $v1
-
-/* 08BBD8 7F0570A8 8C630008 */  lw    $v1, 8($v1)
-.L7F0570AC:
-/* 08BBDC 7F0570AC 5460FFFA */  bnezl $v1, .L7F057098
-/* 08BBE0 7F0570B0 946E0004 */   lhu   $t6, 4($v1)
-/* 08BBE4 7F0570B4 00001025 */  move  $v0, $zero
-.L7F0570B8:
-/* 08BBE8 7F0570B8 03E00008 */  jr    $ra
-/* 08BBEC 7F0570BC 00000000 */   nop   
-)
-#endif
 
 
 
 
 
-#ifdef NONMATCHING
-void get_handle_to_tagged_object(void) {
+/*
+ * Return Object with TagID  
+ * Address 7F0570C0
+ */
+ObjectRecord *get_handle_to_tagged_object(s32 TagID) //#MATCH
+{
+    TagObjectRecord *tag = sub_GAME_7F057080(TagID);
+    ObjectRecord *   obj = NULL;
 
+    if (tag)
+    {
+        obj = tag->TaggedObject;
+    }
+    if (obj && !(obj->runtime_bitflags & 0x10))
+    {
+        obj = NULL; //clear object
+    }
+    return obj;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_handle_to_tagged_object
-/* 08BBF0 7F0570C0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 08BBF4 7F0570C4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 08BBF8 7F0570C8 0FC15C20 */  jal   sub_GAME_7F057080
-/* 08BBFC 7F0570CC 00000000 */   nop   
-/* 08BC00 7F0570D0 10400002 */  beqz  $v0, .L7F0570DC
-/* 08BC04 7F0570D4 00001825 */   move  $v1, $zero
-/* 08BC08 7F0570D8 8C43000C */  lw    $v1, 0xc($v0)
-.L7F0570DC:
-/* 08BC0C 7F0570DC 10600006 */  beqz  $v1, .L7F0570F8
-/* 08BC10 7F0570E0 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 08BC14 7F0570E4 8C6E0064 */  lw    $t6, 0x64($v1)
-/* 08BC18 7F0570E8 31CF0010 */  andi  $t7, $t6, 0x10
-/* 08BC1C 7F0570EC 55E00003 */  bnezl $t7, .L7F0570FC
-/* 08BC20 7F0570F0 00601025 */   move  $v0, $v1
-/* 08BC24 7F0570F4 00001825 */  move  $v1, $zero
-.L7F0570F8:
-/* 08BC28 7F0570F8 00601025 */  move  $v0, $v1
-.L7F0570FC:
-/* 08BC2C 7F0570FC 03E00008 */  jr    $ra
-/* 08BC30 7F057100 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
 
 
 
@@ -199,7 +175,7 @@ glabel get_ptr_text_for_watch_breifing_page
 
 
 
-
+//objectiveGetCount
 s32 add_objective(void)
 {
     return num_objective_ptrs[0]+1;
@@ -252,15 +228,159 @@ glabel get_difficulty_for_objective
 
 
 
-#ifdef NONMATCHING
-void get_status_of_objective(void) {
+#ifndef NONMATCHING
+/*
+ * Return Status of objective.
+ * Note: This matches but may not in future depending on the result of var
+ * "OBJECTIVESTATUS *dword_CODE_bss_80075D58". 
+ * https://decomp.me/scratch/MF31e
+ */
+OBJECTIVESTATUS get_status_of_objective(s32 objectiveNum) //#MATCH
+{
+    MissionObjectiveRecord *objective;
+    OBJECTIVESTATUS         currentstatus;
+    OBJECTIVESTATUS         status = OBJECTIVESTATUS_COMPLETE;
 
-}
-/*from xbla for switch
-                default:
-                    sprintf("unknown goal propdef %d\n",*(local_4c + 3));
+    if (objectiveNum < 10)
+    {
+        if (!&objective_ptrs[objectiveNum]->id)
+        {
+            status = dword_CODE_bss_80075D58[objectiveNum];
+        }
+        else
+        {
+            // for each objective in objectives
+            for (objective = &objective_ptrs[objectiveNum]->id; objective->type != PROPDEF_OBJECTIVE_END; objective = sizepropdef(objective) + (PropDefHeaderRecord *)objective)
+            {
+                {
+                    currentstatus = OBJECTIVESTATUS_COMPLETE;
+                    switch (objective->type)
+                    {
+                        case PROPDEF_OBJECTIVE_DESTROY_OBJECT:
+                        {
+                            ObjectRecord *obj = get_handle_to_tagged_object(objective->ObjRefID);
+                            if (obj && obj->prop && check_if_object_has_not_been_destroyed(obj))
+                            {
+                                currentstatus = OBJECTIVESTATUS_INCOMPLETE;
+                            }
+                            break;
+                        }
+                        case PROPDEF_OBJECTIVE_COMPLETE_CONDITION:
+                        {
+                            if (!check_if_objective_bitflags_set(NULL, objective->ObjRefID))
+                            {
+                                currentstatus = OBJECTIVESTATUS_INCOMPLETE;
+                            }
+                            break;
+                        }
+                        case PROPDEF_OBJECTIVE_FAIL_CONDITION:
+                        {
+                            if (check_if_objective_bitflags_set(NULL, objective->ObjRefID))
+                            {
+                                currentstatus = OBJECTIVESTATUS_FAILED;
+                            }
+                            break;
+                        }
+                        case PROPDEF_OBJECTIVE_COLLECT_OBJECT:
+                        {
+                            ObjectRecord *obj = get_handle_to_tagged_object(objective->ObjRefID);
+                            if (!obj || !obj->prop || !check_if_object_has_not_been_destroyed(obj))
+                            {
+                                currentstatus = OBJECTIVESTATUS_FAILED;
+                            }
+                            else if (!is_prop_in_inventory(obj->prop))
+                            {
+                                currentstatus = OBJECTIVESTATUS_INCOMPLETE;
+                            }
+                            break;
+                        }
+                        case PROPDEF_OBJECTIVE_DEPOSIT_OBJECT:
+                        {
+                            ObjectRecord *obj = get_handle_to_tagged_object(objective->ObjRefID);
+                            if (obj && obj->prop && is_prop_in_inventory(obj->prop))
+                            {
+                                currentstatus = OBJECTIVESTATUS_INCOMPLETE;
+                            }
+                            break;
+                        }
+                        case PROPDEF_OBJECTIVE_PHOTOGRAPH:
+                        {
+                            ObjectRecord *obj = get_handle_to_tagged_object(objective->ObjRefID);
+                            if (!objective->TextID) //0x8
+                            {
+                                if (!obj || !obj->prop || !check_if_object_has_not_been_destroyed(obj))
+                                {
+                                    currentstatus = OBJECTIVESTATUS_FAILED;
+                                }
+                                else
+                                {
+                                    currentstatus = OBJECTIVESTATUS_INCOMPLETE;
+                                }
+                            }
+                            break;
+                        }
+                        case PROPDEF_OBJECTIVE_ENTER_ROOM:
+                        {
+                            if (!objective->TextID) //0x8
+                            {
+                                currentstatus = OBJECTIVESTATUS_INCOMPLETE;
+                            }
+                            break;
+                        }
+                        case PROPDEF_OBJECTIVE_DEPOSIT_OBJECT_IN_ROOM:
+                        {
+                            if (!objective->MinDificulty) //0xc
+                            {
+                                currentstatus = OBJECTIVESTATUS_INCOMPLETE;
+                            }
+                            break;
+                        }
+                        case PROPDEF_OBJECTIVE_COPY_ITEM:
+                        {
+                            if (!get_keyanalyzer_flag())
+                            {
+                                currentstatus = OBJECTIVESTATUS_INCOMPLETE;
+                            }
+                            break;
+                        }
+                        case PROPDEF_OBJECTIVE_END:
+                        case PROPDEF_OBJECTIVE_START:
+                        case PROPDEF_OBJECTIVE_NULL:
+                        {
+                            break;
+                        }
+                        default:
+                        {
+#    ifdef DEBUG
+                            osSyncPrintf("unknown goal propdef %d\n", objective->type);
+#    endif
+                            break;
+                        }
+                    }
+                    if (status == OBJECTIVESTATUS_COMPLETE)
+                    {
+                        if (currentstatus != OBJECTIVESTATUS_COMPLETE)
+                        {
+                            status = currentstatus;
+                        }
+                    }
+                    else if ((status == OBJECTIVESTATUS_INCOMPLETE) && (currentstatus == OBJECTIVESTATUS_FAILED))
+                    {
+                        status = currentstatus;
+                    }
+
+                    //objective  = objheader;
                 }
-*/
+            }
+        } // if objheader
+    }     //objnum < 10
+
+    if (get_debug_all_obj_complete_flag())
+    {
+        status = OBJECTIVESTATUS_COMPLETE;
+    }
+    return status;
+}
 #else
 GLOBAL_ASM(
 .late_rodata

@@ -52,7 +52,10 @@
 
 #define M_U16_MAX_VALUE_F 65536.0f
 #define M_U32_MAX_VALUE_F 4294967296.0f
-
+/*
+ The difference between 1.0 and the next larger floating point number
+*/
+#define FLT_EPSILON       1.19209290E-07F
 
 /*Inline Math Funcs*/
 
@@ -68,7 +71,7 @@
 /* Converts and halves an angle from Degrees to Radians */
 #define mDegToHalfRad(x)      ((x * M_PI_F) / 360.0f)
 /* Converts an angle from Radians to Degrees */
-#define RadToDeg(RAD)         (float)((RAD) / M_TAU_F * 360.0f)
+#define RadToDeg(RAD)         (float)((RAD) * (360.0f / M_TAU_F))
 /* Gets the angle in radians represented by a byte */
 #define ByteToRadian(Byte)    ((Byte * M_TAU_F) * (1.0f / 256.0f))
 

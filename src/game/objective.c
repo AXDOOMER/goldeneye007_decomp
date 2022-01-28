@@ -1,11 +1,60 @@
 #include <ultra64.h>
 #include <boss.h>
 #include "objective.h"
+#include "objective_status.h"
 
 
 #ifdef NONMATCHING
-void something_with_stage_objectives(void) {
 
+//CODE.bss:80075D30
+extern struct objective_entry *objective_ptrs[10];
+extern OBJECTIVESTATUS         dword_CODE_bss_80075D58[10]; //This is an array of 10 OBJECTIVESTATUS,
+
+//CODE.bss:80075D80
+extern u32                    *ptr_last_tag_entry_type16;
+//CODE.bss:80075D84
+extern u32                    *ptr_last_briefing_setup_entry_type23;
+//CODE.bss:80075D88
+extern u32                    *ptr_last_enter_room_subobject_entry_type20;
+//CODE.bss:80075D8C
+extern u32                    *ptr_last_deposit_in_room_subobject_entry_type21;
+//CODE.bss:80075D90
+extern u32                    *ptr_last_photo_obj_in_room_subobject_entry_type1E;
+// data
+extern s32                     num_objective_ptrs[];
+/*
+ * Clears Objectives and states
+ * Note: this matches in everthing except that calling the var "dword_CODE_bss_80075D58"
+ * as-is means the var is offset by 1 word. 
+ * somewhere along the line either the var will change or the func will need re-doing.
+ * https://decomp.me/scratch/ecX06
+ */
+void something_with_stage_objectives() //#99% MATCH
+{
+    s32 i;
+
+    if (bossGetStageNum() != LEVELID_TITLE)
+    {
+        num_objective_ptrs[0] = -1;
+        //dword_CODE_bss_80075D58 = NULL;
+        //dword_CODE_bss_80075D58+4 = NULL;
+        //*dword_CODE_bss_80075D58+8 = *clear2;
+        //dword_CODE_bss_80075D58[0] = OBJECTIVESTATUS_INCOMPLETE;
+        for (i = 1; i <= 10; i++) //using 0-10 causes mismatch
+        {
+            dword_CODE_bss_80075D58[i] = OBJECTIVESTATUS_INCOMPLETE;
+        }
+    }
+
+    for (i = 1; i <= 10; i++) //using 0-10 causes mismatch
+    {
+        objective_ptrs[i] = NULL;
+    }
+    ptr_last_tag_entry_type16                         = NULL;
+    ptr_last_briefing_setup_entry_type23              = NULL;
+    ptr_last_enter_room_subobject_entry_type20        = NULL;
+    ptr_last_deposit_in_room_subobject_entry_type21   = NULL;
+    ptr_last_photo_obj_in_room_subobject_entry_type1E = NULL;
 }
 #else
 
@@ -24,12 +73,12 @@ glabel something_with_stage_objectives
 /* 039A10 7F004EE0 AC2E22F0 */  sw    $t6, %lo(num_objective_ptrs)($at)
 /* 039A14 7F004EE4 3C018007 */  lui   $at, %hi(dword_CODE_bss_80075D58)
 /* 039A18 7F004EE8 AC205D58 */  sw    $zero, %lo(dword_CODE_bss_80075D58)($at)
-/* 039A1C 7F004EEC 3C018007 */  lui   $at, %hi(dword_CODE_bss_80075D5C)
-/* 039A20 7F004EF0 3C028007 */  lui   $v0, %hi(dword_CODE_bss_80075D60)
+/* 039A1C 7F004EEC 3C018007 */  lui   $at, %hi(dword_CODE_bss_80075D58+4)
+/* 039A20 7F004EF0 3C028007 */  lui   $v0, %hi(dword_CODE_bss_80075D58+8)
 /* 039A24 7F004EF4 3C038007 */  lui   $v1, %hi(ptr_last_tag_entry_type16)
 /* 039A28 7F004EF8 24635D80 */  addiu $v1, %lo(ptr_last_tag_entry_type16) # addiu $v1, $v1, 0x5d80
-/* 039A2C 7F004EFC 24425D60 */  addiu $v0, %lo(dword_CODE_bss_80075D60) # addiu $v0, $v0, 0x5d60
-/* 039A30 7F004F00 AC205D5C */  sw    $zero, %lo(dword_CODE_bss_80075D5C)($at)
+/* 039A2C 7F004EFC 24425D60 */  addiu $v0, %lo(dword_CODE_bss_80075D58+8) # addiu $v0, $v0, 0x5d60
+/* 039A30 7F004F00 AC205D5C */  sw    $zero, %lo(dword_CODE_bss_80075D58+4)($at)
 .L7F004F04:
 /* 039A34 7F004F04 24420010 */  addiu $v0, $v0, 0x10
 /* 039A38 7F004F08 AC40FFF4 */  sw    $zero, -0xc($v0)
@@ -84,12 +133,12 @@ glabel something_with_stage_objectives
 /* 039A60 7F004EF0 AC2E2330 */  sw    $t6, %lo(num_objective_ptrs)($at)
 /* 039A64 7F004EF4 3C018007 */  lui   $at, %hi(dword_CODE_bss_80075D58) # $at, 0x8007
 /* 039A68 7F004EF8 AC205D98 */  sw    $zero, %lo(dword_CODE_bss_80075D58)($at)
-/* 039A6C 7F004EFC 3C018007 */  lui   $at, %hi(dword_CODE_bss_80075D5C) # $at, 0x8007
-/* 039A70 7F004F00 3C028007 */  lui   $v0, %hi(dword_CODE_bss_80075D60) # $v0, 0x8007
+/* 039A6C 7F004EFC 3C018007 */  lui   $at, %hi(dword_CODE_bss_80075D58+4) # $at, 0x8007
+/* 039A70 7F004F00 3C028007 */  lui   $v0, %hi(dword_CODE_bss_80075D58+8) # $v0, 0x8007
 /* 039A74 7F004F04 3C038007 */  lui   $v1, %hi(ptr_last_tag_entry_type16) # $v1, 0x8007
 /* 039A78 7F004F08 24635DC0 */  addiu $v1, %lo(ptr_last_tag_entry_type16) # addiu $v1, $v1, 0x5dc0
-/* 039A7C 7F004F0C 24425DA0 */  addiu $v0, %lo(dword_CODE_bss_80075D60) # addiu $v0, $v0, 0x5da0
-/* 039A80 7F004F10 AC205D9C */  sw    $zero, %lo(dword_CODE_bss_80075D5C)($at)
+/* 039A7C 7F004F0C 24425DA0 */  addiu $v0, %lo(dword_CODE_bss_80075D58+8) # addiu $v0, $v0, 0x5da0
+/* 039A80 7F004F10 AC205D9C */  sw    $zero, %lo(dword_CODE_bss_80075D58+4)($at)
 .L7F004F14:
 /* 039A84 7F004F14 24420010 */  addiu $v0, $v0, 0x10
 /* 039A88 7F004F18 AC40FFF4 */  sw    $zero, -0xc($v0)
@@ -146,12 +195,12 @@ glabel something_with_stage_objectives
 /* 039A60 7F004EF0 AC2E2330 */  sw    $t6, %lo(num_objective_ptrs)($at)
 /* 039A64 7F004EF4 3C018007 */  lui   $at, %hi(dword_CODE_bss_80075D58) # $at, 0x8007
 /* 039A68 7F004EF8 AC205D98 */  sw    $zero, %lo(dword_CODE_bss_80075D58)($at)
-/* 039A6C 7F004EFC 3C018007 */  lui   $at, %hi(dword_CODE_bss_80075D5C) # $at, 0x8007
-/* 039A70 7F004F00 3C028007 */  lui   $v0, %hi(dword_CODE_bss_80075D60) # $v0, 0x8007
+/* 039A6C 7F004EFC 3C018007 */  lui   $at, %hi(dword_CODE_bss_80075D58+4) # $at, 0x8007
+/* 039A70 7F004F00 3C028007 */  lui   $v0, %hi(dword_CODE_bss_80075D58+8) # $v0, 0x8007
 /* 039A74 7F004F04 3C038007 */  lui   $v1, %hi(ptr_last_tag_entry_type16) # $v1, 0x8007
 /* 039A78 7F004F08 24635DC0 */  addiu $v1, %lo(ptr_last_tag_entry_type16) # addiu $v1, $v1, 0x5dc0
-/* 039A7C 7F004F0C 24425DA0 */  addiu $v0, %lo(dword_CODE_bss_80075D60) # addiu $v0, $v0, 0x5da0
-/* 039A80 7F004F10 AC205D9C */  sw    $zero, %lo(dword_CODE_bss_80075D5C)($at)
+/* 039A7C 7F004F0C 24425DA0 */  addiu $v0, %lo(dword_CODE_bss_80075D58+8) # addiu $v0, $v0, 0x5da0
+/* 039A80 7F004F10 AC205D9C */  sw    $zero, %lo(dword_CODE_bss_80075D58+4)($at)
 .L7F004F14:
 /* 039A84 7F004F14 24420010 */  addiu $v0, $v0, 0x10
 /* 039A88 7F004F18 AC40FFF4 */  sw    $zero, -0xc($v0)
