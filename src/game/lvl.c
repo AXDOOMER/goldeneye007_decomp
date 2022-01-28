@@ -2511,10 +2511,10 @@ void lvlManageMpGame(void)
         sub_GAME_7F0BC7D4();
         sub_GAME_7F092E50();
         sub_GAME_7F094438();
-        sub_GAME_7F0A47FC();
+        update_bullet_sparks_and_dust_clouds();
         sub_GAME_7F068E6C();
-        sub_GAME_7F0A28D4();
-        sub_GAME_7F09FD3C();
+        update_broken_windows();
+        update_gray_flying_particles();
         handle_mp_respawn_and_some_things();
         reset_all_music_slots();
         something_with_LnameJ();
@@ -3249,13 +3249,13 @@ glabel lvlManageMpGame
 /* 0F3EA8 7F0BF378 00000000 */   nop
 /* 0F3EAC 7F0BF37C 0FC2510E */  jal   sub_GAME_7F094438
 /* 0F3EB0 7F0BF380 00000000 */   nop
-/* 0F3EB4 7F0BF384 0FC291FF */  jal   sub_GAME_7F0A47FC
+/* 0F3EB4 7F0BF384 0FC291FF */  jal   update_bullet_sparks_and_dust_clouds
 /* 0F3EB8 7F0BF388 00000000 */   nop
 /* 0F3EBC 7F0BF38C 0FC1A39B */  jal   sub_GAME_7F068E6C
 /* 0F3EC0 7F0BF390 00000000 */   nop
-/* 0F3EC4 7F0BF394 0FC28A35 */  jal   sub_GAME_7F0A28D4
+/* 0F3EC4 7F0BF394 0FC28A35 */  jal   update_broken_windows
 /* 0F3EC8 7F0BF398 00000000 */   nop
-/* 0F3ECC 7F0BF39C 0FC27F4F */  jal   sub_GAME_7F09FD3C
+/* 0F3ECC 7F0BF39C 0FC27F4F */  jal   update_gray_flying_particles
 /* 0F3ED0 7F0BF3A0 00000000 */   nop
 /* 0F3ED4 7F0BF3A4 0FC0F192 */  jal   handle_mp_respawn_and_some_things
 /* 0F3ED8 7F0BF3A8 00000000 */   nop
@@ -4140,13 +4140,13 @@ glabel lvlManageMpGame
 /* 0F4B20 7F0BFFB0 00000000 */   nop
 /* 0F4B24 7F0BFFB4 0FC253F6 */  jal   sub_GAME_7F094438
 /* 0F4B28 7F0BFFB8 00000000 */   nop
-/* 0F4B2C 7F0BFFBC 0FC294E7 */  jal   sub_GAME_7F0A47FC
+/* 0F4B2C 7F0BFFBC 0FC294E7 */  jal   update_bullet_sparks_and_dust_clouds
 /* 0F4B30 7F0BFFC0 00000000 */   nop
 /* 0F4B34 7F0BFFC4 0FC1A516 */  jal   sub_GAME_7F068E6C
 /* 0F4B38 7F0BFFC8 00000000 */   nop
-/* 0F4B3C 7F0BFFCC 0FC28D1D */  jal   sub_GAME_7F0A28D4
+/* 0F4B3C 7F0BFFCC 0FC28D1D */  jal   update_broken_windows
 /* 0F4B40 7F0BFFD0 00000000 */   nop
-/* 0F4B44 7F0BFFD4 0FC28238 */  jal   sub_GAME_7F09FD3C
+/* 0F4B44 7F0BFFD4 0FC28238 */  jal   update_gray_flying_particles
 /* 0F4B48 7F0BFFD8 00000000 */   nop
 /* 0F4B4C 7F0BFFDC 0FC0F252 */  jal   handle_mp_respawn_and_some_things
 /* 0F4B50 7F0BFFE0 00000000 */   nop
@@ -5028,9 +5028,9 @@ glabel lvlManageMpGame
 /* 0F11BC 7F0BE7CC 00000000 */   nop   
 /* 0F11C0 7F0BE7D0 0FC1A580 */  jal   sub_GAME_7F068E6C
 /* 0F11C4 7F0BE7D4 00000000 */   nop   
-/* 0F11C8 7F0BE7D8 0FC28785 */  jal   sub_GAME_7F0A28D4
+/* 0F11C8 7F0BE7D8 0FC28785 */  jal   update_broken_windows
 /* 0F11CC 7F0BE7DC 00000000 */   nop   
-/* 0F11D0 7F0BE7E0 0FC27CA0 */  jal   sub_GAME_7F09FD3C
+/* 0F11D0 7F0BE7E0 0FC27CA0 */  jal   update_gray_flying_particles
 /* 0F11D4 7F0BE7E4 00000000 */   nop   
 /* 0F11D8 7F0BE7E8 0FC0F1C2 */  jal   handle_mp_respawn_and_some_things
 /* 0F11DC 7F0BE7EC 00000000 */   nop   
