@@ -183,7 +183,6 @@
  
 # 360 "src/aicommands.def"
 //#define JUMP_TO_AI_LIST  JumpToAiList
- ****************************************************************************/ 
 
  /****************************************************************************
  Set CHR_NUM's current AI List to beginning of AI_LIST_ID and execute at    
@@ -191,7 +190,7 @@
  @param CHR_NUM 8bit Chr to jump to                                         
              AI_LIST_ID 16bit pointer to AI List within Chr/Global          
  ***************************************************************************
- Notes: Not recommended to Goto an Objective List (10XX)                     *   
+ Notes: Not recommended to Goto an Objective List (10XX)                     */   
 #define    JUMP_TO_AI_LIST(CHR_NUM, AI_LIST_ID)  \
                     AI_JUMP_TO_AI_LIST_ID  ,  \
                     CHR_NUM , \

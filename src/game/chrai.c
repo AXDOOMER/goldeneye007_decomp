@@ -22,7 +22,7 @@
 /**
  * Address 0x80069B70.
 */
-struct sfx_register_struct sfx_related[SFX_RELATED_LEN];
+sfxRecord sfx_related[SFX_RELATED_LEN];
 
 //CODE.bss:80069C30
 s16 * ptr_list_object_lookup_indices;
@@ -151,6 +151,8 @@ struct object_animation_controller g_TaserAnimController;
 */
 s32 bss_80075CFC;
 
+// forward declarations
+
 //CODE.bss:80075D00
 waypoint * ptr_setup_path_tbl;
 //CODE.bss:80075D04
@@ -158,11 +160,11 @@ void * ptr_setup_path_link;
 //CODE.bss:80075D08
 void * ptr_setup_intro;
 //CODE.bss:80075D0C
-struct object_standard * ptr_setup_objects;
+PropDefHeaderRecord * ptr_setup_objects;
 //CODE.bss:80075D10
 void * ptr_setup_path_sets;
 //CODE.bss:80075D14
-void * ptr_setup_actions;
+AIListRecord * ptr_setup_actions;
 //CODE.bss:80075D18
 PadRecord * ptr_0xxxpresets;
 //CODE.bss:80075D1C
@@ -171,6 +173,9 @@ BoundPadRecord * ptr_2xxxpresets;
 u32 dword_CODE_bss_80075D20;
 //CODE.bss:80075D24
 u32 dword_CODE_bss_80075D24;
+
+//stagesetup gSetup ;
+
 //CODE.bss:80075D28
 u32 dword_CODE_bss_80075D28;
 
@@ -316,41 +321,39 @@ glabel set_sound_effect_source_to_location
 
 
 
-#ifdef NONMATCHING
-void loop_set_sound_effect_all_slots(void) {
-
+void loop_set_sound_effect_all_slots(void)
+{
+    int i;
+    for (i = 0; i < 8; i++)
+    {
+        set_sound_effect_source_to_location(i);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel loop_set_sound_effect_all_slots
-/* 069414 7F0348E4 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 069418 7F0348E8 AFB10018 */  sw    $s1, 0x18($sp)
-/* 06941C 7F0348EC AFB00014 */  sw    $s0, 0x14($sp)
-/* 069420 7F0348F0 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 069424 7F0348F4 00008025 */  move  $s0, $zero
-/* 069428 7F0348F8 24110008 */  li    $s1, 8
-.L7F0348FC:
-/* 06942C 7F0348FC 0FC0D1E8 */  jal   set_sound_effect_source_to_location
-/* 069430 7F034900 02002025 */   move  $a0, $s0
-/* 069434 7F034904 26100001 */  addiu $s0, $s0, 1
-/* 069438 7F034908 1611FFFC */  bne   $s0, $s1, .L7F0348FC
-/* 06943C 7F03490C 00000000 */   nop   
-/* 069440 7F034910 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 069444 7F034914 8FB00014 */  lw    $s0, 0x14($sp)
-/* 069448 7F034918 8FB10018 */  lw    $s1, 0x18($sp)
-/* 06944C 7F03491C 03E00008 */  jr    $ra
-/* 069450 7F034920 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
 
 
-
+#include <limits.h>
 
 
 #ifdef NONMATCHING
-void set_sound_effect_to_slot(void) {
+void set_sound_effect_to_slot(s32 slot, s16 arg1) //#MATCH  audioPlayFromProp
+{
+    sfxRecord *sfx = NULL; //always added to stack anyway, cleaner to use
 
+    if (slot >= 0 && slot < 8)
+    {
+        //NOT Volatile
+        if (!sfx_related[slot].field_0x0 || !sfxGetArg0Unk3F(sfx_related[slot].field_0x0))
+        {
+            sfx = &sfx_related[slot];
+
+            sfx->Volume  = SHRT_MAX;
+            sfx->Volume2 = SHRT_MAX;
+            sfx->sfxID   = -1;
+            sfx->pad     = NULL;
+            sfx->Obj     = NULL;
+        }
+    }
+    play_sfx_a1(g_musicSfxBufferPtr, arg1, sfx);
 }
 #else
 GLOBAL_ASM(
@@ -403,584 +406,62 @@ glabel set_sound_effect_to_slot
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0349BC(void) {
-
+void sub_GAME_7F0349BC(s32 slot) 
+{
+    if ((slot >= 0) && (slot < 8))
+    {
+        sndDeactivate(sfx_related[slot].field_0x0);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0349BC
-/* 0694EC 7F0349BC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0694F0 7F0349C0 0480000A */  bltz  $a0, .L7F0349EC
-/* 0694F4 7F0349C4 AFBF0014 */   sw    $ra, 0x14($sp)
-/* 0694F8 7F0349C8 28810008 */  slti  $at, $a0, 8
-/* 0694FC 7F0349CC 10200007 */  beqz  $at, .L7F0349EC
-/* 069500 7F0349D0 00047080 */   sll   $t6, $a0, 2
-/* 069504 7F0349D4 01C47023 */  subu  $t6, $t6, $a0
-/* 069508 7F0349D8 000E70C0 */  sll   $t6, $t6, 3
-/* 06950C 7F0349DC 3C048007 */  lui   $a0, %hi(sfx_related)
-/* 069510 7F0349E0 008E2021 */  addu  $a0, $a0, $t6
-/* 069514 7F0349E4 0C002408 */  jal   sndDeactivate
-/* 069518 7F0349E8 8C849B70 */   lw    $a0, %lo(sfx_related)($a0)
-.L7F0349EC:
-/* 06951C 7F0349EC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 069520 7F0349F0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 069524 7F0349F4 03E00008 */  jr    $ra
-/* 069528 7F0349F8 00000000 */   nop   
-)
-#endif
 
 
 
 
 
 #ifdef NONMATCHING
-/*
-
-*   Trev's Original Assumption
-
-
-enum ActionCommands
+/** 
+ * Get AI Command Size in bytes
+ * @param AIList: The AI list containing the command
+ * @param offset: The offset (in bytes) to the command you want the size of
+ * @return The number of bytes of AI command
+ * //Todo: Give real name
+ * // Todo: fix locret refrences in other funcs
+ */
+s32 get_length_of_action_block(u8 *AIList, s32 offset)
 {
-	GotoLabel,
-	GotoLabelFromTop,
-	Label,
-	Yield,
-	End,
-	JAL,
+    //compile with -O2
+    u8 *cmd = AIList + offset;
+    u32 pos;
 
-};
-u8 get_length_of_action_block(CurrentActionByte) {
-	enum ActionCommands Action = byte(CurrentActionByte)
-	switch(Action)
-	{
-		case GotoLabel:
-			return 2;
-		case GotoLabelFromTop:
-			return 2;
-		...
-		case 252:
-			return 1;
-		default:
-			return 1;
-	}
-}
-*/
+    switch (cmd[0])
+    {
+#    ifndef _SYNHILITE
+#        define _AI_CMD(CMD)                                             /*  \
+                                                                          */ \
+            case CAT(AI_, CMDNAME):                                      /*  \
+                                                                          */ \
+                return CAT(CAT(AI_, CMDNAME), _LENGTH);
+#        define _AI_DEBUG(CMD)
+#        define _AI_CMD_POLYMORPH(CMD, A, P, Q, D)
+#        include <aicommands.def>
+#    endif
+        case AI_PRINT:
 
-/*
-*   With New macro commands
--   SUGESTION: Prefix all AI commands with AI
-*/
-u8 get_length_of_action_block(u8 *CurrentActionByte)
-{
-        switch (CurrentActionByte)
-        {
-            case goto_next_ID:
-                return goto_next_LENGTH;
-            case goto_first_ID:
-                return goto_first_LENGTH;
-            case label_ID:
-                return label_LENGTH;
-            case ai_sleep_ID:
-                return ai_sleep_LENGTH;
-            case ai_list_end_ID:
-                return ai_list_end_LENGTH;
-            case jump_to_ai_list_ID:
-                return jump_to_ai_list_LENGTH;
-            case set_return_ai_list_ID:
-                return set_return_ai_list_LENGTH;
-            case jump_to_return_ai_list_ID:
-                return jump_to_return_ai_list_LENGTH;
-            case  guard_animation_stop_ID:
-                return guard_animation_stop_LENGTH;
-            case guard_kneel_ID:
-                return guard_kneel_LENGTH;
-            case guard_play_animation_ID:
-                return guard_play_animation_LENGTH;
-            case if_guard_playing_animation_ID:
-                return if_guard_playing_animation_LENGTH;
-            case guard_points_at_bond_ID:
-                return guard_points_at_bond_LENGTH;
-            case guard_looks_around_self_ID:
-                return guard_looks_around_self_LENGTH;
-            case guard_try_sidestepping_ID:
-                return guard_try_sidestepping_LENGTH;
-            case guard_try_hopping_sideways_ID:
-                return guard_try_hopping_sideways_LENGTH;
-            case guard_try_running_to_side_ID:
-                return guard_try_running_to_side_LENGTH;
-            case guard_try_firing_walk_ID:
-                return guard_try_firing_walk_LENGTH;
-            case guard_try_firing_run_ID:
-                return guard_try_firing_run_LENGTH;
-            case guard_try_firing_roll_ID:
-                return guard_try_firing_roll_LENGTH;
-            case guard_try_fire_or_aim_at_target_ID:
-                return guard_try_fire_or_aim_at_target_LENGTH;
-            case guard_try_fire_or_aim_at_target_kneel_ID:
-                return guard_try_fire_or_aim_at_target_kneel_LENGTH;
-            case guard_try_fire_or_aim_at_target_update_ID:
-                return guard_try_fire_or_aim_at_target_update_LENGTH;
-            case guard_try_facing_target_ID:
-                return guard_try_facing_target_LENGTH;
-            case chr_hit_body_part_with_item_damage_ID:
-                return chr_hit_body_part_with_item_damage_LENGTH;
-            case chr_hit_chr_body_part_with_held_item_ID:
-                return chr_hit_chr_body_part_with_held_item_LENGTH;
-            case guard_try_throwing_grenade_ID:
-                return guard_try_throwing_grenade_LENGTH;
-            case guard_try_dropping_item_ID:
-                return guard_try_dropping_item_LENGTH;
-            case guard_runs_to_pad_ID:
-                return guard_runs_to_pad_LENGTH;
-            case guard_runs_to_padpreset_ID:
-                return guard_runs_to_padpreset_LENGTH;
-            case guard_walks_to_pad_ID:
-                return guard_walks_to_pad_LENGTH;
-            case guard_sprints_to_pad_ID:
-                return guard_sprints_to_pad_LENGTH;
-            case guard_start_patrol_ID:
-                return guard_start_patrol_LENGTH;
-            case guard_surrenders_ID:
-                return guard_surrenders_LENGTH;
-            case guard_remove_fade_ID:
-                return guard_remove_fade_LENGTH;
-            case chr_remove_instant_ID:
-                return chr_remove_instant_LENGTH;
-            case guard_try_triggering_alarm_at_pad_ID:
-                return guard_try_triggering_alarm_at_pad_LENGTH;
-            case alarm_on_ID:
-                return alarm_on_LENGTH;
-            case alarm_off_ID:
-                return alarm_off_LENGTH;
-            case removed_command27_ID:
-                return removed_command27_LENGTH;
-            case guard_try_running_to_bond_position_ID:
-                return guard_try_running_to_bond_position_LENGTH;
-            case guard_try_walking_to_bond_position_ID:
-                return guard_try_walking_to_bond_position_LENGTH;
-            case guard_try_sprinting_to_bond_position_ID:
-                return guard_try_sprinting_to_bond_position_LENGTH;
-            case removed_command2B_ID:
-                return removed_command2B_LENGTH;
-            case guard_try_running_to_chr_position_ID:
-                return guard_try_running_to_chr_position_LENGTH;
-            case guard_try_walking_to_chr_position_ID:
-                return guard_try_walking_to_chr_position_LENGTH;
-            case guard_try_sprinting_to_chr_position_ID:
-                return guard_try_sprinting_to_chr_position_LENGTH;
-            case if_guard_has_stopped_moving_ID:
-                return if_guard_has_stopped_moving_LENGTH;
-            case if_chr_dying_or_dead_ID:
-                return if_chr_dying_or_dead_LENGTH;
-            case if_chr_does_not_exist_ID:
-                return if_chr_does_not_exist_LENGTH;
-            case if_guard_sees_bond_ID:
-                return if_guard_sees_bond_LENGTH;
-            case random_generate_ID:
-                return random_generate_LENGTH;
-            case if_random_seed_less_than_ID:
-                return if_random_seed_less_than_LENGTH;
-            case if_random_seed_greater_than_ID:
-                return if_random_seed_greater_than_LENGTH;
-            case if_alarm_is_on_unused_ID:
-                return if_alarm_is_on_unused_LENGTH;
-            case if_alarm_is_on_ID:
-                return if_alarm_is_on_LENGTH;
-            case if_gas_is_leaking_ID:
-                return if_gas_is_leaking_LENGTH;
-            case if_guard_heard_bond_ID:
-                return if_guard_heard_bond_LENGTH;
-            case if_guard_see_another_guard_shot_ID:
-                return if_guard_see_another_guard_shot_LENGTH;
-            case if_guard_see_another_guard_die_ID:
-                return if_guard_see_another_guard_die_LENGTH;
-            case if_guard_and_bond_within_line_of_sight_ID:
-                return if_guard_and_bond_within_line_of_sight_LENGTH;
-            case if_guard_and_bond_within_partial_line_of_sight_ID:
-                return if_guard_and_bond_within_partial_line_of_sight_LENGTH;
-            case if_guard_was_shot_within_last_10_secs_ID:
-                return if_guard_was_shot_within_last_10_secs_LENGTH;
-            case if_guard_heard_bond_within_last_10_secs_ID:
-                return if_guard_heard_bond_within_last_10_secs_LENGTH;
-            case if_guard_in_room_with_chr_ID:
-                return if_guard_in_room_with_chr_LENGTH;
-            case if_guard_is_on_screen_ID:
-                return if_guard_is_on_screen_LENGTH;
-            case if_guard_has_not_been_seen_ID:
-                return if_guard_has_not_been_seen_LENGTH;
-            case if_guard_room_containing_self_is_on_screen_ID:
-                return if_guard_room_containing_self_is_on_screen_LENGTH;
-            case if_room_containing_pad_is_on_screen_ID:
-                return if_room_containing_pad_is_on_screen_LENGTH;
-            case if_guard_is_targeted_by_bond_ID:
-                return if_guard_is_targeted_by_bond_LENGTH;
-            case if_guard_shot_from_bond_missed_ID:
-                return if_guard_shot_from_bond_missed_LENGTH;
-            case if_guard_counter_clockwise_direction_to_bond_less_than_ID:
-                return if_guard_counter_clockwise_direction_to_bond_less_than_LENGTH;
-            case if_guard_counter_clockwise_direction_to_bond_greater_than_ID:
-                return if_guard_counter_clockwise_direction_to_bond_greater_than_LENGTH;
-            case if_guard_counter_clockwise_direction_from_bond_less_than_ID:
-                return if_guard_counter_clockwise_direction_from_bond_less_than_LENGTH;
-            case if_guard_counter_clockwise_direction_from_bond_greater_than_ID:
-                return if_guard_counter_clockwise_direction_from_bond_greater_than_LENGTH;
-            case if_guard_distance_to_bond_less_than_ID:
-                return if_guard_distance_to_bond_less_than_LENGTH;
-            case if_guard_distance_to_bond_greater_than_ID:
-                return if_guard_distance_to_bond_greater_than_LENGTH;
-            case if_chr_distance_to_pad_less_than_ID:
-                return if_chr_distance_to_pad_less_than_LENGTH;
-            case if_chr_distance_to_pad_greater_than_ID:
-                return if_chr_distance_to_pad_greater_than_LENGTH;
-            case if_guard_distance_to_chr_less_than_ID:
-                return if_guard_distance_to_chr_less_than_LENGTH;
-            case if_guard_distance_to_chr_greater_than_ID:
-                return if_guard_distance_to_chr_greater_than_LENGTH;
-            case guard_try_setting_chr_preset_to_guard_within_distance_ID:
-                return guard_try_setting_chr_preset_to_guard_within_distance_LENGTH;
-            case if_bond_distance_to_pad_less_than_ID:
-                return if_bond_distance_to_pad_less_than_LENGTH;
-            case if_bond_distance_to_pad_greater_than_ID:
-                return if_bond_distance_to_pad_greater_than_LENGTH;
-            case if_chr_in_room_with_pad_ID:
-                return if_chr_in_room_with_pad_LENGTH;
-            case if_bond_in_room_with_pad_ID:
-                return if_bond_in_room_with_pad_LENGTH;
-            case if_bond_collected_object_ID:
-                return if_bond_collected_object_LENGTH;
-            case if_item_is_stationary_within_level_ID:
-                return if_item_is_stationary_within_level_LENGTH;
-            case if_item_is_attached_to_object_ID:
-                return if_item_is_attached_to_object_LENGTH;
-            case if_bond_has_item_equipped_ID:
-                return if_bond_has_item_equipped_LENGTH;
-            case if_object_exists_ID:
-                return if_object_exists_LENGTH;
-            case if_object_not_destroyed_ID:
-                return if_object_not_destroyed_LENGTH;
-            case if_object_was_activated_ID:
-                return if_object_was_activated_LENGTH;
-            case if_bond_used_gadget_on_object_ID:
-                return if_bond_used_gadget_on_object_LENGTH;
-            case object_activate_ID:
-                return object_activate_LENGTH;
-            case object_destroy_ID:
-                return object_destroy_LENGTH;
-            case object_detach_from_chr_ID:
-                return object_detach_from_chr_LENGTH;
-            case chr_drop_all_concealed_items_ID:
-                return chr_drop_all_concealed_items_LENGTH;
-            case chr_drop_all_held_items_ID:
-                return chr_drop_all_held_items_LENGTH;
-            case bond_collect_object_ID:
-                return bond_collect_object_LENGTH;
-            case chr_equip_object_ID:
-                return chr_equip_object_LENGTH;
-            case object_move_to_pad_ID:
-                return object_move_to_pad_LENGTH;
-            case door_open_ID:
-                return door_open_LENGTH;
-            case door_close_ID:
-                return door_close_LENGTH;
-            case if_door_state_equal_ID:
-                return if_door_state_equal_LENGTH;
-            case if_door_has_been_opened_before_ID:
-                return if_door_has_been_opened_before_LENGTH;
-            case door_set_lock_ID:
-                return door_set_lock_LENGTH;
-            case door_unset_lock_ID:
-                return door_unset_lock_LENGTH;
-            case if_door_lock_equal_ID:
-                return if_door_lock_equal_LENGTH;
-            case if_objective_num_complete_ID:
-                return if_objective_num_complete_LENGTH;
-            case if_game_difficulty_less_than_ID:
-                return if_game_difficulty_less_than_LENGTH;
-            case if_game_difficulty_greater_than_ID:
-                return if_game_difficulty_greater_than_LENGTH;
-            case if_mission_time_less_than_ID:
-                return if_mission_time_less_than_LENGTH;
-            case if_mission_time_greater_than_ID:
-                return if_mission_time_greater_than_LENGTH;
-            case if_system_power_time_less_than_ID:
-                return if_system_power_time_less_than_LENGTH;
-            case if_system_power_time_greater_than_ID:
-                return if_system_power_time_greater_than_LENGTH;
-            case if_level_id_less_than_ID:
-                return if_level_id_less_than_LENGTH;
-            case if_level_id_greater_than_ID:
-                return if_level_id_greater_than_LENGTH;
-            case if_guard_hits_less_than_ID:
-                return if_guard_hits_less_than_LENGTH;
-            case if_guard_hits_greater_than_ID:
-                return if_guard_hits_greater_than_LENGTH;
-            case if_guard_hits_missed_less_than_ID:
-                return if_guard_hits_missed_less_than_LENGTH;
-            case if_guard_hits_missed_greater_than_ID:
-                return if_guard_hits_missed_greater_than_LENGTH;
-            case if_chr_health_less_than_ID:
-                return if_chr_health_less_than_LENGTH;
-            case if_chr_health_greater_than_ID:
-                return if_chr_health_greater_than_LENGTH;
-            case if_chr_was_damaged_since_last_check_ID:
-                return if_chr_was_damaged_since_last_check_LENGTH;
-            case if_bond_health_less_than_ID:
-                return if_bond_health_less_than_LENGTH;
-            case if_bond_health_greater_than_ID:
-                return if_bond_health_greater_than_LENGTH;
-            case local_byte_1_set_ID:
-                return local_byte_1_set_LENGTH;
-            case local_byte_1_add_ID:
-                return local_byte_1_add_LENGTH;
-            case local_byte_1_subtract_ID:
-                return local_byte_1_subtract_LENGTH;
-            case if_local_byte_1_less_than_ID:
-                return if_local_byte_1_less_than_LENGTH;
-            case if_local_byte_1_less_than_random_seed_ID:
-                return if_local_byte_1_less_than_random_seed_LENGTH;
-            case local_byte_2_set_ID:
-                return local_byte_2_set_LENGTH;
-            case local_byte_2_add_ID:
-                return local_byte_2_add_LENGTH;
-            case local_byte_2_subtract_ID:
-                return local_byte_2_subtract_LENGTH;
-            case if_local_byte_2_less_than_ID:
-                return if_local_byte_2_less_than_LENGTH;
-            case if_local_byte_2_less_than_random_seed_ID:
-                return if_local_byte_2_less_than_random_seed_LENGTH;
-            case guard_set_hearing_scale_ID:
-                return guard_set_hearing_scale_LENGTH;
-            case guard_set_vision_range_ID:
-                return guard_set_vision_range_LENGTH;
-            case guard_set_grenade_probability_ID:
-                return guard_set_grenade_probability_LENGTH;
-            case guard_set_chr_num_ID:
-                return guard_set_chr_num_LENGTH;
-            case guard_set_health_total_ID:
-                return guard_set_health_total_LENGTH;
-            case guard_set_armour_ID:
-                return guard_set_armour_LENGTH;
-            case guard_set_speed_rating_ID:
-                return guard_set_speed_rating_LENGTH;
-            case guard_set_argh_rating_ID:
-                return guard_set_argh_rating_LENGTH;
-            case guard_set_accuracy_rating_ID:
-                return guard_set_accuracy_rating_LENGTH;
-            case guard_bitfield_set_on_ID:
-                return guard_bitfield_set_on_LENGTH;
-            case guard_bitfield_set_off_ID:
-                return guard_bitfield_set_off_LENGTH;
-            case if_guard_bitfield_is_set_on_ID:
-                return if_guard_bitfield_is_set_on_LENGTH;
-            case chr_bitfield_set_on_ID:
-                return chr_bitfield_set_on_LENGTH;
-            case chr_bitfield_set_off_ID:
-                return chr_bitfield_set_off_LENGTH;
-            case if_chr_bitfield_is_set_on_ID:
-                return if_chr_bitfield_is_set_on_LENGTH;
-            case guard_flags_set_on_ID:
-                return guard_flags_set_on_LENGTH;
-            case guard_flags_set_off_ID:
-                return guard_flags_set_off_LENGTH;
-            case if_guard_flags_is_set_on_ID:
-                return if_guard_flags_is_set_on_LENGTH;
-            case chr_flags_set_on_ID:
-                return chr_flags_set_on_LENGTH;
-            case chr_flags_set_off_ID:
-                return chr_flags_set_off_LENGTH;
-            case if_chr_flags_is_set_on_ID:
-                return if_chr_flags_is_set_on_LENGTH;
-            case object_flags_1_set_on_ID:
-                return object_flags_1_set_on_LENGTH;
-            case object_flags_1_set_off_ID:
-                return object_flags_1_set_off_LENGTH;
-            case if_object_flags_1_is_set_on_ID:
-                return if_object_flags_1_is_set_on_LENGTH;
-            case object_flags_2_set_on_ID:
-                return object_flags_2_set_on_LENGTH;
-            case object_flags_2_set_off_ID:
-                return object_flags_2_set_off_LENGTH;
-            case if_object_flags_2_is_set_on_ID:
-                return if_object_flags_2_is_set_on_LENGTH;
-            case guard_set_chr_preset_ID:
-                return guard_set_chr_preset_LENGTH;
-            case chr_set_chr_preset_ID:
-                return chr_set_chr_preset_LENGTH;
-            case guard_set_pad_preset_ID:
-                return guard_set_pad_preset_LENGTH;
-            case chr_set_pad_preset_ID:
-                return chr_set_pad_preset_LENGTH;
-            case debug_log_ID:
-                for (int i = 0; currentaction[i] < debug_log_LENGTH; i++)
-                {
-                    if (currentaction[i] == debug_log_end)
-                        return i;
-                }
-                return debug_log_LENGTH;
-            case local_timer_reset_start_ID:
-                return local_timer_reset_start_LENGTH;
-            case local_timer_reset_ID:
-                return local_timer_reset_LENGTH;
-            case local_timer_stop_ID:
-                return local_timer_stop_LENGTH;
-            case local_timer_start_ID:
-                return local_timer_start_LENGTH;
-            case if_local_timer_has_stopped_ID:
-                return if_local_timer_has_stopped_LENGTH;
-            case if_local_timer_less_than_ID:
-                return if_local_timer_less_than_LENGTH;
-            case if_local_timer_greater_than_ID:
-                return if_local_timer_greater_than_LENGTH;
-            case hud_countdown_show_ID:
-                return hud_countdown_show_LENGTH;
-            case hud_countdown_hide_ID:
-                return hud_countdown_hide_LENGTH;
-            case hud_countdown_set_ID:
-                return hud_countdown_set_LENGTH;
-            case hud_countdown_stop_ID:
-                return hud_countdown_stop_LENGTH;
-            case hud_countdown_start_ID:
-                return hud_countdown_start_LENGTH;
-            case if_hud_countdown_has_stopped_ID:
-                return if_hud_countdown_has_stopped_LENGTH;
-            case if_hud_countdown_less_than_ID:
-                return if_hud_countdown_less_than_LENGTH;
-            case if_hud_countdown_greater_than_ID:
-                return if_hud_countdown_greater_than_LENGTH;
-            case chr_try_spawning_at_pad_ID:
-                return chr_try_spawning_at_pad_LENGTH;
-            case chr_try_spawning_next_to_unseen_chr_ID:
-                return chr_try_spawning_next_to_unseen_chr_LENGTH;
-            case guard_try_spawning_item_ID:
-                return guard_try_spawning_item_LENGTH;
-            case guard_try_spawning_hat_ID:
-                return guard_try_spawning_hat_LENGTH;
-            case chr_try_spawning_clone_ID:
-                return chr_try_spawning_clone_LENGTH;
-            case text_print_bottom_ID:
-                return text_print_bottom_LENGTH;
-            case text_print_top_ID:
-                return text_print_top_LENGTH;
-            case sfx_play_ID:
-                return sfx_play_LENGTH;
-            case sfx_emit_from_object_ID:
-                return sfx_emit_from_object_LENGTH;
-            case sfx_emit_from_pad_ID:
-                return sfx_emit_from_pad_LENGTH;
-            case sfx_set_channel_volume_ID:
-                return sfx_set_channel_volume_LENGTH;
-            case sfx_fade_channel_volume_ID:
-                return sfx_fade_channel_volume_LENGTH;
-            case sfx_stop_channel_ID:
-                return sfx_stop_channel_LENGTH;
-            case if_sfx_channel_volume_less_than_ID:
-                return if_sfx_channel_volume_less_than_LENGTH;
-            case vehicle_start_path_ID:
-                return vehicle_start_path_LENGTH;
-            case vehicle_speed_ID:
-                return vehicle_speed_LENGTH;
-            case aircraft_rotor_speed_ID:
-                return aircraft_rotor_speed_LENGTH;
-            case if_camera_is_in_intro_ID:
-                return if_camera_is_in_intro_LENGTH;
-            case if_camera_is_in_bond_swirl_ID:
-                return if_camera_is_in_bond_swirl_LENGTH;
-            case tv_change_screen_bank_ID:
-                return tv_change_screen_bank_LENGTH;
-            case if_bond_in_tank_ID:
-                return if_bond_in_tank_LENGTH;
-            case exit_level_ID:
-                return exit_level_LENGTH;
-            case camera_return_to_bond_ID:
-                return camera_return_to_bond_LENGTH;
-            case camera_look_at_bond_from_pad_ID:
-                return camera_look_at_bond_from_pad_LENGTH;
-            case camera_switch_ID:
-                return camera_switch_LENGTH;
-            case if_bond_y_pos_less_than_ID:
-                return if_bond_y_pos_less_than_LENGTH;
-            case hud_hide_and_lock_controls_ID:
-                return hud_hide_and_lock_controls_LENGTH;
-            case hud_show_all_ID:
-                return hud_show_all_LENGTH;
-            case chr_try_teleporting_to_pad_ID:
-                return chr_try_teleporting_to_pad_LENGTH;
-            case screen_fade_to_black_ID:
-                return screen_fade_to_black_LENGTH;
-            case screen_fade_from_black_ID:
-                return screen_fade_from_black_LENGTH;
-            case if_screen_fade_completed_ID:
-                return if_screen_fade_completed_LENGTH;
-            case chr_hide_all_ID:
-                return chr_hide_all_LENGTH;
-            case chr_show_all_ID:
-                return chr_show_all_LENGTH;
-            case door_open_instant_ID:
-                return door_open_instant_LENGTH;
-            case chr_remove_item_in_hand_ID:
-                return chr_remove_item_in_hand_LENGTH;
-            case if_number_of_active_players_less_than_ID:
-                return if_number_of_active_players_less_than_LENGTH;
-            case if_bond_item_total_ammo_less_than_ID:
-                return if_bond_item_total_ammo_less_than_LENGTH;
-            case bond_equip_item_ID:
-                return bond_equip_item_LENGTH;
-            case bond_equip_item_cinema_ID:
-                return bond_equip_item_cinema_LENGTH;
-            case bond_set_locked_velocity_ID:
-                return bond_set_locked_velocity_LENGTH;
-            case if_object_in_room_with_pad_ID:
-                return if_object_in_room_with_pad_LENGTH;
-            case if_guard_is_firing_and_unknown_flag_ID:
-                return if_guard_is_firing_and_unknown_flag_LENGTH;
-            case if_guard_is_firing_ID:
-                return if_guard_is_firing_LENGTH;
-            case gas_leak_and_switch_fog_ID:
-                return gas_leak_and_switch_fog_LENGTH;
-            case mission_time_stop_and_exit_level_on_button_input_ID:
-                return mission_time_stop_and_exit_level_on_button_input_LENGTH;
-            case if_bond_is_dead_ID:
-                return if_bond_is_dead_LENGTH;
-            case bond_disable_damage_and_pickups_ID:
-                return bond_disable_damage_and_pickups_LENGTH;
-            case bond_hide_weapons_ID:
-                return bond_hide_weapons_LENGTH;
-            case camera_orbit_pad_ID:
-                return camera_orbit_pad_LENGTH;
-            case credits_roll_ID:
-                return credits_roll_LENGTH;
-            case if_credits_has_completed_ID:
-                return if_credits_has_completed_LENGTH;
-            case if_objective_all_completed_ID:
-                return if_objective_all_completed_LENGTH;
-            case if_folder_actor_is_equal_ID:
-                return if_folder_actor_is_equal_LENGTH;
-            case if_bond_damage_and_pickups_disabled_ID:
-                return if_bond_damage_and_pickups_disabled_LENGTH;
-            case music_xtrack_play_ID:
-                return music_xtrack_play_LENGTH;
-            case music_xtrack_stop_ID:
-                return music_xtrack_stop_LENGTH;
-            case trigger_explosions_around_bond_ID:
-                return trigger_explosions_around_bond_LENGTH;
-            case if_killed_civilians_greater_than_ID:
-                return if_killed_civilians_greater_than_LENGTH;
-            case if_chr_was_shot_since_last_check_ID:
-                return if_chr_was_shot_since_last_check_LENGTH;
-            case bond_killed_in_action_ID:
-                return bond_killed_in_action_LENGTH;
-            case guard_raises_arms_ID:
-                return guard_raises_arms_LENGTH;
-            case gas_leak_and_fade_fog_ID:
-                return gas_leak_and_fade_fog_LENGTH;
-            case object_rocket_launch_ID:
-                return object_rocket_launch_LENGTH;
-           
-            default:
-                return 1;
-        } 
+            pos = offset + 1;
+            //p = AIList;
+            while (AIList[pos] != 0)
+            {
+                //offset++;
+                pos++;
+            }
+            return (pos - offset) + 1;
+
+        default:
+#       ifdef DEBUG
+            osSyncPrintf("chraiitemsize: unknown type %d!\n", cmd[0]);
+#       endif
+            return 1;
+    }
 }
 #else
 GLOBAL_ASM(
@@ -2040,9 +1521,39 @@ ActionLengthSwitchElse:
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F035244(void)
+#include <chraidata.h>
+/**
+ * Get ID of AIList 
+ * @param AIList: Ailist to get ID of
+ * @return ID of AIList 
+ */
+s32 sub_GAME_7F035244(AIRecord *AIList, int *isGlobalAIList) //chraiGetAIListID
 {
+    s32 i;
 
+    if (gSetup.ailists)
+    {
+        for (i = 0; gSetup.ailists[i].ailist; i++)
+        {
+            if (gSetup.ailists[i].ailist == AIList)
+            {
+                *isGlobalAIList = FALSE;
+                return gSetup.ailists[i].ID;
+            }
+        }
+    }
+    i = 0;
+    while (gGlobalAILists[i].ailist)
+    {
+        if (gGlobalAILists[i].ailist == AIList)
+        {
+            *isGlobalAIList = TRUE;
+            return gGlobalAILists[i].ID;
+        }
+        i++;
+    };
+
+    return -1;
 }
 #else
 GLOBAL_ASM(

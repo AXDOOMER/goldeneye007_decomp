@@ -3298,7 +3298,7 @@ typedef union
 #pragma endregion Player
 
 #pragma region stagesetup.h
-        struct stagesetup
+        typedef struct stagesetup
         {
             struct s_pathTbl (*pathtbl)[];
             waygroup (*pathlink)[];
@@ -3310,7 +3310,7 @@ typedef union
             BoundPadRecord (*pad3dlist)[];
             char *(*padnames)[];
             char *(*pad3dnames)[];
-        };
+        } stagesetup;
 #pragma endregion stagesetup.h
 
 

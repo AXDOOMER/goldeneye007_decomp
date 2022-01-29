@@ -1,15 +1,25 @@
+/*========================================================================
+ * chraidata.c
+ *
+ * Global AI Data to be used by any Setup.
+ * 
+ *========================================================================*/
+/**************************************************************************
+ *
+ *  $REVISION: 1.0 $
+ *  $DATE: 2022/01/28 19:37:28 $
+ *  $SOURCE: /src/game/chraidata.h,v $
+ *
+ **************************************************************************/
 #include <ultra64.h>
 #include <bondgame.h>
 #include <bondaicommands.h>
 #include "chrobjdata.h"
-// bss
 
-/*=============================================================================
-// Global AI Lists - GLists
-//===========================================================================*/
+#pragma region Private Members
 
 //private enum, only accessable from within this file
-static enum gListLabels
+static enum lbl
 {
     lblZero,
     lblLoop,
@@ -577,6 +587,8 @@ u8 glist_remove_chr[] = {
     jump_to_ai_list(CHR_SELF, GLIST_END_ROUTINE)
     ai_list_end
 };
+
+#pragma endregion Private Members
 
 //D:8003744C
 // global ai lists (glists)

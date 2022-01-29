@@ -226,30 +226,17 @@ typedef enum HITTARGET
 /*#include "aicommands2.h"*/
 
 #if 1
-/*=============================================================================
-// ai command shortcuts
-//===========================================================================*/
-#define goto_loop_start(label_id) \
-        label(label_id) \
-        ai_sleep
 
+//temporary thunking for ai names
 #define DO(label_id) \
         label(label_id) \
         ai_sleep
-
-#define goto_loop_repeat(label) \
-        goto_first(label)
 
 #define LOOP(label) \
         goto_first(label)
 
 #define CONTINUE(label) \
         goto_first(label)
-
-#define goto_loop_infinite(label_id) \
-        label(label_id) \
-        ai_sleep \
-        goto_first(label_id)
 
 #define LOOP_FOREVER(label_id) \
         label(label_id) \
@@ -260,6 +247,22 @@ typedef enum HITTARGET
         label(label_id) \
             jump_to_return_ai_list \
             ai_list_end
+
+
+/*=============================================================================
+// ai command shortcuts
+//===========================================================================*/
+#define goto_loop_start(label_id) \
+        label(label_id) \
+        ai_sleep
+
+#define goto_loop_repeat(label) \
+        goto_first(label)
+
+#define goto_loop_infinite(label_id) \
+        label(label_id) \
+        ai_sleep \
+        goto_first(label_id)
 
 #define random_generate_greater_than(byte, label) \
         random_generate_seed \

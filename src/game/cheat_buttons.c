@@ -23,14 +23,14 @@
 // This shows up a lot but not quite sure what it represents.
 #define CHEAT_20    20
 
-struct CheatInfo {
+typedef struct  {
     /**
      * Offset 0x0.
      */
     u8 cheat_id;
 
     /**
-     * Offset 0x1.
+     * Offset 0x1. //maybe timer to enter code?
      */
     u8 count_of_something;
 
@@ -48,7 +48,7 @@ struct CheatInfo {
      * Seems to be pointer to u16 array.
      * Offset 0x4.
      */
-    u16 * cheatbuttons;
+    u16 *cheatbuttons;
 
     /**
      * Offset 0x8.
@@ -64,7 +64,7 @@ struct CheatInfo {
      * Offset 0xc.
      */
     int maskfield;
-};
+} CheatInfo;
 
 
 u8 g_CheatPlayerTextRelated[CHEAT_INVALID + 1];
@@ -724,7 +724,7 @@ u32 D_8003F808 = 0x2000004;
 /**
  * Address 0x8003F80C.
  */
-struct CheatInfo g_CheatInfo[] = {
+CheatInfo g_CheatInfo[] = {
     {          CHEAT_EXTRA_MP_CHARS,  0xA, 0, 0, mBtnCheatExtraMPChars,                       0, 0,  /* 0x31 */ CHEAT_MASK_GLOBAL | CHEAT_MASK_16 | CHEAT_MASK_1},
     {           CHEAT_INVINCIBILITY,  0xA, 0, 0, mBtnCheatInvincibility,       TEXT(LMISC,0x00), 0,  /* 0x06 */ CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
     {                 CHEAT_ALLGUNS,  0xA, 0, 0, mBtnCheatAllGuns,             TEXT(LMISC,0x01), 0,  /* 0x02 */ CHEAT_MASK_2},
@@ -807,12 +807,13 @@ struct CheatInfo g_CheatInfo[] = {
 // rodata
 
 // forward declarations
+// Private Functions?
 
 s32 cheatButtonCountBitsSet(u16 param_1);
 void cheatButtonActivateRelated(void);
 void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat);
 void cheatButtonHandleCheatsTurnedOff(s32 cheat_id);
-s32 cheatCheckIfMPCheat(s32 cheat_id);
+bool cheatCheckIfMPCheat(CHEAT_ID cheat_id);
 void cheatButtonSetDkMode(s32 cheat_id);
 void cheatButtonHandleCheatsTurnedOff(s32 cheat);
 
@@ -846,11 +847,11 @@ s32 cheatButtonCountBitsSet(u16 param_1)
  */
 void cheatButtonActivateRelated(void)
 {
-    struct CheatInfo *info = &g_CheatInfo[0];
+    CheatInfo *info = &g_CheatInfo[0];
     s32 bitmask;
     s32 id_index;
     s32 find_index;
-    s32 not_done = 0;
+    bool isDone = FALSE;
     
     if (lvlGetCurrentStageToLoad() == LEVELID_TITLE)
     {
@@ -861,7 +862,7 @@ void cheatButtonActivateRelated(void)
         bitmask = (getPlayerCount() == 1) ? CHEAT_MASK_2 : CHEAT_MASK_MULTIPLAYER;
     }
 
-    for (; info->cheat_id != 0 && not_done == 0; info++)
+    for (; info->cheat_id != 0 && !isDone; info++)
     {
         if (info->count_of_something > 0)
         {
@@ -885,7 +886,7 @@ void cheatButtonActivateRelated(void)
                 {
                     g_CurrentPlayer->can_display_cheat_text = 0;
 
-                    if ((cheatCheckIfOn((s32) info->cheat_id) == 0) || ((info->maskfield & CHEAT_MASK_16) != 0))
+                    if (!cheatCheckIfOn((s32) info->cheat_id) || ((info->maskfield & CHEAT_MASK_16) != 0))
                     {
                         cheatButtonHandleCheatsTurnedOn(info->cheat_id);
                     }
@@ -1033,12 +1034,12 @@ glabel cheat_buttons_mp_related
 
 
 
-u32 cheatIsEnemyRockets(u32 cheatindex)
+bool cheatIsEnemyRockets(CHEAT_ID cheatindex)
 {
     if (cheatindex == CHEAT_ENEMY_ROCKETS) {
-        return 1;
+        return TRUE;
     }
-    return 0;
+    return FALSE;
 }
 
 
@@ -1051,14 +1052,14 @@ u32 cheatIsEnemyRockets(u32 cheatindex)
  * 
  * Address 0x7F091A78.
  */
-s32 cheatCheckIfMPCheat(s32 cheat_id)
+bool cheatCheckIfMPCheat(CHEAT_ID cheat_id)
 {
     if ((g_CheatInfo[cheat_id - 1].maskfield & CHEAT_MASK_MULTIPLAYER) == CHEAT_MASK_MULTIPLAYER)
     {
-        return 1;
+        return TRUE;
     }
 
-    return 0;
+    return FALSE;
 }
 
 
@@ -1067,7 +1068,7 @@ s32 cheatCheckIfMPCheat(s32 cheat_id)
 /**
  * Address 0x7F091AAC.
  */
-void cheatButtonTurnOnCheatForPlayers(u32 cheatindex)
+void cheatButtonTurnOnCheatForPlayers(CHEAT_ID cheatindex)
 {
     u32 cheat_mask;
     s32 starting_player_number;
@@ -1848,7 +1849,7 @@ void cheatDisableAllCheats(void)
 /**
  * Address 0x7F092774.
  */
-char *cheatGetMenuTextPointer(s32 cheat_id)
+char *cheatGetMenuTextPointer(CHEAT_ID cheat_id)
 {
     u16 temp_v0;
 
@@ -1881,8 +1882,8 @@ void cheatButtonSetDkMode(s32 cheat_id)
     s32 num_guards;
     s32 i;
     f32 scale;
-    struct Model *model;
-    struct ChrRecord* guard = ptr_guard_data;
+    Model *model;
+    ChrRecord* guard = ptr_guard_data;
 
     num_guards = get_numguards();
 
@@ -1899,7 +1900,7 @@ void cheatButtonSetDkMode(s32 cheat_id)
     {
 
 #if defined(VERSION_US)
-        model = (struct Model*)guard->model;
+        model = (Model*)guard->model;
         if (model != NULL)
         {
             set_obj_instance_controller_scale(model, model->scale * scale);
@@ -1907,7 +1908,7 @@ void cheatButtonSetDkMode(s32 cheat_id)
 #else
         if (guard->model != NULL && (not_in_us_7F0209EC(guard->bodynum, guard->headnum) != 0))
         {
-            model = (struct Model*)guard->model;
+            model = (Model*)guard->model;
             set_obj_instance_controller_scale(model, model->scale * scale);
         }
 #endif

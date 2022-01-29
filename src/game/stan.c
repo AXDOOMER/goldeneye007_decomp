@@ -6,9 +6,9 @@
 // bss
 struct StanPrefixRecord {
     //CODE.bss:8007B120
-    s32 clippingfile;
+    s32 stanfile;
     //CODE.bss:8007B124
-    struct StandTile* ptr_firstroom;    // read as offset 4, hence the struct
+    StandTile *ptr_firstroom;    // read as offset 4, hence the struct
 };
 
 struct StanPrefixRecord stan_prefix;
@@ -40,7 +40,7 @@ s32 dword_CODE_bss_8007B9E0;
 
 // All relating to a saved collision, but not one struct
 //CODE.bss:8007B9E4
-struct StandTile* stanSavedColl_tile;
+StandTile *stanSavedColl_tile;
 //CODE.bss:8007B9E8
 s32 stanSavedColl_pointI;
 //CODE.bss:8007B9EC
@@ -61,7 +61,7 @@ s32 dword_CODE_bss_8007BA08;
 //CODE.bss:8007BA0C
 s32 dword_CODE_bss_8007BA0C;
 //CODE.bss:8007BA10
-struct StandTile* bfsTileStack[352];
+StandTile *bfsTileStack[352];
 
 
 // data
@@ -801,7 +801,7 @@ glabel sub_GAME_7F0AF20C
 #ifdef NONMATCHING
 void stanLoadFile(void *arg0) {
     stanLoaded = 1;
-    stan_prefix.clippingfile = arg0;
+    stan_prefix.stanfile = arg0;
     standTileStart = (s32) (arg0->unk4 + -0x80);
     if (tokenFind(1, "-stanlinelog") != 0)
     {
@@ -1077,7 +1077,7 @@ struct int3 {
     s32 z;
 };
 
-s32 sub_GAME_7F0AF760(struct StandTile *tile) {
+s32 sub_GAME_7F0AF760(StandTile *tile) {
     // Perhaps it's a coincidence but there is a gap between their uses of x and z
     // Suggests there could be an unused y, which makes sense when their points are 3D
 
@@ -1168,19 +1168,19 @@ glabel sub_GAME_7F0AF760
 void sub_GAME_7F0AF808(void) {
 
 // Still quite a long way off.
-struct StandTile* sub_GAME_7F0AF808(f32 f1,f32 f2,f32 f3,f32 f4)
+StandTile *sub_GAME_7F0AF808(f32 f1,f32 f2,f32 f3,f32 f4)
 {
     // 'findSomeTile' atm
     // It seems a silly thing to be doing during runtime.
 
-    struct StandTile* tile;
-    struct StandTile* tileStack[2];
+    StandTile *tile;
+    StandTile *tileStack[2];
 
     tile = stan_prefix.ptr_firstroom;
 
     // this test may be reading a field but it could well look like this,
-    //   since 0 signals that there is no more data, so 'tile' isn't really a struct StandTile*
-
+    //   since 0 signals that there is no more data, so 'tile' isn't really a StandTile
+*
     while (*(u32*)tile != 0)
     {
         tileStack[0] = tile;
@@ -1299,7 +1299,7 @@ glabel sub_GAME_7F0AF808
 // Making midPnt a f32* did nothing.
 
 // I'm out of ideas.
-void getTileMidPoint(struct StandTile *tile, coord3d *midPnt)
+void getTileMidPoint(StandTile *tile, coord3d *midPnt)
 {
     short headerTail;
     // may be RGB
@@ -1394,7 +1394,7 @@ glabel getTileMidPoint
 #ifdef NONMATCHING
 // Saves a1 (tripleIndex) to the stack completely unnecessarily
 // Otherwise just regalloc, but maybe that alone fixes it.
-void getPointJustInsideOfTileTriple(struct StandTile* tile, s32 tripleIndex, coord3d* pnt)
+void getPointJustInsideOfTileTriple(StandTile *tile, s32 tripleIndex, coord3d* pnt)
 {
     coord3d midPoint;
     s32 pntIndex;
@@ -1668,7 +1668,7 @@ glabel sub_GAME_7F0AFB78
 
 // Returns the shortest distance from (p_x,p_z) to the infinite extention of tile's index-th edge, projected into XZ.
 // Where the edge is vertical (or degenerate) they just return the distance between the points.
-f32 getShortest2dDispToInfTileEdge(struct StandTile *tile,s32 index,f32 p_x,f32 p_z)
+f32 getShortest2dDispToInfTileEdge(StandTile *tile,s32 index,f32 p_x,f32 p_z)
 {
     s32 nextIndex;
     f32 edge_x;
@@ -1719,7 +1719,7 @@ f32 getShortest2dDispToInfTileEdge(struct StandTile *tile,s32 index,f32 p_x,f32 
 
 
 // Sig needed for caller matches.
-f32 getShortest2dDispToInfTripleEdge(struct StandTile *tile,s32 start3index,f32 p_x,f32 p_z);
+f32 getShortest2dDispToInfTripleEdge(StandTile *tile,s32 start3index,f32 p_x,f32 p_z);
 
 #ifdef NONMATCHING
 // Only regalloc incorrect essentially. Any change I make seems to make things much worse though,
@@ -1728,7 +1728,7 @@ f32 getShortest2dDispToInfTripleEdge(struct StandTile *tile,s32 start3index,f32 
 // Similar to getShortest2dDispToInfTileEdge
 // 2nd arg must be in {0,1,2}
 // New name needed though: getShortest2dDispToInfTripleEdge
-f32 getShortest2dDispToInfTripleEdge(struct StandTile *tile,s32 start3index,f32 p_x,f32 p_z)
+f32 getShortest2dDispToInfTripleEdge(StandTile *tile,s32 start3index,f32 p_x,f32 p_z)
 {
     s32 end3index;      // types seem correct, changing introduces more instructions
 
@@ -1885,7 +1885,7 @@ glabel getShortest2dDispToInfTripleEdge
 
 
 
-f32 getShortest2dDispToInfTileEdgeUnscaled(struct StandTile *tile, int index,f32 x,f32 z)
+f32 getShortest2dDispToInfTileEdgeUnscaled(StandTile *tile, int index,f32 x,f32 z)
 {
   f32 disp;
   
@@ -1898,7 +1898,7 @@ f32 getShortest2dDispToInfTileEdgeUnscaled(struct StandTile *tile, int index,f32
 
 
 
-f32 getShortest2dDispToInfTripleEdgeUnscaled(struct StandTile *tile,s32 start3index,f32 p_x,f32 p_z)
+f32 getShortest2dDispToInfTripleEdgeUnscaled(StandTile *tile,s32 start3index,f32 p_x,f32 p_z)
 {
   f32 disp;
   
@@ -1909,7 +1909,7 @@ f32 getShortest2dDispToInfTripleEdgeUnscaled(struct StandTile *tile,s32 start3in
 
 
 
-f32 distToTilePnt2D(struct StandTile *tile,int pntI,f32 p_x,f32 p_z)
+f32 distToTilePnt2D(StandTile *tile,int pntI,f32 p_x,f32 p_z)
 {
   f32 len;
   
@@ -1922,7 +1922,7 @@ f32 distToTilePnt2D(struct StandTile *tile,int pntI,f32 p_x,f32 p_z)
 
 
 #ifdef NONMATCHING
-f32 sub_GAME_7F0B00C4(struct StandTile* tile,s32 index,f32 p_x,f32 p_z)
+f32 sub_GAME_7F0B00C4(StandTile *tile,s32 index,f32 p_x,f32 p_z)
 {
   f32 v_x;
   f32 v_z;
@@ -1979,7 +1979,7 @@ glabel sub_GAME_7F0B00C4
 #ifdef NONMATCHING
 
 // dot product
-f32 sub_GAME_7F0B0140(struct StandTile* tile, s32 index, f32 p_x, f32 p_z)
+f32 sub_GAME_7F0B0140(StandTile *tile, s32 index, f32 p_x, f32 p_z)
 {
     f32 d_x;
     f32 d_z;
@@ -2207,7 +2207,7 @@ glabel sub_GAME_7F0B0198
 
 // Determines if inside (presumably - it effectively does an && of the checks on signs of cross products)
 //   based on the 3 edges. So probably only for triangular tiles.
-s32 isPointInsideTriStandTile_Maybe(struct StandTile *tile, f32 p_x, f32 p_z)
+s32 isPointInsideTriStandTile_Maybe(StandTile *tile, f32 p_x, f32 p_z)
 {
     f32 disp;
     s32 i;
@@ -2225,7 +2225,7 @@ s32 isPointInsideTriStandTile_Maybe(struct StandTile *tile, f32 p_x, f32 p_z)
 
 
 
-s32 isPointInsideTriStandTileUnscaled_Maybe(struct StandTile *tile, f32 p_x, f32 p_z)
+s32 isPointInsideTriStandTileUnscaled_Maybe(StandTile *tile, f32 p_x, f32 p_z)
 {
     f32 disp;
     s32 i;
@@ -2243,7 +2243,7 @@ s32 isPointInsideTriStandTileUnscaled_Maybe(struct StandTile *tile, f32 p_x, f32
 
 
 // Sig for caller matches
-f32 sub_GAME_7F0B0400(struct StandTile *tile, s32 start3index, f32 p_x,f32 p_z);
+f32 sub_GAME_7F0B0400(StandTile *tile, s32 start3index, f32 p_x,f32 p_z);
 
 #ifdef NONMATCHING
 // Similar to a prev func, but simplier.
@@ -2372,7 +2372,7 @@ glabel sub_GAME_7F0B0400
 
 
 
-s32 sub_GAME_7F0B0518(struct StandTile *tile, f32 p_x, f32 p_z)
+s32 sub_GAME_7F0B0518(StandTile *tile, f32 p_x, f32 p_z)
 {
     f32 unk;
     s32 i;
@@ -2679,7 +2679,7 @@ glabel sub_GAME_7F0B07BC
 
 // 'walkTilesBetweenPoints_withCallback'
 // sig declared for caller matches
-s32 sub_GAME_7F0B0914(struct StandTile **tileStack, f32 start_x, f32 start_z, f32 dest_x, f32 dest_z,
+s32 sub_GAME_7F0B0914(StandTile **tileStack, f32 start_x, f32 start_z, f32 dest_x, f32 dest_z,
     standTileWalkCallback_t func, struct StandTileWalkCallbackRecord *funcData);
 
 
@@ -2894,7 +2894,7 @@ glabel sub_GAME_7F0B0914
 /**
  * Address 0x7F0B0BE4.
 */
-s32 walkTilesBetweenPoints_NoCallback(struct StandTile **tileStack, f32 start_x, f32 start_z, f32 dest_x, f32 dest_z)
+s32 walkTilesBetweenPoints_NoCallback(StandTile **tileStack, f32 start_x, f32 start_z, f32 dest_x, f32 dest_z)
 {
     return sub_GAME_7F0B0914(tileStack, start_x, start_z, dest_x, dest_z, 0, 0);
 }
@@ -2903,7 +2903,7 @@ s32 walkTilesBetweenPoints_NoCallback(struct StandTile **tileStack, f32 start_x,
 
 
 // 'walkTilesBetweenPoints_NotingRooms'
-s32 sub_GAME_7F0B0C24(struct StandTile **tileStack, f32 start_x, f32 start_z, f32 dest_x, f32 dest_z, s32 *roomBuffer, s32 *rtnCountSize, s32 maxBufSize)
+s32 sub_GAME_7F0B0C24(StandTile **tileStack, f32 start_x, f32 start_z, f32 dest_x, f32 dest_z, s32 *roomBuffer, s32 *rtnCountSize, s32 maxBufSize)
 {
     struct StandTileWalkCallbackRecord callbackData;
     s32 rtn;
@@ -2922,7 +2922,7 @@ s32 sub_GAME_7F0B0C24(struct StandTile **tileStack, f32 start_x, f32 start_z, f3
 
 
 
-void noteTileRoomIfDifferentToPrev(struct StandTile *tile, struct StandTile *unused, struct StandTileWalkCallbackRecord *data)
+void noteTileRoomIfDifferentToPrev(StandTile *tile, StandTile *unused, struct StandTileWalkCallbackRecord *data)
 {
     s32 newRoom;
 
@@ -2941,7 +2941,7 @@ void noteTileRoomIfDifferentToPrev(struct StandTile *tile, struct StandTile *unu
 
 
 
-void noteTileRoomIfDifferentToPrev_2(struct StandTile *tile, struct StandTile *unused, struct StandTileWalkCallbackRecord *data) {
+void noteTileRoomIfDifferentToPrev_2(StandTile *tile, StandTile *unused, struct StandTileWalkCallbackRecord *data) {
     noteTileRoomIfDifferentToPrev(tile, unused, data);
 }
 
@@ -2953,14 +2953,14 @@ void noteTileRoomIfDifferentToPrev_2(struct StandTile *tile, struct StandTile *u
 #ifdef NONMATCHING
 // Not too close
 
-s32 sub_GAME_7F0B0D0C(struct StandTile *tile, f32 start_x, f32 start_z, struct StandTile **tilePtr,
+s32 sub_GAME_7F0B0D0C(StandTile *tile, f32 start_x, f32 start_z, StandTile **tilePtr,
     f32 end_x, f32 end_z, s32 *roomBuf, s32 maxBufSize)
 {
     s32 roomA;
     s32 roomB;
     s32 bufCount;
-    struct StandTile* tileStack[2];   // unknown size
-    struct StandTile* unkTile;
+     StandTile* tileStack[2];   // unknown size
+     StandTile* unkTile;
 
 
     bufCount = 0;
@@ -3097,12 +3097,12 @@ glabel sub_GAME_7F0B0D0C
 
 
 // sig for caller matches
-s32 sub_GAME_7F0B0E24(struct StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z,
+s32 sub_GAME_7F0B0E24(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z,
     int objFlags, f32 unkHeight, f32 unkA, f32 unkB, f32 unkC);
 
 #ifdef NONMATCHING
 // 'testLineUnobstructed'
-s32 sub_GAME_7F0B0E24(struct StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z,
+s32 sub_GAME_7F0B0E24(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z,
     int objFlags, f32 unkHeight, f32 unkA, f32 unkB, f32 unkC) {
 
 }
@@ -4226,7 +4226,7 @@ void sub_GAME_7F0B1CC4(void) {
     D_800413BC = 0;
 }
 
-struct StandTile* sub_GAME_7F0B1CE0(void) {
+StandTile *sub_GAME_7F0B1CE0(void) {
     return stanSavedColl_tile;
 }
 
@@ -4236,14 +4236,14 @@ s32 sub_GAME_7F0B1CEC(void) {
 
 
 // sig for caller matches
-void getTileEdgePoints(struct StandTile *tile, s32 pointI, coord3d *currPntRtn, coord3d *nextPointRtn);
+void getTileEdgePoints(StandTile *tile, s32 pointI, coord3d *currPntRtn, coord3d *nextPointRtn);
 
 #ifdef NONMATCHING
 // Not debugged at all - can't be far wrong though.
-void getTileEdgePoints(struct StandTile *tile, s32 pointI, coord3d *currPntRtn, coord3d *nextPointRtn)
+void getTileEdgePoints(StandTile *tile, s32 pointI, coord3d *currPntRtn, coord3d *nextPointRtn)
 {
-  struct StandTilePoint *tilePntA;
-  struct StandTilePoint *tilePntB;
+  StandTilePoint *tilePntA;
+  StandTilePoint *tilePntB;
   s32 pointCount;
   
   tilePntA = &tile->points[pointI];
@@ -4554,20 +4554,20 @@ glabel sub_GAME_7F0B1DDC
 
 
 
-s32 sub_GAME_7F0B20D0(struct StandTile** tileStack, f32 target_x, f32 target_z, f32 unknown) {
+s32 sub_GAME_7F0B20D0(StandTile **tileStack, f32 target_x, f32 target_z, f32 unknown) {
     return sub_GAME_7F0B1DDC(tileStack, target_x, target_z, unknown, 0, 0, 0, 0);
 }
 
 
 // sig for caller matches
-s32 sub_GAME_7F0B2110(struct StandTile* tile, struct StandTileLocusCallbackRecord*);
+s32 sub_GAME_7F0B2110(StandTile *tile, struct StandTileLocusCallbackRecord*);
 
 #ifdef NONMATCHING
 
 // Regalloc and a little reordering to solve, but there just seems to be nothing to work with in the loop.
 // Indexing roomBuf makes sense and generates closer code.
 // 'addTileRoomIfNew'
-s32 sub_GAME_7F0B2110(struct StandTile* tile, struct StandTileLocusCallbackRecord* data)
+s32 sub_GAME_7F0B2110(StandTile *tile, struct StandTileLocusCallbackRecord* data)
 {
     s32 i;
     s32 room;
@@ -4635,7 +4635,7 @@ glabel sub_GAME_7F0B2110
 
 
 
-s32 incrNearEdgeCount(struct StandTile** tileStack, s32 stackHeight, struct StandTileLocusCallbackRecord* data) {
+s32 incrNearEdgeCount(StandTile **tileStack, s32 stackHeight, struct StandTileLocusCallbackRecord* data) {
     data->nearEdgeCount += 1;
     return 1;
 }
@@ -4643,7 +4643,7 @@ s32 incrNearEdgeCount(struct StandTile** tileStack, s32 stackHeight, struct Stan
 
 
 
-s32 sub_GAME_7F0B21B0(struct StandTile **tileStack, f32 target_x, f32 target_z, f32 unknown, s32 *roomBuf, s32 *count_rtn, s32 bufMax){
+s32 sub_GAME_7F0B21B0(StandTile **tileStack, f32 target_x, f32 target_z, f32 unknown, s32 *roomBuf, s32 *count_rtn, s32 bufMax){
     struct StandTileLocusCallbackRecord data;
     s32 rtn;
 
@@ -4673,7 +4673,7 @@ s32 sub_GAME_7F0B21B0(struct StandTile **tileStack, f32 target_x, f32 target_z, 
 
 // TODO
 // s16 headerA : 4   gives just regalloc
-s32 sub_GAME_7F0B2244(struct StandTile *tile, u8 *rtn) {
+s32 sub_GAME_7F0B2244(StandTile *tile, u8 *rtn) {
     if (D_80040F30[tile->headerMid >> 0xC] & 2)
     {
         *rtn = 1;
@@ -4903,7 +4903,7 @@ glabel sub_GAME_7F0B23A4
 #ifdef NONMATCHING
 // regalloc only really
 // Duplicating the macro does nothing
-void sub_GAME_7F0B23AC(struct StandTile *tile, s32 tripleIndex, coord3d *pnt)
+void sub_GAME_7F0B23AC(StandTile *tile, s32 tripleIndex, coord3d *pnt)
 {
     s32 pntIndex = STAN_TRIPLE_TO_PNT_INDEX(tile, tripleIndex);
 
@@ -5102,7 +5102,7 @@ glabel sub_GAME_7F0B2420
 
 #ifdef NONMATCHING
 // Tests do appear to be lts
-s32 sub_GAME_7F0B260C(struct StandTile *tile, s32 index, f32 p_x,f32 p_z, void, f32 *rtn)
+s32 sub_GAME_7F0B260C(StandTile *tile, s32 index, f32 p_x,f32 p_z, void, f32 *rtn)
 {
     s32 nextIndex;
 
@@ -5177,7 +5177,7 @@ glabel sub_GAME_7F0B260C
 
 #ifdef NONMATCHING
 // We'll wait to decomp sub_GAME_7F0B260C properly, the reference to the f32 seems to be misbehaving and pointless.
-void sub_GAME_7F0B26B8(struct StandTile **tile, f32 target_x, f32 target_z, f32 b_z, f32 param_5)
+void sub_GAME_7F0B26B8(StandTile **tile, f32 target_x, f32 target_z, f32 b_z, f32 param_5)
 {
     f32 unk_float;
     
@@ -5224,13 +5224,13 @@ glabel sub_GAME_7F0B26B8
 
 #ifdef NONMATCHING
 // Horrifc BFS on tiles
-struct StandTile* sub_GAME_7F0B2718(struct StandTile* srcTile, tilePredicate_t tilePred)
+StandTile *sub_GAME_7F0B2718(StandTile *srcTile, tilePredicate_t tilePred)
 {
-    struct StandTile* tile;
+    StandTile *tile;
     u32 i;
     u32 pointCount;
     s32 link;
-    struct StandTile* linkTile;
+    StandTile *linkTile;
 
     s32 countForIter;
 
@@ -5535,7 +5535,7 @@ f32 stanGetPositionYValue(StandTile *tile, f32 p_x, f32 p_z)
 #ifdef NONMATCHING
 
 // Some instructions misordered
-s32 copy_tile_RGB_as_24bit(struct StandTile* tile, f32 p_x, f32 p_z, u8* rtn) {
+s32 copy_tile_RGB_as_24bit(StandTile *tile, f32 p_x, f32 p_z, u8* rtn) {
     
     u8 B;
     u8 C;
@@ -5577,14 +5577,14 @@ glabel copy_tile_RGB_as_24bit
 
 
 
-f32 sub_GAME_7F0B2C74(struct StandTile *tile, f32 *heights);
+f32 sub_GAME_7F0B2C74(StandTile *tile, f32 *heights);
 
 #ifdef NONMATCHING
 
 // Very interesting. The target has a load of filler crap including instructions like "c.lt.S f2,f2"
 // Presumably something has been generated from a macro but using the fixed value 0
 
-f32 sub_GAME_7F0B2C74(struct StandTile *tile, f32 *heights)
+f32 sub_GAME_7F0B2C74(StandTile *tile, f32 *heights)
 {
     f32 y;
 
@@ -5651,7 +5651,7 @@ glabel sub_GAME_7F0B2C74
 
 
 
-f32 sub_GAME_7F0B2D14(struct StandTile* tile) {
+f32 sub_GAME_7F0B2D14(StandTile *tile) {
     f32 vs[2];
 
     sub_GAME_7F0B2C74(tile, vs);
@@ -5979,7 +5979,7 @@ void *stanDetermineEOF(void *arg0, s32 arg1, s32 arg2) {
     void *phi_v0;
 
     // Node 0
-    stan_prefix.clippingfile = arg0;
+    stan_prefix.stanfile = arg0;
     temp_v0 = (arg2 - arg1);
     standTileStart = (s32) ((arg0->unk4 + temp_v0) + -0x80);
     ptr_firstroom_0 = (s32) (arg0->unk4 + temp_v0);
@@ -6019,7 +6019,7 @@ loop_4:
         }
     }
     // Node 5
-    stan_prefix.clippingfile = arg0;
+    stan_prefix.stanfile = arg0;
     return temp_v0_2;
 }
 #else
@@ -6078,7 +6078,7 @@ glabel stanDetermineEOF
 
 
 
-u8 getTileRoom(struct StandTile* tile) {
+u8 getTileRoom(StandTile *tile) {
     return tile->room;
 }
 
@@ -6086,7 +6086,7 @@ u8 getTileRoom(struct StandTile* tile) {
 
 
 
-s32 sub_GAME_7F0B2FE0(struct StandTile* tile) {
+s32 sub_GAME_7F0B2FE0(StandTile *tile) {
     // u8 -> s32 -> u8 causes the odd asm
 
     s32 room = tile->room;
@@ -6098,7 +6098,7 @@ s32 sub_GAME_7F0B2FE0(struct StandTile* tile) {
 
 
 
-f32 sub_GAME_7F0B3004(struct StandTile* tile) {
+f32 sub_GAME_7F0B3004(StandTile *tile) {
     return sub_GAME_7F0B2D14(tile);
 }
 
@@ -6107,7 +6107,7 @@ f32 sub_GAME_7F0B3004(struct StandTile* tile) {
 
 
 #ifdef NONMATCHING
-Gfx * sub_GAME_7F0B3024(Gfx *ptrdl, struct StandTilePoint *tile_point, u32 RGBAColor) {
+Gfx * sub_GAME_7F0B3024(Gfx *ptrdl, StandTilePoint *tile_point, u32 RGBAColor) {
     return *ptrdl;
 }
 
@@ -6239,7 +6239,7 @@ glabel sub_GAME_7F0B312C
 #ifdef NONMATCHING
 // Only difference is an extra sw a1,0x34(sp) appearing.
 // There is the unused first argument which may have the wrong type
-int sub_GAME_7F0B3138(void* unused, struct StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z,
+int sub_GAME_7F0B3138(void* unused, StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z,
         int objFlags, f32 unkHeight, f32 unkA) {
 
     return sub_GAME_7F0B0E24(pTile, p_x, p_z, dest_x, dest_z, objFlags, unkHeight, unkA, 0, 1);

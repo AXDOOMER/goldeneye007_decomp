@@ -172,14 +172,15 @@ Rotate Image:
 #define BSS_80075030_DATA_LEN 40
 #define ONSCREEN_PROP_LIST_LEN 500
 
-struct sfx_register_struct {
-    u32 field_0x0;
-    u32 field_0x4;
-    u32 field_0x8;
-    u32 field_0xc;
-    u32 field_0x10;
-    u32 field_0x14;
-};
+typedef struct sfxRecord //Need 24 size
+{
+    s32           field_0x0; //0
+    s32           Volume2;   //4
+    s32           sfxID;     //8
+    s32           Volume;    //12
+    PadRecord    *pad;       //16
+    ObjectRecord *Obj;       //20
+} sfxRecord;
 
 /**
  * Getting a match on alloc_lookup_buffers makes it seem
@@ -462,7 +463,7 @@ extern u32 temp_mine_table[30];
 extern f32 gas_damage_flag;
 extern u32 gas_cutoff_flag;
 extern f32 difficulty ;
-extern struct object_standard * ptr_setup_objects;
+extern PropDefHeaderRecord *ptr_setup_objects;
 extern s16 * ptr_list_object_lookup_indices;
 extern PropRecord pos_data_entry[];
 
@@ -475,7 +476,7 @@ extern PropRecord **g_LastOnScreenProp;
 extern PropRecord *g_OnScreenPropList[];
 extern s16 *ptr_room_lookup_buffer_maybe;
 extern struct unk_8007161c *dword_CODE_bss_8007161C;
-extern struct sfx_register_struct sfx_related[];
+extern sfxRecord                          sfx_related[];
 extern struct projectile_data ProjectileData_start_address[];
 extern struct bss_80072E70 dword_CODE_bss_80072E70[];
 extern struct bss_80073370 dword_CODE_bss_80073370[];
@@ -518,5 +519,7 @@ PropRecord *get_ptr_obj_pos_list_current_entry(void);
 void chraiGetPropRoomIds(PropRecord *self, s32 *roomids);
 void propFree(PropRecord *prop);
 void propHide(PropRecord *prop);
+
+
 
 #endif
