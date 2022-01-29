@@ -1325,7 +1325,7 @@ typedef enum PLAYER_ID
 
 typedef enum RGBA_ENUM
 {
-    RED = 0,
+    RED,
     GREEN,
     BLUE,
     ALPHA
@@ -2651,7 +2651,8 @@ typedef enum WAYMODE
         INV_ITEM_NONE,
         INV_ITEM_WEAPON,
         INV_ITEM_PROP,
-        INV_ITEM_DUAL
+        INV_ITEM_DUAL,
+        INV_ITEM_PICKUP
     } INV_ITEM_TYPE;
 
     typedef enum ITEM_IDS

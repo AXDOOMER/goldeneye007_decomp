@@ -78,4 +78,7 @@ s32 sub_GAME_7F054A64(PropRecord *, struct view4s32 *);
 void sub_GAME_7F040384(rgba_s32 *arg0, s32 arg1, rgba_f32 *arg2);
 void trigger_remote_mine_detonation(void);
 
+void                 sub_GAME_7F04C044(PropRecord *prop);
+void                 sub_GAME_7F040CF0(PropRecord *);
+
 #endif

@@ -498,9 +498,9 @@ void sub_GAME_7F03D78C(void);
 void chraiCheckUseHeldItems(void);
 s32 bond_interact_object(void);
 void sub_GAME_7F03D0D4(void);
-void sub_GAME_7F03DD9C(PropRecord *, s16, struct player *);
+void sub_GAME_7F03DD9C(PropRecord *, s16);
 s32 remove_last_obj_pos_data_entry();
-void sub_GAME_7F03E18C(PropRecord *, ChrRecord *);
+void sub_GAME_7F03E18C(PropRecord *);
 void sub_GAME_7F03E27C(PropRecord *, coord3d *, coord3d *, f32);
 void sub_GAME_7F03E210(PropRecord *posData);
 

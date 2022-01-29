@@ -4288,7 +4288,7 @@ void chrPositionRelated7F020D94(ChrRecord *self)
     upperbounds.x = myprop->pos.x + 50.0f;
     upperbounds.y = myprop->pos.y + 100.0f;
     upperbounds.z = myprop->pos.z + 50.0f;
-    sub_GAME_7F03E18C(myprop, self);
+    sub_GAME_7F03E18C(myprop);
     sub_GAME_7F03E27C(myprop, &lowerbounds, &upperbounds, 50.0f);
     sub_GAME_7F03E210(myprop);
 }

@@ -151,7 +151,7 @@ struct object_animation_controller g_TaserAnimController;
 */
 s32 bss_80075CFC;
 
-// forward declarations
+// This is a Stage Setup Struct 
 
 //CODE.bss:80075D00
 waypoint * ptr_setup_path_tbl;
@@ -208,6 +208,7 @@ Gfx *chraiResolveRenderProp(Gfx *arg0, PropRecord *arg1, s32 arg2);
 void chraiCheckUseHeldItem(s32 hand);
 void chraiDefaultWeaponFireHandler(s32);
 void chraiFistAttackHandler(s32, s32);
+void sub_GAME_7F03C2BC(PropRecord *prop, s32 type) ;
 
 // end forward declarations
 
@@ -1519,7 +1520,10 @@ ActionLengthSwitchElse:
 
 
 
-
+//todo: this code matches however, gsetup is seperate at present.
+// Also, StageSetup might be single pointers (*) not ((*)[]) as
+// the later requirees some odd derefrencing
+// eg (&gSetup.ailists)[i].ailist; <-- note extra parens
 #ifdef NONMATCHING
 #include <chraidata.h>
 /**
@@ -1527,7 +1531,7 @@ ActionLengthSwitchElse:
  * @param AIList: Ailist to get ID of
  * @return ID of AIList 
  */
-s32 sub_GAME_7F035244(AIRecord *AIList, int *isGlobalAIList) //chraiGetAIListID
+s32 sub_GAME_7F035244(AIRecord *AIList, int *isGlobalAIList) //# MATCH chraiGetAIListID
 {
     s32 i;
 
@@ -1635,69 +1639,48 @@ glabel sub_GAME_7F035244
 
 
 #ifdef NONMATCHING
-/* MIPS-2-C
-
-s32 true_if_sucessfully_performing_action(s32 arg0, s32 arg1, s32 arg2)
+/** 
+ * GoTo Label
+ * @param AIlist: AIList containing label
+ * @param LabelNum: Integer/enum ID to go to
+ * @return Offset of label from beggining of AIList.
+ */
+s32 chraiGoToLabel(AIRecord *AIList, s32 Offset, s32 LabelNum) //#MATCH 
 {
-    ? sp3C;
-    void *temp_v0;
-    s32 phi_s0;
+    s32   listID;
+    char *debAIListTypeString;
+    bool  isGlobalAIList;
 
-    // Node 0
-    phi_s0 = arg1;
-loop_1:
-    // Node 1
-    temp_v0 = arg0 + phi_s0;
-    if (2 == temp_v0->unk0)
+    for (;;)
     {
-        // Node 2
-        if ((arg2 & 0xff) == temp_v0->unk1)
+        if (AIList[Offset].cmd == AI_LABEL)
         {
-            // Node 3
-            return phi_s0;
-        }
-block_6:
-        // Node 6
-        phi_s0 = phi_s0 + get_length_of_action_block(arg0, phi_s0);
-        goto loop_1;
-    }
-    // Node 4
-    if (4 != temp_v0->unk0)
-    {
-        goto block_6;
-    }
-    // Node 5
-    sub_GAME_7F035244(arg0, &sp3C);
-    return 0;
-}*/
-bool true_if_sucessfully_performing_action(s32 arg0, s32 arg1, s32 arg2)
-{
-    /* Closest ASM I could get (though not using right tools since still cant get to work... ill try again this weekend)*/
-    u8 *v0; //struct
-    int s0 = arg1;
-    int s1 = arg0;
-
-    do
-    {
-        v0 = arg0 + s0;
-        if (v0->unk0 == label_ID)
-        {
-            if ((arg2 & 255) == v0->unk1) //strip lower byte?
+            if (AIList[Offset].val[0] == LabelNum)
             {
-                return arg1; //exit loop and return 
+                // exit loop and return offset to label number
+                return Offset;
             }
-
         }
-        if (v0->unk0 == ai_list_end_ID)
+        else if (AIList[Offset].cmd == AI_ENDLIST)
         {
-            break;
+            // restart ai list PC if next label not found
+            listID = chraiGetAIListID(AIList, &isGlobalAIList);
+#    ifdef DEBUG
+            if (isGlobalAIList)
+            {
+                debAIListTypeString = "global";
+            }
+            else
+            {
+                debAIListTypeString = "local";
+            }
+            osSyncPrintf("AI error: endlist reached jump label=%d %s list=%d!\n", LabelNum, debAIListTypeString, listID);
+#    endif
+            return 0;
         }
-        s0 += get_length_of_action_block(arg0, arg1);
-    }
-    while (v0->unk0 != 4);
 
-    sub_GAME_7F035244(s1, &v0 + 0x3c);
-    return 0;
+        Offset += chraiitemsize(AIList, Offset);
+    }
 }
 #else
 GLOBAL_ASM(
@@ -1774,8 +1757,49 @@ glabel true_if_sucessfully_performing_action
 
 #ifdef NONMATCHING
 //LoadNext_PrevActionBlock
-void LoadNext_PrevActionBlock(void) {
+u8 *ailistFindById(u16 *param_1)
+{
+    undefined4 *  puVar1;
+    AIListRecord *psVar2;
+    undefined *   puVar3;
 
+    if ((int)param_1 < 0x401)
+    {
+        psVar2 = &stru_8003744C;
+        puVar3 = (undefined *)stru_8003744C.anonymous_1;
+        if (stru_8003744C.anonymous_0 != NULL)
+        {
+            while (true)
+            {
+                if (param_1 == puVar3)
+                {
+                    return (undefined *)psVar2->anonymous_0;
+                }
+                if (psVar2[1].anonymous_0 == NULL) break;
+                puVar3 = (undefined *)psVar2[1].anonymous_1;
+                psVar2 = psVar2 + 1;
+            }
+        }
+    }
+    else
+    {
+        if ((ptr_setup_actions != NULL) && (*(int *)ptr_setup_actions != 0))
+        {
+            puVar3 = *(undefined **)(ptr_setup_actions + 4);
+            puVar1 = (undefined4 *)ptr_setup_actions;
+            while (true)
+            {
+                if (param_1 == puVar3)
+                {
+                    return (undefined *)*puVar1;
+                }
+                if (puVar1[2] == 0) break;
+                puVar3 = (undefined *)puVar1[3];
+                puVar1 = puVar1 + 2;
+            }
+        }
+    }
+    return NULL;
 }
 #else
 GLOBAL_ASM(
@@ -1851,8 +1875,30 @@ glabel LoadNext_PrevActionBlock
 
 
 #ifdef NONMATCHING
-void get_ptr_path_for_pathnum(void) {
+PathRecord get_ptr_path_for_pathnum(u64 pathnum)
+{
+    byte       bVar1;
+    undefined *puVar2;
+    int        iVar3;
 
+    iVar3 = 0;
+    if (*(int *)ptr_setup_path_sets != 0)
+    {
+        bVar1  = ptr_setup_path_sets[4];
+        puVar2 = ptr_setup_path_sets;
+        while (true)
+        {
+            if (pathnum == (ulonglong)bVar1)
+            {
+                return (int *)(ptr_setup_path_sets + iVar3 * 8);
+            }
+            iVar3 += 1;
+            if (*(int *)(puVar2 + 8) == 0) break;
+            bVar1  = puVar2[0xc];
+            puVar2 = puVar2 + 8;
+        }
+    }
+    return NULL;
 }
 #else
 GLOBAL_ASM(
@@ -1898,71 +1944,3655 @@ glabel get_ptr_path_for_pathnum
 
 
 #ifdef NONMATCHING
-void parse_handle_actionblocks(*s1, 1, 0) // s1 = AIListp, 1 = true? (a1 is always set to 1) a2 set to 0 within block
+#pragma weak objectiveGetStatus_WEAK objectiveGetStatus
+
+/**
+ Execute AI List from Character, Stage, Vehichle(truck) or Aircraft(heli)
+ Note: GE has little error checking (eg, using a chr action on aircraft) - this was fixed in PD
+ @param *Entityp: Pointer to Entity (non-typed)
+ @param EntityType: PROPTYPE_CHR or PROPTYPE_OBJ
+ @param         PROPTYPE_CHR = Character (Guard or Stage)
+ @param         PROPTYPE_OBJ = Object (Vehichle or Aircraft)
+*/
+void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
 {
-    s7 = 0;
-    if (a1 != ai_sleep)
+    /*
+     * (void *Param, int ParamType) is the correct way to pass a variable
+     *  "object" eg Param can be Either ChrRecord or VehichleRecord
+     *
+     *  Function Name derived from internal strings:
+     *    ai(void) enery tune on (%d, %d, %d)
+     *    ai(void) enery tune off (%d)
+     *  
+     *  Stack requires that each case declair its own AIRecord variable
+     *  
+     */
+
+    ChrRecord *     ChrEntityp      = NULL;
+    VehichleRecord *VehichleEntityp = NULL;
+    AircraftRecord *AircraftEntityp = NULL;
+    AIRecord *      AiListp         = NULL;
+    s32             Offset;
+
+    if (EntityType == PROP_TYPE_CHR)
     {
-        if (a1 == 1)
+        ChrEntityp = Entityp;
+    }
+    else if (EntityType == PROP_TYPE_OBJ)
+    {
+        if (Entityp->type == PROPDEF_VEHICHLE)
         {
-            if (s1[3] > 39)
+            VehichleEntityp = Entityp;
+        }
+        else if (Entityp->type == PROPDEF_AIRCRAFT)
+        {
+            AircraftEntityp = Entityp;
+        }
+    }
+
+    // Load ailist
+    if (ChrEntityp)
+    {
+        Offset  = ChrEntityp->aioffset;
+        AiListp = ChrEntityp->ailist;
+    }
+    else if (VehichleEntityp)
+    {
+        Offset  = VehichleEntityp->aioffset;
+        AiListp = VehichleEntityp->ailist;
+    }
+    else if (AircraftEntityp)
+    {
+        Offset  = AircraftEntityp->aioffset;
+        AiListp = AircraftEntityp->ailist;
+    }
+
+    if (AiListp) // continue if Has ailist (check once)
+    {
+        // loop forever (or until broken)
+        for (;;)
+        {
+            /* 
+             * GE uses long Switch/case while PD uses Bool functions and tests 
+             * for TRUE/FALSE if(funcpointer[ai]) break; 
+             */
+            switch ((AiListp + Offset)->cmd)
             {
-                if (s1[3] = 40)
+                //unfortunatly we cannot use the cmdbuilder in matching rom as the ordering is not sequential
+        #ifdef USECMDBUILDER
+        #    define _AI_DEBUG_ID(CMD, AI_NUMBER_OF_PARAMS, PARAM, DESC)
+        #    define _AI_CMD_POLYMORPH(C, N, P1, P2, D)
+        #    define _AI_CMD_ID(CMD, AI_NUMBER_OF_PARAMS, PARAM, DESC, CODE) /* HACK: Multiline Comments make Newlines in macro */ \
+                case CAT(CAT(AI_, CMD), ):                                  /*                                                    \
+                                                                             */                                                   \
+                    CODE
+        #    include "aicommands.def"
+        #else
+                case AI_GOTO_NEXT:
                 {
-                    returnval1 = s1;
-                }
-            }
-            a2 = s1;
-        }
-    }
-
-    if (s7 == 0)
-    {
-        if (a2 == 0)
-        {
-            if (v1 != 0)
-            {
-                s2 = v1[336];
-                s6 = v1[320];
-            }
-        }
-        else
-        {
-            s2 = a2[336];
-            s6 = a2[320];
-        }
-    }
-    else
-    {
-        s2 = s7[432];
-        s6 = s7[416];
-    }
-
-    if (s6 != 0)
-    {
-        //10 * something
-        //60 * something
-
-        do
-        {
-            if (cmd < AI_CMD_COUNT)
-            {
-                switch Byte(cmd)
-                case 0:
-                    NextStatement = +2;
-                    true_if_sucessfully_performing_action();
+                    AIRecord1 *ai = AiListp + Offset;
+                    Offset        = chraiGoToLabel(AiListp, Offset, ai->val);
+#    ifdef DEBUG
+                    osSyncPrintf(" (%d)\n", ai->val);
+#    endif
                     break;
-                    //...
-            }
-            else
-            {
-                //cmd << 2;
-                cmdpos += get_length_of_action_block(cmd) //GetAICmdLen(Cmd)
-            }
-        }
-        while (action != 4)
-    }
-}
+                }
+                case AI_GOTO_FIRST:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+                    Offset        = chraiGoToLabel(AiListp, 0, ai->val);
+#    ifdef DEBUG
+                    osSyncPrintf(" (%d)\n", ai->val);
+#    endif
+                    break;
+                }
+                case AI_LABEL:
+                {
+                    Offset += 2;
+                    break;
+                }
+                case AI_SLEEP:
+                {
+                    Offset += 1;
+                    if (ChrEntityp)
+                    {
+                        ChrEntityp->ailist   = AiListp;
+                        ChrEntityp->aioffset = Offset;
+                    }
+                    else if (VehichleEntityp)
+                    {
+                        VehichleEntityp->ailist   = AiListp;
+                        VehichleEntityp->aioffset = Offset;
+                    }
+                    else if (AircraftEntityp)
+                    {
+                        AircraftEntityp->ailist   = AiListp;
+                        AircraftEntityp->aioffset = Offset;
+                    }
+                    return; //AI_SLEEP:
+                }
+                case AI_ENDLIST:
+                {
+#    ifdef DEBUG
+                    osSyncPrintf("AI error endlist reached!\n");
+#    endif
+                    return; //AI_ENDLIST:
+                }
+                case AI_JUMP_TO_AI_LIST:
+                {
+                    AIRecord * ai = AiListp + Offset;                       /*needed for stack count inflation*/
+                    ChrRecord *chr;                                         //ok, so mips does not hoist vars in stack, they are in order so must be declaired here
+                    u16        AI_LIST_ID = ai->val[2] | (ai->val[1] << 8); /*This is the only way to match despite assetrs below*/
+                    u8         CHR_NUM    = ai->val[0];
+                    if (CHR_NUM == ((u8)CHR_SELF))
+                    {
+                        AiListp = ailistFindById(AI_LIST_ID); 
+                        Offset  = 0;
+                    }
+                    else
+                    {
+                        chr = chrFindById(ChrEntityp, CHR_NUM);
+                        if (chr)
+                        {
+                            chr->ailist   = ailistFindById(AI_LIST_ID);
+                            chr->aioffset = 0;
+                            chr->sleep    = 0;
+                        }
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_SET_RETURN_AI_LIST:
+                {
+                    AIRecord *ai         = AiListp + Offset;
+                    u16       AI_LIST_ID = ai->val[1] | (ai->val[0] << 8);
+                    if (ChrEntityp)
+                    {
+                        ChrEntityp->aireturnlist = AI_LIST_ID;
+                    }
+                    else if (VehichleEntityp)
+                    {
+                        VehichleEntityp->aireturnlist = AI_LIST_ID;
+                    }
+                    else if (AircraftEntityp)
+                    {
+                        AircraftEntityp->aireturnlist = AI_LIST_ID;
+                    }
+
+                    Offset += 3;
+                    break;
+                }
+                case AI_JUMP_TO_RETURN_AI_LIST:
+                {
+                    if (ChrEntityp)
+                    {
+                        AiListp = ailistFindById(ChrEntityp->aireturnlist);
+                    }
+                    else if (VehichleEntityp)
+                    {
+                        AiListp = ailistFindById(VehichleEntityp->aireturnlist);
+                    }
+                    else if (AircraftEntityp)
+                    {
+                        AiListp = ailistFindById(AircraftEntityp->aireturnlist);
+                    }
+                    Offset = 0;
+                    break;
+                }
+                case AI_GUARD_ANIMATION_STOP:
+                {
+                    chraiStopAnimation(ChrEntityp);
+                    Offset += 1;
+                    break;
+                }
+                case AI_GUARD_KNEEL:
+                {
+                    check_if_able_to_then_kneel(ChrEntityp);
+                    Offset += 1;
+                    break;
+                }
+                case AI_GUARD_PLAY_ANIMATION:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    s32       startframe, anim_id, zero, endframe;
+                    anim_id    = ai->val[1] | ai->val[0] << 8;
+                    startframe = ai->val[3] | ai->val[2] << 8;
+                    endframe   = ai->val[5] | ai->val[4] << 8;
+
+                    if (startframe == (u16)-1)
+                    {
+                        startframe = 0;
+                    }
+                    if (endframe == (u16)-1)
+                    {
+                        endframe = -1;
+                    }
+
+                    if (ChrEntityp)
+                    {
+                        check_if_able_to_then_perform_animation(ChrEntityp, anim_id, startframe, endframe, ai->val[6], ai->val[7]);
+                    }
+                    else if (AircraftEntityp)
+                    {
+                        zero = 0; //debug value maybe?
+                        sub_GAME_7F06FCA8(AircraftEntityp->model, animation_table_ptrs2[anim_id], zero, startframe, 0.5f, (s32)ai->val[7]);
+                        if (endframe >= 0)
+                        {
+                            sub_GAME_7F06FDE8(AircraftEntityp->model, endframe);
+                        }
+                    }
+                    Offset += 9;
+                    break;
+                }
+                case AI_IF_GUARD_PLAYING_ANIMATION:
+                {
+                    AIRecord1 *ai = (AiListp + Offset);
+                    if (ChrEntityp->actiontype == ACT_ANIM)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_GUARD_POINTS_AT_BOND:
+                {
+                    chrTrySurprisedOneHand(ChrEntityp);
+                    Offset += 1;
+                    break;
+                }
+                case AI_GUARD_LOOKS_AROUND_SELF:
+                {
+                    chrTrySurprisedLookAround(ChrEntityp);
+                    Offset += 1;
+                    break;
+                }
+
+                case AI_IF_GUARD_HAS_STOPPED_MOVING:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+                    if (chrIsStopped(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_CHR_DYING_OR_DEAD:
+                {
+                    AIRecord * ai  = AiListp + Offset;
+                    ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
+
+                    if (!chr || chrIsDead(chr))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_CHR_DOES_NOT_EXIST:
+                {
+                    AIRecord * ai  = AiListp + Offset;
+                    ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
+
+                    if (!chr || !chr->model)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_SEES_BOND:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+
+                    if (chrCheckTargetInSight(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+
+                case AI_GUARD_TRY_SIDESTEPPING:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+
+                    if (actor_steps_sideways(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_HOPPING_SIDEWAYS:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+
+                    if (actor_hops_sideways(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_JOGGING_TO_SIDE:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+
+                    if (actor_jogs_sideways(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_FIRING_WALK:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+
+                    if (actor_walks_and_fires(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_FIRING_JOG:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+
+                    if (actor_runs_and_fires(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_FIRING_ROLL:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+
+                    if (actor_rolls_fires_crouched(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_FIRE_OR_AIM_AT_TARGET:
+                {
+                    AIRecord *ai         = AiListp + Offset;
+                    s32       targetid   = ai->val[3] | (ai->val[2] << 8);
+                    s32       targettype = ai->val[1] | (ai->val[0] << 8);
+                    if (actor_aim_at_actor(ChrEntityp, targettype, targetid))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
+                    }
+                    else
+                    {
+                        Offset += 6;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_FIRE_OR_AIM_AT_TARGET_KNEEL:
+                {
+                    AIRecord *ai         = AiListp + Offset;
+                    s32       targetid   = ai->val[3] | (ai->val[2] << 8);
+                    s32       targettype = ai->val[1] | (ai->val[0] << 8);
+                    if (actor_kneel_aim_at_actor(ChrEntityp, targettype, targetid))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
+                    }
+                    else
+                    {
+                        Offset += 6;
+                    }
+                    break;
+                }
+
+                case AI_IF_GUARD_IS_FIRING_AND_TARGET_180_RANGE:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+
+                    if (ChrEntityp->actiontype == ACT_ATTACK &&
+                        !ChrEntityp->act_attack.type_of_motion &&
+                         ChrEntityp->act_attack.attacktype & ATTACKTYPE_DONTTURN)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_IS_FIRING:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+
+                    if (ChrEntityp->actiontype == ACT_ATTACK)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+
+                case AI_GUARD_TRY_FIRE_OR_AIM_AT_TARGET_UPDATE:
+                {
+                    AIRecord *ai         = AiListp + Offset;
+                    s32       targetid   = ai->val[3] | (ai->val[2] << 8);
+                    s32       targettype = ai->val[1] | (ai->val[0] << 8);
+                    if (actor_fire_or_aim_at_target_update(ChrEntityp, targettype, targetid))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
+                    }
+                    else
+                    {
+                        Offset += 6;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_FACING_TARGET:
+                {
+                    AIRecord *ai         = AiListp + Offset;
+                    s32       targetid   = ai->val[3] | (ai->val[2] << 8);
+                    s32       targettype = ai->val[1] | (ai->val[0] << 8);
+                    if (check_set_actor_standing_still(ChrEntityp, targettype, targetid))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
+                    }
+                    else
+                    {
+                        Offset += 6;
+                    }
+                    break;
+                }
+                case AI_CHR_HIT_BODY_PART_WITH_ITEM_DAMAGE:
+                {
+                    AIRecord * ai  = AiListp + Offset;
+                    ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
+                    vec3d      vec = New_Vector(); //gvector0;
+
+                    if (chr && chr->prop)
+                    {
+                        handles_shot_actors(chr, (s8)ai->val[1], &vec, ai->val[2], NULL);
+                    }
+
+                    Offset += 4;
+                    break;
+                }
+                case AI_CHR_HIT_CHR_BODY_PART_WITH_HELD_ITEM:
+                {
+                    AIRecord * ai   = AiListp + Offset;
+                    ChrRecord *chr1 = chrFindById(ChrEntityp, ai->val[0]);
+                    ChrRecord *chr2 = chrFindById(ChrEntityp, ai->val[1]);
+
+                    if (chr1 && chr2 && chr1->prop && chr2->prop)
+                    {
+                        PropRecord *     prop = chrGetEquippedWeaponPropWithCheck(chr1, GUNRIGHT);
+                        WeaponObjRecord *weapon;
+                        vec3d            vec = New_Vector();
+
+                        if (!prop) //not Right hand? try left
+                        {
+                            prop = chrGetEquippedWeaponPropWithCheck(chr1, GUNLEFT);
+                        }
+
+                        if (prop) //hopefully have gun else exit
+                        {
+                            vec.x = chr2->prop->pos.x - chr1->prop->pos.x;
+                            vec.y = chr2->prop->pos.y - chr1->prop->pos.y;
+                            vec.z = chr2->prop->pos.z - chr1->prop->pos.z;
+                            guNormalize(&vec.x, &vec.y, &vec.z);
+                            if (prop)
+                            {
+                            } //prop needs upgrading to v1 instead of t
+                            weapon = prop->weapon;
+                            handles_shot_actors(chr2, (s8)ai->val[2], &vec, weapon->weaponnum, 0);
+                        }
+                    }
+                    Offset += 4;
+                    break;
+                }
+                case AI_GUARD_TRY_THROWING_GRENADE:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+
+                    if (actor_draws_throws_grenade_at_player_if_possible(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_DROPPING_ITEM:
+                {
+                    AIRecord *ai       = AiListp + Offset;
+                    u16       modelnum = ai->val[1] | (ai->val[0] << 8);
+                    if (chrDropItem(ChrEntityp, modelnum, ai->val[2]))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
+                    }
+                    else
+                    {
+                        Offset += 5;
+                    }
+                    break;
+                }
+
+                case AI_GUARD_SURRENDERS:
+                {
+                    chrTrySurrender(ChrEntityp);
+                    Offset += 1;
+                    break;
+                }
+                case AI_GUARD_REMOVE_FADE:
+                {
+                    chrFadeOut(ChrEntityp);
+                    Offset += 1;
+                    break;
+                }
+                case AI_CHR_REMOVE_INSTANT:
+                {
+                    AIRecord * ai  = AiListp + Offset;
+                    ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
+                    if (chr && chr->prop)
+                    {
+                        chr->hidden |= CHRHIDDEN_REMOVE;
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_GUARD_TRY_TRIGGERING_ALARM_AT_PAD:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    u16       pad_id = ai->val[1] | (ai->val[0] << 8);
+                    if (chrTryStartAlarm(ChrEntityp, pad_id))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_ALARM_ON:
+                {
+                    alarmActivate();
+                    Offset += 1;
+                    break;
+                }
+                case AI_ALARM_OFF:
+                {
+                    alarmDeactivate();
+                    Offset += 1;
+                    break;
+                }
+                case AI_REMOVED_COMMAND27:
+                { // run from bond
+                    AIRecord1 *ai = AiListp + Offset;
+                    if (removed_animation_routine_27(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_JOGGING_TO_BOND_POSITION:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+                    if (chrGoToBond(ChrEntityp, SPEED_JOG))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_WALKING_TO_BOND_POSITION:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrGoToBond(ChrEntityp, SPEED_WALK))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_RUNNING_TO_BOND_POSITION:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrGoToBond(ChrEntityp, SPEED_RUN))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_REMOVED_COMMAND2B:
+                { //Find Cover
+                    AIRecord *ai = AiListp + Offset;
+                    if (removed_animation_routine_2B(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_JOGGING_TO_CHR_POSITION:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrGoToChr(ChrEntityp, ai->val[0], SPEED_JOG))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_WALKING_TO_CHR_POSITION:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrGoToChr(ChrEntityp, ai->val[0], SPEED_WALK))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_RUNNING_TO_CHR_POSITION:
+                {
+                    AIRecord *ai = AiListp + Offset;
+
+                    if (chrGoToChr(ChrEntityp, ai->val[0] & 0xff, SPEED_RUN)) // &0xff is here to increase t reg by 1
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+
+                case AI_RANDOM_GENERATE_SEED:
+                {
+                    ChrEntityp->random = randomGetNext();
+                    Offset += 1;
+                    break;
+                }
+                case AI_IF_RANDOM_SEED_LESS_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+
+                    if (ai->val[0] > ChrEntityp->random)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_RANDOM_SEED_GREATER_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ai->val[0] < ChrEntityp->random)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+
+                case AI_GUARD_JOGS_TO_PAD:
+                {
+                    AIRecord *ai  = AiListp + Offset;
+                    u16       pad = ai->val[1] | (ai->val[0] << 8);
+                    chrGoToPad(ChrEntityp, pad, SPEED_JOG);
+                    Offset += 3;
+                    break;
+                }
+                case AI_GUARD_JOGS_TO_PAD_PRESET:
+                {
+                    /* PD uses GoTo Pad (speed) which seems better
+                    switch (ai->val[0]) 
+                    { 
+                        case SPEED_WALK: 
+                            chrGoToPad(ChrEntityp, ChrEntityp->padpreset1, SPEED_WALK);
+                            break;  
+                        case SPEED_JOG: 
+                            etc...
+                    */
+                    chrGoToPad(ChrEntityp, ChrEntityp->padpreset1, SPEED_JOG);
+                    Offset += 1;
+                    break;
+                }
+                case AI_GUARD_WALKS_TO_PAD:
+                {
+                    AIRecord *ai  = AiListp + Offset;
+                    u16       pad = ai->val[1] | (ai->val[0] << 8);
+                    chrGoToPad(ChrEntityp, pad, SPEED_WALK);
+                    Offset += 3;
+                    break;
+                }
+                case AI_GUARD_RUNS_TO_PAD:
+                {
+                    AIRecord *ai  = AiListp + Offset;
+                    u16       pad = ai->val[1] | (ai->val[0] << 8);
+                    chrGoToPad(ChrEntityp, pad, SPEED_RUN);
+                    Offset += 3;
+                    break;
+                }
+                case AI_GUARD_START_PATROL:
+                {
+                    AIRecord *  ai   = AiListp + Offset;
+                    PathRecord *path = pathFindById(ai->val[0]);
+                    if_actor_able_set_on_path(ChrEntityp, path);
+                    Offset += 2;
+                    break;
+                }
+                case AI_IF_ALARM_IS_ON_UNUSED: // aiIfCanHearAlarm
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrCanHearAlarm(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_ALARM_IS_ON:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (alarmIsActive())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GAS_IS_LEAKING:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (check_if_toxic_gas_activated())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_HEARD_BOND:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrIsHearingBond(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_SEE_ANOTHER_GUARD_SHOT:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrSawInjury(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_SEE_ANOTHER_GUARD_DIE:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrSawDeath(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_AND_BOND_WITHIN_LINE_OF_SIGHT:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrCanSeeBond(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_AND_BOND_WITHIN_PARTIAL_LINE_OF_SIGHT:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrIsTargetNearlyInSight(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_WAS_SHOT_OR_SEEN_WITHIN_LAST_10_SECS:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrSawTargetRecently(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_HEARD_BOND_WITHIN_LAST_10_SECS:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrHeardTargetRecently(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_IN_ROOM_WITH_CHR:
+                {
+                    AIRecord * ai  = AiListp + Offset;
+                    ChrRecord *chr = chrFindById(ChrEntityp, *ai->val);
+                    if (chr && chr->prop && check_if_position_in_same_room(ChrEntityp, &chr->prop->pos, chr->prop->stan))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_HAS_NOT_BEEN_SEEN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (!(ChrEntityp->chrflags & CHRFLAG_HAS_BEEN_ON_SCREEN))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_IS_ON_SCREEN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if ((ChrEntityp->prop->flags & PROPFLAG_ONSCREEN))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_ROOM_CONTAINING_SELF_IS_ON_SCREEN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (getROOMID_Bitflags(getTileRoom(ChrEntityp->prop->stan)))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_ROOM_CONTAINING_PAD_IS_ON_SCREEN:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    u16       pad_id = ai->val[1] | (ai->val[0] << 8);
+                    if (check_if_room_for_preset_loaded(ChrEntityp, pad_id))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_IS_TARGETED_BY_BOND:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (sub_GAME_7F0333F8(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_SHOT_FROM_BOND_MISSED:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrIfNearMiss(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_COUNTER_CLOCKWISE_DIRECTION_TO_BOND_LESS_THAN:
+                {
+                    AIRecord *ai  = AiListp + Offset;
+                    // Alternative Names?
+                    // aiIfTargetInFovLeft or aiIfBondOutOfFov
+                    float     rad = chrGetAngleToBond(ChrEntityp); //must use float to save "hidden var"
+                    if (ByteToRadian((ai->val[0])) > rad)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_COUNTER_CLOCKWISE_DIRECTION_TO_BOND_GREATER_THAN:
+                {
+                    AIRecord *ai  = AiListp + Offset;
+                    float     rad = chrGetAngleToBond(ChrEntityp);
+                    if (ByteToRadian((ai->val[0])) < rad)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_COUNTER_CLOCKWISE_DIRECTION_FROM_BOND_LESS_THAN:
+                {
+                    AIRecord *ai  = AiListp + Offset;
+                    float     rad = chrGetAngleFromBond(ChrEntityp);
+                    if (ByteToRadian((ai->val[0])) > rad)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_COUNTER_CLOCKWISE_DIRECTION_FROM_BOND_GREATER_THAN:
+                {
+                    AIRecord *ai  = AiListp + Offset;
+                    float     rad = chrGetAngleFromBond(ChrEntityp);
+                    if (ByteToRadian((ai->val[0])) < rad)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_DISTANCE_TO_BOND_LESS_THAN:
+                {
+                    AIRecord *ai       = AiListp + Offset;
+                    f32       distance = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    if (distance > chrGetDistanceToBond(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_DISTANCE_TO_BOND_GREATER_THAN:
+                {
+                    AIRecord *ai       = AiListp + Offset;
+                    f32       distance = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    if (distance < chrGetDistanceToBond(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_CHR_DISTANCE_TO_PAD_LESS_THAN:
+                {
+                    AIRecord * ai     = AiListp + Offset;
+                    ChrRecord *chr    = chrFindById(ChrEntityp, ai->val[0]);
+                    u16        padnum = (ai->val[4] | (ai->val[3] << 8));
+                    f32        value  = (ai->val[2] | (ai->val[1] << 8)) * 10.0f;
+                    if (chr && (value > chrGetDistanceToPad(chr, padnum)))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[5]);
+                    }
+                    else
+                    {
+                        Offset += 7;
+                    }
+                    break;
+                }
+                case AI_IF_CHR_DISTANCE_TO_PAD_GREATER_THAN:
+                {
+                    AIRecord * ai     = AiListp + Offset;
+                    ChrRecord *chr    = chrFindById(ChrEntityp, ai->val[0]);
+                    u16        padnum = (ai->val[4] | (ai->val[3] << 8));
+                    f32        value  = (ai->val[2] | (ai->val[1] << 8)) * 10.0f;
+                    if (chr && (value < chrGetDistanceToPad(chr, padnum)))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[5]);
+                    }
+                    else
+                    {
+                        Offset += 7;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_DISTANCE_TO_CHR_LESS_THAN:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    f32       cutoff = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    if (cutoff > chrGetDistanceToChr(ChrEntityp, ai->val[2]))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
+                    }
+                    else
+                    {
+                        Offset += 5;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_DISTANCE_TO_CHR_GREATER_THAN:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    f32       cutoff = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    if (cutoff < chrGetDistanceToChr(ChrEntityp, ai->val[2]))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
+                    }
+                    else
+                    {
+                        Offset += 5;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_SETTING_CHR_PRESET_TO_GUARD_WITHIN_DISTANCE:
+                {
+                    AIRecord *ai       = AiListp + Offset;
+                    f32       distance = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    if (sub_GAME_7F033B38(ChrEntityp, distance))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_BOND_DISTANCE_TO_PAD_LESS_THAN:
+                {
+                    AIRecord *ai    = AiListp + Offset;
+                    u16       pad   = (ai->val[3] | (ai->val[2] << 8));
+                    f32       value = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    if (value > chrGetDistanceFromBondToPad(ChrEntityp, pad))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
+                    }
+                    else
+                    {
+                        Offset += 6;
+                    }
+                    break;
+                }
+                case AI_IF_BOND_DISTANCE_TO_PAD_GREATER_THAN:
+                {
+                    AIRecord *ai    = AiListp + Offset;
+                    u16       pad   = (ai->val[3] | (ai->val[2] << 8));
+                    f32       value = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    if (value < chrGetDistanceFromBondToPad(ChrEntityp, pad))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
+                    }
+                    else
+                    {
+                        Offset += 6;
+                    }
+                    break;
+                }
+                case AI_IF_CHR_IN_ROOM_WITH_PAD:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    u16       pad_id = (ai->val[2] | (ai->val[1] << 8));
+                    if (chrIfInPadRoom(ChrEntityp, ai->val[0], pad_id))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
+                    }
+                    else
+                    {
+                        Offset += 5;
+                    }
+                    break;
+                }
+                case AI_IF_BOND_IN_ROOM_WITH_PAD:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    u16       pad_id = ai->val[1] | (ai->val[0] << 8);
+                    if (check_if_actor_is_at_preset(ChrEntityp, pad_id))
+                    {
+#    if DEBUG
+                        osSyncPrintf("BOND IN ROOM\n");
+#    endif
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+#    if DEBUG
+                        osSyncPrintf("bond not in room\n");
+#    endif
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_BOND_COLLECTED_OBJECT:
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop && is_prop_in_inventory(obj->prop))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_ITEM_IS_STATIONARY_WITHIN_LEVEL:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (weaponFindThrown(ai->val[0]))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_ITEM_IS_ATTACHED_TO_OBJECT:
+                {
+                    struct
+                    {
+                        u8 cmd;
+                        u8 val;
+                        u8 val1;
+                        u8 val2;
+                    } *ai              = AiListp + Offset;
+                    ObjectRecord *obj  = objFindByTagId(ai->val1);
+                    bool          pass = FALSE;
+                    if (obj && obj->prop)
+                    {
+                        PropRecord *prop = obj->prop->child;
+                        while (prop)
+                        {
+                            if (prop->type == PROP_TYPE_WEAPON)
+                            {
+                                WeaponObjRecord *weapon = prop->weapon;
+                                if (weapon->weaponnum == ai->val)
+                                {
+                                    pass = TRUE;
+                                    break;
+                                }
+                            }
+                            prop = prop->prev;
+                        }
+                    }
+                    if (pass)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val2);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_BOND_HAS_ITEM_EQUIPPED:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ai->val[0] == getCurrentPlayerWeaponId(GUNRIGHT) || ai->val[0] == getCurrentPlayerWeaponId(GUNLEFT)) //order matters
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_OBJECT_EXISTS: // aiIfGunUnclaimed
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_OBJECT_NOT_DESTROYED:
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop && objIsHealthy(obj))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_OBJECT_WAS_ACTIVATED:
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop && (obj->runtime_bitflags & RUNTIMEBITFLAG_ACTIVATED))
+                    {
+                        obj->runtime_bitflags &= ~RUNTIMEBITFLAG_ACTIVATED;
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_BOND_USED_GADGET_ON_OBJECT:
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop && (obj->openstate & PROPSTATE_ACTIVATED))
+                    {
+                        obj->openstate &= ~PROPSTATE_ACTIVATED;
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_OBJECT_ACTIVATE:
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop)
+                    {
+                        if (obj->prop->type == PROP_TYPE_DOOR)
+                        {
+                            doorActivateWrapper(obj->prop);
+                        }
+                        else if (obj->prop->type == PROP_TYPE_OBJ || obj->prop->type == PROP_TYPE_WEAPON)
+                        {
+                            propobjInteract(obj->prop);
+                        }
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_OBJECT_DESTROY:
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop)
+                    {
+                        if (!do_something_if_object_destroyed(obj))
+                        {
+                            f32 damage = ((obj->damage - obj->maxdamage) + 1) / 250.0f;
+                            maybe_detonate_object(obj, damage, &obj->runtime_pos, 29, -1);
+                        }
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_OBJECT_DROP_FROM_CHR:
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop && obj->prop->parent && obj->prop->parent->type == PROP_TYPE_CHR)
+                    {
+                        ChrRecord *chr = obj->prop->parent->chr;
+                        propobjSetDropped(obj->prop, 2);
+                        chr->hidden |= CHRHIDDEN_DROP_HELD_ITEMS;
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_CHR_DROP_ALL_CONCEALED_ITEMS:
+                {
+                    AIRecord * ai  = AiListp + Offset;
+                    ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
+                    if (chr && chr->prop)
+                    {
+                        chrDropItems(chr);
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_CHR_DROP_ALL_HELD_ITEMS:
+                {
+                    AIRecord * ai  = AiListp + Offset;
+                    ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
+                    if (chr && chr->prop)
+                    {
+                        if (chr->weapons_held[GUNRIGHT])
+                        {
+                            propobjSetDropped(chr->weapons_held[GUNRIGHT], 1);
+                            chr->hidden |= CHRHIDDEN_DROP_HELD_ITEMS;
+                        }
+                        if (chr->weapons_held[GUNLEFT])
+                        {
+                            propobjSetDropped(chr->weapons_held[GUNLEFT], 1);
+                            chr->hidden |= CHRHIDDEN_DROP_HELD_ITEMS;
+                        }
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_BOND_COLLECT_OBJECT:
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop)
+                    {
+                        INV_ITEM_TYPE iType = collect_or_interact_object(obj->prop, FALSE);
+                        sub_GAME_7F03C2BC(obj->prop, iType);
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_CHR_EQUIP_OBJECT:
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    ChrRecord *   chr = chrFindById(ChrEntityp, ai->val[1]);
+                    if (obj && obj->prop && chr)
+                    {
+                        if (obj->prop->parent)
+                        {
+                            sub_GAME_7F04C044(obj->prop);
+                        }
+                        else
+                        {
+                            sub_GAME_7F03E18C(obj->prop);
+                            sub_GAME_7F03A538(obj->prop);
+                            propHide(obj->prop);
+                        }
+                        if (obj->type != PROPDEF_COLLECTABLE || !sub_GAME_7F051E1C(obj, chr))
+                        {
+                            attachNewChild(obj->prop, chr->prop);
+                        }
+                    }
+                    Offset += 3;
+                    break;
+                }
+                case AI_OBJECT_MOVE_TO_PAD:
+                {
+                    AIRecord *          ai  = AiListp + Offset;
+                    ObjectRecord *      obj = objFindByTagId(ai->val[0]);
+                    volatile PadRecord *pad;
+                    u16                 padnum = (ai->val[2] | (ai->val[1] << 8));
+                    Mtxf                matrix;
+
+                    if (obj && obj->prop)
+                    {
+                        if (isNotBoundPad(padnum))
+                        {
+                            pad = &ptr_0xxxpresets[padnum];
+                        }
+                        else
+                        {
+                            pad = (PadRecord *)&ptr_2xxxpresets[getBoundPadNum(padnum)];
+                        }
+                        matrix_4x4_7F059908(&matrix, 0, 0, 0, -pad->target.x, -pad->target.y, -pad->target.z, pad->up.x, pad->up.y, pad->up.z);
+                        if (obj->model)
+                        {
+                            matrix_scalar_multiply(obj->model->scale, &matrix);
+                        }
+                        sub_GAME_7F04088C(obj, pad, &matrix, pad->stan, pad);
+                        sub_GAME_7F056CA0(obj);
+                    }
+                    Offset += 4;
+                    break;
+                }
+                case AI_DOOR_OPEN:
+                {
+                    AIRecord *  ai  = AiListp + Offset;
+                    DoorRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop && obj->prop->type == PROP_TYPE_DOOR)
+                    {
+                        // DoorRecord *door = (DoorRecord *)obj;
+                        doorActivate(obj, DOORSTATE_OPENING);
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_DOOR_CLOSE:
+                {
+                    AIRecord *  ai  = AiListp + Offset;
+                    DoorRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop && obj->prop->type == PROP_TYPE_DOOR)
+                    {
+                        //DoorRecord *door = (DoorRecord *)obj;
+                        doorActivate(obj, DOORSTATE_CLOSING);
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_IF_DOOR_STATE_EQUAL:
+                {
+                    AIRecord *    ai   = AiListp + Offset;
+                    ObjectRecord *obj  = objFindByTagId(ai->val[0]);
+                    bool          pass = FALSE;
+                    if (obj && obj->prop && obj->type == PROPDEF_DOOR)
+                    {
+                        DoorRecord *door = (DoorRecord *)obj;
+                        if (door->openstate == DOORSTATE_STATIONARY)
+                        {
+                            if (door->openPosition <= 0)
+                            {
+                                pass = (ai->val[1] & DOOR_STATE_CLOSED) != 0;
+                            }
+                            else
+                            {
+                                pass = (ai->val[1] & DOOR_STATE_OPEN) != 0;
+                            }
+                        }
+                        else if (door->openstate == DOORSTATE_OPENING || door->openstate == DOORSTATE_WAITING)
+                        {
+                            pass = (ai->val[1] & DOOR_STATE_OPENING) != 0;
+                        }
+                        else if (door->openstate == DOORSTATE_CLOSING)
+                        {
+                            pass = (ai->val[1] & DOOR_STATE_CLOSING) != 0;
+                        }
+                    }
+                    if (pass)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_DOOR_HAS_BEEN_OPENED_BEFORE:
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop && obj->type == PROPDEF_DOOR && (obj->runtime_bitflags & RUNTIMEBITFLAG_BEENOPENED))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_DOOR_SET_LOCK:
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop && obj->prop->type == PROP_TYPE_DOOR)
+                    {
+                        DoorRecord *door = (DoorRecord *)obj;
+                        u8          bits = ai->val[1];
+                        door->keyflags   = door->keyflags | bits;
+                    }
+                    Offset += 3;
+                    break;
+                }
+                case AI_DOOR_UNSET_LOCK:
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop && obj->prop->type == PROP_TYPE_DOOR)
+                    {
+                        DoorRecord *door = (DoorRecord *)obj;
+                        u8          bits = ai->val[1];
+                        door->keyflags &= ~bits;
+                    }
+                    Offset += 3;
+                    break;
+                }
+                case AI_IF_DOOR_LOCK_EQUAL:
+                {
+                    AIRecord *    ai   = AiListp + Offset;
+                    ObjectRecord *obj  = objFindByTagId(ai->val[0]);
+                    bool          pass = FALSE;
+                    if (obj && obj->prop && obj->prop->type == PROP_TYPE_DOOR)
+                    {
+                        DoorRecord *door = (DoorRecord *)obj;
+                        s32         bits = ai->val[1];
+                        if ((door->keyflags & bits) == bits)
+                        {
+                            pass = TRUE;
+                        }
+                    }
+                    if (pass)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_OBJECTIVE_NUM_COMPLETE:
+                {
+                    struct
+                    {
+                        u8 cmd;
+                        u8 val;
+                        u8 label;
+                    } *ai = AiListp + Offset;
+                    /* additional PD code for dificulty filtering 
+                     == OBJECTIVE_COMPLETE && objectiveGetDifficultyBits(ai->val[0]) & (1 << getDifficulty()))* 
+                     */
+                    if (objectiveGetCount() > ai->val && OBJECTIVESTATUS_COMPLETE == objectiveGetStatus_WEAK(ai->val * 1, ai->val))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->label);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_UNKNOWN6E:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (check_2328_preset_set_with_method(ChrEntityp, ai->val[0]))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_UNKNOWN6F:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (sub_GAME_7F033AAC(ChrEntityp, ai->val[0]))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+
+                case AI_IF_GUARD_HITS_LESS_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ai->val[0] > chrGetNumArghs(ChrEntityp)) //order matter
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_HITS_GREATER_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ai->val[0] < chrGetNumArghs(ChrEntityp)) //order matter
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_HITS_MISSED_LESS_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ai->val[0] > chrGetNumCloseArghs(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_HITS_MISSED_GREATER_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ai->val[0] < chrGetNumCloseArghs(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_CHR_HEALTH_LESS_THAN:
+                {
+                    AIRecord * ai    = AiListp + Offset;
+                    f32        value = (ai->val[1]) * 0.1f;
+                    ChrRecord *chr   = chrFindById(ChrEntityp, ai->val[0]);
+
+                    if (chr && ((chr->maxdamage - chr->damage) < value))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_CHR_HEALTH_GREATER_THAN:
+                {
+                    AIRecord * ai    = AiListp + Offset;
+                    f32        value = (ai->val[1]) * 0.1f;
+                    ChrRecord *chr   = chrFindById(ChrEntityp, ai->val[0]);
+
+                    if (chr && ((chr->maxdamage - chr->damage) > value))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_CHR_WAS_DAMAGED_SINCE_LAST_CHECK:
+                {
+                    AIRecord * ai  = AiListp + Offset;
+                    ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
+                    if (chr && (chr->chrflags & CHRFLAG_WAS_DAMAGED))
+                    {
+                        chr->chrflags &= ~CHRFLAG_WAS_DAMAGED; // disable flag
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_BOND_HEALTH_LESS_THAN:
+                {
+                    AIRecord *ai  = AiListp + Offset;
+                    float     val = (ai->val[0]) / 255.0f;
+                    if (val > get_BONDdata_watch_health())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_BOND_HEALTH_GREATER_THAN:
+                {
+                    AIRecord *ai  = AiListp + Offset;
+                    float     val = (ai->val[0]) / 255.0f;
+                    if (val < get_BONDdata_watch_health())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_GAME_DIFFICULTY_LESS_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ai->val[0] > getDifficulty())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_GAME_DIFFICULTY_GREATER_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ai->val[0] < getDifficulty())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_MISSION_TIME_LESS_THAN:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    f32       target = (ai->val[1] | (ai->val[0] << 8));
+                    if (target > get_cur_mp_sec())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_MISSION_TIME_GREATER_THAN:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    f32       target = (ai->val[1] | (ai->val[0] << 8));
+                    if (target < get_cur_mp_sec())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_SYSTEM_POWER_TIME_LESS_THAN:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    f32       target = (ai->val[1] | (ai->val[0] << 8)) * 60.0f;
+                    if (target > getUptime())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_SYSTEM_POWER_TIME_GREATER_THAN:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    f32       target = (ai->val[1] | (ai->val[0] << 8)) * 60.0f;
+                    if (target < getUptime())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_LEVEL_ID_LESS_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ai->val[0] > bossGetStageNum())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_LEVEL_ID_GREATER_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ai->val[0] < bossGetStageNum())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_LOCAL_BYTE_1_SET:
+                {
+                    AIRecord1 *ai      = AiListp + Offset;
+                    ChrEntityp->morale = ai->val;
+                    Offset += 2;
+                    break;
+                }
+                case AI_LOCAL_BYTE_1_ADD:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+                    if (255 - ai->val < ChrEntityp->morale) //clamp to 255
+                    {
+                        ChrEntityp->morale = 255; //max
+                    }
+                    else
+                    {
+                        ChrEntityp->morale += ai->val;
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_LOCAL_BYTE_1_SUBTRACT:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+                    if (ai->val > ChrEntityp->morale) //clamp to 0
+                    {
+                        ChrEntityp->morale = 0;
+                    }
+                    else
+                    {
+                        ChrEntityp->morale -= ai->val;
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_IF_LOCAL_BYTE_1_LESS_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ai->val[0] > ChrEntityp->morale)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_LOCAL_BYTE_1_LESS_THAN_RANDOM_SEED:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ChrEntityp->morale < ChrEntityp->random)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_LOCAL_BYTE_2_SET:
+                {
+                    AIRecord1 *ai         = AiListp + Offset;
+                    ChrEntityp->alertness = ai->val;
+                    Offset += 2;
+                    break;
+                }
+                case AI_LOCAL_BYTE_2_ADD:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+                    if (255 - ai->val < ChrEntityp->alertness) //clamp to 255
+                    {
+                        ChrEntityp->alertness = 255; //max
+                    }
+                    else
+                    {
+                        ChrEntityp->alertness += ai->val;
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_LOCAL_BYTE_2_SUBTRACT:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+                    if (ai->val > ChrEntityp->alertness) //clamp to 0
+                    {
+                        ChrEntityp->alertness = 0;
+                    }
+                    else
+                    {
+                        ChrEntityp->alertness -= ai->val;
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_IF_LOCAL_BYTE_2_LESS_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ai->val[0] > ChrEntityp->alertness)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_LOCAL_BYTE_2_LESS_THAN_RANDOM_SEED:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ChrEntityp->alertness < ChrEntityp->random)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_GUARD_SET_HEARING_SCALE:
+                {
+                    AIRecord *ai             = AiListp + Offset;
+                    f32       distance       = (ai->val[1] | (ai->val[0] << 8)) / 1000.0f;
+                    ChrEntityp->hearingscale = distance;
+                    Offset += 3;
+                    break;
+                }
+                case AI_GUARD_SET_VISION_RANGE:
+                {
+                    AIRecord *ai            = AiListp + Offset;
+                    ChrEntityp->visionrange = (ai->val[0]);
+                    Offset += 2;
+                    break;
+                }
+                case AI_GUARD_SET_GRENADE_PROBABILITY:
+                {
+                    AIRecord *ai            = AiListp + Offset;
+                    ChrEntityp->grenadeprob = ai->val[0];
+                    Offset += 2;
+                    break;
+                }
+                case AI_GUARD_SET_CHR_NUM:
+                {
+                    AIRecord *ai       = AiListp + Offset;
+                    ChrEntityp->chrnum = ai->val[0];
+                    Offset += 2;
+                    break;
+                }
+                case AI_GUARD_SET_HEALTH_TOTAL:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    f32       amount = (ai->val[1] | (ai->val[0] << 8)) * 0.1f;
+                    chrSetMaxDamage(ChrEntityp, amount);
+                    Offset += 3;
+                    break;
+                }
+                case AI_GUARD_SET_ARMOUR:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    f32       amount = (ai->val[1] | (ai->val[0] << 8)) * 0.1f; /*if (cheatIsActive(CHEAT_ENEMYSHIELDS)) { amount = amount < 8 ? 8 : amount; }*/
+                    chrAddHealth(ChrEntityp, amount);
+                    Offset += 3;
+                    break;
+                }
+                case AI_GUARD_SET_SPEED_RATING:
+                {   struct { u8 cmd; s8 val; } *ai = AiListp + Offset;
+#    ifdef DEBUG
+                    /*
+                        ".\\ported\\chrai.c", 2258, "Assertion failed: ai->val>=0"
+                        ".\\ported\\chrai.c", 2259, "Assertion failed: ai->val<=100"
+                        * Note: there are 10 lines between these 2 asserts meaning either no ifdef or no allman.
+                    */
+                    assert(ai->val >= 0);
+                    assert(ai->val <= 100);
+#    endif
+                    ChrEntityp->speedrating = ai->val;
+                    Offset += 2;
+                    break;
+                }
+                case AI_GUARD_SET_ARGH_RATING:
+                {   struct { u8 cmd; s8 val; } *ai = AiListp + Offset;
+#    ifdef DEBUG
+                    /*
+                        ".\\ported\\chrai.c", 2268, "Assertion failed: ai->val>=0"
+                        ".\\ported\\chrai.c", 2269, "Assertion failed: ai->val<=100"
+                    */
+                    assert(ai->val >= 0);
+                    assert(ai->val <= 100);
+#    endif
+                    ChrEntityp->arghrating = ai->val;
+                    Offset += 2;
+                    break;
+                }
+                case AI_GUARD_SET_ACCURACY_RATING:
+                {
+                    struct
+                    {
+                        u8 cmd;
+                        s8 val;
+                    } *ai                      = AiListp + Offset;
+                    ChrEntityp->accuracyrating = ai->val;
+                    Offset += 2;
+                    break;
+                }
+                case AI_GUARD_BITFIELD_SET_ON:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    chrSetFlags(ChrEntityp, ai->val[0]);
+                    Offset += 2;
+                    break;
+                }
+                case AI_GUARD_BITFIELD_SET_OFF:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    chrUnsetFlags(ChrEntityp, ai->val[0]);
+                    Offset += 2;
+                    break;
+                }
+                case AI_IF_GUARD_BITFIELD_IS_SET_ON:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrHasFlag(ChrEntityp, ai->val[0]))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_CHR_BITFIELD_SET_ON:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    chrSetFlagsById(ChrEntityp, ai->val[0], ai->val[1]);
+                    Offset += 3;
+                    break;
+                }
+                case AI_CHR_BITFIELD_SET_OFF:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    chrUnsetFlagsById(ChrEntityp, ai->val[0], ai->val[1]);
+                    Offset += 3;
+                    break;
+                }
+                case AI_IF_CHR_BITFIELD_IS_SET_ON:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrHasFlagById(ChrEntityp, ai->val[0], ai->val[1]))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_OBJECTIVE_BITFIELD_SET_ON:
+                {
+                    AIRecord *ai    = AiListp + Offset;
+                    s32       flags = (ai->val[1] << 16 | ai->val[2] << 8 | ai->val[3] | ai->val[0] << 24);
+                    chrSetStageFlags(ChrEntityp, flags);
+                    Offset += 5;
+                    break;
+                }
+                case AI_OBJECTIVE_BITFIELD_SET_OFF:
+                {
+                    AIRecord *ai    = AiListp + Offset;
+                    s32       flags = (ai->val[1] << 16 | ai->val[2] << 8 | ai->val[3] | ai->val[0] << 24);
+                    chrUnsetStageFlags(ChrEntityp, flags);
+                    Offset += 5;
+                    break;
+                }
+                case AI_IF_OBJECTIVE_BITFIELD_IS_SET_ON:
+                {
+                    AIRecord *ai    = AiListp + Offset;
+                    s32       flags = (ai->val[1] << 16 | ai->val[2] << 8 | ai->val[3] | ai->val[0] << 24);
+                    if (chrHasStageFlag(ChrEntityp, flags)) /* PD && ai->val[4] == 1) || (!chrHasStageFlag(ChrEntityp, flags) && ai->val[4] == 0* */
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
+                    }
+                    else
+                    {
+                        Offset += 6;
+                    }
+                    break;
+                }
+                case AI_GUARD_FLAGS_SET_ON:
+                {
+                    AIRecord *ai    = AiListp + Offset;
+                    CHRFLAG   flags = (ai->val[1] << 16 | ai->val[2] << 8 | ai->val[3] | ai->val[0] << 24);
+                    ChrEntityp->chrflags |= flags;
+                    Offset += 5;
+                    break;
+                }
+                case AI_GUARD_FLAGS_SET_OFF:
+                {
+                    AIRecord *ai    = AiListp + Offset;
+                    CHRFLAG   flags = (ai->val[1] << 16 | ai->val[2] << 8 | ai->val[3] | ai->val[0] << 24);
+                    ChrEntityp->chrflags &= ~flags;
+                    Offset += 5;
+                    break;
+                }
+                case AI_IF_GUARD_FLAGS_IS_SET_ON:
+                {
+                    AIRecord *ai    = AiListp + Offset;
+                    CHRFLAG   flags = (ai->val[1] << 16 | ai->val[2] << 8 | ai->val[3] | ai->val[0] << 24);
+                    if ((ChrEntityp->chrflags & flags) == flags)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
+                    }
+                    else
+                    {
+                        Offset += 6;
+                    }
+                    break;
+                }
+                case AI_CHR_FLAGS_SET_ON:
+                {
+                    AIRecord * ai    = AiListp + Offset;
+                    CHRFLAG    flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    ChrRecord *chr   = chrFindById(ChrEntityp, ai->val[0]);
+                    if (chr)
+                    {
+                        chr->chrflags |= flags;
+                    }
+                    Offset += 6;
+                    break;
+                }
+                case AI_CHR_FLAGS_SET_OFF:
+                {
+                    AIRecord * ai    = AiListp + Offset;
+                    CHRFLAG    flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    ChrRecord *chr   = chrFindById(ChrEntityp, ai->val[0]);
+                    if (chr)
+                    {
+                        chr->chrflags &= ~flags;
+                    }
+                    Offset += 6;
+                    break;
+                }
+                case AI_IF_CHR_FLAGS_IS_SET_ON:
+                {
+                    AIRecord * ai    = AiListp + Offset;
+                    CHRFLAG    flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    ChrRecord *chr   = chrFindById(ChrEntityp, ai->val[0]);
+                    if (chr && (chr->chrflags & flags) == flags)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[5]);
+                    }
+                    else
+                    {
+                        Offset += 7;
+                    }
+                    break;
+                }
+                case AI_OBJECT_FLAGS_1_SET_ON:
+                {
+                    AIRecord *    ai    = AiListp + Offset;
+                    s32           flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    ObjectRecord *obj   = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop)
+                    {
+                        obj->flags |= flags;
+                    }
+                    Offset += 6;
+                    break;
+                }
+                case AI_OBJECT_FLAGS_1_SET_OFF:
+                {
+                    AIRecord *    ai    = AiListp + Offset;
+                    s32           flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    ObjectRecord *obj   = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop)
+                    {
+                        obj->flags &= ~flags;
+                    }
+                    Offset += 6;
+                    break;
+                }
+                case AI_IF_OBJECT_FLAGS_1_IS_SET_ON:
+                {
+                    AIRecord *    ai    = AiListp + Offset;
+                    s32           flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    ObjectRecord *obj   = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop && (obj->flags & flags) == flags)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[5]);
+                    }
+                    else
+                    {
+                        Offset += 7;
+                    }
+                    break;
+                }
+                case AI_OBJECT_FLAGS_2_SET_ON:
+                {
+                    AIRecord *    ai    = AiListp + Offset;
+                    s32           flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    ObjectRecord *obj   = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop)
+                    {
+                        obj->flags2 |= flags;
+                    }
+                    Offset += 6;
+                    break;
+                }
+                case AI_OBJECT_FLAGS_2_SET_OFF:
+                {
+                    AIRecord *    ai    = AiListp + Offset;
+                    s32           flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    ObjectRecord *obj   = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop)
+                    {
+                        obj->flags2 &= ~flags;
+                    }
+                    Offset += 6;
+                    break;
+                }
+                case AI_IF_OBJECT_FLAGS_2_IS_SET_ON:
+                {
+                    AIRecord *    ai    = AiListp + Offset;
+                    s32           flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    ObjectRecord *obj   = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop && ((obj->flags2 & flags) == flags))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[5]);
+                    }
+                    else
+                    {
+                        Offset += 7;
+                    }
+                    break;
+                }
+                case AI_GUARD_SET_CHR_PRESET:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    chrSetChrPreset(ChrEntityp, ai->val[0]);
+                    Offset += 2;
+                    break;
+                }
+                case AI_CHR_SET_CHR_PRESET:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    chrSetChrPreset2(ChrEntityp, ai->val[0], ai->val[1]);
+                    Offset += 3;
+                    break;
+                }
+                case AI_GUARD_SET_PAD_PRESET:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    u16       pad_id = ai->val[1] | ai->val[0] << 8;
+                    if (ChrEntityp)
+                    {
+                        chrSetPadPreset(ChrEntityp, pad_id);
+                    }
+                    else if (AircraftEntityp)
+                    {
+                        AircraftEntityp->pad = pad_id;
+                    }
+                    Offset += 3;
+                    break;
+                }
+                case AI_CHR_SET_PAD_PRESET:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    u16       pad_id = ai->val[2] | ai->val[1] << 8;
+                    chrSetPadPresetByChrnum(ChrEntityp, ai->val[0], pad_id);
+                    Offset += 4;
+                    break;
+                }
+                case AI_PRINT:
+                {
+#    if DEBUG
+                    AIRecord *ai = AiListp + Offset;
+                    //PD = osSyncPrintf("AI_PRINT(void) (%d)\n", chraiitemsize(AiListp, Offset));
+                    osSyncPrintf("AI_PRINT: %s\n", ai->val);
+#    endif
+                    Offset += chraiitemsize(AiListp, Offset);
+                    break;
+                }
+                case AI_LOCAL_TIMER_RESET_START:
+                {
+                    chrRestartTimer(ChrEntityp);
+                    Offset += 1;
+                    break;
+                }
+                case AI_LOCAL_TIMER_RESET:
+                {
+                    ChrEntityp->timer60 = 0;
+                    Offset += 1;
+                    break;
+                }
+                case AI_LOCAL_TIMER_STOP:
+                {
+                    ChrEntityp->hidden &= ~CHRHIDDEN_TIMER_ACTIVE;
+                    Offset += 1;
+                    break;
+                }
+                case AI_LOCAL_TIMER_START:
+                {
+                    ChrEntityp->hidden |= CHRHIDDEN_TIMER_ACTIVE;
+                    Offset += 1;
+                    break;
+                }
+                case AI_IF_LOCAL_TIMER_HAS_STOPPED:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (((ChrEntityp->hidden & CHRHIDDEN_TIMER_ACTIVE) == 0))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_LOCAL_TIMER_LESS_THAN:
+                {
+                    AIRecord *ai   = AiListp + Offset;
+                    f32       valf = ((unsigned)((ai->val[1] << 8) | ai->val[2] | (ai->val[0] << 16))) / 60.0f;
+
+                    if (chrGetTimer(ChrEntityp) < valf)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
+                    }
+                    else
+                    {
+                        Offset += 5;
+                    }
+                    break;
+                }
+                case AI_IF_LOCAL_TIMER_GREATER_THAN:
+                {
+                    AIRecord *ai   = AiListp + Offset;
+                    f32       valf = ((unsigned)((ai->val[1] << 8) | ai->val[2] | (ai->val[0] << 16))) / 60.0f;
+                    if (chrGetTimer(ChrEntityp) > valf)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
+                    }
+                    else
+                    {
+                        Offset += 5;
+                    }
+                    break;
+                }
+                case AI_HUD_COUNTDOWN_SHOW:
+                {
+                    countdownTimerSetVisible(1, TRUE);
+                    Offset += 1;
+                    break;
+                }
+                case AI_HUD_COUNTDOWN_HIDE:
+                {
+                    countdownTimerSetVisible(1, FALSE);
+                    Offset += 1;
+                    break;
+                }
+                case AI_HUD_COUNTDOWN_SET:
+                {
+                    AIRecord *ai      = AiListp + Offset;
+                    f32       seconds = (ai->val[1] | ai->val[0] << 8);
+                    countdownTimerSetValue(seconds * 60.0f);
+                    Offset += 3;
+                    break;
+                }
+                case AI_HUD_COUNTDOWN_STOP:
+                {
+                    countdownTimerSetRunning(FALSE);
+                    Offset += 1;
+                    break;
+                }
+                case AI_HUD_COUNTDOWN_START:
+                {
+                    countdownTimerSetRunning(TRUE);
+                    Offset += 1;
+                    break;
+                }
+                case AI_IF_HUD_COUNTDOWN_HAS_STOPPED:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (!countdownTimerIsRunning())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_HUD_COUNTDOWN_LESS_THAN:
+                {
+                    AIRecord *ai    = AiListp + Offset;
+                    f32       value = ai->val[1] | ai->val[0] << 8;
+                    if (countdownTimerGetValue() < value * 60.0f)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_HUD_COUNTDOWN_GREATER_THAN:
+                {
+                    AIRecord *ai    = AiListp + Offset;
+                    f32       value = ai->val[1] | ai->val[0] << 8;
+                    if (countdownTimerGetValue() > value * 60.0f)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_CHR_TRY_SPAWNING_AT_PAD:
+                {
+                    AIRecord *ai       = AiListp + Offset;
+                    u16       pad      = ai->val[3] | (ai->val[2] << 8);
+                    CHRFLAG   flags    = (ai->val[7] << 16 | ai->val[8] << 8 | ai->val[9] | ai->val[6] << 24);
+                    u16       ailistid = ai->val[5] | ai->val[4] << 8;
+                    AIRecord *ailist   = ailistFindById(ailistid);
+                    if (chrSpawnAtPad(ChrEntityp, ai->val[0], (s8)ai->val[1], pad, ailist, flags))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[10]);
+                    }
+                    else
+                    {
+                        Offset += 12;
+                    }
+                    break;
+                }
+                case AI_CHR_TRY_SPAWNING_NEXT_TO_UNSEEN_CHR:
+                {
+                    AIRecord *ai       = AiListp + Offset;
+                    CHRFLAG   flags    = ai->val[6] << 16 | ai->val[7] << 8 | ai->val[8] | ai->val[5] << 24;
+                    u16       ailistid = ai->val[4] | (ai->val[3] << 8);
+                    AIRecord *ailist   = ailistFindById(ailistid);
+                    if (chrSpawnAtChr(ChrEntityp, ai->val[0], (s8)ai->val[1], ai->val[2], ailist, flags))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[9]);
+                    }
+                    else
+                    {
+                        Offset += 11;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_SPAWNING_ITEM:
+                {
+                    AIRecord *  ai    = AiListp + Offset;
+                    s32         flags = (ai->val[4] << 16) | (ai->val[5] << 8) | ai->val[6] | (ai->val[3] << 24);
+                    s32         model = ai->val[1] | (ai->val[0] << 8); // propID
+                    PropRecord *prop  = NULL;
+
+                    if (ChrEntityp && ChrEntityp->prop && ChrEntityp->model)
+                    {
+                        /* more nice PD code that might be usefull in future
+                        if (cheatIsActive(CHEAT_MARQUIS))
+                        {
+                            flags &= ~0x10000000;
+                            flags |= 0x20000000;
+                            prop = chrGiveWeapon(ChrEntityp, model, ai->val[2], flags);
+                        }
+                        else
+                        */
+                        if (cheatIsActive(28)) // CHEAT_ENEMYROCKETS
+                        {
+                            switch (ai->val[2]) // ITEM_IDS
+                            {
+                                case ITEM_KNIFE:
+                                case ITEM_THROWKNIFE:
+                                case ITEM_WPPK:
+                                case ITEM_WPPKSIL:
+                                case ITEM_TT33:
+                                case ITEM_SKORPION:
+                                case ITEM_AK47:
+                                case ITEM_UZI:
+                                case ITEM_MP5K:
+                                case ITEM_MP5KSIL:
+                                case ITEM_SPECTRE:
+                                case ITEM_M16:
+                                case ITEM_FNP90:
+                                case ITEM_SHOTGUN:
+                                case ITEM_AUTOSHOT:
+                                case ITEM_SNIPERRIFLE:
+                                case ITEM_RUGER:
+                                case ITEM_GOLDENGUN:
+                                case ITEM_SILVERWPPK:
+                                case ITEM_GOLDWPPK:
+                                case ITEM_LASER:
+                                case ITEM_WATCHLASER:
+                                case ITEM_TIMEDMINE:
+                                case ITEM_PROXIMITYMINE:
+                                case ITEM_REMOTEMINE:
+                                case ITEM_TRIGGER:
+                                case ITEM_TASER:
+
+                                    prop = chrGiveWeapon(ChrEntityp, PROP_chrrocketlaunch, ITEM_ROCKETLAUNCH, flags);
+                                    //!Bug, No Break! relying on chrGiveWeapon checking weapon already given
+                                default:
+                                    prop = chrGiveWeapon(ChrEntityp, model, ai->val[2], flags);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            prop = chrGiveWeapon(ChrEntityp, model, ai->val[2], flags);
+                        }
+                    }
+                    if (prop)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[7]);
+                    }
+                    else
+                    {
+                        Offset += 9;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_SPAWNING_HAT:
+                {
+                    AIRecord *ai       = AiListp + Offset;
+                    s32       flags    = (ai->val[3] << 16) | (ai->val[4] << 8) | ai->val[5] | (ai->val[2] << 24);
+                    s32       modelnum = ai->val[1] | (ai->val[0] << 8);
+                    bool      ok       = FALSE;
+                    if (ChrEntityp && ChrEntityp->prop && ChrEntityp->model)
+                    {
+                        ok = chrTryEquipHat(ChrEntityp, modelnum, flags);
+                    }
+                    if (ok)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[6]);
+                    }
+                    else
+                    {
+                        Offset += 8;
+                    }
+                    break;
+                }
+                case AI_CHR_TRY_SPAWNING_CLONE:
+                {
+                    AIRecord *       ai               = AiListp + Offset;
+                    //int zero                        = 0; //on stack in xbla, but matches without
+                    u16              ailistid         = ai->val[2] | (ai->val[1] << 8);
+                    u8 *             ailist           = ailistFindById((u16)ailistid);
+                    ChrRecord *      chr              = chrFindById(ChrEntityp, ai->val[0]);
+                    bool             pass             = FALSE; //564
+                    int              chrnum;
+                    PropRecord *     srcweaponLprop   = NULL;
+                    PropRecord *     srcweaponRprop   = NULL;
+                    PropRecord *     cloneweaponRprop = NULL;
+                    PropRecord *     cloneweaponLprop = NULL;
+                    PropRecord *     cloneprop        = NULL;
+                    ChrRecord *      clone            = NULL; //536
+                    WeaponObjRecord *srcweaponL       = NULL;
+                    WeaponObjRecord *cloneweaponL     = NULL; //528
+                    WeaponObjRecord *cloneweaponR     = NULL; //524
+                    WeaponObjRecord *srcweaponR       = NULL;
+                    PropRecord *     hatprop;
+                    ObjectRecord *   hatobj;
+                    //bool tryhat;
+                    if (chr && (chr->chrflags & CHRFLAG_CLONE))
+                    {
+                        cloneprop = chrSpawnAtChr(ChrEntityp, chr->bodynum, -1, chr->chrnum, ailist, 0);
+                        if (cloneprop)
+                        {
+                            clone  = cloneprop->chr;
+                            chrnum = chr->chrnum + 10000;
+                            if (!chrFindById(ChrEntityp, chrnum))
+                            {
+                                clone->chrnum = chrnum;
+                            }
+                            // chrSetChrnum(clone, getLowestUnusedChrId());
+                            // chr->chrdup = clone->chrnum;
+                            srcweaponRprop = chrGetEquippedWeaponProp(chr, GUNRIGHT);
+                            if (srcweaponRprop)
+                            {
+                                srcweaponR       = srcweaponRprop->weapon;
+                                cloneweaponRprop = chrGiveWeapon(clone, srcweaponR->obj, srcweaponR->weaponnum, 0);
+                                if (cloneweaponRprop)
+                                {
+                                    cloneweaponR = cloneweaponRprop->weapon;
+                                }
+                            }
+
+                            srcweaponLprop = chrGetEquippedWeaponProp(chr, GUNLEFT);
+                            if (srcweaponLprop)
+                            {
+                                srcweaponL       = srcweaponLprop->weapon;
+                                cloneweaponLprop = chrGiveWeapon(clone, srcweaponL->obj, srcweaponL->weaponnum, 0x10000000);
+                                if (cloneweaponLprop)
+                                {
+                                    cloneweaponL = cloneweaponLprop->weapon;
+                                }
+                            }
+
+                            if (srcweaponL && srcweaponR && cloneweaponL && cloneweaponR && srcweaponR == srcweaponL->dualweapon && srcweaponL == srcweaponR->dualweapon)
+                            {
+                                propweaponSetDual(cloneweaponL, cloneweaponR);
+                            }
+                            {
+                                hatprop = chr->handle_positiondata_hat;
+                                if (hatprop)
+                                {
+                                    hatobj = hatprop->obj;
+
+                                    chrTryEquipHat(clone, hatobj->obj, 0);
+                                }
+                            }
+                            /*PD extras*/
+                            //clone->morale     = chr->morale;
+                            //clone->alertness  = chr->alertness;
+                            //clone->padpreset1 = chr->padpreset1;
+                            pass = TRUE;
+                        }
+                    }
+                    if (pass)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
+                    }
+                    else
+                    {
+                        Offset += 5;
+                    }
+                    break;
+                }
+                case AI_TEXT_PRINT_BOTTOM:
+                {
+                    AIRecord *ai   = AiListp + Offset;
+                    char *    text = langGet(ai->val[1] | ai->val[0] << 8);
+#    ifdef VERSION_JP
+                    jp_hudmsgBottomShow(text);
+#    else
+                    hudmsgBottomShow(text);
+#    endif
+                    Offset += 3;
+                    break;
+                }
+                case AI_TEXT_PRINT_TOP:
+                {
+                    AIRecord *ai   = AiListp + Offset;
+                    char *    text = langGet(ai->val[1] | ai->val[0] << 8);
+
+#    if DEBUG
+                    osSyncPrintf("ptop =  %f \n", text);
+#    endif
+
+                    hudmsgTopShow(text);
+                    Offset += 3;
+                    break;
+                }
+                case AI_SFX_PLAY:
+                {
+                    AIRecord *ai       = AiListp + Offset;
+                    s16       audio_id = ai->val[1] | (ai->val[0] << 8);
+                    audioPlayFromProp((s8)ai->val[2], audio_id);
+                    Offset += 4;
+                    break;
+                }
+
+                case AI_SFX_STOP_CHANNEL:
+                {
+                    AIRecord1s *ai = AiListp + Offset;
+                    sub_GAME_7F0349BC(ai->val);
+                    Offset += 2;
+                    break;
+                }
+                case AI_SFX_SET_CHANNEL_VOLUME:
+                {
+                    struct
+                    {
+                        u8 cmd;
+                        s8 slotID;
+                        u8 val[];
+                    } *ai     = AiListp + Offset;
+                    s16 vol   = ai->val[1] | (ai->val[0] << 8);
+                    u16 sfxID = ai->val[3] | (ai->val[2] << 8);
+                    if (ai->slotID >= 0 && ai->slotID < 8)
+                    {
+                        sfx_related[ai->slotID].sfxID  = sfxID;
+                        sfx_related[ai->slotID].Volume = vol;
+                        sfx_related[ai->slotID].pad    = NULL;
+                        sfx_related[ai->slotID].Obj    = NULL;
+                        if (sfxID == 0)
+                        {
+                            audioPlayFromProp2(ai->slotID);
+                        }
+                    }
+                    Offset += 6;
+                    break;
+                }
+                case AI_SFX_FADE_CHANNEL_VOLUME:
+                {
+                    struct
+                    {
+                        u8 cmd;
+                        s8 slotID;
+                        u8 val[];
+                    } *ai     = AiListp + Offset;
+                    f32 vol   = ai->val[1] | (ai->val[0] << 8);
+                    u16 sfxID = ai->val[3] | (ai->val[2] << 8);
+                    if (ai->slotID >= 0 && ai->slotID < 8)
+                    {
+                        sfx_related[ai->slotID].sfxID  = sfxID;
+                        sfx_related[ai->slotID].Volume = sub_GAME_7F0539B8(vol);
+                        sfx_related[ai->slotID].pad    = NULL;
+                        sfx_related[ai->slotID].Obj    = NULL;
+                        if (sfxID == 0)
+                        {
+                            audioPlayFromProp2(ai->slotID);
+                        }
+                    }
+                    Offset += 6;
+                    break;
+                }
+                case AI_SFX_EMIT_FROM_OBJECT:
+                {
+                    struct
+                    {
+                        u8 cmd;
+                        s8 slotID;
+                        u8 val[];
+                    } *ai               = AiListp + Offset;
+                    ObjectRecord *obj   = objFindByTagId(ai->val[0]);
+                    u16           sfxID = ai->val[2] | (ai->val[1] << 8);
+                    if (ai->slotID >= 0 && ai->slotID < 8 && obj)
+                    {
+                        sfx_related[ai->slotID].sfxID = sfxID;
+                        sfx_related[ai->slotID].pad   = NULL;
+                        sfx_related[ai->slotID].Obj   = obj;
+                        if (sfxID == 0)
+                        {
+                            audioPlayFromProp2(ai->slotID);
+                        }
+                    }
+                    Offset += 5;
+                    break;
+                }
+                case AI_SFX_EMIT_FROM_PAD:
+                {
+                    struct
+                    {
+                        u8 cmd;
+                        s8 SlotID;
+                        u8 val[];
+                    } *ai             = AiListp + Offset;
+                    u16        padnum = ai->val[1] | (ai->val[0] << 8);
+                    PadRecord *pad;
+                    u16        sfxID = ai->val[3] | (ai->val[2] << 8);
+                    if (isNotBoundPad(padnum))
+                    {
+                        pad = &ptr_0xxxpresets[padnum];
+                    }
+                    else
+                    {
+                        pad = (PadRecord *)&ptr_2xxxpresets[getBoundPadNum(padnum)];
+                    }
+                    if (ai->SlotID >= 0 && ai->SlotID < 8 && pad)
+                    {
+                        sfx_related[ai->SlotID].sfxID = sfxID;
+                        sfx_related[ai->SlotID].pad   = pad;
+                        sfx_related[ai->SlotID].Obj   = NULL;
+                        if (sfxID == 0)
+                        {
+                            audioPlayFromProp2(ai->SlotID);
+                        }
+                    }
+                    Offset += 6;
+                    break;
+                }
+
+                case AI_IF_SFX_CHANNEL_VOLUME_LESS_THAN:
+                {
+                    struct
+                    {
+                        u8 cmd;
+                        s8 slotID;
+                        u8 val[];
+                    } *ai   = AiListp + Offset;
+                    s16 vol = ai->val[1] | (ai->val[0] << 8);
+                    if ((ai->slotID >= 0) && (ai->slotID < 8) && (sfx_related[ai->slotID].Volume2 < vol))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 5;
+                    }
+                    break;
+                }
+                case AI_VEHICLE_START_PATH:
+                {
+                    AIRecord *  ai   = AiListp + Offset;
+                    PathRecord *path = pathFindById(ai->val[0]);
+                    if (VehichleEntityp)
+                    {
+                        VehichleEntityp->path     = path;
+                        VehichleEntityp->nextstep = 0;
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_VEHICLE_SPEED:
+                {
+                    AIRecord *ai        = AiListp + Offset;
+                    f32       speedtime = ai->val[3] | (ai->val[2] << 8);
+                    f32       speedaim  = (ai->val[1] | (ai->val[0] << 8)) * 100.0f / 15360.0f;
+                    if (VehichleEntityp)
+                    {
+                        VehichleEntityp->speedaim    = speedaim;
+                        VehichleEntityp->speedtime60 = speedtime;
+                    }
+                    Offset += 5;
+                    break;
+                }
+                case AI_AIRCRAFT_ROTOR_SPEED:
+                {
+                    AIRecord *ai        = AiListp + Offset;
+                    f32       speedtime = ai->val[3] | (ai->val[2] << 8);
+                    f32       speedaim  = (ai->val[1] | (ai->val[0] << 8)) * M_TAU / 3600.0f;
+                    if (AircraftEntityp)
+                    {
+                        AircraftEntityp->rotaryspeedaim  = speedaim;
+                        AircraftEntityp->rotaryspeedtime = speedtime;
+                    }
+                    Offset += 5;
+                    break;
+                }
+                case AI_IF_CAMERA_IS_IN_INTRO:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if ((get_camera_mode() == 1) || (get_camera_mode() == 2))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_CAMERA_IS_IN_BOND_SWIRL:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (get_camera_mode() == 3)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_TV_CHANGE_SCREEN_BANK:
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop)
+                    {
+                        if (obj->type == PROPDEF_MONITOR)
+                        {
+                            MonitorObjRecord *sm = (MonitorObjRecord *)obj;
+                            imageSlotSetImage(&sm->Monitor.image, ai->val[2]);
+                        }
+                        else if (obj->type == PROPDEF_MULTI_MONITOR)
+                        {
+                            u8 slot = ai->val[1];
+                            if (slot < 4)
+                            {
+                                multimonitorobj *mm = (multimonitorobj *)obj; //need new size here 0x74 (116) + 0x80 (so monitor is obj + 74)
+                                imageSlotSetImage(&mm->Monitor[slot].image, ai->val[2]);
+                            }
+                        }
+                    }
+                    Offset += 4;
+                    break;
+                }
+                case AI_IF_BOND_IN_TANK:
+                {
+                    /* 
+                    # if DEBUG && PD 
+                    osSyncPrintf("ai_ifbondintank: tank code has been removed.\n"); 
+                    # endif 
+                    */
+                    AIRecord *ai = AiListp + Offset;
+                    if (isBondInTank() == TRUE)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_EXIT_LEVEL:
+                {
+                    if (camera_8003642C)
+                    {
+                        if (camera_80036434 == FALSE)
+                        {
+                            camera_80036434 = TRUE;
+                        }
+                    }
+                    else
+                    {
+                        bossReturnTitleStage();
+                    }
+                    Offset += 1;
+                    break;
+                }
+                case AI_CAMERA_RETURN_TO_BOND:
+                {
+                    set_camera_mode(CAMERAMODE_FP_NOINPUT);
+                    Offset += 1;
+                    break;
+                }
+                case AI_CAMERA_LOOK_AT_BOND_FROM_PAD:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    u16       padnum = ai->val[1] | (ai->val[0] << 8);
+                    if (isNotBoundPad(padnum))
+                    {
+                        dword_CODE_bss_800799F8 = &ptr_0xxxpresets[padnum];
+                    }
+                    else
+                    {
+                        dword_CODE_bss_800799F8 = (PadRecord *)&ptr_2xxxpresets[getBoundPadNum(padnum)];
+                    }
+                    set_camera_mode(CAMERAMODE_POSEND);
+                    Offset += 3;
+                    break;
+                }
+                case AI_CAMERA_SWITCH:
+                {
+                    AIRecord *       ai  = AiListp + Offset;
+                    TagObjectRecord *tag = sub_GAME_7F057080(ai->val[0]);
+                    if (tag)
+                    {
+                        int TagIndex = check_if_object_type_has_been_loaded(tag); //get index
+                        if (TagIndex >= 0)
+                        {
+                            CutsceneRecord *cdef = sub_GAME_7F056A88(tag->OffsetToObj + TagIndex); //get obj
+
+#    ifdef DEBUG
+                            /*".\\ported\\chrai.c", 0xc2b, "Assertion failed: cdef->type==PROPDEF_CAMERAPOS")                             */
+                            assert(cdef->type == PROPDEF_CAMERAPOS);
+#    endif
+                            dword_CODE_bss_800799F8 = NULL;
+                            dword_CODE_bss_800799FC = cdef;
+                            dword_CODE_bss_80079A18 = ai->val[2] | (ai->val[1] << 8);
+                            dword_CODE_bss_80079A1C = ai->val[4] | (ai->val[3] << 8);
+                            set_camera_mode(CAMERAMODE_POSEND);
+                        }
+                    }
+                    Offset += 6;
+                    break;
+                }
+                case AI_IF_BOND_Y_POS_LESS_THAN:
+                {
+                    AIRecord *ai      = AiListp + Offset;
+                    f32       bondpos = (s16)(ai->val[1] | ai->val[0] << 8);
+                    if (get_curplayer_positiondata()->pos.y < bondpos)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_HUD_HIDE_AND_LOCK_CONTROLS_AND_PAUSE_MISSION_TIME:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+                    set_unset_bitflags(4, FALSE);
+                    set_unset_ammo_on_screen_setting(2, FALSE);
+                    if (!(PLAYERFLAG_NOCONTROL & ai->val))
+                    {
+                        currentPlayerSetFlag(PLAYERFLAG_NOCONTROL);
+                    }
+                    if (!(ai->val & PLAYERFLAG_LOCKCONTROLS))
+                    {
+                        sub_GAME_7F08A944(PLAYERFLAG_NOCONTROL);
+                    }
+                    if (!(ai->val & PLAYERFLAG_NOTIMER))
+                    {
+                        countdownTimerSetVisible(16, FALSE);
+                    }
+                    D_800364B0 = FALSE;
+                    Offset += 2;
+                    break;
+                }
+                case AI_HUD_SHOW_ALL_AND_UNLOCK_CONTROLS_AND_RESUME_MISSION_TIME:
+                {
+#    if DEBUG
+                    osSyncPrintf("AI_BONDENABLECONTROL\n");
+#    endif
+                    set_unset_bitflags(4, TRUE);
+                    set_unset_ammo_on_screen_setting(2, TRUE);
+                    currentPlayerUnsetFlag(PLAYERFLAG_NOCONTROL);
+                    sub_GAME_7F08A928(2);
+                    countdownTimerSetVisible(16, TRUE);
+                    D_800364B0 = TRUE;
+                    Offset += 1;
+                    break;
+                }
+                case AI_CHR_TRY_TELEPORTING_TO_PAD:
+                {
+                    AIRecord * ai     = AiListp + Offset;
+                    s32        padnum = ai->val[2] | (ai->val[1] << 8);
+                    ChrRecord *chr    = chrFindById(ChrEntityp, ai->val[0]);
+                    bool       pass   = FALSE;
+                    PadRecord *pad;
+                    f32        FacingDirection;
+                    coord3d    pos;
+                    StandTile *stan;
+
+                    if (chr)
+                    {
+                        padnum = chrResolvePadId(ChrEntityp, padnum);
+                        if (isNotBoundPad(padnum))
+                        {
+                            pad = &ptr_0xxxpresets[padnum];
+                        }
+                        else
+                        {
+                            pad = (PadRecord *)&ptr_2xxxpresets[getBoundPadNum(padnum)];
+                        }
+
+                        FacingDirection = atan2f(pad->target.x, pad->target.z);
+                        pos.x           = pad->pos.x;
+                        pos.y           = pad->pos.y;
+                        pos.z           = pad->pos.z;
+                        //pos  = pad->pos; <-uses lw instead of lwc1
+                        stan            = pad->stan;
+                        sub_GAME_7F03D058(chr->prop, FALSE);
+
+                        if (sub_GAME_7F033F48(&pos, &stan, FacingDirection, TRUE))
+                        {
+                            {
+                                chr->prop->pos.x = pos.x;
+                                chr->prop->pos.y = pos.y;
+                                chr->prop->pos.z = pos.z;
+                            }
+                            //chr->prop->pos  = pos;
+                            chr->prop->stan = stan;
+                            chr->chrflags   = chr->chrflags | CHRFLAG_INIT;
+                            setsubroty(chr->model, FacingDirection);
+                            setsuboffset(chr->model, &pos);
+                            sub_GAME_7F020D94(chr);
+                            if (chr->prop == pPlayer->prop)
+                            {
+                                pPlayer->pos4.x = pos.x;
+                                pPlayer->pos4.y = pos.y;
+                                pPlayer->pos4.z = pos.z;
+
+                                //pPlayer->pos = pos;
+                                pPlayer->current_tile_ptr = stan;
+                            }
+                            pass = TRUE;
+                        }
+                        sub_GAME_7F03D058(chr->prop, TRUE);
+                    }
+                    if (pass)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
+                    }
+                    else
+                    {
+                        Offset += 5;
+                    }
+                    break;
+                }
+                case AI_SCREEN_FADE_TO_BLACK:
+                {
+                    if (stop_time_flag != 2)
+                    {
+                        currentPlayerSetFadeColour(0, 0, 0, 0);
+                        currentPlayerSetFadeFrac(60.0f, 1);
+                    }
+                    Offset += 1;
+                    break;
+                }
+                case AI_SCREEN_FADE_FROM_BLACK:
+                {
+                    if (stop_time_flag != 2)
+                    {
+                        currentPlayerSetFadeColour(0, 0, 0, 1);
+                        currentPlayerSetFadeFrac(60.0f, 0);
+                    }
+                    Offset += 1;
+                    break;
+                }
+                case AI_IF_SCREEN_FADE_COMPLETED:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (pPlayer->colourfadetimemax60 < 0)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_CHR_HIDE_ALL:
+                {
+                    s32 num;
+                    for (num = get_numguards() - 1; num >= 0; num--)
+                    {
+                        if (ptr_guard_data[num].model != NULL)
+                        {
+                            ptr_guard_data[num].chrflags |= CHRFLAG_HIDDEN;
+                        }
+                    }
+                    Offset += 1;
+                    break;
+                }
+                case AI_CHR_SHOW_ALL:
+                {
+                    s32 num;
+                    for (num = get_numguards() - 1; num >= 0; num--)
+                    {
+                        ptr_guard_data[num].chrflags &= ~CHRFLAG_HIDDEN;
+                    }
+
+                    Offset += 1;
+                    break;
+                }
+                case AI_DOOR_OPEN_INSTANT:
+                {
+                    AIRecord *  ai   = AiListp + Offset;
+                    DoorRecord *door = objFindByTagId(ai->val[0]);
+                    if (door && door->prop)
+                    {
+                        //DoorRecord *door   = (DoorRecord *)obj;
+                        door->speed        = 0;
+                        door->openPosition = door->maxFrac;
+                        door->openedTime   = global_timer;
+                        door->openstate        = DOORSTATE_STATIONARY;
+                        sub_GAME_7F052B00(door);
+                        sub_GAME_7F053598(door); // doorActivatePortal
+                        sub_GAME_7F053B10(door);
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_CHR_REMOVE_ITEM_IN_HAND:
+                {
+                    AIRecord * ai  = AiListp + Offset;
+                    ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
+                    if (chr)
+                    {
+                        chrSetWeaponFlag4(chr, ai->val[1]);
+                    }
+                    Offset += 3;
+                    break;
+                }
+                case AI_IF_NUMBER_OF_ACTIVE_PLAYERS_LESS_THAN:
+                {
+                    struct
+                    {
+                        u8 cmd;
+                        s8 val;
+                        u8 label;
+                    } *ai = AiListp + Offset;
+                    if (getPlayercount() < ai->val)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->label);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_BOND_ITEM_TOTAL_AMMO_LESS_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (currentPlayerGetAmmoCount((s8)ai->val[0]) < (s8)ai->val[1])
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_BOND_EQUIP_ITEM:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    currentPlayerEquipWeaponWrapper(GUNRIGHT, (s8)ai->val[0]);
+                    currentPlayerEquipWeaponWrapper(GUNLEFT, 0);
+                    Offset += 2;
+                    break;
+                }
+                case AI_BOND_EQUIP_ITEM_CINEMA:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    currentPlayerUnEquipWeaponWrapper(GUNRIGHT, ai->val[0]);
+                    currentPlayerUnEquipWeaponWrapper(GUNLEFT, 0);
+                    Offset += 2;
+                    break;
+                }
+                case AI_BOND_SET_LOCKED_VELOCITY:
+                {
+                    /*
+                    g_Vars.currentplayer->bondforcespeed.x = (s8)ai->val[1];
+                    g_Vars.currentplayer->bondforcespeed.y = 0;
+                    g_Vars.currentplayer->bondforcespeed.z = (s8)ai->val[2];
+                    */
+                    AIRecord *ai            = AiListp + Offset;
+                    flt_CODE_bss_80079990.x = (s8)ai->val[0];
+                    flt_CODE_bss_80079990.y = 0;
+                    flt_CODE_bss_80079990.z = (s8)ai->val[1];
+                    Offset += 3;
+                    break;
+                }
+                case AI_IF_OBJECT_IN_ROOM_WITH_PAD:
+                {
+                    AIRecord *    ai     = AiListp + Offset;
+                    u16           padnum = ai->val[2] | (ai->val[1] << 8);
+                    PadRecord *   pad;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+
+                    if (isNotBoundPad(padnum))
+                    {
+                        pad = &ptr_0xxxpresets[padnum * 1]; //needs a mult by 1 to correct s0/v1
+                    }
+                    else
+                    {
+                        pad = (PadRecord *)&ptr_2xxxpresets[getBoundPadNum(padnum)];
+                    }
+
+                    if (pad->stan && obj && obj->prop && (pad->stan->RoomID == obj->prop->stan->RoomID))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
+                    }
+                    else
+                    {
+                        Offset += 5;
+                    }
+                    break;
+                }
+                case AI_SWITCH_SKY:
+                { // SWITCHENVIRONMENT
+                    switch_to_solosky2(1.0);
+                    Offset += 1;
+                    break;
+                }
+                case AI_TRIGGER_FADE_AND_EXIT_LEVEL_ON_BUTTON_PRESS:
+                {
+                    if (stop_time_flag == FALSE)
+                    {
+                        stop_time_flag = TRUE;
+                    }
+                    Offset += 1;
+                    break;
+                }
+                case AI_IF_BOND_IS_DEAD:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (pPlayer->bonddead)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_BOND_DISABLE_DAMAGE_AND_PICKUPS:
+                {
+                    g_PlayerInvincible = TRUE;
+                    Offset += 1;
+                    break;
+                }
+                case AI_BOND_HIDE_WEAPONS:
+                {
+                    remove_item_in_hand(GUNRIGHT);
+                    remove_item_in_hand(GUNLEFT);
+                    Offset += 1;
+                    break;
+                }
+                case AI_CAMERA_ORBIT_PAD: //sp order from xbla
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    s32       padnum;
+                    s32       a;
+                    s32       b;
+                    s32       c;
+                    s32       height;
+                    s32       speed;
+                    b                       = ai->val[1] | ai->val[0] << 8;
+                    height                  = (s16)(ai->val[3] | ai->val[2] << 8);
+                    a                       = (s16)(ai->val[5] | ai->val[4] << 8);
+                    padnum                  = ai->val[7] | ai->val[6] << 8;
+                    c                       = (s16)(ai->val[9] | ai->val[8] << 8);
+                    speed                   = ai->val[11] | ai->val[10] << 8;
+                    dword_CODE_bss_800799F8 = NULL;
+                    dword_CODE_bss_800799FC = NULL;
+                    flt_CODE_bss_80079A00   = (speed * M_TAU) / 65536.0f; //speed
+                    flt_CODE_bss_80079A04   = (a * M_TAU) / 65536.0f;
+                    flt_CODE_bss_80079A08   = b;
+                    flt_CODE_bss_80079A0C   = height; //height
+                    flt_CODE_bss_80079A10   = c;
+                    dword_CODE_bss_80079A14 = padnum;   //padtoorbit
+                    set_camera_mode(CAMERAMODE_POSEND);
+                    Offset += 13;
+                    break;
+                }
+                case AI_CREDITS_ROLL:
+                {
+                    D_8003643C = TRUE;
+                    Offset += 1;
+                    break;
+                }
+                case AI_IF_CREDITS_HAS_COMPLETED:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (D_8003643C == 2)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_OBJECTIVE_ALL_COMPLETED:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    //bool a = objectiveIsAllComplete();
+                    if (objectiveIsAllComplete())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_FOLDER_ACTOR_IS_EQUAL:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (getSelectedFolderBond() == (s8)ai->val[0])
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_BOND_DAMAGE_AND_PICKUPS_DISABLED:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (g_PlayerInvincible)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_MUSIC_XTRACK_PLAY:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    Offset += 4;
+                    musicSetXReason((s8)ai->val[0], ai->val[1], ai->val[2]);
+#    if DEBUG
+                    osSyncPrintf("ai: enery tune on (%d, %d, %d)\n", ai->val[0], ai->val[1], ai->val[2]);
+#    endif
+                    break;
+                }
+                case AI_MUSIC_XTRACK_STOP:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    Offset += 2;
+                    musicUnsetXReason((s8)ai->val[0]);
+#    if DEBUG
+                    osSyncPrintf("ai: enery tune off (%d)\n", ai->val[0]);
+#    endif
+                    break;
+                }
+                case AI_TRIGGER_EXPLOSIONS_AROUND_BOND:
+                {
+                    SurroundWithExplosions(0);
+                    Offset += 1;
+                    break;
+                }
+                case AI_IF_KILLED_CIVILIANS_GREATER_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ai->val[0] < get_civilian_casualties())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_CHR_WAS_SHOT_SINCE_LAST_CHECK:
+                {
+                    AIRecord * ai  = AiListp + Offset;
+                    ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
+                    if (chr && chr->chrflags & CHRFLAG_WAS_HIT)
+                    {
+                        chr->chrflags &= ~CHRFLAG_WAS_HIT;
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_BOND_KILLED_IN_ACTION:
+                {
+                    g_isBondKIA = TRUE;
+                    Offset += 1;
+                    break;
+                }
+                case AI_GUARD_RAISES_ARMS:
+                {
+                    chrTrySurprisedSurrender(ChrEntityp);
+                    Offset += 1;
+                    break;
+                }
+                case AI_GAS_LEAK_AND_FADE_FOG:
+                {
+                    void *p[3] = ptr_80030A88_3words;
+                    init_trigger_toxic_gas_effect(p); //do something with p
+                    Offset += 1;
+                    break;
+                }
+                case AI_OBJECT_ROCKET_LAUNCH:
+                {
+                    AIRecord1 *   ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val);
+
+                    if (obj && obj->prop)
+                    {
+                        sub_GAME_7F03FDA8(obj->prop);
+
+                        if (obj->runtime_bitflags & RUNTIMEBITFLAG_LAUNCHING)
+                        {
+                            obj->unk6C->id |= 0x601;
+                            sub_GAME_7F03FE14(obj->prop);
+                            matrix_4x4_set_identity(&obj->unk6C->m);
+                            obj->unk6C->pos.x = 0;
+                            obj->unk6C->pos.y = 1.0f / 60.0f; //step height?
+                            obj->unk6C->pos.z = 0;
+                            obj->unk6C->vec.x = 0;
+                            obj->unk6C->vec.y = 0.29166666f; //direction to move?
+                            obj->unk6C->vec.z = 0;
+                        }
+                    }
+                    Offset += 2;
+                    break;
+                } //============================================================================================================
+#endif
+                default:
+                    /* 
+                     * No Command found, advance ailist by 1. 
+                     * This is attempting to handle situations where the command 
+                     * type is invalid by passing over them and continuing 
+                     * execution.  
+                     * chraiitemsize returns 1 which is pointless really 
+                     * could have done it here without a jump 
+                     * 
+                     * Outcome:crash 
+                     */
+                    {
+                        Offset += chraiitemsize(AiListp, Offset);
+                    }
+            } // switch
+        }     // for
+    }         // Has ailist
+}             //ai()
 #else
 #ifdef VERSION_US
 GLOBAL_ASM(
@@ -19691,7 +23321,7 @@ glabel set_stateflag_0x04_for_posdata
 
 void propHide(PropRecord *prop)
 {
-    prop->flags = prop->flags & 0xfffb;
+    prop->flags &= ~4;
 }
 
 
@@ -19831,47 +23461,32 @@ glabel sub_GAME_7F03A4F0
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03A538(void) {
+void sub_GAME_7F03A538(PropRecord *prop)
+{
+    PropRecord *temp_v0;
+    PropRecord *temp_v0_2;
 
+    if (prop == ptr_obj_pos_list_current_entry)
+    {
+        ptr_obj_pos_list_current_entry = prop->prev;
+    }
+    if (prop == ptr_obj_pos_list_first_entry)
+    {
+        ptr_obj_pos_list_first_entry = prop->next;
+    }
+    temp_v0 = prop->prev;
+    if (temp_v0 != 0)
+    {
+        temp_v0->next = prop->next;
+    }
+    temp_v0_2 = prop->next;
+    if (temp_v0_2 != 0)
+    {
+        temp_v0_2->prev = prop->prev;
+    }
+    prop->prev = NULL;
+    prop->next = NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03A538
-/* 06F068 7F03A538 3C028003 */  lui   $v0, %hi(ptr_obj_pos_list_current_entry)
-/* 06F06C 7F03A53C 24420AA0 */  addiu $v0, %lo(ptr_obj_pos_list_current_entry) # addiu $v0, $v0, 0xaa0
-/* 06F070 7F03A540 8C4E0000 */  lw    $t6, ($v0)
-/* 06F074 7F03A544 148E0003 */  bne   $a0, $t6, .L7F03A554
-/* 06F078 7F03A548 00000000 */   nop   
-/* 06F07C 7F03A54C 8C8F0024 */  lw    $t7, 0x24($a0)
-/* 06F080 7F03A550 AC4F0000 */  sw    $t7, ($v0)
-.L7F03A554:
-/* 06F084 7F03A554 3C028003 */  lui   $v0, %hi(ptr_obj_pos_list_first_entry)
-/* 06F088 7F03A558 24420AA4 */  addiu $v0, %lo(ptr_obj_pos_list_first_entry) # addiu $v0, $v0, 0xaa4
-/* 06F08C 7F03A55C 8C580000 */  lw    $t8, ($v0)
-/* 06F090 7F03A560 54980004 */  bnel  $a0, $t8, .L7F03A574
-/* 06F094 7F03A564 8C820024 */   lw    $v0, 0x24($a0)
-/* 06F098 7F03A568 8C990028 */  lw    $t9, 0x28($a0)
-/* 06F09C 7F03A56C AC590000 */  sw    $t9, ($v0)
-/* 06F0A0 7F03A570 8C820024 */  lw    $v0, 0x24($a0)
-.L7F03A574:
-/* 06F0A4 7F03A574 50400004 */  beql  $v0, $zero, .L7F03A588
-/* 06F0A8 7F03A578 8C820028 */   lw    $v0, 0x28($a0)
-/* 06F0AC 7F03A57C 8C880028 */  lw    $t0, 0x28($a0)
-/* 06F0B0 7F03A580 AC480028 */  sw    $t0, 0x28($v0)
-/* 06F0B4 7F03A584 8C820028 */  lw    $v0, 0x28($a0)
-.L7F03A588:
-/* 06F0B8 7F03A588 50400004 */  beql  $v0, $zero, .L7F03A59C
-/* 06F0BC 7F03A58C AC800024 */   sw    $zero, 0x24($a0)
-/* 06F0C0 7F03A590 8C890024 */  lw    $t1, 0x24($a0)
-/* 06F0C4 7F03A594 AC490024 */  sw    $t1, 0x24($v0)
-/* 06F0C8 7F03A598 AC800024 */  sw    $zero, 0x24($a0)
-.L7F03A59C:
-/* 06F0CC 7F03A59C 03E00008 */  jr    $ra
-/* 06F0D0 7F03A5A0 AC800028 */   sw    $zero, 0x28($a0)
-)
-#endif
 
 
 
@@ -22111,10 +25726,50 @@ void chraiCheckUseHeldItems(void)
 
 
 
-
+//todo: find out why this forces 21990 data out of alignment
 #ifdef NONMATCHING
-void sub_GAME_7F03C2BC(void) {
+//https://decomp.me/scratch/QAX0r
+void sub_GAME_7F03C2BC(PropRecord *prop, INV_ITEM_TYPE type) //#MATCH
+{
+    ObjectRecord *propobj;
 
+    if (type == INV_ITEM_WEAPON)
+    {
+        if ((prop->type == PROP_TYPE_WEAPON) || (prop->type == PROP_TYPE_OBJ))
+        {
+            propobj = prop->obj;
+            if (prop->obj->state & 4) //matches only is called directly (not propobj)
+            {
+                prop->timetoregen = 0x4B0;
+                propobj->runtime_bitflags |= 0x800;
+                propobj->runtime_bitflags &= ~4;
+                propobj->state &= ~0x80;
+                propobj->maxdamage = 0.0f;
+                sub_GAME_7F03E18C(prop);
+                propHide(prop);
+                return;
+            }
+        }
+        sub_GAME_7F03E18C(prop);
+        sub_GAME_7F03A538(prop);
+        propHide(prop);
+        propFree(prop);
+    }
+    else if (type == INV_ITEM_PROP)
+    {
+        sub_GAME_7F03E18C(prop);
+        sub_GAME_7F03A538(prop);
+        propHide(prop);
+    }
+    else if (type == INV_ITEM_PICKUP)
+    {
+        sub_GAME_7F03E18C(prop);
+        sub_GAME_7F03A538(prop);
+        propHide(prop);
+        sub_GAME_7F04C044(prop);
+        sub_GAME_7F040CF0(prop);
+        attachNewChild(prop, get_curplayer_positiondata());
+    }
 }
 #else
 GLOBAL_ASM(
@@ -23081,51 +26736,22 @@ glabel sub_GAME_7F03CFE8
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03D058(void) {
 
+void sub_GAME_7F03D058(PropRecord *prop, bool unset) //#MATCH
+{
+    if (prop->type == PROP_TYPE_CHR)
+    {
+        set_or_unset_GUARDdata_flag(prop->chr, unset);
+    }
+    else if (prop->type == PROP_TYPE_VIEWER)
+    {
+        bondviewUpdateGuardTankFlagsRelated(prop, unset);
+    }
+    else if ((prop->type == PROP_TYPE_OBJ) || (prop->type == PROP_TYPE_DOOR) || (prop->type == PROP_TYPE_WEAPON))
+    {
+        sub_GAME_7F04F218(prop, unset);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03D058
-/* 071B88 7F03D058 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 071B8C 7F03D05C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 071B90 7F03D060 90820000 */  lbu   $v0, ($a0)
-/* 071B94 7F03D064 24010003 */  li    $at, 3
-/* 071B98 7F03D068 00803025 */  move  $a2, $a0
-/* 071B9C 7F03D06C 54410006 */  bnel  $v0, $at, .L7F03D088
-/* 071BA0 7F03D070 24010006 */   li    $at, 6
-/* 071BA4 7F03D074 0FC07D7A */  jal   set_or_unset_GUARDdata_flag
-/* 071BA8 7F03D078 8C840004 */   lw    $a0, 4($a0)
-/* 071BAC 7F03D07C 10000012 */  b     .L7F03D0C8
-/* 071BB0 7F03D080 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 071BB4 7F03D084 24010006 */  li    $at, 6
-.L7F03D088:
-/* 071BB8 7F03D088 54410006 */  bnel  $v0, $at, .L7F03D0A4
-/* 071BBC 7F03D08C 24010001 */   li    $at, 1
-/* 071BC0 7F03D090 0FC2280F */  jal   bondviewUpdateGuardTankFlagsRelated
-/* 071BC4 7F03D094 00C02025 */   move  $a0, $a2
-/* 071BC8 7F03D098 1000000B */  b     .L7F03D0C8
-/* 071BCC 7F03D09C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 071BD0 7F03D0A0 24010001 */  li    $at, 1
-.L7F03D0A4:
-/* 071BD4 7F03D0A4 10410005 */  beq   $v0, $at, .L7F03D0BC
-/* 071BD8 7F03D0A8 24010002 */   li    $at, 2
-/* 071BDC 7F03D0AC 10410003 */  beq   $v0, $at, .L7F03D0BC
-/* 071BE0 7F03D0B0 24010004 */   li    $at, 4
-/* 071BE4 7F03D0B4 54410004 */  bnel  $v0, $at, .L7F03D0C8
-/* 071BE8 7F03D0B8 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F03D0BC:
-/* 071BEC 7F03D0BC 0FC13C86 */  jal   sub_GAME_7F04F218
-/* 071BF0 7F03D0C0 00C02025 */   move  $a0, $a2
-/* 071BF4 7F03D0C4 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F03D0C8:
-/* 071BF8 7F03D0C8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 071BFC 7F03D0CC 03E00008 */  jr    $ra
-/* 071C00 7F03D0D0 00000000 */   nop   
-)
-#endif
 
 
 
@@ -24238,6 +27864,7 @@ glabel sub_GAME_7F03DD9C
 
 
 
+void sub_GAME_7F03DE94(PropRecord *arg0, s16 room);
 
 #ifdef NONMATCHING
 void sub_GAME_7F03DE94(void) {
@@ -24488,119 +28115,45 @@ glabel sub_GAME_7F03E134
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03E18C(void) {
     // Duplicate of the below function with a small extension.
-}
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03E18C
-/* 072CBC 7F03E18C 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 072CC0 7F03E190 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 072CC4 7F03E194 AFB30020 */  sw    $s3, 0x20($sp)
-/* 072CC8 7F03E198 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 072CCC 7F03E19C AFB10018 */  sw    $s1, 0x18($sp)
-/* 072CD0 7F03E1A0 AFB00014 */  sw    $s0, 0x14($sp)
-/* 072CD4 7F03E1A4 9090002C */  lbu   $s0, 0x2c($a0)
-/* 072CD8 7F03E1A8 241200FF */  li    $s2, 255
-/* 072CDC 7F03E1AC 00809825 */  move  $s3, $a0
-/* 072CE0 7F03E1B0 1250000A */  beq   $s2, $s0, .L7F03E1DC
-/* 072CE4 7F03E1B4 2491002C */   addiu $s1, $a0, 0x2c
-/* 072CE8 7F03E1B8 00102C00 */  sll   $a1, $s0, 0x10
-.L7F03E1BC:
-/* 072CEC 7F03E1BC 00057403 */  sra   $t6, $a1, 0x10
-/* 072CF0 7F03E1C0 01C02825 */  move  $a1, $t6
-/* 072CF4 7F03E1C4 0FC0F7A5 */  jal   sub_GAME_7F03DE94
-/* 072CF8 7F03E1C8 02602025 */   move  $a0, $s3
-/* 072CFC 7F03E1CC 92300001 */  lbu   $s0, 1($s1)
-/* 072D00 7F03E1D0 26310001 */  addiu $s1, $s1, 1
-/* 072D04 7F03E1D4 5650FFF9 */  bnel  $s2, $s0, .L7F03E1BC
-/* 072D08 7F03E1D8 00102C00 */   sll   $a1, $s0, 0x10
-.L7F03E1DC:
-/* 072D0C 7F03E1DC 926F0001 */  lbu   $t7, 1($s3)
-/* 072D10 7F03E1E0 241900FF */  li    $t9, 255
-/* 072D14 7F03E1E4 31F80010 */  andi  $t8, $t7, 0x10
-/* 072D18 7F03E1E8 57000003 */  bnezl $t8, .L7F03E1F8
-/* 072D1C 7F03E1EC 8FBF0024 */   lw    $ra, 0x24($sp)
-/* 072D20 7F03E1F0 A279002C */  sb    $t9, 0x2c($s3)
-/* 072D24 7F03E1F4 8FBF0024 */  lw    $ra, 0x24($sp)
-.L7F03E1F8:
-/* 072D28 7F03E1F8 8FB00014 */  lw    $s0, 0x14($sp)
-/* 072D2C 7F03E1FC 8FB10018 */  lw    $s1, 0x18($sp)
-/* 072D30 7F03E200 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 072D34 7F03E204 8FB30020 */  lw    $s3, 0x20($sp)
-/* 072D38 7F03E208 03E00008 */  jr    $ra
-/* 072D3C 7F03E20C 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
-/*
-Main missing these kinds of instructions:
-
-- sll   $a1, $s0, 0x10
-- sra   $t6, $a1, 0x10
-..
-- sll   $a1, $s0, 0x10
-
-So it looks like a conversion from u32 to u16, but we're reading a u8?
-I tried u32 room but no joy.
-*/
-void sub_GAME_7F03E210(PropRecord *posData)
+void sub_GAME_7F03E18C(PropRecord *prop)
 {
-  u8 room;
-  u8 *roomIter;
-  
-  roomIter = posData->rooms;
-  room = roomIter[0];
+    u8  room;
+    u8 *roomIter;
 
-  while (room != 0xff) {
-    FUN_7f03dd9c(posData,(u16)room);
-    roomIter += 1;
-    room = *roomIter;
-  }
-  return;
+    roomIter = prop->rooms;
+    room     = roomIter[0];
+
+    while (room != (u8)-1)
+    {
+        sub_GAME_7F03DE94(prop, room);
+        roomIter += 1;
+        room = *roomIter;
+    }
+    if (!(prop->flags & 0x10))
+    {
+        prop->rooms[0] = -1;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03E210
-/* 072D40 7F03E210 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 072D44 7F03E214 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 072D48 7F03E218 AFB30020 */  sw    $s3, 0x20($sp)
-/* 072D4C 7F03E21C AFB2001C */  sw    $s2, 0x1c($sp)
-/* 072D50 7F03E220 AFB10018 */  sw    $s1, 0x18($sp)
-/* 072D54 7F03E224 AFB00014 */  sw    $s0, 0x14($sp)
-/* 072D58 7F03E228 9090002C */  lbu   $s0, 0x2c($a0)
-/* 072D5C 7F03E22C 241300FF */  li    $s3, 255
-/* 072D60 7F03E230 00809025 */  move  $s2, $a0
-/* 072D64 7F03E234 1270000A */  beq   $s3, $s0, .L7F03E260
-/* 072D68 7F03E238 2491002C */   addiu $s1, $a0, 0x2c
-/* 072D6C 7F03E23C 00102C00 */  sll   $a1, $s0, 0x10
-.L7F03E240:
-/* 072D70 7F03E240 00057403 */  sra   $t6, $a1, 0x10
-/* 072D74 7F03E244 01C02825 */  move  $a1, $t6
-/* 072D78 7F03E248 0FC0F767 */  jal   sub_GAME_7F03DD9C
-/* 072D7C 7F03E24C 02402025 */   move  $a0, $s2
-/* 072D80 7F03E250 92300001 */  lbu   $s0, 1($s1)
-/* 072D84 7F03E254 26310001 */  addiu $s1, $s1, 1
-/* 072D88 7F03E258 5670FFF9 */  bnel  $s3, $s0, .L7F03E240
-/* 072D8C 7F03E25C 00102C00 */   sll   $a1, $s0, 0x10
-.L7F03E260:
-/* 072D90 7F03E260 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 072D94 7F03E264 8FB00014 */  lw    $s0, 0x14($sp)
-/* 072D98 7F03E268 8FB10018 */  lw    $s1, 0x18($sp)
-/* 072D9C 7F03E26C 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 072DA0 7F03E270 8FB30020 */  lw    $s3, 0x20($sp)
-/* 072DA4 7F03E274 03E00008 */  jr    $ra
-/* 072DA8 7F03E278 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
+
+
+
+
+void sub_GAME_7F03E210(PropRecord *prop)
+{
+    u8  room;
+    u8 *roomIter;
+
+    roomIter = prop->rooms;
+    room     = roomIter[0];
+
+    while (room != (u8)-1)
+    {
+        sub_GAME_7F03DD9C(prop, room);
+        roomIter += 1;
+        room = *roomIter;
+    }
+}
 
 
 

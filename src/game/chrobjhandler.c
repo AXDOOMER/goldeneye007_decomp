@@ -2623,8 +2623,8 @@ glabel sub_GAME_7F040BA0
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F040CF0(void) {
-
+void sub_GAME_7F040CF0(PropRecord*)
+{
 }
 #else
 GLOBAL_ASM(
@@ -35292,12 +35292,12 @@ glabel sub_GAME_7F04EF58
 //         (.text+0xf638): undefined reference to `alarmIsActive'
 #ifdef NONMATCHING
 /*
- * Return True if Collected or Interacted (except for Alarm which always returns False)
+ * Return TYPE if Collected or Interacted (except for Alarm which always returns False)
  */
-bool sub_GAME_7F04F170(PropRecord *prop) //#MATCH
+INV_ITEM_TYPE sub_GAME_7F04F170(PropRecord *prop) //#MATCH
 {
     ObjectRecord *obj        = prop->obj;
-    bool          colllected = FALSE;
+    INV_ITEM_TYPE colllected = INV_ITEM_NONE;
 
     if (obj->type == PROPDEF_ALARM)
     {
@@ -37112,15 +37112,15 @@ void display_text_for_weapon_in_lower_left_corner(ITEM_IDS weaponid)
 
 #ifdef NONMATCHING
 // https://decomp.me/scratch/nJWA0
-s32 collect_or_interact_object(PropRecord *prop, bool showstring) //#50% - needs some love, but compiles and looks similar
+INT_ITEM_TYPE collect_or_interact_object(PropRecord *prop, bool showstring) //#50% - needs some love, but compiles and looks similar
 {
     ObjectRecord *propobj;
-    int           collectType;
+    INV_ITEM_TYPE collectType;
 
     propobj = prop->obj;
     if ((pPlayer->bonddead) || (!gclock_timer))
     {
-        return 0;
+        return INV_ITEM_NONE;
     }
 
     switch (propobj->type)
@@ -37137,14 +37137,14 @@ s32 collect_or_interact_object(PropRecord *prop, bool showstring) //#50% - needs
                 }
                 display_string_in_lower_left_corner(text);
             }
-            collectType = 4;
+            collectType = INV_ITEM_PICKUP;
             break;
         }
         case PROPDEF_MAGAZINE:
         {
             AmmoCrateRecord *mag = propobj;
             add_ammo_to_inventory(mag->type, get_ammo_in_magazine(mag), 1, showstring);
-            collectType = 1;
+            collectType = INV_ITEM_WEAPON;
             break;
         }
         case PROPDEF_AMMO:
@@ -37163,7 +37163,7 @@ s32 collect_or_interact_object(PropRecord *prop, bool showstring) //#50% - needs
                 add_ammo_to_inventory(i, ammoquantity, 0, showstring);
             }
             play_sfx_a1(g_musicSfxBufferPtr, 0xEA, 0);
-            collectType = 1;
+            collectType = INV_ITEM_WEAPON;
             break;
         }
         case PROPDEF_COLLECTABLE:
@@ -37201,7 +37201,7 @@ s32 collect_or_interact_object(PropRecord *prop, bool showstring) //#50% - needs
                     }
                     pass = 1;
                 }
-                collectType = 4;
+                collectType = INV_ITEM_PICKUP;
             }
             else
             {
@@ -37223,7 +37223,7 @@ s32 collect_or_interact_object(PropRecord *prop, bool showstring) //#50% - needs
                         display_text_for_weapon_in_lower_left_corner(wep->weaponnum);
                     }
                 }
-                collectType = 1;
+                collectType = INV_ITEM_WEAPON;
             }
             text = get_ammo_type_for_weapon(wep->weaponnum);
             if (text != 0)
@@ -37267,7 +37267,7 @@ s32 collect_or_interact_object(PropRecord *prop, bool showstring) //#50% - needs
                 }
                 display_string_in_lower_left_corner(text);
             }
-            collectType = 1;
+            collectType = INV_ITEM_WEAPON;
             break;
         }
         default:
@@ -37283,21 +37283,21 @@ s32 collect_or_interact_object(PropRecord *prop, bool showstring) //#50% - needs
                 }
                 display_string_in_lower_left_corner(text);
             }
-            collectType = 4;
+            collectType = INV_ITEM_PICKUP;
             break;
         }
     }
     if ((collectType == 1) && ((propobj->runtime_bitflags & 0x10) == 0))
     {
         sub_GAME_7F040D98(propobj, 0, propobj->state & 4);
-        return 1;
+        return INV_ITEM_WEAPON;
     }
     if (collectType != 0)
     {
         add_prop_to_inventory(prop);
-        return 4;
+        return INV_ITEM_PICKUP;
     }
-    return 0; //inventory(4) or ammo(1) or nothing(0)
+    return INV_ITEM_NONE; //inventory(4) or ammo(1) or nothing(0)
 }
 #else
 #ifdef VERSION_US

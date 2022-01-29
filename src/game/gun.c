@@ -3736,7 +3736,7 @@ void sub_GAME_7F05EC1C(void)
         spB4 = phi_f16;
         spB8 = phi_f14;
         spC4 = temp_s0->unk14;
-        sub_GAME_7F08A03C(temp_s0->unkC, phi_f14, temp_s0, 0);
+        bondviewUpdateGuardTankFlagsRelated(temp_s0->unkC, phi_f14, temp_s0, 0);
         temp_f14 = phi_f14;
         if (sub_GAME_7F0B0E24(temp_f14,
                               &spC4,
@@ -3762,7 +3762,7 @@ void sub_GAME_7F05EC1C(void)
             spB0 = 1;
             spD0 = (bitwise f32)temp_s0->unk10;
         }
-        sub_GAME_7F08A03C(temp_s0, 1);
+        bondviewUpdateGuardTankFlagsRelated(temp_s0, 1);
         phi_return =
             sub_GAME_7F05EB0C(arg0, &spC8, spC4, arg2, arg3, arg4, temp_s0);
         if ((arg0->unk64 & 0x80) != 0)

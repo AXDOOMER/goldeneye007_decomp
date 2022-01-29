@@ -11479,7 +11479,7 @@ void sub_GAME_7F07DE9C(struct player *player)
     {
         player->field_2A04 = (s16) player->field_488.current_tile_ptr->room;
 
-        sub_GAME_7F03DD9C(player->prop, player->field_2A04, player);
+        sub_GAME_7F03DD9C(player->prop, player->field_2A04);
     }
 }
 
