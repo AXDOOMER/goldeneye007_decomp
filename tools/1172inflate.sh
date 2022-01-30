@@ -45,12 +45,12 @@ fi
 
 # make sure input file exists
 if [ ! -f "${INPUT_FILE}" ]; then
-    echo "can not read input file"
+    echo "can not read input file: ${INPUT_FILE}"
     usage
 fi
 
 # explanation of commands:
-# use process substitution to cat contentes together to send to gzip.
+# use process substitution to cat contents together to send to gzip.
 # the first cat argument supplies the standard gzip header
 # the next cat argument prints the input file, and chops the "1172" prefix
 # this is sent to the gzip command for decompression, and the expected "unexpected end of file" error is filtered out
