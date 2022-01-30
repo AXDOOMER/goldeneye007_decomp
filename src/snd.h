@@ -83,7 +83,7 @@ typedef struct ALSoundState_s {
     // 0x04 = maybe: voice allocated/started ?
     // 0x08 = ?
     // 0x10 = active flag
-    // 0x20 = ?
+    // 0x20 = related to detune
     // 0x40 = ?
     // 0x80 = ?
     u8 unk3e;
