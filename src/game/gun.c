@@ -4381,9 +4381,9 @@ void generate_player_thrown_object(void)
     spF4     = temp_f6;
     if (clock_timer > 0)
     {
-        spF0 = temp_f10 + ((sp84->unk8 - sp80->unk0) / global_timer_delta);
-        spF4 = temp_f6 + ((sp84->unkC - sp80->unk4) / global_timer_delta);
-        spF8 = temp_f16 + ((sp84->unk10 - sp80->unk8) / global_timer_delta);
+        spF0 = temp_f10 + ((sp84->unk8 - sp80->unk0) / g_GlobalTimerDelta);
+        spF4 = temp_f6 + ((sp84->unkC - sp80->unk4) / g_GlobalTimerDelta);
+        spF8 = temp_f16 + ((sp84->unk10 - sp80->unk8) / g_GlobalTimerDelta);
     }
     temp_t7   = arg0 * 0x3A8;
     temp_v0_2 = pPlayer + temp_t7;

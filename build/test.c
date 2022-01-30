@@ -724,17 +724,17 @@ extern bool sub_GAME_7F051E1C                                (WeaponObjRecord *p
 extern bool is_prop_in_inventory                                (PropRecord *prop);
 extern ObjectRecord* weaponFindThrown                                 (s32 ID);                                                                            // check_if_item_deposited
 extern char *langGet                                         (s32 textID);                                                                        // get_textptr_for_textID
-extern DIFFICULTY getDifficulty                              ();                                                                                  // get_current_difficulty
+extern DIFFICULTY lvlGetSelectedDifficulty                              ();                                                                                  // get_current_difficulty
 extern f32 chrGetAngleFromBond                               (ChrRecord *self);                                                                   //F03 2D70
 extern f32 chrGetAngleToBond                                 (ChrRecord *self);
 extern f32 chrGetDistanceToChr                               (ChrRecord *self, s32 chrID);                                                        // get_distance_between_actor_and_actorID
 extern f32 chrGetDistanceToPad                               (ChrRecord *self, s32 padid);                                                        // sub_GAME_7F032E48
 extern f32 chrGetTimer                                       (ChrRecord *self);                                                                   // get_loop_counter_time_in_seconds
 extern f32 countdownTimerGetValue                            ();                                                                                  // get_clock_time
-extern f32 get_BONDdata_watch_health                         ();
-extern f32 get_cur_mp_sec                                    ();                                                                                  // get_cur_mp_sec
+extern f32 bondviewGetCurrentPlayerHealth                         ();
+extern f32 lvlGetCurrentMultiPlayerSec                                    ();                                                                                  // lvlGetCurrentMultiPlayerSec
 extern f32 getsubroty                                        (Model *objinst);
-extern f32 getUptime                                         ();                                                                                  // get_cur_mp_min
+extern f32 lvlGetCurrentMultiPlayerMin                                         ();                                                                                  // get_cur_mp_min
 extern f32 chrGetDistanceFromBondToPad                     (ChrRecord *self, s32 padid);                                                        // get_distance_between_actor_and_preset
 extern f32 chrGetDistanceToBond                            (ChrRecord *self);                                                                   // distToBond3D
 extern s8 chrGetNumArghs                                    (ChrRecord *self);                                                                   // get_times_actor_shot
@@ -759,7 +759,7 @@ extern s32 do_something_if_object_destroyed                  (ObjectRecord *obj)
 extern s32 get_camera_mode                                   ();
 extern s32 get_civilian_casualties                           ();
 extern s32 getCurrentPlayerWeaponId                          (GUNHAND hand);                                                                      // get_item_in_hand
-extern s32 getPlayercount                                    ();
+extern s32 getPlayerCount                                    ();
 extern u8 getSelectedFolderBond                             ();
 extern OBJECTIVESTATUS objectiveGetStatus(s32 objective); // get_status_of_objective
 extern bool propobjInteract                                   (PropRecord *prop);                                                                  // sub_GAME_7F04F170
@@ -793,8 +793,8 @@ extern void countdownTimerSetVisible                         (int clocklockbits,
 extern void currentPlayerEquipWeaponWrapper                  (GUNHAND hand, s32 next_weapon);                                                     // draw_item_in_hand_has_more_ammo
 extern void currentPlayerSetFadeColour                       (s32 r, s32 g, s32 b, f32 frac);
 extern void currentPlayerSetFadeFrac                         (f32 frames, f32 frac);
-extern void currentPlayerSetFlag                             (PLAYERFLAG flag);                                                                   // set_flags_in_BONDdata_stationary_intro_cam () ;
-extern void currentPlayerUnsetFlag                           (PLAYERFLAG flag);                                                                   // unset_flags_in_BONDdata_stationary_intro_cam() ;
+extern void bondviewSetIntroCameraFlags                             (PLAYERFLAG flag);                                                                   // set_flags_in_BONDdata_stationary_intro_cam () ;
+extern void bondviewUnsetIntroCameraFlags                           (PLAYERFLAG flag);                                                                   // unset_flags_in_BONDdata_stationary_intro_cam() ;
 extern void currentPlayerUnEquipWeaponWrapper                (GUNHAND hand, s8 WeapID);                                                           // remove_hands_item
 extern void doorActivate                                     (DoorRecord *door, DOORSTATE State);                                                 // set_door_state
 extern void doorActivateWrapper                              (PropRecord *prop);                                                                  // sub_GAME_7F05599C
@@ -830,7 +830,7 @@ extern void sub_GAME_7F052B00                                (DoorRecord *door);
 extern void sub_GAME_7F053598                                (DoorRecord *door);                                                                  // doorActivatePortal
 extern void sub_GAME_7F053B10                                (DoorRecord *door);
 extern void sub_GAME_7F056CA0                                (ObjectRecord *obj);
-extern void sub_GAME_7F06FCA8                                (Model *model, AnimTable2 *anim, int b, f32 startframe, float half, float e);
+extern void objecthandlerAnimationRelated7F06FCA8                                (Model *model, AnimTable2 *anim, int b, f32 startframe, float half, float e);
 extern void sub_GAME_7F06FDE8                                (Model *model, float endframe);
 extern void sub_GAME_7F08A928                                (int a);
 extern void sub_GAME_7F08A944                                (PLAYERFLAG flag);
@@ -843,7 +843,7 @@ extern void matrix_4x4_set_identity                          (Mtxf *matrix);
 
 extern Player *pPlayer;
 extern s32 stop_time_flag;               //bond.c
-extern s32 global_timer;                 //lvl.c
+extern s32 g_GlobalTimer;                 //lvl.c
 extern bool g_PlayerInvincible;          //bond.c disable_player_pickups_flag
 extern bool g_isBondKIA;                 //mainmenu.c mission_kia_flag; 
 extern f32 flt_CODE_bss_80079A00;        //bond.c
@@ -1578,7 +1578,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                     else if (AircraftEntityp)
                     {
                         zero = 0; //debug value maybe?
-                        sub_GAME_7F06FCA8(AircraftEntityp->model, animation_table_ptrs2[anim_id], zero, startframe, 0.5f, (s32)ai->val[7]);
+                        objecthandlerAnimationRelated7F06FCA8(AircraftEntityp->model, animation_table_ptrs2[anim_id], zero, startframe, 0.5f, (s32)ai->val[7]);
                         if (endframe >= 0)
                         {
                             sub_GAME_7F06FDE8(AircraftEntityp->model, endframe);
@@ -3017,7 +3017,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                         u8 label;
                     } *ai = AiListp + Offset;
                     /* additional PD code for dificulty filtering 
-                    == OBJECTIVE_COMPLETE && objectiveGetDifficultyBits(ai->val[0]) & (1 << getDifficulty()))* 
+                    == OBJECTIVE_COMPLETE && objectivelvlGetSelectedDifficultyBits(ai->val[0]) & (1 << lvlGetSelectedDifficulty()))* 
                     */
                     if ((ai->val < objectiveGetCount()) && (objectiveGetStatus(ai->val) == OBJECTIVESTATUS_COMPLETE))
                     {
@@ -3159,7 +3159,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 {
                     AIRecord *ai  = AiListp + Offset;
                     float     val = (ai->val[0]) / 255.0f;
-                    if (val > get_BONDdata_watch_health())
+                    if (val > bondviewGetCurrentPlayerHealth())
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
                     }
@@ -3173,7 +3173,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 {
                     AIRecord *ai  = AiListp + Offset;
                     float     val = (ai->val[0]) / 255.0f;
-                    if (val < get_BONDdata_watch_health())
+                    if (val < bondviewGetCurrentPlayerHealth())
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
                     }
@@ -3186,7 +3186,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_GAME_DIFFICULTY_LESS_THAN:
                 {
                     AIRecord *ai = AiListp + Offset;
-                    if (ai->val[0] > getDifficulty())
+                    if (ai->val[0] > lvlGetSelectedDifficulty())
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
                     }
@@ -3199,7 +3199,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_GAME_DIFFICULTY_GREATER_THAN:
                 {
                     AIRecord *ai = AiListp + Offset;
-                    if (ai->val[0] < getDifficulty())
+                    if (ai->val[0] < lvlGetSelectedDifficulty())
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
                     }
@@ -3213,7 +3213,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 {
                     AIRecord *ai     = AiListp + Offset;
                     f32       target = (ai->val[1] | (ai->val[0] << 8));
-                    if (target > get_cur_mp_sec())
+                    if (target > lvlGetCurrentMultiPlayerSec())
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
                     }
@@ -3227,7 +3227,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 {
                     AIRecord *ai     = AiListp + Offset;
                     f32       target = (ai->val[1] | (ai->val[0] << 8));
-                    if (target < get_cur_mp_sec())
+                    if (target < lvlGetCurrentMultiPlayerSec())
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
                     }
@@ -3241,7 +3241,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 {
                     AIRecord *ai     = AiListp + Offset;
                     f32       target = (ai->val[1] | (ai->val[0] << 8)) * 60.0f;
-                    if (target > getUptime())
+                    if (target > lvlGetCurrentMultiPlayerMin())
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
                     }
@@ -3255,7 +3255,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 {
                     AIRecord *ai     = AiListp + Offset;
                     f32       target = (ai->val[1] | (ai->val[0] << 8)) * 60.0f;
-                    if (target < getUptime())
+                    if (target < lvlGetCurrentMultiPlayerMin())
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
                     }
@@ -4493,7 +4493,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                     set_unset_ammo_on_screen_setting(2, FALSE);
                     if (!(ai->val & PLAYERFLAG_NOCONTROL))
                     {
-                        currentPlayerSetFlag(PLAYERFLAG_NOCONTROL);
+                        bondviewSetIntroCameraFlags(PLAYERFLAG_NOCONTROL);
                     }
                     if (!(ai->val & PLAYERFLAG_LOCKCONTROLS))
                     {
@@ -4514,7 +4514,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
 #            endif
                     set_unset_bitflags(4, TRUE);
                     set_unset_ammo_on_screen_setting(2, TRUE);
-                    currentPlayerUnsetFlag(PLAYERFLAG_NOCONTROL);
+                    bondviewUnsetIntroCameraFlags(PLAYERFLAG_NOCONTROL);
                     sub_GAME_7F08A928(2);
                     countdownTimerSetVisible(16, TRUE);
                     D_800364B0 = TRUE;
@@ -4654,7 +4654,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                         //DoorRecord *door   = (DoorRecord *)obj;
                         door->speed        = 0;
                         door->openPosition = door->maxFrac;
-                        door->openedTime   = global_timer;
+                        door->openedTime   = g_GlobalTimer;
                         door->openstate        = DOORSTATE_STATIONARY;
                         sub_GAME_7F052B00(door);
                         sub_GAME_7F053598(door); // doorActivatePortal
@@ -4682,7 +4682,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                         s8 val;
                         u8 label;
                     } *ai = AiListp + Offset;
-                    if (getPlayercount() < ai->val)
+                    if (getPlayerCount() < ai->val)
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->label);
                     }

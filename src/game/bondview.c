@@ -51,7 +51,7 @@ f32 flt_CODE_bss_80079988;
 f32 flt_CODE_bss_8007998C;
 
 //CODE.bss:80079990
-f32 flt_CODE_bss_80079990[3];
+vec3d flt_CODE_bss_80079990;
 // //CODE.bss:80079994
 // f32 flt_CODE_bss_80079994;
 // //CODE.bss:80079998
@@ -104,9 +104,9 @@ f32 flt_CODE_bss_800799F0;
 //CODE.bss:800799F4
 s32 dword_CODE_bss_800799F4;
 //CODE.bss:800799F8
-s32 dword_CODE_bss_800799F8;
+PadRecord * dword_CODE_bss_800799F8;
 //CODE.bss:800799FC
-s32 gBondViewCutscene;
+CutsceneRecord *gBondViewCutscene;
 //CODE.bss:80079A00
 f32 flt_CODE_bss_80079A00;
 //CODE.bss:80079A04
@@ -4840,7 +4840,7 @@ void set_camera_mode(s32 arg0)
             temp_v0_2 = (D_80036514 * 0x10) + &stage_intro_anim_table;
             temp_f12  = temp_v0_2->unk8;
             sp78      = temp_f12;
-            sub_GAME_7F06FCA8(pPlayer->unkD4, temp_v0_2->unk0 + ptr_animation_table, 0, temp_v0_2->unk4, temp_v0_2->unkC, 0.0f);
+            objecthandlerAnimationRelated7F06FCA8(pPlayer->unkD4, temp_v0_2->unk0 + ptr_animation_table, 0, temp_v0_2->unk4, temp_v0_2->unkC, 0.0f);
             if (temp_f12 > 0.0f)
             {
                 sub_GAME_7F06FDE8(pPlayer->unkD4, temp_f12);
@@ -4923,7 +4923,7 @@ void set_camera_mode(s32 arg0)
             currentPlayerStartChrFade(0.0f, 0x3F800000);
             solo_char_load();
             sp38 = sub_GAME_7F06F5AC(pPlayer + 0x598);
-            sub_GAME_7F06FCA8(pPlayer->unkD4, sp38, sub_GAME_7F06F5B4(pPlayer + 0x598), 0.0f, 0.5f, 0.0f);
+            objecthandlerAnimationRelated7F06FCA8(pPlayer->unkD4, sp38, sub_GAME_7F06F5B4(pPlayer + 0x598), 0.0f, 0.5f, 0.0f);
             temp_v1        = pPlayer->unkA8->unk4;
             temp_v1->unk7  = 0x18;
             temp_v1->unk8  = 0;
@@ -10107,7 +10107,8 @@ glabel sub_GAME_7F07CDD4
 
 
 
-s32 get_intank_flag(void) {
+bool get_intank_flag(void)
+{
     return in_tank_flag;
 }
 
@@ -40628,10 +40629,11 @@ s32 getMissiontimer(void) {
 }
 
 
-void trigger_explosions_around_player(int delay){
-  D_80036444 = 1;
-  dword_CODE_bss_8007999C = delay + g_GlobalTimer;
-  dword_CODE_bss_800799A0 = 0;
+void trigger_explosions_around_player(int delay)
+{
+    D_80036444              = 1;
+    dword_CODE_bss_8007999C = delay + g_GlobalTimer;
+    dword_CODE_bss_800799A0 = 0;
 }
 
 

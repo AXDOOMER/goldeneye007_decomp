@@ -24710,7 +24710,7 @@ void *process_monitor_animation_microcode(Model *arg0, ModelNode *arg1, MonitorR
                     arg2->rot    = (temp_v1->unk4 * 6.2831855f) / phi_f2;
                     break;
                 case 15:
-                    arg2->rot += (global_timer_delta * temp_v1->unk4 * 6.2831855f) / phi_f2;
+                    arg2->rot += (g_GlobalTimerDelta * temp_v1->unk4 * 6.2831855f) / phi_f2;
                     temp_f12 = arg2->rot;
                     if (temp_f12 >= 6.2831855f)
                     {
@@ -24727,7 +24727,7 @@ void *process_monitor_animation_microcode(Model *arg0, ModelNode *arg1, MonitorR
         temp_f0_3 = arg2->xscaleinc;
         if (temp_f0_3 > 0.0f)
         {
-            arg2->xscalefrac += temp_f0_3 * global_timer_delta;
+            arg2->xscalefrac += temp_f0_3 * g_GlobalTimerDelta;
             temp_f2 = arg2->xscalefrac;
             if (temp_f2 < 1.0f)
             {
@@ -24744,7 +24744,7 @@ void *process_monitor_animation_microcode(Model *arg0, ModelNode *arg1, MonitorR
         temp_f0_5 = arg2->yscaleinc;
         if (temp_f0_5 > 0.0f)
         {
-            arg2->yscalefrac += temp_f0_5 * global_timer_delta;
+            arg2->yscalefrac += temp_f0_5 * g_GlobalTimerDelta;
             temp_f2_2 = arg2->yscalefrac;
             if (temp_f2_2 < 1.0f)
             {
@@ -24761,7 +24761,7 @@ void *process_monitor_animation_microcode(Model *arg0, ModelNode *arg1, MonitorR
         temp_f0_7 = arg2->xmidinc;
         if (temp_f0_7 > 0.0f)
         {
-            arg2->xmidfrac += temp_f0_7 * global_timer_delta;
+            arg2->xmidfrac += temp_f0_7 * g_GlobalTimerDelta;
             temp_f2_3 = arg2->xmidfrac;
             if (temp_f2_3 < 1.0f)
             {
@@ -24778,7 +24778,7 @@ void *process_monitor_animation_microcode(Model *arg0, ModelNode *arg1, MonitorR
         temp_f0_9 = arg2->ymidinc;
         if (temp_f0_9 > 0.0f)
         {
-            arg2->ymidfrac += temp_f0_9 * global_timer_delta;
+            arg2->ymidfrac += temp_f0_9 * g_GlobalTimerDelta;
             temp_f2_4 = arg2->ymidfrac;
             if (temp_f2_4 < 1.0f)
             {
@@ -24795,7 +24795,7 @@ void *process_monitor_animation_microcode(Model *arg0, ModelNode *arg1, MonitorR
         temp_f2_5 = arg2->colinc;
         if (temp_f2_5 > 0.0f)
         {
-            arg2->colfrac += temp_f2_5 * global_timer_delta;
+            arg2->colfrac += temp_f2_5 * g_GlobalTimerDelta;
             temp_f0_11 = arg2->colfrac;
             if (temp_f0_11 < 1.0f)
             {
@@ -37112,7 +37112,7 @@ void display_text_for_weapon_in_lower_left_corner(ITEM_IDS weaponid)
 
 #ifdef NONMATCHING
 // https://decomp.me/scratch/nJWA0
-INT_ITEM_TYPE collect_or_interact_object(PropRecord *prop, bool showstring) //#50% - needs some love, but compiles and looks similar
+INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, bool showstring) //#50% - needs some love, but compiles and looks similar
 {
     ObjectRecord *propobj;
     INV_ITEM_TYPE collectType;

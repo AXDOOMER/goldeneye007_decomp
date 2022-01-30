@@ -255,5 +255,8 @@ void sub_GAME_7F068190(coord3d *arg0, coord3d *arg1);
 void inc_curplayer_hitcount_with_weapon(ITEM_IDS item, SHOT_REGISTER shot_register);
 s8 get_hands_firing_status(GUNHAND hand);
 void gunFireTankShell(s32 hand);
-
+void         remove_item_in_hand(GUNHAND hand);
+void         remove_hands_item(GUNHAND hand, s32 weapid);
+s32          check_cur_player_ammo_amount_total(AMMOTYPE ammotype);
+s32          get_civilian_casualties(void);
 #endif

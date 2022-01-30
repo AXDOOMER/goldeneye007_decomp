@@ -19,5 +19,5 @@ int add_item_to_inventory(ITEM_IDS item);
 int add_doubles_item_to_inventory(ITEM_IDS right, ITEM_IDS left);
 s32 get_BONDdata_allguns_flag(void);
 void set_BONDdata_allguns_flag(s32 all_guns);
-
+bool          is_prop_in_inventory(PropRecord *prop);
 #endif

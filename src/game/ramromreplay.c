@@ -962,9 +962,9 @@ void replay_recorded_ramrom_from_indy(void)
 
 void ensureCameraModeA(void)
 {
-    if (get_camera_mode() != UNK10_CAM)
+    if (get_camera_mode() != CAMERAMODE_UNK10)
     {
-        set_camera_mode(UNK10_CAM);
+        set_camera_mode(CAMERAMODE_UNK10);
     }
 }
 

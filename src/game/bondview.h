@@ -3181,5 +3181,12 @@ Mtx *currentPlayerGetProjectionMatrix(void);
 Gfx *bondviewRenderProp(PropRecord *arg0, Gfx *arg1, s32 arg2);
 f32 getPlayer_c_lodscalez(void);
 f32 get_BONDdata_bondfadefracnew(void);
+void     sub_GAME_7F08A928(int param_1);
+
+void     sub_GAME_7F08A944(PLAYERFLAG flag);
+void     set_camera_mode(s32 arg0);
+bool     get_intank_flag(void);
+void     display_string_at_top_of_screen(s8 *string);
+void     trigger_explosions_around_player(int delay);
 
 #endif

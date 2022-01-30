@@ -23,8 +23,9 @@ s32 select_psuedorandom_heads(s32 id);
 
 s32 get_random_head(s32 id);
 f32 chrlvDistToBond3D(ChrRecord *guardData);
-
-void chrlvAlertGuardToPlayerPosition(ChrRecord *);
+s32         sub_GAME_7F029D70(ChrRecord *self);
+bool        actor_fire_or_aim_at_target_update(ChrRecord *self, s32 newtargettype, s32 newtargetid);
+    void chrlvAlertGuardToPlayerPosition(ChrRecord *);
 void chrlvIdleAnimationRelated7F023A94(ChrRecord *arg0, f32 arg1);
 f32 chrGetAngleToBond(ChrRecord *arg0);
 s32 check_if_actor_stationary(ChrRecord *);
@@ -68,7 +69,8 @@ f32 get_distance_between_actor_and_actorID(ChrRecord *self, s32 chrID);
 f32 get_distance_between_actor_and_preset(ChrRecord *self, s32 padid);
 void chrlvSetBitfieldFlags(ChrRecord *arg0, u8 arg1);
 void chrlvClearBitfieldFlags(ChrRecord *arg0, u8 arg1);
-void chrlvSetGuardBitfieldFlags(ChrRecord *arg0, s32 guard_id, u8 arg2);
+s32         chrlvTestBitfieldFlags(ChrRecord *self, u8 arg1);
+    void chrlvSetGuardBitfieldFlags(ChrRecord *arg0, s32 guard_id, u8 arg2);
 void chrlvClearGuardBitfieldFlags(ChrRecord *arg0, s32 guard_id, u8 arg2);
 s32 chrlvTestGuardBitfieldFlags(ChrRecord *arg0, s32 guard_id, u8 arg2);
 void toggle_objective_bitflags(ChrRecord *arg0, s32 arg1);

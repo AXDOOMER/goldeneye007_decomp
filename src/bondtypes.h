@@ -1999,7 +1999,7 @@ typedef union
         /**
          * Offset 0x10
         */
-        vec3                 vec;
+        vec3d                 vec;
         u32                  padding;
 
         /*

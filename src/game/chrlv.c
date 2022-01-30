@@ -7440,9 +7440,9 @@ void chrlvFireWeaponRelated(ChrRecord *self, s32 hand)
                                   /*  sp208->unk6C->vec.x = sp1AC.f[0];
                                     sp208->unk6C->vec.y = sp1AC.f[1];
                                     sp208->unk6C->vec.z = sp1AC.f[2];*/
-                                    sp208->unk6C->vec[0] = sp1AC.f[0];
-                                    sp208->unk6C->vec[1] = sp1AC.f[1];
-                                    sp208->unk6C->vec[2] = sp1AC.f[2];
+                                    sp208->unk6C->vec.x = sp1AC.f[0];
+                                    sp208->unk6C->vec.y = sp1AC.f[1];
+                                    sp208->unk6C->vec.z = sp1AC.f[2];
                                     
                                     if (sp208->unk6C->unk98[0] == NULL)
                                     {
@@ -11041,6 +11041,7 @@ s32 chrResolveId(ChrRecord *self, s32 id)
 
 /**
  * Address 0x7F033040.
+ * chrFindById
 */
 ChrRecord *chrlvGetHandleForGuardId(ChrRecord *self, s32 guard_id)
 {

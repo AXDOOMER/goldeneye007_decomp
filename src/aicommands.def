@@ -627,7 +627,7 @@ _AI_CMD(
         else if (AircraftEntityp)
         {
             zero = 0; 
-            sub_GAME_7F06FCA8(AircraftEntityp->model, animation_table_ptrs2[anim_id], zero, startframe, 0.5f, (s32)ai->val[7]);
+            objecthandlerAnimationRelated7F06FCA8(AircraftEntityp->model, animation_table_ptrs2[anim_id], zero, startframe, 0.5f, (s32)ai->val[7]);
             if (endframe >= 0)
             {
                 sub_GAME_7F06FDE8(AircraftEntityp->model, endframe);
@@ -4781,7 +4781,7 @@ _AI_CMD(
 _AI_CMD(
     {
         AIRecord *ai = AiListp + Offset;
-        if (ai->val[0] > getDifficulty())
+        if (ai->val[0] > lvlGetSelectedDifficulty())
         {
             Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
         }
@@ -4818,7 +4818,7 @@ _AI_CMD(
 _AI_CMD(
     {
         AIRecord *ai = AiListp + Offset;
-        if (ai->val[0] < getDifficulty())
+        if (ai->val[0] < lvlGetSelectedDifficulty())
         {
             Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
         }
@@ -4855,7 +4855,7 @@ _AI_CMD(
     {
         AIRecord *ai     = AiListp + Offset;
         f32       target = (ai->val[1] | (ai->val[0] << 8));
-        if (target > get_cur_mp_sec())
+        if (target > lvlGetCurrentMultiPlayerSec())
         {
             Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
         }
@@ -4892,7 +4892,7 @@ _AI_CMD(
     {
         AIRecord *ai     = AiListp + Offset;
         f32       target = (ai->val[1] | (ai->val[0] << 8));
-        if (target < get_cur_mp_sec())
+        if (target < lvlGetCurrentMultiPlayerSec())
         {
             Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
         }
@@ -4928,7 +4928,7 @@ _AI_CMD(
     {
         AIRecord *ai     = AiListp + Offset;
         f32       target = (ai->val[1] | (ai->val[0] << 8)) * 60.0f;
-        if (target > getUptime())
+        if (target > lvlGetCurrentMultiPlayerMin())
         {
             Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
         }
@@ -4964,7 +4964,7 @@ _AI_CMD(
     {
         AIRecord *ai     = AiListp + Offset;
         f32       target = (ai->val[1] | (ai->val[0] << 8)) * 60.0f;
-        if (target < getUptime())
+        if (target < lvlGetCurrentMultiPlayerMin())
         {
             Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
         }
@@ -5334,7 +5334,7 @@ _AI_CMD(
     {
         AIRecord *ai  = AiListp + Offset;
         float     val = (ai->val[0]) / 255.0f;
-        if (val > get_BONDdata_watch_health())
+        if (val > bondviewGetCurrentPlayerHealth())
         {
             Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
         }
@@ -5371,7 +5371,7 @@ _AI_CMD(
     {
         AIRecord *ai  = AiListp + Offset;
         float     val = (ai->val[0]) / 255.0f;
-        if (val < get_BONDdata_watch_health())
+        if (val < bondviewGetCurrentPlayerHealth())
         {
             Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
         }
@@ -8745,7 +8745,7 @@ _AI_CMD(
         set_unset_ammo_on_screen_setting(2, FALSE);
         if (!(PLAYERFLAG_NOCONTROL & ai->val))
         {
-            currentPlayerSetFlag(PLAYERFLAG_NOCONTROL);
+            bondviewSetIntroCameraFlags(PLAYERFLAG_NOCONTROL);
         }
         if (!(ai->val & PLAYERFLAG_LOCKCONTROLS))
         {
@@ -8786,7 +8786,7 @@ _AI_CMD(
     {
         set_unset_bitflags(4, TRUE);
         set_unset_ammo_on_screen_setting(2, TRUE);
-        currentPlayerUnsetFlag(PLAYERFLAG_NOCONTROL);
+        bondviewUnsetIntroCameraFlags(PLAYERFLAG_NOCONTROL);
         sub_GAME_7F08A928(2);
         countdownTimerSetVisible(16, TRUE);
         D_800364B0 = TRUE;
@@ -9085,7 +9085,7 @@ _AI_CMD(
         {
             door->speed = 0;
             door->openPosition = door->maxFrac;
-            door->openedTime = global_timer;
+            door->openedTime = g_GlobalTimer;
             door->openstate = DOORSTATE_STATIONARY;
             sub_GAME_7F052B00(door);
             sub_GAME_7F053598(door);
@@ -9159,7 +9159,7 @@ _AI_CMD(
             s8 val;
             u8 label;
         } *ai = AiListp + Offset;
-        if (getPlayercount() < ai->val)
+        if (getPlayerCount() < ai->val)
         {
             Offset = chraiGoToLabel(AiListp, Offset, ai->label);
         }

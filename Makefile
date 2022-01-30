@@ -6,25 +6,39 @@ default: all
 #(call DrawProgressBar,Percent)
 # OR
 #(call DrawProgressBar,NumberOfItemsDone,TotalNumberOfItems)
-DrawProgressBar =\
-	{\
-		$(if $(2), if [ "$(1)" -ne "$(2)" ]; then percent=`expr 100 / $(2) `; _pdone=`expr $$percent \* $(1)`; else _pdone=100; fi ,_pdone=$(1));\
-		pdone=`expr $$_pdone \* 76 / 100`; \
-		pdoneb=0; \
-		printf "\033[1;97;100m%80s\r\033[1;44m" " "; \
-		if [ "$$pdone" -lt "40" ]; \
-		then \
-			printf "%$${pdone}s"; \
-			printf "\033[100m"; \
-			pdoneb=`expr 38 - $$pdone`; \
-			printf "%$${pdoneb}s%3d%% \r" "" $$_pdone; \
-		else \
-			pdoneb=`expr $$pdone - 38`; \
+# If second param is given, use it to work out a percentage.
+# divide the percentage into a 80 char long bar
+# paint the whole bar grey
+# paint the first half, then text, then second half.
+# clear colour codes
+DrawProgressBar =                                       \
+	{                                                   \
+		$(if $(2),                                      \
+			if [ "$(1)" -ne "$(2)" ];                   \
+			then                                        \
+				_pdone=`expr 100 / $(2) \* $(1)`;       \
+			else                                        \
+				_pdone=100;                             \
+			fi                                          \
+			,_pdone=$(1)                                \
+		);                                              \
+		                                                \
+		pdone=`expr $$_pdone \* 76 / 100`;              \
+		pdoneb=0;                                       \
+		printf "\033[1;97;100m%80s\r\033[1;44m" " ";    \
+		if [ "$$pdone" -lt "40" ];                      \
+		then                                            \
+			printf "%$${pdone}s";                       \
+			printf "\033[100m";                         \
+			pdoneb=`expr 38 - $$pdone`;                 \
+			printf "%$${pdoneb}s%3d%% \r" "" $$_pdone;  \
+		else                                            \
+			pdoneb=`expr $$pdone - 38`;                 \
 			printf "%38s%3d%%%$${pdoneb}s" "" $$_pdone; \
-			printf "\r"; \
-		fi; \
-		printf "\033[0m";\
-	}\
+			printf "\r";                                \
+		fi;                                             \
+		printf "\033[0m";                               \
+	}                                                   \
 
 OrigDrawProgressBar =\
 	{\
@@ -88,28 +102,28 @@ else
 endif
 
 ifeq ($(VERSION), US)
-COUNTRYCODE := u
-LCDEFS := -DVERSION_US
-ASMDEFS := --defsym VERSION_US=1
+ COUNTRYCODE := u
+ LCDEFS := -DVERSION_US
+ ASMDEFS := --defsym VERSION_US=1
 endif
 
 ifeq ($(VERSION), EU)
-COUNTRYCODE := e
-LCDEFS := -DVERSION_EU
-ASMDEFS := --defsym VERSION_EU=1
+ COUNTRYCODE := e
+ LCDEFS := -DVERSION_EU
+ ASMDEFS := --defsym VERSION_EU=1
 endif
 
 ifeq ($(VERSION), JP)
-COUNTRYCODE := j
-LCDEFS := -DVERSION_JP
-ASMDEFS := --defsym VERSION_JP=1
+ COUNTRYCODE := j
+ LCDEFS := -DVERSION_JP
+ ASMDEFS := --defsym VERSION_JP=1
 endif
 
 ALLOWED_VERSIONS := US EU JP
 ifneq ($(filter $(VERSION),$(ALLOWED_VERSIONS)),)
-$(info VERSION=$(VERSION))
+ $(info VERSION=$(VERSION))
 else
-$(error VERSION "$(VERSION)" not supported")
+ $(error VERSION "$(VERSION)" not supported")
 endif
 
 BUILD_DIR_BASE := build
@@ -197,7 +211,8 @@ ifeq ($(IDO_RECOMP), NO)
 else
   CC := $(IRIX_ROOT)/cc
 endif
-CFLAGS := -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) $(WOFF) -signed $(INCLUDE) $(MIPSISET) $(LCDEFS) -DTARGET_N64
+
+CFLAGS := -Wab,-r4300_mul -non_shared -Olimit 2000 -G 0 -Xcpluscomm $(CFLAGWARNING) $(WOFF) -signed $(INCLUDE) $(MIPSISET) $(LCDEFS) -DTARGET_N64
 
 LD := $(TOOLCHAIN)ld
 LD_SCRIPT := ge007.$(COUNTRYCODE).ld
@@ -213,20 +228,21 @@ ASM_PREPROC := python3 tools/asmpreproc/asm-processor.py
 OBJCOPY := $(TOOLCHAIN)objcopy
 
 all: $(APPROM)
-	@$(call DrawProgressBar,100)
 ifeq ($(COMPARE),1)
 	@echo "\n"
-#   Calculate Checksum                        if fail   UP 1 ln  Flash Red White 80ch  midway  80ch Bell Reset Colour
-	@$(SHA1SUM) -c ge007.$(COUNTRYCODE).sha1 || (printf "\033[1A\033[5;41;97m%80s\n%45s%35s\n%80s\007\033[0;0m\n" "" "NOT MATCH!" "" "" && exit 1)
-	@printf                                                    "\033[5;42;97m%80s\n%43s%37s\n%80s\007\033[0;0m\n" "" "MATCH!" "" "" 
+#                                      if fail          Rsrv   Up 3   Flash  Wht  80  Dn 1 Return      Dn 1 Ret 80ch                  Now using cursor commands for better look  //"\033[5;42;97m%80s\r\n%43s%37s\r\n%80s\007\033[0;0m\n"
+#   Calculate Checksum                 Else complete    Lines Lines     Red/Grn   ch  Line SoL midway  Line SoL     Bell Reset Colour
+	@$(SHA1SUM) -c ge007.$(COUNTRYCODE).sha1 || (printf "\n\n\033[3A\033[5;41;97m%80s\033[1B\r%45s%35s\033[1B\r%80s\007\033[0;0m\n\n\n" "" "NOT MATCH!" "" "" && exit 1)
+	@printf                                           "\n\n\n\033[3A\033[5;42;97m%80s\033[1B\r%43s%37s\033[1B\r%80s\007\033[0;0m\n\n\n" "" "MATCH!" "" "" 
 endif
 	@echo "\n Rom File Generated in Build Directory. \n\n"
+
 .SECONDARY:
 	$(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) 
-ifeq ($(filter clean dataclean codeclean stanclean setupclean print-%,$(MAKECMDGOALS)),)
 
+ifeq ($(filter clean dataclean codeclean stanclean setupclean print-%,$(MAKECMDGOALS)),)
   # Make tools if out of date
   $(info Building tools...)
   DUMMY != make -s -C tools >&2 || echo FAIL
@@ -356,7 +372,6 @@ $(BUILD_DIR)/$(OBSEGMENT): $(OBSEG_RZ) $(IMAGE_OBJS)
 
 $(APPELF): $(RSPOBJECTS) $(ULTRAOBJECTS) $(HEADEROBJECTS) $(OBSEG_RZ) $(BUILD_DIR)/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(ASSET_DATAOBJECTS) $(ROMOBJECTS2) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS)
 	$(LD) $(LDFLAGS) -o $@ 
-# @$(call DrawProgressBar,14,15)
 
 $(APPBIN): $(APPELF)
 	$(OBJCOPY) $< $@ -O binary --gap-fill=0xff
@@ -440,3 +455,4 @@ cmdbuilder:
 	@echo
 	@echo Rebuild AI Command Macros whenever changing aicommands.def.
 	@echo
+

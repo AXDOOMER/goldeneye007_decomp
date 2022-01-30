@@ -227,6 +227,7 @@ glabel get_difficulty_for_objective
 
 
 
+#pragma weak    objectiveGetStatus_WEAK = get_status_of_objective
 
 /*
  * Return Status of objective.

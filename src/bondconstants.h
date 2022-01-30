@@ -320,8 +320,9 @@ BITFLAG(PROPSTATE,
 #define PROPSTATE_NORMAL PROPSTATE_NONE
 
 BITFLAG(PLAYERFLAG,
-        1,
-        NOCONTROL
+        LOCKCONTROLS,
+        NOCONTROL,
+        NOTIMER
 )
 
 BITFLAG(RUNTIMEBITFLAG,
@@ -2807,18 +2808,20 @@ typedef enum WAYMODE
 #pragma endregion
 
 #pragma region Setup 
-    typedef enum CAMERAMODE
+   typedef enum CAMERAMODE
     {
-        INTRO_CAM = 1,
-        FADESWIRL_CAM,
-        SWIRL_CAM,
-        FP_CAM,
-        UNK5_CAM,
-        UNK6_CAM,
-        POSEND_CAM,
-        FP_NOINPUT_CAM,
-        MP_CAM,
-        UNK10_CAM
+        CAMERAMODE_NONE,
+        CAMERAMODE_INTRO,
+        CAMERAMODE_FADESWIRL,
+        CAMERAMODE_SWIRL,
+        CAMERAMODE_FP,
+        CAMERAMODE_UNK5,
+        CAMERAMODE_UNK6,
+        CAMERAMODE_POSEND,
+        CAMERAMODE_FP_NOINPUT,
+        CAMERAMODE_MP,
+        CAMERAMODE_UNK10,
+        CAMERAMODE_COUNT
     } CAMERAMODE;
 
     typedef enum INTRO_TYPE

@@ -305,7 +305,9 @@ void chrGetChrWidthHeight(PropRecord *arg0, f32 *width, f32 *height, f32 *always
 f32 chrGetChrGround(PropRecord *arg0);
 void sub_GAME_7F021B20(struct ChrRecord *arg0);
 s32 get_numguards(void);
-Gfx *chrRenderProp(PropRecord *arg0, Gfx *arg1, s32 arg2);
+Gfx *                                       chrRenderProp(PropRecord *arg0, Gfx *arg1, s32 arg2);
+void                                        chrAddHealth(ChrRecord *chr, f32 health);
+void                                        chrSetMaxDamage(ChrRecord *chr, f32 maxdamage);
 
 //tentative signature
 s32 sub_GAME_7F01FC10(Model *, coord3d *, coord3d *, f32 *);

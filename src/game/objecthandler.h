@@ -19,6 +19,7 @@ void set_obj_instance_controller_scale(Model*, f32);
 void getsuboffset(Model *, coord3d *);
 void sub_GAME_7F070AEC(Model *, s32, s32);
 void subcalcpos(Model *);
+ void      sub_GAME_7F06FDE8(Model *model, float endframe);
 
 void objecthandlerAnimationRelated7F06FCA8(Model *, ModelAnimation *, s32, f32, f32, f32);
 void sub_GAME_7F06FDCC(Model *, f32, f32);

@@ -187,9 +187,7 @@ s32 D_80030A78 = 0;
 s32 D_80030A7C = 0;
 s32 D_80030A80 = 0;
 s32 D_80030A84 = 0;
-s32 D_80030A88 = 0;
-s32 D_80030A8C = 0;
-s32 D_80030A90 = 0;
+void* D_80030A88[] = {0,0,0};
 s32 D_80030A94 = 0;
 s32 D_80030A98 = 0;
 s32 D_80030A9C = 0;
@@ -216,10 +214,54 @@ void sub_GAME_7F03C2BC(PropRecord *prop, s32 type) ;
 
 
 
-
+void set_sound_effect_source_to_location(s32 slot);
 #ifdef NONMATCHING
-void set_sound_effect_source_to_location(void) {
+void set_sound_effect_source_to_location(s32 slot)//#MATCH :audioPlayFromProp2
+{
+    int tempvol;
+    sfxRecord *sfx= &sfx_related[slot]; //always added to stack anyway, cleaner to use
+    int clock_timer;
 
+    if ((sfx->field_0x0 ) && (sfxGetArg0Unk3F(sfx->field_0x0) ))
+    {
+    
+        if (sfx->pad )
+        {
+            sfx->Volume = sub_GAME_7F0539E4(sfx->pad);   
+        }
+        else
+        {
+            if (sfx->Obj && sfx->Obj->prop)
+            {
+                //override pad with a co-ord,
+                sfx->Volume = sub_GAME_7F0539E4(&sfx->Obj->runtime_pos);
+            }
+        }
+
+        tempvol = sfx->Volume;
+        if (sfx->sfxID >= 0)
+        {
+            clock_timer = gclock_timer;
+            if (clock_timer < sfx->sfxID)
+            {
+                tempvol = (((sfx->Volume - sfx->Volume2) * clock_timer) / sfx->sfxID) + sfx->Volume2;
+            }
+            sfx->sfxID = sfx->sfxID - clock_timer;
+        }
+        if (get_controls_locked_flag() != 0)
+        {
+            tempvol = 0;
+        }
+        if (tempvol != sfx->Volume2)
+        {
+            sfx_c_70009184(sfx->field_0x0, 8);
+            sfx->Volume2 = tempvol;
+            return;
+        }
+        return;
+    }
+    sfx->Volume2 = 0;
+}
 }
 #else
 GLOBAL_ASM(
@@ -334,7 +376,7 @@ void loop_set_sound_effect_all_slots(void)
 
 #include <limits.h>
 
-
+void set_sound_effect_to_slot(s32 slot, s16 arg1);
 #ifdef NONMATCHING
 void set_sound_effect_to_slot(s32 slot, s16 arg1) //#MATCH  audioPlayFromProp
 {
@@ -417,6 +459,7 @@ void sub_GAME_7F0349BC(s32 slot)
 
 
 
+s32 get_length_of_action_block(u8 *AIList, s32 offset);
 
 
 #ifdef NONMATCHING
@@ -1519,7 +1562,7 @@ ActionLengthSwitchElse:
 
 
 
-
+s32 sub_GAME_7F035244(AIRecord *AIList, int *isGlobalAIList);
 //todo: this code matches however, gsetup is seperate at present.
 // Also, StageSetup might be single pointers (*) not ((*)[]) as
 // the later requirees some odd derefrencing
@@ -1637,7 +1680,7 @@ glabel sub_GAME_7F035244
 
 
 
-
+s32 true_if_sucessfully_performing_action(AIRecord *AIList, s32 Offset, s32 LabelNum);
 #ifdef NONMATCHING
 /** 
  * GoTo Label
@@ -1754,6 +1797,7 @@ glabel true_if_sucessfully_performing_action
 
 
 
+u8 *LoadNext_PrevActionBlock(u16 *param_1);
 
 #ifdef NONMATCHING
 //LoadNext_PrevActionBlock
@@ -1873,31 +1917,21 @@ glabel LoadNext_PrevActionBlock
 
 
 
-
+PathRecord *get_ptr_path_for_pathnum(s32 ID);
 #ifdef NONMATCHING
-PathRecord get_ptr_path_for_pathnum(u64 pathnum)
+PathRecord *get_ptr_path_for_pathnum(s32 ID)
 {
-    byte       bVar1;
-    undefined *puVar2;
-    int        iVar3;
+    int i;
 
-    iVar3 = 0;
-    if (*(int *)ptr_setup_path_sets != 0)
-    {
-        bVar1  = ptr_setup_path_sets[4];
-        puVar2 = ptr_setup_path_sets;
-        while (true)
+        for  (i=0;setup.paths[i].waypoints;i++)
         {
-            if (pathnum == (ulonglong)bVar1)
+            if ( ID == setup.paths[i].ID )
             {
-                return (int *)(ptr_setup_path_sets + iVar3 * 8);
+                return &setup.paths[i];
             }
-            iVar3 += 1;
-            if (*(int *)(puVar2 + 8) == 0) break;
-            bVar1  = puVar2[0xc];
-            puVar2 = puVar2 + 8;
+           
         }
-    }
+
     return NULL;
 }
 #else
@@ -1944,7 +1978,139 @@ glabel get_ptr_path_for_pathnum
 
 
 #ifdef NONMATCHING
-#pragma weak objectiveGetStatus_WEAK objectiveGetStatus
+#include "objecthandler.h"
+#include "chrobjhandler.h"
+#include "initanitable.h"
+#include <random.h>
+#include "lvl.h"
+#include "stan.h"
+#include "chr.h"
+#include "mp_music.h"
+#include "objective_status.h"
+#include "bondview.h"
+#include <assert.h>
+#include "loadobjectmodel.h"
+#include "cheat_buttons.h"
+#include "player.h"
+#include "file.h"
+//forward
+void sub_GAME_7F03A538(PropRecord *prop);
+//end forward
+extern PadRecord * dword_CODE_bss_800799F8;
+extern CutsceneRecord *gBondViewCutscene;
+extern s32 dword_CODE_bss_80079A18;
+extern s32 dword_CODE_bss_80079A1C;
+extern vec3d flt_CODE_bss_80079990;
+//CODE.bss:80079A00
+extern f32 flt_CODE_bss_80079A00;
+//CODE.bss:80079A04
+extern f32 flt_CODE_bss_80079A04;
+//CODE.bss:80079A08
+extern f32 flt_CODE_bss_80079A08;
+//CODE.bss:80079A0C
+extern f32 flt_CODE_bss_80079A0C;
+//CODE.bss:80079A10
+extern f32 flt_CODE_bss_80079A10;
+//CODE.bss:80079A14
+extern s32 dword_CODE_bss_80079A14;
+extern bool mission_kia_flag;
+
+//shims
+extern s32 objectiveGetStatus_WEAK(s32 objectiveNum, s32);
+#define chraiGoToLabel                    true_if_sucessfully_performing_action
+#define pathFindById                      get_ptr_path_for_pathnum
+#define ailistFindById                    LoadNext_PrevActionBlock
+#define chraiGetAIListID                  sub_GAME_7F035244
+#define chraiitemsize                     get_length_of_action_block
+#define audioPlayFromProp                 set_sound_effect_to_slot
+#define audioPlayFromProp2                set_sound_effect_source_to_location
+#define chrFindByLiteralId                chrGetGuardData
+#define chrIsHearingBond                  check_if_actor_02_flag_set
+#define chrFindById                       chrlvGetHandleForGuardId
+#define chrTryEquipHat                    sub_GAME_7F0510C0
+#define alarmIsActive                     is_alarm_on
+#define chrTrySurprisedLookAround         check_if_able_to_then_look_flustered
+#define chrIsStopped                      check_if_actor_stationary
+#define chrCheckTargetInSight             sub_GAME_7F029D70
+#define chrGetEquippedWeaponPropWithCheck is_weapon_in_guarddata_hand
+#define chrDropItem                       actor_drops_itemtype_setting_timer
+#define chrTrySurrender                   check_if_able_to_then_surrender
+#define chrFadeOut                        sub_GAME_7F0333A0
+#define alarmActivate                     start_alarm
+#define alarmDeactivate                   stop_alarm
+#define chrTryStartAlarm                  sub_GAME_7F034514
+#define chrGoToPad                        actor_moves_to_preset_at_speed
+#define chrCanHearAlarm                   alarm_timer_related
+#define chrSawInjury                      check_if_actor_FA_target_set
+#define chrSawDeath                       check_if_actor_FB_target_set
+#define chrCanSeeBond                     sub_GAME_7F0294BC
+#define chrSawTargetRecently              chrlvSeenWithin600
+#define chrHeardTargetRecently            chrlvHearWithin600
+#define chrIfNearMiss                     check_if_actor_invisible
+#define chrGetDistanceToBond              chrlvDistToBond3D
+#define chrGetDistanceToPad               sub_GAME_7F032E48
+#define chrGetDistanceToChr               get_distance_between_actor_and_actorID
+#define chrGetDistanceFromBondToPad       get_distance_between_actor_and_preset
+#define objFindByTagId                    get_handle_to_tagged_object
+#define weaponFindThrown                  check_if_item_deposited
+#define getCurrentPlayerWeaponId          get_item_in_hand
+#define objIsHealthy                      check_if_object_has_not_been_destroyed
+#define doorActivateWrapper               sub_GAME_7F05599C
+#define propobjInteract                   sub_GAME_7F04F170
+#define propobjSetDropped                 sub_GAME_7F04BFD0
+#define chrDropItems                      sub_GAME_7F021B20
+#define doorActivate                      set_door_state
+#define objectiveGetCount                 add_objective
+#define chrGetNumArghs                    get_times_actor_shot
+#define chrGetNumCloseArghs               get_num_shots_near_actor
+#define chrSetFlags                       chrlvSetBitfieldFlags
+#define chrUnsetFlags                     chrlvClearBitfieldFlags
+#define chrHasFlag                        chrlvTestBitfieldFlags
+#define chrSetFlagsById                   chrlvSetGuardBitfieldFlags
+#define chrUnsetFlagsById                 chrlvClearGuardBitfieldFlags
+#define chrHasFlagById                    chrlvTestGuardBitfieldFlags
+#define chrSetStageFlags                  toggle_objective_bitflags
+#define chrUnsetStageFlags                untoggle_objective_bitflags
+#define chrHasStageFlag                   check_if_objective_bitflags_set
+#define chrSetChrPreset                   sub_GAME_7F033CF4
+#define chrSetChrPreset2                  sub_GAME_7F033D1C
+#define chrSetPadPreset                   sub_GAME_7F033D5C
+#define chrSetPadPresetByChrnum           sub_GAME_7F033D84
+#define chrRestartTimer                   reset_and_start_loop_counter
+#define chrGetTimer                       get_loop_counter_time_in_seconds
+#define countdownTimerSetVisible          set_unset_clock_lock_bits
+#define countdownTimerSetValue            set_clock_time
+#define countdownTimerSetRunning          set_clock_enable
+#define countdownTimerIsRunning           get_clock_enable
+#define countdownTimerGetValue            get_clock_time
+#define chrSpawnAtPad                     guard_constructor_BD
+#define chrSpawnAtChr                     guard_constructor_BE
+#define cheatIsActive                     cheatCheckIfOn
+#define chrGiveWeapon                     actor_draws_weapon_with_model
+#define chrGetEquippedWeaponProp          something_with_weaponpos_of_guarddata_hand
+#define propweaponSetDual                 link_objects
+#define langGet                           get_textptr_for_textID
+#define hudmsgBottomShow                  display_string_in_lower_left_corner
+#define hudmsgTopShow                     display_string_at_top_of_screen
+#define imageSlotSetImage                 set_ptr_monitor_img_to_obj_ani_slot
+#define isBondInTank                      get_intank_flag
+#define chrResolvePadId                   convertPadIf9000
+#define sub_GAME_7F020D914                chrPositionRelated7F020D94
+#define chrSetWeaponFlag4                 set_0x4_in_runtime_flags_for_item_in_guards_hand
+#define currentPlayerGetAmmoCount         check_cur_player_ammo_amount_total
+#define currentPlayerEquipWeaponWrapper   draw_item_in_hand_has_more_ammo
+#define currentPlayerUnEquipWeaponWrapper remove_hands_item
+#define g_PlayerInvincible                disable_player_pickups_flag
+#define objectiveIsAllComplete            check_objectives_complete
+#define musicSetXReason                   set_musicslot_time
+#define musicUnsetXReason                 reset_music_in_slot
+#define SurroundWithExplosions            trigger_explosions_around_player
+#define get_civilian_casualties           get_civilian_casualties
+#define g_isBondKIA                       mission_kia_flag
+#define chrTrySurprisedSurrender          check_if_able_to_then_fawn_on_shoulder
+
+
+
 
 /**
  Execute AI List from Character, Stage, Vehichle(truck) or Aircraft(heli)
@@ -1954,7 +2120,7 @@ glabel get_ptr_path_for_pathnum
  @param         PROPTYPE_CHR = Character (Guard or Stage)
  @param         PROPTYPE_OBJ = Object (Vehichle or Aircraft)
 */
-void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
+void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
 {
     /*
      * (void *Param, int ParamType) is the correct way to pass a variable
@@ -1968,10 +2134,10 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
      *  
      */
 
-    ChrRecord *     ChrEntityp      = NULL;
+    ChrRecord      *ChrEntityp      = NULL;
     VehichleRecord *VehichleEntityp = NULL;
     AircraftRecord *AircraftEntityp = NULL;
-    AIRecord *      AiListp         = NULL;
+    AIRecord       *AiListp         = NULL;
     s32             Offset;
 
     if (EntityType == PROP_TYPE_CHR)
@@ -2175,7 +2341,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     else if (AircraftEntityp)
                     {
                         zero = 0; //debug value maybe?
-                        sub_GAME_7F06FCA8(AircraftEntityp->model, animation_table_ptrs2[anim_id], zero, startframe, 0.5f, (s32)ai->val[7]);
+                        objecthandlerAnimationRelated7F06FCA8(AircraftEntityp->model, animation_table_ptrs2[anim_id], zero, startframe, 0.5f, (s32)ai->val[7]);
                         if (endframe >= 0)
                         {
                             sub_GAME_7F06FDE8(AircraftEntityp->model, endframe);
@@ -2452,7 +2618,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
 
                     if (chr && chr->prop)
                     {
-                        handles_shot_actors(chr, (s8)ai->val[1], &vec, ai->val[2], NULL);
+                        handles_shot_actors(chr, (s8)ai->val[1], &vec, ai->val[2], FALSE);
                     }
 
                     Offset += 4;
@@ -3328,9 +3494,9 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 {
                     AIRecord *    ai  = AiListp + Offset;
                     ObjectRecord *obj = objFindByTagId(ai->val[0]);
-                    if (obj && obj->prop && (obj->openstate & PROPSTATE_ACTIVATED))
+                    if (obj && obj->prop && (obj->state & PROPSTATE_ACTIVATED))
                     {
-                        obj->openstate &= ~PROPSTATE_ACTIVATED;
+                        obj->state &= ~PROPSTATE_ACTIVATED;
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
                     }
                     else
@@ -3471,7 +3637,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                         {
                             pad = (PadRecord *)&ptr_2xxxpresets[getBoundPadNum(padnum)];
                         }
-                        matrix_4x4_7F059908(&matrix, 0, 0, 0, -pad->target.x, -pad->target.y, -pad->target.z, pad->up.x, pad->up.y, pad->up.z);
+                        matrix_4x4_7F059908(&matrix, 0, 0, 0, -pad->look.x, -pad->look.y, -pad->look.z, pad->up.x, pad->up.y, pad->up.z);
                         if (obj->model)
                         {
                             matrix_scalar_multiply(obj->model->scale, &matrix);
@@ -3617,7 +3783,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                         u8 label;
                     } *ai = AiListp + Offset;
                     /* additional PD code for dificulty filtering 
-                     == OBJECTIVE_COMPLETE && objectiveGetDifficultyBits(ai->val[0]) & (1 << getDifficulty()))* 
+                     == OBJECTIVE_COMPLETE && objectivelvlGetSelectedDifficultyBits(ai->val[0]) & (1 << lvlGetSelectedDifficulty()))* 
                      */
                     if (objectiveGetCount() > ai->val && OBJECTIVESTATUS_COMPLETE == objectiveGetStatus_WEAK(ai->val * 1, ai->val))
                     {
@@ -3759,7 +3925,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 {
                     AIRecord *ai  = AiListp + Offset;
                     float     val = (ai->val[0]) / 255.0f;
-                    if (val > get_BONDdata_watch_health())
+                    if (val > bondviewGetCurrentPlayerHealth())
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
                     }
@@ -3773,7 +3939,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 {
                     AIRecord *ai  = AiListp + Offset;
                     float     val = (ai->val[0]) / 255.0f;
-                    if (val < get_BONDdata_watch_health())
+                    if (val < bondviewGetCurrentPlayerHealth())
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
                     }
@@ -3786,7 +3952,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 case AI_IF_GAME_DIFFICULTY_LESS_THAN:
                 {
                     AIRecord *ai = AiListp + Offset;
-                    if (ai->val[0] > getDifficulty())
+                    if (ai->val[0] > lvlGetSelectedDifficulty())
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
                     }
@@ -3799,7 +3965,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 case AI_IF_GAME_DIFFICULTY_GREATER_THAN:
                 {
                     AIRecord *ai = AiListp + Offset;
-                    if (ai->val[0] < getDifficulty())
+                    if (ai->val[0] < lvlGetSelectedDifficulty())
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
                     }
@@ -3813,7 +3979,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 {
                     AIRecord *ai     = AiListp + Offset;
                     f32       target = (ai->val[1] | (ai->val[0] << 8));
-                    if (target > get_cur_mp_sec())
+                    if (target > lvlGetCurrentMultiPlayerSec())
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
                     }
@@ -3827,7 +3993,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 {
                     AIRecord *ai     = AiListp + Offset;
                     f32       target = (ai->val[1] | (ai->val[0] << 8));
-                    if (target < get_cur_mp_sec())
+                    if (target < lvlGetCurrentMultiPlayerSec())
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
                     }
@@ -3841,7 +4007,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 {
                     AIRecord *ai     = AiListp + Offset;
                     f32       target = (ai->val[1] | (ai->val[0] << 8)) * 60.0f;
-                    if (target > getUptime())
+                    if (target > lvlGetCurrentMultiPlayerMin())
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
                     }
@@ -3855,7 +4021,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 {
                     AIRecord *ai     = AiListp + Offset;
                     f32       target = (ai->val[1] | (ai->val[0] << 8)) * 60.0f;
-                    if (target < getUptime())
+                    if (target < lvlGetCurrentMultiPlayerMin())
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
                     }
@@ -4920,7 +5086,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 {
                     AIRecord *ai        = AiListp + Offset;
                     f32       speedtime = ai->val[3] | (ai->val[2] << 8);
-                    f32       speedaim  = (ai->val[1] | (ai->val[0] << 8)) * M_TAU / 3600.0f;
+                    f32       speedaim  = (ai->val[1] | (ai->val[0] << 8)) * M_TAU_F / 3600.0f;
                     if (AircraftEntityp)
                     {
                         AircraftEntityp->rotaryspeedaim  = speedaim;
@@ -5051,7 +5217,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                             assert(cdef->type == PROPDEF_CAMERAPOS);
 #    endif
                             dword_CODE_bss_800799F8 = NULL;
-                            dword_CODE_bss_800799FC = cdef;
+                            gBondViewCutscene       = cdef;
                             dword_CODE_bss_80079A18 = ai->val[2] | (ai->val[1] << 8);
                             dword_CODE_bss_80079A1C = ai->val[4] | (ai->val[3] << 8);
                             set_camera_mode(CAMERAMODE_POSEND);
@@ -5081,7 +5247,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     set_unset_ammo_on_screen_setting(2, FALSE);
                     if (!(PLAYERFLAG_NOCONTROL & ai->val))
                     {
-                        currentPlayerSetFlag(PLAYERFLAG_NOCONTROL);
+                        bondviewSetIntroCameraFlags(PLAYERFLAG_NOCONTROL);
                     }
                     if (!(ai->val & PLAYERFLAG_LOCKCONTROLS))
                     {
@@ -5102,7 +5268,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
 #    endif
                     set_unset_bitflags(4, TRUE);
                     set_unset_ammo_on_screen_setting(2, TRUE);
-                    currentPlayerUnsetFlag(PLAYERFLAG_NOCONTROL);
+                    bondviewUnsetIntroCameraFlags(PLAYERFLAG_NOCONTROL);
                     sub_GAME_7F08A928(2);
                     countdownTimerSetVisible(16, TRUE);
                     D_800364B0 = TRUE;
@@ -5132,7 +5298,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                             pad = (PadRecord *)&ptr_2xxxpresets[getBoundPadNum(padnum)];
                         }
 
-                        FacingDirection = atan2f(pad->target.x, pad->target.z);
+                        FacingDirection = atan2f(pad->look.x, pad->look.z);
                         pos.x           = pad->pos.x;
                         pos.y           = pad->pos.y;
                         pos.z           = pad->pos.z;
@@ -5152,15 +5318,15 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                             chr->chrflags   = chr->chrflags | CHRFLAG_INIT;
                             setsubroty(chr->model, FacingDirection);
                             setsuboffset(chr->model, &pos);
-                            sub_GAME_7F020D94(chr);
-                            if (chr->prop == pPlayer->prop)
+                            chrPositionRelated7F020D94(chr);
+                            if (chr->prop == g_CurrentPlayer->prop)
                             {
-                                pPlayer->pos4.x = pos.x;
-                                pPlayer->pos4.y = pos.y;
-                                pPlayer->pos4.z = pos.z;
+                                g_CurrentPlayer->field_488.collision_position.x = pos.x;
+                                g_CurrentPlayer->field_488.collision_position.y = pos.y;
+                                g_CurrentPlayer->field_488.collision_position.z = pos.z;
 
-                                //pPlayer->pos = pos;
-                                pPlayer->current_tile_ptr = stan;
+                                //g_CurrentPlayer->pos = pos;
+                                g_CurrentPlayer->movecentrerelease = stan;
                             }
                             pass = TRUE;
                         }
@@ -5199,7 +5365,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 case AI_IF_SCREEN_FADE_COMPLETED:
                 {
                     AIRecord *ai = AiListp + Offset;
-                    if (pPlayer->colourfadetimemax60 < 0)
+                    if (g_CurrentPlayer->colourfadetimemax60 < 0)
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
                     }
@@ -5242,7 +5408,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                         //DoorRecord *door   = (DoorRecord *)obj;
                         door->speed        = 0;
                         door->openPosition = door->maxFrac;
-                        door->openedTime   = global_timer;
+                        door->openedTime   = g_GlobalTimer;
                         door->openstate        = DOORSTATE_STATIONARY;
                         sub_GAME_7F052B00(door);
                         sub_GAME_7F053598(door); // doorActivatePortal
@@ -5270,7 +5436,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                         s8 val;
                         u8 label;
                     } *ai = AiListp + Offset;
-                    if (getPlayercount() < ai->val)
+                    if (getPlayerCount() < ai->val)
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->label);
                     }
@@ -5339,7 +5505,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                         pad = (PadRecord *)&ptr_2xxxpresets[getBoundPadNum(padnum)];
                     }
 
-                    if (pad->stan && obj && obj->prop && (pad->stan->RoomID == obj->prop->stan->RoomID))
+                    if (pad->stan && obj && obj->prop && (pad->stan->room == obj->prop->stan->room))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
                     }
@@ -5351,7 +5517,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 }
                 case AI_SWITCH_SKY:
                 { // SWITCHENVIRONMENT
-                    switch_to_solosky2(1.0);
+                    fogSwitchToSolosky2(1.0);
                     Offset += 1;
                     break;
                 }
@@ -5367,7 +5533,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 case AI_IF_BOND_IS_DEAD:
                 {
                     AIRecord *ai = AiListp + Offset;
-                    if (pPlayer->bonddead)
+                    if (g_CurrentPlayer->bonddead)
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
                     }
@@ -5406,7 +5572,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     c                       = (s16)(ai->val[9] | ai->val[8] << 8);
                     speed                   = ai->val[11] | ai->val[10] << 8;
                     dword_CODE_bss_800799F8 = NULL;
-                    dword_CODE_bss_800799FC = NULL;
+                    gBondViewCutscene = NULL;
                     flt_CODE_bss_80079A00   = (speed * M_TAU) / 65536.0f; //speed
                     flt_CODE_bss_80079A04   = (a * M_TAU) / 65536.0f;
                     flt_CODE_bss_80079A08   = b;
@@ -5544,7 +5710,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 }
                 case AI_GAS_LEAK_AND_FADE_FOG:
                 {
-                    void *p[3] = ptr_80030A88_3words;
+                    void *p[3] = D_80030A88;
                     init_trigger_toxic_gas_effect(p); //do something with p
                     Offset += 1;
                     break;
@@ -5558,7 +5724,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     {
                         sub_GAME_7F03FDA8(obj->prop);
 
-                        if (obj->runtime_bitflags & RUNTIMEBITFLAG_LAUNCHING)
+                        if (obj->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)
                         {
                             obj->unk6C->id |= 0x601;
                             sub_GAME_7F03FE14(obj->prop);
@@ -27785,8 +27951,48 @@ glabel sub_GAME_7F03DCB8
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03DD9C(void) {
+void sub_GAME_7F03DD9C(PropRecord *arg0, s16 arg1)
+{
+    s16 temp_s0;
+    s16 temp_s0_2;
+    s32 temp_v0;
+    s32 phi_s0;
+    s32 phi_a2;
+    s32 phi_a2_2;
 
+    phi_a2 = -1;
+    phi_a2_2 = -1;
+    if (arg1 >= 0)
+    {
+        temp_s0 = *(ptr_room_lookup_buffer_maybe + (arg1 * 2));
+        phi_s0 = temp_s0;
+        if (temp_s0 >= 0)
+        {
+loop_3:
+            if (sub_GAME_7F03DBCC((arg0 - pos_data_entry) / 52, phi_s0, phi_a2) == 0)
+            {
+                temp_s0_2 = (dword_CODE_bss_8007161C + (phi_s0 << 5))->unk1E;
+                phi_s0 = temp_s0_2;
+                phi_a2 = phi_s0;
+                phi_a2_2 = phi_s0;
+                if (temp_s0_2 < 0)
+                {
+                    goto block_5;
+                }
+                goto loop_3;
+            }
+        }
+        else
+        {
+block_5:
+            temp_v0 = sub_GAME_7F03DCB8(arg1, phi_a2_2, phi_a2_2);
+            if (temp_v0 >= 0)
+            {
+                sub_GAME_7F03DBCC((arg0 - pos_data_entry) / 52, temp_v0);
+            }
+        }
+    }
+}
 }
 #else
 GLOBAL_ASM(
@@ -27867,7 +28073,183 @@ glabel sub_GAME_7F03DD9C
 void sub_GAME_7F03DE94(PropRecord *arg0, s16 room);
 
 #ifdef NONMATCHING
-void sub_GAME_7F03DE94(void) {
+void sub_GAME_7F03DE94(PropRecord *arg0, s16 arg1)
+{
+    s16 *temp_s0;
+    s16 *temp_t5_3;
+    s16 temp_s1;
+    s16 temp_s1_2;
+    s16 temp_s1_3;
+    s16 temp_s1_4;
+    s16 temp_s1_5;
+    s16 temp_t5;
+    s16 temp_t5_2;
+    s16 temp_v1;
+    s16 temp_v1_2;
+    s32 temp_lo;
+    s32 temp_s0_2;
+    s32 temp_t2;
+    s32 temp_v0;
+    u32 temp_t5_4;
+    u32 temp_t5_5;
+    u32 phi_t5;
+    s16 phi_v1;
+    s16 *phi_s0;
+    s32 phi_v0;
+    s16 *phi_s0_2;
+    s32 phi_v0_2;
+    s32 phi_s0_3;
+    s32 phi_v0_3;
+    s16 *phi_t5_2;
+    s32 phi_v0_4;
+    s16 *phi_t5_3;
+    s32 phi_v0_5;
+    s16 *phi_t5_4;
+    s32 phi_v0_6;
+    s32 phi_v0_7;
+    s32 phi_t1;
+    s32 phi_a2;
+
+    phi_t1 = -1;
+    phi_a2 = 0;
+    if (arg1 >= 0)
+    {
+        temp_t2 = arg1 * 2;
+        temp_v1 = *(ptr_room_lookup_buffer_maybe + temp_t2);
+        phi_v1 = temp_v1;
+        if (temp_v1 >= 0)
+        {
+            temp_lo = (arg0 - pos_data_entry) / 52;
+            phi_t5 = dword_CODE_bss_8007161C;
+loop_3:
+            temp_s0 = phi_t5 + (phi_v1 << 5);
+            temp_s1 = *temp_s0;
+            phi_s0 = temp_s0;
+            phi_v0 = 0;
+            if (temp_lo == temp_s1)
+            {
+                *temp_s0 = -1;
+                phi_s0 = dword_CODE_bss_8007161C + (phi_v1 << 5);
+                phi_a2 = 1;
+            }
+            else if (temp_s1 >= 0)
+            {
+                phi_v0 = 1;
+            }
+            temp_t5 = phi_s0->unk2;
+            phi_s0_2 = phi_s0;
+            phi_v0_2 = phi_v0;
+            if (temp_lo == temp_t5)
+            {
+                phi_s0->unk2 = -1;
+                phi_s0_2 = dword_CODE_bss_8007161C + (phi_v1 << 5);
+                phi_a2 = 1;
+            }
+            else if ((phi_v0 == 0) && (temp_t5 >= 0))
+            {
+                phi_v0_2 = 1;
+            }
+            temp_t5_2 = phi_s0_2->unk4;
+            phi_v0_3 = phi_v0_2;
+            if (temp_lo == temp_t5_2)
+            {
+                phi_s0_2->unk4 = -1;
+                phi_a2 = 1;
+            }
+            else if ((phi_v0_2 == 0) && (temp_t5_2 >= 0))
+            {
+                phi_v0_3 = 1;
+            }
+            phi_s0_3 = 6;
+            do
+            {
+                temp_t5_3 = dword_CODE_bss_8007161C + (phi_v1 << 5) + phi_s0_3;
+                temp_s1_2 = *temp_t5_3;
+                phi_t5_2 = temp_t5_3;
+                phi_v0_4 = phi_v0_3;
+                if (temp_lo == temp_s1_2)
+                {
+                    *temp_t5_3 = -1;
+                    phi_t5_2 = dword_CODE_bss_8007161C + (phi_v1 << 5) + phi_s0_3;
+                    phi_a2 = 1;
+                }
+                else if ((phi_v0_3 == 0) && (temp_s1_2 >= 0))
+                {
+                    phi_v0_4 = 1;
+                }
+                temp_s1_3 = phi_t5_2->unk2;
+                phi_t5_3 = phi_t5_2;
+                phi_v0_5 = phi_v0_4;
+                if (temp_lo == temp_s1_3)
+                {
+                    phi_t5_2->unk2 = -1;
+                    phi_t5_3 = dword_CODE_bss_8007161C + (phi_v1 << 5) + phi_s0_3;
+                    phi_a2 = 1;
+                }
+                else if ((phi_v0_4 == 0) && (temp_s1_3 >= 0))
+                {
+                    phi_v0_5 = 1;
+                }
+                temp_s1_4 = phi_t5_3->unk4;
+                phi_t5_4 = phi_t5_3;
+                phi_v0_6 = phi_v0_5;
+                if (temp_lo == temp_s1_4)
+                {
+                    phi_t5_3->unk4 = -1;
+                    phi_t5_4 = dword_CODE_bss_8007161C + (phi_v1 << 5) + phi_s0_3;
+                    phi_a2 = 1;
+                }
+                else if ((phi_v0_5 == 0) && (temp_s1_4 >= 0))
+                {
+                    phi_v0_6 = 1;
+                }
+                temp_s1_5 = phi_t5_4->unk6;
+                temp_s0_2 = phi_s0_3 + 8;
+                phi_s0_3 = temp_s0_2;
+                phi_v0_7 = phi_v0_6;
+                if (temp_lo == temp_s1_5)
+                {
+                    phi_t5_4->unk6 = -1;
+                    phi_a2 = 1;
+                }
+                else if ((phi_v0_6 == 0) && (temp_s1_5 >= 0))
+                {
+                    phi_v0_7 = 1;
+                }
+                phi_v0_3 = phi_v0_7;
+            } while (temp_s0_2 != 0x1E);
+            if (phi_v0_7 == 0)
+            {
+                temp_v0 = phi_v1 << 5;
+                *(dword_CODE_bss_8007161C + temp_v0) = -2;
+                if (phi_t1 >= 0)
+                {
+                    temp_t5_4 = dword_CODE_bss_8007161C;
+                    (temp_t5_4 + (phi_t1 << 5))->unk1E = (temp_t5_4 + temp_v0)->unk1E;
+                }
+                else
+                {
+                    *(ptr_room_lookup_buffer_maybe + temp_t2) = (dword_CODE_bss_8007161C + temp_v0)->unk1E;
+                }
+            }
+            else
+            {
+                phi_t1 = phi_v1;
+            }
+            if (phi_a2 == 0)
+            {
+                temp_t5_5 = dword_CODE_bss_8007161C;
+                temp_v1_2 = (temp_t5_5 + (phi_v1 << 5))->unk1E;
+                phi_t5 = temp_t5_5;
+                phi_v1 = temp_v1_2;
+                if (temp_v1_2 >= 0)
+                {
+                    goto loop_3;
+                }
+            }
+        }
+    }
+}
 
 }
 #else
@@ -28697,69 +29079,27 @@ glabel sub_GAME_7F03E830
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03E85C(void) {
 
+f32 sub_GAME_7F03E85C(ModelNode_BoundingBoxRecord *modelBoundingBox)
+{
+    return modelBoundingBox->Bounds.xmin;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03E85C
-/* 07338C 7F03E85C 03E00008 */  jr    $ra
-/* 073390 7F03E860 C4800004 */   lwc1  $f0, 4($a0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F03E864(void) {
-
+f32 sub_GAME_7F03E864(ModelNode_BoundingBoxRecord *modelBoundingBox)
+{
+    return modelBoundingBox->Bounds.ymin;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03E864
-/* 073394 7F03E864 03E00008 */  jr    $ra
-/* 073398 7F03E868 C480000C */   lwc1  $f0, 0xc($a0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F03E86C(void) {
-
+f32 sub_GAME_7F03E86C(ModelNode_BoundingBoxRecord *modelBoundingBox)
+{
+    return modelBoundingBox->Bounds.ymax;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03E86C
-/* 07339C 7F03E86C 03E00008 */  jr    $ra
-/* 0733A0 7F03E870 C4800010 */   lwc1  $f0, 0x10($a0)
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F03E874(void) {
-
+f32 sub_GAME_7F03E874(ModelNode_BoundingBoxRecord *modelBoundingBox)
+{
+    return modelBoundingBox->Bounds.zmin;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03E874
-/* 0733A4 7F03E874 03E00008 */  jr    $ra
-/* 0733A8 7F03E878 C4800014 */   lwc1  $f0, 0x14($a0)
-)
-#endif
+
+
 
 
 
@@ -30241,8 +30581,33 @@ glabel scan_position_data_table_for_normal_object_at_preset
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03FAB0(void) {
+ObjectRecord* sub_GAME_7F03FAB0(PadRecord* pad, s32 RoomID)
+{
+    s32 sp38;
+    s32 sp34;
+    PropRecord* temp_s0;
+    PropRecord* temp_v0;
+    PropRecord* phi_s0;
 
+    temp_v0 = get_ptr_obj_pos_list_current_entry(pad);
+    phi_s0 = temp_v0;
+    if (temp_v0 != 0)
+    {
+loop_2:
+        if ((phi_s0->type == 1) && (RoomID == phi_s0->stan->unk3) && (sub_GAME_7F03CCB0(phi_s0, &sp38, &sp34), (sub_GAME_7F03CCD8(pad, sp38, sp34) != 0)))
+        {
+            return phi_s0->chr;
+        }
+        temp_s0 = phi_s0->prev;
+        phi_s0 = temp_s0;
+        if (temp_s0 == 0)
+        {
+            goto block_7;
+        }
+        goto loop_2;
+    }
+block_7:
+    return NULL;
 }
 #else
 GLOBAL_ASM(

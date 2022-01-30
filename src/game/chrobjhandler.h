@@ -80,5 +80,28 @@ void trigger_remote_mine_detonation(void);
 
 void                 sub_GAME_7F04C044(PropRecord *prop);
 void                 sub_GAME_7F040CF0(PropRecord *);
-
+bool                 is_alarm_on();
+void                 init_trigger_toxic_gas_effect(coord3d *source);
+void                 set_0x4_in_runtime_flags_for_item_in_guards_hand(ChrRecord *chr, GUNHAND hand);
+void                 sub_GAME_7F053B10(DoorRecord *door)    ;
+void                 sub_GAME_7F053598(DoorRecord *door);
+void                 sub_GAME_7F052B00(DoorRecord *door);
+s32                  sub_GAME_7F0539B8(f32 vol);
+void                 set_ptr_monitor_img_to_obj_ani_slot(MonitorRecord *mon, s32 monAnimID);
+void                 link_objects(WeaponObjRecord *leftweapon, WeaponObjRecord *rightweapon);
+f32                  get_clock_time(void);
+bool                 get_clock_enable(void);
+void                 set_clock_enable(bool enable);
+void                 set_clock_time(f32 time);
+void                 set_unset_clock_lock_bits(int clocklockbits, bool unset);
+void                 sub_GAME_7F04088C(ObjectRecord *baseobj, PadRecord *pad, Mtxf *matrix, StandTile *stan, PadRecord *pad2);
+bool                 sub_GAME_7F051E1C(WeaponObjRecord *wep, ChrRecord *chr);
+INV_ITEM_TYPE        collect_or_interact_object(PropRecord *prop, bool showstring);
+INV_ITEM_TYPE        sub_GAME_7F04F170(PropRecord *prop);
+s32                  do_something_if_object_destroyed(ObjectRecord *obj);
+void                 sub_GAME_7F05599C(PropRecord *prop);
+bool                 check_if_object_has_not_been_destroyed(ObjectRecord *self);
+ObjectRecord *       check_if_item_deposited(s32 ID);
+bool                 check_if_toxic_gas_activated();
+PropRecord *         sub_GAME_7F0510C0(ChrRecord *self, s32 index, s32 flags);
 #endif

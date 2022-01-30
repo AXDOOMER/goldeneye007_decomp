@@ -7398,6 +7398,7 @@ void chrCheckGuardsHeardSound(f32 noise)
  * is not null and (2) chrnum matches index.
  * 
  * Address 0x7F022FC8.
+ * chrFindByLiteralId
  */
 ChrRecord* chrGetGuardData(s32 index)
 {
