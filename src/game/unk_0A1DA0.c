@@ -1349,7 +1349,7 @@ glabel sub_GAME_7F0A2160
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0A28D4(void) {
+void update_broken_windows(void) {
 
 }
 #else
@@ -1371,7 +1371,7 @@ glabel D_80057738
 glabel D_8005773C
 .word 0x00000000 /*0.0*/
 .text
-glabel sub_GAME_7F0A28D4
+glabel update_broken_windows
 /* 0D7404 7F0A28D4 3C028005 */  lui   $v0, %hi(g_ClockTimer)
 /* 0D7408 7F0A28D8 8C428374 */  lw    $v0, %lo(g_ClockTimer)($v0)
 /* 0D740C 7F0A28DC 3C088008 */  lui   $t0, %hi(bufferentrycount_8007A160) 
@@ -1621,7 +1621,7 @@ glabel D_8004CE0C
 .word 0x00000000 /*0.0*/
 
 .text
-glabel sub_GAME_7F0A28D4
+glabel update_broken_windows
 /* 0D4804 7F0A1E14 3C028004 */  lui   $v0, %hi(g_ClockTimer) # $v0, 0x8004
 /* 0D4808 7F0A1E18 8C420FF4 */  lw    $v0, %lo(g_ClockTimer)($v0)
 /* 0D480C 7F0A1E1C 3C088007 */  lui   $t0, %hi(bufferentrycount_8007A160) # $t0, 0x8007
@@ -4865,37 +4865,23 @@ void sub_GAME_7F0A47D4(void) {
     sub_GAME_7F0A45D8();
 }
 
-void sub_GAME_7F0A47FC(void) {
+void update_bullet_sparks_and_dust_clouds(void) {
+    // unknown
     sub_GAME_7F0A3EA0();
+
+    // responsible for updating bullet sparks and dust clouds that spawn when shooting at other players
+    // the limit is 20, after which they'll stop spawning until some are removed
+    // these are 2D and always facing the camera
     sub_GAME_7F0A46A0();
 }
 
 
 
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F0A4824(Gfx *arg0, s32 arg1) {
-
+    sub_GAME_7F0A4528(arg0, arg1);
+    sub_GAME_7F0A4768(arg0, arg1);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A4824
-/* 0D9354 7F0A4824 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0D9358 7F0A4828 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0D935C 7F0A482C AFA40018 */  sw    $a0, 0x18($sp)
-/* 0D9360 7F0A4830 0FC2914A */  jal   sub_GAME_7F0A4528
-/* 0D9364 7F0A4834 AFA5001C */   sw    $a1, 0x1c($sp)
-/* 0D9368 7F0A4838 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0D936C 7F0A483C 0FC291DA */  jal   sub_GAME_7F0A4768
-/* 0D9370 7F0A4840 8FA5001C */   lw    $a1, 0x1c($sp)
-/* 0D9374 7F0A4844 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0D9378 7F0A4848 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0D937C 7F0A484C 03E00008 */  jr    $ra
-/* 0D9380 7F0A4850 00000000 */   nop   
-)
-#endif
+
 
 #endif 
 

@@ -2201,26 +2201,26 @@ void lvlSetMultipliersForDifficulty(void)
  */
 void lvlManageMpGame(void)
 {
-    s32 sp184;
+    s32 current_time_copy;
     s32 sp180;
     s32 sp30;
     s32 sp2C;
-    s32 temp_a0_3;
+    s32 time_limit_minus_60_seconds;
     s32 var_player_count2_again;
     s32 temp_t6;
     s32 temp_v0;
-    s32 temp_v0_3;
+    s32 current_time;
     s32 var_player_count1;
     s32 var_player_count2;
-    s32 temp_v1_2;
-    s32 temp_v1_3;
+    s32 mp_game_time_limit;
+    s32 mp_game_time_limit_2;
     s32 temp_v1_7;
     s32 mp_alive_count;
     s32 mp_player_field424_count;
-    s32 mp_something_count1;
+    s32 mp_player_currently_in_dying_animation;
     s32 phi_a2_5;
     s32 copy_g_clockTimer;
-    s32 mp_points_count1;
+    s32 mp_players_over_point_limit;
     s32 phi_ra_2;
     s32 phi_ra_3;
 
@@ -2290,16 +2290,16 @@ void lvlManageMpGame(void)
             }
         }
 
-        temp_v1_2 = g_MpTime;
-        if (temp_v1_2 > 0)
+        mp_game_time_limit = g_MpTime;
+        if (mp_game_time_limit > 0)
         {
-            temp_v0_3 = D_80048394;
-            temp_a0_3 = temp_v1_2 - 0xE10;
-            temp_t6 = g_ClockTimer + temp_v0_3;
+            current_time = D_80048394;
+            time_limit_minus_60_seconds = mp_game_time_limit - 0xE10;
+            temp_t6 = g_ClockTimer + current_time;
             sp180 = temp_t6;
-            sp184 = temp_v0_3;
+            current_time_copy = current_time;
 
-            if ((temp_v0_3 < temp_a0_3) && (temp_t6 >= temp_a0_3))
+            if ((current_time < time_limit_minus_60_seconds) && (temp_t6 >= time_limit_minus_60_seconds))
             {
                 s32 i = 0;
                 for (i=0; i<getPlayerCount(); i++)
@@ -2309,11 +2309,13 @@ void lvlManageMpGame(void)
                 }
             }
 
+            // sound alarm when game is about to end (10 seconds before end)
             if ((sp180 >= (g_MpTime - 0x258)) && (g_MpSoundStateRelated == 0) && (lvlGetControlsLockedFlag() == 0))
             {
                 sndPlaySfx(g_musicSfxBufferPtr, 0xA1, &g_MpSoundStateRelated);
             }
 
+            // stop alarm
             if (lvlGetControlsLockedFlag() != 0)
             {
                 if ((g_MpSoundStateRelated != NULL) && (sndGetPlayingState(g_MpSoundStateRelated) != 0))
@@ -2322,21 +2324,22 @@ void lvlManageMpGame(void)
                 }
             }
 
-            temp_v1_3 = g_MpTime;
-            if ((sp184 < temp_v1_3) && (sp180 >= temp_v1_3))
+            mp_game_time_limit_2 = g_MpTime;
+            if ((current_time_copy < mp_game_time_limit_2) && (sp180 >= mp_game_time_limit_2))
             {
-                sub_GAME_7F0C2530(0);
+                end_game_and_show_game_over_menu(0);
             }
         }
 
+        // when playing with a kill limit, g_MpPoint is not zero
         if ((g_MpPoint > 0) && (g_ClockTimer != 0))
         {
             s32 i;
             struct player* p;
 
             var_player_count1 = getPlayerCount();
-            mp_points_count1 = 0;
-            mp_something_count1 = 0;
+            mp_players_over_point_limit = 0;
+            mp_player_currently_in_dying_animation = 0;
 
             for (i=0; i<var_player_count1; i++)
             {
@@ -2345,23 +2348,26 @@ void lvlManageMpGame(void)
                 if (p->bonddead != 0 &&
                     (p->field_424 == 0 || p->field_428 == 0 || p->colourfadetimemax60 >= 0.0f))
                 {
-                    mp_something_count1++;
+                    mp_player_currently_in_dying_animation++;
                 }
 
                 if (get_points_for_mp_player(i) >= g_MpPoint)
                 {
-                    mp_points_count1++;
+                    // counts players over kill limit
+                    mp_players_over_point_limit++;
                 }
             }
 
-            if (mp_points_count1 > 0)
+            if (mp_players_over_point_limit > 0)
             {
-                if (mp_something_count1 == 0)
+                if (mp_player_currently_in_dying_animation == 0)
                 {
-                    sub_GAME_7F0C2530(0);
+                    // end game after dying players are finished dying
+                    end_game_and_show_game_over_menu(0);
                 }
                 else
                 {
+                    // this will cause the game to freeze players, to stop them from moving once game ended
                     mpwatchSetStopPlayFlag();
                 }
             }
@@ -2446,7 +2452,7 @@ void lvlManageMpGame(void)
             temp_v1_7 = var_player_count2 - 1;
             if (not_dead_count >= temp_v1_7)
             {
-                sub_GAME_7F0C2530(0);
+                end_game_and_show_game_over_menu(0);
             }
             else if (killed_count >= temp_v1_7)
             {
@@ -2505,10 +2511,10 @@ void lvlManageMpGame(void)
         sub_GAME_7F0BC7D4();
         sub_GAME_7F092E50();
         sub_GAME_7F094438();
-        sub_GAME_7F0A47FC();
+        update_bullet_sparks_and_dust_clouds();
         sub_GAME_7F068E6C();
-        sub_GAME_7F0A28D4();
-        sub_GAME_7F09FD3C();
+        update_broken_windows();
+        update_gray_flying_particles();
         handle_mp_respawn_and_some_things();
         reset_all_music_slots();
         something_with_LnameJ();
@@ -2904,7 +2910,7 @@ glabel lvlManageMpGame
 /* 0F39D0 7F0BEEA0 01C3082A */   slt   $at, $t6, $v1
 /* 0F39D4 7F0BEEA4 14200003 */  bnez  $at, .L7F0BEEB4
 /* 0F39D8 7F0BEEA8 00000000 */   nop
-/* 0F39DC 7F0BEEAC 0FC3094C */  jal   sub_GAME_7F0C2530
+/* 0F39DC 7F0BEEAC 0FC3094C */  jal   end_game_and_show_game_over_menu
 /* 0F39E0 7F0BEEB0 00002025 */   move  $a0, $zero
 .L7F0BEEB4:
 /* 0F39E4 7F0BEEB4 3C188005 */  lui   $t8, %hi(g_MpPoint)
@@ -2971,7 +2977,7 @@ glabel lvlManageMpGame
 /* 0F3AC4 7F0BEF94 00000000 */   nop
 /* 0F3AC8 7F0BEF98 14A00005 */  bnez  $a1, .L7F0BEFB0
 /* 0F3ACC 7F0BEF9C 00000000 */   nop
-/* 0F3AD0 7F0BEFA0 0FC3094C */  jal   sub_GAME_7F0C2530
+/* 0F3AD0 7F0BEFA0 0FC3094C */  jal   end_game_and_show_game_over_menu
 /* 0F3AD4 7F0BEFA4 00002025 */   move  $a0, $zero
 /* 0F3AD8 7F0BEFA8 10000003 */  b     .L7F0BEFB8
 /* 0F3ADC 7F0BEFAC 00000000 */   nop
@@ -3122,7 +3128,7 @@ glabel lvlManageMpGame
 /* 0F3CE0 7F0BF1B0 03E3082A */  slt   $at, $ra, $v1
 /* 0F3CE4 7F0BF1B4 54200006 */  bnezl $at, .L7F0BF1D0
 /* 0F3CE8 7F0BF1B8 01A3082A */   slt   $at, $t5, $v1
-/* 0F3CEC 7F0BF1BC 0FC3094C */  jal   sub_GAME_7F0C2530
+/* 0F3CEC 7F0BF1BC 0FC3094C */  jal   end_game_and_show_game_over_menu
 /* 0F3CF0 7F0BF1C0 00002025 */   move  $a0, $zero
 /* 0F3CF4 7F0BF1C4 10000006 */  b     .L7F0BF1E0
 /* 0F3CF8 7F0BF1C8 00000000 */   nop
@@ -3243,13 +3249,13 @@ glabel lvlManageMpGame
 /* 0F3EA8 7F0BF378 00000000 */   nop
 /* 0F3EAC 7F0BF37C 0FC2510E */  jal   sub_GAME_7F094438
 /* 0F3EB0 7F0BF380 00000000 */   nop
-/* 0F3EB4 7F0BF384 0FC291FF */  jal   sub_GAME_7F0A47FC
+/* 0F3EB4 7F0BF384 0FC291FF */  jal   update_bullet_sparks_and_dust_clouds
 /* 0F3EB8 7F0BF388 00000000 */   nop
 /* 0F3EBC 7F0BF38C 0FC1A39B */  jal   sub_GAME_7F068E6C
 /* 0F3EC0 7F0BF390 00000000 */   nop
-/* 0F3EC4 7F0BF394 0FC28A35 */  jal   sub_GAME_7F0A28D4
+/* 0F3EC4 7F0BF394 0FC28A35 */  jal   update_broken_windows
 /* 0F3EC8 7F0BF398 00000000 */   nop
-/* 0F3ECC 7F0BF39C 0FC27F4F */  jal   sub_GAME_7F09FD3C
+/* 0F3ECC 7F0BF39C 0FC27F4F */  jal   update_gray_flying_particles
 /* 0F3ED0 7F0BF3A0 00000000 */   nop
 /* 0F3ED4 7F0BF3A4 0FC0F192 */  jal   handle_mp_respawn_and_some_things
 /* 0F3ED8 7F0BF3A8 00000000 */   nop
@@ -3795,7 +3801,7 @@ glabel lvlManageMpGame
 /* 0F4648 7F0BFAD8 01C3082A */   slt   $at, $t6, $v1
 /* 0F464C 7F0BFADC 14200003 */  bnez  $at, .Ljp7F0BFAEC
 /* 0F4650 7F0BFAE0 00000000 */   nop
-/* 0F4654 7F0BFAE4 0FC30C78 */  jal   sub_GAME_7F0C2530
+/* 0F4654 7F0BFAE4 0FC30C78 */  jal   end_game_and_show_game_over_menu
 /* 0F4658 7F0BFAE8 00002025 */   move  $a0, $zero
 .Ljp7F0BFAEC:
 /* 0F465C 7F0BFAEC 3C188005 */  lui   $t8, %hi(g_MpPoint) # $t8, 0x8005
@@ -3862,7 +3868,7 @@ glabel lvlManageMpGame
 /* 0F473C 7F0BFBCC 00000000 */   nop
 /* 0F4740 7F0BFBD0 14A00005 */  bnez  $a1, .Ljp7F0BFBE8
 /* 0F4744 7F0BFBD4 00000000 */   nop
-/* 0F4748 7F0BFBD8 0FC30C78 */  jal   sub_GAME_7F0C2530
+/* 0F4748 7F0BFBD8 0FC30C78 */  jal   end_game_and_show_game_over_menu
 /* 0F474C 7F0BFBDC 00002025 */   move  $a0, $zero
 /* 0F4750 7F0BFBE0 10000003 */  b     .Ljp7F0BFBF0
 /* 0F4754 7F0BFBE4 00000000 */   nop
@@ -4013,7 +4019,7 @@ glabel lvlManageMpGame
 /* 0F4958 7F0BFDE8 03E3082A */  slt   $at, $ra, $v1
 /* 0F495C 7F0BFDEC 54200006 */  bnezl $at, .Ljp7F0BFE08
 /* 0F4960 7F0BFDF0 01A3082A */   slt   $at, $t5, $v1
-/* 0F4964 7F0BFDF4 0FC30C78 */  jal   sub_GAME_7F0C2530
+/* 0F4964 7F0BFDF4 0FC30C78 */  jal   end_game_and_show_game_over_menu
 /* 0F4968 7F0BFDF8 00002025 */   move  $a0, $zero
 /* 0F496C 7F0BFDFC 10000006 */  b     .Ljp7F0BFE18
 /* 0F4970 7F0BFE00 00000000 */   nop
@@ -4134,13 +4140,13 @@ glabel lvlManageMpGame
 /* 0F4B20 7F0BFFB0 00000000 */   nop
 /* 0F4B24 7F0BFFB4 0FC253F6 */  jal   sub_GAME_7F094438
 /* 0F4B28 7F0BFFB8 00000000 */   nop
-/* 0F4B2C 7F0BFFBC 0FC294E7 */  jal   sub_GAME_7F0A47FC
+/* 0F4B2C 7F0BFFBC 0FC294E7 */  jal   update_bullet_sparks_and_dust_clouds
 /* 0F4B30 7F0BFFC0 00000000 */   nop
 /* 0F4B34 7F0BFFC4 0FC1A516 */  jal   sub_GAME_7F068E6C
 /* 0F4B38 7F0BFFC8 00000000 */   nop
-/* 0F4B3C 7F0BFFCC 0FC28D1D */  jal   sub_GAME_7F0A28D4
+/* 0F4B3C 7F0BFFCC 0FC28D1D */  jal   update_broken_windows
 /* 0F4B40 7F0BFFD0 00000000 */   nop
-/* 0F4B44 7F0BFFD4 0FC28238 */  jal   sub_GAME_7F09FD3C
+/* 0F4B44 7F0BFFD4 0FC28238 */  jal   update_gray_flying_particles
 /* 0F4B48 7F0BFFD8 00000000 */   nop
 /* 0F4B4C 7F0BFFDC 0FC0F252 */  jal   handle_mp_respawn_and_some_things
 /* 0F4B50 7F0BFFE0 00000000 */   nop
@@ -4679,7 +4685,7 @@ glabel lvlManageMpGame
 /* 0F0CD4 7F0BE2E4 01C3082A */   slt   $at, $t6, $v1
 /* 0F0CD8 7F0BE2E8 14200003 */  bnez  $at, .Leu7F0BE2F8
 /* 0F0CDC 7F0BE2EC 00000000 */   nop   
-/* 0F0CE0 7F0BE2F0 0FC30684 */  jal   sub_GAME_7F0C2530
+/* 0F0CE0 7F0BE2F0 0FC30684 */  jal   end_game_and_show_game_over_menu
 /* 0F0CE4 7F0BE2F4 00002025 */   move  $a0, $zero
 .Leu7F0BE2F8:
 /* 0F0CE8 7F0BE2F8 3C188004 */  lui   $t8, %hi(g_MpPoint) # $t8, 0x8004
@@ -4746,7 +4752,7 @@ glabel lvlManageMpGame
 /* 0F0DC8 7F0BE3D8 00000000 */   nop   
 /* 0F0DCC 7F0BE3DC 14A00005 */  bnez  $a1, .L7F0BE3F4
 /* 0F0DD0 7F0BE3E0 00000000 */   nop   
-/* 0F0DD4 7F0BE3E4 0FC30684 */  jal   sub_GAME_7F0C2530
+/* 0F0DD4 7F0BE3E4 0FC30684 */  jal   end_game_and_show_game_over_menu
 /* 0F0DD8 7F0BE3E8 00002025 */   move  $a0, $zero
 /* 0F0DDC 7F0BE3EC 10000003 */  b     .L7F0BE3FC
 /* 0F0DE0 7F0BE3F0 00000000 */   nop   
@@ -4897,7 +4903,7 @@ glabel lvlManageMpGame
 /* 0F0FE4 7F0BE5F4 03E3082A */  slt   $at, $ra, $v1
 /* 0F0FE8 7F0BE5F8 54200006 */  bnezl $at, .L7F0BE614
 /* 0F0FEC 7F0BE5FC 01A3082A */   slt   $at, $t5, $v1
-/* 0F0FF0 7F0BE600 0FC30684 */  jal   sub_GAME_7F0C2530
+/* 0F0FF0 7F0BE600 0FC30684 */  jal   end_game_and_show_game_over_menu
 /* 0F0FF4 7F0BE604 00002025 */   move  $a0, $zero
 /* 0F0FF8 7F0BE608 10000006 */  b     .L7F0BE624
 /* 0F0FFC 7F0BE60C 00000000 */   nop   
@@ -5022,9 +5028,9 @@ glabel lvlManageMpGame
 /* 0F11BC 7F0BE7CC 00000000 */   nop   
 /* 0F11C0 7F0BE7D0 0FC1A580 */  jal   sub_GAME_7F068E6C
 /* 0F11C4 7F0BE7D4 00000000 */   nop   
-/* 0F11C8 7F0BE7D8 0FC28785 */  jal   sub_GAME_7F0A28D4
+/* 0F11C8 7F0BE7D8 0FC28785 */  jal   update_broken_windows
 /* 0F11CC 7F0BE7DC 00000000 */   nop   
-/* 0F11D0 7F0BE7E0 0FC27CA0 */  jal   sub_GAME_7F09FD3C
+/* 0F11D0 7F0BE7E0 0FC27CA0 */  jal   update_gray_flying_particles
 /* 0F11D4 7F0BE7E4 00000000 */   nop   
 /* 0F11D8 7F0BE7E8 0FC0F1C2 */  jal   handle_mp_respawn_and_some_things
 /* 0F11DC 7F0BE7EC 00000000 */   nop   

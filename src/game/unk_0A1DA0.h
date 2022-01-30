@@ -65,7 +65,7 @@ extern u32 game_options_index;
 
 void sub_GAME_7F0A47D4(void);
 void sub_GAME_7F0A47FC(void);
-void sub_GAME_7F0A28D4(void);
+void update_broken_windows(void);
 void sub_GAME_7F0A4528(Gfx *arg0, s32 arg1);
 void sub_GAME_7F0A4824(Gfx *arg0, s32 arg1);
 Gfx * sub_GAME_7F0A2C44(Gfx *arg0);
