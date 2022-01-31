@@ -32,7 +32,11 @@ void init_menus_or_reset(void)
 
     ptr_logo_and_walletbond_DL = (Gfx *)mempAllocBytesInBank(0x78000, 4);
 
+#if defined(VERSION_EU)
+    ptr_menu_videobuffer = mempAllocBytesInBank(0x55040, 4);
+#else
     ptr_menu_videobuffer = mempAllocBytesInBank(0x4b040, 4);
+#endif
     ptr_menu_videobuffer = ALIGN64_V1(ptr_menu_videobuffer);
 
     ptr_folder_object_instance = 0x0;

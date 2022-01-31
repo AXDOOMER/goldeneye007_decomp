@@ -1,6 +1,13 @@
 #include <PR/os_internal.h>
 #include <io/piint.h>
 
+#define EU_OS_PIM_STACKSIZE 256
+
+#if defined(VERSION_EU)
+#undef OS_PIM_STACKSIZE
+#define OS_PIM_STACKSIZE EU_OS_PIM_STACKSIZE
+#endif
+
 OSDevMgr __osPiDevMgr = {0};
 OSPiHandle *__osPiTable = NULL;
 

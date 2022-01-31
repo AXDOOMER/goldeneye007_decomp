@@ -20,7 +20,7 @@ Gfx *display_text_for_playerdata_on_MP_menu(Gfx *gdl, s32 x, s32 y, u16* arg3, T
 
 s32 checkGamePaused(void);
 
-void sub_GAME_7F0C2530(int arg0);
+void end_game_and_show_game_over_menu(int arg0);
 s32 get_points_for_mp_player(s32 arg0);
 void mpwatchSetStopPlayFlag(void);
 Gfx * mp_watch_menu_display(Gfx *arg0);

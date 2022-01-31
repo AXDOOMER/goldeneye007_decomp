@@ -137,12 +137,12 @@ char *LlenE[] = {
  "IN NINTENDOVISION\n",
  "Produced by Rare\n",
  "Presented by Nintendo\n",
- #ifdef VERSION_US
+ #if defined(LANG_US) || defined(LANG_EU)
  "JAMES BOND WILL RETURN\n",
   0,
   0
  #endif
- #ifdef VERSION_JP
+ #if defined(LANG_JP)
   "Executive Producer\n",
   "Hiroshi Yamauchi\n",
   "Nintendo Producer\n",

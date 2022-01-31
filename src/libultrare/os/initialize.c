@@ -19,6 +19,7 @@ extern __osExceptionVector __osExceptionPreamble;
 OSTime osClockRate = OS_CLOCK_RATE;
 u32 __osShutdown = 0;
 u32 __OSGlobalIntMask = OS_IM_ALL;
+
 u32 __osFinalRom;
 s32 osDiskExist = 0;
 

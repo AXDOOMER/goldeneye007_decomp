@@ -274,22 +274,25 @@ void sub_GAME_7F08E240(f32 arg0, f32 arg1)
 
             g_CurrentPlayer->field_4F0 += g_ClockTimer;
 
-            if (g_CurrentPlayer->field_4F0 >= 0x3D)
-            {
 #if defined(VERSION_EU)
+            if (g_CurrentPlayer->field_4F0 >= 0x33)
+            {
                 currentPlayerSetHeadDamp(0.916599988937f);
-#else
-                currentPlayerSetHeadDamp(0.93f);
-#endif
             }
             else
             {
-#if defined(VERSION_EU)
-        currentPlayerSetHeadDamp(0.987999975681f);
-#else
-        currentPlayerSetHeadDamp(0.99f);
-#endif
+                currentPlayerSetHeadDamp(0.987999975681f);
             }
+#else
+            if (g_CurrentPlayer->field_4F0 >= 0x3D)
+            {
+                currentPlayerSetHeadDamp(0.93f);
+            }
+            else
+            {
+                currentPlayerSetHeadDamp(0.99f);
+            }
+#endif
         }
         else
         {

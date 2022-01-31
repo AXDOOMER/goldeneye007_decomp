@@ -27,7 +27,7 @@ the total.
 """
 
 # lower case
-__supported_versions = ['us', 'jp']
+__supported_versions = ['us', 'jp', 'eu']
 
 # any function read from .map file exceeding this size will throw an exception
 __invalid_func_length_size = 1000000
@@ -41,6 +41,7 @@ __report_bin =      __report_dir + os.path.sep + "report"
 __report_template = __report_dir + os.path.sep + "template.html"
 __report_out_us =   __report_dir + os.path.sep + "index.html"
 __report_out_jp =   __report_dir + os.path.sep + "JPN.htm"
+__report_out_eu =   __report_dir + os.path.sep + "EU.htm"
 
 # default fallback if recently modified timestamps don't work
 __mtime_fallback_filename = 'ge.u.z64'
@@ -576,6 +577,8 @@ def generate_report(stats: StatResults, version):
         html_output = __report_out_us
     elif version == 'jp':
         html_output = __report_out_jp
+    elif version == 'eu':
+        html_output = __report_out_eu
     else:
         print('fatal: version', version, 'not supported! Supported versions are: ', ', '.join(__supported_versions))
         sys.exit(2)
@@ -617,7 +620,7 @@ def print_help():
     print('  which build map to reference against.')
     print(' ')
     print('Options:')
-    print('  -v, --version=CODE     generate decomp stats for version CODE (us or jp). Default is us')
+    print('  -v, --version=CODE     generate decomp stats for version CODE (us, jp, or eu). Default is us')
     print('  -r, --report           generate html report using report tool')
     print('  -n, --non_matching     print csv of all non matching function definitions')
     print('  --mtime_os             use OS last modified time instead of git log')

@@ -4950,8 +4950,10 @@ glabel sub_GAME_7F09F254
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F09FD3C(void) {
-
+void update_gray_flying_particles(void) {
+    // these are created from shooting walls with guns
+    // these are limited to 5 at a time
+    // spawning more will delete the oldest one to spawn a new one
 }
 #else
 GLOBAL_ASM(
@@ -4963,7 +4965,7 @@ glabel D_800576F4
 glabel D_800576F8
 .word 0x3e4ccccd /*0.2*/
 .text
-glabel sub_GAME_7F09FD3C
+glabel update_gray_flying_particles
 /* 0D486C 7F09FD3C 27BDFFA8 */  addiu $sp, $sp, -0x58
 /* 0D4870 7F09FD40 3C028005 */  lui   $v0, %hi(g_ClockTimer)
 /* 0D4874 7F09FD44 8C428374 */  lw    $v0, %lo(g_ClockTimer)($v0)

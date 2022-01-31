@@ -65,7 +65,7 @@ typedef struct {
 extern f32 g_ViXScales[2];
 extern f32 g_ViYScales[2];
 extern s32 g_ViChangeVideoModes[2];
-extern OSSched sc;
+extern OSSched os_scheduler;
 extern OSScClient gfxClient[3];
 extern OSViMode g_ViModes[2];
 extern OSViMode *g_ViModePtrs[2];

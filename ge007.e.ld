@@ -3299,7 +3299,7 @@ SECTIONS
       build/e/src/audi.o (.data);          /* 0x23a0 */
       build/e/src/speed_graph.o (.data);   /* (none) */
       build/e/src/fr.o (.data);            /* 0x2484 */
-      build/e/src/deb.o (.data);
+      build/e/src/deb.o (.data);           /* 0x2520 */
       build/e/src/fault.o (.data);
       /*deb_print may be part of fault per pd beta (.data);*/
       build/e/src/deb_print.o (.data);    /* 0x2540 */
@@ -3315,9 +3315,9 @@ SECTIONS
       build/e/src/str.o (.data);
       build/e/src/sprintf.o (.data);
       build/e/src/pi.o (.data);
-      build/e/src/vi.o (.data); /* 0x3740 */
+      build/e/src/vi.o (.data);            
       build/e/src/debugmenu.o (.data);
-      build/e/src/joy.o (.data);
+      build/e/src/joy.o (.data);           /* 0x3700 */
       build/e/src/motor.o (.data);
       build/e/src/libultrare/io/leointerrupt.o (.data);
       build/e/src/rmon.o (.data);
@@ -3359,10 +3359,10 @@ SECTIONS
       build/e/src/libultrare/io/sptask.o (.data);
       build/e/src/libultra/io/dpsetnextbuf.o (.data);
       build/e/src/libultra/io/sptaskyield.o (.data);
-      build/e/src/libultra/os/timerintr.o (.data);
+      build/e/src/libultra/os/timerintr.o (.data);                  /* 0x4500 */
       build/e/src/libultra/os/getthreadpri.o (.data);
       build/e/src/libultra/os/interrupt.o (.data);
-      build/e/src/libultrare/io/vi.o (.data);
+      build/e/src/libultrare/io/vi.o (.data);                       /* 0x4510 */
       build/e/src/libultra/io/vigetcurrcontext.o (.data);
       build/e/src/libultra/io/viswapcontext.o (.data);
       build/e/src/libultra/io/piacs.o (.data);
@@ -3537,7 +3537,7 @@ SECTIONS
       build/e/src/deb_print.o (.rodata);                               /* 0x5240 */
       build/e/src/getra.o (.rodata);
       build/e/src/ramrom.o (.rodata);
-      build/e/src/boss.o (.rodata);
+      build/e/src/boss.o (.rodata);             /* around 0x5b84 */
       build/e/src/music.o (.rodata);
       build/e/src/snd.o (.rodata);
       build/e/src/memp.o (.rodata);
@@ -4091,6 +4091,7 @@ SECTIONS
       build/e/src/libultrare/io/sptask.o (.bss);
       build/e/src/libultra/io/dpsetnextbuf.o (.bss);
       build/e/src/libultra/io/sptaskyield.o (.bss);
+
       build/e/src/libultra/os/timerintr.o (.bss);
       build/e/src/libultra/os/getthreadpri.o (.bss);
       build/e/src/libultra/os/interrupt.o (.bss);
@@ -4152,6 +4153,7 @@ SECTIONS
       build/e/src/libultrare/libc/xprintf.o (.bss);
       /*build/e/src/libultrare/io/pimgr.o (.bss);*/
       build/e/src/libultrare/io/pfsinit.o (.bss);
+
       build/e/src/libultrare/io/controller.o (.bss);
       build/e/src/libultra/io/contquery.o (.bss);
       build/e/src/libultrare/io/contreaddata.o (.bss);
@@ -4254,6 +4256,7 @@ SECTIONS
       build/e/src/game/initanitable.o (.bss);
       build/e/src/game/initplayergaitobject.o (.bss);
       build/e/src/game/setguscale.o (.bss);
+
       build/e/src/game/initnull_000BC0.o (.bss);
       build/e/src/game/initimages.o (.bss);
       build/e/src/game/initintromatrices.o (.bss);
@@ -4340,6 +4343,7 @@ SECTIONS
       build/e/src/game/crc.o (.bss);
       build/e/src/game/chrObjRandom.o (.bss);
       build/e/src/game/unk_09B7A0.o (.bss);
+
       build/e/src/game/unk_09C250.o (.bss);
       build/e/src/game/unk_0A1DA0.o (.bss);
       build/e/src/game/watch.o (.bss);

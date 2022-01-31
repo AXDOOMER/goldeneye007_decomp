@@ -7,6 +7,7 @@ __pycache__/*
 branchdiff.sh
 branchdiff_report.txt
 *.dump
+*.cdata*
 *.[zZnN]64
 .[vV][sS]/
 021990.bin

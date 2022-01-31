@@ -7,6 +7,7 @@
 
 // bss
 s32 copyof_stagenum;
+
 s32 dword_CODE_bss_80079E94;
 char dword_CODE_bss_80079E98[0x48];
 
@@ -1039,40 +1040,19 @@ void store_stagenum_to_copyof_stagenum(s32 stagenum) {
   copyof_stagenum = stagenum;
 }
 
-#ifndef VERSION_EU
+
 void sub_GAME_7F094438(void)
 {
+    #if defined(VERSION_EU)
+    D_8003FD94[0] = (g_GlobalTimerDelta + D_8003FD94[0]);
+    #else
     D_8003FD94[0] = (g_ClockTimer + D_8003FD94[0]);
+    #endif
     if ( D_8003FD94[0] > 4096.0f)
     {
         D_8003FD94[0] -= 4096.0f;
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F094438
-/* 0C6368 7F093978 3C014580 */  li    $at, 0x45800000 # 4096.000000
-/* 0C636C 7F09397C 44811000 */  mtc1  $at, $f2
-/* 0C6370 7F093980 3C028004 */  lui   $v0, %hi(D_8003FD94) # $v0, 0x8004
-/* 0C6374 7F093984 244299E4 */  addiu $v0, %lo(D_8003FD94) # addiu $v0, $v0, -0x661c
-/* 0C6378 7F093988 3C018004 */  lui   $at, %hi(g_GlobalTimerDelta) # $at, 0x8004
-/* 0C637C 7F09398C C4261004 */  lwc1  $f6, %lo(g_GlobalTimerDelta)($at)
-/* 0C6380 7F093990 C4440000 */  lwc1  $f4, ($v0)
-/* 0C6384 7F093994 46062200 */  add.s $f8, $f4, $f6
-/* 0C6388 7F093998 E4480000 */  swc1  $f8, ($v0)
-/* 0C638C 7F09399C C4400000 */  lwc1  $f0, ($v0)
-/* 0C6390 7F0939A0 4600103C */  c.lt.s $f2, $f0
-/* 0C6394 7F0939A4 00000000 */  nop
-/* 0C6398 7F0939A8 45000003 */  bc1f  .L7F0939B8
-/* 0C639C 7F0939AC 00000000 */   nop
-/* 0C63A0 7F0939B0 46020281 */  sub.s $f10, $f0, $f2
-/* 0C63A4 7F0939B4 E44A0000 */  swc1  $f10, ($v0)
-.L7F0939B8:
-/* 0C63A8 7F0939B8 03E00008 */  jr    $ra
-/* 0C63AC 7F0939BC 00000000 */   nop
-)
-#endif
 
 
 

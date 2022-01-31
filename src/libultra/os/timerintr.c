@@ -1,10 +1,21 @@
 #include <os_internal.h>
 #include "osint.h"
-
 OSTimer *__osTimerList = &__osBaseTimer;
 OSTimer __osBaseTimer;
+
+/**
+ * EU .bss 80057C80
+*/
 OSTime __osCurrentTime;
+
+/**
+ * EU .bss 80057C88
+*/
 u32 __osBaseCounter;
+
+/**
+ * EU .bss 80057C8C
+*/
 u32 __osViIntrCount;
 u32 __osTimerCounter;
 void __osTimerServicesInit(void)

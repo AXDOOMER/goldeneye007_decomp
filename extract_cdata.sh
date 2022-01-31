@@ -29,7 +29,7 @@ MD5_EU="cff69b70a8ad674a0efe5558765855c9"
 
 
 # US
-ROM_FILENAME="baserom.u.N64"
+ROM_FILENAME="baserom.u.z64"
 OUT_FILENAME="baserom.u.cdata"
 if [ -f "${ROM_FILENAME}" ]; then
     ROM_MD5=$(md5sum "${ROM_FILENAME}" | cut -d " " -f1)

@@ -13,14 +13,17 @@ s32 ptr_char_data_buf;
 s32 ptr_char_registry;
 
 
-#ifdef VERSION_JP
+#ifdef LANG_JP
 s32 j_text_trigger = 1;
 #else
+/**
+ * EU .data 80041150
+*/
 s32 j_text_trigger = 0;
 #endif
 
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LANG_US) || defined(LANG_JP)
 
 void *LnameX_lookuptable[45][2] = {
     {NULL, NULL},                    /* Null (unused) */
@@ -71,7 +74,7 @@ void *LnameX_lookuptable[45][2] = {
 
 #endif
 
-#if defined(VERSION_EU)
+#if defined(LANG_EU)
 void *LnameX_lookuptable[45][2] = {
     {NULL, NULL},                    /* Null (unused) */
     {"LameP", "LameJ"},              /* Library (multi) */

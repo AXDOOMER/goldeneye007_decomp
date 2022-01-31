@@ -4,6 +4,12 @@
 #include "watch.h"
 #include "mp_music.h"
 
+#ifdef VERSION_EU
+#define MP_MUSIC_FRAMERATE 50
+#else
+#define MP_MUSIC_FRAMERATE 60
+#endif
+
 // bss
 //CODE.bss:8008C600
 s32 stageMusicID;
@@ -1973,8 +1979,8 @@ void set_musicslot_time(s32 slot, s32 min, s32 sec)
 {
     if ((&music_slot_active_0)[slot] == 0) {
         (&music_slot_active_0)[slot] = 1;
-        (&music_slot_minutes_0)[slot] = min * 0x3c;
-        (&music_slot_seconds_0)[slot] = sec * 0x3c;
+        (&music_slot_minutes_0)[slot] = min * MP_MUSIC_FRAMERATE;
+        (&music_slot_seconds_0)[slot] = sec * MP_MUSIC_FRAMERATE;
     }
 }
 

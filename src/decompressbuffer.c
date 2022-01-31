@@ -1,9 +1,7 @@
 #include <ultra64.h>
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 u8 _decompressBuffer[0xAB400];
-#endif
-
-#if defined(VERSION_EU)
+#else
 u8 _decompressBuffer[0xA1AB0];
 #endif

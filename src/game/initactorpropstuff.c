@@ -633,11 +633,18 @@ void sub_GAME_7F000980(void) {
     sub_GAME_7F0009A0();
 }
 
+#if defined (VERSION_EU)
+#define POS 0x19
+#else
+#define POS 0x27
+#endif
+
 void sub_GAME_7F0009A0(void) {
     u32 *end = &dword_CODE_bss_80075DC8[20];
     u32 *ptr = &dword_CODE_bss_80075DC8[0];
     while(end > ptr) {
-        ptr[39] = 0;
-        ptr += 0x28;
+        ptr[POS] = 0;
+        ptr += POS+1;
     }
 }
+

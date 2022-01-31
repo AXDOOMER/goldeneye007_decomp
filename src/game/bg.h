@@ -45,11 +45,25 @@ typedef struct s_room_info {
 
 typedef struct s_bound_info 
 {
+    #if defined(VERSION_EU)
+    //eu is 0x18 total len
+    u8 roomid;
+    u8 pad1;
+    // could be draw order?
+    s16 unk1;
+    void* next;
+    struct bbox2d bbox;
+    
+    #else
+    //us is 0x1C total len
     s32 roomid;
     // could be draw order?
     s32 unk1;
     struct bbox2d bbox;
     void* next;
+    #endif
+
+    
 } s_bound_info;
 
 typedef struct bg_portal_entry

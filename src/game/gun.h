@@ -208,8 +208,11 @@ typedef struct CartridgeModelFileRecord {
     char * text;
 } CartridgeModelFileRecord;
 
-
+#if defined(VERSION_EU)
+extern char dword_CODE_bss_80075DC8[20][104];
+#else
 extern char dword_CODE_bss_80075DC8[20][160];
+#endif
 
 f32 bondwalkItemGetForceOfImpact(ITEM_IDS item);
 

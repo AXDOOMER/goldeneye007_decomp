@@ -4,6 +4,9 @@
 #include "math_atan2f.h"
 #include "prop.h"
 
+/**
+ * EU .bss 0x80068480
+*/
 s32 lastmpweaponnum;
 
 //.section .rodata
@@ -6761,7 +6764,7 @@ glabel proplvreset2
 .L7F004230:
 /* 036C20 7F004230 0FC01538 */  jal   sub_GAME_7F005540
 /* 036C24 7F004234 02602025 */   move  $a0, $s3
-/* 036C28 7F004238 0FC01571 */  jal   sub_GAME_7F005540
+/* 036C28 7F004238 0FC01571 */  jal   sub_GAME_7F005624
 /* 036C2C 7F00423C 02802025 */   move  $a0, $s4
 /* 036C30 7F004240 0FC26669 */  jal   getPlayerCount
 /* 036C34 7F004244 00008025 */   move  $s0, $zero
@@ -7568,7 +7571,7 @@ other_obj_expand:
 /* 0377E8 7F004DF8 00002025 */   move  $a0, $zero
 /* 0377EC 7F004DFC 0FC01538 */  jal   sub_GAME_7F005540
 /* 0377F0 7F004E00 00002025 */   move  $a0, $zero
-/* 0377F4 7F004E04 0FC01571 */  jal   sub_GAME_7F005540
+/* 0377F4 7F004E04 0FC01571 */  jal   sub_GAME_7F005624
 /* 0377F8 7F004E08 00002025 */   move  $a0, $zero
 .L7F004E88:
 /* 0377FC 7F004E0C 0FC00417 */  jal   alloc_false_GUARDdata_to_exec_global_action

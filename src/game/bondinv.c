@@ -459,7 +459,7 @@ int add_prop_to_inventory(PropRecord *prop)
     return TRUE;
 }
 
-#ifndef VERSION_EU
+
 int add_weapon_by_prop(PropRecord *prop)
 {
     int added;
@@ -510,90 +510,6 @@ int add_weapon_by_prop(PropRecord *prop)
     }
     return added;
 }
-#else
-
-#endif
-#ifdef VERSION_EU
-GLOBAL_ASM(
-.text
-glabel add_weapon_by_prop
-/* 0BF4CC 7F08CADC 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0BF4D0 7F08CAE0 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0BF4D4 7F08CAE4 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0BF4D8 7F08CAE8 908E0000 */  lbu   $t6, ($a0)
-/* 0BF4DC 7F08CAEC 24010004 */  li    $at, 4
-/* 0BF4E0 7F08CAF0 00002825 */  move  $a1, $zero
-/* 0BF4E4 7F08CAF4 55C10037 */  bnel  $t6, $at, .L7F08CBD4
-/* 0BF4E8 7F08CAF8 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 0BF4EC 7F08CAFC 8C860004 */  lw    $a2, 4($a0)
-/* 0BF4F0 7F08CB00 24010008 */  li    $at, 8
-/* 0BF4F4 7F08CB04 90CF0003 */  lbu   $t7, 3($a2)
-/* 0BF4F8 7F08CB08 55E10032 */  bnel  $t7, $at, .L7F08CBD4
-/* 0BF4FC 7F08CB0C 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 0BF500 7F08CB10 80D00080 */  lb    $s0, 0x80($a2)
-/* 0BF504 7F08CB14 AFA60024 */  sw    $a2, 0x24($sp)
-/* 0BF508 7F08CB18 0FC231FA */  jal   add_item_to_inventory
-/* 0BF50C 7F08CB1C 02002025 */   move  $a0, $s0
-/* 0BF510 7F08CB20 8FA30024 */  lw    $v1, 0x24($sp)
-/* 0BF514 7F08CB24 00402825 */  move  $a1, $v0
-/* 0BF518 7F08CB28 8C660084 */  lw    $a2, 0x84($v1)
-/* 0BF51C 7F08CB2C 50C00019 */  beql  $a2, $zero, .L7F08CB94eu
-/* 0BF520 7F08CB30 80660081 */   lb    $a2, 0x81($v1)
-/* 0BF524 7F08CB34 8C780008 */  lw    $t8, 8($v1)
-/* 0BF528 7F08CB38 02002825 */  move  $a1, $s0
-/* 0BF52C 7F08CB3C 02002025 */  move  $a0, $s0
-/* 0BF530 7F08CB40 0018C8C0 */  sll   $t9, $t8, 3
-/* 0BF534 7F08CB44 07230008 */  bgezl $t9, .L7F08CB68
-/* 0BF538 7F08CB48 80C50080 */   lb    $a1, 0x80($a2)
-/* 0BF53C 7F08CB4C 80C40080 */  lb    $a0, 0x80($a2)
-/* 0BF540 7F08CB50 0FC231AB */  jal   add_doubles_item_to_inventory
-/* 0BF544 7F08CB54 AFA30024 */   sw    $v1, 0x24($sp)
-/* 0BF548 7F08CB58 8FA30024 */  lw    $v1, 0x24($sp)
-/* 0BF54C 7F08CB5C 10000006 */  b     .L7F08CB78
-/* 0BF550 7F08CB60 2C450001 */   sltiu $a1, $v0, 1
-/* 0BF554 7F08CB64 80C50080 */  lb    $a1, 0x80($a2)
-.L7F08CB68:
-/* 0BF558 7F08CB68 0FC231AB */  jal   add_doubles_item_to_inventory
-/* 0BF55C 7F08CB6C AFA30024 */   sw    $v1, 0x24($sp)
-/* 0BF560 7F08CB70 8FA30024 */  lw    $v1, 0x24($sp)
-/* 0BF564 7F08CB74 2C450001 */  sltiu $a1, $v0, 1
-.L7F08CB78:
-/* 0BF568 7F08CB78 8C680084 */  lw    $t0, 0x84($v1)
-/* 0BF56C 7F08CB7C A1100081 */  sb    $s0, 0x81($t0)
-/* 0BF570 7F08CB80 8C690084 */  lw    $t1, 0x84($v1)
-/* 0BF574 7F08CB84 AD200084 */  sw    $zero, 0x84($t1)
-/* 0BF578 7F08CB88 10000011 */  b     .L7F08CBD0
-/* 0BF57C 7F08CB8C AC600084 */   sw    $zero, 0x84($v1)
-/* 0BF580 7F08CB90 80660081 */  lb    $a2, 0x81($v1)
-.L7F08CB94eu:
-/* 0BF584 7F08CB94 04C2000F */  bltzl $a2, .L7F08CBD4
-/* 0BF588 7F08CB98 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 0BF58C 7F08CB9C 8C6A0008 */  lw    $t2, 8($v1)
-/* 0BF590 7F08CBA0 02002825 */  move  $a1, $s0
-/* 0BF594 7F08CBA4 02002025 */  move  $a0, $s0
-/* 0BF598 7F08CBA8 000A58C0 */  sll   $t3, $t2, 3
-/* 0BF59C 7F08CBAC 05610005 */  bgez  $t3, .L7F08CBC4eu
-/* 0BF5A0 7F08CBB0 00000000 */   nop   
-/* 0BF5A4 7F08CBB4 0FC23221 */  jal   is_dual_weapon_in_inventory
-/* 0BF5A8 7F08CBB8 00C02025 */   move  $a0, $a2
-/* 0BF5AC 7F08CBBC 10000004 */  b     .L7F08CBD0
-/* 0BF5B0 7F08CBC0 00402825 */   move  $a1, $v0
-.L7F08CBC4eu:
-/* 0BF5B4 7F08CBC4 0FC23221 */  jal   is_dual_weapon_in_inventory
-/* 0BF5B8 7F08CBC8 00C02825 */   move  $a1, $a2
-/* 0BF5BC 7F08CBCC 00402825 */  move  $a1, $v0
-.L7F08CBD0:
-/* 0BF5C0 7F08CBD0 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F08CBD4:
-/* 0BF5C4 7F08CBD4 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0BF5C8 7F08CBD8 27BD0030 */  addiu $sp, $sp, 0x30
-/* 0BF5CC 7F08CBDC 03E00008 */  jr    $ra
-/* 0BF5D0 7F08CBE0 00A01025 */   move  $v0, $a1
-)
-#endif
-
-
-
 
 
 
