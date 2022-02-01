@@ -287,10 +287,10 @@ char *LtitleE[] = {
  "2.4 Goodhead\n",
  "Select Control Style\n",
  "Control Style\n",
- #ifdef VERSION_US
+ #ifdef LANG_US
  0
  #endif
- #ifdef VERSION_JP
+ #ifdef LANG_JP
  "Russian Soldier\n",
  "Russian Infantry\n",
  "Scientist\n",
