@@ -84,13 +84,6 @@ typedef struct AIListRecord
     int       ID;
 } AIListRecord;
 
-//duplicate of AIListRecord from master
-struct ailist
-{
-    u32 (*script)[];
-    s32 id;
-};
-
 #pragma endregion AI
 
 /**
@@ -1334,7 +1327,13 @@ typedef union
      */
     typedef struct BoundPadRecord /*0x44 (68) long confirmed*/
     {
-        inherits PadRecord; /*0x00 confirmed*/
+        //inherits PadRecord; /*0x00 confirmed*/
+        coord3d    pos;       /*0x00*/
+        coord3d    up;        /*0x0c*/
+        coord3d    look;      /*0x18*/
+        char *     plink;     /*0x24 canonical name */
+        StandTile *stan;      /*0x28 canonical name */
+        //temporary fix for no inheritance support by glibtools
         bbox     bbox;      /*0x2c - 0x40 confirmed*/
     } BoundPadRecord;
 
@@ -1355,21 +1354,10 @@ typedef union
       Possible Graph Algorithm used A*
      */
 
-    //!This is used in Usetupxxx files and needs to be replaced with waypoint
-    struct s_pathTbl
-    {
-        s16 pathtbl;
-        s16 field_0x2;
-        s32 (*field_0x4)[];
-        s32 field_0x8;
-        s32 field_0xc;
-    };
 
     /**
      * The waypoint table lists the pad used, and the group the waypoint 
      * belongs to as well as any connected waypoints.
-     //Todo: Rename All instances of pathTbl     - !
-     //Todo: Rename All instances of pathTbl_alt - DONE!
      */
     typedef struct waypoint
     {
@@ -1391,16 +1379,9 @@ typedef union
         s32  dist;       // Initialise to 0, used by engine for pathfinding Heuristics between sets
     } waygroup;
 
-    //!This is used in Usetupxxx files and needs to be replaced with PathRecord
-    struct s_pathSet //path
-    {
-        void *field_0x0;
-        s32   field_0x4;
-    };
+
     /**
      * Path for guard to patrol (loop) or get from A to B (linear)
-     //Todo: rename all instances of PathSet
-     *
      */
     typedef struct PathRecord
     {
