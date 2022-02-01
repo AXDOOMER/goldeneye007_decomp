@@ -324,20 +324,12 @@ void sub_GAME_7F06C3B4(Model *model, s32 node,  ModelFileHeader *header)
     unknown_object_microcode_handler(model,header->RootNode);
 }
 
-
-
-
 void set_aircraft_obj_inst_scale_to_zero(Model *objinstance)
 
 {
     objinstance->obj = NULL;
     return;
 }
-
-
-
-
-
 
 void set_80036084(s32 param_1) {
   D_80036084 = param_1;
@@ -388,6 +380,7 @@ glabel sub_GAME_7F06C418
 void set_vtxallocator(s32 param_1) {
   vtxallocator = param_1;
 }
+
 
 #if defined(LEFTOVERDEBUG)
 void return_null(void) {
@@ -601,10 +594,11 @@ glabel sub_GAME_7F06C660
 )
 #endif
 
+
 //rejoined per EU
-#ifdef NONMATCHING
-void *getsubmatrix(Model *objinst)
+Mtx *getsubmatrix(Model *objinst)
 {
+    #if defined(LEFTOVERDEBUG)
     if (!objinst)
     {
         osSyncPrintf("getsubmatrix: no objinst!\n");
@@ -615,69 +609,9 @@ void *getsubmatrix(Model *objinst)
         osSyncPrintf("getsubmatrix: objinst has no object!\n");
         return_null();
     }
-    return sub_GAME_7F06C660(objinst, objinst->obj, NULL);
-    {
-    }
+    #endif
+    return sub_GAME_7F06C660(objinst, objinst->obj->RootNode, 0);
 }
-#else
-#ifndef VERSION_EU
-//D:80054600
-const char aGetsubmatrixNoObjinst[] = "getsubmatrix: no objinst!\n";
-//D:8005461C
-const char aGetsubmatrixObjinstHasNoObject[] = "getsubmatrix: objinst has no object!\n";
-GLOBAL_ASM(
-.late_rodata
-.text
-glabel getsubmatrix
-/* 0A11D0 7F06C6A0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0A11D4 7F06C6A4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A11D8 7F06C6A8 14800006 */  bnez  $a0, .L7F06C6C4
-/* 0A11DC 7F06C6AC AFA40018 */   sw    $a0, 0x18($sp)
-/* 0A11E0 7F06C6B0 3C048005 */  lui   $a0, %hi(aGetsubmatrixNoObjinst)
-/* 0A11E4 7F06C6B4 0C0033D1 */  jal   osSyncPrintf
-/* 0A11E8 7F06C6B8 24844600 */   addiu $a0, %lo(aGetsubmatrixNoObjinst) # addiu $a0, $a0, 0x4600
-/* 0A11EC 7F06C6BC 0FC1B11B */  jal   return_null
-/* 0A11F0 7F06C6C0 00000000 */   nop   
-.L7F06C6C4:
-/* 0A11F4 7F06C6C4 8FAF0018 */  lw    $t7, 0x18($sp)
-/* 0A11F8 7F06C6C8 3C048005 */  lui   $a0, %hi(aGetsubmatrixObjinstHasNoObject)
-/* 0A11FC 7F06C6CC 8DE20008 */  lw    $v0, 8($t7)
-/* 0A1200 7F06C6D0 54400008 */  bnezl $v0, .L7F06C6F4
-/* 0A1204 7F06C6D4 8FA40018 */   lw    $a0, 0x18($sp)
-/* 0A1208 7F06C6D8 0C0033D1 */  jal   osSyncPrintf
-/* 0A120C 7F06C6DC 2484461C */   addiu $a0, $a0, %lo(aGetsubmatrixObjinstHasNoObject)
-/* 0A1210 7F06C6E0 0FC1B11B */  jal   return_null
-/* 0A1214 7F06C6E4 00000000 */   nop   
-/* 0A1218 7F06C6E8 8FB80018 */  lw    $t8, 0x18($sp)
-/* 0A121C 7F06C6EC 8F020008 */  lw    $v0, 8($t8)
-/* 0A1220 7F06C6F0 8FA40018 */  lw    $a0, 0x18($sp)
-.L7F06C6F4:
-/* 0A1224 7F06C6F4 8C450000 */  lw    $a1, ($v0)
-/* 0A1228 7F06C6F8 0FC1B198 */  jal   sub_GAME_7F06C660
-/* 0A122C 7F06C6FC 00003025 */   move  $a2, $zero
-/* 0A1230 7F06C700 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0A1234 7F06C704 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0A1238 7F06C708 03E00008 */  jr    $ra
-/* 0A123C 7F06C70C 00000000 */   nop   
-)
-#endif
-#ifdef VERSION_EU
-GLOBAL_ASM(
-.text
-glabel getsubmatrix
-/* 09F7C8 7F06CDD8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 09F7CC 7F06CDDC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09F7D0 7F06CDE0 8C8E0008 */  lw    $t6, 8($a0)
-/* 09F7D4 7F06CDE4 00003025 */  move  $a2, $zero
-/* 09F7D8 7F06CDE8 0FC1B366 */  jal   sub_GAME_7F06C660
-/* 09F7DC 7F06CDEC 8DC50000 */   lw    $a1, ($t6)
-/* 09F7E0 7F06CDF0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09F7E4 7F06CDF4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 09F7E8 7F06CDF8 03E00008 */  jr    $ra
-/* 09F7EC 7F06CDFC 00000000 */   nop 
-)
-#endif
-#endif
 
 
 
