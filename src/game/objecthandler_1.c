@@ -327,18 +327,13 @@ void sub_GAME_7F06C3B4(Model *model, s32 node,  ModelFileHeader *header)
 
 
 
-#ifdef NONMATCHING
-void set_aircraft_obj_inst_scale_to_zero(void) {
+void set_aircraft_obj_inst_scale_to_zero(Model *objinstance)
 
+{
+    objinstance->obj = NULL;
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_aircraft_obj_inst_scale_to_zero
-/* 0A0F28 7F06C3F8 03E00008 */  jr    $ra
-/* 0A0F2C 7F06C3FC AC800008 */   sw    $zero, 8($a0)
-)
-#endif
+
 
 
 
