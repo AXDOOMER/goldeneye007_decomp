@@ -9,8 +9,8 @@ struct mcm_layout {
 
 
 
-extern s32 debug_mode;
-extern s32 debHighlightedOption;
+extern s32 g_DebugMode;
+extern s32 g_DebugHighlightedOption;
 
 extern s32 show_debug_menu_flag;
 

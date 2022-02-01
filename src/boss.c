@@ -495,7 +495,7 @@ void bossMainloop(void)
 			                	joyButtons = joyGetButtons(0, ANY_BUTTON);
 			                	g_BossIsDebugMenuOpen = debug_menu_processor(joyStickXPos, joyStickYPos, joyButtons, joyGetButtonsPressedThisFrame(0, ANY_BUTTON));
 			                } else if (joyGetButtons(0, START_BUTTON) == 0) {
-                                debug_mode = debHighlightedOption;
+                                g_DebugMode = g_DebugHighlightedOption;
 			                } else 
 #endif
 #ifndef DEBUGMEN
