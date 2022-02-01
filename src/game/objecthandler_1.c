@@ -317,34 +317,12 @@ glabel get_aircraft_obj_instance_controller
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F06C3B4(void) {
 
+void sub_GAME_7F06C3B4(Model *model, s32 node,  ModelFileHeader *header)
+{
+    sub_GAME_7F076030(model,model->obj,node,header);
+    unknown_object_microcode_handler(model,header->RootNode);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06C3B4
-/* 0A0EE4 7F06C3B4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0A0EE8 7F06C3B8 AFA60020 */  sw    $a2, 0x20($sp)
-/* 0A0EEC 7F06C3BC 00A03025 */  move  $a2, $a1
-/* 0A0EF0 7F06C3C0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A0EF4 7F06C3C4 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 0A0EF8 7F06C3C8 8C850008 */  lw    $a1, 8($a0)
-/* 0A0EFC 7F06C3CC AFA40018 */  sw    $a0, 0x18($sp)
-/* 0A0F00 7F06C3D0 0FC1D80C */  jal   sub_GAME_7F076030
-/* 0A0F04 7F06C3D4 8FA70020 */   lw    $a3, 0x20($sp)
-/* 0A0F08 7F06C3D8 8FAE0020 */  lw    $t6, 0x20($sp)
-/* 0A0F0C 7F06C3DC 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0A0F10 7F06C3E0 0FC1D74B */  jal   unknown_object_microcode_handler
-/* 0A0F14 7F06C3E4 8DC50000 */   lw    $a1, ($t6)
-/* 0A0F18 7F06C3E8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0A0F1C 7F06C3EC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0A0F20 7F06C3F0 03E00008 */  jr    $ra
-/* 0A0F24 7F06C3F4 00000000 */   nop   
-)
-#endif
-
 
 
 
