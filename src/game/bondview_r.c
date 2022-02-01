@@ -129,10 +129,10 @@ glabel load_camera_intro_type_values
 /* 03A338 7F005808 3C018003 */  lui   $at, %hi(mission_kia_flag)
 /* 03A33C 7F00580C AC20A928 */  sw    $zero, %lo(mission_kia_flag)($at)
 /* 03A340 7F005810 3C018003 */  lui   $at, %hi(camera_80036424)
-/* 03A344 7F005814 3C108007 */  lui   $s0, %hi(ptr_setup_intro)
+/* 03A344 7F005814 3C108007 */  lui   $s0, %hi(g_chraiCurrentSetup+8)
 /* 03A348 7F005818 AC206424 */  sw    $zero, %lo(camera_80036424)($at)
 /* 03A34C 7F00581C 26316428 */  addiu $s1, %lo(resolution) # addiu $s1, $s1, 0x6428
-/* 03A350 7F005820 8E105D08 */  lw    $s0, %lo(ptr_setup_intro)($s0)
+/* 03A350 7F005820 8E105D08 */  lw    $s0, %lo(g_chraiCurrentSetup+8)($s0)
 /* 03A354 7F005824 AE200000 */  sw    $zero, ($s1)
 /* 03A358 7F005828 3C018003 */  lui   $at, %hi(camera_8003642C)
 /* 03A35C 7F00582C 3C128003 */  lui   $s2, %hi(camera_80036430)
@@ -286,14 +286,14 @@ glabel load_camera_intro_type_values
 /* 03A5A4 7F005A74 03000008 */  jr    $t8
 /* 03A5A8 7F005A78 00000000 */   nop   
 spawn_point:
-/* 03A5AC 7F005A7C 3C0E8007 */  lui   $t6, %hi(ptr_0xxxpresets) 
-/* 03A5B0 7F005A80 8DCE5D18 */  lw    $t6, %lo(ptr_0xxxpresets)($t6)
+/* 03A5AC 7F005A7C 3C0E8007 */  lui   $t6, %hi(g_chraiCurrentSetup+0x18) 
+/* 03A5B0 7F005A80 8DCE5D18 */  lw    $t6, %lo(g_chraiCurrentSetup+0x18)($t6)
 /* 03A5B4 7F005A84 11C00018 */  beqz  $t6, .L7F005AE8
 /* 03A5B8 7F005A88 00000000 */   nop   
 /* 03A5BC 7F005A8C 0FC30288 */  jal   check_ramrom_flags
 /* 03A5C0 7F005A90 00000000 */   nop   
 /* 03A5C4 7F005A94 8E0F0008 */  lw    $t7, 8($s0)
-/* 03A5C8 7F005A98 3C0A8007 */  lui   $t2, %hi(ptr_0xxxpresets) 
+/* 03A5C8 7F005A98 3C0A8007 */  lui   $t2, %hi(g_chraiCurrentSetup+0x18) 
 /* 03A5CC 7F005A9C 3C018008 */  lui   $at, %hi(startpad)
 /* 03A5D0 7F005AA0 144F0011 */  bne   $v0, $t7, .L7F005AE8
 /* 03A5D4 7F005AA4 00000000 */   nop   
@@ -302,7 +302,7 @@ spawn_point:
 /* 03A5E0 7F005AB0 8C429C68 */  lw    $v0, %lo(startpadcount)($v0)
 /* 03A5E4 7F005AB4 00084880 */  sll   $t1, $t0, 2
 /* 03A5E8 7F005AB8 01284823 */  subu  $t1, $t1, $t0
-/* 03A5EC 7F005ABC 8D4A5D18 */  lw    $t2, %lo(ptr_0xxxpresets)($t2)
+/* 03A5EC 7F005ABC 8D4A5D18 */  lw    $t2, %lo(g_chraiCurrentSetup+0x18)($t2)
 /* 03A5F0 7F005AC0 00094880 */  sll   $t1, $t1, 2
 /* 03A5F4 7F005AC4 01284823 */  subu  $t1, $t1, $t0
 /* 03A5F8 7F005AC8 00094880 */  sll   $t1, $t1, 2
@@ -852,10 +852,10 @@ glabel load_camera_intro_type_values
 /* 03A39C 7F00582C 3C018003 */  lui   $at, %hi(mission_kia_flag) # $at, 0x8003
 /* 03A3A0 7F005830 AC20A968 */  sw    $zero, %lo(mission_kia_flag)($at)
 /* 03A3A4 7F005834 3C018003 */  lui   $at, %hi(camera_80036424) # $at, 0x8003
-/* 03A3A8 7F005838 3C108007 */  lui   $s0, %hi(ptr_setup_intro) # $s0, 0x8007
+/* 03A3A8 7F005838 3C108007 */  lui   $s0, %hi(g_chraiCurrentSetup+8) # $s0, 0x8007
 /* 03A3AC 7F00583C AC206464 */  sw    $zero, %lo(camera_80036424)($at)
 /* 03A3B0 7F005840 26316468 */  addiu $s1, %lo(resolution) # addiu $s1, $s1, 0x6468
-/* 03A3B4 7F005844 8E105D48 */  lw    $s0, %lo(ptr_setup_intro)($s0)
+/* 03A3B4 7F005844 8E105D48 */  lw    $s0, %lo(g_chraiCurrentSetup+8)($s0)
 /* 03A3B8 7F005848 AE200000 */  sw    $zero, ($s1)
 /* 03A3BC 7F00584C 3C018003 */  lui   $at, %hi(camera_8003642C) # $at, 0x8003
 /* 03A3C0 7F005850 3C128003 */  lui   $s2, %hi(camera_80036430) # $s2, 0x8003
@@ -994,14 +994,14 @@ glabel load_camera_intro_type_values
 /* 03A5CC 7F005A5C 03000008 */  jr    $t8
 /* 03A5D0 7F005A60 00000000 */   nop   
 spawn_point:
-/* 03A5D4 7F005A64 3C0E8007 */  lui   $t6, %hi(ptr_0xxxpresets) # $t6, 0x8007
-/* 03A5D8 7F005A68 8DCE5D58 */  lw    $t6, %lo(ptr_0xxxpresets)($t6)
+/* 03A5D4 7F005A64 3C0E8007 */  lui   $t6, %hi(g_chraiCurrentSetup+0x18) # $t6, 0x8007
+/* 03A5D8 7F005A68 8DCE5D58 */  lw    $t6, %lo(g_chraiCurrentSetup+0x18)($t6)
 /* 03A5DC 7F005A6C 11C00018 */  beqz  $t6, .L7F005AD0
 /* 03A5E0 7F005A70 00000000 */   nop   
 /* 03A5E4 7F005A74 0FC305A4 */  jal   check_ramrom_flags
 /* 03A5E8 7F005A78 00000000 */   nop   
 /* 03A5EC 7F005A7C 8E0F0008 */  lw    $t7, 8($s0)
-/* 03A5F0 7F005A80 3C0A8007 */  lui   $t2, %hi(ptr_0xxxpresets) # $t2, 0x8007
+/* 03A5F0 7F005A80 3C0A8007 */  lui   $t2, %hi(g_chraiCurrentSetup+0x18) # $t2, 0x8007
 /* 03A5F4 7F005A84 3C018008 */  lui   $at, %hi(startpad)
 /* 03A5F8 7F005A88 144F0011 */  bne   $v0, $t7, .L7F005AD0
 /* 03A5FC 7F005A8C 00000000 */   nop   
@@ -1010,7 +1010,7 @@ spawn_point:
 /* 03A608 7F005A98 8C429CD8 */  lw    $v0, %lo(startpadcount)($v0)
 /* 03A60C 7F005A9C 00084880 */  sll   $t1, $t0, 2
 /* 03A610 7F005AA0 01284823 */  subu  $t1, $t1, $t0
-/* 03A614 7F005AA4 8D4A5D58 */  lw    $t2, %lo(ptr_0xxxpresets)($t2)
+/* 03A614 7F005AA4 8D4A5D58 */  lw    $t2, %lo(g_chraiCurrentSetup+0x18)($t2)
 /* 03A618 7F005AA8 00094880 */  sll   $t1, $t1, 2
 /* 03A61C 7F005AAC 01284823 */  subu  $t1, $t1, $t0
 /* 03A620 7F005AB0 00094880 */  sll   $t1, $t1, 2
@@ -1567,10 +1567,10 @@ glabel load_camera_intro_type_values
 /* 03819C 7F0057AC 3C018002 */  lui   $at, %hi(mission_kia_flag) # $at, 0x8002
 /* 0381A0 7F0057B0 AC205E78 */  sw    $zero, %lo(mission_kia_flag)($at)
 /* 0381A4 7F0057B4 3C018003 */  lui   $at, %hi(camera_80036424) # $at, 0x8003
-/* 0381A8 7F0057B8 3C108006 */  lui   $s0, %hi(ptr_setup_intro) # $s0, 0x8006
+/* 0381A8 7F0057B8 3C108006 */  lui   $s0, %hi(g_chraiCurrentSetup+8) # $s0, 0x8006
 /* 0381AC 7F0057BC AC201974 */  sw    $zero, %lo(camera_80036424)($at)
 /* 0381B0 7F0057C0 26311978 */  addiu $s1, %lo(resolution) # addiu $s1, $s1, 0x1978
-/* 0381B4 7F0057C4 8E104C48 */  lw    $s0, %lo(ptr_setup_intro)($s0)
+/* 0381B4 7F0057C4 8E104C48 */  lw    $s0, %lo(g_chraiCurrentSetup+8)($s0)
 /* 0381B8 7F0057C8 AE200000 */  sw    $zero, ($s1)
 /* 0381BC 7F0057CC 3C018003 */  lui   $at, %hi(camera_8003642C) # $at, 0x8003
 /* 0381C0 7F0057D0 3C128003 */  lui   $s2, %hi(camera_80036430) # $s2, 0x8003
@@ -1709,14 +1709,14 @@ glabel load_camera_intro_type_values
 /* 0383CC 7F0059DC 03000008 */  jr    $t8
 /* 0383D0 7F0059E0 00000000 */   nop   
 spawn_point:
-/* 0383D4 7F0059E4 3C0E8006 */  lui   $t6, %hi(ptr_0xxxpresets) # $t6, 0x8006
-/* 0383D8 7F0059E8 8DCE4C58 */  lw    $t6, %lo(ptr_0xxxpresets)($t6)
+/* 0383D4 7F0059E4 3C0E8006 */  lui   $t6, %hi(g_chraiCurrentSetup+0x18) # $t6, 0x8006
+/* 0383D8 7F0059E8 8DCE4C58 */  lw    $t6, %lo(g_chraiCurrentSetup+0x18)($t6)
 /* 0383DC 7F0059EC 11C00018 */  beqz  $t6, .L7F005A50
 /* 0383E0 7F0059F0 00000000 */   nop   
 /* 0383E4 7F0059F4 0FC2FFA8 */  jal   check_ramrom_flags
 /* 0383E8 7F0059F8 00000000 */   nop   
 /* 0383EC 7F0059FC 8E0F0008 */  lw    $t7, 8($s0)
-/* 0383F0 7F005A00 3C0A8006 */  lui   $t2, %hi(ptr_0xxxpresets) # $t2, 0x8006
+/* 0383F0 7F005A00 3C0A8006 */  lui   $t2, %hi(g_chraiCurrentSetup+0x18) # $t2, 0x8006
 /* 0383F4 7F005A04 3C018007 */  lui   $at, %hi(startpad)
 /* 0383F8 7F005A08 144F0011 */  bne   $v0, $t7, .L7F005A50
 /* 0383FC 7F005A0C 00000000 */   nop   
@@ -1725,7 +1725,7 @@ spawn_point:
 /* 038408 7F005A18 8C428778 */  lw    $v0, %lo(startpadcount)($v0)
 /* 03840C 7F005A1C 00084880 */  sll   $t1, $t0, 2
 /* 038410 7F005A20 01284823 */  subu  $t1, $t1, $t0
-/* 038414 7F005A24 8D4A4C58 */  lw    $t2, %lo(ptr_0xxxpresets)($t2)
+/* 038414 7F005A24 8D4A4C58 */  lw    $t2, %lo(g_chraiCurrentSetup+0x18)($t2)
 /* 038418 7F005A28 00094880 */  sll   $t1, $t1, 2
 /* 03841C 7F005A2C 01284823 */  subu  $t1, $t1, $t0
 /* 038420 7F005A30 00094880 */  sll   $t1, $t1, 2

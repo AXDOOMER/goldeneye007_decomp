@@ -231,9 +231,10 @@ OBJCOPY := $(TOOLCHAIN)objcopy
 all: $(APPROM)
 ifeq ($(COMPARE),1)
 	@echo "\n"
-#                                      if fail          Rsrv   Up 3   Flash  Wht  80  Dn 1 Return      Dn 1 Ret 80ch                  Now using cursor commands for better look  //"\033[5;42;97m%80s\r\n%43s%37s\r\n%80s\007\033[0;0m\n"
-#   Calculate Checksum                 Else complete    Lines Lines     Red/Grn   ch  Line SoL midway  Line SoL     Bell Reset Colour
-	@$(SHA1SUM) -c ge007.$(COUNTRYCODE).sha1 || (printf "\n\n\033[3A\033[5;41;97m%80s\033[1B\r%45s%35s\033[1B\r%80s\007\033[0;0m\n\n\n" "" "NOT MATCH!" "" "" && exit 1)
+#Now using cursor commands for better look  original was //"\033[5;42;97m%80s\r\n%43s%37s\r\n%80s\007\033[0;0m\n"
+#                                      if fail          Rsrv   Up 3   Flash  Wht  80  Dn 1 Return      Dn 1 Ret 80ch                  Red                                                                              Reset Colour
+#   Calculate Checksum                 Else complete    Lines Lines     Red/Grn   ch  Line SoL midway  Line SoL     Bell Reset Colour                                          Which File failed
+	@$(SHA1SUM) -c ge007.$(COUNTRYCODE).sha1 || (printf "\n\n\033[3A\033[5;41;97m%80s\033[1B\r%45s%35s\033[1B\r%80s\007\033[0;0m\033[91m\n\n\n" "" "NOT MATCH!" "" "" && $(SHA1SUM) --quiet -c checksums.txt && printf "\033[0;0m")
 	@printf                                           "\n\n\n\033[3A\033[5;42;97m%80s\033[1B\r%43s%37s\033[1B\r%80s\007\033[0;0m\n\n\n" "" "MATCH!" "" "" 
 endif
 	@echo "\n Rom File Generated in Build Directory. \n\n"
@@ -243,7 +244,7 @@ endif
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) 
 
-ifeq ($(filter clean dataclean codeclean stanclean setupclean print-%,$(MAKECMDGOALS)),)
+ifeq ($(filter clean dataclean codeclean cmdbuilder test stanclean setupclean print-%,$(MAKECMDGOALS)),)
   # Make tools if out of date
   $(info Building tools...)
   DUMMY != make -s -C tools >&2 || echo FAIL
@@ -386,7 +387,7 @@ $(APPROM):	$(APPBIN)
 
 .PRECIOUS: %.bin  %.o
 
-.PHONY: all default codeclean dataclean clean cmdbuidler
+.PHONY: all default codeclean dataclean clean cmdbuidler test
 
 #CMD Builder tools
 AI_CMD_BUILDER := $(TOOLS_DIR)/cmdbuilder.c
@@ -458,4 +459,11 @@ cmdbuilder:
 	@echo
 	@echo Rebuild AI Command Macros whenever changing aicommands.def.
 	@echo
+
+test:
+	@$(SHA1SUM) --quiet -c checksums.txt
+	@printf "\033[1;92m All Checked Files Match\033[0m\n\n"
+#	@$(SHA1SUM) $(BG_SEG_FILES) $(BRIEF_RZ_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) \
+	$(PROP_RZ_FILES) $(SETUP_BIN_FILES) $(STAN_RZ_FILES) $(TEXT_RZ_FILES) \
+	$(ULTRAOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) > checksums.txt
 

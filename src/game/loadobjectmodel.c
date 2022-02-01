@@ -141,7 +141,7 @@ s32 sizepropdef(PropDefHeaderRecord *pdef)
  */
 ObjectRecord *sub_GAME_7F056A88(s32 index) //#MATCH
 {
-    PropDefHeaderRecord *object = ptr_setup_objects; //wow, first use of header, cool
+    PropDefHeaderRecord *object = g_chraiCurrentSetup.propDefs; //wow, first use of header, cool
     if (index >= 0 && object)
     {
         s32 i;
@@ -166,9 +166,9 @@ s32 check_if_object_type_has_been_loaded(struct object_standard * arg0)
     struct object_standard *object;
     s32 i;
     
-    if (ptr_setup_objects != 0)
+    if (g_chraiCurrentSetup.propDefs != 0)
     {
-        for (object = ptr_setup_objects, i = 0; 0x30 != object->type; i++)
+        for (object = g_chraiCurrentSetup.propDefs, i = 0; 0x30 != object->type; i++)
         {
             if (object == arg0)
             {
@@ -186,8 +186,8 @@ GLOBAL_ASM(
 glabel check_if_object_type_has_been_loaded
 /* 08B64C 7F056B1C 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 08B650 7F056B20 AFB00014 */  sw    $s0, 0x14($sp)
-/* 08B654 7F056B24 3C108007 */  lui   $s0, %hi(ptr_setup_objects)
-/* 08B658 7F056B28 8E105D0C */  lw    $s0, %lo(ptr_setup_objects)($s0)
+/* 08B654 7F056B24 3C108007 */  lui   $s0, %hi(g_chraiCurrentSetup+0x0c)
+/* 08B658 7F056B28 8E105D0C */  lw    $s0, %lo(g_chraiCurrentSetup+0x0c)($s0)
 /* 08B65C 7F056B2C AFB30020 */  sw    $s3, 0x20($sp)
 /* 08B660 7F056B30 00809825 */  move  $s3, $a0
 /* 08B664 7F056B34 AFBF0024 */  sw    $ra, 0x24($sp)
@@ -240,8 +240,8 @@ GLOBAL_ASM(
 glabel sub_GAME_7F056BA8
 /* 08B6D8 7F056BA8 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 08B6DC 7F056BAC AFB00014 */  sw    $s0, 0x14($sp)
-/* 08B6E0 7F056BB0 3C108007 */  lui   $s0, %hi(ptr_setup_objects)
-/* 08B6E4 7F056BB4 8E105D0C */  lw    $s0, %lo(ptr_setup_objects)($s0)
+/* 08B6E0 7F056BB0 3C108007 */  lui   $s0, %hi(g_chraiCurrentSetup+0x0c)
+/* 08B6E4 7F056BB4 8E105D0C */  lw    $s0, %lo(g_chraiCurrentSetup+0x0c)($s0)
 /* 08B6E8 7F056BB8 AFB30020 */  sw    $s3, 0x20($sp)
 /* 08B6EC 7F056BBC 00809825 */  move  $s3, $a0
 /* 08B6F0 7F056BC0 AFBF0024 */  sw    $ra, 0x24($sp)
@@ -693,8 +693,8 @@ GLOBAL_ASM(
 glabel sub_GAME_7F056F08
 /* 08BA38 7F056F08 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 08BA3C 7F056F0C AFB00018 */  sw    $s0, 0x18($sp)
-/* 08BA40 7F056F10 3C108007 */  lui   $s0, %hi(ptr_setup_objects)
-/* 08BA44 7F056F14 8E105D0C */  lw    $s0, %lo(ptr_setup_objects)($s0)
+/* 08BA40 7F056F10 3C108007 */  lui   $s0, %hi(g_chraiCurrentSetup+0x0c)
+/* 08BA44 7F056F14 8E105D0C */  lw    $s0, %lo(g_chraiCurrentSetup+0x0c)($s0)
 /* 08BA48 7F056F18 AFBE0038 */  sw    $fp, 0x38($sp)
 /* 08BA4C 7F056F1C AFB70034 */  sw    $s7, 0x34($sp)
 /* 08BA50 7F056F20 AFB30024 */  sw    $s3, 0x24($sp)

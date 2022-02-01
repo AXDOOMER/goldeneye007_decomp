@@ -40,8 +40,8 @@ GLOBAL_ASM(
 glabel load_proptype
 /* 036680 7F001B50 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 036684 7F001B54 AFB00014 */  sw    $s0, 0x14($sp)
-/* 036688 7F001B58 3C108007 */  lui   $s0, %hi(ptr_setup_objects)
-/* 03668C 7F001B5C 8E105D0C */  lw    $s0, %lo(ptr_setup_objects)($s0)
+/* 036688 7F001B58 3C108007 */  lui   $s0, %hi(g_chraiCurrentSetup+0x0c)
+/* 03668C 7F001B5C 8E105D0C */  lw    $s0, %lo(g_chraiCurrentSetup+0x0c)($s0)
 /* 036690 7F001B60 AFB10018 */  sw    $s1, 0x18($sp)
 /* 036694 7F001B64 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 036698 7F001B68 AFB30020 */  sw    $s3, 0x20($sp)
@@ -420,14 +420,14 @@ glabel prepare_load_objects
 /* 036B10 7F001FE0 8FBF0034 */   lw    $ra, 0x34($sp)
 /* 036B14 7F001FE4 86230006 */  lh    $v1, 6($s1)
 .L7F001FE8:
-/* 036B18 7F001FE8 3C188007 */  lui   $t8, %hi(ptr_0xxxpresets) 
-/* 036B1C 7F001FEC 3C0B8007 */  lui   $t3, %hi(ptr_2xxxpresets) 
+/* 036B18 7F001FE8 3C188007 */  lui   $t8, %hi(g_chraiCurrentSetup+0x18) 
+/* 036B1C 7F001FEC 3C0B8007 */  lui   $t3, %hi(g_chraiCurrentSetup+0x1C) 
 /* 036B20 7F001FF0 28612710 */  slti  $at, $v1, 0x2710
 /* 036B24 7F001FF4 10200039 */  beqz  $at, .L7F0020DC
 /* 036B28 7F001FF8 00035100 */   sll   $t2, $v1, 4
 /* 036B2C 7F001FFC 00037880 */  sll   $t7, $v1, 2
 /* 036B30 7F002000 01E37823 */  subu  $t7, $t7, $v1
-/* 036B34 7F002004 8F185D18 */  lw    $t8, %lo(ptr_0xxxpresets)($t8)
+/* 036B34 7F002004 8F185D18 */  lw    $t8, %lo(g_chraiCurrentSetup+0x18)($t8)
 /* 036B38 7F002008 000F7880 */  sll   $t7, $t7, 2
 /* 036B3C 7F00200C 01E37823 */  subu  $t7, $t7, $v1
 /* 036B40 7F002010 000F7880 */  sll   $t7, $t7, 2
@@ -484,7 +484,7 @@ glabel prepare_load_objects
 /* 036C04 7F0020D4 10000085 */  b     .L7F0022EC
 /* 036C08 7F0020D8 AFA900CC */   sw    $t1, 0xcc($sp)
 .L7F0020DC:
-/* 036C0C 7F0020DC 8D6B5D1C */  lw    $t3, %lo(ptr_2xxxpresets)($t3)
+/* 036C0C 7F0020DC 8D6B5D1C */  lw    $t3, %lo(g_chraiCurrentSetup+0x1C)($t3)
 /* 036C10 7F0020E0 01435021 */  addu  $t2, $t2, $v1
 /* 036C14 7F0020E4 000A5080 */  sll   $t2, $t2, 2
 /* 036C18 7F0020E8 3C01FFF5 */  lui   $at, (0xFFF59FC0 >> 16) # lui $at, 0xfff5
@@ -1440,18 +1440,18 @@ glabel sub_GAME_7F002A3C
 /* 0375A8 7F002A78 01024023 */  subu  $t0, $t0, $v0
 /* 0375AC 7F002A7C 000A5080 */  sll   $t2, $t2, 2
 /* 0375B0 7F002A80 8F190000 */  lw    $t9, ($t8)
-/* 0375B4 7F002A84 3C0B8007 */  lui   $t3, %hi(ptr_2xxxpresets) 
+/* 0375B4 7F002A84 3C0B8007 */  lui   $t3, %hi(g_chraiCurrentSetup+0x1C) 
 /* 0375B8 7F002A88 10200008 */  beqz  $at, .L7F002AAC
 /* 0375BC 7F002A8C 8F260004 */   lw    $a2, 4($t9)
 /* 0375C0 7F002A90 00084080 */  sll   $t0, $t0, 2
-/* 0375C4 7F002A94 3C098007 */  lui   $t1, %hi(ptr_0xxxpresets) 
-/* 0375C8 7F002A98 8D295D18 */  lw    $t1, %lo(ptr_0xxxpresets)($t1)
+/* 0375C4 7F002A94 3C098007 */  lui   $t1, %hi(g_chraiCurrentSetup+0x18) 
+/* 0375C8 7F002A98 8D295D18 */  lw    $t1, %lo(g_chraiCurrentSetup+0x18)($t1)
 /* 0375CC 7F002A9C 01024023 */  subu  $t0, $t0, $v0
 /* 0375D0 7F002AA0 00084080 */  sll   $t0, $t0, 2
 /* 0375D4 7F002AA4 10000006 */  b     .L7F002AC0
 /* 0375D8 7F002AA8 01091821 */   addu  $v1, $t0, $t1
 .L7F002AAC:
-/* 0375DC 7F002AAC 8D6B5D1C */  lw    $t3, %lo(ptr_2xxxpresets)($t3)
+/* 0375DC 7F002AAC 8D6B5D1C */  lw    $t3, %lo(g_chraiCurrentSetup+0x1C)($t3)
 /* 0375E0 7F002AB0 3C01FFF5 */  lui   $at, (0xFFF59FC0 >> 16) # lui $at, 0xfff5
 /* 0375E4 7F002AB4 34219FC0 */  ori   $at, (0xFFF59FC0 & 0xFFFF) # ori $at, $at, 0x9fc0
 /* 0375E8 7F002AB8 014B1821 */  addu  $v1, $t2, $t3
@@ -1607,10 +1607,10 @@ void expand_type_0D_object_autoturret(undefined8 param_1,ObjectRecord.conflict *
     param_2[1].field_0x54 = NULL;
     if (-1 < iVar1) {
         if (iVar1 < 10000) {
-            pOVar4 = &ptr_0xxxpresets->pos + iVar1 * 0x2c;
+            pOVar4 = &g_chraiCurrentSetup.pads->pos + iVar1 * 0x2c;
         }
         else {
-            pOVar4 = ptr_2xxxpresets + iVar1 * 0x44 + -680000;
+            pOVar4 = g_chraiCurrentSetup.boundpads + iVar1 * 0x44 + -680000;
         }
         pPVar2 = param_2->Prop;
         fVar7 = *(&pOVar4->type + 2);
@@ -1702,15 +1702,15 @@ glabel expand_type_0D_object_autoturret
 /* 03788C 7F002D5C 00044080 */  sll   $t0, $a0, 2
 /* 037890 7F002D60 01044023 */  subu  $t0, $t0, $a0
 /* 037894 7F002D64 00084080 */  sll   $t0, $t0, 2
-/* 037898 7F002D68 3C098007 */  lui   $t1, %hi(ptr_0xxxpresets) 
-/* 03789C 7F002D6C 8D295D18 */  lw    $t1, %lo(ptr_0xxxpresets)($t1)
+/* 037898 7F002D68 3C098007 */  lui   $t1, %hi(g_chraiCurrentSetup+0x18) 
+/* 03789C 7F002D6C 8D295D18 */  lw    $t1, %lo(g_chraiCurrentSetup+0x18)($t1)
 /* 0378A0 7F002D70 01044023 */  subu  $t0, $t0, $a0
 /* 0378A4 7F002D74 00084080 */  sll   $t0, $t0, 2
 /* 0378A8 7F002D78 10000009 */  b     .L7F002DA0
 /* 0378AC 7F002D7C 01091821 */   addu  $v1, $t0, $t1
 .L7F002D80:
-/* 0378B0 7F002D80 3C0B8007 */  lui   $t3, %hi(ptr_2xxxpresets) 
-/* 0378B4 7F002D84 8D6B5D1C */  lw    $t3, %lo(ptr_2xxxpresets)($t3)
+/* 0378B0 7F002D80 3C0B8007 */  lui   $t3, %hi(g_chraiCurrentSetup+0x1C) 
+/* 0378B4 7F002D84 8D6B5D1C */  lw    $t3, %lo(g_chraiCurrentSetup+0x1C)($t3)
 /* 0378B8 7F002D88 01445021 */  addu  $t2, $t2, $a0
 /* 0378BC 7F002D8C 000A5080 */  sll   $t2, $t2, 2
 /* 0378C0 7F002D90 3C01FFF5 */  lui   $at, (0xFFF59FC0 >> 16) # lui $at, 0xfff5
@@ -1833,15 +1833,15 @@ glabel expand_type_0D_object_autoturret
 /* 0356BC 7F002CCC 00044080 */  sll   $t0, $a0, 2
 /* 0356C0 7F002CD0 01044023 */  subu  $t0, $t0, $a0
 /* 0356C4 7F002CD4 00084080 */  sll   $t0, $t0, 2
-/* 0356C8 7F002CD8 3C098006 */  lui   $t1, %hi(ptr_0xxxpresets) # $t1, 0x8006
-/* 0356CC 7F002CDC 8D294C58 */  lw    $t1, %lo(ptr_0xxxpresets)($t1)
+/* 0356C8 7F002CD8 3C098006 */  lui   $t1, %hi(g_chraiCurrentSetup+0x18) # $t1, 0x8006
+/* 0356CC 7F002CDC 8D294C58 */  lw    $t1, %lo(g_chraiCurrentSetup+0x18)($t1)
 /* 0356D0 7F002CE0 01044023 */  subu  $t0, $t0, $a0
 /* 0356D4 7F002CE4 00084080 */  sll   $t0, $t0, 2
 /* 0356D8 7F002CE8 10000009 */  b     .L7F002D10
 /* 0356DC 7F002CEC 01091821 */   addu  $v1, $t0, $t1
 .L7F002CF0:
-/* 0356E0 7F002CF0 3C0B8006 */  lui   $t3, %hi(ptr_2xxxpresets) # $t3, 0x8006
-/* 0356E4 7F002CF4 8D6B4C5C */  lw    $t3, %lo(ptr_2xxxpresets)($t3)
+/* 0356E0 7F002CF0 3C0B8006 */  lui   $t3, %hi(g_chraiCurrentSetup+0x1C) # $t3, 0x8006
+/* 0356E4 7F002CF4 8D6B4C5C */  lw    $t3, %lo(g_chraiCurrentSetup+0x1C)($t3)
 /* 0356E8 7F002CF8 01445021 */  addu  $t2, $t2, $a0
 /* 0356EC 7F002CFC 000A5080 */  sll   $t2, $t2, 2
 /* 0356F0 7F002D00 3C01FFF5 */  lui   $at, (0xFFF59FC0 >> 16) # lui $at, 0xfff5
@@ -2383,9 +2383,9 @@ glabel expand_type_01_object
 /* 037FEC 7F0034BC AFA401D0 */   sw    $a0, 0x1d0($sp)
 /* 037FF0 7F0034C0 86390006 */  lh    $t9, 6($s1)
 /* 037FF4 7F0034C4 8E230008 */  lw    $v1, 8($s1)
-/* 037FF8 7F0034C8 3C088007 */  lui   $t0, %hi(ptr_2xxxpresets) 
+/* 037FF8 7F0034C8 3C088007 */  lui   $t0, %hi(g_chraiCurrentSetup+0x1C) 
 /* 037FFC 7F0034CC 00197900 */  sll   $t7, $t9, 4
-/* 038000 7F0034D0 8D085D1C */  lw    $t0, %lo(ptr_2xxxpresets)($t0)
+/* 038000 7F0034D0 8D085D1C */  lw    $t0, %lo(g_chraiCurrentSetup+0x1C)($t0)
 /* 038004 7F0034D4 01F97821 */  addu  $t7, $t7, $t9
 /* 038008 7F0034D8 000F7880 */  sll   $t7, $t7, 2
 /* 03800C 7F0034DC 000348C0 */  sll   $t1, $v1, 3
@@ -2899,9 +2899,9 @@ glabel expand_type_01_object
 /* 035E1C 7F00342C AFA401D0 */   sw    $a0, 0x1d0($sp)
 /* 035E20 7F003430 86390006 */  lh    $t9, 6($s1)
 /* 035E24 7F003434 8E230008 */  lw    $v1, 8($s1)
-/* 035E28 7F003438 3C088006 */  lui   $t0, %hi(ptr_2xxxpresets) # $t0, 0x8006
+/* 035E28 7F003438 3C088006 */  lui   $t0, %hi(g_chraiCurrentSetup+0x1C) # $t0, 0x8006
 /* 035E2C 7F00343C 00197900 */  sll   $t7, $t9, 4
-/* 035E30 7F003440 8D084C5C */  lw    $t0, %lo(ptr_2xxxpresets)($t0)
+/* 035E30 7F003440 8D084C5C */  lw    $t0, %lo(g_chraiCurrentSetup+0x1C)($t0)
 /* 035E34 7F003444 01F97821 */  addu  $t7, $t7, $t9
 /* 035E38 7F003448 000F7880 */  sll   $t7, $t7, 2
 /* 035E3C 7F00344C 000348C0 */  sll   $t1, $v1, 3
@@ -3620,8 +3620,8 @@ glabel proplvreset2
 /* 0388B4 7F003D84 0FC30742 */  jal   load_mission_text_bank
 /* 0388B8 7F003D88 00402025 */   move  $a0, $v0
 /* 0388BC 7F003D8C 8E2C0000 */  lw    $t4, ($s1)
-/* 0388C0 7F003D90 3C078007 */  lui   $a3, %hi(ptr_setup_path_tbl)
-/* 0388C4 7F003D94 24E75D00 */  addiu $a3, %lo(ptr_setup_path_tbl) # addiu $a3, $a3, 0x5d00
+/* 0388C0 7F003D90 3C078007 */  lui   $a3, %hi(g_chraiCurrentSetup+0)
+/* 0388C4 7F003D94 24E75D00 */  addiu $a3, %lo(g_chraiCurrentSetup+0) # addiu $a3, $a3, 0x5d00
 /* 0388C8 7F003D98 022C6821 */  addu  $t5, $s1, $t4
 /* 0388CC 7F003D9C ACED0000 */  sw    $t5, ($a3)
 /* 0388D0 7F003DA0 8E2E0004 */  lw    $t6, 4($s1)
@@ -3749,8 +3749,8 @@ glabel proplvreset2
 /* 038A88 7F003F58 24420004 */  addiu $v0, $v0, 4
 /* 038A8C 7F003F5C 0523FFFD */  bgezl $t1, .L7F003F54
 /* 038A90 7F003F60 8C490004 */   lw    $t1, 4($v0)
-/* 038A94 7F003F64 3C078007 */  lui   $a3, %hi(ptr_setup_path_tbl)
-/* 038A98 7F003F68 24E75D00 */  addiu $a3, %lo(ptr_setup_path_tbl) # addiu $a3, $a3, 0x5d00
+/* 038A94 7F003F64 3C078007 */  lui   $a3, %hi(g_chraiCurrentSetup+0)
+/* 038A98 7F003F68 24E75D00 */  addiu $a3, %lo(g_chraiCurrentSetup+0) # addiu $a3, $a3, 0x5d00
 /* 038A9C 7F003F6C A4C30006 */  sh    $v1, 6($a2)
 .L7F003F70:
 /* 038AA0 7F003F70 8CF90010 */  lw    $t9, 0x10($a3)
@@ -3765,8 +3765,8 @@ glabel proplvreset2
 /* 038AC0 7F003F90 00000000 */   nop   
 /* 038AC4 7F003F94 0FC2D20C */  jal   get_room_data_float2
 /* 038AC8 7F003F98 00000000 */   nop   
-/* 038ACC 7F003F9C 3C108007 */  lui   $s0, %hi(ptr_0xxxpresets)
-/* 038AD0 7F003FA0 8E105D18 */  lw    $s0, %lo(ptr_0xxxpresets)($s0)
+/* 038ACC 7F003F9C 3C108007 */  lui   $s0, %hi(g_chraiCurrentSetup+0x18)
+/* 038AD0 7F003FA0 8E105D18 */  lw    $s0, %lo(g_chraiCurrentSetup+0x18)($s0)
 /* 038AD4 7F003FA4 46000086 */  mov.s $f2, $f0
 /* 038AD8 7F003FA8 8E020024 */  lw    $v0, 0x24($s0)
 /* 038ADC 7F003FAC 10400015 */  beqz  $v0, .L7F004004
@@ -3793,15 +3793,15 @@ glabel proplvreset2
 /* 038B2C 7F003FFC 5440FFEE */  bnezl $v0, .L7F003FB8
 /* 038B30 7F004000 C6060000 */   lwc1  $f6, ($s0)
 .L7F004004:
-/* 038B34 7F004004 3C078007 */  lui   $a3, %hi(ptr_setup_path_tbl)
-/* 038B38 7F004008 24E75D00 */  addiu $a3, %lo(ptr_setup_path_tbl) # addiu $a3, $a3, 0x5d00
+/* 038B34 7F004004 3C078007 */  lui   $a3, %hi(g_chraiCurrentSetup+0)
+/* 038B38 7F004008 24E75D00 */  addiu $a3, %lo(g_chraiCurrentSetup+0) # addiu $a3, $a3, 0x5d00
 /* 038B3C 7F00400C 8CEC001C */  lw    $t4, 0x1c($a3)
 /* 038B40 7F004010 51800033 */  beql  $t4, $zero, .L7F0040E0
 /* 038B44 7F004014 8CE50020 */   lw    $a1, 0x20($a3)
 /* 038B48 7F004018 0FC2D20C */  jal   get_room_data_float2
 /* 038B4C 7F00401C 00000000 */   nop   
-/* 038B50 7F004020 3C078007 */  lui   $a3, %hi(ptr_setup_path_tbl)
-/* 038B54 7F004024 24E75D00 */  addiu $a3, %lo(ptr_setup_path_tbl) # addiu $a3, $a3, 0x5d00
+/* 038B50 7F004020 3C078007 */  lui   $a3, %hi(g_chraiCurrentSetup+0)
+/* 038B54 7F004024 24E75D00 */  addiu $a3, %lo(g_chraiCurrentSetup+0) # addiu $a3, $a3, 0x5d00
 /* 038B58 7F004028 8CF0001C */  lw    $s0, 0x1c($a3)
 /* 038B5C 7F00402C 46000086 */  mov.s $f2, $f0
 /* 038B60 7F004030 8E020024 */  lw    $v0, 0x24($s0)
@@ -3846,8 +3846,8 @@ glabel proplvreset2
 /* 038BF8 7F0040C8 C7A20150 */  lwc1  $f2, 0x150($sp)
 /* 038BFC 7F0040CC 5440FFDC */  bnezl $v0, .L7F004040
 /* 038C00 7F0040D0 C6060000 */   lwc1  $f6, ($s0)
-/* 038C04 7F0040D4 3C078007 */  lui   $a3, %hi(ptr_setup_path_tbl)
-/* 038C08 7F0040D8 24E75D00 */  addiu $a3, %lo(ptr_setup_path_tbl) # addiu $a3, $a3, 0x5d00
+/* 038C04 7F0040D4 3C078007 */  lui   $a3, %hi(g_chraiCurrentSetup+0)
+/* 038C08 7F0040D8 24E75D00 */  addiu $a3, %lo(g_chraiCurrentSetup+0) # addiu $a3, $a3, 0x5d00
 /* 038C0C 7F0040DC 8CE50020 */  lw    $a1, 0x20($a3)
 .L7F0040E0:
 /* 038C10 7F0040E0 50A00010 */  beql  $a1, $zero, .L7F004124
@@ -3992,8 +3992,8 @@ glabel proplvreset2
 /* 038E18 7F0042E8 1420FFF6 */  bnez  $at, .L7F0042C4
 /* 038E1C 7F0042EC 00000000 */   nop   
 .L7F0042F0:
-/* 038E20 7F0042F0 3C0B8007 */  lui   $t3, %hi(ptr_setup_objects) 
-/* 038E24 7F0042F4 8D6B5D0C */  lw    $t3, %lo(ptr_setup_objects)($t3)
+/* 038E20 7F0042F0 3C0B8007 */  lui   $t3, %hi(g_chraiCurrentSetup+0x0c) 
+/* 038E24 7F0042F4 8D6B5D0C */  lw    $t3, %lo(g_chraiCurrentSetup+0x0c)($t3)
 /* 038E28 7F0042F8 116002DF */  beqz  $t3, .L7F004E78
 /* 038E2C 7F0042FC 00000000 */   nop   
 /* 038E30 7F004300 0FC2FF04 */  jal   lvlGetSelectedDifficulty
@@ -4012,8 +4012,8 @@ glabel proplvreset2
 /* 038E64 7F004334 01CFC004 */  sllv  $t8, $t7, $t6
 /* 038E68 7F004338 0298A025 */  or    $s4, $s4, $t8
 .L7F00433C:
-/* 038E6C 7F00433C 3C128007 */  lui   $s2, %hi(ptr_setup_objects)
-/* 038E70 7F004340 8E525D0C */  lw    $s2, %lo(ptr_setup_objects)($s2)
+/* 038E6C 7F00433C 3C128007 */  lui   $s2, %hi(g_chraiCurrentSetup+0x0c)
+/* 038E70 7F004340 8E525D0C */  lw    $s2, %lo(g_chraiCurrentSetup+0x0c)($s2)
 /* 038E74 7F004344 24010030 */  li    $at, 48
 /* 038E78 7F004348 00009825 */  move  $s3, $zero
 /* 038E7C 7F00434C 92430003 */  lbu   $v1, 3($s2)
@@ -4220,12 +4220,12 @@ type2F_tinted_glass:
 /* 039164 7F004634 07230039 */  bgezl $t9, .L7F00471C
 /* 039168 7F004638 02A02025 */   move  $a0, $s5
 /* 03916C 7F00463C 86420006 */  lh    $v0, 6($s2)
-/* 039170 7F004640 3C0B8007 */  lui   $t3, %hi(ptr_2xxxpresets) 
+/* 039170 7F004640 3C0B8007 */  lui   $t3, %hi(g_chraiCurrentSetup+0x1C) 
 /* 039174 7F004644 27A50118 */  addiu $a1, $sp, 0x118
 /* 039178 7F004648 28412710 */  slti  $at, $v0, 0x2710
 /* 03917C 7F00464C 14200032 */  bnez  $at, .L7F004718
 /* 039180 7F004650 00025100 */   sll   $t2, $v0, 4
-/* 039184 7F004654 8D6B5D1C */  lw    $t3, %lo(ptr_2xxxpresets)($t3)
+/* 039184 7F004654 8D6B5D1C */  lw    $t3, %lo(g_chraiCurrentSetup+0x1C)($t3)
 /* 039188 7F004658 01425021 */  addu  $t2, $t2, $v0
 /* 03918C 7F00465C 000A5080 */  sll   $t2, $t2, 2
 /* 039190 7F004660 3C01FFF5 */  lui   $at, (0xFFF59FC0 >> 16) # lui $at, 0xfff5
@@ -4555,8 +4555,8 @@ other_obj_expand:
 /* 039644 7F004B14 26730001 */  addiu $s3, $s3, 1
 /* 039648 7F004B18 5461FE13 */  bnel  $v1, $at, .L7F004368
 /* 03964C 7F004B1C 2468FFFF */   addiu $t0, $v1, -1
-/* 039650 7F004B20 3C128007 */  lui   $s2, %hi(ptr_setup_objects)
-/* 039654 7F004B24 8E525D0C */  lw    $s2, %lo(ptr_setup_objects)($s2)
+/* 039650 7F004B20 3C128007 */  lui   $s2, %hi(g_chraiCurrentSetup+0x0c)
+/* 039654 7F004B24 8E525D0C */  lw    $s2, %lo(g_chraiCurrentSetup+0x0c)($s2)
 /* 039658 7F004B28 00009825 */  move  $s3, $zero
 /* 03965C 7F004B2C 92430003 */  lbu   $v1, 3($s2)
 .L7F004B30:
@@ -4752,26 +4752,26 @@ other_obj_expand:
 /* 039938 7F004E08 1000001B */  b     .L7F004E78
 /* 03993C 7F004E0C 00000000 */   nop   
 .L7F004E10:
-/* 039940 7F004E10 3C018007 */  lui   $at, %hi(ptr_setup_path_tbl)
-/* 039944 7F004E14 AC205D00 */  sw    $zero, %lo(ptr_setup_path_tbl)($at)
-/* 039948 7F004E18 3C018007 */  lui   $at, %hi(ptr_setup_path_link)
-/* 03994C 7F004E1C AC205D04 */  sw    $zero, %lo(ptr_setup_path_link)($at)
-/* 039950 7F004E20 3C018007 */  lui   $at, %hi(ptr_setup_intro)
-/* 039954 7F004E24 AC205D08 */  sw    $zero, %lo(ptr_setup_intro)($at)
-/* 039958 7F004E28 3C018007 */  lui   $at, %hi(ptr_setup_objects)
-/* 03995C 7F004E2C AC205D0C */  sw    $zero, %lo(ptr_setup_objects)($at)
-/* 039960 7F004E30 3C018007 */  lui   $at, %hi(ptr_setup_path_sets)
-/* 039964 7F004E34 AC205D10 */  sw    $zero, %lo(ptr_setup_path_sets)($at)
-/* 039968 7F004E38 3C018007 */  lui   $at, %hi(ptr_setup_actions)
-/* 03996C 7F004E3C AC205D14 */  sw    $zero, %lo(ptr_setup_actions)($at)
-/* 039970 7F004E40 3C018007 */  lui   $at, %hi(ptr_0xxxpresets)
-/* 039974 7F004E44 AC205D18 */  sw    $zero, %lo(ptr_0xxxpresets)($at)
-/* 039978 7F004E48 3C018007 */  lui   $at, %hi(ptr_2xxxpresets)
-/* 03997C 7F004E4C AC205D1C */  sw    $zero, %lo(ptr_2xxxpresets)($at)
-/* 039980 7F004E50 3C018007 */  lui   $at, %hi(dword_CODE_bss_80075D20)
-/* 039984 7F004E54 AC205D20 */  sw    $zero, %lo(dword_CODE_bss_80075D20)($at)
-/* 039988 7F004E58 3C018007 */  lui   $at, %hi(dword_CODE_bss_80075D24)
-/* 03998C 7F004E5C AC205D24 */  sw    $zero, %lo(dword_CODE_bss_80075D24)($at)
+/* 039940 7F004E10 3C018007 */  lui   $at, %hi(g_chraiCurrentSetup+0)
+/* 039944 7F004E14 AC205D00 */  sw    $zero, %lo(g_chraiCurrentSetup+0)($at)
+/* 039948 7F004E18 3C018007 */  lui   $at, %hi(g_chraiCurrentSetup+4)
+/* 03994C 7F004E1C AC205D04 */  sw    $zero, %lo(g_chraiCurrentSetup+4)($at)
+/* 039950 7F004E20 3C018007 */  lui   $at, %hi(g_chraiCurrentSetup+8)
+/* 039954 7F004E24 AC205D08 */  sw    $zero, %lo(g_chraiCurrentSetup+8)($at)
+/* 039958 7F004E28 3C018007 */  lui   $at, %hi(g_chraiCurrentSetup+0x0c)
+/* 03995C 7F004E2C AC205D0C */  sw    $zero, %lo(g_chraiCurrentSetup+0x0c)($at)
+/* 039960 7F004E30 3C018007 */  lui   $at, %hi(g_chraiCurrentSetup+0x10)
+/* 039964 7F004E34 AC205D10 */  sw    $zero, %lo(g_chraiCurrentSetup+0x10)($at)
+/* 039968 7F004E38 3C018007 */  lui   $at, %hi(g_chraiCurrentSetup+0x14)
+/* 03996C 7F004E3C AC205D14 */  sw    $zero, %lo(g_chraiCurrentSetup+0x14)($at)
+/* 039970 7F004E40 3C018007 */  lui   $at, %hi(g_chraiCurrentSetup+0x18)
+/* 039974 7F004E44 AC205D18 */  sw    $zero, %lo(g_chraiCurrentSetup+0x18)($at)
+/* 039978 7F004E48 3C018007 */  lui   $at, %hi(g_chraiCurrentSetup+0x1C)
+/* 03997C 7F004E4C AC205D1C */  sw    $zero, %lo(g_chraiCurrentSetup+0x1C)($at)
+/* 039980 7F004E50 3C018007 */  lui   $at, %hi(g_chraiCurrentSetup+0x20)
+/* 039984 7F004E54 AC205D20 */  sw    $zero, %lo(g_chraiCurrentSetup+0x20)($at)
+/* 039988 7F004E58 3C018007 */  lui   $at, %hi(g_chraiCurrentSetup+0x24)
+/* 03998C 7F004E5C AC205D24 */  sw    $zero, %lo(g_chraiCurrentSetup+0x24)($at)
 /* 039990 7F004E60 0FC003AE */  jal   alloc_init_GUARDdata_entries
 /* 039994 7F004E64 00002025 */   move  $a0, $zero
 /* 039998 7F004E68 0FC01550 */  jal   sub_GAME_7F005540
@@ -5013,8 +5013,8 @@ glabel jpt_8004F02C
 /* 0388F4 7F003D84 0FC30A6E */  jal   load_mission_text_bank
 /* 0388F8 7F003D88 00402025 */   move  $a0, $v0
 /* 0388FC 7F003D8C 8E2C0000 */  lw    $t4, ($s1)
-/* 038900 7F003D90 3C078007 */  lui   $a3, %hi(ptr_setup_path_tbl) # $a3, 0x8007
-/* 038904 7F003D94 24E75D40 */  addiu $a3, %lo(ptr_setup_path_tbl) # addiu $a3, $a3, 0x5d40
+/* 038900 7F003D90 3C078007 */  lui   $a3, %hi(g_chraiCurrentSetup+0) # $a3, 0x8007
+/* 038904 7F003D94 24E75D40 */  addiu $a3, %lo(g_chraiCurrentSetup+0) # addiu $a3, $a3, 0x5d40
 /* 038908 7F003D98 022C6821 */  addu  $t5, $s1, $t4
 /* 03890C 7F003D9C ACED0000 */  sw    $t5, ($a3)
 /* 038910 7F003DA0 8E2E0004 */  lw    $t6, 4($s1)
@@ -5142,8 +5142,8 @@ glabel jpt_8004F02C
 /* 038AC8 7F003F58 24420004 */  addiu $v0, $v0, 4
 /* 038ACC 7F003F5C 0523FFFD */  bgezl $t1, .L7F003F54
 /* 038AD0 7F003F60 8C490004 */   lw    $t1, 4($v0)
-/* 038AD4 7F003F64 3C078007 */  lui   $a3, %hi(ptr_setup_path_tbl) # $a3, 0x8007
-/* 038AD8 7F003F68 24E75D40 */  addiu $a3, %lo(ptr_setup_path_tbl) # addiu $a3, $a3, 0x5d40
+/* 038AD4 7F003F64 3C078007 */  lui   $a3, %hi(g_chraiCurrentSetup+0) # $a3, 0x8007
+/* 038AD8 7F003F68 24E75D40 */  addiu $a3, %lo(g_chraiCurrentSetup+0) # addiu $a3, $a3, 0x5d40
 /* 038ADC 7F003F6C A4C30006 */  sh    $v1, 6($a2)
 .L7F003F70:
 /* 038AE0 7F003F70 8CF90010 */  lw    $t9, 0x10($a3)
@@ -5158,8 +5158,8 @@ glabel jpt_8004F02C
 /* 038B00 7F003F90 00000000 */   nop   
 /* 038B04 7F003F94 0FC2D4F8 */  jal   get_room_data_float2
 /* 038B08 7F003F98 00000000 */   nop   
-/* 038B0C 7F003F9C 3C108007 */  lui   $s0, %hi(ptr_0xxxpresets) # $s0, 0x8007
-/* 038B10 7F003FA0 8E105D58 */  lw    $s0, %lo(ptr_0xxxpresets)($s0)
+/* 038B0C 7F003F9C 3C108007 */  lui   $s0, %hi(g_chraiCurrentSetup+0x18) # $s0, 0x8007
+/* 038B10 7F003FA0 8E105D58 */  lw    $s0, %lo(g_chraiCurrentSetup+0x18)($s0)
 /* 038B14 7F003FA4 46000086 */  mov.s $f2, $f0
 /* 038B18 7F003FA8 8E020024 */  lw    $v0, 0x24($s0)
 /* 038B1C 7F003FAC 10400015 */  beqz  $v0, .L7F004004
@@ -5186,15 +5186,15 @@ glabel jpt_8004F02C
 /* 038B6C 7F003FFC 5440FFEE */  bnezl $v0, .L7F003FB8
 /* 038B70 7F004000 C6060000 */   lwc1  $f6, ($s0)
 .L7F004004:
-/* 038B74 7F004004 3C078007 */  lui   $a3, %hi(ptr_setup_path_tbl) # $a3, 0x8007
-/* 038B78 7F004008 24E75D40 */  addiu $a3, %lo(ptr_setup_path_tbl) # addiu $a3, $a3, 0x5d40
+/* 038B74 7F004004 3C078007 */  lui   $a3, %hi(g_chraiCurrentSetup+0) # $a3, 0x8007
+/* 038B78 7F004008 24E75D40 */  addiu $a3, %lo(g_chraiCurrentSetup+0) # addiu $a3, $a3, 0x5d40
 /* 038B7C 7F00400C 8CEC001C */  lw    $t4, 0x1c($a3)
 /* 038B80 7F004010 51800033 */  beql  $t4, $zero, .L7F0040E0
 /* 038B84 7F004014 8CE50020 */   lw    $a1, 0x20($a3)
 /* 038B88 7F004018 0FC2D4F8 */  jal   get_room_data_float2
 /* 038B8C 7F00401C 00000000 */   nop   
-/* 038B90 7F004020 3C078007 */  lui   $a3, %hi(ptr_setup_path_tbl) # $a3, 0x8007
-/* 038B94 7F004024 24E75D40 */  addiu $a3, %lo(ptr_setup_path_tbl) # addiu $a3, $a3, 0x5d40
+/* 038B90 7F004020 3C078007 */  lui   $a3, %hi(g_chraiCurrentSetup+0) # $a3, 0x8007
+/* 038B94 7F004024 24E75D40 */  addiu $a3, %lo(g_chraiCurrentSetup+0) # addiu $a3, $a3, 0x5d40
 /* 038B98 7F004028 8CF0001C */  lw    $s0, 0x1c($a3)
 /* 038B9C 7F00402C 46000086 */  mov.s $f2, $f0
 /* 038BA0 7F004030 8E020024 */  lw    $v0, 0x24($s0)
@@ -5239,8 +5239,8 @@ glabel jpt_8004F02C
 /* 038C38 7F0040C8 C7A20150 */  lwc1  $f2, 0x150($sp)
 /* 038C3C 7F0040CC 5440FFDC */  bnezl $v0, .L7F004040
 /* 038C40 7F0040D0 C6060000 */   lwc1  $f6, ($s0)
-/* 038C44 7F0040D4 3C078007 */  lui   $a3, %hi(ptr_setup_path_tbl) # $a3, 0x8007
-/* 038C48 7F0040D8 24E75D40 */  addiu $a3, %lo(ptr_setup_path_tbl) # addiu $a3, $a3, 0x5d40
+/* 038C44 7F0040D4 3C078007 */  lui   $a3, %hi(g_chraiCurrentSetup+0) # $a3, 0x8007
+/* 038C48 7F0040D8 24E75D40 */  addiu $a3, %lo(g_chraiCurrentSetup+0) # addiu $a3, $a3, 0x5d40
 /* 038C4C 7F0040DC 8CE50020 */  lw    $a1, 0x20($a3)
 .L7F0040E0:
 /* 038C50 7F0040E0 50A00010 */  beql  $a1, $zero, .L7F004124
@@ -5385,8 +5385,8 @@ glabel jpt_8004F02C
 /* 038E58 7F0042E8 1420FFF6 */  bnez  $at, .L7F0042C4
 /* 038E5C 7F0042EC 00000000 */   nop   
 .L7F0042F0:
-/* 038E60 7F0042F0 3C0B8007 */  lui   $t3, %hi(ptr_setup_objects) # $t3, 0x8007
-/* 038E64 7F0042F4 8D6B5D4C */  lw    $t3, %lo(ptr_setup_objects)($t3)
+/* 038E60 7F0042F0 3C0B8007 */  lui   $t3, %hi(g_chraiCurrentSetup+0x0c) # $t3, 0x8007
+/* 038E64 7F0042F4 8D6B5D4C */  lw    $t3, %lo(g_chraiCurrentSetup+0x0c)($t3)
 /* 038E68 7F0042F8 116002E3 */  beqz  $t3, .L7F004E88
 /* 038E6C 7F0042FC 00000000 */   nop   
 /* 038E70 7F004300 0FC3021E */  jal   lvlGetSelectedDifficulty
@@ -5405,8 +5405,8 @@ glabel jpt_8004F02C
 /* 038EA4 7F004334 01CFC004 */  sllv  $t8, $t7, $t6
 /* 038EA8 7F004338 0298A025 */  or    $s4, $s4, $t8
 .L7F00433C:
-/* 038EAC 7F00433C 3C128007 */  lui   $s2, %hi(ptr_setup_objects) # $s2, 0x8007
-/* 038EB0 7F004340 8E525D4C */  lw    $s2, %lo(ptr_setup_objects)($s2)
+/* 038EAC 7F00433C 3C128007 */  lui   $s2, %hi(g_chraiCurrentSetup+0x0c) # $s2, 0x8007
+/* 038EB0 7F004340 8E525D4C */  lw    $s2, %lo(g_chraiCurrentSetup+0x0c)($s2)
 /* 038EB4 7F004344 24010030 */  li    $at, 48
 /* 038EB8 7F004348 00009825 */  move  $s3, $zero
 /* 038EBC 7F00434C 92430003 */  lbu   $v1, 3($s2)
@@ -5618,12 +5618,12 @@ type2F_tinted_glass:
 /* 0391B4 7F004644 05430039 */  bgezl $t2, .L7F00472C
 /* 0391B8 7F004648 02A02025 */   move  $a0, $s5
 /* 0391BC 7F00464C 86420006 */  lh    $v0, 6($s2)
-/* 0391C0 7F004650 3C0D8007 */  lui   $t5, %hi(ptr_2xxxpresets) # $t5, 0x8007
+/* 0391C0 7F004650 3C0D8007 */  lui   $t5, %hi(g_chraiCurrentSetup+0x1C) # $t5, 0x8007
 /* 0391C4 7F004654 27A50118 */  addiu $a1, $sp, 0x118
 /* 0391C8 7F004658 28412710 */  slti  $at, $v0, 0x2710
 /* 0391CC 7F00465C 14200032 */  bnez  $at, .L7F004728
 /* 0391D0 7F004660 00025900 */   sll   $t3, $v0, 4
-/* 0391D4 7F004664 8DAD5D5C */  lw    $t5, %lo(ptr_2xxxpresets)($t5)
+/* 0391D4 7F004664 8DAD5D5C */  lw    $t5, %lo(g_chraiCurrentSetup+0x1C)($t5)
 /* 0391D8 7F004668 01625821 */  addu  $t3, $t3, $v0
 /* 0391DC 7F00466C 000B5880 */  sll   $t3, $t3, 2
 /* 0391E0 7F004670 3C01FFF5 */  lui   $at, (0xFFF59FC0 >> 16) # lui $at, 0xfff5
@@ -5953,8 +5953,8 @@ other_obj_expand:
 /* 039694 7F004B24 26730001 */  addiu $s3, $s3, 1
 /* 039698 7F004B28 5461FE0F */  bnel  $v1, $at, .L7F004368
 /* 03969C 7F004B2C 2468FFFF */   addiu $t0, $v1, -1
-/* 0396A0 7F004B30 3C128007 */  lui   $s2, %hi(ptr_setup_objects) # $s2, 0x8007
-/* 0396A4 7F004B34 8E525D4C */  lw    $s2, %lo(ptr_setup_objects)($s2)
+/* 0396A0 7F004B30 3C128007 */  lui   $s2, %hi(g_chraiCurrentSetup+0x0c) # $s2, 0x8007
+/* 0396A4 7F004B34 8E525D4C */  lw    $s2, %lo(g_chraiCurrentSetup+0x0c)($s2)
 /* 0396A8 7F004B38 00009825 */  move  $s3, $zero
 /* 0396AC 7F004B3C 92430003 */  lbu   $v1, 3($s2)
 .L7F004B40:
@@ -6150,26 +6150,26 @@ other_obj_expand:
 /* 039988 7F004E18 1000001B */  b     .L7F004E88
 /* 03998C 7F004E1C 00000000 */   nop   
 .L7F004E20:
-/* 039990 7F004E20 3C018007 */  lui   $at, %hi(ptr_setup_path_tbl) # $at, 0x8007
-/* 039994 7F004E24 AC205D40 */  sw    $zero, %lo(ptr_setup_path_tbl)($at)
-/* 039998 7F004E28 3C018007 */  lui   $at, %hi(ptr_setup_path_link) # $at, 0x8007
-/* 03999C 7F004E2C AC205D44 */  sw    $zero, %lo(ptr_setup_path_link)($at)
-/* 0399A0 7F004E30 3C018007 */  lui   $at, %hi(ptr_setup_intro) # $at, 0x8007
-/* 0399A4 7F004E34 AC205D48 */  sw    $zero, %lo(ptr_setup_intro)($at)
-/* 0399A8 7F004E38 3C018007 */  lui   $at, %hi(ptr_setup_objects) # $at, 0x8007
-/* 0399AC 7F004E3C AC205D4C */  sw    $zero, %lo(ptr_setup_objects)($at)
-/* 0399B0 7F004E40 3C018007 */  lui   $at, %hi(ptr_setup_path_sets) # $at, 0x8007
-/* 0399B4 7F004E44 AC205D50 */  sw    $zero, %lo(ptr_setup_path_sets)($at)
-/* 0399B8 7F004E48 3C018007 */  lui   $at, %hi(ptr_setup_actions) # $at, 0x8007
-/* 0399BC 7F004E4C AC205D54 */  sw    $zero, %lo(ptr_setup_actions)($at)
-/* 0399C0 7F004E50 3C018007 */  lui   $at, %hi(ptr_0xxxpresets) # $at, 0x8007
-/* 0399C4 7F004E54 AC205D58 */  sw    $zero, %lo(ptr_0xxxpresets)($at)
-/* 0399C8 7F004E58 3C018007 */  lui   $at, %hi(ptr_2xxxpresets) # $at, 0x8007
-/* 0399CC 7F004E5C AC205D5C */  sw    $zero, %lo(ptr_2xxxpresets)($at)
-/* 0399D0 7F004E60 3C018007 */  lui   $at, %hi(dword_CODE_bss_80075D20) # $at, 0x8007
-/* 0399D4 7F004E64 AC205D60 */  sw    $zero, %lo(dword_CODE_bss_80075D20)($at)
-/* 0399D8 7F004E68 3C018007 */  lui   $at, %hi(dword_CODE_bss_80075D24) # $at, 0x8007
-/* 0399DC 7F004E6C AC205D64 */  sw    $zero, %lo(dword_CODE_bss_80075D24)($at)
+/* 039990 7F004E20 3C018007 */  lui   $at, %hi(g_chraiCurrentSetup+0) # $at, 0x8007
+/* 039994 7F004E24 AC205D40 */  sw    $zero, %lo(g_chraiCurrentSetup+0)($at)
+/* 039998 7F004E28 3C018007 */  lui   $at, %hi(g_chraiCurrentSetup+4) # $at, 0x8007
+/* 03999C 7F004E2C AC205D44 */  sw    $zero, %lo(g_chraiCurrentSetup+4)($at)
+/* 0399A0 7F004E30 3C018007 */  lui   $at, %hi(g_chraiCurrentSetup+8) # $at, 0x8007
+/* 0399A4 7F004E34 AC205D48 */  sw    $zero, %lo(g_chraiCurrentSetup+8)($at)
+/* 0399A8 7F004E38 3C018007 */  lui   $at, %hi(g_chraiCurrentSetup+0x0c) # $at, 0x8007
+/* 0399AC 7F004E3C AC205D4C */  sw    $zero, %lo(g_chraiCurrentSetup+0x0c)($at)
+/* 0399B0 7F004E40 3C018007 */  lui   $at, %hi(g_chraiCurrentSetup+0x10) # $at, 0x8007
+/* 0399B4 7F004E44 AC205D50 */  sw    $zero, %lo(g_chraiCurrentSetup+0x10)($at)
+/* 0399B8 7F004E48 3C018007 */  lui   $at, %hi(g_chraiCurrentSetup+0x14) # $at, 0x8007
+/* 0399BC 7F004E4C AC205D54 */  sw    $zero, %lo(g_chraiCurrentSetup+0x14)($at)
+/* 0399C0 7F004E50 3C018007 */  lui   $at, %hi(g_chraiCurrentSetup+0x18) # $at, 0x8007
+/* 0399C4 7F004E54 AC205D58 */  sw    $zero, %lo(g_chraiCurrentSetup+0x18)($at)
+/* 0399C8 7F004E58 3C018007 */  lui   $at, %hi(g_chraiCurrentSetup+0x1C) # $at, 0x8007
+/* 0399CC 7F004E5C AC205D5C */  sw    $zero, %lo(g_chraiCurrentSetup+0x1C)($at)
+/* 0399D0 7F004E60 3C018007 */  lui   $at, %hi(g_chraiCurrentSetup+0x20) # $at, 0x8007
+/* 0399D4 7F004E64 AC205D60 */  sw    $zero, %lo(g_chraiCurrentSetup+0x20)($at)
+/* 0399D8 7F004E68 3C018007 */  lui   $at, %hi(g_chraiCurrentSetup+0x24) # $at, 0x8007
+/* 0399DC 7F004E6C AC205D64 */  sw    $zero, %lo(g_chraiCurrentSetup+0x24)($at)
 /* 0399E0 7F004E70 0FC003AE */  jal   alloc_init_GUARDdata_entries
 /* 0399E4 7F004E74 00002025 */   move  $a0, $zero
 /* 0399E8 7F004E78 0FC01558 */  jal   sub_GAME_7F005540
@@ -6411,8 +6411,8 @@ glabel proplvreset2
 /* 036700 7F003D10 0FC3047A */  jal   load_mission_text_bank
 /* 036704 7F003D14 00402025 */   move  $a0, $v0
 /* 036708 7F003D18 8E2C0000 */  lw    $t4, ($s1)
-/* 03670C 7F003D1C 3C078006 */  lui   $a3, %hi(ptr_setup_path_tbl) # $a3, 0x8006
-/* 036710 7F003D20 24E74C40 */  addiu $a3, %lo(ptr_setup_path_tbl) # addiu $a3, $a3, 0x4c40
+/* 03670C 7F003D1C 3C078006 */  lui   $a3, %hi(g_chraiCurrentSetup+0) # $a3, 0x8006
+/* 036710 7F003D20 24E74C40 */  addiu $a3, %lo(g_chraiCurrentSetup+0) # addiu $a3, $a3, 0x4c40
 /* 036714 7F003D24 022C6821 */  addu  $t5, $s1, $t4
 /* 036718 7F003D28 ACED0000 */  sw    $t5, ($a3)
 /* 03671C 7F003D2C 8E2E0004 */  lw    $t6, 4($s1)
@@ -6540,8 +6540,8 @@ glabel proplvreset2
 /* 0368D4 7F003EE4 24420004 */  addiu $v0, $v0, 4
 /* 0368D8 7F003EE8 0523FFFD */  bgezl $t1, .L7F003EE0
 /* 0368DC 7F003EEC 8C490004 */   lw    $t1, 4($v0)
-/* 0368E0 7F003EF0 3C078006 */  lui   $a3, %hi(ptr_setup_path_tbl) # $a3, 0x8006
-/* 0368E4 7F003EF4 24E74C40 */  addiu $a3, %lo(ptr_setup_path_tbl) # addiu $a3, $a3, 0x4c40
+/* 0368E0 7F003EF0 3C078006 */  lui   $a3, %hi(g_chraiCurrentSetup+0) # $a3, 0x8006
+/* 0368E4 7F003EF4 24E74C40 */  addiu $a3, %lo(g_chraiCurrentSetup+0) # addiu $a3, $a3, 0x4c40
 /* 0368E8 7F003EF8 A4C30006 */  sh    $v1, 6($a2)
 .L7F003EFC:
 /* 0368EC 7F003EFC 8CF90010 */  lw    $t9, 0x10($a3)
@@ -6556,8 +6556,8 @@ glabel proplvreset2
 /* 03690C 7F003F1C 00000000 */   nop   
 /* 036910 7F003F20 0FC2CEDB */  jal   get_room_data_float2
 /* 036914 7F003F24 00000000 */   nop   
-/* 036918 7F003F28 3C108006 */  lui   $s0, %hi(ptr_0xxxpresets) # $s0, 0x8006
-/* 03691C 7F003F2C 8E104C58 */  lw    $s0, %lo(ptr_0xxxpresets)($s0)
+/* 036918 7F003F28 3C108006 */  lui   $s0, %hi(g_chraiCurrentSetup+0x18) # $s0, 0x8006
+/* 03691C 7F003F2C 8E104C58 */  lw    $s0, %lo(g_chraiCurrentSetup+0x18)($s0)
 /* 036920 7F003F30 46000086 */  mov.s $f2, $f0
 /* 036924 7F003F34 8E020024 */  lw    $v0, 0x24($s0)
 /* 036928 7F003F38 10400015 */  beqz  $v0, .L7F003F90
@@ -6584,15 +6584,15 @@ glabel proplvreset2
 /* 036978 7F003F88 5440FFEE */  bnezl $v0, .L7F003F44
 /* 03697C 7F003F8C C6060000 */   lwc1  $f6, ($s0)
 .L7F003F90:
-/* 036980 7F003F90 3C078006 */  lui   $a3, %hi(ptr_setup_path_tbl) # $a3, 0x8006
-/* 036984 7F003F94 24E74C40 */  addiu $a3, %lo(ptr_setup_path_tbl) # addiu $a3, $a3, 0x4c40
+/* 036980 7F003F90 3C078006 */  lui   $a3, %hi(g_chraiCurrentSetup+0) # $a3, 0x8006
+/* 036984 7F003F94 24E74C40 */  addiu $a3, %lo(g_chraiCurrentSetup+0) # addiu $a3, $a3, 0x4c40
 /* 036988 7F003F98 8CEC001C */  lw    $t4, 0x1c($a3)
 /* 03698C 7F003F9C 51800033 */  beql  $t4, $zero, .L7F00406C
 /* 036990 7F003FA0 8CE50020 */   lw    $a1, 0x20($a3)
 /* 036994 7F003FA4 0FC2CEDB */  jal   get_room_data_float2
 /* 036998 7F003FA8 00000000 */   nop   
-/* 03699C 7F003FAC 3C078006 */  lui   $a3, %hi(ptr_setup_path_tbl) # $a3, 0x8006
-/* 0369A0 7F003FB0 24E74C40 */  addiu $a3, %lo(ptr_setup_path_tbl) # addiu $a3, $a3, 0x4c40
+/* 03699C 7F003FAC 3C078006 */  lui   $a3, %hi(g_chraiCurrentSetup+0) # $a3, 0x8006
+/* 0369A0 7F003FB0 24E74C40 */  addiu $a3, %lo(g_chraiCurrentSetup+0) # addiu $a3, $a3, 0x4c40
 /* 0369A4 7F003FB4 8CF0001C */  lw    $s0, 0x1c($a3)
 /* 0369A8 7F003FB8 46000086 */  mov.s $f2, $f0
 /* 0369AC 7F003FBC 8E020024 */  lw    $v0, 0x24($s0)
@@ -6637,8 +6637,8 @@ glabel proplvreset2
 /* 036A44 7F004054 C7A20150 */  lwc1  $f2, 0x150($sp)
 /* 036A48 7F004058 5440FFDC */  bnezl $v0, .L7F003FCC
 /* 036A4C 7F00405C C6060000 */   lwc1  $f6, ($s0)
-/* 036A50 7F004060 3C078006 */  lui   $a3, %hi(ptr_setup_path_tbl) # $a3, 0x8006
-/* 036A54 7F004064 24E74C40 */  addiu $a3, %lo(ptr_setup_path_tbl) # addiu $a3, $a3, 0x4c40
+/* 036A50 7F004060 3C078006 */  lui   $a3, %hi(g_chraiCurrentSetup+0) # $a3, 0x8006
+/* 036A54 7F004064 24E74C40 */  addiu $a3, %lo(g_chraiCurrentSetup+0) # addiu $a3, $a3, 0x4c40
 /* 036A58 7F004068 8CE50020 */  lw    $a1, 0x20($a3)
 .L7F00406C:
 /* 036A5C 7F00406C 50A00010 */  beql  $a1, $zero, .L7F0040B0
@@ -6783,8 +6783,8 @@ glabel proplvreset2
 /* 036C64 7F004274 1420FFF6 */  bnez  $at, .L7F004250
 /* 036C68 7F004278 00000000 */   nop   
 .L7F00427C:
-/* 036C6C 7F00427C 3C0B8006 */  lui   $t3, %hi(ptr_setup_objects) # $t3, 0x8006
-/* 036C70 7F004280 8D6B4C4C */  lw    $t3, %lo(ptr_setup_objects)($t3)
+/* 036C6C 7F00427C 3C0B8006 */  lui   $t3, %hi(g_chraiCurrentSetup+0x0c) # $t3, 0x8006
+/* 036C70 7F004280 8D6B4C4C */  lw    $t3, %lo(g_chraiCurrentSetup+0x0c)($t3)
 /* 036C74 7F004284 116002E1 */  beqz  $t3, .L7F004E88
 /* 036C78 7F004288 00000000 */   nop   
 /* 036C7C 7F00428C 0FC2FC21 */  jal   lvlGetSelectedDifficulty
@@ -6803,8 +6803,8 @@ glabel proplvreset2
 /* 036CB0 7F0042C0 01CFC004 */  sllv  $t8, $t7, $t6
 /* 036CB4 7F0042C4 0298A025 */  or    $s4, $s4, $t8
 .L7F0042C8:
-/* 036CB8 7F0042C8 3C128006 */  lui   $s2, %hi(ptr_setup_objects) # $s2, 0x8006
-/* 036CBC 7F0042CC 8E524C4C */  lw    $s2, %lo(ptr_setup_objects)($s2)
+/* 036CB8 7F0042C8 3C128006 */  lui   $s2, %hi(g_chraiCurrentSetup+0x0c) # $s2, 0x8006
+/* 036CBC 7F0042CC 8E524C4C */  lw    $s2, %lo(g_chraiCurrentSetup+0x0c)($s2)
 /* 036CC0 7F0042D0 24010030 */  li    $at, 48
 /* 036CC4 7F0042D4 00009825 */  move  $s3, $zero
 /* 036CC8 7F0042D8 92430003 */  lbu   $v1, 3($s2)
@@ -7017,12 +7017,12 @@ type2F_tinted_glass:
 /* 036FC0 7F0045D0 05430039 */  bgezl $t2, .L7F0046B8
 /* 036FC4 7F0045D4 02A02025 */   move  $a0, $s5
 /* 036FC8 7F0045D8 86420006 */  lh    $v0, 6($s2)
-/* 036FCC 7F0045DC 3C0D8006 */  lui   $t5, %hi(ptr_2xxxpresets) # $t5, 0x8006
+/* 036FCC 7F0045DC 3C0D8006 */  lui   $t5, %hi(g_chraiCurrentSetup+0x1C) # $t5, 0x8006
 /* 036FD0 7F0045E0 27A50118 */  addiu $a1, $sp, 0x118
 /* 036FD4 7F0045E4 28412710 */  slti  $at, $v0, 0x2710
 /* 036FD8 7F0045E8 14200032 */  bnez  $at, .L7F0046B4
 /* 036FDC 7F0045EC 00025900 */   sll   $t3, $v0, 4
-/* 036FE0 7F0045F0 8DAD4C5C */  lw    $t5, %lo(ptr_2xxxpresets)($t5)
+/* 036FE0 7F0045F0 8DAD4C5C */  lw    $t5, %lo(g_chraiCurrentSetup+0x1C)($t5)
 /* 036FE4 7F0045F4 01625821 */  addu  $t3, $t3, $v0
 /* 036FE8 7F0045F8 000B5880 */  sll   $t3, $t3, 2
 /* 036FEC 7F0045FC 3C01FFF5 */  lui   $at, (0xFFF59FC0 >> 16) # lui $at, 0xfff5
@@ -7350,8 +7350,8 @@ other_obj_expand:
 /* 037498 7F004AA8 26730001 */  addiu $s3, $s3, 1
 /* 03749C 7F004AAC 5461FE11 */  bnel  $v1, $at, .L7F0042F4
 /* 0374A0 7F004AB0 2468FFFF */   addiu $t0, $v1, -1
-/* 0374A4 7F004AB4 3C128006 */  lui   $s2, %hi(ptr_setup_objects) # $s2, 0x8006
-/* 0374A8 7F004AB8 8E524C4C */  lw    $s2, %lo(ptr_setup_objects)($s2)
+/* 0374A4 7F004AB4 3C128006 */  lui   $s2, %hi(g_chraiCurrentSetup+0x0c) # $s2, 0x8006
+/* 0374A8 7F004AB8 8E524C4C */  lw    $s2, %lo(g_chraiCurrentSetup+0x0c)($s2)
 /* 0374AC 7F004ABC 00009825 */  move  $s3, $zero
 /* 0374B0 7F004AC0 92430003 */  lbu   $v1, 3($s2)
 .L7F004B40:
@@ -7547,26 +7547,26 @@ other_obj_expand:
 /* 03778C 7F004D9C 1000001B */  b     .L7F004E88
 /* 037790 7F004DA0 00000000 */   nop   
 .L7F004E20:
-/* 037794 7F004DA4 3C018006 */  lui   $at, %hi(ptr_setup_path_tbl) # $at, 0x8006
-/* 037798 7F004DA8 AC204C40 */  sw    $zero, %lo(ptr_setup_path_tbl)($at)
-/* 03779C 7F004DAC 3C018006 */  lui   $at, %hi(ptr_setup_path_link) # $at, 0x8006
-/* 0377A0 7F004DB0 AC204C44 */  sw    $zero, %lo(ptr_setup_path_link)($at)
-/* 0377A4 7F004DB4 3C018006 */  lui   $at, %hi(ptr_setup_intro) # $at, 0x8006
-/* 0377A8 7F004DB8 AC204C48 */  sw    $zero, %lo(ptr_setup_intro)($at)
-/* 0377AC 7F004DBC 3C018006 */  lui   $at, %hi(ptr_setup_objects) # $at, 0x8006
-/* 0377B0 7F004DC0 AC204C4C */  sw    $zero, %lo(ptr_setup_objects)($at)
-/* 0377B4 7F004DC4 3C018006 */  lui   $at, %hi(ptr_setup_path_sets) # $at, 0x8006
-/* 0377B8 7F004DC8 AC204C50 */  sw    $zero, %lo(ptr_setup_path_sets)($at)
-/* 0377BC 7F004DCC 3C018006 */  lui   $at, %hi(ptr_setup_actions) # $at, 0x8006
-/* 0377C0 7F004DD0 AC204C54 */  sw    $zero, %lo(ptr_setup_actions)($at)
-/* 0377C4 7F004DD4 3C018006 */  lui   $at, %hi(ptr_0xxxpresets) # $at, 0x8006
-/* 0377C8 7F004DD8 AC204C58 */  sw    $zero, %lo(ptr_0xxxpresets)($at)
-/* 0377CC 7F004DDC 3C018006 */  lui   $at, %hi(ptr_2xxxpresets) # $at, 0x8006
-/* 0377D0 7F004DE0 AC204C5C */  sw    $zero, %lo(ptr_2xxxpresets)($at)
-/* 0377D4 7F004DE4 3C018006 */  lui   $at, %hi(dword_CODE_bss_80075D20) # $at, 0x8006
-/* 0377D8 7F004DE8 AC204C60 */  sw    $zero, %lo(dword_CODE_bss_80075D20)($at)
-/* 0377DC 7F004DEC 3C018006 */  lui   $at, %hi(dword_CODE_bss_80075D24) # $at, 0x8006
-/* 0377E0 7F004DF0 AC204C64 */  sw    $zero, %lo(dword_CODE_bss_80075D24)($at)
+/* 037794 7F004DA4 3C018006 */  lui   $at, %hi(g_chraiCurrentSetup+0) # $at, 0x8006
+/* 037798 7F004DA8 AC204C40 */  sw    $zero, %lo(g_chraiCurrentSetup+0)($at)
+/* 03779C 7F004DAC 3C018006 */  lui   $at, %hi(g_chraiCurrentSetup+4) # $at, 0x8006
+/* 0377A0 7F004DB0 AC204C44 */  sw    $zero, %lo(g_chraiCurrentSetup+4)($at)
+/* 0377A4 7F004DB4 3C018006 */  lui   $at, %hi(g_chraiCurrentSetup+8) # $at, 0x8006
+/* 0377A8 7F004DB8 AC204C48 */  sw    $zero, %lo(g_chraiCurrentSetup+8)($at)
+/* 0377AC 7F004DBC 3C018006 */  lui   $at, %hi(g_chraiCurrentSetup+0x0c) # $at, 0x8006
+/* 0377B0 7F004DC0 AC204C4C */  sw    $zero, %lo(g_chraiCurrentSetup+0x0c)($at)
+/* 0377B4 7F004DC4 3C018006 */  lui   $at, %hi(g_chraiCurrentSetup+0x10) # $at, 0x8006
+/* 0377B8 7F004DC8 AC204C50 */  sw    $zero, %lo(g_chraiCurrentSetup+0x10)($at)
+/* 0377BC 7F004DCC 3C018006 */  lui   $at, %hi(g_chraiCurrentSetup+0x14) # $at, 0x8006
+/* 0377C0 7F004DD0 AC204C54 */  sw    $zero, %lo(g_chraiCurrentSetup+0x14)($at)
+/* 0377C4 7F004DD4 3C018006 */  lui   $at, %hi(g_chraiCurrentSetup+0x18) # $at, 0x8006
+/* 0377C8 7F004DD8 AC204C58 */  sw    $zero, %lo(g_chraiCurrentSetup+0x18)($at)
+/* 0377CC 7F004DDC 3C018006 */  lui   $at, %hi(g_chraiCurrentSetup+0x1C) # $at, 0x8006
+/* 0377D0 7F004DE0 AC204C5C */  sw    $zero, %lo(g_chraiCurrentSetup+0x1C)($at)
+/* 0377D4 7F004DE4 3C018006 */  lui   $at, %hi(g_chraiCurrentSetup+0x20) # $at, 0x8006
+/* 0377D8 7F004DE8 AC204C60 */  sw    $zero, %lo(g_chraiCurrentSetup+0x20)($at)
+/* 0377DC 7F004DEC 3C018006 */  lui   $at, %hi(g_chraiCurrentSetup+0x24) # $at, 0x8006
+/* 0377E0 7F004DF0 AC204C64 */  sw    $zero, %lo(g_chraiCurrentSetup+0x24)($at)
 /* 0377E4 7F004DF4 0FC003AE */  jal   alloc_init_GUARDdata_entries
 /* 0377E8 7F004DF8 00002025 */   move  $a0, $zero
 /* 0377EC 7F004DFC 0FC01538 */  jal   sub_GAME_7F005540

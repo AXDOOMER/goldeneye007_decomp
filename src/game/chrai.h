@@ -423,10 +423,12 @@ struct bss_80075030 {
     u32 unk44;
 };
 
-extern waypoint * ptr_setup_path_tbl;
+//extern waypoint * ptr_setup_path_tbl;
 extern struct SetupPtrs g_SetupPtrs;
-extern PadRecord * ptr_0xxxpresets;
-extern BoundPadRecord * ptr_2xxxpresets;
+//extern PadRecord * ptr_0xxxpresets;
+//extern BoundPadRecord * ptr_2xxxpresets;
+extern stagesetup g_chraiCurrentSetup;
+
 extern u32 monAnimRadarSub1[];
 extern u32 monAnimRadarSub2[];
 extern u32 monAnimRadarSub3[];
@@ -463,7 +465,7 @@ extern u32 temp_mine_table[30];
 extern f32 gas_damage_flag;
 extern u32 gas_cutoff_flag;
 extern f32 difficulty ;
-extern PropDefHeaderRecord *ptr_setup_objects;
+//extern PropDefHeaderRecord *ptr_setup_objects;
 extern s16 * ptr_list_object_lookup_indices;
 extern PropRecord pos_data_entry[];
 

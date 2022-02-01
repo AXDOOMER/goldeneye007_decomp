@@ -17,6 +17,6 @@
 // Public Records
 
 // Global Ai Lists
-AIListRecord gGlobalAILists[];
+//AIListRecord *gGlobalAILists;
 
 

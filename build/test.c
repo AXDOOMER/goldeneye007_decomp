@@ -551,7 +551,7 @@ void switch_to_solosky2(f32 Opacity)
 #        include "../src/bondaicommands.h" //make sure this is after constants
 #        include "../src/game/chrai.h"
 #        if 0
-extern AIListRecord *ptr_setup_actions;
+extern AIListRecord *g_chraiCurrentSetup.ailists;
 extern AIListRecord *GlobalAILists;
 
 
@@ -562,21 +562,21 @@ u8 ailist4[]   = {2, 3, 1, 2, 56, 3, 4};
 // ailist *ailist1p = ailist1, *ailist2p = ailist2, *ailist3p =
 // ailist3, *ailist4p = ailist4;
 AIListRecord setup_actions[] = {{&ailist1, 1}};
-// ailist *ptr_setup_actions = &setup_actions;
+// ailist *g_chraiCurrentSetup.ailists = &setup_actions;
 #            if 0
 
 //SetupPtrs
 //{
-    /*0x80075D00*/ u32 *ptr_setup_path_tbl;
-    /*0x80075D04*/ u32 *ptr_setup_path_link;
-    /*0x80075D08*/ u32 *ptr_setup_intro;
-    /*0x80075D0C*/ ObjectRecord *ptr_setup_objects;
-    /*0x80075D10*/ u32 *ptr_setup_path_sets;
-    /*0x80075D14*/ AIListRecord *ptr_setup_actions; //*g_Lvailists;
-    /*0x80075D18*/ u32 *ptr_0xxxpresets;
-    /*0x80075D1C*/ u32 *ptr_2xxxpresets;
-    /*0x80075D20*/ u32 *dword_CODE_bss_80075D20;
-    /*0x80075D24*/ u32 *dword_CODE_bss_80075D24;
+    /*0x80075D00*/ u32 *g_chraiCurrentSetup.pathwaypoints;
+    /*0x80075D04*/ u32 *g_chraiCurrentSetup.waypointgroups;
+    /*0x80075D08*/ u32 *g_chraiCurrentSetup.intro;
+    /*0x80075D0C*/ ObjectRecord *g_chraiCurrentSetup.propDefs;
+    /*0x80075D10*/ u32 *g_chraiCurrentSetup.patrolpaths;
+    /*0x80075D14*/ AIListRecord *g_chraiCurrentSetup.ailists; //*g_Lvailists;
+    /*0x80075D18*/ u32 *g_chraiCurrentSetup.pads;
+    /*0x80075D1C*/ u32 *g_chraiCurrentSetup.boundpads;
+    /*0x80075D20*/ u32 *g_chraiCurrentSetup.padnames;
+    /*0x80075D24*/ u32 *g_chraiCurrentSetup.boundpadnames;
     /*0x80075D28*/ u32 *dword_CODE_bss_80075D28;
     /*0x80075D30*/ u32 *objective_ptrs[3];
     /*0x80075D34*/
@@ -897,14 +897,14 @@ struct stagesetup setup = {
     pads,
     boundpads,
 };
-waypoint *ptr_setup_path_tbl;
-waygroup* ptr_setup_path_link;
-s32 *ptr_setup_intro;
-ObjectRecord *ptr_setup_objects;
-PathRecord *ptr_setup_path_sets;
-AIListRecord *ptr_setup_actions; // *g_LvAilists;
-PadRecord *ptr_0xxxpresets;
-BoundPadRecord *ptr_2xxxpresets;
+waypoint *g_chraiCurrentSetup.pathwaypoints;
+waygroup* g_chraiCurrentSetup.waypointgroups;
+s32 *g_chraiCurrentSetup.intro;
+ObjectRecord *g_chraiCurrentSetup.propDefs;
+PathRecord *g_chraiCurrentSetup.patrolpaths;
+AIListRecord *g_chraiCurrentSetup.ailists; // *g_LvAilists;
+PadRecord *g_chraiCurrentSetup.pads;
+BoundPadRecord *g_chraiCurrentSetup.boundpads;
 extern int gclock_timer;
 
 #        pragma endregion
@@ -938,8 +938,8 @@ void *ptr_80030A88_3words[3];
 
 //confirmed stuff below this line
 //coord3d g_vector = {0, 0, 0};//D_80030A7C
-/*0x80075D18*/ //PadRecord *ptr_0xxxpresets;      //=&stage[x].pads
-/*0x80075D1C*/ //BoundPadRecord *ptr_2xxxpresets; //=&stage[x].boundpads
+/*0x80075D18*/ //PadRecord *g_chraiCurrentSetup.pads;      //=&stage[x].pads
+/*0x80075D1C*/ //BoundPadRecord *g_chraiCurrentSetup.boundpads; //=&stage[x].boundpads
 sfxRecord sfx_related[8];        //NOT Volatile
 s32 num_guards           = 0;    //chr.c
 s32 objectiveregisters1  = 0;    //objectiveregisters1
@@ -2865,11 +2865,11 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                     {
                         if (isNotBoundPad(padnum))
                         {
-                            pad = &ptr_0xxxpresets[padnum];
+                            pad = &g_chraiCurrentSetup.pads[padnum];
                         }
                         else
                         {
-                            pad = (PadRecord *)&ptr_2xxxpresets[getBoundPadNum(padnum)];
+                            pad = (PadRecord *)&g_chraiCurrentSetup.boundpads[getBoundPadNum(padnum)];
                         }
                         matrix_4x4_7F059908(&matrix, 0, 0, 0, -pad->target.x, -pad->target.y, -pad->target.z, pad->up.x, pad->up.y, pad->up.z);
                         if (obj->model)
@@ -4264,11 +4264,11 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                     u16        sfxID = ai->val[3] | (ai->val[2] << 8);
                     if (isNotBoundPad(padnum))
                     {
-                        pad = &ptr_0xxxpresets[padnum];
+                        pad = &g_chraiCurrentSetup.pads[padnum];
                     }
                     else
                     {
-                        pad = (PadRecord *)&ptr_2xxxpresets[getBoundPadNum(padnum)];
+                        pad = (PadRecord *)&g_chraiCurrentSetup.boundpads[getBoundPadNum(padnum)];
                     }
                     if (ai->SlotID >= 0 && ai->SlotID < 8 && pad)
                     {
@@ -4436,11 +4436,11 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                     u16       padnum = ai->val[1] | (ai->val[0] << 8);
                     if (isNotBoundPad(padnum))
                     {
-                        dword_CODE_bss_800799F8 = &ptr_0xxxpresets[padnum];
+                        dword_CODE_bss_800799F8 = &g_chraiCurrentSetup.pads[padnum];
                     }
                     else
                     {
-                        dword_CODE_bss_800799F8 = (PadRecord *)&ptr_2xxxpresets[getBoundPadNum(padnum)];
+                        dword_CODE_bss_800799F8 = (PadRecord *)&g_chraiCurrentSetup.boundpads[getBoundPadNum(padnum)];
                     }
                     set_camera_mode(CAMERAMODE_POSEND);
                     Offset += 3;
@@ -4537,11 +4537,11 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                         padnum = chrResolvePadId(ChrEntityp, padnum);
                         if (isNotBoundPad(padnum))
                         {
-                            pad = &ptr_0xxxpresets[padnum];
+                            pad = &g_chraiCurrentSetup.pads[padnum];
                         }
                         else
                         {
-                            pad = (PadRecord *)&ptr_2xxxpresets[getBoundPadNum(padnum)];
+                            pad = (PadRecord *)&g_chraiCurrentSetup.boundpads[getBoundPadNum(padnum)];
                         }
 
                         FacingDirection = atan2f(pad->target.x, pad->target.z);
@@ -4744,11 +4744,11 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
 
                     if (isNotBoundPad(padnum))
                     {
-                        pad = &ptr_0xxxpresets[padnum * 1]; //needs a mult by 1 to correct s0/v1
+                        pad = &g_chraiCurrentSetup.pads[padnum * 1]; //needs a mult by 1 to correct s0/v1
                     }
                     else
                     {
-                        pad = (PadRecord *)&ptr_2xxxpresets[getBoundPadNum(padnum)];
+                        pad = (PadRecord *)&g_chraiCurrentSetup.boundpads[getBoundPadNum(padnum)];
                     }
 
                     if (pad->stan && obj && obj->prop && (pad->stan->RoomID == obj->prop->stan->RoomID))
