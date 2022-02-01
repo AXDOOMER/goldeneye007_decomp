@@ -45,8 +45,8 @@ s32 get_debug_chrnum_flag(void);
 s32 get_debug_gunwatchpos_flag(void);
 s32  get_debug_profile_flag(void);
 s32 get_debug_taskgrab_val(void);
-Gfx * print_debug_mcm_to_stdout(Gfx *);
+Gfx * debugmenuRender(Gfx *);
 s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pressed);
-void display_debug_menu_text_onscreen(void);
+void debugmenuUpdate(void);
 
 #endif

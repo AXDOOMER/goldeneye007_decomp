@@ -283,10 +283,10 @@ coord3d player_pos_x = {0};
 #endif
 
 
-void display_debug_menu_text_onscreen(void)
+void debugmenuUpdate(void)
 {
     #if defined(LEFTOVERDEBUG)
-    init_debug_menu_values(&mcm_strings, &mcm_onscreen_positions, &mcm_column_groupings);
+    debmenuSetMenu(&mcm_strings, &mcm_onscreen_positions, &mcm_column_groupings);
     #endif
 }
 
