@@ -875,6 +875,7 @@ void *extract_id_from_object_structure_microcode(Model *Objinst, ModelNode *root
 
 void getpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#MATCH - however OPCODE 3 needs defining
 {
+    #if defined(LEFTOVERDEBUG)
     if (!objinst)
     {
         osSyncPrintf("getpartoffset: no objinst!");
@@ -885,7 +886,7 @@ void getpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#MATCH - 
         osSyncPrintf("getpartoffset: no partdesc!");
         return_null();
     }
-
+    #endif
     switch (part->Opcode & 0xFF)
     {
         case 1:
@@ -930,74 +931,6 @@ void getpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#MATCH - 
     }
 }
 
-#ifdef VERSION_EU
-GLOBAL_ASM(
-
-.text
-glabel getpartoffset
-/* 09F978 7F06CF88 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 09F97C 7F06CF8C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09F980 7F06CF90 94A20000 */  lhu   $v0, ($a1)
-/* 09F984 7F06CF94 24010001 */  li    $at, 1
-/* 09F988 7F06CF98 304E00FF */  andi  $t6, $v0, 0xff
-/* 09F98C 7F06CF9C 11C1000D */  beq   $t6, $at, .L7F06CFD4
-/* 09F990 7F06CFA0 24010002 */   li    $at, 2
-/* 09F994 7F06CFA4 11C10015 */  beq   $t6, $at, .L7F06CFFC
-/* 09F998 7F06CFA8 24010003 */   li    $at, 3
-/* 09F99C 7F06CFAC 11C1001B */  beq   $t6, $at, .L7F06D01C
-/* 09F9A0 7F06CFB0 24010015 */   li    $at, 21
-/* 09F9A4 7F06CFB4 51C10022 */  beql  $t6, $at, .L7F06D040
-/* 09F9A8 7F06CFB8 8CA20004 */   lw    $v0, 4($a1)
-/* 09F9AC 7F06CFBC 44800000 */  mtc1  $zero, $f0
-/* 09F9B0 7F06CFC0 00000000 */  nop   
-/* 09F9B4 7F06CFC4 E4C00000 */  swc1  $f0, ($a2)
-/* 09F9B8 7F06CFC8 E4C00004 */  swc1  $f0, 4($a2)
-/* 09F9BC 7F06CFCC 10000022 */  b     .L7F06D058
-/* 09F9C0 7F06CFD0 E4C00008 */   swc1  $f0, 8($a2)
-.L7F06CFD4:
-/* 09F9C4 7F06CFD4 0FC1B3A3 */  jal   extract_id_from_object_structure_microcode
-/* 09F9C8 7F06CFD8 AFA60020 */   sw    $a2, 0x20($sp)
-/* 09F9CC 7F06CFDC 8FA60020 */  lw    $a2, 0x20($sp)
-/* 09F9D0 7F06CFE0 C4440008 */  lwc1  $f4, 8($v0)
-/* 09F9D4 7F06CFE4 E4C40000 */  swc1  $f4, ($a2)
-/* 09F9D8 7F06CFE8 C446000C */  lwc1  $f6, 0xc($v0)
-/* 09F9DC 7F06CFEC E4C60004 */  swc1  $f6, 4($a2)
-/* 09F9E0 7F06CFF0 C4480010 */  lwc1  $f8, 0x10($v0)
-/* 09F9E4 7F06CFF4 10000018 */  b     .L7F06D058
-/* 09F9E8 7F06CFF8 E4C80008 */   swc1  $f8, 8($a2)
-.L7F06CFFC:
-/* 09F9EC 7F06CFFC 8CA20004 */  lw    $v0, 4($a1)
-/* 09F9F0 7F06D000 C44A0000 */  lwc1  $f10, ($v0)
-/* 09F9F4 7F06D004 E4CA0000 */  swc1  $f10, ($a2)
-/* 09F9F8 7F06D008 C4500004 */  lwc1  $f16, 4($v0)
-/* 09F9FC 7F06D00C E4D00004 */  swc1  $f16, 4($a2)
-/* 09FA00 7F06D010 C4520008 */  lwc1  $f18, 8($v0)
-/* 09FA04 7F06D014 10000010 */  b     .L7F06D058
-/* 09FA08 7F06D018 E4D20008 */   swc1  $f18, 8($a2)
-.L7F06D01C:
-/* 09FA0C 7F06D01C 8CA20004 */  lw    $v0, 4($a1)
-/* 09FA10 7F06D020 C4440000 */  lwc1  $f4, ($v0)
-/* 09FA14 7F06D024 E4C40000 */  swc1  $f4, ($a2)
-/* 09FA18 7F06D028 C4460004 */  lwc1  $f6, 4($v0)
-/* 09FA1C 7F06D02C E4C60004 */  swc1  $f6, 4($a2)
-/* 09FA20 7F06D030 C4480008 */  lwc1  $f8, 8($v0)
-/* 09FA24 7F06D034 10000008 */  b     .L7F06D058
-/* 09FA28 7F06D038 E4C80008 */   swc1  $f8, 8($a2)
-/* 09FA2C 7F06D03C 8CA20004 */  lw    $v0, 4($a1)
-.L7F06D040:
-/* 09FA30 7F06D040 C44A0000 */  lwc1  $f10, ($v0)
-/* 09FA34 7F06D044 E4CA0000 */  swc1  $f10, ($a2)
-/* 09FA38 7F06D048 C4500004 */  lwc1  $f16, 4($v0)
-/* 09FA3C 7F06D04C E4D00004 */  swc1  $f16, 4($a2)
-/* 09FA40 7F06D050 C4520008 */  lwc1  $f18, 8($v0)
-/* 09FA44 7F06D054 E4D20008 */  swc1  $f18, 8($a2)
-.L7F06D058:
-/* 09FA48 7F06D058 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09FA4C 7F06D05C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 09FA50 7F06D060 03E00008 */  jr    $ra
-/* 09FA54 7F06D064 00000000 */   nop   
-)
-#endif
 
 
 
@@ -1311,6 +1244,7 @@ glabel setpartoffset
 
 void getsuboffset(Model *objinst, coord3d *offset) //#MATCH
 {
+    #if defined(LEFTOVERDEBUG )
     if (!objinst)
     {
         osSyncPrintf("getsuboffset: no objinst!");
@@ -1322,31 +1256,16 @@ void getsuboffset(Model *objinst, coord3d *offset) //#MATCH
         osSyncPrintf("getsuboffset: objinst has no object!");
         return_null();
     }
+    #endif
     getpartoffset(objinst, objinst->obj->RootNode, offset);
 }
-
-#ifdef VERSION_EU
-GLOBAL_ASM(
-.text
-glabel getsuboffset
-/* 09FBC8 7F06D1D8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 09FBCC 7F06D1DC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09FBD0 7F06D1E0 8C8E0008 */  lw    $t6, 8($a0)
-/* 09FBD4 7F06D1E4 00A03025 */  move  $a2, $a1
-/* 09FBD8 7F06D1E8 0FC1B3E2 */  jal   getpartoffset
-/* 09FBDC 7F06D1EC 8DC50000 */   lw    $a1, ($t6)
-/* 09FBE0 7F06D1F0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09FBE4 7F06D1F4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 09FBE8 7F06D1F8 03E00008 */  jr    $ra
-/* 09FBEC 7F06D1FC 00000000 */   nop   
-)
-#endif
 
 
 
 
 void setsuboffset(Model *objinst, coord3d *offset) //#MATCH
 {
+    #if defined(LEFTOVERDEBUG )
     if (!objinst)
     {
         osSyncPrintf("setsuboffset: no objinst!");
@@ -1357,25 +1276,10 @@ void setsuboffset(Model *objinst, coord3d *offset) //#MATCH
         osSyncPrintf("setsuboffset: objinst has no object!");
         return_null();
     }
+    #endif
     setpartoffset(objinst, objinst->obj->RootNode, offset);
 }
 
-#ifdef VERSION_EU
-GLOBAL_ASM(
-.text
-glabel setsuboffset
-/* 09FBF0 7F06D200 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 09FBF4 7F06D204 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09FBF8 7F06D208 8C8E0008 */  lw    $t6, 8($a0)
-/* 09FBFC 7F06D20C 00A03025 */  move  $a2, $a1
-/* 09FC00 7F06D210 0FC1B41A */  jal   setpartoffset
-/* 09FC04 7F06D214 8DC50000 */   lw    $a1, ($t6)
-/* 09FC08 7F06D218 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09FC0C 7F06D21C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 09FC10 7F06D220 03E00008 */  jr    $ra
-/* 09FC14 7F06D224 00000000 */   nop   
-)
-#endif
 
 
 
