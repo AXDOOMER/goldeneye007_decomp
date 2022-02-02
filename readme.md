@@ -61,7 +61,7 @@ make
 Clone this repository where you wish to have the project, with a command such as:
 
 ```bash
-git clone https://github.com/n64decomp/007
+git clone https://github.com/kholdfuzion/goldeneye_src
 ```
 
 #### Step 3: Prepare baserom(s) for asset extraction
