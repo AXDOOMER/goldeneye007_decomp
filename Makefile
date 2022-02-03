@@ -89,7 +89,11 @@ DATASEG_COMP := $(TOOLS_DIR)/data_compress.sh
 RZ_COMP := $(TOOLS_DIR)/1172compress.sh
 N64CKSUM := $(TOOLS_DIR)/n64cksum
 MAKEBG := $(TOOLS_DIR)/makebg.sh
-SHA1SUM = sha1sum
+ifeq ($(VERBOSE), 1)
+ SHA1SUM = sha1sum
+else
+ SHA1SUM = sha1sum --quiet
+endif
 
 ifeq ($(FINAL), YES)
  OPTIMIZATION := -O2
@@ -198,6 +202,7 @@ OBJECTS := $(RSPOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(OBSEGMENT)
 MIPSISET := -mips2 -32
 
 INCLUDE := -I . -I include -I include/ultra64 -I include/PR -I src -I src/game -I src/inflate
+
 # ignore warnings:
 # 609 : The number of arguments in the macro invocation does not match the definition - disabled because CPPLib uses "VarArgs" which wasnt invented till c99
 # 649 : Missing member name in structure / union                                      - used for "Inheritance"
@@ -232,9 +237,9 @@ all: $(APPROM)
 ifeq ($(COMPARE),1)
 	@echo "\n"
 #Now using cursor commands for better look  original was //"\033[5;42;97m%80s\r\n%43s%37s\r\n%80s\007\033[0;0m\n"
-#                                      if fail          Rsrv   Up 3   Flash  Wht  80  Dn 1 Return      Dn 1 Ret 80ch                  Red                                                                              Reset Colour
+#                                      if fail          Rsrv   Up 3   Flash  Wht  80  Dn 1 Return      Dn 1 Ret 80ch                  Red                                                                                                                                          Reset Colour
 #   Calculate Checksum                 Else complete    Lines Lines     Red/Grn   ch  Line SoL midway  Line SoL     Bell Reset Colour                                          Which File failed
-	@$(SHA1SUM) -c ge007.$(COUNTRYCODE).sha1 || (printf "\n\n\033[3A\033[5;41;97m%80s\033[1B\r%45s%35s\033[1B\r%80s\007\033[0;0m\033[91m\n\n\n" "" "NOT MATCH!" "" "" && $(SHA1SUM) --quiet -c checksums.txt && printf "\033[0;0m")
+	@$(SHA1SUM) -c ge007.$(COUNTRYCODE).sha1 || (printf "\n\n\033[3A\033[5;41;97m%80s\033[1B\r%45s%35s\033[1B\r%80s\007\033[0;0m\033[91m\n\n\n" "" "NOT MATCH!" "" "" && $(SHA1SUM) --quiet -c checksums.txt && printf "Mismatch in code!\nLocate mismatching code and add 0x34b34\n\n\033[0;0m" && exit 1)
 	@printf                                           "\n\n\n\033[3A\033[5;42;97m%80s\033[1B\r%43s%37s\033[1B\r%80s\007\033[0;0m\n\n\n" "" "MATCH!" "" "" 
 endif
 	@echo "\n Rom File Generated in Build Directory. \n\n"
@@ -277,7 +282,7 @@ ifeq ($(VERBOSE),1)
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(RSPOBJECTS)
 else
 	@clear
-	@echo Deleting All Code Binaries Only (Assets will be left from previous compile)
+	@echo Deleting All Code Binaries Only [Assets will be left from previous compile]
 	@rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map
 	@$(call DrawProgressBar,50)
 	@rm -f $(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(RSPOBJECTS)
@@ -464,6 +469,17 @@ test:
 	@$(SHA1SUM) --quiet -c checksums.txt
 	@printf "\033[1;92m All Checked Files Match\033[0m\n\n"
 #	@$(SHA1SUM) $(BG_SEG_FILES) $(BRIEF_RZ_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) \
-	$(PROP_RZ_FILES) $(SETUP_BIN_FILES) $(STAN_RZ_FILES) $(TEXT_RZ_FILES) \
-	$(ULTRAOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) > checksums.txt
+	$(PROP_RZ_FILES) $(SETUP_BIN_FILES) $(STAN_RZ_FILES) $(TEXT_RZ_FILES) > checksums.txt
 
+
+context:
+	@clear
+	@echo Building Context File [ctx.h]
+	@echo "#define TRUE 1" > build/ctx.h
+	@echo "#define FALSE 0" >> build/ctx.h
+	@sed -n -E ':x /\\$$/ { N; s/\\\n//g ; bx };''/(^\s*#define)|(\\$$)/p; /(\\$$)/p;' src/bondconstants.h src/bondtypes.h >> build/ctx.h
+	@echo "#include <bondtypes.h>" > build/ctx.c
+	@$(CC) -c $(CFLAGS) build/ctx.c -E > build/ctx2.h
+	@sed -E '/^\s*$$/d' build/ctx2.h >> build/ctx.h
+	@rm build/ctx.c build/ctx2.h
+	@echo You can find it in Build/.

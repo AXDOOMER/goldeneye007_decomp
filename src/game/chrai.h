@@ -172,15 +172,7 @@ Rotate Image:
 #define BSS_80075030_DATA_LEN 40
 #define ONSCREEN_PROP_LIST_LEN 500
 
-typedef struct sfxRecord //Need 24 size
-{
-    s32           field_0x0; //0
-    s32           Volume2;   //4
-    s32           sfxID;     //8
-    s32           Volume;    //12
-    PadRecord    *pad;       //16
-    ObjectRecord *Obj;       //20
-} sfxRecord;
+
 
 /**
  * Getting a match on alloc_lookup_buffers makes it seem
@@ -427,7 +419,6 @@ struct bss_80075030 {
 extern struct SetupPtrs g_SetupPtrs;
 //extern PadRecord * ptr_0xxxpresets;
 //extern BoundPadRecord * ptr_2xxxpresets;
-extern stagesetup g_chraiCurrentSetup;
 
 extern u32 monAnimRadarSub1[];
 extern u32 monAnimRadarSub2[];
@@ -465,6 +456,7 @@ extern u32 temp_mine_table[30];
 extern f32 gas_damage_flag;
 extern u32 gas_cutoff_flag;
 extern f32 difficulty ;
+extern stagesetup g_chraiCurrentSetup;
 //extern PropDefHeaderRecord *ptr_setup_objects;
 extern s16 * ptr_list_object_lookup_indices;
 extern PropRecord pos_data_entry[];
@@ -510,7 +502,7 @@ void set_current_objposdata_plus_0x28(PropRecord *);
 void set_stateflag_0x04_for_posdata(PropRecord *);
 void sub_GAME_7F03A4F0(Model*);
 void attachNewChild(PropRecord *newChild, PropRecord *host);
-u8 *                                      LoadNext_PrevActionBlock(u16 *param_1);
+AIRecord *                                      LoadNext_PrevActionBlock(s32 ID);
 void                                      chraiGetCollisionBounds(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *arg3, f32 *arg4);
 void                                      sub_GAME_7F03D058(PropRecord *prop, bool unset);
 void                                      chraiGetCollisionBoundsWithoutY(PropRecord *arg0, struct rect4f **arg1, s32 *arg2);

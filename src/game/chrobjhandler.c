@@ -35441,7 +35441,7 @@ glabel sub_GAME_7F04EF58
 
 
 
-//todo fix (.text+0xf630): undefined reference to `play_sfx_a1'
+//todo fix (.text+0xf630): undefined reference to `sndPlaySfx'
 //         (.text+0xf638): undefined reference to `alarmIsActive'
 #ifdef NONMATCHING
 /*
@@ -35454,7 +35454,7 @@ INV_ITEM_TYPE sub_GAME_7F04F170(PropRecord *prop) //#MATCH
 
     if (obj->type == PROPDEF_ALARM)
     {
-        play_sfx_a1(g_musicSfxBufferPtr, 0xBA, 0);
+        sndPlaySfx(g_musicSfxBufferPtr, 0xBA, 0);
         if (alarmIsActive())
         {
             stop_alarm();
@@ -37293,7 +37293,7 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, bool showstring) //#5
     {
         case PROPDEF_KEY:
         {
-            play_sfx_a1(g_musicSfxBufferPtr, 0xE5, 0);
+            sndPlaySfx(g_musicSfxBufferPtr, 0xE5, 0);
             if (showstring)
             {
                 char *text = obj_get_activated_text(propobj);
@@ -37328,7 +37328,7 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, bool showstring) //#5
 
                 add_ammo_to_inventory(i, ammoquantity, 0, showstring);
             }
-            play_sfx_a1(g_musicSfxBufferPtr, 0xEA, 0);
+            sndPlaySfx(g_musicSfxBufferPtr, 0xEA, 0);
             collectType = INV_ITEM_WEAPON;
             break;
         }
@@ -37415,7 +37415,7 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, bool showstring) //#5
             BodyArmourRecord *armour = propobj;
             char *            text;
             add_BONDdata_watch_armor(armour->Strength);
-            play_sfx_a1(g_musicSfxBufferPtr, 0x51, 0);
+            sndPlaySfx(g_musicSfxBufferPtr, 0x51, 0);
             if (showstring)
             {
                 text = obj_get_activated_text(armour);
@@ -37439,7 +37439,7 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, bool showstring) //#5
         default:
         {
             char *text;
-            play_sfx_a1(g_musicSfxBufferPtr, 0xE5, 0);
+            sndPlaySfx(g_musicSfxBufferPtr, 0xE5, 0);
             if (showstring)
             {
                 text = obj_get_activated_text(propobj);

@@ -5694,7 +5694,7 @@ void generate_player_thrown_object(void)
             temp_v0_3->unk0        = (s32)(temp_v0_3->unk0 | 2);
             phi_s0_2->unk6C->unk8C = (f32)D_80053DC8;
             phi_s0_2->unk6C->unkBC = 0x3C;
-            temp_v0_4              = play_sfx_a1(ptr_sfx_buf, 4, 0);
+            temp_v0_4              = sndPlaySfx(ptr_sfx_buf, 4, 0);
             if (temp_v0_4 != 0)
             {
                 sub_GAME_7F053A10(temp_v0_4, phi_s0_2 + 0x58);

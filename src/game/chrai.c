@@ -17,6 +17,9 @@
 #include "math_ceil.h"
 #include "math_atan2f.h"
 #include "player.h"
+#include "chraidata.h"
+#include <limits.h>
+
 
 // bss
 /**
@@ -150,7 +153,6 @@ struct object_animation_controller g_TaserAnimController;
  * Address 0x80075CFC.
 */
 s32 bss_80075CFC;
-
 // This is a Stage Setup Struct 
 /*
 //CODE.bss:80075D00
@@ -174,6 +176,7 @@ u32 dword_CODE_bss_80075D20;
 //CODE.bss:80075D24
 u32 dword_CODE_bss_80075D24;*/
 
+//CODE.bss:80075D00 - 80075D24
 stagesetup g_chraiCurrentSetup; //Public Working Setup
 
 //CODE.bss:80075D28
@@ -211,6 +214,101 @@ void sub_GAME_7F03C2BC(PropRecord *prop, s32 type) ;
 // end forward declarations
 
 
+//shims
+extern s32 objectiveGetStatus_WEAK(s32 objectiveNum, s32);
+#define chraiGoToLabel                    true_if_sucessfully_performing_action
+#define pathFindById                      get_ptr_path_for_pathnum
+#define ailistFindById                    LoadNext_PrevActionBlock
+#define chraiGetAIListID                  sub_GAME_7F035244
+#define chraiitemsize                     get_length_of_action_block
+#define audioPlayFromProp                 set_sound_effect_to_slot
+#define audioPlayFromProp2                set_sound_effect_source_to_location
+#define chrFindByLiteralId                chrGetGuardData
+#define chrIsHearingBond                  check_if_actor_02_flag_set
+#define chrFindById                       chrlvGetHandleForGuardId
+#define chrTryEquipHat                    sub_GAME_7F0510C0
+#define alarmIsActive                     is_alarm_on
+#define chrTrySurprisedLookAround         check_if_able_to_then_look_flustered
+#define chrIsStopped                      check_if_actor_stationary
+#define chrCheckTargetInSight             sub_GAME_7F029D70
+#define chrGetEquippedWeaponPropWithCheck is_weapon_in_guarddata_hand
+#define chrDropItem                       actor_drops_itemtype_setting_timer
+#define chrTrySurrender                   check_if_able_to_then_surrender
+#define chrFadeOut                        sub_GAME_7F0333A0
+#define alarmActivate                     start_alarm
+#define alarmDeactivate                   stop_alarm
+#define chrTryStartAlarm                  sub_GAME_7F034514
+#define chrGoToPad                        actor_moves_to_preset_at_speed
+#define chrCanHearAlarm                   alarm_timer_related
+#define chrSawInjury                      check_if_actor_FA_target_set
+#define chrSawDeath                       check_if_actor_FB_target_set
+#define chrCanSeeBond                     sub_GAME_7F0294BC
+#define chrSawTargetRecently              chrlvSeenWithin600
+#define chrHeardTargetRecently            chrlvHearWithin600
+#define chrIfNearMiss                     check_if_actor_invisible
+#define chrGetDistanceToBond              chrlvDistToBond3D
+#define chrGetDistanceToPad               sub_GAME_7F032E48
+#define chrGetDistanceToChr               get_distance_between_actor_and_actorID
+#define chrGetDistanceFromBondToPad       get_distance_between_actor_and_preset
+#define objFindByTagId                    get_handle_to_tagged_object
+#define weaponFindThrown                  check_if_item_deposited
+#define getCurrentPlayerWeaponId          get_item_in_hand
+#define objIsHealthy                      check_if_object_has_not_been_destroyed
+#define doorActivateWrapper               sub_GAME_7F05599C
+#define propobjInteract                   sub_GAME_7F04F170
+#define propobjSetDropped                 sub_GAME_7F04BFD0
+#define chrDropItems                      sub_GAME_7F021B20
+#define doorActivate                      set_door_state
+#define objectiveGetCount                 add_objective
+#define chrGetNumArghs                    get_times_actor_shot
+#define chrGetNumCloseArghs               get_num_shots_near_actor
+#define chrSetFlags                       chrlvSetBitfieldFlags
+#define chrUnsetFlags                     chrlvClearBitfieldFlags
+#define chrHasFlag                        chrlvTestBitfieldFlags
+#define chrSetFlagsById                   chrlvSetGuardBitfieldFlags
+#define chrUnsetFlagsById                 chrlvClearGuardBitfieldFlags
+#define chrHasFlagById                    chrlvTestGuardBitfieldFlags
+#define chrSetStageFlags                  toggle_objective_bitflags
+#define chrUnsetStageFlags                untoggle_objective_bitflags
+#define chrHasStageFlag                   check_if_objective_bitflags_set
+#define chrSetChrPreset                   sub_GAME_7F033CF4
+#define chrSetChrPreset2                  sub_GAME_7F033D1C
+#define chrSetPadPreset                   sub_GAME_7F033D5C
+#define chrSetPadPresetByChrnum           sub_GAME_7F033D84
+#define chrRestartTimer                   reset_and_start_loop_counter
+#define chrGetTimer                       get_loop_counter_time_in_seconds
+#define countdownTimerSetVisible          set_unset_clock_lock_bits
+#define countdownTimerSetValue            set_clock_time
+#define countdownTimerSetRunning          set_clock_enable
+#define countdownTimerIsRunning           get_clock_enable
+#define countdownTimerGetValue            get_clock_time
+#define chrSpawnAtPad                     guard_constructor_BD
+#define chrSpawnAtChr                     guard_constructor_BE
+#define cheatIsActive                     cheatCheckIfOn
+#define chrGiveWeapon                     actor_draws_weapon_with_model
+#define chrGetEquippedWeaponProp          something_with_weaponpos_of_guarddata_hand
+#define propweaponSetDual                 link_objects
+#define langGet                           get_textptr_for_textID
+#define hudmsgBottomShow                  display_string_in_lower_left_corner
+#define hudmsgTopShow                     display_string_at_top_of_screen
+#define imageSlotSetImage                 set_ptr_monitor_img_to_obj_ani_slot
+#define isBondInTank                      get_intank_flag
+#define chrResolvePadId                   convertPadIf9000
+#define sub_GAME_7F020D914                chrPositionRelated7F020D94
+#define chrSetWeaponFlag4                 set_0x4_in_runtime_flags_for_item_in_guards_hand
+#define currentPlayerGetAmmoCount         check_cur_player_ammo_amount_total
+#define currentPlayerEquipWeaponWrapper   draw_item_in_hand_has_more_ammo
+#define currentPlayerUnEquipWeaponWrapper remove_hands_item
+#define g_PlayerInvincible                disable_player_pickups_flag
+#define objectiveIsAllComplete            check_objectives_complete
+#define musicSetXReason                   set_musicslot_time
+#define musicUnsetXReason                 reset_music_in_slot
+#define SurroundWithExplosions            trigger_explosions_around_player
+#define get_civilian_casualties           get_civilian_casualties
+#define g_isBondKIA                       mission_kia_flag
+#define chrTrySurprisedSurrender          check_if_able_to_then_fawn_on_shoulder
+
+
 
 
 
@@ -222,7 +320,7 @@ void set_sound_effect_source_to_location(s32 slot)//#MATCH :audioPlayFromProp2
     sfxRecord *sfx= &sfx_related[slot]; //always added to stack anyway, cleaner to use
     int clock_timer;
 
-    if ((sfx->field_0x0 ) && (sfxGetArg0Unk3F(sfx->field_0x0) ))
+    if ((sfx->state ) && (sndGetPlayingState(sfx->state) ))
     {
     
         if (sfx->pad )
@@ -254,7 +352,7 @@ void set_sound_effect_source_to_location(s32 slot)//#MATCH :audioPlayFromProp2
         }
         if (tempvol != sfx->Volume2)
         {
-            sfx_c_70009184(sfx->field_0x0, 8);
+            sfx_c_70009184(sfx->state, 8);
             sfx->Volume2 = tempvol;
             return;
         }
@@ -367,25 +465,22 @@ glabel set_sound_effect_source_to_location
 void loop_set_sound_effect_all_slots(void)
 {
     int i;
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < SFX_RELATED_LEN; i++)
     {
         set_sound_effect_source_to_location(i);
     }
 }
 
 
-#include <limits.h>
 
-void set_sound_effect_to_slot(s32 slot, s16 arg1);
-#ifdef NONMATCHING
-void set_sound_effect_to_slot(s32 slot, s16 arg1) //#MATCH  audioPlayFromProp
+void set_sound_effect_to_slot(s32 slot, s16 soundIndex) //#MATCH  audioPlayFromProp
 {
     sfxRecord *sfx = NULL; //always added to stack anyway, cleaner to use
 
-    if (slot >= 0 && slot < 8)
+    if (slot >= 0 && slot < SFX_RELATED_LEN)
     {
         //NOT Volatile
-        if (!sfx_related[slot].field_0x0 || !sfxGetArg0Unk3F(sfx_related[slot].field_0x0))
+        if (!sfx_related[slot].state || !sndGetPlayingState(sfx_related[slot].state))
         {
             sfx = &sfx_related[slot];
 
@@ -396,54 +491,8 @@ void set_sound_effect_to_slot(s32 slot, s16 arg1) //#MATCH  audioPlayFromProp
             sfx->Obj     = NULL;
         }
     }
-    play_sfx_a1(g_musicSfxBufferPtr, arg1, sfx);
+    sndPlaySfx(g_musicSfxBufferPtr, soundIndex, sfx);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_sound_effect_to_slot
-/* 069454 7F034924 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 069458 7F034928 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 06945C 7F03492C AFA50024 */  sw    $a1, 0x24($sp)
-/* 069460 7F034930 0480001A */  bltz  $a0, .L7F03499C
-/* 069464 7F034934 00003025 */   move  $a2, $zero
-/* 069468 7F034938 28810008 */  slti  $at, $a0, 8
-/* 06946C 7F03493C 10200017 */  beqz  $at, .L7F03499C
-/* 069470 7F034940 00047080 */   sll   $t6, $a0, 2
-/* 069474 7F034944 01C47023 */  subu  $t6, $t6, $a0
-/* 069478 7F034948 3C0F8007 */  lui   $t7, %hi(sfx_related) 
-/* 06947C 7F03494C 25EF9B70 */  addiu $t7, %lo(sfx_related) # addiu $t7, $t7, -0x6490
-/* 069480 7F034950 000E70C0 */  sll   $t6, $t6, 3
-/* 069484 7F034954 01CF1821 */  addu  $v1, $t6, $t7
-/* 069488 7F034958 8C650000 */  lw    $a1, ($v1)
-/* 06948C 7F03495C 10A00007 */  beqz  $a1, .L7F03497C
-/* 069490 7F034960 00A02025 */   move  $a0, $a1
-/* 069494 7F034964 AFA30018 */  sw    $v1, 0x18($sp)
-/* 069498 7F034968 0C00237C */  jal   sndGetPlayingState
-/* 06949C 7F03496C AFA0001C */   sw    $zero, 0x1c($sp)
-/* 0694A0 7F034970 8FA30018 */  lw    $v1, 0x18($sp)
-/* 0694A4 7F034974 14400009 */  bnez  $v0, .L7F03499C
-/* 0694A8 7F034978 8FA6001C */   lw    $a2, 0x1c($sp)
-.L7F03497C:
-/* 0694AC 7F03497C 24027FFF */  li    $v0, 32767
-/* 0694B0 7F034980 2418FFFF */  li    $t8, -1
-/* 0694B4 7F034984 00603025 */  move  $a2, $v1
-/* 0694B8 7F034988 AC62000C */  sw    $v0, 0xc($v1)
-/* 0694BC 7F03498C AC620004 */  sw    $v0, 4($v1)
-/* 0694C0 7F034990 AC780008 */  sw    $t8, 8($v1)
-/* 0694C4 7F034994 AC600010 */  sw    $zero, 0x10($v1)
-/* 0694C8 7F034998 AC600014 */  sw    $zero, 0x14($v1)
-.L7F03499C:
-/* 0694CC 7F03499C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 0694D0 7F0349A0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 0694D4 7F0349A4 0C002382 */  jal   sndPlaySfx
-/* 0694D8 7F0349A8 87A50026 */   lh    $a1, 0x26($sp)
-/* 0694DC 7F0349AC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0694E0 7F0349B0 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0694E4 7F0349B4 03E00008 */  jr    $ra
-/* 0694E8 7F0349B8 00000000 */   nop   
-)
-#endif
 
 
 
@@ -451,15 +500,15 @@ glabel set_sound_effect_to_slot
 
 void sub_GAME_7F0349BC(s32 slot) 
 {
-    if ((slot >= 0) && (slot < 8))
+    if ((slot >= 0) && (slot < SFX_RELATED_LEN))
     {
-        sndDeactivate(sfx_related[slot].field_0x0);
+        sndDeactivate(sfx_related[slot].state);
     }
 }
 
 
 
-s32 get_length_of_action_block(u8 *AIList, s32 offset);
+s32 get_length_of_action_block(AIRecord *AIList, s32 offset);
 
 
 #ifdef NONMATCHING
@@ -471,13 +520,12 @@ s32 get_length_of_action_block(u8 *AIList, s32 offset);
  * //Todo: Give real name
  * // Todo: fix locret refrences in other funcs
  */
-s32 get_length_of_action_block(u8 *AIList, s32 offset)
+s32 get_length_of_action_block(AIRecord *AIList, s32 offset)
 {
     //compile with -O2
-    u8 *cmd = AIList + offset;
     u32 pos;
 
-    switch (cmd[0])
+    switch (AIList->cmd)
     {
 #    ifndef _SYNHILITE
 #        define _AI_CMD(CMD)                                             /*  \
@@ -493,7 +541,7 @@ s32 get_length_of_action_block(u8 *AIList, s32 offset)
 
             pos = offset + 1;
             //p = AIList;
-            while (AIList[pos] != 0)
+            while (AIList->val[pos] != 0)
             {
                 //offset++;
                 pos++;
@@ -1562,20 +1610,19 @@ ActionLengthSwitchElse:
 
 
 
-s32 sub_GAME_7F035244(AIRecord *AIList, int *isGlobalAIList);
-//todo: this code matches however, gsetup is seperate at present.
+//s32 sub_GAME_7F035244(AIRecord *AIList, bool *isGlobalAIList) // chraiGetAIListID
+//todo: this code matches however, g_chraiCurrentSetup seems 40 bytes too early
 // Also, StageSetup might be single pointers (*) not ((*)[]) as
 // the later requirees some odd derefrencing
 // eg (&gSetup.ailists)[i].ailist; <-- note extra parens
 #ifdef NONMATCHING
-#include <chraidata.h>
-extern AIListRecord *gGlobalAILists;
 /**
  * Get ID of AIList 
  * @param AIList: Ailist to get ID of
  * @return ID of AIList 
  */
-s32 sub_GAME_7F035244(AIRecord *AIList, int *isGlobalAIList) //# MATCH chraiGetAIListID
+//https://decomp.me/scratch/uDW6q
+s32 sub_GAME_7F035244(AIRecord *AIList, bool *isGlobalAIList) // chraiGetAIListID
 {
     s32 i;
 
@@ -1590,16 +1637,15 @@ s32 sub_GAME_7F035244(AIRecord *AIList, int *isGlobalAIList) //# MATCH chraiGetA
             }
         }
     }
-    i = 0;
-    while (gGlobalAILists[i].ailist)
+
+    for (i = 0; gGlobalAILists[i].ailist; i++)
     {
         if (gGlobalAILists[i].ailist == AIList)
         {
             *isGlobalAIList = TRUE;
             return gGlobalAILists[i].ID;
         }
-        i++;
-    };
+    }
 
     return -1;
 }
@@ -1681,7 +1727,7 @@ glabel sub_GAME_7F035244
 
 
 
-s32 true_if_sucessfully_performing_action(AIRecord *AIList, s32 Offset, s32 LabelNum);
+s32 true_if_sucessfully_performing_action(AIRecord *AIList, s32 Offset, u8 LabelNum);
 #ifdef NONMATCHING
 /** 
  * GoTo Label
@@ -1689,7 +1735,7 @@ s32 true_if_sucessfully_performing_action(AIRecord *AIList, s32 Offset, s32 Labe
  * @param LabelNum: Integer/enum ID to go to
  * @return Offset of label from beggining of AIList.
  */
-s32 chraiGoToLabel(AIRecord *AIList, s32 Offset, s32 LabelNum) //#MATCH 
+s32 true_if_sucessfully_performing_action(AIRecord *AIList, s32 Offset, u8 LabelNum) //#MATCH chraiGoToLabel
 {
     s32   listID;
     char *debAIListTypeString;
@@ -1796,51 +1842,36 @@ glabel true_if_sucessfully_performing_action
 #endif
 
 
+//todo: code matches but alignment is off (addresses mismatch)
 
-
-u8 *LoadNext_PrevActionBlock(u16 *param_1);
+AIRecord *LoadNext_PrevActionBlock(s32 ID);
 
 #ifdef NONMATCHING
-//LoadNext_PrevActionBlock
-u8 *ailistFindById(u16 *param_1)
+//ailistFindById
+AIRecord *LoadNext_PrevActionBlock(s32 ID) //MATCH https://decomp.me/scratch/Qb0FB
 {
-    undefined4 *  puVar1;
-    AIListRecord *psVar2;
-    undefined *   puVar3;
+    s32 i;
 
-    if ((int)param_1 < 0x401)
+    if (ID > setAiChrID(0))
     {
-        psVar2 = &stru_8003744C;
-        puVar3 = (undefined *)stru_8003744C.anonymous_1;
-        if (stru_8003744C.anonymous_0 != NULL)
+        if (g_chraiCurrentSetup.ailists)
         {
-            while (true)
+            for (i = 0; g_chraiCurrentSetup.ailists[i].ailist; i++)
             {
-                if (param_1 == puVar3)
+                if (g_chraiCurrentSetup.ailists[i].ID == ID)
                 {
-                    return (undefined *)psVar2->anonymous_0;
+                    return g_chraiCurrentSetup.ailists[i].ailist;
                 }
-                if (psVar2[1].anonymous_0 == NULL) break;
-                puVar3 = (undefined *)psVar2[1].anonymous_1;
-                psVar2 = psVar2 + 1;
             }
         }
     }
     else
     {
-        if ((g_chraiCurrentSetup.ailists != NULL) && (*(int *)g_chraiCurrentSetup.ailists != 0))
+        for (i = 0; gGlobalAILists[i].ailist; i++)
         {
-            puVar3 = *(undefined **)(g_chraiCurrentSetup.ailists + 4);
-            puVar1 = (undefined4 *)g_chraiCurrentSetup.ailists;
-            while (true)
+            if (gGlobalAILists[i].ID == ID)
             {
-                if (param_1 == puVar3)
-                {
-                    return (undefined *)*puVar1;
-                }
-                if (puVar1[2] == 0) break;
-                puVar3 = (undefined *)puVar1[3];
-                puVar1 = puVar1 + 2;
+                return gGlobalAILists[i].ailist;
             }
         }
     }
@@ -2015,100 +2046,6 @@ extern f32 flt_CODE_bss_80079A10;
 //CODE.bss:80079A14
 extern s32 dword_CODE_bss_80079A14;
 extern bool mission_kia_flag;
-
-//shims
-extern s32 objectiveGetStatus_WEAK(s32 objectiveNum, s32);
-#define chraiGoToLabel                    true_if_sucessfully_performing_action
-#define pathFindById                      get_ptr_path_for_pathnum
-#define ailistFindById                    LoadNext_PrevActionBlock
-#define chraiGetAIListID                  sub_GAME_7F035244
-#define chraiitemsize                     get_length_of_action_block
-#define audioPlayFromProp                 set_sound_effect_to_slot
-#define audioPlayFromProp2                set_sound_effect_source_to_location
-#define chrFindByLiteralId                chrGetGuardData
-#define chrIsHearingBond                  check_if_actor_02_flag_set
-#define chrFindById                       chrlvGetHandleForGuardId
-#define chrTryEquipHat                    sub_GAME_7F0510C0
-#define alarmIsActive                     is_alarm_on
-#define chrTrySurprisedLookAround         check_if_able_to_then_look_flustered
-#define chrIsStopped                      check_if_actor_stationary
-#define chrCheckTargetInSight             sub_GAME_7F029D70
-#define chrGetEquippedWeaponPropWithCheck is_weapon_in_guarddata_hand
-#define chrDropItem                       actor_drops_itemtype_setting_timer
-#define chrTrySurrender                   check_if_able_to_then_surrender
-#define chrFadeOut                        sub_GAME_7F0333A0
-#define alarmActivate                     start_alarm
-#define alarmDeactivate                   stop_alarm
-#define chrTryStartAlarm                  sub_GAME_7F034514
-#define chrGoToPad                        actor_moves_to_preset_at_speed
-#define chrCanHearAlarm                   alarm_timer_related
-#define chrSawInjury                      check_if_actor_FA_target_set
-#define chrSawDeath                       check_if_actor_FB_target_set
-#define chrCanSeeBond                     sub_GAME_7F0294BC
-#define chrSawTargetRecently              chrlvSeenWithin600
-#define chrHeardTargetRecently            chrlvHearWithin600
-#define chrIfNearMiss                     check_if_actor_invisible
-#define chrGetDistanceToBond              chrlvDistToBond3D
-#define chrGetDistanceToPad               sub_GAME_7F032E48
-#define chrGetDistanceToChr               get_distance_between_actor_and_actorID
-#define chrGetDistanceFromBondToPad       get_distance_between_actor_and_preset
-#define objFindByTagId                    get_handle_to_tagged_object
-#define weaponFindThrown                  check_if_item_deposited
-#define getCurrentPlayerWeaponId          get_item_in_hand
-#define objIsHealthy                      check_if_object_has_not_been_destroyed
-#define doorActivateWrapper               sub_GAME_7F05599C
-#define propobjInteract                   sub_GAME_7F04F170
-#define propobjSetDropped                 sub_GAME_7F04BFD0
-#define chrDropItems                      sub_GAME_7F021B20
-#define doorActivate                      set_door_state
-#define objectiveGetCount                 add_objective
-#define chrGetNumArghs                    get_times_actor_shot
-#define chrGetNumCloseArghs               get_num_shots_near_actor
-#define chrSetFlags                       chrlvSetBitfieldFlags
-#define chrUnsetFlags                     chrlvClearBitfieldFlags
-#define chrHasFlag                        chrlvTestBitfieldFlags
-#define chrSetFlagsById                   chrlvSetGuardBitfieldFlags
-#define chrUnsetFlagsById                 chrlvClearGuardBitfieldFlags
-#define chrHasFlagById                    chrlvTestGuardBitfieldFlags
-#define chrSetStageFlags                  toggle_objective_bitflags
-#define chrUnsetStageFlags                untoggle_objective_bitflags
-#define chrHasStageFlag                   check_if_objective_bitflags_set
-#define chrSetChrPreset                   sub_GAME_7F033CF4
-#define chrSetChrPreset2                  sub_GAME_7F033D1C
-#define chrSetPadPreset                   sub_GAME_7F033D5C
-#define chrSetPadPresetByChrnum           sub_GAME_7F033D84
-#define chrRestartTimer                   reset_and_start_loop_counter
-#define chrGetTimer                       get_loop_counter_time_in_seconds
-#define countdownTimerSetVisible          set_unset_clock_lock_bits
-#define countdownTimerSetValue            set_clock_time
-#define countdownTimerSetRunning          set_clock_enable
-#define countdownTimerIsRunning           get_clock_enable
-#define countdownTimerGetValue            get_clock_time
-#define chrSpawnAtPad                     guard_constructor_BD
-#define chrSpawnAtChr                     guard_constructor_BE
-#define cheatIsActive                     cheatCheckIfOn
-#define chrGiveWeapon                     actor_draws_weapon_with_model
-#define chrGetEquippedWeaponProp          something_with_weaponpos_of_guarddata_hand
-#define propweaponSetDual                 link_objects
-#define langGet                           get_textptr_for_textID
-#define hudmsgBottomShow                  display_string_in_lower_left_corner
-#define hudmsgTopShow                     display_string_at_top_of_screen
-#define imageSlotSetImage                 set_ptr_monitor_img_to_obj_ani_slot
-#define isBondInTank                      get_intank_flag
-#define chrResolvePadId                   convertPadIf9000
-#define sub_GAME_7F020D914                chrPositionRelated7F020D94
-#define chrSetWeaponFlag4                 set_0x4_in_runtime_flags_for_item_in_guards_hand
-#define currentPlayerGetAmmoCount         check_cur_player_ammo_amount_total
-#define currentPlayerEquipWeaponWrapper   draw_item_in_hand_has_more_ammo
-#define currentPlayerUnEquipWeaponWrapper remove_hands_item
-#define g_PlayerInvincible                disable_player_pickups_flag
-#define objectiveIsAllComplete            check_objectives_complete
-#define musicSetXReason                   set_musicslot_time
-#define musicUnsetXReason                 reset_music_in_slot
-#define SurroundWithExplosions            trigger_explosions_around_player
-#define get_civilian_casualties           get_civilian_casualties
-#define g_isBondKIA                       mission_kia_flag
-#define chrTrySurprisedSurrender          check_if_able_to_then_fawn_on_shoulder
 
 
 

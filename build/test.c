@@ -868,13 +868,13 @@ extern AnimTable2* animation_table_ptrs2[];      // initanimtable.c Aircraft Ani
 //extern coord3d gvector0;                 // D_80030A70 //Always 0 doesnt  seem to affect anything
 //extern coord3d gvector2;                 // D_80030A7C //Always 0 never used?
 extern s32 g_musicSfxBufferPtr;
-extern void play_sfx_a1(s32 buffp, s32 vol, sfxRecord *sfx);
+extern void sndPlaySfx(s32 buffp, s32 vol, sfxRecord *sfx);
 extern void sfxDeactivate(s32 sfxp);
 //extern AIListRecord *GlobalAILists; // chrobjdata.c
 AIListRecord GlobalAILists[] = { // Global AI Lists (GLISTs)
     {1, "test"},
     {    2,    "test"}};
-extern bool sfxGetArg0Unk3F(s32 a);
+extern bool sndGetPlayingState(s32 a);
 extern int sub_GAME_7F0539E4(PadRecord *pad); //getVolume?
 extern int get_controls_locked_flag();
 extern int sfx_c_70009184(s32 a0, s32 a1);
@@ -1123,7 +1123,7 @@ void audioPlayFromProp2(s32 slot)//#MATCH :
     sfxRecord *sfx= &sfx_related[slot]; //always added to stack anyway, cleaner to use
     int clock_timer;
 
-    if ((sfx->field_0x0 ) && (sfxGetArg0Unk3F(sfx->field_0x0) ))
+    if ((sfx->state ) && (sndGetPlayingState(sfx->state) ))
     {
     
         if (sfx->pad )
@@ -1155,7 +1155,7 @@ void audioPlayFromProp2(s32 slot)//#MATCH :
         }
         if (tempvol != sfx->Volume2)
         {
-            sfx_c_70009184(sfx->field_0x0, 8);
+            sfx_c_70009184(sfx->state, 8);
             sfx->Volume2 = tempvol;
             return;
         }
@@ -1180,7 +1180,7 @@ void audioPlayFromProp(s32 slot, s16 arg1) //#MATCH  set_sound_effect_to_slot:
     if (slot >= 0 && slot < 8)
     {
         //NOT Volatile
-        if (!sfx_related[slot].field_0x0 || !sfxGetArg0Unk3F(sfx_related[slot].field_0x0))
+        if (!sfx_related[slot].state || !sndGetPlayingState(sfx_related[slot].state))
         {
             sfx = &sfx_related[slot];
 
@@ -1191,14 +1191,14 @@ void audioPlayFromProp(s32 slot, s16 arg1) //#MATCH  set_sound_effect_to_slot:
             sfx->Obj     = NULL;
         }
     }
-    play_sfx_a1(g_musicSfxBufferPtr, arg1, sfx);
+    sndPlaySfx(g_musicSfxBufferPtr, arg1, sfx);
 }
 
 void sub_GAME_7F0349BC(s32 slot) //# : MATCH
 {
     if ((slot >= 0) && (slot < 8))
     {
-        sfxDeactivate(sfx_related[slot].field_0x0);
+        sfxDeactivate(sfx_related[slot].state);
     }
 }
 

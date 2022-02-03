@@ -31,7 +31,7 @@ void init_sound_effects_registers(void)
 
     for (i=0; i<SFX_RELATED_LEN; i++)
     {
-        sfx_related[i].field_0x0 = 0;
+        sfx_related[i].state = 0;
     }
 
 }

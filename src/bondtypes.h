@@ -3301,6 +3301,15 @@ typedef union
         #define getAiChrID(ID)    ((ID) - 1024)
 #pragma endregion stagesetup.h
 
+        typedef struct sfxRecord //Need 24 size
+        {
+            ALSoundState *state; //0
+            s32           Volume2;   //4
+            s32           sfxID;     //8
+            s32           Volume;    //12
+            PadRecord    *pad;       //16
+            ObjectRecord *Obj;       //20
+        } sfxRecord;
 
 
 
