@@ -1,36 +1,36 @@
-#include "ultra64.h"
-#include "include/math.h"
-#include "bondtypes.h"
-#include "boss.h"
-#include "fr.h"
-#include "joy.h"
-#include "music.h"
-#include "snd.h"
-#include "str.h"
-#include "watch.h"
-#include "game/bg.h"
-#include "game/bondview.h"
-#include "game/bondinv.h"
-#include "game/chr.h"
-#include "game/chr_b.h"
-#include "game/chrlv.h"
-#include "game/chrobjhandler.h"
-#include "game/debugmenu_handler.h"
-#include "game/front.h"
-#include "game/gun.h"
-#include "game/initanitable.h"
-#include "game/objecthandler.h"
-#include "game/lvl.h"
-#include "game/math_atan2f.h"
-#include "game/matrixmath.h"
-#include "game/player.h"
-#include "game/player_2.h"
-#include "game/quaternion.h"
-#include "game/stan.h"
-#include "game/textrelated.h"
-#include "game/unk_08DBB0.h"
-#include "game/unk_0C0A70.h"
-#include "game/unk_0BC530.h"
+#include <ultra64.h>
+#include <math.h>
+#include <bondtypes.h>
+#include <boss.h>
+#include <fr.h>
+#include <joy.h>
+#include <music.h>
+#include <snd.h>
+#include <str.h>
+#include <watch.h>
+#include "bg.h"
+#include "bondview.h"
+#include "bondinv.h"
+#include "chr.h"
+#include "chr_b.h"
+#include "chrlv.h"
+#include "chrobjhandler.h"
+#include "debugmenu_handler.h"
+#include "front.h"
+#include "gun.h"
+#include "initanitable.h"
+#include "objecthandler.h"
+#include "lvl.h"
+#include "math_atan2f.h"
+#include "matrixmath.h"
+#include "player.h"
+#include "player_2.h"
+#include "quaternion.h"
+#include "stan.h"
+#include "textrelated.h"
+#include "unk_08DBB0.h"
+#include "unk_0C0A70.h"
+#include "unk_0BC530.h"
 
 #ifdef VERSION_EU
 
@@ -59,13 +59,13 @@
 #endif
 
 // bss
-struct coord3d flt_CODE_bss_80079940;
+coord3d flt_CODE_bss_80079940;
 f32 flt_CODE_bss_8007994C;
-struct coord3d flt_CODE_bss_80079950;
+coord3d flt_CODE_bss_80079950;
 f32 flt_CODE_bss_8007995C;
-struct coord3d flt_CODE_bss_80079960;
+coord3d flt_CODE_bss_80079960;
 f32 flt_CODE_bss_8007996C;
-struct coord3d flt_CODE_bss_80079970;
+coord3d flt_CODE_bss_80079970;
 f32 flt_CODE_bss_8007997C;
 //CODE.bss:80079980
 f32 flt_CODE_bss_80079980;
@@ -77,7 +77,7 @@ f32 flt_CODE_bss_80079988;
 f32 flt_CODE_bss_8007998C;
 
 //CODE.bss:80079990
-f32 flt_CODE_bss_80079990[3];
+vec3d flt_CODE_bss_80079990;
 // //CODE.bss:80079994
 // f32 flt_CODE_bss_80079994;
 // //CODE.bss:80079998
@@ -130,9 +130,9 @@ f32 flt_CODE_bss_800799F0;
 //CODE.bss:800799F4
 s32 dword_CODE_bss_800799F4;
 //CODE.bss:800799F8
-s32 dword_CODE_bss_800799F8;
+PadRecord * dword_CODE_bss_800799F8;
 //CODE.bss:800799FC
-s32 dword_CODE_bss_800799FC;
+CutsceneRecord *gBondViewCutscene;
 //CODE.bss:80079A00
 f32 flt_CODE_bss_80079A00;
 //CODE.bss:80079A04
@@ -575,14 +575,14 @@ void currentPlayerUpdateColourScreenProperties(void);
 s16 getWidth320or440(void);
 s16 getHeight330or240(void);
 void sub_GAME_7F07B1A4(void);
-s32 /*bool*/ currentPlayerIsFadeComplete(void);
+bool currentPlayerIsFadeComplete(void);
 s16 get_curplayer_viewport_ulx(void);
 void sub_GAME_7F086990(s8, s8, u16, u16);
 void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2);
 void bondviewUpdateCurrentRoomPosition(s32 arg0);
 void trigger_solo_watch_menu(s32 arg0);
 void bondviewUpdatePlayerCollisionBounds(void);
-void sub_GAME_7F07C888(struct rect4f *, struct coord3d *, f32);
+void sub_GAME_7F07C888(struct rect4f *, coord3d *, f32);
 void bondviewIntroCameraTextTick(void);
 void bondviewUpperTextWindowTimerTick(void);
 
@@ -621,18 +621,18 @@ void currentPlayerSetCameraScale(void)
 	f32 fVar5;
 	f32 fVar2;
 
-	g_CurrentPlayer->c_scaley = sinf(DEG2RAD(g_CurrentPlayer->c_perspfovy)) / (cosf(DEG2RAD(g_CurrentPlayer->c_perspfovy)) * g_CurrentPlayer->c_halfheight);
+	g_CurrentPlayer->c_scaley = sinf(mDegToHalfRad(g_CurrentPlayer->c_perspfovy)) / (cosf(mDegToHalfRad(g_CurrentPlayer->c_perspfovy)) * g_CurrentPlayer->c_halfheight);
 	g_CurrentPlayer->c_scalex = (g_CurrentPlayer->c_scaley * g_CurrentPlayer->c_perspaspect * g_CurrentPlayer->c_halfheight) / g_CurrentPlayer->c_halfwidth;
 
 	g_CurrentPlayer->c_recipscalex = 1.0f / g_CurrentPlayer->c_scalex;
 	g_CurrentPlayer->c_recipscaley = 1.0f / g_CurrentPlayer->c_scaley;
 
     g_CurrentPlayer->c_scalelod = g_CurrentPlayer->c_scaley;
-	g_CurrentPlayer->c_scalelod60 = sinf(0.52359879f/*DEG2RAD(30)*/) / (cosf(0.52359879f/*DEG2RAD(30)*/) * 120.0f);
+    g_CurrentPlayer->c_scalelod60 = sinf(DegToRad(30)) / (cosf(DegToRad(30)) * 120.0f);
 	g_CurrentPlayer->c_lodscalez = g_CurrentPlayer->c_scalelod / g_CurrentPlayer->c_scalelod60;
-	tmp = (g_CurrentPlayer->c_lodscalez * 65536.0f);
+	tmp = (g_CurrentPlayer->c_lodscalez * M_U16_MAX_VALUE_F);
 
-	if (tmp > 4294967296.0f) {
+	if (tmp > M_U32_MAX_VALUE_F) {
 		g_CurrentPlayer->c_lodscalezu32 = -1;
 	} else {
 		g_CurrentPlayer->c_lodscalezu32 = tmp;
@@ -651,7 +651,7 @@ void currentPlayerSetCameraScale(void)
 	g_CurrentPlayer->c_cameraleftnorm.z = -fVar5 * fVar4;
 }
 
-void sub_GAME_7F077EEC(struct coord2d *in, struct coord3d *out, f32 value) {
+void sub_GAME_7F077EEC(coord2d *in, coord3d *out, f32 value) {
     f32 norm;
     f32 x;
     f32 y;
@@ -665,18 +665,18 @@ void sub_GAME_7F077EEC(struct coord2d *in, struct coord3d *out, f32 value) {
     out->z = (-1.0f * norm);
 }
 
-void sub_GAME_7F077FB4(struct coord3d *in, f32 value, struct coord3d *out) {
+void sub_GAME_7F077FB4(coord3d *in, f32 value, coord3d *out) {
     out->y = ((in->y * value) * g_CurrentPlayer->c_scaley);
     out->x = ((in->x * value) * g_CurrentPlayer->c_scalex);
 }
 
-void sub_GAME_7F077FF4(struct coord3d *in, struct coord3d *out) {
+void sub_GAME_7F077FF4(coord3d *in, coord3d *out) {
     f32 inv_z = (1.0f / in->z);
     out->y = (in->y * inv_z * g_CurrentPlayer->c_recipscaley) + (g_CurrentPlayer->c_screentop + g_CurrentPlayer->c_halfheight);
     out->x = (g_CurrentPlayer->c_screenleft + g_CurrentPlayer->c_halfwidth) - (in->x * inv_z * g_CurrentPlayer->c_recipscalex);
 }
 
-void sub_GAME_7F078060(struct coord3d *in, struct coord3d *out)
+void sub_GAME_7F078060(coord3d *in, coord3d *out)
 {
 	f32 inv_z;
 
@@ -690,18 +690,18 @@ void sub_GAME_7F078060(struct coord3d *in, struct coord3d *out)
 	out->x = (g_CurrentPlayer->c_screenleft + g_CurrentPlayer->c_halfwidth) - in->x * inv_z * g_CurrentPlayer->c_recipscalex;
 }
 
-void sub_GAME_7F0780F0(struct coord3d *in, f32 divisor, struct coord3d *out)
+void sub_GAME_7F0780F0(coord3d *in, f32 divisor, coord3d *out)
 {
 	out->y = in->y * (1.0f / divisor) * g_CurrentPlayer->c_recipscaley;
 	out->x = in->x * (1.0f / divisor) * g_CurrentPlayer->c_recipscalex;
 }
 
-void sub_GAME_7F078140(struct coord3d *in, struct coord3d *out, f32 value1, f32 angle, f32 value2) {
+void sub_GAME_7F078140(coord3d *in, coord3d *out, f32 value1, f32 angle, f32 value2) {
     f32 var1;
     f32 x;
     f32 y;
     f32 z;
-    f32 var2 = sinf(DEG2RAD(angle)) / (cosf(DEG2RAD(angle)) * g_CurrentPlayer->c_halfheight);
+    f32 var2 = sinf(mDegToHalfRad(angle)) / (cosf(mDegToHalfRad(angle)) * g_CurrentPlayer->c_halfheight);
     f32 var3 = (var2 * value2 * g_CurrentPlayer->c_halfheight) / g_CurrentPlayer->c_halfwidth;
     y = (g_CurrentPlayer->c_halfheight - (in->y - g_CurrentPlayer->c_screentop)) * var2;
     x = ((in->x - g_CurrentPlayer->c_screenleft) - g_CurrentPlayer->c_halfwidth) * var3;
@@ -717,9 +717,9 @@ void sub_GAME_7F078140(struct coord3d *in, struct coord3d *out, f32 value1, f32 
  * 
  * Address 0x7F078258.
  */
-void sub_GAME_7F078258(struct coord3d *in, struct coord3d *out, f32 angle, f32 value)
+void sub_GAME_7F078258(coord3d *in, coord3d *out, f32 angle, f32 value)
 {
-    f32 var1 = (cosf(DEG2RAD(angle)) * g_CurrentPlayer->c_halfheight) / (sinf(DEG2RAD(angle)) * in->f[2]);
+    f32 var1 = (cosf(mDegToHalfRad(angle)) * g_CurrentPlayer->c_halfheight) / (sinf(mDegToHalfRad(angle)) * in->f[2]);
     f32 var2 = (var1 * g_CurrentPlayer->c_halfwidth) / (value * g_CurrentPlayer->c_halfheight);
 
     out->f[1] = (in->f[1] * var1) + (g_CurrentPlayer->c_screentop + g_CurrentPlayer->c_halfheight);
@@ -849,28 +849,28 @@ f32 getPlayer_c_perspaspect(void)
     return g_CurrentPlayer->c_perspaspect;
 }
 
-void getPlayer_c_cameratopnorm(struct coord3d *out)
+void getPlayer_c_cameratopnorm(coord3d *out)
 {
     out->x = (g_CurrentPlayer->c_cameratopnorm).x;
     out->y = (g_CurrentPlayer->c_cameratopnorm).y;
     out->z = (g_CurrentPlayer->c_cameratopnorm).z;
 }
 
-void getPlayer_c_cameratopnorm_inverted_y(struct coord3d *out)
+void getPlayer_c_cameratopnorm_inverted_y(coord3d *out)
 {
     out->x = (g_CurrentPlayer->c_cameratopnorm).x;
     out->y = -(g_CurrentPlayer->c_cameratopnorm).y;
     out->z = (g_CurrentPlayer->c_cameratopnorm).z;
 }
 
-void getPlayer_c_cameraleftnorm(struct coord3d *out)
+void getPlayer_c_cameraleftnorm(coord3d *out)
 {
     out->x = (g_CurrentPlayer->c_cameraleftnorm).x;
     out->y = (g_CurrentPlayer->c_cameraleftnorm).y;
     out->z = (g_CurrentPlayer->c_cameraleftnorm).z;
 }
 
-void getPlayer_c_cameraleftnorm_inverted_x(struct coord3d *out)
+void getPlayer_c_cameraleftnorm_inverted_x(coord3d *out)
 {
     out->x = -(g_CurrentPlayer->c_cameraleftnorm).x;
     out->y = (g_CurrentPlayer->c_cameraleftnorm).y;
@@ -1375,35 +1375,35 @@ glabel sub_GAME_7F0785DC
 #endif
 #endif
 
-void sub_GAME_7F078950(struct coord3d *arg0, f32 *arg1) {
+void sub_GAME_7F078950(coord3d *arg0, f32 *arg1) {
     arg0->x = flt_CODE_bss_80079940.x;
     arg0->y = flt_CODE_bss_80079940.y;
     arg0->z = flt_CODE_bss_80079940.z;
     *arg1 = flt_CODE_bss_8007994C;
 }
 
-void sub_GAME_7F078980(struct coord3d *arg0, f32 *arg1) {
+void sub_GAME_7F078980(coord3d *arg0, f32 *arg1) {
     arg0->x = flt_CODE_bss_80079950.x;
     arg0->y = flt_CODE_bss_80079950.y;
     arg0->z = flt_CODE_bss_80079950.z;
     *arg1 = flt_CODE_bss_8007995C;
 }
 
-void sub_GAME_7F0789B0(struct coord3d *arg0, f32 *arg1) {
+void sub_GAME_7F0789B0(coord3d *arg0, f32 *arg1) {
     arg0->x = flt_CODE_bss_80079960.x;
     arg0->y = flt_CODE_bss_80079960.y;
     arg0->z = flt_CODE_bss_80079960.z;
     *arg1 = flt_CODE_bss_8007996C;
 }
 
-void sub_GAME_7F0789E0(struct coord3d *arg0, f32 *arg1) {
+void sub_GAME_7F0789E0(coord3d *arg0, f32 *arg1) {
     arg0->x = flt_CODE_bss_80079970.x;
     arg0->y = flt_CODE_bss_80079970.y;
     arg0->z = flt_CODE_bss_80079970.z;
     *arg1 = flt_CODE_bss_8007997C;
 }
 
-void sub_GAME_7F078A10(struct coord3d *arg0, f32 *arg1) {
+void sub_GAME_7F078A10(coord3d *arg0, f32 *arg1) {
     arg0->x = g_CurrentPlayer->field_10D4->m[2][0];
     arg0->y = g_CurrentPlayer->field_10D4->m[2][1];
     arg0->z = g_CurrentPlayer->field_10D4->m[2][2];
@@ -1422,7 +1422,7 @@ void sub_GAME_7F078A10(struct coord3d *arg0, f32 *arg1) {
  * 
  * Address 0x7F078A58.
  */
-s32 sub_GAME_7F078A58(struct coord3d *vec_scale, f32 norm_scale)
+s32 sub_GAME_7F078A58(coord3d *vec_scale, f32 norm_scale)
 {
     if (flt_CODE_bss_80079980 + norm_scale < (g_CurrentPlayer->field_10D4->m[2][0] * vec_scale->f[0]) + (g_CurrentPlayer->field_10D4->m[2][1] * vec_scale->f[1]) + (g_CurrentPlayer->field_10D4->m[2][2] * vec_scale->f[2]))
     {
@@ -1455,7 +1455,7 @@ s32 sub_GAME_7F078A58(struct coord3d *vec_scale, f32 norm_scale)
 
 
 #ifdef NONMATCHING
-s32 sub_GAME_7F078BF4(struct coord3d *arg0, f32 arg1, f32 *arg2)
+s32 sub_GAME_7F078BF4(coord3d *arg0, f32 arg1, f32 *arg2)
 {
     f32 temp_f2;
     f32 temp_f12;
@@ -2951,8 +2951,8 @@ void bondviewPlayerSpawnRelated(void)
 
     if (getPlayerCount() >= 2)
     {
-        draw_item_in_hand_has_more_ammo(LEFT_HAND, starting_left_weapon);
-        draw_item_in_hand_has_more_ammo(RIGHT_HAND, starting_right_weapon);
+        draw_item_in_hand_has_more_ammo(GUNLEFT, starting_left_weapon);
+        draw_item_in_hand_has_more_ammo(GUNRIGHT, starting_right_weapon);
 
         if (g_CurrentPlayer->ptr_char_objectinstance == NULL)
         {
@@ -2997,7 +2997,7 @@ void currentPlayerSetField00(s32 value) {
  * 
  * Address 0x7F079A60.
  */
-void bondviewUpdateCurrentPlayerPosition(struct coord3d *pos, struct coord3d *pos2, struct coord3d *offset, StandTile *tile, struct coord3d *arg4)
+void bondviewUpdateCurrentPlayerPosition(coord3d *pos, coord3d *pos2, coord3d *offset, StandTile *tile, coord3d *arg4)
 {
     StandTile *sp34;
     StandTile *sp30;
@@ -5238,8 +5238,265 @@ glabel sub_GAME_7F07A534
 
 
 #ifdef NONMATCHING
-void set_camera_mode(void) {
+void set_camera_mode(s32 arg0)
+{
+    f32 sp78;
+    void *sp64;
+    f32 sp60;
+    f32 sp5C;
+    f32 sp58;
+    f32 sp50;
+    f32 sp4C;
+    f32 sp48;
+    void *sp38;
+    f32 temp_f12;
+    s32 temp_s0;
+    s32 temp_v0;
+    s32 temp_v0_4;
+    void *temp_a0;
+    void *temp_a0_2;
+    void *temp_t8;
+    void *temp_t9;
+    void *temp_t9_2;
+    void *temp_v0_10;
+    void *temp_v0_11;
+    void *temp_v0_12;
+    void *temp_v0_2;
+    void *temp_v0_3;
+    void *temp_v0_5;
+    void *temp_v0_6;
+    void *temp_v0_7;
+    void *temp_v0_8;
+    void *temp_v0_9;
+    void *temp_v1;
+    void *phi_t8;
+    void *phi_t9;
+    s32 phi_v0;
+    void *phi_a2;
+    s32 phi_v1;
+    f32 phi_f0;
+    s32 phi_s0;
 
+    cameramode               = arg0;
+    enable_move_after_cinema = 0;
+    temp_v0                  = cameramode;
+    if (temp_v0 == 1)
+    {
+        if ((ptr_random06cam_entry != 0) && (get_recording_ramrom_flag() == 0) && (get_is_ramrom_flag() == 0))
+        {
+            D_800364A4 = 0.0f;
+            currentPlayerSetFadeColour(0, 0, 0, 0x3F800000);
+            currentPlayerSetFadeFrac(0x42700000, 0);
+            load_enviroment(bossGetStageNum(), 1);
+            pPlayer->unk34 = 0;
+            return;
+        }
+        set_camera_mode(3);
+        return;
+    }
+    if (temp_v0 == 2)
+    {
+        currentPlayerSetFadeColour(0, 0, 0, 0);
+        currentPlayerSetFadeFrac(0x42700000, 0x3F800000);
+        return;
+    }
+    if (temp_v0 == 9)
+    {
+        flt_CODE_bss_80079E04 = 0.0f;
+        flt_CODE_bss_80079E08 = -90.0f;
+        flt_CODE_bss_80079E0C = 0.0f;
+        flt_CODE_bss_80079E10 = 80.0f;
+        load_enviroment(bossGetStageNum(0), 0);
+        return;
+    }
+    if (temp_v0 == 3)
+    {
+        D_8003649C = 0;
+        currentPlayerSetFadeColour(0, 0, 0, 0x3F800000);
+        currentPlayerSetFadeFrac(0x42700000, 0);
+        load_enviroment(bossGetStageNum(), 0);
+        if ((D_800364AC != 0) && (get_recording_ramrom_flag() == 0) && (get_is_ramrom_flag() == 0))
+        {
+            D_800364A4 = 0.0f;
+            D_800364A8 = 1;
+            currentPlayerStartChrFade(0.0f, 0x3F800000);
+            solo_char_load();
+            temp_v0_2 = (D_80036514 * 0x10) + &stage_intro_anim_table;
+            temp_f12  = temp_v0_2->unk8;
+            sp78      = temp_f12;
+            objecthandlerAnimationRelated7F06FCA8(pPlayer->unkD4, temp_v0_2->unk0 + ptr_animation_table, 0, temp_v0_2->unk4, temp_v0_2->unkC, 0.0f);
+            if (temp_f12 > 0.0f)
+            {
+                sub_GAME_7F06FDE8(pPlayer->unkD4, temp_f12);
+            }
+            temp_v0_3       = pPlayer->unkA8->unk4;
+            temp_v0_3->unk7 = 0x17;
+            temp_v0_3->unk8 = 0;
+            pPlayer->unk34  = 0;
+            return;
+        }
+        set_camera_mode(4);
+        return;
+    }
+    if (temp_v0 == 4)
+    {
+        if (bossGetStageNum(0) == 0x36)
+        {
+            currentPlayerSetFadeColour(0, 0, 0, 0x3F800000);
+            currentPlayerSetFadeFrac(0, 0x3F800000);
+        }
+        else if (D_8003649C != 0)
+        {
+            currentPlayerSetFadeColour(0, 0, 0, 0x3F800000);
+            currentPlayerSetFadeFrac(0x42700000, 0);
+        }
+        if (getPlayerCount() >= 2)
+        {
+            load_enviroment(bossGetStageNum(), 0);
+        }
+        if (pPlayer->unk1C8 == 0)
+        {
+            draw_item_in_hand_has_more_ammo(1, starting_right_weapon.unk4);
+            draw_item_in_hand_has_more_ammo(0, starting_right_weapon.unk0);
+        }
+        stop_time_flag = 0;
+        return;
+    }
+    if (temp_v0 == 5)
+    {
+        D_800364A4 = 0.0f;
+        D_800364A8 = 1;
+        currentPlayerSetFadeColour(0, 0, 0, 0x3F800000);
+        currentPlayerSetFadeFrac(0x42700000, 0);
+        temp_v0_4 = D_8003648C;
+        phi_v0    = temp_v0_4;
+        if ((temp_v0_4 != 0) && (ptr_playerstank != 0))
+        {
+        }
+        else
+        {
+            in_tank_flag = 0;
+            temp_t9      = pPlayer;
+            phi_t8       = temp_t9;
+            phi_t9       = temp_t9;
+            do
+            {
+                temp_t8           = phi_t8 + 0xC;
+                temp_t9_2         = phi_t9 + 0xC;
+                temp_t9_2->unk47C = phi_t8->unk434;
+                temp_t9_2->unk480 = temp_t8->unk42C;
+                temp_t9_2->unk484 = temp_t8->unk430;
+                phi_t8            = temp_t8;
+                phi_t9            = temp_t9_2;
+            } while (temp_t8 != (temp_t9 + 0x54));
+            temp_v0_5                = pPlayer;
+            temp_v0_5->unk148        = temp_v0_5->unk414;
+            temp_v0_6                = pPlayer;
+            temp_v0_6->unk158        = temp_v0_6->unk418;
+            temp_v0_7                = pPlayer;
+            temp_v0_7->unkA8->unk8   = temp_v0_7->unk48C;
+            temp_v0_8                = pPlayer;
+            temp_v0_8->unkA8->unkC   = temp_v0_8->unk490;
+            temp_v0_9                = pPlayer;
+            temp_v0_9->unkA8->unk10  = temp_v0_9->unk494;
+            temp_v0_10               = pPlayer;
+            temp_v0_10->unkA8->unk14 = temp_v0_10->unk488;
+            sub_GAME_7F081790();
+            sub_GAME_7F080B34(0, 0, 0);
+            sub_GAME_7F081478();
+            currentPlayerStartChrFade(0.0f, 0x3F800000);
+            solo_char_load();
+            sp38 = sub_GAME_7F06F5AC(pPlayer + 0x598);
+            objecthandlerAnimationRelated7F06FCA8(pPlayer->unkD4, sp38, sub_GAME_7F06F5B4(pPlayer + 0x598), 0.0f, 0.5f, 0.0f);
+            temp_v1        = pPlayer->unkA8->unk4;
+            temp_v1->unk7  = 0x18;
+            temp_v1->unk8  = 0;
+            temp_v1->unk14 = temp_v1->unk14 | 1;
+            temp_v0_11     = pPlayer;
+            setsuboffset(temp_v0_11->unkD4, temp_v0_11->unkA8 + 8);
+            setsubroty(pPlayer->unkD4, get_curplay_horizontal_rotation_in_degrees());
+            phi_v0 = D_8003648C;
+        }
+        if ((phi_v0 != 0) && (temp_a0 = ptr_playerstank, (temp_a0 != 0)))
+        {
+            sp64   = temp_a0;
+            sp58   = temp_a0->unk8;
+            sp5C   = temp_a0->unkC;
+            sp60   = temp_a0->unk10;
+            sp48   = temp_a0->unk8;
+            sp4C   = temp_a0->unkC;
+            sp50   = temp_a0->unk10;
+            phi_a2 = temp_a0;
+            phi_v1 = temp_a0->unk14;
+            phi_f0 = 500.0f;
+        }
+        else
+        {
+            temp_v0_12 = pPlayer;
+            sp64       = temp_v0_12->unkA8;
+            sp58       = temp_v0_12->unk3C4;
+            sp5C       = temp_v0_12->unk3C8;
+            sp60       = temp_v0_12->unk3CC;
+            sp48       = temp_v0_12->unk48C;
+            sp4C       = temp_v0_12->unk490;
+            sp50       = temp_v0_12->unk494;
+            phi_a2     = temp_v0_12->unkA8;
+            phi_v1     = temp_v0_12->unk488;
+            phi_f0     = 200.0f;
+        }
+        if (sub_GAME_7F07A534(sp64, &sp58, phi_a2, &sp48, phi_v1, phi_f0) != 0)
+        {
+            if (D_80036510 == 0)
+            {
+                musicTrack1Play(0x2C);
+                sndSetScalerApplyVolumeAllSfxSlot(0x3F000000);
+            }
+            if ((D_8003648C != 0) && (ptr_playerstank != 0))
+            {
+                temp_a0_2 = ptr_playerstank;
+                sub_GAME_7F09C250(temp_a0_2, temp_a0_2 + 8, temp_a0_2->unk14, 0xD, 0, get_cur_playernum(), temp_a0_2 + 0x2C, 0);
+                return;
+            }
+            // Duplicate return node #56. Try simplifying control flow for better match
+            return;
+        }
+        bossRunTitleStage();
+        return;
+    }
+    if (temp_v0 == 6)
+    {
+        currentPlayerSetFadeColour(0, 0, 0, 0);
+        currentPlayerSetFadeFrac(0x42700000, 0x3F800000);
+        return;
+    }
+    if (temp_v0 == 7)
+    {
+        solo_char_load(0);
+        pPlayer->unk34 = 0;
+        return;
+    }
+    if (temp_v0 == 8)
+    {
+        maybe_solo_intro_camera_handler(0);
+        cameramode = 4;
+        return;
+    }
+    if (temp_v0 == 0xA)
+    {
+        phi_s0 = 0;
+        if (getPlayerCount(0) > 0)
+        {
+            do
+            {
+                set_cur_player(phi_s0);
+                currentPlayerSetFadeColour(0, 0, 0, 0);
+                currentPlayerSetFadeFrac(0x42700000, 0x3F800000);
+                temp_s0 = phi_s0 + 1;
+                phi_s0  = temp_s0;
+            } while (temp_s0 < getPlayerCount());
+        }
+        set_cur_player(0);
+    }
 }
 #else
 GLOBAL_ASM(
@@ -6275,11 +6532,11 @@ glabel sub_GAME_7F07B56C
 /* 0B0324 7F07B7F4 C58A0008 */  lwc1  $f10, 8($t4)
 /* 0B0328 7F07B7F8 8FA30058 */  lw    $v1, 0x58($sp)
 /* 0B032C 7F07B7FC 3C188003 */  lui   $t8, %hi(ptr_random06cam_entry)
-/* 0B0330 7F07B800 3C198007 */  lui   $t9, %hi(ptr_0xxxpresets)
+/* 0B0330 7F07B800 3C198007 */  lui   $t9, %hi(g_chraiCurrentSetup+0x18)
 /* 0B0334 7F07B804 46065201 */  sub.s $f8, $f10, $f6
 /* 0B0338 7F07B808 E5A80008 */  swc1  $f8, 8($t5)
 /* 0B033C 7F07B80C 8F1864C0 */  lw    $t8, %lo(ptr_random06cam_entry)($t8)
-/* 0B0340 7F07B810 8F395D18 */  lw    $t9, %lo(ptr_0xxxpresets)($t9)
+/* 0B0340 7F07B810 8F395D18 */  lw    $t9, %lo(g_chraiCurrentSetup+0x18)($t9)
 /* 0B0344 7F07B814 8FAD0054 */  lw    $t5, 0x54($sp)
 /* 0B0348 7F07B818 8F0E0018 */  lw    $t6, 0x18($t8)
 /* 0B034C 7F07B81C 000E7880 */  sll   $t7, $t6, 2
@@ -6670,11 +6927,11 @@ glabel sub_GAME_7F07B56C
 /* 0B08F0 7F07BDC0 03387021 */  addu  $t6, $t9, $t8
 /* 0B08F4 7F07BDC4 8DC4001C */  lw    $a0, 0x1c($t6)
 /* 0B08F8 7F07BDC8 2529A0B0 */  addiu $t1, %lo(g_CurrentPlayer) # addiu $t1, $t1, -0x5f50
-/* 0B08FC 7F07BDCC 3C0C8007 */  lui   $t4, %hi(ptr_0xxxpresets)
+/* 0B08FC 7F07BDCC 3C0C8007 */  lui   $t4, %hi(g_chraiCurrentSetup+0x18)
 /* 0B0900 7F07BDD0 04800012 */  bltz  $a0, .L7F07BE1C
 /* 0B0904 7F07BDD4 00047880 */   sll   $t7, $a0, 2
 /* 0B0908 7F07BDD8 01E47823 */  subu  $t7, $t7, $a0
-/* 0B090C 7F07BDDC 8D8C5D18 */  lw    $t4, %lo(ptr_0xxxpresets)($t4)
+/* 0B090C 7F07BDDC 8D8C5D18 */  lw    $t4, %lo(g_chraiCurrentSetup+0x18)($t4)
 /* 0B0910 7F07BDE0 000F7880 */  sll   $t7, $t7, 2
 /* 0B0914 7F07BDE4 01E47823 */  subu  $t7, $t7, $a0
 /* 0B0918 7F07BDE8 000F7880 */  sll   $t7, $t7, 2
@@ -6920,13 +7177,13 @@ glabel sub_GAME_7F07B56C
 /* 0B0CA4 7F07C174 100000EE */  b     .L7F07C530
 /* 0B0CA8 7F07C178 E46A0008 */   swc1  $f10, 8($v1)
 .L7F07C17C:
-/* 0B0CAC 7F07C17C 3C058008 */  lui   $a1, %hi(dword_CODE_bss_800799FC)
-/* 0B0CB0 7F07C180 24A599FC */  addiu $a1, %lo(dword_CODE_bss_800799FC) # addiu $a1, $a1, -0x6604
+/* 0B0CAC 7F07C17C 3C058008 */  lui   $a1, %hi(gBondViewCutscene)
+/* 0B0CB0 7F07C180 24A599FC */  addiu $a1, %lo(gBondViewCutscene) # addiu $a1, $a1, -0x6604
 /* 0B0CB4 7F07C184 8CA40000 */  lw    $a0, ($a1)
 /* 0B0CB8 7F07C188 10800063 */  beqz  $a0, .L7F07C318
 /* 0B0CBC 7F07C18C 00000000 */   nop
 /* 0B0CC0 7F07C190 8C830018 */  lw    $v1, 0x18($a0)
-/* 0B0CC4 7F07C194 3C0D8007 */  lui   $t5, %hi(ptr_2xxxpresets)
+/* 0B0CC4 7F07C194 3C0D8007 */  lui   $t5, %hi(g_chraiCurrentSetup+0x1C)
 /* 0B0CC8 7F07C198 8FB90048 */  lw    $t9, 0x48($sp)
 /* 0B0CCC 7F07C19C 28612710 */  slti  $at, $v1, 0x2710
 /* 0B0CD0 7F07C1A0 1020000A */  beqz  $at, .L7F07C1CC
@@ -6934,14 +7191,14 @@ glabel sub_GAME_7F07B56C
 /* 0B0CD8 7F07C1A8 00036080 */  sll   $t4, $v1, 2
 /* 0B0CDC 7F07C1AC 01836023 */  subu  $t4, $t4, $v1
 /* 0B0CE0 7F07C1B0 000C6080 */  sll   $t4, $t4, 2
-/* 0B0CE4 7F07C1B4 3C0F8007 */  lui   $t7, %hi(ptr_0xxxpresets)
-/* 0B0CE8 7F07C1B8 8DEF5D18 */  lw    $t7, %lo(ptr_0xxxpresets)($t7)
+/* 0B0CE4 7F07C1B4 3C0F8007 */  lui   $t7, %hi(g_chraiCurrentSetup+0x18)
+/* 0B0CE8 7F07C1B8 8DEF5D18 */  lw    $t7, %lo(g_chraiCurrentSetup+0x18)($t7)
 /* 0B0CEC 7F07C1BC 01836023 */  subu  $t4, $t4, $v1
 /* 0B0CF0 7F07C1C0 000C6080 */  sll   $t4, $t4, 2
 /* 0B0CF4 7F07C1C4 10000008 */  b     .L7F07C1E8
 /* 0B0CF8 7F07C1C8 018F1021 */   addu  $v0, $t4, $t7
 .L7F07C1CC:
-/* 0B0CFC 7F07C1CC 8DAD5D1C */  lw    $t5, %lo(ptr_2xxxpresets)($t5)
+/* 0B0CFC 7F07C1CC 8DAD5D1C */  lw    $t5, %lo(g_chraiCurrentSetup+0x1C)($t5)
 /* 0B0D00 7F07C1D0 0303C021 */  addu  $t8, $t8, $v1
 /* 0B0D04 7F07C1D4 0018C080 */  sll   $t8, $t8, 2
 /* 0B0D08 7F07C1D8 3C01FFF5 */  lui   $at, (0xFFF59FC0 >> 16) # lui $at, 0xfff5
@@ -6988,8 +7245,8 @@ glabel sub_GAME_7F07B56C
 .L7F07C278:
 /* 0B0DA8 7F07C278 0FC15FA8 */  jal   cosf
 /* 0B0DAC 7F07C27C C70C0014 */   lwc1  $f12, 0x14($t8)
-/* 0B0DB0 7F07C280 3C0D8008 */  lui   $t5, %hi(dword_CODE_bss_800799FC)
-/* 0B0DB4 7F07C284 8DAD99FC */  lw    $t5, %lo(dword_CODE_bss_800799FC)($t5)
+/* 0B0DB0 7F07C280 3C0D8008 */  lui   $t5, %hi(gBondViewCutscene)
+/* 0B0DB4 7F07C284 8DAD99FC */  lw    $t5, %lo(gBondViewCutscene)($t5)
 /* 0B0DB8 7F07C288 E7A0001C */  swc1  $f0, 0x1c($sp)
 /* 0B0DBC 7F07C28C 0FC15FAB */  jal   sinf
 /* 0B0DC0 7F07C290 C5AC0010 */   lwc1  $f12, 0x10($t5)
@@ -6998,23 +7255,23 @@ glabel sub_GAME_7F07B56C
 /* 0B0DCC 7F07C29C 8FB9004C */  lw    $t9, 0x4c($sp)
 /* 0B0DD0 7F07C2A0 46060202 */  mul.s $f8, $f0, $f6
 /* 0B0DD4 7F07C2A4 C5CA0000 */  lwc1  $f10, ($t6)
-/* 0B0DD8 7F07C2A8 3C0F8008 */  lui   $t7, %hi(dword_CODE_bss_800799FC)
+/* 0B0DD8 7F07C2A8 3C0F8008 */  lui   $t7, %hi(gBondViewCutscene)
 /* 0B0DDC 7F07C2AC 460A4100 */  add.s $f4, $f8, $f10
 /* 0B0DE0 7F07C2B0 E7240000 */  swc1  $f4, ($t9)
-/* 0B0DE4 7F07C2B4 8DEF99FC */  lw    $t7, %lo(dword_CODE_bss_800799FC)($t7)
+/* 0B0DE4 7F07C2B4 8DEF99FC */  lw    $t7, %lo(gBondViewCutscene)($t7)
 /* 0B0DE8 7F07C2B8 0FC15FAB */  jal   sinf
 /* 0B0DEC 7F07C2BC C5EC0014 */   lwc1  $f12, 0x14($t7)
 /* 0B0DF0 7F07C2C0 8FAC0048 */  lw    $t4, 0x48($sp)
 /* 0B0DF4 7F07C2C4 8FB8004C */  lw    $t8, 0x4c($sp)
-/* 0B0DF8 7F07C2C8 3C0D8008 */  lui   $t5, %hi(dword_CODE_bss_800799FC)
+/* 0B0DF8 7F07C2C8 3C0D8008 */  lui   $t5, %hi(gBondViewCutscene)
 /* 0B0DFC 7F07C2CC C5860004 */  lwc1  $f6, 4($t4)
 /* 0B0E00 7F07C2D0 46060200 */  add.s $f8, $f0, $f6
 /* 0B0E04 7F07C2D4 E7080004 */  swc1  $f8, 4($t8)
-/* 0B0E08 7F07C2D8 8DAD99FC */  lw    $t5, %lo(dword_CODE_bss_800799FC)($t5)
+/* 0B0E08 7F07C2D8 8DAD99FC */  lw    $t5, %lo(gBondViewCutscene)($t5)
 /* 0B0E0C 7F07C2DC 0FC15FA8 */  jal   cosf
 /* 0B0E10 7F07C2E0 C5AC0014 */   lwc1  $f12, 0x14($t5)
-/* 0B0E14 7F07C2E4 3C0E8008 */  lui   $t6, %hi(dword_CODE_bss_800799FC)
-/* 0B0E18 7F07C2E8 8DCE99FC */  lw    $t6, %lo(dword_CODE_bss_800799FC)($t6)
+/* 0B0E14 7F07C2E4 3C0E8008 */  lui   $t6, %hi(gBondViewCutscene)
+/* 0B0E18 7F07C2E8 8DCE99FC */  lw    $t6, %lo(gBondViewCutscene)($t6)
 /* 0B0E1C 7F07C2EC E7A0001C */  swc1  $f0, 0x1c($sp)
 /* 0B0E20 7F07C2F0 0FC15FA8 */  jal   cosf
 /* 0B0E24 7F07C2F4 C5CC0010 */   lwc1  $f12, 0x10($t6)
@@ -7029,7 +7286,7 @@ glabel sub_GAME_7F07B56C
 .L7F07C318:
 /* 0B0E48 7F07C318 3C028008 */  lui   $v0, %hi(dword_CODE_bss_80079A14)
 /* 0B0E4C 7F07C31C 8C429A14 */  lw    $v0, %lo(dword_CODE_bss_80079A14)($v0)
-/* 0B0E50 7F07C320 3C0E8007 */  lui   $t6, %hi(ptr_2xxxpresets)
+/* 0B0E50 7F07C320 3C0E8007 */  lui   $t6, %hi(g_chraiCurrentSetup+0x1C)
 /* 0B0E54 7F07C324 8FAF0054 */  lw    $t7, 0x54($sp)
 /* 0B0E58 7F07C328 28412710 */  slti  $at, $v0, 0x2710
 /* 0B0E5C 7F07C32C 1020000A */  beqz  $at, .L7F07C358
@@ -7037,14 +7294,14 @@ glabel sub_GAME_7F07B56C
 /* 0B0E64 7F07C334 00026080 */  sll   $t4, $v0, 2
 /* 0B0E68 7F07C338 01826023 */  subu  $t4, $t4, $v0
 /* 0B0E6C 7F07C33C 000C6080 */  sll   $t4, $t4, 2
-/* 0B0E70 7F07C340 3C188007 */  lui   $t8, %hi(ptr_0xxxpresets)
-/* 0B0E74 7F07C344 8F185D18 */  lw    $t8, %lo(ptr_0xxxpresets)($t8)
+/* 0B0E70 7F07C340 3C188007 */  lui   $t8, %hi(g_chraiCurrentSetup+0x18)
+/* 0B0E74 7F07C344 8F185D18 */  lw    $t8, %lo(g_chraiCurrentSetup+0x18)($t8)
 /* 0B0E78 7F07C348 01826023 */  subu  $t4, $t4, $v0
 /* 0B0E7C 7F07C34C 000C6080 */  sll   $t4, $t4, 2
 /* 0B0E80 7F07C350 10000008 */  b     .L7F07C374
 /* 0B0E84 7F07C354 01982021 */   addu  $a0, $t4, $t8
 .L7F07C358:
-/* 0B0E88 7F07C358 8DCE5D1C */  lw    $t6, %lo(ptr_2xxxpresets)($t6)
+/* 0B0E88 7F07C358 8DCE5D1C */  lw    $t6, %lo(g_chraiCurrentSetup+0x1C)($t6)
 /* 0B0E8C 7F07C35C 01A26821 */  addu  $t5, $t5, $v0
 /* 0B0E90 7F07C360 000D6880 */  sll   $t5, $t5, 2
 /* 0B0E94 7F07C364 3C01FFF5 */  lui   $at, (0xFFF59FC0 >> 16) # lui $at, 0xfff5
@@ -7367,11 +7624,11 @@ glabel sub_GAME_7F07B56C
 /* 0B0988 7F07BE18 C58A0008 */  lwc1  $f10, 8($t4)
 /* 0B098C 7F07BE1C 8FA30058 */  lw    $v1, 0x58($sp)
 /* 0B0990 7F07BE20 3C188003 */  lui   $t8, %hi(ptr_random06cam_entry) # $t8, 0x8003
-/* 0B0994 7F07BE24 3C198007 */  lui   $t9, %hi(ptr_0xxxpresets) # $t9, 0x8007
+/* 0B0994 7F07BE24 3C198007 */  lui   $t9, %hi(g_chraiCurrentSetup+0x18) # $t9, 0x8007
 /* 0B0998 7F07BE28 46065201 */  sub.s $f8, $f10, $f6
 /* 0B099C 7F07BE2C E5A80008 */  swc1  $f8, 8($t5)
 /* 0B09A0 7F07BE30 8F186500 */  lw    $t8, %lo(ptr_random06cam_entry)($t8)
-/* 0B09A4 7F07BE34 8F395D58 */  lw    $t9, %lo(ptr_0xxxpresets)($t9)
+/* 0B09A4 7F07BE34 8F395D58 */  lw    $t9, %lo(g_chraiCurrentSetup+0x18)($t9)
 /* 0B09A8 7F07BE38 8FAD0054 */  lw    $t5, 0x54($sp)
 /* 0B09AC 7F07BE3C 8F0E0018 */  lw    $t6, 0x18($t8)
 /* 0B09B0 7F07BE40 000E7880 */  sll   $t7, $t6, 2
@@ -7762,11 +8019,11 @@ glabel sub_GAME_7F07B56C
 /* 0B0F54 7F07C3E4 03387021 */  addu  $t6, $t9, $t8
 /* 0B0F58 7F07C3E8 8DC4001C */  lw    $a0, 0x1c($t6)
 /* 0B0F5C 7F07C3EC 2529A120 */  addiu $t1, %lo(g_CurrentPlayer) # addiu $t1, $t1, -0x5ee0
-/* 0B0F60 7F07C3F0 3C0C8007 */  lui   $t4, %hi(ptr_0xxxpresets) # $t4, 0x8007
+/* 0B0F60 7F07C3F0 3C0C8007 */  lui   $t4, %hi(g_chraiCurrentSetup+0x18) # $t4, 0x8007
 /* 0B0F64 7F07C3F4 04800012 */  bltz  $a0, .Ljp7F07C440
 /* 0B0F68 7F07C3F8 00047880 */   sll   $t7, $a0, 2
 /* 0B0F6C 7F07C3FC 01E47823 */  subu  $t7, $t7, $a0
-/* 0B0F70 7F07C400 8D8C5D58 */  lw    $t4, %lo(ptr_0xxxpresets)($t4)
+/* 0B0F70 7F07C400 8D8C5D58 */  lw    $t4, %lo(g_chraiCurrentSetup+0x18)($t4)
 /* 0B0F74 7F07C404 000F7880 */  sll   $t7, $t7, 2
 /* 0B0F78 7F07C408 01E47823 */  subu  $t7, $t7, $a0
 /* 0B0F7C 7F07C40C 000F7880 */  sll   $t7, $t7, 2
@@ -8012,13 +8269,13 @@ glabel sub_GAME_7F07B56C
 /* 0B1308 7F07C798 100000EE */  b     .Ljp7F07CB54
 /* 0B130C 7F07C79C E46A0008 */   swc1  $f10, 8($v1)
 .Ljp7F07C7A0:
-/* 0B1310 7F07C7A0 3C058008 */  lui   $a1, %hi(dword_CODE_bss_800799FC) # $a1, 0x8008
-/* 0B1314 7F07C7A4 24A59A3C */  addiu $a1, %lo(dword_CODE_bss_800799FC) # addiu $a1, $a1, -0x65c4
+/* 0B1310 7F07C7A0 3C058008 */  lui   $a1, %hi(gBondViewCutscene) # $a1, 0x8008
+/* 0B1314 7F07C7A4 24A59A3C */  addiu $a1, %lo(gBondViewCutscene) # addiu $a1, $a1, -0x65c4
 /* 0B1318 7F07C7A8 8CA40000 */  lw    $a0, ($a1)
 /* 0B131C 7F07C7AC 10800063 */  beqz  $a0, .Ljp7F07C93C
 /* 0B1320 7F07C7B0 00000000 */   nop
 /* 0B1324 7F07C7B4 8C830018 */  lw    $v1, 0x18($a0)
-/* 0B1328 7F07C7B8 3C0D8007 */  lui   $t5, %hi(ptr_2xxxpresets) # $t5, 0x8007
+/* 0B1328 7F07C7B8 3C0D8007 */  lui   $t5, %hi(g_chraiCurrentSetup+0x1C) # $t5, 0x8007
 /* 0B132C 7F07C7BC 8FB90048 */  lw    $t9, 0x48($sp)
 /* 0B1330 7F07C7C0 28612710 */  slti  $at, $v1, 0x2710
 /* 0B1334 7F07C7C4 1020000A */  beqz  $at, .Ljp7F07C7F0
@@ -8026,14 +8283,14 @@ glabel sub_GAME_7F07B56C
 /* 0B133C 7F07C7CC 00036080 */  sll   $t4, $v1, 2
 /* 0B1340 7F07C7D0 01836023 */  subu  $t4, $t4, $v1
 /* 0B1344 7F07C7D4 000C6080 */  sll   $t4, $t4, 2
-/* 0B1348 7F07C7D8 3C0F8007 */  lui   $t7, %hi(ptr_0xxxpresets) # $t7, 0x8007
-/* 0B134C 7F07C7DC 8DEF5D58 */  lw    $t7, %lo(ptr_0xxxpresets)($t7)
+/* 0B1348 7F07C7D8 3C0F8007 */  lui   $t7, %hi(g_chraiCurrentSetup+0x18) # $t7, 0x8007
+/* 0B134C 7F07C7DC 8DEF5D58 */  lw    $t7, %lo(g_chraiCurrentSetup+0x18)($t7)
 /* 0B1350 7F07C7E0 01836023 */  subu  $t4, $t4, $v1
 /* 0B1354 7F07C7E4 000C6080 */  sll   $t4, $t4, 2
 /* 0B1358 7F07C7E8 10000008 */  b     .Ljp7F07C80C
 /* 0B135C 7F07C7EC 018F1021 */   addu  $v0, $t4, $t7
 .Ljp7F07C7F0:
-/* 0B1360 7F07C7F0 8DAD5D5C */  lw    $t5, %lo(ptr_2xxxpresets)($t5)
+/* 0B1360 7F07C7F0 8DAD5D5C */  lw    $t5, %lo(g_chraiCurrentSetup+0x1C)($t5)
 /* 0B1364 7F07C7F4 0303C021 */  addu  $t8, $t8, $v1
 /* 0B1368 7F07C7F8 0018C080 */  sll   $t8, $t8, 2
 /* 0B136C 7F07C7FC 3C01FFF5 */  lui   $at, (0xFFF59FC0 >> 16) # lui $at, 0xfff5
@@ -8080,8 +8337,8 @@ glabel sub_GAME_7F07B56C
 .Ljp7F07C89C:
 /* 0B140C 7F07C89C 0FC160F0 */  jal   cosf
 /* 0B1410 7F07C8A0 C70C0014 */   lwc1  $f12, 0x14($t8)
-/* 0B1414 7F07C8A4 3C0D8008 */  lui   $t5, %hi(dword_CODE_bss_800799FC) # $t5, 0x8008
-/* 0B1418 7F07C8A8 8DAD9A3C */  lw    $t5, %lo(dword_CODE_bss_800799FC)($t5)
+/* 0B1414 7F07C8A4 3C0D8008 */  lui   $t5, %hi(gBondViewCutscene) # $t5, 0x8008
+/* 0B1418 7F07C8A8 8DAD9A3C */  lw    $t5, %lo(gBondViewCutscene)($t5)
 /* 0B141C 7F07C8AC E7A0001C */  swc1  $f0, 0x1c($sp)
 /* 0B1420 7F07C8B0 0FC160F3 */  jal   sinf
 /* 0B1424 7F07C8B4 C5AC0010 */   lwc1  $f12, 0x10($t5)
@@ -8090,23 +8347,23 @@ glabel sub_GAME_7F07B56C
 /* 0B1430 7F07C8C0 8FB9004C */  lw    $t9, 0x4c($sp)
 /* 0B1434 7F07C8C4 46060202 */  mul.s $f8, $f0, $f6
 /* 0B1438 7F07C8C8 C5CA0000 */  lwc1  $f10, ($t6)
-/* 0B143C 7F07C8CC 3C0F8008 */  lui   $t7, %hi(dword_CODE_bss_800799FC) # $t7, 0x8008
+/* 0B143C 7F07C8CC 3C0F8008 */  lui   $t7, %hi(gBondViewCutscene) # $t7, 0x8008
 /* 0B1440 7F07C8D0 460A4100 */  add.s $f4, $f8, $f10
 /* 0B1444 7F07C8D4 E7240000 */  swc1  $f4, ($t9)
-/* 0B1448 7F07C8D8 8DEF9A3C */  lw    $t7, %lo(dword_CODE_bss_800799FC)($t7)
+/* 0B1448 7F07C8D8 8DEF9A3C */  lw    $t7, %lo(gBondViewCutscene)($t7)
 /* 0B144C 7F07C8DC 0FC160F3 */  jal   sinf
 /* 0B1450 7F07C8E0 C5EC0014 */   lwc1  $f12, 0x14($t7)
 /* 0B1454 7F07C8E4 8FAC0048 */  lw    $t4, 0x48($sp)
 /* 0B1458 7F07C8E8 8FB8004C */  lw    $t8, 0x4c($sp)
-/* 0B145C 7F07C8EC 3C0D8008 */  lui   $t5, %hi(dword_CODE_bss_800799FC) # $t5, 0x8008
+/* 0B145C 7F07C8EC 3C0D8008 */  lui   $t5, %hi(gBondViewCutscene) # $t5, 0x8008
 /* 0B1460 7F07C8F0 C5860004 */  lwc1  $f6, 4($t4)
 /* 0B1464 7F07C8F4 46060200 */  add.s $f8, $f0, $f6
 /* 0B1468 7F07C8F8 E7080004 */  swc1  $f8, 4($t8)
-/* 0B146C 7F07C8FC 8DAD9A3C */  lw    $t5, %lo(dword_CODE_bss_800799FC)($t5)
+/* 0B146C 7F07C8FC 8DAD9A3C */  lw    $t5, %lo(gBondViewCutscene)($t5)
 /* 0B1470 7F07C900 0FC160F0 */  jal   cosf
 /* 0B1474 7F07C904 C5AC0014 */   lwc1  $f12, 0x14($t5)
-/* 0B1478 7F07C908 3C0E8008 */  lui   $t6, %hi(dword_CODE_bss_800799FC) # $t6, 0x8008
-/* 0B147C 7F07C90C 8DCE9A3C */  lw    $t6, %lo(dword_CODE_bss_800799FC)($t6)
+/* 0B1478 7F07C908 3C0E8008 */  lui   $t6, %hi(gBondViewCutscene) # $t6, 0x8008
+/* 0B147C 7F07C90C 8DCE9A3C */  lw    $t6, %lo(gBondViewCutscene)($t6)
 /* 0B1480 7F07C910 E7A0001C */  swc1  $f0, 0x1c($sp)
 /* 0B1484 7F07C914 0FC160F0 */  jal   cosf
 /* 0B1488 7F07C918 C5CC0010 */   lwc1  $f12, 0x10($t6)
@@ -8121,7 +8378,7 @@ glabel sub_GAME_7F07B56C
 .Ljp7F07C93C:
 /* 0B14AC 7F07C93C 3C028008 */  lui   $v0, %hi(dword_CODE_bss_80079A14) # $v0, 0x8008
 /* 0B14B0 7F07C940 8C429A54 */  lw    $v0, %lo(dword_CODE_bss_80079A14)($v0)
-/* 0B14B4 7F07C944 3C0E8007 */  lui   $t6, %hi(ptr_2xxxpresets) # $t6, 0x8007
+/* 0B14B4 7F07C944 3C0E8007 */  lui   $t6, %hi(g_chraiCurrentSetup+0x1C) # $t6, 0x8007
 /* 0B14B8 7F07C948 8FAF0054 */  lw    $t7, 0x54($sp)
 /* 0B14BC 7F07C94C 28412710 */  slti  $at, $v0, 0x2710
 /* 0B14C0 7F07C950 1020000A */  beqz  $at, .Ljp7F07C97C
@@ -8129,14 +8386,14 @@ glabel sub_GAME_7F07B56C
 /* 0B14C8 7F07C958 00026080 */  sll   $t4, $v0, 2
 /* 0B14CC 7F07C95C 01826023 */  subu  $t4, $t4, $v0
 /* 0B14D0 7F07C960 000C6080 */  sll   $t4, $t4, 2
-/* 0B14D4 7F07C964 3C188007 */  lui   $t8, %hi(ptr_0xxxpresets) # $t8, 0x8007
-/* 0B14D8 7F07C968 8F185D58 */  lw    $t8, %lo(ptr_0xxxpresets)($t8)
+/* 0B14D4 7F07C964 3C188007 */  lui   $t8, %hi(g_chraiCurrentSetup+0x18) # $t8, 0x8007
+/* 0B14D8 7F07C968 8F185D58 */  lw    $t8, %lo(g_chraiCurrentSetup+0x18)($t8)
 /* 0B14DC 7F07C96C 01826023 */  subu  $t4, $t4, $v0
 /* 0B14E0 7F07C970 000C6080 */  sll   $t4, $t4, 2
 /* 0B14E4 7F07C974 10000008 */  b     .Ljp7F07C998
 /* 0B14E8 7F07C978 01982021 */   addu  $a0, $t4, $t8
 .Ljp7F07C97C:
-/* 0B14EC 7F07C97C 8DCE5D5C */  lw    $t6, %lo(ptr_2xxxpresets)($t6)
+/* 0B14EC 7F07C97C 8DCE5D5C */  lw    $t6, %lo(g_chraiCurrentSetup+0x1C)($t6)
 /* 0B14F0 7F07C980 01A26821 */  addu  $t5, $t5, $v0
 /* 0B14F4 7F07C984 000D6880 */  sll   $t5, $t5, 2
 /* 0B14F8 7F07C988 3C01FFF5 */  lui   $at, (0xFFF59FC0 >> 16) # lui $at, 0xfff5
@@ -8458,11 +8715,11 @@ glabel sub_GAME_7F07B56C
 /* 0AE27C 7F07B88C C5AA0008 */  lwc1  $f10, 8($t5)
 /* 0AE280 7F07B890 8FA40058 */  lw    $a0, 0x58($sp)
 /* 0AE284 7F07B894 3C0C8003 */  lui   $t4, %hi(ptr_random06cam_entry) # $t4, 0x8003
-/* 0AE288 7F07B898 3C188006 */  lui   $t8, %hi(ptr_0xxxpresets) # $t8, 0x8006
+/* 0AE288 7F07B898 3C188006 */  lui   $t8, %hi(g_chraiCurrentSetup+0x18) # $t8, 0x8006
 /* 0AE28C 7F07B89C 46065201 */  sub.s $f8, $f10, $f6
 /* 0AE290 7F07B8A0 E5C80008 */  swc1  $f8, 8($t6)
 /* 0AE294 7F07B8A4 8D8C1A10 */  lw    $t4, %lo(ptr_random06cam_entry)($t4)
-/* 0AE298 7F07B8A8 8F184C58 */  lw    $t8, %lo(ptr_0xxxpresets)($t8)
+/* 0AE298 7F07B8A8 8F184C58 */  lw    $t8, %lo(g_chraiCurrentSetup+0x18)($t8)
 /* 0AE29C 7F07B8AC 8FAE0054 */  lw    $t6, 0x54($sp)
 /* 0AE2A0 7F07B8B0 8D8F0018 */  lw    $t7, 0x18($t4)
 /* 0AE2A4 7F07B8B4 000FC880 */  sll   $t9, $t7, 2
@@ -8866,11 +9123,11 @@ glabel sub_GAME_7F07B56C
 /* 0AE87C 7F07BE8C 030E6021 */  addu  $t4, $t8, $t6
 /* 0AE880 7F07BE90 8D83001C */  lw    $v1, 0x1c($t4)
 /* 0AE884 7F07BE94 25298BC0 */  addiu $t1, %lo(g_CurrentPlayer) # addiu $t1, $t1, -0x7440
-/* 0AE888 7F07BE98 3C0F8006 */  lui   $t7, %hi(ptr_0xxxpresets) # $t7, 0x8006
+/* 0AE888 7F07BE98 3C0F8006 */  lui   $t7, %hi(g_chraiCurrentSetup+0x18) # $t7, 0x8006
 /* 0AE88C 7F07BE9C 04600012 */  bltz  $v1, .L7F07BEE8
 /* 0AE890 7F07BEA0 0003C880 */   sll   $t9, $v1, 2
 /* 0AE894 7F07BEA4 0323C823 */  subu  $t9, $t9, $v1
-/* 0AE898 7F07BEA8 8DEF4C58 */  lw    $t7, %lo(ptr_0xxxpresets)($t7)
+/* 0AE898 7F07BEA8 8DEF4C58 */  lw    $t7, %lo(g_chraiCurrentSetup+0x18)($t7)
 /* 0AE89C 7F07BEAC 0019C880 */  sll   $t9, $t9, 2
 /* 0AE8A0 7F07BEB0 0323C823 */  subu  $t9, $t9, $v1
 /* 0AE8A4 7F07BEB4 0019C880 */  sll   $t9, $t9, 2
@@ -9117,13 +9374,13 @@ glabel sub_GAME_7F07B56C
 /* 0AEC34 7F07C244 100000EF */  b     .L7F07C604
 /* 0AEC38 7F07C248 E48A0008 */   swc1  $f10, 8($a0)
 .L7F07C24C:
-/* 0AEC3C 7F07C24C 3C058007 */  lui   $a1, %hi(dword_CODE_bss_800799FC) # $a1, 0x8007
-/* 0AEC40 7F07C250 24A584DC */  addiu $a1, %lo(dword_CODE_bss_800799FC) # addiu $a1, $a1, -0x7b24
+/* 0AEC3C 7F07C24C 3C058007 */  lui   $a1, %hi(gBondViewCutscene) # $a1, 0x8007
+/* 0AEC40 7F07C250 24A584DC */  addiu $a1, %lo(gBondViewCutscene) # addiu $a1, $a1, -0x7b24
 /* 0AEC44 7F07C254 8CA30000 */  lw    $v1, ($a1)
 /* 0AEC48 7F07C258 10600064 */  beqz  $v1, .L7F07C3EC
 /* 0AEC4C 7F07C25C 00000000 */   nop
 /* 0AEC50 7F07C260 8C640018 */  lw    $a0, 0x18($v1)
-/* 0AEC54 7F07C264 3C188006 */  lui   $t8, %hi(ptr_2xxxpresets) # $t8, 0x8006
+/* 0AEC54 7F07C264 3C188006 */  lui   $t8, %hi(g_chraiCurrentSetup+0x1C) # $t8, 0x8006
 /* 0AEC58 7F07C268 8FAE0048 */  lw    $t6, 0x48($sp)
 /* 0AEC5C 7F07C26C 28812710 */  slti  $at, $a0, 0x2710
 /* 0AEC60 7F07C270 1020000A */  beqz  $at, .L7F07C29C
@@ -9131,14 +9388,14 @@ glabel sub_GAME_7F07B56C
 /* 0AEC68 7F07C278 00046880 */  sll   $t5, $a0, 2
 /* 0AEC6C 7F07C27C 01A46823 */  subu  $t5, $t5, $a0
 /* 0AEC70 7F07C280 000D6880 */  sll   $t5, $t5, 2
-/* 0AEC74 7F07C284 3C0F8006 */  lui   $t7, %hi(ptr_0xxxpresets) # $t7, 0x8006
-/* 0AEC78 7F07C288 8DEF4C58 */  lw    $t7, %lo(ptr_0xxxpresets)($t7)
+/* 0AEC74 7F07C284 3C0F8006 */  lui   $t7, %hi(g_chraiCurrentSetup+0x18) # $t7, 0x8006
+/* 0AEC78 7F07C288 8DEF4C58 */  lw    $t7, %lo(g_chraiCurrentSetup+0x18)($t7)
 /* 0AEC7C 7F07C28C 01A46823 */  subu  $t5, $t5, $a0
 /* 0AEC80 7F07C290 000D6880 */  sll   $t5, $t5, 2
 /* 0AEC84 7F07C294 10000008 */  b     .L7F07C2B8
 /* 0AEC88 7F07C298 01AF1021 */   addu  $v0, $t5, $t7
 .L7F07C29C:
-/* 0AEC8C 7F07C29C 8F184C5C */  lw    $t8, %lo(ptr_2xxxpresets)($t8)
+/* 0AEC8C 7F07C29C 8F184C5C */  lw    $t8, %lo(g_chraiCurrentSetup+0x1C)($t8)
 /* 0AEC90 7F07C2A0 01846021 */  addu  $t4, $t4, $a0
 /* 0AEC94 7F07C2A4 000C6080 */  sll   $t4, $t4, 2
 /* 0AEC98 7F07C2A8 3C01FFF5 */  lui   $at, (0xFFF59FC0 >> 16) # lui $at, 0xfff5
@@ -9186,8 +9443,8 @@ glabel sub_GAME_7F07B56C
 .L7F07C34C:
 /* 0AED3C 7F07C34C 0FC16068 */  jal   cosf
 /* 0AED40 7F07C350 C58C0014 */   lwc1  $f12, 0x14($t4)
-/* 0AED44 7F07C354 3C188007 */  lui   $t8, %hi(dword_CODE_bss_800799FC) # $t8, 0x8007
-/* 0AED48 7F07C358 8F1884DC */  lw    $t8, %lo(dword_CODE_bss_800799FC)($t8)
+/* 0AED44 7F07C354 3C188007 */  lui   $t8, %hi(gBondViewCutscene) # $t8, 0x8007
+/* 0AED48 7F07C358 8F1884DC */  lw    $t8, %lo(gBondViewCutscene)($t8)
 /* 0AED4C 7F07C35C E7A0001C */  swc1  $f0, 0x1c($sp)
 /* 0AED50 7F07C360 0FC1606B */  jal   sinf
 /* 0AED54 7F07C364 C70C0010 */   lwc1  $f12, 0x10($t8)
@@ -9196,23 +9453,23 @@ glabel sub_GAME_7F07B56C
 /* 0AED60 7F07C370 8FAE004C */  lw    $t6, 0x4c($sp)
 /* 0AED64 7F07C374 46060202 */  mul.s $f8, $f0, $f6
 /* 0AED68 7F07C378 C72A0000 */  lwc1  $f10, ($t9)
-/* 0AED6C 7F07C37C 3C0F8007 */  lui   $t7, %hi(dword_CODE_bss_800799FC) # $t7, 0x8007
+/* 0AED6C 7F07C37C 3C0F8007 */  lui   $t7, %hi(gBondViewCutscene) # $t7, 0x8007
 /* 0AED70 7F07C380 460A4100 */  add.s $f4, $f8, $f10
 /* 0AED74 7F07C384 E5C40000 */  swc1  $f4, ($t6)
-/* 0AED78 7F07C388 8DEF84DC */  lw    $t7, %lo(dword_CODE_bss_800799FC)($t7)
+/* 0AED78 7F07C388 8DEF84DC */  lw    $t7, %lo(gBondViewCutscene)($t7)
 /* 0AED7C 7F07C38C 0FC1606B */  jal   sinf
 /* 0AED80 7F07C390 C5EC0014 */   lwc1  $f12, 0x14($t7)
 /* 0AED84 7F07C394 8FAD0048 */  lw    $t5, 0x48($sp)
 /* 0AED88 7F07C398 8FAC004C */  lw    $t4, 0x4c($sp)
-/* 0AED8C 7F07C39C 3C188007 */  lui   $t8, %hi(dword_CODE_bss_800799FC) # $t8, 0x8007
+/* 0AED8C 7F07C39C 3C188007 */  lui   $t8, %hi(gBondViewCutscene) # $t8, 0x8007
 /* 0AED90 7F07C3A0 C5A60004 */  lwc1  $f6, 4($t5)
 /* 0AED94 7F07C3A4 46060200 */  add.s $f8, $f0, $f6
 /* 0AED98 7F07C3A8 E5880004 */  swc1  $f8, 4($t4)
-/* 0AED9C 7F07C3AC 8F1884DC */  lw    $t8, %lo(dword_CODE_bss_800799FC)($t8)
+/* 0AED9C 7F07C3AC 8F1884DC */  lw    $t8, %lo(gBondViewCutscene)($t8)
 /* 0AEDA0 7F07C3B0 0FC16068 */  jal   cosf
 /* 0AEDA4 7F07C3B4 C70C0014 */   lwc1  $f12, 0x14($t8)
-/* 0AEDA8 7F07C3B8 3C198007 */  lui   $t9, %hi(dword_CODE_bss_800799FC) # $t9, 0x8007
-/* 0AEDAC 7F07C3BC 8F3984DC */  lw    $t9, %lo(dword_CODE_bss_800799FC)($t9)
+/* 0AEDA8 7F07C3B8 3C198007 */  lui   $t9, %hi(gBondViewCutscene) # $t9, 0x8007
+/* 0AEDAC 7F07C3BC 8F3984DC */  lw    $t9, %lo(gBondViewCutscene)($t9)
 /* 0AEDB0 7F07C3C0 E7A0001C */  swc1  $f0, 0x1c($sp)
 /* 0AEDB4 7F07C3C4 0FC16068 */  jal   cosf
 /* 0AEDB8 7F07C3C8 C72C0010 */   lwc1  $f12, 0x10($t9)
@@ -9227,7 +9484,7 @@ glabel sub_GAME_7F07B56C
 .L7F07C3EC:
 /* 0AEDDC 7F07C3EC 3C028007 */  lui   $v0, %hi(dword_CODE_bss_80079A14) # $v0, 0x8007
 /* 0AEDE0 7F07C3F0 8C4284F4 */  lw    $v0, %lo(dword_CODE_bss_80079A14)($v0)
-/* 0AEDE4 7F07C3F4 3C198006 */  lui   $t9, %hi(ptr_2xxxpresets) # $t9, 0x8006
+/* 0AEDE4 7F07C3F4 3C198006 */  lui   $t9, %hi(g_chraiCurrentSetup+0x1C) # $t9, 0x8006
 /* 0AEDE8 7F07C3F8 8FAF0054 */  lw    $t7, 0x54($sp)
 /* 0AEDEC 7F07C3FC 28412710 */  slti  $at, $v0, 0x2710
 /* 0AEDF0 7F07C400 1020000A */  beqz  $at, .L7F07C42C
@@ -9235,14 +9492,14 @@ glabel sub_GAME_7F07B56C
 /* 0AEDF8 7F07C408 00026880 */  sll   $t5, $v0, 2
 /* 0AEDFC 7F07C40C 01A26823 */  subu  $t5, $t5, $v0
 /* 0AEE00 7F07C410 000D6880 */  sll   $t5, $t5, 2
-/* 0AEE04 7F07C414 3C0C8006 */  lui   $t4, %hi(ptr_0xxxpresets) # $t4, 0x8006
-/* 0AEE08 7F07C418 8D8C4C58 */  lw    $t4, %lo(ptr_0xxxpresets)($t4)
+/* 0AEE04 7F07C414 3C0C8006 */  lui   $t4, %hi(g_chraiCurrentSetup+0x18) # $t4, 0x8006
+/* 0AEE08 7F07C418 8D8C4C58 */  lw    $t4, %lo(g_chraiCurrentSetup+0x18)($t4)
 /* 0AEE0C 7F07C41C 01A26823 */  subu  $t5, $t5, $v0
 /* 0AEE10 7F07C420 000D6880 */  sll   $t5, $t5, 2
 /* 0AEE14 7F07C424 10000008 */  b     .L7F07C448
 /* 0AEE18 7F07C428 01AC1821 */   addu  $v1, $t5, $t4
 .L7F07C42C:
-/* 0AEE1C 7F07C42C 8F394C5C */  lw    $t9, %lo(ptr_2xxxpresets)($t9)
+/* 0AEE1C 7F07C42C 8F394C5C */  lw    $t9, %lo(g_chraiCurrentSetup+0x1C)($t9)
 /* 0AEE20 7F07C430 0302C021 */  addu  $t8, $t8, $v0
 /* 0AEE24 7F07C434 0018C080 */  sll   $t8, $t8, 2
 /* 0AEE28 7F07C438 3C01FFF5 */  lui   $at, (0xFFF59FC0 >> 16) # lui $at, 0xfff5
@@ -10334,7 +10591,8 @@ glabel sub_GAME_7F07CDD4
 
 
 
-s32 get_intank_flag(void) {
+bool get_intank_flag(void)
+{
     return in_tank_flag;
 }
 
@@ -10361,7 +10619,7 @@ s32 get_ptr_for_players_tank(void)
  * 
  * Address 0x7F07CEB0.
  */
-void bondviewSet3dCoord7F07CEB0(struct coord3d *arg0)
+void bondviewSet3dCoord7F07CEB0(coord3d *arg0)
 {
     f32 f;
 
@@ -10401,10 +10659,10 @@ f32 bondviewGet8003646CRad(void)
 
 
 
-s32 cal_player_collision(struct coord3d *arg0, void *arg1);
+s32 cal_player_collision(coord3d *arg0, void *arg1);
 
 #ifdef NONMATCHING
-s32 cal_player_collision(struct coord3d *arg0, void *arg1) {
+s32 cal_player_collision(coord3d *arg0, void *arg1) {
     ? sp3C;
     s32 sp7C;
     ? sp80;
@@ -10950,7 +11208,7 @@ glabel cal_player_collision
  * 
  * Address 0x7F07D234.
  */
-s32 bondviewUpdatePlayerCollision(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *arg2)
+s32 bondviewUpdatePlayerCollision(coord3d *arg0, coord3d *arg1, coord3d *arg2)
 {
     s32 sp1C;
 
@@ -12253,7 +12511,7 @@ void sub_GAME_7F07DE9C(struct player *player)
     {
         player->field_2A04 = (s16) player->field_488.current_tile_ptr->room;
 
-        sub_GAME_7F03DD9C(player->prop, player->field_2A04, player);
+        sub_GAME_7F03DD9C(player->prop, player->field_2A04);
     }
 }
 
@@ -16642,84 +16900,91 @@ void currentPlayerSetFadeColour(s32 r, s32 g, s32 b, f32 frac) {
     g_CurrentPlayer->colourscreenfrac = frac;
 }
 
-void currentPlayerAdjustFade(f32 maxfadetime, s32 r, s32 g, s32 b, f32 frac) {
-    g_CurrentPlayer->colourfadetime60 = 0;
+void currentPlayerAdjustFade(f32 maxfadetime, s32 r, s32 g, s32 b, f32 frac)
+{
+    g_CurrentPlayer->colourfadetime60    = 0;
     g_CurrentPlayer->colourfadetimemax60 = maxfadetime;
-    g_CurrentPlayer->colourfaderedold = g_CurrentPlayer->colourscreenred;
-    g_CurrentPlayer->colourfaderednew = r;
-    g_CurrentPlayer->colourfadegreenold = g_CurrentPlayer->colourscreengreen;
-    g_CurrentPlayer->colourfadegreennew = g;
-    g_CurrentPlayer->colourfadeblueold = g_CurrentPlayer->colourscreenblue;
-    g_CurrentPlayer->colourfadebluenew = b;
-    g_CurrentPlayer->colourfadefracold = g_CurrentPlayer->colourscreenfrac;
-    g_CurrentPlayer->colourfadefracnew = frac;
+    g_CurrentPlayer->colourfaderedold    = g_CurrentPlayer->colourscreenred;
+    g_CurrentPlayer->colourfaderednew    = r;
+    g_CurrentPlayer->colourfadegreenold  = g_CurrentPlayer->colourscreengreen;
+    g_CurrentPlayer->colourfadegreennew  = g;
+    g_CurrentPlayer->colourfadeblueold   = g_CurrentPlayer->colourscreenblue;
+    g_CurrentPlayer->colourfadebluenew   = b;
+    g_CurrentPlayer->colourfadefracold   = g_CurrentPlayer->colourscreenfrac;
+    g_CurrentPlayer->colourfadefracnew   = frac;
 }
 
-void currentPlayerSetFadeFrac(f32 maxfadetime, f32 frac) {
+void currentPlayerSetFadeFrac(f32 maxfadetime, f32 frac)
+{
     currentPlayerAdjustFade(maxfadetime, g_CurrentPlayer->colourscreenred, g_CurrentPlayer->colourscreengreen, g_CurrentPlayer->colourscreenblue, frac);
 }
 
-s32 /*bool*/ currentPlayerIsFadeComplete(void)
+bool currentPlayerIsFadeComplete(void)
 {
 	return g_CurrentPlayer->colourfadetimemax60 < 0;
 }
 
 void currentPlayerUpdateColourScreenProperties(void)
 {
-	if (g_CurrentPlayer->colourfadetimemax60 >= 0) {
-		g_CurrentPlayer->colourfadetime60 += g_GlobalTimerDelta;
+    if (g_CurrentPlayer->colourfadetimemax60 >= 0)
+    {
+        g_CurrentPlayer->colourfadetime60 += g_GlobalTimerDelta;
 
-		if (g_CurrentPlayer->colourfadetime60 < g_CurrentPlayer->colourfadetimemax60) {
-			f32 mult = g_CurrentPlayer->colourfadetime60 / g_CurrentPlayer->colourfadetimemax60;
-			g_CurrentPlayer->colourscreenfrac = g_CurrentPlayer->colourfadefracold + (g_CurrentPlayer->colourfadefracnew - g_CurrentPlayer->colourfadefracold) * mult;
-			g_CurrentPlayer->colourscreenred = g_CurrentPlayer->colourfaderedold + (s32)((g_CurrentPlayer->colourfaderednew - g_CurrentPlayer->colourfaderedold) * mult);
-			g_CurrentPlayer->colourscreengreen = g_CurrentPlayer->colourfadegreenold + (s32)((g_CurrentPlayer->colourfadegreennew - g_CurrentPlayer->colourfadegreenold) * mult);
-			g_CurrentPlayer->colourscreenblue = g_CurrentPlayer->colourfadeblueold + (s32)((g_CurrentPlayer->colourfadebluenew - g_CurrentPlayer->colourfadeblueold) * mult);
-			return;
-		}
+        if (g_CurrentPlayer->colourfadetime60 < g_CurrentPlayer->colourfadetimemax60)
+        {
+            f32 mult                           = g_CurrentPlayer->colourfadetime60 / g_CurrentPlayer->colourfadetimemax60;
+            g_CurrentPlayer->colourscreenfrac  = g_CurrentPlayer->colourfadefracold + (g_CurrentPlayer->colourfadefracnew - g_CurrentPlayer->colourfadefracold) * mult;
+            g_CurrentPlayer->colourscreenred   = g_CurrentPlayer->colourfaderedold + (s32)((g_CurrentPlayer->colourfaderednew - g_CurrentPlayer->colourfaderedold) * mult);
+            g_CurrentPlayer->colourscreengreen = g_CurrentPlayer->colourfadegreenold + (s32)((g_CurrentPlayer->colourfadegreennew - g_CurrentPlayer->colourfadegreenold) * mult);
+            g_CurrentPlayer->colourscreenblue  = g_CurrentPlayer->colourfadeblueold + (s32)((g_CurrentPlayer->colourfadebluenew - g_CurrentPlayer->colourfadeblueold) * mult);
+            return;
+        }
 
-		g_CurrentPlayer->colourscreenfrac = g_CurrentPlayer->colourfadefracnew;
-		g_CurrentPlayer->colourscreenred = g_CurrentPlayer->colourfaderednew;
-		g_CurrentPlayer->colourscreengreen = g_CurrentPlayer->colourfadegreennew;
-		g_CurrentPlayer->colourscreenblue = g_CurrentPlayer->colourfadebluenew;
-		g_CurrentPlayer->colourfadetimemax60 = -1;
-	}
+        g_CurrentPlayer->colourscreenfrac    = g_CurrentPlayer->colourfadefracnew;
+        g_CurrentPlayer->colourscreenred     = g_CurrentPlayer->colourfaderednew;
+        g_CurrentPlayer->colourscreengreen   = g_CurrentPlayer->colourfadegreennew;
+        g_CurrentPlayer->colourscreenblue    = g_CurrentPlayer->colourfadebluenew;
+        g_CurrentPlayer->colourfadetimemax60 = -1;
+    }
 }
 
 void currentPlayerStartChrFade(f32 duration60, f32 targetfrac)
 {
-	struct ChrRecord* chr = g_CurrentPlayer->prop->chr;
+    ChrRecord *chr = g_CurrentPlayer->prop->chr;
 
-	if (chr) {
-		g_CurrentPlayer->bondfadetime60 = 0;
-		g_CurrentPlayer->bondfadetimemax60 = duration60;
-		g_CurrentPlayer->bondfadefracold = chr->fadealpha / 255.0f;
-		g_CurrentPlayer->bondfadefracnew = targetfrac;
-	}
+    if (chr)
+    {
+        g_CurrentPlayer->bondfadetime60    = 0;
+        g_CurrentPlayer->bondfadetimemax60 = duration60;
+        g_CurrentPlayer->bondfadefracold   = chr->fadealpha / 255.0f;
+        g_CurrentPlayer->bondfadefracnew   = targetfrac;
+    }
 }
 
 void currentPlayerTickChrFade(void)
 {
-	if (g_CurrentPlayer->bondfadetimemax60 >= 0) {
-		struct ChrRecord *chr = (struct ChrRecord *)g_CurrentPlayer->prop->chr;
-		f32 frac;
+    if (g_CurrentPlayer->bondfadetimemax60 >= 0)
+    {
+        ChrRecord *chr = g_CurrentPlayer->prop->chr;
+        f32        frac;
 
-		g_CurrentPlayer->bondfadetime60 += g_GlobalTimerDelta;
+        g_CurrentPlayer->bondfadetime60 += g_GlobalTimerDelta;
 
-		if (g_CurrentPlayer->bondfadetime60 < g_CurrentPlayer->bondfadetimemax60) {
-			frac = g_CurrentPlayer->bondfadefracold
-				+ (g_CurrentPlayer->bondfadefracnew - g_CurrentPlayer->bondfadefracold)
-				* g_CurrentPlayer->bondfadetime60
-				/ g_CurrentPlayer->bondfadetimemax60;
-		} else {
-			frac = g_CurrentPlayer->bondfadefracnew;
-			g_CurrentPlayer->bondfadetimemax60 = -1;
-		}
+        if (g_CurrentPlayer->bondfadetime60 < g_CurrentPlayer->bondfadetimemax60)
+        {
+            frac = g_CurrentPlayer->bondfadefracold + (g_CurrentPlayer->bondfadefracnew - g_CurrentPlayer->bondfadefracold) * g_CurrentPlayer->bondfadetime60 / g_CurrentPlayer->bondfadetimemax60;
+        }
+        else
+        {
+            frac = g_CurrentPlayer->bondfadefracnew;
+            g_CurrentPlayer->bondfadetimemax60 = -1;
+        }
 
-		if (chr) {
-			chr->fadealpha = (s8)(frac * 255);
-		}
-	}
+        if (chr)
+        {
+            chr->fadealpha = (s8)(frac * 255);
+        }
+    }
 }
 
 #ifdef NONMATCHING
@@ -16897,6 +17162,8 @@ glabel sub_GAME_7F080B34
  * - identical registers: fail
  * 
  * notes: two regalloc issues
+ * 
+ * //!Um... is this still an issue? seems to build OK - Trev
  */
 f32 bondviewYPositionRelated(StandTile *arg0, f32 arg1, f32 arg2)
 {
@@ -16904,8 +17171,8 @@ f32 bondviewYPositionRelated(StandTile *arg0, f32 arg1, f32 arg2)
 
     if (ptr_playerstank != 0)
     {
-        ObjectRecord * obj = ((struct PropRecord *)ptr_playerstank)->obj;
-        struct PropRecord *p = obj->prop;
+        ObjectRecord * obj = ((PropRecord *)ptr_playerstank)->obj;
+        PropRecord *p = obj->prop;
 
         ret = stanGetPositionYValue(p->stan, p->pos.x, p->pos.z);
             
@@ -16941,7 +17208,7 @@ f32 bondviewYPositionRelated(StandTile *arg0, f32 arg1, f32 arg2)
  * notes: one large wrong section. There's a load that's swapped near the beginning.
  *     Rest of the function just has regalloc issues.
  */
-void bondviewUpdatePlayerClipping(s32 use_clipping_height, f32 clipping_height_offset)
+void bondviewUpdatePlayerClipping(s32 use_stanHeight, f32 stanHeight_offset)
 {
     s32 i;
     f32 temp_f0;
@@ -16956,7 +17223,7 @@ void bondviewUpdatePlayerClipping(s32 use_clipping_height, f32 clipping_height_o
 
     if (in_tank_flag == 1)
     {
-        g_CurrentPlayer->clipping_height = bondviewYPositionRelated(
+        g_CurrentPlayer->stanHeight = bondviewYPositionRelated(
             g_CurrentPlayer->field_488.current_tile_ptr,
             g_CurrentPlayer->field_488.collision_position.f[0],
             g_CurrentPlayer->field_488.collision_position.f[2]);
@@ -16968,25 +17235,25 @@ void bondviewUpdatePlayerClipping(s32 use_clipping_height, f32 clipping_height_o
 
         for (i=0; i<g_ClockTimer; i++)
         {
-            g_CurrentPlayer->field_6C = (g_CurrentPlayer->field_6C * 0.83f) + g_CurrentPlayer->clipping_height;
+            g_CurrentPlayer->field_6C = (g_CurrentPlayer->field_6C * 0.83f) + g_CurrentPlayer->stanHeight;
         }
 
         g_CurrentPlayer->field_70 = g_CurrentPlayer->field_6C * 0.17f;
     }
     else
     {
-        if (use_clipping_height != 0)
+        if (use_stanHeight != 0)
         {
-            g_CurrentPlayer->clipping_height = g_CurrentPlayer->clipping_height + clipping_height_offset;
+            g_CurrentPlayer->stanHeight = g_CurrentPlayer->stanHeight + stanHeight_offset;
 
             temp_f0 = bondviewYPositionRelated(
                 g_CurrentPlayer->field_488.current_tile_ptr,
                 g_CurrentPlayer->field_488.collision_position.f[0],
                 g_CurrentPlayer->field_488.collision_position.f[2]);
             
-            if (g_CurrentPlayer->clipping_height < temp_f0)
+            if (g_CurrentPlayer->stanHeight < temp_f0)
             {
-                g_CurrentPlayer->clipping_height = temp_f0;
+                g_CurrentPlayer->stanHeight = temp_f0;
             }
         }
         else
@@ -17007,32 +17274,32 @@ void bondviewUpdatePlayerClipping(s32 use_clipping_height, f32 clipping_height_o
                 sp5C,
                 bondviewGetPlayerDuckingHeightRelated(g_CurrentPlayer) + sp64) >= 0)
             {
-                if (sp64 < g_CurrentPlayer->clipping_height)
+                if (sp64 < g_CurrentPlayer->stanHeight)
                 {
-                    sp64 = g_CurrentPlayer->clipping_height;
+                    sp64 = g_CurrentPlayer->stanHeight;
                 }
             }
             
-            g_CurrentPlayer->clipping_height = sp64;
+            g_CurrentPlayer->stanHeight = sp64;
         }
 
-        if ((g_CurrentPlayer->field_2A6C != 0) && (g_CurrentPlayer->field_70 < g_CurrentPlayer->clipping_height))
+        if ((g_CurrentPlayer->field_2A6C != 0) && (g_CurrentPlayer->field_70 < g_CurrentPlayer->stanHeight))
         {
             g_CurrentPlayer->field_2A6C = 0;
             g_CurrentPlayer->field_488.current_tile_ptr = g_CurrentPlayer->field_2A70;
             g_CurrentPlayer->field_2A70 = NULL;
         }
 
-        if ((g_CurrentPlayer->field_7C >= 0.0f) || (g_CurrentPlayer->field_70 < g_CurrentPlayer->clipping_height))
+        if ((g_CurrentPlayer->field_7C >= 0.0f) || (g_CurrentPlayer->field_70 < g_CurrentPlayer->stanHeight))
         {
             g_CurrentPlayer->field_6C = g_CurrentPlayer->field_70 / 0.17f;
 
             for (i=0; i<g_ClockTimer; i++)
             {
-                g_CurrentPlayer->field_6C = (g_CurrentPlayer->field_6C * 0.83f) + g_CurrentPlayer->clipping_height;
+                g_CurrentPlayer->field_6C = (g_CurrentPlayer->field_6C * 0.83f) + g_CurrentPlayer->stanHeight;
             }
 
-            if (g_CurrentPlayer->field_70 < g_CurrentPlayer->clipping_height)
+            if (g_CurrentPlayer->field_70 < g_CurrentPlayer->stanHeight)
             {
                 g_CurrentPlayer->field_70 = g_CurrentPlayer->field_6C * 0.17f;
             }
@@ -17041,7 +17308,7 @@ void bondviewUpdatePlayerClipping(s32 use_clipping_height, f32 clipping_height_o
         // decomp issue: begin very wrong section
         save_field_7C = g_CurrentPlayer->field_7C;
 
-        if (g_CurrentPlayer->clipping_height < g_CurrentPlayer->field_70)
+        if (g_CurrentPlayer->stanHeight < g_CurrentPlayer->field_70)
         {
             if ((get_debug_fast_bond_flag() != 0) && (flt_CODE_bss_80079990[0] == 0.0f) && (flt_CODE_bss_80079990[2] == 0.0f))
             {
@@ -17055,15 +17322,15 @@ void bondviewUpdatePlayerClipping(s32 use_clipping_height, f32 clipping_height_o
             new_field_7c = save_field_7C - (g_GlobalTimerDelta * sp40);
             new_field_70 = g_CurrentPlayer->field_70 + (g_GlobalTimerDelta * (save_field_7C + new_field_7c) * 0.5f);
 
-            if (new_field_70 < g_CurrentPlayer->clipping_height)
+            if (new_field_70 < g_CurrentPlayer->stanHeight)
             {
                 f32 f_7c_square = (g_CurrentPlayer->field_7C * g_CurrentPlayer->field_7C);
-                f32 td = (g_CurrentPlayer->field_70 - g_CurrentPlayer->clipping_height);
+                f32 td = (g_CurrentPlayer->field_70 - g_CurrentPlayer->stanHeight);
                 f32 td2 = (2.0f * td * 0.2777778f);
                 f32 tsq = f_7c_square + ((td2 / 60.0f) * 60.0f);
                 new_field_7c = -sqrtf(tsq);
 
-                new_field_70 = g_CurrentPlayer->clipping_height;
+                new_field_70 = g_CurrentPlayer->stanHeight;
 
                 if (g_CurrentPlayer->field_2A6C != 0)
                 {
@@ -17080,7 +17347,7 @@ void bondviewUpdatePlayerClipping(s32 use_clipping_height, f32 clipping_height_o
 
         // end very wrong section
 
-        if ((save_field_7C < 0.0f) && (g_CurrentPlayer->field_70 <= g_CurrentPlayer->clipping_height))
+        if ((save_field_7C < 0.0f) && (g_CurrentPlayer->field_70 <= g_CurrentPlayer->stanHeight))
         {
             if (save_field_7C < -13.333333f)
             {
@@ -33989,8 +34256,8 @@ void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2)
     {
         if (g_CurrentPlayer->field_424 == 0)
         {
-            draw_item_in_hand_has_more_ammo(LEFT_HAND, 0);
-            draw_item_in_hand_has_more_ammo(RIGHT_HAND, 0);
+            draw_item_in_hand_has_more_ammo(GUNLEFT, 0);
+            draw_item_in_hand_has_more_ammo(GUNRIGHT, 0);
 
             if (0)
             {
@@ -34447,7 +34714,7 @@ void store_BONDdata_curpos_to_previous(void) {
     g_CurrentPlayer->previous_model_pos.f[0] = g_CurrentPlayer->current_model_pos.f[0];
     g_CurrentPlayer->previous_model_pos.f[1] = g_CurrentPlayer->current_model_pos.f[1];
     g_CurrentPlayer->previous_model_pos.f[2] = g_CurrentPlayer->current_model_pos.f[2];
-    matrix_4x4_rotate_vector_in_place(currentPlayerGetMatrix10CC(), g_CurrentPlayer->previous_model_pos.f);
+    matrix_4x4_rotate_vector_in_place(currentPlayerGetMatrix10CC(), &g_CurrentPlayer->previous_model_pos);
 }
 
 #ifdef NONMATCHING
@@ -34538,7 +34805,7 @@ loop_2:
     // Node 8
     guMtxF2L(-32000.0f, &sp60, temp_s0, &spA0);
     set_BONDdata_field_10E0(temp_s0);
-    matrix_scalar_multiply(sub_GAME_7F0B4878(), &spC4);
+    matrix_scalar_multiply(bgGetLevelVisibilityScale(), &spC4);
     guMtxF2L(&spC4, g_CurrentPlayer->field_5C);
     sub_GAME_7F059334(g_CurrentPlayer->field_5C, g_CurrentPlayer->field_60);
     currentPlayerSetMatrix10C8(g_CurrentPlayer->field_5C);
@@ -34729,7 +34996,7 @@ glabel sub_GAME_7F0876C4
 /* 0BC498 7F087968 02002825 */   move  $a1, $s0
 /* 0BC49C 7F08796C 0FC1E0E1 */  jal   set_BONDdata_field_10E0
 /* 0BC4A0 7F087970 02002025 */   move  $a0, $s0
-/* 0BC4A4 7F087974 0FC2D21E */  jal   sub_GAME_7F0B4878
+/* 0BC4A4 7F087974 0FC2D21E */  jal   bgGetLevelVisibilityScale
 /* 0BC4A8 7F087978 00000000 */   nop
 /* 0BC4AC 7F08797C 46000306 */  mov.s $f12, $f0
 /* 0BC4B0 7F087980 0FC1629F */  jal   matrix_scalar_multiply
@@ -37163,25 +37430,25 @@ s32 sub_GAME_7F088618(void *arg0) {
     temp_s0_2 = (temp_s0 + 8);
     temp_s0->unk4 = osVirtualToPhysical(spBC);
     temp_s0_3 = (temp_s0_2 + 8);
-    *temp_s0_2 = 0xe7000000;
+    *temp_s0_2 = 0xe7000000;//gDPPipeSync(glistp++);
     temp_s0_2->unk4 = 0;
     temp_s0_4 = (temp_s0_3 + 8);
-    *temp_s0_3 = 0xba001402;
+    *temp_s0_3 = 0xba001402; //gDPSetCyceType(glistp++, G_CYC_1CYCLE);
     temp_s0_3->unk4 = 0;
     temp_s0_5 = (temp_s0_4 + 8);
-    *temp_s0_4 = 0xb900031d;
+    *temp_s0_4 = 0xb900031d; //gDPSetRenderMode(G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
     temp_s0_4->unk4 = 0x5041c8;
     temp_s0_6 = (temp_s0_5 + 8);
     *temp_s0_5 = 0xb9000002;
     *temp_s0_5 = 0;
     temp_s0_7 = (temp_s0_6 + 8);
-    *temp_s0_6 = 0xfcffffff;
+    *temp_s0_6 = 0xfcffffff;//gDPSetCombineMode(glistp++,SHADE, SHADE2);
     temp_s0_6->unk4 = 0xfffe793c;
     temp_s0_8 = (temp_s0_7 + 8);
-    *temp_s0_7 = 0xfa000000;
+    *temp_s0_7 = 0xfa000000;//gDPSetPrimColor(glistp++, 0, 0, 230, 230, 230, 0);
     temp_s0_7->unk4 = 0xe6e6e600;
     temp_s0_9 = (temp_s0_8 + 8);
-    *temp_s0_8 = 0xb6000000;
+    *temp_s0_8 = 0xb6000000;//gDPClearGeometryMode(glistp++, G_CULL_FRONT | G_CULL_BACK );
     temp_s0_8->unk4 = 0x3000;
     *temp_s0_9 = 0x6000000;
     temp_s0_10 = (temp_s0_9 + 8);
@@ -37616,11 +37883,11 @@ glabel mp_respawn_handler
 /* 0BD438 7F088908 8DE80004 */  lw    $t0, 4($t7)
 /* 0BD43C 7F08890C ADC10000 */  sw    $at, ($t6)
 /* 0BD440 7F088910 8DE10008 */  lw    $at, 8($t7)
-/* 0BD444 7F088914 3C108007 */  lui   $s0, %hi(ptr_setup_intro)
+/* 0BD444 7F088914 3C108007 */  lui   $s0, %hi(g_chraiCurrentSetup+8)
 /* 0BD448 7F088918 ADC80004 */  sw    $t0, 4($t6)
 /* 0BD44C 7F08891C ADC10008 */  sw    $at, 8($t6)
 /* 0BD450 7F088920 0FC1E4FB */  jal   init_player_BONDdata
-/* 0BD454 7F088924 8E105D08 */   lw    $s0, %lo(ptr_setup_intro)($s0)
+/* 0BD454 7F088924 8E105D08 */   lw    $s0, %lo(g_chraiCurrentSetup+8)($s0)
 /* 0BD458 7F088928 0FC1E62E */  jal   bondviewPlayerSpawnRelated
 /* 0BD45C 7F08892C 00000000 */   nop
 /* 0BD460 7F088930 3C118008 */  lui   $s1, %hi(g_CurrentPlayer)
@@ -37915,11 +38182,11 @@ glabel mp_respawn_handler
 /* 0BB460 7F088A70 8DE80004 */  lw    $t0, 4($t7)
 /* 0BB464 7F088A74 ADC10000 */  sw    $at, ($t6)
 /* 0BB468 7F088A78 8DE10008 */  lw    $at, 8($t7)
-/* 0BB46C 7F088A7C 3C108006 */  lui   $s0, %hi(ptr_setup_intro) # $s0, 0x8006
+/* 0BB46C 7F088A7C 3C108006 */  lui   $s0, %hi(g_chraiCurrentSetup+8) # $s0, 0x8006
 /* 0BB470 7F088A80 ADC80004 */  sw    $t0, 4($t6)
 /* 0BB474 7F088A84 ADC10008 */  sw    $at, 8($t6)
 /* 0BB478 7F088A88 0FC1E51B */  jal   init_player_BONDdata
-/* 0BB47C 7F088A8C 8E104C48 */   lw    $s0, %lo(ptr_setup_intro)($s0)
+/* 0BB47C 7F088A8C 8E104C48 */   lw    $s0, %lo(g_chraiCurrentSetup+8)($s0)
 /* 0BB480 7F088A90 0FC1E64E */  jal   bondviewPlayerSpawnRelated
 /* 0BB484 7F088A94 00000000 */   nop   
 /* 0BB488 7F088A98 3C118007 */  lui   $s1, %hi(g_CurrentPlayer) # $s1, 0x8007
@@ -39308,9 +39575,9 @@ void sub_GAME_7F08976C(f32 param_1) {
 /**
  * Address 0x7F089778.
  */
-f32 bondviewGetPlayerClippingHeight(struct player *player)
+f32 bondviewGetPlayerStanHeight(struct player *player)
 {
-    return player->clipping_height;
+    return player->stanHeight;
 }
 
 
@@ -39329,7 +39596,7 @@ f32 bondviewGetPlayerDuckingHeightRelated(struct player *player)
 
 
 
-struct PropRecord* get_curplayer_positiondata(void) {
+PropRecord* get_curplayer_positiondata(void) {
     return g_CurrentPlayer->prop;
 }
 
@@ -39362,8 +39629,8 @@ void bondviewKillCurrentPlayer(void)
             D_8003648C = 1;
         }
 
-        draw_item_in_hand_has_more_ammo(LEFT_HAND, 0);
-        draw_item_in_hand_has_more_ammo(RIGHT_HAND, 0);
+        draw_item_in_hand_has_more_ammo(GUNLEFT, 0);
+        draw_item_in_hand_has_more_ammo(GUNRIGHT, 0);
 
         if ((getMissiontimer() - g_CurrentPlayer->field_29F4) < g_playerPerm->shortest_inning)
         {
@@ -40558,18 +40825,24 @@ f32 get_BONDdata_bondfadefracnew(void)
 
 
 
-
-f32 get_curplay_horizontal_rotation_in_degrees(void) {
-    return ((360.0f - g_CurrentPlayer->vv_theta) * 6.2831855f) / 360.0f;
+/**
+ * Get the Current Heading of Current Player in Radians
+ * @return f32 Heading in Radians
+*/
+f32 get_curplay_horizontal_rotation_in_degrees(void)
+{
+    return DegToRad(360.0f - g_CurrentPlayer->vv_theta);
 }
 
 
 
-
-
-
-f32 get_curplay_vertical_rotation_in_degrees(void) {
-    return (g_CurrentPlayer->vv_verta * 6.2831855f) / 360.0f;
+/**
+ * Get the Current Pitch of Current Player in Radians
+ * @return f32 Pitch in Radians
+*/
+f32 get_curplay_vertical_rotation_in_degrees(void)
+{
+    return DegToRad(g_CurrentPlayer->vv_verta);
 }
 
 
@@ -40646,7 +40919,7 @@ u8 bondviewGetCurrentPlayersRoom(void)
 /**
  * Address 0x7F089FD4.
  */
-struct coord3d *bondviewGetCurrentPlayersPosition(void)
+coord3d *bondviewGetCurrentPlayersPosition(void)
 {
     if (g_CurrentPlayer->unknown == 1)
     {
@@ -40658,7 +40931,7 @@ struct coord3d *bondviewGetCurrentPlayersPosition(void)
 
 
 
-struct coord3d * bondviewGetCurrentPlayersPosition3(void)
+coord3d * bondviewGetCurrentPlayersPosition3(void)
 {
 
     if (g_CurrentPlayer->unknown == 1)
@@ -40677,7 +40950,7 @@ int get_BONDdata_field408(void) {
 /**
  * Address 0x7F08A03C.
  */
-void bondviewUpdateGuardTankFlagsRelated(struct PropRecord *arg0, s32 flags)
+void bondviewUpdateGuardTankFlagsRelated(PropRecord *arg0, s32 flags)
 {
     s32 sp1C;
 
@@ -40703,7 +40976,7 @@ void bondviewUpdateGuardTankFlagsRelated(struct PropRecord *arg0, s32 flags)
 /**
  * Address 0x7F08A0B0.
  */
-void bondviewGetPropHeightRelatedValues(struct PropRecord *arg0, struct rect4f **field_B0, s32 *arg2, f32 *height_related, f32 *collision)
+void bondviewGetPropHeightRelatedValues(PropRecord *arg0, struct rect4f **field_B0, s32 *arg2, f32 *height_related, f32 *collision)
 {
     s32 temp_v0;
 
@@ -40760,7 +41033,7 @@ void bondviewUpdatePlayerCollisionBounds(void)
 /**
  * Address 0x7F08A274.
  */
-void bondviewCollisionRadiusRelated(struct PropRecord* arg0, f32 *arg1, f32 *arg2, f32 *arg3)
+void bondviewCollisionRadiusRelated(PropRecord* arg0, f32 *arg1, f32 *arg2, f32 *arg3)
 {
     struct player **temp_v1;
 
@@ -41911,8 +42184,9 @@ void sub_GAME_7F08A928(int param_1)
 }
 
 
-void sub_GAME_7F08A944(int param) {
-    D_800368B4 = D_800368B4 | param;
+void sub_GAME_7F08A944(PLAYERFLAG flag)
+{
+    D_800368B4 |= flag;
 }
 
 #ifdef NONMATCHING
@@ -45398,10 +45672,11 @@ s32 getMissiontimer(void) {
 }
 
 
-void trigger_explosions_around_player(int delay){
-  D_80036444 = 1;
-  dword_CODE_bss_8007999C = delay + g_GlobalTimer;
-  dword_CODE_bss_800799A0 = 0;
+void trigger_explosions_around_player(int delay)
+{
+    D_80036444              = 1;
+    dword_CODE_bss_8007999C = delay + g_GlobalTimer;
+    dword_CODE_bss_800799A0 = 0;
 }
 
 

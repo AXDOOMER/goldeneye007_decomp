@@ -18,7 +18,7 @@ void __osViSwapContext()
     field = IO_READ(VI_CURRENT_REG) & 1; //field num
 
     origin = osVirtualToPhysical(vc->framep) + (vm->fldRegs[field].origin);
-    if (vc->state & VI_STATE_XSCALE_UPDATED)
+    if (vc->state & VI_STATE_X_SCALE)
     {
         vc->x.scale |= (vm->comRegs.xScale & ~VI_SCALE_MASK);
     }
@@ -26,7 +26,7 @@ void __osViSwapContext()
     {
         vc->x.scale = vm->comRegs.xScale;
     }
-    if (vc->state & VI_STATE_YSCALE_UPDATED)
+    if (vc->state & VI_STATE_Y_SCALE)
     {
         nomValue = vm->fldRegs[field].yScale & VI_SCALE_MASK;
         vc->y.scale = vc->y.factor * nomValue;

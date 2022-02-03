@@ -1,4 +1,4 @@
-#include "ultra64.h"
+#include <ultra64.h>
 
 //uncomment when actor is worked on
 //#include "chr.h"

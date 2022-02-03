@@ -5,13 +5,13 @@
 [![PAL-Status][PAL-badge]][PAL-link]
 
 [NTCS-link]: https://kholdfuzion.github.io/goldeneyestatus/
-[NTCS-badge]: https://github.com/kholdfuzion/goldeneye_src/workflows/NTSC-Status/badge.svg
+[NTCS-badge]: ../../workflows/NTSC-Status/badge.svg
 
 [JP-link]: https://kholdfuzion.github.io/goldeneyestatus/JPN.htm
-[JP-badge]: https://github.com/kholdfuzion/goldeneye_src/workflows/JP-Status/badge.svg
+[JP-badge]: ../../workflows/JP-Status/badge.svg
 
 [PAL-link]: https://kholdfuzion.github.io/goldeneyestatus/EU.htm
-[PAL-badge]: https://github.com/kholdfuzion/goldeneye_src/workflows/EU-Status/badge.svg
+[PAL-badge]: ../../workflows/EU-Status/badge.svg
 
 
 This is a WIP decompilation of Goldeneye 007!
@@ -61,7 +61,7 @@ make
 Clone this repository where you wish to have the project, with a command such as:
 
 ```bash
-git clone https://github.com/n64decomp/007
+git clone https://github.com/kholdfuzion/goldeneye_src
 ```
 
 #### Step 3: Prepare baserom(s) for asset extraction
@@ -138,7 +138,7 @@ The full list of configurable variables are listed below, with the default being
 * ``COMPARE``: ``1`` (compare ROM hash), ``0`` (do not compare ROM hash)
 * ``IDO_RECOMP``: ``NO``, ``YES``
 
-Additional documentation of the build process can be found [here](https://github.com/kholdfuzion/goldeneye_src/blob/master/readme-build.md).
+Additional documentation of the build process can be found [here](readme-build.md).
 
 ## Project Structure
 

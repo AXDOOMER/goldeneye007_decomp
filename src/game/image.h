@@ -1,6 +1,6 @@
 #ifndef _IMAGE_H_
 #define _IMAGE_H_
-#include "ultra64.h"
+#include <ultra64.h>
 
 struct image_entry
 {

@@ -1,7 +1,7 @@
-#include "ultra64.h"
-#include "bondgame.h"
-#include "memp.h"
-#include "game/lvl_text.h"
+#include <ultra64.h>
+#include <bondgame.h>
+#include <memp.h>
+#include "lvl_text.h"
 
 // bss
 //CODE.bss:8008C640

@@ -1,27 +1,33 @@
-#include "ultra64.h"
-#include "game/initactorpropstuff.h"
-#include "game/chr.h"
-#include "game/gun.h"
-#include "game/math_floor.h"
+#include <ultra64.h>
+#include "initactorpropstuff.h"
+#include "chr.h"
+#include "gun.h"
+#include "math_floor.h"
 
-
-void reset_counter_rand_body_head(void) {
+/** 
+ * Gets the number of currently allocated heads and bodies
+ * Note: Compile-time static? why bother with a function?
+ */
+void reset_counter_rand_body_head(void)
+{
     num_bodies = 0;
     while (list_of_bodies[num_bodies] >= 0)
     {
-        num_bodies += 1;
+        num_bodies++;
     }
-
+#ifdef ISGOLDFINGER
+    return; //return early as we have a new function for heads
+#endif
     num_male_heads = 0;
     while (random_male_heads[num_male_heads] >= 0)
     {
-        num_male_heads += 1;
+        num_male_heads++;
     }
 
     num_female_heads = 0;
     while (random_female_heads[num_female_heads] >= 0)
     {
-        num_female_heads += 1;
+        num_female_heads++;
     }
 }
 

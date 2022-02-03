@@ -1,6 +1,6 @@
-#include "ultra64.h"
-#include "game/math_asinacos.h"
-#include "game/math_asinfacosf.h"
+#include <ultra64.h>
+#include "math_asinacos.h"
+#include "math_asinfacosf.h"
 
 f32 acosf(f32 cosinef)
 {

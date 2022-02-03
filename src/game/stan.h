@@ -1,8 +1,8 @@
 #ifndef _STAN_H_
 #define _STAN_H_
-#include "ultra64.h"
+#include <ultra64.h>
 
-#include "bondtypes.h"
+#include <bondtypes.h>
 
 // RGB? I've called them 'triple' because I don't really know what RGB is
 // No parens around params
@@ -23,13 +23,13 @@
 // extern
 
 extern f32 stanSavedColl_someMin;
-extern struct PropRecord *stanSavedColl_posData;
+extern PropRecord *stanSavedColl_posData;
 
 /////////////////
 // prototypes
 
 // Necessary forward declaration
-void noteTileRoomIfDifferentToPrev(struct StandTile *tile, struct StandTile *unused, struct StandTileWalkCallbackRecord *data);
+void noteTileRoomIfDifferentToPrev( StandTile *tile,  StandTile *unused,  struct StandTileWalkCallbackRecord *data);
 
 void stanInitDebugNoticeList(void);
 
@@ -40,20 +40,20 @@ Gfx * sub_GAME_7F0B2D48(Gfx *arg0);
 Gfx * sub_GAME_7F0B303C(Gfx *arg0);
 Gfx * sub_GAME_7F0B3034(Gfx *arg0);
 Gfx * sub_GAME_7F0B312C(Gfx *arg0, s32 arg1);
-Gfx * sub_GAME_7F0B3024(Gfx *ptrdl, struct StandTilePoint *tile_point, u32 RGBAColor);
-s32 walkTilesBetweenPoints_NoCallback(struct StandTile **tileStack, f32 start_x, f32 start_z, f32 dest_x, f32 dest_z);
-s32 sub_GAME_7F0B0518(struct StandTile *tile, f32 p_x, f32 p_z);
-f32 stanGetPositionYValue(struct StandTile* tile, f32 p_x, f32 p_z);
-s32 getCollisionEdge_maybe(struct coord3d *pntA, struct coord3d *pntB);
-s32 sub_GAME_7F0B26B8(struct StandTile **tile, f32 target_x, f32 target_z, f32 b_z, f32 param_5);
-s32 sub_GAME_7F0B20D0(struct StandTile** tileStack, f32 target_x, f32 target_z, f32 unknown);
+Gfx * sub_GAME_7F0B3024(Gfx *ptrdl, StandTilePoint *tile_point, u32 RGBAColor);
+s32 walkTilesBetweenPoints_NoCallback(StandTile **tileStack, f32 start_x, f32 start_z, f32 dest_x, f32 dest_z);
+s32 sub_GAME_7F0B0518(StandTile *tile, f32 p_x, f32 p_z);
+f32 stanGetPositionYValue(StandTile* tile, f32 p_x, f32 p_z);
+s32 getCollisionEdge_maybe(coord3d *pntA, coord3d *pntB);
+s32 sub_GAME_7F0B26B8(StandTile **tile, f32 target_x, f32 target_z, f32 b_z, f32 param_5);
+s32 sub_GAME_7F0B20D0(StandTile** tileStack, f32 target_x, f32 target_z, f32 unknown);
 
-s32 sub_GAME_7F0B0E24(struct StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z, int objFlags, f32 unkHeight, f32 unkA, f32 unkB, f32 unkC);
-struct StandTile* sub_GAME_7F0B2718(struct StandTile* srcTile, tilePredicate_t tilePred);
-s32 sub_GAME_7F0B0D0C(struct StandTile *tile, f32 start_x, f32 start_z, struct StandTile **tilePtr, f32 end_x, f32 end_z, s32 *roomBuf, s32 maxBufSize);
-s32 sub_GAME_7F0B0C24(struct StandTile **tileStack, f32 start_x, f32 start_z, f32 dest_x, f32 dest_z, s32 *roomBuffer, s32 *rtnCountSize, s32 maxBufSize);
+s32 sub_GAME_7F0B0E24(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z, int objFlags, f32 unkHeight, f32 unkA, f32 unkB, f32 unkC);
+StandTile* sub_GAME_7F0B2718(StandTile* srcTile, tilePredicate_t tilePred);
+s32 sub_GAME_7F0B0D0C(StandTile *tile, f32 start_x, f32 start_z,  StandTile **tilePtr, f32 end_x, f32 end_z, s32 *roomBuf, s32 maxBufSize);
+s32 sub_GAME_7F0B0C24(StandTile **tileStack, f32 start_x, f32 start_z, f32 dest_x, f32 dest_z, s32 *roomBuffer, s32 *rtnCountSize, s32 maxBufSize);
 s32 sub_GAME_7F0B18B8(StandTile **, f32, f32, f32, s32, f32, f32);
-u8 getTileRoom(struct StandTile* tile);
+u8 getTileRoom(StandTile* tile);
 PropRecord *sub_GAME_7F0B1410(StandTile *arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, s32 arg5);
 
 #endif

@@ -1,8 +1,8 @@
 #ifndef _IMAGE_BANK_H_
 #define _IMAGE_BANK_H_
-#include "ultra64.h"
-#include "bondtypes.h"
-#include "game/bondview.h"
+#include <ultra64.h>
+#include <bondtypes.h>
+#include "bondview.h"
 
 extern struct sImageTableEntry *crosshairimage;
 

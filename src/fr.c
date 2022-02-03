@@ -1,13 +1,12 @@
-#include "ultra64.h"
+#include <ultra64.h>
 #include "vi.h"
 #include "fr.h"
-#include "bondgame.h"
-#include "bondconstants.h"
+#include <bondgame.h>
+#include <bondconstants.h>
 #include "player.h" // g_CurrentPlayer
 #include "sched.h"
 #include "rsp.h"
-#include "PR/os.h"
-#include "include/PR/os.h"
+#include <PR/os.h>
 #include "indy_comms.h"
 #include "game/bondview.h"
 #include "game/viewport.h"

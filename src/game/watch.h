@@ -1,7 +1,7 @@
 #ifndef _WATCH_H_
 #define _WATCH_H_
-#include "ultra64.h"
-#include "bondconstants.h"
+#include <ultra64.h>
+#include <bondconstants.h>
 
 #ifdef VERSION_EU
 #define XOFFSET_1 65

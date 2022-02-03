@@ -1,7 +1,7 @@
 #ifndef _BOSS_H_
 #define _BOSS_H_
 #include <ultra64.h>
-#include "bondgame.h"
+#include <bondgame.h>
 
 struct memallocstring
 {

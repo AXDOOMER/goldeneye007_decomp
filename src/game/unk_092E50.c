@@ -1,5 +1,5 @@
-#include "ultra64.h"
-#include "game/unk_092E50.h"
+#include <ultra64.h>
+#include "unk_092E50.h"
 
 // bss
 //CODE.bss:80079E80

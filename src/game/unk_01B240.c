@@ -1,5 +1,5 @@
-#include "ultra64.h"
-#include "game/unk_01B240.h"
+#include <ultra64.h>
+#include "unk_01B240.h"
 
 
 s32 D_8002BB00 = 0;

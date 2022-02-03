@@ -1,4 +1,4 @@
-#include "ultra64.h"
+#include <ultra64.h>
 #include "zlib.h"
 #include "include/string.h"
 #include "include/bstring.h"

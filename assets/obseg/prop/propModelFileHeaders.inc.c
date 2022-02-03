@@ -1,4 +1,4 @@
-#include "assets/obseg/prop/alarm1/ModelFileHeader.inc.c"
+#include <assets/obseg/prop/alarm1/ModelFileHeader.inc.c>
 MODELFILEHEADER(alarm2, 0, &SKELETON(standard_object), 0, 0, 1, 208.22205, 0, 3)
 MODELFILEHEADER(explosionbit, 0, &SKELETON(standard_object), 0, 0, 1, 208.22205, 0, 0)
 MODELFILEHEADER(ammo_crate1, 0, &SKELETON(standard_object), 0, 0, 1, 691.83429, 0, 3)
@@ -182,7 +182,27 @@ MODELFILEHEADER(damchaindoor, 0, &SKELETON(standard_object), 0, 0, 1, 171.36655,
 MODELFILEHEADER(silotopdoor, 0, &SKELETON(standard_object), 0, 0, 1, 2675.3958, 0, 5)
 MODELFILEHEADER(doorprison1, 0, &SKELETON(standard_object), 0, 0, 1, 1062.0833, 0, 1)
 MODELFILEHEADER(doorstatgate, 0, &SKELETON(standard_object), 0, 0, 1, 1503.9503, 0, 3)
+#ifdef DEBUG
+char* chrobj_SwitchNames[] = {
+    "GFNX_GUN_FLASH",
+    "MUZZLE",
+    "SW_FLASH" };
+#endif
 MODELFILEHEADER(chrkalash, 0, &SKELETON(prop_weapon), 0, 0x3, 0x1, 403.53766, 0, 8)
+/*
+// ROOTNODE SKELETON           SWITCHES NUMSW   NUMJOINTS BOUNDRAD  NUMREC NUMTEX TEXTURES  SWITCHNAMES                 ISLOADED
+
+//D:80038CD0
+struct ModelFileHeader PchrkalashZeader = {
+    NULL,    &chrobjPchrSkeleton,    NULL,    3,    1,    403.53766,    0,    8,    NULL
+                                                                                        #ifdef DEBUG
+                                                                                            ,chrobj_SwitchNames
+                                                                                        #endif
+                                                                                                                            #if !defined(VERSION_EU)
+                                                                                                                                ,FALSE
+                                                                                                                            #endif
+    };
+*/
 MODELFILEHEADER(chrgrenadelaunch, 0, &SKELETON(prop_weapon), 0, 0x3, 0x1, 422.48355, 0, 7)
 MODELFILEHEADER(chrknife, 0, &SKELETON(prop_weapon), 0, 0x3, 0x1, 245.14619, 0, 2)
 MODELFILEHEADER(chrlaser, 0, &SKELETON(prop_weapon), 0, 0x3, 0x2, 444.66241, 0, 8)
@@ -276,6 +296,52 @@ MODELFILEHEADER(chrblackbox, 0, &SKELETON(standard_object), 0, 0, 1, 128.31796, 
 MODELFILEHEADER(chrvideotape, 0, &SKELETON(standard_object), 0, 0, 1, 122.69632, 0, 9)
 MODELFILEHEADER(nintendologo, 0, &SKELETON(standard_object), 0, 0, 1, 1868.335, 0, 1)
 MODELFILEHEADER(goldeneyelogo, 0, &SKELETON(standard_object), 0, 0, 1, 1287.1866, 0, 2)
+#ifdef DEBUG
+char* WalletBond_SwitchNames[] = {
+    "SW_TABS",
+    "SW_PAPER",
+    "SW_EYESONLY",
+    "SW_OHMSS",
+    "SW_CONFIDENTIAL",
+    "SW_CONFIDENTIAL2",
+    "SW_CLASSIFIED",
+    "SW_PHOTOBOND",
+    "SW_BROSNAN",
+    "SW_CONNERY",
+    "SW_DALTON",
+    "SW_MOORE",
+    "SW_PHOTOBRIEF",
+    "SW_COVER",
+    "SW_PHOTOCOVER",
+    "SW_BROSNANCOVER",
+    "SW_CONNERYCOVER",
+    "SW_DALTONCOVER",
+    "SW_MOORECOVER",
+    "SW_SLIDES",
+    "SW_PICS",
+    "GFXHIT0_PICS",
+    "SW_BRIEF1",
+    "SW_BRIEF2",
+    "SW_BRIEF3",
+    "SW_BRIEF4",
+    "SW_BRIEF5",
+    "SW_BRIEF6",
+    "SW_BRIEF7",
+    "SW_BRIEF8",
+    "SW_BRIEF9",
+    "SW_BRIEF10",
+    "SW_BRIEF11",
+    "SW_BRIEF12",
+    "SW_BRIEF13",
+    "SW_BRIEF14",
+    "SW_BRIEF15",
+    "SW_BRIEF16",
+    "SW_BRIEF17",
+    "SW_BRIEF18",
+    "SW_BRIEF19",
+    "SW_BRIEF20",
+    "SW_BLANK" };
+#endif
 MODELFILEHEADER(walletbond, 0, &SKELETON(walletbond), 0, 0x2B, 0x1, 3504.53, 0, 0x54)
 MODELFILEHEADER(miltruck, 0, &SKELETON(car), 0, 0xB, 0x5, 4589.7188, 0, 0x16)
 MODELFILEHEADER(jeep, 0, &SKELETON(car), 0, 0xB, 0x5, 2107.8105, 0, 0x10)

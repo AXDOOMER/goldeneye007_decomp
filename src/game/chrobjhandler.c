@@ -1,28 +1,29 @@
-#include "ultra64.h"
-#include "include/math.h"
-#include "include/PR/libaudio.h"
-#include "assets/GlobalImageTable.h"
-#include "bondgame.h"
-#include "boss.h"
-#include "snd.h"
-#include "music.h"
-#include "memp.h"
-#include "game/bg.h"
-#include "game/bondview.h"
-#include "game/bondinv.h"
-#include "game/chr.h"
-#include "game/chrai.h"
-#include "game/chrlv.h"
-#include "game/chrobjdata.h"
-#include "game/chrobjhandler.h"
-#include "game/fog.h"
-#include "game/lvl.h"
-#include "game/lvl_text.h"
-#include "game/math_floor.h"
-#include "game/math_asinfacosf.h"
-#include "game/math_atan2f.h"
-#include "game/objecthandler.h"
-#include "game/quaternion.h"
+#include <ultra64.h>
+#include <math.h>
+#include <PR/libaudio.h>
+#include <assets/GlobalImageTable.h>
+#include <bondgame.h>
+#include <boss.h>
+#include <snd.h>
+#include <music.h>
+#include <memp.h>
+#include "bg.h"
+#include "bondview.h"
+#include "bondinv.h"
+#include "chr.h"
+#include "chrai.h"
+#include "chrlv.h"
+#include "chrobjdata.h"
+#include "chrobjhandler.h"
+#include "fog.h"
+#include "lvl.h"
+#include "lvl_text.h"
+#include "math_floor.h"
+#include "math_asinfacosf.h"
+#include "math_atan2f.h"
+#include "objecthandler.h"
+#include "quaternion.h"
+#include <limits.h>
 
 #ifdef VERSION_EU
 
@@ -42,7 +43,7 @@ s32 alarm_timer = 0;
 s32 *ptr_alarm_sfx = 0;
 f32 toxic_gas_sound_timer = 0.0;
 s32 activate_gas_sound_timer = FALSE;
-struct coord3d D_80030AD0 = { 0.0f, 0.0f, 0.0f };
+coord3d D_80030AD0 = { 0.0f, 0.0f, 0.0f };
 s32 D_80030ADC = 0;
 f32 D_80030AE0 = 0.0f;
 ALSoundState *ptr_gas_sound = NULL;
@@ -52,9 +53,9 @@ f32 clock_time = 0;
 s32 D_80030AF4 = 0;
 s32 D_80030AF8 = 0;
 s32 D_80030AFC = 0;
-struct ObjectRecord *g_LevelLoadPropSwitch = NULL;
-struct ObjectRecord *g_LevelLoadPropLockDoor = NULL;
-struct ObjectRecord *g_LevelLoadPropSafeItem = NULL;
+ObjectRecord *g_LevelLoadPropSwitch = NULL;
+ObjectRecord *g_LevelLoadPropLockDoor = NULL;
+ObjectRecord *g_LevelLoadPropSafeItem = NULL;
 s32 D_80030B0C = 0;
 s32 bodypartshot = 0xFFFFFFFF;
 f32 F_80030B14 = 1.0;
@@ -1140,8 +1141,38 @@ glabel sub_GAME_7F03FC80
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03FDA8(void) {
+void sub_GAME_7F03FDA8(PropRecord *prop)
+{
+    ObjectRecord *sp1C;
+    s32           temp_v0;
+    struct
+    {
+        u32            id;
+        coord3d pos;
+        vec3d vec;
+        u32            padding;
+        float          m[4][4];
+    } * temp_v0_2;
+    ObjectRecord *temp_v1;
 
+    temp_v1 = prop->obj;
+    temp_v0 = temp_v1->runtime_bitflags;
+    if ((temp_v0 & 0x40) != 0)
+    {
+        sp1C                    = temp_v1;
+        temp_v1->unk6C->m[2][1] = (bitwise f32)sub_GAME_7F03FC80();
+        return;
+    }
+    if ((temp_v0 & 0x80) == 0)
+    {
+        sp1C           = temp_v1;
+        temp_v0_2      = sub_GAME_7F03FC80();
+        temp_v1->unk6C = temp_v0_2;
+        if (temp_v0_2 != 0)
+        {
+            temp_v1->runtime_bitflags |= 0x80;
+        }
+    }
 }
 #else
 GLOBAL_ASM(
@@ -1185,8 +1216,44 @@ glabel sub_GAME_7F03FDA8
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03FE14(void) {
+void sub_GAME_7F03FE14( PropRecord *prop)
+{
+    s32           temp_a1;
+    s8           *temp_v0_2;
+    ObjectRecord *temp_v0;
+    struct
+    {
+        u32            id;
+        struct coord3d pos;
+        struct coord3d vec;
+        u32            padding;
+        float          m[4][4];
+    } * phi_v1;
 
+    temp_v0 = prop->obj;
+    temp_a1 = temp_v0->runtime_bitflags;
+    phi_v1  = NULL;
+    if ((temp_a1 & RUNTIMEBITFLAG_DEPOSIT) != 0)
+    {
+        phi_v1 = temp_v0->unk6C->m[2][1];
+    }
+    else if ((temp_a1 & RUNTIMEBITFLAG_LAUNCHING) != 0)
+    {
+        phi_v1 = temp_v0->unk6C;
+    }
+    if (phi_v1 != 0)
+    {
+        phi_v1->id |= 4;
+        temp_v0_2 = prop->stanid;
+        if (temp_v0_2 != 0)
+        {
+            phi_v1->unkCD = 0xFF;
+            phi_v1->unkCC = temp_v0_2->unk3;
+            return;
+        }
+        phi_v1->unkCC = 0xFF;
+        // Duplicate return node #8. Try simplifying control flow for better match
+    }
 }
 #else
 GLOBAL_ASM(
@@ -1318,7 +1385,7 @@ glabel sub_GAME_7F03FE98
 #ifdef NONMATCHING
 s32 sub_GAME_7F03FF60(ObjectRecord *arg0)
 {
-    if ((arg0->head.hidden2 & 0x80) == 0)
+    if (!(arg0->state & PROPSTATE_DESTROYED))
     {
         return (s32) ((arg0->field_70 * 3.0f) / (f32)(arg0->damage));
     }
@@ -1360,14 +1427,16 @@ glabel sub_GAME_7F03FF60
 
 
 
-
-s32 do_something_if_object_destroyed(ObjectRecord *arg0)
+/*
+ * maxdamage / 4 + 1
+ */
+s32 do_something_if_object_destroyed(ObjectRecord *obj)
 {
-    if ((arg0->head.hidden2 & 0x80) == 0)
+    if (!(obj->state & PROPSTATE_DESTROYED))
     {
-        return 0;
+        return 0; //if Not Dead
     }
-    return ((s32) arg0->field_70 >> 2) + 1;
+    return ((s32) obj->field_70 >> 2) + 1;
 }
 
 
@@ -1375,8 +1444,35 @@ s32 do_something_if_object_destroyed(ObjectRecord *arg0)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03FFF8(void) {
+ModelNode_BoundingBoxRecord *sub_GAME_7F03FFF8(ModelFileHeader *obj)
+{
+    ModelNode *mdlnext;
 
+    if (obj->RootNode->Child)
+    {
+        //for each next node, check for BBox
+        for (mdlnext = obj->RootNode->Child; mdlnext; mdlnext = mdlnext->Next)
+        {
+            if (mdlnext->Opcode == FLTOP_BOUNDINGBOX)
+            {
+                return mdlnext->Data;
+            }
+        }
+
+        //none found, check FIRST child
+        if (obj->RootNode->Child->Child)
+        {
+            //for each next node, check for BBox
+            for (mdlnext = obj->RootNode->Child->Child; mdlnext; mdlnext = mdlnext->Next)
+            {
+                if (mdlnext->Opcode == FLTOP_BOUNDINGBOX)
+                {
+                    return mdlnext->Data;
+                }
+            }
+        }
+    }
+    return NULL;
 }
 #else
 GLOBAL_ASM(
@@ -2120,10 +2216,81 @@ glabel sub_GAME_7F0407F4
 
 
 
+//todo: fix function calls and global vars "undefined reference to"
+#ifdef ONMATCHING
+//moveToPad
+void sub_GAME_7F04088C(ObjectRecord *baseobj, PadRecord *pad, Mtxf *matrix, StandTile *stan, PadRecord *pad2) //#MATCH
+{
+    int                          padd[1];
+    ModelNode_BoundingBoxRecord *modelBoundingBox = sub_GAME_7F03FFF8(baseobj->model->obj); //GetBoundingBox //a0 yes
+    f32                          xmax             = sub_GAME_7F03E864(modelBoundingBox);    //GetXMax//9c yes
+    f32                          ymin             = sub_GAME_7F03E86C(modelBoundingBox);    //GetYMin//98 yes
+    coord3d                      newPos;                                                    //8c 90 94 yes
+    StandTile *                  mStan = stan;                                              //88
+    Mtxf                         mtxcopy;                                                   //48 yes (size 0x40)
 
-#ifdef NONMATCHING
-void sub_GAME_7F04088C(void) {
+    if (baseobj->flags & 4)
+    {
+        matrix_4x4_set_rotation_around_z(M_PI, &mtxcopy);
+        matrix_4x4_multiply_in_place(matrix, &mtxcopy);
+        newPos.x = pad2->pos.x - (mtxcopy.m[1][0] * ymin);
+        newPos.y = pad2->pos.y - (mtxcopy.m[1][1] * ymin);
+        newPos.z = pad2->pos.z - (mtxcopy.m[1][2] * ymin);
+    }
+    else if (baseobj->flags & 8)
+    {
+        matrix_4x4_copy(matrix, &mtxcopy);
+        newPos.x = pad2->pos.x - (mtxcopy.m[1][0] * xmax);
+        newPos.y = pad2->pos.y - (mtxcopy.m[1][1] * xmax);
+        newPos.z = pad2->pos.z - (mtxcopy.m[1][2] * xmax);
+    }
+    else
+    {
+        ObjectRecord *roomObj;                                                               //44
+        f32           distfromTileCenter = sub_GAME_7F0B2970(mStan, pad->pos.x, pad->pos.z); //40
+        f32           byrefA;                                                                //3c
+        f32           byrefB;                                                                //38
+        f32           byrefC;                                                                //34
+        f32           byrefD;                                                                //30
 
+        matrix_4x4_copy(matrix, &mtxcopy);
+        newPos.x = pad2->pos.x - (mtxcopy.m[1][0] * xmax);
+        newPos.z = pad2->pos.z - (mtxcopy.m[1][2] * xmax);
+        roomObj  = sub_GAME_7F03FAB0(pad, stan->room);
+        if (roomObj)
+        {
+            PropRecord *roomObjProp = roomObj->prop;
+            sub_GAME_7F03CC20(roomObjProp, &byrefA, &byrefB, &byrefC, &byrefD);
+            if ((distfromTileCenter < byrefC) && (byrefD < ((mtxcopy.m[1][1] * (ymin - xmax)) + distfromTileCenter + 4.0f)))
+            {
+                newPos.y = byrefC - (mtxcopy.m[1][1] * xmax);
+                baseobj->runtime_bitflags |= RUNTIMEBITFLAG_00008000;
+            }
+            else
+            {
+                newPos.y = (distfromTileCenter - (mtxcopy.m[1][1] * xmax)) + 4.0f;
+            }
+        }
+        else
+        {
+            newPos.y = (distfromTileCenter - (mtxcopy.m[1][1] * xmax)) + 4.0f;
+        }
+    }
+    if (!(baseobj->flags2 & 1) && sub_GAME_7F0B0BE4(&mStan, pad->pos.x, pad->pos.z, newPos.x, newPos.z))
+    {
+        sub_GAME_7F040754(baseobj, &newPos, &mtxcopy, mStan);
+    }
+    else
+    {
+        sub_GAME_7F040754(baseobj, pad, &mtxcopy, stan);
+        if ((baseobj->flags2 & 1) || (baseobj->flags & 0x1000))
+        {
+            baseobj->runtime_pos.x = newPos.x;
+            baseobj->runtime_pos.y = newPos.y;
+            baseobj->runtime_pos.z = newPos.z;
+        }
+    }
+    sub_GAME_7F040484(baseobj);
 }
 #else
 GLOBAL_ASM(
@@ -2470,8 +2637,8 @@ glabel sub_GAME_7F040BA0
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F040CF0(void) {
-
+void sub_GAME_7F040CF0(PropRecord*)
+{
 }
 #else
 GLOBAL_ASM(
@@ -2779,8 +2946,27 @@ glabel if_a0_plus_3_is_4_then_10_else_20
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F041074(void) {
+//https://decomp.me/scratch/5Va8I
+bool sub_GAME_7F041074(coord3d *zeropos, coord3d *pos, coord3d *vec, f32 scale)
+{
+    f32   dist2rd;
 
+    vec3d vector;
+
+    vector.x = vec->x - zeropos->x;
+    vector.y = vec->y - zeropos->y;
+    vector.z = vec->z - zeropos->z;
+
+    dist2rd = (pos->x * vector.x) + (pos->y * vector.y) + (pos->z * vector.z);
+
+    if ((dist2rd > 0.0f) &&
+        ((
+             (((vector.z * vector.z) + (vector.x * vector.x) + (vector.y * vector.y)) - (scale * scale)) *
+             ((pos->z * pos->z) + (pos->x * pos->x) + (pos->y * pos->y))) <= (dist2rd * dist2rd)))
+    {
+        return TRUE;
+    }
+    return FALSE;
 }
 #else
 GLOBAL_ASM(
@@ -5107,23 +5293,23 @@ void chrobjCallsApplySpeed(f32 *openPosition, f32 maxFrac, f32 *speedPtr, f32 ac
 {
     if (maxFrac - *openPosition < -M_PI_F)
     {
-        maxFrac += M_TAU;
+        maxFrac += M_TAU_F;
     }
     else if (maxFrac - *openPosition >= M_PI_F)
     {
-        maxFrac -= M_TAU;
+        maxFrac -= M_TAU_F;
     }
 
     chrobjApplySpeed(openPosition, maxFrac, speedPtr, accel, decel, maxSpeed);
 
     if (*openPosition < 0.0f)
     {
-        *openPosition = *openPosition + M_TAU;
+        *openPosition = *openPosition + M_TAU_F;
     }
 
-    if (*openPosition >= M_TAU)
+    if (*openPosition >= M_TAU_F)
     {
-        *openPosition = *openPosition - M_TAU;
+        *openPosition = *openPosition - M_TAU_F;
     }
 }
 
@@ -11408,12 +11594,12 @@ glabel object_interaction
 /* 07C1FC 7F0476CC 8E2400AC */   lw    $a0, 0xac($s1)
 /* 07C200 7F0476D0 8E2400A4 */  lw    $a0, 0xa4($s1)
 .L7F0476D4:
-/* 07C204 7F0476D4 3C058007 */  lui   $a1, %hi(ptr_setup_path_tbl)
+/* 07C204 7F0476D4 3C058007 */  lui   $a1, %hi(g_chraiCurrentSetup+0)
 /* 07C208 7F0476D8 5080002A */  beql  $a0, $zero, .L7F047784
 /* 07C20C 7F0476DC 8E2B0008 */   lw    $t3, 8($s1)
 /* 07C210 7F0476E0 8E3800A8 */  lw    $t8, 0xa8($s1)
 /* 07C214 7F0476E4 8C8F0000 */  lw    $t7, ($a0)
-/* 07C218 7F0476E8 24A55D00 */  addiu $a1, %lo(ptr_setup_path_tbl) # addiu $a1, $a1, 0x5d00
+/* 07C218 7F0476E8 24A55D00 */  addiu $a1, %lo(g_chraiCurrentSetup+0) # addiu $a1, $a1, 0x5d00
 /* 07C21C 7F0476EC 00184080 */  sll   $t0, $t8, 2
 /* 07C220 7F0476F0 01E81021 */  addu  $v0, $t7, $t0
 /* 07C224 7F0476F4 8C4B0000 */  lw    $t3, ($v0)
@@ -12014,8 +12200,8 @@ glabel object_interaction
 /* 07CB0C 7F047FDC 0FC1B2E6 */  jal   getsuboffset
 /* 07CB10 7F047FE0 8FA50070 */   lw    $a1, 0x70($sp)
 /* 07CB14 7F047FE4 C62A0058 */  lwc1  $f10, 0x58($s1)
-/* 07CB18 7F047FE8 3C058007 */  lui   $a1, %hi(ptr_setup_path_tbl)
-/* 07CB1C 7F047FEC 24A55D00 */  addiu $a1, %lo(ptr_setup_path_tbl) # addiu $a1, $a1, 0x5d00
+/* 07CB18 7F047FE8 3C058007 */  lui   $a1, %hi(g_chraiCurrentSetup+0)
+/* 07CB1C 7F047FEC 24A55D00 */  addiu $a1, %lo(g_chraiCurrentSetup+0) # addiu $a1, $a1, 0x5d00
 /* 07CB20 7F047FF0 E66A0008 */  swc1  $f10, 8($s3)
 /* 07CB24 7F047FF4 C6280060 */  lwc1  $f8, 0x60($s1)
 /* 07CB28 7F047FF8 E6680010 */  swc1  $f8, 0x10($s3)
@@ -12024,9 +12210,9 @@ glabel object_interaction
 /* 07CB34 7F048004 1020000B */  beqz  $at, .L7F048034
 /* 07CB38 7F048008 00027900 */   sll   $t7, $v0, 4
 /* 07CB3C 7F04800C 00026880 */  sll   $t5, $v0, 2
-/* 07CB40 7F048010 3C058007 */  lui   $a1, %hi(ptr_setup_path_tbl)
+/* 07CB40 7F048010 3C058007 */  lui   $a1, %hi(g_chraiCurrentSetup+0)
 /* 07CB44 7F048014 01A26823 */  subu  $t5, $t5, $v0
-/* 07CB48 7F048018 24A55D00 */  addiu $a1, %lo(ptr_setup_path_tbl) # addiu $a1, $a1, 0x5d00
+/* 07CB48 7F048018 24A55D00 */  addiu $a1, %lo(g_chraiCurrentSetup+0) # addiu $a1, $a1, 0x5d00
 /* 07CB4C 7F04801C 000D6880 */  sll   $t5, $t5, 2
 /* 07CB50 7F048020 8CB80018 */  lw    $t8, 0x18($a1)
 /* 07CB54 7F048024 01A26823 */  subu  $t5, $t5, $v0
@@ -16514,12 +16700,12 @@ glabel object_interaction
 /* 07C640 7F047AD0 8E2400AC */   lw    $a0, 0xac($s1)
 /* 07C644 7F047AD4 8E2400A4 */  lw    $a0, 0xa4($s1)
 .Ljp7F047AD8:
-/* 07C648 7F047AD8 3C058007 */  lui   $a1, %hi(ptr_setup_path_tbl) # $a1, 0x8007
+/* 07C648 7F047AD8 3C058007 */  lui   $a1, %hi(g_chraiCurrentSetup+0) # $a1, 0x8007
 /* 07C64C 7F047ADC 5080002A */  beql  $a0, $zero, .Ljp7F047B88
 /* 07C650 7F047AE0 8E2F0008 */   lw    $t7, 8($s1)
 /* 07C654 7F047AE4 8E2E00A8 */  lw    $t6, 0xa8($s1)
 /* 07C658 7F047AE8 8C8C0000 */  lw    $t4, ($a0)
-/* 07C65C 7F047AEC 24A55D40 */  addiu $a1, %lo(ptr_setup_path_tbl) # addiu $a1, $a1, 0x5d40
+/* 07C65C 7F047AEC 24A55D40 */  addiu $a1, %lo(g_chraiCurrentSetup+0) # addiu $a1, $a1, 0x5d40
 /* 07C660 7F047AF0 000E5080 */  sll   $t2, $t6, 2
 /* 07C664 7F047AF4 018A1021 */  addu  $v0, $t4, $t2
 /* 07C668 7F047AF8 8C4F0000 */  lw    $t7, ($v0)
@@ -17120,8 +17306,8 @@ glabel object_interaction
 /* 07CF50 7F0483E0 0FC1B462 */  jal   getsuboffset
 /* 07CF54 7F0483E4 8FA50074 */   lw    $a1, 0x74($sp)
 /* 07CF58 7F0483E8 C62A0058 */  lwc1  $f10, 0x58($s1)
-/* 07CF5C 7F0483EC 3C058007 */  lui   $a1, %hi(ptr_setup_path_tbl) # $a1, 0x8007
-/* 07CF60 7F0483F0 24A55D40 */  addiu $a1, %lo(ptr_setup_path_tbl) # addiu $a1, $a1, 0x5d40
+/* 07CF5C 7F0483EC 3C058007 */  lui   $a1, %hi(g_chraiCurrentSetup+0) # $a1, 0x8007
+/* 07CF60 7F0483F0 24A55D40 */  addiu $a1, %lo(g_chraiCurrentSetup+0) # addiu $a1, $a1, 0x5d40
 /* 07CF64 7F0483F4 E66A0008 */  swc1  $f10, 8($s3)
 /* 07CF68 7F0483F8 C6280060 */  lwc1  $f8, 0x60($s1)
 /* 07CF6C 7F0483FC E6680010 */  swc1  $f8, 0x10($s3)
@@ -17130,9 +17316,9 @@ glabel object_interaction
 /* 07CF78 7F048408 1020000B */  beqz  $at, .Ljp7F048438
 /* 07CF7C 7F04840C 00026100 */   sll   $t4, $v0, 4
 /* 07CF80 7F048410 00025880 */  sll   $t3, $v0, 2
-/* 07CF84 7F048414 3C058007 */  lui   $a1, %hi(ptr_setup_path_tbl) # $a1, 0x8007
+/* 07CF84 7F048414 3C058007 */  lui   $a1, %hi(g_chraiCurrentSetup+0) # $a1, 0x8007
 /* 07CF88 7F048418 01625823 */  subu  $t3, $t3, $v0
-/* 07CF8C 7F04841C 24A55D40 */  addiu $a1, %lo(ptr_setup_path_tbl) # addiu $a1, $a1, 0x5d40
+/* 07CF8C 7F04841C 24A55D40 */  addiu $a1, %lo(g_chraiCurrentSetup+0) # addiu $a1, $a1, 0x5d40
 /* 07CF90 7F048420 000B5880 */  sll   $t3, $t3, 2
 /* 07CF94 7F048424 8CAE0018 */  lw    $t6, 0x18($a1)
 /* 07CF98 7F048428 01625823 */  subu  $t3, $t3, $v0
@@ -21627,12 +21813,12 @@ glabel object_interaction
 /* 07A298 7F0478A8 8E2400AC */   lw    $a0, 0xac($s1)
 /* 07A29C 7F0478AC 8E2400A4 */  lw    $a0, 0xa4($s1)
 .L7F0478B0:
-/* 07A2A0 7F0478B0 3C058006 */  lui   $a1, %hi(ptr_setup_path_tbl) # $a1, 0x8006
+/* 07A2A0 7F0478B0 3C058006 */  lui   $a1, %hi(g_chraiCurrentSetup+0) # $a1, 0x8006
 /* 07A2A4 7F0478B4 5080002A */  beql  $a0, $zero, .L7F047960
 /* 07A2A8 7F0478B8 8E2C0008 */   lw    $t4, 8($s1)
 /* 07A2AC 7F0478BC 8E2800A8 */  lw    $t0, 0xa8($s1)
 /* 07A2B0 7F0478C0 8C8A0000 */  lw    $t2, ($a0)
-/* 07A2B4 7F0478C4 24A54C40 */  addiu $a1, %lo(ptr_setup_path_tbl) # addiu $a1, $a1, 0x4c40
+/* 07A2B4 7F0478C4 24A54C40 */  addiu $a1, %lo(g_chraiCurrentSetup+0) # addiu $a1, $a1, 0x4c40
 /* 07A2B8 7F0478C8 00085880 */  sll   $t3, $t0, 2
 /* 07A2BC 7F0478CC 014B1021 */  addu  $v0, $t2, $t3
 /* 07A2C0 7F0478D0 8C4C0000 */  lw    $t4, ($v0)
@@ -22234,8 +22420,8 @@ glabel object_interaction
 /* 07ABAC 7F0481BC 0FC1B476 */  jal   getsuboffset
 /* 07ABB0 7F0481C0 02002825 */   move  $a1, $s0
 /* 07ABB4 7F0481C4 C62A0058 */  lwc1  $f10, 0x58($s1)
-/* 07ABB8 7F0481C8 3C058006 */  lui   $a1, %hi(ptr_setup_path_tbl) # $a1, 0x8006
-/* 07ABBC 7F0481CC 24A54C40 */  addiu $a1, %lo(ptr_setup_path_tbl) # addiu $a1, $a1, 0x4c40
+/* 07ABB8 7F0481C8 3C058006 */  lui   $a1, %hi(g_chraiCurrentSetup+0) # $a1, 0x8006
+/* 07ABBC 7F0481CC 24A54C40 */  addiu $a1, %lo(g_chraiCurrentSetup+0) # addiu $a1, $a1, 0x4c40
 /* 07ABC0 7F0481D0 E66A0008 */  swc1  $f10, 8($s3)
 /* 07ABC4 7F0481D4 C6280060 */  lwc1  $f8, 0x60($s1)
 /* 07ABC8 7F0481D8 E6680010 */  swc1  $f8, 0x10($s3)
@@ -22244,9 +22430,9 @@ glabel object_interaction
 /* 07ABD4 7F0481E4 1020000B */  beqz  $at, .L7F048214
 /* 07ABD8 7F0481E8 00024900 */   sll   $t1, $v0, 4
 /* 07ABDC 7F0481EC 00027880 */  sll   $t7, $v0, 2
-/* 07ABE0 7F0481F0 3C058006 */  lui   $a1, %hi(ptr_setup_path_tbl) # $a1, 0x8006
+/* 07ABE0 7F0481F0 3C058006 */  lui   $a1, %hi(g_chraiCurrentSetup+0) # $a1, 0x8006
 /* 07ABE4 7F0481F4 01E27823 */  subu  $t7, $t7, $v0
-/* 07ABE8 7F0481F8 24A54C40 */  addiu $a1, %lo(ptr_setup_path_tbl) # addiu $a1, $a1, 0x4c40
+/* 07ABE8 7F0481F8 24A54C40 */  addiu $a1, %lo(g_chraiCurrentSetup+0) # addiu $a1, $a1, 0x4c40
 /* 07ABEC 7F0481FC 000F7880 */  sll   $t7, $t7, 2
 /* 07ABF0 7F048200 8CB90018 */  lw    $t9, 0x18($a1)
 /* 07ABF4 7F048204 01E27823 */  subu  $t7, $t7, $v0
@@ -24206,214 +24392,754 @@ glabel sub_GAME_7F049B58
 
 
 
-#ifdef NONMATCHING
-void save_ptr_monitor_ani_code_to_obj_ani_slot(void) {
-
+void save_ptr_monitor_ani_code_to_obj_ani_slot(MonitorRecord *mon, void *image)
+{
+    mon->image  = image;
+    mon->offset = 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel save_ptr_monitor_ani_code_to_obj_ani_slot
-/* 07E7BC 7F049C8C AC850000 */  sw    $a1, ($a0)
-/* 07E7C0 7F049C90 03E00008 */  jr    $ra
-/* 07E7C4 7F049C94 A4800004 */   sh    $zero, 4($a0)
-)
-#endif
 
 
-
-
-
-
-void set_ptr_monitor_img_to_obj_ani_slot(s32 slot, s32 monAnimID)
+void set_ptr_monitor_img_to_obj_ani_slot(MonitorRecord *mon, s32 monAnimID)
 {
     s32 *image = &monAnim00Bond;
-    switch (monAnimID) {
-     default:
-     case 0:
-        break;
-     case 1:
-        image = &monAnim01DesktopsSatellite;
-        break;
-    case 2:
-        image = &monAnim02Astrological;
-        break;
-    case 3:
-        image = &monAnim03ThreeWavePattern;
-        break;
-    case 4:
-        image = &monAnim04WavePattern;
-        break;
-    case 5:
-        image = &monAnim05GreenTextUp;
-        break;
-    case 6:
-        image = &monAnim06RedTextDown;
-        break;
-    case 7:
-        image = &monAnim07GreenTextDown;
-        break;
-    case 8:
-        image = &monAnim08RedBarGraph;
-        break;
-    case 9:
-        image = &monAnim09BlueBarGraph;
-        break;
-    case 10:
-        image = &monAnim0AGreenBarGraph;
-        break;
-    case 11:
-        image = &monAnim0BRadar;
-        break;
-    case 12:
-        image = &monAnim0CSpinningCube;
-        break;
-    case 13:
-        image = &monAnim0DLocWeapArmed;
-        break;
-    case 14:
-        image = &monAnim0ERedTarget;
-        break;
-    case 15:
-        image = &monAnim0FSatelliteTargeting;
-        break;
-    case 16:
-        image = &monAnim10GlobalMap;
-        break;
-    case 17:
-        image = &monAnim11KarlYelling;
-        break;
-    case 18:
-        image = &monAnim12Skateboard;
-        break;
-    case 19:
-        image = &monAnim13PoliceGuy;
-        break;
-    case 20:
-        image = &monAnim14Off;
-        break;
-    case 21:
-        image = &monAnim15RandomSeven;
-        break;
-    case 22:
-        image = &monAnim16RandomFour;
-        break;
-    case 23:
-        image = &monAnim17RandImageEffect;
-        break;
-    case 24:
-        image = &monRandEffectChanceSHUTTLE1;
-        break;
-    case 25:
-        image = &monRandEffectChanceSHUTTLE2;
-        break;
-    case 26:
-        image = &monRandEffectChanceEARTHFULL1;
-        break;
-    case 27:
-        image = &monRandEffectChanceEARTHFULL2;
-        break;
-    case 28:
-        image = &monRandEffectChanceBLUESTARS;
-        break;
-    case 29:
-        image = &monRandEffectChanceGALAXY1;
-        break;
-    case 30:
-        image = &monRandEffectChanceGALAXY2;
-        break;
-    case 31:
-        image = &monRandEffectChanceEARTHTEXT;
-        break;
-    case 32:
-        image = &monRandEffectChanceTARGETEARTH;
-        break;
-    case 33:
-        image = &monRandEffectChanceGALAXY3;
-        break;
-    case 34:
-        image = &monRandChanceScrollOrZoomRandRGBN;
-        break;
-    case 35:
-        image = &monRandChanceScrollOrZoomRed;
-        break;
-    case 36:
-        image = &monRandChanceScrollOrZoomGreen;
-        break;
-    case 37:
-        image = &monRandChanceScrollOrZoomBlue;
-        break;
-    case 38:
-        image = &monRandChanceScrollOrZoom;
-        break;
-    case 39:
-        image = &monAnim27RandomEffectScrollRight;
-        break;
-    case 40:
-        image = &monAnim28RandomEffectScrollUpFast;
-        break;
-    case 41:
-        image = &monAnim29RandomEffectScrollUp;
-        break;
-    case 42:
-        image = &monAnim2ARandEffectScrollZoom1;
-        break;
-    case 43:
-        image = &monAnim2ARandEffectScrollZoom2;
-        break;
-    case 44:
-        image = &monAnim2CRandEffectWaitRoute;
-        break;
-    case 45:
-        image = &monAnim2DRandEffectFlash;
-        break;
-    case 46:
-        image = &monAnim2ERedBrightening;
-        break;
-    case 47:
-        image = &monAnim2FGreenBrightening;
-        break;
-    case 48:
-        image = &monAnim30GreySolid;
-        break;
-    case 49:
-        image = &monAnim31RedSolid;
-        break;
-    case 50:
-        image = &monAnim32GreenSolid;
-        break;
-    case 51:
-        image = &monAnim33BlackSolid;
-        break;
+    switch (monAnimID)
+    {
+         default:
+         case 0:
+            break;
+         case 1:
+            image = &monAnim01DesktopsSatellite;
+            break;
+        case 2:
+            image = &monAnim02Astrological;
+            break;
+        case 3:
+            image = &monAnim03ThreeWavePattern;
+            break;
+        case 4:
+            image = &monAnim04WavePattern;
+            break;
+        case 5:
+            image = &monAnim05GreenTextUp;
+            break;
+        case 6:
+            image = &monAnim06RedTextDown;
+            break;
+        case 7:
+            image = &monAnim07GreenTextDown;
+            break;
+        case 8:
+            image = &monAnim08RedBarGraph;
+            break;
+        case 9:
+            image = &monAnim09BlueBarGraph;
+            break;
+        case 10:
+            image = &monAnim0AGreenBarGraph;
+            break;
+        case 11:
+            image = &monAnim0BRadar;
+            break;
+        case 12:
+            image = &monAnim0CSpinningCube;
+            break;
+        case 13:
+            image = &monAnim0DLocWeapArmed;
+            break;
+        case 14:
+            image = &monAnim0ERedTarget;
+            break;
+        case 15:
+            image = &monAnim0FSatelliteTargeting;
+            break;
+        case 16:
+            image = &monAnim10GlobalMap;
+            break;
+        case 17:
+            image = &monAnim11KarlYelling;
+            break;
+        case 18:
+            image = &monAnim12Skateboard;
+            break;
+        case 19:
+            image = &monAnim13PoliceGuy;
+            break;
+        case 20:
+            image = &monAnim14Off;
+            break;
+        case 21:
+            image = &monAnim15RandomSeven;
+            break;
+        case 22:
+            image = &monAnim16RandomFour;
+            break;
+        case 23:
+            image = &monAnim17RandImageEffect;
+            break;
+        case 24:
+            image = &monRandEffectChanceSHUTTLE1;
+            break;
+        case 25:
+            image = &monRandEffectChanceSHUTTLE2;
+            break;
+        case 26:
+            image = &monRandEffectChanceEARTHFULL1;
+            break;
+        case 27:
+            image = &monRandEffectChanceEARTHFULL2;
+            break;
+        case 28:
+            image = &monRandEffectChanceBLUESTARS;
+            break;
+        case 29:
+            image = &monRandEffectChanceGALAXY1;
+            break;
+        case 30:
+            image = &monRandEffectChanceGALAXY2;
+            break;
+        case 31:
+            image = &monRandEffectChanceEARTHTEXT;
+            break;
+        case 32:
+            image = &monRandEffectChanceTARGETEARTH;
+            break;
+        case 33:
+            image = &monRandEffectChanceGALAXY3;
+            break;
+        case 34:
+            image = &monRandChanceScrollOrZoomRandRGBN;
+            break;
+        case 35:
+            image = &monRandChanceScrollOrZoomRed;
+            break;
+        case 36:
+            image = &monRandChanceScrollOrZoomGreen;
+            break;
+        case 37:
+            image = &monRandChanceScrollOrZoomBlue;
+            break;
+        case 38:
+            image = &monRandChanceScrollOrZoom;
+            break;
+        case 39:
+            image = &monAnim27RandomEffectScrollRight;
+            break;
+        case 40:
+            image = &monAnim28RandomEffectScrollUpFast;
+            break;
+        case 41:
+            image = &monAnim29RandomEffectScrollUp;
+            break;
+        case 42:
+            image = &monAnim2ARandEffectScrollZoom1;
+            break;
+        case 43:
+            image = &monAnim2ARandEffectScrollZoom2;
+            break;
+        case 44:
+            image = &monAnim2CRandEffectWaitRoute;
+            break;
+        case 45:
+            image = &monAnim2DRandEffectFlash;
+            break;
+        case 46:
+            image = &monAnim2ERedBrightening;
+            break;
+        case 47:
+            image = &monAnim2FGreenBrightening;
+            break;
+        case 48:
+            image = &monAnim30GreySolid;
+            break;
+        case 49:
+            image = &monAnim31RedSolid;
+            break;
+        case 50:
+            image = &monAnim32GreenSolid;
+            break;
+        case 51:
+            image = &monAnim33BlackSolid;
+            break;
     }
-    save_ptr_monitor_ani_code_to_obj_ani_slot(slot,  image);
+    save_ptr_monitor_ani_code_to_obj_ani_slot(mon,  image);
 }
 
 
+
+
+
+void save_img_index_to_obj_ani_slot(MonitorRecord *mon, void *unk88)
+{
+    mon->unk88 = unk88;
+}
 
 
 
 #ifdef NONMATCHING
-void save_img_index_to_obj_ani_slot(void) {
+void *process_monitor_animation_microcode(Model *arg0, ModelNode *arg1, MonitorRecord *arg2, void *arg3, s32 arg4, s32 arg5)
+{
+    void           *spA8;
+    void           *spA4;
+    modeldata_root *spA0;
+    void           *sp94;
+    f32             sp54;
+    f32             sp50;
+    Mtxf           *temp_s2;
+    f32             temp_f0;
+    f32             temp_f0_10;
+    f32             temp_f0_11;
+    f32             temp_f0_2;
+    f32             temp_f0_3;
+    f32             temp_f0_4;
+    f32             temp_f0_5;
+    f32             temp_f0_6;
+    f32             temp_f0_7;
+    f32             temp_f0_8;
+    f32             temp_f0_9;
+    f32             temp_f10;
+    f32             temp_f10_2;
+    f32             temp_f12;
+    f32             temp_f12_2;
+    f32             temp_f18;
+    f32             temp_f18_2;
+    f32             temp_f18_3;
+    f32             temp_f18_4;
+    f32             temp_f20;
+    f32             temp_f22;
+    f32             temp_f24;
+    f32             temp_f2;
+    f32             temp_f2_2;
+    f32             temp_f2_3;
+    f32             temp_f2_4;
+    f32             temp_f2_5;
+    f32             temp_f2_6;
+    f32             temp_f4;
+    f32             temp_f4_2;
+    f32             temp_f6;
+    f32             temp_f6_2;
+    f32             temp_f6_3;
+    f32             temp_f6_4;
+    f32             temp_f6_5;
+    f32             temp_f6_6;
+    f32             temp_f8;
+    f32             temp_v0_4;
+    s16             temp_v0_2;
+    s32             temp_t0;
+    s32             temp_t1;
+    s32             temp_t4;
+    s32             temp_t5;
+    s32             temp_t5_2;
+    s32             temp_t7;
+    s32             temp_t8_2;
+    u16             temp_v0;
+    u32             temp_t3;
+    u8              temp_a0;
+    u8              temp_a1;
+    u8              temp_t0_2;
+    u8              temp_t2_2;
+    u8              temp_t4_2;
+    u8              temp_t5_3;
+    u8              temp_t6_2;
+    u8              temp_t7_2;
+    u8              temp_t8_3;
+    u8              temp_t9_2;
+    u8              temp_v0_3;
+    u8              temp_v0_5;
+    u8              temp_v0_6;
+    u8              temp_v0_7;
+    u8              temp_v1_2;
+    u8              temp_v1_3;
+    void           *temp_s0;
+    void           *temp_s1;
+    void           *temp_t0_3;
+    void           *temp_t2;
+    void           *temp_t2_3;
+    void           *temp_t2_4;
+    void           *temp_t3_2;
+    void           *temp_t5_4;
+    void           *temp_t6;
+    void           *temp_t8;
+    void           *temp_t9;
+    void           *temp_v1;
+    void          **temp_a0_2;
+    f32             phi_f6;
+    f32             phi_f18;
+    f32             phi_f6_2;
+    f32             phi_f18_2;
+    f32             phi_f6_3;
+    f32             phi_f18_3;
+    f32             phi_f6_4;
+    f32             phi_f2;
+    s32             phi_s1;
+    void           *phi_s1_2;
+    f32             phi_f6_5;
+    f32             phi_f22;
+    f32             phi_f4;
+    f32             phi_f24;
+    f32             phi_f10;
+    f32             phi_f14;
+    f32             phi_f18_4;
+    f32             phi_f16;
+    f32             phi_f8;
+    f32             phi_f6_6;
+    f32             phi_f4_2;
+    f32             phi_f10_2;
 
+    if ((arg1 != 0) && ((arg1->Opcode & 0xFF) == MODELNODE_OPCODE_DISPLAYLIST_COLLISIONRECORD))
+    {
+        temp_t8 = arg3;
+        temp_s2 = dynAllocate7F0BD6C4(4);
+        arg3    = temp_t8 + 8;
+        spA8    = temp_t8;
+        spA4    = arg1->Data;
+        spA0    = extract_id_from_object_structure_microcode(arg0, arg1);
+        phi_f2  = 65536.0f;
+        phi_f2  = 65536.0f;
+        phi_s1  = 0;
+        do
+        {
+            temp_v0 = arg2->offset;
+            temp_v1 = arg2->image + (temp_v0 * 4);
+            temp_t3 = temp_v1->unk0;
+            switch (temp_t3)
+            {
+                case 0:
+                    arg2->xmidinc = 0.0f;
+                    arg2->ymidinc = 0.0f;
+                    arg2->offset  = temp_v0 + 1;
+                    break;
+                case 1:
+                    arg2->xmidfrac = 0.0f;
+                    temp_t5        = temp_v1->unk8;
+                    temp_f6        = temp_t5;
+                    phi_f6         = temp_f6;
+                    if (temp_t5 < 0)
+                    {
+                        phi_f6 = temp_f6 + 4294967296.0f;
+                    }
+                    temp_f0       = arg2->xmid;
+                    arg2->xmidold = temp_f0;
+                    arg2->xmidinc = 1.0f / phi_f6;
+                    arg2->offset  = temp_v0 + 3;
+                    arg2->xmidnew = temp_f0 + (temp_v1->unk4 * 0.0009765625f);
+                    break;
+                case 2:
+                    arg2->ymidfrac = 0.0f;
+                    temp_t8_2      = temp_v1->unk8;
+                    temp_f18       = temp_t8_2;
+                    phi_f18        = temp_f18;
+                    if (temp_t8_2 < 0)
+                    {
+                        phi_f18 = temp_f18 + 4294967296.0f;
+                    }
+                    temp_f0_2     = arg2->ymid;
+                    arg2->ymidold = temp_f0_2;
+                    arg2->ymidinc = 1.0f / phi_f18;
+                    arg2->offset  = temp_v0 + 3;
+                    arg2->ymidnew = temp_f0_2 + (temp_v1->unk4 * 0.0009765625f);
+                    break;
+                case 3:
+                    arg2->xmidfrac = 0.0f;
+                    temp_t1        = temp_v1->unk8;
+                    temp_f6_2      = temp_t1;
+                    phi_f6_2       = temp_f6_2;
+                    if (temp_t1 < 0)
+                    {
+                        phi_f6_2 = temp_f6_2 + 4294967296.0f;
+                    }
+                    arg2->xmidold = arg2->xmid;
+                    arg2->xmidinc = 1.0f / phi_f6_2;
+                    arg2->offset  = temp_v0 + 3;
+                    arg2->xmidnew = temp_v1->unk4 * 0.0009765625f;
+                    break;
+                case 4:
+                    arg2->ymidfrac = 0.0f;
+                    temp_t4        = temp_v1->unk8;
+                    temp_f18_2     = temp_t4;
+                    phi_f18_2      = temp_f18_2;
+                    if (temp_t4 < 0)
+                    {
+                        phi_f18_2 = temp_f18_2 + 4294967296.0f;
+                    }
+                    arg2->ymidold = arg2->ymid;
+                    arg2->ymidinc = 1.0f / phi_f18_2;
+                    arg2->offset  = temp_v0 + 3;
+                    arg2->ymidnew = temp_v1->unk4 * 0.0009765625f;
+                    break;
+                case 5:
+                    arg2->xscalefrac = 0.0f;
+                    temp_t7          = temp_v1->unk8;
+                    temp_f6_3        = temp_t7;
+                    phi_f6_3         = temp_f6_3;
+                    if (temp_t7 < 0)
+                    {
+                        phi_f6_3 = temp_f6_3 + 4294967296.0f;
+                    }
+                    arg2->xscaleold = arg2->xscale;
+                    arg2->xscaleinc = 1.0f / phi_f6_3;
+                    arg2->offset    = temp_v0 + 3;
+                    arg2->xscalenew = temp_v1->unk4 * 0.0009765625f;
+                    break;
+                case 6:
+                    arg2->yscalefrac = 0.0f;
+                    temp_t0          = temp_v1->unk8;
+                    temp_f18_3       = temp_t0;
+                    phi_f18_3        = temp_f18_3;
+                    if (temp_t0 < 0)
+                    {
+                        phi_f18_3 = temp_f18_3 + 4294967296.0f;
+                    }
+                    arg2->yscaleold = arg2->yscale;
+                    arg2->yscaleinc = 1.0f / phi_f18_3;
+                    arg2->offset    = temp_v0 + 3;
+                    arg2->yscalenew = temp_v1->unk4 * 0.0009765625f;
+                    break;
+                case 7:
+                    save_img_index_to_obj_ani_slot(arg2, temp_v1->unk4);
+                    arg2->offset += 2;
+                    break;
+                case 8:
+                    temp_v0_2 = arg2->pause60;
+                    if (temp_v0_2 >= 0)
+                    {
+                        arg2->pause60 = temp_v0_2 - clock_timer;
+                        if (arg2->pause60 >= 0)
+                        {
+                            phi_s1 = 1;
+                        }
+                        else
+                        {
+                            arg2->offset += 2;
+                        }
+                    }
+                    else
+                    {
+                        arg2->pause60 = temp_v1->unk4;
+                        phi_s1        = 1;
+                    }
+                    break;
+                case 9:
+                    save_ptr_monitor_ani_code_to_obj_ani_slot(arg2, temp_v1->unk4);
+                    break;
+                case 10:
+                    sp94 = temp_v1;
+                    if ((randomGetNext() >> 0x10) < temp_v1->unk8)
+                    {
+                        save_ptr_monitor_ani_code_to_obj_ani_slot(arg2, temp_v1->unk4);
+                    }
+                    else
+                    {
+                        arg2->offset += 3;
+                    }
+                    break;
+                case 11:
+                    arg2->offset = 0;
+                    break;
+                case 12:
+                    phi_s1 = 1;
+                    break;
+                case 13:
+                    arg2->colfrac = 0.0f;
+                    temp_t5_2     = temp_v1->unk8;
+                    temp_f6_4     = temp_t5_2;
+                    phi_f6_4      = temp_f6_4;
+                    if (temp_t5_2 < 0)
+                    {
+                        phi_f6_4 = temp_f6_4 + 4294967296.0f;
+                    }
+                    arg2->redold   = arg2->red;
+                    arg2->colinc   = 1.0f / phi_f6_4;
+                    arg2->greenold = arg2->green;
+                    arg2->rednew   = temp_v1->unk4 >> 0x18;
+                    arg2->blueold  = arg2->blue;
+                    arg2->greennew = temp_v1->unk4 >> 0x10;
+                    arg2->alphaold = arg2->alpha;
+                    arg2->bluenew  = temp_v1->unk4 >> 8;
+                    arg2->offset   = temp_v0 + 3;
+                    arg2->alphanew = temp_v1->unk4;
+                    break;
+                case 14:
+                    arg2->offset = temp_v0 + 2;
+                    arg2->rot    = (temp_v1->unk4 * 6.2831855f) / phi_f2;
+                    break;
+                case 15:
+                    arg2->rot += (g_GlobalTimerDelta * temp_v1->unk4 * 6.2831855f) / phi_f2;
+                    temp_f12 = arg2->rot;
+                    if (temp_f12 >= 6.2831855f)
+                    {
+                        arg2->rot = temp_f12 - 6.2831855f;
+                    }
+                    if (arg2->rot < 0.0f)
+                    {
+                        arg2->rot += 6.2831855f;
+                    }
+                    arg2->offset += 2;
+                    break;
+            }
+        } while (phi_s1 == 0);
+        temp_f0_3 = arg2->xscaleinc;
+        if (temp_f0_3 > 0.0f)
+        {
+            arg2->xscalefrac += temp_f0_3 * g_GlobalTimerDelta;
+            temp_f2 = arg2->xscalefrac;
+            if (temp_f2 < 1.0f)
+            {
+                temp_f0_4    = arg2->xscaleold;
+                arg2->xscale = temp_f0_4 + ((arg2->xscalenew - temp_f0_4) * temp_f2);
+            }
+            else
+            {
+                arg2->xscalefrac = 1.0f;
+                arg2->xscaleinc  = 0.0f;
+                arg2->xscale     = arg2->xscalenew;
+            }
+        }
+        temp_f0_5 = arg2->yscaleinc;
+        if (temp_f0_5 > 0.0f)
+        {
+            arg2->yscalefrac += temp_f0_5 * g_GlobalTimerDelta;
+            temp_f2_2 = arg2->yscalefrac;
+            if (temp_f2_2 < 1.0f)
+            {
+                temp_f0_6    = arg2->yscaleold;
+                arg2->yscale = temp_f0_6 + ((arg2->yscalenew - temp_f0_6) * temp_f2_2);
+            }
+            else
+            {
+                arg2->yscalefrac = 1.0f;
+                arg2->yscaleinc  = 0.0f;
+                arg2->yscale     = arg2->yscalenew;
+            }
+        }
+        temp_f0_7 = arg2->xmidinc;
+        if (temp_f0_7 > 0.0f)
+        {
+            arg2->xmidfrac += temp_f0_7 * g_GlobalTimerDelta;
+            temp_f2_3 = arg2->xmidfrac;
+            if (temp_f2_3 < 1.0f)
+            {
+                temp_f0_8  = arg2->xmidold;
+                arg2->xmid = temp_f0_8 + ((arg2->xmidnew - temp_f0_8) * temp_f2_3);
+            }
+            else
+            {
+                arg2->xmidfrac = 1.0f;
+                arg2->xmidinc  = 0.0f;
+                arg2->xmid     = arg2->xmidnew;
+            }
+        }
+        temp_f0_9 = arg2->ymidinc;
+        if (temp_f0_9 > 0.0f)
+        {
+            arg2->ymidfrac += temp_f0_9 * g_GlobalTimerDelta;
+            temp_f2_4 = arg2->ymidfrac;
+            if (temp_f2_4 < 1.0f)
+            {
+                temp_f0_10 = arg2->ymidold;
+                arg2->ymid = temp_f0_10 + ((arg2->ymidnew - temp_f0_10) * temp_f2_4);
+            }
+            else
+            {
+                arg2->ymidfrac = 1.0f;
+                arg2->ymidinc  = 0.0f;
+                arg2->ymid     = arg2->ymidnew;
+            }
+        }
+        temp_f2_5 = arg2->colinc;
+        if (temp_f2_5 > 0.0f)
+        {
+            arg2->colfrac += temp_f2_5 * g_GlobalTimerDelta;
+            temp_f0_11 = arg2->colfrac;
+            if (temp_f0_11 < 1.0f)
+            {
+                temp_v0_3   = arg2->redold;
+                temp_v1_2   = arg2->greenold;
+                temp_a0     = arg2->blueold;
+                temp_a1     = arg2->alphaold;
+                arg2->red   = temp_v0_3 + ((arg2->rednew - temp_v0_3) * temp_f0_11);
+                arg2->green = temp_v1_2 + ((arg2->greennew - temp_v1_2) * temp_f0_11);
+                arg2->blue  = temp_a0 + ((arg2->bluenew - temp_a0) * temp_f0_11);
+                arg2->alpha = temp_a1 + ((arg2->alphanew - temp_a1) * temp_f0_11);
+            }
+            else
+            {
+                arg2->colfrac = 1.0f;
+                arg2->colinc  = 0.0f;
+                arg2->red     = arg2->rednew;
+                arg2->green   = arg2->greennew;
+                arg2->blue    = arg2->bluenew;
+                arg2->alpha   = arg2->alphanew;
+            }
+        }
+        spA0->unk0       = temp_s2;
+        spA0->ground     = (bitwise f32)arg3;
+        temp_t3_2        = spA4->unk8;
+        temp_s2->m[0][0] = temp_t3_2->unk0;
+        temp_s2->m[0][1] = temp_t3_2->unk4;
+        temp_s2->m[0][2] = temp_t3_2->unk8;
+        temp_s2->m[0][3] = temp_t3_2->unkC;
+        temp_t6          = spA4->unk8;
+        temp_s2->m[1][0] = temp_t6->unk10;
+        temp_s2->m[1][1] = temp_t6->unk14;
+        temp_s2->m[1][2] = temp_t6->unk18;
+        temp_s2->m[1][3] = temp_t6->unk1C;
+        temp_t9          = spA4->unk8;
+        temp_s2->m[2][0] = temp_t9->unk20;
+        temp_s2->m[2][1] = temp_t9->unk24;
+        temp_s2->m[2][2] = temp_t9->unk28;
+        temp_s2->m[2][3] = temp_t9->unk2C;
+        temp_t2          = spA4->unk8;
+        temp_s2->m[3][0] = temp_t2->unk30;
+        temp_s2->m[3][1] = temp_t2->unk34;
+        temp_s2->m[3][2] = temp_t2->unk38;
+        temp_s2->m[3][3] = temp_t2->unk3C;
+        temp_v0_4        = arg2->unk88;
+        phi_s1_2         = (bitwise void *)temp_v0_4;
+        if ((bitwise u32)temp_v0_4 < 0x64)
+        {
+            phi_s1_2 = ((((bitwise s32)temp_v0_4 * 4) - (bitwise s32)temp_v0_4) * 4) + monitorimages;
+        }
+        if (phi_s1_2 != 0)
+        {
+            temp_f12_2 = arg2->rot;
+            temp_f22   = arg2->xscale * 0.5f;
+            temp_f24   = arg2->yscale * 0.5f;
+            phi_f22    = temp_f22;
+            phi_f24    = temp_f24;
+            phi_f14    = temp_f22;
+            phi_f16    = temp_f24;
+            if (temp_f12_2 != 0.0f)
+            {
+                sp54      = temp_f22;
+                sp50      = temp_f24;
+                temp_f20  = cosf(temp_f12_2, temp_f22) * 1.4142f;
+                temp_f2_6 = sinf(arg2->rot) * 1.4142f;
+                phi_f22   = temp_f22 * temp_f20;
+                phi_f24   = temp_f24 * temp_f2_6;
+                phi_f14   = temp_f22 * temp_f2_6;
+                phi_f16   = temp_f24 * temp_f20;
+            }
+            temp_t6_2 = phi_s1_2->unk4;
+            temp_f6_5 = temp_t6_2;
+            phi_f6_5  = temp_f6_5;
+            if (temp_t6_2 < 0)
+            {
+                phi_f6_5 = temp_f6_5 + 4294967296.0f;
+            }
+            temp_s2->unk8 = phi_f6_5 * (arg2->xmid + phi_f22) * 32.0f;
+            temp_t9_2     = phi_s1_2->unk5;
+            temp_f4       = temp_t9_2;
+            phi_f4        = temp_f4;
+            if (temp_t9_2 < 0)
+            {
+                phi_f4 = temp_f4 + 4294967296.0f;
+            }
+            temp_s2->unkA = phi_f4 * (arg2->ymid + phi_f24) * 32.0f;
+            temp_t2_2     = phi_s1_2->unk4;
+            temp_f10      = temp_t2_2;
+            phi_f10       = temp_f10;
+            if (temp_t2_2 < 0)
+            {
+                phi_f10 = temp_f10 + 4294967296.0f;
+            }
+            temp_s2->unk18 = phi_f10 * (arg2->xmid - phi_f14) * 32.0f;
+            temp_t7_2      = phi_s1_2->unk5;
+            temp_f18_4     = temp_t7_2;
+            phi_f18_4      = temp_f18_4;
+            if (temp_t7_2 < 0)
+            {
+                phi_f18_4 = temp_f18_4 + 4294967296.0f;
+            }
+            temp_s2->unk1A = phi_f18_4 * (arg2->ymid + phi_f16) * 32.0f;
+            temp_t0_2      = phi_s1_2->unk4;
+            temp_f8        = temp_t0_2;
+            phi_f8         = temp_f8;
+            if (temp_t0_2 < 0)
+            {
+                phi_f8 = temp_f8 + 4294967296.0f;
+            }
+            temp_s2->unk28 = phi_f8 * (arg2->xmid - phi_f22) * 32.0f;
+            temp_t4_2      = phi_s1_2->unk5;
+            temp_f6_6      = temp_t4_2;
+            phi_f6_6       = temp_f6_6;
+            if (temp_t4_2 < 0)
+            {
+                phi_f6_6 = temp_f6_6 + 4294967296.0f;
+            }
+            temp_s2->unk2A = phi_f6_6 * (arg2->ymid - phi_f24) * 32.0f;
+            temp_t5_3      = phi_s1_2->unk4;
+            temp_f4_2      = temp_t5_3;
+            phi_f4_2       = temp_f4_2;
+            if (temp_t5_3 < 0)
+            {
+                phi_f4_2 = temp_f4_2 + 4294967296.0f;
+            }
+            temp_s2->unk38 = phi_f4_2 * (arg2->xmid + phi_f14) * 32.0f;
+            temp_t8_3      = phi_s1_2->unk5;
+            temp_f10_2     = temp_t8_3;
+            phi_f10_2      = temp_f10_2;
+            if (temp_t8_3 < 0)
+            {
+                phi_f10_2 = temp_f10_2 + 4294967296.0f;
+            }
+            temp_s2->unk3A = phi_f10_2 * (arg2->ymid - phi_f16) * 32.0f;
+        }
+        temp_v0_5      = arg2->red;
+        temp_s2->unk3C = temp_v0_5;
+        temp_s2->unk2C = temp_v0_5;
+        temp_s2->unk1C = temp_v0_5;
+        temp_s2->unkC  = temp_v0_5;
+        temp_v0_6      = arg2->green;
+        temp_a0_2      = &arg3;
+        temp_s2->unk3D = temp_v0_6;
+        temp_s2->unk2D = temp_v0_6;
+        temp_s2->unk1D = temp_v0_6;
+        temp_s2->unkD  = temp_v0_6;
+        temp_v1_3      = arg2->blue;
+        temp_s2->unk3E = temp_v1_3;
+        temp_s2->unk2E = temp_v1_3;
+        temp_s2->unk1E = temp_v1_3;
+        temp_s2->unkE  = temp_v1_3;
+        temp_v0_7      = arg2->alpha;
+        temp_s2->unk3F = temp_v0_7;
+        temp_s2->unk2F = temp_v0_7;
+        temp_s2->unk1F = temp_v0_7;
+        temp_s2->unkF  = temp_v0_7;
+        if (arg2->alpha < 0xFF)
+        {
+            arg5 = 2;
+        }
+        temp_t2_3       = arg3;
+        arg3            = temp_t2_3 + 8;
+        temp_t2_3->unk4 = 0x2000;
+        temp_t2_3->unk0 = 0xB7000000;
+        likely_generate_DL_for_image_declaration(temp_a0_2, phi_s1_2, arg5, arg4, 2);
+        temp_s0         = arg3;
+        arg3            = temp_s0 + 8;
+        temp_s0->unk0   = 0x1020040;
+        temp_s0->unk4   = osVirtualToPhysical(arg0->unk0c);
+        temp_s1         = arg3;
+        arg3            = temp_s1 + 8;
+        temp_s1->unk0   = 0xBC001006;
+        temp_s1->unk4   = osVirtualToPhysical(temp_s2);
+        temp_t5_4       = arg3;
+        arg3            = temp_t5_4 + 8;
+        temp_t5_4->unk4 = 0x4000000;
+        temp_t5_4->unk0 = 0x4300040;
+        temp_t0_3       = arg3;
+        arg3            = temp_t0_3 + 8;
+        temp_t0_3->unk4 = 0x2010;
+        temp_t0_3->unk0 = 0xB1000032;
+        temp_t2_4       = arg3;
+        arg3            = temp_t2_4 + 8;
+        temp_t2_4->unk4 = 0;
+        temp_t2_4->unk0 = 0xB8000000;
+        spA8->unk0      = 0x6010000;
+        spA8->unk4      = arg3;
+    }
+    return arg3;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel save_img_index_to_obj_ani_slot
-/* 07EA70 7F049F40 03E00008 */  jr    $ra
-/* 07EA74 7F049F44 AC850008 */   sw    $a1, 8($a0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void process_monitor_animation_microcode(void) {
-
-}
 #else
 #ifdef VERSION_US
 GLOBAL_ASM(
@@ -27591,7 +28317,7 @@ Gfx *chrobjRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
         return gdl;
     }
 
-    if ((u8) obj->head.type != PROPDEF_TINTED_GLASS)
+    if ((u8) obj->type != PROPDEF_TINTED_GLASS)
     {
         temp_f0 = chrobjFogVisRangeRelated(prop, getinstsize(obj->model));
 
@@ -27646,11 +28372,11 @@ Gfx *chrobjRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
     {
         jlist.unk30 = 9;
 
-        if (obj->head.type == PROPDEF_TINTED_GLASS)
+        if (obj->type == PROPDEF_TINTED_GLASS)
         {
             jlist.unk34 = ((struct TintedGlassRecord*)obj)->unk88 << 8;
         }
-        else if ((obj->head.type == PROPDEF_DOOR) && ((((struct DoorRecord*)obj)->doorFlags & 2) != 0))
+        else if ((obj->type == PROPDEF_DOOR) && ((((struct DoorRecord*)obj)->doorFlags & 2) != 0))
         {
             jlist.unk34 = ((struct DoorRecord*)obj)->unkbe << 8;
         }
@@ -29304,8 +30030,26 @@ glabel sub_GAME_7F04BCDC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F04BFD0(void) {
+void sub_GAME_7F04BFD0(PropRecord *prop, s32 a)
+{
+    WeaponObjRecord *item;
 
+    if (prop->parent)
+    {
+        item = prop->weapon;
+        sub_GAME_7F03FDA8();
+        if (item->runtime_bitflags & RUNTIMEBITFLAG_DEPOSITED)
+        {
+            if (item->unk6C->unk44)
+            {
+                item->unk6C->unk44->unkB8 = a;
+            }
+        }
+        else if (item->runtime_bitflags & RUNTIMEBITFLAG_LAUNCHING)
+        {
+            item->unk6C->unkB8 = a;
+        }
+    }
 }
 #else
 GLOBAL_ASM(
@@ -29351,9 +30095,45 @@ glabel sub_GAME_7F04BFD0
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F04C044(void) {
+void sub_GAME_7F04C044( PropRecord *prop)
+{
+    PropRecord   *sp24;
+    ObjectRecord *sp20;
+    void         *sp1C;
+    ObjectRecord *sp18;
+    ObjectRecord *temp_a0;
+    ObjectRecord *temp_v0;
+    PropRecord   *temp_a1;
+    PropRecord   *temp_a2;
+    u8            temp_v1;
+    void         *temp_t6;
 
+    temp_a2 = prop->parent;
+    temp_a1 = prop;
+    if ((temp_a2 != 0) && ((temp_v0 = prop->obj, temp_t6 = temp_v0->model, sp24 = temp_a2, prop = temp_a1, sp20 = temp_v0, sp1C = temp_t6, sub_GAME_7F03A5D0(temp_a1, temp_a2), sp1C->unk1C = 0, temp_v0->runtime_bitflags &= 0xFFF7FFFF, temp_v1 = temp_a2->type, (temp_v1 == 3)) || (temp_v1 == 6)) && (temp_a0 = temp_a2->obj, (temp_a0 != 0)))
+    {
+        if (prop == temp_a0->unk1D8)
+        {
+            temp_a0->unk1D8 = 0;
+            return;
+        }
+        if (prop == temp_a0->unk160)
+        {
+            sp18 = temp_a0;
+            sub_GAME_7F02D118(temp_a0, 0, 0);
+            temp_a0->unk160 = 0;
+            return;
+        }
+        if (prop == temp_a0->unk164)
+        {
+            sp18 = temp_a0;
+            sub_GAME_7F02D118(temp_a0, 1, 0);
+            temp_a0->unk164 = 0;
+        }
+        // Duplicate return node #10. Try simplifying control flow for better match
+    }
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -32828,9 +33608,7 @@ glabel sub_GAME_7F04DD68
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F04DE18(void) {
 
-}
 #else
 GLOBAL_ASM(
      .late_rodata
@@ -33029,10 +33807,22 @@ nondestroyable_object:
 
 
 
-
+//todo: fix jtbl in use and undefined reference to `notcollectable_object'
 #ifdef NONMATCHING
-void check_if_collectable_object(void) {
-
+bool check_if_collectable_object(PropDefHeaderRecord *obj)//#MATCH
+{
+    switch (obj->type)
+    {
+        case PROPDEF_KEY:
+        case PROPDEF_MAGAZINE:
+        case PROPDEF_COLLECTABLE:
+        case PROPDEF_HAT:
+        case PROPDEF_AMMO:
+        case PROPDEF_ARMOUR:
+            return TRUE;
+        default:
+            return FALSE;
+    }
 }
 #else
 GLOBAL_ASM(
@@ -33120,7 +33910,7 @@ glabel check_if_destroyable_not_invincible
 /**
  * Address 0x7F04E0CC.
 */
-void chrobjMaybeDetonateObjectIfFlags(ObjectRecord *arg0, f32 arg1, struct coord3d *arg2, ITEM_IDS item, s32 arg4)
+void chrobjMaybeDetonateObjectIfFlags(ObjectRecord *arg0, f32 arg1, coord3d *arg2, ITEM_IDS item, s32 arg4)
 {
     if ((arg0->flags2 & 0x4000) == 0)
     {
@@ -33132,9 +33922,305 @@ void chrobjMaybeDetonateObjectIfFlags(ObjectRecord *arg0, f32 arg1, struct coord
 
 
 #ifdef NONMATCHING
-void maybe_detonate_object(void) {
+//https://decomp.me/scratch/UWQzo 44%
+void maybe_detonate_object(ObjectRecord* self, f32 damage,  coord3d* pos, bool flag, bool flag2)
+{
+    u32 spC8;
+    s32 randAmmoType;//c4
+    int randAmmoType_2;
+
+    s32 sp3C;
+     PropRecord* sp28;
+    u16 ammoAmmount;//24
+    f32 temp_f0;
+    f32 temp_f0_2;
+    f32 temp_f12;
+    s32 temp_a1;
+
+    s32 temp_t7;
+    s32 type;
+    s32* temp_t3;
+    s32* temp_t5;
+    s32* temp_t9;
+    s8 weaponnum;
+     PropRecord* temp_a0_2;
+    u16 temp_a3;
+    u8 temp_v0;
+    u8 temp_v0_4;
+    u8 temp_v0_6;
+    void* temp_a0;
+    void* temp_a2;
+    void* temp_t6;
+    void* temp_v0_5;
+
+    f32 phi_f12;
+     PropRecord* phi_f12_2;
+    s32* phi_t9;
+    s32* phi_t3;
+    s32* phi_t5;
+    void* phi_t6;
+    f32 phi_f0;
+    struct {
+        s32 rhgun:1;
+        s32 noammo:1;
+        s32 inmotion:1;
+        s32 lhgun:1;        
+        s32 nocontrol:1;
+        s32 unk80000:1;
+        s32 jbush:1;
+        s32 petegrenade:1;
+        s32 embedded:1;
+        s32 normal:1;
+        s32 unk8000:1;
+        s32 immobile:1;        
+        s32 dat:1;
+        s32 uncollectable:1;
+        s32 unk800:1;
+        s32 allowpickup:1;
+        s32 invincible:1;
+        s32 embeddedin:1;
+        s32 useguard:1;
+        s32 forcecollection:1;        
+        s32 posabs:1;
+        s32 freestand:1;
+        s32 roadblock:1;
+        s32 glassimage:1;
+        s32 forcecollisions:1;
+        s32 onground:1;
+        s32 forcedonground:1;
+        s32 rotate90:1;        
+        s32 upside_down:1;
+        s32 rightside_up:1;
+        s32 scalex:1;
+        s32 scaley:1;
+    } *flags = &self->flags;
+
+    #define OBJECT_UNTOUCHED 1
+    #define OBJECT_DESTROYED 0
+
+
+    temp_t7 = self->runtime_bitflags & 0xFFF9FFFF;
+    self->runtime_bitflags = temp_t7;
+    self->runtime_bitflags = temp_t7 | (flag2 << 0x11);
+
+
+    if ((self->Head.type != PROPDEF_GAS_RELEASING) ||  (do_something_if_object_destroyed(self) != OBJECT_UNTOUCHED))
+    {
+        if (!flag)
+        {
+            if (check_if_collectable_object(self))
+            {
+                if (self->flags << 8 >= 0)
+                {
+                    return;
+                }
+            }
+            else if (flags->petegrenade) //looks like  bitfield (sll 7 + bgezl)
+            {
+                return;
+            }
+        }
+        else
+        {
+            
+            if (flags->unk800)
+            {
+                return;
+            } 
+
+            if (self->Head.type == PROPDEF_COLLECTABLE || PROPDEF_MAGAZINE)
+            //switch(self->Head.type)
+            {
+                if (self->Head.type == PROPDEF_COLLECTABLE  )
+                {
+                    weaponnum = ((WeaponObjRecord*)self)->weaponnum;
+                    if ((weaponnum == ITEM_GRENADE) || 
+                        (weaponnum == ITEM_TIMEDMINE) || 
+                        (weaponnum == ITEM_REMOTEMINE) || 
+                        (weaponnum == ITEM_PROXIMITYMINE) || 
+                        (weaponnum == ITEM_56) || 
+                        (weaponnum == ITEM_57) || 
+                        (weaponnum == ITEM_BOMBCASE) || 
+                        (weaponnum == ITEM_PLASTIQUE))
+                    {
+                        ((WeaponObjRecord*)self)->timer = 0;
+                    }
+                    return;
+                }
+                else if (self->Head.type == PROPDEF_MAGAZINE)
+                {
+                    type = ((AmmoCrateRecord*)self)->type;
+                    if ((type == AMMO_GRENADE) || 
+                        (type == AMMO_ROCKETS) || 
+                        (type == AMMO_REMOTEMINE) || 
+                        (type == AMMO_PROXMINE) || 
+                        (type == AMMO_TIMEDMINE) || 
+                        (type == AMMO_GRENADEROUND) || 
+                        (type == AMMO_EXPLOSIVEPEN) || 
+                        (type == AMMO_BOMBCASE) || 
+                        (type == AMMO_DYNAMITE))
+                    {
+                        self->flags |= 0x10000000;
+                    }
+                    return;
+                }
+            }
+            if (!check_if_destroyable_not_invincible(damage, self, 8) )
+            {
+                return;
+            }
+
+        } // if flag
+
+        if (do_something_if_object_destroyed(self) == OBJECT_DESTROYED)
+        {
+            self->maxdamage += damage * 250.0f;
+        }
+        else
+        {
+            temp_f0 = 4 - (sub_GAME_7F03FF60(damage, self) % 4);
+            phi_f0 = temp_f0;
+            if (temp_f0 < damage)
+            {
+                damage = phi_f0;
+            }
+            phi_f0 = 1.0f;
+            if (damage < 1.0f)
+            {
+                damage = phi_f0;
+            }
+            self->maxdamage += damage;
+            //phi_f12_2 = (bitwise struct PropRecord* ) damage;
+        }
+
+        if (( self->Head.type == PROPDEF_GLASS) || ( self->Head.type == PROPDEF_TINTED_GLASS))
+        {
+            if (self->damage <= self->maxdamage)
+            {
+                sub_GAME_7F04DCB4(phi_f12_2, self); //smash glass?
+            }
+        }
+        else
+        {
+            sub_GAME_7F04BFD0(self->prop, 1);
+            object_explosion_related(self, pos, flag2);
+        }
+        if ((self->Head.type == PROPDEF_AMMO) && (do_something_if_object_destroyed(self) == OBJECT_UNTOUCHED))
+        {
+            randAmmoType = randomGetNext() % 0xD;
+            do
+            {
+                MultiAmmoCrateRecord *ammo = self;
+                ammoAmmount = ammo->quantities[randAmmoType];
+
+                if (ammoAmmount > 0 && (ammoAmmount != -1) )
+                {
+                    temp_v0_5 = sub_GAME_7F0518D0(randAmmoType, randAmmoType);
+                    if (temp_v0_5)
+                    {
+                        //spawn magazine
+                        AmmoCrateRecord NewMag = blank_07_object; //New_AmmoCrateRecord() 
+                        AmmoCrateRecord temp_a2 = NewMag;
+
+                        //temp_v0_5->obj = ammo->unk80;
+                        //temp_v0_5->unk80 = randAmmoType + 1;
+                        if (randAmmoType + 1 == 2)
+                        {
+                            //temp_v0_5->unk80 = 1;
+                        }
+                        if (sub_GAME_7F0406F8(&temp_a2, *(PitemZ_entries + (temp_a3 * 0xC)), &temp_a2, temp_a3) != 0)
+                        {
+                            //temp_a0 = temp_a2->unk14;
+                            
+                            set_obj_instance_controller_scale(temp_a0, 1);//tempa2
+                            attachNewChild(temp_a2.base.prop, self->prop);
+                        }
+                        break;
+                    }
+                }
+                else
+                {
+                    randAmmoType_2 = (randAmmoType + 1) % 0xD;
+                    randAmmoType = randAmmoType_2;
+                    randAmmoType = randAmmoType;
+
+                }
+            }while (randAmmoType_2 != randAmmoType);
+        }
+
+
+        switch (self->Head.type)
+        {
+            case 13:
+            {
+                self->flags |= 0x40000000;
+                if (do_something_if_object_destroyed(self) == OBJECT_UNTOUCHED)
+                {
+                    self->flags |= 0x10000000;
+                }
+            }
+            case 6:
+            {
+                if (do_something_if_object_destroyed(self) == OBJECT_UNTOUCHED)
+                {
+                    self->flags |= 0x10000000;
+                }
+            }
+            case 10:
+            {
+                if (do_something_if_object_destroyed(self) == OBJECT_UNTOUCHED)
+                {
+                    //save_ptr_monitor_ani_code_to_obj_ani_slot(self + 0x80, &D_80031EE8);
+                }
+            }
+            case 11:
+            {
+                if (do_something_if_object_destroyed(self) == OBJECT_UNTOUCHED)
+                {
+                    //save_ptr_monitor_ani_code_to_obj_ani_slot(self + 0x80, &D_80031EE8);
+                    // save_ptr_monitor_ani_code_to_obj_ani_slot(self + 0xF4, &D_80031EE8);
+                    // save_ptr_monitor_ani_code_to_obj_ani_slot(self + 0x168, &D_80031EE8);
+                    // save_ptr_monitor_ani_code_to_obj_ani_slot(self + 0x1DC, &D_80031EE8);
+                } 
+            }
+            case 36:
+            {
+                if (do_something_if_object_destroyed(self) == OBJECT_UNTOUCHED)
+                {
+                    //init_trigger_toxic_gas_effect(&self->Pos);
+                }
+            }
+            case 21:
+            {
+                if (do_something_if_object_destroyed(self) == OBJECT_DESTROYED)
+                {
+                    temp_f0_2 = self->damage;
+                    //self->unk84 = ((bitwise f32) self->unk80 * (temp_f0_2 - self->maxdamage)) / temp_f0_2;
+                }
+                else
+                {
+                    //self->unk84 = 0.0f;
+                }
+            }
+        }
+        if (do_something_if_object_destroyed(self) == OBJECT_UNTOUCHED)
+        {
+            PropRecord *temp_a0_2 = self->prop->child;
+            
+            if (temp_a0_2 != 0)
+            {
+                do
+                {
+                    temp_a0_2 = temp_a0_2->prev;
+                    sub_GAME_7F04BFD0(temp_a0_2, 1);
+
+                } while (temp_a0_2 != 0);
+            }
+        }
+    } // if PROPDEF_GAS_RELEASING or object not harmed
 
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -34176,26 +35262,10 @@ glabel sub_GAME_7F04EA68
 
 
 
-#ifdef NONMATCHING
-void check_if_object_has_not_been_destroyed(void) {
-
+bool check_if_object_has_not_been_destroyed(ObjectRecord *self) //#MATCH
+{
+    return do_something_if_object_destroyed(self) == 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_object_has_not_been_destroyed
-/* 083A64 7F04EF34 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 083A68 7F04EF38 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 083A6C 7F04EF3C 0FC0FFF0 */  jal   do_something_if_object_destroyed
-/* 083A70 7F04EF40 00000000 */   nop   
-/* 083A74 7F04EF44 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 083A78 7F04EF48 2C4E0001 */  sltiu $t6, $v0, 1
-/* 083A7C 7F04EF4C 01C01025 */  move  $v0, $t6
-/* 083A80 7F04EF50 03E00008 */  jr    $ra
-/* 083A84 7F04EF54 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
-
 
 
 
@@ -34371,10 +35441,36 @@ glabel sub_GAME_7F04EF58
 
 
 
-
+//todo fix (.text+0xf630): undefined reference to `sndPlaySfx'
+//         (.text+0xf638): undefined reference to `alarmIsActive'
 #ifdef NONMATCHING
-void sub_GAME_7F04F170(void) {
+/*
+ * Return TYPE if Collected or Interacted (except for Alarm which always returns False)
+ */
+INV_ITEM_TYPE sub_GAME_7F04F170(PropRecord *prop) //#MATCH
+{
+    ObjectRecord *obj        = prop->obj;
+    INV_ITEM_TYPE colllected = INV_ITEM_NONE;
 
+    if (obj->type == PROPDEF_ALARM)
+    {
+        sndPlaySfx(g_musicSfxBufferPtr, 0xBA, 0);
+        if (alarmIsActive())
+        {
+            stop_alarm();
+        }
+        else
+        {
+            start_alarm();
+        }
+    }
+    if (obj->flags & PROPFLAG_00080000)
+    {
+        colllected = collect_or_interact_object(prop, TRUE);
+    }
+    obj->runtime_bitflags |= RUNTIMEBITFLAG_ACTIVATED;
+    sub_GAME_7F03E6A0(prop);
+    return colllected;
 }
 #else
 GLOBAL_ASM(
@@ -34532,8 +35628,7 @@ void append_text_picked_up(u8 *buffer,u8 * param2,u8 * param3)
 
 
 
-void append_text_ammo_amount_word(u8 *buffer,AMMOTYPES ammotype,u32 amount)
-
+void append_text_ammo_amount_word(u8 *buffer, AMMOTYPE ammotype,u32 amount)
 {
     u8 *textfiletext;
     
@@ -34602,7 +35697,7 @@ void append_text_ammo_amount_word(u8 *buffer,AMMOTYPES ammotype,u32 amount)
 
 
 #ifdef NONMATCHING//
-void apped_text_ammotype(u8 *buffer,AMMOTYPES ammotype,u32 amount)
+void apped_text_ammotype(u8 *buffer,AMMOTYPE ammotype,u32 amount)
 {
     u8 *textfiletext;
     
@@ -35020,7 +36115,7 @@ pluralize_multiples:
 
 
 
-void set_sound_effect_for_ammo_collection(AMMOTYPES ammotype)
+void set_sound_effect_for_ammo_collection(AMMOTYPE ammotype)
 
 {
     switch(ammotype) {
@@ -35099,7 +36194,7 @@ void set_sound_effect_for_weapontype_collection(ITEM_IDS weapontype)
 extern char * D_800529D0;
 extern char * D_800529D4;
 
-void prepare_ammo_type_collection_text(u8 *finaltext, AMMOTYPES ammotype, u32 quantity)
+void prepare_ammo_type_collection_text(u8 *finaltext, AMMOTYPE ammotype, u32 quantity)
 {
     *finaltext = 0;
     if (j_text_trigger != 0)
@@ -35318,7 +36413,7 @@ glabel display_text_when_ammo_collected
 
 
 
-void add_ammo_to_inventory(AMMOTYPES ammotype, int amount, int doplaysound, int dodisplaytext)
+void add_ammo_to_inventory(AMMOTYPE ammotype,int amount,int doplaysound,int dodisplaytext)
 {
     int curammo;
     int maxammo;
@@ -35598,7 +36693,7 @@ void generate_language_specific_text_for_weapon(char *finalstring,ITEM_IDS itemt
 {
     u32 morethan2players;
     //u32 numplayers;
-    //AMMOTYPES ammotype;
+    //AMMOTYPE ammotype;
     //char *textfiletext;
     //size_t strlength;
     
@@ -36182,8 +37277,193 @@ void display_text_for_weapon_in_lower_left_corner(ITEM_IDS weaponid)
 
 
 #ifdef NONMATCHING
-void collect_or_interact_object(void) {
+// https://decomp.me/scratch/nJWA0
+INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, bool showstring) //#50% - needs some love, but compiles and looks similar
+{
+    ObjectRecord *propobj;
+    INV_ITEM_TYPE collectType;
 
+    propobj = prop->obj;
+    if ((pPlayer->bonddead) || (!gclock_timer))
+    {
+        return INV_ITEM_NONE;
+    }
+
+    switch (propobj->type)
+    {
+        case PROPDEF_KEY:
+        {
+            sndPlaySfx(g_musicSfxBufferPtr, 0xE5, 0);
+            if (showstring)
+            {
+                char *text = obj_get_activated_text(propobj);
+                if (!text)
+                {
+                    text = get_textptr_for_textID(0xA43C);
+                }
+                display_string_in_lower_left_corner(text);
+            }
+            collectType = INV_ITEM_PICKUP;
+            break;
+        }
+        case PROPDEF_MAGAZINE:
+        {
+            AmmoCrateRecord *mag = propobj;
+            add_ammo_to_inventory(mag->type, get_ammo_in_magazine(mag), 1, showstring);
+            collectType = INV_ITEM_WEAPON;
+            break;
+        }
+        case PROPDEF_AMMO:
+        {
+            MultiAmmoCrateRecord *ammo = propobj;
+            s32                   i, ammoquantity;
+            for (i = 0; i < AMMOTYPE_GLOBAL_MAX; i++)
+            {
+                ammoquantity = ammo->quantities[i];
+
+                if (getPlayerCount() == 1)
+                {
+                    ammoquantity = ammoquantity * solo_ammo_multiplier;
+                }
+
+                add_ammo_to_inventory(i, ammoquantity, 0, showstring);
+            }
+            sndPlaySfx(g_musicSfxBufferPtr, 0xEA, 0);
+            collectType = INV_ITEM_WEAPON;
+            break;
+        }
+        case PROPDEF_COLLECTABLE:
+        {
+            bool             pass = 0;
+            WeaponObjRecord *wep  = propobj;
+            char *           text, *text2;
+            int              ammocollected;
+            set_sound_effect_for_weapontype_collection(wep->weaponnum);
+
+            if (wep->weaponnum == ITEM_REMOTEMINE)
+            {
+                add_item_to_inventory(ITEM_TRIGGER);
+            }
+            else if (wep->weaponnum == ITEM_TOKEN)
+            {
+                draw_item_in_hand_has_more_ammo(GUNRIGHT, ITEM_TOKEN);
+            }
+            if ((wep->runtime_bitflags & RUNTIMEBITFLAG_DESTROYED))
+            {
+                if (wep->weaponnum < ITEM_BOMBCASE)
+                {
+                    sub_GAME_7F08C764(prop);
+                }
+                if (showstring)
+                {
+                    text = obj_get_activated_text(propobj);
+                    if (text)
+                    {
+                        display_string_in_lower_left_corner(text);
+                    }
+                    else
+                    {
+                        display_text_for_weapon_in_lower_left_corner(wep->weaponnum);
+                    }
+                    pass = 1;
+                }
+                collectType = INV_ITEM_PICKUP;
+            }
+            else
+            {
+                if (sub_GAME_7F08C764(prop) != 0)
+                {
+                    pass = 1;
+                }
+                if (showstring)
+                {
+                    text2 = weapon_get_activated_text(wep->weaponnum);
+
+                    if (text2 != 0)
+                    {
+                        pass = 1;
+                        display_string_in_lower_left_corner(text2);
+                    }
+                    else if (pass != 0)
+                    {
+                        display_text_for_weapon_in_lower_left_corner(wep->weaponnum);
+                    }
+                }
+                collectType = INV_ITEM_WEAPON;
+            }
+            text = get_ammo_type_for_weapon(wep->weaponnum);
+            if (text != 0)
+            {
+                ammocollected = ammo_collected_from_weapon(wep);
+
+                if (ammocollected > 0)
+                {
+                    if (check_cur_player_ammo_amount_in_inventory(text) < get_max_ammo_for_type(text))
+                    {
+                        give_cur_player_ammo(text, check_cur_player_ammo_amount_in_inventory(text) + ammocollected);
+                        if ((pass == 0) && showstring)
+                        {
+                            display_text_when_ammo_collected(text, ammocollected);
+                        }
+                    }
+                }
+            }
+            break;
+        }
+        case PROPDEF_ARMOUR:
+        {
+            BodyArmourRecord *armour = propobj;
+            char *            text;
+            add_BONDdata_watch_armor(armour->Strength);
+            sndPlaySfx(g_musicSfxBufferPtr, 0x51, 0);
+            if (showstring)
+            {
+                text = obj_get_activated_text(armour);
+
+                if (text == 0)
+                {
+                    if (getPlayerCount() < 3)
+                    {
+                        text = get_textptr_for_textID(0xA43D);
+                    }
+                    else
+                    {
+                        text = get_textptr_for_textID(0xA43E);
+                    }
+                }
+                display_string_in_lower_left_corner(text);
+            }
+            collectType = INV_ITEM_WEAPON;
+            break;
+        }
+        default:
+        {
+            char *text;
+            sndPlaySfx(g_musicSfxBufferPtr, 0xE5, 0);
+            if (showstring)
+            {
+                text = obj_get_activated_text(propobj);
+                if (text == 0)
+                {
+                    text = get_textptr_for_textID(0xA43F);
+                }
+                display_string_in_lower_left_corner(text);
+            }
+            collectType = INV_ITEM_PICKUP;
+            break;
+        }
+    }
+    if ((collectType == 1) && ((propobj->runtime_bitflags & 0x10) == 0))
+    {
+        sub_GAME_7F040D98(propobj, 0, propobj->state & 4);
+        return INV_ITEM_WEAPON;
+    }
+    if (collectType != 0)
+    {
+        add_prop_to_inventory(prop);
+        return INV_ITEM_PICKUP;
+    }
+    return INV_ITEM_NONE; //inventory(4) or ammo(1) or nothing(0)
 }
 #else
 #ifdef VERSION_US
@@ -39209,8 +40489,62 @@ glabel sub_GAME_7F051084
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0510C0(void) {
+//sub_GAME_7F0510C0
+PropRecord *chrTryEquipHat(ChrRecord *self, s32 index, s32 flags)
+{
+    ItemModelFileRecord *model;
+    s32                  sp30;
+    PropRecord          *lastprop;
+    PropRecord          *prop;
+    s32                 *temp_t1;
+    s32                 *temp_t4;
+    s32                 *temp_t8;
+    ObjectRecord        *obj;
+    void                *temp_t5;
+    s32                 *phi_t8;
+    s32                 *phi_t1;
+    s32                 *phi_t4;
+    void                *phi_t5;
 
+    model = &PitemZ_entries[index];
+    load_model(index);
+    lastprop = remove_last_obj_pos_data_entry();
+    prop     = get_obj_instance_controller_for_header(model);
+    prop     = prop;
+    obj      = sub_GAME_7F0515B0(lastprop == 0, prop == 0, model);
+    lastprop = lastprop;
+    if (lastprop == 0)
+    {
+        lastprop = remove_last_obj_pos_data_entry();
+    }
+    prop     = prop;
+    lastprop = lastprop;
+    if (prop == 0)
+    {
+        prop = get_obj_instance_controller_for_header(model);
+    }
+    if ((obj != 0) && (lastprop != 0) && (prop != 0))
+    {
+        *obj = blank_11_object;
+
+        obj->obj   = index;
+        obj->flags = flags | 0x4000;
+        obj->pad   = self->chrnum;
+        lastprop   = sub_GAME_7F050F50(obj, self, model, lastprop, prop);
+    }
+    else
+    {
+        if (prop != 0)
+        {
+            set_obj_instance_scale_to_zero(prop);
+        }
+        if (lastprop != 0)
+        {
+            propFree(lastprop);
+            lastprop = NULL;
+        }
+    }
+    return lastprop;
 }
 #else
 GLOBAL_ASM(
@@ -39998,103 +41332,51 @@ glabel trigger_remote_mine_detonation
 
 
 
-#ifdef NONMATCHING
-void check_if_entry_is_collectable(void) {
+KeyRecord *check_if_entry_is_collectable(s32 ID, PropRecord *prop) //#MATCH
+{
+    KeyRecord * key;
+    PropRecord *p;
 
+    if (prop->type == 4)
+    {
+        key = prop->obj;
+        if (ID == key->keyID)
+        {
+            return key;
+        }
+    }
+
+    for (p = prop->child; p; p = p->prev)
+    {
+        key = check_if_entry_is_collectable(ID, p);
+        if (key)
+        {
+            return key;
+        }
+    }
+    return NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_entry_is_collectable
-/* 086598 7F051A68 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 08659C 7F051A6C AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0865A0 7F051A70 AFB10018 */  sw    $s1, 0x18($sp)
-/* 0865A4 7F051A74 AFB00014 */  sw    $s0, 0x14($sp)
-/* 0865A8 7F051A78 90AE0000 */  lbu   $t6, ($a1)
-/* 0865AC 7F051A7C 24010004 */  li    $at, 4
-/* 0865B0 7F051A80 00808825 */  move  $s1, $a0
-/* 0865B4 7F051A84 55C10008 */  bnel  $t6, $at, .L7F051AA8
-/* 0865B8 7F051A88 8CB00020 */   lw    $s0, 0x20($a1)
-/* 0865BC 7F051A8C 8CA30004 */  lw    $v1, 4($a1)
-/* 0865C0 7F051A90 806F0080 */  lb    $t7, 0x80($v1)
-/* 0865C4 7F051A94 548F0004 */  bnel  $a0, $t7, .L7F051AA8
-/* 0865C8 7F051A98 8CB00020 */   lw    $s0, 0x20($a1)
-/* 0865CC 7F051A9C 1000000E */  b     .L7F051AD8
-/* 0865D0 7F051AA0 00601025 */   move  $v0, $v1
-/* 0865D4 7F051AA4 8CB00020 */  lw    $s0, 0x20($a1)
-.L7F051AA8:
-/* 0865D8 7F051AA8 1200000A */  beqz  $s0, .L7F051AD4
-/* 0865DC 7F051AAC 02202025 */   move  $a0, $s1
-.L7F051AB0:
-/* 0865E0 7F051AB0 0FC1469A */  jal   check_if_entry_is_collectable
-/* 0865E4 7F051AB4 02002825 */   move  $a1, $s0
-/* 0865E8 7F051AB8 50400004 */  beql  $v0, $zero, .L7F051ACC
-/* 0865EC 7F051ABC 8E100024 */   lw    $s0, 0x24($s0)
-/* 0865F0 7F051AC0 10000006 */  b     .L7F051ADC
-/* 0865F4 7F051AC4 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 0865F8 7F051AC8 8E100024 */  lw    $s0, 0x24($s0)
-.L7F051ACC:
-/* 0865FC 7F051ACC 5600FFF8 */  bnezl $s0, .L7F051AB0
-/* 086600 7F051AD0 02202025 */   move  $a0, $s1
-.L7F051AD4:
-/* 086604 7F051AD4 00001025 */  move  $v0, $zero
-.L7F051AD8:
-/* 086608 7F051AD8 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F051ADC:
-/* 08660C 7F051ADC 8FB00014 */  lw    $s0, 0x14($sp)
-/* 086610 7F051AE0 8FB10018 */  lw    $s1, 0x18($sp)
-/* 086614 7F051AE4 03E00008 */  jr    $ra
-/* 086618 7F051AE8 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
 
 
 
 
 
-#ifdef NONMATCHING
-void check_if_item_deposited(void) {
+ObjectRecord *check_if_item_deposited(s32 ID) //MATCH
+{
+    ObjectRecord *obj;
+    PropRecord *  prop;
 
+    for (prop = get_ptr_obj_pos_list_current_entry(); prop; prop = prop->prev)
+    {
+        obj = check_if_entry_is_collectable(ID, prop);
+        if (obj && (!(obj->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)))
+        {
+            return obj;
+        }
+    }
+
+    return NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_item_deposited
-/* 08661C 7F051AEC 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 086620 7F051AF0 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 086624 7F051AF4 AFB10018 */  sw    $s1, 0x18($sp)
-/* 086628 7F051AF8 00808825 */  move  $s1, $a0
-/* 08662C 7F051AFC 0FC0E909 */  jal   get_ptr_obj_pos_list_current_entry
-/* 086630 7F051B00 AFB00014 */   sw    $s0, 0x14($sp)
-/* 086634 7F051B04 1040000F */  beqz  $v0, .L7F051B44
-/* 086638 7F051B08 00408025 */   move  $s0, $v0
-/* 08663C 7F051B0C 02202025 */  move  $a0, $s1
-.L7F051B10:
-/* 086640 7F051B10 0FC1469A */  jal   check_if_entry_is_collectable
-/* 086644 7F051B14 02002825 */   move  $a1, $s0
-/* 086648 7F051B18 50400008 */  beql  $v0, $zero, .L7F051B3C
-/* 08664C 7F051B1C 8E100024 */   lw    $s0, 0x24($s0)
-/* 086650 7F051B20 8C4E0064 */  lw    $t6, 0x64($v0)
-/* 086654 7F051B24 31CF0080 */  andi  $t7, $t6, 0x80
-/* 086658 7F051B28 55E00004 */  bnezl $t7, .L7F051B3C
-/* 08665C 7F051B2C 8E100024 */   lw    $s0, 0x24($s0)
-/* 086660 7F051B30 10000006 */  b     .L7F051B4C
-/* 086664 7F051B34 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 086668 7F051B38 8E100024 */  lw    $s0, 0x24($s0)
-.L7F051B3C:
-/* 08666C 7F051B3C 5600FFF4 */  bnezl $s0, .L7F051B10
-/* 086670 7F051B40 02202025 */   move  $a0, $s1
-.L7F051B44:
-/* 086674 7F051B44 00001025 */  move  $v0, $zero
-/* 086678 7F051B48 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F051B4C:
-/* 08667C 7F051B4C 8FB00014 */  lw    $s0, 0x14($sp)
-/* 086680 7F051B50 8FB10018 */  lw    $s1, 0x18($sp)
-/* 086684 7F051B54 03E00008 */  jr    $ra
-/* 086688 7F051B58 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
-
 
 
 
@@ -40305,24 +41587,13 @@ glabel check_guard_detonate_proxmine
 
 
 
-#ifdef NONMATCHING
-void link_objects(void) {
-
+void link_objects(WeaponObjRecord *leftweapon, WeaponObjRecord *rightweapon) //#MATCH
+{
+    leftweapon->LinkedWeaponType  = rightweapon->weaponnum;
+    leftweapon->dualweapon        = rightweapon;
+    rightweapon->LinkedWeaponType = leftweapon->weaponnum;
+    rightweapon->dualweapon       = leftweapon;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel link_objects
-/* 0868A4 7F051D74 80AE0080 */  lb    $t6, 0x80($a1)
-/* 0868A8 7F051D78 808F0080 */  lb    $t7, 0x80($a0)
-/* 0868AC 7F051D7C AC850084 */  sw    $a1, 0x84($a0)
-/* 0868B0 7F051D80 A08E0081 */  sb    $t6, 0x81($a0)
-/* 0868B4 7F051D84 ACA40084 */  sw    $a0, 0x84($a1)
-/* 0868B8 7F051D88 03E00008 */  jr    $ra
-/* 0868BC 7F051D8C A0AF0081 */   sb    $t7, 0x81($a1)
-)
-#endif
-
 
 
 
@@ -40395,8 +41666,54 @@ glabel sub_GAME_7F051DD8
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F051E1C(void) {
+//https://decomp.me/scratch/O9GXq
+bool sub_GAME_7F051E1C(WeaponObjRecord *wep, ChrRecord *chr) //#99% nop missing and t out by 1
+{
+    GUNHAND hand = wep->flags & 0x10000000;
 
+    if (wep->flags & 0x10000000) //if bit 28 true
+    {
+        hand = GUNLEFT;
+    }
+    else
+    {
+        hand = GUNRIGHT;
+    }
+
+    if (wep->prop && wep->model)
+    {
+        if (!(wep->flags & 0x20000000)) //if bit 29 false
+        {
+            //need a NOP here
+            if (!chr->weapons_held[hand]) //if not has gun in hand already
+            {
+                wep->model->attachedto = chr->model;
+
+                if (hand == GUNRIGHT) //normal
+                {
+                    wep->model->unk1c = chr->model->obj->Switches[3];
+                }
+                else
+                {
+                    wep->model->unk1c = chr->model->obj->Switches[5];
+                }
+
+                chr->weapons_held[hand] = wep->prop; //equip hand with prop.
+
+                // check if duel wield
+                if (wep->flags & 0x80000000 && chr->weapons_held[1 - hand])
+                {
+                    link_objects(wep, chr->weapons_held[1 - hand]->obj);
+                }
+            }
+            else
+            {
+                return FALSE;
+            }
+        }
+        attachNewChild(wep->prop, chr->prop);
+    }
+    return TRUE;
 }
 #else
 GLOBAL_ASM(
@@ -40619,9 +41936,96 @@ glabel sub_GAME_7F052030
  * 
  * Address 0x7F05206C.
 */
-object_standard *create_new_item_instance_of_model(PROPS propid, s32 arg1) {
+WeaponObjRecord *create_new_item_instance_of_model(s32 modelnum, ITEM_IDS weaponid)
+{
+    WeaponObjRecord *itemModel;
+    s32              ObjInst;
+    s32              sp20;
+    s32              isObjInstAvailable;
+    s32              lastObj;
+    s32              ObjInst;
+    s32             *temp_t1;
+    s32             *temp_t4;
+    s32             *temp_t8;
+    WeaponObjRecord *NewGun;
+    void            *temp_t5;
+    s32              lastObj;
+    s32              ObjInst;
+    s32             *NewWep;
+    s32             *phi_t1;
+    s32             *phi_t4;
+    void            *phi_t5;
+    WeaponObjRecord *NewGun;
 
-    // spB4 = PitemZ_entries[arg0].header;
+    itemModel = PitemZ_entries[modelnum];
+    load_model();
+    lastObj = remove_last_obj_pos_data_entry();
+    ObjInst = get_obj_instance_controller_for_header(itemModel);
+    isObjInstAvailable = ObjInst == 0;
+    ObjInst    = ObjInst;
+    NewGun = sub_GAME_7F05126C(lastObj == 0, isObjInstAvailable, itemModel);
+    lastObj  = lastObj;
+    NewGun  = NewGun;
+    if (lastObj == 0)
+    {
+        ObjInst   = ObjInst;
+        lastObj = remove_last_obj_pos_data_entry();
+    }
+    ObjInst = ObjInst;
+    if (ObjInst == 0)
+    {
+        ObjInst = get_obj_instance_controller_for_header(itemModel);
+    }
+    if ((NewGun != 0) && (lastObj != 0) && (ObjInst != 0))
+    {
+        //struct copy
+        // NewWep = New_WeaponObjRecord();
+        // t5 = t4;
+        NewWep = &blank_08_object_preset_1;
+        phi_t1 = &sp20;
+        do
+        {
+            temp_t8          = NewWep + 0xC;
+            temp_t1          = phi_t1 + 0xC;
+            temp_t1->unk - C = *NewWep;
+            temp_t1->unk - 8 = temp_t8->unk - 8;
+            temp_t1->unk - 4 = temp_t8->unk - 4;
+            NewWep           = temp_t8;
+            phi_t1           = temp_t1;
+        } while (temp_t8 != (&blank_08_object_preset_1 + 0x84));
+        temp_t1->unk0 = temp_t8->unk0;
+        phi_t4        = &sp20;
+        phi_t5        = NewGun;
+
+        do
+        {
+            temp_t4          = phi_t4 + 0xC;
+            temp_t5          = phi_t5 + 0xC;
+            temp_t5->unk - C = *phi_t4;
+            temp_t5->unk - 8 = temp_t4->unk - 8;
+            temp_t5->unk - 4 = temp_t4->unk - 4;
+            phi_t4           = temp_t4;
+            phi_t5           = temp_t5;
+        } while (temp_t4 != (&sp20 + 0x84));
+        temp_t5->unk0  = temp_t4->unk0;
+        NewGun->unk80 = weaponid;
+        NewGun->unk4  = modelnum;
+        complete_object_data_block_return_position_entry(NewGun, itemModel, lastObj, ObjInst);
+    }
+    else
+    {
+        NewGun = NULL;
+        if (ObjInst != 0)
+        {
+            set_obj_instance_scale_to_zero(ObjInst);
+        }
+        if (lastObj != 0)
+        {
+            propFree(lastObj);
+        }
+    }
+    return NewGun;
+    // itemModel = PitemZ_entries[arg0].header;
     
     // (result)->unk80 = (s8) arg1; // should be object_weapon.gun_pickup
 
@@ -40737,45 +42141,74 @@ glabel create_new_item_instance_of_model
 
 
 
-
-#ifdef NONMATCHING
-void set_0x4_in_runtime_flags_for_item_in_guards_hand(PCHRdata chr, int hand_index) {
-    // BROKEN: we need to first identify the struct assigned to handle_positiondata ptr
-    // function used to remove item from right/left hand or something, maybe position holding data?
-    void **item_in_hand_ptr;
-
-    if (chr->handle_positiondata[hand_index] != 0)
+/**
+ * Set removed flag on hand 
+ */
+void set_0x4_in_runtime_flags_for_item_in_guards_hand(ChrRecord *chr, GUNHAND hand) //#MATCH
+{
+    if (chr->weapons_held[hand])
     {
-        item_in_hand_ptr = chr->handle_positiondata[hand_index] + 4;
-        item_in_hand_ptr[0x19] = (s32)(item_in_hand_ptr[0x19]) | 4;
+        chr->weapons_held[hand]->weapon->runtime_bitflags |= RUNTIMEBITFLAG_REMOVE;
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_0x4_in_runtime_flags_for_item_in_guards_hand
-/* 086D18 7F0521E8 00057080 */  sll   $t6, $a1, 2
-/* 086D1C 7F0521EC 008E7821 */  addu  $t7, $a0, $t6
-/* 086D20 7F0521F0 8DE20160 */  lw    $v0, 0x160($t7)
-/* 086D24 7F0521F4 10400005 */  beqz  $v0, .L7F05220C
-/* 086D28 7F0521F8 00000000 */   nop   
-/* 086D2C 7F0521FC 8C430004 */  lw    $v1, 4($v0)
-/* 086D30 7F052200 8C780064 */  lw    $t8, 0x64($v1)
-/* 086D34 7F052204 37190004 */  ori   $t9, $t8, 4
-/* 086D38 7F052208 AC790064 */  sw    $t9, 0x64($v1)
-.L7F05220C:
-/* 086D3C 7F05220C 03E00008 */  jr    $ra
-/* 086D40 7F052210 00000000 */   nop   
-)
-#endif
 
 
 
 
 #ifdef NONMATCHING
-void something_with_generating_object(void) {
+//https://decomp.me/scratch/pEmVO
+PropRecord *something_with_generating_object(ChrRecord *self, s32 PropID, ITEM_IDS ItemID, s32 flags, WeaponObjRecord *Weapon, ItemModelFileRecord *PropItem) //#90.8%
+{
+    ObjectRecord *objinst;
+    PropRecord   *lastobjentry;
 
+    if (!PropItem)
+    {
+        PropItem = &PitemZ_entries[PropID];
+        load_model(PropID); //move a0a1 and  t9,0xd4(sp) swapped here...
+    }
+    lastobjentry = remove_last_obj_pos_data_entry();
+    objinst      = get_obj_instance_controller_for_header(PropItem);
+
+    if (!Weapon)
+    {
+        Weapon = sub_GAME_7F05126C(lastobjentry == NULL, objinst == NULL, PropItem);
+    }
+    if (!lastobjentry)
+    {
+        lastobjentry = remove_last_obj_pos_data_entry();
+    }
+    if (!objinst)
+    {
+        objinst = get_obj_instance_controller_for_header(PropItem);
+    }
+    if (Weapon && lastobjentry && objinst)
+    { //t regs out by 1
+        WeaponObjRecord New_Weapon = New_WeaponObjRecord(0);
+        *Weapon                    = New_Weapon;
+
+        Weapon->weaponnum = ItemID;
+        Weapon->obj       = PropID;
+        Weapon->flags     = flags | 0x4000;
+        Weapon->pad       = self->chrnum;
+        //match after here
+        lastobjentry      = sub_GAME_7F051F30(Weapon, self, PropItem, lastobjentry, objinst);
+    }
+    else
+    {
+        if (objinst)
+        {
+            set_obj_instance_scale_to_zero(objinst);
+        }
+        if (lastobjentry)
+        {
+            propFree(lastobjentry);
+            lastobjentry = NULL;
+        }
+    }
+    return lastobjentry; //should be new weapon
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -40908,26 +42341,13 @@ glabel something_with_generating_object
 
 
 
-
-#ifdef NONMATCHING
-void actor_draws_weapon_with_model(void) {
-
+/**
+ * Add New Weapon to chr
+ */
+PropRecord *actor_draws_weapon_with_model(ChrRecord *self, s32 PropID, ITEM_IDS ItemID, s32 flags) //#MATCH
+{
+    return something_with_generating_object(self, PropID, ItemID, flags, NULL, NULL);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel actor_draws_weapon_with_model
-/* 086F04 7F0523D4 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 086F08 7F0523D8 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 086F0C 7F0523DC AFA00010 */  sw    $zero, 0x10($sp)
-/* 086F10 7F0523E0 0FC14885 */  jal   something_with_generating_object
-/* 086F14 7F0523E4 AFA00014 */   sw    $zero, 0x14($sp)
-/* 086F18 7F0523E8 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 086F1C 7F0523EC 27BD0020 */  addiu $sp, $sp, 0x20
-/* 086F20 7F0523F0 03E00008 */  jr    $ra
-/* 086F24 7F0523F4 00000000 */   nop   
-)
-#endif
 
 
 
@@ -41174,10 +42594,55 @@ glabel sub_GAME_7F052604
 
 
 
-
+//todo: fix shared jtbl undefined reference to `model_hat_greencap'
 #ifdef NONMATCHING
-void get_hat_model(void) {
+// getHatType
+HATTYPE get_hat_model(PropRecord *prop) //#MATCH
+{
+    ObjectRecord *objinst = prop->obj;
+    switch (objinst->obj)
+    {
+        case PROP_hatfurry:
+        case PROP_hatfurrybrown:
+        case PROP_hatfurryblack:
+        {
+            return HATTYPE_FURRY;
+        }
 
+        case PROP_hattbird:
+        case PROP_hattbirdbrown:
+        {
+            return HATTYPE_BIRD;
+        }
+
+        case PROP_hathelmet:
+        case PROP_hathelmetgrey:
+        {
+            return HATTYPE_HELMATE;
+        }
+
+        case PROP_hatmoon:
+
+        {
+            return HATTYPE_MOON;
+        }
+        case PROP_hatberet:
+        case PROP_hatberetblue:
+        case PROP_hatberetred:
+        {
+            return HATTYPE_BERRET;
+        }
+
+        case PROP_hatpeaked:
+        {
+            return HATTYPE_PEAKED;
+        }
+
+        default:
+        {
+            return HATTYPE_OTHER;
+        }
+    }
 }
 #else
 GLOBAL_ASM(
@@ -41288,8 +42753,8 @@ glabel sub_GAME_7F0526EC
 /* 087244 7F052714 24010006 */   li    $at, 6
 .L7F052718:
 /* 087248 7F052718 86190006 */  lh    $t9, 6($s0)
-/* 08724C 7F05271C 3C098007 */  lui   $t1, %hi(ptr_2xxxpresets) 
-/* 087250 7F052720 8D295D1C */  lw    $t1, %lo(ptr_2xxxpresets)($t1)
+/* 08724C 7F05271C 3C098007 */  lui   $t1, %hi(g_chraiCurrentSetup+0x1C) 
+/* 087250 7F052720 8D295D1C */  lw    $t1, %lo(g_chraiCurrentSetup+0x1C)($t1)
 /* 087254 7F052724 00194100 */  sll   $t0, $t9, 4
 /* 087258 7F052728 01194021 */  addu  $t0, $t0, $t9
 /* 08725C 7F05272C 00084080 */  sll   $t0, $t0, 2
@@ -41557,8 +43022,88 @@ glabel sub_GAME_7F0526EC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F052B00(void) {
+void sub_GAME_7F052B00(DoorRecord *door)
+{
+    ? sp2C;
+    u32 * sp28;
+    s32   temp_a3;
+    s32   temp_a3_2;
+    s32   temp_a3_3;
+    s32   temp_a3_4;
+    u16   temp_v0_2;
+    u16   temp_v0_3;
+    u32   temp_f0;
+    u32   temp_f0_2;
+    u32 * temp_v1;
+    void *temp_v0;
 
+    temp_v1        = &door->unkd0;
+    temp_v0        = (*door->model->unk8)->unk14->unk4;
+    temp_v1->unk0  = temp_v0->unk0;
+    temp_v1->unk4  = temp_v0->unk4;
+    temp_v1->unk8  = temp_v0->unk8;
+    temp_v1->unkC  = temp_v0->unkC;
+    temp_v1->unk10 = temp_v0->unk10;
+    temp_v1->unk14 = temp_v0->unk14;
+    temp_v1->unk18 = temp_v0->unk18;
+    if ((door->doorFlags & 4) != 0)
+    {
+        if (door->doorType == 4)
+        {
+            temp_f0     = temp_v0->unk10;
+            door->unke0 = (bitwise u32)((bitwise f32)temp_f0 + (((bitwise f32)temp_v0->unkC - (bitwise f32)temp_f0) * door->openPosition));
+        }
+        else
+        {
+            temp_f0_2   = temp_v0->unk4;
+            door->unkd4 = (bitwise u32)((bitwise f32)temp_f0_2 + (((bitwise f32)temp_v0->unk8 - (bitwise f32)temp_f0_2) * door->openPosition));
+        }
+    }
+    if (door->perimFrac <= door->openPosition)
+    {
+        door->ptr_allocated_collisiondata_block->unk0 = 0;
+        return;
+    }
+    sp28 = temp_v1;
+    sub_GAME_7F0526EC(door, &sp2C);
+    temp_a3 = door->ptr_allocated_collisiondata_block;
+    sub_GAME_7F03F540(sp28, &sp2C, temp_a3 + 4, temp_a3);
+    temp_v0_2 = door->doorType;
+    if (temp_v0_2 == 4)
+    {
+        door->ptr_allocated_collisiondata_block->unk48 = sub_GAME_7F03E9BC(sp28, &sp2C) + door->Pos.y;
+    }
+    else if (temp_v0_2 == 8)
+    {
+        door->ptr_allocated_collisiondata_block->unk48 = door->Pos.y - D_80053334;
+    }
+    else
+    {
+        door->ptr_allocated_collisiondata_block->unk48 = sub_GAME_7F03E9BC(sp28, &sp2C) + sp60;
+        if ((door->doorFlags & 1) != 0)
+        {
+            temp_a3_2        = door->ptr_allocated_collisiondata_block;
+            temp_a3_2->unk48 = temp_a3_2->unk48 - 1000.0f;
+        }
+    }
+    temp_v0_3 = door->doorType;
+    if (((temp_v0_3 == 6) && ((D_80053338 * door->maxFrac) < door->openPosition)) || ((temp_v0_3 == 7) && ((D_8005333C * door->maxFrac) < door->openPosition)))
+    {
+        temp_a3_4        = door->ptr_allocated_collisiondata_block;
+        temp_a3_4->unk44 = temp_a3_4->unk48 + 50.0f;
+        return;
+    }
+    if (temp_v0_3 == 8)
+    {
+        door->ptr_allocated_collisiondata_block->unk44 = door->Pos.y + 1000.0f;
+        return;
+    }
+    door->ptr_allocated_collisiondata_block->unk44 = sub_GAME_7F03EA5C(sp28, &sp2C) + sp60;
+    if ((door->doorFlags & 1) != 0)
+    {
+        temp_a3_3        = door->ptr_allocated_collisiondata_block;
+        temp_a3_3->unk44 = temp_a3_3->unk44 + 1000.0f;
+    }
 }
 #else
 GLOBAL_ASM(
@@ -42320,30 +43865,18 @@ glabel sub_GAME_7F052D8C
 
 
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F053598(void) {
-
+/**
+ * objToggleDoorPortal 
+ * Toggles (Open/Closed) the portal linked with door
+ * @param door: Door to toggle portal on
+ */
+void sub_GAME_7F053598(DoorRecord *door)
+{
+    if (door->portalNumber >= 0)
+    {
+        bgToggleDataPortalsContrlBytes1Bit1(door->portalNumber, TRUE);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F053598
-/* 0880C8 7F053598 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0880CC 7F05359C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0880D0 7F0535A0 8C8600F0 */  lw    $a2, 0xf0($a0)
-/* 0880D4 7F0535A4 04C00003 */  bltz  $a2, .L7F0535B4
-/* 0880D8 7F0535A8 00C02025 */   move  $a0, $a2
-/* 0880DC 7F0535AC 0FC2E76F */  jal   bgToggleDataPortalsContrlBytes1Bit1
-/* 0880E0 7F0535B0 24050001 */   li    $a1, 1
-.L7F0535B4:
-/* 0880E4 7F0535B4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0880E8 7F0535B8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0880EC 7F0535BC 03E00008 */  jr    $ra
-/* 0880F0 7F0535C0 00000000 */   nop   
-)
-#endif
-
 
 
 
@@ -42507,10 +44040,29 @@ glabel initialize_door
 
 
 
-
+//todo: Code matches however, some data is tied to an earlier func
 #ifdef NONMATCHING
-void sub_GAME_7F0537B8(void) {
+s32 sub_GAME_7F0537B8(f32 vol, f32 min, f32 max) //#MATCH
+{
+    s32 retval; //var is needed
 
+    if (vol <= 200.0f)
+    {
+        retval = SHRT_MAX;
+    }
+    else if (max <= vol)
+    {
+        retval = 0;
+    }
+    else if (min <= vol)
+    {
+        retval = ((max - vol) * 10000.0f) / (max - min);
+    }
+    else
+    {
+        retval = SHRT_MAX - (s32)((sqrtf(vol - 200.0f) * 32767.0f) / sqrtf(min - 200.0f));
+    }
+    return retval;
 }
 #else
 GLOBAL_ASM(
@@ -42688,10 +44240,11 @@ glabel sub_GAME_7F05396C
 
 
 
-
+//todo: code matches however variables refer to earlier funcs
 #ifdef NONMATCHING
-void sub_GAME_7F0539B8(void) {
-
+s32 sub_GAME_7F0539B8(f32 vol) //#MATCH
+{
+    return sub_GAME_7F0537B8(vol, 5000.0f, 6000.0f);
 }
 #else
 GLOBAL_ASM(
@@ -42842,47 +44395,20 @@ glabel sub_GAME_7F053A3C
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F053B10(void) {
 
+#include <snd.h>
+void sub_GAME_7F053B10(DoorRecord *door) //#MATCH
+{
+    if (door->unkf4 && sndGetPlayingState(door->unkf4))
+    {
+        sndDeactivate(door->unkf4);
+    }
+
+    if (door->unkf8 && sndGetPlayingState(door->unkf8))
+    {
+        sndDeactivate(door->unkf8);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F053B10
-/* 088640 7F053B10 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 088644 7F053B14 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 088648 7F053B18 AFA40018 */  sw    $a0, 0x18($sp)
-/* 08864C 7F053B1C 8C8500F4 */  lw    $a1, 0xf4($a0)
-/* 088650 7F053B20 50A00008 */  beql  $a1, $zero, .L7F053B44
-/* 088654 7F053B24 8FB80018 */   lw    $t8, 0x18($sp)
-/* 088658 7F053B28 0C00237C */  jal   sndGetPlayingState
-/* 08865C 7F053B2C 00A02025 */   move  $a0, $a1
-/* 088660 7F053B30 10400003 */  beqz  $v0, .L7F053B40
-/* 088664 7F053B34 8FAF0018 */   lw    $t7, 0x18($sp)
-/* 088668 7F053B38 0C002408 */  jal   sndDeactivate
-/* 08866C 7F053B3C 8DE400F4 */   lw    $a0, 0xf4($t7)
-.L7F053B40:
-/* 088670 7F053B40 8FB80018 */  lw    $t8, 0x18($sp)
-.L7F053B44:
-/* 088674 7F053B44 8F0400F8 */  lw    $a0, 0xf8($t8)
-/* 088678 7F053B48 50800008 */  beql  $a0, $zero, .L7F053B6C
-/* 08867C 7F053B4C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 088680 7F053B50 0C00237C */  jal   sndGetPlayingState
-/* 088684 7F053B54 00000000 */   nop   
-/* 088688 7F053B58 10400003 */  beqz  $v0, .L7F053B68
-/* 08868C 7F053B5C 8FB90018 */   lw    $t9, 0x18($sp)
-/* 088690 7F053B60 0C002408 */  jal   sndDeactivate
-/* 088694 7F053B64 8F2400F8 */   lw    $a0, 0xf8($t9)
-.L7F053B68:
-/* 088698 7F053B68 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F053B6C:
-/* 08869C 7F053B6C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0886A0 7F053B70 03E00008 */  jr    $ra
-/* 0886A4 7F053B74 00000000 */   nop   
-)
-#endif
-
 
 
 
@@ -44098,58 +45624,33 @@ glabel sub_GAME_7F0548A4
 
 
 
-#ifdef NONMATCHING
-void set_door_state(void) {
+void set_door_state(DoorRecord *door, DOORSTATE State) //#MATCH
+{
+    DoorRecord *linkeddoor;
+    DOORSTATE   LinkedState = State;
 
+    if (door->flags2 & 0x40000000) //Close first door before opening second
+    {
+        if (State == DOORSTATE_OPENING)
+        {
+            LinkedState = DOORSTATE_CLOSING;
+            if (door->openstate == DOORSTATE_STATIONARY)
+            {
+                State = DOORSTATE_WAITING;
+            }
+        }
+    }
+
+    sub_GAME_7F0548A4(door, State);
+
+    linkeddoor = door->linkedDoor;
+
+    while (linkeddoor && linkeddoor != door)
+    {
+        sub_GAME_7F0548A4(linkeddoor, LinkedState);
+        linkeddoor = linkeddoor->linkedDoor;
+    };
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_door_state
-/* 0894B8 7F054988 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0894BC 7F05498C AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0894C0 7F054990 AFB20020 */  sw    $s2, 0x20($sp)
-/* 0894C4 7F054994 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 0894C8 7F054998 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0894CC 7F05499C 8C8E000C */  lw    $t6, 0xc($a0)
-/* 0894D0 7F0549A0 00808825 */  move  $s1, $a0
-/* 0894D4 7F0549A4 00A09025 */  move  $s2, $a1
-/* 0894D8 7F0549A8 000E7840 */  sll   $t7, $t6, 1
-/* 0894DC 7F0549AC 05E10008 */  bgez  $t7, .L7F0549D0
-/* 0894E0 7F0549B0 24010001 */   li    $at, 1
-/* 0894E4 7F0549B4 14A10006 */  bne   $a1, $at, .L7F0549D0
-/* 0894E8 7F0549B8 00000000 */   nop   
-/* 0894EC 7F0549BC 809800BC */  lb    $t8, 0xbc($a0)
-/* 0894F0 7F0549C0 24120002 */  li    $s2, 2
-/* 0894F4 7F0549C4 17000002 */  bnez  $t8, .L7F0549D0
-/* 0894F8 7F0549C8 00000000 */   nop   
-/* 0894FC 7F0549CC 24050003 */  li    $a1, 3
-.L7F0549D0:
-/* 089500 7F0549D0 0FC15229 */  jal   sub_GAME_7F0548A4
-/* 089504 7F0549D4 02202025 */   move  $a0, $s1
-/* 089508 7F0549D8 8E3000C8 */  lw    $s0, 0xc8($s1)
-/* 08950C 7F0549DC 5200000B */  beql  $s0, $zero, .L7F054A0C
-/* 089510 7F0549E0 8FBF0024 */   lw    $ra, 0x24($sp)
-/* 089514 7F0549E4 12110008 */  beq   $s0, $s1, .L7F054A08
-/* 089518 7F0549E8 02002025 */   move  $a0, $s0
-.L7F0549EC:
-/* 08951C 7F0549EC 0FC15229 */  jal   sub_GAME_7F0548A4
-/* 089520 7F0549F0 02402825 */   move  $a1, $s2
-/* 089524 7F0549F4 8E1000C8 */  lw    $s0, 0xc8($s0)
-/* 089528 7F0549F8 52000004 */  beql  $s0, $zero, .L7F054A0C
-/* 08952C 7F0549FC 8FBF0024 */   lw    $ra, 0x24($sp)
-/* 089530 7F054A00 5611FFFA */  bnel  $s0, $s1, .L7F0549EC
-/* 089534 7F054A04 02002025 */   move  $a0, $s0
-.L7F054A08:
-/* 089538 7F054A08 8FBF0024 */  lw    $ra, 0x24($sp)
-.L7F054A0C:
-/* 08953C 7F054A0C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 089540 7F054A10 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 089544 7F054A14 8FB20020 */  lw    $s2, 0x20($sp)
-/* 089548 7F054A18 03E00008 */  jr    $ra
-/* 08954C 7F054A1C 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
 
 
 
@@ -44289,7 +45790,7 @@ glabel sub_GAME_7F054A64
 f32 chrobjFogVisRangeRelated(PropRecord *prop, f32 size)
 {
     f32 ret;
-    struct NearFogData *nfd;
+    struct NearFogRecord *nfd;
     f32 temp_f12;
 
     ret = 1.0f;
@@ -44599,7 +46100,7 @@ s32 updateDoorDisplacement(DoorRecord* door)
 {
     int isMoving = 0;
 
-    if (door->state == DOORSTATE_OPENING)
+    if (door->openstate == DOORSTATE_OPENING)
     {
         chrobjApplySpeed(&door->openPosition, door->maxFrac, &door->speed, door->accel, door->decel, door->maxSpeed);
 
@@ -44617,7 +46118,7 @@ s32 updateDoorDisplacement(DoorRecord* door)
 
         isMoving = 1;
     }
-    else if (door->state == DOORSTATE_CLOSING)
+    else if (door->openstate == DOORSTATE_CLOSING)
     {
         chrobjApplySpeed(&door->openPosition, 0.0f, &door->speed, door->accel, door->decel, door->maxSpeed);
 
@@ -44849,8 +46350,8 @@ glabel sub_GAME_7F05522C
 /* 089D6C 7F05523C AFA60070 */  sw    $a2, 0x70($sp)
 /* 089D70 7F055240 AFA70074 */  sw    $a3, 0x74($sp)
 /* 089D74 7F055244 84990006 */  lh    $t9, 6($a0)
-/* 089D78 7F055248 3C098007 */  lui   $t1, %hi(ptr_2xxxpresets) 
-/* 089D7C 7F05524C 8D295D1C */  lw    $t1, %lo(ptr_2xxxpresets)($t1)
+/* 089D78 7F055248 3C098007 */  lui   $t1, %hi(g_chraiCurrentSetup+0x1C) 
+/* 089D7C 7F05524C 8D295D1C */  lw    $t1, %lo(g_chraiCurrentSetup+0x1C)($t1)
 /* 089D80 7F055250 00194100 */  sll   $t0, $t9, 4
 /* 089D84 7F055254 01194021 */  addu  $t0, $t0, $t9
 /* 089D88 7F055258 00084080 */  sll   $t0, $t0, 2
@@ -45334,9 +46835,9 @@ glabel sub_GAME_7F055804
 /* 08A434 7F055904 0FC0F6DC */  jal   sub_GAME_7F03DB70
 /* 08A438 7F055908 27A50028 */   addiu $a1, $sp, 0x28
 /* 08A43C 7F05590C 1040000E */  beqz  $v0, .L7F055948
-/* 08A440 7F055910 3C0C8007 */   lui   $t4, %hi(ptr_2xxxpresets) 
+/* 08A440 7F055910 3C0C8007 */   lui   $t4, %hi(g_chraiCurrentSetup+0x1C) 
 /* 08A444 7F055914 860A0006 */  lh    $t2, 6($s0)
-/* 08A448 7F055918 8D8C5D1C */  lw    $t4, %lo(ptr_2xxxpresets)($t4)
+/* 08A448 7F055918 8D8C5D1C */  lw    $t4, %lo(g_chraiCurrentSetup+0x1C)($t4)
 /* 08A44C 7F05591C 8FA40078 */  lw    $a0, 0x78($sp)
 /* 08A450 7F055920 000A5900 */  sll   $t3, $t2, 4
 /* 08A454 7F055924 016A5821 */  addu  $t3, $t3, $t2
@@ -45379,76 +46880,33 @@ glabel sub_GAME_7F055804
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F05599C(void) {
+void sub_GAME_7F05599C(PropRecord *prop) //#MATCH
+{
+    DoorRecord *door = prop->door;
 
+    if ((door->openstate == DOORSTATE_OPENING) || (door->openstate == DOORSTATE_WAITING))
+    {
+        set_door_state(door, DOORSTATE_CLOSING);
+    }
+    else if (door->openstate == DOORSTATE_CLOSING)
+    {
+        set_door_state(door, DOORSTATE_OPENING);
+    }
+    else if (door->openstate == DOORSTATE_STATIONARY)
+    {
+        if (door->openPosition > 0.5f)
+        {
+            set_door_state(door, DOORSTATE_CLOSING);
+        }
+        else
+        {
+            set_door_state(door, DOORSTATE_OPENING);
+        }
+    }
+    door->runtime_bitflags |= RUNTIMEBITFLAG_ACTIVATED;
+    door->flags2 &= ~8;
+    sub_GAME_7F03E6A0(prop);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05599C
-/* 08A4CC 7F05599C 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 08A4D0 7F0559A0 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 08A4D4 7F0559A4 AFB00018 */  sw    $s0, 0x18($sp)
-/* 08A4D8 7F0559A8 AFA40020 */  sw    $a0, 0x20($sp)
-/* 08A4DC 7F0559AC 8C900004 */  lw    $s0, 4($a0)
-/* 08A4E0 7F0559B0 24010001 */  li    $at, 1
-/* 08A4E4 7F0559B4 820200BC */  lb    $v0, 0xbc($s0)
-/* 08A4E8 7F0559B8 02002025 */  move  $a0, $s0
-/* 08A4EC 7F0559BC 10410003 */  beq   $v0, $at, .L7F0559CC
-/* 08A4F0 7F0559C0 24010003 */   li    $at, 3
-/* 08A4F4 7F0559C4 54410006 */  bnel  $v0, $at, .L7F0559E0
-/* 08A4F8 7F0559C8 24010002 */   li    $at, 2
-.L7F0559CC:
-/* 08A4FC 7F0559CC 0FC15262 */  jal   set_door_state
-/* 08A500 7F0559D0 24050002 */   li    $a1, 2
-/* 08A504 7F0559D4 10000019 */  b     .L7F055A3C
-/* 08A508 7F0559D8 8E0F0064 */   lw    $t7, 0x64($s0)
-/* 08A50C 7F0559DC 24010002 */  li    $at, 2
-.L7F0559E0:
-/* 08A510 7F0559E0 14410005 */  bne   $v0, $at, .L7F0559F8
-/* 08A514 7F0559E4 02002025 */   move  $a0, $s0
-/* 08A518 7F0559E8 0FC15262 */  jal   set_door_state
-/* 08A51C 7F0559EC 24050001 */   li    $a1, 1
-/* 08A520 7F0559F0 10000012 */  b     .L7F055A3C
-/* 08A524 7F0559F4 8E0F0064 */   lw    $t7, 0x64($s0)
-.L7F0559F8:
-/* 08A528 7F0559F8 1440000F */  bnez  $v0, .L7F055A38
-/* 08A52C 7F0559FC 3C013F00 */   li    $at, 0x3F000000 # 0.500000
-/* 08A530 7F055A00 44812000 */  mtc1  $at, $f4
-/* 08A534 7F055A04 C60600B4 */  lwc1  $f6, 0xb4($s0)
-/* 08A538 7F055A08 24050002 */  li    $a1, 2
-/* 08A53C 7F055A0C 02002025 */  move  $a0, $s0
-/* 08A540 7F055A10 4606203C */  c.lt.s $f4, $f6
-/* 08A544 7F055A14 00000000 */  nop   
-/* 08A548 7F055A18 45000005 */  bc1f  .L7F055A30
-/* 08A54C 7F055A1C 00000000 */   nop   
-/* 08A550 7F055A20 0FC15262 */  jal   set_door_state
-/* 08A554 7F055A24 02002025 */   move  $a0, $s0
-/* 08A558 7F055A28 10000004 */  b     .L7F055A3C
-/* 08A55C 7F055A2C 8E0F0064 */   lw    $t7, 0x64($s0)
-.L7F055A30:
-/* 08A560 7F055A30 0FC15262 */  jal   set_door_state
-/* 08A564 7F055A34 24050001 */   li    $a1, 1
-.L7F055A38:
-/* 08A568 7F055A38 8E0F0064 */  lw    $t7, 0x64($s0)
-.L7F055A3C:
-/* 08A56C 7F055A3C 8E19000C */  lw    $t9, 0xc($s0)
-/* 08A570 7F055A40 2401FFF7 */  li    $at, -9
-/* 08A574 7F055A44 35F84000 */  ori   $t8, $t7, 0x4000
-/* 08A578 7F055A48 03214024 */  and   $t0, $t9, $at
-/* 08A57C 7F055A4C AE180064 */  sw    $t8, 0x64($s0)
-/* 08A580 7F055A50 AE08000C */  sw    $t0, 0xc($s0)
-/* 08A584 7F055A54 0FC0F9A8 */  jal   sub_GAME_7F03E6A0
-/* 08A588 7F055A58 8FA40020 */   lw    $a0, 0x20($sp)
-/* 08A58C 7F055A5C 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 08A590 7F055A60 8FB00018 */  lw    $s0, 0x18($sp)
-/* 08A594 7F055A64 27BD0020 */  addiu $sp, $sp, 0x20
-/* 08A598 7F055A68 03E00008 */  jr    $ra
-/* 08A59C 7F055A6C 00000000 */   nop   
-)
-#endif
-
 
 
 
@@ -45462,8 +46920,8 @@ GLOBAL_ASM(
 .text
 glabel sub_GAME_7F055A70
 /* 08A5A0 7F055A70 84AE0006 */  lh    $t6, 6($a1)
-/* 08A5A4 7F055A74 3C188007 */  lui   $t8, %hi(ptr_2xxxpresets) 
-/* 08A5A8 7F055A78 8F185D1C */  lw    $t8, %lo(ptr_2xxxpresets)($t8)
+/* 08A5A4 7F055A74 3C188007 */  lui   $t8, %hi(g_chraiCurrentSetup+0x1C) 
+/* 08A5A8 7F055A78 8F185D1C */  lw    $t8, %lo(g_chraiCurrentSetup+0x1C)($t8)
 /* 08A5AC 7F055A7C 000E7900 */  sll   $t7, $t6, 4
 /* 08A5B0 7F055A80 01EE7821 */  addu  $t7, $t7, $t6
 /* 08A5B4 7F055A84 000F7880 */  sll   $t7, $t7, 2
@@ -45989,7 +47447,7 @@ void stop_alarm(void)
   return;
 }
 
-u32 is_alarm_on(void)
+bool is_alarm_on(void)
 {
   return (0 < alarm_timer);
 }
@@ -45998,55 +47456,22 @@ u32 is_alarm_on(void)
 
 
 
-#ifdef NONMATCHING
-void init_trigger_toxic_gas_effect(void) {
-
+void init_trigger_toxic_gas_effect(coord3d *source) //#MATCH
+{
+    activate_gas_sound_timer = TRUE;
+    D_80030AE0               = 0.0f;
+    D_80030AD0.x             = source->x;
+    D_80030AD0.y             = source->y;
+    D_80030AD0.z             = source->z;
+    if (bossGetStageNum() == LEVELID_EGYPT)
+    {
+        gas_damage_flag = 120.0f;
+        gas_cutoff_flag = FALSE;
+        return;
+    }
+    gas_damage_flag = 3600.0f;
+    gas_cutoff_flag = TRUE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel init_trigger_toxic_gas_effect
-/* 08A994 7F055E64 44802000 */  mtc1  $zero, $f4
-/* 08A998 7F055E68 240E0001 */  li    $t6, 1
-/* 08A99C 7F055E6C 3C018003 */  lui   $at, %hi(activate_gas_sound_timer)
-/* 08A9A0 7F055E70 AC2E0ACC */  sw    $t6, %lo(activate_gas_sound_timer)($at)
-/* 08A9A4 7F055E74 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 08A9A8 7F055E78 3C018003 */  lui   $at, %hi(D_80030AE0)
-/* 08A9AC 7F055E7C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 08A9B0 7F055E80 E4240AE0 */  swc1  $f4, %lo(D_80030AE0)($at)
-/* 08A9B4 7F055E84 C4860000 */  lwc1  $f6, ($a0)
-/* 08A9B8 7F055E88 3C028003 */  lui   $v0, %hi(D_80030AD0)
-/* 08A9BC 7F055E8C 24420AD0 */  addiu $v0, %lo(D_80030AD0) # addiu $v0, $v0, 0xad0
-/* 08A9C0 7F055E90 E4460000 */  swc1  $f6, ($v0)
-/* 08A9C4 7F055E94 C4880004 */  lwc1  $f8, 4($a0)
-/* 08A9C8 7F055E98 E4480004 */  swc1  $f8, 4($v0)
-/* 08A9CC 7F055E9C C48A0008 */  lwc1  $f10, 8($a0)
-/* 08A9D0 7F055EA0 0C001A57 */  jal   bossGetStageNum
-/* 08A9D4 7F055EA4 E44A0008 */   swc1  $f10, 8($v0)
-/* 08A9D8 7F055EA8 24010020 */  li    $at, 32
-/* 08A9DC 7F055EAC 14410007 */  bne   $v0, $at, .L7F055ECC
-/* 08A9E0 7F055EB0 3C0142F0 */   li    $at, 0x42F00000 # 120.000000
-/* 08A9E4 7F055EB4 44818000 */  mtc1  $at, $f16
-/* 08A9E8 7F055EB8 3C018007 */  lui   $at, %hi(gas_damage_flag)
-/* 08A9EC 7F055EBC E4301E78 */  swc1  $f16, %lo(gas_damage_flag)($at)
-/* 08A9F0 7F055EC0 3C018007 */  lui   $at, %hi(gas_cutoff_flag)
-/* 08A9F4 7F055EC4 10000008 */  b     .L7F055EE8
-/* 08A9F8 7F055EC8 AC201E7C */   sw    $zero, %lo(gas_cutoff_flag)($at)
-.L7F055ECC:
-/* 08A9FC 7F055ECC 3C014561 */  li    $at, 0x45610000 # 3600.000000
-/* 08AA00 7F055ED0 44819000 */  mtc1  $at, $f18
-/* 08AA04 7F055ED4 3C018007 */  lui   $at, %hi(gas_damage_flag)
-/* 08AA08 7F055ED8 240F0001 */  li    $t7, 1
-/* 08AA0C 7F055EDC E4321E78 */  swc1  $f18, %lo(gas_damage_flag)($at)
-/* 08AA10 7F055EE0 3C018007 */  lui   $at, %hi(gas_cutoff_flag)
-/* 08AA14 7F055EE4 AC2F1E7C */  sw    $t7, %lo(gas_cutoff_flag)($at)
-.L7F055EE8:
-/* 08AA18 7F055EE8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 08AA1C 7F055EEC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 08AA20 7F055EF0 03E00008 */  jr    $ra
-/* 08AA24 7F055EF4 00000000 */   nop   
-)
-#endif
 
 
 
@@ -46063,36 +47488,10 @@ void check_deactivate_gas_sound(void)
 
 
 
-//!FIXME
-//Seriously why tf is this nopping:
-///* 08AA74 7F055F44 00001025 */  move  $v0, $zero
-//it byte matches otherwise
-#ifdef NONMATCHING
-s32 check_if_toxic_gas_activated(void)
+bool check_if_toxic_gas_activated() //#MATCH
 {
-    if (0.0f < toxic_gas_sound_timer) {
-        return 1;
-    }
-    return ;
+    return (toxic_gas_sound_timer > 0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_toxic_gas_activated
-/* 08AA68 7F055F38 3C018003 */  lui   $at, %hi(toxic_gas_sound_timer)
-/* 08AA6C 7F055F3C C4260AC8 */  lwc1  $f6, %lo(toxic_gas_sound_timer)($at)
-/* 08AA70 7F055F40 44802000 */  mtc1  $zero, $f4
-/* 08AA74 7F055F44 00001025 */  move  $v0, $zero
-/* 08AA78 7F055F48 4606203C */  c.lt.s $f4, $f6
-/* 08AA7C 7F055F4C 00000000 */  nop   
-/* 08AA80 7F055F50 45000002 */  bc1f  .L7F055F5C
-/* 08AA84 7F055F54 00000000 */   nop   
-/* 08AA88 7F055F58 24020001 */  li    $v0, 1
-.L7F055F5C:
-/* 08AA8C 7F055F5C 03E00008 */  jr    $ra
-/* 08AA90 7F055F60 00000000 */   nop   
-)
-#endif
 
 
 
@@ -46449,33 +47848,38 @@ glabel handle_gas_damage
 
 
 
-void set_unset_clock_lock_bits(int clocklockbits,int flag)
+void set_unset_clock_lock_bits(int clocklockbits, bool unset)
 {
-    if (flag != 0) {
+    if (unset)
+    {
         clock_drawn_flag &= ~clocklockbits;
         return;
     }
     clock_drawn_flag |= clocklockbits;
 }
 
-u32 is_clock_drawn_onscreen(void)
+bool is_clock_drawn_onscreen(void)
 {
-    return clock_drawn_flag == 0;
+    return clock_drawn_flag == FALSE;
 }
 
-void set_clock_time(f32 time) {
+void set_clock_time(f32 time)
+{
     clock_time = time;
 }
 
-f32 get_clock_time(void) {
+f32 get_clock_time(void)
+{
     return clock_time;
 }
 
-void set_clock_enable(s32 enable) {
+void set_clock_enable(bool enable)
+{
     clock_enable = enable;
 }
 
-s32 get_clock_enable(void) {
+bool get_clock_enable(void)
+{
     return clock_enable;
 }
 

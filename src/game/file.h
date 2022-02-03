@@ -1,10 +1,11 @@
 #ifndef _FILE_H_
 #define _FILE_H_
-#include "ultra64.h"
+#include <ultra64.h>
 
-#include "bondconstants.h"
+#include <bondconstants.h>
 
 // unknown/unused struct. Adding so that a definition exists.
+//Private Struct, Move to C
 struct save_file { s32* data; };
 
 typedef struct save_data
@@ -58,7 +59,7 @@ void end_of_mission_briefing(void);
 void fileLoadSaveSettingsForSelectedFolder(int a);
 void deleteCurrentSelectedFolder(void);
 void copyCurrentEEPROMtoStack(void);
-u8 getSelectedFolderBond(void);
+s32 getSelectedFolderBond(void);
 void set_selected_folder_num(u32 foldernum);
 void set_selected_difficulty(DIFFICULTY difficulty);
 void set_solo_and_ptr_briefing(LEVELID stage);

@@ -1,7 +1,7 @@
 #ifndef _TOKEN_H_
 #define _TOKEN_H_
 
-#include "ultra64.h"
+#include <ultra64.h>
 
 #if defined(LEFTOVERDEBUG)
 #define G_TOKEN_STRING_LEN 160

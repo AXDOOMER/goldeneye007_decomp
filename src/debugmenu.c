@@ -1,4 +1,4 @@
-#include "ultra64.h"
+#include <ultra64.h>
 #include "debugmenu.h"
 #include "vi.h"
 #include "game/dyn.h"
@@ -351,7 +351,7 @@ glabel debmenu7000AF98
 #endif
 #endif
 
-void debmenuSetPosition(s32 x, s32 y) {
+void debmenuSetPos(s32 x, s32 y) {
     #ifdef LEFTOVERDEBUG
     x += g_DebugMenuTextStartX;
     y += g_DebugMenuTextStartY;
@@ -360,7 +360,7 @@ void debmenuSetPosition(s32 x, s32 y) {
     #endif
 }
 
-void debmenuSetPrimColor(s32 r, s32 g, s32 b, s32 a) {
+void debmenuSetFgColour(s32 r, s32 g, s32 b, s32 a) {
     #ifdef LEFTOVERDEBUG
     g_DebugMenuPrimitiveColor.words.w1 = ((r << 24) | (g << 16) | (b << 8) | (255 - a));
     #endif
@@ -393,12 +393,12 @@ void debmenuWriteChar(unsigned char c) {
 void debmenuSetPositionAndWriteChar(s32 x, s32 y, unsigned char c)
 {
     #ifdef LEFTOVERDEBUG
-    debmenuSetPosition(x, y);
+    debmenuSetPos(x, y);
     debmenuWriteChar(c);
     #endif
 }
 
-void debmenuWriteString(const unsigned char *str) {
+void debmenuPrintString(const unsigned char *str) {
     #ifdef LEFTOVERDEBUG
     while (*str != '\0') {
         debmenuWriteChar(*str++);
@@ -408,7 +408,7 @@ void debmenuWriteString(const unsigned char *str) {
 
 void debmenuSetPositionAndWriteString(s32 x, s32 y, const unsigned char *str) { 
     #ifdef LEFTOVERDEBUG
-    debmenuSetPosition(x, y);
+    debmenuSetPos(x, y);
     while (*str != '\0') {
         debmenuWriteChar(*str++);
     }

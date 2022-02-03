@@ -1,22 +1,12 @@
-#include "ultra64.h"
+#include <ultra64.h>
 
-#include "bondtypes.h"
-#include "bondconstants.h"
-#include "fr.h"
-#include "game/bg.h"
-#include "game/bondview.h"
-#include "game/fog.h"
-
-// internal struct
-struct FogDetails
-{
-    f32 g_CurFogDetails;
-    f32 scaled_far_fog_dist;
-    u32 unk08;
-    u32 unk0c;
-    f32 far_fog_dist_scaled;
-    f32 near_fog_dist_scaled;
-};
+#include <bondtypes.h>
+#include <bondconstants.h>
+#include <fr.h>
+#include "bg.h"
+#include "bondview.h"
+#include "fog.h"
+#include <limits.h>
 
 /**
  * Address 0x800825C0.
@@ -26,12 +16,20 @@ s32 g_FogSkyIsEnabled;
 /**
  * Address 0x800825C4.
 */
-struct NearFogData *g_NearFogValuesP;
+NearFogRecord *g_NearFogValuesP;
 
 /**
- * Address 0x800825C8.
+ * Address 0x800825C8. Private struct to this file only
 */
-struct FogDetails g_CurFogDetails;
+struct FogDetails
+{
+    f32 g_CurFogDetails;
+    f32 scaled_far_fog_dist;
+    u32 unk08;
+    u32 unk0c;
+    f32 far_fog_dist_scaled;
+    f32 near_fog_dist_scaled;
+} g_CurFogDetails;
 
 /**
  * Address 0x800825E0.
@@ -46,17 +44,17 @@ f32 g_DifferenceFromFarFogIntensity;
 /**
  * Address 0x800825E8.
 */
-struct EnvironmentData *g_EnvironmentFoundp;
+EnvironmentRecord *g_EnvironmentFoundp;
 
 /**
  * Address 0x800825EC.
 */
-struct EnvironmentData * g_EnvironmentMainp;
+EnvironmentRecord * g_EnvironmentMainp;
 
 /**
  * Address 0x800825F0.
 */
-struct EnvironmentData * g_EnvironmentAltp;
+EnvironmentRecord * g_EnvironmentAltp;
 
 /**
  * Unreferenced.
@@ -76,7 +74,7 @@ s32 D_80044DC0 = 0;
 /**
  * Address 0x80044DC4.
 */
-f32 g_ScaledFarFogIntensity = 3.4028235e38;
+f32 g_ScaledFarFogIntensity = FLT_MAX;
 
 /**
  * Address 0x80044DC8.
@@ -86,7 +84,7 @@ f32 g_ScaledDifferenceFromFarFogIntensity = 0.0;
 /**
  * Address 0x80044DCC.
 */
-struct CurrentEnvData g_CurrentEnvironment = { 
+CurrentEnvironmentRecord g_CurrentEnvironment = { 
     0x384, // s32 DifferenceFromFarIntensity;
     0x3e8, // u32 FarIntensity;
         0,     // u8  Red;
@@ -114,7 +112,7 @@ s32 D_80044E08 = 0;
 s32 D_80044E0C = 0;
 
 #if defined(VERSION_EU)
-struct EnvironmentData fog_tables[] = {
+EnvironmentRecord fog_tables[] = {
      //stageID                              blendmultiplier    farfog    nearfog  mvisrng  mobfnrng  dif_ght  far_alight    red     green     blue    clouds   cloudrept  skymid, cloudred   green    blue   iswater  waterrepeat  waterid  water red,green,blue  waterconcavity
     {LEVELID_STATUE                             ,        15,      3500,    2000,     2500,    2000,    0x3E4,    0x3E8,       0,       0,       8,        1,      5000,       0,      170,    100,     40,        0,       -1000,       0,       0,     0,    0,    30.0 },
     {LEVELID_CONTROL                            ,        10,     10000,    2500,     5000,     800,    0x3E4,    0x3E8,       0,       0,       0,        0,         0,       0,        0,      0,      0,        0,           0,       0,       0,     0,    0,     0.0 },
@@ -169,7 +167,7 @@ struct EnvironmentData fog_tables[] = {
 /**
  * Address 0x80044E10.
 */
-struct EnvironmentData fog_tables[] = {
+EnvironmentRecord fog_tables[] = {
      //stageID                              blendmultiplier    farfog    nearfog  mvisrng  mobfnrng  mnvisrng   intensity  dif_ght  far_alight    red     green     blue    clouds   cloudrept skyimid reserved  cloudred   green    blue   iswater  padding[3]  waterrepeat  waterid reserved2   water red,green,blue  waterconcavity
     {LEVELID_STATUE                             ,        15,      3500,    2000,     2500,    2000,        0,      0x3E7,    0x3E4,    0x3E8,       0,       0,       8,        1,      5000,    0,        0,        170,    100,     40,        0,    0,0,0,         -1000,       0,        0,        0,     0,    0,    30.0 },
     {LEVELID_CONTROL                            ,        10,     10000,    2500,     5000,     800,        0,      0x3E7,    0x3E4,    0x3E8,       0,       0,       0,        0,         0,    0,        0,          0,      0,      0,        0,    0,0,0,             0,       0,        0,        0,     0,    0,     0.0 },
@@ -223,7 +221,7 @@ struct EnvironmentData fog_tables[] = {
 #endif
 
 
-struct EnvironmentData_Fogless fog_tables2[] = {
+EnvironmentFoglessRecord fog_tables2[] = {
     {LEVELID_NONE   ,    0,       0x10,    0x40,    0,        5000.0,        0,        0,        255.0,        255.0,        255.0,        0,        0,        0,        0,           0.0,        0,        0,          0.0,          0.0,          0.0,        0.0},
     {LEVELID_FRIGATE,    0x10,    0x30,    0x60,    1,        3000.0,        0,        0,        230.0,        230.0,        230.0,        1,        0,        0,        0,        -150.0,        2,        0,        255.0,        255.0,        150.0,        0.0},
     {LEVELID_CUBA   ,    0x30,    0x40,    0x10,    0,        5000.0,        0,        0,        255.0,        255.0,        255.0,        0,        0,        0,        0,           0.0,        0,        0,          0.0,          0.0,          0.0,        0.0},
@@ -232,8 +230,8 @@ struct EnvironmentData_Fogless fog_tables2[] = {
 
 // forward declarations
 
-void fogLoadCurrentEnvironment(struct EnvironmentData *arg0);
-void fogLoadFoglessCurrentEnvironment(struct EnvironmentData_Fogless *arg0);
+void fogLoadCurrentEnvironment(EnvironmentRecord *arg0);
+void fogLoadFoglessCurrentEnvironment(EnvironmentFoglessRecord *arg0);
 
 // end forward declarations
 
@@ -249,8 +247,10 @@ void sub_GAME_7F0BA720(s32 a, s32 b)
     return;
 }
 
-
-struct CurrentEnvData *fogGetCurrentEnvironmentp(void)
+/**
+* @return Pointer to Current Environment
+*/
+CurrentEnvironmentRecord *fogGetCurrentEnvironmentp(void)
 {
     return &g_CurrentEnvironment;
 }
@@ -275,7 +275,7 @@ f32 fogGetScaledFarFogIntensitySquared(void)
 /**
  * Address 0x7F0BA758.
 */
-void fogLoadCurrentEnvironment(struct EnvironmentData *arg0)
+void fogLoadCurrentEnvironment(EnvironmentRecord *arg0)
 {
     f32 zrange[2]; // 48
     f32 pk0;
@@ -287,7 +287,7 @@ void fogLoadCurrentEnvironment(struct EnvironmentData *arg0)
     viSetZRange(arg0->Visibility.BlendMultiplier, arg0->Visibility.FarFog);
     viGetZRange(&zrange);
 
-    temp_f0 = sub_GAME_7F0B4878();
+    temp_f0 = bgGetLevelVisibilityScale();
     zrange[0] /= temp_f0;
     zrange[1] /= temp_f0;
 
@@ -356,7 +356,7 @@ glabel fogLoadCurrentEnvironment
 /* 0EC40C 7F0B9A1C 46802320 */   cvt.s.w $f12, $f4
 /* 0EC410 7F0B9A20 0C00103F */  jal   viGetZRange
 /* 0EC414 7F0B9A24 27A40030 */   addiu $a0, $sp, 0x30
-/* 0EC418 7F0B9A28 0FC2CEED */  jal   sub_GAME_7F0B4878
+/* 0EC418 7F0B9A28 0FC2CEED */  jal   bgGetLevelVisibilityScale
 /* 0EC41C 7F0B9A2C 00000000 */   nop   
 /* 0EC420 7F0B9A30 C7A80030 */  lwc1  $f8, 0x30($sp)
 /* 0EC424 7F0B9A34 C7A40034 */  lwc1  $f4, 0x34($sp)
@@ -594,7 +594,7 @@ glabel fogLoadCurrentEnvironment
 /**
  * Address 0x7F0BA9D0.
 */
-void fogLoadFoglessCurrentEnvironment(struct EnvironmentData_Fogless *arg0)
+void fogLoadFoglessCurrentEnvironment(EnvironmentFoglessRecord *arg0)
 {
     g_CurrentEnvironment.Red = arg0->Red;
     g_CurrentEnvironment.Green = arg0->Green;
@@ -629,9 +629,9 @@ void fogRemoved7F0BAA5C(s32 a)
 */
 void fogLoadLevelEnvironment(s32 level_id, s32 arg1)
 {
-    struct EnvironmentData *phi_v1;
-    struct EnvironmentData_Fogless *phi_v2;
-    struct EnvironmentData_Fogless *sp1C;
+    EnvironmentRecord *phi_v1;
+    EnvironmentFoglessRecord *phi_v2;
+    EnvironmentFoglessRecord *sp1C;
     s32 num_players;
 
     sp1C = NULL;
@@ -643,7 +643,7 @@ void fogLoadLevelEnvironment(s32 level_id, s32 arg1)
         num_players = 0;
     }
 
-    g_ScaledFarFogIntensity = 3.4028235e38f;
+    g_ScaledFarFogIntensity = FLT_MAX;
     g_ScaledDifferenceFromFarFogIntensity = 0.0f;
 
     if (arg1)
@@ -901,10 +901,12 @@ glabel fogLoadLevelEnvironment
 #if defined(VERSION_US) || defined(VERSION_JP)
 /**
  * Address 0x7F0BACA8.
-*/
+ * Switch to next Environment. 
+ * @param isTransition: Usually 0 for instant switch or 1 to transition gradually
+ */
 void fogSwitchToSolosky2(f32 arg0)
 {
-    static struct EnvironmentData dword_CODE_bss_800825F8;
+    static EnvironmentRecord dword_CODE_bss_800825F8;
 
     dword_CODE_bss_800825F8 = *g_EnvironmentMainp;
 
@@ -1287,11 +1289,11 @@ Gfx *fogRenderClearFogMode(Gfx *gdl)
 /**
  * Address 0x7F0BB2C8.
 */
-s32 fogPositionIsVisibleThroughFog(struct coord3d *pos, f32 range)
+s32 fogPositionIsVisibleThroughFog(coord3d *pos, f32 range)
 {
-    struct coord3d sp24;
+    coord3d sp24;
     f32 ff;
-    struct coord3d *player_pos;
+    coord3d *player_pos;
     Mtxf *player_mtx;
 
     if (g_FogSkyIsEnabled == 0)
@@ -1317,7 +1319,7 @@ s32 fogPositionIsVisibleThroughFog(struct coord3d *pos, f32 range)
 }
 
 
-struct NearFogData *fogGetNearFogValuesP(void)
+NearFogRecord *fogGetNearFogValuesP(void)
 {
     return g_NearFogValuesP;
 }
@@ -1326,7 +1328,7 @@ struct NearFogData *fogGetNearFogValuesP(void)
 /**
  * Address 0x7F0BB3A4.
 */
-s32 fogGetPropDistColor(PropRecord *prop, struct rgba_f32 *color)
+s32 fogGetPropDistColor(PropRecord *prop, rgba_f32 *color)
 {
     if (g_FogSkyIsEnabled == 0)
     {

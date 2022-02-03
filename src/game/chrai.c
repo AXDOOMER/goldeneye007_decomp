@@ -1,27 +1,31 @@
-#include "ultra64.h"
-#include "bondgame.h"
-#include "bondtypes.h"
-#include "boss.h"
-#include "snd.h"
-#include "music.h"
-#include "game/bg.h"
-#include "game/bondview.h"
-#include "game/chr.h"
-#include "game/chrai.h"
-#include "game/chrlv.h"
-#include "game/chrobjhandler.h"
-#include "game/gun.h"
-#include "game/lvl_text.h"
-#include "game/math_floor.h"
-#include "game/math_ceil.h"
-#include "game/math_atan2f.h"
-#include "game/player.h"
+#include <ultra64.h>
+#include <bondgame.h>
+#include <bondtypes.h>
+#include <bondaicommands.h>
+#include <boss.h>
+#include <snd.h>
+#include <music.h>
+#include "bg.h"
+#include "bondview.h"
+#include "chr.h"
+#include "chrai.h"
+#include "chrlv.h"
+#include "chrobjhandler.h"
+#include "gun.h"
+#include "lvl_text.h"
+#include "math_floor.h"
+#include "math_ceil.h"
+#include "math_atan2f.h"
+#include "player.h"
+#include "chraidata.h"
+#include <limits.h>
+
 
 // bss
 /**
  * Address 0x80069B70.
 */
-struct sfx_register_struct sfx_related[SFX_RELATED_LEN];
+sfxRecord sfx_related[SFX_RELATED_LEN];
 
 //CODE.bss:80069C30
 s16 * ptr_list_object_lookup_indices;
@@ -32,7 +36,7 @@ u32 num_obj_position_data_entries;
 /**
  * Address 0x80069C38.
 */
-struct PropRecord pos_data_entry[POS_DATA_ENTRY_LEN];
+PropRecord pos_data_entry[POS_DATA_ENTRY_LEN];
 
 //CODE.bss:80071618
 s16 *ptr_room_lookup_buffer_maybe;
@@ -45,13 +49,13 @@ struct unk_8007161c *dword_CODE_bss_8007161C;
  * 
  * Address 0x80071620.
 */
-struct PropRecord *g_OnScreenPropList[ONSCREEN_PROP_LIST_LEN];
+PropRecord *g_OnScreenPropList[ONSCREEN_PROP_LIST_LEN];
 
 /**
  * Pointer to last onscreen prop.
  * Address 0x80071DF0.
 */
-struct PropRecord **g_LastOnScreenProp;
+PropRecord **g_LastOnScreenProp;
 
 /**
  * Count of onscreen props.
@@ -149,27 +153,32 @@ struct object_animation_controller g_TaserAnimController;
  * Address 0x80075CFC.
 */
 s32 bss_80075CFC;
-
+// This is a Stage Setup Struct 
+/*
 //CODE.bss:80075D00
-struct path_table_alt * ptr_setup_path_tbl;
+waypoint * ptr_setup_path_tbl;
 //CODE.bss:80075D04
 void * ptr_setup_path_link;
 //CODE.bss:80075D08
 void * ptr_setup_intro;
 //CODE.bss:80075D0C
-struct object_standard * ptr_setup_objects;
+PropDefHeaderRecord * ptr_setup_objects;
 //CODE.bss:80075D10
 void * ptr_setup_path_sets;
 //CODE.bss:80075D14
-void * ptr_setup_actions;
+AIListRecord * ptr_setup_actions;
 //CODE.bss:80075D18
-struct pad * ptr_0xxxpresets;
+PadRecord * ptr_0xxxpresets;
 //CODE.bss:80075D1C
-struct pad3d * ptr_2xxxpresets;
+BoundPadRecord * ptr_2xxxpresets;
 //CODE.bss:80075D20
 u32 dword_CODE_bss_80075D20;
 //CODE.bss:80075D24
-u32 dword_CODE_bss_80075D24;
+u32 dword_CODE_bss_80075D24;*/
+
+//CODE.bss:80075D00 - 80075D24
+stagesetup g_chraiCurrentSetup; //Public Working Setup
+
 //CODE.bss:80075D28
 u32 dword_CODE_bss_80075D28;
 
@@ -181,15 +190,13 @@ s32 D_80030A78 = 0;
 s32 D_80030A7C = 0;
 s32 D_80030A80 = 0;
 s32 D_80030A84 = 0;
-s32 D_80030A88 = 0;
-s32 D_80030A8C = 0;
-s32 D_80030A90 = 0;
+void* D_80030A88[] = {0,0,0};
 s32 D_80030A94 = 0;
 s32 D_80030A98 = 0;
 s32 D_80030A9C = 0;
-struct PropRecord *ptr_obj_pos_list_current_entry = 0;
-struct PropRecord *ptr_obj_pos_list_first_entry = 0;
-struct PropRecord *ptr_obj_pos_list_final_entry = 0;
+PropRecord *ptr_obj_pos_list_current_entry = 0;
+PropRecord *ptr_obj_pos_list_first_entry = 0;
+PropRecord *ptr_obj_pos_list_final_entry = 0;
 f32 difficulty = 1.0;
 s32 D_80030AB0 = 0;
 s32 D_80030AB4 = 0;
@@ -202,17 +209,157 @@ Gfx *chraiResolveRenderProp(Gfx *arg0, PropRecord *arg1, s32 arg2);
 void chraiCheckUseHeldItem(s32 hand);
 void chraiDefaultWeaponFireHandler(s32);
 void chraiFistAttackHandler(s32, s32);
+void sub_GAME_7F03C2BC(PropRecord *prop, s32 type) ;
 
 // end forward declarations
 
 
+//shims
+extern s32 objectiveGetStatus_WEAK(s32 objectiveNum, s32);
+#define chraiGoToLabel                    true_if_sucessfully_performing_action
+#define pathFindById                      get_ptr_path_for_pathnum
+#define ailistFindById                    LoadNext_PrevActionBlock
+#define chraiGetAIListID                  sub_GAME_7F035244
+#define chraiitemsize                     get_length_of_action_block
+#define audioPlayFromProp                 set_sound_effect_to_slot
+#define audioPlayFromProp2                set_sound_effect_source_to_location
+#define chrFindByLiteralId                chrGetGuardData
+#define chrIsHearingBond                  check_if_actor_02_flag_set
+#define chrFindById                       chrlvGetHandleForGuardId
+#define chrTryEquipHat                    sub_GAME_7F0510C0
+#define alarmIsActive                     is_alarm_on
+#define chrTrySurprisedLookAround         check_if_able_to_then_look_flustered
+#define chrIsStopped                      check_if_actor_stationary
+#define chrCheckTargetInSight             sub_GAME_7F029D70
+#define chrGetEquippedWeaponPropWithCheck is_weapon_in_guarddata_hand
+#define chrDropItem                       actor_drops_itemtype_setting_timer
+#define chrTrySurrender                   check_if_able_to_then_surrender
+#define chrFadeOut                        sub_GAME_7F0333A0
+#define alarmActivate                     start_alarm
+#define alarmDeactivate                   stop_alarm
+#define chrTryStartAlarm                  sub_GAME_7F034514
+#define chrGoToPad                        actor_moves_to_preset_at_speed
+#define chrCanHearAlarm                   alarm_timer_related
+#define chrSawInjury                      check_if_actor_FA_target_set
+#define chrSawDeath                       check_if_actor_FB_target_set
+#define chrCanSeeBond                     sub_GAME_7F0294BC
+#define chrSawTargetRecently              chrlvSeenWithin600
+#define chrHeardTargetRecently            chrlvHearWithin600
+#define chrIfNearMiss                     check_if_actor_invisible
+#define chrGetDistanceToBond              chrlvDistToBond3D
+#define chrGetDistanceToPad               sub_GAME_7F032E48
+#define chrGetDistanceToChr               get_distance_between_actor_and_actorID
+#define chrGetDistanceFromBondToPad       get_distance_between_actor_and_preset
+#define objFindByTagId                    get_handle_to_tagged_object
+#define weaponFindThrown                  check_if_item_deposited
+#define getCurrentPlayerWeaponId          get_item_in_hand
+#define objIsHealthy                      check_if_object_has_not_been_destroyed
+#define doorActivateWrapper               sub_GAME_7F05599C
+#define propobjInteract                   sub_GAME_7F04F170
+#define propobjSetDropped                 sub_GAME_7F04BFD0
+#define chrDropItems                      sub_GAME_7F021B20
+#define doorActivate                      set_door_state
+#define objectiveGetCount                 add_objective
+#define chrGetNumArghs                    get_times_actor_shot
+#define chrGetNumCloseArghs               get_num_shots_near_actor
+#define chrSetFlags                       chrlvSetBitfieldFlags
+#define chrUnsetFlags                     chrlvClearBitfieldFlags
+#define chrHasFlag                        chrlvTestBitfieldFlags
+#define chrSetFlagsById                   chrlvSetGuardBitfieldFlags
+#define chrUnsetFlagsById                 chrlvClearGuardBitfieldFlags
+#define chrHasFlagById                    chrlvTestGuardBitfieldFlags
+#define chrSetStageFlags                  toggle_objective_bitflags
+#define chrUnsetStageFlags                untoggle_objective_bitflags
+#define chrHasStageFlag                   check_if_objective_bitflags_set
+#define chrSetChrPreset                   sub_GAME_7F033CF4
+#define chrSetChrPreset2                  sub_GAME_7F033D1C
+#define chrSetPadPreset                   sub_GAME_7F033D5C
+#define chrSetPadPresetByChrnum           sub_GAME_7F033D84
+#define chrRestartTimer                   reset_and_start_loop_counter
+#define chrGetTimer                       get_loop_counter_time_in_seconds
+#define countdownTimerSetVisible          set_unset_clock_lock_bits
+#define countdownTimerSetValue            set_clock_time
+#define countdownTimerSetRunning          set_clock_enable
+#define countdownTimerIsRunning           get_clock_enable
+#define countdownTimerGetValue            get_clock_time
+#define chrSpawnAtPad                     guard_constructor_BD
+#define chrSpawnAtChr                     guard_constructor_BE
+#define cheatIsActive                     cheatCheckIfOn
+#define chrGiveWeapon                     actor_draws_weapon_with_model
+#define chrGetEquippedWeaponProp          something_with_weaponpos_of_guarddata_hand
+#define propweaponSetDual                 link_objects
+#define langGet                           get_textptr_for_textID
+#define hudmsgBottomShow                  display_string_in_lower_left_corner
+#define hudmsgTopShow                     display_string_at_top_of_screen
+#define imageSlotSetImage                 set_ptr_monitor_img_to_obj_ani_slot
+#define isBondInTank                      get_intank_flag
+#define chrResolvePadId                   convertPadIf9000
+#define sub_GAME_7F020D914                chrPositionRelated7F020D94
+#define chrSetWeaponFlag4                 set_0x4_in_runtime_flags_for_item_in_guards_hand
+#define currentPlayerGetAmmoCount         check_cur_player_ammo_amount_total
+#define currentPlayerEquipWeaponWrapper   draw_item_in_hand_has_more_ammo
+#define currentPlayerUnEquipWeaponWrapper remove_hands_item
+#define g_PlayerInvincible                disable_player_pickups_flag
+#define objectiveIsAllComplete            check_objectives_complete
+#define musicSetXReason                   set_musicslot_time
+#define musicUnsetXReason                 reset_music_in_slot
+#define SurroundWithExplosions            trigger_explosions_around_player
+#define get_civilian_casualties           get_civilian_casualties
+#define g_isBondKIA                       mission_kia_flag
+#define chrTrySurprisedSurrender          check_if_able_to_then_fawn_on_shoulder
 
 
 
 
+
+void set_sound_effect_source_to_location(s32 slot);
 #ifdef NONMATCHING
-void set_sound_effect_source_to_location(void) {
+void set_sound_effect_source_to_location(s32 slot)//#MATCH :audioPlayFromProp2
+{
+    int tempvol;
+    sfxRecord *sfx= &sfx_related[slot]; //always added to stack anyway, cleaner to use
+    int clock_timer;
 
+    if ((sfx->state ) && (sndGetPlayingState(sfx->state) ))
+    {
+    
+        if (sfx->pad )
+        {
+            sfx->Volume = sub_GAME_7F0539E4(sfx->pad);   
+        }
+        else
+        {
+            if (sfx->Obj && sfx->Obj->prop)
+            {
+                //override pad with a co-ord,
+                sfx->Volume = sub_GAME_7F0539E4(&sfx->Obj->runtime_pos);
+            }
+        }
+
+        tempvol = sfx->Volume;
+        if (sfx->sfxID >= 0)
+        {
+            clock_timer = gclock_timer;
+            if (clock_timer < sfx->sfxID)
+            {
+                tempvol = (((sfx->Volume - sfx->Volume2) * clock_timer) / sfx->sfxID) + sfx->Volume2;
+            }
+            sfx->sfxID = sfx->sfxID - clock_timer;
+        }
+        if (get_controls_locked_flag() != 0)
+        {
+            tempvol = 0;
+        }
+        if (tempvol != sfx->Volume2)
+        {
+            sfx_c_70009184(sfx->state, 8);
+            sfx->Volume2 = tempvol;
+            return;
+        }
+        return;
+    }
+    sfx->Volume2 = 0;
+}
 }
 #else
 GLOBAL_ASM(
@@ -315,671 +462,98 @@ glabel set_sound_effect_source_to_location
 
 
 
-#ifdef NONMATCHING
-void loop_set_sound_effect_all_slots(void) {
-
-}
-#else
-GLOBAL_ASM(
-.text
-glabel loop_set_sound_effect_all_slots
-/* 069414 7F0348E4 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 069418 7F0348E8 AFB10018 */  sw    $s1, 0x18($sp)
-/* 06941C 7F0348EC AFB00014 */  sw    $s0, 0x14($sp)
-/* 069420 7F0348F0 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 069424 7F0348F4 00008025 */  move  $s0, $zero
-/* 069428 7F0348F8 24110008 */  li    $s1, 8
-.L7F0348FC:
-/* 06942C 7F0348FC 0FC0D1E8 */  jal   set_sound_effect_source_to_location
-/* 069430 7F034900 02002025 */   move  $a0, $s0
-/* 069434 7F034904 26100001 */  addiu $s0, $s0, 1
-/* 069438 7F034908 1611FFFC */  bne   $s0, $s1, .L7F0348FC
-/* 06943C 7F03490C 00000000 */   nop   
-/* 069440 7F034910 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 069444 7F034914 8FB00014 */  lw    $s0, 0x14($sp)
-/* 069448 7F034918 8FB10018 */  lw    $s1, 0x18($sp)
-/* 06944C 7F03491C 03E00008 */  jr    $ra
-/* 069450 7F034920 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
-void set_sound_effect_to_slot(void) {
-
-}
-#else
-GLOBAL_ASM(
-.text
-glabel set_sound_effect_to_slot
-/* 069454 7F034924 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 069458 7F034928 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 06945C 7F03492C AFA50024 */  sw    $a1, 0x24($sp)
-/* 069460 7F034930 0480001A */  bltz  $a0, .L7F03499C
-/* 069464 7F034934 00003025 */   move  $a2, $zero
-/* 069468 7F034938 28810008 */  slti  $at, $a0, 8
-/* 06946C 7F03493C 10200017 */  beqz  $at, .L7F03499C
-/* 069470 7F034940 00047080 */   sll   $t6, $a0, 2
-/* 069474 7F034944 01C47023 */  subu  $t6, $t6, $a0
-/* 069478 7F034948 3C0F8007 */  lui   $t7, %hi(sfx_related) 
-/* 06947C 7F03494C 25EF9B70 */  addiu $t7, %lo(sfx_related) # addiu $t7, $t7, -0x6490
-/* 069480 7F034950 000E70C0 */  sll   $t6, $t6, 3
-/* 069484 7F034954 01CF1821 */  addu  $v1, $t6, $t7
-/* 069488 7F034958 8C650000 */  lw    $a1, ($v1)
-/* 06948C 7F03495C 10A00007 */  beqz  $a1, .L7F03497C
-/* 069490 7F034960 00A02025 */   move  $a0, $a1
-/* 069494 7F034964 AFA30018 */  sw    $v1, 0x18($sp)
-/* 069498 7F034968 0C00237C */  jal   sndGetPlayingState
-/* 06949C 7F03496C AFA0001C */   sw    $zero, 0x1c($sp)
-/* 0694A0 7F034970 8FA30018 */  lw    $v1, 0x18($sp)
-/* 0694A4 7F034974 14400009 */  bnez  $v0, .L7F03499C
-/* 0694A8 7F034978 8FA6001C */   lw    $a2, 0x1c($sp)
-.L7F03497C:
-/* 0694AC 7F03497C 24027FFF */  li    $v0, 32767
-/* 0694B0 7F034980 2418FFFF */  li    $t8, -1
-/* 0694B4 7F034984 00603025 */  move  $a2, $v1
-/* 0694B8 7F034988 AC62000C */  sw    $v0, 0xc($v1)
-/* 0694BC 7F03498C AC620004 */  sw    $v0, 4($v1)
-/* 0694C0 7F034990 AC780008 */  sw    $t8, 8($v1)
-/* 0694C4 7F034994 AC600010 */  sw    $zero, 0x10($v1)
-/* 0694C8 7F034998 AC600014 */  sw    $zero, 0x14($v1)
-.L7F03499C:
-/* 0694CC 7F03499C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 0694D0 7F0349A0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 0694D4 7F0349A4 0C002382 */  jal   sndPlaySfx
-/* 0694D8 7F0349A8 87A50026 */   lh    $a1, 0x26($sp)
-/* 0694DC 7F0349AC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0694E0 7F0349B0 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0694E4 7F0349B4 03E00008 */  jr    $ra
-/* 0694E8 7F0349B8 00000000 */   nop   
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0349BC(void) {
-
-}
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0349BC
-/* 0694EC 7F0349BC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0694F0 7F0349C0 0480000A */  bltz  $a0, .L7F0349EC
-/* 0694F4 7F0349C4 AFBF0014 */   sw    $ra, 0x14($sp)
-/* 0694F8 7F0349C8 28810008 */  slti  $at, $a0, 8
-/* 0694FC 7F0349CC 10200007 */  beqz  $at, .L7F0349EC
-/* 069500 7F0349D0 00047080 */   sll   $t6, $a0, 2
-/* 069504 7F0349D4 01C47023 */  subu  $t6, $t6, $a0
-/* 069508 7F0349D8 000E70C0 */  sll   $t6, $t6, 3
-/* 06950C 7F0349DC 3C048007 */  lui   $a0, %hi(sfx_related)
-/* 069510 7F0349E0 008E2021 */  addu  $a0, $a0, $t6
-/* 069514 7F0349E4 0C002408 */  jal   sndDeactivate
-/* 069518 7F0349E8 8C849B70 */   lw    $a0, %lo(sfx_related)($a0)
-.L7F0349EC:
-/* 06951C 7F0349EC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 069520 7F0349F0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 069524 7F0349F4 03E00008 */  jr    $ra
-/* 069528 7F0349F8 00000000 */   nop   
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
-/*
-
-*   Trev's Original Assumption
-
-
-enum ActionCommands
+void loop_set_sound_effect_all_slots(void)
 {
-	GotoLabel,
-	GotoLabelFromTop,
-	Label,
-	Yield,
-	End,
-	JAL,
-
-};
-u8 get_length_of_action_block(CurrentActionByte) {
-	enum ActionCommands Action = byte(CurrentActionByte)
-	switch(Action)
-	{
-		case GotoLabel:
-			return 2;
-		case GotoLabelFromTop:
-			return 2;
-		...
-		case 252:
-			return 1;
-		default:
-			return 1;
-	}
+    int i;
+    for (i = 0; i < SFX_RELATED_LEN; i++)
+    {
+        set_sound_effect_source_to_location(i);
+    }
 }
-*/
 
-/*
-*   With New macro commands
--   SUGESTION: Prefix all AI commands with AI
-*/
-u8 get_length_of_action_block(u8 *CurrentActionByte)
+
+
+void set_sound_effect_to_slot(s32 slot, s16 soundIndex) //#MATCH  audioPlayFromProp
 {
-        switch (CurrentActionByte)
+    sfxRecord *sfx = NULL; //always added to stack anyway, cleaner to use
+
+    if (slot >= 0 && slot < SFX_RELATED_LEN)
+    {
+        //NOT Volatile
+        if (!sfx_related[slot].state || !sndGetPlayingState(sfx_related[slot].state))
         {
-            case goto_next_ID:
-                return goto_next_LENGTH;
-            case goto_first_ID:
-                return goto_first_LENGTH;
-            case label_ID:
-                return label_LENGTH;
-            case ai_sleep_ID:
-                return ai_sleep_LENGTH;
-            case ai_list_end_ID:
-                return ai_list_end_LENGTH;
-            case jump_to_ai_list_ID:
-                return jump_to_ai_list_LENGTH;
-            case set_return_ai_list_ID:
-                return set_return_ai_list_LENGTH;
-            case jump_to_return_ai_list_ID:
-                return jump_to_return_ai_list_LENGTH;
-            case  guard_animation_stop_ID:
-                return guard_animation_stop_LENGTH;
-            case guard_kneel_ID:
-                return guard_kneel_LENGTH;
-            case guard_play_animation_ID:
-                return guard_play_animation_LENGTH;
-            case if_guard_playing_animation_ID:
-                return if_guard_playing_animation_LENGTH;
-            case guard_points_at_bond_ID:
-                return guard_points_at_bond_LENGTH;
-            case guard_looks_around_self_ID:
-                return guard_looks_around_self_LENGTH;
-            case guard_try_sidestepping_ID:
-                return guard_try_sidestepping_LENGTH;
-            case guard_try_hopping_sideways_ID:
-                return guard_try_hopping_sideways_LENGTH;
-            case guard_try_running_to_side_ID:
-                return guard_try_running_to_side_LENGTH;
-            case guard_try_firing_walk_ID:
-                return guard_try_firing_walk_LENGTH;
-            case guard_try_firing_run_ID:
-                return guard_try_firing_run_LENGTH;
-            case guard_try_firing_roll_ID:
-                return guard_try_firing_roll_LENGTH;
-            case guard_try_fire_or_aim_at_target_ID:
-                return guard_try_fire_or_aim_at_target_LENGTH;
-            case guard_try_fire_or_aim_at_target_kneel_ID:
-                return guard_try_fire_or_aim_at_target_kneel_LENGTH;
-            case guard_try_fire_or_aim_at_target_update_ID:
-                return guard_try_fire_or_aim_at_target_update_LENGTH;
-            case guard_try_facing_target_ID:
-                return guard_try_facing_target_LENGTH;
-            case chr_hit_body_part_with_item_damage_ID:
-                return chr_hit_body_part_with_item_damage_LENGTH;
-            case chr_hit_chr_body_part_with_held_item_ID:
-                return chr_hit_chr_body_part_with_held_item_LENGTH;
-            case guard_try_throwing_grenade_ID:
-                return guard_try_throwing_grenade_LENGTH;
-            case guard_try_dropping_item_ID:
-                return guard_try_dropping_item_LENGTH;
-            case guard_runs_to_pad_ID:
-                return guard_runs_to_pad_LENGTH;
-            case guard_runs_to_padpreset_ID:
-                return guard_runs_to_padpreset_LENGTH;
-            case guard_walks_to_pad_ID:
-                return guard_walks_to_pad_LENGTH;
-            case guard_sprints_to_pad_ID:
-                return guard_sprints_to_pad_LENGTH;
-            case guard_start_patrol_ID:
-                return guard_start_patrol_LENGTH;
-            case guard_surrenders_ID:
-                return guard_surrenders_LENGTH;
-            case guard_remove_fade_ID:
-                return guard_remove_fade_LENGTH;
-            case chr_remove_instant_ID:
-                return chr_remove_instant_LENGTH;
-            case guard_try_triggering_alarm_at_pad_ID:
-                return guard_try_triggering_alarm_at_pad_LENGTH;
-            case alarm_on_ID:
-                return alarm_on_LENGTH;
-            case alarm_off_ID:
-                return alarm_off_LENGTH;
-            case removed_command27_ID:
-                return removed_command27_LENGTH;
-            case guard_try_running_to_bond_position_ID:
-                return guard_try_running_to_bond_position_LENGTH;
-            case guard_try_walking_to_bond_position_ID:
-                return guard_try_walking_to_bond_position_LENGTH;
-            case guard_try_sprinting_to_bond_position_ID:
-                return guard_try_sprinting_to_bond_position_LENGTH;
-            case removed_command2B_ID:
-                return removed_command2B_LENGTH;
-            case guard_try_running_to_chr_position_ID:
-                return guard_try_running_to_chr_position_LENGTH;
-            case guard_try_walking_to_chr_position_ID:
-                return guard_try_walking_to_chr_position_LENGTH;
-            case guard_try_sprinting_to_chr_position_ID:
-                return guard_try_sprinting_to_chr_position_LENGTH;
-            case if_guard_has_stopped_moving_ID:
-                return if_guard_has_stopped_moving_LENGTH;
-            case if_chr_dying_or_dead_ID:
-                return if_chr_dying_or_dead_LENGTH;
-            case if_chr_does_not_exist_ID:
-                return if_chr_does_not_exist_LENGTH;
-            case if_guard_sees_bond_ID:
-                return if_guard_sees_bond_LENGTH;
-            case random_generate_ID:
-                return random_generate_LENGTH;
-            case if_random_seed_less_than_ID:
-                return if_random_seed_less_than_LENGTH;
-            case if_random_seed_greater_than_ID:
-                return if_random_seed_greater_than_LENGTH;
-            case if_alarm_is_on_unused_ID:
-                return if_alarm_is_on_unused_LENGTH;
-            case if_alarm_is_on_ID:
-                return if_alarm_is_on_LENGTH;
-            case if_gas_is_leaking_ID:
-                return if_gas_is_leaking_LENGTH;
-            case if_guard_heard_bond_ID:
-                return if_guard_heard_bond_LENGTH;
-            case if_guard_see_another_guard_shot_ID:
-                return if_guard_see_another_guard_shot_LENGTH;
-            case if_guard_see_another_guard_die_ID:
-                return if_guard_see_another_guard_die_LENGTH;
-            case if_guard_and_bond_within_line_of_sight_ID:
-                return if_guard_and_bond_within_line_of_sight_LENGTH;
-            case if_guard_and_bond_within_partial_line_of_sight_ID:
-                return if_guard_and_bond_within_partial_line_of_sight_LENGTH;
-            case if_guard_was_shot_within_last_10_secs_ID:
-                return if_guard_was_shot_within_last_10_secs_LENGTH;
-            case if_guard_heard_bond_within_last_10_secs_ID:
-                return if_guard_heard_bond_within_last_10_secs_LENGTH;
-            case if_guard_in_room_with_chr_ID:
-                return if_guard_in_room_with_chr_LENGTH;
-            case if_guard_is_on_screen_ID:
-                return if_guard_is_on_screen_LENGTH;
-            case if_guard_has_not_been_seen_ID:
-                return if_guard_has_not_been_seen_LENGTH;
-            case if_guard_room_containing_self_is_on_screen_ID:
-                return if_guard_room_containing_self_is_on_screen_LENGTH;
-            case if_room_containing_pad_is_on_screen_ID:
-                return if_room_containing_pad_is_on_screen_LENGTH;
-            case if_guard_is_targeted_by_bond_ID:
-                return if_guard_is_targeted_by_bond_LENGTH;
-            case if_guard_shot_from_bond_missed_ID:
-                return if_guard_shot_from_bond_missed_LENGTH;
-            case if_guard_counter_clockwise_direction_to_bond_less_than_ID:
-                return if_guard_counter_clockwise_direction_to_bond_less_than_LENGTH;
-            case if_guard_counter_clockwise_direction_to_bond_greater_than_ID:
-                return if_guard_counter_clockwise_direction_to_bond_greater_than_LENGTH;
-            case if_guard_counter_clockwise_direction_from_bond_less_than_ID:
-                return if_guard_counter_clockwise_direction_from_bond_less_than_LENGTH;
-            case if_guard_counter_clockwise_direction_from_bond_greater_than_ID:
-                return if_guard_counter_clockwise_direction_from_bond_greater_than_LENGTH;
-            case if_guard_distance_to_bond_less_than_ID:
-                return if_guard_distance_to_bond_less_than_LENGTH;
-            case if_guard_distance_to_bond_greater_than_ID:
-                return if_guard_distance_to_bond_greater_than_LENGTH;
-            case if_chr_distance_to_pad_less_than_ID:
-                return if_chr_distance_to_pad_less_than_LENGTH;
-            case if_chr_distance_to_pad_greater_than_ID:
-                return if_chr_distance_to_pad_greater_than_LENGTH;
-            case if_guard_distance_to_chr_less_than_ID:
-                return if_guard_distance_to_chr_less_than_LENGTH;
-            case if_guard_distance_to_chr_greater_than_ID:
-                return if_guard_distance_to_chr_greater_than_LENGTH;
-            case guard_try_setting_chr_preset_to_guard_within_distance_ID:
-                return guard_try_setting_chr_preset_to_guard_within_distance_LENGTH;
-            case if_bond_distance_to_pad_less_than_ID:
-                return if_bond_distance_to_pad_less_than_LENGTH;
-            case if_bond_distance_to_pad_greater_than_ID:
-                return if_bond_distance_to_pad_greater_than_LENGTH;
-            case if_chr_in_room_with_pad_ID:
-                return if_chr_in_room_with_pad_LENGTH;
-            case if_bond_in_room_with_pad_ID:
-                return if_bond_in_room_with_pad_LENGTH;
-            case if_bond_collected_object_ID:
-                return if_bond_collected_object_LENGTH;
-            case if_item_is_stationary_within_level_ID:
-                return if_item_is_stationary_within_level_LENGTH;
-            case if_item_is_attached_to_object_ID:
-                return if_item_is_attached_to_object_LENGTH;
-            case if_bond_has_item_equipped_ID:
-                return if_bond_has_item_equipped_LENGTH;
-            case if_object_exists_ID:
-                return if_object_exists_LENGTH;
-            case if_object_not_destroyed_ID:
-                return if_object_not_destroyed_LENGTH;
-            case if_object_was_activated_ID:
-                return if_object_was_activated_LENGTH;
-            case if_bond_used_gadget_on_object_ID:
-                return if_bond_used_gadget_on_object_LENGTH;
-            case object_activate_ID:
-                return object_activate_LENGTH;
-            case object_destroy_ID:
-                return object_destroy_LENGTH;
-            case object_detach_from_chr_ID:
-                return object_detach_from_chr_LENGTH;
-            case chr_drop_all_concealed_items_ID:
-                return chr_drop_all_concealed_items_LENGTH;
-            case chr_drop_all_held_items_ID:
-                return chr_drop_all_held_items_LENGTH;
-            case bond_collect_object_ID:
-                return bond_collect_object_LENGTH;
-            case chr_equip_object_ID:
-                return chr_equip_object_LENGTH;
-            case object_move_to_pad_ID:
-                return object_move_to_pad_LENGTH;
-            case door_open_ID:
-                return door_open_LENGTH;
-            case door_close_ID:
-                return door_close_LENGTH;
-            case if_door_state_equal_ID:
-                return if_door_state_equal_LENGTH;
-            case if_door_has_been_opened_before_ID:
-                return if_door_has_been_opened_before_LENGTH;
-            case door_set_lock_ID:
-                return door_set_lock_LENGTH;
-            case door_unset_lock_ID:
-                return door_unset_lock_LENGTH;
-            case if_door_lock_equal_ID:
-                return if_door_lock_equal_LENGTH;
-            case if_objective_num_complete_ID:
-                return if_objective_num_complete_LENGTH;
-            case if_game_difficulty_less_than_ID:
-                return if_game_difficulty_less_than_LENGTH;
-            case if_game_difficulty_greater_than_ID:
-                return if_game_difficulty_greater_than_LENGTH;
-            case if_mission_time_less_than_ID:
-                return if_mission_time_less_than_LENGTH;
-            case if_mission_time_greater_than_ID:
-                return if_mission_time_greater_than_LENGTH;
-            case if_system_power_time_less_than_ID:
-                return if_system_power_time_less_than_LENGTH;
-            case if_system_power_time_greater_than_ID:
-                return if_system_power_time_greater_than_LENGTH;
-            case if_level_id_less_than_ID:
-                return if_level_id_less_than_LENGTH;
-            case if_level_id_greater_than_ID:
-                return if_level_id_greater_than_LENGTH;
-            case if_guard_hits_less_than_ID:
-                return if_guard_hits_less_than_LENGTH;
-            case if_guard_hits_greater_than_ID:
-                return if_guard_hits_greater_than_LENGTH;
-            case if_guard_hits_missed_less_than_ID:
-                return if_guard_hits_missed_less_than_LENGTH;
-            case if_guard_hits_missed_greater_than_ID:
-                return if_guard_hits_missed_greater_than_LENGTH;
-            case if_chr_health_less_than_ID:
-                return if_chr_health_less_than_LENGTH;
-            case if_chr_health_greater_than_ID:
-                return if_chr_health_greater_than_LENGTH;
-            case if_chr_was_damaged_since_last_check_ID:
-                return if_chr_was_damaged_since_last_check_LENGTH;
-            case if_bond_health_less_than_ID:
-                return if_bond_health_less_than_LENGTH;
-            case if_bond_health_greater_than_ID:
-                return if_bond_health_greater_than_LENGTH;
-            case local_byte_1_set_ID:
-                return local_byte_1_set_LENGTH;
-            case local_byte_1_add_ID:
-                return local_byte_1_add_LENGTH;
-            case local_byte_1_subtract_ID:
-                return local_byte_1_subtract_LENGTH;
-            case if_local_byte_1_less_than_ID:
-                return if_local_byte_1_less_than_LENGTH;
-            case if_local_byte_1_less_than_random_seed_ID:
-                return if_local_byte_1_less_than_random_seed_LENGTH;
-            case local_byte_2_set_ID:
-                return local_byte_2_set_LENGTH;
-            case local_byte_2_add_ID:
-                return local_byte_2_add_LENGTH;
-            case local_byte_2_subtract_ID:
-                return local_byte_2_subtract_LENGTH;
-            case if_local_byte_2_less_than_ID:
-                return if_local_byte_2_less_than_LENGTH;
-            case if_local_byte_2_less_than_random_seed_ID:
-                return if_local_byte_2_less_than_random_seed_LENGTH;
-            case guard_set_hearing_scale_ID:
-                return guard_set_hearing_scale_LENGTH;
-            case guard_set_vision_range_ID:
-                return guard_set_vision_range_LENGTH;
-            case guard_set_grenade_probability_ID:
-                return guard_set_grenade_probability_LENGTH;
-            case guard_set_chr_num_ID:
-                return guard_set_chr_num_LENGTH;
-            case guard_set_health_total_ID:
-                return guard_set_health_total_LENGTH;
-            case guard_set_armour_ID:
-                return guard_set_armour_LENGTH;
-            case guard_set_speed_rating_ID:
-                return guard_set_speed_rating_LENGTH;
-            case guard_set_argh_rating_ID:
-                return guard_set_argh_rating_LENGTH;
-            case guard_set_accuracy_rating_ID:
-                return guard_set_accuracy_rating_LENGTH;
-            case guard_bitfield_set_on_ID:
-                return guard_bitfield_set_on_LENGTH;
-            case guard_bitfield_set_off_ID:
-                return guard_bitfield_set_off_LENGTH;
-            case if_guard_bitfield_is_set_on_ID:
-                return if_guard_bitfield_is_set_on_LENGTH;
-            case chr_bitfield_set_on_ID:
-                return chr_bitfield_set_on_LENGTH;
-            case chr_bitfield_set_off_ID:
-                return chr_bitfield_set_off_LENGTH;
-            case if_chr_bitfield_is_set_on_ID:
-                return if_chr_bitfield_is_set_on_LENGTH;
-            case guard_flags_set_on_ID:
-                return guard_flags_set_on_LENGTH;
-            case guard_flags_set_off_ID:
-                return guard_flags_set_off_LENGTH;
-            case if_guard_flags_is_set_on_ID:
-                return if_guard_flags_is_set_on_LENGTH;
-            case chr_flags_set_on_ID:
-                return chr_flags_set_on_LENGTH;
-            case chr_flags_set_off_ID:
-                return chr_flags_set_off_LENGTH;
-            case if_chr_flags_is_set_on_ID:
-                return if_chr_flags_is_set_on_LENGTH;
-            case object_flags_1_set_on_ID:
-                return object_flags_1_set_on_LENGTH;
-            case object_flags_1_set_off_ID:
-                return object_flags_1_set_off_LENGTH;
-            case if_object_flags_1_is_set_on_ID:
-                return if_object_flags_1_is_set_on_LENGTH;
-            case object_flags_2_set_on_ID:
-                return object_flags_2_set_on_LENGTH;
-            case object_flags_2_set_off_ID:
-                return object_flags_2_set_off_LENGTH;
-            case if_object_flags_2_is_set_on_ID:
-                return if_object_flags_2_is_set_on_LENGTH;
-            case guard_set_chr_preset_ID:
-                return guard_set_chr_preset_LENGTH;
-            case chr_set_chr_preset_ID:
-                return chr_set_chr_preset_LENGTH;
-            case guard_set_pad_preset_ID:
-                return guard_set_pad_preset_LENGTH;
-            case chr_set_pad_preset_ID:
-                return chr_set_pad_preset_LENGTH;
-            case debug_log_ID:
-                for (int i = 0; currentaction[i] < debug_log_LENGTH; i++)
-                {
-                    if (currentaction[i] == debug_log_end)
-                        return i;
-                }
-                return debug_log_LENGTH;
-            case local_timer_reset_start_ID:
-                return local_timer_reset_start_LENGTH;
-            case local_timer_reset_ID:
-                return local_timer_reset_LENGTH;
-            case local_timer_stop_ID:
-                return local_timer_stop_LENGTH;
-            case local_timer_start_ID:
-                return local_timer_start_LENGTH;
-            case if_local_timer_has_stopped_ID:
-                return if_local_timer_has_stopped_LENGTH;
-            case if_local_timer_less_than_ID:
-                return if_local_timer_less_than_LENGTH;
-            case if_local_timer_greater_than_ID:
-                return if_local_timer_greater_than_LENGTH;
-            case hud_countdown_show_ID:
-                return hud_countdown_show_LENGTH;
-            case hud_countdown_hide_ID:
-                return hud_countdown_hide_LENGTH;
-            case hud_countdown_set_ID:
-                return hud_countdown_set_LENGTH;
-            case hud_countdown_stop_ID:
-                return hud_countdown_stop_LENGTH;
-            case hud_countdown_start_ID:
-                return hud_countdown_start_LENGTH;
-            case if_hud_countdown_has_stopped_ID:
-                return if_hud_countdown_has_stopped_LENGTH;
-            case if_hud_countdown_less_than_ID:
-                return if_hud_countdown_less_than_LENGTH;
-            case if_hud_countdown_greater_than_ID:
-                return if_hud_countdown_greater_than_LENGTH;
-            case chr_try_spawning_at_pad_ID:
-                return chr_try_spawning_at_pad_LENGTH;
-            case chr_try_spawning_next_to_unseen_chr_ID:
-                return chr_try_spawning_next_to_unseen_chr_LENGTH;
-            case guard_try_spawning_item_ID:
-                return guard_try_spawning_item_LENGTH;
-            case guard_try_spawning_hat_ID:
-                return guard_try_spawning_hat_LENGTH;
-            case chr_try_spawning_clone_ID:
-                return chr_try_spawning_clone_LENGTH;
-            case text_print_bottom_ID:
-                return text_print_bottom_LENGTH;
-            case text_print_top_ID:
-                return text_print_top_LENGTH;
-            case sfx_play_ID:
-                return sfx_play_LENGTH;
-            case sfx_emit_from_object_ID:
-                return sfx_emit_from_object_LENGTH;
-            case sfx_emit_from_pad_ID:
-                return sfx_emit_from_pad_LENGTH;
-            case sfx_set_channel_volume_ID:
-                return sfx_set_channel_volume_LENGTH;
-            case sfx_fade_channel_volume_ID:
-                return sfx_fade_channel_volume_LENGTH;
-            case sfx_stop_channel_ID:
-                return sfx_stop_channel_LENGTH;
-            case if_sfx_channel_volume_less_than_ID:
-                return if_sfx_channel_volume_less_than_LENGTH;
-            case vehicle_start_path_ID:
-                return vehicle_start_path_LENGTH;
-            case vehicle_speed_ID:
-                return vehicle_speed_LENGTH;
-            case aircraft_rotor_speed_ID:
-                return aircraft_rotor_speed_LENGTH;
-            case if_camera_is_in_intro_ID:
-                return if_camera_is_in_intro_LENGTH;
-            case if_camera_is_in_bond_swirl_ID:
-                return if_camera_is_in_bond_swirl_LENGTH;
-            case tv_change_screen_bank_ID:
-                return tv_change_screen_bank_LENGTH;
-            case if_bond_in_tank_ID:
-                return if_bond_in_tank_LENGTH;
-            case exit_level_ID:
-                return exit_level_LENGTH;
-            case camera_return_to_bond_ID:
-                return camera_return_to_bond_LENGTH;
-            case camera_look_at_bond_from_pad_ID:
-                return camera_look_at_bond_from_pad_LENGTH;
-            case camera_switch_ID:
-                return camera_switch_LENGTH;
-            case if_bond_y_pos_less_than_ID:
-                return if_bond_y_pos_less_than_LENGTH;
-            case hud_hide_and_lock_controls_ID:
-                return hud_hide_and_lock_controls_LENGTH;
-            case hud_show_all_ID:
-                return hud_show_all_LENGTH;
-            case chr_try_teleporting_to_pad_ID:
-                return chr_try_teleporting_to_pad_LENGTH;
-            case screen_fade_to_black_ID:
-                return screen_fade_to_black_LENGTH;
-            case screen_fade_from_black_ID:
-                return screen_fade_from_black_LENGTH;
-            case if_screen_fade_completed_ID:
-                return if_screen_fade_completed_LENGTH;
-            case chr_hide_all_ID:
-                return chr_hide_all_LENGTH;
-            case chr_show_all_ID:
-                return chr_show_all_LENGTH;
-            case door_open_instant_ID:
-                return door_open_instant_LENGTH;
-            case chr_remove_item_in_hand_ID:
-                return chr_remove_item_in_hand_LENGTH;
-            case if_number_of_active_players_less_than_ID:
-                return if_number_of_active_players_less_than_LENGTH;
-            case if_bond_item_total_ammo_less_than_ID:
-                return if_bond_item_total_ammo_less_than_LENGTH;
-            case bond_equip_item_ID:
-                return bond_equip_item_LENGTH;
-            case bond_equip_item_cinema_ID:
-                return bond_equip_item_cinema_LENGTH;
-            case bond_set_locked_velocity_ID:
-                return bond_set_locked_velocity_LENGTH;
-            case if_object_in_room_with_pad_ID:
-                return if_object_in_room_with_pad_LENGTH;
-            case if_guard_is_firing_and_unknown_flag_ID:
-                return if_guard_is_firing_and_unknown_flag_LENGTH;
-            case if_guard_is_firing_ID:
-                return if_guard_is_firing_LENGTH;
-            case gas_leak_and_switch_fog_ID:
-                return gas_leak_and_switch_fog_LENGTH;
-            case mission_time_stop_and_exit_level_on_button_input_ID:
-                return mission_time_stop_and_exit_level_on_button_input_LENGTH;
-            case if_bond_is_dead_ID:
-                return if_bond_is_dead_LENGTH;
-            case bond_disable_damage_and_pickups_ID:
-                return bond_disable_damage_and_pickups_LENGTH;
-            case bond_hide_weapons_ID:
-                return bond_hide_weapons_LENGTH;
-            case camera_orbit_pad_ID:
-                return camera_orbit_pad_LENGTH;
-            case credits_roll_ID:
-                return credits_roll_LENGTH;
-            case if_credits_has_completed_ID:
-                return if_credits_has_completed_LENGTH;
-            case if_objective_all_completed_ID:
-                return if_objective_all_completed_LENGTH;
-            case if_folder_actor_is_equal_ID:
-                return if_folder_actor_is_equal_LENGTH;
-            case if_bond_damage_and_pickups_disabled_ID:
-                return if_bond_damage_and_pickups_disabled_LENGTH;
-            case music_xtrack_play_ID:
-                return music_xtrack_play_LENGTH;
-            case music_xtrack_stop_ID:
-                return music_xtrack_stop_LENGTH;
-            case trigger_explosions_around_bond_ID:
-                return trigger_explosions_around_bond_LENGTH;
-            case if_killed_civilians_greater_than_ID:
-                return if_killed_civilians_greater_than_LENGTH;
-            case if_chr_was_shot_since_last_check_ID:
-                return if_chr_was_shot_since_last_check_LENGTH;
-            case bond_killed_in_action_ID:
-                return bond_killed_in_action_LENGTH;
-            case guard_raises_arms_ID:
-                return guard_raises_arms_LENGTH;
-            case gas_leak_and_fade_fog_ID:
-                return gas_leak_and_fade_fog_LENGTH;
-            case object_rocket_launch_ID:
-                return object_rocket_launch_LENGTH;
-           
-            default:
-                return 1;
-        } 
+            sfx = &sfx_related[slot];
+
+            sfx->Volume  = SHRT_MAX;
+            sfx->Volume2 = SHRT_MAX;
+            sfx->sfxID   = -1;
+            sfx->pad     = NULL;
+            sfx->Obj     = NULL;
+        }
+    }
+    sndPlaySfx(g_musicSfxBufferPtr, soundIndex, sfx);
+}
+
+
+
+
+
+void sub_GAME_7F0349BC(s32 slot) 
+{
+    if ((slot >= 0) && (slot < SFX_RELATED_LEN))
+    {
+        sndDeactivate(sfx_related[slot].state);
+    }
+}
+
+
+
+s32 get_length_of_action_block(AIRecord *AIList, s32 offset);
+
+
+#ifdef NONMATCHING
+/** 
+ * Get AI Command Size in bytes
+ * @param AIList: The AI list containing the command
+ * @param offset: The offset (in bytes) to the command you want the size of
+ * @return The number of bytes of AI command
+ * //Todo: Give real name
+ * // Todo: fix locret refrences in other funcs
+ */
+s32 get_length_of_action_block(AIRecord *AIList, s32 offset)
+{
+    //compile with -O2
+    u32 pos;
+
+    switch (AIList->cmd)
+    {
+#    ifndef _SYNHILITE
+#        define _AI_CMD(CMD)                                             /*  \
+                                                                          */ \
+            case CAT(AI_, CMDNAME):                                      /*  \
+                                                                          */ \
+                return CAT(CAT(AI_, CMDNAME), _LENGTH);
+#        define _AI_DEBUG(CMD)
+#        define _AI_CMD_POLYMORPH(CMD, A, P, Q, D)
+#        include <aicommands.def>
+#    endif
+        case AI_PRINT:
+
+            pos = offset + 1;
+            //p = AIList;
+            while (AIList->val[pos] != 0)
+            {
+                //offset++;
+                pos++;
+            }
+            return (pos - offset) + 1;
+
+        default:
+#       ifdef DEBUG
+            osSyncPrintf("chraiitemsize: unknown type %d!\n", cmd[0]);
+#       endif
+            return 1;
+    }
 }
 #else
 GLOBAL_ASM(
@@ -1244,7 +818,7 @@ glabel jpt_actionblock_lengths
 glabel get_length_of_action_block #(CurrentActionByte)
 /* 06952C 7F0349FC 00851021 */  addu  $v0, $a0, $a1      #v0 = CurrentActionByte
 /* 069530 7F034A00 904E0000 */  lbu   $t6, ($v0)         #t6= Action = byte(v0)
-/* 069534 7F034A04 2DC100FD */  sltiu $at, $t6, 0xfd               #if not Action less than AI_CMDS_TOTAL
+/* 069534 7F034A04 2DC100FD */  sltiu $at, $t6, 0xfd               #if not Action less than AI_CMD_COUNT
 /* 069538 7F034A08 1020020B */  beqz  $at, ActionLengthSwitchElse  #   Action << 2
 /* 06953C 7F034A0C 000E7080 */   sll   $t6, $t6, 2                 #   return 1 //goto ActionLengthSwitchElse
 /* 069540 7F034A10 3C018005 */  lui   $at, %hi(jpt_actionblock_lengths)                  #else
@@ -2036,12 +1610,44 @@ ActionLengthSwitchElse:
 
 
 
-
-
+//s32 sub_GAME_7F035244(AIRecord *AIList, bool *isGlobalAIList) // chraiGetAIListID
+//todo: this code matches however, g_chraiCurrentSetup seems 40 bytes too early
+// Also, StageSetup might be single pointers (*) not ((*)[]) as
+// the later requirees some odd derefrencing
+// eg (&gSetup.ailists)[i].ailist; <-- note extra parens
 #ifdef NONMATCHING
-void sub_GAME_7F035244(void)
+/**
+ * Get ID of AIList 
+ * @param AIList: Ailist to get ID of
+ * @return ID of AIList 
+ */
+//https://decomp.me/scratch/uDW6q
+s32 sub_GAME_7F035244(AIRecord *AIList, bool *isGlobalAIList) // chraiGetAIListID
 {
+    s32 i;
 
+    if (g_chraiCurrentSetup.ailists)
+    {
+        for (i = 0; g_chraiCurrentSetup.ailists[i].ailist; i++)
+        {
+            if (g_chraiCurrentSetup.ailists[i].ailist == AIList)
+            {
+                *isGlobalAIList = FALSE;
+                return g_chraiCurrentSetup.ailists[i].ID;
+            }
+        }
+    }
+
+    for (i = 0; gGlobalAILists[i].ailist; i++)
+    {
+        if (gGlobalAILists[i].ailist == AIList)
+        {
+            *isGlobalAIList = TRUE;
+            return gGlobalAILists[i].ID;
+        }
+    }
+
+    return -1;
 }
 #else
 GLOBAL_ASM(
@@ -2064,11 +1670,11 @@ GLOBAL_ASM(
 
 .text
 glabel sub_GAME_7F035244
-/* 069D74 7F035244 3C088007 */  lui   $t0, %hi(ptr_setup_path_tbl) 
-/* 069D78 7F035248 25085D00 */  addiu $t0, %lo(ptr_setup_path_tbl) # addiu $t0, $t0, 0x5d00
-/* 069D7C 7F03524C 8D020014 */  lw    $v0, 0x14($t0) #v0 = ptr_setup_actions
+/* 069D74 7F035244 3C088007 */  lui   $t0, %hi(g_chraiCurrentSetup+0) 
+/* 069D78 7F035248 25085D00 */  addiu $t0, %lo(g_chraiCurrentSetup+0) # addiu $t0, $t0, 0x5d00
+/* 069D7C 7F03524C 8D020014 */  lw    $v0, 0x14($t0) #v0 = g_chraiCurrentSetup.ailists
 /* 069D80 7F035250 00A03825 */  move  $a3, $a1
-/* 069D84 7F035254 3C198003 */  lui   $t9, %hi(D_8003744C)
+/* 069D84 7F035254 3C198003 */  lui   $t9, %hi(gGlobalAILists)
 /* 069D88 7F035258 10400013 */  beqz  $v0, .L7F0352A8
 /* 069D8C 7F03525C 00000000 */   nop   
 /* 069D90 7F035260 8C4E0000 */  lw    $t6, ($v0)
@@ -2093,9 +1699,9 @@ glabel sub_GAME_7F035244
 /* 069DD0 7F0352A0 14C0FFF5 */  bnez  $a2, .L7F035278
 /* 069DD4 7F0352A4 00000000 */   nop   
 .L7F0352A8:
-/* 069DD8 7F0352A8 8F39744C */  lw    $t9, %lo(D_8003744C)($t9)
-/* 069DDC 7F0352AC 3C098003 */  lui   $t1, %hi(D_8003744C)
-/* 069DE0 7F0352B0 2523744C */  addiu $v1, $t1, %lo(D_8003744C)
+/* 069DD8 7F0352A8 8F39744C */  lw    $t9, %lo(gGlobalAILists)($t9)
+/* 069DDC 7F0352AC 3C098003 */  lui   $t1, %hi(gGlobalAILists)
+/* 069DE0 7F0352B0 2523744C */  addiu $v1, $t1, %lo(gGlobalAILists)
 /* 069DE4 7F0352B4 1320000B */  beqz  $t9, .L7F0352E4
 /* 069DE8 7F0352B8 240A0001 */   li    $t2, 1
 /* 069DEC 7F0352BC 8C620000 */  lw    $v0, ($v1)
@@ -2121,71 +1727,50 @@ glabel sub_GAME_7F035244
 
 
 
-
+s32 true_if_sucessfully_performing_action(AIRecord *AIList, s32 Offset, u8 LabelNum);
 #ifdef NONMATCHING
-/* MIPS-2-C
-
-s32 true_if_sucessfully_performing_action(s32 arg0, s32 arg1, s32 arg2)
+/** 
+ * GoTo Label
+ * @param AIlist: AIList containing label
+ * @param LabelNum: Integer/enum ID to go to
+ * @return Offset of label from beggining of AIList.
+ */
+s32 true_if_sucessfully_performing_action(AIRecord *AIList, s32 Offset, u8 LabelNum) //#MATCH chraiGoToLabel
 {
-    ? sp3C;
-    void *temp_v0;
-    s32 phi_s0;
+    s32   listID;
+    char *debAIListTypeString;
+    bool  isGlobalAIList;
 
-    // Node 0
-    phi_s0 = arg1;
-loop_1:
-    // Node 1
-    temp_v0 = arg0 + phi_s0;
-    if (2 == temp_v0->unk0)
+    for (;;)
     {
-        // Node 2
-        if ((arg2 & 0xff) == temp_v0->unk1)
+        if (AIList[Offset].cmd == AI_LABEL)
         {
-            // Node 3
-            return phi_s0;
-        }
-block_6:
-        // Node 6
-        phi_s0 = phi_s0 + get_length_of_action_block(arg0, phi_s0);
-        goto loop_1;
-    }
-    // Node 4
-    if (4 != temp_v0->unk0)
-    {
-        goto block_6;
-    }
-    // Node 5
-    sub_GAME_7F035244(arg0, &sp3C);
-    return 0;
-}*/
-bool true_if_sucessfully_performing_action(s32 arg0, s32 arg1, s32 arg2)
-{
-    /* Closest ASM I could get (though not using right tools since still cant get to work... ill try again this weekend)*/
-    u8 *v0; //struct
-    int s0 = arg1;
-    int s1 = arg0;
-
-    do
-    {
-        v0 = arg0 + s0;
-        if (v0->unk0 == label_ID)
-        {
-            if ((arg2 & 255) == v0->unk1) //strip lower byte?
+            if (AIList[Offset].val[0] == LabelNum)
             {
-                return arg1; //exit loop and return 
+                // exit loop and return offset to label number
+                return Offset;
             }
-
         }
-        if (v0->unk0 == ai_list_end_ID)
+        else if (AIList[Offset].cmd == AI_ENDLIST)
         {
-            break;
+            // restart ai list PC if next label not found
+            listID = chraiGetAIListID(AIList, &isGlobalAIList);
+#    ifdef DEBUG
+            if (isGlobalAIList)
+            {
+                debAIListTypeString = "global";
+            }
+            else
+            {
+                debAIListTypeString = "local";
+            }
+            osSyncPrintf("AI error: endlist reached jump label=%d %s list=%d!\n", LabelNum, debAIListTypeString, listID);
+#    endif
+            return 0;
         }
-        s0 += get_length_of_action_block(arg0, arg1);
-    }
-    while (v0->unk0 != 4);
 
-    sub_GAME_7F035244(s1, &v0 + 0x3c);
-    return 0;
+        Offset += chraiitemsize(AIList, Offset);
+    }
 }
 #else
 GLOBAL_ASM(
@@ -2257,13 +1842,40 @@ glabel true_if_sucessfully_performing_action
 #endif
 
 
+//todo: code matches but alignment is off (addresses mismatch)
 
-
+AIRecord *LoadNext_PrevActionBlock(s32 ID);
 
 #ifdef NONMATCHING
-//LoadNext_PrevActionBlock
-void LoadNext_PrevActionBlock(void) {
+//ailistFindById
+AIRecord *LoadNext_PrevActionBlock(s32 ID) //MATCH https://decomp.me/scratch/Qb0FB
+{
+    s32 i;
 
+    if (ID > setAiChrID(0))
+    {
+        if (g_chraiCurrentSetup.ailists)
+        {
+            for (i = 0; g_chraiCurrentSetup.ailists[i].ailist; i++)
+            {
+                if (g_chraiCurrentSetup.ailists[i].ID == ID)
+                {
+                    return g_chraiCurrentSetup.ailists[i].ailist;
+                }
+            }
+        }
+    }
+    else
+    {
+        for (i = 0; gGlobalAILists[i].ailist; i++)
+        {
+            if (gGlobalAILists[i].ID == ID)
+            {
+                return gGlobalAILists[i].ailist;
+            }
+        }
+    }
+    return NULL;
 }
 #else
 GLOBAL_ASM(
@@ -2286,9 +1898,9 @@ GLOBAL_ASM(
 glabel LoadNext_PrevActionBlock
 /* 069EC8 7F035398 28810401 */  slti  $at, $a0, 0x401
 /* 069ECC 7F03539C 14200014 */  bnez  $at, .L7F0353F0
-/* 069ED0 7F0353A0 3C198003 */   lui   $t9, %hi(D_8003744C)
-/* 069ED4 7F0353A4 3C028007 */  lui   $v0, %hi(ptr_setup_actions)
-/* 069ED8 7F0353A8 8C425D14 */  lw    $v0, %lo(ptr_setup_actions)($v0)
+/* 069ED0 7F0353A0 3C198003 */   lui   $t9, %hi(gGlobalAILists)
+/* 069ED4 7F0353A4 3C028007 */  lui   $v0, %hi(g_chraiCurrentSetup+0x14)
+/* 069ED8 7F0353A8 8C425D14 */  lw    $v0, %lo(g_chraiCurrentSetup+0x14)($v0)
 /* 069EDC 7F0353AC 5040001F */  beql  $v0, $zero, .L7F03542C #if <= 0 return
 /* 069EE0 7F0353B0 00001025 */   move  $v0, $zero
 /* 069EE4 7F0353B4 8C4E0000 */  lw    $t6, ($v0)
@@ -2310,9 +1922,9 @@ glabel LoadNext_PrevActionBlock
 /* 069F18 7F0353E8 10000010 */  b     .L7F03542C
 /* 069F1C 7F0353EC 00001025 */   move  $v0, $zero
 .L7F0353F0:
-/* 069F20 7F0353F0 8F39744C */  lw    $t9, %lo(D_8003744C)($t9)
-/* 069F24 7F0353F4 3C038003 */  lui   $v1, %hi(D_8003744C)
-/* 069F28 7F0353F8 2463744C */  addiu $v1, %lo(D_8003744C) # addiu $v1, $v1, 0x744c
+/* 069F20 7F0353F0 8F39744C */  lw    $t9, %lo(gGlobalAILists)($t9)
+/* 069F24 7F0353F4 3C038003 */  lui   $v1, %hi(gGlobalAILists)
+/* 069F28 7F0353F8 2463744C */  addiu $v1, %lo(gGlobalAILists) # addiu $v1, $v1, 0x744c
 /* 069F2C 7F0353FC 5320000B */  beql  $t9, $zero, .L7F03542C
 /* 069F30 7F035400 00001025 */   move  $v0, $zero
 /* 069F34 7F035404 8C680004 */  lw    $t0, 4($v1)
@@ -2337,10 +1949,22 @@ glabel LoadNext_PrevActionBlock
 
 
 
-
+PathRecord *get_ptr_path_for_pathnum(s32 ID);
 #ifdef NONMATCHING
-void get_ptr_path_for_pathnum(void) {
+PathRecord *get_ptr_path_for_pathnum(s32 ID)
+{
+    int i;
 
+        for  (i=0;setup.patrolpaths[i].waypoints;i++)
+        {
+            if ( ID == setup.patrolpaths[i].ID )
+            {
+                return &setup.patrolpaths[i];
+            }
+           
+        }
+
+    return NULL;
 }
 #else
 GLOBAL_ASM(
@@ -2355,8 +1979,8 @@ GLOBAL_ASM(
 
 .text
 glabel get_ptr_path_for_pathnum
-/* 069F64 7F035434 3C058007 */  lui   $a1, %hi(ptr_setup_path_sets)
-/* 069F68 7F035438 8CA55D10 */  lw    $a1, %lo(ptr_setup_path_sets)($a1)
+/* 069F64 7F035434 3C058007 */  lui   $a1, %hi(g_chraiCurrentSetup+0x10)
+/* 069F68 7F035438 8CA55D10 */  lw    $a1, %lo(g_chraiCurrentSetup+0x10)($a1)
 /* 069F6C 7F03543C 00001825 */  move  $v1, $zero
 /* 069F70 7F035440 8CAE0000 */  lw    $t6, ($a1)
 /* 069F74 7F035444 00A01025 */  move  $v0, $a1
@@ -2386,71 +2010,3693 @@ glabel get_ptr_path_for_pathnum
 
 
 #ifdef NONMATCHING
-void parse_handle_actionblocks(*s1, 1, 0) // s1 = AIListp, 1 = true? (a1 is always set to 1) a2 set to 0 within block
+#include "objecthandler.h"
+#include "chrobjhandler.h"
+#include "initanitable.h"
+#include <random.h>
+#include "lvl.h"
+#include "stan.h"
+#include "chr.h"
+#include "mp_music.h"
+#include "objective_status.h"
+#include "bondview.h"
+#include <assert.h>
+#include "loadobjectmodel.h"
+#include "cheat_buttons.h"
+#include "player.h"
+#include "file.h"
+//forward
+void sub_GAME_7F03A538(PropRecord *prop);
+//end forward
+extern PadRecord * dword_CODE_bss_800799F8;
+extern CutsceneRecord *gBondViewCutscene;
+extern s32 dword_CODE_bss_80079A18;
+extern s32 dword_CODE_bss_80079A1C;
+extern vec3d flt_CODE_bss_80079990;
+//CODE.bss:80079A00
+extern f32 flt_CODE_bss_80079A00;
+//CODE.bss:80079A04
+extern f32 flt_CODE_bss_80079A04;
+//CODE.bss:80079A08
+extern f32 flt_CODE_bss_80079A08;
+//CODE.bss:80079A0C
+extern f32 flt_CODE_bss_80079A0C;
+//CODE.bss:80079A10
+extern f32 flt_CODE_bss_80079A10;
+//CODE.bss:80079A14
+extern s32 dword_CODE_bss_80079A14;
+extern bool mission_kia_flag;
+
+
+
+
+/**
+ Execute AI List from Character, Stage, Vehichle(truck) or Aircraft(heli)
+ Note: GE has little error checking (eg, using a chr action on aircraft) - this was fixed in PD
+ @param *Entityp: Pointer to Entity (non-typed)
+ @param EntityType: PROPTYPE_CHR or PROPTYPE_OBJ
+ @param         PROPTYPE_CHR = Character (Guard or Stage)
+ @param         PROPTYPE_OBJ = Object (Vehichle or Aircraft)
+*/
+void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
 {
-    s7 = 0;
-    if (a1 != ai_sleep)
+    /*
+     * (void *Param, int ParamType) is the correct way to pass a variable
+     *  "object" eg Param can be Either ChrRecord or VehichleRecord
+     *
+     *  Function Name derived from internal strings:
+     *    ai(void) enery tune on (%d, %d, %d)
+     *    ai(void) enery tune off (%d)
+     *  
+     *  Stack requires that each case declair its own AIRecord variable
+     *  
+     */
+
+    ChrRecord      *ChrEntityp      = NULL;
+    VehichleRecord *VehichleEntityp = NULL;
+    AircraftRecord *AircraftEntityp = NULL;
+    AIRecord       *AiListp         = NULL;
+    s32             Offset;
+
+    if (EntityType == PROP_TYPE_CHR)
     {
-        if (a1 == 1)
+        ChrEntityp = Entityp;
+    }
+    else if (EntityType == PROP_TYPE_OBJ)
+    {
+        if (Entityp->type == PROPDEF_VEHICHLE)
         {
-            if (s1[3] > 39)
+            VehichleEntityp = Entityp;
+        }
+        else if (Entityp->type == PROPDEF_AIRCRAFT)
+        {
+            AircraftEntityp = Entityp;
+        }
+    }
+
+    // Load ailist
+    if (ChrEntityp)
+    {
+        Offset  = ChrEntityp->aioffset;
+        AiListp = ChrEntityp->ailist;
+    }
+    else if (VehichleEntityp)
+    {
+        Offset  = VehichleEntityp->aioffset;
+        AiListp = VehichleEntityp->ailist;
+    }
+    else if (AircraftEntityp)
+    {
+        Offset  = AircraftEntityp->aioffset;
+        AiListp = AircraftEntityp->ailist;
+    }
+
+    if (AiListp) // continue if Has ailist (check once)
+    {
+        // loop forever (or until broken)
+        for (;;)
+        {
+            /* 
+             * GE uses long Switch/case while PD uses Bool functions and tests 
+             * for TRUE/FALSE if(funcpointer[ai]) break; 
+             */
+            switch ((AiListp + Offset)->cmd)
             {
-                if (s1[3] = 40)
+                //unfortunatly we cannot use the cmdbuilder in matching rom as the ordering is not sequential
+        #ifdef USECMDBUILDER
+        #    define _AI_DEBUG_ID(CMD, AI_NUMBER_OF_PARAMS, PARAM, DESC)
+        #    define _AI_CMD_POLYMORPH(C, N, P1, P2, D)
+        #    define _AI_CMD_ID(CMD, AI_NUMBER_OF_PARAMS, PARAM, DESC, CODE) /* HACK: Multiline Comments make Newlines in macro */ \
+                case CAT(CAT(AI_, CMD), ):                                  /*                                                    \
+                                                                             */                                                   \
+                    CODE
+        #    include "aicommands.def"
+        #else
+                case AI_GOTO_NEXT:
                 {
-                    returnval1 = s1;
-                }
-            }
-            a2 = s1;
-        }
-    }
-
-    if (s7 == 0)
-    {
-        if (a2 == 0)
-        {
-            if (v1 != 0)
-            {
-                s2 = v1[336];
-                s6 = v1[320];
-            }
-        }
-        else
-        {
-            s2 = a2[336];
-            s6 = a2[320];
-        }
-    }
-    else
-    {
-        s2 = s7[432];
-        s6 = s7[416];
-    }
-
-    if (s6 != 0)
-    {
-        //10 * something
-        //60 * something
-
-        do
-        {
-            if (cmd < AI_CMDS_TOTAL)
-            {
-                switch Byte(cmd)
-                case 0:
-                    NextStatement = +2;
-                    true_if_sucessfully_performing_action();
+                    AIRecord1 *ai = AiListp + Offset;
+                    Offset        = chraiGoToLabel(AiListp, Offset, ai->val);
+#    ifdef DEBUG
+                    osSyncPrintf(" (%d)\n", ai->val);
+#    endif
                     break;
-                    //...
-            }
-            else
-            {
-                //cmd << 2;
-                cmdpos += get_length_of_action_block(cmd) //GetAICmdLen(Cmd)
-            }
-        }
-        while (action != 4)
-    }
-}
+                }
+                case AI_GOTO_FIRST:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+                    Offset        = chraiGoToLabel(AiListp, 0, ai->val);
+#    ifdef DEBUG
+                    osSyncPrintf(" (%d)\n", ai->val);
+#    endif
+                    break;
+                }
+                case AI_LABEL:
+                {
+                    Offset += 2;
+                    break;
+                }
+                case AI_SLEEP:
+                {
+                    Offset += 1;
+                    if (ChrEntityp)
+                    {
+                        ChrEntityp->ailist   = AiListp;
+                        ChrEntityp->aioffset = Offset;
+                    }
+                    else if (VehichleEntityp)
+                    {
+                        VehichleEntityp->ailist   = AiListp;
+                        VehichleEntityp->aioffset = Offset;
+                    }
+                    else if (AircraftEntityp)
+                    {
+                        AircraftEntityp->ailist   = AiListp;
+                        AircraftEntityp->aioffset = Offset;
+                    }
+                    return; //AI_SLEEP:
+                }
+                case AI_ENDLIST:
+                {
+#    ifdef DEBUG
+                    osSyncPrintf("AI error endlist reached!\n");
+#    endif
+                    return; //AI_ENDLIST:
+                }
+                case AI_JUMP_TO_AI_LIST:
+                {
+                    AIRecord * ai = AiListp + Offset;                       /*needed for stack count inflation*/
+                    ChrRecord *chr;                                         //ok, so mips does not hoist vars in stack, they are in order so must be declaired here
+                    u16        AI_LIST_ID = ai->val[2] | (ai->val[1] << 8); /*This is the only way to match despite assetrs below*/
+                    u8         CHR_NUM    = ai->val[0];
+                    if (CHR_NUM == ((u8)CHR_SELF))
+                    {
+                        AiListp = ailistFindById(AI_LIST_ID); 
+                        Offset  = 0;
+                    }
+                    else
+                    {
+                        chr = chrFindById(ChrEntityp, CHR_NUM);
+                        if (chr)
+                        {
+                            chr->ailist   = ailistFindById(AI_LIST_ID);
+                            chr->aioffset = 0;
+                            chr->sleep    = 0;
+                        }
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_SET_RETURN_AI_LIST:
+                {
+                    AIRecord *ai         = AiListp + Offset;
+                    u16       AI_LIST_ID = ai->val[1] | (ai->val[0] << 8);
+                    if (ChrEntityp)
+                    {
+                        ChrEntityp->aireturnlist = AI_LIST_ID;
+                    }
+                    else if (VehichleEntityp)
+                    {
+                        VehichleEntityp->aireturnlist = AI_LIST_ID;
+                    }
+                    else if (AircraftEntityp)
+                    {
+                        AircraftEntityp->aireturnlist = AI_LIST_ID;
+                    }
+
+                    Offset += 3;
+                    break;
+                }
+                case AI_JUMP_TO_RETURN_AI_LIST:
+                {
+                    if (ChrEntityp)
+                    {
+                        AiListp = ailistFindById(ChrEntityp->aireturnlist);
+                    }
+                    else if (VehichleEntityp)
+                    {
+                        AiListp = ailistFindById(VehichleEntityp->aireturnlist);
+                    }
+                    else if (AircraftEntityp)
+                    {
+                        AiListp = ailistFindById(AircraftEntityp->aireturnlist);
+                    }
+                    Offset = 0;
+                    break;
+                }
+                case AI_GUARD_ANIMATION_STOP:
+                {
+                    chraiStopAnimation(ChrEntityp);
+                    Offset += 1;
+                    break;
+                }
+                case AI_GUARD_KNEEL:
+                {
+                    check_if_able_to_then_kneel(ChrEntityp);
+                    Offset += 1;
+                    break;
+                }
+                case AI_GUARD_PLAY_ANIMATION:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    s32       startframe, anim_id, zero, endframe;
+                    anim_id    = ai->val[1] | ai->val[0] << 8;
+                    startframe = ai->val[3] | ai->val[2] << 8;
+                    endframe   = ai->val[5] | ai->val[4] << 8;
+
+                    if (startframe == (u16)-1)
+                    {
+                        startframe = 0;
+                    }
+                    if (endframe == (u16)-1)
+                    {
+                        endframe = -1;
+                    }
+
+                    if (ChrEntityp)
+                    {
+                        check_if_able_to_then_perform_animation(ChrEntityp, anim_id, startframe, endframe, ai->val[6], ai->val[7]);
+                    }
+                    else if (AircraftEntityp)
+                    {
+                        zero = 0; //debug value maybe?
+                        objecthandlerAnimationRelated7F06FCA8(AircraftEntityp->model, animation_table_ptrs2[anim_id], zero, startframe, 0.5f, (s32)ai->val[7]);
+                        if (endframe >= 0)
+                        {
+                            sub_GAME_7F06FDE8(AircraftEntityp->model, endframe);
+                        }
+                    }
+                    Offset += 9;
+                    break;
+                }
+                case AI_IF_GUARD_PLAYING_ANIMATION:
+                {
+                    AIRecord1 *ai = (AiListp + Offset);
+                    if (ChrEntityp->actiontype == ACT_ANIM)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_GUARD_POINTS_AT_BOND:
+                {
+                    chrTrySurprisedOneHand(ChrEntityp);
+                    Offset += 1;
+                    break;
+                }
+                case AI_GUARD_LOOKS_AROUND_SELF:
+                {
+                    chrTrySurprisedLookAround(ChrEntityp);
+                    Offset += 1;
+                    break;
+                }
+
+                case AI_IF_GUARD_HAS_STOPPED_MOVING:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+                    if (chrIsStopped(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_CHR_DYING_OR_DEAD:
+                {
+                    AIRecord * ai  = AiListp + Offset;
+                    ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
+
+                    if (!chr || chrIsDead(chr))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_CHR_DOES_NOT_EXIST:
+                {
+                    AIRecord * ai  = AiListp + Offset;
+                    ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
+
+                    if (!chr || !chr->model)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_SEES_BOND:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+
+                    if (chrCheckTargetInSight(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+
+                case AI_GUARD_TRY_SIDESTEPPING:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+
+                    if (actor_steps_sideways(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_HOPPING_SIDEWAYS:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+
+                    if (actor_hops_sideways(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_JOGGING_TO_SIDE:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+
+                    if (actor_jogs_sideways(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_FIRING_WALK:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+
+                    if (actor_walks_and_fires(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_FIRING_JOG:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+
+                    if (actor_runs_and_fires(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_FIRING_ROLL:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+
+                    if (actor_rolls_fires_crouched(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_FIRE_OR_AIM_AT_TARGET:
+                {
+                    AIRecord *ai         = AiListp + Offset;
+                    s32       targetid   = ai->val[3] | (ai->val[2] << 8);
+                    s32       targettype = ai->val[1] | (ai->val[0] << 8);
+                    if (actor_aim_at_actor(ChrEntityp, targettype, targetid))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
+                    }
+                    else
+                    {
+                        Offset += 6;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_FIRE_OR_AIM_AT_TARGET_KNEEL:
+                {
+                    AIRecord *ai         = AiListp + Offset;
+                    s32       targetid   = ai->val[3] | (ai->val[2] << 8);
+                    s32       targettype = ai->val[1] | (ai->val[0] << 8);
+                    if (actor_kneel_aim_at_actor(ChrEntityp, targettype, targetid))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
+                    }
+                    else
+                    {
+                        Offset += 6;
+                    }
+                    break;
+                }
+
+                case AI_IF_GUARD_IS_FIRING_AND_TARGET_180_RANGE:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+
+                    if (ChrEntityp->actiontype == ACT_ATTACK &&
+                        !ChrEntityp->act_attack.type_of_motion &&
+                         ChrEntityp->act_attack.attacktype & ATTACKTYPE_DONTTURN)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_IS_FIRING:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+
+                    if (ChrEntityp->actiontype == ACT_ATTACK)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+
+                case AI_GUARD_TRY_FIRE_OR_AIM_AT_TARGET_UPDATE:
+                {
+                    AIRecord *ai         = AiListp + Offset;
+                    s32       targetid   = ai->val[3] | (ai->val[2] << 8);
+                    s32       targettype = ai->val[1] | (ai->val[0] << 8);
+                    if (actor_fire_or_aim_at_target_update(ChrEntityp, targettype, targetid))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
+                    }
+                    else
+                    {
+                        Offset += 6;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_FACING_TARGET:
+                {
+                    AIRecord *ai         = AiListp + Offset;
+                    s32       targetid   = ai->val[3] | (ai->val[2] << 8);
+                    s32       targettype = ai->val[1] | (ai->val[0] << 8);
+                    if (check_set_actor_standing_still(ChrEntityp, targettype, targetid))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
+                    }
+                    else
+                    {
+                        Offset += 6;
+                    }
+                    break;
+                }
+                case AI_CHR_HIT_BODY_PART_WITH_ITEM_DAMAGE:
+                {
+                    AIRecord * ai  = AiListp + Offset;
+                    ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
+                    vec3d      vec = New_Vector(); //gvector0;
+
+                    if (chr && chr->prop)
+                    {
+                        handles_shot_actors(chr, (s8)ai->val[1], &vec, ai->val[2], FALSE);
+                    }
+
+                    Offset += 4;
+                    break;
+                }
+                case AI_CHR_HIT_CHR_BODY_PART_WITH_HELD_ITEM:
+                {
+                    AIRecord * ai   = AiListp + Offset;
+                    ChrRecord *chr1 = chrFindById(ChrEntityp, ai->val[0]);
+                    ChrRecord *chr2 = chrFindById(ChrEntityp, ai->val[1]);
+
+                    if (chr1 && chr2 && chr1->prop && chr2->prop)
+                    {
+                        PropRecord *     prop = chrGetEquippedWeaponPropWithCheck(chr1, GUNRIGHT);
+                        WeaponObjRecord *weapon;
+                        vec3d            vec = New_Vector();
+
+                        if (!prop) //not Right hand? try left
+                        {
+                            prop = chrGetEquippedWeaponPropWithCheck(chr1, GUNLEFT);
+                        }
+
+                        if (prop) //hopefully have gun else exit
+                        {
+                            vec.x = chr2->prop->pos.x - chr1->prop->pos.x;
+                            vec.y = chr2->prop->pos.y - chr1->prop->pos.y;
+                            vec.z = chr2->prop->pos.z - chr1->prop->pos.z;
+                            guNormalize(&vec.x, &vec.y, &vec.z);
+                            if (prop)
+                            {
+                            } //prop needs upgrading to v1 instead of t
+                            weapon = prop->weapon;
+                            handles_shot_actors(chr2, (s8)ai->val[2], &vec, weapon->weaponnum, 0);
+                        }
+                    }
+                    Offset += 4;
+                    break;
+                }
+                case AI_GUARD_TRY_THROWING_GRENADE:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+
+                    if (actor_draws_throws_grenade_at_player_if_possible(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_DROPPING_ITEM:
+                {
+                    AIRecord *ai       = AiListp + Offset;
+                    u16       modelnum = ai->val[1] | (ai->val[0] << 8);
+                    if (chrDropItem(ChrEntityp, modelnum, ai->val[2]))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
+                    }
+                    else
+                    {
+                        Offset += 5;
+                    }
+                    break;
+                }
+
+                case AI_GUARD_SURRENDERS:
+                {
+                    chrTrySurrender(ChrEntityp);
+                    Offset += 1;
+                    break;
+                }
+                case AI_GUARD_REMOVE_FADE:
+                {
+                    chrFadeOut(ChrEntityp);
+                    Offset += 1;
+                    break;
+                }
+                case AI_CHR_REMOVE_INSTANT:
+                {
+                    AIRecord * ai  = AiListp + Offset;
+                    ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
+                    if (chr && chr->prop)
+                    {
+                        chr->hidden |= CHRHIDDEN_REMOVE;
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_GUARD_TRY_TRIGGERING_ALARM_AT_PAD:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    u16       pad_id = ai->val[1] | (ai->val[0] << 8);
+                    if (chrTryStartAlarm(ChrEntityp, pad_id))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_ALARM_ON:
+                {
+                    alarmActivate();
+                    Offset += 1;
+                    break;
+                }
+                case AI_ALARM_OFF:
+                {
+                    alarmDeactivate();
+                    Offset += 1;
+                    break;
+                }
+                case AI_REMOVED_COMMAND27:
+                { // run from bond
+                    AIRecord1 *ai = AiListp + Offset;
+                    if (removed_animation_routine_27(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_JOGGING_TO_BOND_POSITION:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+                    if (chrGoToBond(ChrEntityp, SPEED_JOG))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_WALKING_TO_BOND_POSITION:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrGoToBond(ChrEntityp, SPEED_WALK))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_RUNNING_TO_BOND_POSITION:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrGoToBond(ChrEntityp, SPEED_RUN))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_REMOVED_COMMAND2B:
+                { //Find Cover
+                    AIRecord *ai = AiListp + Offset;
+                    if (removed_animation_routine_2B(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_JOGGING_TO_CHR_POSITION:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrGoToChr(ChrEntityp, ai->val[0], SPEED_JOG))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_WALKING_TO_CHR_POSITION:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrGoToChr(ChrEntityp, ai->val[0], SPEED_WALK))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_RUNNING_TO_CHR_POSITION:
+                {
+                    AIRecord *ai = AiListp + Offset;
+
+                    if (chrGoToChr(ChrEntityp, ai->val[0] & 0xff, SPEED_RUN)) // &0xff is here to increase t reg by 1
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+
+                case AI_RANDOM_GENERATE_SEED:
+                {
+                    ChrEntityp->random = randomGetNext();
+                    Offset += 1;
+                    break;
+                }
+                case AI_IF_RANDOM_SEED_LESS_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+
+                    if (ai->val[0] > ChrEntityp->random)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_RANDOM_SEED_GREATER_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ai->val[0] < ChrEntityp->random)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+
+                case AI_GUARD_JOGS_TO_PAD:
+                {
+                    AIRecord *ai  = AiListp + Offset;
+                    u16       pad = ai->val[1] | (ai->val[0] << 8);
+                    chrGoToPad(ChrEntityp, pad, SPEED_JOG);
+                    Offset += 3;
+                    break;
+                }
+                case AI_GUARD_JOGS_TO_PAD_PRESET:
+                {
+                    /* PD uses GoTo Pad (speed) which seems better
+                    switch (ai->val[0]) 
+                    { 
+                        case SPEED_WALK: 
+                            chrGoToPad(ChrEntityp, ChrEntityp->padpreset1, SPEED_WALK);
+                            break;  
+                        case SPEED_JOG: 
+                            etc...
+                    */
+                    chrGoToPad(ChrEntityp, ChrEntityp->padpreset1, SPEED_JOG);
+                    Offset += 1;
+                    break;
+                }
+                case AI_GUARD_WALKS_TO_PAD:
+                {
+                    AIRecord *ai  = AiListp + Offset;
+                    u16       pad = ai->val[1] | (ai->val[0] << 8);
+                    chrGoToPad(ChrEntityp, pad, SPEED_WALK);
+                    Offset += 3;
+                    break;
+                }
+                case AI_GUARD_RUNS_TO_PAD:
+                {
+                    AIRecord *ai  = AiListp + Offset;
+                    u16       pad = ai->val[1] | (ai->val[0] << 8);
+                    chrGoToPad(ChrEntityp, pad, SPEED_RUN);
+                    Offset += 3;
+                    break;
+                }
+                case AI_GUARD_START_PATROL:
+                {
+                    AIRecord *  ai   = AiListp + Offset;
+                    PathRecord *path = pathFindById(ai->val[0]);
+                    if_actor_able_set_on_path(ChrEntityp, path);
+                    Offset += 2;
+                    break;
+                }
+                case AI_IF_ALARM_IS_ON_UNUSED: // aiIfCanHearAlarm
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrCanHearAlarm(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_ALARM_IS_ON:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (alarmIsActive())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GAS_IS_LEAKING:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (check_if_toxic_gas_activated())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_HEARD_BOND:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrIsHearingBond(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_SEE_ANOTHER_GUARD_SHOT:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrSawInjury(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_SEE_ANOTHER_GUARD_DIE:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrSawDeath(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_AND_BOND_WITHIN_LINE_OF_SIGHT:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrCanSeeBond(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_AND_BOND_WITHIN_PARTIAL_LINE_OF_SIGHT:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrIsTargetNearlyInSight(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_WAS_SHOT_OR_SEEN_WITHIN_LAST_10_SECS:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrSawTargetRecently(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_HEARD_BOND_WITHIN_LAST_10_SECS:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrHeardTargetRecently(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_IN_ROOM_WITH_CHR:
+                {
+                    AIRecord * ai  = AiListp + Offset;
+                    ChrRecord *chr = chrFindById(ChrEntityp, *ai->val);
+                    if (chr && chr->prop && check_if_position_in_same_room(ChrEntityp, &chr->prop->pos, chr->prop->stan))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_HAS_NOT_BEEN_SEEN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (!(ChrEntityp->chrflags & CHRFLAG_HAS_BEEN_ON_SCREEN))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_IS_ON_SCREEN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if ((ChrEntityp->prop->flags & PROPFLAG_ONSCREEN))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_ROOM_CONTAINING_SELF_IS_ON_SCREEN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (getROOMID_Bitflags(getTileRoom(ChrEntityp->prop->stan)))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_ROOM_CONTAINING_PAD_IS_ON_SCREEN:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    u16       pad_id = ai->val[1] | (ai->val[0] << 8);
+                    if (check_if_room_for_preset_loaded(ChrEntityp, pad_id))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_IS_TARGETED_BY_BOND:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (sub_GAME_7F0333F8(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_SHOT_FROM_BOND_MISSED:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrIfNearMiss(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_COUNTER_CLOCKWISE_DIRECTION_TO_BOND_LESS_THAN:
+                {
+                    AIRecord *ai  = AiListp + Offset;
+                    // Alternative Names?
+                    // aiIfTargetInFovLeft or aiIfBondOutOfFov
+                    float     rad = chrGetAngleToBond(ChrEntityp); //must use float to save "hidden var"
+                    if (ByteToRadian((ai->val[0])) > rad)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_COUNTER_CLOCKWISE_DIRECTION_TO_BOND_GREATER_THAN:
+                {
+                    AIRecord *ai  = AiListp + Offset;
+                    float     rad = chrGetAngleToBond(ChrEntityp);
+                    if (ByteToRadian((ai->val[0])) < rad)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_COUNTER_CLOCKWISE_DIRECTION_FROM_BOND_LESS_THAN:
+                {
+                    AIRecord *ai  = AiListp + Offset;
+                    float     rad = chrGetAngleFromBond(ChrEntityp);
+                    if (ByteToRadian((ai->val[0])) > rad)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_COUNTER_CLOCKWISE_DIRECTION_FROM_BOND_GREATER_THAN:
+                {
+                    AIRecord *ai  = AiListp + Offset;
+                    float     rad = chrGetAngleFromBond(ChrEntityp);
+                    if (ByteToRadian((ai->val[0])) < rad)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_DISTANCE_TO_BOND_LESS_THAN:
+                {
+                    AIRecord *ai       = AiListp + Offset;
+                    f32       distance = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    if (distance > chrGetDistanceToBond(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_DISTANCE_TO_BOND_GREATER_THAN:
+                {
+                    AIRecord *ai       = AiListp + Offset;
+                    f32       distance = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    if (distance < chrGetDistanceToBond(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_CHR_DISTANCE_TO_PAD_LESS_THAN:
+                {
+                    AIRecord * ai     = AiListp + Offset;
+                    ChrRecord *chr    = chrFindById(ChrEntityp, ai->val[0]);
+                    u16        padnum = (ai->val[4] | (ai->val[3] << 8));
+                    f32        value  = (ai->val[2] | (ai->val[1] << 8)) * 10.0f;
+                    if (chr && (value > chrGetDistanceToPad(chr, padnum)))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[5]);
+                    }
+                    else
+                    {
+                        Offset += 7;
+                    }
+                    break;
+                }
+                case AI_IF_CHR_DISTANCE_TO_PAD_GREATER_THAN:
+                {
+                    AIRecord * ai     = AiListp + Offset;
+                    ChrRecord *chr    = chrFindById(ChrEntityp, ai->val[0]);
+                    u16        padnum = (ai->val[4] | (ai->val[3] << 8));
+                    f32        value  = (ai->val[2] | (ai->val[1] << 8)) * 10.0f;
+                    if (chr && (value < chrGetDistanceToPad(chr, padnum)))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[5]);
+                    }
+                    else
+                    {
+                        Offset += 7;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_DISTANCE_TO_CHR_LESS_THAN:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    f32       cutoff = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    if (cutoff > chrGetDistanceToChr(ChrEntityp, ai->val[2]))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
+                    }
+                    else
+                    {
+                        Offset += 5;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_DISTANCE_TO_CHR_GREATER_THAN:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    f32       cutoff = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    if (cutoff < chrGetDistanceToChr(ChrEntityp, ai->val[2]))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
+                    }
+                    else
+                    {
+                        Offset += 5;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_SETTING_CHR_PRESET_TO_GUARD_WITHIN_DISTANCE:
+                {
+                    AIRecord *ai       = AiListp + Offset;
+                    f32       distance = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    if (sub_GAME_7F033B38(ChrEntityp, distance))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_BOND_DISTANCE_TO_PAD_LESS_THAN:
+                {
+                    AIRecord *ai    = AiListp + Offset;
+                    u16       pad   = (ai->val[3] | (ai->val[2] << 8));
+                    f32       value = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    if (value > chrGetDistanceFromBondToPad(ChrEntityp, pad))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
+                    }
+                    else
+                    {
+                        Offset += 6;
+                    }
+                    break;
+                }
+                case AI_IF_BOND_DISTANCE_TO_PAD_GREATER_THAN:
+                {
+                    AIRecord *ai    = AiListp + Offset;
+                    u16       pad   = (ai->val[3] | (ai->val[2] << 8));
+                    f32       value = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    if (value < chrGetDistanceFromBondToPad(ChrEntityp, pad))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
+                    }
+                    else
+                    {
+                        Offset += 6;
+                    }
+                    break;
+                }
+                case AI_IF_CHR_IN_ROOM_WITH_PAD:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    u16       pad_id = (ai->val[2] | (ai->val[1] << 8));
+                    if (chrIfInPadRoom(ChrEntityp, ai->val[0], pad_id))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
+                    }
+                    else
+                    {
+                        Offset += 5;
+                    }
+                    break;
+                }
+                case AI_IF_BOND_IN_ROOM_WITH_PAD:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    u16       pad_id = ai->val[1] | (ai->val[0] << 8);
+                    if (check_if_actor_is_at_preset(ChrEntityp, pad_id))
+                    {
+#    if DEBUG
+                        osSyncPrintf("BOND IN ROOM\n");
+#    endif
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+#    if DEBUG
+                        osSyncPrintf("bond not in room\n");
+#    endif
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_BOND_COLLECTED_OBJECT:
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop && is_prop_in_inventory(obj->prop))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_ITEM_IS_STATIONARY_WITHIN_LEVEL:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (weaponFindThrown(ai->val[0]))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_ITEM_IS_ATTACHED_TO_OBJECT:
+                {
+                    struct
+                    {
+                        u8 cmd;
+                        u8 val;
+                        u8 val1;
+                        u8 val2;
+                    } *ai              = AiListp + Offset;
+                    ObjectRecord *obj  = objFindByTagId(ai->val1);
+                    bool          pass = FALSE;
+                    if (obj && obj->prop)
+                    {
+                        PropRecord *prop = obj->prop->child;
+                        while (prop)
+                        {
+                            if (prop->type == PROP_TYPE_WEAPON)
+                            {
+                                WeaponObjRecord *weapon = prop->weapon;
+                                if (weapon->weaponnum == ai->val)
+                                {
+                                    pass = TRUE;
+                                    break;
+                                }
+                            }
+                            prop = prop->prev;
+                        }
+                    }
+                    if (pass)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val2);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_BOND_HAS_ITEM_EQUIPPED:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ai->val[0] == getCurrentPlayerWeaponId(GUNRIGHT) || ai->val[0] == getCurrentPlayerWeaponId(GUNLEFT)) //order matters
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_OBJECT_EXISTS: // aiIfGunUnclaimed
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_OBJECT_NOT_DESTROYED:
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop && objIsHealthy(obj))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_OBJECT_WAS_ACTIVATED:
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop && (obj->runtime_bitflags & RUNTIMEBITFLAG_ACTIVATED))
+                    {
+                        obj->runtime_bitflags &= ~RUNTIMEBITFLAG_ACTIVATED;
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_BOND_USED_GADGET_ON_OBJECT:
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop && (obj->state & PROPSTATE_ACTIVATED))
+                    {
+                        obj->state &= ~PROPSTATE_ACTIVATED;
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_OBJECT_ACTIVATE:
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop)
+                    {
+                        if (obj->prop->type == PROP_TYPE_DOOR)
+                        {
+                            doorActivateWrapper(obj->prop);
+                        }
+                        else if (obj->prop->type == PROP_TYPE_OBJ || obj->prop->type == PROP_TYPE_WEAPON)
+                        {
+                            propobjInteract(obj->prop);
+                        }
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_OBJECT_DESTROY:
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop)
+                    {
+                        if (!do_something_if_object_destroyed(obj))
+                        {
+                            f32 damage = ((obj->damage - obj->maxdamage) + 1) / 250.0f;
+                            maybe_detonate_object(obj, damage, &obj->runtime_pos, 29, -1);
+                        }
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_OBJECT_DROP_FROM_CHR:
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop && obj->prop->parent && obj->prop->parent->type == PROP_TYPE_CHR)
+                    {
+                        ChrRecord *chr = obj->prop->parent->chr;
+                        propobjSetDropped(obj->prop, 2);
+                        chr->hidden |= CHRHIDDEN_DROP_HELD_ITEMS;
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_CHR_DROP_ALL_CONCEALED_ITEMS:
+                {
+                    AIRecord * ai  = AiListp + Offset;
+                    ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
+                    if (chr && chr->prop)
+                    {
+                        chrDropItems(chr);
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_CHR_DROP_ALL_HELD_ITEMS:
+                {
+                    AIRecord * ai  = AiListp + Offset;
+                    ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
+                    if (chr && chr->prop)
+                    {
+                        if (chr->weapons_held[GUNRIGHT])
+                        {
+                            propobjSetDropped(chr->weapons_held[GUNRIGHT], 1);
+                            chr->hidden |= CHRHIDDEN_DROP_HELD_ITEMS;
+                        }
+                        if (chr->weapons_held[GUNLEFT])
+                        {
+                            propobjSetDropped(chr->weapons_held[GUNLEFT], 1);
+                            chr->hidden |= CHRHIDDEN_DROP_HELD_ITEMS;
+                        }
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_BOND_COLLECT_OBJECT:
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop)
+                    {
+                        INV_ITEM_TYPE iType = collect_or_interact_object(obj->prop, FALSE);
+                        sub_GAME_7F03C2BC(obj->prop, iType);
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_CHR_EQUIP_OBJECT:
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    ChrRecord *   chr = chrFindById(ChrEntityp, ai->val[1]);
+                    if (obj && obj->prop && chr)
+                    {
+                        if (obj->prop->parent)
+                        {
+                            sub_GAME_7F04C044(obj->prop);
+                        }
+                        else
+                        {
+                            sub_GAME_7F03E18C(obj->prop);
+                            sub_GAME_7F03A538(obj->prop);
+                            propHide(obj->prop);
+                        }
+                        if (obj->type != PROPDEF_COLLECTABLE || !sub_GAME_7F051E1C(obj, chr))
+                        {
+                            attachNewChild(obj->prop, chr->prop);
+                        }
+                    }
+                    Offset += 3;
+                    break;
+                }
+                case AI_OBJECT_MOVE_TO_PAD:
+                {
+                    AIRecord *          ai  = AiListp + Offset;
+                    ObjectRecord *      obj = objFindByTagId(ai->val[0]);
+                    volatile PadRecord *pad;
+                    u16                 padnum = (ai->val[2] | (ai->val[1] << 8));
+                    Mtxf                matrix;
+
+                    if (obj && obj->prop)
+                    {
+                        if (isNotBoundPad(padnum))
+                        {
+                            pad = &g_chraiCurrentSetup.pads[padnum];
+                        }
+                        else
+                        {
+                            pad = (PadRecord *)&g_chraiCurrentSetup.boundpads[getBoundPadNum(padnum)];
+                        }
+                        matrix_4x4_7F059908(&matrix, 0, 0, 0, -pad->look.x, -pad->look.y, -pad->look.z, pad->up.x, pad->up.y, pad->up.z);
+                        if (obj->model)
+                        {
+                            matrix_scalar_multiply(obj->model->scale, &matrix);
+                        }
+                        sub_GAME_7F04088C(obj, pad, &matrix, pad->stan, pad);
+                        sub_GAME_7F056CA0(obj);
+                    }
+                    Offset += 4;
+                    break;
+                }
+                case AI_DOOR_OPEN:
+                {
+                    AIRecord *  ai  = AiListp + Offset;
+                    DoorRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop && obj->prop->type == PROP_TYPE_DOOR)
+                    {
+                        // DoorRecord *door = (DoorRecord *)obj;
+                        doorActivate(obj, DOORSTATE_OPENING);
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_DOOR_CLOSE:
+                {
+                    AIRecord *  ai  = AiListp + Offset;
+                    DoorRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop && obj->prop->type == PROP_TYPE_DOOR)
+                    {
+                        //DoorRecord *door = (DoorRecord *)obj;
+                        doorActivate(obj, DOORSTATE_CLOSING);
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_IF_DOOR_STATE_EQUAL:
+                {
+                    AIRecord *    ai   = AiListp + Offset;
+                    ObjectRecord *obj  = objFindByTagId(ai->val[0]);
+                    bool          pass = FALSE;
+                    if (obj && obj->prop && obj->type == PROPDEF_DOOR)
+                    {
+                        DoorRecord *door = (DoorRecord *)obj;
+                        if (door->openstate == DOORSTATE_STATIONARY)
+                        {
+                            if (door->openPosition <= 0)
+                            {
+                                pass = (ai->val[1] & DOOR_STATE_CLOSED) != 0;
+                            }
+                            else
+                            {
+                                pass = (ai->val[1] & DOOR_STATE_OPEN) != 0;
+                            }
+                        }
+                        else if (door->openstate == DOORSTATE_OPENING || door->openstate == DOORSTATE_WAITING)
+                        {
+                            pass = (ai->val[1] & DOOR_STATE_OPENING) != 0;
+                        }
+                        else if (door->openstate == DOORSTATE_CLOSING)
+                        {
+                            pass = (ai->val[1] & DOOR_STATE_CLOSING) != 0;
+                        }
+                    }
+                    if (pass)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_DOOR_HAS_BEEN_OPENED_BEFORE:
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop && obj->type == PROPDEF_DOOR && (obj->runtime_bitflags & RUNTIMEBITFLAG_BEENOPENED))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_DOOR_SET_LOCK:
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop && obj->prop->type == PROP_TYPE_DOOR)
+                    {
+                        DoorRecord *door = (DoorRecord *)obj;
+                        u8          bits = ai->val[1];
+                        door->keyflags   = door->keyflags | bits;
+                    }
+                    Offset += 3;
+                    break;
+                }
+                case AI_DOOR_UNSET_LOCK:
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop && obj->prop->type == PROP_TYPE_DOOR)
+                    {
+                        DoorRecord *door = (DoorRecord *)obj;
+                        u8          bits = ai->val[1];
+                        door->keyflags &= ~bits;
+                    }
+                    Offset += 3;
+                    break;
+                }
+                case AI_IF_DOOR_LOCK_EQUAL:
+                {
+                    AIRecord *    ai   = AiListp + Offset;
+                    ObjectRecord *obj  = objFindByTagId(ai->val[0]);
+                    bool          pass = FALSE;
+                    if (obj && obj->prop && obj->prop->type == PROP_TYPE_DOOR)
+                    {
+                        DoorRecord *door = (DoorRecord *)obj;
+                        s32         bits = ai->val[1];
+                        if ((door->keyflags & bits) == bits)
+                        {
+                            pass = TRUE;
+                        }
+                    }
+                    if (pass)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_OBJECTIVE_NUM_COMPLETE:
+                {
+                    struct
+                    {
+                        u8 cmd;
+                        u8 val;
+                        u8 label;
+                    } *ai = AiListp + Offset;
+                    /* additional PD code for dificulty filtering 
+                     == OBJECTIVE_COMPLETE && objectivelvlGetSelectedDifficultyBits(ai->val[0]) & (1 << lvlGetSelectedDifficulty()))* 
+                     */
+                    if (objectiveGetCount() > ai->val && OBJECTIVESTATUS_COMPLETE == objectiveGetStatus_WEAK(ai->val * 1, ai->val))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->label);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_UNKNOWN6E:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (check_2328_preset_set_with_method(ChrEntityp, ai->val[0]))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_UNKNOWN6F:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (sub_GAME_7F033AAC(ChrEntityp, ai->val[0]))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+
+                case AI_IF_GUARD_HITS_LESS_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ai->val[0] > chrGetNumArghs(ChrEntityp)) //order matter
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_HITS_GREATER_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ai->val[0] < chrGetNumArghs(ChrEntityp)) //order matter
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_HITS_MISSED_LESS_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ai->val[0] > chrGetNumCloseArghs(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_GUARD_HITS_MISSED_GREATER_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ai->val[0] < chrGetNumCloseArghs(ChrEntityp))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_CHR_HEALTH_LESS_THAN:
+                {
+                    AIRecord * ai    = AiListp + Offset;
+                    f32        value = (ai->val[1]) * 0.1f;
+                    ChrRecord *chr   = chrFindById(ChrEntityp, ai->val[0]);
+
+                    if (chr && ((chr->maxdamage - chr->damage) < value))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_CHR_HEALTH_GREATER_THAN:
+                {
+                    AIRecord * ai    = AiListp + Offset;
+                    f32        value = (ai->val[1]) * 0.1f;
+                    ChrRecord *chr   = chrFindById(ChrEntityp, ai->val[0]);
+
+                    if (chr && ((chr->maxdamage - chr->damage) > value))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_CHR_WAS_DAMAGED_SINCE_LAST_CHECK:
+                {
+                    AIRecord * ai  = AiListp + Offset;
+                    ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
+                    if (chr && (chr->chrflags & CHRFLAG_WAS_DAMAGED))
+                    {
+                        chr->chrflags &= ~CHRFLAG_WAS_DAMAGED; // disable flag
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_BOND_HEALTH_LESS_THAN:
+                {
+                    AIRecord *ai  = AiListp + Offset;
+                    float     val = (ai->val[0]) / 255.0f;
+                    if (val > bondviewGetCurrentPlayerHealth())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_BOND_HEALTH_GREATER_THAN:
+                {
+                    AIRecord *ai  = AiListp + Offset;
+                    float     val = (ai->val[0]) / 255.0f;
+                    if (val < bondviewGetCurrentPlayerHealth())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_GAME_DIFFICULTY_LESS_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ai->val[0] > lvlGetSelectedDifficulty())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_GAME_DIFFICULTY_GREATER_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ai->val[0] < lvlGetSelectedDifficulty())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_MISSION_TIME_LESS_THAN:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    f32       target = (ai->val[1] | (ai->val[0] << 8));
+                    if (target > lvlGetCurrentMultiPlayerSec())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_MISSION_TIME_GREATER_THAN:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    f32       target = (ai->val[1] | (ai->val[0] << 8));
+                    if (target < lvlGetCurrentMultiPlayerSec())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_SYSTEM_POWER_TIME_LESS_THAN:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    f32       target = (ai->val[1] | (ai->val[0] << 8)) * 60.0f;
+                    if (target > lvlGetCurrentMultiPlayerMin())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_SYSTEM_POWER_TIME_GREATER_THAN:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    f32       target = (ai->val[1] | (ai->val[0] << 8)) * 60.0f;
+                    if (target < lvlGetCurrentMultiPlayerMin())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_LEVEL_ID_LESS_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ai->val[0] > bossGetStageNum())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_LEVEL_ID_GREATER_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ai->val[0] < bossGetStageNum())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_LOCAL_BYTE_1_SET:
+                {
+                    AIRecord1 *ai      = AiListp + Offset;
+                    ChrEntityp->morale = ai->val;
+                    Offset += 2;
+                    break;
+                }
+                case AI_LOCAL_BYTE_1_ADD:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+                    if (255 - ai->val < ChrEntityp->morale) //clamp to 255
+                    {
+                        ChrEntityp->morale = 255; //max
+                    }
+                    else
+                    {
+                        ChrEntityp->morale += ai->val;
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_LOCAL_BYTE_1_SUBTRACT:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+                    if (ai->val > ChrEntityp->morale) //clamp to 0
+                    {
+                        ChrEntityp->morale = 0;
+                    }
+                    else
+                    {
+                        ChrEntityp->morale -= ai->val;
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_IF_LOCAL_BYTE_1_LESS_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ai->val[0] > ChrEntityp->morale)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_LOCAL_BYTE_1_LESS_THAN_RANDOM_SEED:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ChrEntityp->morale < ChrEntityp->random)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_LOCAL_BYTE_2_SET:
+                {
+                    AIRecord1 *ai         = AiListp + Offset;
+                    ChrEntityp->alertness = ai->val;
+                    Offset += 2;
+                    break;
+                }
+                case AI_LOCAL_BYTE_2_ADD:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+                    if (255 - ai->val < ChrEntityp->alertness) //clamp to 255
+                    {
+                        ChrEntityp->alertness = 255; //max
+                    }
+                    else
+                    {
+                        ChrEntityp->alertness += ai->val;
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_LOCAL_BYTE_2_SUBTRACT:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+                    if (ai->val > ChrEntityp->alertness) //clamp to 0
+                    {
+                        ChrEntityp->alertness = 0;
+                    }
+                    else
+                    {
+                        ChrEntityp->alertness -= ai->val;
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_IF_LOCAL_BYTE_2_LESS_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ai->val[0] > ChrEntityp->alertness)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_LOCAL_BYTE_2_LESS_THAN_RANDOM_SEED:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ChrEntityp->alertness < ChrEntityp->random)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_GUARD_SET_HEARING_SCALE:
+                {
+                    AIRecord *ai             = AiListp + Offset;
+                    f32       distance       = (ai->val[1] | (ai->val[0] << 8)) / 1000.0f;
+                    ChrEntityp->hearingscale = distance;
+                    Offset += 3;
+                    break;
+                }
+                case AI_GUARD_SET_VISION_RANGE:
+                {
+                    AIRecord *ai            = AiListp + Offset;
+                    ChrEntityp->visionrange = (ai->val[0]);
+                    Offset += 2;
+                    break;
+                }
+                case AI_GUARD_SET_GRENADE_PROBABILITY:
+                {
+                    AIRecord *ai            = AiListp + Offset;
+                    ChrEntityp->grenadeprob = ai->val[0];
+                    Offset += 2;
+                    break;
+                }
+                case AI_GUARD_SET_CHR_NUM:
+                {
+                    AIRecord *ai       = AiListp + Offset;
+                    ChrEntityp->chrnum = ai->val[0];
+                    Offset += 2;
+                    break;
+                }
+                case AI_GUARD_SET_HEALTH_TOTAL:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    f32       amount = (ai->val[1] | (ai->val[0] << 8)) * 0.1f;
+                    chrSetMaxDamage(ChrEntityp, amount);
+                    Offset += 3;
+                    break;
+                }
+                case AI_GUARD_SET_ARMOUR:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    f32       amount = (ai->val[1] | (ai->val[0] << 8)) * 0.1f; /*if (cheatIsActive(CHEAT_ENEMYSHIELDS)) { amount = amount < 8 ? 8 : amount; }*/
+                    chrAddHealth(ChrEntityp, amount);
+                    Offset += 3;
+                    break;
+                }
+                case AI_GUARD_SET_SPEED_RATING:
+                {   struct { u8 cmd; s8 val; } *ai = AiListp + Offset;
+#    ifdef DEBUG
+                    /*
+                        ".\\ported\\chrai.c", 2258, "Assertion failed: ai->val>=0"
+                        ".\\ported\\chrai.c", 2259, "Assertion failed: ai->val<=100"
+                        * Note: there are 10 lines between these 2 asserts meaning either no ifdef or no allman.
+                    */
+                    assert(ai->val >= 0);
+                    assert(ai->val <= 100);
+#    endif
+                    ChrEntityp->speedrating = ai->val;
+                    Offset += 2;
+                    break;
+                }
+                case AI_GUARD_SET_ARGH_RATING:
+                {   struct { u8 cmd; s8 val; } *ai = AiListp + Offset;
+#    ifdef DEBUG
+                    /*
+                        ".\\ported\\chrai.c", 2268, "Assertion failed: ai->val>=0"
+                        ".\\ported\\chrai.c", 2269, "Assertion failed: ai->val<=100"
+                    */
+                    assert(ai->val >= 0);
+                    assert(ai->val <= 100);
+#    endif
+                    ChrEntityp->arghrating = ai->val;
+                    Offset += 2;
+                    break;
+                }
+                case AI_GUARD_SET_ACCURACY_RATING:
+                {
+                    struct
+                    {
+                        u8 cmd;
+                        s8 val;
+                    } *ai                      = AiListp + Offset;
+                    ChrEntityp->accuracyrating = ai->val;
+                    Offset += 2;
+                    break;
+                }
+                case AI_GUARD_BITFIELD_SET_ON:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    chrSetFlags(ChrEntityp, ai->val[0]);
+                    Offset += 2;
+                    break;
+                }
+                case AI_GUARD_BITFIELD_SET_OFF:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    chrUnsetFlags(ChrEntityp, ai->val[0]);
+                    Offset += 2;
+                    break;
+                }
+                case AI_IF_GUARD_BITFIELD_IS_SET_ON:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrHasFlag(ChrEntityp, ai->val[0]))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_CHR_BITFIELD_SET_ON:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    chrSetFlagsById(ChrEntityp, ai->val[0], ai->val[1]);
+                    Offset += 3;
+                    break;
+                }
+                case AI_CHR_BITFIELD_SET_OFF:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    chrUnsetFlagsById(ChrEntityp, ai->val[0], ai->val[1]);
+                    Offset += 3;
+                    break;
+                }
+                case AI_IF_CHR_BITFIELD_IS_SET_ON:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (chrHasFlagById(ChrEntityp, ai->val[0], ai->val[1]))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_OBJECTIVE_BITFIELD_SET_ON:
+                {
+                    AIRecord *ai    = AiListp + Offset;
+                    s32       flags = (ai->val[1] << 16 | ai->val[2] << 8 | ai->val[3] | ai->val[0] << 24);
+                    chrSetStageFlags(ChrEntityp, flags);
+                    Offset += 5;
+                    break;
+                }
+                case AI_OBJECTIVE_BITFIELD_SET_OFF:
+                {
+                    AIRecord *ai    = AiListp + Offset;
+                    s32       flags = (ai->val[1] << 16 | ai->val[2] << 8 | ai->val[3] | ai->val[0] << 24);
+                    chrUnsetStageFlags(ChrEntityp, flags);
+                    Offset += 5;
+                    break;
+                }
+                case AI_IF_OBJECTIVE_BITFIELD_IS_SET_ON:
+                {
+                    AIRecord *ai    = AiListp + Offset;
+                    s32       flags = (ai->val[1] << 16 | ai->val[2] << 8 | ai->val[3] | ai->val[0] << 24);
+                    if (chrHasStageFlag(ChrEntityp, flags)) /* PD && ai->val[4] == 1) || (!chrHasStageFlag(ChrEntityp, flags) && ai->val[4] == 0* */
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
+                    }
+                    else
+                    {
+                        Offset += 6;
+                    }
+                    break;
+                }
+                case AI_GUARD_FLAGS_SET_ON:
+                {
+                    AIRecord *ai    = AiListp + Offset;
+                    CHRFLAG   flags = (ai->val[1] << 16 | ai->val[2] << 8 | ai->val[3] | ai->val[0] << 24);
+                    ChrEntityp->chrflags |= flags;
+                    Offset += 5;
+                    break;
+                }
+                case AI_GUARD_FLAGS_SET_OFF:
+                {
+                    AIRecord *ai    = AiListp + Offset;
+                    CHRFLAG   flags = (ai->val[1] << 16 | ai->val[2] << 8 | ai->val[3] | ai->val[0] << 24);
+                    ChrEntityp->chrflags &= ~flags;
+                    Offset += 5;
+                    break;
+                }
+                case AI_IF_GUARD_FLAGS_IS_SET_ON:
+                {
+                    AIRecord *ai    = AiListp + Offset;
+                    CHRFLAG   flags = (ai->val[1] << 16 | ai->val[2] << 8 | ai->val[3] | ai->val[0] << 24);
+                    if ((ChrEntityp->chrflags & flags) == flags)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
+                    }
+                    else
+                    {
+                        Offset += 6;
+                    }
+                    break;
+                }
+                case AI_CHR_FLAGS_SET_ON:
+                {
+                    AIRecord * ai    = AiListp + Offset;
+                    CHRFLAG    flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    ChrRecord *chr   = chrFindById(ChrEntityp, ai->val[0]);
+                    if (chr)
+                    {
+                        chr->chrflags |= flags;
+                    }
+                    Offset += 6;
+                    break;
+                }
+                case AI_CHR_FLAGS_SET_OFF:
+                {
+                    AIRecord * ai    = AiListp + Offset;
+                    CHRFLAG    flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    ChrRecord *chr   = chrFindById(ChrEntityp, ai->val[0]);
+                    if (chr)
+                    {
+                        chr->chrflags &= ~flags;
+                    }
+                    Offset += 6;
+                    break;
+                }
+                case AI_IF_CHR_FLAGS_IS_SET_ON:
+                {
+                    AIRecord * ai    = AiListp + Offset;
+                    CHRFLAG    flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    ChrRecord *chr   = chrFindById(ChrEntityp, ai->val[0]);
+                    if (chr && (chr->chrflags & flags) == flags)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[5]);
+                    }
+                    else
+                    {
+                        Offset += 7;
+                    }
+                    break;
+                }
+                case AI_OBJECT_FLAGS_1_SET_ON:
+                {
+                    AIRecord *    ai    = AiListp + Offset;
+                    s32           flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    ObjectRecord *obj   = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop)
+                    {
+                        obj->flags |= flags;
+                    }
+                    Offset += 6;
+                    break;
+                }
+                case AI_OBJECT_FLAGS_1_SET_OFF:
+                {
+                    AIRecord *    ai    = AiListp + Offset;
+                    s32           flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    ObjectRecord *obj   = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop)
+                    {
+                        obj->flags &= ~flags;
+                    }
+                    Offset += 6;
+                    break;
+                }
+                case AI_IF_OBJECT_FLAGS_1_IS_SET_ON:
+                {
+                    AIRecord *    ai    = AiListp + Offset;
+                    s32           flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    ObjectRecord *obj   = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop && (obj->flags & flags) == flags)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[5]);
+                    }
+                    else
+                    {
+                        Offset += 7;
+                    }
+                    break;
+                }
+                case AI_OBJECT_FLAGS_2_SET_ON:
+                {
+                    AIRecord *    ai    = AiListp + Offset;
+                    s32           flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    ObjectRecord *obj   = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop)
+                    {
+                        obj->flags2 |= flags;
+                    }
+                    Offset += 6;
+                    break;
+                }
+                case AI_OBJECT_FLAGS_2_SET_OFF:
+                {
+                    AIRecord *    ai    = AiListp + Offset;
+                    s32           flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    ObjectRecord *obj   = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop)
+                    {
+                        obj->flags2 &= ~flags;
+                    }
+                    Offset += 6;
+                    break;
+                }
+                case AI_IF_OBJECT_FLAGS_2_IS_SET_ON:
+                {
+                    AIRecord *    ai    = AiListp + Offset;
+                    s32           flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    ObjectRecord *obj   = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop && ((obj->flags2 & flags) == flags))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[5]);
+                    }
+                    else
+                    {
+                        Offset += 7;
+                    }
+                    break;
+                }
+                case AI_GUARD_SET_CHR_PRESET:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    chrSetChrPreset(ChrEntityp, ai->val[0]);
+                    Offset += 2;
+                    break;
+                }
+                case AI_CHR_SET_CHR_PRESET:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    chrSetChrPreset2(ChrEntityp, ai->val[0], ai->val[1]);
+                    Offset += 3;
+                    break;
+                }
+                case AI_GUARD_SET_PAD_PRESET:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    u16       pad_id = ai->val[1] | ai->val[0] << 8;
+                    if (ChrEntityp)
+                    {
+                        chrSetPadPreset(ChrEntityp, pad_id);
+                    }
+                    else if (AircraftEntityp)
+                    {
+                        AircraftEntityp->pad = pad_id;
+                    }
+                    Offset += 3;
+                    break;
+                }
+                case AI_CHR_SET_PAD_PRESET:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    u16       pad_id = ai->val[2] | ai->val[1] << 8;
+                    chrSetPadPresetByChrnum(ChrEntityp, ai->val[0], pad_id);
+                    Offset += 4;
+                    break;
+                }
+                case AI_PRINT:
+                {
+#    if DEBUG
+                    AIRecord *ai = AiListp + Offset;
+                    //PD = osSyncPrintf("AI_PRINT(void) (%d)\n", chraiitemsize(AiListp, Offset));
+                    osSyncPrintf("AI_PRINT: %s\n", ai->val);
+#    endif
+                    Offset += chraiitemsize(AiListp, Offset);
+                    break;
+                }
+                case AI_LOCAL_TIMER_RESET_START:
+                {
+                    chrRestartTimer(ChrEntityp);
+                    Offset += 1;
+                    break;
+                }
+                case AI_LOCAL_TIMER_RESET:
+                {
+                    ChrEntityp->timer60 = 0;
+                    Offset += 1;
+                    break;
+                }
+                case AI_LOCAL_TIMER_STOP:
+                {
+                    ChrEntityp->hidden &= ~CHRHIDDEN_TIMER_ACTIVE;
+                    Offset += 1;
+                    break;
+                }
+                case AI_LOCAL_TIMER_START:
+                {
+                    ChrEntityp->hidden |= CHRHIDDEN_TIMER_ACTIVE;
+                    Offset += 1;
+                    break;
+                }
+                case AI_IF_LOCAL_TIMER_HAS_STOPPED:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (((ChrEntityp->hidden & CHRHIDDEN_TIMER_ACTIVE) == 0))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_LOCAL_TIMER_LESS_THAN:
+                {
+                    AIRecord *ai   = AiListp + Offset;
+                    f32       valf = ((unsigned)((ai->val[1] << 8) | ai->val[2] | (ai->val[0] << 16))) / 60.0f;
+
+                    if (chrGetTimer(ChrEntityp) < valf)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
+                    }
+                    else
+                    {
+                        Offset += 5;
+                    }
+                    break;
+                }
+                case AI_IF_LOCAL_TIMER_GREATER_THAN:
+                {
+                    AIRecord *ai   = AiListp + Offset;
+                    f32       valf = ((unsigned)((ai->val[1] << 8) | ai->val[2] | (ai->val[0] << 16))) / 60.0f;
+                    if (chrGetTimer(ChrEntityp) > valf)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
+                    }
+                    else
+                    {
+                        Offset += 5;
+                    }
+                    break;
+                }
+                case AI_HUD_COUNTDOWN_SHOW:
+                {
+                    countdownTimerSetVisible(1, TRUE);
+                    Offset += 1;
+                    break;
+                }
+                case AI_HUD_COUNTDOWN_HIDE:
+                {
+                    countdownTimerSetVisible(1, FALSE);
+                    Offset += 1;
+                    break;
+                }
+                case AI_HUD_COUNTDOWN_SET:
+                {
+                    AIRecord *ai      = AiListp + Offset;
+                    f32       seconds = (ai->val[1] | ai->val[0] << 8);
+                    countdownTimerSetValue(seconds * 60.0f);
+                    Offset += 3;
+                    break;
+                }
+                case AI_HUD_COUNTDOWN_STOP:
+                {
+                    countdownTimerSetRunning(FALSE);
+                    Offset += 1;
+                    break;
+                }
+                case AI_HUD_COUNTDOWN_START:
+                {
+                    countdownTimerSetRunning(TRUE);
+                    Offset += 1;
+                    break;
+                }
+                case AI_IF_HUD_COUNTDOWN_HAS_STOPPED:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (!countdownTimerIsRunning())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_HUD_COUNTDOWN_LESS_THAN:
+                {
+                    AIRecord *ai    = AiListp + Offset;
+                    f32       value = ai->val[1] | ai->val[0] << 8;
+                    if (countdownTimerGetValue() < value * 60.0f)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_IF_HUD_COUNTDOWN_GREATER_THAN:
+                {
+                    AIRecord *ai    = AiListp + Offset;
+                    f32       value = ai->val[1] | ai->val[0] << 8;
+                    if (countdownTimerGetValue() > value * 60.0f)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_CHR_TRY_SPAWNING_AT_PAD:
+                {
+                    AIRecord *ai       = AiListp + Offset;
+                    u16       pad      = ai->val[3] | (ai->val[2] << 8);
+                    CHRFLAG   flags    = (ai->val[7] << 16 | ai->val[8] << 8 | ai->val[9] | ai->val[6] << 24);
+                    u16       ailistid = ai->val[5] | ai->val[4] << 8;
+                    AIRecord *ailist   = ailistFindById(ailistid);
+                    if (chrSpawnAtPad(ChrEntityp, ai->val[0], (s8)ai->val[1], pad, ailist, flags))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[10]);
+                    }
+                    else
+                    {
+                        Offset += 12;
+                    }
+                    break;
+                }
+                case AI_CHR_TRY_SPAWNING_NEXT_TO_UNSEEN_CHR:
+                {
+                    AIRecord *ai       = AiListp + Offset;
+                    CHRFLAG   flags    = ai->val[6] << 16 | ai->val[7] << 8 | ai->val[8] | ai->val[5] << 24;
+                    u16       ailistid = ai->val[4] | (ai->val[3] << 8);
+                    AIRecord *ailist   = ailistFindById(ailistid);
+                    if (chrSpawnAtChr(ChrEntityp, ai->val[0], (s8)ai->val[1], ai->val[2], ailist, flags))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[9]);
+                    }
+                    else
+                    {
+                        Offset += 11;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_SPAWNING_ITEM:
+                {
+                    AIRecord *  ai    = AiListp + Offset;
+                    s32         flags = (ai->val[4] << 16) | (ai->val[5] << 8) | ai->val[6] | (ai->val[3] << 24);
+                    s32         model = ai->val[1] | (ai->val[0] << 8); // propID
+                    PropRecord *prop  = NULL;
+
+                    if (ChrEntityp && ChrEntityp->prop && ChrEntityp->model)
+                    {
+                        /* more nice PD code that might be usefull in future
+                        if (cheatIsActive(CHEAT_MARQUIS))
+                        {
+                            flags &= ~0x10000000;
+                            flags |= 0x20000000;
+                            prop = chrGiveWeapon(ChrEntityp, model, ai->val[2], flags);
+                        }
+                        else
+                        */
+                        if (cheatIsActive(28)) // CHEAT_ENEMYROCKETS
+                        {
+                            switch (ai->val[2]) // ITEM_IDS
+                            {
+                                case ITEM_KNIFE:
+                                case ITEM_THROWKNIFE:
+                                case ITEM_WPPK:
+                                case ITEM_WPPKSIL:
+                                case ITEM_TT33:
+                                case ITEM_SKORPION:
+                                case ITEM_AK47:
+                                case ITEM_UZI:
+                                case ITEM_MP5K:
+                                case ITEM_MP5KSIL:
+                                case ITEM_SPECTRE:
+                                case ITEM_M16:
+                                case ITEM_FNP90:
+                                case ITEM_SHOTGUN:
+                                case ITEM_AUTOSHOT:
+                                case ITEM_SNIPERRIFLE:
+                                case ITEM_RUGER:
+                                case ITEM_GOLDENGUN:
+                                case ITEM_SILVERWPPK:
+                                case ITEM_GOLDWPPK:
+                                case ITEM_LASER:
+                                case ITEM_WATCHLASER:
+                                case ITEM_TIMEDMINE:
+                                case ITEM_PROXIMITYMINE:
+                                case ITEM_REMOTEMINE:
+                                case ITEM_TRIGGER:
+                                case ITEM_TASER:
+
+                                    prop = chrGiveWeapon(ChrEntityp, PROP_chrrocketlaunch, ITEM_ROCKETLAUNCH, flags);
+                                    //!Bug, No Break! relying on chrGiveWeapon checking weapon already given
+                                default:
+                                    prop = chrGiveWeapon(ChrEntityp, model, ai->val[2], flags);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            prop = chrGiveWeapon(ChrEntityp, model, ai->val[2], flags);
+                        }
+                    }
+                    if (prop)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[7]);
+                    }
+                    else
+                    {
+                        Offset += 9;
+                    }
+                    break;
+                }
+                case AI_GUARD_TRY_SPAWNING_HAT:
+                {
+                    AIRecord *ai       = AiListp + Offset;
+                    s32       flags    = (ai->val[3] << 16) | (ai->val[4] << 8) | ai->val[5] | (ai->val[2] << 24);
+                    s32       modelnum = ai->val[1] | (ai->val[0] << 8);
+                    bool      ok       = FALSE;
+                    if (ChrEntityp && ChrEntityp->prop && ChrEntityp->model)
+                    {
+                        ok = chrTryEquipHat(ChrEntityp, modelnum, flags);
+                    }
+                    if (ok)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[6]);
+                    }
+                    else
+                    {
+                        Offset += 8;
+                    }
+                    break;
+                }
+                case AI_CHR_TRY_SPAWNING_CLONE:
+                {
+                    AIRecord *       ai               = AiListp + Offset;
+                    //int zero                        = 0; //on stack in xbla, but matches without
+                    u16              ailistid         = ai->val[2] | (ai->val[1] << 8);
+                    u8 *             ailist           = ailistFindById((u16)ailistid);
+                    ChrRecord *      chr              = chrFindById(ChrEntityp, ai->val[0]);
+                    bool             pass             = FALSE; //564
+                    int              chrnum;
+                    PropRecord *     srcweaponLprop   = NULL;
+                    PropRecord *     srcweaponRprop   = NULL;
+                    PropRecord *     cloneweaponRprop = NULL;
+                    PropRecord *     cloneweaponLprop = NULL;
+                    PropRecord *     cloneprop        = NULL;
+                    ChrRecord *      clone            = NULL; //536
+                    WeaponObjRecord *srcweaponL       = NULL;
+                    WeaponObjRecord *cloneweaponL     = NULL; //528
+                    WeaponObjRecord *cloneweaponR     = NULL; //524
+                    WeaponObjRecord *srcweaponR       = NULL;
+                    PropRecord *     hatprop;
+                    ObjectRecord *   hatobj;
+                    //bool tryhat;
+                    if (chr && (chr->chrflags & CHRFLAG_CLONE))
+                    {
+                        cloneprop = chrSpawnAtChr(ChrEntityp, chr->bodynum, -1, chr->chrnum, ailist, 0);
+                        if (cloneprop)
+                        {
+                            clone  = cloneprop->chr;
+                            chrnum = chr->chrnum + 10000;
+                            if (!chrFindById(ChrEntityp, chrnum))
+                            {
+                                clone->chrnum = chrnum;
+                            }
+                            // chrSetChrnum(clone, getLowestUnusedChrId());
+                            // chr->chrdup = clone->chrnum;
+                            srcweaponRprop = chrGetEquippedWeaponProp(chr, GUNRIGHT);
+                            if (srcweaponRprop)
+                            {
+                                srcweaponR       = srcweaponRprop->weapon;
+                                cloneweaponRprop = chrGiveWeapon(clone, srcweaponR->obj, srcweaponR->weaponnum, 0);
+                                if (cloneweaponRprop)
+                                {
+                                    cloneweaponR = cloneweaponRprop->weapon;
+                                }
+                            }
+
+                            srcweaponLprop = chrGetEquippedWeaponProp(chr, GUNLEFT);
+                            if (srcweaponLprop)
+                            {
+                                srcweaponL       = srcweaponLprop->weapon;
+                                cloneweaponLprop = chrGiveWeapon(clone, srcweaponL->obj, srcweaponL->weaponnum, 0x10000000);
+                                if (cloneweaponLprop)
+                                {
+                                    cloneweaponL = cloneweaponLprop->weapon;
+                                }
+                            }
+
+                            if (srcweaponL && srcweaponR && cloneweaponL && cloneweaponR && srcweaponR == srcweaponL->dualweapon && srcweaponL == srcweaponR->dualweapon)
+                            {
+                                propweaponSetDual(cloneweaponL, cloneweaponR);
+                            }
+                            {
+                                hatprop = chr->handle_positiondata_hat;
+                                if (hatprop)
+                                {
+                                    hatobj = hatprop->obj;
+
+                                    chrTryEquipHat(clone, hatobj->obj, 0);
+                                }
+                            }
+                            /*PD extras*/
+                            //clone->morale     = chr->morale;
+                            //clone->alertness  = chr->alertness;
+                            //clone->padpreset1 = chr->padpreset1;
+                            pass = TRUE;
+                        }
+                    }
+                    if (pass)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
+                    }
+                    else
+                    {
+                        Offset += 5;
+                    }
+                    break;
+                }
+                case AI_TEXT_PRINT_BOTTOM:
+                {
+                    AIRecord *ai   = AiListp + Offset;
+                    char *    text = langGet(ai->val[1] | ai->val[0] << 8);
+#    ifdef VERSION_JP
+                    jp_hudmsgBottomShow(text);
+#    else
+                    hudmsgBottomShow(text);
+#    endif
+                    Offset += 3;
+                    break;
+                }
+                case AI_TEXT_PRINT_TOP:
+                {
+                    AIRecord *ai   = AiListp + Offset;
+                    char *    text = langGet(ai->val[1] | ai->val[0] << 8);
+
+#    if DEBUG
+                    osSyncPrintf("ptop =  %f \n", text);
+#    endif
+
+                    hudmsgTopShow(text);
+                    Offset += 3;
+                    break;
+                }
+                case AI_SFX_PLAY:
+                {
+                    AIRecord *ai       = AiListp + Offset;
+                    s16       audio_id = ai->val[1] | (ai->val[0] << 8);
+                    audioPlayFromProp((s8)ai->val[2], audio_id);
+                    Offset += 4;
+                    break;
+                }
+
+                case AI_SFX_STOP_CHANNEL:
+                {
+                    AIRecord1s *ai = AiListp + Offset;
+                    sub_GAME_7F0349BC(ai->val);
+                    Offset += 2;
+                    break;
+                }
+                case AI_SFX_SET_CHANNEL_VOLUME:
+                {
+                    struct
+                    {
+                        u8 cmd;
+                        s8 slotID;
+                        u8 val[];
+                    } *ai     = AiListp + Offset;
+                    s16 vol   = ai->val[1] | (ai->val[0] << 8);
+                    u16 sfxID = ai->val[3] | (ai->val[2] << 8);
+                    if (ai->slotID >= 0 && ai->slotID < 8)
+                    {
+                        sfx_related[ai->slotID].sfxID  = sfxID;
+                        sfx_related[ai->slotID].Volume = vol;
+                        sfx_related[ai->slotID].pad    = NULL;
+                        sfx_related[ai->slotID].Obj    = NULL;
+                        if (sfxID == 0)
+                        {
+                            audioPlayFromProp2(ai->slotID);
+                        }
+                    }
+                    Offset += 6;
+                    break;
+                }
+                case AI_SFX_FADE_CHANNEL_VOLUME:
+                {
+                    struct
+                    {
+                        u8 cmd;
+                        s8 slotID;
+                        u8 val[];
+                    } *ai     = AiListp + Offset;
+                    f32 vol   = ai->val[1] | (ai->val[0] << 8);
+                    u16 sfxID = ai->val[3] | (ai->val[2] << 8);
+                    if (ai->slotID >= 0 && ai->slotID < 8)
+                    {
+                        sfx_related[ai->slotID].sfxID  = sfxID;
+                        sfx_related[ai->slotID].Volume = sub_GAME_7F0539B8(vol);
+                        sfx_related[ai->slotID].pad    = NULL;
+                        sfx_related[ai->slotID].Obj    = NULL;
+                        if (sfxID == 0)
+                        {
+                            audioPlayFromProp2(ai->slotID);
+                        }
+                    }
+                    Offset += 6;
+                    break;
+                }
+                case AI_SFX_EMIT_FROM_OBJECT:
+                {
+                    struct
+                    {
+                        u8 cmd;
+                        s8 slotID;
+                        u8 val[];
+                    } *ai               = AiListp + Offset;
+                    ObjectRecord *obj   = objFindByTagId(ai->val[0]);
+                    u16           sfxID = ai->val[2] | (ai->val[1] << 8);
+                    if (ai->slotID >= 0 && ai->slotID < 8 && obj)
+                    {
+                        sfx_related[ai->slotID].sfxID = sfxID;
+                        sfx_related[ai->slotID].pad   = NULL;
+                        sfx_related[ai->slotID].Obj   = obj;
+                        if (sfxID == 0)
+                        {
+                            audioPlayFromProp2(ai->slotID);
+                        }
+                    }
+                    Offset += 5;
+                    break;
+                }
+                case AI_SFX_EMIT_FROM_PAD:
+                {
+                    struct
+                    {
+                        u8 cmd;
+                        s8 SlotID;
+                        u8 val[];
+                    } *ai             = AiListp + Offset;
+                    u16        padnum = ai->val[1] | (ai->val[0] << 8);
+                    PadRecord *pad;
+                    u16        sfxID = ai->val[3] | (ai->val[2] << 8);
+                    if (isNotBoundPad(padnum))
+                    {
+                        pad = &g_chraiCurrentSetup.pads[padnum];
+                    }
+                    else
+                    {
+                        pad = (PadRecord *)&g_chraiCurrentSetup.boundpads[getBoundPadNum(padnum)];
+                    }
+                    if (ai->SlotID >= 0 && ai->SlotID < 8 && pad)
+                    {
+                        sfx_related[ai->SlotID].sfxID = sfxID;
+                        sfx_related[ai->SlotID].pad   = pad;
+                        sfx_related[ai->SlotID].Obj   = NULL;
+                        if (sfxID == 0)
+                        {
+                            audioPlayFromProp2(ai->SlotID);
+                        }
+                    }
+                    Offset += 6;
+                    break;
+                }
+
+                case AI_IF_SFX_CHANNEL_VOLUME_LESS_THAN:
+                {
+                    struct
+                    {
+                        u8 cmd;
+                        s8 slotID;
+                        u8 val[];
+                    } *ai   = AiListp + Offset;
+                    s16 vol = ai->val[1] | (ai->val[0] << 8);
+                    if ((ai->slotID >= 0) && (ai->slotID < 8) && (sfx_related[ai->slotID].Volume2 < vol))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 5;
+                    }
+                    break;
+                }
+                case AI_VEHICLE_START_PATH:
+                {
+                    AIRecord *  ai   = AiListp + Offset;
+                    PathRecord *path = pathFindById(ai->val[0]);
+                    if (VehichleEntityp)
+                    {
+                        VehichleEntityp->path     = path;
+                        VehichleEntityp->nextstep = 0;
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_VEHICLE_SPEED:
+                {
+                    AIRecord *ai        = AiListp + Offset;
+                    f32       speedtime = ai->val[3] | (ai->val[2] << 8);
+                    f32       speedaim  = (ai->val[1] | (ai->val[0] << 8)) * 100.0f / 15360.0f;
+                    if (VehichleEntityp)
+                    {
+                        VehichleEntityp->speedaim    = speedaim;
+                        VehichleEntityp->speedtime60 = speedtime;
+                    }
+                    Offset += 5;
+                    break;
+                }
+                case AI_AIRCRAFT_ROTOR_SPEED:
+                {
+                    AIRecord *ai        = AiListp + Offset;
+                    f32       speedtime = ai->val[3] | (ai->val[2] << 8);
+                    f32       speedaim  = (ai->val[1] | (ai->val[0] << 8)) * M_TAU_F / 3600.0f;
+                    if (AircraftEntityp)
+                    {
+                        AircraftEntityp->rotaryspeedaim  = speedaim;
+                        AircraftEntityp->rotaryspeedtime = speedtime;
+                    }
+                    Offset += 5;
+                    break;
+                }
+                case AI_IF_CAMERA_IS_IN_INTRO:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if ((get_camera_mode() == 1) || (get_camera_mode() == 2))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_CAMERA_IS_IN_BOND_SWIRL:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (get_camera_mode() == 3)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_TV_CHANGE_SCREEN_BANK:
+                {
+                    AIRecord *    ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+                    if (obj && obj->prop)
+                    {
+                        if (obj->type == PROPDEF_MONITOR)
+                        {
+                            MonitorObjRecord *sm = (MonitorObjRecord *)obj;
+                            imageSlotSetImage(&sm->Monitor.image, ai->val[2]);
+                        }
+                        else if (obj->type == PROPDEF_MULTI_MONITOR)
+                        {
+                            u8 slot = ai->val[1];
+                            if (slot < 4)
+                            {
+                                multimonitorobj *mm = (multimonitorobj *)obj; //need new size here 0x74 (116) + 0x80 (so monitor is obj + 74)
+                                imageSlotSetImage(&mm->Monitor[slot].image, ai->val[2]);
+                            }
+                        }
+                    }
+                    Offset += 4;
+                    break;
+                }
+                case AI_IF_BOND_IN_TANK:
+                {
+                    /* 
+                    # if DEBUG && PD 
+                    osSyncPrintf("ai_ifbondintank: tank code has been removed.\n"); 
+                    # endif 
+                    */
+                    AIRecord *ai = AiListp + Offset;
+                    if (isBondInTank() == TRUE)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_EXIT_LEVEL:
+                {
+                    if (camera_8003642C)
+                    {
+                        if (camera_80036434 == FALSE)
+                        {
+                            camera_80036434 = TRUE;
+                        }
+                    }
+                    else
+                    {
+                        bossReturnTitleStage();
+                    }
+                    Offset += 1;
+                    break;
+                }
+                case AI_CAMERA_RETURN_TO_BOND:
+                {
+                    set_camera_mode(CAMERAMODE_FP_NOINPUT);
+                    Offset += 1;
+                    break;
+                }
+                case AI_CAMERA_LOOK_AT_BOND_FROM_PAD:
+                {
+                    AIRecord *ai     = AiListp + Offset;
+                    u16       padnum = ai->val[1] | (ai->val[0] << 8);
+                    if (isNotBoundPad(padnum))
+                    {
+                        dword_CODE_bss_800799F8 = &g_chraiCurrentSetup.pads[padnum];
+                    }
+                    else
+                    {
+                        dword_CODE_bss_800799F8 = (PadRecord *)&g_chraiCurrentSetup.boundpads[getBoundPadNum(padnum)];
+                    }
+                    set_camera_mode(CAMERAMODE_POSEND);
+                    Offset += 3;
+                    break;
+                }
+                case AI_CAMERA_SWITCH:
+                {
+                    AIRecord *       ai  = AiListp + Offset;
+                    TagObjectRecord *tag = sub_GAME_7F057080(ai->val[0]);
+                    if (tag)
+                    {
+                        int TagIndex = check_if_object_type_has_been_loaded(tag); //get index
+                        if (TagIndex >= 0)
+                        {
+                            CutsceneRecord *cdef = sub_GAME_7F056A88(tag->OffsetToObj + TagIndex); //get obj
+
+#    ifdef DEBUG
+                            /*".\\ported\\chrai.c", 0xc2b, "Assertion failed: cdef->type==PROPDEF_CAMERAPOS")                             */
+                            assert(cdef->type == PROPDEF_CAMERAPOS);
+#    endif
+                            dword_CODE_bss_800799F8 = NULL;
+                            gBondViewCutscene       = cdef;
+                            dword_CODE_bss_80079A18 = ai->val[2] | (ai->val[1] << 8);
+                            dword_CODE_bss_80079A1C = ai->val[4] | (ai->val[3] << 8);
+                            set_camera_mode(CAMERAMODE_POSEND);
+                        }
+                    }
+                    Offset += 6;
+                    break;
+                }
+                case AI_IF_BOND_Y_POS_LESS_THAN:
+                {
+                    AIRecord *ai      = AiListp + Offset;
+                    f32       bondpos = (s16)(ai->val[1] | ai->val[0] << 8);
+                    if (get_curplayer_positiondata()->pos.y < bondpos)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_HUD_HIDE_AND_LOCK_CONTROLS_AND_PAUSE_MISSION_TIME:
+                {
+                    AIRecord1 *ai = AiListp + Offset;
+                    set_unset_bitflags(4, FALSE);
+                    set_unset_ammo_on_screen_setting(2, FALSE);
+                    if (!(PLAYERFLAG_NOCONTROL & ai->val))
+                    {
+                        bondviewSetIntroCameraFlags(PLAYERFLAG_NOCONTROL);
+                    }
+                    if (!(ai->val & PLAYERFLAG_LOCKCONTROLS))
+                    {
+                        sub_GAME_7F08A944(PLAYERFLAG_NOCONTROL);
+                    }
+                    if (!(ai->val & PLAYERFLAG_NOTIMER))
+                    {
+                        countdownTimerSetVisible(16, FALSE);
+                    }
+                    D_800364B0 = FALSE;
+                    Offset += 2;
+                    break;
+                }
+                case AI_HUD_SHOW_ALL_AND_UNLOCK_CONTROLS_AND_RESUME_MISSION_TIME:
+                {
+#    if DEBUG
+                    osSyncPrintf("AI_BONDENABLECONTROL\n");
+#    endif
+                    set_unset_bitflags(4, TRUE);
+                    set_unset_ammo_on_screen_setting(2, TRUE);
+                    bondviewUnsetIntroCameraFlags(PLAYERFLAG_NOCONTROL);
+                    sub_GAME_7F08A928(2);
+                    countdownTimerSetVisible(16, TRUE);
+                    D_800364B0 = TRUE;
+                    Offset += 1;
+                    break;
+                }
+                case AI_CHR_TRY_TELEPORTING_TO_PAD:
+                {
+                    AIRecord * ai     = AiListp + Offset;
+                    s32        padnum = ai->val[2] | (ai->val[1] << 8);
+                    ChrRecord *chr    = chrFindById(ChrEntityp, ai->val[0]);
+                    bool       pass   = FALSE;
+                    PadRecord *pad;
+                    f32        FacingDirection;
+                    coord3d    pos;
+                    StandTile *stan;
+
+                    if (chr)
+                    {
+                        padnum = chrResolvePadId(ChrEntityp, padnum);
+                        if (isNotBoundPad(padnum))
+                        {
+                            pad = &g_chraiCurrentSetup.pads[padnum];
+                        }
+                        else
+                        {
+                            pad = (PadRecord *)&g_chraiCurrentSetup.boundpads[getBoundPadNum(padnum)];
+                        }
+
+                        FacingDirection = atan2f(pad->look.x, pad->look.z);
+                        pos.x           = pad->pos.x;
+                        pos.y           = pad->pos.y;
+                        pos.z           = pad->pos.z;
+                        //pos  = pad->pos; <-uses lw instead of lwc1
+                        stan            = pad->stan;
+                        sub_GAME_7F03D058(chr->prop, FALSE);
+
+                        if (sub_GAME_7F033F48(&pos, &stan, FacingDirection, TRUE))
+                        {
+                            {
+                                chr->prop->pos.x = pos.x;
+                                chr->prop->pos.y = pos.y;
+                                chr->prop->pos.z = pos.z;
+                            }
+                            //chr->prop->pos  = pos;
+                            chr->prop->stan = stan;
+                            chr->chrflags   = chr->chrflags | CHRFLAG_INIT;
+                            setsubroty(chr->model, FacingDirection);
+                            setsuboffset(chr->model, &pos);
+                            chrPositionRelated7F020D94(chr);
+                            if (chr->prop == g_CurrentPlayer->prop)
+                            {
+                                g_CurrentPlayer->field_488.collision_position.x = pos.x;
+                                g_CurrentPlayer->field_488.collision_position.y = pos.y;
+                                g_CurrentPlayer->field_488.collision_position.z = pos.z;
+
+                                //g_CurrentPlayer->pos = pos;
+                                g_CurrentPlayer->movecentrerelease = stan;
+                            }
+                            pass = TRUE;
+                        }
+                        sub_GAME_7F03D058(chr->prop, TRUE);
+                    }
+                    if (pass)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
+                    }
+                    else
+                    {
+                        Offset += 5;
+                    }
+                    break;
+                }
+                case AI_SCREEN_FADE_TO_BLACK:
+                {
+                    if (stop_time_flag != 2)
+                    {
+                        currentPlayerSetFadeColour(0, 0, 0, 0);
+                        currentPlayerSetFadeFrac(60.0f, 1);
+                    }
+                    Offset += 1;
+                    break;
+                }
+                case AI_SCREEN_FADE_FROM_BLACK:
+                {
+                    if (stop_time_flag != 2)
+                    {
+                        currentPlayerSetFadeColour(0, 0, 0, 1);
+                        currentPlayerSetFadeFrac(60.0f, 0);
+                    }
+                    Offset += 1;
+                    break;
+                }
+                case AI_IF_SCREEN_FADE_COMPLETED:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (g_CurrentPlayer->colourfadetimemax60 < 0)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_CHR_HIDE_ALL:
+                {
+                    s32 num;
+                    for (num = get_numguards() - 1; num >= 0; num--)
+                    {
+                        if (ptr_guard_data[num].model != NULL)
+                        {
+                            ptr_guard_data[num].chrflags |= CHRFLAG_HIDDEN;
+                        }
+                    }
+                    Offset += 1;
+                    break;
+                }
+                case AI_CHR_SHOW_ALL:
+                {
+                    s32 num;
+                    for (num = get_numguards() - 1; num >= 0; num--)
+                    {
+                        ptr_guard_data[num].chrflags &= ~CHRFLAG_HIDDEN;
+                    }
+
+                    Offset += 1;
+                    break;
+                }
+                case AI_DOOR_OPEN_INSTANT:
+                {
+                    AIRecord *  ai   = AiListp + Offset;
+                    DoorRecord *door = objFindByTagId(ai->val[0]);
+                    if (door && door->prop)
+                    {
+                        //DoorRecord *door   = (DoorRecord *)obj;
+                        door->speed        = 0;
+                        door->openPosition = door->maxFrac;
+                        door->openedTime   = g_GlobalTimer;
+                        door->openstate        = DOORSTATE_STATIONARY;
+                        sub_GAME_7F052B00(door);
+                        sub_GAME_7F053598(door); // doorActivatePortal
+                        sub_GAME_7F053B10(door);
+                    }
+                    Offset += 2;
+                    break;
+                }
+                case AI_CHR_REMOVE_ITEM_IN_HAND:
+                {
+                    AIRecord * ai  = AiListp + Offset;
+                    ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
+                    if (chr)
+                    {
+                        chrSetWeaponFlag4(chr, ai->val[1]);
+                    }
+                    Offset += 3;
+                    break;
+                }
+                case AI_IF_NUMBER_OF_ACTIVE_PLAYERS_LESS_THAN:
+                {
+                    struct
+                    {
+                        u8 cmd;
+                        s8 val;
+                        u8 label;
+                    } *ai = AiListp + Offset;
+                    if (getPlayerCount() < ai->val)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->label);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_BOND_ITEM_TOTAL_AMMO_LESS_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (currentPlayerGetAmmoCount((s8)ai->val[0]) < (s8)ai->val[1])
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
+                    }
+                    else
+                    {
+                        Offset += 4;
+                    }
+                    break;
+                }
+                case AI_BOND_EQUIP_ITEM:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    currentPlayerEquipWeaponWrapper(GUNRIGHT, (s8)ai->val[0]);
+                    currentPlayerEquipWeaponWrapper(GUNLEFT, 0);
+                    Offset += 2;
+                    break;
+                }
+                case AI_BOND_EQUIP_ITEM_CINEMA:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    currentPlayerUnEquipWeaponWrapper(GUNRIGHT, ai->val[0]);
+                    currentPlayerUnEquipWeaponWrapper(GUNLEFT, 0);
+                    Offset += 2;
+                    break;
+                }
+                case AI_BOND_SET_LOCKED_VELOCITY:
+                {
+                    /*
+                    g_Vars.currentplayer->bondforcespeed.x = (s8)ai->val[1];
+                    g_Vars.currentplayer->bondforcespeed.y = 0;
+                    g_Vars.currentplayer->bondforcespeed.z = (s8)ai->val[2];
+                    */
+                    AIRecord *ai            = AiListp + Offset;
+                    flt_CODE_bss_80079990.x = (s8)ai->val[0];
+                    flt_CODE_bss_80079990.y = 0;
+                    flt_CODE_bss_80079990.z = (s8)ai->val[1];
+                    Offset += 3;
+                    break;
+                }
+                case AI_IF_OBJECT_IN_ROOM_WITH_PAD:
+                {
+                    AIRecord *    ai     = AiListp + Offset;
+                    u16           padnum = ai->val[2] | (ai->val[1] << 8);
+                    PadRecord *   pad;
+                    ObjectRecord *obj = objFindByTagId(ai->val[0]);
+
+                    if (isNotBoundPad(padnum))
+                    {
+                        pad = &g_chraiCurrentSetup.pads[padnum * 1]; //needs a mult by 1 to correct s0/v1
+                    }
+                    else
+                    {
+                        pad = (PadRecord *)&g_chraiCurrentSetup.boundpads[getBoundPadNum(padnum)];
+                    }
+
+                    if (pad->stan && obj && obj->prop && (pad->stan->room == obj->prop->stan->room))
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
+                    }
+                    else
+                    {
+                        Offset += 5;
+                    }
+                    break;
+                }
+                case AI_SWITCH_SKY:
+                { // SWITCHENVIRONMENT
+                    fogSwitchToSolosky2(1.0);
+                    Offset += 1;
+                    break;
+                }
+                case AI_TRIGGER_FADE_AND_EXIT_LEVEL_ON_BUTTON_PRESS:
+                {
+                    if (stop_time_flag == FALSE)
+                    {
+                        stop_time_flag = TRUE;
+                    }
+                    Offset += 1;
+                    break;
+                }
+                case AI_IF_BOND_IS_DEAD:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (g_CurrentPlayer->bonddead)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_BOND_DISABLE_DAMAGE_AND_PICKUPS:
+                {
+                    g_PlayerInvincible = TRUE;
+                    Offset += 1;
+                    break;
+                }
+                case AI_BOND_HIDE_WEAPONS:
+                {
+                    remove_item_in_hand(GUNRIGHT);
+                    remove_item_in_hand(GUNLEFT);
+                    Offset += 1;
+                    break;
+                }
+                case AI_CAMERA_ORBIT_PAD: //sp order from xbla
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    s32       padnum;
+                    s32       a;
+                    s32       b;
+                    s32       c;
+                    s32       height;
+                    s32       speed;
+                    b                       = ai->val[1] | ai->val[0] << 8;
+                    height                  = (s16)(ai->val[3] | ai->val[2] << 8);
+                    a                       = (s16)(ai->val[5] | ai->val[4] << 8);
+                    padnum                  = ai->val[7] | ai->val[6] << 8;
+                    c                       = (s16)(ai->val[9] | ai->val[8] << 8);
+                    speed                   = ai->val[11] | ai->val[10] << 8;
+                    dword_CODE_bss_800799F8 = NULL;
+                    gBondViewCutscene = NULL;
+                    flt_CODE_bss_80079A00   = (speed * M_TAU) / 65536.0f; //speed
+                    flt_CODE_bss_80079A04   = (a * M_TAU) / 65536.0f;
+                    flt_CODE_bss_80079A08   = b;
+                    flt_CODE_bss_80079A0C   = height; //height
+                    flt_CODE_bss_80079A10   = c;
+                    dword_CODE_bss_80079A14 = padnum;   //padtoorbit
+                    set_camera_mode(CAMERAMODE_POSEND);
+                    Offset += 13;
+                    break;
+                }
+                case AI_CREDITS_ROLL:
+                {
+                    D_8003643C = TRUE;
+                    Offset += 1;
+                    break;
+                }
+                case AI_IF_CREDITS_HAS_COMPLETED:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (D_8003643C == 2)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_OBJECTIVE_ALL_COMPLETED:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    //bool a = objectiveIsAllComplete();
+                    if (objectiveIsAllComplete())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_IF_FOLDER_ACTOR_IS_EQUAL:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (getSelectedFolderBond() == (s8)ai->val[0])
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_BOND_DAMAGE_AND_PICKUPS_DISABLED:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (g_PlayerInvincible)
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
+                    }
+                    else
+                    {
+                        Offset += 2;
+                    }
+                    break;
+                }
+                case AI_MUSIC_XTRACK_PLAY:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    Offset += 4;
+                    musicSetXReason((s8)ai->val[0], ai->val[1], ai->val[2]);
+#    if DEBUG
+                    osSyncPrintf("ai: enery tune on (%d, %d, %d)\n", ai->val[0], ai->val[1], ai->val[2]);
+#    endif
+                    break;
+                }
+                case AI_MUSIC_XTRACK_STOP:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    Offset += 2;
+                    musicUnsetXReason((s8)ai->val[0]);
+#    if DEBUG
+                    osSyncPrintf("ai: enery tune off (%d)\n", ai->val[0]);
+#    endif
+                    break;
+                }
+                case AI_TRIGGER_EXPLOSIONS_AROUND_BOND:
+                {
+                    SurroundWithExplosions(0);
+                    Offset += 1;
+                    break;
+                }
+                case AI_IF_KILLED_CIVILIANS_GREATER_THAN:
+                {
+                    AIRecord *ai = AiListp + Offset;
+                    if (ai->val[0] < get_civilian_casualties())
+                    {
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_IF_CHR_WAS_SHOT_SINCE_LAST_CHECK:
+                {
+                    AIRecord * ai  = AiListp + Offset;
+                    ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
+                    if (chr && chr->chrflags & CHRFLAG_WAS_HIT)
+                    {
+                        chr->chrflags &= ~CHRFLAG_WAS_HIT;
+                        Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
+                    }
+                    else
+                    {
+                        Offset += 3;
+                    }
+                    break;
+                }
+                case AI_BOND_KILLED_IN_ACTION:
+                {
+                    g_isBondKIA = TRUE;
+                    Offset += 1;
+                    break;
+                }
+                case AI_GUARD_RAISES_ARMS:
+                {
+                    chrTrySurprisedSurrender(ChrEntityp);
+                    Offset += 1;
+                    break;
+                }
+                case AI_GAS_LEAK_AND_FADE_FOG:
+                {
+                    void *p[3] = D_80030A88;
+                    init_trigger_toxic_gas_effect(p); //do something with p
+                    Offset += 1;
+                    break;
+                }
+                case AI_OBJECT_ROCKET_LAUNCH:
+                {
+                    AIRecord1 *   ai  = AiListp + Offset;
+                    ObjectRecord *obj = objFindByTagId(ai->val);
+
+                    if (obj && obj->prop)
+                    {
+                        sub_GAME_7F03FDA8(obj->prop);
+
+                        if (obj->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)
+                        {
+                            obj->unk6C->id |= 0x601;
+                            sub_GAME_7F03FE14(obj->prop);
+                            matrix_4x4_set_identity(&obj->unk6C->m);
+                            obj->unk6C->pos.x = 0;
+                            obj->unk6C->pos.y = 1.0f / 60.0f; //step height?
+                            obj->unk6C->pos.z = 0;
+                            obj->unk6C->vec.x = 0;
+                            obj->unk6C->vec.y = 0.29166666f; //direction to move?
+                            obj->unk6C->vec.z = 0;
+                        }
+                    }
+                    Offset += 2;
+                    break;
+                } //============================================================================================================
+#endif
+                default:
+                    /* 
+                     * No Command found, advance ailist by 1. 
+                     * This is attempting to handle situations where the command 
+                     * type is invalid by passing over them and continuing 
+                     * execution.  
+                     * chraiitemsize returns 1 which is pointless really 
+                     * could have done it here without a jump 
+                     * 
+                     * Outcome:crash 
+                     */
+                    {
+                        Offset += chraiitemsize(AiListp, Offset);
+                    }
+            } // switch
+        }     // for
+    }         // Has ailist
+}             //ai()
 #else
 #ifdef VERSION_US
 GLOBAL_ASM(
@@ -2874,7 +6120,7 @@ GetByteS1_ParseCommandByte_SwitchCase:								/*GetCommandByte(cmd)*/
 /* 06A0BC 7F03558C 922E0000 */  lbu   $t6, ($s1) #t6 = byte(s1)
 ParseCommandByte_SwitchCase:
 /* 06A0C0 7F035590 02C02025 */  move  $a0, $s6
-/* 06A0C4 7F035594 2DC100FD */  sltiu $at, $t6, 0xfd				# if Cmd !< AI_CMDS_TOTAL  then 
+/* 06A0C4 7F035594 2DC100FD */  sltiu $at, $t6, 0xfd				# if Cmd !< AI_CMD_COUNT  then 
 /* 06A0C8 7F035598 10201314 */  beqz  $at, GetCmdLength				#    Cmd<<2  goto GetCmdLength
 /* 06A0CC 7F03559C 000E7080 */   sll   $t6, $t6, 2
 /* 06A0D0 7F0355A0 3C018005 */  lui   $at, %hi(jpt_800524F8)
@@ -4979,15 +8225,15 @@ action65_Object_Moved_To_Preset_4:
 /* 06BE10 7F0372E0 000A6080 */  sll   $t4, $t2, 2
 /* 06BE14 7F0372E4 018A6023 */  subu  $t4, $t4, $t2
 /* 06BE18 7F0372E8 000C6080 */  sll   $t4, $t4, 2
-/* 06BE1C 7F0372EC 3C198007 */  lui   $t9, %hi(ptr_0xxxpresets) 
-/* 06BE20 7F0372F0 8F395D18 */  lw    $t9, %lo(ptr_0xxxpresets)($t9)
+/* 06BE1C 7F0372EC 3C198007 */  lui   $t9, %hi(g_chraiCurrentSetup+0x18) 
+/* 06BE20 7F0372F0 8F395D18 */  lw    $t9, %lo(g_chraiCurrentSetup+0x18)($t9)
 /* 06BE24 7F0372F4 018A6023 */  subu  $t4, $t4, $t2
 /* 06BE28 7F0372F8 000C6080 */  sll   $t4, $t4, 2
 /* 06BE2C 7F0372FC 1000000A */  b     .L7F037328
 /* 06BE30 7F037300 01998021 */   addu  $s0, $t4, $t9
 .L7F037304:
-/* 06BE34 7F037304 3C0E8007 */  lui   $t6, %hi(ptr_2xxxpresets) 
-/* 06BE38 7F037308 8DCE5D1C */  lw    $t6, %lo(ptr_2xxxpresets)($t6)
+/* 06BE34 7F037304 3C0E8007 */  lui   $t6, %hi(g_chraiCurrentSetup+0x1C) 
+/* 06BE38 7F037308 8DCE5D1C */  lw    $t6, %lo(g_chraiCurrentSetup+0x1C)($t6)
 /* 06BE3C 7F03730C 00026900 */  sll   $t5, $v0, 4
 /* 06BE40 7F037310 01A26821 */  addu  $t5, $t5, $v0
 /* 06BE44 7F037314 000D6880 */  sll   $t5, $t5, 2
@@ -7145,15 +10391,15 @@ actionC6_EmanateSoundSlotnumFromPresetWithAudibleRV_6:
 /* 06DCC8 7F039198 000AC880 */  sll   $t9, $t2, 2
 /* 06DCCC 7F03919C 032AC823 */  subu  $t9, $t9, $t2
 /* 06DCD0 7F0391A0 0019C880 */  sll   $t9, $t9, 2
-/* 06DCD4 7F0391A4 3C0D8007 */  lui   $t5, %hi(ptr_0xxxpresets) 
-/* 06DCD8 7F0391A8 8DAD5D18 */  lw    $t5, %lo(ptr_0xxxpresets)($t5)
+/* 06DCD4 7F0391A4 3C0D8007 */  lui   $t5, %hi(g_chraiCurrentSetup+0x18) 
+/* 06DCD8 7F0391A8 8DAD5D18 */  lw    $t5, %lo(g_chraiCurrentSetup+0x18)($t5)
 /* 06DCDC 7F0391AC 032AC823 */  subu  $t9, $t9, $t2
 /* 06DCE0 7F0391B0 0019C880 */  sll   $t9, $t9, 2
 /* 06DCE4 7F0391B4 1000000A */  b     .L7F0391E0
 /* 06DCE8 7F0391B8 032D2021 */   addu  $a0, $t9, $t5
 .L7F0391BC:
-/* 06DCEC 7F0391BC 3C0F8007 */  lui   $t7, %hi(ptr_2xxxpresets) 
-/* 06DCF0 7F0391C0 8DEF5D1C */  lw    $t7, %lo(ptr_2xxxpresets)($t7)
+/* 06DCEC 7F0391BC 3C0F8007 */  lui   $t7, %hi(g_chraiCurrentSetup+0x1C) 
+/* 06DCF0 7F0391C0 8DEF5D1C */  lw    $t7, %lo(g_chraiCurrentSetup+0x1C)($t7)
 /* 06DCF4 7F0391C4 00037100 */  sll   $t6, $v1, 4
 /* 06DCF8 7F0391C8 01C37021 */  addu  $t6, $t6, $v1
 /* 06DCFC 7F0391CC 000E7080 */  sll   $t6, $t6, 2
@@ -7416,7 +10662,7 @@ actionD3_Return_From_Camera_Scene_1:
 actionD4_Camera_Looks_At_Bond_From_Preset_3:
 /* 06E094 7F039564 922A0001 */  lbu   $t2, 1($s1)
 /* 06E098 7F039568 922C0002 */  lbu   $t4, 2($s1)
-/* 06E09C 7F03956C 3C0F8007 */  lui   $t7, %hi(ptr_2xxxpresets) 
+/* 06E09C 7F03956C 3C0F8007 */  lui   $t7, %hi(g_chraiCurrentSetup+0x1C) 
 /* 06E0A0 7F039570 000A4A00 */  sll   $t1, $t2, 8
 /* 06E0A4 7F039574 012C1025 */  or    $v0, $t1, $t4
 /* 06E0A8 7F039578 304BFFFF */  andi  $t3, $v0, 0xffff
@@ -7425,8 +10671,8 @@ actionD4_Camera_Looks_At_Bond_From_Preset_3:
 /* 06E0B4 7F039584 01601825 */   move  $v1, $t3
 /* 06E0B8 7F039588 000BC080 */  sll   $t8, $t3, 2
 /* 06E0BC 7F03958C 030BC023 */  subu  $t8, $t8, $t3
-/* 06E0C0 7F039590 3C198007 */  lui   $t9, %hi(ptr_0xxxpresets) 
-/* 06E0C4 7F039594 8F395D18 */  lw    $t9, %lo(ptr_0xxxpresets)($t9)
+/* 06E0C0 7F039590 3C198007 */  lui   $t9, %hi(g_chraiCurrentSetup+0x18) 
+/* 06E0C4 7F039594 8F395D18 */  lw    $t9, %lo(g_chraiCurrentSetup+0x18)($t9)
 /* 06E0C8 7F039598 0018C080 */  sll   $t8, $t8, 2
 /* 06E0CC 7F03959C 030BC023 */  subu  $t8, $t8, $t3
 /* 06E0D0 7F0395A0 0018C080 */  sll   $t8, $t8, 2
@@ -7435,7 +10681,7 @@ actionD4_Camera_Looks_At_Bond_From_Preset_3:
 /* 06E0DC 7F0395AC 1000000B */  b     .L7F0395DC
 /* 06E0E0 7F0395B0 AC2D99F8 */   sw    $t5, %lo(dword_CODE_bss_800799F8)($at)
 .L7F0395B4:
-/* 06E0E4 7F0395B4 8DEF5D1C */  lw    $t7, %lo(ptr_2xxxpresets)($t7)
+/* 06E0E4 7F0395B4 8DEF5D1C */  lw    $t7, %lo(g_chraiCurrentSetup+0x1C)($t7)
 /* 06E0E8 7F0395B8 00037100 */  sll   $t6, $v1, 4
 /* 06E0EC 7F0395BC 01C37021 */  addu  $t6, $t6, $v1
 /* 06E0F0 7F0395C0 000E7080 */  sll   $t6, $t6, 2
@@ -7465,8 +10711,8 @@ actionD5_Go_To_Camera_Position_6:
 /* 06E148 7F039618 01822021 */   addu  $a0, $t4, $v0
 /* 06E14C 7F03961C 3C018008 */  lui   $at, %hi(dword_CODE_bss_800799F8)
 /* 06E150 7F039620 AC2099F8 */  sw    $zero, %lo(dword_CODE_bss_800799F8)($at)
-/* 06E154 7F039624 3C018008 */  lui   $at, %hi(dword_CODE_bss_800799FC)
-/* 06E158 7F039628 AC2299FC */  sw    $v0, %lo(dword_CODE_bss_800799FC)($at)
+/* 06E154 7F039624 3C018008 */  lui   $at, %hi(gBondViewCutscene)
+/* 06E158 7F039628 AC2299FC */  sw    $v0, %lo(gBondViewCutscene)($at)
 /* 06E15C 7F03962C 922B0002 */  lbu   $t3, 2($s1)
 /* 06E160 7F039630 92390003 */  lbu   $t9, 3($s1)
 /* 06E164 7F039634 3C018008 */  lui   $at, %hi(dword_CODE_bss_80079A18)
@@ -7588,15 +10834,15 @@ actionD9_GuardIDMovedToPresetReturnLoopIfSuccessful_5:
 /* 06E30C 7F0397DC 00026880 */  sll   $t5, $v0, 2
 /* 06E310 7F0397E0 01A26823 */  subu  $t5, $t5, $v0
 /* 06E314 7F0397E4 000D6880 */  sll   $t5, $t5, 2
-/* 06E318 7F0397E8 3C0E8007 */  lui   $t6, %hi(ptr_0xxxpresets) 
-/* 06E31C 7F0397EC 8DCE5D18 */  lw    $t6, %lo(ptr_0xxxpresets)($t6)
+/* 06E318 7F0397E8 3C0E8007 */  lui   $t6, %hi(g_chraiCurrentSetup+0x18) 
+/* 06E31C 7F0397EC 8DCE5D18 */  lw    $t6, %lo(g_chraiCurrentSetup+0x18)($t6)
 /* 06E320 7F0397F0 01A26823 */  subu  $t5, $t5, $v0
 /* 06E324 7F0397F4 000D6880 */  sll   $t5, $t5, 2
 /* 06E328 7F0397F8 10000009 */  b     .L7F039820
 /* 06E32C 7F0397FC 01AE1821 */   addu  $v1, $t5, $t6
 .L7F039800:
-/* 06E330 7F039800 3C0A8007 */  lui   $t2, %hi(ptr_2xxxpresets) 
-/* 06E334 7F039804 8D4A5D1C */  lw    $t2, %lo(ptr_2xxxpresets)($t2)
+/* 06E330 7F039800 3C0A8007 */  lui   $t2, %hi(g_chraiCurrentSetup+0x1C) 
+/* 06E334 7F039804 8D4A5D1C */  lw    $t2, %lo(g_chraiCurrentSetup+0x1C)($t2)
 /* 06E338 7F039808 01E27821 */  addu  $t7, $t7, $v0
 /* 06E33C 7F03980C 000F7880 */  sll   $t7, $t7, 2
 /* 06E340 7F039810 3C01FFF5 */  lui   $at, (0xFFF59FC0 >> 16) # lui $at, 0xfff5
@@ -7918,15 +11164,15 @@ actionE6_If_16_Object_And_Preset_Are_In_Same_Room_RVL_5:
 /* 06E7B8 7F039C88 00037880 */  sll   $t7, $v1, 2
 /* 06E7BC 7F039C8C 01E37823 */  subu  $t7, $t7, $v1
 /* 06E7C0 7F039C90 000F7880 */  sll   $t7, $t7, 2
-/* 06E7C4 7F039C94 3C0A8007 */  lui   $t2, %hi(ptr_0xxxpresets) 
-/* 06E7C8 7F039C98 8D4A5D18 */  lw    $t2, %lo(ptr_0xxxpresets)($t2)
+/* 06E7C4 7F039C94 3C0A8007 */  lui   $t2, %hi(g_chraiCurrentSetup+0x18) 
+/* 06E7C8 7F039C98 8D4A5D18 */  lw    $t2, %lo(g_chraiCurrentSetup+0x18)($t2)
 /* 06E7CC 7F039C9C 01E37823 */  subu  $t7, $t7, $v1
 /* 06E7D0 7F039CA0 000F7880 */  sll   $t7, $t7, 2
 /* 06E7D4 7F039CA4 1000000A */  b     .L7F039CD0
 /* 06E7D8 7F039CA8 01EA2021 */   addu  $a0, $t7, $t2
 .L7F039CAC:
-/* 06E7DC 7F039CAC 3C0C8007 */  lui   $t4, %hi(ptr_2xxxpresets) 
-/* 06E7E0 7F039CB0 8D8C5D1C */  lw    $t4, %lo(ptr_2xxxpresets)($t4)
+/* 06E7DC 7F039CAC 3C0C8007 */  lui   $t4, %hi(g_chraiCurrentSetup+0x1C) 
+/* 06E7E0 7F039CB0 8D8C5D1C */  lw    $t4, %lo(g_chraiCurrentSetup+0x1C)($t4)
 /* 06E7E4 7F039CB4 00034900 */  sll   $t1, $v1, 4
 /* 06E7E8 7F039CB8 01234821 */  addu  $t1, $t1, $v1
 /* 06E7EC 7F039CBC 00094880 */  sll   $t1, $t1, 2
@@ -8047,8 +11293,8 @@ actionEE_Cuba_Circular_Camera_Aim_D:
 /* 06E990 7F039E60 3C018008 */  lui   $at, %hi(dword_CODE_bss_800799F8)
 /* 06E994 7F039E64 AC2099F8 */  sw    $zero, %lo(dword_CODE_bss_800799F8)($at)
 /* 06E998 7F039E68 461A5482 */  mul.s $f18, $f10, $f26
-/* 06E99C 7F039E6C 3C018008 */  lui   $at, %hi(dword_CODE_bss_800799FC)
-/* 06E9A0 7F039E70 AC2099FC */  sw    $zero, %lo(dword_CODE_bss_800799FC)($at)
+/* 06E99C 7F039E6C 3C018008 */  lui   $at, %hi(gBondViewCutscene)
+/* 06E9A0 7F039E70 AC2099FC */  sw    $zero, %lo(gBondViewCutscene)($at)
 /* 06E9A4 7F039E74 000A4A00 */  sll   $t1, $t2, 8
 /* 06E9A8 7F039E78 3C018008 */  lui   $at, %hi(flt_CODE_bss_80079A00)
 /* 06E9AC 7F039E7C 012C3825 */  or    $a3, $t1, $t4
@@ -8741,7 +11987,7 @@ GetByteS1_ParseCommandByte_SwitchCase:								/*GetCommandByte(cmd)*/
 /* 06A0BC 7F03558C 922E0000 */  lbu   $t6, ($s1) #t6 = byte(s1)
 ParseCommandByte_SwitchCase:
 /* 06A0C0 7F035590 02C02025 */  move  $a0, $s6
-/* 06A0C4 7F035594 2DC100FD */  sltiu $at, $t6, 0xfd				# if Cmd !< AI_CMDS_TOTAL  then 
+/* 06A0C4 7F035594 2DC100FD */  sltiu $at, $t6, 0xfd				# if Cmd !< AI_CMD_COUNT  then 
 /* 06A0C8 7F035598 10201314 */  beqz  $at, GetCmdLength				#    Cmd<<2  goto GetCmdLength
 /* 06A0CC 7F03559C 000E7080 */   sll   $t6, $t6, 2
 /* 06A0D0 7F0355A0 3C018005 */  lui   $at, %hi(jpt_800524F8)
@@ -10846,15 +14092,15 @@ action65_Object_Moved_To_Preset_4:
 /* 06BE10 7F0372E0 000A6080 */  sll   $t4, $t2, 2
 /* 06BE14 7F0372E4 018A6023 */  subu  $t4, $t4, $t2
 /* 06BE18 7F0372E8 000C6080 */  sll   $t4, $t4, 2
-/* 06BE1C 7F0372EC 3C198007 */  lui   $t9, %hi(ptr_0xxxpresets) 
-/* 06BE20 7F0372F0 8F395D18 */  lw    $t9, %lo(ptr_0xxxpresets)($t9)
+/* 06BE1C 7F0372EC 3C198007 */  lui   $t9, %hi(g_chraiCurrentSetup+0x18) 
+/* 06BE20 7F0372F0 8F395D18 */  lw    $t9, %lo(g_chraiCurrentSetup+0x18)($t9)
 /* 06BE24 7F0372F4 018A6023 */  subu  $t4, $t4, $t2
 /* 06BE28 7F0372F8 000C6080 */  sll   $t4, $t4, 2
 /* 06BE2C 7F0372FC 1000000A */  b     .L7F037328
 /* 06BE30 7F037300 01998021 */   addu  $s0, $t4, $t9
 .L7F037304:
-/* 06BE34 7F037304 3C0E8007 */  lui   $t6, %hi(ptr_2xxxpresets) 
-/* 06BE38 7F037308 8DCE5D1C */  lw    $t6, %lo(ptr_2xxxpresets)($t6)
+/* 06BE34 7F037304 3C0E8007 */  lui   $t6, %hi(g_chraiCurrentSetup+0x1C) 
+/* 06BE38 7F037308 8DCE5D1C */  lw    $t6, %lo(g_chraiCurrentSetup+0x1C)($t6)
 /* 06BE3C 7F03730C 00026900 */  sll   $t5, $v0, 4
 /* 06BE40 7F037310 01A26821 */  addu  $t5, $t5, $v0
 /* 06BE44 7F037314 000D6880 */  sll   $t5, $t5, 2
@@ -13012,15 +16258,15 @@ actionC6_EmanateSoundSlotnumFromPresetWithAudibleRV_6:
 /* 06DCC8 7F039198 000AC880 */  sll   $t9, $t2, 2
 /* 06DCCC 7F03919C 032AC823 */  subu  $t9, $t9, $t2
 /* 06DCD0 7F0391A0 0019C880 */  sll   $t9, $t9, 2
-/* 06DCD4 7F0391A4 3C0D8007 */  lui   $t5, %hi(ptr_0xxxpresets) 
-/* 06DCD8 7F0391A8 8DAD5D18 */  lw    $t5, %lo(ptr_0xxxpresets)($t5)
+/* 06DCD4 7F0391A4 3C0D8007 */  lui   $t5, %hi(g_chraiCurrentSetup+0x18) 
+/* 06DCD8 7F0391A8 8DAD5D18 */  lw    $t5, %lo(g_chraiCurrentSetup+0x18)($t5)
 /* 06DCDC 7F0391AC 032AC823 */  subu  $t9, $t9, $t2
 /* 06DCE0 7F0391B0 0019C880 */  sll   $t9, $t9, 2
 /* 06DCE4 7F0391B4 1000000A */  b     .L7F0391E0
 /* 06DCE8 7F0391B8 032D2021 */   addu  $a0, $t9, $t5
 .L7F0391BC:
-/* 06DCEC 7F0391BC 3C0F8007 */  lui   $t7, %hi(ptr_2xxxpresets) 
-/* 06DCF0 7F0391C0 8DEF5D1C */  lw    $t7, %lo(ptr_2xxxpresets)($t7)
+/* 06DCEC 7F0391BC 3C0F8007 */  lui   $t7, %hi(g_chraiCurrentSetup+0x1C) 
+/* 06DCF0 7F0391C0 8DEF5D1C */  lw    $t7, %lo(g_chraiCurrentSetup+0x1C)($t7)
 /* 06DCF4 7F0391C4 00037100 */  sll   $t6, $v1, 4
 /* 06DCF8 7F0391C8 01C37021 */  addu  $t6, $t6, $v1
 /* 06DCFC 7F0391CC 000E7080 */  sll   $t6, $t6, 2
@@ -13283,7 +16529,7 @@ actionD3_Return_From_Camera_Scene_1:
 actionD4_Camera_Looks_At_Bond_From_Preset_3:
 /* 06E094 7F039564 922A0001 */  lbu   $t2, 1($s1)
 /* 06E098 7F039568 922C0002 */  lbu   $t4, 2($s1)
-/* 06E09C 7F03956C 3C0F8007 */  lui   $t7, %hi(ptr_2xxxpresets) 
+/* 06E09C 7F03956C 3C0F8007 */  lui   $t7, %hi(g_chraiCurrentSetup+0x1C) 
 /* 06E0A0 7F039570 000A4A00 */  sll   $t1, $t2, 8
 /* 06E0A4 7F039574 012C1025 */  or    $v0, $t1, $t4
 /* 06E0A8 7F039578 304BFFFF */  andi  $t3, $v0, 0xffff
@@ -13292,8 +16538,8 @@ actionD4_Camera_Looks_At_Bond_From_Preset_3:
 /* 06E0B4 7F039584 01601825 */   move  $v1, $t3
 /* 06E0B8 7F039588 000BC080 */  sll   $t8, $t3, 2
 /* 06E0BC 7F03958C 030BC023 */  subu  $t8, $t8, $t3
-/* 06E0C0 7F039590 3C198007 */  lui   $t9, %hi(ptr_0xxxpresets) 
-/* 06E0C4 7F039594 8F395D18 */  lw    $t9, %lo(ptr_0xxxpresets)($t9)
+/* 06E0C0 7F039590 3C198007 */  lui   $t9, %hi(g_chraiCurrentSetup+0x18) 
+/* 06E0C4 7F039594 8F395D18 */  lw    $t9, %lo(g_chraiCurrentSetup+0x18)($t9)
 /* 06E0C8 7F039598 0018C080 */  sll   $t8, $t8, 2
 /* 06E0CC 7F03959C 030BC023 */  subu  $t8, $t8, $t3
 /* 06E0D0 7F0395A0 0018C080 */  sll   $t8, $t8, 2
@@ -13302,7 +16548,7 @@ actionD4_Camera_Looks_At_Bond_From_Preset_3:
 /* 06E0DC 7F0395AC 1000000B */  b     .L7F0395DC
 /* 06E0E0 7F0395B0 AC2D99F8 */   sw    $t5, %lo(dword_CODE_bss_800799F8)($at)
 .L7F0395B4:
-/* 06E0E4 7F0395B4 8DEF5D1C */  lw    $t7, %lo(ptr_2xxxpresets)($t7)
+/* 06E0E4 7F0395B4 8DEF5D1C */  lw    $t7, %lo(g_chraiCurrentSetup+0x1C)($t7)
 /* 06E0E8 7F0395B8 00037100 */  sll   $t6, $v1, 4
 /* 06E0EC 7F0395BC 01C37021 */  addu  $t6, $t6, $v1
 /* 06E0F0 7F0395C0 000E7080 */  sll   $t6, $t6, 2
@@ -13332,8 +16578,8 @@ actionD5_Go_To_Camera_Position_6:
 /* 06E148 7F039618 01822021 */   addu  $a0, $t4, $v0
 /* 06E14C 7F03961C 3C018008 */  lui   $at, %hi(dword_CODE_bss_800799F8)
 /* 06E150 7F039620 AC2099F8 */  sw    $zero, %lo(dword_CODE_bss_800799F8)($at)
-/* 06E154 7F039624 3C018008 */  lui   $at, %hi(dword_CODE_bss_800799FC)
-/* 06E158 7F039628 AC2299FC */  sw    $v0, %lo(dword_CODE_bss_800799FC)($at)
+/* 06E154 7F039624 3C018008 */  lui   $at, %hi(gBondViewCutscene)
+/* 06E158 7F039628 AC2299FC */  sw    $v0, %lo(gBondViewCutscene)($at)
 /* 06E15C 7F03962C 922B0002 */  lbu   $t3, 2($s1)
 /* 06E160 7F039630 92390003 */  lbu   $t9, 3($s1)
 /* 06E164 7F039634 3C018008 */  lui   $at, %hi(dword_CODE_bss_80079A18)
@@ -13455,15 +16701,15 @@ actionD9_GuardIDMovedToPresetReturnLoopIfSuccessful_5:
 /* 06E30C 7F0397DC 00026880 */  sll   $t5, $v0, 2
 /* 06E310 7F0397E0 01A26823 */  subu  $t5, $t5, $v0
 /* 06E314 7F0397E4 000D6880 */  sll   $t5, $t5, 2
-/* 06E318 7F0397E8 3C0E8007 */  lui   $t6, %hi(ptr_0xxxpresets) 
-/* 06E31C 7F0397EC 8DCE5D18 */  lw    $t6, %lo(ptr_0xxxpresets)($t6)
+/* 06E318 7F0397E8 3C0E8007 */  lui   $t6, %hi(g_chraiCurrentSetup+0x18) 
+/* 06E31C 7F0397EC 8DCE5D18 */  lw    $t6, %lo(g_chraiCurrentSetup+0x18)($t6)
 /* 06E320 7F0397F0 01A26823 */  subu  $t5, $t5, $v0
 /* 06E324 7F0397F4 000D6880 */  sll   $t5, $t5, 2
 /* 06E328 7F0397F8 10000009 */  b     .L7F039820
 /* 06E32C 7F0397FC 01AE1821 */   addu  $v1, $t5, $t6
 .L7F039800:
-/* 06E330 7F039800 3C0A8007 */  lui   $t2, %hi(ptr_2xxxpresets) 
-/* 06E334 7F039804 8D4A5D1C */  lw    $t2, %lo(ptr_2xxxpresets)($t2)
+/* 06E330 7F039800 3C0A8007 */  lui   $t2, %hi(g_chraiCurrentSetup+0x1C) 
+/* 06E334 7F039804 8D4A5D1C */  lw    $t2, %lo(g_chraiCurrentSetup+0x1C)($t2)
 /* 06E338 7F039808 01E27821 */  addu  $t7, $t7, $v0
 /* 06E33C 7F03980C 000F7880 */  sll   $t7, $t7, 2
 /* 06E340 7F039810 3C01FFF5 */  lui   $at, (0xFFF59FC0 >> 16) # lui $at, 0xfff5
@@ -13785,15 +17031,15 @@ actionE6_If_16_Object_And_Preset_Are_In_Same_Room_RVL_5:
 /* 06E7B8 7F039C88 00037880 */  sll   $t7, $v1, 2
 /* 06E7BC 7F039C8C 01E37823 */  subu  $t7, $t7, $v1
 /* 06E7C0 7F039C90 000F7880 */  sll   $t7, $t7, 2
-/* 06E7C4 7F039C94 3C0A8007 */  lui   $t2, %hi(ptr_0xxxpresets) 
-/* 06E7C8 7F039C98 8D4A5D18 */  lw    $t2, %lo(ptr_0xxxpresets)($t2)
+/* 06E7C4 7F039C94 3C0A8007 */  lui   $t2, %hi(g_chraiCurrentSetup+0x18) 
+/* 06E7C8 7F039C98 8D4A5D18 */  lw    $t2, %lo(g_chraiCurrentSetup+0x18)($t2)
 /* 06E7CC 7F039C9C 01E37823 */  subu  $t7, $t7, $v1
 /* 06E7D0 7F039CA0 000F7880 */  sll   $t7, $t7, 2
 /* 06E7D4 7F039CA4 1000000A */  b     .L7F039CD0
 /* 06E7D8 7F039CA8 01EA2021 */   addu  $a0, $t7, $t2
 .L7F039CAC:
-/* 06E7DC 7F039CAC 3C0C8007 */  lui   $t4, %hi(ptr_2xxxpresets) 
-/* 06E7E0 7F039CB0 8D8C5D1C */  lw    $t4, %lo(ptr_2xxxpresets)($t4)
+/* 06E7DC 7F039CAC 3C0C8007 */  lui   $t4, %hi(g_chraiCurrentSetup+0x1C) 
+/* 06E7E0 7F039CB0 8D8C5D1C */  lw    $t4, %lo(g_chraiCurrentSetup+0x1C)($t4)
 /* 06E7E4 7F039CB4 00034900 */  sll   $t1, $v1, 4
 /* 06E7E8 7F039CB8 01234821 */  addu  $t1, $t1, $v1
 /* 06E7EC 7F039CBC 00094880 */  sll   $t1, $t1, 2
@@ -13914,8 +17160,8 @@ actionEE_Cuba_Circular_Camera_Aim_D:
 /* 06E990 7F039E60 3C018008 */  lui   $at, %hi(dword_CODE_bss_800799F8)
 /* 06E994 7F039E64 AC2099F8 */  sw    $zero, %lo(dword_CODE_bss_800799F8)($at)
 /* 06E998 7F039E68 461A5482 */  mul.s $f18, $f10, $f26
-/* 06E99C 7F039E6C 3C018008 */  lui   $at, %hi(dword_CODE_bss_800799FC)
-/* 06E9A0 7F039E70 AC2099FC */  sw    $zero, %lo(dword_CODE_bss_800799FC)($at)
+/* 06E99C 7F039E6C 3C018008 */  lui   $at, %hi(gBondViewCutscene)
+/* 06E9A0 7F039E70 AC2099FC */  sw    $zero, %lo(gBondViewCutscene)($at)
 /* 06E9A4 7F039E74 000A4A00 */  sll   $t1, $t2, 8
 /* 06E9A8 7F039E78 3C018008 */  lui   $at, %hi(flt_CODE_bss_80079A00)
 /* 06E9AC 7F039E7C 012C3825 */  or    $a3, $t1, $t4
@@ -14609,7 +17855,7 @@ GetByteS1_ParseCommandByte_SwitchCase:								/*GetCommandByte(cmd)*/
 /* 06A0BC 7F03558C 922E0000 */  lbu   $t6, ($s1) #t6 = byte(s1)
 ParseCommandByte_SwitchCase:
 /* 06A0C0 7F035590 02C02025 */  move  $a0, $s6
-/* 06A0C4 7F035594 2DC100FD */  sltiu $at, $t6, 0xfd				# if Cmd !< AI_CMDS_TOTAL  then 
+/* 06A0C4 7F035594 2DC100FD */  sltiu $at, $t6, 0xfd				# if Cmd !< AI_CMD_COUNT  then 
 /* 06A0C8 7F035598 10201314 */  beqz  $at, GetCmdLength				#    Cmd<<2  goto GetCmdLength
 /* 06A0CC 7F03559C 000E7080 */   sll   $t6, $t6, 2
 /* 06A0D0 7F0355A0 3C018005 */  lui   $at, %hi(jpt_800524F8)
@@ -16714,15 +19960,15 @@ action65_Object_Moved_To_Preset_4:
 /* 06BE10 7F0372E0 000A6080 */  sll   $t4, $t2, 2
 /* 06BE14 7F0372E4 018A6023 */  subu  $t4, $t4, $t2
 /* 06BE18 7F0372E8 000C6080 */  sll   $t4, $t4, 2
-/* 06BE1C 7F0372EC 3C198007 */  lui   $t9, %hi(ptr_0xxxpresets) 
-/* 06BE20 7F0372F0 8F395D18 */  lw    $t9, %lo(ptr_0xxxpresets)($t9)
+/* 06BE1C 7F0372EC 3C198007 */  lui   $t9, %hi(g_chraiCurrentSetup+0x18) 
+/* 06BE20 7F0372F0 8F395D18 */  lw    $t9, %lo(g_chraiCurrentSetup+0x18)($t9)
 /* 06BE24 7F0372F4 018A6023 */  subu  $t4, $t4, $t2
 /* 06BE28 7F0372F8 000C6080 */  sll   $t4, $t4, 2
 /* 06BE2C 7F0372FC 1000000A */  b     .L7F037328
 /* 06BE30 7F037300 01998021 */   addu  $s0, $t4, $t9
 .L7F037304:
-/* 06BE34 7F037304 3C0E8007 */  lui   $t6, %hi(ptr_2xxxpresets) 
-/* 06BE38 7F037308 8DCE5D1C */  lw    $t6, %lo(ptr_2xxxpresets)($t6)
+/* 06BE34 7F037304 3C0E8007 */  lui   $t6, %hi(g_chraiCurrentSetup+0x1C) 
+/* 06BE38 7F037308 8DCE5D1C */  lw    $t6, %lo(g_chraiCurrentSetup+0x1C)($t6)
 /* 06BE3C 7F03730C 00026900 */  sll   $t5, $v0, 4
 /* 06BE40 7F037310 01A26821 */  addu  $t5, $t5, $v0
 /* 06BE44 7F037314 000D6880 */  sll   $t5, $t5, 2
@@ -18904,15 +22150,15 @@ actionC6_EmanateSoundSlotnumFromPresetWithAudibleRV_6:
 /* 06BC28 7F039238 00196080 */  sll   $t4, $t9, 2
 /* 06BC2C 7F03923C 01996023 */  subu  $t4, $t4, $t9
 /* 06BC30 7F039240 000C6080 */  sll   $t4, $t4, 2
-/* 06BC34 7F039244 3C0B8006 */  lui   $t3, %hi(ptr_0xxxpresets) # $t3, 0x8006
-/* 06BC38 7F039248 8D6B4C58 */  lw    $t3, %lo(ptr_0xxxpresets)($t3)
+/* 06BC34 7F039244 3C0B8006 */  lui   $t3, %hi(g_chraiCurrentSetup+0x18) # $t3, 0x8006
+/* 06BC38 7F039248 8D6B4C58 */  lw    $t3, %lo(g_chraiCurrentSetup+0x18)($t3)
 /* 06BC3C 7F03924C 01996023 */  subu  $t4, $t4, $t9
 /* 06BC40 7F039250 000C6080 */  sll   $t4, $t4, 2
 /* 06BC44 7F039254 1000000A */  b     .L7F039280
 /* 06BC48 7F039258 018B2021 */   addu  $a0, $t4, $t3
 .L7F03925C:
-/* 06BC4C 7F03925C 3C0D8006 */  lui   $t5, %hi(ptr_2xxxpresets) # $t5, 0x8006
-/* 06BC50 7F039260 8DAD4C5C */  lw    $t5, %lo(ptr_2xxxpresets)($t5)
+/* 06BC4C 7F03925C 3C0D8006 */  lui   $t5, %hi(g_chraiCurrentSetup+0x1C) # $t5, 0x8006
+/* 06BC50 7F039260 8DAD4C5C */  lw    $t5, %lo(g_chraiCurrentSetup+0x1C)($t5)
 /* 06BC54 7F039264 0003C100 */  sll   $t8, $v1, 4
 /* 06BC58 7F039268 0303C021 */  addu  $t8, $t8, $v1
 /* 06BC5C 7F03926C 0018C080 */  sll   $t8, $t8, 2
@@ -19183,7 +22429,7 @@ actionD3_Return_From_Camera_Scene_1:
 actionD4_Camera_Looks_At_Bond_From_Preset_3:
 /* 06C014 7F039624 922F0001 */  lbu   $t7, 1($s1)
 /* 06C018 7F039628 92290002 */  lbu   $t1, 2($s1)
-/* 06C01C 7F03962C 3C0E8006 */  lui   $t6, %hi(ptr_2xxxpresets) # $t6, 0x8006
+/* 06C01C 7F03962C 3C0E8006 */  lui   $t6, %hi(g_chraiCurrentSetup+0x1C) # $t6, 0x8006
 /* 06C020 7F039630 000F5200 */  sll   $t2, $t7, 8
 /* 06C024 7F039634 01491025 */  or    $v0, $t2, $t1
 /* 06C028 7F039638 304CFFFF */  andi  $t4, $v0, 0xffff
@@ -19192,8 +22438,8 @@ actionD4_Camera_Looks_At_Bond_From_Preset_3:
 /* 06C034 7F039644 01801825 */   move  $v1, $t4
 /* 06C038 7F039648 000C5880 */  sll   $t3, $t4, 2
 /* 06C03C 7F03964C 016C5823 */  subu  $t3, $t3, $t4
-/* 06C040 7F039650 3C188006 */  lui   $t8, %hi(ptr_0xxxpresets) # $t8, 0x8006
-/* 06C044 7F039654 8F184C58 */  lw    $t8, %lo(ptr_0xxxpresets)($t8)
+/* 06C040 7F039650 3C188006 */  lui   $t8, %hi(g_chraiCurrentSetup+0x18) # $t8, 0x8006
+/* 06C044 7F039654 8F184C58 */  lw    $t8, %lo(g_chraiCurrentSetup+0x18)($t8)
 /* 06C048 7F039658 000B5880 */  sll   $t3, $t3, 2
 /* 06C04C 7F03965C 016C5823 */  subu  $t3, $t3, $t4
 /* 06C050 7F039660 000B5880 */  sll   $t3, $t3, 2
@@ -19202,7 +22448,7 @@ actionD4_Camera_Looks_At_Bond_From_Preset_3:
 /* 06C05C 7F03966C 1000000B */  b     .L7F03969C
 /* 06C060 7F039670 AC2D84D8 */   sw    $t5, %lo(dword_CODE_bss_800799F8)($at)
 .L7F039674:
-/* 06C064 7F039674 8DCE4C5C */  lw    $t6, %lo(ptr_2xxxpresets)($t6)
+/* 06C064 7F039674 8DCE4C5C */  lw    $t6, %lo(g_chraiCurrentSetup+0x1C)($t6)
 /* 06C068 7F039678 0003C900 */  sll   $t9, $v1, 4
 /* 06C06C 7F03967C 0323C821 */  addu  $t9, $t9, $v1
 /* 06C070 7F039680 0019C880 */  sll   $t9, $t9, 2
@@ -19232,8 +22478,8 @@ actionD5_Go_To_Camera_Position_6:
 /* 06C0C8 7F0396D8 01222021 */   addu  $a0, $t1, $v0
 /* 06C0CC 7F0396DC 3C018007 */  lui   $at, %hi(dword_CODE_bss_800799F8) # $at, 0x8007
 /* 06C0D0 7F0396E0 AC2084D8 */  sw    $zero, %lo(dword_CODE_bss_800799F8)($at)
-/* 06C0D4 7F0396E4 3C018007 */  lui   $at, %hi(dword_CODE_bss_800799FC) # $at, 0x8007
-/* 06C0D8 7F0396E8 AC2284DC */  sw    $v0, %lo(dword_CODE_bss_800799FC)($at)
+/* 06C0D4 7F0396E4 3C018007 */  lui   $at, %hi(gBondViewCutscene) # $at, 0x8007
+/* 06C0D8 7F0396E8 AC2284DC */  sw    $v0, %lo(gBondViewCutscene)($at)
 /* 06C0DC 7F0396EC 922C0002 */  lbu   $t4, 2($s1)
 /* 06C0E0 7F0396F0 92380003 */  lbu   $t8, 3($s1)
 /* 06C0E4 7F0396F4 3C018007 */  lui   $at, %hi(dword_CODE_bss_80079A18) # $at, 0x8007
@@ -19355,15 +22601,15 @@ actionD9_GuardIDMovedToPresetReturnLoopIfSuccessful_5:
 /* 06C28C 7F03989C 00026880 */  sll   $t5, $v0, 2
 /* 06C290 7F0398A0 01A26823 */  subu  $t5, $t5, $v0
 /* 06C294 7F0398A4 000D6880 */  sll   $t5, $t5, 2
-/* 06C298 7F0398A8 3C198006 */  lui   $t9, %hi(ptr_0xxxpresets) # $t9, 0x8006
-/* 06C29C 7F0398AC 8F394C58 */  lw    $t9, %lo(ptr_0xxxpresets)($t9)
+/* 06C298 7F0398A8 3C198006 */  lui   $t9, %hi(g_chraiCurrentSetup+0x18) # $t9, 0x8006
+/* 06C29C 7F0398AC 8F394C58 */  lw    $t9, %lo(g_chraiCurrentSetup+0x18)($t9)
 /* 06C2A0 7F0398B0 01A26823 */  subu  $t5, $t5, $v0
 /* 06C2A4 7F0398B4 000D6880 */  sll   $t5, $t5, 2
 /* 06C2A8 7F0398B8 10000009 */  b     .L7F0398E0
 /* 06C2AC 7F0398BC 01B91821 */   addu  $v1, $t5, $t9
 .L7F0398C0:
-/* 06C2B0 7F0398C0 3C0F8006 */  lui   $t7, %hi(ptr_2xxxpresets) # $t7, 0x8006
-/* 06C2B4 7F0398C4 8DEF4C5C */  lw    $t7, %lo(ptr_2xxxpresets)($t7)
+/* 06C2B0 7F0398C0 3C0F8006 */  lui   $t7, %hi(g_chraiCurrentSetup+0x1C) # $t7, 0x8006
+/* 06C2B4 7F0398C4 8DEF4C5C */  lw    $t7, %lo(g_chraiCurrentSetup+0x1C)($t7)
 /* 06C2B8 7F0398C8 01C27021 */  addu  $t6, $t6, $v0
 /* 06C2BC 7F0398CC 000E7080 */  sll   $t6, $t6, 2
 /* 06C2C0 7F0398D0 3C01FFF5 */  lui   $at, (0xFFF59FC0 >> 16) # lui $at, 0xfff5
@@ -19685,15 +22931,15 @@ actionE6_If_16_Object_And_Preset_Are_In_Same_Room_RVL_5:
 /* 06C738 7F039D48 00037080 */  sll   $t6, $v1, 2
 /* 06C73C 7F039D4C 01C37023 */  subu  $t6, $t6, $v1
 /* 06C740 7F039D50 000E7080 */  sll   $t6, $t6, 2
-/* 06C744 7F039D54 3C0F8006 */  lui   $t7, %hi(ptr_0xxxpresets) # $t7, 0x8006
-/* 06C748 7F039D58 8DEF4C58 */  lw    $t7, %lo(ptr_0xxxpresets)($t7)
+/* 06C744 7F039D54 3C0F8006 */  lui   $t7, %hi(g_chraiCurrentSetup+0x18) # $t7, 0x8006
+/* 06C748 7F039D58 8DEF4C58 */  lw    $t7, %lo(g_chraiCurrentSetup+0x18)($t7)
 /* 06C74C 7F039D5C 01C37023 */  subu  $t6, $t6, $v1
 /* 06C750 7F039D60 000E7080 */  sll   $t6, $t6, 2
 /* 06C754 7F039D64 1000000A */  b     .L7F039D90
 /* 06C758 7F039D68 01CF2021 */   addu  $a0, $t6, $t7
 .L7F039D6C:
-/* 06C75C 7F039D6C 3C098006 */  lui   $t1, %hi(ptr_2xxxpresets) # $t1, 0x8006
-/* 06C760 7F039D70 8D294C5C */  lw    $t1, %lo(ptr_2xxxpresets)($t1)
+/* 06C75C 7F039D6C 3C098006 */  lui   $t1, %hi(g_chraiCurrentSetup+0x1C) # $t1, 0x8006
+/* 06C760 7F039D70 8D294C5C */  lw    $t1, %lo(g_chraiCurrentSetup+0x1C)($t1)
 /* 06C764 7F039D74 00035100 */  sll   $t2, $v1, 4
 /* 06C768 7F039D78 01435021 */  addu  $t2, $t2, $v1
 /* 06C76C 7F039D7C 000A5080 */  sll   $t2, $t2, 2
@@ -19814,8 +23060,8 @@ actionEE_Cuba_Circular_Camera_Aim_D:
 /* 06C910 7F039F20 3C018007 */  lui   $at, %hi(dword_CODE_bss_800799F8) # $at, 0x8007
 /* 06C914 7F039F24 AC2084D8 */  sw    $zero, %lo(dword_CODE_bss_800799F8)($at)
 /* 06C918 7F039F28 461A5482 */  mul.s $f18, $f10, $f26
-/* 06C91C 7F039F2C 3C018007 */  lui   $at, %hi(dword_CODE_bss_800799FC) # $at, 0x8007
-/* 06C920 7F039F30 AC2084DC */  sw    $zero, %lo(dword_CODE_bss_800799FC)($at)
+/* 06C91C 7F039F2C 3C018007 */  lui   $at, %hi(gBondViewCutscene) # $at, 0x8007
+/* 06C920 7F039F30 AC2084DC */  sw    $zero, %lo(gBondViewCutscene)($at)
 /* 06C924 7F039F34 000F5200 */  sll   $t2, $t7, 8
 /* 06C928 7F039F38 3C018007 */  lui   $at, %hi(flt_CODE_bss_80079A00) # $at, 0x8007
 /* 06C92C 7F039F3C 01493825 */  or    $a3, $t2, $t1
@@ -20103,7 +23349,7 @@ void chraiUpdateOnscreenPropCount(void)
     s32 i;
     s32 j;
     s32 count;
-    struct PropRecord *prop;
+    PropRecord *prop;
     s32 phi_a0;
     f32 phi_f12;
 
@@ -20113,7 +23359,7 @@ void chraiUpdateOnscreenPropCount(void)
 
     for (; prop != NULL; prop = prop->prev)
     {
-        if ((prop->flags & (PROPFLAG4 | PROPFLAG_ONSCREEN)) == (PROPFLAG4 | PROPFLAG_ONSCREEN))
+        if ((prop->flags & (PROPFLAG_00000004 | PROPFLAG_ONSCREEN)) == (PROPFLAG_00000004 | PROPFLAG_ONSCREEN))
         {
             g_OnScreenPropList[count] = prop;
             count++;
@@ -20128,7 +23374,7 @@ void chraiUpdateOnscreenPropCount(void)
         // removed
     }
 
-    g_LastOnScreenProp = (struct PropRecord *)&g_OnScreenPropList[count];
+    g_LastOnScreenProp = (PropRecord *)&g_OnScreenPropList[count];
     
     for (i=0; i<count; i++)
     {
@@ -20177,9 +23423,9 @@ glabel set_stateflag_0x04_for_posdata
 
 
 
-void propHide(struct PropRecord *prop)
+void propHide(PropRecord *prop)
 {
-    prop->flags = prop->flags & 0xfffb;
+    prop->flags &= ~4;
 }
 
 
@@ -20188,7 +23434,7 @@ void propHide(struct PropRecord *prop)
 
 
 
-struct PropRecord *get_ptr_obj_pos_list_current_entry(void)
+PropRecord *get_ptr_obj_pos_list_current_entry(void)
 {
     return ptr_obj_pos_list_current_entry;
 }
@@ -20237,7 +23483,7 @@ glabel remove_last_obj_pos_data_entry
 
 
 
-void propFree(struct PropRecord *prop)
+void propFree(PropRecord *prop)
 {
     prop->prev = ptr_obj_pos_list_final_entry;
     prop->next = 0x0;
@@ -20319,47 +23565,32 @@ glabel sub_GAME_7F03A4F0
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03A538(void) {
+void sub_GAME_7F03A538(PropRecord *prop)
+{
+    PropRecord *temp_v0;
+    PropRecord *temp_v0_2;
 
+    if (prop == ptr_obj_pos_list_current_entry)
+    {
+        ptr_obj_pos_list_current_entry = prop->prev;
+    }
+    if (prop == ptr_obj_pos_list_first_entry)
+    {
+        ptr_obj_pos_list_first_entry = prop->next;
+    }
+    temp_v0 = prop->prev;
+    if (temp_v0 != 0)
+    {
+        temp_v0->next = prop->next;
+    }
+    temp_v0_2 = prop->next;
+    if (temp_v0_2 != 0)
+    {
+        temp_v0_2->prev = prop->prev;
+    }
+    prop->prev = NULL;
+    prop->next = NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03A538
-/* 06F068 7F03A538 3C028003 */  lui   $v0, %hi(ptr_obj_pos_list_current_entry)
-/* 06F06C 7F03A53C 24420AA0 */  addiu $v0, %lo(ptr_obj_pos_list_current_entry) # addiu $v0, $v0, 0xaa0
-/* 06F070 7F03A540 8C4E0000 */  lw    $t6, ($v0)
-/* 06F074 7F03A544 148E0003 */  bne   $a0, $t6, .L7F03A554
-/* 06F078 7F03A548 00000000 */   nop   
-/* 06F07C 7F03A54C 8C8F0024 */  lw    $t7, 0x24($a0)
-/* 06F080 7F03A550 AC4F0000 */  sw    $t7, ($v0)
-.L7F03A554:
-/* 06F084 7F03A554 3C028003 */  lui   $v0, %hi(ptr_obj_pos_list_first_entry)
-/* 06F088 7F03A558 24420AA4 */  addiu $v0, %lo(ptr_obj_pos_list_first_entry) # addiu $v0, $v0, 0xaa4
-/* 06F08C 7F03A55C 8C580000 */  lw    $t8, ($v0)
-/* 06F090 7F03A560 54980004 */  bnel  $a0, $t8, .L7F03A574
-/* 06F094 7F03A564 8C820024 */   lw    $v0, 0x24($a0)
-/* 06F098 7F03A568 8C990028 */  lw    $t9, 0x28($a0)
-/* 06F09C 7F03A56C AC590000 */  sw    $t9, ($v0)
-/* 06F0A0 7F03A570 8C820024 */  lw    $v0, 0x24($a0)
-.L7F03A574:
-/* 06F0A4 7F03A574 50400004 */  beql  $v0, $zero, .L7F03A588
-/* 06F0A8 7F03A578 8C820028 */   lw    $v0, 0x28($a0)
-/* 06F0AC 7F03A57C 8C880028 */  lw    $t0, 0x28($a0)
-/* 06F0B0 7F03A580 AC480028 */  sw    $t0, 0x28($v0)
-/* 06F0B4 7F03A584 8C820028 */  lw    $v0, 0x28($a0)
-.L7F03A588:
-/* 06F0B8 7F03A588 50400004 */  beql  $v0, $zero, .L7F03A59C
-/* 06F0BC 7F03A58C AC800024 */   sw    $zero, 0x24($a0)
-/* 06F0C0 7F03A590 8C890024 */  lw    $t1, 0x24($a0)
-/* 06F0C4 7F03A594 AC490024 */  sw    $t1, 0x24($v0)
-/* 06F0C8 7F03A598 AC800024 */  sw    $zero, 0x24($a0)
-.L7F03A59C:
-/* 06F0CC 7F03A59C 03E00008 */  jr    $ra
-/* 06F0D0 7F03A5A0 AC800028 */   sw    $zero, 0x28($a0)
-)
-#endif
 
 
 
@@ -20444,7 +23675,7 @@ Gfx *chraiResolveRenderProp(Gfx * arg0, PropRecord *arg1, s32 arg2)
     {
         arg0 = chrobjRenderProp(arg1, arg0, arg2);
     }
-    else if (temp_v0 == PROP_TYPE_EXPLOSTION)
+    else if (temp_v0 == PROP_TYPE_EXPLOSION)
     {
         arg0 = unk09c250RenderPropExplosion(arg1, arg0);
     }
@@ -20479,8 +23710,8 @@ Gfx *chraiResolveRenderProp(Gfx * arg0, PropRecord *arg1, s32 arg2)
 Gfx *sub_GAME_7F03A6F4(Gfx *arg0, s32 roomid, s32 arg2)
 {
     s32 flag;
-    struct PropRecord **pp;
-    struct PropRecord *prop;
+    PropRecord **pp;
+    PropRecord *prop;
     s32 i;
     s32* rp;
     s32 unused2;
@@ -20873,7 +24104,7 @@ glabel sub_GAME_7F03AA44
 /* 06F598 7F03AA68 AFB00018 */  sw    $s0, 0x18($sp)
 /* 06F59C 7F03AA6C 0FC2D20F */  jal   get_room_data_float1
 /* 06F5A0 7F03AA70 AFA40058 */   sw    $a0, 0x58($sp)
-/* 06F5A4 7F03AA74 0FC2D21E */  jal   sub_GAME_7F0B4878
+/* 06F5A4 7F03AA74 0FC2D21E */  jal   bgGetLevelVisibilityScale
 /* 06F5A8 7F03AA78 E7A00034 */   swc1  $f0, 0x34($sp)
 /* 06F5AC 7F03AA7C C6440000 */  lwc1  $f4, ($s2)
 /* 06F5B0 7F03AA80 C6260000 */  lwc1  $f6, ($s1)
@@ -21499,7 +24730,7 @@ glabel chraiDefaultWeaponFireHandler
 /* 06FDFC 7F03B2CC 8FB901AC */   lw    $t9, 0x1ac($sp)
 /* 06FE00 7F03B2D0 0FC2D20F */  jal   get_room_data_float1
 /* 06FE04 7F03B2D4 00000000 */   nop   
-/* 06FE08 7F03B2D8 0FC2D21E */  jal   sub_GAME_7F0B4878
+/* 06FE08 7F03B2D8 0FC2D21E */  jal   bgGetLevelVisibilityScale
 /* 06FE0C 7F03B2DC E7A00048 */   swc1  $f0, 0x48($sp)
 /* 06FE10 7F03B2E0 C7A20048 */  lwc1  $f2, 0x48($sp)
 /* 06FE14 7F03B2E4 46020202 */  mul.s $f8, $f0, $f2
@@ -22560,7 +25791,7 @@ void chraiCheckUseHeldItem(s32 hand)
         }
         else if (item_id == ITEM_SHOTGUN || item_id == ITEM_AUTOSHOT)
         {
-            inc_curplayer_hitcount_with_weapon(item_id, SHOTS_FIRED);
+            inc_curplayer_hitcount_with_weapon(item_id, SHOT_REGISTER_TOTAL);
 
             for (i=0; i<NUMBER_SHOTGUN_BULLETS; i++)
             {
@@ -22577,7 +25808,7 @@ void chraiCheckUseHeldItem(s32 hand)
         }
         else
         {
-            inc_curplayer_hitcount_with_weapon(item_id, SHOTS_FIRED);
+            inc_curplayer_hitcount_with_weapon(item_id, SHOT_REGISTER_TOTAL);
             chraiDefaultWeaponFireHandler(hand);
         }
     }
@@ -22592,17 +25823,57 @@ void chraiCheckUseHeldItem(s32 hand)
 */
 void chraiCheckUseHeldItems(void)
 {
-    chraiCheckUseHeldItem(RIGHT_HAND);
-    chraiCheckUseHeldItem(LEFT_HAND);
+    chraiCheckUseHeldItem(GUNRIGHT);
+    chraiCheckUseHeldItem(GUNLEFT);
 }
 
 
 
 
-
+//todo: find out why this forces 21990 data out of alignment
 #ifdef NONMATCHING
-void sub_GAME_7F03C2BC(void) {
+//https://decomp.me/scratch/QAX0r
+void sub_GAME_7F03C2BC(PropRecord *prop, INV_ITEM_TYPE type) //#MATCH
+{
+    ObjectRecord *propobj;
 
+    if (type == INV_ITEM_WEAPON)
+    {
+        if ((prop->type == PROP_TYPE_WEAPON) || (prop->type == PROP_TYPE_OBJ))
+        {
+            propobj = prop->obj;
+            if (prop->obj->state & 4) //matches only is called directly (not propobj)
+            {
+                prop->timetoregen = 0x4B0;
+                propobj->runtime_bitflags |= 0x800;
+                propobj->runtime_bitflags &= ~4;
+                propobj->state &= ~0x80;
+                propobj->maxdamage = 0.0f;
+                sub_GAME_7F03E18C(prop);
+                propHide(prop);
+                return;
+            }
+        }
+        sub_GAME_7F03E18C(prop);
+        sub_GAME_7F03A538(prop);
+        propHide(prop);
+        propFree(prop);
+    }
+    else if (type == INV_ITEM_PROP)
+    {
+        sub_GAME_7F03E18C(prop);
+        sub_GAME_7F03A538(prop);
+        propHide(prop);
+    }
+    else if (type == INV_ITEM_PICKUP)
+    {
+        sub_GAME_7F03E18C(prop);
+        sub_GAME_7F03A538(prop);
+        propHide(prop);
+        sub_GAME_7F04C044(prop);
+        sub_GAME_7F040CF0(prop);
+        attachNewChild(prop, get_curplayer_positiondata());
+    }
 }
 #else
 
@@ -23717,7 +26988,7 @@ glabel determing_type_of_object_and_detection
 */
 void chraiGetPropRoomIds(PropRecord *self, s32 *roomids)
 {
-    struct StandTile *stan;
+    StandTile *stan;
     s32 i;
 
     stan = self->stan;
@@ -23815,7 +27086,7 @@ void chraiGetCollisionBoundsWithoutY(PropRecord *arg0, struct rect4f **arg1, s32
 /**
  * Address 0x7F03CCD8.
 */
-s32 sub_GAME_7F03CCD8(struct coord3d *arg0, struct rect4f *arg1, s32 arg2)
+s32 sub_GAME_7F03CCD8(coord3d *arg0, struct rect4f *arg1, s32 arg2)
 {
     f32 diff;
     s32 i;
@@ -23931,7 +27202,7 @@ glabel sub_GAME_7F03CFE8
 /* 071B54 7F03D024 00027080 */  sll   $t6, $v0, 2
 /* 071B58 7F03D028 3C048008 */  lui   $a0, %hi(g_playerPointers)
 /* 071B5C 7F03D02C 008E2021 */  addu  $a0, $a0, $t6
-/* 071B60 7F03D030 0FC225DE */  jal   bondviewGetPlayerClippingHeight
+/* 071B60 7F03D030 0FC225DE */  jal   bondviewGetPlayerStanHeight
 /* 071B64 7F03D034 8C849EE0 */   lw    $a0, %lo(g_playerPointers)($a0)
 /* 071B68 7F03D038 10000004 */  b     .L7F03D04C
 /* 071B6C 7F03D03C 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -23950,51 +27221,22 @@ glabel sub_GAME_7F03CFE8
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03D058(void) {
 
+void sub_GAME_7F03D058(PropRecord *prop, bool unset) //#MATCH
+{
+    if (prop->type == PROP_TYPE_CHR)
+    {
+        set_or_unset_GUARDdata_flag(prop->chr, unset);
+    }
+    else if (prop->type == PROP_TYPE_VIEWER)
+    {
+        bondviewUpdateGuardTankFlagsRelated(prop, unset);
+    }
+    else if ((prop->type == PROP_TYPE_OBJ) || (prop->type == PROP_TYPE_DOOR) || (prop->type == PROP_TYPE_WEAPON))
+    {
+        sub_GAME_7F04F218(prop, unset);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03D058
-/* 071B88 7F03D058 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 071B8C 7F03D05C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 071B90 7F03D060 90820000 */  lbu   $v0, ($a0)
-/* 071B94 7F03D064 24010003 */  li    $at, 3
-/* 071B98 7F03D068 00803025 */  move  $a2, $a0
-/* 071B9C 7F03D06C 54410006 */  bnel  $v0, $at, .L7F03D088
-/* 071BA0 7F03D070 24010006 */   li    $at, 6
-/* 071BA4 7F03D074 0FC07D7A */  jal   set_or_unset_GUARDdata_flag
-/* 071BA8 7F03D078 8C840004 */   lw    $a0, 4($a0)
-/* 071BAC 7F03D07C 10000012 */  b     .L7F03D0C8
-/* 071BB0 7F03D080 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 071BB4 7F03D084 24010006 */  li    $at, 6
-.L7F03D088:
-/* 071BB8 7F03D088 54410006 */  bnel  $v0, $at, .L7F03D0A4
-/* 071BBC 7F03D08C 24010001 */   li    $at, 1
-/* 071BC0 7F03D090 0FC2280F */  jal   bondviewUpdateGuardTankFlagsRelated
-/* 071BC4 7F03D094 00C02025 */   move  $a0, $a2
-/* 071BC8 7F03D098 1000000B */  b     .L7F03D0C8
-/* 071BCC 7F03D09C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 071BD0 7F03D0A0 24010001 */  li    $at, 1
-.L7F03D0A4:
-/* 071BD4 7F03D0A4 10410005 */  beq   $v0, $at, .L7F03D0BC
-/* 071BD8 7F03D0A8 24010002 */   li    $at, 2
-/* 071BDC 7F03D0AC 10410003 */  beq   $v0, $at, .L7F03D0BC
-/* 071BE0 7F03D0B0 24010004 */   li    $at, 4
-/* 071BE4 7F03D0B4 54410004 */  bnel  $v0, $at, .L7F03D0C8
-/* 071BE8 7F03D0B8 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F03D0BC:
-/* 071BEC 7F03D0BC 0FC13C86 */  jal   sub_GAME_7F04F218
-/* 071BF0 7F03D0C0 00C02025 */   move  $a0, $a2
-/* 071BF4 7F03D0C4 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F03D0C8:
-/* 071BF8 7F03D0C8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 071BFC 7F03D0CC 03E00008 */  jr    $ra
-/* 071C00 7F03D0D0 00000000 */   nop   
-)
-#endif
 
 
 
@@ -25028,8 +28270,48 @@ glabel sub_GAME_7F03DCB8
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03DD9C(void) {
+void sub_GAME_7F03DD9C(PropRecord *arg0, s16 arg1)
+{
+    s16 temp_s0;
+    s16 temp_s0_2;
+    s32 temp_v0;
+    s32 phi_s0;
+    s32 phi_a2;
+    s32 phi_a2_2;
 
+    phi_a2 = -1;
+    phi_a2_2 = -1;
+    if (arg1 >= 0)
+    {
+        temp_s0 = *(ptr_room_lookup_buffer_maybe + (arg1 * 2));
+        phi_s0 = temp_s0;
+        if (temp_s0 >= 0)
+        {
+loop_3:
+            if (sub_GAME_7F03DBCC((arg0 - pos_data_entry) / 52, phi_s0, phi_a2) == 0)
+            {
+                temp_s0_2 = (dword_CODE_bss_8007161C + (phi_s0 << 5))->unk1E;
+                phi_s0 = temp_s0_2;
+                phi_a2 = phi_s0;
+                phi_a2_2 = phi_s0;
+                if (temp_s0_2 < 0)
+                {
+                    goto block_5;
+                }
+                goto loop_3;
+            }
+        }
+        else
+        {
+block_5:
+            temp_v0 = sub_GAME_7F03DCB8(arg1, phi_a2_2, phi_a2_2);
+            if (temp_v0 >= 0)
+            {
+                sub_GAME_7F03DBCC((arg0 - pos_data_entry) / 52, temp_v0);
+            }
+        }
+    }
+}
 }
 #else
 GLOBAL_ASM(
@@ -25107,9 +28389,186 @@ glabel sub_GAME_7F03DD9C
 
 
 
+void sub_GAME_7F03DE94(PropRecord *arg0, s16 room);
 
 #ifdef NONMATCHING
-void sub_GAME_7F03DE94(void) {
+void sub_GAME_7F03DE94(PropRecord *arg0, s16 arg1)
+{
+    s16 *temp_s0;
+    s16 *temp_t5_3;
+    s16 temp_s1;
+    s16 temp_s1_2;
+    s16 temp_s1_3;
+    s16 temp_s1_4;
+    s16 temp_s1_5;
+    s16 temp_t5;
+    s16 temp_t5_2;
+    s16 temp_v1;
+    s16 temp_v1_2;
+    s32 temp_lo;
+    s32 temp_s0_2;
+    s32 temp_t2;
+    s32 temp_v0;
+    u32 temp_t5_4;
+    u32 temp_t5_5;
+    u32 phi_t5;
+    s16 phi_v1;
+    s16 *phi_s0;
+    s32 phi_v0;
+    s16 *phi_s0_2;
+    s32 phi_v0_2;
+    s32 phi_s0_3;
+    s32 phi_v0_3;
+    s16 *phi_t5_2;
+    s32 phi_v0_4;
+    s16 *phi_t5_3;
+    s32 phi_v0_5;
+    s16 *phi_t5_4;
+    s32 phi_v0_6;
+    s32 phi_v0_7;
+    s32 phi_t1;
+    s32 phi_a2;
+
+    phi_t1 = -1;
+    phi_a2 = 0;
+    if (arg1 >= 0)
+    {
+        temp_t2 = arg1 * 2;
+        temp_v1 = *(ptr_room_lookup_buffer_maybe + temp_t2);
+        phi_v1 = temp_v1;
+        if (temp_v1 >= 0)
+        {
+            temp_lo = (arg0 - pos_data_entry) / 52;
+            phi_t5 = dword_CODE_bss_8007161C;
+loop_3:
+            temp_s0 = phi_t5 + (phi_v1 << 5);
+            temp_s1 = *temp_s0;
+            phi_s0 = temp_s0;
+            phi_v0 = 0;
+            if (temp_lo == temp_s1)
+            {
+                *temp_s0 = -1;
+                phi_s0 = dword_CODE_bss_8007161C + (phi_v1 << 5);
+                phi_a2 = 1;
+            }
+            else if (temp_s1 >= 0)
+            {
+                phi_v0 = 1;
+            }
+            temp_t5 = phi_s0->unk2;
+            phi_s0_2 = phi_s0;
+            phi_v0_2 = phi_v0;
+            if (temp_lo == temp_t5)
+            {
+                phi_s0->unk2 = -1;
+                phi_s0_2 = dword_CODE_bss_8007161C + (phi_v1 << 5);
+                phi_a2 = 1;
+            }
+            else if ((phi_v0 == 0) && (temp_t5 >= 0))
+            {
+                phi_v0_2 = 1;
+            }
+            temp_t5_2 = phi_s0_2->unk4;
+            phi_v0_3 = phi_v0_2;
+            if (temp_lo == temp_t5_2)
+            {
+                phi_s0_2->unk4 = -1;
+                phi_a2 = 1;
+            }
+            else if ((phi_v0_2 == 0) && (temp_t5_2 >= 0))
+            {
+                phi_v0_3 = 1;
+            }
+            phi_s0_3 = 6;
+            do
+            {
+                temp_t5_3 = dword_CODE_bss_8007161C + (phi_v1 << 5) + phi_s0_3;
+                temp_s1_2 = *temp_t5_3;
+                phi_t5_2 = temp_t5_3;
+                phi_v0_4 = phi_v0_3;
+                if (temp_lo == temp_s1_2)
+                {
+                    *temp_t5_3 = -1;
+                    phi_t5_2 = dword_CODE_bss_8007161C + (phi_v1 << 5) + phi_s0_3;
+                    phi_a2 = 1;
+                }
+                else if ((phi_v0_3 == 0) && (temp_s1_2 >= 0))
+                {
+                    phi_v0_4 = 1;
+                }
+                temp_s1_3 = phi_t5_2->unk2;
+                phi_t5_3 = phi_t5_2;
+                phi_v0_5 = phi_v0_4;
+                if (temp_lo == temp_s1_3)
+                {
+                    phi_t5_2->unk2 = -1;
+                    phi_t5_3 = dword_CODE_bss_8007161C + (phi_v1 << 5) + phi_s0_3;
+                    phi_a2 = 1;
+                }
+                else if ((phi_v0_4 == 0) && (temp_s1_3 >= 0))
+                {
+                    phi_v0_5 = 1;
+                }
+                temp_s1_4 = phi_t5_3->unk4;
+                phi_t5_4 = phi_t5_3;
+                phi_v0_6 = phi_v0_5;
+                if (temp_lo == temp_s1_4)
+                {
+                    phi_t5_3->unk4 = -1;
+                    phi_t5_4 = dword_CODE_bss_8007161C + (phi_v1 << 5) + phi_s0_3;
+                    phi_a2 = 1;
+                }
+                else if ((phi_v0_5 == 0) && (temp_s1_4 >= 0))
+                {
+                    phi_v0_6 = 1;
+                }
+                temp_s1_5 = phi_t5_4->unk6;
+                temp_s0_2 = phi_s0_3 + 8;
+                phi_s0_3 = temp_s0_2;
+                phi_v0_7 = phi_v0_6;
+                if (temp_lo == temp_s1_5)
+                {
+                    phi_t5_4->unk6 = -1;
+                    phi_a2 = 1;
+                }
+                else if ((phi_v0_6 == 0) && (temp_s1_5 >= 0))
+                {
+                    phi_v0_7 = 1;
+                }
+                phi_v0_3 = phi_v0_7;
+            } while (temp_s0_2 != 0x1E);
+            if (phi_v0_7 == 0)
+            {
+                temp_v0 = phi_v1 << 5;
+                *(dword_CODE_bss_8007161C + temp_v0) = -2;
+                if (phi_t1 >= 0)
+                {
+                    temp_t5_4 = dword_CODE_bss_8007161C;
+                    (temp_t5_4 + (phi_t1 << 5))->unk1E = (temp_t5_4 + temp_v0)->unk1E;
+                }
+                else
+                {
+                    *(ptr_room_lookup_buffer_maybe + temp_t2) = (dword_CODE_bss_8007161C + temp_v0)->unk1E;
+                }
+            }
+            else
+            {
+                phi_t1 = phi_v1;
+            }
+            if (phi_a2 == 0)
+            {
+                temp_t5_5 = dword_CODE_bss_8007161C;
+                temp_v1_2 = (temp_t5_5 + (phi_v1 << 5))->unk1E;
+                phi_t5 = temp_t5_5;
+                phi_v1 = temp_v1_2;
+                if (temp_v1_2 >= 0)
+                {
+                    goto loop_3;
+                }
+            }
+        }
+    }
+}
 
 }
 #else
@@ -25357,119 +28816,45 @@ glabel sub_GAME_7F03E134
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03E18C(void) {
     // Duplicate of the below function with a small extension.
-}
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03E18C
-/* 072CBC 7F03E18C 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 072CC0 7F03E190 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 072CC4 7F03E194 AFB30020 */  sw    $s3, 0x20($sp)
-/* 072CC8 7F03E198 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 072CCC 7F03E19C AFB10018 */  sw    $s1, 0x18($sp)
-/* 072CD0 7F03E1A0 AFB00014 */  sw    $s0, 0x14($sp)
-/* 072CD4 7F03E1A4 9090002C */  lbu   $s0, 0x2c($a0)
-/* 072CD8 7F03E1A8 241200FF */  li    $s2, 255
-/* 072CDC 7F03E1AC 00809825 */  move  $s3, $a0
-/* 072CE0 7F03E1B0 1250000A */  beq   $s2, $s0, .L7F03E1DC
-/* 072CE4 7F03E1B4 2491002C */   addiu $s1, $a0, 0x2c
-/* 072CE8 7F03E1B8 00102C00 */  sll   $a1, $s0, 0x10
-.L7F03E1BC:
-/* 072CEC 7F03E1BC 00057403 */  sra   $t6, $a1, 0x10
-/* 072CF0 7F03E1C0 01C02825 */  move  $a1, $t6
-/* 072CF4 7F03E1C4 0FC0F7A5 */  jal   sub_GAME_7F03DE94
-/* 072CF8 7F03E1C8 02602025 */   move  $a0, $s3
-/* 072CFC 7F03E1CC 92300001 */  lbu   $s0, 1($s1)
-/* 072D00 7F03E1D0 26310001 */  addiu $s1, $s1, 1
-/* 072D04 7F03E1D4 5650FFF9 */  bnel  $s2, $s0, .L7F03E1BC
-/* 072D08 7F03E1D8 00102C00 */   sll   $a1, $s0, 0x10
-.L7F03E1DC:
-/* 072D0C 7F03E1DC 926F0001 */  lbu   $t7, 1($s3)
-/* 072D10 7F03E1E0 241900FF */  li    $t9, 255
-/* 072D14 7F03E1E4 31F80010 */  andi  $t8, $t7, 0x10
-/* 072D18 7F03E1E8 57000003 */  bnezl $t8, .L7F03E1F8
-/* 072D1C 7F03E1EC 8FBF0024 */   lw    $ra, 0x24($sp)
-/* 072D20 7F03E1F0 A279002C */  sb    $t9, 0x2c($s3)
-/* 072D24 7F03E1F4 8FBF0024 */  lw    $ra, 0x24($sp)
-.L7F03E1F8:
-/* 072D28 7F03E1F8 8FB00014 */  lw    $s0, 0x14($sp)
-/* 072D2C 7F03E1FC 8FB10018 */  lw    $s1, 0x18($sp)
-/* 072D30 7F03E200 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 072D34 7F03E204 8FB30020 */  lw    $s3, 0x20($sp)
-/* 072D38 7F03E208 03E00008 */  jr    $ra
-/* 072D3C 7F03E20C 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
-/*
-Main missing these kinds of instructions:
-
-- sll   $a1, $s0, 0x10
-- sra   $t6, $a1, 0x10
-..
-- sll   $a1, $s0, 0x10
-
-So it looks like a conversion from u32 to u16, but we're reading a u8?
-I tried u32 room but no joy.
-*/
-void sub_GAME_7F03E210(struct PropRecord *posData)
+void sub_GAME_7F03E18C(PropRecord *prop)
 {
-  u8 room;
-  u8 *roomIter;
-  
-  roomIter = posData->rooms;
-  room = roomIter[0];
+    u8  room;
+    u8 *roomIter;
 
-  while (room != 0xff) {
-    FUN_7f03dd9c(posData,(u16)room);
-    roomIter += 1;
-    room = *roomIter;
-  }
-  return;
+    roomIter = prop->rooms;
+    room     = roomIter[0];
+
+    while (room != (u8)-1)
+    {
+        sub_GAME_7F03DE94(prop, room);
+        roomIter += 1;
+        room = *roomIter;
+    }
+    if (!(prop->flags & 0x10))
+    {
+        prop->rooms[0] = -1;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03E210
-/* 072D40 7F03E210 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 072D44 7F03E214 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 072D48 7F03E218 AFB30020 */  sw    $s3, 0x20($sp)
-/* 072D4C 7F03E21C AFB2001C */  sw    $s2, 0x1c($sp)
-/* 072D50 7F03E220 AFB10018 */  sw    $s1, 0x18($sp)
-/* 072D54 7F03E224 AFB00014 */  sw    $s0, 0x14($sp)
-/* 072D58 7F03E228 9090002C */  lbu   $s0, 0x2c($a0)
-/* 072D5C 7F03E22C 241300FF */  li    $s3, 255
-/* 072D60 7F03E230 00809025 */  move  $s2, $a0
-/* 072D64 7F03E234 1270000A */  beq   $s3, $s0, .L7F03E260
-/* 072D68 7F03E238 2491002C */   addiu $s1, $a0, 0x2c
-/* 072D6C 7F03E23C 00102C00 */  sll   $a1, $s0, 0x10
-.L7F03E240:
-/* 072D70 7F03E240 00057403 */  sra   $t6, $a1, 0x10
-/* 072D74 7F03E244 01C02825 */  move  $a1, $t6
-/* 072D78 7F03E248 0FC0F767 */  jal   sub_GAME_7F03DD9C
-/* 072D7C 7F03E24C 02402025 */   move  $a0, $s2
-/* 072D80 7F03E250 92300001 */  lbu   $s0, 1($s1)
-/* 072D84 7F03E254 26310001 */  addiu $s1, $s1, 1
-/* 072D88 7F03E258 5670FFF9 */  bnel  $s3, $s0, .L7F03E240
-/* 072D8C 7F03E25C 00102C00 */   sll   $a1, $s0, 0x10
-.L7F03E260:
-/* 072D90 7F03E260 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 072D94 7F03E264 8FB00014 */  lw    $s0, 0x14($sp)
-/* 072D98 7F03E268 8FB10018 */  lw    $s1, 0x18($sp)
-/* 072D9C 7F03E26C 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 072DA0 7F03E270 8FB30020 */  lw    $s3, 0x20($sp)
-/* 072DA4 7F03E274 03E00008 */  jr    $ra
-/* 072DA8 7F03E278 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
+
+
+
+
+void sub_GAME_7F03E210(PropRecord *prop)
+{
+    u8  room;
+    u8 *roomIter;
+
+    roomIter = prop->rooms;
+    room     = roomIter[0];
+
+    while (room != (u8)-1)
+    {
+        sub_GAME_7F03DD9C(prop, room);
+        roomIter += 1;
+        room = *roomIter;
+    }
+}
 
 
 
@@ -26013,69 +29398,27 @@ glabel sub_GAME_7F03E830
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03E85C(void) {
 
+f32 sub_GAME_7F03E85C(ModelNode_BoundingBoxRecord *modelBoundingBox)
+{
+    return modelBoundingBox->Bounds.xmin;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03E85C
-/* 07338C 7F03E85C 03E00008 */  jr    $ra
-/* 073390 7F03E860 C4800004 */   lwc1  $f0, 4($a0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F03E864(void) {
-
+f32 sub_GAME_7F03E864(ModelNode_BoundingBoxRecord *modelBoundingBox)
+{
+    return modelBoundingBox->Bounds.ymin;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03E864
-/* 073394 7F03E864 03E00008 */  jr    $ra
-/* 073398 7F03E868 C480000C */   lwc1  $f0, 0xc($a0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F03E86C(void) {
-
+f32 sub_GAME_7F03E86C(ModelNode_BoundingBoxRecord *modelBoundingBox)
+{
+    return modelBoundingBox->Bounds.ymax;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03E86C
-/* 07339C 7F03E86C 03E00008 */  jr    $ra
-/* 0733A0 7F03E870 C4800010 */   lwc1  $f0, 0x10($a0)
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F03E874(void) {
-
+f32 sub_GAME_7F03E874(ModelNode_BoundingBoxRecord *modelBoundingBox)
+{
+    return modelBoundingBox->Bounds.zmin;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03E874
-/* 0733A4 7F03E874 03E00008 */  jr    $ra
-/* 0733A8 7F03E878 C4800014 */   lwc1  $f0, 0x14($a0)
-)
-#endif
+
+
 
 
 
@@ -27557,8 +30900,33 @@ glabel scan_position_data_table_for_normal_object_at_preset
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03FAB0(void) {
+ObjectRecord* sub_GAME_7F03FAB0(PadRecord* pad, s32 RoomID)
+{
+    s32 sp38;
+    s32 sp34;
+    PropRecord* temp_s0;
+    PropRecord* temp_v0;
+    PropRecord* phi_s0;
 
+    temp_v0 = get_ptr_obj_pos_list_current_entry(pad);
+    phi_s0 = temp_v0;
+    if (temp_v0 != 0)
+    {
+loop_2:
+        if ((phi_s0->type == 1) && (RoomID == phi_s0->stan->unk3) && (sub_GAME_7F03CCB0(phi_s0, &sp38, &sp34), (sub_GAME_7F03CCD8(pad, sp38, sp34) != 0)))
+        {
+            return phi_s0->chr;
+        }
+        temp_s0 = phi_s0->prev;
+        phi_s0 = temp_s0;
+        if (temp_s0 == 0)
+        {
+            goto block_7;
+        }
+        goto loop_2;
+    }
+block_7:
+    return NULL;
 }
 #else
 GLOBAL_ASM(

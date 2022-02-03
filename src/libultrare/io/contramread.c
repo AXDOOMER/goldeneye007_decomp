@@ -1,7 +1,7 @@
-#include <os_internal.h>
-#include <rcp.h>
-#include "src/libultra/io/controller.h"
-#include "src/libultra/io/siint.h"
+#include <PR/os_internal.h>
+#include <PR/rcp.h>
+#include <io/controller.h>
+#include <io/siint.h>
 
 static void __osPackRamReadData(int channel, u16 address);
 s32 __osContRamRead(OSMesgQueue *mq, int channel, u16 address, u8 *buffer)

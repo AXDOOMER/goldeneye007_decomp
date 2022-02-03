@@ -1,8 +1,8 @@
-#include "ultra64.h"
-#include "game/debugmenu_handler.h"
-#include "game/initgamedata.h"
-#include "boss.h"
-#include "fr.h"
+#include <ultra64.h>
+#include "debugmenu_handler.h"
+#include "initgamedata.h"
+#include <boss.h>
+#include <fr.h>
 
 #if defined(LEFTOVERDEBUG)
 
@@ -10,7 +10,7 @@
 //D:80036BA0
 u32 D_80036BA0 = 0;
 //D:80036BA4
-s32 mcm_column_groupings[] = 
+s32 g_DebugMenuOffsets[] = 
 {
        8, 0x13, 0x1E, 0x2B, 
     0x32, 0x39, 0x45, 0x4D, 
@@ -18,7 +18,7 @@ s32 mcm_column_groupings[] =
 };
 
 //D:80036BC8
-struct mcm_layout mcm_onscreen_positions[] = {
+struct mcm_layout g_DebugMenuPositions[] = {
     {8, 5},
     {8, 6},
     {8, 7},
@@ -27,6 +27,7 @@ struct mcm_layout mcm_onscreen_positions[] = {
     {8, 0xA},
     {8, 0xB},
     {8, 0xC},
+
     {0x19, 5},
     {0x19, 6},
     {0x19, 7},
@@ -38,6 +39,7 @@ struct mcm_layout mcm_onscreen_positions[] = {
     {0x19, 0xD},
     {0x19, 0xE},
     {0x19, 0xF},
+
     {0x28, 5},
     {0x28, 6},
     {0x28, 7},
@@ -49,6 +51,7 @@ struct mcm_layout mcm_onscreen_positions[] = {
     {0x28, 0xD},
     {0x28, 0xE},
     {0x28, 0xF},
+
     {0x39, 5},
     {0x39, 6},
     {0x39, 7},
@@ -62,6 +65,7 @@ struct mcm_layout mcm_onscreen_positions[] = {
     {0x39, 0xF},
     {0x39, 0x10},
     {0x39, 0x11},
+
     {8, 0x14},
     {8, 0x15},
     {8, 0x16},
@@ -69,6 +73,7 @@ struct mcm_layout mcm_onscreen_positions[] = {
     {8, 0x18},
     {8, 0x19},
     {8, 0x1A},
+
     {0x19, 0x14},
     {0x19, 0x15},
     {0x19, 0x16},
@@ -76,6 +81,7 @@ struct mcm_layout mcm_onscreen_positions[] = {
     {0x19, 0x18},
     {0x19, 0x19},
     {0x19, 0x1A},
+
     {0x28, 0x14},
     {0x28, 0x15},
     {0x28, 0x16},
@@ -88,6 +94,7 @@ struct mcm_layout mcm_onscreen_positions[] = {
     {0x28, 0x1D},
     {0x28, 0x1E},
     {0x28, 0x1F},
+
     {0x39, 0x14},
     {0x39, 0x15},
     {0x39, 0x16},
@@ -108,6 +115,7 @@ char *mcm_strings[] = {
      "scale",
      "play title",
      "bond die",
+
      "select anim",
      "gun pos",
      "flash colour",
@@ -119,6 +127,7 @@ char *mcm_strings[] = {
      "collisions",
      "all guns",
      "max ammo",
+
      "display speed",
      "background",
      "props",
@@ -130,6 +139,7 @@ char *mcm_strings[] = {
      "port inf",
      "port approx",
      "pr room loads",
+
      "show mem use",
      "show mem bars",
      "grab rgb",
@@ -143,6 +153,7 @@ char *mcm_strings[] = {
      "replay ramrom",
      "save ramrom",
      "load ramrom",
+
      "auto y aim",
      "auto x aim",
      "007",
@@ -150,6 +161,7 @@ char *mcm_strings[] = {
      "all",
      "fast",
      "objectives",
+
      "marg top",
      "marg bot",
      "marg left",
@@ -157,6 +169,7 @@ char *mcm_strings[] = {
      "marg reset",
      "screen size",
      "screen pos",
+
      "show patrols",
      "intro",
      "intro edit",
@@ -169,6 +182,7 @@ char *mcm_strings[] = {
      "profile",
      "obj load",
      "weapon load",
+
      "joy2 sky edit",
      "joy2 hits edit",
      "joy2 detail edit",
@@ -184,9 +198,9 @@ s32 debug_render_raster = 2;
 //D:80036F68
 s32 debug_freeze_processing = 2;
 //D:80036F6C
-s32 debug_mode = 2;
+s32 g_DebugMode = 2;
 //D:80036F70
-s32 debHighlightedOption = 2;
+s32 g_DebugHighlightedOption = 2;
 //D:80036F74
 s32 memusage_display_flag = FALSE;
 //D:80036F78
@@ -274,19 +288,19 @@ u32 dword_D_80036FE8[] = {
 //D:80036FF8
 s32 show_debug_menu_flag = 0;
 //D:80036FFC
-s32 grab_rgb_screenshot_flag = 0;
+s32 g_DebugScreenshotRgb = 0;
 //D:80037000
-s32 grab_jpeg_screenshot_flag = 0;
+s32 g_DebugScreenshotJpg = 0;
 //D:80037004
-struct coord3d player_pos_x = {0};
+coord3d player_pos_x = {0};
 
 #endif
 
 
-void display_debug_menu_text_onscreen(void)
+void debugmenuUpdate(void)
 {
     #if defined(LEFTOVERDEBUG)
-    init_debug_menu_values(&mcm_strings, &mcm_onscreen_positions, &mcm_column_groupings);
+    debmenuSetMenu(&mcm_strings, &g_DebugMenuPositions, &g_DebugMenuOffsets);
     #endif
 }
 
@@ -294,8 +308,8 @@ void display_debug_menu_text_onscreen(void)
 void debmenuHandleMoveView(void)
 {
     sub_GAME_7F0916F4();
-    debHighlightedOption = get_highlighted_debug_option();
-    debug_render_raster = debug_freeze_processing = debHighlightedOption;
+    g_DebugHighlightedOption = get_highlighted_debug_option();
+    debug_render_raster = debug_freeze_processing = g_DebugHighlightedOption;
 }
 #endif
 
@@ -303,8 +317,8 @@ void debmenuHandleMoveView(void)
 void debmenuHandleStanView(void)
 {
     maybe_solo_intro_camera_handler();
-    debHighlightedOption = get_highlighted_debug_option();
-    debug_render_raster = debug_freeze_processing = debHighlightedOption;
+    g_DebugHighlightedOption = get_highlighted_debug_option();
+    debug_render_raster = debug_freeze_processing = g_DebugHighlightedOption;
 }
 #endif
 
@@ -312,8 +326,8 @@ void debmenuHandleStanView(void)
 void debmenuHandleBondView(void)
 {
     maybe_solo_intro_camera_handler();
-    debHighlightedOption = get_highlighted_debug_option();
-    debug_render_raster = debug_freeze_processing = debHighlightedOption;
+    g_DebugHighlightedOption = get_highlighted_debug_option();
+    debug_render_raster = debug_freeze_processing = g_DebugHighlightedOption;
 }
 #endif
 
@@ -344,28 +358,28 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
 //    f32 tempz;
 //    f32 tempy;
     s32 debug_profile_flag;
-    struct PropRecord *playerprop;
+    PropRecord *playerprop;
 
 
-    if (grab_rgb_screenshot_flag != 0)
+    if (g_DebugScreenshotRgb != 0)
     {
-        grab_rgb_screenshot_flag++;
-        if ((grab_rgb_screenshot_flag ^ 3) == 0)
+        g_DebugScreenshotRgb++;
+        if ((g_DebugScreenshotRgb ^ 3) == 0)
         {
             indyGrabRgb32bit();
-            grab_rgb_screenshot_flag = 0;
+            g_DebugScreenshotRgb = 0;
             viSetColorMode16Bit();
             osViBlack(0U);
         }
     }
 
-    if (grab_jpeg_screenshot_flag != 0)
+    if (g_DebugScreenshotJpg != 0)
     {
-        grab_jpeg_screenshot_flag++;
-        if ((grab_jpeg_screenshot_flag ^ 3) == 0)
+        g_DebugScreenshotJpg++;
+        if ((g_DebugScreenshotJpg ^ 3) == 0)
         {
             indyGrabJpg32bit();
-            grab_jpeg_screenshot_flag = 0;
+            g_DebugScreenshotJpg = 0;
             viSetColorMode16Bit();
             osViBlack(0U);
         }
@@ -387,38 +401,38 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
     else
     {
 
-        if (debug_mode != -2U)
+        if (g_DebugMode != -2U)
         {
-            debHighlightedOption = debug_mode;
-            debug_mode = -2U;
+            g_DebugHighlightedOption = g_DebugMode;
+            g_DebugMode = -2U;
         }
         button_pressed = (s32) button_pressed;
         if ((button_pressed & L_JPAD) != 0)
         {
-            gotoLeftDebugOption(debug_mode);
-            debug_mode = -2U;
+            gotoLeftDebugOption(g_DebugMode);
+            g_DebugMode = -2U;
         }
 
         if ((button_pressed & R_JPAD) != 0)
         {
-            gotoRightDebugOption(debug_mode);
-            debug_mode = -2U;
+            gotoRightDebugOption(g_DebugMode);
+            g_DebugMode = -2U;
         }
 
         if ((button_pressed & U_JPAD) != 0)
         {
-            gotoAboveDebugOption(debug_mode);
-            debug_mode = -2U;
+            gotoAboveDebugOption(g_DebugMode);
+            g_DebugMode = -2U;
         }
 
         if ((button_pressed & D_JPAD) != 0)
         {
-            gotoBelowDebugOption(debug_mode);
-            debug_mode = -2U;
+            gotoBelowDebugOption(g_DebugMode);
+            g_DebugMode = -2U;
         }
         if ((button_pressed & START_BUTTON|A_BUTTON) != 0)
         {
-            switch (get_highlighted_debug_option(debug_mode)) {
+            switch (get_highlighted_debug_option(g_DebugMode)) {
             case 0: // move view
                 debmenuHandleMoveView();
                 break;
@@ -429,25 +443,25 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
                 debmenuHandleBondView();
                 break;
             case 3: // level
-                debHighlightedOption = get_highlighted_debug_option();
+                g_DebugHighlightedOption = get_highlighted_debug_option();
                 break;
             case 4: // region
-                debHighlightedOption = get_highlighted_debug_option();
+                g_DebugHighlightedOption = get_highlighted_debug_option();
                 break;
             case 5: // scale
-                debHighlightedOption = get_highlighted_debug_option();
+                g_DebugHighlightedOption = get_highlighted_debug_option();
                 break;
             case 8: // select anim
-                debHighlightedOption = get_highlighted_debug_option();
+                g_DebugHighlightedOption = get_highlighted_debug_option();
                 break;
             case 9: // gun pos
-                debHighlightedOption = get_highlighted_debug_option();
+                g_DebugHighlightedOption = get_highlighted_debug_option();
                 break;
             case 10: // flash colour
-                debHighlightedOption = get_highlighted_debug_option();
+                g_DebugHighlightedOption = get_highlighted_debug_option();
                 break;
             case 11: // hit colour
-                debHighlightedOption = get_highlighted_debug_option();
+                g_DebugHighlightedOption = get_highlighted_debug_option();
                 break;
 
             //case 50: //marg top
@@ -456,13 +470,13 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
             //case 53: //marg right
             //case 54: //marg reset
             case 55: // screen size
-                debHighlightedOption = get_highlighted_debug_option();
+                g_DebugHighlightedOption = get_highlighted_debug_option();
                 break;
             case 56: // screen pos
-                debHighlightedOption = get_highlighted_debug_option();
+                g_DebugHighlightedOption = get_highlighted_debug_option();
                 break;
             case 12: // music
-                debHighlightedOption = get_highlighted_debug_option();
+                g_DebugHighlightedOption = get_highlighted_debug_option();
                 break;
             case 26: // port close
             case 27: // port inf
@@ -470,7 +484,7 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
                 debug_portal_flag ^= 1;
                 break;
             case 13: // sfx
-                debHighlightedOption = get_highlighted_debug_option();
+                g_DebugHighlightedOption = get_highlighted_debug_option();
                 break;
             case 14: // invincible
                 set_bondata_invincible_flag(get_bondata_invincible_flag() == 0);
@@ -540,12 +554,12 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
                 bossMemBarsFlagToggle();
                 break;
             case 32: // grab rgb
-                grab_rgb_screenshot_flag = 1;
+                g_DebugScreenshotRgb = 1;
                 osViBlack(1U);
                 viSetColorMode32Bit();
                 break;
             case 33: // grab jpeg
-                grab_jpeg_screenshot_flag = 1;
+                g_DebugScreenshotJpg = 1;
                 osViBlack(1U);
                 viSetColorMode32Bit();
                 break;
@@ -634,7 +648,7 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
                 }
                 break;
             case 62: // gun key pos
-                debHighlightedOption = get_highlighted_debug_option();
+                g_DebugHighlightedOption = get_highlighted_debug_option();
 
                 break;
             case 64: // chr num
@@ -656,11 +670,11 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
                 debug_explosioninfo_flag ^= 1;
                 break;
             case 73: // magic fog
-                debHighlightedOption = get_highlighted_debug_option();
+                g_DebugHighlightedOption = get_highlighted_debug_option();
 
                 break;
             case 76: // fog
-                debHighlightedOption = get_highlighted_debug_option();
+                g_DebugHighlightedOption = get_highlighted_debug_option();
 
                 break;
             case 74: // gun watch pos
@@ -687,7 +701,7 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
                 debug_weapon_load_table();
                 break;
             case 59: // intro edit
-                debHighlightedOption = get_highlighted_debug_option();
+                g_DebugHighlightedOption = get_highlighted_debug_option();
 
                 break;
             }
@@ -811,8 +825,8 @@ glabel jpt_80055830
 .text
 glabel debug_menu_processor
 /* 0C50D0 7F0905A0 27BDFFA0 */  addiu $sp, $sp, -0x60
-/* 0C50D4 7F0905A4 3C038003 */  lui   $v1, %hi(grab_rgb_screenshot_flag)
-/* 0C50D8 7F0905A8 8C636FFC */  lw    $v1, %lo(grab_rgb_screenshot_flag)($v1)
+/* 0C50D4 7F0905A4 3C038003 */  lui   $v1, %hi(g_DebugScreenshotRgb)
+/* 0C50D8 7F0905A8 8C636FFC */  lw    $v1, %lo(g_DebugScreenshotRgb)($v1)
 /* 0C50DC 7F0905AC AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0C50E0 7F0905B0 AFA40060 */  sw    $a0, 0x60($sp)
 /* 0C50E4 7F0905B4 AFA50064 */  sw    $a1, 0x64($sp)
@@ -821,39 +835,39 @@ glabel debug_menu_processor
 /* 0C50F0 7F0905C0 AFA7006C */   sw    $a3, 0x6c($sp)
 /* 0C50F4 7F0905C4 38620003 */  xori  $v0, $v1, 3
 /* 0C50F8 7F0905C8 24630001 */  addiu $v1, $v1, 1
-/* 0C50FC 7F0905CC 3C018003 */  lui   $at, %hi(grab_rgb_screenshot_flag)
+/* 0C50FC 7F0905CC 3C018003 */  lui   $at, %hi(g_DebugScreenshotRgb)
 /* 0C5100 7F0905D0 14400008 */  bnez  $v0, .L7F0905F4
-/* 0C5104 7F0905D4 AC236FFC */   sw    $v1, %lo(grab_rgb_screenshot_flag)($at)
+/* 0C5104 7F0905D4 AC236FFC */   sw    $v1, %lo(g_DebugScreenshotRgb)($at)
 /* 0C5108 7F0905D8 0C0012ED */  jal   indyGrabRgb32bit
 /* 0C510C 7F0905DC 00000000 */   nop   
-/* 0C5110 7F0905E0 3C018003 */  lui   $at, %hi(grab_rgb_screenshot_flag)
+/* 0C5110 7F0905E0 3C018003 */  lui   $at, %hi(g_DebugScreenshotRgb)
 /* 0C5114 7F0905E4 0C000F00 */  jal   viSetColorMode16Bit
-/* 0C5118 7F0905E8 AC206FFC */   sw    $zero, %lo(grab_rgb_screenshot_flag)($at)
+/* 0C5118 7F0905E8 AC206FFC */   sw    $zero, %lo(g_DebugScreenshotRgb)($at)
 /* 0C511C 7F0905EC 0C0038B4 */  jal   osViBlack
 /* 0C5120 7F0905F0 00002025 */   move  $a0, $zero
 .L7F0905F4:
-/* 0C5124 7F0905F4 3C038003 */  lui   $v1, %hi(grab_jpeg_screenshot_flag)
-/* 0C5128 7F0905F8 8C637000 */  lw    $v1, %lo(grab_jpeg_screenshot_flag)($v1)
-/* 0C512C 7F0905FC 3C018003 */  lui   $at, %hi(grab_jpeg_screenshot_flag)
+/* 0C5124 7F0905F4 3C038003 */  lui   $v1, %hi(g_DebugScreenshotJpg)
+/* 0C5128 7F0905F8 8C637000 */  lw    $v1, %lo(g_DebugScreenshotJpg)($v1)
+/* 0C512C 7F0905FC 3C018003 */  lui   $at, %hi(g_DebugScreenshotJpg)
 /* 0C5130 7F090600 1060000B */  beqz  $v1, .L7F090630
 /* 0C5134 7F090604 38620003 */   xori  $v0, $v1, 3
 /* 0C5138 7F090608 24630001 */  addiu $v1, $v1, 1
 /* 0C513C 7F09060C 14400008 */  bnez  $v0, .L7F090630
-/* 0C5140 7F090610 AC237000 */   sw    $v1, %lo(grab_jpeg_screenshot_flag)($at)
+/* 0C5140 7F090610 AC237000 */   sw    $v1, %lo(g_DebugScreenshotJpg)($at)
 /* 0C5144 7F090614 0C001235 */  jal   indyGrabJpg32bit
 /* 0C5148 7F090618 00000000 */   nop   
-/* 0C514C 7F09061C 3C018003 */  lui   $at, %hi(grab_jpeg_screenshot_flag)
+/* 0C514C 7F09061C 3C018003 */  lui   $at, %hi(g_DebugScreenshotJpg)
 /* 0C5150 7F090620 0C000F00 */  jal   viSetColorMode16Bit
-/* 0C5154 7F090624 AC207000 */   sw    $zero, %lo(grab_jpeg_screenshot_flag)($at)
+/* 0C5154 7F090624 AC207000 */   sw    $zero, %lo(g_DebugScreenshotJpg)($at)
 /* 0C5158 7F090628 0C0038B4 */  jal   osViBlack
 /* 0C515C 7F09062C 00002025 */   move  $a0, $zero
 .L7F090630:
 /* 0C5160 7F090630 3C0E8003 */  lui   $t6, %hi(show_debug_menu_flag) 
 /* 0C5164 7F090634 8DCE6FF8 */  lw    $t6, %lo(show_debug_menu_flag)($t6)
-/* 0C5168 7F090638 3C048003 */  lui   $a0, %hi(debug_mode)
+/* 0C5168 7F090638 3C048003 */  lui   $a0, %hi(g_DebugMode)
 /* 0C516C 7F09063C 3C018003 */  lui   $at, %hi(show_debug_menu_flag)
 /* 0C5170 7F090640 15C00010 */  bnez  $t6, .L7F090684
-/* 0C5174 7F090644 24846F6C */   addiu $a0, %lo(debug_mode) # addiu $a0, $a0, 0x6f6c
+/* 0C5174 7F090644 24846F6C */   addiu $a0, %lo(g_DebugMode) # addiu $a0, $a0, 0x6f6c
 /* 0C5178 7F090648 97A4006A */  lhu   $a0, 0x6a($sp)
 /* 0C517C 7F09064C 30830008 */  andi  $v1, $a0, 8
 /* 0C5180 7F090650 0003102B */  sltu  $v0, $zero, $v1
@@ -874,10 +888,10 @@ glabel debug_menu_processor
 .L7F090684:
 /* 0C51B4 7F090684 8C820000 */  lw    $v0, ($a0)
 /* 0C51B8 7F090688 2403FFFE */  li    $v1, -2
-/* 0C51BC 7F09068C 3C018003 */  lui   $at, %hi(debHighlightedOption)
+/* 0C51BC 7F09068C 3C018003 */  lui   $at, %hi(g_DebugHighlightedOption)
 /* 0C51C0 7F090690 50620004 */  beql  $v1, $v0, .L7F0906A4
 /* 0C51C4 7F090694 97B9006E */   lhu   $t9, 0x6e($sp)
-/* 0C51C8 7F090698 AC226F70 */  sw    $v0, %lo(debHighlightedOption)($at)
+/* 0C51C8 7F090698 AC226F70 */  sw    $v0, %lo(g_DebugHighlightedOption)($at)
 /* 0C51CC 7F09069C AC830000 */  sw    $v1, ($a0)
 /* 0C51D0 7F0906A0 97B9006E */  lhu   $t9, 0x6e($sp)
 .L7F0906A4:
@@ -886,8 +900,8 @@ glabel debug_menu_processor
 /* 0C51DC 7F0906AC AFB90018 */   sw    $t9, 0x18($sp)
 /* 0C51E0 7F0906B0 0FC240E7 */  jal   gotoLeftDebugOption
 /* 0C51E4 7F0906B4 00000000 */   nop   
-/* 0C51E8 7F0906B8 3C048003 */  lui   $a0, %hi(debug_mode)
-/* 0C51EC 7F0906BC 24846F6C */  addiu $a0, %lo(debug_mode) # addiu $a0, $a0, 0x6f6c
+/* 0C51E8 7F0906B8 3C048003 */  lui   $a0, %hi(g_DebugMode)
+/* 0C51EC 7F0906BC 24846F6C */  addiu $a0, %lo(g_DebugMode) # addiu $a0, $a0, 0x6f6c
 /* 0C51F0 7F0906C0 2403FFFE */  li    $v1, -2
 /* 0C51F4 7F0906C4 AC830000 */  sw    $v1, ($a0)
 .L7F0906C8:
@@ -897,8 +911,8 @@ glabel debug_menu_processor
 /* 0C5204 7F0906D4 8FAB0018 */   lw    $t3, 0x18($sp)
 /* 0C5208 7F0906D8 0FC240B0 */  jal   gotoRightDebugOption
 /* 0C520C 7F0906DC 00000000 */   nop   
-/* 0C5210 7F0906E0 3C048003 */  lui   $a0, %hi(debug_mode)
-/* 0C5214 7F0906E4 24846F6C */  addiu $a0, %lo(debug_mode) # addiu $a0, $a0, 0x6f6c
+/* 0C5210 7F0906E0 3C048003 */  lui   $a0, %hi(g_DebugMode)
+/* 0C5214 7F0906E4 24846F6C */  addiu $a0, %lo(g_DebugMode) # addiu $a0, $a0, 0x6f6c
 /* 0C5218 7F0906E8 2403FFFE */  li    $v1, -2
 /* 0C521C 7F0906EC AC830000 */  sw    $v1, ($a0)
 /* 0C5220 7F0906F0 8FAB0018 */  lw    $t3, 0x18($sp)
@@ -908,8 +922,8 @@ glabel debug_menu_processor
 /* 0C522C 7F0906FC 8FAD0018 */   lw    $t5, 0x18($sp)
 /* 0C5230 7F090700 0FC24072 */  jal   gotoAboveDebugOption
 /* 0C5234 7F090704 00000000 */   nop   
-/* 0C5238 7F090708 3C048003 */  lui   $a0, %hi(debug_mode)
-/* 0C523C 7F09070C 24846F6C */  addiu $a0, %lo(debug_mode) # addiu $a0, $a0, 0x6f6c
+/* 0C5238 7F090708 3C048003 */  lui   $a0, %hi(g_DebugMode)
+/* 0C523C 7F09070C 24846F6C */  addiu $a0, %lo(g_DebugMode) # addiu $a0, $a0, 0x6f6c
 /* 0C5240 7F090710 2403FFFE */  li    $v1, -2
 /* 0C5244 7F090714 AC830000 */  sw    $v1, ($a0)
 /* 0C5248 7F090718 8FAD0018 */  lw    $t5, 0x18($sp)
@@ -919,8 +933,8 @@ glabel debug_menu_processor
 /* 0C5254 7F090724 8FAF0018 */   lw    $t7, 0x18($sp)
 /* 0C5258 7F090728 0FC24092 */  jal   gotoBelowDebugOption
 /* 0C525C 7F09072C 00000000 */   nop   
-/* 0C5260 7F090730 3C048003 */  lui   $a0, %hi(debug_mode)
-/* 0C5264 7F090734 24846F6C */  addiu $a0, %lo(debug_mode) # addiu $a0, $a0, 0x6f6c
+/* 0C5260 7F090730 3C048003 */  lui   $a0, %hi(g_DebugMode)
+/* 0C5264 7F090734 24846F6C */  addiu $a0, %lo(g_DebugMode) # addiu $a0, $a0, 0x6f6c
 /* 0C5268 7F090738 2403FFFE */  li    $v1, -2
 /* 0C526C 7F09073C AC830000 */  sw    $v1, ($a0)
 /* 0C5270 7F090740 8FAF0018 */  lw    $t7, 0x18($sp)
@@ -956,63 +970,63 @@ debug_bondview:
 debug_level:
 /* 0C52D8 7F0907A8 0FC2406C */  jal   get_highlighted_debug_option
 /* 0C52DC 7F0907AC 00000000 */   nop   
-/* 0C52E0 7F0907B0 3C018003 */  lui   $at, %hi(debHighlightedOption)
+/* 0C52E0 7F0907B0 3C018003 */  lui   $at, %hi(g_DebugHighlightedOption)
 /* 0C52E4 7F0907B4 100001AF */  b     .L7F090E74
-/* 0C52E8 7F0907B8 AC226F70 */   sw    $v0, %lo(debHighlightedOption)($at)
+/* 0C52E8 7F0907B8 AC226F70 */   sw    $v0, %lo(g_DebugHighlightedOption)($at)
 .L7F0907BC:
 /* 0C52EC 7F0907BC 0FC2406C */  jal   get_highlighted_debug_option
 /* 0C52F0 7F0907C0 00000000 */   nop   
-/* 0C52F4 7F0907C4 3C018003 */  lui   $at, %hi(debHighlightedOption)
+/* 0C52F4 7F0907C4 3C018003 */  lui   $at, %hi(g_DebugHighlightedOption)
 /* 0C52F8 7F0907C8 100001AA */  b     .L7F090E74
-/* 0C52FC 7F0907CC AC226F70 */   sw    $v0, %lo(debHighlightedOption)($at)
+/* 0C52FC 7F0907CC AC226F70 */   sw    $v0, %lo(g_DebugHighlightedOption)($at)
 debug_scale:
 /* 0C5300 7F0907D0 0FC2406C */  jal   get_highlighted_debug_option
 /* 0C5304 7F0907D4 00000000 */   nop   
-/* 0C5308 7F0907D8 3C018003 */  lui   $at, %hi(debHighlightedOption)
+/* 0C5308 7F0907D8 3C018003 */  lui   $at, %hi(g_DebugHighlightedOption)
 /* 0C530C 7F0907DC 100001A5 */  b     .L7F090E74
-/* 0C5310 7F0907E0 AC226F70 */   sw    $v0, %lo(debHighlightedOption)($at)
+/* 0C5310 7F0907E0 AC226F70 */   sw    $v0, %lo(g_DebugHighlightedOption)($at)
 debug_selectanim:
 /* 0C5314 7F0907E4 0FC2406C */  jal   get_highlighted_debug_option
 /* 0C5318 7F0907E8 00000000 */   nop   
-/* 0C531C 7F0907EC 3C018003 */  lui   $at, %hi(debHighlightedOption)
+/* 0C531C 7F0907EC 3C018003 */  lui   $at, %hi(g_DebugHighlightedOption)
 /* 0C5320 7F0907F0 100001A0 */  b     .L7F090E74
-/* 0C5324 7F0907F4 AC226F70 */   sw    $v0, %lo(debHighlightedOption)($at)
+/* 0C5324 7F0907F4 AC226F70 */   sw    $v0, %lo(g_DebugHighlightedOption)($at)
 debug_gunpos:
 /* 0C5328 7F0907F8 0FC2406C */  jal   get_highlighted_debug_option
 /* 0C532C 7F0907FC 00000000 */   nop   
-/* 0C5330 7F090800 3C018003 */  lui   $at, %hi(debHighlightedOption)
+/* 0C5330 7F090800 3C018003 */  lui   $at, %hi(g_DebugHighlightedOption)
 /* 0C5334 7F090804 1000019B */  b     .L7F090E74
-/* 0C5338 7F090808 AC226F70 */   sw    $v0, %lo(debHighlightedOption)($at)
+/* 0C5338 7F090808 AC226F70 */   sw    $v0, %lo(g_DebugHighlightedOption)($at)
 debug_flashcolor:
 /* 0C533C 7F09080C 0FC2406C */  jal   get_highlighted_debug_option
 /* 0C5340 7F090810 00000000 */   nop   
-/* 0C5344 7F090814 3C018003 */  lui   $at, %hi(debHighlightedOption)
+/* 0C5344 7F090814 3C018003 */  lui   $at, %hi(g_DebugHighlightedOption)
 /* 0C5348 7F090818 10000196 */  b     .L7F090E74
-/* 0C534C 7F09081C AC226F70 */   sw    $v0, %lo(debHighlightedOption)($at)
+/* 0C534C 7F09081C AC226F70 */   sw    $v0, %lo(g_DebugHighlightedOption)($at)
 debug_hitcolor:
 /* 0C5350 7F090820 0FC2406C */  jal   get_highlighted_debug_option
 /* 0C5354 7F090824 00000000 */   nop   
-/* 0C5358 7F090828 3C018003 */  lui   $at, %hi(debHighlightedOption)
+/* 0C5358 7F090828 3C018003 */  lui   $at, %hi(g_DebugHighlightedOption)
 /* 0C535C 7F09082C 10000191 */  b     .L7F090E74
-/* 0C5360 7F090830 AC226F70 */   sw    $v0, %lo(debHighlightedOption)($at)
+/* 0C5360 7F090830 AC226F70 */   sw    $v0, %lo(g_DebugHighlightedOption)($at)
 .L7F090834:
 /* 0C5364 7F090834 0FC2406C */  jal   get_highlighted_debug_option
 /* 0C5368 7F090838 00000000 */   nop   
-/* 0C536C 7F09083C 3C018003 */  lui   $at, %hi(debHighlightedOption)
+/* 0C536C 7F09083C 3C018003 */  lui   $at, %hi(g_DebugHighlightedOption)
 /* 0C5370 7F090840 1000018C */  b     .L7F090E74
-/* 0C5374 7F090844 AC226F70 */   sw    $v0, %lo(debHighlightedOption)($at)
+/* 0C5374 7F090844 AC226F70 */   sw    $v0, %lo(g_DebugHighlightedOption)($at)
 debug_screenpos:
 /* 0C5378 7F090848 0FC2406C */  jal   get_highlighted_debug_option
 /* 0C537C 7F09084C 00000000 */   nop   
-/* 0C5380 7F090850 3C018003 */  lui   $at, %hi(debHighlightedOption)
+/* 0C5380 7F090850 3C018003 */  lui   $at, %hi(g_DebugHighlightedOption)
 /* 0C5384 7F090854 10000187 */  b     .L7F090E74
-/* 0C5388 7F090858 AC226F70 */   sw    $v0, %lo(debHighlightedOption)($at)
+/* 0C5388 7F090858 AC226F70 */   sw    $v0, %lo(g_DebugHighlightedOption)($at)
 debug_music:
 /* 0C538C 7F09085C 0FC2406C */  jal   get_highlighted_debug_option
 /* 0C5390 7F090860 00000000 */   nop   
-/* 0C5394 7F090864 3C018003 */  lui   $at, %hi(debHighlightedOption)
+/* 0C5394 7F090864 3C018003 */  lui   $at, %hi(g_DebugHighlightedOption)
 /* 0C5398 7F090868 10000182 */  b     .L7F090E74
-/* 0C539C 7F09086C AC226F70 */   sw    $v0, %lo(debHighlightedOption)($at)
+/* 0C539C 7F09086C AC226F70 */   sw    $v0, %lo(g_DebugHighlightedOption)($at)
 portal_close_inf_approx:
 /* 0C53A0 7F090870 3C028003 */  lui   $v0, %hi(debug_portal_flag)
 /* 0C53A4 7F090874 24426FD4 */  addiu $v0, %lo(debug_portal_flag) # addiu $v0, $v0, 0x6fd4
@@ -1023,9 +1037,9 @@ portal_close_inf_approx:
 debug_sfx:
 /* 0C53B8 7F090888 0FC2406C */  jal   get_highlighted_debug_option
 /* 0C53BC 7F09088C 00000000 */   nop   
-/* 0C53C0 7F090890 3C018003 */  lui   $at, %hi(debHighlightedOption)
+/* 0C53C0 7F090890 3C018003 */  lui   $at, %hi(g_DebugHighlightedOption)
 /* 0C53C4 7F090894 10000177 */  b     .L7F090E74
-/* 0C53C8 7F090898 AC226F70 */   sw    $v0, %lo(debHighlightedOption)($at)
+/* 0C53C8 7F090898 AC226F70 */   sw    $v0, %lo(g_DebugHighlightedOption)($at)
 debug_invincible:
 /* 0C53CC 7F09089C 0FC227D6 */  jal   get_bondata_invincible_flag
 /* 0C53D0 7F0908A0 00000000 */   nop   
@@ -1184,8 +1198,8 @@ debug_showmembars:
 /* 0C55E4 7F090AB4 8FB80018 */   lw    $t8, 0x18($sp)
 debug_grabrgb:
 /* 0C55E8 7F090AB8 24030001 */  li    $v1, 1
-/* 0C55EC 7F090ABC 3C018003 */  lui   $at, %hi(grab_rgb_screenshot_flag)
-/* 0C55F0 7F090AC0 AC236FFC */  sw    $v1, %lo(grab_rgb_screenshot_flag)($at)
+/* 0C55EC 7F090ABC 3C018003 */  lui   $at, %hi(g_DebugScreenshotRgb)
+/* 0C55F0 7F090AC0 AC236FFC */  sw    $v1, %lo(g_DebugScreenshotRgb)($at)
 /* 0C55F4 7F090AC4 0C0038B4 */  jal   osViBlack
 /* 0C55F8 7F090AC8 24040001 */   li    $a0, 1
 /* 0C55FC 7F090ACC 0C000F04 */  jal   viSetColorMode32Bit
@@ -1194,8 +1208,8 @@ debug_grabrgb:
 /* 0C5608 7F090AD8 8FB80018 */   lw    $t8, 0x18($sp)
 debug_grabjpeg:
 /* 0C560C 7F090ADC 24030001 */  li    $v1, 1
-/* 0C5610 7F090AE0 3C018003 */  lui   $at, %hi(grab_jpeg_screenshot_flag)
-/* 0C5614 7F090AE4 AC237000 */  sw    $v1, %lo(grab_jpeg_screenshot_flag)($at)
+/* 0C5610 7F090AE0 3C018003 */  lui   $at, %hi(g_DebugScreenshotJpg)
+/* 0C5614 7F090AE4 AC237000 */  sw    $v1, %lo(g_DebugScreenshotJpg)($at)
 /* 0C5618 7F090AE8 0C0038B4 */  jal   osViBlack
 /* 0C561C 7F090AEC 24040001 */   li    $a0, 1
 /* 0C5620 7F090AF0 0C000F04 */  jal   viSetColorMode32Bit
@@ -1359,9 +1373,9 @@ debug_worldpos:
 debug_chrkeypos:
 /* 0C5848 7F090D18 0FC2406C */  jal   get_highlighted_debug_option
 /* 0C584C 7F090D1C 00000000 */   nop   
-/* 0C5850 7F090D20 3C018003 */  lui   $at, %hi(debHighlightedOption)
+/* 0C5850 7F090D20 3C018003 */  lui   $at, %hi(g_DebugHighlightedOption)
 /* 0C5854 7F090D24 10000053 */  b     .L7F090E74
-/* 0C5858 7F090D28 AC226F70 */   sw    $v0, %lo(debHighlightedOption)($at)
+/* 0C5858 7F090D28 AC226F70 */   sw    $v0, %lo(g_DebugHighlightedOption)($at)
 debug_chrnum:
 /* 0C585C 7F090D2C 3C028003 */  lui   $v0, %hi(debug_chrnum_flag)
 /* 0C5860 7F090D30 24426FB8 */  addiu $v0, %lo(debug_chrnum_flag) # addiu $v0, $v0, 0x6fb8
@@ -1407,15 +1421,15 @@ debug_explosioninfo:
 debug_magicfog:
 /* 0C58EC 7F090DBC 0FC2406C */  jal   get_highlighted_debug_option
 /* 0C58F0 7F090DC0 00000000 */   nop   
-/* 0C58F4 7F090DC4 3C018003 */  lui   $at, %hi(debHighlightedOption)
+/* 0C58F4 7F090DC4 3C018003 */  lui   $at, %hi(g_DebugHighlightedOption)
 /* 0C58F8 7F090DC8 1000002A */  b     .L7F090E74
-/* 0C58FC 7F090DCC AC226F70 */   sw    $v0, %lo(debHighlightedOption)($at)
+/* 0C58FC 7F090DCC AC226F70 */   sw    $v0, %lo(g_DebugHighlightedOption)($at)
 debug_fog:
 /* 0C5900 7F090DD0 0FC2406C */  jal   get_highlighted_debug_option
 /* 0C5904 7F090DD4 00000000 */   nop   
-/* 0C5908 7F090DD8 3C018003 */  lui   $at, %hi(debHighlightedOption)
+/* 0C5908 7F090DD8 3C018003 */  lui   $at, %hi(g_DebugHighlightedOption)
 /* 0C590C 7F090DDC 10000025 */  b     .L7F090E74
-/* 0C5910 7F090DE0 AC226F70 */   sw    $v0, %lo(debHighlightedOption)($at)
+/* 0C5910 7F090DE0 AC226F70 */   sw    $v0, %lo(g_DebugHighlightedOption)($at)
 debug_gunwatchpos:
 /* 0C5914 7F090DE4 3C028003 */  lui   $v0, %hi(debug_gunwatchpos_flags)
 /* 0C5918 7F090DE8 24426FBC */  addiu $v0, %lo(debug_gunwatchpos_flags) # addiu $v0, $v0, 0x6fbc
@@ -1457,8 +1471,8 @@ debug_weaponload:
 debug_introedit:
 /* 0C5994 7F090E64 0FC2406C */  jal   get_highlighted_debug_option
 /* 0C5998 7F090E68 00000000 */   nop   
-/* 0C599C 7F090E6C 3C018003 */  lui   $at, %hi(debHighlightedOption)
-/* 0C59A0 7F090E70 AC226F70 */  sw    $v0, %lo(debHighlightedOption)($at)
+/* 0C599C 7F090E6C 3C018003 */  lui   $at, %hi(g_DebugHighlightedOption)
+/* 0C59A0 7F090E70 AC226F70 */  sw    $v0, %lo(g_DebugHighlightedOption)($at)
 def_7F090770:
 .L7F090E74:
 /* 0C59A4 7F090E74 8FB80018 */  lw    $t8, 0x18($sp)
@@ -1529,7 +1543,7 @@ s32 get_debug_freeze_processing(void) {
 
 s32 getDebugMode(void) {
 #if defined(LEFTOVERDEBUG)
-    return debug_mode;
+    return g_DebugMode;
 #else
     return 2;
 #endif
@@ -1537,7 +1551,7 @@ s32 getDebugMode(void) {
 
 void setDebugMode(void) {
 #if defined(LEFTOVERDEBUG)
-    debug_mode = debHighlightedOption;
+    g_DebugMode = g_DebugHighlightedOption;
 #endif
 }
 

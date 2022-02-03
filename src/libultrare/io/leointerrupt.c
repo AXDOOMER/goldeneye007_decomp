@@ -1,9 +1,9 @@
-#include <os_internal.h>
-#include <rcp.h>
+#include <PR/os_internal.h>
+#include <PR/rcp.h>
 #include <bstring.h>
-#include "src/libultra/os/osint.h"
-#include "src/libultra/io/piint.h"
-#include "src/libultrare/libultrare.h"
+#include <os/osint.h>
+#include <io/piint.h>
+#include "../libultrare.h"
 
 #ifdef VERSION_EU
 

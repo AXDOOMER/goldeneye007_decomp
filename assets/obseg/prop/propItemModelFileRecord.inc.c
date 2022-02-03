@@ -1,5 +1,5 @@
 ItemModelFileRecord PitemZ_entries[] = {
-    #include "assets/obseg/prop/alarm1/propFileRecord.inc.c"
+    #include <assets/obseg/prop/alarm1/propFileRecord.inc.c>
     PROPFILERECORD(alarm2, 0.1)
     PROPFILERECORD(explosionbit, 0.1)
     PROPFILERECORD(ammo_crate1, 0.1)

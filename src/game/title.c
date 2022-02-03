@@ -1,19 +1,21 @@
-#include "include/PR/gbi.h"
-#include "include/PR/gu.h"
-#include "include/PR/os.h"
-#include "assets/font_dl.h"
-#include "ultra64.h"
-#include "bondgame.h"
-#include "fr.h"
-#include "macro.h"
+#include <ultra64.h>
+#include <PR/gbi.h>
+#include <PR/gu.h>
+#include <PR/os.h>
+#include <assets/font_dl.h>
+#include <bondgame.h>
+#include <fr.h>
+#include <macro.h>
 #include "matrixmath.h"
-#include "ramrom.h"
-#include "game/blood_animation.h"
-#include "game/chr.h"
-#include "game/chr_b.h"
-#include "game/math_floor.h"
-#include "game/title.h"
-#include "game/unk_01B240.h"
+#include <ramrom.h>
+#include "blood_animation.h"
+#include "chr.h"
+#include "chr_b.h"
+#include "math_floor.h"
+#include "title.h"
+#include "unk_01B240.h"
+
+
 
 extern signed short sins(unsigned short x);
 

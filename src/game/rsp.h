@@ -1,12 +1,12 @@
 #ifndef _RSP_H_
 #define _RSP_H_
 
-#include "ultra64.h"
+#include <ultra64.h>
 
-#include "sched.h"
-#include "PR/gbi.h"
-#include "PR/os.h"
-#include "PR/sptask.h"
+#include <sched.h>
+#include <PR/gbi.h>
+#include <PR/os.h>
+#include <PR/sptask.h>
 
 /**
  * This is cast to type OSMesg for a call to osSendMesg.

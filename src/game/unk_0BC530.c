@@ -1,7 +1,7 @@
-#include "ultra64.h"
-#include "game/player.h"
-#include "game/bg.h"
-#include "game/unk_0BC530.h"
+#include <ultra64.h>
+#include "player.h"
+#include "bg.h"
+#include "unk_0BC530.h"
 
 #ifdef VERSION_EU
 #define AMT300 100
@@ -464,7 +464,7 @@ s32 getRoomIndexPOS(s32 index)
 }
 
 
-void sub_GAME_7F0BCA34(s32 index, struct coord3d *param_2)
+void sub_GAME_7F0BCA34(s32 index, coord3d *param_2)
 {
     param_2->x = ptr_bgdata_room_fileposition_list[index].pos.x * room_data_float2;
     param_2->y = ptr_bgdata_room_fileposition_list[index].pos.y * room_data_float2;

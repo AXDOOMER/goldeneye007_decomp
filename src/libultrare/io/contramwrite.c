@@ -1,7 +1,7 @@
-#include <os_internal.h>
-#include <rcp.h>
-#include "src/libultra/io/controller.h"
-#include "src/libultra/io/siint.h"
+#include <PR/os_internal.h>
+#include <PR/rcp.h>
+#include <io/controller.h>
+#include <io/siint.h>
 
 static void __osPackRamWriteData(int channel, u16 address, u8 *buffer);
 s32 __osContRamWrite(OSMesgQueue *mq, int channel, u16 address, u8 *buffer, int force)

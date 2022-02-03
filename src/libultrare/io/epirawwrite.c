@@ -1,5 +1,5 @@
-#include <os_internal.h>
-#include "src/libultra/io/piint.h"
+#include <PR/os_internal.h>
+#include <io/piint.h>
 
 s32 osEPiRawWriteIo(OSPiHandle *pihandle, u32 devAddr, u32 data)
 {

@@ -1,4 +1,4 @@
-#include "ultra64.h"
+#include <ultra64.h>
 
 /**
  * EU .data, offset from start of data_seg : 0x36a0

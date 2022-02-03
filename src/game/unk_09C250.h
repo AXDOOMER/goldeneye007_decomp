@@ -1,7 +1,7 @@
 #ifndef _UNK_09C250_H_
 #define _UNK_09C250_H_
-#include "ultra64.h"
-#include "bondtypes.h"
+#include <ultra64.h>
+#include <bondtypes.h>
 
 #define EXPLOSION_BUFFER_LEN 6
 #define EXPLOSION_PARTS_LEN 40
@@ -59,7 +59,7 @@ typedef struct s_impacttype {
 
 struct ExplosionPart
 {
-    struct coord3d pos;
+    coord3d pos;
     u32 size;
     u32 rot;
     s16 frame;
@@ -67,7 +67,7 @@ struct ExplosionPart
 };
 
 struct Explosion {
-    struct PropRecord *prop;
+    PropRecord *prop;
     u32 unk04;
     struct ExplosionPart parts[EXPLOSION_PARTS_LEN];
     u32 unk3C8;
@@ -80,7 +80,7 @@ struct Explosion {
 
 struct SmokePart
 {
-    struct coord3d pos;         /*0x00*/
+    coord3d pos;         /*0x00*/
     f32 size;                   /*0x0c*/
     u32 rot;                    /*0x10*/
     u32 deltarot;               /*0x14*/
@@ -91,7 +91,7 @@ struct SmokePart
 };
 
 struct Smoke {
-    struct PropRecord *prop;
+    PropRecord *prop;
     u32 unk04;
     struct SmokePart parts[SMOKE_PARTS_LEN]; /*0x008*/
 };
@@ -215,6 +215,6 @@ Gfx *unk09c250RenderPropExplosion(PropRecord *arg0, Gfx *arg1);
 Gfx *unk09c250RenderPropSmoke(PropRecord *arg0, Gfx *arg1);
 
 
-Gfx *sub_GAME_7F0A1A94(Gfx *arg0, struct PropRecord *arg1, s32 arg2);
+Gfx *sub_GAME_7F0A1A94(Gfx *arg0, PropRecord *arg1, s32 arg2);
 
 #endif

@@ -13,6 +13,9 @@
   .ifdef VERSION_EU
     .incbin "build\/e\/assets\/obseg\/\path\/\name\.rz"
   .endif
+  .ifdef VERSION_DEBUG
+    .incbin "build\/d\/assets\/obseg\/\path\/\name\.rz"
+  .endif
     .balign 16
   end_\name:
 .endm
@@ -32,6 +35,10 @@
     #.warning "obseg_file_Z: build\/e\/assets\/obseg\/\path\/\name\.rz"
     .incbin "build\/e\/assets\/obseg\/\path\/\name\.rz"
   .endif
+  .ifdef VERSION_DEBUG
+    #.warning "obseg_file_Z: build\/d\/assets\/obseg\/\path\/\name\.rz"
+    .incbin "build\/d\/assets\/obseg\/\path\/\name\.rz"
+  .endif
     .balign 16
   end_\name:
 .endm
@@ -50,6 +57,10 @@
 
   .ifdef VERSION_EU
     .incbin "build/e/assets/obseg/bg/\sname\.seg"
+  .endif
+
+  .ifdef VERSION_DEBUG
+    .incbin "build/d/assets/obseg/bg/\sname\.seg"
   .endif
   end_\name:
 .endm

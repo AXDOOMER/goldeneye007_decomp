@@ -1,22 +1,22 @@
-#include "ultra64.h"
+#include <ultra64.h>
 #include "include/limits.h"
-#include "bondconstants.h"
-#include "bondtypes.h"
-#include "game/bondview.h"
-#include "game/bondinv.h"
-#include "game/gun.h"
-#include "game/chrobjdata.h"
-#include "game/quaternion.h"
-#include "game/image_bank.h"
-#include "game/bondwalk2.h"
-#include "game/othermodemicrocode.h"
-#include "bondgame.h"
-#include "game/player.h"
-#include "music.h"
-#include "game/lvl.h"
-#include "snd.h"
-#include "game/math_asinfacosf.h"
-#include "game/loadobjectmodel.h"
+#include <bondconstants.h>
+#include <bondtypes.h>
+#include "bondview.h"
+#include "bondinv.h"
+#include "gun.h"
+#include "chrobjdata.h"
+#include "quaternion.h"
+#include "image_bank.h"
+#include "bondwalk2.h"
+#include "othermodemicrocode.h"
+#include <bondgame.h>
+#include "player.h"
+#include <music.h>
+#include "lvl.h"
+#include <snd.h>
+#include "math_asinfacosf.h"
+#include "loadobjectmodel.h"
 
 // bss
 s32 dword_CODE_bss_80075DB0;
@@ -37,13 +37,13 @@ s32 dword_CODE_bss_80076A48;
 
 // data
 //D:80032440
-struct rgba_u8 D_80032440[] = {
+rgba_u8 D_80032440[] = {
 	{0x96, 0x96, 0x96, 0},
 	{0x96, 0x96, 0x96, 0}
 };
 
 //D:80032448
-struct rgba_u8 D_80032448[] = {
+rgba_u8 D_80032448[] = {
 	{0xFF, 0xFF, 0xFF, 0},
 	{0xFF, 0xFF, 0xFF, 0},
 	{0xB2, 0x4D, 0x2E, 0}
@@ -71,10 +71,10 @@ CartridgeModelFileRecord ejected_cartridge[] = {
 	{0, ""}
 };
 
-#include "assets/obseg/gun/gunWeaponStats.inc.c"
+#include <assets/obseg/gun/gunWeaponStats.inc.c>
 
 //D:80033924
-#include "assets/obseg/gun/gunModelFileRecord.inc.c"
+#include <assets/obseg/gun/gunModelFileRecord.inc.c>
 
 //D:80034C9C
 u32 cartridges_eject = 0;
@@ -987,7 +987,7 @@ WeaponStats *get_ptr_item_statistics(ITEM_IDS item) {
 
 
 
-void copy_item_in_hand(struct coord3d *pos)
+void copy_item_in_hand(coord3d *pos)
 {
     ITEM_IDS item;
     WeaponStats *stats;
@@ -1001,7 +1001,7 @@ void copy_item_in_hand(struct coord3d *pos)
 }
 
 
-void copy_item_in_hand_to_main_list(struct coord3d *pos) {
+void copy_item_in_hand_to_main_list(coord3d *pos) {
     
     WeaponStats *stats;
     ITEM_IDS item;
@@ -1814,14 +1814,13 @@ glabel sub_GAME_7F05CEBC
 
 
 
-
-s32 get_itemtype_in_hand(HANDEDNESS hand)
+s32 get_itemtype_in_hand(GUNHAND hand)
 {
     return g_CurrentPlayer->hand_item[hand];
 }
 
 
-ModelFileHeader *get_ptr_itemheader_in_hand(HANDEDNESS hand)
+ModelFileHeader *get_ptr_itemheader_in_hand(GUNHAND hand)
 {
     return &g_CurrentPlayer->copy_of_body_obj_header[hand];
 }
@@ -1829,7 +1828,7 @@ ModelFileHeader *get_ptr_itemheader_in_hand(HANDEDNESS hand)
 
 
 
-u8 * getPlayerWeaponBufferForHand(HANDEDNESS hand)
+u8 * getPlayerWeaponBufferForHand(GUNHAND hand)
 {
     return g_CurrentPlayer->ptr_hand_weapon_buffer[hand];
 }
@@ -1841,7 +1840,7 @@ u32 getSizeBufferWeaponInHand(int hand)
 }
 
 
-void remove_item_in_hand(HANDEDNESS hand)
+void remove_item_in_hand(GUNHAND hand)
 {
   g_CurrentPlayer->hand_invisible[hand] = 0;
   g_CurrentPlayer->hand_item[hand] = ITEM_UNARMED;
@@ -2436,7 +2435,7 @@ glabel sub_GAME_7F05D334
 )
 #endif
 
-s32 get_next_weapon_in_cycle_for_hand(HANDEDNESS hand, s32 direction)
+s32 get_next_weapon_in_cycle_for_hand(GUNHAND hand, s32 direction)
 {
 	if (g_CurrentPlayer->hands[hand].when_detonating_mines_is_0 == 5) {
 		if (
@@ -2659,8 +2658,8 @@ void sub_GAME_7F05D650(int param_1)
 
 void sub_GAME_7F05D690(void)
 {
-    draw_item_in_hand_has_more_ammo(RIGHT_HAND, g_CurrentPlayer->hands[RIGHT_HAND].previous_weapon);
-    draw_item_in_hand_has_more_ammo(LEFT_HAND, g_CurrentPlayer->hands[LEFT_HAND].previous_weapon);
+    draw_item_in_hand_has_more_ammo(GUNRIGHT, g_CurrentPlayer->hands[GUNRIGHT].previous_weapon);
+    draw_item_in_hand_has_more_ammo(GUNLEFT, g_CurrentPlayer->hands[GUNLEFT].previous_weapon);
 }
 
 
@@ -2669,21 +2668,21 @@ void advance_through_inventory(void)
     ITEM_IDS nextright;
     ITEM_IDS nextleft;
 
-    nextright = get_next_weapon_in_cycle_for_hand(RIGHT_HAND, 1);
-    nextleft = get_next_weapon_in_cycle_for_hand(LEFT_HAND, 1);
+    nextright = get_next_weapon_in_cycle_for_hand(GUNRIGHT, 1);
+    nextleft = get_next_weapon_in_cycle_for_hand(GUNLEFT, 1);
 
     if ((nextright >= ITEM_BOMBCASE) || (nextleft >= ITEM_BOMBCASE))
     {
-        nextright = g_CurrentPlayer->hands[RIGHT_HAND].previous_weapon;
-        nextleft = g_CurrentPlayer->hands[LEFT_HAND].previous_weapon;
+        nextright = g_CurrentPlayer->hands[GUNRIGHT].previous_weapon;
+        nextleft = g_CurrentPlayer->hands[GUNLEFT].previous_weapon;
     }
     else
     {
         choose_cycle_forward_weapon(&nextright, &nextleft, FALSE);
     }
 
-    likely_change_weapon_in_hand(RIGHT_HAND, nextright, 1);
-    likely_change_weapon_in_hand(LEFT_HAND, nextleft, 1);
+    likely_change_weapon_in_hand(GUNRIGHT, nextright, 1);
+    likely_change_weapon_in_hand(GUNLEFT, nextleft, 1);
 }
 
 
@@ -2692,21 +2691,21 @@ void backstep_through_inventory(void)
     ITEM_IDS nextright;
     ITEM_IDS nextleft;
 
-    nextright = get_next_weapon_in_cycle_for_hand(RIGHT_HAND, -1);
-    nextleft = get_next_weapon_in_cycle_for_hand(LEFT_HAND, -1);
+    nextright = get_next_weapon_in_cycle_for_hand(GUNRIGHT, -1);
+    nextleft = get_next_weapon_in_cycle_for_hand(GUNLEFT, -1);
 
     if ((nextright >= ITEM_BOMBCASE) || (nextleft >= ITEM_BOMBCASE))
     {
-        nextright = g_CurrentPlayer->hands[RIGHT_HAND].previous_weapon;
-        nextleft = g_CurrentPlayer->hands[LEFT_HAND].previous_weapon;
+        nextright = g_CurrentPlayer->hands[GUNRIGHT].previous_weapon;
+        nextleft = g_CurrentPlayer->hands[GUNLEFT].previous_weapon;
     }
     else
     {
         choose_cycle_back_weapon(&nextright, &nextleft, FALSE);
     }
 
-    likely_change_weapon_in_hand(RIGHT_HAND, nextright, -1);
-    likely_change_weapon_in_hand(LEFT_HAND, nextleft, -1);
+    likely_change_weapon_in_hand(GUNRIGHT, nextright, -1);
+    likely_change_weapon_in_hand(GUNLEFT, nextleft, -1);
 }
 
 void autoadvance_on_deplete_all_ammo(void)
@@ -2716,16 +2715,16 @@ void autoadvance_on_deplete_all_ammo(void)
 	ITEM_IDS duperight;
 	ITEM_IDS dupeleft;
 
-    nextright = get_next_weapon_in_cycle_for_hand(RIGHT_HAND, 1);
+    nextright = get_next_weapon_in_cycle_for_hand(GUNRIGHT, 1);
     duperight = nextright;
 
-    nextleft = get_next_weapon_in_cycle_for_hand(LEFT_HAND, 1);
+    nextleft = get_next_weapon_in_cycle_for_hand(GUNLEFT, 1);
     dupeleft = nextleft;
 
     if ((duperight >= ITEM_BOMBCASE) || (dupeleft >= ITEM_BOMBCASE))
     {
-        duperight = g_CurrentPlayer->hands[RIGHT_HAND].previous_weapon;
-        dupeleft = g_CurrentPlayer->hands[LEFT_HAND].previous_weapon;
+        duperight = g_CurrentPlayer->hands[GUNRIGHT].previous_weapon;
+        dupeleft = g_CurrentPlayer->hands[GUNLEFT].previous_weapon;
     }
     else if ((duperight == ITEM_REMOTEMINE) && ((check_if_item_available(ITEM_TRIGGER))))
     {
@@ -2744,17 +2743,17 @@ void autoadvance_on_deplete_all_ammo(void)
         }
     }
 
-    likely_change_weapon_in_hand(RIGHT_HAND, duperight, 1);
-    likely_change_weapon_in_hand(LEFT_HAND, dupeleft, 1);
+    likely_change_weapon_in_hand(GUNRIGHT, duperight, 1);
+    likely_change_weapon_in_hand(GUNLEFT, dupeleft, 1);
 }
 
-s32 draw_item_in_hand_has_more_ammo(HANDEDNESS hand, s32 next_weapon) {
+s32 draw_item_in_hand_has_more_ammo(GUNHAND hand, s32 next_weapon) {
     g_CurrentPlayer->hands[hand].weapon_current_animation = 5;
     g_CurrentPlayer->hands[hand].weapon_next_weapon = next_weapon;
     g_CurrentPlayer->hands[hand].weapon_animation_trigger = 0;
 }
 
-void attempt_reload_item_in_hand(HANDEDNESS hand) {
+void attempt_reload_item_in_hand(GUNHAND hand) {
     s32 ammo_type = get_ammo_type_for_weapon(get_item_in_hand(hand));
     if (ammo_type != 0) {
         if (g_CurrentPlayer->hands[hand].weapon_current_animation == 0) {
@@ -2763,16 +2762,16 @@ void attempt_reload_item_in_hand(HANDEDNESS hand) {
     }
 }
 
-s32 get_item_in_hand(HANDEDNESS hand) {
+s32 get_item_in_hand(GUNHAND hand) {
     return g_CurrentPlayer->hands[hand].weaponnum;
 }
 
-void draw_item_in_hand(HANDEDNESS hand, s32 next_weapon) {
+void draw_item_in_hand(GUNHAND hand, s32 next_weapon) {
 	g_CurrentPlayer->hands[hand].weapon_current_animation = 0xE;
 	g_CurrentPlayer->hands[hand].weapon_next_weapon = next_weapon;
 }
 
-s32 get_item_in_hand_or_watch_menu(HANDEDNESS hand) {
+s32 get_item_in_hand_or_watch_menu(GUNHAND hand) {
 	if (g_CurrentPlayer->hands[hand].weaponnum_watchmenu >= 0) {
 		return g_CurrentPlayer->hands[hand].weaponnum_watchmenu;
 	} else {
@@ -2780,12 +2779,12 @@ s32 get_item_in_hand_or_watch_menu(HANDEDNESS hand) {
 	}
 }
 
-void sub_GAME_7F05DA8C(HANDEDNESS hand, s32 weaponnum_watchmenu) {
+void sub_GAME_7F05DA8C(GUNHAND hand, s32 weaponnum_watchmenu) {
     place_item_in_hand_swap_and_make_visible();
 	g_CurrentPlayer->hands[hand].weaponnum_watchmenu = weaponnum_watchmenu;
 }
 
-void sub_GAME_7F05DAE4(HANDEDNESS hand) {
+void sub_GAME_7F05DAE4(GUNHAND hand) {
     if (g_CurrentPlayer->hands[hand].weaponnum_watchmenu >= 0) {
         place_item_in_hand_swap_and_make_visible(hand, g_CurrentPlayer->hands[hand].weaponnum);
 		g_CurrentPlayer->hands[hand].weaponnum_watchmenu = -1;
@@ -2793,8 +2792,41 @@ void sub_GAME_7F05DAE4(HANDEDNESS hand) {
 }
 
 #ifdef NONMATCHING
-void remove_hands_item(void) {
+void remove_hands_item(GUNHAND hand, s32 weapid) 
+{
+    s32      ammomag;
+    AMMOTYPE ammotype;
 
+    void *   ammocount;
+
+    ammotype = get_ammo_type_for_weapon(&pPlayer->hands[hand]);
+
+    if (pPlayer->hands[hand].weaponnum_watchmenu < 0)
+    {
+        place_item_in_hand_swap_and_make_visible(hand, weapid, &pPlayer->hands[hand], ammotype);
+    }
+
+    ammomag   = pPlayer->hands[hand].weapon_ammo_in_magazine;
+    ammocount = pPlayer->AmmoHeld[ammotype];
+    if (ammomag > 0)
+    {
+        //ammocount->unk1130 = ammocount->unk1130 + ammomag;
+    }
+    if (pPlayer->hands[hand].weaponnum < 0x21)
+    {
+        //pPlayer->hands[hand].weapon_firing_status=2;
+        pPlayer->AmmoHeld[ammotype] += weapid;
+    }
+    if (getPlayerCount(&pPlayer->hands[hand], ammomag, &pPlayer->hands[hand], ammotype) >= 2)
+    {
+        sub_GAME_7F09B368(hand);
+    }
+    sub_GAME_7F05FB00(hand);
+    pPlayer->hands[hand].weaponnum               = weapid;
+    pPlayer->hands[hand].weapon_ammo_in_magazine = 0;
+    pPlayer->hands[hand].field_A4C               = 0;
+    pPlayer->hands[hand].field_A50               = 0;
+    calculate_equip_cur_item();
 }
 #else
 
@@ -2975,43 +3007,43 @@ glabel remove_hands_item
 #endif
 #endif
 
-s8 get_hands_firing_status(HANDEDNESS hand) {
+s8 get_hands_firing_status(GUNHAND hand) {
     return g_CurrentPlayer->hands[hand].weapon_firing_status;
 }
 
-f32 sub_GAME_7F05DCB8(HANDEDNESS hand) {
+f32 sub_GAME_7F05DCB8(GUNHAND hand) {
 	return g_CurrentPlayer->hands[hand].field_A34;
 }
 
-f32 sub_GAME_7F05DCE8(HANDEDNESS hand)
+f32 sub_GAME_7F05DCE8(GUNHAND hand)
 {
 	f32 ret;
 
-	if (hand == RIGHT_HAND)
+	if (hand == GUNRIGHT)
 	{
-		ret = get_ptr_item_statistics(get_item_in_hand_or_watch_menu(RIGHT_HAND))->PosX;
+		ret = get_ptr_item_statistics(get_item_in_hand_or_watch_menu(GUNRIGHT))->PosX;
 	}
 	else
 	{
-		ret = -get_ptr_item_statistics(get_item_in_hand_or_watch_menu(LEFT_HAND))->PosX;
+		ret = -get_ptr_item_statistics(get_item_in_hand_or_watch_menu(GUNLEFT))->PosX;
 	}
 
 	return ret;
 }
 
 f32 get_item_in_hand_zoom(void) {
-    if (get_item_in_hand_or_watch_menu(RIGHT_HAND) == ITEM_SNIPERRIFLE) {
+    if (get_item_in_hand_or_watch_menu(GUNRIGHT) == ITEM_SNIPERRIFLE) {
         return g_CurrentPlayer->sniper_zoom;
     }
-    if (get_item_in_hand_or_watch_menu(RIGHT_HAND) == ITEM_CAMERA) {
+    if (get_item_in_hand_or_watch_menu(GUNRIGHT) == ITEM_CAMERA) {
         return g_CurrentPlayer->camera_zoom;
     }
-    return get_ptr_item_statistics(get_item_in_hand_or_watch_menu(RIGHT_HAND))->Zoom;
+    return get_ptr_item_statistics(get_item_in_hand_or_watch_menu(GUNRIGHT))->Zoom;
 }
 
 void camera_sniper_zoom_in(f32 zoom)
 {
-	if (get_item_in_hand_or_watch_menu(RIGHT_HAND) == ITEM_SNIPERRIFLE) {
+	if (get_item_in_hand_or_watch_menu(GUNRIGHT) == ITEM_SNIPERRIFLE) {
 		g_CurrentPlayer->sniper_zoom *= (1.0f + (zoom * 0.1f));
 		if (g_CurrentPlayer->sniper_zoom > 60.0f) {
 			g_CurrentPlayer->sniper_zoom = 60.0f;
@@ -3019,7 +3051,7 @@ void camera_sniper_zoom_in(f32 zoom)
 	}
 	else
 	{
-		if (get_item_in_hand_or_watch_menu(RIGHT_HAND) == ITEM_CAMERA) {
+		if (get_item_in_hand_or_watch_menu(GUNRIGHT) == ITEM_CAMERA) {
 			g_CurrentPlayer->camera_zoom *= (1.0f + (zoom * 0.1f));
 			if (g_CurrentPlayer->camera_zoom > 60.0f) {
 				g_CurrentPlayer->camera_zoom = 60.0f;
@@ -3030,7 +3062,7 @@ void camera_sniper_zoom_in(f32 zoom)
 
 void camera_sniper_zoom_out(f32 zoom)
 {
-	if (get_item_in_hand_or_watch_menu(RIGHT_HAND) == ITEM_SNIPERRIFLE) {
+	if (get_item_in_hand_or_watch_menu(GUNRIGHT) == ITEM_SNIPERRIFLE) {
 		g_CurrentPlayer->sniper_zoom /= (1.0f + (zoom * 0.1f));
 		if (g_CurrentPlayer->sniper_zoom < 7.0f) {
 			g_CurrentPlayer->sniper_zoom = 7.0f;
@@ -3038,7 +3070,7 @@ void camera_sniper_zoom_out(f32 zoom)
 	}
 	else
 	{
-		if (get_item_in_hand_or_watch_menu(RIGHT_HAND) == ITEM_CAMERA) {
+		if (get_item_in_hand_or_watch_menu(GUNRIGHT) == ITEM_CAMERA) {
 			g_CurrentPlayer->camera_zoom /= (1.0f + (zoom * 0.1f));
 			if (g_CurrentPlayer->camera_zoom < 7.0f) {
 				g_CurrentPlayer->camera_zoom = 7.0f;
@@ -3893,8 +3925,8 @@ glabel sub_GAME_7F05E0E4
 
 void sub_GAME_7F05E5F0(f32 param_1)
 {
-    g_CurrentPlayer->hands[RIGHT_HAND].field_A30 = (1.0f - cosf(param_1)) * 5.0f;
-    g_CurrentPlayer->hands[LEFT_HAND].field_A30 = (1.0f - cosf(param_1)) * 5.0f;
+    g_CurrentPlayer->hands[GUNRIGHT].field_A30 = (1.0f - cosf(param_1)) * 5.0f;
+    g_CurrentPlayer->hands[GUNLEFT].field_A30 = (1.0f - cosf(param_1)) * 5.0f;
 }
 
 
@@ -4123,7 +4155,7 @@ glabel sub_GAME_7F05E6B4
 #endif
 #endif
 
-void sub_GAME_7F05E808(HANDEDNESS hand) {
+void sub_GAME_7F05E808(GUNHAND hand) {
 	g_CurrentPlayer->hands[hand].field_A8C = 1;
 }
 
@@ -4469,7 +4501,7 @@ glabel sub_GAME_7F05EA94
 /**
  * Address 0x7F05EB0C.
 */
-void sub_GAME_7F05EB0C(ObjectRecord *arg0, struct coord3d *arg1, struct StandTile *arg2, Mtxf *arg3, struct coord3d *arg4, Mtxf *arg5, struct PropRecord *arg6)
+void sub_GAME_7F05EB0C(ObjectRecord *arg0, coord3d *arg1, StandTile *arg2, Mtxf *arg3, coord3d *arg4, Mtxf *arg5, PropRecord *arg6)
 {
     PropRecord *temp_s1;
     struct ObjectRecord_f6c *temp_v0;
@@ -4510,8 +4542,95 @@ void sub_GAME_7F05EB0C(ObjectRecord *arg0, struct coord3d *arg1, struct StandTil
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F05EC1C(void) {
+void sub_GAME_7F05EC1C(void)
+{
+    f32 spD0;
+    f32 spCC;
+    f32 spC8;
+    s32 spC4;
+    f32 spB8;
+    f32 spB4;
+    s32 spB0;
+    s8  spA9;
+    s8  spA8;
+    ? sp54;
+    ? sp50;
+    f32   temp_f0;
+    f32   temp_f14;
+    void *temp_s0;
+    f32   phi_f16;
+    f32   phi_f14;
+    s32   phi_return;
 
+    phi_return = arg0->unk10;
+    if (arg0->unk10 != 0)
+    {
+        temp_s0 = get_curplayer_positiondata();
+        temp_f0 = sub_GAME_7F089778(pPlayer);
+        spB0    = 0;
+        if (arg1->unk4 < temp_s0->unkC)
+        {
+            phi_f16 = arg1->unk4 - temp_f0;
+            phi_f14 = temp_s0->unkC - temp_f0;
+        }
+        else
+        {
+            phi_f16 = temp_s0->unkC - temp_f0;
+            phi_f14 = arg1->unk4 - temp_f0;
+        }
+        spB4 = phi_f16;
+        spB8 = phi_f14;
+        spC4 = temp_s0->unk14;
+        bondviewUpdateGuardTankFlagsRelated(temp_s0->unkC, phi_f14, temp_s0, 0);
+        temp_f14 = phi_f14;
+        if (sub_GAME_7F0B0E24(temp_f14,
+                              &spC4,
+                              temp_s0->unk8,
+                              temp_s0->unk10,
+                              arg1->unk0,
+                              arg1->unk8,
+                              0x1F,
+                              temp_f14,
+                              phi_f16,
+                              0.0f,
+                              1.0f) != 0)
+        {
+            spC8 = (bitwise f32)arg1->unk0;
+            spCC = arg1->unk4;
+            spD0 = arg1->unk8;
+        }
+        else
+        {
+            spC4 = temp_s0->unk14;
+            spC8 = (bitwise f32)temp_s0->unk8;
+            spCC = temp_s0->unkC;
+            spB0 = 1;
+            spD0 = (bitwise f32)temp_s0->unk10;
+        }
+        bondviewUpdateGuardTankFlagsRelated(temp_s0, 1);
+        phi_return =
+            sub_GAME_7F05EB0C(arg0, &spC8, spC4, arg2, arg3, arg4, temp_s0);
+        if ((arg0->unk64 & 0x80) != 0)
+        {
+            if (spB0 != 0)
+            {
+                arg0->unk6C->unk0  = (s32)(arg0->unk6C->unk0 | 0x100);
+                arg0->unk6C->unkD4 = (bitwise f32)arg1->unk0;
+                arg0->unk6C->unkD8 = (f32)arg1->unk4;
+                arg0->unk6C->unkDC = (f32)arg1->unk8;
+            }
+            spA8       = get_cur_players_room();
+            spA9       = (u8)0xFF;
+            phi_return = sub_GAME_7F0B4AB4(get_BONDdata_position3(),
+                                           &spC8,
+                                           &spA8,
+                                           arg0->unk6C + 0xCC,
+                                           &sp54,
+                                           &sp50,
+                                           0x14);
+        }
+    }
+    return phi_return;
 }
 #else
 GLOBAL_ASM(
@@ -4533,7 +4652,7 @@ glabel sub_GAME_7F05EC1C
 /* 093780 7F05EC50 00000000 */   nop
 /* 093784 7F05EC54 3C048008 */  lui   $a0, %hi(g_CurrentPlayer)
 /* 093788 7F05EC58 00408025 */  move  $s0, $v0
-/* 09378C 7F05EC5C 0FC225DE */  jal   bondviewGetPlayerClippingHeight
+/* 09378C 7F05EC5C 0FC225DE */  jal   bondviewGetPlayerStanHeight
 /* 093790 7F05EC60 8C84A0B0 */   lw    $a0, %lo(g_CurrentPlayer)($a0)
 /* 093794 7F05EC64 AFA000B0 */  sw    $zero, 0xb0($sp)
 /* 093798 7F05EC68 C60C000C */  lwc1  $f12, 0xc($s0)
@@ -5430,7 +5549,158 @@ glabel sub_GAME_7F05F09C
         assertPrint_8291E690(".\\ported\\gun.cpp",0x8df,"throwmineremote - Not a mine!");
     }
 //*/
-void generate_player_thrown_object(void) {
+void generate_player_thrown_object(void)
+{
+    ? spFC;
+    f32 spF8;
+    f32 spF4;
+    f32 spF0;
+    f32 spEC;
+    f32 spE8;
+    f32 spE4;
+    f32 spE0;
+    ? spA0;
+    ? sp94;
+    f32   sp88;
+    void *sp84;
+    void *sp80;
+    f32   sp78;
+    f32   sp74;
+    f32   sp70;
+    ? sp40;
+    s32   sp38;
+    s32   sp2C;
+    f32   temp_f10;
+    f32   temp_f16;
+    f32   temp_f6;
+    s32   temp_t7;
+    s32   temp_v0;
+    s32   temp_v0_4;
+    void *temp_s0;
+    void *temp_v0_2;
+    void *temp_v0_3;
+    void *phi_s0;
+    void *phi_s0_2;
+    s32   phi_a1;
+
+    spEC    = D_80053CA8;
+    sp84    = get_curplayer_positiondata();
+    sp80    = get_BONDdata_field408();
+    temp_v0 = get_item_in_hand(arg0);
+    sp38    = temp_v0;
+    if (temp_v0 == 0x3D)
+    {
+        spEC = D_80053CAC;
+    }
+    sub_GAME_7F057C14(&spF0, &spFC);
+    sub_GAME_7F0681CC(&sp94, &sp88, arg0);
+    sub_GAME_7F0583D8(sub_GAME_7F078444(), &sp88);
+    temp_f10 = sp88 * spEC;
+    temp_f16 = sp90 * spEC;
+    spF0     = temp_f10;
+    temp_f6  = (sp8C * spEC) + 5.0f;
+    spF8     = temp_f16;
+    spF4     = temp_f6;
+    if (clock_timer > 0)
+    {
+        spF0 = temp_f10 + ((sp84->unk8 - sp80->unk0) / g_GlobalTimerDelta);
+        spF4 = temp_f6 + ((sp84->unkC - sp80->unk4) / g_GlobalTimerDelta);
+        spF8 = temp_f16 + ((sp84->unk10 - sp80->unk8) / g_GlobalTimerDelta);
+    }
+    temp_t7   = arg0 * 0x3A8;
+    temp_v0_2 = pPlayer + temp_t7;
+    spE0      = temp_v0_2->unkB08;
+    spE4      = temp_v0_2->unkB0C;
+    sp2C      = temp_t7;
+    spE8      = temp_v0_2->unkB10;
+    reset_array_of_0x10_floats(&spA0);
+    sub_GAME_7F058020((pPlayer + sp2C) + 0xAD8, &sp40);
+    sp70 = 0.0f;
+    sp74 = 0.0f;
+    sp78 = 0.0f;
+    sub_GAME_7F058068(&sp40, &spA0);
+    phi_s0 = NULL;
+    if (sp38 == 0x3D)
+    {
+        temp_s0 = sub_GAME_7F08C570(sp38, sp38);
+        sub_GAME_7F08C61C(sp38);
+        if (temp_s0 != 0)
+        {
+            sub_GAME_7F04C044(temp_s0->unk10);
+        }
+        sub_GAME_7F05D690();
+        phi_s0 = temp_s0;
+    }
+    phi_s0_2 = phi_s0;
+    phi_a1   = sp38;
+    if (phi_s0 == 0)
+    {
+        if ((u32)(sp38 - 0x1B) < 0x23U)
+        {
+            switch
+            ///* 09408C 7F05F55C 01000008 */ jr $t0
+            //    /* 094090 7F05F560 00000000 */ nop
+            case thrown_item_proximity_mine:
+                a0                                   = 200
+                    //    /* 094094 7F05F564 1000000C */ b.L7F05F598
+                    //        /* 094098 7F05F568 240400C8 */ li $a0,
+                    case thrown_item_timed_mine : a0 = 201
+
+                                                  //    /* 09409C 7F05F56C 1000000A */ b.L7F05F598
+                                                  //        /* 0940A0 7F05F570 240400C9 */ li $a0,
+                                                  case thrown_item_bombcase : a0                                                                                                               = 226
+                                                                              //    /* 0940A4 7F05F574 10000008 */ b.L7F05F598
+                                                                              //        /* 0940A8 7F05F578 240400E2 */ li $a0,
+                                                                              case thrown_item_bug : a0                                                                                        = 245
+                                                                                                     //    /* 0940AC 7F05F57C 10000006 */ b.L7F05F598
+                                                                                                     //        /* 0940B0 7F05F580 240400F5 */ li $a0,
+                                                                                                     case thrown_item_micro_camera : a0                                                        = 246
+                                                                                                                                     //    /* 0940B4 7F05F584 10000004 */ b.L7F05F598
+                                                                                                                                     //        /* 0940B8 7F05F588 240400F6 */ li $a0,
+                                                                                                                                     case thrown_item_GE_key : a0                              = 248
+                                                                                                                                                               //    /* 0940BC 7F05F58C 10000002 */ b.L7F05F598
+                                                                                                                                                               //        /* 0940C0 7F05F590 240400F8 */ li $a0,
+                                                                                                                                                               case thrown_item_plastique : a0 = 273
+            //    /* 0940C4 7F05F594 24040111 */ li $a0,
+        }
+        phi_s0_2 = create_new_item_instance_of_model(0xC7, sp38);
+        phi_a1   = sp38;
+    }
+    if (phi_s0_2 != 0)
+    {
+        //set timers
+        switch
+            case generate_temp_remote_mine
+                if (get_num_players != 1)
+                    timer = 180
+                else phi_s0_2.timer = 300 
+            case generate_temp_proximity_mine
+                     if (get_num_players != 1) timer = 180 else timer =                          300
+            case generate_temp_timed_mine
+                     if (get_num_players != 1) timer = 180 else timer =                          300
+            case generate_temp_bombcase
+                     if (get_num_players != 1) timer = 180 else timer =                          300
+            case generate_temp_startic thrown
+                     if (get_num_players != 1) timer = 180 else timer =                          300
+            default
+                     if (get_num_players != 1) timer = 180 else timer =                          300
+        phi_s0_2->unk64 = (s32)(phi_s0_2->unk64 & 0xFFF9FFFF);
+        phi_s0_2->unk64 =
+            (s32)(phi_s0_2->unk64 | (get_cur_playernum(phi_a1) << 0x11));
+        sub_GAME_7F05EC1C(phi_s0_2, &spE0, &spA0, &spF0, &spFC);
+        if ((phi_s0_2->unk64 & 0x80) != 0)
+        {
+            temp_v0_3              = phi_s0_2->unk6C;
+            temp_v0_3->unk0        = (s32)(temp_v0_3->unk0 | 2);
+            phi_s0_2->unk6C->unk8C = (f32)D_80053DC8;
+            phi_s0_2->unk6C->unkBC = 0x3C;
+            temp_v0_4              = sndPlaySfx(ptr_sfx_buf, 4, 0);
+            if (temp_v0_4 != 0)
+            {
+                sub_GAME_7F053A10(temp_v0_4, phi_s0_2 + 0x58);
+            }
+        }
+    }
 
 }
 #else
@@ -9165,7 +9435,7 @@ weapon_bullet_type_shotgun_mine:
 /* 096320 7F0617F0 3C048008 */  lui   $a0, %hi(g_CurrentPlayer)
 /* 096324 7F0617F4 53200046 */  beql  $t9, $zero, .L7F061910
 /* 096328 7F0617F8 8FBF0034 */   lw    $ra, 0x34($sp)
-/* 09632C 7F0617FC 0FC225DE */  jal   bondviewGetPlayerClippingHeight
+/* 09632C 7F0617FC 0FC225DE */  jal   bondviewGetPlayerStanHeight
 /* 096330 7F061800 8C84A0B0 */   lw    $a0, %lo(g_CurrentPlayer)($a0)
 /* 096334 7F061804 44050000 */  mfc1  $a1, $f0
 /* 096338 7F061808 0FC1A142 */  jal   sub_GAME_7F068508
@@ -10951,7 +11221,7 @@ weapon_bullet_type_shotgun_mine:
 /* 09688C 7F061D1C 3C048008 */  lui   $a0, %hi(g_CurrentPlayer) # $a0, 0x8008
 /* 096890 7F061D20 53000046 */  beql  $t8, $zero, .Ljp7F061E3C
 /* 096894 7F061D24 8FBF0034 */   lw    $ra, 0x34($sp)
-/* 096898 7F061D28 0FC22793 */  jal   bondviewGetPlayerClippingHeight
+/* 096898 7F061D28 0FC22793 */  jal   bondviewGetPlayerStanHeight
 /* 09689C 7F061D2C 8C84A120 */   lw    $a0, %lo(g_CurrentPlayer)($a0)
 /* 0968A0 7F061D30 44050000 */  mfc1  $a1, $f0
 /* 0968A4 7F061D34 0FC1A2B8 */  jal   sub_GAME_7F068508
@@ -12739,7 +13009,7 @@ weapon_bullet_type_shotgun_mine:
 /* 0946A4 7F061CB4 3C048007 */  lui   $a0, %hi(g_CurrentPlayer) # $a0, 0x8007
 /* 0946A8 7F061CB8 51E00046 */  beql  $t7, $zero, .L7F061DD4
 /* 0946AC 7F061CBC 8FBF0034 */   lw    $ra, 0x34($sp)
-/* 0946B0 7F061CC0 0FC22638 */  jal   bondviewGetPlayerClippingHeight
+/* 0946B0 7F061CC0 0FC22638 */  jal   bondviewGetPlayerStanHeight
 /* 0946B4 7F061CC4 8C848BC0 */   lw    $a0, %lo(g_CurrentPlayer)($a0)
 /* 0946B8 7F061CC8 44050000 */  mfc1  $a1, $f0
 /* 0946BC 7F061CCC 0FC1A31A */  jal   sub_GAME_7F068508
@@ -12829,8 +13099,8 @@ weapon_bullet_type_shotgun_mine:
 
 void bondwalkFireBothHands(void)
 {
-    handles_firing_or_throwing_weapon_in_hand(RIGHT_HAND);
-    handles_firing_or_throwing_weapon_in_hand(LEFT_HAND);
+    handles_firing_or_throwing_weapon_in_hand(GUNRIGHT);
+    handles_firing_or_throwing_weapon_in_hand(GUNLEFT);
 }
 
 
@@ -12846,10 +13116,25 @@ void bondwalkFireBothHands(void)
  * 
  * Address 0x7F061948.
 */
-void sub_GAME_7F061948(struct ChrRecord_f180 *arg0, ITEM_IDS item, struct coord3d *arg2, struct coord3d *arg3)
+void sub_GAME_7F061948(struct ChrRecord_f180 *arg0, ITEM_IDS item, coord3d *arg2, coord3d *arg3)
 {
     f32 phi_f12_2;
 
+    //arg0->pos.x = arg2->x;
+    //arg0->pos.y = arg2->y;
+    //arg0->pos.z = arg2->z;
+
+    //arg0->delta.x = arg3->x - arg2->x;
+    //arg0->delta.y = arg3->y - arg2->y;
+    //arg0->delta.z = arg3->z - arg2->z;
+
+    //phi_f12_2 = sqrtf((arg0->delta.f[0] * arg0->delta.f[0]) + (arg0->delta.f[1] * arg0->delta.f[1]) + (arg0->delta.f[2] * arg0->delta.f[2]));
+ 
+    //arg0->delta.x *= 1.0f / phi_f12_2;
+    //arg0->delta.y *= 1.0f / phi_f12_2;
+    //arg0->delta.z *= 1.0f / phi_f12_2;
+
+    
     arg0->pos.f[0] = arg2->f[0];
     arg0->pos.f[1] = arg2->f[1];
     arg0->pos.f[2] = arg2->f[2];
@@ -18077,7 +18362,7 @@ glabel sub_GAME_7F064720
  * 
  * Address 0x7F064774.
 */
-void recall_joy2_hits_edit_flag(s32 arg0, struct coord3d *arg1, s32 arg2)
+void recall_joy2_hits_edit_flag(s32 arg0, coord3d *arg1, s32 arg2)
 {
 
 }
@@ -27386,8 +27671,8 @@ void analyzeGEKey(void)
    	    DISPLAYSTRINGLOWERLEFT(get_textptr_for_textID(TEXT(LGUN, 0xD8))); //Analyzing the GoldenEye key...
     	g_CurrentPlayer->copiedgoldeneye = 1;
     	sndPlaySfx(g_musicSfxBufferPtr, 0xf5, 0x0);
-    	draw_item_in_hand_has_more_ammo(RIGHT_HAND, ITEM_GOLDENEYEKEY);
-    	draw_item_in_hand_has_more_ammo(LEFT_HAND, ITEM_UNARMED);
+    	draw_item_in_hand_has_more_ammo(GUNRIGHT, ITEM_GOLDENEYEKEY);
+    	draw_item_in_hand_has_more_ammo(GUNLEFT, ITEM_UNARMED);
   	}
   	else
   	{
@@ -27413,8 +27698,8 @@ void give_weapon_case_items(void)
   display_text_for_weapon_in_lower_left_corner(ITEM_SNIPERRIFLE);
   give_cur_player_ammo(sniperrifle_stats.AmmoType, check_cur_player_ammo_amount_in_inventory(sniperrifle_stats.AmmoType) + sniperrifle_stats.MagSize);
   inventory_remove_item_by_id(ITEM_WEAPONCASE);
-  draw_item_in_hand_has_more_ammo(RIGHT_HAND,ITEM_SNIPERRIFLE);
-  draw_item_in_hand_has_more_ammo(LEFT_HAND,ITEM_UNARMED);
+  draw_item_in_hand_has_more_ammo(GUNRIGHT,ITEM_SNIPERRIFLE);
+  draw_item_in_hand_has_more_ammo(GUNLEFT,ITEM_UNARMED);
 }
 
 
@@ -28913,15 +29198,15 @@ void sub_GAME_7F067AA4(s32 param_1)
 }
 
 
-void sub_GAME_7F067AB4(struct coord3d *param_1)
+void sub_GAME_7F067AB4(coord3d *param_1)
 {
-  g_CurrentPlayer->hands[RIGHT_HAND].field_A38 = sub_GAME_7F05DCB8(RIGHT_HAND) + param_1->x;
-  g_CurrentPlayer->hands[RIGHT_HAND].field_A3C = param_1->y;
-  g_CurrentPlayer->hands[RIGHT_HAND].field_A40 = param_1->z;
+  g_CurrentPlayer->hands[GUNRIGHT].field_A38 = sub_GAME_7F05DCB8(GUNRIGHT) + param_1->x;
+  g_CurrentPlayer->hands[GUNRIGHT].field_A3C = param_1->y;
+  g_CurrentPlayer->hands[GUNRIGHT].field_A40 = param_1->z;
 
-  g_CurrentPlayer->hands[LEFT_HAND].field_A38 = sub_GAME_7F05DCB8(LEFT_HAND) + param_1->x;
-  g_CurrentPlayer->hands[LEFT_HAND].field_A3C = param_1->y;
-  g_CurrentPlayer->hands[LEFT_HAND].field_A40 = param_1->z;
+  g_CurrentPlayer->hands[GUNLEFT].field_A38 = sub_GAME_7F05DCB8(GUNLEFT) + param_1->x;
+  g_CurrentPlayer->hands[GUNLEFT].field_A3C = param_1->y;
+  g_CurrentPlayer->hands[GUNLEFT].field_A40 = param_1->z;
 
 }
 
@@ -29919,13 +30204,13 @@ glabel sub_GAME_7F0680D4
 /**
  * Address 0x7F068190.
 */
-void sub_GAME_7F068190(struct coord3d *arg0, struct coord3d *arg1)
+void sub_GAME_7F068190(coord3d *zeropos, coord3d *vec)
 {
-    arg0->f[0] = 0.0f;
-    arg0->f[1] = 0.0f;
-    arg0->f[2] = 0.0f;
+    zeropos->x = 0.0f;
+    zeropos->y = 0.0f;
+    zeropos->z = 0.0f;
 
-    sub_GAME_7F077EEC(&g_CurrentPlayer->crosshair_angle, arg1, 1.0f);
+    sub_GAME_7F077EEC(&g_CurrentPlayer->crosshair_angle, vec, 1.0f);
 }
 
 
@@ -29971,7 +30256,7 @@ void sub_GAME_7F0681CC(void *arg0, s32 arg1, s32 arg2) {
     if (sp1C < 0)
     {
         // Node 4
-        phi_f10 = (temp_f10 + 4294967296.0f);
+        phi_f10 = (temp_f10 + M_U32_MAX_VALUE_F);
     }
     // Node 5
     temp_f16 = (f32) temp_ret;
@@ -29979,7 +30264,7 @@ void sub_GAME_7F0681CC(void *arg0, s32 arg1, s32 arg2) {
     if (temp_ret < 0)
     {
         // Node 6
-        phi_f16 = (temp_f16 + 4294967296.0f);
+        phi_f16 = (temp_f16 + M_U32_MAX_VALUE_F);
     }
     // Node 7
     sp20 = (f32) ((phi_f16 * 2.3283064365386963e-10f) * ((phi_f10 * 2.3283064365386963e-10f) - 0.5f));
@@ -29992,7 +30277,7 @@ void sub_GAME_7F0681CC(void *arg0, s32 arg1, s32 arg2) {
     if (sp1C < 0)
     {
         // Node 8
-        phi_f8 = (temp_f8 + 4294967296.0f);
+        phi_f8 = (temp_f8 + M_U32_MAX_VALUE_F);
     }
     // Node 9
     temp_f16_2 = (f32) temp_ret_2;
@@ -30000,7 +30285,7 @@ void sub_GAME_7F0681CC(void *arg0, s32 arg1, s32 arg2) {
     if (temp_ret_2 < 0)
     {
         // Node 10
-        phi_f16_2 = (temp_f16_2 + 4294967296.0f);
+        phi_f16_2 = (temp_f16_2 + M_U32_MAX_VALUE_F);
     }
     // Node 11
     sp20 = (f32) ((phi_f16_2 * 2.3283064365386963e-10f) * ((phi_f8 * 2.3283064365386963e-10f) - 0.5f));
@@ -32457,14 +32742,15 @@ glabel sub_GAME_7F06908C
 #endif
 #endif
 
-void set_unset_ammo_on_screen_setting(s32 flags, s32 isset) {
+void set_unset_ammo_on_screen_setting(s32 flags, bool unset) {
 
-	if (isset) {
-		g_CurrentPlayer->somekinda_flags = (g_CurrentPlayer->somekinda_flags & ~flags);
+	if (unset)
+    {
+		g_CurrentPlayer->somekinda_flags &= ~flags;
 		return;
 	}
 
-	g_CurrentPlayer->somekinda_flags = (g_CurrentPlayer->somekinda_flags | flags);
+	g_CurrentPlayer->somekinda_flags |= flags;
 }
 
 #ifdef NONMATCHING
@@ -32634,21 +32920,20 @@ glabel give_cur_player_ammo
 
 
 
-s32 check_cur_player_ammo_amount_in_inventory(AMMOTYPES ammotype) {
+s32 check_cur_player_ammo_amount_in_inventory(AMMOTYPE ammotype) {
     return g_CurrentPlayer->ammoheldarr[ammotype];
 }
 
-
-s32 check_cur_player_ammo_amount_total(AMMOTYPES ammotype) {
+s32 check_cur_player_ammo_amount_total(AMMOTYPE ammotype) {
 
     s32 total_ammo = check_cur_player_ammo_amount_in_inventory(ammotype);
 
-    if (get_ammo_type_for_weapon(get_item_in_hand(RIGHT_HAND)) == ammotype) {
-        total_ammo += get_ammo_in_hands_magazine(RIGHT_HAND);
+    if (get_ammo_type_for_weapon(get_item_in_hand(GUNRIGHT)) == ammotype) {
+        total_ammo += get_ammo_in_hands_magazine(GUNRIGHT);
     }
 
-    if (get_ammo_type_for_weapon(get_item_in_hand(LEFT_HAND)) == ammotype) {
-        total_ammo += get_ammo_in_hands_magazine(LEFT_HAND);
+    if (get_ammo_type_for_weapon(get_item_in_hand(GUNLEFT)) == ammotype) {
+        total_ammo += get_ammo_in_hands_magazine(GUNLEFT);
     }
 
     return total_ammo;
@@ -32951,25 +33236,25 @@ void *microcode_generation_ammo_related(void *arg0, void *arg1, f32 arg2, f32 ar
     // Node 0
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0xc0;
-    *arg0 = 0xba000602;
+    *arg0 = 0xba000602; //gDPSetColorDither(glistp++, G_CD_MAGICSQ);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0;
-    *arg0 = 0xba001301;
+    *arg0 = 0xba001301;//gDPSetTexturePersp(glistp++, G_TP_NONE);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0;
     *arg0 = 0xb9000002;
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0;
-    *arg0 = 0xba001001;
+    *arg0 = 0xba001001;//gDPSetTextureLOD(glistp++, G_TL_TILE);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0;
-    *arg0 = 0xba000c02;
+    *arg0 = 0xba000c02;//gDPSetTextureFilter(glistp++, G_TF_POINT);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0xc00;
-    *arg0 = 0xba000903;
+    *arg0 = 0xba000903;//gDPSetTextureConvert(glistp++, G_TC_CONV);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0;
-    *arg0 = 0xba000e02;
+    *arg0 = 0xba000e02;//gDPSetTextureLUT(glistp++, G_TT_NONE);
     phi_t9 = ((s32) arg1->unk4 >> 1);
     if (arg1->unk4 < 0)
     {
@@ -32994,7 +33279,7 @@ void *microcode_generation_ammo_related(void *arg0, void *arg1, f32 arg2, f32 ar
         if (arg1->unk5 < 0)
         {
             // Node 6
-            phi_f4 = (temp_f4_2 + 4294967296.0f);
+            phi_f4 = (temp_f4_2 + M_U32_MAX_VALUE_F);
         }
         // Node 7
         spB4 = (f32) (arg3 - (phi_f4 * 0.5f));
@@ -33007,7 +33292,7 @@ void *microcode_generation_ammo_related(void *arg0, void *arg1, f32 arg2, f32 ar
         if (arg1->unk5 < 0)
         {
             // Node 9
-            phi_f18 = (temp_f18 + 4294967296.0f);
+            phi_f18 = (temp_f18 + M_U32_MAX_VALUE_F);
         }
         // Node 10
         phi_t2 = ((s32) arg1->unk5 >> 1);
@@ -33029,7 +33314,7 @@ void *microcode_generation_ammo_related(void *arg0, void *arg1, f32 arg2, f32 ar
     if (arg1->unk4 < 0)
     {
         // Node 14
-        phi_f18_2 = (temp_f18_2 + 4294967296.0f);
+        phi_f18_2 = (temp_f18_2 + M_U32_MAX_VALUE_F);
     }
     // Node 15
     spA8 = (f32) (phi_f18_2 * 0.5f);
@@ -33038,22 +33323,22 @@ void *microcode_generation_ammo_related(void *arg0, void *arg1, f32 arg2, f32 ar
     if (arg1->unk5 < 0)
     {
         // Node 16
-        phi_f16 = (temp_f16 + 4294967296.0f);
+        phi_f16 = (temp_f16 + M_U32_MAX_VALUE_F);
     }
     // Node 17
     arg0 = (void *) (arg0 + 8);
     spAC = (f32) (phi_f16 * 0.5f);
     arg0->unk4 = 0;
-    *arg0 = 0xe7000000;
+    *arg0 = 0xe7000000;//gDPPipeSync(glistp++);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0;
-    *arg0 = 0xba001402;
+    *arg0 = 0xba001402;//gDPSetCyceType(glistp++, G_CYC_1CYCLE);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0x504240;
-    *arg0 = 0xb900031d;
+    *arg0 = 0xb900031d;//gDPSetRenderMode(glistp++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0xfffdf6fb;
-    *arg0 = 0xfcffffff;
+    *arg0 = 0xfcffffff;//gDPSetCombineMode(glistp++, PRIMITIVE, PRIMITIVE2);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0;
     *arg0 = 0xfa000000;
@@ -33071,25 +33356,25 @@ void *microcode_generation_ammo_related(void *arg0, void *arg1, f32 arg2, f32 ar
     display_image_at_on_screen_coord(&arg0, &spB0, &spA8, arg1->unk4, (s32) arg1->unk5, 0, 0, 1, arg8, arg9, argA, argB, (s32) (0 < arg1->unk6), 0);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0;
-    *arg0 = 0xe7000000;
+    *arg0 = 0xe7000000;//gDPPipeSync(glistp++);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0x40;
-    *arg0 = 0xba000602;
+    *arg0 = 0xba000602;//gDPSetColorDither(glistp++, G_CD_BAYER);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0x80000;
-    *arg0 = 0xba001301;
+    *arg0 = 0xba001301;//gDPSetTexturePersp(glistp++, G_TP_PERSP);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0;
     *arg0 = 0xb9000002;
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0x10000;
-    *arg0 = 0xba001001;
+    *arg0 = 0xba001001;//gDPSetTextureLOD(glistp++, G_TL_LOD);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0x2000;
-    *arg0 = 0xba000c02;
+    *arg0 = 0xba000c02;//gDPSetTextureFilter(glistp++, G_TF_BILERP);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0xc00;
-    *arg0 = 0xba000903;
+    *arg0 = 0xba000903;//gDPSetTextureConvert(glistp++, G_TC_FILT);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0;
     *arg0 = 0xba000e02;
@@ -35456,15 +35741,15 @@ glabel sub_GAME_7F06A334
 
 
 
-
-void set_unset_bitflags(s32 bitflags, s32 flag) {
-
-    if (flag != 0) {
-        g_CurrentPlayer->somekinda_bitflags = (g_CurrentPlayer->somekinda_bitflags & ~bitflags);
+void set_unset_bitflags(s32 bitflags, bool unset)
+{
+    if (unset)
+    {
+        g_CurrentPlayer->somekinda_bitflags &= ~bitflags;
         return;
     }
 
-    g_CurrentPlayer->somekinda_bitflags = (g_CurrentPlayer->somekinda_bitflags | bitflags);
+    g_CurrentPlayer->somekinda_bitflags |= bitflags;
 }
 
 

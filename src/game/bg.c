@@ -1,21 +1,21 @@
-#include "ultra64.h"
-#include "PR/os.h"
-#include "include/PR/gbi.h"
-#include "bondconstants.h"
-#include "deb.h"
-#include "fr.h"
-#include "memp.h"
-#include "game/bg.h"
-#include "game/bondview.h"
-#include "game/debugmenu_handler.h"
-#include "game/decompress.h"
-#include "game/fog.h"
-#include "game/lvl.h"
-#include "game/math_ceil.h"
-#include "game/matrixmath.h"
-#include "game/player.h"
-#include "game/unk_09C250.h"
-#include "game/unk_0BC530.h"
+#include <ultra64.h>
+#include <PR/os.h>
+#include <PR/gbi.h>
+#include <bondconstants.h>
+#include <deb.h>
+#include <fr.h>
+#include <memp.h>
+#include "bg.h"
+#include "bondview.h"
+#include "debugmenu_handler.h"
+#include "decompress.h"
+#include "fog.h"
+#include "lvl.h"
+#include "math_ceil.h"
+#include "matrixmath.h"
+#include "player.h"
+#include "unk_09C250.h"
+#include "unk_0BC530.h"
 
 
 
@@ -26,7 +26,7 @@
 s32 ptr_bg_data;
 
 //CODE.bss:8007BF94
-s32 ptr_clipping;
+s32 gptr_stan;
 
 /**
  * address 8007BF98
@@ -148,20 +148,25 @@ char table_for_portals[0xFA0];
 
 
 // data
-//D:800413F0
+/* D:800413F0 Level gCurrentLevel = {0, 1.0, 1.0, 1.0, 1}; cant check this
+   anymore however will concede seperate vars since below gets match? */
 s32 *ptr_bg_c_debug_debug_notice_list = 0;
 //D:800413F4
 f32 room_data_float1 = 1.0;
 //D:800413F8
 f32 room_data_float2 = 1.0;
-//D:800413FC
-f32 D_800413FC = 1.0;
+//D:800413FC Private member - use bgGetLevelVisibilityScale outside this file
+f32 mCurrentLevelVisibilityScale = 1.0;
 //D:80041400
 s32 levelentry_index = 1;
 
 /**
  * Something related to player screen.
  * Maybe x, y, width, height.
+ * DefaultScreenXMin = 1; //always 1 (related to getvideosettings) Xmin
+ * DefaultScreenYMin = 1; //always 1 (related to getvideosettings)Ymin
+ * SubtractFromWidth = -1; //always -1 (related to getvideosettings)
+ * SubtractFromHeight = -1; //always -1 (related to getvideosettings)
  * Address 0x80041404.
  */
 s32 bgViewRelated[] = { 1, 1, -1, -1 };
@@ -170,7 +175,7 @@ s32 bgViewRelated[] = { 1, 1, -1, -1 };
 s_room_info array_room_info[0x8b] = {0};
 s32 MaxNumRooms = 0x8b ;
 #else
-//D:80041414
+//D:80041414 //This is why 150 is room limit
 s_room_info array_room_info[0x96] = {0};
 //D:800442F4
 s32 MaxNumRooms = 0x96 ;
@@ -250,8 +255,8 @@ s32 eu_cdata_0x1f0d4 = 0;
 
 //D:80044840
 Lights1 GlobalLight = gdSPDefLights1(
-	150,150,150,        /* ambient color grey */ //D:80044840
-	255,255,255,
+    150,150,150,        /* ambient color grey */ //D:80044840
+    255,255,255,
     77,77,46    /* white light from the upper west-south-west (42 up, 244') */ //D:80044848
 );
 
@@ -360,24 +365,35 @@ Gfx *bgScissorCurrentPlayerView(Gfx *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 // end forward declarations
 
 
-// RenderMode/Combiner Look-Up-Tables
-// Looks for value on left, and replaces with correct value on right
-// eg 0x0C192078 = C8112078, or had they used macros gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2 )
-// The reason for this LUT is to dynamicly change the rendermode and combiner to FOG / NoFog or any other setting they might have wanted to test during development as it applies during runtime
-/*Reminder:
-	1cycle combiners repeat both cycles gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA2)
-				            (       -  )*     +  ,  (       -  )*     +
-	G_CC_MODULATERGBA2	    COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, 0 
-*/
 /*
-//New Defines to be added to gbi.h
-#define	ModulateRGB_EnvA 	TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT //custom combiner for triangle alpha
-#define	ModulateRGB_EnvA2 	COMBINED, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT //custom combiner for triangle alpha
-#define	ModulateRGBA_EnvA 	TEXEL0, 0, SHADE, 0, TEXEL0, 0, ENVIRONMENT, 0 //custom combiner for Texture*triangle alpha
-#define	ModulateRGBA_EnvA2 	COMBINED, 0, SHADE, 0, COMBINED, 0, ENVIRONMENT, 0 //custom combiner for texture*triangle alpha
-#define	SHADE_EnvA 		    0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT //custom combiner for triangle alpha
-#define	TLRGB_ATile1 		TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, 0, TEXEL1, 0
+    //###RenderMode / Combiner Look - Up - Tables
+    The reason for this LUT is to dynamicly change the rendermode and combiner to
+    FOG / NoFog or any other setting they might have wanted to test during development
+    as it applies during runtime
+
+//###Reminder:
+    1cycle combiners repeat both cycles
+    gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA2)
+
+    combiner macros are a list of parameters that form a mathematical sum.
+                            (       -  )*     +  ,  (       -  )*     +
+    G_CC_MODULATERGBA2	    COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, 0 
 */
+#if 0
+//New Defines to be added to gbi.h
+/*custom combiner for triangle alpha*/
+#define	ModulateRGB_EnvA 	TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT
+/*custom combiner for triangle alpha*/
+#define	ModulateRGB_EnvA2 	COMBINED, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT
+/*custom combiner for Texture*triangle alpha*/
+#define	ModulateRGBA_EnvA 	TEXEL0, 0, SHADE, 0, TEXEL0, 0, ENVIRONMENT, 0
+/*custom combiner for texture*triangle alpha*/
+#define	ModulateRGBA_EnvA2 	COMBINED, 0, SHADE, 0, COMBINED, 0, ENVIRONMENT, 0
+/*custom combiner for triangle alpha*/
+#define	SHADE_EnvA 		    0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT
+/*Tri-linear filter colour, flat tile alpha (for cutouts)*/
+#define TLRGB_ATile1        TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, 0, TEXEL1, 0 
+#endif
 //D:80044928
 Gfx D_80044928[] = {
     gsDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATEIA2),
@@ -425,9 +441,11 @@ Gfx FogDL_secondary_800449C8[] = {
     //Transparent Surface to FOG Transparent Surface
     gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_SURF2),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_SURF2),
+
     // Billboard Cut-out to FOG Billboard Cut-out - eg, Mario Tree or Depot lamp
-    0xB900031D, 0x0C193078,
-    0xB900031D, 0xC8113078,
+    gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_TEX_EDGE2),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
+    
     // Swap all refrences to Shade in Alpha to Environment
     gsDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATEIA2),
     gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  COMBINED, 0, SHADE, 0,  COMBINED, 0, ENVIRONMENT, 0),
@@ -447,8 +465,8 @@ Gfx FogDL_secondary_800449C8[] = {
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  0, 0, 0, ENVIRONMENT,  TEXEL0, 0, SHADE, 0,  0, 0, 0, ENVIRONMENT),
     gsDPSetCombineLERP(0, 0, 0, SHADE,  0, 0, 0, SHADE,  0, 0, 0, COMBINED,  0, 0, 0, COMBINED),
     gsDPSetCombineLERP(0, 0, 0, SHADE,  0, 0, 0, ENVIRONMENT,  0, 0, 0, COMBINED,  0, 0, 0, COMBINED),
-    gsDPSetCombineLERP(0, 0, 0, SHADE,  0, 0, 0, SHADE,  0, 0, 0, SHADE,  0, 0, 0, SHADE),
-    gsDPSetCombineLERP(0, 0, 0, SHADE,  0, 0, 0, ENVIRONMENT,  0, 0, 0, SHADE,  0, 0, 0, ENVIRONMENT),
+    gsDPSetCombineLERP(0, 0, 0, SHADE, 0, 0, 0, SHADE, 0, 0, 0, SHADE, 0, 0, 0, SHADE),//gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
+    gsDPSetCombineLERP(0, 0, 0, SHADE,  0, 0, 0, ENVIRONMENT,  0, 0, 0, SHADE,  0, 0, 0, ENVIRONMENT), //gsDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_SHADE_EnvA),
     // This one is an oddball... its extra here AND is weird using Tile1 only for Alpha
     gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  1, 0, TEXEL1, 0,  COMBINED, 0, SHADE, 0,  COMBINED, 0, SHADE, 0),
     gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  1, 0, TEXEL1, 0,  COMBINED, 0, SHADE, 0,  COMBINED, 0, ENVIRONMENT, 0),   
@@ -458,6 +476,7 @@ Gfx FogDL_secondary_800449C8[] = {
 
 //D:80044AB0
 // Loaded once on first time entering level, only once ever
+// Swap all refrences to Shade in Alpha to Environment
 Gfx D_80044AB0[] = {
     gsDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATEIA2),
     gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  COMBINED, 0, SHADE, 0,  COMBINED, 0, ENVIRONMENT, 0),
@@ -484,6 +503,7 @@ Gfx D_80044AB0[] = {
 
 //D:80044B58
 // Loaded once on first time entering level, only once ever
+// Swap all refrences to Shade in Alpha to Environment
 Gfx D_80044B58[] = {
     gsDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATEIA2),
     gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  COMBINED, 0, SHADE, 0,  COMBINED, 0, ENVIRONMENT, 0),
@@ -522,20 +542,20 @@ Gfx BillboardDL_80044C00[] = {
 Gfx ParticleDL_80044C28[] = {
     0xB900031D, 0x00552078, 0xB900031D, 0x00502078, 
     0xB900031D, 0x0C192078, 0xB900031D, 0x0C182078,
-	/*
-	//1 Cycle Opa to Particle
-	gDPSetRenderMode(RM_AA_ZB_OPA_SURF, RM_AA_ZB_OPA_SURF2), gDPSetRenderMode(G_RM_AA_ZB_PCL_SURF, G_RM_AA_ZB_PCL_SURF2),
-	//2 cycle Opa to Particle
-	gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_OPA_SURF2), gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_PCL_SURF2),
-	*/
+    /*
+    //1 Cycle Opa to Particle
+    gsDPSetRenderMode(RM_AA_ZB_OPA_SURF, RM_AA_ZB_OPA_SURF2), gDPSetRenderMode(G_RM_AA_ZB_PCL_SURF, G_RM_AA_ZB_PCL_SURF2),
+    //2 cycle Opa to Particle
+    gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_OPA_SURF2), gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_PCL_SURF2),
+    */
     0x0, 0
 };
 
 //D:80044C50
 Gfx transparent2cloudDL_80044C50[] = {
-	//Transparent to Cloud (Saves AA - Stops Jaggies from appearing behind BillBoard)
-	gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_SURF2), gsDPSetRenderMode(G_RM_PASS, G_RM_ZB_CLD_SURF2),
-	0,0
+    //Transparent to Cloud (Saves AA - Stops Jaggies from appearing behind BillBoard)
+    gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_SURF2), gsDPSetRenderMode(G_RM_PASS, G_RM_ZB_CLD_SURF2),
+    0,0
 };
 
 //D:80044C68
@@ -548,17 +568,17 @@ Gfx WalletBondDL_80044C68[] = {
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE,  TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE,  0, 0, 0, COMBINED,  0, 0, 0, COMBINED),
     /*
-	//1 Cycle particle Surface to 2 Cycle colour + 1-a*Fog ???
-	gsDPSetCycleType(G_CYC_2CYCLE),
-	gDPSetRenderMode(G_RM_AA_PCL_SURF, G_RM_AA_PCL_SURF2), gDPSetRenderMode(AA_EN | IM_RD | CVG_DST_CLAMP | ALPHA_CVG_SEL | ZMODE_OPA | GBL_c1(G_BL_CLR_IN, G_BL_A_SHADE, G_BL_CLR_FOG, G_BL_1MA) | GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_1MA)),
-	gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_PASS2), gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2),
-	*/
-	0x0, 0
+    //1 Cycle particle Surface to 2 Cycle colour + 1-a*Fog ???
+    gsDPSetCycleType(G_CYC_2CYCLE),
+    gsDPSetRenderMode(G_RM_AA_PCL_SURF, G_RM_AA_PCL_SURF2), gDPSetRenderMode(AA_EN | IM_RD | CVG_DST_CLAMP | ALPHA_CVG_SEL | ZMODE_OPA | GBL_c1(G_BL_CLR_IN, G_BL_A_SHADE, G_BL_CLR_FOG, G_BL_1MA) | GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_1MA)),
+    gsDPSetCombineMode(G_CC_MODULATERGBA, G_CC_PASS2), gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2),
+    */
+    0x0, 0
 };
 
 //D:80044CA0
 Gfx D_80044CA0[] = {
-	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE,  TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE,  TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE),
     gsDPSetCombineLERP(TEXEL0, 0, SCALE, 0,  0, 0, 0, ENVIRONMENT,  TEXEL0, 0, SCALE, 0,  0, 0, 0, ENVIRONMENT),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0),
     gsDPSetCombineLERP(TEXEL0, 0, SCALE, 0,  TEXEL0, 0, ENVIRONMENT, 0,  TEXEL0, 0, SCALE, 0,  TEXEL0, 0, ENVIRONMENT, 0),
@@ -586,13 +606,26 @@ Gfx D_80044CA0[] = {
     gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  1, 0, TEXEL1, 0,  COMBINED, 0, SCALE, 0,  COMBINED, 0, ENVIRONMENT, 0),
     gsDPSetCombineLERP(0, 0, 0, SHADE,  0, 0, 0, SHADE,  0, 0, 0, COMBINED,  0, 0, 0, COMBINED),
     gsDPSetCombineLERP(CENTER, 0, SCALE, 0,  0, 0, 0, ENVIRONMENT,  0, 0, 0, COMBINED,  0, 0, 0, COMBINED),
-	0,0
+    0,0
 };
 
 //D:80044D88
 s32 *ptrDynamic_CC_RM_LUT[] = {
     &D_80044928, &FogDL_primary_80044940, &BillboardDL_80044C00, &ParticleDL_80044C28, &transparent2cloudDL_80044C50,
     &FogDL_secondary_800449C8, &D_80044AB0, &D_80044B58, &WalletBondDL_80044C68, &D_80044CA0
+};
+enum CCRMLUT
+{
+    CCRMLUT_UNKNOWN,
+    CCRMLUT_PRIMARY_ADDFOG,
+    CCRMLUT_BILLBOARD,
+    CCRMLUT_WATER,
+    CCRMLUT_CLOUD,
+    CCRMLUT_SECONDARY_ADDFOG,
+    CCRMLUT_PRIMARY,
+    CCRMLUT_SECONDARY,
+    CCRMLUT_WALLETBOND,
+    CCRMLUT_FIXFOGALPHA3
 };
 //D:80044DB0
 s32 D_80044DB0 = 0;
@@ -2410,8 +2443,8 @@ glabel load_bg_file
 /* 0E8DB0 7F0B4280 022A5821 */  addu  $t3, $s1, $t2
 /* 0E8DB4 7F0B4284 0FC2F341 */  jal   _load_resource_named_to_membank
 /* 0E8DB8 7F0B4288 8D640008 */   lw    $a0, 8($t3)
-/* 0E8DBC 7F0B428C 3C108008 */  lui   $s0, %hi(ptr_clipping)
-/* 0E8DC0 7F0B4290 2610BF94 */  addiu $s0, %lo(ptr_clipping) # addiu $s0, $s0, -0x406c
+/* 0E8DBC 7F0B428C 3C108008 */  lui   $s0, %hi(gptr_stan)
+/* 0E8DC0 7F0B4290 2610BF94 */  addiu $s0, %lo(gptr_stan) # addiu $s0, $s0, -0x406c
 /* 0E8DC4 7F0B4294 AE020000 */  sw    $v0, ($s0)
 /* 0E8DC8 7F0B4298 00402025 */  move  $a0, $v0
 /* 0E8DCC 7F0B429C 00002825 */  move  $a1, $zero
@@ -2444,8 +2477,8 @@ glabel load_bg_file
 /* 0E8E38 7F0B4308 0FC08B87 */  jal    chrRemoved7F022E1C
 /* 0E8E3C 7F0B430C C5AC000C */   lwc1  $f12, 0xc($t5)
 /* 0E8E40 7F0B4310 8E4E0000 */  lw    $t6, ($s2)
-/* 0E8E44 7F0B4314 3C108004 */  lui   $s0, %hi(D_800413FC)
-/* 0E8E48 7F0B4318 261013FC */  addiu $s0, %lo(D_800413FC) # addiu $s0, $s0, 0x13fc
+/* 0E8E44 7F0B4314 3C108004 */  lui   $s0, %hi(mCurrentLevelVisibilityScale)
+/* 0E8E48 7F0B4318 261013FC */  addiu $s0, %lo(mCurrentLevelVisibilityScale) # addiu $s0, $s0, 0x13fc
 /* 0E8E4C 7F0B431C 01D40019 */  multu $t6, $s4
 /* 0E8E50 7F0B4320 00007812 */  mflo  $t7
 /* 0E8E54 7F0B4324 022FC021 */  addu  $t8, $s1, $t7
@@ -2881,8 +2914,8 @@ glabel load_bg_file
 /* 0E5FAC 7F0B35BC 022A5821 */  addu  $t3, $s1, $t2
 /* 0E5FB0 7F0B35C0 0FC2F053 */  jal   _load_resource_named_to_membank
 /* 0E5FB4 7F0B35C4 8D640008 */   lw    $a0, 8($t3)
-/* 0E5FB8 7F0B35C8 3C108007 */  lui   $s0, %hi(ptr_clipping) # $s0, 0x8007
-/* 0E5FBC 7F0B35CC 26109EE4 */  addiu $s0, %lo(ptr_clipping) # addiu $s0, $s0, -0x611c
+/* 0E5FB8 7F0B35C8 3C108007 */  lui   $s0, %hi(gptr_stan) # $s0, 0x8007
+/* 0E5FBC 7F0B35CC 26109EE4 */  addiu $s0, %lo(gptr_stan) # addiu $s0, $s0, -0x611c
 /* 0E5FC0 7F0B35D0 AE020000 */  sw    $v0, ($s0)
 /* 0E5FC4 7F0B35D4 00402025 */  move  $a0, $v0
 /* 0E5FC8 7F0B35D8 00002825 */  move  $a1, $zero
@@ -2915,8 +2948,8 @@ glabel load_bg_file
 /* 0E6034 7F0B3644 0FC08B79 */  jal   chrRemoved7F022E1C
 /* 0E6038 7F0B3648 C5AC000C */   lwc1  $f12, 0xc($t5)
 /* 0E603C 7F0B364C 8E4E0000 */  lw    $t6, ($s2)
-/* 0E6040 7F0B3650 3C108004 */  lui   $s0, %hi(D_800413FC) # $s0, 0x8004
-/* 0E6044 7F0B3654 2610AC4C */  addiu $s0, %lo(D_800413FC) # addiu $s0, $s0, -0x53b4
+/* 0E6040 7F0B3650 3C108004 */  lui   $s0, %hi(mCurrentLevelVisibilityScale) # $s0, 0x8004
+/* 0E6044 7F0B3654 2610AC4C */  addiu $s0, %lo(mCurrentLevelVisibilityScale) # addiu $s0, $s0, -0x53b4
 /* 0E6048 7F0B3658 01D40019 */  multu $t6, $s4
 /* 0E604C 7F0B365C 00007812 */  mflo  $t7
 /* 0E6050 7F0B3660 022FC021 */  addu  $t8, $s1, $t7
@@ -3320,9 +3353,9 @@ glabel sub_GAME_7F0B4848
 
 
 
-
-f32 sub_GAME_7F0B4878(void) {
-    return D_800413FC;
+//sub_GAME_7F0B4878
+f32 bgGetLevelVisibilityScale(void) {
+    return mCurrentLevelVisibilityScale;
 }
 
 
@@ -4027,7 +4060,7 @@ void sub_GAME_7F0B5208(s32 arg0, void *arg1) {
 
     // Node 0
     viGetZRange(&sp3C);
-    sp40 = (f32) (sp40 / D_800413FC);
+    sp40 = (f32) (sp40 / mCurrentLevelVisibilityScale);
     phi_v1 = 0;
     phi_a2 = ((arg0 * 0x50) + &array_room_info);
     phi_s6_2 = 0;
@@ -4222,8 +4255,8 @@ glabel sub_GAME_7F0B5208
 /* 0E9D78 7F0B5248 0000A825 */  move  $s5, $zero
 /* 0E9D7C 7F0B524C 0C0011AB */  jal   viGetZRange
 /* 0E9D80 7F0B5250 27A4003C */   addiu $a0, $sp, 0x3c
-/* 0E9D84 7F0B5254 3C018004 */  lui   $at, %hi(D_800413FC)
-/* 0E9D88 7F0B5258 C42613FC */  lwc1  $f6, %lo(D_800413FC)($at)
+/* 0E9D84 7F0B5254 3C018004 */  lui   $at, %hi(mCurrentLevelVisibilityScale)
+/* 0E9D88 7F0B5258 C42613FC */  lwc1  $f6, %lo(mCurrentLevelVisibilityScale)($at)
 /* 0E9D8C 7F0B525C C7A40040 */  lwc1  $f4, 0x40($sp)
 /* 0E9D90 7F0B5260 8FAE0078 */  lw    $t6, 0x78($sp)
 /* 0E9D94 7F0B5264 3C188004 */  lui   $t8, %hi(array_room_info) 
@@ -4492,8 +4525,8 @@ glabel sub_GAME_7F0B5528
 /* 0EA0A4 7F0B5574 241E0001 */  li    $fp, 1
 /* 0EA0A8 7F0B5578 0C0011AB */  jal   viGetZRange
 /* 0EA0AC 7F0B557C 27A40098 */   addiu $a0, $sp, 0x98
-/* 0EA0B0 7F0B5580 3C018004 */  lui   $at, %hi(D_800413FC)
-/* 0EA0B4 7F0B5584 C42613FC */  lwc1  $f6, %lo(D_800413FC)($at)
+/* 0EA0B0 7F0B5580 3C018004 */  lui   $at, %hi(mCurrentLevelVisibilityScale)
+/* 0EA0B4 7F0B5584 C42613FC */  lwc1  $f6, %lo(mCurrentLevelVisibilityScale)($at)
 /* 0EA0B8 7F0B5588 C7A4009C */  lwc1  $f4, 0x9c($sp)
 /* 0EA0BC 7F0B558C 3C138008 */  lui   $s3, %hi(ptr_bgdata_portals)
 /* 0EA0C0 7F0B5590 8FB500B0 */  lw    $s5, 0xb0($sp)
@@ -5342,16 +5375,20 @@ s32 getMaxNumRooms(void) {
     return MaxNumRooms;
 }
 
-
-s32 getROOMID_Bitflags(int roomID)
+/*
+ * Return butflags0 (confirmed u8)
+ */
+u8 getROOMID_Bitflags(s32 roomID)
 {
-    return (s32)array_room_info[roomID].bitflags;
+    return array_room_info[roomID].bitflags0;
 }
 
-
-s32 getROOMID_Bitflags1(s32 roomID)
+/*
+ * Return butflags1 (confirmed u8)
+ */
+u8 getROOMID_Bitflags1(s32 roomID)
 {
-    return (s32)array_room_info[roomID].bitflags1;
+    return array_room_info[roomID].bitflags1;
 }
 
 
@@ -6308,12 +6345,12 @@ void sub_GAME_7F0B6368(s32 rooms) {
                     // Node 21
                     temp_a0 = phi_v1_3->unk8;
                     sp1C = (void *) phi_v1_3;
-                    sub_GAME_7F0BA640(temp_a0, (phi_v1_3->unk20 + temp_a0), 1);
+                    bgLoadFromDynamicCCRMLUT(temp_a0, (phi_v1_3->unk20 + temp_a0), CCRMLUT_PRIMARY_ADDFOG);
                     temp_v1_3 = phi_v1_3;
                     if (temp_v1_3->unkC != 0)
                     {
                         // Node 22
-                        sub_GAME_7F0BA640(temp_v1_3->unkC, (temp_v1_3->unk24 + temp_v1_3->unkC), 5);
+                        bgLoadFromDynamicCCRMLUT(temp_v1_3->unkC, (temp_v1_3->unk24 + temp_v1_3->unkC), CCRMLUT_SECONDARY_ADDFOG);
                     }
                 }
                 else
@@ -6321,12 +6358,12 @@ void sub_GAME_7F0B6368(s32 rooms) {
                     // Node 23
                     temp_a0_2 = phi_v1_3->unk8;
                     sp1C = (void *) phi_v1_3;
-                    sub_GAME_7F0BA640(temp_a0_2, (phi_v1_3->unk20 + temp_a0_2), 6);
+                    bgLoadFromDynamicCCRMLUT(temp_a0_2, (phi_v1_3->unk20 + temp_a0_2), CCRMLUT_PRIMARY);
                     temp_v1_4 = phi_v1_3;
                     if (temp_v1_4->unkC != 0)
                     {
                         // Node 24
-                        sub_GAME_7F0BA640(temp_v1_4->unkC, (temp_v1_4->unk24 + temp_v1_4->unkC), 7);
+                        bgLoadFromDynamicCCRMLUT(temp_v1_4->unkC, (temp_v1_4->unk24 + temp_v1_4->unkC), CCRMLUT_SECONDARY);
                     }
                 }
                 // Node 25
@@ -6469,7 +6506,7 @@ glabel sub_GAME_7F0B6368
 /* 0EB064 7F0B6534 8C6D0020 */  lw    $t5, 0x20($v1)
 /* 0EB068 7F0B6538 24060001 */  li    $a2, 1
 /* 0EB06C 7F0B653C AFA3001C */  sw    $v1, 0x1c($sp)
-/* 0EB070 7F0B6540 0FC2E990 */  jal   sub_GAME_7F0BA640
+/* 0EB070 7F0B6540 0FC2E990 */  jal   bgLoadFromDynamicCCRMLUT
 /* 0EB074 7F0B6544 01A42821 */   addu  $a1, $t5, $a0
 /* 0EB078 7F0B6548 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0EB07C 7F0B654C 8C64000C */  lw    $a0, 0xc($v1)
@@ -6477,7 +6514,7 @@ glabel sub_GAME_7F0B6368
 /* 0EB084 7F0B6554 00000000 */   nop   
 /* 0EB088 7F0B6558 8C6E0024 */  lw    $t6, 0x24($v1)
 /* 0EB08C 7F0B655C 24060005 */  li    $a2, 5
-/* 0EB090 7F0B6560 0FC2E990 */  jal   sub_GAME_7F0BA640
+/* 0EB090 7F0B6560 0FC2E990 */  jal   bgLoadFromDynamicCCRMLUT
 /* 0EB094 7F0B6564 01C42821 */   addu  $a1, $t6, $a0
 /* 0EB098 7F0B6568 1000000E */  b     .L7F0B65A4
 /* 0EB09C 7F0B656C 00000000 */   nop   
@@ -6485,7 +6522,7 @@ glabel sub_GAME_7F0B6368
 .L7F0B6574:
 /* 0EB0A4 7F0B6574 8C6F0020 */  lw    $t7, 0x20($v1)
 /* 0EB0A8 7F0B6578 AFA3001C */  sw    $v1, 0x1c($sp)
-/* 0EB0AC 7F0B657C 0FC2E990 */  jal   sub_GAME_7F0BA640
+/* 0EB0AC 7F0B657C 0FC2E990 */  jal   bgLoadFromDynamicCCRMLUT
 /* 0EB0B0 7F0B6580 01E42821 */   addu  $a1, $t7, $a0
 /* 0EB0B4 7F0B6584 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0EB0B8 7F0B6588 8C64000C */  lw    $a0, 0xc($v1)
@@ -6493,7 +6530,7 @@ glabel sub_GAME_7F0B6368
 /* 0EB0C0 7F0B6590 00000000 */   nop   
 /* 0EB0C4 7F0B6594 8C780024 */  lw    $t8, 0x24($v1)
 /* 0EB0C8 7F0B6598 24060007 */  li    $a2, 7
-/* 0EB0CC 7F0B659C 0FC2E990 */  jal   sub_GAME_7F0BA640
+/* 0EB0CC 7F0B659C 0FC2E990 */  jal   bgLoadFromDynamicCCRMLUT
 /* 0EB0D0 7F0B65A0 03042821 */   addu  $a1, $t8, $a0
 .L7F0B65A4:
 /* 0EB0D4 7F0B65A4 0FC2DA65 */  jal   sub_GAME_7F0B6994
@@ -6639,7 +6676,7 @@ glabel sub_GAME_7F0B6368
 /* 0E8260 7F0B5870 8C6D0020 */  lw    $t5, 0x20($v1)
 /* 0E8264 7F0B5874 24060001 */  li    $a2, 1
 /* 0E8268 7F0B5878 AFA3001C */  sw    $v1, 0x1c($sp)
-/* 0E826C 7F0B587C 0FC2E638 */  jal   sub_GAME_7F0BA640
+/* 0E826C 7F0B587C 0FC2E638 */  jal   bgLoadFromDynamicCCRMLUT
 /* 0E8270 7F0B5880 01A42821 */   addu  $a1, $t5, $a0
 /* 0E8274 7F0B5884 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0E8278 7F0B5888 8C64000C */  lw    $a0, 0xc($v1)
@@ -6647,7 +6684,7 @@ glabel sub_GAME_7F0B6368
 /* 0E8280 7F0B5890 00000000 */   nop   
 /* 0E8284 7F0B5894 8C6E0024 */  lw    $t6, 0x24($v1)
 /* 0E8288 7F0B5898 24060005 */  li    $a2, 5
-/* 0E828C 7F0B589C 0FC2E638 */  jal   sub_GAME_7F0BA640
+/* 0E828C 7F0B589C 0FC2E638 */  jal   bgLoadFromDynamicCCRMLUT
 /* 0E8290 7F0B58A0 01C42821 */   addu  $a1, $t6, $a0
 /* 0E8294 7F0B58A4 1000000E */  b     .L7F0B58E0
 /* 0E8298 7F0B58A8 00000000 */   nop   
@@ -6655,7 +6692,7 @@ glabel sub_GAME_7F0B6368
 .L7F0B58B0:
 /* 0E82A0 7F0B58B0 8C6F0020 */  lw    $t7, 0x20($v1)
 /* 0E82A4 7F0B58B4 AFA3001C */  sw    $v1, 0x1c($sp)
-/* 0E82A8 7F0B58B8 0FC2E638 */  jal   sub_GAME_7F0BA640
+/* 0E82A8 7F0B58B8 0FC2E638 */  jal   bgLoadFromDynamicCCRMLUT
 /* 0E82AC 7F0B58BC 01E42821 */   addu  $a1, $t7, $a0
 /* 0E82B0 7F0B58C0 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0E82B4 7F0B58C4 8C64000C */  lw    $a0, 0xc($v1)
@@ -6663,7 +6700,7 @@ glabel sub_GAME_7F0B6368
 /* 0E82BC 7F0B58CC 00000000 */   nop   
 /* 0E82C0 7F0B58D0 8C780024 */  lw    $t8, 0x24($v1)
 /* 0E82C4 7F0B58D4 24060007 */  li    $a2, 7
-/* 0E82C8 7F0B58D8 0FC2E638 */  jal   sub_GAME_7F0BA640
+/* 0E82C8 7F0B58D8 0FC2E638 */  jal   bgLoadFromDynamicCCRMLUT
 /* 0E82CC 7F0B58DC 03042821 */   addu  $a1, $t8, $a0
 .L7F0B58E0:
 /* 0E82D0 7F0B58E0 0FC2D734 */  jal   sub_GAME_7F0B6994

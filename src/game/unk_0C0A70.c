@@ -1,5 +1,5 @@
-#include "ultra64.h"
-#include "game/unk_0C0A70.h"
+#include <ultra64.h>
+#include "unk_0C0A70.h"
 
 // data
 s32 D_80048490 = -1;

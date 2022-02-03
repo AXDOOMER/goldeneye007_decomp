@@ -1,5 +1,5 @@
-#include "ultra64.h"
-#include "deb.h"
+#include <ultra64.h>
+#include <deb.h>
 #include "memp.h"
 #include "game/lvl_text.h"
 

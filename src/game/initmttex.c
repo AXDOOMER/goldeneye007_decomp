@@ -1,7 +1,7 @@
-#include "ultra64.h"
-#include "memp.h"
-#include "game/image.h"
-#include "game/initmttex.h"
+#include <ultra64.h>
+#include <memp.h>
+#include "image.h"
+#include "initmttex.h"
 
 void set_mt_tex_alloc(void)
 {  

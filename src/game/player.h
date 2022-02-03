@@ -1,9 +1,9 @@
 #ifndef _PLAYER_H_
 #define _PLAYER_H_
-#include "ultra64.h"
-#include "bondconstants.h"
-#include "bondtypes.h"
-#include "game/bondview.h"
+#include <ultra64.h>
+#include <bondconstants.h>
+#include <bondtypes.h>
+#include "bondview.h"
 
 struct player_data {
     /* 0x0 */

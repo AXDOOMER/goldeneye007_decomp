@@ -1,4 +1,4 @@
-#include "ultra64.h"
+#include <ultra64.h>
 
 /**
  * Math.Floor function for floating point value; rounds towards

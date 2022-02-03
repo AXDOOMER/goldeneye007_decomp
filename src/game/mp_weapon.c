@@ -1,6 +1,6 @@
-#include "ultra64.h"
-#include "bondconstants.h"
-#include "game/mp_weapon.h"
+#include <ultra64.h>
+#include <bondconstants.h>
+#include "mp_weapon.h"
 
 // data
 //D:80048670

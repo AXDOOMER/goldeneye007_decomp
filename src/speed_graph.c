@@ -1,4 +1,4 @@
-#include "ultra64.h"
+#include <ultra64.h>
 #include "unk_0C0A70.h"
 #include "debugmenu.h"
 
@@ -219,34 +219,34 @@ Gfx *speedGraphDisplay(Gfx *gdl)
         
         counters = get_counters();
 
-        debmenuSetPrimColor(255, 255, 255, 255);
+        debmenuSetFgColour(255, 255, 255, 255);
         debmenuSetEnvColor(0, 0, 0, 255);
 
         // utz %
-        debmenuSetPosition(8, 5);
+        debmenuSetPos(8, 5);
         sprintf(buffer, "utz %2.0f%%\n", (((counters[1] - counters[3]) * 100.0f) / counters[0]));
-        debmenuWriteString(buffer);
+        debmenuPrintString(buffer);
 
         // rsp %
-        debmenuSetPosition(8, 6);
+        debmenuSetPos(8, 6);
         sprintf(buffer, "rsp %2.0f%%\n", (((counters[0] - counters[1]) * 100.0f) / counters[0]));
-        debmenuWriteString(buffer);
+        debmenuPrintString(buffer);
 
         // tex %
-        debmenuSetPosition(8, 7);
+        debmenuSetPos(8, 7);
         sprintf(buffer, "tex %2.0f%%", ((counters[3] * 100.0f) / counters[0]));
-        debmenuWriteString(buffer);
+        debmenuPrintString(buffer);
 
         // hz (60 / framerate)
         // -- or 50 for PAL
-        debmenuSetPosition(28, 5);
+        debmenuSetPos(28, 5);
         sprintf(buffer, "%2d hz", ((speedgraphframes == 0) ? 0 : (VICLOCK / speedgraphframes)));
-        debmenuWriteString(buffer);
+        debmenuPrintString(buffer);
 
         // framerate
-        debmenuSetPosition(28, 6);
+        debmenuSetPos(28, 6);
         sprintf(buffer, "%2d frames", speedgraphframes);
-        debmenuWriteString(buffer);
+        debmenuPrintString(buffer);
 
         // (continues framerate output)
         if (speedgraphframes != g_speedGraphMaxSeenCount)
@@ -258,7 +258,7 @@ Gfx *speedGraphDisplay(Gfx *gdl)
             sprintf(buffer, "     ");
         }
 
-        debmenuWriteString(buffer);
+        debmenuPrintString(buffer);
         
         g_speedGraphMaxSeenCount = 0;
     }

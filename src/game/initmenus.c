@@ -1,9 +1,9 @@
-#include "ultra64.h"
-#include "memp.h"
-#include "game/front.h"
-#include "game/initmenus.h"
-#include "game/initintromatrices.h"
-#include "macro.h"
+#include <ultra64.h>
+#include <memp.h>
+#include "front.h"
+#include "initmenus.h"
+#include "initintromatrices.h"
+#include <macro.h>
 
 void init_menus_or_reset(void)
 {

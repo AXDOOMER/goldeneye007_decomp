@@ -1,7 +1,7 @@
 #ifndef _GLOBALIMAGETABLE_H_
 #define _GLOBALIMAGETABLE_H_
-#include "ultra64.h"
-#include "bondtypes.h"
+#include <ultra64.h>
+#include <bondtypes.h>
 
 enum MONIMGIDS {
     IMGBOND, //0x0
@@ -53,7 +53,7 @@ enum MONIMGIDS {
     IMGCUBE3,
     IMGCUBE4,
     IMGTRIANGLE, //0x30
-    IMGKEYBOARDKEY,
+    IMGKEYBOARDKEY
 };
 
 

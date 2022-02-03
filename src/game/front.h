@@ -1,8 +1,8 @@
 #ifndef _MAINMENU_H_
 #define _MAINMENU_H_
-#include "ultra64.h"
-#include "bondgame.h"
-#include "bondconstants.h"
+#include <ultra64.h>
+#include <bondgame.h>
+#include <bondconstants.h>
 
 struct legal_screen_text {
     int h_pos;
@@ -158,7 +158,7 @@ extern f32 flt_CODE_bss_80069614;
 //CODE.bss:80069618
 extern f32 flt_CODE_bss_80069618;
 //CODE.bss:80069620
-extern struct coord3d dword_CODE_bss_80069620[0x4];
+extern coord3d dword_CODE_bss_80069620[0x4];
 
 //CODE.bss:80069650
 extern u8 cheat_available[];

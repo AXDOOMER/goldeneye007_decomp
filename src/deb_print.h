@@ -1,7 +1,7 @@
 #ifndef _DEBUG_PRINT_H_
 #define _DEBUG_PRINT_H_
 
-#include "ultra64.h"
+#include <ultra64.h>
 
 
 #define STACK_POINTER_COUNT  5

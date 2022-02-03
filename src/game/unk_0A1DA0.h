@@ -1,6 +1,7 @@
 #ifndef _UNK_0A1DA0_H_
 #define _UNK_0A1DA0_H_
-#include "ultra64.h"
+#include <ultra64.h>
+#include <bondtypes.h>
 
 typedef struct s_something_explosiony {
     s32 field_0x0;
@@ -71,6 +72,6 @@ void sub_GAME_7F0A4824(Gfx *arg0, s32 arg1);
 Gfx * sub_GAME_7F0A2C44(Gfx *arg0);
 
 // tentative signature
-void *sub_GAME_7F0A3E1C(struct coord3d *arg0, s32 arg1, f32 arg2, s16 arg3);
+void *sub_GAME_7F0A3E1C(coord3d *arg0, s32 arg1, f32 arg2, s16 arg3);
 
 #endif

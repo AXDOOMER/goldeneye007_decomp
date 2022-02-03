@@ -1,3 +1,7 @@
+#ifdef DEBUG
+char* weapon_gun_unassigned_JointNames[] = {
+    "" };
+#endif
 //D:8003C720
 ModelJoint JOINTLIST(gun_unassigned)[] = {
     {0x0002, 0x0000, 0x0000}

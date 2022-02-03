@@ -1,7 +1,7 @@
-#include "ultra64.h"
-#include "game/file.h"
-#include "game/file2.h"
-#include "game/front.h"
+#include <ultra64.h>
+#include "file.h"
+#include "file2.h"
+#include "front.h"
 
 /* EEPROM masks for in-game settings */
 #define OPTION_INVERTLOOK    0x0001
@@ -37,6 +37,7 @@ s32 save_selected_bond[] = {0,0,0,0};
 //D:8002C520
 save_data D_8002C520 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0};
 //D:8002C580
+// Default Save
 save_data D_8002C580 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0};
 //D:8002C5E0
 save_data D_8002C5E0 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0};
@@ -132,7 +133,7 @@ void copyCurrentEEPROMtoStack(void)
   fileCopySaveIfSelectedBondDifferent(selected_folder_num);
 }
 
-u8 getSelectedFolderBond(void)
+s32 getSelectedFolderBond(void)
 {
   return fileGetBondForFolder(selected_folder_num);
 }
@@ -194,7 +195,7 @@ void store_favorite_weapon_current_player(u32 right,u32 left)
   u32 playerNum;
 
   playerNum = get_cur_playernum();
-  array_favweapon[playerNum][RIGHT_HAND] = right;
-  array_favweapon[playerNum][LEFT_HAND] = left;
+  array_favweapon[playerNum][GUNRIGHT] = right;
+  array_favweapon[playerNum][GUNLEFT] = left;
 }
 

@@ -1,10 +1,10 @@
 #include <ultra64.h>
-#include "include/PR/os.h"
-#include "include/PR/os_internal.h"
-#include "bondgame.h"
+#include <PR/os.h>
+#include <PR/os_internal.h>
+#include <bondgame.h>
 #include "boot.h"
 #include "sched.h"
-#include "rmon.h"
+#include "rmon.h" /*<PR/rmon.h>*/
 #include "tlb_resolve.h"
 #include "tlb_hardwire.h"
 #include "init.h"

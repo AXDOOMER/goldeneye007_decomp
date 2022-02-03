@@ -1,5 +1,5 @@
-#include "ultra64.h"
-#include "include/PR/os.h"
+#include <ultra64.h>
+#include <PR/os.h>
 #include "sched.h"
 #include "audi.h"
 #include "thread_config.h"

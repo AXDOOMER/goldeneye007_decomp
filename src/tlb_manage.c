@@ -1,8 +1,8 @@
-#include "ultra64.h"
+#include <ultra64.h>
 #include "ramrom.h"
 #include "tlb_manage.h"
 #include "tlb_random.h"
-#include "PR/os.h"
+#include <PR/os.h>
 
 /**
  * @file tlb_manage.c

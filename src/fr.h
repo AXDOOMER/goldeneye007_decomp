@@ -1,6 +1,6 @@
 #ifndef _VIDEO_H_
 #define _VIDEO_H_
-#include "ultra64.h"
+#include <ultra64.h>
 
 #define NUM_VIDEO_FRAME_BUFFERS    2
 #define NUM_VIDEO_SETTINGS         NUM_VIDEO_FRAME_BUFFERS

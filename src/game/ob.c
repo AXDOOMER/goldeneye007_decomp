@@ -1,10 +1,10 @@
-#include "ultra64.h"
-#include "game/ob.h"
-#include "deb.h"
-#include "memp.h"
-#include "assets/obseg/obseg.h"
-#include "game/decompress.h"
-#include "game/indy_comms.h"
+#include <ultra64.h>
+#include "ob.h"
+#include <deb.h>
+#include <memp.h>
+#include <assets/obseg/obseg.h>
+#include "decompress.h"
+#include "indy_comms.h"
 
 
 //bss
@@ -21,7 +21,7 @@ struct resource_lookup_data_entry resource_lookup_data_array[0x2e0]; /* 0x2e0 = 
 s32 ob_c_debug_notice_list_entry = 0;
 
 
-#include "assets/obseg/file_resource_table.inc.c"
+#include <assets/obseg/file_resource_table.inc.c>
 /* struct fileentry file_resource_table[] = 
    {
        blah;

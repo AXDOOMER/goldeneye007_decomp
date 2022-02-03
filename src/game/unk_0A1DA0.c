@@ -1,6 +1,6 @@
-#include "ultra64.h"
-#include "game/math_atan2f.h"
-#include "game/unk_0A1DA0.h"
+#include <ultra64.h>
+#include "math_atan2f.h"
+#include "unk_0A1DA0.h"
 
 // bss
 //CODE.bss:8007A160

@@ -1,6 +1,6 @@
-#include "ultra64.h"
-#include "PR/libaudio.h"
-#include "include/os_extension.h"
+#include <ultra64.h>
+#include <PR/libaudio.h>
+#include <os_extension.h>
 #include "music.h"
 #include "snd.h"
 
@@ -335,7 +335,7 @@ void sndHandleEvent(ALSndPlayer *sndp, ALSndpEvent *event)
         {
             case (AL_SNDP_PLAY_EVT):
             {
-                if ((state->unk3f == AL_UNKOWN_5) || (state->unk3f == AL_UNKOWN_4))
+                if ((state->playingState == AL_UNKOWN_5) || (state->playingState == AL_UNKOWN_4))
                 {
                     // comment copied from sndplayer: effect buss 0
                     vc.fxBus = 0;
@@ -354,7 +354,7 @@ void sndHandleEvent(ALSndPlayer *sndp, ALSndpEvent *event)
                     {
                         if ((state->unk3e & 0x12) || (state->unk38 > 0))
                         {
-                            state->unk3f = AL_UNKOWN_4;
+                            state->playingState = AL_UNKOWN_4;
                             state->unk38--;
                             alEvtqPostEvent(&sndp->evtq, (ALEvent*)event, DELTA_33_MS);
 
@@ -369,11 +369,11 @@ void sndHandleEvent(ALSndPlayer *sndp, ALSndpEvent *event)
                                 if (
                                     ((state->unk3e & 0x12) == 0)
                                     && (state->unk3e & 4)
-                                    && (tstate->unk3f != AL_UNKOWN_3))
+                                    && (tstate->playingState != AL_UNKOWN_3))
                                 {
                                     playAllocEvent.common.type = AL_SNDP_END_EVT;
                                     playAllocEvent.msg.state = tstate;
-                                    tstate->unk3f = AL_UNKOWN_3;
+                                    tstate->playingState = AL_UNKOWN_3;
                                     compare_result = 0;
                                     loopCheckVar[0] = tstate;
                                     
@@ -408,7 +408,7 @@ void sndHandleEvent(ALSndPlayer *sndp, ALSndpEvent *event)
                     state->unk3e = state->unk3e | 4;
                     alSynStartVoice(sndp->drvr, &state->voice, snd->wavetable);
 
-                    state->unk3f = AL_PLAYING;
+                    state->playingState = AL_PLAYING;
                     g_sndAllocatedVoicesCount++;
 
                     delta = (ALMicroTime)((f32)snd->envelope->attackTime / state->pitch_2c / state->pitch_28);
@@ -460,7 +460,7 @@ void sndHandleEvent(ALSndPlayer *sndp, ALSndpEvent *event)
                     || (state->unk3e & 0x2)
                 )
                 {
-                    switch (state->unk3f)
+                    switch (state->playingState)
                     {
                         case (AL_PLAYING):
                         {
@@ -474,7 +474,7 @@ void sndHandleEvent(ALSndPlayer *sndp, ALSndpEvent *event)
                                 stopEvent.common.type = AL_SNDP_END_EVT;
                                 stopEvent.msg.state = state;
                                 alEvtqPostEvent(&sndp->evtq, (ALEvent *)&stopEvent, delta);
-                                state->unk3f = AL_STOPPING;
+                                state->playingState = AL_STOPPING;
                             }
                             else
                             {
@@ -507,7 +507,7 @@ void sndHandleEvent(ALSndPlayer *sndp, ALSndpEvent *event)
             {
                 state->pan = event->pan32.pan32;
 
-                if (state->unk3f == AL_PLAYING)
+                if (state->playingState == AL_PLAYING)
                 {
                     vtmp = state->pan - AL_PAN_CENTER + snd->samplePan;
                     pan = (ALPan) MIN(MAX(vtmp, AL_PAN_LEFT), AL_PAN_RIGHT);
@@ -522,7 +522,7 @@ void sndHandleEvent(ALSndPlayer *sndp, ALSndpEvent *event)
             {
                 state->pitch_2c = event->pitch.pitch;
 
-                if (state->unk3f == AL_PLAYING)
+                if (state->playingState == AL_PLAYING)
                 {
                     alSynSetPitch(sndp->drvr, &state->voice, state->pitch_2c * state->pitch_28);
 
@@ -538,7 +538,7 @@ void sndHandleEvent(ALSndPlayer *sndp, ALSndpEvent *event)
             {
                 state->fxMix = event->fx32.mix32;
 
-                if (state->unk3f == AL_PLAYING)
+                if (state->playingState == AL_PLAYING)
                 {
                     vtmp = (state->fxMix + (keyMap->keyMax & 0xf)) * 8;
                     vtmp = MIN(AL_VOL_FULL, MAX(AL_DEFAULT_FXMIX, vtmp));
@@ -552,7 +552,7 @@ void sndHandleEvent(ALSndPlayer *sndp, ALSndpEvent *event)
             case (AL_SNDP_VOL_EVT):
             {
                 state->vol = event->vol.vol;
-                if (state->unk3f == AL_PLAYING)
+                if (state->playingState == AL_PLAYING)
                 {
                     tmp = g_sndSfxSlotVolume[keyMap->keyMin & 0x3f];
                     vol = state->vol;
@@ -578,7 +578,7 @@ void sndHandleEvent(ALSndPlayer *sndp, ALSndpEvent *event)
             
             case (AL_SNDP_RELEASE_EVT):
             {
-                if (state->unk3f == AL_PLAYING)
+                if (state->playingState == AL_PLAYING)
                 {
                     delta = ((f32)snd->envelope->releaseTime / state->pitch_28 / state->pitch_2c);
 
@@ -1633,7 +1633,7 @@ ALSoundState *sndSetupSound(struct ALBankAlt_s *soundBank, ALSound* sound)
         decayTimeFlag = (sound->envelope->decayTime == -1);
         state->priority = decayTimeFlag + 0x40;
 
-        state->unk3f = AL_UNKOWN_5;
+        state->playingState = AL_UNKOWN_5;
         state->unk38 = 2;
         state->sound = sound;
         state->pitch_2c = 1.0f;
@@ -1700,7 +1700,7 @@ void sndUnlinkClearSound(ALSoundState *state)
         g_sndAllocatedVoicesCount--;
     }
 
-    state->unk3f = AL_STOPPED;
+    state->playingState = AL_STOPPED;
 
     if (state->state != NULL)
     {
@@ -1727,18 +1727,18 @@ void sndSetPriority(ALSoundState *state, u8 priority)
 
 /**
  * 99F0    70008DF0
- *     V0= TRUE if SE playing flag set [A0+0x3F]
- *     value is set only when sound defaults have been set
- *     accepts: A0=p->SE buffer
+ * Gets Playing State if a state is available
+ * @param state: the state to check
+ * @return AL_PLAYSTATE
  */
 u8 sndGetPlayingState(ALSoundState *state)
 {
     if (state != NULL)
     {
-        return state->unk3f;
+        return state->playingState;
     }
 
-    return 0;
+    return AL_STOPPED;
 }
 
 /**

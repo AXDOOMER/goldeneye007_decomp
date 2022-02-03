@@ -1,32 +1,32 @@
-#include "include/os_extension.h"
-#include "assets/GlobalImageTable.h"
+#include <os_extension.h>
+#include <assets/GlobalImageTable.h>
 #include "assets/image_externs.h"
-#include "ultra64.h"
-#include "bondgame.h"
-#include "bondconstants.h"
-#include "boss.h"
-#include "fr.h"
+#include <ultra64.h>
+#include <bondgame.h>
+#include <bondconstants.h>
+#include <boss.h>
+#include <fr.h>
 #include "lvl_text.h"
-#include "joy.h"
-#include "music.h"
-#include "random.h"
-#include "snd.h"
-#include "game/bondview.h"
-#include "game/chr.h"
-#include "game/chr_b.h"
-#include "game/chrlv.h"
-#include "game/cheat_buttons.h"
-#include "game/chrobjdata.h"
-#include "game/file2.h"
-#include "game/front.h"
-#include "game/image_bank.h"
-#include "game/lvl.h"
-#include "game/mp_weapon.h"
-#include "game/math_floor.h"
-#include "game/player.h"
-#include "game/spectrum.h"
-#include "game/textrelated.h"
-#include "game/blood_animation.h"
+#include <joy.h>
+#include <music.h>
+#include <random.h>
+#include <snd.h>
+#include "bondview.h"
+#include "chr.h"
+#include "chr_b.h"
+#include "chrlv.h"
+#include "cheat_buttons.h"
+#include "chrobjdata.h"
+#include "file2.h"
+#include "front.h"
+#include "image_bank.h"
+#include "lvl.h"
+#include "mp_weapon.h"
+#include "math_floor.h"
+#include "player.h"
+#include "spectrum.h"
+#include "textrelated.h"
+#include "blood_animation.h"
 #include "game/othermodemicrocode.h"
 #include "game/bondwalk2.h"
 #include "game/file2.h"
@@ -107,7 +107,7 @@ f32 flt_CODE_bss_80069618;
 //CODE.bss:8006961C
 f32 flt_CODE_bss_8006961C;
 //CODE.bss:80069620
-struct coord3d dword_CODE_bss_80069620[0x4];
+coord3d dword_CODE_bss_80069620[0x4];
 
 //CODE.bss:80069650
 u8 cheat_available[CHEATS_TRACKED];
@@ -365,7 +365,7 @@ u32 D_8002AAEC = 0;
 u32 D_8002AAF0 = 0;
 u32 D_8002AAF4 = 0;
 u32 D_8002AAF8 = 0;
-struct coord3d D_8002AAFC = {0};
+coord3d D_8002AAFC = {0};
 //u32 D_8002AB00 = 0;
 //u32 D_8002AB04 = 0;
 u32 D_8002AB08 = 0;
@@ -1476,7 +1476,13 @@ void interface_menu00_legalscreen(void)
     viSetAspect(1.3333334f);
     viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(0);
-
+#if defined(ISGOLDFINGER) || defined(USEEXPANSION)
+    if (osGetMemSize != 0x00800000)
+    {
+        set_menu_to_mode(MENU_NO_CONTROLLERS, 1); //double up as No expansion pak window
+        return;
+    }
+#endif
     menu_timer += g_ClockTimer;
 
     if (menu_timer >= MENU_LEGALSCREEN_MENU_TIMER_MAX)
@@ -1781,7 +1787,7 @@ void constructor_menu17_switchscreens(Gfx * DL)
 #ifdef NONMATCHING
 void init_menu01_nintendo(void)
 {
-    struct coord3d local_c;
+    coord3d local_c;
 
     menu_timer = 0;
     local_c.x = D_8002AAFC.x;
@@ -3053,7 +3059,7 @@ loop_2:
         }
         if (PitemZ_entries.unkD08->unk8->unk54 != 0)
         {
-            sub_GAME_7F0BA640(PitemZ_entries.unkD08->unk8->unk54->unk4->unk1C + (PitemZ_entries.unkD08->unk8->unk54->unk4->unk0 & 0xffffff), 0, 8);
+            bgLoadFromDynamicCCRMLUT(PitemZ_entries.unkD08->unk8->unk54->unk4->unk1C + (PitemZ_entries.unkD08->unk8->unk54->unk4->unk0 & 0xffffff), 0, 8);
         }
     }
 }
@@ -3110,7 +3116,7 @@ glabel load_walletbond
 /* 040490 7F00B960 8C59001C */  lw    $t9, 0x1c($v0)
 /* 040494 7F00B964 24060008 */  li    $a2, 8
 /* 040498 7F00B968 01014824 */  and   $t1, $t0, $at
-/* 04049C 7F00B96C 0FC2E990 */  jal   sub_GAME_7F0BA640
+/* 04049C 7F00B96C 0FC2E990 */  jal   bgLoadFromDynamicCCRMLUT
 /* 0404A0 7F00B970 03292021 */   addu  $a0, $t9, $t1
 .L7F00B974:
 /* 0404A4 7F00B974 8FBF0034 */  lw    $ra, 0x34($sp)
@@ -5045,14 +5051,14 @@ loop_24:
     phi_f6 = temp_f6;
     if (mainfolderimages->unk10 < 0)
     {
-        phi_f6 = temp_f6 + 4294967296.0f;
+        phi_f6 = temp_f6 + M_U32_MAX_VALUE_F;
     }
     sp94 = (f32) (phi_f6 * 0.5f);
     temp_f18 = (f32) mainfolderimages->unk11;
     phi_f18 = temp_f18;
     if (mainfolderimages->unk11 < 0)
     {
-        phi_f18 = temp_f18 + 4294967296.0f;
+        phi_f18 = temp_f18 + M_U32_MAX_VALUE_F;
     }
     sp98 = (f32) (phi_f18 * 0.5f);
     likely_generate_DL_for_image_declaration(&arg0, mainfolderimages + 0xc, 4, 0, 0);
@@ -5066,14 +5072,14 @@ loop_24:
     phi_f6_2 = temp_f6_2;
     if (mainfolderimages->unk1C < 0)
     {
-        phi_f6_2 = temp_f6_2 + 4294967296.0f;
+        phi_f6_2 = temp_f6_2 + M_U32_MAX_VALUE_F;
     }
     sp84 = (f32) (phi_f6_2 * 0.5f);
     temp_f10_2 = (f32) mainfolderimages->unk1D;
     phi_f10 = temp_f10_2;
     if (mainfolderimages->unk1D < 0)
     {
-        phi_f10 = temp_f10_2 + 4294967296.0f;
+        phi_f10 = temp_f10_2 + M_U32_MAX_VALUE_F;
     }
     sp88 = (f32) (phi_f10 * 0.5f);
     likely_generate_DL_for_image_declaration(&arg0, mainfolderimages + 0x18, 4, 0, 0);
@@ -16685,7 +16691,7 @@ loop_1:
     temp_ret_5 = combiner_bayer_lod_perspective(temp_v0);
     arg0 = (s32) (temp_ret_5 + 8);
     temp_v0_2 = temp_ret_5;
-    temp_v0_2->unk0 = 0xba000c02;
+    temp_v0_2->unk0 = 0xba000c02; //gDPSet...
     temp_v0_2->unk4 = 0;
     temp_s3 = &arg0;
     temp_s0_2 = mainfolderimages + 0x3c;
@@ -16726,15 +16732,15 @@ loop_6:
         {
             arg0 = (s32) (temp_t5 + 8);
             temp_t5->unk4 = 0x100000;
-            temp_t5->unk0 = 0xba001402;
+            temp_t5->unk0 = 0xba001402; //gDPSetCyceType(glistp++, G_CYC_2CYCLE);
             temp_t9 = arg0;
             arg0 = (s32) (temp_t9 + 8);
             temp_t9->unk4 = -0xf6;
-            temp_t9->unk0 = 0xf8000000;
+            temp_t9->unk0 = 0xf8000000; //gDPSetFogColor(glistp++, 0, 0, 0, 246);
             temp_t4 = arg0;
             arg0 = (s32) (temp_t4 + 8);
             temp_t4->unk4 = 0xc4112048;
-            temp_t4->unk0 = 0xb900031d;
+            temp_t4->unk0 = 0xb900031d; //gDPSetRenderMode(glistp++, G_RM_FOG_PRIM_A, G_RM_AA_OPA_SURF2);
             display_image_at_on_screen_coord(temp_s3, temp_s4_2, temp_s5, 0x44, 0x2c, 0, 0, 1, 0xff, 0xff, 0xff, 0xff, (s32) (0 < temp_s0_3->unk6), 1);
         }
         else

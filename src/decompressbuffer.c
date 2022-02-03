@@ -1,4 +1,4 @@
-#include "ultra64.h"
+#include <ultra64.h>
 
 #if defined(LEFTOVERDEBUG)
 u8 _decompressBuffer[0xAB400];

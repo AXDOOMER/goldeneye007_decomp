@@ -1,7 +1,7 @@
-#include "ultra64.h"
-#include "memp.h"
+#include <ultra64.h>
+#include <memp.h>
 #include "spectrum.h"
-#include "bondconstants.h"
+#include <bondconstants.h>
 
 // bss
 u8* ptr_sectrum_monitor_data_temp_buf;

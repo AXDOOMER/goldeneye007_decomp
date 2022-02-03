@@ -1,6 +1,6 @@
-#include <os_internal.h>
-#include "src/libultra/io/controller.h"
-#include "src/libultra/io/siint.h"
+#include <PR/os_internal.h>
+#include <io/controller.h>
+#include <io/siint.h>
 
 s32 osPfsInit(OSMesgQueue *queue, OSPfs *pfs, int channel)
 {
@@ -40,7 +40,7 @@ s32 __osPfsGetStatus(OSMesgQueue *queue, int channel)
     osRecvMesg(queue, &dummy, OS_MESG_BLOCK);
     ret = __osSiRawStartDma(OS_READ, &__osPfsPifRam);
     osRecvMesg(queue, &dummy, OS_MESG_BLOCK);
-    __osPfsGetInitData(&bitpattern, &data);
+    __osPfsGetInitData(&bitpattern, data);
 
     if ((data[channel].status & CONT_CARD_ON) && (data[channel].status & CONT_CARD_PULL))
     {

@@ -1,3 +1,50 @@
+#ifdef DEBUG
+char* weapon_gun_kf7_SwitchNames[] = {
+    "CARTRIDGE",
+    "SW_FLASH",
+    "FLASH",
+    "MUZZLE",
+    "EXTRAFLASH" };
+#endif
+#ifdef DEBUG
+char* weapon_gun_revolver_SwitchNames[] = {
+    "CARTRIDGE",
+    "SW_FLASH",
+    "FLASH",
+    "MUZZLE",
+    "DRUM",
+    "HAMMER",
+    "FINGER",
+    "SLIDE",
+    "SW_HANDOFF1",
+    "SW_HANDOFF2",
+    "SW_HANDOFF3",
+    "SW_HANDOFF4",
+    "SW_HANDOFF5",
+    "SW_HANDOFF6",
+    "SW_GUNOFF1",
+    "SW_GUNOFF2",
+    "GFXHIT_SCREEN",
+    "SW_SCREEN",
+    "SW_cart1",
+    "SW_cart2",
+    "SW_cart3",
+    "SW_cart4",
+    "SW_cart5",
+    "SW_case1",
+    "SW_case2",
+    "SW_case3",
+    "SW_case4",
+    "SW_case5",
+    "2PT_FINGER",
+    "SW_BOILER",
+    "SW_DINNER",
+    "SW_CONNERY",
+    "SW_SUIT",
+    "SW_TIMBER",
+    "SW_SNOW",
+    "SW_HANDOFF7" };
+#endif
 //D:8003C7C0 
 //tank
 //token
@@ -20,7 +67,7 @@ MODELFILEHEADER(grenadelaunch, 0, &SKELETON(gun_revolver), 0, 0x24, 5, 768.33496
 MODELFILEHEADER(spectre, 0, &SKELETON(standard_gun), 0, 0x24, 4, 598.42865, 0, 0xB)
 MODELFILEHEADER(laser, 0, &SKELETON(standard_gun), 0, 0x24, 3, 442.81848, 0, 0xD)
 MODELFILEHEADER(rocketlaunch, 0, &SKELETON(standard_gun), 0, 0x24, 3, 566.51208, 0, 0xA)
-#include "assets/obseg/gun/knife/modelFileHeader.inc.c"
+#include <assets/obseg/gun/knife/modelFileHeader.inc.c>
 MODELFILEHEADER(throwknife, 0, &SKELETON(standard_gun), 0, 0x24, 3, 373.31387, 0, 9)
 MODELFILEHEADER(taser, 0, &SKELETON(standard_gun), 0, 0x23, 3, 182.78622, 0, 0x11)
 MODELFILEHEADER(remotemine, 0, &SKELETON(standard_gun), 0, 0x23, 3, 50.999378, 0, 3)
@@ -28,7 +75,7 @@ MODELFILEHEADER(proximitymine, 0, &SKELETON(standard_gun), 0, 0x1C, 3, 51.00029,
 MODELFILEHEADER(timedmine, 0, &SKELETON(standard_gun), 0, 0x1C, 3, 49.368877, 0, 4)
 MODELFILEHEADER(trigger, 0, &SKELETON(standard_gun), 0, 0x24, 4, 283.9006, 0, 0x16)
 MODELFILEHEADER(grenade, 0, &SKELETON(standard_gun), 0, 0x24, 3, 427.27081, 0, 5)
-#include "assets/obseg/gun/fist/modelFileHeader.inc.c"
+#include <assets/obseg/gun/fist/modelFileHeader.inc.c>
 MODELFILEHEADER(sniperrifle, 0, &SKELETON(standard_gun), 0, 0x24, 4, 808.03253, 0, 7)
 MODELFILEHEADER(cartridge, 0, &SKELETON(gun_unassigned), 0, 0, 1, 14.128822, 0, 2)
 MODELFILEHEADER(cartrifle, 0, &SKELETON(gun_unassigned), 0, 0, 1, 30.122747, 0, 2)

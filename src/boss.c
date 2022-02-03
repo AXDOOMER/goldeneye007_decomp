@@ -1,45 +1,42 @@
-#include "include/os_extension.h"
-#include "include/PR/os.h"
+#include <os_extension.h>
+#include <PR/os.h>
 #include "bondview.h"
-#include "bondconstants.h"
-#include "bondgame.h"
+#include <bondconstants.h>
+#include <bondgame.h>
 #include "boss.h"
 #include "deb.h"
 #include "debugmenu.h"
-#include "dyn.h"
-#include "game_debug.h"
-#include "file.h"
-#include "file2.h"
-#include "indy_comms.h"
+#include "game/dyn.h"
+#include "game/game_debug.h"
+#include "game/file.h"
+#include "game/file2.h"
+#include "game/indy_comms.h"
 #include "init.h"
 #include "joy.h"
-#include "lvl.h"
-#include "front.h"
+#include "game/lvl.h"
+#include "game/front.h"
 #include "mema.h"
 #include "memp.h"
 #include "music.h"
-#include "ob.h"
+#include "game/ob.h"
 #include "ramrom.h"
 #include "random.h"
-#include "rmon.h"
+#include "rmon.h" /*<PR/rmon.h>*/
 #include "sched.h"
 #include "speed_graph.h"
 #include "token.h"
 #include "tlb_manage.h"
-#include "ultra64.h"
 #include "fr.h"
-#include "image.h"
+#include "game/image.h"
 #include "vi.h"
 #include "game/bg.h"
 #include "game/debugmenu_handler.h"
-#include "game/front.h"
 #include "game/ramromreplay.h"
 #include "game/room_model_buffer.h"
 #include "game/rsp.h"
 #include "game/stan.h"
 #include "game/textrelated.h"
 #include "game/player.h"
-#include "game/unk_0C0A70.h"
 #include "game/unk_0C0A70.h"
 
 /**
@@ -129,7 +126,7 @@ struct memallocstring memallocstringtable[] = {
 };
 
 s32 g_MainStageNum = LEVELID_NONE;
-s32 g_DebugFeatureFlag = 0;
+s32 g_BossIsDebugMenuOpen = 0;
 
 OSScMsg g_bossGfxDoneMsg = { OS_SC_DONE_MSG };
 
@@ -489,19 +486,27 @@ void bossMainloop(void)
 
                             gdl = firstGdl = dynGetMasterDisplayList();
 
-                            //leaving commented till final build defines are picked as its not required for matching
-                            //
-                            //#ifdef ENABLE_DEBUG_MENU
-                            //    g_DebugFeatureFlag = (joyGetButtons(0, U_CBUTTONS & D_CBUTTONS)!=0xC);
-                            //#endif
-
-                            if (g_DebugFeatureFlag)
+#ifdef DEBUGMENU
+                            //ported from pd beta, official way to open debug menu
+			                // If menu is open (?) or player has pressed C down + C up
+			                if (g_BossIsDebugMenuOpen || joyGetButtons(0, U_CBUTTONS | D_CBUTTONS) == (U_CBUTTONS | D_CBUTTONS)) {
+			                	joyStickXPos = joyGetStickX(0);
+			                	joyStickYPos = joyGetStickY(0);
+			                	joyButtons = joyGetButtons(0, ANY_BUTTON);
+			                	g_BossIsDebugMenuOpen = debug_menu_processor(joyStickXPos, joyStickYPos, joyButtons, joyGetButtonsPressedThisFrame(0, ANY_BUTTON));
+			                } else if (joyGetButtons(0, START_BUTTON) == 0) {
+                                g_DebugMode = g_DebugHighlightedOption;
+			                } else 
+#endif
+#ifndef DEBUGMEN
+                            if (g_BossIsDebugMenuOpen)
+#endif
                             {
-                                    joyStickXPos = joyGetStickX(0);
-                                    joyStickYPos = joyGetStickY(0);
-                                    joyButtons = joyGetButtons(0, ANY_BUTTON);
-                                    g_DebugFeatureFlag = debug_menu_processor(joyStickXPos, joyStickYPos, joyButtons, joyGetButtonsPressedThisFrame(0, ANY_BUTTON));
-                            }
+			                	joyStickXPos = joyGetStickX(0);
+			                	joyStickYPos = joyGetStickY(0);
+			                	joyButtons = joyGetButtons(0, ANY_BUTTON);
+			                	g_BossIsDebugMenuOpen = debug_menu_processor(joyStickXPos, joyStickYPos, joyButtons, joyGetButtonsPressedThisFrame(0, ANY_BUTTON));
+			                }
 
                             lvlManageMpGame();
                             shuffle_player_ids();
@@ -548,10 +553,10 @@ void bossMainloop(void)
 #endif
                             }
 
-                            if (g_DebugFeatureFlag)
+                            if (g_BossIsDebugMenuOpen)
                             {
-                                display_debug_menu_text_onscreen();
-                                gdl = print_debug_mcm_to_stdout(gdl);
+                                debugmenuUpdate();
+                                gdl = debugmenuRender(gdl);
                             }
 
                             gDPFullSync(gdl++); // 0xe9000000, 0x00000000
@@ -1005,8 +1010,8 @@ glabel bossMainloop
 /* 00653C 7000593C 00002025 */   move  $a0, $zero
 /* 006540 70005940 0FC2F289 */  jal   dynGetMasterDisplayList
 /* 006544 70005944 00000000 */   nop   
-/* 006548 70005948 3C0E8002 */  lui   $t6, %hi(g_DebugFeatureFlag) # $t6, 0x8002
-/* 00654C 7000594C 8DCE2190 */  lw    $t6, %lo(g_DebugFeatureFlag)($t6)
+/* 006548 70005948 3C0E8002 */  lui   $t6, %hi(g_BossIsDebugMenuOpen) # $t6, 0x8002
+/* 00654C 7000594C 8DCE2190 */  lw    $t6, %lo(g_BossIsDebugMenuOpen)($t6)
 /* 006550 70005950 AFA201A4 */  sw    $v0, 0x1a4($sp)
 /* 006554 70005954 00409825 */  move  $s3, $v0
 /* 006558 70005958 11C0001D */  beqz  $t6, .L700059D0
@@ -1037,8 +1042,8 @@ glabel bossMainloop
 /* 0065BC 700059BC 3246FFFF */  andi  $a2, $s2, 0xffff
 /* 0065C0 700059C0 0FC240F2 */  jal  debug_menu_processor
 /* 0065C4 700059C4 3047FFFF */   andi  $a3, $v0, 0xffff
-/* 0065C8 700059C8 3C018002 */  lui   $at, %hi(g_DebugFeatureFlag) # $at, 0x8002
-/* 0065CC 700059CC AC222190 */  sw    $v0, %lo(g_DebugFeatureFlag)($at)
+/* 0065C8 700059C8 3C018002 */  lui   $at, %hi(g_BossIsDebugMenuOpen) # $at, 0x8002
+/* 0065CC 700059CC AC222190 */  sw    $v0, %lo(g_BossIsDebugMenuOpen)($at)
 .L700059D0:
 /* 0065D0 700059D0 0FC2F7EB */  jal   lvlManageMpGame
 /* 0065D4 700059D4 00000000 */   nop   
@@ -1145,13 +1150,13 @@ glabel bossMainloop
 /* 00675C 70005B5C 02602025 */   move  $a0, $s3
 /* 006760 70005B60 00409825 */  move  $s3, $v0
 .L70005B64:
-/* 006764 70005B64 3C088002 */  lui   $t0, %hi(g_DebugFeatureFlag) # $t0, 0x8002
-/* 006768 70005B68 8D082190 */  lw    $t0, %lo(g_DebugFeatureFlag)($t0)
+/* 006764 70005B64 3C088002 */  lui   $t0, %hi(g_BossIsDebugMenuOpen) # $t0, 0x8002
+/* 006768 70005B68 8D082190 */  lw    $t0, %lo(g_BossIsDebugMenuOpen)($t0)
 /* 00676C 70005B6C 51000007 */  beql  $t0, $zero, .L70005B8C
 /* 006770 70005B70 02601025 */   move  $v0, $s3
-/* 006774 70005B74 0FC240F0 */  jal   display_debug_menu_text_onscreen
+/* 006774 70005B74 0FC240F0 */  jal   debugmenuUpdate
 /* 006778 70005B78 00000000 */   nop   
-/* 00677C 70005B7C 0FC240DE */  jal   print_debug_mcm_to_stdout
+/* 00677C 70005B7C 0FC240DE */  jal   debugmenuRender
 /* 006780 70005B80 02602025 */   move  $a0, $s3
 /* 006784 70005B84 00409825 */  move  $s3, $v0
 /* 006788 70005B88 02601025 */  move  $v0, $s3
@@ -1339,7 +1344,7 @@ void bossReturnTitleStage(void) {
  *     V0=state of debug menu (1:on; 0:off) [80024300]
  */
 s32 bossGetDebugParseFlag(void) {
-    return g_DebugFeatureFlag;
+    return g_BossIsDebugMenuOpen;
 }
 
 

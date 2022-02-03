@@ -1,7 +1,7 @@
 // #ifndef _STAGESETUP_H_
 // #define _STAGESETUP_H_
 
-// #include "bondtypes.h"
+// #include <bondtypes.h>
 
 // #define PAD3D_START 10000
 // #define PADADV(PAD) (PAD + PAD3D_START)
@@ -22,18 +22,18 @@
 
 // struct pad
 // {
-//     struct coord3d pos;
-//     struct coord3d up;
-//     struct coord3d look;
+//     coord3d pos;
+//     coord3d up;
+//     coord3d look;
 //     char *plink;
 //     int unk;
 // };
 
 // struct pad3d
 // {
-//     struct coord3d pos;
-//     struct coord3d up;
-//     struct coord3d look;
+//     coord3d pos;
+//     coord3d up;
+//     coord3d look;
 //     char *plink;
 //     int unk;
 //     struct bbox bbox;

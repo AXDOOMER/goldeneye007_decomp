@@ -1,5 +1,5 @@
-#include "ultra64.h"
-#include "music.h"
+#include <ultra64.h>
+#include <music.h>
 #include "music_0D2720.h"
 #include "watch.h"
 #include "mp_music.h"
@@ -1986,21 +1986,22 @@ void set_musicslot_time(s32 slot, s32 min, s32 sec)
 
 void reset_music_in_slot(s32 slot)
 {
-  if (-1 < slot) {
-    (&music_slot_active_0)[slot] = 0;
-    return;
-  }
-  music_slot_active_0 = 0;
-  music_slot_minutes_0 = 0;
-  music_slot_seconds_0 = 0;
-  music_slot_active_1 = 0;
-  music_slot_minutes_1 = 0;
-  music_slot_seconds_1 = 0;
-  music_slot_active_2 = 0;
-  music_slot_minutes_2 = 0;
-  music_slot_seconds_2 = 0;
-  music_slot_active_3 = 0;
-  music_slot_minutes_3 = 0;
-  music_slot_seconds_3 = 0;
+    if (-1 < slot)
+    {
+        (&music_slot_active_0)[slot] = 0;
+        return;
+    }
+    music_slot_active_0  = 0;
+    music_slot_minutes_0 = 0;
+    music_slot_seconds_0 = 0;
+    music_slot_active_1  = 0;
+    music_slot_minutes_1 = 0;
+    music_slot_seconds_1 = 0;
+    music_slot_active_2  = 0;
+    music_slot_minutes_2 = 0;
+    music_slot_seconds_2 = 0;
+    music_slot_active_3  = 0;
+    music_slot_minutes_3 = 0;
+    music_slot_seconds_3 = 0;
 }
 

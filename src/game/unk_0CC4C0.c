@@ -1,7 +1,7 @@
-#include "ultra64.h"
-#include "game/lvl.h"
-#include "game/image.h"
-#include "game/unk_0CC4C0.h"
+#include <ultra64.h>
+#include "lvl.h"
+#include "image.h"
+#include "unk_0CC4C0.h"
 
 // bss
 //8008D140

@@ -1,14 +1,14 @@
-#include "ultra64.h"
+#include <ultra64.h>
 #include "matrixmath.h"
 
 /**
  * x vector plus ((difference to y vector) * scaler).
  */
-void sub_GAME_7F05AE00(vec3 x, vec3 y, f32 scaler, vec3 result)
+void sub_GAME_7F05AE00(vec3d *x, vec3d *y, f32 scaler, vec3d *result)
 {
-    result[0] = x[0] + ((y[0] - x[0]) * scaler);
-    result[1] = x[1] + ((y[1] - x[1]) * scaler);
-    result[2] = x[2] + ((y[2] - x[2]) * scaler);
+    result->x = ((y->x - x->x) * scaler) + x->x;
+    result->y = ((y->y - x->y) * scaler) + x->y;
+    result->z = ((y->z - x->z) * scaler) + x->z;
 }
 
 /**
@@ -22,18 +22,18 @@ f32 sub_GAME_7F05AE50(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
     f32 t2;
 
     square = arg4 * arg4;
-    cube = square * arg4;
+    cube   = square * arg4;
 
-    t2 = square - ((arg4 + cube) * 0.5f);
-    total = arg0 * t2;
+    t2     = square - ((arg4 + cube) * 0.5f);
+    total  = arg0 * t2;
 
-    t2 = ((1.5f * cube) - (2.5f * square)) + 1.0f;
+    t2     = ((1.5f * cube) - (2.5f * square)) + 1.0f;
     total += arg1 * t2;
 
-    t2 = (-1.5f * cube) + (2.0f * square) + (0.5f * arg4);
+    t2     = (-1.5f * cube) + (2.0f * square) + (0.5f * arg4);
     total += arg2 * t2;
 
-    t2 = (cube - square) * 0.5f;
+    t2     = (cube - square) * 0.5f;
     total += arg3 * t2;
 
     return total;
@@ -49,7 +49,7 @@ f32 sub_GAME_7F05AE50(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
  * - identical registers: fail
  */
 #ifdef NONMATCHING
-void sub_GAME_7F05AEFC(vec3 arg0, vec3 arg1, vec3 arg2, vec3 arg3, f32 arg4, vec3 result)
+void sub_GAME_7F05AEFC(vec3d *arg0, vec3d *arg1, vec3d *arg2, vec3d *arg3, f32 arg4, vec3d *result)
 {
     f32 square;
     f32 cube;
@@ -59,16 +59,16 @@ void sub_GAME_7F05AEFC(vec3 arg0, vec3 arg1, vec3 arg2, vec3 arg3, f32 arg4, vec
     f32 temp_f18;
 
     square = arg4 * arg4;
-    cube = square * arg4;
-    
-    temp_f8 = 0.5f * (cube - square);
+    cube   = square * arg4;
+
+    temp_f8  = 0.5f * (cube - square);
     temp_f14 = square - ((arg4 + cube) * 0.5f);
     temp_f16 = 1.0f + (1.5f * cube) - (2.5f * square);
     temp_f18 = (-1.5f * cube) + (0.5f * arg4) + (2.0f * square);
 
-    result[0] = (temp_f8 * arg3[0]) + ((temp_f14 * arg0[0]) + (temp_f16 * arg1[0]) + (temp_f18 * arg2[0]));
-    result[1] = (temp_f8 * arg3[1]) + ((temp_f14 * arg0[1]) + (temp_f16 * arg1[1]) + (temp_f18 * arg2[1]));
-    result[2] = (temp_f8 * arg3[2]) + ((temp_f14 * arg0[2]) + (temp_f16 * arg1[2]) + (temp_f18 * arg2[2]));
+    result->f[0] = (temp_f8 * arg3->f[0]) + ((temp_f14 * arg0->f[0]) + (temp_f16 * arg1->f[0]) + (temp_f18 * arg2->f[0]));
+    result->f[1] = (temp_f8 * arg3->f[1]) + ((temp_f14 * arg0->f[1]) + (temp_f16 * arg1->f[1]) + (temp_f18 * arg2->f[1]));
+    result->f[2] = (temp_f8 * arg3->f[2]) + ((temp_f14 * arg0->f[2]) + (temp_f16 * arg1->f[2]) + (temp_f18 * arg2->f[2]));
 }
 #else
 GLOBAL_ASM(

@@ -1,5 +1,5 @@
 
-#include "ultra64.h"
+#include <ultra64.h>
 
 extern u64 osClockRate;
 extern u8 D_80365D20;

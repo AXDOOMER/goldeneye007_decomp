@@ -1,7 +1,6 @@
-#include "ultra64.h"
-#include "PR/gbi.h"
-#include "deb.h"
-
+#include <ultra64.h>
+#include <PR/gbi.h>
+#include <deb.h>
 /**
  * EU .data, offset from start of data_seg : 0x3740
 */

@@ -1,8 +1,8 @@
 #ifndef _RAMROMREPLAY_H_
 #define _RAMROMREPLAY_H_
 
-#include "ultra64.h"
-#include "game/file.h"
+#include <ultra64.h>
+#include "file.h"
 #define INDY_RAMROM_DEMO_ADDRESS 0x00F00000
 
 typedef struct ramromfilestructure {

@@ -1,29 +1,29 @@
 /*
 * This file was automatically generated
 * 
-* Thursday, August 26, 2021 9:53:30 PM
-* Getools.Lib: 21.8.26.1
+* Monday, January 17, 2022 9:36:15 AM
+* Getools.Lib: 21.9.18.1
 */
 
 #include "ultra64.h"
 #include "bondtypes.h"
 
 // forward declarations
-struct pad padlist[];
-struct pad3d pad3dlist[];
-s32 objlist[];
+PadRecord padlist[];
+BoundPadRecord pad3dlist[];
+s32 propDefs[];
 s32 intro[];
-struct s_pathLink pathlist[];
-struct s_pathTbl pathtbl[];
-struct s_pathSet paths[];
-struct ailist ailists[];
+waygroup pathsets[];
+waypoint pathwaypoints[];
+PathRecord patrolpaths[];
+AIListRecord ailists[];
 
-struct stagesetup setup = {
-    &pathtbl,
-    &pathlist,
+stagesetup UsetuplenZ = {
+    &pathwaypoints,
+    &pathsets,
     &intro,
-    &objlist,
-    &paths,
+    &propDefs,
+    &patrolpaths,
     &ailists,
     &padlist,
     &pad3dlist,
@@ -31,7 +31,11 @@ struct stagesetup setup = {
     NULL
 };
 
-struct pad padlist[] = {
+
+
+
+
+PadRecord padlist[] = {
     { {542.0f, 48.0f, -586.0f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f, 1.0f}, "p1820a", 0 },
     { {645.0f, 48.0f, -557.0f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f, 1.0f}, "p1760a", 0 },
     { {525.0f, 48.0f, -533.0f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f, 1.0f}, "p1795a", 0 },
@@ -84,7 +88,7 @@ struct pad padlist[] = {
 };
 
 
-struct pad3d pad3dlist[] = {
+BoundPadRecord pad3dlist[] = {
     { {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, NULL, 0, {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f} }
 };
 
@@ -637,8 +641,7 @@ CreditsEntry credits_data_0[] = {
 };
 
 
-
-s32 objlist[] = {
+s32 propDefs[] = {
     /* Type = WatchMenuObjectiveText; index = 0 */
     _mkword(0, _mkshort(0, 35)), 0, 20491, 0,
     /* Type = WatchMenuObjectiveText; index = 1 */
@@ -718,24 +721,24 @@ s32 intro[] = {
 };
 
 
-struct s_pathTbl pathtbl[] = {
-    { 0xffff, 0xffff, NULL, 0x00000000, 0x00000000 }
+waypoint pathwaypoints[] = {
+    { 0xffffffff, NULL, 0x00000000, 0x00000000 }
 };
 
 
-s32 unknown_setup_block_0[] = { 0 };
+s32 unknown_setup_block_1[] = { 0 };
 
 
-struct s_pathLink pathlist[] = {
+waygroup pathsets[] = {
     { NULL, NULL, 0 }
 };
 
 
-s32 unknown_setup_block_1[] = { 0, -1 };
+s32 unknown_setup_block_2[] = { 0, -1 };
 
 
-struct s_pathSet paths[] = {
-    { NULL, 0x00000000 }
+PathRecord patrolpaths[] = {
+    { NULL, 0x00, 0x00, 0x0000 }
 };
 
 
@@ -749,7 +752,7 @@ u32 ai_4[] = { 0x02030a00, 0xb60103ff, 0xff442005, 0xfd000104 };
 u32 ai_2[] = { 0xf20009d9, 0xfd002c2c, 0x0209ad62, 0x320a00d9, 0xfd002f2c, 0x022c0a00, 0xb5ffffff, 0xff060002, 0x08032f2c, 0x0108022c, 0x3335dc2c, 0x0a00b500, 0x9e00fa44, 0x20050004, 0x03010802, 0x2c0a00b5, 0x0103ffff, 0x44200500, 0x04040108, 0x04000000 };
 u32 ai_5[] = { 0x03d701ed, 0x030303ee, 0x012c0064, 0x0012002e, 0xffba1c71, 0xa0f80001, 0x0000a000, 0x00010000, 0xa0f80002, 0x0000a000, 0x00020000, 0x05f80402, 0x05000401, 0x0303db02, 0x0b03dc2c, 0x010b022c, 0xae020f03, 0xb400001e, 0x2c010f02, 0x2cc35008, 0xae020c03, 0xb40000b4, 0x2c010c02, 0x2cc35009, 0xae020d03, 0xb40000b4, 0x2c010d02, 0x2cc3500a, 0xae020e03, 0xb400012c, 0x2c010e02, 0x2cef0208, 0x03f02c01, 0x08022cda, 0x020903dc, 0x2c010902, 0x2c020a03, 0xd2010a04 };
 
-struct ailist ailists[] = {
+AIListRecord ailists[] = {
     /* index = 0 */
     { &ai_1, 0x00000401 },
     /* index = 1 */
@@ -763,10 +766,6 @@ struct ailist ailists[] = {
     /* index = 5 */
     { NULL, 0x00000000 }
 };
-
-
-
-
 
 
 

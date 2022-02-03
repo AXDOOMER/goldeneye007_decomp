@@ -1,10 +1,10 @@
-#include "ultra64.h"
-#include "bondtypes.h"
-#include "game/cheat_buttons.h"
-#include "game/chr.h"
-#include "game/chr_b.h"
-#include "game/chrobjdata.h"
-#include "game/objecthandler.h"
+#include <ultra64.h>
+#include <bondtypes.h>
+#include "cheat_buttons.h"
+#include "chr.h"
+#include "chr_b.h"
+#include "chrobjdata.h"
+#include "objecthandler.h"
 
 s32 load_body_head_if_not_loaded(s32 model)
 {
@@ -111,8 +111,8 @@ struct Model *makeonebody(s32 arg0, s32 arg1, struct ModelFileHeader *arg2, stru
     return arg5;
 }
 
-
-Model * setup_chr_instance(int body,int head,ModelFileHeader *body_header, ModelFileHeader *head_header,int sunglasses)
+//sub_GAME_7F0234A8
+Model *setup_chr_instance(int body,int head,ModelFileHeader *body_header, ModelFileHeader *head_header,int sunglasses)
 {
   return makeonebody(body,head,body_header,head_header,sunglasses,0x0);
 }

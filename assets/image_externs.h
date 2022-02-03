@@ -2,7 +2,7 @@
 //and have meaningful names given
 #ifndef _inflateEXTERNS_H_
 #define _inflateEXTERNS_H_
-#include "ultra64.h"
+#include <ultra64.h>
 
 #define IMAGESEG(id) 0xABCD0000 | id
 

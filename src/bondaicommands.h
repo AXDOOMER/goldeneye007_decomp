@@ -1,209 +1,253 @@
+
+/*==============================================================================
+//# Chr AI commands reference
+//## Programmed by Mark Edmonds
+==============================================================================
+ AI in GoldenEye and Perfect Dark use a Symbolic Language (similar to Java
+ Bytecode) and run a threaded code system useing pseudo-code to represent
+ function calls in a single operator.
+ At run time, a small "interpreter" - ai() scans over the code and runs
+ the subroutine identified by the instruction.
+ This concept is implemented as a branch table.
+==============================================================================
+ Terminology:
+ chr                Character
+ obj                Objective
+ AI List            List of AI commands - List must end with 04 command
+ GList              Global List
+ Chr AI Lists     0401-04FF range
+ Obj AI Lists     1000-10FF range
+ Global AI Lists  0000-0011 range
+==============================================================================
+### AI List intro
+==============================================================================
+ AI Lists are a list of AI commands that are executed from top to bottom.
+ They are used to control guard AI (fire, chase, go to position, etc) and
+ objective AI (objective logic, mission fail state, spawning guards, etc)
+==============================================================================
+### Character AI List info
+==============================================================================
+ Chr AI Lists drive the gameplay, such as attacking/chasing player.
+ A chr AI List will not execute until a guard is assigned that List
+ (unlike obj Lists).
+ Multiple guards can use the same AI List - each guard is treated as an
+ independent thread with their own instance of unique data.
+==============================================================================
+### Objective AI List info
+==============================================================================
+ Each obj AI List (10XX) will have with a obj AI assigned at at level start.
+ Obj AI Lists run continuously in the background without a guard attached.
+ They still have a chr struct but lack a model/position in the level, they are
+ commonly used for level scripting (objectives) or monitoring guard spawns.
+ Obj AI Lists cannot run guard commands due to the lack of level presence.
+==============================================================================
+### Global AI List info
+==============================================================================
+ Global AI Lists are 0x11 useful Lists accessible with every level. The
+ above Lists (chr/obj) are unique to each level setup file, compared to
+ Global Lists which are accessible throughout the entire game.
+ They contain generic AI Lists used for most levels
+==============================================================================
+### AI command note
+==============================================================================
+ Commands with guard/vehicle/aircraft prefix are exclusive to chr AI Lists,
+ they can't be executed by obj AI Lists (10XX) or it will crash! commands
+ with chr prefix can be used by obj/chr AI Lists - exceptions to this rule
+ are detailed within the command description
+==============================================================================
+### AI commands with chr number argument
+==============================================================================
+ Most commands with a chr prefix use a chr number argument. For the most part,
+ this can be used with any loaded chr num and it will work fine. There is
+ however one exception to this and that is special chr num ID CHR_BOND_CINEMA.
+ This ID only works when bond has a third person model assigned
+ (intro/exit cutscene).
+ Only use CHR_BOND_CINEMA for intro/exit cutscene specific logic
+==============================================================================
+### Vehicle/aircraft AI command
+==============================================================================
+ Commands with a vehicle/aircraft prefix can only be executed by
+ vehicle/aircraft objects. These types of objects do not use a chr struct.
+ Most non-vehicle commands will crash if they try to access caller's
+ chr struct
+==============================================================================
+### AI commands with label argument
+==============================================================================
+ Most commands will have a label argument in their function description. This
+ is used when a command has a false/true state. For example, the jog to bond
+ command (28) has goto label argument. When the command is executed, it will
+ check if the guard is able to jog to bond. If for some reason the command
+ fails (bond is unreachable/guard is dying/etc) then the command will not
+ goto label and the next command will be executed. The most common use of
+ commands with goto labels are jumping out of an infinite loop - for an
+ example check global AI List glist_startle_chr_and_jog_to_bond_subroutine
+===========================================================================*/
+
 #ifndef _BONDAICOMMANDS_H_
 #define _BONDAICOMMANDS_H_
-#include "ultra64.h"
+#include <ultra64.h>
 
 #define chararray16(input) (input & 0xFF00) >> 8, input & 0x00FF
 #define chararray24(input) (input & 0xFF0000) >> 16, (input & 0x00FF00) >> 8, input & 0x0000FF
 #define chararray32(input) (input & 0xFF000000) >> 24, (input & 0x00FF0000) >> 16, (input & 0x0000FF00) >> 8, input & 0x000000FF
 
-/*=============================================================================
-// chr ai commands reference
-// programmed by mark edmonds
-//=============================================================================
-// terminology:
-// chr              character
-// obj              objective
-// list             list of ai commands - list must end with 04 command
-// glist            global list
-// chr ai lists     0401-04FF range
-// obj ai lists     1000-10FF range
-// global ai lists  0000-0011 range
-//=============================================================================
-// ai list intro
-//=============================================================================
-// ai list are a list of ai commands that are executed from top to bottom.
-// they are used to control guard ai (fire, chase, go to position, etc) and
-// objective ai (objective logic, mission fail state, spawning guards, etc)
-//=============================================================================
-// character ai list info
-//=============================================================================
-// chr ai lists drive the gameplay, such as attacking/chasing player. a chr ai
-// list will not execute until a guard is assigned that list (unlike obj lists).
-// multiple guards can use the same ai list - each guard is treated as a independent
-// thread with their own instance of unique data
-//=============================================================================
-// objective ai list info
-//=============================================================================
-// each obj ai list (10XX) will have with a obj ai assigned at at level start.
-// obj ai lists run continuously in the background without a guard attached.
-// they still have a chr struct but lack a model/position in the level, they are
-// commonly used for level scripting (objectives) or monitoring guard spawns.
-// obj ai lists cannot run guard commands due to the lack of level presence
-//=============================================================================
-// global ai list info
-//=============================================================================
-// global ai lists are 0x11 useful lists accessible with every level. the above
-// lists (chr/obj) are unique to each level setup file, compared to global lists
-// which are accessible throughout the entire game. they contain generic ai lists
-// used for most levels
-//=============================================================================
-// ai command note
-//=============================================================================
-// commands with guard/vehicle/aircraft prefix are exclusive to chr ai lists,
-// they can't be executed by obj ai lists (10XX) or it will crash! commands with
-// chr prefix can be used by obj/chr ai lists - exceptions to this rule are detailed
-// within the command description
-//=============================================================================
-// ai commands with chr number argument
-//=============================================================================
-// most commands with a chr prefix use a chr number argument. for the most part,
-// this can be used with any loaded chr num and it will work fine. there is however
-// one exception to this and that is special chr num ID CHR_BOND_CINEMA. this ID
-// only works when bond has a third person model assigned (intro/exit cutscene).
-// only use CHR_BOND_CINEMA for intro/exit cutscene specific logic
-//=============================================================================
-// vehicle/aircraft ai command
-//=============================================================================
-// commands with a vehicle/aircraft prefix can only be executed by vehicle/aircraft
-// objects. these types of objects do not use a chr struct. most non-vehicle
-// commands will crash if they try to access caller's chr struct
-//=============================================================================
-// ai commands with label argument
-//=============================================================================
-// most commands will have a label argument in their function description. this
-// is used when a command has a false/true state. for example, the run to bond
-// command (28) has goto label argument. when the command is executed, it will
-// check if the guard is able to run to bond. if for some reason the command fails
-// (bond is unreachable/guard is dying/etc) then the command will not goto label
-// and the next command will be executed. the most common use of commands with
-// goto labels are jumping out of an infinite loop - for an example check global
-// ai list GLIST_STARTLE_CHR_AND_RUN_TO_BOND_SUBROUTINE
-//===========================================================================*/
-
 #define AI_LIST_GLOBAL_START 0x0000
 #define AI_LIST_CHR_START 0x0401
 #define AI_LIST_OBJ_START 0x1000
 
-#define AI_CMDS_TOTAL (object_rocket_launch_ID + 1)
+
 
 /*=============================================================================
 // global ai lists - glists
 //===========================================================================*/
-#define GLIST_AIM_AT_BOND                              0x0000 // continuously aim at bond with weapon
-#define GLIST_END_ROUTINE                              0x0001 // end routine (loop forever)
-#define GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE 0x0002 // wait for bond detection (spawn clone when heard bond)
-#define GLIST_IDLE_RAND_ANIM_SUBROUTINE                0x0003 // play idle animation (subroutine)
-#define GLIST_KEYBOARD_RAND_ANIM_SUBROUTINE            0x0004 // play use keyboard animation (subroutine)
-#define GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM   0x0005 // wait for bond detection (deaf/no clones/no idling)
-#define GLIST_FIRE_RAND_ANIM_SUBROUTINE                0x0006 // fire at bond with random animation (subroutine)
-#define GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM        0x0007 // wait for bond detection (no clones/no idling)
-#define GLIST_RUN_TO_BOND_SUBROUTINE                   0x0008 // run to bond and fire (subroutine)
-#define GLIST_RUN_TO_CHR_PADPRESET_AND_ACTIVATE_ALARM  0x0009 // run to chr->padpreset1 and activate alarm
-#define GLIST_STARTLE_CHR_AND_RUN_TO_BOND_SUBROUTINE   0x000A // startle character (subroutine)
-#define GLIST_SPAWN_CLONE_OR_RUN_TO_BOND               0x000B // if chr has been seen, run to bond - else spawn clone
-#define GLIST_RUN_TO_BOND_AND_FIRE                     0x000C // run to bond and fire
-#define GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY   0x000D // forever chase bond and fire (halt randomly)
-#define GLIST_WAIT_ONE_SECOND_SUBROUTINE               0x000E // wait for one second (subroutine)
-#define GLIST_EXIT_LEVEL                               0x000F // exit level
-#define GLIST_DRAW_DD44_AND_FIRE                       0x0010 // draw dd44 and fire
-#define GLIST_REMOVE_CHR                               0x0011 // remove chr
+typedef enum GLISTID
+{
+    GLIST_AIM_AT_BOND,                              // Continuously aim at bond with weapon
+    GLIST_END_ROUTINE,                              // End routine (loop forever)
+    GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE, // Wait for bond detection (spawn clone when heard bond)
+    GLIST_IDLE_RAND_ANIM_SUBROUTINE,                // Play idle animation (subroutine)
+    GLIST_KEYBOARD_RAND_ANIM_SUBROUTINE,            // Play use keyboard animation (subroutine)
+    GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM,   // Wait for bond detection (deaf/no clones/no idling)
+    GLIST_FIRE_RAND_ANIM_SUBROUTINE,                // Fire at bond with random animation (subroutine)
+    GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM,        // Wait for bond detection (no clones/no idling)
+    GLIST_RUN_TO_BOND_SUBROUTINE,                   // Run to bond and fire (subroutine)
+    GLIST_RUN_TO_CHR_PADPRESET_AND_ACTIVATE_ALARM,  // Run to chr->padpreset1 and activate alarm
+    GLIST_STARTLE_CHR_AND_RUN_TO_BOND_SUBROUTINE,   // Startle character (subroutine)
+    GLIST_SPAWN_CLONE_OR_RUN_TO_BOND,               // If chr has been seen, run to bond - else spawn clone
+    GLIST_RUN_TO_BOND_AND_FIRE,                     // Jog to bond and fire
+    GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY,   // Forever chase bond and fire (halt randomly)
+    GLIST_WAIT_ONE_SECOND_SUBROUTINE,               // Wait for one second (subroutine)
+    GLIST_EXIT_LEVEL,                               // Exit level
+    GLIST_DRAW_DD44_AND_FIRE,                       // Draw DD44 and fire
+    GLIST_REMOVE_CHR                               // Remove chr
+} GLISTID;
 /*===========================================================================*/
 
 /*=============================================================================
-// command bitfield flags and common settings
+## command bitfield flags and common settings
 //===========================================================================*/
-// command 0A - animation flags
-#define ANIM_MIRROR                     0x01 // mirror animation
-#define ANIM_UNKNOWN                    0x02 // ?? (cancels no translation flag)
-#define ANIM_LOOP_HOLD_LAST_FRAME       0x04 // loop/hold last frame (required for reverse flag)
-#define ANIM_PLAY_SFX                   0x08 // play sneeze sfx with animation 9F (triggers 50% of the time)
-#define ANIM_IDLE_POSE_WHEN_COMPLETE    0x10 // idle pose after animation has completed (does not work with looping animations)
-#define ANIM_TRANSLATION_SCALE_4X       0x20 // translation scale multiplier x4 (used for dam and cradle cinema)
-#define ANIM_NO_TRANSLATION             0x40 // no translation
-#define ANIM_REVERSE_LOOPING_ANIMATION  0x80 // reverse animation (only for looped animations)
 
-#define ANIM_DEFAULT_INTERPOLATION      0x10 // use this if interpolation value isn't important
+// command 0A - animation flags
+#define ANIM_MIRROR                     0x01 /* Mirror animation*/
+#define ANIM_UNKNOWN                    0x02 /* ?? (cancels no translation flag)*/
+#define ANIM_LOOP_HOLD_LAST_FRAME       0x04 /* Loop/hold last frame (required for reverse flag)*/
+#define ANIM_PLAY_SFX                   0x08 /* Play sneeze sfx with animation 9f (triggers 50% of the time)*/
+#define ANIM_IDLE_POSE_WHEN_COMPLETE    0x10 /* Idle pose after animation has completed (does not work with looping animations)*/
+#define ANIM_TRANSLATION_SCALE_4X       0x20 /* Translation scale multiplier x4 (used for dam and cradle cinema)*/
+#define ANIM_NO_TRANSLATION             0x40 /* No translation*/
+#define ANIM_REVERSE_LOOPING_ANIMATION  0x80 /* Reverse animation (only for looped animations)*/
+
+#define ANIM_DEFAULT_INTERPOLATION      0x10 /* Use this if interpolation value isn't important*/
 
 // command 14/15/16/17 - target flags
-#define TARGET_BOND                     0x0001 // set target to bond (ignores target argument)
-#define TARGET_FRONT_OF_CHR             0x0002 // set target to front of chr
-#define TARGET_CHR                      0x0004 // set target type to chr_num
-#define TARGET_PAD                      0x0008 // set target type to pad
-#define TARGET_COMPASS                  0x0010 // set target to compass direction (hex) N: 0000 E: C000 S: 8000: W: 4000
-#define TARGET_AIM_ONLY                 0x0020 // aim at target instead of firing
-#define TARGET_DONTTURN                 0x0040 // limits target to 180 degrees in front of guard (cannot be used with bond target flag)
+#define TARGET_BOND                     0x0001 /* Set target to bond (ignores target argument)*/
+#define TARGET_FRONT_OF_CHR             0x0002 /* Set target to front of chr*/
+#define TARGET_CHR                      0x0004 /* Set target type to chr_num*/
+#define TARGET_PAD                      0x0008 /* Set target type to pad*/
+#define TARGET_COMPASS                  0x0010 /* Set target to compass direction (hex) N: 0000 E: C000 S: 8000: W: 4000*/
+#define TARGET_AIM_ONLY                 0x0020 /* Aim at target instead of firing*/
+#define TARGET_DONTTURN                 0x0040 /* Limits target to 180 degrees in front of guard (cannot be used with TARGET_BOND flag)*/
 
 // command 18/19 - target body part values
-#define HIT_NULL_PART                   0x00 // null part, no reaction - 1x damage
-#define HIT_LEFT_FOOT                   0x01 // left foot - 1x damage
-#define HIT_LEFT_LEG                    0x02 // left leg - 1x damage
-#define HIT_LEFT_THIGH                  0x03 // left thigh - 1x damage
-#define HIT_RIGHT_FOOT                  0x04 // right foot - 1x damage
-#define HIT_RIGHT_LEG                   0x05 // right leg - 1x damage
-#define HIT_RIGHT_THIGH                 0x06 // right thigh - 1x damage
-#define HIT_PELVIS                      0x07 // pelvis - 1x damage
-#define HIT_HEAD                        0x08 // head - 4x damage
-#define HIT_LEFT_HAND                   0x09 // left hand - 1x damage
-#define HIT_LEFT_ARM                    0x0A // left arm - 1x damage
-#define HIT_LEFT_SHOULDER               0x0B // left shoulder - 1x damage
-#define HIT_RIGHT_HAND                  0x0C // right hand - 1x damage
-#define HIT_RIGHT_ARM                   0x0D // right arm - 1x damage
-#define HIT_RIGHT_SHOULDER              0x0E // right shoulder - 1x damage
-#define HIT_CHEST                       0x0F // chest - 2x damage
-#define HIT_GUN                       0x64 /* GUN - 0x damage*/
-#define HIT_HAT                       0x6E /* HAT - 0x damage*/
-#define HIT_GENERAL                     0xC8
-#define HIT_GENERALHALF                 0xC9
+typedef enum HITTARGET
+{
+    HIT_NULL_PART,          /* Null part, no reaction - 1x damage*/
+    HIT_LEFT_FOOT,          /* Left foot              - 1x damage*/
+    HIT_LEFT_LEG,           /* Left leg               - 1x damage*/
+    HIT_LEFT_THIGH,         /* Left thigh             - 1x damage*/
+    HIT_RIGHT_FOOT,         /* Right foot             - 1x damage*/
+    HIT_RIGHT_LEG,          /* Right leg              - 1x damage*/
+    HIT_RIGHT_THIGH,        /* Right thigh            - 1x damage*/
+    HIT_PELVIS,             /* Pelvis                 - 1x damage*/
+    HIT_HEAD,               /* Head                   - 4x damage*/
+    HIT_LEFT_HAND,          /* Left hand              - 1x damage*/
+    HIT_LEFT_ARM,           /* Left arm               - 1x damage*/
+    HIT_LEFT_SHOULDER,      /* Left shoulder          - 1x damage*/
+    HIT_RIGHT_HAND,         /* Right hand             - 1x damage*/
+    HIT_RIGHT_ARM,          /* Right arm              - 1x damage*/
+    HIT_RIGHT_SHOULDER,     /* Right shoulder         - 1x damage*/
+    HIT_CHEST,              /* Chest                  - 2x damage*/
+    HIT_GUN         = 0x64, /* GUN                    - 0x damage*/
+    HIT_HAT         = 0x6E, /* HAT                    - 0x damage*/
+    HIT_GENERAL     = 0xC8,
+    HIT_GENERALHALF = 0xC9
+} HITTARGET;
 
 // command 68 - door states
-#define DOOR_STATE_CLOSED               0x01 // closed
-#define DOOR_STATE_OPEN                 0x02 // opened
-#define DOOR_STATE_CLOSING              0x04 // closing
-#define DOOR_STATE_OPENING              0x08 // opening
+#define DOOR_STATE_CLOSED               0x01 /* Closed*/
+#define DOOR_STATE_OPEN                 0x02 /* Opened*/
+#define DOOR_STATE_CLOSING              0x04 /* Closing*/
+#define DOOR_STATE_OPENING              0x08 /* Opening*/
 
 // command BD/BE - spawn flags
-#define SPAWN_SUNGLASSES                0x00000001 // sunglasses
-#define SPAWN_SUNGLASSES_RANDOM         0x00000002 // sunglasses (random, 50% of the time)
-#define SPAWN_00000004                  0x00000004 // unknown
-#define SPAWN_00000008                  0x00000008 // unknown
-#define SPAWN_IGNORE_PAD_SIGHT_CHECK    0x00000010 // ignore check for pad within view (force spawn)
-#define SPAWN_00000020                  0x00000020 // unknown
-#define SPAWN_00000040                  0x00000040 // unknown
-#define SPAWN_00000080                  0x00000080 // unknown
-#define SPAWN_00000100                  0x00000100 // unknown
-#define SPAWN_00000200                  0x00000200 // unknown
-#define SPAWN_00000400                  0x00000400 // unknown
-#define SPAWN_00000800                  0x00000800 // unknown
-#define SPAWN_00001000                  0x00001000 // unknown
-#define SPAWN_00002000                  0x00002000 // unknown
-#define SPAWN_00004000                  0x00004000 // unknown
-#define SPAWN_00008000                  0x00008000 // unknown
-#define SPAWN_00010000                  0x00010000 // unknown
-#define SPAWN_00020000                  0x00020000 // unknown
-#define SPAWN_00040000                  0x00040000 // unknown
-#define SPAWN_00080000                  0x00080000 // unknown
-#define SPAWN_00100000                  0x00100000 // unknown
-#define SPAWN_00200000                  0x00200000 // unknown
-#define SPAWN_00400000                  0x00400000 // unknown
-#define SPAWN_00800000                  0x00800000 // unknown
-#define SPAWN_01000000                  0x01000000 // unknown
-#define SPAWN_02000000                  0x02000000 // unknown
-#define SPAWN_04000000                  0x04000000 // unknown
-#define SPAWN_08000000                  0x08000000 // unknown
-#define SPAWN_10000000                  0x10000000 // unknown
-#define SPAWN_20000000                  0x20000000 // unknown
-#define SPAWN_40000000                  0x40000000 // unknown
-#define SPAWN_80000000                  0x80000000 // unknown
+#define SPAWN_SUNGLASSES                0x00000001 /* Sunglasses*/
+#define SPAWN_SUNGLASSES_RANDOM         0x00000002 /* Sunglasses (random, 50% of the time)*/
+#define SPAWN_00000004                  0x00000004 /* Unknown*/
+#define SPAWN_00000008                  0x00000008 /* unknown*/
+#define SPAWN_IGNORE_PAD_SIGHT_CHECK    0x00000010 /* Ignore check for pad within view (force spawn)*/
+#define SPAWN_00000020                  0x00000020 /* unknown*/
+#define SPAWN_00000040                  0x00000040 /* unknown*/
+#define SPAWN_00000080                  0x00000080 /* unknown*/
+#define SPAWN_00000100                  0x00000100 /* unknown*/
+#define SPAWN_00000200                  0x00000200 /* unknown*/
+#define SPAWN_00000400                  0x00000400 /* unknown*/
+#define SPAWN_00000800                  0x00000800 /* unknown*/
+#define SPAWN_00001000                  0x00001000 /* unknown*/
+#define SPAWN_00002000                  0x00002000 /* unknown*/
+#define SPAWN_00004000                  0x00004000 /* unknown*/
+#define SPAWN_00008000                  0x00008000 /* unknown*/
+#define SPAWN_00010000                  0x00010000 /* unknown*/
+#define SPAWN_00020000                  0x00020000 /* unknown*/
+#define SPAWN_00040000                  0x00040000 /* unknown*/
+#define SPAWN_00080000                  0x00080000 /* unknown*/
+#define SPAWN_00100000                  0x00100000 /* unknown*/
+#define SPAWN_00200000                  0x00200000 /* unknown*/
+#define SPAWN_00400000                  0x00400000 /* unknown*/
+#define SPAWN_00800000                  0x00800000 /* unknown*/
+#define SPAWN_01000000                  0x01000000 /* unknown*/
+#define SPAWN_02000000                  0x02000000 /* unknown*/
+#define SPAWN_04000000                  0x04000000 /* unknown*/
+#define SPAWN_08000000                  0x08000000 /* unknown*/
+#define SPAWN_10000000                  0x10000000 /* unknown*/
+#define SPAWN_20000000                  0x20000000 /* unknown*/
+#define SPAWN_40000000                  0x40000000 /* unknown*/
+#define SPAWN_80000000                  0x80000000 /* unknown*/
 
 // command D7 - hud flags
-#define HUD_HIDE_ALL                    0x00 // hide all
-#define HUD_SHOW_TEXT_TOP               0x01 // don't hide top text
-#define HUD_SHOW_TEXT_BOTTOM            0x02 // don't hide bottom text
-#define HUD_SHOW_HUD_COUNTDOWN          0x04 // don't hide hud countdown
+#define HUD_HIDE_ALL                    0x00 /* Hide all*/
+#define HUD_SHOW_TEXT_TOP               0x01 /* Don't hide top text*/
+#define HUD_SHOW_TEXT_BOTTOM            0x02 /* Don't hide bottom text*/
+#define HUD_SHOW_HUD_COUNTDOWN          0x04 /* Don't hide hud countdown*/
 
-// command 94/95/96/97/98/99 chr->BITFIELD - used for ai list GLIST_FIRE_RAND_ANIM_SUBROUTINE
-#define BITFIELD_DONT_POINT_AT_BOND     0x01 // if set, don't point at bond
+/* command 94/95/96/97/98/99 chr->BITFIELD - Used for AI List GLIST_FIRE_RAND_ANIM_SUBROUTINE*/
+#define BITFIELD_DONT_POINT_AT_BOND     0x01 /* If set, don't point at Bond*/
 /*===========================================================================*/
+
+/*#include "aicommands2.h"*/
+
+#if 1
+
+//temporary thunking for ai names
+#define DO(label_id) \
+        label(label_id) \
+        ai_sleep
+
+#define LOOP(label) \
+        goto_first(label)
+
+#define CONTINUE(label) \
+        goto_first(label)
+
+#define LOOP_FOREVER(label_id) \
+        label(label_id) \
+        ai_sleep \
+        goto_first(label_id)
+
+#define RETURN(label_id)\
+        label(label_id) \
+            jump_to_return_ai_list \
+            ai_list_end
+
 
 /*=============================================================================
 // ai command shortcuts
@@ -1686,7 +1730,7 @@
 // info: makes chr hold tagged object
 //=============================================================================
 // note: if chr's hands are occupied, object will be equipped as an concealed
-// attachment. but if tagged object's handedness flag is free on guard then
+// attachment. but if tagged object's GUNHAND flag is free on guard then
 // guard will equip weapon. tagged object's prop must have a holding position
 // command within the model file
 //===========================================================================*/
@@ -3916,4 +3960,5 @@
         object_rocket_launch_ID, \
         object_tag,
 
+#endif
 #endif

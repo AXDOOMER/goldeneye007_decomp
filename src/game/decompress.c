@@ -1,4 +1,4 @@
-#include "ultra64.h"
+#include <ultra64.h>
 #include "zlib.h"
 
 //this definately isn't proper way this data was represented, but works for now

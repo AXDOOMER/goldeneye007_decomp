@@ -1,31 +1,31 @@
 /*
 * This file was automatically generated
 * 
-* Thursday, August 26, 2021 9:53:27 PM
-* Getools.Lib: 21.8.26.1
+* Monday, January 17, 2022 9:36:12 AM
+* Getools.Lib: 21.9.18.1
 */
 
 #include "ultra64.h"
 #include "bondtypes.h"
 
 // forward declarations
-struct pad padlist[];
-struct pad3d pad3dlist[];
-s32 objlist[];
+PadRecord padlist[];
+BoundPadRecord pad3dlist[];
+s32 propDefs[];
 s32 intro[];
-struct s_pathLink pathlist[];
+waygroup pathsets[];
 char *pad3dnames[];
-struct s_pathTbl pathtbl[];
+waypoint pathwaypoints[];
 char *padnames[];
-struct s_pathSet paths[];
-struct ailist ailists[];
+PathRecord patrolpaths[];
+AIListRecord ailists[];
 
-struct stagesetup setup = {
-    &pathtbl,
-    &pathlist,
+stagesetup UsetuprunZ = {
+    &pathwaypoints,
+    &pathsets,
     &intro,
-    &objlist,
-    &paths,
+    &propDefs,
+    &patrolpaths,
     &ailists,
     &padlist,
     &pad3dlist,
@@ -33,7 +33,7 @@ struct stagesetup setup = {
     &pad3dnames
 };
 
-struct pad padlist[] = {
+PadRecord padlist[] = {
     { {675.0f, -38.0f, -461.0f}, {0.0f, 1.0f, 0.0f}, {0.708905f, 0.0f, 0.705304f}, "p3833a", 0 },
     { {709.0f, -38.0f, -451.0f}, {0.0f, 1.0f, 0.0f}, {-0.708912f, 0.0f, -0.705296f}, "p3831a1", 0 },
     { {735.0f, -38.0f, -457.0f}, {0.0f, 1.0f, 0.0f}, {-0.999997f, 0.0f, 0.002546f}, "p3831a1", 0 },
@@ -214,7 +214,7 @@ struct pad padlist[] = {
 };
 
 
-struct pad3d pad3dlist[] = {
+BoundPadRecord pad3dlist[] = {
     { {646.0f, -43.0f, -1478.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f}, "p2169a", 0, {-2.0f, 1.0f, -2.0f, -2.0f, -1.0f, 2.0f} },
     { {1012.0f, -19.0f, -1779.0f}, {0.0f, 1.0f, 0.0f}, {-0.707168f, 1e-06, -0.707046f}, "p2216a2", 0, {-14.850645f, 13.436069f, -4e-06, 30.000004f, -12.019656f, 16.264635f} },
     { {935.0f, -35.0f, -1881.0f}, {0.142935f, 0.986286f, 0.082524f}, {-0.854148f, 0.165048f, -0.493143f}, "p1632a2", 0, {-6.813465f, 7.349367f, -27.120205f, 4.91059f, -59.638824f, 59.063366f} },
@@ -231,7 +231,7 @@ struct pad3d pad3dlist[] = {
 };
 
 
-s32 objlist[] = {
+s32 propDefs[] = {
     /* Type = WatchMenuObjectiveText; index = 0 */
     _mkword(0, _mkshort(0, 35)), 0, 28682, 0,
     /* Type = WatchMenuObjectiveText; index = 1 */
@@ -583,7 +583,7 @@ s32 path_indeces_0[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1
 s32 path_indeces_1[] = { 68, 69, 70, -1 };
 s32 path_indeces_2[] = { 71, 72, -1 };
 
-struct s_pathLink pathlist[] = {
+waygroup pathsets[] = {
     { &path_neighbors_0, &path_indeces_0, 0 },
     { &path_neighbors_1, &path_indeces_1, 0 },
     { &path_neighbors_2, &path_indeces_2, 0 },
@@ -673,81 +673,81 @@ s32 path_table_70[] = { 66, 68, 69, -1 };
 s32 path_table_71[] = { 68, 72, -1 };
 s32 path_table_72[] = { 71, -1 };
 
-struct s_pathTbl pathtbl[] = {
-    { 0x0000, 0x00ae, &path_table_0, 0x00000000, 0x00000000 },
-    { 0x0000, 0x00ad, &path_table_1, 0x00000000, 0x00000000 },
-    { 0x0000, 0x00ac, &path_table_2, 0x00000000, 0x00000000 },
-    { 0x0000, 0x00ab, &path_table_3, 0x00000000, 0x00000000 },
-    { 0x0000, 0x00aa, &path_table_4, 0x00000000, 0x00000000 },
-    { 0x0000, 0x00a9, &path_table_5, 0x00000000, 0x00000000 },
-    { 0x0000, 0x00a8, &path_table_6, 0x00000000, 0x00000000 },
-    { 0x0000, 0x00a7, &path_table_7, 0x00000000, 0x00000000 },
-    { 0x0000, 0x00a6, &path_table_8, 0x00000000, 0x00000000 },
-    { 0x0000, 0x00a5, &path_table_9, 0x00000000, 0x00000000 },
-    { 0x0000, 0x00a4, &path_table_10, 0x00000000, 0x00000000 },
-    { 0x0000, 0x00a3, &path_table_11, 0x00000000, 0x00000000 },
-    { 0x0000, 0x00a2, &path_table_12, 0x00000000, 0x00000000 },
-    { 0x0000, 0x00a1, &path_table_13, 0x00000000, 0x00000000 },
-    { 0x0000, 0x00a0, &path_table_14, 0x00000000, 0x00000000 },
-    { 0x0000, 0x009f, &path_table_15, 0x00000000, 0x00000000 },
-    { 0x0000, 0x009e, &path_table_16, 0x00000000, 0x00000000 },
-    { 0x0000, 0x009d, &path_table_17, 0x00000000, 0x00000000 },
-    { 0x0000, 0x009c, &path_table_18, 0x00000000, 0x00000000 },
-    { 0x0000, 0x009b, &path_table_19, 0x00000000, 0x00000000 },
-    { 0x0000, 0x009a, &path_table_20, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0099, &path_table_21, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0098, &path_table_22, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0097, &path_table_23, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0096, &path_table_24, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0095, &path_table_25, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0094, &path_table_26, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0093, &path_table_27, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0092, &path_table_28, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0091, &path_table_29, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0090, &path_table_30, 0x00000000, 0x00000000 },
-    { 0x0000, 0x008f, &path_table_31, 0x00000000, 0x00000000 },
-    { 0x0000, 0x008e, &path_table_32, 0x00000000, 0x00000000 },
-    { 0x0000, 0x008d, &path_table_33, 0x00000000, 0x00000000 },
-    { 0x0000, 0x008c, &path_table_34, 0x00000000, 0x00000000 },
-    { 0x0000, 0x008b, &path_table_35, 0x00000000, 0x00000000 },
-    { 0x0000, 0x008a, &path_table_36, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0089, &path_table_37, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0088, &path_table_38, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0087, &path_table_39, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0086, &path_table_40, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0085, &path_table_41, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0084, &path_table_42, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0083, &path_table_43, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0082, &path_table_44, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0081, &path_table_45, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0080, &path_table_46, 0x00000000, 0x00000000 },
-    { 0x0000, 0x007f, &path_table_47, 0x00000000, 0x00000000 },
-    { 0x0000, 0x007e, &path_table_48, 0x00000000, 0x00000000 },
-    { 0x0000, 0x007d, &path_table_49, 0x00000000, 0x00000000 },
-    { 0x0000, 0x007c, &path_table_50, 0x00000000, 0x00000000 },
-    { 0x0000, 0x007b, &path_table_51, 0x00000000, 0x00000000 },
-    { 0x0000, 0x007a, &path_table_52, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0079, &path_table_53, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0078, &path_table_54, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0077, &path_table_55, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0076, &path_table_56, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0075, &path_table_57, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0074, &path_table_58, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0073, &path_table_59, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0072, &path_table_60, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0071, &path_table_61, 0x00000000, 0x00000000 },
-    { 0x0000, 0x0070, &path_table_62, 0x00000000, 0x00000000 },
-    { 0x0000, 0x006f, &path_table_63, 0x00000000, 0x00000000 },
-    { 0x0000, 0x006e, &path_table_64, 0x00000000, 0x00000000 },
-    { 0x0000, 0x006d, &path_table_65, 0x00000000, 0x00000000 },
-    { 0x0000, 0x006c, &path_table_66, 0x00000000, 0x00000000 },
-    { 0x0000, 0x006b, &path_table_67, 0x00000000, 0x00000000 },
-    { 0x0000, 0x006a, &path_table_68, 0x00000001, 0x00000000 },
-    { 0x0000, 0x0069, &path_table_69, 0x00000001, 0x00000000 },
-    { 0x0000, 0x0068, &path_table_70, 0x00000001, 0x00000000 },
-    { 0x0000, 0x0067, &path_table_71, 0x00000002, 0x00000000 },
-    { 0x0000, 0x0066, &path_table_72, 0x00000002, 0x00000000 },
-    { 0xffff, 0xffff, NULL, 0x00000000, 0x00000000 }
+waypoint pathwaypoints[] = {
+    { 0x000000ae, &path_table_0, 0x00000000, 0x00000000 },
+    { 0x000000ad, &path_table_1, 0x00000000, 0x00000000 },
+    { 0x000000ac, &path_table_2, 0x00000000, 0x00000000 },
+    { 0x000000ab, &path_table_3, 0x00000000, 0x00000000 },
+    { 0x000000aa, &path_table_4, 0x00000000, 0x00000000 },
+    { 0x000000a9, &path_table_5, 0x00000000, 0x00000000 },
+    { 0x000000a8, &path_table_6, 0x00000000, 0x00000000 },
+    { 0x000000a7, &path_table_7, 0x00000000, 0x00000000 },
+    { 0x000000a6, &path_table_8, 0x00000000, 0x00000000 },
+    { 0x000000a5, &path_table_9, 0x00000000, 0x00000000 },
+    { 0x000000a4, &path_table_10, 0x00000000, 0x00000000 },
+    { 0x000000a3, &path_table_11, 0x00000000, 0x00000000 },
+    { 0x000000a2, &path_table_12, 0x00000000, 0x00000000 },
+    { 0x000000a1, &path_table_13, 0x00000000, 0x00000000 },
+    { 0x000000a0, &path_table_14, 0x00000000, 0x00000000 },
+    { 0x0000009f, &path_table_15, 0x00000000, 0x00000000 },
+    { 0x0000009e, &path_table_16, 0x00000000, 0x00000000 },
+    { 0x0000009d, &path_table_17, 0x00000000, 0x00000000 },
+    { 0x0000009c, &path_table_18, 0x00000000, 0x00000000 },
+    { 0x0000009b, &path_table_19, 0x00000000, 0x00000000 },
+    { 0x0000009a, &path_table_20, 0x00000000, 0x00000000 },
+    { 0x00000099, &path_table_21, 0x00000000, 0x00000000 },
+    { 0x00000098, &path_table_22, 0x00000000, 0x00000000 },
+    { 0x00000097, &path_table_23, 0x00000000, 0x00000000 },
+    { 0x00000096, &path_table_24, 0x00000000, 0x00000000 },
+    { 0x00000095, &path_table_25, 0x00000000, 0x00000000 },
+    { 0x00000094, &path_table_26, 0x00000000, 0x00000000 },
+    { 0x00000093, &path_table_27, 0x00000000, 0x00000000 },
+    { 0x00000092, &path_table_28, 0x00000000, 0x00000000 },
+    { 0x00000091, &path_table_29, 0x00000000, 0x00000000 },
+    { 0x00000090, &path_table_30, 0x00000000, 0x00000000 },
+    { 0x0000008f, &path_table_31, 0x00000000, 0x00000000 },
+    { 0x0000008e, &path_table_32, 0x00000000, 0x00000000 },
+    { 0x0000008d, &path_table_33, 0x00000000, 0x00000000 },
+    { 0x0000008c, &path_table_34, 0x00000000, 0x00000000 },
+    { 0x0000008b, &path_table_35, 0x00000000, 0x00000000 },
+    { 0x0000008a, &path_table_36, 0x00000000, 0x00000000 },
+    { 0x00000089, &path_table_37, 0x00000000, 0x00000000 },
+    { 0x00000088, &path_table_38, 0x00000000, 0x00000000 },
+    { 0x00000087, &path_table_39, 0x00000000, 0x00000000 },
+    { 0x00000086, &path_table_40, 0x00000000, 0x00000000 },
+    { 0x00000085, &path_table_41, 0x00000000, 0x00000000 },
+    { 0x00000084, &path_table_42, 0x00000000, 0x00000000 },
+    { 0x00000083, &path_table_43, 0x00000000, 0x00000000 },
+    { 0x00000082, &path_table_44, 0x00000000, 0x00000000 },
+    { 0x00000081, &path_table_45, 0x00000000, 0x00000000 },
+    { 0x00000080, &path_table_46, 0x00000000, 0x00000000 },
+    { 0x0000007f, &path_table_47, 0x00000000, 0x00000000 },
+    { 0x0000007e, &path_table_48, 0x00000000, 0x00000000 },
+    { 0x0000007d, &path_table_49, 0x00000000, 0x00000000 },
+    { 0x0000007c, &path_table_50, 0x00000000, 0x00000000 },
+    { 0x0000007b, &path_table_51, 0x00000000, 0x00000000 },
+    { 0x0000007a, &path_table_52, 0x00000000, 0x00000000 },
+    { 0x00000079, &path_table_53, 0x00000000, 0x00000000 },
+    { 0x00000078, &path_table_54, 0x00000000, 0x00000000 },
+    { 0x00000077, &path_table_55, 0x00000000, 0x00000000 },
+    { 0x00000076, &path_table_56, 0x00000000, 0x00000000 },
+    { 0x00000075, &path_table_57, 0x00000000, 0x00000000 },
+    { 0x00000074, &path_table_58, 0x00000000, 0x00000000 },
+    { 0x00000073, &path_table_59, 0x00000000, 0x00000000 },
+    { 0x00000072, &path_table_60, 0x00000000, 0x00000000 },
+    { 0x00000071, &path_table_61, 0x00000000, 0x00000000 },
+    { 0x00000070, &path_table_62, 0x00000000, 0x00000000 },
+    { 0x0000006f, &path_table_63, 0x00000000, 0x00000000 },
+    { 0x0000006e, &path_table_64, 0x00000000, 0x00000000 },
+    { 0x0000006d, &path_table_65, 0x00000000, 0x00000000 },
+    { 0x0000006c, &path_table_66, 0x00000000, 0x00000000 },
+    { 0x0000006b, &path_table_67, 0x00000000, 0x00000000 },
+    { 0x0000006a, &path_table_68, 0x00000001, 0x00000000 },
+    { 0x00000069, &path_table_69, 0x00000001, 0x00000000 },
+    { 0x00000068, &path_table_70, 0x00000001, 0x00000000 },
+    { 0x00000067, &path_table_71, 0x00000002, 0x00000000 },
+    { 0x00000066, &path_table_72, 0x00000002, 0x00000000 },
+    { 0xffffffff, NULL, 0x00000000, 0x00000000 }
 };
 
 
@@ -832,10 +832,10 @@ char *padnames[] = {
 s32 path_set_0[] = { 64, 62, -1 };
 s32 path_set_1[] = { 71, 72, 71, 72, 71, 72, 68, 71, 70, 69, 68, -1 };
 
-struct s_pathSet paths[] = {
-    { &path_set_0, 0x00000000 },
-    { &path_set_1, 0x01000000 },
-    { NULL, 0x00000000 }
+PathRecord patrolpaths[] = {
+    { &path_set_0, 0x00, 0x00, 0x0000 },
+    { &path_set_1, 0x01, 0x00, 0x0000 },
+    { NULL, 0x00, 0x00, 0x0000 }
 };
 
 
@@ -862,7 +862,7 @@ u32 ai_20[] = { 0x020703cf, 0x29010702, 0x2905f804, 0x0c020603, 0x01060400 };
 u32 ai_12[] = { 0xcd000000, 0x00020703, 0x9c000010, 0x00290107, 0x0229cd02, 0x6c0000ab, 0x004c0a00, 0x01ffffff, 0xff04100a, 0x0001ffff, 0xffff0410, 0x02060301, 0x06040000 };
 u32 ai_21[] = { 0x0207039c, 0x00001000, 0x29010702, 0x29ae0204, 0x03b40000, 0x3c290104, 0x0229c400, 0xf8ff0206, 0x03010604 };
 
-struct ailist ailists[] = {
+AIListRecord ailists[] = {
     /* index = 0 */
     { &ai_0, 0x00000401 },
     /* index = 1 */
@@ -910,10 +910,6 @@ struct ailist ailists[] = {
     /* index = 22 */
     { NULL, 0x00000000 }
 };
-
-
-
-
 
 
 

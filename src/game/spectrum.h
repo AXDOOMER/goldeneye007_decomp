@@ -1,6 +1,6 @@
 #ifndef _SPECTRUM_H_
 #define _SPECTRUM_H_
-#include "ultra64.h"
+#include <ultra64.h>
 
 typedef enum SPECTRUMROMS {
     ROM_SABRE,

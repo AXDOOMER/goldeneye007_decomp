@@ -1,6 +1,6 @@
 #ifndef _MP_WEAPON_H_
 #define _MP_WEAPON_H_
-#include "ultra64.h"
+#include <ultra64.h>
 
 struct s_mp_weapon_set
 {

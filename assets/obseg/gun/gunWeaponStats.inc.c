@@ -36,10 +36,10 @@ WeaponStats default_weaponstats = {
 	1.0, 0.0, 0.0, 0.0, 3.0, 3.0, 8.5, 0, 0, 0xFF, 0x00, 1, 0, 0, NULL, 1.0, 0.0, 0.0, SCALEVAL1, 0.89999998, 1.0, 0xFF, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 4.0, 0.0, 0x110
 };
 //D:80032504
-#include "assets/obseg/gun/fist/gunWeaponStat.inc.c"
+#include <assets/obseg/gun/fist/gunWeaponStat.inc.c>
 
 //D:80032574
-#include "assets/obseg/gun/knife/gunWeaponStat.inc.c"
+#include <assets/obseg/gun/knife/gunWeaponStat.inc.c>
 
 //D:800325E4
 WeaponStats throwknife_stats = {

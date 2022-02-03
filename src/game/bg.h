@@ -1,9 +1,9 @@
 #ifndef _BG_H_
 #define _BG_H_
-#include "ultra64.h"
-#include "bondgame.h"
-#include "bondtypes.h"
-#include "bondconstants.h"
+#include <ultra64.h>
+#include <bondgame.h>
+#include <bondtypes.h>
+#include <bondconstants.h>
 
 struct levelentry
 {
@@ -16,7 +16,7 @@ struct levelentry
 };
 
 typedef struct s_room_info {
-    u8 bitflags;
+    u8 bitflags0;
     u8 bitflags1;
     u8 model_bin_loaded;
     u8 bitflags2;
@@ -70,7 +70,7 @@ typedef struct bg_portal_entry
 {
     u8 numPoints;
     u8 padding[3];
-    struct coord3d point;
+    coord3d point;
 } bg_portal_entry;
 
 typedef struct bg_portal_data_entry
@@ -87,7 +87,7 @@ typedef struct bg_room_data
     void* pPointTableBin;
     void* pPriMappingBin;
     void* pSecMappingBin;
-    struct coord3d pos;
+    coord3d pos;
 } bg_room_data;
 
 extern s32 MaxNumRooms;
@@ -123,8 +123,8 @@ Gfx *bgScissorCurrentPlayerView(Gfx *arg0, s32 left, s32 top, s32 width, s32 hei
 Gfx* bgScissorCurrentPlayerViewDefault(Gfx* arg0);
 Gfx* bgScissorCurrentPlayerViewF(Gfx* arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4);
 f32 get_room_data_float1(void);
-s32 getROOMID_Bitflags(int roomID);
+u8 getROOMID_Bitflags(int roomID);
 s32 bgGet2dBboxByRoomId(s32 room_id, struct bbox2d *result);
-f32 sub_GAME_7F0B4878(void);
+f32 bgGetLevelVisibilityScale(void);
 
 #endif

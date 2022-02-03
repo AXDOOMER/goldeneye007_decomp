@@ -1,6 +1,6 @@
 #ifndef _INDY_COMMANDS_H_
 #define _INDY_COMMANDS_H_
-#include "ultra64.h"
+#include <ultra64.h>
 
 typedef struct indy_resource_entry_header {
     u32 resourceID;

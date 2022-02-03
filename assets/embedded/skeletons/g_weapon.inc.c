@@ -1,3 +1,22 @@
+#ifdef DEBUG
+/*Controller model*/
+char* weapon_gun_controller_JointNames[] = {
+    "SKEL_TOP",
+    "SKEL_IN",
+    "SKEL_OUT",
+    "SKEL_IN",
+    "SKEL_OUT",
+    "SKEL_IN",
+    "SKEL_OUT",
+    "SKEL_IN",
+    "SKEL_OUT",
+    "SKEL_IN",
+    "SKEL_OUT",
+    "SKEL_IN",
+    "SKEL_OUT"
+};
+#endif
+
 //D:8003D340
 ModelJoint JOINTLIST(g_weapon)[] = {
     {0x02, 0x00, 0x00}, 

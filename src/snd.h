@@ -1,8 +1,8 @@
 #ifndef _SND_H_
 #define _SND_H_
 
-#include "ultra64.h"
-#include "PR/libaudio.h"
+#include <ultra64.h>
+#include <PR/libaudio.h>
 
 #define DELTA_1_MS   1000
 #define DELTA_33_MS 33333
@@ -87,8 +87,12 @@ typedef struct ALSoundState_s {
     // 0x40 = ?
     // 0x80 = ?
     u8 unk3e;
-
-    u8 unk3f; // playing state?
+    /*
+      AL_STOPPED
+      AL_PLAYING
+      AL_STOPPING
+    */
+    u8 playingState; 
 
 } ALSoundState;
 

@@ -1,6 +1,6 @@
-#include "ultra64.h"
-#include "game/front.h"
-#include "bondconstants.h"
+#include <ultra64.h>
+#include "front.h"
+#include <bondconstants.h>
  /**
   * initGameData
   * 

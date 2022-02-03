@@ -1,10 +1,10 @@
 #ifndef _FILE2_H_
 #define _FILE2_H_
-#include "ultra64.h"
+#include <ultra64.h>
 
-#include "bondconstants.h"
-#include "bondtypes.h"
-#include "game/file.h"
+#include <bondconstants.h>
+#include <bondtypes.h>
+#include "file.h"
 
 #define RAMROM_FOLDERNUM 0x64
 

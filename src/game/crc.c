@@ -1,5 +1,5 @@
-#include "ultra64.h"
-#include "random.h"
+#include <ultra64.h>
+#include <random.h>
 #include "file.h"
 
 /**

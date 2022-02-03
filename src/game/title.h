@@ -1,6 +1,6 @@
 #ifndef _INTRO_LOGOS_H_
 #define _INTRO_LOGOS_H_
-#include "ultra64.h"
+#include <ultra64.h>
 
 extern s32 dword_CODE_bss_80069550;
 extern Gfx *dword_CODE_bss_80069554;

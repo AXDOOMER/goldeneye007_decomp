@@ -1,7 +1,7 @@
-#include "ultra64.h"
-#include "game/chrai.h"
-#include "game/unk_09C250.h"
-#include "fr.h"
+#include <ultra64.h>
+#include "chrai.h"
+#include "unk_09C250.h"
+#include <fr.h>
 
 void cleanupExplosions(void)
 {

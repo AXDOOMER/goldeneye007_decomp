@@ -1,9 +1,9 @@
-#include "ultra64.h"
-#include "memp.h"
-#include "game/bg.h"
-#include "game/initobjects.h"
-#include "game/chrai.h"
-#include "game/chrobjhandler.h"
+#include <ultra64.h>
+#include <memp.h>
+#include "bg.h"
+#include "initobjects.h"
+#include "chrai.h"
+#include "chrobjhandler.h"
 //this file may very well be a few different sub files
 
 struct object_animation_controller g_InitialMonitorAnimController = {&monAnim00Bond, 0, 0xFFFF, 0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.5, 0.0, 0.0, 0.5, 0.5, 0.5, 0.0, 0.0, 0.5, 0.5, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 1.0, 0.0};
@@ -31,7 +31,7 @@ void init_sound_effects_registers(void)
 
     for (i=0; i<SFX_RELATED_LEN; i++)
     {
-        sfx_related[i].field_0x0 = 0;
+        sfx_related[i].state = 0;
     }
 
 }

@@ -1,7 +1,7 @@
-#include <os_internal.h>
-#include <rcp.h>
-#include "src/libultra/io/controller.h"
-#include "src/libultra/io/siint.h"
+#include <PR/os_internal.h>
+#include <PR/rcp.h>
+#include <io/controller.h>
+#include <io/siint.h>
 
 #define HALF_A_SECOND OS_USEC_TO_CYCLES(500000)
 

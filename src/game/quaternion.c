@@ -1,6 +1,6 @@
-#include "ultra64.h"
-#include "game/quaternion.h"
-#include "game/math_asinfacosf.h"
+#include <ultra64.h>
+#include "quaternion.h"
+#include "math_asinfacosf.h"
 
 #define M_PI 3.1415927f
 #define HALF2RAD(x) (x * (M_PI / 32768.0f))

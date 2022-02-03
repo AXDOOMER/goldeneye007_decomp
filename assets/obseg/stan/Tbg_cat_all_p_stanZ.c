@@ -5,8 +5,8 @@
 * Getools.Lib: 21.8.18.1
 */
 
-#include "ultra64.h"
-#include "stan.h"
+#include <ultra64.h>
+#include <game/stan.h>
 
 // forward declarations
 BetaStandTile tile_0;

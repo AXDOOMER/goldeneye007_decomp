@@ -1,6 +1,6 @@
 #ifndef _CHEAT_BUTTONS_H_
 #define _CHEAT_BUTTONS_H_
-#include "ultra64.h"
+#include <ultra64.h>
 
 enum CHEAT_MASK {
     CHEAT_MASK_0 = 0,
@@ -46,12 +46,13 @@ enum CHEAT_MASK {
 
 extern u8 g_CheatPlayerTextRelated[0x4C];
 
-u32 cheatIsEnemyRockets(u32 cheatindex);
-void cheatButtonTurnOnCheatForPlayers(u32 cheatindex);
+//public Functions
+bool cheatIsEnemyRockets(CHEAT_ID cheatindex);
+void cheatButtonTurnOnCheatForPlayers(CHEAT_ID cheatindex);
 void cheat_buttons_mp_related(void);
-s32 cheatCheckIfOn(CHEAT_ID cheat);
-s32 cheatCheckIfMPCheat(s32 arg0);
+bool cheatCheckIfOn(CHEAT_ID cheatindex);
+bool cheatCheckIfMPCheat(CHEAT_ID cheatindex);
 void cheatDisableAllCheats(void);
-char *cheatGetMenuTextPointer(s32 arg0);
+char *cheatGetMenuTextPointer(CHEAT_ID cheatindex);
 
 #endif

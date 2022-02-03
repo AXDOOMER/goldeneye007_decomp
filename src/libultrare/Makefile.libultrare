@@ -3,7 +3,7 @@
 # The current approach is to explicitly list each .c and .s file, as either original or Rare.
 # 
 
-LIBULTRA_INCLUDE := -I . -I include -I include/PR -I src/libultra
+LIBULTRA_INCLUDE := -I . -I include -I include/PR -I src/libultrare -I src/libultra
 LIBULTRA_OPTIMIZATION := -O1
 LIBULTRA_ASM_OPTIMIZATION := -O1
 

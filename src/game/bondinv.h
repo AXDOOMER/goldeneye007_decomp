@@ -1,8 +1,8 @@
 #ifndef _BONDINV_H_
 #define _BONDINV_H_
-#include "ultra64.h"
-#include "bondconstants.h"
-#include "game/bondview.h"
+#include <ultra64.h>
+#include <bondconstants.h>
+#include "bondview.h"
 
 void reinit_inventory(void);
 s32 bondinvIsAliveWithFlag(void);
@@ -19,5 +19,5 @@ int add_item_to_inventory(ITEM_IDS item);
 int add_doubles_item_to_inventory(ITEM_IDS right, ITEM_IDS left);
 s32 get_BONDdata_allguns_flag(void);
 void set_BONDdata_allguns_flag(s32 all_guns);
-
+bool          is_prop_in_inventory(PropRecord *prop);
 #endif

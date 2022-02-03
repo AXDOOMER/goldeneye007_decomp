@@ -1,7 +1,7 @@
 #ifndef _LVL_H_
 #define _LVL_H_
-#include "ultra64.h"
-#include "bondconstants.h"
+#include <ultra64.h>
+#include <bondconstants.h>
 
 #define DEFAULT_AGENT_AI_ACCURACY_MODIFIER 0.6f
 #define DEFAULT_AGENT_AI_DAMAGE_MODIFIER 0.5f
@@ -70,6 +70,8 @@ void lvlSetControlsLockedFlag(s32 arg0);
 s32 lvlGetControlsLockedFlag(void);
 void lvlSetMultipliersForDifficulty(void);
 s32 lvlGetCurrentStageToLoad(void);
-s32 sub_GAME_7F0BD8F0(void);
+s32        sub_GAME_7F0BD8F0(void);
+f32        lvlGetCurrentMultiPlayerSec(void);
+f32        lvlGetCurrentMultiPlayerMin(void);
 
 #endif

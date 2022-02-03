@@ -1,67 +1,67 @@
-#include "ultra64.h"
-#include "include/math.h"
-#include "include/os_extension.h"
-#include "include/PR/libaudio.h"
-#include "assets/font_dl.h"
-#include "deb.h"
-#include "memp.h"
-#include "music.h"
-#include "tlb_manage.h"
-#include "fr.h"
-#include "snd.h"
-#include "ramrom.h"
-#include "random.h"
-#include "joy.h"
-#include "token.h"
-#include "game/debugmenu_handler.h"
-#include "game/lvl.h"
-#include "game/lvl_text.h"
-#include "game/initunk_0072B0.h"
-#include "game/front.h"
-#include "game/bondinv.h"
-#include "game/player.h"
-#include "game/player_2.h"
-#include "game/chrobjhandler.h"
-#include "game/cleanup_objects.h"
-#include "game/unk_09C250.h"
-#include "game/chrai.h"
-#include "game/mp_music.h"
-#include "game/initunk_005520.h"
-#include "game/initmttex.h"
-#include "game/unk_0A1DA0.h"
-#include "game/image_bank.h"
-#include "game/textrelated.h"
-#include "game/initmenus.h"
-#include "game/cheat_buttons.h"
-#include "game/bg.h"
-#include "game/watch.h"
-#include "game/objective.h"
-#include "game/mp_watch.h"
-#include "game/unk_09B7A0.h"
-#include "game/initunk_005450.h"
-#include "game/initobjects.h"
-#include "game/initguards.h"
-#include "game/prop.h"
-#include "game/initexplosioncasing.h"
-#include "game/initunk_007180.h"
-#include "game/initunk_007290.h"
-#include "game/initunk_0072B0.h"
-#include "game/initpathtablelinks.h"
-#include "game/ejectedcartridges.h"
-#include "game/inititemslots.h"
-#include "game/initBondDATA.h"
-#include "game/bondview.h"
-#include "game/bondview_r.h"
-#include "game/initBondDATAdefaults.h"
-#include "game/viewport.h"
-#include "game/stan.h"
-#include "game/gun.h"
-#include "game/unk_091080.h"
-#include "game/mp_music.h"
-#include "game/unk_0BC530.h"
-#include "game/unk_092E50.h"
-#include "game/unk_0C0A70.h"
-#include "game/chr.h"
+#include <ultra64.h>
+#include <math.h>
+#include <os_extension.h>
+#include <PR/libaudio.h>
+#include <assets/font_dl.h>
+#include <deb.h>
+#include <memp.h>
+#include <music.h>
+#include <tlb_manage.h>
+#include <fr.h>
+#include <snd.h>
+#include <ramrom.h>
+#include <random.h>
+#include <joy.h>
+#include <token.h>
+#include "debugmenu_handler.h"
+#include "lvl.h"
+#include "lvl_text.h"
+#include "initunk_0072B0.h"
+#include "front.h"
+#include "bondinv.h"
+#include "player.h"
+#include "player_2.h"
+#include "chrobjhandler.h"
+#include "cleanup_objects.h"
+#include "unk_09C250.h"
+#include "chrai.h"
+#include "mp_music.h"
+#include "initunk_005520.h"
+#include "initmttex.h"
+#include "unk_0A1DA0.h"
+#include "image_bank.h"
+#include "textrelated.h"
+#include "initmenus.h"
+#include "cheat_buttons.h"
+#include "bg.h"
+#include "watch.h"
+#include "objective.h"
+#include "mp_watch.h"
+#include "unk_09B7A0.h"
+#include "initunk_005450.h"
+#include "initobjects.h"
+#include "initguards.h"
+#include "prop.h"
+#include "initexplosioncasing.h"
+#include "initunk_007180.h"
+#include "initunk_007290.h"
+#include "initunk_0072B0.h"
+#include "initpathtablelinks.h"
+#include "ejectedcartridges.h"
+#include "inititemslots.h"
+#include "initBondDATA.h"
+#include "bondview.h"
+#include "bondview_r.h"
+#include "initBondDATAdefaults.h"
+#include "viewport.h"
+#include "stan.h"
+#include "gun.h"
+#include "unk_091080.h"
+#include "mp_music.h"
+#include "unk_0BC530.h"
+#include "unk_092E50.h"
+#include "unk_0C0A70.h"
+#include "chr.h"
 
 // bss
 //CODE.bss:8008C260
@@ -1966,8 +1966,8 @@ Gfx* lvlRender(Gfx* DL)
 
             if (bond_pressed_reload_activate() && bond_interact_object())
             {
-                attempt_reload_item_in_hand(RIGHT_HAND);
-                attempt_reload_item_in_hand(LEFT_HAND);
+                attempt_reload_item_in_hand(GUNRIGHT);
+                attempt_reload_item_in_hand(GUNLEFT);
             }
 
             sub_GAME_7F03D0D4();
@@ -2041,7 +2041,7 @@ Gfx* lvlRender(Gfx* DL)
 #if defined(BUGFIX_R1)
                 cheatCheckIfOn(CHEAT_INFINITE_AMMO) != 0
                 && (
-                    (get_item_in_hand(RIGHT_HAND) != ITEM_WATCHLASER)
+                    (get_item_in_hand(GUNRIGHT) != ITEM_WATCHLASER)
                     || (g_CurrentPlayer->field_FCC == 0)
                 )
 #else /* VERSION_US */
@@ -5422,13 +5422,13 @@ void lvlUpdateMpPlayerData(void)
     {
         if (bondinvIsAliveWithFlag())
         {
-            if (get_item_in_hand(RIGHT_HAND) != ITEM_TOKEN)
+            if (get_item_in_hand(GUNRIGHT) != ITEM_TOKEN)
             {
-                draw_item_in_hand_has_more_ammo(RIGHT_HAND, ITEM_TOKEN);
+                draw_item_in_hand_has_more_ammo(GUNRIGHT, ITEM_TOKEN);
 
-                if (g_CurrentPlayer->hands[RIGHT_HAND].when_detonating_mines_is_0 == 2)
+                if (g_CurrentPlayer->hands[GUNRIGHT].when_detonating_mines_is_0 == 2)
                 {
-                    g_CurrentPlayer->hands[RIGHT_HAND].when_detonating_mines_is_0 = 5;
+                    g_CurrentPlayer->hands[GUNRIGHT].when_detonating_mines_is_0 = 5;
                 }
             }
 

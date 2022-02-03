@@ -1,10 +1,10 @@
-#include "ultra64.h"
-#include "game/math_floor.h"
-#include "game/math_ceil.h"
-#include "game/quaternion.h"
-#include "game/math_asinfacosf.h"
-#include "game/math_unk_05A9E0.h"
-#include "game/chrobjdata.h"
+#include <ultra64.h>
+#include "math_floor.h"
+#include "math_ceil.h"
+#include "quaternion.h"
+#include "math_asinfacosf.h"
+#include "math_unk_05A9E0.h"
+#include "chrobjdata.h"
 
 
 //file split per EU

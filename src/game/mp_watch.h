@@ -1,6 +1,6 @@
 #ifndef _MP_WATCH_H_
 #define _MP_WATCH_H_
-#include "ultra64.h"
+#include <ultra64.h>
 
 typedef enum TEXTCOLORS {
     GREEN_NORMAL=0,

@@ -18,10 +18,10 @@
  * Copyright Laws of the United States.
  *====================================================================*/
 
-#include <libaudio.h>
-#include "src/libultra/audio/synthInternals.h"
-#include <os.h>
-#include "include/assert.h"
+#include <PR/libaudio.h>
+#include <audio/synthInternals.h>
+#include <PR/os.h>
+#include <assert.h>
 
 #ifdef AUD_PROFILE
 extern u32 cnt_index, env_num, env_cnt, env_max, env_min, lastCnt[];

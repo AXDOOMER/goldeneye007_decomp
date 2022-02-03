@@ -1,9 +1,9 @@
 #ifndef _BONDWALK_H_
 #define _BONDWALK_H_
-#include "ultra64.h"
-#include "game/chrobjdata.h"
-#include "bondconstants.h"
-#include "bondtypes.h"
+#include <ultra64.h>
+#include "chrobjdata.h"
+#include <bondconstants.h>
+#include <bondtypes.h>
 
 typedef struct WeaponStats
 {
@@ -222,7 +222,7 @@ void bondwalkFireBothHands(void);
 
 f32 sub_GAME_7F0649AC(s32 param_1);
 
-f32 sub_GAME_7F05DCB8(HANDEDNESS hand);
+f32 sub_GAME_7F05DCB8(GUNHAND hand);
 
 u16 *get_ptr_short_watch_text_for_item(ITEM_IDS item);
 
@@ -232,10 +232,10 @@ void display_in_game_crosshair(s32 *gdl);
 
 WeaponStats *get_ptr_item_statistics(ITEM_IDS item);
 
-s32 get_item_in_hand(HANDEDNESS hand);
-s32 draw_item_in_hand_has_more_ammo(HANDEDNESS hand, s32 next_weapon);
+s32 get_item_in_hand(GUNHAND hand);
+s32 draw_item_in_hand_has_more_ammo(GUNHAND hand, s32 next_weapon);
 void sub_GAME_7F068E6C(void);
-void attempt_reload_item_in_hand(HANDEDNESS hand);
+void attempt_reload_item_in_hand(GUNHAND hand);
 void set_max_ammo_for_cur_player(void);
 void set_unset_ammo_on_screen_setting(s32 flags, s32 isset);
 void set_unset_bitflags(s32 bitflags, s32 flag);
@@ -250,13 +250,16 @@ u16 bondwalkItemGetSound(ITEM_IDS item);
 u8 bondwalkItemGetSoundTriggerRate(ITEM_IDS item);
 
 void recall_joy2_hits_edit_detail_edit_flag(s32 arg0, u8 *arg1, s32 arg2);
-void recall_joy2_hits_edit_flag(s32 arg0, struct coord3d *arg1, s32 arg2);
-void sub_GAME_7F05EB0C(ObjectRecord *arg0, struct coord3d *arg1, struct StandTile *arg2, Mtxf *arg3, struct coord3d *arg4, Mtxf *arg5, struct PropRecord *arg6);
-void sub_GAME_7F061948(struct ChrRecord_f180 *arg0, ITEM_IDS item, struct coord3d *arg2, struct coord3d *arg3);
-void sub_GAME_7F068190(struct coord3d *arg0, struct coord3d *arg1);
+void recall_joy2_hits_edit_flag(s32 arg0, coord3d *arg1, s32 arg2);
+void sub_GAME_7F05EB0C(ObjectRecord *arg0, coord3d *arg1,  StandTile *arg2, Mtxf *arg3, coord3d *arg4, Mtxf *arg5,  PropRecord *arg6);
+void sub_GAME_7F061948(struct ChrRecord_f180 *arg0, ITEM_IDS item, coord3d *arg2, coord3d *arg3);
+void sub_GAME_7F068190(coord3d *arg0, coord3d *arg1);
 
 void inc_curplayer_hitcount_with_weapon(ITEM_IDS item, SHOT_REGISTER shot_register);
-s8 get_hands_firing_status(HANDEDNESS hand);
+s8 get_hands_firing_status(GUNHAND hand);
 void gunFireTankShell(s32 hand);
-
+void         remove_item_in_hand(GUNHAND hand);
+void         remove_hands_item(GUNHAND hand, s32 weapid);
+s32          check_cur_player_ammo_amount_total(AMMOTYPE ammotype);
+s32          get_civilian_casualties(void);
 #endif

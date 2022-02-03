@@ -1,11 +1,11 @@
-#include "ultra64.h"
+#include <ultra64.h>
 #include "rsp.h"
-#include "init.h"
-#include "memp.h"
-#include "deb.h"
-#include "sched.h"
-#include "PR/sptask.h"
-#include "PR/ucode.h"
+#include <init.h>
+#include <memp.h>
+#include <deb.h>
+#include <sched.h>
+#include <PR/sptask.h>
+#include <PR/ucode.h>
 
 #define RSP_MEMP_BANK                   6
 #define RSP_MEMP_ALLOC_SIZE_BYTES  0xA000

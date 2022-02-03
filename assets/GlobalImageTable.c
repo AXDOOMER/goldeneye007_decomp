@@ -1,8 +1,8 @@
-#include "ultra64.h"
-#include "bondconstants.h"
-#include "bondtypes.h"
-#include "PR/gbi.h"
-#include "assets/image_externs.h"
+#include <ultra64.h>
+#include <bondconstants.h>
+#include <bondtypes.h>
+#include <PR/gbi.h>
+#include <assets/image_externs.h>
 
 Gfx globalDL_0x000[] = { 
     gsDPPipeSync(),

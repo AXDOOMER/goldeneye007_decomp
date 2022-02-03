@@ -1,31 +1,31 @@
 /*
 * This file was automatically generated
 * 
-* Thursday, August 26, 2021 9:53:29 PM
-* Getools.Lib: 21.8.26.1
+* Monday, January 17, 2022 9:36:14 AM
+* Getools.Lib: 21.9.18.1
 */
 
 #include "ultra64.h"
 #include "bondtypes.h"
 
 // forward declarations
-struct pad padlist[];
-struct pad3d pad3dlist[];
-s32 objlist[];
+PadRecord padlist[];
+BoundPadRecord pad3dlist[];
+s32 propDefs[];
 s32 intro[];
-struct s_pathLink pathlist[];
+waygroup pathsets[];
 char *pad3dnames[];
-struct s_pathTbl pathtbl[];
+waypoint pathwaypoints[];
 char *padnames[];
-struct s_pathSet paths[];
-struct ailist ailists[];
+PathRecord patrolpaths[];
+AIListRecord ailists[];
 
-struct stagesetup setup = {
-    &pathtbl,
-    &pathlist,
+stagesetup Ump_setuparchZ = {
+    &pathwaypoints,
+    &pathsets,
     &intro,
-    &objlist,
-    &paths,
+    &propDefs,
+    &patrolpaths,
     &ailists,
     &padlist,
     &pad3dlist,
@@ -33,7 +33,7 @@ struct stagesetup setup = {
     &pad3dnames
 };
 
-struct pad padlist[] = {
+PadRecord padlist[] = {
     { {-1408.0f, 162.0f, -1439.0f}, {0.0f, 1.0f, 0.0f}, {-1.0f, 0.0f, -1e-06}, "p208d", 0 },
     { {-1542.0f, 162.0f, -1389.0f}, {0.0f, 1.0f, 0.0f}, {-1.0f, 0.0f, -1e-06}, "p198d", 0 },
     { {-1737.0f, 162.0f, -1145.0f}, {0.0f, 1.0f, 0.0f}, {-1.0f, 0.0f, -1e-06}, "p300d", 0 },
@@ -248,7 +248,7 @@ struct pad padlist[] = {
 };
 
 
-struct pad3d pad3dlist[] = {
+BoundPadRecord pad3dlist[] = {
     { {-51.0f, 81.0f, -621.0f}, {-1.0f, 0.0f, 5e-06}, {0.0f, 1.0f, 0.0f}, "p166a1", 0, {-28.000168f, 21.999834f, -33.00011f, -32.99986f, -21.999998f, 18.999998f} },
     { {-51.0f, 81.0f, -399.0f}, {-1.0f, 0.0f, 5e-06}, {0.0f, 1.0f, 0.0f}, "p385a1", 0, {-28.000168f, 21.999834f, -33.00011f, -32.99986f, -21.999998f, 18.999998f} },
     { {-51.0f, 81.0f, -186.0f}, {-1.0f, 0.0f, 5e-06}, {0.0f, 1.0f, 0.0f}, "p378a1", 0, {-27.000168f, 21.999834f, -33.00011f, -32.999863f, -21.999998f, 18.999998f} },
@@ -578,7 +578,7 @@ struct pad3d pad3dlist[] = {
 };
 
 
-s32 objlist[] = {
+s32 propDefs[] = {
     /* Type = Collectable; index = 0 */
     _mkword(256, _mkshort(0, 8)), _mkword(333, 118), 0x00000001, 0x00000000, 0x00000000, 0x00000000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x00000000, 0x00000000, 0, 0, _mkword(1000, 0), 0, 0, _mkword(_mkshort(0x58, 0xff), 0xffff), 0,
     /* Type = StandardProp; index = 1 */
@@ -743,7 +743,7 @@ s32 intro[] = {
 s32 unknown_setup_block_0[] = { -1, -1 };
 
 
-struct s_pathLink pathlist[] = {
+waygroup pathsets[] = {
     { NULL, NULL, 0 }
 };
 
@@ -756,8 +756,8 @@ char *pad3dnames[] = {
 s32 unknown_setup_block_1[] = { -1 };
 
 
-struct s_pathTbl pathtbl[] = {
-    { 0xffff, 0xffff, NULL, 0x00000000, 0x00000000 }
+waypoint pathwaypoints[] = {
+    { 0xffffffff, NULL, 0x00000000, 0x00000000 }
 };
 
 
@@ -766,19 +766,15 @@ char *padnames[] = {
 };
 
 
-struct s_pathSet paths[] = {
-    { NULL, 0x00000000 }
+PathRecord patrolpaths[] = {
+    { NULL, 0x00, 0x00, 0x0000 }
 };
 
 
-struct ailist ailists[] = {
+AIListRecord ailists[] = {
     /* index = 0 */
     { NULL, 0x00000000 }
 };
-
-
-
-
 
 
 

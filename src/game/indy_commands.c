@@ -1,6 +1,6 @@
-#include "ultra64.h"
-#include "game/indy_commands.h"
-#include "include/PR/os.h"
+#include <ultra64.h>
+#include "indy_commands.h"
+#include <PR/os.h>
 
 // data
 //D:8004EAC0

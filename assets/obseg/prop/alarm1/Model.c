@@ -1,5 +1,5 @@
-#include "GEModels_64.h"
-#define VERTEXGROUPCOUNT0 = 12
+#include <bondtypes.h>
+#define VERTEXGROUPCOUNT0     = 12
 #define COLLISIONVERTEXCOUNT0 = 12
 
 ModelFileTextures proptextures[2] = 
