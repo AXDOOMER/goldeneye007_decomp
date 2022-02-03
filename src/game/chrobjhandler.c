@@ -35440,10 +35440,9 @@ glabel sub_GAME_7F04EF58
 
 
 
+//Todo: Reemove the shim once rename complete
+#define alarmIsActive is_alarm_on
 
-//todo fix (.text+0xf630): undefined reference to `sndPlaySfx'
-//         (.text+0xf638): undefined reference to `alarmIsActive'
-#ifdef NONMATCHING
 /*
  * Return TYPE if Collected or Interacted (except for Alarm which always returns False)
  */
@@ -35472,61 +35471,6 @@ INV_ITEM_TYPE sub_GAME_7F04F170(PropRecord *prop) //#MATCH
     sub_GAME_7F03E6A0(prop);
     return colllected;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-
-
-.text
-glabel sub_GAME_7F04F170
-/* 083CA0 7F04F170 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 083CA4 7F04F174 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 083CA8 7F04F178 AFB00018 */  sw    $s0, 0x18($sp)
-/* 083CAC 7F04F17C AFA40028 */  sw    $a0, 0x28($sp)
-/* 083CB0 7F04F180 8C900004 */  lw    $s0, 4($a0)
-/* 083CB4 7F04F184 AFA00020 */  sw    $zero, 0x20($sp)
-/* 083CB8 7F04F188 24010005 */  li    $at, 5
-/* 083CBC 7F04F18C 920F0003 */  lbu   $t7, 3($s0)
-/* 083CC0 7F04F190 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 083CC4 7F04F194 240500BA */  li    $a1, 186
-/* 083CC8 7F04F198 15E1000D */  bne   $t7, $at, .L7F04F1D0
-/* 083CCC 7F04F19C 00003025 */   move  $a2, $zero
-/* 083CD0 7F04F1A0 0C002382 */  jal   sndPlaySfx
-/* 083CD4 7F04F1A4 8C843720 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 083CD8 7F04F1A8 0FC15794 */  jal   is_alarm_on
-/* 083CDC 7F04F1AC 00000000 */   nop   
-/* 083CE0 7F04F1B0 10400005 */  beqz  $v0, .L7F04F1C8
-/* 083CE4 7F04F1B4 00000000 */   nop   
-/* 083CE8 7F04F1B8 0FC1578B */  jal   stop_alarm
-/* 083CEC 7F04F1BC 00000000 */   nop   
-/* 083CF0 7F04F1C0 10000004 */  b     .L7F04F1D4
-/* 083CF4 7F04F1C4 8E180008 */   lw    $t8, 8($s0)
-.L7F04F1C8:
-/* 083CF8 7F04F1C8 0FC15772 */  jal   start_alarm
-/* 083CFC 7F04F1CC 00000000 */   nop   
-.L7F04F1D0:
-/* 083D00 7F04F1D0 8E180008 */  lw    $t8, 8($s0)
-.L7F04F1D4:
-/* 083D04 7F04F1D4 8FA40028 */  lw    $a0, 0x28($sp)
-/* 083D08 7F04F1D8 0018CB00 */  sll   $t9, $t8, 0xc
-/* 083D0C 7F04F1DC 07230005 */  bgezl $t9, .L7F04F1F4
-/* 083D10 7F04F1E0 8E080064 */   lw    $t0, 0x64($s0)
-/* 083D14 7F04F1E4 0FC14094 */  jal   collect_or_interact_object
-/* 083D18 7F04F1E8 24050001 */   li    $a1, 1
-/* 083D1C 7F04F1EC AFA20020 */  sw    $v0, 0x20($sp)
-/* 083D20 7F04F1F0 8E080064 */  lw    $t0, 0x64($s0)
-.L7F04F1F4:
-/* 083D24 7F04F1F4 35094000 */  ori   $t1, $t0, 0x4000
-/* 083D28 7F04F1F8 AE090064 */  sw    $t1, 0x64($s0)
-/* 083D2C 7F04F1FC 0FC0F9A8 */  jal   sub_GAME_7F03E6A0
-/* 083D30 7F04F200 8FA40028 */   lw    $a0, 0x28($sp)
-/* 083D34 7F04F204 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 083D38 7F04F208 8FA20020 */  lw    $v0, 0x20($sp)
-/* 083D3C 7F04F20C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 083D40 7F04F210 03E00008 */  jr    $ra
-/* 083D44 7F04F214 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
 
 
 

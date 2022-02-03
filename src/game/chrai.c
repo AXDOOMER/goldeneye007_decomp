@@ -19,6 +19,21 @@
 #include "player.h"
 #include "chraidata.h"
 #include <limits.h>
+#include "objecthandler.h"
+#include "chrobjhandler.h"
+#include "initanitable.h"
+#include <random.h>
+#include "lvl.h"
+#include "stan.h"
+#include "chr.h"
+#include "mp_music.h"
+#include "objective_status.h"
+#include "bondview.h"
+#include <assert.h>
+#include "loadobjectmodel.h"
+#include "cheat_buttons.h"
+#include "player.h"
+#include "file.h"
 
 
 // bss
@@ -213,9 +228,9 @@ void sub_GAME_7F03C2BC(PropRecord *prop, s32 type) ;
 
 // end forward declarations
 
+extern s32 objectiveGetStatus_WEAK(s32 objectiveNum, s32);
 
 //shims
-extern s32 objectiveGetStatus_WEAK(s32 objectiveNum, s32);
 #define chraiGoToLabel                    true_if_sucessfully_performing_action
 #define pathFindById                      get_ptr_path_for_pathnum
 #define ailistFindById                    LoadNext_PrevActionBlock
@@ -1610,7 +1625,7 @@ ActionLengthSwitchElse:
 
 
 
-//s32 sub_GAME_7F035244(AIRecord *AIList, bool *isGlobalAIList) // chraiGetAIListID
+s32 sub_GAME_7F035244(AIRecord *AIList, bool *isGlobalAIList); // chraiGetAIListID
 //todo: this code matches however, g_chraiCurrentSetup seems 40 bytes too early
 // Also, StageSetup might be single pointers (*) not ((*)[]) as
 // the later requirees some odd derefrencing
@@ -2010,21 +2025,7 @@ glabel get_ptr_path_for_pathnum
 
 
 #ifdef NONMATCHING
-#include "objecthandler.h"
-#include "chrobjhandler.h"
-#include "initanitable.h"
-#include <random.h>
-#include "lvl.h"
-#include "stan.h"
-#include "chr.h"
-#include "mp_music.h"
-#include "objective_status.h"
-#include "bondview.h"
-#include <assert.h>
-#include "loadobjectmodel.h"
-#include "cheat_buttons.h"
-#include "player.h"
-#include "file.h"
+
 //forward
 void sub_GAME_7F03A538(PropRecord *prop);
 //end forward
