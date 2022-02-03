@@ -93,11 +93,6 @@ u32 g_DebugMenuTexture[] = {
     0x00000000, 0x00226900, 0x00000000, 0x00008B46, 0x00008B00, 0x00467A00, 0x00000000, 0x00000000 
 };
 
-typedef struct {
-    u8 chr;
-    u8 color;
-} character;
-
 s32 g_DebugMenuTextStartX = 5;
 s32 g_DebugMenuTextStartY = 1;
 s32 g_DebugMenuTextCurrentX = 24;

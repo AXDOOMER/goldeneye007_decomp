@@ -685,13 +685,13 @@ s32 fileIsStageUnlockedAtDifficulty(s32 foldernum, LEVEL_SOLO_SEQUENCE stage, DI
             return 1;
         }
 
-        // no save, cheat anabled, its unlocked.
+        // no save, cheat enabled, its unlocked.
         if (get_debug_enable_agent_levels_flag() && difficulty == DIFFICULTY_AGENT)
         {
             return 1;
         }
 
-        // no save, cheat anabled, its unlocked. (basically a repeat of above)
+        // no save, cheat enabled, its unlocked. (basically a repeat of above)
         if (get_debug_enable_all_levels_flag())
         {
             return 1;

@@ -481,17 +481,17 @@ ALCSPlayer *g_musicXTrack1SeqPlayer;
 ALCSPlayer *g_musicXTrack2SeqPlayer;
 ALCSPlayer *g_musicXTrack3SeqPlayer;
 
-RareALSeqFile *g_musicDataTable;
+RareALSeqBankFile *g_musicDataTable;
 
 /**
- * ROM offsets for music tracks.
+ * Length of music track after uncompressed.
  */
-u16 g_musicTrackOffset[NUM_MUSIC_TRACKS + 1];
+u16 g_musicTrackLength[NUM_MUSIC_TRACKS + 1];
 
 /**
- * ROM lengths for music tracks.
+ * ROM lengths for music tracks. This is 1172 compressed length.
  */
-u16 g_musicTrackLength[NUM_MUSIC_TRACKS];
+u16 g_musicTrackCompressedLength[NUM_MUSIC_TRACKS];
 
 
 s16 g_musicUnused80063836;
@@ -604,7 +604,7 @@ extern u32 _musicsampletblSegmentRomStart;
  * Patch the file so that offsets are pointers.
  * This is a copy of alSeqFileNew from n64devkit\ultra\usr\src\pr\libsrc\libultra\audio\bnkf.c
  */
-void musicSeqFileNew(RareALSeqFile *file, u8 *base)
+void musicSeqFileNew(RareALSeqBankFile *file, u8 *base)
 {
     s32 offset = (s32) base;
     s32 i;
@@ -681,7 +681,7 @@ void musicSeqPlayerInit(void)
 
     // this area based on auReadSeqFileHeader
 
-    // is this sizeof(RareALSeqFile) ? which implies the struct isn't right...
+    // is this sizeof(RareALSeqBankFile) ? which implies the struct isn't right...
     size = 0x10;
     g_musicDataTable = alHeapAlloc(&g_musicHeap, 1, size);
     romCopy(g_musicDataTable, (void *)tblSegmentRomStartAddress, size);
@@ -707,13 +707,13 @@ void musicSeqPlayerInit(void)
     // see auSeqPlayerSetFile in n64devkit\ultra\usr\src\pr\demos_old\nnsample1\audio.c
     for (ui = 0; ui < NUM_MUSIC_TRACKS; ui++)
     {
-        g_musicTrackOffset[ui] = g_musicDataTable->seqArray[ui].offset;
-        g_musicTrackLength[ui] = g_musicDataTable->seqArray[ui].len;
+        g_musicTrackLength[ui] = g_musicDataTable->seqArray[ui].uncompressed_len;
+        g_musicTrackCompressedLength[ui] = g_musicDataTable->seqArray[ui].len;
 
         // Note that auSeqPlayerSetFile adjusts the len value, not offset.
-        if (g_musicTrackOffset[ui] & 1)
+        if (g_musicTrackLength[ui] & 1)
         {
-            g_musicTrackOffset[ui]++;
+            g_musicTrackLength[ui]++;
         }
     }
 
@@ -822,8 +822,8 @@ void musicTrack1Play(s32 track)
         return;
     }
 
-    t3 = ALIGN16_a(g_musicTrackOffset[g_musicXTrack1CurrentTrackNum]) + (NUM_MUSIC_TRACKS + 1);
-    trackSizeBytes = ALIGN16_a(g_musicTrackLength[g_musicXTrack1CurrentTrackNum]);
+    t3 = ALIGN16_a(g_musicTrackLength[g_musicXTrack1CurrentTrackNum]) + (NUM_MUSIC_TRACKS + 1);
+    trackSizeBytes = ALIGN16_a(g_musicTrackCompressedLength[g_musicXTrack1CurrentTrackNum]);
     thing.seqData = g_musicXTrack1SeqData;
     temp_a0 = (u8*)((t3 + (s32)thing.seqData) - trackSizeBytes);
 
@@ -1011,8 +1011,8 @@ void musicTrack2Play(s32 track)
         return;
     }
 
-    t3 = ALIGN16_a(g_musicTrackOffset[g_musicXTrack2CurrentTrackNum]) + (NUM_MUSIC_TRACKS + 1);
-    trackSizeBytes = ALIGN16_a(g_musicTrackLength[g_musicXTrack2CurrentTrackNum]);
+    t3 = ALIGN16_a(g_musicTrackLength[g_musicXTrack2CurrentTrackNum]) + (NUM_MUSIC_TRACKS + 1);
+    trackSizeBytes = ALIGN16_a(g_musicTrackCompressedLength[g_musicXTrack2CurrentTrackNum]);
     thing.seqData = g_musicXTrack2SeqData;
     temp_a0 = (u8*)((t3 + (s32)thing.seqData) - trackSizeBytes);
 
@@ -1200,8 +1200,8 @@ void musicTrack3Play(s32 track)
         return;
     }
 
-    t3 = ALIGN16_a(g_musicTrackOffset[g_musicXTrack3CurrentTrackNum]) + (NUM_MUSIC_TRACKS + 1);
-    trackSizeBytes = ALIGN16_a(g_musicTrackLength[g_musicXTrack3CurrentTrackNum]);
+    t3 = ALIGN16_a(g_musicTrackLength[g_musicXTrack3CurrentTrackNum]) + (NUM_MUSIC_TRACKS + 1);
+    trackSizeBytes = ALIGN16_a(g_musicTrackCompressedLength[g_musicXTrack3CurrentTrackNum]);
     thing.seqData = g_musicXTrack3SeqData;
     temp_a0 = (u8*)((t3 + (s32)thing.seqData) - trackSizeBytes);
 

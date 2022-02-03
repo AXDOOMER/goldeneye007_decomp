@@ -37,11 +37,8 @@ if [ -f "${ROM_FILENAME}" ]; then
     if [ "${ROM_MD5}" = "${MD5_US}" ]; then
         echo "extracting US compressed data segment"
         dd bs=1 skip=137616 count=71760 if="${ROM_FILENAME}" of="${OUT_FILENAME}" status=none
-        echo -n -e \\x1F\\x8B\\x08\\x00\\x00\\x00\\x00\\x00\\x02\\x03 > "${OUT_FILENAME}.temp"
-        cat "${OUT_FILENAME}" | tail --bytes=+3 >> "${OUT_FILENAME}.temp"
-        cat "${OUT_FILENAME}.temp" > "${OUT_FILENAME}.zip"
-        cat "${OUT_FILENAME}.zip" | gzip --quiet --decompress > "${OUT_FILENAME}.bin"
-        rm "${OUT_FILENAME}" "${OUT_FILENAME}.temp" "${OUT_FILENAME}.zip"
+        GZ=gzip tools/1172inflate.sh "${OUT_FILENAME}" "${OUT_FILENAME}.bin"
+        rm "${OUT_FILENAME}"
     else
         echo "cannot extract compressed data segment from ${ROM_FILENAME}, md5=${ROM_MD5}, expected ${MD5_US}"
     fi
@@ -58,13 +55,10 @@ if [ -f "${ROM_FILENAME}" ]; then
     if [ "${ROM_MD5}" = "${MD5_JP}" ]; then
         echo "extracting JP compressed data segment"
         dd bs=1 skip=137680 count=71752 if="${ROM_FILENAME}" of="${OUT_FILENAME}" status=none
-        echo -n -e \\x1F\\x8B\\x08\\x00\\x00\\x00\\x00\\x00\\x02\\x03 > "${OUT_FILENAME}.temp"
-        cat "${OUT_FILENAME}" | tail --bytes=+3 >> "${OUT_FILENAME}.temp"
-        cat "${OUT_FILENAME}.temp" > "${OUT_FILENAME}.zip"
-        cat "${OUT_FILENAME}.zip" | gzip --quiet --decompress > "${OUT_FILENAME}.bin"
-        rm "${OUT_FILENAME}" "${OUT_FILENAME}.temp" "${OUT_FILENAME}.zip"
+        GZ=gzip tools/1172inflate.sh "${OUT_FILENAME}" "${OUT_FILENAME}.bin"
+        rm "${OUT_FILENAME}"
     else
-        echo "cannot extract compressed data segment from ${ROM_FILENAME}, md5=${ROM_MD5}, expected ${MD5_US}"
+        echo "cannot extract compressed data segment from ${ROM_FILENAME}, md5=${ROM_MD5}, expected ${MD5_JP}"
     fi
 else
     echo "${ROM_FILENAME} not found"
@@ -79,13 +73,10 @@ if [ -f "${ROM_FILENAME}" ]; then
     if [ "${ROM_MD5}" = "${MD5_EU}" ]; then
         echo "extracting EU compressed data segment"
         dd bs=1 skip=129104 count=67680 if="${ROM_FILENAME}" of="${OUT_FILENAME}" status=none
-        echo -n -e \\x1F\\x8B\\x08\\x00\\x00\\x00\\x00\\x00\\x02\\x03 > "${OUT_FILENAME}.temp"
-        cat "${OUT_FILENAME}" | tail --bytes=+3 >> "${OUT_FILENAME}.temp"
-        cat "${OUT_FILENAME}.temp" > "${OUT_FILENAME}.zip"
-        cat "${OUT_FILENAME}.zip" | gzip --quiet --decompress > "${OUT_FILENAME}.bin"
-        rm "${OUT_FILENAME}" "${OUT_FILENAME}.temp" "${OUT_FILENAME}.zip"
+        GZ=gzip tools/1172inflate.sh "${OUT_FILENAME}" "${OUT_FILENAME}.bin"
+        rm "${OUT_FILENAME}"
     else
-        echo "cannot extract compressed data segment from ${ROM_FILENAME}, md5=${ROM_MD5}, expected ${MD5_US}"
+        echo "cannot extract compressed data segment from ${ROM_FILENAME}, md5=${ROM_MD5}, expected ${MD5_EU}"
     fi
 else
     echo "${ROM_FILENAME} not found"

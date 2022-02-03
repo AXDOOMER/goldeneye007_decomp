@@ -31,6 +31,10 @@ assets/images/split/*.bin*
 assets/music/*.bin
 assets/music/*.ctl
 assets/music/*.tbl
+assets/music/*.sbk
+assets/music/*.seq
+assets/music/*.aifc
+assets/music/*.aiff
 assets/obseg/bg/*.bin
 assets/obseg/bg/e/*.bin
 assets/obseg/chr/*.bin
@@ -146,5 +150,6 @@ assets/obseg/text/e/LtraP.c
 assets/obseg/text/e/LwaxP.c
 tools/report/index.html
 tools/report/JPN.htm
+tools/gaudio/*
 bondtypes_AI.h
 baserom*

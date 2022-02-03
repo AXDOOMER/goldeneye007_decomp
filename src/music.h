@@ -18,13 +18,19 @@
  */
 typedef struct
 {
+    // address is offset from the start of .sbk file
     u8 *address;
-    u16 offset;
+
+    // seq length after uncompressed.
+    u16 uncompressed_len;
+
+    // len is data segment length in the rom. This is the 1172 compressed length.
     u16 len;
 } RareALSeqData;
 
 /**
  * Structure for storing collection of sequence metadatas.
+ * These are stored 1172 compressed.
  * Based on original ALSeqFile in n64devkit\ultra\usr\include\PR\libaudio.h.
  */
 typedef struct
@@ -35,7 +41,7 @@ typedef struct
     u16 seqCount;
 
     /**
-     * Unknown, maybe revision.
+     * Unknown, maybe unused padding.
      */
     u16 unk;
 
@@ -44,7 +50,7 @@ typedef struct
      * will be allocated from ALHeap at runtime.
      */
     RareALSeqData seqArray[1];
-} RareALSeqFile;
+} RareALSeqBankFile;
 
 typedef enum MUSIC_FADESTATE_e {
     /**

@@ -327,6 +327,26 @@ endif
 	@echo "\n\n All Code and Asset Binaries Cleared! Make will Re-Build these next time.\n"
 
 
+help:
+	@echo "makefile help"
+	@echo ""
+	@echo "  supported targets:"
+	@echo ""
+	@echo "    all                             build all (default)"
+	@echo "    clean                           rm all build artifacts"
+	@echo "    dataclean                       rm only asset build artifacts"
+	@echo "    codeclean                       rm only code (asm, .c) build artifacts"
+	@echo "    libultraclean                   rm only code (asm, .c) build artifacts from Rare's"
+	@echo "                                    libultra files"
+	@echo "    stanclean                       rm only stan build artifacts"
+	@echo "    setupclean                      rm only setup build artifacts"
+	@echo ""
+	@echo ""
+	@echo "  options:"
+	@echo ""
+	@echo "    VERSION=v                       region version. Supported values: ${ALLOWED_VERSIONS}"
+	@echo "                                    US is default"
+
 $(BUILD_DIR)/rsp/%.bin: rsp/*.s
 	$(ARMIPS) -sym $@.sym -strequ CODE_FILE $(BUILD_DIR)/rsp/$*.bin -strequ DATA_FILE $(BUILD_DIR)/rsp/$*_data.bin $<
 # @$(call DrawProgressBar,1,15)
@@ -398,7 +418,6 @@ $(APPBIN): $(APPELF)
 $(APPROM):	$(APPBIN)
 	$(DATASEG_COMP) $< $(OUTCODE)
 	$(N64CKSUM) $< $@
-	rm header.tmp
 
 .PRECIOUS: %.bin  %.o
 
