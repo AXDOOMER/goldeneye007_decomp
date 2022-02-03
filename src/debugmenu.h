@@ -3,6 +3,11 @@
 
 #include <ultra64.h>
 
+typedef struct {
+    u8 chr;
+    u8 color;
+} character;
+
 void debmenu7000ADA8(void);
 void debmenuInit(void);
 void debmenuReset(void);
