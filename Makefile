@@ -259,7 +259,7 @@ endif
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) 
 
-ifeq ($(filter clean dataclean codeclean cmdbuilder test stanclean setupclean print-%,$(MAKECMDGOALS)),)
+ifeq ($(filter clean dataclean codeclean context cmdbuilder test stanclean setupclean print-%,$(MAKECMDGOALS)),)
   # Make tools if out of date
   $(info Building tools...)
   DUMMY != make -s -C tools >&2 || echo FAIL
@@ -482,14 +482,23 @@ test:
 	$(PROP_RZ_FILES) $(SETUP_BIN_FILES) $(STAN_RZ_FILES) $(TEXT_RZ_FILES) > checksums.txt
 
 
+ifneq ($(filter-out context,$(MAKECMDGOALS)),)
+ CONTEXTFILE := $(filter-out context ,$(MAKECMDGOALS))
+else
+ CONTEXTFILE := ctx.c
+endif
 context:
 	@clear
-	@echo Building Context File [ctx.h]
+	@echo Building Context File [ctx.h] from $(CONTEXTFILE)
 	@echo "#define TRUE 1" > build/ctx.h
 	@echo "#define FALSE 0" >> build/ctx.h
 	@sed -n -E ':x /\\$$/ { N; s/\\\n//g ; bx };''/(^\s*#define)|(\\$$)/p; /(\\$$)/p;' src/bondconstants.h src/bondtypes.h >> build/ctx.h
+ifeq ($(CONTEXTFILE),ctx.c)
 	@echo "#include <bondtypes.h>" > build/ctx.c
 	@$(CC) -c $(CFLAGS) build/ctx.c -E > build/ctx2.h
+else
+	@$(CC) -c $(CFLAGS) $(CONTEXTFILE) -E > build/ctx2.h
+endif	
 	@sed -E '/^\s*$$/d' build/ctx2.h >> build/ctx.h
 	@rm build/ctx.c build/ctx2.h
 	@echo You can find it in Build/.
