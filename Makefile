@@ -3,6 +3,7 @@
 ### Default target ###
 default: all
 
+### Build Functions ###
 #(call DrawProgressBar,Percent)
 # OR
 #(call DrawProgressBar,NumberOfItemsDone,TotalNumberOfItems)
@@ -135,11 +136,6 @@ ifeq ($(VERSION), DEBUG)
 endif
 
 ALLOWED_VERSIONS := US EU JP DEBUG
-ifneq ($(filter $(VERSION),$(ALLOWED_VERSIONS)),)
- $(info VERSION=$(VERSION))
-else
- $(error VERSION "$(VERSION)" not supported")
-endif
 
 BUILD_DIR_BASE := build
 # BUILD_DIR is the location where all build artifacts are placed
@@ -259,7 +255,12 @@ endif
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) 
 
-ifeq ($(filter clean dataclean codeclean context cmdbuilder test stanclean setupclean print-%,$(MAKECMDGOALS)),)
+ifeq ($(filter clean dataclean help codeclean context cmdbuilder test stanclean setupclean print-%,$(MAKECMDGOALS)),)
+  ifneq ($(filter $(VERSION),$(ALLOWED_VERSIONS)),)
+    $(info VERSION=$(VERSION))
+  else
+    $(error VERSION "$(VERSION)" not supported")
+  endif
   # Make tools if out of date
   $(info Building tools...)
   DUMMY != make -s -C tools >&2 || echo FAIL
@@ -326,26 +327,30 @@ else
 endif
 	@echo "\n\n All Code and Asset Binaries Cleared! Make will Re-Build these next time.\n"
 
-
+#         0    4                             35                                            80             80(with colour codes)
 help:
-	@echo "makefile help"
+	@echo "\n\033[1;4mmakefile help\033[0m"
 	@echo ""
 	@echo "  supported targets:"
 	@echo ""
-	@echo "    all                             build all (default)"
-	@echo "    clean                           rm all build artifacts"
-	@echo "    dataclean                       rm only asset build artifacts"
-	@echo "    codeclean                       rm only code (asm, .c) build artifacts"
-	@echo "    libultraclean                   rm only code (asm, .c) build artifacts from Rare's"
-	@echo "                                    libultra files"
-	@echo "    stanclean                       rm only stan build artifacts"
-	@echo "    setupclean                      rm only setup build artifacts"
+	@echo "    all                            \033[1;92m Build\033[0m all (default)"
+	@echo "    clean                          \033[1;91m Delete all\033[0m build artifacts"
+	@echo "    dataclean                      \033[1;91m Delete\033[0m only asset build artifacts"
+	@echo "    codeclean                      \033[1;91m Delete\033[0m only code (asm, .c) build artifacts"
+	@echo "    libultraclean                  \033[1;91m Delete\033[0m only code (asm, .c) build artifacts "
+	@echo "                                    from Rare's libultra files"
+	@echo "    stanclean                      \033[1;91m Delete\033[0m only stan build artifacts"
+	@echo "    setupclean                     \033[1;91m Delete\033[0m only setup build artifacts"
+	@echo "    cmdbuidler                     \033[1;92m Build\033[0m AI Commands"
+	@echo "    context [file]                 \033[1;92m Build\033[0m Context File from [file]"
+	@echo "                                    eg make context src/game/chrai.c"
+	@echo "    test                            Re-Run Data Verification "
 	@echo ""
 	@echo ""
 	@echo "  options:"
 	@echo ""
-	@echo "    VERSION=v                       region version. Supported values: ${ALLOWED_VERSIONS}"
-	@echo "                                    US is default"
+	@echo "    VERSION=v                       Region version. (US is default)"
+	@echo "                                    Supported values: ${ALLOWED_VERSIONS}\n"
 
 $(BUILD_DIR)/rsp/%.bin: rsp/*.s
 	$(ARMIPS) -sym $@.sym -strequ CODE_FILE $(BUILD_DIR)/rsp/$*.bin -strequ DATA_FILE $(BUILD_DIR)/rsp/$*_data.bin $<
@@ -514,10 +519,10 @@ context:
 	@sed -n -E ':x /\\$$/ { N; s/\\\n//g ; bx };''/(^\s*#define)|(\\$$)/p; /(\\$$)/p;' src/bondconstants.h src/bondtypes.h >> build/ctx.h
 ifeq ($(CONTEXTFILE),ctx.c)
 	@echo "#include <bondtypes.h>" > build/ctx.c
-	@$(CC) -c $(CFLAGS) build/ctx.c -E > build/ctx2.h
+	@$(CC) -c $(CFLAGS) build/ctx.c -E > build/ctx2.h  2> /dev/null
 else
-	@$(CC) -c $(CFLAGS) $(CONTEXTFILE) -E > build/ctx2.h
+	@$(CC) -c $(CFLAGS) $(CONTEXTFILE) -E > build/ctx2.h 2> /dev/null
 endif	
 	@sed -E '/^\s*$$/d' build/ctx2.h >> build/ctx.h
 	@rm build/ctx.c build/ctx2.h
-	@echo You can find it in Build/.
+	@echo You can find it in Build [build/ctx.h].
