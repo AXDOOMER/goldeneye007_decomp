@@ -158,5 +158,4 @@ assets/obseg/text/e/LtraP.c
 assets/obseg/text/e/LwaxP.c
 tools/report/index.html
 tools/report/JPN.htm
-tools/sbksplit/*
-!tools/sbksplit/*.c
+tools/gaudio/*
