@@ -33213,21 +33213,19 @@ glabel jpt_80052D9C
 /*D:80052DF0*/
 /*hack, doesn't fit in own function*/
 glabel jpt_80052DF0
-.word destroyable_object
+.word destroyable_object   
 .word nondestroyable_object
-.word destroyable_object
+.word destroyable_object   
 .word nondestroyable_object
-.word destroyable_object
-.word destroyable_object
-.word nondestroyable_object
-.word nondestroyable_object
-.word nondestroyable_object
-.word destroyable_object
-.word destroyable_object
-.word destroyable_object
-.word destroyable_object
+.word destroyable_object   
+.word destroyable_object   
 .word nondestroyable_object
 .word nondestroyable_object
+.word nondestroyable_object
+.word destroyable_object   
+.word destroyable_object   
+.word destroyable_object   
+.word destroyable_object   
 .word nondestroyable_object
 .word nondestroyable_object
 .word nondestroyable_object
@@ -33248,7 +33246,9 @@ glabel jpt_80052DF0
 .word nondestroyable_object
 .word nondestroyable_object
 .word nondestroyable_object
-.word destroyable_object
+.word nondestroyable_object
+.word nondestroyable_object
+.word destroyable_object   
 .word nondestroyable_object
 .word nondestroyable_object
 
@@ -33615,24 +33615,28 @@ GLOBAL_ASM(
 /*hack, part of check_if_collectable_object*/
 /*D:80052EAC*/
 glabel jpt_80052EAC
-.word collectable_object
-.word notcollectable_object
-.word notcollectable_object
-.word collectable_object
-.word collectable_object
-.word notcollectable_object
-.word notcollectable_object
-.word notcollectable_object
-.word notcollectable_object
-.word notcollectable_object
-.word notcollectable_object
-.word notcollectable_object
-.word notcollectable_object
-.word collectable_object
-.word notcollectable_object
-.word notcollectable_object
-.word collectable_object
-.word collectable_object
+                           /*0
+1
+2
+3*/
+.word collectable_object   /*key*/
+.word notcollectable_object/**/
+.word notcollectable_object/**/
+.word collectable_object   /*mag*/
+.word collectable_object   /*col*/
+.word notcollectable_object/**/
+.word notcollectable_object/**/
+.word notcollectable_object/**/
+.word notcollectable_object/**/
+.word notcollectable_object/**/
+.word notcollectable_object/**/
+.word notcollectable_object/**/
+.word notcollectable_object/**/
+.word collectable_object   /*hat*/
+.word notcollectable_object/**/
+.word notcollectable_object/**/
+.word collectable_object   /*ammo*/
+.word collectable_object   /*armour*/
 .text
 glabel sub_GAME_7F04DE18
 /* 082948 7F04DE18 27BDFF68 */  addiu $sp, $sp, -0x98
@@ -33772,8 +33776,30 @@ glabel sub_GAME_7F04DEFC
 
 
 #ifdef NONMATCHING
-void check_if_destroyable_object_type(void) {
-
+bool check_if_destroyable_object_type(PropDefHeaderRecord *obj)//#MATCH
+{
+    switch (obj->type)
+    {
+        case PROPDEF_DOOR:
+        case PROPDEF_PROP:
+        case PROPDEF_ALARM:
+        case PROPDEF_CCTV:
+        case PROPDEF_MONITOR:
+        case PROPDEF_MULTI_MONITOR:
+        case PROPDEF_RACK:
+        case PROPDEF_AUTOGUN:
+        case PROPDEF_GAS_RELEASING:
+        case PROPDEF_VEHICHLE:
+        case PROPDEF_AIRCRAFT:
+        case PROPDEF_UNK41:
+        case PROPDEF_GLASS:
+        case PROPDEF_SAFE:
+        case PROPDEF_TANK:
+        case PROPDEF_TINTED_GLASS:
+            return TRUE;
+        default:
+            return FALSE;
+    }
 }
 #else
 GLOBAL_ASM(
