@@ -107,24 +107,34 @@ endif
 
 ifeq ($(VERSION), US)
  COUNTRYCODE := u
- LCDEFS := -DVERSION_US -DLANG_US -DREFRESH_NTSC -DLEFTOVERDEBUG -DLEFTOVERSPECTRUM
- ASMDEFS := --defsym VERSION_US=1 --defsym LANG_US=1 --defsym REFRESH_NTSC=1 --defsym LEFTOVERDEBUG=1 --defsym LEFTOVERSPECTRUM=1
-else
+ OUTCODE := $(COUNTRYCODE)
+ LCDEFS := -DVERSION_US -DLANG_US -DREFRESH_NTSC -DLEFTOVERDEBUG -DLEFTOVERSPECTRUM -DBUGFIX_R0
+ ASMDEFS := --defsym VERSION_US=1 --defsym LANG_US=1 --defsym REFRESH_NTSC=1 --defsym LEFTOVERDEBUG=1 --defsym LEFTOVERSPECTRUM=1 --defsym BUGFIX_R0=1
 endif
 
 ifeq ($(VERSION), EU)
  COUNTRYCODE := e
+ OUTCODE := $(COUNTRYCODE)
  LCDEFS := -DVERSION_EU -DLANG_EU -DREFRESH_PAL -DBUGFIX_R1 -DBUGFIX_R2 
  ASMDEFS := --defsym VERSION_EU=1 --defsym LANG_EU=1 --defsym REFRESH_PAL=1 --defsym BUGFIX_R1=1 --defsym BUGFIX_R2=1
 endif
 
 ifeq ($(VERSION), JP)
  COUNTRYCODE := j
+ OUTCODE := $(COUNTRYCODE)
  LCDEFS := -DVERSION_JP -DLANG_JP -DREFRESH_NTSC -DBUGFIX_R1 -DLEFTOVERDEBUG -DLEFTOVERSPECTRUM
  ASMDEFS := --defsym VERSION_JP=1 --defsym LANG_JP=1 --defsym REFRESH_NTSC=1 --defsym BUGFIX_R1=1 --defsym LEFTOVERDEBUG=1 --defsym LEFTOVERSPECTRUM=1
 endif
 
-ALLOWED_VERSIONS := US EU JP
+ifeq ($(VERSION), DEBUG)
+ COUNTRYCODE := u
+ OUTCODE := d
+ LCDEFS := -DVERSION_US -DLANG_US -DREFRESH_NTSC -DLEFTOVERDEBUG -DLEFTOVERSPECTRUM -DBUGFIX_R0 -DDEBUGMENU
+ ASMDEFS := --defsym VERSION_DEBUG=1 --defsym LANG_US=1 --defsym REFRESH_NTSC=1 --defsym LEFTOVERDEBUG=1 --defsym LEFTOVERSPECTRUM=1 --defsym BUGFIX_R0=1 --defsym DEBUGMENU=1
+ COMPARE := 0
+endif
+
+ALLOWED_VERSIONS := US EU JP DEBUG
 ifneq ($(filter $(VERSION),$(ALLOWED_VERSIONS)),)
  $(info VERSION=$(VERSION))
 else
@@ -133,7 +143,7 @@ endif
 
 BUILD_DIR_BASE := build
 # BUILD_DIR is the location where all build artifacts are placed
-BUILD_DIR      := $(BUILD_DIR_BASE)/$(COUNTRYCODE)
+BUILD_DIR      := $(BUILD_DIR_BASE)/$(OUTCODE)
 include assets/Makefile.obseg
 include assets/Makefile.music
 BUILD_SUB_DIRS := \
@@ -151,9 +161,9 @@ BUILD_SUB_DIRS := \
 $(shell mkdir -p $(BUILD_DIR))
 $(foreach subdir,$(BUILD_SUB_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(subdir)))
 
-APPELF := $(BUILD_DIR)/ge007.$(COUNTRYCODE).elf
-APPROM := $(BUILD_DIR)/ge007.$(COUNTRYCODE).z64
-APPBIN := $(BUILD_DIR)/ge007.$(COUNTRYCODE).bin
+APPELF := $(BUILD_DIR)/ge007.$(OUTCODE).elf
+APPROM := $(BUILD_DIR)/ge007.$(OUTCODE).z64
+APPBIN := $(BUILD_DIR)/ge007.$(OUTCODE).bin
 
 HEADERFILES := $(foreach dir,src,$(wildcard $(dir)/*.s))
 HEADEROBJECTS := $(foreach file,$(HEADERFILES),$(BUILD_DIR)/$(file:.s=.o))
@@ -221,10 +231,10 @@ endif
 CFLAGS := -Wab,-r4300_mul -non_shared -Olimit 2000 -G 0 -Xcpluscomm $(CFLAGWARNING) $(WOFF) -signed $(INCLUDE) $(MIPSISET) $(LCDEFS) -DTARGET_N64
 
 LD := $(TOOLCHAIN)ld
-LD_SCRIPT := ge007.$(COUNTRYCODE).ld
+LD_SCRIPT := ge007.$(OUTCODE).ld
 
 # --no-warn-mismatch is needed to link -mips3 object files (some libultra math) with the regular files compiled with -mips2
-LDFLAGS := -T undefined_syms.txt -T $(LD_SCRIPT) -Map build/ge007.$(COUNTRYCODE).map --no-warn-mismatch
+LDFLAGS := -T undefined_syms.txt -T $(LD_SCRIPT) -Map build/ge007.$(OUTCODE).map --no-warn-mismatch
 
 AS := $(TOOLCHAIN)as
 ASFLAGS := -march=vr4300 -mabi=32 $(INCLUDE) $(ASMDEFS)
@@ -237,15 +247,15 @@ all: $(APPROM)
 ifeq ($(COMPARE),1)
 	@echo "\n"
 #Now using cursor commands for better look  original was //"\033[5;42;97m%80s\r\n%43s%37s\r\n%80s\007\033[0;0m\n"
-#                                      if fail          Rsrv   Up 3   Flash  Wht  80  Dn 1 Return      Dn 1 Ret 80ch                  Red                                                                                                                                          Reset Colour
+#                                      if fail          Rsrv   Up 3   Flash  Wht  80  Dn 1 Return      Dn 1 Ret 80ch                  Red                                                                              Reset Colour
 #   Calculate Checksum                 Else complete    Lines Lines     Red/Grn   ch  Line SoL midway  Line SoL     Bell Reset Colour                                          Which File failed
-	@$(SHA1SUM) -c ge007.$(COUNTRYCODE).sha1 || (printf "\n\n\033[3A\033[5;41;97m%80s\033[1B\r%45s%35s\033[1B\r%80s\007\033[0;0m\033[91m\n\n\n" "" "NOT MATCH!" "" "" && $(SHA1SUM) --quiet -c checksums.txt && printf "Mismatch in code!\nLocate mismatching code and add 0x34b34\n\n\033[0;0m" && exit 1)
+	@$(SHA1SUM) -c ge007.$(OUTCODE).sha1 || (printf "\n\n\033[3A\033[5;41;97m%80s\033[1B\r%45s%35s\033[1B\r%80s\007\033[0;0m\033[91m\n\n\n" "" "NOT MATCH!" "" "" && $(SHA1SUM) --quiet -c checksums.txt && printf "Mismatch in code!\nLocate mismatching code and add 0x34b34\n\n\033[0;0m" && exit 1)
 	@printf                                           "\n\n\n\033[3A\033[5;42;97m%80s\033[1B\r%43s%37s\033[1B\r%80s\007\033[0;0m\n\n\n" "" "MATCH!" "" "" 
 endif
 	@echo "\n Rom File Generated in Build Directory. \n\n"
 
 .SECONDARY:
-	$(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
+	$(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map \
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) 
 
@@ -264,26 +274,26 @@ endif
 include src/libultrare/Makefile.libultrare
 
 setupclean:
-	rm -f $(APPELF) $(APPROM) $(APPBIN) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
+	rm -f $(APPELF) $(APPROM) $(APPBIN) $(BUILD_DIR)/ge007.$(OUTCODE).map \
 	$(SETUP_BUILD_FILES)
 
 stanclean:
-	rm -f $(APPELF) $(APPROM) $(APPBIN) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
+	rm -f $(APPELF) $(APPROM) $(APPBIN) $(BUILD_DIR)/ge007.$(OUTCODE).map \
 	$(STAN_BUILD_FILES)
 
 libultraclean:
-	rm -f $(APPELF) $(APPROM) $(APPBIN) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
+	rm -f $(APPELF) $(APPROM) $(APPBIN) $(BUILD_DIR)/ge007.$(OUTCODE).map \
 	$(ULTRAOBJECTS)
 
 
 codeclean:
 ifeq ($(VERBOSE),1)
-	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
+	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map \
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(RSPOBJECTS)
 else
 	@clear
 	@echo Deleting All Code Binaries Only [Assets will be left from previous compile]
-	@rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map
+	@rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map
 	@$(call DrawProgressBar,50)
 	@rm -f $(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(RSPOBJECTS)
 	@$(call DrawProgressBar,100)
@@ -291,13 +301,13 @@ endif
 	@echo "\n\n Code Binaries Cleared! Make will Re-Build these next time.\n"
 
 dataclean: 
-	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
+	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map \
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) \
 	$(STAN_BUILD_FILES) $(SETUP_BUILD_FILES)
 
 clean:
 ifeq ($(VERBOSE),1)
-	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
+	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map \
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) $(RSPOBJECTS) \
 	$(STAN_BUILD_FILES) $(SETUP_BUILD_FILES)
@@ -305,7 +315,7 @@ else
 	@clear
 	@echo Deleting All Code and Asset Binaries
 	@$(call DrawProgressBar,0)
-	@rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map
+	@rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map
 	@$(call DrawProgressBar,1,4)
 	@rm -f $(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS)
 	@$(call DrawProgressBar,2,4)
@@ -386,7 +396,7 @@ $(APPBIN): $(APPELF)
 	$(OBJCOPY) $< $@ -O binary --gap-fill=0xff
 	
 $(APPROM):	$(APPBIN)
-	$(DATASEG_COMP) $< $(COUNTRYCODE)
+	$(DATASEG_COMP) $< $(OUTCODE)
 	$(N64CKSUM) $< $@
 	rm header.tmp
 

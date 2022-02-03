@@ -441,11 +441,11 @@ Gfx FogDL_secondary_800449C8[] = {
     //Transparent Surface to FOG Transparent Surface
     gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_SURF2),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_SURF2),
+
     // Billboard Cut-out to FOG Billboard Cut-out - eg, Mario Tree or Depot lamp
-    // Todo : Test this rendermode and remove the hex
-    //gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_TEX_EDGE2), gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
-    0xB900031D, 0x0C193078,
-    0xB900031D, 0xC8113078,
+    gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_TEX_EDGE2),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
+    
     // Swap all refrences to Shade in Alpha to Environment
     gsDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATEIA2),
     gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  COMBINED, 0, SHADE, 0,  COMBINED, 0, ENVIRONMENT, 0),
