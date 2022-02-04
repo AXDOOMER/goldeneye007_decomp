@@ -132,17 +132,18 @@ void save_ptrDL_enpoint_to_current_init_lightfixture_table(Gfx *param_1)
 
 s32 check_if_imageID_is_light(s32 imageID)
 {
-    if ((imageID == _image201_ID_LIGHT)  || 
+    if ((imageID == IMAGE_WALL_LAMP)     || 
         (imageID == _image203_ID_LIGHT)  || 
         (imageID == _image205_ID_LIGHT)  || 
         (imageID == _image252_ID_LIGHT)  || 
-        (imageID == _image254_ID_LIGHT)  || 
+        (imageID == IMAGE_PANEL_LAMP)    || 
         (imageID == _image255_ID_LIGHT)  || 
-        (imageID == _image256_ID_LIGHT) || 
-        (imageID == _image428_ID_LIGHT) || 
-        (imageID == _image982_ID_LIGHT) || 
-        (imageID == _image1383_ID_LIGHT))
+        (imageID == _image256_ID_LIGHT)  || 
+        (imageID == IMAGE_HANGING_LAMP)  || 
+        (imageID == IMAGE_NEON_LAMP)     || 
+        (imageID == IMAGE_LINEAR_LAMP))
     {
+        // Will darken when shot
         return 1;
     } 
     else
