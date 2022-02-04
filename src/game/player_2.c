@@ -201,10 +201,10 @@ void initBONDdataforPlayer(PLAYER_ID player)
     (*ppPVar3)->bondfadefracnew = 0.00000000;
     (*ppPVar3)->field_19C = 0.00000000;
     (*ppPVar3)->field_1A0 = 0;
-    (*ppPVar3)->field_1C0 = 0;
+    (*ppPVar3)->watch_pause_time = 0;
     (*ppPVar3)->field_1C4 = 0;
     (*ppPVar3)->pause_animation_state = 0;
-    (*ppPVar3)->paused_flag = 1;
+    (*ppPVar3)->outside_watch_menu = 1;
     (*ppPVar3)->open_close_solo_watch_menu = 0;
     (*ppPVar3)->field_1D4 = 0.00000000;
     (*ppPVar3)->field_1D8 = 0.00000000;
@@ -225,7 +225,7 @@ void initBONDdataforPlayer(PLAYER_ID player)
     (*ppPVar3)->field_21C = 1;
     (*ppPVar3)->step_in_view_watch_animation = 0;
     (*ppPVar3)->pause_animation_counter = 0.00000000;
-    (*ppPVar3)->field_3B4 = 0;
+    (*ppPVar3)->buttons_pressed = 0;
     (*ppPVar3)->field_3B6 = 0;
     (*ppPVar3)->field_3B8 = 0.00000000;
     (*ppPVar3)->field_3BC = 0.00000000;

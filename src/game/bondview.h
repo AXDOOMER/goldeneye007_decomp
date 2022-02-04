@@ -80,16 +80,24 @@ struct collision434 {
     StandTile *current_tile_ptr_for_portals;
 };
 
+/**
+ * first hand: 0x800c6fd0
+*/
 struct hand
 {
   s32 weaponnum;
   s32 weaponnum_watchmenu;
   s32 previous_weapon;
   s8 weapon_firing_status;
+
   s8 field_87D;
   s8 field_87E;
   s8 field_87F;
-  s32 field_880;
+
+  /**
+   * Time holding weapon
+  */
+  s32 weapon_hold_time;
   s32 field_884;
   s32 field_888;
   s32 field_88C;
@@ -414,22 +422,25 @@ struct player
 
   /**
    * Collision / clipping related.
+   * Related to y offset.
    * Offset 0x006c.
    */
   /* 0x006c */ f32 field_6C;
 
   /**
    * Collision / clipping related.
+   * Seems to hold save value as stanHeight.
    * Offset 0x0070.
    */
   /* 0x0070 */ f32 field_70;
 
-  /* 0x0074 */ f32 stanHeight;
+  /* 0x0074 0x800c67d4 */ f32 stanHeight;
 
   /* 0x0078 */ s32 field_78;
 
   /**
    * Collision / clipping related.
+   * Used when descending down stairs/ramp.
    * Offset 0x007c.
    */
   /* 0x007c */ f32 field_7C;
@@ -461,8 +472,21 @@ struct player
   /* 0x0090 */ f32 field_90;
   /* 0x0094 */ s32 field_94;
   /* 0x0098 */ f32 field_98;
+  
+  /**
+   * Flag: 0, 1, 2
+  */
   /* 0x009c */ s32 crouchpos;
+
+  /**
+   * Varies from 0.0f to -100.0f
+   * /
   /* 0x00a0 */ f32 ducking_height_offset;
+
+  /**
+   * Crouch related, only used while moving up or down into or
+   * out of crouch position.
+  */
   /* 0x00a4 */ f32 field_A4;
   /* 0x00a8 */ PropRecord* prop;
   /* 0x00ac */ s32 field_AC;
@@ -501,6 +525,13 @@ struct player
   /* 0x0128 */ s32 automovecentreenabled;
   /* 0x012c */ s32 fastmovecentreenabled;
   /* 0x0120 */ s32 automovecentre;
+
+  /**
+   * 0: crosshair shown on screen
+   * 1: crosshair hidden
+   * Only applies in level, when in control of bond.
+   * Address 0x800c6884
+  */
   /* 0x0124 */ s32 insightaimmode;
   /* 0x0128 */ s32 autoyaimenabled;
   /* 0x012c */ f32 autoaimy;
@@ -522,7 +553,17 @@ struct player
   /* 0x016c */ f32 speedsideways;
   /* 0x0170 */ f32 speedstrafe;
   /* 0x0174 */ f32 speedforwards;
+
+  /**
+   * Normal run speed: 1.0
+   * After 3 seconds of running: 1.35.
+   * Address 0x80c68d8
+  */
   /* 0x0178 */ f32 speedboost;
+
+  /**
+   * How long Bond has been running
+  */
   /* 0x017c */ s32 speedmaxtime60;
   f32 boost_factor_x;
   f32 boost_factor_y;
@@ -540,10 +581,24 @@ struct player
   s32 field_1B4;
   s32 field_1B8;
   s32 field_1BC;
-  s32 field_1C0;
+
+  /**
+   * Current pause time.
+   * Resets after every new pause.
+   * Address 0x800c6920
+  */
+  s32 watch_pause_time;
+
   s32 field_1C4;
   s32 watch_animation_state;
-  s32 paused_flag;
+
+  /**
+   * 1 = level is active
+   * 0 = game is paused
+   * Changes to zero only after fully entering watch.
+   * Address 0x800c692c
+  */
+  s32 outside_watch_menu;
   s32 open_close_solo_watch_menu;
   s32 field_1D4;
   s32 field_1D8;
@@ -556,6 +611,12 @@ struct player
   s32 field_1F4;
   s32 field_1F8;
   s32 field_1FC;
+  /**
+   * Pausing flag.
+   * 0 = level is active
+   * 1 = begin pause animation. Set as soon as moving arm begins, cleared when moving arm ends.
+   * 0x800C6960
+  */
   s32 pausing_flag;
   f32 pause_starting_angle;
   f32 pause_related;
@@ -681,7 +742,12 @@ struct player
   s32 field_3A8;
   s32 field_3AC;
   s32 field_3B0;
-  u16 field_3B4;
+
+  /**
+   * Copy of buttons pressed.
+   * Address 0x800C6B17
+  */
+  u16 buttons_pressed;
   s16 field_3B6;
   s32 field_3B8;
   s32 field_3BC;
@@ -1165,6 +1231,10 @@ struct player
   f32 screenymaxf;
 
   /**
+   * Used during level.
+   * 0x2: no crosshair
+   * 0x0: cross hair shown on screen.
+   * 
    * Offset 0x1128.
    */
   s32 somekinda_bitflags;
@@ -1199,6 +1269,9 @@ struct player
   s32 field_1288;
 
   /**
+   * This buffers button presses.
+   * L_TRIGGER and R_TRIGGER do not add entry by themselves.
+   * Entry seems to be added only on other button presses.
    * Offset 0x128c.
    */
   u16 cheat_display_text_related[20];
