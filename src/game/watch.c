@@ -12896,7 +12896,7 @@ Gfx *sub_GAME_7F0ACA28(Gfx *gdl, s32 arg1, s32 watch_transitioning)
 
     if (watch_transitioning == TRUE)
     {
-        set_BONDdata_paused_flag(0);
+        set_BONDdata_outside_watch_menu_flag(0);
         sub_GAME_7F0BD8FC(0);
 
         // Handle A or Z button click when in any page but inventory page
@@ -12926,7 +12926,7 @@ Gfx *sub_GAME_7F0ACA28(Gfx *gdl, s32 arg1, s32 watch_transitioning)
     else if (watch_transitioning == FALSE)
     {
         sub_GAME_7F0BD8FC(1);
-        set_BONDdata_paused_flag(1);
+        set_BONDdata_outside_watch_menu_flag(1);
         gdl = draw_background_health_and_armor_transitioning(gdl, arg1);
     }
 

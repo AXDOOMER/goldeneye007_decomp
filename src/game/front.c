@@ -894,6 +894,32 @@ s32 check_if_stage_completed_on_difficulty(int stage, DIFFICULTY difficulty);
 s32 get_highest_unlocked_difficulty_for_level(s32 arg0);
 Gfx * write_text_at_abs_coord(Gfx *, s32* x, s32 *y, u8 *text, s32 ptrSecondFontTableLarge, s32 ptrFirstFontTableLarge, u32 rgb_hex, s16 width, s16 height, s32 unk9, s32 unka);
 
+Gfx *constructor_menu00_legalscreen(Gfx *DL);
+Gfx *constructor_menu01_nintendo(Gfx *DL);
+Gfx *constructor_menu02_rareware(Gfx *DL);
+Gfx *constructor_menu03_eye(Gfx *DL);
+Gfx *constructor_menu04_goldeneyelogo(Gfx *DL);
+Gfx *constructor_menu05_fileselect(Gfx *DL);
+Gfx *constructor_menu06_modesel(Gfx *DL);
+Gfx *constructor_menu07_missionsel(Gfx *DL);
+Gfx *constructor_menu08_difficulty(Gfx *DL);
+Gfx *constructor_menu09_007options(Gfx *DL);
+Gfx *constructor_menu0A_briefing(Gfx *DL);
+Gfx *constructor_menu0C_missionfailed(Gfx *DL);
+Gfx *constructor_menu0D_missioncomplete(Gfx *DL);
+Gfx *constructor_menu0E_mpoptions(Gfx *DL);
+Gfx *constructor_menu0F_mpcharsel(Gfx *DL);
+Gfx *constructor_menu10_mphandicap(Gfx *DL);
+Gfx *constructor_menu11_mpcontrol(Gfx *DL);
+Gfx *constructor_menu12_mpstage(Gfx *DL);
+Gfx *constructor_menu13_mpscenario(Gfx *DL);
+Gfx *constructor_menu14_mpteams(Gfx *DL);
+Gfx *constructor_menu15_cheat(Gfx *DL);
+Gfx *constructor_menu16_nocontrollers(Gfx *DL);
+Gfx *constructor_menu17_switchscreens(Gfx *DL);
+Gfx *constructor_menu18_displaycast(Gfx *DL);
+Gfx *constructor_menu19_spectrum(Gfx *DL);
+
 // end forward declarations.
 
 
@@ -1773,9 +1799,9 @@ void interface_menu17_switchscreens(void)
 }
 
 
-void constructor_menu17_switchscreens(Gfx * DL)
+Gfx * constructor_menu17_switchscreens(Gfx * DL)
 {
-    insert_imageDL(DL);
+    return insert_imageDL(DL);
 }
 
 
@@ -2457,8 +2483,8 @@ void interface_menu02_rareware(void)
     }
 }
 
-void constructor_menu02_rareware(Gfx * DL) {
-    retrieve_display_rareware_logo(DL);
+Gfx * constructor_menu02_rareware(Gfx * DL) {
+    return retrieve_display_rareware_logo(DL);
 }
 
 
@@ -2489,8 +2515,8 @@ void interface_menu03_eye(void) {
     }
 }
 
-void constructor_menu03_eye(Gfx * DL) {
-    sub_GAME_7F009254(DL);
+Gfx * constructor_menu03_eye(Gfx * DL) {
+    return sub_GAME_7F009254(DL);
 }
 
 
@@ -12107,7 +12133,7 @@ glabel interface_menu0E_mpoptions
 
 
 
-void constructor_menu0E_mpoptions(Gfx *DL)
+Gfx * constructor_menu0E_mpoptions(Gfx *DL)
 {
     u8 *text;
 
@@ -12313,8 +12339,8 @@ void constructor_menu0E_mpoptions(Gfx *DL)
   DL = write_text_at_abs_coord(DL,&x,&y,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,entry,viGetX(),viGetY(),0,0);
   DL = add_tab3_previous(DL);
   DL = add_tab1_start(DL);
-  load_draw_selected_icon_folder_select(DL);
-  return;
+  DL = load_draw_selected_icon_folder_select(DL);
+  return DL;
 }
 
 
@@ -29454,268 +29480,86 @@ menu0B_runstage_interface:
 
 
 
-
-
-#ifdef NONMATCHING
 Gfx * menu_jump_constructor_handler(Gfx *DL)
 {
     switch(current_menu) {
         case MENU_LEGAL_SCREEN:
-            constructor_menu00_legalscreen(DL);
-            break;
-        case MENU_NINTENDO_LOGO:
-            constructor_menu01_nintendo(DL);
-            break;
-        case MENU_RAREWARE_LOGO:
-            constructor_menu02_rareware(DL);
-            break;
-        case MENU_EYE_INTRO:
-            constructor_menu03_eye(DL);
-            break;
-        case MENU_GOLDENEYE_LOGO:
-            constructor_menu04_goldeneyelogo(DL);
-            break;
-        case MENU_FILE_SELECT:
-            constructor_menu05_fileselect(DL);
-            break;
-        case MENU_MODE_SELECT:
-            constructor_menu06_modesel(DL);
-            break;
-        case MENU_MISSION_SELECT:
-            constructor_menu07_missionsel(DL);
-            break;
-        case MENU_DIFFICULTY:
-            constructor_menu08_difficulty(DL);
-            break;
-        case MENU_007_OPTIONS:
-            constructor_menu09_007options(DL);
-            break;
-        case MENU_BRIEFING:
-            constructor_menu0A_briefing(DL);
-            break;
-        case MENU_MISSION_FAILED:
-            constructor_menu0C_missionfailed(DL);
-            break;
-        case MENU_MISSION_COMPLETE:
-            constructor_menu0D_missioncomplete(DL);
-            break;
-        case MENU_MP_OPTIONS:
-            constructor_menu0E_mpoptions(DL);
-            break;
-        case MENU_MP_CHAR_SELECT:
-            constructor_menu0F_mpcharsel(DL);
-            break;
-        case MENU_MP_HANDICAP:
-            constructor_menu10_mphandicap(DL);
-            break;
-        case MENU_MP_CONTROL_STYLE:
-            constructor_menu11_mpcontrol(DL);
-            break;
-        case MENU_MP_STAGE_SELECT:
-            constructor_menu12_mpstage(DL);
-            break;
-        case MENU_MP_SCENARIO_SELECT:
-            constructor_menu13_mpscenario(DL);
-            break;
-        case MENU_MP_TEAMS:
-            constructor_menu14_mpteams(DL);
-            break;
-        case MENU_CHEAT:
-            constructor_menu15_cheat(DL);
-            break;
-        case MENU_NO_CONTROLLERS:
-            constructor_menu16_nocontrollers(DL);
+            DL = constructor_menu00_legalscreen(DL);
             break;
         case MENU_SWITCH_SCREENS:
-            constructor_menu17_switchscreens(DL);
+            DL = constructor_menu17_switchscreens(DL);
+            break;
+        case MENU_NINTENDO_LOGO:
+            DL = constructor_menu01_nintendo(DL);
+            break;
+        case MENU_RAREWARE_LOGO:
+            DL = constructor_menu02_rareware(DL);
+            break;
+        case MENU_EYE_INTRO:
+            DL = constructor_menu03_eye(DL);
+            break;
+        case MENU_GOLDENEYE_LOGO:
+            DL = constructor_menu04_goldeneyelogo(DL);
+            break;
+        case MENU_FILE_SELECT:
+            DL = constructor_menu05_fileselect(DL);
+            break;
+        case MENU_MODE_SELECT:
+            DL = constructor_menu06_modesel(DL);
+            break;
+        case MENU_MISSION_SELECT:
+            DL = constructor_menu07_missionsel(DL);
+            break;
+        case MENU_DIFFICULTY:
+            DL = constructor_menu08_difficulty(DL);
+            break;
+        case MENU_007_OPTIONS:
+            DL = constructor_menu09_007options(DL);
+            break;
+        case MENU_BRIEFING:
+            DL = constructor_menu0A_briefing(DL);
+            break;
+        case MENU_MISSION_FAILED:
+            DL = constructor_menu0C_missionfailed(DL);
+            break;
+        case MENU_MISSION_COMPLETE:
+            DL = constructor_menu0D_missioncomplete(DL);
+            break;
+        case MENU_MP_OPTIONS:
+            DL = constructor_menu0E_mpoptions(DL);
+            break;
+        case MENU_MP_SCENARIO_SELECT:
+            DL = constructor_menu13_mpscenario(DL);
+            break;
+        case MENU_MP_CHAR_SELECT:
+            DL = constructor_menu0F_mpcharsel(DL);
+            break;
+        case MENU_MP_TEAMS:
+            DL = constructor_menu14_mpteams(DL);
+            break;
+        case MENU_MP_HANDICAP:
+            DL = constructor_menu10_mphandicap(DL);
+            break;
+        case MENU_MP_CONTROL_STYLE:
+            DL = constructor_menu11_mpcontrol(DL);
+            break;
+        case MENU_MP_STAGE_SELECT:
+            DL = constructor_menu12_mpstage(DL);
+            break;
+        case MENU_CHEAT:
+            DL = constructor_menu15_cheat(DL);
+            break;
+        case MENU_NO_CONTROLLERS:
+            DL = constructor_menu16_nocontrollers(DL);
             break;
         case MENU_DISPLAY_CAST:
-            constructor_menu18_displaycast(DL);
+            DL = constructor_menu18_displaycast(DL);
             break;
         case MENU_SPECTRUM_EMU:
-            constructor_menu19_spectrum(DL);
+            DL = constructor_menu19_spectrum(DL);
     }
-    return;
+    
+    return DL;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel jpt_menu_constructor
- .word menu00_legal_constructor
- .word menu01_nintendo_constructor
- .word menu02_rareware_constructor
- .word menu03_eyeintro_constructor
- .word menu04_goldeneye_constructor
- .word menu05_fileselect_constructor
- .word menu06_modesel_constructor
- .word menu07_missionsel_constructor
- .word menu08_difficulty_constructor
- .word menu09_007options_constructor
- .word menu0A_briefing_constructor
- .word menu0B_runstage_constructor
- .word menu0C_missionfailed_constructor
- .word menu0D_missioncomplete_constructor
- .word menu0E_mpoptions_constructor
- .word menu0F_mpcharsel_constructor
- .word menu10_mphandicap_constructor
- .word menu11_mpcontrol_constructor
- .word menu12_mpstage_constructor
- .word menu13_mpscenario_constructor
- .word menu14_mpteams_constructor
- .word menu15_cheat_constructor
- .word menu16_nocontrollers_constructor
- .word menu17_switchscreens_constructor
- .word menu18_displaycast_constructor
- .word menu19_spectrum_constructor
-
-.text
-glabel menu_jump_constructor_handler
-/* 04FA2C 7F01AEFC 3C0E8003 */  lui   $t6, %hi(current_menu)
-/* 04FA30 7F01AF00 8DCEA8C0 */  lw    $t6, %lo(current_menu)($t6)
-/* 04FA34 7F01AF04 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 04FA38 7F01AF08 AFB00018 */  sw    $s0, 0x18($sp)
-/* 04FA3C 7F01AF0C 2DC1001A */  sltiu $at, $t6, 0x1a
-/* 04FA40 7F01AF10 00808025 */  move  $s0, $a0
-/* 04FA44 7F01AF14 1020006A */  beqz  $at, menu0B_runstage_constructor
-/* 04FA48 7F01AF18 AFBF001C */   sw    $ra, 0x1c($sp)
-/* 04FA4C 7F01AF1C 000E7080 */  sll   $t6, $t6, 2
-/* 04FA50 7F01AF20 3C018005 */  lui   $at, %hi(jpt_menu_constructor)
-/* 04FA54 7F01AF24 002E0821 */  addu  $at, $at, $t6
-/* 04FA58 7F01AF28 8C2E1C84 */  lw    $t6, %lo(jpt_menu_constructor)($at)
-/* 04FA5C 7F01AF2C 01C00008 */  jr    $t6
-/* 04FA60 7F01AF30 00000000 */   nop
-glabel menu00_legal_constructor
-/* 04FA64 7F01AF34 0FC02A38 */  jal   constructor_menu00_legalscreen
-/* 04FA68 7F01AF38 02002025 */   move  $a0, $s0
-/* 04FA6C 7F01AF3C 10000060 */  b     menu0B_runstage_constructor
-/* 04FA70 7F01AF40 00408025 */   move  $s0, $v0
-glabel menu17_switchscreens_constructor
-/* 04FA74 7F01AF44 0FC02AEA */  jal   constructor_menu17_switchscreens
-/* 04FA78 7F01AF48 02002025 */   move  $a0, $s0
-/* 04FA7C 7F01AF4C 1000005C */  b     menu0B_runstage_constructor
-/* 04FA80 7F01AF50 00408025 */   move  $s0, $v0
-glabel menu01_nintendo_constructor
-/* 04FA84 7F01AF54 0FC02B66 */  jal   constructor_menu01_nintendo
-/* 04FA88 7F01AF58 02002025 */   move  $a0, $s0
-/* 04FA8C 7F01AF5C 10000058 */  b     menu0B_runstage_constructor
-/* 04FA90 7F01AF60 00408025 */   move  $s0, $v0
-glabel menu02_rareware_constructor
-/* 04FA94 7F01AF64 0FC02C4D */  jal   constructor_menu02_rareware
-/* 04FA98 7F01AF68 02002025 */   move  $a0, $s0
-/* 04FA9C 7F01AF6C 10000054 */  b     menu0B_runstage_constructor
-/* 04FAA0 7F01AF70 00408025 */   move  $s0, $v0
-glabel menu03_eyeintro_constructor
-/* 04FAA4 7F01AF74 0FC02C8E */  jal   constructor_menu03_eye
-/* 04FAA8 7F01AF78 02002025 */   move  $a0, $s0
-/* 04FAAC 7F01AF7C 10000050 */  b     menu0B_runstage_constructor
-/* 04FAB0 7F01AF80 00408025 */   move  $s0, $v0
-glabel menu04_goldeneye_constructor
-/* 04FAB4 7F01AF84 0FC02D1F */  jal   constructor_menu04_goldeneyelogo
-/* 04FAB8 7F01AF88 02002025 */   move  $a0, $s0
-/* 04FABC 7F01AF8C 1000004C */  b     menu0B_runstage_constructor
-/* 04FAC0 7F01AF90 00408025 */   move  $s0, $v0
-glabel menu05_fileselect_constructor
-/* 04FAC4 7F01AF94 0FC03102 */  jal   constructor_menu05_fileselect
-/* 04FAC8 7F01AF98 02002025 */   move  $a0, $s0
-/* 04FACC 7F01AF9C 10000048 */  b     menu0B_runstage_constructor
-/* 04FAD0 7F01AFA0 00408025 */   move  $s0, $v0
-glabel menu06_modesel_constructor
-/* 04FAD4 7F01AFA4 0FC0360A */  jal   constructor_menu06_modesel
-/* 04FAD8 7F01AFA8 02002025 */   move  $a0, $s0
-/* 04FADC 7F01AFAC 10000044 */  b     menu0B_runstage_constructor
-/* 04FAE0 7F01AFB0 00408025 */   move  $s0, $v0
-glabel menu07_missionsel_constructor
-/* 04FAE4 7F01AFB4 0FC03916 */  jal   constructor_menu07_missionsel
-/* 04FAE8 7F01AFB8 02002025 */   move  $a0, $s0
-/* 04FAEC 7F01AFBC 10000040 */  b     menu0B_runstage_constructor
-/* 04FAF0 7F01AFC0 00408025 */   move  $s0, $v0
-glabel menu08_difficulty_constructor
-/* 04FAF4 7F01AFC4 0FC03B66 */  jal   constructor_menu08_difficulty
-/* 04FAF8 7F01AFC8 02002025 */   move  $a0, $s0
-/* 04FAFC 7F01AFCC 1000003C */  b     menu0B_runstage_constructor
-/* 04FB00 7F01AFD0 00408025 */   move  $s0, $v0
-glabel menu09_007options_constructor
-/* 04FB04 7F01AFD4 0FC03DE6 */  jal   constructor_menu09_007options
-/* 04FB08 7F01AFD8 02002025 */   move  $a0, $s0
-/* 04FB0C 7F01AFDC 10000038 */  b     menu0B_runstage_constructor
-/* 04FB10 7F01AFE0 00408025 */   move  $s0, $v0
-glabel menu0A_briefing_constructor
-/* 04FB14 7F01AFE4 0FC0575D */  jal   constructor_menu0A_briefing
-/* 04FB18 7F01AFE8 02002025 */   move  $a0, $s0
-/* 04FB1C 7F01AFEC 10000034 */  b     menu0B_runstage_constructor
-/* 04FB20 7F01AFF0 00408025 */   move  $s0, $v0
-glabel menu0C_missionfailed_constructor
-/* 04FB24 7F01AFF4 0FC058FB */  jal   constructor_menu0C_missionfailed
-/* 04FB28 7F01AFF8 02002025 */   move  $a0, $s0
-/* 04FB2C 7F01AFFC 10000030 */  b     menu0B_runstage_constructor
-/* 04FB30 7F01B000 00408025 */   move  $s0, $v0
-glabel menu0D_missioncomplete_constructor
-/* 04FB34 7F01B004 0FC05A82 */  jal   constructor_menu0D_missioncomplete
-/* 04FB38 7F01B008 02002025 */   move  $a0, $s0
-/* 04FB3C 7F01B00C 1000002C */  b     menu0B_runstage_constructor
-/* 04FB40 7F01B010 00408025 */   move  $s0, $v0
-glabel menu0E_mpoptions_constructor
-/* 04FB44 7F01B014 0FC043C4 */  jal   constructor_menu0E_mpoptions
-/* 04FB48 7F01B018 02002025 */   move  $a0, $s0
-/* 04FB4C 7F01B01C 10000028 */  b     menu0B_runstage_constructor
-/* 04FB50 7F01B020 00408025 */   move  $s0, $v0
-glabel menu13_mpscenario_constructor
-/* 04FB54 7F01B024 0FC05292 */  jal   constructor_menu13_mpscenario
-/* 04FB58 7F01B028 02002025 */   move  $a0, $s0
-/* 04FB5C 7F01B02C 10000024 */  b     menu0B_runstage_constructor
-/* 04FB60 7F01B030 00408025 */   move  $s0, $v0
-glabel menu0F_mpcharsel_constructor
-/* 04FB64 7F01B034 0FC049E5 */  jal   constructor_menu0F_mpcharsel
-/* 04FB68 7F01B038 02002025 */   move  $a0, $s0
-/* 04FB6C 7F01B03C 10000020 */  b     menu0B_runstage_constructor
-/* 04FB70 7F01B040 00408025 */   move  $s0, $v0
-glabel menu14_mpteams_constructor
-/* 04FB74 7F01B044 0FC0544E */  jal   constructor_menu14_mpteams
-/* 04FB78 7F01B048 02002025 */   move  $a0, $s0
-/* 04FB7C 7F01B04C 1000001C */  b     menu0B_runstage_constructor
-/* 04FB80 7F01B050 00408025 */   move  $s0, $v0
-glabel menu10_mphandicap_constructor
-/* 04FB84 7F01B054 0FC04C5F */  jal   constructor_menu10_mphandicap
-/* 04FB88 7F01B058 02002025 */   move  $a0, $s0
-/* 04FB8C 7F01B05C 10000018 */  b     menu0B_runstage_constructor
-/* 04FB90 7F01B060 00408025 */   move  $s0, $v0
-glabel menu11_mpcontrol_constructor
-/* 04FB94 7F01B064 0FC04E60 */  jal   constructor_menu11_mpcontrol
-/* 04FB98 7F01B068 02002025 */   move  $a0, $s0
-/* 04FB9C 7F01B06C 10000014 */  b     menu0B_runstage_constructor
-/* 04FBA0 7F01B070 00408025 */   move  $s0, $v0
-glabel menu12_mpstage_constructor
-/* 04FBA4 7F01B074 0FC05014 */  jal   constructor_menu12_mpstage
-/* 04FBA8 7F01B078 02002025 */   move  $a0, $s0
-/* 04FBAC 7F01B07C 10000010 */  b     menu0B_runstage_constructor
-/* 04FBB0 7F01B080 00408025 */   move  $s0, $v0
-glabel menu15_cheat_constructor
-/* 04FBB4 7F01B084 0FC05FD7 */  jal   constructor_menu15_cheat
-/* 04FBB8 7F01B088 02002025 */   move  $a0, $s0
-/* 04FBBC 7F01B08C 1000000C */  b     menu0B_runstage_constructor
-/* 04FBC0 7F01B090 00408025 */   move  $s0, $v0
-glabel menu16_nocontrollers_constructor
-/* 04FBC4 7F01B094 0FC06114 */  jal   constructor_menu16_nocontrollers
-/* 04FBC8 7F01B098 02002025 */   move  $a0, $s0
-/* 04FBCC 7F01B09C 10000008 */  b     menu0B_runstage_constructor
-/* 04FBD0 7F01B0A0 00408025 */   move  $s0, $v0
-glabel menu18_displaycast_constructor
-/* 04FBD4 7F01B0A4 0FC064CA */  jal   constructor_menu18_displaycast
-/* 04FBD8 7F01B0A8 02002025 */   move  $a0, $s0
-/* 04FBDC 7F01B0AC 10000004 */  b     menu0B_runstage_constructor
-/* 04FBE0 7F01B0B0 00408025 */   move  $s0, $v0
-glabel menu19_spectrum_constructor
-/* 04FBE4 7F01B0B4 0FC06938 */  jal   constructor_menu19_spectrum
-/* 04FBE8 7F01B0B8 02002025 */   move  $a0, $s0
-/* 04FBEC 7F01B0BC 00408025 */  move  $s0, $v0
-glabel menu0B_runstage_constructor
-/* 04FBF0 7F01B0C0 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 04FBF4 7F01B0C4 02001025 */  move  $v0, $s0
-/* 04FBF8 7F01B0C8 8FB00018 */  lw    $s0, 0x18($sp)
-/* 04FBFC 7F01B0CC 03E00008 */  jr    $ra
-/* 04FC00 7F01B0D0 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
-
 
 

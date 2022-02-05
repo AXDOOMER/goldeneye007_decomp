@@ -2853,10 +2853,10 @@ void init_player_BONDdata(void)
     g_CurrentPlayer->apparentarmour = 0.0f;
     g_CurrentPlayer->damageshowtime = -1;
     g_CurrentPlayer->healthshowtime = -1;
-    g_CurrentPlayer->field_1C0 = 0;
+    g_CurrentPlayer->watch_pause_time = 0;
     g_CurrentPlayer->field_1C4 = 0;
     g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x0;
-    g_CurrentPlayer->paused_flag = 1;
+    g_CurrentPlayer->outside_watch_menu = 1;
     g_CurrentPlayer->open_close_solo_watch_menu = 0;
     g_CurrentPlayer->field_1A0 = 0;
     g_CurrentPlayer->field_19C = 0.0f;
@@ -2927,7 +2927,7 @@ void init_player_BONDdata(void)
     g_CurrentPlayer->step_in_view_watch_animation = 0;
     g_CurrentPlayer->pause_animation_counter = 0.0f;
     g_CurrentPlayer->pausing_flag = 0;
-    g_CurrentPlayer->field_3B4 = (u16)0;
+    g_CurrentPlayer->buttons_pressed = (u16)0;
     g_CurrentPlayer->field_3B6 = (u16)0;
     g_CurrentPlayer->field_29C0 = 15.0f;
     g_CurrentPlayer->field_2A04 = -1;
@@ -13268,12 +13268,12 @@ f32 bondviewGetPauseAnimationPercent(void)
 
 
 
-void set_BONDdata_paused_flag(s32 arg0) {
-    g_CurrentPlayer->paused_flag = arg0;
+void set_BONDdata_outside_watch_menu_flag(s32 arg0) {
+    g_CurrentPlayer->outside_watch_menu = arg0;
 }
 
-s32 get_BONDdata_paused_flag(void) {
-    return g_CurrentPlayer->paused_flag;
+s32 get_BONDdata_outside_watch_menu_flag(void) {
+    return g_CurrentPlayer->outside_watch_menu;
 }
 
 
@@ -34098,7 +34098,7 @@ s16 bondviewGetCurrentPlayerViewportUly(void)
  * Refreshes autoaim setting.
  * Arguments are passed into MoveBond or sub_GAME_7F086990.
  * Checks if necessary to call bossReturnTitleStage.
- * Set player field_3B4 to arg2.
+ * Set player->buttons_pressed to arg2.
  * 
  * Address 0x7F086F9C (VERSION_US).
  * Address 0x7F0870BC (VERSION_EU).
@@ -34204,11 +34204,11 @@ void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2)
             mission_timer += g_ClockTimer;
         }
 
-        MoveBond(arg0, arg1, arg2, (u16) g_CurrentPlayer->field_3B4);
+        MoveBond(arg0, arg1, arg2, (u16) g_CurrentPlayer->buttons_pressed);
     }
     else
     {
-        sub_GAME_7F086990(arg0, arg1, arg2, (u16) g_CurrentPlayer->field_3B4);
+        sub_GAME_7F086990(arg0, arg1, arg2, (u16) g_CurrentPlayer->buttons_pressed);
     }
     
 #if defined(BUGFIX_R1)
@@ -34220,7 +34220,7 @@ void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2)
     
     if (stop_time_flag != 0)
     {
-        if ((lvlGetControlsLockedFlag() == 0) && ((arg2 & ~(g_CurrentPlayer->field_3B4) & 0xF030)))
+        if ((lvlGetControlsLockedFlag() == 0) && ((arg2 & ~(g_CurrentPlayer->buttons_pressed) & 0xF030)))
         {
             stop_time_flag = 2;
 
@@ -34276,7 +34276,7 @@ void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2)
         bossRunTitleStage();
     }
 
-    g_CurrentPlayer->field_3B4 = arg2;
+    g_CurrentPlayer->buttons_pressed = arg2;
 }
 
 #else /* VERSION_EU */
