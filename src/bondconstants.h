@@ -47,6 +47,9 @@
 (#prefix "_" #name)(#name),
 #define CREATE_ENUM(prefix, name)    IF_ELSE(prefix) \
 (prefix##_##name)(name),
+#define CREATE_SIZES(prefix, name, size)    IF_ELSE(prefix) \
+(prefix##_##name##_size = size)(name = size),
+
 
 /**
  *  A single list can be made into an enum and string array for debug.
@@ -917,6 +920,7 @@ typedef enum GUNHAND //Canonical name
     GUNLEFT
 } GUNHAND;
 
+
 #define HIT_TYPES(HIT) \
     HIT DEFAULT        \
     HIT STONE          \
@@ -940,6 +944,23 @@ typedef enum HIT_TYPE
 #ifdef DEBUG
     char *HIT_TYPE_ToString[] = { CREATE_TYPES(STRINGS, HIT, HIT_TYPES) };
 #endif
+
+#define IMAGE(NAME, SZ, HS, HT, F3, F4, F5, F6) IMAGE_ ## NAME,
+typedef enum IMAGEIDS
+{
+#include <assets/images.def>
+    IMAGEIDS_COUNT
+} IMAGEIDS;
+#undef IMAGE
+
+#define IMAGE(NAME, SZ, HS, HT, F3, F4, F5, F6) IMAGE_ ## NAME ## _SIZE = SZ,
+typedef enum IMGAGESIZES
+{
+#include <assets/images.def>
+    IMGAGESIZES_COUNT
+} IMGAGESIZES;
+#undef IMAGE
+
 
 typedef enum LEVELID
 { // skyID since only used by Sky and does not reflect levelID, rather in past
@@ -2950,11 +2971,23 @@ typedef enum WAYMODE
 #define _mkshort(a, b)        ((a << 8) | (b & 0xff))
 #define _mkword(a, b)         ((a << 16) | (b & 0xffff))
 
-#define isNotBoundPad(pad)  pad < 10000
-#define getBoundPadNum(pad) pad - 10000
-#define setBoundPadNum(pad) pad + 10000
+    /* Pad Catagory */
+#define isNotBoundPad(pad)       pad < 10000
+#define getBoundPadNum(pad)      pad - 10000
+#define setBoundPadNum(pad)      pad + 10000
+    /* AI Catagory */
+#define setAiGlobalID(ID)        ((ID) + 0)
+#define setAiStageID(ID)         ((ID) + 4096)
+#define setAiChrID(ID)           ((ID) + 1024)
+#define getAiGlobalID(ID)        ((ID)-0)
+#define getAiStageID(ID)         ((ID)-4096)
+#define getAiChrID(ID)           ((ID)-1024)
+    /* language file to slot allocation */
+#define TEXT(TEXTBANK, TEXTSLOT) ((TEXTBANK * 0x0400U) + TEXTSLOT)
+    /* Image ID to RAM allocation */
+#define IMAGESEG(id)             0xABCD0000 | id
 
-//macros for FILERECORDS
+    //macros for FILERECORDS
 #define SKELETON(NAME)    skeleton_ ## NAME
 #define JOINTLIST(NAME)   jointlist_ ## NAME
 #define JOINTNAMES(NAME)  jointnames_ ## NAME
@@ -3089,8 +3122,6 @@ typedef enum WAYMODE
     )                                      \
 },
 
- /* language file to slot allocation */
-#define TEXT(TEXTBANK, TEXTSLOT) ((TEXTBANK * 0x0400U) + TEXTSLOT)
 
 
 #pragma endregion

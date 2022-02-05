@@ -3293,12 +3293,7 @@ typedef union
             char           *boundpadnames;
         } stagesetup;
 
-        #define setAiGlobalID(ID) ((ID) + 0)
-        #define setAiStageID(ID)  ((ID) + 4096)
-        #define setAiChrID(ID)    ((ID) + 1024)
-        #define getAiGlobalID(ID) ((ID) - 0)
-        #define getAiStageID(ID)  ((ID) - 4096)
-        #define getAiChrID(ID)    ((ID) - 1024)
+
 #pragma endregion stagesetup.h
 
         typedef struct sfxRecord //Need 24 size

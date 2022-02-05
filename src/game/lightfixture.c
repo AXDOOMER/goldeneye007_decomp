@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "lightfixture.h"
+#include <bondconstants.h>
 #include <assets/image_externs.h>
 
 
@@ -133,12 +134,12 @@ void save_ptrDL_enpoint_to_current_init_lightfixture_table(Gfx *param_1)
 s32 check_if_imageID_is_light(s32 imageID)
 {
     if ((imageID == IMAGE_WALL_LAMP)     || 
-        (imageID == _image203_ID_LIGHT)  || 
-        (imageID == _image205_ID_LIGHT)  || 
-        (imageID == _image252_ID_LIGHT)  || 
+        (imageID == IMAGE_203_LIGHT)  || 
+        (imageID == IMAGE_205_LIGHT)  || 
+        (imageID == IMAGE_252_LIGHT)  || 
         (imageID == IMAGE_PANEL_LAMP)    || 
-        (imageID == _image255_ID_LIGHT)  || 
-        (imageID == _image256_ID_LIGHT)  || 
+        (imageID == IMAGE_255_LIGHT)  || 
+        (imageID == IMAGE_256_LIGHT)  || 
         (imageID == IMAGE_HANGING_LAMP)  || 
         (imageID == IMAGE_NEON_LAMP)     || 
         (imageID == IMAGE_LINEAR_LAMP))
