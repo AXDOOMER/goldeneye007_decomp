@@ -55,8 +55,8 @@ Gfx g_DebugMenuTextureDisplayList[] = {
     gsSPEndDisplayList()
 };
 character g_DebugMenuTextBuffer[80][35] = {0};
-Gfx g_DebugMenuPrimitiveColors[32] = {0};
-Gfx g_DebugMenuEnvironmentColors[32] = {0};
+Gfx g_DHudFgGbiPtrs[32] = {0};
+Gfx g_DHudBgGbiPtrs[32] = {0};
 s32 g_DebugMenuCurrentColorIndex = 0;
 
 #define ANSI_COLOR_CODE_FG_BLACK   "\x1B[30m"
@@ -169,13 +169,13 @@ void debmenuInit(void) {
 void debmenuWriteCharAtPos(s32 x, s32 y, unsigned char c) {
     s32 i;
     for (i = 0; i < 32; i++) {
-        if ((g_DebugMenuPrimitiveColor.words.w1 == g_DebugMenuPrimitiveColors[i].words.w1) &&
-            (g_DebugMenuEnvironmentColor.words.w1 == g_DebugMenuEnvironmentColors[i].words.w1)) {
+        if ((g_DebugMenuPrimitiveColor.words.w1 == g_DHudFgGbiPtrs[i].words.w1) &&
+            (g_DebugMenuEnvironmentColor.words.w1 == g_DHudBgGbiPtrs[i].words.w1)) {
             goto end;
         }
     }
-    g_DebugMenuPrimitiveColors[g_DebugMenuCurrentColorIndex] = g_DebugMenuPrimitiveColor;
-    g_DebugMenuEnvironmentColors[g_DebugMenuCurrentColorIndex] = g_DebugMenuEnvironmentColor;
+    g_DHudFgGbiPtrs[g_DebugMenuCurrentColorIndex] = g_DebugMenuPrimitiveColor;
+    g_DHudBgGbiPtrs[g_DebugMenuCurrentColorIndex] = g_DebugMenuEnvironmentColor;
     g_DebugMenuCurrentColorIndex = ((g_DebugMenuCurrentColorIndex + 1) % 32);
     i = g_DebugMenuCurrentColorIndex;
 end:
@@ -364,69 +364,103 @@ void debmenuSetPositionAndWriteString(s32 x, s32 y, const unsigned char *str) {
 #ifdef DEBUGMENU
 u32 get_random_value(void);
 // Decent attempt but still lots of diffs
-Gfx *debmenuDraw(Gfx *gdl) {
-    s32 y;
-    s32 x;
-    s32 index = -1;
-    Gfx *end;
-    s32 size;
-    s32 free;
-    for (y = 0; y < 35; y++) {
-        for (x = 0; x < 80; x++) {
-            u8 var = g_DebugMenuTextBuffer[x][y].color;
-            if (g_DebugMenuTextBuffer[x][y].chr != '\0') {
-                if (var != index) {
-                    end += 2;
-                    index = var;
-                }
-                end += 3;
-            }
-        }
-    }
-    size = ((u8*)end - (u8*)gdl);
-    free = dynGetFreeGfx(gdl);
-    if (size <= 0) {
-        return gdl;
-    }
-    free -= 2048;
-    if (free <= 0) {
-        g_DebugMenuRandomThreshold = 0;
-    } else if (free < size) {
-        g_DebugMenuRandomThreshold = ((free * 255) / size);
-    } else {
-        g_DebugMenuRandomThreshold = 256;
-    }
-    gSPDisplayList(gdl++, g_DebugMenuTextureDisplayList);
-    index = -1;
-    for (y = 0; y < 35; y++) {
-        for (x = 0; x < 80; x++) {
-            character *ptr = &g_DebugMenuTextBuffer[x][y];
-            u32 var2 = ptr->chr;
-            u8 var1 = ptr->color;
-            if (var2 != '\0') {
-                if (var1 != index) {
-                    *(gdl++) = g_DebugMenuPrimitiveColors[var1];
-                    *(gdl++) = g_DebugMenuEnvironmentColors[var1];
-                    index = var1;
-                }
-                //add or remove random flickering of debug menu text
+Gfx *debmenuDraw(Gfx *gdl)
+{
+	s32 x;
+	s32 y;
+	s32 appliedpaletteindex;
+	s32 available;
+	s32 needed;
+	Gfx *gdl2;
+	static u32 percentage = 255;
+	// Calculate how much space is needed in the display list
+	// based on the number of characters to draw and the number
+	// of times the colours will be changed.
+	gdl2 = gdl;
+	appliedpaletteindex = -1;
+	for (y = 0; y < 35; y++) {
+		for (x = 0; x < 80; x++) {
+			u32 c = g_DebugMenuTextBuffer[x][y].chr;
+			s32 paletteindex = g_DebugMenuTextBuffer[x][y].color;
+			if (c != '\0') {
+				if (paletteindex != appliedpaletteindex) {
+					gdl2 += 2;
+					appliedpaletteindex = paletteindex;
+				}
+				if (1);
+				gdl2 += 3;
+			}
+		}
+	}
+	// Make sure there'll be a least 256 GBI commands free (2KB)
+	available = dynGetFreeGfx(gdl) - 256 * sizeof(Gfx);
+	needed = (u32)gdl2 - (u32)gdl;
+	if (needed <= 0) { // shouldn't be possible
+		return gdl;
+	}
+	{
+		s32 x;
+		s32 appliedpaletteindex = -1;
+		// Write a "percentage" (out of 255) into a global variable
+		// which shows how much of the displaylist will be committed,
+		// provided 2KB is kept free.
+		if (available <= 0) {
+			// There's already less than 2KB free in the display list
+			percentage = 0;
+		} else if (needed > available) {
+			// The display list would end with less than 2KB free,
+			// so calculate the percentage
+			percentage = available * 255 / needed;
+		} else {
+			// The display list would end with at least 2KB free,
+			// so the displaylist can be committed in full
+			percentage = 256;
+		}
+		gSPDisplayList(gdl++, g_DebugMenuTextureDisplayList);
+		// Build the display list for real this time.
+		// Regardless of the availability checks above, just stop when
+		// there's less than 1KB of free space... sort of. It still writes
+		// the colour change commands, but the debug HUD doesn't exactly
+		// draw rainbows so it's no big deal.
+		for (y = 0; y < 35; y++) {
+			for (x = 0; x < 80; x++) {
+				u32 c = g_DebugMenuTextBuffer[x][y].chr;
+				s32 paletteindex = g_DebugMenuTextBuffer[x][y].color;
+				if (c != '\0') {
+					if (paletteindex != appliedpaletteindex) {
+						*gdl = g_DHudFgGbiPtrs[paletteindex]; gdl++;
+						*gdl = g_DHudBgGbiPtrs[paletteindex]; gdl++;
+						appliedpaletteindex = paletteindex;
+					}
                 #ifndef DEBUGMENU
-                if ((randomGetNext() & 0xFF) < g_DebugMenuRandomThreshold) {
+                    if ((randomGetNext() & 0xFF) < g_DebugMenuRandomThreshold) {
+                #else
+                    if(1) {
                 #endif
-                    if (dynGetFreeGfx(gdl) >= 1024) {
-                        s32 s = ((var2 - 32) % 32);
-                        s32 t = ((var2 - 32) / 32);
-                        gSPTextureRectangle(gdl++, ((x * 4) * 4), ((y * 7) * 4), (((x + 1) * 4) * 4), (((y + 1) * 7) * 4), G_TX_RENDERTILE, ((s * 4) * 32), ((t * 7) * 32), (1 << 10), (1 << 10));
+				    	if (dynGetFreeGfx(gdl) >= 1024) {
+				    		gSPTextureRectangle(gdl++,
+				    				// Screen coords to draw at
+				    				x * 4 * 4,
+				    				y * 7 * 4,
+				    				x * 4 * 4 + 4 * 4,
+				    				y * 7 * 4 + 7 * 4,
+				    				0,
+				    				// Sprite X and Y positions
+				    				((c - ' ') % 32) * 4 * 32,
+				    				((s32)(c - ' ') >> 5) * 7 * 32,
+				    				1024, 1024);
+				    	}
                     }
-                #ifndef DEBUGMENU
-                }
-                #endif
-            }
-        }
-    }
+				}
+			}
+		}
+	}
     return gdl;
 }
+
+
 #else
+
 #ifndef VERSION_EU
 GLOBAL_ASM(
 .text
@@ -435,7 +469,7 @@ glabel debmenuDraw
 /* 00BE80 7000B280 AFB5002C */  sw    $s5, 0x2c($sp)
 /* 00BE84 7000B284 AFB1001C */  sw    $s1, 0x1c($sp)
 /* 00BE88 7000B288 AFB00018 */  sw    $s0, 0x18($sp)
-/* 00BE8C 7000B28C 3C078002 */  lui   $a3, %hi(g_DebugMenuPrimitiveColors)
+/* 00BE8C 7000B28C 3C078002 */  lui   $a3, %hi(g_DHudFgGbiPtrs)
 /* 00BE90 7000B290 00808025 */  move  $s0, $a0
 /* 00BE94 7000B294 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 00BE98 7000B298 AFBE0038 */  sw    $fp, 0x38($sp)
@@ -446,7 +480,7 @@ glabel debmenuDraw
 /* 00BEAC 7000B2AC AFB20020 */  sw    $s2, 0x20($sp)
 /* 00BEB0 7000B2B0 00808825 */  move  $s1, $a0
 /* 00BEB4 7000B2B4 2406FFFF */  li    $a2, -1
-/* 00BEB8 7000B2B8 24E76610 */  addiu $a3, %lo(g_DebugMenuPrimitiveColors) # addiu $a3, $a3, 0x6610
+/* 00BEB8 7000B2B8 24E76610 */  addiu $a3, %lo(g_DHudFgGbiPtrs) # addiu $a3, $a3, 0x6610
 /* 00BEBC 7000B2BC 0000A825 */  move  $s5, $zero
 /* 00BEC0 7000B2C0 00004025 */  move  $t0, $zero
 .L7000B2C4:
@@ -518,11 +552,11 @@ glabel debmenuDraw
 /* 00BFA4 7000B3A4 3C090600 */  lui   $t1, 0x600
 /* 00BFA8 7000B3A8 AC490000 */  sw    $t1, ($v0)
 /* 00BFAC 7000B3AC AC4A0004 */  sw    $t2, 4($v0)
-/* 00BFB0 7000B3B0 3C1E8002 */  lui   $fp, %hi(g_DebugMenuEnvironmentColors) 
-/* 00BFB4 7000B3B4 3C178002 */  lui   $s7, %hi(g_DebugMenuPrimitiveColors) 
+/* 00BFB0 7000B3B0 3C1E8002 */  lui   $fp, %hi(g_DHudBgGbiPtrs) 
+/* 00BFB4 7000B3B4 3C178002 */  lui   $s7, %hi(g_DHudFgGbiPtrs) 
 /* 00BFB8 7000B3B8 26100008 */  addiu $s0, $s0, 8
-/* 00BFBC 7000B3BC 26F76610 */  addiu $s7, %lo(g_DebugMenuPrimitiveColors) # addiu $s7, $s7, 0x6610
-/* 00BFC0 7000B3C0 27DE6710 */  addiu $fp, %lo(g_DebugMenuEnvironmentColors) # addiu $fp, $fp, 0x6710
+/* 00BFBC 7000B3BC 26F76610 */  addiu $s7, %lo(g_DHudFgGbiPtrs) # addiu $s7, $s7, 0x6610
+/* 00BFC0 7000B3C0 27DE6710 */  addiu $fp, %lo(g_DHudBgGbiPtrs) # addiu $fp, $fp, 0x6710
 /* 00BFC4 7000B3C4 AFA00040 */  sw    $zero, 0x40($sp)
 /* 00BFC8 7000B3C8 0000A825 */  move  $s5, $zero
 /* 00BFCC 7000B3CC 24160050 */  li    $s6, 80
