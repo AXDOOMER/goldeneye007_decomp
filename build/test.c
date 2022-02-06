@@ -14,7 +14,7 @@ single regex for diff
   braces   |   non asm  |     addr     |       jal target                        |     Other targets         | Blank lines
 ((\{|\})\n)|(^.[^:]*$\n)|(^.*:.{11}\d?)|((?<=jal\t)([\d a b c d e f]{1,4} <.*\n))|([\d a b c d e f]{1,4} <.*)|(^$\n)
 */
-
+111
 #if 0
 
 #    define TARGET_N64

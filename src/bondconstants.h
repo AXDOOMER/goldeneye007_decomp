@@ -944,7 +944,7 @@ typedef enum HIT_TYPE
 #ifdef DEBUG
     char *HIT_TYPE_ToString[] = { CREATE_TYPES(STRINGS, HIT, HIT_TYPES) };
 #endif
-
+    
 #define IMAGE(NAME, SZ, HS, HT, F3, F4, F5, F6) IMAGE_ ## NAME,
 typedef enum IMAGEIDS
 {

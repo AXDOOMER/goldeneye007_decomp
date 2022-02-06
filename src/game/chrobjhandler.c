@@ -33615,10 +33615,10 @@ GLOBAL_ASM(
 /*hack, part of check_if_collectable_object*/
 /*D:80052EAC*/
 glabel jpt_80052EAC
-                           /*0
-1
-2
-3*/
+                           /*0*/
+                            /*1*/
+                            /*2*/
+                            /*3*/
 .word collectable_object   /*key*/
 .word notcollectable_object/**/
 .word notcollectable_object/**/

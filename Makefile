@@ -1,7 +1,16 @@
 # Makefile to rebuild Goldeneye 007
 
 ### Default target ###
-default: all
+default: colour
+
+### Default Build Options ###
+# Version of the game to build
+FINAL := YES
+VERSION := US
+IDO_RECOMP := NO
+VERBOSE := 
+# If COMPARE is 1, check the output sha1sum when building 'all'
+COMPARE := 1
 
 ### Build Functions ###
 #(call DrawProgressBar,Percent)
@@ -26,19 +35,19 @@ DrawProgressBar =                                       \
 		                                                \
 		pdone=`expr $$_pdone \* 76 / 100`;              \
 		pdoneb=0;                                       \
-		printf "\033[1;97;100m%80s\r\033[1;44m" " ";    \
+		printf "\033[3;30r\033[H\033[H\033[1;97;100m%79s\033[H\033[1;44m" " ";    \
 		if [ "$$pdone" -lt "40" ];                      \
 		then                                            \
 			printf "%$${pdone}s";                       \
 			printf "\033[100m";                         \
 			pdoneb=`expr 38 - $$pdone`;                 \
-			printf "%$${pdoneb}s%3d%% \r" "" $$_pdone;  \
+			printf "%$${pdoneb}s%3d%%\033[H" "" $$_pdone;  \
 		else                                            \
 			pdoneb=`expr $$pdone - 38`;                 \
 			printf "%38s%3d%%%$${pdoneb}s" "" $$_pdone; \
-			printf "\r";                                \
+			printf "";                                \
 		fi;                                             \
-		printf "\033[0m";                               \
+		printf "\033[0m\0338\033[u";                               \
 	}                                                   \
 
 OrigDrawProgressBar =\
@@ -58,14 +67,8 @@ OrigDrawProgressBar =\
 	}
 
 
-### Build Options ###
-# Version of the game to build
-FINAL := YES
-VERSION := US
-IDO_RECOMP := NO
-VERBOSE := 0
-# If COMPARE is 1, check the output sha1sum when building 'all'
-COMPARE := 1
+## More Build Variables (Auto) ##
+RUNNING :=
 
 ifeq ($(shell type mips-linux-gnu-ld >/dev/null 2>/dev/null; echo $$?), 0)
   TOOLCHAIN := mips-linux-gnu-
@@ -238,24 +241,36 @@ ARMIPS	:= $(TOOLS_DIR)/armips
 ASM_PREPROC := python3 tools/asmpreproc/asm-processor.py
 
 OBJCOPY := $(TOOLCHAIN)objcopy
+#                        Rsrv   Up 3   Flash  Wht  80  Dn 1 Return      Dn 1 Ret 80ch              Red 
+#                        Lines Lines     Red/Grn   ch  Line SoL midway  Line SoL   Bell Reset Colour 
+PRINTNOMATCH := printf "\n\n\033[3A\033[5;41;97m%80s\033[1B\r%45s%35s\033[1B\r%80s\007\033[0;0m\033[91m\n\n\n" "" "NOT MATCH!" "" ""
+PRINTMATCH := printf "\n\n\n\033[3A\033[5;42;97m%80s\033[1B\r%43s%37s\033[1B\r%80s\007\033[0;0m\n" "" "MATCH!" "" "" 
+
+## Build Recipies ##
+
 
 all: $(APPROM)
+ifeq ($(VERBOSE),)
+	@$(call DrawProgressBar,100)
+endif
 ifeq ($(COMPARE),1)
+
 	@echo "\n"
 #Now using cursor commands for better look  original was //"\033[5;42;97m%80s\r\n%43s%37s\r\n%80s\007\033[0;0m\n"
-#                                      if fail          Rsrv   Up 3   Flash  Wht  80  Dn 1 Return      Dn 1 Ret 80ch                  Red                                                                              Reset Colour
-#   Calculate Checksum                 Else complete    Lines Lines     Red/Grn   ch  Line SoL midway  Line SoL     Bell Reset Colour                                          Which File failed
-	@$(SHA1SUM) -c ge007.$(OUTCODE).sha1 || (printf "\n\n\033[3A\033[5;41;97m%80s\033[1B\r%45s%35s\033[1B\r%80s\007\033[0;0m\033[91m\n\n\n" "" "NOT MATCH!" "" "" && $(SHA1SUM) --quiet -c checksums.txt && printf "Mismatch in code!\nLocate mismatching code and add 0x34b34\n\n\033[0;0m" && exit 1)
-	@printf                                           "\n\n\n\033[3A\033[5;42;97m%80s\033[1B\r%43s%37s\033[1B\r%80s\007\033[0;0m\n\n\n" "" "MATCH!" "" "" 
+#   Calculate Checksum                      if fail                                         Which File failed                                                              Reset Colour
+	@$(SHA1SUM) -c ge007.$(OUTCODE).sha1 || ($(PRINTNOMATCH) && $(SHA1SUM) --quiet -c checksums.txt && printf "Mismatch in code!\nLocate mismatching code and add 0x34b34\n\n\033[0;0m" && exit 1)
+#   Else complete 
+	@$(PRINTMATCH)
 endif
-	@echo "\n Rom File Generated in Build Directory. \n\n"
+	@echo "\n Rom File Generated in Build Directory. \n\n\033[0;0r"
 
 .SECONDARY:
 	$(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map \
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) 
 
-ifeq ($(filter clean dataclean help codeclean context cmdbuilder test stanclean setupclean print-%,$(MAKECMDGOALS)),)
+ifeq ($(filter clean dataclean help codeclean context cmdbuilder test stanclean setupclean colour print-%,$(MAKECMDGOALS)),)
+  ifneq ($(MAKECMDGOALS),)
   ifneq ($(filter $(VERSION),$(ALLOWED_VERSIONS)),)
     $(info VERSION=$(VERSION))
   else
@@ -268,11 +283,122 @@ ifeq ($(filter clean dataclean help codeclean context cmdbuilder test stanclean 
       $(error Failed to build tools)
     endif
   $(info Building ROM...)
+  endif
 endif
 
 # this file references variables defined above: BUILD_DIR, CFLAGWARNING, INCLUDE, LCDEFS
 # this file defines $(ULTRAOBJECTS)
 include src/libultrare/Makefile.libultrare
+
+$(BUILD_DIR)/rsp/%.bin: rsp/*.s
+	$(ARMIPS) -sym $@.sym -strequ CODE_FILE $(BUILD_DIR)/rsp/$*.bin -strequ DATA_FILE $(BUILD_DIR)/rsp/$*_data.bin $<
+    ifeq ($(VERBOSE),)
+		@$(call DrawProgressBar,1,15)
+    endif
+
+$(BUILD_DIR)/%.o: src/%.s
+	$(AS) $(ASFLAGS) -o $@ $<
+ifeq ($(VERBOSE),)
+	@$(call DrawProgressBar,2,15)
+endif
+
+$(BUILD_DIR)/src/%.o: src/%.s
+	$(AS) $(ASFLAGS) -o $@ $<
+ifeq ($(VERBOSE),)
+	@$(call DrawProgressBar,3,15)
+endif
+
+$(BUILD_DIR)/assets/%.o: assets/%.c
+	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
+	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
+ifeq ($(VERBOSE),)
+	@$(call DrawProgressBar,4,15)
+endif
+
+$(BUILD_DIR)/assets/%.o: assets/%.s
+	$(AS) $(ASFLAGS) -o $@ $<
+ifeq ($(VERBOSE),)
+	@$(call DrawProgressBar,5,15)
+endif
+
+$(BUILD_DIR)/src/rspboot.o: $(BUILD_DIR)/rsp/rspboot.bin 
+
+
+$(BUILD_DIR)/assets/ramrom/%.o: assets/ramrom/%.s
+	$(AS) $(ASFLAGS) -o $@ $<
+ifeq ($(VERBOSE),)
+	@$(call DrawProgressBar,7,15)
+endif
+
+$(BUILD_DIR)/assets/font/%.o: assets/font/%.c
+	$(CC) -c $(CFLAGS) -o $@ $(OPTIMIZATION) $<
+ifeq ($(VERBOSE),)
+	@$(call DrawProgressBar,8,15)
+endif
+
+$(BUILD_DIR)/assets/obseg/%.o: assets/obseg/%.s $(OBSEG_RZ)
+	$(AS) $(ASFLAGS) -o $@ $<
+ifeq ($(VERBOSE),)
+	@$(call DrawProgressBar,9,15)
+endif
+
+$(BUILD_DIR)/assets/images/split/%.o: assets/images/split/%.bin
+	$(LD) -r -b binary $< -o $@
+#	@printf "\033[40B\r"
+	@$(call DrawProgressBar,10,15)
+#	@printf "\033[40A\r"
+
+#$(BUILD_DIR)/src/random.o: OPTIMIZATION := -O3
+#$(BUILD_DIR)/src/random.o: INCLUDE := -I . -I include -I include/PR
+#$(BUILD_DIR)/src/random.o: MIPSISET := -mips3 -o32
+#$(BUILD_DIR)/src/random.o: src/random.c
+#	$(CC) -c -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821,838,649 -signed $(INCLUDE) $(MIPSISET) $(LCDEFS) -DTARGET_N64 $(OPTIMIZATION) -o $@ $<
+
+$(BUILD_DIR)/%.o: src/%.c
+	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
+	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
+ifeq ($(VERBOSE),)
+	@$(call DrawProgressBar,11,15)
+endif
+
+$(BUILD_DIR)/src/%.o: src/%.c
+	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
+	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
+ifeq ($(VERBOSE),)
+	@$(call DrawProgressBar,12,15)
+endif
+
+$(BUILD_DIR)/$(OBSEGMENT): $(OBSEG_RZ) $(IMAGE_OBJS)
+ifeq ($(VERBOSE),)
+	@$(call DrawProgressBar,13,15)
+endif
+
+$(APPELF): $(RSPOBJECTS) $(ULTRAOBJECTS) $(HEADEROBJECTS) $(OBSEG_RZ) $(BUILD_DIR)/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(ASSET_DATAOBJECTS) $(ROMOBJECTS2) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS)
+	@echo "Linking Files"
+	$(LD) $(LDFLAGS) -o $@ 
+
+$(APPBIN): $(APPELF)
+  ifeq ($(VERBOSE),)
+	@$(call DrawProgressBar,98)
+  endif
+	$(OBJCOPY) $< $@ -O binary --gap-fill=0xff
+	
+$(APPROM):	$(APPBIN)
+  ifeq ($(VERBOSE),)
+	@$(call DrawProgressBar,100)
+  endif
+	$(DATASEG_COMP) $< $(OUTCODE)
+	$(N64CKSUM) $< $@
+
+.PRECIOUS: %.bin  %.o
+
+
+
+
+## Phony Recipies - Get Make to do something ##
+
+
+.PHONY: all default codeclean dataclean clean cmdbuidler test help
 
 setupclean:
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(BUILD_DIR)/ge007.$(OUTCODE).map \
@@ -327,6 +453,7 @@ else
 endif
 	@echo "\n\n All Code and Asset Binaries Cleared! Make will Re-Build these next time.\n"
 
+
 #         0    4                             35                                            80             80(with colour codes)
 help:
 	@echo "\n\033[1;4mmakefile help\033[0m"
@@ -351,82 +478,6 @@ help:
 	@echo ""
 	@echo "    VERSION=v                       Region version. (US is default)"
 	@echo "                                    Supported values: ${ALLOWED_VERSIONS}\n"
-
-$(BUILD_DIR)/rsp/%.bin: rsp/*.s
-	$(ARMIPS) -sym $@.sym -strequ CODE_FILE $(BUILD_DIR)/rsp/$*.bin -strequ DATA_FILE $(BUILD_DIR)/rsp/$*_data.bin $<
-# @$(call DrawProgressBar,1,15)
-
-$(BUILD_DIR)/%.o: src/%.s
-	$(AS) $(ASFLAGS) -o $@ $<
-# @$(call DrawProgressBar,2,15)
-
-$(BUILD_DIR)/src/%.o: src/%.s
-	$(AS) $(ASFLAGS) -o $@ $<
-# @$(call DrawProgressBar,3,15)
-
-$(BUILD_DIR)/assets/%.o: assets/%.c
-	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
-	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
-# @$(call DrawProgressBar,4,15)
-
-$(BUILD_DIR)/assets/%.o: assets/%.s
-	$(AS) $(ASFLAGS) -o $@ $<
-# @$(call DrawProgressBar,5,15)
-
-$(BUILD_DIR)/src/rspboot.o: $(BUILD_DIR)/rsp/rspboot.bin 
-# @$(call DrawProgressBar,6,15)
-
-$(BUILD_DIR)/assets/ramrom/%.o: assets/ramrom/%.s
-	$(AS) $(ASFLAGS) -o $@ $<
-# @$(call DrawProgressBar,7,15)
-
-$(BUILD_DIR)/assets/font/%.o: assets/font/%.c
-	$(CC) -c $(CFLAGS) -o $@ $(OPTIMIZATION) $<
-# @$(call DrawProgressBar,8,15)
-
-$(BUILD_DIR)/assets/obseg/%.o: assets/obseg/%.s $(OBSEG_RZ)
-	$(AS) $(ASFLAGS) -o $@ $<
-# @$(call DrawProgressBar,9,15)
-
-$(BUILD_DIR)/assets/images/split/%.o: assets/images/split/%.bin
-	$(LD) -r -b binary $< -o $@
-#	@printf "\033[40B\r"
-#	@$(call DrawProgressBar,10,15)
-#	@printf "\033[40A\r"
-
-#$(BUILD_DIR)/src/random.o: OPTIMIZATION := -O3
-#$(BUILD_DIR)/src/random.o: INCLUDE := -I . -I include -I include/PR
-#$(BUILD_DIR)/src/random.o: MIPSISET := -mips3 -o32
-#$(BUILD_DIR)/src/random.o: src/random.c
-#	$(CC) -c -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821,838,649 -signed $(INCLUDE) $(MIPSISET) $(LCDEFS) -DTARGET_N64 $(OPTIMIZATION) -o $@ $<
-
-$(BUILD_DIR)/%.o: src/%.c
-	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
-	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
-# @$(call DrawProgressBar,11,15)
-
-$(BUILD_DIR)/src/%.o: src/%.c
-	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
-	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
-# @$(call DrawProgressBar,12,15)
-
-$(BUILD_DIR)/$(OBSEGMENT): $(OBSEG_RZ) $(IMAGE_OBJS)
-# @$(call DrawProgressBar,13,15)
-	
-
-$(APPELF): $(RSPOBJECTS) $(ULTRAOBJECTS) $(HEADEROBJECTS) $(OBSEG_RZ) $(BUILD_DIR)/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(ASSET_DATAOBJECTS) $(ROMOBJECTS2) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS)
-	$(LD) $(LDFLAGS) -o $@ 
-
-$(APPBIN): $(APPELF)
-	$(OBJCOPY) $< $@ -O binary --gap-fill=0xff
-	
-$(APPROM):	$(APPBIN)
-	$(DATASEG_COMP) $< $(OUTCODE)
-	$(N64CKSUM) $< $@
-
-.PRECIOUS: %.bin  %.o
-
-.PHONY: all default codeclean dataclean clean cmdbuidler test
 
 #CMD Builder tools
 AI_CMD_BUILDER := $(TOOLS_DIR)/cmdbuilder.c
@@ -526,3 +577,18 @@ endif
 	@sed -E '/^\s*$$/d' build/ctx2.h >> build/ctx.h
 	@rm build/ctx.c build/ctx2.h
 	@echo You can find it in Build [build/ctx.h].
+
+colour:
+  ifeq ($(VERBOSE),)
+	@clear
+	@$(call DrawProgressBar,0)
+	@echo "\033[H"
+  endif
+	@$(MAKE) --no-print-directory RUNNING=1 all 2>&1 | sed -E \
+	-e "s/^.*[Ee]rror.*/$$(echo "\033[0;91m")&$$(echo "\033[0m")/g" \
+	-e "s/^.*[Ww]arning.*/$$(echo "\033[0;93m")&$$(echo "\033[0m")/g" \
+	-e "s/^.*(([Bb]uilding)|([Ll]ink)).*/$$(echo "\033[0;94m")&$$(echo "\033[0m")/g" \
+	-e "s/\s((src.*?(!stdin)\.c)|(build.*?\.o))\s/$$(echo "\033[0;97m")&$$(echo "\033[0m")/g"
+	@echo "\033[0;0r\033[80B\033[1A"
+$(VERBOSE).SILENT:
+
