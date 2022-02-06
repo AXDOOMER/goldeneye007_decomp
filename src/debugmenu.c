@@ -360,7 +360,7 @@ void debmenuSetPositionAndWriteString(s32 x, s32 y, const unsigned char *str) {
     #endif
 }
 
-/hacky hack for DEBUGMENU until properly decompiled
+//hacky hack for DEBUGMENU until properly decompiled
 #ifdef DEBUGMENU
 u32 get_random_value(void);
 // Decent attempt but still lots of diffs
