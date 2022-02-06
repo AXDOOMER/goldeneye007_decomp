@@ -48,6 +48,7 @@ Gfx g_DebugMenuTextureDisplayList[] = {
     gsDPSetRenderMode(IM_RD | CVG_DST_FULL | ZMODE_OPA | FORCE_BL | GBL_c1(G_BL_CLR_MEM, G_BL_A_IN, G_BL_CLR_IN, G_BL_1), IM_RD | CVG_DST_FULL | ZMODE_OPA | FORCE_BL | GBL_c2(G_BL_CLR_MEM, G_BL_A_IN, G_BL_CLR_IN, G_BL_1)),
     gsDPSetCombineLERP(PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT),
     gsDPSetTexturePersp(G_TP_NONE),
+    //gsDPSetTextureLUT(G_TT_NONE),
     gsDPSetAlphaCompare(G_AC_NONE),
     gsDPLoadTextureBlock(&g_DebugMenuTexture, G_IM_FMT_IA, G_IM_SIZ_8b, 128, 21, 0, (G_TX_NOMIRROR | G_TX_WRAP), (G_TX_NOMIRROR | G_TX_WRAP), G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD),
     gsDPLoadSync(),
@@ -359,7 +360,8 @@ void debmenuSetPositionAndWriteString(s32 x, s32 y, const unsigned char *str) {
     #endif
 }
 
-#ifdef NONMATCHING
+/hacky hack for DEBUGMENU until properly decompiled
+#ifdef DEBUGMENU
 u32 get_random_value(void);
 // Decent attempt but still lots of diffs
 Gfx *debmenuDraw(Gfx *gdl) {
@@ -407,13 +409,18 @@ Gfx *debmenuDraw(Gfx *gdl) {
                     *(gdl++) = g_DebugMenuEnvironmentColors[var1];
                     index = var1;
                 }
+                //add or remove random flickering of debug menu text
+                #ifndef DEBUGMENU
                 if ((randomGetNext() & 0xFF) < g_DebugMenuRandomThreshold) {
+                #endif
                     if (dynGetFreeGfx(gdl) >= 1024) {
                         s32 s = ((var2 - 32) % 32);
                         s32 t = ((var2 - 32) / 32);
                         gSPTextureRectangle(gdl++, ((x * 4) * 4), ((y * 7) * 4), (((x + 1) * 4) * 4), (((y + 1) * 7) * 4), G_TX_RENDERTILE, ((s * 4) * 32), ((t * 7) * 32), (1 << 10), (1 << 10));
                     }
+                #ifndef DEBUGMENU
                 }
+                #endif
             }
         }
     }
