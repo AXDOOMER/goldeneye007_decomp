@@ -54,7 +54,7 @@ jobs:
         run: ./extract_diff.j.sh
 
       - name: build armips
-        run: make -C tools armips
+        run: make -C tools all
 
       - name: Make JP 
         run: make -j IDO_RECOMP=YES VERSION=JP
