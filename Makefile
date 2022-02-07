@@ -344,7 +344,7 @@ endif
 $(BUILD_DIR)/assets/images/split/%.o: assets/images/split/%.bin
 	$(LD) -r -b binary $< -o $@
 #	@printf "\033[40B\r"
-	@$(call DrawProgressBar,10,15)
+#	@$(call DrawProgressBar,10,15)
 #	@printf "\033[40A\r"
 
 #$(BUILD_DIR)/src/random.o: OPTIMIZATION := -O3
