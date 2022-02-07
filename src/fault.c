@@ -143,15 +143,11 @@ u8 g_tlbUnused[0x500];
 char g_tlbStack[0x2300];
 OSMesgQueue g_faultMesgQ;
 OSMesg *g_faultMesgBuf;
-OSThread *g_faultedThreadPtr;
-u32 dword_CODE_bss_80063660;
 
-// bss - indy/debug section
 
-u32 *g_indyCurrentReadBufferResourceId;
-u8 *g_indyReadBufferString1;
-u8 *g_indyReadBufferString2;
-char g_indyReadBuffer[g_indyReadBuffer_LEN];
+
+
+
 
 // forward declarations
 
@@ -177,55 +173,46 @@ void faultInit(void)
  * 
  * decomp status:
  * - compiles: yes
- * - stack resize: fail
+ * - stack resize: yes
  * - identical instructions: yes
  * - identical registers: yes
- * 
- * Only 5 words differ. Two are the location of `msg` on the stack, fixing
- * whatever is off should fix the 'msg' location automatically.
- * 
- * current                                target
- * addiu	sp,sp,-72                     addiu	sp,sp,-64
- * sw	a0,72(sp)                         sw	a0,64(sp)
- * sw	zero,68(sp)                       sw	zero,60(sp)
- * addiu	s1,sp,68                      addiu	s1,sp,60
- * addiu	sp,sp,72                      addiu	sp,sp,64
  */
-#ifdef NONMATCHING
+extern OSThread *__osRunQueue;
 void faultMain(void* arg0)
 {
     OSMesg msg = 0;
-    OSIntMask startingInterruptMask;
-    OSThread *faultedThread;
-
+    OSIntMask mask;
+    static OSThread *curr;
+    static OSThread *last;
     /**
      * Target generates 5 separate dereferences of g_faultedThreadPtr,
      * only way I can get that to happen is with a pointer to a pointer.
      */
-    OSThread **ppfaultedThread = &g_faultedThreadPtr;
+    //OSThread **ppfaultedThread = &g_faultedThreadPtr;
 
-    osSetEventMesg(OS_EVENT_FAULT, &g_faultMesgQ, (OSMesg)MSG_FAULT);
-    dword_CODE_bss_80063660 = 0;
+    osSetEventMesg(0xC, &g_faultMesgQ, (OSMesg)0x10);
+    last = 0;
 
     while (1)
     {
-        osRecvMesg(&g_faultMesgQ, &msg, OS_MESG_BLOCK);
-        startingInterruptMask = osSetIntMask(OS_IM_NONE);
-        faultedThread = __osGetCurrFaultedThread();
-        *ppfaultedThread = faultedThread;
+        osRecvMesg(&g_faultMesgQ, &msg, 1);
+        mask = osSetIntMask(1);
+        curr = __osGetCurrFaultedThread();
+        //*ppfaultedThread = curr;
 
-        if (faultedThread == NULL)
+        if (curr == 0)
         {
             continue;
         }
-        else if (((faultedThread->context.cause & CAUSE_EXCMASK) == EXC_RMISS) && ((faultedThread->context.badvaddr & 0xFFC00000) == (u32)0x7F000000))
-        {
-            tlbmanageTranslateLoadRomFromTlbAddress((*ppfaultedThread)->context.badvaddr);
-            (*ppfaultedThread)->state = (u16)0xA;
-            (*ppfaultedThread)->flags = (u16)0;
 
-            __osEnqueueThread(&__osRunQueue, *ppfaultedThread);
-            osSetIntMask(startingInterruptMask);
+        else if (((curr->context.cause & 0x7c) == 8) && ((curr->context.badvaddr & 0xFFC00000) == (u32)0x7F000000))
+        {
+            tlbmanageTranslateLoadRomFromTlbAddress(curr->context.badvaddr);
+            curr->state = (u16)0xA;
+            curr->flags = (u16)0;
+
+            __osEnqueueThread(&__osRunQueue, curr);
+            osSetIntMask(mask);
             osYieldThread();
         }
         else
@@ -234,107 +221,13 @@ void faultMain(void* arg0)
         }
     }
 
-    osSetIntMask(startingInterruptMask);
+    osSetIntMask(mask);
 
     // infinite loop
     while (1) {}
+
 }
-#else
-GLOBAL_ASM(
-.text
-glabel faultMain
-/* 005B54 70004F54 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 005B58 70004F58 AFB70030 */  sw    $s7, 0x30($sp)
-/* 005B5C 70004F5C 3C178006 */  lui   $s7, %hi(g_faultMesgQ) 
-/* 005B60 70004F60 26F73640 */  addiu $s7, %lo(g_faultMesgQ) # addiu $s7, $s7, 0x3640
-/* 005B64 70004F64 AFBF0034 */  sw    $ra, 0x34($sp)
-/* 005B68 70004F68 AFA40040 */  sw    $a0, 0x40($sp)
-/* 005B6C 70004F6C AFB6002C */  sw    $s6, 0x2c($sp)
-/* 005B70 70004F70 AFB50028 */  sw    $s5, 0x28($sp)
-/* 005B74 70004F74 AFB40024 */  sw    $s4, 0x24($sp)
-/* 005B78 70004F78 AFB30020 */  sw    $s3, 0x20($sp)
-/* 005B7C 70004F7C AFB2001C */  sw    $s2, 0x1c($sp)
-/* 005B80 70004F80 AFB10018 */  sw    $s1, 0x18($sp)
-/* 005B84 70004F84 AFB00014 */  sw    $s0, 0x14($sp)
-/* 005B88 70004F88 AFA0003C */  sw    $zero, 0x3c($sp)
-/* 005B8C 70004F8C 2404000C */  li    $a0, 12
-/* 005B90 70004F90 02E02825 */  move  $a1, $s7
-/* 005B94 70004F94 0C003714 */  jal   osSetEventMesg
-/* 005B98 70004F98 24060010 */   li    $a2, 16
-/* 005B9C 70004F9C 3C018006 */  lui   $at, %hi(dword_CODE_bss_80063660)
-/* 005BA0 70004FA0 3C168002 */  lui   $s6, %hi(__osRunQueue)
-/* 005BA4 70004FA4 AC203660 */  sw    $zero, %lo(dword_CODE_bss_80063660)($at)
-/* 005BA8 70004FA8 26D67728 */  addiu $s6, %lo(__osRunQueue) # addiu $s6, $s6, 0x7728
-/* 005BAC 70004FAC 2415000A */  li    $s5, 10
-/* 005BB0 70004FB0 3C14FFC0 */  lui   $s4, 0xffc0
-/* 005BB4 70004FB4 3C137F00 */  lui   $s3, 0x7f00
-/* 005BB8 70004FB8 24120008 */  li    $s2, 8
-/* 005BBC 70004FBC 27B1003C */  addiu $s1, $sp, 0x3c
-.L70004FC0:
-/* 005BC0 70004FC0 02E02025 */  move  $a0, $s7
-.L70004FC4:
-/* 005BC4 70004FC4 02202825 */  move  $a1, $s1
-/* 005BC8 70004FC8 0C003774 */  jal   osRecvMesg
-/* 005BCC 70004FCC 24060001 */   li    $a2, 1
-/* 005BD0 70004FD0 0C00374C */  jal   osSetIntMask
-/* 005BD4 70004FD4 24040001 */   li    $a0, 1
-/* 005BD8 70004FD8 0C004060 */  jal   __osGetCurrFaultedThread
-/* 005BDC 70004FDC 00408025 */   move  $s0, $v0
-/* 005BE0 70004FE0 3C018006 */  lui   $at, %hi(g_faultedThreadPtr)
-/* 005BE4 70004FE4 1040FFF6 */  beqz  $v0, .L70004FC0
-/* 005BE8 70004FE8 AC22365C */   sw    $v0, %lo(g_faultedThreadPtr)($at)
-/* 005BEC 70004FEC 8C4E0120 */  lw    $t6, 0x120($v0)
-/* 005BF0 70004FF0 3C088006 */  lui   $t0, %hi(g_faultedThreadPtr) 
-/* 005BF4 70004FF4 31CF007C */  andi  $t7, $t6, 0x7c
-/* 005BF8 70004FF8 164F0018 */  bne   $s2, $t7, .L7000505C
-/* 005BFC 70004FFC 00000000 */   nop   
-/* 005C00 70005000 8C580124 */  lw    $t8, 0x124($v0)
-/* 005C04 70005004 0314C824 */  and   $t9, $t8, $s4
-/* 005C08 70005008 16790014 */  bne   $s3, $t9, .L7000505C
-/* 005C0C 7000500C 00000000 */   nop   
-/* 005C10 70005010 8D08365C */  lw    $t0, %lo(g_faultedThreadPtr)($t0)
-/* 005C14 70005014 0C000676 */  jal   tlbmanageTranslateLoadRomFromTlbAddress
-/* 005C18 70005018 8D040124 */   lw    $a0, 0x124($t0)
-/* 005C1C 7000501C 3C098006 */  lui   $t1, %hi(g_faultedThreadPtr) 
-/* 005C20 70005020 8D29365C */  lw    $t1, %lo(g_faultedThreadPtr)($t1)
-/* 005C24 70005024 3C0A8006 */  lui   $t2, %hi(g_faultedThreadPtr) 
-/* 005C28 70005028 3C058006 */  lui   $a1, %hi(g_faultedThreadPtr)
-/* 005C2C 7000502C A5350010 */  sh    $s5, 0x10($t1)
-/* 005C30 70005030 8D4A365C */  lw    $t2, %lo(g_faultedThreadPtr)($t2)
-/* 005C34 70005034 02C02025 */  move  $a0, $s6
-/* 005C38 70005038 A5400012 */  sh    $zero, 0x12($t2)
-/* 005C3C 7000503C 0C00422B */  jal   __osEnqueueThread
-/* 005C40 70005040 8CA5365C */   lw    $a1, %lo(g_faultedThreadPtr)($a1)
-/* 005C44 70005044 0C00374C */  jal   osSetIntMask
-/* 005C48 70005048 02002025 */   move  $a0, $s0
-/* 005C4C 7000504C 0C0042B4 */  jal   osYieldThread
-/* 005C50 70005050 00000000 */   nop   
-/* 005C54 70005054 1000FFDB */  b     .L70004FC4
-/* 005C58 70005058 02E02025 */   move  $a0, $s7
-.L7000505C:
-/* 005C5C 7000505C 0C00374C */  jal   osSetIntMask
-/* 005C60 70005060 02002025 */   move  $a0, $s0
-.L70005064:
-/* 005C64 70005064 1000FFFF */  b     .L70005064
-/* 005C68 70005068 00000000 */   nop   
-/* 005C6C 7000506C 00000000 */  nop   
-/* 005C70 70005070 00000000 */  nop   
-/* 005C74 70005074 00000000 */  nop   
-/* 005C78 70005078 00000000 */  nop   
-/* 005C7C 7000507C 00000000 */  nop   
-/* 005C80 70005080 8FBF0034 */  lw    $ra, 0x34($sp)
-/* 005C84 70005084 8FB00014 */  lw    $s0, 0x14($sp)
-/* 005C88 70005088 8FB10018 */  lw    $s1, 0x18($sp)
-/* 005C8C 7000508C 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 005C90 70005090 8FB30020 */  lw    $s3, 0x20($sp)
-/* 005C94 70005094 8FB40024 */  lw    $s4, 0x24($sp)
-/* 005C98 70005098 8FB50028 */  lw    $s5, 0x28($sp)
-/* 005C9C 7000509C 8FB6002C */  lw    $s6, 0x2c($sp)
-/* 005CA0 700050A0 8FB70030 */  lw    $s7, 0x30($sp)
-/* 005CA4 700050A4 03E00008 */  jr    $ra
-/* 005CA8 700050A8 27BD0040 */   addiu $sp, $sp, 0x40
-)
-#endif
+
 
 /**
  * Given a pointer to an instruction and a stack frame pointer, attempt to find
@@ -512,6 +405,13 @@ s32 indyStrlen(u8 *arg0)
 
     return count;
 }
+
+
+// bss - indy/debug section
+u32 *g_indyCurrentReadBufferResourceId;
+u8 *g_indyReadBufferString1;
+u8 *g_indyReadBufferString2;
+char g_indyReadBuffer[g_indyReadBuffer_LEN];
 
 /**
  * 5E94    70005294
