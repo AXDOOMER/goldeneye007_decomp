@@ -1069,7 +1069,7 @@ void joyRumblePakStop(void)
 #if defined(VERSION_US)
         g_ContRumblePakCurrentState[i] = RUMBLEPAKSTATE_ON;
         g_ContRumblePakTargetState[i] = RUMBLEPAKSTATE_OFF;
-#elif defined(VERSION_JP)
+#elif defined(VERSION_JP) || defined(VERSION_EU)
         g_ContRumblePakTargetState[i] = RUMBLEPAKSTATE_UNKNOWN;
 #endif
     }
