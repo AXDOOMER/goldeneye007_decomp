@@ -190,17 +190,17 @@ void faultMain(void* arg0)
      */
     //OSThread **ppfaultedThread = &g_faultedThreadPtr;
 
-    osSetEventMesg(0xC, &g_faultMesgQ, (OSMesg)0x10);
+    osSetEventMesg(OS_EVENT_FAULT, &g_faultMesgQ, (OSMesg)MSG_FAULT);
     last = 0;
 
     while (1)
     {
-        osRecvMesg(&g_faultMesgQ, &msg, 1);
-        mask = osSetIntMask(1);
+        osRecvMesg(&g_faultMesgQ, &msg, OS_MESG_BLOCK);
+        mask = osSetIntMask(OS_IM_NONE);
         curr = __osGetCurrFaultedThread();
         //*ppfaultedThread = curr;
 
-        if (curr == 0)
+        if (curr == NULL)
         {
             continue;
         }
