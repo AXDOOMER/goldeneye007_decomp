@@ -119,7 +119,9 @@ Gfx g_DebugMenuEndDisplayList = gsSPEndDisplayList();
 Gfx g_DebugMenuNoOp = gsDPNoOp();
 Gfx g_DebugMenuPrimitiveColor = gsDPSetPrimColor(0, 0, 255, 255, 255, 0);
 Gfx g_DebugMenuEnvironmentColor = gsDPSetEnvColor(0, 0, 0, 0);
+#ifndef DEBUGMENU
 u32 g_DebugMenuRandomThreshold = 0xFF; // Static?
+#endif
 
 #endif
 
@@ -363,7 +365,7 @@ void debmenuSetPositionAndWriteString(s32 x, s32 y, const unsigned char *str) {
 //hacky hack for DEBUGMENU until properly decompiled
 #ifdef DEBUGMENU
 u32 get_random_value(void);
-// Decent attempt but still lots of diffs
+// very close gSPTextureRectangle has some reordering issues
 Gfx *debmenuDraw(Gfx *gdl)
 {
 	s32 x;
@@ -433,7 +435,7 @@ Gfx *debmenuDraw(Gfx *gdl)
 						appliedpaletteindex = paletteindex;
 					}
                 #ifndef DEBUGMENU
-                    if ((randomGetNext() & 0xFF) < g_DebugMenuRandomThreshold) {
+                    if ((randomGetNext() & 0xFF) < percentage) {
                 #else
                     if(1) {
                 #endif
