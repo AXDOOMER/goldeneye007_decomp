@@ -35,19 +35,18 @@ DrawProgressBar =                                       \
 		                                                \
 		pdone=`expr $$_pdone \* 76 / 100`;              \
 		pdoneb=0;                                       \
-		printf "\033[3;30r\033[H\033[H\033[1;97;100m%79s\033[H\033[1;44m" " ";    \
+		printf "\0337\033[s\033[3;30r\033[H\033[1;97;100m%79s\033[H\033[1;44m" " ";    \
 		if [ "$$pdone" -lt "40" ];                      \
 		then                                            \
 			printf "%$${pdone}s";                       \
 			printf "\033[100m";                         \
 			pdoneb=`expr 38 - $$pdone`;                 \
-			printf "%$${pdoneb}s%3d%%\033[H" "" $$_pdone;  \
+			printf "%$${pdoneb}s%3d%%" "" $$_pdone;  \
 		else                                            \
 			pdoneb=`expr $$pdone - 38`;                 \
 			printf "%38s%3d%%%$${pdoneb}s" "" $$_pdone; \
-			printf "";                                \
 		fi;                                             \
-		printf "\033[0m\0338\033[u";                               \
+		printf "\0338\033[u\033[m";                               \
 	}                                                   \
 
 OrigDrawProgressBar =\
@@ -581,7 +580,7 @@ endif
 colour:
   ifeq ($(VERBOSE),)
 	@clear
-	@$(call DrawProgressBar,0)
+	@$(call DrawProgressBar,10)
 	@echo "\033[H"
   endif
 	@$(MAKE) --no-print-directory RUNNING=1 all 2>&1 | sed -E \

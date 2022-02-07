@@ -9,11 +9,6 @@
 
 
 
-struct struct_13 {
-    void * ailist;
-    int ailistid;
-};
-
 struct headHat
 {
     float xoffset;

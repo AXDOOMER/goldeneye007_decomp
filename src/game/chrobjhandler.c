@@ -1443,7 +1443,7 @@ s32 do_something_if_object_destroyed(ObjectRecord *obj)
 
 
 
-#ifdef NONMATCHING
+#ifndef NONMATCHING
 ModelNode_BoundingBoxRecord *sub_GAME_7F03FFF8(ModelFileHeader *obj)
 {
     ModelNode *mdlnext;
@@ -1453,7 +1453,7 @@ ModelNode_BoundingBoxRecord *sub_GAME_7F03FFF8(ModelFileHeader *obj)
         //for each next node, check for BBox
         for (mdlnext = obj->RootNode->Child; mdlnext; mdlnext = mdlnext->Next)
         {
-            if (mdlnext->Opcode == FLTOP_BOUNDINGBOX)
+            if (mdlnext->Opcode == MODELNODE_OPCODE_BOUNDINGBOXRECORD)
             {
                 return mdlnext->Data;
             }
@@ -1465,7 +1465,7 @@ ModelNode_BoundingBoxRecord *sub_GAME_7F03FFF8(ModelFileHeader *obj)
             //for each next node, check for BBox
             for (mdlnext = obj->RootNode->Child->Child; mdlnext; mdlnext = mdlnext->Next)
             {
-                if (mdlnext->Opcode == FLTOP_BOUNDINGBOX)
+                if (mdlnext->Opcode == MODELNODE_OPCODE_BOUNDINGBOXRECORD)
                 {
                     return mdlnext->Data;
                 }
@@ -2217,7 +2217,7 @@ glabel sub_GAME_7F0407F4
 
 
 //todo: fix function calls and global vars "undefined reference to"
-#ifdef ONMATCHING
+#ifdef NONMATCHING
 //moveToPad
 void sub_GAME_7F04088C(ObjectRecord *baseobj, PadRecord *pad, Mtxf *matrix, StandTile *stan, PadRecord *pad2) //#MATCH
 {
@@ -2276,7 +2276,7 @@ void sub_GAME_7F04088C(ObjectRecord *baseobj, PadRecord *pad, Mtxf *matrix, Stan
             newPos.y = (distfromTileCenter - (mtxcopy.m[1][1] * xmax)) + 4.0f;
         }
     }
-    if (!(baseobj->flags2 & 1) && sub_GAME_7F0B0BE4(&mStan, pad->pos.x, pad->pos.z, newPos.x, newPos.z))
+    if (!(baseobj->flags2 & 1) && walkTilesBetweenPoints_NoCallback(&mStan, pad->pos.x, pad->pos.z, newPos.x, newPos.z))
     {
         sub_GAME_7F040754(baseobj, &newPos, &mtxcopy, mStan);
     }
