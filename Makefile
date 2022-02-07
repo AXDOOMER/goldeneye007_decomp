@@ -1,14 +1,14 @@
 # Makefile to rebuild Goldeneye 007
 
 ### Default target ###
-default: colour
+default: all
 
 ### Default Build Options ###
 # Version of the game to build
 FINAL := YES
 VERSION := US
 IDO_RECOMP := NO
-VERBOSE := 
+VERBOSE := 1
 # If COMPARE is 1, check the output sha1sum when building 'all'
 COMPARE := 1
 
