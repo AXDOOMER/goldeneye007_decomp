@@ -53,6 +53,9 @@ jobs:
       - name: Extract EU Assets
         run: ./extract_diff.e.sh
 
+      - name: build armips
+        run: make -C tools armips
+
       - name: Make EU 
         run: make -j IDO_RECOMP=YES VERSION=EU
           

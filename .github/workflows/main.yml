@@ -45,6 +45,9 @@ jobs:
       
       - name: Extract US Assets
         run: ./extract_baserom.u.sh
+      
+      - name: build armips
+        run: make -C tools armips
 
       - name: Make US 
         run: make -j IDO_RECOMP=YES VERSION=US

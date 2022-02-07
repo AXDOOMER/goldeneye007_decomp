@@ -53,6 +53,9 @@ jobs:
       - name: Extract JP Assets
         run: ./extract_diff.j.sh
 
+      - name: build armips
+        run: make -C tools armips
+
       - name: Make JP 
         run: make -j IDO_RECOMP=YES VERSION=JP
           
