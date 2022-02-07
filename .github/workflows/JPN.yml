@@ -47,9 +47,6 @@ jobs:
           FILE_JP: ${{ secrets.SECRET_FILE_JP  }}
         run: wget -O baserom.j.z64 $FILE_JP
 
-      - name: build tools
-        run: make -C tools all
-
       - name: Extract US Assets
         run: ./extract_baserom.u.sh
 
