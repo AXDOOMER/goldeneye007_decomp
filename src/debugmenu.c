@@ -119,10 +119,6 @@ Gfx g_DebugMenuEndDisplayList = gsSPEndDisplayList();
 Gfx g_DebugMenuNoOp = gsDPNoOp();
 Gfx g_DebugMenuPrimitiveColor = gsDPSetPrimColor(0, 0, 255, 255, 255, 0);
 Gfx g_DebugMenuEnvironmentColor = gsDPSetEnvColor(0, 0, 0, 0);
-#ifndef DEBUGMENU
-u32 g_DebugMenuRandomThreshold = 0xFF; // Static?
-#endif
-
 #endif
 
 /**
@@ -363,6 +359,9 @@ void debmenuSetPositionAndWriteString(s32 x, s32 y, const unsigned char *str) {
 }
 
 //hacky hack for DEBUGMENU until properly decompiled
+#if !defined(DEBUGMENU) && defined(LEFTOVERDEBUG)
+u32 percentage = 0xFF; // Static?
+#endif
 #ifdef DEBUGMENU
 u32 get_random_value(void);
 // very close gSPTextureRectangle has some reordering issues
@@ -517,9 +516,9 @@ glabel debmenuDraw
 .L7000B32C:
 /* 00BF2C 7000B32C 1C600004 */  bgtz  $v1, .L7000B340
 /* 00BF30 7000B330 2414FFFF */   li    $s4, -1
-/* 00BF34 7000B334 3C018002 */  lui   $at, %hi(g_DebugMenuRandomThreshold)
+/* 00BF34 7000B334 3C018002 */  lui   $at, %hi(percentage)
 /* 00BF38 7000B338 10000017 */  b     .L7000B398
-/* 00BF3C 7000B33C AC2068B8 */   sw    $zero, %lo(g_DebugMenuRandomThreshold)($at)
+/* 00BF3C 7000B33C AC2068B8 */   sw    $zero, %lo(percentage)($at)
 .L7000B340:
 /* 00BF40 7000B340 0064082A */  slt   $at, $v1, $a0
 /* 00BF44 7000B344 10200011 */  beqz  $at, .L7000B38C
@@ -537,15 +536,15 @@ glabel debmenuDraw
 /* 00BF70 7000B370 00000000 */   nop   
 /* 00BF74 7000B374 0006000D */  break 6
 .L7000B378:
-/* 00BF78 7000B378 3C018002 */  lui   $at, %hi(g_DebugMenuRandomThreshold)
+/* 00BF78 7000B378 3C018002 */  lui   $at, %hi(percentage)
 /* 00BF7C 7000B37C 0000C012 */  mflo  $t8
-/* 00BF80 7000B380 AC3868B8 */  sw    $t8, %lo(g_DebugMenuRandomThreshold)($at)
+/* 00BF80 7000B380 AC3868B8 */  sw    $t8, %lo(percentage)($at)
 /* 00BF84 7000B384 10000005 */  b     .L7000B39C
 /* 00BF88 7000B388 02001025 */   move  $v0, $s0
 .L7000B38C:
 /* 00BF8C 7000B38C 24190100 */  li    $t9, 256
-/* 00BF90 7000B390 3C018002 */  lui   $at, %hi(g_DebugMenuRandomThreshold)
-/* 00BF94 7000B394 AC3968B8 */  sw    $t9, %lo(g_DebugMenuRandomThreshold)($at)
+/* 00BF90 7000B390 3C018002 */  lui   $at, %hi(percentage)
+/* 00BF94 7000B394 AC3968B8 */  sw    $t9, %lo(percentage)($at)
 .L7000B398:
 /* 00BF98 7000B398 02001025 */  move  $v0, $s0
 .L7000B39C:
@@ -590,8 +589,8 @@ glabel debmenuDraw
 .L7000B42C:
 /* 00C02C 7000B42C 0C002914 */  jal   randomGetNext
 /* 00C030 7000B430 00000000 */   nop   
-/* 00C034 7000B434 3C0B8002 */  lui   $t3, %hi(g_DebugMenuRandomThreshold) 
-/* 00C038 7000B438 8D6B68B8 */  lw    $t3, %lo(g_DebugMenuRandomThreshold)($t3)
+/* 00C034 7000B434 3C0B8002 */  lui   $t3, %hi(percentage) 
+/* 00C038 7000B438 8D6B68B8 */  lw    $t3, %lo(percentage)($t3)
 /* 00C03C 7000B43C 304A00FF */  andi  $t2, $v0, 0xff
 /* 00C040 7000B440 014B082B */  sltu  $at, $t2, $t3
 /* 00C044 7000B444 5020002F */  beql  $at, $zero, .L7000B504
