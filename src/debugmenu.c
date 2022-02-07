@@ -367,6 +367,7 @@ u32 get_random_value(void);
 // very close gSPTextureRectangle has some reordering issues
 Gfx *debmenuDraw(Gfx *gdl)
 {
+    #if defined(LEFTOVERDEBUG)
 	s32 x;
 	s32 y;
 	s32 appliedpaletteindex;
@@ -456,6 +457,7 @@ Gfx *debmenuDraw(Gfx *gdl)
 			}
 		}
 	}
+    #endif
     return gdl;
 }
 
