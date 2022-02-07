@@ -33211,47 +33211,6 @@ glabel jpt_80052D9C
 .word loc_CODE_7F04DB00
 .word loc_CODE_7F04DA48
 
-/*D:80052DF0*/
-/*hack, doesn't fit in own function*/
-glabel jpt_80052DF0
-.word destroyable_object   
-.word nondestroyable_object
-.word destroyable_object   
-.word nondestroyable_object
-.word destroyable_object   
-.word destroyable_object   
-.word nondestroyable_object
-.word nondestroyable_object
-.word nondestroyable_object
-.word destroyable_object   
-.word destroyable_object   
-.word destroyable_object   
-.word destroyable_object   
-.word nondestroyable_object
-.word nondestroyable_object
-.word nondestroyable_object
-.word nondestroyable_object
-.word nondestroyable_object
-.word nondestroyable_object
-.word nondestroyable_object
-.word nondestroyable_object
-.word nondestroyable_object
-.word nondestroyable_object
-.word nondestroyable_object
-.word nondestroyable_object
-.word nondestroyable_object
-.word nondestroyable_object
-.word nondestroyable_object
-.word nondestroyable_object
-.word nondestroyable_object
-.word nondestroyable_object
-.word nondestroyable_object
-.word nondestroyable_object
-.word nondestroyable_object
-.word nondestroyable_object
-.word destroyable_object   
-.word nondestroyable_object
-.word nondestroyable_object
 
 
 .text
@@ -33483,17 +33442,7 @@ void sub_GAME_7F04DCB4(void) {
 }
 #else
 GLOBAL_ASM(
-.late_rodata
-/*hack, doesnt fit in own data above*/
-.word destroyable_object
-.word destroyable_object
-.word destroyable_object
-.word destroyable_object
-.word destroyable_object
-.word nondestroyable_object
-.word destroyable_object
-.word nondestroyable_object
-.word destroyable_object
+
 
 .text
 glabel sub_GAME_7F04DCB4
@@ -33612,32 +33561,7 @@ glabel sub_GAME_7F04DD68
 
 #else
 GLOBAL_ASM(
-     .late_rodata
-/*hack, part of check_if_collectable_object*/
-/*D:80052EAC*/
-glabel jpt_80052EAC
-                           /*0*/
-                            /*1*/
-                            /*2*/
-                            /*3*/
-.word collectable_object   /*key*/
-.word notcollectable_object/**/
-.word notcollectable_object/**/
-.word collectable_object   /*mag*/
-.word collectable_object   /*col*/
-.word notcollectable_object/**/
-.word notcollectable_object/**/
-.word notcollectable_object/**/
-.word notcollectable_object/**/
-.word notcollectable_object/**/
-.word notcollectable_object/**/
-.word notcollectable_object/**/
-.word notcollectable_object/**/
-.word collectable_object   /*hat*/
-.word notcollectable_object/**/
-.word notcollectable_object/**/
-.word collectable_object   /*ammo*/
-.word collectable_object   /*armour*/
+
 .text
 glabel sub_GAME_7F04DE18
 /* 082948 7F04DE18 27BDFF68 */  addiu $sp, $sp, -0x98
@@ -33775,8 +33699,7 @@ glabel sub_GAME_7F04DEFC
 
 
 
-//todo: undefined refrences to jtbl
-#ifdef NONMATCHING
+
 bool check_if_destroyable_object_type(PropDefHeaderRecord *obj)//#MATCH
 {
     switch (obj->type)
@@ -33802,40 +33725,8 @@ bool check_if_destroyable_object_type(PropDefHeaderRecord *obj)//#MATCH
             return FALSE;
     }
 }
-#else
-GLOBAL_ASM(
-.late_rodata
 
 
-.text
-glabel check_if_destroyable_object_type
-/* 082B00 7F04DFD0 908E0003 */  lbu   $t6, 3($a0)
-/* 082B04 7F04DFD4 25CFFFFF */  addiu $t7, $t6, -1
-/* 082B08 7F04DFD8 2DE1002F */  sltiu $at, $t7, 0x2f
-/* 082B0C 7F04DFDC 10200008 */  beqz  $at, .L7F04E000
-/* 082B10 7F04DFE0 000F7880 */   sll   $t7, $t7, 2
-/* 082B14 7F04DFE4 3C018005 */  lui   $at, %hi(jpt_80052DF0)
-/* 082B18 7F04DFE8 002F0821 */  addu  $at, $at, $t7
-/* 082B1C 7F04DFEC 8C2F2DF0 */  lw    $t7, %lo(jpt_80052DF0)($at)
-/* 082B20 7F04DFF0 01E00008 */  jr    $t7
-/* 082B24 7F04DFF4 00000000 */   nop   
-destroyable_object:
-/* 082B28 7F04DFF8 03E00008 */  jr    $ra
-/* 082B2C 7F04DFFC 24020001 */   li    $v0, 1
-
-nondestroyable_object:
-.L7F04E000:
-/* 082B30 7F04E000 00001025 */  move  $v0, $zero
-/* 082B34 7F04E004 03E00008 */  jr    $ra
-/* 082B38 7F04E008 00000000 */   nop   
-)
-#endif
-
-
-
-
-//todo: fix jtbl in use and undefined reference to `notcollectable_object'
-#ifdef NONMATCHING
 bool check_if_collectable_object(PropDefHeaderRecord *obj)//#MATCH
 {
     switch (obj->type)
@@ -33851,31 +33742,7 @@ bool check_if_collectable_object(PropDefHeaderRecord *obj)//#MATCH
             return FALSE;
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_collectable_object
-/* 082B3C 7F04E00C 908E0003 */  lbu   $t6, 3($a0)
-/* 082B40 7F04E010 25CFFFFC */  addiu $t7, $t6, -4
-/* 082B44 7F04E014 2DE10012 */  sltiu $at, $t7, 0x12
-/* 082B48 7F04E018 10200008 */  beqz  $at, .L7F04E03C
-/* 082B4C 7F04E01C 000F7880 */   sll   $t7, $t7, 2
-/* 082B50 7F04E020 3C018005 */  lui   $at, %hi(jpt_80052EAC)
-/* 082B54 7F04E024 002F0821 */  addu  $at, $at, $t7
-/* 082B58 7F04E028 8C2F2EAC */  lw    $t7, %lo(jpt_80052EAC)($at)
-/* 082B5C 7F04E02C 01E00008 */  jr    $t7
-/* 082B60 7F04E030 00000000 */   nop   
-collectable_object:
-/* 082B64 7F04E034 03E00008 */  jr    $ra
-/* 082B68 7F04E038 24020001 */   li    $v0, 1
 
-notcollectable_object:
-.L7F04E03C:
-/* 082B6C 7F04E03C 00001025 */  move  $v0, $zero
-/* 082B70 7F04E040 03E00008 */  jr    $ra
-/* 082B74 7F04E044 00000000 */   nop   
-)
-#endif
 
 
 
