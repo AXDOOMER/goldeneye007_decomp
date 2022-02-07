@@ -264,7 +264,7 @@ ifeq ($(COMPARE),1)
 #   Else complete 
 	@$(PRINTMATCH)
 endif
-	@echo "\n Rom File Generated in Build Directory. \n\n\033[0;0r"
+	@echo "\n Rom File Generated in Build Directory. \n\n"
 
 .SECONDARY:
 	$(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map \
@@ -278,6 +278,7 @@ ifeq ($(filter clean dataclean help codeclean context cmdbuilder test stanclean 
     else
       $(error VERSION "$(VERSION)" not supported")
     endif
+  endif
     # Make tools if out of date
     $(info Building tools...)
     DUMMY != make -s -C tools >&2 || echo FAIL
@@ -285,7 +286,7 @@ ifeq ($(filter clean dataclean help codeclean context cmdbuilder test stanclean 
       $(error Failed to build tools)
     endif
     $(info Building ROM...)
-  endif
+
 endif
 
 $(BUILD_DIR)/rsp/%.bin: rsp/*.s
