@@ -23,7 +23,7 @@ GZIP := gzipsrc/gzip
 $(GZIP):
 	@$(MAKE) -C gzipsrc
 
-all: $(GZIP) $(PROGRAMS) $(CXX_PROGRAMS) armips
+all: $(GZIP) $(PROGRAMS) $(CXX_PROGRAMS)
 
 clean:
 	$(RM) $(PROGRAMS) $(CXX_PROGRAMS)
