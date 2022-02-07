@@ -580,7 +580,7 @@ endif
 colour:
   ifeq ($(VERBOSE),)
 	@clear
-	@$(call DrawProgressBar,10)
+	@$(call DrawProgressBar,0)
 	@echo "\033[H"
   endif
 	@$(MAKE) --no-print-directory RUNNING=1 all 2>&1 | sed -E \

@@ -24,6 +24,7 @@
 #include "objecthandler.h"
 #include "quaternion.h"
 #include <limits.h>
+#include "stan.h"
 
 #ifdef VERSION_EU
 
@@ -2247,7 +2248,7 @@ void sub_GAME_7F04088C(ObjectRecord *baseobj, PadRecord *pad, Mtxf *matrix, Stan
     else
     {
         ObjectRecord *roomObj;                                                               //44
-        f32           distfromTileCenter = sub_GAME_7F0B2970(mStan, pad->pos.x, pad->pos.z); //40
+        f32           distfromTileCenter = stanGetPositionYValue(mStan, pad->pos.x, pad->pos.z); //40
         f32           byrefA;                                                                //3c
         f32           byrefB;                                                                //38
         f32           byrefC;                                                                //34
@@ -2260,7 +2261,7 @@ void sub_GAME_7F04088C(ObjectRecord *baseobj, PadRecord *pad, Mtxf *matrix, Stan
         if (roomObj)
         {
             PropRecord *roomObjProp = roomObj->prop;
-            sub_GAME_7F03CC20(roomObjProp, &byrefA, &byrefB, &byrefC, &byrefD);
+            chraiGetCollisionBounds(roomObjProp, &byrefA, &byrefB, &byrefC, &byrefD);
             if ((distfromTileCenter < byrefC) && (byrefD < ((mtxcopy.m[1][1] * (ymin - xmax)) + distfromTileCenter + 4.0f)))
             {
                 newPos.y = byrefC - (mtxcopy.m[1][1] * xmax);
@@ -33774,7 +33775,7 @@ glabel sub_GAME_7F04DEFC
 
 
 
-
+//todo: undefined refrences to jtbl
 #ifdef NONMATCHING
 bool check_if_destroyable_object_type(PropDefHeaderRecord *obj)//#MATCH
 {

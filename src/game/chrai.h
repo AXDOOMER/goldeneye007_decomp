@@ -514,7 +514,10 @@ PropRecord *get_ptr_obj_pos_list_current_entry(void);
 void chraiGetPropRoomIds(PropRecord *self, s32 *roomids);
 void propFree(PropRecord *prop);
 void propHide(PropRecord *prop);
-
-
-
+f32                                             sub_GAME_7F03E85C(ModelNode_BoundingBoxRecord *modelBoundingBox);
+f32                                             sub_GAME_7F03E864(ModelNode_BoundingBoxRecord *modelBoundingBox);
+f32                                             sub_GAME_7F03E86C(ModelNode_BoundingBoxRecord *modelBoundingBox);
+f32                                             sub_GAME_7F03E874(ModelNode_BoundingBoxRecord *modelBoundingBox);
+ObjectRecord *                                  sub_GAME_7F03FAB0(PadRecord *pad, s32 RoomID);
+void                                            chraiGetCollisionBounds(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *arg3, f32 *arg4);
 #endif

@@ -29,6 +29,8 @@ void matrix_4x4_set_rotation_around_x(f32 angle, Mtxf *matrix);
 void matrix_4x4_set_rotation_around_y(f32 angle, Mtxf *matrix);
 void matrix_scalar_multiply(f32 scalar, f32 *matrix);
 void matrix_4x4_7F059908(Mtxf *arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9);
+void matrix_4x4_set_rotation_around_z(f32 angle, Mtxf *matrix);
+void matrix_4x4_multiply_in_place(Mtxf *lhs, Mtxf *rhs);
 
 // tenative guess
 void sub_GAME_7F058E78(Mtxf *arg0, Mtxf *arg1);
