@@ -247,6 +247,9 @@ PRINTMATCH := printf "\n\n\n\033[3A\033[5;42;97m%80s\033[1B\r%43s%37s\033[1B\r%8
 
 ## Build Recipies ##
 
+# this file references variables defined above: BUILD_DIR, CFLAGWARNING, INCLUDE, LCDEFS
+# this file defines $(ULTRAOBJECTS)
+include src/libultrare/Makefile.libultrare
 
 all: $(APPROM)
 ifeq ($(VERBOSE),)
@@ -270,30 +273,23 @@ endif
 
 ifeq ($(filter clean dataclean help codeclean context cmdbuilder test stanclean setupclean colour print-%,$(MAKECMDGOALS)),)
   ifneq ($(MAKECMDGOALS),)
-  ifneq ($(filter $(VERSION),$(ALLOWED_VERSIONS)),)
-    $(info VERSION=$(VERSION))
-  else
-    $(error VERSION "$(VERSION)" not supported")
-  endif
-  # Make tools if out of date
-  $(info Building tools...)
-  DUMMY != make -s -C tools >&2 || echo FAIL
+    ifneq ($(filter $(VERSION),$(ALLOWED_VERSIONS)),)
+      $(info VERSION=$(VERSION))
+    else
+      $(error VERSION "$(VERSION)" not supported")
+    endif
+    # Make tools if out of date
+    $(info Building tools...)
+    DUMMY != make -s -C tools >&2 || echo FAIL
     ifeq ($(DUMMY),FAIL)
       $(error Failed to build tools)
     endif
-  $(info Building ROM...)
+    $(info Building ROM...)
   endif
 endif
 
-# this file references variables defined above: BUILD_DIR, CFLAGWARNING, INCLUDE, LCDEFS
-# this file defines $(ULTRAOBJECTS)
-include src/libultrare/Makefile.libultrare
-
 $(BUILD_DIR)/rsp/%.bin: rsp/*.s
 	$(ARMIPS) -sym $@.sym -strequ CODE_FILE $(BUILD_DIR)/rsp/$*.bin -strequ DATA_FILE $(BUILD_DIR)/rsp/$*_data.bin $<
-    ifeq ($(VERBOSE),)
-		@$(call DrawProgressBar,1,15)
-    endif
 
 $(BUILD_DIR)/%.o: src/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
