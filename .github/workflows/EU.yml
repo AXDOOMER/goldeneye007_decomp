@@ -47,14 +47,14 @@ jobs:
           FILE_EU: ${{ secrets.SECRET_FILE_EU  }}
         run: wget -O baserom.e.z64 $FILE_EU
 
+      - name: build tools
+        run: make -C tools all
+
       - name: Extract US Assets
         run: ./extract_baserom.u.sh
 
       - name: Extract EU Assets
         run: ./extract_diff.e.sh
-
-      - name: build armips
-        run: make -C tools all
 
       - name: Make EU 
         run: make -j IDO_RECOMP=YES VERSION=EU

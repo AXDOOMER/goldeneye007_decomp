@@ -42,13 +42,13 @@ jobs:
         env:
           FILE_US: ${{ secrets.SECRET_FILE_US  }}
         run: wget -O baserom.u.z64 $FILE_US
-      
+
+      - name: build tools
+        run: make -C tools all
+
       - name: Extract US Assets
         run: ./extract_baserom.u.sh
       
-      - name: build armips
-        run: make -C tools all
-
       - name: Make US 
         run: make -j IDO_RECOMP=YES VERSION=US
           
