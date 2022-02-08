@@ -241,7 +241,12 @@ LDFLAGS := -T undefined_syms.txt -T $(LD_SCRIPT) -Map build/ge007.$(OUTCODE).map
 
 AS := $(TOOLCHAIN)as
 ASFLAGS := -march=vr4300 -mabi=32 $(INCLUDE) $(ASMDEFS)
-ARMIPS	:= $(TOOLS_DIR)/armips
+# Use the system installed armips if available. Otherwise use the one provided with this repository.
+ifneq (,$(shell which armips 2>/dev/null)) 
+  ARMIPS              := armips
+else
+  ARMIPS              := $(TOOLS_DIR)/armips
+endif
 ASM_PREPROC := python3 tools/asmpreproc/asm-processor.py
 
 OBJCOPY := $(TOOLCHAIN)objcopy
