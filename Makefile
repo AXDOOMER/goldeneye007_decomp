@@ -1,16 +1,33 @@
 # Makefile to rebuild Goldeneye 007
 
 ### Default target ###
-default: all
+default: colour
 
 ### Default Build Options ###
 # Version of the game to build
 FINAL := YES
 VERSION := US
 IDO_RECOMP := NO
-VERBOSE := 1
+VERBOSE := 
 # If COMPARE is 1, check the output sha1sum when building 'all'
 COMPARE := 1
+
+
+## VT100 Codes ##
+SAVECURSOR := \0337\033[s
+RESTORECURSOR := \0338\033[u
+SET_SCROLLREGION = \033[$(1);$(2)r
+RESTORESCROLLREGION := \033[r
+RESTORECOLOUR := \033[m
+FGWHITEB :=\033[1;97m
+FGWHITE := \033[0;97m
+FGYELLOW := \033[0;93m
+FGRED := \033[0;91m
+FGGREEN := \033[1;92m
+FGBLUE := \033[0;94m
+BGBLUE := \033[1;44m
+BGGREY := \033[100m
+CURSOR_GOTO = \033[$(1);$(2)H
 
 ### Build Functions ###
 #(call DrawProgressBar,Percent)
@@ -35,39 +52,23 @@ DrawProgressBar =                                       \
 		                                                \
 		pdone=`expr $$_pdone \* 76 / 100`;              \
 		pdoneb=0;                                       \
-		printf "\0337\033[s\033[3;30r\033[H\033[1;97;100m%79s\033[H\033[1;44m" " ";    \
+		str="$(SAVECURSOR)$(call SET_SCROLLREGION,3,0)$(call CURSOR_GOTO,2,999)\033[1J$(call CURSOR_GOTO,1)$(FGWHITEB)$(BGGREY)%79s$(call CURSOR_GOTO,1)$(BGBLUE)" ;    \
 		if [ "$$pdone" -lt "40" ];                      \
 		then                                            \
-			printf "%$${pdone}s";                       \
-			printf "\033[100m";                         \
+			str=$$str"%$${pdone}s";                       \
+			str=$$str"$(BGGREY)";                         \
 			pdoneb=`expr 38 - $$pdone`;                 \
-			printf "%$${pdoneb}s%3d%%" "" $$_pdone;  \
+			str=$$str"%$${pdoneb}s%3d%%";  \
 		else                                            \
 			pdoneb=`expr $$pdone - 38`;                 \
-			printf "%38s%3d%%%$${pdoneb}s" "" $$_pdone; \
+			str=$$str"%1s%37s%3d%%%$${pdoneb}s"; \
 		fi;                                             \
-		printf "\0338\033[u\033[m";                               \
+		str=$$str"$(RESTORECURSOR)$(RESTORECOLOUR)";                               \
+		printf $$str "" "" "" $$_pdone; \
 	}                                                   \
-
-OrigDrawProgressBar =\
-	{\
-		pbar="[";\
-		$(if $(2), if [ "$(1)" -ne "$(2)" ]; then percent=`expr 100 / $(2) `; _pdone=`expr $$percent \* $(1)`; else _pdone=100; fi ,_pdone=$(1));\
-		pdone=`expr $$_pdone / 4`;\
-		for i in $$(seq 0 $$pdone);\
-		do \
-			pbar="$${pbar}=";\
-		done;\
-		for i in $$(seq $$pdone 24);\
-		do \
-			pbar="$$pbar ";\
-		done;\
-		printf "$$pbar]%3d%%\r" "" "$$_pdone";\
-	}
 
 
 ## More Build Variables (Auto) ##
-RUNNING :=
 
 ifeq ($(shell type mips-linux-gnu-ld >/dev/null 2>/dev/null; echo $$?), 0)
   TOOLCHAIN := mips-linux-gnu-
@@ -159,6 +160,8 @@ BUILD_SUB_DIRS := \
 $(shell mkdir -p $(BUILD_DIR))
 $(foreach subdir,$(BUILD_SUB_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(subdir)))
 
+## Collect Objects ##
+
 APPELF := $(BUILD_DIR)/ge007.$(OUTCODE).elf
 APPROM := $(BUILD_DIR)/ge007.$(OUTCODE).z64
 APPBIN := $(BUILD_DIR)/ge007.$(OUTCODE).bin
@@ -207,6 +210,8 @@ RZOBJECTS := $(foreach file,$(RZFILES),$(BUILD_DIR)/src/$(file:.c=.o))
 
 OBJECTS := $(RSPOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(OBSEGMENT) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS)
 
+## Command Line args for builders ##
+
 MIPSISET := -mips2 -32
 
 INCLUDE := -I . -I include -I include/ultra64 -I include/PR -I src -I src/game -I src/inflate
@@ -240,10 +245,10 @@ ARMIPS	:= $(TOOLS_DIR)/armips
 ASM_PREPROC := python3 tools/asmpreproc/asm-processor.py
 
 OBJCOPY := $(TOOLCHAIN)objcopy
-#                        Rsrv   Up 3   Flash  Wht  80  Dn 1 Return      Dn 1 Ret 80ch              Red 
+#                        Rsrv   Up 3   Flash  Wht  80  Dn 1 Return      Dn 1 Ret 80ch                 Red 
 #                        Lines Lines     Red/Grn   ch  Line SoL midway  Line SoL   Bell Reset Colour 
-PRINTNOMATCH := printf "\n\n\033[3A\033[5;41;97m%80s\033[1B\r%45s%35s\033[1B\r%80s\007\033[0;0m\033[91m\n\n\n" "" "NOT MATCH!" "" ""
-PRINTMATCH := printf "\n\n\n\033[3A\033[5;42;97m%80s\033[1B\r%43s%37s\033[1B\r%80s\007\033[0;0m\n" "" "MATCH!" "" "" 
+PRINTNOMATCH := printf "\n\n\033[3A\033[5;41;97m%80s\033[1B\r%45s%35s\033[1B\r%80s\007$(RESTORECOLOUR)\033[91m\n\n\n" "" "NOT MATCH!" "" ""
+PRINTMATCH := printf "\n\n\n\033[3A\033[5;42;97m%80s\033[1B\r%43s%37s\033[1B\r%80s\007$(RESTORECOLOUR)\n" "" "MATCH!" "" "" 
 
 ## Build Recipies ##
 
@@ -272,77 +277,86 @@ endif
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) 
 
 ifeq ($(filter clean dataclean help codeclean context cmdbuilder test stanclean setupclean colour print-%,$(MAKECMDGOALS)),)
-  ifneq ($(MAKECMDGOALS),)
+# Dont print version on "default" since it will be spat out twice
     ifneq ($(filter $(VERSION),$(ALLOWED_VERSIONS)),)
-      $(info VERSION=$(VERSION))
+      #$(info VERSION=$(VERSION))
     else
       $(error VERSION "$(VERSION)" not supported")
     endif
-  endif
     # Make tools if out of date
     $(info Building tools...)
     DUMMY != make -s -C tools >&2 || echo FAIL
     ifeq ($(DUMMY),FAIL)
       $(error Failed to build tools)
     endif
-    $(info Building ROM...)
+    $(info Building $(VERSION) ROM...)
 
 endif
 
-$(BUILD_DIR)/rsp/%.bin: rsp/*.s
+# Build RSP
+$(BUILD_DIR)/rsp/%.bin: rsp/*.s pb1
 	$(ARMIPS) -sym $@.sym -strequ CODE_FILE $(BUILD_DIR)/rsp/$*.bin -strequ DATA_FILE $(BUILD_DIR)/rsp/$*_data.bin $<
-
-$(BUILD_DIR)/%.o: src/%.s
-	$(AS) $(ASFLAGS) -o $@ $<
-ifeq ($(VERBOSE),)
-	@$(call DrawProgressBar,2,15)
-endif
-
-$(BUILD_DIR)/src/%.o: src/%.s
-	$(AS) $(ASFLAGS) -o $@ $<
-ifeq ($(VERBOSE),)
-	@$(call DrawProgressBar,3,15)
-endif
-
-$(BUILD_DIR)/assets/%.o: assets/%.c
-	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
-	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
-ifeq ($(VERBOSE),)
-	@$(call DrawProgressBar,4,15)
-endif
-
-$(BUILD_DIR)/assets/%.o: assets/%.s
-	$(AS) $(ASFLAGS) -o $@ $<
-ifeq ($(VERBOSE),)
-	@$(call DrawProgressBar,5,15)
-endif
+	@echo $@
 
 $(BUILD_DIR)/src/rspboot.o: $(BUILD_DIR)/rsp/rspboot.bin 
 
-
-$(BUILD_DIR)/assets/ramrom/%.o: assets/ramrom/%.s
+#Build asm files in root
+$(BUILD_DIR)/%.o: src/%.s pb2
 	$(AS) $(ASFLAGS) -o $@ $<
-ifeq ($(VERBOSE),)
-	@$(call DrawProgressBar,7,15)
-endif
+	@echo $@
 
-$(BUILD_DIR)/assets/font/%.o: assets/font/%.c
-	$(CC) -c $(CFLAGS) -o $@ $(OPTIMIZATION) $<
-ifeq ($(VERBOSE),)
-	@$(call DrawProgressBar,8,15)
-endif
-
-$(BUILD_DIR)/assets/obseg/%.o: assets/obseg/%.s $(OBSEG_RZ)
+#Build asm files in src/
+$(BUILD_DIR)/src/%.o: src/%.s pb3
 	$(AS) $(ASFLAGS) -o $@ $<
-ifeq ($(VERBOSE),)
-	@$(call DrawProgressBar,9,15)
-endif
+	@echo $@
 
-$(BUILD_DIR)/assets/images/split/%.o: assets/images/split/%.bin
+#Build Images
+$(BUILD_DIR)/assets/images/split/%.o: assets/images/split/%.bin pb4
 	$(LD) -r -b binary $< -o $@
-#	@printf "\033[40B\r"
-#	@$(call DrawProgressBar,10,15)
-#	@printf "\033[40A\r"
+	@echo $@
+
+#Compress Obseg
+$(BUILD_DIR)/$(OBSEGMENT): $(OBSEG_RZ) $(IMAGE_OBJS) pb6
+	@echo $@
+
+#Build C files in root/
+$(BUILD_DIR)/%.o: src/%.c pb7
+	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
+	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
+	@echo $@
+
+
+#Build C files in src/
+$(BUILD_DIR)/src/%.o: src/%.c pb8
+	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
+	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
+	@echo $@
+
+#Build RamRom
+$(BUILD_DIR)/assets/ramrom/%.o: assets/ramrom/%.s pb9
+	$(AS) $(ASFLAGS) -o $@ $<
+	@echo $@
+
+#Build fonts
+$(BUILD_DIR)/assets/font/%.o: assets/font/%.c pb10
+	$(CC) -c $(CFLAGS) -o $@ $(OPTIMIZATION) $<
+	@echo $@
+
+#Build asm files in assets/
+$(BUILD_DIR)/assets/%.o: assets/%.s pb11
+	$(AS) $(ASFLAGS) -o $@ $<
+	@echo $@
+
+#Build Obseg
+$(BUILD_DIR)/assets/obseg/%.o: assets/obseg/%.s $(OBSEG_RZ) pb12
+	$(AS) $(ASFLAGS) -o $@ $<
+	@echo $@
+
+#Build C files in assets/
+$(BUILD_DIR)/assets/%.o: assets/%.c pb13
+	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
+	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
+	@echo $@
 
 #$(BUILD_DIR)/src/random.o: OPTIMIZATION := -O3
 #$(BUILD_DIR)/src/random.o: INCLUDE := -I . -I include -I include/PR
@@ -350,26 +364,8 @@ $(BUILD_DIR)/assets/images/split/%.o: assets/images/split/%.bin
 #$(BUILD_DIR)/src/random.o: src/random.c
 #	$(CC) -c -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821,838,649 -signed $(INCLUDE) $(MIPSISET) $(LCDEFS) -DTARGET_N64 $(OPTIMIZATION) -o $@ $<
 
-$(BUILD_DIR)/%.o: src/%.c
-	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
-	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
-ifeq ($(VERBOSE),)
-	@$(call DrawProgressBar,11,15)
-endif
-
-$(BUILD_DIR)/src/%.o: src/%.c
-	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
-	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
-ifeq ($(VERBOSE),)
-	@$(call DrawProgressBar,12,15)
-endif
-
-$(BUILD_DIR)/$(OBSEGMENT): $(OBSEG_RZ) $(IMAGE_OBJS)
-ifeq ($(VERBOSE),)
-	@$(call DrawProgressBar,13,15)
-endif
-
-$(APPELF): $(RSPOBJECTS) $(ULTRAOBJECTS) $(HEADEROBJECTS) $(OBSEG_RZ) $(BUILD_DIR)/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(ASSET_DATAOBJECTS) $(ROMOBJECTS2) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS)
+#Link Files
+$(APPELF): $(RSPOBJECTS) $(ULTRAOBJECTS) $(HEADEROBJECTS) $(OBSEG_RZ) $(BUILD_DIR)/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(ASSET_DATAOBJECTS) $(ROMOBJECTS2) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS) pb14
 	@echo "Linking Files"
 	$(LD) $(LDFLAGS) -o $@ 
 
@@ -394,7 +390,9 @@ $(APPROM):	$(APPBIN)
 ## Phony Recipies - Get Make to do something ##
 
 
-.PHONY: all default codeclean dataclean clean cmdbuidler test help
+.PHONY: all default codeclean dataclean clean cmdbuidler test help colour
+# Dont declare as phony otherwise make will re-evaluate every build including the recipies assosiated with them - just make sure no file is ever called pbx
+# pb1 pb2 pb3 pb4 pb5 pb6 pb7 pb8 pb9 pb10 pb11 pb12 pb13 pb14
 
 setupclean:
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(BUILD_DIR)/ge007.$(OUTCODE).map \
@@ -415,13 +413,13 @@ ifeq ($(VERBOSE),1)
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(RSPOBJECTS)
 else
 	@clear
-	@echo Deleting All Code Binaries Only [Assets will be left from previous compile]
+	@echo "\n\nDeleting All Code Binaries Only [Assets will be left from previous compile]"
 	@rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map
 	@$(call DrawProgressBar,50)
 	@rm -f $(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(RSPOBJECTS)
 	@$(call DrawProgressBar,100)
 endif
-	@echo "\n\n Code Binaries Cleared! Make will Re-Build these next time.\n"
+	@echo "\033[1J$(RESTORESCROLLREGION)\nCode Binaries Cleared! Make will Re-Build these next time.\n"
 
 dataclean: 
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map \
@@ -436,7 +434,7 @@ ifeq ($(VERBOSE),1)
 	$(STAN_BUILD_FILES) $(SETUP_BUILD_FILES)
 else
 	@clear
-	@echo Deleting All Code and Asset Binaries
+	@echo "\n\nDeleting All Code and Asset Binaries"
 	@$(call DrawProgressBar,0)
 	@rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map
 	@$(call DrawProgressBar,1,4)
@@ -447,25 +445,25 @@ else
 	@rm -f $(IMAGE_OBJS) $(MUSIC_RZ_FILES) $(RSPOBJECTS) $(STAN_BUILD_FILES) $(SETUP_BUILD_FILES)
 	@$(call DrawProgressBar,100)
 endif
-	@echo "\n\n All Code and Asset Binaries Cleared! Make will Re-Build these next time.\n"
+	@echo "\033[1J$(RESTORESCROLLREGION)\nAll Code and Asset Binaries Cleared! Make will Re-Build these next time.\n"
 
 
 #         0    4                             35                                            80             80(with colour codes)
 help:
-	@echo "\n\033[1;4mmakefile help\033[0m"
+	@echo "\n\033[1;4mmakefile help$(RESTORECOLOUR)"
 	@echo ""
 	@echo "  supported targets:"
 	@echo ""
-	@echo "    all                            \033[1;92m Build\033[0m all (default)"
-	@echo "    clean                          \033[1;91m Delete all\033[0m build artifacts"
-	@echo "    dataclean                      \033[1;91m Delete\033[0m only asset build artifacts"
-	@echo "    codeclean                      \033[1;91m Delete\033[0m only code (asm, .c) build artifacts"
-	@echo "    libultraclean                  \033[1;91m Delete\033[0m only code (asm, .c) build artifacts "
+	@echo "    all                            $(FGGREEN) Build$(RESTORECOLOUR) all (default)"
+	@echo "    clean                          $(FGRED) Delete all$(RESTORECOLOUR) build artifacts"
+	@echo "    dataclean                      $(FGRED) Delete$(RESTORECOLOUR) only asset build artifacts"
+	@echo "    codeclean                      $(FGRED) Delete$(RESTORECOLOUR) only code (asm, .c) build artifacts"
+	@echo "    libultraclean                  $(FGRED) Delete$(RESTORECOLOUR) only code (asm, .c) build artifacts "
 	@echo "                                    from Rare's libultra files"
-	@echo "    stanclean                      \033[1;91m Delete\033[0m only stan build artifacts"
-	@echo "    setupclean                     \033[1;91m Delete\033[0m only setup build artifacts"
-	@echo "    cmdbuidler                     \033[1;92m Build\033[0m AI Commands"
-	@echo "    context [file]                 \033[1;92m Build\033[0m Context File from [file]"
+	@echo "    stanclean                      $(FGRED) Delete$(RESTORECOLOUR) only stan build artifacts"
+	@echo "    setupclean                     $(FGRED) Delete$(RESTORECOLOUR) only setup build artifacts"
+	@echo "    cmdbuidler                     $(FGGREEN) Build$(RESTORECOLOUR) AI Commands"
+	@echo "    context [file]                 $(FGGREEN) Build$(RESTORECOLOUR) Context File from [file]"
 	@echo "                                    eg make context src/game/chrai.c"
 	@echo "    test                            Re-Run Data Verification "
 	@echo ""
@@ -576,15 +574,77 @@ endif
 
 colour:
   ifeq ($(VERBOSE),)
-	@clear
+#	@clear
+	@echo "\033[3A"
 	@$(call DrawProgressBar,0)
-	@echo "\033[H"
   endif
-	@$(MAKE) --no-print-directory RUNNING=1 all 2>&1 | sed -E \
-	-e "s/^.*[Ee]rror.*/$$(echo "\033[0;91m")&$$(echo "\033[0m")/g" \
-	-e "s/^.*[Ww]arning.*/$$(echo "\033[0;93m")&$$(echo "\033[0m")/g" \
-	-e "s/^.*(([Bb]uilding)|([Ll]ink)).*/$$(echo "\033[0;94m")&$$(echo "\033[0m")/g" \
-	-e "s/\s((src.*?(!stdin)\.c)|(build.*?\.o))\s/$$(echo "\033[0;97m")&$$(echo "\033[0m")/g"
-	@echo "\033[0;0r\033[80B\033[1A"
+	@$(MAKE) --no-print-directory all 2>&1 | sed -E \
+	-e "s/^.*[Ee]rror.*/$$(echo "$(FGRED)")&$$(echo "$(RESTORECOLOUR)")/g" \
+	-e "s/^.*[Ww]arning.*/$$(echo "$(FGYELLOW)")&$$(echo "$(RESTORECOLOUR)")/g" \
+	-e "s/^.*(([Bb]uilding)|([Ll]inkin)).*/$$(echo "$(FGBLUE)")&$$(echo "$(RESTORECOLOUR)")/g" \
+	-e "s/\s((src.*?(!stdin)\.c)|(build.*?\.o))\s/$$(echo "$(FGWHITE)")&$$(echo "$(RESTORECOLOUR)")/g"
+	@echo "$(SAVECURSOR)$(RESTORESCROLLREGION)$(RESTORECURSOR)\033[1A"
 $(VERBOSE).SILENT:
+
+
+
+## Progress Bar status - call once ##
+pb1:
+ifeq ($(VERBOSE),)
+	@$(call DrawProgressBar,1,15)
+endif
+pb2:
+ifeq ($(VERBOSE),)
+	@$(call DrawProgressBar,2,15)
+endif
+pb3:
+ifeq ($(VERBOSE),)
+	@$(call DrawProgressBar,3,15)
+endif
+pb4:
+ifeq ($(VERBOSE),)
+	@$(call DrawProgressBar,4,15)
+endif
+pb5:
+ifeq ($(VERBOSE),)
+	@$(call DrawProgressBar,5,15)
+endif
+pb6:
+ifeq ($(VERBOSE),)
+	@$(call DrawProgressBar,6,15)
+endif
+pb7:
+ifeq ($(VERBOSE),)
+	@$(call DrawProgressBar,7,15)
+endif
+pb8:
+ifeq ($(VERBOSE),)
+	@$(call DrawProgressBar,8,15)
+endif
+pb9:
+ifeq ($(VERBOSE),)
+	@$(call DrawProgressBar,9,15)
+endif
+pb10:
+ifeq ($(VERBOSE),)
+	@$(call DrawProgressBar,10,15)
+endif
+pb11:
+ifeq ($(VERBOSE),)
+	@$(call DrawProgressBar,11,15)
+endif
+pb12:
+ifeq ($(VERBOSE),)
+	@$(call DrawProgressBar,12,15)
+endif
+pb13:
+ifeq ($(VERBOSE),)
+	@$(call DrawProgressBar,13,15)
+endif
+pb14:
+ifeq ($(VERBOSE),)
+	@$(call DrawProgressBar,14,15)
+endif
+
+
 
