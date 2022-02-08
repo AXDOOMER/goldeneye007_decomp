@@ -3046,11 +3046,11 @@ glabel set_item_visibility_in_objinstance
 
 void select_load_bond_picture(s32 *objinstance,u32 bondID)
 {
-    set_item_visibility_in_objinstance(objinstance,8,1);
+    set_item_visibility_in_objinstance(objinstance,8,1); //brosnan picture
     set_item_visibility_in_objinstance(objinstance,9,0);
     set_item_visibility_in_objinstance(objinstance,10,0);
     set_item_visibility_in_objinstance(objinstance,0xb,0);
-    set_item_visibility_in_objinstance(objinstance,0xf,1);
+    set_item_visibility_in_objinstance(objinstance,0xf,1); //bigger brosnan picture
     set_item_visibility_in_objinstance(objinstance,0x10,0);
     set_item_visibility_in_objinstance(objinstance,0x11,0);
     set_item_visibility_in_objinstance(objinstance,0x12,0);
@@ -7195,47 +7195,17 @@ glabel pull_and_display_text_for_folder_a0
 
 
 
-#ifdef NONMATCHING
-u32 check_if_stage_completed_on_difficulty(int stage, DIFFICULTY difficulty) {
-  u32 completed;
+s32 check_if_stage_completed_on_difficulty(int stage, DIFFICULTY difficulty)
+{
+    s32 num;
 
-  if (mission_folder_setup_entries[stage].mission_num < 0) {
-    completed = FALSE;
-  }
-  else {
-    completed = fileIsStageUnlockedAtDifficulty(selected_folder_num,mission_folder_setup_entries[stage].mission_num,difficulty);
-  }
-  return completed;
+    num = mission_folder_setup_entries[stage].mission_num;
+    if (num >= 0)
+    {
+        return fileIsStageUnlockedAtDifficulty(selected_folder_num, num, difficulty);
+    }
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_stage_completed_on_difficulty
-/* 04283C 7F00DD0C 000470C0 */  sll   $t6, $a0, 3
-/* 042840 7F00DD10 01C47023 */  subu  $t6, $t6, $a0
-/* 042844 7F00DD14 000E7080 */  sll   $t6, $t6, 2
-/* 042848 7F00DD18 3C078003 */  lui   $a3, %hi(mission_folder_setup_entries+0x14)
-/* 04284C 7F00DD1C 00EE3821 */  addu  $a3, $a3, $t6
-/* 042850 7F00DD20 8CE7ABF8 */  lw    $a3, %lo(mission_folder_setup_entries+0x14)($a3)
-/* 042854 7F00DD24 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 042858 7F00DD28 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 04285C 7F00DD2C 04E00007 */  bltz  $a3, .L7F00DD4C
-/* 042860 7F00DD30 00A03025 */   move  $a2, $a1
-/* 042864 7F00DD34 3C048003 */  lui   $a0, %hi(selected_folder_num)
-/* 042868 7F00DD38 8C84A8E8 */  lw    $a0, %lo(selected_folder_num)($a0)
-/* 04286C 7F00DD3C 0FC078B0 */  jal   fileIsStageUnlockedAtDifficulty
-/* 042870 7F00DD40 00E02825 */   move  $a1, $a3
-/* 042874 7F00DD44 10000003 */  b     .L7F00DD54
-/* 042878 7F00DD48 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F00DD4C:
-/* 04287C 7F00DD4C 00001025 */  move  $v0, $zero
-/* 042880 7F00DD50 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F00DD54:
-/* 042884 7F00DD54 27BD0018 */  addiu $sp, $sp, 0x18
-/* 042888 7F00DD58 03E00008 */  jr    $ra
-/* 04288C 7F00DD5C 00000000 */   nop
-)
-#endif
 
 
 
