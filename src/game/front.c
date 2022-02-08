@@ -309,14 +309,14 @@ s32 set0_never_used = 0;
 s32 set0_never_used_0 = 0;
 s32 D_8002A968 = 0;
 s32 D_8002A96C = 0;
-struct rgba_u8 D_8002A970 = {0x96, 0x96, 0x96, 0};
-struct rgba_u8 D_8002A974 = {0x96, 0x96, 0x96, 0};
-struct rgba_u8 D_8002A978 = {0xFF, 0xFF, 0xFF, 0};
-struct rgba_u8 D_8002A97C = {0xFF, 0xFF, 0xFF, 0};
-struct rgba_u8 D_8002A980 = {0x4D, 0x4D, 0x2E, 0};
-struct rgba_u8 D_8002A984 = {0};
-struct rgba_u8 D_8002A988 = {0xFF, 0xFF, 0xFF, 0};
-struct rgba_u8 D_8002A98C = {0xFF, 0xFF, 0xFF, 0};
+struct rgba_u8 RGBA_8002A970 = {0x96, 0x96, 0x96, 0};
+struct rgba_u8 RGBA_8002A974 = {0x96, 0x96, 0x96, 0};
+struct rgba_u8 RGBA_8002A978 = {0xFF, 0xFF, 0xFF, 0};
+struct rgba_u8 RGBA_8002A97C = {0xFF, 0xFF, 0xFF, 0};
+struct rgba_u8 RGBA_8002A980 = {0x4D, 0x4D, 0x2E, 0};
+struct rgba_u8 RGBA_8002A984 = {0};
+struct rgba_u8 RGBA_8002A988 = {0xFF, 0xFF, 0xFF, 0};
+struct rgba_u8 RGBA_8002A98C = {0xFF, 0xFF, 0xFF, 0};
 u32 D_8002A990 = 0;
 u32 D_8002A994 = 0;
 u32 D_8002A998 = 0;
@@ -334,18 +334,18 @@ u32 D_8002A9BC = 0x8C000000;
 struct coord3d D_8002A9C0 = {0.0f, 0.0f, 0.0f};
 
 struct legal_screen_text D_8002A9CC[] = {
-    {220,  30, 1, 1, TEXT(LTITLE, 0x07), 0},
-    { 34,  83, 0, 1, TEXT(LTITLE, 0x08), 0},
-    {226,  84, 0, 1, TEXT(LTITLE, 0x09), 0},
-    {226,  97, 0, 1, TEXT(LTITLE, 0x0A), 0},
-    {226, 110, 0, 1, TEXT(LTITLE, 0x0B), 0},
-    {226, 122, 0, 1, TEXT(LTITLE, 0x0C), 0},
-    {227, 134, 0, 1, TEXT(LTITLE, 0x0D), 0},
-    {219, 211, 0, 1, TEXT(LTITLE, 0x0E), 0},
-    { 60, 169, 0, 1, TEXT(LTITLE, 0x0F), 0},
-    { 60, 201, 0, 1, TEXT(LTITLE, 0x10), 0},
-    { 99, 266, 0, 1, TEXT(LTITLE, 0x11), 0},
-    { 80, 280, 0, 1, TEXT(LTITLE, 0x12), 0}
+    {220,  30, 1, 1, TEXT(LTITLE, 0x07), 0}, //"TWYCROSS BOARD OF GAME CLASSIFICATION\n"
+    { 34,  83, 0, 1, TEXT(LTITLE, 0x08), 0}, //"This is to certify\n" 
+    {226,  84, 0, 1, TEXT(LTITLE, 0x09), 0}, //"(c) 1997 Nintendo/Rare\n"
+    {226,  97, 0, 1, TEXT(LTITLE, 0x0A), 0}, //"(c) 1962, 1995 Danjaq, LLC. &\n"
+    {226, 110, 0, 1, TEXT(LTITLE, 0x0B), 0}, //"U.A.C. All Rights Reserved\n"
+    {226, 122, 0, 1, TEXT(LTITLE, 0x0C), 0}, //"(c) 1997 Eon Productions\n"
+    {227, 134, 0, 1, TEXT(LTITLE, 0x0D), 0}, //"Ltd. & Mac B. Inc.\n"
+    {219, 211, 0, 1, TEXT(LTITLE, 0x0E), 0}, //"Suitable only for 1-4 persons\n"
+    { 60, 169, 0, 1, TEXT(LTITLE, 0x0F), 0}, //"PRESIDENT\n"
+    { 60, 201, 0, 1, TEXT(LTITLE, 0x10), 0}, //"VICE\n"
+    { 99, 266, 0, 1, TEXT(LTITLE, 0x11), 0}, //"James Bond theme by Monty Norman.\n"
+    { 80, 280, 0, 1, TEXT(LTITLE, 0x12), 0}  //"Used by permission of EMI Unart Catalog Inc.\n"
 };
 
 u32 D_8002AABC = 0;
@@ -504,14 +504,14 @@ struct MP_game_length_settings multi_game_lengths[] = {
 };
 
 struct mp_stage_playercount mp_player_counts[] = {
-    {TEXT(LTITLE, 0x35), 2, 4},
-    {TEXT(LTITLE, 0x36), 2, 4},
-    {TEXT(LTITLE, 0x37), 2, 4},
-    {TEXT(LTITLE, 0x38), 2, 4},
-    {TEXT(LTITLE, 0x39), 2, 4},
-    {TEXT(LTITLE, 0x3A), 4, 4},
-    {TEXT(LTITLE, 0x3B), 4, 4},
-    {TEXT(LTITLE, 0x3C), 3, 3}
+    {TEXT(LTITLE, 0x35), 2, 4}, //"Normal"
+    {TEXT(LTITLE, 0x36), 2, 4}, //"You Only Live Twice"
+    {TEXT(LTITLE, 0x37), 2, 4}, //"The Living Daylights [Flag Tag]"
+    {TEXT(LTITLE, 0x38), 2, 4}, //"The Man With the Golden Gun"
+    {TEXT(LTITLE, 0x39), 2, 4}, //"License to Kill"
+    {TEXT(LTITLE, 0x3A), 4, 4}, //"Team: 2 vs 2"
+    {TEXT(LTITLE, 0x3B), 4, 4}, //"Team: 3 vs 1"
+    {TEXT(LTITLE, 0x3C), 3, 3}  //"Team: 2 vs 1"
 };
 
 struct mp_stage_setup multi_stage_setups[] = {
@@ -672,17 +672,17 @@ struct MP_selectable_chars mp_chr_setup[] = {
 
 
 struct MP_handicap_menu MP_handicap_table[] = {
-    {TEXT(LTITLE, 0x3D), 0, 10.0},
-    {TEXT(LTITLE, 0x3E), 0, 2.8560996},
-    {TEXT(LTITLE, 0x3F), 0, 2.1969998},
-    {TEXT(LTITLE, 0x40), 0, 1.6899998},
-    {TEXT(LTITLE, 0x41), 0, 1.3},
-    {TEXT(LTITLE, 0x42), 0, 1.0},
-    {TEXT(LTITLE, 0x43), 0, 0.76923078},
-    {TEXT(LTITLE, 0x44), 0, 0.59171599},
-    {TEXT(LTITLE, 0x45), 0, 0.45516616},
-    {TEXT(LTITLE, 0x46), 0, 0.35012782},
-    {TEXT(LTITLE, 0x47), 0, 0.1}
+    {TEXT(LTITLE, 0x3D), 0, 10.0},       // "Health -10\n(Hero)"
+    {TEXT(LTITLE, 0x3E), 0, 2.8560996},  // "Health -4\n(Veteran)"
+    {TEXT(LTITLE, 0x3F), 0, 2.1969998},  // "Health -3\n(Veteran)"
+    {TEXT(LTITLE, 0x40), 0, 1.6899998},  // "Health -2\n(Veteran)"
+    {TEXT(LTITLE, 0x41), 0, 1.3},        // "Health -1\n(Veteran)"
+    {TEXT(LTITLE, 0x42), 0, 1.0},        // "Health +0\n(Normal)"
+    {TEXT(LTITLE, 0x43), 0, 0.76923078}, // "Health +1\n(Novice)"
+    {TEXT(LTITLE, 0x44), 0, 0.59171599}, // "Health +2\n(Novice)"
+    {TEXT(LTITLE, 0x45), 0, 0.45516616}, // "Health +3\n(Novice)"
+    {TEXT(LTITLE, 0x46), 0, 0.35012782}, // "Health +4\n(Novice)"
+    {TEXT(LTITLE, 0x47), 0, 0.1}         // "Health +10\n(Rookie)"
 };
 
 struct MP_controller_configuration_menu MP_controller_configuration_table[] = {
@@ -697,10 +697,10 @@ struct MP_controller_configuration_menu MP_controller_configuration_table[] = {
 };
 
 struct MP_sight_aim_settings mp_sight_adjust_table[] = {
-    {TEXT(LTITLE, 0x48), 0, 0},
-    {TEXT(LTITLE, 0x49), 1, 0},
-    {TEXT(LTITLE, 0x4A), 0, 1},
-    {TEXT(LTITLE, 0x4B), 1, 1}
+    {TEXT(LTITLE, 0x48), 0, 0}, // "Sight OFF, Auto Aim OFF"
+    {TEXT(LTITLE, 0x49), 1, 0}, // "Sight ON, Auto Aim OFF"
+    {TEXT(LTITLE, 0x4A), 0, 1}, // "Sight OFF, Auto Aim ON"
+    {TEXT(LTITLE, 0x4B), 1, 1}  // "Sight ON, Auto Aim ON"
 };
 
 s32 selected_num_players = 0;
@@ -709,8 +709,8 @@ s32 player_2_char = -1;
 s32 player_3_char = -1;
 s32 player_4_char = -1;
 s32 MP_stage_selected = MP_STAGE_TEMPLE;
-s32 game_length = 2;
-s32 aim_sight_adjustment = 3;
+s32 game_length = 2; //10minutes
+s32 aim_sight_adjustment = 3; //"Sight ON, Auto Aim ON"
 s32 scenario = SCENARIO_NORMAL;
 s32 unlock_stage_select = 1;
 s32 unlock_game_length = 1;
@@ -751,7 +751,7 @@ u32 D_8002B5E0 = 0;
 
 u32 MP_menu_selected_option = 0;
 u32 intro_character_index = 0;
-u32 randomly_selected_intro_animation = 0;
+u32 randomly_selected_intro_animation = ANIM_idle;
 u32 intro_animation_count = 0;
 u32 objinstance = 0;
 u32 ptrobjinstance = 0;
@@ -1992,7 +1992,7 @@ loop_1:
     temp_ret->unkC = &D_8002A990;
     arg0 = (s32) (temp_ret + 0x18);
     temp_ret->unk10 = 0x3880010;
-    temp_ret->unk14 = &D_8002A988;
+    temp_ret->unk14 = &RGBA_8002A988;
     temp_v1 = 0xff - ((s32) ((menu_timer * 0xff) + 0xfffe8f72) / 0x64);
     phi_v1 = temp_v1;
     if (temp_v1 >= 0x100)
@@ -2004,14 +2004,14 @@ loop_1:
     {
         phi_v1_2 = (u8)0;
     }
-    D_8002A988.unk6 = (s8) phi_v1_2;
-    D_8002A988.unk5 = (s8) phi_v1_2;
-    D_8002A988.unk4 = (s8) phi_v1_2;
-    D_8002A988.unk2 = (s8) phi_v1_2;
-    D_8002A988.unk1 = (s8) phi_v1_2;
-    D_8002A988.unk0 = (s8) phi_v1_2;
+    RGBA_8002A988.unk6 = (s8) phi_v1_2;
+    RGBA_8002A988.unk5 = (s8) phi_v1_2;
+    RGBA_8002A988.unk4 = (s8) phi_v1_2;
+    RGBA_8002A988.unk2 = (s8) phi_v1_2;
+    RGBA_8002A988.unk1 = (s8) phi_v1_2;
+    RGBA_8002A988.unk0 = (s8) phi_v1_2;
     flt_CODE_bss_80069614 = (f32) (flt_CODE_bss_80069614 + D_80051A04);
-    matrix_4x4_set_rotation_around_y(flt_CODE_bss_80069614, &D_8002A988, &sp90);
+    matrix_4x4_set_rotation_around_y(flt_CODE_bss_80069614, &RGBA_8002A988, &sp90);
     matrix_scalar_multiply_3(flt_CODE_bss_80069618, &sp90);
     flt_CODE_bss_80069618 = (f32) (flt_CODE_bss_80069618 * D_80051A0C);
     if (D_80051A08 < flt_CODE_bss_80069618)
@@ -2098,10 +2098,10 @@ glabel constructor_menu01_nintendo
 /* 03F94C 7F00AE1C AC4B0008 */  sw    $t3, 8($v0)
 /* 03F950 7F00AE20 AC4C000C */  sw    $t4, 0xc($v0)
 /* 03F954 7F00AE24 244D0018 */  addiu $t5, $v0, 0x18
-/* 03F958 7F00AE28 3C048003 */  lui   $a0, %hi(D_8002A988)
+/* 03F958 7F00AE28 3C048003 */  lui   $a0, %hi(RGBA_8002A988)
 /* 03F95C 7F00AE2C AFAD0168 */  sw    $t5, 0x168($sp)
 /* 03F960 7F00AE30 3C180388 */  lui   $t8, (0x03880010 >> 16) # lui $t8, 0x388
-/* 03F964 7F00AE34 2484A988 */  addiu $a0, %lo(D_8002A988) # addiu $a0, $a0, -0x5678
+/* 03F964 7F00AE34 2484A988 */  addiu $a0, %lo(RGBA_8002A988) # addiu $a0, $a0, -0x5678
 /* 03F968 7F00AE38 37180010 */  ori   $t8, (0x03880010 & 0xFFFF) # ori $t8, $t8, 0x10
 /* 03F96C 7F00AE3C AC580010 */  sw    $t8, 0x10($v0)
 /* 03F970 7F00AE40 AC440014 */  sw    $a0, 0x14($v0)
@@ -2298,10 +2298,10 @@ glabel constructor_menu01_nintendo
 /* 03F94C 7F00AE1C AC4B0008 */  sw    $t3, 8($v0)
 /* 03F950 7F00AE20 AC4C000C */  sw    $t4, 0xc($v0)
 /* 03F954 7F00AE24 244D0018 */  addiu $t5, $v0, 0x18
-/* 03F958 7F00AE28 3C048003 */  lui   $a0, %hi(D_8002A988)
+/* 03F958 7F00AE28 3C048003 */  lui   $a0, %hi(RGBA_8002A988)
 /* 03F95C 7F00AE2C AFAD0168 */  sw    $t5, 0x168($sp)
 /* 03F960 7F00AE30 3C180388 */  lui   $t8, (0x03880010 >> 16) # lui $t8, 0x388
-/* 03F964 7F00AE34 2484A988 */  addiu $a0, %lo(D_8002A988) # addiu $a0, $a0, -0x5678
+/* 03F964 7F00AE34 2484A988 */  addiu $a0, %lo(RGBA_8002A988) # addiu $a0, $a0, -0x5678
 /* 03F968 7F00AE38 37180010 */  ori   $t8, (0x03880010 & 0xFFFF) # ori $t8, $t8, 0x10
 /* 03F96C 7F00AE3C AC580010 */  sw    $t8, 0x10($v0)
 /* 03F970 7F00AE40 AC440014 */  sw    $a0, 0x14($v0)
@@ -2692,9 +2692,9 @@ loop_1:
     temp_a0 = temp_s4;
     temp_s4 = temp_s4 + 8;
     temp_v1->unk0 = 0x3860010;
-    temp_v1->unk4 = &D_8002A978;
+    temp_v1->unk4 = &RGBA_8002A978;
     temp_a0->unk0 = 0x3880010;
-    temp_a0->unk4 = &D_8002A970;
+    temp_a0->unk4 = &RGBA_8002A970;
     temp_s4->unk0 = 0x3840010;
     temp_s4->unk4 = temp_s0;
     temp_s4 = temp_s4 + 8;
@@ -2797,16 +2797,16 @@ glabel constructor_menu04_goldeneyelogo
 /* 04009C 7F00B56C AC4A0000 */  sw    $t2, ($v0)
 /* 0400A0 7F00B570 AC4B0004 */  sw    $t3, 4($v0)
 /* 0400A4 7F00B574 3C0C0386 */  lui   $t4, (0x03860010 >> 16) # lui $t4, 0x386
-/* 0400A8 7F00B578 3C0D8003 */  lui   $t5, %hi(D_8002A978)
-/* 0400AC 7F00B57C 25ADA978 */  addiu $t5, %lo(D_8002A978) # addiu $t5, $t5, -0x5688
+/* 0400A8 7F00B578 3C0D8003 */  lui   $t5, %hi(RGBA_8002A978)
+/* 0400AC 7F00B57C 25ADA978 */  addiu $t5, %lo(RGBA_8002A978) # addiu $t5, $t5, -0x5688
 /* 0400B0 7F00B580 358C0010 */  ori   $t4, (0x03860010 & 0xFFFF) # ori $t4, $t4, 0x10
 /* 0400B4 7F00B584 02802025 */  move  $a0, $s4
 /* 0400B8 7F00B588 26940008 */  addiu $s4, $s4, 8
 /* 0400BC 7F00B58C AC6C0000 */  sw    $t4, ($v1)
 /* 0400C0 7F00B590 AC6D0004 */  sw    $t5, 4($v1)
 /* 0400C4 7F00B594 3C180388 */  lui   $t8, (0x03880010 >> 16) # lui $t8, 0x388
-/* 0400C8 7F00B598 3C0F8003 */  lui   $t7, %hi(D_8002A970)
-/* 0400CC 7F00B59C 25EFA970 */  addiu $t7, %lo(D_8002A970) # addiu $t7, $t7, -0x5690
+/* 0400C8 7F00B598 3C0F8003 */  lui   $t7, %hi(RGBA_8002A970)
+/* 0400CC 7F00B59C 25EFA970 */  addiu $t7, %lo(RGBA_8002A970) # addiu $t7, $t7, -0x5690
 /* 0400D0 7F00B5A0 37180010 */  ori   $t8, (0x03880010 & 0xFFFF) # ori $t8, $t8, 0x10
 /* 0400D4 7F00B5A4 02802825 */  move  $a1, $s4
 /* 0400D8 7F00B5A8 AC980000 */  sw    $t8, ($a0)
@@ -4737,16 +4737,16 @@ char* get_ptr_difficulty_name(s32 difficulty)
     switch (difficulty)
     {
     case 0:
-        text = get_textptr_for_textID(TEXT(LTITLE, 0x13));
+        text = get_textptr_for_textID(TEXT(LTITLE, 0x13)); //Agent
         break;
     case 1:
-        text = get_textptr_for_textID(TEXT(LTITLE, 0x14));
+        text = get_textptr_for_textID(TEXT(LTITLE, 0x14)); //Secret Agent
         break;
     case 2:
-        text = get_textptr_for_textID(TEXT(LTITLE, 0x15));
+        text = get_textptr_for_textID(TEXT(LTITLE, 0x15)); //00 Agent
         break;
     case 3:
-        text = get_textptr_for_textID(TEXT(LTITLE, 0x16));
+        text = get_textptr_for_textID(TEXT(LTITLE, 0x16)); //007
         break;
     }
     return text;
@@ -25452,16 +25452,16 @@ glabel constructor_menu18_displaycast
 /* 04E1E0 7F0196B0 AC4B0000 */  sw    $t3, ($v0)
 /* 04E1E4 7F0196B4 AC580004 */  sw    $t8, 4($v0)
 /* 04E1E8 7F0196B8 3C0C0386 */  lui   $t4, (0x03860010 >> 16) # lui $t4, 0x386
-/* 04E1EC 7F0196BC 3C198003 */  lui   $t9, %hi(D_8002A978)
-/* 04E1F0 7F0196C0 2739A978 */  addiu $t9, %lo(D_8002A978) # addiu $t9, $t9, -0x5688
+/* 04E1EC 7F0196BC 3C198003 */  lui   $t9, %hi(RGBA_8002A978)
+/* 04E1F0 7F0196C0 2739A978 */  addiu $t9, %lo(RGBA_8002A978) # addiu $t9, $t9, -0x5688
 /* 04E1F4 7F0196C4 358C0010 */  ori   $t4, (0x03860010 & 0xFFFF) # ori $t4, $t4, 0x10
 /* 04E1F8 7F0196C8 02602025 */  move  $a0, $s3
 /* 04E1FC 7F0196CC 26730008 */  addiu $s3, $s3, 8
 /* 04E200 7F0196D0 AC6C0000 */  sw    $t4, ($v1)
 /* 04E204 7F0196D4 AC790004 */  sw    $t9, 4($v1)
 /* 04E208 7F0196D8 3C0E0388 */  lui   $t6, (0x03880010 >> 16) # lui $t6, 0x388
-/* 04E20C 7F0196DC 3C0F8003 */  lui   $t7, %hi(D_8002A970)
-/* 04E210 7F0196E0 25EFA970 */  addiu $t7, %lo(D_8002A970) # addiu $t7, $t7, -0x5690
+/* 04E20C 7F0196DC 3C0F8003 */  lui   $t7, %hi(RGBA_8002A970)
+/* 04E210 7F0196E0 25EFA970 */  addiu $t7, %lo(RGBA_8002A970) # addiu $t7, $t7, -0x5690
 /* 04E214 7F0196E4 35CE0010 */  ori   $t6, (0x03880010 & 0xFFFF) # ori $t6, $t6, 0x10
 /* 04E218 7F0196E8 02602825 */  move  $a1, $s3
 /* 04E21C 7F0196EC AC8E0000 */  sw    $t6, ($a0)
@@ -26576,16 +26576,16 @@ glabel constructor_menu18_displaycast
 /* 04C11C 7F01972C AC4B0000 */  sw    $t3, ($v0)
 /* 04C120 7F019730 AC580004 */  sw    $t8, 4($v0)
 /* 04C124 7F019734 3C0C0386 */  lui   $t4, (0x03860010 >> 16) # lui $t4, 0x386
-/* 04C128 7F019738 3C198002 */  lui   $t9, %hi(D_8002A978) # $t9, 0x8002
-/* 04C12C 7F01973C 27395EC8 */  addiu $t9, %lo(D_8002A978) # addiu $t9, $t9, 0x5ec8
+/* 04C128 7F019738 3C198002 */  lui   $t9, %hi(RGBA_8002A978) # $t9, 0x8002
+/* 04C12C 7F01973C 27395EC8 */  addiu $t9, %lo(RGBA_8002A978) # addiu $t9, $t9, 0x5ec8
 /* 04C130 7F019740 358C0010 */  ori   $t4, (0x03860010 & 0xFFFF) # ori $t4, $t4, 0x10
 /* 04C134 7F019744 02602025 */  move  $a0, $s3
 /* 04C138 7F019748 26730008 */  addiu $s3, $s3, 8
 /* 04C13C 7F01974C AC6C0000 */  sw    $t4, ($v1)
 /* 04C140 7F019750 AC790004 */  sw    $t9, 4($v1)
 /* 04C144 7F019754 3C0E0388 */  lui   $t6, (0x03880010 >> 16) # lui $t6, 0x388
-/* 04C148 7F019758 3C0F8002 */  lui   $t7, %hi(D_8002A970) # $t7, 0x8002
-/* 04C14C 7F01975C 25EF5EC0 */  addiu $t7, %lo(D_8002A970) # addiu $t7, $t7, 0x5ec0
+/* 04C148 7F019758 3C0F8002 */  lui   $t7, %hi(RGBA_8002A970) # $t7, 0x8002
+/* 04C14C 7F01975C 25EF5EC0 */  addiu $t7, %lo(RGBA_8002A970) # addiu $t7, $t7, 0x5ec0
 /* 04C150 7F019760 35CE0010 */  ori   $t6, (0x03880010 & 0xFFFF) # ori $t6, $t6, 0x10
 /* 04C154 7F019764 02602825 */  move  $a1, $s3
 /* 04C158 7F019768 AC8E0000 */  sw    $t6, ($a0)
