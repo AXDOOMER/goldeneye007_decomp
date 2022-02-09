@@ -4,6 +4,15 @@
 
 #define LINE "__________________________________________________________________"
 
+#ifndef VERBOSE_OUTPUT
+void printf_info(const char *fmt, ...)
+{
+    return;
+}
+#else
+#define printf_info printf
+#endif
+
 int main(int argc, char **argv)
 {
 	/************************/
@@ -17,7 +26,7 @@ int main(int argc, char **argv)
 		printf("\n  AAA RIP - Lite DD Clone\n%s\n\n  About: Extract sub-binary from binary\n\n  Syntax: %s \"in\" \"out\" \"offset\" \"length\" \"out offset\"\n\n  Usage:\n  Setting length argument to 0 will write until end of input file.\n  Omitting output offset will overwrite output file.\n  All arguments assume decimal values.", LINE, argv[0]);
 		goto exit;
 	}
-	printf("%s\n", LINE);
+	printf_info("%s\n", LINE);
 
 	/* load input from argument */
 	input = fopen(argv[1], "rb");
@@ -63,10 +72,10 @@ int main(int argc, char **argv)
 		printf("\n  Error: Aborted, length goes beyond end of file");
 		goto error_input;
 	}
-	printf("\n  Input File: %s\n  Output File: %s\n  Offset: %ld\n  Length: %ld", argv[1], argv[2], offset_input, length_input);
+	printf_info("\n  Input File: %s\n  Output File: %s\n  Offset: %ld\n  Length: %ld", argv[1], argv[2], offset_input, length_input);
 	if(argc == 6)
 	{
-		printf("\n  Output Offset: %ld", offset_output);
+		printf_info("\n  Output Offset: %ld", offset_output);
 	}
 
 	/* read input to file buffer */
@@ -153,6 +162,6 @@ error_output:
 error_input:
 	fclose(input);
 exit:
-	printf("\n%s\n", LINE);
+	printf_info("\n%s\n", LINE);
 	return 0;
 }
