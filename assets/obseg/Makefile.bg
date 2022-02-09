@@ -2,26 +2,19 @@
 
 # COUNTRYCODE specific needs to be above the base directory in this makefile
 $(BUILD_DIR)/$(OBSEG_DIR)/bg/%.seg: $(OBSEG_DIR)/bg/$(COUNTRYCODE)/%.bin
-	$(MAKEBG) $< $@
+	@cp -f $< $@
 
 $(BUILD_DIR)/$(OBSEG_DIR)/bg/%.seg: $(OBSEG_DIR)/bg/%.bin
-	$(MAKEBG) $< $@
-
-
-
-
+	@cp -f $< $@
 
 $(BUILD_DIR)/$(OBSEG_DIR)/bg/%.seg: $(BUILD_DIR)/$(OBSEG_DIR)/bg/%.bin
-	$(MAKEBG) $< $@
-
+	@cp -f $< $@
 
 $(BUILD_DIR)/$(OBSEG_DIR)/bg/%.bin: $(BUILD_DIR)/$(OBSEG_DIR)/bg/%.elf
 	$(OBJCOPY) $< $@ -O binary
 
-
 $(BUILD_DIR)/$(OBSEG_DIR)/bg/%.elf: $(BUILD_DIR)/$(OBSEG_DIR)/bg/%.o
 	$(LD) -T assets/obseg/bg/bg_all_p.ld -o $@ $<
-
 
 $(BUILD_DIR)/$(OBSEG_DIR)/bg/%.o: $(OBSEG_DIR)/bg/%.c
 	$(CC) -c $(CFLAGS) -o $@ -O2 $<

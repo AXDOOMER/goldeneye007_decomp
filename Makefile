@@ -92,7 +92,7 @@ TOOLS_DIR := tools
 DATASEG_COMP := $(TOOLS_DIR)/data_compress.sh
 RZ_COMP := $(TOOLS_DIR)/1172compress.sh
 N64CKSUM := $(TOOLS_DIR)/n64cksum
-MAKEBG := $(TOOLS_DIR)/makebg.sh
+
 ifeq ($(VERBOSE), 1)
  SHA1SUM = sha1sum
 else

@@ -2,8 +2,7 @@
 #include "quaternion.h"
 #include "math_asinfacosf.h"
 
-#define M_PI 3.1415927f
-#define HALF2RAD(x) (x * (M_PI / 32768.0f))
+#define HALF2RAD(x) (x * (M_PI_F / 32768.0f))
 
 void quaternion_set_rotation_around_xyz(vec3u angles, quatf q)
 {

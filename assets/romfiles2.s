@@ -1,4 +1,4 @@
-.section .data, "a"
+.section .data
 
 
 .global unknown2

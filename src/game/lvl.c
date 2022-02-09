@@ -1460,7 +1460,7 @@ glabel lvlStageLoad
 /* 0EFCB0 7F0BD2C0 27BD0038 */   addiu $sp, $sp, 0x38
 )
 #endif
-#endif
+
 
 
 
