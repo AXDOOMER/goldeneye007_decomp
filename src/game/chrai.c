@@ -327,8 +327,6 @@ extern s32 objectiveGetStatus_WEAK(s32 objectiveNum, s32);
 
 
 
-void set_sound_effect_source_to_location(s32 slot);
-#ifdef NONMATCHING
 void set_sound_effect_source_to_location(s32 slot)//#MATCH :audioPlayFromProp2
 {
     int tempvol;
@@ -354,20 +352,20 @@ void set_sound_effect_source_to_location(s32 slot)//#MATCH :audioPlayFromProp2
         tempvol = sfx->Volume;
         if (sfx->sfxID >= 0)
         {
-            clock_timer = gclock_timer;
+            clock_timer = g_ClockTimer;
             if (clock_timer < sfx->sfxID)
             {
                 tempvol = (((sfx->Volume - sfx->Volume2) * clock_timer) / sfx->sfxID) + sfx->Volume2;
             }
             sfx->sfxID = sfx->sfxID - clock_timer;
         }
-        if (get_controls_locked_flag() != 0)
+        if (lvlGetControlsLockedFlag() != 0)
         {
             tempvol = 0;
         }
         if (tempvol != sfx->Volume2)
         {
-            sfx_c_70009184(sfx->state, 8);
+            sndCreatePostEvent(sfx->state, 8, tempvol);
             sfx->Volume2 = tempvol;
             return;
         }
@@ -375,104 +373,6 @@ void set_sound_effect_source_to_location(s32 slot)//#MATCH :audioPlayFromProp2
     }
     sfx->Volume2 = 0;
 }
-}
-#else
-GLOBAL_ASM(
-.text
-glabel set_sound_effect_source_to_location
-/* 0692D0 7F0347A0 00047080 */  sll   $t6, $a0, 2
-/* 0692D4 7F0347A4 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0692D8 7F0347A8 01C47023 */  subu  $t6, $t6, $a0
-/* 0692DC 7F0347AC 3C0F8007 */  lui   $t7, %hi(sfx_related) 
-/* 0692E0 7F0347B0 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0692E4 7F0347B4 25EF9B70 */  addiu $t7, %lo(sfx_related) # addiu $t7, $t7, -0x6490
-/* 0692E8 7F0347B8 000E70C0 */  sll   $t6, $t6, 3
-/* 0692EC 7F0347BC 01CF8021 */  addu  $s0, $t6, $t7
-/* 0692F0 7F0347C0 8E050000 */  lw    $a1, ($s0)
-/* 0692F4 7F0347C4 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0692F8 7F0347C8 50A00041 */  beql  $a1, $zero, .L7F0348D0
-/* 0692FC 7F0347CC AE000004 */   sw    $zero, 4($s0)
-/* 069300 7F0347D0 0C00237C */  jal   sndGetPlayingState
-/* 069304 7F0347D4 00A02025 */   move  $a0, $a1
-/* 069308 7F0347D8 5040003D */  beql  $v0, $zero, .L7F0348D0
-/* 06930C 7F0347DC AE000004 */   sw    $zero, 4($s0)
-/* 069310 7F0347E0 8E040010 */  lw    $a0, 0x10($s0)
-/* 069314 7F0347E4 50800006 */  beql  $a0, $zero, .L7F034800
-/* 069318 7F0347E8 8E020014 */   lw    $v0, 0x14($s0)
-/* 06931C 7F0347EC 0FC14E79 */  jal   sub_GAME_7F0539E4
-/* 069320 7F0347F0 00000000 */   nop   
-/* 069324 7F0347F4 1000000A */  b     .L7F034820
-/* 069328 7F0347F8 AE02000C */   sw    $v0, 0xc($s0)
-/* 06932C 7F0347FC 8E020014 */  lw    $v0, 0x14($s0)
-.L7F034800:
-/* 069330 7F034800 50400008 */  beql  $v0, $zero, .L7F034824
-/* 069334 7F034804 8E030008 */   lw    $v1, 8($s0)
-/* 069338 7F034808 8C580010 */  lw    $t8, 0x10($v0)
-/* 06933C 7F03480C 53000005 */  beql  $t8, $zero, .L7F034824
-/* 069340 7F034810 8E030008 */   lw    $v1, 8($s0)
-/* 069344 7F034814 0FC14E79 */  jal   sub_GAME_7F0539E4
-/* 069348 7F034818 24440058 */   addiu $a0, $v0, 0x58
-/* 06934C 7F03481C AE02000C */  sw    $v0, 0xc($s0)
-.L7F034820:
-/* 069350 7F034820 8E030008 */  lw    $v1, 8($s0)
-.L7F034824:
-/* 069354 7F034824 8E05000C */  lw    $a1, 0xc($s0)
-/* 069358 7F034828 3C048005 */  lui   $a0, %hi(g_ClockTimer)
-/* 06935C 7F03482C 04600018 */  bltz  $v1, .L7F034890
-/* 069360 7F034830 00A03025 */   move  $a2, $a1
-/* 069364 7F034834 8C848374 */  lw    $a0, %lo(g_ClockTimer)($a0)
-/* 069368 7F034838 0083082A */  slt   $at, $a0, $v1
-/* 06936C 7F03483C 10200013 */  beqz  $at, .L7F03488C
-/* 069370 7F034840 00645023 */   subu  $t2, $v1, $a0
-/* 069374 7F034844 8E020004 */  lw    $v0, 4($s0)
-/* 069378 7F034848 00A2C823 */  subu  $t9, $a1, $v0
-/* 06937C 7F03484C 03240019 */  multu $t9, $a0
-/* 069380 7F034850 00004012 */  mflo  $t0
-/* 069384 7F034854 00000000 */  nop   
-/* 069388 7F034858 00000000 */  nop   
-/* 06938C 7F03485C 0103001A */  div   $zero, $t0, $v1
-/* 069390 7F034860 00004812 */  mflo  $t1
-/* 069394 7F034864 01223021 */  addu  $a2, $t1, $v0
-/* 069398 7F034868 14600002 */  bnez  $v1, .L7F034874
-/* 06939C 7F03486C 00000000 */   nop   
-/* 0693A0 7F034870 0007000D */  break 7
-.L7F034874:
-/* 0693A4 7F034874 2401FFFF */  li    $at, -1
-/* 0693A8 7F034878 14610004 */  bne   $v1, $at, .L7F03488C
-/* 0693AC 7F03487C 3C018000 */   lui   $at, 0x8000
-/* 0693B0 7F034880 15010002 */  bne   $t0, $at, .L7F03488C
-/* 0693B4 7F034884 00000000 */   nop   
-/* 0693B8 7F034888 0006000D */  break 6
-.L7F03488C:
-/* 0693BC 7F03488C AE0A0008 */  sw    $t2, 8($s0)
-.L7F034890:
-/* 0693C0 7F034890 0FC2FF01 */  jal   lvlGetControlsLockedFlag
-/* 0693C4 7F034894 AFA60024 */   sw    $a2, 0x24($sp)
-/* 0693C8 7F034898 10400002 */  beqz  $v0, .L7F0348A4
-/* 0693CC 7F03489C 8FA60024 */   lw    $a2, 0x24($sp)
-/* 0693D0 7F0348A0 00003025 */  move  $a2, $zero
-.L7F0348A4:
-/* 0693D4 7F0348A4 8E0B0004 */  lw    $t3, 4($s0)
-/* 0693D8 7F0348A8 24050008 */  li    $a1, 8
-/* 0693DC 7F0348AC 50CB0009 */  beql  $a2, $t3, .L7F0348D4
-/* 0693E0 7F0348B0 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 0693E4 7F0348B4 8E040000 */  lw    $a0, ($s0)
-/* 0693E8 7F0348B8 0C002461 */  jal   sndCreatePostEvent
-/* 0693EC 7F0348BC AFA60024 */   sw    $a2, 0x24($sp)
-/* 0693F0 7F0348C0 8FA60024 */  lw    $a2, 0x24($sp)
-/* 0693F4 7F0348C4 10000002 */  b     .L7F0348D0
-/* 0693F8 7F0348C8 AE060004 */   sw    $a2, 4($s0)
-/* 0693FC 7F0348CC AE000004 */  sw    $zero, 4($s0)
-.L7F0348D0:
-/* 069400 7F0348D0 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F0348D4:
-/* 069404 7F0348D4 8FB00018 */  lw    $s0, 0x18($sp)
-/* 069408 7F0348D8 27BD0028 */  addiu $sp, $sp, 0x28
-/* 06940C 7F0348DC 03E00008 */  jr    $ra
-/* 069410 7F0348E0 00000000 */   nop   
-)
-#endif
-
 
 
 
