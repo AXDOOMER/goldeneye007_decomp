@@ -1668,6 +1668,7 @@ s32 sub_GAME_7F035244(AIRecord *AIList, bool *isGlobalAIList) // chraiGetAIListI
 GLOBAL_ASM(
 .late_rodata
 /*HACK FIXME */
+/*MORE HACKY HACK from get_length_of_action_block    */
 .word locret_CODE_7F034F9C
 .word locret_CODE_7F034FA4
 .word locret_CODE_7F034FAC
@@ -1791,6 +1792,7 @@ s32 true_if_sucessfully_performing_action(AIRecord *AIList, s32 Offset, u8 Label
 GLOBAL_ASM(
 .late_rodata
 /*HACK FIXME */
+/*MORE HACKY HACK from get_length_of_action_block    */
 .word locret_CODE_7F03500C
 .word locret_CODE_7F035014
 .word locret_CODE_7F03501C
@@ -1896,6 +1898,7 @@ AIRecord *LoadNext_PrevActionBlock(s32 ID) //MATCH https://decomp.me/scratch/Qb0
 GLOBAL_ASM(
 .late_rodata
 /*HACK FIXME */
+/*MORE HACKY HACK from get_length_of_action_block    */
 .word locret_CODE_7F035074
 .word locret_CODE_7F03507C
 .word locret_CODE_7F035084
@@ -1985,6 +1988,7 @@ PathRecord *get_ptr_path_for_pathnum(s32 ID)
 GLOBAL_ASM(
 .late_rodata
 /*HACK FIXME */
+/*MORE HACKY HACK from get_length_of_action_block    */
 .word locret_CODE_7F0350D4
 .word locret_CODE_7F0350DC
 .word locret_CODE_7F0350E4
@@ -5703,6 +5707,7 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
 GLOBAL_ASM(
 .late_rodata
 /*HACK FIXME */
+/*MORE HACKY HACK from get_length_of_action_block    */
 .word locret_CODE_7F035104
 .word locret_CODE_7F03510C
 .word locret_CODE_7F035114
@@ -5737,6 +5742,8 @@ GLOBAL_ASM(
 .word locret_CODE_7F0351EC
 .word locret_CODE_7F0351F4
 .word actionFC_length
+/*END HACKY HACK from get_length_of_action_block    */
+
 .late_rodata
 glabel D_800524F4
 .word 0x40c90fdb /*6.2831855*/
