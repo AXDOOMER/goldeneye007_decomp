@@ -2800,7 +2800,7 @@ void init_player_BONDdata(void)
 {
     if (getPlayerCount() >= 2)
     {
-        g_CurrentPlayer->field_430 = get_player_control_style(get_cur_playernum());
+        g_CurrentPlayer->controldef = get_player_control_style(get_cur_playernum());
         cur_player_set_control_type(get_player_control_style(get_cur_playernum()));
     }
     g_CurrentPlayer->current_model_pos.f[0] = 0.0f;
@@ -2878,9 +2878,9 @@ void init_player_BONDdata(void)
     g_CurrentPlayer->field_2A4C = 0.0f;
     g_CurrentPlayer->speedboost = 1.0f;
     g_CurrentPlayer->speedmaxtime60 = 0;
-    g_CurrentPlayer->boost_factor_x = 0.0f;
-    g_CurrentPlayer->boost_factor_y = 0.0f;
-    g_CurrentPlayer->boost_factor_z = 0.0f;
+    g_CurrentPlayer->bondshotspeed.x = 0.0f;
+    g_CurrentPlayer->bondshotspeed.y = 0.0f;
+    g_CurrentPlayer->bondshotspeed.z = 0.0f;
     g_CurrentPlayer->field_104 = 0;
     g_CurrentPlayer->field_108 = 0;
     g_CurrentPlayer->field_10C = 0;
@@ -2916,8 +2916,8 @@ void init_player_BONDdata(void)
     g_CurrentPlayer->bondfadetimemax60 = -1.0f;
     g_CurrentPlayer->bondfadefracold = 0.0f;
     g_CurrentPlayer->bondfadefracnew = 0.0f;
-    g_CurrentPlayer->field_42C = 2;
-    g_CurrentPlayer->field_430 = 0;
+    g_CurrentPlayer->field_42c = 2;
+    g_CurrentPlayer->controldef = 0;
     g_CurrentPlayer->pause_starting_angle = 0.0f;
     g_CurrentPlayer->pause_related = 0.0f;
     g_CurrentPlayer->pause_target_angle = 0.0f;
@@ -9636,7 +9636,7 @@ glabel sub_GAME_7F07B56C
 
 void sub_GAME_7F07C540(s32 arg0)
 {
-    g_CurrentPlayer->field_42C = arg0;
+    g_CurrentPlayer->field_42c = arg0;
 }
 
 void set_BONDdata_lookahead_setting(s32 arg0)
@@ -34254,7 +34254,7 @@ void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2)
     
     if (g_CurrentPlayer->bonddead)
     {
-        if (g_CurrentPlayer->field_424 == 0)
+        if (g_CurrentPlayer->redbloodfinished == 0)
         {
             draw_item_in_hand_has_more_ammo(GUNLEFT, 0);
             draw_item_in_hand_has_more_ammo(GUNRIGHT, 0);
@@ -34265,7 +34265,7 @@ void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2)
             };
         }
 
-        if (g_CurrentPlayer->field_424 && g_CurrentPlayer->field_428 && (D_80036510 >= 3))
+        if (g_CurrentPlayer->redbloodfinished && g_CurrentPlayer->deathanimfinished && (D_80036510 >= 3))
         {
             bossRunTitleStage();
         }
@@ -39621,8 +39621,8 @@ void bondviewKillCurrentPlayer(void)
 
         g_CurrentPlayer->previous_collision_info = g_CurrentPlayer->field_488;
 
-        g_CurrentPlayer->field_414 = g_CurrentPlayer->vv_theta;
-        g_CurrentPlayer->field_418 = g_CurrentPlayer->vv_verta;
+        g_CurrentPlayer->thetadie = g_CurrentPlayer->vv_theta;
+        g_CurrentPlayer->vertadie = g_CurrentPlayer->vv_verta;
 
         if (ptr_playerstank != 0)
         {
@@ -40943,7 +40943,7 @@ coord3d * bondviewGetCurrentPlayersPosition3(void)
 }
 
 int get_BONDdata_field408(void) {
-    return (int) &g_CurrentPlayer->field_408;
+    return (int) &g_CurrentPlayer->bondprevpos;
 }
 
 

@@ -2277,7 +2277,7 @@ void lvlManageMpGame(void)
                 if (p->bonddead != 0)
                 {
                     mp_alive_count++;
-                    if (p->field_424 != 0)
+                    if (p->redbloodfinished != 0)
                     {
                         mp_player_field424_count++;
                     }
@@ -2346,7 +2346,7 @@ void lvlManageMpGame(void)
                 p = g_playerPointers[i];
 
                 if (p->bonddead != 0 &&
-                    (p->field_424 == 0 || p->field_428 == 0 || p->colourfadetimemax60 >= 0.0f))
+                    (p->redbloodfinished == 0 || p->deathanimfinished == 0 || p->colourfadetimemax60 >= 0.0f))
                 {
                     mp_player_currently_in_dying_animation++;
                 }
@@ -2441,7 +2441,7 @@ void lvlManageMpGame(void)
                             g_playerPlayerData[i].order_out_in_yolt = (u8) (phi_a2_5 + 1);
                         }
 
-                        if ((g_playerPointers[i]->field_424 != 0) && (g_playerPointers[i]->field_428 != 0) && (g_playerPointers[i]->colourfadetimemax60 < 0.0f))
+                        if ((g_playerPointers[i]->redbloodfinished != 0) && (g_playerPointers[i]->deathanimfinished != 0) && (g_playerPointers[i]->colourfadetimemax60 < 0.0f))
                         {
                             phi_ra_2 = phi_ra_3 + 1;
                         }
@@ -5413,8 +5413,8 @@ void lvlUpdateMpPlayerData(void)
     }
 
     // decomp issue: `g_CurrentPlayer->prop` and `g_CurrentPlayer` registers are swapped.
-    temp_f0 = g_CurrentPlayer->prop->position.x - g_CurrentPlayer->field_408;
-    temp_f2 = g_CurrentPlayer->prop->position.z - g_CurrentPlayer->field_410;
+    temp_f0 = g_CurrentPlayer->prop->position.x - g_CurrentPlayer->bondprevpos.x;
+    temp_f2 = g_CurrentPlayer->prop->position.z - g_CurrentPlayer->bondprevpos.z;
 
     g_playerPerm->distance_traveled += sqrtf((temp_f0 * temp_f0) + (temp_f2 * temp_f2));
 
