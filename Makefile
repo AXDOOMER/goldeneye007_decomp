@@ -18,18 +18,57 @@ SAVECURSOR := \0337\033[s
 RESTORECURSOR := \0338\033[u
 SET_SCROLLREGION = \033[$(1);$(2)r
 RESTORESCROLLREGION := \033[r
-RESTORECOLOUR := \033[m
-FGWHITEB :=\033[1;97m
-FGWHITE := \033[0;97m
-FGYELLOW := \033[0;93m
-FGRED := \033[0;91m
-FGGREEN := \033[1;92m
-FGBLUE := \033[0;94m
-BGBLUE := \033[1;44m
-BGGREY := \033[100m
 CURSOR_GOTO = \033[$(1);$(2)H
+SET_TEXTATTRIB = \033[$(1)$(if $(2),;$(2))$(if $(3),;$(3))m
+
+#Attributes
+RESTORECOLOUR := \033[m
+BOLD := 1
+DIM := 2
+UNDERSCORE := 4
+BLINK := 5
+INVERT := 7
+HIDDEN := 8
+
+#Colours
+FG_BLACK:= 30
+FG_MAROON:= 31
+FG_GREEN:= 32
+FG_OLIVE:= 33
+FG_NAVY:= 34
+FG_PURPLE:= 35
+FG_TEAL:= 36
+FG_SILVER:= 37
+FG_GRAY:= 90
+FG_RED:= 91
+FG_LIME:= 92
+FG_YELLOW:= 93
+FG_BLUE:= 94
+FG_VIOLET:= 95
+FG_CYAN:= 96
+FG_WHITE:= 97
+
+BG_BLACK:= 40
+BG_MAROON:= 41
+BG_GREEN:= 42
+BG_OLIVE:= 43
+BG_NAVY:= 44
+BG_PURPLE:= 45
+BG_TEAL:= 46
+BG_SILVER:= 47
+BG_GRAY:= 100
+BG_RED:= 101
+BG_LIME:= 102
+BG_YELLOW:= 103
+BG_BLUE:= 104
+BG_VIOLET:= 105
+BG_CYAN:= 106
+BG_WHITE:= 107
 
 ### Build Functions ###
+# Common build print status function
+PRINT_STATUS = @echo "$(call SET_TEXTATTRIB,$(FG_GREEN))$(1) $(call SET_TEXTATTRIB,$(FG_OLIVE))$(2)$(call SET_TEXTATTRIB,$(FG_GRAY)) -> $(call SET_TEXTATTRIB,$(FG_NAVY))$(3)$(RESTORECOLOUR)"
+
 #(call DrawProgressBar,Percent)
 # OR
 #(call DrawProgressBar,NumberOfItemsDone,TotalNumberOfItems)
@@ -52,20 +91,21 @@ DrawProgressBar =                                       \
 		                                                \
 		pdone=`expr $$_pdone \* 76 / 100`;              \
 		pdoneb=0;                                       \
-		str="$(SAVECURSOR)$(call SET_SCROLLREGION,3,0)$(call CURSOR_GOTO,2,999)\033[1J$(call CURSOR_GOTO,1)$(FGWHITEB)$(BGGREY)%79s$(call CURSOR_GOTO,1)$(BGBLUE)" ;    \
+		str="$(SAVECURSOR)$(call SET_SCROLLREGION,3,0)$(call CURSOR_GOTO,2,999)\033[1J$(call CURSOR_GOTO,1)$(call SET_TEXTATTRIB,$(BOLD),$(FG_WHITE))$(call SET_TEXTATTRIB,$(BG_GRAY))%79s$(call CURSOR_GOTO,1)$(call SET_TEXTATTRIB,$(BG_NAVY))" ;    \
+		                                                \
 		if [ "$$pdone" -lt "40" ];                      \
 		then                                            \
-			str=$$str"%$${pdone}s";                       \
-			str=$$str"$(BGGREY)";                         \
+			str=$$str"%$${pdone}s";                     \
+			str=$$str"$(call SET_TEXTATTRIB,$(BG_GRAY))";\
 			pdoneb=`expr 38 - $$pdone`;                 \
-			str=$$str"%$${pdoneb}s%3d%%";  \
+			str=$$str"%$${pdoneb}s%3d%%";               \
 		else                                            \
 			pdoneb=`expr $$pdone - 38`;                 \
-			str=$$str"%1s%37s%3d%%%$${pdoneb}s"; \
+			str=$$str"%1s%37s%3d%%%$${pdoneb}s";        \
 		fi;                                             \
-		str=$$str"$(RESTORECURSOR)$(RESTORECOLOUR)";                               \
-		printf $$str "" "" "" $$_pdone; \
-	}                                                   \
+		str=$$str"$(RESTORECURSOR)$(RESTORECOLOUR)";    \
+		printf $$str "" "" "" $$_pdone;                 \
+	}
 
 
 ## More Build Variables (Auto) ##
@@ -200,7 +240,7 @@ MUSIC_OBJECTS := $(foreach file,$(MUSIC_FILES),$(BUILD_DIR)/$(file:.s=.o))
 
 OBSEG_FILES := assets/obseg/ob_seg.s
 OBSEG_OBJECTS := $(BUILD_DIR)/assets/obseg/ob_seg.o
-OBSEG_RZ := $(BG_SEG_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) $(PROP_RZ_FILES) $(STAN_RZ_FILES) $(BRIEF_RZ_FILES) $(SETUP_RZ_FILES) $(TEXT_RZ_FILES)
+OBSEG_RZ := $(BG__SEG_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) $(PROP_RZ_FILES) $(STAN_RZ_FILES) $(BRIEF_RZ_FILES) $(SETUP_RZ_FILES) $(TEXT_RZ_FILES)
 
 IMAGE_BINS := $(foreach dir,assets/images/split,$(wildcard $(dir)/*.bin))
 IMAGE_OBJS := $(foreach file,$(IMAGE_BINS),$(BUILD_DIR)/$(file:.bin=.o))
@@ -250,10 +290,12 @@ endif
 ASM_PREPROC := python3 tools/asmpreproc/asm-processor.py
 
 OBJCOPY := $(TOOLCHAIN)objcopy
-#                        Rsrv   Up 3   Flash  Wht  80  Dn 1 Return      Dn 1 Ret 80ch                 Red 
-#                        Lines Lines     Red/Grn   ch  Line SoL midway  Line SoL   Bell Reset Colour 
-PRINTNOMATCH := printf "\n\n\033[3A\033[5;41;97m%80s\033[1B\r%45s%35s\033[1B\r%80s\007$(RESTORECOLOUR)\033[91m\n\n\n" "" "NOT MATCH!" "" ""
-PRINTMATCH := printf "\n\n\n\033[3A\033[5;42;97m%80s\033[1B\r%43s%37s\033[1B\r%80s\007$(RESTORECOLOUR)\n" "" "MATCH!" "" "" 
+
+#Now using cursor commands for better look  original was //"\033[5;42;97m%80s\r\n%43s%37s\r\n%80s\007\033[0;0m\n"
+#                        Rsrv   Up 3                                                        80  Dn 1 Return      Dn 1 Ret 80ch                  
+#                        Lines Lines                                                        ch  Line SoL midway  Line SoL   Bell 
+PRINTNOMATCH := printf "\n\n\033[3A$(call SET_TEXTATTRIB,$(BLINK),$(BG_MAROON),$(FG_WHITE))%80s\033[1B\r%45s%35s\033[1B\r%80s\007$(RESTORECOLOUR)$(call SET_TEXTATTRIB,$(FG_RED))\n\n\n" "" "NOT MATCH!" "" ""
+PRINTMATCH := printf "\n\n\n\033[3A$(call SET_TEXTATTRIB,$(BLINK),$(BG_GREEN),$(FG_WHITE))%80s\033[1B\r%43s%37s\033[1B\r%80s\007$(RESTORECOLOUR)\n" "" "MATCH!" "" "" 
 
 ## Build Recipies ##
 
@@ -268,9 +310,8 @@ endif
 ifeq ($(COMPARE),1)
 
 	@echo "\n"
-#Now using cursor commands for better look  original was //"\033[5;42;97m%80s\r\n%43s%37s\r\n%80s\007\033[0;0m\n"
-#   Calculate Checksum                      if fail                                         Which File failed                                                              Reset Colour
-	@$(SHA1SUM) -c ge007.$(OUTCODE).sha1 || ($(PRINTNOMATCH) && $(SHA1SUM) --quiet -c checksums.txt && printf "Mismatch in code!\nLocate mismatching code and add 0x34b34\n\n\033[0;0m" && exit 1)
+#   Calculate Checksum                      if fail                                         Allow overspill                                    Which File failed                       Quick Check (data)                    Slow Check (extract .text binary)
+	@$(SHA1SUM) -c ge007.$(OUTCODE).sha1 || ($(PRINTNOMATCH) && echo "$(SAVECURSOR)$(RESTORESCROLLREGION)$(RESTORECURSOR)\033[1DPlease wait while we determine which files are affected..." && $(SHA1SUM) --quiet -c checksums.txt && ./test_files.sh -c -i ge007.$(OUTCODE)-test_basis.csv && exit 1)
 #   Else complete 
 	@$(PRINTMATCH)
 endif
@@ -300,68 +341,68 @@ endif
 
 # Build RSP
 $(BUILD_DIR)/rsp/%.bin: rsp/*.s pb1
+	$(call PRINT_STATUS,Assembling:,$<,$@)
 	$(ARMIPS) -sym $@.sym -strequ CODE_FILE $(BUILD_DIR)/rsp/$*.bin -strequ DATA_FILE $(BUILD_DIR)/rsp/$*_data.bin $<
-	@echo $@
 
 $(BUILD_DIR)/src/rspboot.o: $(BUILD_DIR)/rsp/rspboot.bin 
 
 #Build asm files in root
 $(BUILD_DIR)/%.o: src/%.s pb2
+	$(call PRINT_STATUS,Assembling:,$<,$@)
 	$(AS) $(ASFLAGS) -o $@ $<
-	@echo $@
 
 #Build asm files in src/
 $(BUILD_DIR)/src/%.o: src/%.s pb3
+	$(call PRINT_STATUS,Assembling:,$<,$@)
 	$(AS) $(ASFLAGS) -o $@ $<
-	@echo $@
 
 #Build Images
 $(BUILD_DIR)/assets/images/split/%.o: assets/images/split/%.bin pb4
+	$(call PRINT_STATUS,Compiling:,$<,$@)
 	$(LD) -r -b binary $< -o $@
-	@echo $@
 
 #Compress Obseg
 $(BUILD_DIR)/$(OBSEGMENT): $(OBSEG_RZ) $(IMAGE_OBJS) pb6
-	@echo $@
+	$(call PRINT_STATUS,Compressing:,$<,$@)
 
 #Build C files in root/
 $(BUILD_DIR)/%.o: src/%.c pb7
+	$(call PRINT_STATUS,Compiling:,$<,$@)
 	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
 	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
-	@echo $@
 
 
 #Build C files in src/
 $(BUILD_DIR)/src/%.o: src/%.c pb8
+	$(call PRINT_STATUS,Compiling:,$<,$@)
 	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
 	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
-	@echo $@
 
 #Build RamRom
 $(BUILD_DIR)/assets/ramrom/%.o: assets/ramrom/%.s pb9
+	$(call PRINT_STATUS,Assembling:,$<,$@)
 	$(AS) $(ASFLAGS) -o $@ $<
-	@echo $@
 
 #Build fonts
 $(BUILD_DIR)/assets/font/%.o: assets/font/%.c pb10
+	$(call PRINT_STATUS,Compiling:,$<,$@)
 	$(CC) -c $(CFLAGS) -o $@ $(OPTIMIZATION) $<
-	@echo $@
 
 #Build asm files in assets/
 $(BUILD_DIR)/assets/%.o: assets/%.s pb11
+	$(call PRINT_STATUS,Assembling:,$<,$@)
 	$(AS) $(ASFLAGS) -o $@ $<
-	@echo $@
 
 #Build Obseg
 $(BUILD_DIR)/assets/obseg/%.o: assets/obseg/%.s $(OBSEG_RZ) pb12
+	$(call PRINT_STATUS,Assembling:,$<,$@)
 	$(AS) $(ASFLAGS) -o $@ $<
-	@echo $@
 
 #Build C files in assets/
 $(BUILD_DIR)/assets/%.o: assets/%.c pb13
+	$(call PRINT_STATUS,Compiling:,$<,$@)
 	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
 	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
-	@echo $@
 
 #$(BUILD_DIR)/src/random.o: OPTIMIZATION := -O3
 #$(BUILD_DIR)/src/random.o: INCLUDE := -I . -I include -I include/PR
@@ -371,20 +412,23 @@ $(BUILD_DIR)/assets/%.o: assets/%.c pb13
 
 #Link Files
 $(APPELF): $(RSPOBJECTS) $(ULTRAOBJECTS) $(HEADEROBJECTS) $(OBSEG_RZ) $(BUILD_DIR)/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(ASSET_DATAOBJECTS) $(ROMOBJECTS2) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS) pb14
-	@echo "Linking Files"
+	@echo "Linking Files into ELF"
 	$(LD) $(LDFLAGS) -o $@ 
 
 $(APPBIN): $(APPELF)
   ifeq ($(VERBOSE),)
 	@$(call DrawProgressBar,98)
   endif
+	@echo "Building ROM"
 	$(OBJCOPY) $< $@ -O binary --gap-fill=0xff
 	
 $(APPROM):	$(APPBIN)
   ifeq ($(VERBOSE),)
 	@$(call DrawProgressBar,100)
   endif
+	@echo "Compressing ROM"
 	$(DATASEG_COMP) $< $(OUTCODE)
+	@echo "Finalizing ROM"
 	$(N64CKSUM) $< $@
 
 .PRECIOUS: %.bin  %.o
@@ -459,16 +503,16 @@ help:
 	@echo ""
 	@echo "  supported targets:"
 	@echo ""
-	@echo "    all                            $(FGGREEN) Build$(RESTORECOLOUR) all (default)"
-	@echo "    clean                          $(FGRED) Delete all$(RESTORECOLOUR) build artifacts"
-	@echo "    dataclean                      $(FGRED) Delete$(RESTORECOLOUR) only asset build artifacts"
-	@echo "    codeclean                      $(FGRED) Delete$(RESTORECOLOUR) only code (asm, .c) build artifacts"
-	@echo "    libultraclean                  $(FGRED) Delete$(RESTORECOLOUR) only code (asm, .c) build artifacts "
+	@echo "    all                            $(call SET_TEXTATTRIB,$(FG_LIME)) Build$(RESTORECOLOUR) all (default)"
+	@echo "    clean                          $(call SET_TEXTATTRIB,$(FG_RED)) Delete all$(RESTORECOLOUR) build artifacts"
+	@echo "    dataclean                      $(call SET_TEXTATTRIB,$(FG_RED)) Delete$(RESTORECOLOUR) only asset build artifacts"
+	@echo "    codeclean                      $(call SET_TEXTATTRIB,$(FG_RED)) Delete$(RESTORECOLOUR) only code (asm, .c) build artifacts"
+	@echo "    libultraclean                  $(call SET_TEXTATTRIB,$(FG_RED)) Delete$(RESTORECOLOUR) only code (asm, .c) build artifacts "
 	@echo "                                    from Rare's libultra files"
-	@echo "    stanclean                      $(FGRED) Delete$(RESTORECOLOUR) only stan build artifacts"
-	@echo "    setupclean                     $(FGRED) Delete$(RESTORECOLOUR) only setup build artifacts"
-	@echo "    cmdbuidler                     $(FGGREEN) Build$(RESTORECOLOUR) AI Commands"
-	@echo "    context [file]                 $(FGGREEN) Build$(RESTORECOLOUR) Context File from [file]"
+	@echo "    stanclean                      $(call SET_TEXTATTRIB,$(FG_RED)) Delete$(RESTORECOLOUR) only stan build artifacts"
+	@echo "    setupclean                     $(call SET_TEXTATTRIB,$(FG_RED)) Delete$(RESTORECOLOUR) only setup build artifacts"
+	@echo "    cmdbuidler                     $(call SET_TEXTATTRIB,$(FG_LIME)) Build$(RESTORECOLOUR) AI Commands"
+	@echo "    context [file]                 $(call SET_TEXTATTRIB,$(FG_LIME)) Build$(RESTORECOLOUR) Context File from [file]"
 	@echo "                                    eg make context src/game/chrai.c"
 	@echo "    test                            Re-Run Data Verification "
 	@echo ""
@@ -552,7 +596,7 @@ cmdbuilder:
 test:
 	@$(SHA1SUM) --quiet -c checksums.txt
 	@printf "\033[1;92m All Checked Files Match\033[0m\n\n"
-#	@$(SHA1SUM) $(BG_SEG_FILES) $(BRIEF_RZ_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) \
+#	@$(SHA1SUM) $(BG__SEG_FILES) $(BRIEF_RZ_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) \
 	$(PROP_RZ_FILES) $(SETUP_BIN_FILES) $(STAN_RZ_FILES) $(TEXT_RZ_FILES) > checksums.txt
 
 
@@ -584,13 +628,12 @@ colour:
 	@$(call DrawProgressBar,0)
   endif
 	@$(MAKE) --no-print-directory all 2>&1 | sed -E \
-	-e "s/^.*[Ee]rror.*/$$(echo "$(FGRED)")&$$(echo "$(RESTORECOLOUR)")/g" \
-	-e "s/^.*[Ww]arning.*/$$(echo "$(FGYELLOW)")&$$(echo "$(RESTORECOLOUR)")/g" \
-	-e "s/^.*(([Bb]uilding)|([Ll]inkin)).*/$$(echo "$(FGBLUE)")&$$(echo "$(RESTORECOLOUR)")/g" \
-	-e "s/\s((src.*?(!stdin)\.c)|(build.*?\.o))\s/$$(echo "$(FGWHITE)")&$$(echo "$(RESTORECOLOUR)")/g"
+	-e "s/(^.*[Ee]rror.*)|(Mis-Match in)|(:\sFAILED)/$$(echo "$(call SET_TEXTATTRIB,$(FG_RED))")&$$(echo "$(RESTORECOLOUR)")/g" \
+	-e "s/^.*[Ww]arning.*/$$(echo "$(call SET_TEXTATTRIB,$(FG_YELLOW))")&$$(echo "$(RESTORECOLOUR)")/g" \
+	-e "s/^.*(([Bb]uilding)|(:\sOK)|([Ll]inkin)).*/$$(echo "$(call SET_TEXTATTRIB,$(FG_LIME))")&$$(echo "$(RESTORECOLOUR)")/g" \
+	-e "s/(\s((src.*?(!stdin)\.c)|(build.*?\.o))\s)|(src.*?\.c)/$$(echo "$(call SET_TEXTATTRIB,$(FG_WHITE))")&$$(echo "$(RESTORECOLOUR)")/g"
 	@echo "$(SAVECURSOR)$(RESTORESCROLLREGION)$(RESTORECURSOR)\033[1A"
 $(VERBOSE).SILENT:
-
 
 
 ## Progress Bar status - call once ##

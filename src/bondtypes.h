@@ -2131,7 +2131,7 @@ typedef union
         f32     sumground;          /*0xA4*/
         f32     manground;          /*0xA8*/
         f32     ground;             /*0xAC*/
-        coord3d fallspeed;          /*0xB0 current pos*/
+        coord3d fallspeed;          /*0xB0*/
         coord3d prevpos;            /*0xBC*/
         s32     lastwalk60;         /*0xC8*/
         s32     lastmoveok60;       /*0xCC*/
@@ -2162,7 +2162,7 @@ typedef union
         s16            aireturnlist;     /* 0x010A confirmed*/
         u8             morale;           /* used by ai commands 81-85 */
         u8             alertness;        /* used by ai commands 86-8A */
-        u8             BITFIELD;
+        u8             BITFIELD;         /*canon name is "flags2"*/
         u8             random;
         s32            timer60;    /* 0x0110 */
         s16            padpreset1; /* ID PAD_PRESET */

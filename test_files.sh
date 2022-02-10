@@ -2,6 +2,7 @@
 
 SRC=
 CONTINUE_ON_ERROR=0
+VERBOSE=0
 
 usage() {
     echo "checks md5s generated from make_test_files_basis.sh"
@@ -22,6 +23,9 @@ while getopts "i:ch" arg; do
       ;;
     c)
         CONTINUE_ON_ERROR=1
+      ;;
+    v)
+        VERBOSE=1
       ;;
     h | *) # Display help.
       usage
@@ -50,23 +54,29 @@ do
         echo "File not found: ${SRC}"
         continue
     fi
+    if [ -f $FILE ]; then
+        mips-linux-gnu-objcopy -j "${SECTION}" -O binary "${FILE}" "${TMP}"
+        ACTUAL=$(md5sum -b "${TMP}" | cut -c -32 | tr '[:upper:]' '[:lower:]')
+        EXPECTED=$(echo "${MD5}" | tr '[:upper:]' '[:lower:]')
     
-    mips-linux-gnu-objcopy -j "${SECTION}" -O binary "${FILE}" "${TMP}"
-    ACTUAL=$(md5sum -b "${TMP}" | cut -c -32 | tr '[:upper:]' '[:lower:]')
-    EXPECTED=$(echo "${MD5}" | tr '[:upper:]' '[:lower:]')
-    
-    if [ "${ACTUAL}" != "${EXPECTED}" ] ; then
-        echo "checksums differ, section'${SECTION}', file: '${FILE}'. Actual=[${ACTUAL}], expected=[${EXPECTED}]"
+        if [ "${ACTUAL}" != "${EXPECTED}" ] ; then
+            if [ $VERBOSE -eq 1 ]; then
+                echo "checksums differ, section'${SECTION}', file: '${FILE}'. Actual=[${ACTUAL}], expected=[${EXPECTED}]"
+            else
+                echo -e "Mis-Match in $(echo $FILE | sed -E -e 's/build\/[uje]\/src\//src\//g;' -e 's/\.o/\.c/g')"
+            fi
         
-        if [ ${CONTINUE_ON_ERROR} -eq 0 ] ; then
-            IFS=$OLDIFS
-            rm -f "${TMP}"
-            exit 1
+            if [ ${CONTINUE_ON_ERROR} -eq 0 ] ; then
+                IFS=$OLDIFS
+                rm -f "${TMP}"
+                exit 1
+            fi
+        else
+            if [ ${VERBOSE} -eq 1 ]; then
+                echo "pass: section'${SECTION}' ${FILE}"
+            fi
         fi
-    else
-        echo "pass: section'${SECTION}' ${FILE}"
     fi
-    
 done < "${SRC}"
 
 IFS=$OLDIFS
