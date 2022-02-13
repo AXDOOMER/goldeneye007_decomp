@@ -35099,7 +35099,7 @@ s32 sub_GAME_7F087A08(s32 arg0) {
         {
             // Node 4
             sp58 = temp_v1;
-            viSet800232B4(0, temp_a0, temp_a1, &sp4C);
+            viShake(0, temp_a0, temp_a1, &sp4C);
         }
         // Node 5
         sp74 = (f32) temp_v1->unk2C;
@@ -35207,7 +35207,7 @@ glabel sub_GAME_7F087A08
 /* 0BC604 7F087AD4 8FA30058 */   lw    $v1, 0x58($sp)
 /* 0BC608 7F087AD8 44806000 */  mtc1  $zero, $f12
 .L7F087ADC:
-/* 0BC60C 7F087ADC 0C000EC1 */  jal   viSet800232B4
+/* 0BC60C 7F087ADC 0C000EC1 */  jal   viShake
 /* 0BC610 7F087AE0 AFA30058 */   sw    $v1, 0x58($sp)
 /* 0BC614 7F087AE4 8FA30058 */  lw    $v1, 0x58($sp)
 .L7F087AE8:
@@ -35400,7 +35400,7 @@ glabel sub_GAME_7F087A08
 /* 0BA624 7F087C34 8FA30058 */   lw    $v1, 0x58($sp)
 /* 0BA628 7F087C38 44806000 */  mtc1  $zero, $f12
 .L7F087C3C:
-/* 0BA62C 7F087C3C 0C000D55 */  jal   viSet800232B4
+/* 0BA62C 7F087C3C 0C000D55 */  jal   viShake
 /* 0BA630 7F087C40 AFA30058 */   sw    $v1, 0x58($sp)
 /* 0BA634 7F087C44 8FA30058 */  lw    $v1, 0x58($sp)
 .L7F087C48:

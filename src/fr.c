@@ -46,13 +46,13 @@
 u32 g_unused80023240 = 0;
 
 #if defined(VERSION_EU)
-struct VideoSettings_s g_videoSettings[NUM_VIDEO_SETTINGS] = 
+struct VideoSettings_s g_ViDataArray[NUM_VIDEO_SETTINGS] = 
 {
     {0, 0, 0, 0, 320, 272, 60.0f, 1.17647063732f, 30.0f, 10000.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 320, 272, 0, 0, 1, NULL},
     {0, 0, 0, 0, 320, 272, 60.0f, 1.17647063732f, 30.0f, 10000.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 320, 272, 0, 0, 1, NULL}
 };
 #else
-struct VideoSettings_s g_videoSettings[NUM_VIDEO_SETTINGS] = 
+struct VideoSettings_s g_ViDataArray[NUM_VIDEO_SETTINGS] = 
 {
     {0, 0, 0, 0, 320, 240, 60.0f, 1.3333334f, 30.0f, 10000.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 320, 240, 0, 0, 1, NULL},
     {0, 0, 0, 0, 320, 240, 60.0f, 1.3333334f, 30.0f, 10000.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 320, 240, 0, 0, 1, NULL}
@@ -68,17 +68,17 @@ s32 g_viHorizontalOffset = 0;
 /**
  * Address 800232A0.
  * vimode vStart vertical offset in video_related_8.
- * (see D_800232B4 before changing the name)
+ * (see g_ViShakeIntensity before changing the name)
  */
 s32 D_800232A0 = 0;
 
-VideoSettings *ptr_video_settings1 = &g_videoSettings[0];
-VideoSettings *ptr_video_settings2 = &g_videoSettings[0];
-s32 g_viColorOutputMode = 1;
+VideoSettings *g_ViFrontData = &g_ViDataArray[0];
+VideoSettings *g_ViBackData = &g_ViDataArray[0];
+s32 g_viColorOutputMode = COLORMODE_16BIT;
 
 /**
  * Address 800232B0.
- * D_800232B4 multiplier sign. This is only ever 1 or -1.
+ * g_ViShakeIntensity multiplier sign. This is only ever 1 or -1.
  */
 s32 g_viVstartSign = 1;
 
@@ -87,19 +87,19 @@ s32 g_viVstartSign = 1;
  * vimode vStart vertical offset in viVsyncRelated.
  * (see D_800232A0 before changing the name)
  */
-s32 D_800232B4 = 0;
+s32 g_ViShakeIntensity = 0;
 
 /**
  * Address 800232B8.
- * Some kind of counter for how frequently D_800232B4 is zero'd in viVsyncRelated.
+ * Some kind of counter for how frequently g_ViShakeIntensity is zero'd in viVsyncRelated.
  */
-u32 D_800232B8 = 0;
+u32 g_ViShakeTimer = 0;
 
 /**
  * Address 800232BC.
  * Some kind of counter for how frequently osViBlack is called with "active" parameter.
  */
-u32 D_800232BC = 3;
+u32 g_ViUnblackTimer = 3;
 
 /**
  * Address 800232C0.
@@ -127,15 +127,15 @@ OSViMode g_viOriginalVideoMode;
 
 /**
  * Address 80060878.
- * cfb_16 index for ptr_video_settings1.
+ * cfb_16 index for g_ViFrontData.
  */
-u8 g_viVideoSettings1FrameBufferIndex;
+u8 g_ViFrontIndex;
 
 /**
  * Address 80060879.
- * cfb_16 index for ptr_video_settings2 and g_CurrentPlayer->viewports.
+ * cfb_16 index for g_ViBackData and g_CurrentPlayer->viewports.
  */
-u8 g_viVideoSettings2FrameBufferIndex;
+u8 g_ViBackIndex;
 
 /**
  * Current vi mode pointer.
@@ -187,14 +187,14 @@ const s16 g_viRuntimeScreenHeights[] = {SCREEN_HEIGHT_272, SCREEN_HEIGHT_272, SC
  */
 void viInitVideoSettings(void)
 {
-    g_viVideoSettings1FrameBufferIndex = 0;
-    g_viVideoSettings2FrameBufferIndex = 1;
+    g_ViFrontIndex = 0;
+    g_ViBackIndex = 1;
 
-    ptr_video_settings1 = (VideoSettings*)((u8*)&g_videoSettings + (g_viVideoSettings1FrameBufferIndex * sizeof(VideoSettings)));
-    ptr_video_settings1->framebuf = cfb_16[g_viVideoSettings1FrameBufferIndex]; 
+    g_ViFrontData = (VideoSettings*)((u8*)&g_ViDataArray + (g_ViFrontIndex * sizeof(VideoSettings)));
+    g_ViFrontData->framebuf = cfb_16[g_ViFrontIndex]; 
 
-    ptr_video_settings2 = (VideoSettings*)((u8*)&g_videoSettings + (g_viVideoSettings2FrameBufferIndex * sizeof(VideoSettings)));
-    ptr_video_settings2->framebuf = cfb_16[g_viVideoSettings2FrameBufferIndex];
+    g_ViBackData = (VideoSettings*)((u8*)&g_ViDataArray + (g_ViBackIndex * sizeof(VideoSettings)));
+    g_ViBackData->framebuf = cfb_16[g_ViBackIndex];
     
     g_viHorizontalOffset = 0;
     #ifndef VERSION_EU
@@ -219,10 +219,10 @@ void viInitBuffers(void)
     }
 }
 
-void viSet800232BC(u32 arg0)
+void frBlack(u32 black)
 {
-    arg0 += 2;
-    D_800232BC = arg0;
+    black += 2;
+    g_ViUnblackTimer = black;
 }
 
 /**
@@ -239,17 +239,17 @@ void viVsyncRelated(void)
     s32 verticalOffset;
     s32 registerValue;
 
-    if (D_800232B8 > 0)
+    if (g_ViShakeTimer > 0)
     {
-        D_800232B8--;
+        g_ViShakeTimer--;
         
-        if (D_800232B8 == 0)
+        if (g_ViShakeTimer == 0)
         {
-            D_800232B4 = 0;
+            g_ViShakeIntensity = 0;
         }
     }
 
-    verticalOffset = g_viVstartSign * D_800232B4;
+    verticalOffset = g_viVstartSign * g_ViShakeIntensity;
 
     // note the implicit cast from unsigned to signed.
     registerValue = g_viOriginalVstart0;
@@ -259,17 +259,17 @@ void viVsyncRelated(void)
     (*viMode).fldRegs[1].vStart = ADD_LOW_AND_HI_16_TRUNCATE(registerValue, verticalOffset);
 
     osViSetMode(viMode);
-    osViBlack(D_800232BC);
+    osViBlack(g_ViUnblackTimer);
 
-    // D_800232BC might be declared signed which means the if statement is
+    // g_ViUnblackTimer might be declared signed which means the if statement is
     //
-    //    if (D_800232BC != 0 && D_800232BC < 3)
+    //    if (g_ViUnblackTimer != 0 && g_ViUnblackTimer < 3)
     //
     // but this way feels "safer", though the cast to (s32) now seems unnatural.
     // The "right" answer depends on what's supposed to happen for values like -1 or 0xffffffff ...
-    if (D_800232BC > 0 && (s32)D_800232BC < 3)
+    if (g_ViUnblackTimer > 0 && (s32)g_ViUnblackTimer < 3)
     {
-        D_800232BC--;
+        g_ViUnblackTimer--;
     }
 
     osViSetSpecialFeatures(OS_VI_DITHER_FILTER_ON | OS_VI_GAMMA_OFF);
@@ -301,9 +301,9 @@ void video_related_8(void)
 
     s32 nextMode;
 
-    if (ptr_video_settings1->mode != ptr_video_settings2->mode)
+    if (g_ViFrontData->mode != g_ViBackData->mode)
     {
-        switch (ptr_video_settings2->mode)
+        switch (g_ViBackData->mode)
         {
             case VIDEOMODE_DISABLE_320x240:
             {
@@ -344,7 +344,7 @@ void video_related_8(void)
                 g_viOriginalVstart0 = viMode->fldRegs[0].vStart;
                 g_viOriginalVstart1 = viMode->fldRegs[1].vStart;
 
-                viSet800232BC(0);
+                frBlack(0);
 
                 break;
             }
@@ -373,14 +373,14 @@ void video_related_8(void)
         osViSetSpecialFeatures(OS_VI_DITHER_FILTER_ON | OS_VI_GAMMA_OFF);
     }
 
-    calculatedXScale = (f32)ptr_video_settings2->x / (f32)ptr_video_settings2->bufx;
-    calculatedYScale = (f32)ptr_video_settings2->y / (f32)ptr_video_settings2->bufy;
+    calculatedXScale = (f32)g_ViBackData->x / (f32)g_ViBackData->bufx;
+    calculatedYScale = (f32)g_ViBackData->y / (f32)g_ViBackData->bufy;
 
     // osViBlack requires YScale to be 1.0, otherwise, 
     //     "Using it for YScale factors that are not 1.0 creates the potential
     //     for the video interface to malfunction and enter a state that cannot
     //     be exited without resetting the system."
-    if (ptr_video_settings2->mode == VIDEOMODE_DISABLE_320x240)
+    if (g_ViBackData->mode == VIDEOMODE_DISABLE_320x240)
     {
         calculatedYScale = 1.0f;
     }
@@ -403,7 +403,7 @@ void video_related_8(void)
     g_ViXScales[GET_D_800232C0] = calculatedXScale;
     g_ViYScales[GET_D_800232C0] = calculatedYScale;
     
-    if (ptr_video_settings2->mode == VIDEOMODE_320x240)
+    if (g_ViBackData->mode == VIDEOMODE_320x240)
     {
         g_ViModePtrs[GET_D_800232C0] = &g_viOriginalVideoMode;
 
@@ -430,12 +430,12 @@ void video_related_8(void)
             }
         }
 
-        g_ViModes[GET_D_800232C0].comRegs.width = ptr_video_settings2->bufx;
-        g_ViModes[GET_D_800232C0].comRegs.xScale = ((ptr_video_settings2->bufx * XSCALE_MAX) / SCREEN_WIDTH_MAX);
-        g_ViModes[GET_D_800232C0].fldRegs[0].yScale = ((ptr_video_settings2->bufy * YSCALE_MAX) / SCREEN_HEIGHT_MAX);
-        g_ViModes[GET_D_800232C0].fldRegs[1].yScale = ((ptr_video_settings2->bufy * YSCALE_MAX) / SCREEN_HEIGHT_MAX);
-        g_ViModes[GET_D_800232C0].fldRegs[0].origin = (ptr_video_settings2->bufx * 2);
-        g_ViModes[GET_D_800232C0].fldRegs[1].origin = (ptr_video_settings2->bufx * 2);
+        g_ViModes[GET_D_800232C0].comRegs.width = g_ViBackData->bufx;
+        g_ViModes[GET_D_800232C0].comRegs.xScale = ((g_ViBackData->bufx * XSCALE_MAX) / SCREEN_WIDTH_MAX);
+        g_ViModes[GET_D_800232C0].fldRegs[0].yScale = ((g_ViBackData->bufy * YSCALE_MAX) / SCREEN_HEIGHT_MAX);
+        g_ViModes[GET_D_800232C0].fldRegs[1].yScale = ((g_ViBackData->bufy * YSCALE_MAX) / SCREEN_HEIGHT_MAX);
+        g_ViModes[GET_D_800232C0].fldRegs[0].origin = (g_ViBackData->bufx * 2);
+        g_ViModes[GET_D_800232C0].fldRegs[1].origin = (g_ViBackData->bufx * 2);
 
         registerValue = g_ViModes[GET_D_800232C0].comRegs.hStart;
         registerValue = ADD_LOW_AND_HI_16_MOD(registerValue, g_viHorizontalOffset);
@@ -477,35 +477,35 @@ void video_related_8(void)
 
     if (g_viColorOutputMode != COLORMODE_32BIT)
     {
-        ((struct GfxInfo_s *)g_gfxTaskSettingsList)->cfb = ptr_video_settings2->framebuf;
+        ((struct GfxInfo_s *)g_gfxTaskSettingsList)->cfb = g_ViBackData->framebuf;
     }
     else
     {
         ((struct GfxInfo_s *)g_gfxTaskSettingsList)->cfb = cfb_16[0];
     }
     
-    settings = ptr_video_settings2;
+    settings = g_ViBackData;
 
-    g_viVideoSettings1FrameBufferIndex = (g_viVideoSettings1FrameBufferIndex + 1) % NUM_VIDEO_SETTINGS;
-    g_viVideoSettings2FrameBufferIndex = (g_viVideoSettings2FrameBufferIndex + 1) % NUM_VIDEO_SETTINGS;
+    g_ViFrontIndex = (g_ViFrontIndex + 1) % NUM_VIDEO_SETTINGS;
+    g_ViBackIndex = (g_ViBackIndex + 1) % NUM_VIDEO_SETTINGS;
 
     // first li 44, needs to be signed. (sizeof(VideoSettings) == 44)
-    ptr_video_settings1 = (VideoSettings*)((u8*)&g_videoSettings + (g_viVideoSettings1FrameBufferIndex * (s32)sizeof(VideoSettings)));
-    ptr_video_settings2 = (VideoSettings*)((u8*)&g_videoSettings + (g_viVideoSettings2FrameBufferIndex * (s32)sizeof(VideoSettings)));
+    g_ViFrontData = (VideoSettings*)((u8*)&g_ViDataArray + (g_ViFrontIndex * (s32)sizeof(VideoSettings)));
+    g_ViBackData = (VideoSettings*)((u8*)&g_ViDataArray + (g_ViBackIndex * (s32)sizeof(VideoSettings)));
     
     // second li 44, can be signed or unsigned.
-    bcopy(settings, ptr_video_settings2, sizeof(VideoSettings));
-    ptr_video_settings2->framebuf = cfb_16[g_viVideoSettings2FrameBufferIndex];
+    bcopy(settings, g_ViBackData, sizeof(VideoSettings));
+    g_ViBackData->framebuf = cfb_16[g_ViBackIndex];
 }
 #else
 #ifndef VERSION_EU
 GLOBAL_ASM(
 .text
 glabel video_related_8
-/* 003E98 70003298 3C0D8002 */  lui   $t5, %hi(ptr_video_settings2) 
-/* 003E9C 7000329C 25AD32A8 */  addiu $t5, %lo(ptr_video_settings2) # addiu $t5, $t5, 0x32a8
-/* 003EA0 700032A0 3C0E8002 */  lui   $t6, %hi(ptr_video_settings1) 
-/* 003EA4 700032A4 8DCE32A4 */  lw    $t6, %lo(ptr_video_settings1)($t6)
+/* 003E98 70003298 3C0D8002 */  lui   $t5, %hi(g_ViBackData) 
+/* 003E9C 7000329C 25AD32A8 */  addiu $t5, %lo(g_ViBackData) # addiu $t5, $t5, 0x32a8
+/* 003EA0 700032A0 3C0E8002 */  lui   $t6, %hi(g_ViFrontData) 
+/* 003EA4 700032A4 8DCE32A4 */  lw    $t6, %lo(g_ViFrontData)($t6)
 /* 003EA8 700032A8 8DA80000 */  lw    $t0, ($t5)
 /* 003EAC 700032AC 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 003EB0 700032B0 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -639,7 +639,7 @@ glabel video_related_8
 /* 004088 70003488 AC2F0884 */  sw    $t7, %lo(viMode+0x8)($at)
 /* 00408C 7000348C 8F380044 */  lw    $t8, 0x44($t9)
 /* 004090 70003490 3C018006 */  lui   $at, %hi(viMode+0xC)
-/* 004094 70003494 0C000C64 */  jal   viSet800232BC
+/* 004094 70003494 0C000C64 */  jal   frBlack
 /* 004098 70003498 AC380888 */   sw    $t8, %lo(viMode+0xC)($at)
 /* 00409C 7000349C 1000001B */  b     .L7000350C
 /* 0040A0 700034A0 00000000 */   nop   
@@ -675,10 +675,10 @@ glabel video_related_8
 .L7000350C:
 /* 00410C 7000350C 0C003DEC */  jal   osViSetSpecialFeatures
 /* 004110 70003510 24040042 */   li    $a0, 66
-/* 004114 70003514 3C088002 */  lui   $t0, %hi(ptr_video_settings2) 
-/* 004118 70003518 8D0832A8 */  lw    $t0, %lo(ptr_video_settings2)($t0)
-/* 00411C 7000351C 3C0D8002 */  lui   $t5, %hi(ptr_video_settings2) 
-/* 004120 70003520 25AD32A8 */  addiu $t5, %lo(ptr_video_settings2) # addiu $t5, $t5, 0x32a8
+/* 004114 70003514 3C088002 */  lui   $t0, %hi(g_ViBackData) 
+/* 004118 70003518 8D0832A8 */  lw    $t0, %lo(g_ViBackData)($t0)
+/* 00411C 7000351C 3C0D8002 */  lui   $t5, %hi(g_ViBackData) 
+/* 004120 70003520 25AD32A8 */  addiu $t5, %lo(g_ViBackData) # addiu $t5, $t5, 0x32a8
 /* 004124 70003524 91020000 */  lbu   $v0, ($t0)
 /* 004128 70003528 850F0004 */  lh    $t7, 4($t0)
 .L7000352C:
@@ -1029,16 +1029,16 @@ glabel video_related_8
 /* 004618 70003A18 25CE5000 */  addiu $t6, %lo(cfb_16) # addiu $t6, $t6, 0x5000
 /* 00461C 70003A1C AF2E0058 */  sw    $t6, 0x58($t9)
 .L70003A20:
-/* 004620 70003A20 3C028006 */  lui   $v0, %hi(g_viVideoSettings1FrameBufferIndex)
-/* 004624 70003A24 24420878 */  addiu $v0, %lo(g_viVideoSettings1FrameBufferIndex) # addiu $v0, $v0, 0x878
+/* 004620 70003A20 3C028006 */  lui   $v0, %hi(g_ViFrontIndex)
+/* 004624 70003A24 24420878 */  addiu $v0, %lo(g_ViFrontIndex) # addiu $v0, $v0, 0x878
 /* 004628 70003A28 90580000 */  lbu   $t8, ($v0)
-/* 00462C 70003A2C 3C038006 */  lui   $v1, %hi(g_viVideoSettings2FrameBufferIndex)
+/* 00462C 70003A2C 3C038006 */  lui   $v1, %hi(g_ViBackIndex)
 /* 004630 70003A30 2408002C */  li    $t0, 44
 /* 004634 70003A34 270F0001 */  addiu $t7, $t8, 1
-/* 004638 70003A38 24630879 */  addiu $v1, %lo(g_viVideoSettings2FrameBufferIndex) # addiu $v1, $v1, 0x879
+/* 004638 70003A38 24630879 */  addiu $v1, %lo(g_ViBackIndex) # addiu $v1, $v1, 0x879
 /* 00463C 70003A3C 90790000 */  lbu   $t9, ($v1)
-/* 004640 70003A40 3C078002 */  lui   $a3, %hi(g_videoSettings)
-/* 004644 70003A44 24E73244 */  addiu $a3, %lo(g_videoSettings) # addiu $a3, $a3, 0x3244
+/* 004640 70003A40 3C078002 */  lui   $a3, %hi(g_ViDataArray)
+/* 004644 70003A44 24E73244 */  addiu $a3, %lo(g_ViDataArray) # addiu $a3, $a3, 0x3244
 /* 004648 70003A48 27380001 */  addiu $t8, $t9, 1
 /* 00464C 70003A4C 8DA40000 */  lw    $a0, ($t5)
 /* 004650 70003A50 05E10004 */  bgez  $t7, .L70003A64
@@ -1057,19 +1057,19 @@ glabel video_related_8
 .L70003A80:
 /* 004680 70003A80 01C80019 */  multu $t6, $t0
 /* 004684 70003A84 A06F0000 */  sb    $t7, ($v1)
-/* 004688 70003A88 3C018002 */  lui   $at, %hi(ptr_video_settings1)
+/* 004688 70003A88 3C018002 */  lui   $at, %hi(g_ViFrontData)
 /* 00468C 70003A8C 2406002C */  li    $a2, 44
 /* 004690 70003A90 0000C812 */  mflo  $t9
 /* 004694 70003A94 00F9C021 */  addu  $t8, $a3, $t9
-/* 004698 70003A98 AC3832A4 */  sw    $t8, %lo(ptr_video_settings1)($at)
+/* 004698 70003A98 AC3832A4 */  sw    $t8, %lo(g_ViFrontData)($at)
 /* 00469C 70003A9C 906F0000 */  lbu   $t7, ($v1)
 /* 0046A0 70003AA0 01E80019 */  multu $t7, $t0
 /* 0046A4 70003AA4 00007012 */  mflo  $t6
 /* 0046A8 70003AA8 00EE2821 */  addu  $a1, $a3, $t6
 /* 0046AC 70003AAC 0C003E5C */  jal   bcopy
 /* 0046B0 70003AB0 ADA50000 */   sw    $a1, ($t5)
-/* 0046B4 70003AB4 3C038006 */  lui   $v1, %hi(g_viVideoSettings2FrameBufferIndex)
-/* 0046B8 70003AB8 24630879 */  addiu $v1, %lo(g_viVideoSettings2FrameBufferIndex) # addiu $v1, $v1, 0x879
+/* 0046B4 70003AB4 3C038006 */  lui   $v1, %hi(g_ViBackIndex)
+/* 0046B8 70003AB8 24630879 */  addiu $v1, %lo(g_ViBackIndex) # addiu $v1, $v1, 0x879
 /* 0046BC 70003ABC 90780000 */  lbu   $t8, ($v1)
 /* 0046C0 70003AC0 3C0E803B */  lui   $t6, %hi(cfb_16) # $t6, 0x803b
 /* 0046C4 70003AC4 25CE5000 */  addiu $t6, %lo(cfb_16) # addiu $t6, $t6, 0x5000
@@ -1079,8 +1079,8 @@ glabel video_related_8
 /* 0046D4 70003AD4 01F87823 */  subu  $t7, $t7, $t8
 /* 0046D8 70003AD8 000F7880 */  sll   $t7, $t7, 2
 /* 0046DC 70003ADC 01F87823 */  subu  $t7, $t7, $t8
-/* 0046E0 70003AE0 3C188002 */  lui   $t8, %hi(ptr_video_settings2) 
-/* 0046E4 70003AE4 8F1832A8 */  lw    $t8, %lo(ptr_video_settings2)($t8)
+/* 0046E0 70003AE0 3C188002 */  lui   $t8, %hi(g_ViBackData) 
+/* 0046E4 70003AE4 8F1832A8 */  lw    $t8, %lo(g_ViBackData)($t8)
 /* 0046E8 70003AE8 000F7AC0 */  sll   $t7, $t7, 0xb
 /* 0046EC 70003AEC 01EEC821 */  addu  $t9, $t7, $t6
 /* 0046F0 70003AF0 AF190028 */  sw    $t9, 0x28($t8)
@@ -1094,10 +1094,10 @@ glabel video_related_8
 GLOBAL_ASM(
 .text
 glabel video_related_8
-/* 003A0C 70002E0C 3C078002 */  lui   $a3, %hi(ptr_video_settings2) # $a3, 0x8002
-/* 003A10 70002E10 3C0E8002 */  lui   $t6, %hi(ptr_video_settings1) # $t6, 0x8002
-/* 003A14 70002E14 8DCE1144 */  lw    $t6, %lo(ptr_video_settings1)($t6)
-/* 003A18 70002E18 8CE71148 */  lw    $a3, %lo(ptr_video_settings2)($a3)
+/* 003A0C 70002E0C 3C078002 */  lui   $a3, %hi(g_ViBackData) # $a3, 0x8002
+/* 003A10 70002E10 3C0E8002 */  lui   $t6, %hi(g_ViFrontData) # $t6, 0x8002
+/* 003A14 70002E14 8DCE1144 */  lw    $t6, %lo(g_ViFrontData)($t6)
+/* 003A18 70002E18 8CE71148 */  lw    $a3, %lo(g_ViBackData)($a3)
 /* 003A1C 70002E1C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 003A20 70002E20 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 003A24 70002E24 91CF0000 */  lbu   $t7, ($t6)
@@ -1180,7 +1180,7 @@ glabel video_related_8
 /* 003B40 70002F40 AC383E54 */  sw    $t8, %lo(viMode+0x8)($at)
 /* 003B44 70002F44 8DCF0044 */  lw    $t7, 0x44($t6)
 /* 003B48 70002F48 3C018005 */  lui   $at, %hi(viMode+0xC) # $at, 0x8005
-/* 003B4C 70002F4C 0C000B41 */  jal   viSet800232BC
+/* 003B4C 70002F4C 0C000B41 */  jal   frBlack
 /* 003B50 70002F50 AC2F3E58 */   sw    $t7, %lo(viMode+0xC)($at)
 /* 003B54 70002F54 10000010 */  b     .L70002F98
 /* 003B58 70002F58 00000000 */   nop   
@@ -1203,8 +1203,8 @@ glabel video_related_8
 .L70002F98:
 /* 003B98 70002F98 0C003BF8 */  jal   osViSetSpecialFeatures
 /* 003B9C 70002F9C 24040042 */   li    $a0, 66
-/* 003BA0 70002FA0 3C078002 */  lui   $a3, %hi(ptr_video_settings2) # $a3, 0x8002
-/* 003BA4 70002FA4 8CE71148 */  lw    $a3, %lo(ptr_video_settings2)($a3)
+/* 003BA0 70002FA0 3C078002 */  lui   $a3, %hi(g_ViBackData) # $a3, 0x8002
+/* 003BA4 70002FA4 8CE71148 */  lw    $a3, %lo(g_ViBackData)($a3)
 /* 003BA8 70002FA8 90E30000 */  lbu   $v1, ($a3)
 /* 003BAC 70002FAC 84EE0004 */  lh    $t6, 4($a3)
 .L70002FB0:
@@ -1540,18 +1540,18 @@ glabel video_related_8
 /* 004058 70003458 25CEB000 */  addiu $t6, %lo(cfb_16) # addiu $t6, $t6, -0x5000
 /* 00405C 7000345C AF0E0058 */  sw    $t6, 0x58($t8)
 .L70003460:
-/* 004060 70003460 3C028005 */  lui   $v0, %hi(g_viVideoSettings1FrameBufferIndex) # $v0, 0x8005
-/* 004064 70003464 24423E48 */  addiu $v0, %lo(g_viVideoSettings1FrameBufferIndex) # addiu $v0, $v0, 0x3e48
+/* 004060 70003460 3C028005 */  lui   $v0, %hi(g_ViFrontIndex) # $v0, 0x8005
+/* 004064 70003464 24423E48 */  addiu $v0, %lo(g_ViFrontIndex) # addiu $v0, $v0, 0x3e48
 /* 004068 70003468 904F0000 */  lbu   $t7, ($v0)
-/* 00406C 7000346C 3C048002 */  lui   $a0, %hi(ptr_video_settings2) # $a0, 0x8002
-/* 004070 70003470 8C841148 */  lw    $a0, %lo(ptr_video_settings2)($a0)
+/* 00406C 7000346C 3C048002 */  lui   $a0, %hi(g_ViBackData) # $a0, 0x8002
+/* 004070 70003470 8C841148 */  lw    $a0, %lo(g_ViBackData)($a0)
 /* 004074 70003474 25F90001 */  addiu $t9, $t7, 1
-/* 004078 70003478 3C038005 */  lui   $v1, %hi(g_viVideoSettings2FrameBufferIndex) # $v1, 0x8005
+/* 004078 70003478 3C038005 */  lui   $v1, %hi(g_ViBackIndex) # $v1, 0x8005
 /* 00407C 7000347C 2408002C */  li    $t0, 44
-/* 004080 70003480 24633E49 */  addiu $v1, %lo(g_viVideoSettings2FrameBufferIndex) # addiu $v1, $v1, 0x3e49
+/* 004080 70003480 24633E49 */  addiu $v1, %lo(g_ViBackIndex) # addiu $v1, $v1, 0x3e49
 /* 004084 70003484 90780000 */  lbu   $t8, ($v1)
-/* 004088 70003488 3C078002 */  lui   $a3, %hi(g_videoSettings) # $a3, 0x8002
-/* 00408C 7000348C 24E710E4 */  addiu $a3, %lo(g_videoSettings) # addiu $a3, $a3, 0x10e4
+/* 004088 70003488 3C078002 */  lui   $a3, %hi(g_ViDataArray) # $a3, 0x8002
+/* 00408C 7000348C 24E710E4 */  addiu $a3, %lo(g_ViDataArray) # addiu $a3, $a3, 0x10e4
 /* 004090 70003490 07210004 */  bgez  $t9, .L700034A4
 /* 004094 70003494 332E0001 */   andi  $t6, $t9, 1
 /* 004098 70003498 11C00002 */  beqz  $t6, .L700034A4
@@ -1569,22 +1569,22 @@ glabel video_related_8
 .L700034C4:
 /* 0040C4 700034C4 01C80019 */  multu $t6, $t0
 /* 0040C8 700034C8 A0790000 */  sb    $t9, ($v1)
-/* 0040CC 700034CC 3C018002 */  lui   $at, %hi(ptr_video_settings1) # $at, 0x8002
-/* 0040D0 700034D0 3C058002 */  lui   $a1, %hi(ptr_video_settings2) # $a1, 0x8002
+/* 0040CC 700034CC 3C018002 */  lui   $at, %hi(g_ViFrontData) # $at, 0x8002
+/* 0040D0 700034D0 3C058002 */  lui   $a1, %hi(g_ViBackData) # $a1, 0x8002
 /* 0040D4 700034D4 2406002C */  li    $a2, 44
 /* 0040D8 700034D8 0000C012 */  mflo  $t8
 /* 0040DC 700034DC 00F87821 */  addu  $t7, $a3, $t8
-/* 0040E0 700034E0 AC2F1144 */  sw    $t7, %lo(ptr_video_settings1)($at)
+/* 0040E0 700034E0 AC2F1144 */  sw    $t7, %lo(g_ViFrontData)($at)
 /* 0040E4 700034E4 90790000 */  lbu   $t9, ($v1)
-/* 0040E8 700034E8 3C018002 */  lui   $at, %hi(ptr_video_settings2) # $at, 0x8002
+/* 0040E8 700034E8 3C018002 */  lui   $at, %hi(g_ViBackData) # $at, 0x8002
 /* 0040EC 700034EC 03280019 */  multu $t9, $t0
 /* 0040F0 700034F0 00007012 */  mflo  $t6
 /* 0040F4 700034F4 00EEC021 */  addu  $t8, $a3, $t6
-/* 0040F8 700034F8 AC381148 */  sw    $t8, %lo(ptr_video_settings2)($at)
+/* 0040F8 700034F8 AC381148 */  sw    $t8, %lo(g_ViBackData)($at)
 /* 0040FC 700034FC 0C003C68 */  jal   bcopy
-/* 004100 70003500 8CA51148 */   lw    $a1, %lo(ptr_video_settings2)($a1)
-/* 004104 70003504 3C038005 */  lui   $v1, %hi(g_viVideoSettings2FrameBufferIndex) # $v1, 0x8005
-/* 004108 70003508 24633E49 */  addiu $v1, %lo(g_viVideoSettings2FrameBufferIndex) # addiu $v1, $v1, 0x3e49
+/* 004100 70003500 8CA51148 */   lw    $a1, %lo(g_ViBackData)($a1)
+/* 004104 70003504 3C038005 */  lui   $v1, %hi(g_ViBackIndex) # $v1, 0x8005
+/* 004108 70003508 24633E49 */  addiu $v1, %lo(g_ViBackIndex) # addiu $v1, $v1, 0x3e49
 /* 00410C 7000350C 906F0000 */  lbu   $t7, ($v1)
 /* 004110 70003510 3C0E803B */  lui   $t6, %hi(cfb_16) # $t6, 0x803b
 /* 004114 70003514 25CEB000 */  addiu $t6, %lo(cfb_16) # addiu $t6, $t6, -0x5000
@@ -1594,8 +1594,8 @@ glabel video_related_8
 /* 004124 70003524 032FC821 */  addu  $t9, $t9, $t7
 /* 004128 70003528 0019C880 */  sll   $t9, $t9, 2
 /* 00412C 7000352C 032FC821 */  addu  $t9, $t9, $t7
-/* 004130 70003530 3C0F8002 */  lui   $t7, %hi(ptr_video_settings2) # $t7, 0x8002
-/* 004134 70003534 8DEF1148 */  lw    $t7, %lo(ptr_video_settings2)($t7)
+/* 004130 70003530 3C0F8002 */  lui   $t7, %hi(g_ViBackData) # $t7, 0x8002
+/* 004134 70003534 8DEF1148 */  lw    $t7, %lo(g_ViBackData)($t7)
 /* 004138 70003538 0019CAC0 */  sll   $t9, $t9, 0xb
 /* 00413C 7000353C 032EC021 */  addu  $t8, $t9, $t6
 /* 004140 70003540 ADF80028 */  sw    $t8, 0x28($t7)
@@ -1608,20 +1608,20 @@ glabel video_related_8
 #endif
 
 
-void viSet800232B4(f32 param_1)
+void viShake(f32 intensity)
 {
-    if (param_1 > 14.0f)
+    if (intensity > 14.0f)
     {
-        param_1 = 14.0f;
+        intensity = 14.0f;
     }
 
-    if (param_1 < 0.0f)
+    if (intensity < 0.0f)
     {
-        param_1 = 0.0f;
+        intensity = 0.0f;
     }
 
-    D_800232B4 = (s32)param_1;
-    D_800232B8 = 10;
+    g_ViShakeIntensity = (s32)intensity;
+    g_ViShakeTimer = 10;
 }
 
 void viRecvMesg(int count)
@@ -1642,9 +1642,9 @@ void viSetVideoMode(s32 m)
     //if (2 < iStack00000014) {
     //    assertPrint_8291E690(".\\ported\\fr.cpp",0x22b,"Assertion failed: m<MD_MAXIMUM");
     //}
-    ptr_video_settings2->mode = m;
-    ptr_video_settings2->x = ptr_video_settings2->bufx = g_viRuntimeScreenWidths[m];
-    ptr_video_settings2->y = ptr_video_settings2->bufy = g_viRuntimeScreenHeights[m];
+    g_ViBackData->mode = m;
+    g_ViBackData->x = g_ViBackData->bufx = g_viRuntimeScreenWidths[m];
+    g_ViBackData->y = g_ViBackData->bufy = g_viRuntimeScreenHeights[m];
 }
 
 void viSetColorMode16Bit(void)
@@ -1659,17 +1659,17 @@ void viSetColorMode32Bit(void)
 
 u8 *viGetFrameBuf2(void)
 {
-    return ptr_video_settings2->framebuf;
+    return g_ViBackData->framebuf;
 }
 
 u8 *viGetFrameBuf1(void)
 {
-    return ptr_video_settings1->framebuf;
+    return g_ViFrontData->framebuf;
 }
 
 void viSetFrameBuf2(u8 *buf)
 {
-    ptr_video_settings2->framebuf = buf;
+    g_ViBackData->framebuf = buf;
 }
 
 u16 viGetPerspNorm(void)
@@ -1681,15 +1681,15 @@ Gfx *video_related_F(Gfx *gdl)
 {
     if (g_CurrentPlayer != NULL)
     {
-        g_CurrentPlayer->viewports[g_viVideoSettings2FrameBufferIndex].vp.vscale[0] = (ptr_video_settings2->viewx * 2);
-        g_CurrentPlayer->viewports[g_viVideoSettings2FrameBufferIndex].vp.vtrans[0] = (ptr_video_settings2->viewx * 2) + (ptr_video_settings2->viewleft * 4);
-        g_CurrentPlayer->viewports[g_viVideoSettings2FrameBufferIndex].vp.vscale[1] = (ptr_video_settings2->viewy * 2);
-        g_CurrentPlayer->viewports[g_viVideoSettings2FrameBufferIndex].vp.vtrans[1] = (ptr_video_settings2->viewy * 2) + (ptr_video_settings2->viewtop * 4);
+        g_CurrentPlayer->viewports[g_ViBackIndex].vp.vscale[0] = (g_ViBackData->viewx * 2);
+        g_CurrentPlayer->viewports[g_ViBackIndex].vp.vtrans[0] = (g_ViBackData->viewx * 2) + (g_ViBackData->viewleft * 4);
+        g_CurrentPlayer->viewports[g_ViBackIndex].vp.vscale[1] = (g_ViBackData->viewy * 2);
+        g_CurrentPlayer->viewports[g_ViBackIndex].vp.vtrans[1] = (g_ViBackData->viewy * 2) + (g_ViBackData->viewtop * 4);
     }
 
-    gSPViewport(gdl++, OS_K0_TO_PHYSICAL(&g_CurrentPlayer->viewports[g_viVideoSettings2FrameBufferIndex]));
+    gSPViewport(gdl++, OS_K0_TO_PHYSICAL(&g_CurrentPlayer->viewports[g_ViBackIndex]));
     g_viProjectionMatrix = dynAllocateMatrix();    
-    guPerspectiveF(g_viProjectionMatrixF, &g_viPerspNorm, ptr_video_settings2->fovy, ptr_video_settings2->aspect, ptr_video_settings2->znear, ptr_video_settings2->zfar, 1.0f);
+    guPerspectiveF(g_viProjectionMatrixF, &g_viPerspNorm, g_ViBackData->fovy, g_ViBackData->aspect, g_ViBackData->znear, g_ViBackData->zfar, 1.0f);
     guMtxF2L(g_viProjectionMatrixF, g_viProjectionMatrix);
     gSPMatrix(gdl++, OS_K0_TO_PHYSICAL(g_viProjectionMatrix), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
     gSPPerspNormalize(gdl++, g_viPerspNorm);
@@ -1698,11 +1698,11 @@ Gfx *video_related_F(Gfx *gdl)
 
     if (g_viColorOutputMode != COLORMODE_32BIT)
     {
-        gDPSetColorImage(gdl++, G_IM_FMT_RGBA, G_IM_SIZ_16b, ptr_video_settings2->bufx, OS_K0_TO_PHYSICAL(ptr_video_settings2->framebuf));
+        gDPSetColorImage(gdl++, G_IM_FMT_RGBA, G_IM_SIZ_16b, g_ViBackData->bufx, OS_K0_TO_PHYSICAL(g_ViBackData->framebuf));
     }
     else
     {
-        gDPSetColorImage(gdl++, G_IM_FMT_RGBA, G_IM_SIZ_32b, ptr_video_settings2->bufx, OS_K0_TO_PHYSICAL(cfb_16[0]));
+        gDPSetColorImage(gdl++, G_IM_FMT_RGBA, G_IM_SIZ_32b, g_ViBackData->bufx, OS_K0_TO_PHYSICAL(cfb_16[0]));
     }
 
     return gdl;
@@ -1710,7 +1710,7 @@ Gfx *video_related_F(Gfx *gdl)
 
 Gfx *viClearZBufCurrentPlayer(Gfx *gdl)
 {
-    if (ptr_video_settings2->usezbuf != 0)
+    if (g_ViBackData->usezbuf != 0)
     {
         gdl = zbufClearCurrentPlayer(zbufInit(gdl));
     }
@@ -1721,7 +1721,7 @@ Gfx *viClearZBufCurrentPlayer(Gfx *gdl)
 Gfx *viFillScreen(Gfx *gdl)
 {
 	gDPSetCycleType(gdl++, G_CYC_FILL);
-	gDPFillRectangle(gdl++, 0, 0, (ptr_video_settings2->bufx - 1), (ptr_video_settings2->bufy - 1));
+	gDPFillRectangle(gdl++, 0, 0, (g_ViBackData->bufx - 1), (g_ViBackData->bufy - 1));
 	gDPPipeSync(gdl++);
 
     return gdl;
@@ -1802,115 +1802,115 @@ s32 viGetHorizontalOffset(void)
 
 void viSetBuf(s16 x, s16 y)
 {
-    ptr_video_settings2->bufx = x;
-    ptr_video_settings2->bufy = y;
+    g_ViBackData->bufx = x;
+    g_ViBackData->bufy = y;
 }
 
 s16 viGetBufX(void)
 {
-    return ptr_video_settings2->bufx;
+    return g_ViBackData->bufx;
 }
 
 s16 viGetBufY(void)
 {
-    return ptr_video_settings2->bufy;
+    return g_ViBackData->bufy;
 }
 
 void viSetXY(s16 x, s16 y)
 {
-    ptr_video_settings2->x = x;
-    ptr_video_settings2->y = y;
+    g_ViBackData->x = x;
+    g_ViBackData->y = y;
 }
 
 s16 viGetX(void)
 {
-    return ptr_video_settings2->x;
+    return g_ViBackData->x;
 }
 
 s16 viGetY(void)
 {
-    return ptr_video_settings2->y;
+    return g_ViBackData->y;
 }
 
 void viSetViewSize(s16 x, s16 y)
 {
-    ptr_video_settings2->viewx = x;
-    ptr_video_settings2->viewy = y;
-    currentPlayerSetScreenSize(ptr_video_settings2->viewx, ptr_video_settings2->viewy);
+    g_ViBackData->viewx = x;
+    g_ViBackData->viewy = y;
+    currentPlayerSetScreenSize(g_ViBackData->viewx, g_ViBackData->viewy);
     currentPlayerSetCameraScale();
 }
 
 s16 viGetViewWidth(void)
 {
-    return ptr_video_settings2->viewx;
+    return g_ViBackData->viewx;
 }
 
 s16 viGetViewHeight(void)
 {
-    return ptr_video_settings2->viewy;
+    return g_ViBackData->viewy;
 }
 
 void viSetViewPosition(s16 left, s16 top)
 {
-    ptr_video_settings2->viewleft = left;
-    ptr_video_settings2->viewtop = top;
-    currentPlayerSetScreenPosition(ptr_video_settings2->viewleft, ptr_video_settings2->viewtop);
+    g_ViBackData->viewleft = left;
+    g_ViBackData->viewtop = top;
+    currentPlayerSetScreenPosition(g_ViBackData->viewleft, g_ViBackData->viewtop);
 }
 
 s16 viGetViewLeft(void)
 {
-    return ptr_video_settings2->viewleft;
+    return g_ViBackData->viewleft;
 }
 
 s16 viGetViewTop(void)
 {
-    return ptr_video_settings2->viewtop;
+    return g_ViBackData->viewtop;
 }
 
 void viSetUseZBuf(s32 usezbuf)
 {
-  ptr_video_settings2->usezbuf = usezbuf;
+  g_ViBackData->usezbuf = usezbuf;
 }
 
 void viSetFovY(f32 fovy)
 {
-    ptr_video_settings2->fovy = fovy;
-    currentPlayerSetPerspective(ptr_video_settings2->znear, ptr_video_settings2->fovy, ptr_video_settings2->aspect);
+    g_ViBackData->fovy = fovy;
+    currentPlayerSetPerspective(g_ViBackData->znear, g_ViBackData->fovy, g_ViBackData->aspect);
     currentPlayerSetCameraScale();
 }
 
 void viSetAspect(f32 aspect)
 {
-    ptr_video_settings2->aspect = aspect;
-    currentPlayerSetPerspective(ptr_video_settings2->znear, ptr_video_settings2->fovy, ptr_video_settings2->aspect);
+    g_ViBackData->aspect = aspect;
+    currentPlayerSetPerspective(g_ViBackData->znear, g_ViBackData->fovy, g_ViBackData->aspect);
     currentPlayerSetCameraScale();
 }
 
 f32 viGetFovY(void)
 {
-    return ptr_video_settings2->fovy;
+    return g_ViBackData->fovy;
 }
 
 void viSetFov(f32 fovx, f32 fovy)
 {
-    ptr_video_settings2->fovy = fovy;
-    ptr_video_settings2->aspect = (f32) (fovx / fovy);
-    currentPlayerSetPerspective(ptr_video_settings2->znear, ptr_video_settings2->fovy, ptr_video_settings2->aspect);
+    g_ViBackData->fovy = fovy;
+    g_ViBackData->aspect = (f32) (fovx / fovy);
+    currentPlayerSetPerspective(g_ViBackData->znear, g_ViBackData->fovy, g_ViBackData->aspect);
     currentPlayerSetCameraScale();
 }
 
 void viSetZRange(f32 near, f32 far)
 {
-    ptr_video_settings2->znear = near;
-    ptr_video_settings2->zfar = far;
-    currentPlayerSetPerspective(ptr_video_settings2->znear, ptr_video_settings2->fovy, ptr_video_settings2->aspect);
+    g_ViBackData->znear = near;
+    g_ViBackData->zfar = far;
+    currentPlayerSetPerspective(g_ViBackData->znear, g_ViBackData->fovy, g_ViBackData->aspect);
     currentPlayerSetCameraScale();
 }
 
 void viGetZRange(f32 *zrange)
 {
-    zrange[0] = ptr_video_settings2->znear;
-    zrange[1] = ptr_video_settings2->zfar;
+    zrange[0] = g_ViBackData->znear;
+    zrange[1] = g_ViBackData->zfar;
 }
 
 Gfx *viSetFillColor(Gfx *gdl, s32 r, s32 g, s32 b)
@@ -1950,7 +1950,7 @@ void indyGrabJpg16bit(void)
     }
     
     sprintf(buffer, "grab.%d.temp.uix", *pgrabnum);
-    indycommHostSendDump((u8*)&buffer, (u8*)ptr_video_settings2->framebuf, (viGetX() * viGetY() * 2));
+    indycommHostSendDump((u8*)&buffer, (u8*)g_ViBackData->framebuf, (viGetX() * viGetY() * 2));
 
     sprintf(buffer, "uix2pix grab.%d.temp.uix", *pgrabnum);
     indycommHostSendCmd((u8*)&buffer);
@@ -2034,7 +2034,7 @@ void indyGrabRgb16bit(void)
     }
     
     sprintf(buffer, "grab.%d.temp.uix", *pgrabnum);
-    indycommHostSendDump((u8*)&buffer, (u8*)ptr_video_settings2->framebuf, (viGetX() * viGetY() * 2));
+    indycommHostSendDump((u8*)&buffer, (u8*)g_ViBackData->framebuf, (viGetX() * viGetY() * 2));
 
     sprintf(buffer, "uix2pix grab.%d.temp.uix", *pgrabnum);
     indycommHostSendCmd((u8*)&buffer);

@@ -8,7 +8,7 @@ void cleanupExplosions(void)
     s32 i;
   
     numExplosionEntries = 0;
-    viSet800232B4(0.0);
+    viShake(0.0);
 
     if (ptr_explosion_buf != NULL)
     {
