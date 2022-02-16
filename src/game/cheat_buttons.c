@@ -868,7 +868,7 @@ void cheatButtonActivateRelated(void)
         {
             if ((g_CurrentPlayer->can_display_cheat_text >= info->count_of_something) && ((info->maskfield & bitmask) != 0))
             {
-                id_index = ((g_CurrentPlayer->cheatindex - info->count_of_something) + CHEAT_20) % CHEAT_20;
+                id_index = ((g_CurrentPlayer->something_with_cheat_text - info->count_of_something) + CHEAT_20) % CHEAT_20;
 
                 find_index=0;
                 for (; find_index < info->count_of_something; find_index++)
