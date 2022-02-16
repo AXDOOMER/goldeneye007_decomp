@@ -868,7 +868,7 @@ void cheatButtonActivateRelated(void)
         {
             if ((g_CurrentPlayer->can_display_cheat_text >= info->count_of_something) && ((info->maskfield & bitmask) != 0))
             {
-                id_index = ((g_CurrentPlayer->something_with_cheat_text - info->count_of_something) + CHEAT_20) % CHEAT_20;
+                id_index = ((g_CurrentPlayer->cheatindex - info->count_of_something) + CHEAT_20) % CHEAT_20;
 
                 find_index=0;
                 for (; find_index < info->count_of_something; find_index++)
@@ -911,10 +911,10 @@ void cheatButtonActivateRelated(void)
  * decomp status:
  * - compiles: yes
  * - stack resize: ok
- * - identical instructions: fail
+ * - identical instructions: ok
  * - identical registers: fail
  * 
- * notes: the u16/bit operators are not playing nicely, just a few misordered instructions there.
+ * notes: just register swaps starting at jgb_trig
  */
 void cheat_buttons_mp_related(void)
 {
@@ -925,27 +925,28 @@ void cheat_buttons_mp_related(void)
     jgb = joyGetButtons(get_cur_playernum(), ANY_BUTTON);
     jgbptf = joyGetButtonsPressedThisFrame(get_cur_playernum(), ANY_BUTTON);
     jgb_trig = (jgb & (L_TRIG | R_TRIG));
-    jgbptf &= ~(jgb_trig & ANY_BUTTON);
     jgb &= ~(jgb & (L_TRIG | R_TRIG));
-
+    jgbptf &= ~(jgb_trig);
+    
+    
     if (jgbptf != 0)
-    {
+    {       
         if ((cheatButtonCountBitsSet(jgbptf) == 1) && ((cheatButtonCountBitsSet(jgb) == 1)))
         {
-            g_CurrentPlayer->cheat_display_text_related[g_CurrentPlayer->something_with_cheat_text] = jgbptf | jgb_trig;
-            g_CurrentPlayer->something_with_cheat_text = (u8) ((g_CurrentPlayer->something_with_cheat_text + 1) % CHEAT_20);
+            g_CurrentPlayer->cheat_display_text_related[g_CurrentPlayer->something_with_cheat_text] =  jgb_trig | jgbptf;
+            g_CurrentPlayer->something_with_cheat_text =  (g_CurrentPlayer->something_with_cheat_text + 1) % CHEAT_20;
 
             if ((s32) g_CurrentPlayer->can_display_cheat_text < CHEAT_20)
             {
                 g_CurrentPlayer->can_display_cheat_text += 1;
             }
-        }
+        } 
         else
         {
             g_CurrentPlayer->can_display_cheat_text = 0;
         }
     }
-
+    
     cheatButtonActivateRelated();
 }
 #else
