@@ -195,7 +195,7 @@ u16 mBtnCheatInvisibilityMulti[] = {
     L_TRIG | R_TRIG | D_CBUTTONS  
 };
 //D:8003F4E4
-u16 mBtnCheatInvalid2[] = {
+u16 mBtnCheatDam[] = {
     L_TRIG | R_TRIG | U_CBUTTONS  ,
              R_TRIG | L_JPAD,
              R_TRIG | D_CBUTTONS ,
@@ -429,7 +429,7 @@ u16 mBtnCheatCradle[] = {
              R_TRIG | R_JPAD
 };
 //D:8003F64C
-u16 mBtnCheatAztech[] = {
+u16 mBtnCheatAztek[] = {
              R_TRIG | D_CBUTTONS ,
              R_TRIG | L_JPAD,
     L_TRIG |          R_JPAD,
@@ -706,7 +706,7 @@ u16 mBtnCheat2xLaser[] = {
     L_TRIG | R_TRIG | U_JPAD
 };
 //D:8003F7F8
-u16 mBtnCheatUnlockCheats[] = {
+u16 mBtnCheatUnlockAllGuns[] = {
                       D_JPAD,
                       L_JPAD,
                       U_CBUTTONS,
@@ -725,80 +725,82 @@ u32 D_8003F808 = 0x2000004;
  * Address 0x8003F80C.
  */
 CheatInfo g_CheatInfo[] = {
-    {          CHEAT_EXTRA_MP_CHARS,  0xA, 0, 0, mBtnCheatExtraMPChars,                       0, 0,  /* 0x31 */ CHEAT_MASK_GLOBAL | CHEAT_MASK_16 | CHEAT_MASK_1},
-    {           CHEAT_INVINCIBILITY,  0xA, 0, 0, mBtnCheatInvincibility,       TEXT(LMISC,0x00), 0,  /* 0x06 */ CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
-    {                 CHEAT_ALLGUNS,  0xA, 0, 0, mBtnCheatAllGuns,             TEXT(LMISC,0x01), 0,  /* 0x02 */ CHEAT_MASK_2},
-    {                 CHEAT_MAXAMMO,  0xA, 0, 0, mBtnCheatMaxAmmo,                            0, 0,  /* 0x16 */ CHEAT_MASK_16 | CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
-    {                           0x5,  0xA, 0, 0, mBtnCheatInvalid,                            0, 0,  /* 0x16 */ CHEAT_MASK_16 | CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
-    {CHEAT_DEACTIVATE_INVINCIBILITY,  0xA, 0, 0, mBtnCheatDeactivateInvincibilityMulti,       0, 0,  /* 0x34 */ CHEAT_MASK_GLOBAL | CHEAT_MASK_16 | CHEAT_MASK_MULTIPLAYER},
-    {                CHEAT_LINEMODE,  0xA, 0, 0, mBtnCheatLineMode,            TEXT(LMISC,0x37), 0,  /* 0x66 */ CHEAT_MASK_64 | CHEAT_MASK_GLOBAL | CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
-    {               CHEAT_2X_HEALTH,    0, 0, 0,                0,                            0, 0,  /* 0x16 */ CHEAT_MASK_16 | CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
-    {                CHEAT_2X_ARMOR,    0, 0, 0,                0,                            0, 0,  /* 0x16 */ CHEAT_MASK_16 | CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
-    {            CHEAT_INVISIBILITY,  0xA, 0, 0, mBtnCheatInvisibility,        TEXT(LMISC,0x04), 0,  /* 0x62 */ CHEAT_MASK_64 | CHEAT_MASK_GLOBAL | CHEAT_MASK_2},
-    {           CHEAT_INFINITE_AMMO,    0, 0, 0,                0,             TEXT(LMISC,0x06), 0,  /* 0x66 */ CHEAT_MASK_64 | CHEAT_MASK_GLOBAL | CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
-    {                 CHEAT_DK_MODE,    0, 0, 0,                0,             TEXT(LMISC,0x07), 0,  /* 0x26 */ CHEAT_MASK_GLOBAL | CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
-    {           CHEAT_EXTRA_WEAPONS,    0, 0, 0,                0,                            0, 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_2},
-    {               CHEAT_TINY_BOND,    0, 0, 0,                0,             TEXT(LMISC,0x08), 0,  /* 0x02 */ CHEAT_MASK_2},
-    {               CHEAT_PAINTBALL,    0, 0, 0,                0,             TEXT(LMISC,0x38), 0,  /* 0x66 */ CHEAT_MASK_64 | CHEAT_MASK_GLOBAL | CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
-    {              CHEAT_10X_HEALTH,    0, 0, 0,                0,                            0, 0,  /* 0x16 */ CHEAT_MASK_16 | CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
-    {                  CHEAT_MAGNUM,    0, 0, 0,                0,             TEXT(LMISC,0x0A), 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_2},
-    {                   CHEAT_LASER,    0, 0, 0,                0,             TEXT(LMISC,0x0B), 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_2},
-    {              CHEAT_GOLDEN_GUN,    0, 0, 0,                0,             TEXT(LMISC,0x0C), 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_2},
-    {              CHEAT_SILVER_PP7,    0, 0, 0,                0,             TEXT(LMISC,0x0D), 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_2},
-    {                CHEAT_GOLD_PP7,    0, 0, 0,                0,             TEXT(LMISC,0x0E), 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_2},
-    {                          0x16,  0xA, 0, 0, mBtnCheatInvisibilityMulti,                  0, 0,  /* 0x12 */ CHEAT_MASK_MULTIPLAYER},
-    {             CHEAT_NO_RADAR_MP,    0, 0, 0,                0,             TEXT(LMISC,0x43), 0,  /* 0x64 */ CHEAT_MASK_64 | CHEAT_MASK_GLOBAL | CHEAT_MASK_MULTIPLAYER},
-    {              CHEAT_TURBO_MODE,    0, 0, 0,                0,             TEXT(LMISC,0x40), 0,  /* 0x66 */ CHEAT_MASK_64 | CHEAT_MASK_GLOBAL | CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
+    {          CHEAT_EXTRA_MP_CHARS,  0xA, 0, 0, mBtnCheatExtraMPChars,                       0, 0,  /* 0x31 */ CHEAT_MASK_GLOBAL | CHEAT_MASK_16 | CHEAT_MASK_MENUS}, 
+    {           CHEAT_INVINCIBILITY,  0xA, 0, 0, mBtnCheatInvincibility,       TEXT(LMISC,0x00), 0,  /* 0x06 */ CHEAT_MASK_MPGAME | CHEAT_MASK_SPGAME}, 
+    {                 CHEAT_ALLGUNS,  0xA, 0, 0, mBtnCheatAllGuns,             TEXT(LMISC,0x01), 0,  /* 0x02 */ CHEAT_MASK_SPGAME}, 
+    {                 CHEAT_MAXAMMO,  0xA, 0, 0, mBtnCheatMaxAmmo,                            0, 0,  /* 0x16 */ CHEAT_MASK_16 | CHEAT_MASK_MPGAME | CHEAT_MASK_SPGAME},
+    {   CHEAT_DEBUG_RETURN_SAVED_RA,  0xA, 0, 0, mBtnCheatInvalid,                            0, 0,  /* 0x16 */ CHEAT_MASK_16 | CHEAT_MASK_MPGAME | CHEAT_MASK_SPGAME},
+    {CHEAT_DEACTIVATE_INVINCIBILITY,  0xA, 0, 0, mBtnCheatDeactivateInvincibilityMulti,       0, 0,  /* 0x34 */ CHEAT_MASK_GLOBAL | CHEAT_MASK_16 | CHEAT_MASK_MPGAME},
+    {                CHEAT_LINEMODE,  0xA, 0, 0, mBtnCheatLineMode,            TEXT(LMISC,0x37), 0,  /* 0x66 */ CHEAT_MASK_TOGGLE | CHEAT_MASK_GLOBAL | CHEAT_MASK_MPGAME | CHEAT_MASK_SPGAME},
+    {               CHEAT_2X_HEALTH,    0, 0, 0,                0,                            0, 0,  /* 0x16 */ CHEAT_MASK_16 | CHEAT_MASK_MPGAME | CHEAT_MASK_SPGAME},
+    {                CHEAT_2X_ARMOR,    0, 0, 0,                0,                            0, 0,  /* 0x16 */ CHEAT_MASK_16 | CHEAT_MASK_MPGAME | CHEAT_MASK_SPGAME},
+    {            CHEAT_INVISIBILITY,  0xA, 0, 0, mBtnCheatInvisibility,        TEXT(LMISC,0x04), 0,  /* 0x62 */ CHEAT_MASK_TOGGLE | CHEAT_MASK_GLOBAL | CHEAT_MASK_SPGAME},
+    {           CHEAT_INFINITE_AMMO,    0, 0, 0,                0,             TEXT(LMISC,0x06), 0,  /* 0x66 */ CHEAT_MASK_TOGGLE | CHEAT_MASK_GLOBAL | CHEAT_MASK_MPGAME | CHEAT_MASK_SPGAME},
+    {                 CHEAT_DK_MODE,    0, 0, 0,                0,             TEXT(LMISC,0x07), 0,  /* 0x26 */ CHEAT_MASK_GLOBAL | CHEAT_MASK_MPGAME | CHEAT_MASK_SPGAME},
+    {           CHEAT_EXTRA_WEAPONS,    0, 0, 0,                0,                            0, 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_SPGAME},
+    {               CHEAT_TINY_BOND,    0, 0, 0,                0,             TEXT(LMISC,0x08), 0,  /* 0x02 */ CHEAT_MASK_SPGAME},
+    {               CHEAT_PAINTBALL,    0, 0, 0,                0,             TEXT(LMISC,0x38), 0,  /* 0x66 */ CHEAT_MASK_TOGGLE | CHEAT_MASK_GLOBAL | CHEAT_MASK_MPGAME | CHEAT_MASK_SPGAME},
+    {              CHEAT_10X_HEALTH,    0, 0, 0,                0,                            0, 0,  /* 0x16 */ CHEAT_MASK_16 | CHEAT_MASK_MPGAME | CHEAT_MASK_SPGAME},
+    {                  CHEAT_MAGNUM,    0, 0, 0,                0,             TEXT(LMISC,0x0A), 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_SPGAME},
+    {                   CHEAT_LASER,    0, 0, 0,                0,             TEXT(LMISC,0x0B), 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_SPGAME},
+    {              CHEAT_GOLDEN_GUN,    0, 0, 0,                0,             TEXT(LMISC,0x0C), 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_SPGAME},
+    {              CHEAT_SILVER_PP7,    0, 0, 0,                0,             TEXT(LMISC,0x0D), 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_SPGAME},
+    {                CHEAT_GOLD_PP7,    0, 0, 0,                0,             TEXT(LMISC,0x0E), 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_SPGAME},
+    {         CHEAT_INVISIBILITY_MP,  0xA, 0, 0, mBtnCheatInvisibilityMulti,                  0, 0,  /* 0x12 */ CHEAT_MASK_MPGAME},
+    {             CHEAT_NO_RADAR_MP,    0, 0, 0,                0,             TEXT(LMISC,0x43), 0,  /* 0x64 */ CHEAT_MASK_TOGGLE | CHEAT_MASK_GLOBAL | CHEAT_MASK_MPGAME},
+    {              CHEAT_TURBO_MODE,    0, 0, 0,                0,             TEXT(LMISC,0x40), 0,  /* 0x66 */ CHEAT_MASK_TOGGLE | CHEAT_MASK_GLOBAL | CHEAT_MASK_MPGAME | CHEAT_MASK_SPGAME},
     {               CHEAT_DEBUG_POS,    0, 0, 0,                0,                            0, 0,  /* 0x20 */ CHEAT_MASK_GLOBAL},
-    {          CHEAT_FAST_ANIMATION,    0, 0, 0,                0,             TEXT(LMISC,0x41), 0,  /* 0x72 */ CHEAT_MASK_64 | CHEAT_MASK_GLOBAL | CHEAT_MASK_16 | CHEAT_MASK_2},
-    {          CHEAT_SLOW_ANIMATION,    0, 0, 0,                0,             TEXT(LMISC,0x42), 0,  /* 0x72 */ CHEAT_MASK_64 | CHEAT_MASK_GLOBAL | CHEAT_MASK_16 | CHEAT_MASK_2},
-    {           CHEAT_ENEMY_ROCKETS,    0, 0, 0,                0,             TEXT(LMISC,0x39), 0,  /* 0x01 */ CHEAT_MASK_1},
-    {      CHEAT_2X_ROCKET_LAUNCHER,    0, 0, 0,                0,             TEXT(LMISC,0x3A), 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_2},
-    {     CHEAT_2X_GRENADE_LAUNCHER,    0, 0, 0,                0,             TEXT(LMISC,0x3B), 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_2},
-    {                CHEAT_2X_RCP90,    0, 0, 0,                0,             TEXT(LMISC,0x3C), 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_2},
-    {       CHEAT_2X_THROWING_KNIFE,    0, 0, 0,                0,             TEXT(LMISC,0x3D), 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_2},
-    {        CHEAT_2X_HUNTING_KNIFE,    0, 0, 0,                0,             TEXT(LMISC,0x3E), 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_2},
-    {                CHEAT_2X_LASER,    0, 0, 0,                0,             TEXT(LMISC,0x3F), 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_2},
-    {                          0x23,  0xA, 0, 0, mBtnCheatPaintballMod,                       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x24,  0xA, 0, 0, mBtnCheatInvincible2,                        0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x25,  0xA, 0, 0, mBtnCheatDKMode,                             0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x26,  0xA, 0, 0, mBtnCheat2xGL,                               0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x27,  0xA, 0, 0, mBtnCheat2xRL,                               0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x28,  0xA, 0, 0, mBtnCheatTurboMode,                          0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x29,  0xA, 0, 0, mBtnCheatNoRadar,                            0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x2A,  0xA, 0, 0, mBtnCheatTinyBond,                           0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x2B,  0xA, 0, 0, mBtnCheat2xTKnives,                          0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x2C,  0xA, 0, 0, mBtnCheatFastAnimation,                      0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x2D,  0xA, 0, 0, mBtnCheatBondInvisible,                      0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x2E,  0xA, 0, 0, mBtnCheatEnemyRL,                            0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x2F,  0xA, 0, 0, mBtnCheatSlowAnimation,                      0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x30,  0xA, 0, 0, mBtnCheatSilverPPK,                          0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x31,  0xA, 0, 0, mBtnCheat2xHKnives,                          0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x32,  0xA, 0, 0, mBtnCheatInfinitAmmo,                        0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x33,  0xA, 0, 0, mBtnCheat2xFNP90,                            0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x34,  0xA, 0, 0, mBtnCheatGoldPPK,                            0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x35,  0xA, 0, 0, mBtnCheat2xLaser,                            0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {           CHEAT_UNLOCK_CHEATS,  0xA, 0, 0, mBtnCheatUnlockCheats,                       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x37,  0xA, 0, 0, mBtnCheatInvalid2,                           0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x38,  0xA, 0, 0, mBtnCheatFacility,                           0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x39,  0xA, 0, 0, mBtnCheatRunway,                             0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x3A,  0xA, 0, 0, mBtnCheatSurface,                            0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x3B,  0xA, 0, 0, mBtnCheatBunker,                             0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x3C,  0xA, 0, 0, mBtnCheatSilo,                               0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x3D,  0xA, 0, 0, mBtnCheatFrigate,                            0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x3E,  0xA, 0, 0, mBtnCheatSurface2,                           0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x3F,  0xA, 0, 0, mBtnCheatBunker2,                            0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x40,  0xA, 0, 0, mBtnCheatStatue,                             0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x41,  0xA, 0, 0, mBtnCheatArchives,                           0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x42,  0xA, 0, 0, mBtnCheatStreets,                            0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x43,  0xA, 0, 0, mBtnCheatDepot,                              0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x44,  0xA, 0, 0, mBtnCheatTrain,                              0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x45,  0xA, 0, 0, mBtnCheatJungle,                             0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x46,  0xA, 0, 0, mBtnCheatControl,                            0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x47,  0xA, 0, 0, mBtnCheatCaverns,                            0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x48,  0xA, 0, 0, mBtnCheatCradle,                             0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {                          0x49,  0xA, 0, 0, mBtnCheatAztech,                             0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
-    {           CHEAT_UNLOCK_STAGES,  0xA, 0, 0, mBtnCheatEgypt,                              0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {          CHEAT_FAST_ANIMATION,    0, 0, 0,                0,             TEXT(LMISC,0x41), 0,  /* 0x72 */ CHEAT_MASK_TOGGLE | CHEAT_MASK_GLOBAL | CHEAT_MASK_16 | CHEAT_MASK_SPGAME},
+    {          CHEAT_SLOW_ANIMATION,    0, 0, 0,                0,             TEXT(LMISC,0x42), 0,  /* 0x72 */ CHEAT_MASK_TOGGLE | CHEAT_MASK_GLOBAL | CHEAT_MASK_16 | CHEAT_MASK_SPGAME},
+    {           CHEAT_ENEMY_ROCKETS,    0, 0, 0,                0,             TEXT(LMISC,0x39), 0,  /* 0x01 */ CHEAT_MASK_MENUS},
+    {      CHEAT_2X_ROCKET_LAUNCHER,    0, 0, 0,                0,             TEXT(LMISC,0x3A), 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_SPGAME},
+    {     CHEAT_2X_GRENADE_LAUNCHER,    0, 0, 0,                0,             TEXT(LMISC,0x3B), 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_SPGAME},
+    {                CHEAT_2X_RCP90,    0, 0, 0,                0,             TEXT(LMISC,0x3C), 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_SPGAME},
+    {       CHEAT_2X_THROWING_KNIFE,    0, 0, 0,                0,             TEXT(LMISC,0x3D), 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_SPGAME},
+    {        CHEAT_2X_HUNTING_KNIFE,    0, 0, 0,                0,             TEXT(LMISC,0x3E), 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_SPGAME},
+    {                CHEAT_2X_LASER,    0, 0, 0,                0,             TEXT(LMISC,0x3F), 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_SPGAME},
+
+    {        CHEAT_UNLOCK_PAINTBALL,  0xA, 0, 0, mBtnCheatPaintballMod,                       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at cheat menu
+    {       CHEAT_UNLOCK_INVINCIBLE,  0xA, 0, 0, mBtnCheatInvincible2,                        0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at cheat menu
+    {           CHEAT_UNLOCK_DKMODE,  0xA, 0, 0, mBtnCheatDKMode,                             0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at cheat menu
+    {             CHEAT_UNLOCK_2XGL,  0xA, 0, 0, mBtnCheat2xGL,                               0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at cheat menu
+    {             CHEAT_UNLOCK_2XRL,  0xA, 0, 0, mBtnCheat2xRL,                               0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at cheat menu
+    {            CHEAT_UNLOCK_TURBO,  0xA, 0, 0, mBtnCheatTurboMode,                          0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at cheat menu
+    {          CHEAT_UNLOCK_NORADAR,  0xA, 0, 0, mBtnCheatNoRadar,                            0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at cheat menu
+    {             CHEAT_UNLOCK_TINY,  0xA, 0, 0, mBtnCheatTinyBond,                           0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at cheat menu
+    {         CHEAT_UNLOCK_2XTKNIFE,  0xA, 0, 0, mBtnCheat2xTKnives,                          0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at cheat menu
+    {             CHEAT_UNLOCK_FAST,  0xA, 0, 0, mBtnCheatFastAnimation,                      0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at cheat menu
+    {            CHEAT_UNLOCK_INVIS,  0xA, 0, 0, mBtnCheatBondInvisible,                      0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at cheat menu
+    {          CHEAT_UNLOCK_ENEMYRL,  0xA, 0, 0, mBtnCheatEnemyRL,                            0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at cheat menu
+    {             CHEAT_UNLOCK_SLOW,  0xA, 0, 0, mBtnCheatSlowAnimation,                      0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at cheat menu
+    {        CHEAT_UNLOCK_SILVERPPK,  0xA, 0, 0, mBtnCheatSilverPPK,                          0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at cheat menu
+    {         CHEAT_UNLOCK_2XHKNIFE,  0xA, 0, 0, mBtnCheat2xHKnives,                          0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at cheat menu
+    {          CHEAT_UNLOCK_INFAMMO,  0xA, 0, 0, mBtnCheatInfinitAmmo,                        0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at cheat menu
+    {           CHEAT_UNLOCK_2XFNP0,  0xA, 0, 0, mBtnCheat2xFNP90,                            0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at cheat menu
+    {          CHEAT_UNLOCK_GOLDPPK,  0xA, 0, 0, mBtnCheatGoldPPK,                            0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at cheat menu
+    {          CHEAT_UNLOCK_2XLASER,  0xA, 0, 0, mBtnCheat2xLaser,                            0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at cheat menu
+    {          CHEAT_UNLOCK_ALLGUNS,  0xA, 0, 0, mBtnCheatUnlockAllGuns,                      0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at cheat menu
+
+    {              CHEAT_UNLOCK_DAM,  0xA, 0, 0, mBtnCheatDam,                                0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at mission select
+    {         CHEAT_UNLOCK_FACILITY,  0xA, 0, 0, mBtnCheatFacility,                           0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at mission select
+    {           CHEAT_UNLOCK_RUNWAY,  0xA, 0, 0, mBtnCheatRunway,                             0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at mission select
+    {          CHEAT_UNLOCK_SURFACE,  0xA, 0, 0, mBtnCheatSurface,                            0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at mission select
+    {           CHEAT_UNLOCK_BUNKER,  0xA, 0, 0, mBtnCheatBunker,                             0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at mission select
+    {             CHEAT_UNLOCK_SILO,  0xA, 0, 0, mBtnCheatSilo,                               0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at mission select
+    {          CHEAT_UNLOCK_FRIGATE,  0xA, 0, 0, mBtnCheatFrigate,                            0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at mission select
+    {         CHEAT_UNLOCK_SURFACE2,  0xA, 0, 0, mBtnCheatSurface2,                           0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at mission select
+    {          CHEAT_UNLOCK_BUNKER2,  0xA, 0, 0, mBtnCheatBunker2,                            0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at mission select
+    {           CHEAT_UNLOCK_STATUE,  0xA, 0, 0, mBtnCheatStatue,                             0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at mission select
+    {         CHEAT_UNLOCK_ARCHIVES,  0xA, 0, 0, mBtnCheatArchives,                           0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at mission select
+    {          CHEAT_UNLOCK_STREETS,  0xA, 0, 0, mBtnCheatStreets,                            0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at mission select
+    {            CHEAT_UNLOCK_DEPOT,  0xA, 0, 0, mBtnCheatDepot,                              0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at mission select
+    {            CHEAT_UNLOCK_TRAIN,  0xA, 0, 0, mBtnCheatTrain,                              0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at mission select
+    {           CHEAT_UNLOCK_JUNGLE,  0xA, 0, 0, mBtnCheatJungle,                             0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at mission select
+    {          CHEAT_UNLOCK_CONTROL,  0xA, 0, 0, mBtnCheatControl,                            0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at mission select
+    {          CHEAT_UNLOCK_CAVERNS,  0xA, 0, 0, mBtnCheatCaverns,                            0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at mission select
+    {           CHEAT_UNLOCK_CRADLE,  0xA, 0, 0, mBtnCheatCradle,                             0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at mission select
+    {            CHEAT_UNLOCK_AZTEK,  0xA, 0, 0, mBtnCheatAztek,                              0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at mission select
+    {            CHEAT_UNLOCK_EGYPT,  0xA, 0, 0, mBtnCheatEgypt,                              0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_MENUS}, //at mission select
     {0}
 };
 
@@ -809,13 +811,12 @@ CheatInfo g_CheatInfo[] = {
 // forward declarations
 // Private Functions?
 
-s32 cheatButtonCountBitsSet(u16 param_1);
+s32 cheatButtonCountBitsSet(u16 bits);
 void cheatButtonActivateRelated(void);
 void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat);
-void cheatButtonHandleCheatsTurnedOff(s32 cheat_id);
+void cheatButtonHandleCheatsTurnedOff(CHEAT_ID cheat_id);
 bool cheatCheckIfMPCheat(CHEAT_ID cheat_id);
-void cheatButtonSetDkMode(s32 cheat_id);
-void cheatButtonHandleCheatsTurnedOff(s32 cheat);
+void cheatButtonSetDkMode(CHEAT_ID cheat_id);
 
 // end forward declarations
 
@@ -823,13 +824,13 @@ void cheatButtonHandleCheatsTurnedOff(s32 cheat);
 
 
 
-s32 cheatButtonCountBitsSet(u16 param_1)
+s32 cheatButtonCountBitsSet(u16 bits)
 {
     s32 count;
 
-    for (count = 0; (u32)param_1 != 0; param_1 >>= 1)
+    for (count = 0; (u32)bits != 0; bits >>= 1)
     {
-        if (param_1 & 1)
+        if (bits & 1)
         {
             count++;
         }
@@ -855,11 +856,11 @@ void cheatButtonActivateRelated(void)
     
     if (lvlGetCurrentStageToLoad() == LEVELID_TITLE)
     {
-        bitmask = CHEAT_MASK_1;
+        bitmask = CHEAT_MASK_MENUS;
     }
     else
     {
-        bitmask = (getPlayerCount() == 1) ? CHEAT_MASK_2 : CHEAT_MASK_MULTIPLAYER;
+        bitmask = (getPlayerCount() == 1) ? CHEAT_MASK_SPGAME : CHEAT_MASK_MPGAME;
     }
 
     for (; info->cheat_id != 0 && !isDone; info++)
@@ -1116,10 +1117,12 @@ glabel cheat_buttons_mp_related
 
 
 
-
-bool cheatIsEnemyRockets(CHEAT_ID cheatindex)
+/**
+ * true if param is CHEAT_ENEMY_ROCKETS
+ */
+bool cheatIsEnemyRockets(CHEAT_ID id)
 {
-    if (cheatindex == CHEAT_ENEMY_ROCKETS) {
+    if (id == CHEAT_ENEMY_ROCKETS) {
         return TRUE;
     }
     return FALSE;
@@ -1131,13 +1134,13 @@ bool cheatIsEnemyRockets(CHEAT_ID cheatindex)
 
 
 /**
- * @param cheat_id: 1 based index.
+ * true if param is MP cheat
  * 
  * Address 0x7F091A78.
  */
 bool cheatCheckIfMPCheat(CHEAT_ID cheat_id)
 {
-    if ((g_CheatInfo[cheat_id - 1].maskfield & CHEAT_MASK_MULTIPLAYER) == CHEAT_MASK_MULTIPLAYER)
+    if ((g_CheatInfo[cheat_id - 1].maskfield & CHEAT_MASK_MPGAME) == CHEAT_MASK_MPGAME)
     {
         return TRUE;
     }
@@ -1168,7 +1171,7 @@ void cheatButtonTurnOnCheatForPlayers(CHEAT_ID cheatindex)
     }
     else
     {
-        if (cheat_mask & CHEAT_MASK_MULTIPLAYER)
+        if (cheat_mask & CHEAT_MASK_MPGAME)
         {
             if (cheat_mask & CHEAT_MASK_GLOBAL)
             {
@@ -1226,19 +1229,19 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             return;
 
         case CHEAT_INVINCIBILITY:
-            if (get_bondata_invincible_flag() == 0)
+            if (!get_bondata_invincible_flag())
             {
                 DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x0F)));
-                set_bondata_invincible_flag(1);
+                set_bondata_invincible_flag(TRUE);
                 return;
             }
             return;
 
         case CHEAT_ALLGUNS:
-            if (get_BONDdata_allguns_flag() == 0)
+            if (!get_BONDdata_allguns_flag())
             {
                 DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x10)));
-                set_BONDdata_allguns_flag(1);
+                set_BONDdata_allguns_flag(TRUE);
                 return;
             }
             return;
@@ -1260,19 +1263,19 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
                         if (i != current_player_number)
                         {
                             set_cur_player(i);
-                            if (get_bondata_invincible_flag() != 0)
+                            if (get_bondata_invincible_flag())
                             {
-                                set_bondata_invincible_flag(0);
-                                flag = 1;
+                                set_bondata_invincible_flag(FALSE);
+                                flag = TRUE;
                             }
                         }
 
                         set_cur_player(current_player_number);
                     }
 
-                    if (flag != 0)
+                    if (flag)
                     {
-                        sndPlaySfx(g_musicSfxBufferPtr, 0x9F, 0);
+                        sndPlaySfx(g_musicSfxBufferPtr, CAMERA_BEEP1_SFX, 0);
                         return;
                     }
 
@@ -1282,7 +1285,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             return;
 
         case CHEAT_LINEMODE:
-            set_debug_VisCVG_flag(1);
+            set_debug_VisCVG_flag(TRUE);
             return;
 
         case CHEAT_2X_HEALTH:
@@ -1297,14 +1300,12 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_2X_ARMOR:
             if ((g_CurrentPlayer->actual_armor == 1.0f) || (g_CurrentPlayer->bondarmour < 1.0f))
             {
-#if defined(BUGFIX_R1)
                 DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x13)));
-                if(1)
+#if defined(BUGFIX_R1)
+                if(TRUE)
                 {
                     // removed
                 }
-#else
-                DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x13)));
 #endif
                 g_CurrentPlayer->bondarmour = 1.0f;
                 g_CurrentPlayer->actual_armor = 2.0f;
@@ -1312,10 +1313,10 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             return;
 
         case CHEAT_INVISIBILITY:
-            if (bondviewGetVisibleToGuardsFlag() != 0)
+            if (bondviewGetVisibleToGuardsFlag())
             {
                 DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x14)));
-                bondviewSetVisibleToGuardsFlag(0);
+                bondviewSetVisibleToGuardsFlag(FALSE);
                 return;
             }
             return;
@@ -1329,7 +1330,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
 
         case CHEAT_DK_MODE:
             DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x17)));
-            cheatButtonSetDkMode(1);
+            cheatButtonSetDkMode(TRUE);
             return;
 
         case CHEAT_EXTRA_WEAPONS:
@@ -1376,14 +1377,12 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_10X_HEALTH:
             if ((g_CurrentPlayer->actual_health == 1.0f) || (g_CurrentPlayer->bondhealth < 1.0f))
             {
-#if defined(BUGFIX_R1)
                 DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x1B)));
-                if(1)
+#if defined(BUGFIX_R1)
+                if(TRUE)
                 {
                     // removed
                 }
-#else
-                DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x1B)));
 #endif
                 g_CurrentPlayer->bondhealth = 1.0f;
                 g_CurrentPlayer->actual_health = 10.0f;
@@ -1435,23 +1434,23 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             }
             return;
 
-        case 0x16: /* unknown */
+        case CHEAT_INVISIBILITY_MP: /* unknown */
             currentPlayerStartChrFade(300.0f, 0.05f);
             return;
 
         case CHEAT_TURBO_MODE:
-            if (get_debug_fast_bond_flag() == 0)
+            if (!get_debug_fast_bond_flag())
             {
                 DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x1D)));
-                set_debug_fast_bond_flag(1);
+                set_debug_fast_bond_flag(TRUE);
                 return;
             }
             return;
 
         case CHEAT_DEBUG_POS:
-            if (get_debug_testingmanpos_flag() == 0)
+            if (!get_debug_testingmanpos_flag())
             {
-                set_debug_testingmanpos_flag(1);
+                set_debug_testingmanpos_flag(TRUE);
                 return;
             }
             return;
@@ -1526,7 +1525,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             if (player_count == 1)
             {
 #if defined(BUGFIX_R1)
-                if (j_text_trigger != 0)
+                if (j_text_trigger)
                 {
                     add_item_to_inventory(ITEM_ROCKETLAUNCH);
                     add_item_to_inventory(ITEM_SNIPERRIFLE);
@@ -1553,68 +1552,68 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             }
             return;
 
-        case 0x23: /* fall through */
-        case 0x24:
-        case 0x25:
-        case 0x26:
-        case 0x27:
-        case 0x28:
-        case 0x29:
-        case 0x2A:
-        case 0x2B:
-        case 0x2C:
-        case 0x2D:
-        case 0x2E:
-        case 0x2F:
-        case 0x30:
-        case 0x31:
-        case 0x32:
-        case 0x33:
-        case 0x34:
-        case 0x35:
-        case 0x36:
+        case CHEAT_UNLOCK_PAINTBALL: /* fall through */
+        case CHEAT_UNLOCK_INVINCIBLE:
+        case CHEAT_UNLOCK_DKMODE:
+        case CHEAT_UNLOCK_2XGL:
+        case CHEAT_UNLOCK_2XRL:
+        case CHEAT_UNLOCK_TURBO:
+        case CHEAT_UNLOCK_NORADAR:
+        case CHEAT_UNLOCK_TINY:
+        case CHEAT_UNLOCK_2XTKNIFE:
+        case CHEAT_UNLOCK_FAST:
+        case CHEAT_UNLOCK_INVIS:
+        case CHEAT_UNLOCK_ENEMYRL:
+        case CHEAT_UNLOCK_SLOW:
+        case CHEAT_UNLOCK_SILVERPPK:
+        case CHEAT_UNLOCK_2XHKNIFE:
+        case CHEAT_UNLOCK_INFAMMO:
+        case CHEAT_UNLOCK_2XFNP0:
+        case CHEAT_UNLOCK_GOLDPPK:
+        case CHEAT_UNLOCK_2XLASER:
+        case CHEAT_UNLOCK_ALLGUNS:
             {
-                s32 val = cheat_id - 0x23;
+                s32 val = cheat_id - CHEAT_UNLOCK_PAINTBALL;
                 if ((selected_folder_num >= 0) && (selected_folder_num < 4))
                 {
                     sub_GAME_7F01E760(selected_folder_num, val);
-                    sndPlaySfx(g_musicSfxBufferPtr, 0x9F, 0);
+                    sndPlaySfx(g_musicSfxBufferPtr, CAMERA_BEEP1_SFX, 0);
                     return;
                 }
             }
             return;
             
-        case 0x37:  /* fall through */
-        case 0x38:
-        case 0x39:
-        case 0x3A:
-        case 0x3B:
-        case 0x3C:
-        case 0x3D:
-        case 0x3E:
-        case 0x3F:
-        case 0x40:
-        case 0x41:
-        case 0x42:
-        case 0x43:
-        case 0x44:
-        case 0x45:
-        case 0x46:
-        case 0x47:
-        case 0x48:
-        case 0x49:
-        case 0x4A:
+        case CHEAT_UNLOCK_DAM:  /* fall through */
+        case CHEAT_UNLOCK_FACILITY:
+        case CHEAT_UNLOCK_RUNWAY:
+        case CHEAT_UNLOCK_SURFACE:
+        case CHEAT_UNLOCK_BUNKER:
+        case CHEAT_UNLOCK_SILO:
+        case CHEAT_UNLOCK_FRIGATE:
+        case CHEAT_UNLOCK_SURFACE2:
+        case CHEAT_UNLOCK_BUNKER2:
+        case CHEAT_UNLOCK_STATUE:
+        case CHEAT_UNLOCK_ARCHIVES:
+        case CHEAT_UNLOCK_STREETS:
+        case CHEAT_UNLOCK_DEPOT:
+        case CHEAT_UNLOCK_TRAIN:
+        case CHEAT_UNLOCK_JUNGLE:
+        case CHEAT_UNLOCK_CONTROL:
+        case CHEAT_UNLOCK_CAVERNS:
+        case CHEAT_UNLOCK_CRADLE:
+        case CHEAT_UNLOCK_AZTEK:
+        case CHEAT_UNLOCK_EGYPT:
             {
-                s32 max = cheat_id - 0x37;
-                s32 i;
+                s32 max = cheat_id - CHEAT_UNLOCK_DAM;
+                s32 stagenum;
                 s32 unlock_count;
                 if (selected_folder_num >= 0 && selected_folder_num < 4)
                 {
-                    unlock_count = 0; // move v1, zero
-                    i = 0; // move a1, zero
-                    for (; i < max; i++)
+                    unlock_count = 0;
+                    stagenum = 0; 
+                    for (; stagenum < max; stagenum++)
                     {
-                        if (fileIsStageUnlockedAtDifficulty(selected_folder_num, i, 0) == 3)
+                        if (fileIsStageUnlockedAtDifficulty(selected_folder_num, stagenum, DIFFICULTY_AGENT) == 3)
                         {
                             unlock_count++;
                         }
@@ -1622,8 +1621,8 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
 
                     if (max - 1 == (unlock_count))
                     {
-                        fileUnlockStageInFolderAtDifficulty(selected_folder_num, max - 1, 0, 0x5F5E0FF);
-                        sndPlaySfx(g_musicSfxBufferPtr, 0x9F, 0);
+                        fileUnlockStageInFolderAtDifficulty(selected_folder_num, max - 1, DIFFICULTY_AGENT, 0x5F5E0FF);
+                        sndPlaySfx(g_musicSfxBufferPtr, CAMERA_BEEP1_SFX, 0);
                     }
                 }
             }
@@ -1639,7 +1638,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
 /**
  * Address 0x7F092438 (all versions)
  */
-void cheatButtonHandleCheatsTurnedOff(s32 cheat_id)
+void cheatButtonHandleCheatsTurnedOff(CHEAT_ID cheat_id)
 {
     s32 mask;
     s32 current_player_number;
@@ -1664,32 +1663,32 @@ void cheatButtonHandleCheatsTurnedOff(s32 cheat_id)
     switch (cheat_id)
     {
         case CHEAT_INVINCIBILITY:
-            if (get_bondata_invincible_flag() != 0)
+            if (get_bondata_invincible_flag())
             {
                 DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x1e)));
-                set_bondata_invincible_flag(0);
+                set_bondata_invincible_flag(FALSE);
                 return;
             }
             return;
             
         case CHEAT_ALLGUNS:
-            if (get_BONDdata_allguns_flag() != 0)
+            if (get_BONDdata_allguns_flag())
             {
                 DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x1F)));
-                set_BONDdata_allguns_flag(0);
+                set_BONDdata_allguns_flag(FALSE);
                 return;
             }
             return;
 
         case CHEAT_LINEMODE:
-            set_debug_VisCVG_flag(0);
+            set_debug_VisCVG_flag(FALSE);
             return;
 
         case CHEAT_INVISIBILITY:
-            if (bondviewGetVisibleToGuardsFlag() == 0)
+            if (!bondviewGetVisibleToGuardsFlag())
             {
                 DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x20)));
-                bondviewSetVisibleToGuardsFlag(1);
+                bondviewSetVisibleToGuardsFlag(TRUE);
                 return;
             }
             return;
@@ -1700,7 +1699,7 @@ void cheatButtonHandleCheatsTurnedOff(s32 cheat_id)
             
         case CHEAT_DK_MODE:
             DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x23)));
-            cheatButtonSetDkMode(0);
+            cheatButtonSetDkMode(FALSE);
             return;
 
         case CHEAT_TINY_BOND:
@@ -1708,7 +1707,7 @@ void cheatButtonHandleCheatsTurnedOff(s32 cheat_id)
             {
                 DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x24)));
                 g_playerPerm->player_perspective_height = 1.0f;
-                if (g_CurrentPlayer->ptr_char_objectinstance != 0)
+                if (g_CurrentPlayer->ptr_char_objectinstance)
                 {
                     set_obj_instance_controller_scale(g_CurrentPlayer->ptr_char_objectinstance, 2.0f * ((struct Model *)g_CurrentPlayer->ptr_char_objectinstance)->scale);
                 }
@@ -1720,23 +1719,23 @@ void cheatButtonHandleCheatsTurnedOff(s32 cheat_id)
             DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x25)));
             return;
 
-        case 0x16: /* multiplayer? but the function call is for "fade"? */
+        case CHEAT_INVISIBILITY_MP: /* multiplayer? but the function call is for "fade"? */
             currentPlayerStartChrFade(300.0f, 1.0f);
             return;
 
         case CHEAT_TURBO_MODE:
-            if (get_debug_fast_bond_flag() != 0)
+            if (get_debug_fast_bond_flag())
             {
                 DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x27)));
-                set_debug_fast_bond_flag(0);
+                set_debug_fast_bond_flag(FALSE);
                 return;
             }
             return;
 
         case CHEAT_DEBUG_POS:
-            if (get_debug_testingmanpos_flag() != 0)
+            if (get_debug_testingmanpos_flag())
             {
-                set_debug_testingmanpos_flag(0);
+                set_debug_testingmanpos_flag(FALSE);
             }
             return;
 
@@ -1764,46 +1763,46 @@ void cheatButtonHandleCheatsTurnedOff(s32 cheat_id)
         case CHEAT_2X_THROWING_KNIFE:
         case CHEAT_2X_HUNTING_KNIFE:
         case CHEAT_2X_LASER:
-        case 0x23:
-        case 0x24:
-        case 0x25:
-        case 0x26:
-        case 0x27:
-        case 0x28:
-        case 0x29:
-        case 0x2A:
-        case 0x2B:
-        case 0x2C:
-        case 0x2D:
-        case 0x2E:
-        case 0x2F:
-        case 0x30:
-        case 0x31:
-        case 0x32:
-        case 0x33:
-        case 0x34:
-        case 0x35:
-        case CHEAT_UNLOCK_CHEATS:
-        case 0x37:
-        case 0x38:
-        case 0x39:
-        case 0x3a:
-        case 0x3b:
-        case 0x3c:
-        case 0x3d:
-        case 0x3e:
-        case 0x3f:
-        case 0x40:
-        case 0x41:
-        case 0x42:
-        case 0x43:
-        case 0x44:
-        case 0x45:
-        case 0x46:
-        case 0x47:
-        case 0x48:
-        case 0x49:
-        case CHEAT_UNLOCK_STAGES:
+        case CHEAT_UNLOCK_PAINTBALL:
+        case CHEAT_UNLOCK_INVINCIBLE:
+        case CHEAT_UNLOCK_DKMODE:
+        case CHEAT_UNLOCK_2XGL:
+        case CHEAT_UNLOCK_2XRL:
+        case CHEAT_UNLOCK_TURBO:
+        case CHEAT_UNLOCK_NORADAR:
+        case CHEAT_UNLOCK_TINY:
+        case CHEAT_UNLOCK_2XTKNIFE:
+        case CHEAT_UNLOCK_FAST:
+        case CHEAT_UNLOCK_INVIS:
+        case CHEAT_UNLOCK_ENEMYRL:
+        case CHEAT_UNLOCK_SLOW:
+        case CHEAT_UNLOCK_SILVERPPK:
+        case CHEAT_UNLOCK_2XHKNIFE:
+        case CHEAT_UNLOCK_INFAMMO:
+        case CHEAT_UNLOCK_2XFNP0:
+        case CHEAT_UNLOCK_GOLDPPK:
+        case CHEAT_UNLOCK_2XLASER:
+        case CHEAT_UNLOCK_ALLGUNS:
+        case CHEAT_UNLOCK_DAM:
+        case CHEAT_UNLOCK_FACILITY:
+        case CHEAT_UNLOCK_RUNWAY:
+        case CHEAT_UNLOCK_SURFACE:
+        case CHEAT_UNLOCK_BUNKER:
+        case CHEAT_UNLOCK_SILO:
+        case CHEAT_UNLOCK_FRIGATE:
+        case CHEAT_UNLOCK_SURFACE2:
+        case CHEAT_UNLOCK_BUNKER2:
+        case CHEAT_UNLOCK_STATUE:
+        case CHEAT_UNLOCK_ARCHIVES:
+        case CHEAT_UNLOCK_STREETS:
+        case CHEAT_UNLOCK_DEPOT:
+        case CHEAT_UNLOCK_TRAIN:
+        case CHEAT_UNLOCK_JUNGLE:
+        case CHEAT_UNLOCK_CONTROL:
+        case CHEAT_UNLOCK_CAVERNS:
+        case CHEAT_UNLOCK_CRADLE:
+        case CHEAT_UNLOCK_AZTEK:
+        case CHEAT_UNLOCK_EGYPT:
         
         default:
         break;
@@ -1833,7 +1832,7 @@ void cheatDisableAllCheats(void)
 
         for (j=1; j<CHEAT_INVALID; j++)
         {
-            if ((g_CheatInfo[j - 1].maskfield & CHEAT_MASK_64) && (cheatCheckIfOn(j) != 0))
+            if ((g_CheatInfo[j - 1].maskfield & CHEAT_MASK_TOGGLE) && (cheatCheckIfOn(j)))
             {
                 cheatButtonHandleCheatsTurnedOff(j);
             }
@@ -1878,7 +1877,7 @@ bool cheatCheckIfOn(CHEAT_ID cheat)
 
 
 
-void cheatButtonSetDkMode(s32 cheat_id)
+void cheatButtonSetDkMode(CHEAT_ID cheat_id)
 {
     s32 num_guards;
     s32 i;
@@ -1888,7 +1887,7 @@ void cheatButtonSetDkMode(s32 cheat_id)
 
     num_guards = get_numguards();
 
-    if (cheat_id != 0)
+    if (cheat_id)
     {
         scale = 0.8f;
     }
@@ -1902,12 +1901,12 @@ void cheatButtonSetDkMode(s32 cheat_id)
 
 #if defined(VERSION_US)
         model = (Model*)guard->model;
-        if (model != NULL)
+        if (model)
         {
             set_obj_instance_controller_scale(model, model->scale * scale);
         }
 #else
-        if (guard->model != NULL && (not_in_us_7F0209EC(guard->bodynum, guard->headnum) != 0))
+        if (guard->model && not_in_us_7F0209EC(guard->bodynum, guard->headnum))
         {
             model = (Model*)guard->model;
             set_obj_instance_controller_scale(model, model->scale * scale);

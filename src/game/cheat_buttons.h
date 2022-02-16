@@ -8,14 +8,17 @@ enum CHEAT_MASK {
     /**
      * Title screen related.
      */
-    CHEAT_MASK_1 = (1 << 0),
+    CHEAT_MASK_MENUS = (1 << 0),
 
     /**
-     * Maybe single player?
+     * Singleplayer in-game
      */
-    CHEAT_MASK_2 = (1 << 1),
+    CHEAT_MASK_SPGAME = (1 << 1),
 
-    CHEAT_MASK_MULTIPLAYER = (1 << 2),
+    /**
+     * Multiplayer in-game
+     */
+    CHEAT_MASK_MPGAME = (1 << 2),
     
     CHEAT_MASK_8 = (1 << 3),
 
@@ -34,7 +37,7 @@ enum CHEAT_MASK {
     /**
      * Checked when disabling cheat
      */
-    CHEAT_MASK_64 = (1 << 6),
+    CHEAT_MASK_TOGGLE = (1 << 6),
 
     CHEAT_MASK_128 = (1 << 7),
     CHEAT_MASK_256 = (1 << 8),
