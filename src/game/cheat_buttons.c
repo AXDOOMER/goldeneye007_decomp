@@ -712,14 +712,13 @@ u16 mBtnCheatUnlockAllGuns[] = {
                       U_CBUTTONS,
                       R_JPAD,
     L_TRIG |          D_JPAD,
-    L_TRIG |          L_JPAD
+    L_TRIG |          L_JPAD,
+    L_TRIG |          U_JPAD,
+                  L_CBUTTONS,
+                      L_JPAD,
+                  D_CBUTTONS
 };
 #pragma endregion
-
-//D:8003F804
-u32 D_8003F804 = 0x8200002;
-//D:8003F808
-u32 D_8003F808 = 0x2000004;
 
 /**
  * Address 0x8003F80C.
