@@ -6,20 +6,20 @@
 
 
 
-void sub_GAME_7F007180(void)
+void alloc_shattered_window_pieces(void)
 {
     s32 i;
     s32 level = lvlGetCurrentStageToLoad();
     
-    bufferentrycount_8007A160 = (0xC8 / getPlayerCount());
+    SHATTERED_WINDOW_PIECES_BUFFER_LEN = (200 / getPlayerCount());
     if ((level == LEVELID_STREETS) || (level == LEVELID_DEPOT))
     {
-        bufferentrycount_8007A160 = (bufferentrycount_8007A160 >> 1);
+        SHATTERED_WINDOW_PIECES_BUFFER_LEN = (SHATTERED_WINDOW_PIECES_BUFFER_LEN >> 1);
     }
-    dword_CODE_bss_8007A164 = mempAllocBytesInBank(((bufferentrycount_8007A160 * 0x68) + 0xF) & ~0xF, 4U);
-    for(i=0; i<bufferentrycount_8007A160; i++)
+    ptr_shattered_window_pieces = mempAllocBytesInBank(((SHATTERED_WINDOW_PIECES_BUFFER_LEN * 0x68) + 0xF) & ~0xF, 4U);
+    for(i=0; i<SHATTERED_WINDOW_PIECES_BUFFER_LEN; i++)
     {
-        dword_CODE_bss_8007A164[i].field_0x0 = 0;
+        ptr_shattered_window_pieces[i].piece = NULL;
     }
     
     D_80040940 = 0;

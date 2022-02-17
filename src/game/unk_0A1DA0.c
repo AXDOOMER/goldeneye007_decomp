@@ -4,9 +4,9 @@
 
 // bss
 //CODE.bss:8007A160
-s32 bufferentrycount_8007A160;
+s32 SHATTERED_WINDOW_PIECES_BUFFER_LEN;
 //CODE.bss:8007A164
-s_something_explosiony* dword_CODE_bss_8007A164;
+s_shattered_window_piece* ptr_shattered_window_pieces;
 //CODE.bss:8007A168
 u32 dword_CODE_bss_8007A168;
 //CODE.bss:8007A16C
@@ -154,8 +154,8 @@ glabel sub_GAME_7F0A1DA0
 /* 0D6A18 7F0A1EE8 0FC16A8C */  jal   atan2f
 /* 0D6A1C 7F0A1EEC C64C0000 */   lwc1  $f12, ($s2)
 /* 0D6A20 7F0A1EF0 C7B200FC */  lwc1  $f18, 0xfc($sp)
-/* 0D6A24 7F0A1EF4 3C0E8008 */  lui   $t6, %hi(bufferentrycount_8007A160) 
-/* 0D6A28 7F0A1EF8 8DCEA160 */  lw    $t6, %lo(bufferentrycount_8007A160)($t6)
+/* 0D6A24 7F0A1EF4 3C0E8008 */  lui   $t6, %hi(SHATTERED_WINDOW_PIECES_BUFFER_LEN) 
+/* 0D6A28 7F0A1EF8 8DCEA160 */  lw    $t6, %lo(SHATTERED_WINDOW_PIECES_BUFFER_LEN)($t6)
 /* 0D6A2C 7F0A1EFC 4616E501 */  sub.s $f20, $f28, $f22
 /* 0D6A30 7F0A1F00 46000786 */  mov.s $f30, $f0
 /* 0D6A34 7F0A1F04 46189681 */  sub.s $f26, $f18, $f24
@@ -389,9 +389,9 @@ glabel sub_GAME_7F0A2160
 /* 0D6D40 7F0A2210 26100940 */  addiu $s0, %lo(D_80040940) # addiu $s0, $s0, 0x940
 /* 0D6D44 7F0A2214 8E180000 */  lw    $t8, ($s0)
 /* 0D6D48 7F0A2218 24120068 */  li    $s2, 104
-/* 0D6D4C 7F0A221C 3C118008 */  lui   $s1, %hi(dword_CODE_bss_8007A164)
+/* 0D6D4C 7F0A221C 3C118008 */  lui   $s1, %hi(ptr_shattered_window_pieces)
 /* 0D6D50 7F0A2220 03120019 */  multu $t8, $s2
-/* 0D6D54 7F0A2224 2631A164 */  addiu $s1, %lo(dword_CODE_bss_8007A164) # addiu $s1, $s1, -0x5e9c
+/* 0D6D54 7F0A2224 2631A164 */  addiu $s1, %lo(ptr_shattered_window_pieces) # addiu $s1, $s1, -0x5e9c
 /* 0D6D58 7F0A2228 8E2F0000 */  lw    $t7, ($s1)
 /* 0D6D5C 7F0A222C 8FA30058 */  lw    $v1, 0x58($sp)
 /* 0D6D60 7F0A2230 240E0001 */  li    $t6, 1
@@ -808,7 +808,7 @@ glabel sub_GAME_7F0A2160
 /* 0D73A0 7F0A2870 46145202 */  mul.s $f8, $f10, $f20
 /* 0D73A4 7F0A2874 8E2F0000 */  lw    $t7, ($s1)
 /* 0D73A8 7F0A2878 01720019 */  multu $t3, $s2
-/* 0D73AC 7F0A287C 3C0E8008 */  lui   $t6, %hi(bufferentrycount_8007A160) 
+/* 0D73AC 7F0A287C 3C0E8008 */  lui   $t6, %hi(SHATTERED_WINDOW_PIECES_BUFFER_LEN) 
 /* 0D73B0 7F0A2880 46164102 */  mul.s $f4, $f8, $f22
 /* 0D73B4 7F0A2884 00006812 */  mflo  $t5
 /* 0D73B8 7F0A2888 01ED4821 */  addu  $t1, $t7, $t5
@@ -816,7 +816,7 @@ glabel sub_GAME_7F0A2160
 /* 0D73C0 7F0A2890 8E190000 */  lw    $t9, ($s0)
 /* 0D73C4 7F0A2894 272C0001 */  addiu $t4, $t9, 1
 /* 0D73C8 7F0A2898 AE0C0000 */  sw    $t4, ($s0)
-/* 0D73CC 7F0A289C 8DCEA160 */  lw    $t6, %lo(bufferentrycount_8007A160)($t6)
+/* 0D73CC 7F0A289C 8DCEA160 */  lw    $t6, %lo(SHATTERED_WINDOW_PIECES_BUFFER_LEN)($t6)
 /* 0D73D0 7F0A28A0 018E082A */  slt   $at, $t4, $t6
 /* 0D73D4 7F0A28A4 54200003 */  bnezl $at, .L7F0A28B4
 /* 0D73D8 7F0A28A8 8FBF003C */   lw    $ra, 0x3c($sp)
@@ -899,9 +899,9 @@ glabel sub_GAME_7F0A2160
 /* 0D4140 7F0A1750 2610A590 */  addiu $s0, %lo(D_80040940) # addiu $s0, $s0, -0x5a70
 /* 0D4144 7F0A1754 8E180000 */  lw    $t8, ($s0)
 /* 0D4148 7F0A1758 24120068 */  li    $s2, 104
-/* 0D414C 7F0A175C 3C118007 */  lui   $s1, %hi(dword_CODE_bss_8007A164) # $s1, 0x8007
+/* 0D414C 7F0A175C 3C118007 */  lui   $s1, %hi(ptr_shattered_window_pieces) # $s1, 0x8007
 /* 0D4150 7F0A1760 03120019 */  multu $t8, $s2
-/* 0D4154 7F0A1764 26318C74 */  addiu $s1, %lo(dword_CODE_bss_8007A164) # addiu $s1, $s1, -0x738c
+/* 0D4154 7F0A1764 26318C74 */  addiu $s1, %lo(ptr_shattered_window_pieces) # addiu $s1, $s1, -0x738c
 /* 0D4158 7F0A1768 8E2F0000 */  lw    $t7, ($s1)
 /* 0D415C 7F0A176C 3C018005 */  lui   $at, %hi(D_8004CDF0) # $at, 0x8005
 /* 0D4160 7F0A1770 C422CDF0 */  lwc1  $f2, %lo(D_8004CDF0)($at)
@@ -1318,7 +1318,7 @@ glabel sub_GAME_7F0A2160
 /* 0D47A0 7F0A1DB0 46145202 */  mul.s $f8, $f10, $f20
 /* 0D47A4 7F0A1DB4 8E2F0000 */  lw    $t7, ($s1)
 /* 0D47A8 7F0A1DB8 01720019 */  multu $t3, $s2
-/* 0D47AC 7F0A1DBC 3C0E8007 */  lui   $t6, %hi(bufferentrycount_8007A160) # $t6, 0x8007
+/* 0D47AC 7F0A1DBC 3C0E8007 */  lui   $t6, %hi(SHATTERED_WINDOW_PIECES_BUFFER_LEN) # $t6, 0x8007
 /* 0D47B0 7F0A1DC0 46164102 */  mul.s $f4, $f8, $f22
 /* 0D47B4 7F0A1DC4 00006812 */  mflo  $t5
 /* 0D47B8 7F0A1DC8 01ED4821 */  addu  $t1, $t7, $t5
@@ -1326,7 +1326,7 @@ glabel sub_GAME_7F0A2160
 /* 0D47C0 7F0A1DD0 8E190000 */  lw    $t9, ($s0)
 /* 0D47C4 7F0A1DD4 272C0001 */  addiu $t4, $t9, 1
 /* 0D47C8 7F0A1DD8 AE0C0000 */  sw    $t4, ($s0)
-/* 0D47CC 7F0A1DDC 8DCE8C70 */  lw    $t6, %lo(bufferentrycount_8007A160)($t6)
+/* 0D47CC 7F0A1DDC 8DCE8C70 */  lw    $t6, %lo(SHATTERED_WINDOW_PIECES_BUFFER_LEN)($t6)
 /* 0D47D0 7F0A1DE0 018E082A */  slt   $at, $t4, $t6
 /* 0D47D4 7F0A1DE4 54200003 */  bnezl $at, .L7F0A1DF4
 /* 0D47D8 7F0A1DE8 8FBF003C */   lw    $ra, 0x3c($sp)
@@ -1374,8 +1374,8 @@ glabel D_8005773C
 glabel update_broken_windows
 /* 0D7404 7F0A28D4 3C028005 */  lui   $v0, %hi(g_ClockTimer)
 /* 0D7408 7F0A28D8 8C428374 */  lw    $v0, %lo(g_ClockTimer)($v0)
-/* 0D740C 7F0A28DC 3C088008 */  lui   $t0, %hi(bufferentrycount_8007A160) 
-/* 0D7410 7F0A28E0 2508A160 */  addiu $t0, %lo(bufferentrycount_8007A160) # addiu $t0, $t0, -0x5ea0
+/* 0D740C 7F0A28DC 3C088008 */  lui   $t0, %hi(SHATTERED_WINDOW_PIECES_BUFFER_LEN) 
+/* 0D7410 7F0A28E0 2508A160 */  addiu $t0, %lo(SHATTERED_WINDOW_PIECES_BUFFER_LEN) # addiu $t0, $t0, -0x5ea0
 /* 0D7414 7F0A28E4 2841000F */  slti  $at, $v0, 0xf
 /* 0D7418 7F0A28E8 10200004 */  beqz  $at, .L7F0A28FC
 /* 0D741C 7F0A28EC 00001825 */   move  $v1, $zero
@@ -1391,13 +1391,13 @@ glabel update_broken_windows
 /* 0D743C 7F0A290C 00001025 */  move  $v0, $zero
 /* 0D7440 7F0A2910 3C018005 */  lui   $at, %hi(D_80057728)
 /* 0D7444 7F0A2914 19C000C9 */  blez  $t6, .L7F0A2C3C
-/* 0D7448 7F0A2918 3C098008 */   lui   $t1, %hi(dword_CODE_bss_8007A164) 
+/* 0D7448 7F0A2918 3C098008 */   lui   $t1, %hi(ptr_shattered_window_pieces) 
 /* 0D744C 7F0A291C C4307728 */  lwc1  $f16, %lo(D_80057728)($at)
 /* 0D7450 7F0A2920 3C018005 */  lui   $at, %hi(D_8005772C)
 /* 0D7454 7F0A2924 C42E772C */  lwc1  $f14, %lo(D_8005772C)($at)
 /* 0D7458 7F0A2928 3C018005 */  lui   $at, %hi(D_80057730)
 /* 0D745C 7F0A292C C42C7730 */  lwc1  $f12, %lo(D_80057730)($at)
-/* 0D7460 7F0A2930 2529A164 */  addiu $t1, %lo(dword_CODE_bss_8007A164) # addiu $t1, $t1, -0x5e9c
+/* 0D7460 7F0A2930 2529A164 */  addiu $t1, %lo(ptr_shattered_window_pieces) # addiu $t1, $t1, -0x5e9c
 /* 0D7464 7F0A2934 8D2F0000 */  lw    $t7, ($t1)
 .L7F0A2938:
 /* 0D7468 7F0A2938 01E32021 */  addu  $a0, $t7, $v1
@@ -1624,8 +1624,8 @@ glabel D_8004CE0C
 glabel update_broken_windows
 /* 0D4804 7F0A1E14 3C028004 */  lui   $v0, %hi(g_ClockTimer) # $v0, 0x8004
 /* 0D4808 7F0A1E18 8C420FF4 */  lw    $v0, %lo(g_ClockTimer)($v0)
-/* 0D480C 7F0A1E1C 3C088007 */  lui   $t0, %hi(bufferentrycount_8007A160) # $t0, 0x8007
-/* 0D4810 7F0A1E20 25088C70 */  addiu $t0, %lo(bufferentrycount_8007A160) # addiu $t0, $t0, -0x7390
+/* 0D480C 7F0A1E1C 3C088007 */  lui   $t0, %hi(SHATTERED_WINDOW_PIECES_BUFFER_LEN) # $t0, 0x8007
+/* 0D4810 7F0A1E20 25088C70 */  addiu $t0, %lo(SHATTERED_WINDOW_PIECES_BUFFER_LEN) # addiu $t0, $t0, -0x7390
 /* 0D4814 7F0A1E24 2841000F */  slti  $at, $v0, 0xf
 /* 0D4818 7F0A1E28 10200004 */  beqz  $at, .L7F0A1E3C
 /* 0D481C 7F0A1E2C 00001825 */   move  $v1, $zero
@@ -1641,13 +1641,13 @@ glabel update_broken_windows
 /* 0D483C 7F0A1E4C 00001025 */  move  $v0, $zero
 /* 0D4840 7F0A1E50 3C018005 */  lui   $at, %hi(D_8004CE00) # $at, 0x8005
 /* 0D4844 7F0A1E54 19C000C9 */  blez  $t6, .L7F0A217C
-/* 0D4848 7F0A1E58 3C098007 */   lui   $t1, %hi(dword_CODE_bss_8007A164) # $t1, 0x8007
+/* 0D4848 7F0A1E58 3C098007 */   lui   $t1, %hi(ptr_shattered_window_pieces) # $t1, 0x8007
 /* 0D484C 7F0A1E5C C430CE00 */  lwc1  $f16, %lo(D_8004CE00)($at)
 /* 0D4850 7F0A1E60 3C018005 */  lui   $at, %hi(D_8004CE04) # $at, 0x8005
 /* 0D4854 7F0A1E64 C42ECE04 */  lwc1  $f14, %lo(D_8004CE04)($at)
 /* 0D4858 7F0A1E68 3C018005 */  lui   $at, %hi(D_8004CE08) # $at, 0x8005
 /* 0D485C 7F0A1E6C C42CCE08 */  lwc1  $f12, %lo(D_8004CE08)($at)
-/* 0D4860 7F0A1E70 25298C74 */  addiu $t1, %lo(dword_CODE_bss_8007A164) # addiu $t1, $t1, -0x738c
+/* 0D4860 7F0A1E70 25298C74 */  addiu $t1, %lo(ptr_shattered_window_pieces) # addiu $t1, $t1, -0x738c
 /* 0D4864 7F0A1E74 8D2F0000 */  lw    $t7, ($t1)
 .L7F0A1E78:
 /* 0D4868 7F0A1E78 01E32021 */  addu  $a0, $t7, $v1
@@ -1949,15 +1949,15 @@ glabel sub_GAME_7F0A2C44
 /* 0D78A0 7F0A2D70 0C003A2C */  jal   osVirtualToPhysical
 /* 0D78A4 7F0A2D74 00402025 */   move  $a0, $v0
 /* 0D78A8 7F0A2D78 AE020004 */  sw    $v0, 4($s0)
-/* 0D78AC 7F0A2D7C 3C048008 */  lui   $a0, %hi(bufferentrycount_8007A160)
-/* 0D78B0 7F0A2D80 8C84A160 */  lw    $a0, %lo(bufferentrycount_8007A160)($a0)
+/* 0D78AC 7F0A2D7C 3C048008 */  lui   $a0, %hi(SHATTERED_WINDOW_PIECES_BUFFER_LEN)
+/* 0D78B0 7F0A2D80 8C84A160 */  lw    $a0, %lo(SHATTERED_WINDOW_PIECES_BUFFER_LEN)($a0)
 /* 0D78B4 7F0A2D84 00008025 */  move  $s0, $zero
 /* 0D78B8 7F0A2D88 0000A025 */  move  $s4, $zero
 /* 0D78BC 7F0A2D8C 18800044 */  blez  $a0, .L7F0A2EA0
 /* 0D78C0 7F0A2D90 3C170420 */   lui   $s7, (0x04200030 >> 16) # lui $s7, 0x420
 /* 0D78C4 7F0A2D94 3C168008 */  lui   $s6, %hi(g_CurrentPlayer)
-/* 0D78C8 7F0A2D98 3C138008 */  lui   $s3, %hi(dword_CODE_bss_8007A164)
-/* 0D78CC 7F0A2D9C 2673A164 */  addiu $s3, %lo(dword_CODE_bss_8007A164) # addiu $s3, $s3, -0x5e9c
+/* 0D78C8 7F0A2D98 3C138008 */  lui   $s3, %hi(ptr_shattered_window_pieces)
+/* 0D78CC 7F0A2D9C 2673A164 */  addiu $s3, %lo(ptr_shattered_window_pieces) # addiu $s3, $s3, -0x5e9c
 /* 0D78D0 7F0A2DA0 26D6A0B0 */  addiu $s6, %lo(g_CurrentPlayer) # addiu $s6, $s6, -0x5f50
 /* 0D78D4 7F0A2DA4 3C1EBF00 */  lui   $fp, 0xbf00
 /* 0D78D8 7F0A2DA8 36F70030 */  ori   $s7, (0x04200030 & 0xFFFF) # ori $s7, $s7, 0x30
@@ -2013,12 +2013,12 @@ glabel sub_GAME_7F0A2C44
 /* 0D799C 7F0A2E6C AE220004 */  sw    $v0, 4($s1)
 /* 0D79A0 7F0A2E70 8FAC00D0 */  lw    $t4, 0xd0($sp)
 /* 0D79A4 7F0A2E74 240E0A14 */  li    $t6, 2580
-/* 0D79A8 7F0A2E78 3C048008 */  lui   $a0, %hi(bufferentrycount_8007A160)
+/* 0D79A8 7F0A2E78 3C048008 */  lui   $a0, %hi(SHATTERED_WINDOW_PIECES_BUFFER_LEN)
 /* 0D79AC 7F0A2E7C 258D0008 */  addiu $t5, $t4, 8
 /* 0D79B0 7F0A2E80 AFAD00D0 */  sw    $t5, 0xd0($sp)
 /* 0D79B4 7F0A2E84 AD8E0004 */  sw    $t6, 4($t4)
 /* 0D79B8 7F0A2E88 AD9E0000 */  sw    $fp, ($t4)
-/* 0D79BC 7F0A2E8C 8C84A160 */  lw    $a0, %lo(bufferentrycount_8007A160)($a0)
+/* 0D79BC 7F0A2E8C 8C84A160 */  lw    $a0, %lo(SHATTERED_WINDOW_PIECES_BUFFER_LEN)($a0)
 /* 0D79C0 7F0A2E90 26940001 */  addiu $s4, $s4, 1
 .L7F0A2E94:
 /* 0D79C4 7F0A2E94 0284082A */  slt   $at, $s4, $a0
