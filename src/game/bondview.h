@@ -2929,7 +2929,7 @@ extern s32 D_800364AC;
 //D:800364B0
 extern s32 D_800364B0;
 //D:800364B4
-extern s32 disable_player_pickups_flag;
+extern s32 g_PlayerInvincible;
 //D:800364B8
 extern s32 D_800364B8;
 //D:800364BC
@@ -3193,13 +3193,13 @@ f32 get_BONDdata_watch_armor(void);
 void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2);
 
 #if defined(BUGFIX_R1)
-#define DISPLAYSTRINGLOWERLEFT jp_display_string_in_lower_left_corner
-void display_string_in_lower_left_corner(char *string, s32 arg1, s32 arg2);
-void jp_display_string_in_lower_left_corner(char *string);
+#define HUDMESSAGEBOTTOM jp_hudmsgBottomShow
+void hudmsgBottomShow(char *string, s32 arg1, s32 arg2);
+void jp_hudmsgBottomShow(char *string);
 #else
 // VERSION_US
-#define DISPLAYSTRINGLOWERLEFT display_string_in_lower_left_corner
-void display_string_in_lower_left_corner(char *string);
+#define HUDMESSAGEBOTTOM hudmsgBottomShow
+void hudmsgBottomShow(char *string);
 #endif
 
 Gfx * sub_GAME_7F087A08(Gfx *arg0);
@@ -3261,8 +3261,8 @@ void     sub_GAME_7F08A928(int param_1);
 
 void     sub_GAME_7F08A944(PLAYERFLAG flag);
 void     set_camera_mode(s32 arg0);
-bool     get_intank_flag(void);
-void     display_string_at_top_of_screen(s8 *string);
-void     trigger_explosions_around_player(int delay);
+bool     isBondInTank(void);
+void     hudmsgTopShow(s8 *string);
+void     SurroundWithExplosions(int delay);
 
 #endif

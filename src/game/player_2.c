@@ -3178,7 +3178,7 @@ weapon_multi_none:
 #ifdef NONMATCHING
 void sub_GAME_7F09B368(s32 arg0) {
     // Node 0
-    return set_0x4_in_runtime_flags_for_item_in_guards_hand(g_CurrentPlayer->unkA8->unk4, arg0);
+    return chrSetWeaponFlag4(g_CurrentPlayer->unkA8->unk4, arg0);
 }
 
 #else
@@ -3202,7 +3202,7 @@ glabel sub_GAME_7F09B368
 /* 0CFEA4 7F09B374 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0CFEA8 7F09B378 8DCF00A8 */  lw    $t7, 0xa8($t6)
 /* 0CFEAC 7F09B37C 00802825 */  move  $a1, $a0
-/* 0CFEB0 7F09B380 0FC1487A */  jal   set_0x4_in_runtime_flags_for_item_in_guards_hand
+/* 0CFEB0 7F09B380 0FC1487A */  jal   chrSetWeaponFlag4
 /* 0CFEB4 7F09B384 8DE40004 */   lw    $a0, 4($t7)
 /* 0CFEB8 7F09B388 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0CFEBC 7F09B38C 27BD0018 */  addiu $sp, $sp, 0x18
@@ -3226,7 +3226,7 @@ void sub_GAME_7F09B398(GUNHAND hand) {
 
     temp_v0 = g_CurrentPlayer->prop->chr;
     if (!temp_v0->handle_positiondata[hand]) {
-        weaponNum = get_item_in_hand(hand);
+        weaponNum = getCurrentPlayerWeaponId(hand);
         weaponIdMaybe = sub_GAME_7F09B244(weaponNum);
         if (weaponIdMaybe >= 0) {
             something_with_generating_object(temp_v0, weaponIdMaybe, weaponNum, hand == GUNRIGHT ? 0 : 0x10000000, 0, 0);
@@ -3258,7 +3258,7 @@ glabel sub_GAME_7F09B398
 /* 0CFEEC 7F09B3BC 57200014 */  bnezl $t9, .L7F09B410
 /* 0CFEF0 7F09B3C0 8FBF001C */   lw    $ra, 0x1c($sp)
 /* 0CFEF4 7F09B3C4 AFA20034 */  sw    $v0, 0x34($sp)
-/* 0CFEF8 7F09B3C8 0FC17674 */  jal   get_item_in_hand
+/* 0CFEF8 7F09B3C8 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 0CFEFC 7F09B3CC AFA30024 */   sw    $v1, 0x24($sp)
 /* 0CFF00 7F09B3D0 AFA20030 */  sw    $v0, 0x30($sp)
 /* 0CFF04 7F09B3D4 0FC26C91 */  jal   sub_GAME_7F09B244

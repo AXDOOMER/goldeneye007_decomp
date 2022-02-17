@@ -2039,13 +2039,13 @@ Gfx* lvlRender(Gfx* DL)
             if (
 
 #if defined(BUGFIX_R1)
-                cheatCheckIfOn(CHEAT_INFINITE_AMMO) != 0
+                cheatIsActive(CHEAT_INFINITE_AMMO) != 0
                 && (
-                    (get_item_in_hand(GUNRIGHT) != ITEM_WATCHLASER)
+                    (getCurrentPlayerWeaponId(GUNRIGHT) != ITEM_WATCHLASER)
                     || (g_CurrentPlayer->field_FCC == 0)
                 )
 #else /* VERSION_US */
-                cheatCheckIfOn(CHEAT_INFINITE_AMMO) != 0
+                cheatIsActive(CHEAT_INFINITE_AMMO) != 0
 #endif
                 )
             {
@@ -2305,7 +2305,7 @@ void lvlManageMpGame(void)
                 for (i=0; i<getPlayerCount(); i++)
                 {
                     set_cur_player(i);
-                    display_string_in_lower_left_corner("One minute left");
+                    hudmsgBottomShow("One minute left");
                 }
             }
 
@@ -2855,7 +2855,7 @@ glabel lvlManageMpGame
 /* 0F3900 7F0BEDD0 0FC26C43 */  jal   set_cur_player
 /* 0F3904 7F0BEDD4 8FA4017C */   lw    $a0, 0x17c($sp)
 /* 0F3908 7F0BEDD8 3C048006 */  lui   $a0, %hi(aOneMinuteLeft)
-/* 0F390C 7F0BEDDC 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 0F390C 7F0BEDDC 0FC228F2 */  jal   hudmsgBottomShow
 /* 0F3910 7F0BEDE0 2484B704 */   addiu $a0, %lo(aOneMinuteLeft) # addiu $a0, $a0, -0x48fc
 /* 0F3914 7F0BEDE4 8FAF017C */  lw    $t7, 0x17c($sp)
 /* 0F3918 7F0BEDE8 25F80001 */  addiu $t8, $t7, 1
@@ -3744,9 +3744,9 @@ glabel lvlManageMpGame
 .Ljp7F0BFA04:
 /* 0F4574 7F0BFA04 0FC26F2B */  jal   set_cur_player
 /* 0F4578 7F0BFA08 8FA4017C */   lw    $a0, 0x17c($sp)
-/* 0F457C 7F0BFA0C 0FC30AA2 */  jal   get_textptr_for_textID
+/* 0F457C 7F0BFA0C 0FC30AA2 */  jal   langGet
 /* 0F4580 7F0BFA10 3404B044 */   li    $a0, 45124
-/* 0F4584 7F0BFA14 0FC22B10 */  jal   jp_display_string_in_lower_left_corner
+/* 0F4584 7F0BFA14 0FC22B10 */  jal   jp_hudmsgBottomShow
 /* 0F4588 7F0BFA18 00402025 */   move  $a0, $v0
 /* 0F458C 7F0BFA1C 8FAF017C */  lw    $t7, 0x17c($sp)
 /* 0F4590 7F0BFA20 25F80001 */  addiu $t8, $t7, 1
@@ -4628,9 +4628,9 @@ glabel lvlManageMpGame
 .L7F0BE210:
 /* 0F0C00 7F0BE210 0FC26993 */  jal   set_cur_player
 /* 0F0C04 7F0BE214 8FA4017C */   lw    $a0, 0x17c($sp)
-/* 0F0C08 7F0BE218 0FC304AE */  jal   get_textptr_for_textID
+/* 0F0C08 7F0BE218 0FC304AE */  jal   langGet
 /* 0F0C0C 7F0BE21C 3404B044 */   li    $a0, 45124
-/* 0F0C10 7F0BE220 0FC229B5 */  jal   jp_display_string_in_lower_left_corner
+/* 0F0C10 7F0BE220 0FC229B5 */  jal   jp_hudmsgBottomShow
 /* 0F0C14 7F0BE224 00402025 */   move  $a0, $v0
 /* 0F0C18 7F0BE228 8FAF017C */  lw    $t7, 0x17c($sp)
 /* 0F0C1C 7F0BE22C 25F80001 */  addiu $t8, $t7, 1
@@ -5422,9 +5422,9 @@ void lvlUpdateMpPlayerData(void)
     {
         if (bondinvIsAliveWithFlag())
         {
-            if (get_item_in_hand(GUNRIGHT) != ITEM_TOKEN)
+            if (getCurrentPlayerWeaponId(GUNRIGHT) != ITEM_TOKEN)
             {
-                draw_item_in_hand_has_more_ammo(GUNRIGHT, ITEM_TOKEN);
+                currentPlayerEquipWeaponWrapper(GUNRIGHT, ITEM_TOKEN);
 
                 if (g_CurrentPlayer->hands[GUNRIGHT].when_detonating_mines_is_0 == 2)
                 {
@@ -5621,12 +5621,12 @@ glabel lvlUpdateMpPlayerData
 /* 0F4578 7F0BFA48 00000000 */   nop
 /* 0F457C 7F0BFA4C 1040001C */  beqz  $v0, .L7F0BFAC0
 /* 0F4580 7F0BFA50 00000000 */   nop
-/* 0F4584 7F0BFA54 0FC17674 */  jal   get_item_in_hand
+/* 0F4584 7F0BFA54 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 0F4588 7F0BFA58 00002025 */   move  $a0, $zero
 /* 0F458C 7F0BFA5C 24010058 */  li    $at, 88
 /* 0F4590 7F0BFA60 1041000B */  beq   $v0, $at, .L7F0BFA90
 /* 0F4594 7F0BFA64 00002025 */   move  $a0, $zero
-/* 0F4598 7F0BFA68 0FC17645 */  jal   draw_item_in_hand_has_more_ammo
+/* 0F4598 7F0BFA68 0FC17645 */  jal   currentPlayerEquipWeaponWrapper
 /* 0F459C 7F0BFA6C 24050058 */   li    $a1, 88
 /* 0F45A0 7F0BFA70 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
 /* 0F45A4 7F0BFA74 8C42A0B0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
@@ -5843,12 +5843,12 @@ glabel lvlUpdateMpPlayerData
 /* 0F187C 7F0BEE8C 00000000 */   nop   
 /* 0F1880 7F0BEE90 1040001C */  beqz  $v0, .L7F0BEF04
 /* 0F1884 7F0BEE94 00000000 */   nop   
-/* 0F1888 7F0BEE98 0FC177A2 */  jal   get_item_in_hand
+/* 0F1888 7F0BEE98 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 0F188C 7F0BEE9C 00002025 */   move  $a0, $zero
 /* 0F1890 7F0BEEA0 24010058 */  li    $at, 88
 /* 0F1894 7F0BEEA4 1041000B */  beq   $v0, $at, .L7F0BEED4
 /* 0F1898 7F0BEEA8 00002025 */   move  $a0, $zero
-/* 0F189C 7F0BEEAC 0FC17773 */  jal   draw_item_in_hand_has_more_ammo
+/* 0F189C 7F0BEEAC 0FC17773 */  jal   currentPlayerEquipWeaponWrapper
 /* 0F18A0 7F0BEEB0 24050058 */   li    $a1, 88
 /* 0F18A4 7F0BEEB4 3C028007 */  lui   $v0, %hi(g_CurrentPlayer) # $v0, 0x8007
 /* 0F18A8 7F0BEEB8 8C428BC0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)

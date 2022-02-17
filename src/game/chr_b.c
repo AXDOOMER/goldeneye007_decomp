@@ -34,9 +34,9 @@ struct Model *makeonebody(s32 arg0, s32 arg1, struct ModelFileHeader *arg2, stru
 
     if (
 #ifndef VERSION_US
-    (cheatCheckIfOn(CHEAT_DK_MODE) != 0) && (not_in_us_7F0209EC(arg0, arg1) != 0)
+    (cheatIsActive(CHEAT_DK_MODE) != 0) && (not_in_us_7F0209EC(arg0, arg1) != 0)
 #else
-    cheatCheckIfOn(CHEAT_DK_MODE)
+    cheatIsActive(CHEAT_DK_MODE)
 #endif
     )
     {

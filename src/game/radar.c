@@ -60,7 +60,7 @@ block_4:
     {
         goto block_4;
     }
-    if (cheatCheckIfOn(CHEAT_NORADAR) != 0)
+    if (cheatIsActive(CHEAT_NORADAR) != 0)
     {
         return DL;
     }
@@ -237,7 +237,7 @@ glabel display_red_blue_on_radar
 /* 0FAC50 7F0C6120 10000119 */  b     .L7F0C6588
 /* 0FAC54 7F0C6124 8FA20088 */   lw    $v0, 0x88($sp)
 .L7F0C6128:
-/* 0FAC58 7F0C6128 0FC249EF */  jal   cheatCheckIfOn
+/* 0FAC58 7F0C6128 0FC249EF */  jal   cheatIsActive
 /* 0FAC5C 7F0C612C 24040017 */   li    $a0, 23
 /* 0FAC60 7F0C6130 10400003 */  beqz  $v0, .L7F0C6140
 /* 0FAC64 7F0C6134 00000000 */   nop   
@@ -609,7 +609,7 @@ glabel display_red_blue_on_radar
 /* 0F8020 7F0C5630 1000011C */  b     .L7F0C5AA4
 /* 0F8024 7F0C5634 8FA20088 */   lw    $v0, 0x88($sp)
 .L7F0C5638:
-/* 0F8028 7F0C5638 0FC24737 */  jal   cheatCheckIfOn
+/* 0F8028 7F0C5638 0FC24737 */  jal   cheatIsActive
 /* 0F802C 7F0C563C 24040017 */   li    $a0, 23
 /* 0F8030 7F0C5640 10400003 */  beqz  $v0, .L7F0C5650
 /* 0F8034 7F0C5644 00000000 */   nop   

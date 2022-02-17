@@ -1333,7 +1333,7 @@ void bossReturnTitleStage(void) {
     display_objective_status_text_on_status_change();
     FUN_7f057a40();
 #endif
-    if ((bossGetStageNum() != LEVELID_CUBA) && (check_objectives_complete() != 0x0)) {
+    if ((bossGetStageNum() != LEVELID_CUBA) && (objectiveIsAllComplete() != 0x0)) {
         end_of_mission_briefing();
     }
     bossRunTitleStage();

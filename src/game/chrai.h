@@ -482,7 +482,7 @@ extern struct object_animation_controller g_MonitorAnimController;
 extern struct object_animation_controller g_UnknownAnimController;
 extern struct object_animation_controller g_TaserAnimController;
 
-void stop_alarm(void);
+void alarmDeactivate(void);
 
 void check_deactivate_gas_sound(void);
 void handle_mp_respawn_and_some_things(void);
@@ -502,7 +502,7 @@ void set_current_objposdata_plus_0x28(PropRecord *);
 void set_stateflag_0x04_for_posdata(PropRecord *);
 void sub_GAME_7F03A4F0(Model*);
 void attachNewChild(PropRecord *newChild, PropRecord *host);
-AIRecord *                                      LoadNext_PrevActionBlock(s32 ID);
+AIRecord *                                      ailistFindById(s32 ID);
 void                                      chraiGetCollisionBounds(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *arg3, f32 *arg4);
 void                                      sub_GAME_7F03D058(PropRecord *prop, bool unset);
 void                                      chraiGetCollisionBoundsWithoutY(PropRecord *arg0, struct rect4f **arg1, s32 *arg2);

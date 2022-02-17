@@ -297,7 +297,7 @@ extern s32 folder_selection_screen_option_icon;
 extern s32 folder_selected_for_deletion;
 extern s32 folder_selected_for_deletion_choice;
 extern s32 mission_failed_or_aborted;
-extern s32 mission_kia_flag;
+extern s32 g_isBondKIA;
 extern s32 is_first_time_on_legal_screen;
 extern s32 is_first_time_on_main_menu;
 extern s32 prev_keypresses;

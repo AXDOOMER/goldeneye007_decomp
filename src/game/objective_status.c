@@ -60,7 +60,7 @@ TagObjectRecord *sub_GAME_7F057080(s32 TagID) //#MATCH
  * Return Object with TagID  
  * Address 7F0570C0
  */
-ObjectRecord *get_handle_to_tagged_object(s32 TagID) //#MATCH
+ObjectRecord *objFindByTagId(s32 TagID) //#MATCH
 {
     TagObjectRecord *tag = sub_GAME_7F057080(TagID);
     ObjectRecord *   obj = NULL;
@@ -92,7 +92,7 @@ u8 * get_ptr_text_for_watch_breifing_page(WATCH_BRIEFING_PAGE page)
     {
         if (page == curentry->menu)
         {
-            textptr = get_textptr_for_textID(curentry->text);
+            textptr = langGet(curentry->text);
         }
         textptr = 0;
     }
@@ -100,17 +100,17 @@ u8 * get_ptr_text_for_watch_breifing_page(WATCH_BRIEFING_PAGE page)
     {
         if (page == 0)
         {
-            textptr = get_textptr_for_textID(TEXT(LMISC, 0x29)); //"E R R O R\n"
+            textptr = langGet(TEXT(LMISC, 0x29)); //"E R R O R\n"
         }
         else
         {
             if (page == 1)
             {
-                textptr = get_textptr_for_textID(TEXT(LMISC, 0x2a)); //"no briefing for this mission\n"
+                textptr = langGet(TEXT(LMISC, 0x2a)); //"no briefing for this mission\n"
             }
             else
             {
-                textptr = get_textptr_for_textID(TEXT(LMISC, 0x2b)); //"\n"
+                textptr = langGet(TEXT(LMISC, 0x2b)); //"\n"
             }
         }
     }
@@ -132,7 +132,7 @@ glabel get_ptr_text_for_watch_breifing_page
 /* 08BC54 7F057124 54AE0008 */  bnel  $a1, $t6, .L7F057148
 /* 08BC58 7F057128 8C42000C */   lw    $v0, 0xc($v0)
 /* 08BC5C 7F05712C 9444000A */  lhu   $a0, 0xa($v0)
-/* 08BC60 7F057130 0FC30776 */  jal   get_textptr_for_textID
+/* 08BC60 7F057130 0FC30776 */  jal   langGet
 /* 08BC64 7F057134 AFA50018 */   sw    $a1, 0x18($sp)
 /* 08BC68 7F057138 8FA50018 */  lw    $a1, 0x18($sp)
 /* 08BC6C 7F05713C 10000004 */  b     .L7F057150
@@ -146,19 +146,19 @@ glabel get_ptr_text_for_watch_breifing_page
 /* 08BC84 7F057154 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 08BC88 7F057158 14A00005 */  bnez  $a1, .L7F057170
 /* 08BC8C 7F05715C 24010001 */   li    $at, 1
-/* 08BC90 7F057160 0FC30776 */  jal   get_textptr_for_textID
+/* 08BC90 7F057160 0FC30776 */  jal   langGet
 /* 08BC94 7F057164 3404B029 */   li    $a0, 45097
 /* 08BC98 7F057168 1000000A */  b     .L7F057194
 /* 08BC9C 7F05716C 00401825 */   move  $v1, $v0
 .L7F057170:
 /* 08BCA0 7F057170 14A10005 */  bne   $a1, $at, .L7F057188
 /* 08BCA4 7F057174 00000000 */   nop   
-/* 08BCA8 7F057178 0FC30776 */  jal   get_textptr_for_textID
+/* 08BCA8 7F057178 0FC30776 */  jal   langGet
 /* 08BCAC 7F05717C 3404B02A */   li    $a0, 45098
 /* 08BCB0 7F057180 10000004 */  b     .L7F057194
 /* 08BCB4 7F057184 00401825 */   move  $v1, $v0
 .L7F057188:
-/* 08BCB8 7F057188 0FC30776 */  jal   get_textptr_for_textID
+/* 08BCB8 7F057188 0FC30776 */  jal   langGet
 /* 08BCBC 7F05718C 3404B02B */   li    $a0, 45099
 /* 08BCC0 7F057190 00401825 */  move  $v1, $v0
 .L7F057194:
@@ -176,7 +176,7 @@ glabel get_ptr_text_for_watch_breifing_page
 
 
 //objectiveGetCount
-s32 add_objective(void)
+s32 objectiveGetCount(void)
 {
     return num_objective_ptrs[0]+1;
 }
@@ -188,7 +188,7 @@ u8 * get_text_for_objective(int objective)
     u8 *textptr;
     
     if ((objective < 10) && (objective_ptrs[objective] != 0)) {
-        return get_textptr_for_textID(objective_ptrs[objective]->text);
+        return langGet(objective_ptrs[objective]->text);
     }
     return 0;
 }
@@ -258,8 +258,8 @@ OBJECTIVESTATUS get_status_of_objective(s32 objectiveNum) //#MATCH
                     {
                         case PROPDEF_OBJECTIVE_DESTROY_OBJECT:
                         {
-                            ObjectRecord *obj = get_handle_to_tagged_object(objective->ObjRefID);
-                            if (obj && obj->prop && check_if_object_has_not_been_destroyed(obj))
+                            ObjectRecord *obj = objFindByTagId(objective->ObjRefID);
+                            if (obj && obj->prop && objIsHealthy(obj))
                             {
                                 currentstatus = OBJECTIVESTATUS_INCOMPLETE;
                             }
@@ -267,7 +267,7 @@ OBJECTIVESTATUS get_status_of_objective(s32 objectiveNum) //#MATCH
                         }
                         case PROPDEF_OBJECTIVE_COMPLETE_CONDITION:
                         {
-                            if (!check_if_objective_bitflags_set(NULL, objective->ObjRefID))
+                            if (!chrHasStageFlag(NULL, objective->ObjRefID))
                             {
                                 currentstatus = OBJECTIVESTATUS_INCOMPLETE;
                             }
@@ -275,7 +275,7 @@ OBJECTIVESTATUS get_status_of_objective(s32 objectiveNum) //#MATCH
                         }
                         case PROPDEF_OBJECTIVE_FAIL_CONDITION:
                         {
-                            if (check_if_objective_bitflags_set(NULL, objective->ObjRefID))
+                            if (chrHasStageFlag(NULL, objective->ObjRefID))
                             {
                                 currentstatus = OBJECTIVESTATUS_FAILED;
                             }
@@ -283,8 +283,8 @@ OBJECTIVESTATUS get_status_of_objective(s32 objectiveNum) //#MATCH
                         }
                         case PROPDEF_OBJECTIVE_COLLECT_OBJECT:
                         {
-                            ObjectRecord *obj = get_handle_to_tagged_object(objective->ObjRefID);
-                            if (!obj || !obj->prop || !check_if_object_has_not_been_destroyed(obj))
+                            ObjectRecord *obj = objFindByTagId(objective->ObjRefID);
+                            if (!obj || !obj->prop || !objIsHealthy(obj))
                             {
                                 currentstatus = OBJECTIVESTATUS_FAILED;
                             }
@@ -296,7 +296,7 @@ OBJECTIVESTATUS get_status_of_objective(s32 objectiveNum) //#MATCH
                         }
                         case PROPDEF_OBJECTIVE_DEPOSIT_OBJECT:
                         {
-                            ObjectRecord *obj = get_handle_to_tagged_object(objective->ObjRefID);
+                            ObjectRecord *obj = objFindByTagId(objective->ObjRefID);
                             if (obj && obj->prop && is_prop_in_inventory(obj->prop))
                             {
                                 currentstatus = OBJECTIVESTATUS_INCOMPLETE;
@@ -305,10 +305,10 @@ OBJECTIVESTATUS get_status_of_objective(s32 objectiveNum) //#MATCH
                         }
                         case PROPDEF_OBJECTIVE_PHOTOGRAPH:
                         {
-                            ObjectRecord *obj = get_handle_to_tagged_object(objective->ObjRefID);
+                            ObjectRecord *obj = objFindByTagId(objective->ObjRefID);
                             if (!objective->TextID) //0x8
                             {
-                                if (!obj || !obj->prop || !check_if_object_has_not_been_destroyed(obj))
+                                if (!obj || !obj->prop || !objIsHealthy(obj))
                                 {
                                     currentstatus = OBJECTIVESTATUS_FAILED;
                                 }
@@ -384,13 +384,13 @@ OBJECTIVESTATUS get_status_of_objective(s32 objectiveNum) //#MATCH
 
 
 
-bool check_objectives_complete(void)
+bool objectiveIsAllComplete(void)
 {
     DIFFICULTY objdiff;
     DIFFICULTY curdiff;
     int objective;
     
-    for (objective = 0; objective < add_objective(); objective++)
+    for (objective = 0; objective < objectiveGetCount(); objective++)
     {
         objdiff = get_difficulty_for_objective(objective);
         curdiff = lvlGetSelectedDifficulty();
@@ -486,7 +486,7 @@ glabel display_objective_status_text_on_status_change
 /* 08C14C 7F05761C 3404B02C */  li    $a0, 45100
 /* 08C150 7F057620 1160000A */  beqz  $t3, .L7F05764C
 /* 08C154 7F057624 00000000 */   nop   
-/* 08C158 7F057628 0FC30776 */  jal   get_textptr_for_textID
+/* 08C158 7F057628 0FC30776 */  jal   langGet
 /* 08C15C 7F05762C 3404B02C */   li    $a0, 45100
 /* 08C160 7F057630 02602025 */  move  $a0, $s3
 /* 08C164 7F057634 03C02825 */  move  $a1, $fp
@@ -496,7 +496,7 @@ glabel display_objective_status_text_on_status_change
 /* 08C174 7F057644 1000000A */  b     .L7F057670
 /* 08C178 7F057648 24010001 */   li    $at, 1
 .L7F05764C:
-/* 08C17C 7F05764C 0FC30776 */  jal   get_textptr_for_textID
+/* 08C17C 7F05764C 0FC30776 */  jal   langGet
 /* 08C180 7F057650 26900061 */   addiu $s0, $s4, 0x61
 /* 08C184 7F057654 3C058005 */  lui   $a1, %hi(aSC)
 /* 08C188 7F057658 24A5364C */  addiu $a1, %lo(aSC) # addiu $a1, $a1, 0x364c
@@ -508,7 +508,7 @@ glabel display_objective_status_text_on_status_change
 .L7F057670:
 /* 08C1A0 7F057670 16210008 */  bne   $s1, $at, .L7F057694
 /* 08C1A4 7F057674 00000000 */   nop   
-/* 08C1A8 7F057678 0FC30776 */  jal   get_textptr_for_textID
+/* 08C1A8 7F057678 0FC30776 */  jal   langGet
 /* 08C1AC 7F05767C 3404B02D */   li    $a0, 45101
 /* 08C1B0 7F057680 02602025 */  move  $a0, $s3
 /* 08C1B4 7F057684 0C0029FF */  jal   strcat
@@ -518,7 +518,7 @@ glabel display_objective_status_text_on_status_change
 .L7F057694:
 /* 08C1C4 7F057694 16200008 */  bnez  $s1, .L7F0576B8
 /* 08C1C8 7F057698 24010002 */   li    $at, 2
-/* 08C1CC 7F05769C 0FC30776 */  jal   get_textptr_for_textID
+/* 08C1CC 7F05769C 0FC30776 */  jal   langGet
 /* 08C1D0 7F0576A0 3404B02E */   li    $a0, 45102
 /* 08C1D4 7F0576A4 02602025 */  move  $a0, $s3
 /* 08C1D8 7F0576A8 0C0029FF */  jal   strcat
@@ -528,13 +528,13 @@ glabel display_objective_status_text_on_status_change
 .L7F0576B8:
 /* 08C1E8 7F0576B8 16210006 */  bne   $s1, $at, .L7F0576D4
 /* 08C1EC 7F0576BC 00000000 */   nop   
-/* 08C1F0 7F0576C0 0FC30776 */  jal   get_textptr_for_textID
+/* 08C1F0 7F0576C0 0FC30776 */  jal   langGet
 /* 08C1F4 7F0576C4 3404B02F */   li    $a0, 45103
 /* 08C1F8 7F0576C8 02602025 */  move  $a0, $s3
 /* 08C1FC 7F0576CC 0C0029FF */  jal   strcat
 /* 08C200 7F0576D0 00402825 */   move  $a1, $v0
 .L7F0576D4:
-/* 08C204 7F0576D4 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 08C204 7F0576D4 0FC228F2 */  jal   hudmsgBottomShow
 /* 08C208 7F0576D8 02602025 */   move  $a0, $s3
 .L7F0576DC:
 /* 08C20C 7F0576DC 0FC15C81 */  jal   get_difficulty_for_objective
@@ -635,7 +635,7 @@ glabel display_objective_status_text_on_status_change
 /* 08C6A8 7F057B38 3404B02C */  li    $a0, 45100
 /* 08C6AC 7F057B3C 1180000B */  beqz  $t4, .L7F057B6C
 /* 08C6B0 7F057B40 00000000 */   nop   
-/* 08C6B4 7F057B44 0FC30AA2 */  jal   get_textptr_for_textID
+/* 08C6B4 7F057B44 0FC30AA2 */  jal   langGet
 /* 08C6B8 7F057B48 3404B02C */   li    $a0, 45100
 /* 08C6BC 7F057B4C 3C058005 */  lui   $a1, %hi(aSAC) # $a1, 0x8005
 /* 08C6C0 7F057B50 24A53674 */  addiu $a1, %lo(aSAC) # addiu $a1, $a1, 0x3674
@@ -646,7 +646,7 @@ glabel display_objective_status_text_on_status_change
 /* 08C6D4 7F057B64 10000009 */  b     .L7F057B8C
 /* 08C6D8 7F057B68 00000000 */   nop   
 .L7F057B6C:
-/* 08C6DC 7F057B6C 0FC30AA2 */  jal   get_textptr_for_textID
+/* 08C6DC 7F057B6C 0FC30AA2 */  jal   langGet
 /* 08C6E0 7F057B70 26B00061 */   addiu $s0, $s5, 0x61
 /* 08C6E4 7F057B74 3C058005 */  lui   $a1, %hi(aSC) # $a1, 0x8005
 /* 08C6E8 7F057B78 24A5367C */  addiu $a1, %lo(aSC) # addiu $a1, $a1, 0x367c
@@ -657,7 +657,7 @@ glabel display_objective_status_text_on_status_change
 .L7F057B8C:
 /* 08C6FC 7F057B8C 163E0008 */  bne   $s1, $fp, .L7F057BB0
 /* 08C700 7F057B90 00000000 */   nop   
-/* 08C704 7F057B94 0FC30AA2 */  jal   get_textptr_for_textID
+/* 08C704 7F057B94 0FC30AA2 */  jal   langGet
 /* 08C708 7F057B98 3404B02D */   li    $a0, 45101
 /* 08C70C 7F057B9C 02602025 */  move  $a0, $s3
 /* 08C710 7F057BA0 0C002A03 */  jal   strcat
@@ -667,7 +667,7 @@ glabel display_objective_status_text_on_status_change
 .L7F057BB0:
 /* 08C720 7F057BB0 16200008 */  bnez  $s1, .L7F057BD4
 /* 08C724 7F057BB4 24010002 */   li    $at, 2
-/* 08C728 7F057BB8 0FC30AA2 */  jal   get_textptr_for_textID
+/* 08C728 7F057BB8 0FC30AA2 */  jal   langGet
 /* 08C72C 7F057BBC 3404B02E */   li    $a0, 45102
 /* 08C730 7F057BC0 02602025 */  move  $a0, $s3
 /* 08C734 7F057BC4 0C002A03 */  jal   strcat
@@ -677,13 +677,13 @@ glabel display_objective_status_text_on_status_change
 .L7F057BD4:
 /* 08C744 7F057BD4 16210006 */  bne   $s1, $at, .L7F057BF0
 /* 08C748 7F057BD8 00000000 */   nop   
-/* 08C74C 7F057BDC 0FC30AA2 */  jal   get_textptr_for_textID
+/* 08C74C 7F057BDC 0FC30AA2 */  jal   langGet
 /* 08C750 7F057BE0 3404B02F */   li    $a0, 45103
 /* 08C754 7F057BE4 02602025 */  move  $a0, $s3
 /* 08C758 7F057BE8 0C002A03 */  jal   strcat
 /* 08C75C 7F057BEC 00402825 */   move  $a1, $v0
 .L7F057BF0:
-/* 08C760 7F057BF0 0FC22B10 */  jal   jp_display_string_in_lower_left_corner
+/* 08C760 7F057BF0 0FC22B10 */  jal   jp_hudmsgBottomShow
 /* 08C764 7F057BF4 02602025 */   move  $a0, $s3
 .L7F057BF8:
 /* 08C768 7F057BF8 0FC15DC1 */  jal   get_difficulty_for_objective
@@ -789,7 +789,7 @@ glabel display_objective_status_text_on_status_change
 /* 08A308 7F057918 3404B02C */  li    $a0, 45100
 /* 08A30C 7F05791C 1180000B */  beqz  $t4, .L7F05794C
 /* 08A310 7F057920 00000000 */   nop   
-/* 08A314 7F057924 0FC304AE */  jal   get_textptr_for_textID
+/* 08A314 7F057924 0FC304AE */  jal   langGet
 /* 08A318 7F057928 3404B02C */   li    $a0, 45100
 /* 08A31C 7F05792C 3C058005 */  lui   $a1, %hi(aSAC) # $a1, 0x8005
 /* 08A320 7F057930 24A59784 */  addiu $a1, %lo(aSAC) # addiu $a1, $a1, -0x687c
@@ -800,7 +800,7 @@ glabel display_objective_status_text_on_status_change
 /* 08A334 7F057944 10000009 */  b     .L7F05796C
 /* 08A338 7F057948 00000000 */   nop   
 .L7F05794C:
-/* 08A33C 7F05794C 0FC304AE */  jal   get_textptr_for_textID
+/* 08A33C 7F05794C 0FC304AE */  jal   langGet
 /* 08A340 7F057950 26B00061 */   addiu $s0, $s5, 0x61
 /* 08A344 7F057954 3C058005 */  lui   $a1, %hi(aSC) # $a1, 0x8005
 /* 08A348 7F057958 24A5978C */  addiu $a1, %lo(aSC) # addiu $a1, $a1, -0x6874
@@ -811,7 +811,7 @@ glabel display_objective_status_text_on_status_change
 .L7F05796C:
 /* 08A35C 7F05796C 163E0008 */  bne   $s1, $fp, .L7F057990
 /* 08A360 7F057970 00000000 */   nop   
-/* 08A364 7F057974 0FC304AE */  jal   get_textptr_for_textID
+/* 08A364 7F057974 0FC304AE */  jal   langGet
 /* 08A368 7F057978 3404B02D */   li    $a0, 45101
 /* 08A36C 7F05797C 02602025 */  move  $a0, $s3
 /* 08A370 7F057980 0C002717 */  jal   strcat
@@ -821,7 +821,7 @@ glabel display_objective_status_text_on_status_change
 .L7F057990:
 /* 08A380 7F057990 16200008 */  bnez  $s1, .L7F0579B4
 /* 08A384 7F057994 24010002 */   li    $at, 2
-/* 08A388 7F057998 0FC304AE */  jal   get_textptr_for_textID
+/* 08A388 7F057998 0FC304AE */  jal   langGet
 /* 08A38C 7F05799C 3404B02E */   li    $a0, 45102
 /* 08A390 7F0579A0 02602025 */  move  $a0, $s3
 /* 08A394 7F0579A4 0C002717 */  jal   strcat
@@ -831,13 +831,13 @@ glabel display_objective_status_text_on_status_change
 .L7F0579B4:
 /* 08A3A4 7F0579B4 16210006 */  bne   $s1, $at, .L7F0579D0
 /* 08A3A8 7F0579B8 00000000 */   nop   
-/* 08A3AC 7F0579BC 0FC304AE */  jal   get_textptr_for_textID
+/* 08A3AC 7F0579BC 0FC304AE */  jal   langGet
 /* 08A3B0 7F0579C0 3404B02F */   li    $a0, 45103
 /* 08A3B4 7F0579C4 02602025 */  move  $a0, $s3
 /* 08A3B8 7F0579C8 0C002717 */  jal   strcat
 /* 08A3BC 7F0579CC 00402825 */   move  $a1, $v0
 .L7F0579D0:
-/* 08A3C0 7F0579D0 0FC229B5 */  jal   jp_display_string_in_lower_left_corner
+/* 08A3C0 7F0579D0 0FC229B5 */  jal   jp_hudmsgBottomShow
 /* 08A3C4 7F0579D4 02602025 */   move  $a0, $s3
 .L7F0579D8:
 /* 08A3C8 7F0579D8 0FC15D39 */  jal   get_difficulty_for_objective
@@ -1033,7 +1033,7 @@ glabel objectiveTakePictureHandler
 .L7F0578EC:
 /* 08C41C 7F0578EC 55C00066 */  bnezl $t6, .L7F057A88
 /* 08C420 7F0578F0 8E31000C */   lw    $s1, 0xc($s1)
-/* 08C424 7F0578F4 0FC15C30 */  jal   get_handle_to_tagged_object
+/* 08C424 7F0578F4 0FC15C30 */  jal   objFindByTagId
 /* 08C428 7F0578F8 8E240004 */   lw    $a0, 4($s1)
 /* 08C42C 7F0578FC 10400061 */  beqz  $v0, .L7F057A84
 /* 08C430 7F057900 00408025 */   move  $s0, $v0
@@ -1049,7 +1049,7 @@ glabel objectiveTakePictureHandler
 /* 08C458 7F057928 00000000 */  nop   
 /* 08C45C 7F05792C 45020056 */  bc1fl .L7F057A88
 /* 08C460 7F057930 8E31000C */   lw    $s1, 0xc($s1)
-/* 08C464 7F057934 0FC13BCD */  jal   check_if_object_has_not_been_destroyed
+/* 08C464 7F057934 0FC13BCD */  jal   objIsHealthy
 /* 08C468 7F057938 00402025 */   move  $a0, $v0
 /* 08C46C 7F05793C 10400051 */  beqz  $v0, .L7F057A84
 /* 08C470 7F057940 02402825 */   move  $a1, $s2

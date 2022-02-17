@@ -886,7 +886,7 @@ void cheatButtonActivateRelated(void)
                 {
                     g_CurrentPlayer->can_display_cheat_text = 0;
 
-                    if (!cheatCheckIfOn((s32) info->cheat_id) || ((info->maskfield & CHEAT_MASK_16) != 0))
+                    if (!cheatIsActive((s32) info->cheat_id) || ((info->maskfield & CHEAT_MASK_16) != 0))
                     {
                         cheatButtonHandleCheatsTurnedOn(info->cheat_id);
                     }
@@ -1231,7 +1231,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_INVINCIBILITY:
             if (!get_bondata_invincible_flag())
             {
-                DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x0F)));
+                HUDMESSAGEBOTTOM((char *)langGet(TEXT(LMISC, 0x0F)));
                 set_bondata_invincible_flag(TRUE);
                 return;
             }
@@ -1240,14 +1240,14 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_ALLGUNS:
             if (!get_BONDdata_allguns_flag())
             {
-                DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x10)));
+                HUDMESSAGEBOTTOM((char *)langGet(TEXT(LMISC, 0x10)));
                 set_BONDdata_allguns_flag(TRUE);
                 return;
             }
             return;
 
         case CHEAT_MAXAMMO:
-            DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x11)));
+            HUDMESSAGEBOTTOM((char *)langGet(TEXT(LMISC, 0x11)));
             set_max_ammo_for_cur_player();
             return;
 
@@ -1291,7 +1291,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_2X_HEALTH:
             if ((g_CurrentPlayer->actual_health == 1.0f) || (g_CurrentPlayer->bondhealth < 1.0f))
             {
-                DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x12)));
+                HUDMESSAGEBOTTOM((char *)langGet(TEXT(LMISC, 0x12)));
                 g_CurrentPlayer->bondhealth = 1.0f;
                 g_CurrentPlayer->actual_health = 2.0f;
             }
@@ -1300,7 +1300,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_2X_ARMOR:
             if ((g_CurrentPlayer->actual_armor == 1.0f) || (g_CurrentPlayer->bondarmour < 1.0f))
             {
-                DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x13)));
+                HUDMESSAGEBOTTOM((char *)langGet(TEXT(LMISC, 0x13)));
 #if defined(BUGFIX_R1)
                 if(TRUE)
                 {
@@ -1315,21 +1315,21 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_INVISIBILITY:
             if (bondviewGetVisibleToGuardsFlag())
             {
-                DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x14)));
+                HUDMESSAGEBOTTOM((char *)langGet(TEXT(LMISC, 0x14)));
                 bondviewSetVisibleToGuardsFlag(FALSE);
                 return;
             }
             return;
 
         case CHEAT_INFINITE_AMMO:
-            DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x16)));
+            HUDMESSAGEBOTTOM((char *)langGet(TEXT(LMISC, 0x16)));
             /**
             * Note: the lvlRender in lvl.c checks if infinite ammo is on then calls set_max_ammo_for_cur_player
             */
             return;
 
         case CHEAT_DK_MODE:
-            DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x17)));
+            HUDMESSAGEBOTTOM((char *)langGet(TEXT(LMISC, 0x17)));
             cheatButtonSetDkMode(TRUE);
             return;
 
@@ -1350,7 +1350,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
 
                 if (vvv > 0)
                 {
-                    DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x18)));
+                    HUDMESSAGEBOTTOM((char *)langGet(TEXT(LMISC, 0x18)));
                 }
                 return;
             }
@@ -1359,7 +1359,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_TINY_BOND:
             if ((player_count == 1) && (g_playerPerm->player_perspective_height == 1.0f))
             {
-                DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x19)));
+                HUDMESSAGEBOTTOM((char *)langGet(TEXT(LMISC, 0x19)));
                 g_playerPerm->player_perspective_height = 0.5f;
 
                 if (g_CurrentPlayer->ptr_char_objectinstance != NULL)
@@ -1371,13 +1371,13 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             return;
 
         case CHEAT_PAINTBALL:
-            DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x1A)));
+            HUDMESSAGEBOTTOM((char *)langGet(TEXT(LMISC, 0x1A)));
             return;
 
         case CHEAT_10X_HEALTH:
             if ((g_CurrentPlayer->actual_health == 1.0f) || (g_CurrentPlayer->bondhealth < 1.0f))
             {
-                DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x1B)));
+                HUDMESSAGEBOTTOM((char *)langGet(TEXT(LMISC, 0x1B)));
 #if defined(BUGFIX_R1)
                 if(TRUE)
                 {
@@ -1441,7 +1441,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_TURBO_MODE:
             if (!get_debug_fast_bond_flag())
             {
-                DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x1D)));
+                HUDMESSAGEBOTTOM((char *)langGet(TEXT(LMISC, 0x1D)));
                 set_debug_fast_bond_flag(TRUE);
                 return;
             }
@@ -1458,7 +1458,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_FAST_ANIMATION:
             if (get_animation_rate() < 4.0f)
             {
-                DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x34)));
+                HUDMESSAGEBOTTOM((char *)langGet(TEXT(LMISC, 0x34)));
                 animation_speed_related(4.0f);
                 return;
             }
@@ -1467,7 +1467,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_SLOW_ANIMATION:
             if (get_animation_rate() > 0.25f)
             {
-                DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x32)));
+                HUDMESSAGEBOTTOM((char *)langGet(TEXT(LMISC, 0x32)));
                 animation_speed_related(0.25);
                 return;
             }
@@ -1665,7 +1665,7 @@ void cheatButtonHandleCheatsTurnedOff(CHEAT_ID cheat_id)
         case CHEAT_INVINCIBILITY:
             if (get_bondata_invincible_flag())
             {
-                DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x1e)));
+                HUDMESSAGEBOTTOM((char *)langGet(TEXT(LMISC, 0x1e)));
                 set_bondata_invincible_flag(FALSE);
                 return;
             }
@@ -1674,7 +1674,7 @@ void cheatButtonHandleCheatsTurnedOff(CHEAT_ID cheat_id)
         case CHEAT_ALLGUNS:
             if (get_BONDdata_allguns_flag())
             {
-                DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x1F)));
+                HUDMESSAGEBOTTOM((char *)langGet(TEXT(LMISC, 0x1F)));
                 set_BONDdata_allguns_flag(FALSE);
                 return;
             }
@@ -1687,25 +1687,25 @@ void cheatButtonHandleCheatsTurnedOff(CHEAT_ID cheat_id)
         case CHEAT_INVISIBILITY:
             if (!bondviewGetVisibleToGuardsFlag())
             {
-                DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x20)));
+                HUDMESSAGEBOTTOM((char *)langGet(TEXT(LMISC, 0x20)));
                 bondviewSetVisibleToGuardsFlag(TRUE);
                 return;
             }
             return;
 
         case CHEAT_INFINITE_AMMO:
-            DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x22)));
+            HUDMESSAGEBOTTOM((char *)langGet(TEXT(LMISC, 0x22)));
             return;
             
         case CHEAT_DK_MODE:
-            DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x23)));
+            HUDMESSAGEBOTTOM((char *)langGet(TEXT(LMISC, 0x23)));
             cheatButtonSetDkMode(FALSE);
             return;
 
         case CHEAT_TINY_BOND:
             if ((player_count == 1) && (g_playerPerm->player_perspective_height != 1.0f))
             {
-                DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x24)));
+                HUDMESSAGEBOTTOM((char *)langGet(TEXT(LMISC, 0x24)));
                 g_playerPerm->player_perspective_height = 1.0f;
                 if (g_CurrentPlayer->ptr_char_objectinstance)
                 {
@@ -1716,7 +1716,7 @@ void cheatButtonHandleCheatsTurnedOff(CHEAT_ID cheat_id)
             return;
 
         case CHEAT_PAINTBALL:
-            DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x25)));
+            HUDMESSAGEBOTTOM((char *)langGet(TEXT(LMISC, 0x25)));
             return;
 
         case CHEAT_INVISIBILITY_MP: /* multiplayer? but the function call is for "fade"? */
@@ -1726,7 +1726,7 @@ void cheatButtonHandleCheatsTurnedOff(CHEAT_ID cheat_id)
         case CHEAT_TURBO_MODE:
             if (get_debug_fast_bond_flag())
             {
-                DISPLAYSTRINGLOWERLEFT((char *)get_textptr_for_textID(TEXT(LMISC, 0x27)));
+                HUDMESSAGEBOTTOM((char *)langGet(TEXT(LMISC, 0x27)));
                 set_debug_fast_bond_flag(FALSE);
                 return;
             }
@@ -1832,7 +1832,7 @@ void cheatDisableAllCheats(void)
 
         for (j=1; j<CHEAT_INVALID; j++)
         {
-            if ((g_CheatInfo[j - 1].maskfield & CHEAT_MASK_TOGGLE) && (cheatCheckIfOn(j)))
+            if ((g_CheatInfo[j - 1].maskfield & CHEAT_MASK_TOGGLE) && (cheatIsActive(j)))
             {
                 cheatButtonHandleCheatsTurnedOff(j);
             }
@@ -1857,10 +1857,10 @@ char *cheatGetMenuTextPointer(CHEAT_ID cheat_id)
 
     if (temp_v0 != 0)
     {
-        return get_textptr_for_textID((s32) temp_v0);
+        return langGet((s32) temp_v0);
     }
 
-    return get_textptr_for_textID(TEXT(LMISC,0x28));
+    return langGet(TEXT(LMISC,0x28));
 }
 
 
@@ -1868,7 +1868,7 @@ char *cheatGetMenuTextPointer(CHEAT_ID cheat_id)
 /**
  * Address 0x7F0927BC.
  */
-bool cheatCheckIfOn(CHEAT_ID cheat)
+bool cheatIsActive(CHEAT_ID cheat)
 {
     return ((bool) (u8) g_CheatPlayerTextRelated[cheat] >> get_cur_playernum()) & 1;
 }

@@ -126,8 +126,8 @@ s32 chrlvMaybeSameRoom                        (ChrRecord *self, coord3d *arg1, S
 s32 chrlvCurrentPlayerCall7F0B0E24            (ChrRecord *self);
 s32 chrlvCall7F0B0E24WithChrWidthHeight       (PropRecord *arg0, coord3d *arg1, coord3d *arg2);
 void chrlvSetTargetToPlayer                   (ChrRecord *self);
-s32 chrlvSeenWithin600                        (ChrRecord *);
-s32 sub_GAME_7F029D70                         (ChrRecord *self);
+s32 chrSawTargetRecently                        (ChrRecord *);
+s32 chrCheckTargetInSight                         (ChrRecord *self);
 void chrlvNormDistanceToPlayer                (ChrRecord *self, s32 arg1, coord3d *arg2);
 s32 sub_GAME_7F02A0EC                         (ChrRecord *self, s32 arg1, f32 arg2);
 void chrlvModelRotyRelated                    (ChrRecord *self, s32 arg1, coord3d *arg2);
@@ -326,7 +326,7 @@ void expand_09_characters(s32 arg0, GuardRecord *arg1, s32 arg2)
         if (sp38 != 0)
         {
             sp3C = atan2f(pad->look.f[0], pad->look.f[2]);
-            temp_v0_4 = replace_GUARDdata_with_actual_values(sp38, (PadRecord *)&sp48, sp3C, sp54, LoadNext_PrevActionBlock(arg1->AIListID));
+            temp_v0_4 = replace_GUARDdata_with_actual_values(sp38, (PadRecord *)&sp48, sp3C, sp54, ailistFindById(arg1->AIListID));
             
             if (temp_v0_4 != 0)
             {
@@ -386,8 +386,8 @@ void chrlvIdleAnimationRelated(ChrRecord *self, f32 arg1)
     PropRecord *left;
     PropRecord *right;
 
-    left = something_with_weaponpos_of_guarddata_hand(self, GUNLEFT);
-    right = something_with_weaponpos_of_guarddata_hand(self, GUNRIGHT);
+    left = chrGetEquippedWeaponProp(self, GUNLEFT);
+    right = chrGetEquippedWeaponProp(self, GUNRIGHT);
 
     if (
         ((left != NULL) && (right != NULL))
@@ -583,8 +583,8 @@ void chrlvActorKneel(ChrRecord *self)
     PropRecord *left;
     PropRecord *right;
 
-    left = something_with_weaponpos_of_guarddata_hand(self, GUNLEFT);
-    right = something_with_weaponpos_of_guarddata_hand(self, GUNRIGHT);
+    left = chrGetEquippedWeaponProp(self, GUNLEFT);
+    right = chrGetEquippedWeaponProp(self, GUNRIGHT);
     sub_GAME_7F02D184(self);
     
     if (((left != NULL) && (right != NULL))
@@ -667,8 +667,8 @@ void chrlvExtendLeftHandAnimationRelated(ChrRecord *self)
     PropRecord *right;
     s32 phi_a2;
 
-    left = something_with_weaponpos_of_guarddata_hand(self, GUNLEFT);
-    right = something_with_weaponpos_of_guarddata_hand(self, GUNRIGHT);
+    left = chrGetEquippedWeaponProp(self, GUNLEFT);
+    right = chrGetEquippedWeaponProp(self, GUNRIGHT);
 
     phi_a2 = 0;
     if ((left != NULL) && (right == NULL))
@@ -726,8 +726,8 @@ void chrlvSpotBondAnimationRelated(ChrRecord *self, f32 arg1)
     s32 sp2C;
     f32 objarg4;
 
-    left = something_with_weaponpos_of_guarddata_hand(self, GUNLEFT);
-    right = something_with_weaponpos_of_guarddata_hand(self, GUNRIGHT);
+    left = chrGetEquippedWeaponProp(self, GUNLEFT);
+    right = chrGetEquippedWeaponProp(self, GUNRIGHT);
 
     sp2C = 0;
     if ((left != NULL) && (right == NULL))
@@ -766,7 +766,7 @@ void chrlvActorShuffleFeet(ChrRecord *self)
         return;
     }
 
-    if (check_if_actor_stationary(self) == 0)
+    if (chrIsStopped(self) == 0)
     {
         chrlvKneelingAnimationRelated(self);
     }
@@ -830,8 +830,8 @@ void chrlvActorThrowWeaponSurrender(ChrRecord *self)
 
     if (self->actiontype != ACT_SURRENDER)
     {
-        left = something_with_weaponpos_of_guarddata_hand(self, GUNLEFT);
-        right = something_with_weaponpos_of_guarddata_hand(self, GUNRIGHT);
+        left = chrGetEquippedWeaponProp(self, GUNLEFT);
+        right = chrGetEquippedWeaponProp(self, GUNRIGHT);
 
         sub_GAME_7F02D184(self);
 
@@ -846,11 +846,11 @@ void chrlvActorThrowWeaponSurrender(ChrRecord *self)
 
             if (left != 0)
             {
-                sub_GAME_7F04BFD0(left, 2);
+                propobjSetDropped(left, 2);
             }
             if (right != 0)
             {
-                sub_GAME_7F04BFD0(right, 2);
+                propobjSetDropped(right, 2);
             }
 
             self->hidden |= CHRHIDDEN_DROP_HELD_ITEMS;
@@ -863,7 +863,7 @@ void chrlvActorThrowWeaponSurrender(ChrRecord *self)
             self->sleep = 0x10;
         }
 
-        sub_GAME_7F021B20(self);
+        chrDropItems(self);
     }
 }
 
@@ -895,8 +895,8 @@ void chrlvSideStepAnimationRelated(ChrRecord *self, s32 arg1)
     s32 sp2C;
     s32 phi_v1;
 
-    left = something_with_weaponpos_of_guarddata_hand(self, GUNLEFT);
-    right = something_with_weaponpos_of_guarddata_hand(self, GUNRIGHT);
+    left = chrGetEquippedWeaponProp(self, GUNLEFT);
+    right = chrGetEquippedWeaponProp(self, GUNRIGHT);
     sp2C = 0;
     phi_v1 = 0;
 
@@ -961,8 +961,8 @@ void chrlvFireJumpToSideAnimationRelated(ChrRecord *self, s32 arg1)
     PropRecord *right;
     s32 sp2C;
 
-    left = something_with_weaponpos_of_guarddata_hand(self, GUNLEFT);
-    right = something_with_weaponpos_of_guarddata_hand(self, 0);
+    left = chrGetEquippedWeaponProp(self, GUNLEFT);
+    right = chrGetEquippedWeaponProp(self, 0);
 
     sp2C = 0;
 
@@ -1035,8 +1035,8 @@ void sub_GAME_7F024CF8(ChrRecord *self, coord3d *arg1)
     dz = self->prop->pos.f[2] - arg1->f[2];
     sq = sqrtf((dx * dx) + (dz * dz));
     
-    left = something_with_weaponpos_of_guarddata_hand(self, GUNLEFT);
-    right = something_with_weaponpos_of_guarddata_hand(self, GUNRIGHT);
+    left = chrGetEquippedWeaponProp(self, GUNLEFT);
+    right = chrGetEquippedWeaponProp(self, GUNRIGHT);
 
     sp2C = 1;
 
@@ -1266,7 +1266,7 @@ void chrlvInitActAttack(ChrRecord *self, struct anim_group_info **arg1, s32 arg2
     {
         if (arg3->p[i] != 0)
         {
-            temp_chr = something_with_weaponpos_of_guarddata_hand(self, i)->chr;
+            temp_chr = chrGetEquippedWeaponProp(self, i)->chr;
 
             if (bondwalkItemGetAutomaticFiringRate((s32) temp_chr->act_attack.attack_item) < 0)
             {
@@ -1366,15 +1366,15 @@ void sub_GAME_7F025560(ChrRecord *self, s32 attack_type, s32 arg2)
     PropRecord * left2;
     PropRecord * right2;
 
-    left = something_with_weaponpos_of_guarddata_hand(self, GUNLEFT);
-    right = something_with_weaponpos_of_guarddata_hand(self, GUNRIGHT);
+    left = chrGetEquippedWeaponProp(self, GUNLEFT);
+    right = chrGetEquippedWeaponProp(self, GUNRIGHT);
 
     sp = D_800309B8;
 
     if ((left != NULL) && (right != NULL))
     {
-        left2 = is_weapon_in_guarddata_hand(self, GUNLEFT);
-        right2 = is_weapon_in_guarddata_hand(self, GUNRIGHT);
+        left2 = chrGetEquippedWeaponPropWithCheck(self, GUNLEFT);
+        right2 = chrGetEquippedWeaponPropWithCheck(self, GUNRIGHT);
 
         if ((left2 != NULL) && (right2 != NULL))
         {
@@ -1438,15 +1438,15 @@ void sub_GAME_7F0256F0(ChrRecord *self, s32 attack_type, s32 arg2)
     PropRecord * left2;
     PropRecord * right2;
 
-    left = something_with_weaponpos_of_guarddata_hand(self, GUNLEFT);
-    right = something_with_weaponpos_of_guarddata_hand(self, GUNRIGHT);
+    left = chrGetEquippedWeaponProp(self, GUNLEFT);
+    right = chrGetEquippedWeaponProp(self, GUNRIGHT);
 
     sp = D_800309C0;
 
     if ((left != NULL) && (right != NULL))
     {
-        left2 = is_weapon_in_guarddata_hand(self, GUNLEFT);
-        right2 = is_weapon_in_guarddata_hand(self, GUNRIGHT);
+        left2 = chrGetEquippedWeaponPropWithCheck(self, GUNLEFT);
+        right2 = chrGetEquippedWeaponPropWithCheck(self, GUNRIGHT);
 
         if ((left2 != NULL) && (right2 != NULL))
         {
@@ -1514,8 +1514,8 @@ void chrlvInitActAttackWalk(ChrRecord *chr, s32 arg1)
     s32 phi_v1;
     u32 unused = 1;
 
-    left = something_with_weaponpos_of_guarddata_hand(chr, GUNLEFT);
-    right = something_with_weaponpos_of_guarddata_hand(chr, GUNRIGHT);
+    left = chrGetEquippedWeaponProp(chr, GUNLEFT);
+    right = chrGetEquippedWeaponProp(chr, GUNRIGHT);
 
     sp70 = D_800309C8;
     sp68 = D_800309D0;
@@ -1523,8 +1523,8 @@ void chrlvInitActAttackWalk(ChrRecord *chr, s32 arg1)
 
     if ((left != NULL) && (right != NULL))
     {
-        left2 = is_weapon_in_guarddata_hand(chr, GUNLEFT);
-        right2 = is_weapon_in_guarddata_hand(chr, GUNRIGHT);
+        left2 = chrGetEquippedWeaponPropWithCheck(chr, GUNLEFT);
+        right2 = chrGetEquippedWeaponPropWithCheck(chr, GUNRIGHT);
 
         phi_v1 = 0U;
 
@@ -1637,7 +1637,7 @@ void chrlvInitActAttackWalk(ChrRecord *chr, s32 arg1)
     {
         if (sp70.p[i])
         {
-            tmp_chr = something_with_weaponpos_of_guarddata_hand(chr, i)->chr;
+            tmp_chr = chrGetEquippedWeaponProp(chr, i)->chr;
 
             if (bondwalkItemGetAutomaticFiringRate((s32) tmp_chr->act_attackwalk.attack_item) < 0)
             {
@@ -1698,8 +1698,8 @@ void chrlvInitActAttackRoll(ChrRecord *chr, s32 arg1)
     s32 i; // 68
 
     self_model = chr->model;
-    left = something_with_weaponpos_of_guarddata_hand(chr, GUNLEFT);
-    right = something_with_weaponpos_of_guarddata_hand(chr, GUNRIGHT);
+    left = chrGetEquippedWeaponProp(chr, GUNLEFT);
+    right = chrGetEquippedWeaponProp(chr, GUNRIGHT);
     sp78 = 0;
     sp64 = D_800309E0;
     sp5C = 0;
@@ -1709,8 +1709,8 @@ void chrlvInitActAttackRoll(ChrRecord *chr, s32 arg1)
 
     if ((left != NULL) && (right != NULL))
     {
-        left_2 = is_weapon_in_guarddata_hand(chr, GUNLEFT);
-        right_2 = is_weapon_in_guarddata_hand(chr, GUNRIGHT);
+        left_2 = chrGetEquippedWeaponPropWithCheck(chr, GUNLEFT);
+        right_2 = chrGetEquippedWeaponPropWithCheck(chr, GUNRIGHT);
 
         if ((left_2 != NULL) && (right_2 != NULL))
         {
@@ -1779,7 +1779,7 @@ void chrlvInitActAttackRoll(ChrRecord *chr, s32 arg1)
     {
         if (sp64.p[i] != 0)
         {
-            temp_v1_2 = something_with_weaponpos_of_guarddata_hand(chr, i)->chr;
+            temp_v1_2 = chrGetEquippedWeaponProp(chr, i)->chr;
 
             if (bondwalkItemGetAutomaticFiringRate((s32) temp_v1_2->act_attackroll.attack_item) < 0)
             {
@@ -2215,7 +2215,7 @@ void triggered_on_shot_hit(ChrRecord *self, coord3d *arg1, f32 arg2, s32 req_ani
                 }
             }
 
-            sub_GAME_7F021B20(self);
+            chrDropItems(self);
             increment_num_kills_display_text_in_MP();
             
             if (self->chrflags & CHRFLAG_COUNT_DEATH_AS_CIVILIAN)
@@ -2278,8 +2278,8 @@ void triggered_on_shot_hit(ChrRecord *self, coord3d *arg1, f32 arg2, s32 req_ani
             {
                 if ((D_8002C914[animation_something_index].field_24 != NULL) && (D_8002C914[animation_something_index].field_28 > 0))
                 {
-                    PropRecord *temp_left = something_with_weaponpos_of_guarddata_hand(self, GUNLEFT); // 80(sp)
-                    PropRecord *temp_right = something_with_weaponpos_of_guarddata_hand(self, GUNRIGHT);
+                    PropRecord *temp_left = chrGetEquippedWeaponProp(self, GUNLEFT); // 80(sp)
+                    PropRecord *temp_right = chrGetEquippedWeaponProp(self, GUNRIGHT);
                     s32 tr;
                     struct struck_animation_table *struck_ani; // 68(sp)
                     s32 ff = flag1 == 0; // 52(sp) ??
@@ -2327,13 +2327,13 @@ void triggered_on_shot_hit(ChrRecord *self, coord3d *arg1, f32 arg2, s32 req_ani
         {
             if ((self->weapons_held[GUNRIGHT] != NULL) && ((self->weapons_held[GUNRIGHT]->obj->flags & 0x2000) == 0))
             {
-                sub_GAME_7F04BFD0(self->weapons_held[GUNRIGHT], 1);
+                propobjSetDropped(self->weapons_held[GUNRIGHT], 1);
                 self->hidden |= CHRHIDDEN_DROP_HELD_ITEMS;
             }
 
             if ((self->weapons_held[GUNLEFT] != NULL) && ((self->weapons_held[GUNLEFT]->obj->flags & 0x2000) == 0))
             {
-                sub_GAME_7F04BFD0(self->weapons_held[GUNLEFT], 1);
+                propobjSetDropped(self->weapons_held[GUNLEFT], 1);
                 self->hidden |= CHRHIDDEN_DROP_HELD_ITEMS;
             }
         }
@@ -2661,7 +2661,7 @@ bool handles_shot_actors(ChrRecord *self, s32 hitpart, coord3d *vector, s32 weap
         }
         else if (hattype != HATTYPE_HELMATE) //normal hats - knock off
         {
-            sub_GAME_7F04BFD0(self->handle_positiondata_hat, 4); //propobjSetDropped
+            propobjSetDropped(self->handle_positiondata_hat, 4); //propobjSetDropped
             self->hidden |= CHRHIDDEN_DROP_HELD_ITEMS;           //drop hat
         }
         else //steel helmate - ricochet
@@ -2960,7 +2960,7 @@ s32 chrlvExplosionDamage(ChrRecord *self, coord3d *arg1, f32 damage, s32 arg3)
             play_sound_for_shot_actor(self);
         }
 
-        sub_GAME_7F021B20(self);
+        chrDropItems(self);
         increment_num_kills_display_text_in_MP();
 
         if (self->chrflags & CHRFLAG_COUNT_DEATH_AS_CIVILIAN)
@@ -2970,13 +2970,13 @@ s32 chrlvExplosionDamage(ChrRecord *self, coord3d *arg1, f32 damage, s32 arg3)
 
         if ((self->weapons_held[GUNRIGHT] != NULL) && ((self->weapons_held[GUNRIGHT]->obj->flags & 0x2000) == 0))
         {
-            sub_GAME_7F04BFD0(self->weapons_held[GUNRIGHT], 1);
+            propobjSetDropped(self->weapons_held[GUNRIGHT], 1);
             self->hidden |= 1;
         }
 
         if ((self->weapons_held[GUNLEFT] != NULL) && ((self->weapons_held[GUNLEFT]->obj->flags & 0x2000) == 0))
         {
-            sub_GAME_7F04BFD0(self->weapons_held[GUNLEFT], 1);
+            propobjSetDropped(self->weapons_held[GUNLEFT], 1);
             self->hidden |= 1;
         }
 
@@ -3810,8 +3810,8 @@ void get_sound_at_range(ChrRecord *self, s32 arg1, s32 arg2)
     s32 ani_arg;
     s32 flag;
 
-    left = something_with_weaponpos_of_guarddata_hand(self, GUNLEFT);
-    right = something_with_weaponpos_of_guarddata_hand(self, GUNRIGHT);
+    left = chrGetEquippedWeaponProp(self, GUNLEFT);
+    right = chrGetEquippedWeaponProp(self, GUNRIGHT);
 
     if (((left != NULL) && (right != NULL)) || ((left == NULL) && (right == NULL)))
     {
@@ -3981,8 +3981,8 @@ void chrlvWalkingAnimationRelated(ChrRecord *self)
     s32 ani_arg;
     s32 flag;
 
-    left = something_with_weaponpos_of_guarddata_hand(self, GUNLEFT);
-    right = something_with_weaponpos_of_guarddata_hand(self, GUNRIGHT);
+    left = chrGetEquippedWeaponProp(self, GUNLEFT);
+    right = chrGetEquippedWeaponProp(self, GUNRIGHT);
 
     if (((left != NULL) && (right != NULL)) || ((left == NULL)) && (right == NULL))
     {
@@ -4292,7 +4292,7 @@ s32 chrlvAttackRelated7F0292A8(ChrRecord *self, coord3d *arg1, StandTile *arg2)
 /**
  * Address 0x7F0294BC.
 */
-bool sub_GAME_7F0294BC(ChrRecord *self)
+bool chrCanSeeBond(ChrRecord *self)
 {
     bool pass = FALSE;
     PropRecord *myprop;
@@ -4575,7 +4575,7 @@ void chrlvAlertGuardToPlayerPosition(ChrRecord *self)
 /**
  * Address 0x7F029C5C.
 */
-bool check_if_actor_stationary(ChrRecord *self)
+bool chrIsStopped(ChrRecord *self)
 {
     if ((self->actiontype == ACT_STAND) && !self->act_stand.unk02c && !self->act_stand.unk038)
     {
@@ -4604,7 +4604,7 @@ bool check_if_actor_stationary(ChrRecord *self)
 /**
  * Address 0x7F029D70.
 */
-s32 sub_GAME_7F029D70(ChrRecord *self)
+s32 chrCheckTargetInSight(ChrRecord *self)
 {
     PropRecord *myprop;   
     PropRecord *bondprop; 
@@ -4637,7 +4637,7 @@ s32 sub_GAME_7F029D70(ChrRecord *self)
         radChangeToFaceBond = rrr + M_TAU_F;
     }
 
-    if (chrlvSeenWithin600(self))
+    if (chrSawTargetRecently(self))
     {
         pass = TRUE;
     }
@@ -4686,7 +4686,7 @@ s32 sub_GAME_7F029D70(ChrRecord *self)
 
     if (pass)
     {
-        pass = sub_GAME_7F0294BC(self);
+        pass = chrCanSeeBond(self);
     }
 
     if (pass)
@@ -5014,7 +5014,7 @@ bool actor_walks_and_fires(ChrRecord *self)
         bondprop = get_curplayer_positiondata();
 
         if (
-            (is_weapon_in_guarddata_hand(self, GUNRIGHT) || is_weapon_in_guarddata_hand(self, GUNLEFT))
+            (chrGetEquippedWeaponPropWithCheck(self, GUNRIGHT) || chrGetEquippedWeaponPropWithCheck(self, GUNLEFT))
             &&
             ((g_GlobalTimer - self->lastwalk60) >= CHRLV_RECENT_TIME_CHECK)
             )
@@ -5050,7 +5050,7 @@ bool actor_runs_and_fires(ChrRecord *self)
         bondprop = get_curplayer_positiondata();
 
         if (
-            (is_weapon_in_guarddata_hand(self, GUNRIGHT) || is_weapon_in_guarddata_hand(self, GUNLEFT))
+            (chrGetEquippedWeaponPropWithCheck(self, GUNRIGHT) || chrGetEquippedWeaponPropWithCheck(self, GUNLEFT))
             &&
             ((g_GlobalTimer - self->lastwalk60) >= CHRLV_RECENT_TIME_CHECK)
             )
@@ -5091,7 +5091,7 @@ bool actor_rolls_fires_crouched(ChrRecord *self)
         myprop   = self->prop;
         bondprop = get_curplayer_positiondata();
 
-        if (is_weapon_in_guarddata_hand(self, GUNRIGHT) || is_weapon_in_guarddata_hand(self, GUNLEFT))
+        if (chrGetEquippedWeaponPropWithCheck(self, GUNRIGHT) || chrGetEquippedWeaponPropWithCheck(self, GUNLEFT))
         {
             vec.x  = bondprop->pos.x - myprop->pos.x;
             vec.y  = bondprop->pos.y - myprop->pos.y;
@@ -5130,7 +5130,7 @@ bool actor_rolls_fires_crouched(ChrRecord *self)
 bool actor_aim_at_actor(ChrRecord *self, s32 attack_type, s32 b)
 {
     if ((chrIsNotDeadOrShot(self)) &&
-        ((is_weapon_in_guarddata_hand(self, GUNRIGHT)) || (is_weapon_in_guarddata_hand(self, GUNLEFT))))
+        ((chrGetEquippedWeaponPropWithCheck(self, GUNRIGHT)) || (chrGetEquippedWeaponPropWithCheck(self, GUNLEFT))))
     {
         sub_GAME_7F025560(self, attack_type, b);
         return TRUE;
@@ -5148,7 +5148,7 @@ bool actor_aim_at_actor(ChrRecord *self, s32 attack_type, s32 b)
 bool actor_kneel_aim_at_actor(ChrRecord *self, s32 targettype, s32 targetid)
 {
     if ((chrIsNotDeadOrShot(self)) &&
-        ((is_weapon_in_guarddata_hand(self, GUNRIGHT)) || (is_weapon_in_guarddata_hand(self, GUNLEFT))))
+        ((chrGetEquippedWeaponPropWithCheck(self, GUNRIGHT)) || (chrGetEquippedWeaponPropWithCheck(self, GUNLEFT))))
     {
         sub_GAME_7F0256F0(self, targettype, targetid);
         return TRUE;
@@ -5205,7 +5205,7 @@ bool check_set_actor_standing_still(ChrRecord *self, s32 faceentitytype, s32 fac
 /**
  * Address 0x7F02ABB4.
 */
-bool actor_moves_to_preset_at_speed(ChrRecord *self, s32 padid, SPEED speed)
+bool chrGoToPad(ChrRecord *self, s32 padid, SPEED speed)
 {
     PadRecord *pad;
     StandTile *stan2; //sp38
@@ -5214,7 +5214,7 @@ bool actor_moves_to_preset_at_speed(ChrRecord *self, s32 padid, SPEED speed)
 
     if ((padid >= 0) && chrIsNotDeadOrShot(self) && (g_SeenBondRecentlyGuardCount < 10))
     {
-        padid = convertPadIf9000(self, padid);
+        padid = chrResolvePadId(self, padid);
         if (isNotBoundPad(padid))
         {
             pad = &g_chraiCurrentSetup.pads[padid];
@@ -5333,8 +5333,8 @@ void chrlvTickStand(ChrRecord *self)
             temp_f0 = chrlvDistanceToChrRelated(self, self->act_stand.face_entitytype, self->act_stand.face_entityid);
             if ((temp_f0 > 0.34906587f) && (temp_f0 < 5.9341197f))
             {
-                left = something_with_weaponpos_of_guarddata_hand(self, 1);
-                right = something_with_weaponpos_of_guarddata_hand(self, 0);
+                left = chrGetEquippedWeaponProp(self, 1);
+                right = chrGetEquippedWeaponProp(self, 0);
 
                 self->act_stand.unk038 = 1;
                 self->act_stand.unk03c = 1;
@@ -5521,7 +5521,7 @@ void chrlvTickAnim(ChrRecord *self)
         && (objecthandlerGetModelField28(self->model) >= 42.0f)
         && ((self->chrflags << 6) >= 0))
     {
-        if (((D_80048380 & 1) == 0) && (chrlvDistToBond3D(self) < 800.0f))
+        if (((D_80048380 & 1) == 0) && (chrGetDistanceToBond(self) < 800.0f))
         {
             sub_GAME_7F053A10(sndPlaySfx((struct ALBankAlt_s *)g_musicSfxBufferPtr, 0x101, 0), &self->prop->pos);
         }
@@ -5864,7 +5864,7 @@ void chrlvTickStartAlarm(ChrRecord *self)
     // bug/typo, should be 50.0f on VERSION_EU
     if (objecthandlerGetModelField28(model) >= 60.0f)
     {
-        start_alarm();
+        alarmActivate();
     }
 
     if (objecthandlerGetModelField28(model) >= sub_GAME_7F06F5C4(model))
@@ -5924,7 +5924,7 @@ void sub_GAME_7F02BFE4(ChrRecord *self, s32 arg1, s32 arg2)
     s32 sp28;
     ALSoundState *phi_a2;
 
-    prop = something_with_weaponpos_of_guarddata_hand(self, arg1);
+    prop = chrGetEquippedWeaponProp(self, arg1);
     temp_v1 = prop->chr;
     phi_a1 = 0;
 
@@ -6001,7 +6001,7 @@ glabel sub_GAME_7F02BFE4
 /* 060B1C 7F02BFEC AFB00018 */  sw    $s0, 0x18($sp)
 /* 060B20 7F02BFF0 00808025 */  move  $s0, $a0
 /* 060B24 7F02BFF4 AFA50044 */  sw    $a1, 0x44($sp)
-/* 060B28 7F02BFF8 0FC08C0B */  jal   something_with_weaponpos_of_guarddata_hand
+/* 060B28 7F02BFF8 0FC08C0B */  jal   chrGetEquippedWeaponProp
 /* 060B2C 7F02BFFC AFA60048 */   sw    $a2, 0x48($sp)
 /* 060B30 7F02C000 8C430004 */  lw    $v1, 4($v0)
 /* 060B34 7F02C004 80640080 */  lb    $a0, 0x80($v1)
@@ -6349,7 +6349,7 @@ s32 chrlvUpdateAimendsideback(ChrRecord *self, struct weapon_firing_animation_ta
             }
             else
             {
-                seen_bond_flag = sub_GAME_7F0294BC(self);
+                seen_bond_flag = chrCanSeeBond(self);
             }
         }
         else
@@ -6453,11 +6453,11 @@ s32 chrlvUpdateAimendsideback(ChrRecord *self, struct weapon_firing_animation_ta
             
             if (arg3)
             {
-                weapon_prop = something_with_weaponpos_of_guarddata_hand(self, GUNRIGHT);
+                weapon_prop = chrGetEquippedWeaponProp(self, GUNRIGHT);
             }
             else
             {
-                weapon_prop = something_with_weaponpos_of_guarddata_hand(self, GUNLEFT);
+                weapon_prop = chrGetEquippedWeaponProp(self, GUNLEFT);
             }
 
             // This if block is a slight modification of @see sub_GAME_7F02D630.
@@ -6697,7 +6697,7 @@ void sub_GAME_7F02D118(ChrRecord *self, s32 hand, s32 arg2)
 {
     PropRecord *temp_v0;
 
-    temp_v0 = something_with_weaponpos_of_guarddata_hand(self, hand);
+    temp_v0 = chrGetEquippedWeaponProp(self, hand);
 
     if (temp_v0 != NULL)
     {
@@ -6716,7 +6716,7 @@ s32 sub_GAME_7F02D148(ChrRecord *self, s32 hand)
 {
     PropRecord *temp_v0;
 
-    temp_v0 = something_with_weaponpos_of_guarddata_hand(self, hand);
+    temp_v0 = chrGetEquippedWeaponProp(self, hand);
 
     if (temp_v0 != NULL)
     {
@@ -6950,7 +6950,7 @@ s32 sub_GAME_7F02D630(ChrRecord *self, GUNHAND hand, coord3d *arg2)
     Mtxf *temp_a0_2; // sp108
     Mtxf sp68; // sp44
     
-    weapon_prop = something_with_weaponpos_of_guarddata_hand(self, hand);
+    weapon_prop = chrGetEquippedWeaponProp(self, hand);
     ret = 0;
 
     if ((weapon_prop != NULL) )
@@ -7040,7 +7040,7 @@ void chrlvFireWeaponRelated(ChrRecord *self, s32 hand)
     f32 sp4C;
     
     self_prop = self->prop;
-    weapon_prop = something_with_weaponpos_of_guarddata_hand(self, hand);
+    weapon_prop = chrGetEquippedWeaponProp(self, hand);
 
     if (weapon_prop != NULL)
     {
@@ -8597,7 +8597,7 @@ void chrlvTickThrowGrenade(ChrRecord *self)
     self_model = self->model;
     temp_f2 = objecthandlerGetModelField28(self_model);
     gunhand = (self_model->gunhand != GUNRIGHT) ? GUNLEFT : GUNRIGHT;
-    held_prop = something_with_weaponpos_of_guarddata_hand(self, gunhand);
+    held_prop = chrGetEquippedWeaponProp(self, gunhand);
 
     if ((temp_f2 >= 20.0f) && (held_prop != NULL))
     {
@@ -8613,7 +8613,7 @@ void chrlvTickThrowGrenade(ChrRecord *self)
 
     if ((temp_f2 >= 119.0f) && (held_prop != NULL))
     {
-        sub_GAME_7F04BFD0(self->weapons_held[gunhand], 3);
+        propobjSetDropped(self->weapons_held[gunhand], 3);
         self->hidden |= 1;
     }
 
@@ -10073,7 +10073,7 @@ void chrlvTravelTick(ChrRecord *self, coord3d *arg1, StandTile *arg2, struct way
                 {
                     sub_GAME_7F0281F4(self);
                     sub_GAME_7F055B78(self_prop, phi_s3->door);
-                    set_door_state(phi_s3->door, 1);
+                    doorActivate(phi_s3->door, 1);
 
                     if (((self->hidden & CHRHIDDEN_OFFSCREEN_PATROL) == 0)
                         && (objecthandlerGetModelAnim(self->model) != (struct ModelAnimation *)&ptr_animation_table->data[(s32)&ANIM_DATA_idle_unarmed])
@@ -10531,7 +10531,7 @@ void chrlvAllChrTick(void)
 /**
  * Address 0x7F032B68.
 */
-s32 chrlvSeenWithin600(ChrRecord *self)
+s32 chrSawTargetRecently(ChrRecord *self)
 {
     if ((self->lastseetarget60 > 0) && ((g_GlobalTimer - self->lastseetarget60) < CHRLV_10_SEC_TIMER))
     {
@@ -10546,7 +10546,7 @@ s32 chrlvSeenWithin600(ChrRecord *self)
 /**
  * Address 0x7F032BA0.
 */
-s32 chrlvHearWithin600(ChrRecord *self)
+s32 chrHeardTargetRecently(ChrRecord *self)
 {
     if ((self->lastheartarget60 > 0) && ((g_GlobalTimer - self->lastheartarget60) < CHRLV_10_SEC_TIMER))
     {
@@ -10610,7 +10610,7 @@ coord3d *chrlvGetChrOrPresetLocation(ChrRecord *self, s32 flags, s32 lookup_id, 
 
     if ((flags & 4) != 0)
     {
-        guard = chrlvGetHandleForGuardId(self, lookup_id);
+        guard = chrFindById(self, lookup_id);
 
         if ((guard == 0) || (guard->prop == 0))
         {
@@ -10624,7 +10624,7 @@ coord3d *chrlvGetChrOrPresetLocation(ChrRecord *self, s32 flags, s32 lookup_id, 
 
     if ((flags & 8) != 0)
     {
-        padid = convertPadIf9000(self, lookup_id);
+        padid = chrResolvePadId(self, lookup_id);
 
         if (isNotBoundPad(padid))
         {
@@ -10670,7 +10670,7 @@ f32 chrGetAngleFromBond(ChrRecord *self)
 /**
  * Address 0x7F032DE4.
 */
-f32 chrlvDistToBond3D(ChrRecord *guardData)
+f32 chrGetDistanceToBond(ChrRecord *guardData)
 {
     PropRecord *guardPosData;
     PropRecord *playerPosData;
@@ -10691,13 +10691,13 @@ f32 chrlvDistToBond3D(ChrRecord *guardData)
 /**
  * Address 0x7F032E48.
 */
-f32 sub_GAME_7F032E48(ChrRecord *self, s32 padID)
+f32 chrGetDistanceToPad(ChrRecord *self, s32 padID)
 {
     PropRecord *myprop;
     PadRecord *pad;
 
     myprop = self->prop;
-    padID  = convertPadIf9000(self, padID);
+    padID  = chrResolvePadId(self, padID);
 
     if (isNotBoundPad(padID))
     {
@@ -10724,7 +10724,7 @@ bool check_if_room_for_preset_loaded(ChrRecord *self, s32 padnum)
     PadRecord *pad;
     StandTile *padstan;
 
-    padnum = convertPadIf9000(self, padnum);
+    padnum = chrResolvePadId(self, padnum);
 
     if (isNotBoundPad(padnum))
     {
@@ -10746,7 +10746,7 @@ bool check_if_room_for_preset_loaded(ChrRecord *self, s32 padnum)
 }
 
 
-s32 convertPadIf9000(ChrRecord *guardData,s32 padNo)
+s32 chrResolvePadId(ChrRecord *guardData,s32 padNo)
 {
     // Guard's target pad.
     if (padNo == PAD_PRESET)
@@ -10800,13 +10800,13 @@ s32 chrResolveId(ChrRecord *self, s32 id)
  * Address 0x7F033040.
  * chrFindById
 */
-ChrRecord *chrlvGetHandleForGuardId(ChrRecord *self, s32 guard_id)
+ChrRecord *chrFindById(ChrRecord *self, s32 guard_id)
 {
     s32 i;
     ChrRecord* guard;
 
     guard_id = chrResolveId(self, guard_id);
-    guard = chrGetGuardData(guard_id);
+    guard = chrFindByLiteralId(guard_id);
 
     if (guard == NULL)
     {
@@ -10828,14 +10828,14 @@ ChrRecord *chrlvGetHandleForGuardId(ChrRecord *self, s32 guard_id)
 /**
  * Address 0x7F0330C4.
 */
-f32 get_distance_between_actor_and_actorID(ChrRecord *self, s32 chrID)
+f32 chrGetDistanceToChr(ChrRecord *self, s32 chrID)
 {
     PropRecord *myprop;
     ChrRecord  *chr;
     f32         distance;
 
     myprop   = self->prop;
-    chr      = chrlvGetHandleForGuardId(self, chrID);
+    chr      = chrFindById(self, chrID);
     distance = 0.0f;
 
     if (chr && chr->model && chr->prop)
@@ -10854,13 +10854,13 @@ f32 get_distance_between_actor_and_actorID(ChrRecord *self, s32 chrID)
 /**
  * Address 0x7F033154.
 */
-f32 get_distance_between_actor_and_preset(ChrRecord *self, s32 padid)
+f32 chrGetDistanceFromBondToPad(ChrRecord *self, s32 padid)
 {
     PropRecord *bondprop;
     PadRecord *pad;
 
     bondprop = get_curplayer_positiondata();
-    padid    = convertPadIf9000(self, padid);
+    padid    = chrResolvePadId(self, padid);
 
     if (isNotBoundPad(padid))
     {
@@ -10882,7 +10882,7 @@ f32 get_distance_between_actor_and_preset(ChrRecord *self, s32 padid)
  * The property is named "BITFIELD".
  * Address 0x7F033218.
 */
-void chrlvSetBitfieldFlags(ChrRecord *self, u8 arg1)
+void chrSetFlags(ChrRecord *self, u8 arg1)
 {
     self->BITFIELD |= arg1;
 }
@@ -10893,7 +10893,7 @@ void chrlvSetBitfieldFlags(ChrRecord *self, u8 arg1)
  * The property is named "BITFIELD".
  * Address 0x7F03322C.
 */
-void chrlvClearBitfieldFlags(ChrRecord *self, u8 arg1)
+void chrUnsetFlags(ChrRecord *self, u8 arg1)
 {
     self->BITFIELD &= ~arg1;
 }
@@ -10904,7 +10904,7 @@ void chrlvClearBitfieldFlags(ChrRecord *self, u8 arg1)
  * The property is named "BITFIELD".
  * Address 0x7F033244.
 */
-s32 chrlvTestBitfieldFlags(ChrRecord *self, u8 arg1)
+s32 chrHasFlag(ChrRecord *self, u8 arg1)
 {
     return (self->BITFIELD & arg1) != 0;
 }
@@ -10915,15 +10915,15 @@ s32 chrlvTestBitfieldFlags(ChrRecord *self, u8 arg1)
  * The property is named "BITFIELD".
  * Address 0x7F033260.
 */
-void chrlvSetGuardBitfieldFlags(ChrRecord *self, s32 guard_id, u8 arg2)
+void chrSetFlagsById(ChrRecord *self, s32 guard_id, u8 arg2)
 {
     ChrRecord *guard;
 
-    guard = chrlvGetHandleForGuardId(self, guard_id);
+    guard = chrFindById(self, guard_id);
 
     if (guard != NULL)
     {
-        chrlvSetBitfieldFlags(guard, arg2);
+        chrSetFlags(guard, arg2);
     }
 }
 
@@ -10933,15 +10933,15 @@ void chrlvSetGuardBitfieldFlags(ChrRecord *self, s32 guard_id, u8 arg2)
  * The property is named "BITFIELD".
  * Address 0x7F033290.
 */
-void chrlvClearGuardBitfieldFlags(ChrRecord *self, s32 guard_id, u8 arg2)
+void chrUnsetFlagsById(ChrRecord *self, s32 guard_id, u8 arg2)
 {
     ChrRecord *guard;
 
-    guard = chrlvGetHandleForGuardId(self, guard_id);
+    guard = chrFindById(self, guard_id);
 
     if (guard != NULL)
     {
-        chrlvClearBitfieldFlags(guard, arg2);
+        chrUnsetFlags(guard, arg2);
     }
 }
 
@@ -10951,15 +10951,15 @@ void chrlvClearGuardBitfieldFlags(ChrRecord *self, s32 guard_id, u8 arg2)
  * The property is named "BITFIELD".
  * Address 0x7F0332C0.
 */
-bool chrlvTestGuardBitfieldFlags(ChrRecord *self, s32 guard_id, u8 arg2)
+bool chrHasFlagById(ChrRecord *self, s32 guard_id, u8 arg2)
 {
     ChrRecord *guard;
 
-    guard = chrlvGetHandleForGuardId(self, guard_id);
+    guard = chrFindById(self, guard_id);
 
     if (guard != NULL)
     {
-        return chrlvTestBitfieldFlags(guard, arg2);
+        return chrHasFlag(guard, arg2);
     }
 
     return FALSE;
@@ -10970,7 +10970,7 @@ bool chrlvTestGuardBitfieldFlags(ChrRecord *self, s32 guard_id, u8 arg2)
 /**
  * Address 0x7F0332FC.
 */
-void toggle_objective_bitflags(ChrRecord *self, s32 arg1)
+void chrSetStageFlags(ChrRecord *self, s32 arg1)
 {
     objectiveregisters1 |= arg1;
 }
@@ -10980,7 +10980,7 @@ void toggle_objective_bitflags(ChrRecord *self, s32 arg1)
 /**
  * Address 0x7F033318.
 */
-void untoggle_objective_bitflags(ChrRecord *self, u32 flags)
+void chrUnsetStageFlags(ChrRecord *self, u32 flags)
 {
     objectiveregisters1 = ~flags & objectiveregisters1; //shorthand does not match
 }
@@ -10989,7 +10989,7 @@ void untoggle_objective_bitflags(ChrRecord *self, u32 flags)
 /**
  * Address 0x7F033338.
 */
-bool check_if_objective_bitflags_set(ChrRecord *self, s32 flags)
+bool chrHasStageFlag(ChrRecord *self, s32 flags)
 {
     return (objectiveregisters1 & flags) != 0;
 }
@@ -10999,7 +10999,7 @@ bool check_if_objective_bitflags_set(ChrRecord *self, s32 flags)
 /**
  * Address 0x7F033354.
 */
-bool check_if_actor_02_flag_set(ChrRecord *self)
+bool chrIsHearingBond(ChrRecord *self)
 {
     return (self->hidden & CHRHIDDEN_ALERT_GUARD_RELATED) != 0;
 }
@@ -11009,7 +11009,7 @@ bool check_if_actor_02_flag_set(ChrRecord *self)
 /**
  * Address 0x7F033364.
 */
-bool check_if_able_to_then_surrender(ChrRecord *self)
+bool chrTrySurrender(ChrRecord *self)
 {
     if (chrIsNotDeadOrShot(self))
     {
@@ -11026,7 +11026,7 @@ bool check_if_able_to_then_surrender(ChrRecord *self)
 /**
  * Address 0x7F0333A0.
 */
-bool sub_GAME_7F0333A0(ChrRecord *self)
+bool chrFadeOut(ChrRecord *self)
 {
     chrlvActorFadeAway(self);
 
@@ -11038,7 +11038,7 @@ bool sub_GAME_7F0333A0(ChrRecord *self)
 /**
  * Address 0x7F0333C4.
 */
-void reset_and_start_loop_counter(ChrRecord *self)
+void chrRestartTimer(ChrRecord *self)
 {
     self->timer60 = 0;
     self->hidden |= CHRHIDDEN_TIMER_ACTIVE;
@@ -11049,7 +11049,7 @@ void reset_and_start_loop_counter(ChrRecord *self)
 /**
  * Address 0x7F0333D8.
 */
-f32 get_loop_counter_time_in_seconds(ChrRecord *self)
+f32 chrGetTimer(ChrRecord *self)
 {
     return self->timer60 / CHRLV_FRAMERATE_F;
 }
@@ -11089,7 +11089,7 @@ bool sub_GAME_7F0333F8(ChrRecord *self)
 /**
  * Address 0x7F033490.
 */
-bool check_if_actor_invisible(ChrRecord *self)
+bool chrIfNearMiss(ChrRecord *self)
 {
     return (self->chrflags & CHRFLAG_NEAR_MISS) != 0;
 }
@@ -11127,7 +11127,7 @@ bool chrGoToChr(ChrRecord *self, s32 chrid, SPEED speed)
 
     if (chrIsNotDeadOrShot(self) && (g_SeenBondRecentlyGuardCount < 10))
     {
-        chr = chrlvGetHandleForGuardId(self, chrid);
+        chr = chrFindById(self, chrid);
         if (chr && chr->model && chr->prop)
         {
             chrprop = chr->prop;
@@ -11150,7 +11150,7 @@ bool chrGoToChr(ChrRecord *self, s32 chrid, SPEED speed)
  * Address 0x7F0335A4.
  * PD: chrGetNumArghs
  */
-s8 get_times_actor_shot(ChrRecord *self)
+s8 chrGetNumArghs(ChrRecord *self)
 {
     return self->numarghs;
 }
@@ -11163,7 +11163,7 @@ s8 get_times_actor_shot(ChrRecord *self)
  * Address 0x7F0335AC.
  * PD: chrGetNumCloseArghs
  */
-s8 get_num_shots_near_actor(ChrRecord *self)
+s8 chrGetNumCloseArghs(ChrRecord *self)
 {
     return self->numclosearghs;
 }
@@ -11174,7 +11174,7 @@ s8 get_num_shots_near_actor(ChrRecord *self)
  * 
  * Address 0x7F0335B4.
  */
-bool check_if_actor_FA_target_set(ChrRecord *self)
+bool chrSawInjury(ChrRecord *self)
 {
     return ((self->chrseeshot < 0) ^ 1);
 }
@@ -11185,7 +11185,7 @@ bool check_if_actor_FA_target_set(ChrRecord *self)
  * 
  * Address 0x7F0335C4.
  */
-bool check_if_actor_FB_target_set(ChrRecord *self)
+bool chrSawDeath(ChrRecord *self)
 {
     return ((self->chrseedie < 0) ^ 1);
 }
@@ -11229,7 +11229,7 @@ bool chrTrySurprisedOneHand(ChrRecord *self)
 /**
  * Address 0x7F03364C.
 */
-bool check_if_able_to_then_fawn_on_shoulder(ChrRecord *self)
+bool chrTrySurprisedSurrender(ChrRecord *self)
 {
     if (chrIsNotDeadOrShot(self))
     {
@@ -11245,7 +11245,7 @@ bool check_if_able_to_then_fawn_on_shoulder(ChrRecord *self)
 /**
  * Address 0x7F033688.
 */
-bool check_if_able_to_then_look_flustered(ChrRecord *self)
+bool chrTrySurprisedLookAround(ChrRecord *self)
 {
     if (chrIsNotDeadOrShot(self))
     {
@@ -11296,7 +11296,7 @@ s32 check_if_able_to_then_perform_animation(ChrRecord *self, s32 animID, s32 b, 
  * Address 0x7F033760.
  * PD: chrCanHearAlarm
 */
-bool alarm_timer_related(ChrRecord *self)
+bool chrCanHearAlarm(ChrRecord *self)
 {
     /*
      possibly this was to be more advanced than simply
@@ -11304,7 +11304,7 @@ bool alarm_timer_related(ChrRecord *self)
      It could have for example done a room check
      since this has a "self" reference.
      */
-    return is_alarm_on();
+    return alarmIsActive();
 }
 
 
@@ -11566,7 +11566,7 @@ bool sub_GAME_7F033B38(ChrRecord *self, f32 distance)
 /**
  * Address 0x7F033CF4.
 */
-void sub_GAME_7F033CF4(ChrRecord *self, s32 id)
+void chrSetChrPreset(ChrRecord *self, s32 id)
 {
     self->chrpreset1 = chrResolveId(self, id);
 }
@@ -11575,11 +11575,11 @@ void sub_GAME_7F033CF4(ChrRecord *self, s32 id)
 /**
  * Address 0x7F033D1C.
 */
-void sub_GAME_7F033D1C(ChrRecord *self, s32 id, s32 id2)
+void chrSetChrPreset2(ChrRecord *self, s32 id, s32 id2)
 {
     ChrRecord *chr;
 
-    chr = chrlvGetHandleForGuardId(self, id);
+    chr = chrFindById(self, id);
 
     if (chr)
     {
@@ -11592,22 +11592,22 @@ void sub_GAME_7F033D1C(ChrRecord *self, s32 id, s32 id2)
 /**
  * Address 0x7F033D5C.
 */
-void sub_GAME_7F033D5C( ChrRecord *self, s32 padid)
+void chrSetPadPreset( ChrRecord *self, s32 padid)
 {
-    self->padpreset1 = convertPadIf9000(self, padid);
+    self->padpreset1 = chrResolvePadId(self, padid);
 }
 
 
 /**
  * Address 0x7F033D84.
 */
-void sub_GAME_7F033D84(ChrRecord *self, s32 chrid, s32 padid)
+void chrSetPadPresetByChrnum(ChrRecord *self, s32 chrid, s32 padid)
 {
-    ChrRecord *chr = chrlvGetHandleForGuardId(self, chrid);
+    ChrRecord *chr = chrFindById(self, chrid);
 
     if (chr)
     {
-        chr->padpreset1 = convertPadIf9000(self, padid);
+        chr->padpreset1 = chrResolvePadId(self, padid);
     }
 }
 
@@ -11784,10 +11784,10 @@ PropRecord *actionblock_guard_constructor_BDBE(s32 bodynum, s32 headnum, coord3d
 /**
  * Address 0x7F034258.
 */
-PropRecord *guard_constructor_BD(ChrRecord *self, s32 bodynum, s32 headnum, s32 padid, AIListRecord *ailist, s32 flags)
+PropRecord *chrSpawnAtPad(ChrRecord *self, s32 bodynum, s32 headnum, s32 padid, AIListRecord *ailist, s32 flags)
 {
     PadRecord *pad;
-    padid = convertPadIf9000(self, padid);
+    padid = chrResolvePadId(self, padid);
 
     if (isNotBoundPad(padid))
     {
@@ -11806,10 +11806,10 @@ PropRecord *guard_constructor_BD(ChrRecord *self, s32 bodynum, s32 headnum, s32 
 /**
  * Address 0x7F034308.
  */
-PropRecord *guard_constructor_BE(ChrRecord *self, s32 bodynum, s32 headnum, s32 chrnum, AIListRecord *ailist, s32 flags)
+PropRecord *chrSpawnAtChr(ChrRecord *self, s32 bodynum, s32 headnum, s32 chrnum, AIListRecord *ailist, s32 flags)
 {
     ChrRecord *chr;
-    chr = chrlvGetHandleForGuardId(self, chrnum);
+    chr = chrFindById(self, chrnum);
 
     if (!(chr->chrflags & CHRFLAG_HAS_BEEN_ON_SCREEN))
     {
@@ -11832,8 +11832,8 @@ bool chrIfInPadRoom(ChrRecord *self, s32 chrnum, s32 padnum)
     PadRecord *pad;
     ChrRecord *chr;
 
-    chr    = chrlvGetHandleForGuardId(self, chrnum);
-    padnum = convertPadIf9000(self, padnum);
+    chr    = chrFindById(self, chrnum);
+    padnum = chrResolvePadId(self, padnum);
 
     if (isNotBoundPad(padnum))
     {
@@ -11865,7 +11865,7 @@ bool check_if_actor_is_at_preset(ChrRecord *self, s32 padnum)
     PadRecord  *pad;
 
     bondprop = get_curplayer_positiondata();
-    padnum   = convertPadIf9000(self, padnum);
+    padnum   = chrResolvePadId(self, padnum);
 
     if (isNotBoundPad(padnum))
     {
@@ -11907,17 +11907,17 @@ bool removed_animation_routine_2B(ChrRecord *self)
 /**
  * Address 0x7F034514.
 */
-bool sub_GAME_7F034514(ChrRecord *self, s32 PadId)
+bool chrTryStartAlarm(ChrRecord *self, s32 PadId)
 {
     ObjectRecord *objinst;
 
-    PadId = convertPadIf9000(self, PadId);
+    PadId = chrResolvePadId(self, PadId);
 
     if (chrIsNotDeadOrShot(self))
     {
         objinst = scan_position_data_table_for_normal_object_at_preset(PadId);
 
-        if (objinst && check_if_object_has_not_been_destroyed(objinst))
+        if (objinst && objIsHealthy(objinst))
         {
             chrlvExtendLeftHandAnimationRelated(self);
 
@@ -11951,15 +11951,15 @@ bool actor_draws_throws_grenade_at_player_if_possible(ChrRecord *self)
         return FALSE;
     }
 
-    if (chrlvDistToBond3D(self) < 10.0f)
+    if (chrGetDistanceToBond(self) < 10.0f)
     {
         return FALSE;
     }
 
     if (chrIsNotDeadOrShot(self))
     {
-        Left  = something_with_weaponpos_of_guarddata_hand(self, GUNLEFT);
-        Right = something_with_weaponpos_of_guarddata_hand(self, GUNRIGHT);
+        Left  = chrGetEquippedWeaponProp(self, GUNLEFT);
+        Right = chrGetEquippedWeaponProp(self, GUNRIGHT);
 
         if (Right && (RightWep = Right->weapon, RightWep->weaponnum == ITEM_GRENADE))
         {
@@ -11984,7 +11984,7 @@ bool actor_draws_throws_grenade_at_player_if_possible(ChrRecord *self)
                 flags = 0x10000000;
             }
             
-            NewGrenadeProp = actor_draws_weapon_with_model(self, 0xC4, ITEM_GRENADE, flags);
+            NewGrenadeProp = chrGiveWeapon(self, 0xC4, ITEM_GRENADE, flags);
             
             if (NewGrenadeProp)
             {
@@ -12006,7 +12006,7 @@ bool actor_draws_throws_grenade_at_player_if_possible(ChrRecord *self)
  * Address 0x7F0346FC.
  * chrDropItem
 */
-bool actor_drops_itemtype_setting_timer(ChrRecord *self, s32 modelnum, u8 weaponid)
+bool chrDropItem(ChrRecord *self, s32 modelnum, u8 weaponid)
 {
     WeaponObjRecord *NewModel = (WeaponObjRecord *)create_new_item_instance_of_model(modelnum, weaponid);
     
@@ -12015,7 +12015,7 @@ bool actor_drops_itemtype_setting_timer(ChrRecord *self, s32 modelnum, u8 weapon
         set_obj_instance_controller_scale(NewModel->model, NewModel->model->scale);
         attachNewChild(NewModel->prop, self->prop);
         NewModel->timer = CHRLV_DEFAULT_TIMER;
-        sub_GAME_7F04BFD0(NewModel->prop, 1);
+        propobjSetDropped(NewModel->prop, 1);
         self->hidden = self->hidden | 1;
 
         return TRUE;

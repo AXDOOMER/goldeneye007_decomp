@@ -286,7 +286,7 @@ glabel debug_object_load_all_models
 /* 035EE4 7F0013B4 01CF2025 */   or    $a0, $t6, $t7
 /* 035EE8 7F0013B8 02002025 */  move  $a0, $s0
 .L7F0013BC:
-/* 035EEC 7F0013BC 0FC0D27F */  jal   get_length_of_action_block
+/* 035EEC 7F0013BC 0FC0D27F */  jal   chraiitemsize
 /* 035EF0 7F0013C0 00002825 */   move  $a1, $zero
 /* 035EF4 7F0013C4 1000FFB9 */  b     .L7F0012AC
 /* 035EF8 7F0013C8 02028021 */   addu  $s0, $s0, $v0

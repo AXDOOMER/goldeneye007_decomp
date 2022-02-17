@@ -53,7 +53,7 @@ extern u8 g_CheatPlayerTextRelated[0x4C];
 bool cheatIsEnemyRockets(CHEAT_ID cheatindex);
 void cheatButtonTurnOnCheatForPlayers(CHEAT_ID cheatindex);
 void cheat_buttons_mp_related(void);
-bool cheatCheckIfOn(CHEAT_ID cheatindex);
+bool cheatIsActive(CHEAT_ID cheatindex);
 bool cheatCheckIfMPCheat(CHEAT_ID cheatindex);
 void cheatDisableAllCheats(void);
 char *cheatGetMenuTextPointer(CHEAT_ID cheatindex);

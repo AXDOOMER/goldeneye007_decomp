@@ -3453,7 +3453,7 @@ glabel sub_GAME_7F02083C
 /* 055380 7F020850 AFA5009C */  sw    $a1, 0x9c($sp)
 /* 055384 7F020854 AFA60098 */  sw    $a2, 0x98($sp)
 /* 055388 7F020858 2404000C */  li    $a0, 12
-/* 05538C 7F02085C 0FC249EF */  jal   cheatCheckIfOn
+/* 05538C 7F02085C 0FC249EF */  jal   cheatIsActive
 /* 055390 7F020860 E7A40094 */   swc1  $f4, 0x94($sp)
 /* 055394 7F020864 1040000E */  beqz  $v0, .L7F0208A0
 /* 055398 7F020868 8FA60098 */   lw    $a2, 0x98($sp)
@@ -3835,7 +3835,7 @@ glabel sub_GAME_7F02083C
 /* 055630 7F020AC0 AFA5009C */  sw    $a1, 0x9c($sp)
 /* 055634 7F020AC4 AFA70098 */  sw    $a3, 0x98($sp)
 /* 055638 7F020AC8 2404000C */  li    $a0, 12
-/* 05563C 7F020ACC 0FC24CCF */  jal   cheatCheckIfOn
+/* 05563C 7F020ACC 0FC24CCF */  jal   cheatIsActive
 /* 055640 7F020AD0 E7A40094 */   swc1  $f4, 0x94($sp)
 /* 055644 7F020AD4 1040001C */  beqz  $v0, .L7F020B48
 /* 055648 7F020AD8 8FA70098 */   lw    $a3, 0x98($sp)
@@ -4665,7 +4665,7 @@ glabel sub_GAME_7F020EF0
 /* 055F78 7F021448 A04F0001 */  sb    $t7, 1($v0)
 /* 055F7C 7F02144C 8E0E0014 */  lw    $t6, 0x14($s0)
 /* 055F80 7F021450 35C90008 */  ori   $t1, $t6, 8
-/* 055F84 7F021454 0FC249EF */  jal   cheatCheckIfOn
+/* 055F84 7F021454 0FC249EF */  jal   cheatIsActive
 /* 055F88 7F021458 AE090014 */   sw    $t1, 0x14($s0)
 /* 055F8C 7F02145C 10400004 */  beqz  $v0, .L7F021470
 /* 055F90 7F021460 3C013EA0 */   li    $at, 0x3EA00000 # 0.312500
@@ -5517,7 +5517,7 @@ glabel sub_GAME_7F020EF0
 /* 056250 7F0216E0 A04F0001 */  sb    $t7, 1($v0)
 /* 056254 7F0216E4 8E0E0014 */  lw    $t6, 0x14($s0)
 /* 056258 7F0216E8 35C90008 */  ori   $t1, $t6, 8
-/* 05625C 7F0216EC 0FC24CCF */  jal   cheatCheckIfOn
+/* 05625C 7F0216EC 0FC24CCF */  jal   cheatIsActive
 /* 056260 7F0216F0 AE090014 */   sw    $t1, 0x14($s0)
 /* 056264 7F0216F4 10400018 */  beqz  $v0, .Ljp7F021758
 /* 056268 7F0216F8 00000000 */   nop   
@@ -6443,7 +6443,7 @@ glabel sub_GAME_7F020EF0
 /* 053DB0 7F0213C0 A04F0001 */  sb    $t7, 1($v0)
 /* 053DB4 7F0213C4 8E0E0014 */  lw    $t6, 0x14($s0)
 /* 053DB8 7F0213C8 35C90008 */  ori   $t1, $t6, 8
-/* 053DBC 7F0213CC 0FC24737 */  jal   cheatCheckIfOn
+/* 053DBC 7F0213CC 0FC24737 */  jal   cheatIsActive
 /* 053DC0 7F0213D0 AE090014 */   sw    $t1, 0x14($s0)
 /* 053DC4 7F0213D4 10400018 */  beqz  $v0, .L7F021438
 /* 053DC8 7F0213D8 00000000 */   nop   
@@ -6937,7 +6937,7 @@ glabel sub_GAME_7F020EF0
 /**
  * Address 0x7F021B20.
  */
-void sub_GAME_7F021B20(ChrRecord *self) 
+void chrDropItems(ChrRecord *self) 
 {
     PropRecord *childprop = self->prop->child;
     while (childprop)
@@ -6949,7 +6949,7 @@ void sub_GAME_7F021B20(ChrRecord *self)
             WeaponObjRecord *wep = childprop->weapon;
             if (!(wep->flags & 0x2000))
             {
-                sub_GAME_7F04BFD0(childprop, 1);
+                propobjSetDropped(childprop, 1);
             }
         }
         childprop = childprop->prev;
@@ -7966,7 +7966,7 @@ glabel sub_GAME_7F022980
 /* 05767C 7F022B4C 54410013 */  bnel  $v0, $at, .L7F022B9C
 /* 057680 7F022B50 8622003A */   lh    $v0, 0x3a($s1)
 .L7F022B54:
-/* 057684 7F022B54 0FC12FF4 */  jal   sub_GAME_7F04BFD0
+/* 057684 7F022B54 0FC12FF4 */  jal   propobjSetDropped
 /* 057688 7F022B58 24050001 */   li    $a1, 1
 /* 05768C 7F022B5C 96C90012 */  lhu   $t1, 0x12($s6)
 /* 057690 7F022B60 352A0001 */  ori   $t2, $t1, 1
@@ -8258,7 +8258,7 @@ void chrCheckGuardsHeardSound(f32 noise)
     {
         if (ptr_guard_data[i].model != NULL)
         {
-            if (chrlvDistToBond3D(&ptr_guard_data[i]) < ptr_guard_data[i].hearingscale * (noise * 100.0f))
+            if (chrGetDistanceToBond(&ptr_guard_data[i]) < ptr_guard_data[i].hearingscale * (noise * 100.0f))
             {
                 chrlvAlertGuardToPlayerPosition(&ptr_guard_data[i]);
             }
@@ -8275,7 +8275,7 @@ void chrCheckGuardsHeardSound(f32 noise)
  * Address 0x7F022FC8.
  * chrFindByLiteralId
  */
-ChrRecord* chrGetGuardData(s32 index)
+ChrRecord* chrFindByLiteralId(s32 index)
 {
     s32 i;
 
@@ -8295,7 +8295,7 @@ ChrRecord* chrGetGuardData(s32 index)
 /**
  * Address 0x7F02302C.
  */
-PropRecord *something_with_weaponpos_of_guarddata_hand(ChrRecord *self, GUNHAND hand)
+PropRecord *chrGetEquippedWeaponProp(ChrRecord *self, GUNHAND hand)
 {
     return self->weapons_held[hand]; //0x160
 }
@@ -8306,7 +8306,7 @@ PropRecord *something_with_weaponpos_of_guarddata_hand(ChrRecord *self, GUNHAND 
 /**
  * Address 0x7F02303C.
  */
-PropRecord *is_weapon_in_guarddata_hand(ChrRecord *self, GUNHAND hand) 
+PropRecord *chrGetEquippedWeaponPropWithCheck(ChrRecord *self, GUNHAND hand) 
 {
     PropRecord *gunprop = self->weapons_held[hand];
     if (gunprop)

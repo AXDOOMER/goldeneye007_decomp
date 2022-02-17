@@ -6738,10 +6738,10 @@ glabel handle_thrown_explosive_detonation
 /* 078A18 7F043EE8 24040078 */  li    $a0, 120
 /* 078A1C 7F043EEC 8CED0064 */  lw    $t5, 0x64($a3)
 /* 078A20 7F043EF0 35AE0004 */  ori   $t6, $t5, 4
-/* 078A24 7F043EF4 0FC22FF1 */  jal   trigger_explosions_around_player
+/* 078A24 7F043EF4 0FC22FF1 */  jal   SurroundWithExplosions
 /* 078A28 7F043EF8 ACEE0064 */   sw    $t6, 0x64($a3)
 /* 078A2C 7F043EFC 24040002 */  li    $a0, 2
-/* 078A30 7F043F00 0FC15858 */  jal   set_unset_clock_lock_bits
+/* 078A30 7F043F00 0FC15858 */  jal   countdownTimerSetVisible
 /* 078A34 7F043F04 00002825 */   move  $a1, $zero
 /* 078A38 7F043F08 100000BA */  b     .L7F0441F4
 /* 078A3C 7F043F0C 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -7062,10 +7062,10 @@ glabel handle_thrown_explosive_detonation
 /* 078D5C 7F0441EC 24040078 */  li    $a0, 120
 /* 078D60 7F0441F0 8CED0064 */  lw    $t5, 0x64($a3)
 /* 078D64 7F0441F4 35AE0004 */  ori   $t6, $t5, 4
-/* 078D68 7F0441F8 0FC23213 */  jal   trigger_explosions_around_player
+/* 078D68 7F0441F8 0FC23213 */  jal   SurroundWithExplosions
 /* 078D6C 7F0441FC ACEE0064 */   sw    $t6, 0x64($a3)
 /* 078D70 7F044200 24040002 */  li    $a0, 2
-/* 078D74 7F044204 0FC15997 */  jal   set_unset_clock_lock_bits
+/* 078D74 7F044204 0FC15997 */  jal   countdownTimerSetVisible
 /* 078D78 7F044208 00002825 */   move  $a1, $zero
 /* 078D7C 7F04420C 100000B3 */  b     .L7F0444DC
 /* 078D80 7F044210 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -7377,10 +7377,10 @@ glabel handle_thrown_explosive_detonation
 /* 07699C 7F043FAC 24040064 */  li    $a0, 100
 /* 0769A0 7F043FB0 8CED0064 */  lw    $t5, 0x64($a3)
 /* 0769A4 7F043FB4 35AE0004 */  ori   $t6, $t5, 4
-/* 0769A8 7F043FB8 0FC230B5 */  jal   trigger_explosions_around_player
+/* 0769A8 7F043FB8 0FC230B5 */  jal   SurroundWithExplosions
 /* 0769AC 7F043FBC ACEE0064 */   sw    $t6, 0x64($a3)
 /* 0769B0 7F043FC0 24040002 */  li    $a0, 2
-/* 0769B4 7F043FC4 0FC15910 */  jal   set_unset_clock_lock_bits
+/* 0769B4 7F043FC4 0FC15910 */  jal   countdownTimerSetVisible
 /* 0769B8 7F043FC8 00002825 */   move  $a1, $zero
 /* 0769BC 7F043FCC 100000B3 */  b     .L7F04429C
 /* 0769C0 7F043FD0 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -10471,7 +10471,7 @@ glabel object_interaction
 /* 07B1D4 7F0466A4 00195000 */  sll   $t2, $t9, 0
 /* 07B1D8 7F0466A8 05420004 */  bltzl $t2, .L7F0466BC
 /* 07B1DC 7F0466AC 820C00BC */   lb    $t4, 0xbc($s0)
-/* 07B1E0 7F0466B0 0FC15262 */  jal   set_door_state
+/* 07B1E0 7F0466B0 0FC15262 */  jal   doorActivate
 /* 07B1E4 7F0466B4 24050002 */   li    $a1, 2
 /* 07B1E8 7F0466B8 820C00BC */  lb    $t4, 0xbc($s0)
 .L7F0466BC:
@@ -10520,7 +10520,7 @@ glabel object_interaction
 /* 07B280 7F046750 02002025 */   move  $a0, $s0
 /* 07B284 7F046754 10400003 */  beqz  $v0, .L7F046764
 /* 07B288 7F046758 00000000 */   nop   
-/* 07B28C 7F04675C 0FC15667 */  jal   sub_GAME_7F05599C
+/* 07B28C 7F04675C 0FC15667 */  jal   doorActivateWrapper
 /* 07B290 7F046760 02602025 */   move  $a0, $s3
 .L7F046764:
 /* 07B294 7F046764 3C188005 */  lui   $t8, %hi(g_GlobalTimer) 
@@ -10702,7 +10702,7 @@ glabel object_interaction
 /* 07B520 7F0469F0 0119082A */  slt   $at, $t0, $t9
 /* 07B524 7F0469F4 54200006 */  bnezl $at, .L7F046A10
 /* 07B528 7F0469F8 8FA40514 */   lw    $a0, 0x514($sp)
-/* 07B52C 7F0469FC 0FC15772 */  jal   start_alarm
+/* 07B52C 7F0469FC 0FC15772 */  jal   alarmActivate
 /* 07B530 7F046A00 E7B20518 */   swc1  $f18, 0x518($sp)
 /* 07B534 7F046A04 C7B20518 */  lwc1  $f18, 0x518($sp)
 /* 07B538 7F046A08 AE0000E0 */  sw    $zero, 0xe0($s0)
@@ -11534,7 +11534,7 @@ glabel object_interaction
 /* 07C120 7F0475F0 000E6B00 */  sll   $t5, $t6, 0xc
 /* 07C124 7F0475F4 05A00014 */  bltz  $t5, .L7F047648
 /* 07C128 7F0475F8 00000000 */   nop   
-/* 07C12C 7F0475FC 0FC13BCD */  jal   check_if_object_has_not_been_destroyed
+/* 07C12C 7F0475FC 0FC13BCD */  jal   objIsHealthy
 /* 07C130 7F047600 02202025 */   move  $a0, $s1
 /* 07C134 7F047604 10400010 */  beqz  $v0, .L7F047648
 /* 07C138 7F047608 00000000 */   nop   
@@ -12302,7 +12302,7 @@ glabel object_interaction
 /* 07CC7C 7F04814C 000B4B00 */  sll   $t1, $t3, 0xc
 /* 07CC80 7F048150 05200014 */  bltz  $t1, .L7F0481A4
 /* 07CC84 7F048154 00000000 */   nop   
-/* 07CC88 7F048158 0FC13BCD */  jal   check_if_object_has_not_been_destroyed
+/* 07CC88 7F048158 0FC13BCD */  jal   objIsHealthy
 /* 07CC8C 7F04815C 02202025 */   move  $a0, $s1
 /* 07CC90 7F048160 10400010 */  beqz  $v0, .L7F0481A4
 /* 07CC94 7F048164 00000000 */   nop   
@@ -15577,7 +15577,7 @@ glabel object_interaction
 /* 07B618 7F046AA8 0058082A */  slt   $at, $v0, $t8
 /* 07B61C 7F046AAC 50200004 */  beql  $at, $zero, .Ljp7F046AC0
 /* 07B620 7F046AB0 820800BC */   lb    $t0, 0xbc($s0)
-/* 07B624 7F046AB4 0FC153A1 */  jal   set_door_state
+/* 07B624 7F046AB4 0FC153A1 */  jal   doorActivate
 /* 07B628 7F046AB8 24050002 */   li    $a1, 2
 /* 07B62C 7F046ABC 820800BC */  lb    $t0, 0xbc($s0)
 .Ljp7F046AC0:
@@ -15626,7 +15626,7 @@ glabel object_interaction
 /* 07B6C4 7F046B54 02002025 */   move  $a0, $s0
 /* 07B6C8 7F046B58 10400003 */  beqz  $v0, .Ljp7F046B68
 /* 07B6CC 7F046B5C 00000000 */   nop   
-/* 07B6D0 7F046B60 0FC157A6 */  jal   sub_GAME_7F05599C
+/* 07B6D0 7F046B60 0FC157A6 */  jal   doorActivateWrapper
 /* 07B6D4 7F046B64 02602025 */   move  $a0, $s3
 .Ljp7F046B68:
 /* 07B6D8 7F046B68 3C0E8005 */  lui   $t6, %hi(g_GlobalTimer) # $t6, 0x8005
@@ -15808,7 +15808,7 @@ glabel object_interaction
 /* 07B964 7F046DF4 0159082A */  slt   $at, $t2, $t9
 /* 07B968 7F046DF8 54200006 */  bnezl $at, .Ljp7F046E14
 /* 07B96C 7F046DFC 8FA40518 */   lw    $a0, 0x518($sp)
-/* 07B970 7F046E00 0FC158B1 */  jal   start_alarm
+/* 07B970 7F046E00 0FC158B1 */  jal   alarmActivate
 /* 07B974 7F046E04 E7B2051C */   swc1  $f18, 0x51c($sp)
 /* 07B978 7F046E08 C7B2051C */  lwc1  $f18, 0x51c($sp)
 /* 07B97C 7F046E0C AE0000E0 */  sw    $zero, 0xe0($s0)
@@ -16640,7 +16640,7 @@ glabel object_interaction
 /* 07C564 7F0479F4 00095B00 */  sll   $t3, $t1, 0xc
 /* 07C568 7F0479F8 05600014 */  bltz  $t3, .Ljp7F047A4C
 /* 07C56C 7F0479FC 00000000 */   nop   
-/* 07C570 7F047A00 0FC13CCE */  jal   check_if_object_has_not_been_destroyed
+/* 07C570 7F047A00 0FC13CCE */  jal   objIsHealthy
 /* 07C574 7F047A04 02202025 */   move  $a0, $s1
 /* 07C578 7F047A08 10400010 */  beqz  $v0, .Ljp7F047A4C
 /* 07C57C 7F047A0C 00000000 */   nop   
@@ -17408,7 +17408,7 @@ glabel object_interaction
 /* 07D0C0 7F048550 000F6B00 */  sll   $t5, $t7, 0xc
 /* 07D0C4 7F048554 05A00014 */  bltz  $t5, .Ljp7F0485A8
 /* 07D0C8 7F048558 00000000 */   nop   
-/* 07D0CC 7F04855C 0FC13CCE */  jal   check_if_object_has_not_been_destroyed
+/* 07D0CC 7F04855C 0FC13CCE */  jal   objIsHealthy
 /* 07D0D0 7F048560 02202025 */   move  $a0, $s1
 /* 07D0D4 7F048564 10400010 */  beqz  $v0, .Ljp7F0485A8
 /* 07D0D8 7F048568 00000000 */   nop   
@@ -20689,7 +20689,7 @@ glabel object_interaction
 /* 079270 7F046880 0058082A */  slt   $at, $v0, $t8
 /* 079274 7F046884 10200003 */  beqz  $at, .L7F046894
 /* 079278 7F046888 02002025 */   move  $a0, $s0
-/* 07927C 7F04688C 0FC1531A */  jal   set_door_state
+/* 07927C 7F04688C 0FC1531A */  jal   doorActivate
 /* 079280 7F046890 24050002 */   li    $a1, 2
 .L7F046894:
 /* 079284 7F046894 820F00BC */  lb    $t7, 0xbc($s0)
@@ -20739,7 +20739,7 @@ glabel object_interaction
 /* 07931C 7F04692C 02002025 */   move  $a0, $s0
 /* 079320 7F046930 10400003 */  beqz  $v0, .L7F046940
 /* 079324 7F046934 00000000 */   nop   
-/* 079328 7F046938 0FC1571F */  jal   sub_GAME_7F05599C
+/* 079328 7F046938 0FC1571F */  jal   doorActivateWrapper
 /* 07932C 7F04693C 02602025 */   move  $a0, $s3
 .L7F046940:
 /* 079330 7F046940 3C088004 */  lui   $t0, %hi(g_GlobalTimer) # $t0, 0x8004
@@ -20921,7 +20921,7 @@ glabel object_interaction
 /* 0795BC 7F046BCC 016D082A */  slt   $at, $t3, $t5
 /* 0795C0 7F046BD0 54200006 */  bnezl $at, .L7F046BEC
 /* 0795C4 7F046BD4 8FA40518 */   lw    $a0, 0x518($sp)
-/* 0795C8 7F046BD8 0FC1582A */  jal   start_alarm
+/* 0795C8 7F046BD8 0FC1582A */  jal   alarmActivate
 /* 0795CC 7F046BDC E7B2051C */   swc1  $f18, 0x51c($sp)
 /* 0795D0 7F046BE0 C7B2051C */  lwc1  $f18, 0x51c($sp)
 /* 0795D4 7F046BE4 AE0000E0 */  sw    $zero, 0xe0($s0)
@@ -21753,7 +21753,7 @@ glabel object_interaction
 /* 07A1BC 7F0477CC 00194B00 */  sll   $t1, $t9, 0xc
 /* 07A1C0 7F0477D0 05200014 */  bltz  $t1, .L7F047824
 /* 07A1C4 7F0477D4 00000000 */   nop   
-/* 07A1C8 7F0477D8 0FC13C47 */  jal   check_if_object_has_not_been_destroyed
+/* 07A1C8 7F0477D8 0FC13C47 */  jal   objIsHealthy
 /* 07A1CC 7F0477DC 02202025 */   move  $a0, $s1
 /* 07A1D0 7F0477E0 10400010 */  beqz  $v0, .L7F047824
 /* 07A1D4 7F0477E4 00000000 */   nop   
@@ -22522,7 +22522,7 @@ glabel object_interaction
 /* 07AD1C 7F04832C 000A5B00 */  sll   $t3, $t2, 0xc
 /* 07AD20 7F048330 05600014 */  bltz  $t3, .L7F048384
 /* 07AD24 7F048334 00000000 */   nop   
-/* 07AD28 7F048338 0FC13C47 */  jal   check_if_object_has_not_been_destroyed
+/* 07AD28 7F048338 0FC13C47 */  jal   objIsHealthy
 /* 07AD2C 7F04833C 02202025 */   move  $a0, $s1
 /* 07AD30 7F048340 10400010 */  beqz  $v0, .L7F048384
 /* 07AD34 7F048344 00000000 */   nop   
@@ -24400,7 +24400,7 @@ void save_ptr_monitor_ani_code_to_obj_ani_slot(MonitorRecord *mon, void *image)
 }
 
 
-void set_ptr_monitor_img_to_obj_ani_slot(MonitorRecord *mon, s32 monAnimID)
+void imageSlotSetImage(MonitorRecord *mon, s32 monAnimID)
 {
     s32 *image = &monAnim00Bond;
     switch (monAnimID)
@@ -30031,7 +30031,7 @@ glabel sub_GAME_7F04BCDC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F04BFD0(PropRecord *prop, s32 a)
+void propobjSetDropped(PropRecord *prop, s32 a)
 {
     WeaponObjRecord *item;
 
@@ -30055,7 +30055,7 @@ void sub_GAME_7F04BFD0(PropRecord *prop, s32 a)
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F04BFD0
+glabel propobjSetDropped
 /* 080B00 7F04BFD0 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 080B04 7F04BFD4 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 080B08 7F04BFD8 8C82001C */  lw    $v0, 0x1c($a0)
@@ -33996,7 +33996,7 @@ void maybe_detonate_object(ObjectRecord* self, f32 damage,  coord3d* pos, bool f
         }
         else
         {
-            sub_GAME_7F04BFD0(self->prop, 1);
+            propobjSetDropped(self->prop, 1);
             object_explosion_related(self, pos, flag2);
         }
         if ((self->Head.type == PROPDEF_AMMO) && (do_something_if_object_destroyed(self) == OBJECT_UNTOUCHED))
@@ -34106,7 +34106,7 @@ void maybe_detonate_object(ObjectRecord* self, f32 damage,  coord3d* pos, bool f
                 do
                 {
                     temp_a0_2 = temp_a0_2->prev;
-                    sub_GAME_7F04BFD0(temp_a0_2, 1);
+                    propobjSetDropped(temp_a0_2, 1);
 
                 } while (temp_a0_2 != 0);
             }
@@ -34297,7 +34297,7 @@ glabel maybe_detonate_object
 /* 082EB4 7F04E384 10000008 */  b     .L7F04E3A8
 /* 082EB8 7F04E388 92020003 */   lbu   $v0, 3($s0)
 .L7F04E38C:
-/* 082EBC 7F04E38C 0FC12FF4 */  jal   sub_GAME_7F04BFD0
+/* 082EBC 7F04E38C 0FC12FF4 */  jal   propobjSetDropped
 /* 082EC0 7F04E390 8E040010 */   lw    $a0, 0x10($s0)
 /* 082EC4 7F04E394 02002025 */  move  $a0, $s0
 /* 082EC8 7F04E398 8FA500E8 */  lw    $a1, 0xe8($sp)
@@ -34534,7 +34534,7 @@ glabel maybe_detonate_object
 /* 083220 7F04E6F0 8C820024 */  lw    $v0, 0x24($a0)
 .L7F04E6F4:
 /* 083224 7F04E6F4 24050001 */  li    $a1, 1
-/* 083228 7F04E6F8 0FC12FF4 */  jal   sub_GAME_7F04BFD0
+/* 083228 7F04E6F8 0FC12FF4 */  jal   propobjSetDropped
 /* 08322C 7F04E6FC AFA20028 */   sw    $v0, 0x28($sp)
 /* 083230 7F04E700 8FA40028 */  lw    $a0, 0x28($sp)
 /* 083234 7F04E704 5480FFFB */  bnezl $a0, .L7F04E6F4
@@ -34891,7 +34891,7 @@ glabel sub_GAME_7F04EA68
 /* 0836A8 7F04EB78 3C0641D0 */  lui   $a2, 0x41d0
 /* 0836AC 7F04EB7C 0FC28F87 */  jal   sub_GAME_7F0A3E1C
 /* 0836B0 7F04EB80 91E70003 */   lbu   $a3, 3($t7)
-/* 0836B4 7F04EB84 0FC13BCD */  jal   check_if_object_has_not_been_destroyed
+/* 0836B4 7F04EB84 0FC13BCD */  jal   objIsHealthy
 /* 0836B8 7F04EB88 02202025 */   move  $a0, $s1
 /* 0836BC 7F04EB8C 5040000D */  beql  $v0, $zero, .L7F04EBC4
 /* 0836C0 7F04EB90 8E0B004C */   lw    $t3, 0x4c($s0)
@@ -35126,7 +35126,7 @@ glabel sub_GAME_7F04EA68
 /* 083A08 7F04EED8 318E0002 */  andi  $t6, $t4, 2
 /* 083A0C 7F04EEDC 51C00007 */  beql  $t6, $zero, .L7F04EEFC
 /* 083A10 7F04EEE0 8E38000C */   lw    $t8, 0xc($s1)
-/* 083A14 7F04EEE4 0FC13BCD */  jal   check_if_object_has_not_been_destroyed
+/* 083A14 7F04EEE4 0FC13BCD */  jal   objIsHealthy
 /* 083A18 7F04EEE8 02202025 */   move  $a0, $s1
 /* 083A1C 7F04EEEC 54400003 */  bnezl $v0, .L7F04EEFC
 /* 083A20 7F04EEF0 8E38000C */   lw    $t8, 0xc($s1)
@@ -35156,7 +35156,7 @@ glabel sub_GAME_7F04EA68
 
 
 
-bool check_if_object_has_not_been_destroyed(ObjectRecord *self) //#MATCH
+bool objIsHealthy(ObjectRecord *self) //#MATCH
 {
     return do_something_if_object_destroyed(self) == 0;
 }
@@ -35210,7 +35210,7 @@ glabel sub_GAME_7F04EF58
 /* 083AD4 7F04EFA4 5140006E */  beql  $t2, $zero, .L7F04F160
 /* 083AD8 7F04EFA8 8FBF001C */   lw    $ra, 0x1c($sp)
 /* 083ADC 7F04EFAC AFA50050 */  sw    $a1, 0x50($sp)
-/* 083AE0 7F04EFB0 0FC13BCD */  jal   check_if_object_has_not_been_destroyed
+/* 083AE0 7F04EFB0 0FC13BCD */  jal   objIsHealthy
 /* 083AE4 7F04EFB4 AFA60058 */   sw    $a2, 0x58($sp)
 /* 083AE8 7F04EFB8 10400068 */  beqz  $v0, .L7F04F15C
 /* 083AEC 7F04EFBC 8FA50050 */   lw    $a1, 0x50($sp)
@@ -35335,12 +35335,12 @@ glabel sub_GAME_7F04EF58
 
 
 //Todo: Reemove the shim once rename complete
-#define alarmIsActive is_alarm_on
+#define alarmIsActive alarmIsActive
 
 /*
  * Return TYPE if Collected or Interacted (except for Alarm which always returns False)
  */
-INV_ITEM_TYPE sub_GAME_7F04F170(PropRecord *prop) //#MATCH
+INV_ITEM_TYPE propobjInteract(PropRecord *prop) //#MATCH
 {
     ObjectRecord *obj        = prop->obj;
     INV_ITEM_TYPE colllected = INV_ITEM_NONE;
@@ -35350,11 +35350,11 @@ INV_ITEM_TYPE sub_GAME_7F04F170(PropRecord *prop) //#MATCH
         sndPlaySfx(g_musicSfxBufferPtr, 0xBA, 0);
         if (alarmIsActive())
         {
-            stop_alarm();
+            alarmDeactivate();
         }
         else
         {
-            start_alarm();
+            alarmActivate();
         }
     }
     if (obj->flags & PROPFLAG_00080000)
@@ -35457,7 +35457,7 @@ void append_text_picked_up(u8 *buffer,u8 * param2,u8 * param3)
 {
   u8 *puVar1;
   
-  puVar1 = get_textptr_for_textID(TEXT(LPROPOBJ,0x00)); //Picked up
+  puVar1 = langGet(TEXT(LPROPOBJ,0x00)); //Picked up
   strcat(buffer,puVar1);
   return;
 }
@@ -35475,7 +35475,7 @@ void append_text_ammo_amount_word(u8 *buffer, AMMOTYPE ammotype,u32 amount)
     case AMMO_9MM_2:
     case AMMO_RIFLE:
     case AMMO_PLASTIQUE:
-        textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x01)); //some
+        textfiletext = langGet(TEXT(LPROPOBJ,0x01)); //some
         strcat(buffer,textfiletext);
         break;
     case AMMO_SHOTGUN:
@@ -35495,33 +35495,33 @@ void append_text_ammo_amount_word(u8 *buffer, AMMOTYPE ammotype,u32 amount)
     case AMMO_BUG:
     case AMMO_MICRO_CAMERA:
         if (amount == 1) {
-            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x02)); //a
+            textfiletext = langGet(TEXT(LPROPOBJ,0x02)); //a
             strcat(buffer,textfiletext);
         }
         else {
-            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x01)); //some
+            textfiletext = langGet(TEXT(LPROPOBJ,0x01)); //some
             strcat(buffer,textfiletext);
         }
         break;
     case AMMO_EXPLOSIVEPEN:
     case AMMO_BOMBCASE:
         if (amount == 1) {
-            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x03)); //an
+            textfiletext = langGet(TEXT(LPROPOBJ,0x03)); //an
             strcat(buffer,textfiletext);
         }
         else {
-            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x01)); //some
+            textfiletext = langGet(TEXT(LPROPOBJ,0x01)); //some
             strcat(buffer,textfiletext);
         }
         break;
     case AMMO_GEKEY:
     case AMMO_TOKEN:
         if (amount == 1) {
-            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x04)); //the
+            textfiletext = langGet(TEXT(LPROPOBJ,0x04)); //the
             strcat(buffer,textfiletext);
         }
         else {
-            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x01)); //some
+            textfiletext = langGet(TEXT(LPROPOBJ,0x01)); //some
             strcat(buffer,textfiletext);
         }
     }
@@ -35540,115 +35540,115 @@ void apped_text_ammotype(u8 *buffer,AMMOTYPE ammotype,u32 amount)
     u8 *textfiletext;
     
     if (((ammotype == AMMO_9MM) || (ammotype == AMMO_9MM_2)) || (ammotype == AMMO_RIFLE)) {
-        textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x05)); //ammo
+        textfiletext = langGet(TEXT(LPROPOBJ,0x05)); //ammo
         strcat(buffer,textfiletext);
     }
     else {
         if (ammotype == AMMO_KNIFE) {
-            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x0F)); //throwing
+            textfiletext = langGet(TEXT(LPROPOBJ,0x0F)); //throwing
             strcat(buffer,textfiletext);
             if (amount == 1) {
-                textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x10)); //knife
+                textfiletext = langGet(TEXT(LPROPOBJ, 0x10)); //knife
                 strcat(buffer,textfiletext);
             }
             else {
-                textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x11)); //knives
+                textfiletext = langGet(TEXT(LPROPOBJ, 0x11)); //knives
                 strcat(buffer,textfiletext);
             }
         }
         else {
             if (ammotype == AMMO_DYNAMITE) {
                 if (amount == 1) {
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x19)); //stick
+                    textfiletext = langGet(TEXT(LPROPOBJ, 0x19)); //stick
                     strcat(buffer,textfiletext);
                 }
                 else {
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x1A)); //sticks
+                    textfiletext = langGet(TEXT(LPROPOBJ, 0x1A)); //sticks
                     strcat(buffer,textfiletext);
                 }
-                textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x18)); //of dynamite
+                textfiletext = langGet(TEXT(LPROPOBJ, 0x18)); //of dynamite
                 strcat(buffer,textfiletext);
             }
             else {
                 switch(ammotype) {
                 case AMMO_SHOTGUN:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x06)); //shotgun cartridge
+                    textfiletext = langGet(TEXT(LPROPOBJ,0x06)); //shotgun cartridge
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_GRENADE:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x09)); //hand grenade
+                    textfiletext = langGet(TEXT(LPROPOBJ,0x09)); //hand grenade
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_ROCKETS:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x0B)); //rocket
+                    textfiletext = langGet(TEXT(LPROPOBJ,0x0B)); //rocket
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_REMOTEMINE:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x0C)); //remote mine
+                    textfiletext = langGet(TEXT(LPROPOBJ,0x0C)); //remote mine
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_PROXMINE:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x0D)); //proximity mine
+                    textfiletext = langGet(TEXT(LPROPOBJ,0x0D)); //proximity mine
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_TIMEDMINE:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x0E)); //timed mine
+                    textfiletext = langGet(TEXT(LPROPOBJ,0x0E)); //timed mine
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_GRENADEROUND:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x0A)); //grenade round
+                    textfiletext = langGet(TEXT(LPROPOBJ,0x0A)); //grenade round
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_MAGNUM:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x07)); //magnum bullet
+                    textfiletext = langGet(TEXT(LPROPOBJ,0x07)); //magnum bullet
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_GGUN:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x08)); //golden bullet
+                    textfiletext = langGet(TEXT(LPROPOBJ,0x08)); //golden bullet
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_DARTS:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x13)); //dart
+                    textfiletext = langGet(TEXT(LPROPOBJ, 0x13)); //dart
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_EXPLOSIVEPEN:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x14)); //explosive pen
+                    textfiletext = langGet(TEXT(LPROPOBJ, 0x14)); //explosive pen
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_BOMBCASE:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x15)); //explosive case
+                    textfiletext = langGet(TEXT(LPROPOBJ, 0x15)); //explosive case
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_FLARE:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x16)); //flare
+                    textfiletext = langGet(TEXT(LPROPOBJ, 0x16)); //flare
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_PITON:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x17)); //piton
+                    textfiletext = langGet(TEXT(LPROPOBJ, 0x17)); //piton
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_BUG:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x1b)); //bug
+                    textfiletext = langGet(TEXT(LPROPOBJ, 0x1b)); //bug
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_MICRO_CAMERA:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x1c)); //micro camera
+                    textfiletext = langGet(TEXT(LPROPOBJ, 0x1c)); //micro camera
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_GEKEY:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x1d)); //GoldenEye key
+                    textfiletext = langGet(TEXT(LPROPOBJ, 0x1d)); //GoldenEye key
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_PLASTIQUE:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x1f)); //plastique
+                    textfiletext = langGet(TEXT(LPROPOBJ, 0x1f)); //plastique
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_TOKEN:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x1e)); //token
+                    textfiletext = langGet(TEXT(LPROPOBJ, 0x1e)); //token
                     strcat(buffer,textfiletext);
                 }
                 if (1 < (int)amount) {
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x12)); //s
+                    textfiletext = langGet(TEXT(LPROPOBJ, 0x12)); //s
                     strcat(buffer,textfiletext);
                 }
             }
@@ -35705,7 +35705,7 @@ glabel apped_text_ammotype
 /* 083F64 7F04F434 54A10009 */  bnel  $a1, $at, .L7F04F45C
 /* 083F68 7F04F438 2401000A */   li    $at, 10
 .L7F04F43C:
-/* 083F6C 7F04F43C 0FC30776 */  jal   get_textptr_for_textID
+/* 083F6C 7F04F43C 0FC30776 */  jal   langGet
 /* 083F70 7F04F440 3404A405 */   li    $a0, 41989
 /* 083F74 7F04F444 02002025 */  move  $a0, $s0
 /* 083F78 7F04F448 0C0029FF */  jal   strcat
@@ -35716,7 +35716,7 @@ glabel apped_text_ammotype
 .L7F04F45C:
 /* 083F8C 7F04F45C 54A10019 */  bnel  $a1, $at, .L7F04F4C4
 /* 083F90 7F04F460 24010013 */   li    $at, 19
-/* 083F94 7F04F464 0FC30776 */  jal   get_textptr_for_textID
+/* 083F94 7F04F464 0FC30776 */  jal   langGet
 /* 083F98 7F04F468 3404A40F */   li    $a0, 41999
 /* 083F9C 7F04F46C 02002025 */  move  $a0, $s0
 /* 083FA0 7F04F470 0C0029FF */  jal   strcat
@@ -35725,7 +35725,7 @@ glabel apped_text_ammotype
 /* 083FAC 7F04F47C 24010001 */  li    $at, 1
 /* 083FB0 7F04F480 15C10008 */  bne   $t6, $at, .L7F04F4A4
 /* 083FB4 7F04F484 00000000 */   nop   
-/* 083FB8 7F04F488 0FC30776 */  jal   get_textptr_for_textID
+/* 083FB8 7F04F488 0FC30776 */  jal   langGet
 /* 083FBC 7F04F48C 3404A410 */   li    $a0, 42000
 /* 083FC0 7F04F490 02002025 */  move  $a0, $s0
 /* 083FC4 7F04F494 0C0029FF */  jal   strcat
@@ -35733,7 +35733,7 @@ glabel apped_text_ammotype
 /* 083FCC 7F04F49C 100000B6 */  b     .L7F04F778
 /* 083FD0 7F04F4A0 8FBF001C */   lw    $ra, 0x1c($sp)
 .L7F04F4A4:
-/* 083FD4 7F04F4A4 0FC30776 */  jal   get_textptr_for_textID
+/* 083FD4 7F04F4A4 0FC30776 */  jal   langGet
 /* 083FD8 7F04F4A8 3404A411 */   li    $a0, 42001
 /* 083FDC 7F04F4AC 02002025 */  move  $a0, $s0
 /* 083FE0 7F04F4B0 0C0029FF */  jal   strcat
@@ -35747,7 +35747,7 @@ glabel apped_text_ammotype
 /* 083FFC 7F04F4CC 8FAF0028 */  lw    $t7, 0x28($sp)
 /* 084000 7F04F4D0 15E20008 */  bne   $t7, $v0, .L7F04F4F4
 /* 084004 7F04F4D4 00000000 */   nop   
-/* 084008 7F04F4D8 0FC30776 */  jal   get_textptr_for_textID
+/* 084008 7F04F4D8 0FC30776 */  jal   langGet
 /* 08400C 7F04F4DC 3404A419 */   li    $a0, 42009
 /* 084010 7F04F4E0 02002025 */  move  $a0, $s0
 /* 084014 7F04F4E4 0C0029FF */  jal   strcat
@@ -35755,13 +35755,13 @@ glabel apped_text_ammotype
 /* 08401C 7F04F4EC 10000006 */  b     .L7F04F508
 /* 084020 7F04F4F0 00000000 */   nop   
 .L7F04F4F4:
-/* 084024 7F04F4F4 0FC30776 */  jal   get_textptr_for_textID
+/* 084024 7F04F4F4 0FC30776 */  jal   langGet
 /* 084028 7F04F4F8 3404A41A */   li    $a0, 42010
 /* 08402C 7F04F4FC 02002025 */  move  $a0, $s0
 /* 084030 7F04F500 0C0029FF */  jal   strcat
 /* 084034 7F04F504 00402825 */   move  $a1, $v0
 .L7F04F508:
-/* 084038 7F04F508 0FC30776 */  jal   get_textptr_for_textID
+/* 084038 7F04F508 0FC30776 */  jal   langGet
 /* 08403C 7F04F50C 3404A418 */   li    $a0, 42008
 /* 084040 7F04F510 02002025 */  move  $a0, $s0
 /* 084044 7F04F514 0C0029FF */  jal   strcat
@@ -35778,7 +35778,7 @@ glabel apped_text_ammotype
 /* 08406C 7F04F53C 03000008 */  jr    $t8
 /* 084070 7F04F540 00000000 */   nop   
 text_pickup_shotgun_cartridge:
-/* 084074 7F04F544 0FC30776 */  jal   get_textptr_for_textID
+/* 084074 7F04F544 0FC30776 */  jal   langGet
 /* 084078 7F04F548 3404A406 */   li    $a0, 41990
 /* 08407C 7F04F54C 02002025 */  move  $a0, $s0
 /* 084080 7F04F550 0C0029FF */  jal   strcat
@@ -35786,7 +35786,7 @@ text_pickup_shotgun_cartridge:
 /* 084088 7F04F558 1000007E */  b     .L7F04F754
 /* 08408C 7F04F55C 8FB90028 */   lw    $t9, 0x28($sp)
 text_pickup_magnum_bullet:
-/* 084090 7F04F560 0FC30776 */  jal   get_textptr_for_textID
+/* 084090 7F04F560 0FC30776 */  jal   langGet
 /* 084094 7F04F564 3404A407 */   li    $a0, 41991
 /* 084098 7F04F568 02002025 */  move  $a0, $s0
 /* 08409C 7F04F56C 0C0029FF */  jal   strcat
@@ -35794,7 +35794,7 @@ text_pickup_magnum_bullet:
 /* 0840A4 7F04F574 10000077 */  b     .L7F04F754
 /* 0840A8 7F04F578 8FB90028 */   lw    $t9, 0x28($sp)
 text_pickup_golden_bullet:
-/* 0840AC 7F04F57C 0FC30776 */  jal   get_textptr_for_textID
+/* 0840AC 7F04F57C 0FC30776 */  jal   langGet
 /* 0840B0 7F04F580 3404A408 */   li    $a0, 41992
 /* 0840B4 7F04F584 02002025 */  move  $a0, $s0
 /* 0840B8 7F04F588 0C0029FF */  jal   strcat
@@ -35802,7 +35802,7 @@ text_pickup_golden_bullet:
 /* 0840C0 7F04F590 10000070 */  b     .L7F04F754
 /* 0840C4 7F04F594 8FB90028 */   lw    $t9, 0x28($sp)
 text_pickup_hand_grenade:
-/* 0840C8 7F04F598 0FC30776 */  jal   get_textptr_for_textID
+/* 0840C8 7F04F598 0FC30776 */  jal   langGet
 /* 0840CC 7F04F59C 3404A409 */   li    $a0, 41993
 /* 0840D0 7F04F5A0 02002025 */  move  $a0, $s0
 /* 0840D4 7F04F5A4 0C0029FF */  jal   strcat
@@ -35810,7 +35810,7 @@ text_pickup_hand_grenade:
 /* 0840DC 7F04F5AC 10000069 */  b     .L7F04F754
 /* 0840E0 7F04F5B0 8FB90028 */   lw    $t9, 0x28($sp)
 text_pickup_grenade_round:
-/* 0840E4 7F04F5B4 0FC30776 */  jal   get_textptr_for_textID
+/* 0840E4 7F04F5B4 0FC30776 */  jal   langGet
 /* 0840E8 7F04F5B8 3404A40A */   li    $a0, 41994
 /* 0840EC 7F04F5BC 02002025 */  move  $a0, $s0
 /* 0840F0 7F04F5C0 0C0029FF */  jal   strcat
@@ -35818,7 +35818,7 @@ text_pickup_grenade_round:
 /* 0840F8 7F04F5C8 10000062 */  b     .L7F04F754
 /* 0840FC 7F04F5CC 8FB90028 */   lw    $t9, 0x28($sp)
 text_pickup_rocket:
-/* 084100 7F04F5D0 0FC30776 */  jal   get_textptr_for_textID
+/* 084100 7F04F5D0 0FC30776 */  jal   langGet
 /* 084104 7F04F5D4 3404A40B */   li    $a0, 41995
 /* 084108 7F04F5D8 02002025 */  move  $a0, $s0
 /* 08410C 7F04F5DC 0C0029FF */  jal   strcat
@@ -35826,7 +35826,7 @@ text_pickup_rocket:
 /* 084114 7F04F5E4 1000005B */  b     .L7F04F754
 /* 084118 7F04F5E8 8FB90028 */   lw    $t9, 0x28($sp)
 text_pickup_remote_mine:
-/* 08411C 7F04F5EC 0FC30776 */  jal   get_textptr_for_textID
+/* 08411C 7F04F5EC 0FC30776 */  jal   langGet
 /* 084120 7F04F5F0 3404A40C */   li    $a0, 41996
 /* 084124 7F04F5F4 02002025 */  move  $a0, $s0
 /* 084128 7F04F5F8 0C0029FF */  jal   strcat
@@ -35834,7 +35834,7 @@ text_pickup_remote_mine:
 /* 084130 7F04F600 10000054 */  b     .L7F04F754
 /* 084134 7F04F604 8FB90028 */   lw    $t9, 0x28($sp)
 text_pickup_proximity_mine:
-/* 084138 7F04F608 0FC30776 */  jal   get_textptr_for_textID
+/* 084138 7F04F608 0FC30776 */  jal   langGet
 /* 08413C 7F04F60C 3404A40D */   li    $a0, 41997
 /* 084140 7F04F610 02002025 */  move  $a0, $s0
 /* 084144 7F04F614 0C0029FF */  jal   strcat
@@ -35842,7 +35842,7 @@ text_pickup_proximity_mine:
 /* 08414C 7F04F61C 1000004D */  b     .L7F04F754
 /* 084150 7F04F620 8FB90028 */   lw    $t9, 0x28($sp)
 text_pickup_timed_mine:
-/* 084154 7F04F624 0FC30776 */  jal   get_textptr_for_textID
+/* 084154 7F04F624 0FC30776 */  jal   langGet
 /* 084158 7F04F628 3404A40E */   li    $a0, 41998
 /* 08415C 7F04F62C 02002025 */  move  $a0, $s0
 /* 084160 7F04F630 0C0029FF */  jal   strcat
@@ -35850,7 +35850,7 @@ text_pickup_timed_mine:
 /* 084168 7F04F638 10000046 */  b     .L7F04F754
 /* 08416C 7F04F63C 8FB90028 */   lw    $t9, 0x28($sp)
 text_pickup_dart:
-/* 084170 7F04F640 0FC30776 */  jal   get_textptr_for_textID
+/* 084170 7F04F640 0FC30776 */  jal   langGet
 /* 084174 7F04F644 3404A413 */   li    $a0, 42003
 /* 084178 7F04F648 02002025 */  move  $a0, $s0
 /* 08417C 7F04F64C 0C0029FF */  jal   strcat
@@ -35858,7 +35858,7 @@ text_pickup_dart:
 /* 084184 7F04F654 1000003F */  b     .L7F04F754
 /* 084188 7F04F658 8FB90028 */   lw    $t9, 0x28($sp)
 text_pickup_explosive_pen:
-/* 08418C 7F04F65C 0FC30776 */  jal   get_textptr_for_textID
+/* 08418C 7F04F65C 0FC30776 */  jal   langGet
 /* 084190 7F04F660 3404A414 */   li    $a0, 42004
 /* 084194 7F04F664 02002025 */  move  $a0, $s0
 /* 084198 7F04F668 0C0029FF */  jal   strcat
@@ -35866,7 +35866,7 @@ text_pickup_explosive_pen:
 /* 0841A0 7F04F670 10000038 */  b     .L7F04F754
 /* 0841A4 7F04F674 8FB90028 */   lw    $t9, 0x28($sp)
 text_pickup_explosive_case:
-/* 0841A8 7F04F678 0FC30776 */  jal   get_textptr_for_textID
+/* 0841A8 7F04F678 0FC30776 */  jal   langGet
 /* 0841AC 7F04F67C 3404A415 */   li    $a0, 42005
 /* 0841B0 7F04F680 02002025 */  move  $a0, $s0
 /* 0841B4 7F04F684 0C0029FF */  jal   strcat
@@ -35874,7 +35874,7 @@ text_pickup_explosive_case:
 /* 0841BC 7F04F68C 10000031 */  b     .L7F04F754
 /* 0841C0 7F04F690 8FB90028 */   lw    $t9, 0x28($sp)
 text_pickup_flare:
-/* 0841C4 7F04F694 0FC30776 */  jal   get_textptr_for_textID
+/* 0841C4 7F04F694 0FC30776 */  jal   langGet
 /* 0841C8 7F04F698 3404A416 */   li    $a0, 42006
 /* 0841CC 7F04F69C 02002025 */  move  $a0, $s0
 /* 0841D0 7F04F6A0 0C0029FF */  jal   strcat
@@ -35882,7 +35882,7 @@ text_pickup_flare:
 /* 0841D8 7F04F6A8 1000002A */  b     .L7F04F754
 /* 0841DC 7F04F6AC 8FB90028 */   lw    $t9, 0x28($sp)
 text_pickup_piton:
-/* 0841E0 7F04F6B0 0FC30776 */  jal   get_textptr_for_textID
+/* 0841E0 7F04F6B0 0FC30776 */  jal   langGet
 /* 0841E4 7F04F6B4 3404A417 */   li    $a0, 42007
 /* 0841E8 7F04F6B8 02002025 */  move  $a0, $s0
 /* 0841EC 7F04F6BC 0C0029FF */  jal   strcat
@@ -35890,7 +35890,7 @@ text_pickup_piton:
 /* 0841F4 7F04F6C4 10000023 */  b     .L7F04F754
 /* 0841F8 7F04F6C8 8FB90028 */   lw    $t9, 0x28($sp)
 text_pickup_bug:
-/* 0841FC 7F04F6CC 0FC30776 */  jal   get_textptr_for_textID
+/* 0841FC 7F04F6CC 0FC30776 */  jal   langGet
 /* 084200 7F04F6D0 3404A41B */   li    $a0, 42011
 /* 084204 7F04F6D4 02002025 */  move  $a0, $s0
 /* 084208 7F04F6D8 0C0029FF */  jal   strcat
@@ -35898,7 +35898,7 @@ text_pickup_bug:
 /* 084210 7F04F6E0 1000001C */  b     .L7F04F754
 /* 084214 7F04F6E4 8FB90028 */   lw    $t9, 0x28($sp)
 text_pickup_micro_camera:
-/* 084218 7F04F6E8 0FC30776 */  jal   get_textptr_for_textID
+/* 084218 7F04F6E8 0FC30776 */  jal   langGet
 /* 08421C 7F04F6EC 3404A41C */   li    $a0, 42012
 /* 084220 7F04F6F0 02002025 */  move  $a0, $s0
 /* 084224 7F04F6F4 0C0029FF */  jal   strcat
@@ -35906,7 +35906,7 @@ text_pickup_micro_camera:
 /* 08422C 7F04F6FC 10000015 */  b     .L7F04F754
 /* 084230 7F04F700 8FB90028 */   lw    $t9, 0x28($sp)
 text_pickup_goldeneye_key:
-/* 084234 7F04F704 0FC30776 */  jal   get_textptr_for_textID
+/* 084234 7F04F704 0FC30776 */  jal   langGet
 /* 084238 7F04F708 3404A41D */   li    $a0, 42013
 /* 08423C 7F04F70C 02002025 */  move  $a0, $s0
 /* 084240 7F04F710 0C0029FF */  jal   strcat
@@ -35914,7 +35914,7 @@ text_pickup_goldeneye_key:
 /* 084248 7F04F718 1000000E */  b     .L7F04F754
 /* 08424C 7F04F71C 8FB90028 */   lw    $t9, 0x28($sp)
 text_pickup_token:
-/* 084250 7F04F720 0FC30776 */  jal   get_textptr_for_textID
+/* 084250 7F04F720 0FC30776 */  jal   langGet
 /* 084254 7F04F724 3404A41E */   li    $a0, 42014
 /* 084258 7F04F728 02002025 */  move  $a0, $s0
 /* 08425C 7F04F72C 0C0029FF */  jal   strcat
@@ -35922,7 +35922,7 @@ text_pickup_token:
 /* 084264 7F04F734 10000007 */  b     .L7F04F754
 /* 084268 7F04F738 8FB90028 */   lw    $t9, 0x28($sp)
 text_pickup_plastique:
-/* 08426C 7F04F73C 0FC30776 */  jal   get_textptr_for_textID
+/* 08426C 7F04F73C 0FC30776 */  jal   langGet
 /* 084270 7F04F740 3404A41F */   li    $a0, 42015
 /* 084274 7F04F744 02002025 */  move  $a0, $s0
 /* 084278 7F04F748 0C0029FF */  jal   strcat
@@ -35934,7 +35934,7 @@ pluralize_multiples:
 /* 084284 7F04F754 2B210002 */  slti  $at, $t9, 2
 /* 084288 7F04F758 54200007 */  bnezl $at, .L7F04F778
 /* 08428C 7F04F75C 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 084290 7F04F760 0FC30776 */  jal   get_textptr_for_textID
+/* 084290 7F04F760 0FC30776 */  jal   langGet
 /* 084294 7F04F764 3404A412 */   li    $a0, 42002
 /* 084298 7F04F768 02002025 */  move  $a0, $s0
 /* 08429C 7F04F76C 0C0029FF */  jal   strcat
@@ -36159,7 +36159,7 @@ glabel display_text_when_ammo_collected
 /* 084574 7F04FA44 8DC10000 */  lw    $at, ($t6)
 /* 084578 7F04FA48 0FC13E48 */  jal   prepare_ammo_type_collection_text
 /* 08457C 7F04FA4C AD010000 */   sw    $at, ($t0)
-/* 084580 7F04FA50 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 084580 7F04FA50 0FC228F2 */  jal   hudmsgBottomShow
 /* 084584 7F04FA54 27A4001C */   addiu $a0, $sp, 0x1c
 /* 084588 7F04FA58 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 08458C 7F04FA5C 27BD0080 */  addiu $sp, $sp, 0x80
@@ -36197,7 +36197,7 @@ glabel display_text_when_ammo_collected
 /* 084574 7F04FA44 8DC10000 */  lw    $at, ($t6)
 /* 084578 7F04FA48 0FC13E48 */  jal   prepare_ammo_type_collection_text
 /* 08457C 7F04FA4C AD010000 */   sw    $at, ($t0)
-/* 084580 7F04FA50 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
+/* 084580 7F04FA50 0FC228F2 */  jal   jp_hudmsgBottomShow
 /* 084584 7F04FA54 27A4001C */   addiu $a0, $sp, 0x1c
 /* 084588 7F04FA58 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 08458C 7F04FA5C 27BD0080 */  addiu $sp, $sp, 0x80
@@ -36236,7 +36236,7 @@ glabel display_text_when_ammo_collected
 /* 084574 7F04FA44 8DC10000 */  lw    $at, ($t6)
 /* 084578 7F04FA48 0FC13E48 */  jal   prepare_ammo_type_collection_text
 /* 08457C 7F04FA4C AD010000 */   sw    $at, ($t0)
-/* 084580 7F04FA50 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
+/* 084580 7F04FA50 0FC228F2 */  jal   jp_hudmsgBottomShow
 /* 084584 7F04FA54 27A4001C */   addiu $a0, $sp, 0x1c
 /* 084588 7F04FA58 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 08458C 7F04FA5C 27BD0080 */  addiu $sp, $sp, 0x80
@@ -36545,13 +36545,13 @@ void generate_language_specific_text_for_weapon(char *finalstring,ITEM_IDS itemt
     else {
           if (getPlayerCount() < 3) {
              //Picked up
-            strcpy(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ,0x00))); 
+            strcpy(finalstring, langGet(TEXT(LPROPOBJ,0x00))); 
           }
     }
     switch(itemtype) {
     case ITEM_KNIFE:
         //a hunting knife.
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x20)));  
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x20)));  
         break;
     case ITEM_THROWKNIFE:
     case ITEM_GRENADE:
@@ -36570,111 +36570,111 @@ void generate_language_specific_text_for_weapon(char *finalstring,ITEM_IDS itemt
         return;
     case ITEM_WPPK:
         //a PP7.
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x21)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x21)));
         break;
     case ITEM_WPPKSIL:
         //a silenced PP7.
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x22)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x22)));
         break;
     case ITEM_TT33:
         //a DD44 Dostovei.
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x23)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x23)));
         break;
     case ITEM_SKORPION:
         //a Klobb.
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x24)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x24)));
         break;
     case ITEM_AK47:
         //a KF7 Soviet.
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x25)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x25)));
         break;
     case ITEM_UZI:
         //a ZMG (9mm).
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x26)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x26)));
         break;
     case ITEM_MP5K:
         //a D5K Deutsche.
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x27)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x27)));
         break;
     case ITEM_MP5KSIL:
         //a silenced D5K.
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x28)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x28)));
         break;
     case ITEM_SPECTRE:
         //a Phantom.
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x29)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x29)));
         break;
     case ITEM_M16:
         //an AR33 assault rifle.
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x2a)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x2a)));
         break;
     case ITEM_FNP90:
         //an RC-P90.
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x2b)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x2b)));
         break;
     case ITEM_SHOTGUN:
         //a shotgun.
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x2c)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x2c)));
         break;
     case ITEM_AUTOSHOT:
         //an automatic shotgun.
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x2d)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x2d)));
         break;
     case ITEM_SNIPERRIFLE:
         //a sniper rifle.
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x2e)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x2e)));
         break;
     case ITEM_RUGER:
         //a Cougar Magnum.
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x31)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x31)));
         break;
     case ITEM_GOLDENGUN:
         //the Golden Gun.
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x32)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x32)));
         break;
     case ITEM_SILVERWPPK:
         //a silver PP7.
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x36)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x36)));
         break;
     case ITEM_GOLDWPPK:
         //a gold PP7.
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x37)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x37)));
         break;
     case ITEM_LASER:
         //a Moonraker laser.
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x33)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x33)));
         break;
     default:
         //a new weapon.
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x3b)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x3b)));
         break;
     case ITEM_GRENADELAUNCH:
         //a grenade launcher.
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x2f)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x2f)));
         break;
     case ITEM_ROCKETLAUNCH:
         //a rocket launcher.
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x30)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x30)));
         break;
     case ITEM_FLAREPISTOL:
         //a flare pistol.
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x34)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x34)));
         break;
     case ITEM_PITONGUN:
         //a piton gun.
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x35)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x35)));
         break;
     case ITEM_KEYCARD:
         //a keycard.
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x38)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x38)));
         break;
     case ITEM_KEYYALE:
         //a yale key.
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x39)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x39)));
         break;
     case ITEM_KEYBOLT:
         //a bolt key.
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x3a)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ, 0x3a)));
     }
     if ((j_text_trigger != 0) && (!morethan2players))
     {
@@ -36683,7 +36683,7 @@ void generate_language_specific_text_for_weapon(char *finalstring,ITEM_IDS itemt
             finalstring[strlen(finalstring) - 1] = '\0';
         }
         //Picked up 
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ,0x00)));
+        strcat(finalstring, langGet(TEXT(LPROPOBJ,0x00)));
         strcat(finalstring,"\n");
     }
     return;
@@ -36808,7 +36808,7 @@ glabel generate_language_specific_text_for_weapon
 /* 084964 7F04FE34 28410003 */  slti  $at, $v0, 3
 /* 084968 7F04FE38 50200007 */  beql  $at, $zero, .L7F04FE58
 /* 08496C 7F04FE3C 8FB8002C */   lw    $t8, 0x2c($sp)
-/* 084970 7F04FE40 0FC30776 */  jal   get_textptr_for_textID
+/* 084970 7F04FE40 0FC30776 */  jal   langGet
 /* 084974 7F04FE44 3404A400 */   li    $a0, 41984
 /* 084978 7F04FE48 02002025 */  move  $a0, $s0
 /* 08497C 7F04FE4C 0C0029DC */  jal   strcpy
@@ -36835,7 +36835,7 @@ weapon_collect_msg_BLANK:
 /* 0849C4 7F04FE94 100000DF */  b     .L7F050214
 /* 0849C8 7F04FE98 8FBF001C */   lw    $ra, 0x1c($sp)
 weapon_collect_msg_a_hunting_knife:
-/* 0849CC 7F04FE9C 0FC30776 */  jal   get_textptr_for_textID
+/* 0849CC 7F04FE9C 0FC30776 */  jal   langGet
 /* 0849D0 7F04FEA0 3404A420 */   li    $a0, 42016
 /* 0849D4 7F04FEA4 02002025 */  move  $a0, $s0
 /* 0849D8 7F04FEA8 0C0029FF */  jal   strcat
@@ -36843,7 +36843,7 @@ weapon_collect_msg_a_hunting_knife:
 /* 0849E0 7F04FEB0 100000BC */  b     .L7F0501A4
 /* 0849E4 7F04FEB4 00000000 */   nop   
 weapon_collect_msg_a_pp7:
-/* 0849E8 7F04FEB8 0FC30776 */  jal   get_textptr_for_textID
+/* 0849E8 7F04FEB8 0FC30776 */  jal   langGet
 /* 0849EC 7F04FEBC 3404A421 */   li    $a0, 42017
 /* 0849F0 7F04FEC0 02002025 */  move  $a0, $s0
 /* 0849F4 7F04FEC4 0C0029FF */  jal   strcat
@@ -36851,7 +36851,7 @@ weapon_collect_msg_a_pp7:
 /* 0849FC 7F04FECC 100000B5 */  b     .L7F0501A4
 /* 084A00 7F04FED0 00000000 */   nop   
 weapon_collect_msg_a_silenced_pp7:
-/* 084A04 7F04FED4 0FC30776 */  jal   get_textptr_for_textID
+/* 084A04 7F04FED4 0FC30776 */  jal   langGet
 /* 084A08 7F04FED8 3404A422 */   li    $a0, 42018
 /* 084A0C 7F04FEDC 02002025 */  move  $a0, $s0
 /* 084A10 7F04FEE0 0C0029FF */  jal   strcat
@@ -36859,7 +36859,7 @@ weapon_collect_msg_a_silenced_pp7:
 /* 084A18 7F04FEE8 100000AE */  b     .L7F0501A4
 /* 084A1C 7F04FEEC 00000000 */   nop   
 weapon_collect_msg_a_dd44:
-/* 084A20 7F04FEF0 0FC30776 */  jal   get_textptr_for_textID
+/* 084A20 7F04FEF0 0FC30776 */  jal   langGet
 /* 084A24 7F04FEF4 3404A423 */   li    $a0, 42019
 /* 084A28 7F04FEF8 02002025 */  move  $a0, $s0
 /* 084A2C 7F04FEFC 0C0029FF */  jal   strcat
@@ -36867,7 +36867,7 @@ weapon_collect_msg_a_dd44:
 /* 084A34 7F04FF04 100000A7 */  b     .L7F0501A4
 /* 084A38 7F04FF08 00000000 */   nop   
 weapon_collect_msg_a_klobb:
-/* 084A3C 7F04FF0C 0FC30776 */  jal   get_textptr_for_textID
+/* 084A3C 7F04FF0C 0FC30776 */  jal   langGet
 /* 084A40 7F04FF10 3404A424 */   li    $a0, 42020
 /* 084A44 7F04FF14 02002025 */  move  $a0, $s0
 /* 084A48 7F04FF18 0C0029FF */  jal   strcat
@@ -36875,7 +36875,7 @@ weapon_collect_msg_a_klobb:
 /* 084A50 7F04FF20 100000A0 */  b     .L7F0501A4
 /* 084A54 7F04FF24 00000000 */   nop   
 weapon_collect_msg_a_kf7:
-/* 084A58 7F04FF28 0FC30776 */  jal   get_textptr_for_textID
+/* 084A58 7F04FF28 0FC30776 */  jal   langGet
 /* 084A5C 7F04FF2C 3404A425 */   li    $a0, 42021
 /* 084A60 7F04FF30 02002025 */  move  $a0, $s0
 /* 084A64 7F04FF34 0C0029FF */  jal   strcat
@@ -36883,7 +36883,7 @@ weapon_collect_msg_a_kf7:
 /* 084A6C 7F04FF3C 10000099 */  b     .L7F0501A4
 /* 084A70 7F04FF40 00000000 */   nop   
 weapon_collect_msg_a_zmg:
-/* 084A74 7F04FF44 0FC30776 */  jal   get_textptr_for_textID
+/* 084A74 7F04FF44 0FC30776 */  jal   langGet
 /* 084A78 7F04FF48 3404A426 */   li    $a0, 42022
 /* 084A7C 7F04FF4C 02002025 */  move  $a0, $s0
 /* 084A80 7F04FF50 0C0029FF */  jal   strcat
@@ -36891,7 +36891,7 @@ weapon_collect_msg_a_zmg:
 /* 084A88 7F04FF58 10000092 */  b     .L7F0501A4
 /* 084A8C 7F04FF5C 00000000 */   nop   
 weapon_collect_msg_a_d5k:
-/* 084A90 7F04FF60 0FC30776 */  jal   get_textptr_for_textID
+/* 084A90 7F04FF60 0FC30776 */  jal   langGet
 /* 084A94 7F04FF64 3404A427 */   li    $a0, 42023
 /* 084A98 7F04FF68 02002025 */  move  $a0, $s0
 /* 084A9C 7F04FF6C 0C0029FF */  jal   strcat
@@ -36899,7 +36899,7 @@ weapon_collect_msg_a_d5k:
 /* 084AA4 7F04FF74 1000008B */  b     .L7F0501A4
 /* 084AA8 7F04FF78 00000000 */   nop   
 weapon_collect_msg_a_silenced_d5k:
-/* 084AAC 7F04FF7C 0FC30776 */  jal   get_textptr_for_textID
+/* 084AAC 7F04FF7C 0FC30776 */  jal   langGet
 /* 084AB0 7F04FF80 3404A428 */   li    $a0, 42024
 /* 084AB4 7F04FF84 02002025 */  move  $a0, $s0
 /* 084AB8 7F04FF88 0C0029FF */  jal   strcat
@@ -36907,7 +36907,7 @@ weapon_collect_msg_a_silenced_d5k:
 /* 084AC0 7F04FF90 10000084 */  b     .L7F0501A4
 /* 084AC4 7F04FF94 00000000 */   nop   
 weapon_collect_msg_a_phantom:
-/* 084AC8 7F04FF98 0FC30776 */  jal   get_textptr_for_textID
+/* 084AC8 7F04FF98 0FC30776 */  jal   langGet
 /* 084ACC 7F04FF9C 3404A429 */   li    $a0, 42025
 /* 084AD0 7F04FFA0 02002025 */  move  $a0, $s0
 /* 084AD4 7F04FFA4 0C0029FF */  jal   strcat
@@ -36915,7 +36915,7 @@ weapon_collect_msg_a_phantom:
 /* 084ADC 7F04FFAC 1000007D */  b     .L7F0501A4
 /* 084AE0 7F04FFB0 00000000 */   nop   
 weapon_collect_msg_a_ar33:
-/* 084AE4 7F04FFB4 0FC30776 */  jal   get_textptr_for_textID
+/* 084AE4 7F04FFB4 0FC30776 */  jal   langGet
 /* 084AE8 7F04FFB8 3404A42A */   li    $a0, 42026
 /* 084AEC 7F04FFBC 02002025 */  move  $a0, $s0
 /* 084AF0 7F04FFC0 0C0029FF */  jal   strcat
@@ -36923,7 +36923,7 @@ weapon_collect_msg_a_ar33:
 /* 084AF8 7F04FFC8 10000076 */  b     .L7F0501A4
 /* 084AFC 7F04FFCC 00000000 */   nop   
 weapon_collect_msg_a_rcp90:
-/* 084B00 7F04FFD0 0FC30776 */  jal   get_textptr_for_textID
+/* 084B00 7F04FFD0 0FC30776 */  jal   langGet
 /* 084B04 7F04FFD4 3404A42B */   li    $a0, 42027
 /* 084B08 7F04FFD8 02002025 */  move  $a0, $s0
 /* 084B0C 7F04FFDC 0C0029FF */  jal   strcat
@@ -36931,7 +36931,7 @@ weapon_collect_msg_a_rcp90:
 /* 084B14 7F04FFE4 1000006F */  b     .L7F0501A4
 /* 084B18 7F04FFE8 00000000 */   nop   
 weapon_collect_msg_a_shotgun:
-/* 084B1C 7F04FFEC 0FC30776 */  jal   get_textptr_for_textID
+/* 084B1C 7F04FFEC 0FC30776 */  jal   langGet
 /* 084B20 7F04FFF0 3404A42C */   li    $a0, 42028
 /* 084B24 7F04FFF4 02002025 */  move  $a0, $s0
 /* 084B28 7F04FFF8 0C0029FF */  jal   strcat
@@ -36939,7 +36939,7 @@ weapon_collect_msg_a_shotgun:
 /* 084B30 7F050000 10000068 */  b     .L7F0501A4
 /* 084B34 7F050004 00000000 */   nop   
 weapon_collect_msg_an_auto_shotgun:
-/* 084B38 7F050008 0FC30776 */  jal   get_textptr_for_textID
+/* 084B38 7F050008 0FC30776 */  jal   langGet
 /* 084B3C 7F05000C 3404A42D */   li    $a0, 42029
 /* 084B40 7F050010 02002025 */  move  $a0, $s0
 /* 084B44 7F050014 0C0029FF */  jal   strcat
@@ -36947,7 +36947,7 @@ weapon_collect_msg_an_auto_shotgun:
 /* 084B4C 7F05001C 10000061 */  b     .L7F0501A4
 /* 084B50 7F050020 00000000 */   nop   
 weapon_collect_msg_a_sniper:
-/* 084B54 7F050024 0FC30776 */  jal   get_textptr_for_textID
+/* 084B54 7F050024 0FC30776 */  jal   langGet
 /* 084B58 7F050028 3404A42E */   li    $a0, 42030
 /* 084B5C 7F05002C 02002025 */  move  $a0, $s0
 /* 084B60 7F050030 0C0029FF */  jal   strcat
@@ -36955,7 +36955,7 @@ weapon_collect_msg_a_sniper:
 /* 084B68 7F050038 1000005A */  b     .L7F0501A4
 /* 084B6C 7F05003C 00000000 */   nop   
 weapon_collect_msg_a_grenade_launcher:
-/* 084B70 7F050040 0FC30776 */  jal   get_textptr_for_textID
+/* 084B70 7F050040 0FC30776 */  jal   langGet
 /* 084B74 7F050044 3404A42F */   li    $a0, 42031
 /* 084B78 7F050048 02002025 */  move  $a0, $s0
 /* 084B7C 7F05004C 0C0029FF */  jal   strcat
@@ -36963,7 +36963,7 @@ weapon_collect_msg_a_grenade_launcher:
 /* 084B84 7F050054 10000053 */  b     .L7F0501A4
 /* 084B88 7F050058 00000000 */   nop   
 weapon_collect_msg_a_rocket_launcher:
-/* 084B8C 7F05005C 0FC30776 */  jal   get_textptr_for_textID
+/* 084B8C 7F05005C 0FC30776 */  jal   langGet
 /* 084B90 7F050060 3404A430 */   li    $a0, 42032
 /* 084B94 7F050064 02002025 */  move  $a0, $s0
 /* 084B98 7F050068 0C0029FF */  jal   strcat
@@ -36971,7 +36971,7 @@ weapon_collect_msg_a_rocket_launcher:
 /* 084BA0 7F050070 1000004C */  b     .L7F0501A4
 /* 084BA4 7F050074 00000000 */   nop   
 weapon_collect_msg_a_cougar_magnum:
-/* 084BA8 7F050078 0FC30776 */  jal   get_textptr_for_textID
+/* 084BA8 7F050078 0FC30776 */  jal   langGet
 /* 084BAC 7F05007C 3404A431 */   li    $a0, 42033
 /* 084BB0 7F050080 02002025 */  move  $a0, $s0
 /* 084BB4 7F050084 0C0029FF */  jal   strcat
@@ -36979,7 +36979,7 @@ weapon_collect_msg_a_cougar_magnum:
 /* 084BBC 7F05008C 10000045 */  b     .L7F0501A4
 /* 084BC0 7F050090 00000000 */   nop   
 weapon_collect_msg_a_golden_gun:
-/* 084BC4 7F050094 0FC30776 */  jal   get_textptr_for_textID
+/* 084BC4 7F050094 0FC30776 */  jal   langGet
 /* 084BC8 7F050098 3404A432 */   li    $a0, 42034
 /* 084BCC 7F05009C 02002025 */  move  $a0, $s0
 /* 084BD0 7F0500A0 0C0029FF */  jal   strcat
@@ -36987,7 +36987,7 @@ weapon_collect_msg_a_golden_gun:
 /* 084BD8 7F0500A8 1000003E */  b     .L7F0501A4
 /* 084BDC 7F0500AC 00000000 */   nop   
 weapon_collect_msg_a_moonraker_laser:
-/* 084BE0 7F0500B0 0FC30776 */  jal   get_textptr_for_textID
+/* 084BE0 7F0500B0 0FC30776 */  jal   langGet
 /* 084BE4 7F0500B4 3404A433 */   li    $a0, 42035
 /* 084BE8 7F0500B8 02002025 */  move  $a0, $s0
 /* 084BEC 7F0500BC 0C0029FF */  jal   strcat
@@ -36995,7 +36995,7 @@ weapon_collect_msg_a_moonraker_laser:
 /* 084BF4 7F0500C4 10000037 */  b     .L7F0501A4
 /* 084BF8 7F0500C8 00000000 */   nop   
 weapon_collect_msg_a_flare_pistol:
-/* 084BFC 7F0500CC 0FC30776 */  jal   get_textptr_for_textID
+/* 084BFC 7F0500CC 0FC30776 */  jal   langGet
 /* 084C00 7F0500D0 3404A434 */   li    $a0, 42036
 /* 084C04 7F0500D4 02002025 */  move  $a0, $s0
 /* 084C08 7F0500D8 0C0029FF */  jal   strcat
@@ -37003,7 +37003,7 @@ weapon_collect_msg_a_flare_pistol:
 /* 084C10 7F0500E0 10000030 */  b     .L7F0501A4
 /* 084C14 7F0500E4 00000000 */   nop   
 weapon_collect_msg_a_piton_gun:
-/* 084C18 7F0500E8 0FC30776 */  jal   get_textptr_for_textID
+/* 084C18 7F0500E8 0FC30776 */  jal   langGet
 /* 084C1C 7F0500EC 3404A435 */   li    $a0, 42037
 /* 084C20 7F0500F0 02002025 */  move  $a0, $s0
 /* 084C24 7F0500F4 0C0029FF */  jal   strcat
@@ -37011,7 +37011,7 @@ weapon_collect_msg_a_piton_gun:
 /* 084C2C 7F0500FC 10000029 */  b     .L7F0501A4
 /* 084C30 7F050100 00000000 */   nop   
 weapon_collect_msg_a_silver_pp7:
-/* 084C34 7F050104 0FC30776 */  jal   get_textptr_for_textID
+/* 084C34 7F050104 0FC30776 */  jal   langGet
 /* 084C38 7F050108 3404A436 */   li    $a0, 42038
 /* 084C3C 7F05010C 02002025 */  move  $a0, $s0
 /* 084C40 7F050110 0C0029FF */  jal   strcat
@@ -37019,7 +37019,7 @@ weapon_collect_msg_a_silver_pp7:
 /* 084C48 7F050118 10000022 */  b     .L7F0501A4
 /* 084C4C 7F05011C 00000000 */   nop   
 weapon_collect_msg_a_gold_pp7:
-/* 084C50 7F050120 0FC30776 */  jal   get_textptr_for_textID
+/* 084C50 7F050120 0FC30776 */  jal   langGet
 /* 084C54 7F050124 3404A437 */   li    $a0, 42039
 /* 084C58 7F050128 02002025 */  move  $a0, $s0
 /* 084C5C 7F05012C 0C0029FF */  jal   strcat
@@ -37027,7 +37027,7 @@ weapon_collect_msg_a_gold_pp7:
 /* 084C64 7F050134 1000001B */  b     .L7F0501A4
 /* 084C68 7F050138 00000000 */   nop   
 weapon_collect_msg_a_keycard:
-/* 084C6C 7F05013C 0FC30776 */  jal   get_textptr_for_textID
+/* 084C6C 7F05013C 0FC30776 */  jal   langGet
 /* 084C70 7F050140 3404A438 */   li    $a0, 42040
 /* 084C74 7F050144 02002025 */  move  $a0, $s0
 /* 084C78 7F050148 0C0029FF */  jal   strcat
@@ -37035,7 +37035,7 @@ weapon_collect_msg_a_keycard:
 /* 084C80 7F050150 10000014 */  b     .L7F0501A4
 /* 084C84 7F050154 00000000 */   nop   
 weapon_collect_msg_a_yale_key:
-/* 084C88 7F050158 0FC30776 */  jal   get_textptr_for_textID
+/* 084C88 7F050158 0FC30776 */  jal   langGet
 /* 084C8C 7F05015C 3404A439 */   li    $a0, 42041
 /* 084C90 7F050160 02002025 */  move  $a0, $s0
 /* 084C94 7F050164 0C0029FF */  jal   strcat
@@ -37043,7 +37043,7 @@ weapon_collect_msg_a_yale_key:
 /* 084C9C 7F05016C 1000000D */  b     .L7F0501A4
 /* 084CA0 7F050170 00000000 */   nop   
 weapon_collect_msg_a_bolt_key:
-/* 084CA4 7F050174 0FC30776 */  jal   get_textptr_for_textID
+/* 084CA4 7F050174 0FC30776 */  jal   langGet
 /* 084CA8 7F050178 3404A43A */   li    $a0, 42042
 /* 084CAC 7F05017C 02002025 */  move  $a0, $s0
 /* 084CB0 7F050180 0C0029FF */  jal   strcat
@@ -37052,7 +37052,7 @@ weapon_collect_msg_a_bolt_key:
 /* 084CBC 7F05018C 00000000 */   nop   
 weapon_collect_msg_a_new_weapon:
 .L7F050190:
-/* 084CC0 7F050190 0FC30776 */  jal   get_textptr_for_textID
+/* 084CC0 7F050190 0FC30776 */  jal   langGet
 /* 084CC4 7F050194 3404A43B */   li    $a0, 42043
 /* 084CC8 7F050198 02002025 */  move  $a0, $s0
 /* 084CCC 7F05019C 0C0029FF */  jal   strcat
@@ -37077,7 +37077,7 @@ weapon_collect_msg_a_new_weapon:
 /* 084D14 7F0501E4 02026021 */  addu  $t4, $s0, $v0
 /* 084D18 7F0501E8 A180FFFF */  sb    $zero, -1($t4)
 .L7F0501EC:
-/* 084D1C 7F0501EC 0FC30776 */  jal   get_textptr_for_textID
+/* 084D1C 7F0501EC 0FC30776 */  jal   langGet
 /* 084D20 7F0501F0 3404A400 */   li    $a0, 41984
 /* 084D24 7F0501F4 02002025 */  move  $a0, $s0
 /* 084D28 7F0501F8 0C0029FF */  jal   strcat
@@ -37105,7 +37105,7 @@ void display_text_for_weapon_in_lower_left_corner(ITEM_IDS weaponid)
     char acStack100 [100];
     
     generate_language_specific_text_for_weapon(acStack100,weaponid);
-    DISPLAYSTRINGLOWERLEFT(acStack100);
+    HUDMESSAGEBOTTOM(acStack100);
     return;
 }
 
@@ -37137,9 +37137,9 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, bool showstring) //#5
                 char *text = obj_get_activated_text(propobj);
                 if (!text)
                 {
-                    text = get_textptr_for_textID(0xA43C);
+                    text = langGet(0xA43C);
                 }
-                display_string_in_lower_left_corner(text);
+                hudmsgBottomShow(text);
             }
             collectType = INV_ITEM_PICKUP;
             break;
@@ -37184,7 +37184,7 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, bool showstring) //#5
             }
             else if (wep->weaponnum == ITEM_TOKEN)
             {
-                draw_item_in_hand_has_more_ammo(GUNRIGHT, ITEM_TOKEN);
+                currentPlayerEquipWeaponWrapper(GUNRIGHT, ITEM_TOKEN);
             }
             if ((wep->runtime_bitflags & RUNTIMEBITFLAG_DESTROYED))
             {
@@ -37197,7 +37197,7 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, bool showstring) //#5
                     text = obj_get_activated_text(propobj);
                     if (text)
                     {
-                        display_string_in_lower_left_corner(text);
+                        hudmsgBottomShow(text);
                     }
                     else
                     {
@@ -37220,7 +37220,7 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, bool showstring) //#5
                     if (text2 != 0)
                     {
                         pass = 1;
-                        display_string_in_lower_left_corner(text2);
+                        hudmsgBottomShow(text2);
                     }
                     else if (pass != 0)
                     {
@@ -37262,14 +37262,14 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, bool showstring) //#5
                 {
                     if (getPlayerCount() < 3)
                     {
-                        text = get_textptr_for_textID(0xA43D);
+                        text = langGet(0xA43D);
                     }
                     else
                     {
-                        text = get_textptr_for_textID(0xA43E);
+                        text = langGet(0xA43E);
                     }
                 }
-                display_string_in_lower_left_corner(text);
+                hudmsgBottomShow(text);
             }
             collectType = INV_ITEM_WEAPON;
             break;
@@ -37283,9 +37283,9 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, bool showstring) //#5
                 text = obj_get_activated_text(propobj);
                 if (text == 0)
                 {
-                    text = get_textptr_for_textID(0xA43F);
+                    text = langGet(0xA43F);
                 }
-                display_string_in_lower_left_corner(text);
+                hudmsgBottomShow(text);
             }
             collectType = INV_ITEM_PICKUP;
             break;
@@ -37401,11 +37401,11 @@ interact_key_object:
 /* 084E18 7F0502E8 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 084E1C 7F0502EC 14400004 */  bnez  $v0, .L7F050300
 /* 084E20 7F0502F0 00402025 */   move  $a0, $v0
-/* 084E24 7F0502F4 0FC30776 */  jal   get_textptr_for_textID
+/* 084E24 7F0502F4 0FC30776 */  jal   langGet
 /* 084E28 7F0502F8 3404A43C */   li    $a0, 42044
 /* 084E2C 7F0502FC 00402025 */  move  $a0, $v0
 .L7F050300:
-/* 084E30 7F050300 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 084E30 7F050300 0FC228F2 */  jal   hudmsgBottomShow
 /* 084E34 7F050304 00000000 */   nop   
 .L7F050308:
 /* 084E38 7F050308 100000DA */  b     .L7F050674
@@ -37484,7 +37484,7 @@ interact_weapon_object:
 .L7F050414:
 /* 084F44 7F050414 14810003 */  bne   $a0, $at, .L7F050424
 /* 084F48 7F050418 24050058 */   li    $a1, 88
-/* 084F4C 7F05041C 0FC17645 */  jal   draw_item_in_hand_has_more_ammo
+/* 084F4C 7F05041C 0FC17645 */  jal   currentPlayerEquipWeaponWrapper
 /* 084F50 7F050420 00002025 */   move  $a0, $zero
 .L7F050424:
 /* 084F54 7F050424 8FAE006C */  lw    $t6, 0x6c($sp)
@@ -37508,7 +37508,7 @@ interact_weapon_object:
 /* 084F94 7F050464 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 084F98 7F050468 10400005 */  beqz  $v0, .L7F050480
 /* 084F9C 7F05046C 00402025 */   move  $a0, $v0
-/* 084FA0 7F050470 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 084FA0 7F050470 0FC228F2 */  jal   hudmsgBottomShow
 /* 084FA4 7F050474 00000000 */   nop   
 /* 084FA8 7F050478 10000005 */  b     .L7F050490
 /* 084FAC 7F05047C 240B0001 */   li    $t3, 1
@@ -37540,7 +37540,7 @@ interact_weapon_object:
 /* 085000 7F0504D0 10400006 */  beqz  $v0, .L7F0504EC
 /* 085004 7F0504D4 00402025 */   move  $a0, $v0
 /* 085008 7F0504D8 24180001 */  li    $t8, 1
-/* 08500C 7F0504DC 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 08500C 7F0504DC 0FC228F2 */  jal   hudmsgBottomShow
 /* 085010 7F0504E0 AFB80044 */   sw    $t8, 0x44($sp)
 /* 085014 7F0504E4 10000008 */  b     .L7F050508
 /* 085018 7F0504E8 8FA90048 */   lw    $t1, 0x48($sp)
@@ -37617,16 +37617,16 @@ interact_bodyarmor_object:
 /* 085124 7F0505F4 28410003 */  slti  $at, $v0, 3
 /* 085128 7F0505F8 10200005 */  beqz  $at, .L7F050610
 /* 08512C 7F0505FC 00000000 */   nop   
-/* 085130 7F050600 0FC30776 */  jal   get_textptr_for_textID
+/* 085130 7F050600 0FC30776 */  jal   langGet
 /* 085134 7F050604 3404A43D */   li    $a0, 42045
 /* 085138 7F050608 10000004 */  b     .L7F05061C
 /* 08513C 7F05060C 00402025 */   move  $a0, $v0
 .L7F050610:
-/* 085140 7F050610 0FC30776 */  jal   get_textptr_for_textID
+/* 085140 7F050610 0FC30776 */  jal   langGet
 /* 085144 7F050614 3404A43E */   li    $a0, 42046
 /* 085148 7F050618 00402025 */  move  $a0, $v0
 .L7F05061C:
-/* 08514C 7F05061C 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 08514C 7F05061C 0FC228F2 */  jal   hudmsgBottomShow
 /* 085150 7F050620 00000000 */   nop   
 .L7F050624:
 /* 085154 7F050624 10000013 */  b     .L7F050674
@@ -37645,11 +37645,11 @@ interact_default_object:
 /* 085180 7F050650 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 085184 7F050654 14400004 */  bnez  $v0, .L7F050668
 /* 085188 7F050658 00402025 */   move  $a0, $v0
-/* 08518C 7F05065C 0FC30776 */  jal   get_textptr_for_textID
+/* 08518C 7F05065C 0FC30776 */  jal   langGet
 /* 085190 7F050660 3404A43F */   li    $a0, 42047
 /* 085194 7F050664 00402025 */  move  $a0, $v0
 .L7F050668:
-/* 085198 7F050668 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 085198 7F050668 0FC228F2 */  jal   hudmsgBottomShow
 /* 08519C 7F05066C 00000000 */   nop   
 /* 0851A0 7F050670 24030004 */  li    $v1, 4
 .L7F050674:
@@ -37781,11 +37781,11 @@ interact_key_object:
 /* 084E18 7F0502E8 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 084E1C 7F0502EC 14400004 */  bnez  $v0, .L7F050300
 /* 084E20 7F0502F0 00402025 */   move  $a0, $v0
-/* 084E24 7F0502F4 0FC30776 */  jal   get_textptr_for_textID
+/* 084E24 7F0502F4 0FC30776 */  jal   langGet
 /* 084E28 7F0502F8 3404A43C */   li    $a0, 42044
 /* 084E2C 7F0502FC 00402025 */  move  $a0, $v0
 .L7F050300:
-/* 084E30 7F050300 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
+/* 084E30 7F050300 0FC228F2 */  jal   jp_hudmsgBottomShow
 /* 084E34 7F050304 00000000 */   nop   
 .L7F050308:
 /* 084E38 7F050308 100000DA */  b     .L7F050674
@@ -37864,7 +37864,7 @@ interact_weapon_object:
 .L7F050414:
 /* 084F44 7F050414 14810003 */  bne   $a0, $at, .L7F050424
 /* 084F48 7F050418 24050058 */   li    $a1, 88
-/* 084F4C 7F05041C 0FC17645 */  jal   draw_item_in_hand_has_more_ammo
+/* 084F4C 7F05041C 0FC17645 */  jal   currentPlayerEquipWeaponWrapper
 /* 084F50 7F050420 00002025 */   move  $a0, $zero
 .L7F050424:
 /* 084F54 7F050424 8FAE006C */  lw    $t6, 0x6c($sp)
@@ -37888,7 +37888,7 @@ interact_weapon_object:
 /* 084F94 7F050464 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 084F98 7F050468 10400005 */  beqz  $v0, .L7F050480
 /* 084F9C 7F05046C 00402025 */   move  $a0, $v0
-/* 084FA0 7F050470 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
+/* 084FA0 7F050470 0FC228F2 */  jal   jp_hudmsgBottomShow
 /* 084FA4 7F050474 00000000 */   nop   
 /* 084FA8 7F050478 10000005 */  b     .L7F050490
 /* 084FAC 7F05047C 240B0001 */   li    $t3, 1
@@ -37920,7 +37920,7 @@ interact_weapon_object:
 /* 085000 7F0504D0 10400006 */  beqz  $v0, .L7F0504EC
 /* 085004 7F0504D4 00402025 */   move  $a0, $v0
 /* 085008 7F0504D8 24180001 */  li    $t8, 1
-/* 08500C 7F0504DC 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
+/* 08500C 7F0504DC 0FC228F2 */  jal   jp_hudmsgBottomShow
 /* 085010 7F0504E0 AFB80044 */   sw    $t8, 0x44($sp)
 /* 085014 7F0504E4 10000008 */  b     .L7F050508
 /* 085018 7F0504E8 8FA90048 */   lw    $t1, 0x48($sp)
@@ -37997,16 +37997,16 @@ interact_bodyarmor_object:
 /* 085124 7F0505F4 28410003 */  slti  $at, $v0, 3
 /* 085128 7F0505F8 10200005 */  beqz  $at, .L7F050610
 /* 08512C 7F0505FC 00000000 */   nop   
-/* 085130 7F050600 0FC30776 */  jal   get_textptr_for_textID
+/* 085130 7F050600 0FC30776 */  jal   langGet
 /* 085134 7F050604 3404A43D */   li    $a0, 42045
 /* 085138 7F050608 10000004 */  b     .L7F05061C
 /* 08513C 7F05060C 00402025 */   move  $a0, $v0
 .L7F050610:
-/* 085140 7F050610 0FC30776 */  jal   get_textptr_for_textID
+/* 085140 7F050610 0FC30776 */  jal   langGet
 /* 085144 7F050614 3404A43E */   li    $a0, 42046
 /* 085148 7F050618 00402025 */  move  $a0, $v0
 .L7F05061C:
-/* 08514C 7F05061C 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
+/* 08514C 7F05061C 0FC228F2 */  jal   jp_hudmsgBottomShow
 /* 085150 7F050620 00000000 */   nop   
 .L7F050624:
 /* 085154 7F050624 10000013 */  b     .L7F050674
@@ -38025,11 +38025,11 @@ interact_default_object:
 /* 085180 7F050650 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 085184 7F050654 14400004 */  bnez  $v0, .L7F050668
 /* 085188 7F050658 00402025 */   move  $a0, $v0
-/* 08518C 7F05065C 0FC30776 */  jal   get_textptr_for_textID
+/* 08518C 7F05065C 0FC30776 */  jal   langGet
 /* 085190 7F050660 3404A43F */   li    $a0, 42047
 /* 085194 7F050664 00402025 */  move  $a0, $v0
 .L7F050668:
-/* 085198 7F050668 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
+/* 085198 7F050668 0FC228F2 */  jal   jp_hudmsgBottomShow
 /* 08519C 7F05066C 00000000 */   nop   
 /* 0851A0 7F050670 24030004 */  li    $v1, 4
 .L7F050674:
@@ -38162,11 +38162,11 @@ interact_key_object:
 /* 084E18 7F0502E8 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 084E1C 7F0502EC 14400004 */  bnez  $v0, .L7F050300
 /* 084E20 7F0502F0 00402025 */   move  $a0, $v0
-/* 084E24 7F0502F4 0FC30776 */  jal   get_textptr_for_textID
+/* 084E24 7F0502F4 0FC30776 */  jal   langGet
 /* 084E28 7F0502F8 3404A43C */   li    $a0, 42044
 /* 084E2C 7F0502FC 00402025 */  move  $a0, $v0
 .L7F050300:
-/* 084E30 7F050300 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
+/* 084E30 7F050300 0FC228F2 */  jal   jp_hudmsgBottomShow
 /* 084E34 7F050304 00000000 */   nop   
 .L7F050308:
 /* 084E38 7F050308 100000DA */  b     .L7F050674
@@ -38245,7 +38245,7 @@ interact_weapon_object:
 .L7F050414:
 /* 084F44 7F050414 14810003 */  bne   $a0, $at, .L7F050424
 /* 084F48 7F050418 24050058 */   li    $a1, 88
-/* 084F4C 7F05041C 0FC17645 */  jal   draw_item_in_hand_has_more_ammo
+/* 084F4C 7F05041C 0FC17645 */  jal   currentPlayerEquipWeaponWrapper
 /* 084F50 7F050420 00002025 */   move  $a0, $zero
 .L7F050424:
 /* 084F54 7F050424 8FAE006C */  lw    $t6, 0x6c($sp)
@@ -38269,7 +38269,7 @@ interact_weapon_object:
 /* 084F94 7F050464 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 084F98 7F050468 10400005 */  beqz  $v0, .L7F050480
 /* 084F9C 7F05046C 00402025 */   move  $a0, $v0
-/* 084FA0 7F050470 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
+/* 084FA0 7F050470 0FC228F2 */  jal   jp_hudmsgBottomShow
 /* 084FA4 7F050474 00000000 */   nop   
 /* 084FA8 7F050478 10000005 */  b     .L7F050490
 /* 084FAC 7F05047C 240B0001 */   li    $t3, 1
@@ -38301,7 +38301,7 @@ interact_weapon_object:
 /* 085000 7F0504D0 10400006 */  beqz  $v0, .L7F0504EC
 /* 085004 7F0504D4 00402025 */   move  $a0, $v0
 /* 085008 7F0504D8 24180001 */  li    $t8, 1
-/* 08500C 7F0504DC 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
+/* 08500C 7F0504DC 0FC228F2 */  jal   jp_hudmsgBottomShow
 /* 085010 7F0504E0 AFB80044 */   sw    $t8, 0x44($sp)
 /* 085014 7F0504E4 10000008 */  b     .L7F050508
 /* 085018 7F0504E8 8FA90048 */   lw    $t1, 0x48($sp)
@@ -38378,16 +38378,16 @@ interact_bodyarmor_object:
 /* 085124 7F0505F4 28410003 */  slti  $at, $v0, 3
 /* 085128 7F0505F8 10200005 */  beqz  $at, .L7F050610
 /* 08512C 7F0505FC 00000000 */   nop   
-/* 085130 7F050600 0FC30776 */  jal   get_textptr_for_textID
+/* 085130 7F050600 0FC30776 */  jal   langGet
 /* 085134 7F050604 3404A43D */   li    $a0, 42045
 /* 085138 7F050608 10000004 */  b     .L7F05061C
 /* 08513C 7F05060C 00402025 */   move  $a0, $v0
 .L7F050610:
-/* 085140 7F050610 0FC30776 */  jal   get_textptr_for_textID
+/* 085140 7F050610 0FC30776 */  jal   langGet
 /* 085144 7F050614 3404A43E */   li    $a0, 42046
 /* 085148 7F050618 00402025 */  move  $a0, $v0
 .L7F05061C:
-/* 08514C 7F05061C 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
+/* 08514C 7F05061C 0FC228F2 */  jal   jp_hudmsgBottomShow
 /* 085150 7F050620 00000000 */   nop   
 .L7F050624:
 /* 085154 7F050624 10000013 */  b     .L7F050674
@@ -38406,11 +38406,11 @@ interact_default_object:
 /* 085180 7F050650 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 085184 7F050654 14400004 */  bnez  $v0, .L7F050668
 /* 085188 7F050658 00402025 */   move  $a0, $v0
-/* 08518C 7F05065C 0FC30776 */  jal   get_textptr_for_textID
+/* 08518C 7F05065C 0FC30776 */  jal   langGet
 /* 085190 7F050660 3404A43F */   li    $a0, 42047
 /* 085194 7F050664 00402025 */  move  $a0, $v0
 .L7F050668:
-/* 085198 7F050668 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
+/* 085198 7F050668 0FC228F2 */  jal   jp_hudmsgBottomShow
 /* 08519C 7F05066C 00000000 */   nop   
 /* 0851A0 7F050670 24030004 */  li    $v1, 4
 .L7F050674:
@@ -40327,7 +40327,7 @@ glabel sub_GAME_7F051084
 
 
 #ifdef NONMATCHING
-//sub_GAME_7F0510C0
+//chrTryEquipHat
 PropRecord *chrTryEquipHat(ChrRecord *self, s32 index, s32 flags)
 {
     ItemModelFileRecord *model;
@@ -40387,7 +40387,7 @@ PropRecord *chrTryEquipHat(ChrRecord *self, s32 index, s32 flags)
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0510C0
+glabel chrTryEquipHat
 /* 085BF0 7F0510C0 27BDFF40 */  addiu $sp, $sp, -0xc0
 /* 085BF4 7F0510C4 00057080 */  sll   $t6, $a1, 2
 /* 085BF8 7F0510C8 01C57023 */  subu  $t6, $t6, $a1
@@ -41199,7 +41199,7 @@ KeyRecord *check_if_entry_is_collectable(s32 ID, PropRecord *prop) //#MATCH
 
 
 
-ObjectRecord *check_if_item_deposited(s32 ID) //MATCH
+ObjectRecord *weaponFindThrown(s32 ID) //MATCH
 {
     ObjectRecord *obj;
     PropRecord *  prop;
@@ -41425,7 +41425,7 @@ glabel check_guard_detonate_proxmine
 
 
 
-void link_objects(WeaponObjRecord *leftweapon, WeaponObjRecord *rightweapon) //#MATCH
+void propweaponSetDual(WeaponObjRecord *leftweapon, WeaponObjRecord *rightweapon) //#MATCH
 {
     leftweapon->LinkedWeaponType  = rightweapon->weaponnum;
     leftweapon->dualweapon        = rightweapon;
@@ -41541,7 +41541,7 @@ bool sub_GAME_7F051E1C(WeaponObjRecord *wep, ChrRecord *chr) //#99% nop missing 
                 // check if duel wield
                 if (wep->flags & 0x80000000 && chr->weapons_held[1 - hand])
                 {
-                    link_objects(wep, chr->weapons_held[1 - hand]->obj);
+                    propweaponSetDual(wep, chr->weapons_held[1 - hand]->obj);
                 }
             }
             else
@@ -41614,7 +41614,7 @@ glabel sub_GAME_7F051E1C
 /* 086A18 7F051EE8 00000000 */   nop   
 /* 086A1C 7F051EEC 8C450004 */  lw    $a1, 4($v0)
 /* 086A20 7F051EF0 AFA7001C */  sw    $a3, 0x1c($sp)
-/* 086A24 7F051EF4 0FC1475D */  jal   link_objects
+/* 086A24 7F051EF4 0FC1475D */  jal   propweaponSetDual
 /* 086A28 7F051EF8 AFA60018 */   sw    $a2, 0x18($sp)
 /* 086A2C 7F051EFC 8FA60018 */  lw    $a2, 0x18($sp)
 /* 086A30 7F051F00 8FA7001C */  lw    $a3, 0x1c($sp)
@@ -41982,7 +41982,7 @@ glabel create_new_item_instance_of_model
 /**
  * Set removed flag on hand 
  */
-void set_0x4_in_runtime_flags_for_item_in_guards_hand(ChrRecord *chr, GUNHAND hand) //#MATCH
+void chrSetWeaponFlag4(ChrRecord *chr, GUNHAND hand) //#MATCH
 {
     if (chr->weapons_held[hand])
     {
@@ -42182,7 +42182,7 @@ glabel something_with_generating_object
 /**
  * Add New Weapon to chr
  */
-PropRecord *actor_draws_weapon_with_model(ChrRecord *self, s32 PropID, ITEM_IDS ItemID, s32 flags) //#MATCH
+PropRecord *chrGiveWeapon(ChrRecord *self, s32 PropID, ITEM_IDS ItemID, s32 flags) //#MATCH
 {
     return something_with_generating_object(self, PropID, ItemID, flags, NULL, NULL);
 }
@@ -42207,7 +42207,7 @@ glabel sub_GAME_7F0523F8
 /* 086F3C 7F05240C AFA600C0 */  sw    $a2, 0xc0($sp)
 /* 086F40 7F052410 8C870004 */  lw    $a3, 4($a0)
 /* 086F44 7F052414 00E02025 */  move  $a0, $a3
-/* 086F48 7F052418 0FC08C0B */  jal   something_with_weaponpos_of_guarddata_hand
+/* 086F48 7F052418 0FC08C0B */  jal   chrGetEquippedWeaponProp
 /* 086F4C 7F05241C AFA700B4 */   sw    $a3, 0xb4($sp)
 /* 086F50 7F052420 8FA700B4 */  lw    $a3, 0xb4($sp)
 /* 086F54 7F052424 10400046 */  beqz  $v0, .L7F052540
@@ -45462,7 +45462,7 @@ glabel sub_GAME_7F0548A4
 
 
 
-void set_door_state(DoorRecord *door, DOORSTATE State) //#MATCH
+void doorActivate(DoorRecord *door, DOORSTATE State) //#MATCH
 {
     DoorRecord *linkeddoor;
     DOORSTATE   LinkedState = State;
@@ -46718,27 +46718,27 @@ glabel sub_GAME_7F055804
 
 
 
-void sub_GAME_7F05599C(PropRecord *prop) //#MATCH
+void doorActivateWrapper(PropRecord *prop) //#MATCH
 {
     DoorRecord *door = prop->door;
 
     if ((door->openstate == DOORSTATE_OPENING) || (door->openstate == DOORSTATE_WAITING))
     {
-        set_door_state(door, DOORSTATE_CLOSING);
+        doorActivate(door, DOORSTATE_CLOSING);
     }
     else if (door->openstate == DOORSTATE_CLOSING)
     {
-        set_door_state(door, DOORSTATE_OPENING);
+        doorActivate(door, DOORSTATE_OPENING);
     }
     else if (door->openstate == DOORSTATE_STATIONARY)
     {
         if (door->openPosition > 0.5f)
         {
-            set_door_state(door, DOORSTATE_CLOSING);
+            doorActivate(door, DOORSTATE_CLOSING);
         }
         else
         {
-            set_door_state(door, DOORSTATE_OPENING);
+            doorActivate(door, DOORSTATE_OPENING);
         }
     }
     door->runtime_bitflags |= RUNTIMEBITFLAG_ACTIVATED;
@@ -46969,7 +46969,7 @@ glabel sub_GAME_7F055C40
 /* 08A830 7F055D00 8FA40024 */   lw    $a0, 0x24($sp)
 /* 08A834 7F055D04 0FC156DE */  jal   sub_GAME_7F055B78
 /* 08A838 7F055D08 02002825 */   move  $a1, $s0
-/* 08A83C 7F055D0C 0FC15667 */  jal   sub_GAME_7F05599C
+/* 08A83C 7F055D0C 0FC15667 */  jal   doorActivateWrapper
 /* 08A840 7F055D10 8FA40030 */   lw    $a0, 0x30($sp)
 /* 08A844 7F055D14 10000028 */  b     .L7F055DB8
 /* 08A848 7F055D18 8FBF001C */   lw    $ra, 0x1c($sp)
@@ -46996,16 +46996,16 @@ glabel sub_GAME_7F055C40
 /* 08A898 7F055D68 8C4B001C */  lw    $t3, 0x1c($v0)
 /* 08A89C 7F055D6C 11600007 */  beqz  $t3, .L7F055D8C
 /* 08A8A0 7F055D70 00000000 */   nop   
-/* 08A8A4 7F055D74 0FC30776 */  jal   get_textptr_for_textID
+/* 08A8A4 7F055D74 0FC30776 */  jal   langGet
 /* 08A8A8 7F055D78 8C44001C */   lw    $a0, 0x1c($v0)
-/* 08A8AC 7F055D7C 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 08A8AC 7F055D7C 0FC228F2 */  jal   hudmsgBottomShow
 /* 08A8B0 7F055D80 00402025 */   move  $a0, $v0
 /* 08A8B4 7F055D84 10000006 */  b     .L7F055DA0
 /* 08A8B8 7F055D88 8E02000C */   lw    $v0, 0xc($s0)
 .L7F055D8C:
-/* 08A8BC 7F055D8C 0FC30776 */  jal   get_textptr_for_textID
+/* 08A8BC 7F055D8C 0FC30776 */  jal   langGet
 /* 08A8C0 7F055D90 3404A440 */   li    $a0, 42048
-/* 08A8C4 7F055D94 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 08A8C4 7F055D94 0FC228F2 */  jal   hudmsgBottomShow
 /* 08A8C8 7F055D98 00402025 */   move  $a0, $v0
 /* 08A8CC 7F055D9C 8E02000C */  lw    $v0, 0xc($s0)
 .L7F055DA0:
@@ -47084,7 +47084,7 @@ glabel sub_GAME_7F055C40
 /* 08A830 7F055D00 8FA40024 */   lw    $a0, 0x24($sp)
 /* 08A834 7F055D04 0FC156DE */  jal   sub_GAME_7F055B78
 /* 08A838 7F055D08 02002825 */   move  $a1, $s0
-/* 08A83C 7F055D0C 0FC15667 */  jal   sub_GAME_7F05599C
+/* 08A83C 7F055D0C 0FC15667 */  jal   doorActivateWrapper
 /* 08A840 7F055D10 8FA40030 */   lw    $a0, 0x30($sp)
 /* 08A844 7F055D14 10000028 */  b     .L7F055DB8
 /* 08A848 7F055D18 8FBF001C */   lw    $ra, 0x1c($sp)
@@ -47111,16 +47111,16 @@ glabel sub_GAME_7F055C40
 /* 08A898 7F055D68 8C4B001C */  lw    $t3, 0x1c($v0)
 /* 08A89C 7F055D6C 11600007 */  beqz  $t3, .L7F055D8C
 /* 08A8A0 7F055D70 00000000 */   nop   
-/* 08A8A4 7F055D74 0FC30776 */  jal   get_textptr_for_textID
+/* 08A8A4 7F055D74 0FC30776 */  jal   langGet
 /* 08A8A8 7F055D78 8C44001C */   lw    $a0, 0x1c($v0)
-/* 08A8AC 7F055D7C 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
+/* 08A8AC 7F055D7C 0FC228F2 */  jal   jp_hudmsgBottomShow
 /* 08A8B0 7F055D80 00402025 */   move  $a0, $v0
 /* 08A8B4 7F055D84 10000006 */  b     .L7F055DA0
 /* 08A8B8 7F055D88 8E02000C */   lw    $v0, 0xc($s0)
 .L7F055D8C:
-/* 08A8BC 7F055D8C 0FC30776 */  jal   get_textptr_for_textID
+/* 08A8BC 7F055D8C 0FC30776 */  jal   langGet
 /* 08A8C0 7F055D90 3404A440 */   li    $a0, 42048
-/* 08A8C4 7F055D94 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
+/* 08A8C4 7F055D94 0FC228F2 */  jal   jp_hudmsgBottomShow
 /* 08A8C8 7F055D98 00402025 */   move  $a0, $v0
 /* 08A8CC 7F055D9C 8E02000C */  lw    $v0, 0xc($s0)
 .L7F055DA0:
@@ -47200,7 +47200,7 @@ glabel sub_GAME_7F055C40
 /* 08A830 7F055D00 8FA40024 */   lw    $a0, 0x24($sp)
 /* 08A834 7F055D04 0FC156DE */  jal   sub_GAME_7F055B78
 /* 08A838 7F055D08 02002825 */   move  $a1, $s0
-/* 08A83C 7F055D0C 0FC15667 */  jal   sub_GAME_7F05599C
+/* 08A83C 7F055D0C 0FC15667 */  jal   doorActivateWrapper
 /* 08A840 7F055D10 8FA40030 */   lw    $a0, 0x30($sp)
 /* 08A844 7F055D14 10000028 */  b     .L7F055DB8
 /* 08A848 7F055D18 8FBF001C */   lw    $ra, 0x1c($sp)
@@ -47227,16 +47227,16 @@ glabel sub_GAME_7F055C40
 /* 08A898 7F055D68 8C4B001C */  lw    $t3, 0x1c($v0)
 /* 08A89C 7F055D6C 11600007 */  beqz  $t3, .L7F055D8C
 /* 08A8A0 7F055D70 00000000 */   nop   
-/* 08A8A4 7F055D74 0FC30776 */  jal   get_textptr_for_textID
+/* 08A8A4 7F055D74 0FC30776 */  jal   langGet
 /* 08A8A8 7F055D78 8C44001C */   lw    $a0, 0x1c($v0)
-/* 08A8AC 7F055D7C 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
+/* 08A8AC 7F055D7C 0FC228F2 */  jal   jp_hudmsgBottomShow
 /* 08A8B0 7F055D80 00402025 */   move  $a0, $v0
 /* 08A8B4 7F055D84 10000006 */  b     .L7F055DA0
 /* 08A8B8 7F055D88 8E02000C */   lw    $v0, 0xc($s0)
 .L7F055D8C:
-/* 08A8BC 7F055D8C 0FC30776 */  jal   get_textptr_for_textID
+/* 08A8BC 7F055D8C 0FC30776 */  jal   langGet
 /* 08A8C0 7F055D90 3404A440 */   li    $a0, 42048
-/* 08A8C4 7F055D94 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
+/* 08A8C4 7F055D94 0FC228F2 */  jal   jp_hudmsgBottomShow
 /* 08A8C8 7F055D98 00402025 */   move  $a0, $v0
 /* 08A8CC 7F055D9C 8E02000C */  lw    $v0, 0xc($s0)
 .L7F055DA0:
@@ -47262,7 +47262,7 @@ glabel sub_GAME_7F055C40
 
 
 
-void start_alarm(void)
+void alarmActivate(void)
 {
     if (alarm_timer < 1) {
         alarm_timer = 1;
@@ -47278,14 +47278,14 @@ void deactivate_alarm_sound_effect(void)
     return;
 }
 
-void stop_alarm(void)
+void alarmDeactivate(void)
 {
   alarm_timer = 0;
   deactivate_alarm_sound_effect();
   return;
 }
 
-bool is_alarm_on(void)
+bool alarmIsActive(void)
 {
   return (0 < alarm_timer);
 }
@@ -47335,7 +47335,7 @@ bool check_if_toxic_gas_activated() //#MATCH
 
 
 #ifdef NONMATCHING
-extern s32 disable_player_pickups_flag;
+extern s32 g_PlayerInvincible;
 void handle_gas_damage(void)
 {
     if (activate_gas_sound_timer)
@@ -47349,7 +47349,7 @@ void handle_gas_damage(void)
     }
     if (0.0f < toxic_gas_sound_timer)
     {
-        if (disable_player_pickups_flag == 0)
+        if (g_PlayerInvincible == 0)
         {
             fogSwitchToSolosky2(toxic_gas_sound_timer / gas_damage_flag);
             if (gas_cutoff_flag != 0)
@@ -47429,12 +47429,12 @@ glabel handle_gas_damage
 /* 08AAF0 7F055FC0 3C038003 */  lui   $v1, %hi(toxic_gas_sound_timer)
 /* 08AAF4 7F055FC4 24630AC8 */  addiu $v1, %lo(toxic_gas_sound_timer) # addiu $v1, $v1, 0xac8
 /* 08AAF8 7F055FC8 C4600000 */  lwc1  $f0, ($v1)
-/* 08AAFC 7F055FCC 3C0F8003 */  lui   $t7, %hi(disable_player_pickups_flag) 
+/* 08AAFC 7F055FCC 3C0F8003 */  lui   $t7, %hi(g_PlayerInvincible) 
 /* 08AB00 7F055FD0 4600803C */  c.lt.s $f16, $f0
 /* 08AB04 7F055FD4 00000000 */  nop   
 /* 08AB08 7F055FD8 4502005E */  bc1fl .L7F056154
 /* 08AB0C 7F055FDC 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 08AB10 7F055FE0 8DEF64B4 */  lw    $t7, %lo(disable_player_pickups_flag)($t7)
+/* 08AB10 7F055FE0 8DEF64B4 */  lw    $t7, %lo(g_PlayerInvincible)($t7)
 /* 08AB14 7F055FE4 3C018007 */  lui   $at, %hi(gas_damage_flag)
 /* 08AB18 7F055FE8 55E0005A */  bnezl $t7, .L7F056154
 /* 08AB1C 7F055FEC 8FBF001C */   lw    $ra, 0x1c($sp)
@@ -47570,12 +47570,12 @@ glabel handle_gas_damage
 /* 088C90 7F0562A0 3C038003 */  lui   $v1, %hi(toxic_gas_sound_timer) # $v1, 0x8003
 /* 088C94 7F0562A4 2463C018 */  addiu $v1, %lo(toxic_gas_sound_timer) # addiu $v1, $v1, -0x3fe8
 /* 088C98 7F0562A8 C4600000 */  lwc1  $f0, ($v1)
-/* 088C9C 7F0562AC 3C0F8003 */  lui   $t7, %hi(disable_player_pickups_flag) # $t7, 0x8003
+/* 088C9C 7F0562AC 3C0F8003 */  lui   $t7, %hi(g_PlayerInvincible) # $t7, 0x8003
 /* 088CA0 7F0562B0 4600803C */  c.lt.s $f16, $f0
 /* 088CA4 7F0562B4 00000000 */  nop   
 /* 088CA8 7F0562B8 4502005E */  bc1fl .L7F056434
 /* 088CAC 7F0562BC 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 088CB0 7F0562C0 8DEF1A04 */  lw    $t7, %lo(disable_player_pickups_flag)($t7)
+/* 088CB0 7F0562C0 8DEF1A04 */  lw    $t7, %lo(g_PlayerInvincible)($t7)
 /* 088CB4 7F0562C4 3C018006 */  lui   $at, %hi(gas_damage_flag) # $at, 0x8006
 /* 088CB8 7F0562C8 55E0005A */  bnezl $t7, .L7F056434
 /* 088CBC 7F0562CC 8FBF001C */   lw    $ra, 0x1c($sp)
@@ -47686,7 +47686,7 @@ glabel handle_gas_damage
 
 
 
-void set_unset_clock_lock_bits(int clocklockbits, bool unset)
+void countdownTimerSetVisible(int clocklockbits, bool unset)
 {
     if (unset)
     {
@@ -47701,22 +47701,22 @@ bool is_clock_drawn_onscreen(void)
     return clock_drawn_flag == FALSE;
 }
 
-void set_clock_time(f32 time)
+void countdownTimerSetValue(f32 time)
 {
     clock_time = time;
 }
 
-f32 get_clock_time(void)
+f32 countdownTimerGetValue(void)
 {
     return clock_time;
 }
 
-void set_clock_enable(bool enable)
+void countdownTimerSetRunning(bool enable)
 {
     clock_enable = enable;
 }
 
-bool get_clock_enable(void)
+bool countdownTimerIsRunning(void)
 {
     return clock_enable;
 }
@@ -48293,7 +48293,7 @@ glabel sub_GAME_7F056210
 
 void handle_alarm_gas_timer_calldamage(void)
 {
-    if (is_alarm_on() != 0)
+    if (alarmIsActive() != 0)
     {
         if ((ptr_alarm_sfx == 0) && (lvlGetControlsLockedFlag() == 0))
         {
@@ -48304,7 +48304,7 @@ void handle_alarm_gas_timer_calldamage(void)
 
         if (CHROBJ_GAS_TIMER < alarm_timer)
         {
-            stop_alarm();
+            alarmDeactivate();
         }
     }
 
@@ -48419,10 +48419,10 @@ glabel drop_inventory
 /* 08B2D0 7F0567A0 8DCF00A8 */  lw    $t7, 0xa8($t6)
 /* 08B2D4 7F0567A4 00002825 */  move  $a1, $zero
 /* 08B2D8 7F0567A8 8DF20004 */  lw    $s2, 4($t7)
-/* 08B2DC 7F0567AC 0FC1487A */  jal   set_0x4_in_runtime_flags_for_item_in_guards_hand
+/* 08B2DC 7F0567AC 0FC1487A */  jal   chrSetWeaponFlag4
 /* 08B2E0 7F0567B0 02402025 */   move  $a0, $s2
 /* 08B2E4 7F0567B4 02402025 */  move  $a0, $s2
-/* 08B2E8 7F0567B8 0FC1487A */  jal   set_0x4_in_runtime_flags_for_item_in_guards_hand
+/* 08B2E8 7F0567B8 0FC1487A */  jal   chrSetWeaponFlag4
 /* 08B2EC 7F0567BC 24050001 */   li    $a1, 1
 /* 08B2F0 7F0567C0 24100001 */  li    $s0, 1
 /* 08B2F4 7F0567C4 24140059 */  li    $s4, 89
@@ -48445,7 +48445,7 @@ glabel drop_inventory
 /* 08B334 7F056804 10400006 */  beqz  $v0, .L7F056820
 /* 08B338 7F056808 00408825 */   move  $s1, $v0
 /* 08B33C 7F05680C 00402025 */  move  $a0, $v0
-/* 08B340 7F056810 0FC12FF4 */  jal   sub_GAME_7F04BFD0
+/* 08B340 7F056810 0FC12FF4 */  jal   propobjSetDropped
 /* 08B344 7F056814 24050001 */   li    $a1, 1
 /* 08B348 7F056818 0FC1304C */  jal   sub_GAME_7F04C130
 /* 08B34C 7F05681C 02202025 */   move  $a0, $s1

@@ -1619,7 +1619,7 @@ glabel sub_GAME_7F09C9D8
 /* 0D197C 7F09CE4C 4608A502 */  mul.s $f20, $f20, $f8
 /* 0D1980 7F09CE50 00000000 */  nop   
 .L7F09CE54:
-/* 0D1984 7F09CE54 0FC1F39E */  jal   get_intank_flag
+/* 0D1984 7F09CE54 0FC1F39E */  jal   isBondInTank
 /* 0D1988 7F09CE58 00000000 */   nop   
 /* 0D198C 7F09CE5C 14540002 */  bne   $v0, $s4, .L7F09CE68
 /* 0D1990 7F09CE60 4600B386 */   mov.s $f14, $f22
@@ -6308,7 +6308,7 @@ glabel sub_GAME_7F0A108C
 /* 0D5C10 7F0A10E0 8DC10008 */  lw    $at, 8($t6)
 /* 0D5C14 7F0A10E4 AEA10008 */  sw    $at, 8($s5)
 /* 0D5C18 7F0A10E8 8DD9000C */  lw    $t9, 0xc($t6)
-/* 0D5C1C 7F0A10EC 0FC249EF */  jal   cheatCheckIfOn
+/* 0D5C1C 7F0A10EC 0FC249EF */  jal   cheatIsActive
 /* 0D5C20 7F0A10F0 AEB9000C */   sw    $t9, 0xc($s5)
 /* 0D5C24 7F0A10F4 10400003 */  beqz  $v0, .L7F0A1104
 /* 0D5C28 7F0A10F8 3C0A8004 */   lui   $t2, %hi(D_8004080C) 
