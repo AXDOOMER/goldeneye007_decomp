@@ -41241,33 +41241,20 @@ void add_obj_to_temp_proxmine_table(s32 arg0) {
 
 
 
-#ifdef NONMATCHING
-void remove_obj_from_temp_proxmine_table(void) {
+void remove_obj_from_temp_proxmine_table(s32 arg) {
+    s32 i = 0;
 
+    while (1) {
+        if (temp_mine_table[i] == arg) {
+            temp_mine_table[i] = 0;
+            return;
+        }
+        i++;
+        if (i == 30) {
+            return;
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel remove_obj_from_temp_proxmine_table
-/* 0866C4 7F051B94 3C038007 */  lui   $v1, %hi(temp_mine_table)
-/* 0866C8 7F051B98 3C028007 */  lui   $v0, %hi(gas_damage_flag)
-/* 0866CC 7F051B9C 24421E78 */  addiu $v0, %lo(gas_damage_flag) # addiu $v0, $v0, 0x1e78
-/* 0866D0 7F051BA0 24631E00 */  addiu $v1, %lo(temp_mine_table) # addiu $v1, $v1, 0x1e00
-/* 0866D4 7F051BA4 8C6E0000 */  lw    $t6, ($v1)
-.L7F051BA8:
-/* 0866D8 7F051BA8 548E0004 */  bnel  $a0, $t6, .L7F051BBC
-/* 0866DC 7F051BAC 24630004 */   addiu $v1, $v1, 4
-/* 0866E0 7F051BB0 03E00008 */  jr    $ra
-/* 0866E4 7F051BB4 AC600000 */   sw    $zero, ($v1)
-
-/* 0866E8 7F051BB8 24630004 */  addiu $v1, $v1, 4
-.L7F051BBC:
-/* 0866EC 7F051BBC 5462FFFA */  bnel  $v1, $v0, .L7F051BA8
-/* 0866F0 7F051BC0 8C6E0000 */   lw    $t6, ($v1)
-/* 0866F4 7F051BC4 03E00008 */  jr    $ra
-/* 0866F8 7F051BC8 00000000 */   nop   
-)
-#endif
 
 
 
