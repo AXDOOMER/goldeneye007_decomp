@@ -6,7 +6,7 @@
 //CODE.bss:8007A160
 s32 SHATTERED_WINDOW_PIECES_BUFFER_LEN;
 //CODE.bss:8007A164
-s_shattered_window_pieces* ptr_shattered_window_pieces;
+s_shattered_window_piece* ptr_shattered_window_pieces;
 //CODE.bss:8007A168
 u32 dword_CODE_bss_8007A168;
 //CODE.bss:8007A16C

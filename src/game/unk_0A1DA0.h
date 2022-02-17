@@ -3,7 +3,7 @@
 #include <ultra64.h>
 #include <bondtypes.h>
 
-typedef struct s_shattered_window_pieces {
+typedef struct s_shattered_window_piece {
     s32* piece;
     f32 x;
     f32 y;
@@ -48,10 +48,10 @@ typedef struct s_shattered_window_pieces {
     u8 field_0x65;
     u8 field_0x66;
     u8 field_0x67;
-} s_shattered_window_pieces;
+} s_shattered_window_piece;
 
 extern s32 SHATTERED_WINDOW_PIECES_BUFFER_LEN;
-extern s_shattered_window_pieces* ptr_shattered_window_pieces;
+extern s_shattered_window_piece* ptr_shattered_window_pieces;
 extern u32 D_80040940;
 extern u32 D_80040960[];
 
