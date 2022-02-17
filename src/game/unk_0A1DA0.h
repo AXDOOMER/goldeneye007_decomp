@@ -4,7 +4,7 @@
 #include <bondtypes.h>
 
 typedef struct s_shattered_window_pieces {
-    s32 field_0x0;
+    s32* piece;
     f32 x;
     f32 y;
     f32 z;
