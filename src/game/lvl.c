@@ -5928,7 +5928,7 @@ void lvlUnloadStageTextData(void)
     cleanupGuardData();
     cleanupObjectSounds();
     cleanupExplosions();
-    sub_GAME_7F007920();
+    cleanup_window_pieces();
     cleanup_REMOVED_();
     cleanupAlarms();
     cleanupObjects(g_CurrentStageToLoad);
