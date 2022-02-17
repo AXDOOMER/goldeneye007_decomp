@@ -41220,17 +41220,16 @@ ObjectRecord *check_if_item_deposited(s32 ID) //MATCH
 
 
 
-void add_obj_to_temp_proxmine_table(s32 arg0) {
-    s32 temp_v1 = 0;
+void add_obj_to_temp_proxmine_table(s32 arg) {
+    s32 i = 0;
 
     while (1) {
-        if (temp_mine_table[temp_v1] == 0) {
-            temp_mine_table[temp_v1] = arg0;
+        if (temp_mine_table[i] == 0) {
+            temp_mine_table[i] = arg;
             return;
         }
-        temp_v1++;
-        //phi_v1 = temp_v1;
-        if (temp_v1 == 30) {
+        i++;
+        if (i == 30) {
             return;
         }
     }
