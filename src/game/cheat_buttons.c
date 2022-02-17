@@ -23,48 +23,6 @@
 // This shows up a lot but not quite sure what it represents.
 #define CHEAT_20    20
 
-typedef struct  {
-    /**
-     * Offset 0x0.
-     */
-    u8 cheat_id;
-
-    /**
-     * Offset 0x1. //maybe timer to enter code?
-     */
-    u8 count_of_something;
-
-    /**
-     * Offset 0x2.
-     */
-    u8 field_2;
-
-    /**
-     * Offset 0x3.
-     */
-    u8 field_3;
-
-    /**
-     * Seems to be pointer to u16 array.
-     * Offset 0x4.
-     */
-    u16 *cheatbuttons;
-
-    /**
-     * Offset 0x8.
-     */
-    u16 text_bank_id;
-
-    /**
-     * Offset 0xa.
-     */
-    u16 unk_a;
-
-    /**
-     * Offset 0xc.
-     */
-    int maskfield;
-} CheatInfo;
 
 
 u8 g_CheatPlayerTextRelated[CHEAT_INVALID + 1];
@@ -822,7 +780,9 @@ void cheatButtonSetDkMode(CHEAT_ID cheat_id);
 
 
 
-
+/**
+ * Address 0x7F091740.
+ */
 s32 cheatButtonCountBitsSet(u16 bits)
 {
     s32 count;
@@ -943,6 +903,8 @@ void cheat_buttons_mp_related(void)
 
 /**
  * true if param is CHEAT_ENEMY_ROCKETS
+ *
+ * Address 7F091A5C.
  */
 bool cheatIsEnemyRockets(CHEAT_ID id)
 {
@@ -1700,7 +1662,9 @@ bool cheatIsActive(CHEAT_ID cheat)
 
 
 
-
+/**
+ * Address 0x7F0927F4.
+ */
 void cheatButtonSetDkMode(CHEAT_ID cheat_id)
 {
     s32 num_guards;

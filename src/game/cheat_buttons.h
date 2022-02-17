@@ -47,6 +47,50 @@ enum CHEAT_MASK {
     // ... 
 };
 
+typedef struct  {
+    /**
+     * Offset 0x0.
+     */
+    u8 cheat_id;
+
+    /**
+     * Offset 0x1. //maybe timer to enter code?
+     */
+    u8 count_of_something;
+
+    /**
+     * Offset 0x2.
+     */
+    u8 field_2;
+
+    /**
+     * Offset 0x3.
+     */
+    u8 field_3;
+
+    /**
+     * Seems to be pointer to u16 array.
+     * Offset 0x4.
+     */
+    u16 *cheatbuttons;
+
+    /**
+     * Offset 0x8.
+     */
+    u16 text_bank_id;
+
+    /**
+     * Offset 0xa.
+     */
+    u16 unk_a;
+
+    /**
+     * Offset 0xc.
+     */
+    int maskfield;
+} CheatInfo;
+
+
 extern u8 g_CheatPlayerTextRelated[0x4C];
 
 //public Functions
