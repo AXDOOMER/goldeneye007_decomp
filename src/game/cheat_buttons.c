@@ -902,19 +902,8 @@ void cheatButtonActivateRelated(void)
 
 
 
-
-
-#ifdef NONMATCHING
 /**
  * Address 0x7F09193C.
- * 
- * decomp status:
- * - compiles: yes
- * - stack resize: ok
- * - identical instructions: ok
- * - identical registers: fail
- * 
- * notes: just register swaps starting at jgb_trig
  */
 void cheat_buttons_mp_related(void)
 {
@@ -925,7 +914,7 @@ void cheat_buttons_mp_related(void)
     jgb = joyGetButtons(get_cur_playernum(), ANY_BUTTON);
     jgbptf = joyGetButtonsPressedThisFrame(get_cur_playernum(), ANY_BUTTON);
     jgb_trig = (jgb & (L_TRIG | R_TRIG));
-    jgb &= ~(jgb & (L_TRIG | R_TRIG));
+    jgb &= ~(jgb_trig);
     jgbptf &= ~(jgb_trig);
     
     
@@ -933,7 +922,7 @@ void cheat_buttons_mp_related(void)
     {       
         if ((cheatButtonCountBitsSet(jgbptf) == 1) && ((cheatButtonCountBitsSet(jgb) == 1)))
         {
-            g_CurrentPlayer->cheat_display_text_related[g_CurrentPlayer->something_with_cheat_text] =  jgb_trig | jgbptf;
+            g_CurrentPlayer->cheat_display_text_related[g_CurrentPlayer->something_with_cheat_text] = jgbptf | jgb_trig;
             g_CurrentPlayer->something_with_cheat_text =  (g_CurrentPlayer->something_with_cheat_text + 1) % CHEAT_20;
 
             if ((s32) g_CurrentPlayer->can_display_cheat_text < CHEAT_20)
@@ -949,171 +938,6 @@ void cheat_buttons_mp_related(void)
     
     cheatButtonActivateRelated();
 }
-#else
-
-#if defined(VERSION_US) || defined(VERSION_JP)
-GLOBAL_ASM(
-.text
-glabel cheat_buttons_mp_related
-/* 0C646C 7F09193C 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0C6470 7F091940 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C6474 7F091944 0FC26C54 */  jal   get_cur_playernum
-/* 0C6478 7F091948 00000000 */   nop
-/* 0C647C 7F09194C 00022600 */  sll   $a0, $v0, 0x18
-/* 0C6480 7F091950 00047603 */  sra   $t6, $a0, 0x18
-/* 0C6484 7F091954 01C02025 */  move  $a0, $t6
-/* 0C6488 7F091958 0C0030C3 */  jal   joyGetButtons
-/* 0C648C 7F09195C 3405FFFF */   li    $a1, 65535
-/* 0C6490 7F091960 0FC26C54 */  jal   get_cur_playernum
-/* 0C6494 7F091964 A7A20026 */   sh    $v0, 0x26($sp)
-/* 0C6498 7F091968 00022600 */  sll   $a0, $v0, 0x18
-/* 0C649C 7F09196C 00047E03 */  sra   $t7, $a0, 0x18
-/* 0C64A0 7F091970 01E02025 */  move  $a0, $t7
-/* 0C64A4 7F091974 0C0030EB */  jal   joyGetButtonsPressedThisFrame
-/* 0C64A8 7F091978 3405FFFF */   li    $a1, 65535
-/* 0C64AC 7F09197C 97A30026 */  lhu   $v1, 0x26($sp)
-/* 0C64B0 7F091980 30780030 */  andi  $t8, $v1, 0x30
-/* 0C64B4 7F091984 3306FFFF */  andi  $a2, $t8, 0xffff
-/* 0C64B8 7F091988 00C04827 */  not   $t1, $a2
-/* 0C64BC 7F09198C 0300C827 */  not   $t9, $t8
-/* 0C64C0 7F091990 00492824 */  and   $a1, $v0, $t1
-/* 0C64C4 7F091994 30AAFFFF */  andi  $t2, $a1, 0xffff
-/* 0C64C8 7F091998 00794024 */  and   $t0, $v1, $t9
-/* 0C64CC 7F09199C A7A80026 */  sh    $t0, 0x26($sp)
-/* 0C64D0 7F0919A0 11400028 */  beqz  $t2, .L7F091A44
-/* 0C64D4 7F0919A4 A7A50024 */   sh    $a1, 0x24($sp)
-/* 0C64D8 7F0919A8 30A4FFFF */  andi  $a0, $a1, 0xffff
-/* 0C64DC 7F0919AC 0FC245D0 */  jal   cheatButtonCountBitsSet
-/* 0C64E0 7F0919B0 AFA60018 */   sw    $a2, 0x18($sp)
-/* 0C64E4 7F0919B4 24010001 */  li    $at, 1
-/* 0C64E8 7F0919B8 1441001E */  bne   $v0, $at, .L7F091A34
-/* 0C64EC 7F0919BC 8FA70018 */   lw    $a3, 0x18($sp)
-/* 0C64F0 7F0919C0 97A40026 */  lhu   $a0, 0x26($sp)
-/* 0C64F4 7F0919C4 0FC245D0 */  jal   cheatButtonCountBitsSet
-/* 0C64F8 7F0919C8 AFA70018 */   sw    $a3, 0x18($sp)
-/* 0C64FC 7F0919CC 24010001 */  li    $at, 1
-/* 0C6500 7F0919D0 14410018 */  bne   $v0, $at, .L7F091A34
-/* 0C6504 7F0919D4 8FA70018 */   lw    $a3, 0x18($sp)
-/* 0C6508 7F0919D8 3C048008 */  lui   $a0, %hi(g_CurrentPlayer)
-/* 0C650C 7F0919DC 2484A0B0 */  addiu $a0, %lo(g_CurrentPlayer) # addiu $a0, $a0, -0x5f50
-/* 0C6510 7F0919E0 8C820000 */  lw    $v0, ($a0)
-/* 0C6514 7F0919E4 97AB0024 */  lhu   $t3, 0x24($sp)
-/* 0C6518 7F0919E8 24010014 */  li    $at, 20
-/* 0C651C 7F0919EC 904D12B4 */  lbu   $t5, 0x12b4($v0)
-/* 0C6520 7F0919F0 01676025 */  or    $t4, $t3, $a3
-/* 0C6524 7F0919F4 000D7040 */  sll   $t6, $t5, 1
-/* 0C6528 7F0919F8 004E7821 */  addu  $t7, $v0, $t6
-/* 0C652C 7F0919FC A5EC128C */  sh    $t4, 0x128c($t7)
-/* 0C6530 7F091A00 8C820000 */  lw    $v0, ($a0)
-/* 0C6534 7F091A04 905812B4 */  lbu   $t8, 0x12b4($v0)
-/* 0C6538 7F091A08 27190001 */  addiu $t9, $t8, 1
-/* 0C653C 7F091A0C 0321001A */  div   $zero, $t9, $at
-/* 0C6540 7F091A10 00004010 */  mfhi  $t0
-/* 0C6544 7F091A14 A04812B4 */  sb    $t0, 0x12b4($v0)
-/* 0C6548 7F091A18 8C820000 */  lw    $v0, ($a0)
-/* 0C654C 7F091A1C 904312B5 */  lbu   $v1, 0x12b5($v0)
-/* 0C6550 7F091A20 28610014 */  slti  $at, $v1, 0x14
-/* 0C6554 7F091A24 10200007 */  beqz  $at, .L7F091A44
-/* 0C6558 7F091A28 24690001 */   addiu $t1, $v1, 1
-/* 0C655C 7F091A2C 10000005 */  b     .L7F091A44
-/* 0C6560 7F091A30 A04912B5 */   sb    $t1, 0x12b5($v0)
-.L7F091A34:
-/* 0C6564 7F091A34 3C048008 */  lui   $a0, %hi(g_CurrentPlayer)
-/* 0C6568 7F091A38 2484A0B0 */  addiu $a0, %lo(g_CurrentPlayer) # addiu $a0, $a0, -0x5f50
-/* 0C656C 7F091A3C 8C8A0000 */  lw    $t2, ($a0)
-/* 0C6570 7F091A40 A14012B5 */  sb    $zero, 0x12b5($t2)
-.L7F091A44:
-/* 0C6574 7F091A44 0FC245DF */  jal   cheatButtonActivateRelated
-/* 0C6578 7F091A48 00000000 */   nop
-/* 0C657C 7F091A4C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C6580 7F091A50 27BD0028 */  addiu $sp, $sp, 0x28
-/* 0C6584 7F091A54 03E00008 */  jr    $ra
-/* 0C6588 7F091A58 00000000 */   nop
-)
-#endif
-
-#if defined(VERSION_EU)
-GLOBAL_ASM(
-.text
-glabel cheat_buttons_mp_related
-/* 0C37AC 7F090DBC 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0C37B0 7F090DC0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C37B4 7F090DC4 0FC269A4 */  jal   get_cur_playernum
-/* 0C37B8 7F090DC8 00000000 */   nop   
-/* 0C37BC 7F090DCC 00022600 */  sll   $a0, $v0, 0x18
-/* 0C37C0 7F090DD0 00047603 */  sra   $t6, $a0, 0x18
-/* 0C37C4 7F090DD4 01C02025 */  move  $a0, $t6
-/* 0C37C8 7F090DD8 0C002C20 */  jal   joyGetButtons
-/* 0C37CC 7F090DDC 3405FFFF */   li    $a1, 65535
-/* 0C37D0 7F090DE0 0FC269A4 */  jal   get_cur_playernum
-/* 0C37D4 7F090DE4 A7A20026 */   sh    $v0, 0x26($sp)
-/* 0C37D8 7F090DE8 00022600 */  sll   $a0, $v0, 0x18
-/* 0C37DC 7F090DEC 00047E03 */  sra   $t7, $a0, 0x18
-/* 0C37E0 7F090DF0 01E02025 */  move  $a0, $t7
-/* 0C37E4 7F090DF4 0C002C48 */  jal   joyGetButtonsPressedThisFrame
-/* 0C37E8 7F090DF8 3405FFFF */   li    $a1, 65535
-/* 0C37EC 7F090DFC 97A30026 */  lhu   $v1, 0x26($sp)
-/* 0C37F0 7F090E00 30780030 */  andi  $t8, $v1, 0x30
-/* 0C37F4 7F090E04 3306FFFF */  andi  $a2, $t8, 0xffff
-/* 0C37F8 7F090E08 00C04827 */  not   $t1, $a2
-/* 0C37FC 7F090E0C 0300C827 */  not   $t9, $t8
-/* 0C3800 7F090E10 00492824 */  and   $a1, $v0, $t1
-/* 0C3804 7F090E14 30AAFFFF */  andi  $t2, $a1, 0xffff
-/* 0C3808 7F090E18 00794024 */  and   $t0, $v1, $t9
-/* 0C380C 7F090E1C A7A80026 */  sh    $t0, 0x26($sp)
-/* 0C3810 7F090E20 11400028 */  beqz  $t2, .L7F090EC4
-/* 0C3814 7F090E24 A7A50024 */   sh    $a1, 0x24($sp)
-/* 0C3818 7F090E28 30A4FFFF */  andi  $a0, $a1, 0xffff
-/* 0C381C 7F090E2C 0FC242F0 */  jal   cheatButtonCountBitsSet
-/* 0C3820 7F090E30 AFA60018 */   sw    $a2, 0x18($sp)
-/* 0C3824 7F090E34 24010001 */  li    $at, 1
-/* 0C3828 7F090E38 1441001E */  bne   $v0, $at, .L7F090EB4
-/* 0C382C 7F090E3C 8FA70018 */   lw    $a3, 0x18($sp)
-/* 0C3830 7F090E40 97A40026 */  lhu   $a0, 0x26($sp)
-/* 0C3834 7F090E44 0FC242F0 */  jal   cheatButtonCountBitsSet
-/* 0C3838 7F090E48 AFA70018 */   sw    $a3, 0x18($sp)
-/* 0C383C 7F090E4C 24010001 */  li    $at, 1
-/* 0C3840 7F090E50 14410018 */  bne   $v0, $at, .L7F090EB4
-/* 0C3844 7F090E54 8FA70018 */   lw    $a3, 0x18($sp)
-/* 0C3848 7F090E58 3C048007 */  lui   $a0, %hi(g_CurrentPlayer) # $a0, 0x8007
-/* 0C384C 7F090E5C 24848BC0 */  addiu $a0, %lo(g_CurrentPlayer) # addiu $a0, $a0, -0x7440
-/* 0C3850 7F090E60 8C820000 */  lw    $v0, ($a0)
-/* 0C3854 7F090E64 97AB0024 */  lhu   $t3, 0x24($sp)
-/* 0C3858 7F090E68 24010014 */  li    $at, 20
-/* 0C385C 7F090E6C 904D12AC */  lbu   $t5, 0x12ac($v0)
-/* 0C3860 7F090E70 01676025 */  or    $t4, $t3, $a3
-/* 0C3864 7F090E74 000D7040 */  sll   $t6, $t5, 1
-/* 0C3868 7F090E78 004E7821 */  addu  $t7, $v0, $t6
-/* 0C386C 7F090E7C A5EC1284 */  sh    $t4, 0x1284($t7)
-/* 0C3870 7F090E80 8C820000 */  lw    $v0, ($a0)
-/* 0C3874 7F090E84 905812AC */  lbu   $t8, 0x12ac($v0)
-/* 0C3878 7F090E88 27190001 */  addiu $t9, $t8, 1
-/* 0C387C 7F090E8C 0321001A */  div   $zero, $t9, $at
-/* 0C3880 7F090E90 00004010 */  mfhi  $t0
-/* 0C3884 7F090E94 A04812AC */  sb    $t0, 0x12ac($v0)
-/* 0C3888 7F090E98 8C820000 */  lw    $v0, ($a0)
-/* 0C388C 7F090E9C 904312AD */  lbu   $v1, 0x12ad($v0)
-/* 0C3890 7F090EA0 28610014 */  slti  $at, $v1, 0x14
-/* 0C3894 7F090EA4 10200007 */  beqz  $at, .L7F090EC4
-/* 0C3898 7F090EA8 24690001 */   addiu $t1, $v1, 1
-/* 0C389C 7F090EAC 10000005 */  b     .L7F090EC4
-/* 0C38A0 7F090EB0 A04912AD */   sb    $t1, 0x12ad($v0)
-.L7F090EB4:
-/* 0C38A4 7F090EB4 3C048007 */  lui   $a0, %hi(g_CurrentPlayer) # $a0, 0x8007
-/* 0C38A8 7F090EB8 24848BC0 */  addiu $a0, %lo(g_CurrentPlayer) # addiu $a0, $a0, -0x7440
-/* 0C38AC 7F090EBC 8C8A0000 */  lw    $t2, ($a0)
-/* 0C38B0 7F090EC0 A14012AD */  sb    $zero, 0x12ad($t2)
-.L7F090EC4:
-/* 0C38B4 7F090EC4 0FC242FF */  jal   cheatButtonActivateRelated
-/* 0C38B8 7F090EC8 00000000 */   nop   
-/* 0C38BC 7F090ECC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C38C0 7F090ED0 27BD0028 */  addiu $sp, $sp, 0x28
-/* 0C38C4 7F090ED4 03E00008 */  jr    $ra
-/* 0C38C8 7F090ED8 00000000 */   nop   
-)
-#endif
-#endif
-
 
 
 
