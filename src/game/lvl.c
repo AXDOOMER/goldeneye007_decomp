@@ -496,7 +496,7 @@ void lvlStageLoad(s32 stage)
     set_new_rand_head_bodies(stage);
     proplvreset2(stage);
     alloc_explosion_smoke_casing_scorch_impact_buffers();
-    sub_GAME_7F007180();
+    alloc_shattered_window_pieces();
     sub_GAME_7F007290();
     sub_GAME_7F0072B0();
 
@@ -760,7 +760,7 @@ glabel lvlStageLoad
 /* 0F291C 7F0BDDEC 8FA40038 */   lw    $a0, 0x38($sp)
 /* 0F2920 7F0BDDF0 0FC01B64 */  jal   alloc_explosion_smoke_casing_scorch_impact_buffers
 /* 0F2924 7F0BDDF4 00000000 */   nop
-/* 0F2928 7F0BDDF8 0FC01C60 */  jal   sub_GAME_7F007180
+/* 0F2928 7F0BDDF8 0FC01C60 */  jal   alloc_shattered_window_pieces
 /* 0F292C 7F0BDDFC 00000000 */   nop
 /* 0F2930 7F0BDE00 0FC01CA4 */  jal   sub_GAME_7F007290
 /* 0F2934 7F0BDE04 00000000 */   nop
@@ -1065,7 +1065,7 @@ glabel lvlStageLoad
 /* 0F351C 7F0BE9AC 8FA40038 */   lw    $a0, 0x38($sp)
 /* 0F3520 7F0BE9B0 0FC01B6C */  jal   alloc_explosion_smoke_casing_scorch_impact_buffers
 /* 0F3524 7F0BE9B4 00000000 */   nop
-/* 0F3528 7F0BE9B8 0FC01C68 */  jal   sub_GAME_7F007180
+/* 0F3528 7F0BE9B8 0FC01C68 */  jal   alloc_shattered_window_pieces
 /* 0F352C 7F0BE9BC 00000000 */   nop
 /* 0F3530 7F0BE9C0 0FC01CAC */  jal   sub_GAME_7F007290
 /* 0F3534 7F0BE9C4 00000000 */   nop
@@ -1387,7 +1387,7 @@ glabel lvlStageLoad
 /* 0EFB9C 7F0BD1AC 8FA40038 */   lw    $a0, 0x38($sp)
 /* 0EFBA0 7F0BD1B0 0FC01B44 */  jal   alloc_explosion_smoke_casing_scorch_impact_buffers
 /* 0EFBA4 7F0BD1B4 00000000 */   nop   
-/* 0EFBA8 7F0BD1B8 0FC01C40 */  jal   sub_GAME_7F007180
+/* 0EFBA8 7F0BD1B8 0FC01C40 */  jal   alloc_shattered_window_pieces
 /* 0EFBAC 7F0BD1BC 00000000 */   nop   
 /* 0EFBB0 7F0BD1C0 0FC01C84 */  jal   sub_GAME_7F007290
 /* 0EFBB4 7F0BD1C4 00000000 */   nop   

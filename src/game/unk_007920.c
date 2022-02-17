@@ -9,7 +9,7 @@ s32 sub_GAME_7F007920(void) {
     s32 phi_v0;
 
     // Node 0
-    if (bufferentrycount_8007A160 > 0)
+    if (SHATTERED_WINDOW_PIECES_BUFFER_LEN > 0)
     {
         // Node 1
         phi_v1 = 0;
@@ -17,10 +17,10 @@ s32 sub_GAME_7F007920(void) {
 loop_2:
         // Node 2
         temp_v0 = (phi_v0 + 1);
-        *(dword_CODE_bss_8007A164 + phi_v1) = 0;
+        *(ptr_shattered_window_pieces + phi_v1) = 0;
         phi_v1 = (phi_v1 + 0x68);
         phi_v0 = temp_v0;
-        if (temp_v0 < bufferentrycount_8007A160)
+        if (temp_v0 < SHATTERED_WINDOW_PIECES_BUFFER_LEN)
         {
             goto loop_2;
         }
@@ -32,14 +32,14 @@ loop_2:
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F007920
-/* 03C450 7F007920 3C048008 */  lui   $a0, %hi(bufferentrycount_8007A160)
-/* 03C454 7F007924 2484A160 */  addiu $a0, %lo(bufferentrycount_8007A160) # addiu $a0, $a0, -0x5ea0
+/* 03C450 7F007920 3C048008 */  lui   $a0, %hi(SHATTERED_WINDOW_PIECES_BUFFER_LEN)
+/* 03C454 7F007924 2484A160 */  addiu $a0, %lo(SHATTERED_WINDOW_PIECES_BUFFER_LEN) # addiu $a0, $a0, -0x5ea0
 /* 03C458 7F007928 8C8E0000 */  lw    $t6, ($a0)
 /* 03C45C 7F00792C 00001025 */  move  $v0, $zero
 /* 03C460 7F007930 00001825 */  move  $v1, $zero
 /* 03C464 7F007934 19C0000B */  blez  $t6, .L7F007964
-/* 03C468 7F007938 3C058008 */   lui   $a1, %hi(dword_CODE_bss_8007A164)
-/* 03C46C 7F00793C 24A5A164 */  addiu $a1, %lo(dword_CODE_bss_8007A164) # addiu $a1, $a1, -0x5e9c
+/* 03C468 7F007938 3C058008 */   lui   $a1, %hi(ptr_shattered_window_pieces)
+/* 03C46C 7F00793C 24A5A164 */  addiu $a1, %lo(ptr_shattered_window_pieces) # addiu $a1, $a1, -0x5e9c
 /* 03C470 7F007940 8CAF0000 */  lw    $t7, ($a1)
 .L7F007944:
 /* 03C474 7F007944 24420001 */  addiu $v0, $v0, 1
