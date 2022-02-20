@@ -41130,41 +41130,13 @@ glabel sub_GAME_7F0518D0
 
 
 
-#ifdef NONMATCHING
 void trigger_remote_mine_detonation(void)
 {
-    u32 uVar1;
-    
-    uVar1 = get_cur_playernum();
-    D_80030AF4 = D_80030AF4 | 1 << (uVar1 & 0x1f);
-    sndPlaySfx(g_musicSfxBufferPtr,TRIGGER_MINE,0x0);
+    u32 uVar1 = 1 << (get_cur_playernum());
+    D_80030AF4 = uVar1 | D_80030AF4;
+    sndPlaySfx(g_musicSfxBufferPtr, WATCH_DETONATE_MINE_SFX, NULL);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel trigger_remote_mine_detonation
-/* 086548 7F051A18 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 08654C 7F051A1C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 086550 7F051A20 0FC26C54 */  jal   get_cur_playernum
-/* 086554 7F051A24 00000000 */   nop   
-/* 086558 7F051A28 3C038003 */  lui   $v1, %hi(D_80030AF4)
-/* 08655C 7F051A2C 24630AF4 */  addiu $v1, %lo(D_80030AF4) # addiu $v1, $v1, 0xaf4
-/* 086560 7F051A30 8C6E0000 */  lw    $t6, ($v1)
-/* 086564 7F051A34 240F0001 */  li    $t7, 1
-/* 086568 7F051A38 004FC004 */  sllv  $t8, $t7, $v0
-/* 08656C 7F051A3C 01D8C825 */  or    $t9, $t6, $t8
-/* 086570 7F051A40 AC790000 */  sw    $t9, ($v1)
-/* 086574 7F051A44 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 086578 7F051A48 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 08657C 7F051A4C 240500F3 */  li    $a1, 243
-/* 086580 7F051A50 0C002382 */  jal   sndPlaySfx
-/* 086584 7F051A54 00003025 */   move  $a2, $zero
-/* 086588 7F051A58 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 08658C 7F051A5C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 086590 7F051A60 03E00008 */  jr    $ra
-/* 086594 7F051A64 00000000 */   nop   
-)
-#endif
+
 
 
 
