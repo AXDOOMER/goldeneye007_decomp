@@ -103,7 +103,7 @@ s32 mpwatchIsPlayerPressingLeft(s32 player)
 
 void mpwatchPlayBeep(void)
 {
-    sndPlaySfx(g_musicSfxBufferPtr, CAMERA_BEEP1_SFX, 0);
+    sndPlaySfx(g_musicSfxBufferPtr, WATCH_BEEP1_SFX, 0);
 }
 
 void mpwatchUnpauseGame(void)

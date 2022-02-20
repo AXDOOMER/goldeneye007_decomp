@@ -1061,7 +1061,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
 
                     if (flag)
                     {
-                        sndPlaySfx(g_musicSfxBufferPtr, CAMERA_BEEP1_SFX, 0);
+                        sndPlaySfx(g_musicSfxBufferPtr, WATCH_BEEP1_SFX, 0);
                         return;
                     }
 
@@ -1363,7 +1363,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
                 if ((selected_folder_num >= 0) && (selected_folder_num < 4))
                 {
                     sub_GAME_7F01E760(selected_folder_num, val);
-                    sndPlaySfx(g_musicSfxBufferPtr, CAMERA_BEEP1_SFX, 0);
+                    sndPlaySfx(g_musicSfxBufferPtr, WATCH_BEEP1_SFX, 0);
                     return;
                 }
             }
@@ -1408,7 +1408,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
                     if (max - 1 == (unlock_count))
                     {
                         fileUnlockStageInFolderAtDifficulty(selected_folder_num, max - 1, DIFFICULTY_AGENT, 0x5F5E0FF);
-                        sndPlaySfx(g_musicSfxBufferPtr, CAMERA_BEEP1_SFX, 0);
+                        sndPlaySfx(g_musicSfxBufferPtr, WATCH_BEEP1_SFX, 0);
                     }
                 }
             }
