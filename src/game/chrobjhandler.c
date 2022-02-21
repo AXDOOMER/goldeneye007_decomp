@@ -2057,25 +2057,10 @@ glabel init_standard_object
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0406F8(void) {
 
+PropRecord* sub_GAME_7F0406F8(s32* object, ModelFileHeader* header) {
+  return init_standard_object(object, header, 0, 0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0406F8
-/* 075228 7F0406F8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 07522C 7F0406FC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 075230 7F040700 00003025 */  move  $a2, $zero
-/* 075234 7F040704 0FC10153 */  jal   init_standard_object
-/* 075238 7F040708 00003825 */   move  $a3, $zero
-/* 07523C 7F04070C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 075240 7F040710 27BD0018 */  addiu $sp, $sp, 0x18
-/* 075244 7F040714 03E00008 */  jr    $ra
-/* 075248 7F040718 00000000 */   nop   
-)
-#endif
 
 
 
