@@ -2894,24 +2894,10 @@ glabel sub_GAME_7F040D98
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F041024(void) {
 
+void sub_GAME_7F041024(struct object_standard * arg0, s32 arg1) {
+    sub_GAME_7F040D98(arg0, arg1, 0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F041024
-/* 075B54 7F041024 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 075B58 7F041028 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 075B5C 7F04102C 0FC10366 */  jal   sub_GAME_7F040D98
-/* 075B60 7F041030 00003025 */   move  $a2, $zero
-/* 075B64 7F041034 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 075B68 7F041038 27BD0018 */  addiu $sp, $sp, 0x18
-/* 075B6C 7F04103C 03E00008 */  jr    $ra
-/* 075B70 7F041040 00000000 */   nop   
-)
-#endif
 
 
 
