@@ -42216,24 +42216,9 @@ glabel sub_GAME_7F0523F8
 
 
 
-#ifdef NONMATCHING
 void redirect_object_collectability_routines(void) {
-
+    object_collectability_routines();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel redirect_object_collectability_routines
-/* 087084 7F052554 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 087088 7F052558 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 08708C 7F05255C 0FC141B7 */  jal   object_collectability_routines
-/* 087090 7F052560 00000000 */   nop   
-/* 087094 7F052564 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 087098 7F052568 27BD0018 */  addiu $sp, $sp, 0x18
-/* 08709C 7F05256C 03E00008 */  jr    $ra
-/* 0870A0 7F052570 00000000 */   nop   
-)
-#endif
 
 
 
