@@ -45273,26 +45273,10 @@ glabel sub_GAME_7F05480C
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F05487C(void) {
-
+void sub_GAME_7F05487C(s32 arg0) {
+    play_door_closing_soundeffect_1(arg0);
+    sub_GAME_7F0535C4(arg0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05487C
-/* 0893AC 7F05487C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0893B0 7F054880 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0893B4 7F054884 0FC1512E */  jal   play_door_closing_soundeffect_1
-/* 0893B8 7F054888 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0893BC 7F05488C 0FC14D71 */  jal   sub_GAME_7F0535C4
-/* 0893C0 7F054890 8FA40018 */   lw    $a0, 0x18($sp)
-/* 0893C4 7F054894 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0893C8 7F054898 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0893CC 7F05489C 03E00008 */  jr    $ra
-/* 0893D0 7F0548A0 00000000 */   nop   
-)
-#endif
 
 
 
