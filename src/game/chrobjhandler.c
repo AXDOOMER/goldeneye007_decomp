@@ -2903,30 +2903,13 @@ void sub_GAME_7F041024(struct object_standard * arg0, s32 arg1) {
 
 
 
-#ifdef NONMATCHING
-void if_a0_plus_3_is_4_then_10_else_20(void) {
 
+float if_a0_plus_3_is_4_then_10_else_20(struct object_standard * obj) {
+    if (obj->type == 4) {
+        return 20.0f;
+    }
+    return 10.0f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel if_a0_plus_3_is_4_then_10_else_20
-/* 075B74 7F041044 908E0003 */  lbu   $t6, 3($a0)
-/* 075B78 7F041048 24010004 */  li    $at, 4
-/* 075B7C 7F04104C 15C10004 */  bne   $t6, $at, .L7F041060
-/* 075B80 7F041050 3C0141A0 */   li    $at, 0x41A00000 # 20.000000
-/* 075B84 7F041054 44810000 */  mtc1  $at, $f0
-/* 075B88 7F041058 03E00008 */  jr    $ra
-/* 075B8C 7F04105C 00000000 */   nop   
-
-.L7F041060:
-/* 075B90 7F041060 3C014120 */  li    $at, 0x41200000 # 10.000000
-/* 075B94 7F041064 44810000 */  mtc1  $at, $f0
-/* 075B98 7F041068 00000000 */  nop   
-/* 075B9C 7F04106C 03E00008 */  jr    $ra
-/* 075BA0 7F041070 00000000 */   nop   
-)
-#endif
 
 
 
