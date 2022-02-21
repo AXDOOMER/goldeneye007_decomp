@@ -3052,7 +3052,7 @@ void disable_sounds_attached_to_player_then_something(PropRecord *prop)
     while (p != NULL)
     {
         sub_GAME_7F04C044(p);
-        sub_GAME_7F041024(p->chr, 1);
+        objFreePermanently(p->chr, 1);
         p = p->nextSibling;
     }
 
@@ -3130,7 +3130,7 @@ glabel disable_sounds_attached_to_player_then_something
 /* 055018 7F0204E8 0FC13011 */  jal   sub_GAME_7F04C044
 /* 05501C 7F0204EC 8C900024 */   lw    $s0, 0x24($a0)
 /* 055020 7F0204F0 02202025 */  move  $a0, $s1
-/* 055024 7F0204F4 0FC10409 */  jal   sub_GAME_7F041024
+/* 055024 7F0204F4 0FC10409 */  jal   objFreePermanently
 /* 055028 7F0204F8 24050001 */   li    $a1, 1
 /* 05502C 7F0204FC 1600FFF9 */  bnez  $s0, .L7F0204E4
 /* 055030 7F020500 02002025 */   move  $a0, $s0
@@ -4392,7 +4392,7 @@ glabel sub_GAME_7F020EF0
 /* 055BAC 7F02107C 31EE0004 */  andi  $t6, $t7, 4
 /* 055BB0 7F021080 51C00004 */  beql  $t6, $zero, .L7F021094
 /* 055BB4 7F021084 8E020164 */   lw    $v0, 0x164($s0)
-/* 055BB8 7F021088 0FC10409 */  jal   sub_GAME_7F041024
+/* 055BB8 7F021088 0FC10409 */  jal   objFreePermanently
 /* 055BBC 7F02108C 24050001 */   li    $a1, 1
 /* 055BC0 7F021090 8E020164 */  lw    $v0, 0x164($s0)
 .L7F021094:
@@ -4403,7 +4403,7 @@ glabel sub_GAME_7F020EF0
 /* 055BD4 7F0210A4 312A0004 */  andi  $t2, $t1, 4
 /* 055BD8 7F0210A8 51400004 */  beql  $t2, $zero, .L7F0210BC
 /* 055BDC 7F0210AC 8E020014 */   lw    $v0, 0x14($s0)
-/* 055BE0 7F0210B0 0FC10409 */  jal   sub_GAME_7F041024
+/* 055BE0 7F0210B0 0FC10409 */  jal   objFreePermanently
 /* 055BE4 7F0210B4 24050001 */   li    $a1, 1
 /* 055BE8 7F0210B8 8E020014 */  lw    $v0, 0x14($s0)
 .L7F0210BC:
@@ -5244,7 +5244,7 @@ glabel sub_GAME_7F020EF0
 /* 055E84 7F021314 31EE0004 */  andi  $t6, $t7, 4
 /* 055E88 7F021318 51C00004 */  beql  $t6, $zero, .Ljp7F02132C
 /* 055E8C 7F02131C 8E020164 */   lw    $v0, 0x164($s0)
-/* 055E90 7F021320 0FC104C9 */  jal   sub_GAME_7F041024
+/* 055E90 7F021320 0FC104C9 */  jal   objFreePermanently
 /* 055E94 7F021324 24050001 */   li    $a1, 1
 /* 055E98 7F021328 8E020164 */  lw    $v0, 0x164($s0)
 .Ljp7F02132C:
@@ -5255,7 +5255,7 @@ glabel sub_GAME_7F020EF0
 /* 055EAC 7F02133C 312A0004 */  andi  $t2, $t1, 4
 /* 055EB0 7F021340 51400004 */  beql  $t2, $zero, .Ljp7F021354
 /* 055EB4 7F021344 8E020014 */   lw    $v0, 0x14($s0)
-/* 055EB8 7F021348 0FC104C9 */  jal   sub_GAME_7F041024
+/* 055EB8 7F021348 0FC104C9 */  jal   objFreePermanently
 /* 055EBC 7F02134C 24050001 */   li    $a1, 1
 /* 055EC0 7F021350 8E020014 */  lw    $v0, 0x14($s0)
 .Ljp7F021354:
@@ -6170,7 +6170,7 @@ glabel sub_GAME_7F020EF0
 /* 0539E4 7F020FF4 31EE0004 */  andi  $t6, $t7, 4
 /* 0539E8 7F020FF8 51C00004 */  beql  $t6, $zero, .L7F02100C
 /* 0539EC 7F020FFC 8E020164 */   lw    $v0, 0x164($s0)
-/* 0539F0 7F021000 0FC10439 */  jal   sub_GAME_7F041024
+/* 0539F0 7F021000 0FC10439 */  jal   objFreePermanently
 /* 0539F4 7F021004 24050001 */   li    $a1, 1
 /* 0539F8 7F021008 8E020164 */  lw    $v0, 0x164($s0)
 .L7F02100C:
@@ -6181,7 +6181,7 @@ glabel sub_GAME_7F020EF0
 /* 053A0C 7F02101C 312A0004 */  andi  $t2, $t1, 4
 /* 053A10 7F021020 51400004 */  beql  $t2, $zero, .L7F021034
 /* 053A14 7F021024 8E020014 */   lw    $v0, 0x14($s0)
-/* 053A18 7F021028 0FC10439 */  jal   sub_GAME_7F041024
+/* 053A18 7F021028 0FC10439 */  jal   objFreePermanently
 /* 053A1C 7F02102C 24050001 */   li    $a1, 1
 /* 053A20 7F021030 8E020014 */  lw    $v0, 0x14($s0)
 .L7F021034:

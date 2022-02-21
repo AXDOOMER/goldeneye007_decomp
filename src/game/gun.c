@@ -7054,7 +7054,7 @@ glabel sub_GAME_7F05FB00
 /* 094668 7F05FB38 24050001 */  li    $a1, 1
 /* 09466C 7F05FB3C 10C00005 */  beqz  $a2, .L7F05FB54
 /* 094670 7F05FB40 00C02025 */   move  $a0, $a2
-/* 094674 7F05FB44 0FC10409 */  jal   sub_GAME_7F041024
+/* 094674 7F05FB44 0FC10409 */  jal   objFreePermanently
 /* 094678 7F05FB48 AFA2001C */   sw    $v0, 0x1c($sp)
 /* 09467C 7F05FB4C 8FA2001C */  lw    $v0, 0x1c($sp)
 /* 094680 7F05FB50 AC400220 */  sw    $zero, 0x220($v0)
@@ -7087,7 +7087,7 @@ glabel sub_GAME_7F05FB00
 /* 0929E0 7F05FFF0 24050001 */  li    $a1, 1
 /* 0929E4 7F05FFF4 10C00005 */  beqz  $a2, .L7F06000C
 /* 0929E8 7F05FFF8 00C02025 */   move  $a0, $a2
-/* 0929EC 7F05FFFC 0FC10439 */  jal   sub_GAME_7F041024
+/* 0929EC 7F05FFFC 0FC10439 */  jal   objFreePermanently
 /* 0929F0 7F060000 AFA2001C */   sw    $v0, 0x1c($sp)
 /* 0929F4 7F060004 8FA2001C */  lw    $v0, 0x1c($sp)
 /* 0929F8 7F060008 AC400220 */  sw    $zero, 0x220($v0)

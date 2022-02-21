@@ -45,7 +45,7 @@ extern f32 g_SoloAmmoMultiplier;
  */
 void sub_GAME_7F04F218(s32 arg0, s32 arg1);
 
-void sub_GAME_7F041024(struct object_standard * arg0, s32 arg1);
+void objFreePermanently(struct ObjectRecord * obj, bool freeprop);
 
 void chrobjApplySpeed(f32 *openPosition, f32 maxFrac, f32 *speedPtr, f32 accel, f32 decel, f32 maxSpeed);
 void chrobjCallsApplySpeed(f32 *openPosition, f32 maxFrac, f32 *speedPtr, f32 accel, f32 decel, f32 maxSpeed);
