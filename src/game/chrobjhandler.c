@@ -43636,28 +43636,13 @@ void sub_GAME_7F053598(DoorRecord *door)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0535C4(void) {
 
+void sub_GAME_7F0535C4(DoorRecord *door) {
+    if (door->portalNumber >= 0)
+    {
+        bgToggleDataPortalsContrlBytes1Bit1(door->portalNumber, FALSE);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0535C4
-/* 0880F4 7F0535C4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0880F8 7F0535C8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0880FC 7F0535CC 8C8600F0 */  lw    $a2, 0xf0($a0)
-/* 088100 7F0535D0 04C00003 */  bltz  $a2, .L7F0535E0
-/* 088104 7F0535D4 00C02025 */   move  $a0, $a2
-/* 088108 7F0535D8 0FC2E76F */  jal   bgToggleDataPortalsContrlBytes1Bit1
-/* 08810C 7F0535DC 00002825 */   move  $a1, $zero
-.L7F0535E0:
-/* 088110 7F0535E0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 088114 7F0535E4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 088118 7F0535E8 03E00008 */  jr    $ra
-/* 08811C 7F0535EC 00000000 */   nop   
-)
-#endif
 
 
 
