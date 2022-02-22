@@ -23,7 +23,12 @@ GZIP := gzipsrc/gzip
 $(GZIP):
 	@$(MAKE) -C gzipsrc
 
-all: $(GZIP) $(PROGRAMS) $(CXX_PROGRAMS)
+IDO53 := ido5.3_recomp/cc
+
+$(IDO53):
+	@$(MAKE) -C ido5.3_recomp
+
+all: $(GZIP) $(PROGRAMS) $(CXX_PROGRAMS) $(IDO53)
 
 clean:
 	$(RM) $(PROGRAMS) $(CXX_PROGRAMS)
