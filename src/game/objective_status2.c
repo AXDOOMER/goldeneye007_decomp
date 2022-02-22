@@ -434,48 +434,15 @@ glabel sub_GAME_7F057D88
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F057DF8(float *param_1,float *param_2,int param_3)
+void sub_GAME_7F057DF8(struct Mtxf *arg0, struct Mtxf *arg1, s32 count)
 {
-    int i;
-    
-    for (i = 0; 0 < param_3; i++)
-    {
-        matrix_4x4_multiply_homogeneous_in_place(param_2,param_1);
+    s32 i;
+
+    for (i = 0; i < count; i++) {
+        matrix_4x4_multiply_homogeneous_in_place(arg1, arg0);
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F057DF8
-/* 08C928 7F057DF8 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 08C92C 7F057DFC AFB30020 */  sw    $s3, 0x20($sp)
-/* 08C930 7F057E00 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 08C934 7F057E04 AFB10018 */  sw    $s1, 0x18($sp)
-/* 08C938 7F057E08 AFB00014 */  sw    $s0, 0x14($sp)
-/* 08C93C 7F057E0C 00C08825 */  move  $s1, $a2
-/* 08C940 7F057E10 00A09025 */  move  $s2, $a1
-/* 08C944 7F057E14 00809825 */  move  $s3, $a0
-/* 08C948 7F057E18 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 08C94C 7F057E1C 18C00007 */  blez  $a2, .L7F057E3C
-/* 08C950 7F057E20 00008025 */   move  $s0, $zero
-/* 08C954 7F057E24 02402025 */  move  $a0, $s2
-.L7F057E28:
-/* 08C958 7F057E28 0FC16026 */  jal   matrix_4x4_multiply_homogeneous_in_place
-/* 08C95C 7F057E2C 02602825 */   move  $a1, $s3
-/* 08C960 7F057E30 26100001 */  addiu $s0, $s0, 1
-/* 08C964 7F057E34 5611FFFC */  bnel  $s0, $s1, .L7F057E28
-/* 08C968 7F057E38 02402025 */   move  $a0, $s2
-.L7F057E3C:
-/* 08C96C 7F057E3C 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 08C970 7F057E40 8FB00014 */  lw    $s0, 0x14($sp)
-/* 08C974 7F057E44 8FB10018 */  lw    $s1, 0x18($sp)
-/* 08C978 7F057E48 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 08C97C 7F057E4C 8FB30020 */  lw    $s3, 0x20($sp)
-/* 08C980 7F057E50 03E00008 */  jr    $ra
-/* 08C984 7F057E54 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
+
 
 
 
