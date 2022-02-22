@@ -3815,38 +3815,20 @@ glabel sub_GAME_7F0B1410
 
 #ifdef NONMATCHING
 // general regalloc
-f32 sub_GAME_7F0B16C4(f32 a_x,f32 a_z,f32 b_x,f32 b_z,f32 c_x,f32 c_z)
+// almost matching, a single assembly line is wrong:
+// e629c:    mul.s   $f6,$f16,$f4         r e629c:    mul.s   $f6,$f4,$f16
+f32 sub_GAME_7F0B16C4(f32 x1, f32 z1, f32 x2, f32 z2, f32 x3, f32 z3)
 {
-    f32 AB_x;
-    f32 AB_y; // unused
-    f32 AB_z;
+    u32 stack[8];
+    f32 result;
 
-    f32 dist;
+    result = sqrtf((x2 - x1) * (x2 - x1) + (z2 - z1) * (z2 - z1));
 
-    f32 BC_x;
-    f32 BC_y; // unused
-    f32 BC_z;
-
-    f32 AC_x;
-    f32 AC_y; // unused
-    f32 AC_z;
-    
-    AB_x = b_x - a_x;
-    AB_z = b_z - a_z;
-    dist = sqrtf(AB_x * AB_x + AB_z * AB_z);
-
-    if (dist == 0) {
-        BC_x = c_x - b_x;
-        BC_z = c_z - b_z;
-        return sqrtf(BC_x*BC_x + BC_z*BC_z);
-    }
-    else {
-        AC_x = c_x - a_x;
-        AC_z = c_z - a_z;
-        return (AB_z * AC_x  + -AB_x * AC_z) / dist;
+    if (result == 0.0f) {
+        return sqrtf((x3 - x2) * (x3 - x2) + (z3 - z2) * (z3 - z2));
     }
 
-    return dist;
+    return ((x3 - x1) * (z2 - z1) + -(x2 - x1) * (z3 - z1)) / result;
 }
 
 #else
@@ -3915,112 +3897,33 @@ glabel sub_GAME_7F0B16C4
 
 f32 distBetweenPoints2d(f32 o_x,f32 o_z,f32 p_x,f32 p_z)
 {
-  p_x -= o_x;
-  p_z -= o_z;
-  return sqrtf(p_x*p_x + p_z*p_z);
+    p_x -= o_x;
+    p_z -= o_z;
+    return sqrtf(p_x * p_x + p_z * p_z);
 }
 
 
 
 
 
-#ifdef NONMATCHING
-// Not 100% sure it's logically equivalent.
-// Pretty sure the test at least needs rephrasing to match.
-s32 sub_GAME_7F0B17E4(f32 a_x,f32 a_z,f32 b_x,f32 b_z,f32 c_x,f32 c_z)
+bool sub_GAME_7F0B17E4(f32 x1, f32 z1, f32 x2, f32 z2, f32 x3, f32 z3)
 {
-    f32 AB_x;
-    f32 AB_z;
-    f32 len_AB_sq;
-    f32 AC_x;
-    f32 AC_z;
-    f32 AC_dot_AB;
-    
-    AB_x = b_x - a_x;
-    AB_z = b_z - a_z;
-    len_AB_sq = AB_x * AB_x + AB_z * AB_z;
+    f32 f0;
+    f32 f2;
+    f32 f16;
+    f32 f18;
 
-    AC_x = c_x - a_x;
-    AC_z = c_z - a_z;
-    AC_dot_AB = AC_x * AB_x + AC_z * AB_z;
+    x3 -= x1;
+    z3 -= z1;
 
-    // This appears to be A correct formulation, but the first statement is obviously false (requires length < 0)
-    // 
-    if (
-        ((AC_dot_AB > len_AB_sq) && (AC_dot_AB < 0))    // = false
-        || (0 < AC_dot_AB && AC_dot_AB < len_AB_sq)     // AC_dot_AB in (0, len_AB_sq)
-    ){
-        return 1;
-    }
+    f0 = x2 - x1;
+    f2 = z2 - z1;
 
-    return 0;
+    f16 = x3 * f0 + z3 * f2;
+    f18 = f0 * f0 + f2 * f2;
 
+    return (f18 < f16 && f16 < 0) || (f16 > 0 && f16 < f18);
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B17E4
-/* 0E6314 7F0B17E4 C7A40010 */  lwc1  $f4, 0x10($sp)
-/* 0E6318 7F0B17E8 C7A80014 */  lwc1  $f8, 0x14($sp)
-/* 0E631C 7F0B17EC AFA60008 */  sw    $a2, 8($sp)
-/* 0E6320 7F0B17F0 460C2181 */  sub.s $f6, $f4, $f12
-/* 0E6324 7F0B17F4 C7A40008 */  lwc1  $f4, 8($sp)
-/* 0E6328 7F0B17F8 AFA7000C */  sw    $a3, 0xc($sp)
-/* 0E632C 7F0B17FC 460E4281 */  sub.s $f10, $f8, $f14
-/* 0E6330 7F0B1800 C7A8000C */  lwc1  $f8, 0xc($sp)
-/* 0E6334 7F0B1804 E7A60010 */  swc1  $f6, 0x10($sp)
-/* 0E6338 7F0B1808 460C2001 */  sub.s $f0, $f4, $f12
-/* 0E633C 7F0B180C E7AA0014 */  swc1  $f10, 0x14($sp)
-/* 0E6340 7F0B1810 00001025 */  move  $v0, $zero
-/* 0E6344 7F0B1814 460E4081 */  sub.s $f2, $f8, $f14
-/* 0E6348 7F0B1818 46000102 */  mul.s $f4, $f0, $f0
-/* 0E634C 7F0B181C 00000000 */  nop   
-/* 0E6350 7F0B1820 46021202 */  mul.s $f8, $f2, $f2
-/* 0E6354 7F0B1824 46082480 */  add.s $f18, $f4, $f8
-/* 0E6358 7F0B1828 46003102 */  mul.s $f4, $f6, $f0
-/* 0E635C 7F0B182C 00000000 */  nop   
-/* 0E6360 7F0B1830 46025202 */  mul.s $f8, $f10, $f2
-/* 0E6364 7F0B1834 46082400 */  add.s $f16, $f4, $f8
-/* 0E6368 7F0B1838 4610903C */  c.lt.s $f18, $f16
-/* 0E636C 7F0B183C 00000000 */  nop   
-/* 0E6370 7F0B1840 45000002 */  bc1f  .L7F0B184C
-/* 0E6374 7F0B1844 00000000 */   nop   
-/* 0E6378 7F0B1848 24020001 */  li    $v0, 1
-.L7F0B184C:
-/* 0E637C 7F0B184C 5040000B */  beql  $v0, $zero, .L7F0B187C
-/* 0E6380 7F0B1850 44805000 */   mtc1  $zero, $f10
-/* 0E6384 7F0B1854 44803000 */  mtc1  $zero, $f6
-/* 0E6388 7F0B1858 00001025 */  move  $v0, $zero
-/* 0E638C 7F0B185C 4606803C */  c.lt.s $f16, $f6
-/* 0E6390 7F0B1860 00000000 */  nop   
-/* 0E6394 7F0B1864 45000002 */  bc1f  .L7F0B1870
-/* 0E6398 7F0B1868 00000000 */   nop   
-/* 0E639C 7F0B186C 24020001 */  li    $v0, 1
-.L7F0B1870:
-/* 0E63A0 7F0B1870 1440000F */  bnez  $v0, .L7F0B18B0
-/* 0E63A4 7F0B1874 00000000 */   nop   
-/* 0E63A8 7F0B1878 44805000 */  mtc1  $zero, $f10
-.L7F0B187C:
-/* 0E63AC 7F0B187C 00001025 */  move  $v0, $zero
-/* 0E63B0 7F0B1880 4610503C */  c.lt.s $f10, $f16
-/* 0E63B4 7F0B1884 00000000 */  nop   
-/* 0E63B8 7F0B1888 45000002 */  bc1f  .L7F0B1894
-/* 0E63BC 7F0B188C 00000000 */   nop   
-/* 0E63C0 7F0B1890 24020001 */  li    $v0, 1
-.L7F0B1894:
-/* 0E63C4 7F0B1894 10400006 */  beqz  $v0, .L7F0B18B0
-/* 0E63C8 7F0B1898 00000000 */   nop   
-/* 0E63CC 7F0B189C 4612803C */  c.lt.s $f16, $f18
-/* 0E63D0 7F0B18A0 00001025 */  move  $v0, $zero
-/* 0E63D4 7F0B18A4 45000002 */  bc1f  .L7F0B18B0
-/* 0E63D8 7F0B18A8 00000000 */   nop   
-/* 0E63DC 7F0B18AC 24020001 */  li    $v0, 1
-.L7F0B18B0:
-/* 0E63E0 7F0B18B0 03E00008 */  jr    $ra
-/* 0E63E4 7F0B18B4 00000000 */   nop   
-)
-#endif
 
 
 

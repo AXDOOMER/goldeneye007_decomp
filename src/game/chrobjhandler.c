@@ -2899,96 +2899,28 @@ float objGetWidth(struct ObjectRecord * obj) {
 
 
 
-
-#ifdef NONMATCHING
-//https://decomp.me/scratch/5Va8I
 bool sub_GAME_7F041074(coord3d *zeropos, coord3d *pos, coord3d *vec, f32 scale)
 {
-    f32   dist2rd;
-
     vec3d vector;
+    f32 dist2rd;
 
     vector.x = vec->x - zeropos->x;
     vector.y = vec->y - zeropos->y;
     vector.z = vec->z - zeropos->z;
 
-    dist2rd = (pos->x * vector.x) + (pos->y * vector.y) + (pos->z * vector.z);
+    dist2rd = pos->f[0] * vector.f[0] + pos->f[1] * vector.f[1] + pos->f[2] * vector.f[2];
 
-    if ((dist2rd > 0.0f) &&
-        ((
-             (((vector.z * vector.z) + (vector.x * vector.x) + (vector.y * vector.y)) - (scale * scale)) *
-             ((pos->z * pos->z) + (pos->x * pos->x) + (pos->y * pos->y))) <= (dist2rd * dist2rd)))
-    {
-        return TRUE;
+    if (dist2rd > 0) {
+        f32 a = pos->f[0] * pos->f[0] + pos->f[1] * pos->f[1] + pos->f[2] * pos->f[2];
+        f32 b = vector.f[0] * vector.f[0] + vector.f[1] * vector.f[1] + vector.f[2] * vector.f[2];
+
+        if ((b - scale * scale) * a <= dist2rd * dist2rd) {
+            return 1;
+        }
     }
-    return FALSE;
+
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F041074
-/* 075BA4 7F041074 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 075BA8 7F041078 AFA70024 */  sw    $a3, 0x24($sp)
-/* 075BAC 7F04107C C48A0000 */  lwc1  $f10, ($a0)
-/* 075BB0 7F041080 C4C80000 */  lwc1  $f8, ($a2)
-/* 075BB4 7F041084 00001025 */  move  $v0, $zero
-/* 075BB8 7F041088 460A4181 */  sub.s $f6, $f8, $f10
-/* 075BBC 7F04108C E7A6000C */  swc1  $f6, 0xc($sp)
-/* 075BC0 7F041090 C4880004 */  lwc1  $f8, 4($a0)
-/* 075BC4 7F041094 C4C40004 */  lwc1  $f4, 4($a2)
-/* 075BC8 7F041098 46082281 */  sub.s $f10, $f4, $f8
-/* 075BCC 7F04109C E7AA0010 */  swc1  $f10, 0x10($sp)
-/* 075BD0 7F0410A0 C4840008 */  lwc1  $f4, 8($a0)
-/* 075BD4 7F0410A4 C4C60008 */  lwc1  $f6, 8($a2)
-/* 075BD8 7F0410A8 C7AA000C */  lwc1  $f10, 0xc($sp)
-/* 075BDC 7F0410AC 46043201 */  sub.s $f8, $f6, $f4
-/* 075BE0 7F0410B0 C7A40010 */  lwc1  $f4, 0x10($sp)
-/* 075BE4 7F0410B4 E7A80014 */  swc1  $f8, 0x14($sp)
-/* 075BE8 7F0410B8 C4AC0000 */  lwc1  $f12, ($a1)
-/* 075BEC 7F0410BC C4AE0004 */  lwc1  $f14, 4($a1)
-/* 075BF0 7F0410C0 C4A20008 */  lwc1  $f2, 8($a1)
-/* 075BF4 7F0410C4 460A6182 */  mul.s $f6, $f12, $f10
-/* 075BF8 7F0410C8 E7AA0000 */  swc1  $f10, ($sp)
-/* 075BFC 7F0410CC 46047202 */  mul.s $f8, $f14, $f4
-/* 075C00 7F0410D0 46083180 */  add.s $f6, $f6, $f8
-/* 075C04 7F0410D4 C7A80014 */  lwc1  $f8, 0x14($sp)
-/* 075C08 7F0410D8 46024282 */  mul.s $f10, $f8, $f2
-/* 075C0C 7F0410DC 46065000 */  add.s $f0, $f10, $f6
-/* 075C10 7F0410E0 44805000 */  mtc1  $zero, $f10
-/* 075C14 7F0410E4 00000000 */  nop   
-/* 075C18 7F0410E8 4600503C */  c.lt.s $f10, $f0
-/* 075C1C 7F0410EC 00000000 */  nop   
-/* 075C20 7F0410F0 45000019 */  bc1f  .L7F041158
-/* 075C24 7F0410F4 00000000 */   nop   
-/* 075C28 7F0410F8 460C6182 */  mul.s $f6, $f12, $f12
-/* 075C2C 7F0410FC 00000000 */  nop   
-/* 075C30 7F041100 460E7282 */  mul.s $f10, $f14, $f14
-/* 075C34 7F041104 460A3180 */  add.s $f6, $f6, $f10
-/* 075C38 7F041108 46021282 */  mul.s $f10, $f2, $f2
-/* 075C3C 7F04110C 46065400 */  add.s $f16, $f10, $f6
-/* 075C40 7F041110 C7AA0000 */  lwc1  $f10, ($sp)
-/* 075C44 7F041114 460A5182 */  mul.s $f6, $f10, $f10
-/* 075C48 7F041118 00000000 */  nop   
-/* 075C4C 7F04111C 46042282 */  mul.s $f10, $f4, $f4
-/* 075C50 7F041120 460A3100 */  add.s $f4, $f6, $f10
-/* 075C54 7F041124 46084182 */  mul.s $f6, $f8, $f8
-/* 075C58 7F041128 C7A80024 */  lwc1  $f8, 0x24($sp)
-/* 075C5C 7F04112C 46000282 */  mul.s $f10, $f0, $f0
-/* 075C60 7F041130 46043480 */  add.s $f18, $f6, $f4
-/* 075C64 7F041134 46084182 */  mul.s $f6, $f8, $f8
-/* 075C68 7F041138 46069101 */  sub.s $f4, $f18, $f6
-/* 075C6C 7F04113C 46102202 */  mul.s $f8, $f4, $f16
-/* 075C70 7F041140 460A403E */  c.le.s $f8, $f10
-/* 075C74 7F041144 00000000 */  nop   
-/* 075C78 7F041148 45000003 */  bc1f  .L7F041158
-/* 075C7C 7F04114C 00000000 */   nop   
-/* 075C80 7F041150 10000001 */  b     .L7F041158
-/* 075C84 7F041154 24020001 */   li    $v0, 1
-.L7F041158:
-/* 075C88 7F041158 03E00008 */  jr    $ra
-/* 075C8C 7F04115C 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
 
 
 
@@ -40303,7 +40235,7 @@ PropRecord *chrTryEquipHat(ChrRecord *self, s32 index, s32 flags)
     lastprop = remove_last_obj_pos_data_entry();
     prop     = get_obj_instance_controller_for_header(model);
     prop     = prop;
-    obj      = sub_GAME_7F0515B0(lastprop == 0, prop == 0, model);
+    obj      = hatCreate(lastprop == 0, prop == 0, model);
     lastprop = lastprop;
     if (lastprop == 0)
     {
@@ -40367,7 +40299,7 @@ glabel chrTryEquipHat
 /* 085C48 7F051118 00408825 */  move  $s1, $v0
 /* 085C4C 7F05111C 2E040001 */  sltiu $a0, $s0, 1
 /* 085C50 7F051120 2C450001 */  sltiu $a1, $v0, 1
-/* 085C54 7F051124 0FC1456C */  jal   sub_GAME_7F0515B0
+/* 085C54 7F051124 0FC1456C */  jal   hatCreate
 /* 085C58 7F051128 8FA600BC */   lw    $a2, 0xbc($sp)
 /* 085C5C 7F05112C 16000004 */  bnez  $s0, .L7F051140
 /* 085C60 7F051130 00409025 */   move  $s2, $v0
@@ -40725,13 +40657,13 @@ glabel sub_GAME_7F051588
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0515B0(void) {
+void hatCreate(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0515B0
+glabel hatCreate
 /* 0860E0 7F0515B0 27BDFF98 */  addiu $sp, $sp, -0x68
 /* 0860E4 7F0515B4 AFB50034 */  sw    $s5, 0x34($sp)
 /* 0860E8 7F0515B8 3C158003 */  lui   $s5, %hi(D_80030AFC)
@@ -40953,27 +40885,10 @@ glabel sub_GAME_7F0515B0
 
 
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F0518A8(void) {
-
+// Returns struct hatobj* in PD
+void* sub_GAME_7F0518A8(void) {
+    return hatCreate(0, 0, NULL);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0518A8
-/* 0863D8 7F0518A8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0863DC 7F0518AC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0863E0 7F0518B0 00002025 */  move  $a0, $zero
-/* 0863E4 7F0518B4 00002825 */  move  $a1, $zero
-/* 0863E8 7F0518B8 0FC1456C */  jal   sub_GAME_7F0515B0
-/* 0863EC 7F0518BC 00003025 */   move  $a2, $zero
-/* 0863F0 7F0518C0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0863F4 7F0518C4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0863F8 7F0518C8 03E00008 */  jr    $ra
-/* 0863FC 7F0518CC 00000000 */   nop   
-)
-#endif
 
 
 

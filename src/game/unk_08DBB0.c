@@ -1530,6 +1530,13 @@ glabel sub_GAME_7F08F4F0
 
 #ifdef NONMATCHING
 void sub_GAME_7F08F67C(void) {
+    // func0f115390 in PD: 
+    struct waypoint *waypoint = g_StageSetup.waypoints;
+
+    while (waypoint->padnum >= 0) {
+        waypoint->unk0c = -1;
+        waypoint++;
+    }
 
 }
 #else

@@ -30566,31 +30566,10 @@ glabel sub_GAME_7F03F748
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03F90C(void) {
-
+void sub_GAME_7F03F90C(struct model *model, f32 *arg1, f32 *arg2, f32 *arg3, f32 *arg4) {
+    sub_GAME_7F03F748(model, arg1, arg2, 0);
+    sub_GAME_7F03F748(model, arg3, arg4, 1);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03F90C
-/* 07443C 7F03F90C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 074440 7F03F910 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 074444 7F03F914 AFA70024 */  sw    $a3, 0x24($sp)
-/* 074448 7F03F918 AFA40018 */  sw    $a0, 0x18($sp)
-/* 07444C 7F03F91C 0FC0FDD2 */  jal   sub_GAME_7F03F748
-/* 074450 7F03F920 00003825 */   move  $a3, $zero
-/* 074454 7F03F924 8FA40018 */  lw    $a0, 0x18($sp)
-/* 074458 7F03F928 8FA50024 */  lw    $a1, 0x24($sp)
-/* 07445C 7F03F92C 8FA60028 */  lw    $a2, 0x28($sp)
-/* 074460 7F03F930 0FC0FDD2 */  jal   sub_GAME_7F03F748
-/* 074464 7F03F934 24070001 */   li    $a3, 1
-/* 074468 7F03F938 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 07446C 7F03F93C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 074470 7F03F940 03E00008 */  jr    $ra
-/* 074474 7F03F944 00000000 */   nop   
-)
-#endif
 
 
 
