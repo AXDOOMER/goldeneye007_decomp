@@ -59,7 +59,7 @@ glabel randomGetNext
 
 
 
-#ifndef NONMATCHING
+#ifdef NONMATCHING
 /**
  * This sets the global random seed. This is called from boss mainloop by randomSetSeed(osGetCount()),
  * so the argument may just be 32bit.
