@@ -21,7 +21,7 @@ void sub_GAME_7F070AEC(Model *, s32, s32);
 void subcalcpos(Model *);
  void      sub_GAME_7F06FDE8(Model *model, float endframe);
 
-void objecthandlerAnimationRelated7F06FCA8(Model *, ModelAnimation *, s32, f32, f32, f32);
+void modelSetAnimation(Model *, ModelAnimation *, s32, f32, f32, f32);
 void sub_GAME_7F06FDCC(Model *, f32, f32);
 void sub_GAME_7F06FDE8(Model *, f32);
 void sub_GAME_7F06CE84(Model *, f32);
@@ -36,7 +36,7 @@ ModelAnimation * objecthandlerGetModelAnim(Model *);
 f32 sub_GAME_7F06F618(Model*);
 s32 sub_GAME_7F06F5B4(Model *);
 f32 sub_GAME_7F06F5C4(Model *);
-s32 sub_GAME_7F06FE4C(Model *, f32, f32);
+s32 modelSetAnimSpeed(Model *, f32, f32);
 f32 sub_GAME_7F06F610(Model *);
 s32 sub_GAME_7F06FE90(Model *arg0, f32 arg1, f32 arg2);
 f32 getinstsize(Model *arg0);
@@ -71,7 +71,7 @@ void sub_GAME_7F06D2E4(s32, s32, ModelSkeleton*, void* anim, s32, s16*);
 
 // arg2 unknown type.
 void sub_GAME_7F075FAC(Model *, ModelFileHeader *, void *);
-void sub_GAME_7F06FE3C(Model **, void (*)());
+void modelSetAnimFlipFunction(Model **, void (*)());
 void subcalcmatrices(struct unk_joint_list *, Model *);
 void instcalcmatrices(struct unk_joint_list *arg0, Model *arg1);
 

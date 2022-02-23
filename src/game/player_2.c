@@ -256,7 +256,7 @@ void initBONDdataforPlayer(PLAYER_ID player)
     (*ppPVar3)->field_4DC = 1;
     (*ppPVar3)->field_4E0 = 1;
     (*ppPVar3)->field_4E4 = 1;
-    (*ppPVar3)->field_4E8 = 0;
+    (*ppPVar3)->headanim = 0;
     (*ppPVar3)->field_4EC = 0.93000001;
     (*ppPVar3)->field_4F0 = 0;
     (*ppPVar3)->field_4F4 = 1.00000000;

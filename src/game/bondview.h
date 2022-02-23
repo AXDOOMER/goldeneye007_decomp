@@ -813,7 +813,7 @@ struct player
   u32 resetheadrot; // bool
   u32 field_4E4; // bool
 
-  s32 field_4E8; // index into array of pointers. Pointers are for animations.
+  s32 headanim; // index into array of pointers. Pointers are for animations.
 
   // has NTSC<->PAL difference, but not (5/6)
   f32 headdamp;
@@ -848,7 +848,7 @@ struct player
 
   // offset 0x594
   s32 standcnt;
-  Model *field_598;
+  Model *model;
   s32 field_59C;
   s32 field_5A0;
   s32 field_5A4;

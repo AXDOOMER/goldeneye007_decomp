@@ -2097,7 +2097,7 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     else if (AircraftEntityp)
                     {
                         zero = 0; //debug value maybe?
-                        objecthandlerAnimationRelated7F06FCA8(AircraftEntityp->model, animation_table_ptrs2[anim_id], zero, startframe, 0.5f, (s32)ai->val[7]);
+                        modelSetAnimation(AircraftEntityp->model, animation_table_ptrs2[anim_id], zero, startframe, 0.5f, (s32)ai->val[7]);
                         if (endframe >= 0)
                         {
                             sub_GAME_7F06FDE8(AircraftEntityp->model, endframe);
@@ -6144,7 +6144,7 @@ action0A_Animation_9:
 /* 06A388 7F035858 44072000 */  mfc1  $a3, $f4
 /* 06A38C 7F03585C 8CA5A04C */  lw    $a1, %lo(animation_table_ptrs2)($a1)
 /* 06A390 7F035860 00003025 */  move  $a2, $zero
-/* 06A394 7F035864 0FC1BF2A */  jal   objecthandlerAnimationRelated7F06FCA8
+/* 06A394 7F035864 0FC1BF2A */  jal   modelSetAnimation
 /* 06A398 7F035868 E7AA0014 */   swc1  $f10, 0x14($sp)
 /* 06A39C 7F03586C 06620009 */  bltzl $s3, .L7F035894
 /* 06A3A0 7F035870 26520009 */   addiu $s2, $s2, 9
@@ -12011,7 +12011,7 @@ action0A_Animation_9:
 /* 06A388 7F035858 44072000 */  mfc1  $a3, $f4
 /* 06A38C 7F03585C 8CA5A04C */  lw    $a1, %lo(animation_table_ptrs2)($a1)
 /* 06A390 7F035860 00003025 */  move  $a2, $zero
-/* 06A394 7F035864 0FC1BF2A */  jal   objecthandlerAnimationRelated7F06FCA8
+/* 06A394 7F035864 0FC1BF2A */  jal   modelSetAnimation
 /* 06A398 7F035868 E7AA0014 */   swc1  $f10, 0x14($sp)
 /* 06A39C 7F03586C 06620009 */  bltzl $s3, .L7F035894
 /* 06A3A0 7F035870 26520009 */   addiu $s2, $s2, 9
@@ -17879,7 +17879,7 @@ action0A_Animation_9:
 /* 06A388 7F035858 44072000 */  mfc1  $a3, $f4
 /* 06A38C 7F03585C 8CA5A04C */  lw    $a1, %lo(animation_table_ptrs2)($a1)
 /* 06A390 7F035860 00003025 */  move  $a2, $zero
-/* 06A394 7F035864 0FC1BF2A */  jal   objecthandlerAnimationRelated7F06FCA8
+/* 06A394 7F035864 0FC1BF2A */  jal   modelSetAnimation
 /* 06A398 7F035868 E7AA0014 */   swc1  $f10, 0x14($sp)
 /* 06A39C 7F03586C 06620009 */  bltzl $s3, .L7F035894
 /* 06A3A0 7F035870 26520009 */   addiu $s2, $s2, 9

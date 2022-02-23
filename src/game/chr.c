@@ -4350,7 +4350,7 @@ glabel sub_GAME_7F020EF0
 /* 055B14 7F020FE4 44812000 */  mtc1  $at, $f4
 /* 055B18 7F020FE8 44070000 */  mfc1  $a3, $f0
 /* 055B1C 7F020FEC E7A00014 */  swc1  $f0, 0x14($sp)
-/* 055B20 7F020FF0 0FC1BF2A */  jal   objecthandlerAnimationRelated7F06FCA8
+/* 055B20 7F020FF0 0FC1BF2A */  jal   modelSetAnimation
 /* 055B24 7F020FF4 E7A40010 */   swc1  $f4, 0x10($sp)
 /* 055B28 7F020FF8 10000008 */  b     .L7F02101C
 /* 055B2C 7F020FFC 00000000 */   nop   
@@ -5202,7 +5202,7 @@ glabel sub_GAME_7F020EF0
 /* 055DEC 7F02127C 44812000 */  mtc1  $at, $f4
 /* 055DF0 7F021280 44070000 */  mfc1  $a3, $f0
 /* 055DF4 7F021284 E7A00014 */  swc1  $f0, 0x14($sp)
-/* 055DF8 7F021288 0FC1C0A6 */  jal   objecthandlerAnimationRelated7F06FCA8
+/* 055DF8 7F021288 0FC1C0A6 */  jal   modelSetAnimation
 /* 055DFC 7F02128C E7A40010 */   swc1  $f4, 0x10($sp)
 /* 055E00 7F021290 10000008 */  b     .Ljp7F0212B4
 /* 055E04 7F021294 00000000 */   nop   
@@ -6128,7 +6128,7 @@ glabel sub_GAME_7F020EF0
 /* 05394C 7F020F5C 44812000 */  mtc1  $at, $f4
 /* 053950 7F020F60 44070000 */  mfc1  $a3, $f0
 /* 053954 7F020F64 E7A00014 */  swc1  $f0, 0x14($sp)
-/* 053958 7F020F68 0FC1BF92 */  jal   objecthandlerAnimationRelated7F06FCA8
+/* 053958 7F020F68 0FC1BF92 */  jal   modelSetAnimation
 /* 05395C 7F020F6C E7A40010 */   swc1  $f4, 0x10($sp)
 /* 053960 7F020F70 10000008 */  b     .L7F020F94
 /* 053964 7F020F74 00000000 */   nop   

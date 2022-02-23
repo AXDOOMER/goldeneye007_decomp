@@ -76,14 +76,14 @@ void sets_a_bunch_of_BONDdata_values_to_default(void)
     }
 #endif
 
-    sub_GAME_7F075FAC(&g_CurrentPlayer->field_598, &player_gait_object_header, &g_CurrentPlayer->field_654);
-    set_obj_instance_controller_scale(&g_CurrentPlayer->field_598, IDO_POINT_ONE);
+    sub_GAME_7F075FAC(&g_CurrentPlayer->model, &player_gait_object_header, &g_CurrentPlayer->field_654);
+    set_obj_instance_controller_scale(&g_CurrentPlayer->model, IDO_POINT_ONE);
 
 #if defined (BUGFIX_R1)
-    sub_GAME_7F06FF18(&g_CurrentPlayer->field_598, ANIMRATE, 0.0f);
+    sub_GAME_7F06FF18(&g_CurrentPlayer->model, ANIMRATE, 0.0f);
 #endif
 
-    g_CurrentPlayer->field_4E8 = 0;
+    g_CurrentPlayer->headanim = 0;
 
     g_CurrentPlayer->headdamp = DAMPVAL;
 
@@ -155,33 +155,33 @@ void sets_a_bunch_of_BONDdata_values_to_default(void)
 
     sp90 = D_8002A790;
 
-    objecthandlerAnimationRelated7F06FCA8(&g_CurrentPlayer->field_598, (struct ModelAnimation *)&ptr_animation_table->data[(s32)&ANIM_DATA_idle], 0, 0.0f, 0.5f, 0.0f);
+    modelSetAnimation(&g_CurrentPlayer->model, (struct ModelAnimation *)&ptr_animation_table->data[(s32)&ANIM_DATA_idle], 0, 0.0f, 0.5f, 0.0f);
 
-    subcalcpos(&g_CurrentPlayer->field_598);
+    subcalcpos(&g_CurrentPlayer->model);
     matrix_4x4_set_identity(&sp50);
 
     sp90.unk_matrix = &sp50;
     sp90.mtxlist = &g_CurrentPlayer->field_6D0;
 
-    subcalcmatrices(&sp90, &g_CurrentPlayer->field_598);
+    subcalcmatrices(&sp90, &g_CurrentPlayer->model);
 
     g_CurrentPlayer->stationary_ground_offset = g_CurrentPlayer->field_704;
     g_CurrentPlayer->field_554 = 0.0f;
     g_CurrentPlayer->field_558 = g_CurrentPlayer->field_744 - g_CurrentPlayer->field_704;
     g_CurrentPlayer->field_55C = g_CurrentPlayer->field_748 - g_CurrentPlayer->field_708;
 
-    objecthandlerAnimationRelated7F06FCA8(
-        &g_CurrentPlayer->field_598,
+    modelSetAnimation(
+        &g_CurrentPlayer->model,
         // match hack: addu address calculated backwards
-        (struct ModelAnimation *) ((s32)g_BondMoveAnimationSetup[g_CurrentPlayer->field_4E8].anim_id + (s32)&ptr_animation_table->data),
+        (struct ModelAnimation *) ((s32)g_BondMoveAnimationSetup[g_CurrentPlayer->headanim].anim_id + (s32)&ptr_animation_table->data),
         0,
-        g_BondMoveAnimationSetup[g_CurrentPlayer->field_4E8].unk04,
+        g_BondMoveAnimationSetup[g_CurrentPlayer->headanim].unk04,
         0.5f,
         0.0f);
 
-    sub_GAME_7F06FDCC(&g_CurrentPlayer->field_598, g_BondMoveAnimationSetup[g_CurrentPlayer->field_4E8].unk04, 0.0f);
-    sub_GAME_7F06FDE8(&g_CurrentPlayer->field_598, g_BondMoveAnimationSetup[g_CurrentPlayer->field_4E8].unk08);
-    sub_GAME_7F06FE3C(&g_CurrentPlayer->field_598, currentPlayerToggle5BC);
+    sub_GAME_7F06FDCC(&g_CurrentPlayer->model, g_BondMoveAnimationSetup[g_CurrentPlayer->headanim].unk04, 0.0f);
+    sub_GAME_7F06FDE8(&g_CurrentPlayer->model, g_BondMoveAnimationSetup[g_CurrentPlayer->headanim].unk08);
+    modelSetAnimFlipFunction(&g_CurrentPlayer->model, bheadFlipAnimation);
 
     currentPlayerUpdateIdleHeadRoll();
 }

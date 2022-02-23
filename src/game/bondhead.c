@@ -63,7 +63,7 @@ void currentPlayerSetHeadDamp(f32 headdamp);
 
 
 
-void currentPlayerToggle5BC()
+void bheadFlipAnimation()
 {
     g_CurrentPlayer->field_5BC = !g_CurrentPlayer->field_5BC;
 }
@@ -186,9 +186,9 @@ void sub_GAME_7F08E240(f32 arg0, f32 arg1)
     spD0 = D_80036B0C;
     spC4 = D_80036B18;
 
-    spC0 = sub_GAME_7F06F618(&g_CurrentPlayer->field_598);
+    spC0 = sub_GAME_7F06F618(&g_CurrentPlayer->model);
 
-    if (g_CurrentPlayer->field_4E8 == 0)
+    if (g_CurrentPlayer->headanim == 0)
     {
         if (spC0 > 0.7f)
         {
@@ -205,7 +205,7 @@ void sub_GAME_7F08E240(f32 arg0, f32 arg1)
 
         g_CurrentPlayer->field_4F8 = g_CurrentPlayer->field_4F4;
     }
-    else if (g_CurrentPlayer->field_4E8 == 1)
+    else if (g_CurrentPlayer->headanim == 1)
     {
         g_CurrentPlayer->field_4F4 = 0.9f;
         g_CurrentPlayer->field_4F8 = 0.5f;
@@ -225,27 +225,27 @@ void sub_GAME_7F08E240(f32 arg0, f32 arg1)
     g_CurrentPlayer->field_4E4 = 0;
 
     sub_GAME_7F0701D4(0);
-    sub_GAME_7F070AEC(&g_CurrentPlayer->field_598, g_ClockTimer, 1);
+    sub_GAME_7F070AEC(&g_CurrentPlayer->model, g_ClockTimer, 1);
     sub_GAME_7F0701D4((s32) sp30);
 
-    subcalcpos(&g_CurrentPlayer->field_598);
+    subcalcpos(&g_CurrentPlayer->model);
     matrix_4x4_set_identity(&sp40);
 
     sp80.unk_matrix = &sp40;
     sp80.mtxlist = &g_CurrentPlayer->field_6D0;
 
-    subcalcmatrices(&sp80, &g_CurrentPlayer->field_598);
+    subcalcmatrices(&sp80, &g_CurrentPlayer->model);
 
     g_CurrentPlayer->field_544[0] = g_CurrentPlayer->field_554;
     g_CurrentPlayer->field_544[1] = g_CurrentPlayer->field_558;
     g_CurrentPlayer->field_544[2] = g_CurrentPlayer->field_55C;
 
-    getsuboffset(&g_CurrentPlayer->field_598, (struct float3 *) &sp34);
+    getsuboffset(&g_CurrentPlayer->model, (struct float3 *) &sp34);
 
     sp34.f[0] -= g_CurrentPlayer->field_700;
     sp34.f[2] -= g_CurrentPlayer->field_708;
     
-    setsuboffset(&g_CurrentPlayer->field_598, (coord3d *) &sp34);
+    setsuboffset(&g_CurrentPlayer->model, (coord3d *) &sp34);
 
     if (spC0 > 0.0f)
     {
@@ -262,7 +262,7 @@ void sub_GAME_7F08E240(f32 arg0, f32 arg1)
         spDC.f[1] = ((g_CurrentPlayer->field_704 - g_CurrentPlayer->stationary_ground_offset) * g_CurrentPlayer->field_4F4) + g_CurrentPlayer->stationary_ground_offset;
         spDC.f[2] = g_CurrentPlayer->field_708 * g_CurrentPlayer->field_4F4;
 
-        if (g_CurrentPlayer->field_4E8 >= 0)
+        if (g_CurrentPlayer->headanim >= 0)
         {
             spD0.f[0] = g_CurrentPlayer->field_6F0 * g_CurrentPlayer->field_4F8;
             spD0.f[1] = g_CurrentPlayer->field_6F4 * g_CurrentPlayer->field_4F4;
@@ -370,20 +370,20 @@ void sub_GAME_7F08E8BC(f32 arg0)
     {
         if (arg0 <= g_BondMoveAnimationSetup[i].unk14 * g_BondMoveAnimationSetup[i].unk0C)
         {
-            if (i != g_CurrentPlayer->field_4E8)
+            if (i != g_CurrentPlayer->headanim)
             {
                 temp_f14 = 0.0f;
 
-                if (g_CurrentPlayer->field_4E8 >= 0)
+                if (g_CurrentPlayer->headanim >= 0)
                 {
-                    temp_f14 = (g_CurrentPlayer->field_5C0 - g_BondMoveAnimationSetup[g_CurrentPlayer->field_4E8].unk04)
-                        / (g_BondMoveAnimationSetup[g_CurrentPlayer->field_4E8].unk08 - g_BondMoveAnimationSetup[g_CurrentPlayer->field_4E8].unk04);
+                    temp_f14 = (g_CurrentPlayer->field_5C0 - g_BondMoveAnimationSetup[g_CurrentPlayer->headanim].unk04)
+                        / (g_BondMoveAnimationSetup[g_CurrentPlayer->headanim].unk08 - g_BondMoveAnimationSetup[g_CurrentPlayer->headanim].unk04);
 
                     temp_f14 = g_BondMoveAnimationSetup[i].unk04 + ((g_BondMoveAnimationSetup[i].unk08 - g_BondMoveAnimationSetup[i].unk04) * temp_f14);
                 }
 
-                objecthandlerAnimationRelated7F06FCA8(
-                    &g_CurrentPlayer->field_598,
+                modelSetAnimation(
+                    &g_CurrentPlayer->model,
                     // match hack: addu address backwards
                     (struct ModelAnimation *) ((s32)g_BondMoveAnimationSetup[i].anim_id + (s32)&ptr_animation_table->data),
                     (s32) g_CurrentPlayer->field_5BC,
@@ -391,15 +391,15 @@ void sub_GAME_7F08E8BC(f32 arg0)
                     0.5f,
                     12.0f);
 
-                sub_GAME_7F06FDCC(&g_CurrentPlayer->field_598, g_BondMoveAnimationSetup[i].unk04, 0.0f);
-                sub_GAME_7F06FDE8(&g_CurrentPlayer->field_598, g_BondMoveAnimationSetup[i].unk08);
-                sub_GAME_7F06FE3C(&g_CurrentPlayer->field_598, currentPlayerToggle5BC);
-                g_CurrentPlayer->field_4E8 = i;
+                sub_GAME_7F06FDCC(&g_CurrentPlayer->model, g_BondMoveAnimationSetup[i].unk04, 0.0f);
+                sub_GAME_7F06FDE8(&g_CurrentPlayer->model, g_BondMoveAnimationSetup[i].unk08);
+                modelSetAnimFlipFunction(&g_CurrentPlayer->model, bheadFlipAnimation);
+                g_CurrentPlayer->headanim = i;
             }
 
             arg0 /= g_BondMoveAnimationSetup[i].unk0C;
 
-            sub_GAME_7F06FE4C(&g_CurrentPlayer->field_598, arg0 * 0.5f, 0.0f);
+            modelSetAnimSpeed(&g_CurrentPlayer->model, arg0 * 0.5f, 0.0f);
             return;
         }
     }
@@ -412,10 +412,10 @@ void sub_GAME_7F08E8BC(f32 arg0)
 /**
  * Address 0x7F08EA48.
 */
-void sub_GAME_7F08EA48(struct ModelAnimation *arg0, s32 arg1, f32 arg2, f32 arg3)
+void bheadStartDeathAnimation(struct ModelAnimation *animnum, s32 flip, f32 fstarttime, f32 speed)
 {
-    objecthandlerAnimationRelated7F06FCA8(&g_CurrentPlayer->field_598, arg0, arg1, arg2, arg3 * 0.5f, 12.0f);
-    g_CurrentPlayer->field_4E8 = -1;
+    modelSetAnimation(&g_CurrentPlayer->model, animnum, flip, fstarttime, speed * 0.5f, 12.0f);
+    g_CurrentPlayer->headanim = -1;
 }
 
 
@@ -426,16 +426,16 @@ void sub_GAME_7F08EA48(struct ModelAnimation *arg0, s32 arg1, f32 arg2, f32 arg3
 /**
  * Address 0x7F08EAB8.
 */
-void sub_GAME_7F08EAB8(f32 arg0)
+void bheadSetSpeed(f32 speed)
 {
-    sub_GAME_7F06FE4C(&g_CurrentPlayer->field_598, arg0 * 0.5f, 0.0f);
+    modelSetAnimSpeed(&g_CurrentPlayer->model, speed * 0.5f, 0.0f);
 }
 
 
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F08EAF8(void) {
+f32 bheadGetBreathingValue(void) {
 
 }
 #else
@@ -446,7 +446,7 @@ glabel D_80055338
 glabel D_8005533C
 .word 0x3b888889 /*0.0041666669*/
 .text
-glabel sub_GAME_7F08EAF8
+glabel bheadGetBreathingValue
 /* 0C3628 7F08EAF8 3C0E8008 */  lui   $t6, %hi(g_CurrentPlayer) 
 /* 0C362C 7F08EAFC 8DCEA0B0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
 /* 0C3630 7F08EB00 27BDFFE0 */  addiu $sp, $sp, -0x20
