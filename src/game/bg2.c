@@ -13,7 +13,7 @@
 #include "math_ceil.h"
 #include "matrixmath.h"
 #include "player.h"
-#include "unk_09C250.h"
+#include "explosions.h"
 #include "unk_0BC530.h"
 
 // new file, per EU

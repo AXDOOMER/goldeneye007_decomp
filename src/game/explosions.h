@@ -1,5 +1,5 @@
-#ifndef _UNK_09C250_H_
-#define _UNK_09C250_H_
+#ifndef _explosions._H_
+#define _explosions._H_
 #include <ultra64.h>
 #include <bondtypes.h>
 

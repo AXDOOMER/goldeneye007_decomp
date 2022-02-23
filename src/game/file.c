@@ -117,9 +117,9 @@ void end_of_mission_briefing(void)
     }
 }
 
-void fileLoadSaveSettingsForSelectedFolder(int a)
+void fileLoadSaveSettingsForSelectedFolder(int stage)
 {
-    if(a){}
+    if(stage){}
     fileLoadSettingsForFolder(selected_folder_num);
 }
 

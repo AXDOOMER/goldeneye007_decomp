@@ -242,7 +242,7 @@ void nullsub_7F0A4860(void)
 }
 
 
-void init_watch_at_start_of_stage(int a)
+void init_watch_at_start_of_stage(int stage)
 {
     watch_screen_index = WATCH_INDEX_MISSION_STATUS;
     controller_options_index = CONTROLLER_OPTIONS_INDEX_STYLE;
@@ -304,7 +304,7 @@ void init_watch_at_start_of_stage(int a)
     D_80040B4C = 0x32;
     D_80040B50 = 0x32;
     D_80040B54 = 0x32;
-    fileLoadSaveSettingsForSelectedFolder(a);
+    fileLoadSaveSettingsForSelectedFolder(stage);
     mission_failed_or_aborted = FALSE;
 }
 
@@ -2190,7 +2190,7 @@ void sub_GAME_7F0A6A80(void)
     s32 temp_3;
     u32 random_value;
 
-    if (joyGetButtonsPressedThisFrame(PLAYER_1, 0x1000))
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, START_BUTTON))
     {
         set_open_close_solo_watch_menu_to1();
     }

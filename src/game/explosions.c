@@ -7,7 +7,7 @@
 #include "bg.h"
 #include "image_bank.h"
 #include "othermodemicrocode.h"
-#include "unk_09C250.h"
+#include "explosions.h"
 #include "unk_0BC530.h"
 #include <assets/GlobalImageTable.h>
 

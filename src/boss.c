@@ -31,6 +31,7 @@
 #include "vi.h"
 #include "game/bg.h"
 #include "game/debugmenu_handler.h"
+#include "game/lvl.h"
 #include "game/ramromreplay.h"
 #include "game/room_model_buffer.h"
 #include "game/rsp.h"

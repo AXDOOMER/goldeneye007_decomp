@@ -27,7 +27,7 @@
 #include "player.h"
 #include "player_2.h"
 #include "stan.h"
-#include "unk_08DBB0.h"
+#include "bondhead.h"
 #include "unk_0A1DA0.h"
 
 #ifdef REFRESH_PAL

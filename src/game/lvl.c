@@ -23,7 +23,7 @@
 #include "player_2.h"
 #include "chrobjhandler.h"
 #include "cleanup_objects.h"
-#include "unk_09C250.h"
+#include "explosions.h"
 #include "chrai.h"
 #include "mp_music.h"
 #include "initunk_005520.h"

@@ -1,6 +1,6 @@
 #include <ultra64.h>
 #include "chrai.h"
-#include "unk_09C250.h"
+#include "explosions.h"
 #include <fr.h>
 
 void cleanupExplosions(void)

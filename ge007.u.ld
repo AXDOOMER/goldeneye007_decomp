@@ -321,10 +321,10 @@ SECTIONS
       build/u/src/game/cleanup_objectives.o (.text);
       build/u/src/game/cleanupSFXRelated.o (.text);
       build/u/src/game/playerstats_007770.o (.text);
-      build/u/src/game/unk_007800.o (.text);
-      build/u/src/game/unk_007920.o (.text);
+      build/u/src/game/cleanexplosions.o (.text);
+      build/u/src/game/cleanwindowpieces.o (.text);
       build/u/src/game/null_007970.o (.text);
-      build/u/src/game/unk_007980.o (.text);
+      build/u/src/game/cleanplayersound.o (.text);
       build/u/src/game/title.o (.text);
       build/u/src/game/front.o (.text);
       build/u/src/game/unk_01B0E0.o (.text);
@@ -360,7 +360,7 @@ SECTIONS
       build/u/src/game/othermodemicrocode.o (.text);
       build/u/src/game/bondview.o (.text);
       build/u/src/game/bondinv.o (.text);
-      build/u/src/game/unk_08DBB0.o (.text);
+      build/u/src/game/bondhead.o (.text);
       build/u/src/game/debugmenu_08FE00.o (.text);
       build/u/src/game/debugmenu_handler.o (.text);
       build/u/src/game/unk_091080.o (.text);
@@ -377,7 +377,7 @@ SECTIONS
       build/u/src/game/crc.o (.text);
       build/u/src/game/chrObjRandom.o (.text);
       build/u/src/game/unk_09B7A0.o (.text);
-      build/u/src/game/unk_09C250.o (.text);
+      build/u/src/game/explosions.o (.text);
       build/u/src/game/unk_0A1DA0.o (.text);
       build/u/src/game/watch.o (.text);
       build/u/src/game/textrelated.o (.text);
@@ -3711,10 +3711,10 @@ SECTIONS
       build/u/src/game/cleanup_objectives.o (.data);
       build/u/src/game/cleanupSFXRelated.o (.data);
       build/u/src/game/playerstats_007770.o (.data);
-      build/u/src/game/unk_007800.o (.data);
-      build/u/src/game/unk_007920.o (.data);
+      build/u/src/game/cleanexplosions.o (.data);
+      build/u/src/game/cleanwindowpieces.o (.data);
       build/u/src/game/null_007970.o (.data);
-      build/u/src/game/unk_007980.o (.data);
+      build/u/src/game/cleanplayersound.o (.data);
       build/u/src/game/title.o (.data);
       build/u/src/game/front.o (.data);
       build/u/src/game/unk_01B0E0.o (.data);
@@ -3750,7 +3750,7 @@ SECTIONS
       build/u/src/game/othermodemicrocode.o (.data);
       build/u/src/game/bondview.o (.data);
       build/u/src/game/bondinv.o (.data);
-      build/u/src/game/unk_08DBB0.o (.data);
+      build/u/src/game/bondhead.o (.data);
       build/u/src/game/debugmenu_08FE00.o (.data);
       build/u/src/game/debugmenu_handler.o (.data);
       build/u/src/game/unk_091080.o (.data);
@@ -3767,7 +3767,7 @@ SECTIONS
       build/u/src/game/crc.o (.data);
       build/u/src/game/chrObjRandom.o (.data);
       build/u/src/game/unk_09B7A0.o (.data);
-      build/u/src/game/unk_09C250.o (.data);
+      build/u/src/game/explosions.o (.data);
       build/u/src/game/unk_0A1DA0.o (.data);
       build/u/src/game/watch.o (.data);
       build/u/src/game/textrelated.o (.data);
@@ -3841,10 +3841,10 @@ SECTIONS
       build/u/src/game/cleanup_objectives.o (.rodata);
       build/u/src/game/cleanupSFXRelated.o (.rodata);
       build/u/src/game/playerstats_007770.o (.rodata);
-      build/u/src/game/unk_007800.o (.rodata);
-      build/u/src/game/unk_007920.o (.rodata);
+      build/u/src/game/cleanexplosions.o (.rodata);
+      build/u/src/game/cleanwindowpieces.o (.rodata);
       build/u/src/game/null_007970.o (.rodata);
-      build/u/src/game/unk_007980.o (.rodata);
+      build/u/src/game/cleanplayersound.o (.rodata);
       build/u/src/game/title.o (.rodata);
       build/u/src/game/front.o (.rodata);
       build/u/src/game/unk_01B0E0.o (.rodata);
@@ -3880,7 +3880,7 @@ SECTIONS
       build/u/src/game/othermodemicrocode.o (.rodata);
       build/u/src/game/bondview.o (.rodata);
       build/u/src/game/bondinv.o (.rodata);
-      build/u/src/game/unk_08DBB0.o (.rodata);
+      build/u/src/game/bondhead.o (.rodata);
       build/u/src/game/debugmenu_08FE00.o (.rodata);
       build/u/src/game/debugmenu_handler.o (.rodata);
       build/u/src/game/unk_091080.o (.rodata);
@@ -3897,7 +3897,7 @@ SECTIONS
       build/u/src/game/crc.o (.rodata);
       build/u/src/game/chrObjRandom.o (.rodata);
       build/u/src/game/unk_09B7A0.o (.rodata);
-      build/u/src/game/unk_09C250.o (.rodata);
+      build/u/src/game/explosions.o (.rodata);
       build/u/src/game/unk_0A1DA0.o (.rodata);
       build/u/src/game/watch.o (.rodata);
       build/u/src/game/textrelated.o (.rodata);
@@ -4188,10 +4188,10 @@ SECTIONS
       build/u/src/game/cleanup_objectives.o (.bss);
       build/u/src/game/cleanupSFXRelated.o (.bss);
       build/u/src/game/playerstats_007770.o (.bss);
-      build/u/src/game/unk_007800.o (.bss);
-      build/u/src/game/unk_007920.o (.bss);
+      build/u/src/game/cleanexplosions.o (.bss);
+      build/u/src/game/cleanwindowpieces.o (.bss);
       build/u/src/game/null_007970.o (.bss);
-      build/u/src/game/unk_007980.o (.bss);
+      build/u/src/game/cleanplayersound.o (.bss);
       build/u/src/game/title.o (.bss);
       build/u/src/game/front.o (.bss);
       build/u/src/game/unk_01B0E0.o (.bss);
@@ -4227,7 +4227,7 @@ SECTIONS
       build/u/src/game/othermodemicrocode.o (.bss);
       build/u/src/game/bondview.o (.bss);
       build/u/src/game/bondinv.o (.bss);
-      build/u/src/game/unk_08DBB0.o (.bss);
+      build/u/src/game/bondhead.o (.bss);
       build/u/src/game/debugmenu_08FE00.o (.bss);
       build/u/src/game/debugmenu_handler.o (.bss);
       build/u/src/game/unk_091080.o (.bss);
@@ -4244,7 +4244,7 @@ SECTIONS
       build/u/src/game/crc.o (.bss);
       build/u/src/game/chrObjRandom.o (.bss);
       build/u/src/game/unk_09B7A0.o (.bss);
-      build/u/src/game/unk_09C250.o (.bss);
+      build/u/src/game/explosions.o (.bss);
       build/u/src/game/unk_0A1DA0.o (.bss);
       build/u/src/game/watch.o (.bss);
       build/u/src/game/textrelated.o (.bss);
