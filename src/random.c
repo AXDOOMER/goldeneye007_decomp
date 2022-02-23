@@ -13,6 +13,8 @@
 u64 g_randomSeed = 0xAB8D9F7781280783;
 
 #ifdef NONMATCHING
+// https://decomp.me/scratch/4prWp
+// -mips3 -O2
 /**
  * Iterates the current random seed and returns a 32 bit value.
  * Same assembly instructions as tlbRandomGetNext and chrObjRandomGetNext, but different globals.
@@ -57,7 +59,7 @@ glabel randomGetNext
 
 
 
-#ifdef NONMATCHING
+#ifndef NONMATCHING
 /**
  * This sets the global random seed. This is called from boss mainloop by randomSetSeed(osGetCount()),
  * so the argument may just be 32bit.
@@ -66,7 +68,7 @@ glabel randomGetNext
  * 
  * Same assembly instructions as chrObjRandomSetSeed.
  */ 
-void randomSetSeed(u32 param_1) {
+void randomSetSeed(u64 param_1) {
     g_randomSeed = param_1 + 1;
 }
 #else
