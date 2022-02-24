@@ -314,7 +314,7 @@ SECTIONS
       build/j/src/game/initunk_007290.o (.text);
       build/j/src/game/initcheattext.o (.text);
       build/j/src/game/initmttex.o (.text);
-      build/j/src/game/initunk_0073B0.o (.text);
+      build/j/src/game/cleanup_guard_data.o (.text);
       build/j/src/game/cleanup_object_sounds.o (.text);
       build/j/src/game/cleanup_alarms.o (.text);
       build/j/src/game/cleanup_objects.o (.text);
@@ -3703,7 +3703,7 @@ SECTIONS
       build/j/src/game/initunk_007290.o (.data);
       build/j/src/game/initcheattext.o (.data);
       build/j/src/game/initmttex.o (.data);
-      build/j/src/game/initunk_0073B0.o (.data);
+      build/j/src/game/cleanup_guard_data.o (.data);
       build/j/src/game/cleanup_object_sounds.o (.data);
       build/j/src/game/cleanup_alarms.o (.data);
       build/j/src/game/cleanup_objects.o (.data);
@@ -3833,7 +3833,7 @@ SECTIONS
       build/j/src/game/initunk_007290.o (.rodata);
       build/j/src/game/initcheattext.o (.rodata);
       build/j/src/game/initmttex.o (.rodata);
-      build/j/src/game/initunk_0073B0.o (.rodata);
+      build/j/src/game/cleanup_guard_data.o (.rodata);
       build/j/src/game/cleanup_object_sounds.o (.rodata);
       build/j/src/game/cleanup_alarms.o (.rodata);
       build/j/src/game/cleanup_objects.o (.rodata);
@@ -4180,7 +4180,7 @@ SECTIONS
       build/j/src/game/initunk_007290.o (.bss);
       build/j/src/game/initcheattext.o (.bss);
       build/j/src/game/initmttex.o (.bss);
-      build/j/src/game/initunk_0073B0.o (.bss);
+      build/j/src/game/cleanup_guard_data.o (.bss);
       build/j/src/game/cleanup_object_sounds.o (.bss);
       build/j/src/game/cleanup_alarms.o (.bss);
       build/j/src/game/cleanup_objects.o (.bss);

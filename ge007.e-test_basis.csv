@@ -533,11 +533,11 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/e/src/game/initcheattext.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/e/src/game/initcheattext.o
 d41d8cd98f00b204e9800998ecf8427e,.data,build/e/src/game/initcheattext.o
 d41d8cd98f00b204e9800998ecf8427e,.rodata,build/e/src/game/initcheattext.o
-8e400a3267ff4e97615eea6a8aac3637,.text,build/e/src/game/initunk_0073B0.o
-d41d8cd98f00b204e9800998ecf8427e,.code,build/e/src/game/initunk_0073B0.o
-d41d8cd98f00b204e9800998ecf8427e,.bss,build/e/src/game/initunk_0073B0.o
-d41d8cd98f00b204e9800998ecf8427e,.data,build/e/src/game/initunk_0073B0.o
-d41d8cd98f00b204e9800998ecf8427e,.rodata,build/e/src/game/initunk_0073B0.o
+8e400a3267ff4e97615eea6a8aac3637,.text,build/e/src/game/cleanup_guard_data.o
+d41d8cd98f00b204e9800998ecf8427e,.code,build/e/src/game/cleanup_guard_data.o
+d41d8cd98f00b204e9800998ecf8427e,.bss,build/e/src/game/cleanup_guard_data.o
+d41d8cd98f00b204e9800998ecf8427e,.data,build/e/src/game/cleanup_guard_data.o
+d41d8cd98f00b204e9800998ecf8427e,.rodata,build/e/src/game/cleanup_guard_data.o
 565b094ac26178b6723feb37ba142c13,.text,build/e/src/game/cleanup_object_sounds.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/e/src/game/cleanup_object_sounds.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/e/src/game/cleanup_object_sounds.o
