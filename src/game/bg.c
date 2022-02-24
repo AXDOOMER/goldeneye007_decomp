@@ -11176,46 +11176,19 @@ invalid_type_terminate:
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0B8A24(s32 arg0) {
-    // Node 0
+// Something about portals. Void* are structs.
+void *sub_GAME_7F0B8A24(s32 *cmd) {
+
     current_visibility = 0;
-    if (arg0 != 0)
+    if (!cmd)
     {
-        // Node 2
-        bgStackGetNthValueFromEnd(0, arg0);
-        // Node 3
-        return parse_global_vis_command_list(arg0, 1);
+        return cmd;
     }
-    // Node 1
-    return parse_global_vis_command_list(arg0, 1);
+
+    bgStackGetNthValueFromEnd(0);
+
+    return parse_global_vis_command_list(cmd, 1);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B8A24
-/* 0ED554 7F0B8A24 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0ED558 7F0B8A28 3C018004 */  lui   $at, %hi(current_visibility)
-/* 0ED55C 7F0B8A2C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0ED560 7F0B8A30 00803025 */  move  $a2, $a0
-/* 0ED564 7F0B8A34 14800003 */  bnez  $a0, .L7F0B8A44
-/* 0ED568 7F0B8A38 AC2048FC */   sw    $zero, %lo(current_visibility)($at)
-/* 0ED56C 7F0B8A3C 10000007 */  b     .L7F0B8A5C
-/* 0ED570 7F0B8A40 00801025 */   move  $v0, $a0
-.L7F0B8A44:
-/* 0ED574 7F0B8A44 00002025 */  move  $a0, $zero
-/* 0ED578 7F0B8A48 0FC2E0F9 */  jal   bgStackGetNthValueFromEnd
-/* 0ED57C 7F0B8A4C AFA60018 */   sw    $a2, 0x18($sp)
-/* 0ED580 7F0B8A50 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0ED584 7F0B8A54 0FC2E105 */  jal   parse_global_vis_command_list
-/* 0ED588 7F0B8A58 24050001 */   li    $a1, 1
-.L7F0B8A5C:
-/* 0ED58C 7F0B8A5C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0ED590 7F0B8A60 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0ED594 7F0B8A64 03E00008 */  jr    $ra
-/* 0ED598 7F0B8A68 00000000 */   nop   
-)
-#endif
 
 
 
