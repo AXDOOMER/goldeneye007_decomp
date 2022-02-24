@@ -10130,28 +10130,9 @@ s32 bgStackPop(void)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0B83E4(void) {
-
+s32 bgStackGetNthValueFromEnd(s32 n) {
+    return g_BgStack[((g_BgStackCount - n) + (BG_STACK_SIZE - 1)) % BG_STACK_SIZE];
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B83E4
-/* 0ECF14 7F0B83E4 3C0E8004 */  lui   $t6, %hi(g_BgStackCount) 
-/* 0ECF18 7F0B83E8 8DCE48F8 */  lw    $t6, %lo(g_BgStackCount)($t6)
-/* 0ECF1C 7F0B83EC 24010014 */  li    $at, 20
-/* 0ECF20 7F0B83F0 3C028004 */  lui   $v0, %hi(g_BgStack)
-/* 0ECF24 7F0B83F4 01C47823 */  subu  $t7, $t6, $a0
-/* 0ECF28 7F0B83F8 25F80013 */  addiu $t8, $t7, 0x13
-/* 0ECF2C 7F0B83FC 0301001A */  div   $zero, $t8, $at
-/* 0ECF30 7F0B8400 0000C810 */  mfhi  $t9
-/* 0ECF34 7F0B8404 00194080 */  sll   $t0, $t9, 2
-/* 0ECF38 7F0B8408 00481021 */  addu  $v0, $v0, $t0
-/* 0ECF3C 7F0B840C 03E00008 */  jr    $ra
-/* 0ECF40 7F0B8410 8C4248A8 */   lw    $v0, %lo(g_BgStack)($v0)
-)
-#endif
 
 
 
@@ -11202,7 +11183,7 @@ void sub_GAME_7F0B8A24(s32 arg0) {
     if (arg0 != 0)
     {
         // Node 2
-        sub_GAME_7F0B83E4(0, arg0);
+        bgStackGetNthValueFromEnd(0, arg0);
         // Node 3
         return parse_global_vis_command_list(arg0, 1);
     }
@@ -11223,7 +11204,7 @@ glabel sub_GAME_7F0B8A24
 /* 0ED570 7F0B8A40 00801025 */   move  $v0, $a0
 .L7F0B8A44:
 /* 0ED574 7F0B8A44 00002025 */  move  $a0, $zero
-/* 0ED578 7F0B8A48 0FC2E0F9 */  jal   sub_GAME_7F0B83E4
+/* 0ED578 7F0B8A48 0FC2E0F9 */  jal   bgStackGetNthValueFromEnd
 /* 0ED57C 7F0B8A4C AFA60018 */   sw    $a2, 0x18($sp)
 /* 0ED580 7F0B8A50 8FA40018 */  lw    $a0, 0x18($sp)
 /* 0ED584 7F0B8A54 0FC2E105 */  jal   parse_global_vis_command_list
