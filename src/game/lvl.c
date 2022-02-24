@@ -16,7 +16,7 @@
 #include "debugmenu_handler.h"
 #include "lvl.h"
 #include "lvl_text.h"
-#include "initunk_0072B0.h"
+#include "initcheattext.h"
 #include "front.h"
 #include "bondinv.h"
 #include "player.h"
@@ -43,9 +43,9 @@
 #include "initguards.h"
 #include "prop.h"
 #include "initexplosioncasing.h"
-#include "initunk_007180.h"
+#include "alloc_window_pieces.h"
 #include "initunk_007290.h"
-#include "initunk_0072B0.h"
+#include "initcheattext.h"
 #include "initpathtablelinks.h"
 #include "ejectedcartridges.h"
 #include "inititemslots.h"
@@ -498,11 +498,11 @@ void lvlStageLoad(s32 stage)
     alloc_explosion_smoke_casing_scorch_impact_buffers();
     alloc_shattered_window_pieces();
     sub_GAME_7F007290();
-    sub_GAME_7F0072B0();
+    initCheatTextBuffer();
 
     if (g_CurrentStageToLoad == LEVELID_TITLE)
     {
-        disable_onscreen_cheat_text();
+        disableOnscreenCheatText();
     }
     else
     {
@@ -520,7 +520,7 @@ void lvlStageLoad(s32 stage)
             load_camera_intro_type_values();
             bondviewPlayerSpawnRelated();
             sets_a_bunch_of_BONDdata_values_to_default();
-            disable_onscreen_cheat_text();
+            disableOnscreenCheatText();
         }
 
         set_cur_player(0);
@@ -764,14 +764,14 @@ glabel lvlStageLoad
 /* 0F292C 7F0BDDFC 00000000 */   nop
 /* 0F2930 7F0BDE00 0FC01CA4 */  jal   sub_GAME_7F007290
 /* 0F2934 7F0BDE04 00000000 */   nop
-/* 0F2938 7F0BDE08 0FC01CAC */  jal   sub_GAME_7F0072B0
+/* 0F2938 7F0BDE08 0FC01CAC */  jal   initCheatTextBuffer
 /* 0F293C 7F0BDE0C 00000000 */   nop
 /* 0F2940 7F0BDE10 3C0C8005 */  lui   $t4, %hi(g_CurrentStageToLoad)
 /* 0F2944 7F0BDE14 8D8C8364 */  lw    $t4, %lo(g_CurrentStageToLoad)($t4)
 /* 0F2948 7F0BDE18 2401005A */  li    $at, 90
 /* 0F294C 7F0BDE1C 15810005 */  bne   $t4, $at, .L7F0BDE34
 /* 0F2950 7F0BDE20 00000000 */   nop
-/* 0F2954 7F0BDE24 0FC01CBE */  jal   disable_onscreen_cheat_text
+/* 0F2954 7F0BDE24 0FC01CBE */  jal   disableOnscreenCheatText
 /* 0F2958 7F0BDE28 00000000 */   nop
 /* 0F295C 7F0BDE2C 10000020 */  b     .L7F0BDEB0
 /* 0F2960 7F0BDE30 00000000 */   nop
@@ -799,7 +799,7 @@ glabel lvlStageLoad
 /* 0F29B0 7F0BDE80 00000000 */   nop
 /* 0F29B4 7F0BDE84 0FC018E3 */  jal   sets_a_bunch_of_BONDdata_values_to_default
 /* 0F29B8 7F0BDE88 00000000 */   nop
-/* 0F29BC 7F0BDE8C 0FC01CBE */  jal   disable_onscreen_cheat_text
+/* 0F29BC 7F0BDE8C 0FC01CBE */  jal   disableOnscreenCheatText
 /* 0F29C0 7F0BDE90 00000000 */   nop
 /* 0F29C4 7F0BDE94 0FC26919 */  jal   getPlayerCount
 /* 0F29C8 7F0BDE98 26100001 */   addiu $s0, $s0, 1
@@ -1069,14 +1069,14 @@ glabel lvlStageLoad
 /* 0F352C 7F0BE9BC 00000000 */   nop
 /* 0F3530 7F0BE9C0 0FC01CAC */  jal   sub_GAME_7F007290
 /* 0F3534 7F0BE9C4 00000000 */   nop
-/* 0F3538 7F0BE9C8 0FC01CB4 */  jal   sub_GAME_7F0072B0
+/* 0F3538 7F0BE9C8 0FC01CB4 */  jal   initCheatTextBuffer
 /* 0F353C 7F0BE9CC 00000000 */   nop
 /* 0F3540 7F0BE9D0 3C0C8005 */  lui   $t4, %hi(g_CurrentStageToLoad) # $t4, 0x8005
 /* 0F3544 7F0BE9D4 8D8C8394 */  lw    $t4, %lo(g_CurrentStageToLoad)($t4)
 /* 0F3548 7F0BE9D8 2401005A */  li    $at, 90
 /* 0F354C 7F0BE9DC 15810005 */  bne   $t4, $at, .Ljp7F0BE9F4
 /* 0F3550 7F0BE9E0 00000000 */   nop
-/* 0F3554 7F0BE9E4 0FC01CC6 */  jal   disable_onscreen_cheat_text
+/* 0F3554 7F0BE9E4 0FC01CC6 */  jal   disableOnscreenCheatText
 /* 0F3558 7F0BE9E8 00000000 */   nop
 /* 0F355C 7F0BE9EC 10000020 */  b     .Ljp7F0BEA70
 /* 0F3560 7F0BE9F0 00000000 */   nop
@@ -1104,7 +1104,7 @@ glabel lvlStageLoad
 /* 0F35B0 7F0BEA40 00000000 */   nop
 /* 0F35B4 7F0BEA44 0FC018E3 */  jal   sets_a_bunch_of_BONDdata_values_to_default
 /* 0F35B8 7F0BEA48 00000000 */   nop
-/* 0F35BC 7F0BEA4C 0FC01CC6 */  jal   disable_onscreen_cheat_text
+/* 0F35BC 7F0BEA4C 0FC01CC6 */  jal   disableOnscreenCheatText
 /* 0F35C0 7F0BEA50 00000000 */   nop
 /* 0F35C4 7F0BEA54 0FC26C01 */  jal   getPlayerCount
 /* 0F35C8 7F0BEA58 26100001 */   addiu $s0, $s0, 1
@@ -1391,14 +1391,14 @@ glabel lvlStageLoad
 /* 0EFBAC 7F0BD1BC 00000000 */   nop   
 /* 0EFBB0 7F0BD1C0 0FC01C84 */  jal   sub_GAME_7F007290
 /* 0EFBB4 7F0BD1C4 00000000 */   nop   
-/* 0EFBB8 7F0BD1C8 0FC01C8C */  jal   sub_GAME_7F0072B0
+/* 0EFBB8 7F0BD1C8 0FC01C8C */  jal   initCheatTextBuffer
 /* 0EFBBC 7F0BD1CC 00000000 */   nop   
 /* 0EFBC0 7F0BD1D0 3C0C8004 */  lui   $t4, %hi(g_CurrentStageToLoad) # $t4, 0x8004
 /* 0EFBC4 7F0BD1D4 8D8C0FE4 */  lw    $t4, %lo(g_CurrentStageToLoad)($t4)
 /* 0EFBC8 7F0BD1D8 2401005A */  li    $at, 90
 /* 0EFBCC 7F0BD1DC 15810005 */  bne   $t4, $at, .L7F0BD1F4
 /* 0EFBD0 7F0BD1E0 00000000 */   nop   
-/* 0EFBD4 7F0BD1E4 0FC01C9E */  jal   disable_onscreen_cheat_text
+/* 0EFBD4 7F0BD1E4 0FC01C9E */  jal   disableOnscreenCheatText
 /* 0EFBD8 7F0BD1E8 00000000 */   nop   
 /* 0EFBDC 7F0BD1EC 10000020 */  b     .L7F0BD270
 /* 0EFBE0 7F0BD1F0 00000000 */   nop   
@@ -1426,7 +1426,7 @@ glabel lvlStageLoad
 /* 0EFC30 7F0BD240 00000000 */   nop   
 /* 0EFC34 7F0BD244 0FC018C3 */  jal   sets_a_bunch_of_BONDdata_values_to_default
 /* 0EFC38 7F0BD248 00000000 */   nop   
-/* 0EFC3C 7F0BD24C 0FC01C9E */  jal   disable_onscreen_cheat_text
+/* 0EFC3C 7F0BD24C 0FC01C9E */  jal   disableOnscreenCheatText
 /* 0EFC40 7F0BD250 00000000 */   nop   
 /* 0EFC44 7F0BD254 0FC26669 */  jal   getPlayerCount
 /* 0EFC48 7F0BD258 26100001 */   addiu $s0, $s0, 1

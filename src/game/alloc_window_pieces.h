@@ -1,5 +1,5 @@
-#ifndef _INITUNK_007180_H_
-#define _INITUNK_007180_H_
+#ifndef _alloc_window_pieces._H_
+#define _alloc_window_pieces._H_
 #include <ultra64.h>
 
 void alloc_shattered_window_pieces(void);

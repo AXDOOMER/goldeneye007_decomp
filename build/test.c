@@ -830,7 +830,7 @@ extern void sub_GAME_7F052B00                                (DoorRecord *door);
 extern void sub_GAME_7F053598                                (DoorRecord *door);                                                                  // doorActivatePortal
 extern void sub_GAME_7F053B10                                (DoorRecord *door);
 extern void sub_GAME_7F056CA0                                (ObjectRecord *obj);
-extern void objecthandlerAnimationRelated7F06FCA8                                (Model *model, AnimTable2 *anim, int b, f32 startframe, float half, float e);
+extern void modelSetAnimation                                (Model *model, AnimTable2 *anim, int b, f32 startframe, float half, float e);
 extern void sub_GAME_7F06FDE8                                (Model *model, float endframe);
 extern void sub_GAME_7F08A928                                (int a);
 extern void sub_GAME_7F08A944                                (PLAYERFLAG flag);
@@ -1578,7 +1578,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                     else if (AircraftEntityp)
                     {
                         zero = 0; //debug value maybe?
-                        objecthandlerAnimationRelated7F06FCA8(AircraftEntityp->model, animation_table_ptrs2[anim_id], zero, startframe, 0.5f, (s32)ai->val[7]);
+                        modelSetAnimation(AircraftEntityp->model, animation_table_ptrs2[anim_id], zero, startframe, 0.5f, (s32)ai->val[7]);
                         if (endframe >= 0)
                         {
                             sub_GAME_7F06FDE8(AircraftEntityp->model, endframe);
