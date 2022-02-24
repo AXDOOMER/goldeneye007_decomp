@@ -33643,14 +33643,14 @@ bool check_if_destroyable_not_invincible(ObjectRecord *obj) {
 
     if (check_if_collectable_object(obj) && obj->type != 21)
     {
-        // Can get this one right
+        // Can't get this one right
         // 82bc0:    bltzl   t9,0x82bec  | 82bc0:    beqzl   t9,0x82bec
         if ((obj->flags << 0xf) != 0)
         {
             return FALSE;
         }
     }
-    // Can get this one right
+    // Can't get this one right
     // 82bd8:    bgezl   t1,0x82bec      | 82bd8:    bnezl   t1,0x82bec
     else if ((obj->flags << 0xe) == 0) 
     {
