@@ -2100,7 +2100,7 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                         modelSetAnimation(AircraftEntityp->model, animation_table_ptrs2[anim_id], zero, startframe, 0.5f, (s32)ai->val[7]);
                         if (endframe >= 0)
                         {
-                            sub_GAME_7F06FDE8(AircraftEntityp->model, endframe);
+                            modelSetAnimEndFrame(AircraftEntityp->model, endframe);
                         }
                     }
                     Offset += 9;
@@ -6153,7 +6153,7 @@ action0A_Animation_9:
 /* 06A3AC 7F03587C 46808420 */  cvt.s.w $f16, $f16
 /* 06A3B0 7F035880 8D440014 */  lw    $a0, 0x14($t2)
 /* 06A3B4 7F035884 44058000 */  mfc1  $a1, $f16
-/* 06A3B8 7F035888 0FC1BF7A */  jal   sub_GAME_7F06FDE8
+/* 06A3B8 7F035888 0FC1BF7A */  jal   modelSetAnimEndFrame
 /* 06A3BC 7F03588C 00000000 */   nop   
 .L7F035890:
 /* 06A3C0 7F035890 26520009 */  addiu $s2, $s2, 9
@@ -12020,7 +12020,7 @@ action0A_Animation_9:
 /* 06A3AC 7F03587C 46808420 */  cvt.s.w $f16, $f16
 /* 06A3B0 7F035880 8D440014 */  lw    $a0, 0x14($t2)
 /* 06A3B4 7F035884 44058000 */  mfc1  $a1, $f16
-/* 06A3B8 7F035888 0FC1BF7A */  jal   sub_GAME_7F06FDE8
+/* 06A3B8 7F035888 0FC1BF7A */  jal   modelSetAnimEndFrame
 /* 06A3BC 7F03588C 00000000 */   nop   
 .L7F035890:
 /* 06A3C0 7F035890 26520009 */  addiu $s2, $s2, 9
@@ -17888,7 +17888,7 @@ action0A_Animation_9:
 /* 06A3AC 7F03587C 46808420 */  cvt.s.w $f16, $f16
 /* 06A3B0 7F035880 8D440014 */  lw    $a0, 0x14($t2)
 /* 06A3B4 7F035884 44058000 */  mfc1  $a1, $f16
-/* 06A3B8 7F035888 0FC1BF7A */  jal   sub_GAME_7F06FDE8
+/* 06A3B8 7F035888 0FC1BF7A */  jal   modelSetAnimEndFrame
 /* 06A3BC 7F03588C 00000000 */   nop   
 .L7F035890:
 /* 06A3C0 7F035890 26520009 */  addiu $s2, $s2, 9

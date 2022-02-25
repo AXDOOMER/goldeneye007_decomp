@@ -572,7 +572,7 @@ struct player
   f32 bondfadetimemax60;
   f32 bondfadefracold;
   f32 bondfadefracnew;
-  f32 field_19C;
+  f32 bondbreathing;
   s32 field_1A0;
   s32 field_1A4;
   s32 field_1A8;
@@ -3256,7 +3256,7 @@ s32 get_BONDdata_field_10E0(void);
 Mtx *currentPlayerGetProjectionMatrix(void);
 Gfx *bondviewRenderProp(PropRecord *arg0, Gfx *arg1, s32 arg2);
 f32 getPlayer_c_lodscalez(void);
-f32 get_BONDdata_bondfadefracnew(void);
+f32 bondviewGetBondBreathing(void);
 void     sub_GAME_7F08A928(int param_1);
 
 void     sub_GAME_7F08A944(PLAYERFLAG flag);

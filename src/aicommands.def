@@ -630,7 +630,7 @@ _AI_CMD(
             modelSetAnimation(AircraftEntityp->model, animation_table_ptrs2[anim_id], zero, startframe, 0.5f, (s32)ai->val[7]);
             if (endframe >= 0)
             {
-                sub_GAME_7F06FDE8(AircraftEntityp->model, endframe);
+                modelSetAnimEndFrame(AircraftEntityp->model, endframe);
             }
         }
         Offset += CAT(CAT(AI_, CMDNAME), _LENGTH);

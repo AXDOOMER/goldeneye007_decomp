@@ -385,6 +385,7 @@ SECTIONS
       build/e/src/game/bondview.o (.text);
       build/e/src/game/bondinv.o (.text);
       build/e/src/game/bondhead.o (.text);
+      build/e/src/game/padhalllv.o (.text);
       build/e/src/game/debugmenu_08FE00.o (.text);
       build/e/src/game/debugmenu_handler.o (.text);
       build/e/src/game/unk_091080.o (.text);
@@ -3824,6 +3825,7 @@ SECTIONS
       build/e/src/game/bondview.o (.data);                        /* 0x12d20 */
       build/e/src/game/bondinv.o (.data);
       build/e/src/game/bondhead.o (.data);                /* around 0x133d0 */
+      build/e/src/game/padhalllv.o (.data);
       build/e/src/game/debugmenu_08FE00.o (.data);
       build/e/src/game/debugmenu_handler.o (.data);         /* around 0x133a0 */
       build/e/src/game/unk_091080.o (.data);
@@ -3954,6 +3956,7 @@ SECTIONS
       build/e/src/game/bondview.o (.rodata);            /* around 0x2c000 up to 0x2c258 */
       build/e/src/game/bondinv.o (.rodata);
       build/e/src/game/bondhead.o (.rodata);
+      build/e/src/game/padhalllv.o (.rodata);
       build/e/src/game/debugmenu_08FE00.o (.rodata);
       build/e/src/game/debugmenu_handler.o (.rodata);
       build/e/src/game/unk_091080.o (.rodata);
@@ -4327,6 +4330,7 @@ SECTIONS
       build/e/src/game/bondview.o (.bss);
       build/e/src/game/bondinv.o (.bss);
       build/e/src/game/bondhead.o (.bss);
+      build/e/src/game/padhalllv.o (.bss);
       build/e/src/game/debugmenu_08FE00.o (.bss);
       build/e/src/game/debugmenu_handler.o (.bss);
       build/e/src/game/unk_091080.o (.bss);

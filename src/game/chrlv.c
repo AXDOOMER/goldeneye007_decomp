@@ -396,13 +396,13 @@ void chrlvIdleAnimationRelated(ChrRecord *self, f32 arg1)
         || (check_if_item_held_like_pistol(right) != 0))
     {
         modelSetAnimation(self->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_idle_unarmed], randomGetNext() & 1, 0, 0.25f, arg1);
-        sub_GAME_7F06FDCC(self->model, 0, 16.0f);
+        modelSetAnimLooping(self->model, 0, 16.0f);
     }
     else if ((right != NULL) || (left != NULL))
     {
         modelSetAnimation(self->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_idle], left != NULL, 0, 0.25f, arg1);
-        sub_GAME_7F06FDCC(self->model, 0, 16.0f);
-        sub_GAME_7F06FDE8(self->model, 120.0f);
+        modelSetAnimLooping(self->model, 0, 16.0f);
+        modelSetAnimEndFrame(self->model, 120.0f);
     }
 
     return;
@@ -534,12 +534,12 @@ void chrlvKneelingAnimationRelated(ChrRecord *self)
         if ((s32)objecthandlerGetModelAnim(self->model) == (s32)&ANIM_DATA_fire_kneel_forward_one_handed_weapon_slow + (s32)&ptr_animation_table->data)
         {
             modelSetAnimation(self->model, (struct ModelAnimation*)((s32)&ANIM_DATA_fire_kneel_forward_one_handed_weapon_slow + (s32)&ptr_animation_table->data), (s32) self->model->gunhand, 109.0f, chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f), 16.0f);
-            sub_GAME_7F06FDE8(self->model, 140.0f);
+            modelSetAnimEndFrame(self->model, 140.0f);
         }
         else
         {
             modelSetAnimation(self->model, (struct ModelAnimation*)&ptr_animation_table->data[(s32)&ANIM_DATA_fire_kneel_left_leg], (s32) self->model->gunhand, 120.0f, chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f), 16.0f);
-            sub_GAME_7F06FDE8(self->model, 151.0f);
+            modelSetAnimEndFrame(self->model, 151.0f);
         }
 
         return;
@@ -594,12 +594,12 @@ void chrlvActorKneel(ChrRecord *self)
     {
         s32 r = randomGetNext() & 1;
         modelSetAnimation(self->model, (struct ModelAnimation*)&ptr_animation_table->data[(s32)&ANIM_DATA_fire_kneel_forward_one_handed_weapon_slow], r, 0.0f, chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f), 16.0f);
-        sub_GAME_7F06FDE8(self->model, 28.0f);
+        modelSetAnimEndFrame(self->model, 28.0f);
     }
     else if ((right != NULL) || (left != NULL))
     {
         modelSetAnimation(self->model, (struct ModelAnimation*)&ptr_animation_table->data[(s32)&ANIM_DATA_fire_kneel_left_leg], left != NULL, 0.0f, chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f), 16.0f);
-        sub_GAME_7F06FDE8(self->model, 27.0f);
+        modelSetAnimEndFrame(self->model, 27.0f);
     }
 
     self->actiontype = ACT_KNEEL;
@@ -627,7 +627,7 @@ void chrlvPerformAnimationForActor(ChrRecord *self, s32 arg1, s32 arg2, s32 arg3
 
     if (arg3 >= 0)
     {
-        sub_GAME_7F06FDE8(self->model, (f32)arg3);
+        modelSetAnimEndFrame(self->model, (f32)arg3);
     }
 
     if ((arg4 & 0x20) != 0)
@@ -686,7 +686,7 @@ void chrlvExtendLeftHandAnimationRelated(ChrRecord *self)
     self->sleep = 0;
 
     modelSetAnimation(self->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_extending_left_hand], phi_a2, 40.0f, 1.0f, 16.0f);
-    sub_GAME_7F06FDE8(self->model, 82.0f);
+    modelSetAnimEndFrame(self->model, 82.0f);
 }
 
 
@@ -710,7 +710,7 @@ void chrlvThrowGrenadeAnimationRelated(ChrRecord *self, PropRecord *arg1, s32 ar
         modelSetAnimation(self->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_fire_throw_grenade], arg2 != 0, 84.0f, chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f), 16.0f);
     }
 
-    sub_GAME_7F06FDE8(self->model, 193.0f);
+    modelSetAnimEndFrame(self->model, 193.0f);
 }
 
 
@@ -741,7 +741,7 @@ void chrlvSpotBondAnimationRelated(ChrRecord *self, f32 arg1)
 
     objarg4 = chrlvGetGuard007SpeedRating(self, 0.6f, 0.96000004f); // 0.96000004 is different from 0.96
     modelSetAnimation(self->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_spotting_bond], sp2C, 10.0f, objarg4, arg1);
-    sub_GAME_7F06FDE8(self->model, 52.0f);
+    modelSetAnimEndFrame(self->model, 52.0f);
 }
 
 
@@ -783,7 +783,7 @@ void chrlvSurrenderAnimationRelated(ChrRecord *self)
     self->actiontype = ACT_SURPRISED;
     self->sleep = 0;
     modelSetAnimation(self->model, (struct ModelAnimation*)&ptr_animation_table->data[(s32)&ANIM_DATA_surrendering_armed], randomGetNext() & 1, 0.0f, chrlvGetGuard007SpeedRating(self, 0.35f, 0.56f), 16.0f);
-    sub_GAME_7F06FDE8(self->model, 7.0f);
+    modelSetAnimEndFrame(self->model, 7.0f);
 }
 
 
@@ -805,15 +805,15 @@ void chrlvActorLookFlustered(ChrRecord *self)
 
     if (sp2C == 0)
     {
-        sub_GAME_7F06FDE8(self->model, chrlvGetGuard007SpeedRating(self, 38.0f, 8.0f));
+        modelSetAnimEndFrame(self->model, chrlvGetGuard007SpeedRating(self, 38.0f, 8.0f));
     }
     else if (sp2C == 1)
     {
-        sub_GAME_7F06FDE8(self->model, chrlvGetGuard007SpeedRating(self, 66.0f, 8.0f));
+        modelSetAnimEndFrame(self->model, chrlvGetGuard007SpeedRating(self, 66.0f, 8.0f));
     }
     else
     {
-        sub_GAME_7F06FDE8(self->model, chrlvGetGuard007SpeedRating(self, 96.0f, 8.0f));
+        modelSetAnimEndFrame(self->model, chrlvGetGuard007SpeedRating(self, 96.0f, 8.0f));
     }
 }
 
@@ -840,7 +840,7 @@ void chrlvActorThrowWeaponSurrender(ChrRecord *self)
         if ((right != NULL) || (left != NULL))
         {
             modelSetAnimation(self->model, (struct ModelAnimation*)&ptr_animation_table->data[(s32)&ANIM_DATA_surrendering_armed_drop_weapon], randomGetNext() & 1, 0.0f, 0.5f, 16.0f);
-            sub_GAME_7F06FDCC(self->model, 40.0f, 16.0f);
+            modelSetAnimLooping(self->model, 40.0f, 16.0f);
 
             self->sleep = 0x10;
 
@@ -858,7 +858,7 @@ void chrlvActorThrowWeaponSurrender(ChrRecord *self)
         else
         {
             modelSetAnimation(self->model, (struct ModelAnimation*)&ptr_animation_table->data[(s32)&ANIM_DATA_surrendering_armed], randomGetNext() & 1, 0.0f, 0.5f, 16.0f);
-            sub_GAME_7F06FDCC(self->model, 30.0f, 16.0f);
+            modelSetAnimLooping(self->model, 30.0f, 16.0f);
 
             self->sleep = 0x10;
         }
@@ -924,12 +924,12 @@ void chrlvSideStepAnimationRelated(ChrRecord *self, s32 arg1)
         if (arg1 != 0)
         {
             modelSetAnimation(self->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_side_step_left], 0, 5.0f, chrlvGetGuard007SpeedRating(self, 0.55f, 0.88000005f), 16.0f);
-            sub_GAME_7F06FDE8(self->model, 27.0f);
+            modelSetAnimEndFrame(self->model, 27.0f);
         }
         else
         {
             modelSetAnimation(self->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_side_step_left], 1, 5.0f, chrlvGetGuard007SpeedRating(self, 0.55f, 0.88000005f), 16.0f);
-            sub_GAME_7F06FDE8(self->model, 27.0f);
+            modelSetAnimEndFrame(self->model, 27.0f);
         }
 
         return;
@@ -938,13 +938,13 @@ void chrlvSideStepAnimationRelated(ChrRecord *self, s32 arg1)
     if (((arg1 != 0) && (sp2C == 0)) || ((arg1 == 0) && (sp2C != 0)))
     {
         modelSetAnimation(self->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_slide_left], sp2C, 5.0f, chrlvGetGuard007SpeedRating(self, 0.7f, 1.12f), 16.0f);
-        sub_GAME_7F06FDE8(self->model, 34.0f);
+        modelSetAnimEndFrame(self->model, 34.0f);
 
     }
     else
     {
         modelSetAnimation(self->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_slide_right], sp2C, 5.0f, chrlvGetGuard007SpeedRating(self, 0.7f, 1.12f), 16.0f);
-        sub_GAME_7F06FDE8(self->model, 32.0f);
+        modelSetAnimEndFrame(self->model, 32.0f);
     }
 
     return;
@@ -989,12 +989,12 @@ void chrlvFireJumpToSideAnimationRelated(ChrRecord *self, s32 arg1)
         if ((randomGetNext() & 1) != 0)
         {
             modelSetAnimation(self->model, (struct ModelAnimation*)&ptr_animation_table->data[(s32)&ANIM_DATA_fire_jump_to_side_left], sp2C, 5.0f, chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f), 16.0f);
-            sub_GAME_7F06FDE8(self->model, 49.0f);
+            modelSetAnimEndFrame(self->model, 49.0f);
         }
         else
         {
             modelSetAnimation(self->model, (struct ModelAnimation*)&ptr_animation_table->data[(s32)&ANIM_DATA_fire_jump_to_side_right], sp2C, 130.0f, chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f), 16.0f);
-            sub_GAME_7F06FDE8(self->model, 173.0f);
+            modelSetAnimEndFrame(self->model, 173.0f);
         }
 
         return;
@@ -1003,12 +1003,12 @@ void chrlvFireJumpToSideAnimationRelated(ChrRecord *self, s32 arg1)
     if ((randomGetNext() & 1) != 0)
     {
         modelSetAnimation(self->model, (struct ModelAnimation*)&ptr_animation_table->data[(s32)&ANIM_DATA_fire_jump_to_side_right], sp2C, 20.0f, chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f), 16.0f);
-        sub_GAME_7F06FDE8(self->model, 63.0f);
+        modelSetAnimEndFrame(self->model, 63.0f);
     }
     else
     {
         modelSetAnimation(self->model, (struct ModelAnimation*)&ptr_animation_table->data[(s32)&ANIM_DATA_fire_jump_to_side_left], sp2C, 91.0f, chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f), 16.0f);
-        sub_GAME_7F06FDE8(self->model, 136.0f);
+        modelSetAnimEndFrame(self->model, 136.0f);
     }
 
     return;
@@ -1096,8 +1096,8 @@ void chrlvDeathStaggerAnimationRelated(ChrRecord *self)
     self->actiontype = ACT_TEST;
     self->sleep = 0;
     modelSetAnimation(self->model, (struct ModelAnimation*)&ptr_animation_table->data[(s32)&ANIM_DATA_death_stagger_back_to_wall], 0, 10.0f, 0.5f, 16.0f);
-    sub_GAME_7F06FDCC(self->model, 10.0f, 16.0f);
-    sub_GAME_7F06FDE8(self->model, 40.0f);
+    modelSetAnimLooping(self->model, 10.0f, 16.0f);
+    modelSetAnimEndFrame(self->model, 40.0f);
 }
 
 
@@ -1118,35 +1118,35 @@ void chrlvAttackActionRelated(ChrRecord *self)
     {
         if ((f->anonymous_8 >= 0.0f) && (f->anonymous_8 < f->anonymous_6))
         {
-            sub_GAME_7F06FDE8(model, f->anonymous_8);
+            modelSetAnimEndFrame(model, f->anonymous_8);
         }
         else
         {
-            sub_GAME_7F06FDE8(model, f->anonymous_6);
+            modelSetAnimEndFrame(model, f->anonymous_6);
         }
     }
     else if (self->act_attack.unk36 != 0)
     {
         if (f->anonymous_8 >= 0.0f)
         {
-            sub_GAME_7F06FDE8(model, f->anonymous_8);
+            modelSetAnimEndFrame(model, f->anonymous_8);
         }
         else
         {
-            sub_GAME_7F06FDE8(model, f->anonymous_6);
+            modelSetAnimEndFrame(model, f->anonymous_6);
         }
     }
     else if (f->anonymous_8 >= 0.0f)
     {
-        sub_GAME_7F06FDE8(model, f->anonymous_8);
+        modelSetAnimEndFrame(model, f->anonymous_8);
     }
     else if (f->anonymous_5 >= 0.0f)
     {
-        sub_GAME_7F06FDE8(model, f->anonymous_5);
+        modelSetAnimEndFrame(model, f->anonymous_5);
     }
     else
     {
-        sub_GAME_7F06FDE8(model, -1.0f);
+        modelSetAnimEndFrame(model, -1.0f);
     }
 }
 
@@ -1862,20 +1862,20 @@ void chrlvInitActAttackRoll(ChrRecord *chr, s32 arg1)
         {
             if (panim_float->anonymous_9 >= 0.0f)
             {
-                sub_GAME_7F06FDE8(self_model, panim_float->anonymous_9);
+                modelSetAnimEndFrame(self_model, panim_float->anonymous_9);
             }
             else
             {
-                sub_GAME_7F06FDE8(self_model, panim_float->anonymous_7);
+                modelSetAnimEndFrame(self_model, panim_float->anonymous_7);
             }
         }
         else if (panim_float->anonymous_8 >= 0.0f)
         {
-            sub_GAME_7F06FDE8(self_model, panim_float->anonymous_8);
+            modelSetAnimEndFrame(self_model, panim_float->anonymous_8);
         }
         else if (panim_float->anonymous_5 >= 0.0f)
         {
-            sub_GAME_7F06FDE8(self_model, panim_float->anonymous_5);
+            modelSetAnimEndFrame(self_model, panim_float->anonymous_5);
         }
     }
 }
@@ -2150,7 +2150,7 @@ void triggered_on_shot_hit(ChrRecord *self, coord3d *arg1, f32 arg2, s32 req_ani
 
                         if (struck_ani->anonymous_2 >= 0.0f)
                         {
-                            sub_GAME_7F06FDE8(model, struck_ani->anonymous_2);
+                            modelSetAnimEndFrame(model, struck_ani->anonymous_2);
                         }
 
                         // Note: PD sets the chrwidth to 10 when a guard dies slumped against an object or wall
@@ -2190,11 +2190,11 @@ void triggered_on_shot_hit(ChrRecord *self, coord3d *arg1, f32 arg2, s32 req_ani
 
                     if ((s32)struck_anib->anonymous_0 == ((s32)&ptr_animation_table->data[(s32)&ANIM_DATA_death_neck]) && ((randomGetNext() % (u32)0x64) != 0))
                     {
-                        sub_GAME_7F06FDE8(model, 241.0f);
+                        modelSetAnimEndFrame(model, 241.0f);
                     }
                     else if (struck_anib->anonymous_2 >= 0.0f)
                     {
-                        sub_GAME_7F06FDE8(model, struck_anib->anonymous_2);
+                        modelSetAnimEndFrame(model, struck_anib->anonymous_2);
                     }
 
                     impact_force = bondwalkItemGetForceOfImpact(item);
@@ -2241,15 +2241,15 @@ void triggered_on_shot_hit(ChrRecord *self, coord3d *arg1, f32 arg2, s32 req_ani
 
                     if (sp54 < 2U)
                     {
-                        sub_GAME_7F06FDE8(model, chrlvGetGuard007ArghRating(self, 34.0f, 8.0f));
+                        modelSetAnimEndFrame(model, chrlvGetGuard007ArghRating(self, 34.0f, 8.0f));
                     }
                     else if (sp54 < 4U)
                     {
-                        sub_GAME_7F06FDE8(model, chrlvGetGuard007ArghRating(self, 71.0f, 8.0f));
+                        modelSetAnimEndFrame(model, chrlvGetGuard007ArghRating(self, 71.0f, 8.0f));
                     }
                     else
                     {
-                        sub_GAME_7F06FDE8(model, chrlvGetGuard007ArghRating(self, (f32) (((u16*)sp80)[2] - 1), 8.0f));
+                        modelSetAnimEndFrame(model, chrlvGetGuard007ArghRating(self, (f32) (((u16*)sp80)[2] - 1), 8.0f));
                     }
                 }
                 else
@@ -2259,15 +2259,15 @@ void triggered_on_shot_hit(ChrRecord *self, coord3d *arg1, f32 arg2, s32 req_ani
                     
                     if (sp54 < 2U)
                     {
-                        sub_GAME_7F06FDE8(model, chrlvGetGuard007ArghRating(self, 37.0f, 8.0f));
+                        modelSetAnimEndFrame(model, chrlvGetGuard007ArghRating(self, 37.0f, 8.0f));
                     }
                     else if (sp54 < 4U)
                     {
-                        sub_GAME_7F06FDE8(model, chrlvGetGuard007ArghRating(self, 70.0f, 8.0f));
+                        modelSetAnimEndFrame(model, chrlvGetGuard007ArghRating(self, 70.0f, 8.0f));
                     }
                     else
                     {
-                        sub_GAME_7F06FDE8(model, chrlvGetGuard007ArghRating(self, (f32) (((u16*)sp80)[2] - 1), 8.0f));
+                        modelSetAnimEndFrame(model, chrlvGetGuard007ArghRating(self, (f32) (((u16*)sp80)[2] - 1), 8.0f));
                     }
                 }
                 
@@ -2311,11 +2311,11 @@ void triggered_on_shot_hit(ChrRecord *self, coord3d *arg1, f32 arg2, s32 req_ani
 
                     if (struck_ani->anonymous_2 >= 0.0f)
                     {
-                        sub_GAME_7F06FDE8(model, chrlvGetGuard007ArghRating(self, struck_ani->anonymous_2, 8.0f));
+                        modelSetAnimEndFrame(model, chrlvGetGuard007ArghRating(self, struck_ani->anonymous_2, 8.0f));
                     }
                     else
                     {
-                        sub_GAME_7F06FDE8(model, chrlvGetGuard007ArghRating(self, (f32)((s32)((u16*)struck_ani->anonymous_0)[2] - (s32)1), 8.0f));
+                        modelSetAnimEndFrame(model, chrlvGetGuard007ArghRating(self, (f32)((s32)((u16*)struck_ani->anonymous_0)[2] - (s32)1), 8.0f));
                     }
                 }
             }
@@ -2828,7 +2828,7 @@ bool handles_shot_actors(ChrRecord *self, s32 hitpart, coord3d *vector, s32 weap
             {
                 if (endframe2 >= 0.0f)
                 {
-                    sub_GAME_7F06FDE8(self->model, endframe2); //modelSetAnimEndFrame
+                    modelSetAnimEndFrame(self->model, endframe2); //modelSetAnimEndFrame
                 }
 
                 self->actiontype         = ACT_PREARGH;
@@ -2952,7 +2952,7 @@ s32 chrlvExplosionDamage(ChrRecord *self, coord3d *arg1, f32 damage, s32 arg3)
         
         if (sp38->anonymous_6 >= 0.0f)
         {
-            sub_GAME_7F06FDE8(self_model, sp38->anonymous_6);
+            modelSetAnimEndFrame(self_model, sp38->anonymous_6);
         }
 
         if (arg3 != 0)
@@ -3286,7 +3286,7 @@ s32 chrlvMovementTargetRelated(ChrRecord *self)
     StandTile *sp1C; // 28
     f32 sp18; // 24
 
-    sp18 = sub_GAME_7F06F618(self->model);
+    sp18 = modelGetAbsAnimSpeed(self->model);
     chrlvActGoposRelated(self, &sp20, &sp1C);
     temp_v0 = self->prop;
     dx = sp20.f[0] - temp_v0->pos.f[0];
@@ -3401,7 +3401,7 @@ void chrlvActGoposIncCurIndex(ChrRecord *self)
 
         self->act_gopos.curindex = 1;
 
-        sub_GAME_7F08F4F0(p, self->act_gopos.target_path, (waypoint **)&self->act_gopos.waypoints, MAX_CHRWAYPOINTS);
+        waypointFindRoute(p, self->act_gopos.target_path, (waypoint **)&self->act_gopos.waypoints, MAX_CHRWAYPOINTS);
     }
 
     chrlvActGoposSetTargetPosRelated(self);
@@ -3653,7 +3653,7 @@ void chrlvTravelTickMagic(ChrRecord *self, struct waydata *arg1, f32 arg2, coord
 
     self->invalidmove = 0;
     self->lastmoveok60 = g_GlobalTimer;
-    arg1->segdistdone += arg2 * sub_GAME_7F06F618(self->model) * g_GlobalTimerDelta;
+    arg1->segdistdone += arg2 * modelGetAbsAnimSpeed(self->model) * g_GlobalTimerDelta;
     
     if (arg1->segdisttotal <= arg1->segdistdone)
     {
@@ -3923,7 +3923,7 @@ s32 plot_course_for_actor(ChrRecord *self, coord3d *arg1, StandTile *stan, SPEED
 
     if ((prop_waypoint != NULL) 
         && (target_waypoint != NULL) 
-        && !(sub_GAME_7F08F4F0(prop_waypoint, target_waypoint, (waypoint **)&sp44, MAX_CHRWAYPOINTS) < 2)
+        && !(waypointFindRoute(prop_waypoint, target_waypoint, (waypoint **)&sp44, MAX_CHRWAYPOINTS) < 2)
     )
     {
         sub_GAME_7F02D184(self);
@@ -5356,7 +5356,7 @@ void chrlvTickStand(ChrRecord *self)
                         0.5f,
                         16.0f);
 
-                    sub_GAME_7F06FDE8(
+                    modelSetAnimEndFrame(
                         self->model,
                         (((u16*)((s32)&ANIM_DATA_walking_unarmed + (s32)&ptr_animation_table->data))[2] - 1));
                 }
@@ -5371,7 +5371,7 @@ void chrlvTickStand(ChrRecord *self)
                         0.5f,
                         16.0f);
 
-                    sub_GAME_7F06FDE8(
+                    modelSetAnimEndFrame(
                         self->model,
                         (((u16*)((s32)&ANIM_DATA_walking + (s32)&ptr_animation_table->data))[2] - 1));
                 }
@@ -5562,7 +5562,7 @@ void chrlvTickSurrender(ChrRecord *self)
             if (chrlvCall7F02982C(self->prop, &sp30, 20.0f) == 0)
             {
                 modelSetAnimation(self->model, (struct ModelAnimation *)&ptr_animation_table->data[(s32)&ANIM_DATA_surrendering_armed], randomGetNext() & 1, 30.0f, 0.5f, 16.0f);
-                sub_GAME_7F06FDCC(self->model, 30.0f, 16.0f);
+                modelSetAnimLooping(self->model, 30.0f, 16.0f);
             }
         }
     }
@@ -7430,7 +7430,7 @@ s32 chrlvAttackrollAnimationRelated7F02E2E0(ChrRecord *self)
 
         if (D_80030078[1].anonymous_5 >= 0.0f)
         {
-            sub_GAME_7F06FDE8(model, D_80030078[1].anonymous_5);
+            modelSetAnimEndFrame(model, D_80030078[1].anonymous_5);
         }
 
         return 1;
@@ -7475,7 +7475,7 @@ void chrlvAttackrollAnimationRelated7F02E3B8(ChrRecord *self)
 
     if (self->act_attackroll.animfloats->anonymous_5 >= 0.0f)
     {
-        sub_GAME_7F06FDE8(model, self->act_attackroll.animfloats->anonymous_5);
+        modelSetAnimEndFrame(model, self->act_attackroll.animfloats->anonymous_5);
     }
 }
 
@@ -7527,7 +7527,7 @@ void chrlvTickAttackCommon(ChrRecord *self)
                         
                         if (self->act_attack.animfloats->anonymous_5 >= 0.0f)
                         {
-                            sub_GAME_7F06FDE8(self_model, self->act_attack.animfloats->anonymous_5);
+                            modelSetAnimEndFrame(self_model, self->act_attack.animfloats->anonymous_5);
                         }
                     }
                 }
@@ -7619,7 +7619,7 @@ void chrlvTickAttackCommon(ChrRecord *self)
             self->act_attack.unk31 = 0;
 
             modelSetAnimation(self_model, objecthandlerGetModelAnim(self_model), (s32) self_model->gunhand, fp1, temp_f0_6, 8.0f);
-            sub_GAME_7F06FDE8(self_model, fp2);
+            modelSetAnimEndFrame(self_model, fp2);
         }
 
         phi_f20 = objecthandlerGetModelField28(self_model);
@@ -7846,7 +7846,7 @@ glabel chrlvTickAttackCommon
 /* 06101C 7F02E62C 45000004 */  bc1f  .L7F02E640
 /* 061020 7F02E630 00000000 */   nop   
 /* 061024 7F02E634 44050000 */  mfc1  $a1, $f0
-/* 061028 7F02E638 0FC1BFE2 */  jal   sub_GAME_7F06FDE8
+/* 061028 7F02E638 0FC1BFE2 */  jal   modelSetAnimEndFrame
 /* 06102C 7F02E63C 02602025 */   move  $a0, $s3
 .L7F02E640:
 /* 061030 7F02E640 10000004 */  b     .L7F02E654
@@ -7994,7 +7994,7 @@ glabel chrlvTickAttackCommon
 /* 06122C 7F02E83C 0FC1BF92 */  jal   modelSetAnimation
 /* 061230 7F02E840 E7AC0010 */   swc1  $f12, 0x10($sp)
 /* 061234 7F02E844 4405A000 */  mfc1  $a1, $f20
-/* 061238 7F02E848 0FC1BFE2 */  jal   sub_GAME_7F06FDE8
+/* 061238 7F02E848 0FC1BFE2 */  jal   modelSetAnimEndFrame
 /* 06123C 7F02E84C 02602025 */   move  $a0, $s3
 .L7F02E850:
 /* 061240 7F02E850 0FC1BDD7 */  jal   objecthandlerGetModelField28
@@ -8315,7 +8315,7 @@ void chrlvTickAttack(ChrRecord *self)
             
             if (self->act_attack.animfloats->anonymous_5 >= 0.0f)
             {
-                sub_GAME_7F06FDE8(self_model, self->act_attack.animfloats->anonymous_5);
+                modelSetAnimEndFrame(self_model, self->act_attack.animfloats->anonymous_5);
             }
 
             self->act_attack.type_of_motion = 2;
@@ -8390,12 +8390,12 @@ void chrlvTickAttack(ChrRecord *self)
                 {
                     if (self->act_attack.animfloats->anonymous_5 >= 0.0f)
                     {
-                        sub_GAME_7F06FDE8(self_model, self->act_attack.animfloats->anonymous_5);
+                        modelSetAnimEndFrame(self_model, self->act_attack.animfloats->anonymous_5);
                     }
                 }
                 else
                 {
-                    sub_GAME_7F06FDE8(self_model, self->act_attack.animfloats->anonymous_7);
+                    modelSetAnimEndFrame(self_model, self->act_attack.animfloats->anonymous_7);
                 }
             }
         }
@@ -8511,20 +8511,20 @@ void chrlvTickAttackRoll(ChrRecord *self)
                 {
                     if (phi_v1->anonymous_9 >= 0.0f)
                     {
-                        sub_GAME_7F06FDE8(temp_a0, phi_v1->anonymous_9);
+                        modelSetAnimEndFrame(temp_a0, phi_v1->anonymous_9);
                     }
                     else
                     {
-                        sub_GAME_7F06FDE8(temp_a0, phi_v1->anonymous_7);
+                        modelSetAnimEndFrame(temp_a0, phi_v1->anonymous_7);
                     }
                 }
                 else if (phi_v1->anonymous_8 >= 0.0f)
                 {
-                    sub_GAME_7F06FDE8(temp_a0, phi_v1->anonymous_8);
+                    modelSetAnimEndFrame(temp_a0, phi_v1->anonymous_8);
                 }
                 else if (phi_v1->anonymous_5 >= 0.0f)
                 {
-                    sub_GAME_7F06FDE8(temp_a0, phi_v1->anonymous_5);
+                    modelSetAnimEndFrame(temp_a0, phi_v1->anonymous_5);
                 }
 
                 if (self->act_attackroll.animfloats->anonymous_3 != 0.0f)
@@ -8567,12 +8567,12 @@ void chrlvTickAttackRoll(ChrRecord *self)
                     {
                         if (self->act_attackroll.animfloats->anonymous_5 >= 0.0f)
                         {
-                            sub_GAME_7F06FDE8(temp_a0, self->act_attackroll.animfloats->anonymous_5);
+                            modelSetAnimEndFrame(temp_a0, self->act_attackroll.animfloats->anonymous_5);
                         }
                     }
                     else
                     {
-                        sub_GAME_7F06FDE8(temp_a0, self->act_attackroll.animfloats->anonymous_7);
+                        modelSetAnimEndFrame(temp_a0, self->act_attackroll.animfloats->anonymous_7);
                     }
                 }
             }
@@ -8654,7 +8654,7 @@ void chrlvTickBondIntro(ChrRecord *self)
             sub_GAME_7F06F610(self_model),
             24.0f);
 
-        sub_GAME_7F06FDE8(self_model, 131.0f);
+        modelSetAnimEndFrame(self_model, 131.0f);
 
         return;
     }
@@ -9098,7 +9098,7 @@ void chrlvTickRunPos(ChrRecord *self)
             sp2C = D_80030994;
         }
 
-        self->act_runpos.neardist += sp2C * g_GlobalTimerDelta * sub_GAME_7F06F618(self_model);
+        self->act_runpos.neardist += sp2C * g_GlobalTimerDelta * modelGetAbsAnimSpeed(self_model);
     }
 }
 
@@ -11443,7 +11443,7 @@ bool check_2328_preset_set_with_method(ChrRecord *self, u8 quadrant)
         {
             if (quadrant == QUADRANT_2NDWPTOTARGET)
             {
-                if (sub_GAME_7F08F4F0(myclosestwaypoint, bondsclosestwaypoint, (waypoint **)&sp2C, PATH_FINDING_WP_LIMIT) >= PATH_FINDING_WP_LIMIT)
+                if (waypointFindRoute(myclosestwaypoint, bondsclosestwaypoint, (waypoint **)&sp2C, PATH_FINDING_WP_LIMIT) >= PATH_FINDING_WP_LIMIT)
                 {
                     self->padpreset1 = sp2C[1]->padID;
 

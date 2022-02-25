@@ -179,9 +179,9 @@ void sets_a_bunch_of_BONDdata_values_to_default(void)
         0.5f,
         0.0f);
 
-    sub_GAME_7F06FDCC(&g_CurrentPlayer->model, g_BondMoveAnimationSetup[g_CurrentPlayer->headanim].unk04, 0.0f);
-    sub_GAME_7F06FDE8(&g_CurrentPlayer->model, g_BondMoveAnimationSetup[g_CurrentPlayer->headanim].unk08);
+    modelSetAnimLooping(&g_CurrentPlayer->model, g_BondMoveAnimationSetup[g_CurrentPlayer->headanim].unk04, 0.0f);
+    modelSetAnimEndFrame(&g_CurrentPlayer->model, g_BondMoveAnimationSetup[g_CurrentPlayer->headanim].unk08);
     modelSetAnimFlipFunction(&g_CurrentPlayer->model, bheadFlipAnimation);
 
-    currentPlayerUpdateIdleHeadRoll();
+    bheadUpdateIdleRoll();
 }

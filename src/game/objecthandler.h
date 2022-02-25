@@ -19,11 +19,11 @@ void set_obj_instance_controller_scale(Model*, f32);
 void getsuboffset(Model *, coord3d *);
 void sub_GAME_7F070AEC(Model *, s32, s32);
 void subcalcpos(Model *);
- void      sub_GAME_7F06FDE8(Model *model, float endframe);
+ void      modelSetAnimEndFrame(Model *model, float endframe);
 
 void modelSetAnimation(Model *, ModelAnimation *, s32, f32, f32, f32);
-void sub_GAME_7F06FDCC(Model *, f32, f32);
-void sub_GAME_7F06FDE8(Model *, f32);
+void modelSetAnimLooping(Model *, f32, f32);
+void modelSetAnimEndFrame(Model *, f32);
 void sub_GAME_7F06CE84(Model *, f32);
 
 void *extract_id_from_object_structure_microcode(Model *Objinst, ModelNode *root);
@@ -33,7 +33,7 @@ void sub_GAME_7F06FC4C(Model *, u8 *, s32, f32, f32, f32, s32);
 f32 objecthandlerGetModelField28(Model *model);
 
 ModelAnimation * objecthandlerGetModelAnim(Model *);
-f32 sub_GAME_7F06F618(Model*);
+f32 modelGetAbsAnimSpeed(Model*);
 s32 sub_GAME_7F06F5B4(Model *);
 f32 sub_GAME_7F06F5C4(Model *);
 s32 modelSetAnimSpeed(Model *, f32, f32);

@@ -5080,23 +5080,23 @@ glabel sub_GAME_7F06F610
  * Address 0x7F06F618.
  * PD: modelGetAbsAnimSpeed
 */
-f32 sub_GAME_7F06F618(struct Model *arg0)
+f32 modelGetAbsAnimSpeed(struct Model *model)
 {
-    f32 phi_f2;
+    f32 speed;
 
-    phi_f2 = arg0->unk40;
+    speed = model->unk40;
     
-    if (phi_f2 < 0.0f)
+    if (speed < 0.0f)
     {
-        phi_f2 = -phi_f2;
+        speed = -speed;
     }
     
-    return phi_f2;
+    return speed;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F06F618
+glabel modelGetAbsAnimSpeed
 /* 0A4148 7F06F618 C4820040 */  lwc1  $f2, 0x40($a0)
 /* 0A414C 7F06F61C 44802000 */  mtc1  $zero, $f4
 /* 0A4150 7F06F620 00000000 */  nop   
@@ -5916,13 +5916,13 @@ glabel sub_GAME_7F06FCFC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F06FDCC(void) {
+void modelSetAnimLooping(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F06FDCC
+glabel modelSetAnimLooping
 /* 0A48FC 7F06FDCC 44856000 */  mtc1  $a1, $f12
 /* 0A4900 7F06FDD0 44867000 */  mtc1  $a2, $f14
 /* 0A4904 7F06FDD4 240E0001 */  li    $t6, 1
@@ -5938,7 +5938,7 @@ glabel sub_GAME_7F06FDCC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F06FDE8(Model *model, f32 endframe)
+void modelSetAnimEndFrame(Model *model, f32 endframe)
 {
     void *temp_v0;
 
@@ -5954,7 +5954,7 @@ void sub_GAME_7F06FDE8(Model *model, f32 endframe)
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F06FDE8
+glabel modelSetAnimEndFrame
 /* 0A4918 7F06FDE8 8C820020 */  lw    $v0, 0x20($a0)
 /* 0A491C 7F06FDEC 44856000 */  mtc1  $a1, $f12
 /* 0A4920 7F06FDF0 3C01BF80 */  li    $at, 0xBF800000 # -1.000000

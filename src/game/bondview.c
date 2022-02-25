@@ -2859,7 +2859,7 @@ void init_player_BONDdata(void)
     g_CurrentPlayer->outside_watch_menu = 1;
     g_CurrentPlayer->open_close_solo_watch_menu = 0;
     g_CurrentPlayer->field_1A0 = 0;
-    g_CurrentPlayer->field_19C = 0.0f;
+    g_CurrentPlayer->bondbreathing = 0.0f;
     g_CurrentPlayer->speedtheta = 0.0f;
     g_CurrentPlayer->vv_costheta = 1.0f;
     g_CurrentPlayer->vv_sintheta = 0.0f;
@@ -5327,7 +5327,7 @@ void set_camera_mode(s32 arg0)
             modelSetAnimation(pPlayer->unkD4, temp_v0_2->unk0 + ptr_animation_table, 0, temp_v0_2->unk4, temp_v0_2->unkC, 0.0f);
             if (temp_f12 > 0.0f)
             {
-                sub_GAME_7F06FDE8(pPlayer->unkD4, temp_f12);
+                modelSetAnimEndFrame(pPlayer->unkD4, temp_f12);
             }
             temp_v0_3       = pPlayer->unkA8->unk4;
             temp_v0_3->unk7 = 0x17;
@@ -5668,7 +5668,7 @@ glabel set_camera_mode
 /* 0AF764 7F07AC34 8E0F0000 */   lw    $t7, ($s0)
 /* 0AF768 7F07AC38 8E0E0000 */  lw    $t6, ($s0)
 /* 0AF76C 7F07AC3C 44056000 */  mfc1  $a1, $f12
-/* 0AF770 7F07AC40 0FC1BF7A */  jal   sub_GAME_7F06FDE8
+/* 0AF770 7F07AC40 0FC1BF7A */  jal   modelSetAnimEndFrame
 /* 0AF774 7F07AC44 8DC400D4 */   lw    $a0, 0xd4($t6)
 /* 0AF778 7F07AC48 8E0F0000 */  lw    $t7, ($s0)
 .L7F07AC4C:
@@ -17014,7 +17014,7 @@ glabel sub_GAME_7F080B34
 /* 0B5690 7F080B60 55C00014 */  bnezl $t6, .L7F080BB4
 /* 0B5694 7F080B64 8C4F0420 */   lw    $t7, 0x420($v0)
 /* 0B5698 7F080B68 E7AC00D0 */  swc1  $f12, 0xd0($sp)
-/* 0B569C 7F080B6C 0FC23A2F */  jal   sub_GAME_7F08E8BC
+/* 0B569C 7F080B6C 0FC23A2F */  jal   bheadAdjustAnimation
 /* 0B56A0 7F080B70 E7AE00D4 */   swc1  $f14, 0xd4($sp)
 /* 0B56A4 7F080B74 C7AC00D0 */  lwc1  $f12, 0xd0($sp)
 /* 0B56A8 7F080B78 C7AE00D4 */  lwc1  $f14, 0xd4($sp)
@@ -17071,7 +17071,7 @@ glabel sub_GAME_7F080B34
 .L7F080C34:
 /* 0B5764 7F080C34 C7AC00CC */  lwc1  $f12, 0xcc($sp)
 .L7F080C38:
-/* 0B5768 7F080C38 0FC23890 */  jal   sub_GAME_7F08E240
+/* 0B5768 7F080C38 0FC23890 */  jal   bheadUpdate
 /* 0B576C 7F080C3C C7AE00D8 */   lwc1  $f14, 0xd8($sp)
 /* 0B5770 7F080C40 8E0D0000 */  lw    $t5, ($s0)
 /* 0B5774 7F080C44 3C0143B4 */  li    $at, 0x43B40000 # 360.000000
@@ -40817,9 +40817,9 @@ int bondviewGetIfCurrentPlayerHealthShowTime(void)
 
 
 
-f32 get_BONDdata_bondfadefracnew(void)
+f32 bondviewGetBondBreathing(void)
 {
-    return g_CurrentPlayer->field_19C;
+    return g_CurrentPlayer->bondbreathing;
 }
 
 
@@ -44277,7 +44277,7 @@ glabel sub_GAME_7F08B0F0
 /* 0C0498 7F08B968 E5AC1288 */   swc1  $f12, 0x1288($t5)
 /* 0C049C 7F08B96C 8E2F0000 */  lw    $t7, ($s1)
 /* 0C04A0 7F08B970 44051000 */  mfc1  $a1, $f2
-/* 0C04A4 7F08B974 0FC1BF73 */  jal   sub_GAME_7F06FDCC
+/* 0C04A4 7F08B974 0FC1BF73 */  jal   modelSetAnimLooping
 /* 0C04A8 7F08B978 8DE400D4 */   lw    $a0, 0xd4($t7)
 /* 0C04AC 7F08B97C 44807000 */  mtc1  $zero, $f14
 /* 0C04B0 7F08B980 00000000 */  nop
@@ -44289,7 +44289,7 @@ glabel sub_GAME_7F08B0F0
 /* 0C04C4 7F08B994 8E290000 */   lw    $t1, ($s1)
 /* 0C04C8 7F08B998 8E380000 */  lw    $t8, ($s1)
 /* 0C04CC 7F08B99C 44052000 */  mfc1  $a1, $f4
-/* 0C04D0 7F08B9A0 0FC1BF7A */  jal   sub_GAME_7F06FDE8
+/* 0C04D0 7F08B9A0 0FC1BF7A */  jal   modelSetAnimEndFrame
 /* 0C04D4 7F08B9A4 8F0400D4 */   lw    $a0, 0xd4($t8)
 /* 0C04D8 7F08B9A8 44807000 */  mtc1  $zero, $f14
 /* 0C04DC 7F08B9AC 00000000 */  nop
@@ -45115,7 +45115,7 @@ glabel sub_GAME_7F08B0F0
 /* 0BE64C 7F08BC5C E5AC1280 */   swc1  $f12, 0x1280($t5)
 /* 0BE650 7F08BC60 8E2F0000 */  lw    $t7, ($s1)
 /* 0BE654 7F08BC64 44051000 */  mfc1  $a1, $f2
-/* 0BE658 7F08BC68 0FC1BFDB */  jal   sub_GAME_7F06FDCC
+/* 0BE658 7F08BC68 0FC1BFDB */  jal   modelSetAnimLooping
 /* 0BE65C 7F08BC6C 8DE400D4 */   lw    $a0, 0xd4($t7)
 /* 0BE660 7F08BC70 44807000 */  mtc1  $zero, $f14
 /* 0BE664 7F08BC74 00000000 */  nop   
@@ -45127,7 +45127,7 @@ glabel sub_GAME_7F08B0F0
 /* 0BE678 7F08BC88 8E290000 */   lw    $t1, ($s1)
 /* 0BE67C 7F08BC8C 8E380000 */  lw    $t8, ($s1)
 /* 0BE680 7F08BC90 44052000 */  mfc1  $a1, $f4
-/* 0BE684 7F08BC94 0FC1BFE2 */  jal   sub_GAME_7F06FDE8
+/* 0BE684 7F08BC94 0FC1BFE2 */  jal   modelSetAnimEndFrame
 /* 0BE688 7F08BC98 8F0400D4 */   lw    $a0, 0xd4($t8)
 /* 0BE68C 7F08BC9C 44807000 */  mtc1  $zero, $f14
 /* 0BE690 7F08BCA0 00000000 */  nop   
