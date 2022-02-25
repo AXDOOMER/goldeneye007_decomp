@@ -43854,8 +43854,9 @@ glabel sub_GAME_7F053894
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F05396C(void) {
+void sub_GAME_7F05396C(ALSoundState *state, coord3d *pos, s32 low, s32 high) {
 
+    sndCreatePostEvent(state, 8, sub_GAME_7F053894(pos, low, high));
 }
 #else
 GLOBAL_ASM(
