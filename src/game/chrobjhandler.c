@@ -43940,27 +43940,11 @@ glabel sub_GAME_7F0539E4
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F053A10(void) {
-
+void sub_GAME_7F053A10(ALSoundState *state, coord3d *pos)
+{
+    sub_GAME_7F05396C(state, pos, 0x459C4000,  0x45BB8000);
+//                                ^ 5000       ^ 6000
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F053A10
-/* 088540 7F053A10 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 088544 7F053A14 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 088548 7F053A18 3C06459C */  lui   $a2, (0x459C4000 >> 16) # lui $a2, 0x459c
-/* 08854C 7F053A1C 3C0745BB */  lui   $a3, (0x45BB8000 >> 16) # lui $a3, 0x45bb
-/* 088550 7F053A20 34E78000 */  ori   $a3, (0x45BB8000 & 0xFFFF) # ori $a3, $a3, 0x8000
-/* 088554 7F053A24 0FC14E5B */  jal   sub_GAME_7F05396C
-/* 088558 7F053A28 34C64000 */   ori   $a2, (0x459C4000 & 0xFFFF) # ori $a2, $a2, 0x4000
-/* 08855C 7F053A2C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 088560 7F053A30 27BD0018 */  addiu $sp, $sp, 0x18
-/* 088564 7F053A34 03E00008 */  jr    $ra
-/* 088568 7F053A38 00000000 */   nop   
-)
-#endif
 
 
 
