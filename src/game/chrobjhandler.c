@@ -43785,7 +43785,7 @@ glabel sub_GAME_7F0537B8
 #ifdef NONMATCHING
 // registers and stack are wrong
 // instructions match
-void sub_GAME_7F053894(coord3d *pos, f32 high, f32 low)
+s32 sub_GAME_7F053894(coord3d *pos, f32 high, f32 low)
 {
     PropRecord *prop;
     s32 index;
@@ -43809,7 +43809,7 @@ void sub_GAME_7F053894(coord3d *pos, f32 high, f32 low)
             longest_distance = distance;
         }
     }
-    sub_GAME_7F0537B8(longest_distance, high, low); // returns something
+    return sub_GAME_7F0537B8(longest_distance, high, low);
 }
 #else
 GLOBAL_ASM(
@@ -43941,27 +43941,9 @@ glabel sub_GAME_7F0539B8
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0539E4(void) {
-
+s32 sub_GAME_7F0539E4(coord3d *pos) {
+    return sub_GAME_7F053894(pos, 0x459C4000, 0x45BB8000);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0539E4
-/* 088514 7F0539E4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 088518 7F0539E8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 08851C 7F0539EC 3C05459C */  lui   $a1, (0x459C4000 >> 16) # lui $a1, 0x459c
-/* 088520 7F0539F0 3C0645BB */  lui   $a2, (0x45BB8000 >> 16) # lui $a2, 0x45bb
-/* 088524 7F0539F4 34C68000 */  ori   $a2, (0x45BB8000 & 0xFFFF) # ori $a2, $a2, 0x8000
-/* 088528 7F0539F8 0FC14E25 */  jal   sub_GAME_7F053894
-/* 08852C 7F0539FC 34A54000 */   ori   $a1, (0x459C4000 & 0xFFFF) # ori $a1, $a1, 0x4000
-/* 088530 7F053A00 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 088534 7F053A04 27BD0018 */  addiu $sp, $sp, 0x18
-/* 088538 7F053A08 03E00008 */  jr    $ra
-/* 08853C 7F053A0C 00000000 */   nop   
-)
-#endif
 
 
 
