@@ -22,6 +22,7 @@
 #include "math_asinfacosf.h"
 #include "math_atan2f.h"
 #include "objecthandler.h"
+#include "player.h"
 #include "quaternion.h"
 #include <limits.h>
 #include "stan.h"
@@ -43782,8 +43783,33 @@ glabel sub_GAME_7F0537B8
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F053894(void) {
+// registers and stack are wrong
+// instructions match
+void sub_GAME_7F053894(coord3d *pos, f32 high, f32 low)
+{
+    PropRecord *prop;
+    s32 index;
+    f32 longest_distance = low;
+    f32 diffx;
+    f32 diffy;
+    f32 diffz;
+    f32 distance;
+    s32 count = getPlayerCount();
 
+    for (index = 0; index < count; index++)
+    {
+        prop  = g_playerPointers[index]->prop;
+        diffx = prop->pos.x - pos->x;
+        diffy = prop->pos.y - pos->y;
+        diffz = prop->pos.z - pos->z;
+        distance = sqrtf(diffx * diffx + diffy * diffy + diffz * diffz);
+
+        if (distance > longest_distance)
+        {
+            longest_distance = distance;
+        }
+    }
+    sub_GAME_7F0537B8(longest_distance, high, low); // returns something
 }
 #else
 GLOBAL_ASM(
