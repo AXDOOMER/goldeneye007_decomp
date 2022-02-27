@@ -448,9 +448,13 @@ void amMain(void* arg)
 			g_EndTime = osGetTime();
 			g_DeltaTime = g_EndTime - g_StartTime;
 
-			if (count % 240 == 0) {
-				g_DeltaAverage = g_DeltaTimeSum / 240;
-				g_DeltaTimeSum = 0; g_LargestDeltaTime = 0;
+			if (count % AUDIO_MANAGER_COUNT_INTERVAL == 0) {
+				g_DeltaAverage = g_DeltaTimeSum / AUDIO_MANAGER_COUNT_INTERVAL;
+				
+                // comma is required to continue into next statement, or will fail to match.
+                // Or can have two statements on the same line.
+                g_DeltaTimeSum = 0,
+                g_LargestDeltaTime = 0;
 			} else {
 				g_DeltaTimeSum = (g_DeltaTimeSum + g_EndTime) - g_StartTime;
 			}
