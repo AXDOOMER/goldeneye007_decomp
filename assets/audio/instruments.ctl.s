@@ -7,7 +7,7 @@
 
 .global _instrumentsctlSegmentRomStart
 _instrumentsctlSegmentRomStart:
- .incbin "assets/music/instruments.ctl"
+ .incbin "assets/audio/instruments.ctl"
 .global _instrumentsctlSegmentRomEnd
 _instrumentsctlSegmentRomEnd:
 

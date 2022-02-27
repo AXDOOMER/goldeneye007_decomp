@@ -7,6 +7,6 @@
 
 .global _instrumentstblSegmentRomStart
 _instrumentstblSegmentRomStart:
- .incbin "assets/music/instruments.tbl"
+ .incbin "assets/audio/instruments.tbl"
 .global _instrumentstblSegmentRomEnd
 _instrumentstblSegmentRomEnd:

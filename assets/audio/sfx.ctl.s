@@ -7,7 +7,7 @@
 
 .global _sfxctlSegmentRomStart
 _sfxctlSegmentRomStart:
- .incbin "assets/music/sfx.ctl"
+ .incbin "assets/audio/sfx.ctl"
 .global _sfxctlSegmentRomEnd
 _sfxctlSegmentRomEnd:
 
