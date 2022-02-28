@@ -44365,8 +44365,118 @@ def_7F053BE4:
 
 
 #ifdef NONMATCHING
-void play_door_opening_soundeffect_1(void) {
+// Almost decompiled. 
+// Using a "move a3,v0" instead of "addiu a3,t?,0xf4" in two places. 
+// Once done, play_door_opening_soundeffect_0 is an easy win.
+void play_door_opening_soundeffect_1(DoorRecord *door) {
+    ALSoundState *soundState = NULL;
+    ALSoundState *pendingState = NULL;
+    u32 doorOpenSound = 0;
 
+    sub_GAME_7F053B10(door);
+
+    if (door->unkf4 == NULL)
+    {
+        pendingState = (ALSoundState *)(door->unkf4);
+    }
+    else if (door->unkf8 == NULL)
+    {
+        pendingState = (ALSoundState *)(door->unkf8);
+    }
+
+    doorOpenSound = door->doorOpenSound;
+
+    switch (doorOpenSound)
+    {
+    case 1:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xd2, NULL);
+        if (pendingState != NULL)
+        {
+            sndPlaySfx(g_musicSfxBufferPtr, 0xd3, pendingState);
+        }
+        break;
+    case 2:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xd2, NULL);
+        if (pendingState != NULL)
+        {
+            sndPlaySfx(g_musicSfxBufferPtr, 7, pendingState);
+        }
+        break;
+    case 3:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xca, NULL);
+        if (pendingState != NULL)
+        {
+            sndPlaySfx(g_musicSfxBufferPtr, 0xcc, pendingState);
+        }
+        break;
+    case 4:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xd6, NULL);
+        if (pendingState != NULL)
+        {
+            sndPlaySfx(g_musicSfxBufferPtr, 0xd8, pendingState);
+        }
+        break;
+    case 7:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xc0, NULL);
+        if (pendingState != NULL)
+        {
+            sndPlaySfx(g_musicSfxBufferPtr, 0xbf, pendingState);
+        }
+        break;
+    case 8:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xbc, NULL);
+        if (pendingState != NULL)
+        {
+            sndPlaySfx(g_musicSfxBufferPtr, 7, pendingState);
+        }
+        break;
+    case 9:
+        if (pendingState != NULL)
+        {
+            sndPlaySfx(g_musicSfxBufferPtr, 0xc2, pendingState);
+        }
+        break;
+    case 0xd:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 7, NULL);
+        if (pendingState != NULL)
+        {
+            sndPlaySfx(g_musicSfxBufferPtr, 7, pendingState);
+        }
+        break;
+    case 0xe:
+        if (pendingState != NULL)
+        {
+            sndPlaySfx(g_musicSfxBufferPtr, 0xda, pendingState);
+        }
+        break;
+    case 0xf:
+        if (pendingState != NULL)
+        {
+            sndPlaySfx(g_musicSfxBufferPtr, 0xe1, pendingState);
+        }
+        break;
+    case 0x10:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xd6, NULL);
+        break;
+    case 0x11:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 7, NULL);
+        if (soundState != NULL)
+        {
+            sub_GAME_7F053A10(soundState, &door->prop->pos);
+        }
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xca, NULL);
+        if (pendingState != NULL)
+        {
+            sndPlaySfx(g_musicSfxBufferPtr, 0xcc, pendingState);
+        }
+    }
+
+    if (soundState != NULL)
+    {
+        sub_GAME_7F053A10(soundState, &door->prop->pos);
+    }
+    sub_GAME_7F053A3C();
+    return;
 }
 #else
 GLOBAL_ASM(
