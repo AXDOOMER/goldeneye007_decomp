@@ -36,13 +36,14 @@ assets/music/*.seq
 assets/music/*.aifc
 assets/music/*.aiff
 assets/music/*.wav
-assets/music/*.midi
-assets/audio/*.aiff
-assets/audio/*.aifc
-assets/audio/*.ctl
-assets/audio/*.tbl
-assets/audio/*.sbk
-assets/audio/*.seq
+assets/audio/**/*.midi
+assets/audio/**/*.pattern
+assets/audio/**/*.aiff
+assets/audio/**/*.aifc
+assets/audio/**/*.ctl
+assets/audio/**/*.tbl
+assets/audio/**/*.sbk
+assets/audio/**/*.seq
 assets/obseg/bg/*.bin
 assets/obseg/bg/e/*.bin
 assets/obseg/chr/*.bin
@@ -164,3 +165,4 @@ tools/gaudio/bin/
 tools/gaudio/obj/
 tools/gaudio/valgrind*
 tools/gaudio/run*.txt
+tools/gaudio/test_data/
