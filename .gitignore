@@ -44,6 +44,9 @@ assets/audio/**/*.ctl
 assets/audio/**/*.tbl
 assets/audio/**/*.sbk
 assets/audio/**/*.seq
+assets/audio/**/*.wav
+assets/audio/**/*.inst
+assets/audio/**/*.coef
 assets/obseg/bg/*.bin
 assets/obseg/bg/e/*.bin
 assets/obseg/chr/*.bin

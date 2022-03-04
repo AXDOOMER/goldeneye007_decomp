@@ -1,8 +1,18 @@
-# This file is used by gaudio tools to name music tracks.
+# This file is used by gaudio tools to name music tracks extracted from sbk.
+# This is also used to list names of the same files that should
+# be used to compile music tracks back into sbk.
 #
 # Track names originated from `enum MUSIC_TRACKS`
 #
 # These should be listed sequentially in the order they should appear in ROM.
+#
+# Empty lines are ignored
+# Lines beginning with # are ignored
+# Lines beginning with text are considered names, do not try to # the end of a line
+#
+# Note: Order listed here does not correspond to stage order!
+
+# 0-9
 None
 Short_Solo_Death
 Intro
@@ -13,6 +23,8 @@ Citadel
 Facility
 Control
 Dam
+
+# 10-19
 Frigate
 Archives
 Silo
@@ -23,6 +35,8 @@ Bunker2
 Statue
 Elevator_Control
 Cradle
+
+# 20-29
 Unk
 Elevator_Wc
 Egyptian
@@ -33,6 +47,8 @@ Watercaverns
 Deathsolo
 Surface2
 Trainx
+
+# 30-39
 Unk2
 Facilityx
 Depotx
@@ -43,6 +59,8 @@ Frigatex
 Archivesx
 Silox
 Egyptianx
+
+# 40-49
 Streetsx
 Bunker1x
 Bunker2x
@@ -53,6 +71,8 @@ Aztecx
 Egyptx
 Cradlex
 Cuba
+
+# 50-59
 Runway
 Runwayplane
 Mptheme3
@@ -63,6 +83,8 @@ Runwayx
 Surface1
 Mpdeath
 Surface2x
+
+# 60-62
 Surface2end    
 Statuepart
 End_Something
