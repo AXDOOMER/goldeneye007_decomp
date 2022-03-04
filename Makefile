@@ -425,6 +425,10 @@ else
 endif
 	@echo "\033[1J$(RESTORESCROLLREGION)\nCode Binaries Cleared! Make will Re-Build these next time.\n"
 
+audioclean: 
+	rm -f $(APPELF) $(APPROM) $(APPBIN) $(BUILD_DIR)/ge007.$(OUTCODE).map \
+	$(AUDIOOBJECTS)
+
 dataclean: 
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map \
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(AUDIOOBJECTS) $(IMAGE_OBJS) \
@@ -461,6 +465,7 @@ help:
 	@echo "    all                            $(FGGREEN) Build$(RESTORECOLOUR) all (default)"
 	@echo "    clean                          $(FGRED) Delete all$(RESTORECOLOUR) build artifacts"
 	@echo "    dataclean                      $(FGRED) Delete$(RESTORECOLOUR) only asset build artifacts"
+	@echo "    audioclean                     $(FGRED) Delete$(RESTORECOLOUR) only audio asset build artifacts"
 	@echo "    codeclean                      $(FGRED) Delete$(RESTORECOLOUR) only code (asm, .c) build artifacts"
 	@echo "    libultraclean                  $(FGRED) Delete$(RESTORECOLOUR) only code (asm, .c) build artifacts "
 	@echo "                                    from Rare's libultra files"
