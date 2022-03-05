@@ -377,23 +377,14 @@ Note: loop points within samples are not covered in this tutorial, but gaudio su
 
 **Assemble metadata about instrument samples into the .inst file**
 
-The last instrument in the .inst file is `Instrument0074`. A new instrument will need to be added, which I'll call `ent_inst_0075`. The instrument will need a child sound record, I'll name it `ent_sound_0131`. And the sound record will need a keymap and envelope record. The naming is not really particular, the only that matters is that references are unique within the .inst file (but don't mess up array indeces).
+The last instrument in the .inst file is `Instrument0074`. A new instrument will need to be added, which I'll call `ent_inst_0075`. The instrument will need two child sound records, one for the base piano sound and another for the higher frequency sample. And each sound record will need a keymap and envelope record. The naming is not really particular, the only that matters is that references are unique within the .inst file.
 
 The sequence player restricts the audio sample to within one octave of the keybase. This is why the original piano sample was resampled to 44100 Hz above. Each one will require it's own keymap. The base sample will have a keybase of C4, with max value of B4. The second sample will have a keybase of C5 with max value of B5. The programmer manual says that keymap ranges should not overlap, as the sequence player will choose the first keymap valid for the range.
 
 The .inst file should have the following text added
 
 ```
-# Instrument0074, nothing changed about this
-instrument Instrument0074 {
-    volume = 127;
-    pan = 64;
-    priority = 5;
-    bendRange = 200;
-
-    sound [0] = Sound0129;
-    sound [1] = Sound0130;
-}
+# Instrument0074 is the same, add new records below
 
 # keymap for new sound c4
 keymap ent_keymap_c4 {
