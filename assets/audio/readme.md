@@ -22,9 +22,29 @@ Waveform data is stored in AIFF format using custom compression; these are .aifc
 
 See header documentation or gaudio documentation for further details on audio formats.
 
-# Start
+# Script summary
 
-The five base audio files will be extracted when the baserom extract script is run. Alternatively, a convenience shell script `extract_baserom_audio.u.sh` is provided  which will only extract the five base audio files.
+These will be discussed in more detail below. The included helper scripts are
+
+- `extract_baserom_audio.u.sh`: Extracts the five base audio files into the assets/audio directory.
+- `extract_midi.sh`: (*assuming `music_names` is unchanged*) Extracts compressed game music sequence files, inflates, and converts to MIDI.
+- `extract_instruments_to_aifc.sh`: (*assuming `music_names` is unchanged*) Extracts music sound samples to .aifc and create associated .inst file.
+- `extract_sfx_to_aifc.sh`: (*assuming `sfx_names` is unchanged*) Extracts sound effect samples to .aifc and create associated .inst file.
+- `build_soundbank.sh`: Convert midi files to compressed sequence format and build music.sbk according to `music_names`.
+- `build_instrumentsfrom_aifc.sh`: Compile music sample sounds listed in associated .inst file and build instruments.ctl and instruments.tbl.
+- `build_sfx_from_aifc.sh`: Compile sound effect samples listed in associated .inst file and build sfx.ctl and sfx.tbl.
+
+# Source code and Building
+
+The project wraps the five base audio files in an assembly .s file. This will make the following addresses globablly accessible. These are the start and end address for each file compiled into the rom.
+
+- music.s: `_musicSbkSegmentRomStart`, `_musicSbkSegmentRomEnd`
+- instruments.ctl.s: `_instrumentsctlSegmentRomStart`, `_instrumentsctlSegmentRomEnd`
+- instruments.tbl.s: `_instrumentstblSegmentRomStart`, `_instrumentstblSegmentRomEnd`
+- sfx.ctl.s: `_sfxctlSegmentRomStart`, `_sfxctlSegmentRomEnd`
+- sfx.tbl.s: `_sfxtblSegmentRomStart`, `_sfxtblSegmentRomEnd`
+
+The above .s files will be compiled by the main Makefile into an object file. Because the .s files never change, the Makefile won't rebuild audio automatically when one of the five base files changes. Instead run `make audioclean` to clear existing audio object files then rebuild.
 
 # Sounds -- Sound Effects
 
