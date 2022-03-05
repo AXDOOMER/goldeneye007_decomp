@@ -7211,127 +7211,39 @@ s32 check_if_stage_completed_on_difficulty(int stage, DIFFICULTY difficulty)
 
 
 
-#ifdef NONMATCHING
 s32 get_highest_unlocked_difficulty_for_level(s32 arg0)
 {
-    s32 temp_ret;
-    s32 temp_ret_2;
-    s32 temp_s0;
-    s32 phi_s1;
-    s32 phi_s0;
+    s32 num;
+    s32 difficulty;
+    s32 temp_v0;
 
-    temp_ret = pull_and_display_text_for_folder_a0();
-    if ((0x80030000 + (((temp_ret * 8) - temp_ret) * 4))->unk-5414 >= 0)
+    if (mission_folder_setup_entries[pull_and_display_text_for_folder_a0()].stage_id >= 0)
     {
-        if (( fileIs007ModeUnlocked(selected_folder_num) != 0) || (get_debug_007_unlock_flag() != 0))
+        num = 2;
+        if (fileIs007ModeUnlocked(selected_folder_num) || get_debug_007_unlock_flag())
         {
-            phi_s1 = 3;
+            num = 3;
         }
-        else
-        {
 
-        }
-        if (phi_s1 >= 0)
+        for (difficulty=num; difficulty >= 0; difficulty--)
         {
-            phi_s0 = phi_s1;
-loop_6:
-            temp_ret_2 = fileIsStageUnlockedAtDifficulty(selected_folder_num, arg0, phi_s0);
+            temp_v0 = fileIsStageUnlockedAtDifficulty(selected_folder_num, arg0, difficulty);
             if (g_AppendCheatSinglePlayer == 0)
             {
-                if (temp_ret_2 != 0)
+                if (temp_v0 != 0)
                 {
-                    return phi_s0;
+                    return difficulty;
                 }
             }
-            else
+            else if (temp_v0 == 3)
             {
-                if (temp_ret_2 == 3)
-                {
-                    return phi_s0;
-                }
-            }
-            temp_s0 = phi_s0 + -1;
-            phi_s0 = temp_s0;
-            if (temp_s0 >= 0)
-            {
-                goto loop_6;
+                return difficulty;
             }
         }
     }
+
     return -1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_highest_unlocked_difficulty_for_level
-/* 042890 7F00DD60 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 042894 7F00DD64 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 042898 7F00DD68 AFB30024 */  sw    $s3, 0x24($sp)
-/* 04289C 7F00DD6C 00809825 */  move  $s3, $a0
-/* 0428A0 7F00DD70 AFB40028 */  sw    $s4, 0x28($sp)
-/* 0428A4 7F00DD74 AFB20020 */  sw    $s2, 0x20($sp)
-/* 0428A8 7F00DD78 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 0428AC 7F00DD7C 0FC03730 */  jal   pull_and_display_text_for_folder_a0
-/* 0428B0 7F00DD80 AFB00018 */   sw    $s0, 0x18($sp)
-/* 0428B4 7F00DD84 000270C0 */  sll   $t6, $v0, 3
-/* 0428B8 7F00DD88 01C27023 */  subu  $t6, $t6, $v0
-/* 0428BC 7F00DD8C 000E7080 */  sll   $t6, $t6, 2
-/* 0428C0 7F00DD90 3C0F8003 */  lui   $t7, %hi(mission_folder_setup_entries+8)
-/* 0428C4 7F00DD94 01EE7821 */  addu  $t7, $t7, $t6
-/* 0428C8 7F00DD98 8DEFABEC */  lw    $t7, %lo(mission_folder_setup_entries+8)($t7)
-/* 0428CC 7F00DD9C 3C148003 */  lui   $s4, %hi(selected_folder_num)
-/* 0428D0 7F00DDA0 2694A8E8 */  addiu $s4, %lo(selected_folder_num) # addiu $s4, $s4, -0x5718
-/* 0428D4 7F00DDA4 05E00021 */  bltz  $t7, .L7F00DE2C
-/* 0428D8 7F00DDA8 24110002 */   li    $s1, 2
-/* 0428DC 7F00DDAC 0FC07D28 */  jal   fileIs007ModeUnlocked
-/* 0428E0 7F00DDB0 8E840000 */   lw    $a0, ($s4)
-/* 0428E4 7F00DDB4 54400006 */  bnezl $v0, .L7F00DDD0
-/* 0428E8 7F00DDB8 24110003 */   li    $s1, 3
-/* 0428EC 7F00DDBC 0FC243FD */  jal   get_debug_007_unlock_flag
-/* 0428F0 7F00DDC0 00000000 */   nop
-/* 0428F4 7F00DDC4 10400002 */  beqz  $v0, .L7F00DDD0
-/* 0428F8 7F00DDC8 00000000 */   nop
-/* 0428FC 7F00DDCC 24110003 */  li    $s1, 3
-.L7F00DDD0:
-/* 042900 7F00DDD0 06200016 */  bltz  $s1, .L7F00DE2C
-/* 042904 7F00DDD4 02208025 */   move  $s0, $s1
-/* 042908 7F00DDD8 3C118003 */  lui   $s1, %hi(g_AppendCheatSinglePlayer)
-/* 04290C 7F00DDDC 2631A900 */  addiu $s1, %lo(g_AppendCheatSinglePlayer) # addiu $s1, $s1, -0x5700
-/* 042910 7F00DDE0 24120003 */  li    $s2, 3
-/* 042914 7F00DDE4 8E840000 */  lw    $a0, ($s4)
-.L7F00DDE8:
-/* 042918 7F00DDE8 02602825 */  move  $a1, $s3
-/* 04291C 7F00DDEC 0FC078B0 */  jal   fileIsStageUnlockedAtDifficulty
-/* 042920 7F00DDF0 02003025 */   move  $a2, $s0
-/* 042924 7F00DDF4 8E380000 */  lw    $t8, ($s1)
-/* 042928 7F00DDF8 17000005 */  bnez  $t8, .L7F00DE10
-/* 04292C 7F00DDFC 00000000 */   nop
-/* 042930 7F00DE00 50400008 */  beql  $v0, $zero, .L7F00DE24
-/* 042934 7F00DE04 2610FFFF */   addiu $s0, $s0, -1
-/* 042938 7F00DE08 10000009 */  b     .L7F00DE30
-/* 04293C 7F00DE0C 02001025 */   move  $v0, $s0
-.L7F00DE10:
-/* 042940 7F00DE10 54520004 */  bnel  $v0, $s2, .L7F00DE24
-/* 042944 7F00DE14 2610FFFF */   addiu $s0, $s0, -1
-/* 042948 7F00DE18 10000005 */  b     .L7F00DE30
-/* 04294C 7F00DE1C 02001025 */   move  $v0, $s0
-/* 042950 7F00DE20 2610FFFF */  addiu $s0, $s0, -1
-.L7F00DE24:
-/* 042954 7F00DE24 0603FFF0 */  bgezl $s0, .L7F00DDE8
-/* 042958 7F00DE28 8E840000 */   lw    $a0, ($s4)
-.L7F00DE2C:
-/* 04295C 7F00DE2C 2402FFFF */  li    $v0, -1
-.L7F00DE30:
-/* 042960 7F00DE30 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 042964 7F00DE34 8FB00018 */  lw    $s0, 0x18($sp)
-/* 042968 7F00DE38 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 04296C 7F00DE3C 8FB20020 */  lw    $s2, 0x20($sp)
-/* 042970 7F00DE40 8FB30024 */  lw    $s3, 0x24($sp)
-/* 042974 7F00DE44 8FB40028 */  lw    $s4, 0x28($sp)
-/* 042978 7F00DE48 03E00008 */  jr    $ra
-/* 04297C 7F00DE4C 27BD0030 */   addiu $sp, $sp, 0x30
-)
-#endif
 
 
 
