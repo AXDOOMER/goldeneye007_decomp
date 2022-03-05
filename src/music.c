@@ -822,7 +822,7 @@ void musicTrack1Play(s32 track)
         return;
     }
 
-    t3 = ALIGN16_a(g_musicTrackLength[g_musicXTrack1CurrentTrackNum]) + (NUM_MUSIC_TRACKS + 1);
+    t3 = ALIGN16_a(g_musicTrackLength[g_musicXTrack1CurrentTrackNum]) + ALIGN16_a(NUM_MUSIC_TRACKS);
     trackSizeBytes = ALIGN16_a(g_musicTrackCompressedLength[g_musicXTrack1CurrentTrackNum]);
     thing.seqData = g_musicXTrack1SeqData;
     temp_a0 = (u8*)((t3 + (s32)thing.seqData) - trackSizeBytes);
@@ -1011,7 +1011,7 @@ void musicTrack2Play(s32 track)
         return;
     }
 
-    t3 = ALIGN16_a(g_musicTrackLength[g_musicXTrack2CurrentTrackNum]) + (NUM_MUSIC_TRACKS + 1);
+    t3 = ALIGN16_a(g_musicTrackLength[g_musicXTrack2CurrentTrackNum]) + ALIGN16_a(NUM_MUSIC_TRACKS);
     trackSizeBytes = ALIGN16_a(g_musicTrackCompressedLength[g_musicXTrack2CurrentTrackNum]);
     thing.seqData = g_musicXTrack2SeqData;
     temp_a0 = (u8*)((t3 + (s32)thing.seqData) - trackSizeBytes);
@@ -1200,7 +1200,7 @@ void musicTrack3Play(s32 track)
         return;
     }
 
-    t3 = ALIGN16_a(g_musicTrackLength[g_musicXTrack3CurrentTrackNum]) + (NUM_MUSIC_TRACKS + 1);
+    t3 = ALIGN16_a(g_musicTrackLength[g_musicXTrack3CurrentTrackNum]) + ALIGN16_a(NUM_MUSIC_TRACKS);
     trackSizeBytes = ALIGN16_a(g_musicTrackCompressedLength[g_musicXTrack3CurrentTrackNum]);
     thing.seqData = g_musicXTrack3SeqData;
     temp_a0 = (u8*)((t3 + (s32)thing.seqData) - trackSizeBytes);

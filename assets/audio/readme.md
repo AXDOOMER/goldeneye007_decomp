@@ -252,6 +252,33 @@ A convenience shell script `extract_instruments_to_aifc.sh` is provided to extra
 
 A convenience shell script `build_instruments_from_aifc.sh` is provided to compile the instruments sounds into `instruments.ctl` and `instruments.tbl` files. This requires the .aifc files extracted above, and an .inst file to explain which files to use. See gaudio documentation for further details on .inst file format.
 
+# Sounds bulk export
+
+Conversion to wav is not reversible, so no helper scripts are included by default. If you want to bulk convert aifc samples to wav the following might be helpful.
+
+This will convert the instrument sounds to wav. It will include "smpl" chunk to capture loop information. These will not be freequency adjusted
+
+```
+#!/bin/bash
+for file in test_data/instruments/*.aifc
+do
+    OUTPUT_FILENAME=$(echo "${file}" | sed -e 's/\.aifc$/\.wav/')
+    if [ "${file}" = "${OUTPUT_FILENAME}" ]; then
+        echo "cannot determine what to rename file: ${file}"
+        break
+    fi
+    bin/aifc2wav --in="${file}" --out="${OUTPUT_FILENAME}" --debug --inst-file=test_data/instruments.inst --inst-search=use --inst-val="${file}" --write-smpl --no-freq-adjust
+    #GZ=../gzipsrc/gzip ../1172inflate.sh "${file}" "${OUTPUT_FILENAME}"
+    retVal=$?
+    if [ $retVal -ne 0 ]; then
+        echo "fatal error, exit code $retVal"
+        exit $retVal
+    fi
+done
+```
+
+A similar script could be run for sound effects, but the last two options (`--write-smpl --no-freq-adjust`) should be excluded.
+
 # Music Tracks
 
 This section covers extracting music tracks (not instruments), changing music tracks, and building the sound bank file.
