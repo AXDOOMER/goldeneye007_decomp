@@ -429,35 +429,35 @@ f32 folder_option_ERASE_right_bound = 0.0f;
 f32 folder_option_ERASE_lower_bound = 0.0f;
 
 struct mission_folder_setup mission_folder_setup_entries[] = {
-    {"1", TEXT(LTITLE, 0x78), 0, LEVELID_NONE, 0, MISSION_HEADER, -1, 0},
-    {"i", TEXT(LTITLE, 0x79), 0, LEVELID_DAM, 0, MISSION_PART, 0, "UbriefdamZ"},
-    {"ii", TEXT(LTITLE, 0x7A), 0, LEVELID_FACILITY, 0, MISSION_PART, 1, "UbriefarkZ"},
-    {"iii", TEXT(LTITLE, 0x7B), 0, LEVELID_RUNWAY, 0, MISSION_PART, 2, "UbriefrunZ"},
-    {"2", TEXT(LTITLE, 0x7C), 0, LEVELID_NONE, 0, MISSION_HEADER, -1, 0},
-    {"i", TEXT(LTITLE, 0x7D), 0, LEVELID_SURFACE, 0, MISSION_PART, 3, "UbriefsevxZ"},
-    {"ii", TEXT(LTITLE, 0x7E), 0, LEVELID_BUNKER1, 0, MISSION_PART, 4, "UbriefsevbunkerZ"},
-    {"3", TEXT(LTITLE, 0x7F), 0, LEVELID_NONE, 1, MISSION_HEADER, -1, 0},
-    {"i", TEXT(LTITLE, 0x80), TEXT(LTITLE, 0x81), LEVELID_SILO, 1, MISSION_PART, 5, "UbriefsiloZ"},
-    {"4", TEXT(LTITLE, 0x82), 0, LEVELID_NONE, 1, MISSION_HEADER, -1, 0},
-    {"i", TEXT(LTITLE, 0x83), 0, LEVELID_FRIGATE, 1, MISSION_PART, 6, "UbriefdestZ"},
-    {"5", TEXT(LTITLE, 0x7C), 0, LEVELID_NONE, 1, MISSION_HEADER, -1, 0},
-    {"i", TEXT(LTITLE, 0x7D), 0, LEVELID_SURFACE2, 1, MISSION_PART, 7, "UbriefsevxbZ"},
-    {"ii", TEXT(LTITLE, 0x7E), 0, LEVELID_BUNKER2, 1, MISSION_PART, 8, "UbriefsevbZ"},
-    {"6", TEXT(LTITLE, 0x84), 0, LEVELID_NONE, 2, MISSION_HEADER, -1, 0},
-    {"i", TEXT(LTITLE, 0x85), TEXT(LTITLE, 0x86), LEVELID_STATUE, 2, MISSION_PART, 9, "UbriefstatueZ"},
-    {"ii", TEXT(LTITLE, 0x87), TEXT(LTITLE, 0x88), LEVELID_ARCHIVES, 2, MISSION_PART, 0xA, "UbriefarchZ"},
-    {"iii", TEXT(LTITLE, 0x89), 0, LEVELID_STREETS, 2, MISSION_PART, 0xB, "UbriefpeteZ"},
-    {"iv", TEXT(LTITLE, 0x8A), 0, LEVELID_DEPOT, 2, MISSION_PART, 0xC, "UbriefdepoZ"},
-    {"v", TEXT(LTITLE, 0x8B), 0, LEVELID_TRAIN, 2, MISSION_PART, 0xD, "UbrieftraZ"},
-    {"7", TEXT(LTITLE, 0x8C), 0, LEVELID_NONE, 3, MISSION_HEADER, -1, 0},
-    {"i", TEXT(LTITLE, 0x8D), 0, LEVELID_JUNGLE, 3, MISSION_PART, 0xE, "UbriefjunZ"},
-    {"ii", TEXT(LTITLE, 0x8E), TEXT(LTITLE, 0x8F), LEVELID_CONTROL, 3, MISSION_PART, 0xF, "UbriefcontrolZ"},
-    {"iii", TEXT(LTITLE, 0x90), TEXT(LTITLE, 0x91), LEVELID_CAVERNS, 3, MISSION_PART, 0x10, "UbriefcaveZ"},
-    {"iv", TEXT(LTITLE, 0x92), TEXT(LTITLE, 0x93), LEVELID_CRADLE, 3, MISSION_PART, 0x11, "UbriefcradZ"},
-    {"8", TEXT(LTITLE, 0x94), 0, LEVELID_NONE, 4, MISSION_HEADER, -1, 0},
-    {"i", TEXT(LTITLE, 0x95), TEXT(LTITLE, 0x96), LEVELID_AZTEC, 4, MISSION_PART, 0x12, "UbriefaztZ"},
-    {"9", TEXT(LTITLE, 0x97), 0, LEVELID_NONE, 4, MISSION_HEADER, -1, 0},
-    {"i", TEXT(LTITLE, 0x98), TEXT(LTITLE, 0x99), LEVELID_EGYPT, 4, MISSION_PART, 0x13, "UbriefcrypZ"},
+    {"1",   TEXT(LTITLE, 0x78),                  0, LEVELID_NONE,     0, MISSION_HEADER,   -1, 0},
+    {"i",   TEXT(LTITLE, 0x79),                  0, LEVELID_DAM,      0, MISSION_PART,      0, "UbriefdamZ"},
+    {"ii",  TEXT(LTITLE, 0x7A),                  0, LEVELID_FACILITY, 0, MISSION_PART,      1, "UbriefarkZ"},
+    {"iii", TEXT(LTITLE, 0x7B),                  0, LEVELID_RUNWAY,   0, MISSION_PART,      2, "UbriefrunZ"},
+    {"2",   TEXT(LTITLE, 0x7C),                  0, LEVELID_NONE,     0, MISSION_HEADER,   -1, 0},
+    {"i",   TEXT(LTITLE, 0x7D),                  0, LEVELID_SURFACE,  0, MISSION_PART,      3, "UbriefsevxZ"},
+    {"ii",  TEXT(LTITLE, 0x7E),                  0, LEVELID_BUNKER1,  0, MISSION_PART,      4, "UbriefsevbunkerZ"},
+    {"3",   TEXT(LTITLE, 0x7F),                  0, LEVELID_NONE,     1, MISSION_HEADER,   -1, 0},
+    {"i",   TEXT(LTITLE, 0x80), TEXT(LTITLE, 0x81), LEVELID_SILO,     1, MISSION_PART,      5, "UbriefsiloZ"},
+    {"4",   TEXT(LTITLE, 0x82),                  0, LEVELID_NONE,     1, MISSION_HEADER,   -1, 0},
+    {"i",   TEXT(LTITLE, 0x83),                  0, LEVELID_FRIGATE,  1, MISSION_PART,      6, "UbriefdestZ"},
+    {"5",   TEXT(LTITLE, 0x7C),                  0, LEVELID_NONE,     1, MISSION_HEADER,   -1, 0},
+    {"i",   TEXT(LTITLE, 0x7D),                  0, LEVELID_SURFACE2, 1, MISSION_PART,      7, "UbriefsevxbZ"},
+    {"ii",  TEXT(LTITLE, 0x7E),                  0, LEVELID_BUNKER2,  1, MISSION_PART,      8, "UbriefsevbZ"},
+    {"6",   TEXT(LTITLE, 0x84),                  0, LEVELID_NONE,     2, MISSION_HEADER,   -1, 0},
+    {"i",   TEXT(LTITLE, 0x85), TEXT(LTITLE, 0x86), LEVELID_STATUE,   2, MISSION_PART,      9, "UbriefstatueZ"},
+    {"ii",  TEXT(LTITLE, 0x87), TEXT(LTITLE, 0x88), LEVELID_ARCHIVES, 2, MISSION_PART,    0xA, "UbriefarchZ"},
+    {"iii", TEXT(LTITLE, 0x89),                  0, LEVELID_STREETS,  2, MISSION_PART,    0xB, "UbriefpeteZ"},
+    {"iv",  TEXT(LTITLE, 0x8A),                  0, LEVELID_DEPOT,    2, MISSION_PART,    0xC, "UbriefdepoZ"},
+    {"v",   TEXT(LTITLE, 0x8B),                  0, LEVELID_TRAIN,    2, MISSION_PART,    0xD, "UbrieftraZ"},
+    {"7",   TEXT(LTITLE, 0x8C),                  0, LEVELID_NONE,     3, MISSION_HEADER,   -1, 0},
+    {"i",   TEXT(LTITLE, 0x8D),                  0, LEVELID_JUNGLE,   3, MISSION_PART,    0xE, "UbriefjunZ"},
+    {"ii",  TEXT(LTITLE, 0x8E), TEXT(LTITLE, 0x8F), LEVELID_CONTROL,  3, MISSION_PART,    0xF, "UbriefcontrolZ"},
+    {"iii", TEXT(LTITLE, 0x90), TEXT(LTITLE, 0x91), LEVELID_CAVERNS,  3, MISSION_PART,   0x10, "UbriefcaveZ"},
+    {"iv",  TEXT(LTITLE, 0x92), TEXT(LTITLE, 0x93), LEVELID_CRADLE,   3, MISSION_PART,   0x11, "UbriefcradZ"},
+    {"8",   TEXT(LTITLE, 0x94),                  0, LEVELID_NONE,     4, MISSION_HEADER,   -1, 0},
+    {"i",   TEXT(LTITLE, 0x95), TEXT(LTITLE, 0x96), LEVELID_AZTEC,    4, MISSION_PART,   0x12, "UbriefaztZ"},
+    {"9",   TEXT(LTITLE, 0x97),                  0, LEVELID_NONE,     4, MISSION_HEADER,   -1, 0},
+    {"i",   TEXT(LTITLE, 0x98), TEXT(LTITLE, 0x99), LEVELID_EGYPT,    4, MISSION_PART,   0x13, "UbriefcrypZ"},
     {NULL, 0, 0, LEVELID_NONE, -1, MISSION_PART, -1, 0}
 };
 
@@ -7140,59 +7140,20 @@ glabel constructor_menu06_modesel
 
 
 
-#ifdef NONMATCHING
 s32 pull_and_display_text_for_folder_a0(s32 arg0)
 {
-    void *phi_v0;
-    s32 phi_v1;
+    int i;
 
-    phi_v0 = &mission_folder_setup_entries;
-    phi_v1 = 0;
-    if (D_8002ABE8 != 0)
+    for (i=0; mission_folder_setup_entries[i].folder_text_preset != 0 ; i++)
     {
-loop_1:
-        if (arg0 == phi_v0->unk14)
+        if (arg0 == mission_folder_setup_entries[i].mission_num)
         {
-            return phi_v1;
-        }
-        phi_v0 = phi_v0 + 0x1c;
-        phi_v1 = phi_v1 + 1;
-        if (phi_v0->unk20 != 0)
-        {
-            goto loop_1;
+            return i;
         }
     }
+
     return -1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel pull_and_display_text_for_folder_a0
-/* 0427F0 7F00DCC0 3C0E8003 */  lui   $t6, %hi(mission_folder_setup_entries+4)
-/* 0427F4 7F00DCC4 95CEABE8 */  lhu   $t6, %lo(mission_folder_setup_entries+4)($t6)
-/* 0427F8 7F00DCC8 3C028003 */  lui   $v0, %hi(mission_folder_setup_entries)
-/* 0427FC 7F00DCCC 2442ABE4 */  addiu $v0, %lo(mission_folder_setup_entries) # addiu $v0, $v0, -0x541c
-/* 042800 7F00DCD0 11C0000B */  beqz  $t6, .L7F00DD00
-/* 042804 7F00DCD4 00001825 */   move  $v1, $zero
-/* 042808 7F00DCD8 8C4F0014 */  lw    $t7, 0x14($v0)
-.L7F00DCDC:
-/* 04280C 7F00DCDC 548F0004 */  bnel  $a0, $t7, .L7F00DCF0
-/* 042810 7F00DCE0 94580020 */   lhu   $t8, 0x20($v0)
-/* 042814 7F00DCE4 03E00008 */  jr    $ra
-/* 042818 7F00DCE8 00601025 */   move  $v0, $v1
-/* 04281C 7F00DCEC 94580020 */  lhu   $t8, 0x20($v0)
-.L7F00DCF0:
-/* 042820 7F00DCF0 24630001 */  addiu $v1, $v1, 1
-/* 042824 7F00DCF4 2442001C */  addiu $v0, $v0, 0x1c
-/* 042828 7F00DCF8 5700FFF8 */  bnezl $t8, .L7F00DCDC
-/* 04282C 7F00DCFC 8C4F0014 */   lw    $t7, 0x14($v0)
-.L7F00DD00:
-/* 042830 7F00DD00 2402FFFF */  li    $v0, -1
-/* 042834 7F00DD04 03E00008 */  jr    $ra
-/* 042838 7F00DD08 00000000 */   nop
-)
-#endif
-
 
 
 s32 check_if_stage_completed_on_difficulty(int stage, DIFFICULTY difficulty)
@@ -7217,7 +7178,7 @@ s32 get_highest_unlocked_difficulty_for_level(s32 arg0)
     s32 difficulty;
     s32 temp_v0;
 
-    if (mission_folder_setup_entries[pull_and_display_text_for_folder_a0()].stage_id >= 0)
+    if (mission_folder_setup_entries[pull_and_display_text_for_folder_a0(arg0)].stage_id >= 0)
     {
         num = 2;
         if (fileIs007ModeUnlocked(selected_folder_num) || get_debug_007_unlock_flag())
