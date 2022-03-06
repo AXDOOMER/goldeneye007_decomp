@@ -323,7 +323,7 @@ PRINTMATCH := printf "\n\n\n\033[3A$(call SET_TEXTATTRIB,$(BLINK),$(BG_GREEN),$(
 include src/libultrare/Makefile.libultrare
 
 all: $(APPROM)
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,100)
 endif
 ifeq ($(COMPARE),1)
@@ -435,18 +435,18 @@ $(BUILD_DIR)/assets/%.o: assets/%.c pb13
 
 #Link Files
 $(APPELF): $(RSPOBJECTS) $(ULTRAOBJECTS) $(HEADEROBJECTS) $(OBSEG_RZ) $(BUILD_DIR)/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(ASSET_DATAOBJECTS) $(ROMOBJECTS2) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS) pb14
-	@echo "Linking Files into ELF"
-	$(LD) $(LDFLAGS) -o $@ 
+	@echo "Linking Files into ELF" 
+	$(LD) $(LDFLAGS) -o $@ > /dev/null & $(call IncrementProgressBarFromAtRate,87,1.5)
 
 $(APPBIN): $(APPELF)
-  ifeq ($(VERBOSE),)
+  ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,98)
   endif
 	@echo "Building ROM"
 	$(OBJCOPY) $< $@ -O binary --gap-fill=0xff
 	
 $(APPROM):	$(APPBIN)
-  ifeq ($(VERBOSE),)
+  ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,100)
   endif
 	@echo "Compressing ROM"

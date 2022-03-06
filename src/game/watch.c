@@ -654,7 +654,7 @@ void watch_play_beep_sound(void) {
 
     } else {
         watch_soundrelated_maybe = 1;
-        sndPlaySfx(g_musicSfxBufferPtr, WATCH_BEEP1_SFX, 0);
+        sndPlaySfx(g_musicSfxBufferPtr, CAMERA_BEEP1_SFX, 0);
     }
 }
 
@@ -759,7 +759,7 @@ void sub_GAME_7F0A51D8(void)
 void sub_GAME_7F0A5210(void)
 {
     set_controlstick_lr_disabled();
-    sndPlaySfx(g_musicSfxBufferPtr, WATCH_BEEP1_SFX, NULL);
+    sndPlaySfx(g_musicSfxBufferPtr, CAMERA_BEEP1_SFX, NULL);
     if ((D_80040B10 << 0x10) < randomGetNext()) {
         sub_GAME_7F0A51D8();
     }
@@ -4909,7 +4909,7 @@ void sub_GAME_7F0A8378(void)
     currentPlayerUnEquipWeaponWrapper(1, 0);
     set_BONDdata_equipcuritem(D_800409B8);
     D_800409C4 = 10;
-    sndPlaySfx(g_musicSfxBufferPtr, WATCH_BEEP1_SFX, 0);
+    sndPlaySfx(g_musicSfxBufferPtr, CAMERA_BEEP1_SFX, 0);
 }
 
 
