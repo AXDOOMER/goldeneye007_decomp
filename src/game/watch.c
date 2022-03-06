@@ -766,6 +766,7 @@ void sub_GAME_7F0A5210(void)
     return;
 }
 
+// initial pause screen: WATCH_INDEX_MISSION_STATUS
 void watch_screen0_navigation(void)
 {
     s32 goto_watch_screen_index_4;
@@ -823,7 +824,7 @@ void watch_screen0_navigation(void)
     }
 }
 
-
+// pause screen: WATCH_INDEX_INVENTORY
 void watch_screen1_navigation(void)
 {
     s32 goto_watch_screen_index_0;
@@ -899,7 +900,7 @@ void unused_watch_screen_navigation(void) {
     }
 }
 
-
+// WATCH_INDEX_CONTROL_OPTIONS
 void watch_screen2_navigation(void) {
 
     if ((joyGetButtonsPressedThisFrame(PLAYER_1, L_CBUTTONS|L_TRIG|L_JPAD)) || (sub_GAME_7F0A4FB0()))
@@ -923,7 +924,7 @@ void watch_screen2_navigation(void) {
     }
 }
 
-
+// WATCH_INDEX_GAME_OPTIONS
 void watch_screen3_navigation(void) {
 
     if ((joyGetButtonsPressedThisFrame(PLAYER_1, L_CBUTTONS|L_TRIG|L_JPAD)) || (sub_GAME_7F0A4FB0()))
@@ -947,7 +948,7 @@ void watch_screen3_navigation(void) {
     }
 }
 
-
+// WATCH_INDEX_MISSION_BRIEFING
 void watch_screen4_navigation(void) {
 
     if ((joyGetButtonsPressedThisFrame(PLAYER_1, L_CBUTTONS|L_TRIG|L_JPAD)) || (sub_GAME_7F0A4FB0()))
