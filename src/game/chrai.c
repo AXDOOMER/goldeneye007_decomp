@@ -5003,7 +5003,7 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     set_unset_ammo_on_screen_setting(2, FALSE);
                     if (!(PLAYERFLAG_NOCONTROL & ai->val))
                     {
-                        bondviewSetIntroCameraFlags(PLAYERFLAG_NOCONTROL);
+                        hudmsgsSetOff(PLAYERFLAG_NOCONTROL);
                     }
                     if (!(ai->val & PLAYERFLAG_LOCKCONTROLS))
                     {
@@ -5024,7 +5024,7 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
 #    endif
                     set_unset_bitflags(4, TRUE);
                     set_unset_ammo_on_screen_setting(2, TRUE);
-                    bondviewUnsetIntroCameraFlags(PLAYERFLAG_NOCONTROL);
+                    hudmsgsSetOn(PLAYERFLAG_NOCONTROL);
                     sub_GAME_7F08A928(2);
                     countdownTimerSetVisible(16, TRUE);
                     D_800364B0 = TRUE;
@@ -10593,7 +10593,7 @@ actionD7_Disable_Text_Variable_2:
 /* 06E228 7F0396F8 30AF0002 */  andi  $t7, $a1, 2
 /* 06E22C 7F0396FC 55E00005 */  bnezl $t7, .L7F039714
 /* 06E230 7F039700 30AA0001 */   andi  $t2, $a1, 1
-/* 06E234 7F039704 0FC228E7 */  jal   bondviewSetIntroCameraFlags
+/* 06E234 7F039704 0FC228E7 */  jal   hudmsgsSetOff
 /* 06E238 7F039708 24040002 */   li    $a0, 2
 /* 06E23C 7F03970C 92250001 */  lbu   $a1, 1($s1)
 /* 06E240 7F039710 30AA0001 */  andi  $t2, $a1, 1
@@ -10622,7 +10622,7 @@ actionD8_Enable_All_On_Screen_Displays_1:
 /* 06E28C 7F03975C 24040002 */  li    $a0, 2
 /* 06E290 7F039760 0FC1A43D */  jal   set_unset_ammo_on_screen_setting
 /* 06E294 7F039764 24050001 */   li    $a1, 1
-/* 06E298 7F039768 0FC228E0 */  jal   bondviewUnsetIntroCameraFlags
+/* 06E298 7F039768 0FC228E0 */  jal   hudmsgsSetOn
 /* 06E29C 7F03976C 24040002 */   li    $a0, 2
 /* 06E2A0 7F039770 0FC22A4A */  jal   sub_GAME_7F08A928
 /* 06E2A4 7F039774 24040002 */   li    $a0, 2
@@ -16460,7 +16460,7 @@ actionD7_Disable_Text_Variable_2:
 /* 06E228 7F0396F8 30AF0002 */  andi  $t7, $a1, 2
 /* 06E22C 7F0396FC 55E00005 */  bnezl $t7, .L7F039714
 /* 06E230 7F039700 30AA0001 */   andi  $t2, $a1, 1
-/* 06E234 7F039704 0FC228E7 */  jal   bondviewSetIntroCameraFlags
+/* 06E234 7F039704 0FC228E7 */  jal   hudmsgsSetOff
 /* 06E238 7F039708 24040002 */   li    $a0, 2
 /* 06E23C 7F03970C 92250001 */  lbu   $a1, 1($s1)
 /* 06E240 7F039710 30AA0001 */  andi  $t2, $a1, 1
@@ -16489,7 +16489,7 @@ actionD8_Enable_All_On_Screen_Displays_1:
 /* 06E28C 7F03975C 24040002 */  li    $a0, 2
 /* 06E290 7F039760 0FC1A43D */  jal   set_unset_ammo_on_screen_setting
 /* 06E294 7F039764 24050001 */   li    $a1, 1
-/* 06E298 7F039768 0FC228E0 */  jal   bondviewUnsetIntroCameraFlags
+/* 06E298 7F039768 0FC228E0 */  jal   hudmsgsSetOn
 /* 06E29C 7F03976C 24040002 */   li    $a0, 2
 /* 06E2A0 7F039770 0FC22A4A */  jal   sub_GAME_7F08A928
 /* 06E2A4 7F039774 24040002 */   li    $a0, 2
@@ -22360,7 +22360,7 @@ actionD7_Disable_Text_Variable_2:
 /* 06C1A8 7F0397B8 30AE0002 */  andi  $t6, $a1, 2
 /* 06C1AC 7F0397BC 55C00005 */  bnezl $t6, .L7F0397D4
 /* 06C1B0 7F0397C0 30AF0001 */   andi  $t7, $a1, 1
-/* 06C1B4 7F0397C4 0FC22952 */  jal   bondviewSetIntroCameraFlags
+/* 06C1B4 7F0397C4 0FC22952 */  jal   hudmsgsSetOff
 /* 06C1B8 7F0397C8 24040002 */   li    $a0, 2
 /* 06C1BC 7F0397CC 92250001 */  lbu   $a1, 1($s1)
 /* 06C1C0 7F0397D0 30AF0001 */  andi  $t7, $a1, 1
@@ -22389,7 +22389,7 @@ actionD8_Enable_All_On_Screen_Displays_1:
 /* 06C20C 7F03981C 24040002 */  li    $a0, 2
 /* 06C210 7F039820 0FC1A622 */  jal   set_unset_ammo_on_screen_setting
 /* 06C214 7F039824 24050001 */   li    $a1, 1
-/* 06C218 7F039828 0FC2294B */  jal   bondviewUnsetIntroCameraFlags
+/* 06C218 7F039828 0FC2294B */  jal   hudmsgsSetOn
 /* 06C21C 7F03982C 24040002 */   li    $a0, 2
 /* 06C220 7F039830 0FC22ADC */  jal   sub_GAME_7F08A928
 /* 06C224 7F039834 24040002 */   li    $a0, 2

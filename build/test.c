@@ -793,8 +793,8 @@ extern void countdownTimerSetVisible                         (int clocklockbits,
 extern void currentPlayerEquipWeaponWrapper                  (GUNHAND hand, s32 next_weapon);                                                     // draw_item_in_hand_has_more_ammo
 extern void currentPlayerSetFadeColour                       (s32 r, s32 g, s32 b, f32 frac);
 extern void currentPlayerSetFadeFrac                         (f32 frames, f32 frac);
-extern void bondviewSetIntroCameraFlags                             (PLAYERFLAG flag);                                                                   // set_flags_in_BONDdata_stationary_intro_cam () ;
-extern void bondviewUnsetIntroCameraFlags                           (PLAYERFLAG flag);                                                                   // unset_flags_in_BONDdata_stationary_intro_cam() ;
+extern void hudmsgsSetOff                             (PLAYERFLAG flag);                                                                   // set_flags_in_BONDdata_stationary_intro_cam () ;
+extern void hudmsgsSetOn                           (PLAYERFLAG flag);                                                                   // unset_flags_in_BONDdata_stationary_intro_cam() ;
 extern void currentPlayerUnEquipWeaponWrapper                (GUNHAND hand, s8 WeapID);                                                           // remove_hands_item
 extern void doorActivate                                     (DoorRecord *door, DOORSTATE State);                                                 // set_door_state
 extern void doorActivateWrapper                              (PropRecord *prop);                                                                  // sub_GAME_7F05599C
@@ -4493,7 +4493,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                     set_unset_ammo_on_screen_setting(2, FALSE);
                     if (!(ai->val & PLAYERFLAG_NOCONTROL))
                     {
-                        bondviewSetIntroCameraFlags(PLAYERFLAG_NOCONTROL);
+                        hudmsgsSetOff(PLAYERFLAG_NOCONTROL);
                     }
                     if (!(ai->val & PLAYERFLAG_LOCKCONTROLS))
                     {
@@ -4514,7 +4514,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
 #            endif
                     set_unset_bitflags(4, TRUE);
                     set_unset_ammo_on_screen_setting(2, TRUE);
-                    bondviewUnsetIntroCameraFlags(PLAYERFLAG_NOCONTROL);
+                    hudmsgsSetOn(PLAYERFLAG_NOCONTROL);
                     sub_GAME_7F08A928(2);
                     countdownTimerSetVisible(16, TRUE);
                     D_800364B0 = TRUE;
