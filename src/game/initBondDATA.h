@@ -106,7 +106,7 @@ struct BONDdata_item_control_blocks {
     float field_190;
     int field_194;
     int field_198;
-    int field_19C;
+    int bondbreathing;
     float field_1A0;
     float field_1A4;
     int field_1A8;

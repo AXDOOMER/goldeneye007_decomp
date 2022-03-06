@@ -855,7 +855,7 @@ void blank_text_bank(s32 textBank) {
 }
 
 
-u8 * get_textptr_for_textID(s32 slotID)
+u8 * langGet(s32 slotID)
 {
     u32 * textbank_ptr = ptr_text[slotID >> 10]; /* get the text file bank ID index the text ptr table */
     u32 textslot_offset = textbank_ptr[slotID & 0x03FF]; /* load the textbank ptr table then get the slot's offset */

@@ -8,7 +8,7 @@ default: colour
 FINAL := YES
 VERSION := US
 IDO_RECOMP := NO
-VERBOSE := 1
+VERBOSE := 0
 # If COMPARE is 1, check the output sha1sum when building 'all'
 COMPARE := 1
 
@@ -259,7 +259,7 @@ MUSIC_OBJECTS := $(foreach file,$(MUSIC_FILES),$(BUILD_DIR)/$(file:.s=.o))
 
 OBSEG_FILES := assets/obseg/ob_seg.s
 OBSEG_OBJECTS := $(BUILD_DIR)/assets/obseg/ob_seg.o
-OBSEG_RZ := $(BG__SEG_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) $(PROP_RZ_FILES) $(STAN_RZ_FILES) $(BRIEF_RZ_FILES) $(SETUP_RZ_FILES) $(TEXT_RZ_FILES)
+OBSEG_RZ := $(BG_SEG_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) $(PROP_RZ_FILES) $(STAN_RZ_FILES) $(BRIEF_RZ_FILES) $(SETUP_RZ_FILES) $(TEXT_RZ_FILES)
 
 IMAGE_BINS := $(foreach dir,assets/images/split,$(wildcard $(dir)/*.bin))
 IMAGE_OBJS := $(foreach file,$(IMAGE_BINS),$(BUILD_DIR)/$(file:.bin=.o))
@@ -394,11 +394,11 @@ $(BUILD_DIR)/%.o: src/%.c pb7
 #Build C files in src/
 $(BUILD_DIR)/src/%.o: src/%.c pb8
 	$(call PRINT_STATUS,Compiling:,$<,$@)
-	#convert AI_PRINT commands from readable to byte-array
+ #	convert AI_PRINT commands from readable to byte-array
 	$(if $(filter %chraidata.c,$<), @cp $< $<.tmp; $(ConvertAIPRINT) $<.tmp > $<)
 	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION) $(if $(filter %chraidata.c,$<), || (cp $<.tmp $< && exit 1))
 	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
-	#restore file
+ #	restore file
 	$(if $(filter %chraidata.c,$<), @cp $<.tmp $<; rm $<.tmp)
 
 #Build RamRom
@@ -660,44 +660,47 @@ colour:
 	-e "s/^.*(([Bb]uilding)|(:\sOK)|([Ll]inkin)).*/$$(echo "$(call SET_TEXTATTRIB,$(FG_LIME))")&$$(echo "$(RESTORECOLOUR)")/g" \
 	-e "s/((([^\/]*([^s][^t][^d][^i][^n])\.c)|([^\/]*\.o))\s)/$$(echo "$(call SET_TEXTATTRIB,$(FG_WHITE))")&$$(echo "$(RESTORECOLOUR)")/g" 
 	@echo "$(SAVECURSOR)$(RESTORESCROLLREGION)$(RESTORECURSOR)\033[1A"
-$(VERBOSE).SILENT:
+
+ifeq ($(VERBOSE),0)
+.SILENT:
+endif
 
 
 ## Progress Bar status - call once ##
 pb1:
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,1,15)
 endif
 pb2:
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,2,15)
 endif
 pb3:
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,3,15)
 endif
 pb4:
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,4,15)
 endif
 pb5:
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,5,15)
 endif
 pb6:
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,6,15)
 endif
 pb7:
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,7,15)
 endif
 pb8:
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,8,15)
 endif
 pb9:
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,9,15)
 endif
 pb10:
@@ -705,19 +708,19 @@ ifeq ($(VERBOSE),)
 	@$(call DrawProgressBar,10,15)
 endif
 pb11:
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,11,15)
 endif
 pb12:
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,12,15)
 endif
 pb13:
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,13,15)
 endif
 pb14:
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,14,15)
 endif
 

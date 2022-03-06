@@ -346,7 +346,7 @@ void __scHandleRSP(OSSched *sc) {
 #if defined(VERSION_EU)
     speedGraphDisplay(0x10001);
 #else
-    speedGraphVideoRelated_3(0x10001);
+    profileSetMarker(0x10001);
 #endif
     if ((t->state & OS_SC_YIELD) && osSpTaskYielded(&t->list)) {
         t->state |= OS_SC_YIELDED;
@@ -380,7 +380,7 @@ void __scHandleRDP(OSSched *sc)
 #if defined(VERSION_EU)
     speedGraphDisplay(0x10002);
 #else
-    speedGraphVideoRelated_3(0x10002);
+    profileSetMarker(0x10002);
 #endif
         osDpGetCounters(g_DisplayPerformanceCounters);
         t = sc->curRDPTask;
@@ -484,7 +484,7 @@ void __scExec(OSSched *sc, OSScTask *sp, OSScTask *dp)
 #if defined(VERSION_EU)
             speedGraphDisplay(0x30001);
 #else
-            speedGraphVideoRelated_3(0x30001);
+            profileSetMarker(0x30001);
 #endif
         }
         else
@@ -493,8 +493,8 @@ void __scExec(OSSched *sc, OSScTask *sp, OSScTask *dp)
             speedGraphDisplay(0x40001);
             speedGraphDisplay(0x20002);
 #else
-            speedGraphVideoRelated_3(0x40001);
-            speedGraphVideoRelated_3(0x20002);
+            profileSetMarker(0x40001);
+            profileSetMarker(0x20002);
 #endif
         }
         sp->state &= ~(OS_SC_YIELD | OS_SC_YIELDED); 

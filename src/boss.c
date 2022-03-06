@@ -31,6 +31,7 @@
 #include "vi.h"
 #include "game/bg.h"
 #include "game/debugmenu_handler.h"
+#include "game/lvl.h"
 #include "game/ramromreplay.h"
 #include "game/room_model_buffer.h"
 #include "game/rsp.h"
@@ -473,13 +474,13 @@ void bossMainloop(void)
                             }
 
 #if defined(VERSION_EU)
-                            speedGraphVideoRelated_3();
+                            profileSetMarker();
                             speedGraphVideoRelated_2();
                             speedGraphDisplay(0x20004);
 #else
                             video_DL_related_4();
                             speedGraphVideoRelated_2();
-                            speedGraphVideoRelated_3(0x20000);
+                            profileSetMarker(0x20000);
 #endif
                             joyConsumeSamplesWrapper();
                             permit_stderr(0);
@@ -617,7 +618,7 @@ void bossMainloop(void)
 #if defined(VERSION_EU)
                             speedGraphDisplay(1);
 #else
-                            speedGraphVideoRelated_3(0x10000);
+                            profileSetMarker(0x10000);
 #endif
                         }
                     }
@@ -998,7 +999,7 @@ glabel bossMainloop
 /* 006510 70005910 0FC30001 */  jal   sub_GAME_7F0C0B4C
 /* 006514 70005914 00000000 */   nop   
 .L70005918:
-/* 006518 70005918 0C000AEE */  jal   speedGraphVideoRelated_3
+/* 006518 70005918 0C000AEE */  jal   profileSetMarker
 /* 00651C 7000591C 00000000 */   nop   
 /* 006520 70005920 0C000AEC */  jal   speedGraphVideoRelated_2
 /* 006524 70005924 00000000 */   nop   
@@ -1333,7 +1334,7 @@ void bossReturnTitleStage(void) {
     display_objective_status_text_on_status_change();
     FUN_7f057a40();
 #endif
-    if ((bossGetStageNum() != LEVELID_CUBA) && (check_objectives_complete() != 0x0)) {
+    if ((bossGetStageNum() != LEVELID_CUBA) && (objectiveIsAllComplete() != 0x0)) {
         end_of_mission_briefing();
     }
     bossRunTitleStage();

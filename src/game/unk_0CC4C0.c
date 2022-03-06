@@ -668,63 +668,18 @@ glabel sub_GAME_7F0CC9D4
 
 
 
-#ifdef NONMATCHING
 s32 sub_GAME_7F0CCA9C(s32 arg0) {
-    s32 temp_a0;
-    s32 temp_t6;
-    s32 temp_v1;
-    s32 phi_a0;
-    s32 phi_v1;
-    s32 phi_v1_2;
+    s32 i = 0;
 
-    // Node 0
-    temp_a0 = (arg0 + -1);
-    phi_v1_2 = 0;
-    if (temp_a0 > 0)
-    {
-        // Node 1
-        phi_a0 = temp_a0;
-        phi_v1 = 0;
-loop_2:
-        // Node 2
-        temp_t6 = ((s32) phi_a0 >> 1);
-        temp_v1 = (phi_v1 + 1);
-        phi_v1_2 = temp_v1;
-        if (temp_t6 > 0)
-        {
-            // Node 3
-            phi_a0 = temp_t6;
-            phi_v1 = temp_v1;
-            phi_v1_2 = temp_v1;
-            if (temp_v1 != 8)
-            {
-                goto loop_2;
-            }
-        }
+    arg0--;
+
+    while (arg0 > 0 && i < 8) {
+        arg0 >>= 1;
+        i++;
     }
-    // Node 4
-    return phi_v1_2;
+
+    return i;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0CCA9C
-/* 1015CC 7F0CCA9C 2484FFFF */  addiu $a0, $a0, -1
-/* 1015D0 7F0CCAA0 18800008 */  blez  $a0, .L7F0CCAC4
-/* 1015D4 7F0CCAA4 00001825 */   move  $v1, $zero
-/* 1015D8 7F0CCAA8 24020008 */  li    $v0, 8
-/* 1015DC 7F0CCAAC 00047043 */  sra   $t6, $a0, 1
-.L7F0CCAB0:
-/* 1015E0 7F0CCAB0 01C02025 */  move  $a0, $t6
-/* 1015E4 7F0CCAB4 19C00003 */  blez  $t6, .L7F0CCAC4
-/* 1015E8 7F0CCAB8 24630001 */   addiu $v1, $v1, 1
-/* 1015EC 7F0CCABC 5462FFFC */  bnel  $v1, $v0, .L7F0CCAB0
-/* 1015F0 7F0CCAC0 00047043 */   sra   $t6, $a0, 1
-.L7F0CCAC4:
-/* 1015F4 7F0CCAC4 03E00008 */  jr    $ra
-/* 1015F8 7F0CCAC8 00601025 */   move  $v0, $v1
-)
-#endif
 
 
 

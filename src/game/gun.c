@@ -992,7 +992,7 @@ void copy_item_in_hand(coord3d *pos)
     ITEM_IDS item;
     WeaponStats *stats;
 
-    item = get_item_in_hand(0);
+    item = getCurrentPlayerWeaponId(0);
     stats = get_ptr_item_statistics(item);
 
     pos->x = stats->PosX;
@@ -1006,7 +1006,7 @@ void copy_item_in_hand_to_main_list(coord3d *pos) {
     WeaponStats *stats;
     ITEM_IDS item;
 
-    item = get_item_in_hand(0);
+    item = getCurrentPlayerWeaponId(0);
     stats = get_ptr_item_statistics(item);
 
     stats->PosX = pos->x;
@@ -1043,7 +1043,7 @@ glabel unknown_takes_playerhand
 /* 0914C8 7F05C998 AFB20030 */  sw    $s2, 0x30($sp)
 /* 0914CC 7F05C99C AFB00028 */  sw    $s0, 0x28($sp)
 /* 0914D0 7F05C9A0 F7B60020 */  sdc1  $f22, 0x20($sp)
-/* 0914D4 7F05C9A4 0FC17674 */  jal   get_item_in_hand
+/* 0914D4 7F05C9A4 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 0914D8 7F05C9A8 F7B40018 */   sdc1  $f20, 0x18($sp)
 /* 0914DC 7F05C9AC 0FC1722D */  jal   get_ptr_item_statistics
 /* 0914E0 7F05C9B0 00402025 */   move  $a0, $v0
@@ -1407,7 +1407,7 @@ glabel unknown_takes_playerhand
 /* 08F838 7F05CE48 AFB20030 */  sw    $s2, 0x30($sp)
 /* 08F83C 7F05CE4C AFB00028 */  sw    $s0, 0x28($sp)
 /* 08F840 7F05CE50 F7B60020 */  sdc1  $f22, 0x20($sp)
-/* 08F844 7F05CE54 0FC177A2 */  jal   get_item_in_hand
+/* 08F844 7F05CE54 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 08F848 7F05CE58 F7B40018 */   sdc1  $f20, 0x18($sp)
 /* 08F84C 7F05CE5C 0FC17359 */  jal   get_ptr_item_statistics
 /* 08F850 7F05CE60 00402025 */   move  $a0, $v0
@@ -2441,7 +2441,7 @@ s32 get_next_weapon_in_cycle_for_hand(GUNHAND hand, s32 direction)
 		if (
 			(direction < 0 && (g_CurrentPlayer->hands[hand].field_8B8 > 0)) ||
 			(direction > 0 && (g_CurrentPlayer->hands[hand].field_8B8 < 0)) ) {
-			return get_item_in_hand(hand);
+			return getCurrentPlayerWeaponId(hand);
 		}
 		else {
 			return g_CurrentPlayer->hands[hand].weapon_next_weapon;
@@ -2451,7 +2451,7 @@ s32 get_next_weapon_in_cycle_for_hand(GUNHAND hand, s32 direction)
     if (g_CurrentPlayer->hands[hand].when_detonating_mines_is_0 == 6) {
         return g_CurrentPlayer->hands[hand].weapon_next_weapon;
     }
-    return get_item_in_hand(hand);
+    return getCurrentPlayerWeaponId(hand);
 }
 
 
@@ -2658,8 +2658,8 @@ void sub_GAME_7F05D650(int param_1)
 
 void sub_GAME_7F05D690(void)
 {
-    draw_item_in_hand_has_more_ammo(GUNRIGHT, g_CurrentPlayer->hands[GUNRIGHT].previous_weapon);
-    draw_item_in_hand_has_more_ammo(GUNLEFT, g_CurrentPlayer->hands[GUNLEFT].previous_weapon);
+    currentPlayerEquipWeaponWrapper(GUNRIGHT, g_CurrentPlayer->hands[GUNRIGHT].previous_weapon);
+    currentPlayerEquipWeaponWrapper(GUNLEFT, g_CurrentPlayer->hands[GUNLEFT].previous_weapon);
 }
 
 
@@ -2747,14 +2747,14 @@ void autoadvance_on_deplete_all_ammo(void)
     likely_change_weapon_in_hand(GUNLEFT, dupeleft, 1);
 }
 
-s32 draw_item_in_hand_has_more_ammo(GUNHAND hand, s32 next_weapon) {
+s32 currentPlayerEquipWeaponWrapper(GUNHAND hand, s32 next_weapon) {
     g_CurrentPlayer->hands[hand].weapon_current_animation = 5;
     g_CurrentPlayer->hands[hand].weapon_next_weapon = next_weapon;
     g_CurrentPlayer->hands[hand].weapon_animation_trigger = 0;
 }
 
 void attempt_reload_item_in_hand(GUNHAND hand) {
-    s32 ammo_type = get_ammo_type_for_weapon(get_item_in_hand(hand));
+    s32 ammo_type = get_ammo_type_for_weapon(getCurrentPlayerWeaponId(hand));
     if (ammo_type != 0) {
         if (g_CurrentPlayer->hands[hand].weapon_current_animation == 0) {
             g_CurrentPlayer->hands[hand].weapon_current_animation = 9;
@@ -2762,7 +2762,7 @@ void attempt_reload_item_in_hand(GUNHAND hand) {
     }
 }
 
-s32 get_item_in_hand(GUNHAND hand) {
+s32 getCurrentPlayerWeaponId(GUNHAND hand) {
     return g_CurrentPlayer->hands[hand].weaponnum;
 }
 
@@ -2792,7 +2792,7 @@ void sub_GAME_7F05DAE4(GUNHAND hand) {
 }
 
 #ifdef NONMATCHING
-void remove_hands_item(GUNHAND hand, s32 weapid) 
+void currentPlayerUnEquipWeaponWrapper(GUNHAND hand, s32 weapid) 
 {
     s32      ammomag;
     AMMOTYPE ammotype;
@@ -2833,7 +2833,7 @@ void remove_hands_item(GUNHAND hand, s32 weapid)
 #if defined(VERSION_US) || defined(VERSION_JP)
 GLOBAL_ASM(
 .text
-glabel remove_hands_item
+glabel currentPlayerUnEquipWeaponWrapper
 /* 092684 7F05DB54 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 092688 7F05DB58 000470C0 */  sll   $t6, $a0, 3
 /* 09268C 7F05DB5C AFB10018 */  sw    $s1, 0x18($sp)
@@ -2921,7 +2921,7 @@ glabel remove_hands_item
 #if defined(VERSION_EU)
 GLOBAL_ASM(
 .text
-glabel remove_hands_item
+glabel currentPlayerUnEquipWeaponWrapper
 /* 0909FC 7F05E00C 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 090A00 7F05E010 000470C0 */  sll   $t6, $a0, 3
 /* 090A04 7F05E014 AFB10018 */  sw    $s1, 0x18($sp)
@@ -3247,7 +3247,7 @@ glabel sub_GAME_7F05E0E4
 /* 092D04 7F05E1D4 4481A000 */  mtc1  $at, $f20
 /* 092D08 7F05E1D8 E7000FC0 */  swc1  $f0, 0xfc0($t8)
 .L7F05E1DC:
-/* 092D0C 7F05E1DC 0FC227B5 */  jal   get_BONDdata_bondfadefracnew
+/* 092D0C 7F05E1DC 0FC227B5 */  jal   bondviewGetBondBreathing
 /* 092D10 7F05E1E0 E7B00050 */   swc1  $f16, 0x50($sp)
 /* 092D14 7F05E1E4 3C018005 */  lui   $at, %hi(D_80053C54)
 /* 092D18 7F05E1E8 C4283C54 */  lwc1  $f8, %lo(D_80053C54)($at)
@@ -3259,7 +3259,7 @@ glabel sub_GAME_7F05E0E4
 /* 092D30 7F05E200 00000000 */  nop
 /* 092D34 7F05E204 4502000C */  bc1fl .L7F05E238
 /* 092D38 7F05E208 3C013F00 */   lui   $at, 0x3f00
-/* 092D3C 7F05E20C 0FC227B5 */  jal   get_BONDdata_bondfadefracnew
+/* 092D3C 7F05E20C 0FC227B5 */  jal   bondviewGetBondBreathing
 /* 092D40 7F05E210 E7B00050 */   swc1  $f16, 0x50($sp)
 /* 092D44 7F05E214 3C018005 */  lui   $at, %hi(D_80053C58)
 /* 092D48 7F05E218 C4323C58 */  lwc1  $f18, %lo(D_80053C58)($at)
@@ -3636,7 +3636,7 @@ glabel sub_GAME_7F05E0E4
 /* 09107C 7F05E68C 4481A000 */  mtc1  $at, $f20
 /* 091080 7F05E690 E7000FB8 */  swc1  $f0, 0xfb8($t8)
 .L7F05E694:
-/* 091084 7F05E694 0FC22828 */  jal   get_BONDdata_bondfadefracnew
+/* 091084 7F05E694 0FC22828 */  jal   bondviewGetBondBreathing
 /* 091088 7F05E698 E7B00050 */   swc1  $f16, 0x50($sp)
 /* 09108C 7F05E69C 3C018005 */  lui   $at, %hi(D_80053C54) # $at, 0x8005
 /* 091090 7F05E6A0 C4289D94 */  lwc1  $f8, %lo(D_80053C54)($at)
@@ -3648,7 +3648,7 @@ glabel sub_GAME_7F05E0E4
 /* 0910A8 7F05E6B8 00000000 */  nop   
 /* 0910AC 7F05E6BC 4502000C */  bc1fl .L7F05E6F0
 /* 0910B0 7F05E6C0 3C013F00 */   lui   $at, 0x3f00
-/* 0910B4 7F05E6C4 0FC22828 */  jal   get_BONDdata_bondfadefracnew
+/* 0910B4 7F05E6C4 0FC22828 */  jal   bondviewGetBondBreathing
 /* 0910B8 7F05E6C8 E7B00050 */   swc1  $f16, 0x50($sp)
 /* 0910BC 7F05E6CC 3C018005 */  lui   $at, %hi(D_80053C58) # $at, 0x8005
 /* 0910C0 7F05E6D0 C4329D98 */  lwc1  $f18, %lo(D_80053C58)($at)
@@ -3932,7 +3932,7 @@ void sub_GAME_7F05E5F0(f32 param_1)
 
 f32 get_value_if_watch_is_on_hand_or_not(int hand)
 {
-  if ((get_item_in_hand(hand) == ITEM_TRIGGER) || (get_item_in_hand(hand) == ITEM_WATCHLASER))
+  if ((getCurrentPlayerWeaponId(hand) == ITEM_TRIGGER) || (getCurrentPlayerWeaponId(hand) == ITEM_WATCHLASER))
   {
     return 0.08726647f;
   }
@@ -4804,7 +4804,7 @@ glabel sub_GAME_7F05EE24
 /* 093968 7F05EE38 0FC2280B */  jal   get_BONDdata_field408
 /* 09396C 7F05EE3C 00408025 */   move  $s0, $v0
 /* 093970 7F05EE40 AFA20080 */  sw    $v0, 0x80($sp)
-/* 093974 7F05EE44 0FC17674 */  jal   get_item_in_hand
+/* 093974 7F05EE44 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 093978 7F05EE48 8FA40140 */   lw    $a0, 0x140($sp)
 /* 09397C 7F05EE4C AFA20038 */  sw    $v0, 0x38($sp)
 /* 093980 7F05EE50 27A400F0 */  addiu $a0, $sp, 0xf0
@@ -4980,7 +4980,7 @@ glabel sub_GAME_7F05EE24
 /* 091CE0 7F05F2F0 0FC2287E */  jal   get_BONDdata_field408
 /* 091CE4 7F05F2F4 00408025 */   move  $s0, $v0
 /* 091CE8 7F05F2F8 AFA20080 */  sw    $v0, 0x80($sp)
-/* 091CEC 7F05F2FC 0FC177A2 */  jal   get_item_in_hand
+/* 091CEC 7F05F2FC 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 091CF0 7F05F300 8FA40140 */   lw    $a0, 0x140($sp)
 /* 091CF4 7F05F304 AFA20038 */  sw    $v0, 0x38($sp)
 /* 091CF8 7F05F308 27A400F0 */  addiu $a0, $sp, 0xf0
@@ -5586,7 +5586,7 @@ void generate_player_thrown_object(void)
     spEC    = D_80053CA8;
     sp84    = get_curplayer_positiondata();
     sp80    = get_BONDdata_field408();
-    temp_v0 = get_item_in_hand(arg0);
+    temp_v0 = getCurrentPlayerWeaponId(arg0);
     sp38    = temp_v0;
     if (temp_v0 == 0x3D)
     {
@@ -5804,7 +5804,7 @@ glabel generate_player_thrown_object
 /* 093EAC 7F05F37C 0FC2280B */  jal   get_BONDdata_field408
 /* 093EB0 7F05F380 AFA20084 */   sw    $v0, 0x84($sp)
 /* 093EB4 7F05F384 AFA20080 */  sw    $v0, 0x80($sp)
-/* 093EB8 7F05F388 0FC17674 */  jal   get_item_in_hand
+/* 093EB8 7F05F388 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 093EBC 7F05F38C 8FA40140 */   lw    $a0, 0x140($sp)
 /* 093EC0 7F05F390 2401003D */  li    $at, 61
 /* 093EC4 7F05F394 14410004 */  bne   $v0, $at, .L7F05F3A8
@@ -6171,7 +6171,7 @@ glabel generate_player_thrown_object
 /* 092224 7F05F834 0FC2287E */  jal   get_BONDdata_field408
 /* 092228 7F05F838 AFA20084 */   sw    $v0, 0x84($sp)
 /* 09222C 7F05F83C AFA20080 */  sw    $v0, 0x80($sp)
-/* 092230 7F05F840 0FC177A2 */  jal   get_item_in_hand
+/* 092230 7F05F840 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 092234 7F05F844 8FA40140 */   lw    $a0, 0x140($sp)
 /* 092238 7F05F848 2401003D */  li    $at, 61
 /* 09223C 7F05F84C 14410004 */  bne   $v0, $at, .L7F05F860
@@ -7054,7 +7054,7 @@ glabel sub_GAME_7F05FB00
 /* 094668 7F05FB38 24050001 */  li    $a1, 1
 /* 09466C 7F05FB3C 10C00005 */  beqz  $a2, .L7F05FB54
 /* 094670 7F05FB40 00C02025 */   move  $a0, $a2
-/* 094674 7F05FB44 0FC10409 */  jal   sub_GAME_7F041024
+/* 094674 7F05FB44 0FC10409 */  jal   objFreePermanently
 /* 094678 7F05FB48 AFA2001C */   sw    $v0, 0x1c($sp)
 /* 09467C 7F05FB4C 8FA2001C */  lw    $v0, 0x1c($sp)
 /* 094680 7F05FB50 AC400220 */  sw    $zero, 0x220($v0)
@@ -7087,7 +7087,7 @@ glabel sub_GAME_7F05FB00
 /* 0929E0 7F05FFF0 24050001 */  li    $a1, 1
 /* 0929E4 7F05FFF4 10C00005 */  beqz  $a2, .L7F06000C
 /* 0929E8 7F05FFF8 00C02025 */   move  $a0, $a2
-/* 0929EC 7F05FFFC 0FC10439 */  jal   sub_GAME_7F041024
+/* 0929EC 7F05FFFC 0FC10439 */  jal   objFreePermanently
 /* 0929F0 7F060000 AFA2001C */   sw    $v0, 0x1c($sp)
 /* 0929F4 7F060004 8FA2001C */  lw    $v0, 0x1c($sp)
 /* 0929F8 7F060008 AC400220 */  sw    $zero, 0x220($v0)
@@ -7140,7 +7140,7 @@ glabel gunFireTankShell
 /* 0946D8 7F05FBA8 0FC2280B */  jal   get_BONDdata_field408
 /* 0946DC 7F05FBAC AFA20048 */   sw    $v0, 0x48($sp)
 /* 0946E0 7F05FBB0 AFA20044 */  sw    $v0, 0x44($sp)
-/* 0946E4 7F05FBB4 0FC17674 */  jal   get_item_in_hand
+/* 0946E4 7F05FBB4 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 0946E8 7F05FBB8 8FA40108 */   lw    $a0, 0x108($sp)
 /* 0946EC 7F05FBBC AFA20040 */  sw    $v0, 0x40($sp)
 /* 0946F0 7F05FBC0 0FC15FF4 */  jal   matrix_4x4_set_identity
@@ -7446,7 +7446,7 @@ glabel gunFireTankShell
 /* 092A50 7F060060 0FC2287E */  jal   get_BONDdata_field408
 /* 092A54 7F060064 AFA20048 */   sw    $v0, 0x48($sp)
 /* 092A58 7F060068 AFA20044 */  sw    $v0, 0x44($sp)
-/* 092A5C 7F06006C 0FC177A2 */  jal   get_item_in_hand
+/* 092A5C 7F06006C 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 092A60 7F060070 8FA40108 */   lw    $a0, 0x108($sp)
 /* 092A64 7F060074 AFA20040 */  sw    $v0, 0x40($sp)
 /* 092A68 7F060078 0FC1611E */  jal   matrix_4x4_set_identity
@@ -13268,7 +13268,7 @@ glabel sub_GAME_7F061BF4
 /* 0967A8 7F061C78 00000000 */  nop
 /* 0967AC 7F061C7C 45030062 */  bc1tl .L7F061E08
 /* 0967B0 7F061C80 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 0967B4 7F061C84 0FC17674 */  jal   get_item_in_hand
+/* 0967B4 7F061C84 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 0967B8 7F061C88 02202025 */   move  $a0, $s1
 /* 0967BC 7F061C8C 2607039C */  addiu $a3, $s0, 0x39c
 /* 0967C0 7F061C90 AFA70028 */  sw    $a3, 0x28($sp)
@@ -13346,7 +13346,7 @@ glabel sub_GAME_7F061BF4
 /* 0968E0 7F061DB0 00000000 */  nop
 /* 0968E4 7F061DB4 45030014 */  bc1tl .L7F061E08
 /* 0968E8 7F061DB8 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 0968EC 7F061DBC 0FC17674 */  jal   get_item_in_hand
+/* 0968EC 7F061DBC 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 0968F0 7F061DC0 02202025 */   move  $a0, $s1
 /* 0968F4 7F061DC4 00116080 */  sll   $t4, $s1, 2
 /* 0968F8 7F061DC8 01916023 */  subu  $t4, $t4, $s1
@@ -13417,7 +13417,7 @@ glabel sub_GAME_7F061BF4
 /* 094B2C 7F06213C 00000000 */  nop   
 /* 094B30 7F062140 45030062 */  bc1tl .L7F0622CC
 /* 094B34 7F062144 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 094B38 7F062148 0FC177A2 */  jal   get_item_in_hand
+/* 094B38 7F062148 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 094B3C 7F06214C 02202025 */   move  $a0, $s1
 /* 094B40 7F062150 2607039C */  addiu $a3, $s0, 0x39c
 /* 094B44 7F062154 AFA70028 */  sw    $a3, 0x28($sp)
@@ -13495,7 +13495,7 @@ glabel sub_GAME_7F061BF4
 /* 094C64 7F062274 00000000 */  nop   
 /* 094C68 7F062278 45030014 */  bc1tl .L7F0622CC
 /* 094C6C 7F06227C 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 094C70 7F062280 0FC177A2 */  jal   get_item_in_hand
+/* 094C70 7F062280 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 094C74 7F062284 02202025 */   move  $a0, $s1
 /* 094C78 7F062288 00116080 */  sll   $t4, $s1, 2
 /* 094C7C 7F06228C 01916023 */  subu  $t4, $t4, $s1
@@ -18760,7 +18760,7 @@ glabel sub_GAME_7F0649D8
 /* 099538 7F064A08 01CF8821 */  addu  $s1, $t6, $t7
 /* 09953C 7F064A0C AFB00014 */  sw    $s0, 0x14($sp)
 /* 099540 7F064A10 26310870 */  addiu $s1, $s1, 0x870
-/* 099544 7F064A14 0FC17674 */  jal   get_item_in_hand
+/* 099544 7F064A14 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 099548 7F064A18 AFA40038 */   sw    $a0, 0x38($sp)
 /* 09954C 7F064A1C 8E38002C */  lw    $t8, 0x2c($s1)
 /* 099550 7F064A20 00408025 */  move  $s0, $v0
@@ -18860,7 +18860,7 @@ glabel sub_GAME_7F0649D8
 /* 0978F4 7F064F04 01CF8821 */  addu  $s1, $t6, $t7
 /* 0978F8 7F064F08 AFB00014 */  sw    $s0, 0x14($sp)
 /* 0978FC 7F064F0C 26310868 */  addiu $s1, $s1, 0x868
-/* 097900 7F064F10 0FC177A2 */  jal   get_item_in_hand
+/* 097900 7F064F10 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 097904 7F064F14 AFA40038 */   sw    $a0, 0x38($sp)
 /* 097908 7F064F18 8E38002C */  lw    $t8, 0x2c($s1)
 /* 09790C 7F064F1C 00408025 */  move  $s0, $v0
@@ -20493,19 +20493,19 @@ Weapon_shooting_throwable:
 /* 09A78C 7F065C5C 8FAF01D0 */   lw    $t7, 0x1d0($sp)
 /* 09A790 7F065C60 15E0000C */  bnez  $t7, .L7F065C94
 /* 09A794 7F065C64 00000000 */   nop
-/* 09A798 7F065C68 0FC17674 */  jal   get_item_in_hand
+/* 09A798 7F065C68 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 09A79C 7F065C6C 24040001 */   li    $a0, 1
 /* 09A7A0 7F065C70 8E04003C */  lw    $a0, 0x3c($s0)
 /* 09A7A4 7F065C74 0FC23103 */  jal   check_if_item_for_hand_available
 /* 09A7A8 7F065C78 00402825 */   move  $a1, $v0
 /* 09A7AC 7F065C7C 1440000D */  bnez  $v0, .L7F065CB4
 /* 09A7B0 7F065C80 24040001 */   li    $a0, 1
-/* 09A7B4 7F065C84 0FC17645 */  jal   draw_item_in_hand_has_more_ammo
+/* 09A7B4 7F065C84 0FC17645 */  jal   currentPlayerEquipWeaponWrapper
 /* 09A7B8 7F065C88 00002825 */   move  $a1, $zero
 /* 09A7BC 7F065C8C 1000000A */  b     .L7F065CB8
 /* 09A7C0 7F065C90 8FA401D0 */   lw    $a0, 0x1d0($sp)
 .L7F065C94:
-/* 09A7C4 7F065C94 0FC17674 */  jal   get_item_in_hand
+/* 09A7C4 7F065C94 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 09A7C8 7F065C98 00002025 */   move  $a0, $zero
 /* 09A7CC 7F065C9C 00402025 */  move  $a0, $v0
 /* 09A7D0 7F065CA0 0FC23103 */  jal   check_if_item_for_hand_available
@@ -20516,7 +20516,7 @@ Weapon_shooting_throwable:
 .L7F065CB4:
 /* 09A7E4 7F065CB4 8FA401D0 */  lw    $a0, 0x1d0($sp)
 .L7F065CB8:
-/* 09A7E8 7F065CB8 0FC176D5 */  jal   remove_hands_item
+/* 09A7E8 7F065CB8 0FC176D5 */  jal   currentPlayerUnEquipWeaponWrapper
 /* 09A7EC 7F065CBC 8E05003C */   lw    $a1, 0x3c($s0)
 /* 09A7F0 7F065CC0 0FC17691 */  jal   get_item_in_hand_or_watch_menu
 /* 09A7F4 7F065CC4 8FA401D0 */   lw    $a0, 0x1d0($sp)
@@ -20607,8 +20607,8 @@ Weapon_shooting_throwable:
 /* 09A92C 7F065DFC 0FC173AF */  jal   sub_GAME_7F05CEBC
 /* 09A930 7F065E00 8FA401D0 */   lw    $a0, 0x1d0($sp)
 /* 09A934 7F065E04 1040002D */  beqz  $v0, .L7F065EBC
-/* 09A938 7F065E08 3C0C8003 */   lui   $t4, %hi(disable_player_pickups_flag)
-/* 09A93C 7F065E0C 8D8C64B4 */  lw    $t4, %lo(disable_player_pickups_flag)($t4)
+/* 09A938 7F065E08 3C0C8003 */   lui   $t4, %hi(g_PlayerInvincible)
+/* 09A93C 7F065E0C 8D8C64B4 */  lw    $t4, %lo(g_PlayerInvincible)($t4)
 /* 09A940 7F065E10 2A21003E */  slti  $at, $s1, 0x3e
 /* 09A944 7F065E14 5580002A */  bnezl $t4, .L7F065EC0
 /* 09A948 7F065E18 8E0E0020 */   lw    $t6, 0x20($s0)
@@ -20845,8 +20845,8 @@ weapon_switchstyle_NONE:
 /* 09AC84 7F066154 0FC173AF */  jal   sub_GAME_7F05CEBC
 /* 09AC88 7F066158 8FA401D0 */   lw    $a0, 0x1d0($sp)
 /* 09AC8C 7F06615C 10400018 */  beqz  $v0, .L7F0661C0
-/* 09AC90 7F066160 3C0B8003 */   lui   $t3, %hi(disable_player_pickups_flag)
-/* 09AC94 7F066164 8D6B64B4 */  lw    $t3, %lo(disable_player_pickups_flag)($t3)
+/* 09AC90 7F066160 3C0B8003 */   lui   $t3, %hi(g_PlayerInvincible)
+/* 09AC94 7F066164 8D6B64B4 */  lw    $t3, %lo(g_PlayerInvincible)($t3)
 /* 09AC98 7F066168 2A21003E */  slti  $at, $s1, 0x3e
 /* 09AC9C 7F06616C 55600015 */  bnezl $t3, .L7F0661C4
 /* 09ACA0 7F066170 8E0C0020 */   lw    $t4, 0x20($s0)
@@ -23341,19 +23341,19 @@ Weapon_shooting_throwable:
 /* 09AD70 7F066200 8FB901E0 */   lw    $t9, 0x1e0($sp)
 /* 09AD74 7F066204 1720000C */  bnez  $t9, .Ljp7F066238
 /* 09AD78 7F066208 00000000 */   nop
-/* 09AD7C 7F06620C 0FC177BC */  jal   get_item_in_hand
+/* 09AD7C 7F06620C 0FC177BC */  jal   getCurrentPlayerWeaponId
 /* 09AD80 7F066210 24040001 */   li    $a0, 1
 /* 09AD84 7F066214 8E04003C */  lw    $a0, 0x3c($s0)
 /* 09AD88 7F066218 0FC2332D */  jal   check_if_item_for_hand_available
 /* 09AD8C 7F06621C 00402825 */   move  $a1, $v0
 /* 09AD90 7F066220 1440000D */  bnez  $v0, .Ljp7F066258
 /* 09AD94 7F066224 24040001 */   li    $a0, 1
-/* 09AD98 7F066228 0FC1778D */  jal   draw_item_in_hand_has_more_ammo
+/* 09AD98 7F066228 0FC1778D */  jal   currentPlayerEquipWeaponWrapper
 /* 09AD9C 7F06622C 00002825 */   move  $a1, $zero
 /* 09ADA0 7F066230 1000000A */  b     .Ljp7F06625C
 /* 09ADA4 7F066234 8FA401E0 */   lw    $a0, 0x1e0($sp)
 .Ljp7F066238:
-/* 09ADA8 7F066238 0FC177BC */  jal   get_item_in_hand
+/* 09ADA8 7F066238 0FC177BC */  jal   getCurrentPlayerWeaponId
 /* 09ADAC 7F06623C 00002025 */   move  $a0, $zero
 /* 09ADB0 7F066240 00402025 */  move  $a0, $v0
 /* 09ADB4 7F066244 0FC2332D */  jal   check_if_item_for_hand_available
@@ -23364,7 +23364,7 @@ Weapon_shooting_throwable:
 .Ljp7F066258:
 /* 09ADC8 7F066258 8FA401E0 */  lw    $a0, 0x1e0($sp)
 .Ljp7F06625C:
-/* 09ADCC 7F06625C 0FC1781D */  jal   remove_hands_item
+/* 09ADCC 7F06625C 0FC1781D */  jal   currentPlayerUnEquipWeaponWrapper
 /* 09ADD0 7F066260 8E05003C */   lw    $a1, 0x3c($s0)
 /* 09ADD4 7F066264 0FC177D9 */  jal   get_item_in_hand_or_watch_menu
 /* 09ADD8 7F066268 8FA401E0 */   lw    $a0, 0x1e0($sp)
@@ -23455,8 +23455,8 @@ Weapon_shooting_throwable:
 /* 09AF10 7F0663A0 0FC174F7 */  jal   sub_GAME_7F05CEBC
 /* 09AF14 7F0663A4 8FA401E0 */   lw    $a0, 0x1e0($sp)
 /* 09AF18 7F0663A8 10400032 */  beqz  $v0, weapon_switchstyle_NONE
-/* 09AF1C 7F0663AC 3C0F8003 */   lui   $t7, %hi(disable_player_pickups_flag) # $t7, 0x8003
-/* 09AF20 7F0663B0 8DEF64F4 */  lw    $t7, %lo(disable_player_pickups_flag)($t7)
+/* 09AF1C 7F0663AC 3C0F8003 */   lui   $t7, %hi(g_PlayerInvincible) # $t7, 0x8003
+/* 09AF20 7F0663B0 8DEF64F4 */  lw    $t7, %lo(g_PlayerInvincible)($t7)
 /* 09AF24 7F0663B4 3C198008 */  lui   $t9, %hi(g_CurrentPlayer) # $t9, 0x8008
 /* 09AF28 7F0663B8 55E0002F */  bnezl $t7, .Ljp7F066478
 /* 09AF2C 7F0663BC 8E0F0020 */   lw    $t7, 0x20($s0)
@@ -23700,8 +23700,8 @@ weapon_switchstyle_NONE:
 /* 09B28C 7F06671C 0FC174F7 */  jal   sub_GAME_7F05CEBC
 /* 09B290 7F066720 8FA401E0 */   lw    $a0, 0x1e0($sp)
 /* 09B294 7F066724 1040001D */  beqz  $v0, weapon_reload_none_sfx
-/* 09B298 7F066728 3C0E8003 */   lui   $t6, %hi(disable_player_pickups_flag) # $t6, 0x8003
-/* 09B29C 7F06672C 8DCE64F4 */  lw    $t6, %lo(disable_player_pickups_flag)($t6)
+/* 09B298 7F066728 3C0E8003 */   lui   $t6, %hi(g_PlayerInvincible) # $t6, 0x8003
+/* 09B29C 7F06672C 8DCE64F4 */  lw    $t6, %lo(g_PlayerInvincible)($t6)
 /* 09B2A0 7F066730 3C0F8008 */  lui   $t7, %hi(g_CurrentPlayer) # $t7, 0x8008
 /* 09B2A4 7F066734 55C0001A */  bnezl $t6, .Ljp7F0667A0
 /* 09B2A8 7F066738 8E0E0020 */   lw    $t6, 0x20($s0)
@@ -26300,19 +26300,19 @@ Weapon_shooting_throwable:
 /* 098CE8 7F0662F8 8FB901E0 */   lw    $t9, 0x1e0($sp)
 /* 098CEC 7F0662FC 1720000C */  bnez  $t9, .L7F066330
 /* 098CF0 7F066300 00000000 */   nop
-/* 098CF4 7F066304 0FC177A2 */  jal   get_item_in_hand
+/* 098CF4 7F066304 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 098CF8 7F066308 24040001 */   li    $a0, 1
 /* 098CFC 7F06630C 8E04003C */  lw    $a0, 0x3c($s0)
 /* 098D00 7F066310 0FC231CD */  jal   check_if_item_for_hand_available
 /* 098D04 7F066314 00402825 */   move  $a1, $v0
 /* 098D08 7F066318 1440000D */  bnez  $v0, .L7F066350
 /* 098D0C 7F06631C 24040001 */   li    $a0, 1
-/* 098D10 7F066320 0FC17773 */  jal   draw_item_in_hand_has_more_ammo
+/* 098D10 7F066320 0FC17773 */  jal   currentPlayerEquipWeaponWrapper
 /* 098D14 7F066324 00002825 */   move  $a1, $zero
 /* 098D18 7F066328 1000000A */  b     .L7F066354
 /* 098D1C 7F06632C 8FA401E0 */   lw    $a0, 0x1e0($sp)
 .L7F066330:
-/* 098D20 7F066330 0FC177A2 */  jal   get_item_in_hand
+/* 098D20 7F066330 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 098D24 7F066334 00002025 */   move  $a0, $zero
 /* 098D28 7F066338 00402025 */  move  $a0, $v0
 /* 098D2C 7F06633C 0FC231CD */  jal   check_if_item_for_hand_available
@@ -26323,7 +26323,7 @@ Weapon_shooting_throwable:
 .L7F066350:
 /* 098D40 7F066350 8FA401E0 */  lw    $a0, 0x1e0($sp)
 .L7F066354:
-/* 098D44 7F066354 0FC17803 */  jal   remove_hands_item
+/* 098D44 7F066354 0FC17803 */  jal   currentPlayerUnEquipWeaponWrapper
 /* 098D48 7F066358 8E05003C */   lw    $a1, 0x3c($s0)
 /* 098D4C 7F06635C 0FC177BF */  jal   get_item_in_hand_or_watch_menu
 /* 098D50 7F066360 8FA401E0 */   lw    $a0, 0x1e0($sp)
@@ -26414,8 +26414,8 @@ Weapon_shooting_throwable:
 /* 098E88 7F066498 0FC174DB */  jal   sub_GAME_7F05CEBC
 /* 098E8C 7F06649C 8FA401E0 */   lw    $a0, 0x1e0($sp)
 /* 098E90 7F0664A0 10400032 */  beqz  $v0, .L7F06656C
-/* 098E94 7F0664A4 3C0F8003 */   lui   $t7, %hi(disable_player_pickups_flag) # $t7, 0x8003
-/* 098E98 7F0664A8 8DEF1A04 */  lw    $t7, %lo(disable_player_pickups_flag)($t7)
+/* 098E94 7F0664A4 3C0F8003 */   lui   $t7, %hi(g_PlayerInvincible) # $t7, 0x8003
+/* 098E98 7F0664A8 8DEF1A04 */  lw    $t7, %lo(g_PlayerInvincible)($t7)
 /* 098E9C 7F0664AC 3C198007 */  lui   $t9, %hi(g_CurrentPlayer) # $t9, 0x8007
 /* 098EA0 7F0664B0 55E0002F */  bnezl $t7, .L7F066570
 /* 098EA4 7F0664B4 8E0F0020 */   lw    $t7, 0x20($s0)
@@ -26661,8 +26661,8 @@ weapon_switchstyle_NONE:
 /* 099204 7F066814 0FC174DB */  jal   sub_GAME_7F05CEBC
 /* 099208 7F066818 8FA401E0 */   lw    $a0, 0x1e0($sp)
 /* 09920C 7F06681C 1040001D */  beqz  $v0, .L7F066894
-/* 099210 7F066820 3C0E8003 */   lui   $t6, %hi(disable_player_pickups_flag) # $t6, 0x8003
-/* 099214 7F066824 8DCE1A04 */  lw    $t6, %lo(disable_player_pickups_flag)($t6)
+/* 099210 7F066820 3C0E8003 */   lui   $t6, %hi(g_PlayerInvincible) # $t6, 0x8003
+/* 099214 7F066824 8DCE1A04 */  lw    $t6, %lo(g_PlayerInvincible)($t6)
 /* 099218 7F066828 3C0F8007 */  lui   $t7, %hi(g_CurrentPlayer) # $t7, 0x8007
 /* 09921C 7F06682C 55C0001A */  bnezl $t6, .L7F066898
 /* 099220 7F066830 8E0E0020 */   lw    $t6, 0x20($s0)
@@ -27668,15 +27668,15 @@ void analyzeGEKey(void)
 {
     if (checkHasGEKey())
     {
-   	    DISPLAYSTRINGLOWERLEFT(get_textptr_for_textID(TEXT(LGUN, 0xD8))); //Analyzing the GoldenEye key...
+   	    HUDMESSAGEBOTTOM(langGet(TEXT(LGUN, 0xD8))); //Analyzing the GoldenEye key...
     	g_CurrentPlayer->copiedgoldeneye = 1;
     	sndPlaySfx(g_musicSfxBufferPtr, 0xf5, 0x0);
-    	draw_item_in_hand_has_more_ammo(GUNRIGHT, ITEM_GOLDENEYEKEY);
-    	draw_item_in_hand_has_more_ammo(GUNLEFT, ITEM_UNARMED);
+    	currentPlayerEquipWeaponWrapper(GUNRIGHT, ITEM_GOLDENEYEKEY);
+    	currentPlayerEquipWeaponWrapper(GUNLEFT, ITEM_UNARMED);
   	}
   	else
   	{
-	    DISPLAYSTRINGLOWERLEFT(get_textptr_for_textID(TEXT(LGUN, 0xD9))); //You do not have the GoldenEye key.
+	    HUDMESSAGEBOTTOM(langGet(TEXT(LGUN, 0xD9))); //You do not have the GoldenEye key.
 	    sub_GAME_7F05D690();
   	}
   	return;
@@ -27698,8 +27698,8 @@ void give_weapon_case_items(void)
   display_text_for_weapon_in_lower_left_corner(ITEM_SNIPERRIFLE);
   give_cur_player_ammo(sniperrifle_stats.AmmoType, check_cur_player_ammo_amount_in_inventory(sniperrifle_stats.AmmoType) + sniperrifle_stats.MagSize);
   inventory_remove_item_by_id(ITEM_WEAPONCASE);
-  draw_item_in_hand_has_more_ammo(GUNRIGHT,ITEM_SNIPERRIFLE);
-  draw_item_in_hand_has_more_ammo(GUNLEFT,ITEM_UNARMED);
+  currentPlayerEquipWeaponWrapper(GUNRIGHT,ITEM_SNIPERRIFLE);
+  currentPlayerEquipWeaponWrapper(GUNLEFT,ITEM_UNARMED);
 }
 
 
@@ -27741,25 +27741,25 @@ f32 get_45_degree_angle(s32 unk) {
 
 u16 *get_ptr_first_title_line_item(ITEM_IDS item)
 {
-  return get_textptr_for_textID(gitem_structs[item].upper_watch_text);
+  return langGet(gitem_structs[item].upper_watch_text);
 }
 
 
 u16 *get_ptr_second_title_line_item(ITEM_IDS item)
 {
-    return get_textptr_for_textID(gitem_structs[item].lower_watch_text);
+    return langGet(gitem_structs[item].lower_watch_text);
 }
 
 
 u16 *get_ptr_short_watch_text_for_item(ITEM_IDS item)
 {
-    return get_textptr_for_textID(gitem_structs[item].watch_equipment_text);
+    return langGet(gitem_structs[item].watch_equipment_text);
 }
 
 
 u16 *get_ptr_long_watch_text_for_item(ITEM_IDS item)
 {
-    return get_textptr_for_textID(gitem_structs[item].weapon_of_choice_text);
+    return langGet(gitem_structs[item].weapon_of_choice_text);
 }
 
 
@@ -27850,8 +27850,8 @@ void sub_GAME_7F0671A4(void)
   float fVar4;
   float fVar5;
 
-  item = get_item_in_hand(0);
-  item_00 = get_item_in_hand(1);
+  item = getCurrentPlayerWeaponId(0);
+  item_00 = getCurrentPlayerWeaponId(1);
   pwVar2 = get_ptr_item_statistics(item);
   pwVar3 = get_ptr_item_statistics(item_00);
   if ((item != ITEM_UNARMED) && (get_hands_firing_status(0) != 0)) {
@@ -27896,10 +27896,10 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0671A4
 /* 09BCD4 7F0671A4 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 09BCD8 7F0671A8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09BCDC 7F0671AC 0FC17674 */  jal   get_item_in_hand
+/* 09BCDC 7F0671AC 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 09BCE0 7F0671B0 00002025 */   move  $a0, $zero
 /* 09BCE4 7F0671B4 AFA2002C */  sw    $v0, 0x2c($sp)
-/* 09BCE8 7F0671B8 0FC17674 */  jal   get_item_in_hand
+/* 09BCE8 7F0671B8 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 09BCEC 7F0671BC 24040001 */   li    $a0, 1
 /* 09BCF0 7F0671C0 AFA20028 */  sw    $v0, 0x28($sp)
 /* 09BCF4 7F0671C4 0FC1722D */  jal   get_ptr_item_statistics
@@ -28042,10 +28042,10 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0671A4
 /* 09A33C 7F06794C 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 09A340 7F067950 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09A344 7F067954 0FC177A2 */  jal   get_item_in_hand
+/* 09A344 7F067954 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 09A348 7F067958 00002025 */   move  $a0, $zero
 /* 09A34C 7F06795C AFA2002C */  sw    $v0, 0x2c($sp)
-/* 09A350 7F067960 0FC177A2 */  jal   get_item_in_hand
+/* 09A350 7F067960 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 09A354 7F067964 24040001 */   li    $a0, 1
 /* 09A358 7F067968 AFA20028 */  sw    $v0, 0x28($sp)
 /* 09A35C 7F06796C 0FC17359 */  jal   get_ptr_item_statistics
@@ -28199,7 +28199,7 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0673B4
 /* 09BEE4 7F0673B4 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 09BEE8 7F0673B8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09BEEC 7F0673BC 0FC17674 */  jal   get_item_in_hand
+/* 09BEEC 7F0673BC 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 09BEF0 7F0673C0 AFA40018 */   sw    $a0, 0x18($sp)
 /* 09BEF4 7F0673C4 0FC1A50B */  jal   get_ammo_type_for_weapon
 /* 09BEF8 7F0673C8 00402025 */   move  $a0, $v0
@@ -28234,7 +28234,7 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0673B4
 /* 09A54C 7F067B5C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 09A550 7F067B60 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09A554 7F067B64 0FC177A2 */  jal   get_item_in_hand
+/* 09A554 7F067B64 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 09A558 7F067B68 AFA40018 */   sw    $a0, 0x18($sp)
 /* 09A55C 7F067B6C 0FC1A6F0 */  jal   get_ammo_type_for_weapon
 /* 09A560 7F067B70 00402025 */   move  $a0, $v0
@@ -28309,10 +28309,10 @@ glabel sub_GAME_7F067420
 .L7F067490:
 /* 09BFC0 7F067490 5040012A */  beql  $v0, $zero, .L7F06793C
 /* 09BFC4 7F067494 AC600FD4 */   sw    $zero, 0xfd4($v1)
-/* 09BFC8 7F067498 0FC17674 */  jal   get_item_in_hand
+/* 09BFC8 7F067498 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 09BFCC 7F06749C 00002025 */   move  $a0, $zero
 /* 09BFD0 7F0674A0 AFA20044 */  sw    $v0, 0x44($sp)
-/* 09BFD4 7F0674A4 0FC17674 */  jal   get_item_in_hand
+/* 09BFD4 7F0674A4 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 09BFD8 7F0674A8 24040001 */   li    $a0, 1
 /* 09BFDC 7F0674AC 8E030000 */  lw    $v1, ($s0)
 /* 09BFE0 7F0674B0 AFA20040 */  sw    $v0, 0x40($sp)
@@ -28598,14 +28598,14 @@ glabel sub_GAME_7F067420
 .L7F0678C0:
 /* 09C3F0 7F0678C0 8E0D0000 */  lw    $t5, ($s0)
 .L7F0678C4:
-/* 09C3F4 7F0678C4 0FC17674 */  jal   get_item_in_hand
+/* 09C3F4 7F0678C4 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 09C3F8 7F0678C8 8DA40FD8 */   lw    $a0, 0xfd8($t5)
 /* 09C3FC 7F0678CC 5440000E */  bnezl $v0, .L7F067908
 /* 09C400 7F0678D0 8E030000 */   lw    $v1, ($s0)
 /* 09C404 7F0678D4 8E180000 */  lw    $t8, ($s0)
 /* 09C408 7F0678D8 240C0001 */  li    $t4, 1
 /* 09C40C 7F0678DC 8F090FD8 */  lw    $t1, 0xfd8($t8)
-/* 09C410 7F0678E0 0FC17674 */  jal   get_item_in_hand
+/* 09C410 7F0678E0 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 09C414 7F0678E4 01892023 */   subu  $a0, $t4, $t1
 /* 09C418 7F0678E8 50400007 */  beql  $v0, $zero, .L7F067908
 /* 09C41C 7F0678EC 8E030000 */   lw    $v1, ($s0)
@@ -28667,10 +28667,10 @@ glabel sub_GAME_7F067420
 /* 09C4EC 7F0679BC 0FC100C4 */  jal   update_color_shading
 /* 09C4F0 7F0679C0 24840FDC */   addiu $a0, $a0, 0xfdc
 .L7F0679C4:
-/* 09C4F4 7F0679C4 0FC17674 */  jal   get_item_in_hand
+/* 09C4F4 7F0679C4 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 09C4F8 7F0679C8 00002025 */   move  $a0, $zero
 /* 09C4FC 7F0679CC AFA2002C */  sw    $v0, 0x2c($sp)
-/* 09C500 7F0679D0 0FC17674 */  jal   get_item_in_hand
+/* 09C500 7F0679D0 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 09C504 7F0679D4 24040001 */   li    $a0, 1
 /* 09C508 7F0679D8 8FA4002C */  lw    $a0, 0x2c($sp)
 /* 09C50C 7F0679DC 0FC2367B */  jal   increment_held_time
@@ -28765,10 +28765,10 @@ glabel sub_GAME_7F067420
 .L7F067C38:
 /* 09A628 7F067C38 5040012A */  beql  $v0, $zero, .L7F0680E4
 /* 09A62C 7F067C3C AC600FCC */   sw    $zero, 0xfcc($v1)
-/* 09A630 7F067C40 0FC177A2 */  jal   get_item_in_hand
+/* 09A630 7F067C40 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 09A634 7F067C44 00002025 */   move  $a0, $zero
 /* 09A638 7F067C48 AFA20044 */  sw    $v0, 0x44($sp)
-/* 09A63C 7F067C4C 0FC177A2 */  jal   get_item_in_hand
+/* 09A63C 7F067C4C 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 09A640 7F067C50 24040001 */   li    $a0, 1
 /* 09A644 7F067C54 8E030000 */  lw    $v1, ($s0)
 /* 09A648 7F067C58 AFA20040 */  sw    $v0, 0x40($sp)
@@ -29054,14 +29054,14 @@ glabel sub_GAME_7F067420
 .L7F068068:
 /* 09AA58 7F068068 8E0D0000 */  lw    $t5, ($s0)
 .L7F06806C:
-/* 09AA5C 7F06806C 0FC177A2 */  jal   get_item_in_hand
+/* 09AA5C 7F06806C 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 09AA60 7F068070 8DA40FD0 */   lw    $a0, 0xfd0($t5)
 /* 09AA64 7F068074 5440000E */  bnezl $v0, .L7F0680B0
 /* 09AA68 7F068078 8E030000 */   lw    $v1, ($s0)
 /* 09AA6C 7F06807C 8E180000 */  lw    $t8, ($s0)
 /* 09AA70 7F068080 240C0001 */  li    $t4, 1
 /* 09AA74 7F068084 8F090FD0 */  lw    $t1, 0xfd0($t8)
-/* 09AA78 7F068088 0FC177A2 */  jal   get_item_in_hand
+/* 09AA78 7F068088 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 09AA7C 7F06808C 01892023 */   subu  $a0, $t4, $t1
 /* 09AA80 7F068090 50400007 */  beql  $v0, $zero, .L7F0680B0
 /* 09AA84 7F068094 8E030000 */   lw    $v1, ($s0)
@@ -29123,10 +29123,10 @@ glabel sub_GAME_7F067420
 /* 09AB54 7F068164 0FC100F4 */  jal   update_color_shading
 /* 09AB58 7F068168 24840FD4 */   addiu $a0, $a0, 0xfd4
 .L7F06816C:
-/* 09AB5C 7F06816C 0FC177A2 */  jal   get_item_in_hand
+/* 09AB5C 7F06816C 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 09AB60 7F068170 00002025 */   move  $a0, $zero
 /* 09AB64 7F068174 AFA2002C */  sw    $v0, 0x2c($sp)
-/* 09AB68 7F068178 0FC177A2 */  jal   get_item_in_hand
+/* 09AB68 7F068178 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 09AB6C 7F06817C 24040001 */   li    $a0, 1
 /* 09AB70 7F068180 8FA4002C */  lw    $a0, 0x2c($sp)
 /* 09AB74 7F068184 0FC237D5 */  jal   increment_held_time
@@ -29819,7 +29819,7 @@ glabel sub_GAME_7F067F58
 /* 09CA90 7F067F60 E7AC0018 */  swc1  $f12, 0x18($sp)
 /* 09CA94 7F067F64 E7AE001C */  swc1  $f14, 0x1c($sp)
 /* 09CA98 7F067F68 AFA60020 */  sw    $a2, 0x20($sp)
-/* 09CA9C 7F067F6C 0FC17674 */  jal   get_item_in_hand
+/* 09CA9C 7F067F6C 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 09CAA0 7F067F70 00002025 */   move  $a0, $zero
 /* 09CAA4 7F067F74 0FC1722D */  jal   get_ptr_item_statistics
 /* 09CAA8 7F067F78 00402025 */   move  $a0, $v0
@@ -29852,7 +29852,7 @@ glabel sub_GAME_7F067F58
 /* 09B0F8 7F068708 E7AC0018 */  swc1  $f12, 0x18($sp)
 /* 09B0FC 7F06870C E7AE001C */  swc1  $f14, 0x1c($sp)
 /* 09B100 7F068710 AFA60020 */  sw    $a2, 0x20($sp)
-/* 09B104 7F068714 0FC177A2 */  jal   get_item_in_hand
+/* 09B104 7F068714 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 09B108 7F068718 00002025 */   move  $a0, $zero
 /* 09B10C 7F06871C 0FC17359 */  jal   get_ptr_item_statistics
 /* 09B110 7F068720 00402025 */   move  $a0, $v0
@@ -29895,7 +29895,7 @@ glabel sub_GAME_7F067FBC
 /* 09CAF0 7F067FC0 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 09CAF4 7F067FC4 E7AC0018 */  swc1  $f12, 0x18($sp)
 /* 09CAF8 7F067FC8 E7AE001C */  swc1  $f14, 0x1c($sp)
-/* 09CAFC 7F067FCC 0FC17674 */  jal   get_item_in_hand
+/* 09CAFC 7F067FCC 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 09CB00 7F067FD0 00002025 */   move  $a0, $zero
 /* 09CB04 7F067FD4 0FC1722D */  jal   get_ptr_item_statistics
 /* 09CB08 7F067FD8 00402025 */   move  $a0, $v0
@@ -29921,7 +29921,7 @@ glabel sub_GAME_7F067FBC
 /* 09D108 7F068598 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 09D10C 7F06859C E7AC0018 */  swc1  $f12, 0x18($sp)
 /* 09D110 7F0685A0 E7AE001C */  swc1  $f14, 0x1c($sp)
-/* 09D114 7F0685A4 0FC177BC */  jal   get_item_in_hand
+/* 09D114 7F0685A4 0FC177BC */  jal   getCurrentPlayerWeaponId
 /* 09D118 7F0685A8 00002025 */   move  $a0, $zero
 /* 09D11C 7F0685AC 0FC17375 */  jal   get_ptr_item_statistics
 /* 09D120 7F0685B0 00402025 */   move  $a0, $v0
@@ -29947,7 +29947,7 @@ glabel sub_GAME_7F067FBC
 /* 09B158 7F068768 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 09B15C 7F06876C E7AC0018 */  swc1  $f12, 0x18($sp)
 /* 09B160 7F068770 E7AE001C */  swc1  $f14, 0x1c($sp)
-/* 09B164 7F068774 0FC177A2 */  jal   get_item_in_hand
+/* 09B164 7F068774 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 09B168 7F068778 00002025 */   move  $a0, $zero
 /* 09B16C 7F06877C 0FC17359 */  jal   get_ptr_item_statistics
 /* 09B170 7F068780 00402025 */   move  $a0, $v0
@@ -30237,7 +30237,7 @@ void sub_GAME_7F0681CC(void *arg0, s32 arg1, s32 arg2) {
     f32 phi_f8;
 
     // Node 0
-    sp28 = (f32) get_ptr_item_statistics(get_item_in_hand(arg2))->unk30;
+    sp28 = (f32) get_ptr_item_statistics(getCurrentPlayerWeaponId(arg2))->unk30;
     if (bondwalkItemCheckBitflags(get_item_in_hand_or_watch_menu(arg2), 0x1000) != 0)
     {
         // Node 1
@@ -30309,7 +30309,7 @@ glabel sub_GAME_7F0681CC
 /* 09CD04 7F0681D4 AFA40038 */  sw    $a0, 0x38($sp)
 /* 09CD08 7F0681D8 AFA5003C */  sw    $a1, 0x3c($sp)
 /* 09CD0C 7F0681DC AFA60040 */  sw    $a2, 0x40($sp)
-/* 09CD10 7F0681E0 0FC17674 */  jal   get_item_in_hand
+/* 09CD10 7F0681E0 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 09CD14 7F0681E4 00C02025 */   move  $a0, $a2
 /* 09CD18 7F0681E8 0FC1722D */  jal   get_ptr_item_statistics
 /* 09CD1C 7F0681EC 00402025 */   move  $a0, $v0
@@ -30473,7 +30473,7 @@ glabel sub_GAME_7F0681CC
 /* 09B36C 7F06897C AFA40038 */  sw    $a0, 0x38($sp)
 /* 09B370 7F068980 AFA5003C */  sw    $a1, 0x3c($sp)
 /* 09B374 7F068984 AFA60040 */  sw    $a2, 0x40($sp)
-/* 09B378 7F068988 0FC177A2 */  jal   get_item_in_hand
+/* 09B378 7F068988 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 09B37C 7F06898C 00C02025 */   move  $a0, $a2
 /* 09B380 7F068990 0FC17359 */  jal   get_ptr_item_statistics
 /* 09B384 7F068994 00402025 */   move  $a0, $v0
@@ -30868,7 +30868,7 @@ glabel sub_GAME_7F068508
 /* 09D040 7F068510 AFB00014 */  sw    $s0, 0x14($sp)
 /* 09D044 7F068514 00808025 */  move  $s0, $a0
 /* 09D048 7F068518 AFB10018 */  sw    $s1, 0x18($sp)
-/* 09D04C 7F06851C 0FC17674 */  jal   get_item_in_hand
+/* 09D04C 7F06851C 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 09D050 7F068520 AFA500C4 */   sw    $a1, 0xc4($sp)
 /* 09D054 7F068524 AFA20078 */  sw    $v0, 0x78($sp)
 /* 09D058 7F068528 0FC1722D */  jal   get_ptr_item_statistics
@@ -31454,7 +31454,7 @@ glabel sub_GAME_7F068508
 /* 09B660 7F068C70 AFB00014 */  sw    $s0, 0x14($sp)
 /* 09B664 7F068C74 00808025 */  move  $s0, $a0
 /* 09B668 7F068C78 AFB10018 */  sw    $s1, 0x18($sp)
-/* 09B66C 7F068C7C 0FC177A2 */  jal   get_item_in_hand
+/* 09B66C 7F068C7C 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 09B670 7F068C80 AFA5010C */   sw    $a1, 0x10c($sp)
 /* 09B674 7F068C84 AFA200C0 */  sw    $v0, 0xc0($sp)
 /* 09B678 7F068C88 0FC17359 */  jal   get_ptr_item_statistics
@@ -32768,7 +32768,7 @@ glabel give_cur_player_ammo
 /* 09DC68 7F069138 00808025 */  move  $s0, $a0
 /* 09DC6C 7F06913C AFBF001C */  sw    $ra, 0x1c($sp)
 /* 09DC70 7F069140 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 09DC74 7F069144 0FC17674 */  jal   get_item_in_hand
+/* 09DC74 7F069144 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 09DC78 7F069148 00002025 */   move  $a0, $zero
 /* 09DC7C 7F06914C AFA20024 */  sw    $v0, 0x24($sp)
 /* 09DC80 7F069150 0FC1A50B */  jal   get_ammo_type_for_weapon
@@ -32847,7 +32847,7 @@ glabel give_cur_player_ammo
 /* 09C2BC 7F0698CC 00808025 */  move  $s0, $a0
 /* 09C2C0 7F0698D0 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 09C2C4 7F0698D4 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 09C2C8 7F0698D8 0FC177A2 */  jal   get_item_in_hand
+/* 09C2C8 7F0698D8 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 09C2CC 7F0698DC 00002025 */   move  $a0, $zero
 /* 09C2D0 7F0698E0 AFA20024 */  sw    $v0, 0x24($sp)
 /* 09C2D4 7F0698E4 0FC1A6F0 */  jal   get_ammo_type_for_weapon
@@ -32924,15 +32924,15 @@ s32 check_cur_player_ammo_amount_in_inventory(AMMOTYPE ammotype) {
     return g_CurrentPlayer->ammoheldarr[ammotype];
 }
 
-s32 check_cur_player_ammo_amount_total(AMMOTYPE ammotype) {
+s32 currentPlayerGetAmmoCount(AMMOTYPE ammotype) {
 
     s32 total_ammo = check_cur_player_ammo_amount_in_inventory(ammotype);
 
-    if (get_ammo_type_for_weapon(get_item_in_hand(GUNRIGHT)) == ammotype) {
+    if (get_ammo_type_for_weapon(getCurrentPlayerWeaponId(GUNRIGHT)) == ammotype) {
         total_ammo += get_ammo_in_hands_magazine(GUNRIGHT);
     }
 
-    if (get_ammo_type_for_weapon(get_item_in_hand(GUNLEFT)) == ammotype) {
+    if (get_ammo_type_for_weapon(getCurrentPlayerWeaponId(GUNLEFT)) == ammotype) {
         total_ammo += get_ammo_in_hands_magazine(GUNLEFT);
     }
 
@@ -33061,7 +33061,7 @@ GLOBAL_ASM(
 glabel get_ammo_in_hands_weapon
 /* 09DEA4 7F069374 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 09DEA8 7F069378 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09DEAC 7F06937C 0FC17674 */  jal   get_item_in_hand
+/* 09DEAC 7F06937C 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 09DEB0 7F069380 AFA40020 */   sw    $a0, 0x20($sp)
 /* 09DEB4 7F069384 00402025 */  move  $a0, $v0
 /* 09DEB8 7F069388 0FC1A514 */  jal   get_ammo_count_for_weapon
@@ -33077,7 +33077,7 @@ glabel get_ammo_in_hands_weapon
 .L7F0693B0:
 /* 09DEE0 7F0693B0 240F0001 */  li    $t7, 1
 /* 09DEE4 7F0693B4 01EE2023 */  subu  $a0, $t7, $t6
-/* 09DEE8 7F0693B8 0FC17674 */  jal   get_item_in_hand
+/* 09DEE8 7F0693B8 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 09DEEC 7F0693BC AFA50018 */   sw    $a1, 0x18($sp)
 /* 09DEF0 7F0693C0 2401000F */  li    $at, 15
 /* 09DEF4 7F0693C4 10410004 */  beq   $v0, $at, .L7F0693D8
@@ -33118,7 +33118,7 @@ GLOBAL_ASM(
 glabel get_ammo_in_hands_weapon
 /* 09C4F8 7F069B08 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 09C4FC 7F069B0C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09C500 7F069B10 0FC177A2 */  jal   get_item_in_hand
+/* 09C500 7F069B10 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 09C504 7F069B14 AFA40020 */   sw    $a0, 0x20($sp)
 /* 09C508 7F069B18 00402025 */  move  $a0, $v0
 /* 09C50C 7F069B1C 0FC1A6F9 */  jal   get_ammo_count_for_weapon
@@ -33134,7 +33134,7 @@ glabel get_ammo_in_hands_weapon
 .Leu7F069B44:
 /* 09C534 7F069B44 240F0001 */  li    $t7, 1
 /* 09C538 7F069B48 01EE2023 */  subu  $a0, $t7, $t6
-/* 09C53C 7F069B4C 0FC177A2 */  jal   get_item_in_hand
+/* 09C53C 7F069B4C 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 09C540 7F069B50 AFA50018 */   sw    $a1, 0x18($sp)
 /* 09C544 7F069B54 2401000F */  li    $at, 15
 /* 09C548 7F069B58 10410004 */  beq   $v0, $at, .L7F069B6C
@@ -34162,8 +34162,8 @@ s32 generate_ammo_total_microcode(s32 arg0) {
         if (g_CurrentPlayer->unk29C4 == 0)
         {
             // Node 2
-            sp64 = get_item_in_hand(1);
-            sp60 = get_item_in_hand(0);
+            sp64 = getCurrentPlayerWeaponId(1);
+            sp60 = getCurrentPlayerWeaponId(0);
             if (getPlayerCount() < 3)
             {
                 // Node 3
@@ -34404,10 +34404,10 @@ glabel generate_ammo_total_microcode
 /* 09E844 7F069D14 8C4F29C4 */  lw    $t7, 0x29c4($v0)
 /* 09E848 7F069D18 55E00182 */  bnezl $t7, .L7F06A324
 /* 09E84C 7F069D1C 8FBF0024 */   lw    $ra, 0x24($sp)
-/* 09E850 7F069D20 0FC17674 */  jal   get_item_in_hand
+/* 09E850 7F069D20 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 09E854 7F069D24 24040001 */   li    $a0, 1
 /* 09E858 7F069D28 AFA20064 */  sw    $v0, 0x64($sp)
-/* 09E85C 7F069D2C 0FC17674 */  jal   get_item_in_hand
+/* 09E85C 7F069D2C 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 09E860 7F069D30 00002025 */   move  $a0, $zero
 /* 09E864 7F069D34 0FC26919 */  jal   getPlayerCount
 /* 09E868 7F069D38 AFA20060 */   sw    $v0, 0x60($sp)
@@ -34836,10 +34836,10 @@ glabel generate_ammo_total_microcode
 /* 09CE98 7F06A4A8 8C4F29BC */  lw    $t7, 0x29bc($v0)
 /* 09CE9C 7F06A4AC 55E00182 */  bnezl $t7, .L7F06AAB8
 /* 09CEA0 7F06A4B0 8FBF0024 */   lw    $ra, 0x24($sp)
-/* 09CEA4 7F06A4B4 0FC177A2 */  jal   get_item_in_hand
+/* 09CEA4 7F06A4B4 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 09CEA8 7F06A4B8 24040001 */   li    $a0, 1
 /* 09CEAC 7F06A4BC AFA20064 */  sw    $v0, 0x64($sp)
-/* 09CEB0 7F06A4C0 0FC177A2 */  jal   get_item_in_hand
+/* 09CEB0 7F06A4C0 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 09CEB4 7F06A4C4 00002025 */   move  $a0, $zero
 /* 09CEB8 7F06A4C8 0FC26669 */  jal   getPlayerCount
 /* 09CEBC 7F06A4CC AFA20060 */   sw    $v0, 0x60($sp)
@@ -35284,8 +35284,8 @@ s32 sub_GAME_7F06A334(s32 arg0) {
     s32 phi_s0_4;
 
     // Node 0
-    sp54 = get_item_in_hand(1);
-    temp_ret = get_item_in_hand(0);
+    sp54 = getCurrentPlayerWeaponId(1);
+    temp_ret = getCurrentPlayerWeaponId(0);
     phi_s0_4 = arg0;
     if (temp_ret != 0)
     {
@@ -35397,10 +35397,10 @@ glabel sub_GAME_7F06A334
 /* 09EE68 7F06A338 AFB00028 */  sw    $s0, 0x28($sp)
 /* 09EE6C 7F06A33C 00808025 */  move  $s0, $a0
 /* 09EE70 7F06A340 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 09EE74 7F06A344 0FC17674 */  jal   get_item_in_hand
+/* 09EE74 7F06A344 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 09EE78 7F06A348 24040001 */   li    $a0, 1
 /* 09EE7C 7F06A34C AFA20054 */  sw    $v0, 0x54($sp)
-/* 09EE80 7F06A350 0FC17674 */  jal   get_item_in_hand
+/* 09EE80 7F06A350 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 09EE84 7F06A354 00002025 */   move  $a0, $zero
 /* 09EE88 7F06A358 1040008E */  beqz  $v0, .L7F06A594
 /* 09EE8C 7F06A35C 00402025 */   move  $a0, $v0
@@ -35571,10 +35571,10 @@ glabel sub_GAME_7F06A334
 /* 09D4BC 7F06AACC AFB00028 */  sw    $s0, 0x28($sp)
 /* 09D4C0 7F06AAD0 00808025 */  move  $s0, $a0
 /* 09D4C4 7F06AAD4 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 09D4C8 7F06AAD8 0FC177A2 */  jal   get_item_in_hand
+/* 09D4C8 7F06AAD8 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 09D4CC 7F06AADC 24040001 */   li    $a0, 1
 /* 09D4D0 7F06AAE0 AFA20054 */  sw    $v0, 0x54($sp)
-/* 09D4D4 7F06AAE4 0FC177A2 */  jal   get_item_in_hand
+/* 09D4D4 7F06AAE4 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 09D4D8 7F06AAE8 00002025 */   move  $a0, $zero
 /* 09D4DC 7F06AAEC 1040008E */  beqz  $v0, .L7F06AD28
 /* 09D4E0 7F06AAF0 00402025 */   move  $a0, $v0
@@ -35822,8 +35822,8 @@ void *increment_num_kills_display_text_in_MP(void) {
     {
         // Node 1
         sp34 = getMissiontimer();
-        sprintf(&sp40, &aSD, get_textptr_for_textID(TEXT(LGUN, 0xDA)), g_playerPerm->killcount); // kill count
-        display_string_in_lower_left_corner(&sp40);
+        sprintf(&sp40, &aSD, langGet(TEXT(LGUN, 0xDA)), g_playerPerm->killcount); // kill count
+        hudmsgBottomShow(&sp40);
         if (g_playerPerm->killcount >= 2)
         {
             // Node 2
@@ -35915,7 +35915,7 @@ glabel increment_num_kills_display_text_in_MP
 /* 09F2F8 7F06A7C8 0FC22FEE */  jal   getMissiontimer
 /* 09F2FC 7F06A7CC 00000000 */   nop
 /* 09F300 7F06A7D0 AFA20034 */  sw    $v0, 0x34($sp)
-/* 09F304 7F06A7D4 0FC30776 */  jal   get_textptr_for_textID
+/* 09F304 7F06A7D4 0FC30776 */  jal   langGet
 /* 09F308 7F06A7D8 340498DA */   li    $a0, 39130
 /* 09F30C 7F06A7DC 3C088008 */  lui   $t0, %hi(g_playerPerm)
 /* 09F310 7F06A7E0 8D08A0B4 */  lw    $t0, %lo(g_playerPerm)($t0)
@@ -35925,7 +35925,7 @@ glabel increment_num_kills_display_text_in_MP
 /* 09F320 7F06A7F0 00403025 */  move  $a2, $v0
 /* 09F324 7F06A7F4 0C002B25 */  jal   sprintf
 /* 09F328 7F06A7F8 8D07001C */   lw    $a3, 0x1c($t0)
-/* 09F32C 7F06A7FC 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 09F32C 7F06A7FC 0FC228F2 */  jal   hudmsgBottomShow
 /* 09F330 7F06A800 27A40040 */   addiu $a0, $sp, 0x40
 /* 09F334 7F06A804 3C038008 */  lui   $v1, %hi(g_playerPerm)
 /* 09F338 7F06A808 8C63A0B4 */  lw    $v1, %lo(g_playerPerm)($v1)
@@ -36030,7 +36030,7 @@ glabel increment_num_kills_display_text_in_MP
 /* 09F2F8 7F06A7C8 0FC22FEE */  jal   getMissiontimer
 /* 09F2FC 7F06A7CC 00000000 */   nop
 /* 09F300 7F06A7D0 AFA20034 */  sw    $v0, 0x34($sp)
-/* 09F304 7F06A7D4 0FC30776 */  jal   get_textptr_for_textID
+/* 09F304 7F06A7D4 0FC30776 */  jal   langGet
 /* 09F308 7F06A7D8 340498DA */   li    $a0, 39130
 /* 09F30C 7F06A7DC 3C088008 */  lui   $t0, %hi(g_playerPerm)
 /* 09F310 7F06A7E0 8D08A0B4 */  lw    $t0, %lo(g_playerPerm)($t0)
@@ -36040,7 +36040,7 @@ glabel increment_num_kills_display_text_in_MP
 /* 09F320 7F06A7F0 00403025 */  move  $a2, $v0
 /* 09F324 7F06A7F4 0C002B25 */  jal   sprintf
 /* 09F328 7F06A7F8 8D07001C */   lw    $a3, 0x1c($t0)
-/* 09F32C 7F06A7FC 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
+/* 09F32C 7F06A7FC 0FC228F2 */  jal   jp_hudmsgBottomShow
 /* 09F330 7F06A800 27A40040 */   addiu $a0, $sp, 0x40
 /* 09F334 7F06A804 3C038008 */  lui   $v1, %hi(g_playerPerm)
 /* 09F338 7F06A808 8C63A0B4 */  lw    $v1, %lo(g_playerPerm)($v1)
@@ -36146,7 +36146,7 @@ glabel increment_num_kills_display_text_in_MP
 /* 09D960 7F06AF70 0FC230AB */  jal   getMissiontimer
 /* 09D964 7F06AF74 00000000 */   nop   
 /* 09D968 7F06AF78 AFA20034 */  sw    $v0, 0x34($sp)
-/* 09D96C 7F06AF7C 0FC304AE */  jal   get_textptr_for_textID
+/* 09D96C 7F06AF7C 0FC304AE */  jal   langGet
 /* 09D970 7F06AF80 340498DA */   li    $a0, 39130
 /* 09D974 7F06AF84 3C088007 */  lui   $t0, %hi(g_playerPerm) # $t0, 0x8007
 /* 09D978 7F06AF88 8D088BC4 */  lw    $t0, %lo(g_playerPerm)($t0)
@@ -36156,7 +36156,7 @@ glabel increment_num_kills_display_text_in_MP
 /* 09D988 7F06AF98 00403025 */  move  $a2, $v0
 /* 09D98C 7F06AF9C 0C00283D */  jal   sprintf
 /* 09D990 7F06AFA0 8D07001C */   lw    $a3, 0x1c($t0)
-/* 09D994 7F06AFA4 0FC229B5 */  jal   jp_display_string_in_lower_left_corner
+/* 09D994 7F06AFA4 0FC229B5 */  jal   jp_hudmsgBottomShow
 /* 09D998 7F06AFA8 27A40040 */   addiu $a0, $sp, 0x40
 /* 09D99C 7F06AFAC 3C038007 */  lui   $v1, %hi(g_playerPerm) # $v1, 0x8007
 /* 09D9A0 7F06AFB0 8C638BC4 */  lw    $v1, %lo(g_playerPerm)($v1)
@@ -36261,13 +36261,13 @@ void increment_num_deaths(void)
     {
         if (g_CurrentPlayer->deathcount == 1)
         {
-            sprintf(acStack256, get_textptr_for_textID(TEXT(LGUN, 0xDB))); //died once
+            sprintf(acStack256, langGet(TEXT(LGUN, 0xDB))); //died once
         }
         else
         {
-            sprintf(acStack256, &aSDS, get_textptr_for_textID(TEXT(LGUN, 0xDC))), g_CurrentPlayer->deathcount, get_textptr_for_textID(TEXT(LGUN, 0xDD))); //died times
+            sprintf(acStack256, &aSDS, langGet(TEXT(LGUN, 0xDC))), g_CurrentPlayer->deathcount, langGet(TEXT(LGUN, 0xDD))); //died times
         }
-		display_string_in_lower_left_corner(acStack256);
+		hudmsgBottomShow(acStack256);
     }
 }
 #else
@@ -36291,7 +36291,7 @@ glabel increment_num_deaths
 /* 09F4C0 7F06A990 8F1929D8 */  lw    $t9, 0x29d8($t8)
 /* 09F4C4 7F06A994 17210008 */  bne   $t9, $at, .L7F06A9B8
 /* 09F4C8 7F06A998 00000000 */   nop
-/* 09F4CC 7F06A99C 0FC30776 */  jal   get_textptr_for_textID
+/* 09F4CC 7F06A99C 0FC30776 */  jal   langGet
 /* 09F4D0 7F06A9A0 340498DB */   li    $a0, 39131
 /* 09F4D4 7F06A9A4 27A40030 */  addiu $a0, $sp, 0x30
 /* 09F4D8 7F06A9A8 0C002B25 */  jal   sprintf
@@ -36299,10 +36299,10 @@ glabel increment_num_deaths
 /* 09F4E0 7F06A9B0 1000000F */  b     .L7F06A9F0
 /* 09F4E4 7F06A9B4 00000000 */   nop
 .L7F06A9B8:
-/* 09F4E8 7F06A9B8 0FC30776 */  jal   get_textptr_for_textID
+/* 09F4E8 7F06A9B8 0FC30776 */  jal   langGet
 /* 09F4EC 7F06A9BC 340498DC */   li    $a0, 39132
 /* 09F4F0 7F06A9C0 AFA20028 */  sw    $v0, 0x28($sp)
-/* 09F4F4 7F06A9C4 0FC30776 */  jal   get_textptr_for_textID
+/* 09F4F4 7F06A9C4 0FC30776 */  jal   langGet
 /* 09F4F8 7F06A9C8 340498DD */   li    $a0, 39133
 /* 09F4FC 7F06A9CC 3C088008 */  lui   $t0, %hi(g_CurrentPlayer)
 /* 09F500 7F06A9D0 8D08A0B0 */  lw    $t0, %lo(g_CurrentPlayer)($t0)
@@ -36314,7 +36314,7 @@ glabel increment_num_deaths
 /* 09F518 7F06A9E8 0C002B25 */  jal   sprintf
 /* 09F51C 7F06A9EC 8FA60028 */   lw    $a2, 0x28($sp)
 .L7F06A9F0:
-/* 09F520 7F06A9F0 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 09F520 7F06A9F0 0FC228F2 */  jal   hudmsgBottomShow
 /* 09F524 7F06A9F4 27A40030 */   addiu $a0, $sp, 0x30
 .L7F06A9F8:
 /* 09F528 7F06A9F8 8FBF001C */  lw    $ra, 0x1c($sp)
@@ -36344,7 +36344,7 @@ glabel increment_num_deaths
 /* 09F4C0 7F06A990 8F1929D8 */  lw    $t9, 0x29d8($t8)
 /* 09F4C4 7F06A994 17210008 */  bne   $t9, $at, .L7F06A9B8
 /* 09F4C8 7F06A998 00000000 */   nop
-/* 09F4CC 7F06A99C 0FC30776 */  jal   get_textptr_for_textID
+/* 09F4CC 7F06A99C 0FC30776 */  jal   langGet
 /* 09F4D0 7F06A9A0 340498DB */   li    $a0, 39131
 /* 09F4D4 7F06A9A4 27A40030 */  addiu $a0, $sp, 0x30
 /* 09F4D8 7F06A9A8 0C002B25 */  jal   sprintf
@@ -36352,10 +36352,10 @@ glabel increment_num_deaths
 /* 09F4E0 7F06A9B0 1000000F */  b     .L7F06A9F0
 /* 09F4E4 7F06A9B4 00000000 */   nop
 .L7F06A9B8:
-/* 09F4E8 7F06A9B8 0FC30776 */  jal   get_textptr_for_textID
+/* 09F4E8 7F06A9B8 0FC30776 */  jal   langGet
 /* 09F4EC 7F06A9BC 340498DC */   li    $a0, 39132
 /* 09F4F0 7F06A9C0 AFA20028 */  sw    $v0, 0x28($sp)
-/* 09F4F4 7F06A9C4 0FC30776 */  jal   get_textptr_for_textID
+/* 09F4F4 7F06A9C4 0FC30776 */  jal   langGet
 /* 09F4F8 7F06A9C8 340498DD */   li    $a0, 39133
 /* 09F4FC 7F06A9CC 3C088008 */  lui   $t0, %hi(g_CurrentPlayer)
 /* 09F500 7F06A9D0 8D08A0B0 */  lw    $t0, %lo(g_CurrentPlayer)($t0)
@@ -36367,7 +36367,7 @@ glabel increment_num_deaths
 /* 09F518 7F06A9E8 0C002B25 */  jal   sprintf
 /* 09F51C 7F06A9EC 8FA60028 */   lw    $a2, 0x28($sp)
 .L7F06A9F0:
-/* 09F520 7F06A9F0 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
+/* 09F520 7F06A9F0 0FC228F2 */  jal   jp_hudmsgBottomShow
 /* 09F524 7F06A9F4 27A40030 */   addiu $a0, $sp, 0x30
 .L7F06A9F8:
 /* 09F528 7F06A9F8 8FBF001C */  lw    $ra, 0x1c($sp)
@@ -36397,7 +36397,7 @@ glabel increment_num_deaths
 /* 09DB28 7F06B138 8F1929D0 */  lw    $t9, 0x29d0($t8)
 /* 09DB2C 7F06B13C 17210008 */  bne   $t9, $at, .L7F06B160
 /* 09DB30 7F06B140 00000000 */   nop   
-/* 09DB34 7F06B144 0FC304AE */  jal   get_textptr_for_textID
+/* 09DB34 7F06B144 0FC304AE */  jal   langGet
 /* 09DB38 7F06B148 340498DB */   li    $a0, 39131
 /* 09DB3C 7F06B14C 27A40030 */  addiu $a0, $sp, 0x30
 /* 09DB40 7F06B150 0C00283D */  jal   sprintf
@@ -36405,10 +36405,10 @@ glabel increment_num_deaths
 /* 09DB48 7F06B158 1000000F */  b     .L7F06B198
 /* 09DB4C 7F06B15C 00000000 */   nop   
 .L7F06B160:
-/* 09DB50 7F06B160 0FC304AE */  jal   get_textptr_for_textID
+/* 09DB50 7F06B160 0FC304AE */  jal   langGet
 /* 09DB54 7F06B164 340498DC */   li    $a0, 39132
 /* 09DB58 7F06B168 AFA20028 */  sw    $v0, 0x28($sp)
-/* 09DB5C 7F06B16C 0FC304AE */  jal   get_textptr_for_textID
+/* 09DB5C 7F06B16C 0FC304AE */  jal   langGet
 /* 09DB60 7F06B170 340498DD */   li    $a0, 39133
 /* 09DB64 7F06B174 3C088007 */  lui   $t0, %hi(g_CurrentPlayer) # $t0, 0x8007
 /* 09DB68 7F06B178 8D088BC0 */  lw    $t0, %lo(g_CurrentPlayer)($t0)
@@ -36420,7 +36420,7 @@ glabel increment_num_deaths
 /* 09DB80 7F06B190 0C00283D */  jal   sprintf
 /* 09DB84 7F06B194 8FA60028 */   lw    $a2, 0x28($sp)
 .L7F06B198:
-/* 09DB88 7F06B198 0FC229B5 */  jal   jp_display_string_in_lower_left_corner
+/* 09DB88 7F06B198 0FC229B5 */  jal   jp_hudmsgBottomShow
 /* 09DB8C 7F06B19C 27A40030 */   addiu $a0, $sp, 0x30
 .L7F06B1A0:
 /* 09DB90 7F06B1A0 8FBF001C */  lw    $ra, 0x1c($sp)
@@ -36455,8 +36455,8 @@ void *increment_num_suicides_display_MP(void) {
     {
         // Node 1
         sp34 = getMissiontimer();
-        sprintf(&sp40, &aSD_0, get_textptr_for_textID(TEXT(LGUN, 0xDE)), g_CurrentPlayer->num_suicides); //suicide count
-        display_string_in_lower_left_corner(&sp40);
+        sprintf(&sp40, &aSD_0, langGet(TEXT(LGUN, 0xDE)), g_CurrentPlayer->num_suicides); //suicide count
+        hudmsgBottomShow(&sp40);
         if (g_playerPerm->killcount >= 2)
         {
             // Node 2
@@ -36544,7 +36544,7 @@ glabel increment_num_suicides_display_MP
 /* 09F57C 7F06AA4C 0FC22FEE */  jal   getMissiontimer
 /* 09F580 7F06AA50 00000000 */   nop
 /* 09F584 7F06AA54 AFA20034 */  sw    $v0, 0x34($sp)
-/* 09F588 7F06AA58 0FC30776 */  jal   get_textptr_for_textID
+/* 09F588 7F06AA58 0FC30776 */  jal   langGet
 /* 09F58C 7F06AA5C 340498DE */   li    $a0, 39134
 /* 09F590 7F06AA60 8E180000 */  lw    $t8, ($s0)
 /* 09F594 7F06AA64 3C058005 */  lui   $a1, %hi(aSD_0)
@@ -36553,7 +36553,7 @@ glabel increment_num_suicides_display_MP
 /* 09F5A0 7F06AA70 00403025 */  move  $a2, $v0
 /* 09F5A4 7F06AA74 0C002B25 */  jal   sprintf
 /* 09F5A8 7F06AA78 8F0729DC */   lw    $a3, 0x29dc($t8)
-/* 09F5AC 7F06AA7C 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 09F5AC 7F06AA7C 0FC228F2 */  jal   hudmsgBottomShow
 /* 09F5B0 7F06AA80 27A40040 */   addiu $a0, $sp, 0x40
 /* 09F5B4 7F06AA84 3C078008 */  lui   $a3, %hi(g_playerPerm)
 /* 09F5B8 7F06AA88 24E7A0B4 */  addiu $a3, %lo(g_playerPerm) # addiu $a3, $a3, -0x5f4c
@@ -36654,7 +36654,7 @@ glabel increment_num_suicides_display_MP
 /* 09F57C 7F06AA4C 0FC22FEE */  jal   getMissiontimer
 /* 09F580 7F06AA50 00000000 */   nop
 /* 09F584 7F06AA54 AFA20034 */  sw    $v0, 0x34($sp)
-/* 09F588 7F06AA58 0FC30776 */  jal   get_textptr_for_textID
+/* 09F588 7F06AA58 0FC30776 */  jal   langGet
 /* 09F58C 7F06AA5C 340498DE */   li    $a0, 39134
 /* 09F590 7F06AA60 8E180000 */  lw    $t8, ($s0)
 /* 09F594 7F06AA64 3C058005 */  lui   $a1, %hi(aSD_0)
@@ -36663,7 +36663,7 @@ glabel increment_num_suicides_display_MP
 /* 09F5A0 7F06AA70 00403025 */  move  $a2, $v0
 /* 09F5A4 7F06AA74 0C002B25 */  jal   sprintf
 /* 09F5A8 7F06AA78 8F0729DC */   lw    $a3, 0x29dc($t8)
-/* 09F5AC 7F06AA7C 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
+/* 09F5AC 7F06AA7C 0FC228F2 */  jal   jp_hudmsgBottomShow
 /* 09F5B0 7F06AA80 27A40040 */   addiu $a0, $sp, 0x40
 /* 09F5B4 7F06AA84 3C078008 */  lui   $a3, %hi(g_playerPerm)
 /* 09F5B8 7F06AA88 24E7A0B4 */  addiu $a3, %lo(g_playerPerm) # addiu $a3, $a3, -0x5f4c
@@ -36764,7 +36764,7 @@ glabel increment_num_suicides_display_MP
 /* 09DBE4 7F06B1F4 0FC230AB */  jal   getMissiontimer
 /* 09DBE8 7F06B1F8 00000000 */   nop   
 /* 09DBEC 7F06B1FC AFA20034 */  sw    $v0, 0x34($sp)
-/* 09DBF0 7F06B200 0FC304AE */  jal   get_textptr_for_textID
+/* 09DBF0 7F06B200 0FC304AE */  jal   langGet
 /* 09DBF4 7F06B204 340498DE */   li    $a0, 39134
 /* 09DBF8 7F06B208 8E180000 */  lw    $t8, ($s0)
 /* 09DBFC 7F06B20C 3C058005 */  lui   $a1, %hi(aSD_0) # $a1, 0x8005
@@ -36773,7 +36773,7 @@ glabel increment_num_suicides_display_MP
 /* 09DC08 7F06B218 00403025 */  move  $a2, $v0
 /* 09DC0C 7F06B21C 0C00283D */  jal   sprintf
 /* 09DC10 7F06B220 8F0729D4 */   lw    $a3, 0x29d4($t8)
-/* 09DC14 7F06B224 0FC229B5 */  jal   jp_display_string_in_lower_left_corner
+/* 09DC14 7F06B224 0FC229B5 */  jal   jp_hudmsgBottomShow
 /* 09DC18 7F06B228 27A40040 */   addiu $a0, $sp, 0x40
 /* 09DC1C 7F06B22C 3C078007 */  lui   $a3, %hi(g_playerPerm) # $a3, 0x8007
 /* 09DC20 7F06B230 24E78BC4 */  addiu $a3, %lo(g_playerPerm) # addiu $a3, $a3, -0x743c

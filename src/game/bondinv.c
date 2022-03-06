@@ -1080,7 +1080,7 @@ u16 *inv_get_name_by_index(s32 index)
             {
                 if (override->unk6)
                 {
-                    return get_textptr_for_textID(override->unk6);
+                    return langGet(override->unk6);
                 }
 
                 weaponnum = override->weapon;
@@ -1093,7 +1093,7 @@ u16 *inv_get_name_by_index(s32 index)
 
             if (override && override->unk6)
             {
-                return get_textptr_for_textID(override->unk6);
+                return langGet(override->unk6);
             }
         }
     }
@@ -1140,7 +1140,7 @@ u16 *inv_get_long_name_by_index(s32 index)
             {
                 if (override->unk7)
                 {
-                    return get_textptr_for_textID(override->unk7);
+                    return langGet(override->unk7);
                 }
 
                 weaponnum = override->weapon;
@@ -1153,7 +1153,7 @@ u16 *inv_get_long_name_by_index(s32 index)
 
             if (override && override->unk7)
             {
-                return get_textptr_for_textID(override->unk7);
+                return langGet(override->unk7);
             }
         }
     }
@@ -1220,7 +1220,7 @@ u16 *inv_get_first_title_name_by_index(s32 index)
             {
                 if (override->unk4)
                 {
-                    return get_textptr_for_textID(override->unk4);
+                    return langGet(override->unk4);
                 }
 
                 weaponnum = override->weapon;
@@ -1233,7 +1233,7 @@ u16 *inv_get_first_title_name_by_index(s32 index)
 
             if (override && override->unk4)
             {
-                return get_textptr_for_textID(override->unk4);
+                return langGet(override->unk4);
             }
         }
     }
@@ -1280,7 +1280,7 @@ u16 *inv_get_second_title_name_by_index(s32 index)
             {
                 if (override->unk5)
                 {
-                    return get_textptr_for_textID(override->unk5);
+                    return langGet(override->unk5);
                 }
 
                 weaponnum = override->weapon;
@@ -1293,7 +1293,7 @@ u16 *inv_get_second_title_name_by_index(s32 index)
 
             if (override && override->unk5)
             {
-                return get_textptr_for_textID(override->unk5);
+                return langGet(override->unk5);
             }
         }
     }
@@ -1374,7 +1374,7 @@ void calculate_equip_cur_item(void)
     s32 current_weapon;
     s32 i;
 
-    current_weapon = get_item_in_hand(GUNRIGHT);
+    current_weapon = getCurrentPlayerWeaponId(GUNRIGHT);
 
     g_CurrentPlayer->equipcuritem = 0;
 
@@ -1394,7 +1394,7 @@ u8 *obj_get_activated_text(ObjectRecord *obj)
 
     if (override && override->unk8)
     {
-        return get_textptr_for_textID(override->unk8);
+        return langGet(override->unk8);
     }
 
     return NULL;
@@ -1406,7 +1406,7 @@ u8 *weapon_get_activated_text(ITEM_IDS weaponnum)
 
     if (override && override->unk8)
     {
-        return get_textptr_for_textID(override->unk8);
+        return langGet(override->unk8);
     }
 
     return NULL;

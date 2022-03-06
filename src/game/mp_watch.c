@@ -103,7 +103,7 @@ s32 mpwatchIsPlayerPressingLeft(s32 player)
 
 void mpwatchPlayBeep(void)
 {
-    sndPlaySfx(g_musicSfxBufferPtr, CAMERA_BEEP1_SFX, 0);
+    sndPlaySfx(g_musicSfxBufferPtr, WATCH_BEEP1_SFX, 0);
 }
 
 void mpwatchUnpauseGame(void)
@@ -869,7 +869,7 @@ glabel end_game_and_show_game_over_menu
 /* 0F7888 7F0C2D58 AE4C002C */  sw    $t4, 0x2c($s2)
 /* 0F788C 7F0C2D5C 01F88821 */  addu  $s1, $t7, $t8
 /* 0F7890 7F0C2D60 95C40000 */  lhu   $a0, ($t6)
-/* 0F7894 7F0C2D64 0FC30776 */  jal   get_textptr_for_textID
+/* 0F7894 7F0C2D64 0FC30776 */  jal   langGet
 /* 0F7898 7F0C2D68 24130001 */   li    $s3, 1
 /* 0F789C 7F0C2D6C 8E280000 */  lw    $t0, ($s1)
 /* 0F78A0 7F0C2D70 AD022A10 */  sw    $v0, 0x2a10($t0)
@@ -919,7 +919,7 @@ glabel end_game_and_show_game_over_menu
 /* 0F793C 7F0C2E0C AE4E002C */  sw    $t6, 0x2c($s2)
 /* 0F7940 7F0C2E10 01098821 */  addu  $s1, $t0, $t1
 /* 0F7944 7F0C2E14 97040000 */  lhu   $a0, ($t8)
-/* 0F7948 7F0C2E18 0FC30776 */  jal   get_textptr_for_textID
+/* 0F7948 7F0C2E18 0FC30776 */  jal   langGet
 /* 0F794C 7F0C2E1C 24130002 */   li    $s3, 2
 /* 0F7950 7F0C2E20 8E2A0000 */  lw    $t2, ($s1)
 /* 0F7954 7F0C2E24 AD422A14 */  sw    $v0, 0x2a14($t2)
@@ -1523,7 +1523,7 @@ glabel end_game_and_show_game_over_menu
 /* 0F4C28 7F0C2238 AE4C002C */  sw    $t4, 0x2c($s2)
 /* 0F4C2C 7F0C223C 01F88821 */  addu  $s1, $t7, $t8
 /* 0F4C30 7F0C2240 95C40000 */  lhu   $a0, ($t6)
-/* 0F4C34 7F0C2244 0FC304AE */  jal   get_textptr_for_textID
+/* 0F4C34 7F0C2244 0FC304AE */  jal   langGet
 /* 0F4C38 7F0C2248 24130001 */   li    $s3, 1
 /* 0F4C3C 7F0C224C 8E280000 */  lw    $t0, ($s1)
 /* 0F4C40 7F0C2250 AD022A08 */  sw    $v0, 0x2a08($t0)
@@ -1573,7 +1573,7 @@ glabel end_game_and_show_game_over_menu
 /* 0F4CDC 7F0C22EC AE4E002C */  sw    $t6, 0x2c($s2)
 /* 0F4CE0 7F0C22F0 01098821 */  addu  $s1, $t0, $t1
 /* 0F4CE4 7F0C22F4 97040000 */  lhu   $a0, ($t8)
-/* 0F4CE8 7F0C22F8 0FC304AE */  jal   get_textptr_for_textID
+/* 0F4CE8 7F0C22F8 0FC304AE */  jal   langGet
 /* 0F4CEC 7F0C22FC 24130002 */   li    $s3, 2
 /* 0F4CF0 7F0C2300 8E2A0000 */  lw    $t2, ($s1)
 /* 0F4CF4 7F0C2304 AD422A0C */  sw    $v0, 0x2a0c($t2)
@@ -3140,7 +3140,7 @@ glabel write_playerrank_to_buffer
 /* 0F89B0 7F0C3E80 10000032 */  b     .L7F0C3F4C
 /* 0F89B4 7F0C3E84 8FBF001C */   lw    $ra, 0x1c($sp)
 .L7F0C3E88:
-/* 0F89B8 7F0C3E88 0FC30776 */  jal   get_textptr_for_textID
+/* 0F89B8 7F0C3E88 0FC30776 */  jal   langGet
 /* 0F89BC 7F0C3E8C 3404A011 */   li    $a0, 40977
 /* 0F89C0 7F0C3E90 8FA40080 */  lw    $a0, 0x80($sp)
 /* 0F89C4 7F0C3E94 0C002B25 */  jal   sprintf
@@ -3148,7 +3148,7 @@ glabel write_playerrank_to_buffer
 /* 0F89CC 7F0C3E9C 1000002B */  b     .L7F0C3F4C
 /* 0F89D0 7F0C3EA0 8FBF001C */   lw    $ra, 0x1c($sp)
 .L7F0C3EA4:
-/* 0F89D4 7F0C3EA4 0FC30776 */  jal   get_textptr_for_textID
+/* 0F89D4 7F0C3EA4 0FC30776 */  jal   langGet
 /* 0F89D8 7F0C3EA8 3404A012 */   li    $a0, 40978
 /* 0F89DC 7F0C3EAC 8FA40080 */  lw    $a0, 0x80($sp)
 /* 0F89E0 7F0C3EB0 0C002B25 */  jal   sprintf
@@ -3161,7 +3161,7 @@ glabel write_playerrank_to_buffer
 /* 0F89F8 7F0C3EC8 24010007 */   li    $at, 7
 /* 0F89FC 7F0C3ECC 10410008 */  beq   $v0, $at, .L7F0C3EF0
 /* 0F8A00 7F0C3ED0 00000000 */   nop   
-/* 0F8A04 7F0C3ED4 0FC30776 */  jal   get_textptr_for_textID
+/* 0F8A04 7F0C3ED4 0FC30776 */  jal   langGet
 /* 0F8A08 7F0C3ED8 3404A013 */   li    $a0, 40979
 /* 0F8A0C 7F0C3EDC 8FA40080 */  lw    $a0, 0x80($sp)
 /* 0F8A10 7F0C3EE0 0C002B25 */  jal   sprintf
@@ -3169,7 +3169,7 @@ glabel write_playerrank_to_buffer
 /* 0F8A18 7F0C3EE8 10000018 */  b     .L7F0C3F4C
 /* 0F8A1C 7F0C3EEC 8FBF001C */   lw    $ra, 0x1c($sp)
 .L7F0C3EF0:
-/* 0F8A20 7F0C3EF0 0FC30776 */  jal   get_textptr_for_textID
+/* 0F8A20 7F0C3EF0 0FC30776 */  jal   langGet
 /* 0F8A24 7F0C3EF4 3404A012 */   li    $a0, 40978
 /* 0F8A28 7F0C3EF8 8FA40080 */  lw    $a0, 0x80($sp)
 /* 0F8A2C 7F0C3EFC 0C002B25 */  jal   sprintf
@@ -3180,7 +3180,7 @@ glabel write_playerrank_to_buffer
 /* 0F8A3C 7F0C3F0C 24010006 */  li    $at, 6
 /* 0F8A40 7F0C3F10 13210008 */  beq   $t9, $at, .L7F0C3F34
 /* 0F8A44 7F0C3F14 00000000 */   nop   
-/* 0F8A48 7F0C3F18 0FC30776 */  jal   get_textptr_for_textID
+/* 0F8A48 7F0C3F18 0FC30776 */  jal   langGet
 /* 0F8A4C 7F0C3F1C 3404A014 */   li    $a0, 40980
 /* 0F8A50 7F0C3F20 8FA40080 */  lw    $a0, 0x80($sp)
 /* 0F8A54 7F0C3F24 0C002B25 */  jal   sprintf
@@ -3188,7 +3188,7 @@ glabel write_playerrank_to_buffer
 /* 0F8A5C 7F0C3F2C 10000007 */  b     .L7F0C3F4C
 /* 0F8A60 7F0C3F30 8FBF001C */   lw    $ra, 0x1c($sp)
 .L7F0C3F34:
-/* 0F8A64 7F0C3F34 0FC30776 */  jal   get_textptr_for_textID
+/* 0F8A64 7F0C3F34 0FC30776 */  jal   langGet
 /* 0F8A68 7F0C3F38 3404A012 */   li    $a0, 40978
 /* 0F8A6C 7F0C3F3C 8FA40080 */  lw    $a0, 0x80($sp)
 /* 0F8A70 7F0C3F40 0C002B25 */  jal   sprintf
@@ -3321,7 +3321,7 @@ text_play:
 /* 0F8C00 7F0C40D0 3C0B8009 */  lui   $t3, %hi(time_trigger_alt_gameover_msg) 
 /* 0F8C04 7F0C40D4 15400005 */  bnez  $t2, .L7F0C40EC
 /* 0F8C08 7F0C40D8 00000000 */   nop   
-/* 0F8C0C 7F0C40DC 0FC30776 */  jal   get_textptr_for_textID
+/* 0F8C0C 7F0C40DC 0FC30776 */  jal   langGet
 /* 0F8C10 7F0C40E0 3404A015 */   li    $a0, 40981
 /* 0F8C14 7F0C40E4 1000002A */  b     .L7F0C4190
 /* 0F8C18 7F0C40E8 AFA200A4 */   sw    $v0, 0xa4($sp)
@@ -3329,12 +3329,12 @@ text_play:
 /* 0F8C1C 7F0C40EC 8D6BC710 */  lw    $t3, %lo(time_trigger_alt_gameover_msg)($t3)
 /* 0F8C20 7F0C40F0 11600005 */  beqz  $t3, .L7F0C4108
 /* 0F8C24 7F0C40F4 00000000 */   nop   
-/* 0F8C28 7F0C40F8 0FC30776 */  jal   get_textptr_for_textID
+/* 0F8C28 7F0C40F8 0FC30776 */  jal   langGet
 /* 0F8C2C 7F0C40FC 3404A016 */   li    $a0, 40982
 /* 0F8C30 7F0C4100 10000023 */  b     .L7F0C4190
 /* 0F8C34 7F0C4104 AFA200A4 */   sw    $v0, 0xa4($sp)
 .L7F0C4108:
-/* 0F8C38 7F0C4108 0FC30776 */  jal   get_textptr_for_textID
+/* 0F8C38 7F0C4108 0FC30776 */  jal   langGet
 /* 0F8C3C 7F0C410C 3404A017 */   li    $a0, 40983
 /* 0F8C40 7F0C4110 1000001F */  b     .L7F0C4190
 /* 0F8C44 7F0C4114 AFA200A4 */   sw    $v0, 0xa4($sp)
@@ -3348,7 +3348,7 @@ text_pause_unpause:
 /* 0F8C5C 7F0C412C 8DADC718 */  lw    $t5, %lo(g_pausedFlag)($t5)
 /* 0F8C60 7F0C4130 11A0000B */  beqz  $t5, .L7F0C4160
 /* 0F8C64 7F0C4134 00000000 */   nop   
-/* 0F8C68 7F0C4138 0FC30776 */  jal   get_textptr_for_textID
+/* 0F8C68 7F0C4138 0FC30776 */  jal   langGet
 /* 0F8C6C 7F0C413C 3404A018 */   li    $a0, 40984
 /* 0F8C70 7F0C4140 0FC26C54 */  jal   get_cur_playernum
 /* 0F8C74 7F0C4144 AFA200A4 */   sw    $v0, 0xa4($sp)
@@ -3359,12 +3359,12 @@ text_pause_unpause:
 /* 0F8C88 7F0C4158 1000000D */  b     .L7F0C4190
 /* 0F8C8C 7F0C415C 24100001 */   li    $s0, 1
 .L7F0C4160:
-/* 0F8C90 7F0C4160 0FC30776 */  jal   get_textptr_for_textID
+/* 0F8C90 7F0C4160 0FC30776 */  jal   langGet
 /* 0F8C94 7F0C4164 3404A019 */   li    $a0, 40985
 /* 0F8C98 7F0C4168 10000009 */  b     .L7F0C4190
 /* 0F8C9C 7F0C416C AFA200A4 */   sw    $v0, 0xa4($sp)
 text_exit:
-/* 0F8CA0 7F0C4170 0FC30776 */  jal   get_textptr_for_textID
+/* 0F8CA0 7F0C4170 0FC30776 */  jal   langGet
 /* 0F8CA4 7F0C4174 3404A01A */   li    $a0, 40986
 /* 0F8CA8 7F0C4178 0C001145 */  jal   viGetViewLeft
 /* 0F8CAC 7F0C417C AFA200A4 */   sw    $v0, 0xa4($sp)
@@ -3751,7 +3751,7 @@ def_7F0C40C0:
 /* 0F9258 7F0C4728 0FC051D6 */  jal   get_scenario
 /* 0F925C 7F0C472C 00000000 */   nop   
 /* 0F9260 7F0C4730 AFA20080 */  sw    $v0, 0x80($sp)
-/* 0F9264 7F0C4734 0FC30776 */  jal   get_textptr_for_textID
+/* 0F9264 7F0C4734 0FC30776 */  jal   langGet
 /* 0F9268 7F0C4738 3404A01B */   li    $a0, 40987
 /* 0F926C 7F0C473C 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTableSmall) 
 /* 0F9270 7F0C4740 8DEF0EAC */  lw    $t7, %lo(ptrFirstFontTableSmall)($t7)
@@ -4174,10 +4174,10 @@ def_7F0C40C0:
 /* 0F988C 7F0C4D5C AFAB0010 */   sw    $t3, 0x10($sp)
 /* 0F9890 7F0C4D60 00408825 */  move  $s1, $v0
 .L7F0C4D64:
-/* 0F9894 7F0C4D64 0FC30776 */  jal   get_textptr_for_textID
+/* 0F9894 7F0C4D64 0FC30776 */  jal   langGet
 /* 0F9898 7F0C4D68 3404A01C */   li    $a0, 40988
 /* 0F989C 7F0C4D6C 3404A01D */  li    $a0, 40989
-/* 0F98A0 7F0C4D70 0FC30776 */  jal   get_textptr_for_textID
+/* 0F98A0 7F0C4D70 0FC30776 */  jal   langGet
 /* 0F98A4 7F0C4D74 AFA2004C */   sw    $v0, 0x4c($sp)
 /* 0F98A8 7F0C4D78 8FA700D4 */  lw    $a3, 0xd4($sp)
 /* 0F98AC 7F0C4D7C 3C058006 */  lui   $a1, %hi(ascii_pnum_KILLS)
@@ -4469,10 +4469,10 @@ def_7F0C40C0:
 /* 0F9D04 7F0C51D4 AFAC0010 */   sw    $t4, 0x10($sp)
 /* 0F9D08 7F0C51D8 00408825 */  move  $s1, $v0
 .L7F0C51DC:
-/* 0F9D0C 7F0C51DC 0FC30776 */  jal   get_textptr_for_textID
+/* 0F9D0C 7F0C51DC 0FC30776 */  jal   langGet
 /* 0F9D10 7F0C51E0 3404A01C */   li    $a0, 40988
 /* 0F9D14 7F0C51E4 3404A01E */  li    $a0, 40990
-/* 0F9D18 7F0C51E8 0FC30776 */  jal   get_textptr_for_textID
+/* 0F9D18 7F0C51E8 0FC30776 */  jal   langGet
 /* 0F9D1C 7F0C51EC AFA2004C */   sw    $v0, 0x4c($sp)
 /* 0F9D20 7F0C51F0 8FA700D4 */  lw    $a3, 0xd4($sp)
 /* 0F9D24 7F0C51F4 3C058006 */  lui   $a1, %hi(ascii_pnum_LOSSES)
@@ -4863,7 +4863,7 @@ def_7F0C40C0:
 .L7F0C57BC:
 /* 0FA2EC 7F0C57BC AFA90074 */  sw    $t1, 0x74($sp)
 .L7F0C57C0:
-/* 0FA2F0 7F0C57C0 0FC30776 */  jal   get_textptr_for_textID
+/* 0FA2F0 7F0C57C0 0FC30776 */  jal   langGet
 /* 0FA2F4 7F0C57C4 3404A01F */   li    $a0, 40991
 /* 0FA2F8 7F0C57C8 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTableSmall) 
 /* 0FA2FC 7F0C57CC 8D8C0EAC */  lw    $t4, %lo(ptrFirstFontTableSmall)($t4)
@@ -5097,7 +5097,7 @@ def_7F0C40C0:
 /* 0FA678 7F0C5B48 24010006 */  li    $at, 6
 /* 0FA67C 7F0C5B4C 15E100B0 */  bne   $t7, $at, .L7F0C5E10
 /* 0FA680 7F0C5B50 00000000 */   nop   
-/* 0FA684 7F0C5B54 0FC30776 */  jal   get_textptr_for_textID
+/* 0FA684 7F0C5B54 0FC30776 */  jal   langGet
 /* 0FA688 7F0C5B58 3404A020 */   li    $a0, 40992
 /* 0FA68C 7F0C5B5C 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableSmall) 
 /* 0FA690 7F0C5B60 8DAD0EAC */  lw    $t5, %lo(ptrFirstFontTableSmall)($t5)
@@ -5186,7 +5186,7 @@ def_7F0C40C0:
 /* 0FA7D8 7F0C5CA8 AFAF0010 */   sw    $t7, 0x10($sp)
 /* 0FA7DC 7F0C5CAC 00408825 */  move  $s1, $v0
 .L7F0C5CB0:
-/* 0FA7E0 7F0C5CB0 0FC30776 */  jal   get_textptr_for_textID
+/* 0FA7E0 7F0C5CB0 0FC30776 */  jal   langGet
 /* 0FA7E4 7F0C5CB4 3404A021 */   li    $a0, 40993
 /* 0FA7E8 7F0C5CB8 3C188004 */  lui   $t8, %hi(ptrFirstFontTableSmall) 
 /* 0FA7EC 7F0C5CBC 8F180EAC */  lw    $t8, %lo(ptrFirstFontTableSmall)($t8)
@@ -5358,7 +5358,7 @@ def_7F0C40C0:
 /* 0FAA64 7F0C5F34 0FC2B366 */  jal   microcode_constructor
 /* 0FAA68 7F0C5F38 00402025 */   move  $a0, $v0
 /* 0FAA6C 7F0C5F3C 00408825 */  move  $s1, $v0
-/* 0FAA70 7F0C5F40 0FC30776 */  jal   get_textptr_for_textID
+/* 0FAA70 7F0C5F40 0FC30776 */  jal   langGet
 /* 0FAA74 7F0C5F44 3404A022 */   li    $a0, 40994
 /* 0FAA78 7F0C5F48 3C098004 */  lui   $t1, %hi(ptrFirstFontTableSmall) 
 /* 0FAA7C 7F0C5F4C 8D290EAC */  lw    $t1, %lo(ptrFirstFontTableSmall)($t1)
@@ -5496,7 +5496,7 @@ text_play:
 /* 0F98F0 7F0C4D80 3C0D8009 */  lui   $t5, %hi(time_trigger_alt_gameover_msg) # $t5, 0x8009
 /* 0F98F4 7F0C4D84 15800005 */  bnez  $t4, .Ljp7F0C4D9C
 /* 0F98F8 7F0C4D88 00000000 */   nop   
-/* 0F98FC 7F0C4D8C 0FC30AA2 */  jal   get_textptr_for_textID
+/* 0F98FC 7F0C4D8C 0FC30AA2 */  jal   langGet
 /* 0F9900 7F0C4D90 3404A015 */   li    $a0, 40981
 /* 0F9904 7F0C4D94 1000002A */  b     .Ljp7F0C4E40
 /* 0F9908 7F0C4D98 AFA200A4 */   sw    $v0, 0xa4($sp)
@@ -5504,12 +5504,12 @@ text_play:
 /* 0F990C 7F0C4D9C 8DADC780 */  lw    $t5, %lo(time_trigger_alt_gameover_msg)($t5)
 /* 0F9910 7F0C4DA0 11A00005 */  beqz  $t5, .Ljp7F0C4DB8
 /* 0F9914 7F0C4DA4 00000000 */   nop   
-/* 0F9918 7F0C4DA8 0FC30AA2 */  jal   get_textptr_for_textID
+/* 0F9918 7F0C4DA8 0FC30AA2 */  jal   langGet
 /* 0F991C 7F0C4DAC 3404A016 */   li    $a0, 40982
 /* 0F9920 7F0C4DB0 10000023 */  b     .Ljp7F0C4E40
 /* 0F9924 7F0C4DB4 AFA200A4 */   sw    $v0, 0xa4($sp)
 .Ljp7F0C4DB8:
-/* 0F9928 7F0C4DB8 0FC30AA2 */  jal   get_textptr_for_textID
+/* 0F9928 7F0C4DB8 0FC30AA2 */  jal   langGet
 /* 0F992C 7F0C4DBC 3404A017 */   li    $a0, 40983
 /* 0F9930 7F0C4DC0 1000001F */  b     .Ljp7F0C4E40
 /* 0F9934 7F0C4DC4 AFA200A4 */   sw    $v0, 0xa4($sp)
@@ -5523,7 +5523,7 @@ text_pause_unpause:
 /* 0F994C 7F0C4DDC 8DEFC788 */  lw    $t7, %lo(g_pausedFlag)($t7)
 /* 0F9950 7F0C4DE0 11E0000B */  beqz  $t7, .Ljp7F0C4E10
 /* 0F9954 7F0C4DE4 00000000 */   nop   
-/* 0F9958 7F0C4DE8 0FC30AA2 */  jal   get_textptr_for_textID
+/* 0F9958 7F0C4DE8 0FC30AA2 */  jal   langGet
 /* 0F995C 7F0C4DEC 3404A018 */   li    $a0, 40984
 /* 0F9960 7F0C4DF0 0FC26F3C */  jal   get_cur_playernum
 /* 0F9964 7F0C4DF4 AFA200A4 */   sw    $v0, 0xa4($sp)
@@ -5534,12 +5534,12 @@ text_pause_unpause:
 /* 0F9978 7F0C4E08 1000000D */  b     .Ljp7F0C4E40
 /* 0F997C 7F0C4E0C 24100001 */   li    $s0, 1
 .Ljp7F0C4E10:
-/* 0F9980 7F0C4E10 0FC30AA2 */  jal   get_textptr_for_textID
+/* 0F9980 7F0C4E10 0FC30AA2 */  jal   langGet
 /* 0F9984 7F0C4E14 3404A019 */   li    $a0, 40985
 /* 0F9988 7F0C4E18 10000009 */  b     .Ljp7F0C4E40
 /* 0F998C 7F0C4E1C AFA200A4 */   sw    $v0, 0xa4($sp)
 text_exit:
-/* 0F9990 7F0C4E20 0FC30AA2 */  jal   get_textptr_for_textID
+/* 0F9990 7F0C4E20 0FC30AA2 */  jal   langGet
 /* 0F9994 7F0C4E24 3404A01A */   li    $a0, 40986
 /* 0F9998 7F0C4E28 0C001145 */  jal   viGetViewLeft
 /* 0F999C 7F0C4E2C AFA200A4 */   sw    $v0, 0xa4($sp)
@@ -5926,7 +5926,7 @@ def_7F0C40C0:
 /* 0F9F48 7F0C53D8 0FC05202 */  jal   get_scenario
 /* 0F9F4C 7F0C53DC 00000000 */   nop   
 /* 0F9F50 7F0C53E0 AFA20080 */  sw    $v0, 0x80($sp)
-/* 0F9F54 7F0C53E4 0FC30AA2 */  jal   get_textptr_for_textID
+/* 0F9F54 7F0C53E4 0FC30AA2 */  jal   langGet
 /* 0F9F58 7F0C53E8 3404A01B */   li    $a0, 40987
 /* 0F9F5C 7F0C53EC 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableSmall) # $t6, 0x8004
 /* 0F9F60 7F0C53F0 8DCE0EDC */  lw    $t6, %lo(ptrFirstFontTableSmall)($t6)
@@ -6349,10 +6349,10 @@ def_7F0C40C0:
 /* 0FA57C 7F0C5A0C AFAC0010 */   sw    $t4, 0x10($sp)
 /* 0FA580 7F0C5A10 00408825 */  move  $s1, $v0
 .Ljp7F0C5A14:
-/* 0FA584 7F0C5A14 0FC30AA2 */  jal   get_textptr_for_textID
+/* 0FA584 7F0C5A14 0FC30AA2 */  jal   langGet
 /* 0FA588 7F0C5A18 3404A01C */   li    $a0, 40988
 /* 0FA58C 7F0C5A1C 3404A01D */  li    $a0, 40989
-/* 0FA590 7F0C5A20 0FC30AA2 */  jal   get_textptr_for_textID
+/* 0FA590 7F0C5A20 0FC30AA2 */  jal   langGet
 /* 0FA594 7F0C5A24 AFA2004C */   sw    $v0, 0x4c($sp)
 /* 0FA598 7F0C5A28 8FA700D4 */  lw    $a3, 0xd4($sp)
 /* 0FA59C 7F0C5A2C 3C058006 */  lui   $a1, %hi(ascii_pnum_KILLS) # $a1, 0x8006
@@ -6644,10 +6644,10 @@ def_7F0C40C0:
 /* 0FA9F4 7F0C5E84 AFB80010 */   sw    $t8, 0x10($sp)
 /* 0FA9F8 7F0C5E88 00408825 */  move  $s1, $v0
 .Ljp7F0C5E8C:
-/* 0FA9FC 7F0C5E8C 0FC30AA2 */  jal   get_textptr_for_textID
+/* 0FA9FC 7F0C5E8C 0FC30AA2 */  jal   langGet
 /* 0FAA00 7F0C5E90 3404A01C */   li    $a0, 40988
 /* 0FAA04 7F0C5E94 3404A01E */  li    $a0, 40990
-/* 0FAA08 7F0C5E98 0FC30AA2 */  jal   get_textptr_for_textID
+/* 0FAA08 7F0C5E98 0FC30AA2 */  jal   langGet
 /* 0FAA0C 7F0C5E9C AFA2004C */   sw    $v0, 0x4c($sp)
 /* 0FAA10 7F0C5EA0 8FA700D4 */  lw    $a3, 0xd4($sp)
 /* 0FAA14 7F0C5EA4 3C058006 */  lui   $a1, %hi(ascii_pnum_LOSSES) # $a1, 0x8006
@@ -7038,7 +7038,7 @@ def_7F0C40C0:
 .Ljp7F0C646C:
 /* 0FAFDC 7F0C646C AFB90074 */  sw    $t9, 0x74($sp)
 .Ljp7F0C6470:
-/* 0FAFE0 7F0C6470 0FC30AA2 */  jal   get_textptr_for_textID
+/* 0FAFE0 7F0C6470 0FC30AA2 */  jal   langGet
 /* 0FAFE4 7F0C6474 3404A01F */   li    $a0, 40991
 /* 0FAFE8 7F0C6478 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableSmall) # $t5, 0x8004
 /* 0FAFEC 7F0C647C 8DAD0EDC */  lw    $t5, %lo(ptrFirstFontTableSmall)($t5)
@@ -7272,7 +7272,7 @@ def_7F0C40C0:
 /* 0FB368 7F0C67F8 24010006 */  li    $at, 6
 /* 0FB36C 7F0C67FC 15A100B0 */  bne   $t5, $at, .Ljp7F0C6AC0
 /* 0FB370 7F0C6800 00000000 */   nop   
-/* 0FB374 7F0C6804 0FC30AA2 */  jal   get_textptr_for_textID
+/* 0FB374 7F0C6804 0FC30AA2 */  jal   langGet
 /* 0FB378 7F0C6808 3404A020 */   li    $a0, 40992
 /* 0FB37C 7F0C680C 3C198004 */  lui   $t9, %hi(ptrFirstFontTableSmall) # $t9, 0x8004
 /* 0FB380 7F0C6810 8F390EDC */  lw    $t9, %lo(ptrFirstFontTableSmall)($t9)
@@ -7361,7 +7361,7 @@ def_7F0C40C0:
 /* 0FB4C8 7F0C6958 AFB80010 */   sw    $t8, 0x10($sp)
 /* 0FB4CC 7F0C695C 00408825 */  move  $s1, $v0
 .Ljp7F0C6960:
-/* 0FB4D0 7F0C6960 0FC30AA2 */  jal   get_textptr_for_textID
+/* 0FB4D0 7F0C6960 0FC30AA2 */  jal   langGet
 /* 0FB4D4 7F0C6964 3404A021 */   li    $a0, 40993
 /* 0FB4D8 7F0C6968 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableSmall) # $t5, 0x8004
 /* 0FB4DC 7F0C696C 8DAD0EDC */  lw    $t5, %lo(ptrFirstFontTableSmall)($t5)
@@ -7533,7 +7533,7 @@ def_7F0C40C0:
 /* 0FB754 7F0C6BE4 0FC2B652 */  jal   microcode_constructor
 /* 0FB758 7F0C6BE8 00402025 */   move  $a0, $v0
 /* 0FB75C 7F0C6BEC 00408825 */  move  $s1, $v0
-/* 0FB760 7F0C6BF0 0FC30AA2 */  jal   get_textptr_for_textID
+/* 0FB760 7F0C6BF0 0FC30AA2 */  jal   langGet
 /* 0FB764 7F0C6BF4 3404A022 */   li    $a0, 40994
 /* 0FB768 7F0C6BF8 3C188004 */  lui   $t8, %hi(ptrFirstFontTableSmall) # $t8, 0x8004
 /* 0FB76C 7F0C6BFC 8F180EDC */  lw    $t8, %lo(ptrFirstFontTableSmall)($t8)
@@ -7684,7 +7684,7 @@ text_play:
 /* 0F5FA0 7F0C35B0 3C0D8007 */  lui   $t5, %hi(time_trigger_alt_gameover_msg) # $t5, 0x8007
 /* 0F5FA4 7F0C35B4 15800005 */  bnez  $t4, .L7F0C35CC
 /* 0F5FA8 7F0C35B8 00000000 */   nop   
-/* 0F5FAC 7F0C35BC 0FC304AE */  jal   get_textptr_for_textID
+/* 0F5FAC 7F0C35BC 0FC304AE */  jal   langGet
 /* 0F5FB0 7F0C35C0 3404A015 */   li    $a0, 40981
 /* 0F5FB4 7F0C35C4 1000002A */  b     .L7F0C3670
 /* 0F5FB8 7F0C35C8 AFA200A4 */   sw    $v0, 0xa4($sp)
@@ -7692,12 +7692,12 @@ text_play:
 /* 0F5FBC 7F0C35CC 8DAD3AF0 */  lw    $t5, %lo(time_trigger_alt_gameover_msg)($t5)
 /* 0F5FC0 7F0C35D0 11A00005 */  beqz  $t5, .L7F0C35E8
 /* 0F5FC4 7F0C35D4 00000000 */   nop   
-/* 0F5FC8 7F0C35D8 0FC304AE */  jal   get_textptr_for_textID
+/* 0F5FC8 7F0C35D8 0FC304AE */  jal   langGet
 /* 0F5FCC 7F0C35DC 3404A016 */   li    $a0, 40982
 /* 0F5FD0 7F0C35E0 10000023 */  b     .L7F0C3670
 /* 0F5FD4 7F0C35E4 AFA200A4 */   sw    $v0, 0xa4($sp)
 .L7F0C35E8:
-/* 0F5FD8 7F0C35E8 0FC304AE */  jal   get_textptr_for_textID
+/* 0F5FD8 7F0C35E8 0FC304AE */  jal   langGet
 /* 0F5FDC 7F0C35EC 3404A017 */   li    $a0, 40983
 /* 0F5FE0 7F0C35F0 1000001F */  b     .L7F0C3670
 /* 0F5FE4 7F0C35F4 AFA200A4 */   sw    $v0, 0xa4($sp)
@@ -7711,7 +7711,7 @@ text_pause_unpause:
 /* 0F5FFC 7F0C360C 8DEF3AF8 */  lw    $t7, %lo(g_pausedFlag)($t7)
 /* 0F6000 7F0C3610 11E0000B */  beqz  $t7, .L7F0C3640
 /* 0F6004 7F0C3614 00000000 */   nop   
-/* 0F6008 7F0C3618 0FC304AE */  jal   get_textptr_for_textID
+/* 0F6008 7F0C3618 0FC304AE */  jal   langGet
 /* 0F600C 7F0C361C 3404A018 */   li    $a0, 40984
 /* 0F6010 7F0C3620 0FC269A4 */  jal   get_cur_playernum
 /* 0F6014 7F0C3624 AFA200A4 */   sw    $v0, 0xa4($sp)
@@ -7722,12 +7722,12 @@ text_pause_unpause:
 /* 0F6028 7F0C3638 1000000D */  b     .L7F0C3670
 /* 0F602C 7F0C363C 24100001 */   li    $s0, 1
 .L7F0C3640:
-/* 0F6030 7F0C3640 0FC304AE */  jal   get_textptr_for_textID
+/* 0F6030 7F0C3640 0FC304AE */  jal   langGet
 /* 0F6034 7F0C3644 3404A019 */   li    $a0, 40985
 /* 0F6038 7F0C3648 10000009 */  b     .L7F0C3670
 /* 0F603C 7F0C364C AFA200A4 */   sw    $v0, 0xa4($sp)
 text_exit:
-/* 0F6040 7F0C3650 0FC304AE */  jal   get_textptr_for_textID
+/* 0F6040 7F0C3650 0FC304AE */  jal   langGet
 /* 0F6044 7F0C3654 3404A01A */   li    $a0, 40986
 /* 0F6048 7F0C3658 0C000FD9 */  jal   viGetViewLeft
 /* 0F604C 7F0C365C AFA200A4 */   sw    $v0, 0xa4($sp)
@@ -8113,7 +8113,7 @@ text_exit:
 /* 0F65F8 7F0C3C08 0FC051B2 */  jal   get_scenario
 /* 0F65FC 7F0C3C0C 00000000 */   nop   
 /* 0F6600 7F0C3C10 AFA20080 */  sw    $v0, 0x80($sp)
-/* 0F6604 7F0C3C14 0FC304AE */  jal   get_textptr_for_textID
+/* 0F6604 7F0C3C14 0FC304AE */  jal   langGet
 /* 0F6608 7F0C3C18 3404A01B */   li    $a0, 40987
 /* 0F660C 7F0C3C1C 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableSmall) # $t6, 0x8004
 /* 0F6610 7F0C3C20 8DCEAAFC */  lw    $t6, %lo(ptrFirstFontTableSmall)($t6)
@@ -8536,10 +8536,10 @@ text_exit:
 /* 0F6C2C 7F0C423C AFAC0010 */   sw    $t4, 0x10($sp)
 /* 0F6C30 7F0C4240 00408825 */  move  $s1, $v0
 .L7F0C4244:
-/* 0F6C34 7F0C4244 0FC304AE */  jal   get_textptr_for_textID
+/* 0F6C34 7F0C4244 0FC304AE */  jal   langGet
 /* 0F6C38 7F0C4248 3404A01C */   li    $a0, 40988
 /* 0F6C3C 7F0C424C 3404A01D */  li    $a0, 40989
-/* 0F6C40 7F0C4250 0FC304AE */  jal   get_textptr_for_textID
+/* 0F6C40 7F0C4250 0FC304AE */  jal   langGet
 /* 0F6C44 7F0C4254 AFA2004C */   sw    $v0, 0x4c($sp)
 /* 0F6C48 7F0C4258 8FA700D4 */  lw    $a3, 0xd4($sp)
 /* 0F6C4C 7F0C425C 3C058005 */  lui   $a1, %hi(ascii_pnum_KILLS) # $a1, 0x8005
@@ -8831,10 +8831,10 @@ text_exit:
 /* 0F70A4 7F0C46B4 AFB80010 */   sw    $t8, 0x10($sp)
 /* 0F70A8 7F0C46B8 00408825 */  move  $s1, $v0
 .L7F0C46BC:
-/* 0F70AC 7F0C46BC 0FC304AE */  jal   get_textptr_for_textID
+/* 0F70AC 7F0C46BC 0FC304AE */  jal   langGet
 /* 0F70B0 7F0C46C0 3404A01C */   li    $a0, 40988
 /* 0F70B4 7F0C46C4 3404A01E */  li    $a0, 40990
-/* 0F70B8 7F0C46C8 0FC304AE */  jal   get_textptr_for_textID
+/* 0F70B8 7F0C46C8 0FC304AE */  jal   langGet
 /* 0F70BC 7F0C46CC AFA2004C */   sw    $v0, 0x4c($sp)
 /* 0F70C0 7F0C46D0 8FA700D4 */  lw    $a3, 0xd4($sp)
 /* 0F70C4 7F0C46D4 3C058005 */  lui   $a1, %hi(ascii_pnum_LOSSES) # $a1, 0x8005
@@ -9225,7 +9225,7 @@ text_exit:
 .L7F0C4C9C:
 /* 0F768C 7F0C4C9C AFB90074 */  sw    $t9, 0x74($sp)
 .L7F0C4CA0:
-/* 0F7690 7F0C4CA0 0FC304AE */  jal   get_textptr_for_textID
+/* 0F7690 7F0C4CA0 0FC304AE */  jal   langGet
 /* 0F7694 7F0C4CA4 3404A01F */   li    $a0, 40991
 /* 0F7698 7F0C4CA8 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableSmall) # $t5, 0x8004
 /* 0F769C 7F0C4CAC 8DADAAFC */  lw    $t5, %lo(ptrFirstFontTableSmall)($t5)
@@ -9459,7 +9459,7 @@ text_exit:
 /* 0F7A18 7F0C5028 24010006 */  li    $at, 6
 /* 0F7A1C 7F0C502C 15A100B0 */  bne   $t5, $at, .L7F0C52F0
 /* 0F7A20 7F0C5030 00000000 */   nop   
-/* 0F7A24 7F0C5034 0FC304AE */  jal   get_textptr_for_textID
+/* 0F7A24 7F0C5034 0FC304AE */  jal   langGet
 /* 0F7A28 7F0C5038 3404A020 */   li    $a0, 40992
 /* 0F7A2C 7F0C503C 3C198004 */  lui   $t9, %hi(ptrFirstFontTableSmall) # $t9, 0x8004
 /* 0F7A30 7F0C5040 8F39AAFC */  lw    $t9, %lo(ptrFirstFontTableSmall)($t9)
@@ -9548,7 +9548,7 @@ text_exit:
 /* 0F7B78 7F0C5188 AFB80010 */   sw    $t8, 0x10($sp)
 /* 0F7B7C 7F0C518C 00408825 */  move  $s1, $v0
 .L7F0C5190:
-/* 0F7B80 7F0C5190 0FC304AE */  jal   get_textptr_for_textID
+/* 0F7B80 7F0C5190 0FC304AE */  jal   langGet
 /* 0F7B84 7F0C5194 3404A021 */   li    $a0, 40993
 /* 0F7B88 7F0C5198 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableSmall) # $t5, 0x8004
 /* 0F7B8C 7F0C519C 8DADAAFC */  lw    $t5, %lo(ptrFirstFontTableSmall)($t5)
@@ -9720,7 +9720,7 @@ text_exit:
 /* 0F7E04 7F0C5414 0FC2B016 */  jal   microcode_constructor
 /* 0F7E08 7F0C5418 00402025 */   move  $a0, $v0
 /* 0F7E0C 7F0C541C 00408825 */  move  $s1, $v0
-/* 0F7E10 7F0C5420 0FC304AE */  jal   get_textptr_for_textID
+/* 0F7E10 7F0C5420 0FC304AE */  jal   langGet
 /* 0F7E14 7F0C5424 3404A022 */   li    $a0, 40994
 /* 0F7E18 7F0C5428 3C188004 */  lui   $t8, %hi(ptrFirstFontTableSmall) # $t8, 0x8004
 /* 0F7E1C 7F0C542C 8F18AAFC */  lw    $t8, %lo(ptrFirstFontTableSmall)($t8)

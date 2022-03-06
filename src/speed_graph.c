@@ -138,7 +138,7 @@ void speedGraphVideoRelated_2(void) {
 }
 
 #if defined(LEFTOVERDEBUG)
-void speedGraphVideoRelated_3(s32 arg0)
+void profileSetMarker(s32 arg0)
 {
     s32 index;
     s32 var2;
@@ -179,7 +179,7 @@ void speedGraphVideoRelated_3(s32 arg0)
     osSetIntMask(mask);
 }
 #else
-void speedGraphVideoRelated_3(void)
+void profileSetMarker(void)
 {
 }
 #endif

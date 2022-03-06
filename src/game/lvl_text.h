@@ -6,6 +6,6 @@
 extern s32 j_text_trigger;
 
 void something_with_LnameJ(void);
-u8 * get_textptr_for_textID(s32 slotID);
+u8 * langGet(s32 slotID);
 
 #endif

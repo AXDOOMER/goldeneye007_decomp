@@ -1975,7 +1975,7 @@ glabel reset_all_music_slots
 
 
 
-void set_musicslot_time(s32 slot, s32 min, s32 sec)
+void musicSetXReason(s32 slot, s32 min, s32 sec)
 {
     if ((&music_slot_active_0)[slot] == 0) {
         (&music_slot_active_0)[slot] = 1;
@@ -1984,7 +1984,7 @@ void set_musicslot_time(s32 slot, s32 min, s32 sec)
     }
 }
 
-void reset_music_in_slot(s32 slot)
+void musicUnsetXReason(s32 slot)
 {
     if (-1 < slot)
     {

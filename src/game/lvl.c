@@ -16,14 +16,14 @@
 #include "debugmenu_handler.h"
 #include "lvl.h"
 #include "lvl_text.h"
-#include "initunk_0072B0.h"
+#include "initcheattext.h"
 #include "front.h"
 #include "bondinv.h"
 #include "player.h"
 #include "player_2.h"
 #include "chrobjhandler.h"
 #include "cleanup_objects.h"
-#include "unk_09C250.h"
+#include "explosions.h"
 #include "chrai.h"
 #include "mp_music.h"
 #include "initunk_005520.h"
@@ -43,9 +43,9 @@
 #include "initguards.h"
 #include "prop.h"
 #include "initexplosioncasing.h"
-#include "initunk_007180.h"
+#include "alloc_window_pieces.h"
 #include "initunk_007290.h"
-#include "initunk_0072B0.h"
+#include "initcheattext.h"
 #include "initpathtablelinks.h"
 #include "ejectedcartridges.h"
 #include "inititemslots.h"
@@ -496,13 +496,13 @@ void lvlStageLoad(s32 stage)
     set_new_rand_head_bodies(stage);
     proplvreset2(stage);
     alloc_explosion_smoke_casing_scorch_impact_buffers();
-    sub_GAME_7F007180();
+    alloc_shattered_window_pieces();
     sub_GAME_7F007290();
-    sub_GAME_7F0072B0();
+    initCheatTextBuffer();
 
     if (g_CurrentStageToLoad == LEVELID_TITLE)
     {
-        disable_onscreen_cheat_text();
+        disableOnscreenCheatText();
     }
     else
     {
@@ -520,7 +520,7 @@ void lvlStageLoad(s32 stage)
             load_camera_intro_type_values();
             bondviewPlayerSpawnRelated();
             sets_a_bunch_of_BONDdata_values_to_default();
-            disable_onscreen_cheat_text();
+            disableOnscreenCheatText();
         }
 
         set_cur_player(0);
@@ -760,18 +760,18 @@ glabel lvlStageLoad
 /* 0F291C 7F0BDDEC 8FA40038 */   lw    $a0, 0x38($sp)
 /* 0F2920 7F0BDDF0 0FC01B64 */  jal   alloc_explosion_smoke_casing_scorch_impact_buffers
 /* 0F2924 7F0BDDF4 00000000 */   nop
-/* 0F2928 7F0BDDF8 0FC01C60 */  jal   sub_GAME_7F007180
+/* 0F2928 7F0BDDF8 0FC01C60 */  jal   alloc_shattered_window_pieces
 /* 0F292C 7F0BDDFC 00000000 */   nop
 /* 0F2930 7F0BDE00 0FC01CA4 */  jal   sub_GAME_7F007290
 /* 0F2934 7F0BDE04 00000000 */   nop
-/* 0F2938 7F0BDE08 0FC01CAC */  jal   sub_GAME_7F0072B0
+/* 0F2938 7F0BDE08 0FC01CAC */  jal   initCheatTextBuffer
 /* 0F293C 7F0BDE0C 00000000 */   nop
 /* 0F2940 7F0BDE10 3C0C8005 */  lui   $t4, %hi(g_CurrentStageToLoad)
 /* 0F2944 7F0BDE14 8D8C8364 */  lw    $t4, %lo(g_CurrentStageToLoad)($t4)
 /* 0F2948 7F0BDE18 2401005A */  li    $at, 90
 /* 0F294C 7F0BDE1C 15810005 */  bne   $t4, $at, .L7F0BDE34
 /* 0F2950 7F0BDE20 00000000 */   nop
-/* 0F2954 7F0BDE24 0FC01CBE */  jal   disable_onscreen_cheat_text
+/* 0F2954 7F0BDE24 0FC01CBE */  jal   disableOnscreenCheatText
 /* 0F2958 7F0BDE28 00000000 */   nop
 /* 0F295C 7F0BDE2C 10000020 */  b     .L7F0BDEB0
 /* 0F2960 7F0BDE30 00000000 */   nop
@@ -799,7 +799,7 @@ glabel lvlStageLoad
 /* 0F29B0 7F0BDE80 00000000 */   nop
 /* 0F29B4 7F0BDE84 0FC018E3 */  jal   sets_a_bunch_of_BONDdata_values_to_default
 /* 0F29B8 7F0BDE88 00000000 */   nop
-/* 0F29BC 7F0BDE8C 0FC01CBE */  jal   disable_onscreen_cheat_text
+/* 0F29BC 7F0BDE8C 0FC01CBE */  jal   disableOnscreenCheatText
 /* 0F29C0 7F0BDE90 00000000 */   nop
 /* 0F29C4 7F0BDE94 0FC26919 */  jal   getPlayerCount
 /* 0F29C8 7F0BDE98 26100001 */   addiu $s0, $s0, 1
@@ -1065,18 +1065,18 @@ glabel lvlStageLoad
 /* 0F351C 7F0BE9AC 8FA40038 */   lw    $a0, 0x38($sp)
 /* 0F3520 7F0BE9B0 0FC01B6C */  jal   alloc_explosion_smoke_casing_scorch_impact_buffers
 /* 0F3524 7F0BE9B4 00000000 */   nop
-/* 0F3528 7F0BE9B8 0FC01C68 */  jal   sub_GAME_7F007180
+/* 0F3528 7F0BE9B8 0FC01C68 */  jal   alloc_shattered_window_pieces
 /* 0F352C 7F0BE9BC 00000000 */   nop
 /* 0F3530 7F0BE9C0 0FC01CAC */  jal   sub_GAME_7F007290
 /* 0F3534 7F0BE9C4 00000000 */   nop
-/* 0F3538 7F0BE9C8 0FC01CB4 */  jal   sub_GAME_7F0072B0
+/* 0F3538 7F0BE9C8 0FC01CB4 */  jal   initCheatTextBuffer
 /* 0F353C 7F0BE9CC 00000000 */   nop
 /* 0F3540 7F0BE9D0 3C0C8005 */  lui   $t4, %hi(g_CurrentStageToLoad) # $t4, 0x8005
 /* 0F3544 7F0BE9D4 8D8C8394 */  lw    $t4, %lo(g_CurrentStageToLoad)($t4)
 /* 0F3548 7F0BE9D8 2401005A */  li    $at, 90
 /* 0F354C 7F0BE9DC 15810005 */  bne   $t4, $at, .Ljp7F0BE9F4
 /* 0F3550 7F0BE9E0 00000000 */   nop
-/* 0F3554 7F0BE9E4 0FC01CC6 */  jal   disable_onscreen_cheat_text
+/* 0F3554 7F0BE9E4 0FC01CC6 */  jal   disableOnscreenCheatText
 /* 0F3558 7F0BE9E8 00000000 */   nop
 /* 0F355C 7F0BE9EC 10000020 */  b     .Ljp7F0BEA70
 /* 0F3560 7F0BE9F0 00000000 */   nop
@@ -1104,7 +1104,7 @@ glabel lvlStageLoad
 /* 0F35B0 7F0BEA40 00000000 */   nop
 /* 0F35B4 7F0BEA44 0FC018E3 */  jal   sets_a_bunch_of_BONDdata_values_to_default
 /* 0F35B8 7F0BEA48 00000000 */   nop
-/* 0F35BC 7F0BEA4C 0FC01CC6 */  jal   disable_onscreen_cheat_text
+/* 0F35BC 7F0BEA4C 0FC01CC6 */  jal   disableOnscreenCheatText
 /* 0F35C0 7F0BEA50 00000000 */   nop
 /* 0F35C4 7F0BEA54 0FC26C01 */  jal   getPlayerCount
 /* 0F35C8 7F0BEA58 26100001 */   addiu $s0, $s0, 1
@@ -1387,18 +1387,18 @@ glabel lvlStageLoad
 /* 0EFB9C 7F0BD1AC 8FA40038 */   lw    $a0, 0x38($sp)
 /* 0EFBA0 7F0BD1B0 0FC01B44 */  jal   alloc_explosion_smoke_casing_scorch_impact_buffers
 /* 0EFBA4 7F0BD1B4 00000000 */   nop   
-/* 0EFBA8 7F0BD1B8 0FC01C40 */  jal   sub_GAME_7F007180
+/* 0EFBA8 7F0BD1B8 0FC01C40 */  jal   alloc_shattered_window_pieces
 /* 0EFBAC 7F0BD1BC 00000000 */   nop   
 /* 0EFBB0 7F0BD1C0 0FC01C84 */  jal   sub_GAME_7F007290
 /* 0EFBB4 7F0BD1C4 00000000 */   nop   
-/* 0EFBB8 7F0BD1C8 0FC01C8C */  jal   sub_GAME_7F0072B0
+/* 0EFBB8 7F0BD1C8 0FC01C8C */  jal   initCheatTextBuffer
 /* 0EFBBC 7F0BD1CC 00000000 */   nop   
 /* 0EFBC0 7F0BD1D0 3C0C8004 */  lui   $t4, %hi(g_CurrentStageToLoad) # $t4, 0x8004
 /* 0EFBC4 7F0BD1D4 8D8C0FE4 */  lw    $t4, %lo(g_CurrentStageToLoad)($t4)
 /* 0EFBC8 7F0BD1D8 2401005A */  li    $at, 90
 /* 0EFBCC 7F0BD1DC 15810005 */  bne   $t4, $at, .L7F0BD1F4
 /* 0EFBD0 7F0BD1E0 00000000 */   nop   
-/* 0EFBD4 7F0BD1E4 0FC01C9E */  jal   disable_onscreen_cheat_text
+/* 0EFBD4 7F0BD1E4 0FC01C9E */  jal   disableOnscreenCheatText
 /* 0EFBD8 7F0BD1E8 00000000 */   nop   
 /* 0EFBDC 7F0BD1EC 10000020 */  b     .L7F0BD270
 /* 0EFBE0 7F0BD1F0 00000000 */   nop   
@@ -1426,7 +1426,7 @@ glabel lvlStageLoad
 /* 0EFC30 7F0BD240 00000000 */   nop   
 /* 0EFC34 7F0BD244 0FC018C3 */  jal   sets_a_bunch_of_BONDdata_values_to_default
 /* 0EFC38 7F0BD248 00000000 */   nop   
-/* 0EFC3C 7F0BD24C 0FC01C9E */  jal   disable_onscreen_cheat_text
+/* 0EFC3C 7F0BD24C 0FC01C9E */  jal   disableOnscreenCheatText
 /* 0EFC40 7F0BD250 00000000 */   nop   
 /* 0EFC44 7F0BD254 0FC26669 */  jal   getPlayerCount
 /* 0EFC48 7F0BD258 26100001 */   addiu $s0, $s0, 1
@@ -2039,13 +2039,13 @@ Gfx* lvlRender(Gfx* DL)
             if (
 
 #if defined(BUGFIX_R1)
-                cheatCheckIfOn(CHEAT_INFINITE_AMMO) != 0
+                cheatIsActive(CHEAT_INFINITE_AMMO) != 0
                 && (
-                    (get_item_in_hand(GUNRIGHT) != ITEM_WATCHLASER)
+                    (getCurrentPlayerWeaponId(GUNRIGHT) != ITEM_WATCHLASER)
                     || (g_CurrentPlayer->field_FCC == 0)
                 )
 #else /* VERSION_US */
-                cheatCheckIfOn(CHEAT_INFINITE_AMMO) != 0
+                cheatIsActive(CHEAT_INFINITE_AMMO) != 0
 #endif
                 )
             {
@@ -2305,7 +2305,7 @@ void lvlManageMpGame(void)
                 for (i=0; i<getPlayerCount(); i++)
                 {
                     set_cur_player(i);
-                    display_string_in_lower_left_corner("One minute left");
+                    hudmsgBottomShow("One minute left");
                 }
             }
 
@@ -2855,7 +2855,7 @@ glabel lvlManageMpGame
 /* 0F3900 7F0BEDD0 0FC26C43 */  jal   set_cur_player
 /* 0F3904 7F0BEDD4 8FA4017C */   lw    $a0, 0x17c($sp)
 /* 0F3908 7F0BEDD8 3C048006 */  lui   $a0, %hi(aOneMinuteLeft)
-/* 0F390C 7F0BEDDC 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 0F390C 7F0BEDDC 0FC228F2 */  jal   hudmsgBottomShow
 /* 0F3910 7F0BEDE0 2484B704 */   addiu $a0, %lo(aOneMinuteLeft) # addiu $a0, $a0, -0x48fc
 /* 0F3914 7F0BEDE4 8FAF017C */  lw    $t7, 0x17c($sp)
 /* 0F3918 7F0BEDE8 25F80001 */  addiu $t8, $t7, 1
@@ -3744,9 +3744,9 @@ glabel lvlManageMpGame
 .Ljp7F0BFA04:
 /* 0F4574 7F0BFA04 0FC26F2B */  jal   set_cur_player
 /* 0F4578 7F0BFA08 8FA4017C */   lw    $a0, 0x17c($sp)
-/* 0F457C 7F0BFA0C 0FC30AA2 */  jal   get_textptr_for_textID
+/* 0F457C 7F0BFA0C 0FC30AA2 */  jal   langGet
 /* 0F4580 7F0BFA10 3404B044 */   li    $a0, 45124
-/* 0F4584 7F0BFA14 0FC22B10 */  jal   jp_display_string_in_lower_left_corner
+/* 0F4584 7F0BFA14 0FC22B10 */  jal   jp_hudmsgBottomShow
 /* 0F4588 7F0BFA18 00402025 */   move  $a0, $v0
 /* 0F458C 7F0BFA1C 8FAF017C */  lw    $t7, 0x17c($sp)
 /* 0F4590 7F0BFA20 25F80001 */  addiu $t8, $t7, 1
@@ -4628,9 +4628,9 @@ glabel lvlManageMpGame
 .L7F0BE210:
 /* 0F0C00 7F0BE210 0FC26993 */  jal   set_cur_player
 /* 0F0C04 7F0BE214 8FA4017C */   lw    $a0, 0x17c($sp)
-/* 0F0C08 7F0BE218 0FC304AE */  jal   get_textptr_for_textID
+/* 0F0C08 7F0BE218 0FC304AE */  jal   langGet
 /* 0F0C0C 7F0BE21C 3404B044 */   li    $a0, 45124
-/* 0F0C10 7F0BE220 0FC229B5 */  jal   jp_display_string_in_lower_left_corner
+/* 0F0C10 7F0BE220 0FC229B5 */  jal   jp_hudmsgBottomShow
 /* 0F0C14 7F0BE224 00402025 */   move  $a0, $v0
 /* 0F0C18 7F0BE228 8FAF017C */  lw    $t7, 0x17c($sp)
 /* 0F0C1C 7F0BE22C 25F80001 */  addiu $t8, $t7, 1
@@ -5422,9 +5422,9 @@ void lvlUpdateMpPlayerData(void)
     {
         if (bondinvIsAliveWithFlag())
         {
-            if (get_item_in_hand(GUNRIGHT) != ITEM_TOKEN)
+            if (getCurrentPlayerWeaponId(GUNRIGHT) != ITEM_TOKEN)
             {
-                draw_item_in_hand_has_more_ammo(GUNRIGHT, ITEM_TOKEN);
+                currentPlayerEquipWeaponWrapper(GUNRIGHT, ITEM_TOKEN);
 
                 if (g_CurrentPlayer->hands[GUNRIGHT].when_detonating_mines_is_0 == 2)
                 {
@@ -5621,12 +5621,12 @@ glabel lvlUpdateMpPlayerData
 /* 0F4578 7F0BFA48 00000000 */   nop
 /* 0F457C 7F0BFA4C 1040001C */  beqz  $v0, .L7F0BFAC0
 /* 0F4580 7F0BFA50 00000000 */   nop
-/* 0F4584 7F0BFA54 0FC17674 */  jal   get_item_in_hand
+/* 0F4584 7F0BFA54 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 0F4588 7F0BFA58 00002025 */   move  $a0, $zero
 /* 0F458C 7F0BFA5C 24010058 */  li    $at, 88
 /* 0F4590 7F0BFA60 1041000B */  beq   $v0, $at, .L7F0BFA90
 /* 0F4594 7F0BFA64 00002025 */   move  $a0, $zero
-/* 0F4598 7F0BFA68 0FC17645 */  jal   draw_item_in_hand_has_more_ammo
+/* 0F4598 7F0BFA68 0FC17645 */  jal   currentPlayerEquipWeaponWrapper
 /* 0F459C 7F0BFA6C 24050058 */   li    $a1, 88
 /* 0F45A0 7F0BFA70 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
 /* 0F45A4 7F0BFA74 8C42A0B0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
@@ -5843,12 +5843,12 @@ glabel lvlUpdateMpPlayerData
 /* 0F187C 7F0BEE8C 00000000 */   nop   
 /* 0F1880 7F0BEE90 1040001C */  beqz  $v0, .L7F0BEF04
 /* 0F1884 7F0BEE94 00000000 */   nop   
-/* 0F1888 7F0BEE98 0FC177A2 */  jal   get_item_in_hand
+/* 0F1888 7F0BEE98 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 0F188C 7F0BEE9C 00002025 */   move  $a0, $zero
 /* 0F1890 7F0BEEA0 24010058 */  li    $at, 88
 /* 0F1894 7F0BEEA4 1041000B */  beq   $v0, $at, .L7F0BEED4
 /* 0F1898 7F0BEEA8 00002025 */   move  $a0, $zero
-/* 0F189C 7F0BEEAC 0FC17773 */  jal   draw_item_in_hand_has_more_ammo
+/* 0F189C 7F0BEEAC 0FC17773 */  jal   currentPlayerEquipWeaponWrapper
 /* 0F18A0 7F0BEEB0 24050058 */   li    $a1, 88
 /* 0F18A4 7F0BEEB4 3C028007 */  lui   $v0, %hi(g_CurrentPlayer) # $v0, 0x8007
 /* 0F18A8 7F0BEEB8 8C428BC0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
@@ -5928,7 +5928,7 @@ void lvlUnloadStageTextData(void)
     cleanupGuardData();
     cleanupObjectSounds();
     cleanupExplosions();
-    sub_GAME_7F007920();
+    cleanup_window_pieces();
     cleanup_REMOVED_();
     cleanupAlarms();
     cleanupObjects(g_CurrentStageToLoad);

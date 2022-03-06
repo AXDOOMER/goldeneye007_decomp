@@ -56,7 +56,7 @@ f32 get_007_health_mod(void);
 f32 get_007_damage_mod(void);
 f32 get_007_accuracy_mod(void);
 void end_of_mission_briefing(void);
-void fileLoadSaveSettingsForSelectedFolder(int a);
+void fileLoadSaveSettingsForSelectedFolder(int stage);
 void deleteCurrentSelectedFolder(void);
 void copyCurrentEEPROMtoStack(void);
 s32 getSelectedFolderBond(void);

@@ -2139,7 +2139,7 @@ huffman_type5:
 /* 0FCDA0 7F0C8270 27A400A8 */  addiu $a0, $sp, 0xa8
 /* 0FCDA4 7F0C8274 000B7880 */  sll   $t7, $t3, 2
 /* 0FCDA8 7F0C8278 00AF2821 */  addu  $a1, $a1, $t7
-/* 0FCDAC 7F0C827C 0FC32648 */  jal   type5_6_7_getsamples
+/* 0FCDAC 7F0C827C 0FC32648 */  jal   texBuildLookup
 /* 0FCDB0 7F0C8280 8CA59214 */   lw    $a1, %lo(pixelsamplebits+52)($a1)
 /* 0FCDB4 7F0C8284 8FAC30AC */  lw    $t4, 0x30ac($sp)
 /* 0FCDB8 7F0C8288 8FB90088 */  lw    $t9, 0x88($sp)
@@ -2160,7 +2160,7 @@ huffman_type6:
 /* 0FCDF0 7F0C82C0 27A400A8 */  addiu $a0, $sp, 0xa8
 /* 0FCDF4 7F0C82C4 000D7080 */  sll   $t6, $t5, 2
 /* 0FCDF8 7F0C82C8 00AE2821 */  addu  $a1, $a1, $t6
-/* 0FCDFC 7F0C82CC 0FC32648 */  jal   type5_6_7_getsamples
+/* 0FCDFC 7F0C82CC 0FC32648 */  jal   texBuildLookup
 /* 0FCE00 7F0C82D0 8CA59214 */   lw    $a1, %lo(pixelsamplebits+52)($a1)
 /* 0FCE04 7F0C82D4 00408825 */  move  $s1, $v0
 /* 0FCE08 7F0C82D8 03C02025 */  move  $a0, $fp
@@ -2188,7 +2188,7 @@ huffman_type7:
 /* 0FCE5C 7F0C832C 27A400A8 */  addiu $a0, $sp, 0xa8
 /* 0FCE60 7F0C8330 00186880 */  sll   $t5, $t8, 2
 /* 0FCE64 7F0C8334 00AD2821 */  addu  $a1, $a1, $t5
-/* 0FCE68 7F0C8338 0FC32648 */  jal   type5_6_7_getsamples
+/* 0FCE68 7F0C8338 0FC32648 */  jal   texBuildLookup
 /* 0FCE6C 7F0C833C 8CA59214 */   lw    $a1, %lo(pixelsamplebits+52)($a1)
 /* 0FCE70 7F0C8340 00408825 */  move  $s1, $v0
 /* 0FCE74 7F0C8344 03C02025 */  move  $a0, $fp
@@ -3817,112 +3817,46 @@ glabel type4_7_9_getsamples
 
 
 
-#ifdef NONMATCHING
-s32 type5_6_7_getsamples(u16 *image,s32 count)
+/**
+ * Populate a lookup table by reading it out of the bit string.
+ *
+ * The first 11 bits denote the number of colours in the lookup table.
+ * The data following this is a list of colours, where each colour is sized
+ * according to the texture's format.
+ *
+ * This function does NOT work with pixel formats of 8 bits or less.
+ */
+s32 texBuildLookup(s8 *lookup, s32 bitsperpixel)
 {
+    s32 numcolors = extractImageBitCount(11);
     s32 i;
     
-    if (count < 0x11)
+    if (bitsperpixel <= 16)
     {
-        for(i = 0; i<extractImageBitCount(0xb); i++) 
+        u16 *image = (u16*)lookup;
+        for (i = 0; i < numcolors; i++)
         {
-            image[i] = extractImageBitCount(count);
+            image[i] = extractImageBitCount(bitsperpixel);
         }
     }
-    else if (count < 0x19)
+    else if (bitsperpixel <= 24)
     {
-        for(i = 0; i<extractImageBitCount(0xb); i++)
+        u32 *image = (u32*)lookup;
+        for (i = 0; i < numcolors; i++)
         {
-            image[i] = extractImageBitCount(count);
+            image[i] = extractImageBitCount(bitsperpixel);
         }
     }
     else
     {
-        for(i = 0; i<extractImageBitCount(0xb); i++)
+        u32 *image = (u32*)lookup;
+        for (i = 0; i < numcolors; i++)
         {
-            image[i] = extractImageBitCount(count + -0x18) | extractImageBitCount(0x18) << 8;
+            image[i] = extractImageBitCount(24) << 8 | extractImageBitCount(bitsperpixel - 24);
         }
     }
-    return i;
+    return numcolors;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel type5_6_7_getsamples
-/* 0FE450 7F0C9920 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0FE454 7F0C9924 AFB30020 */  sw    $s3, 0x20($sp)
-/* 0FE458 7F0C9928 00809825 */  move  $s3, $a0
-/* 0FE45C 7F0C992C AFBF002C */  sw    $ra, 0x2c($sp)
-/* 0FE460 7F0C9930 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 0FE464 7F0C9934 00A09025 */  move  $s2, $a1
-/* 0FE468 7F0C9938 AFB50028 */  sw    $s5, 0x28($sp)
-/* 0FE46C 7F0C993C AFB40024 */  sw    $s4, 0x24($sp)
-/* 0FE470 7F0C9940 AFB10018 */  sw    $s1, 0x18($sp)
-/* 0FE474 7F0C9944 AFB00014 */  sw    $s0, 0x14($sp)
-/* 0FE478 7F0C9948 0FC32FCB */  jal   extractImageBitCount
-/* 0FE47C 7F0C994C 2404000B */   li    $a0, 11
-/* 0FE480 7F0C9950 2A410011 */  slti  $at, $s2, 0x11
-/* 0FE484 7F0C9954 1020000C */  beqz  $at, .L7F0C9988
-/* 0FE488 7F0C9958 0040A825 */   move  $s5, $v0
-/* 0FE48C 7F0C995C 18400027 */  blez  $v0, .L7F0C99FC
-/* 0FE490 7F0C9960 00008025 */   move  $s0, $zero
-/* 0FE494 7F0C9964 02608825 */  move  $s1, $s3
-.L7F0C9968:
-/* 0FE498 7F0C9968 0FC32FCB */  jal   extractImageBitCount
-/* 0FE49C 7F0C996C 02402025 */   move  $a0, $s2
-/* 0FE4A0 7F0C9970 26100001 */  addiu $s0, $s0, 1
-/* 0FE4A4 7F0C9974 26310002 */  addiu $s1, $s1, 2
-/* 0FE4A8 7F0C9978 1615FFFB */  bne   $s0, $s5, .L7F0C9968
-/* 0FE4AC 7F0C997C A622FFFE */   sh    $v0, -2($s1)
-/* 0FE4B0 7F0C9980 1000001F */  b     .L7F0C9A00
-/* 0FE4B4 7F0C9984 8FBF002C */   lw    $ra, 0x2c($sp)
-.L7F0C9988:
-/* 0FE4B8 7F0C9988 2A410019 */  slti  $at, $s2, 0x19
-/* 0FE4BC 7F0C998C 1020000C */  beqz  $at, .L7F0C99C0
-/* 0FE4C0 7F0C9990 00000000 */   nop   
-/* 0FE4C4 7F0C9994 18400019 */  blez  $v0, .L7F0C99FC
-/* 0FE4C8 7F0C9998 00008025 */   move  $s0, $zero
-/* 0FE4CC 7F0C999C 02608825 */  move  $s1, $s3
-.L7F0C99A0:
-/* 0FE4D0 7F0C99A0 0FC32FCB */  jal   extractImageBitCount
-/* 0FE4D4 7F0C99A4 02402025 */   move  $a0, $s2
-/* 0FE4D8 7F0C99A8 26100001 */  addiu $s0, $s0, 1
-/* 0FE4DC 7F0C99AC 26310004 */  addiu $s1, $s1, 4
-/* 0FE4E0 7F0C99B0 1615FFFB */  bne   $s0, $s5, .L7F0C99A0
-/* 0FE4E4 7F0C99B4 AE22FFFC */   sw    $v0, -4($s1)
-/* 0FE4E8 7F0C99B8 10000011 */  b     .L7F0C9A00
-/* 0FE4EC 7F0C99BC 8FBF002C */   lw    $ra, 0x2c($sp)
-.L7F0C99C0:
-/* 0FE4F0 7F0C99C0 1840000E */  blez  $v0, .L7F0C99FC
-/* 0FE4F4 7F0C99C4 00008025 */   move  $s0, $zero
-/* 0FE4F8 7F0C99C8 2654FFE8 */  addiu $s4, $s2, -0x18
-/* 0FE4FC 7F0C99CC 02608825 */  move  $s1, $s3
-.L7F0C99D0:
-/* 0FE500 7F0C99D0 0FC32FCB */  jal   extractImageBitCount
-/* 0FE504 7F0C99D4 24040018 */   li    $a0, 24
-/* 0FE508 7F0C99D8 00409025 */  move  $s2, $v0
-/* 0FE50C 7F0C99DC 0FC32FCB */  jal   extractImageBitCount
-/* 0FE510 7F0C99E0 02802025 */   move  $a0, $s4
-/* 0FE514 7F0C99E4 00127200 */  sll   $t6, $s2, 8
-/* 0FE518 7F0C99E8 26100001 */  addiu $s0, $s0, 1
-/* 0FE51C 7F0C99EC 004E7825 */  or    $t7, $v0, $t6
-/* 0FE520 7F0C99F0 26310004 */  addiu $s1, $s1, 4
-/* 0FE524 7F0C99F4 1615FFF6 */  bne   $s0, $s5, .L7F0C99D0
-/* 0FE528 7F0C99F8 AE2FFFFC */   sw    $t7, -4($s1)
-.L7F0C99FC:
-/* 0FE52C 7F0C99FC 8FBF002C */  lw    $ra, 0x2c($sp)
-.L7F0C9A00:
-/* 0FE530 7F0C9A00 02A01025 */  move  $v0, $s5
-/* 0FE534 7F0C9A04 8FB50028 */  lw    $s5, 0x28($sp)
-/* 0FE538 7F0C9A08 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0FE53C 7F0C9A0C 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0FE540 7F0C9A10 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 0FE544 7F0C9A14 8FB30020 */  lw    $s3, 0x20($sp)
-/* 0FE548 7F0C9A18 8FB40024 */  lw    $s4, 0x24($sp)
-/* 0FE54C 7F0C9A1C 03E00008 */  jr    $ra
-/* 0FE550 7F0C9A20 27BD0030 */   addiu $sp, $sp, 0x30
-)
-#endif
 
 
 

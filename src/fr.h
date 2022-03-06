@@ -162,7 +162,7 @@ extern Mtx *g_viProjectionMatrix;
 /* SCREEN_HEIGHT #define changes based on version (PAL or NTSC) */
 extern u8 cfb_16[NUM_VIDEO_FRAME_BUFFERS][SCREEN_WIDTH * SCREEN_HEIGHT * 2];
 
-void viSet800232B4(f32 param_1);
+void viShake(f32 param_1);
 
 void viInitVideoSettings(void);
 s16 viGetX(void);

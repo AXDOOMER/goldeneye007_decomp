@@ -3,8 +3,8 @@
 #include <ultra64.h>
 #include <bondtypes.h>
 
-typedef struct s_something_explosiony {
-    s32 field_0x0;
+typedef struct s_shattered_window_piece {
+    s32* piece;
     f32 x;
     f32 y;
     f32 z;
@@ -48,10 +48,10 @@ typedef struct s_something_explosiony {
     u8 field_0x65;
     u8 field_0x66;
     u8 field_0x67;
-} s_something_explosiony;
+} s_shattered_window_piece;
 
-extern s32 bufferentrycount_8007A160;
-extern s_something_explosiony* dword_CODE_bss_8007A164;
+extern s32 SHATTERED_WINDOW_PIECES_BUFFER_LEN;
+extern s_shattered_window_piece* ptr_shattered_window_pieces;
 extern u32 D_80040940;
 extern u32 D_80040960[];
 

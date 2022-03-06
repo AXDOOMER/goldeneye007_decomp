@@ -830,8 +830,8 @@ extern void sub_GAME_7F052B00                                (DoorRecord *door);
 extern void sub_GAME_7F053598                                (DoorRecord *door);                                                                  // doorActivatePortal
 extern void sub_GAME_7F053B10                                (DoorRecord *door);
 extern void sub_GAME_7F056CA0                                (ObjectRecord *obj);
-extern void objecthandlerAnimationRelated7F06FCA8                                (Model *model, AnimTable2 *anim, int b, f32 startframe, float half, float e);
-extern void sub_GAME_7F06FDE8                                (Model *model, float endframe);
+extern void modelSetAnimation                                (Model *model, AnimTable2 *anim, int b, f32 startframe, float half, float e);
+extern void modelSetAnimEndFrame                                (Model *model, float endframe);
 extern void sub_GAME_7F08A928                                (int a);
 extern void sub_GAME_7F08A944                                (PLAYERFLAG flag);
 extern void maybe_detonate_object                            (ObjectRecord *baseobj, f32 damage, coord3d *pos, s32 flag, s32 flag2);
@@ -1578,10 +1578,10 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                     else if (AircraftEntityp)
                     {
                         zero = 0; //debug value maybe?
-                        objecthandlerAnimationRelated7F06FCA8(AircraftEntityp->model, animation_table_ptrs2[anim_id], zero, startframe, 0.5f, (s32)ai->val[7]);
+                        modelSetAnimation(AircraftEntityp->model, animation_table_ptrs2[anim_id], zero, startframe, 0.5f, (s32)ai->val[7]);
                         if (endframe >= 0)
                         {
-                            sub_GAME_7F06FDE8(AircraftEntityp->model, endframe);
+                            modelSetAnimEndFrame(AircraftEntityp->model, endframe);
                         }
                     }
                     Offset += 9;
@@ -5034,7 +5034,7 @@ extern s32 get_cur_playernum();
 extern PadRecord *sub_GAME_7F027CD4(coord3d *pos, void *stan);
 extern StandTile *sub_GAME_7F0B2718(StandTile *srcTile, void *tilePred);
 extern PadRecord *get_ptrpreset_in_table_matching_tile(StandTile *stan);
-//extern int sub_GAME_7F08F4F0( PadRecord *a, PadRecord *b, coord3d*pos, int dist);
+//extern int waypointFindRoute( PadRecord *a, PadRecord *b, coord3d*pos, int dist);
 extern int sub_GAME_7F08FB90(PadRecord *a, PadRecord *b, int padid);
 extern void set_or_unset_GUARDdata_flag(ChrRecord *self, bool unset);
 extern int sub_GAME_7F0B0E24(struct StandTile **pTile, float p_x, float p_z, float dest_x, float dest_z, int objFlags, float unkHeight, float unkA, float unkB, float unkC);

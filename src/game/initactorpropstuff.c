@@ -247,7 +247,7 @@ glabel sub_GAME_7F00032C
 
 #ifdef NONMATCHING
 void sub_GAME_7F00046C(void) {
-
+    // Same as PD's func0f00052c
 }
 #else
 GLOBAL_ASM(

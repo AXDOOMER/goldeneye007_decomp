@@ -126,8 +126,8 @@ glabel load_camera_intro_type_values
 /* 03A32C 7F0057FC ADC80004 */  sw    $t0, 4($t6)
 /* 03A330 7F005800 3C118003 */  lui   $s1, %hi(resolution)
 /* 03A334 7F005804 ADC10008 */  sw    $at, 8($t6)
-/* 03A338 7F005808 3C018003 */  lui   $at, %hi(mission_kia_flag)
-/* 03A33C 7F00580C AC20A928 */  sw    $zero, %lo(mission_kia_flag)($at)
+/* 03A338 7F005808 3C018003 */  lui   $at, %hi(g_isBondKIA)
+/* 03A33C 7F00580C AC20A928 */  sw    $zero, %lo(g_isBondKIA)($at)
 /* 03A340 7F005810 3C018003 */  lui   $at, %hi(camera_80036424)
 /* 03A344 7F005814 3C108007 */  lui   $s0, %hi(g_chraiCurrentSetup+8)
 /* 03A348 7F005818 AC206424 */  sw    $zero, %lo(camera_80036424)($at)
@@ -227,8 +227,8 @@ glabel load_camera_intro_type_values
 /* 03A4BC 7F00598C 3C018003 */  lui   $at, %hi(D_800364B0)
 /* 03A4C0 7F005990 240D0001 */  li    $t5, 1
 /* 03A4C4 7F005994 AC2D64B0 */  sw    $t5, %lo(D_800364B0)($at)
-/* 03A4C8 7F005998 3C018003 */  lui   $at, %hi(disable_player_pickups_flag)
-/* 03A4CC 7F00599C AC2064B4 */  sw    $zero, %lo(disable_player_pickups_flag)($at)
+/* 03A4C8 7F005998 3C018003 */  lui   $at, %hi(g_PlayerInvincible)
+/* 03A4CC 7F00599C AC2064B4 */  sw    $zero, %lo(g_PlayerInvincible)($at)
 /* 03A4D0 7F0059A0 3C018003 */  lui   $at, %hi(cameramode)
 /* 03A4D4 7F0059A4 AC206494 */  sw    $zero, %lo(cameramode)($at)
 /* 03A4D8 7F0059A8 3C018003 */  lui   $at, %hi(enable_move_after_cinema)
@@ -453,13 +453,13 @@ fixed_cam:
 /* 03A80C 7F005CDC E610000C */  swc1  $f16, 0xc($s0)
 /* 03A810 7F005CE0 46145403 */  div.s $f16, $f10, $f20
 /* 03A814 7F005CE4 E6060010 */  swc1  $f6, 0x10($s0)
-/* 03A818 7F005CE8 0FC30776 */  jal   get_textptr_for_textID
+/* 03A818 7F005CE8 0FC30776 */  jal   langGet
 /* 03A81C 7F005CEC E6100014 */   swc1  $f16, 0x14($s0)
 /* 03A820 7F005CF0 8E030020 */  lw    $v1, 0x20($s0)
 /* 03A824 7F005CF4 AE02001C */  sw    $v0, 0x1c($s0)
 /* 03A828 7F005CF8 10600004 */  beqz  $v1, .L7F005D0C
 /* 03A82C 7F005CFC 00000000 */   nop   
-/* 03A830 7F005D00 0FC30776 */  jal   get_textptr_for_textID
+/* 03A830 7F005D00 0FC30776 */  jal   langGet
 /* 03A834 7F005D04 3064FFFF */   andi  $a0, $v1, 0xffff
 /* 03A838 7F005D08 AE020020 */  sw    $v0, 0x20($s0)
 .L7F005D0C:
@@ -849,8 +849,8 @@ glabel load_camera_intro_type_values
 /* 03A390 7F005820 ADC80004 */  sw    $t0, 4($t6)
 /* 03A394 7F005824 3C118003 */  lui   $s1, %hi(resolution) # $s1, 0x8003
 /* 03A398 7F005828 ADC10008 */  sw    $at, 8($t6)
-/* 03A39C 7F00582C 3C018003 */  lui   $at, %hi(mission_kia_flag) # $at, 0x8003
-/* 03A3A0 7F005830 AC20A968 */  sw    $zero, %lo(mission_kia_flag)($at)
+/* 03A39C 7F00582C 3C018003 */  lui   $at, %hi(g_isBondKIA) # $at, 0x8003
+/* 03A3A0 7F005830 AC20A968 */  sw    $zero, %lo(g_isBondKIA)($at)
 /* 03A3A4 7F005834 3C018003 */  lui   $at, %hi(camera_80036424) # $at, 0x8003
 /* 03A3A8 7F005838 3C108007 */  lui   $s0, %hi(g_chraiCurrentSetup+8) # $s0, 0x8007
 /* 03A3AC 7F00583C AC206464 */  sw    $zero, %lo(camera_80036424)($at)
@@ -936,8 +936,8 @@ glabel load_camera_intro_type_values
 /* 03A4E8 7F005978 3C018003 */  lui   $at, %hi(D_800364B0) # $at, 0x8003
 /* 03A4EC 7F00597C 240D0001 */  li    $t5, 1
 /* 03A4F0 7F005980 AC2D64F0 */  sw    $t5, %lo(D_800364B0)($at)
-/* 03A4F4 7F005984 3C018003 */  lui   $at, %hi(disable_player_pickups_flag) # $at, 0x8003
-/* 03A4F8 7F005988 AC2064F4 */  sw    $zero, %lo(disable_player_pickups_flag)($at)
+/* 03A4F4 7F005984 3C018003 */  lui   $at, %hi(g_PlayerInvincible) # $at, 0x8003
+/* 03A4F8 7F005988 AC2064F4 */  sw    $zero, %lo(g_PlayerInvincible)($at)
 /* 03A4FC 7F00598C 3C018003 */  lui   $at, %hi(cameramode) # $at, 0x8003
 /* 03A500 7F005990 AC2064D4 */  sw    $zero, %lo(cameramode)($at)
 /* 03A504 7F005994 3C018003 */  lui   $at, %hi(enable_move_after_cinema) # $at, 0x8003
@@ -1161,13 +1161,13 @@ fixed_cam:
 /* 03A834 7F005CC4 E604000C */  swc1  $f4, 0xc($s0)
 /* 03A838 7F005CC8 46149103 */  div.s $f4, $f18, $f20
 /* 03A83C 7F005CCC E60A0010 */  swc1  $f10, 0x10($s0)
-/* 03A840 7F005CD0 0FC30AA2 */  jal   get_textptr_for_textID
+/* 03A840 7F005CD0 0FC30AA2 */  jal   langGet
 /* 03A844 7F005CD4 E6040014 */   swc1  $f4, 0x14($s0)
 /* 03A848 7F005CD8 8E030020 */  lw    $v1, 0x20($s0)
 /* 03A84C 7F005CDC AE02001C */  sw    $v0, 0x1c($s0)
 /* 03A850 7F005CE0 10600004 */  beqz  $v1, .L7F005CF4
 /* 03A854 7F005CE4 00000000 */   nop   
-/* 03A858 7F005CE8 0FC30AA2 */  jal   get_textptr_for_textID
+/* 03A858 7F005CE8 0FC30AA2 */  jal   langGet
 /* 03A85C 7F005CEC 3064FFFF */   andi  $a0, $v1, 0xffff
 /* 03A860 7F005CF0 AE020020 */  sw    $v0, 0x20($s0)
 .L7F005CF4:
@@ -1564,8 +1564,8 @@ glabel load_camera_intro_type_values
 /* 038190 7F0057A0 ADC80004 */  sw    $t0, 4($t6)
 /* 038194 7F0057A4 3C118003 */  lui   $s1, %hi(resolution) # $s1, 0x8003
 /* 038198 7F0057A8 ADC10008 */  sw    $at, 8($t6)
-/* 03819C 7F0057AC 3C018002 */  lui   $at, %hi(mission_kia_flag) # $at, 0x8002
-/* 0381A0 7F0057B0 AC205E78 */  sw    $zero, %lo(mission_kia_flag)($at)
+/* 03819C 7F0057AC 3C018002 */  lui   $at, %hi(g_isBondKIA) # $at, 0x8002
+/* 0381A0 7F0057B0 AC205E78 */  sw    $zero, %lo(g_isBondKIA)($at)
 /* 0381A4 7F0057B4 3C018003 */  lui   $at, %hi(camera_80036424) # $at, 0x8003
 /* 0381A8 7F0057B8 3C108006 */  lui   $s0, %hi(g_chraiCurrentSetup+8) # $s0, 0x8006
 /* 0381AC 7F0057BC AC201974 */  sw    $zero, %lo(camera_80036424)($at)
@@ -1651,8 +1651,8 @@ glabel load_camera_intro_type_values
 /* 0382E8 7F0058F8 3C018003 */  lui   $at, %hi(D_800364B0) # $at, 0x8003
 /* 0382EC 7F0058FC 240D0001 */  li    $t5, 1
 /* 0382F0 7F005900 AC2D1A00 */  sw    $t5, %lo(D_800364B0)($at)
-/* 0382F4 7F005904 3C018003 */  lui   $at, %hi(disable_player_pickups_flag) # $at, 0x8003
-/* 0382F8 7F005908 AC201A04 */  sw    $zero, %lo(disable_player_pickups_flag)($at)
+/* 0382F4 7F005904 3C018003 */  lui   $at, %hi(g_PlayerInvincible) # $at, 0x8003
+/* 0382F8 7F005908 AC201A04 */  sw    $zero, %lo(g_PlayerInvincible)($at)
 /* 0382FC 7F00590C 3C018003 */  lui   $at, %hi(cameramode) # $at, 0x8003
 /* 038300 7F005910 AC2019E4 */  sw    $zero, %lo(cameramode)($at)
 /* 038304 7F005914 3C018003 */  lui   $at, %hi(enable_move_after_cinema) # $at, 0x8003
@@ -1876,13 +1876,13 @@ fixed_cam:
 /* 038634 7F005C44 E604000C */  swc1  $f4, 0xc($s0)
 /* 038638 7F005C48 46149103 */  div.s $f4, $f18, $f20
 /* 03863C 7F005C4C E60A0010 */  swc1  $f10, 0x10($s0)
-/* 038640 7F005C50 0FC304AE */  jal   get_textptr_for_textID
+/* 038640 7F005C50 0FC304AE */  jal   langGet
 /* 038644 7F005C54 E6040014 */   swc1  $f4, 0x14($s0)
 /* 038648 7F005C58 8E030020 */  lw    $v1, 0x20($s0)
 /* 03864C 7F005C5C AE02001C */  sw    $v0, 0x1c($s0)
 /* 038650 7F005C60 10600004 */  beqz  $v1, .L7F005C74
 /* 038654 7F005C64 00000000 */   nop   
-/* 038658 7F005C68 0FC304AE */  jal   get_textptr_for_textID
+/* 038658 7F005C68 0FC304AE */  jal   langGet
 /* 03865C 7F005C6C 3064FFFF */   andi  $a0, $v1, 0xffff
 /* 038660 7F005C70 AE020020 */  sw    $v0, 0x20($s0)
 .L7F005C74:

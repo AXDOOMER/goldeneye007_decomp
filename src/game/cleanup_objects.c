@@ -48,7 +48,7 @@ void cleanupObjects(s32 stage)
                 case 43:
                 case 45:
                 case 47:
-                    sub_GAME_7F041024((object_standard *)obj, 1);
+                    objFreePermanently((ObjectRecord *)obj, 1);
                     break;
             }
 
@@ -132,7 +132,7 @@ glabel cleanupObjects
 /* 03C07C 7F00754C 00000000 */   nop 
 .L7F007550:
 /* 03C080 7F007550 02002025 */  move  $a0, $s0
-/* 03C084 7F007554 0FC10409 */  jal   sub_GAME_7F041024
+/* 03C084 7F007554 0FC10409 */  jal   objFreePermanently
 /* 03C088 7F007558 24050001 */   li    $a1, 1
 .L7F00755C:
 /* 03C08C 7F00755C 0FC15A3D */  jal   sizepropdef

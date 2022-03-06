@@ -7,7 +7,7 @@
 #include "bg.h"
 #include "image_bank.h"
 #include "othermodemicrocode.h"
-#include "unk_09C250.h"
+#include "explosions.h"
 #include "unk_0BC530.h"
 #include <assets/GlobalImageTable.h>
 
@@ -1007,7 +1007,7 @@ glabel sub_GAME_7F09C7C4
 /* 0D1328 7F09C7F8 15C00006 */  bnez  $t6, .L7F09C814
 /* 0D132C 7F09C7FC AFA60060 */   sw    $a2, 0x60($sp)
 /* 0D1330 7F09C800 44806000 */  mtc1  $zero, $f12
-/* 0D1334 7F09C804 0C000EC1 */  jal   viSet800232B4
+/* 0D1334 7F09C804 0C000EC1 */  jal   viShake
 /* 0D1338 7F09C808 00000000 */   nop   
 /* 0D133C 7F09C80C 10000069 */  b     .L7F09C9B4
 /* 0D1340 7F09C810 8FBF003C */   lw    $ra, 0x3c($sp)
@@ -1118,7 +1118,7 @@ glabel sub_GAME_7F09C7C4
 /* 0D14CC 7F09C99C 00000000 */  nop   
 /* 0D14D0 7F09C9A0 468084A0 */  cvt.s.w $f18, $f16
 /* 0D14D4 7F09C9A4 46149302 */  mul.s $f12, $f18, $f20
-/* 0D14D8 7F09C9A8 0C000EC1 */  jal   viSet800232B4
+/* 0D14D8 7F09C9A8 0C000EC1 */  jal   viShake
 /* 0D14DC 7F09C9AC 00000000 */   nop   
 /* 0D14E0 7F09C9B0 8FBF003C */  lw    $ra, 0x3c($sp)
 .L7F09C9B4:
@@ -1160,7 +1160,7 @@ glabel sub_GAME_7F09C7C4
 /* 0D1EE4 7F09D374 15C00006 */  bnez  $t6, .Ljp7F09D390
 /* 0D1EE8 7F09D378 AFA60070 */   sw    $a2, 0x70($sp)
 /* 0D1EEC 7F09D37C 44806000 */  mtc1  $zero, $f12
-/* 0D1EF0 7F09D380 0C000EC1 */  jal   viSet800232B4
+/* 0D1EF0 7F09D380 0C000EC1 */  jal   viShake
 /* 0D1EF4 7F09D384 00000000 */   nop   
 /* 0D1EF8 7F09D388 10000071 */  b     .Ljp7F09D550
 /* 0D1EFC 7F09D38C 8FBF004C */   lw    $ra, 0x4c($sp)
@@ -1280,7 +1280,7 @@ glabel sub_GAME_7F09C7C4
 /* 0D20A8 7F09D538 00000000 */  nop   
 /* 0D20AC 7F09D53C 468084A0 */  cvt.s.w $f18, $f16
 /* 0D20B0 7F09D540 46149302 */  mul.s $f12, $f18, $f20
-/* 0D20B4 7F09D544 0C000EC1 */  jal   viSet800232B4
+/* 0D20B4 7F09D544 0C000EC1 */  jal   viShake
 /* 0D20B8 7F09D548 00000000 */   nop   
 /* 0D20BC 7F09D54C 8FBF004C */  lw    $ra, 0x4c($sp)
 .Ljp7F09D550:
@@ -1619,7 +1619,7 @@ glabel sub_GAME_7F09C9D8
 /* 0D197C 7F09CE4C 4608A502 */  mul.s $f20, $f20, $f8
 /* 0D1980 7F09CE50 00000000 */  nop   
 .L7F09CE54:
-/* 0D1984 7F09CE54 0FC1F39E */  jal   get_intank_flag
+/* 0D1984 7F09CE54 0FC1F39E */  jal   isBondInTank
 /* 0D1988 7F09CE58 00000000 */   nop   
 /* 0D198C 7F09CE5C 14540002 */  bne   $v0, $s4, .L7F09CE68
 /* 0D1990 7F09CE60 4600B386 */   mov.s $f14, $f22
@@ -6308,7 +6308,7 @@ glabel sub_GAME_7F0A108C
 /* 0D5C10 7F0A10E0 8DC10008 */  lw    $at, 8($t6)
 /* 0D5C14 7F0A10E4 AEA10008 */  sw    $at, 8($s5)
 /* 0D5C18 7F0A10E8 8DD9000C */  lw    $t9, 0xc($t6)
-/* 0D5C1C 7F0A10EC 0FC249EF */  jal   cheatCheckIfOn
+/* 0D5C1C 7F0A10EC 0FC249EF */  jal   cheatIsActive
 /* 0D5C20 7F0A10F0 AEB9000C */   sw    $t9, 0xc($s5)
 /* 0D5C24 7F0A10F4 10400003 */  beqz  $v0, .L7F0A1104
 /* 0D5C28 7F0A10F8 3C0A8004 */   lui   $t2, %hi(D_8004080C) 

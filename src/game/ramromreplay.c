@@ -2,7 +2,7 @@
 #include <ultra64.h>
 #include "debugmenu_handler.h"
 #include "lvl.h"
-#include "initunk_0072B0.h"
+#include "initcheattext.h"
 #include "front.h"
 #include "ramromreplay.h"
 #include <ramrom.h>

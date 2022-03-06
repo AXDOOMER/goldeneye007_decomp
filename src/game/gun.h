@@ -232,8 +232,8 @@ void display_in_game_crosshair(s32 *gdl);
 
 WeaponStats *get_ptr_item_statistics(ITEM_IDS item);
 
-s32 get_item_in_hand(GUNHAND hand);
-s32 draw_item_in_hand_has_more_ammo(GUNHAND hand, s32 next_weapon);
+s32 getCurrentPlayerWeaponId(GUNHAND hand);
+s32 currentPlayerEquipWeaponWrapper(GUNHAND hand, s32 next_weapon);
 void sub_GAME_7F068E6C(void);
 void attempt_reload_item_in_hand(GUNHAND hand);
 void set_max_ammo_for_cur_player(void);
@@ -259,7 +259,7 @@ void inc_curplayer_hitcount_with_weapon(ITEM_IDS item, SHOT_REGISTER shot_regist
 s8 get_hands_firing_status(GUNHAND hand);
 void gunFireTankShell(s32 hand);
 void         remove_item_in_hand(GUNHAND hand);
-void         remove_hands_item(GUNHAND hand, s32 weapid);
-s32          check_cur_player_ammo_amount_total(AMMOTYPE ammotype);
+void         currentPlayerUnEquipWeaponWrapper(GUNHAND hand, s32 weapid);
+s32          currentPlayerGetAmmoCount(AMMOTYPE ammotype);
 s32          get_civilian_casualties(void);
 #endif

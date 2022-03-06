@@ -565,34 +565,15 @@ glabel sub_GAME_7F06C570
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F06C660(void) {
+Mtxf *sub_GAME_7F06C660(struct Model *model, struct ModelNode *node, s32 arg2) {
+    s32 index = sub_GAME_7F06C570(node, arg2);
 
+    if (index >= 0) {
+        return &model->unk0c[index];
+    }
+
+    return NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06C660
-/* 0A1190 7F06C660 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0A1194 7F06C664 AFA40018 */  sw    $a0, 0x18($sp)
-/* 0A1198 7F06C668 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A119C 7F06C66C 00A02025 */  move  $a0, $a1
-/* 0A11A0 7F06C670 0FC1B15C */  jal   sub_GAME_7F06C570
-/* 0A11A4 7F06C674 00C02825 */   move  $a1, $a2
-/* 0A11A8 7F06C678 04400006 */  bltz  $v0, .L7F06C694
-/* 0A11AC 7F06C67C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0A11B0 7F06C680 8FAE0018 */  lw    $t6, 0x18($sp)
-/* 0A11B4 7F06C684 0002C180 */  sll   $t8, $v0, 6
-/* 0A11B8 7F06C688 8DCF000C */  lw    $t7, 0xc($t6)
-/* 0A11BC 7F06C68C 10000002 */  b     .L7F06C698
-/* 0A11C0 7F06C690 01F81021 */   addu  $v0, $t7, $t8
-.L7F06C694:
-/* 0A11C4 7F06C694 00001025 */  move  $v0, $zero
-.L7F06C698:
-/* 0A11C8 7F06C698 03E00008 */  jr    $ra
-/* 0A11CC 7F06C69C 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
 
 
 //rejoined per EU
@@ -669,39 +650,15 @@ glabel sub_GAME_7F06C710
 
 
 
-#ifdef NONMATCHING
 f32 sub_GAME_7F06C768(Model *objinst)
 {
-    void *temp_v0;
-
-    temp_v0 = getsubmatrix(objinst);
-    if (temp_v0 != 0)
+    Mtxf *mtx = getsubmatrix(objinst);
+    if (mtx != 0)
     {
-        return -temp_v0->unk38;
+        return -mtx->m[3][2];
     }
     return 0.0f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06C768
-/* 0A1298 7F06C768 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0A129C 7F06C76C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A12A0 7F06C770 0FC1B1A8 */  jal   getsubmatrix
-/* 0A12A4 7F06C774 00000000 */   nop   
-/* 0A12A8 7F06C778 10400004 */  beqz  $v0, .L7F06C78C
-/* 0A12AC 7F06C77C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0A12B0 7F06C780 C4400038 */  lwc1  $f0, 0x38($v0)
-/* 0A12B4 7F06C784 10000003 */  b     .L7F06C794
-/* 0A12B8 7F06C788 46000007 */   neg.s $f0, $f0
-.L7F06C78C:
-/* 0A12BC 7F06C78C 44800000 */  mtc1  $zero, $f0
-/* 0A12C0 7F06C790 00000000 */  nop   
-.L7F06C794:
-/* 0A12C4 7F06C794 03E00008 */  jr    $ra
-/* 0A12C8 7F06C798 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
 
 
 
@@ -3764,7 +3721,7 @@ glabel process_03_unknown
 
 #ifdef NONMATCHING
 void process_15_subposition(void) {
-
+    // May match model0001c5b4 in PD
 }
 #else
 GLOBAL_ASM(
@@ -3917,8 +3874,16 @@ glabel process_08_distance_triggers
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F06E970(void) {
+void sub_GAME_7F06E970(struct Model *model, struct ModelNode *node) {
+    // May match with PD's model0001c784 function
+    struct modelrodata_distance *rodata = &node->Data->distance;
+    struct modelrwdata_distance *rwdata = modelGetNodeRwData(model, node);
 
+    if (rwdata->visible) {
+        node->child = rodata->target;
+    } else {
+        node->child = NULL;
+    }
 }
 #else
 GLOBAL_ASM(
@@ -3952,8 +3917,16 @@ glabel sub_GAME_7F06E970
 
 
 #ifdef NONMATCHING
-void process_12_handle_switch(void) {
+void process_12_handle_switch(struct Model *model, struct ModelNode *node) {
+    // May match with PD's model0001c7d0
+    struct modelrodata_toggle *rodata = &node->Data->toggle;
+    struct modelrwdata_toggle *rwdata = modelGetNodeRwData(model, node);
 
+    if (rwdata->visible) {
+        node->child = rodata->target;
+    } else {
+        node->child = NULL;
+    }
 }
 #else
 GLOBAL_ASM(
@@ -5114,23 +5087,23 @@ f32 sub_GAME_7F06F610(Model *model)
  * Address 0x7F06F618.
  * PD: modelGetAbsAnimSpeed
 */
-f32 sub_GAME_7F06F618(struct Model *arg0)
+f32 modelGetAbsAnimSpeed(struct Model *model)
 {
-    f32 phi_f2;
+    f32 speed;
 
-    phi_f2 = arg0->unk40;
+    speed = model->unk40;
     
-    if (phi_f2 < 0.0f)
+    if (speed < 0.0f)
     {
-        phi_f2 = -phi_f2;
+        speed = -speed;
     }
     
-    return phi_f2;
+    return speed;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F06F618
+glabel modelGetAbsAnimSpeed
 /* 0A4148 7F06F618 C4820040 */  lwc1  $f2, 0x40($a0)
 /* 0A414C 7F06F61C 44802000 */  mtc1  $zero, $f4
 /* 0A4150 7F06F620 00000000 */  nop   
@@ -5846,13 +5819,13 @@ glabel sub_GAME_7F06FC4C
 
 
 #ifdef NONMATCHING
-void objecthandlerAnimationRelated7F06FCA8(void) {
+void modelSetAnimation(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel objecthandlerAnimationRelated7F06FCA8
+glabel modelSetAnimation
 /* 0A47D8 7F06FCA8 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0A47DC 7F06FCAC AFBF001C */  sw    $ra, 0x1c($sp)
 /* 0A47E0 7F06FCB0 AFA50024 */  sw    $a1, 0x24($sp)
@@ -5950,13 +5923,13 @@ glabel sub_GAME_7F06FCFC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F06FDCC(void) {
+void modelSetAnimLooping(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F06FDCC
+glabel modelSetAnimLooping
 /* 0A48FC 7F06FDCC 44856000 */  mtc1  $a1, $f12
 /* 0A4900 7F06FDD0 44867000 */  mtc1  $a2, $f14
 /* 0A4904 7F06FDD4 240E0001 */  li    $t6, 1
@@ -5972,7 +5945,7 @@ glabel sub_GAME_7F06FDCC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F06FDE8(Model *model, f32 endframe)
+void modelSetAnimEndFrame(Model *model, f32 endframe)
 {
     void *temp_v0;
 
@@ -5988,7 +5961,7 @@ void sub_GAME_7F06FDE8(Model *model, f32 endframe)
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F06FDE8
+glabel modelSetAnimEndFrame
 /* 0A4918 7F06FDE8 8C820020 */  lw    $v0, 0x20($a0)
 /* 0A491C 7F06FDEC 44856000 */  mtc1  $a1, $f12
 /* 0A4920 7F06FDF0 3C01BF80 */  li    $at, 0xBF800000 # -1.000000
@@ -6020,13 +5993,13 @@ glabel sub_GAME_7F06FDE8
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F06FE3C(void) {
+void modelSetAnimFlipFunction(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F06FE3C
+glabel modelSetAnimFlipFunction
 /* 0A496C 7F06FE3C 03E00008 */  jr    $ra
 /* 0A4970 7F06FE40 AC850098 */   sw    $a1, 0x98($a0)
 )
@@ -6054,13 +6027,13 @@ glabel sub_GAME_7F06FE44
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F06FE4C(void) {
+void modelSetAnimSpeed(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F06FE4C
+glabel modelSetAnimSpeed
 /* 0A497C 7F06FE4C 44866000 */  mtc1  $a2, $f12
 /* 0A4980 7F06FE50 44800000 */  mtc1  $zero, $f0
 /* 0A4984 7F06FE54 44857000 */  mtc1  $a1, $f14
@@ -6112,7 +6085,7 @@ s32 sub_GAME_7F06FE90(Model *arg0, f32 arg1, f32 arg2)
     }
     
     t = arg0->unk40 + ((2.0f * phi_f2) / arg2);
-    return sub_GAME_7F06FE4C(arg0, t, arg2);
+    return modelSetAnimSpeed(arg0, t, arg2);
 }
 
 
@@ -7278,7 +7251,7 @@ glabel sub_GAME_7F070AEC
 /* 0A598C 7F070E5C 4407D000 */  mfc1  $a3, $f26
 /* 0A5990 7F070E60 E7B20084 */  swc1  $f18, 0x84($sp)
 /* 0A5994 7F070E64 02002025 */  move  $a0, $s0
-/* 0A5998 7F070E68 0FC1BF2A */  jal   objecthandlerAnimationRelated7F06FCA8
+/* 0A5998 7F070E68 0FC1BF2A */  jal   modelSetAnimation
 /* 0A599C 7F070E6C E7A40014 */   swc1  $f4, 0x14($sp)
 /* 0A59A0 7F070E70 C7B20084 */  lwc1  $f18, 0x84($sp)
 /* 0A59A4 7F070E74 240A0001 */  li    $t2, 1

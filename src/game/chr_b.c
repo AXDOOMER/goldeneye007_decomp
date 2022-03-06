@@ -21,58 +21,58 @@ s32 load_body_head_if_not_loaded(s32 model)
  * Address 0x7F0232E8 (VERSION_US)
  * Address 0x7F0235D8 (other version)
 */
-struct Model *makeonebody(s32 arg0, s32 arg1, struct ModelFileHeader *arg2, struct ModelFileHeader *arg3, s32 arg4, struct Model *arg5)
+struct Model *makeonebody(s32 body, s32 head, struct ModelFileHeader *bodyHeader, struct ModelFileHeader *headHeader, s32 sunglasses, struct Model *model)
 {
-    f32 sp34;
-    f32 sp30;
-    s32 sp2C;
-    struct ModelNode_HeaderRecord *temp_a1;
+    f32 scale;
+    f32 pov;
+    s32 opcode;
+    struct ModelNode_HeaderRecord *node;
 
-    sp34 = c_item_entries[arg0].scale * 0.10000001f;
-    sp2C = 0;
-    sp30 = c_item_entries[arg0].pov;
+    scale = c_item_entries[body].scale * 0.10000001f;
+    opcode = 0;
+    pov = c_item_entries[body].pov;
 
     if (
 #ifndef VERSION_US
-    (cheatCheckIfOn(CHEAT_DK_MODE) != 0) && (not_in_us_7F0209EC(arg0, arg1) != 0)
+    cheatIsActive(CHEAT_DK_MODE) && not_in_us_7F0209EC(body, head)
 #else
-    cheatCheckIfOn(CHEAT_DK_MODE)
+    cheatIsActive(CHEAT_DK_MODE)
 #endif
     )
     {
-        sp34 *= 0.8f;
+        scale *= 0.8f;
     }
 
-    if (arg2->RootNode == 0)
+    if (bodyHeader->RootNode == 0)
     {
-        load_object_into_memory(arg2, c_item_entries[arg0].filename);
+        load_object_into_memory(bodyHeader, c_item_entries[body].filename);
     }
 
-    set_objuse_flag_compute_grp_nums_set_obj_loaded(arg2);
+    set_objuse_flag_compute_grp_nums_set_obj_loaded(bodyHeader);
 
-    if ((c_item_entries[arg0].hasHead == 0) && (arg1 >= 0))
+    if ((c_item_entries[body].hasHead == 0) && (head >= 0))
     {
-        sp2C = &arg2->Switches[4]->Opcode;
-        if (sp2C != 0)
+        opcode = &bodyHeader->Switches[4]->Opcode;
+        if (opcode != 0)
         {
-            if (arg3->RootNode == 0)
+            if (headHeader->RootNode == 0)
             {
-                load_object_into_memory(arg3, c_item_entries[arg1].filename);
+                load_object_into_memory(headHeader, c_item_entries[head].filename);
 #ifdef XBLADEBUG
     #error fix XBLADEBUG
       //sprintf("makeonebody: no head attachment for body number %d!\n",lVar3);
 #endif
             }
 
-            set_objuse_flag_compute_grp_nums_set_obj_loaded(arg3);
+            set_objuse_flag_compute_grp_nums_set_obj_loaded(headHeader);
 
-            arg2->numRecords += arg3->numRecords;
+            bodyHeader->numRecords += headHeader->numRecords;
         }
     }
 
-    if (arg5 == 0)
+    if (model == 0)
     {
-        arg5 = get_aircraft_obj_instance_controller(arg2);
+        model = get_aircraft_obj_instance_controller(bodyHeader);
     }
 
 #ifdef XBLADEBUG
@@ -87,28 +87,28 @@ struct Model *makeonebody(s32 arg0, s32 arg1, struct ModelFileHeader *arg2, stru
   //
 #endif
 
-    if (arg5 != 0)
+    if (model != 0)
     {
-        set_obj_instance_controller_scale(arg5, sp34);
-        sub_GAME_7F06CE84(arg5, sp30);
+        set_obj_instance_controller_scale(model, scale);
+        sub_GAME_7F06CE84(model, pov);
 
-        if ((arg3 != 0) && (c_item_entries[arg0].hasHead == 0))
+        if ((headHeader != 0) && (c_item_entries[body].hasHead == 0))
         {
-            arg2->numRecords -= arg3->numRecords;
-            sub_GAME_7F06C3B4(arg5, sp2C, arg3);
+            bodyHeader->numRecords -= headHeader->numRecords;
+            sub_GAME_7F06C3B4(model, opcode, headHeader);
 
-            if ((arg4 == 0) && ((s32) arg3->numSwitches > 0))
+            if ((sunglasses == 0) && ((s32) headHeader->numSwitches > 0))
             {
-                if (arg3->Switches[0] != 0)
+                if (headHeader->Switches[0] != 0)
                 {
-                    temp_a1 = extract_id_from_object_structure_microcode(arg5, arg3->Switches[0]);
-                    temp_a1->ModelType = 0;
+                    node = extract_id_from_object_structure_microcode(model, headHeader->Switches[0]);
+                    node->ModelType = 0;
                 }
             }
         }
     }
 
-    return arg5;
+    return model;
 }
 
 //sub_GAME_7F0234A8
