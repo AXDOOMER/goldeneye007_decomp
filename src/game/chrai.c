@@ -345,7 +345,6 @@ s32 chraiitemsize(u8 *AIList, s32 offset);
  * @param offset: The offset (in bytes) to the command you want the size of
  * @return The number of bytes of AI command
  * //Todo: Give real name
- * // Todo: fix locret refrences in other funcs
  */
 s32 chraiitemsize(u8 *AIList, s32 offset)
 {
@@ -889,17 +888,12 @@ s32 chraiitemsize(u8 *AIList, s32 offset)
 
 
 s32 chraiGetAIListID(AIRecord *AIList, bool *isGlobalAIList); // chraiGetAIListID
-//todo: this code matches however, g_chraiCurrentSetup seems 40 bytes too early
-// Also, StageSetup might be single pointers (*) not ((*)[]) as
-// the later requirees some odd derefrencing
-// eg (&gSetup.ailists)[i].ailist; <-- note extra parens
 
 /**
  * Get ID of AIList 
  * @param AIList: Ailist to get ID of
  * @return ID of AIList 
  */
-//https://decomp.me/scratch/uDW6q
 s32 chraiGetAIListID(AIRecord *AIList, bool *isGlobalAIList) // chraiGetAIListID
 {
     s32 i;
@@ -977,8 +971,6 @@ s32 chraiGoToLabel(AIRecord *AIList, s32 Offset, u8 LabelNum) //#MATCH chraiGoTo
     }
 }
 
-
-//todo: code matches but alignment is off (addresses mismatch)
 
 AIRecord *ailistFindById(s32 ID);
 
