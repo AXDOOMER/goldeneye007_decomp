@@ -5448,7 +5448,7 @@ void set_camera_mode(s32 arg0)
         {
             if (D_80036510 == 0)
             {
-                musicTrack1Play(0x2C);
+                musicTrack1Play(M_INTROSWOOSH);
                 sndSetScalerApplyVolumeAllSfxSlot(0x3F000000);
             }
             if ((D_8003648C != 0) && (ptr_playerstank != 0))
