@@ -1731,6 +1731,7 @@ struct player
   s32 field_19AC;
   s32 field_19B0;
   s32 field_19B4;
+  // end watch vertex buffer
   s32 field_19B8;
   s32 field_19BC;
   s32 field_19C0;

@@ -232,7 +232,27 @@ s32 D_80040E7C = 0;
 
 
 
+// forward declarations
 
+struct V3_u8 {
+    u8 v0;
+    u8 v1;
+    u8 v2;
+};
+
+struct WatchBufferVertices {
+    u32 unk00;
+    u32 unk04;
+    u32 unk08;
+    u8 unk0C;
+    u8 unk0D;
+    u8 unk0E;
+    u8 unk0f;
+};
+
+void draw_selected_page_rectangle(s32 watch_screen_index, struct WatchBufferVertices *arg2);
+
+// end forward declarations
 
 
 
@@ -2489,8 +2509,36 @@ glabel sub_GAME_7F0A6EE8
 
 
 #ifdef NONMATCHING
-void draw_selected_page_rectangle(void) {
+/**
+ * Decomp notes: match down to regalloc.
+*/
+void draw_selected_page_rectangle(s32 watch_screen_index, struct WatchBufferVertices *arg2)
+{
+    s32 i;
+    s32 limit;
 
+    for (i=0; i<20; i++)
+    {
+        arg2[i].unk0C = 0x20;
+        arg2[i].unk0D = 0x70;
+        arg2[i].unk0E = 0x20;
+    }
+
+    i = watch_screen_index * 4;
+    limit = i + 3;
+    for ( ; i <= limit; i++)
+    {
+        arg2[i].unk0C = 0x50;
+        arg2[i].unk0D = 0xF0;
+        arg2[i].unk0E = 0x50;
+
+        if (watch_soundrelated_maybe)
+        {
+            arg2[i].unk0C = 0x30;
+            arg2[i].unk0D = 0xA0;
+            arg2[i].unk0E = 0x30;
+        }
+    }
 }
 #else
 GLOBAL_ASM(
@@ -12893,7 +12941,7 @@ glabel draw_watch_mission_briefing_page
 
 Gfx *sub_GAME_7F0ACA28(Gfx *gdl, s32 arg1, s32 watch_transitioning)
 {
-    draw_selected_page_rectangle(watch_screen_index, &g_CurrentPlayer->buffer_for_watch_greenbackdrop_vertices);
+    draw_selected_page_rectangle(watch_screen_index, (struct WatchBufferVertices *)&g_CurrentPlayer->buffer_for_watch_greenbackdrop_vertices);
 
     if (watch_transitioning == TRUE)
     {
