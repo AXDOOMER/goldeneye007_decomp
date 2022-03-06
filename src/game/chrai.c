@@ -240,7 +240,7 @@ extern s32 objectiveGetStatus_WEAK(s32 objectiveNum, s32);
 
 
 
-void audioPlayFromProp2(s32 slot)//#MATCH :audioPlayFromProp2
+void audioPlayFromProp2(s32 slot)//#MATCH :audioPlayFromProp2orpad
 {
     int tempvol;
     sfxRecord *sfx= &sfx_related[slot]; //always added to stack anyway, cleaner to use
@@ -249,15 +249,14 @@ void audioPlayFromProp2(s32 slot)//#MATCH :audioPlayFromProp2
     if ((sfx->state ) && (sndGetPlayingState(sfx->state) ))
     {
     
-        if (sfx->pad )
+        if (sfx->pos )
         {
-            sfx->Volume = sub_GAME_7F0539E4(sfx->pad);   
+            sfx->Volume = sub_GAME_7F0539E4(sfx->pos);   
         }
         else
         {
             if (sfx->Obj && sfx->Obj->prop)
             {
-                //override pad with a co-ord,
                 sfx->Volume = sub_GAME_7F0539E4(&sfx->Obj->runtime_pos);
             }
         }
@@ -301,7 +300,7 @@ void loop_set_sound_effect_all_slots(void)
 
 
 
-void audioPlayFromProp(s32 slot, s16 soundIndex) //#MATCH  audioPlayFromProp
+void audioPlayFromProp(s32 slot, s16 soundIndex) //#MATCH  audioPlay Not from prop or pos
 {
     sfxRecord *sfx = NULL; //always added to stack anyway, cleaner to use
     //"Existing ai sound number %d!\n"
@@ -315,7 +314,7 @@ void audioPlayFromProp(s32 slot, s16 soundIndex) //#MATCH  audioPlayFromProp
             sfx->Volume  = SHRT_MAX;
             sfx->Volume2 = SHRT_MAX;
             sfx->sfxID   = -1;
-            sfx->pad     = NULL;
+            sfx->pos     = NULL;
             sfx->Obj     = NULL;
         }
     }
@@ -853,10 +852,10 @@ s32 chraiitemsize(u8 *AIList, s32 offset)
             return AI_IFFolderActorIsEqual_LENGTH;
         case AI_IFBondDamageAndPickupsDisabled:
             return AI_IFBondDamageAndPickupsDisabled_LENGTH;
-        case AI_MusicXtrackPlay:
-            return AI_MusicXtrackPlay_LENGTH;
-        case AI_MusicXtrackStop:
-            return AI_MusicXtrackStop_LENGTH;
+        case AI_MusicPlaySlot:
+            return AI_MusicPlaySlot_LENGTH;
+        case AI_MusicStopSlot:
+            return AI_MusicStopSlot_LENGTH;
         case AI_TriggerExplosionsAroundBond:
             return AI_TriggerExplosionsAroundBond_LENGTH;
         case AI_IFKilledCiviliansGreaterThan:
@@ -2641,7 +2640,7 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                 case AI_IFImOnPatrolOrStopped:
                 {
                     AIRecord1 *ai = AiListp + Offset;
-                    if (chrIsStopped(ChrEntityp))
+                    if (chrHasStoppedOrPatroling(ChrEntityp))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val);
                     }
@@ -5248,7 +5247,7 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     {
                         sfx_related[ai->slotID].sfxID  = sfxID;
                         sfx_related[ai->slotID].Volume = vol;
-                        sfx_related[ai->slotID].pad    = NULL;
+                        sfx_related[ai->slotID].pos    = NULL;
                         sfx_related[ai->slotID].Obj    = NULL;
                         if (sfxID == 0)
                         {
@@ -5278,7 +5277,7 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     {
                         sfx_related[ai->slotID].sfxID  = sfxID;
                         sfx_related[ai->slotID].Volume = sub_GAME_7F0539B8(vol);
-                        sfx_related[ai->slotID].pad    = NULL;
+                        sfx_related[ai->slotID].pos    = NULL;
                         sfx_related[ai->slotID].Obj    = NULL;
                         if (sfxID == 0)
                         {
@@ -5301,7 +5300,7 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     if (ai->slotID >= 0 && ai->slotID < 8 && obj)
                     {
                         sfx_related[ai->slotID].sfxID = sfxID;
-                        sfx_related[ai->slotID].pad   = NULL;
+                        sfx_related[ai->slotID].pos   = NULL;
                         sfx_related[ai->slotID].Obj   = obj;
                         if (sfxID == 0)
                         {
@@ -5333,7 +5332,7 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     if (ai->SlotID >= 0 && ai->SlotID < 8 && pad)
                     {
                         sfx_related[ai->SlotID].sfxID = sfxID;
-                        sfx_related[ai->SlotID].pad   = pad;
+                        sfx_related[ai->SlotID].pos   = pad;
                         sfx_related[ai->SlotID].Obj   = NULL;
                         if (sfxID == 0)
                         {
@@ -5950,11 +5949,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     break;
                 }
-                case AI_MusicXtrackPlay:
+                case AI_MusicPlaySlot:
                 {
                     AIRecord *ai = AiListp + Offset;
-                    Offset += AI_MusicXtrackPlay_LENGTH;
-                    musicSetXReason((s8)ai->val[0], ai->val[1], ai->val[2]);
+                    Offset += AI_MusicPlaySlot_LENGTH;
+                    musicPlaySlot((s8)ai->val[0], ai->val[1], ai->val[2]);
 #ifdef DEBUG
                     /*
                      * GE doesnt have this command, but it shows format of commands
@@ -5964,11 +5963,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
 #endif
                     break;
                 }
-                case AI_MusicXtrackStop:
+                case AI_MusicStopSlot:
                 {
                     AIRecord *ai = AiListp + Offset;
-                    Offset += AI_MusicXtrackStop_LENGTH;
-                    musicUnsetXReason((s8)ai->val[0]);
+                    Offset += AI_MusicStopSlot_LENGTH;
+                    musicStopSlot((s8)ai->val[0]);
 #ifdef DEBUG
                     osSyncPrintf("ai: enery tune off (%d)\n", ai->val[0]);
 #endif
@@ -6749,7 +6748,7 @@ action0D_Guard_Looks_Around_When_Shot_At_1:
 /* 06A420 7F0358F0 1000FF26 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A424 7F0358F4 26310001 */   addiu $s1, $s1, 1
 action2F_When_Guard_Stops_Moving_RVL_2:
-/* 06A428 7F0358F8 0FC0A717 */  jal   chrIsStopped
+/* 06A428 7F0358F8 0FC0A717 */  jal   chrHasStoppedOrPatroling
 /* 06A42C 7F0358FC 02E02025 */   move  $a0, $s7
 /* 06A430 7F035900 10400007 */  beqz  $v0, .L7F035920
 /* 06A434 7F035904 02C02025 */   move  $a0, $s6
@@ -9571,21 +9570,21 @@ action93_Set_Character_Accuracy_2:
 /* 06CB90 7F038060 A2EC0002 */   sb    $t4, 2($s7)
 action94_Mask_Guard_Type_With_Value_2:
 /* 06CB94 7F038064 02E02025 */  move  $a0, $s7
-/* 06CB98 7F038068 0FC0CC86 */  jal   chrlvSetFlags2
+/* 06CB98 7F038068 0FC0CC86 */  jal   chrSetFlags2
 /* 06CB9C 7F03806C 92250001 */   lbu   $a1, 1($s1)
 /* 06CBA0 7F038070 26520002 */  addiu $s2, $s2, 2
 /* 06CBA4 7F038074 1000F545 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CBA8 7F038078 26310002 */   addiu $s1, $s1, 2
 action95_Unmask_Guard_Type_With_Value_2:
 /* 06CBAC 7F03807C 02E02025 */  move  $a0, $s7
-/* 06CBB0 7F038080 0FC0CC8B */  jal   chrlvUnsetFlags2
+/* 06CBB0 7F038080 0FC0CC8B */  jal   chrUnsetFlags2
 /* 06CBB4 7F038084 92250001 */   lbu   $a1, 1($s1)
 /* 06CBB8 7F038088 26520002 */  addiu $s2, $s2, 2
 /* 06CBBC 7F03808C 1000F53F */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CBC0 7F038090 26310002 */   addiu $s1, $s1, 2
 action96_If_Guard_Type_Value_Is_Set_RVL_3:
 /* 06CBC4 7F038094 02E02025 */  move  $a0, $s7
-/* 06CBC8 7F038098 0FC0CC91 */  jal   chrlvTestFlags2
+/* 06CBC8 7F038098 0FC0CC91 */  jal   chrHasFlags2
 /* 06CBCC 7F03809C 92250001 */   lbu   $a1, 1($s1)
 /* 06CBD0 7F0380A0 10400007 */  beqz  $v0, .L7F0380C0
 /* 06CBD4 7F0380A4 02C02025 */   move  $a0, $s6
@@ -9602,7 +9601,7 @@ action96_If_Guard_Type_Value_Is_Set_RVL_3:
 action97_Mask_Guard_Type_Flags_With_Value_3:
 /* 06CBFC 7F0380CC 02E02025 */  move  $a0, $s7
 /* 06CC00 7F0380D0 92250001 */  lbu   $a1, 1($s1)
-/* 06CC04 7F0380D4 0FC0CC98 */  jal   chrlvSetChrFlags2
+/* 06CC04 7F0380D4 0FC0CC98 */  jal   chrSetFlags2ById
 /* 06CC08 7F0380D8 92260002 */   lbu   $a2, 2($s1)
 /* 06CC0C 7F0380DC 26520003 */  addiu $s2, $s2, 3
 /* 06CC10 7F0380E0 1000F52A */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -9610,7 +9609,7 @@ action97_Mask_Guard_Type_Flags_With_Value_3:
 action98_Unmask_Guard_Type_Flags_With_Value_3:
 /* 06CC18 7F0380E8 02E02025 */  move  $a0, $s7
 /* 06CC1C 7F0380EC 92250001 */  lbu   $a1, 1($s1)
-/* 06CC20 7F0380F0 0FC0CCA4 */  jal   chrlvUnsetChrFlags2
+/* 06CC20 7F0380F0 0FC0CCA4 */  jal   chrUnsetFlags2ById
 /* 06CC24 7F0380F4 92260002 */   lbu   $a2, 2($s1)
 /* 06CC28 7F0380F8 26520003 */  addiu $s2, $s2, 3
 /* 06CC2C 7F0380FC 1000F523 */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -9618,7 +9617,7 @@ action98_Unmask_Guard_Type_Flags_With_Value_3:
 action99_If_Guard_Type_Flags_Set_RVL_4:
 /* 06CC34 7F038104 02E02025 */  move  $a0, $s7
 /* 06CC38 7F038108 92250001 */  lbu   $a1, 1($s1)
-/* 06CC3C 7F03810C 0FC0CCB0 */  jal   chrlvTestChrFlags2
+/* 06CC3C 7F03810C 0FC0CCB0 */  jal   chrHasFlags2ById
 /* 06CC40 7F038110 92260002 */   lbu   $a2, 2($s1)
 /* 06CC44 7F038114 10400007 */  beqz  $v0, .L7F038134
 /* 06CC48 7F038118 02C02025 */   move  $a0, $s6
@@ -11783,7 +11782,7 @@ actionF4_PlaysValuenum1ThemeSlot03ForValuenum2Seconds_4:
 /* 06EB18 7F039FE8 26520004 */  addiu $s2, $s2, 4
 /* 06EB1C 7F039FEC 80440001 */  lb    $a0, 1($v0)
 /* 06EB20 7F039FF0 90450002 */  lbu   $a1, 2($v0)
-/* 06EB24 7F039FF4 0FC3053F */  jal   musicSetXReason
+/* 06EB24 7F039FF4 0FC3053F */  jal   musicPlaySlot
 /* 06EB28 7F039FF8 90460003 */   lbu   $a2, 3($v0)
 /* 06EB2C 7F039FFC 1000ED64 */  b     ParseCommandByte_SwitchCase
 /* 06EB30 7F03A000 922E0000 */   lbu   $t6, ($s1)
@@ -11791,7 +11790,7 @@ actionF5_Turn_Off_Music_In_Slot_num_0_3_2:
 /* 06EB34 7F03A004 02201025 */  move  $v0, $s1
 /* 06EB38 7F03A008 26310002 */  addiu $s1, $s1, 2
 /* 06EB3C 7F03A00C 26520002 */  addiu $s2, $s2, 2
-/* 06EB40 7F03A010 0FC30556 */  jal   musicUnsetXReason
+/* 06EB40 7F03A010 0FC30556 */  jal   musicStopSlot
 /* 06EB44 7F03A014 80440001 */   lb    $a0, 1($v0)
 /* 06EB48 7F03A018 1000ED5D */  b     ParseCommandByte_SwitchCase
 /* 06EB4C 7F03A01C 922E0000 */   lbu   $t6, ($s1)
@@ -12616,7 +12615,7 @@ action0D_Guard_Looks_Around_When_Shot_At_1:
 /* 06A420 7F0358F0 1000FF26 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A424 7F0358F4 26310001 */   addiu $s1, $s1, 1
 action2F_When_Guard_Stops_Moving_RVL_2:
-/* 06A428 7F0358F8 0FC0A717 */  jal   chrIsStopped
+/* 06A428 7F0358F8 0FC0A717 */  jal   chrHasStoppedOrPatroling
 /* 06A42C 7F0358FC 02E02025 */   move  $a0, $s7
 /* 06A430 7F035900 10400007 */  beqz  $v0, .L7F035920
 /* 06A434 7F035904 02C02025 */   move  $a0, $s6
@@ -15438,21 +15437,21 @@ action93_Set_Character_Accuracy_2:
 /* 06CB90 7F038060 A2EC0002 */   sb    $t4, 2($s7)
 action94_Mask_Guard_Type_With_Value_2:
 /* 06CB94 7F038064 02E02025 */  move  $a0, $s7
-/* 06CB98 7F038068 0FC0CC86 */  jal   chrlvSetFlags2
+/* 06CB98 7F038068 0FC0CC86 */  jal   chrSetFlags2
 /* 06CB9C 7F03806C 92250001 */   lbu   $a1, 1($s1)
 /* 06CBA0 7F038070 26520002 */  addiu $s2, $s2, 2
 /* 06CBA4 7F038074 1000F545 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CBA8 7F038078 26310002 */   addiu $s1, $s1, 2
 action95_Unmask_Guard_Type_With_Value_2:
 /* 06CBAC 7F03807C 02E02025 */  move  $a0, $s7
-/* 06CBB0 7F038080 0FC0CC8B */  jal   chrlvUnsetFlags2
+/* 06CBB0 7F038080 0FC0CC8B */  jal   chrUnsetFlags2
 /* 06CBB4 7F038084 92250001 */   lbu   $a1, 1($s1)
 /* 06CBB8 7F038088 26520002 */  addiu $s2, $s2, 2
 /* 06CBBC 7F03808C 1000F53F */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CBC0 7F038090 26310002 */   addiu $s1, $s1, 2
 action96_If_Guard_Type_Value_Is_Set_RVL_3:
 /* 06CBC4 7F038094 02E02025 */  move  $a0, $s7
-/* 06CBC8 7F038098 0FC0CC91 */  jal   chrlvTestFlags2
+/* 06CBC8 7F038098 0FC0CC91 */  jal   chrHasFlags2
 /* 06CBCC 7F03809C 92250001 */   lbu   $a1, 1($s1)
 /* 06CBD0 7F0380A0 10400007 */  beqz  $v0, .L7F0380C0
 /* 06CBD4 7F0380A4 02C02025 */   move  $a0, $s6
@@ -15469,7 +15468,7 @@ action96_If_Guard_Type_Value_Is_Set_RVL_3:
 action97_Mask_Guard_Type_Flags_With_Value_3:
 /* 06CBFC 7F0380CC 02E02025 */  move  $a0, $s7
 /* 06CC00 7F0380D0 92250001 */  lbu   $a1, 1($s1)
-/* 06CC04 7F0380D4 0FC0CC98 */  jal   chrlvSetChrFlags2
+/* 06CC04 7F0380D4 0FC0CC98 */  jal   chrSetFlags2ById
 /* 06CC08 7F0380D8 92260002 */   lbu   $a2, 2($s1)
 /* 06CC0C 7F0380DC 26520003 */  addiu $s2, $s2, 3
 /* 06CC10 7F0380E0 1000F52A */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -15477,7 +15476,7 @@ action97_Mask_Guard_Type_Flags_With_Value_3:
 action98_Unmask_Guard_Type_Flags_With_Value_3:
 /* 06CC18 7F0380E8 02E02025 */  move  $a0, $s7
 /* 06CC1C 7F0380EC 92250001 */  lbu   $a1, 1($s1)
-/* 06CC20 7F0380F0 0FC0CCA4 */  jal   chrlvUnsetChrFlags2
+/* 06CC20 7F0380F0 0FC0CCA4 */  jal   chrUnsetFlags2ById
 /* 06CC24 7F0380F4 92260002 */   lbu   $a2, 2($s1)
 /* 06CC28 7F0380F8 26520003 */  addiu $s2, $s2, 3
 /* 06CC2C 7F0380FC 1000F523 */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -15485,7 +15484,7 @@ action98_Unmask_Guard_Type_Flags_With_Value_3:
 action99_If_Guard_Type_Flags_Set_RVL_4:
 /* 06CC34 7F038104 02E02025 */  move  $a0, $s7
 /* 06CC38 7F038108 92250001 */  lbu   $a1, 1($s1)
-/* 06CC3C 7F03810C 0FC0CCB0 */  jal   chrlvTestChrFlags2
+/* 06CC3C 7F03810C 0FC0CCB0 */  jal   chrHasFlags2ById
 /* 06CC40 7F038110 92260002 */   lbu   $a2, 2($s1)
 /* 06CC44 7F038114 10400007 */  beqz  $v0, .L7F038134
 /* 06CC48 7F038118 02C02025 */   move  $a0, $s6
@@ -17650,7 +17649,7 @@ actionF4_PlaysValuenum1ThemeSlot03ForValuenum2Seconds_4:
 /* 06EB18 7F039FE8 26520004 */  addiu $s2, $s2, 4
 /* 06EB1C 7F039FEC 80440001 */  lb    $a0, 1($v0)
 /* 06EB20 7F039FF0 90450002 */  lbu   $a1, 2($v0)
-/* 06EB24 7F039FF4 0FC3053F */  jal   musicSetXReason
+/* 06EB24 7F039FF4 0FC3053F */  jal   musicPlaySlot
 /* 06EB28 7F039FF8 90460003 */   lbu   $a2, 3($v0)
 /* 06EB2C 7F039FFC 1000ED64 */  b     ParseCommandByte_SwitchCase
 /* 06EB30 7F03A000 922E0000 */   lbu   $t6, ($s1)
@@ -17658,7 +17657,7 @@ actionF5_Turn_Off_Music_In_Slot_num_0_3_2:
 /* 06EB34 7F03A004 02201025 */  move  $v0, $s1
 /* 06EB38 7F03A008 26310002 */  addiu $s1, $s1, 2
 /* 06EB3C 7F03A00C 26520002 */  addiu $s2, $s2, 2
-/* 06EB40 7F03A010 0FC30556 */  jal   musicUnsetXReason
+/* 06EB40 7F03A010 0FC30556 */  jal   musicStopSlot
 /* 06EB44 7F03A014 80440001 */   lb    $a0, 1($v0)
 /* 06EB48 7F03A018 1000ED5D */  b     ParseCommandByte_SwitchCase
 /* 06EB4C 7F03A01C 922E0000 */   lbu   $t6, ($s1)
@@ -18484,7 +18483,7 @@ action0D_Guard_Looks_Around_When_Shot_At_1:
 /* 06A420 7F0358F0 1000FF26 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A424 7F0358F4 26310001 */   addiu $s1, $s1, 1
 action2F_When_Guard_Stops_Moving_RVL_2:
-/* 06A428 7F0358F8 0FC0A717 */  jal   chrIsStopped
+/* 06A428 7F0358F8 0FC0A717 */  jal   chrHasStoppedOrPatroling
 /* 06A42C 7F0358FC 02E02025 */   move  $a0, $s7
 /* 06A430 7F035900 10400007 */  beqz  $v0, .L7F035920
 /* 06A434 7F035904 02C02025 */   move  $a0, $s6
@@ -21306,21 +21305,21 @@ action93_Set_Character_Accuracy_2:
 /* 06CB90 7F038060 A2EC0002 */   sb    $t4, 2($s7)
 action94_Mask_Guard_Type_With_Value_2:
 /* 06CB94 7F038064 02E02025 */  move  $a0, $s7
-/* 06CB98 7F038068 0FC0CC86 */  jal   chrlvSetFlags2
+/* 06CB98 7F038068 0FC0CC86 */  jal   chrSetFlags2
 /* 06CB9C 7F03806C 92250001 */   lbu   $a1, 1($s1)
 /* 06CBA0 7F038070 26520002 */  addiu $s2, $s2, 2
 /* 06CBA4 7F038074 1000F545 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CBA8 7F038078 26310002 */   addiu $s1, $s1, 2
 action95_Unmask_Guard_Type_With_Value_2:
 /* 06CBAC 7F03807C 02E02025 */  move  $a0, $s7
-/* 06CBB0 7F038080 0FC0CC8B */  jal   chrlvUnsetFlags2
+/* 06CBB0 7F038080 0FC0CC8B */  jal   chrUnsetFlags2
 /* 06CBB4 7F038084 92250001 */   lbu   $a1, 1($s1)
 /* 06CBB8 7F038088 26520002 */  addiu $s2, $s2, 2
 /* 06CBBC 7F03808C 1000F53F */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CBC0 7F038090 26310002 */   addiu $s1, $s1, 2
 action96_If_Guard_Type_Value_Is_Set_RVL_3:
 /* 06CBC4 7F038094 02E02025 */  move  $a0, $s7
-/* 06CBC8 7F038098 0FC0CC91 */  jal   chrlvTestFlags2
+/* 06CBC8 7F038098 0FC0CC91 */  jal   chrHasFlags2
 /* 06CBCC 7F03809C 92250001 */   lbu   $a1, 1($s1)
 /* 06CBD0 7F0380A0 10400007 */  beqz  $v0, .L7F0380C0
 /* 06CBD4 7F0380A4 02C02025 */   move  $a0, $s6
@@ -21337,7 +21336,7 @@ action96_If_Guard_Type_Value_Is_Set_RVL_3:
 action97_Mask_Guard_Type_Flags_With_Value_3:
 /* 06CBFC 7F0380CC 02E02025 */  move  $a0, $s7
 /* 06CC00 7F0380D0 92250001 */  lbu   $a1, 1($s1)
-/* 06CC04 7F0380D4 0FC0CC98 */  jal   chrlvSetChrFlags2
+/* 06CC04 7F0380D4 0FC0CC98 */  jal   chrSetFlags2ById
 /* 06CC08 7F0380D8 92260002 */   lbu   $a2, 2($s1)
 /* 06CC0C 7F0380DC 26520003 */  addiu $s2, $s2, 3
 /* 06CC10 7F0380E0 1000F52A */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -21345,7 +21344,7 @@ action97_Mask_Guard_Type_Flags_With_Value_3:
 action98_Unmask_Guard_Type_Flags_With_Value_3:
 /* 06CC18 7F0380E8 02E02025 */  move  $a0, $s7
 /* 06CC1C 7F0380EC 92250001 */  lbu   $a1, 1($s1)
-/* 06CC20 7F0380F0 0FC0CCA4 */  jal   chrlvUnsetChrFlags2
+/* 06CC20 7F0380F0 0FC0CCA4 */  jal   chrUnsetFlags2ById
 /* 06CC24 7F0380F4 92260002 */   lbu   $a2, 2($s1)
 /* 06CC28 7F0380F8 26520003 */  addiu $s2, $s2, 3
 /* 06CC2C 7F0380FC 1000F523 */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -21353,7 +21352,7 @@ action98_Unmask_Guard_Type_Flags_With_Value_3:
 action99_If_Guard_Type_Flags_Set_RVL_4:
 /* 06CC34 7F038104 02E02025 */  move  $a0, $s7
 /* 06CC38 7F038108 92250001 */  lbu   $a1, 1($s1)
-/* 06CC3C 7F03810C 0FC0CCB0 */  jal   chrlvTestChrFlags2
+/* 06CC3C 7F03810C 0FC0CCB0 */  jal   chrHasFlags2ById
 /* 06CC40 7F038110 92260002 */   lbu   $a2, 2($s1)
 /* 06CC44 7F038114 10400007 */  beqz  $v0, .L7F038134
 /* 06CC48 7F038118 02C02025 */   move  $a0, $s6
@@ -23550,7 +23549,7 @@ actionF4_PlaysValuenum1ThemeSlot03ForValuenum2Seconds_4:
 /* 06CA98 7F03A0A8 26520004 */  addiu $s2, $s2, 4
 /* 06CA9C 7F03A0AC 80440001 */  lb    $a0, 1($v0)
 /* 06CAA0 7F03A0B0 90450002 */  lbu   $a1, 2($v0)
-/* 06CAA4 7F03A0B4 0FC30277 */  jal   musicSetXReason
+/* 06CAA4 7F03A0B4 0FC30277 */  jal   musicPlaySlot
 /* 06CAA8 7F03A0B8 90460003 */   lbu   $a2, 3($v0)
 /* 06CAAC 7F03A0BC 1000ED44 */  b     ParseCommandByte_SwitchCase
 /* 06CAB0 7F03A0C0 922E0000 */   lbu   $t6, ($s1)
@@ -23558,7 +23557,7 @@ actionF5_Turn_Off_Music_In_Slot_num_0_3_2:
 /* 06CAB4 7F03A0C4 02201025 */  move  $v0, $s1
 /* 06CAB8 7F03A0C8 26310002 */  addiu $s1, $s1, 2
 /* 06CABC 7F03A0CC 26520002 */  addiu $s2, $s2, 2
-/* 06CAC0 7F03A0D0 0FC3028E */  jal   musicUnsetXReason
+/* 06CAC0 7F03A0D0 0FC3028E */  jal   musicStopSlot
 /* 06CAC4 7F03A0D4 80440001 */   lb    $a0, 1($v0)
 /* 06CAC8 7F03A0D8 1000ED3D */  b     ParseCommandByte_SwitchCase
 /* 06CACC 7F03A0DC 922E0000 */   lbu   $t6, ($s1)

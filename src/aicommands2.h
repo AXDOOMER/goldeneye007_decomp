@@ -6663,13 +6663,13 @@ r*******************************************************************************
         this or SECONDS_TOTAL_DURATION reaches 0. 
         If you do not want this to happen, set SECONDS_STOPPED_DURATION to 0 
 *******************************************************************************/   
-#define MusicXtrackPlay(MUSIC_SLOT, SECONDS_STOPPED_DURATION, SECONDS_TOTAL_DURATION)  \
-                    AI_MusicXtrackPlay  ,  \
+#define MusicPlaySlot(MUSIC_SLOT, SECONDS_STOPPED_DURATION, SECONDS_TOTAL_DURATION)  \
+                    AI_MusicPlaySlot  ,  \
                     MUSIC_SLOT , \
                     SECONDS_STOPPED_DURATION , \
                     SECONDS_TOTAL_DURATION ,   
  
-#define AI_MusicXtrackPlay_LENGTH   (AICMDSIZE +1   +1   +1    ) 
+#define AI_MusicPlaySlot_LENGTH   (AICMDSIZE +1   +1   +1    ) 
 
 
  
@@ -6689,11 +6689,11 @@ r*******************************************************************************
         (set by MUSIC_XTRACK_PLAY) reaches zero. 
         This is ignored when using music slot -1 
 *******************************************************************************/   
-#define MusicXtrackStop(MUSIC_SLOT)  \
-                    AI_MusicXtrackStop  ,  \
+#define MusicStopSlot(MUSIC_SLOT)  \
+                    AI_MusicStopSlot  ,  \
                     MUSIC_SLOT ,   
  
-#define AI_MusicXtrackStop_LENGTH   (AICMDSIZE +1    ) 
+#define AI_MusicStopSlot_LENGTH   (AICMDSIZE +1    ) 
 
 
  

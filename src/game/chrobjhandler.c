@@ -35242,8 +35242,6 @@ glabel sub_GAME_7F04EF58
 
 
 
-//Todo: Reemove the shim once rename complete
-#define alarmIsActive alarmIsActive
 
 /*
  * Return TYPE if Collected or Interacted (except for Alarm which always returns False)

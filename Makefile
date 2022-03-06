@@ -648,7 +648,7 @@ endif
 	@echo You can find it in Build [build/ctx.h].
 
 colour:
-  ifeq ($(VERBOSE),)
+  ifeq ($(VERBOSE),0)
 #	@clear
 	@echo "\033[3A"
 	@$(call DrawProgressBar,0)

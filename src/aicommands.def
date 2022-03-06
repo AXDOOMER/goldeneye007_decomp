@@ -2412,7 +2412,7 @@ _AI_CMD_POLYMORPH(,
 _AI_CMD(
     {
         AIRecord1 *ai = AiListp + Offset;
-        if (chrIsStopped(ChrEntityp))
+        if (chrHasStoppedOrPatroling(ChrEntityp))
         {
             Offset = chraiGoToLabel(AiListp, Offset, ai->val);
         }
@@ -9417,7 +9417,7 @@ _AI_CMD(
         if (ai->slotID >= 0 && ai->slotID < 8 && obj)
         {
             sfx_related[ai->slotID].sfxID = sfxID;
-            sfx_related[ai->slotID].pad = NULL;
+            sfx_related[ai->slotID].pos = NULL;
             sfx_related[ai->slotID].Obj = obj;
             if (sfxID == 0)
             {
@@ -9477,7 +9477,7 @@ _AI_CMD(
         if (ai->SlotID >= 0 && ai->SlotID < 8 && pad)
         {
             sfx_related[ai->SlotID].sfxID = sfxID;
-            sfx_related[ai->SlotID].pad = pad;
+            sfx_related[ai->SlotID].pos = pad;
             sfx_related[ai->SlotID].Obj = NULL;
             if (sfxID == 0)
             {
@@ -9530,7 +9530,7 @@ _AI_CMD(
         {
             sfx_related[ai->slotID].sfxID = sfxID;
             sfx_related[ai->slotID].Volume = vol;
-            sfx_related[ai->slotID].pad = NULL;
+            sfx_related[ai->slotID].pos = NULL;
             sfx_related[ai->slotID].Obj = NULL;
             if (sfxID == 0)
             {
@@ -9583,7 +9583,7 @@ _AI_CMD(
         {
             sfx_related[ai->slotID].sfxID = sfxID;
             sfx_related[ai->slotID].Volume = sub_GAME_7F0539B8(vol);
-            sfx_related[ai->slotID].pad = NULL;
+            sfx_related[ai->slotID].pos = NULL;
             sfx_related[ai->slotID].Obj = NULL;
             if (sfxID == 0)
             {
@@ -11493,7 +11493,7 @@ _AI_CMD(
 //==============================================================================
 
 /* #define CMDNAME MUSIC_XTRACK_PLAY */
-#define CMDNAME MusicXtrackPlay
+#define CMDNAME MusicPlaySlot
 
 #define DESCRIPTION \
 /*******************************************************************************
@@ -11513,7 +11513,7 @@ _AI_CMD(
     {
         AIRecord *ai = AiListp + Offset;
         Offset += CAT(CAT(AI_, CMDNAME), _LENGTH);
-        musicSetXReason((s8)ai->val[0], ai->val[1], ai->val[2]);
+        musicPlaySlot((s8)ai->val[0], ai->val[1], ai->val[2]);
         break;
     })
 
@@ -11531,7 +11531,7 @@ _AI_CMD(
 //==============================================================================
 
 /* #define CMDNAME MUSIC_XTRACK_STOP */
-#define CMDNAME MusicXtrackStop
+#define CMDNAME MusicStopSlot
 
 #define DESCRIPTION \
 /*******************************************************************************
@@ -11551,7 +11551,7 @@ _AI_CMD(
     {
         AIRecord *ai = AiListp + Offset;
         Offset += CAT(CAT(AI_, CMDNAME), _LENGTH);
-        musicUnsetXReason((s8)ai->val[0]);
+        musicStopSlot((s8)ai->val[0]);
         break;
     })
 

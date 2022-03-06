@@ -699,7 +699,7 @@ extern bool chrIfInPadRoom                                   (ChrRecord *self, s
 extern bool chrIfNearMiss                                    (ChrRecord *self);                                                                   // check_if_actor_invisible
 extern bool chrIsDead                                        (ChrRecord *self);                                                                   // true_if_actor_dying_fading
 extern bool chrIsHearingBond                                 (ChrRecord *self);                                                                   // check_if_actor_02_flag_set
-extern bool chrIsStopped                                     (ChrRecord *self);                                                                   // check_if_actor_stationary
+extern bool chrHasStoppedOrPatroling                                     (ChrRecord *self);                                                                   // check_if_actor_stationary
 extern bool chrIsTargetNearlyInSight                         (ChrRecord *self);                                                                   // chrIsTargetNearlyInSight
 extern bool chrSawDeath                                      (ChrRecord *self);                                                                   // check_if_actor_FB_target_set
 extern bool chrSawInjury                                     (ChrRecord *self);                                                                   // check_if_actor_FA_target_set
@@ -805,8 +805,8 @@ extern void imageSlotSetImage                                (MonitorRecord* mon
 extern void init_trigger_toxic_gas_effect                    (coord3d *colour);
 extern void matrix_4x4_7F059908                              (Mtxf * matrix, f32 a, f32 b, f32 c, f32 lx, f32 ly, f32 lz, f32 ux, f32 uy, f32 uz);
 extern void matrix_scalar_multiply                        (f32 scale, Mtxf *matrix);
-extern void musicSetXReason                                  (int slot, int min, int sec);//set_musicslot_time
-extern void musicUnsetXReason                                (int slot);//reset_music_in_slot
+extern void musicPlaySlot                                  (int slot, int min, int sec);//set_musicslot_time
+extern void musicStopSlot                                (int slot);//reset_music_in_slot
 extern void propHide                                         (PropRecord *prop);                                                                  //propHide
 extern void propobjSetDropped                                (PropRecord *prop, int a);                                                           // sub_GAME_7F04BFD0
 extern void propweaponSetDual                                (WeaponObjRecord *leftweapon, WeaponObjRecord *rightweapon);                         // link_objects
@@ -1616,7 +1616,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_GUARD_HAS_STOPPED_MOVING:
                 {
                     AIRecord1 *ai = AiListp + Offset;
-                    if (chrIsStopped(ChrEntityp))
+                    if (chrHasStoppedOrPatroling(ChrEntityp))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val);
                     }
@@ -4273,7 +4273,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                     if (ai->SlotID >= 0 && ai->SlotID < 8 && pad)
                     {
                         sfx_related[ai->SlotID].sfxID = sfxID;
-                        sfx_related[ai->SlotID].pad   = pad;
+                        sfx_related[ai->SlotID].pos   = pad;
                         sfx_related[ai->SlotID].Obj   = NULL;
                         if (sfxID == 0)
                         {
@@ -4892,7 +4892,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 {
                     AIRecord *ai = AiListp + Offset;
                     Offset += 4;
-                    musicSetXReason((s8)ai->val[0], ai->val[1], ai->val[2]);
+                    musicPlaySlot((s8)ai->val[0], ai->val[1], ai->val[2]);
 #            if DEBUG
                     osSyncPrintf("ai: enery tune on (%d, %d, %d)\n", ai->val[0], ai->val[1], ai->val[2]);
 #            endif
@@ -4902,7 +4902,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 {
                     AIRecord *ai = AiListp + Offset;
                     Offset += 2;
-                    musicUnsetXReason((s8)ai->val[0]);
+                    musicStopSlot((s8)ai->val[0]);
 #            if DEBUG
                     osSyncPrintf("ai: enery tune off (%d)\n", ai->val[0]);
 #            endif

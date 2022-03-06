@@ -126,8 +126,8 @@ s32 chrlvMaybeSameRoom                        (ChrRecord *self, coord3d *arg1, S
 s32 chrlvCurrentPlayerCall7F0B0E24            (ChrRecord *self);
 s32 chrlvCall7F0B0E24WithChrWidthHeight       (PropRecord *arg0, coord3d *arg1, coord3d *arg2);
 void chrlvSetTargetToPlayer                   (ChrRecord *self);
-s32 chrSawTargetRecently                        (ChrRecord *);
-s32 chrCheckTargetInSight                         (ChrRecord *self);
+s32 chrSawTargetRecently                      (ChrRecord *);
+s32 chrCheckTargetInSight                     (ChrRecord *self);
 void chrlvNormDistanceToPlayer                (ChrRecord *self, s32 arg1, coord3d *arg2);
 s32 sub_GAME_7F02A0EC                         (ChrRecord *self, s32 arg1, f32 arg2);
 void chrlvModelRotyRelated                    (ChrRecord *self, s32 arg1, coord3d *arg2);
@@ -766,7 +766,7 @@ void chrlvActorShuffleFeet(ChrRecord *self)
         return;
     }
 
-    if (chrIsStopped(self) == 0)
+    if (chrHasStoppedOrPatroling(self) == 0)
     {
         chrlvKneelingAnimationRelated(self);
     }
@@ -4575,7 +4575,7 @@ void chrlvAlertGuardToPlayerPosition(ChrRecord *self)
 /**
  * Address 0x7F029C5C.
 */
-bool chrIsStopped(ChrRecord *self) //chrHasStoppedOrPatroling
+bool chrHasStoppedOrPatroling(ChrRecord *self) //chrHasStoppedOrPatroling
 {
     if ((self->actiontype == ACT_STAND) && !self->act_stand.unk02c && !self->act_stand.unk038)
     {
@@ -10882,7 +10882,7 @@ f32 chrGetDistanceFromBondToPad(ChrRecord *self, s32 padid)
  * The property is named "flags2".
  * Address 0x7F033218.
 */
-void chrlvSetFlags2(ChrRecord *self, u8 flags2)
+void chrSetFlags2(ChrRecord *self, u8 flags2)
 {
     self->flags2 |= flags2;
 }
@@ -10893,7 +10893,7 @@ void chrlvSetFlags2(ChrRecord *self, u8 flags2)
  * The property is named "flags2".
  * Address 0x7F03322C.
 */
-void chrlvUnsetFlags2(ChrRecord *self, u8 flags2)
+void chrUnsetFlags2(ChrRecord *self, u8 flags2)
 {
     self->flags2 &= ~flags2;
 }
@@ -10904,7 +10904,7 @@ void chrlvUnsetFlags2(ChrRecord *self, u8 flags2)
  * The property is named "flags2".
  * Address 0x7F033244.
 */
-s32 chrlvTestFlags2(ChrRecord *self, u8 flags2)
+s32 chrHasFlags2(ChrRecord *self, u8 flags2)
 {
     return (self->flags2 & flags2) != 0;
 }
@@ -10915,7 +10915,7 @@ s32 chrlvTestFlags2(ChrRecord *self, u8 flags2)
  * The property is named "flags2".
  * Address 0x7F033260.
 */
-void chrlvSetChrFlags2(ChrRecord *self, s32 chrNum, u8 flags2)
+void chrSetFlags2ById(ChrRecord *self, s32 chrNum, u8 flags2)
 {
     ChrRecord *chr;
 
@@ -10923,7 +10923,7 @@ void chrlvSetChrFlags2(ChrRecord *self, s32 chrNum, u8 flags2)
 
     if (chr != NULL)
     {
-        chrlvSetFlags2(chr, flags2);
+        chrSetFlags2(chr, flags2);
     }
 }
 
@@ -10933,7 +10933,7 @@ void chrlvSetChrFlags2(ChrRecord *self, s32 chrNum, u8 flags2)
  * The property is named "flags2".
  * Address 0x7F033290.
 */
-void chrlvUnsetChrFlags2(ChrRecord *self, s32 chrNum, u8 flags2)
+void chrUnsetFlags2ById(ChrRecord *self, s32 chrNum, u8 flags2)
 {
     ChrRecord *chr;
 
@@ -10941,7 +10941,7 @@ void chrlvUnsetChrFlags2(ChrRecord *self, s32 chrNum, u8 flags2)
 
     if (chr != NULL)
     {
-        chrlvUnsetFlags2(chr, flags2);
+        chrUnsetFlags2(chr, flags2);
     }
 }
 
@@ -10951,7 +10951,7 @@ void chrlvUnsetChrFlags2(ChrRecord *self, s32 chrNum, u8 flags2)
  * The property is named "flags2".
  * Address 0x7F0332C0.
 */
-bool chrlvTestChrFlags2(ChrRecord *self, s32 chrNum, u8 flags2)
+bool chrHasFlags2ById(ChrRecord *self, s32 chrNum, u8 flags2)
 {
     ChrRecord *chr;
 
@@ -10959,7 +10959,7 @@ bool chrlvTestChrFlags2(ChrRecord *self, s32 chrNum, u8 flags2)
 
     if (chr != NULL)
     {
-        return chrlvTestFlags2(chr, flags2);
+        return chrHasFlags2(chr, flags2);
     }
 
     return FALSE;

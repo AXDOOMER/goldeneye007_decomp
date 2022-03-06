@@ -43,47 +43,47 @@ extern f32 g_SoloAmmoMultiplier;
  * @param arg0: entity pointer, maybe PropModel
  * @param arg1: maybe flags
  */
-void sub_GAME_7F04F218(s32 arg0, s32 arg1);
+void                 sub_GAME_7F04F218(s32 arg0, s32 arg1);
 
-void objFreePermanently(struct ObjectRecord * obj, bool freeprop);
+void                 objFreePermanently(struct ObjectRecord *obj, bool freeprop);
 
-void chrobjApplySpeed(f32 *openPosition, f32 maxFrac, f32 *speedPtr, f32 accel, f32 decel, f32 maxSpeed);
-void chrobjCallsApplySpeed(f32 *openPosition, f32 maxFrac, f32 *speedPtr, f32 accel, f32 decel, f32 maxSpeed);
-Gfx * sub_GAME_7F049B58(Gfx *arg0);
-void set_color_shading_from_tile(PropRecord*, rgba_u8 *);
-void propobjSetDropped(PropRecord *, s32);
-void sub_GAME_7F053A10(ALSoundState *, coord3d *);
-void alarmActivate(void);
-void sub_GAME_7F052574(PropRecord *, s32);
-s32 sub_GAME_7F052604(PropRecord *);
-int sub_GAME_7F0539E4(PadRecord *pad); //getVolume?
-object_standard *create_new_item_instance_of_model(PROP propid, s32 arg1);
-void maybe_detonate_object(ObjectRecord *arg0, f32 arg1, coord3d *arg2, ITEM_IDS item, s32 arg4);
-void chrobjMaybeDetonateObjectIfFlags(ObjectRecord *arg0, f32 arg1, coord3d *arg2, ITEM_IDS item, s32 arg4);
-void sub_GAME_7F03FDA8(PropRecord *);
-void sub_GAME_7F03FE14(PropRecord *);
-void sub_GAME_7F040484(ObjectRecord *);
-void sub_GAME_7F040754(ObjectRecord *, coord3d *, Mtxf *, StandTile *);
-s32 sub_GAME_7F041074(coord3d *arg0, coord3d *arg1, coord3d *arg2, f32 arg3);
-void sub_GAME_7F04F244(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *arg3, f32 *arg4);
-void doorActivate(DoorRecord *door, DOORSTATE State);
-s32 sub_GAME_7F055A70(PropRecord *arg0, DoorRecord *arg1);
-void sub_GAME_7F055B78(PropRecord *arg0, DoorRecord *arg1);
-Gfx *chrobjRenderProp(PropRecord *arg0, Gfx *arg1, s32 arg2);
+void                 chrobjApplySpeed(f32 *openPosition, f32 maxFrac, f32 *speedPtr, f32 accel, f32 decel, f32 maxSpeed);
+void                 chrobjCallsApplySpeed(f32 *openPosition, f32 maxFrac, f32 *speedPtr, f32 accel, f32 decel, f32 maxSpeed);
+Gfx                 *sub_GAME_7F049B58(Gfx *arg0);
+void                 set_color_shading_from_tile(PropRecord *, rgba_u8 *);
+void                 propobjSetDropped(PropRecord *, s32);
+void                 sub_GAME_7F053A10(ALSoundState *, coord3d *);
+void                 alarmActivate(void);
+void                 sub_GAME_7F052574(PropRecord *, s32);
+s32                  sub_GAME_7F052604(PropRecord *);
+s32                  sub_GAME_7F0539E4(coord3d *pos); //getVolume?
+ObjectRecord        *create_new_item_instance_of_model(PROP propid, s32 arg1);
+void                 maybe_detonate_object(ObjectRecord *arg0, f32 arg1, coord3d *arg2, ITEM_IDS item, s32 arg4);
+void                 chrobjMaybeDetonateObjectIfFlags(ObjectRecord *arg0, f32 arg1, coord3d *arg2, ITEM_IDS item, s32 arg4);
+void                 sub_GAME_7F03FDA8(PropRecord *);
+void                 sub_GAME_7F03FE14(PropRecord *);
+void                 sub_GAME_7F040484(ObjectRecord *);
+void                 sub_GAME_7F040754(ObjectRecord *, coord3d *, Mtxf *, StandTile *);
+s32                  sub_GAME_7F041074(coord3d *arg0, coord3d *arg1, coord3d *arg2, f32 arg3);
+void                 sub_GAME_7F04F244(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *arg3, f32 *arg4);
+void                 doorActivate(DoorRecord *door, DOORSTATE State);
+s32                  sub_GAME_7F055A70(PropRecord *arg0, DoorRecord *arg1);
+void                 sub_GAME_7F055B78(PropRecord *arg0, DoorRecord *arg1);
+Gfx                 *chrobjRenderProp(PropRecord *arg0, Gfx *arg1, s32 arg2);
 
-f32 chrobjFogVisRangeRelated(PropRecord *prop, f32 size);
-s32 sub_GAME_7F054A64(PropRecord *, struct view4s32 *);
+f32                  chrobjFogVisRangeRelated(PropRecord *prop, f32 size);
+s32                  sub_GAME_7F054A64(PropRecord *, struct view4s32 *);
 
 // note: rgba to rgb
-void sub_GAME_7F040384(rgba_s32 *arg0, s32 arg1, rgba_f32 *arg2);
-void trigger_remote_mine_detonation(void);
+void                 sub_GAME_7F040384(rgba_s32 *arg0, s32 arg1, rgba_f32 *arg2);
+void                 trigger_remote_mine_detonation(void);
 
 void                 sub_GAME_7F04C044(PropRecord *prop);
 void                 sub_GAME_7F040CF0(PropRecord *);
 bool                 alarmIsActive();
 void                 init_trigger_toxic_gas_effect(coord3d *source);
 void                 chrSetWeaponFlag4(ChrRecord *chr, GUNHAND hand);
-void                 sub_GAME_7F053B10(DoorRecord *door)    ;
+void                 sub_GAME_7F053B10(DoorRecord *door);
 void                 sub_GAME_7F053598(DoorRecord *door);
 void                 sub_GAME_7F052B00(DoorRecord *door);
 s32                  sub_GAME_7F0539B8(f32 vol);
@@ -101,7 +101,7 @@ INV_ITEM_TYPE        propobjInteract(PropRecord *prop);
 s32                  do_something_if_object_destroyed(ObjectRecord *obj);
 void                 doorActivateWrapper(PropRecord *prop);
 bool                 objIsHealthy(ObjectRecord *self);
-ObjectRecord *       weaponFindThrown(s32 ID);
+ObjectRecord        *weaponFindThrown(s32 ID);
 bool                 check_if_toxic_gas_activated();
-PropRecord *         chrTryEquipHat(ChrRecord *self, s32 index, s32 flags);
+PropRecord          *chrTryEquipHat(ChrRecord *self, s32 index, s32 flags);
 #endif

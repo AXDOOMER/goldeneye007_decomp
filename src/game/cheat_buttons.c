@@ -672,9 +672,9 @@ u16 mBtnCheatUnlockAllGuns[] = {
     L_TRIG |          D_JPAD,
     L_TRIG |          L_JPAD,
     L_TRIG |          U_JPAD,
-                  L_CBUTTONS,
+                      L_CBUTTONS,
                       L_JPAD,
-                  D_CBUTTONS
+                      D_CBUTTONS
 };
 #pragma endregion
 

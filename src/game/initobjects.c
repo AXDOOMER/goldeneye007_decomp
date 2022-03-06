@@ -31,7 +31,7 @@ void init_sound_effects_registers(void)
 
     for (i=0; i<SFX_RELATED_LEN; i++)
     {
-        sfx_related[i].state = NULL;
+        sfx_related[i].state = AL_STOPPED;
     }
 
 }

@@ -3301,7 +3301,7 @@ typedef union
             s32           Volume2;   //4
             s32           sfxID;     //8
             s32           Volume;    //12
-            PadRecord    *pad;       //16
+            coord3d      *pos;       //16
             ObjectRecord *Obj;       //20
         } sfxRecord;
 

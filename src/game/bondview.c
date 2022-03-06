@@ -38978,7 +38978,7 @@ glabel maybe_mp_interface
 /* 0BDF4C 7F08941C 24010001 */  li    $at, 1
 /* 0BDF50 7F089420 14410013 */  bne   $v0, $at, .L7F089470
 /* 0BDF54 7F089424 00000000 */   nop
-/* 0BDF58 7F089428 0FC30556 */  jal   musicUnsetXReason
+/* 0BDF58 7F089428 0FC30556 */  jal   musicStopSlot
 /* 0BDF5C 7F08942C 2404FFFF */   li    $a0, -1
 /* 0BDF60 7F089430 0FC3030F */  jal   set_missionstate
 /* 0BDF64 7F089434 00002025 */   move  $a0, $zero
@@ -39308,7 +39308,7 @@ glabel maybe_mp_interface
 /* 0BBF74 7F089584 24010001 */  li    $at, 1
 /* 0BBF78 7F089588 14410013 */  bne   $v0, $at, .L7F0895D8
 /* 0BBF7C 7F08958C 00000000 */   nop   
-/* 0BBF80 7F089590 0FC3028E */  jal   musicUnsetXReason
+/* 0BBF80 7F089590 0FC3028E */  jal   musicStopSlot
 /* 0BBF84 7F089594 2404FFFF */   li    $a0, -1
 /* 0BBF88 7F089598 0FC3003F */  jal   set_missionstate
 /* 0BBF8C 7F08959C 00002025 */   move  $a0, $zero
