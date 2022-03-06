@@ -32,7 +32,7 @@ s32 mission_brief_index = BRIEF_INDEX_OBJECTIVES;
 //D:800409A4
 s32 D_800409A4 = 0;
 //D:800409A8
-s32 watch_soundrelated_maybe = 0;
+s32 watch_item_is_actively_selected = 0;
 //D:800409AC
 s32 D_800409AC = 0;
 //D:800409B0
@@ -234,20 +234,11 @@ s32 D_80040E7C = 0;
 
 // forward declarations
 
-struct V3_u8 {
-    u8 v0;
-    u8 v1;
-    u8 v2;
-};
-
 struct WatchBufferVertices {
     u32 unk00;
     u32 unk04;
     u32 unk08;
-    u8 unk0C;
-    u8 unk0D;
-    u8 unk0E;
-    u8 unk0f;
+    rgba_u8 color;
 };
 
 void draw_selected_page_rectangle(s32 watch_screen_index, struct WatchBufferVertices *arg2);
@@ -269,7 +260,7 @@ void init_watch_at_start_of_stage(int stage)
     game_options_index = GAME_OPTIONS_INDEX_MUSIC;
     mission_brief_index = BRIEF_INDEX_OBJECTIVES;
     D_800409A4 = 0;
-    watch_soundrelated_maybe = 0;
+    watch_item_is_actively_selected = 0;
     D_800409AC = 0;
     D_800409B0 = 0;
     D_800409B4 = 0;
@@ -669,17 +660,17 @@ void set_screen_ratio(SCREEN_RATIO_OPTION ratio_option)
 
 void watch_play_beep_sound(void) {
 
-    if (watch_soundrelated_maybe == 1) {
-        watch_soundrelated_maybe = 0;
+    if (watch_item_is_actively_selected == 1) {
+        watch_item_is_actively_selected = 0;
 
     } else {
-        watch_soundrelated_maybe = 1;
+        watch_item_is_actively_selected = 1;
         sndPlaySfx(g_musicSfxBufferPtr, WATCH_BEEP1_SFX, 0);
     }
 }
 
-void reset_watch_soundrelated_maybe(void){
-  watch_soundrelated_maybe = 0;
+void reset_watch_item_is_actively_selected(void){
+  watch_item_is_actively_selected = 0;
 }
 
 u32 is_holding_greater_than_2E_left_on_stick(void)
@@ -792,7 +783,7 @@ void watch_screen0_navigation(void)
     s32 goto_watch_screen_index_4;
     s32 goto_watch_screen_index_1;
 
-    if (watch_soundrelated_maybe == 0)
+    if (watch_item_is_actively_selected == 0)
     {
         goto_watch_screen_index_4 = FALSE;
         goto_watch_screen_index_1 = FALSE;
@@ -850,7 +841,7 @@ void watch_screen1_navigation(void)
     s32 goto_watch_screen_index_0;
     s32 goto_watch_screen_index_2;
 
-    if (watch_soundrelated_maybe == 0)
+    if (watch_item_is_actively_selected == 0)
     {
         goto_watch_screen_index_0 = FALSE;
         goto_watch_screen_index_2 = FALSE;
@@ -901,7 +892,7 @@ void unused_watch_screen_navigation(void) {
 
     if ((joyGetButtonsPressedThisFrame(PLAYER_1, L_CBUTTONS|L_TRIG|L_JPAD)) || (sub_GAME_7F0A4FB0()))
     {
-        if (watch_soundrelated_maybe == 0)
+        if (watch_item_is_actively_selected == 0)
         {
             watch_screen_index = WATCH_INDEX_INVENTORY;
             set_controlstick_lr_disabled();
@@ -910,7 +901,7 @@ void unused_watch_screen_navigation(void) {
     }
     if ((joyGetButtonsPressedThisFrame(PLAYER_1, R_CBUTTONS|R_TRIG|R_JPAD)) || (sub_GAME_7F0A4FEC()))
     {
-        if (watch_soundrelated_maybe == 0)
+        if (watch_item_is_actively_selected == 0)
         {
             watch_screen_index = WATCH_INDEX_CONTROL_OPTIONS;
             reset_controller_options_index();
@@ -925,7 +916,7 @@ void watch_screen2_navigation(void) {
 
     if ((joyGetButtonsPressedThisFrame(PLAYER_1, L_CBUTTONS|L_TRIG|L_JPAD)) || (sub_GAME_7F0A4FB0()))
     {
-        if ((joyGetButtons(PLAYER_1, Z_TRIG) == 0) && (watch_soundrelated_maybe == 0))
+        if ((joyGetButtons(PLAYER_1, Z_TRIG) == 0) && (watch_item_is_actively_selected == 0))
         {
             watch_screen_index = WATCH_INDEX_INVENTORY;
             sub_GAME_7F0A5210();
@@ -935,7 +926,7 @@ void watch_screen2_navigation(void) {
     }
     if ((joyGetButtonsPressedThisFrame(PLAYER_1, R_CBUTTONS|R_TRIG|R_JPAD)) || (sub_GAME_7F0A4FEC()))
     {
-        if ((joyGetButtons(PLAYER_1, Z_TRIG) == 0) && (watch_soundrelated_maybe == 0))
+        if ((joyGetButtons(PLAYER_1, Z_TRIG) == 0) && (watch_item_is_actively_selected == 0))
         {
             watch_screen_index = WATCH_INDEX_GAME_OPTIONS;
             reset_game_options_index();
@@ -949,7 +940,7 @@ void watch_screen3_navigation(void) {
 
     if ((joyGetButtonsPressedThisFrame(PLAYER_1, L_CBUTTONS|L_TRIG|L_JPAD)) || (sub_GAME_7F0A4FB0()))
     {
-        if ((joyGetButtons(PLAYER_1, Z_TRIG) == 0) && (watch_soundrelated_maybe == 0))
+        if ((joyGetButtons(PLAYER_1, Z_TRIG) == 0) && (watch_item_is_actively_selected == 0))
         {
             watch_screen_index = WATCH_INDEX_CONTROL_OPTIONS;
             reset_controller_options_index();
@@ -959,7 +950,7 @@ void watch_screen3_navigation(void) {
     }
     if ((joyGetButtonsPressedThisFrame(PLAYER_1, R_CBUTTONS|R_TRIG|R_JPAD)) || (sub_GAME_7F0A4FEC()))
     {
-        if ((joyGetButtons(PLAYER_1, Z_TRIG) == 0) && (watch_soundrelated_maybe == 0))
+        if ((joyGetButtons(PLAYER_1, Z_TRIG) == 0) && (watch_item_is_actively_selected == 0))
         {
             watch_screen_index = WATCH_INDEX_MISSION_BRIEFING;
             sub_GAME_7F0A5210();
@@ -973,7 +964,7 @@ void watch_screen4_navigation(void) {
 
     if ((joyGetButtonsPressedThisFrame(PLAYER_1, L_CBUTTONS|L_TRIG|L_JPAD)) || (sub_GAME_7F0A4FB0()))
     {
-        if (watch_soundrelated_maybe == 0)
+        if (watch_item_is_actively_selected == 0)
         {
             watch_screen_index = WATCH_INDEX_GAME_OPTIONS;
             reset_game_options_index();
@@ -984,7 +975,7 @@ void watch_screen4_navigation(void) {
     }
     if ((joyGetButtonsPressedThisFrame(PLAYER_1, R_CBUTTONS|R_TRIG|R_JPAD)) || (sub_GAME_7F0A4FEC()))
     {
-        if (watch_soundrelated_maybe == 0)
+        if (watch_item_is_actively_selected == 0)
         {
             watch_screen_index = WATCH_INDEX_MISSION_STATUS;
             zero_D_800409A4();
@@ -999,7 +990,7 @@ void controller_options_controlstyle_navigation(void)
 {
     if ((joyGetButtonsPressedThisFrame(PLAYER_1, U_CBUTTONS|U_JPAD)) || (sub_GAME_7F0A5088()))
     {
-        if (watch_soundrelated_maybe == 0)
+        if (watch_item_is_actively_selected == 0)
         {
             controller_options_index = CONTROLLER_OPTIONS_INDEX_INPUTS;
             set_D_80040AE0_0();
@@ -1008,7 +999,7 @@ void controller_options_controlstyle_navigation(void)
     }
     if ((joyGetButtonsPressedThisFrame(PLAYER_1, D_CBUTTONS|D_JPAD)) || (sub_GAME_7F0A50C4()))
     {
-        if (watch_soundrelated_maybe == 0)
+        if (watch_item_is_actively_selected == 0)
         {
             controller_options_index = CONTROLLER_OPTIONS_INDEX_INPUTS;
             set_D_80040AE0_0();
@@ -1020,7 +1011,7 @@ void controller_options_inputs_navigation(void)
 {
     if ((joyGetButtonsPressedThisFrame(PLAYER_1, U_CBUTTONS|U_JPAD)) || (sub_GAME_7F0A5088()))
     {
-        if (watch_soundrelated_maybe == 0)
+        if (watch_item_is_actively_selected == 0)
         {
             controller_options_index = CONTROLLER_OPTIONS_INDEX_STYLE;
             set_D_80040AE0_0();
@@ -1029,7 +1020,7 @@ void controller_options_inputs_navigation(void)
     }
     if ((joyGetButtonsPressedThisFrame(PLAYER_1, D_CBUTTONS|D_JPAD)) || (sub_GAME_7F0A50C4()))
     {
-        if (watch_soundrelated_maybe == 0)
+        if (watch_item_is_actively_selected == 0)
         {
             controller_options_index = CONTROLLER_OPTIONS_INDEX_STYLE;
             set_D_80040AE0_0();
@@ -1045,13 +1036,13 @@ void sub_GAME_7F0A5998(void)
     {
         game_options_index = game_options_index - 1;
         set_D_80040AE0_0();
-        reset_watch_soundrelated_maybe();
+        reset_watch_item_is_actively_selected();
     }
     else if ((joyGetButtonsPressedThisFrame(PLAYER_1, D_CBUTTONS|D_JPAD)) || (sub_GAME_7F0A50C4()))
     {
         game_options_index = game_options_index + 1;
         set_D_80040AE0_0();
-        reset_watch_soundrelated_maybe();
+        reset_watch_item_is_actively_selected();
     }
 
     aux = game_options_index;
@@ -1074,7 +1065,7 @@ void game_options_music_volume_navigation(void)
     {
         game_options_index = GAME_OPTIONS_INDEX_RATIO;
         set_D_80040AE0_0();
-        reset_watch_soundrelated_maybe();
+        reset_watch_item_is_actively_selected();
         return;
     }
 
@@ -1082,7 +1073,7 @@ void game_options_music_volume_navigation(void)
     {
         game_options_index = GAME_OPTIONS_INDEX_FX;
         set_D_80040AE0_0();
-        reset_watch_soundrelated_maybe();
+        reset_watch_item_is_actively_selected();
     }
 }
 
@@ -1092,7 +1083,7 @@ void game_options_fx_volume_navigation(void)
     {
         game_options_index = GAME_OPTIONS_INDEX_MUSIC;
         set_D_80040AE0_0();
-        reset_watch_soundrelated_maybe();
+        reset_watch_item_is_actively_selected();
         return;
     }
 
@@ -1100,7 +1091,7 @@ void game_options_fx_volume_navigation(void)
     {
         game_options_index = GAME_OPTIONS_INDEX_LOOK_UPDOWN;
         set_D_80040AE0_0();
-        reset_watch_soundrelated_maybe();
+        reset_watch_item_is_actively_selected();
     }
 }
 
@@ -1119,14 +1110,14 @@ void sub_GAME_7F0A5B80(void)
     {    
         if ((joyGetButtonsPressedThisFrame(PLAYER_1,U_CBUTTONS|U_JPAD) != 0) && (joyGetStickY(PLAYER_1) >= 0x47))
         {
-            if ((D_800409BC > 0) && (watch_soundrelated_maybe == 0))
+            if ((D_800409BC > 0) && (watch_item_is_actively_selected == 0))
             {
                 D_800409BC -= 1.0f;
             }
         }
         else
         {
-            if ((((joyGetButtonsPressedThisFrame(PLAYER_1,D_CBUTTONS|D_JPAD) != 0) || (joyGetStickY(PLAYER_1) < -0x46)) && (D_800409BC < invItems - 1)) && (watch_soundrelated_maybe == 0))
+            if ((((joyGetButtonsPressedThisFrame(PLAYER_1,D_CBUTTONS|D_JPAD) != 0) || (joyGetStickY(PLAYER_1) < -0x46)) && (D_800409BC < invItems - 1)) && (watch_item_is_actively_selected == 0))
             {
                 D_800409BC += 1.0f;
             }
@@ -1135,14 +1126,14 @@ void sub_GAME_7F0A5B80(void)
 
         if (joyGetButtons(PLAYER_1,U_CBUTTONS|U_JPAD) != 0)
         {
-            if ((0 < D_800409BC) && (watch_soundrelated_maybe == 0))
+            if ((0 < D_800409BC) && (watch_item_is_actively_selected == 0))
             {
                 D_800409BC -= 0.1f;
             }
         }
         else
         {
-            if (((joyGetButtons(PLAYER_1,D_CBUTTONS|D_JPAD) != 0) && (D_800409BC < invItems + -1)) && (watch_soundrelated_maybe == 0))
+            if (((joyGetButtons(PLAYER_1,D_CBUTTONS|D_JPAD) != 0) && (D_800409BC < invItems + -1)) && (watch_item_is_actively_selected == 0))
             {
                 D_800409BC += 0.1f;
             }
@@ -1151,21 +1142,21 @@ void sub_GAME_7F0A5B80(void)
     
 
 
-    if ((joyGetStickY(PLAYER_1) >= 0x1F) && (joyGetStickY(PLAYER_1) < 0x46) && (D_800409B8 > 0) && (watch_soundrelated_maybe == 0))
+    if ((joyGetStickY(PLAYER_1) >= 0x1F) && (joyGetStickY(PLAYER_1) < 0x46) && (D_800409B8 > 0) && (watch_item_is_actively_selected == 0))
     {
         D_800409BC -= joyGetStickY(PLAYER_1) / 300.0f;
     }
-    else if ((joyGetStickY(PLAYER_1) < -0x1E) && (joyGetStickY(PLAYER_1) >= -0x45) && (D_800409BC < (invItems - 1)) && (watch_soundrelated_maybe == 0))
+    else if ((joyGetStickY(PLAYER_1) < -0x1E) && (joyGetStickY(PLAYER_1) >= -0x45) && (D_800409BC < (invItems - 1)) && (watch_item_is_actively_selected == 0))
     {
         D_800409BC -= joyGetStickY(PLAYER_1) / 300.0f;
     }
 
 
-    if ((sub_GAME_7F0A5160() != 0) && (D_800409B8 > 0) && (watch_soundrelated_maybe == 0))
+    if ((sub_GAME_7F0A5160() != 0) && (D_800409B8 > 0) && (watch_item_is_actively_selected == 0))
     {
         D_800409BC -= 1.0f;
     }
-    else if ((sub_GAME_7F0A519C() != 0) && (D_800409B8 < (invItems - 1)) && (watch_soundrelated_maybe == 0))
+    else if ((sub_GAME_7F0A519C() != 0) && (D_800409B8 < (invItems - 1)) && (watch_item_is_actively_selected == 0))
     {
         D_800409BC += 1.0f;
     }
@@ -1263,13 +1254,13 @@ glabel sub_GAME_7F0A5B80
 /* 0DA6F0 7F0A5BC0 3C068004 */   lui   $a2, %hi(D_800409BC)
 /* 0DA6F4 7F0A5BC4 24C609BC */  addiu $a2, %lo(D_800409BC) # addiu $a2, $a2, 0x9bc
 /* 0DA6F8 7F0A5BC8 C4C00000 */  lwc1  $f0, ($a2)
-/* 0DA6FC 7F0A5BCC 3C188004 */  lui   $t8, %hi(watch_soundrelated_maybe)
+/* 0DA6FC 7F0A5BCC 3C188004 */  lui   $t8, %hi(watch_item_is_actively_selected)
 /* 0DA700 7F0A5BD0 4600010D */  trunc.w.s $f4, $f0
 /* 0DA704 7F0A5BD4 440F2000 */  mfc1  $t7, $f4
 /* 0DA708 7F0A5BD8 00000000 */  nop
 /* 0DA70C 7F0A5BDC 59E0002B */  blezl $t7, .L7F0A5C8C
 /* 0DA710 7F0A5BE0 00002025 */   move  $a0, $zero
-/* 0DA714 7F0A5BE4 8F1809A8 */  lw    $t8, %lo(watch_soundrelated_maybe)($t8)
+/* 0DA714 7F0A5BE4 8F1809A8 */  lw    $t8, %lo(watch_item_is_actively_selected)($t8)
 /* 0DA718 7F0A5BE8 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0DA71C 7F0A5BEC 57000027 */  bnezl $t8, .L7F0A5C8C
 /* 0DA720 7F0A5BF0 00002025 */   move  $a0, $zero
@@ -1296,7 +1287,7 @@ glabel sub_GAME_7F0A5B80
 /* 0DA76C 7F0A5C3C 24C609BC */  addiu $a2, %lo(D_800409BC) # addiu $a2, $a2, 0x9bc
 /* 0DA770 7F0A5C40 C4C00000 */  lwc1  $f0, ($a2)
 /* 0DA774 7F0A5C44 8FAB001C */  lw    $t3, 0x1c($sp)
-/* 0DA778 7F0A5C48 3C0D8004 */  lui   $t5, %hi(watch_soundrelated_maybe)
+/* 0DA778 7F0A5C48 3C0D8004 */  lui   $t5, %hi(watch_item_is_actively_selected)
 /* 0DA77C 7F0A5C4C 4600028D */  trunc.w.s $f10, $f0
 /* 0DA780 7F0A5C50 256CFFFF */  addiu $t4, $t3, -1
 /* 0DA784 7F0A5C54 440A5000 */  mfc1  $t2, $f10
@@ -1304,7 +1295,7 @@ glabel sub_GAME_7F0A5B80
 /* 0DA78C 7F0A5C5C 014C082A */  slt   $at, $t2, $t4
 /* 0DA790 7F0A5C60 5020000A */  beql  $at, $zero, .L7F0A5C8C
 /* 0DA794 7F0A5C64 00002025 */   move  $a0, $zero
-/* 0DA798 7F0A5C68 8DAD09A8 */  lw    $t5, %lo(watch_soundrelated_maybe)($t5)
+/* 0DA798 7F0A5C68 8DAD09A8 */  lw    $t5, %lo(watch_item_is_actively_selected)($t5)
 /* 0DA79C 7F0A5C6C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0DA7A0 7F0A5C70 55A00006 */  bnezl $t5, .L7F0A5C8C
 /* 0DA7A4 7F0A5C74 00002025 */   move  $a0, $zero
@@ -1321,13 +1312,13 @@ glabel sub_GAME_7F0A5B80
 /* 0DA7C8 7F0A5C98 10400010 */  beqz  $v0, .L7F0A5CDC
 /* 0DA7CC 7F0A5C9C 24C609BC */   addiu $a2, %lo(D_800409BC) # addiu $a2, $a2, 0x9bc
 /* 0DA7D0 7F0A5CA0 C4C00000 */  lwc1  $f0, ($a2)
-/* 0DA7D4 7F0A5CA4 3C188004 */  lui   $t8, %hi(watch_soundrelated_maybe)
+/* 0DA7D4 7F0A5CA4 3C188004 */  lui   $t8, %hi(watch_item_is_actively_selected)
 /* 0DA7D8 7F0A5CA8 4600010D */  trunc.w.s $f4, $f0
 /* 0DA7DC 7F0A5CAC 440F2000 */  mfc1  $t7, $f4
 /* 0DA7E0 7F0A5CB0 00000000 */  nop
 /* 0DA7E4 7F0A5CB4 19E00020 */  blez  $t7, .L7F0A5D38
 /* 0DA7E8 7F0A5CB8 00000000 */   nop
-/* 0DA7EC 7F0A5CBC 8F1809A8 */  lw    $t8, %lo(watch_soundrelated_maybe)($t8)
+/* 0DA7EC 7F0A5CBC 8F1809A8 */  lw    $t8, %lo(watch_item_is_actively_selected)($t8)
 /* 0DA7F0 7F0A5CC0 3C018006 */  lui   $at, %hi(D_8005847C)
 /* 0DA7F4 7F0A5CC4 1700001C */  bnez  $t8, .L7F0A5D38
 /* 0DA7F8 7F0A5CC8 00000000 */   nop
@@ -1344,7 +1335,7 @@ glabel sub_GAME_7F0A5B80
 /* 0DA820 7F0A5CF0 24C609BC */   addiu $a2, %lo(D_800409BC) # addiu $a2, $a2, 0x9bc
 /* 0DA824 7F0A5CF4 C4C00000 */  lwc1  $f0, ($a2)
 /* 0DA828 7F0A5CF8 8FAA001C */  lw    $t2, 0x1c($sp)
-/* 0DA82C 7F0A5CFC 3C0D8004 */  lui   $t5, %hi(watch_soundrelated_maybe)
+/* 0DA82C 7F0A5CFC 3C0D8004 */  lui   $t5, %hi(watch_item_is_actively_selected)
 /* 0DA830 7F0A5D00 4600028D */  trunc.w.s $f10, $f0
 /* 0DA834 7F0A5D04 254CFFFF */  addiu $t4, $t2, -1
 /* 0DA838 7F0A5D08 440B5000 */  mfc1  $t3, $f10
@@ -1352,7 +1343,7 @@ glabel sub_GAME_7F0A5B80
 /* 0DA840 7F0A5D10 016C082A */  slt   $at, $t3, $t4
 /* 0DA844 7F0A5D14 10200008 */  beqz  $at, .L7F0A5D38
 /* 0DA848 7F0A5D18 00000000 */   nop
-/* 0DA84C 7F0A5D1C 8DAD09A8 */  lw    $t5, %lo(watch_soundrelated_maybe)($t5)
+/* 0DA84C 7F0A5D1C 8DAD09A8 */  lw    $t5, %lo(watch_item_is_actively_selected)($t5)
 /* 0DA850 7F0A5D20 3C018006 */  lui   $at, %hi(D_80058480)
 /* 0DA854 7F0A5D24 15A00004 */  bnez  $t5, .L7F0A5D38
 /* 0DA858 7F0A5D28 00000000 */   nop
@@ -1371,10 +1362,10 @@ glabel sub_GAME_7F0A5B80
 /* 0DA888 7F0A5D58 10200015 */  beqz  $at, .L7F0A5DB0
 /* 0DA88C 7F0A5D5C 3C0E8004 */   lui   $t6, %hi(D_800409B8)
 /* 0DA890 7F0A5D60 8DCE09B8 */  lw    $t6, %lo(D_800409B8)($t6)
-/* 0DA894 7F0A5D64 3C0F8004 */  lui   $t7, %hi(watch_soundrelated_maybe)
+/* 0DA894 7F0A5D64 3C0F8004 */  lui   $t7, %hi(watch_item_is_actively_selected)
 /* 0DA898 7F0A5D68 19C00011 */  blez  $t6, .L7F0A5DB0
 /* 0DA89C 7F0A5D6C 00000000 */   nop
-/* 0DA8A0 7F0A5D70 8DEF09A8 */  lw    $t7, %lo(watch_soundrelated_maybe)($t7)
+/* 0DA8A0 7F0A5D70 8DEF09A8 */  lw    $t7, %lo(watch_item_is_actively_selected)($t7)
 /* 0DA8A4 7F0A5D74 15E0000E */  bnez  $t7, .L7F0A5DB0
 /* 0DA8A8 7F0A5D78 00000000 */   nop
 /* 0DA8AC 7F0A5D7C 0C00307F */  jal   joyGetStickY
@@ -1404,7 +1395,7 @@ glabel sub_GAME_7F0A5B80
 /* 0DA908 7F0A5DD8 24C609BC */   addiu $a2, %lo(D_800409BC) # addiu $a2, $a2, 0x9bc
 /* 0DA90C 7F0A5DDC C4C40000 */  lwc1  $f4, ($a2)
 /* 0DA910 7F0A5DE0 8FAA001C */  lw    $t2, 0x1c($sp)
-/* 0DA914 7F0A5DE4 3C0C8004 */  lui   $t4, %hi(watch_soundrelated_maybe)
+/* 0DA914 7F0A5DE4 3C0C8004 */  lui   $t4, %hi(watch_item_is_actively_selected)
 /* 0DA918 7F0A5DE8 4600218D */  trunc.w.s $f6, $f4
 /* 0DA91C 7F0A5DEC 254BFFFF */  addiu $t3, $t2, -1
 /* 0DA920 7F0A5DF0 44193000 */  mfc1  $t9, $f6
@@ -1412,7 +1403,7 @@ glabel sub_GAME_7F0A5B80
 /* 0DA928 7F0A5DF8 032B082A */  slt   $at, $t9, $t3
 /* 0DA92C 7F0A5DFC 10200010 */  beqz  $at, .L7F0A5E40
 /* 0DA930 7F0A5E00 00000000 */   nop
-/* 0DA934 7F0A5E04 8D8C09A8 */  lw    $t4, %lo(watch_soundrelated_maybe)($t4)
+/* 0DA934 7F0A5E04 8D8C09A8 */  lw    $t4, %lo(watch_item_is_actively_selected)($t4)
 /* 0DA938 7F0A5E08 1580000D */  bnez  $t4, .L7F0A5E40
 /* 0DA93C 7F0A5E0C 00000000 */   nop
 /* 0DA940 7F0A5E10 0C00307F */  jal   joyGetStickY
@@ -1435,10 +1426,10 @@ glabel sub_GAME_7F0A5B80
 /* 0DA980 7F0A5E50 24C609BC */   addiu $a2, %lo(D_800409BC) # addiu $a2, $a2, 0x9bc
 /* 0DA984 7F0A5E54 3C0D8004 */  lui   $t5, %hi(D_800409B8)
 /* 0DA988 7F0A5E58 8DAD09B8 */  lw    $t5, %lo(D_800409B8)($t5)
-/* 0DA98C 7F0A5E5C 3C0E8004 */  lui   $t6, %hi(watch_soundrelated_maybe)
+/* 0DA98C 7F0A5E5C 3C0E8004 */  lui   $t6, %hi(watch_item_is_actively_selected)
 /* 0DA990 7F0A5E60 19A0000B */  blez  $t5, .L7F0A5E90
 /* 0DA994 7F0A5E64 00000000 */   nop
-/* 0DA998 7F0A5E68 8DCE09A8 */  lw    $t6, %lo(watch_soundrelated_maybe)($t6)
+/* 0DA998 7F0A5E68 8DCE09A8 */  lw    $t6, %lo(watch_item_is_actively_selected)($t6)
 /* 0DA99C 7F0A5E6C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0DA9A0 7F0A5E70 15C00007 */  bnez  $t6, .L7F0A5E90
 /* 0DA9A4 7F0A5E74 00000000 */   nop
@@ -1458,11 +1449,11 @@ glabel sub_GAME_7F0A5B80
 /* 0DA9D8 7F0A5EA8 3C0F8004 */  lui   $t7, %hi(D_800409B8)
 /* 0DA9DC 7F0A5EAC 8DEF09B8 */  lw    $t7, %lo(D_800409B8)($t7)
 /* 0DA9E0 7F0A5EB0 270AFFFF */  addiu $t2, $t8, -1
-/* 0DA9E4 7F0A5EB4 3C198004 */  lui   $t9, %hi(watch_soundrelated_maybe)
+/* 0DA9E4 7F0A5EB4 3C198004 */  lui   $t9, %hi(watch_item_is_actively_selected)
 /* 0DA9E8 7F0A5EB8 01EA082A */  slt   $at, $t7, $t2
 /* 0DA9EC 7F0A5EBC 1020000A */  beqz  $at, .L7F0A5EE8
 /* 0DA9F0 7F0A5EC0 00000000 */   nop
-/* 0DA9F4 7F0A5EC4 8F3909A8 */  lw    $t9, %lo(watch_soundrelated_maybe)($t9)
+/* 0DA9F4 7F0A5EC4 8F3909A8 */  lw    $t9, %lo(watch_item_is_actively_selected)($t9)
 /* 0DA9F8 7F0A5EC8 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0DA9FC 7F0A5ECC 17200006 */  bnez  $t9, .L7F0A5EE8
 /* 0DAA00 7F0A5ED0 00000000 */   nop
@@ -2011,14 +2002,14 @@ void mission_brief_background_navigation(void)
     {
         mission_brief_index = BRIEF_INDEX_OBJECTIVES;
         set_D_80040AE0_0();
-        reset_watch_soundrelated_maybe();
+        reset_watch_item_is_actively_selected();
     }
 
     if ((joyGetButtonsPressedThisFrame(PLAYER_1, D_CBUTTONS|D_JPAD)) || (sub_GAME_7F0A50C4()))
     {
         mission_brief_index = BRIEF_INDEX_M;
         set_D_80040AE0_0();
-        reset_watch_soundrelated_maybe();
+        reset_watch_item_is_actively_selected();
     }
 }
 
@@ -2029,7 +2020,7 @@ void mission_brief_m_briefing_navigation(void)
     {
         mission_brief_index = BRIEF_INDEX_BACKGROUND;
         set_D_80040AE0_0();
-        reset_watch_soundrelated_maybe();
+        reset_watch_item_is_actively_selected();
         return;
     }
 
@@ -2037,7 +2028,7 @@ void mission_brief_m_briefing_navigation(void)
     {
         mission_brief_index = BRIEF_INDEX_Q;
         set_D_80040AE0_0();
-        reset_watch_soundrelated_maybe();
+        reset_watch_item_is_actively_selected();
     }
 }
 
@@ -2048,7 +2039,7 @@ void mission_brief_q_branch_navigation(void)
     {
         mission_brief_index = BRIEF_INDEX_M;
         set_D_80040AE0_0();
-        reset_watch_soundrelated_maybe();
+        reset_watch_item_is_actively_selected();
         return;
     }
 
@@ -2056,7 +2047,7 @@ void mission_brief_q_branch_navigation(void)
     {
         mission_brief_index = BRIEF_INDEX_MONEYPENNY;
         set_D_80040AE0_0();
-        reset_watch_soundrelated_maybe();
+        reset_watch_item_is_actively_selected();
     }
 }
 
@@ -2066,7 +2057,7 @@ void mission_brief_moneypenny_navigation(void)
     {
         mission_brief_index = BRIEF_INDEX_Q;
         set_D_80040AE0_0();
-        reset_watch_soundrelated_maybe();
+        reset_watch_item_is_actively_selected();
         return;
     }
 
@@ -2074,7 +2065,7 @@ void mission_brief_moneypenny_navigation(void)
     {
         mission_brief_index = BRIEF_INDEX_OBJECTIVES;
         set_D_80040AE0_0();
-        reset_watch_soundrelated_maybe();
+        reset_watch_item_is_actively_selected();
     }
 }
 
@@ -2084,7 +2075,7 @@ void mission_brief_objectives_navigation(void)
     {
         mission_brief_index = BRIEF_INDEX_MONEYPENNY;
         set_D_80040AE0_0();
-        reset_watch_soundrelated_maybe();
+        reset_watch_item_is_actively_selected();
         return;
     }
 
@@ -2092,7 +2083,7 @@ void mission_brief_objectives_navigation(void)
     {
         mission_brief_index = BRIEF_INDEX_BACKGROUND;
         set_D_80040AE0_0();
-        reset_watch_soundrelated_maybe();
+        reset_watch_item_is_actively_selected();
     }
 }
 
@@ -2176,7 +2167,7 @@ void sub_GAME_7F0A69A8(void)
     {
         D_800409D8 = 8;
     }
-    reset_watch_soundrelated_maybe();
+    reset_watch_item_is_actively_selected();
     watch_screen_index = WATCH_INDEX_MISSION_STATUS;
     mission_brief_index = BRIEF_INDEX_OBJECTIVES;
     D_800409C8 = 0.999f;
@@ -2517,26 +2508,30 @@ void draw_selected_page_rectangle(s32 watch_screen_index, struct WatchBufferVert
     s32 i;
     s32 limit;
 
+    // Default color for rectangle.
     for (i=0; i<20; i++)
     {
-        arg2[i].unk0C = 0x20;
-        arg2[i].unk0D = 0x70;
-        arg2[i].unk0E = 0x20;
+        arg2[i].color.r = 0x20;
+        arg2[i].color.g = 0x70;
+        arg2[i].color.b = 0x20;
     }
 
     i = watch_screen_index * 4;
     limit = i + 3;
     for ( ; i <= limit; i++)
     {
-        arg2[i].unk0C = 0x50;
-        arg2[i].unk0D = 0xF0;
-        arg2[i].unk0E = 0x50;
+        // Color of currently selected screen
+        arg2[i].color.r = 0x50;
+        arg2[i].color.g = 0xF0;
+        arg2[i].color.b = 0x50;
 
-        if (watch_soundrelated_maybe)
+        if (watch_item_is_actively_selected)
         {
-            arg2[i].unk0C = 0x30;
-            arg2[i].unk0D = 0xA0;
-            arg2[i].unk0E = 0x30;
+            // Color of currently selected screen when a menu option is selected.
+            // This applies on main screen, game options, controller options, objective status, but not inventory.
+            arg2[i].color.r = 0x30;
+            arg2[i].color.g = 0xA0;
+            arg2[i].color.b = 0x30;
         }
     }
 }
@@ -2563,10 +2558,10 @@ glabel draw_selected_page_rectangle
 /* 0DBC18 7F0A70E8 00037100 */   sll   $t6, $v1, 4
 /* 0DBC1C 7F0A70EC 00067900 */  sll   $t7, $a2, 4
 /* 0DBC20 7F0A70F0 01E52021 */  addu  $a0, $t7, $a1
-/* 0DBC24 7F0A70F4 3C068004 */  lui   $a2, %hi(watch_soundrelated_maybe)
+/* 0DBC24 7F0A70F4 3C068004 */  lui   $a2, %hi(watch_item_is_actively_selected)
 /* 0DBC28 7F0A70F8 00AE1821 */  addu  $v1, $a1, $t6
 /* 0DBC2C 7F0A70FC 240500F0 */  li    $a1, 240
-/* 0DBC30 7F0A7100 24C609A8 */  addiu $a2, %lo(watch_soundrelated_maybe) # addiu $a2, $a2, 0x9a8
+/* 0DBC30 7F0A7100 24C609A8 */  addiu $a2, %lo(watch_item_is_actively_selected) # addiu $a2, $a2, 0x9a8
 /* 0DBC34 7F0A7104 240800A0 */  li    $t0, 160
 /* 0DBC38 7F0A7108 24070030 */  li    $a3, 48
 /* 0DBC3C 7F0A710C 24020050 */  li    $v0, 80
@@ -3534,7 +3529,7 @@ Gfx *sub_GAME_7F0A77C8(Gfx *arg0)
     sp70 = temp_v1;
     sp68 = temp_v1;
 
-    if (watch_soundrelated_maybe != 0)
+    if (watch_item_is_actively_selected != 0)
     {
         if (D_800409A4 == 0)
         {
@@ -3557,7 +3552,7 @@ Gfx *sub_GAME_7F0A77C8(Gfx *arg0)
         }
     }
 
-    if (watch_soundrelated_maybe != 0)
+    if (watch_item_is_actively_selected != 0)
     {
         sub_GAME_7F0AE98C(&sp60, &sp64, sp54, sp58, sp5C, 0);
 
@@ -3637,8 +3632,8 @@ glabel sub_GAME_7F0A77C8
 .L7F0A7860:
 /* 0DC390 7F0A7860 00001025 */  move  $v0, $zero
 .L7F0A7864:
-/* 0DC394 7F0A7864 3C098004 */  lui   $t1, %hi(watch_soundrelated_maybe)
-/* 0DC398 7F0A7868 8D2909A8 */  lw    $t1, %lo(watch_soundrelated_maybe)($t1)
+/* 0DC394 7F0A7864 3C098004 */  lui   $t1, %hi(watch_item_is_actively_selected)
+/* 0DC398 7F0A7868 8D2909A8 */  lw    $t1, %lo(watch_item_is_actively_selected)($t1)
 /* 0DC39C 7F0A786C 2443004C */  addiu $v1, $v0, 0x4c
 /* 0DC3A0 7F0A7870 AFA3006C */  sw    $v1, 0x6c($sp)
 /* 0DC3A4 7F0A7874 AFA30070 */  sw    $v1, 0x70($sp)
@@ -3676,8 +3671,8 @@ glabel sub_GAME_7F0A77C8
 /* 0DC418 7F0A78E8 3C018004 */   lui   $at, %hi(D_800409A4)
 /* 0DC41C 7F0A78EC AC2009A4 */  sw    $zero, %lo(D_800409A4)($at)
 .L7F0A78F0:
-/* 0DC420 7F0A78F0 3C0B8004 */  lui   $t3, %hi(watch_soundrelated_maybe)
-/* 0DC424 7F0A78F4 8D6B09A8 */  lw    $t3, %lo(watch_soundrelated_maybe)($t3)
+/* 0DC420 7F0A78F0 3C0B8004 */  lui   $t3, %hi(watch_item_is_actively_selected)
+/* 0DC424 7F0A78F4 8D6B09A8 */  lw    $t3, %lo(watch_item_is_actively_selected)($t3)
 /* 0DC428 7F0A78F8 27A40060 */  addiu $a0, $sp, 0x60
 /* 0DC42C 7F0A78FC 27A50064 */  addiu $a1, $sp, 0x64
 /* 0DC430 7F0A7900 1160007E */  beqz  $t3, .L7F0A7AFC
@@ -3934,8 +3929,8 @@ glabel sub_GAME_7F0A77C8
 .L7F0A6B78:
 /* 0D9568 7F0A6B78 00001025 */  move  $v0, $zero
 .L7F0A6B7C:
-/* 0D956C 7F0A6B7C 3C098004 */  lui   $t1, %hi(watch_soundrelated_maybe) # $t1, 0x8004
-/* 0D9570 7F0A6B80 8D29A5F8 */  lw    $t1, %lo(watch_soundrelated_maybe)($t1)
+/* 0D956C 7F0A6B7C 3C098004 */  lui   $t1, %hi(watch_item_is_actively_selected) # $t1, 0x8004
+/* 0D9570 7F0A6B80 8D29A5F8 */  lw    $t1, %lo(watch_item_is_actively_selected)($t1)
 /* 0D9574 7F0A6B84 2443004E */  addiu $v1, $v0, 0x4e
 /* 0D9578 7F0A6B88 AFA3006C */  sw    $v1, 0x6c($sp)
 /* 0D957C 7F0A6B8C AFA30070 */  sw    $v1, 0x70($sp)
@@ -3973,8 +3968,8 @@ glabel sub_GAME_7F0A77C8
 /* 0D95F0 7F0A6C00 3C018004 */   lui   $at, %hi(D_800409A4) # $at, 0x8004
 /* 0D95F4 7F0A6C04 AC20A5F4 */  sw    $zero, %lo(D_800409A4)($at)
 .L7F0A6C08:
-/* 0D95F8 7F0A6C08 3C0B8004 */  lui   $t3, %hi(watch_soundrelated_maybe) # $t3, 0x8004
-/* 0D95FC 7F0A6C0C 8D6BA5F8 */  lw    $t3, %lo(watch_soundrelated_maybe)($t3)
+/* 0D95F8 7F0A6C08 3C0B8004 */  lui   $t3, %hi(watch_item_is_actively_selected) # $t3, 0x8004
+/* 0D95FC 7F0A6C0C 8D6BA5F8 */  lw    $t3, %lo(watch_item_is_actively_selected)($t3)
 /* 0D9600 7F0A6C10 27A40060 */  addiu $a0, $sp, 0x60
 /* 0D9604 7F0A6C14 27A50064 */  addiu $a1, $sp, 0x64
 /* 0D9608 7F0A6C18 1160007E */  beqz  $t3, .L7F0A6E14
@@ -6689,8 +6684,8 @@ glabel sub_GAME_7F0A8FEC
 /* 0DDB30 7F0A9000 2404000C */   li    $a0, 12
 /* 0DDB34 7F0A9004 0C002472 */  jal   sndGetSfxSlotFirstNaturalVolume
 /* 0DDB38 7F0A9008 AFA2003C */   sw    $v0, 0x3c($sp)
-/* 0DDB3C 7F0A900C 3C0E8004 */  lui   $t6, %hi(watch_soundrelated_maybe)
-/* 0DDB40 7F0A9010 8DCE09A8 */  lw    $t6, %lo(watch_soundrelated_maybe)($t6)
+/* 0DDB3C 7F0A900C 3C0E8004 */  lui   $t6, %hi(watch_item_is_actively_selected)
+/* 0DDB40 7F0A9010 8DCE09A8 */  lw    $t6, %lo(watch_item_is_actively_selected)($t6)
 /* 0DDB44 7F0A9014 A7A20046 */  sh    $v0, 0x46($sp)
 /* 0DDB48 7F0A9018 3C0F8004 */  lui   $t7, %hi(game_options_index)
 /* 0DDB4C 7F0A901C 51C00008 */  beql  $t6, $zero, .L7F0A9040
@@ -6817,8 +6812,8 @@ glabel sub_GAME_7F0A91C8
 /* 0DDD0C 7F0A91DC 2404000C */   li    $a0, 12
 /* 0DDD10 7F0A91E0 0FC2A4D6 */  jal   get_mTrack2Vol
 /* 0DDD14 7F0A91E4 AFA2003C */   sw    $v0, 0x3c($sp)
-/* 0DDD18 7F0A91E8 3C0E8004 */  lui   $t6, %hi(watch_soundrelated_maybe)
-/* 0DDD1C 7F0A91EC 8DCE09A8 */  lw    $t6, %lo(watch_soundrelated_maybe)($t6)
+/* 0DDD18 7F0A91E8 3C0E8004 */  lui   $t6, %hi(watch_item_is_actively_selected)
+/* 0DDD1C 7F0A91EC 8DCE09A8 */  lw    $t6, %lo(watch_item_is_actively_selected)($t6)
 /* 0DDD20 7F0A91F0 A7A20046 */  sh    $v0, 0x46($sp)
 /* 0DDD24 7F0A91F4 3C0F8004 */  lui   $t7, %hi(game_options_index)
 /* 0DDD28 7F0A91F8 51C00007 */  beql  $t6, $zero, .L7F0A9218
@@ -7144,8 +7139,8 @@ glabel sub_GAME_7F0A9684
 /* 0DE1F0 7F0A96C0 1020000B */  beqz  $at, .L7F0A96F0
 /* 0DE1F4 7F0A96C4 8FA5001C */   lw    $a1, 0x1c($sp)
 .L7F0A96C8:
-/* 0DE1F8 7F0A96C8 3C0E8004 */  lui   $t6, %hi(watch_soundrelated_maybe)
-/* 0DE1FC 7F0A96CC 8DCE09A8 */  lw    $t6, %lo(watch_soundrelated_maybe)($t6)
+/* 0DE1F8 7F0A96C8 3C0E8004 */  lui   $t6, %hi(watch_item_is_actively_selected)
+/* 0DE1FC 7F0A96CC 8DCE09A8 */  lw    $t6, %lo(watch_item_is_actively_selected)($t6)
 /* 0DE200 7F0A96D0 3C0F8004 */  lui   $t7, %hi(controller_options_index)
 /* 0DE204 7F0A96D4 51C00007 */  beql  $t6, $zero, .L7F0A96F4
 /* 0DE208 7F0A96D8 8CA20000 */   lw    $v0, ($a1)
@@ -7167,7 +7162,7 @@ glabel sub_GAME_7F0A9684
 .L7F0A9710:
 /* 0DE240 7F0A9710 28410064 */  slti  $at, $v0, 0x64
 /* 0DE244 7F0A9714 1420000E */  bnez  $at, .L7F0A9750
-/* 0DE248 7F0A9718 3C0A8004 */   lui   $t2, %hi(watch_soundrelated_maybe)
+/* 0DE248 7F0A9718 3C0A8004 */   lui   $t2, %hi(watch_item_is_actively_selected)
 /* 0DE24C 7F0A971C 8FA80024 */  lw    $t0, 0x24($sp)
 /* 0DE250 7F0A9720 3C014120 */  li    $at, 0x41200000 # 10.000000
 /* 0DE254 7F0A9724 44814000 */  mtc1  $at, $f8
@@ -7182,7 +7177,7 @@ glabel sub_GAME_7F0A9684
 /* 0DE278 7F0A9748 1000001D */  b     .L7F0A97C0
 /* 0DE27C 7F0A974C E5200000 */   swc1  $f0, ($t1)
 .L7F0A9750:
-/* 0DE280 7F0A9750 8D4A09A8 */  lw    $t2, %lo(watch_soundrelated_maybe)($t2)
+/* 0DE280 7F0A9750 8D4A09A8 */  lw    $t2, %lo(watch_item_is_actively_selected)($t2)
 /* 0DE284 7F0A9754 3C0B8004 */  lui   $t3, %hi(controller_options_index)
 /* 0DE288 7F0A9758 5140001A */  beql  $t2, $zero, .L7F0A97C4
 /* 0DE28C 7F0A975C 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -7266,8 +7261,8 @@ glabel sub_GAME_7F0A97D0
 /* 0DE378 7F0A9848 1420FFF5 */  bnez  $at, .L7F0A9820
 /* 0DE37C 7F0A984C 00000000 */   nop
 .L7F0A9850:
-/* 0DE380 7F0A9850 3C188004 */  lui   $t8, %hi(watch_soundrelated_maybe)
-/* 0DE384 7F0A9854 8F1809A8 */  lw    $t8, %lo(watch_soundrelated_maybe)($t8)
+/* 0DE380 7F0A9850 3C188004 */  lui   $t8, %hi(watch_item_is_actively_selected)
+/* 0DE384 7F0A9854 8F1809A8 */  lw    $t8, %lo(watch_item_is_actively_selected)($t8)
 /* 0DE388 7F0A9858 3C198004 */  lui   $t9, %hi(controller_options_index)
 /* 0DE38C 7F0A985C 13000019 */  beqz  $t8, .L7F0A98C4
 /* 0DE390 7F0A9860 00000000 */   nop
@@ -7475,8 +7470,8 @@ glabel sub_GAME_7F0A97D0
 /* 0DB578 7F0A8B88 1420FFF5 */  bnez  $at, .L7F0A8B60
 /* 0DB57C 7F0A8B8C 00000000 */   nop   
 .L7F0A8B90:
-/* 0DB580 7F0A8B90 3C188004 */  lui   $t8, %hi(watch_soundrelated_maybe) # $t8, 0x8004
-/* 0DB584 7F0A8B94 8F18A5F8 */  lw    $t8, %lo(watch_soundrelated_maybe)($t8)
+/* 0DB580 7F0A8B90 3C188004 */  lui   $t8, %hi(watch_item_is_actively_selected) # $t8, 0x8004
+/* 0DB584 7F0A8B94 8F18A5F8 */  lw    $t8, %lo(watch_item_is_actively_selected)($t8)
 /* 0DB588 7F0A8B98 3C198004 */  lui   $t9, %hi(controller_options_index) # $t9, 0x8004
 /* 0DB58C 7F0A8B9C 13000019 */  beqz  $t8, .L7F0A8C04
 /* 0DB590 7F0A8BA0 00000000 */   nop   
@@ -7854,8 +7849,8 @@ glabel sub_GAME_7F0A9AB8
 /* 0DE884 7F0A9D54 24010001 */  li    $at, 1
 /* 0DE888 7F0A9D58 1521000A */  bne   $t1, $at, .L7F0A9D84
 /* 0DE88C 7F0A9D5C AFB8004C */   sw    $t8, 0x4c($sp)
-/* 0DE890 7F0A9D60 3C0A8004 */  lui   $t2, %hi(watch_soundrelated_maybe)
-/* 0DE894 7F0A9D64 8D4A09A8 */  lw    $t2, %lo(watch_soundrelated_maybe)($t2)
+/* 0DE890 7F0A9D60 3C0A8004 */  lui   $t2, %hi(watch_item_is_actively_selected)
+/* 0DE894 7F0A9D64 8D4A09A8 */  lw    $t2, %lo(watch_item_is_actively_selected)($t2)
 /* 0DE898 7F0A9D68 00002025 */  move  $a0, $zero
 /* 0DE89C 7F0A9D6C 11400005 */  beqz  $t2, .L7F0A9D84
 /* 0DE8A0 7F0A9D70 00000000 */   nop
@@ -8186,8 +8181,8 @@ glabel sub_GAME_7F0A9AB8
 /* 0DED74 7F0AA244 252A0019 */  addiu $t2, $t1, 0x19
 /* 0DED78 7F0AA248 1561000A */  bne   $t3, $at, .L7F0AA274
 /* 0DED7C 7F0AA24C AFAA004C */   sw    $t2, 0x4c($sp)
-/* 0DED80 7F0AA250 3C0C8004 */  lui   $t4, %hi(watch_soundrelated_maybe)
-/* 0DED84 7F0AA254 8D8C09A8 */  lw    $t4, %lo(watch_soundrelated_maybe)($t4)
+/* 0DED80 7F0AA250 3C0C8004 */  lui   $t4, %hi(watch_item_is_actively_selected)
+/* 0DED84 7F0AA254 8D8C09A8 */  lw    $t4, %lo(watch_item_is_actively_selected)($t4)
 /* 0DED88 7F0AA258 00002025 */  move  $a0, $zero
 /* 0DED8C 7F0AA25C 11800005 */  beqz  $t4, .L7F0AA274
 /* 0DED90 7F0AA260 00000000 */   nop
@@ -8734,8 +8729,8 @@ glabel sub_GAME_7F0A9AB8
 /* 0DBA84 7F0A9094 24010001 */  li    $at, 1
 /* 0DBA88 7F0A9098 1521000A */  bne   $t1, $at, .L7F0A90C4
 /* 0DBA8C 7F0A909C AFB8004C */   sw    $t8, 0x4c($sp)
-/* 0DBA90 7F0A90A0 3C0A8004 */  lui   $t2, %hi(watch_soundrelated_maybe) # $t2, 0x8004
-/* 0DBA94 7F0A90A4 8D4AA5F8 */  lw    $t2, %lo(watch_soundrelated_maybe)($t2)
+/* 0DBA90 7F0A90A0 3C0A8004 */  lui   $t2, %hi(watch_item_is_actively_selected) # $t2, 0x8004
+/* 0DBA94 7F0A90A4 8D4AA5F8 */  lw    $t2, %lo(watch_item_is_actively_selected)($t2)
 /* 0DBA98 7F0A90A8 00002025 */  move  $a0, $zero
 /* 0DBA9C 7F0A90AC 11400005 */  beqz  $t2, .L7F0A90C4
 /* 0DBAA0 7F0A90B0 00000000 */   nop   
@@ -9066,8 +9061,8 @@ glabel sub_GAME_7F0A9AB8
 /* 0DBF74 7F0A9584 252A001E */  addiu $t2, $t1, 0x1e
 /* 0DBF78 7F0A9588 1561000A */  bne   $t3, $at, .L7F0A95B4
 /* 0DBF7C 7F0A958C AFAA004C */   sw    $t2, 0x4c($sp)
-/* 0DBF80 7F0A9590 3C0C8004 */  lui   $t4, %hi(watch_soundrelated_maybe) # $t4, 0x8004
-/* 0DBF84 7F0A9594 8D8CA5F8 */  lw    $t4, %lo(watch_soundrelated_maybe)($t4)
+/* 0DBF80 7F0A9590 3C0C8004 */  lui   $t4, %hi(watch_item_is_actively_selected) # $t4, 0x8004
+/* 0DBF84 7F0A9594 8D8CA5F8 */  lw    $t4, %lo(watch_item_is_actively_selected)($t4)
 /* 0DBF88 7F0A9598 00002025 */  move  $a0, $zero
 /* 0DBF8C 7F0A959C 11800005 */  beqz  $t4, .L7F0A95B4
 /* 0DBF90 7F0A95A0 00000000 */   nop   
@@ -9669,8 +9664,8 @@ glabel sub_GAME_7F0AADC0
 /* 0DFA64 7F0AAF34 C42C0B24 */  lwc1  $f12, %lo(D_80040B24)($at)
 /* 0DFA68 7F0AAF38 0FC161A2 */  jal   matrix_4x4_set_rotation_around_z
 /* 0DFA6C 7F0AAF3C 27A504BC */   addiu $a1, $sp, 0x4bc
-/* 0DFA70 7F0AAF40 3C0F8004 */  lui   $t7, %hi(watch_soundrelated_maybe)
-/* 0DFA74 7F0AAF44 8DEF09A8 */  lw    $t7, %lo(watch_soundrelated_maybe)($t7)
+/* 0DFA70 7F0AAF40 3C0F8004 */  lui   $t7, %hi(watch_item_is_actively_selected)
+/* 0DFA74 7F0AAF44 8DEF09A8 */  lw    $t7, %lo(watch_item_is_actively_selected)($t7)
 /* 0DFA78 7F0AAF48 11E00016 */  beqz  $t7, .L7F0AAFA4
 /* 0DFA7C 7F0AAF4C 3C098004 */   lui   $t1, %hi(controller_options_index)
 /* 0DFA80 7F0AAF50 8D290998 */  lw    $t1, %lo(controller_options_index)($t1)
@@ -9869,8 +9864,8 @@ glabel sub_GAME_7F0AADC0
 /* 0DFD6C 7F0AB23C C42C0B34 */  lwc1  $f12, %lo(D_80040B34)($at)
 /* 0DFD70 7F0AB240 0FC161A2 */  jal   matrix_4x4_set_rotation_around_z
 /* 0DFD74 7F0AB244 27A504BC */   addiu $a1, $sp, 0x4bc
-/* 0DFD78 7F0AB248 3C088004 */  lui   $t0, %hi(watch_soundrelated_maybe)
-/* 0DFD7C 7F0AB24C 8D0809A8 */  lw    $t0, %lo(watch_soundrelated_maybe)($t0)
+/* 0DFD78 7F0AB248 3C088004 */  lui   $t0, %hi(watch_item_is_actively_selected)
+/* 0DFD7C 7F0AB24C 8D0809A8 */  lw    $t0, %lo(watch_item_is_actively_selected)($t0)
 /* 0DFD80 7F0AB250 11000016 */  beqz  $t0, .L7F0AB2AC
 /* 0DFD84 7F0AB254 3C0F8004 */   lui   $t7, %hi(controller_options_index)
 /* 0DFD88 7F0AB258 8DEF0998 */  lw    $t7, %lo(controller_options_index)($t7)
@@ -10140,8 +10135,8 @@ glabel sub_GAME_7F0AADC0
 /* 0E0658 7F0ABAE8 C42C0B54 */  lwc1  $f12, %lo(D_80040B24)($at)
 /* 0E065C 7F0ABAEC 0FC162EA */  jal   matrix_4x4_set_rotation_around_z
 /* 0E0660 7F0ABAF0 27A504BC */   addiu $a1, $sp, 0x4bc
-/* 0E0664 7F0ABAF4 3C088004 */  lui   $t0, %hi(watch_soundrelated_maybe) # $t0, 0x8004
-/* 0E0668 7F0ABAF8 8D0809D8 */  lw    $t0, %lo(watch_soundrelated_maybe)($t0)
+/* 0E0664 7F0ABAF4 3C088004 */  lui   $t0, %hi(watch_item_is_actively_selected) # $t0, 0x8004
+/* 0E0668 7F0ABAF8 8D0809D8 */  lw    $t0, %lo(watch_item_is_actively_selected)($t0)
 /* 0E066C 7F0ABAFC 11000016 */  beqz  $t0, .Ljp7F0ABB58
 /* 0E0670 7F0ABB00 3C0F8004 */   lui   $t7, %hi(controller_options_index) # $t7, 0x8004
 /* 0E0674 7F0ABB04 8DEF09C8 */  lw    $t7, %lo(controller_options_index)($t7)
@@ -10337,8 +10332,8 @@ glabel sub_GAME_7F0AADC0
 /* 0E0954 7F0ABDE4 C42C0B64 */  lwc1  $f12, %lo(D_80040B34)($at)
 /* 0E0958 7F0ABDE8 0FC162EA */  jal   matrix_4x4_set_rotation_around_z
 /* 0E095C 7F0ABDEC 27A504BC */   addiu $a1, $sp, 0x4bc
-/* 0E0960 7F0ABDF0 3C0C8004 */  lui   $t4, %hi(watch_soundrelated_maybe) # $t4, 0x8004
-/* 0E0964 7F0ABDF4 8D8C09D8 */  lw    $t4, %lo(watch_soundrelated_maybe)($t4)
+/* 0E0960 7F0ABDF0 3C0C8004 */  lui   $t4, %hi(watch_item_is_actively_selected) # $t4, 0x8004
+/* 0E0964 7F0ABDF4 8D8C09D8 */  lw    $t4, %lo(watch_item_is_actively_selected)($t4)
 /* 0E0968 7F0ABDF8 11800016 */  beqz  $t4, .Ljp7F0ABE54
 /* 0E096C 7F0ABDFC 3C0D8004 */   lui   $t5, %hi(controller_options_index) # $t5, 0x8004
 /* 0E0970 7F0ABE00 8DAD09C8 */  lw    $t5, %lo(controller_options_index)($t5)
@@ -10608,8 +10603,8 @@ glabel sub_GAME_7F0AADC0
 /* 0DCC58 7F0AA268 C42CA774 */  lwc1  $f12, %lo(D_80040B24)($at)
 /* 0DCC5C 7F0AA26C 0FC162CC */  jal   matrix_4x4_set_rotation_around_z
 /* 0DCC60 7F0AA270 27A504BC */   addiu $a1, $sp, 0x4bc
-/* 0DCC64 7F0AA274 3C088004 */  lui   $t0, %hi(watch_soundrelated_maybe) # $t0, 0x8004
-/* 0DCC68 7F0AA278 8D08A5F8 */  lw    $t0, %lo(watch_soundrelated_maybe)($t0)
+/* 0DCC64 7F0AA274 3C088004 */  lui   $t0, %hi(watch_item_is_actively_selected) # $t0, 0x8004
+/* 0DCC68 7F0AA278 8D08A5F8 */  lw    $t0, %lo(watch_item_is_actively_selected)($t0)
 /* 0DCC6C 7F0AA27C 11000016 */  beqz  $t0, .L7F0AA2D8
 /* 0DCC70 7F0AA280 3C0F8004 */   lui   $t7, %hi(controller_options_index) # $t7, 0x8004
 /* 0DCC74 7F0AA284 8DEFA5E8 */  lw    $t7, %lo(controller_options_index)($t7)
@@ -10805,8 +10800,8 @@ glabel sub_GAME_7F0AADC0
 /* 0DCF54 7F0AA564 C42CA784 */  lwc1  $f12, %lo(D_80040B34)($at)
 /* 0DCF58 7F0AA568 0FC162CC */  jal   matrix_4x4_set_rotation_around_z
 /* 0DCF5C 7F0AA56C 27A504BC */   addiu $a1, $sp, 0x4bc
-/* 0DCF60 7F0AA570 3C0C8004 */  lui   $t4, %hi(watch_soundrelated_maybe) # $t4, 0x8004
-/* 0DCF64 7F0AA574 8D8CA5F8 */  lw    $t4, %lo(watch_soundrelated_maybe)($t4)
+/* 0DCF60 7F0AA570 3C0C8004 */  lui   $t4, %hi(watch_item_is_actively_selected) # $t4, 0x8004
+/* 0DCF64 7F0AA574 8D8CA5F8 */  lw    $t4, %lo(watch_item_is_actively_selected)($t4)
 /* 0DCF68 7F0AA578 11800016 */  beqz  $t4, .L7F0AA5D4
 /* 0DCF6C 7F0AA57C 3C0D8004 */   lui   $t5, %hi(controller_options_index) # $t5, 0x8004
 /* 0DCF70 7F0AA580 8DADA5E8 */  lw    $t5, %lo(controller_options_index)($t5)
@@ -11012,7 +11007,7 @@ Gfx *draw_watch_control_options_page(Gfx *gdl, s32 param_2) {
         if (controller_options_index == 0)
         {
             phi_s1 = 0xA0FFA0F0;
-            if (watch_soundrelated_maybe != 0)
+            if (watch_item_is_actively_selected != 0)
             {
                 phi_s1 = -1;
             }
@@ -11020,7 +11015,7 @@ Gfx *draw_watch_control_options_page(Gfx *gdl, s32 param_2) {
         
         sub_GAME_7F0AE98C(&sp50, &sp54, textptr, ptr_second_font, ptr_first_font, 0);
         
-        if ((watch_soundrelated_maybe != 0) && (controller_options_index == 0))
+        if ((watch_item_is_actively_selected != 0) && (controller_options_index == 0))
         {
             gdl = jp_text_write_stuff(gdl, &sp5C, &sp58, textptr, ptr_second_font, ptr_first_font, phi_s1, 0x7000A0, sp54 + 1, sp50, 0, 0);
         } else
@@ -11043,7 +11038,7 @@ Gfx *draw_watch_control_options_page(Gfx *gdl, s32 param_2) {
         if (controller_options_index == 1)
         {
             phi_s1 = 0xA0FFA0F0;
-            if (watch_soundrelated_maybe != 0)
+            if (watch_item_is_actively_selected != 0)
             {
                 phi_s1 = -1;
             }
@@ -11051,7 +11046,7 @@ Gfx *draw_watch_control_options_page(Gfx *gdl, s32 param_2) {
         
         sub_GAME_7F0AE98C(&sp50, &sp54, textptr, ptr_second_font, ptr_first_font, 0);
 
-        if ((watch_soundrelated_maybe != 0) && (controller_options_index == 1))
+        if ((watch_item_is_actively_selected != 0) && (controller_options_index == 1))
         {
             gdl = jp_text_write_stuff(gdl, &sp5C, &sp58, textptr, ptr_second_font, ptr_first_font, phi_s1, 0x7000A0, sp54 + 1, sp50, 0, 0);
         } else
@@ -11074,7 +11069,7 @@ void game_option_select_value(u32 *param_1, u32 param_2)
 
 void game_option_toggle_input(s32 option_index)
 {
-    if ( (joyGetButtonsPressedThisFrame(PLAYER_1, L_CBUTTONS|L_TRIG|L_JPAD) || sub_GAME_7F0A4FB0()) && watch_soundrelated_maybe )
+    if ( (joyGetButtonsPressedThisFrame(PLAYER_1, L_CBUTTONS|L_TRIG|L_JPAD) || sub_GAME_7F0A4FB0()) && watch_item_is_actively_selected )
     {
         if (game_options_entries[option_index].current_value == 1)
         {
@@ -11087,7 +11082,7 @@ void game_option_toggle_input(s32 option_index)
     }
     else
     {
-        if ( (joyGetButtonsPressedThisFrame(PLAYER_1, R_CBUTTONS|R_TRIG|R_JPAD) || sub_GAME_7F0A4FEC()) && watch_soundrelated_maybe )
+        if ( (joyGetButtonsPressedThisFrame(PLAYER_1, R_CBUTTONS|R_TRIG|R_JPAD) || sub_GAME_7F0A4FEC()) && watch_item_is_actively_selected )
         {
             if (game_options_entries[option_index].current_value == 0)
             {
@@ -11491,7 +11486,7 @@ Gfx *draw_toggle_options(Gfx *gdl)
 
         if ( i == game_options_index - 2)
         {
-            if (watch_soundrelated_maybe)
+            if (watch_item_is_actively_selected)
             {
                 gdl = sub_GAME_7F0AB908(sub_GAME_7F0A9398(gdl, XOFFSET_1, y_offset, langGet(game_options_entries[i].text[0]), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0), y_offset, i, 2);
             }
@@ -11543,7 +11538,7 @@ Gfx *draw_watch_game_options_page(Gfx *gdl, s32 param_2) {
         if (game_options_index == 0)
         {
             sp5C = 0xA0FFA0F0;
-            if (watch_soundrelated_maybe != 0)
+            if (watch_item_is_actively_selected != 0)
             {
                 sp5C = -1;
             }
@@ -11551,7 +11546,7 @@ Gfx *draw_watch_game_options_page(Gfx *gdl, s32 param_2) {
 
         sub_GAME_7F0AE98C(&sp48, &sp4C, textptr, ptr_second_font, ptr_first_font, 0);
 
-        if ((watch_soundrelated_maybe != 0) && (game_options_index == 0))
+        if ((watch_item_is_actively_selected != 0) && (game_options_index == 0))
         {
             gdl = jp_text_write_stuff(gdl, &sp54, &sp50, textptr, ptr_second_font, ptr_first_font, sp5C, 0x7000A0, sp4C + 1, sp48, 0, 0);
         }
@@ -11570,7 +11565,7 @@ Gfx *draw_watch_game_options_page(Gfx *gdl, s32 param_2) {
         if (game_options_index == 1)
         {
             sp5C = 0xA0FFA0F0;
-            if (watch_soundrelated_maybe != 0)
+            if (watch_item_is_actively_selected != 0)
             {
                 sp5C = -1;
             }
@@ -11578,7 +11573,7 @@ Gfx *draw_watch_game_options_page(Gfx *gdl, s32 param_2) {
 
         sub_GAME_7F0AE98C(&sp48, &sp4C, textptr, ptr_second_font, ptr_first_font, 0);
 
-        if ((watch_soundrelated_maybe != 0) && (game_options_index == 1))
+        if ((watch_item_is_actively_selected != 0) && (game_options_index == 1))
         {
             gdl = jp_text_write_stuff(gdl, &sp54, &sp50, textptr, ptr_second_font, ptr_first_font, sp5C, 0x7000A0, sp4C + 1, sp48, 0, 0);
         }
