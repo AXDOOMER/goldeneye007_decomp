@@ -87,9 +87,9 @@ void sets_a_bunch_of_BONDdata_values_to_default(void)
 
     g_CurrentPlayer->headdamp = DAMPVAL;
 
-    g_CurrentPlayer->field_4F0 = 0;
-    g_CurrentPlayer->field_4F4 = 1.0f;
-    g_CurrentPlayer->field_4F8 = 1.0f;
+    g_CurrentPlayer->headwalkingtime60 = 0;
+    g_CurrentPlayer->headamplitude = 1.0f;
+    g_CurrentPlayer->sideamplitude = 1.0f;
     g_CurrentPlayer->headpos[0] = 0.0f;
     g_CurrentPlayer->headpos[1] = 0.0f;
     g_CurrentPlayer->headpos[2] = 0.0f;
@@ -118,15 +118,15 @@ void sets_a_bunch_of_BONDdata_values_to_default(void)
     g_CurrentPlayer->headupsum[2] = 0.0f;
     g_CurrentPlayer->resetheadpos = 1;
     g_CurrentPlayer->resetheadrot = 1;
-    g_CurrentPlayer->field_4E4 = 1;
-    g_CurrentPlayer->field_544[0] = 0.0f;
-    g_CurrentPlayer->field_544[1] = 0.0f;
-    g_CurrentPlayer->field_544[2] = 0.0f;
-    g_CurrentPlayer->stationary_ground_offset = 0.0f;
-    g_CurrentPlayer->field_554 = 0.0f;
-    g_CurrentPlayer->field_558 = 0.0f;
-    g_CurrentPlayer->field_55C = 0.0f;
-    g_CurrentPlayer->field_560 = 0.0f;
+    g_CurrentPlayer->resetheadtick = 1;
+    g_CurrentPlayer->headbodyoffset[0] = 0.0f;
+    g_CurrentPlayer->headbodyoffset[1] = 0.0f;
+    g_CurrentPlayer->headbodyoffset[2] = 0.0f;
+    g_CurrentPlayer->standheight = 0.0f;
+    g_CurrentPlayer->standbodyoffset.x = 0.0f;
+    g_CurrentPlayer->standbodyoffset.y = 0.0f;
+    g_CurrentPlayer->standbodyoffset.z = 0.0f;
+    g_CurrentPlayer->standfrac = 0.0f;
     g_CurrentPlayer->standlook[0][0] = 0.0f;
     g_CurrentPlayer->standlook[0][1] = 0.0f;
     g_CurrentPlayer->standlook[0][2] = 1.0f;
@@ -165,10 +165,10 @@ void sets_a_bunch_of_BONDdata_values_to_default(void)
 
     subcalcmatrices(&sp90, &g_CurrentPlayer->model);
 
-    g_CurrentPlayer->stationary_ground_offset = g_CurrentPlayer->field_704;
-    g_CurrentPlayer->field_554 = 0.0f;
-    g_CurrentPlayer->field_558 = g_CurrentPlayer->field_744 - g_CurrentPlayer->field_704;
-    g_CurrentPlayer->field_55C = g_CurrentPlayer->field_748 - g_CurrentPlayer->field_708;
+    g_CurrentPlayer->standheight = g_CurrentPlayer->field_704;
+    g_CurrentPlayer->standbodyoffset.x = 0.0f;
+    g_CurrentPlayer->standbodyoffset.y = g_CurrentPlayer->field_744 - g_CurrentPlayer->field_704;
+    g_CurrentPlayer->standbodyoffset.z = g_CurrentPlayer->field_748 - g_CurrentPlayer->field_708;
 
     modelSetAnimation(
         &g_CurrentPlayer->model,

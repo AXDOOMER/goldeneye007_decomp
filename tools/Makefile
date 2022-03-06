@@ -23,10 +23,13 @@ GZIP := gzipsrc/gzip
 $(GZIP):
 	@$(MAKE) -C gzipsrc
 
+ifeq ($(IDO_RECOMP), YES)
+
 IDO53 := ido5.3_recomp/cc
 
 $(IDO53):
 	@$(MAKE) -C ido5.3_recomp
+endif
 
 all: $(GZIP) $(PROGRAMS) $(CXX_PROGRAMS) $(IDO53)
 

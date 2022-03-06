@@ -825,28 +825,28 @@ u32 D_8002BA2C = 0;
 u32 D_8002BA30 = 0;
 u32 D_8002BA34 = 0;
 
-PROPS random_rifles_in_intro[] =
+PROP random_rifles_in_intro[] =
 {
-    PROP_chrkalash,
-    PROP_chrm16,
-    PROP_chrfnp90,
-    PROP_chrautoshot,
-    PROP_chrgrenadelaunch,
-    PROP_chrsniperrifle
+    PROP_CHRKALASH,
+    PROP_CHRM16,
+    PROP_CHRFNP90,
+    PROP_CHRAUTOSHOT,
+    PROP_CHRGRENADELAUNCH,
+    PROP_CHRSNIPERRIFLE
 };
 
-PROPS random_pistols_in_intro[] =
+PROP random_pistols_in_intro[] =
 {
-    PROP_chrwppk,
-    PROP_chrwppksil,
-    PROP_chrskorpion,
-    PROP_chruzi,
-    PROP_chruzi,
-    PROP_chrtt33,
-    PROP_chrtt33,
-    PROP_chrruger,
-    PROP_chrlaser,
-    PROP_chrgolden
+    PROP_CHRWPPK,
+    PROP_CHRWPPKSIL,
+    PROP_CHRSKORPION,
+    PROP_CHRUZI,
+    PROP_CHRUZI,
+    PROP_CHRTT33,
+    PROP_CHRTT33,
+    PROP_CHRRUGER,
+    PROP_CHRLASER,
+    PROP_CHRGOLDEN
 };
 
 f32 D_8002BA78 = 0.0f;

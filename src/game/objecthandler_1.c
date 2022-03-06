@@ -5011,7 +5011,7 @@ glabel sub_GAME_7F06F5B4
 /**
  * Address 0x7F06F5BC.
 */
-f32 objecthandlerGetModelField28(struct Model *model)
+f32 objecthandlerGetModelField28(Model *model)
 {
     return model->unk28;
 }
@@ -5021,8 +5021,22 @@ f32 objecthandlerGetModelField28(struct Model *model)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F06F5C4(void) {
+f32 sub_GAME_7F06F5C4(Model *model)
+{
+    f32   temp_f2;
+    ModelAnimation *temp_v0;
 
+    temp_f2 = model->unk3C;
+    if (temp_f2 >= 0.0f)
+    {
+        return temp_f2;
+    }
+    temp_v0 = model->anim;
+    if (temp_v0 != 0)
+    {
+        return temp_v0->unk04 - 1;
+    }
+    return 0.0f;
 }
 #else
 GLOBAL_ASM(
@@ -5058,18 +5072,11 @@ glabel sub_GAME_7F06F5C4
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F06F610(void) {
-
+f32 sub_GAME_7F06F610(Model *model)
+{
+    return model->unk40;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06F610
-/* 0A4140 7F06F610 03E00008 */  jr    $ra
-/* 0A4144 7F06F614 C4800040 */   lwc1  $f0, 0x40($a0)
-)
-#endif
+
 
 
 

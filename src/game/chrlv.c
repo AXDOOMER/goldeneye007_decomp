@@ -126,8 +126,8 @@ s32 chrlvMaybeSameRoom                        (ChrRecord *self, coord3d *arg1, S
 s32 chrlvCurrentPlayerCall7F0B0E24            (ChrRecord *self);
 s32 chrlvCall7F0B0E24WithChrWidthHeight       (PropRecord *arg0, coord3d *arg1, coord3d *arg2);
 void chrlvSetTargetToPlayer                   (ChrRecord *self);
-s32 chrSawTargetRecently                        (ChrRecord *);
-s32 chrCheckTargetInSight                         (ChrRecord *self);
+s32 chrSawTargetRecently                      (ChrRecord *);
+s32 chrCheckTargetInSight                     (ChrRecord *self);
 void chrlvNormDistanceToPlayer                (ChrRecord *self, s32 arg1, coord3d *arg2);
 s32 sub_GAME_7F02A0EC                         (ChrRecord *self, s32 arg1, f32 arg2);
 void chrlvModelRotyRelated                    (ChrRecord *self, s32 arg1, coord3d *arg2);
@@ -766,7 +766,7 @@ void chrlvActorShuffleFeet(ChrRecord *self)
         return;
     }
 
-    if (chrIsStopped(self) == 0)
+    if (chrHasStoppedOrPatroling(self) == 0)
     {
         chrlvKneelingAnimationRelated(self);
     }
@@ -4575,7 +4575,7 @@ void chrlvAlertGuardToPlayerPosition(ChrRecord *self)
 /**
  * Address 0x7F029C5C.
 */
-bool chrIsStopped(ChrRecord *self)
+bool chrHasStoppedOrPatroling(ChrRecord *self) //chrHasStoppedOrPatroling
 {
     if ((self->actiontype == ACT_STAND) && !self->act_stand.unk02c && !self->act_stand.unk038)
     {
@@ -5061,7 +5061,7 @@ bool actor_runs_and_fires(ChrRecord *self)
 
             if ((SQR(dx) + SQR(dy) + SQR(dz)) >= (1000000.0f))
             {
-                chrlvInitActAttackWalk(self, SPEED_JOG);
+                chrlvInitActAttackWalk(self, SPEED_RUN);
                 return TRUE;
             }
         }
@@ -7164,7 +7164,7 @@ void chrlvFireWeaponRelated(ChrRecord *self, s32 hand)
                     {
                         if (((dx * dx) + (dy * dy) + (dz * dz)) > 160000.0f)
                         {
-                            sp208 = (struct WeaponObjRecord *)create_new_item_instance_of_model(PROP_chrrocket, 0x56);
+                            sp208 = (struct WeaponObjRecord *)create_new_item_instance_of_model(PROP_CHRROCKET, 0x56);
                             if (sp208 != NULL)
                             {
                                 matrix_4x4_set_identity(&sp1C8);
@@ -7218,7 +7218,7 @@ void chrlvFireWeaponRelated(ChrRecord *self, s32 hand)
                     {
                         if (((dx * dx) + (dy * dy) + (dz * dz)) > 160000.0f)
                         {
-                            sp128 = (struct WeaponObjRecord *)create_new_item_instance_of_model(PROP_chrgrenaderound, 0x57);
+                            sp128 = (struct WeaponObjRecord *)create_new_item_instance_of_model(PROP_CHRGRENADEROUND, 0x57);
                             if (sp128 != NULL)
                             {
                                 matrix_4x4_set_identity(&spE8);
@@ -9201,35 +9201,35 @@ s32 sub_GAME_7F0301FC(ChrRecord *self, coord3d *point, StandTile *arg2, coord3d 
 /**
  * Address 0x7F0304AC.
 */
-s32 sub_GAME_7F0304AC(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *arg3, coord3d *arg4, StandTile *arg5, s32 arg6)
+s32 sub_GAME_7F0304AC(ChrRecord *self, coord3d *mypos, StandTile *mystan, coord3d *arg3, coord3d *bondpos, StandTile *bondstan, s32 arg6)
 {
     StandTile *sp44;
-    s32 sp40;
+    bool pass;
     f32 sp3C;
     f32 sp38;
     f32 sp34;
     StandTile *sp30;
 
-    sp44 = arg2;
-    sp40 = 0;
+    sp44 = mystan; // duplicate var? needed?
+    pass = FALSE;
 
     chrGetChrWidthHeight(self->prop, &sp34, &sp3C, &sp38);
     set_or_unset_GUARDdata_flag(self, 0);
 
-    if (sub_GAME_7F0B0E24(&sp44, arg1->x, arg1->f[2], arg3->x, arg3->f[2], arg6, sp3C, sp38, 0.0f, 1.0f))
+    if (sub_GAME_7F0B0E24(&sp44, mypos->x, mypos->z, arg3->x, arg3->z, arg6, sp3C, sp38, 0.0f, 1.0f))
     {
-        sp30 = sp44;
+        sp30 = sp44; // duplicate var? needed?
 
-        if (sub_GAME_7F0B0E24(&sp30, arg3->x, arg3->f[2], arg4->x, arg4->f[2], arg6, sp3C, sp38, 0.0f, 1.0f)
-            && ((arg5 == NULL) || (sp30 == arg5)))
+        if (sub_GAME_7F0B0E24(&sp30, arg3->x, arg3->z, bondpos->x, bondpos->z, arg6, sp3C, sp38, 0.0f, 1.0f)
+            && ((bondstan == NULL) || (sp30 == bondstan)))
         {
-            sp40 = 1;
+            pass = TRUE;
         }
     }
 
     set_or_unset_GUARDdata_flag(self, 1);
 
-    return sp40;
+    return pass;
 }
 
 
@@ -10566,14 +10566,14 @@ f32 get_distance_actor_to_position(ChrRecord *self, coord3d *pos)
     f32         radToPos;
     f32         radMyHeading;
     PropRecord *myprop;
-    f32         angle;
+    f32         anglebetween;
 
     radMyHeading = getsubroty(self->model);
     myprop       = self->prop;
-    angle        = atan2f(pos->x - myprop->pos.x, pos->z - myprop->pos.z);
-    radToPos     = angle - radMyHeading;
+    anglebetween = atan2f(pos->x - myprop->pos.x, pos->z - myprop->pos.z);
+    radToPos     = anglebetween - radMyHeading;
 
-    if (angle < radMyHeading)
+    if (anglebetween < radMyHeading)
     {
         radToPos = radToPos + M_TAU_F;
     }
@@ -10655,10 +10655,10 @@ f32 chrGetAngleFromBond(ChrRecord *self)
     f32 radBondHeading   = get_curplay_horizontal_rotation_in_degrees();
     PropRecord *myprop   = self->prop;
     PropRecord *bondprop = get_curplayer_positiondata();
-    f32 angle            = atan2f(myprop->pos.x - bondprop->pos.x, myprop->pos.z - bondprop->pos.z);
-    f32 radFromBond      = angle - radBondHeading;
+    f32 anglebetween     = atan2f(myprop->pos.x - bondprop->pos.x, myprop->pos.z - bondprop->pos.z);
+    f32 radFromBond      = anglebetween - radBondHeading;
 
-    if (angle < radBondHeading)
+    if (anglebetween < radBondHeading)
     {
         radFromBond = radFromBond + M_TAU_F;
     }
@@ -10749,7 +10749,7 @@ bool check_if_room_for_preset_loaded(ChrRecord *self, s32 padnum)
 s32 chrResolvePadId(ChrRecord *guardData,s32 padNo)
 {
     // Guard's target pad.
-    if (padNo == PAD_PRESET)
+    if (padNo == PAD_PRESET1)
     {
         padNo = (s32)guardData->padpreset1;
     }
@@ -10879,87 +10879,87 @@ f32 chrGetDistanceFromBondToPad(ChrRecord *self, s32 padid)
 
 
 /**
- * The property is named "BITFIELD".
+ * The property is named "flags2".
  * Address 0x7F033218.
 */
-void chrSetFlags(ChrRecord *self, u8 arg1)
+void chrSetFlags2(ChrRecord *self, u8 flags2)
 {
-    self->BITFIELD |= arg1;
+    self->flags2 |= flags2;
 }
 
 
 
 /**
- * The property is named "BITFIELD".
+ * The property is named "flags2".
  * Address 0x7F03322C.
 */
-void chrUnsetFlags(ChrRecord *self, u8 arg1)
+void chrUnsetFlags2(ChrRecord *self, u8 flags2)
 {
-    self->BITFIELD &= ~arg1;
+    self->flags2 &= ~flags2;
 }
 
 
 
 /**
- * The property is named "BITFIELD".
+ * The property is named "flags2".
  * Address 0x7F033244.
 */
-s32 chrHasFlag(ChrRecord *self, u8 arg1)
+s32 chrHasFlags2(ChrRecord *self, u8 flags2)
 {
-    return (self->BITFIELD & arg1) != 0;
+    return (self->flags2 & flags2) != 0;
 }
 
 
 
 /**
- * The property is named "BITFIELD".
+ * The property is named "flags2".
  * Address 0x7F033260.
 */
-void chrSetFlagsById(ChrRecord *self, s32 guard_id, u8 arg2)
+void chrSetFlags2ById(ChrRecord *self, s32 chrNum, u8 flags2)
 {
-    ChrRecord *guard;
+    ChrRecord *chr;
 
-    guard = chrFindById(self, guard_id);
+    chr = chrFindById(self, chrNum);
 
-    if (guard != NULL)
+    if (chr != NULL)
     {
-        chrSetFlags(guard, arg2);
+        chrSetFlags2(chr, flags2);
     }
 }
 
 
 
 /**
- * The property is named "BITFIELD".
+ * The property is named "flags2".
  * Address 0x7F033290.
 */
-void chrUnsetFlagsById(ChrRecord *self, s32 guard_id, u8 arg2)
+void chrUnsetFlags2ById(ChrRecord *self, s32 chrNum, u8 flags2)
 {
-    ChrRecord *guard;
+    ChrRecord *chr;
 
-    guard = chrFindById(self, guard_id);
+    chr = chrFindById(self, chrNum);
 
-    if (guard != NULL)
+    if (chr != NULL)
     {
-        chrUnsetFlags(guard, arg2);
+        chrUnsetFlags2(chr, flags2);
     }
 }
 
 
 
 /**
- * The property is named "BITFIELD".
+ * The property is named "flags2".
  * Address 0x7F0332C0.
 */
-bool chrHasFlagById(ChrRecord *self, s32 guard_id, u8 arg2)
+bool chrHasFlags2ById(ChrRecord *self, s32 chrNum, u8 flags2)
 {
-    ChrRecord *guard;
+    ChrRecord *chr;
 
-    guard = chrFindById(self, guard_id);
+    chr = chrFindById(self, chrNum);
 
-    if (guard != NULL)
+    if (chr != NULL)
     {
-        return chrHasFlag(guard, arg2);
+        return chrHasFlags2(chr, flags2);
     }
 
     return FALSE;
@@ -11636,7 +11636,7 @@ s32 chrIsTargetNearlyInSight(ChrRecord *self)
     }
     else
     {
-        getCollisionEdge_maybe(&sp48, &sp3C);
+        getCollisionEdge_maybe(&sp48, &sp3C); //extreme edges of stan tile
 
         if (
             sub_GAME_7F0304AC(self, &self_prop->pos, self_prop->stan, &sp48, &player_prop->pos, player_prop->stan, 0)
@@ -11797,7 +11797,9 @@ PropRecord *chrSpawnAtPad(ChrRecord *self, s32 bodynum, s32 headnum, s32 padid, 
     {
         pad = (PadRecord *)&g_chraiCurrentSetup.boundpads[getBoundPadNum(padid)];
     }
-
+    #ifdef DEBUG
+    osSyncPrintf("%s%s new char x = %f, y = %f, z = %f \n", "", "", pad->pos.x, pad->pos.y, pad->pos.z);
+    #endif
     return actionblock_guard_constructor_BDBE(bodynum, headnum, &pad->pos, pad->stan, atan2f(pad->look.f[0], pad->look.f[2]), ailist, flags);
 }
 

@@ -7,8 +7,8 @@ default: colour
 # Version of the game to build
 FINAL := YES
 VERSION := US
-IDO_RECOMP := YES
-VERBOSE := 
+IDO_RECOMP := NO
+VERBOSE := 0
 # If COMPARE is 1, check the output sha1sum when building 'all'
 COMPARE := 1
 
@@ -18,18 +18,58 @@ SAVECURSOR := \0337\033[s
 RESTORECURSOR := \0338\033[u
 SET_SCROLLREGION = \033[$(1);$(2)r
 RESTORESCROLLREGION := \033[r
-RESTORECOLOUR := \033[m
-FGWHITEB :=\033[1;97m
-FGWHITE := \033[0;97m
-FGYELLOW := \033[0;93m
-FGRED := \033[0;91m
-FGGREEN := \033[1;92m
-FGBLUE := \033[0;94m
-BGBLUE := \033[1;44m
-BGGREY := \033[100m
 CURSOR_GOTO = \033[$(1);$(2)H
+SET_TEXTATTRIB = \033[$(1)$(if $(2),;$(2))$(if $(3),;$(3))m
+BELL := \007
+
+#Attributes
+RESTORECOLOUR := \033[m
+BOLD := 1
+DIM := 2
+UNDERSCORE := 4
+BLINK := 5
+INVERT := 7
+HIDDEN := 8
+
+#Colours
+FG_BLACK:= 30
+FG_MAROON:= 31
+FG_GREEN:= 32
+FG_OLIVE:= 33
+FG_NAVY:= 34
+FG_PURPLE:= 35
+FG_TEAL:= 36
+FG_SILVER:= 37
+FG_GRAY:= 90
+FG_RED:= 91
+FG_LIME:= 92
+FG_YELLOW:= 93
+FG_BLUE:= 94
+FG_VIOLET:= 95
+FG_CYAN:= 96
+FG_WHITE:= 97
+
+BG_BLACK:= 40
+BG_MAROON:= 41
+BG_GREEN:= 42
+BG_OLIVE:= 43
+BG_NAVY:= 44
+BG_PURPLE:= 45
+BG_TEAL:= 46
+BG_SILVER:= 47
+BG_GRAY:= 100
+BG_RED:= 101
+BG_LIME:= 102
+BG_YELLOW:= 103
+BG_BLUE:= 104
+BG_VIOLET:= 105
+BG_CYAN:= 106
+BG_WHITE:= 107
 
 ### Build Functions ###
+# Common build print status function
+PRINT_STATUS = @echo "$(call SET_TEXTATTRIB,$(FG_GREEN))$(1) $(call SET_TEXTATTRIB,$(FG_OLIVE))$(2)$(call SET_TEXTATTRIB,$(FG_GRAY)) $(if $3, -> $(call SET_TEXTATTRIB,$(FG_NAVY))$(3))$(RESTORECOLOUR)"
+
 #(call DrawProgressBar,Percent)
 # OR
 #(call DrawProgressBar,NumberOfItemsDone,TotalNumberOfItems)
@@ -52,21 +92,40 @@ DrawProgressBar =                                       \
 		                                                \
 		pdone=`expr $$_pdone \* 76 / 100`;              \
 		pdoneb=0;                                       \
-		str="$(SAVECURSOR)$(call SET_SCROLLREGION,3,0)$(call CURSOR_GOTO,2,999)\033[1J$(call CURSOR_GOTO,1)$(FGWHITEB)$(BGGREY)%79s$(call CURSOR_GOTO,1)$(BGBLUE)" ;    \
-		if [ "$$pdone" -lt "40" ];                      \
+		str="$(SAVECURSOR)$(call SET_SCROLLREGION,3,0)$(call CURSOR_GOTO,2,999)\033[1J$(call CURSOR_GOTO,1)$(call SET_TEXTATTRIB,$(BOLD),$(FG_WHITE))$(call SET_TEXTATTRIB,$(BG_GRAY))%80s$(call CURSOR_GOTO,1)$(call SET_TEXTATTRIB,$(BG_NAVY))" ;    \
+		                                                \
+		if [ "$$pdone" -lt "38" ];                      \
 		then                                            \
-			str=$$str"%$${pdone}s";                       \
-			str=$$str"$(BGGREY)";                         \
+			str=$$str"%$${pdone}s";                     \
+			str=$$str"$(call SET_TEXTATTRIB,$(BG_GRAY))";\
 			pdoneb=`expr 38 - $$pdone`;                 \
-			str=$$str"%$${pdoneb}s%3d%%";  \
+			str=$$str"%$${pdoneb}s%3d%%";               \
 		else                                            \
 			pdoneb=`expr $$pdone - 38`;                 \
-			str=$$str"%1s%37s%3d%%%$${pdoneb}s"; \
+			str=$$str"%1s%37s%3d%%%$${pdoneb}s";        \
 		fi;                                             \
-		str=$$str"$(RESTORECURSOR)$(RESTORECOLOUR)";                               \
-		printf $$str "" "" "" $$_pdone; \
-	}                                                   \
+		str=$$str"$(RESTORECURSOR)$(RESTORECOLOUR)";    \
+		printf $$str "" "" "" $$_pdone;                 \
+	}
 
+# Increment Progress Bar From percentage (1), and increase by 1 every (2) seconds.
+# Continue doing so until calling process ends
+IncrementProgressBarFromAtRate =         \
+	{                                    \
+		i=$(1);                          \
+		while [ -d /proc/$$! ]; do       \
+			$(call DrawProgressBar,$$i); \
+			i=$$((i+1));                 \
+			sleep $(2);                  \
+		done;                            \
+	}
+
+# Convert AI Print commands from readable strings to byte arrays automatically.
+ConvertAIPRINT = sed -E -e ':loop s/PRINT\("(..*?)(.)"/PRINT\("\1",\x27\2\x27/g; tloop; \
+                s/(PRINT\(.*?)\x27\\\x27,\x27(.)\x27(.*)\)/\1\x27\\\2\x27\3\)/g; \
+                s/(PRINT\()"(.)"(.*)\)/\1\x27\2\x27\3\)/g; \
+                s/PRINT\((.*)\)/PRINT\(\1,\x27\\0\x27\,)/g; \
+                s/PRINT\((.*)\)/AI_PRINT,\1/g'
 
 ## More Build Variables (Auto) ##
 
@@ -250,10 +309,12 @@ endif
 ASM_PREPROC := python3 tools/asmpreproc/asm-processor.py
 
 OBJCOPY := $(TOOLCHAIN)objcopy
-#                        Rsrv   Up 3   Flash  Wht  80  Dn 1 Return      Dn 1 Ret 80ch                 Red 
-#                        Lines Lines     Red/Grn   ch  Line SoL midway  Line SoL   Bell Reset Colour 
-PRINTNOMATCH := printf "\n\n\033[3A\033[5;41;97m%80s\033[1B\r%45s%35s\033[1B\r%80s\007$(RESTORECOLOUR)\033[91m\n\n\n" "" "NOT MATCH!" "" ""
-PRINTMATCH := printf "\n\n\n\033[3A\033[5;42;97m%80s\033[1B\r%43s%37s\033[1B\r%80s\007$(RESTORECOLOUR)\n" "" "MATCH!" "" "" 
+
+#Now using cursor commands for better look  original was //"\033[5;42;97m%80s\r\n%43s%37s\r\n%80s\007\033[0;0m\n"
+#                        Rsrv   Up 3                                                        80  Dn 1 Return      Dn 1 Ret 80ch                  
+#                        Lines Lines                                                        ch  Line SoL midway  Line SoL      Bell 
+PRINTNOMATCH := printf "\n\n\033[3A$(call SET_TEXTATTRIB,$(BLINK),$(BG_MAROON),$(FG_WHITE))%80s\033[1B\r%45s%35s\033[1B\r%80s$(BELL)$(RESTORECOLOUR)$(call SET_TEXTATTRIB,$(FG_RED))\n\n\n" "" "NOT MATCH!" "" ""
+PRINTMATCH := printf "\n\n\n\033[3A$(call SET_TEXTATTRIB,$(BLINK),$(BG_GREEN),$(FG_WHITE))%80s\033[1B\r%43s%37s\033[1B\r%80s$(BELL)$(RESTORECOLOUR)\n" "" "MATCH!" "" "" 
 
 ## Build Recipies ##
 
@@ -262,15 +323,14 @@ PRINTMATCH := printf "\n\n\n\033[3A\033[5;42;97m%80s\033[1B\r%43s%37s\033[1B\r%8
 include src/libultrare/Makefile.libultrare
 
 all: $(APPROM)
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,100)
 endif
 ifeq ($(COMPARE),1)
 
 	@echo "\n"
-#Now using cursor commands for better look  original was //"\033[5;42;97m%80s\r\n%43s%37s\r\n%80s\007\033[0;0m\n"
-#   Calculate Checksum                      if fail                                         Which File failed                                                              Reset Colour
-	@$(SHA1SUM) -c ge007.$(OUTCODE).sha1 || ($(PRINTNOMATCH) && $(SHA1SUM) --quiet -c checksums.txt && printf "Mismatch in code!\nLocate mismatching code and add 0x34b34\n\n\033[0;0m" && exit 1)
+#   Calculate Checksum                      if fail                                         Allow overspill                                    Which File failed                       Quick Check (data)                    Slow Check (extract .text binary)
+	@$(SHA1SUM) -c ge007.$(OUTCODE).sha1 || ($(PRINTNOMATCH) && echo "$(SAVECURSOR)$(RESTORESCROLLREGION)$(RESTORECURSOR)\033[1DPlease wait while we determine which files are affected..." && $(SHA1SUM) --quiet -c checksums.txt && ./test_files.sh -c -i ge007.$(OUTCODE)-test_basis.csv && exit 1)
 #   Else complete 
 	@$(PRINTMATCH)
 endif
@@ -300,68 +360,72 @@ endif
 
 # Build RSP
 $(BUILD_DIR)/rsp/%.bin: rsp/*.s pb1
+	$(call PRINT_STATUS,Assembling:,$<,$@)
 	$(ARMIPS) -sym $@.sym -strequ CODE_FILE $(BUILD_DIR)/rsp/$*.bin -strequ DATA_FILE $(BUILD_DIR)/rsp/$*_data.bin $<
-	@echo $@
 
 $(BUILD_DIR)/src/rspboot.o: $(BUILD_DIR)/rsp/rspboot.bin 
 
 #Build asm files in root
 $(BUILD_DIR)/%.o: src/%.s pb2
+	$(call PRINT_STATUS,Assembling:,$<,$@)
 	$(AS) $(ASFLAGS) -o $@ $<
-	@echo $@
 
 #Build asm files in src/
 $(BUILD_DIR)/src/%.o: src/%.s pb3
+	$(call PRINT_STATUS,Assembling:,$<,$@)
 	$(AS) $(ASFLAGS) -o $@ $<
-	@echo $@
 
 #Build Images
 $(BUILD_DIR)/assets/images/split/%.o: assets/images/split/%.bin pb4
+	$(call PRINT_STATUS,Compiling:,$<,$@)
 	$(LD) -r -b binary $< -o $@
-	@echo $@
 
 #Compress Obseg
 $(BUILD_DIR)/$(OBSEGMENT): $(OBSEG_RZ) $(IMAGE_OBJS) pb6
-	@echo $@
+	$(call PRINT_STATUS,Compressing:,$<,$@)
 
 #Build C files in root/
 $(BUILD_DIR)/%.o: src/%.c pb7
+	$(call PRINT_STATUS,Compiling:,$<,$@)
 	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
 	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
-	@echo $@
 
 
 #Build C files in src/
 $(BUILD_DIR)/src/%.o: src/%.c pb8
-	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
+	$(call PRINT_STATUS,Compiling:,$<,$@)
+ #	convert AI_PRINT commands from readable to byte-array
+	$(if $(filter %chraidata.c,$<), @cp $< $<.tmp; $(ConvertAIPRINT) $<.tmp > $<)
+	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION) $(if $(filter %chraidata.c,$<), || (cp $<.tmp $< && exit 1))
 	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
-	@echo $@
+ #	restore file
+	$(if $(filter %chraidata.c,$<), @cp $<.tmp $<; rm $<.tmp)
 
 #Build RamRom
 $(BUILD_DIR)/assets/ramrom/%.o: assets/ramrom/%.s pb9
+	$(call PRINT_STATUS,Assembling:,$<,$@)
 	$(AS) $(ASFLAGS) -o $@ $<
-	@echo $@
 
 #Build fonts
 $(BUILD_DIR)/assets/font/%.o: assets/font/%.c pb10
+	$(call PRINT_STATUS,Compiling:,$<,$@)
 	$(CC) -c $(CFLAGS) -o $@ $(OPTIMIZATION) $<
-	@echo $@
 
 #Build asm files in assets/
 $(BUILD_DIR)/assets/%.o: assets/%.s pb11
+	$(call PRINT_STATUS,Assembling:,$<,$@)
 	$(AS) $(ASFLAGS) -o $@ $<
-	@echo $@
 
 #Build Obseg
 $(BUILD_DIR)/assets/obseg/%.o: assets/obseg/%.s $(OBSEG_RZ) pb12
+	$(call PRINT_STATUS,Assembling:,$<,$@)
 	$(AS) $(ASFLAGS) -o $@ $<
-	@echo $@
 
 #Build C files in assets/
 $(BUILD_DIR)/assets/%.o: assets/%.c pb13
+	$(call PRINT_STATUS,Compiling:,$<,$@)
 	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
 	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
-	@echo $@
 
 #$(BUILD_DIR)/src/random.o: OPTIMIZATION := -O3
 #$(BUILD_DIR)/src/random.o: INCLUDE := -I . -I include -I include/PR
@@ -371,20 +435,23 @@ $(BUILD_DIR)/assets/%.o: assets/%.c pb13
 
 #Link Files
 $(APPELF): $(RSPOBJECTS) $(ULTRAOBJECTS) $(HEADEROBJECTS) $(OBSEG_RZ) $(BUILD_DIR)/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(ASSET_DATAOBJECTS) $(ROMOBJECTS2) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS) pb14
-	@echo "Linking Files"
-	$(LD) $(LDFLAGS) -o $@ 
+	@echo "Linking Files into ELF" 
+	$(LD) $(LDFLAGS) -o $@ > /dev/null & $(call IncrementProgressBarFromAtRate,87,1.5)
 
 $(APPBIN): $(APPELF)
-  ifeq ($(VERBOSE),)
+  ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,98)
   endif
+	@echo "Building ROM"
 	$(OBJCOPY) $< $@ -O binary --gap-fill=0xff
 	
 $(APPROM):	$(APPBIN)
-  ifeq ($(VERBOSE),)
+  ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,100)
   endif
+	@echo "Compressing ROM"
 	$(DATASEG_COMP) $< $(OUTCODE)
+	@echo "Finalizing ROM"
 	$(N64CKSUM) $< $@
 
 .PRECIOUS: %.bin  %.o
@@ -459,16 +526,16 @@ help:
 	@echo ""
 	@echo "  supported targets:"
 	@echo ""
-	@echo "    all                            $(FGGREEN) Build$(RESTORECOLOUR) all (default)"
-	@echo "    clean                          $(FGRED) Delete all$(RESTORECOLOUR) build artifacts"
-	@echo "    dataclean                      $(FGRED) Delete$(RESTORECOLOUR) only asset build artifacts"
-	@echo "    codeclean                      $(FGRED) Delete$(RESTORECOLOUR) only code (asm, .c) build artifacts"
-	@echo "    libultraclean                  $(FGRED) Delete$(RESTORECOLOUR) only code (asm, .c) build artifacts "
+	@echo "    all                            $(call SET_TEXTATTRIB,$(FG_LIME)) Build$(RESTORECOLOUR) all (default)"
+	@echo "    clean                          $(call SET_TEXTATTRIB,$(FG_RED)) Delete all$(RESTORECOLOUR) build artifacts"
+	@echo "    dataclean                      $(call SET_TEXTATTRIB,$(FG_RED)) Delete$(RESTORECOLOUR) only asset build artifacts"
+	@echo "    codeclean                      $(call SET_TEXTATTRIB,$(FG_RED)) Delete$(RESTORECOLOUR) only code (asm, .c) build artifacts"
+	@echo "    libultraclean                  $(call SET_TEXTATTRIB,$(FG_RED)) Delete$(RESTORECOLOUR) only code (asm, .c) build artifacts "
 	@echo "                                    from Rare's libultra files"
-	@echo "    stanclean                      $(FGRED) Delete$(RESTORECOLOUR) only stan build artifacts"
-	@echo "    setupclean                     $(FGRED) Delete$(RESTORECOLOUR) only setup build artifacts"
-	@echo "    cmdbuidler                     $(FGGREEN) Build$(RESTORECOLOUR) AI Commands"
-	@echo "    context [file]                 $(FGGREEN) Build$(RESTORECOLOUR) Context File from [file]"
+	@echo "    stanclean                      $(call SET_TEXTATTRIB,$(FG_RED)) Delete$(RESTORECOLOUR) only stan build artifacts"
+	@echo "    setupclean                     $(call SET_TEXTATTRIB,$(FG_RED)) Delete$(RESTORECOLOUR) only setup build artifacts"
+	@echo "    cmdbuidler                     $(call SET_TEXTATTRIB,$(FG_LIME)) Build$(RESTORECOLOUR) AI Commands"
+	@echo "    context [file]                 $(call SET_TEXTATTRIB,$(FG_LIME)) Build$(RESTORECOLOUR) Context File from [file]"
 	@echo "                                    eg make context src/game/chrai.c"
 	@echo "    test                            Re-Run Data Verification "
 	@echo ""
@@ -483,28 +550,30 @@ AI_CMD_BUILDER := $(TOOLS_DIR)/cmdbuilder.c
 AI_CMD_LIST_DEFINITIONS := src/aicommands.def
 AI_CMD_LIST_TEMP := $(BUILD_DIR)/aicommands.temp
 AI_CMD_LIST_H2 := src/aicommands2.h
+#Pre-Format encoding newlines and tags
+AI_CMD_BUILDER_PRECONVERT := sed -E
+AI_CMD_BUILDER_PRECONVERT += -e 's/\x27\\n\x27/\x27\/n\x27/g;' #                     encode '\n' as '/n' (TEXT PRINT command)
+AI_CMD_BUILDER_PRECONVERT += -e '/^\s*\*/ s/\x27/\?\?x27/g;' #                       encode DocBlock(/**...**/) quotes '' as x27
+AI_CMD_BUILDER_PRECONVERT += -e '/\/\*\*/ , /\*\// s/([^/])$$/\1 \\n\\/g;' #         encode DocBlock(/**...**/) Newlines as \n\ .
+#AI_CMD_BUILDER_PRECONVERT += -e '/^\s*\*/ s/([^\/])$$/\1 \\n\\/g;' #                encode DocBlock(/**...**/) Newlines as \n\ .
+AI_CMD_BUILDER_PRECONVERT += -e 's/[^/\*\S]\*$$/\\n\\/g; s/^(\s*)\*[^/\*]/\1  /g;' # remove DocBlock sides (causes problems with tooltips) fixed to check for ordinary comment
+#AI_CMD_BUILDER_PRECONVERT += -e '/^_AI_CMD_POLYMORPH\(CMDNAME,\n(.|\n)*?\s{19}DESCRIPTION(\)| DESCRIPTION2\))/ s/[^,]\n/\\n\\/g;' #      Newlines in POLYMORPHS 
+AI_CMD_BUILDER_PRECONVERT += -e 's/\/\*\*/\?\?\\\*\(\*\*/g;' #                       encode /** as ??\*(**
+AI_CMD_BUILDER_PRECONVERT += -e 's/\*\*\//\*\*\)\*\?\?\\ /g;' #                      encode **/ as **)*??\ 
 #Format Newlines and Comment tags
 AI_CMD_BUILDER_CONVERT := sed -E
 AI_CMD_BUILDER_CONVERT += -e 's/\\n/\n/g;' #                add newlines
 AI_CMD_BUILDER_CONVERT += -e 's/\?{2}\=/\#/g;' #            replace ??= with hash for defines
 AI_CMD_BUILDER_CONVERT += -e 's/\?{2}\\/\//g;' #            replace ??\ with /
+AI_CMD_BUILDER_CONVERT += -e 's/DEFINE([^D])/\#define\1/g;' #       replace DEFINE with #define
 AI_CMD_BUILDER_CONVERT += -e 's/\\.*/\\/g;' #               replace \... with \ (line continuation)
 AI_CMD_BUILDER_CONVERT += -e 's/\*\(\*/\*/g;' #             replace *(* with *
 AI_CMD_BUILDER_CONVERT += -e 's/\*\)\*/\*/g;' #             replace *)* with *
 AI_CMD_BUILDER_CONVERT += -e 's/MAKE_EXPAND\(([^\n]*)MAKE_EXPAND_END\)/\1/g;' #replace MAKE_EXPAND(CONTENTS) with CONTENTS
 AI_CMD_BUILDER_CONVERT += -e 's/\?{2}x27/\x27/g;' #         replace ??x27 with '
 AI_CMD_BUILDER_CONVERT += -e 's/\x27\/n\x27/\x27\\n\x27/g;' # replace '/n' with '\n'
+AI_CMD_BUILDER_CONVERT += -e 's/AI_EndList\s*,/AI_EndList/g;' # replace AI_EndList , with AI_EndList
 AI_CMD_BUILDER_CONVERT += -e '/^ *$$/d'
-#Pre-Format encoding newlines and tags
-AI_CMD_BUILDER_PRECONVERT := sed -E
-AI_CMD_BUILDER_PRECONVERT += -e 's/\x27\\n\x27/\x27\/n\x27/g;' #                encode '\n' as '/n'
-AI_CMD_BUILDER_PRECONVERT += -e '/^\s*\*/ s/\x27/\?\?x27/g;' #                  encode DocBlock(/**...**/) quotes
-#AI_CMD_BUILDER_PRECONVERT += -e 's/[^/]\*\n/\\BOO\\/g;' #      encode DocBlock newlines as \n\ 
-AI_CMD_BUILDER_PRECONVERT += -e 's/[^/]\*$$/\\n\\/g; s/^(\s*)\*[^/]/\1 /g;' #   remove DocBlock sides (causes problems with tooltips) fixed to check for ordinary comment
-AI_CMD_BUILDER_PRECONVERT += -e '/^_AI_CMD_POLYMORPH\(CMDNAME,\n(.|\n)*?\s{19}DESCRIPTION(\)| DESCRIPTION2\))/ s/[^,]\n/\\n\\/g;' #      Newlines in POLYMORPHS 
-AI_CMD_BUILDER_PRECONVERT += -e 's/\/\*\*/\?\?\\\*\(\*\*/g;' #                  encode /** as ??\*(**
-AI_CMD_BUILDER_PRECONVERT += -e 's/\*\*\//\*\*\)\*\?\?\\ /g;' #                 encode **/ as **)*??\ 
-#AI_CMD_BUILDER_PRECONVERT += -e 's/asterix! --> \*\//asterix! --> \x27\//g;' # Comment Syntax Highlighter - Dont need this now
 
 AI_CMD_LIST_H2_HEADER := \
 "/******************************************************************************\n\
@@ -525,109 +594,113 @@ cmdbuilder:
 	@echo
 	@echo Building AI Command Macros...
 	@echo
-	@$(call DrawProgressBar,0,6)
+	@$(call DrawProgressBar,0)
 	@ # copy command definitions to temp
 	@cp $(AI_CMD_LIST_DEFINITIONS) $(AI_CMD_LIST_TEMP)
-	@$(call DrawProgressBar,1,6)
+	@$(call DrawProgressBar,5)
 	@ # Preformat Definitions for builder (encode documentation tags)
+	@$(call PRINT_STATUS,"Pre Formatting",$(AI_CMD_LIST_DEFINITIONS))
 	@$(AI_CMD_BUILDER_PRECONVERT) $(AI_CMD_LIST_TEMP) > $(AI_CMD_LIST_DEFINITIONS)
-	@$(call DrawProgressBar,2,6)
+	@$(call DrawProgressBar,10)
 	@ # Print Header
 	@echo $(AI_CMD_LIST_H2_HEADER) > $(AI_CMD_LIST_H2)
-	@$(call DrawProgressBar,3,6)
+	@$(call DrawProgressBar,11)
 	@ # Execute Builder and format (re-add newlines, documentation tags etc) -C keeps /**/ comments
-	@$(CC) -Xcpluscomm -c $(AI_CMD_BUILDER) $(INCLUDE) -w 581 -E | $(AI_CMD_BUILDER_CONVERT) >> $(AI_CMD_LIST_H2)
-	@$(call DrawProgressBar,4,6)
+	@$(call PRINT_STATUS,"Processing",$(AI_CMD_LIST_DEFINITIONS))
+	@echo This might take some time...
+	@$(CC) -Xcpluscomm -c $(AI_CMD_BUILDER) $(INCLUDE) -w 581 -E | $(AI_CMD_BUILDER_CONVERT) >> $(AI_CMD_LIST_H2) & $(call IncrementProgressBarFromAtRate,12,0.5)
+	@$(call DrawProgressBar,98)
 	@ # restore command def from temp (no encoding)
 	@cp $(AI_CMD_LIST_TEMP) $(AI_CMD_LIST_DEFINITIONS)
-	@$(call DrawProgressBar,5,6)
+	@$(call DrawProgressBar,99)
 	@rm $(AI_CMD_LIST_TEMP)
 	@$(call DrawProgressBar,100)
 	@echo
-	@printf "%32s\n" "Done!"
+	@echo Done!
 	@echo
 	@echo Rebuild AI Command Macros whenever changing aicommands.def.
-	@echo
+	@echo "\n$(BELL)$(SAVECURSOR)$(RESTORESCROLLREGION)$(RESTORECURSOR)\033[1A"
 
 test:
 	@$(SHA1SUM) --quiet -c checksums.txt
 	@printf "\033[1;92m All Checked Files Match\033[0m\n\n"
-#	@$(SHA1SUM) $(BG_SEG_FILES) $(BRIEF_RZ_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) \
+#	@$(SHA1SUM) $(BG__SEG_FILES) $(BRIEF_RZ_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) \
 	$(PROP_RZ_FILES) $(SETUP_BIN_FILES) $(STAN_RZ_FILES) $(TEXT_RZ_FILES) > checksums.txt
 
 
 ifneq ($(filter-out context,$(MAKECMDGOALS)),)
  CONTEXTFILE := $(filter-out context ,$(MAKECMDGOALS))
 else
- CONTEXTFILE := ctx.c
+ CONTEXTFILE := build/ctx.c
 endif
 context:
 	@clear
 	@echo Building Context File [ctx.h] from $(CONTEXTFILE)
 	@echo "#define TRUE 1" > build/ctx.h
 	@echo "#define FALSE 0" >> build/ctx.h
-	@sed -n -E ':x /\\$$/ { N; s/\\\n//g ; bx };''/(^\s*#define)|(\\$$)/p; /(\\$$)/p;' src/bondconstants.h src/bondtypes.h >> build/ctx.h
-ifeq ($(CONTEXTFILE),ctx.c)
+ifeq ($(CONTEXTFILE),build/ctx.c)
 	@echo "#include <bondtypes.h>" > build/ctx.c
-	@$(CC) -c $(CFLAGS) build/ctx.c -E > build/ctx2.h  2> /dev/null
-else
-	@$(CC) -c $(CFLAGS) $(CONTEXTFILE) -E > build/ctx2.h 2> /dev/null
 endif	
+	@sed -n -E ':x /\\$$/ { N; s/\\\n//g ; bx };''/(^\s*#define)|(\\$$)/p; /(\\$$)/p;' src/bondconstants.h src/bondtypes.h $(CONTEXTFILE) >> build/ctx.h
+	@$(CC) -c $(CFLAGS) $(CONTEXTFILE) -E > build/ctx2.h 2> /dev/null || (rm build/ctx2.h && exit 1)
 	@sed -E '/^\s*$$/d' build/ctx2.h >> build/ctx.h
-	@rm build/ctx.c build/ctx2.h
+	@rm build/ctx.c build/ctx2.h || exit 0
 	@echo You can find it in Build [build/ctx.h].
 
 colour:
-  ifeq ($(VERBOSE),)
+  ifeq ($(VERBOSE),0)
 #	@clear
 	@echo "\033[3A"
 	@$(call DrawProgressBar,0)
   endif
 	@$(MAKE) --no-print-directory all 2>&1 | sed -E \
-	-e "s/^.*[Ee]rror.*/$$(echo "$(FGRED)")&$$(echo "$(RESTORECOLOUR)")/g" \
-	-e "s/^.*[Ww]arning.*/$$(echo "$(FGYELLOW)")&$$(echo "$(RESTORECOLOUR)")/g" \
-	-e "s/^.*(([Bb]uilding)|([Ll]inkin)).*/$$(echo "$(FGBLUE)")&$$(echo "$(RESTORECOLOUR)")/g" \
-	-e "s/\s((src.*?(!stdin)\.c)|(build.*?\.o))\s/$$(echo "$(FGWHITE)")&$$(echo "$(RESTORECOLOUR)")/g"
+	-e 's/\(\(\x27E\x27\,\x27R\x27\,\x27R\x27\,\x27O\x27\,\x27R\x27,\s?((\x27?,?\s?\x27.)*)\x27,\s?\x27([^x27])\x27\)/((\x27ERROR\x27,\1\3\x27\)/g; :loop s/\(\((\x27ERROR)((\x27?,?\s?\x27.)*),?\s?\x27(.)\x27([^x27]*)\x27\)/((\1\2\5\x27\)/g; tloop; ' \
+	-e "s/(ERROR:[^\x27]*?\x27)|(^.*[Ee]rror.*)|(Mis-Match in)|(:\sFAILED)/$$(echo "$(call SET_TEXTATTRIB,$(FG_RED))")&$$(echo "$(RESTORECOLOUR)")/g" \
+	-e "s/^.*[Ww]arning.*/$$(echo "$(call SET_TEXTATTRIB,$(FG_YELLOW))")&$$(echo "$(RESTORECOLOUR)")/g" \
+	-e "s/^.*(([Bb]uilding)|(:\sOK)|([Ll]inkin)).*/$$(echo "$(call SET_TEXTATTRIB,$(FG_LIME))")&$$(echo "$(RESTORECOLOUR)")/g" \
+	-e "s/((([^\/]*([^s][^t][^d][^i][^n])\.c)|([^\/]*\.o))\s)/$$(echo "$(call SET_TEXTATTRIB,$(FG_WHITE))")&$$(echo "$(RESTORECOLOUR)")/g" 
 	@echo "$(SAVECURSOR)$(RESTORESCROLLREGION)$(RESTORECURSOR)\033[1A"
-$(VERBOSE).SILENT:
 
+ifeq ($(VERBOSE),0)
+.SILENT:
+endif
 
 
 ## Progress Bar status - call once ##
 pb1:
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,1,15)
 endif
 pb2:
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,2,15)
 endif
 pb3:
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,3,15)
 endif
 pb4:
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,4,15)
 endif
 pb5:
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,5,15)
 endif
 pb6:
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,6,15)
 endif
 pb7:
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,7,15)
 endif
 pb8:
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,8,15)
 endif
 pb9:
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,9,15)
 endif
 pb10:
@@ -635,19 +708,19 @@ ifeq ($(VERBOSE),)
 	@$(call DrawProgressBar,10,15)
 endif
 pb11:
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,11,15)
 endif
 pb12:
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,12,15)
 endif
 pb13:
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,13,15)
 endif
 pb14:
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,14,15)
 endif
 

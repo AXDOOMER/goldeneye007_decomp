@@ -192,28 +192,28 @@ void bheadUpdate(f32 arg0, f32 arg1)
     {
         if (spC0 > 0.7f)
         {
-            g_CurrentPlayer->field_4F4 = 1.0f;
+            g_CurrentPlayer->headamplitude = 1.0f;
         }
         else if (spC0 > 0.1f)
         {
-            g_CurrentPlayer->field_4F4 = (((spC0 - 0.1f) * 0.6f) / 0.59999996f) + 0.4f;
+            g_CurrentPlayer->headamplitude = (((spC0 - 0.1f) * 0.6f) / 0.59999996f) + 0.4f;
         }
         else
         {
-            g_CurrentPlayer->field_4F4 = 0.4f;
+            g_CurrentPlayer->headamplitude = 0.4f;
         }
 
-        g_CurrentPlayer->field_4F8 = g_CurrentPlayer->field_4F4;
+        g_CurrentPlayer->sideamplitude = g_CurrentPlayer->headamplitude;
     }
     else if (g_CurrentPlayer->headanim == 1)
     {
-        g_CurrentPlayer->field_4F4 = 0.9f;
-        g_CurrentPlayer->field_4F8 = 0.5f;
+        g_CurrentPlayer->headamplitude = 0.9f;
+        g_CurrentPlayer->sideamplitude = 0.5f;
     }
     else
     {
-        g_CurrentPlayer->field_4F4 = 1.0f;
-        g_CurrentPlayer->field_4F8 = g_CurrentPlayer->field_4F4;
+        g_CurrentPlayer->headamplitude = 1.0f;
+        g_CurrentPlayer->sideamplitude = g_CurrentPlayer->headamplitude;
     }
 
     sp80 = D_80036B24;
@@ -222,7 +222,7 @@ void bheadUpdate(f32 arg0, f32 arg1)
 
     sp30 = sub_GAME_7F0701E0();
 
-    g_CurrentPlayer->field_4E4 = 0;
+    g_CurrentPlayer->resetheadtick = 0;
 
     sub_GAME_7F0701D4(0);
     sub_GAME_7F070AEC(&g_CurrentPlayer->model, g_ClockTimer, 1);
@@ -236,9 +236,9 @@ void bheadUpdate(f32 arg0, f32 arg1)
 
     subcalcmatrices(&sp80, &g_CurrentPlayer->model);
 
-    g_CurrentPlayer->field_544[0] = g_CurrentPlayer->field_554;
-    g_CurrentPlayer->field_544[1] = g_CurrentPlayer->field_558;
-    g_CurrentPlayer->field_544[2] = g_CurrentPlayer->field_55C;
+    g_CurrentPlayer->headbodyoffset[0] = g_CurrentPlayer->standbodyoffset.x;
+    g_CurrentPlayer->headbodyoffset[1] = g_CurrentPlayer->standbodyoffset.y;
+    g_CurrentPlayer->headbodyoffset[2] = g_CurrentPlayer->standbodyoffset.z;
 
     getsuboffset(&g_CurrentPlayer->model, (struct float3 *) &sp34);
 
@@ -258,24 +258,24 @@ void bheadUpdate(f32 arg0, f32 arg1)
             g_CurrentPlayer->field_708 /= g_GlobalTimerDelta;
         }
 
-        headpos.f[0] = g_CurrentPlayer->field_700 * g_CurrentPlayer->field_4F4;
-        headpos.f[1] = ((g_CurrentPlayer->field_704 - g_CurrentPlayer->stationary_ground_offset) * g_CurrentPlayer->field_4F4) + g_CurrentPlayer->stationary_ground_offset;
-        headpos.f[2] = g_CurrentPlayer->field_708 * g_CurrentPlayer->field_4F4;
+        headpos.f[0] = g_CurrentPlayer->field_700 * g_CurrentPlayer->headamplitude;
+        headpos.f[1] = ((g_CurrentPlayer->field_704 - g_CurrentPlayer->standheight) * g_CurrentPlayer->headamplitude) + g_CurrentPlayer->standheight;
+        headpos.f[2] = g_CurrentPlayer->field_708 * g_CurrentPlayer->headamplitude;
 
         if (g_CurrentPlayer->headanim >= 0)
         {
-            lookvel.f[0] = g_CurrentPlayer->field_6F0 * g_CurrentPlayer->field_4F8;
-            lookvel.f[1] = g_CurrentPlayer->field_6F4 * g_CurrentPlayer->field_4F4;
-            lookvel.f[2] = ((g_CurrentPlayer->field_6F8 - 1.0f) * g_CurrentPlayer->field_4F4) + 1.0f;
+            lookvel.f[0] = g_CurrentPlayer->field_6F0 * g_CurrentPlayer->sideamplitude;
+            lookvel.f[1] = g_CurrentPlayer->field_6F4 * g_CurrentPlayer->headamplitude;
+            lookvel.f[2] = ((g_CurrentPlayer->field_6F8 - 1.0f) * g_CurrentPlayer->headamplitude) + 1.0f;
 
-            upvel.f[0] = g_CurrentPlayer->field_6E0 * g_CurrentPlayer->field_4F4;
-            upvel.f[1] = ((g_CurrentPlayer->field_6E4 - 1.0f) * g_CurrentPlayer->field_4F4) + 1.0f;
-            upvel.f[2] = g_CurrentPlayer->field_6E8 * g_CurrentPlayer->field_4F4;
+            upvel.f[0] = g_CurrentPlayer->field_6E0 * g_CurrentPlayer->headamplitude;
+            upvel.f[1] = ((g_CurrentPlayer->field_6E4 - 1.0f) * g_CurrentPlayer->headamplitude) + 1.0f;
+            upvel.f[2] = g_CurrentPlayer->field_6E8 * g_CurrentPlayer->headamplitude;
 
-            g_CurrentPlayer->field_4F0 += g_ClockTimer;
+            g_CurrentPlayer->headwalkingtime60 += g_ClockTimer;
 
 #if defined(VERSION_EU)
-            if (g_CurrentPlayer->field_4F0 >= 0x33)
+            if (g_CurrentPlayer->headwalkingtime60 >= 0x33)
             {
                 bheadSetdamp(0.916599988937f);
             }
@@ -284,7 +284,7 @@ void bheadUpdate(f32 arg0, f32 arg1)
                 bheadSetdamp(0.987999975681f);
             }
 #else
-            if (g_CurrentPlayer->field_4F0 >= 0x3D)
+            if (g_CurrentPlayer->headwalkingtime60 >= 0x3D)
             {
                 bheadSetdamp(0.93f);
             }
@@ -309,32 +309,32 @@ void bheadUpdate(f32 arg0, f32 arg1)
     }
     else
     {
-        g_CurrentPlayer->field_544[0] = g_CurrentPlayer->field_554;
-        g_CurrentPlayer->field_544[1] = g_CurrentPlayer->field_558;
-        g_CurrentPlayer->field_544[2] = g_CurrentPlayer->field_55C;
+        g_CurrentPlayer->headbodyoffset[0] = g_CurrentPlayer->standbodyoffset.x;
+        g_CurrentPlayer->headbodyoffset[1] = g_CurrentPlayer->standbodyoffset.y;
+        g_CurrentPlayer->headbodyoffset[2] = g_CurrentPlayer->standbodyoffset.z;
 
         headpos.f[0] = 0.0f;
-        headpos.f[1] = g_CurrentPlayer->stationary_ground_offset;
+        headpos.f[1] = g_CurrentPlayer->standheight;
         headpos.f[2] = 0.0f;
 
-        g_CurrentPlayer->field_4F0 = 0;
+        g_CurrentPlayer->headwalkingtime60 = 0;
 #if defined(VERSION_EU)
         bheadSetdamp(0.987999975681f);
 #else
         bheadSetdamp(0.99f);
 #endif
-        g_CurrentPlayer->field_560 += (0.008333334f + (0.025000002f * bondviewGetBondBreathing())) * g_GlobalTimerDelta;
+        g_CurrentPlayer->standfrac += (0.008333334f + (0.025000002f * bondviewGetBondBreathing())) * g_GlobalTimerDelta;
 
-        if (g_CurrentPlayer->field_560 >= 1.0f)
+        if (g_CurrentPlayer->standfrac >= 1.0f)
         {
             bheadUpdateIdleRoll();
-            g_CurrentPlayer->field_560 -= 1.0f;
+            g_CurrentPlayer->standfrac -= 1.0f;
         }
 
         sub_GAME_7F05AE00(
             &g_CurrentPlayer->standlook[g_CurrentPlayer->standcnt][0],
             &g_CurrentPlayer->standlook[1 - g_CurrentPlayer->standcnt][0],
-            g_CurrentPlayer->field_560,
+            g_CurrentPlayer->standfrac,
             &lookvel);
 
         lookvel.f[0] *= (1.0f + (5.0f * bondviewGetBondBreathing()));
@@ -343,7 +343,7 @@ void bheadUpdate(f32 arg0, f32 arg1)
         sub_GAME_7F05AE00(
             &g_CurrentPlayer->standup[g_CurrentPlayer->standcnt][0],
             &g_CurrentPlayer->standup[1 - g_CurrentPlayer->standcnt][0],
-            g_CurrentPlayer->field_560,
+            g_CurrentPlayer->standfrac,
             &upvel);
 
         upvel.f[0] *= (1.0f + (5.0f * bondviewGetBondBreathing()));
