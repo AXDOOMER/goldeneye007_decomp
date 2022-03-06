@@ -1748,7 +1748,8 @@ struct player
   s32 field_19EC;
   s32 field_19F0;
   s32 field_19F4;
-  s32 field_19F8;
+
+  s32 watch_body_armor_bar_gdl; // used in watch
   s32 field_19FC;
   s32 field_1A00;
   s32 field_1A04;
@@ -2208,7 +2209,7 @@ struct player
   s32 field_211C;
   s32 field_2120;
   s32 field_2124;
-  s32 field_2128;
+  s32 watch_health_bar_gdl; // used in watch
   s32 field_212C;
   s32 field_2130;
   s32 field_2134;
@@ -2748,7 +2749,7 @@ struct player
   s32 field_298C;
   s32 field_2990;
   s32 field_2994;
-  s32 field_2998;
+  s32 field_2998; // used in watch
   s32 field_299C;
   s32 field_29A0;
   s32 field_29A4;
@@ -3265,5 +3266,7 @@ void     set_camera_mode(s32 arg0);
 bool     isBondInTank(void);
 void     hudmsgTopShow(s8 *string);
 void     SurroundWithExplosions(int delay);
+s32 check_watch_page_transistion_running(void);
+f32 bondviewWatchAnimationRelated(void);
 
 #endif
