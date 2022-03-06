@@ -44743,28 +44743,10 @@ glabel sub_GAME_7F05474C
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0547DC(void) {
-
+void sub_GAME_7F0547DC(DoorRecord *door) {
+    door->flags &= 0x7FFFFFFF;
+    play_door_opening_soundeffect_1(door);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0547DC
-/* 08930C 7F0547DC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 089310 7F0547E0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 089314 7F0547E4 8C8E0008 */  lw    $t6, 8($a0)
-/* 089318 7F0547E8 3C017FFF */  lui   $at, (0x7FFFFFFF >> 16) # lui $at, 0x7fff
-/* 08931C 7F0547EC 3421FFFF */  ori   $at, (0x7FFFFFFF & 0xFFFF) # ori $at, $at, 0xffff
-/* 089320 7F0547F0 01C17824 */  and   $t7, $t6, $at
-/* 089324 7F0547F4 0FC14FD9 */  jal   play_door_opening_soundeffect_1
-/* 089328 7F0547F8 AC8F0008 */   sw    $t7, 8($a0)
-/* 08932C 7F0547FC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 089330 7F054800 27BD0018 */  addiu $sp, $sp, 0x18
-/* 089334 7F054804 03E00008 */  jr    $ra
-/* 089338 7F054808 00000000 */   nop   
-)
-#endif
 
 
 
