@@ -892,8 +892,6 @@ u16 color_palette_entries_50_percent[] = {1, 0x1F, 0x3C1, 0x3DF, 0x7801, 0x781F,
 Gfx* add_tab3_previous(Gfx* DL);
 s32 check_if_stage_completed_on_difficulty(int stage, DIFFICULTY difficulty);
 s32 get_highest_unlocked_difficulty_for_level(s32 arg0);
-Gfx * write_text_at_abs_coord(Gfx *, s32* x, s32 *y, u8 *text, s32 ptrSecondFontTableLarge, s32 ptrFirstFontTableLarge, u32 rgb_hex, s16 width, s16 height, s32 unk9, s32 unka);
-
 Gfx *constructor_menu00_legalscreen(Gfx *DL);
 Gfx *constructor_menu01_nintendo(Gfx *DL);
 Gfx *constructor_menu02_rareware(Gfx *DL);
