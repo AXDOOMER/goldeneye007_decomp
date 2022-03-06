@@ -44052,313 +44052,129 @@ void sub_GAME_7F053B10(DoorRecord *door) //#MATCH
 
 
 
-#ifdef NONMATCHING
-void play_door_opening_soundeffect_0(void) {
+void play_door_opening_soundeffect_0(DoorRecord *door) {
+    ALSoundState *soundState = NULL;
+    ALSoundState *pendingState = NULL;
 
+    sub_GAME_7F053B10(door);
+
+    if (door->unkf4 == NULL)
+    {
+        pendingState = &door->unkf4;
+    }
+    else if (door->unkf8 == NULL)
+    {
+        pendingState = &door->unkf8;
+    }
+
+    switch (door->doorOpenSound)
+    {
+    case 1:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD2, NULL);
+        if (pendingState != NULL)
+        {
+            sndPlaySfx(g_musicSfxBufferPtr, 0xD3, pendingState);
+        }
+        break;
+    case 2:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD2, NULL);
+        if (pendingState != NULL)
+        {
+            sndPlaySfx(g_musicSfxBufferPtr, 7, pendingState);
+        }
+        break;
+    case 3:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xCA, NULL);
+        if (pendingState != NULL)
+        {
+            sndPlaySfx(g_musicSfxBufferPtr, 0xCC, pendingState);
+        }
+        break;
+    case 4:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD6, NULL);
+        if (pendingState != NULL)
+        {
+            sndPlaySfx(g_musicSfxBufferPtr, 0xD8, pendingState);
+        }
+        break;
+    case 5:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xBC, NULL);
+        break;
+    case 6:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 7, NULL);
+        break;
+    case 7:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xC0, NULL);
+        if (pendingState != NULL)
+        {
+            sndPlaySfx(g_musicSfxBufferPtr, 0xBF, pendingState);
+        }
+        break;
+    case 8:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xBC, NULL);
+        if (pendingState != NULL)
+        {
+            sndPlaySfx(g_musicSfxBufferPtr, 7, pendingState);
+        }
+        break;
+    case 9:
+        if (pendingState != NULL)
+        {
+            sndPlaySfx(g_musicSfxBufferPtr, 0xC2, pendingState);
+        }
+        break;
+    case 10:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xC4, NULL);
+        break;
+    case 11:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 7, NULL);
+        break;
+    case 12:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xC8, NULL);
+        break;
+    case 13:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 7, NULL);
+        if (pendingState != NULL)
+        {
+            sndPlaySfx(g_musicSfxBufferPtr, 7, pendingState);
+        }
+        break;
+    case 14:
+        if (pendingState != NULL)
+        {
+            sndPlaySfx(g_musicSfxBufferPtr, 0xDA, pendingState);
+        }
+        break;
+    case 15:
+        if (pendingState != NULL)
+        {
+            sndPlaySfx(g_musicSfxBufferPtr, 0xE1, pendingState);
+        }
+        break;
+    case 16:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD6, NULL);
+        break;
+    case 17:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 7, NULL);
+        if (soundState != NULL)
+        {
+            sub_GAME_7F053A10(soundState, &door->prop->pos);
+        }
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xCA, NULL);
+        if (pendingState != NULL)
+        {
+            sndPlaySfx(g_musicSfxBufferPtr, 0xCC, pendingState);
+        }
+    }
+
+    if (soundState != NULL)
+    {
+        sub_GAME_7F053A10(soundState, &door->prop->pos);
+    }
+
+    sub_GAME_7F053A3C(door);
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-/*D:8005334C*/
-glabel door_opening_sound_table_0
-.word .L7F053BEC
-.word .L7F053C2C
-.word .L7F053C6C
-.word .L7F053CAC
-.word .L7F053CEC
-.word .L7F053D08
-.word .L7F053D24
-.word .L7F053D64
-.word .L7F053DA4
-.word .L7F053DC4
-.word .L7F053DE0
-.word .L7F053DFC
-.word .L7F053E18
-.word .L7F053E58
-.word .L7F053E78
-.word .L7F053E98
-.word .L7F053EB4
 
-.text
-glabel play_door_opening_soundeffect_0
-/* 0886A8 7F053B78 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0886AC 7F053B7C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0886B0 7F053B80 AFA40020 */  sw    $a0, 0x20($sp)
-/* 0886B4 7F053B84 AFA0001C */  sw    $zero, 0x1c($sp)
-/* 0886B8 7F053B88 0FC14EC4 */  jal   sub_GAME_7F053B10
-/* 0886BC 7F053B8C AFA00018 */   sw    $zero, 0x18($sp)
-/* 0886C0 7F053B90 8FAE0020 */  lw    $t6, 0x20($sp)
-/* 0886C4 7F053B94 8FA70018 */  lw    $a3, 0x18($sp)
-/* 0886C8 7F053B98 8FB80020 */  lw    $t8, 0x20($sp)
-/* 0886CC 7F053B9C 8DCF00F4 */  lw    $t7, 0xf4($t6)
-/* 0886D0 7F053BA0 8FA80020 */  lw    $t0, 0x20($sp)
-/* 0886D4 7F053BA4 55E00004 */  bnezl $t7, .L7F053BB8
-/* 0886D8 7F053BA8 8F1900F8 */   lw    $t9, 0xf8($t8)
-/* 0886DC 7F053BAC 10000005 */  b     .L7F053BC4
-/* 0886E0 7F053BB0 25C700F4 */   addiu $a3, $t6, 0xf4
-/* 0886E4 7F053BB4 8F1900F8 */  lw    $t9, 0xf8($t8)
-.L7F053BB8:
-/* 0886E8 7F053BB8 57200003 */  bnezl $t9, .L7F053BC8
-/* 0886EC 7F053BBC 8D0900A4 */   lw    $t1, 0xa4($t0)
-/* 0886F0 7F053BC0 270700F8 */  addiu $a3, $t8, 0xf8
-.L7F053BC4:
-/* 0886F4 7F053BC4 8D0900A4 */  lw    $t1, 0xa4($t0)
-.L7F053BC8:
-/* 0886F8 7F053BC8 252AFFFF */  addiu $t2, $t1, -1
-/* 0886FC 7F053BCC 2D410011 */  sltiu $at, $t2, 0x11
-/* 088700 7F053BD0 102000D6 */  beqz  $at, .L7F053F2C
-/* 088704 7F053BD4 000A5080 */   sll   $t2, $t2, 2
-/* 088708 7F053BD8 3C018005 */  lui   $at, %hi(door_opening_sound_table_0)
-/* 08870C 7F053BDC 002A0821 */  addu  $at, $at, $t2
-/* 088710 7F053BE0 8C2A334C */  lw    $t2, %lo(door_opening_sound_table_0)($at)
-/* 088714 7F053BE4 01400008 */  jr    $t2
-/* 088718 7F053BE8 00000000 */   nop   
-.L7F053BEC:
-/* 08871C 7F053BEC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 088720 7F053BF0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 088724 7F053BF4 240500D2 */  li    $a1, 210
-/* 088728 7F053BF8 00003025 */  move  $a2, $zero
-/* 08872C 7F053BFC 0C002382 */  jal   sndPlaySfx
-/* 088730 7F053C00 AFA70018 */   sw    $a3, 0x18($sp)
-/* 088734 7F053C04 8FA70018 */  lw    $a3, 0x18($sp)
-/* 088738 7F053C08 AFA2001C */  sw    $v0, 0x1c($sp)
-/* 08873C 7F053C0C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 088740 7F053C10 10E000C6 */  beqz  $a3, .L7F053F2C
-/* 088744 7F053C14 240500D3 */   li    $a1, 211
-/* 088748 7F053C18 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 08874C 7F053C1C 0C002382 */  jal   sndPlaySfx
-/* 088750 7F053C20 00E03025 */   move  $a2, $a3
-/* 088754 7F053C24 100000C2 */  b     .L7F053F30
-/* 088758 7F053C28 8FAC001C */   lw    $t4, 0x1c($sp)
-.L7F053C2C:
-/* 08875C 7F053C2C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 088760 7F053C30 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 088764 7F053C34 240500D2 */  li    $a1, 210
-/* 088768 7F053C38 00003025 */  move  $a2, $zero
-/* 08876C 7F053C3C 0C002382 */  jal   sndPlaySfx
-/* 088770 7F053C40 AFA70018 */   sw    $a3, 0x18($sp)
-/* 088774 7F053C44 8FA70018 */  lw    $a3, 0x18($sp)
-/* 088778 7F053C48 AFA2001C */  sw    $v0, 0x1c($sp)
-/* 08877C 7F053C4C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 088780 7F053C50 10E000B6 */  beqz  $a3, .L7F053F2C
-/* 088784 7F053C54 24050007 */   li    $a1, 7
-/* 088788 7F053C58 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 08878C 7F053C5C 0C002382 */  jal   sndPlaySfx
-/* 088790 7F053C60 00E03025 */   move  $a2, $a3
-/* 088794 7F053C64 100000B2 */  b     .L7F053F30
-/* 088798 7F053C68 8FAC001C */   lw    $t4, 0x1c($sp)
-.L7F053C6C:
-/* 08879C 7F053C6C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 0887A0 7F053C70 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 0887A4 7F053C74 240500CA */  li    $a1, 202
-/* 0887A8 7F053C78 00003025 */  move  $a2, $zero
-/* 0887AC 7F053C7C 0C002382 */  jal   sndPlaySfx
-/* 0887B0 7F053C80 AFA70018 */   sw    $a3, 0x18($sp)
-/* 0887B4 7F053C84 8FA70018 */  lw    $a3, 0x18($sp)
-/* 0887B8 7F053C88 AFA2001C */  sw    $v0, 0x1c($sp)
-/* 0887BC 7F053C8C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 0887C0 7F053C90 10E000A6 */  beqz  $a3, .L7F053F2C
-/* 0887C4 7F053C94 240500CC */   li    $a1, 204
-/* 0887C8 7F053C98 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 0887CC 7F053C9C 0C002382 */  jal   sndPlaySfx
-/* 0887D0 7F053CA0 00E03025 */   move  $a2, $a3
-/* 0887D4 7F053CA4 100000A2 */  b     .L7F053F30
-/* 0887D8 7F053CA8 8FAC001C */   lw    $t4, 0x1c($sp)
-.L7F053CAC:
-/* 0887DC 7F053CAC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 0887E0 7F053CB0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 0887E4 7F053CB4 240500D6 */  li    $a1, 214
-/* 0887E8 7F053CB8 00003025 */  move  $a2, $zero
-/* 0887EC 7F053CBC 0C002382 */  jal   sndPlaySfx
-/* 0887F0 7F053CC0 AFA70018 */   sw    $a3, 0x18($sp)
-/* 0887F4 7F053CC4 8FA70018 */  lw    $a3, 0x18($sp)
-/* 0887F8 7F053CC8 AFA2001C */  sw    $v0, 0x1c($sp)
-/* 0887FC 7F053CCC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 088800 7F053CD0 10E00096 */  beqz  $a3, .L7F053F2C
-/* 088804 7F053CD4 240500D8 */   li    $a1, 216
-/* 088808 7F053CD8 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 08880C 7F053CDC 0C002382 */  jal   sndPlaySfx
-/* 088810 7F053CE0 00E03025 */   move  $a2, $a3
-/* 088814 7F053CE4 10000092 */  b     .L7F053F30
-/* 088818 7F053CE8 8FAC001C */   lw    $t4, 0x1c($sp)
-.L7F053CEC:
-/* 08881C 7F053CEC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 088820 7F053CF0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 088824 7F053CF4 240500BC */  li    $a1, 188
-/* 088828 7F053CF8 0C002382 */  jal   sndPlaySfx
-/* 08882C 7F053CFC 00003025 */   move  $a2, $zero
-/* 088830 7F053D00 1000008A */  b     .L7F053F2C
-/* 088834 7F053D04 AFA2001C */   sw    $v0, 0x1c($sp)
-.L7F053D08:
-/* 088838 7F053D08 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 08883C 7F053D0C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 088840 7F053D10 24050007 */  li    $a1, 7
-/* 088844 7F053D14 0C002382 */  jal   sndPlaySfx
-/* 088848 7F053D18 00003025 */   move  $a2, $zero
-/* 08884C 7F053D1C 10000083 */  b     .L7F053F2C
-/* 088850 7F053D20 AFA2001C */   sw    $v0, 0x1c($sp)
-.L7F053D24:
-/* 088854 7F053D24 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 088858 7F053D28 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 08885C 7F053D2C 240500C0 */  li    $a1, 192
-/* 088860 7F053D30 00003025 */  move  $a2, $zero
-/* 088864 7F053D34 0C002382 */  jal   sndPlaySfx
-/* 088868 7F053D38 AFA70018 */   sw    $a3, 0x18($sp)
-/* 08886C 7F053D3C 8FA70018 */  lw    $a3, 0x18($sp)
-/* 088870 7F053D40 AFA2001C */  sw    $v0, 0x1c($sp)
-/* 088874 7F053D44 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 088878 7F053D48 10E00078 */  beqz  $a3, .L7F053F2C
-/* 08887C 7F053D4C 240500BF */   li    $a1, 191
-/* 088880 7F053D50 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 088884 7F053D54 0C002382 */  jal   sndPlaySfx
-/* 088888 7F053D58 00E03025 */   move  $a2, $a3
-/* 08888C 7F053D5C 10000074 */  b     .L7F053F30
-/* 088890 7F053D60 8FAC001C */   lw    $t4, 0x1c($sp)
-.L7F053D64:
-/* 088894 7F053D64 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 088898 7F053D68 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 08889C 7F053D6C 240500BC */  li    $a1, 188
-/* 0888A0 7F053D70 00003025 */  move  $a2, $zero
-/* 0888A4 7F053D74 0C002382 */  jal   sndPlaySfx
-/* 0888A8 7F053D78 AFA70018 */   sw    $a3, 0x18($sp)
-/* 0888AC 7F053D7C 8FA70018 */  lw    $a3, 0x18($sp)
-/* 0888B0 7F053D80 AFA2001C */  sw    $v0, 0x1c($sp)
-/* 0888B4 7F053D84 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 0888B8 7F053D88 10E00068 */  beqz  $a3, .L7F053F2C
-/* 0888BC 7F053D8C 24050007 */   li    $a1, 7
-/* 0888C0 7F053D90 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 0888C4 7F053D94 0C002382 */  jal   sndPlaySfx
-/* 0888C8 7F053D98 00E03025 */   move  $a2, $a3
-/* 0888CC 7F053D9C 10000064 */  b     .L7F053F30
-/* 0888D0 7F053DA0 8FAC001C */   lw    $t4, 0x1c($sp)
-.L7F053DA4:
-/* 0888D4 7F053DA4 10E00061 */  beqz  $a3, .L7F053F2C
-/* 0888D8 7F053DA8 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 0888DC 7F053DAC 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 0888E0 7F053DB0 240500C2 */  li    $a1, 194
-/* 0888E4 7F053DB4 0C002382 */  jal   sndPlaySfx
-/* 0888E8 7F053DB8 00E03025 */   move  $a2, $a3
-/* 0888EC 7F053DBC 1000005C */  b     .L7F053F30
-/* 0888F0 7F053DC0 8FAC001C */   lw    $t4, 0x1c($sp)
-.L7F053DC4:
-/* 0888F4 7F053DC4 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 0888F8 7F053DC8 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 0888FC 7F053DCC 240500C4 */  li    $a1, 196
-/* 088900 7F053DD0 0C002382 */  jal   sndPlaySfx
-/* 088904 7F053DD4 00003025 */   move  $a2, $zero
-/* 088908 7F053DD8 10000054 */  b     .L7F053F2C
-/* 08890C 7F053DDC AFA2001C */   sw    $v0, 0x1c($sp)
-.L7F053DE0:
-/* 088910 7F053DE0 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 088914 7F053DE4 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 088918 7F053DE8 24050007 */  li    $a1, 7
-/* 08891C 7F053DEC 0C002382 */  jal   sndPlaySfx
-/* 088920 7F053DF0 00003025 */   move  $a2, $zero
-/* 088924 7F053DF4 1000004D */  b     .L7F053F2C
-/* 088928 7F053DF8 AFA2001C */   sw    $v0, 0x1c($sp)
-.L7F053DFC:
-/* 08892C 7F053DFC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 088930 7F053E00 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 088934 7F053E04 240500C8 */  li    $a1, 200
-/* 088938 7F053E08 0C002382 */  jal   sndPlaySfx
-/* 08893C 7F053E0C 00003025 */   move  $a2, $zero
-/* 088940 7F053E10 10000046 */  b     .L7F053F2C
-/* 088944 7F053E14 AFA2001C */   sw    $v0, 0x1c($sp)
-.L7F053E18:
-/* 088948 7F053E18 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 08894C 7F053E1C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 088950 7F053E20 24050007 */  li    $a1, 7
-/* 088954 7F053E24 00003025 */  move  $a2, $zero
-/* 088958 7F053E28 0C002382 */  jal   sndPlaySfx
-/* 08895C 7F053E2C AFA70018 */   sw    $a3, 0x18($sp)
-/* 088960 7F053E30 8FA70018 */  lw    $a3, 0x18($sp)
-/* 088964 7F053E34 AFA2001C */  sw    $v0, 0x1c($sp)
-/* 088968 7F053E38 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 08896C 7F053E3C 10E0003B */  beqz  $a3, .L7F053F2C
-/* 088970 7F053E40 24050007 */   li    $a1, 7
-/* 088974 7F053E44 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 088978 7F053E48 0C002382 */  jal   sndPlaySfx
-/* 08897C 7F053E4C 00E03025 */   move  $a2, $a3
-/* 088980 7F053E50 10000037 */  b     .L7F053F30
-/* 088984 7F053E54 8FAC001C */   lw    $t4, 0x1c($sp)
-.L7F053E58:
-/* 088988 7F053E58 10E00034 */  beqz  $a3, .L7F053F2C
-/* 08898C 7F053E5C 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 088990 7F053E60 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 088994 7F053E64 240500DA */  li    $a1, 218
-/* 088998 7F053E68 0C002382 */  jal   sndPlaySfx
-/* 08899C 7F053E6C 00E03025 */   move  $a2, $a3
-/* 0889A0 7F053E70 1000002F */  b     .L7F053F30
-/* 0889A4 7F053E74 8FAC001C */   lw    $t4, 0x1c($sp)
-.L7F053E78:
-/* 0889A8 7F053E78 10E0002C */  beqz  $a3, .L7F053F2C
-/* 0889AC 7F053E7C 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 0889B0 7F053E80 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 0889B4 7F053E84 240500E1 */  li    $a1, 225
-/* 0889B8 7F053E88 0C002382 */  jal   sndPlaySfx
-/* 0889BC 7F053E8C 00E03025 */   move  $a2, $a3
-/* 0889C0 7F053E90 10000027 */  b     .L7F053F30
-/* 0889C4 7F053E94 8FAC001C */   lw    $t4, 0x1c($sp)
-.L7F053E98:
-/* 0889C8 7F053E98 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 0889CC 7F053E9C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 0889D0 7F053EA0 240500D6 */  li    $a1, 214
-/* 0889D4 7F053EA4 0C002382 */  jal   sndPlaySfx
-/* 0889D8 7F053EA8 00003025 */   move  $a2, $zero
-/* 0889DC 7F053EAC 1000001F */  b     .L7F053F2C
-/* 0889E0 7F053EB0 AFA2001C */   sw    $v0, 0x1c($sp)
-.L7F053EB4:
-/* 0889E4 7F053EB4 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 0889E8 7F053EB8 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 0889EC 7F053EBC 24050007 */  li    $a1, 7
-/* 0889F0 7F053EC0 00003025 */  move  $a2, $zero
-/* 0889F4 7F053EC4 0C002382 */  jal   sndPlaySfx
-/* 0889F8 7F053EC8 AFA70018 */   sw    $a3, 0x18($sp)
-/* 0889FC 7F053ECC 8FA70018 */  lw    $a3, 0x18($sp)
-/* 088A00 7F053ED0 10400008 */  beqz  $v0, .L7F053EF4
-/* 088A04 7F053ED4 AFA2001C */   sw    $v0, 0x1c($sp)
-/* 088A08 7F053ED8 8FAB0020 */  lw    $t3, 0x20($sp)
-/* 088A0C 7F053EDC 00402025 */  move  $a0, $v0
-/* 088A10 7F053EE0 8D650010 */  lw    $a1, 0x10($t3)
-/* 088A14 7F053EE4 AFA70018 */  sw    $a3, 0x18($sp)
-/* 088A18 7F053EE8 0FC14E84 */  jal   sub_GAME_7F053A10
-/* 088A1C 7F053EEC 24A50008 */   addiu $a1, $a1, 8
-/* 088A20 7F053EF0 8FA70018 */  lw    $a3, 0x18($sp)
-.L7F053EF4:
-/* 088A24 7F053EF4 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 088A28 7F053EF8 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 088A2C 7F053EFC 240500CA */  li    $a1, 202
-/* 088A30 7F053F00 00003025 */  move  $a2, $zero
-/* 088A34 7F053F04 0C002382 */  jal   sndPlaySfx
-/* 088A38 7F053F08 AFA70018 */   sw    $a3, 0x18($sp)
-/* 088A3C 7F053F0C 8FA70018 */  lw    $a3, 0x18($sp)
-/* 088A40 7F053F10 AFA2001C */  sw    $v0, 0x1c($sp)
-/* 088A44 7F053F14 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 088A48 7F053F18 10E00004 */  beqz  $a3, .L7F053F2C
-/* 088A4C 7F053F1C 240500CC */   li    $a1, 204
-/* 088A50 7F053F20 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 088A54 7F053F24 0C002382 */  jal   sndPlaySfx
-/* 088A58 7F053F28 00E03025 */   move  $a2, $a3
-def_7F053BE4:
-.L7F053F2C:
-/* 088A5C 7F053F2C 8FAC001C */  lw    $t4, 0x1c($sp)
-.L7F053F30:
-/* 088A60 7F053F30 8FAD0020 */  lw    $t5, 0x20($sp)
-/* 088A64 7F053F34 11800005 */  beqz  $t4, .L7F053F4C
-/* 088A68 7F053F38 00000000 */   nop   
-/* 088A6C 7F053F3C 8DA50010 */  lw    $a1, 0x10($t5)
-/* 088A70 7F053F40 01802025 */  move  $a0, $t4
-/* 088A74 7F053F44 0FC14E84 */  jal   sub_GAME_7F053A10
-/* 088A78 7F053F48 24A50008 */   addiu $a1, $a1, 8
-.L7F053F4C:
-/* 088A7C 7F053F4C 0FC14E8F */  jal   sub_GAME_7F053A3C
-/* 088A80 7F053F50 8FA40020 */   lw    $a0, 0x20($sp)
-/* 088A84 7F053F54 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 088A88 7F053F58 27BD0020 */  addiu $sp, $sp, 0x20
-/* 088A8C 7F053F5C 03E00008 */  jr    $ra
-/* 088A90 7F053F60 00000000 */   nop   
-)
-#endif
 
 
 
