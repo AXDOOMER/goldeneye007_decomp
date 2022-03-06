@@ -5537,31 +5537,31 @@ glabel sub_GAME_7F0B2718
  * @param pntA: out parameter, will contain stanSavedColl_pntA (x,z)
  * @param pntB: out parameter, will contain stanSavedColl_pntB (x,z)
  */
-s32 getCollisionEdge_maybe(coord3d *pntA, coord3d *pntB)
+bool getCollisionEdge_maybe(coord3d *pntA, coord3d *pntB)
 {
     if (stanSavedColl_tile)
     {
         getTileEdgePoints(stanSavedColl_tile, stanSavedColl_pointI, pntA, pntB);
 
-        return 1;
+        return TRUE;
     }
     else
     {
         if (D_800413BC)
         {
-            pntA->f[0] = stanSavedColl_pntA[0];
-            pntA->f[1] = 0;
-            pntA->f[2] = stanSavedColl_pntA[1];
+            pntA->x = stanSavedColl_pntA[0];
+            pntA->y = 0;
+            pntA->z = stanSavedColl_pntA[1];
 
-            pntB->f[0] = stanSavedColl_pntB[0];
-            pntB->f[1] = 0;
-            pntB->f[2] = stanSavedColl_pntB[1];
+            pntB->x = stanSavedColl_pntB[0];
+            pntB->y = 0;
+            pntB->z = stanSavedColl_pntB[1];
 
-            return 1;
+            return TRUE;
         }
         else
         {
-            return 0;
+            return FALSE;
         }
     }
 }
@@ -6175,8 +6175,14 @@ glabel stanDetermineEOF
 #endif
 
 
-
-u8 getTileRoom(StandTile *tile) {
+/**
+ Get the room the tile belongs to
+ @param tile: Tile to quiry
+ @return the room number the tile is located in
+ @exception Although room is u8, this needs to be s32 for matching ai.
+ */
+s32 getTileRoom(StandTile *tile)
+{
     return tile->room;
 }
 
@@ -6184,7 +6190,8 @@ u8 getTileRoom(StandTile *tile) {
 
 
 
-s32 sub_GAME_7F0B2FE0(StandTile *tile) {
+s32 sub_GAME_7F0B2FE0(StandTile *tile)
+{
     // u8 -> s32 -> u8 causes the odd asm
 
     s32 room = tile->room;

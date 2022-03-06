@@ -56,8 +56,8 @@ void sub_GAME_7F053A10(ALSoundState *, coord3d *);
 void start_alarm(void);
 void sub_GAME_7F052574(PropRecord *, s32);
 s32 sub_GAME_7F052604(PropRecord *);
-
-object_standard *create_new_item_instance_of_model(PROPS propid, s32 arg1);
+int sub_GAME_7F0539E4(PadRecord *pad); //getVolume?
+object_standard *create_new_item_instance_of_model(PROP propid, s32 arg1);
 void maybe_detonate_object(ObjectRecord *arg0, f32 arg1, coord3d *arg2, ITEM_IDS item, s32 arg4);
 void chrobjMaybeDetonateObjectIfFlags(ObjectRecord *arg0, f32 arg1, coord3d *arg2, ITEM_IDS item, s32 arg4);
 void sub_GAME_7F03FDA8(PropRecord *);

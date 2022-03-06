@@ -483,8 +483,8 @@ extern struct object_animation_controller g_UnknownAnimController;
 extern struct object_animation_controller g_TaserAnimController;
 
 void stop_alarm(void);
-
-void check_deactivate_gas_sound(void);
+s32 get_length_of_action_block(u8 *AIList, s32 offset);
+    void check_deactivate_gas_sound(void);
 void handle_mp_respawn_and_some_things(void);
 void determing_type_of_object_and_detection(void);
 void chraiUpdateOnscreenPropCount(void);

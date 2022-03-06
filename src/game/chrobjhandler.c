@@ -1388,9 +1388,9 @@ s32 sub_GAME_7F03FF60(ObjectRecord *arg0)
 {
     if (!(arg0->state & PROPSTATE_DESTROYED))
     {
-        return (s32) ((arg0->field_70 * 3.0f) / (f32)(arg0->damage));
+        return (s32) ((arg0->maxdamage * 3.0f) / (f32)(arg0->damage));
     }
-    return (s32) (arg0->field_70 + 4.0f);
+    return (s32) (arg0->maxdamage + 4.0f);
 }
 #else
 GLOBAL_ASM(
@@ -1437,7 +1437,7 @@ s32 do_something_if_object_destroyed(ObjectRecord *obj)
     {
         return 0; //if Not Dead
     }
-    return ((s32) obj->field_70 >> 2) + 1;
+    return ((s32) obj->maxdamage >> 2) + 1;
 }
 
 
@@ -41769,7 +41769,7 @@ glabel sub_GAME_7F052030
 
 #ifdef NONMATCHING
 /**
- * @param arg0: index into PitemZ_entries, which is enum PROPS
+ * @param arg0: index into PitemZ_entries, which is enum PROP
  * @param arg1: object_weapon.gun_pickup value
  * 
  * Address 0x7F05206C.
@@ -42440,38 +42440,38 @@ HATTYPE get_hat_model(PropRecord *prop) //#MATCH
     ObjectRecord *objinst = prop->obj;
     switch (objinst->obj)
     {
-        case PROP_hatfurry:
-        case PROP_hatfurrybrown:
-        case PROP_hatfurryblack:
+        case PROP_HATFURRY:
+        case PROP_HATFURRYBROWN:
+        case PROP_HATFURRYBLACK:
         {
             return HATTYPE_FURRY;
         }
 
-        case PROP_hattbird:
-        case PROP_hattbirdbrown:
+        case PROP_HATTBIRD:
+        case PROP_HATTBIRDBROWN:
         {
             return HATTYPE_BIRD;
         }
 
-        case PROP_hathelmet:
-        case PROP_hathelmetgrey:
+        case PROP_HATHELMET:
+        case PROP_HATHELMETGREY:
         {
             return HATTYPE_HELMATE;
         }
 
-        case PROP_hatmoon:
+        case PROP_HATMOON:
 
         {
             return HATTYPE_MOON;
         }
-        case PROP_hatberet:
-        case PROP_hatberetblue:
-        case PROP_hatberetred:
+        case PROP_HATBERET:
+        case PROP_HATBERETBLUE:
+        case PROP_HATBERETRED:
         {
             return HATTYPE_BERRET;
         }
 
-        case PROP_hatpeaked:
+        case PROP_HATPEAKED:
         {
             return HATTYPE_PEAKED;
         }

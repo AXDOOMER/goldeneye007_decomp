@@ -85,40 +85,40 @@ typedef enum prefix                                                             
  */
 #define BITFLAG(NAME,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,aa,ab,ac,ad,ae,af)\
 typedef enum NAME \
-{ /*
-  */NAME ## _NONE,/*
-  */IF(NOT(IS_EMPTY(a)))(NAME ## _ ## a = 1 << 0) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(b))))/*
-  */IF(NOT(IS_EMPTY(b)))(NAME ## _ ## b = 1 << 1) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(c))))/*
-  */IF(NOT(IS_EMPTY(c)))(NAME ## _ ## c = 1 << 2) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(d))))/*
-  */IF(NOT(IS_EMPTY(d)))(NAME ## _ ## d = 1 << 3) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(e))))/*
-  */IF(NOT(IS_EMPTY(e)))(NAME ## _ ## e = 1 << 4) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(f))))/*
-  */IF(NOT(IS_EMPTY(f)))(NAME ## _ ## f = 1 << 5) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(g))))/*
-  */IF(NOT(IS_EMPTY(g)))(NAME ## _ ## g = 1 << 6) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(h))))/*
-  */IF(NOT(IS_EMPTY(h)))(NAME ## _ ## h = 1 << 7) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(i))))/*
-  */IF(NOT(IS_EMPTY(i)))(NAME ## _ ## i = 1 << 8) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(j))))/*
-  */IF(NOT(IS_EMPTY(j)))(NAME ## _ ## j = 1 << 9) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(k))))/*
-  */IF(NOT(IS_EMPTY(k)))(NAME ## _ ## k = 1 << 10) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(l))))/*
-  */IF(NOT(IS_EMPTY(l)))(NAME ## _ ## l = 1 << 11) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(m))))/*
-  */IF(NOT(IS_EMPTY(m)))(NAME ## _ ## m = 1 << 12) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(n))))/*
-  */IF(NOT(IS_EMPTY(n)))(NAME ## _ ## n = 1 << 13) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(o))))/*
-  */IF(NOT(IS_EMPTY(o)))(NAME ## _ ## o = 1 << 14) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(p))))/*
-  */IF(NOT(IS_EMPTY(p)))(NAME ## _ ## p = 1 << 15) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(q))))/*
-  */IF(NOT(IS_EMPTY(q)))(NAME ## _ ## q = 1 << 16) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(r))))/*
-  */IF(NOT(IS_EMPTY(r)))(NAME ## _ ## r = 1 << 17) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(s))))/*
-  */IF(NOT(IS_EMPTY(s)))(NAME ## _ ## s = 1 << 18) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(t))))/*
-  */IF(NOT(IS_EMPTY(t)))(NAME ## _ ## t = 1 << 19) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(u))))/*
-  */IF(NOT(IS_EMPTY(u)))(NAME ## _ ## u = 1 << 20) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(v))))/*
-  */IF(NOT(IS_EMPTY(v)))(NAME ## _ ## v = 1 << 21) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(w))))/*
-  */IF(NOT(IS_EMPTY(w)))(NAME ## _ ## w = 1 << 22) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(x))))/*
-  */IF(NOT(IS_EMPTY(x)))(NAME ## _ ## x = 1 << 23) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(y))))/*
-  */IF(NOT(IS_EMPTY(y)))(NAME ## _ ## y = 1 << 24) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(z))))/*
-  */IF(NOT(IS_EMPTY(z)))(NAME ## _ ## z = 1 << 25) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(aa))))/*
-  */IF(NOT(IS_EMPTY(aa)))(NAME ## _ ## aa = 1 << 26) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(ab))))/*
-  */IF(NOT(IS_EMPTY(ab)))(NAME ## _ ## ab = 1 << 27) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(ac))))/*
-  */IF(NOT(IS_EMPTY(ac)))(NAME ## _ ## ac = 1 << 28) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(ad))))/*
-  */IF(NOT(IS_EMPTY(ad)))(NAME ## _ ## ad = 1 << 29) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(ae))))/*
-  */IF(NOT(IS_EMPTY(ae)))(NAME ## _ ## ae = 1 << 30) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(af))))/*
-  */IF(NOT(IS_EMPTY(af)))(NAME ## _ ## af = 1 << 31)                   /*
+{ /*\
+  */NAME ## _NONE,/*\
+  */IF(NOT(IS_EMPTY(a)))(NAME ## _ ## a = 1 << 0) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(b))))/*\
+  */IF(NOT(IS_EMPTY(b)))(NAME ## _ ## b = 1 << 1) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(c))))/*\
+  */IF(NOT(IS_EMPTY(c)))(NAME ## _ ## c = 1 << 2) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(d))))/*\
+  */IF(NOT(IS_EMPTY(d)))(NAME ## _ ## d = 1 << 3) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(e))))/*\
+  */IF(NOT(IS_EMPTY(e)))(NAME ## _ ## e = 1 << 4) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(f))))/*\
+  */IF(NOT(IS_EMPTY(f)))(NAME ## _ ## f = 1 << 5) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(g))))/*\
+  */IF(NOT(IS_EMPTY(g)))(NAME ## _ ## g = 1 << 6) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(h))))/*\
+  */IF(NOT(IS_EMPTY(h)))(NAME ## _ ## h = 1 << 7) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(i))))/*\
+  */IF(NOT(IS_EMPTY(i)))(NAME ## _ ## i = 1 << 8) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(j))))/*\
+  */IF(NOT(IS_EMPTY(j)))(NAME ## _ ## j = 1 << 9) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(k))))/*\
+  */IF(NOT(IS_EMPTY(k)))(NAME ## _ ## k = 1 << 10) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(l))))/*\
+  */IF(NOT(IS_EMPTY(l)))(NAME ## _ ## l = 1 << 11) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(m))))/*\
+  */IF(NOT(IS_EMPTY(m)))(NAME ## _ ## m = 1 << 12) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(n))))/*\
+  */IF(NOT(IS_EMPTY(n)))(NAME ## _ ## n = 1 << 13) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(o))))/*\
+  */IF(NOT(IS_EMPTY(o)))(NAME ## _ ## o = 1 << 14) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(p))))/*\
+  */IF(NOT(IS_EMPTY(p)))(NAME ## _ ## p = 1 << 15) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(q))))/*\
+  */IF(NOT(IS_EMPTY(q)))(NAME ## _ ## q = 1 << 16) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(r))))/*\
+  */IF(NOT(IS_EMPTY(r)))(NAME ## _ ## r = 1 << 17) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(s))))/*\
+  */IF(NOT(IS_EMPTY(s)))(NAME ## _ ## s = 1 << 18) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(t))))/*\
+  */IF(NOT(IS_EMPTY(t)))(NAME ## _ ## t = 1 << 19) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(u))))/*\
+  */IF(NOT(IS_EMPTY(u)))(NAME ## _ ## u = 1 << 20) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(v))))/*\
+  */IF(NOT(IS_EMPTY(v)))(NAME ## _ ## v = 1 << 21) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(w))))/*\
+  */IF(NOT(IS_EMPTY(w)))(NAME ## _ ## w = 1 << 22) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(x))))/*\
+  */IF(NOT(IS_EMPTY(x)))(NAME ## _ ## x = 1 << 23) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(y))))/*\
+  */IF(NOT(IS_EMPTY(y)))(NAME ## _ ## y = 1 << 24) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(z))))/*\
+  */IF(NOT(IS_EMPTY(z)))(NAME ## _ ## z = 1 << 25) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(aa))))/*\
+  */IF(NOT(IS_EMPTY(aa)))(NAME ## _ ## aa = 1 << 26) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(ab))))/*\
+  */IF(NOT(IS_EMPTY(ab)))(NAME ## _ ## ab = 1 << 27) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(ac))))/*\
+  */IF(NOT(IS_EMPTY(ac)))(NAME ## _ ## ac = 1 << 28) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(ad))))/*\
+  */IF(NOT(IS_EMPTY(ad)))(NAME ## _ ## ad = 1 << 29) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(ae))))/*\
+  */IF(NOT(IS_EMPTY(ae)))(NAME ## _ ## ae = 1 << 30) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(af))))/*\
+  */IF(NOT(IS_EMPTY(af)))(NAME ## _ ## af = 1 << 31)                   /*\
 */} NAME;
 
 
@@ -191,11 +191,11 @@ typedef enum CHRFLAG
 {
     CHRFLAG_NONE,
     CHRFLAG_INIT                         = 0x00000001 , // initialize chr
-    CHRFLAG_CLONE                        = 0x00000002 , // clone on heard gunfire (used by GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE)
+    CHRFLAG_CLONE                        = 0x00000002 , // clone on heard gunfire (used by GAILIST_STANDARD_GUARD)
     CHRFLAG_NEAR_MISS                    = 0x00000004 , // chr was just nearly shot (sometimes set on direct hit) - resets every tick
     CHRFLAG_HAS_BEEN_ON_SCREEN           = 0x00000008 , // chr has been on screen before
     CHRFLAG_INVINCIBLE                   = 0x00000010 , // invincible
-    CHRFLAG_00000020                     = 0x00000020 , // unknown
+    CHRSTART_FORCENOBLOOD                = 0x00000020,  // canonical name
     CHRFLAG_CAN_SHOOT_CHRS               = 0x00000040 , // can shoot other guards
     CHRFLAG_00000080                     = 0x00000080 , // unknown
     CHRFLAG_WAS_DAMAGED                  = 0x00000100 , // chr has taken damage (not invincible)
@@ -223,6 +223,18 @@ typedef enum CHRFLAG
     CHRFLAG_40000000                     = 0x40000000 , // unknown
     CHRFLAG_80000000                     = 0x80000000   // unknown
 }CHRFLAG;
+
+//chr flags2
+BITFLAG(FLAGS2,
+        DONT_POINT_AT_BOND,
+        02,
+        04
+)
+
+//PROP SOUND (Unknown values, only name known)
+BITFLAG(PS_FLAGS2,
+        NO_DISTANCEQ
+)
 
 // prop definition flags
 typedef enum PROPFLAG
@@ -401,6 +413,12 @@ BITFLAG(RUNTIMEBITFLAG,
 #define OBJECTTYPE_35 0x35
 #define OBJECTTYPE_36 0x36
 
+#define QUADRANT_BACK          0x01
+#define QUADRANT_SIDE1         0x02
+#define QUADRANT_SIDE2         0x04
+#define QUADRANT_FRONT         0x08
+#define QUADRANT_2NDWPTOTARGET 0x10 // second waypoint on route to target
+#define QUADRANT_20            0x20 // second waypoint on route to target
 
 #pragma endregion
 
@@ -440,6 +458,8 @@ typedef enum AI_CMD
 #    define _AI_DEBUG(C) CAT(AI_, CMDNAME),
 
 #    define _AI_CMD_POLYMORPH(CMD, A, P, Q, D)
+
+#    define DEFINE(x)
 
 #    include "aicommands.def"
 #endif /* !_SYNHILITE */
@@ -1901,8 +1921,8 @@ typedef enum SHOT_REGISTER
 typedef enum SPEED
 {
     SPEED_WALK,
-    SPEED_JOG,
-    SPEED_RUN
+    SPEED_RUN,
+    SPEED_SPRINT
 } SPEED;
 
 
@@ -2127,367 +2147,369 @@ typedef enum WAYMODE
         HEAD_MALE_COUNT   = HEAD_F_START - HEAD_START,     // Total number of usable randon male heads
         HEAD_FEMALE_COUNT = HEAD_BOND_START - HEAD_F_START // Total number of usable randon female heads
     } HEADS;
-    typedef enum PROPS
+
+    //Canonical name and style "ai_destroyobj 2 : (def->obj == PROP_ELVIS_SAUCER)\n"
+    typedef enum PROP
     {
-        PROP_alarm1,              /* Beta Alarm / Default Multi Weapon                                  */
-        PROP_alarm2,              /* Alarm                                                              */
-        PROP_explosionbit,        /* White Pyramid (Explosion Bit)                                      */
-        PROP_ammo_crate1,         /* Ammo Crate (Brown w/ Edge Brace, 6x240 Black)                      */
-        PROP_ammo_crate2,         /* Ammo Crate (Brown w/ Center Brace, 12x8 Black)                     */
-        PROP_ammo_crate3,         /* Ammo Crate (Green w/ Center Brace, 12x8 Brown)                     */
-        PROP_ammo_crate4,         /* Ammo Crate (Green w/ Edge Brace, 6x8 White)                        */
-        PROP_ammo_crate5,         /* Ammo Crate (Green w/ Double Brace, 24x60 Black)                    */
-        PROP_bin1,                /* Rusted Trash Bin                                                   */
-        PROP_blotter1,            /* Desk Blotter                                                       */
-        PROP_book1,               /* Red Book                                                           */
-        PROP_bookshelf1,          /* Bookshelf                                                          */
-        PROP_bridge_console1a,    /* Bridge Console w/ Monitor, Navigation + Keyboard 1A                */
-        PROP_bridge_console1b,    /* Bridge Console w/ Navigation 1B                                    */
-        PROP_bridge_console2a,    /* Bridge Console w/ Navigation, Monitor + Keyboard 2A                */
-        PROP_bridge_console2b,    /* Bridge Console w/ Various Controls 2B                              */
-        PROP_bridge_console3a,    /* Bridge Console w/ Monitor, Navigation + Keyboard 3A                */
-        PROP_bridge_console3b,    /* Bridge Console w/ Monitor, Keyboard + Navigation 3B                */
-        PROP_card_box1,           /* Cardboard Box, Kapto|Enb                                           */
-        PROP_card_box2,           /* Cardboard Box, Red Arrow, Bahko                                    */
-        PROP_card_box3,           /* Cardboard Box, Scrawled Text, Bahah                                */
-        PROP_card_box4_lg,        /* Cardboard Box, Three Seams                                         */
-        PROP_card_box5_lg,        /* Cardboard Box, Two Seams, Bahah                                    */
-        PROP_card_box6_lg,        /* Cardboard Box, Bahko                                               */
-        PROP_cctv,                /* Surveillance Camera                                                */
-        PROP_console1,            /* Double Screen Consoles w/ Keyboards                                */
-        PROP_console2,            /* Double Screen Consoles w/ Left Keyboard                            */
-        PROP_console3,            /* Double Screen Consoles w/ Right Keyboard                           */
-        PROP_console_seva,        /* Console w/ Keyboard                                                */
-        PROP_console_sevb,        /* Console w/ Monitor + Keyboard                                      */
-        PROP_console_sevc,        /* Console w/ Switches                                                */
-        PROP_console_sevd,        /* Console w/ Five Gauges                                             */
-        PROP_console_sev2a,       /* Console w/ Four Faders                                             */
-        PROP_console_sev2b,       /* Console w/ Monitor, Keyboard + Switches                            */
-        PROP_console_sev2c,       /* Console w/ Three Gauges                                            */
-        PROP_console_sev2d,       /* Console w/ Pressure Gauge                                          */
-        PROP_console_sev_GEa,     /* Console w/ GoldenEye Key Slot                                      */
-        PROP_console_sev_GEb,     /* Console w/ Faders + Pressure Gauge                                 */
-        PROP_desk1,               /* Desk w/ Kickplate                                                  */
-        PROP_desk2,               /* Desk                                                               */
-        PROP_desk_lamp2,          /* Desk Lamp                                                          */
-        PROP_disc_reader,         /* External Hard Drive                                                */
-        PROP_disk_drive1,         /* Floppy Disc Drive                                                  */
-        PROP_filing_cabinet1,     /* Filing Cabinet                                                     */
-        PROP_jerry_can1,          /* Jerrycan (Fuel Container)                                          */
-        PROP_keyboard1,           /* Computer Keyboard                                                  */
-        PROP_kit_units1,          /* Kitchen Cabinets                                                   */
-        PROP_letter_tray1,        /* Letter Tray                                                        */
-        PROP_mainframe1,          /* Mainframe, Basic                                                   */
-        PROP_mainframe2,          /* Mainframe, Advanced                                                */
-        PROP_metal_chair1,        /* Chair (Metal)                                                      */
-        PROP_metal_crate1,        /* Metal Crate, 6 Top Corner                                          */
-        PROP_metal_crate2,        /* Metal Crate, 6 Bottom Corner                                       */
-        PROP_metal_crate3,        /* Metal Crate, Toxic Materials                                       */
-        PROP_metal_crate4,        /* Metal Crate, Double Stripe - Class D1 Hazard                       */
-        PROP_missile_rack,        /* Naval Harpoon Missile in Containment Rack                          */
-        PROP_missile_rack2,       /* Naval Harpoon Missiles in Containment Racks x4                     */
-        PROP_oil_drum1,           /* Oil Drum, Single Stripe, Ribbed                                    */
-        PROP_oil_drum2,           /* Oil Drum, Single Stripe, Ribbed - Class D1 Hazard                  */
-        PROP_oil_drum3,           /* Oil Drum, Single Stripe, Ribbed - Toxic Materials                  */
-        PROP_oil_drum5,           /* Oil Drum, Double Stripe - Toxic Materials                          */
-        PROP_oil_drum6,           /* Oil Drum - Toxic Materials                                         */
-        PROP_oil_drum7,           /* Oil Drum, Double Dashes - Class D1 Hazard                          */
-        PROP_padlock,             /* Padlock                                                            */
-        PROP_phone1,              /* Telephone                                                          */
-        PROP_radio_unit1,         /* Radio Tuner w/ 1 Knob + 2 Gauges                                   */
-        PROP_radio_unit2,         /* Radio Tuner w/ 1 Knob + 5 Gauges                                   */
-        PROP_radio_unit3,         /* Radio Tuner w/ 3 Knobs + 5 Gauges                                  */
-        PROP_radio_unit4,         /* Radio Tuner w/ 3 Knobs + 2 Gauges                                  */
-        PROP_sat1_reflect,        /* GoldenEye Satellite                                                */
-        PROP_satdish,             /* Satellite Dish (Arkangelsk)                                        */
-        PROP_satbox,              /* Uplink Box                                                         */
-        PROP_stool1,              /* Wooden Stool                                                       */
-        PROP_swivel_chair1,       /* Swivel Chair                                                       */
-        PROP_torpedo_rack,        /* Naval Torpedo Rack x3                                              */
-        PROP_tv1,                 /* Television Monitor                                                 */
-        PROP_tv_holder,           /* Hanging Monitor Rack                                               */
-        PROP_tvscreen,            /* Wall Monitor Screen                                                */
-        PROP_tv4screen,           /* Wall Monitor Screens, 4-in-1                                       */
-        PROP_wood_lg_crate1,      /* Wooden Crate w/ #4 Label, Bahah                                    */
-        PROP_wood_lg_crate2,      /* Wooden Crate, Darker Shading, Kapto|Enb                            */
-        PROP_wood_md_crate3,      /* Wooden Crates x8, Bahko                                            */
-        PROP_wood_sm_crate4,      /* Wooden Crate w/ #2 Label, Bahko                                    */
-        PROP_wood_sm_crate5,      /* Wooden Crate w/ #4 Label, Darker Shading, Bahah                    */
-        PROP_wood_sm_crate6,      /* Wooden Crate w/ UP Arrow, Kapto|Enb                                */
-        PROP_wooden_table1,       /* Wooden Table                                                       */
-        PROP_swipe_card2,         /* Keycard                                                            */
-        PROP_borg_crate,          /* Blue and Gold Printed Circuit Cube (Borg Crate)                    */
-        PROP_boxes4x4,            /* Metal Crate Stack, 4x4                                             */
-        PROP_boxes3x4,            /* Metal Crate Stack, 3x4                                             */
-        PROP_boxes2x4,            /* Metal Crate Stack, 2x4                                             */
-        PROP_sec_panel,           /* Security Card Panel                                                */
-        PROP_ICBM_nose,           /* Silo Missile (ICBM), Nose Cone Only                                */
+        PROP_ALARM1,              /* Beta Alarm / Default Multi Weapon                                  */
+        PROP_ALARM2,              /* Alarm                                                              */
+        PROP_EXPLOSIONBIT,        /* White Pyramid (Explosion Bit)                                      */
+        PROP_AMMO_CRATE1,         /* Ammo Crate (Brown w/ Edge Brace, 6x240 Black)                      */
+        PROP_AMMO_CRATE2,         /* Ammo Crate (Brown w/ Center Brace, 12x8 Black)                     */
+        PROP_AMMO_CRATE3,         /* Ammo Crate (Green w/ Center Brace, 12x8 Brown)                     */
+        PROP_AMMO_CRATE4,         /* Ammo Crate (Green w/ Edge Brace, 6x8 White)                        */
+        PROP_AMMO_CRATE5,         /* Ammo Crate (Green w/ Double Brace, 24x60 Black)                    */
+        PROP_BIN1,                /* Rusted Trash Bin                                                   */
+        PROP_BLOTTER1,            /* Desk Blotter                                                       */
+        PROP_BOOK1,               /* Red Book                                                           */
+        PROP_BOOKSHELF1,          /* Bookshelf                                                          */
+        PROP_BRIDGE_CONSOLE1A,    /* Bridge Console w/ Monitor, Navigation + Keyboard 1A                */
+        PROP_BRIDGE_CONSOLE1B,    /* Bridge Console w/ Navigation 1B                                    */
+        PROP_BRIDGE_CONSOLE2A,    /* Bridge Console w/ Navigation, Monitor + Keyboard 2A                */
+        PROP_BRIDGE_CONSOLE2B,    /* Bridge Console w/ Various Controls 2B                              */
+        PROP_BRIDGE_CONSOLE3A,    /* Bridge Console w/ Monitor, Navigation + Keyboard 3A                */
+        PROP_BRIDGE_CONSOLE3B,    /* Bridge Console w/ Monitor, Keyboard + Navigation 3B                */
+        PROP_CARD_BOX1,           /* Cardboard Box, Kapto|Enb                                           */
+        PROP_CARD_BOX2,           /* Cardboard Box, Red Arrow, Bahko                                    */
+        PROP_CARD_BOX3,           /* Cardboard Box, Scrawled Text, Bahah                                */
+        PROP_CARD_BOX4_LG,        /* Cardboard Box, Three Seams                                         */
+        PROP_CARD_BOX5_LG,        /* Cardboard Box, Two Seams, Bahah                                    */
+        PROP_CARD_BOX6_LG,        /* Cardboard Box, Bahko                                               */
+        PROP_CCTV,                /* Surveillance Camera                                                */
+        PROP_CONSOLE1,            /* Double Screen Consoles w/ Keyboards                                */
+        PROP_CONSOLE2,            /* Double Screen Consoles w/ Left Keyboard                            */
+        PROP_CONSOLE3,            /* Double Screen Consoles w/ Right Keyboard                           */
+        PROP_CONSOLE_SEVA,        /* Console w/ Keyboard                                                */
+        PROP_CONSOLE_SEVB,        /* Console w/ Monitor + Keyboard                                      */
+        PROP_CONSOLE_SEVC,        /* Console w/ Switches                                                */
+        PROP_CONSOLE_SEVD,        /* Console w/ Five Gauges                                             */
+        PROP_CONSOLE_SEV2A,       /* Console w/ Four Faders                                             */
+        PROP_CONSOLE_SEV2B,       /* Console w/ Monitor, Keyboard + Switches                            */
+        PROP_CONSOLE_SEV2C,       /* Console w/ Three Gauges                                            */
+        PROP_CONSOLE_SEV2D,       /* Console w/ Pressure Gauge                                          */
+        PROP_CONSOLE_SEV_GEA,     /* Console w/ GoldenEye Key Slot                                      */
+        PROP_CONSOLE_SEV_GEB,     /* Console w/ Faders + Pressure Gauge                                 */
+        PROP_DESK1,               /* Desk w/ Kickplate                                                  */
+        PROP_DESK2,               /* Desk                                                               */
+        PROP_DESK_LAMP2,          /* Desk Lamp                                                          */
+        PROP_DISC_READER,         /* External Hard Drive                                                */
+        PROP_DISK_DRIVE1,         /* Floppy Disc Drive                                                  */
+        PROP_FILING_CABINET1,     /* Filing Cabinet                                                     */
+        PROP_JERRY_CAN1,          /* Jerrycan (Fuel Container)                                          */
+        PROP_KEYBOARD1,           /* Computer Keyboard                                                  */
+        PROP_KIT_UNITS1,          /* Kitchen Cabinets                                                   */
+        PROP_LETTER_TRAY1,        /* Letter Tray                                                        */
+        PROP_MAINFRAME1,          /* Mainframe, Basic                                                   */
+        PROP_MAINFRAME2,          /* Mainframe, Advanced                                                */
+        PROP_METAL_CHAIR1,        /* Chair (Metal)                                                      */
+        PROP_METAL_CRATE1,        /* Metal Crate, 6 Top Corner                                          */
+        PROP_METAL_CRATE2,        /* Metal Crate, 6 Bottom Corner                                       */
+        PROP_METAL_CRATE3,        /* Metal Crate, Toxic Materials                                       */
+        PROP_METAL_CRATE4,        /* Metal Crate, Double Stripe - Class D1 Hazard                       */
+        PROP_MISSILE_RACK,        /* Naval Harpoon Missile in Containment Rack                          */
+        PROP_MISSILE_RACK2,       /* Naval Harpoon Missiles in Containment Racks x4                     */
+        PROP_OIL_DRUM1,           /* Oil Drum, Single Stripe, Ribbed                                    */
+        PROP_OIL_DRUM2,           /* Oil Drum, Single Stripe, Ribbed - Class D1 Hazard                  */
+        PROP_OIL_DRUM3,           /* Oil Drum, Single Stripe, Ribbed - Toxic Materials                  */
+        PROP_OIL_DRUM5,           /* Oil Drum, Double Stripe - Toxic Materials                          */
+        PROP_OIL_DRUM6,           /* Oil Drum - Toxic Materials                                         */
+        PROP_OIL_DRUM7,           /* Oil Drum, Double Dashes - Class D1 Hazard                          */
+        PROP_PADLOCK,             /* Padlock                                                            */
+        PROP_PHONE1,              /* Telephone                                                          */
+        PROP_RADIO_UNIT1,         /* Radio Tuner w/ 1 Knob + 2 Gauges                                   */
+        PROP_RADIO_UNIT2,         /* Radio Tuner w/ 1 Knob + 5 Gauges                                   */
+        PROP_RADIO_UNIT3,         /* Radio Tuner w/ 3 Knobs + 5 Gauges                                  */
+        PROP_RADIO_UNIT4,         /* Radio Tuner w/ 3 Knobs + 2 Gauges                                  */
+        PROP_SAT1_REFLECT,        /* GoldenEye Satellite                                                */
+        PROP_SATDISH,             /* Satellite Dish (Arkangelsk)                                        */
+        PROP_SATBOX,              /* Uplink Box                                                         */
+        PROP_STOOL1,              /* Wooden Stool                                                       */
+        PROP_SWIVEL_CHAIR1,       /* Swivel Chair                                                       */
+        PROP_TORPEDO_RACK,        /* Naval Torpedo Rack x3                                              */
+        PROP_TV1,                 /* Television Monitor                                                 */
+        PROP_TV_HOLDER,           /* Hanging Monitor Rack                                               */
+        PROP_TVSCREEN,            /* Wall Monitor Screen                                                */
+        PROP_TV4SCREEN,           /* Wall Monitor Screens, 4-in-1                                       */
+        PROP_WOOD_LG_CRATE1,      /* Wooden Crate w/ #4 Label, Bahah                                    */
+        PROP_WOOD_LG_CRATE2,      /* Wooden Crate, Darker Shading, Kapto|Enb                            */
+        PROP_WOOD_MD_CRATE3,      /* Wooden Crates x8, Bahko                                            */
+        PROP_WOOD_SM_CRATE4,      /* Wooden Crate w/ #2 Label, Bahko                                    */
+        PROP_WOOD_SM_CRATE5,      /* Wooden Crate w/ #4 Label, Darker Shading, Bahah                    */
+        PROP_WOOD_SM_CRATE6,      /* Wooden Crate w/ UP Arrow, Kapto|Enb                                */
+        PROP_WOODEN_TABLE1,       /* Wooden Table                                                       */
+        PROP_SWIPE_CARD2,         /* Keycard                                                            */
+        PROP_BORG_CRATE,          /* Blue and Gold Printed Circuit Cube (Borg Crate)                    */
+        PROP_BOXES4X4,            /* Metal Crate Stack, 4x4                                             */
+        PROP_BOXES3X4,            /* Metal Crate Stack, 3x4                                             */
+        PROP_BOXES2X4,            /* Metal Crate Stack, 2x4                                             */
+        PROP_SEC_PANEL,           /* Security Card Panel                                                */
+        PROP_ICBM_NOSE,           /* Silo Missile (ICBM), Nose Cone Only                                */
         PROP_ICBM,                /* Silo Missile (ICBM)                                                */
-        PROP_tuning_console1,     /* Dual Consoles on Castors                                           */
-        PROP_desk_arecibo1,       /* Computer Work Desk                                                 */
-        PROP_locker3,             /* Lockers, Single Venting                                            */
-        PROP_locker4,             /* Lockers, Double Venting                                            */
-        PROP_roofgun,             /* Ceiling Mounted Drone Gun                                          */
-        PROP_dest_engine,         /* Frigate Engine                                                     */
-        PROP_dest_exocet,         /* Naval MK 29 Missile Launcher (Exocet)                              */
-        PROP_dest_gun,            /* Naval 100 mm Gun Turret (TR 100)                                   */
-        PROP_dest_harpoon,        /* Naval MK 141 Launch Canisters (Harpoon)                            */
-        PROP_dest_seawolf,        /* Naval MK 26 Dual Missile Launcher (Seawolf)                        */
-        PROP_window,              /* Window Glass                                                       */
-        PROP_window_lib_lg1,      /* Window Glass, Lattice Frame, 4x10 (single-sided)                   */
-        PROP_window_lib_sm1,      /* Window Glass, Lattice Frame, 4x3 (double-sided)                    */
-        PROP_window_cor11,        /* Window Glass, Lattice Frame, 4x4 (single-sided)                    */
-        PROP_jungle3_tree,        /* Jungle Large Tree                                                  */
-        PROP_palm,                /* Jungle Palm Tree                                                   */
-        PROP_palmtree,            /* Jungle Palm Tree, Resprouting After Loss of Fronds                 */
-        PROP_plant2b,             /* Jungle Plant, Low Shrub                                            */
-        PROP_labbench,            /* Laboratory Table w/ Sink Drains                                    */
-        PROP_gasbarrel,           /* White Bin                                                          */
-        PROP_gasbarrels,          /* White Bins x4                                                      */
-        PROP_bodyarmour,          /* Body Armor                                                         */
-        PROP_bodyarmourvest,      /* Body Armor (Vest)                                                  */
-        PROP_gastank,             /* Bottling Tank                                                      */
-        PROP_glassware1,          /* Glass Cup                                                          */
-        PROP_hatchbolt,           /* Metallic Securing Strip (Hatch Bolt)                               */
-        PROP_brakeunit,           /* Train Brake Controller                                             */
-        PROP_ak47mag,             /* Gun Magazine (KF7 Soviet)                                          */
-        PROP_m16mag,              /* Gun Magazine (AR33 Assault Rifle)                                  */
-        PROP_mp5kmag,             /* Gun Magazine (D5K Deutsche)                                        */
-        PROP_skorpionmag,         /* Gun Magazine (Klobb)                                               */
-        PROP_spectremag,          /* Gun Magazine (Phantom)                                             */
-        PROP_uzimag,              /* Gun Magazine (ZMG (9mm))                                           */
-        PROP_silencer,            /* Silencer                                                           */
-        PROP_chrextinguisher,     /* Fire Extinguisher                                                  */
-        PROP_boxcartridges,       /* Box of Shells (Shotgun Cartridges)                                 */
-        PROP_fnp90mag,            /* Gun Magazine (RC-P90)                                              */
-        PROP_goldenshells,        /* Box of Shells (Golden Gun Bullets)                                 */
-        PROP_magnumshells,        /* Box of Shells (Magnum Rounds)                                      */
-        PROP_wppkmag,             /* Gun Magazine (PP7)                                                 */
-        PROP_tt33mag,             /* Gun Magazine (DD44 Dostovei)                                       */
-        PROP_sev_door,            /* Grey Containment Door w/ Caution Stripes and Window                */
-        PROP_sev_door3,           /* Grey Electronic Door w/ LEFT Arrow                                 */
-        PROP_sev_door3_wind,      /* BETA Electronic Door w/ LEFT Arrow and Fake Window                 */
-        PROP_sev_door4_wind,      /* Grey Electronic Door w/ LEFT Arrow and Window                      */
-        PROP_sev_trislide,        /* Glass Door w/ Stone Frame                                          */
-        PROP_sev_door_v1,         /* Grey Electronic Door w/ UP Arrow                                   */
-        PROP_steel_door1,         /* Silver Corrugated Door w/ Caution Stripes                          */
-        PROP_steel_door2,         /* Rusty Door w/ Handle                                               */
-        PROP_steel_door3,         /* Double Cross Brace Door                                            */
-        PROP_silo_lift_door,      /* Elevator Door                                                      */
-        PROP_steel_door2b,        /* Rusty Door w/o Handle                                              */
-        PROP_door_roller1,        /* Blue Bay Door w/ Caution Stripes                                   */
-        PROP_door_roller2,        /* Blue Bay Door w/ Venting and Caution Stripes                       */
-        PROP_door_roller3,        /* Blue Bay Door w/ Venting and Caution Stripes                       */
-        PROP_door_roller4,        /* Cargo Bay Door w/ UP Arrow and Transportation Stripes              */
-        PROP_door_st_arec1,       /* Blue Corrugated Door w/ Transportation Stripes                     */
-        PROP_door_st_arec2,       /* Blue Reversed Corrugated Door w/ Transportation Stripes            */
-        PROP_door_dest1,          /* Grey Frigate Door w/ Indents and Caution Stripes                   */
-        PROP_door_dest2,          /* Grey Frigate Door w/ Indents, Caution Stripes and KEEP CLEAR Label */
-        PROP_gas_plant_sw_do1,    /* Grey Swinging Door w/ Blue Stripe                                  */
-        PROP_gas_plant_sw2_do1,   /* Grey Swinging Door, Darker                                         */
-        PROP_gas_plant_sw3_do1,   /* Grey Swinging Door, Lighter                                        */
-        PROP_gas_plant_sw4_do1,   /* Light Wooden Door (Looks Like Sand)                                */
-        PROP_gas_plant_met1_do1,  /* Brown Electronic Door                                              */
-        PROP_gas_plant_wc_cub1,   /* Bathroom Stall Door                                                */
-        PROP_gasplant_clear_door, /* Laboratory Glass Door                                              */
-        PROP_train_door,          /* Dark Wooden Door                                                   */
-        PROP_train_door2,         /* Dark Wooden Door w/ Window                                         */
-        PROP_train_door3,         /* Dark Wooden Door w/ Window + Shutter                               */
-        PROP_door_eyelid,         /* Eyelid Door                                                        */
-        PROP_door_iris,           /* Iris Door                                                          */
-        PROP_sevdoorwood,         /* Cabin Door                                                         */
-        PROP_sevdoorwind,         /* Weathered Swinging Door w/ Window                                  */
-        PROP_sevdoornowind,       /* Weathered Swinging Door                                            */
-        PROP_sevdoormetslide,     /* Brown Corrugated Electronic Door                                   */
-        PROP_cryptdoor1a,         /* Stone Door w/ Prints (Set A)                                       */
-        PROP_cryptdoor1b,         /* Sand Door w/ Damage (Set A)                                        */
-        PROP_cryptdoor2a,         /* Stone Door w/ Prints, Darker (Set B)                               */
-        PROP_cryptdoor2b,         /* Sand Door w/ Damage, Darker (Set B)                                */
-        PROP_cryptdoor3,          /* Egyptian Moving Wall                                               */
-        PROP_cryptdoor4,          /* Brown Sand Door (Temple)                                           */
-        PROP_vertdoor,            /* Blast Door (Control)                                               */
-        PROP_hatchdoor,           /* Train Floor Hatch                                                  */
-        PROP_damgatedoor,         /* Security Gate (Dam)                                                */
-        PROP_damtundoor,          /* Tunnel Flood Door (Dam)                                            */
-        PROP_damchaindoor,        /* Mesh Gate                                                          */
-        PROP_silotopdoor,         /* Launch Tube Ceiling Shutter (Silo)                                 */
-        PROP_doorprison1,         /* Cell Door                                                          */
-        PROP_doorstatgate,        /* Park Gate                                                          */
-        PROP_chrkalash,           /* KF7 Soviet                                                         */
-        PROP_chrgrenadelaunch,    /* Grenade Launcher                                                   */
-        PROP_chrknife,            /* Hunting Knife                                                      */
-        PROP_chrlaser,            /* Moonraker Laser                                                    */
-        PROP_chrm16,              /* AR33 Assault Rifle                                                 */
-        PROP_chrmp5k,             /* D5K Deutsche                                                       */
-        PROP_chrruger,            /* Cougar Magnum                                                      */
-        PROP_chrwppk,             /* PP7 Special Issue                                                  */
-        PROP_chrshotgun,          /* Shotgun                                                            */
-        PROP_chrskorpion,         /* Klobb                                                              */
-        PROP_chrspectre,          /* Phantom                                                            */
-        PROP_chruzi,              /* ZMG (9mm)                                                          */
-        PROP_chrgrenade,          /* Hand Grenade                                                       */
-        PROP_chrfnp90,            /* RC-P90                                                             */
-        PROP_chrbriefcase,        /* Briefcase                                                          */
-        PROP_chrremotemine,       /* Remote Mine                                                        */
-        PROP_chrproximitymine,    /* Proximity Mine                                                     */
-        PROP_chrtimedmine,        /* Timed Mine                                                         */
-        PROP_chrrocket,           /* Rocket                                                             */
-        PROP_chrgrenaderound,     /* Grenade Round                                                      */
-        PROP_chrwppksil,          /* PP7 (Silenced)                                                     */
-        PROP_chrtt33,             /* DD44 Dostovei                                                      */
-        PROP_chrmp5ksil,          /* D5K (Silenced)                                                     */
-        PROP_chrautoshot,         /* Automatic Shotgun                                                  */
-        PROP_chrgolden,           /* Golden Gun                                                         */
-        PROP_chrthrowknife,       /* Throwing Knife                                                     */
-        PROP_chrsniperrifle,      /* Sniper Rifle                                                       */
-        PROP_chrrocketlaunch,     /* Rocket Launcher                                                    */
-        PROP_hatfurry,            /* Fur Hat, Blue                                                      */
-        PROP_hatfurrybrown,       /* Fur Hat, Brown                                                     */
-        PROP_hatfurryblack,       /* Fur Hat, Black                                                     */
-        PROP_hattbird,            /* Side Cap, Light Green                                              */
-        PROP_hattbirdbrown,       /* Side Cap, Dark Green                                               */
-        PROP_hathelmet,           /* Combat Helmet, Green                                               */
-        PROP_hathelmetgrey,       /* Combat Helmet, Grey                                                */
-        PROP_hatmoon,             /* Elite Headgear                                                     */
-        PROP_hatberet,            /* Special Forces Beret, Black                                        */
-        PROP_hatberetblue,        /* Special Forces Beret, Navy                                         */
-        PROP_hatberetred,         /* Special Forces Beret, Burgundy                                     */
-        PROP_hatpeaked,           /* Officer's Peaked Visor Cap                                         */
-        PROP_chrwristdart,        /* Pchrwristdart (BETA)                                               */
-        PROP_chrexplosivepen,     /* Pchrexplosivepen (BETA)                                            */
-        PROP_chrbombcase,         /* Bomb Case (Briefcase Laying Down)                                  */
-        PROP_chrflarepistol,      /* Pchrflarepistol (BETA Pickup)                                      */
-        PROP_chrpitongun,         /* Pchrpitongun (BETA Pickup)                                         */
-        PROP_chrfingergun,        /* Pchrfingergun (BETA Pickup)                                        */
-        PROP_chrsilverwppk,       /* Pchrsilverwppk (BETA Pickup)                                       */
-        PROP_chrgoldwppk,         /* Pchrgoldwppk (BETA Pickup)                                         */
-        PROP_chrdynamite,         /* Pchrdynamite (BETA Pickup)                                         */
-        PROP_chrbungee,           /* Pchrbungee (BETA Pickup)                                           */
-        PROP_chrdoordecoder,      /* Door Decoder                                                       */
-        PROP_chrbombdefuser,      /* Bomb Defuser                                                       */
-        PROP_chrbugdetector,      /* Pchrbugdetector (BETA Pickup)                                      */
-        PROP_chrsafecrackercase,  /* Safe Cracker Case (Briefcase Laying Down)                          */
-        PROP_chrcamera,           /* Photo Camera (007)                                                 */
-        PROP_chrlockexploder,     /* Pchrlockexploder (BETA Pickup)                                     */
-        PROP_chrdoorexploder,     /* Pchrdoorexploder (BETA Pickup)                                     */
-        PROP_chrkeyanalysercase,  /* Key Analyzer Case (Briefcase Laying Down)                          */
-        PROP_chrweaponcase,       /* Weapon Case (Briefcase Standing Up)                                */
-        PROP_chrkeyyale,          /* Yale Key                                                           */
-        PROP_chrkeybolt,          /* Bolt Key                                                           */
-        PROP_chrbug,              /* Covert Modem / Tracker Bug                                         */
-        PROP_chrmicrocamera,      /* Micro Camera                                                       */
-        PROP_floppy,              /* Floppy Disc                                                        */
-        PROP_chrgoldeneyekey,     /* GoldenEye Key                                                      */
-        PROP_chrpolarizedglasses, /* Polarized Glasses                                                  */
-        PROP_chrcreditcard,       /* Pchrcreditcard (BETA Pickup)                                       */
-        PROP_chrdarkglasses,      /* Pchrdarkglasses (BETA Pickup)                                      */
-        PROP_chrgaskeyring,       /* Gas Keyring                                                        */
-        PROP_chrdatathief,        /* Datathief                                                          */
-        PROP_safe,                /* Safe Body                                                          */
-        PROP_bomb,                /* Pbomb (BETA Pickup)                                                */
-        PROP_chrplans,            /* Plans (Briefing Folder)                                            */
-        PROP_chrspyfile,          /* Pchrspyfile (BETA Pickup)                                          */
-        PROP_chrblueprints,       /* Pirate Blueprints                                                  */
-        PROP_chrcircuitboard,     /* Circuitboard                                                       */
-        PROP_chrmap,              /* Bunker Expansion Plans                                             */
-        PROP_chrspooltape,        /* Pchrspooltape (BETA Pickup)                                        */
-        PROP_chraudiotape,        /* Audiotape                                                          */
-        PROP_chrmicrofilm,        /* Pchrmicrofilm (BETA Pickup)                                        */
-        PROP_chrmicrocode,        /* Pchrmicrocode (BETA Pickup)                                        */
-        PROP_chrlectre,           /* Pchrlectre (BETA Pickup)                                           */
-        PROP_chrmoney,            /* Pchrmoney (BETA Pickup)                                            */
-        PROP_chrgoldbar,          /* Pchrgoldbar (BETA Pickup)                                          */
-        PROP_chrheroin,           /* Pchrheroin (BETA Pickup)                                           */
-        PROP_chrclipboard,        /* Clipboard                                                          */
-        PROP_chrdossierred,       /* Red Dossier                                                        */
-        PROP_chrstafflist,        /* Staff List                                                         */
-        PROP_chrdattape,          /* DAT                                                                */
-        PROP_chrplastique,        /* Plastique                                                          */
-        PROP_chrblackbox,         /* Black Box (Orange Flight Recorder)                                 */
-        PROP_chrvideotape,        /* CCTV Tape (GoldenEye VHS)                                          */
-        PROP_nintendologo,        /* Nintendo Logo                                                      */
-        PROP_goldeneyelogo,       /* GoldenEye Logo                                                     */
-        PROP_walletbond,          /* Classified Folder w/ Royal Crest (Folder Menus)                    */
-        PROP_miltruck,            /* Supply Truck                                                       */
-        PROP_jeep,                /* Military Jeep                                                      */
-        PROP_artic,               /* Red Prime Mover                                                    */
-        PROP_helicopter,          /* Transport Helicopter w/ Natalya                                    */
-        PROP_tiger,               /* Pirate Euro Chopper                                                */
-        PROP_milcopter,           /* Hound Helicopter                                                   */
-        PROP_hind,                /* Soviet Camouflage Chopper                                          */
-        PROP_artictrailer,        /* Black Trailer                                                      */
-        PROP_motorbike,           /* Motorbike                                                          */
-        PROP_tank,                /* Tank                                                               */
-        PROP_apc,                 /* Armored Personnel Carrier                                          */
-        PROP_speedboat,           /* Speedboat                                                          */
-        PROP_plane,               /* Aeroplane                                                          */
-        PROP_gun_runway1,         /* Heavy Gun Emplacement                                              */
-        PROP_safedoor,            /* Safe Door                                                          */
-        PROP_key_holder,          /* Key Rack                                                           */
-        PROP_hatchsevx,           /* Grating (Ventshaft Hatch)                                          */
-        PROP_sevdish,             /* Satellite Dish (Severnaya)                                         */
-        PROP_archsecdoor1,        /* Archives Moving Wall (Dark)                                        */
-        PROP_archsecdoor2,        /* Archives Moving Wall (Light)                                       */
-        PROP_groundgun,           /* Free Standing Drone Gun                                            */
-        PROP_trainextdoor,        /* Train Exterior Door                                                */
-        PROP_carbmw,              /* White Car #1 (BMW)                                                 */
-        PROP_carescort,           /* White Car #2 (Escort)                                              */
-        PROP_cargolf,             /* White Car #3 (Golf)                                                */
-        PROP_carweird,            /* Red Car (Cadillac)                                                 */
-        PROP_carzil,              /* Ourumov's Car (ZIL)                                                */
-        PROP_shuttle_door_l,      /* Exhaust Bay Doors, Left Side                                       */
-        PROP_shuttle_door_r,      /* Exhaust Bay Doors, Right Side                                      */
-        PROP_depot_gate_entry,    /* Metallic Gate w/ Red Star                                          */
-        PROP_depot_door_steel,    /* Rusty Door w/ Handle (Lo-Res)                                      */
-        PROP_glassware2,          /* Beaker w/ Blue Topper                                              */
-        PROP_glassware3,          /* Erlenmeyer Flask                                                   */
-        PROP_glassware4,          /* Set of Five Beakers                                                */
-        PROP_landmine,            /* Land Mine                                                          */
-        PROP_plant1,              /* Jungle Plant, Withered and Dying                                   */
-        PROP_plant11,             /* Jungle Plant, Turning Colour                                       */
-        PROP_plant2,              /* Jungle Plant, Healthy and Thick                                    */
-        PROP_plant3,              /* Jungle Plant, Tall Leaves                                          */
-        PROP_jungle5_tree,        /* Jungle Tree, Moss Covered                                          */
-        PROP_legalpage,           /* GoldenEye Certification Screen                                     */
-        PROP_st_pete_room_1i,     /* Roads and Buildings #1 (stretch of road)                           */
-        PROP_st_pete_room_2i,     /* Roads and Buildings #2 (stretch of road)                           */
-        PROP_st_pete_room_3t,     /* Roads and Buildings #3 (intersection)                              */
-        PROP_st_pete_room_5c,     /* Roads and Buildings #4 (street corner)                             */
-        PROP_st_pete_room_6c,     /* Roads and Buildings #5 (street corner)                             */
-        PROP_door_rollertrain,    /* Roller Door                                                        */
-        PROP_door_win,            /* Glass Sliding Door (Aztec)                                         */
-        PROP_door_aztec,          /* Stone Sliding Door (Aztec)                                         */
-        PROP_shuttle,             /* Moonraker Shuttle                                                  */
-        PROP_door_azt_desk,       /* Boardroom Table (Aztec Exhaust Bay)                                */
-        PROP_door_azt_desk_top,   /* Boardroom Table Extension (Aztec Exhaust Bay)                      */
-        PROP_door_azt_chair,      /* Boardroom Chair (Aztec Exhaust Bay)                                */
-        PROP_door_mf,             /* Mainframe Door                                                     */
-        PROP_flag,                /* Flag Tag Token                                                     */
-        PROP_barricade,           /* Road Barricade                                                     */
-        PROP_modembox,            /* Covert Modem Connection Screen                                     */
-        PROP_doorpanel,           /* Sliding Door Activation Switch                                     */
-        PROP_doorconsole,         /* Console w/ Activation Light                                        */
-        PROP_chrtesttube,         /* Glass Test Tube                                                    */
-        PROP_bollard,             /* Bollard                                                            */
-        PROPS_MAX
-    } PROPS;
+        PROP_TUNING_CONSOLE1,     /* Dual Consoles on Castors                                           */
+        PROP_DESK_ARECIBO1,       /* Computer Work Desk                                                 */
+        PROP_LOCKER3,             /* Lockers, Single Venting                                            */
+        PROP_LOCKER4,             /* Lockers, Double Venting                                            */
+        PROP_ROOFGUN,             /* Ceiling Mounted Drone Gun                                          */
+        PROP_DEST_ENGINE,         /* Frigate Engine                                                     */
+        PROP_DEST_EXOCET,         /* Naval MK 29 Missile Launcher (Exocet)                              */
+        PROP_DEST_GUN,            /* Naval 100 mm Gun Turret (TR 100)                                   */
+        PROP_DEST_HARPOON,        /* Naval MK 141 Launch Canisters (Harpoon)                            */
+        PROP_DEST_SEAWOLF,        /* Naval MK 26 Dual Missile Launcher (Seawolf)                        */
+        PROP_WINDOW,              /* Window Glass                                                       */
+        PROP_WINDOW_LIB_LG1,      /* Window Glass, Lattice Frame, 4x10 (single-sided)                   */
+        PROP_WINDOW_LIB_SM1,      /* Window Glass, Lattice Frame, 4x3 (double-sided)                    */
+        PROP_WINDOW_COR11,        /* Window Glass, Lattice Frame, 4x4 (single-sided)                    */
+        PROP_JUNGLE3_TREE,        /* Jungle Large Tree                                                  */
+        PROP_PALM,                /* Jungle Palm Tree                                                   */
+        PROP_PALMTREE,            /* Jungle Palm Tree, Resprouting After Loss of Fronds                 */
+        PROP_PLANT2B,             /* Jungle Plant, Low Shrub                                            */
+        PROP_LABBENCH,            /* Laboratory Table w/ Sink Drains                                    */
+        PROP_GASBARREL,           /* White Bin                                                          */
+        PROP_GASBARRELS,          /* White Bins x4                                                      */
+        PROP_BODYARMOUR,          /* Body Armor                                                         */
+        PROP_BODYARMOURVEST,      /* Body Armor (Vest)                                                  */
+        PROP_GASTANK,             /* Bottling Tank                                                      */
+        PROP_GLASSWARE1,          /* Glass Cup                                                          */
+        PROP_HATCHBOLT,           /* Metallic Securing Strip (Hatch Bolt)                               */
+        PROP_BRAKEUNIT,           /* Train Brake Controller                                             */
+        PROP_AK47MAG,             /* Gun Magazine (KF7 Soviet)                                          */
+        PROP_M16MAG,              /* Gun Magazine (AR33 Assault Rifle)                                  */
+        PROP_MP5KMAG,             /* Gun Magazine (D5K Deutsche)                                        */
+        PROP_SKORPIONMAG,         /* Gun Magazine (Klobb)                                               */
+        PROP_SPECTREMAG,          /* Gun Magazine (Phantom)                                             */
+        PROP_UZIMAG,              /* Gun Magazine (ZMG (9mm))                                           */
+        PROP_SILENCER,            /* Silencer                                                           */
+        PROP_CHREXTINGUISHER,     /* Fire Extinguisher                                                  */
+        PROP_BOXCARTRIDGES,       /* Box of Shells (Shotgun Cartridges)                                 */
+        PROP_FNP90MAG,            /* Gun Magazine (RC-P90)                                              */
+        PROP_GOLDENSHELLS,        /* Box of Shells (Golden Gun Bullets)                                 */
+        PROP_MAGNUMSHELLS,        /* Box of Shells (Magnum Rounds)                                      */
+        PROP_WPPKMAG,             /* Gun Magazine (PP7)                                                 */
+        PROP_TT33MAG,             /* Gun Magazine (DD44 Dostovei)                                       */
+        PROP_SEV_DOOR,            /* Grey Containment Door w/ Caution Stripes and Window                */
+        PROP_SEV_DOOR3,           /* Grey Electronic Door w/ LEFT Arrow                                 */
+        PROP_SEV_DOOR3_WIND,      /* BETA Electronic Door w/ LEFT Arrow and Fake Window                 */
+        PROP_SEV_DOOR4_WIND,      /* Grey Electronic Door w/ LEFT Arrow and Window                      */
+        PROP_SEV_TRISLIDE,        /* Glass Door w/ Stone Frame                                          */
+        PROP_SEV_DOOR_V1,         /* Grey Electronic Door w/ UP Arrow                                   */
+        PROP_STEEL_DOOR1,         /* Silver Corrugated Door w/ Caution Stripes                          */
+        PROP_STEEL_DOOR2,         /* Rusty Door w/ Handle                                               */
+        PROP_STEEL_DOOR3,         /* Double Cross Brace Door                                            */
+        PROP_SILO_LIFT_DOOR,      /* Elevator Door                                                      */
+        PROP_STEEL_DOOR2B,        /* Rusty Door w/o Handle                                              */
+        PROP_DOOR_ROLLER1,        /* Blue Bay Door w/ Caution Stripes                                   */
+        PROP_DOOR_ROLLER2,        /* Blue Bay Door w/ Venting and Caution Stripes                       */
+        PROP_DOOR_ROLLER3,        /* Blue Bay Door w/ Venting and Caution Stripes                       */
+        PROP_DOOR_ROLLER4,        /* Cargo Bay Door w/ UP Arrow and Transportation Stripes              */
+        PROP_DOOR_ST_AREC1,       /* Blue Corrugated Door w/ Transportation Stripes                     */
+        PROP_DOOR_ST_AREC2,       /* Blue Reversed Corrugated Door w/ Transportation Stripes            */
+        PROP_DOOR_DEST1,          /* Grey Frigate Door w/ Indents and Caution Stripes                   */
+        PROP_DOOR_DEST2,          /* Grey Frigate Door w/ Indents, Caution Stripes and KEEP CLEAR Label */
+        PROP_GAS_PLANT_SW_DO1,    /* Grey Swinging Door w/ Blue Stripe                                  */
+        PROP_GAS_PLANT_SW2_DO1,   /* Grey Swinging Door, Darker                                         */
+        PROP_GAS_PLANT_SW3_DO1,   /* Grey Swinging Door, Lighter                                        */
+        PROP_GAS_PLANT_SW4_DO1,   /* Light Wooden Door (Looks Like Sand)                                */
+        PROP_GAS_PLANT_MET1_DO1,  /* Brown Electronic Door                                              */
+        PROP_GAS_PLANT_WC_CUB1,   /* Bathroom Stall Door                                                */
+        PROP_GASPLANT_CLEAR_DOOR, /* Laboratory Glass Door                                              */
+        PROP_TRAIN_DOOR,          /* Dark Wooden Door                                                   */
+        PROP_TRAIN_DOOR2,         /* Dark Wooden Door w/ Window                                         */
+        PROP_TRAIN_DOOR3,         /* Dark Wooden Door w/ Window + Shutter                               */
+        PROP_DOOR_EYELID,         /* Eyelid Door                                                        */
+        PROP_DOOR_IRIS,           /* Iris Door                                                          */
+        PROP_SEVDOORWOOD,         /* Cabin Door                                                         */
+        PROP_SEVDOORWIND,         /* Weathered Swinging Door w/ Window                                  */
+        PROP_SEVDOORNOWIND,       /* Weathered Swinging Door                                            */
+        PROP_SEVDOORMETSLIDE,     /* Brown Corrugated Electronic Door                                   */
+        PROP_CRYPTDOOR1A,         /* Stone Door w/ Prints (Set A)                                       */
+        PROP_CRYPTDOOR1B,         /* Sand Door w/ Damage (Set A)                                        */
+        PROP_CRYPTDOOR2A,         /* Stone Door w/ Prints, Darker (Set B)                               */
+        PROP_CRYPTDOOR2B,         /* Sand Door w/ Damage, Darker (Set B)                                */
+        PROP_CRYPTDOOR3,          /* Egyptian Moving Wall                                               */
+        PROP_CRYPTDOOR4,          /* Brown Sand Door (Temple)                                           */
+        PROP_VERTDOOR,            /* Blast Door (Control)                                               */
+        PROP_HATCHDOOR,           /* Train Floor Hatch                                                  */
+        PROP_DAMGATEDOOR,         /* Security Gate (Dam)                                                */
+        PROP_DAMTUNDOOR,          /* Tunnel Flood Door (Dam)                                            */
+        PROP_DAMCHAINDOOR,        /* Mesh Gate                                                          */
+        PROP_SILOTOPDOOR,         /* Launch Tube Ceiling Shutter (Silo)                                 */
+        PROP_DOORPRISON1,         /* Cell Door                                                          */
+        PROP_DOORSTATGATE,        /* Park Gate                                                          */
+        PROP_CHRKALASH,           /* KF7 Soviet                                                         */
+        PROP_CHRGRENADELAUNCH,    /* Grenade Launcher                                                   */
+        PROP_CHRKNIFE,            /* Hunting Knife                                                      */
+        PROP_CHRLASER,            /* Moonraker Laser                                                    */
+        PROP_CHRM16,              /* AR33 Assault Rifle                                                 */
+        PROP_CHRMP5K,             /* D5K Deutsche                                                       */
+        PROP_CHRRUGER,            /* Cougar Magnum                                                      */
+        PROP_CHRWPPK,             /* PP7 Special Issue                                                  */
+        PROP_CHRSHOTGUN,          /* Shotgun                                                            */
+        PROP_CHRSKORPION,         /* Klobb                                                              */
+        PROP_CHRSPECTRE,          /* Phantom                                                            */
+        PROP_CHRUZI,              /* ZMG (9mm)                                                          */
+        PROP_CHRGRENADE,          /* Hand Grenade                                                       */
+        PROP_CHRFNP90,            /* RC-P90                                                             */
+        PROP_CHRBRIEFCASE,        /* Briefcase                                                          */
+        PROP_CHRREMOTEMINE,       /* Remote Mine                                                        */
+        PROP_CHRPROXIMITYMINE,    /* Proximity Mine                                                     */
+        PROP_CHRTIMEDMINE,        /* Timed Mine                                                         */
+        PROP_CHRROCKET,           /* Rocket                                                             */
+        PROP_CHRGRENADEROUND,     /* Grenade Round                                                      */
+        PROP_CHRWPPKSIL,          /* PP7 (Silenced)                                                     */
+        PROP_CHRTT33,             /* DD44 Dostovei                                                      */
+        PROP_CHRMP5KSIL,          /* D5K (Silenced)                                                     */
+        PROP_CHRAUTOSHOT,         /* Automatic Shotgun                                                  */
+        PROP_CHRGOLDEN,           /* Golden Gun                                                         */
+        PROP_CHRTHROWKNIFE,       /* Throwing Knife                                                     */
+        PROP_CHRSNIPERRIFLE,      /* Sniper Rifle                                                       */
+        PROP_CHRROCKETLAUNCH,     /* Rocket Launcher                                                    */
+        PROP_HATFURRY,            /* Fur Hat, Blue                                                      */
+        PROP_HATFURRYBROWN,       /* Fur Hat, Brown                                                     */
+        PROP_HATFURRYBLACK,       /* Fur Hat, Black                                                     */
+        PROP_HATTBIRD,            /* Side Cap, Light Green                                              */
+        PROP_HATTBIRDBROWN,       /* Side Cap, Dark Green                                               */
+        PROP_HATHELMET,           /* Combat Helmet, Green                                               */
+        PROP_HATHELMETGREY,       /* Combat Helmet, Grey                                                */
+        PROP_HATMOON,             /* Elite Headgear                                                     */
+        PROP_HATBERET,            /* Special Forces Beret, Black                                        */
+        PROP_HATBERETBLUE,        /* Special Forces Beret, Navy                                         */
+        PROP_HATBERETRED,         /* Special Forces Beret, Burgundy                                     */
+        PROP_HATPEAKED,           /* Officer's Peaked Visor Cap                                         */
+        PROP_CHRWRISTDART,        /* Pchrwristdart (BETA)                                               */
+        PROP_CHREXPLOSIVEPEN,     /* Pchrexplosivepen (BETA)                                            */
+        PROP_CHRBOMBCASE,         /* Bomb Case (Briefcase Laying Down)                                  */
+        PROP_CHRFLAREPISTOL,      /* Pchrflarepistol (BETA Pickup)                                      */
+        PROP_CHRPITONGUN,         /* Pchrpitongun (BETA Pickup)                                         */
+        PROP_CHRFINGERGUN,        /* Pchrfingergun (BETA Pickup)                                        */
+        PROP_CHRSILVERWPPK,       /* Pchrsilverwppk (BETA Pickup)                                       */
+        PROP_CHRGOLDWPPK,         /* Pchrgoldwppk (BETA Pickup)                                         */
+        PROP_CHRDYNAMITE,         /* Pchrdynamite (BETA Pickup)                                         */
+        PROP_CHRBUNGEE,           /* Pchrbungee (BETA Pickup)                                           */
+        PROP_CHRDOORDECODER,      /* Door Decoder                                                       */
+        PROP_CHRBOMBDEFUSER,      /* Bomb Defuser                                                       */
+        PROP_CHRBUGDETECTOR,      /* Pchrbugdetector (BETA Pickup)                                      */
+        PROP_CHRSAFECRACKERCASE,  /* Safe Cracker Case (Briefcase Laying Down)                          */
+        PROP_CHRCAMERA,           /* Photo Camera (007)                                                 */
+        PROP_CHRLOCKEXPLODER,     /* Pchrlockexploder (BETA Pickup)                                     */
+        PROP_CHRDOOREXPLODER,     /* Pchrdoorexploder (BETA Pickup)                                     */
+        PROP_CHRKEYANALYSERCASE,  /* Key Analyzer Case (Briefcase Laying Down)                          */
+        PROP_CHRWEAPONCASE,       /* Weapon Case (Briefcase Standing Up)                                */
+        PROP_CHRKEYYALE,          /* Yale Key                                                           */
+        PROP_CHRKEYBOLT,          /* Bolt Key                                                           */
+        PROP_CHRBUG,              /* Covert Modem / Tracker Bug                                         */
+        PROP_CHRMICROCAMERA,      /* Micro Camera                                                       */
+        PROP_FLOPPY,              /* Floppy Disc                                                        */
+        PROP_CHRGOLDENEYEKEY,     /* GoldenEye Key                                                      */
+        PROP_CHRPOLARIZEDGLASSES, /* Polarized Glasses                                                  */
+        PROP_CHRCREDITCARD,       /* Pchrcreditcard (BETA Pickup)                                       */
+        PROP_CHRDARKGLASSES,      /* Pchrdarkglasses (BETA Pickup)                                      */
+        PROP_CHRGASKEYRING,       /* Gas Keyring                                                        */
+        PROP_CHRDATATHIEF,        /* Datathief                                                          */
+        PROP_SAFE,                /* Safe Body                                                          */
+        PROP_BOMB,                /* Pbomb (BETA Pickup)                                                */
+        PROP_CHRPLANS,            /* Plans (Briefing Folder)                                            */
+        PROP_CHRSPYFILE,          /* Pchrspyfile (BETA Pickup)                                          */
+        PROP_CHRBLUEPRINTS,       /* Pirate Blueprints                                                  */
+        PROP_CHRCIRCUITBOARD,     /* Circuitboard                                                       */
+        PROP_CHRMAP,              /* Bunker Expansion Plans                                             */
+        PROP_CHRSPOOLTAPE,        /* Pchrspooltape (BETA Pickup)                                        */
+        PROP_CHRAUDIOTAPE,        /* Audiotape                                                          */
+        PROP_CHRMICROFILM,        /* Pchrmicrofilm (BETA Pickup)                                        */
+        PROP_CHRMICROCODE,        /* Pchrmicrocode (BETA Pickup)                                        */
+        PROP_CHRLECTRE,           /* Pchrlectre (BETA Pickup)                                           */
+        PROP_CHRMONEY,            /* Pchrmoney (BETA Pickup)                                            */
+        PROP_CHRGOLDBAR,          /* Pchrgoldbar (BETA Pickup)                                          */
+        PROP_CHRHEROIN,           /* Pchrheroin (BETA Pickup)                                           */
+        PROP_CHRCLIPBOARD,        /* Clipboard                                                          */
+        PROP_CHRDOSSIERRED,       /* Red Dossier                                                        */
+        PROP_CHRSTAFFLIST,        /* Staff List                                                         */
+        PROP_CHRDATTAPE,          /* DAT                                                                */
+        PROP_CHRPLASTIQUE,        /* Plastique                                                          */
+        PROP_CHRBLACKBOX,         /* Black Box (Orange Flight Recorder)                                 */
+        PROP_CHRVIDEOTAPE,        /* CCTV Tape (GoldenEye VHS)                                          */
+        PROP_NINTENDOLOGO,        /* Nintendo Logo                                                      */
+        PROP_GOLDENEYELOGO,       /* GoldenEye Logo                                                     */
+        PROP_WALLETBOND,          /* Classified Folder w/ Royal Crest (Folder Menus)                    */
+        PROP_MILTRUCK,            /* Supply Truck                                                       */
+        PROP_JEEP,                /* Military Jeep                                                      */
+        PROP_ARTIC,               /* Red Prime Mover                                                    */
+        PROP_HELICOPTER,          /* Transport Helicopter w/ Natalya                                    */
+        PROP_TIGER,               /* Pirate Euro Chopper                                                */
+        PROP_MILCOPTER,           /* Hound Helicopter                                                   */
+        PROP_HIND,                /* Soviet Camouflage Chopper                                          */
+        PROP_ARTICTRAILER,        /* Black Trailer                                                      */
+        PROP_MOTORBIKE,           /* Motorbike                                                          */
+        PROP_TANK,                /* Tank                                                               */
+        PROP_APC,                 /* Armored Personnel Carrier                                          */
+        PROP_SPEEDBOAT,           /* Speedboat                                                          */
+        PROP_PLANE,               /* Aeroplane                                                          */
+        PROP_GUN_RUNWAY1,         /* Heavy Gun Emplacement                                              */
+        PROP_SAFEDOOR,            /* Safe Door                                                          */
+        PROP_KEY_HOLDER,          /* Key Rack                                                           */
+        PROP_HATCHSEVX,           /* Grating (Ventshaft Hatch)                                          */
+        PROP_SEVDISH,             /* Satellite Dish (Severnaya)                                         */
+        PROP_ARCHSECDOOR1,        /* Archives Moving Wall (Dark)                                        */
+        PROP_ARCHSECDOOR2,        /* Archives Moving Wall (Light)                                       */
+        PROP_GROUNDGUN,           /* Free Standing Drone Gun                                            */
+        PROP_TRAINEXTDOOR,        /* Train Exterior Door                                                */
+        PROP_CARBMW,              /* White Car #1 (BMW)                                                 */
+        PROP_CARESCORT,           /* White Car #2 (Escort)                                              */
+        PROP_CARGOLF,             /* White Car #3 (Golf)                                                */
+        PROP_CARWEIRD,            /* Red Car (Cadillac)                                                 */
+        PROP_CARZIL,              /* Ourumov's Car (ZIL)                                                */
+        PROP_SHUTTLE_DOOR_L,      /* Exhaust Bay Doors, Left Side                                       */
+        PROP_SHUTTLE_DOOR_R,      /* Exhaust Bay Doors, Right Side                                      */
+        PROP_DEPOT_GATE_ENTRY,    /* Metallic Gate w/ Red Star                                          */
+        PROP_DEPOT_DOOR_STEEL,    /* Rusty Door w/ Handle (Lo-Res)                                      */
+        PROP_GLASSWARE2,          /* Beaker w/ Blue Topper                                              */
+        PROP_GLASSWARE3,          /* Erlenmeyer Flask                                                   */
+        PROP_GLASSWARE4,          /* Set of Five Beakers                                                */
+        PROP_LANDMINE,            /* Land Mine                                                          */
+        PROP_PLANT1,              /* Jungle Plant, Withered and Dying                                   */
+        PROP_PLANT11,             /* Jungle Plant, Turning Colour                                       */
+        PROP_PLANT2,              /* Jungle Plant, Healthy and Thick                                    */
+        PROP_PLANT3,              /* Jungle Plant, Tall Leaves                                          */
+        PROP_JUNGLE5_TREE,        /* Jungle Tree, Moss Covered                                          */
+        PROP_LEGALPAGE,           /* GoldenEye Certification Screen                                     */
+        PROP_ST_PETE_ROOM_1I,     /* Roads and Buildings #1 (stretch of road)                           */
+        PROP_ST_PETE_ROOM_2I,     /* Roads and Buildings #2 (stretch of road)                           */
+        PROP_ST_PETE_ROOM_3T,     /* Roads and Buildings #3 (intersection)                              */
+        PROP_ST_PETE_ROOM_5C,     /* Roads and Buildings #4 (street corner)                             */
+        PROP_ST_PETE_ROOM_6C,     /* Roads and Buildings #5 (street corner)                             */
+        PROP_DOOR_ROLLERTRAIN,    /* Roller Door                                                        */
+        PROP_DOOR_WIN,            /* Glass Sliding Door (Aztec)                                         */
+        PROP_DOOR_AZTEC,          /* Stone Sliding Door (Aztec)                                         */
+        PROP_SHUTTLE,             /* Moonraker Shuttle                                                  */
+        PROP_DOOR_AZT_DESK,       /* Boardroom Table (Aztec Exhaust Bay)                                */
+        PROP_DOOR_AZT_DESK_TOP,   /* Boardroom Table Extension (Aztec Exhaust Bay)                      */
+        PROP_DOOR_AZT_CHAIR,      /* Boardroom Chair (Aztec Exhaust Bay)                                */
+        PROP_DOOR_MF,             /* Mainframe Door                                                     */
+        PROP_FLAG,                /* Flag Tag Token                                                     */
+        PROP_BARRICADE,           /* Road Barricade                                                     */
+        PROP_MODEMBOX,            /* Covert Modem Connection Screen                                     */
+        PROP_DOORPANEL,           /* Sliding Door Activation Switch                                     */
+        PROP_DOORCONSOLE,         /* Console w/ Activation Light                                        */
+        PROP_CHRTESTTUBE,         /* Glass Test Tube                                                    */
+        PROP_BOLLARD,             /* Bollard                                                            */
+        PROP_MAX
+    } PROP;
 
     typedef enum PROJECTILES
     {
         PROJECTILES_MAX                = 0x2E,
-        PROJECTILES_TYPE_KNIFE         = PROP_chrknife,
-        PROJECTILES_TYPE_GRENADE       = PROP_chrgrenade,
-        PROJECTILES_TYPE_REMOTE_MINE   = PROP_chrremotemine,
-        PROJECTILES_TYPE_PROX_MINE     = PROP_chrproximitymine,
-        PROJECTILES_TYPE_TIMED_MINE    = PROP_chrtimedmine,
-        PROJECTILES_TYPE_ROCKET_ROUND  = PROP_chrrocket,
-        PROJECTILES_TYPE_ROCKET_ROUND2 = PROP_chrrocket,
-        PROJECTILES_TYPE_GLAUNCH_ROUND = PROP_chrgrenaderound,
-        PROJECTILES_TYPE_BOMBCASE      = PROP_chrbombcase,
-        PROJECTILES_TYPE_BUG           = PROP_chrbug,
-        PROJECTILES_TYPE_MICROCAMERA   = PROP_chrmicrocamera,
-        PROJECTILES_TYPE_GE_KEY        = PROP_chrgoldeneyekey,
-        PROJECTILES_TYPE_PLASTIQUE     = PROP_chrplastique
+        PROJECTILES_TYPE_KNIFE         = PROP_CHRKNIFE,
+        PROJECTILES_TYPE_GRENADE       = PROP_CHRGRENADE,
+        PROJECTILES_TYPE_REMOTE_MINE   = PROP_CHRREMOTEMINE,
+        PROJECTILES_TYPE_PROX_MINE     = PROP_CHRPROXIMITYMINE,
+        PROJECTILES_TYPE_TIMED_MINE    = PROP_CHRTIMEDMINE,
+        PROJECTILES_TYPE_ROCKET_ROUND  = PROP_CHRROCKET,
+        PROJECTILES_TYPE_ROCKET_ROUND2 = PROP_CHRROCKET,
+        PROJECTILES_TYPE_GLAUNCH_ROUND = PROP_CHRGRENADEROUND,
+        PROJECTILES_TYPE_BOMBCASE      = PROP_CHRBOMBCASE,
+        PROJECTILES_TYPE_BUG           = PROP_CHRBUG,
+        PROJECTILES_TYPE_MICROCAMERA   = PROP_CHRMICROCAMERA,
+        PROJECTILES_TYPE_GE_KEY        = PROP_CHRGOLDENEYEKEY,
+        PROJECTILES_TYPE_PLASTIQUE     = PROP_CHRPLASTIQUE
     } PROJECTILES;
 
     /** For use in Prop Records (Not to be confused with Object (canonical - Prop Definition) Records  which use PROPDEF (canonical Name)) */
@@ -2927,8 +2949,9 @@ typedef enum WAYMODE
 #define CHR_FREE             -1    /* chr IDs when free'd (killed or removed from level) */
 #define CHR_SPAWN_NUM_START  5000  /* default chr num for spawned guards with ai command BD/BE */
 #define CHR_CLONED_NUM_START 10000 /* default chr num for cloed guards with ai command C1 */
+    /* Special ID for selecting PadPreset in AI list */
+#define PAD_PRESET1          9000 /* stored as chr->padpreset1 */
 
-#define PAD_PRESET               9000 /* stored as chr->padpreset1 */
 #define GAME_TICKRATE            60
 #define OBJECTIVES_MAX           10
 #define MAX_CHRWAYPOINTS         6
@@ -2936,12 +2959,6 @@ typedef enum WAYMODE
 #define PROPRECORD_STAN_ROOM_LEN 4
 #define NUMBER_SHOTGUN_BULLETS   5
 
-#define QUADRANT_BACK          0x01
-#define QUADRANT_SIDE1         0x02
-#define QUADRANT_SIDE2         0x04
-#define QUADRANT_FRONT         0x08
-#define QUADRANT_2NDWPTOTARGET 0x10 // second waypoint on route to target
-#define QUADRANT_20            0x20 // second waypoint on route to target
 
 #pragma endregion
 
@@ -2968,20 +2985,25 @@ typedef enum WAYMODE
     #define ABS_F(val)            (val) < 0 ? (float)(val) + 4294967296.0f /* -1.0f */: (float)(val)
     #define ABS(x)                ((x) < 0 ? -(x) : (x))
 #endif
-#define _mkshort(a, b)        ((a << 8) | (b & 0xff))
-#define _mkword(a, b)         ((a << 16) | (b & 0xffff))
-
+#define _mkshort(a, b)            ((a << 8) | (b & 0xff))
+#define _mkword(a, b)             ((a << 16) | (b & 0xffff))
+#define CharArrayTo16(val, index) (                                         val[index+1] | val[index] << 8)
+#define CharArrayTo24(val, index) (                     val[index+1] << 8 | val[index+2] | val[index] << 16)
+#define CharArrayTo32(val, index) (val[index+1] << 16 | val[index+2] << 8 | val[index+3] | val[index] << 24)
     /* Pad Catagory */
 #define isNotBoundPad(pad)       pad < 10000
 #define getBoundPadNum(pad)      pad - 10000
 #define setBoundPadNum(pad)      pad + 10000
     /* AI Catagory */
+#define isAiGlobalID(ID)         ((ID) < 1025)
+#define isAiBGID(ID)             ((ID) > 4097)
+#define isAiChrID(ID)            (!isAiGlobalID(ID) && !isAiBGID(ID))
 #define setAiGlobalID(ID)        ((ID) + 0)
-#define setAiStageID(ID)         ((ID) + 4096)
-#define setAiChrID(ID)           ((ID) + 1024)
-#define getAiGlobalID(ID)        ((ID)-0)
-#define getAiStageID(ID)         ((ID)-4096)
-#define getAiChrID(ID)           ((ID)-1024)
+#define setAiChrID(ID)           ((ID) + 1025)
+#define setAiBGID(ID)            ((ID) + 4097)
+#define getAiGlobalID(ID)        ((ID) - 0)
+#define getAiChrID(ID)           ((ID) - 1025)
+#define getAiBGID(ID)            ((ID) - 4097)
     /* language file to slot allocation */
 #define TEXT(TEXTBANK, TEXTSLOT) ((TEXTBANK * 0x0400U) + TEXTSLOT)
     /* Image ID to RAM allocation */

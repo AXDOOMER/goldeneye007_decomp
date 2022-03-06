@@ -6,7 +6,12 @@
 
 // Value is 3, it just needs to be less than MAX_CHRWAYPOINTS
 #define PATH_FINDING_WP_LIMIT (MAX_CHRWAYPOINTS - 3)
+#    ifdef REFRESH_PAL
+#    define CHRLV_FRAMERATE_F 50.0f
 
+#endif
+
+#define CHRLV_FRAMERATE_F 60.0f
 
 
 
@@ -67,12 +72,12 @@ f32 sub_GAME_7F032E48(ChrRecord *self, s32 padID);
 bool check_if_room_for_preset_loaded(ChrRecord *self, s32 padnum);
 f32 get_distance_between_actor_and_actorID(ChrRecord *self, s32 chrID);
 f32 get_distance_between_actor_and_preset(ChrRecord *self, s32 padid);
-void chrlvSetBitfieldFlags(ChrRecord *arg0, u8 arg1);
-void chrlvClearBitfieldFlags(ChrRecord *arg0, u8 arg1);
-s32         chrlvTestBitfieldFlags(ChrRecord *self, u8 arg1);
-    void chrlvSetGuardBitfieldFlags(ChrRecord *arg0, s32 guard_id, u8 arg2);
-void chrlvClearGuardBitfieldFlags(ChrRecord *arg0, s32 guard_id, u8 arg2);
-s32 chrlvTestGuardBitfieldFlags(ChrRecord *arg0, s32 guard_id, u8 arg2);
+void chrlvSetFlags2(ChrRecord *arg0, u8 arg1);
+void chrlvUnsetFlags2(ChrRecord *arg0, u8 arg1);
+s32         chrlvTestFlags2(ChrRecord *self, u8 arg1);
+    void chrlvSetChrFlags2(ChrRecord *arg0, s32 guard_id, u8 arg2);
+void chrlvUnsetChrFlags2(ChrRecord *arg0, s32 guard_id, u8 arg2);
+s32 chrlvTestChrFlags2(ChrRecord *arg0, s32 guard_id, u8 arg2);
 void toggle_objective_bitflags(ChrRecord *arg0, s32 arg1);
 void untoggle_objective_bitflags(ChrRecord *self, u32 flags);
 bool check_if_objective_bitflags_set(ChrRecord *self, s32 flags);

@@ -277,12 +277,12 @@ extern s32 objectiveGetStatus_WEAK(s32 objectiveNum, s32);
 #define objectiveGetCount                 add_objective
 #define chrGetNumArghs                    get_times_actor_shot
 #define chrGetNumCloseArghs               get_num_shots_near_actor
-#define chrSetFlags                       chrlvSetBitfieldFlags
-#define chrUnsetFlags                     chrlvClearBitfieldFlags
-#define chrHasFlag                        chrlvTestBitfieldFlags
-#define chrSetFlagsById                   chrlvSetGuardBitfieldFlags
-#define chrUnsetFlagsById                 chrlvClearGuardBitfieldFlags
-#define chrHasFlagById                    chrlvTestGuardBitfieldFlags
+#define chrSetFlags                       chrlvSetFlags2
+#define chrUnsetFlags                     chrlvUnsetFlags2
+#define chrHasFlag                        chrlvTestFlags2
+#define chrSetFlagsById                   chrlvSetChrFlags2
+#define chrUnsetFlagsById                 chrlvUnsetChrFlags2
+#define chrHasFlagById                    chrlvTestChrFlags2
 #define chrSetStageFlags                  toggle_objective_bitflags
 #define chrUnsetStageFlags                untoggle_objective_bitflags
 #define chrHasStageFlag                   check_if_objective_bitflags_set
@@ -391,7 +391,7 @@ void loop_set_sound_effect_all_slots(void)
 void set_sound_effect_to_slot(s32 slot, s16 soundIndex) //#MATCH  audioPlayFromProp
 {
     sfxRecord *sfx = NULL; //always added to stack anyway, cleaner to use
-
+    //"Existing ai sound number %d!\n"
     if (slot >= 0 && slot < SFX_RELATED_LEN)
     {
         //NOT Volatile
@@ -423,53 +423,557 @@ void sub_GAME_7F0349BC(s32 slot)
 
 
 
-s32 get_length_of_action_block(AIRecord *AIList, s32 offset);
 
 
 #ifdef NONMATCHING
 /** 
  * Get AI Command Size in bytes
- * @param AIList: The AI list containing the command
+ * @param AIList: u8 Pointer to The AI list containing the command
  * @param offset: The offset (in bytes) to the command you want the size of
  * @return The number of bytes of AI command
  * //Todo: Give real name
  * // Todo: fix locret refrences in other funcs
  */
-s32 get_length_of_action_block(AIRecord *AIList, s32 offset)
+s32 get_length_of_action_block(u8 *AIList, s32 offset)
 {
-    //compile with -O2
-    u32 pos;
-
-    switch (AIList->cmd)
+	//matches only as u8* despite text evidence of ai->val structs
+    switch (AIList[offset])
     {
+		//Cant Use CMD Builder due to different order...
+#if defined(USECMDBUILDER)
 #    ifndef _SYNHILITE
 #        define _AI_CMD(CMD)                                             /*  \
                                                                           */ \
             case CAT(AI_, CMDNAME):                                      /*  \
                                                                           */ \
                 return CAT(CAT(AI_, CMDNAME), _LENGTH);
-#        define _AI_DEBUG(CMD)
+#        define _AI_DEBUG()
 #        define _AI_CMD_POLYMORPH(CMD, A, P, Q, D)
+#        define DEFINE(x)
 #        include <aicommands.def>
 #    endif
+#endif
+        case AI_GotoNext:
+            return AI_GotoNext_LENGTH;
+        case AI_GotoFirst:
+            return AI_GotoFirst_LENGTH;
+        case AI_Label:
+            return AI_Label_LENGTH;
+        case AI_Yield:
+            return AI_Yield_LENGTH;
+        case AI_EndList:
+            return AI_EndList_LENGTH; 
+        case AI_SetChrAiList:
+            return AI_SetChrAiList_LENGTH;
+        case AI_SetReturnAiList:
+            return AI_SetReturnAiList_LENGTH;
+        case AI_Return:
+            return AI_Return_LENGTH;
+        case AI_Stop:
+            return AI_Stop_LENGTH;
+        case AI_Kneel:
+            return AI_Kneel_LENGTH;
+        case AI_PlayAnimation:
+            return AI_PlayAnimation_LENGTH;
+        case AI_IFPlayingAnimation:
+            return AI_IFPlayingAnimation_LENGTH;
+        case AI_PointAtBond:
+            return AI_PointAtBond_LENGTH;
+        case AI_LookSurprised:
+            return AI_LookSurprised_LENGTH;
+        case AI_TRYSidestepping:
+            return AI_TRYSidestepping_LENGTH;
+        case AI_TRYSideHopping:
+            return AI_TRYSideHopping_LENGTH;
+        case AI_TRYSideRunning:
+            return AI_TRYSideRunning_LENGTH;
+        case AI_TRYFiringWalk:
+            return AI_TRYFiringWalk_LENGTH;
+        case AI_TRYFiringRun:
+            return AI_TRYFiringRun_LENGTH;
+        case AI_TRYFiringRoll:
+            return AI_TRYFiringRoll_LENGTH;
+        case AI_TRYFireOrAimAtTarget:
+            return AI_TRYFireOrAimAtTarget_LENGTH;
+        case AI_TRYFireOrAimAtTargetKneel:
+            return AI_TRYFireOrAimAtTargetKneel_LENGTH;
+        case AI_IFImFiring:
+            return AI_IFImFiring_LENGTH;
+        case AI_IFImFiringAndLockedForward:
+            return AI_IFImFiringAndLockedForward_LENGTH;
+        case AI_TRYFireOrAimAtTargetUpdate:
+            return AI_TRYFireOrAimAtTargetUpdate_LENGTH;
+        case AI_TRYFacingTarget:
+            return AI_TRYFacingTarget_LENGTH;
+        case AI_HitChrWithItem:
+            return AI_HitChrWithItem_LENGTH;
+        case AI_ChrHitChr:
+            return AI_ChrHitChr_LENGTH;
+        case AI_TRYThrowingGrenade:
+            return AI_TRYThrowingGrenade_LENGTH;
+        case AI_TRYDroppingItem:
+            return AI_TRYDroppingItem_LENGTH;
+        case AI_RunToPad:
+            return AI_RunToPad_LENGTH;
+        case AI_RunToPadPreset:
+            return AI_RunToPadPreset_LENGTH;
+        case AI_WalkToPad:
+            return AI_WalkToPad_LENGTH;
+        case AI_SprintToPad:
+            return AI_SprintToPad_LENGTH;
+        case AI_StartPatrol:
+            return AI_StartPatrol_LENGTH;
+        case AI_Surrender:
+            return AI_Surrender_LENGTH;
+        case AI_RemoveMe:
+            return AI_RemoveMe_LENGTH;
+        case AI_ChrRemoveInstant:
+            return AI_ChrRemoveInstant_LENGTH;
+        case AI_TRYTriggeringAlarmAtPad:
+            return AI_TRYTriggeringAlarmAtPad_LENGTH;
+        case AI_AlarmOn:
+            return AI_AlarmOn_LENGTH;
+        case AI_AlarmOff:
+            return AI_AlarmOff_LENGTH;
+        case AI_TRYRunFromBond:
+            return AI_TRYRunFromBond_LENGTH;
+        case AI_TRYRunToBond:
+            return AI_TRYRunToBond_LENGTH;
+        case AI_TRYWalkToBond:
+            return AI_TRYWalkToBond_LENGTH;
+        case AI_TRYSprintToBond:
+            return AI_TRYSprintToBond_LENGTH;
+        case AI_TRYFindCover:
+            return AI_TRYFindCover_LENGTH;
+        case AI_TRYRunToChr:
+            return AI_TRYRunToChr_LENGTH;
+        case AI_TRYWalkToChr:
+            return AI_TRYWalkToChr_LENGTH;
+        case AI_TRYSprintToChr:
+            return AI_TRYSprintToChr_LENGTH;
+        case AI_IFImOnPatrolOrStopped:
+            return AI_IFImOnPatrolOrStopped_LENGTH;
+        case AI_IFChrDyingOrDead:
+            return AI_IFChrDyingOrDead_LENGTH;
+        case AI_IFChrDoesNotExist:
+            return AI_IFChrDoesNotExist_LENGTH;
+        case AI_IFISeeBond:
+            return AI_IFISeeBond_LENGTH;
+        case AI_SetNewRandom:
+            return AI_SetNewRandom_LENGTH;
+        case AI_IFRandomLessThan:
+            return AI_IFRandomLessThan_LENGTH;
+        case AI_IFRandomGreaterThan:
+            return AI_IFRandomGreaterThan_LENGTH;
+        case AI_IFICanHearAlarm:
+            return AI_IFICanHearAlarm_LENGTH;
+        case AI_IFAlarmIsOn:
+            return AI_IFAlarmIsOn_LENGTH;
+        case AI_IFGasIsLeaking:
+            return AI_IFGasIsLeaking_LENGTH;
+        case AI_IFIHeardBond:
+            return AI_IFIHeardBond_LENGTH;
+        case AI_IFISeeSomeoneShot:
+            return AI_IFISeeSomeoneShot_LENGTH;
+        case AI_IFISeeSomeoneDie:
+            return AI_IFISeeSomeoneDie_LENGTH;
+        case AI_IFICouldSeeBond:
+            return AI_IFICouldSeeBond_LENGTH;
+        case AI_IFICouldSeeBondsStan:
+            return AI_IFICouldSeeBondsStan_LENGTH;
+        case AI_IFIWasShotRecently:
+            return AI_IFIWasShotRecently_LENGTH;
+        case AI_IFIHeardBondRecently:
+            return AI_IFIHeardBondRecently_LENGTH;
+        case AI_IFImInRoomWithChr:
+            return AI_IFImInRoomWithChr_LENGTH;
+        case AI_IFIveNotBeenSeen:
+            return AI_IFIveNotBeenSeen_LENGTH;
+        case AI_IFImOnScreen:
+            return AI_IFImOnScreen_LENGTH;
+        case AI_IFMyRoomIsOnScreen:
+            return AI_IFMyRoomIsOnScreen_LENGTH;
+        case AI_IFRoomWithPadIsOnScreen:
+            return AI_IFRoomWithPadIsOnScreen_LENGTH;
+        case AI_IFImTargetedByBond:
+            return AI_IFImTargetedByBond_LENGTH;
+        case AI_IFBondMissedMe:
+            return AI_IFBondMissedMe_LENGTH;
+        case AI_IFMyAngleToBondLessThan:
+            return AI_IFMyAngleToBondLessThan_LENGTH;
+        case AI_IFMyAngleToBondGreaterThan:
+            return AI_IFMyAngleToBondGreaterThan_LENGTH;
+        case AI_IFMyAngleFromBondLessThan:
+            return AI_IFMyAngleFromBondLessThan_LENGTH;
+        case AI_IFMyAngleFromBondGreaterThan:
+            return AI_IFMyAngleFromBondGreaterThan_LENGTH;
+        case AI_IFMyDistanceToBondLessThanDecimeter:
+            return AI_IFMyDistanceToBondLessThanDecimeter_LENGTH;
+        case AI_IFMyDistanceToBondGreaterThanDecimeter:
+            return AI_IFMyDistanceToBondGreaterThanDecimeter_LENGTH;
+        case AI_IFChrDistanceToPadLessThanDecimeter:
+            return AI_IFChrDistanceToPadLessThanDecimeter_LENGTH;
+        case AI_IFChrDistanceToPadGreaterThanDecimeter:
+            return AI_IFChrDistanceToPadGreaterThanDecimeter_LENGTH;
+        case AI_IFMyDistanceToChrLessThanDecimeter:
+            return AI_IFMyDistanceToChrLessThanDecimeter_LENGTH;
+        case AI_IFMyDistanceToChrGreaterThanDecimeter:
+            return AI_IFMyDistanceToChrGreaterThanDecimeter_LENGTH;
+        case AI_TRYSettingMyPresetToChrWithinDistanceDecimeter:
+            return AI_TRYSettingMyPresetToChrWithinDistanceDecimeter_LENGTH;
+        case AI_IFBondDistanceToPadLessThanDecimeter:
+            return AI_IFBondDistanceToPadLessThanDecimeter_LENGTH;
+        case AI_IFBondDistanceToPadGreaterThanDecimeter:
+            return AI_IFBondDistanceToPadGreaterThanDecimeter_LENGTH;
+        case AI_IFChrInRoomWithPad:
+            return AI_IFChrInRoomWithPad_LENGTH;
+        case AI_IFBondInRoomWithPad:
+            return AI_IFBondInRoomWithPad_LENGTH;
+        case AI_IFBondCollectedObject:
+            return AI_IFBondCollectedObject_LENGTH;
+        case AI_IFItemIsStationaryWithinLevel:
+            return AI_IFItemIsStationaryWithinLevel_LENGTH;
+        case AI_IFItemIsAttachedToObject:
+            return AI_IFItemIsAttachedToObject_LENGTH;
+        case AI_IFBondHasItemEquipped:
+            return AI_IFBondHasItemEquipped_LENGTH;
+        case AI_IFObjectExists:
+            return AI_IFObjectExists_LENGTH;
+        case AI_IFObjectNotDestroyed:
+            return AI_IFObjectNotDestroyed_LENGTH;
+        case AI_IFObjectWasActivated:
+            return AI_IFObjectWasActivated_LENGTH;
+        case AI_IFBondUsedGadgetOnObject:
+            return AI_IFBondUsedGadgetOnObject_LENGTH;
+        case AI_ActivateObject:
+            return AI_ActivateObject_LENGTH;
+        case AI_DestroyObject:
+            return AI_DestroyObject_LENGTH;
+        case AI_DropObjectFromChr:
+            return AI_DropObjectFromChr_LENGTH;
+        case AI_ChrDropAllConcealedItems:
+            return AI_ChrDropAllConcealedItems_LENGTH;
+        case AI_ChrDropAllHeldItems:
+            return AI_ChrDropAllHeldItems_LENGTH;
+        case AI_BondCollectObject:
+            return AI_BondCollectObject_LENGTH;
+        case AI_ChrEquipObject:
+            return AI_ChrEquipObject_LENGTH;
+        case AI_MoveObject:
+            return AI_MoveObject_LENGTH;
+        case AI_DoorOpen:
+            return AI_DoorOpen_LENGTH;
+        case AI_DoorClose:
+            return AI_DoorClose_LENGTH;
+        case AI_IFDoorStateEqual:
+            return AI_IFDoorStateEqual_LENGTH;
+        case AI_IFDoorHasBeenOpenedBefore:
+            return AI_IFDoorHasBeenOpenedBefore_LENGTH;
+        case AI_DoorSetLock:
+            return AI_DoorSetLock_LENGTH;
+        case AI_DoorUnsetLock:
+            return AI_DoorUnsetLock_LENGTH;
+        case AI_IFDoorLockEqual:
+            return AI_IFDoorLockEqual_LENGTH;
+        case AI_IFObjectiveNumComplete:
+            return AI_IFObjectiveNumComplete_LENGTH;
+        case AI_TRYUnknown6e:
+            return AI_TRYUnknown6e_LENGTH;
+        case AI_TRYUnknown6f:
+            return AI_TRYUnknown6f_LENGTH;
+        case AI_IFGameDifficultyLessThan:
+            return AI_IFGameDifficultyLessThan_LENGTH;
+        case AI_IFGameDifficultyGreaterThan:
+            return AI_IFGameDifficultyGreaterThan_LENGTH;
+        case AI_IFMissionTimeLessThan:
+            return AI_IFMissionTimeLessThan_LENGTH;
+        case AI_IFMissionTimeGreaterThan:
+            return AI_IFMissionTimeGreaterThan_LENGTH;
+        case AI_IFSystemPowerTimeLessThan:
+            return AI_IFSystemPowerTimeLessThan_LENGTH;
+        case AI_IFSystemPowerTimeGreaterThan:
+            return AI_IFSystemPowerTimeGreaterThan_LENGTH;
+        case AI_IFLevelIdLessThan:
+            return AI_IFLevelIdLessThan_LENGTH;
+        case AI_IFLevelIdGreaterThan:
+            return AI_IFLevelIdGreaterThan_LENGTH;
+        case AI_IFMyNumArghsLessThan:
+            return AI_IFMyNumArghsLessThan_LENGTH;
+        case AI_IFMyNumArghsGreaterThan:
+            return AI_IFMyNumArghsGreaterThan_LENGTH;
+        case AI_IFMyNumCloseArghsLessThan:
+            return AI_IFMyNumCloseArghsLessThan_LENGTH;
+        case AI_IFMyNumCloseArghsGreaterThan:
+            return AI_IFMyNumCloseArghsGreaterThan_LENGTH;
+        case AI_IFChrHealthLessThan:
+            return AI_IFChrHealthLessThan_LENGTH;
+        case AI_IFChrHealthGreaterThan:
+            return AI_IFChrHealthGreaterThan_LENGTH;
+        case AI_IFChrWasDamagedSinceLastCheck:
+            return AI_IFChrWasDamagedSinceLastCheck_LENGTH;
+        case AI_IFBondHealthLessThan:
+            return AI_IFBondHealthLessThan_LENGTH;
+        case AI_IFBondHealthGreaterThan:
+            return AI_IFBondHealthGreaterThan_LENGTH;
+        case AI_SetMyMorale:
+            return AI_SetMyMorale_LENGTH;
+        case AI_AddToMyMorale:
+            return AI_AddToMyMorale_LENGTH;
+        case AI_SubtractFromMyMorale:
+            return AI_SubtractFromMyMorale_LENGTH;
+        case AI_IFMyMoraleLessThan:
+            return AI_IFMyMoraleLessThan_LENGTH;
+        case AI_IFMyMoraleLessThanRandom:
+            return AI_IFMyMoraleLessThanRandom_LENGTH;
+        case AI_SetMyAlertness:
+            return AI_SetMyAlertness_LENGTH;
+        case AI_AddToMyAlertness:
+            return AI_AddToMyAlertness_LENGTH;
+        case AI_SubtractFromMyAlertness:
+            return AI_SubtractFromMyAlertness_LENGTH;
+        case AI_IFMyAlertnessLessThan:
+            return AI_IFMyAlertnessLessThan_LENGTH;
+        case AI_IFMyAlertnessLessThanRandom:
+            return AI_IFMyAlertnessLessThanRandom_LENGTH;
+        case AI_SetMyHearingScale:
+            return AI_SetMyHearingScale_LENGTH;
+        case AI_SetMyVisionRange:
+            return AI_SetMyVisionRange_LENGTH;
+        case AI_SetMyGrenadeProbability:
+            return AI_SetMyGrenadeProbability_LENGTH;
+        case AI_SetMyChrNum:
+            return AI_SetMyChrNum_LENGTH;
+        case AI_SetMyHealthTotal:
+            return AI_SetMyHealthTotal_LENGTH;
+        case AI_SetMyArmour:
+            return AI_SetMyArmour_LENGTH;
+        case AI_SetMySpeedRating:
+            return AI_SetMySpeedRating_LENGTH;
+        case AI_SetMyArghRating:
+            return AI_SetMyArghRating_LENGTH;
+        case AI_SetMyAccuracyRating:
+            return AI_SetMyAccuracyRating_LENGTH;
+        case AI_SetMyFlags2:
+            return AI_SetMyFlags2_LENGTH;
+        case AI_UnsetMyFlags2:
+            return AI_UnsetMyFlags2_LENGTH;
+        case AI_IFMyFlags2Has:
+            return AI_IFMyFlags2Has_LENGTH;
+        case AI_SetChrBitfield:
+            return AI_SetChrBitfield_LENGTH;
+        case AI_UnsetChrBitfield:
+            return AI_UnsetChrBitfield_LENGTH;
+        case AI_IFChrBitfieldHas:
+            return AI_IFChrBitfieldHas_LENGTH;
+        case AI_SetObjectiveBitfield:
+            return AI_SetObjectiveBitfield_LENGTH;
+        case AI_UnsetObjectiveBitfield:
+            return AI_UnsetObjectiveBitfield_LENGTH;
+        case AI_IFObjectiveBitfieldHas:
+            return AI_IFObjectiveBitfieldHas_LENGTH;
+        case AI_SetMychrflags:
+            return AI_SetMychrflags_LENGTH;
+        case AI_UnsetMychrflags:
+            return AI_UnsetMychrflags_LENGTH;
+        case AI_IFMychrflagsHas:
+            return AI_IFMychrflagsHas_LENGTH;
+        case AI_SetChrchrflags:
+            return AI_SetChrchrflags_LENGTH;
+        case AI_UnsetChrchrflags:
+            return AI_UnsetChrchrflags_LENGTH;
+        case AI_IFChrchrflagsHas:
+            return AI_IFChrchrflagsHas_LENGTH;
+        case AI_SetObjectFlags:
+            return AI_SetObjectFlags_LENGTH;
+        case AI_UnsetObjectFlags:
+            return AI_UnsetObjectFlags_LENGTH;
+        case AI_IFObjectFlagsHas:
+            return AI_IFObjectFlagsHas_LENGTH;
+        case AI_SetObjectFlags2:
+            return AI_SetObjectFlags2_LENGTH;
+        case AI_UnsetObjectFlags2:
+            return AI_UnsetObjectFlags2_LENGTH;
+        case AI_IFObjectFlags2Has:
+            return AI_IFObjectFlags2Has_LENGTH;
+        case AI_SetMyChrPreset:
+            return AI_SetMyChrPreset_LENGTH;
+        case AI_SetChrChrPreset:
+            return AI_SetChrChrPreset_LENGTH;
+        case AI_SetMyPadPreset:
+            return AI_SetMyPadPreset_LENGTH;
+        case AI_SetChrPadPreset:
+            return AI_SetChrPadPreset_LENGTH;
+        case AI_MyTimerStart:
+            return AI_MyTimerStart_LENGTH;
+        case AI_MyTimerReset:
+            return AI_MyTimerReset_LENGTH;
+        case AI_MyTimerPause:
+            return AI_MyTimerPause_LENGTH;
+        case AI_MyTimerResume:
+            return AI_MyTimerResume_LENGTH;
+        case AI_IFMyTimerIsNotRunning:
+            return AI_IFMyTimerIsNotRunning_LENGTH;
+        case AI_IFMyTimerLessThanTicks:
+            return AI_IFMyTimerLessThanTicks_LENGTH;
+        case AI_IFMyTimerGreaterThanTicks:
+            return AI_IFMyTimerGreaterThanTicks_LENGTH;
+        case AI_HudCountdownShow:
+            return AI_HudCountdownShow_LENGTH;
+        case AI_HudCountdownHide:
+            return AI_HudCountdownHide_LENGTH;
+        case AI_HudCountdownSet:
+            return AI_HudCountdownSet_LENGTH;
+        case AI_HudCountdownStop:
+            return AI_HudCountdownStop_LENGTH;
+        case AI_HudCountdownStart:
+            return AI_HudCountdownStart_LENGTH;
+        case AI_IFHudCountdownIsNotRunning:
+            return AI_IFHudCountdownIsNotRunning_LENGTH;
+        case AI_IFHudCountdownLessThan:
+            return AI_IFHudCountdownLessThan_LENGTH;
+        case AI_IFHudCountdownGreaterThan:
+            return AI_IFHudCountdownGreaterThan_LENGTH;
+        case AI_TRYSpawningChrAtPad:
+            return AI_TRYSpawningChrAtPad_LENGTH;
+        case AI_TRYSpawningChrNextToChr:
+            return AI_TRYSpawningChrNextToChr_LENGTH;
+        case AI_TRYGiveMeItem:
+            return AI_TRYGiveMeItem_LENGTH;
+        case AI_TRYGiveMeHat:
+            return AI_TRYGiveMeHat_LENGTH;
+        case AI_TRYCloningChr:
+            return AI_TRYCloningChr_LENGTH;
+        case AI_TextPrintBottom:
+            return AI_TextPrintBottom_LENGTH;
+        case AI_TextPrintTop:
+            return AI_TextPrintTop_LENGTH;
+        case AI_SfxPlay:
+            return AI_SfxPlay_LENGTH;
+        case AI_SfxEmitFromObject:
+            return AI_SfxEmitFromObject_LENGTH;
+        case AI_SfxEmitFromPad:
+            return AI_SfxEmitFromPad_LENGTH;
+        case AI_SfxSetChannelVolume:
+            return AI_SfxSetChannelVolume_LENGTH;
+        case AI_SfxFadeChannelVolume:
+            return AI_SfxFadeChannelVolume_LENGTH;
+        case AI_SfxStopChannel:
+            return AI_SfxStopChannel_LENGTH;
+        case AI_IFSfxChannelVolumeLessThan:
+            return AI_IFSfxChannelVolumeLessThan_LENGTH;
+        case AI_VehicleStartPath:
+            return AI_VehicleStartPath_LENGTH;
+        case AI_VehicleSpeed:
+            return AI_VehicleSpeed_LENGTH;
+        case AI_AircraftRotorSpeed:
+            return AI_AircraftRotorSpeed_LENGTH;
+        case AI_IFCameraIsInIntro:
+            return AI_IFCameraIsInIntro_LENGTH;
+        case AI_IFCameraIsInBondSwirl:
+            return AI_IFCameraIsInBondSwirl_LENGTH;
+        case AI_TvChangeScreenBank:
+            return AI_TvChangeScreenBank_LENGTH;
+        case AI_IFBondInTank:
+            return AI_IFBondInTank_LENGTH; 
+        case AI_EndLevel:
+            return AI_EndLevel_LENGTH;
+        case AI_CameraReturnToBond:
+            return AI_CameraReturnToBond_LENGTH;
+        case AI_CameraLookAtBondFromPad:
+            return AI_CameraLookAtBondFromPad_LENGTH;
+        case AI_CameraSwitch:
+            return AI_CameraSwitch_LENGTH;
+        case AI_IFBondYPosLessThan:
+            return AI_IFBondYPosLessThan_LENGTH;
+        case AI_BondDisableControl:
+            return AI_BondDisableControl_LENGTH;
+        case AI_BondEnableControl:
+            return AI_BondEnableControl_LENGTH;
+        case AI_TRYTeleportingChrToPad:
+            return AI_TRYTeleportingChrToPad_LENGTH;
+        case AI_ScreenFadeToBlack:
+            return AI_ScreenFadeToBlack_LENGTH;
+        case AI_ScreenFadeFromBlack:
+            return AI_ScreenFadeFromBlack_LENGTH;
+        case AI_IFScreenFadeCompleted:
+            return AI_IFScreenFadeCompleted_LENGTH;
+        case AI_HideAllChrs:
+            return AI_HideAllChrs_LENGTH;
+        case AI_ShowAllChrs:
+            return AI_ShowAllChrs_LENGTH;
+        case AI_DoorOpenInstant:
+            return AI_DoorOpenInstant_LENGTH;
+        case AI_ChrRemoveItemInHand:
+            return AI_ChrRemoveItemInHand_LENGTH;
+        case AI_IfNumberOfActivePlayersLessThan:
+            return AI_IfNumberOfActivePlayersLessThan_LENGTH;
+        case AI_IFBondItemTotalAmmoLessThan:
+            return AI_IFBondItemTotalAmmoLessThan_LENGTH;
+        case AI_BondEquipItem:
+            return AI_BondEquipItem_LENGTH;
+        case AI_BondEquipItemCinema:
+            return AI_BondEquipItemCinema_LENGTH;
+        case AI_BondSetLockedVelocity:
+            return AI_BondSetLockedVelocity_LENGTH;
+        case AI_IFObjectInRoomWithPad:
+            return AI_IFObjectInRoomWithPad_LENGTH;
+        case AI_SwitchSky:
+            return AI_SwitchSky_LENGTH;
+        case AI_TriggerFadeAndExitLevelOnButtonPress:
+            return AI_TriggerFadeAndExitLevelOnButtonPress_LENGTH;
+        case AI_IFBondIsDead:
+            return AI_IFBondIsDead_LENGTH;
+        case AI_BondDisableDamageAndPickups:
+            return AI_BondDisableDamageAndPickups_LENGTH;
+        case AI_BondHideWeapons:
+            return AI_BondHideWeapons_LENGTH;
+        case AI_CameraOrbitPad:
+            return AI_CameraOrbitPad_LENGTH;
+        case AI_CreditsRoll:
+            return AI_CreditsRoll_LENGTH;
+        case AI_IFCreditsHasCompleted:
+            return AI_IFCreditsHasCompleted_LENGTH;
+        case AI_IFObjectiveAllCompleted:
+            return AI_IFObjectiveAllCompleted_LENGTH;
+        case AI_IFFolderActorIsEqual:
+            return AI_IFFolderActorIsEqual_LENGTH;
+        case AI_IFBondDamageAndPickupsDisabled:
+            return AI_IFBondDamageAndPickupsDisabled_LENGTH;
+        case AI_MusicXtrackPlay:
+            return AI_MusicXtrackPlay_LENGTH;
+        case AI_MusicXtrackStop:
+            return AI_MusicXtrackStop_LENGTH;
+        case AI_TriggerExplosionsAroundBond:
+            return AI_TriggerExplosionsAroundBond_LENGTH;
+        case AI_IFKilledCiviliansGreaterThan:
+            return AI_IFKilledCiviliansGreaterThan_LENGTH;
+        case AI_IFChrWasShotSinceLastCheck:
+            return AI_IFChrWasShotSinceLastCheck_LENGTH;
+        case AI_BondKilledInAction:
+            return AI_BondKilledInAction_LENGTH;
+        case AI_RaiseArms:
+            return AI_RaiseArms_LENGTH;
+        case AI_GasLeakAndFadeFog:
+            return AI_GasLeakAndFadeFog_LENGTH;
+        case AI_ObjectRocketLaunch:
+            return AI_ObjectRocketLaunch_LENGTH;
         case AI_PRINT:
-
-            pos = offset + 1;
-            //p = AIList;
-            while (AIList->val[pos] != 0)
+		{   
+            s32 pos = offset + 1;
+            while (AIList[pos] != 0) 
             {
-                //offset++;
-                pos++;
+                ++pos;
             }
             return (pos - offset) + 1;
-
+		}
         default:
-#       ifdef DEBUG
-            osSyncPrintf("chraiitemsize: unknown type %d!\n", cmd[0]);
+#       if defined(DEBUG)
+            osSyncPrintf("chraiitemsize: unknown type %d!\n", *AIList);
 #       endif
             return 1;
     }
 }
+
 #else
 GLOBAL_ASM(
 .late_rodata
@@ -1553,12 +2057,12 @@ s32 sub_GAME_7F035244(AIRecord *AIList, bool *isGlobalAIList) // chraiGetAIListI
         }
     }
 
-    for (i = 0; gGlobalAILists[i].ailist; i++)
+    for (i = 0; g_GlobalAILists[i].ailist; i++)
     {
-        if (gGlobalAILists[i].ailist == AIList)
+        if (g_GlobalAILists[i].ailist == AIList)
         {
             *isGlobalAIList = TRUE;
-            return gGlobalAILists[i].ID;
+            return g_GlobalAILists[i].ID;
         }
     }
 
@@ -1590,7 +2094,7 @@ glabel sub_GAME_7F035244
 /* 069D78 7F035248 25085D00 */  addiu $t0, %lo(g_chraiCurrentSetup+0) # addiu $t0, $t0, 0x5d00
 /* 069D7C 7F03524C 8D020014 */  lw    $v0, 0x14($t0) #v0 = g_chraiCurrentSetup.ailists
 /* 069D80 7F035250 00A03825 */  move  $a3, $a1
-/* 069D84 7F035254 3C198003 */  lui   $t9, %hi(gGlobalAILists)
+/* 069D84 7F035254 3C198003 */  lui   $t9, %hi(g_GlobalAILists)
 /* 069D88 7F035258 10400013 */  beqz  $v0, .L7F0352A8
 /* 069D8C 7F03525C 00000000 */   nop   
 /* 069D90 7F035260 8C4E0000 */  lw    $t6, ($v0)
@@ -1615,9 +2119,9 @@ glabel sub_GAME_7F035244
 /* 069DD0 7F0352A0 14C0FFF5 */  bnez  $a2, .L7F035278
 /* 069DD4 7F0352A4 00000000 */   nop   
 .L7F0352A8:
-/* 069DD8 7F0352A8 8F39744C */  lw    $t9, %lo(gGlobalAILists)($t9)
-/* 069DDC 7F0352AC 3C098003 */  lui   $t1, %hi(gGlobalAILists)
-/* 069DE0 7F0352B0 2523744C */  addiu $v1, $t1, %lo(gGlobalAILists)
+/* 069DD8 7F0352A8 8F39744C */  lw    $t9, %lo(g_GlobalAILists)($t9)
+/* 069DDC 7F0352AC 3C098003 */  lui   $t1, %hi(g_GlobalAILists)
+/* 069DE0 7F0352B0 2523744C */  addiu $v1, $t1, %lo(g_GlobalAILists)
 /* 069DE4 7F0352B4 1320000B */  beqz  $t9, .L7F0352E4
 /* 069DE8 7F0352B8 240A0001 */   li    $t2, 1
 /* 069DEC 7F0352BC 8C620000 */  lw    $v0, ($v1)
@@ -1659,7 +2163,7 @@ s32 true_if_sucessfully_performing_action(AIRecord *AIList, s32 Offset, u8 Label
 
     for (;;)
     {
-        if (AIList[Offset].cmd == AI_LABEL)
+        if (AIList[Offset].cmd == AI_Label)
         {
             if (AIList[Offset].val[0] == LabelNum)
             {
@@ -1667,7 +2171,7 @@ s32 true_if_sucessfully_performing_action(AIRecord *AIList, s32 Offset, u8 Label
                 return Offset;
             }
         }
-        else if (AIList[Offset].cmd == AI_ENDLIST)
+        else if (AIList[Offset].cmd == AI_EndList)
         {
             // restart ai list PC if next label not found
             listID = chraiGetAIListID(AIList, &isGlobalAIList);
@@ -1769,7 +2273,7 @@ AIRecord *LoadNext_PrevActionBlock(s32 ID) //MATCH https://decomp.me/scratch/Qb0
 {
     s32 i;
 
-    if (ID > setAiChrID(0))
+    if (!isAiGlobalID(ID))
     {
         if (g_chraiCurrentSetup.ailists)
         {
@@ -1784,11 +2288,11 @@ AIRecord *LoadNext_PrevActionBlock(s32 ID) //MATCH https://decomp.me/scratch/Qb0
     }
     else
     {
-        for (i = 0; gGlobalAILists[i].ailist; i++)
+        for (i = 0; g_GlobalAILists[i].ailist; i++)
         {
-            if (gGlobalAILists[i].ID == ID)
+            if (g_GlobalAILists[i].ID == ID)
             {
-                return gGlobalAILists[i].ailist;
+                return g_GlobalAILists[i].ailist;
             }
         }
     }
@@ -1816,7 +2320,7 @@ GLOBAL_ASM(
 glabel LoadNext_PrevActionBlock
 /* 069EC8 7F035398 28810401 */  slti  $at, $a0, 0x401
 /* 069ECC 7F03539C 14200014 */  bnez  $at, .L7F0353F0
-/* 069ED0 7F0353A0 3C198003 */   lui   $t9, %hi(gGlobalAILists)
+/* 069ED0 7F0353A0 3C198003 */   lui   $t9, %hi(g_GlobalAILists)
 /* 069ED4 7F0353A4 3C028007 */  lui   $v0, %hi(g_chraiCurrentSetup+0x14)
 /* 069ED8 7F0353A8 8C425D14 */  lw    $v0, %lo(g_chraiCurrentSetup+0x14)($v0)
 /* 069EDC 7F0353AC 5040001F */  beql  $v0, $zero, .L7F03542C #if <= 0 return
@@ -1840,9 +2344,9 @@ glabel LoadNext_PrevActionBlock
 /* 069F18 7F0353E8 10000010 */  b     .L7F03542C
 /* 069F1C 7F0353EC 00001025 */   move  $v0, $zero
 .L7F0353F0:
-/* 069F20 7F0353F0 8F39744C */  lw    $t9, %lo(gGlobalAILists)($t9)
-/* 069F24 7F0353F4 3C038003 */  lui   $v1, %hi(gGlobalAILists)
-/* 069F28 7F0353F8 2463744C */  addiu $v1, %lo(gGlobalAILists) # addiu $v1, $v1, 0x744c
+/* 069F20 7F0353F0 8F39744C */  lw    $t9, %lo(g_GlobalAILists)($t9)
+/* 069F24 7F0353F4 3C038003 */  lui   $v1, %hi(g_GlobalAILists)
+/* 069F28 7F0353F8 2463744C */  addiu $v1, %lo(g_GlobalAILists) # addiu $v1, $v1, 0x744c
 /* 069F2C 7F0353FC 5320000B */  beql  $t9, $zero, .L7F03542C
 /* 069F30 7F035400 00001025 */   move  $v0, $zero
 /* 069F34 7F035404 8C680004 */  lw    $t0, 4($v1)
@@ -1873,11 +2377,11 @@ PathRecord *get_ptr_path_for_pathnum(s32 ID)
 {
     int i;
 
-        for  (i=0;setup.patrolpaths[i].waypoints;i++)
+        for  (i=0;g_chraiCurrentSetup.patrolpaths[i].waypoints;i++)
         {
-            if ( ID == setup.patrolpaths[i].ID )
+            if ( ID == g_chraiCurrentSetup.patrolpaths[i].ID )
             {
-                return &setup.patrolpaths[i];
+                return &g_chraiCurrentSetup.patrolpaths[i];
             }
            
         }
@@ -1960,21 +2464,21 @@ extern bool mission_kia_flag;
  Note: GE has little error checking (eg, using a chr action on aircraft) - this was fixed in PD
  @param *Entityp: Pointer to Entity (non-typed)
  @param EntityType: PROPTYPE_CHR or PROPTYPE_OBJ
- @param         PROPTYPE_CHR = Character (Guard or Stage)
+ @param         PROPTYPE_CHR = Character or BG
  @param         PROPTYPE_OBJ = Object (Vehichle or Aircraft)
 */
 void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
 {
     /*
-     * (void *Param, int ParamType) is the correct way to pass a variable
-     *  "object" eg Param can be Either ChrRecord or VehichleRecord
+     *(void *Param, int ParamType) is the correct way to pass a variable
+     *    "object" eg Param can be Either ChrRecord or VehichleRecord
      *
-     *  Function Name derived from internal strings:
+     *Function Name derived from internal strings:
      *    ai(void) enery tune on (%d, %d, %d)
      *    ai(void) enery tune off (%d)
-     *  
-     *  Stack requires that each case declair its own AIRecord variable
-     *  
+     *
+     * Stack requires that each case declair its own AIRecord variable
+     *
      */
 
     ChrRecord      *ChrEntityp      = NULL;
@@ -2021,48 +2525,48 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
         // loop forever (or until broken)
         for (;;)
         {
-            /* 
+            /*
              * GE uses long Switch/case while PD uses Bool functions and tests 
              * for TRUE/FALSE if(funcpointer[ai]) break; 
              */
             switch ((AiListp + Offset)->cmd)
             {
                 //unfortunatly we cannot use the cmdbuilder in matching rom as the ordering is not sequential
-        #ifdef USECMDBUILDER
-        #    define _AI_DEBUG_ID(CMD, AI_NUMBER_OF_PARAMS, PARAM, DESC)
-        #    define _AI_CMD_POLYMORPH(C, N, P1, P2, D)
-        #    define _AI_CMD_ID(CMD, AI_NUMBER_OF_PARAMS, PARAM, DESC, CODE) /* HACK: Multiline Comments make Newlines in macro */ \
-                case CAT(CAT(AI_, CMD), ):                                  /*                                                    \
-                                                                             */                                                   \
-                    CODE
-        #    include "aicommands.def"
-        #else
-                case AI_GOTO_NEXT:
+#ifdef USECMDBUILDER
+    #define _AI_DEBUG_ID(CMD, AI_NUMBER_OF_PARAMS, PARAM, DESC)
+    #define _AI_CMD_POLYMORPH(C, N, P1, P2, D)
+    #define _AI_CMD_ID(CMD, AI_NUMBER_OF_PARAMS, PARAM, DESC, CODE) /*  HACK: Multiline Comments make Newlines in macro */ \
+                    case CAT(CAT(AI_, CMD), ):                      /*                                                     \
+                                                                    */                                                   \
+                        CODE
+    #include "aicommands.def"
+#else
+                case AI_GotoNext:
                 {
                     AIRecord1 *ai = AiListp + Offset;
                     Offset        = chraiGoToLabel(AiListp, Offset, ai->val);
-#    ifdef DEBUG
+#ifdef DEBUG
                     osSyncPrintf(" (%d)\n", ai->val);
-#    endif
+#endif
                     break;
                 }
-                case AI_GOTO_FIRST:
+                case AI_GotoFirst:
                 {
                     AIRecord1 *ai = AiListp + Offset;
                     Offset        = chraiGoToLabel(AiListp, 0, ai->val);
-#    ifdef DEBUG
+#ifdef DEBUG
                     osSyncPrintf(" (%d)\n", ai->val);
-#    endif
+#endif
                     break;
                 }
-                case AI_LABEL:
+                case AI_Label:
                 {
-                    Offset += 2;
+                    Offset += AI_Label_LENGTH;
                     break;
                 }
-                case AI_SLEEP:
+                case AI_Yield:
                 {
-                    Offset += 1;
+                    Offset += AI_Yield_LENGTH;
                     if (ChrEntityp)
                     {
                         ChrEntityp->ailist   = AiListp;
@@ -2078,21 +2582,20 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                         AircraftEntityp->ailist   = AiListp;
                         AircraftEntityp->aioffset = Offset;
                     }
-                    return; //AI_SLEEP:
+                    return;
                 }
-                case AI_ENDLIST:
+                case AI_EndList:
                 {
-#    ifdef DEBUG
-                    osSyncPrintf("AI error endlist reached!\n");
-#    endif
-                    return; //AI_ENDLIST:
+                    //Not an error to be here, same as yield except without pushing offset past it.
+                    return; 
                 }
-                case AI_JUMP_TO_AI_LIST:
+                case AI_SetChrAiList:
                 {
-                    AIRecord * ai = AiListp + Offset;                       /*needed for stack count inflation*/
-                    ChrRecord *chr;                                         //ok, so mips does not hoist vars in stack, they are in order so must be declaired here
-                    u16        AI_LIST_ID = ai->val[2] | (ai->val[1] << 8); /*This is the only way to match despite assetrs below*/
+                    AIRecord  *ai         = AiListp + Offset;         /* needed for stack count inflation */
+                    ChrRecord *chr;                                   //ok, so mips does not hoist vars in stack, they are in order so must be declaired here
+                    u16        AI_LIST_ID = CharArrayTo16(ai->val,1); /* This is the only way to match despite assetrs below */
                     u8         CHR_NUM    = ai->val[0];
+
                     if (CHR_NUM == ((u8)CHR_SELF))
                     {
                         AiListp = ailistFindById(AI_LIST_ID); 
@@ -2107,14 +2610,15 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                             chr->aioffset = 0;
                             chr->sleep    = 0;
                         }
-                        Offset += 4;
+                        Offset += AI_SetChrAiList_LENGTH;
                     }
                     break;
                 }
-                case AI_SET_RETURN_AI_LIST:
+                case AI_SetReturnAiList:
                 {
                     AIRecord *ai         = AiListp + Offset;
-                    u16       AI_LIST_ID = ai->val[1] | (ai->val[0] << 8);
+                    u16       AI_LIST_ID = CharArrayTo16(ai->val,0);
+
                     if (ChrEntityp)
                     {
                         ChrEntityp->aireturnlist = AI_LIST_ID;
@@ -2128,10 +2632,10 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                         AircraftEntityp->aireturnlist = AI_LIST_ID;
                     }
 
-                    Offset += 3;
+                    Offset += AI_SetReturnAiList_LENGTH;
                     break;
                 }
-                case AI_JUMP_TO_RETURN_AI_LIST:
+                case AI_Return:
                 {
                     if (ChrEntityp)
                     {
@@ -2148,25 +2652,26 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     Offset = 0;
                     break;
                 }
-                case AI_GUARD_ANIMATION_STOP:
+                case AI_Stop:
                 {
                     chraiStopAnimation(ChrEntityp);
-                    Offset += 1;
+                    Offset += AI_Stop_LENGTH;
                     break;
                 }
-                case AI_GUARD_KNEEL:
+                case AI_Kneel:
                 {
                     check_if_able_to_then_kneel(ChrEntityp);
-                    Offset += 1;
+                    Offset += AI_Kneel_LENGTH;
                     break;
                 }
-                case AI_GUARD_PLAY_ANIMATION:
+                case AI_PlayAnimation:
                 {
                     AIRecord *ai = AiListp + Offset;
                     s32       startframe, anim_id, zero, endframe;
-                    anim_id    = ai->val[1] | ai->val[0] << 8;
-                    startframe = ai->val[3] | ai->val[2] << 8;
-                    endframe   = ai->val[5] | ai->val[4] << 8;
+
+                    anim_id    = CharArrayTo16(ai->val,0);
+                    startframe = CharArrayTo16(ai->val,2);
+                    endframe   = CharArrayTo16(ai->val,4);
 
                     if (startframe == (u16)-1)
                     {
@@ -2190,36 +2695,36 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                             sub_GAME_7F06FDE8(AircraftEntityp->model, endframe);
                         }
                     }
-                    Offset += 9;
+                    Offset += AI_PlayAnimation_LENGTH;
                     break;
                 }
-                case AI_IF_GUARD_PLAYING_ANIMATION:
+                case AI_IFPlayingAnimation:
                 {
                     AIRecord1 *ai = (AiListp + Offset);
+
                     if (ChrEntityp->actiontype == ACT_ANIM)
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val);
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFPlayingAnimation_LENGTH;
                     }
                     break;
                 }
-                case AI_GUARD_POINTS_AT_BOND:
+                case AI_PointAtBond:
                 {
                     chrTrySurprisedOneHand(ChrEntityp);
-                    Offset += 1;
+                    Offset += AI_PointAtBond_LENGTH;
                     break;
                 }
-                case AI_GUARD_LOOKS_AROUND_SELF:
+                case AI_LookSurprised:
                 {
                     chrTrySurprisedLookAround(ChrEntityp);
-                    Offset += 1;
+                    Offset += AI_LookSurprised_LENGTH;
                     break;
                 }
-
-                case AI_IF_GUARD_HAS_STOPPED_MOVING:
+                case AI_IFImOnPatrolOrStopped:
                 {
                     AIRecord1 *ai = AiListp + Offset;
                     if (chrIsStopped(ChrEntityp))
@@ -2228,13 +2733,13 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFImOnPatrolOrStopped_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_CHR_DYING_OR_DEAD:
+                case AI_IFChrDyingOrDead:
                 {
-                    AIRecord * ai  = AiListp + Offset;
+                    AIRecord  *ai  = AiListp + Offset;
                     ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
 
                     if (!chr || chrIsDead(chr))
@@ -2243,13 +2748,13 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFChrDyingOrDead_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_CHR_DOES_NOT_EXIST:
+                case AI_IFChrDoesNotExist:
                 {
-                    AIRecord * ai  = AiListp + Offset;
+                    AIRecord  *ai  = AiListp + Offset;
                     ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
 
                     if (!chr || !chr->model)
@@ -2258,11 +2763,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFChrDoesNotExist_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GUARD_SEES_BOND:
+                case AI_IFISeeBond:
                 {
                     AIRecord1 *ai = AiListp + Offset;
 
@@ -2272,12 +2777,12 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFISeeBond_LENGTH;
                     }
                     break;
                 }
 
-                case AI_GUARD_TRY_SIDESTEPPING:
+                case AI_TRYSidestepping:
                 {
                     AIRecord1 *ai = AiListp + Offset;
 
@@ -2287,11 +2792,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_TRYSidestepping_LENGTH;
                     }
                     break;
                 }
-                case AI_GUARD_TRY_HOPPING_SIDEWAYS:
+                case AI_TRYSideHopping:
                 {
                     AIRecord1 *ai = AiListp + Offset;
 
@@ -2301,11 +2806,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_TRYSideHopping_LENGTH;
                     }
                     break;
                 }
-                case AI_GUARD_TRY_JOGGING_TO_SIDE:
+                case AI_TRYSideRunning:
                 {
                     AIRecord1 *ai = AiListp + Offset;
 
@@ -2315,11 +2820,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_TRYSideRunning_LENGTH;
                     }
                     break;
                 }
-                case AI_GUARD_TRY_FIRING_WALK:
+                case AI_TRYFiringWalk:
                 {
                     AIRecord1 *ai = AiListp + Offset;
 
@@ -2329,11 +2834,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_TRYFiringWalk_LENGTH;
                     }
                     break;
                 }
-                case AI_GUARD_TRY_FIRING_JOG:
+                case AI_TRYFiringRun:
                 {
                     AIRecord1 *ai = AiListp + Offset;
 
@@ -2343,11 +2848,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_TRYFiringRun_LENGTH;
                     }
                     break;
                 }
-                case AI_GUARD_TRY_FIRING_ROLL:
+                case AI_TRYFiringRoll:
                 {
                     AIRecord1 *ai = AiListp + Offset;
 
@@ -2357,42 +2862,41 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_TRYFiringRoll_LENGTH;
                     }
                     break;
                 }
-                case AI_GUARD_TRY_FIRE_OR_AIM_AT_TARGET:
+                case AI_TRYFireOrAimAtTarget:
                 {
                     AIRecord *ai         = AiListp + Offset;
-                    s32       targetid   = ai->val[3] | (ai->val[2] << 8);
-                    s32       targettype = ai->val[1] | (ai->val[0] << 8);
+                    s32       targetid   = CharArrayTo16(ai->val,2);
+                    s32       targettype = CharArrayTo16(ai->val,0);
                     if (actor_aim_at_actor(ChrEntityp, targettype, targetid))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
                     }
                     else
                     {
-                        Offset += 6;
+                        Offset += AI_TRYFireOrAimAtTarget_LENGTH;
                     }
                     break;
                 }
-                case AI_GUARD_TRY_FIRE_OR_AIM_AT_TARGET_KNEEL:
+                case AI_TRYFireOrAimAtTargetKneel:
                 {
                     AIRecord *ai         = AiListp + Offset;
-                    s32       targetid   = ai->val[3] | (ai->val[2] << 8);
-                    s32       targettype = ai->val[1] | (ai->val[0] << 8);
+                    s32       targetid   = CharArrayTo16(ai->val,2);
+                    s32       targettype = CharArrayTo16(ai->val,0);
                     if (actor_kneel_aim_at_actor(ChrEntityp, targettype, targetid))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
                     }
                     else
                     {
-                        Offset += 6;
+                        Offset += AI_TRYFireOrAimAtTargetKneel_LENGTH;
                     }
                     break;
                 }
-
-                case AI_IF_GUARD_IS_FIRING_AND_TARGET_180_RANGE:
+                case AI_IFImFiringAndLockedForward:
                 {
                     AIRecord1 *ai = AiListp + Offset;
 
@@ -2404,11 +2908,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFImFiringAndLockedForward_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GUARD_IS_FIRING:
+                case AI_IFImFiring:
                 {
                     AIRecord1 *ai = AiListp + Offset;
 
@@ -2418,44 +2922,44 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFImFiring_LENGTH;
                     }
                     break;
                 }
 
-                case AI_GUARD_TRY_FIRE_OR_AIM_AT_TARGET_UPDATE:
+                case AI_TRYFireOrAimAtTargetUpdate:
                 {
                     AIRecord *ai         = AiListp + Offset;
-                    s32       targetid   = ai->val[3] | (ai->val[2] << 8);
-                    s32       targettype = ai->val[1] | (ai->val[0] << 8);
+                    s32       targetid   = CharArrayTo16(ai->val,2);
+                    s32       targettype = CharArrayTo16(ai->val,0);
                     if (actor_fire_or_aim_at_target_update(ChrEntityp, targettype, targetid))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
                     }
                     else
                     {
-                        Offset += 6;
+                        Offset += AI_TRYFireOrAimAtTargetUpdate_LENGTH;
                     }
                     break;
                 }
-                case AI_GUARD_TRY_FACING_TARGET:
+                case AI_TRYFacingTarget:
                 {
                     AIRecord *ai         = AiListp + Offset;
-                    s32       targetid   = ai->val[3] | (ai->val[2] << 8);
-                    s32       targettype = ai->val[1] | (ai->val[0] << 8);
+                    s32       targetid   = CharArrayTo16(ai->val,2);
+                    s32       targettype = CharArrayTo16(ai->val,0);
                     if (check_set_actor_standing_still(ChrEntityp, targettype, targetid))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
                     }
                     else
                     {
-                        Offset += 6;
+                        Offset += AI_TRYFacingTarget_LENGTH;
                     }
                     break;
                 }
-                case AI_CHR_HIT_BODY_PART_WITH_ITEM_DAMAGE:
+                case AI_HitChrWithItem:
                 {
-                    AIRecord * ai  = AiListp + Offset;
+                    AIRecord  *ai  = AiListp + Offset;
                     ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
                     vec3d      vec = New_Vector(); //gvector0;
 
@@ -2464,18 +2968,18 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                         handles_shot_actors(chr, (s8)ai->val[1], &vec, ai->val[2], FALSE);
                     }
 
-                    Offset += 4;
+                    Offset += AI_HitChrWithItem_LENGTH;
                     break;
                 }
-                case AI_CHR_HIT_CHR_BODY_PART_WITH_HELD_ITEM:
+                case AI_ChrHitChr:
                 {
-                    AIRecord * ai   = AiListp + Offset;
+                    AIRecord  *ai   = AiListp + Offset;
                     ChrRecord *chr1 = chrFindById(ChrEntityp, ai->val[0]);
                     ChrRecord *chr2 = chrFindById(ChrEntityp, ai->val[1]);
 
                     if (chr1 && chr2 && chr1->prop && chr2->prop)
                     {
-                        PropRecord *     prop = chrGetEquippedWeaponPropWithCheck(chr1, GUNRIGHT);
+                        PropRecord      *prop = chrGetEquippedWeaponPropWithCheck(chr1, GUNRIGHT);
                         WeaponObjRecord *weapon;
                         vec3d            vec = New_Vector();
 
@@ -2497,10 +3001,10 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                             handles_shot_actors(chr2, (s8)ai->val[2], &vec, weapon->weaponnum, 0);
                         }
                     }
-                    Offset += 4;
+                    Offset += AI_ChrHitChr_LENGTH;
                     break;
                 }
-                case AI_GUARD_TRY_THROWING_GRENADE:
+                case AI_TRYThrowingGrenade:
                 {
                     AIRecord1 *ai = AiListp + Offset;
 
@@ -2510,75 +3014,75 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_TRYThrowingGrenade_LENGTH;
                     }
                     break;
                 }
-                case AI_GUARD_TRY_DROPPING_ITEM:
+                case AI_TRYDroppingItem:
                 {
                     AIRecord *ai       = AiListp + Offset;
-                    u16       modelnum = ai->val[1] | (ai->val[0] << 8);
+                    u16       modelnum = CharArrayTo16(ai->val,0);
                     if (chrDropItem(ChrEntityp, modelnum, ai->val[2]))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
                     }
                     else
                     {
-                        Offset += 5;
+                        Offset += AI_TRYDroppingItem_LENGTH;
                     }
                     break;
                 }
 
-                case AI_GUARD_SURRENDERS:
+                case AI_Surrender:
                 {
                     chrTrySurrender(ChrEntityp);
-                    Offset += 1;
+                    Offset += AI_Surrender_LENGTH;
                     break;
                 }
-                case AI_GUARD_REMOVE_FADE:
+                case AI_RemoveMe:
                 {
                     chrFadeOut(ChrEntityp);
-                    Offset += 1;
+                    Offset += AI_RemoveMe_LENGTH;
                     break;
                 }
-                case AI_CHR_REMOVE_INSTANT:
+                case AI_ChrRemoveInstant:
                 {
-                    AIRecord * ai  = AiListp + Offset;
+                    AIRecord  *ai  = AiListp + Offset;
                     ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
                     if (chr && chr->prop)
                     {
                         chr->hidden |= CHRHIDDEN_REMOVE;
                     }
-                    Offset += 2;
+                    Offset += AI_ChrRemoveInstant_LENGTH;
                     break;
                 }
-                case AI_GUARD_TRY_TRIGGERING_ALARM_AT_PAD:
+                case AI_TRYTriggeringAlarmAtPad:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    u16       pad_id = ai->val[1] | (ai->val[0] << 8);
+                    u16       pad_id = CharArrayTo16(ai->val,0);
                     if (chrTryStartAlarm(ChrEntityp, pad_id))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
                     }
                     else
                     {
-                        Offset += 4;
+                        Offset += AI_TRYTriggeringAlarmAtPad_LENGTH;
                     }
                     break;
                 }
-                case AI_ALARM_ON:
+                case AI_AlarmOn:
                 {
                     alarmActivate();
-                    Offset += 1;
+                    Offset += AI_AlarmOn_LENGTH;
                     break;
                 }
-                case AI_ALARM_OFF:
+                case AI_AlarmOff:
                 {
                     alarmDeactivate();
-                    Offset += 1;
+                    Offset += AI_AlarmOff_LENGTH;
                     break;
                 }
-                case AI_REMOVED_COMMAND27:
+                case AI_TRYRunFromBond:
                 { // run from bond
                     AIRecord1 *ai = AiListp + Offset;
                     if (removed_animation_routine_27(ChrEntityp))
@@ -2587,24 +3091,24 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_TRYRunFromBond_LENGTH;
                     }
                     break;
                 }
-                case AI_GUARD_TRY_JOGGING_TO_BOND_POSITION:
+                case AI_TRYRunToBond:
                 {
                     AIRecord1 *ai = AiListp + Offset;
-                    if (chrGoToBond(ChrEntityp, SPEED_JOG))
+                    if (chrGoToBond(ChrEntityp, SPEED_RUN))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val);
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_TRYRunToBond_LENGTH;
                     }
                     break;
                 }
-                case AI_GUARD_TRY_WALKING_TO_BOND_POSITION:
+                case AI_TRYWalkToBond:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (chrGoToBond(ChrEntityp, SPEED_WALK))
@@ -2613,24 +3117,24 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_TRYWalkToBond_LENGTH;
                     }
                     break;
                 }
-                case AI_GUARD_TRY_RUNNING_TO_BOND_POSITION:
+                case AI_TRYSprintToBond:
                 {
                     AIRecord *ai = AiListp + Offset;
-                    if (chrGoToBond(ChrEntityp, SPEED_RUN))
+                    if (chrGoToBond(ChrEntityp, SPEED_SPRINT))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_TRYSprintToBond_LENGTH;
                     }
                     break;
                 }
-                case AI_REMOVED_COMMAND2B:
+                case AI_TRYFindCover:
                 { //Find Cover
                     AIRecord *ai = AiListp + Offset;
                     if (removed_animation_routine_2B(ChrEntityp))
@@ -2639,24 +3143,24 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_TRYFindCover_LENGTH;
                     }
                     break;
                 }
-                case AI_GUARD_TRY_JOGGING_TO_CHR_POSITION:
+                case AI_TRYRunToChr:
                 {
                     AIRecord *ai = AiListp + Offset;
-                    if (chrGoToChr(ChrEntityp, ai->val[0], SPEED_JOG))
+                    if (chrGoToChr(ChrEntityp, ai->val[0], SPEED_RUN))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_TRYRunToChr_LENGTH;
                     }
                     break;
                 }
-                case AI_GUARD_TRY_WALKING_TO_CHR_POSITION:
+                case AI_TRYWalkToChr:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (chrGoToChr(ChrEntityp, ai->val[0], SPEED_WALK))
@@ -2665,32 +3169,32 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_TRYWalkToChr_LENGTH;
                     }
                     break;
                 }
-                case AI_GUARD_TRY_RUNNING_TO_CHR_POSITION:
+                case AI_TRYSprintToChr:
                 {
                     AIRecord *ai = AiListp + Offset;
 
-                    if (chrGoToChr(ChrEntityp, ai->val[0] & 0xff, SPEED_RUN)) // &0xff is here to increase t reg by 1
+                    if (chrGoToChr(ChrEntityp, ai->val[0] & 0xff, SPEED_SPRINT)) // &0xff is here to increase t reg by 1
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_TRYSprintToChr_LENGTH;
                     }
                     break;
                 }
 
-                case AI_RANDOM_GENERATE_SEED:
+                case AI_SetNewRandom:
                 {
                     ChrEntityp->random = randomGetNext();
-                    Offset += 1;
+                    Offset += AI_SetNewRandom_LENGTH;
                     break;
                 }
-                case AI_IF_RANDOM_SEED_LESS_THAN:
+                case AI_IFRandomLessThan:
                 {
                     AIRecord *ai = AiListp + Offset;
 
@@ -2700,11 +3204,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFRandomLessThan_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_RANDOM_SEED_GREATER_THAN:
+                case AI_IFRandomGreaterThan:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (ai->val[0] < ChrEntityp->random)
@@ -2713,20 +3217,20 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFRandomGreaterThan_LENGTH;
                     }
                     break;
                 }
 
-                case AI_GUARD_JOGS_TO_PAD:
+                case AI_RunToPad:
                 {
                     AIRecord *ai  = AiListp + Offset;
-                    u16       pad = ai->val[1] | (ai->val[0] << 8);
-                    chrGoToPad(ChrEntityp, pad, SPEED_JOG);
-                    Offset += 3;
+                    u16       pad = CharArrayTo16(ai->val,0);
+                    chrGoToPad(ChrEntityp, pad, SPEED_RUN);
+                    Offset += AI_RunToPad_LENGTH;
                     break;
                 }
-                case AI_GUARD_JOGS_TO_PAD_PRESET:
+                case AI_RunToPadPreset:
                 {
                     /* PD uses GoTo Pad (speed) which seems better
                     switch (ai->val[0]) 
@@ -2734,38 +3238,38 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                         case SPEED_WALK: 
                             chrGoToPad(ChrEntityp, ChrEntityp->padpreset1, SPEED_WALK);
                             break;  
-                        case SPEED_JOG: 
+                        case SPEED_RUN: 
                             etc...
-                    */
-                    chrGoToPad(ChrEntityp, ChrEntityp->padpreset1, SPEED_JOG);
-                    Offset += 1;
+                     */
+                    chrGoToPad(ChrEntityp, ChrEntityp->padpreset1, SPEED_RUN);
+                    Offset += AI_RunToPadPreset_LENGTH;
                     break;
                 }
-                case AI_GUARD_WALKS_TO_PAD:
+                case AI_WalkToPad:
                 {
                     AIRecord *ai  = AiListp + Offset;
-                    u16       pad = ai->val[1] | (ai->val[0] << 8);
+                    u16       pad = CharArrayTo16(ai->val,0);
                     chrGoToPad(ChrEntityp, pad, SPEED_WALK);
-                    Offset += 3;
+                    Offset += AI_WalkToPad_LENGTH;
                     break;
                 }
-                case AI_GUARD_RUNS_TO_PAD:
+                case AI_SprintToPad:
                 {
                     AIRecord *ai  = AiListp + Offset;
-                    u16       pad = ai->val[1] | (ai->val[0] << 8);
-                    chrGoToPad(ChrEntityp, pad, SPEED_RUN);
-                    Offset += 3;
+                    u16       pad = CharArrayTo16(ai->val,0);
+                    chrGoToPad(ChrEntityp, pad, SPEED_SPRINT);
+                    Offset += AI_SprintToPad_LENGTH;
                     break;
                 }
-                case AI_GUARD_START_PATROL:
+                case AI_StartPatrol:
                 {
-                    AIRecord *  ai   = AiListp + Offset;
+                    AIRecord   *ai   = AiListp + Offset;
                     PathRecord *path = pathFindById(ai->val[0]);
                     if_actor_able_set_on_path(ChrEntityp, path);
-                    Offset += 2;
+                    Offset += AI_StartPatrol_LENGTH;
                     break;
                 }
-                case AI_IF_ALARM_IS_ON_UNUSED: // aiIfCanHearAlarm
+                case AI_IFICanHearAlarm: // aiIfCanHearAlarm
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (chrCanHearAlarm(ChrEntityp))
@@ -2774,11 +3278,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFICanHearAlarm_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_ALARM_IS_ON:
+                case AI_IFAlarmIsOn:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (alarmIsActive())
@@ -2787,11 +3291,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFAlarmIsOn_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GAS_IS_LEAKING:
+                case AI_IFGasIsLeaking:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (check_if_toxic_gas_activated())
@@ -2800,11 +3304,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFGasIsLeaking_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GUARD_HEARD_BOND:
+                case AI_IFIHeardBond:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (chrIsHearingBond(ChrEntityp))
@@ -2813,11 +3317,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFIHeardBond_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GUARD_SEE_ANOTHER_GUARD_SHOT:
+                case AI_IFISeeSomeoneShot:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (chrSawInjury(ChrEntityp))
@@ -2826,11 +3330,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFISeeSomeoneShot_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GUARD_SEE_ANOTHER_GUARD_DIE:
+                case AI_IFISeeSomeoneDie:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (chrSawDeath(ChrEntityp))
@@ -2839,11 +3343,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFISeeSomeoneDie_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GUARD_AND_BOND_WITHIN_LINE_OF_SIGHT:
+                case AI_IFICouldSeeBond:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (chrCanSeeBond(ChrEntityp))
@@ -2852,11 +3356,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFICouldSeeBond_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GUARD_AND_BOND_WITHIN_PARTIAL_LINE_OF_SIGHT:
+                case AI_IFICouldSeeBondsStan:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (chrIsTargetNearlyInSight(ChrEntityp))
@@ -2865,11 +3369,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFICouldSeeBondsStan_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GUARD_WAS_SHOT_OR_SEEN_WITHIN_LAST_10_SECS:
+                case AI_IFIWasShotRecently:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (chrSawTargetRecently(ChrEntityp))
@@ -2878,11 +3382,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFIWasShotRecently_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GUARD_HEARD_BOND_WITHIN_LAST_10_SECS:
+                case AI_IFIHeardBondRecently:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (chrHeardTargetRecently(ChrEntityp))
@@ -2891,13 +3395,13 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFIHeardBondRecently_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GUARD_IN_ROOM_WITH_CHR:
+                case AI_IFImInRoomWithChr:
                 {
-                    AIRecord * ai  = AiListp + Offset;
+                    AIRecord  *ai  = AiListp + Offset;
                     ChrRecord *chr = chrFindById(ChrEntityp, *ai->val);
                     if (chr && chr->prop && check_if_position_in_same_room(ChrEntityp, &chr->prop->pos, chr->prop->stan))
                     {
@@ -2905,11 +3409,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFImInRoomWithChr_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GUARD_HAS_NOT_BEEN_SEEN:
+                case AI_IFIveNotBeenSeen:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (!(ChrEntityp->chrflags & CHRFLAG_HAS_BEEN_ON_SCREEN))
@@ -2918,11 +3422,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFIveNotBeenSeen_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GUARD_IS_ON_SCREEN:
+                case AI_IFImOnScreen:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if ((ChrEntityp->prop->flags & PROPFLAG_ONSCREEN))
@@ -2931,38 +3435,39 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFImOnScreen_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GUARD_ROOM_CONTAINING_SELF_IS_ON_SCREEN:
+                case AI_IFMyRoomIsOnScreen:
                 {
                     AIRecord *ai = AiListp + Offset;
-                    if (getROOMID_Bitflags(getTileRoom(ChrEntityp->prop->stan)))
+ 
+                    if (getROOMID_Bitflags(getTileRoom(ChrEntityp->prop->stan))) //embedded func to match, must be s32 not u8
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFMyRoomIsOnScreen_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_ROOM_CONTAINING_PAD_IS_ON_SCREEN:
+                case AI_IFRoomWithPadIsOnScreen:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    u16       pad_id = ai->val[1] | (ai->val[0] << 8);
+                    u16       pad_id = CharArrayTo16(ai->val,0);
                     if (check_if_room_for_preset_loaded(ChrEntityp, pad_id))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
                     }
                     else
                     {
-                        Offset += 4;
+                        Offset += AI_IFRoomWithPadIsOnScreen_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GUARD_IS_TARGETED_BY_BOND:
+                case AI_IFImTargetedByBond:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (sub_GAME_7F0333F8(ChrEntityp))
@@ -2971,11 +3476,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFImTargetedByBond_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GUARD_SHOT_FROM_BOND_MISSED:
+                case AI_IFBondMissedMe:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (chrIfNearMiss(ChrEntityp))
@@ -2984,15 +3489,15 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFBondMissedMe_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GUARD_COUNTER_CLOCKWISE_DIRECTION_TO_BOND_LESS_THAN:
+                case AI_IFMyAngleToBondLessThan:
                 {
-                    AIRecord *ai  = AiListp + Offset;
                     // Alternative Names?
                     // aiIfTargetInFovLeft or aiIfBondOutOfFov
+                    AIRecord *ai  = AiListp + Offset;
                     float     rad = chrGetAngleToBond(ChrEntityp); //must use float to save "hidden var"
                     if (ByteToRadian((ai->val[0])) > rad)
                     {
@@ -3000,11 +3505,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFMyAngleToBondLessThan_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GUARD_COUNTER_CLOCKWISE_DIRECTION_TO_BOND_GREATER_THAN:
+                case AI_IFMyAngleToBondGreaterThan:
                 {
                     AIRecord *ai  = AiListp + Offset;
                     float     rad = chrGetAngleToBond(ChrEntityp);
@@ -3014,11 +3519,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFMyAngleToBondGreaterThan_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GUARD_COUNTER_CLOCKWISE_DIRECTION_FROM_BOND_LESS_THAN:
+                case AI_IFMyAngleFromBondLessThan:
                 {
                     AIRecord *ai  = AiListp + Offset;
                     float     rad = chrGetAngleFromBond(ChrEntityp);
@@ -3028,11 +3533,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFMyAngleFromBondLessThan_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GUARD_COUNTER_CLOCKWISE_DIRECTION_FROM_BOND_GREATER_THAN:
+                case AI_IFMyAngleFromBondGreaterThan:
                 {
                     AIRecord *ai  = AiListp + Offset;
                     float     rad = chrGetAngleFromBond(ChrEntityp);
@@ -3042,179 +3547,179 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFMyAngleFromBondGreaterThan_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GUARD_DISTANCE_TO_BOND_LESS_THAN:
+                case AI_IFMyDistanceToBondLessThanDecimeter:
                 {
                     AIRecord *ai       = AiListp + Offset;
-                    f32       distance = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    f32       distance = CharArrayTo16(ai->val,0) * 10.0f;
                     if (distance > chrGetDistanceToBond(ChrEntityp))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
                     }
                     else
                     {
-                        Offset += 4;
+                        Offset += AI_IFMyDistanceToBondLessThanDecimeter_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GUARD_DISTANCE_TO_BOND_GREATER_THAN:
+                case AI_IFMyDistanceToBondGreaterThanDecimeter:
                 {
                     AIRecord *ai       = AiListp + Offset;
-                    f32       distance = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    f32       distance = CharArrayTo16(ai->val,0) * 10.0f;
                     if (distance < chrGetDistanceToBond(ChrEntityp))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
                     }
                     else
                     {
-                        Offset += 4;
+                        Offset += AI_IFMyDistanceToBondGreaterThanDecimeter_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_CHR_DISTANCE_TO_PAD_LESS_THAN:
+                case AI_IFChrDistanceToPadLessThanDecimeter:
                 {
-                    AIRecord * ai     = AiListp + Offset;
+                    AIRecord  *ai     = AiListp + Offset;
                     ChrRecord *chr    = chrFindById(ChrEntityp, ai->val[0]);
-                    u16        padnum = (ai->val[4] | (ai->val[3] << 8));
-                    f32        value  = (ai->val[2] | (ai->val[1] << 8)) * 10.0f;
+                    u16        padnum = CharArrayTo16(ai->val,3);
+                    f32        value  = CharArrayTo16(ai->val,1) * 10.0f;
                     if (chr && (value > chrGetDistanceToPad(chr, padnum)))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[5]);
                     }
                     else
                     {
-                        Offset += 7;
+                        Offset += AI_IFChrDistanceToPadLessThanDecimeter_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_CHR_DISTANCE_TO_PAD_GREATER_THAN:
+                case AI_IFChrDistanceToPadGreaterThanDecimeter:
                 {
-                    AIRecord * ai     = AiListp + Offset;
+                    AIRecord  *ai     = AiListp + Offset;
                     ChrRecord *chr    = chrFindById(ChrEntityp, ai->val[0]);
-                    u16        padnum = (ai->val[4] | (ai->val[3] << 8));
-                    f32        value  = (ai->val[2] | (ai->val[1] << 8)) * 10.0f;
+                    u16        padnum = CharArrayTo16(ai->val,3);
+                    f32        value  = CharArrayTo16(ai->val,1) * 10.0f;
                     if (chr && (value < chrGetDistanceToPad(chr, padnum)))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[5]);
                     }
                     else
                     {
-                        Offset += 7;
+                        Offset += AI_IFChrDistanceToPadGreaterThanDecimeter_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GUARD_DISTANCE_TO_CHR_LESS_THAN:
+                case AI_IFMyDistanceToChrLessThanDecimeter:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    f32       cutoff = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    f32       cutoff = CharArrayTo16(ai->val,0) * 10.0f;
                     if (cutoff > chrGetDistanceToChr(ChrEntityp, ai->val[2]))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
                     }
                     else
                     {
-                        Offset += 5;
+                        Offset += AI_IFMyDistanceToChrLessThanDecimeter_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GUARD_DISTANCE_TO_CHR_GREATER_THAN:
+                case AI_IFMyDistanceToChrGreaterThanDecimeter:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    f32       cutoff = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    f32       cutoff = CharArrayTo16(ai->val,0) * 10.0f;
                     if (cutoff < chrGetDistanceToChr(ChrEntityp, ai->val[2]))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
                     }
                     else
                     {
-                        Offset += 5;
+                        Offset += AI_IFMyDistanceToChrGreaterThanDecimeter_LENGTH;
                     }
                     break;
                 }
-                case AI_GUARD_TRY_SETTING_CHR_PRESET_TO_GUARD_WITHIN_DISTANCE:
+                case AI_TRYSettingMyPresetToChrWithinDistanceDecimeter:
                 {
                     AIRecord *ai       = AiListp + Offset;
-                    f32       distance = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    f32       distance = CharArrayTo16(ai->val,0) * 10.0f;
                     if (sub_GAME_7F033B38(ChrEntityp, distance))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
                     }
                     else
                     {
-                        Offset += 4;
+                        Offset += AI_TRYSettingMyPresetToChrWithinDistanceDecimeter_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_BOND_DISTANCE_TO_PAD_LESS_THAN:
+                case AI_IFBondDistanceToPadLessThanDecimeter:
                 {
                     AIRecord *ai    = AiListp + Offset;
-                    u16       pad   = (ai->val[3] | (ai->val[2] << 8));
-                    f32       value = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    u16       pad   = CharArrayTo16(ai->val,2);
+                    f32       value = CharArrayTo16(ai->val,0) * 10.0f;
                     if (value > chrGetDistanceFromBondToPad(ChrEntityp, pad))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
                     }
                     else
                     {
-                        Offset += 6;
+                        Offset += AI_IFBondDistanceToPadLessThanDecimeter_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_BOND_DISTANCE_TO_PAD_GREATER_THAN:
+                case AI_IFBondDistanceToPadGreaterThanDecimeter:
                 {
                     AIRecord *ai    = AiListp + Offset;
-                    u16       pad   = (ai->val[3] | (ai->val[2] << 8));
-                    f32       value = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    u16       pad   = CharArrayTo16(ai->val,2);
+                    f32       value = CharArrayTo16(ai->val,0) * 10.0f;
                     if (value < chrGetDistanceFromBondToPad(ChrEntityp, pad))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
                     }
                     else
                     {
-                        Offset += 6;
+                        Offset += AI_IFBondDistanceToPadGreaterThanDecimeter_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_CHR_IN_ROOM_WITH_PAD:
+                case AI_IFChrInRoomWithPad:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    u16       pad_id = (ai->val[2] | (ai->val[1] << 8));
+                    u16       pad_id = CharArrayTo16(ai->val,1);
                     if (chrIfInPadRoom(ChrEntityp, ai->val[0], pad_id))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
                     }
                     else
                     {
-                        Offset += 5;
+                        Offset += AI_IFChrInRoomWithPad_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_BOND_IN_ROOM_WITH_PAD:
+                case AI_IFBondInRoomWithPad:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    u16       pad_id = ai->val[1] | (ai->val[0] << 8);
+                    u16       pad_id = CharArrayTo16(ai->val,0);
                     if (check_if_actor_is_at_preset(ChrEntityp, pad_id))
                     {
-#    if DEBUG
+#ifdef DEBUG
                         osSyncPrintf("BOND IN ROOM\n");
-#    endif
+#endif
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
                     }
                     else
                     {
-#    if DEBUG
+#ifdef DEBUG
                         osSyncPrintf("bond not in room\n");
-#    endif
-                        Offset += 4;
+#endif
+                        Offset += AI_IFBondInRoomWithPad_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_BOND_COLLECTED_OBJECT:
+                case AI_IFBondCollectedObject:
                 {
-                    AIRecord *    ai  = AiListp + Offset;
+                    AIRecord     *ai  = AiListp + Offset;
                     ObjectRecord *obj = objFindByTagId(ai->val[0]);
                     if (obj && obj->prop && is_prop_in_inventory(obj->prop))
                     {
@@ -3222,11 +3727,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFBondCollectedObject_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_ITEM_IS_STATIONARY_WITHIN_LEVEL:
+                case AI_IFItemIsStationaryWithinLevel:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (weaponFindThrown(ai->val[0]))
@@ -3235,11 +3740,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFItemIsStationaryWithinLevel_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_ITEM_IS_ATTACHED_TO_OBJECT:
+                case AI_IFItemIsAttachedToObject:
                 {
                     struct
                     {
@@ -3273,11 +3778,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 4;
+                        Offset += AI_IFItemIsAttachedToObject_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_BOND_HAS_ITEM_EQUIPPED:
+                case AI_IFBondHasItemEquipped:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (ai->val[0] == getCurrentPlayerWeaponId(GUNRIGHT) || ai->val[0] == getCurrentPlayerWeaponId(GUNLEFT)) //order matters
@@ -3286,13 +3791,13 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFBondHasItemEquipped_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_OBJECT_EXISTS: // aiIfGunUnclaimed
+                case AI_IFObjectExists: // aiIfGunUnclaimed
                 {
-                    AIRecord *    ai  = AiListp + Offset;
+                    AIRecord     *ai  = AiListp + Offset;
                     ObjectRecord *obj = objFindByTagId(ai->val[0]);
                     if (obj && obj->prop)
                     {
@@ -3300,13 +3805,13 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFObjectExists_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_OBJECT_NOT_DESTROYED:
+                case AI_IFObjectNotDestroyed:
                 {
-                    AIRecord *    ai  = AiListp + Offset;
+                    AIRecord     *ai  = AiListp + Offset;
                     ObjectRecord *obj = objFindByTagId(ai->val[0]);
                     if (obj && obj->prop && objIsHealthy(obj))
                     {
@@ -3314,13 +3819,13 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFObjectNotDestroyed_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_OBJECT_WAS_ACTIVATED:
+                case AI_IFObjectWasActivated:
                 {
-                    AIRecord *    ai  = AiListp + Offset;
+                    AIRecord     *ai  = AiListp + Offset;
                     ObjectRecord *obj = objFindByTagId(ai->val[0]);
                     if (obj && obj->prop && (obj->runtime_bitflags & RUNTIMEBITFLAG_ACTIVATED))
                     {
@@ -3329,13 +3834,13 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFObjectWasActivated_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_BOND_USED_GADGET_ON_OBJECT:
+                case AI_IFBondUsedGadgetOnObject:
                 {
-                    AIRecord *    ai  = AiListp + Offset;
+                    AIRecord     *ai  = AiListp + Offset;
                     ObjectRecord *obj = objFindByTagId(ai->val[0]);
                     if (obj && obj->prop && (obj->state & PROPSTATE_ACTIVATED))
                     {
@@ -3344,13 +3849,13 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFBondUsedGadgetOnObject_LENGTH;
                     }
                     break;
                 }
-                case AI_OBJECT_ACTIVATE:
+                case AI_ActivateObject:
                 {
-                    AIRecord *    ai  = AiListp + Offset;
+                    AIRecord     *ai  = AiListp + Offset;
                     ObjectRecord *obj = objFindByTagId(ai->val[0]);
                     if (obj && obj->prop)
                     {
@@ -3363,27 +3868,33 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                             propobjInteract(obj->prop);
                         }
                     }
-                    Offset += 2;
+                    Offset += AI_ActivateObject_LENGTH;
                     break;
                 }
-                case AI_OBJECT_DESTROY:
+                case AI_DestroyObject: //canonicly destroyobj
                 {
-                    AIRecord *    ai  = AiListp + Offset;
+                    AIRecord     *ai  = AiListp + Offset;
                     ObjectRecord *obj = objFindByTagId(ai->val[0]);
+#ifdef DEBUG
+                    osSyncPrintf("ai_destroyobj 1 : \n");
+#endif
                     if (obj && obj->prop)
                     {
                         if (!do_something_if_object_destroyed(obj))
                         {
+#ifdef DEBUG
+                            osSyncPrintf("ai_destroyobj 3 : adddamageobj\n");
+#endif
                             f32 damage = ((obj->damage - obj->maxdamage) + 1) / 250.0f;
                             maybe_detonate_object(obj, damage, &obj->runtime_pos, 29, -1);
                         }
                     }
-                    Offset += 2;
+                    Offset += AI_DestroyObject_LENGTH;
                     break;
                 }
-                case AI_OBJECT_DROP_FROM_CHR:
+                case AI_DropObjectFromChr:
                 {
-                    AIRecord *    ai  = AiListp + Offset;
+                    AIRecord     *ai  = AiListp + Offset;
                     ObjectRecord *obj = objFindByTagId(ai->val[0]);
                     if (obj && obj->prop && obj->prop->parent && obj->prop->parent->type == PROP_TYPE_CHR)
                     {
@@ -3391,23 +3902,23 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                         propobjSetDropped(obj->prop, 2);
                         chr->hidden |= CHRHIDDEN_DROP_HELD_ITEMS;
                     }
-                    Offset += 2;
+                    Offset += AI_DropObjectFromChr_LENGTH;
                     break;
                 }
-                case AI_CHR_DROP_ALL_CONCEALED_ITEMS:
+                case AI_ChrDropAllConcealedItems:
                 {
-                    AIRecord * ai  = AiListp + Offset;
+                    AIRecord  *ai  = AiListp + Offset;
                     ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
                     if (chr && chr->prop)
                     {
                         chrDropItems(chr);
                     }
-                    Offset += 2;
+                    Offset += AI_ChrDropAllConcealedItems_LENGTH;
                     break;
                 }
-                case AI_CHR_DROP_ALL_HELD_ITEMS:
+                case AI_ChrDropAllHeldItems:
                 {
-                    AIRecord * ai  = AiListp + Offset;
+                    AIRecord  *ai  = AiListp + Offset;
                     ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
                     if (chr && chr->prop)
                     {
@@ -3422,26 +3933,26 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                             chr->hidden |= CHRHIDDEN_DROP_HELD_ITEMS;
                         }
                     }
-                    Offset += 2;
+                    Offset += AI_ChrDropAllHeldItems_LENGTH;
                     break;
                 }
-                case AI_BOND_COLLECT_OBJECT:
+                case AI_BondCollectObject:
                 {
-                    AIRecord *    ai  = AiListp + Offset;
+                    AIRecord     *ai  = AiListp + Offset;
                     ObjectRecord *obj = objFindByTagId(ai->val[0]);
                     if (obj && obj->prop)
                     {
                         INV_ITEM_TYPE iType = collect_or_interact_object(obj->prop, FALSE);
                         sub_GAME_7F03C2BC(obj->prop, iType);
                     }
-                    Offset += 2;
+                    Offset += AI_BondCollectObject_LENGTH;
                     break;
                 }
-                case AI_CHR_EQUIP_OBJECT:
+                case AI_ChrEquipObject:
                 {
-                    AIRecord *    ai  = AiListp + Offset;
+                    AIRecord     *ai  = AiListp + Offset;
                     ObjectRecord *obj = objFindByTagId(ai->val[0]);
-                    ChrRecord *   chr = chrFindById(ChrEntityp, ai->val[1]);
+                    ChrRecord    *chr = chrFindById(ChrEntityp, ai->val[1]);
                     if (obj && obj->prop && chr)
                     {
                         if (obj->prop->parent)
@@ -3459,15 +3970,15 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                             attachNewChild(obj->prop, chr->prop);
                         }
                     }
-                    Offset += 3;
+                    Offset += AI_ChrEquipObject_LENGTH;
                     break;
                 }
-                case AI_OBJECT_MOVE_TO_PAD:
+                case AI_MoveObject: //canonicly aiMoveObj
                 {
-                    AIRecord *          ai  = AiListp + Offset;
-                    ObjectRecord *      obj = objFindByTagId(ai->val[0]);
+                    AIRecord           *ai  = AiListp + Offset;
+                    ObjectRecord       *obj = objFindByTagId(ai->val[0]);
                     volatile PadRecord *pad;
-                    u16                 padnum = (ai->val[2] | (ai->val[1] << 8));
+                    u16                 padnum = CharArrayTo16(ai->val,1);
                     Mtxf                matrix;
 
                     if (obj && obj->prop)
@@ -3480,6 +3991,9 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                         {
                             pad = (PadRecord *)&g_chraiCurrentSetup.boundpads[getBoundPadNum(padnum)];
                         }
+#ifdef DEBUG
+                            osSyncPrintf("aiMoveObj: moving object to pad %d\n");
+#endif
                         matrix_4x4_7F059908(&matrix, 0, 0, 0, -pad->look.x, -pad->look.y, -pad->look.z, pad->up.x, pad->up.y, pad->up.z);
                         if (obj->model)
                         {
@@ -3488,36 +4002,36 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                         sub_GAME_7F04088C(obj, pad, &matrix, pad->stan, pad);
                         sub_GAME_7F056CA0(obj);
                     }
-                    Offset += 4;
+                    Offset += AI_MoveObject_LENGTH;
                     break;
                 }
-                case AI_DOOR_OPEN:
+                case AI_DoorOpen:
                 {
-                    AIRecord *  ai  = AiListp + Offset;
+                    AIRecord   *ai  = AiListp + Offset;
                     DoorRecord *obj = objFindByTagId(ai->val[0]);
                     if (obj && obj->prop && obj->prop->type == PROP_TYPE_DOOR)
                     {
                         // DoorRecord *door = (DoorRecord *)obj;
                         doorActivate(obj, DOORSTATE_OPENING);
                     }
-                    Offset += 2;
+                    Offset += AI_DoorOpen_LENGTH;
                     break;
                 }
-                case AI_DOOR_CLOSE:
+                case AI_DoorClose:
                 {
-                    AIRecord *  ai  = AiListp + Offset;
+                    AIRecord   *ai  = AiListp + Offset;
                     DoorRecord *obj = objFindByTagId(ai->val[0]);
                     if (obj && obj->prop && obj->prop->type == PROP_TYPE_DOOR)
                     {
                         //DoorRecord *door = (DoorRecord *)obj;
                         doorActivate(obj, DOORSTATE_CLOSING);
                     }
-                    Offset += 2;
+                    Offset += AI_DoorClose_LENGTH;
                     break;
                 }
-                case AI_IF_DOOR_STATE_EQUAL:
+                case AI_IFDoorStateEqual:
                 {
-                    AIRecord *    ai   = AiListp + Offset;
+                    AIRecord     *ai   = AiListp + Offset;
                     ObjectRecord *obj  = objFindByTagId(ai->val[0]);
                     bool          pass = FALSE;
                     if (obj && obj->prop && obj->type == PROPDEF_DOOR)
@@ -3549,13 +4063,13 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 4;
+                        Offset += AI_IFDoorStateEqual_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_DOOR_HAS_BEEN_OPENED_BEFORE:
+                case AI_IFDoorHasBeenOpenedBefore:
                 {
-                    AIRecord *    ai  = AiListp + Offset;
+                    AIRecord     *ai  = AiListp + Offset;
                     ObjectRecord *obj = objFindByTagId(ai->val[0]);
                     if (obj && obj->prop && obj->type == PROPDEF_DOOR && (obj->runtime_bitflags & RUNTIMEBITFLAG_BEENOPENED))
                     {
@@ -3563,13 +4077,13 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFDoorHasBeenOpenedBefore_LENGTH;
                     }
                     break;
                 }
-                case AI_DOOR_SET_LOCK:
+                case AI_DoorSetLock:
                 {
-                    AIRecord *    ai  = AiListp + Offset;
+                    AIRecord     *ai  = AiListp + Offset;
                     ObjectRecord *obj = objFindByTagId(ai->val[0]);
                     if (obj && obj->prop && obj->prop->type == PROP_TYPE_DOOR)
                     {
@@ -3577,12 +4091,12 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                         u8          bits = ai->val[1];
                         door->keyflags   = door->keyflags | bits;
                     }
-                    Offset += 3;
+                    Offset += AI_DoorSetLock_LENGTH;
                     break;
                 }
-                case AI_DOOR_UNSET_LOCK:
+                case AI_DoorUnsetLock:
                 {
-                    AIRecord *    ai  = AiListp + Offset;
+                    AIRecord     *ai  = AiListp + Offset;
                     ObjectRecord *obj = objFindByTagId(ai->val[0]);
                     if (obj && obj->prop && obj->prop->type == PROP_TYPE_DOOR)
                     {
@@ -3590,12 +4104,12 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                         u8          bits = ai->val[1];
                         door->keyflags &= ~bits;
                     }
-                    Offset += 3;
+                    Offset += AI_DoorUnsetLock_LENGTH;
                     break;
                 }
-                case AI_IF_DOOR_LOCK_EQUAL:
+                case AI_IFDoorLockEqual:
                 {
-                    AIRecord *    ai   = AiListp + Offset;
+                    AIRecord     *ai   = AiListp + Offset;
                     ObjectRecord *obj  = objFindByTagId(ai->val[0]);
                     bool          pass = FALSE;
                     if (obj && obj->prop && obj->prop->type == PROP_TYPE_DOOR)
@@ -3613,11 +4127,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 4;
+                        Offset += AI_IFDoorLockEqual_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_OBJECTIVE_NUM_COMPLETE:
+                case AI_IFObjectiveNumComplete:
                 {
                     struct
                     {
@@ -3625,20 +4139,20 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                         u8 val;
                         u8 label;
                     } *ai = AiListp + Offset;
-                    /* additional PD code for dificulty filtering 
-                     == OBJECTIVE_COMPLETE && objectivelvlGetSelectedDifficultyBits(ai->val[0]) & (1 << lvlGetSelectedDifficulty()))* 
-                     */
-                    if (objectiveGetCount() > ai->val && OBJECTIVESTATUS_COMPLETE == objectiveGetStatus_WEAK(ai->val * 1, ai->val))
+                    /*  additional PD code for dificulty filtering 
+                     == OBJECTIVE_COMPLETE && objectivelvlGetSelectedDifficultyBits(ai->val[0]) & (1 << lvlGetSelectedDifficulty()))  *
+                    */
+                    if (objectiveGetCount() > ai->val && OBJECTIVESTATUS_COMPLETE == objectiveGetStatus_WEAK(ai->val *1, ai->val )) 
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->label);
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFObjectiveNumComplete_LENGTH;
                     }
                     break;
                 }
-                case AI_GUARD_TRY_UNKNOWN6E:
+                case AI_TRYUnknown6e:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (check_2328_preset_set_with_method(ChrEntityp, ai->val[0]))
@@ -3647,11 +4161,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_TRYUnknown6e_LENGTH;
                     }
                     break;
                 }
-                case AI_GUARD_TRY_UNKNOWN6F:
+                case AI_TRYUnknown6f:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (sub_GAME_7F033AAC(ChrEntityp, ai->val[0]))
@@ -3660,12 +4174,12 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_TRYUnknown6f_LENGTH;
                     }
                     break;
                 }
 
-                case AI_IF_GUARD_HITS_LESS_THAN:
+                case AI_IFMyNumArghsLessThan:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (ai->val[0] > chrGetNumArghs(ChrEntityp)) //order matter
@@ -3674,11 +4188,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFMyNumArghsLessThan_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GUARD_HITS_GREATER_THAN:
+                case AI_IFMyNumArghsGreaterThan:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (ai->val[0] < chrGetNumArghs(ChrEntityp)) //order matter
@@ -3687,11 +4201,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFMyNumArghsGreaterThan_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GUARD_HITS_MISSED_LESS_THAN:
+                case AI_IFMyNumCloseArghsLessThan:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (ai->val[0] > chrGetNumCloseArghs(ChrEntityp))
@@ -3700,11 +4214,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFMyNumCloseArghsLessThan_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GUARD_HITS_MISSED_GREATER_THAN:
+                case AI_IFMyNumCloseArghsGreaterThan:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (ai->val[0] < chrGetNumCloseArghs(ChrEntityp))
@@ -3713,13 +4227,13 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFMyNumCloseArghsGreaterThan_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_CHR_HEALTH_LESS_THAN:
+                case AI_IFChrHealthLessThan:
                 {
-                    AIRecord * ai    = AiListp + Offset;
+                    AIRecord  *ai    = AiListp + Offset;
                     f32        value = (ai->val[1]) * 0.1f;
                     ChrRecord *chr   = chrFindById(ChrEntityp, ai->val[0]);
 
@@ -3729,13 +4243,13 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 4;
+                        Offset += AI_IFChrHealthLessThan_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_CHR_HEALTH_GREATER_THAN:
+                case AI_IFChrHealthGreaterThan:
                 {
-                    AIRecord * ai    = AiListp + Offset;
+                    AIRecord  *ai    = AiListp + Offset;
                     f32        value = (ai->val[1]) * 0.1f;
                     ChrRecord *chr   = chrFindById(ChrEntityp, ai->val[0]);
 
@@ -3745,13 +4259,13 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 4;
+                        Offset += AI_IFChrHealthGreaterThan_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_CHR_WAS_DAMAGED_SINCE_LAST_CHECK:
+                case AI_IFChrWasDamagedSinceLastCheck:
                 {
-                    AIRecord * ai  = AiListp + Offset;
+                    AIRecord  *ai  = AiListp + Offset;
                     ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
                     if (chr && (chr->chrflags & CHRFLAG_WAS_DAMAGED))
                     {
@@ -3760,11 +4274,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFChrWasDamagedSinceLastCheck_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_BOND_HEALTH_LESS_THAN:
+                case AI_IFBondHealthLessThan:
                 {
                     AIRecord *ai  = AiListp + Offset;
                     float     val = (ai->val[0]) / 255.0f;
@@ -3774,11 +4288,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFBondHealthLessThan_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_BOND_HEALTH_GREATER_THAN:
+                case AI_IFBondHealthGreaterThan:
                 {
                     AIRecord *ai  = AiListp + Offset;
                     float     val = (ai->val[0]) / 255.0f;
@@ -3788,11 +4302,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFBondHealthGreaterThan_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GAME_DIFFICULTY_LESS_THAN:
+                case AI_IFGameDifficultyLessThan:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (ai->val[0] > lvlGetSelectedDifficulty())
@@ -3801,11 +4315,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFGameDifficultyLessThan_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_GAME_DIFFICULTY_GREATER_THAN:
+                case AI_IFGameDifficultyGreaterThan:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (ai->val[0] < lvlGetSelectedDifficulty())
@@ -3814,67 +4328,67 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFGameDifficultyGreaterThan_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_MISSION_TIME_LESS_THAN:
+                case AI_IFMissionTimeLessThan:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    f32       target = (ai->val[1] | (ai->val[0] << 8));
+                    f32       target = CharArrayTo16(ai->val,0);
                     if (target > lvlGetCurrentMultiPlayerSec())
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
                     }
                     else
                     {
-                        Offset += 4;
+                        Offset += AI_IFMissionTimeLessThan_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_MISSION_TIME_GREATER_THAN:
+                case AI_IFMissionTimeGreaterThan:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    f32       target = (ai->val[1] | (ai->val[0] << 8));
+                    f32       target = CharArrayTo16(ai->val,0);
                     if (target < lvlGetCurrentMultiPlayerSec())
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
                     }
                     else
                     {
-                        Offset += 4;
+                        Offset += AI_IFMissionTimeGreaterThan_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_SYSTEM_POWER_TIME_LESS_THAN:
+                case AI_IFSystemPowerTimeLessThan:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    f32       target = (ai->val[1] | (ai->val[0] << 8)) * 60.0f;
+                    f32       target = CharArrayTo16(ai->val,0) * CHRLV_FRAMERATE_F;
                     if (target > lvlGetCurrentMultiPlayerMin())
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
                     }
                     else
                     {
-                        Offset += 4;
+                        Offset += AI_IFSystemPowerTimeLessThan_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_SYSTEM_POWER_TIME_GREATER_THAN:
+                case AI_IFSystemPowerTimeGreaterThan:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    f32       target = (ai->val[1] | (ai->val[0] << 8)) * 60.0f;
+                    f32       target = CharArrayTo16(ai->val,0) * CHRLV_FRAMERATE_F;
                     if (target < lvlGetCurrentMultiPlayerMin())
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
                     }
                     else
                     {
-                        Offset += 4;
+                        Offset += AI_IFSystemPowerTimeGreaterThan_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_LEVEL_ID_LESS_THAN:
+                case AI_IFLevelIdLessThan:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (ai->val[0] > bossGetStageNum())
@@ -3883,11 +4397,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFLevelIdLessThan_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_LEVEL_ID_GREATER_THAN:
+                case AI_IFLevelIdGreaterThan:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (ai->val[0] < bossGetStageNum())
@@ -3896,18 +4410,21 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFLevelIdGreaterThan_LENGTH;
                     }
                     break;
                 }
-                case AI_LOCAL_BYTE_1_SET:
+                case AI_SetMyMorale:
                 {
                     AIRecord1 *ai      = AiListp + Offset;
                     ChrEntityp->morale = ai->val;
-                    Offset += 2;
+#ifdef DEBUG
+                    osSyncPrintf("MORALE IS NOW %d \n",ChrEntityp->morale);
+#endif
+                    Offset += AI_SetMyMorale_LENGTH;
                     break;
                 }
-                case AI_LOCAL_BYTE_1_ADD:
+                case AI_AddToMyMorale:
                 {
                     AIRecord1 *ai = AiListp + Offset;
                     if (255 - ai->val < ChrEntityp->morale) //clamp to 255
@@ -3918,10 +4435,14 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     {
                         ChrEntityp->morale += ai->val;
                     }
-                    Offset += 2;
+#ifdef DEBUG
+                    osSyncPrintf("MORALE IS NOW %d \n",ChrEntityp->morale);
+#endif
+
+                    Offset += AI_AddToMyMorale_LENGTH;
                     break;
                 }
-                case AI_LOCAL_BYTE_1_SUBTRACT:
+                case AI_SubtractFromMyMorale:
                 {
                     AIRecord1 *ai = AiListp + Offset;
                     if (ai->val > ChrEntityp->morale) //clamp to 0
@@ -3932,10 +4453,13 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     {
                         ChrEntityp->morale -= ai->val;
                     }
-                    Offset += 2;
+#ifdef DEBUG
+                    osSyncPrintf("MORALE IS NOW %d \n", ChrEntityp->morale);
+#endif
+                    Offset += AI_SubtractFromMyMorale_LENGTH;
                     break;
                 }
-                case AI_IF_LOCAL_BYTE_1_LESS_THAN:
+                case AI_IFMyMoraleLessThan:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (ai->val[0] > ChrEntityp->morale)
@@ -3944,11 +4468,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFMyMoraleLessThan_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_LOCAL_BYTE_1_LESS_THAN_RANDOM_SEED:
+                case AI_IFMyMoraleLessThanRandom:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (ChrEntityp->morale < ChrEntityp->random)
@@ -3957,18 +4481,21 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFMyMoraleLessThanRandom_LENGTH;
                     }
                     break;
                 }
-                case AI_LOCAL_BYTE_2_SET:
+                case AI_SetMyAlertness:
                 {
                     AIRecord1 *ai         = AiListp + Offset;
                     ChrEntityp->alertness = ai->val;
-                    Offset += 2;
+#ifdef DEBUG
+                    osSyncPrintf("AI_PRINT(void) Alertness =  %d!\n", ChrEntityp->alertness);
+#endif
+                    Offset += AI_SetMyAlertness_LENGTH;
                     break;
                 }
-                case AI_LOCAL_BYTE_2_ADD:
+                case AI_AddToMyAlertness:
                 {
                     AIRecord1 *ai = AiListp + Offset;
                     if (255 - ai->val < ChrEntityp->alertness) //clamp to 255
@@ -3979,10 +4506,10 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     {
                         ChrEntityp->alertness += ai->val;
                     }
-                    Offset += 2;
+                    Offset += AI_AddToMyAlertness_LENGTH;
                     break;
                 }
-                case AI_LOCAL_BYTE_2_SUBTRACT:
+                case AI_SubtractFromMyAlertness:
                 {
                     AIRecord1 *ai = AiListp + Offset;
                     if (ai->val > ChrEntityp->alertness) //clamp to 0
@@ -3993,10 +4520,10 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     {
                         ChrEntityp->alertness -= ai->val;
                     }
-                    Offset += 2;
+                    Offset += AI_SubtractFromMyAlertness_LENGTH;
                     break;
                 }
-                case AI_IF_LOCAL_BYTE_2_LESS_THAN:
+                case AI_IFMyAlertnessLessThan:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (ai->val[0] > ChrEntityp->alertness)
@@ -4005,11 +4532,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFMyAlertnessLessThan_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_LOCAL_BYTE_2_LESS_THAN_RANDOM_SEED:
+                case AI_IFMyAlertnessLessThanRandom:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (ChrEntityp->alertness < ChrEntityp->random)
@@ -4018,85 +4545,85 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFMyAlertnessLessThanRandom_LENGTH;
                     }
                     break;
                 }
-                case AI_GUARD_SET_HEARING_SCALE:
+                case AI_SetMyHearingScale:
                 {
                     AIRecord *ai             = AiListp + Offset;
-                    f32       distance       = (ai->val[1] | (ai->val[0] << 8)) / 1000.0f;
+                    f32       distance       = CharArrayTo16(ai->val,0) / 1000.0f;
                     ChrEntityp->hearingscale = distance;
-                    Offset += 3;
+                    Offset += AI_SetMyHearingScale_LENGTH;
                     break;
                 }
-                case AI_GUARD_SET_VISION_RANGE:
+                case AI_SetMyVisionRange:
                 {
                     AIRecord *ai            = AiListp + Offset;
                     ChrEntityp->visionrange = (ai->val[0]);
-                    Offset += 2;
+                    Offset += AI_SetMyVisionRange_LENGTH;
                     break;
                 }
-                case AI_GUARD_SET_GRENADE_PROBABILITY:
+                case AI_SetMyGrenadeProbability:
                 {
                     AIRecord *ai            = AiListp + Offset;
                     ChrEntityp->grenadeprob = ai->val[0];
-                    Offset += 2;
+                    Offset += AI_SetMyGrenadeProbability_LENGTH;
                     break;
                 }
-                case AI_GUARD_SET_CHR_NUM:
+                case AI_SetMyChrNum:
                 {
                     AIRecord *ai       = AiListp + Offset;
                     ChrEntityp->chrnum = ai->val[0];
-                    Offset += 2;
+                    Offset += AI_SetMyChrNum_LENGTH;
                     break;
                 }
-                case AI_GUARD_SET_HEALTH_TOTAL:
+                case AI_SetMyHealthTotal:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    f32       amount = (ai->val[1] | (ai->val[0] << 8)) * 0.1f;
+                    f32       amount = CharArrayTo16(ai->val,0) * 0.1f;
                     chrSetMaxDamage(ChrEntityp, amount);
-                    Offset += 3;
+                    Offset += AI_SetMyHealthTotal_LENGTH;
                     break;
                 }
-                case AI_GUARD_SET_ARMOUR:
+                case AI_SetMyArmour:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    f32       amount = (ai->val[1] | (ai->val[0] << 8)) * 0.1f; /*if (cheatIsActive(CHEAT_ENEMYSHIELDS)) { amount = amount < 8 ? 8 : amount; }*/
+                    f32       amount = CharArrayTo16(ai->val,0) * 0.1f; /*if (cheatIsActive(CHEAT_ENEMYSHIELDS)) { amount = amount < 8 ? 8 : amount; } */
                     chrAddHealth(ChrEntityp, amount);
-                    Offset += 3;
+                    Offset += AI_SetMyArmour_LENGTH;
                     break;
                 }
-                case AI_GUARD_SET_SPEED_RATING:
-                {   struct { u8 cmd; s8 val; } *ai = AiListp + Offset;
-#    ifdef DEBUG
+                case AI_SetMySpeedRating:
+                {   AIRecord1s *ai = AiListp + Offset;
+#ifdef DEBUG
                     /*
                         ".\\ported\\chrai.c", 2258, "Assertion failed: ai->val>=0"
                         ".\\ported\\chrai.c", 2259, "Assertion failed: ai->val<=100"
-                        * Note: there are 10 lines between these 2 asserts meaning either no ifdef or no allman.
-                    */
+                     *  Note: there are 10 lines between these 2 asserts meaning either no ifdef or no allman.
+                     */
                     assert(ai->val >= 0);
                     assert(ai->val <= 100);
-#    endif
+#endif
                     ChrEntityp->speedrating = ai->val;
-                    Offset += 2;
+                    Offset += AI_SetMySpeedRating_LENGTH;
                     break;
                 }
-                case AI_GUARD_SET_ARGH_RATING:
-                {   struct { u8 cmd; s8 val; } *ai = AiListp + Offset;
-#    ifdef DEBUG
+                case AI_SetMyArghRating:
+                {   AIRecord1s *ai = AiListp + Offset;
+#ifdef DEBUG
                     /*
                         ".\\ported\\chrai.c", 2268, "Assertion failed: ai->val>=0"
                         ".\\ported\\chrai.c", 2269, "Assertion failed: ai->val<=100"
                     */
                     assert(ai->val >= 0);
                     assert(ai->val <= 100);
-#    endif
+#endif
                     ChrEntityp->arghrating = ai->val;
-                    Offset += 2;
+                    Offset += AI_SetMyArghRating_LENGTH;
                     break;
                 }
-                case AI_GUARD_SET_ACCURACY_RATING:
+                case AI_SetMyAccuracyRating:
                 {
                     struct
                     {
@@ -4104,24 +4631,24 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                         s8 val;
                     } *ai                      = AiListp + Offset;
                     ChrEntityp->accuracyrating = ai->val;
-                    Offset += 2;
+                    Offset += AI_SetMyAccuracyRating_LENGTH;
                     break;
                 }
-                case AI_GUARD_BITFIELD_SET_ON:
+                case AI_SetMyFlags2:
                 {
                     AIRecord *ai = AiListp + Offset;
                     chrSetFlags(ChrEntityp, ai->val[0]);
-                    Offset += 2;
+                    Offset += AI_SetMyFlags2_LENGTH;
                     break;
                 }
-                case AI_GUARD_BITFIELD_SET_OFF:
+                case AI_UnsetMyFlags2:
                 {
                     AIRecord *ai = AiListp + Offset;
                     chrUnsetFlags(ChrEntityp, ai->val[0]);
-                    Offset += 2;
+                    Offset += AI_UnsetMyFlags2_LENGTH;
                     break;
                 }
-                case AI_IF_GUARD_BITFIELD_IS_SET_ON:
+                case AI_IFMyFlags2Has:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (chrHasFlag(ChrEntityp, ai->val[0]))
@@ -4130,25 +4657,25 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFMyFlags2Has_LENGTH;
                     }
                     break;
                 }
-                case AI_CHR_BITFIELD_SET_ON:
+                case AI_SetChrBitfield:
                 {
                     AIRecord *ai = AiListp + Offset;
                     chrSetFlagsById(ChrEntityp, ai->val[0], ai->val[1]);
-                    Offset += 3;
+                    Offset += AI_SetChrBitfield_LENGTH;
                     break;
                 }
-                case AI_CHR_BITFIELD_SET_OFF:
+                case AI_UnsetChrBitfield:
                 {
                     AIRecord *ai = AiListp + Offset;
                     chrUnsetFlagsById(ChrEntityp, ai->val[0], ai->val[1]);
-                    Offset += 3;
+                    Offset += AI_UnsetChrBitfield_LENGTH;
                     break;
                 }
-                case AI_IF_CHR_BITFIELD_IS_SET_ON:
+                case AI_IFChrBitfieldHas:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (chrHasFlagById(ChrEntityp, ai->val[0], ai->val[1]))
@@ -4157,98 +4684,98 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 4;
+                        Offset += AI_IFChrBitfieldHas_LENGTH;
                     }
                     break;
                 }
-                case AI_OBJECTIVE_BITFIELD_SET_ON:
+                case AI_SetObjectiveBitfield:
                 {
                     AIRecord *ai    = AiListp + Offset;
-                    s32       flags = (ai->val[1] << 16 | ai->val[2] << 8 | ai->val[3] | ai->val[0] << 24);
+                    s32       flags = CharArrayTo32(ai->val,0);
                     chrSetStageFlags(ChrEntityp, flags);
-                    Offset += 5;
+                    Offset += AI_SetObjectiveBitfield_LENGTH;
                     break;
                 }
-                case AI_OBJECTIVE_BITFIELD_SET_OFF:
+                case AI_UnsetObjectiveBitfield:
                 {
                     AIRecord *ai    = AiListp + Offset;
-                    s32       flags = (ai->val[1] << 16 | ai->val[2] << 8 | ai->val[3] | ai->val[0] << 24);
+                    s32       flags = CharArrayTo32(ai->val,0);
                     chrUnsetStageFlags(ChrEntityp, flags);
-                    Offset += 5;
+                    Offset += AI_UnsetObjectiveBitfield_LENGTH;
                     break;
                 }
-                case AI_IF_OBJECTIVE_BITFIELD_IS_SET_ON:
+                case AI_IFObjectiveBitfieldHas:
                 {
                     AIRecord *ai    = AiListp + Offset;
-                    s32       flags = (ai->val[1] << 16 | ai->val[2] << 8 | ai->val[3] | ai->val[0] << 24);
-                    if (chrHasStageFlag(ChrEntityp, flags)) /* PD && ai->val[4] == 1) || (!chrHasStageFlag(ChrEntityp, flags) && ai->val[4] == 0* */
+                    s32       flags = CharArrayTo32(ai->val,0);
+                    if (chrHasStageFlag(ChrEntityp, flags)) /* PD && ai->val[4] == 1) || (!chrHasStageFlag(ChrEntityp, flags) && ai->val[4] == 0  * */
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
                     }
                     else
                     {
-                        Offset += 6;
+                        Offset += AI_IFObjectiveBitfieldHas_LENGTH;
                     }
                     break;
                 }
-                case AI_GUARD_FLAGS_SET_ON:
+                case AI_SetMychrflags:
                 {
                     AIRecord *ai    = AiListp + Offset;
-                    CHRFLAG   flags = (ai->val[1] << 16 | ai->val[2] << 8 | ai->val[3] | ai->val[0] << 24);
+                    CHRFLAG   flags = CharArrayTo32(ai->val,0);
                     ChrEntityp->chrflags |= flags;
-                    Offset += 5;
+                    Offset += AI_SetMychrflags_LENGTH;
                     break;
                 }
-                case AI_GUARD_FLAGS_SET_OFF:
+                case AI_UnsetMychrflags:
                 {
                     AIRecord *ai    = AiListp + Offset;
-                    CHRFLAG   flags = (ai->val[1] << 16 | ai->val[2] << 8 | ai->val[3] | ai->val[0] << 24);
+                    CHRFLAG   flags = CharArrayTo32(ai->val,0);
                     ChrEntityp->chrflags &= ~flags;
-                    Offset += 5;
+                    Offset += AI_UnsetMychrflags_LENGTH;
                     break;
                 }
-                case AI_IF_GUARD_FLAGS_IS_SET_ON:
+                case AI_IFMychrflagsHas:
                 {
                     AIRecord *ai    = AiListp + Offset;
-                    CHRFLAG   flags = (ai->val[1] << 16 | ai->val[2] << 8 | ai->val[3] | ai->val[0] << 24);
+                    CHRFLAG   flags = CharArrayTo32(ai->val,0);
                     if ((ChrEntityp->chrflags & flags) == flags)
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
                     }
                     else
                     {
-                        Offset += 6;
+                        Offset += AI_IFMychrflagsHas_LENGTH;
                     }
                     break;
                 }
-                case AI_CHR_FLAGS_SET_ON:
+                case AI_SetChrchrflags:
                 {
-                    AIRecord * ai    = AiListp + Offset;
-                    CHRFLAG    flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    AIRecord  *ai    = AiListp + Offset;
+                    CHRFLAG    flags = CharArrayTo32(ai->val,1);
                     ChrRecord *chr   = chrFindById(ChrEntityp, ai->val[0]);
                     if (chr)
                     {
                         chr->chrflags |= flags;
                     }
-                    Offset += 6;
+                    Offset += AI_SetChrchrflags_LENGTH;
                     break;
                 }
-                case AI_CHR_FLAGS_SET_OFF:
+                case AI_UnsetChrchrflags:
                 {
-                    AIRecord * ai    = AiListp + Offset;
-                    CHRFLAG    flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    AIRecord  *ai    = AiListp + Offset;
+                    CHRFLAG    flags = CharArrayTo32(ai->val,1);
                     ChrRecord *chr   = chrFindById(ChrEntityp, ai->val[0]);
                     if (chr)
                     {
                         chr->chrflags &= ~flags;
                     }
-                    Offset += 6;
+                    Offset += AI_UnsetChrchrflags_LENGTH;
                     break;
                 }
-                case AI_IF_CHR_FLAGS_IS_SET_ON:
+                case AI_IFChrchrflagsHas:
                 {
-                    AIRecord * ai    = AiListp + Offset;
-                    CHRFLAG    flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    AIRecord  *ai    = AiListp + Offset;
+                    CHRFLAG    flags = CharArrayTo32(ai->val,1);
                     ChrRecord *chr   = chrFindById(ChrEntityp, ai->val[0]);
                     if (chr && (chr->chrflags & flags) == flags)
                     {
@@ -4256,38 +4783,38 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 7;
+                        Offset += AI_IFChrchrflagsHas_LENGTH;
                     }
                     break;
                 }
-                case AI_OBJECT_FLAGS_1_SET_ON:
+                case AI_SetObjectFlags:
                 {
-                    AIRecord *    ai    = AiListp + Offset;
-                    s32           flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    AIRecord     *ai    = AiListp + Offset;
+                    s32           flags = CharArrayTo32(ai->val,1);
                     ObjectRecord *obj   = objFindByTagId(ai->val[0]);
                     if (obj && obj->prop)
                     {
                         obj->flags |= flags;
                     }
-                    Offset += 6;
+                    Offset += AI_SetObjectFlags_LENGTH;
                     break;
                 }
-                case AI_OBJECT_FLAGS_1_SET_OFF:
+                case AI_UnsetObjectFlags:
                 {
-                    AIRecord *    ai    = AiListp + Offset;
-                    s32           flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    AIRecord     *ai    = AiListp + Offset;
+                    s32           flags = CharArrayTo32(ai->val,1);
                     ObjectRecord *obj   = objFindByTagId(ai->val[0]);
                     if (obj && obj->prop)
                     {
                         obj->flags &= ~flags;
                     }
-                    Offset += 6;
+                    Offset += AI_UnsetObjectFlags_LENGTH;
                     break;
                 }
-                case AI_IF_OBJECT_FLAGS_1_IS_SET_ON:
+                case AI_IFObjectFlagsHas:
                 {
-                    AIRecord *    ai    = AiListp + Offset;
-                    s32           flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    AIRecord     *ai    = AiListp + Offset;
+                    s32           flags = CharArrayTo32(ai->val,1);
                     ObjectRecord *obj   = objFindByTagId(ai->val[0]);
                     if (obj && obj->prop && (obj->flags & flags) == flags)
                     {
@@ -4295,38 +4822,38 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 7;
+                        Offset += AI_IFObjectFlagsHas_LENGTH;
                     }
                     break;
                 }
-                case AI_OBJECT_FLAGS_2_SET_ON:
+                case AI_SetObjectFlags2:
                 {
-                    AIRecord *    ai    = AiListp + Offset;
-                    s32           flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    AIRecord     *ai    = AiListp + Offset;
+                    s32           flags = CharArrayTo32(ai->val,1);
                     ObjectRecord *obj   = objFindByTagId(ai->val[0]);
                     if (obj && obj->prop)
                     {
                         obj->flags2 |= flags;
                     }
-                    Offset += 6;
+                    Offset += AI_SetObjectFlags2_LENGTH;
                     break;
                 }
-                case AI_OBJECT_FLAGS_2_SET_OFF:
+                case AI_UnsetObjectFlags2:
                 {
-                    AIRecord *    ai    = AiListp + Offset;
-                    s32           flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    AIRecord     *ai    = AiListp + Offset;
+                    s32           flags = CharArrayTo32(ai->val,1);
                     ObjectRecord *obj   = objFindByTagId(ai->val[0]);
                     if (obj && obj->prop)
                     {
                         obj->flags2 &= ~flags;
                     }
-                    Offset += 6;
+                    Offset += AI_UnsetObjectFlags2_LENGTH;
                     break;
                 }
-                case AI_IF_OBJECT_FLAGS_2_IS_SET_ON:
+                case AI_IFObjectFlags2Has:
                 {
-                    AIRecord *    ai    = AiListp + Offset;
-                    s32           flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    AIRecord     *ai    = AiListp + Offset;
+                    s32           flags = CharArrayTo32(ai->val,1);
                     ObjectRecord *obj   = objFindByTagId(ai->val[0]);
                     if (obj && obj->prop && ((obj->flags2 & flags) == flags))
                     {
@@ -4334,82 +4861,88 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 7;
+                        Offset += AI_IFObjectFlags2Has_LENGTH;
                     }
                     break;
                 }
-                case AI_GUARD_SET_CHR_PRESET:
+                case AI_SetMyChrPreset:
                 {
                     AIRecord *ai = AiListp + Offset;
                     chrSetChrPreset(ChrEntityp, ai->val[0]);
-                    Offset += 2;
+                    Offset += AI_SetMyChrPreset_LENGTH;
                     break;
                 }
-                case AI_CHR_SET_CHR_PRESET:
+                case AI_SetChrChrPreset:
                 {
                     AIRecord *ai = AiListp + Offset;
                     chrSetChrPreset2(ChrEntityp, ai->val[0], ai->val[1]);
-                    Offset += 3;
+                    Offset += AI_SetChrChrPreset_LENGTH;
                     break;
                 }
-                case AI_GUARD_SET_PAD_PRESET:
+                case AI_SetMyPadPreset:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    u16       pad_id = ai->val[1] | ai->val[0] << 8;
+                    u16       pad_id = CharArrayTo16(ai->val,0);
                     if (ChrEntityp)
                     {
+#ifdef DEBUG
+                        if (pad_id == PAD_PRESET1 && ChrEntityp->padpreset1 == PAD_PRESET1)
+                        {
+                            osSyncPrintf("RUSS : Pad is bollox -> Num=%d (%d) - PAD_PRESET1=%d\n", pad_id, ChrEntityp->padpreset1, PAD_PRESET1);
+                        }
+#endif
                         chrSetPadPreset(ChrEntityp, pad_id);
                     }
                     else if (AircraftEntityp)
                     {
                         AircraftEntityp->pad = pad_id;
                     }
-                    Offset += 3;
+                    Offset += AI_SetMyPadPreset_LENGTH;
                     break;
                 }
-                case AI_CHR_SET_PAD_PRESET:
+                case AI_SetChrPadPreset:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    u16       pad_id = ai->val[2] | ai->val[1] << 8;
+                    u16       pad_id = CharArrayTo16(ai->val,1);
                     chrSetPadPresetByChrnum(ChrEntityp, ai->val[0], pad_id);
-                    Offset += 4;
+                    Offset += AI_SetChrPadPreset_LENGTH;
                     break;
                 }
                 case AI_PRINT:
                 {
-#    if DEBUG
+#ifdef DEBUG
                     AIRecord *ai = AiListp + Offset;
-                    //PD = osSyncPrintf("AI_PRINT(void) (%d)\n", chraiitemsize(AiListp, Offset));
+                    //PD = osSyncPrintf("AI_PRINT(void) [%d] %s\n", ai-val);
                     osSyncPrintf("AI_PRINT: %s\n", ai->val);
-#    endif
+#endif
                     Offset += chraiitemsize(AiListp, Offset);
                     break;
                 }
-                case AI_LOCAL_TIMER_RESET_START:
+                case AI_MyTimerStart:
                 {
-                    chrRestartTimer(ChrEntityp);
-                    Offset += 1;
+                    chrRestartTimer(ChrEntityp); //Set timer60 to 0 and set flag
+                    Offset += AI_MyTimerStart_LENGTH;
                     break;
                 }
-                case AI_LOCAL_TIMER_RESET:
+                case AI_MyTimerReset:
                 {
                     ChrEntityp->timer60 = 0;
-                    Offset += 1;
+                    Offset += AI_MyTimerReset_LENGTH;
                     break;
                 }
-                case AI_LOCAL_TIMER_STOP:
+                case AI_MyTimerPause:
                 {
                     ChrEntityp->hidden &= ~CHRHIDDEN_TIMER_ACTIVE;
-                    Offset += 1;
+                    Offset += AI_MyTimerPause_LENGTH;
                     break;
                 }
-                case AI_LOCAL_TIMER_START:
+                case AI_MyTimerResume:
                 {
                     ChrEntityp->hidden |= CHRHIDDEN_TIMER_ACTIVE;
-                    Offset += 1;
+                    Offset += AI_MyTimerResume_LENGTH;
                     break;
                 }
-                case AI_IF_LOCAL_TIMER_HAS_STOPPED:
+                case AI_IFMyTimerIsNotRunning:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (((ChrEntityp->hidden & CHRHIDDEN_TIMER_ACTIVE) == 0))
@@ -4418,14 +4951,14 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFMyTimerIsNotRunning_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_LOCAL_TIMER_LESS_THAN:
+                case AI_IFMyTimerLessThanTicks:
                 {
                     AIRecord *ai   = AiListp + Offset;
-                    f32       valf = ((unsigned)((ai->val[1] << 8) | ai->val[2] | (ai->val[0] << 16))) / 60.0f;
+                    f32       valf = ((unsigned)CharArrayTo24(ai->val,0)) / CHRLV_FRAMERATE_F;
 
                     if (chrGetTimer(ChrEntityp) < valf)
                     {
@@ -4433,57 +4966,57 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 5;
+                        Offset += AI_IFMyTimerLessThanTicks_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_LOCAL_TIMER_GREATER_THAN:
+                case AI_IFMyTimerGreaterThanTicks:
                 {
                     AIRecord *ai   = AiListp + Offset;
-                    f32       valf = ((unsigned)((ai->val[1] << 8) | ai->val[2] | (ai->val[0] << 16))) / 60.0f;
+                    f32       valf = ((unsigned)CharArrayTo24(ai->val,0)) / CHRLV_FRAMERATE_F;
                     if (chrGetTimer(ChrEntityp) > valf)
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
                     }
                     else
                     {
-                        Offset += 5;
+                        Offset += AI_IFMyTimerGreaterThanTicks_LENGTH;
                     }
                     break;
                 }
-                case AI_HUD_COUNTDOWN_SHOW:
+                case AI_HudCountdownShow:
                 {
                     countdownTimerSetVisible(1, TRUE);
-                    Offset += 1;
+                    Offset += AI_HudCountdownShow_LENGTH;
                     break;
                 }
-                case AI_HUD_COUNTDOWN_HIDE:
+                case AI_HudCountdownHide:
                 {
                     countdownTimerSetVisible(1, FALSE);
-                    Offset += 1;
+                    Offset += AI_HudCountdownHide_LENGTH;
                     break;
                 }
-                case AI_HUD_COUNTDOWN_SET:
+                case AI_HudCountdownSet:
                 {
                     AIRecord *ai      = AiListp + Offset;
-                    f32       seconds = (ai->val[1] | ai->val[0] << 8);
-                    countdownTimerSetValue(seconds * 60.0f);
-                    Offset += 3;
+                    f32       seconds = CharArrayTo16(ai->val,0);
+                    countdownTimerSetValue(seconds * CHRLV_FRAMERATE_F);
+                    Offset += AI_HudCountdownSet_LENGTH;
                     break;
                 }
-                case AI_HUD_COUNTDOWN_STOP:
+                case AI_HudCountdownStop:
                 {
                     countdownTimerSetRunning(FALSE);
-                    Offset += 1;
+                    Offset += AI_HudCountdownStop_LENGTH;
                     break;
                 }
-                case AI_HUD_COUNTDOWN_START:
+                case AI_HudCountdownStart:
                 {
                     countdownTimerSetRunning(TRUE);
-                    Offset += 1;
+                    Offset += AI_HudCountdownStart_LENGTH;
                     break;
                 }
-                case AI_IF_HUD_COUNTDOWN_HAS_STOPPED:
+                case AI_IFHudCountdownIsNotRunning:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (!countdownTimerIsRunning())
@@ -4492,60 +5025,66 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFHudCountdownIsNotRunning_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_HUD_COUNTDOWN_LESS_THAN:
+                case AI_IFHudCountdownLessThan:
                 {
                     AIRecord *ai    = AiListp + Offset;
-                    f32       value = ai->val[1] | ai->val[0] << 8;
-                    if (countdownTimerGetValue() < value * 60.0f)
+                    f32       value = CharArrayTo16(ai->val,0);
+                    if (countdownTimerGetValue() < value * CHRLV_FRAMERATE_F)
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
                     }
                     else
                     {
-                        Offset += 4;
+                        Offset += AI_IFHudCountdownLessThan_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_HUD_COUNTDOWN_GREATER_THAN:
+                case AI_IFHudCountdownGreaterThan:
                 {
                     AIRecord *ai    = AiListp + Offset;
-                    f32       value = ai->val[1] | ai->val[0] << 8;
-                    if (countdownTimerGetValue() > value * 60.0f)
+                    f32       value = CharArrayTo16(ai->val,0);
+                    if (countdownTimerGetValue() > value * CHRLV_FRAMERATE_F)
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
                     }
                     else
                     {
-                        Offset += 4;
+                        Offset += AI_IFHudCountdownGreaterThan_LENGTH;
                     }
                     break;
                 }
-                case AI_CHR_TRY_SPAWNING_AT_PAD:
+                case AI_TRYSpawningChrAtPad:
                 {
                     AIRecord *ai       = AiListp + Offset;
-                    u16       pad      = ai->val[3] | (ai->val[2] << 8);
-                    CHRFLAG   flags    = (ai->val[7] << 16 | ai->val[8] << 8 | ai->val[9] | ai->val[6] << 24);
-                    u16       ailistid = ai->val[5] | ai->val[4] << 8;
+                    u16       pad      = CharArrayTo16(ai->val,2);
+                    CHRFLAG   flags    = CharArrayTo32(ai->val,6);
+                    u16       ailistid = CharArrayTo16(ai->val,4);
                     AIRecord *ailist   = ailistFindById(ailistid);
+#ifdef DEBUG
+                    if (flags & 32)
+                    {
+                        osSyncPrintf("ai_createchrheadthenjumpf : Flag set CHRSTART_FORCENOBLOOD\n");
+                    }
+#endif
                     if (chrSpawnAtPad(ChrEntityp, ai->val[0], (s8)ai->val[1], pad, ailist, flags))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[10]);
                     }
                     else
                     {
-                        Offset += 12;
+                        Offset += AI_TRYSpawningChrAtPad_LENGTH;
                     }
                     break;
                 }
-                case AI_CHR_TRY_SPAWNING_NEXT_TO_UNSEEN_CHR:
+                case AI_TRYSpawningChrNextToChr:
                 {
                     AIRecord *ai       = AiListp + Offset;
-                    CHRFLAG   flags    = ai->val[6] << 16 | ai->val[7] << 8 | ai->val[8] | ai->val[5] << 24;
-                    u16       ailistid = ai->val[4] | (ai->val[3] << 8);
+                    CHRFLAG   flags    = CharArrayTo32(ai->val,5);
+                    u16       ailistid = CharArrayTo16(ai->val,3);
                     AIRecord *ailist   = ailistFindById(ailistid);
                     if (chrSpawnAtChr(ChrEntityp, ai->val[0], (s8)ai->val[1], ai->val[2], ailist, flags))
                     {
@@ -4553,20 +5092,20 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 11;
+                        Offset += AI_TRYSpawningChrNextToChr_LENGTH;
                     }
                     break;
                 }
-                case AI_GUARD_TRY_SPAWNING_ITEM:
+                case AI_TRYGiveMeItem:
                 {
-                    AIRecord *  ai    = AiListp + Offset;
-                    s32         flags = (ai->val[4] << 16) | (ai->val[5] << 8) | ai->val[6] | (ai->val[3] << 24);
-                    s32         model = ai->val[1] | (ai->val[0] << 8); // propID
+                    AIRecord   *ai    = AiListp + Offset;
+                    s32         flags = CharArrayTo32(ai->val,3);
+                    s32         model = CharArrayTo16(ai->val,0); 
                     PropRecord *prop  = NULL;
 
                     if (ChrEntityp && ChrEntityp->prop && ChrEntityp->model)
                     {
-                        /* more nice PD code that might be usefull in future
+                        /*  more nice PD code that might be usefull in future
                         if (cheatIsActive(CHEAT_MARQUIS))
                         {
                             flags &= ~0x10000000;
@@ -4607,7 +5146,7 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                                 case ITEM_TRIGGER:
                                 case ITEM_TASER:
 
-                                    prop = chrGiveWeapon(ChrEntityp, PROP_chrrocketlaunch, ITEM_ROCKETLAUNCH, flags);
+                                    prop = chrGiveWeapon(ChrEntityp, PROP_CHRROCKETLAUNCH, ITEM_ROCKETLAUNCH, flags);
                                     //!Bug, No Break! relying on chrGiveWeapon checking weapon already given
                                 default:
                                     prop = chrGiveWeapon(ChrEntityp, model, ai->val[2], flags);
@@ -4625,15 +5164,15 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 9;
+                        Offset += AI_TRYGiveMeItem_LENGTH;
                     }
                     break;
                 }
-                case AI_GUARD_TRY_SPAWNING_HAT:
+                case AI_TRYGiveMeHat:
                 {
                     AIRecord *ai       = AiListp + Offset;
-                    s32       flags    = (ai->val[3] << 16) | (ai->val[4] << 8) | ai->val[5] | (ai->val[2] << 24);
-                    s32       modelnum = ai->val[1] | (ai->val[0] << 8);
+                    s32       flags    = CharArrayTo32(ai->val,2);
+                    s32       modelnum = CharArrayTo16(ai->val,0);
                     bool      ok       = FALSE;
                     if (ChrEntityp && ChrEntityp->prop && ChrEntityp->model)
                     {
@@ -4645,31 +5184,31 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 8;
+                        Offset += AI_TRYGiveMeHat_LENGTH;
                     }
                     break;
                 }
-                case AI_CHR_TRY_SPAWNING_CLONE:
+                case AI_TRYCloningChr:
                 {
-                    AIRecord *       ai               = AiListp + Offset;
+                    AIRecord        *ai               = AiListp + Offset;
                     //int zero                        = 0; //on stack in xbla, but matches without
-                    u16              ailistid         = ai->val[2] | (ai->val[1] << 8);
-                    u8 *             ailist           = ailistFindById((u16)ailistid);
-                    ChrRecord *      chr              = chrFindById(ChrEntityp, ai->val[0]);
+                    u16              ailistid         = CharArrayTo16(ai->val,1);
+                    u8              *ailist           = ailistFindById((u16)ailistid);
+                    ChrRecord       *chr              = chrFindById(ChrEntityp, ai->val[0]);
                     bool             pass             = FALSE; //564
                     int              chrnum;
-                    PropRecord *     srcweaponLprop   = NULL;
-                    PropRecord *     srcweaponRprop   = NULL;
-                    PropRecord *     cloneweaponRprop = NULL;
-                    PropRecord *     cloneweaponLprop = NULL;
-                    PropRecord *     cloneprop        = NULL;
-                    ChrRecord *      clone            = NULL; //536
+                    PropRecord      *srcweaponLprop   = NULL;
+                    PropRecord      *srcweaponRprop   = NULL;
+                    PropRecord      *cloneweaponRprop = NULL;
+                    PropRecord      *cloneweaponLprop = NULL;
+                    PropRecord      *cloneprop        = NULL;
+                    ChrRecord       *clone            = NULL; //536
                     WeaponObjRecord *srcweaponL       = NULL;
                     WeaponObjRecord *cloneweaponL     = NULL; //528
                     WeaponObjRecord *cloneweaponR     = NULL; //524
                     WeaponObjRecord *srcweaponR       = NULL;
-                    PropRecord *     hatprop;
-                    ObjectRecord *   hatobj;
+                    PropRecord      *hatprop;
+                    ObjectRecord    *hatobj;
                     //bool tryhat;
                     if (chr && (chr->chrflags & CHRFLAG_CLONE))
                     {
@@ -4719,7 +5258,7 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                                     chrTryEquipHat(clone, hatobj->obj, 0);
                                 }
                             }
-                            /*PD extras*/
+                            /* PD extras */
                             //clone->morale     = chr->morale;
                             //clone->alertness  = chr->alertness;
                             //clone->padpreset1 = chr->padpreset1;
@@ -4732,52 +5271,57 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 5;
+                        Offset += AI_TRYCloningChr_LENGTH;
                     }
                     break;
                 }
-                case AI_TEXT_PRINT_BOTTOM:
+                case AI_TextPrintBottom:
                 {
                     AIRecord *ai   = AiListp + Offset;
-                    char *    text = langGet(ai->val[1] | ai->val[0] << 8);
-#    ifdef VERSION_JP
+                    char     *text = langGet(CharArrayTo16(ai->val,0));
+#ifdef DEBUG
+                    osSyncPrintf("USING HUD MESSAGE Stringy = %d, ai->txt = %d\n", CharArrayTo16(ai->val,0), text);
+#endif
+#ifdef VERSION_JP
                     jp_hudmsgBottomShow(text);
-#    else
+#else
                     hudmsgBottomShow(text);
-#    endif
-                    Offset += 3;
+#endif
+                    Offset += AI_TextPrintBottom_LENGTH;
                     break;
                 }
-                case AI_TEXT_PRINT_TOP:
+                case AI_TextPrintTop:
                 {
                     AIRecord *ai   = AiListp + Offset;
-                    char *    text = langGet(ai->val[1] | ai->val[0] << 8);
+                    char     *text = langGet(CharArrayTo16(ai->val,0));
 
-#    if DEBUG
+#ifdef DEBUG
                     osSyncPrintf("ptop =  %f \n", text);
-#    endif
+                    osSyncPrintf("USING HUD MESSAGE Stringy = %d, ai->txt = %d\n", CharArrayTo16(ai->val,0), text);
+
+#endif
 
                     hudmsgTopShow(text);
-                    Offset += 3;
+                    Offset += AI_TextPrintTop_LENGTH;
                     break;
                 }
-                case AI_SFX_PLAY:
+                case AI_SfxPlay:
                 {
                     AIRecord *ai       = AiListp + Offset;
-                    s16       audio_id = ai->val[1] | (ai->val[0] << 8);
+                    s16       audio_id = CharArrayTo16(ai->val,0);
                     audioPlayFromProp((s8)ai->val[2], audio_id);
-                    Offset += 4;
+                    Offset += AI_SfxPlay_LENGTH;
                     break;
                 }
 
-                case AI_SFX_STOP_CHANNEL:
+                case AI_SfxStopChannel:
                 {
                     AIRecord1s *ai = AiListp + Offset;
                     sub_GAME_7F0349BC(ai->val);
-                    Offset += 2;
+                    Offset += AI_SfxStopChannel_LENGTH;
                     break;
                 }
-                case AI_SFX_SET_CHANNEL_VOLUME:
+                case AI_SfxSetChannelVolume:
                 {
                     struct
                     {
@@ -4785,8 +5329,8 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                         s8 slotID;
                         u8 val[];
                     } *ai     = AiListp + Offset;
-                    s16 vol   = ai->val[1] | (ai->val[0] << 8);
-                    u16 sfxID = ai->val[3] | (ai->val[2] << 8);
+                    s16 vol   = CharArrayTo16(ai->val,0);
+                    u16 sfxID = CharArrayTo16(ai->val,2);
                     if (ai->slotID >= 0 && ai->slotID < 8)
                     {
                         sfx_related[ai->slotID].sfxID  = sfxID;
@@ -4798,10 +5342,13 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                             audioPlayFromProp2(ai->slotID);
                         }
                     }
-                    Offset += 6;
+                    /*
+                      "AI : Bad sound setup command\n"
+                    */
+                    Offset += AI_SfxSetChannelVolume_LENGTH;
                     break;
                 }
-                case AI_SFX_FADE_CHANNEL_VOLUME:
+                case AI_SfxFadeChannelVolume:
                 {
                     struct
                     {
@@ -4809,8 +5356,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                         s8 slotID;
                         u8 val[];
                     } *ai     = AiListp + Offset;
-                    f32 vol   = ai->val[1] | (ai->val[0] << 8);
-                    u16 sfxID = ai->val[3] | (ai->val[2] << 8);
+                    f32 vol   = CharArrayTo16(ai->val,0);
+                    u16 sfxID = CharArrayTo16(ai->val,2);
+                    /*
+                        "fadeTo\n"
+                     */
                     if (ai->slotID >= 0 && ai->slotID < 8)
                     {
                         sfx_related[ai->slotID].sfxID  = sfxID;
@@ -4822,10 +5372,10 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                             audioPlayFromProp2(ai->slotID);
                         }
                     }
-                    Offset += 6;
+                    Offset += AI_SfxFadeChannelVolume_LENGTH;
                     break;
                 }
-                case AI_SFX_EMIT_FROM_OBJECT:
+                case AI_SfxEmitFromObject:
                 {
                     struct
                     {
@@ -4834,7 +5384,7 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                         u8 val[];
                     } *ai               = AiListp + Offset;
                     ObjectRecord *obj   = objFindByTagId(ai->val[0]);
-                    u16           sfxID = ai->val[2] | (ai->val[1] << 8);
+                    u16           sfxID = CharArrayTo16(ai->val,1);
                     if (ai->slotID >= 0 && ai->slotID < 8 && obj)
                     {
                         sfx_related[ai->slotID].sfxID = sfxID;
@@ -4845,10 +5395,10 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                             audioPlayFromProp2(ai->slotID);
                         }
                     }
-                    Offset += 5;
+                    Offset += AI_SfxEmitFromObject_LENGTH;
                     break;
                 }
-                case AI_SFX_EMIT_FROM_PAD:
+                case AI_SfxEmitFromPad:
                 {
                     struct
                     {
@@ -4856,9 +5406,9 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                         s8 SlotID;
                         u8 val[];
                     } *ai             = AiListp + Offset;
-                    u16        padnum = ai->val[1] | (ai->val[0] << 8);
+                    u16        padnum = CharArrayTo16(ai->val,0);
                     PadRecord *pad;
-                    u16        sfxID = ai->val[3] | (ai->val[2] << 8);
+                    u16        sfxID = CharArrayTo16(ai->val,2);
                     if (isNotBoundPad(padnum))
                     {
                         pad = &g_chraiCurrentSetup.pads[padnum];
@@ -4877,11 +5427,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                             audioPlayFromProp2(ai->SlotID);
                         }
                     }
-                    Offset += 6;
+                    Offset += AI_SfxEmitFromPad_LENGTH;
                     break;
                 }
 
-                case AI_IF_SFX_CHANNEL_VOLUME_LESS_THAN:
+                case AI_IFSfxChannelVolumeLessThan:
                 {
                     struct
                     {
@@ -4889,56 +5439,56 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                         s8 slotID;
                         u8 val[];
                     } *ai   = AiListp + Offset;
-                    s16 vol = ai->val[1] | (ai->val[0] << 8);
+                    s16 vol = CharArrayTo16(ai->val,0);
                     if ((ai->slotID >= 0) && (ai->slotID < 8) && (sfx_related[ai->slotID].Volume2 < vol))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
                     }
                     else
                     {
-                        Offset += 5;
+                        Offset += AI_IFSfxChannelVolumeLessThan_LENGTH;
                     }
                     break;
                 }
-                case AI_VEHICLE_START_PATH:
+                case AI_VehicleStartPath:
                 {
-                    AIRecord *  ai   = AiListp + Offset;
+                    AIRecord   *ai   = AiListp + Offset;
                     PathRecord *path = pathFindById(ai->val[0]);
                     if (VehichleEntityp)
                     {
                         VehichleEntityp->path     = path;
                         VehichleEntityp->nextstep = 0;
                     }
-                    Offset += 2;
+                    Offset += AI_VehicleStartPath_LENGTH;
                     break;
                 }
-                case AI_VEHICLE_SPEED:
+                case AI_VehicleSpeed:
                 {
                     AIRecord *ai        = AiListp + Offset;
-                    f32       speedtime = ai->val[3] | (ai->val[2] << 8);
-                    f32       speedaim  = (ai->val[1] | (ai->val[0] << 8)) * 100.0f / 15360.0f;
+                    f32       speedtime = CharArrayTo16(ai->val,2);
+                    f32       speedaim  = CharArrayTo16(ai->val,0) * 100.0f / 15360.0f;
                     if (VehichleEntityp)
                     {
                         VehichleEntityp->speedaim    = speedaim;
                         VehichleEntityp->speedtime60 = speedtime;
                     }
-                    Offset += 5;
+                    Offset += AI_VehicleSpeed_LENGTH;
                     break;
                 }
-                case AI_AIRCRAFT_ROTOR_SPEED:
+                case AI_AircraftRotorSpeed:
                 {
                     AIRecord *ai        = AiListp + Offset;
-                    f32       speedtime = ai->val[3] | (ai->val[2] << 8);
-                    f32       speedaim  = (ai->val[1] | (ai->val[0] << 8)) * M_TAU_F / 3600.0f;
+                    f32       speedtime = CharArrayTo16(ai->val,2);
+                    f32       speedaim  = CharArrayTo16(ai->val,0) * M_TAU_F / 3600.0f;
                     if (AircraftEntityp)
                     {
                         AircraftEntityp->rotaryspeedaim  = speedaim;
                         AircraftEntityp->rotaryspeedtime = speedtime;
                     }
-                    Offset += 5;
+                    Offset += AI_AircraftRotorSpeed_LENGTH;
                     break;
                 }
-                case AI_IF_CAMERA_IS_IN_INTRO:
+                case AI_IFCameraIsInIntro:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if ((get_camera_mode() == 1) || (get_camera_mode() == 2))
@@ -4947,11 +5497,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFCameraIsInIntro_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_CAMERA_IS_IN_BOND_SWIRL:
+                case AI_IFCameraIsInBondSwirl:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (get_camera_mode() == 3)
@@ -4960,13 +5510,13 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFCameraIsInBondSwirl_LENGTH;
                     }
                     break;
                 }
-                case AI_TV_CHANGE_SCREEN_BANK:
+                case AI_TvChangeScreenBank:
                 {
-                    AIRecord *    ai  = AiListp + Offset;
+                    AIRecord     *ai  = AiListp + Offset;
                     ObjectRecord *obj = objFindByTagId(ai->val[0]);
                     if (obj && obj->prop)
                     {
@@ -4985,16 +5535,16 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                             }
                         }
                     }
-                    Offset += 4;
+                    Offset += AI_TvChangeScreenBank_LENGTH;
                     break;
                 }
-                case AI_IF_BOND_IN_TANK:
+                case AI_IFBondInTank: //canonical name
                 {
-                    /* 
-                    # if DEBUG && PD 
+                    /*
+#ifdef DEBUG && PD 
                     osSyncPrintf("ai_ifbondintank: tank code has been removed.\n"); 
-                    # endif 
-                    */
+#endif 
+                     */
                     AIRecord *ai = AiListp + Offset;
                     if (isBondInTank() == TRUE)
                     {
@@ -5002,12 +5552,13 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFBondInTank_LENGTH;
                     }
                     break;
                 }
-                case AI_EXIT_LEVEL:
+                case AI_EndLevel: // canonical name
                 {
+                    /*"aiEndLevel" */
                     if (camera_8003642C)
                     {
                         if (camera_80036434 == FALSE)
@@ -5019,19 +5570,19 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     {
                         bossReturnTitleStage();
                     }
-                    Offset += 1;
+                    Offset += AI_EndLevel_LENGTH;
                     break;
                 }
-                case AI_CAMERA_RETURN_TO_BOND:
+                case AI_CameraReturnToBond:
                 {
                     set_camera_mode(CAMERAMODE_FP_NOINPUT);
-                    Offset += 1;
+                    Offset += AI_CameraReturnToBond_LENGTH;
                     break;
                 }
-                case AI_CAMERA_LOOK_AT_BOND_FROM_PAD:
+                case AI_CameraLookAtBondFromPad:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    u16       padnum = ai->val[1] | (ai->val[0] << 8);
+                    u16       padnum = CharArrayTo16(ai->val,0);
                     if (isNotBoundPad(padnum))
                     {
                         dword_CODE_bss_800799F8 = &g_chraiCurrentSetup.pads[padnum];
@@ -5041,12 +5592,12 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                         dword_CODE_bss_800799F8 = (PadRecord *)&g_chraiCurrentSetup.boundpads[getBoundPadNum(padnum)];
                     }
                     set_camera_mode(CAMERAMODE_POSEND);
-                    Offset += 3;
+                    Offset += AI_CameraLookAtBondFromPad_LENGTH;
                     break;
                 }
-                case AI_CAMERA_SWITCH:
+                case AI_CameraSwitch:
                 {
-                    AIRecord *       ai  = AiListp + Offset;
+                    AIRecord        *ai  = AiListp + Offset;
                     TagObjectRecord *tag = sub_GAME_7F057080(ai->val[0]);
                     if (tag)
                     {
@@ -5055,35 +5606,35 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                         {
                             CutsceneRecord *cdef = sub_GAME_7F056A88(tag->OffsetToObj + TagIndex); //get obj
 
-#    ifdef DEBUG
-                            /*".\\ported\\chrai.c", 0xc2b, "Assertion failed: cdef->type==PROPDEF_CAMERAPOS")                             */
+#ifdef DEBUG
+                            /*".\\ported\\chrai.c", 0xc2b, "Assertion failed: cdef->type==PROPDEF_CAMERAPOS") */
                             assert(cdef->type == PROPDEF_CAMERAPOS);
-#    endif
+#endif
                             dword_CODE_bss_800799F8 = NULL;
                             gBondViewCutscene       = cdef;
-                            dword_CODE_bss_80079A18 = ai->val[2] | (ai->val[1] << 8);
-                            dword_CODE_bss_80079A1C = ai->val[4] | (ai->val[3] << 8);
+                            dword_CODE_bss_80079A18 = CharArrayTo16(ai->val,1);
+                            dword_CODE_bss_80079A1C = CharArrayTo16(ai->val,3);
                             set_camera_mode(CAMERAMODE_POSEND);
                         }
                     }
-                    Offset += 6;
+                    Offset += AI_CameraSwitch_LENGTH;
                     break;
                 }
-                case AI_IF_BOND_Y_POS_LESS_THAN:
+                case AI_IFBondYPosLessThan:
                 {
                     AIRecord *ai      = AiListp + Offset;
-                    f32       bondpos = (s16)(ai->val[1] | ai->val[0] << 8);
+                    f32       bondpos = (s16)CharArrayTo16(ai->val,0);
                     if (get_curplayer_positiondata()->pos.y < bondpos)
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
                     }
                     else
                     {
-                        Offset += 4;
+                        Offset += AI_IFBondYPosLessThan_LENGTH;
                     }
                     break;
                 }
-                case AI_HUD_HIDE_AND_LOCK_CONTROLS_AND_PAUSE_MISSION_TIME:
+                case AI_BondDisableControl:
                 {
                     AIRecord1 *ai = AiListp + Offset;
                     set_unset_bitflags(4, FALSE);
@@ -5101,27 +5652,27 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                         countdownTimerSetVisible(16, FALSE);
                     }
                     D_800364B0 = FALSE;
-                    Offset += 2;
+                    Offset += AI_BondDisableControl_LENGTH;
                     break;
                 }
-                case AI_HUD_SHOW_ALL_AND_UNLOCK_CONTROLS_AND_RESUME_MISSION_TIME:
+                case AI_BondEnableControl:
                 {
-#    if DEBUG
+#ifdef DEBUG
                     osSyncPrintf("AI_BONDENABLECONTROL\n");
-#    endif
+#endif
                     set_unset_bitflags(4, TRUE);
                     set_unset_ammo_on_screen_setting(2, TRUE);
                     bondviewUnsetIntroCameraFlags(PLAYERFLAG_NOCONTROL);
                     sub_GAME_7F08A928(2);
                     countdownTimerSetVisible(16, TRUE);
                     D_800364B0 = TRUE;
-                    Offset += 1;
+                    Offset += AI_BondEnableControl_LENGTH;
                     break;
                 }
-                case AI_CHR_TRY_TELEPORTING_TO_PAD:
+                case AI_TRYTeleportingChrToPad:
                 {
-                    AIRecord * ai     = AiListp + Offset;
-                    s32        padnum = ai->val[2] | (ai->val[1] << 8);
+                    AIRecord  *ai     = AiListp + Offset;
+                    s32        padnum = CharArrayTo16(ai->val,1);
                     ChrRecord *chr    = chrFindById(ChrEntityp, ai->val[0]);
                     bool       pass   = FALSE;
                     PadRecord *pad;
@@ -5181,31 +5732,31 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 5;
+                        Offset += AI_TRYTeleportingChrToPad_LENGTH;
                     }
                     break;
                 }
-                case AI_SCREEN_FADE_TO_BLACK:
+                case AI_ScreenFadeToBlack:
                 {
                     if (stop_time_flag != 2)
                     {
                         currentPlayerSetFadeColour(0, 0, 0, 0);
-                        currentPlayerSetFadeFrac(60.0f, 1);
+                        currentPlayerSetFadeFrac(CHRLV_FRAMERATE_F, 1);
                     }
-                    Offset += 1;
+                    Offset += AI_ScreenFadeToBlack_LENGTH;
                     break;
                 }
-                case AI_SCREEN_FADE_FROM_BLACK:
+                case AI_ScreenFadeFromBlack:
                 {
                     if (stop_time_flag != 2)
                     {
                         currentPlayerSetFadeColour(0, 0, 0, 1);
-                        currentPlayerSetFadeFrac(60.0f, 0);
+                        currentPlayerSetFadeFrac(CHRLV_FRAMERATE_F, 0);
                     }
-                    Offset += 1;
+                    Offset += AI_ScreenFadeFromBlack_LENGTH;
                     break;
                 }
-                case AI_IF_SCREEN_FADE_COMPLETED:
+                case AI_IFScreenFadeCompleted:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (g_CurrentPlayer->colourfadetimemax60 < 0)
@@ -5214,11 +5765,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFScreenFadeCompleted_LENGTH;
                     }
                     break;
                 }
-                case AI_CHR_HIDE_ALL:
+                case AI_HideAllChrs:
                 {
                     s32 num;
                     for (num = get_numguards() - 1; num >= 0; num--)
@@ -5228,10 +5779,10 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                             ptr_guard_data[num].chrflags |= CHRFLAG_HIDDEN;
                         }
                     }
-                    Offset += 1;
+                    Offset += AI_HideAllChrs_LENGTH;
                     break;
                 }
-                case AI_CHR_SHOW_ALL:
+                case AI_ShowAllChrs:
                 {
                     s32 num;
                     for (num = get_numguards() - 1; num >= 0; num--)
@@ -5239,12 +5790,12 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                         ptr_guard_data[num].chrflags &= ~CHRFLAG_HIDDEN;
                     }
 
-                    Offset += 1;
+                    Offset += AI_ShowAllChrs_LENGTH;
                     break;
                 }
-                case AI_DOOR_OPEN_INSTANT:
+                case AI_DoorOpenInstant:
                 {
-                    AIRecord *  ai   = AiListp + Offset;
+                    AIRecord   *ai   = AiListp + Offset;
                     DoorRecord *door = objFindByTagId(ai->val[0]);
                     if (door && door->prop)
                     {
@@ -5252,26 +5803,26 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                         door->speed        = 0;
                         door->openPosition = door->maxFrac;
                         door->openedTime   = g_GlobalTimer;
-                        door->openstate        = DOORSTATE_STATIONARY;
+                        door->openstate    = DOORSTATE_STATIONARY;
                         sub_GAME_7F052B00(door);
                         sub_GAME_7F053598(door); // doorActivatePortal
                         sub_GAME_7F053B10(door);
                     }
-                    Offset += 2;
+                    Offset += AI_DoorOpenInstant_LENGTH;
                     break;
                 }
-                case AI_CHR_REMOVE_ITEM_IN_HAND:
+                case AI_ChrRemoveItemInHand:
                 {
-                    AIRecord * ai  = AiListp + Offset;
+                    AIRecord  *ai  = AiListp + Offset;
                     ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
                     if (chr)
                     {
                         chrSetWeaponFlag4(chr, ai->val[1]);
                     }
-                    Offset += 3;
+                    Offset += AI_ChrRemoveItemInHand_LENGTH;
                     break;
                 }
-                case AI_IF_NUMBER_OF_ACTIVE_PLAYERS_LESS_THAN:
+                case AI_IfNumberOfActivePlayersLessThan:
                 {
                     struct
                     {
@@ -5285,11 +5836,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IfNumberOfActivePlayersLessThan_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_BOND_ITEM_TOTAL_AMMO_LESS_THAN:
+                case AI_IFBondItemTotalAmmoLessThan:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (currentPlayerGetAmmoCount((s8)ai->val[0]) < (s8)ai->val[1])
@@ -5298,27 +5849,27 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 4;
+                        Offset += AI_IFBondItemTotalAmmoLessThan_LENGTH;
                     }
                     break;
                 }
-                case AI_BOND_EQUIP_ITEM:
+                case AI_BondEquipItem:
                 {
                     AIRecord *ai = AiListp + Offset;
                     currentPlayerEquipWeaponWrapper(GUNRIGHT, (s8)ai->val[0]);
                     currentPlayerEquipWeaponWrapper(GUNLEFT, 0);
-                    Offset += 2;
+                    Offset += AI_BondEquipItem_LENGTH;
                     break;
                 }
-                case AI_BOND_EQUIP_ITEM_CINEMA:
+                case AI_BondEquipItemCinema:
                 {
-                    AIRecord *ai = AiListp + Offset;
-                    currentPlayerUnEquipWeaponWrapper(GUNRIGHT, ai->val[0]);
+                    AIRecord1s *ai = AiListp + Offset;
+                    currentPlayerUnEquipWeaponWrapper(GUNRIGHT, ai->val);
                     currentPlayerUnEquipWeaponWrapper(GUNLEFT, 0);
-                    Offset += 2;
+                    Offset += AI_BondEquipItemCinema_LENGTH;
                     break;
                 }
-                case AI_BOND_SET_LOCKED_VELOCITY:
+                case AI_BondSetLockedVelocity:
                 {
                     /*
                     g_Vars.currentplayer->bondforcespeed.x = (s8)ai->val[1];
@@ -5329,19 +5880,19 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     flt_CODE_bss_80079990.x = (s8)ai->val[0];
                     flt_CODE_bss_80079990.y = 0;
                     flt_CODE_bss_80079990.z = (s8)ai->val[1];
-                    Offset += 3;
+                    Offset += AI_BondSetLockedVelocity_LENGTH;
                     break;
                 }
-                case AI_IF_OBJECT_IN_ROOM_WITH_PAD:
+                case AI_IFObjectInRoomWithPad:
                 {
-                    AIRecord *    ai     = AiListp + Offset;
-                    u16           padnum = ai->val[2] | (ai->val[1] << 8);
-                    PadRecord *   pad;
+                    AIRecord     *ai     = AiListp + Offset;
+                    u16           padnum = CharArrayTo16(ai->val,1);
+                    PadRecord    *pad;
                     ObjectRecord *obj = objFindByTagId(ai->val[0]);
 
                     if (isNotBoundPad(padnum))
                     {
-                        pad = &g_chraiCurrentSetup.pads[padnum * 1]; //needs a mult by 1 to correct s0/v1
+                        pad = &g_chraiCurrentSetup.pads[padnum  *1]; //needs a mult by 1 to correct s0/v1
                     }
                     else
                     {
@@ -5354,27 +5905,28 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 5;
+                        Offset += AI_IFObjectInRoomWithPad_LENGTH;
                     }
                     break;
                 }
-                case AI_SWITCH_SKY:
+                case AI_SwitchSky:
                 { // SWITCHENVIRONMENT
-                    fogSwitchToSolosky2(1.0);
-                    Offset += 1;
+                    fogSwitchToSolosky2(1.0f);
+                    Offset += AI_SwitchSky_LENGTH;
                     break;
                 }
-                case AI_TRIGGER_FADE_AND_EXIT_LEVEL_ON_BUTTON_PRESS:
+                case AI_TriggerFadeAndExitLevelOnButtonPress:
                 {
                     if (stop_time_flag == FALSE)
                     {
                         stop_time_flag = TRUE;
                     }
-                    Offset += 1;
+                    Offset += AI_TriggerFadeAndExitLevelOnButtonPress_LENGTH;
                     break;
                 }
-                case AI_IF_BOND_IS_DEAD:
+                case AI_IFBondIsDead:
                 {
+                    /*"\n\nmicronsoft activeCorpse(r) activated.\n\n" */
                     AIRecord *ai = AiListp + Offset;
                     if (g_CurrentPlayer->bonddead)
                     {
@@ -5382,57 +5934,58 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFBondIsDead_LENGTH;
                     }
                     break;
                 }
-                case AI_BOND_DISABLE_DAMAGE_AND_PICKUPS:
+                case AI_BondDisableDamageAndPickups:
                 {
                     g_PlayerInvincible = TRUE;
-                    Offset += 1;
+                    Offset += AI_BondDisableDamageAndPickups_LENGTH;
                     break;
                 }
-                case AI_BOND_HIDE_WEAPONS:
+                case AI_BondHideWeapons:
                 {
+                    /*"remove guntype %d\n" */
                     remove_item_in_hand(GUNRIGHT);
                     remove_item_in_hand(GUNLEFT);
-                    Offset += 1;
+                    Offset += AI_BondHideWeapons_LENGTH;
                     break;
                 }
-                case AI_CAMERA_ORBIT_PAD: //sp order from xbla
+                case AI_CameraOrbitPad: //sp order from xbla
                 {
                     AIRecord *ai = AiListp + Offset;
                     s32       padnum;
-                    s32       a;
-                    s32       b;
-                    s32       c;
-                    s32       height;
-                    s32       speed;
-                    b                       = ai->val[1] | ai->val[0] << 8;
-                    height                  = (s16)(ai->val[3] | ai->val[2] << 8);
-                    a                       = (s16)(ai->val[5] | ai->val[4] << 8);
-                    padnum                  = ai->val[7] | ai->val[6] << 8;
-                    c                       = (s16)(ai->val[9] | ai->val[8] << 8);
-                    speed                   = ai->val[11] | ai->val[10] << 8;
+                    s32       speed60;
+                    s32       camDististance;
+                    s32       targetHeight;
+                    s32       camHeight;
+                    s32       start;
+                    camDististance          = CharArrayTo16(ai->val, 0);
+                    camHeight               = (s16)CharArrayTo16(ai->val, 2);
+                    speed60                 = (s16)CharArrayTo16(ai->val, 4);
+                    padnum                  = CharArrayTo16(ai->val, 6);
+                    targetHeight            = (s16)CharArrayTo16(ai->val, 8);
+                    start                   = CharArrayTo16(ai->val, 10);
                     dword_CODE_bss_800799F8 = NULL;
-                    gBondViewCutscene = NULL;
-                    flt_CODE_bss_80079A00   = (speed * M_TAU) / 65536.0f; //speed
-                    flt_CODE_bss_80079A04   = (a * M_TAU) / 65536.0f;
-                    flt_CODE_bss_80079A08   = b;
-                    flt_CODE_bss_80079A0C   = height; //height
-                    flt_CODE_bss_80079A10   = c;
-                    dword_CODE_bss_80079A14 = padnum;   //padtoorbit
+                    gBondViewCutscene       = NULL;
+                    flt_CODE_bss_80079A00   = (start * M_TAU_F) / M_U16_MAX_VALUE_F;   /*unit direction 0 - 1 (increments are 0.000001) */
+                    flt_CODE_bss_80079A04   = (speed60 * M_TAU_F) / M_U16_MAX_VALUE_F; /*how many increments per frame */
+                    flt_CODE_bss_80079A08   = camDististance;
+                    flt_CODE_bss_80079A0C   = camHeight;
+                    flt_CODE_bss_80079A10   = targetHeight;
+                    dword_CODE_bss_80079A14 = padnum;
                     set_camera_mode(CAMERAMODE_POSEND);
-                    Offset += 13;
+                    Offset += AI_CameraOrbitPad_LENGTH;
                     break;
                 }
-                case AI_CREDITS_ROLL:
+                case AI_CreditsRoll:
                 {
                     D_8003643C = TRUE;
-                    Offset += 1;
+                    Offset += AI_CreditsRoll_LENGTH;
                     break;
                 }
-                case AI_IF_CREDITS_HAS_COMPLETED:
+                case AI_IFCreditsHasCompleted:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (D_8003643C == 2)
@@ -5441,11 +5994,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFCreditsHasCompleted_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_OBJECTIVE_ALL_COMPLETED:
+                case AI_IFObjectiveAllCompleted:
                 {
                     AIRecord *ai = AiListp + Offset;
                     //bool a = objectiveIsAllComplete();
@@ -5455,11 +6008,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFObjectiveAllCompleted_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_FOLDER_ACTOR_IS_EQUAL:
+                case AI_IFFolderActorIsEqual:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (getSelectedFolderBond() == (s8)ai->val[0])
@@ -5468,11 +6021,11 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFFolderActorIsEqual_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_BOND_DAMAGE_AND_PICKUPS_DISABLED:
+                case AI_IFBondDamageAndPickupsDisabled:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (g_PlayerInvincible)
@@ -5481,37 +6034,41 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 2;
+                        Offset += AI_IFBondDamageAndPickupsDisabled_LENGTH;
                     }
                     break;
                 }
-                case AI_MUSIC_XTRACK_PLAY:
+                case AI_MusicXtrackPlay:
                 {
                     AIRecord *ai = AiListp + Offset;
-                    Offset += 4;
+                    Offset += AI_MusicXtrackPlay_LENGTH;
                     musicSetXReason((s8)ai->val[0], ai->val[1], ai->val[2]);
-#    if DEBUG
+#ifdef DEBUG
+                    /*
+                     * GE doesnt have this command, but it shows format of commands
+                     * "ai_ifmusicqueueemptyjumpf : %s, State=%x (getlvleveltime60=%f)\n"
+                     */
                     osSyncPrintf("ai: enery tune on (%d, %d, %d)\n", ai->val[0], ai->val[1], ai->val[2]);
-#    endif
+#endif
                     break;
                 }
-                case AI_MUSIC_XTRACK_STOP:
+                case AI_MusicXtrackStop:
                 {
                     AIRecord *ai = AiListp + Offset;
-                    Offset += 2;
+                    Offset += AI_MusicXtrackStop_LENGTH;
                     musicUnsetXReason((s8)ai->val[0]);
-#    if DEBUG
+#ifdef DEBUG
                     osSyncPrintf("ai: enery tune off (%d)\n", ai->val[0]);
-#    endif
+#endif
                     break;
                 }
-                case AI_TRIGGER_EXPLOSIONS_AROUND_BOND:
+                case AI_TriggerExplosionsAroundBond:
                 {
                     SurroundWithExplosions(0);
-                    Offset += 1;
+                    Offset += AI_TriggerExplosionsAroundBond_LENGTH;
                     break;
                 }
-                case AI_IF_KILLED_CIVILIANS_GREATER_THAN:
+                case AI_IFKilledCiviliansGreaterThan:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (ai->val[0] < get_civilian_casualties())
@@ -5520,13 +6077,13 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFKilledCiviliansGreaterThan_LENGTH;
                     }
                     break;
                 }
-                case AI_IF_CHR_WAS_SHOT_SINCE_LAST_CHECK:
+                case AI_IFChrWasShotSinceLastCheck:
                 {
-                    AIRecord * ai  = AiListp + Offset;
+                    AIRecord  *ai  = AiListp + Offset;
                     ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
                     if (chr && chr->chrflags & CHRFLAG_WAS_HIT)
                     {
@@ -5535,32 +6092,32 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     }
                     else
                     {
-                        Offset += 3;
+                        Offset += AI_IFChrWasShotSinceLastCheck_LENGTH;
                     }
                     break;
                 }
-                case AI_BOND_KILLED_IN_ACTION:
+                case AI_BondKilledInAction:
                 {
                     g_isBondKIA = TRUE;
-                    Offset += 1;
+                    Offset += AI_BondKilledInAction_LENGTH;
                     break;
                 }
-                case AI_GUARD_RAISES_ARMS:
+                case AI_RaiseArms:
                 {
                     chrTrySurprisedSurrender(ChrEntityp);
-                    Offset += 1;
+                    Offset += AI_RaiseArms_LENGTH;
                     break;
                 }
-                case AI_GAS_LEAK_AND_FADE_FOG:
+                case AI_GasLeakAndFadeFog:
                 {
                     void *p[3] = D_80030A88;
                     init_trigger_toxic_gas_effect(p); //do something with p
-                    Offset += 1;
+                    Offset += AI_GasLeakAndFadeFog_LENGTH;
                     break;
                 }
-                case AI_OBJECT_ROCKET_LAUNCH:
+                case AI_ObjectRocketLaunch:
                 {
-                    AIRecord1 *   ai  = AiListp + Offset;
+                    AIRecord1    *ai  = AiListp + Offset;
                     ObjectRecord *obj = objFindByTagId(ai->val);
 
                     if (obj && obj->prop)
@@ -5573,26 +6130,26 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                             sub_GAME_7F03FE14(obj->prop);
                             matrix_4x4_set_identity(&obj->unk6C->m);
                             obj->unk6C->pos.x = 0;
-                            obj->unk6C->pos.y = 1.0f / 60.0f; //step height?
+                            obj->unk6C->pos.y = 1.0f / CHRLV_FRAMERATE_F; //step height?
                             obj->unk6C->pos.z = 0;
                             obj->unk6C->vec.x = 0;
                             obj->unk6C->vec.y = 0.29166666f; //direction to move?
                             obj->unk6C->vec.z = 0;
                         }
                     }
-                    Offset += 2;
+                    Offset += AI_ObjectRocketLaunch_LENGTH;
                     break;
                 } //============================================================================================================
 #endif
                 default:
-                    /* 
+                    /*
                      * No Command found, advance ailist by 1. 
                      * This is attempting to handle situations where the command 
                      * type is invalid by passing over them and continuing 
                      * execution.  
                      * chraiitemsize returns 1 which is pointless really 
                      * could have done it here without a jump 
-                     * 
+                     *
                      * Outcome:crash 
                      */
                     {
@@ -5601,7 +6158,12 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
             } // switch
         }     // for
     }         // Has ailist
+#ifdef DEBUG
+    osSyncPrintf("SERIOUS AI ERROR!!!!!! Null ailist!\n");
+#endif
 }             //ai()
+
+
 #else
 #ifdef VERSION_US
 GLOBAL_ASM(
@@ -9097,21 +9659,21 @@ action93_Set_Character_Accuracy_2:
 /* 06CB90 7F038060 A2EC0002 */   sb    $t4, 2($s7)
 action94_Mask_Guard_Type_With_Value_2:
 /* 06CB94 7F038064 02E02025 */  move  $a0, $s7
-/* 06CB98 7F038068 0FC0CC86 */  jal   chrlvSetBitfieldFlags
+/* 06CB98 7F038068 0FC0CC86 */  jal   chrlvSetFlags2
 /* 06CB9C 7F03806C 92250001 */   lbu   $a1, 1($s1)
 /* 06CBA0 7F038070 26520002 */  addiu $s2, $s2, 2
 /* 06CBA4 7F038074 1000F545 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CBA8 7F038078 26310002 */   addiu $s1, $s1, 2
 action95_Unmask_Guard_Type_With_Value_2:
 /* 06CBAC 7F03807C 02E02025 */  move  $a0, $s7
-/* 06CBB0 7F038080 0FC0CC8B */  jal   chrlvClearBitfieldFlags
+/* 06CBB0 7F038080 0FC0CC8B */  jal   chrlvUnsetFlags2
 /* 06CBB4 7F038084 92250001 */   lbu   $a1, 1($s1)
 /* 06CBB8 7F038088 26520002 */  addiu $s2, $s2, 2
 /* 06CBBC 7F03808C 1000F53F */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CBC0 7F038090 26310002 */   addiu $s1, $s1, 2
 action96_If_Guard_Type_Value_Is_Set_RVL_3:
 /* 06CBC4 7F038094 02E02025 */  move  $a0, $s7
-/* 06CBC8 7F038098 0FC0CC91 */  jal   chrlvTestBitfieldFlags
+/* 06CBC8 7F038098 0FC0CC91 */  jal   chrlvTestFlags2
 /* 06CBCC 7F03809C 92250001 */   lbu   $a1, 1($s1)
 /* 06CBD0 7F0380A0 10400007 */  beqz  $v0, .L7F0380C0
 /* 06CBD4 7F0380A4 02C02025 */   move  $a0, $s6
@@ -9128,7 +9690,7 @@ action96_If_Guard_Type_Value_Is_Set_RVL_3:
 action97_Mask_Guard_Type_Flags_With_Value_3:
 /* 06CBFC 7F0380CC 02E02025 */  move  $a0, $s7
 /* 06CC00 7F0380D0 92250001 */  lbu   $a1, 1($s1)
-/* 06CC04 7F0380D4 0FC0CC98 */  jal   chrlvSetGuardBitfieldFlags
+/* 06CC04 7F0380D4 0FC0CC98 */  jal   chrlvSetChrFlags2
 /* 06CC08 7F0380D8 92260002 */   lbu   $a2, 2($s1)
 /* 06CC0C 7F0380DC 26520003 */  addiu $s2, $s2, 3
 /* 06CC10 7F0380E0 1000F52A */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -9136,7 +9698,7 @@ action97_Mask_Guard_Type_Flags_With_Value_3:
 action98_Unmask_Guard_Type_Flags_With_Value_3:
 /* 06CC18 7F0380E8 02E02025 */  move  $a0, $s7
 /* 06CC1C 7F0380EC 92250001 */  lbu   $a1, 1($s1)
-/* 06CC20 7F0380F0 0FC0CCA4 */  jal   chrlvClearGuardBitfieldFlags
+/* 06CC20 7F0380F0 0FC0CCA4 */  jal   chrlvUnsetChrFlags2
 /* 06CC24 7F0380F4 92260002 */   lbu   $a2, 2($s1)
 /* 06CC28 7F0380F8 26520003 */  addiu $s2, $s2, 3
 /* 06CC2C 7F0380FC 1000F523 */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -9144,7 +9706,7 @@ action98_Unmask_Guard_Type_Flags_With_Value_3:
 action99_If_Guard_Type_Flags_Set_RVL_4:
 /* 06CC34 7F038104 02E02025 */  move  $a0, $s7
 /* 06CC38 7F038108 92250001 */  lbu   $a1, 1($s1)
-/* 06CC3C 7F03810C 0FC0CCB0 */  jal   chrlvTestGuardBitfieldFlags
+/* 06CC3C 7F03810C 0FC0CCB0 */  jal   chrlvTestChrFlags2
 /* 06CC40 7F038110 92260002 */   lbu   $a2, 2($s1)
 /* 06CC44 7F038114 10400007 */  beqz  $v0, .L7F038134
 /* 06CC48 7F038118 02C02025 */   move  $a0, $s6
@@ -14964,21 +15526,21 @@ action93_Set_Character_Accuracy_2:
 /* 06CB90 7F038060 A2EC0002 */   sb    $t4, 2($s7)
 action94_Mask_Guard_Type_With_Value_2:
 /* 06CB94 7F038064 02E02025 */  move  $a0, $s7
-/* 06CB98 7F038068 0FC0CC86 */  jal   chrlvSetBitfieldFlags
+/* 06CB98 7F038068 0FC0CC86 */  jal   chrlvSetFlags2
 /* 06CB9C 7F03806C 92250001 */   lbu   $a1, 1($s1)
 /* 06CBA0 7F038070 26520002 */  addiu $s2, $s2, 2
 /* 06CBA4 7F038074 1000F545 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CBA8 7F038078 26310002 */   addiu $s1, $s1, 2
 action95_Unmask_Guard_Type_With_Value_2:
 /* 06CBAC 7F03807C 02E02025 */  move  $a0, $s7
-/* 06CBB0 7F038080 0FC0CC8B */  jal   chrlvClearBitfieldFlags
+/* 06CBB0 7F038080 0FC0CC8B */  jal   chrlvUnsetFlags2
 /* 06CBB4 7F038084 92250001 */   lbu   $a1, 1($s1)
 /* 06CBB8 7F038088 26520002 */  addiu $s2, $s2, 2
 /* 06CBBC 7F03808C 1000F53F */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CBC0 7F038090 26310002 */   addiu $s1, $s1, 2
 action96_If_Guard_Type_Value_Is_Set_RVL_3:
 /* 06CBC4 7F038094 02E02025 */  move  $a0, $s7
-/* 06CBC8 7F038098 0FC0CC91 */  jal   chrlvTestBitfieldFlags
+/* 06CBC8 7F038098 0FC0CC91 */  jal   chrlvTestFlags2
 /* 06CBCC 7F03809C 92250001 */   lbu   $a1, 1($s1)
 /* 06CBD0 7F0380A0 10400007 */  beqz  $v0, .L7F0380C0
 /* 06CBD4 7F0380A4 02C02025 */   move  $a0, $s6
@@ -14995,7 +15557,7 @@ action96_If_Guard_Type_Value_Is_Set_RVL_3:
 action97_Mask_Guard_Type_Flags_With_Value_3:
 /* 06CBFC 7F0380CC 02E02025 */  move  $a0, $s7
 /* 06CC00 7F0380D0 92250001 */  lbu   $a1, 1($s1)
-/* 06CC04 7F0380D4 0FC0CC98 */  jal   chrlvSetGuardBitfieldFlags
+/* 06CC04 7F0380D4 0FC0CC98 */  jal   chrlvSetChrFlags2
 /* 06CC08 7F0380D8 92260002 */   lbu   $a2, 2($s1)
 /* 06CC0C 7F0380DC 26520003 */  addiu $s2, $s2, 3
 /* 06CC10 7F0380E0 1000F52A */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -15003,7 +15565,7 @@ action97_Mask_Guard_Type_Flags_With_Value_3:
 action98_Unmask_Guard_Type_Flags_With_Value_3:
 /* 06CC18 7F0380E8 02E02025 */  move  $a0, $s7
 /* 06CC1C 7F0380EC 92250001 */  lbu   $a1, 1($s1)
-/* 06CC20 7F0380F0 0FC0CCA4 */  jal   chrlvClearGuardBitfieldFlags
+/* 06CC20 7F0380F0 0FC0CCA4 */  jal   chrlvUnsetChrFlags2
 /* 06CC24 7F0380F4 92260002 */   lbu   $a2, 2($s1)
 /* 06CC28 7F0380F8 26520003 */  addiu $s2, $s2, 3
 /* 06CC2C 7F0380FC 1000F523 */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -15011,7 +15573,7 @@ action98_Unmask_Guard_Type_Flags_With_Value_3:
 action99_If_Guard_Type_Flags_Set_RVL_4:
 /* 06CC34 7F038104 02E02025 */  move  $a0, $s7
 /* 06CC38 7F038108 92250001 */  lbu   $a1, 1($s1)
-/* 06CC3C 7F03810C 0FC0CCB0 */  jal   chrlvTestGuardBitfieldFlags
+/* 06CC3C 7F03810C 0FC0CCB0 */  jal   chrlvTestChrFlags2
 /* 06CC40 7F038110 92260002 */   lbu   $a2, 2($s1)
 /* 06CC44 7F038114 10400007 */  beqz  $v0, .L7F038134
 /* 06CC48 7F038118 02C02025 */   move  $a0, $s6
@@ -20832,21 +21394,21 @@ action93_Set_Character_Accuracy_2:
 /* 06CB90 7F038060 A2EC0002 */   sb    $t4, 2($s7)
 action94_Mask_Guard_Type_With_Value_2:
 /* 06CB94 7F038064 02E02025 */  move  $a0, $s7
-/* 06CB98 7F038068 0FC0CC86 */  jal   chrlvSetBitfieldFlags
+/* 06CB98 7F038068 0FC0CC86 */  jal   chrlvSetFlags2
 /* 06CB9C 7F03806C 92250001 */   lbu   $a1, 1($s1)
 /* 06CBA0 7F038070 26520002 */  addiu $s2, $s2, 2
 /* 06CBA4 7F038074 1000F545 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CBA8 7F038078 26310002 */   addiu $s1, $s1, 2
 action95_Unmask_Guard_Type_With_Value_2:
 /* 06CBAC 7F03807C 02E02025 */  move  $a0, $s7
-/* 06CBB0 7F038080 0FC0CC8B */  jal   chrlvClearBitfieldFlags
+/* 06CBB0 7F038080 0FC0CC8B */  jal   chrlvUnsetFlags2
 /* 06CBB4 7F038084 92250001 */   lbu   $a1, 1($s1)
 /* 06CBB8 7F038088 26520002 */  addiu $s2, $s2, 2
 /* 06CBBC 7F03808C 1000F53F */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CBC0 7F038090 26310002 */   addiu $s1, $s1, 2
 action96_If_Guard_Type_Value_Is_Set_RVL_3:
 /* 06CBC4 7F038094 02E02025 */  move  $a0, $s7
-/* 06CBC8 7F038098 0FC0CC91 */  jal   chrlvTestBitfieldFlags
+/* 06CBC8 7F038098 0FC0CC91 */  jal   chrlvTestFlags2
 /* 06CBCC 7F03809C 92250001 */   lbu   $a1, 1($s1)
 /* 06CBD0 7F0380A0 10400007 */  beqz  $v0, .L7F0380C0
 /* 06CBD4 7F0380A4 02C02025 */   move  $a0, $s6
@@ -20863,7 +21425,7 @@ action96_If_Guard_Type_Value_Is_Set_RVL_3:
 action97_Mask_Guard_Type_Flags_With_Value_3:
 /* 06CBFC 7F0380CC 02E02025 */  move  $a0, $s7
 /* 06CC00 7F0380D0 92250001 */  lbu   $a1, 1($s1)
-/* 06CC04 7F0380D4 0FC0CC98 */  jal   chrlvSetGuardBitfieldFlags
+/* 06CC04 7F0380D4 0FC0CC98 */  jal   chrlvSetChrFlags2
 /* 06CC08 7F0380D8 92260002 */   lbu   $a2, 2($s1)
 /* 06CC0C 7F0380DC 26520003 */  addiu $s2, $s2, 3
 /* 06CC10 7F0380E0 1000F52A */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -20871,7 +21433,7 @@ action97_Mask_Guard_Type_Flags_With_Value_3:
 action98_Unmask_Guard_Type_Flags_With_Value_3:
 /* 06CC18 7F0380E8 02E02025 */  move  $a0, $s7
 /* 06CC1C 7F0380EC 92250001 */  lbu   $a1, 1($s1)
-/* 06CC20 7F0380F0 0FC0CCA4 */  jal   chrlvClearGuardBitfieldFlags
+/* 06CC20 7F0380F0 0FC0CCA4 */  jal   chrlvUnsetChrFlags2
 /* 06CC24 7F0380F4 92260002 */   lbu   $a2, 2($s1)
 /* 06CC28 7F0380F8 26520003 */  addiu $s2, $s2, 3
 /* 06CC2C 7F0380FC 1000F523 */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -20879,7 +21441,7 @@ action98_Unmask_Guard_Type_Flags_With_Value_3:
 action99_If_Guard_Type_Flags_Set_RVL_4:
 /* 06CC34 7F038104 02E02025 */  move  $a0, $s7
 /* 06CC38 7F038108 92250001 */  lbu   $a1, 1($s1)
-/* 06CC3C 7F03810C 0FC0CCB0 */  jal   chrlvTestGuardBitfieldFlags
+/* 06CC3C 7F03810C 0FC0CCB0 */  jal   chrlvTestChrFlags2
 /* 06CC40 7F038110 92260002 */   lbu   $a2, 2($s1)
 /* 06CC44 7F038114 10400007 */  beqz  $v0, .L7F038134
 /* 06CC48 7F038118 02C02025 */   move  $a0, $s6

@@ -181,8 +181,33 @@ glabel alloc_false_GUARDdata_to_exec_global_action
 #endif
 
 #ifdef NONMATCHING
-void debug_object_load_all_models(void) {
-
+void debug_object_load_all_models(void)
+{
+    for i = 0 to sizeof(g_currentsetup.ailist)/4)
+    switch (g_currentSetup.ailist[i])
+    case AI_DROPGUNTYPE:
+#    ifdef DEBUG
+    osSyncPrintf("loaded dropguntype obj = % d\n", obj);
+#    endif
+    case AI_CREATECHRHEADATCHR:
+#    ifdef DEBUG
+        osSyncPrintf("loaded createchrheadatchr obj=%d\n", obj);
+        osSyncPrintf("loaded createchrheadatchr obj=%d (head)\n", obj);
+#    endif
+    case AI_CREATECHRHEAD:
+#    ifdef DEBUG
+        osSyncPrintf("loaded createchrhead obj=%d (body)\n", obj);
+        osSyncPrintf("loaded createchrhead obj=%d (head)\n", obj);
+#    endif
+    case AI_CREATEWEAPONHELDCHR:
+#    ifdef DEBUG
+        osSyncPrintf("loaded createweaponheldchr obj=%d\n", obj);
+        osSyncPrintf("loaded createweaponheldchr obj=%d (ammo)\n", obj);
+#    endif
+    case AI_CREATEHATONCHR:
+#    ifdef DEBUG
+        osSyncPrintf("loaded createhatonchr obj=%d\n", obj);
+#    endif
 }
 #else
 GLOBAL_ASM(

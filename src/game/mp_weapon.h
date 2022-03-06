@@ -13,7 +13,7 @@ struct s_mp_weapon_set
     s8 ammoamount;
     s8 allowpickup;
     /**
-     * enum PROPS
+     * enum PROP
     */
     s16 propID;
     s8 size;
@@ -27,7 +27,7 @@ struct s_mp_weapon_set
     */
     s32 itemID;
     /**
-     * enum PROPS
+     * enum PROP
     */
     s32 propID;
     f32 size;
