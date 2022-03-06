@@ -699,7 +699,7 @@ extern bool chrIfInPadRoom                                   (ChrRecord *self, s
 extern bool chrIfNearMiss                                    (ChrRecord *self);                                                                   // check_if_actor_invisible
 extern bool chrIsDead                                        (ChrRecord *self);                                                                   // true_if_actor_dying_fading
 extern bool chrIsHearingBond                                 (ChrRecord *self);                                                                   // check_if_actor_02_flag_set
-extern bool chrIsStopped                                     (ChrRecord *self);                                                                   // check_if_actor_stationary
+extern bool chrHasStoppedOrPatroling                                     (ChrRecord *self);                                                                   // check_if_actor_stationary
 extern bool chrIsTargetNearlyInSight                         (ChrRecord *self);                                                                   // chrIsTargetNearlyInSight
 extern bool chrSawDeath                                      (ChrRecord *self);                                                                   // check_if_actor_FB_target_set
 extern bool chrSawInjury                                     (ChrRecord *self);                                                                   // check_if_actor_FA_target_set
@@ -805,8 +805,8 @@ extern void imageSlotSetImage                                (MonitorRecord* mon
 extern void init_trigger_toxic_gas_effect                    (coord3d *colour);
 extern void matrix_4x4_7F059908                              (Mtxf * matrix, f32 a, f32 b, f32 c, f32 lx, f32 ly, f32 lz, f32 ux, f32 uy, f32 uz);
 extern void matrix_scalar_multiply                        (f32 scale, Mtxf *matrix);
-extern void musicSetXReason                                  (int slot, int min, int sec);//set_musicslot_time
-extern void musicUnsetXReason                                (int slot);//reset_music_in_slot
+extern void musicPlaySlot                                  (int slot, int min, int sec);//set_musicslot_time
+extern void musicStopSlot                                (int slot);//reset_music_in_slot
 extern void propHide                                         (PropRecord *prop);                                                                  //propHide
 extern void propobjSetDropped                                (PropRecord *prop, int a);                                                           // sub_GAME_7F04BFD0
 extern void propweaponSetDual                                (WeaponObjRecord *leftweapon, WeaponObjRecord *rightweapon);                         // link_objects
@@ -871,7 +871,7 @@ extern s32 g_musicSfxBufferPtr;
 extern void sndPlaySfx(s32 buffp, s32 vol, sfxRecord *sfx);
 extern void sfxDeactivate(s32 sfxp);
 //extern AIListRecord *GlobalAILists; // chrobjdata.c
-AIListRecord GlobalAILists[] = { // Global AI Lists (GLISTs)
+AIListRecord GlobalAILists[] = { // Global AI Lists (GAILISTs)
     {1, "test"},
     {    2,    "test"}};
 extern bool sndGetPlayingState(s32 a);
@@ -1485,7 +1485,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 u8 AiListType  = ai->val[1];
                 u8 AiListIndex = ai->val[2];
                 */
-                    u16        AI_LIST_ID = ai->val[2] | (ai->val[1] << 8); /*This is the only way to match despite assetrs below*/
+                    u16        AI_LIST_ID = CharArrayTo16(ai->val,1); /*This is the only way to match despite assetrs below*/
                     u8         CHR_NUM    = ai->val[0];
                     if (CHR_NUM == ((u8)CHR_SELF))
                     {
@@ -1508,7 +1508,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_SET_RETURN_AI_LIST:
                 {
                     AIRecord *ai         = AiListp + Offset;
-                    u16       AI_LIST_ID = ai->val[1] | (ai->val[0] << 8);
+                    u16       AI_LIST_ID = CharArrayTo16(ai->val,0);
                     if (ChrEntityp)
                     {
                         ChrEntityp->aireturnlist = AI_LIST_ID;
@@ -1558,9 +1558,9 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 {
                     AIRecord *ai = AiListp + Offset;
                     s32       startframe, anim_id, zero, endframe;
-                    anim_id    = ai->val[1] | ai->val[0] << 8;
-                    startframe = ai->val[3] | ai->val[2] << 8;
-                    endframe   = ai->val[5] | ai->val[4] << 8;
+                    anim_id    = CharArrayTo16(ai->val,0);
+                    startframe = CharArrayTo16(ai->val,2);
+                    endframe   = CharArrayTo16(ai->val,4);
 
                     if (startframe == (u16)-1)
                     {
@@ -1616,7 +1616,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_GUARD_HAS_STOPPED_MOVING:
                 {
                     AIRecord1 *ai = AiListp + Offset;
-                    if (chrIsStopped(ChrEntityp))
+                    if (chrHasStoppedOrPatroling(ChrEntityp))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val);
                     }
@@ -1758,8 +1758,8 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_GUARD_TRY_FIRE_OR_AIM_AT_TARGET:
                 {
                     AIRecord *ai         = AiListp + Offset;
-                    s32       targetid   = ai->val[3] | (ai->val[2] << 8);
-                    s32       targettype = ai->val[1] | (ai->val[0] << 8);
+                    s32       targetid   = CharArrayTo16(ai->val,2);
+                    s32       targettype = CharArrayTo16(ai->val,0);
                     if (actor_aim_at_actor(ChrEntityp, targettype, targetid))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
@@ -1773,8 +1773,8 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_GUARD_TRY_FIRE_OR_AIM_AT_TARGET_KNEEL:
                 {
                     AIRecord *ai         = AiListp + Offset;
-                    s32       targetid   = ai->val[3] | (ai->val[2] << 8);
-                    s32       targettype = ai->val[1] | (ai->val[0] << 8);
+                    s32       targetid   = CharArrayTo16(ai->val,2);
+                    s32       targettype = CharArrayTo16(ai->val,0);
                     if (actor_kneel_aim_at_actor(ChrEntityp, targettype, targetid))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
@@ -1818,8 +1818,8 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_GUARD_TRY_FIRE_OR_AIM_AT_TARGET_UPDATE:
                 {
                     AIRecord *ai         = AiListp + Offset;
-                    s32       targetid   = ai->val[3] | (ai->val[2] << 8);
-                    s32       targettype = ai->val[1] | (ai->val[0] << 8);
+                    s32       targetid   = CharArrayTo16(ai->val,2);
+                    s32       targettype = CharArrayTo16(ai->val,0);
                     if (actor_fire_or_aim_at_target_update(ChrEntityp, targettype, targetid))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
@@ -1833,8 +1833,8 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_GUARD_TRY_FACING_TARGET:
                 {
                     AIRecord *ai         = AiListp + Offset;
-                    s32       targetid   = ai->val[3] | (ai->val[2] << 8);
-                    s32       targettype = ai->val[1] | (ai->val[0] << 8);
+                    s32       targetid   = CharArrayTo16(ai->val,2);
+                    s32       targettype = CharArrayTo16(ai->val,0);
                     if (check_set_actor_standing_still(ChrEntityp, targettype, targetid))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
@@ -1909,7 +1909,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_GUARD_TRY_DROPPING_ITEM:
                 {
                     AIRecord *ai       = AiListp + Offset;
-                    u16       modelnum = ai->val[1] | (ai->val[0] << 8);
+                    u16       modelnum = CharArrayTo16(ai->val,0);
                     if (chrDropItem(ChrEntityp, modelnum, ai->val[2]))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
@@ -1947,7 +1947,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_GUARD_TRY_TRIGGERING_ALARM_AT_PAD:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    u16       pad_id = ai->val[1] | (ai->val[0] << 8);
+                    u16       pad_id = CharArrayTo16(ai->val,0);
                     if (chrTryStartAlarm(ChrEntityp, pad_id))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
@@ -2113,7 +2113,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_GUARD_JOGS_TO_PAD:
                 {
                     AIRecord *ai  = AiListp + Offset;
-                    u16       pad = ai->val[1] | (ai->val[0] << 8);
+                    u16       pad = CharArrayTo16(ai->val,0);
                     chrGoToPad(ChrEntityp, pad, SPEED_JOG);
                     Offset += 3;
                     break; //AI_GUARD_JOGS_TO_PAD:
@@ -2135,7 +2135,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_GUARD_WALKS_TO_PAD:
                 {
                     AIRecord *ai  = AiListp + Offset;
-                    u16       pad = ai->val[1] | (ai->val[0] << 8);
+                    u16       pad = CharArrayTo16(ai->val,0);
                     chrGoToPad(ChrEntityp, pad, SPEED_WALK);
                     Offset += 3;
                     break; //AI_GUARD_WALKS_TO_PAD:
@@ -2143,7 +2143,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_GUARD_RUNS_TO_PAD:
                 {
                     AIRecord *ai  = AiListp + Offset;
-                    u16       pad = ai->val[1] | (ai->val[0] << 8);
+                    u16       pad = CharArrayTo16(ai->val,0);
                     chrGoToPad(ChrEntityp, pad, SPEED_RUN);
                     Offset += 3;
                     break; //AI_GUARD_RUNS_TO_PAD:
@@ -2342,7 +2342,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_ROOM_CONTAINING_PAD_IS_ON_SCREEN:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    u16       pad_id = ai->val[1] | (ai->val[0] << 8);
+                    u16       pad_id = CharArrayTo16(ai->val,0);
                     if (check_if_room_for_preset_loaded(ChrEntityp, pad_id))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
@@ -2440,7 +2440,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_GUARD_DISTANCE_TO_BOND_LESS_THAN:
                 {
                     AIRecord *ai       = AiListp + Offset;
-                    f32       distance = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    f32       distance = CharArrayTo16(ai->val,0)) * 10.0f;
                     if (distance > chrGetDistanceToBond(ChrEntityp))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
@@ -2454,7 +2454,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_GUARD_DISTANCE_TO_BOND_GREATER_THAN:
                 {
                     AIRecord *ai       = AiListp + Offset;
-                    f32       distance = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    f32       distance = CharArrayTo16(ai->val,0)) * 10.0f;
                     if (distance < chrGetDistanceToBond(ChrEntityp))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
@@ -2469,8 +2469,8 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 {
                     AIRecord * ai     = AiListp + Offset;
                     ChrRecord *chr    = chrFindById(ChrEntityp, ai->val[0]);
-                    u16        padnum = (ai->val[4] | (ai->val[3] << 8));
-                    f32        value  = (ai->val[2] | (ai->val[1] << 8)) * 10.0f;
+                    u16        padnum = CharArrayTo16(ai->val,3));
+                    f32        value  = CharArrayTo16(ai->val,1)) * 10.0f;
                     if (chr && (value > chrGetDistanceToPad(chr, padnum)))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[5]);
@@ -2485,8 +2485,8 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 {
                     AIRecord * ai     = AiListp + Offset;
                     ChrRecord *chr    = chrFindById(ChrEntityp, ai->val[0]);
-                    u16        padnum = (ai->val[4] | (ai->val[3] << 8));
-                    f32        value  = (ai->val[2] | (ai->val[1] << 8)) * 10.0f;
+                    u16        padnum = CharArrayTo16(ai->val,3));
+                    f32        value  = CharArrayTo16(ai->val,1)) * 10.0f;
                     if (chr && (value < chrGetDistanceToPad(chr, padnum)))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[5]);
@@ -2500,7 +2500,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_GUARD_DISTANCE_TO_CHR_LESS_THAN:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    f32       cutoff = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    f32       cutoff = CharArrayTo16(ai->val,0)) * 10.0f;
                     if (cutoff > chrGetDistanceToChr(ChrEntityp, ai->val[2]))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
@@ -2514,7 +2514,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_GUARD_DISTANCE_TO_CHR_GREATER_THAN:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    f32       cutoff = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    f32       cutoff = CharArrayTo16(ai->val,0)) * 10.0f;
                     if (cutoff < chrGetDistanceToChr(ChrEntityp, ai->val[2]))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
@@ -2528,7 +2528,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_GUARD_TRY_SETTING_CHR_PRESET_TO_GUARD_WITHIN_DISTANCE:
                 {
                     AIRecord *ai       = AiListp + Offset;
-                    f32       distance = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    f32       distance = CharArrayTo16(ai->val,0)) * 10.0f;
                     if (sub_GAME_7F033B38(ChrEntityp, distance))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
@@ -2542,8 +2542,8 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_BOND_DISTANCE_TO_PAD_LESS_THAN:
                 {
                     AIRecord *ai    = AiListp + Offset;
-                    u16       pad   = (ai->val[3] | (ai->val[2] << 8));
-                    f32       value = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    u16       pad   = CharArrayTo16(ai->val,2));
+                    f32       value = CharArrayTo16(ai->val,0)) * 10.0f;
                     if (value > chrGetDistanceFromBondToPad(ChrEntityp, pad))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
@@ -2557,8 +2557,8 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_BOND_DISTANCE_TO_PAD_GREATER_THAN:
                 {
                     AIRecord *ai    = AiListp + Offset;
-                    u16       pad   = (ai->val[3] | (ai->val[2] << 8));
-                    f32       value = (ai->val[1] | (ai->val[0] << 8)) * 10.0f;
+                    u16       pad   = CharArrayTo16(ai->val,2));
+                    f32       value = CharArrayTo16(ai->val,0)) * 10.0f;
                     if (value < chrGetDistanceFromBondToPad(ChrEntityp, pad))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
@@ -2572,7 +2572,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_CHR_IN_ROOM_WITH_PAD:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    u16       pad_id = (ai->val[2] | (ai->val[1] << 8));
+                    u16       pad_id = CharArrayTo16(ai->val,1));
                     if (chrIfInPadRoom(ChrEntityp, ai->val[0], pad_id))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
@@ -2586,7 +2586,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_BOND_IN_ROOM_WITH_PAD:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    u16       pad_id = ai->val[1] | (ai->val[0] << 8);
+                    u16       pad_id = CharArrayTo16(ai->val,0);
                     if (check_if_actor_is_at_preset(ChrEntityp, pad_id))
                     {
 #            if DEBUG
@@ -2858,7 +2858,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                     AIRecord *          ai  = AiListp + Offset;
                     ObjectRecord *      obj = objFindByTagId(ai->val[0]);
                     volatile PadRecord *pad;
-                    u16                 padnum = (ai->val[2] | (ai->val[1] << 8));
+                    u16                 padnum = CharArrayTo16(ai->val,1));
                     Mtxf                matrix;
 
                     if (obj && obj->prop)
@@ -3212,7 +3212,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_MISSION_TIME_LESS_THAN:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    f32       target = (ai->val[1] | (ai->val[0] << 8));
+                    f32       target = CharArrayTo16(ai->val,0));
                     if (target > lvlGetCurrentMultiPlayerSec())
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
@@ -3226,7 +3226,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_MISSION_TIME_GREATER_THAN:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    f32       target = (ai->val[1] | (ai->val[0] << 8));
+                    f32       target = CharArrayTo16(ai->val,0));
                     if (target < lvlGetCurrentMultiPlayerSec())
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
@@ -3240,7 +3240,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_SYSTEM_POWER_TIME_LESS_THAN:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    f32       target = (ai->val[1] | (ai->val[0] << 8)) * 60.0f;
+                    f32       target = CharArrayTo16(ai->val,0)) * 60.0f;
                     if (target > lvlGetCurrentMultiPlayerMin())
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
@@ -3254,7 +3254,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_SYSTEM_POWER_TIME_GREATER_THAN:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    f32       target = (ai->val[1] | (ai->val[0] << 8)) * 60.0f;
+                    f32       target = CharArrayTo16(ai->val,0)) * 60.0f;
                     if (target < lvlGetCurrentMultiPlayerMin())
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
@@ -3416,7 +3416,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_GUARD_SET_HEARING_SCALE:
                 {
                     AIRecord *ai             = AiListp + Offset;
-                    f32       distance       = (ai->val[1] | (ai->val[0] << 8)) / 1000.0f;
+                    f32       distance       = CharArrayTo16(ai->val,0)) / 1000.0f;
                     ChrEntityp->hearingscale = distance;
                     Offset += 3;
                     break; //AI_GUARD_SET_HEARING_SCALE:
@@ -3445,7 +3445,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_GUARD_SET_HEALTH_TOTAL:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    f32       amount = (ai->val[1] | (ai->val[0] << 8)) * 0.1f;
+                    f32       amount = CharArrayTo16(ai->val,0)) * 0.1f;
                     chrSetMaxDamage(ChrEntityp, amount);
                     Offset += 3;
                     break; //AI_GUARD_SET_HEALTH_TOTAL:
@@ -3453,7 +3453,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_GUARD_SET_ARMOUR:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    f32       amount = (ai->val[1] | (ai->val[0] << 8)) * 0.1f; /*if (cheatIsActive(CHEAT_ENEMYSHIELDS)) { amount = amount < 8 ? 8 : amount; }*/
+                    f32       amount = CharArrayTo16(ai->val,0)) * 0.1f; /*if (cheatIsActive(CHEAT_ENEMYSHIELDS)) { amount = amount < 8 ? 8 : amount; }*/
                     chrAddHealth(ChrEntityp, amount);
                     Offset += 3;
                     break; //AI_GUARD_SET_ARMOUR:
@@ -3567,7 +3567,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_OBJECTIVE_BITFIELD_SET_ON:
                 {
                     AIRecord *ai    = AiListp + Offset;
-                    s32       flags = (ai->val[1] << 16 | ai->val[2] << 8 | ai->val[3] | ai->val[0] << 24);
+                    s32       flags = CharArrayTo32(ai->val,0);
                     chrSetStageFlags(ChrEntityp, flags);
                     Offset += 5;
                     break; //AI_OBJECTIVE_BITFIELD_SET_ON:
@@ -3575,7 +3575,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_OBJECTIVE_BITFIELD_SET_OFF:
                 {
                     AIRecord *ai    = AiListp + Offset;
-                    s32       flags = (ai->val[1] << 16 | ai->val[2] << 8 | ai->val[3] | ai->val[0] << 24);
+                    s32       flags = CharArrayTo32(ai->val,0);
                     chrUnsetStageFlags(ChrEntityp, flags);
                     Offset += 5;
                     break; //AI_OBJECTIVE_BITFIELD_SET_OFF:
@@ -3583,7 +3583,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_OBJECTIVE_BITFIELD_IS_SET_ON:
                 {
                     AIRecord *ai    = AiListp + Offset;
-                    s32       flags = (ai->val[1] << 16 | ai->val[2] << 8 | ai->val[3] | ai->val[0] << 24);
+                    s32       flags = CharArrayTo32(ai->val,0);
                     if (chrHasStageFlag(ChrEntityp, flags)) /* PD && ai->val[4] == 1) || (!chrHasStageFlag(ChrEntityp, flags) && ai->val[4] == 0* */
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
@@ -3597,7 +3597,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_GUARD_FLAGS_SET_ON:
                 {
                     AIRecord *ai    = AiListp + Offset;
-                    CHRFLAG   flags = (ai->val[1] << 16 | ai->val[2] << 8 | ai->val[3] | ai->val[0] << 24);
+                    CHRFLAG   flags = CharArrayTo32(ai->val,0);
                     ChrEntityp->chrflags |= flags;
                     Offset += 5;
                     break; //AI_GUARD_FLAGS_SET_ON:
@@ -3605,7 +3605,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_GUARD_FLAGS_SET_OFF:
                 {
                     AIRecord *ai    = AiListp + Offset;
-                    CHRFLAG   flags = (ai->val[1] << 16 | ai->val[2] << 8 | ai->val[3] | ai->val[0] << 24);
+                    CHRFLAG   flags = CharArrayTo32(ai->val,0);
                     ChrEntityp->chrflags &= ~flags;
                     Offset += 5;
                     break; //AI_GUARD_FLAGS_SET_OFF:
@@ -3613,7 +3613,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_GUARD_FLAGS_IS_SET_ON:
                 {
                     AIRecord *ai    = AiListp + Offset;
-                    CHRFLAG   flags = (ai->val[1] << 16 | ai->val[2] << 8 | ai->val[3] | ai->val[0] << 24);
+                    CHRFLAG   flags = CharArrayTo32(ai->val,0);
                     if ((ChrEntityp->chrflags & flags) == flags)
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[4]);
@@ -3628,7 +3628,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 {
                     AIRecord * ai    = AiListp + Offset;
                     /*What an odd order for bytestream but its the only way that matches...*/
-                    CHRFLAG    flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    CHRFLAG    flags = CharArrayTo32(ai->val,1);
                     ChrRecord *chr   = chrFindById(ChrEntityp, ai->val[0]);
                     if (chr)
                     {
@@ -3640,7 +3640,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_CHR_FLAGS_SET_OFF:
                 {
                     AIRecord * ai    = AiListp + Offset;
-                    CHRFLAG    flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    CHRFLAG    flags = CharArrayTo32(ai->val,1);
                     ChrRecord *chr   = chrFindById(ChrEntityp, ai->val[0]);
                     if (chr)
                     {
@@ -3652,7 +3652,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_CHR_FLAGS_IS_SET_ON:
                 {
                     AIRecord * ai    = AiListp + Offset;
-                    CHRFLAG    flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    CHRFLAG    flags = CharArrayTo32(ai->val,1);
                     ChrRecord *chr   = chrFindById(ChrEntityp, ai->val[0]);
                     if (chr && (chr->chrflags & flags) == flags)
                     {
@@ -3667,7 +3667,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_OBJECT_FLAGS_1_SET_ON:
                 {
                     AIRecord *    ai    = AiListp + Offset;
-                    s32           flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    s32           flags = CharArrayTo32(ai->val,1);
                     ObjectRecord *obj   = objFindByTagId(ai->val[0]);
                     if (obj && obj->prop)
                     {
@@ -3679,7 +3679,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_OBJECT_FLAGS_1_SET_OFF:
                 {
                     AIRecord *    ai    = AiListp + Offset;
-                    s32           flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    s32           flags = CharArrayTo32(ai->val,1);
                     ObjectRecord *obj   = objFindByTagId(ai->val[0]);
                     if (obj && obj->prop)
                     {
@@ -3691,7 +3691,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_OBJECT_FLAGS_1_IS_SET_ON:
                 {
                     AIRecord *    ai    = AiListp + Offset;
-                    s32           flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    s32           flags = CharArrayTo32(ai->val,1);
                     ObjectRecord *obj   = objFindByTagId(ai->val[0]);
                     if (obj && obj->prop && (obj->flags & flags) == flags)
                     {
@@ -3706,7 +3706,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_OBJECT_FLAGS_2_SET_ON:
                 {
                     AIRecord *    ai    = AiListp + Offset;
-                    s32           flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    s32           flags = CharArrayTo32(ai->val,1);
                     ObjectRecord *obj   = objFindByTagId(ai->val[0]);
                     if (obj && obj->prop)
                     {
@@ -3718,7 +3718,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_OBJECT_FLAGS_2_SET_OFF:
                 {
                     AIRecord *    ai    = AiListp + Offset;
-                    s32           flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    s32           flags = CharArrayTo32(ai->val,1);
                     ObjectRecord *obj   = objFindByTagId(ai->val[0]);
                     if (obj && obj->prop)
                     {
@@ -3730,7 +3730,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_OBJECT_FLAGS_2_IS_SET_ON:
                 {
                     AIRecord *    ai    = AiListp + Offset;
-                    s32           flags = (ai->val[2] << 16 | ai->val[3] << 8 | ai->val[4] | ai->val[1] << 24);
+                    s32           flags = CharArrayTo32(ai->val,1);
                     ObjectRecord *obj   = objFindByTagId(ai->val[0]);
                     if (obj && obj->prop && ((obj->flags2 & flags) == flags))
                     {
@@ -3759,7 +3759,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_GUARD_SET_PAD_PRESET:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    u16       pad_id = ai->val[1] | ai->val[0] << 8;
+                    u16       pad_id = CharArrayTo16(ai->val,0);
                     if (ChrEntityp)
                     {
                         chrSetPadPreset(ChrEntityp, pad_id);
@@ -3774,7 +3774,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_CHR_SET_PAD_PRESET:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    u16       pad_id = ai->val[2] | ai->val[1] << 8;
+                    u16       pad_id = CharArrayTo16(ai->val,1);
                     chrSetPadPresetByChrnum(ChrEntityp, ai->val[0], pad_id);
                     Offset += 4;
                     break; //AI_CHR_SET_PAD_PRESET:
@@ -3829,7 +3829,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_LOCAL_TIMER_LESS_THAN:
                 {
                     AIRecord *ai   = AiListp + Offset;
-                    f32       valf = ((unsigned)((ai->val[1] << 8) | ai->val[2] | (ai->val[0] << 16))) / 60.0f;
+                    f32       valf = ((unsigned)CharArrayTo24(ai->val,0)) / 60.0f;
 
                     if (chrGetTimer(ChrEntityp) < valf)
                     {
@@ -3844,7 +3844,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_LOCAL_TIMER_GREATER_THAN:
                 {
                     AIRecord *ai   = AiListp + Offset;
-                    f32       valf = ((unsigned)((ai->val[1] << 8) | ai->val[2] | (ai->val[0] << 16))) / 60.0f;
+                    f32       valf = ((unsigned)CharArrayTo24(ai->val,0)) / 60.0f;
                     if (chrGetTimer(ChrEntityp) > valf)
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
@@ -3870,7 +3870,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_HUD_COUNTDOWN_SET:
                 {
                     AIRecord *ai      = AiListp + Offset;
-                    f32       seconds = (ai->val[1] | ai->val[0] << 8);
+                    f32       seconds = CharArrayTo16(ai->val,0);
                     countdownTimerSetValue(seconds * 60.0f);
                     Offset += 3;
                     break; //AI_HUD_COUNTDOWN_SET:
@@ -3903,7 +3903,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_HUD_COUNTDOWN_LESS_THAN:
                 {
                     AIRecord *ai    = AiListp + Offset;
-                    f32       value = ai->val[1] | ai->val[0] << 8;
+                    f32       value = CharArrayTo16(ai->val,0);
                     if (countdownTimerGetValue() < value * 60.0f)
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
@@ -3917,7 +3917,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_HUD_COUNTDOWN_GREATER_THAN:
                 {
                     AIRecord *ai    = AiListp + Offset;
-                    f32       value = ai->val[1] | ai->val[0] << 8;
+                    f32       value = CharArrayTo16(ai->val,0);
                     if (countdownTimerGetValue() > value * 60.0f)
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
@@ -3931,9 +3931,9 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_CHR_TRY_SPAWNING_AT_PAD:
                 {
                     AIRecord *ai       = AiListp + Offset;
-                    u16       pad      = ai->val[3] | (ai->val[2] << 8);
-                    CHRFLAG   flags    = (ai->val[7] << 16 | ai->val[8] << 8 | ai->val[9] | ai->val[6] << 24);
-                    u16       ailistid = ai->val[5] | ai->val[4] << 8;
+                    u16       pad      = CharArrayTo16(ai->val,2);
+                    CHRFLAG   flags    = CharArrayTo32(ai->val,6);
+                    u16       ailistid = CharArrayTo16(ai->val,4);
                     AIRecord *ailist   = ailistFindById(ailistid);
                     if (chrSpawnAtPad(ChrEntityp, ai->val[0], (s8)ai->val[1], pad, ailist, flags))
                     {
@@ -3948,8 +3948,8 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_CHR_TRY_SPAWNING_NEXT_TO_UNSEEN_CHR:
                 {
                     AIRecord *ai       = AiListp + Offset;
-                    CHRFLAG   flags    = ai->val[6] << 16 | ai->val[7] << 8 | ai->val[8] | ai->val[5] << 24;
-                    u16       ailistid = ai->val[4] | (ai->val[3] << 8);
+                    CHRFLAG   flags    = CharArrayTo32(ai->val,5);
+                    u16       ailistid = CharArrayTo16(ai->val,3);
                     AIRecord *ailist   = ailistFindById(ailistid);
                     if (chrSpawnAtChr(ChrEntityp, ai->val[0], (s8)ai->val[1], ai->val[2], ailist, flags))
                     {
@@ -3965,7 +3965,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 {
                     AIRecord *  ai    = AiListp + Offset;
                     s32         flags = (ai->val[4] << 16) | (ai->val[5] << 8) | ai->val[6] | (ai->val[3] << 24);
-                    s32         model = ai->val[1] | (ai->val[0] << 8); // propID
+                    s32         model = CharArrayTo16(ai->val,0); // propID
                     PropRecord *prop  = NULL;
 
                     if (ChrEntityp && ChrEntityp->prop && ChrEntityp->model)
@@ -4011,7 +4011,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                                 case ITEM_TRIGGER:
                                 case ITEM_TASER:
 
-                                    prop = chrGiveWeapon(ChrEntityp, PROP_chrrocketlaunch, ITEM_ROCKETLAUNCH, flags);
+                                    prop = chrGiveWeapon(ChrEntityp, PROP_CHRROCKETLAUNCH, ITEM_ROCKETLAUNCH, flags);
                                     //!Bug, No Break! relying on chrGiveWeapon checking weapon already given
                                 default:
                                     prop = chrGiveWeapon(ChrEntityp, model, ai->val[2], flags);
@@ -4037,7 +4037,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 {
                     AIRecord *ai       = AiListp + Offset;
                     s32       flags    = (ai->val[3] << 16) | (ai->val[4] << 8) | ai->val[5] | (ai->val[2] << 24);
-                    s32       modelnum = ai->val[1] | (ai->val[0] << 8);
+                    s32       modelnum = CharArrayTo16(ai->val,0);
                     bool      ok       = FALSE;
                     if (ChrEntityp && ChrEntityp->prop && ChrEntityp->model)
                     {
@@ -4057,7 +4057,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 {
                     AIRecord *       ai       = AiListp + Offset;
                     //int zero                      ;//= 0; //on stack in xbla, but matches without
-                    u16              ailistid = ai->val[2] | (ai->val[1] << 8);
+                    u16              ailistid = CharArrayTo16(ai->val,1);
                     u8 *             ailist   = ailistFindById((u16)ailistid);
                     ChrRecord *      chr      = chrFindById(ChrEntityp, ai->val[0]);
                     bool             pass     = FALSE; //564
@@ -4142,7 +4142,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_TEXT_PRINT_BOTTOM:
                 {
                     AIRecord *ai   = AiListp + Offset;
-                    char *    text = langGet(ai->val[1] | ai->val[0] << 8);
+                    char *    text = langGet(CharArrayTo16(ai->val,0));
 #            ifdef VERSION_JP
                     jp_hudmsgBottomShow(text);
 #            else
@@ -4154,7 +4154,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_TEXT_PRINT_TOP:
                 {
                     AIRecord *ai   = AiListp + Offset;
-                    char *    text = langGet(ai->val[1] | ai->val[0] << 8);
+                    char *    text = langGet(CharArrayTo16(ai->val,0));
 
 #            if DEBUG
                     osSyncPrintf("ptop =  %f \n", text);
@@ -4167,7 +4167,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_SFX_PLAY:
                 {
                     AIRecord *ai       = AiListp + Offset;
-                    s16       audio_id = ai->val[1] | (ai->val[0] << 8);
+                    s16       audio_id = CharArrayTo16(ai->val,0);
                     audioPlayFromProp((s8)ai->val[2], audio_id);
                     Offset += 4;
                     break; //AI_SFX_PLAY:
@@ -4188,8 +4188,8 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                         s8 slotID;
                         u8 val[];
                     } *ai     = AiListp + Offset;
-                    s16 vol   = ai->val[1] | (ai->val[0] << 8);
-                    u16 sfxID = ai->val[3] | (ai->val[2] << 8);
+                    s16 vol   = CharArrayTo16(ai->val,0);
+                    u16 sfxID = CharArrayTo16(ai->val,2);
                     if (ai->slotID >= 0 && ai->slotID < 8)
                     {
                         sfx_related[ai->slotID].sfxID  = sfxID;
@@ -4212,8 +4212,8 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                         s8 slotID;
                         u8 val[];
                     } *ai     = AiListp + Offset;
-                    f32 vol   = ai->val[1] | (ai->val[0] << 8);
-                    u16 sfxID = ai->val[3] | (ai->val[2] << 8);
+                    f32 vol   = CharArrayTo16(ai->val,0);
+                    u16 sfxID = CharArrayTo16(ai->val,2);
                     if (ai->slotID >= 0 && ai->slotID < 8)
                     {
                         sfx_related[ai->slotID].sfxID  = sfxID;
@@ -4237,7 +4237,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                         u8 val[];
                     } *ai               = AiListp + Offset;
                     ObjectRecord *obj   = objFindByTagId(ai->val[0]);
-                    u16           sfxID = ai->val[2] | (ai->val[1] << 8);
+                    u16           sfxID = CharArrayTo16(ai->val,1);
                     if (ai->slotID >= 0 && ai->slotID < 8 && obj)
                     {
                         sfx_related[ai->slotID].sfxID = sfxID;
@@ -4259,9 +4259,9 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                         s8 SlotID;
                         u8 val[];
                     } *ai             = AiListp + Offset;
-                    u16        padnum = ai->val[1] | (ai->val[0] << 8);
+                    u16        padnum = CharArrayTo16(ai->val,0);
                     PadRecord *pad;
-                    u16        sfxID = ai->val[3] | (ai->val[2] << 8);
+                    u16        sfxID = CharArrayTo16(ai->val,2);
                     if (isNotBoundPad(padnum))
                     {
                         pad = &g_chraiCurrentSetup.pads[padnum];
@@ -4273,7 +4273,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                     if (ai->SlotID >= 0 && ai->SlotID < 8 && pad)
                     {
                         sfx_related[ai->SlotID].sfxID = sfxID;
-                        sfx_related[ai->SlotID].pad   = pad;
+                        sfx_related[ai->SlotID].pos   = pad;
                         sfx_related[ai->SlotID].Obj   = NULL;
                         if (sfxID == 0)
                         {
@@ -4292,7 +4292,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                         s8 slotID;
                         u8 val[];
                     } *ai   = AiListp + Offset;
-                    s16 vol = ai->val[1] | (ai->val[0] << 8);
+                    s16 vol = CharArrayTo16(ai->val,0);
                     if ((ai->slotID >= 0) && (ai->slotID < 8) && (sfx_related[ai->slotID].Volume2 < vol))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
@@ -4318,8 +4318,8 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_VEHICLE_SPEED:
                 {
                     AIRecord *ai        = AiListp + Offset;
-                    f32       speedtime = ai->val[3] | (ai->val[2] << 8);
-                    f32       speedaim  = (ai->val[1] | (ai->val[0] << 8)) * 100.0f / 15360.0f;
+                    f32       speedtime = CharArrayTo16(ai->val,2);
+                    f32       speedaim  = CharArrayTo16(ai->val,0)) * 100.0f / 15360.0f;
                     if (VehichleEntityp)
                     {
                         VehichleEntityp->speedaim    = speedaim;
@@ -4331,8 +4331,8 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_AIRCRAFT_ROTOR_SPEED:
                 {
                     AIRecord *ai        = AiListp + Offset;
-                    f32       speedtime = ai->val[3] | (ai->val[2] << 8);
-                    f32       speedaim  = (ai->val[1] | (ai->val[0] << 8)) * M_TAU / 3600.0f;
+                    f32       speedtime = CharArrayTo16(ai->val,2);
+                    f32       speedaim  = CharArrayTo16(ai->val,0)) * M_TAU / 3600.0f;
                     if (AircraftEntityp)
                     {
                         AircraftEntityp->rotaryspeedaim  = speedaim;
@@ -4433,7 +4433,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_CAMERA_LOOK_AT_BOND_FROM_PAD:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    u16       padnum = ai->val[1] | (ai->val[0] << 8);
+                    u16       padnum = CharArrayTo16(ai->val,0);
                     if (isNotBoundPad(padnum))
                     {
                         dword_CODE_bss_800799F8 = &g_chraiCurrentSetup.pads[padnum];
@@ -4463,8 +4463,8 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
 #            endif
                             dword_CODE_bss_800799F8 = NULL;
                             gBondViewCutscene = cdef;
-                            dword_CODE_bss_80079A18 = ai->val[2] | (ai->val[1] << 8);
-                            dword_CODE_bss_80079A1C = ai->val[4] | (ai->val[3] << 8);
+                            dword_CODE_bss_80079A18 = CharArrayTo16(ai->val,1);
+                            dword_CODE_bss_80079A1C = CharArrayTo16(ai->val,3);
                             set_camera_mode(CAMERAMODE_POSEND);
                         }
                     }
@@ -4474,7 +4474,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_BOND_Y_POS_LESS_THAN:
                 {
                     AIRecord *ai      = AiListp + Offset;
-                    f32       bondpos = (s16)(ai->val[1] | ai->val[0] << 8);
+                    f32       bondpos = (s16)CharArrayTo16(ai->val,0);
                     if (get_curplayer_positiondata()->pos.y < bondpos)
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
@@ -4524,7 +4524,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_CHR_TRY_TELEPORTING_TO_PAD:
                 {
                     AIRecord * ai     = AiListp + Offset;
-                    s32        padnum = ai->val[2] | (ai->val[1] << 8);
+                    s32        padnum = CharArrayTo16(ai->val,1);
                     ChrRecord *chr    = chrFindById(ChrEntityp, ai->val[0]);
                     bool       pass   = FALSE;
                     PadRecord *pad;
@@ -4738,7 +4738,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 case AI_IF_OBJECT_IN_ROOM_WITH_PAD:
                 {
                     AIRecord *    ai     = AiListp + Offset;
-                    u16           padnum = ai->val[2] | (ai->val[1] << 8);
+                    u16           padnum = CharArrayTo16(ai->val,1);
                     PadRecord *   pad;
                     ObjectRecord *obj = objFindByTagId(ai->val[0]);
 
@@ -4811,11 +4811,11 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                     s32       c;
                     s32       height;
                     s32       speed;
-                    b                       = ai->val[1] | ai->val[0] << 8;
-                    height                  = (s16)(ai->val[3] | ai->val[2] << 8);
-                    a                       = (s16)(ai->val[5] | ai->val[4] << 8);
-                    padnum                  = ai->val[7] | ai->val[6] << 8;
-                    c                       = (s16)(ai->val[9] | ai->val[8] << 8);
+                    b                       = CharArrayTo16(ai->val,0);
+                    height                  = (s16)CharArrayTo16(ai->val,2);
+                    a                       = (s16)CharArrayTo16(ai->val,4);
+                    padnum                  = CharArrayTo16(ai->val,6);
+                    c                       = (s16)CharArrayTo16(ai->val,8);
                     speed                   = ai->val[11] | ai->val[10] << 8;
                     dword_CODE_bss_800799F8 = NULL;
                     gBondViewCutscene = NULL;
@@ -4892,7 +4892,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 {
                     AIRecord *ai = AiListp + Offset;
                     Offset += 4;
-                    musicSetXReason((s8)ai->val[0], ai->val[1], ai->val[2]);
+                    musicPlaySlot((s8)ai->val[0], ai->val[1], ai->val[2]);
 #            if DEBUG
                     osSyncPrintf("ai: enery tune on (%d, %d, %d)\n", ai->val[0], ai->val[1], ai->val[2]);
 #            endif
@@ -4902,7 +4902,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 {
                     AIRecord *ai = AiListp + Offset;
                     Offset += 2;
-                    musicUnsetXReason((s8)ai->val[0]);
+                    musicStopSlot((s8)ai->val[0]);
 #            if DEBUG
                     osSyncPrintf("ai: enery tune off (%d)\n", ai->val[0]);
 #            endif
@@ -8076,24 +8076,24 @@ void ReadAnimationSet(Animation *animations, int numberAnimations, unsigned long
 #    define _SWAPSTATEMENTS(A, B) B A
 #    define ELSEIIF(COND)         IF_##COND
 #    define GNUM                  0
-        DO( //D O(GLIST LOOP1)
+        DO( //D O(GAILIST LOOP1)
 
             IFNOT(GUARD_HAS_STOPPED_MOVING(INCGNUM)) 
             (
-                 /*ELSE*/ CONTINUE(GLIST_LOOP1)
+                 /*ELSE*/ CONTINUE(GAILIST_LOOP1)
             )
             (
-                LABEL(GLIST_STOPPED_MOVING)
+                LABEL(GAILIST_STOPPED_MOVING)
                 IF_GUARD_SEES_BOND(INC(GNUM))
-                /*ELSE*/ IF_GUARD_WAS_SHOT_OR_SEEN_WITHIN_LAST_10_SECS(GLIST_DONE)
-                /*ELSE*/ IF_GUARD_HEARD_BOND_WITHIN_LAST_10_SECS(GLIST_DONE)
-                /*ELSEIF*/ RANDOM_GENERATE_GREATER_THAN(1, GLIST_NEXT) // 1/255 chance of playing idle animation
+                /*ELSE*/ IF_GUARD_WAS_SHOT_OR_SEEN_WITHIN_LAST_10_SECS(GAILIST_DONE)
+                /*ELSE*/ IF_GUARD_HEARD_BOND_WITHIN_LAST_10_SECS(GAILIST_DONE)
+                /*ELSEIF*/ RANDOM_GENERATE_GREATER_THAN(1, GAILIST_NEXT) // 1/255 chance of playing idle animation
                 /*ELSE*/
-                    SETRETURNAILIST(GLIST_ID_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE)
-                    JUMPTOAILIST(CHR_SELF, GLIST_ID_IDLE_RAND_ANIM_SUBROUTINE) // play idle animation and return to list
+                    SETRETURNAILIST(GAILIST_ID_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE)
+                    JUMP(CHR_SELF, GAILIST_ID_IDLE_RAND_ANIM_SUBROUTINE) // play idle animation and return to list
                 /*ENDIF*/
             )
-            LABEL(GLIST_NEXT)
+            LABEL(GAILIST_NEXT)
         )
 #endif
 

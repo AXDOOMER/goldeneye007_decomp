@@ -50,6 +50,23 @@ typedef struct s_shattered_window_piece {
     u8 field_0x67;
 } s_shattered_window_piece;
 
+// Used for rendering watch menu
+struct WatchVertex {
+    s8 unk00;
+    s8 unk01;
+    s8 unk02;
+    s8 unk03;
+    s32 unk04;
+    s8 unk08;
+    s8 unk09;
+    s8 unk0A;
+    s8 unk0B;
+    s8 unk0C;
+    s8 unk0D;
+    s8 unk0E;
+    s8 unk0F;
+};
+
 extern s32 SHATTERED_WINDOW_PIECES_BUFFER_LEN;
 extern s_shattered_window_piece* ptr_shattered_window_pieces;
 extern u32 D_80040940;
@@ -73,5 +90,7 @@ Gfx * sub_GAME_7F0A2C44(Gfx *arg0);
 
 // tentative signature
 void *sub_GAME_7F0A3E1C(coord3d *arg0, s32 arg1, f32 arg2, s16 arg3);
+void sub_GAME_7F0A33F8(struct WatchVertex *arg0, s32 arg1, f32 arg2, s32 arg3);
+Gfx *sub_GAME_7F0A3978(Gfx *gdl, void *arg1, s32 unused_arg2, s32 arg3);
 
 #endif

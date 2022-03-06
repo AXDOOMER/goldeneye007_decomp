@@ -7024,13 +7024,13 @@ Gfx *chrRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
     chrmodel = chr->model;
     spB4 = (s32) chr->fadealpha;
 
-    if ((chr->chrflags << 5) >= 0)
+    if ((chr->chrflags << 5) >= 0) //CHRFLAG_04000000
     {
         f32 f = chrobjFogVisRangeRelated(prop, getinstsize(chrmodel));
         spB4 = (s32) (f * (f32) spB4);
     }
 
-    if ((spB4 < 0xFF) || (chr->chrflags & 0x20000))
+    if ((spB4 < 0xFF) || (chr->chrflags & CHRFLAG_00020000))
     {
         if (arg2 == 0)
         {
@@ -7085,7 +7085,7 @@ Gfx *chrRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
                 held_hat_obj = prop_held_hat->obj;
             }
 
-            if ((sub_GAME_7F054A64(prop, &sp60) > 0) && ((chr->chrflags << 8) >= 0))
+            if ((sub_GAME_7F054A64(prop, &sp60) > 0) && ((chr->chrflags << 8) >= 0))//CHRFLAG_CULL_USING_HITBOX
             {
                 gdl = bgScissorCurrentPlayerViewF(gdl, sp60.left, sp60.top, sp60.width, sp60.height);
             }
@@ -7098,7 +7098,7 @@ Gfx *chrRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
             jlist.unk04 = 1;
             jlist.gdl = gdl;
             
-            if ((chr->chrflags & 0x2000) != 0)
+            if ((chr->chrflags & CHRFLAG_NO_SHADOW) != 0)
             {
                 sp4C = 0;
             }
@@ -8341,10 +8341,11 @@ void chrUpdateCollisionBounds(PropRecord *arg0, rect4f **arg1, s32 *arg2, f32 *y
     chr = arg0->chr;
 
     if (
-        (chr->actiontype != ACT_DIE)
-        && (chr->actiontype != ACT_DEAD)
-        && ((chr->chrflags & 0x10400) == 0)
-        && ((chr->hidden & 0x100) == 0))
+        (chr->actiontype != ACT_DIE) &&
+        (chr->actiontype != ACT_DEAD) &&
+        ((chr->chrflags & (CHRFLAG_00010000 | CHRFLAG_HIDDEN)) == 0) && 
+        ((chr->hidden & 0x100) == 0)
+        )
     {
         *arg2 = 4;
         *arg1 = &chr->collision_bounds;

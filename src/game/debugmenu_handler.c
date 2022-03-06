@@ -644,6 +644,17 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
                         player_pos_x.x = (f32) playerprop->position.x;
                         player_pos_x.y = (f32) playerprop->position.y;
                         player_pos_x.z = (f32) playerprop->position.z;
+                        #ifdef DEBUG
+                        osSyncPrintf("%s%sbond world pos=%f,%f,%f dist from prev=%f\n",
+                                     "",
+                                     "",
+                                     playerprop->position.x,
+                                     playerprop->position.y,
+                                     playerprop->position.z,
+                                     sqrtf(((playerprop->position.x - player_pos_x.x) * (playerprop->position.x - player_pos_x.x)) +
+                                           ((playerprop->position.y - player_pos_x.y) * (playerprop->position.y - player_pos_x.y)) +
+                                           ((playerprop->position.z - player_pos_x.z) * (playerprop->position.z - player_pos_x.z))));
+                        #endif
                     }
                 }
                 break;

@@ -604,5 +604,6 @@ void menu_init();
 Gfx * menu_jump_constructor_handler(Gfx *DL);
 void unlock_all_mp_chars(void);
 u8 get_player_mp_char_gender(int player);
+s32 pull_and_display_text_for_folder_a0(s32 arg0);
 
 #endif

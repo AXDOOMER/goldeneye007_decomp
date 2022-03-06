@@ -2800,7 +2800,7 @@ void init_player_BONDdata(void)
 {
     if (getPlayerCount() >= 2)
     {
-        g_CurrentPlayer->field_430 = get_player_control_style(get_cur_playernum());
+        g_CurrentPlayer->controldef = get_player_control_style(get_cur_playernum());
         cur_player_set_control_type(get_player_control_style(get_cur_playernum()));
     }
     g_CurrentPlayer->current_model_pos.f[0] = 0.0f;
@@ -2878,9 +2878,9 @@ void init_player_BONDdata(void)
     g_CurrentPlayer->field_2A4C = 0.0f;
     g_CurrentPlayer->speedboost = 1.0f;
     g_CurrentPlayer->speedmaxtime60 = 0;
-    g_CurrentPlayer->boost_factor_x = 0.0f;
-    g_CurrentPlayer->boost_factor_y = 0.0f;
-    g_CurrentPlayer->boost_factor_z = 0.0f;
+    g_CurrentPlayer->bondshotspeed.x = 0.0f;
+    g_CurrentPlayer->bondshotspeed.y = 0.0f;
+    g_CurrentPlayer->bondshotspeed.z = 0.0f;
     g_CurrentPlayer->field_104 = 0;
     g_CurrentPlayer->field_108 = 0;
     g_CurrentPlayer->field_10C = 0;
@@ -2916,8 +2916,8 @@ void init_player_BONDdata(void)
     g_CurrentPlayer->bondfadetimemax60 = -1.0f;
     g_CurrentPlayer->bondfadefracold = 0.0f;
     g_CurrentPlayer->bondfadefracnew = 0.0f;
-    g_CurrentPlayer->field_42C = 2;
-    g_CurrentPlayer->field_430 = 0;
+    g_CurrentPlayer->field_42c = 2;
+    g_CurrentPlayer->controldef = 0;
     g_CurrentPlayer->pause_starting_angle = 0.0f;
     g_CurrentPlayer->pause_related = 0.0f;
     g_CurrentPlayer->pause_target_angle = 0.0f;
@@ -9638,7 +9638,7 @@ glabel sub_GAME_7F07B56C
 
 void sub_GAME_7F07C540(s32 arg0)
 {
-    g_CurrentPlayer->field_42C = arg0;
+    g_CurrentPlayer->field_42c = arg0;
 }
 
 void set_BONDdata_lookahead_setting(s32 arg0)
@@ -34256,7 +34256,7 @@ void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2)
     
     if (g_CurrentPlayer->bonddead)
     {
-        if (g_CurrentPlayer->field_424 == 0)
+        if (g_CurrentPlayer->redbloodfinished == 0)
         {
             currentPlayerEquipWeaponWrapper(GUNLEFT, 0);
             currentPlayerEquipWeaponWrapper(GUNRIGHT, 0);
@@ -34267,7 +34267,7 @@ void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2)
             };
         }
 
-        if (g_CurrentPlayer->field_424 && g_CurrentPlayer->field_428 && (D_80036510 >= 3))
+        if (g_CurrentPlayer->redbloodfinished && g_CurrentPlayer->deathanimfinished && (D_80036510 >= 3))
         {
             bossRunTitleStage();
         }
@@ -38980,7 +38980,7 @@ glabel maybe_mp_interface
 /* 0BDF4C 7F08941C 24010001 */  li    $at, 1
 /* 0BDF50 7F089420 14410013 */  bne   $v0, $at, .L7F089470
 /* 0BDF54 7F089424 00000000 */   nop
-/* 0BDF58 7F089428 0FC30556 */  jal   musicUnsetXReason
+/* 0BDF58 7F089428 0FC30556 */  jal   musicStopSlot
 /* 0BDF5C 7F08942C 2404FFFF */   li    $a0, -1
 /* 0BDF60 7F089430 0FC3030F */  jal   set_missionstate
 /* 0BDF64 7F089434 00002025 */   move  $a0, $zero
@@ -39310,7 +39310,7 @@ glabel maybe_mp_interface
 /* 0BBF74 7F089584 24010001 */  li    $at, 1
 /* 0BBF78 7F089588 14410013 */  bne   $v0, $at, .L7F0895D8
 /* 0BBF7C 7F08958C 00000000 */   nop   
-/* 0BBF80 7F089590 0FC3028E */  jal   musicUnsetXReason
+/* 0BBF80 7F089590 0FC3028E */  jal   musicStopSlot
 /* 0BBF84 7F089594 2404FFFF */   li    $a0, -1
 /* 0BBF88 7F089598 0FC3003F */  jal   set_missionstate
 /* 0BBF8C 7F08959C 00002025 */   move  $a0, $zero
@@ -39623,8 +39623,8 @@ void bondviewKillCurrentPlayer(void)
 
         g_CurrentPlayer->previous_collision_info = g_CurrentPlayer->field_488;
 
-        g_CurrentPlayer->field_414 = g_CurrentPlayer->vv_theta;
-        g_CurrentPlayer->field_418 = g_CurrentPlayer->vv_verta;
+        g_CurrentPlayer->thetadie = g_CurrentPlayer->vv_theta;
+        g_CurrentPlayer->vertadie = g_CurrentPlayer->vv_verta;
 
         if (ptr_playerstank != 0)
         {
@@ -40945,7 +40945,7 @@ coord3d * bondviewGetCurrentPlayersPosition3(void)
 }
 
 int get_BONDdata_field408(void) {
-    return (int) &g_CurrentPlayer->field_408;
+    return (int) &g_CurrentPlayer->bondprevpos;
 }
 
 

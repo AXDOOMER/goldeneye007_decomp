@@ -1,5 +1,5 @@
-#ifndef _explosions._H_
-#define _explosions._H_
+#ifndef _explosions_H_
+#define _explosions_H_
 #include <ultra64.h>
 #include <bondtypes.h>
 

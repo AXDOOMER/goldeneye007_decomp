@@ -33,7 +33,7 @@
  * Syntax Sugar for clarification of intent
  * Inheritance allows child structs to directly use parent elements 
  * without sub-struct style calls 
- *     obj->type and wep->type becomes simply 
+ *     obj->type and wep->base.type becomes simply 
  *     obj->type and wep->type (wep inherits obj)
  * Usage:
  * Define the first entry to the inheriting struct as "inherits xxx"
@@ -2131,14 +2131,14 @@ typedef union
         f32     sumground;          /*0xA4*/
         f32     manground;          /*0xA8*/
         f32     ground;             /*0xAC*/
-        coord3d fallspeed;          /*0xB0 current pos*/
+        coord3d fallspeed;          /*0xB0*/
         coord3d prevpos;            /*0xBC*/
         s32     lastwalk60;         /*0xC8*/
         s32     lastmoveok60;       /*0xCC*/
         f32     visionrange;        /*0xD0*/
         s32     lastseetarget60;    /*0xD4*/
         coord3d lastknowntargetpos; /*0xD8 confirmed*/
-        void   *targetTile;         /*0xE4*/
+        void   *targetTile;         /*0xE4 maybe lastshooter*/
 
         /*0xE8 */
         union
@@ -2162,7 +2162,7 @@ typedef union
         s16            aireturnlist;     /* 0x010A confirmed*/
         u8             morale;           /* used by ai commands 81-85 */
         u8             alertness;        /* used by ai commands 86-8A */
-        u8             BITFIELD;
+        u8             flags2;         /*canonical name */
         u8             random;
         s32            timer60;    /* 0x0110 */
         s16            padpreset1; /* ID PAD_PRESET */
@@ -2225,7 +2225,7 @@ typedef union
     typedef struct ObjectRecord
     {
         inherits    PropDefHeaderRecord;
-        s16         obj;
+        s16         obj; //canonical name, use with PROP_ enum eg PROP_ALARM1
         /* ID 0x6
             0000+ or 2710+ (10,000+) to use standard presets.
             -1 to -256 to set this object
@@ -2403,9 +2403,8 @@ typedef union
 
         ObjectRecord_f6c *unk6C; //pointer somewhere at least 0x44 long and the pointer at 0 and 0x44 is also at least 0xb8 long
 
-        float             field_70;
-        short             damage;
-        short             maxdamage;
+        f32             maxdamage;
+        f32               damage;
         rgba_u8           field_78;
         char              field_7C;
         char              field_7D;
@@ -3302,7 +3301,7 @@ typedef union
             s32           Volume2;   //4
             s32           sfxID;     //8
             s32           Volume;    //12
-            PadRecord    *pad;       //16
+            coord3d      *pos;       //16
             ObjectRecord *Obj;       //20
         } sfxRecord;
 
