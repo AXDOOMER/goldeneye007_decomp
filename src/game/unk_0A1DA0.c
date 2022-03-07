@@ -3592,13 +3592,68 @@ glabel sub_GAME_7F0A3978
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0A3AB8(void) {
+/**
+ * Setup watch rectangles in the usual manner.
+ * This is called to setup the screen select rectangles, but note
+ * that the colors are overwritten in set_page_rectangle_colors.
+ * Also used to initialize watch static.
+ * @param vtx: Pointer to first vertex in a {@code struct WatchRectangle}.
+ * @param startx:
+ * @param startz:
+ * @param width:
+ * @param height:
+ * @param horizontal_offset:
+ * @param vertical_offset:
+ * 
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical instructions: no
+ * - identical registers: fail
+ * 
+ * Notes: Instruction order is just wrong until the loop starts.
+ * There's an extra move instruction.
+*/
+struct WatchVertex *setup_watch_rectangles(struct WatchVertex *vtx, s32 startx, s32 startz, s32 width, s32 height, s32 horizontal_offset, s32 vertical_offset)
+{
+    s32 i;
+    s32 j;
+    s32 xval;
+    s32 zval;
+    
+    xval = startx + horizontal_offset;
 
+    if(vtx); // seems to be needed to match return and last few lines.
+
+    for (i=0; i<2; i++, xval += width)
+    {
+        zval = startz + vertical_offset;
+
+        for (j=0; j<2; j++, zval += height)
+        {
+            vtx->coord1.AsArray[0] = xval;
+            vtx->coord1.AsArray[1] = 0;
+            vtx->coord1.AsArray[2] = zval;
+
+            vtx->coord2.AsArray[0] = 0;
+            vtx->coord2.AsArray[1] = 0;
+            vtx->coord2.AsArray[2] = 0;
+
+            vtx->color.rgba[0] = 0x20;
+            vtx->color.rgba[1] = 0x70;
+            vtx->color.rgba[2] = 0x20;
+            vtx->color.rgba[3] = 0xF0;
+
+            vtx++;
+        }
+    }
+
+    return vtx;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0A3AB8
+glabel setup_watch_rectangles
 /* 0D85E8 7F0A3AB8 27BDFFF8 */  addiu $sp, $sp, -8
 /* 0D85EC 7F0A3ABC 8FAE001C */  lw    $t6, 0x1c($sp)
 /* 0D85F0 7F0A3AC0 AFB00004 */  sw    $s0, 4($sp)

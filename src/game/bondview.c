@@ -16094,8 +16094,8 @@ void trigger_solo_watch_menu(s32 arg0)
             /**
              * This section is for rendering the selected screen rectangles.
             */
-            ptr_b = &g_CurrentPlayer->buffer_for_watch_greenbackdrop_DL;
-            ptr_a = &g_CurrentPlayer->buffer_for_watch_greenbackdrop_vertices;
+            ptr_b = g_CurrentPlayer->buffer_for_watch_greenbackdrop_DL;
+            ptr_a = g_CurrentPlayer->buffer_for_watch_greenbackdrop_vertices;
 
             for (i=0;
                 i<(WATCH_NUMBER_SCREENS * WATCH_SCREEN_SELECT_RECTANGLE_HSPACE);
@@ -16103,7 +16103,8 @@ void trigger_solo_watch_menu(s32 arg0)
                     ptr_a = next)
             {
                 ptr_copy = ptr_a;
-                next = sub_GAME_7F0A3AB8(ptr_a, i, 0, 0x64, 0x14, -0x12B, 0x136);
+                // Note: colors are set here but overwritten in watch.c set_page_rectangle_colors
+                next = setup_watch_rectangles(ptr_a, i, 0, 0x64, 0x14, -0x12B, 0x136);
                 ptr_b = sub_GAME_7F0A3B40(ptr_b, OS_K0_TO_PHYSICAL(ptr_copy));
             }
 
@@ -16116,11 +16117,11 @@ void trigger_solo_watch_menu(s32 arg0)
              * This section is related to rendering static on the watch menu.
              * Static is defined by a horizontal bar in the middle of the screen.
             */
-            ptr_a = &g_CurrentPlayer->buffer_for_watch_static_vertices;
-            ptr_b = &g_CurrentPlayer->buffer_for_watch_static_DL;
+            ptr_a = g_CurrentPlayer->buffer_for_watch_static_vertices;
+            ptr_b = g_CurrentPlayer->buffer_for_watch_static_DL;
 
-            ptr_copy = &g_CurrentPlayer->buffer_for_watch_static_vertices;
-            next = sub_GAME_7F0A3AB8(ptr_a, 0, 0, 0x398, 0x14, -0x1CC, 0);
+            ptr_copy = g_CurrentPlayer->buffer_for_watch_static_vertices;
+            next = setup_watch_rectangles(ptr_a, 0, 0, 0x398, 0x14, -0x1CC, 0);
             ptr_b = sub_GAME_7F0A3B40(ptr_b, OS_K0_TO_PHYSICAL(ptr_copy));
 
             gSPEndDisplayList(ptr_b);
@@ -16347,7 +16348,7 @@ glabel trigger_solo_watch_menu
 /* 0B4544 7F07FA14 02202025 */  move  $a0, $s1
 /* 0B4548 7F07FA18 02002825 */  move  $a1, $s0
 /* 0B454C 7F07FA1C 00003025 */  move  $a2, $zero
-/* 0B4550 7F07FA20 0FC28EAE */  jal   sub_GAME_7F0A3AB8
+/* 0B4550 7F07FA20 0FC28EAE */  jal   setup_watch_rectangles
 /* 0B4554 7F07FA24 24070064 */   li    $a3, 100
 /* 0B4558 7F07FA28 3C018000 */  lui   $at, 0x8000
 /* 0B455C 7F07FA2C 00408825 */  move  $s1, $v0
@@ -16372,7 +16373,7 @@ glabel trigger_solo_watch_menu
 /* 0B45A8 7F07FA78 00002825 */  move  $a1, $zero
 /* 0B45AC 7F07FA7C 00003025 */  move  $a2, $zero
 /* 0B45B0 7F07FA80 24070398 */  li    $a3, 920
-/* 0B45B4 7F07FA84 0FC28EAE */  jal   sub_GAME_7F0A3AB8
+/* 0B45B4 7F07FA84 0FC28EAE */  jal   setup_watch_rectangles
 /* 0B45B8 7F07FA88 24732998 */   addiu $s3, $v1, 0x2998
 /* 0B45BC 7F07FA8C 3C018000 */  lui   $at, 0x8000
 /* 0B45C0 7F07FA90 02412821 */  addu  $a1, $s2, $at
@@ -16654,7 +16655,7 @@ glabel trigger_solo_watch_menu
 /* 0B24A8 7F07FAB8 02202025 */  move  $a0, $s1
 /* 0B24AC 7F07FABC 02002825 */  move  $a1, $s0
 /* 0B24B0 7F07FAC0 00003025 */  move  $a2, $zero
-/* 0B24B4 7F07FAC4 0FC28BFE */  jal   sub_GAME_7F0A3AB8
+/* 0B24B4 7F07FAC4 0FC28BFE */  jal   setup_watch_rectangles
 /* 0B24B8 7F07FAC8 24070064 */   li    $a3, 100
 /* 0B24BC 7F07FACC 3C018000 */  lui   $at, 0x8000
 /* 0B24C0 7F07FAD0 00408825 */  move  $s1, $v0
@@ -16679,7 +16680,7 @@ glabel trigger_solo_watch_menu
 /* 0B250C 7F07FB1C 00002825 */  move  $a1, $zero
 /* 0B2510 7F07FB20 00003025 */  move  $a2, $zero
 /* 0B2514 7F07FB24 24070398 */  li    $a3, 920
-/* 0B2518 7F07FB28 0FC28BFE */  jal   sub_GAME_7F0A3AB8
+/* 0B2518 7F07FB28 0FC28BFE */  jal   setup_watch_rectangles
 /* 0B251C 7F07FB2C 24732990 */   addiu $s3, $v1, 0x2990
 /* 0B2520 7F07FB30 3C018000 */  lui   $at, 0x8000
 /* 0B2524 7F07FB34 02412821 */  addu  $a1, $s2, $at

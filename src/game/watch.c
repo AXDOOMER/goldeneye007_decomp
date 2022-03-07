@@ -242,14 +242,7 @@ s32 D_80040E7C = 0;
 
 // forward declarations
 
-struct WatchBufferVertices {
-    u32 unk00;
-    u32 unk04;
-    u32 unk08;
-    rgba_u8 color;
-};
-
-void set_page_rectangle_colors(s32 watch_screen_index, struct WatchBufferVertices *arg2);
+void set_page_rectangle_colors(s32 watch_screen_index, struct WatchVertex *arg2);
 Gfx *draw_watch_mission_status_page(Gfx *gdl, Mtx *param_2);
 Gfx *unused_draw_watch_inventory_page(Gfx *gdl, Mtx *param_2);
 Gfx *draw_watch_inventory_page(Gfx *gdl, Mtx *param_2);
@@ -2520,13 +2513,13 @@ glabel sub_GAME_7F0A6EE8
 /**
  * Decomp notes: match down to regalloc.
 */
-void set_page_rectangle_colors(s32 watch_screen_index, struct WatchBufferVertices *arg2)
+void set_page_rectangle_colors(s32 watch_screen_index, struct WatchVertex *arg2)
 {
     s32 i;
     s32 limit;
 
     // Default color for rectangle.
-    for (i=0; i<20; i++)
+    for (i=0; i<(4 * WATCH_NUMBER_SCREENS); i++)
     {
         arg2[i].color.r = 0x20;
         arg2[i].color.g = 0x70;
@@ -2751,7 +2744,7 @@ Gfx *draw_background_health_and_armor(Gfx *gdl, Mtx *arg1, s32 zoom_squish)
     */
     gDPSetRenderMode(gdl++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
     gDPSetCombineMode(gdl++, G_CC_SHADE, G_CC_SHADE);
-    gSPDisplayList(gdl++, OS_PHYSICAL_TO_K0(&g_CurrentPlayer->buffer_for_watch_greenbackdrop_DL));
+    gSPDisplayList(gdl++, OS_PHYSICAL_TO_K0(g_CurrentPlayer->buffer_for_watch_greenbackdrop_DL));
     /**
      * // end green rectangles/page select section
     */
@@ -2764,10 +2757,10 @@ Gfx *draw_background_health_and_armor(Gfx *gdl, Mtx *arg1, s32 zoom_squish)
 
     if (g_WatchBackgroundGreen < 0xE0)
     {
-        sub_GAME_7F0A68D8(&g_CurrentPlayer->buffer_for_watch_static_vertices);
+        sub_GAME_7F0A68D8(g_CurrentPlayer->buffer_for_watch_static_vertices);
 
         gDPSetRenderMode(gdl++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
-        gSPDisplayList(gdl++, OS_PHYSICAL_TO_K0(&g_CurrentPlayer->buffer_for_watch_static_DL));
+        gSPDisplayList(gdl++, OS_PHYSICAL_TO_K0(g_CurrentPlayer->buffer_for_watch_static_DL));
     }
 
     return gdl;
@@ -6048,7 +6041,7 @@ glabel sub_GAME_7F0A8FEC
 /* 0DDBF0 7F0A90C0 8FA4003C */  lw    $a0, 0x3c($sp)
 /* 0DDBF4 7F0A90C4 00002825 */  move  $a1, $zero
 /* 0DDBF8 7F0A90C8 00003025 */  move  $a2, $zero
-/* 0DDBFC 7F0A90CC 0FC28EAE */  jal   sub_GAME_7F0A3AB8
+/* 0DDBFC 7F0A90CC 0FC28EAE */  jal   setup_watch_rectangles
 /* 0DDC00 7F0A90D0 24070258 */   li    $a3, 600
 /* 0DDC04 7F0A90D4 3C018000 */  lui   $at, 0x8000
 /* 0DDC08 7F0A90D8 AFA20038 */  sw    $v0, 0x38($sp)
@@ -6065,7 +6058,7 @@ glabel sub_GAME_7F0A8FEC
 /* 0DDC34 7F0A9104 8FA40038 */  lw    $a0, 0x38($sp)
 /* 0DDC38 7F0A9108 00002825 */  move  $a1, $zero
 /* 0DDC3C 7F0A910C 00003025 */  move  $a2, $zero
-/* 0DDC40 7F0A9110 0FC28EAE */  jal   sub_GAME_7F0A3AB8
+/* 0DDC40 7F0A9110 0FC28EAE */  jal   setup_watch_rectangles
 /* 0DDC44 7F0A9114 24070258 */   li    $a3, 600
 /* 0DDC48 7F0A9118 3C018000 */  lui   $at, 0x8000
 /* 0DDC4C 7F0A911C AFA20038 */  sw    $v0, 0x38($sp)
@@ -6082,7 +6075,7 @@ glabel sub_GAME_7F0A8FEC
 /* 0DDC78 7F0A9148 8FA40038 */  lw    $a0, 0x38($sp)
 /* 0DDC7C 7F0A914C 00002825 */  move  $a1, $zero
 /* 0DDC80 7F0A9150 00003025 */  move  $a2, $zero
-/* 0DDC84 7F0A9154 0FC28EAE */  jal   sub_GAME_7F0A3AB8
+/* 0DDC84 7F0A9154 0FC28EAE */  jal   setup_watch_rectangles
 /* 0DDC88 7F0A9158 24070258 */   li    $a3, 600
 /* 0DDC8C 7F0A915C 8FA4003C */  lw    $a0, 0x3c($sp)
 /* 0DDC90 7F0A9160 8FA50040 */  lw    $a1, 0x40($sp)
@@ -6175,7 +6168,7 @@ glabel sub_GAME_7F0A91C8
 /* 0DDDC8 7F0A9298 8FA4003C */  lw    $a0, 0x3c($sp)
 /* 0DDDCC 7F0A929C 00002825 */  move  $a1, $zero
 /* 0DDDD0 7F0A92A0 00003025 */  move  $a2, $zero
-/* 0DDDD4 7F0A92A4 0FC28EAE */  jal   sub_GAME_7F0A3AB8
+/* 0DDDD4 7F0A92A4 0FC28EAE */  jal   setup_watch_rectangles
 /* 0DDDD8 7F0A92A8 24070258 */   li    $a3, 600
 /* 0DDDDC 7F0A92AC 3C018000 */  lui   $at, 0x8000
 /* 0DDDE0 7F0A92B0 AFA20038 */  sw    $v0, 0x38($sp)
@@ -6192,7 +6185,7 @@ glabel sub_GAME_7F0A91C8
 /* 0DDE0C 7F0A92DC 8FA40038 */  lw    $a0, 0x38($sp)
 /* 0DDE10 7F0A92E0 00002825 */  move  $a1, $zero
 /* 0DDE14 7F0A92E4 00003025 */  move  $a2, $zero
-/* 0DDE18 7F0A92E8 0FC28EAE */  jal   sub_GAME_7F0A3AB8
+/* 0DDE18 7F0A92E8 0FC28EAE */  jal   setup_watch_rectangles
 /* 0DDE1C 7F0A92EC 24070258 */   li    $a3, 600
 /* 0DDE20 7F0A92F0 3C018000 */  lui   $at, 0x8000
 /* 0DDE24 7F0A92F4 AFA20038 */  sw    $v0, 0x38($sp)
@@ -6209,7 +6202,7 @@ glabel sub_GAME_7F0A91C8
 /* 0DDE50 7F0A9320 8FA40038 */  lw    $a0, 0x38($sp)
 /* 0DDE54 7F0A9324 00002825 */  move  $a1, $zero
 /* 0DDE58 7F0A9328 00003025 */  move  $a2, $zero
-/* 0DDE5C 7F0A932C 0FC28EAE */  jal   sub_GAME_7F0A3AB8
+/* 0DDE5C 7F0A932C 0FC28EAE */  jal   setup_watch_rectangles
 /* 0DDE60 7F0A9330 24070258 */   li    $a3, 600
 /* 0DDE64 7F0A9334 8FA4003C */  lw    $a0, 0x3c($sp)
 /* 0DDE68 7F0A9338 8FA50040 */  lw    $a1, 0x40($sp)
@@ -12250,7 +12243,7 @@ glabel draw_watch_mission_briefing_page
 
 Gfx *sub_GAME_7F0ACA28(Gfx *gdl, Mtx *arg1, s32 watch_transitioning)
 {
-    set_page_rectangle_colors(watch_screen_index, (struct WatchBufferVertices *)&g_CurrentPlayer->buffer_for_watch_greenbackdrop_vertices);
+    set_page_rectangle_colors(watch_screen_index, (struct WatchVertex *)g_CurrentPlayer->buffer_for_watch_greenbackdrop_vertices);
 
     if (watch_transitioning == TRUE)
     {

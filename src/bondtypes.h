@@ -266,11 +266,13 @@ typedef union
 
     // Buffer defined on player struct, used
     // to render rectangles in bottom of watch menu.
+    // Vertex order:
+    // upper left
+    // lower left
+    // upper right
+    // lower right
     struct WatchRectangle {
-        struct WatchVertex v1;
-        struct WatchVertex v2;
-        struct WatchVertex v3;
-        struct WatchVertex v4;
+        struct WatchVertex vtx[4];
     };
 
     #pragma region volumes and areas

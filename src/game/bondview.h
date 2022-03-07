@@ -1649,7 +1649,8 @@ struct player
   struct WatchRectangle buffer_for_watch_greenbackdrop_vertices[WATCH_NUMBER_SCREENS];
 
   /**
-   * Offset 0x19b8
+   * Watch static, not "static vertices".
+   * Offset 0x19b8.
   */
   struct WatchRectangle buffer_for_watch_static_vertices[1];
   
@@ -2660,6 +2661,7 @@ struct player
   s32 field_2994;
   
   /**
+   * Watch static, not "static DL".
    * Offset 0x2998
   */
   Gfx buffer_for_watch_static_DL[1];

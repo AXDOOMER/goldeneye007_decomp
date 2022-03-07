@@ -43,7 +43,7 @@
 #define WATCH_NUMBER_SCREENS 5
 
 /**
- * Horizontal spacing between wtch menu screen select rectangles.
+ * Horizontal spacing between watch menu screen select rectangles.
 */
 #define WATCH_SCREEN_SELECT_RECTANGLE_HSPACE 125
 
