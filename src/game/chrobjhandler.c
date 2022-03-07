@@ -1942,7 +1942,7 @@ glabel init_standard_object
 /* 075090 7F040560 14C00007 */  bnez  $a2, .L7F040580
 /* 075094 7F040564 AFBF001C */   sw    $ra, 0x1c($sp)
 /* 075098 7F040568 AFA50024 */  sw    $a1, 0x24($sp)
-/* 07509C 7F04056C 0FC0E90C */  jal   remove_last_obj_pos_data_entry
+/* 07509C 7F04056C 0FC0E90C */  jal   propAllocate
 /* 0750A0 7F040570 AFA7002C */   sw    $a3, 0x2c($sp)
 /* 0750A4 7F040574 8FA50024 */  lw    $a1, 0x24($sp)
 /* 0750A8 7F040578 8FA7002C */  lw    $a3, 0x2c($sp)
@@ -40252,14 +40252,14 @@ PropRecord *chrTryEquipHat(ChrRecord *self, s32 index, s32 flags)
 
     model = &PitemZ_entries[index];
     load_model(index);
-    lastprop = remove_last_obj_pos_data_entry();
+    lastprop = propAllocate();
     prop     = get_obj_instance_controller_for_header(model);
     prop     = prop;
     obj      = hatCreate(lastprop == 0, prop == 0, model);
     lastprop = lastprop;
     if (lastprop == 0)
     {
-        lastprop = remove_last_obj_pos_data_entry();
+        lastprop = propAllocate();
     }
     prop     = prop;
     lastprop = lastprop;
@@ -40311,7 +40311,7 @@ glabel chrTryEquipHat
 /* 085C28 7F0510F8 AFA500C4 */  sw    $a1, 0xc4($sp)
 /* 085C2C 7F0510FC 0FC15B0E */  jal   load_model
 /* 085C30 7F051100 AFAF00BC */   sw    $t7, 0xbc($sp)
-/* 085C34 7F051104 0FC0E90C */  jal   remove_last_obj_pos_data_entry
+/* 085C34 7F051104 0FC0E90C */  jal   propAllocate
 /* 085C38 7F051108 00000000 */   nop   
 /* 085C3C 7F05110C 00408025 */  move  $s0, $v0
 /* 085C40 7F051110 0FC1B025 */  jal   get_obj_instance_controller_for_header
@@ -40323,7 +40323,7 @@ glabel chrTryEquipHat
 /* 085C58 7F051128 8FA600BC */   lw    $a2, 0xbc($sp)
 /* 085C5C 7F05112C 16000004 */  bnez  $s0, .L7F051140
 /* 085C60 7F051130 00409025 */   move  $s2, $v0
-/* 085C64 7F051134 0FC0E90C */  jal   remove_last_obj_pos_data_entry
+/* 085C64 7F051134 0FC0E90C */  jal   propAllocate
 /* 085C68 7F051138 00000000 */   nop   
 /* 085C6C 7F05113C 00408025 */  move  $s0, $v0
 .L7F051140:
@@ -41634,7 +41634,7 @@ WeaponObjRecord *create_new_item_instance_of_model(s32 modelnum, ITEM_IDS weapon
 
     itemModel = PitemZ_entries[modelnum];
     load_model();
-    lastObj = remove_last_obj_pos_data_entry();
+    lastObj = propAllocate();
     ObjInst = get_obj_instance_controller_for_header(itemModel);
     isObjInstAvailable = ObjInst == 0;
     ObjInst    = ObjInst;
@@ -41644,7 +41644,7 @@ WeaponObjRecord *create_new_item_instance_of_model(s32 modelnum, ITEM_IDS weapon
     if (lastObj == 0)
     {
         ObjInst   = ObjInst;
-        lastObj = remove_last_obj_pos_data_entry();
+        lastObj = propAllocate();
     }
     ObjInst = ObjInst;
     if (ObjInst == 0)
@@ -41723,7 +41723,7 @@ glabel create_new_item_instance_of_model
 /* 086BC8 7F052098 AFA400B8 */  sw    $a0, 0xb8($sp)
 /* 086BCC 7F05209C 0FC15B0E */  jal   load_model
 /* 086BD0 7F0520A0 AFAF00B4 */   sw    $t7, 0xb4($sp)
-/* 086BD4 7F0520A4 0FC0E90C */  jal   remove_last_obj_pos_data_entry
+/* 086BD4 7F0520A4 0FC0E90C */  jal   propAllocate
 /* 086BD8 7F0520A8 00000000 */   nop   
 /* 086BDC 7F0520AC 00408025 */  move  $s0, $v0
 /* 086BE0 7F0520B0 0FC1B025 */  jal   get_obj_instance_controller_for_header
@@ -41736,7 +41736,7 @@ glabel create_new_item_instance_of_model
 /* 086BFC 7F0520CC 8FA700AC */  lw    $a3, 0xac($sp)
 /* 086C00 7F0520D0 16000005 */  bnez  $s0, .L7F0520E8
 /* 086C04 7F0520D4 00408825 */   move  $s1, $v0
-/* 086C08 7F0520D8 0FC0E90C */  jal   remove_last_obj_pos_data_entry
+/* 086C08 7F0520D8 0FC0E90C */  jal   propAllocate
 /* 086C0C 7F0520DC AFA700AC */   sw    $a3, 0xac($sp)
 /* 086C10 7F0520E0 8FA700AC */  lw    $a3, 0xac($sp)
 /* 086C14 7F0520E4 00408025 */  move  $s0, $v0
@@ -41842,7 +41842,7 @@ PropRecord *something_with_generating_object(ChrRecord *self, s32 PropID, ITEM_I
         PropItem = &PitemZ_entries[PropID];
         load_model(PropID); //move a0a1 and  t9,0xd4(sp) swapped here...
     }
-    lastobjentry = remove_last_obj_pos_data_entry();
+    lastobjentry = propAllocate();
     objinst      = get_obj_instance_controller_for_header(PropItem);
 
     if (!Weapon)
@@ -41851,7 +41851,7 @@ PropRecord *something_with_generating_object(ChrRecord *self, s32 PropID, ITEM_I
     }
     if (!lastobjentry)
     {
-        lastobjentry = remove_last_obj_pos_data_entry();
+        lastobjentry = propAllocate();
     }
     if (!objinst)
     {
@@ -41909,7 +41909,7 @@ glabel something_with_generating_object
 /* 086D8C 7F05225C 0FC15B0E */  jal   load_model
 /* 086D90 7F052260 AFB900D4 */   sw    $t9, 0xd4($sp)
 .L7F052264:
-/* 086D94 7F052264 0FC0E90C */  jal   remove_last_obj_pos_data_entry
+/* 086D94 7F052264 0FC0E90C */  jal   propAllocate
 /* 086D98 7F052268 00000000 */   nop   
 /* 086D9C 7F05226C 00408825 */  move  $s1, $v0
 /* 086DA0 7F052270 0FC1B025 */  jal   get_obj_instance_controller_for_header
@@ -41925,7 +41925,7 @@ glabel something_with_generating_object
 .L7F052298:
 /* 086DC8 7F052298 16200004 */  bnez  $s1, .L7F0522AC
 /* 086DCC 7F05229C 00000000 */   nop   
-/* 086DD0 7F0522A0 0FC0E90C */  jal   remove_last_obj_pos_data_entry
+/* 086DD0 7F0522A0 0FC0E90C */  jal   propAllocate
 /* 086DD4 7F0522A4 00000000 */   nop   
 /* 086DD8 7F0522A8 00408825 */  move  $s1, $v0
 .L7F0522AC:

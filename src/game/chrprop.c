@@ -285,9 +285,9 @@ PropRecord *get_ptr_obj_pos_list_current_entry(void)
 
 
 #ifdef NONMATCHING
-PropRecord* remove_last_obj_pos_data_entry(void) {
-    PropRecord* prop  = ptr_obj_pos_list_final_entry;
-
+//matches except uses a0 instead of a1
+PropRecord* propAllocate(void) {
+    PropRecord* prop = ptr_obj_pos_list_final_entry;
     if (prop)
     {
         ptr_obj_pos_list_final_entry = prop->prev;
@@ -295,10 +295,11 @@ PropRecord* remove_last_obj_pos_data_entry(void) {
         prop->next = 0;
         prop->parent = 0;
         prop->child = 0;
-        prop->type = 0;
-        prop->stan = 0;
+
         prop->flags = 0;
-        prop->rooms[0] = 0xFF;
+        prop->stan = 0;
+        prop->timetoregen = 0;
+        prop->rooms[0] = -1;
         return prop;
     }
     return NULL;
@@ -306,7 +307,7 @@ PropRecord* remove_last_obj_pos_data_entry(void) {
 #else
 GLOBAL_ASM(
 .text
-glabel remove_last_obj_pos_data_entry
+glabel propAllocate
 /* 06EF60 7F03A430 3C058003 */  lui   $a1, %hi(ptr_obj_pos_list_final_entry)
 /* 06EF64 7F03A434 24A50AA8 */  addiu $a1, %lo(ptr_obj_pos_list_final_entry) # addiu $a1, $a1, 0xaa8
 /* 06EF68 7F03A438 8CA30000 */  lw    $v1, ($a1)

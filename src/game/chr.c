@@ -2991,7 +2991,7 @@ PropRecord * replace_GUARDdata_with_actual_values( Model * arg0, coord3d * arg1,
     PropRecord * ret;
     s32 phi_a0;
 
-    ret = remove_last_obj_pos_data_entry();
+    ret = propAllocate();
 
     if (ret != 0)
     {

@@ -696,7 +696,7 @@ def_7F005A74:
 /* 03AB88 7F006058 00000000 */   nop   
 /* 03AB8C 7F00605C 0FC22A40 */  jal   sub_GAME_7F08A900
 /* 03AB90 7F006060 00000000 */   nop   
-/* 03AB94 7F006064 0FC0E90C */  jal   remove_last_obj_pos_data_entry
+/* 03AB94 7F006064 0FC0E90C */  jal   propAllocate
 /* 03AB98 7F006068 00000000 */   nop   
 /* 03AB9C 7F00606C 8E480000 */  lw    $t0, ($s2)
 /* 03ABA0 7F006070 240A0006 */  li    $t2, 6
@@ -1408,7 +1408,7 @@ def_7F005A74:
 /* 03ABC0 7F006050 00000000 */   nop   
 /* 03ABC4 7F006054 0FC22C37 */  jal   sub_GAME_7F08A900
 /* 03ABC8 7F006058 00000000 */   nop   
-/* 03ABCC 7F00605C 0FC0E9CC */  jal   remove_last_obj_pos_data_entry
+/* 03ABCC 7F00605C 0FC0E9CC */  jal   propAllocate
 /* 03ABD0 7F006060 00000000 */   nop   
 /* 03ABD4 7F006064 8E590000 */  lw    $t9, ($s2)
 /* 03ABD8 7F006068 240F0006 */  li    $t7, 6
@@ -2123,7 +2123,7 @@ def_7F005A74:
 /* 0389C0 7F005FD0 00000000 */   nop   
 /* 0389C4 7F005FD4 0FC22AD2 */  jal   sub_GAME_7F08A900
 /* 0389C8 7F005FD8 00000000 */   nop   
-/* 0389CC 7F005FDC 0FC0E93C */  jal   remove_last_obj_pos_data_entry
+/* 0389CC 7F005FDC 0FC0E93C */  jal   propAllocate
 /* 0389D0 7F005FE0 00000000 */   nop   
 /* 0389D4 7F005FE4 8E590000 */  lw    $t9, ($s2)
 /* 0389D8 7F005FE8 240F0006 */  li    $t7, 6
