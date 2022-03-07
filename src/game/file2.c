@@ -6,6 +6,7 @@
 #include "watch.h"
 #include "file.h"
 #include "file2.h"
+#include "front.h"
 
 /**
  *

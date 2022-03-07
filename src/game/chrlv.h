@@ -6,7 +6,12 @@
 
 // Value is 3, it just needs to be less than MAX_CHRWAYPOINTS
 #define PATH_FINDING_WP_LIMIT (MAX_CHRWAYPOINTS - 3)
+#    ifdef REFRESH_PAL
+#    define CHRLV_FRAMERATE_F 50.0f
 
+#endif
+
+#define CHRLV_FRAMERATE_F 60.0f
 
 
 
@@ -23,12 +28,12 @@ s32 select_psuedorandom_heads(s32 id);
 
 s32 get_random_head(s32 id);
 f32 chrGetDistanceToBond(ChrRecord *guardData);
-s32         chrCheckTargetInSight(ChrRecord *self);
-bool        actor_fire_or_aim_at_target_update(ChrRecord *self, s32 newtargettype, s32 newtargetid);
-    void chrlvAlertGuardToPlayerPosition(ChrRecord *);
+s32 chrCheckTargetInSight(ChrRecord *self);
+bool actor_fire_or_aim_at_target_update(ChrRecord *self, s32 newtargettype, s32 newtargetid);
+void chrlvAlertGuardToPlayerPosition(ChrRecord *);
 void chrlvIdleAnimationRelated7F023A94(ChrRecord *arg0, f32 arg1);
 f32 chrGetAngleToBond(ChrRecord *arg0);
-s32 chrIsStopped(ChrRecord *);
+s32 chrHasStoppedOrPatroling(ChrRecord *);
 s32 chrResolvePadId(ChrRecord *guardData,s32 padNo);
 void chrlvLineLineIntersection(coord3d *arg0, coord3d *arg1, coord3d *arg2, coord3d *arg3, coord3d *result);
 void chrlvStanLineDirIntersection(coord3d *arg0, coord3d *arg1, coord3d *result);
@@ -67,12 +72,12 @@ f32 chrGetDistanceToPad(ChrRecord *self, s32 padID);
 bool check_if_room_for_preset_loaded(ChrRecord *self, s32 padnum);
 f32 chrGetDistanceToChr(ChrRecord *self, s32 chrID);
 f32 chrGetDistanceFromBondToPad(ChrRecord *self, s32 padid);
-void chrSetFlags(ChrRecord *arg0, u8 arg1);
-void chrUnsetFlags(ChrRecord *arg0, u8 arg1);
-s32         chrHasFlag(ChrRecord *self, u8 arg1);
-    void chrSetFlagsById(ChrRecord *arg0, s32 guard_id, u8 arg2);
-void chrUnsetFlagsById(ChrRecord *arg0, s32 guard_id, u8 arg2);
-s32 chrHasFlagById(ChrRecord *arg0, s32 guard_id, u8 arg2);
+void chrSetFlags2(ChrRecord *arg0, u8 arg1);
+void chrUnsetFlags2(ChrRecord *arg0, u8 arg1);
+s32 chrHasFlags2(ChrRecord *self, u8 arg1);
+void chrSetFlags2ById(ChrRecord *arg0, s32 guard_id, u8 arg2);
+void chrUnsetFlags2ById(ChrRecord *arg0, s32 guard_id, u8 arg2);
+s32 chrHasFlags2ById(ChrRecord *arg0, s32 guard_id, u8 arg2); //chrHasFlags2ById
 void chrSetStageFlags(ChrRecord *arg0, s32 arg1);
 void chrUnsetStageFlags(ChrRecord *self, u32 flags);
 bool chrHasStageFlag(ChrRecord *self, s32 flags);

@@ -82,8 +82,6 @@ void reset_game_options_index();
 
 void zero_D_800409A4();
 
-void draw_selected_page_rectangle(s32 watch_screen_index, s32 arg2);
-
 f32 sub_GAME_7F0A6A2C(f32 arg0);
 
 f32 sub_GAME_7F0A95C4(f32 param_1, f32 param_2, f32 param_3);
@@ -108,10 +106,7 @@ void sub_GAME_7F0A91A0(u16 arg0);
 void cur_player_set_control_type(int type);
 void init_watch_at_start_of_stage(int a);
 
-Gfx *draw_watch_game_options_page(Gfx *gdl, s32 param_2);
-Gfx *draw_watch_control_options_page(Gfx *gdl, s32 param_2);
-
-Gfx *unused_draw_watch_inventory_page(Gfx *gdl, s32 param_2);
+Gfx *sub_GAME_7F0ACA28(Gfx *gdl, Mtx *arg1, s32 watch_transitioning);
 
 #endif
 

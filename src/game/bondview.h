@@ -565,9 +565,7 @@ struct player
    * How long Bond has been running
   */
   /* 0x017c */ s32 speedmaxtime60;
-  f32 boost_factor_x;
-  f32 boost_factor_y;
-  f32 boost_factor_z;
+  coord3d bondshotspeed; //0x180
   f32 bondfadetime60;
   f32 bondfadetimemax60;
   f32 bondfadefracold;
@@ -778,48 +776,41 @@ struct player
   * Something with position, like previous x position.
   * Offset 0x408.
   */
-  f32 field_408;
-  s32 field_40C;
-
-  /*
-  * Something with position, like previous z position.
-  * Offset 0x410.
-  */
-  f32 field_410;
+  coord3d bondprevpos; //0x408
   
-  f32 field_414;
-  f32 field_418;
-  s32 cuff_value;
-  s32 field_420;
+  f32 thetadie; //0x414
+  f32 vertadie; //0x418
+  s32 bondtype; 
+  s32 startnewbonddie; //0x420
 
   /**
    * Multiplayer related.
    * Offset 0x424.
    */
-  s32 field_424;
+  s32 redbloodfinished;
 
   /**
    * Multiplayer related.
    * Offset 0x428.
    */
-  s32 field_428;
-  s32 field_42C;
-  s32 field_430;
+  s32 deathanimfinished;
+  s32 field_42c;
+  s32 controldef; //0x430
 
   struct collision434 previous_collision_info;
   struct collision434 field_488;
 
   u32 resetheadpos; // bool
   u32 resetheadrot; // bool
-  u32 field_4E4; // bool
+  u32 resetheadtick; // bool 0x4e4
 
   s32 headanim; // index into array of pointers. Pointers are for animations.
 
   // has NTSC<->PAL difference, but not (5/6)
   f32 headdamp;
-  s32 field_4F0;
-  f32 field_4F4;
-  f32 field_4F8;
+  s32 headwalkingtime60; //0x4f0
+  f32 headamplitude; //0x4f4
+  f32 sideamplitude; //0x4f8
   vec3 headpos;
   vec3 headlook;
 
@@ -831,14 +822,12 @@ struct player
 
   // headupsum[1] has NTSC->PAL conversion rate (5/6)
   vec3 headupsum;
-  vec3 field_544;
-  f32 stationary_ground_offset;
+  vec3 headbodyoffset; //0x544
+  f32 standheight; // old name stationary_ground_offset
 
   // f32[4] ?? or 2 x f32[2] ??
-  f32 field_554;
-  f32 field_558;
-  f32 field_55C;
-  f32 field_560;
+  coord3d standbodyoffset; //0x554
+  f32 standfrac; //0x560
 
   // offset 0x564
   vec3 standlook[2];
@@ -933,6 +922,7 @@ struct player
   s32 field_6CC;
 
   // struct? this gets pointed to. Pointer called "mtxlist" takes address of this property.
+  // bondheadmatrices 0 - 3 
   s32 field_6D0;
   s32 field_6D4;
   s32 field_6D8;
@@ -952,7 +942,7 @@ struct player
 
 
   f32 field_700;
-  f32 field_704;  // related to stationary_ground_offset
+  f32 field_704;  // related to standheight
   f32 field_708;
 
   s32 field_70C;
@@ -1731,6 +1721,7 @@ struct player
   s32 field_19AC;
   s32 field_19B0;
   s32 field_19B4;
+  // end watch vertex buffer
   s32 field_19B8;
   s32 field_19BC;
   s32 field_19C0;
@@ -1747,7 +1738,8 @@ struct player
   s32 field_19EC;
   s32 field_19F0;
   s32 field_19F4;
-  s32 field_19F8;
+
+  s32 watch_body_armor_bar_gdl; // used in watch
   s32 field_19FC;
   s32 field_1A00;
   s32 field_1A04;
@@ -2207,7 +2199,7 @@ struct player
   s32 field_211C;
   s32 field_2120;
   s32 field_2124;
-  s32 field_2128;
+  s32 watch_health_bar_gdl; // used in watch
   s32 field_212C;
   s32 field_2130;
   s32 field_2134;
@@ -2747,7 +2739,7 @@ struct player
   s32 field_298C;
   s32 field_2990;
   s32 field_2994;
-  s32 field_2998;
+  s32 field_2998; // used in watch
   s32 field_299C;
   s32 field_29A0;
   s32 field_29A4;
@@ -3234,8 +3226,8 @@ void bondviewUpdateGuardTankFlagsRelated(PropRecord *arg0, s32 flags);
 void bondviewGetPropHeightRelatedValues(PropRecord *arg0, struct rect4f **field_B0, s32 *arg2, f32 *height_related, f32 *collision);
 void bondviewAddCurrentPlayerArmor(f32 arg0);
 void bondviewResetIntroCameraMessageDialogs(void);
-void bondviewUnsetIntroCameraFlags(s32 flag);
-void bondviewSetIntroCameraFlags(s32 flags);
+void hudmsgsSetOn(s32 flag);
+void hudmsgsSetOff(s32 flags);
 Gfx* bondviewGfxPlayerField5cMatrix(Gfx* gdl);
 Mtxf *currentPlayerGetMatrix10D4(void);
 void sub_GAME_7F08BEEC(Mtxf *arg0, s32 arg1);
@@ -3264,5 +3256,7 @@ void     set_camera_mode(s32 arg0);
 bool     isBondInTank(void);
 void     hudmsgTopShow(s8 *string);
 void     SurroundWithExplosions(int delay);
+s32 check_watch_page_transistion_running(void);
+f32 bondviewWatchAnimationRelated(void);
 
 #endif
