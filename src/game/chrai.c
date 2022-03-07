@@ -37,184 +37,6 @@
 #include "fog.h"
 
 
-// bss
-/**
- * Address 0x80069B70.
-*/
-sfxRecord sfx_related[SFX_RELATED_LEN];
-
-//CODE.bss:80069C30
-s16 * ptr_list_object_lookup_indices;
-
-//CODE.bss:80069C34
-u32 num_obj_position_data_entries;
-
-/**
- * Address 0x80069C38.
-*/
-PropRecord pos_data_entry[POS_DATA_ENTRY_LEN];
-
-//CODE.bss:80071618
-s16 *ptr_room_lookup_buffer_maybe;
-
-//CODE.bss:8007161C
-struct unk_8007161c *dword_CODE_bss_8007161C;
-
-/**
- * Array of pointers, containing onscreen props.
- * 
- * Address 0x80071620.
-*/
-PropRecord *g_OnScreenPropList[ONSCREEN_PROP_LIST_LEN];
-
-/**
- * Pointer to last onscreen prop.
- * Address 0x80071DF0.
-*/
-PropRecord **g_LastOnScreenProp;
-
-/**
- * Count of onscreen props.
- * Address 0x80071DF4.
-*/
-s32 g_OnScreenPropCount;
-
-//CODE.bss:80071DF8
-u32 dword_CODE_bss_80071DF8;
-//CODE.bss:80071DFC
-u32 dword_CODE_bss_80071DFC;
-//CODE.bss:80071E00
-u32 temp_mine_table[30];
-
-//CODE.bss:80071E78
-f32 gas_damage_flag;
-//CODE.bss:80071E7C
-u32 gas_cutoff_flag;
-
-/**
- * Address 0x80071E80.
-*/
-struct projectile_data ProjectileData_start_address[PROJECTILEDATA_START_ADDRESS_LEN];
-
-/**
- * Address 0x80072E70.
-*/
-struct bss_80072E70 dword_CODE_bss_80072E70[BSS_80072E70_DATA_LEN];
-
-/**
- * Address 0x80073370.
-*/
-struct bss_80073370 dword_CODE_bss_80073370[BSS_80073370_DATA_LEN];
-
-/**
- * Address 0x80073DC0.
-*/
-struct bss_80073DC0 dword_CODE_bss_80073DC0[BSS_80073DC0_DATA_LEN];
-
-/**
- * Address 0x80075030.
-*/
-struct bss_80075030 dword_CODE_bss_80075030[BSS_80075030_DATA_LEN];
-
-//CODE.bss:80075B70
-u32 objinst;
-//CODE.bss:80075B74
-u32 dword_CODE_bss_80075B74;
-//CODE.bss:80075B78
-f32 flt_CODE_bss_80075B78;
-//CODE.bss:80075B7C
-f32 flt_CODE_bss_80075B7C;
-//CODE.bss:80075B80
-f32 flt_CODE_bss_80075B80;
-//CODE.bss:80075B84
-f32 flt_CODE_bss_80075B84;
-//CODE.bss:80075B88
-f32 flt_CODE_bss_80075B88;
-//CODE.bss:80075B8C
-f32 flt_CODE_bss_80075B8C;
-//CODE.bss:80075B90
-f32 flt_CODE_bss_80075B90;
-//CODE.bss:80075B94
-f32 flt_CODE_bss_80075B94;
-
-/**
- * Address 0x80075B98.
-*/
-struct object_animation_controller g_MonitorAnimController;
-
-/**
- * Unused / unreferenced (from padding / align?)
- * Address 0x80075C0C.
-*/
-s32 bss_80075C0C;
-
-/**
- * Address 0x80075C10.
-*/
-struct object_animation_controller g_UnknownAnimController;
-
-/**
- * Unused / unreferenced (from padding / align?)
- * Address 0x80075C84.
-*/
-s32 bss_80075C84;
-
-/**
- * Unused / unreferenced (from padding / align?)
- * Address 0x80075C88.
-*/
-struct object_animation_controller g_TaserAnimController;
-
-/**
- * Address 0x80075CFC.
-*/
-s32 bss_80075CFC;
-// This is a Stage Setup Struct 
-/*
-//CODE.bss:80075D00
-waypoint * ptr_setup_path_tbl;
-//CODE.bss:80075D04
-void * ptr_setup_path_link;
-//CODE.bss:80075D08
-void * ptr_setup_intro;
-//CODE.bss:80075D0C
-PropDefHeaderRecord * ptr_setup_objects;
-//CODE.bss:80075D10
-void * ptr_setup_path_sets;
-//CODE.bss:80075D14
-AIListRecord * ptr_setup_actions;
-//CODE.bss:80075D18
-PadRecord * ptr_0xxxpresets;
-//CODE.bss:80075D1C
-BoundPadRecord * ptr_2xxxpresets;
-//CODE.bss:80075D20
-u32 dword_CODE_bss_80075D20;
-//CODE.bss:80075D24
-u32 dword_CODE_bss_80075D24;*/
-
-//CODE.bss:80075D00 - 80075D24
-stagesetup g_chraiCurrentSetup; //Public Working Setup
-
-//CODE.bss:80075D28
-u32 dword_CODE_bss_80075D28;
-
-
-//data
-vec3d New_Vec =  {0,0,0}; //a70
-vec3d New_Vec2 =  {0,0,0};//a7c
-coord3d New_Coord = {0,0,0};//a88
-s32 D_80030A94 = 0;
-s32 D_80030A98 = 0;
-s32 D_80030A9C = 0;
-PropRecord *ptr_obj_pos_list_current_entry = 0;
-PropRecord *ptr_obj_pos_list_first_entry = 0;
-PropRecord *ptr_obj_pos_list_final_entry = 0;
-f32 difficulty = 1.0;
-s32 D_80030AB0 = 0;
-s32 D_80030AB4 = 0;
-s32 D_80030AB8 = 0;
-s32 D_80030ABC = 0;
-
 // forward declarations
 
 Gfx *chraiResolveRenderProp(Gfx *arg0, PropRecord *arg1, s32 arg2);
@@ -1547,7 +1369,7 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                 {
                     AIRecord  *ai  = AiListp + Offset;
                     ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
-                    vec3d      vec = New_Vec; //gvector0;
+                    vec3d      vec = {0,0,0};
 
                     if (chr && chr->prop)
                     {
@@ -1567,7 +1389,7 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     {
                         PropRecord      *prop = chrGetEquippedWeaponPropWithCheck(chr1, GUNRIGHT);
                         WeaponObjRecord *weapon;
-                        vec3d            vec = New_Vec2;
+                        vec3d            vec = {0,0,0};
 
                         if (!prop) //not Right hand? try left
                         {
@@ -4710,7 +4532,7 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                 }
                 case AI_GasLeakAndFadeFog:
                 {
-                    coord3d emitPos = New_Coord;
+                    coord3d emitPos = {0,0,0};
                     init_trigger_toxic_gas_effect(&emitPos);
                     Offset += AI_GasLeakAndFadeFog_LENGTH;
                     break;
