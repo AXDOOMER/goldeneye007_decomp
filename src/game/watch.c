@@ -2758,16 +2758,16 @@ Gfx *draw_background_health_and_armor(Gfx *gdl, Mtx *arg1, s32 zoom_squish)
 
     for (i=0; i<WATCH_BACKGROUND_VERTEX_COUNT; i++)
     {
-        sp48[i].unk0F = (s8)g_WatchBackgroundGreen;
-        sp44[i].unk0F = (s8)g_WatchBackgroundGreen;
+        sp48[i].color.a = (s8)g_WatchBackgroundGreen;
+        sp44[i].color.a = (s8)g_WatchBackgroundGreen;
     }
 
     if (g_WatchBackgroundGreen < 0xE0)
     {
-        sub_GAME_7F0A68D8(&g_CurrentPlayer->field_19B8);
+        sub_GAME_7F0A68D8(&g_CurrentPlayer->buffer_for_watch_static_vertices);
 
         gDPSetRenderMode(gdl++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
-        gSPDisplayList(gdl++, OS_PHYSICAL_TO_K0(&g_CurrentPlayer->field_2998));
+        gSPDisplayList(gdl++, OS_PHYSICAL_TO_K0(&g_CurrentPlayer->buffer_for_watch_static_DL));
     }
 
     return gdl;

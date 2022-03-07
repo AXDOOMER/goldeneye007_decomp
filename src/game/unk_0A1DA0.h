@@ -50,23 +50,6 @@ typedef struct s_shattered_window_piece {
     u8 field_0x67;
 } s_shattered_window_piece;
 
-// Used for rendering watch menu
-struct WatchVertex {
-    s8 unk00;
-    s8 unk01;
-    s8 unk02;
-    s8 unk03;
-    s32 unk04;
-    s8 unk08;
-    s8 unk09;
-    s8 unk0A;
-    s8 unk0B;
-    s8 unk0C;
-    s8 unk0D;
-    s8 unk0E;
-    s8 unk0F;
-};
-
 extern s32 SHATTERED_WINDOW_PIECES_BUFFER_LEN;
 extern s_shattered_window_piece* ptr_shattered_window_pieces;
 extern u32 D_80040940;

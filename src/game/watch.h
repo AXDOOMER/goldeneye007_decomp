@@ -35,6 +35,18 @@
 #define WATCHZOOM3 3.95f
 #endif
 
+/**
+ * A static buffer for watch menu current screen rectangles
+ * is added to the player struct. This is a compile time
+ * const to know the size of the buffer.
+*/
+#define WATCH_NUMBER_SCREENS 5
+
+/**
+ * Horizontal spacing between wtch menu screen select rectangles.
+*/
+#define WATCH_SCREEN_SELECT_RECTANGLE_HSPACE 125
+
 typedef enum WATCH_INDEX {
     WATCH_INDEX_MISSION_STATUS = 0,
     WATCH_INDEX_INVENTORY,

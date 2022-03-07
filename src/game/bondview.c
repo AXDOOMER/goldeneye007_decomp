@@ -16041,8 +16041,9 @@ void set_open_close_solo_watch_menu_to1(void) {
  * - identical instructions: no
  * - identical registers: fail
  * 
- * Notes: Problem area is in the foor loop. Single assigment is at the end of the
- * loop and needs to be at the beginning. There is some regalloc issues in the same area.
+ * Notes: Problem area is in the for loop. There is a single assigment at the end of the
+ * loop that needs to be at the beginning.
+ * There is some regalloc issues in the same area.
 */
 void trigger_solo_watch_menu(s32 arg0)
 {
@@ -16095,7 +16096,11 @@ void trigger_solo_watch_menu(s32 arg0)
             */
             ptr_b = &g_CurrentPlayer->buffer_for_watch_greenbackdrop_DL;
             ptr_a = &g_CurrentPlayer->buffer_for_watch_greenbackdrop_vertices;
-            for (i=0; i<625; i+=125, ptr_a = next)
+
+            for (i=0;
+                i<(WATCH_NUMBER_SCREENS * WATCH_SCREEN_SELECT_RECTANGLE_HSPACE);
+                i+=WATCH_SCREEN_SELECT_RECTANGLE_HSPACE,
+                    ptr_a = next)
             {
                 ptr_copy = ptr_a;
                 next = sub_GAME_7F0A3AB8(ptr_a, i, 0, 0x64, 0x14, -0x12B, 0x136);
@@ -16111,10 +16116,10 @@ void trigger_solo_watch_menu(s32 arg0)
              * This section is related to rendering static on the watch menu.
              * Static is defined by a horizontal bar in the middle of the screen.
             */
-            ptr_a = &g_CurrentPlayer->field_19B8;
-            ptr_b = &g_CurrentPlayer->field_2998;
+            ptr_a = &g_CurrentPlayer->buffer_for_watch_static_vertices;
+            ptr_b = &g_CurrentPlayer->buffer_for_watch_static_DL;
 
-            ptr_copy = &g_CurrentPlayer->field_19B8;
+            ptr_copy = &g_CurrentPlayer->buffer_for_watch_static_vertices;
             next = sub_GAME_7F0A3AB8(ptr_a, 0, 0, 0x398, 0x14, -0x1CC, 0);
             ptr_b = sub_GAME_7F0A3B40(ptr_b, OS_K0_TO_PHYSICAL(ptr_copy));
 

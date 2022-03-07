@@ -5,6 +5,7 @@
 #include <bondtypes.h>
 #include "chr.h"
 #include "matrixmath.h"
+#include "watch.h"
 
 typedef struct invitem_weap
 {
@@ -1641,105 +1642,22 @@ struct player
   s32 field_186C;
   s32 field_1870;
   s32 field_1874;
-  s32 buffer_for_watch_greenbackdrop_vertices;
-  s32 field_187C;
-  s32 field_1880;
-  s32 field_1884;
-  s32 field_1888;
-  s32 field_188C;
-  s32 field_1890;
-  s32 field_1894;
-  s32 field_1898;
-  s32 field_189C;
-  s32 field_18A0;
-  s32 field_18A4;
-  s32 field_18A8;
-  s32 field_18AC;
-  s32 field_18B0;
-  s32 field_18B4;
-  s32 field_18B8;
-  s32 field_18BC;
-  s32 field_18C0;
-  s32 field_18C4;
-  s32 field_18C8;
-  s32 field_18CC;
-  s32 field_18D0;
-  s32 field_18D4;
-  s32 field_18D8;
-  s32 field_18DC;
-  s32 field_18E0;
-  s32 field_18E4;
-  s32 field_18E8;
-  s32 field_18EC;
-  s32 field_18F0;
-  s32 field_18F4;
-  s32 field_18F8;
-  s32 field_18FC;
-  s32 field_1900;
-  s32 field_1904;
-  s32 field_1908;
-  s32 field_190C;
-  s32 field_1910;
-  s32 field_1914;
-  s32 field_1918;
-  s32 field_191C;
-  s32 field_1920;
-  s32 field_1924;
-  s32 field_1928;
-  s32 field_192C;
-  s32 field_1930;
-  s32 field_1934;
-  s32 field_1938;
-  s32 field_193C;
-  s32 field_1940;
-  s32 field_1944;
-  s32 field_1948;
-  s32 field_194C;
-  s32 field_1950;
-  s32 field_1954;
-  s32 field_1958;
-  s32 field_195C;
-  s32 field_1960;
-  s32 field_1964;
-  s32 field_1968;
-  s32 field_196C;
-  s32 field_1970;
-  s32 field_1974;
-  s32 field_1978;
-  s32 field_197C;
-  s32 field_1980;
-  s32 field_1984;
-  s32 field_1988;
-  s32 field_198C;
-  s32 field_1990;
-  s32 field_1994;
-  s32 field_1998;
-  s32 field_199C;
-  s32 field_19A0;
-  s32 field_19A4;
-  s32 field_19A8;
-  s32 field_19AC;
-  s32 field_19B0;
-  s32 field_19B4;
-  // end watch vertex buffer
-  s32 field_19B8;
-  s32 field_19BC;
-  s32 field_19C0;
-  s32 field_19C4;
-  s32 field_19C8;
-  s32 field_19CC;
-  s32 field_19D0;
-  s32 field_19D4;
-  s32 field_19D8;
-  s32 field_19DC;
-  s32 field_19E0;
-  s32 field_19E4;
-  s32 field_19E8;
-  s32 field_19EC;
-  s32 field_19F0;
-  s32 field_19F4;
 
+  /**
+   * Offset 0x1878
+  */
+  struct WatchRectangle buffer_for_watch_greenbackdrop_vertices[WATCH_NUMBER_SCREENS];
+
+  /**
+   * Offset 0x19b8
+  */
+  struct WatchRectangle buffer_for_watch_static_vertices[1];
+  
+  /**
+   * Offset 0x19f8
+  */
   s32 watch_body_armor_bar_gdl; // used in watch
+  
   s32 field_19FC;
   s32 field_1A00;
   s32 field_1A04;
@@ -2199,7 +2117,12 @@ struct player
   s32 field_211C;
   s32 field_2120;
   s32 field_2124;
+
+  /**
+   * Offset 0x2128
+  */
   s32 watch_health_bar_gdl; // used in watch
+
   s32 field_212C;
   s32 field_2130;
   s32 field_2134;
@@ -2659,16 +2582,12 @@ struct player
   s32 field_284C;
   s32 field_2850;
   s32 field_2854;
-  s32 buffer_for_watch_greenbackdrop_DL;
-  s32 field_285C;
-  s32 field_2860;
-  s32 field_2864;
-  s32 field_2868;
-  s32 field_286C;
-  s32 field_2870;
-  s32 field_2874;
-  s32 field_2878;
-  s32 field_287C;
+
+  /**
+   * Offset 0x2858
+  */
+  Gfx buffer_for_watch_greenbackdrop_DL[WATCH_NUMBER_SCREENS];
+  
   s32 field_2880;
   s32 field_2884;
   s32 field_2888;
@@ -2739,8 +2658,12 @@ struct player
   s32 field_298C;
   s32 field_2990;
   s32 field_2994;
-  s32 field_2998; // used in watch
-  s32 field_299C;
+  
+  /**
+   * Offset 0x2998
+  */
+  Gfx buffer_for_watch_static_DL[1];
+
   s32 field_29A0;
   s32 field_29A4;
   s32 field_29A8;
