@@ -1482,7 +1482,7 @@ typedef enum SFX_ID
     UNKNOWN2_SFX,               //*
     UNKNOWN3_SFX,               //*
     PUNCHING_AIR_SFX,
-    GUN_B1_MGUN3_3_SFX,         //Used for Spyder (Klobb)
+    GUN_B1_MGUN3_3_SFX,         //Used for Skorpion (Klobb)
     GUN_B2_HEAVY_SFX,           //Used for PPK
     GUN_UNKNOWN_SFX,
     GUN_B4_BOLTACTION_SFX,      //used for AK47

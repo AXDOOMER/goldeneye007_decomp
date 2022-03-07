@@ -4604,7 +4604,7 @@ bool chrHasStoppedOrPatroling(ChrRecord *self) //chrHasStoppedOrPatroling
 /**
  * Address 0x7F029D70.
 */
-s32 chrCheckTargetInSight(ChrRecord *self)
+bool chrCheckTargetInSight(ChrRecord *self)
 {
     PropRecord *myprop;   
     PropRecord *bondprop; 
