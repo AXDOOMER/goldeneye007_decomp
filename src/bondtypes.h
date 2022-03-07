@@ -233,9 +233,20 @@ typedef union
             f32 f[3];
         };
     } coord3d;
-
+#define New_Coord3d(x, y, z)            \
+    {                                   \
+        IF_ELSE(IS_EMPTY(x))            \
+        (0)(x),                         \
+            IF_ELSE(IS_EMPTY(y))(0)(y), \
+            IF_ELSE(IS_EMPTY(z))(0)(z)  \
+    }
     typedef coord3d vec3d; //canononical name
-    #define New_Vector() { 0, 0, 0 }
+#define New_Vector(x, y, z)        \
+    {                              \
+        IF_ELSE(IS_EMPTY(x))(0)(x),\
+        IF_ELSE(IS_EMPTY(y))(0)(y),\
+        IF_ELSE(IS_EMPTY(z))(0)(z) \
+    }
     typedef f32 vec3[3];   //!depreciated
 
     /**

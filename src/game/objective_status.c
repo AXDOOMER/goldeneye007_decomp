@@ -226,7 +226,7 @@ glabel get_difficulty_for_objective
 
 
 
-
+//horrible hack to get ai matching, but it does correctly refrence this func with 2 params
 #pragma weak    objectiveGetStatus_WEAK = get_status_of_objective
 
 /*

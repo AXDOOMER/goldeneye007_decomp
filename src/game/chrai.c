@@ -34,6 +34,7 @@
 #include "cheat_buttons.h"
 #include "player.h"
 #include "file.h"
+#include "fog.h"
 
 
 // bss
@@ -199,13 +200,9 @@ u32 dword_CODE_bss_80075D28;
 
 
 //data
-s32 D_80030A70 = 0;
-s32 D_80030A74 = 0;
-s32 D_80030A78 = 0;
-s32 D_80030A7C = 0;
-s32 D_80030A80 = 0;
-s32 D_80030A84 = 0;
-void* D_80030A88[] = {0,0,0};
+vec3d New_Vec =  {0,0,0}; //a70
+vec3d New_Vec2 =  {0,0,0};//a7c
+coord3d New_Coord = {0,0,0};//a88
 s32 D_80030A94 = 0;
 s32 D_80030A98 = 0;
 s32 D_80030A9C = 0;
@@ -1041,7 +1038,7 @@ PathRecord *pathFindById(s32 ID)
 #ifdef NONMATCHING
 
 //forward
-void sub_GAME_7F03A538(PropRecord *prop);
+extern void sub_GAME_7F03A538(PropRecord *prop);
 //end forward
 extern PadRecord * dword_CODE_bss_800799F8;
 extern CutsceneRecord *gBondViewCutscene;
@@ -1567,7 +1564,7 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                 {
                     AIRecord  *ai  = AiListp + Offset;
                     ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
-                    vec3d      vec = New_Vector(); //gvector0;
+                    vec3d      vec = New_Vec; //gvector0;
 
                     if (chr && chr->prop)
                     {
@@ -1587,7 +1584,7 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     {
                         PropRecord      *prop = chrGetEquippedWeaponPropWithCheck(chr1, GUNRIGHT);
                         WeaponObjRecord *weapon;
-                        vec3d            vec = New_Vector();
+                        vec3d            vec = New_Vec2;
 
                         if (!prop) //not Right hand? try left
                         {
@@ -3242,21 +3239,21 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                 case AI_SetMyFlags2:
                 {
                     AIRecord *ai = AiListp + Offset;
-                    chrSetFlags(ChrEntityp, ai->val[0]);
+                    chrSetFlags2(ChrEntityp, ai->val[0]);
                     Offset += AI_SetMyFlags2_LENGTH;
                     break;
                 }
                 case AI_UnsetMyFlags2:
                 {
                     AIRecord *ai = AiListp + Offset;
-                    chrUnsetFlags(ChrEntityp, ai->val[0]);
+                    chrUnsetFlags2(ChrEntityp, ai->val[0]);
                     Offset += AI_UnsetMyFlags2_LENGTH;
                     break;
                 }
                 case AI_IFMyFlags2Has:
                 {
                     AIRecord *ai = AiListp + Offset;
-                    if (chrHasFlag(ChrEntityp, ai->val[0]))
+                    if (chrHasFlags2(ChrEntityp, ai->val[0]))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
                     }
@@ -3269,21 +3266,21 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                 case AI_SetChrBitfield:
                 {
                     AIRecord *ai = AiListp + Offset;
-                    chrSetFlagsById(ChrEntityp, ai->val[0], ai->val[1]);
+                    chrSetFlags2ById(ChrEntityp, ai->val[0], ai->val[1]);
                     Offset += AI_SetChrBitfield_LENGTH;
                     break;
                 }
                 case AI_UnsetChrBitfield:
                 {
                     AIRecord *ai = AiListp + Offset;
-                    chrUnsetFlagsById(ChrEntityp, ai->val[0], ai->val[1]);
+                    chrUnsetFlags2ById(ChrEntityp, ai->val[0], ai->val[1]);
                     Offset += AI_UnsetChrBitfield_LENGTH;
                     break;
                 }
                 case AI_IFChrBitfieldHas:
                 {
                     AIRecord *ai = AiListp + Offset;
-                    if (chrHasFlagById(ChrEntityp, ai->val[0], ai->val[1]))
+                    if (chrHasFlags2ById(ChrEntityp, ai->val[0], ai->val[1]))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
                     }
@@ -4325,7 +4322,7 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                                 g_CurrentPlayer->field_488.collision_position.z = pos.z;
 
                                 //g_CurrentPlayer->pos = pos;
-                                g_CurrentPlayer->movecentrerelease = stan;
+                                g_CurrentPlayer->field_488.current_tile_ptr = stan;
                             }
                             pass = TRUE;
                         }
@@ -4714,8 +4711,8 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                 }
                 case AI_GasLeakAndFadeFog:
                 {
-                    coord3d *emitPos[3] = D_80030A88; //NEW_COORD; {0,0,0}
-                    init_trigger_toxic_gas_effect(emitPos);
+                    coord3d emitPos = New_Coord;
+                    init_trigger_toxic_gas_effect(&emitPos);
                     Offset += AI_GasLeakAndFadeFog_LENGTH;
                     break;
                 }
@@ -5696,8 +5693,8 @@ action18_Shoot_Guard_ID_In_Style_With_Weapon_Type_num_4:
 /* 06A828 7F035CF8 02E02025 */  move  $a0, $s7
 /* 06A82C 7F035CFC 0FC0CC10 */  jal   chrFindById
 /* 06A830 7F035D00 92250001 */   lbu   $a1, 1($s1)
-/* 06A834 7F035D04 3C188003 */  lui   $t8, %hi(D_80030A70) 
-/* 06A838 7F035D08 27180A70 */  addiu $t8, %lo(D_80030A70) # addiu $t8, $t8, 0xa70
+/* 06A834 7F035D04 3C188003 */  lui   $t8, %hi(New_Vec) 
+/* 06A838 7F035D08 27180A70 */  addiu $t8, %lo(New_Vec) # addiu $t8, $t8, 0xa70
 /* 06A83C 7F035D0C 8F010000 */  lw    $at, ($t8)
 /* 06A840 7F035D10 27AF06F4 */  addiu $t7, $sp, 0x6f4
 /* 06A844 7F035D14 8F090004 */  lw    $t1, 4($t8)
@@ -5741,8 +5738,8 @@ action19_Guard_ID1_Shoots_Guard_ID2_In_Style_4:
 /* 06A8D0 7F035DA0 26520004 */   addiu $s2, $s2, 4
 /* 06A8D4 7F035DA4 0FC08C0F */  jal   chrGetEquippedWeaponPropWithCheck
 /* 06A8D8 7F035DA8 00002825 */   move  $a1, $zero
-/* 06A8DC 7F035DAC 3C0E8003 */  lui   $t6, %hi(D_80030A7C) 
-/* 06A8E0 7F035DB0 25CE0A7C */  addiu $t6, %lo(D_80030A7C) # addiu $t6, $t6, 0xa7c
+/* 06A8DC 7F035DAC 3C0E8003 */  lui   $t6, %hi(New_Vec2) 
+/* 06A8E0 7F035DB0 25CE0A7C */  addiu $t6, %lo(New_Vec2) # addiu $t6, $t6, 0xa7c
 /* 06A8E4 7F035DB4 8DC10000 */  lw    $at, ($t6)
 /* 06A8E8 7F035DB8 27AD06D4 */  addiu $t5, $sp, 0x6d4
 /* 06A8EC 7F035DBC 8DCF0004 */  lw    $t7, 4($t6)
@@ -10513,8 +10510,8 @@ actionFA_Guard_Fawns_On_Shoulder_1:
 /* 06EC28 7F03A0F8 1000ED24 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06EC2C 7F03A0FC 26310001 */   addiu $s1, $s1, 1
 actionFB_SwitchToSkyValuenumAndActivateGasContainersIfExist_:
-/* 06EC30 7F03A100 3C0A8003 */  lui   $t2, %hi(D_80030A88) 
-/* 06EC34 7F03A104 254A0A88 */  addiu $t2, %lo(D_80030A88) # addiu $t2, $t2, 0xa88
+/* 06EC30 7F03A100 3C0A8003 */  lui   $t2, %hi(New_Coord) 
+/* 06EC34 7F03A104 254A0A88 */  addiu $t2, %lo(New_Coord) # addiu $t2, $t2, 0xa88
 /* 06EC38 7F03A108 8D410000 */  lw    $at, ($t2)
 /* 06EC3C 7F03A10C 27A40090 */  addiu $a0, $sp, 0x90
 /* 06EC40 7F03A110 AC810000 */  sw    $at, ($a0)
@@ -11527,8 +11524,8 @@ action18_Shoot_Guard_ID_In_Style_With_Weapon_Type_num_4:
 /* 06A828 7F035CF8 02E02025 */  move  $a0, $s7
 /* 06A82C 7F035CFC 0FC0CC10 */  jal   chrFindById
 /* 06A830 7F035D00 92250001 */   lbu   $a1, 1($s1)
-/* 06A834 7F035D04 3C188003 */  lui   $t8, %hi(D_80030A70) 
-/* 06A838 7F035D08 27180A70 */  addiu $t8, %lo(D_80030A70) # addiu $t8, $t8, 0xa70
+/* 06A834 7F035D04 3C188003 */  lui   $t8, %hi(New_Vec) 
+/* 06A838 7F035D08 27180A70 */  addiu $t8, %lo(New_Vec) # addiu $t8, $t8, 0xa70
 /* 06A83C 7F035D0C 8F010000 */  lw    $at, ($t8)
 /* 06A840 7F035D10 27AF06F4 */  addiu $t7, $sp, 0x6f4
 /* 06A844 7F035D14 8F090004 */  lw    $t1, 4($t8)
@@ -11572,8 +11569,8 @@ action19_Guard_ID1_Shoots_Guard_ID2_In_Style_4:
 /* 06A8D0 7F035DA0 26520004 */   addiu $s2, $s2, 4
 /* 06A8D4 7F035DA4 0FC08C0F */  jal   chrGetEquippedWeaponPropWithCheck
 /* 06A8D8 7F035DA8 00002825 */   move  $a1, $zero
-/* 06A8DC 7F035DAC 3C0E8003 */  lui   $t6, %hi(D_80030A7C) 
-/* 06A8E0 7F035DB0 25CE0A7C */  addiu $t6, %lo(D_80030A7C) # addiu $t6, $t6, 0xa7c
+/* 06A8DC 7F035DAC 3C0E8003 */  lui   $t6, %hi(New_Vec2) 
+/* 06A8E0 7F035DB0 25CE0A7C */  addiu $t6, %lo(New_Vec2) # addiu $t6, $t6, 0xa7c
 /* 06A8E4 7F035DB4 8DC10000 */  lw    $at, ($t6)
 /* 06A8E8 7F035DB8 27AD06D4 */  addiu $t5, $sp, 0x6d4
 /* 06A8EC 7F035DBC 8DCF0004 */  lw    $t7, 4($t6)
@@ -16344,8 +16341,8 @@ actionFA_Guard_Fawns_On_Shoulder_1:
 /* 06EC28 7F03A0F8 1000ED24 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06EC2C 7F03A0FC 26310001 */   addiu $s1, $s1, 1
 actionFB_SwitchToSkyValuenumAndActivateGasContainersIfExist_:
-/* 06EC30 7F03A100 3C0A8003 */  lui   $t2, %hi(D_80030A88) 
-/* 06EC34 7F03A104 254A0A88 */  addiu $t2, %lo(D_80030A88) # addiu $t2, $t2, 0xa88
+/* 06EC30 7F03A100 3C0A8003 */  lui   $t2, %hi(New_Coord) 
+/* 06EC34 7F03A104 254A0A88 */  addiu $t2, %lo(New_Coord) # addiu $t2, $t2, 0xa88
 /* 06EC38 7F03A108 8D410000 */  lw    $at, ($t2)
 /* 06EC3C 7F03A10C 27A40090 */  addiu $a0, $sp, 0x90
 /* 06EC40 7F03A110 AC810000 */  sw    $at, ($a0)
@@ -17360,8 +17357,8 @@ action18_Shoot_Guard_ID_In_Style_With_Weapon_Type_num_4:
 /* 06A828 7F035CF8 02E02025 */  move  $a0, $s7
 /* 06A82C 7F035CFC 0FC0CC10 */  jal   chrFindById
 /* 06A830 7F035D00 92250001 */   lbu   $a1, 1($s1)
-/* 06A834 7F035D04 3C188003 */  lui   $t8, %hi(D_80030A70) 
-/* 06A838 7F035D08 27180A70 */  addiu $t8, %lo(D_80030A70) # addiu $t8, $t8, 0xa70
+/* 06A834 7F035D04 3C188003 */  lui   $t8, %hi(New_Vec) 
+/* 06A838 7F035D08 27180A70 */  addiu $t8, %lo(New_Vec) # addiu $t8, $t8, 0xa70
 /* 06A83C 7F035D0C 8F010000 */  lw    $at, ($t8)
 /* 06A840 7F035D10 27AF06F4 */  addiu $t7, $sp, 0x6f4
 /* 06A844 7F035D14 8F090004 */  lw    $t1, 4($t8)
@@ -17405,8 +17402,8 @@ action19_Guard_ID1_Shoots_Guard_ID2_In_Style_4:
 /* 06A8D0 7F035DA0 26520004 */   addiu $s2, $s2, 4
 /* 06A8D4 7F035DA4 0FC08C0F */  jal   chrGetEquippedWeaponPropWithCheck
 /* 06A8D8 7F035DA8 00002825 */   move  $a1, $zero
-/* 06A8DC 7F035DAC 3C0E8003 */  lui   $t6, %hi(D_80030A7C) 
-/* 06A8E0 7F035DB0 25CE0A7C */  addiu $t6, %lo(D_80030A7C) # addiu $t6, $t6, 0xa7c
+/* 06A8DC 7F035DAC 3C0E8003 */  lui   $t6, %hi(New_Vec2) 
+/* 06A8E0 7F035DB0 25CE0A7C */  addiu $t6, %lo(New_Vec2) # addiu $t6, $t6, 0xa7c
 /* 06A8E4 7F035DB4 8DC10000 */  lw    $at, ($t6)
 /* 06A8E8 7F035DB8 27AD06D4 */  addiu $t5, $sp, 0x6d4
 /* 06A8EC 7F035DBC 8DCF0004 */  lw    $t7, 4($t6)
@@ -22209,8 +22206,8 @@ actionFA_Guard_Fawns_On_Shoulder_1:
 /* 06CBA8 7F03A1B8 1000ED04 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CBAC 7F03A1BC 26310001 */   addiu $s1, $s1, 1
 actionFB_SwitchToSkyValuenumAndActivateGasContainersIfExist_:
-/* 06CBB0 7F03A1C0 3C0F8003 */  lui   $t7, %hi(D_80030A88) # $t7, 0x8003
-/* 06CBB4 7F03A1C4 25EFBFD8 */  addiu $t7, %lo(D_80030A88) # addiu $t7, $t7, -0x4028
+/* 06CBB0 7F03A1C0 3C0F8003 */  lui   $t7, %hi(New_Coord) # $t7, 0x8003
+/* 06CBB4 7F03A1C4 25EFBFD8 */  addiu $t7, %lo(New_Coord) # addiu $t7, $t7, -0x4028
 /* 06CBB8 7F03A1C8 8DE10000 */  lw    $at, ($t7)
 /* 06CBBC 7F03A1CC 27A40090 */  addiu $a0, $sp, 0x90
 /* 06CBC0 7F03A1D0 AC810000 */  sw    $at, ($a0)
@@ -24795,8 +24792,8 @@ void chraiCheckUseHeldItems(void)
 
 
 
-//todo: find out why this forces 21990 data out of alignment
-#ifdef NONMATCHING
+//todo: find out why this forces 21990 data out of alignment 
+#ifndef NONMATCHING
 //https://decomp.me/scratch/QAX0r
 void sub_GAME_7F03C2BC(PropRecord *prop, INV_ITEM_TYPE type) //#MATCH
 {
