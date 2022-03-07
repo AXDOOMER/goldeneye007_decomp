@@ -12489,7 +12489,7 @@ glabel sub_GAME_7F07D960
 
 
 void sub_GAME_7F07DE64(struct player *player) {
-    sub_GAME_7F03DE94(player->prop, player->field_2A04, player);
+    chrpropDeregisterRoom(player->prop, player->field_2A04, player);
     player->field_2A04 = -1;
 }
 
@@ -12513,7 +12513,7 @@ void sub_GAME_7F07DE9C(struct player *player)
     {
         player->field_2A04 = (s16) player->field_488.current_tile_ptr->room;
 
-        sub_GAME_7F03DD9C(player->prop, player->field_2A04);
+        chrpropRegisterRoom(player->prop, player->field_2A04);
     }
 }
 
@@ -28210,7 +28210,7 @@ glabel MoveBond
 /* 0BB170 7F086640 C60A00D0 */  lwc1  $f10, 0xd0($s0)
 /* 0BB174 7F086644 8FA40130 */  lw    $a0, 0x130($sp)
 /* 0BB178 7F086648 46065502 */  mul.s $f20, $f10, $f6
-/* 0BB17C 7F08664C 0FC0FA19 */  jal   sub_GAME_7F03E864
+/* 0BB17C 7F08664C 0FC0FA19 */  jal   chrpropBBOXGetYmin
 /* 0BB180 7F086650 00000000 */   nop
 /* 0BB184 7F086654 8FA20138 */  lw    $v0, 0x138($sp)
 /* 0BB188 7F086658 3C014080 */  li    $at, 0x40800000 # 4.000000
@@ -30751,7 +30751,7 @@ glabel MoveBond
 /* 0BB864 7F086CF4 C60A00D0 */  lwc1  $f10, 0xd0($s0)
 /* 0BB868 7F086CF8 8FA40130 */  lw    $a0, 0x130($sp)
 /* 0BB86C 7F086CFC 46065502 */  mul.s $f20, $f10, $f6
-/* 0BB870 7F086D00 0FC0FAD9 */  jal   sub_GAME_7F03E864
+/* 0BB870 7F086D00 0FC0FAD9 */  jal   chrpropBBOXGetYmin
 /* 0BB874 7F086D04 00000000 */   nop
 /* 0BB878 7F086D08 8FA20138 */  lw    $v0, 0x138($sp)
 /* 0BB87C 7F086D0C 3C014080 */  li    $at, 0x40800000 # 4.000000
@@ -33281,7 +33281,7 @@ glabel MoveBond
 /* 0B9138 7F086748 C60800D0 */  lwc1  $f8, 0xd0($s0)
 /* 0B913C 7F08674C 8FA40130 */  lw    $a0, 0x130($sp)
 /* 0B9140 7F086750 460A4502 */  mul.s $f20, $f8, $f10
-/* 0B9144 7F086754 0FC0FA49 */  jal   sub_GAME_7F03E864
+/* 0B9144 7F086754 0FC0FA49 */  jal   chrpropBBOXGetYmin
 /* 0B9148 7F086758 00000000 */   nop
 /* 0B914C 7F08675C 8FA20138 */  lw    $v0, 0x138($sp)
 /* 0B9150 7F086760 3C014080 */  li    $at, 0x40800000 # 4.000000

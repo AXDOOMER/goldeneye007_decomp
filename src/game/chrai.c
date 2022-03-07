@@ -839,7 +839,7 @@ PathRecord *pathFindById(s32 ID)
 
 
 //forward
-extern void sub_GAME_7F03A538(PropRecord *prop);
+extern void chrpropDelist(PropRecord *prop);
 //end forward
 extern PadRecord * dword_CODE_bss_800799F8;
 extern CutsceneRecord *gBondViewCutscene;
@@ -2365,13 +2365,13 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                         }
                         else
                         {
-                            sub_GAME_7F03E18C(obj->prop);
-                            sub_GAME_7F03A538(obj->prop);
-                            propDisable(obj->prop);
+                            chrpropDeregisterRooms(obj->prop);
+                            chrpropDelist(obj->prop);
+                            chrpropDisable(obj->prop);
                         }
                         if (obj->type != PROPDEF_COLLECTABLE || !sub_GAME_7F051E1C(obj, chr))
                         {
-                            attachNewChild(obj->prop, chr->prop);
+                            chrpropReparent(obj->prop, chr->prop);
                         }
                     }
                     Offset += AI_ChrEquipObject_LENGTH;

@@ -769,7 +769,7 @@ extern s32 propGetPlayerNum                                  ();      //get_cur_
 extern u8 getTileRoom                                        (StandTile *stan);                                                                    // 
 extern void alarmActivate                                    ();                                                                                  // start_alarm
 extern void alarmDeactivate                                  ();                                                                                  // stop_alarm
-extern void attachNewChild                                   (PropRecord *child, PropRecord *parent);
+extern void chrpropReparent                                   (PropRecord *child, PropRecord *parent);
 extern void chrAddHealth                                     (ChrRecord *self, f32 amount);
 extern void chrDropItems                                     (ChrRecord *self);                                                                   // sub_GAME_7F021B20
 extern void chrRestartTimer                                  (ChrRecord *self);                                                                   // reset_and_start_loop_counter//
@@ -807,7 +807,7 @@ extern void matrix_4x4_7F059908                              (Mtxf * matrix, f32
 extern void matrix_scalar_multiply                        (f32 scale, Mtxf *matrix);
 extern void musicPlaySlot                                  (int slot, int min, int sec);//set_musicslot_time
 extern void musicStopSlot                                (int slot);//reset_music_in_slot
-extern void propDisable                                         (PropRecord *prop);                                                                  //propDisable
+extern void chrpropDisable                                         (PropRecord *prop);                                                                  //chrpropDisable
 extern void propobjSetDropped                                (PropRecord *prop, int a);                                                           // sub_GAME_7F04BFD0
 extern void propweaponSetDual                                (WeaponObjRecord *leftweapon, WeaponObjRecord *rightweapon);                         // link_objects
 extern void remove_item_in_hand                              (GUNHAND hand);
@@ -818,10 +818,10 @@ extern void set_unset_bitflags                               (s32 flags, bool un
 extern void setsuboffset                                     (Model *Objinst, coord3d *pos);
 extern void setsubroty                                       (Model *Objinst, f32 direction);
 extern void sub_GAME_7F020D94                                (ChrRecord *self);                                                                   //
-extern void sub_GAME_7F03A538                                (PropRecord *prop);                                                                  //add to proptree
+extern void chrpropDelist                                (PropRecord *prop);                                                                  //add to proptree
 extern void sub_GAME_7F03C2BC                                (PropRecord *prop, int type);
 extern void sub_GAME_7F03D058                                (PropRecord *prop, bool a);
-extern void sub_GAME_7F03E18C                                (PropRecord *prop);
+extern void chrpropDeregisterRooms                                (PropRecord *prop);
 extern void sub_GAME_7F03FDA8                                (PropRecord *prop);
 extern void sub_GAME_7F03FE14                                (PropRecord *prop);
 extern void sub_GAME_7F04088C                                (ObjectRecord *obj, PadRecord *pad, Mtxf *matrix, StandTile *stan, PadRecord *pad2);
@@ -2841,13 +2841,13 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                         }
                         else
                         {
-                            sub_GAME_7F03E18C(obj->prop);
-                            sub_GAME_7F03A538(obj->prop);
-                            propDisable(obj->prop);
+                            chrpropDeregisterRooms(obj->prop);
+                            chrpropDelist(obj->prop);
+                            chrpropDisable(obj->prop);
                         }
                         if (obj->type != PROPDEF_COLLECTABLE || !sub_GAME_7F051E1C(obj, chr))
                         {
-                            attachNewChild(obj->prop, chr->prop);
+                            chrpropReparent(obj->prop, chr->prop);
                         }
                     }
                     Offset += 3;

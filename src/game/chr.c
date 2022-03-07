@@ -2991,7 +2991,7 @@ PropRecord * replace_GUARDdata_with_actual_values( Model * arg0, coord3d * arg1,
     PropRecord * ret;
     s32 phi_a0;
 
-    ret = propAllocate();
+    ret = chrpropAllocate();
 
     if (ret != 0)
     {
@@ -3046,7 +3046,7 @@ void disable_sounds_attached_to_player_then_something(PropRecord *prop)
     }
 
     sub_GAME_7F050DE8(model);
-    sub_GAME_7F03E18C(prop);
+    chrpropDeregisterRooms(prop);
 
     p = prop->child;
     while (p != NULL)
@@ -3120,7 +3120,7 @@ glabel disable_sounds_attached_to_player_then_something
 .L7F0204C8:
 /* 054FF8 7F0204C8 0FC1437A */  jal   sub_GAME_7F050DE8
 /* 054FFC 7F0204CC 8FA40028 */   lw    $a0, 0x28($sp)
-/* 055000 7F0204D0 0FC0F863 */  jal   sub_GAME_7F03E18C
+/* 055000 7F0204D0 0FC0F863 */  jal   chrpropDeregisterRooms
 /* 055004 7F0204D4 02002025 */   move  $a0, $s0
 /* 055008 7F0204D8 8E040020 */  lw    $a0, 0x20($s0)
 /* 05500C 7F0204DC 10800009 */  beqz  $a0, .L7F020504
@@ -4237,9 +4237,9 @@ void chrPositionRelated7F020D94(ChrRecord *self)
     upperbounds.x = myprop->pos.x + 50.0f;
     upperbounds.y = myprop->pos.y + 100.0f;
     upperbounds.z = myprop->pos.z + 50.0f;
-    sub_GAME_7F03E18C(myprop);
+    chrpropDeregisterRooms(myprop);
     sub_GAME_7F03E27C(myprop, &lowerbounds, &upperbounds, 50.0f);
-    sub_GAME_7F03E210(myprop);
+    chrpropRegisterRooms(myprop);
 }
 
 

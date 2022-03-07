@@ -184,7 +184,7 @@ s32 D_80030AB0 = 0;
 
 // forward declarations
 
-Gfx *chraiResolveRenderProp(Gfx *arg0, PropRecord *arg1, s32 arg2);
+Gfx *chrpropRender(Gfx *arg0, PropRecord *arg1, s32 arg2);
 void chraiCheckUseHeldItem(s32 hand);
 void chraiDefaultWeaponFireHandler(s32);
 void chraiFistAttackHandler(s32, s32);
@@ -256,14 +256,14 @@ void chraiUpdateOnscreenPropCount(void)
 }
 
 
-void propEnable(PropRecord *prop)
+void chrpropEnable(PropRecord *prop)
 {
     prop->flags |= PROPFLAG_ENABLED;
 }
 
 
 
-void propDisable(PropRecord *prop)
+void chrpropDisable(PropRecord *prop)
 {
     prop->flags &= ~PROPFLAG_ENABLED;
 }
@@ -286,7 +286,7 @@ PropRecord *get_ptr_obj_pos_list_current_entry(void)
 
 #ifdef NONMATCHING
 //matches except uses a0 instead of a1
-PropRecord* propAllocate(void) {
+PropRecord* chrpropAllocate(void) {
     PropRecord* prop = ptr_obj_pos_list_final_entry;
     if (prop)
     {
@@ -307,7 +307,7 @@ PropRecord* propAllocate(void) {
 #else
 GLOBAL_ASM(
 .text
-glabel propAllocate
+glabel chrpropAllocate
 /* 06EF60 7F03A430 3C058003 */  lui   $a1, %hi(ptr_obj_pos_list_final_entry)
 /* 06EF64 7F03A434 24A50AA8 */  addiu $a1, %lo(ptr_obj_pos_list_final_entry) # addiu $a1, $a1, 0xaa8
 /* 06EF68 7F03A438 8CA30000 */  lw    $v1, ($a1)
@@ -339,7 +339,7 @@ glabel propAllocate
 
 
 
-void propFree(PropRecord *prop)
+void chrpropFree(PropRecord *prop)
 {
     prop->prev = ptr_obj_pos_list_final_entry;
     prop->next = 0x0;
@@ -352,7 +352,7 @@ void propFree(PropRecord *prop)
 
 #ifdef NONMATCHING
 //functionally close, asm out of order
-void propActivate(PropRecord* prop) {
+void chrpropActivate(PropRecord* prop) {
     PropRecord* cur = ptr_obj_pos_list_current_entry;
     if (cur) {
         cur->next = prop;
@@ -372,7 +372,7 @@ void propActivate(PropRecord* prop) {
 #else
 GLOBAL_ASM(
 .text
-glabel propActivate
+glabel chrpropActivate
 /* 06EFD4 7F03A4A4 3C038003 */  lui   $v1, %hi(ptr_obj_pos_list_current_entry)
 /* 06EFD8 7F03A4A8 24630AA0 */  addiu $v1, %lo(ptr_obj_pos_list_current_entry) # addiu $v1, $v1, 0xaa0
 /* 06EFDC 7F03A4AC 8C620000 */  lw    $v0, ($v1)
@@ -402,13 +402,13 @@ glabel propActivate
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03A4F0(void) {
+void chrpropActivateThisFrame(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F03A4F0
+glabel chrpropActivateThisFrame
 /* 06F020 7F03A4F0 3C038003 */  lui   $v1, %hi(ptr_obj_pos_list_first_entry)
 /* 06F024 7F03A4F4 24630AA4 */  addiu $v1, %lo(ptr_obj_pos_list_first_entry) # addiu $v1, $v1, 0xaa4
 /* 06F028 7F03A4F8 8C620000 */  lw    $v0, ($v1)
@@ -436,7 +436,7 @@ glabel sub_GAME_7F03A4F0
 
 
 
-void sub_GAME_7F03A538(PropRecord *prop)
+void chrpropDelist(PropRecord *prop)
 {
     PropRecord *temp_v0;
     PropRecord *temp_v0_2;
@@ -467,7 +467,7 @@ void sub_GAME_7F03A538(PropRecord *prop)
 
 
 
-void attachNewChild(PropRecord *newChild, PropRecord *host)
+void chrpropReparent(PropRecord *newChild, PropRecord *host)
 {
     newChild->parent = host;
 
@@ -488,13 +488,13 @@ void attachNewChild(PropRecord *newChild, PropRecord *host)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03A5D0(void) {
+void chrpropDetach(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F03A5D0
+glabel chrpropDetach
 /* 06F100 7F03A5D0 8C82001C */  lw    $v0, 0x1c($a0)
 /* 06F104 7F03A5D4 10400013 */  beqz  $v0, .L7F03A624
 /* 06F108 7F03A5D8 00000000 */   nop   
@@ -532,34 +532,34 @@ glabel sub_GAME_7F03A5D0
 /**
  * Address 0x7F03A62C.
 */
-Gfx *chraiResolveRenderProp(Gfx * arg0, PropRecord *arg1, s32 arg2)
+Gfx *chrpropRender(Gfx * gdl, PropRecord *prop, s32 withalpha)
 {
-    u8 temp_v0;
+    u8 type;
 
-    temp_v0 = arg1->type;
+    type = prop->type;
 
-    if (temp_v0 == PROP_TYPE_CHR)
+    if (type == PROP_TYPE_CHR)
     {
-        arg0 = chrRenderProp(arg1, arg0, arg2);
+        gdl = chrRenderProp(prop, gdl, withalpha);
     }
-    else if ((temp_v0 == PROP_TYPE_OBJ) || (temp_v0 == PROP_TYPE_WEAPON) || (temp_v0 == PROP_TYPE_DOOR))
+    else if ((type == PROP_TYPE_OBJ) || (type == PROP_TYPE_WEAPON) || (type == PROP_TYPE_DOOR))
     {
-        arg0 = chrobjRenderProp(arg1, arg0, arg2);
+        gdl = chrobjRenderProp(prop, gdl, withalpha);
     }
-    else if (temp_v0 == PROP_TYPE_EXPLOSION)
+    else if (type == PROP_TYPE_EXPLOSION)
     {
-        arg0 = unk09c250RenderPropExplosion(arg1, arg0);
+        gdl = unk09c250RenderPropExplosion(prop, gdl);
     }
-    else if (temp_v0 == PROP_TYPE_SMOKE)
+    else if (type == PROP_TYPE_SMOKE)
     {
-        arg0 = unk09c250RenderPropSmoke(arg1, arg0);
+        gdl = unk09c250RenderPropSmoke(prop, gdl);
     }
-    else if (temp_v0 == PROP_TYPE_VIEWER)
+    else if (type == PROP_TYPE_VIEWER)
     {
-        arg0 = bondviewRenderProp(arg1, arg0, arg2);
+        gdl = bondviewRenderProp(prop, gdl, withalpha);
     }
 
-    return arg0;
+    return gdl;
 }
 
 
@@ -578,7 +578,7 @@ Gfx *chraiResolveRenderProp(Gfx * arg0, PropRecord *arg1, s32 arg2)
  * 
  * notes: can't seem to iterate the prop lists correctly. Maybe type definitions are wrong?
 */
-Gfx *sub_GAME_7F03A6F4(Gfx *arg0, s32 roomid, s32 arg2)
+Gfx *chrpropsRenderPass(Gfx *gdl, s32 roomid, s32 renderpass)
 {
     s32 flag;
     PropRecord **pp;
@@ -592,17 +592,17 @@ Gfx *sub_GAME_7F03A6F4(Gfx *arg0, s32 roomid, s32 arg2)
 
     if (bossGetStageNum() == LEVELID_CUBA)
     {
-        if (arg2 == 0)
+        if (renderpass == 0)
         {
-            return arg0;
+            return gdl;
         }
-        else if (arg2 == 2)
+        else if (renderpass == 2)
         {
-            arg2 = 0;
+            renderpass = 0;
         }
     }
 
-    if ((arg2 == 0) || (arg2 == 2))
+    if ((renderpass == 0) || (renderpass == 2))
     {
         for (pp = g_LastOnScreenProp; --pp >= g_OnScreenPropList; )
         {
@@ -612,11 +612,11 @@ Gfx *sub_GAME_7F03A6F4(Gfx *arg0, s32 roomid, s32 arg2)
             {
                 flag = 0;
 
-                if ((arg2 == 0) && ((prop->flags & 0x21) == 0))
+                if ((renderpass == 0) && ((prop->flags & 0x21) == 0))
                 {
                     flag = 1;
                 }
-                else if ((arg2 == 2) && ((prop->flags & 0x21) == 1))
+                else if ((renderpass == 2) && ((prop->flags & 0x21) == 1))
                 {
                     flag = 1;
                 }
@@ -642,7 +642,7 @@ Gfx *sub_GAME_7F03A6F4(Gfx *arg0, s32 roomid, s32 arg2)
 
                     if (flag)
                     {
-                        arg0 = chraiResolveRenderProp(arg0, prop, 0);
+                        gdl = chrpropRender(gdl, prop, 0);
                     }
                 }
             }
@@ -683,21 +683,21 @@ Gfx *sub_GAME_7F03A6F4(Gfx *arg0, s32 roomid, s32 arg2)
                 {
                     if (prop->flags & 0x20)
                     {
-                        arg0 = chraiResolveRenderProp(arg0, prop, 0);
+                        gdl = chrpropRender(gdl, prop, 0);
                     }
 
-                    arg0 = chraiResolveRenderProp(arg0, prop, 1);
+                    gdl = chrpropRender(gdl, prop, 1);
                 }
             }
         }
     }
 
-    return bgScissorCurrentPlayerViewDefault(arg0);
+    return bgScissorCurrentPlayerViewDefault(gdl);
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F03A6F4
+glabel chrpropsRenderPass
 /* 06F224 7F03A6F4 27BDFF90 */  addiu $sp, $sp, -0x70
 /* 06F228 7F03A6F8 AFBF0034 */  sw    $ra, 0x34($sp)
 /* 06F22C 7F03A6FC AFB70030 */  sw    $s7, 0x30($sp)
@@ -791,7 +791,7 @@ glabel sub_GAME_7F03A6F4
 /* 06F364 7F03A834 12200005 */  beqz  $s1, .L7F03A84C
 /* 06F368 7F03A838 02802025 */   move  $a0, $s4
 /* 06F36C 7F03A83C 02402825 */  move  $a1, $s2
-/* 06F370 7F03A840 0FC0E98B */  jal   chraiResolveRenderProp
+/* 06F370 7F03A840 0FC0E98B */  jal   chrpropRender
 /* 06F374 7F03A844 00003025 */   move  $a2, $zero
 /* 06F378 7F03A848 0040A025 */  move  $s4, $v0
 .L7F03A84C:
@@ -850,13 +850,13 @@ glabel sub_GAME_7F03A6F4
 /* 06F438 7F03A908 31090020 */  andi  $t1, $t0, 0x20
 /* 06F43C 7F03A90C 51200005 */  beql  $t1, $zero, .L7F03A924
 /* 06F440 7F03A910 02802025 */   move  $a0, $s4
-/* 06F444 7F03A914 0FC0E98B */  jal   chraiResolveRenderProp
+/* 06F444 7F03A914 0FC0E98B */  jal   chrpropRender
 /* 06F448 7F03A918 00003025 */   move  $a2, $zero
 /* 06F44C 7F03A91C 0040A025 */  move  $s4, $v0
 /* 06F450 7F03A920 02802025 */  move  $a0, $s4
 .L7F03A924:
 /* 06F454 7F03A924 02402825 */  move  $a1, $s2
-/* 06F458 7F03A928 0FC0E98B */  jal   chraiResolveRenderProp
+/* 06F458 7F03A928 0FC0E98B */  jal   chrpropRender
 /* 06F45C 7F03A92C 24060001 */   li    $a2, 1
 /* 06F460 7F03A930 0040A025 */  move  $s4, $v0
 .L7F03A934:
@@ -2722,30 +2722,30 @@ void sub_GAME_7F03C2BC(PropRecord *prop, INV_ITEM_TYPE type) //#MATCH
                 propobj->runtime_bitflags &= ~4;
                 propobj->state &= ~0x80;
                 propobj->maxdamage = 0.0f;
-                sub_GAME_7F03E18C(prop);
-                propDisable(prop);
+                chrpropDeregisterRooms(prop);
+                chrpropDisable(prop);
                 return;
             }
         }
-        sub_GAME_7F03E18C(prop);
-        sub_GAME_7F03A538(prop);
-        propDisable(prop);
-        propFree(prop);
+        chrpropDeregisterRooms(prop);
+        chrpropDelist(prop);
+        chrpropDisable(prop);
+        chrpropFree(prop);
     }
     else if (type == INV_ITEM_PROP)
     {
-        sub_GAME_7F03E18C(prop);
-        sub_GAME_7F03A538(prop);
-        propDisable(prop);
+        chrpropDeregisterRooms(prop);
+        chrpropDelist(prop);
+        chrpropDisable(prop);
     }
     else if (type == INV_ITEM_PICKUP)
     {
-        sub_GAME_7F03E18C(prop);
-        sub_GAME_7F03A538(prop);
-        propDisable(prop);
+        chrpropDeregisterRooms(prop);
+        chrpropDelist(prop);
+        chrpropDisable(prop);
         sub_GAME_7F04C044(prop);
         sub_GAME_7F040CF0(prop);
-        attachNewChild(prop, get_curplayer_positiondata());
+        chrpropReparent(prop, get_curplayer_positiondata());
     }
 }
 
@@ -3083,9 +3083,9 @@ glabel handle_mp_respawn_and_some_things
 /* 0712DC 7F03C7AC 31098000 */  andi  $t1, $t0, 0x8000
 /* 0712E0 7F03C7B0 11200023 */  beqz  $t1, .L7F03C840
 /* 0712E4 7F03C7B4 00000000 */   nop   
-/* 0712E8 7F03C7B8 0FC0F863 */  jal   sub_GAME_7F03E18C
+/* 0712E8 7F03C7B8 0FC0F863 */  jal   chrpropDeregisterRooms
 /* 0712EC 7F03C7BC 02202025 */   move  $a0, $s1
-/* 0712F0 7F03C7C0 0FC0E94E */  jal   sub_GAME_7F03A538
+/* 0712F0 7F03C7C0 0FC0E94E */  jal   chrpropDelist
 /* 0712F4 7F03C7C4 02202025 */   move  $a0, $s1
 /* 0712F8 7F03C7C8 8E0A0064 */  lw    $t2, 0x64($s0)
 /* 0712FC 7F03C7CC 2401F7FF */  li    $at, -2049
@@ -3113,12 +3113,12 @@ glabel handle_mp_respawn_and_some_things
 /* 071354 7F03C824 AFA20028 */   sw    $v0, 0x28($sp)
 /* 071358 7F03C828 8FA30028 */  lw    $v1, 0x28($sp)
 /* 07135C 7F03C82C 8E040010 */  lw    $a0, 0x10($s0)
-/* 071360 7F03C830 0FC0E969 */  jal   attachNewChild
+/* 071360 7F03C830 0FC0E969 */  jal   chrpropReparent
 /* 071364 7F03C834 8C650010 */   lw    $a1, 0x10($v1)
 /* 071368 7F03C838 1000001C */  b     .L7F03C8AC
 /* 07136C 7F03C83C 24130001 */   li    $s3, 1
 .L7F03C840:
-/* 071370 7F03C840 0FC0E901 */  jal   propEnable
+/* 071370 7F03C840 0FC0E901 */  jal   chrpropEnable
 /* 071374 7F03C844 02202025 */   move  $a0, $s1
 /* 071378 7F03C848 0FC0F84D */  jal   sub_GAME_7F03E134
 /* 07137C 7F03C84C 02202025 */   move  $a0, $s1
@@ -3236,9 +3236,9 @@ glabel handle_mp_respawn_and_some_things
 .L7F03C9D8:
 /* 071508 7F03C9D8 16410009 */  bne   $s2, $at, .L7F03CA00
 /* 07150C 7F03C9DC 8E300024 */   lw    $s0, 0x24($s1)
-/* 071510 7F03C9E0 0FC0E94E */  jal   sub_GAME_7F03A538
+/* 071510 7F03C9E0 0FC0E94E */  jal   chrpropDelist
 /* 071514 7F03C9E4 02202025 */   move  $a0, $s1
-/* 071518 7F03C9E8 0FC0E93C */  jal   sub_GAME_7F03A4F0
+/* 071518 7F03C9E8 0FC0E93C */  jal   chrpropActivateThisFrame
 /* 07151C 7F03C9EC 02202025 */   move  $a0, $s1
 /* 071520 7F03C9F0 16000006 */  bnez  $s0, .L7F03CA0C
 /* 071524 7F03C9F4 00000000 */   nop   
@@ -3366,9 +3366,9 @@ glabel handle_mp_respawn_and_some_things
 /* 06F25C 7F03C86C 31098000 */  andi  $t1, $t0, 0x8000
 /* 06F260 7F03C870 11200023 */  beqz  $t1, .L7F03C900
 /* 06F264 7F03C874 00000000 */   nop   
-/* 06F268 7F03C878 0FC0F893 */  jal   sub_GAME_7F03E18C
+/* 06F268 7F03C878 0FC0F893 */  jal   chrpropDeregisterRooms
 /* 06F26C 7F03C87C 02202025 */   move  $a0, $s1
-/* 06F270 7F03C880 0FC0E97E */  jal   sub_GAME_7F03A538
+/* 06F270 7F03C880 0FC0E97E */  jal   chrpropDelist
 /* 06F274 7F03C884 02202025 */   move  $a0, $s1
 /* 06F278 7F03C888 8E0A0064 */  lw    $t2, 0x64($s0)
 /* 06F27C 7F03C88C 2401F7FF */  li    $at, -2049
@@ -3396,12 +3396,12 @@ glabel handle_mp_respawn_and_some_things
 /* 06F2D4 7F03C8E4 AFA20028 */   sw    $v0, 0x28($sp)
 /* 06F2D8 7F03C8E8 8FA30028 */  lw    $v1, 0x28($sp)
 /* 06F2DC 7F03C8EC 8E040010 */  lw    $a0, 0x10($s0)
-/* 06F2E0 7F03C8F0 0FC0E999 */  jal   attachNewChild
+/* 06F2E0 7F03C8F0 0FC0E999 */  jal   chrpropReparent
 /* 06F2E4 7F03C8F4 8C650010 */   lw    $a1, 0x10($v1)
 /* 06F2E8 7F03C8F8 1000001C */  b     .L7F03C96C
 /* 06F2EC 7F03C8FC 24130001 */   li    $s3, 1
 .L7F03C900:
-/* 06F2F0 7F03C900 0FC0E931 */  jal   propEnable
+/* 06F2F0 7F03C900 0FC0E931 */  jal   chrpropEnable
 /* 06F2F4 7F03C904 02202025 */   move  $a0, $s1
 /* 06F2F8 7F03C908 0FC0F87D */  jal   sub_GAME_7F03E134
 /* 06F2FC 7F03C90C 02202025 */   move  $a0, $s1
@@ -3519,9 +3519,9 @@ glabel handle_mp_respawn_and_some_things
 .L7F03CA98:
 /* 06F488 7F03CA98 16410009 */  bne   $s2, $at, .L7F03CAC0
 /* 06F48C 7F03CA9C 8E300024 */   lw    $s0, 0x24($s1)
-/* 06F490 7F03CAA0 0FC0E97E */  jal   sub_GAME_7F03A538
+/* 06F490 7F03CAA0 0FC0E97E */  jal   chrpropDelist
 /* 06F494 7F03CAA4 02202025 */   move  $a0, $s1
-/* 06F498 7F03CAA8 0FC0E96C */  jal   sub_GAME_7F03A4F0
+/* 06F498 7F03CAA8 0FC0E96C */  jal   chrpropActivateThisFrame
 /* 06F49C 7F03CAAC 02202025 */   move  $a0, $s1
 /* 06F4A0 7F03CAB0 16000006 */  bnez  $s0, .L7F03CACC
 /* 06F4A4 7F03CAB4 00000000 */   nop   
@@ -3623,9 +3623,9 @@ glabel determing_type_of_object_and_detection
 .L7F03CB08:
 /* 071638 7F03CB08 14B30009 */  bne   $a1, $s3, .L7F03CB30
 /* 07163C 7F03CB0C 8E110024 */   lw    $s1, 0x24($s0)
-/* 071640 7F03CB10 0FC0E94E */  jal   sub_GAME_7F03A538
+/* 071640 7F03CB10 0FC0E94E */  jal   chrpropDelist
 /* 071644 7F03CB14 02002025 */   move  $a0, $s0
-/* 071648 7F03CB18 0FC0E93C */  jal   sub_GAME_7F03A4F0
+/* 071648 7F03CB18 0FC0E93C */  jal   chrpropActivateThisFrame
 /* 07164C 7F03CB1C 02002025 */   move  $a0, $s0
 /* 071650 7F03CB20 16200005 */  bnez  $s1, .L7F03CB38
 /* 071654 7F03CB24 00000000 */   nop   
@@ -4958,7 +4958,7 @@ glabel sub_GAME_7F03DCB8
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03DD9C(PropRecord *arg0, s16 arg1)
+void chrpropRegisterRoom(PropRecord *arg0, s16 arg1)
 {
     s16 temp_s0;
     s16 temp_s0_2;
@@ -5004,7 +5004,7 @@ block_5:
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F03DD9C
+glabel chrpropRegisterRoom
 /* 0728CC 7F03DD9C 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 0728D0 7F03DDA0 AFA5002C */  sw    $a1, 0x2c($sp)
 /* 0728D4 7F03DDA4 87AE002E */  lh    $t6, 0x2e($sp)
@@ -5077,10 +5077,10 @@ glabel sub_GAME_7F03DD9C
 
 
 
-void sub_GAME_7F03DE94(PropRecord *arg0, s16 room);
+void chrpropDeregisterRoom(PropRecord *arg0, s16 room);
 
 #ifdef NONMATCHING
-void sub_GAME_7F03DE94(PropRecord *arg0, s16 arg1)
+void chrpropDeregisterRoom(PropRecord *arg0, s16 arg1)
 {
     s16 *temp_s0;
     s16 *temp_t5_3;
@@ -5262,7 +5262,7 @@ loop_3:
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F03DE94
+glabel chrpropDeregisterRoom
 /* 0729C4 7F03DE94 27BDFFF0 */  addiu $sp, $sp, -0x10
 /* 0729C8 7F03DE98 00057400 */  sll   $t6, $a1, 0x10
 /* 0729CC 7F03DE9C 000E7C03 */  sra   $t7, $t6, 0x10
@@ -5505,7 +5505,7 @@ glabel sub_GAME_7F03E134
 
 
     // Duplicate of the below function with a small extension.
-void sub_GAME_7F03E18C(PropRecord *prop)
+void chrpropDeregisterRooms(PropRecord *prop)
 {
     u8  room;
     u8 *roomIter;
@@ -5515,7 +5515,7 @@ void sub_GAME_7F03E18C(PropRecord *prop)
 
     while (room != (u8)-1)
     {
-        sub_GAME_7F03DE94(prop, room);
+        chrpropDeregisterRoom(prop, room);
         roomIter += 1;
         room = *roomIter;
     }
@@ -5528,7 +5528,7 @@ void sub_GAME_7F03E18C(PropRecord *prop)
 
 
 
-void sub_GAME_7F03E210(PropRecord *prop)
+void chrpropRegisterRooms(PropRecord *prop)
 {
     u8  room;
     u8 *roomIter;
@@ -5538,7 +5538,7 @@ void sub_GAME_7F03E210(PropRecord *prop)
 
     while (room != (u8)-1)
     {
-        sub_GAME_7F03DD9C(prop, room);
+        chrpropRegisterRoom(prop, room);
         roomIter += 1;
         room = *roomIter;
     }
@@ -5888,18 +5888,11 @@ glabel sub_GAME_7F03E4F0
 
 
 
-#ifdef NONMATCHING
+
 void removed_debug_roomblocks_feature(void) {
 
 }
-#else
-GLOBAL_ASM(
-.text
-glabel removed_debug_roomblocks_feature
-/* 0731C8 7F03E698 03E00008 */  jr    $ra
-/* 0731CC 7F03E69C 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -6087,21 +6080,21 @@ glabel sub_GAME_7F03E830
 
 
 
-f32 sub_GAME_7F03E85C(ModelNode_BoundingBoxRecord *modelBoundingBox)
+f32 chrpropBBOXGetXmin(ModelNode_BoundingBoxRecord *modelBoundingBox)
 {
     return modelBoundingBox->Bounds.xmin;
 }
 
-f32 sub_GAME_7F03E864(ModelNode_BoundingBoxRecord *modelBoundingBox)
+f32 chrpropBBOXGetYmin(ModelNode_BoundingBoxRecord *modelBoundingBox)
 {
     return modelBoundingBox->Bounds.ymin;
 }
 
-f32 sub_GAME_7F03E86C(ModelNode_BoundingBoxRecord *modelBoundingBox)
+f32 chrpropBBOXGetYmax(ModelNode_BoundingBoxRecord *modelBoundingBox)
 {
     return modelBoundingBox->Bounds.ymax;
 }
-f32 sub_GAME_7F03E874(ModelNode_BoundingBoxRecord *modelBoundingBox)
+f32 chrpropBBOXGetZmin(ModelNode_BoundingBoxRecord *modelBoundingBox)
 {
     return modelBoundingBox->Bounds.zmin;
 }

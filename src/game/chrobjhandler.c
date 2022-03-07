@@ -1942,7 +1942,7 @@ glabel init_standard_object
 /* 075090 7F040560 14C00007 */  bnez  $a2, .L7F040580
 /* 075094 7F040564 AFBF001C */   sw    $ra, 0x1c($sp)
 /* 075098 7F040568 AFA50024 */  sw    $a1, 0x24($sp)
-/* 07509C 7F04056C 0FC0E90C */  jal   propAllocate
+/* 07509C 7F04056C 0FC0E90C */  jal   chrpropAllocate
 /* 0750A0 7F040570 AFA7002C */   sw    $a3, 0x2c($sp)
 /* 0750A4 7F040574 8FA50024 */  lw    $a1, 0x24($sp)
 /* 0750A8 7F040578 8FA7002C */  lw    $a3, 0x2c($sp)
@@ -2040,7 +2040,7 @@ glabel init_standard_object
 .L7F0406CC:
 /* 0751FC 7F0406CC 52200005 */  beql  $s1, $zero, .L7F0406E4
 /* 075200 7F0406D0 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 075204 7F0406D4 0FC0E921 */  jal   propFree
+/* 075204 7F0406D4 0FC0E921 */  jal   chrpropFree
 /* 075208 7F0406D8 02202025 */   move  $a0, $s1
 /* 07520C 7F0406DC 00008825 */  move  $s1, $zero
 .L7F0406E0:
@@ -2210,8 +2210,8 @@ void sub_GAME_7F04088C(ObjectRecord *baseobj, PadRecord *pad, Mtxf *matrix, Stan
 {
     int                          padd[1];
     ModelNode_BoundingBoxRecord *modelBoundingBox = sub_GAME_7F03FFF8(baseobj->model->obj); //GetBoundingBox //a0 yes
-    f32                          xmax             = sub_GAME_7F03E864(modelBoundingBox);    //GetXMax//9c yes
-    f32                          ymin             = sub_GAME_7F03E86C(modelBoundingBox);    //GetYMin//98 yes
+    f32                          xmax             = chrpropBBOXGetYmin(modelBoundingBox);    //GetXMax//9c yes
+    f32                          ymin             = chrpropBBOXGetYmax(modelBoundingBox);    //GetYMin//98 yes
     coord3d                      newPos;                                                    //8c 90 94 yes
     StandTile *                  mStan = stan;                                              //88
     Mtxf                         mtxcopy;                                                   //48 yes (size 0x40)
@@ -2315,10 +2315,10 @@ glabel sub_GAME_7F04088C
 /* 0753DC 7F0408AC 0FC0FFFE */  jal   sub_GAME_7F03FFF8
 /* 0753E0 7F0408B0 8DC40008 */   lw    $a0, 8($t6)
 /* 0753E4 7F0408B4 AFA200A0 */  sw    $v0, 0xa0($sp)
-/* 0753E8 7F0408B8 0FC0FA19 */  jal   sub_GAME_7F03E864
+/* 0753E8 7F0408B8 0FC0FA19 */  jal   chrpropBBOXGetYmin
 /* 0753EC 7F0408BC 00402025 */   move  $a0, $v0
 /* 0753F0 7F0408C0 8FA400A0 */  lw    $a0, 0xa0($sp)
-/* 0753F4 7F0408C4 0FC0FA1B */  jal   sub_GAME_7F03E86C
+/* 0753F4 7F0408C4 0FC0FA1B */  jal   chrpropBBOXGetYmax
 /* 0753F8 7F0408C8 E7A0009C */   swc1  $f0, 0x9c($sp)
 /* 0753FC 7F0408CC 8FA700B4 */  lw    $a3, 0xb4($sp)
 /* 075400 7F0408D0 E7A00098 */  swc1  $f0, 0x98($sp)
@@ -2539,7 +2539,7 @@ glabel sub_GAME_7F040BA0
 /* 0756EC 7F040BBC 00808025 */  move  $s0, $a0
 /* 0756F0 7F040BC0 0FC0FFFE */  jal   sub_GAME_7F03FFF8
 /* 0756F4 7F040BC4 8DC40008 */   lw    $a0, 8($t6)
-/* 0756F8 7F040BC8 0FC0FA1D */  jal   sub_GAME_7F03E874
+/* 0756F8 7F040BC8 0FC0FA1D */  jal   chrpropBBOXGetZmin
 /* 0756FC 7F040BCC 00402025 */   move  $a0, $v0
 /* 075700 7F040BD0 8FAF00D4 */  lw    $t7, 0xd4($sp)
 /* 075704 7F040BD4 3C018005 */  lui   $at, %hi(D_80052A50)
@@ -2821,7 +2821,7 @@ glabel objFree
 /* 075A98 7F040F68 02202025 */   move  $a0, $s1
 /* 075A9C 7F040F6C 8E510010 */  lw    $s1, 0x10($s2)
 .L7F040F70:
-/* 075AA0 7F040F70 0FC0F863 */  jal   sub_GAME_7F03E18C
+/* 075AA0 7F040F70 0FC0F863 */  jal   chrpropDeregisterRooms
 /* 075AA4 7F040F74 02202025 */   move  $a0, $s1
 /* 075AA8 7F040F78 8E510010 */  lw    $s1, 0x10($s2)
 /* 075AAC 7F040F7C 8E300020 */  lw    $s0, 0x20($s1)
@@ -2858,11 +2858,11 @@ glabel objFree
 .L7F040FE8:
 /* 075B18 7F040FE8 53200008 */  beql  $t9, $zero, .L7F04100C
 /* 075B1C 7F040FEC AE400010 */   sw    $zero, 0x10($s2)
-/* 075B20 7F040FF0 0FC0E94E */  jal   sub_GAME_7F03A538
+/* 075B20 7F040FF0 0FC0E94E */  jal   chrpropDelist
 /* 075B24 7F040FF4 8E440010 */   lw    $a0, 0x10($s2)
-/* 075B28 7F040FF8 0FC0E905 */  jal   propDisable
+/* 075B28 7F040FF8 0FC0E905 */  jal   chrpropDisable
 /* 075B2C 7F040FFC 8E440010 */   lw    $a0, 0x10($s2)
-/* 075B30 7F041000 0FC0E921 */  jal   propFree
+/* 075B30 7F041000 0FC0E921 */  jal   chrpropFree
 /* 075B34 7F041004 8E440010 */   lw    $a0, 0x10($s2)
 /* 075B38 7F041008 AE400010 */  sw    $zero, 0x10($s2)
 .L7F04100C:
@@ -5961,7 +5961,7 @@ glabel sub_GAME_7F0439B8
 /* 078530 7F043A00 8E0F0014 */  lw    $t7, 0x14($s0)
 /* 078534 7F043A04 0FC0FFFE */  jal   sub_GAME_7F03FFF8
 /* 078538 7F043A08 8DE40008 */   lw    $a0, 8($t7)
-/* 07853C 7F043A0C 0FC0FA19 */  jal   sub_GAME_7F03E864
+/* 07853C 7F043A0C 0FC0FA19 */  jal   chrpropBBOXGetYmin
 /* 078540 7F043A10 00402025 */   move  $a0, $v0
 /* 078544 7F043A14 C6060028 */  lwc1  $f6, 0x28($s0)
 /* 078548 7F043A18 C6040058 */  lwc1  $f4, 0x58($s0)
@@ -6024,11 +6024,11 @@ glabel sub_GAME_7F043A6C
 /* 0785F0 7F043AC0 8E190064 */  lw    $t9, 0x64($s0)
 /* 0785F4 7F043AC4 02202025 */  move  $a0, $s1
 /* 0785F8 7F043AC8 37280040 */  ori   $t0, $t9, 0x40
-/* 0785FC 7F043ACC 0FC0F863 */  jal   sub_GAME_7F03E18C
+/* 0785FC 7F043ACC 0FC0F863 */  jal   chrpropDeregisterRooms
 /* 078600 7F043AD0 AE080064 */   sw    $t0, 0x64($s0)
-/* 078604 7F043AD4 0FC0E94E */  jal   sub_GAME_7F03A538
+/* 078604 7F043AD4 0FC0E94E */  jal   chrpropDelist
 /* 078608 7F043AD8 02202025 */   move  $a0, $s1
-/* 07860C 7F043ADC 0FC0E905 */  jal   propDisable
+/* 07860C 7F043ADC 0FC0E905 */  jal   chrpropDisable
 /* 078610 7F043AE0 02202025 */   move  $a0, $s1
 /* 078614 7F043AE4 8FA900F8 */  lw    $t1, 0xf8($sp)
 /* 078618 7F043AE8 8E0A0014 */  lw    $t2, 0x14($s0)
@@ -6037,7 +6037,7 @@ glabel sub_GAME_7F043A6C
 /* 078624 7F043AF4 8E0C0014 */  lw    $t4, 0x14($s0)
 /* 078628 7F043AF8 8FAB00FC */  lw    $t3, 0xfc($sp)
 /* 07862C 7F043AFC AD8B001C */  sw    $t3, 0x1c($t4)
-/* 078630 7F043B00 0FC0E969 */  jal   attachNewChild
+/* 078630 7F043B00 0FC0E969 */  jal   chrpropReparent
 /* 078634 7F043B04 8FA500F4 */   lw    $a1, 0xf4($sp)
 /* 078638 7F043B08 27B100AC */  addiu $s1, $sp, 0xac
 /* 07863C 7F043B0C 02202825 */  move  $a1, $s1
@@ -8728,7 +8728,7 @@ glabel sub_GAME_7F044B38
 /* 079C58 7F045128 8FA50148 */  lw    $a1, 0x148($sp)
 /* 079C5C 7F04512C 0FC16106 */  jal   matrix_4x4_transform_vector
 /* 079C60 7F045130 27A60124 */   addiu $a2, $sp, 0x124
-/* 079C64 7F045134 0FC0FA19 */  jal   sub_GAME_7F03E864
+/* 079C64 7F045134 0FC0FA19 */  jal   chrpropBBOXGetYmin
 /* 079C68 7F045138 8FA400C0 */   lw    $a0, 0xc0($sp)
 /* 079C6C 7F04513C 8FB80154 */  lw    $t8, 0x154($sp)
 /* 079C70 7F045140 C7A80134 */  lwc1  $f8, 0x134($sp)
@@ -8753,7 +8753,7 @@ glabel sub_GAME_7F044B38
 /* 079CB8 7F045188 0FC2CA5C */  jal   stanGetPositionYValue
 /* 079CBC 7F04518C 8E260010 */   lw    $a2, 0x10($s1)
 /* 079CC0 7F045190 E7A0005C */  swc1  $f0, 0x5c($sp)
-/* 079CC4 7F045194 0FC0FA19 */  jal   sub_GAME_7F03E864
+/* 079CC4 7F045194 0FC0FA19 */  jal   chrpropBBOXGetYmin
 /* 079CC8 7F045198 8FA400C0 */   lw    $a0, 0xc0($sp)
 /* 079CCC 7F04519C 8FA80148 */  lw    $t0, 0x148($sp)
 /* 079CD0 7F0451A0 8FA90154 */  lw    $t1, 0x154($sp)
@@ -28654,7 +28654,7 @@ glabel sub_GAME_7F04B610
 /* 080408 7F04B8D8 0FC0FFFE */  jal   sub_GAME_7F03FFF8
 /* 08040C 7F04B8DC E7A4005C */   swc1  $f4, 0x5c($sp)
 /* 080410 7F04B8E0 00408025 */  move  $s0, $v0
-/* 080414 7F04B8E4 0FC0FA19 */  jal   sub_GAME_7F03E864
+/* 080414 7F04B8E4 0FC0FA19 */  jal   chrpropBBOXGetYmin
 /* 080418 7F04B8E8 00402025 */   move  $a0, $v0
 /* 08041C 7F04B8EC C7A6005C */  lwc1  $f6, 0x5c($sp)
 /* 080420 7F04B8F0 3C018005 */  lui   $at, %hi(D_80052CB8)
@@ -28665,7 +28665,7 @@ glabel sub_GAME_7F04B610
 /* 080434 7F04B904 C452000C */  lwc1  $f18, 0xc($v0)
 /* 080438 7F04B908 460A4402 */  mul.s $f16, $f8, $f10
 /* 08043C 7F04B90C 46109100 */  add.s $f4, $f18, $f16
-/* 080440 7F04B910 0FC0FA19 */  jal   sub_GAME_7F03E864
+/* 080440 7F04B910 0FC0FA19 */  jal   chrpropBBOXGetYmin
 /* 080444 7F04B914 E444000C */   swc1  $f4, 0xc($v0)
 /* 080448 7F04B918 C7A6005C */  lwc1  $f6, 0x5c($sp)
 /* 08044C 7F04B91C 3C018005 */  lui   $at, %hi(D_80052CBC)
@@ -29146,7 +29146,7 @@ glabel sub_GAME_7F04B610
 /* 07E4BC 7F04BACC 0FC1002E */  jal   sub_GAME_7F03FFF8
 /* 07E4C0 7F04BAD0 E7A4005C */   swc1  $f4, 0x5c($sp)
 /* 07E4C4 7F04BAD4 00408025 */  move  $s0, $v0
-/* 07E4C8 7F04BAD8 0FC0FA49 */  jal   sub_GAME_7F03E864
+/* 07E4C8 7F04BAD8 0FC0FA49 */  jal   chrpropBBOXGetYmin
 /* 07E4CC 7F04BADC 00402025 */   move  $a0, $v0
 /* 07E4D0 7F04BAE0 C7A6005C */  lwc1  $f6, 0x5c($sp)
 /* 07E4D4 7F04BAE4 3C018005 */  lui   $at, %hi(D_80052CB8) # $at, 0x8005
@@ -29157,7 +29157,7 @@ glabel sub_GAME_7F04B610
 /* 07E4E8 7F04BAF8 C452000C */  lwc1  $f18, 0xc($v0)
 /* 07E4EC 7F04BAFC 460A4402 */  mul.s $f16, $f8, $f10
 /* 07E4F0 7F04BB00 46109100 */  add.s $f4, $f18, $f16
-/* 07E4F4 7F04BB04 0FC0FA49 */  jal   sub_GAME_7F03E864
+/* 07E4F4 7F04BB04 0FC0FA49 */  jal   chrpropBBOXGetYmin
 /* 07E4F8 7F04BB08 E444000C */   swc1  $f4, 0xc($v0)
 /* 07E4FC 7F04BB0C C7A6005C */  lwc1  $f6, 0x5c($sp)
 /* 07E500 7F04BB10 3C018005 */  lui   $at, %hi(D_80052CBC) # $at, 0x8005
@@ -29998,7 +29998,7 @@ void sub_GAME_7F04C044( PropRecord *prop)
 
     temp_a2 = prop->parent;
     temp_a1 = prop;
-    if ((temp_a2 != 0) && ((temp_v0 = prop->obj, temp_t6 = temp_v0->model, sp24 = temp_a2, prop = temp_a1, sp20 = temp_v0, sp1C = temp_t6, sub_GAME_7F03A5D0(temp_a1, temp_a2), sp1C->unk1C = 0, temp_v0->runtime_bitflags &= 0xFFF7FFFF, temp_v1 = temp_a2->type, (temp_v1 == 3)) || (temp_v1 == 6)) && (temp_a0 = temp_a2->obj, (temp_a0 != 0)))
+    if ((temp_a2 != 0) && ((temp_v0 = prop->obj, temp_t6 = temp_v0->model, sp24 = temp_a2, prop = temp_a1, sp20 = temp_v0, sp1C = temp_t6, chrpropDetach(temp_a1, temp_a2), sp1C->unk1C = 0, temp_v0->runtime_bitflags &= 0xFFF7FFFF, temp_v1 = temp_a2->type, (temp_v1 == 3)) || (temp_v1 == 6)) && (temp_a0 = temp_a2->obj, (temp_a0 != 0)))
     {
         if (prop == temp_a0->unk1D8)
         {
@@ -30037,7 +30037,7 @@ glabel sub_GAME_7F04C044
 /* 080B94 7F04C064 AFA60024 */  sw    $a2, 0x24($sp)
 /* 080B98 7F04C068 AFA50028 */  sw    $a1, 0x28($sp)
 /* 080B9C 7F04C06C AFA20020 */  sw    $v0, 0x20($sp)
-/* 080BA0 7F04C070 0FC0E974 */  jal   sub_GAME_7F03A5D0
+/* 080BA0 7F04C070 0FC0E974 */  jal   chrpropDetach
 /* 080BA4 7F04C074 AFAE001C */   sw    $t6, 0x1c($sp)
 /* 080BA8 7F04C078 8FAF001C */  lw    $t7, 0x1c($sp)
 /* 080BAC 7F04C07C 8FA20020 */  lw    $v0, 0x20($sp)
@@ -30728,9 +30728,9 @@ glabel sub_GAME_7F04C130
 .L7F04C984:
 /* 0814B4 7F04C984 0FC13011 */  jal   sub_GAME_7F04C044
 /* 0814B8 7F04C988 8FA40108 */   lw    $a0, 0x108($sp)
-/* 0814BC 7F04C98C 0FC0E929 */  jal   propActivate
+/* 0814BC 7F04C98C 0FC0E929 */  jal   chrpropActivate
 /* 0814C0 7F04C990 8FA40108 */   lw    $a0, 0x108($sp)
-/* 0814C4 7F04C994 0FC0E901 */  jal   propEnable
+/* 0814C4 7F04C994 0FC0E901 */  jal   chrpropEnable
 /* 0814C8 7F04C998 8FA40108 */   lw    $a0, 0x108($sp)
 /* 0814CC 7F04C99C C7A000E8 */  lwc1  $f0, 0xe8($sp)
 /* 0814D0 7F04C9A0 8FA80108 */  lw    $t0, 0x108($sp)
@@ -31406,9 +31406,9 @@ glabel sub_GAME_7F04C130
 .L7F04C984:
 /* 0814B4 7F04C984 0FC13011 */  jal   sub_GAME_7F04C044
 /* 0814B8 7F04C988 8FA40108 */   lw    $a0, 0x108($sp)
-/* 0814BC 7F04C98C 0FC0E929 */  jal   propActivate
+/* 0814BC 7F04C98C 0FC0E929 */  jal   chrpropActivate
 /* 0814C0 7F04C990 8FA40108 */   lw    $a0, 0x108($sp)
-/* 0814C4 7F04C994 0FC0E901 */  jal   propEnable
+/* 0814C4 7F04C994 0FC0E901 */  jal   chrpropEnable
 /* 0814C8 7F04C998 8FA40108 */   lw    $a0, 0x108($sp)
 /* 0814CC 7F04C99C C7A000E8 */  lwc1  $f0, 0xe8($sp)
 /* 0814D0 7F04C9A0 8FA80108 */  lw    $t0, 0x108($sp)
@@ -33935,7 +33935,7 @@ void maybe_detonate_object(ObjectRecord* self, f32 damage,  coord3d* pos, bool f
                             //temp_a0 = temp_a2->unk14;
                             
                             set_obj_instance_controller_scale(temp_a0, 1);//tempa2
-                            attachNewChild(temp_a2.base.prop, self->prop);
+                            chrpropReparent(temp_a2.base.prop, self->prop);
                         }
                         break;
                     }
@@ -34310,7 +34310,7 @@ glabel maybe_detonate_object
 /* 08303C 7F04E50C AFA600C0 */   sw    $a2, 0xc0($sp)
 /* 083040 7F04E510 8FA600C0 */  lw    $a2, 0xc0($sp)
 /* 083044 7F04E514 8E050010 */  lw    $a1, 0x10($s0)
-/* 083048 7F04E518 0FC0E969 */  jal   attachNewChild
+/* 083048 7F04E518 0FC0E969 */  jal   chrpropReparent
 /* 08304C 7F04E51C 8CC40010 */   lw    $a0, 0x10($a2)
 /* 083050 7F04E520 10000008 */  b     .L7F04E544
 /* 083054 7F04E524 92020003 */   lbu   $v0, 3($s0)
@@ -40145,7 +40145,7 @@ glabel sub_GAME_7F050F50
 /* 085B24 7F050FF4 8D090008 */  lw    $t1, 8($t0)
 /* 085B28 7F050FF8 8D2A0018 */  lw    $t2, 0x18($t1)
 /* 085B2C 7F050FFC AD6A001C */  sw    $t2, 0x1c($t3)
-/* 085B30 7F051000 0FC0E969 */  jal   attachNewChild
+/* 085B30 7F051000 0FC0E969 */  jal   chrpropReparent
 /* 085B34 7F051004 8C450018 */   lw    $a1, 0x18($v0)
 /* 085B38 7F051008 8FAC0024 */  lw    $t4, 0x24($sp)
 /* 085B3C 7F05100C AD9101D8 */  sw    $s1, 0x1d8($t4)
@@ -40252,14 +40252,14 @@ PropRecord *chrTryEquipHat(ChrRecord *self, s32 index, s32 flags)
 
     model = &PitemZ_entries[index];
     load_model(index);
-    lastprop = propAllocate();
+    lastprop = chrpropAllocate();
     prop     = get_obj_instance_controller_for_header(model);
     prop     = prop;
     obj      = hatCreate(lastprop == 0, prop == 0, model);
     lastprop = lastprop;
     if (lastprop == 0)
     {
-        lastprop = propAllocate();
+        lastprop = chrpropAllocate();
     }
     prop     = prop;
     lastprop = lastprop;
@@ -40284,7 +40284,7 @@ PropRecord *chrTryEquipHat(ChrRecord *self, s32 index, s32 flags)
         }
         if (lastprop != 0)
         {
-            propFree(lastprop);
+            chrpropFree(lastprop);
             lastprop = NULL;
         }
     }
@@ -40311,7 +40311,7 @@ glabel chrTryEquipHat
 /* 085C28 7F0510F8 AFA500C4 */  sw    $a1, 0xc4($sp)
 /* 085C2C 7F0510FC 0FC15B0E */  jal   load_model
 /* 085C30 7F051100 AFAF00BC */   sw    $t7, 0xbc($sp)
-/* 085C34 7F051104 0FC0E90C */  jal   propAllocate
+/* 085C34 7F051104 0FC0E90C */  jal   chrpropAllocate
 /* 085C38 7F051108 00000000 */   nop   
 /* 085C3C 7F05110C 00408025 */  move  $s0, $v0
 /* 085C40 7F051110 0FC1B025 */  jal   get_obj_instance_controller_for_header
@@ -40323,7 +40323,7 @@ glabel chrTryEquipHat
 /* 085C58 7F051128 8FA600BC */   lw    $a2, 0xbc($sp)
 /* 085C5C 7F05112C 16000004 */  bnez  $s0, .L7F051140
 /* 085C60 7F051130 00409025 */   move  $s2, $v0
-/* 085C64 7F051134 0FC0E90C */  jal   propAllocate
+/* 085C64 7F051134 0FC0E90C */  jal   chrpropAllocate
 /* 085C68 7F051138 00000000 */   nop   
 /* 085C6C 7F05113C 00408025 */  move  $s0, $v0
 .L7F051140:
@@ -40397,7 +40397,7 @@ glabel chrTryEquipHat
 .L7F05123C:
 /* 085D6C 7F05123C 52000005 */  beql  $s0, $zero, .L7F051254
 /* 085D70 7F051240 8FBF002C */   lw    $ra, 0x2c($sp)
-/* 085D74 7F051244 0FC0E921 */  jal   propFree
+/* 085D74 7F051244 0FC0E921 */  jal   chrpropFree
 /* 085D78 7F051248 02002025 */   move  $a0, $s0
 /* 085D7C 7F05124C 00008025 */  move  $s0, $zero
 .L7F051250:
@@ -41386,7 +41386,7 @@ bool sub_GAME_7F051E1C(WeaponObjRecord *wep, ChrRecord *chr) //#99% nop missing 
                 return FALSE;
             }
         }
-        attachNewChild(wep->prop, chr->prop);
+        chrpropReparent(wep->prop, chr->prop);
     }
     return TRUE;
 }
@@ -41462,7 +41462,7 @@ glabel sub_GAME_7F051E1C
 /* 086A3C 7F051F0C 10000004 */  b     .L7F051F20
 /* 086A40 7F051F10 00001025 */   move  $v0, $zero
 .L7F051F14:
-/* 086A44 7F051F14 0FC0E969 */  jal   attachNewChild
+/* 086A44 7F051F14 0FC0E969 */  jal   chrpropReparent
 /* 086A48 7F051F18 8CE50018 */   lw    $a1, 0x18($a3)
 /* 086A4C 7F051F1C 24020001 */  li    $v0, 1
 .L7F051F20:
@@ -41634,7 +41634,7 @@ WeaponObjRecord *create_new_item_instance_of_model(s32 modelnum, ITEM_IDS weapon
 
     itemModel = PitemZ_entries[modelnum];
     load_model();
-    lastObj = propAllocate();
+    lastObj = chrpropAllocate();
     ObjInst = get_obj_instance_controller_for_header(itemModel);
     isObjInstAvailable = ObjInst == 0;
     ObjInst    = ObjInst;
@@ -41644,7 +41644,7 @@ WeaponObjRecord *create_new_item_instance_of_model(s32 modelnum, ITEM_IDS weapon
     if (lastObj == 0)
     {
         ObjInst   = ObjInst;
-        lastObj = propAllocate();
+        lastObj = chrpropAllocate();
     }
     ObjInst = ObjInst;
     if (ObjInst == 0)
@@ -41696,7 +41696,7 @@ WeaponObjRecord *create_new_item_instance_of_model(s32 modelnum, ITEM_IDS weapon
         }
         if (lastObj != 0)
         {
-            propFree(lastObj);
+            chrpropFree(lastObj);
         }
     }
     return NewGun;
@@ -41723,7 +41723,7 @@ glabel create_new_item_instance_of_model
 /* 086BC8 7F052098 AFA400B8 */  sw    $a0, 0xb8($sp)
 /* 086BCC 7F05209C 0FC15B0E */  jal   load_model
 /* 086BD0 7F0520A0 AFAF00B4 */   sw    $t7, 0xb4($sp)
-/* 086BD4 7F0520A4 0FC0E90C */  jal   propAllocate
+/* 086BD4 7F0520A4 0FC0E90C */  jal   chrpropAllocate
 /* 086BD8 7F0520A8 00000000 */   nop   
 /* 086BDC 7F0520AC 00408025 */  move  $s0, $v0
 /* 086BE0 7F0520B0 0FC1B025 */  jal   get_obj_instance_controller_for_header
@@ -41736,7 +41736,7 @@ glabel create_new_item_instance_of_model
 /* 086BFC 7F0520CC 8FA700AC */  lw    $a3, 0xac($sp)
 /* 086C00 7F0520D0 16000005 */  bnez  $s0, .L7F0520E8
 /* 086C04 7F0520D4 00408825 */   move  $s1, $v0
-/* 086C08 7F0520D8 0FC0E90C */  jal   propAllocate
+/* 086C08 7F0520D8 0FC0E90C */  jal   chrpropAllocate
 /* 086C0C 7F0520DC AFA700AC */   sw    $a3, 0xac($sp)
 /* 086C10 7F0520E0 8FA700AC */  lw    $a3, 0xac($sp)
 /* 086C14 7F0520E4 00408025 */  move  $s0, $v0
@@ -41802,7 +41802,7 @@ glabel create_new_item_instance_of_model
 .L7F0521C0:
 /* 086CF0 7F0521C0 52000004 */  beql  $s0, $zero, .L7F0521D4
 /* 086CF4 7F0521C4 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 086CF8 7F0521C8 0FC0E921 */  jal   propFree
+/* 086CF8 7F0521C8 0FC0E921 */  jal   chrpropFree
 /* 086CFC 7F0521CC 02002025 */   move  $a0, $s0
 /* 086D00 7F0521D0 8FBF001C */  lw    $ra, 0x1c($sp)
 .L7F0521D4:
@@ -41842,7 +41842,7 @@ PropRecord *something_with_generating_object(ChrRecord *self, s32 PropID, ITEM_I
         PropItem = &PitemZ_entries[PropID];
         load_model(PropID); //move a0a1 and  t9,0xd4(sp) swapped here...
     }
-    lastobjentry = propAllocate();
+    lastobjentry = chrpropAllocate();
     objinst      = get_obj_instance_controller_for_header(PropItem);
 
     if (!Weapon)
@@ -41851,7 +41851,7 @@ PropRecord *something_with_generating_object(ChrRecord *self, s32 PropID, ITEM_I
     }
     if (!lastobjentry)
     {
-        lastobjentry = propAllocate();
+        lastobjentry = chrpropAllocate();
     }
     if (!objinst)
     {
@@ -41877,7 +41877,7 @@ PropRecord *something_with_generating_object(ChrRecord *self, s32 PropID, ITEM_I
         }
         if (lastobjentry)
         {
-            propFree(lastobjentry);
+            chrpropFree(lastobjentry);
             lastobjentry = NULL;
         }
     }
@@ -41909,7 +41909,7 @@ glabel something_with_generating_object
 /* 086D8C 7F05225C 0FC15B0E */  jal   load_model
 /* 086D90 7F052260 AFB900D4 */   sw    $t9, 0xd4($sp)
 .L7F052264:
-/* 086D94 7F052264 0FC0E90C */  jal   propAllocate
+/* 086D94 7F052264 0FC0E90C */  jal   chrpropAllocate
 /* 086D98 7F052268 00000000 */   nop   
 /* 086D9C 7F05226C 00408825 */  move  $s1, $v0
 /* 086DA0 7F052270 0FC1B025 */  jal   get_obj_instance_controller_for_header
@@ -41925,7 +41925,7 @@ glabel something_with_generating_object
 .L7F052298:
 /* 086DC8 7F052298 16200004 */  bnez  $s1, .L7F0522AC
 /* 086DCC 7F05229C 00000000 */   nop   
-/* 086DD0 7F0522A0 0FC0E90C */  jal   propAllocate
+/* 086DD0 7F0522A0 0FC0E90C */  jal   chrpropAllocate
 /* 086DD4 7F0522A4 00000000 */   nop   
 /* 086DD8 7F0522A8 00408825 */  move  $s1, $v0
 .L7F0522AC:
@@ -41998,7 +41998,7 @@ glabel something_with_generating_object
 .L7F0523A4:
 /* 086ED4 7F0523A4 52200005 */  beql  $s1, $zero, .L7F0523BC
 /* 086ED8 7F0523A8 8FBF002C */   lw    $ra, 0x2c($sp)
-/* 086EDC 7F0523AC 0FC0E921 */  jal   propFree
+/* 086EDC 7F0523AC 0FC0E921 */  jal   chrpropFree
 /* 086EE0 7F0523B0 02202025 */   move  $a0, $s1
 /* 086EE4 7F0523B4 00008825 */  move  $s1, $zero
 .L7F0523B8:

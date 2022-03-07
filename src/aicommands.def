@@ -5084,13 +5084,13 @@ _AI_CMD(
             }
             else
             {
-                sub_GAME_7F03E18C(obj->prop);
-                sub_GAME_7F03A538(obj->prop);
-                propDisable(obj->prop);
+                chrpropDeregisterRooms(obj->prop);
+                chrpropDelist(obj->prop);
+                chrpropDisable(obj->prop);
             }
             if (obj->type != PROPDEF_COLLECTABLE || !sub_GAME_7F051E1C(obj, chr))
             {
-                attachNewChild(obj->prop, chr->prop);
+                chrpropReparent(obj->prop, chr->prop);
             }
         }
         Offset += CAT(CAT(AI_, CMDNAME), _LENGTH);

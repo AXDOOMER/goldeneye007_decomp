@@ -330,8 +330,8 @@ void expand_09_characters(s32 arg0, GuardRecord *arg1, s32 arg2)
             
             if (temp_v0_4 != 0)
             {
-                propActivate(temp_v0_4);
-                propEnable(temp_v0_4);
+                chrpropActivate(temp_v0_4);
+                chrpropEnable(temp_v0_4);
 
                 temp_v0_5 = temp_v0_4->chr;
                 temp_v0_5->chrnum = (s16) arg1->chrnum;
@@ -11764,8 +11764,8 @@ PropRecord *actionblock_guard_constructor_BDBE(s32 bodynum, s32 headnum, coord3d
 
                 if (chrprop != NULL)
                 {
-                    sub_GAME_7F03A4F0(chrprop);
-                    propEnable(chrprop);
+                    chrpropActivateThisFrame(chrprop);
+                    chrpropEnable(chrprop);
                     chr          = chrprop->chr;
                     chr->headnum = headnum;
                     chr->bodynum = bodynum;
@@ -12015,7 +12015,7 @@ bool chrDropItem(ChrRecord *self, s32 modelnum, u8 weaponid)
     if (NewModel && NewModel->prop)
     {
         set_obj_instance_controller_scale(NewModel->model, NewModel->model->scale);
-        attachNewChild(NewModel->prop, self->prop);
+        chrpropReparent(NewModel->prop, self->prop);
         NewModel->timer = CHRLV_DEFAULT_TIMER;
         propobjSetDropped(NewModel->prop, 1);
         self->hidden = self->hidden | 1;
