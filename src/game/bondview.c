@@ -11,26 +11,29 @@
 #include "bg.h"
 #include "bondview.h"
 #include "bondinv.h"
+#include "bondhead.h"
 #include "chr.h"
 #include "chr_b.h"
 #include "chrlv.h"
 #include "chrobjhandler.h"
 #include "debugmenu_handler.h"
+#include "file.h"
 #include "front.h"
 #include "gun.h"
 #include "initanitable.h"
-#include "objecthandler.h"
 #include "lvl.h"
 #include "math_atan2f.h"
 #include "matrixmath.h"
+#include "mp_music.h"
+#include "objecthandler.h"
 #include "player.h"
 #include "player_2.h"
 #include "quaternion.h"
 #include "stan.h"
 #include "textrelated.h"
-#include "bondhead.h"
 #include "unk_0C0A70.h"
 #include "unk_0BC530.h"
+#include "unk_0A1DA0.h"
 
 #ifdef VERSION_EU
 
@@ -16030,30 +16033,28 @@ void set_open_close_solo_watch_menu_to1(void) {
 
 
 #ifdef NONMATCHING
+
+/**
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical instructions: no
+ * - identical registers: fail
+ * 
+ * Notes: Problem area is in the foor loop. Single assigment is at the end of the
+ * loop and needs to be at the beginning. There is some regalloc issues in the same area.
+*/
 void trigger_solo_watch_menu(s32 arg0)
 {
-    s32 *temp_a0;
-    s32 *temp_s1;
-    s32 *temp_s2;
-    s32 *temp_s3;
-    s32 *temp_v0_3;
-    s32 *temp_v0_4;
-    s32 temp_s0;
-    s32 temp_v0;
-    s32 temp_v0_2;
-    struct player *temp_v1;
-    struct player *temp_v1_2;
-    struct player *temp_v1_3;
-    struct player *temp_v1_4;
-    struct player *temp_v1_5;
-    struct player *temp_v1_6;
-    s32 *phi_s1;
-    s32 phi_s0;
-    s32 *phi_s3;
+    s32 *ptr_a;
+    Gfx *ptr_b;
+    s32 *next;
+    s32 *ptr_copy;
+    int i;
 
-    switch (g_CurrentPlayer->watch_animation_state)
+    if (g_CurrentPlayer->watch_animation_state == 0)
     {
-        case 0:
+        if (arg0 == 0)
         {
             watch_transition_time *= 1.1f;
             if (watch_transition_time > 1.7f)
@@ -16061,9 +16062,14 @@ void trigger_solo_watch_menu(s32 arg0)
                 watch_transition_time = 1.7f;
             }
 
-            if ((Gun_hand_without_item(1, 1) != 0) && (Gun_hand_without_item(0) != 0) && (temp_v1_2 = g_CurrentPlayer, temp_v0_2 = temp_v1_2->hands[1].when_detonating_mines_is_0, (temp_v0_2 != 5)) && (temp_v0_2 != 6) && (temp_v0_2 != 7) && (temp_v0_2 != 8))
+            if ((Gun_hand_without_item(1) != 0)
+                && (Gun_hand_without_item(0) != 0)
+                && (g_CurrentPlayer->hands[1].when_detonating_mines_is_0 != 5)
+                && (g_CurrentPlayer->hands[1].when_detonating_mines_is_0 != 6)
+                && (g_CurrentPlayer->hands[1].when_detonating_mines_is_0 != 7)
+                && (g_CurrentPlayer->hands[1].when_detonating_mines_is_0 != 8))
             {
-                temp_v1_2->watch_animation_state = 1;
+                g_CurrentPlayer->watch_animation_state = 1;
             }
             else
             {
@@ -16075,153 +16081,143 @@ void trigger_solo_watch_menu(s32 arg0)
             
             sub_GAME_7F07DEFC();
             bondviewTriggerWatchZoomDefault();
+
             sub_GAME_7F0A2F30(&g_CurrentPlayer->healthdamagetype, 0x2E, 1, get_BONDdata_watch_armor());
-            sub_GAME_7F0A3330(&g_CurrentPlayer->field_19F8, g_CurrentPlayer + 0x800012B8, 0x2E);
+            sub_GAME_7F0A3330(&g_CurrentPlayer->watch_body_armor_bar_gdl, OS_K0_TO_PHYSICAL(&g_CurrentPlayer->healthdamagetype), 0x2E);
+
             sub_GAME_7F0A2F30(&g_CurrentPlayer->related_to_health_display, 0x2E, -1, bondviewGetCurrentPlayerHealth());
-            sub_GAME_7F0A3330(&g_CurrentPlayer->field_2128, g_CurrentPlayer + 0x80001598, 0x2E);
+            sub_GAME_7F0A3330(&g_CurrentPlayer->watch_health_bar_gdl, OS_K0_TO_PHYSICAL(&g_CurrentPlayer->related_to_health_display), 0x2E);
+            
             sub_GAME_7F0A69A8();
-            temp_v1_5 = g_CurrentPlayer;
-            phi_s1 = &temp_v1_5->buffer_for_watch_greenbackdrop_vertices;
-            phi_s0 = 0;
-            phi_s3 = &temp_v1_5->buffer_for_watch_greenbackdrop_DL;
-            do
+
+            /**
+             * This section is for rendering the selected screen rectangles.
+            */
+            ptr_b = &g_CurrentPlayer->buffer_for_watch_greenbackdrop_DL;
+            ptr_a = &g_CurrentPlayer->buffer_for_watch_greenbackdrop_vertices;
+            for (i=0; i<625; i+=125, ptr_a = next)
             {
-                temp_s1 = sub_GAME_7F0A3AB8(phi_s1, phi_s0, 0, 0x64, 0x14, -0x12B, 0x136);
-                temp_v0_3 = sub_GAME_7F0A3B40(phi_s3, phi_s1 + 0x80000000);
-                temp_s0 = phi_s0 + 0x7D;
-                phi_s1 = temp_s1;
-                phi_s0 = temp_s0;
-                phi_s3 = temp_v0_3;
-            } while (temp_s0 != 0x271);
-
-            temp_v0_3->unk0 = 0xB8000000;
-            temp_v0_3->unk4 = 0;
-            temp_v1_6 = g_CurrentPlayer;
-            temp_a0 = &temp_v1_6->field_19B8;
-            temp_s2 = temp_a0;
-            temp_s3 = &temp_v1_6->field_2998;
-
-            sub_GAME_7F0A3AB8(temp_a0, 0, 0, 0x398, 0x14, -0x1CC, 0);
-            temp_v0_4 = sub_GAME_7F0A3B40(temp_s3, temp_s2 + 0x80000000);
-            temp_v0_4->unk0 = 0xB8000000;
-            temp_v0_4->unk4 = 0;
-        }
-        break;
-
-        case 1:
-        {
-            g_CurrentPlayer->watch_animation_state = 9;
-            g_CurrentPlayer->watch_pause_time = 0;
-            g_CurrentPlayer->field_1C4 = 0;
-        }
-        break;
-
-        case 2:
-        {
-            g_CurrentPlayer->watch_animation_state = 0xA;
-            g_CurrentPlayer->watch_pause_time = 0;
-            g_CurrentPlayer->field_1C4 = 0;
-        }
-        break;
-
-        case 3:
-        {
-            g_CurrentPlayer->watch_animation_state = 7;
-            g_CurrentPlayer->watch_pause_time = 0;
-            g_CurrentPlayer->field_1C4 = 0;
-        }
-        break;
-
-        case 4:
-        {
-            g_CurrentPlayer->watch_animation_state = 6;
-            g_CurrentPlayer->watch_pause_time = 0;
-            g_CurrentPlayer->field_1C4 = 0;
-        }
-        break;
-
-        case 5:
-        {
-            deleteCurrentSelectedFolder();
-            sub_GAME_7F0C1340();
-            g_CurrentPlayer->watch_animation_state = 0xC;
-            g_CurrentPlayer->watch_pause_time = 0;
-            g_CurrentPlayer->field_1C4 = 0;
-            g_CurrentPlayer->open_close_solo_watch_menu = 0;
-        }
-        break;
-
-        case 6:
-        {
-            if (arg0 == 0)
-            {
-                g_CurrentPlayer->watch_animation_state = 4;
-                g_CurrentPlayer->watch_pause_time = 0;
-                g_CurrentPlayer->field_1C4 = 0;
-                sub_GAME_7F0A69A8();
+                ptr_copy = ptr_a;
+                next = sub_GAME_7F0A3AB8(ptr_a, i, 0, 0x64, 0x14, -0x12B, 0x136);
+                ptr_b = sub_GAME_7F0A3B40(ptr_b, OS_K0_TO_PHYSICAL(ptr_copy));
             }
-        }
-        break;
 
-        case 7:
-        {
-            if (arg0 == 0)
-            {
-                g_CurrentPlayer->watch_animation_state = 3;
-                g_CurrentPlayer->watch_pause_time = 0;
-                g_CurrentPlayer->field_1C4 = 0;
-                sub_GAME_7F0A69A8();
-            }
-        }
-        break;
+            gSPEndDisplayList(ptr_b);
+            /**
+             * End watch screen select rectangles.
+            */
 
-        case 8:
-        {
-            if (arg0 == 0)
-            {
-                g_CurrentPlayer->watch_animation_state = 0xB;
-                g_CurrentPlayer->watch_pause_time = 0;
-                g_CurrentPlayer->field_1C4 = 0;
-                sub_GAME_7F0A69A8();
-            }
-        }
-        break;
+            /**
+             * This section is related to rendering static on the watch menu.
+             * Static is defined by a horizontal bar in the middle of the screen.
+            */
+            ptr_a = &g_CurrentPlayer->field_19B8;
+            ptr_b = &g_CurrentPlayer->field_2998;
 
-        case 9:
-        {
-            if (arg0 == 0)
-            {
-                g_CurrentPlayer->watch_animation_state = 1;
-                g_CurrentPlayer->watch_pause_time = 0;
-                g_CurrentPlayer->field_1C4 = 0;
-            }
-        }
-        break;
+            ptr_copy = &g_CurrentPlayer->field_19B8;
+            next = sub_GAME_7F0A3AB8(ptr_a, 0, 0, 0x398, 0x14, -0x1CC, 0);
+            ptr_b = sub_GAME_7F0A3B40(ptr_b, OS_K0_TO_PHYSICAL(ptr_copy));
 
-        case 10:
-        {
-            if (arg0 == 0)
-            {
-                g_CurrentPlayer->watch_animation_state = 1;
-                g_CurrentPlayer->watch_pause_time = 0;
-                g_CurrentPlayer->field_1C4 = 0;
-            }
+            gSPEndDisplayList(ptr_b);
+            /**
+             * End watch static section.
+            */
         }
-        break;
-
-        case 11:
+    }
+    else if (g_CurrentPlayer->watch_animation_state == 1)
+    {
+        g_CurrentPlayer->watch_animation_state = 9;
+        g_CurrentPlayer->watch_pause_time = 0;
+        g_CurrentPlayer->field_1C4 = 0;
+    }
+    else if (g_CurrentPlayer->watch_animation_state == 2)
+    {
+        g_CurrentPlayer->watch_animation_state = 0xA;
+        g_CurrentPlayer->watch_pause_time = 0;
+        g_CurrentPlayer->field_1C4 = 0;
+    }
+    else if (g_CurrentPlayer->watch_animation_state == 3)
+    {
+        g_CurrentPlayer->watch_animation_state = 7;
+        g_CurrentPlayer->watch_pause_time = 0;
+        g_CurrentPlayer->field_1C4 = 0;
+    }
+    else if (g_CurrentPlayer->watch_animation_state == 4)
+    {
+        g_CurrentPlayer->watch_animation_state = 6;
+        g_CurrentPlayer->watch_pause_time = 0;
+        g_CurrentPlayer->field_1C4 = 0;
+    }
+    else if (g_CurrentPlayer->watch_animation_state == 5)
+    {
+        deleteCurrentSelectedFolder();
+        sub_GAME_7F0C1340();
+        g_CurrentPlayer->watch_animation_state = 0xC;
+        g_CurrentPlayer->watch_pause_time = 0;
+        g_CurrentPlayer->field_1C4 = 0;
+        g_CurrentPlayer->open_close_solo_watch_menu = 0;
+    }
+    else if (g_CurrentPlayer->watch_animation_state == 12)
+    {
+        // removed
+    }
+    else if (g_CurrentPlayer->watch_animation_state == 6)
+    {
+        if (arg0 == 0)
         {
-            g_CurrentPlayer->watch_animation_state = 8;
+            g_CurrentPlayer->watch_animation_state = 4;
+            g_CurrentPlayer->watch_pause_time = 0;
+            g_CurrentPlayer->field_1C4 = 0;
+            sub_GAME_7F0A69A8();
+        }
+    }
+    else if (g_CurrentPlayer->watch_animation_state == 7)
+    {
+        if (arg0 == 0)
+        {
+            g_CurrentPlayer->watch_animation_state = 3;
+            g_CurrentPlayer->watch_pause_time = 0;
+            g_CurrentPlayer->field_1C4 = 0;
+            sub_GAME_7F0A69A8();
+        }
+    }
+    else if (g_CurrentPlayer->watch_animation_state == 8)
+    {
+        if (arg0 == 0)
+        {
+            g_CurrentPlayer->watch_animation_state = 0xB;
+            g_CurrentPlayer->watch_pause_time = 0;
+            g_CurrentPlayer->field_1C4 = 0;
+            sub_GAME_7F0A69A8();
+        }
+    }
+    else if (g_CurrentPlayer->watch_animation_state == 9)
+    {
+        if (arg0 == 0)
+        {
+            g_CurrentPlayer->watch_animation_state = 1;
             g_CurrentPlayer->watch_pause_time = 0;
             g_CurrentPlayer->field_1C4 = 0;
         }
-        break;
-
-        case 13:
+    }
+    else if (g_CurrentPlayer->watch_animation_state == 10)
+    {
+        if (arg0 == 0)
         {
-            g_CurrentPlayer->watch_animation_state = 0;
+            g_CurrentPlayer->watch_animation_state = 1;
+            g_CurrentPlayer->watch_pause_time = 0;
+            g_CurrentPlayer->field_1C4 = 0;
         }
-        break;
+    }
+    else if (g_CurrentPlayer->watch_animation_state == 11)
+    {
+        g_CurrentPlayer->watch_animation_state = 8;
+        g_CurrentPlayer->watch_pause_time = 0;
+        g_CurrentPlayer->field_1C4 = 0;
+    }
+    else if (g_CurrentPlayer->watch_animation_state == 13)
+    {
+        g_CurrentPlayer->watch_animation_state = 0;
     }
 }
 #else
