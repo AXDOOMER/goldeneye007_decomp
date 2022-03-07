@@ -1721,6 +1721,7 @@ struct player
   s32 field_19AC;
   s32 field_19B0;
   s32 field_19B4;
+  // end watch vertex buffer
   s32 field_19B8;
   s32 field_19BC;
   s32 field_19C0;
@@ -1737,7 +1738,8 @@ struct player
   s32 field_19EC;
   s32 field_19F0;
   s32 field_19F4;
-  s32 field_19F8;
+
+  s32 watch_body_armor_bar_gdl; // used in watch
   s32 field_19FC;
   s32 field_1A00;
   s32 field_1A04;
@@ -2197,7 +2199,7 @@ struct player
   s32 field_211C;
   s32 field_2120;
   s32 field_2124;
-  s32 field_2128;
+  s32 watch_health_bar_gdl; // used in watch
   s32 field_212C;
   s32 field_2130;
   s32 field_2134;
@@ -2737,7 +2739,7 @@ struct player
   s32 field_298C;
   s32 field_2990;
   s32 field_2994;
-  s32 field_2998;
+  s32 field_2998; // used in watch
   s32 field_299C;
   s32 field_29A0;
   s32 field_29A4;
@@ -3224,8 +3226,8 @@ void bondviewUpdateGuardTankFlagsRelated(PropRecord *arg0, s32 flags);
 void bondviewGetPropHeightRelatedValues(PropRecord *arg0, struct rect4f **field_B0, s32 *arg2, f32 *height_related, f32 *collision);
 void bondviewAddCurrentPlayerArmor(f32 arg0);
 void bondviewResetIntroCameraMessageDialogs(void);
-void bondviewUnsetIntroCameraFlags(s32 flag);
-void bondviewSetIntroCameraFlags(s32 flags);
+void hudmsgsSetOn(s32 flag);
+void hudmsgsSetOff(s32 flags);
 Gfx* bondviewGfxPlayerField5cMatrix(Gfx* gdl);
 Mtxf *currentPlayerGetMatrix10D4(void);
 void sub_GAME_7F08BEEC(Mtxf *arg0, s32 arg1);
@@ -3254,5 +3256,7 @@ void     set_camera_mode(s32 arg0);
 bool     isBondInTank(void);
 void     hudmsgTopShow(s8 *string);
 void     SurroundWithExplosions(int delay);
+s32 check_watch_page_transistion_running(void);
+f32 bondviewWatchAnimationRelated(void);
 
 #endif

@@ -429,35 +429,35 @@ f32 folder_option_ERASE_right_bound = 0.0f;
 f32 folder_option_ERASE_lower_bound = 0.0f;
 
 struct mission_folder_setup mission_folder_setup_entries[] = {
-    {"1", TEXT(LTITLE, 0x78), 0, LEVELID_NONE, 0, MISSION_HEADER, -1, 0},
-    {"i", TEXT(LTITLE, 0x79), 0, LEVELID_DAM, 0, MISSION_PART, 0, "UbriefdamZ"},
-    {"ii", TEXT(LTITLE, 0x7A), 0, LEVELID_FACILITY, 0, MISSION_PART, 1, "UbriefarkZ"},
-    {"iii", TEXT(LTITLE, 0x7B), 0, LEVELID_RUNWAY, 0, MISSION_PART, 2, "UbriefrunZ"},
-    {"2", TEXT(LTITLE, 0x7C), 0, LEVELID_NONE, 0, MISSION_HEADER, -1, 0},
-    {"i", TEXT(LTITLE, 0x7D), 0, LEVELID_SURFACE, 0, MISSION_PART, 3, "UbriefsevxZ"},
-    {"ii", TEXT(LTITLE, 0x7E), 0, LEVELID_BUNKER1, 0, MISSION_PART, 4, "UbriefsevbunkerZ"},
-    {"3", TEXT(LTITLE, 0x7F), 0, LEVELID_NONE, 1, MISSION_HEADER, -1, 0},
-    {"i", TEXT(LTITLE, 0x80), TEXT(LTITLE, 0x81), LEVELID_SILO, 1, MISSION_PART, 5, "UbriefsiloZ"},
-    {"4", TEXT(LTITLE, 0x82), 0, LEVELID_NONE, 1, MISSION_HEADER, -1, 0},
-    {"i", TEXT(LTITLE, 0x83), 0, LEVELID_FRIGATE, 1, MISSION_PART, 6, "UbriefdestZ"},
-    {"5", TEXT(LTITLE, 0x7C), 0, LEVELID_NONE, 1, MISSION_HEADER, -1, 0},
-    {"i", TEXT(LTITLE, 0x7D), 0, LEVELID_SURFACE2, 1, MISSION_PART, 7, "UbriefsevxbZ"},
-    {"ii", TEXT(LTITLE, 0x7E), 0, LEVELID_BUNKER2, 1, MISSION_PART, 8, "UbriefsevbZ"},
-    {"6", TEXT(LTITLE, 0x84), 0, LEVELID_NONE, 2, MISSION_HEADER, -1, 0},
-    {"i", TEXT(LTITLE, 0x85), TEXT(LTITLE, 0x86), LEVELID_STATUE, 2, MISSION_PART, 9, "UbriefstatueZ"},
-    {"ii", TEXT(LTITLE, 0x87), TEXT(LTITLE, 0x88), LEVELID_ARCHIVES, 2, MISSION_PART, 0xA, "UbriefarchZ"},
-    {"iii", TEXT(LTITLE, 0x89), 0, LEVELID_STREETS, 2, MISSION_PART, 0xB, "UbriefpeteZ"},
-    {"iv", TEXT(LTITLE, 0x8A), 0, LEVELID_DEPOT, 2, MISSION_PART, 0xC, "UbriefdepoZ"},
-    {"v", TEXT(LTITLE, 0x8B), 0, LEVELID_TRAIN, 2, MISSION_PART, 0xD, "UbrieftraZ"},
-    {"7", TEXT(LTITLE, 0x8C), 0, LEVELID_NONE, 3, MISSION_HEADER, -1, 0},
-    {"i", TEXT(LTITLE, 0x8D), 0, LEVELID_JUNGLE, 3, MISSION_PART, 0xE, "UbriefjunZ"},
-    {"ii", TEXT(LTITLE, 0x8E), TEXT(LTITLE, 0x8F), LEVELID_CONTROL, 3, MISSION_PART, 0xF, "UbriefcontrolZ"},
-    {"iii", TEXT(LTITLE, 0x90), TEXT(LTITLE, 0x91), LEVELID_CAVERNS, 3, MISSION_PART, 0x10, "UbriefcaveZ"},
-    {"iv", TEXT(LTITLE, 0x92), TEXT(LTITLE, 0x93), LEVELID_CRADLE, 3, MISSION_PART, 0x11, "UbriefcradZ"},
-    {"8", TEXT(LTITLE, 0x94), 0, LEVELID_NONE, 4, MISSION_HEADER, -1, 0},
-    {"i", TEXT(LTITLE, 0x95), TEXT(LTITLE, 0x96), LEVELID_AZTEC, 4, MISSION_PART, 0x12, "UbriefaztZ"},
-    {"9", TEXT(LTITLE, 0x97), 0, LEVELID_NONE, 4, MISSION_HEADER, -1, 0},
-    {"i", TEXT(LTITLE, 0x98), TEXT(LTITLE, 0x99), LEVELID_EGYPT, 4, MISSION_PART, 0x13, "UbriefcrypZ"},
+    {"1",   TEXT(LTITLE, 0x78),                  0, LEVELID_NONE,     0, MISSION_HEADER,   -1, 0},
+    {"i",   TEXT(LTITLE, 0x79),                  0, LEVELID_DAM,      0, MISSION_PART,      0, "UbriefdamZ"},
+    {"ii",  TEXT(LTITLE, 0x7A),                  0, LEVELID_FACILITY, 0, MISSION_PART,      1, "UbriefarkZ"},
+    {"iii", TEXT(LTITLE, 0x7B),                  0, LEVELID_RUNWAY,   0, MISSION_PART,      2, "UbriefrunZ"},
+    {"2",   TEXT(LTITLE, 0x7C),                  0, LEVELID_NONE,     0, MISSION_HEADER,   -1, 0},
+    {"i",   TEXT(LTITLE, 0x7D),                  0, LEVELID_SURFACE,  0, MISSION_PART,      3, "UbriefsevxZ"},
+    {"ii",  TEXT(LTITLE, 0x7E),                  0, LEVELID_BUNKER1,  0, MISSION_PART,      4, "UbriefsevbunkerZ"},
+    {"3",   TEXT(LTITLE, 0x7F),                  0, LEVELID_NONE,     1, MISSION_HEADER,   -1, 0},
+    {"i",   TEXT(LTITLE, 0x80), TEXT(LTITLE, 0x81), LEVELID_SILO,     1, MISSION_PART,      5, "UbriefsiloZ"},
+    {"4",   TEXT(LTITLE, 0x82),                  0, LEVELID_NONE,     1, MISSION_HEADER,   -1, 0},
+    {"i",   TEXT(LTITLE, 0x83),                  0, LEVELID_FRIGATE,  1, MISSION_PART,      6, "UbriefdestZ"},
+    {"5",   TEXT(LTITLE, 0x7C),                  0, LEVELID_NONE,     1, MISSION_HEADER,   -1, 0},
+    {"i",   TEXT(LTITLE, 0x7D),                  0, LEVELID_SURFACE2, 1, MISSION_PART,      7, "UbriefsevxbZ"},
+    {"ii",  TEXT(LTITLE, 0x7E),                  0, LEVELID_BUNKER2,  1, MISSION_PART,      8, "UbriefsevbZ"},
+    {"6",   TEXT(LTITLE, 0x84),                  0, LEVELID_NONE,     2, MISSION_HEADER,   -1, 0},
+    {"i",   TEXT(LTITLE, 0x85), TEXT(LTITLE, 0x86), LEVELID_STATUE,   2, MISSION_PART,      9, "UbriefstatueZ"},
+    {"ii",  TEXT(LTITLE, 0x87), TEXT(LTITLE, 0x88), LEVELID_ARCHIVES, 2, MISSION_PART,    0xA, "UbriefarchZ"},
+    {"iii", TEXT(LTITLE, 0x89),                  0, LEVELID_STREETS,  2, MISSION_PART,    0xB, "UbriefpeteZ"},
+    {"iv",  TEXT(LTITLE, 0x8A),                  0, LEVELID_DEPOT,    2, MISSION_PART,    0xC, "UbriefdepoZ"},
+    {"v",   TEXT(LTITLE, 0x8B),                  0, LEVELID_TRAIN,    2, MISSION_PART,    0xD, "UbrieftraZ"},
+    {"7",   TEXT(LTITLE, 0x8C),                  0, LEVELID_NONE,     3, MISSION_HEADER,   -1, 0},
+    {"i",   TEXT(LTITLE, 0x8D),                  0, LEVELID_JUNGLE,   3, MISSION_PART,    0xE, "UbriefjunZ"},
+    {"ii",  TEXT(LTITLE, 0x8E), TEXT(LTITLE, 0x8F), LEVELID_CONTROL,  3, MISSION_PART,    0xF, "UbriefcontrolZ"},
+    {"iii", TEXT(LTITLE, 0x90), TEXT(LTITLE, 0x91), LEVELID_CAVERNS,  3, MISSION_PART,   0x10, "UbriefcaveZ"},
+    {"iv",  TEXT(LTITLE, 0x92), TEXT(LTITLE, 0x93), LEVELID_CRADLE,   3, MISSION_PART,   0x11, "UbriefcradZ"},
+    {"8",   TEXT(LTITLE, 0x94),                  0, LEVELID_NONE,     4, MISSION_HEADER,   -1, 0},
+    {"i",   TEXT(LTITLE, 0x95), TEXT(LTITLE, 0x96), LEVELID_AZTEC,    4, MISSION_PART,   0x12, "UbriefaztZ"},
+    {"9",   TEXT(LTITLE, 0x97),                  0, LEVELID_NONE,     4, MISSION_HEADER,   -1, 0},
+    {"i",   TEXT(LTITLE, 0x98), TEXT(LTITLE, 0x99), LEVELID_EGYPT,    4, MISSION_PART,   0x13, "UbriefcrypZ"},
     {NULL, 0, 0, LEVELID_NONE, -1, MISSION_PART, -1, 0}
 };
 
@@ -892,8 +892,6 @@ u16 color_palette_entries_50_percent[] = {1, 0x1F, 0x3C1, 0x3DF, 0x7801, 0x781F,
 Gfx* add_tab3_previous(Gfx* DL);
 s32 check_if_stage_completed_on_difficulty(int stage, DIFFICULTY difficulty);
 s32 get_highest_unlocked_difficulty_for_level(s32 arg0);
-Gfx * write_text_at_abs_coord(Gfx *, s32* x, s32 *y, u8 *text, s32 ptrSecondFontTableLarge, s32 ptrFirstFontTableLarge, u32 rgb_hex, s16 width, s16 height, s32 unk9, s32 unka);
-
 Gfx *constructor_menu00_legalscreen(Gfx *DL);
 Gfx *constructor_menu01_nintendo(Gfx *DL);
 Gfx *constructor_menu02_rareware(Gfx *DL);
@@ -7140,59 +7138,20 @@ glabel constructor_menu06_modesel
 
 
 
-#ifdef NONMATCHING
 s32 pull_and_display_text_for_folder_a0(s32 arg0)
 {
-    void *phi_v0;
-    s32 phi_v1;
+    int i;
 
-    phi_v0 = &mission_folder_setup_entries;
-    phi_v1 = 0;
-    if (D_8002ABE8 != 0)
+    for (i=0; mission_folder_setup_entries[i].folder_text_preset != 0 ; i++)
     {
-loop_1:
-        if (arg0 == phi_v0->unk14)
+        if (arg0 == mission_folder_setup_entries[i].mission_num)
         {
-            return phi_v1;
-        }
-        phi_v0 = phi_v0 + 0x1c;
-        phi_v1 = phi_v1 + 1;
-        if (phi_v0->unk20 != 0)
-        {
-            goto loop_1;
+            return i;
         }
     }
+
     return -1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel pull_and_display_text_for_folder_a0
-/* 0427F0 7F00DCC0 3C0E8003 */  lui   $t6, %hi(mission_folder_setup_entries+4)
-/* 0427F4 7F00DCC4 95CEABE8 */  lhu   $t6, %lo(mission_folder_setup_entries+4)($t6)
-/* 0427F8 7F00DCC8 3C028003 */  lui   $v0, %hi(mission_folder_setup_entries)
-/* 0427FC 7F00DCCC 2442ABE4 */  addiu $v0, %lo(mission_folder_setup_entries) # addiu $v0, $v0, -0x541c
-/* 042800 7F00DCD0 11C0000B */  beqz  $t6, .L7F00DD00
-/* 042804 7F00DCD4 00001825 */   move  $v1, $zero
-/* 042808 7F00DCD8 8C4F0014 */  lw    $t7, 0x14($v0)
-.L7F00DCDC:
-/* 04280C 7F00DCDC 548F0004 */  bnel  $a0, $t7, .L7F00DCF0
-/* 042810 7F00DCE0 94580020 */   lhu   $t8, 0x20($v0)
-/* 042814 7F00DCE4 03E00008 */  jr    $ra
-/* 042818 7F00DCE8 00601025 */   move  $v0, $v1
-/* 04281C 7F00DCEC 94580020 */  lhu   $t8, 0x20($v0)
-.L7F00DCF0:
-/* 042820 7F00DCF0 24630001 */  addiu $v1, $v1, 1
-/* 042824 7F00DCF4 2442001C */  addiu $v0, $v0, 0x1c
-/* 042828 7F00DCF8 5700FFF8 */  bnezl $t8, .L7F00DCDC
-/* 04282C 7F00DCFC 8C4F0014 */   lw    $t7, 0x14($v0)
-.L7F00DD00:
-/* 042830 7F00DD00 2402FFFF */  li    $v0, -1
-/* 042834 7F00DD04 03E00008 */  jr    $ra
-/* 042838 7F00DD08 00000000 */   nop
-)
-#endif
-
 
 
 s32 check_if_stage_completed_on_difficulty(int stage, DIFFICULTY difficulty)
@@ -7211,127 +7170,39 @@ s32 check_if_stage_completed_on_difficulty(int stage, DIFFICULTY difficulty)
 
 
 
-#ifdef NONMATCHING
 s32 get_highest_unlocked_difficulty_for_level(s32 arg0)
 {
-    s32 temp_ret;
-    s32 temp_ret_2;
-    s32 temp_s0;
-    s32 phi_s1;
-    s32 phi_s0;
+    s32 num;
+    s32 difficulty;
+    s32 temp_v0;
 
-    temp_ret = pull_and_display_text_for_folder_a0();
-    if ((0x80030000 + (((temp_ret * 8) - temp_ret) * 4))->unk-5414 >= 0)
+    if (mission_folder_setup_entries[pull_and_display_text_for_folder_a0(arg0)].stage_id >= 0)
     {
-        if (( fileIs007ModeUnlocked(selected_folder_num) != 0) || (get_debug_007_unlock_flag() != 0))
+        num = 2;
+        if (fileIs007ModeUnlocked(selected_folder_num) || get_debug_007_unlock_flag())
         {
-            phi_s1 = 3;
+            num = 3;
         }
-        else
-        {
 
-        }
-        if (phi_s1 >= 0)
+        for (difficulty=num; difficulty >= 0; difficulty--)
         {
-            phi_s0 = phi_s1;
-loop_6:
-            temp_ret_2 = fileIsStageUnlockedAtDifficulty(selected_folder_num, arg0, phi_s0);
+            temp_v0 = fileIsStageUnlockedAtDifficulty(selected_folder_num, arg0, difficulty);
             if (g_AppendCheatSinglePlayer == 0)
             {
-                if (temp_ret_2 != 0)
+                if (temp_v0 != 0)
                 {
-                    return phi_s0;
+                    return difficulty;
                 }
             }
-            else
+            else if (temp_v0 == 3)
             {
-                if (temp_ret_2 == 3)
-                {
-                    return phi_s0;
-                }
-            }
-            temp_s0 = phi_s0 + -1;
-            phi_s0 = temp_s0;
-            if (temp_s0 >= 0)
-            {
-                goto loop_6;
+                return difficulty;
             }
         }
     }
+
     return -1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_highest_unlocked_difficulty_for_level
-/* 042890 7F00DD60 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 042894 7F00DD64 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 042898 7F00DD68 AFB30024 */  sw    $s3, 0x24($sp)
-/* 04289C 7F00DD6C 00809825 */  move  $s3, $a0
-/* 0428A0 7F00DD70 AFB40028 */  sw    $s4, 0x28($sp)
-/* 0428A4 7F00DD74 AFB20020 */  sw    $s2, 0x20($sp)
-/* 0428A8 7F00DD78 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 0428AC 7F00DD7C 0FC03730 */  jal   pull_and_display_text_for_folder_a0
-/* 0428B0 7F00DD80 AFB00018 */   sw    $s0, 0x18($sp)
-/* 0428B4 7F00DD84 000270C0 */  sll   $t6, $v0, 3
-/* 0428B8 7F00DD88 01C27023 */  subu  $t6, $t6, $v0
-/* 0428BC 7F00DD8C 000E7080 */  sll   $t6, $t6, 2
-/* 0428C0 7F00DD90 3C0F8003 */  lui   $t7, %hi(mission_folder_setup_entries+8)
-/* 0428C4 7F00DD94 01EE7821 */  addu  $t7, $t7, $t6
-/* 0428C8 7F00DD98 8DEFABEC */  lw    $t7, %lo(mission_folder_setup_entries+8)($t7)
-/* 0428CC 7F00DD9C 3C148003 */  lui   $s4, %hi(selected_folder_num)
-/* 0428D0 7F00DDA0 2694A8E8 */  addiu $s4, %lo(selected_folder_num) # addiu $s4, $s4, -0x5718
-/* 0428D4 7F00DDA4 05E00021 */  bltz  $t7, .L7F00DE2C
-/* 0428D8 7F00DDA8 24110002 */   li    $s1, 2
-/* 0428DC 7F00DDAC 0FC07D28 */  jal   fileIs007ModeUnlocked
-/* 0428E0 7F00DDB0 8E840000 */   lw    $a0, ($s4)
-/* 0428E4 7F00DDB4 54400006 */  bnezl $v0, .L7F00DDD0
-/* 0428E8 7F00DDB8 24110003 */   li    $s1, 3
-/* 0428EC 7F00DDBC 0FC243FD */  jal   get_debug_007_unlock_flag
-/* 0428F0 7F00DDC0 00000000 */   nop
-/* 0428F4 7F00DDC4 10400002 */  beqz  $v0, .L7F00DDD0
-/* 0428F8 7F00DDC8 00000000 */   nop
-/* 0428FC 7F00DDCC 24110003 */  li    $s1, 3
-.L7F00DDD0:
-/* 042900 7F00DDD0 06200016 */  bltz  $s1, .L7F00DE2C
-/* 042904 7F00DDD4 02208025 */   move  $s0, $s1
-/* 042908 7F00DDD8 3C118003 */  lui   $s1, %hi(g_AppendCheatSinglePlayer)
-/* 04290C 7F00DDDC 2631A900 */  addiu $s1, %lo(g_AppendCheatSinglePlayer) # addiu $s1, $s1, -0x5700
-/* 042910 7F00DDE0 24120003 */  li    $s2, 3
-/* 042914 7F00DDE4 8E840000 */  lw    $a0, ($s4)
-.L7F00DDE8:
-/* 042918 7F00DDE8 02602825 */  move  $a1, $s3
-/* 04291C 7F00DDEC 0FC078B0 */  jal   fileIsStageUnlockedAtDifficulty
-/* 042920 7F00DDF0 02003025 */   move  $a2, $s0
-/* 042924 7F00DDF4 8E380000 */  lw    $t8, ($s1)
-/* 042928 7F00DDF8 17000005 */  bnez  $t8, .L7F00DE10
-/* 04292C 7F00DDFC 00000000 */   nop
-/* 042930 7F00DE00 50400008 */  beql  $v0, $zero, .L7F00DE24
-/* 042934 7F00DE04 2610FFFF */   addiu $s0, $s0, -1
-/* 042938 7F00DE08 10000009 */  b     .L7F00DE30
-/* 04293C 7F00DE0C 02001025 */   move  $v0, $s0
-.L7F00DE10:
-/* 042940 7F00DE10 54520004 */  bnel  $v0, $s2, .L7F00DE24
-/* 042944 7F00DE14 2610FFFF */   addiu $s0, $s0, -1
-/* 042948 7F00DE18 10000005 */  b     .L7F00DE30
-/* 04294C 7F00DE1C 02001025 */   move  $v0, $s0
-/* 042950 7F00DE20 2610FFFF */  addiu $s0, $s0, -1
-.L7F00DE24:
-/* 042954 7F00DE24 0603FFF0 */  bgezl $s0, .L7F00DDE8
-/* 042958 7F00DE28 8E840000 */   lw    $a0, ($s4)
-.L7F00DE2C:
-/* 04295C 7F00DE2C 2402FFFF */  li    $v0, -1
-.L7F00DE30:
-/* 042960 7F00DE30 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 042964 7F00DE34 8FB00018 */  lw    $s0, 0x18($sp)
-/* 042968 7F00DE38 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 04296C 7F00DE3C 8FB20020 */  lw    $s2, 0x20($sp)
-/* 042970 7F00DE40 8FB30024 */  lw    $s3, 0x24($sp)
-/* 042974 7F00DE44 8FB40028 */  lw    $s4, 0x28($sp)
-/* 042978 7F00DE48 03E00008 */  jr    $ra
-/* 04297C 7F00DE4C 27BD0030 */   addiu $sp, $sp, 0x30
-)
-#endif
 
 
 
