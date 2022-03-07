@@ -4834,24 +4834,10 @@ void chraiUpdateOnscreenPropCount(void)
 }
 
 
-
-#ifdef NONMATCHING
-void set_stateflag_0x04_for_posdata(void) {
-
+void set_stateflag_0x04_for_posdata(PropRecord *param_1)
+{
+    param_1->flags = param_1->flags | 4;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_stateflag_0x04_for_posdata
-/* 06EF34 7F03A404 908E0001 */  lbu   $t6, 1($a0)
-/* 06EF38 7F03A408 35CF0004 */  ori   $t7, $t6, 4
-/* 06EF3C 7F03A40C 03E00008 */  jr    $ra
-/* 06EF40 7F03A410 A08F0001 */   sb    $t7, 1($a0)
-)
-#endif
-
-
-
 
 
 
