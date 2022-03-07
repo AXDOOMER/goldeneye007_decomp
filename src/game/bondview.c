@@ -585,6 +585,7 @@ void bondviewUpdatePlayerCollisionBounds(void);
 void sub_GAME_7F07C888(struct rect4f *, coord3d *, f32);
 void bondviewIntroCameraTextTick(void);
 void bondviewUpperTextWindowTimerTick(void);
+void sub_GAME_7F07DEFC(void);
 
 // end forward declarations
 
@@ -12516,7 +12517,8 @@ void sub_GAME_7F07DE9C(struct player *player)
 }
 
 
-void sub_GAME_7F07DEFC(void) {
+void sub_GAME_7F07DEFC(void)
+{
     g_CurrentPlayer->pause_starting_angle = g_CurrentPlayer->vv_verta;
     g_CurrentPlayer->field_210 = 0.0f;
     g_CurrentPlayer->field_218 = 0;
@@ -16028,8 +16030,199 @@ void set_open_close_solo_watch_menu_to1(void) {
 
 
 #ifdef NONMATCHING
-void trigger_solo_watch_menu(void) {
+void trigger_solo_watch_menu(s32 arg0)
+{
+    s32 *temp_a0;
+    s32 *temp_s1;
+    s32 *temp_s2;
+    s32 *temp_s3;
+    s32 *temp_v0_3;
+    s32 *temp_v0_4;
+    s32 temp_s0;
+    s32 temp_v0;
+    s32 temp_v0_2;
+    struct player *temp_v1;
+    struct player *temp_v1_2;
+    struct player *temp_v1_3;
+    struct player *temp_v1_4;
+    struct player *temp_v1_5;
+    struct player *temp_v1_6;
+    s32 *phi_s1;
+    s32 phi_s0;
+    s32 *phi_s3;
 
+    switch (g_CurrentPlayer->watch_animation_state)
+    {
+        case 0:
+        {
+            watch_transition_time *= 1.1f;
+            if (watch_transition_time > 1.7f)
+            {
+                watch_transition_time = 1.7f;
+            }
+
+            if ((sub_GAME_7F05CEBC(1, 1) != 0) && (sub_GAME_7F05CEBC(0) != 0) && (temp_v1_2 = g_CurrentPlayer, temp_v0_2 = temp_v1_2->hands[1].when_detonating_mines_is_0, (temp_v0_2 != 5)) && (temp_v0_2 != 6) && (temp_v0_2 != 7) && (temp_v0_2 != 8))
+            {
+                temp_v1_2->watch_animation_state = 1;
+            }
+            else
+            {
+                g_CurrentPlayer->watch_animation_state = 0xD;
+            }
+            
+            g_CurrentPlayer->watch_pause_time = 0;
+            g_CurrentPlayer->field_1C4 = 0;
+            
+            sub_GAME_7F07DEFC();
+            bondviewTriggerWatchZoomDefault();
+            sub_GAME_7F0A2F30(&g_CurrentPlayer->healthdamagetype, 0x2E, 1, get_BONDdata_watch_armor());
+            sub_GAME_7F0A3330(&g_CurrentPlayer->field_19F8, g_CurrentPlayer + 0x800012B8, 0x2E);
+            sub_GAME_7F0A2F30(&g_CurrentPlayer->related_to_health_display, 0x2E, -1, bondviewGetCurrentPlayerHealth());
+            sub_GAME_7F0A3330(&g_CurrentPlayer->field_2128, g_CurrentPlayer + 0x80001598, 0x2E);
+            sub_GAME_7F0A69A8();
+            temp_v1_5 = g_CurrentPlayer;
+            phi_s1 = &temp_v1_5->buffer_for_watch_greenbackdrop_vertices;
+            phi_s0 = 0;
+            phi_s3 = &temp_v1_5->buffer_for_watch_greenbackdrop_DL;
+            do
+            {
+                temp_s1 = sub_GAME_7F0A3AB8(phi_s1, phi_s0, 0, 0x64, 0x14, -0x12B, 0x136);
+                temp_v0_3 = sub_GAME_7F0A3B40(phi_s3, phi_s1 + 0x80000000);
+                temp_s0 = phi_s0 + 0x7D;
+                phi_s1 = temp_s1;
+                phi_s0 = temp_s0;
+                phi_s3 = temp_v0_3;
+            } while (temp_s0 != 0x271);
+
+            temp_v0_3->unk0 = 0xB8000000;
+            temp_v0_3->unk4 = 0;
+            temp_v1_6 = g_CurrentPlayer;
+            temp_a0 = &temp_v1_6->field_19B8;
+            temp_s2 = temp_a0;
+            temp_s3 = &temp_v1_6->field_2998;
+
+            sub_GAME_7F0A3AB8(temp_a0, 0, 0, 0x398, 0x14, -0x1CC, 0);
+            temp_v0_4 = sub_GAME_7F0A3B40(temp_s3, temp_s2 + 0x80000000);
+            temp_v0_4->unk0 = 0xB8000000;
+            temp_v0_4->unk4 = 0;
+        }
+        break;
+
+        case 1:
+        {
+            g_CurrentPlayer->watch_animation_state = 9;
+            g_CurrentPlayer->watch_pause_time = 0;
+            g_CurrentPlayer->field_1C4 = 0;
+        }
+        break;
+
+        case 2:
+        {
+            g_CurrentPlayer->watch_animation_state = 0xA;
+            g_CurrentPlayer->watch_pause_time = 0;
+            g_CurrentPlayer->field_1C4 = 0;
+        }
+        break;
+
+        case 3:
+        {
+            g_CurrentPlayer->watch_animation_state = 7;
+            g_CurrentPlayer->watch_pause_time = 0;
+            g_CurrentPlayer->field_1C4 = 0;
+        }
+        break;
+
+        case 4:
+        {
+            g_CurrentPlayer->watch_animation_state = 6;
+            g_CurrentPlayer->watch_pause_time = 0;
+            g_CurrentPlayer->field_1C4 = 0;
+        }
+        break;
+
+        case 5:
+        {
+            deleteCurrentSelectedFolder();
+            sub_GAME_7F0C1340();
+            g_CurrentPlayer->watch_animation_state = 0xC;
+            g_CurrentPlayer->watch_pause_time = 0;
+            g_CurrentPlayer->field_1C4 = 0;
+            g_CurrentPlayer->open_close_solo_watch_menu = 0;
+        }
+        break;
+
+        case 6:
+        {
+            if (arg0 == 0)
+            {
+                g_CurrentPlayer->watch_animation_state = 4;
+                g_CurrentPlayer->watch_pause_time = 0;
+                g_CurrentPlayer->field_1C4 = 0;
+                sub_GAME_7F0A69A8();
+            }
+        }
+        break;
+
+        case 7:
+        {
+            if (arg0 == 0)
+            {
+                g_CurrentPlayer->watch_animation_state = 3;
+                g_CurrentPlayer->watch_pause_time = 0;
+                g_CurrentPlayer->field_1C4 = 0;
+                sub_GAME_7F0A69A8();
+            }
+        }
+        break;
+
+        case 8:
+        {
+            if (arg0 == 0)
+            {
+                g_CurrentPlayer->watch_animation_state = 0xB;
+                g_CurrentPlayer->watch_pause_time = 0;
+                g_CurrentPlayer->field_1C4 = 0;
+                sub_GAME_7F0A69A8();
+            }
+        }
+        break;
+
+        case 9:
+        {
+            if (arg0 == 0)
+            {
+                g_CurrentPlayer->watch_animation_state = 1;
+                g_CurrentPlayer->watch_pause_time = 0;
+                g_CurrentPlayer->field_1C4 = 0;
+            }
+        }
+        break;
+
+        case 10:
+        {
+            if (arg0 == 0)
+            {
+                g_CurrentPlayer->watch_animation_state = 1;
+                g_CurrentPlayer->watch_pause_time = 0;
+                g_CurrentPlayer->field_1C4 = 0;
+            }
+        }
+        break;
+
+        case 11:
+        {
+            g_CurrentPlayer->watch_animation_state = 8;
+            g_CurrentPlayer->watch_pause_time = 0;
+            g_CurrentPlayer->field_1C4 = 0;
+        }
+        break;
+
+        case 13:
+        {
+            g_CurrentPlayer->watch_animation_state = 0;
+        }
+        break;
+    }
 }
 #else
 #if defined(VERSION_US) || defined(VERSION_JP)

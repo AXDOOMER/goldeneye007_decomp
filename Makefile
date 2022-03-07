@@ -9,7 +9,9 @@ FINAL := YES
 VERSION := US
 IDO_RECOMP := YES
 VERBOSE := 0
-# If COMPARE is 1, check the output sha1sum when building 'all'
+# If COMPARE is 1, check the output sha1sum when building 'all', and if fali to match
+# then compare ELF sections to known md5 checksums.
+# If compare is 2, it will just compare the sha1sum.
 COMPARE := 1
 
 
@@ -333,6 +335,9 @@ ifeq ($(COMPARE),1)
 	@$(SHA1SUM) -c ge007.$(OUTCODE).sha1 || ($(PRINTNOMATCH) && echo "$(SAVECURSOR)$(RESTORESCROLLREGION)$(RESTORECURSOR)\033[1DPlease wait while we determine which files are affected..." && $(SHA1SUM) --quiet -c checksums.txt && ./test_files.sh -c -i ge007.$(OUTCODE)-test_basis.csv && exit 1)
 #   Else complete 
 	@$(PRINTMATCH)
+endif
+ifeq ($(COMPARE),2)
+	@$(SHA1SUM) -c ge007.$(COUNTRYCODE).sha1
 endif
 	@echo "\n Rom File Generated in Build Directory. \n\n"
 

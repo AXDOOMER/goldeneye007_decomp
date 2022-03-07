@@ -38,6 +38,16 @@ u32 D_8004095C = 0;
 
 
 //D:80040960
+// struct rgba_u8 D_80040960[8] = {
+//     { 0xFF, 0xFF, 0xFF, 0xFF }, 
+//     { 0xFF, 0xFF, 0xC8, 0xFF }, 
+//     { 0xFF, 0x00, 0x00, 0xFF },
+//     { 0xFF, 0xFF, 0xFF, 0xFF },
+//     { 0xFF, 0xFF, 0xFF, 0xFF },
+//     { 0xFF, 0xFF, 0xFF, 0xFF },
+//     { 0 },
+//     { 0 }
+// };
 u32 D_80040960[] = {
     0xFFFFFFFF, 
     0xFFFFC8FF, 
@@ -3641,30 +3651,20 @@ glabel sub_GAME_7F0A3AB8
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0A3B40(void) {
+Gfx *sub_GAME_7F0A3B40(Gfx *gdl, s32 *arg1)
+{
+    gSPVertex(gdl++, arg1, 4, 0);
 
+    // gfxdis can't parse this, but maybe?: gSPModifyVertex(gdl++, 16, 0, 0x2110);
+    // manual specification:
+    {								\
+        Gfx *_g = (Gfx *)(gdl++);		\
+        _g->words.w0 = 0xB1000032;	\
+        _g->words.w1 = 0x2110;		\
+    }
+
+    return gdl;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A3B40
-/* 0D8670 7F0A3B40 3C0E0430 */  lui   $t6, (0x04300040 >> 16) # lui $t6, 0x430
-/* 0D8674 7F0A3B44 35CE0040 */  ori   $t6, (0x04300040 & 0xFFFF) # ori $t6, $t6, 0x40
-/* 0D8678 7F0A3B48 24860008 */  addiu $a2, $a0, 8
-/* 0D867C 7F0A3B4C 3C0FB100 */  lui   $t7, (0xB1000032 >> 16) # lui $t7, 0xb100
-/* 0D8680 7F0A3B50 AC8E0000 */  sw    $t6, ($a0)
-/* 0D8684 7F0A3B54 AC850004 */  sw    $a1, 4($a0)
-/* 0D8688 7F0A3B58 35EF0032 */  ori   $t7, (0xB1000032 & 0xFFFF) # ori $t7, $t7, 0x32
-/* 0D868C 7F0A3B5C 24182110 */  li    $t8, 8464
-/* 0D8690 7F0A3B60 ACD80004 */  sw    $t8, 4($a2)
-/* 0D8694 7F0A3B64 ACCF0000 */  sw    $t7, ($a2)
-/* 0D8698 7F0A3B68 03E00008 */  jr    $ra
-/* 0D869C 7F0A3B6C 24C20008 */   addiu $v0, $a2, 8
-)
-#endif
-
-
 
 
 
