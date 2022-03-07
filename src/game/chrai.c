@@ -1035,7 +1035,7 @@ PathRecord *pathFindById(s32 ID)
 
 
 
-#ifdef NONMATCHING
+#ifndef NONMATCHING
 
 //forward
 extern void sub_GAME_7F03A538(PropRecord *prop);
@@ -3742,14 +3742,14 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                                 case ITEM_GOLDWPPK:
                                 case ITEM_LASER:
                                 case ITEM_WATCHLASER:
-                                case ITEM_TIMEDMINE:
-                                case ITEM_PROXIMITYMINE:
                                 case ITEM_REMOTEMINE:
                                 case ITEM_TRIGGER:
                                 case ITEM_TASER:
 
                                     prop = chrGiveWeapon(ChrEntityp, PROP_CHRROCKETLAUNCH, ITEM_ROCKETLAUNCH, flags);
                                     //!Bug, No Break! relying on chrGiveWeapon checking weapon already given
+                                case ITEM_TIMEDMINE:
+                                case ITEM_PROXIMITYMINE:
                                 default:
                                     prop = chrGiveWeapon(ChrEntityp, model, ai->val[2], flags);
                                     break;
@@ -5038,7 +5038,7 @@ glabel D_800528F8
 .word 0x3dcccccd /*0.1*/
 
 glabel jpt_800528FC
-.word loc_CODE_7F038C0C
+.word loc_CODE_7F038C0C/**/
 .word loc_CODE_7F038C0C
 .word loc_CODE_7F038C0C
 .word loc_CODE_7F038C0C
