@@ -3742,14 +3742,15 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                                 case ITEM_GOLDWPPK:
                                 case ITEM_LASER:
                                 case ITEM_WATCHLASER:
-                                case ITEM_TIMEDMINE:
-                                case ITEM_PROXIMITYMINE:
+                                
                                 case ITEM_REMOTEMINE:
                                 case ITEM_TRIGGER:
                                 case ITEM_TASER:
 
                                     prop = chrGiveWeapon(ChrEntityp, PROP_CHRROCKETLAUNCH, ITEM_ROCKETLAUNCH, flags);
                                     //!Bug, No Break! relying on chrGiveWeapon checking weapon already given
+                                case ITEM_TIMEDMINE:
+                                case ITEM_PROXIMITYMINE:
                                 default:
                                     prop = chrGiveWeapon(ChrEntityp, model, ai->val[2], flags);
                                     break;
