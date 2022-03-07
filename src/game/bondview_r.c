@@ -733,7 +733,7 @@ def_7F005A74:
 /* 03AC1C 7F0060EC 0FC0E929 */  jal   set_current_objposdata_plus_0x28
 /* 03AC20 7F0060F0 8DE400A8 */   lw    $a0, 0xa8($t7)
 /* 03AC24 7F0060F4 8E4E0000 */  lw    $t6, ($s2)
-/* 03AC28 7F0060F8 0FC0E901 */  jal   set_stateflag_0x04_for_posdata
+/* 03AC28 7F0060F8 0FC0E901 */  jal   propEnable
 /* 03AC2C 7F0060FC 8DC400A8 */   lw    $a0, 0xa8($t6)
 /* 03AC30 7F006100 8E420000 */  lw    $v0, ($s2)
 /* 03AC34 7F006104 3C018005 */  lui   $at, %hi(D_8004F1E0)
@@ -1445,7 +1445,7 @@ def_7F005A74:
 /* 03AC54 7F0060E4 0FC0E9E9 */  jal   set_current_objposdata_plus_0x28
 /* 03AC58 7F0060E8 8D8400A8 */   lw    $a0, 0xa8($t4)
 /* 03AC5C 7F0060EC 8E4D0000 */  lw    $t5, ($s2)
-/* 03AC60 7F0060F0 0FC0E9C1 */  jal   set_stateflag_0x04_for_posdata
+/* 03AC60 7F0060F0 0FC0E9C1 */  jal   propEnable
 /* 03AC64 7F0060F4 8DA400A8 */   lw    $a0, 0xa8($t5)
 /* 03AC68 7F0060F8 8E420000 */  lw    $v0, ($s2)
 /* 03AC6C 7F0060FC 3C018005 */  lui   $at, %hi(D_8004F1E0) # $at, 0x8005
@@ -2160,7 +2160,7 @@ def_7F005A74:
 /* 038A54 7F006064 0FC0E959 */  jal   set_current_objposdata_plus_0x28
 /* 038A58 7F006068 8D8400A8 */   lw    $a0, 0xa8($t4)
 /* 038A5C 7F00606C 8E4D0000 */  lw    $t5, ($s2)
-/* 038A60 7F006070 0FC0E931 */  jal   set_stateflag_0x04_for_posdata
+/* 038A60 7F006070 0FC0E931 */  jal   propEnable
 /* 038A64 7F006074 8DA400A8 */   lw    $a0, 0xa8($t5)
 /* 038A68 7F006078 8E420000 */  lw    $v0, ($s2)
 /* 038A6C 7F00607C 3C018004 */  lui   $at, %hi(D_8004F1E0) # $at, 0x8004

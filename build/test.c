@@ -807,7 +807,7 @@ extern void matrix_4x4_7F059908                              (Mtxf * matrix, f32
 extern void matrix_scalar_multiply                        (f32 scale, Mtxf *matrix);
 extern void musicPlaySlot                                  (int slot, int min, int sec);//set_musicslot_time
 extern void musicStopSlot                                (int slot);//reset_music_in_slot
-extern void propHide                                         (PropRecord *prop);                                                                  //propHide
+extern void propDisable                                         (PropRecord *prop);                                                                  //propDisable
 extern void propobjSetDropped                                (PropRecord *prop, int a);                                                           // sub_GAME_7F04BFD0
 extern void propweaponSetDual                                (WeaponObjRecord *leftweapon, WeaponObjRecord *rightweapon);                         // link_objects
 extern void remove_item_in_hand                              (GUNHAND hand);
@@ -2843,7 +2843,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                         {
                             sub_GAME_7F03E18C(obj->prop);
                             sub_GAME_7F03A538(obj->prop);
-                            propHide(obj->prop);
+                            propDisable(obj->prop);
                         }
                         if (obj->type != PROPDEF_COLLECTABLE || !sub_GAME_7F051E1C(obj, chr))
                         {

@@ -5086,7 +5086,7 @@ _AI_CMD(
             {
                 sub_GAME_7F03E18C(obj->prop);
                 sub_GAME_7F03A538(obj->prop);
-                propHide(obj->prop);
+                propDisable(obj->prop);
             }
             if (obj->type != PROPDEF_COLLECTABLE || !sub_GAME_7F051E1C(obj, chr))
             {

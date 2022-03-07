@@ -331,7 +331,7 @@ void expand_09_characters(s32 arg0, GuardRecord *arg1, s32 arg2)
             if (temp_v0_4 != 0)
             {
                 set_current_objposdata_plus_0x28(temp_v0_4);
-                set_stateflag_0x04_for_posdata(temp_v0_4);
+                propEnable(temp_v0_4);
 
                 temp_v0_5 = temp_v0_4->chr;
                 temp_v0_5->chrnum = (s16) arg1->chrnum;
@@ -11765,7 +11765,7 @@ PropRecord *actionblock_guard_constructor_BDBE(s32 bodynum, s32 headnum, coord3d
                 if (chrprop != NULL)
                 {
                     sub_GAME_7F03A4F0(chrprop);
-                    set_stateflag_0x04_for_posdata(chrprop);
+                    propEnable(chrprop);
                     chr          = chrprop->chr;
                     chr->headnum = headnum;
                     chr->bodynum = bodynum;

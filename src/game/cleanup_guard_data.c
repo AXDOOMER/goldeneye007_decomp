@@ -26,7 +26,7 @@ loop_2:
             // Node 3
             disable_sounds_attached_to_player_then_something(temp_v0->unk18);
             sub_GAME_7F03A538((ptr_guard_data + phi_s0)->unk18);
-            propHide((ptr_guard_data + phi_s0)->unk18);
+            propDisable((ptr_guard_data + phi_s0)->unk18);
             propFree((ptr_guard_data + phi_s0)->unk18);
             phi_v1 = num_guards;
         }
@@ -73,7 +73,7 @@ glabel cleanupGuardData
 /* 03BF38 7F007408 8F240018 */   lw    $a0, 0x18($t9)
 /* 03BF3C 7F00740C 8E280000 */  lw    $t0, ($s1)
 /* 03BF40 7F007410 01104821 */  addu  $t1, $t0, $s0
-/* 03BF44 7F007414 0FC0E905 */  jal   propHide
+/* 03BF44 7F007414 0FC0E905 */  jal   propDisable
 /* 03BF48 7F007418 8D240018 */   lw    $a0, 0x18($t1)
 /* 03BF4C 7F00741C 8E2A0000 */  lw    $t2, ($s1)
 /* 03BF50 7F007420 01505821 */  addu  $t3, $t2, $s0

@@ -347,7 +347,7 @@ glabel sub_GAME_7F09C250
 /* 0D0F24 7F09C3F4 AFA70030 */  sw    $a3, 0x30($sp)
 /* 0D0F28 7F09C3F8 0FC0E93C */  jal   sub_GAME_7F03A4F0
 /* 0D0F2C 7F09C3FC AFA80040 */   sw    $t0, 0x40($sp)
-/* 0D0F30 7F09C400 0FC0E901 */  jal   set_stateflag_0x04_for_posdata
+/* 0D0F30 7F09C400 0FC0E901 */  jal   propEnable
 /* 0D0F34 7F09C404 8FA40030 */   lw    $a0, 0x30($sp)
 /* 0D0F38 7F09C408 8FA80040 */  lw    $t0, 0x40($sp)
 /* 0D0F3C 7F09C40C 8FA20058 */  lw    $v0, 0x58($sp)
@@ -719,7 +719,7 @@ glabel sub_GAME_7F09C250
 .Ljp7F09CF84:
 /* 0D1AF4 7F09CF84 0FC0E9FC */  jal   sub_GAME_7F03A4F0
 /* 0D1AF8 7F09CF88 AFA70038 */   sw    $a3, 0x38($sp)
-/* 0D1AFC 7F09CF8C 0FC0E9C1 */  jal   set_stateflag_0x04_for_posdata
+/* 0D1AFC 7F09CF8C 0FC0E9C1 */  jal   propEnable
 /* 0D1B00 7F09CF90 8FA40038 */   lw    $a0, 0x38($sp)
 /* 0D1B04 7F09CF94 8FA20060 */  lw    $v0, 0x60($sp)
 /* 0D1B08 7F09CF98 8FA70038 */  lw    $a3, 0x38($sp)
@@ -3468,7 +3468,7 @@ glabel sub_GAME_7F09E700
 .L7F09E874:
 /* 0D33A4 7F09E874 0FC0E93C */  jal   sub_GAME_7F03A4F0
 /* 0D33A8 7F09E878 AFAD002C */   sw    $t5, 0x2c($sp)
-/* 0D33AC 7F09E87C 0FC0E901 */  jal   set_stateflag_0x04_for_posdata
+/* 0D33AC 7F09E87C 0FC0E901 */  jal   propEnable
 /* 0D33B0 7F09E880 8FA4001C */   lw    $a0, 0x1c($sp)
 /* 0D33B4 7F09E884 8FAD002C */  lw    $t5, 0x2c($sp)
 /* 0D33B8 7F09E888 8FB9001C */  lw    $t9, 0x1c($sp)

@@ -37,10 +37,7 @@
 #include "fog.h"
 
 // bss
-/**
- * Address 0x80069B70.
-*/
-sfxRecord sfx_related[SFX_RELATED_LEN];
+
 
 //CODE.bss:80069C30
 s16 * ptr_list_object_lookup_indices;
@@ -216,7 +213,7 @@ void chraiUpdateOnscreenPropCount(void)
 
     for (; prop != NULL; prop = prop->prev)
     {
-        if ((prop->flags & (PROPFLAG_00000004 | PROPFLAG_ONSCREEN)) == (PROPFLAG_00000004 | PROPFLAG_ONSCREEN))
+        if ((prop->flags & (PROPFLAG_ENABLED | PROPFLAG_ONSCREEN)) == (PROPFLAG_ENABLED | PROPFLAG_ONSCREEN))
         {
             g_OnScreenPropList[count] = prop;
             count++;
@@ -259,16 +256,16 @@ void chraiUpdateOnscreenPropCount(void)
 }
 
 
-void set_stateflag_0x04_for_posdata(PropRecord *param_1)
+void propEnable(PropRecord *prop)
 {
-    param_1->flags = param_1->flags | 4;
+    prop->flags |= PROPFLAG_ENABLED;
 }
 
 
 
-void propHide(PropRecord *prop)
+void propDisable(PropRecord *prop)
 {
-    prop->flags &= ~4;
+    prop->flags &= ~PROPFLAG_ENABLED;
 }
 
 
@@ -288,8 +285,23 @@ PropRecord *get_ptr_obj_pos_list_current_entry(void)
 
 
 #ifdef NONMATCHING
-void remove_last_obj_pos_data_entry(void) {
+PropRecord* remove_last_obj_pos_data_entry(void) {
+    PropRecord* prop  = ptr_obj_pos_list_final_entry;
 
+    if (prop)
+    {
+        ptr_obj_pos_list_final_entry = prop->prev;
+        prop->prev = NULL;
+        prop->next = 0;
+        prop->parent = 0;
+        prop->child = 0;
+        prop->type = 0;
+        prop->stan = 0;
+        prop->flags = 0;
+        prop->rooms[0] = 0xFF;
+        return prop;
+    }
+    return NULL;
 }
 #else
 GLOBAL_ASM(
@@ -2695,26 +2707,26 @@ void sub_GAME_7F03C2BC(PropRecord *prop, INV_ITEM_TYPE type) //#MATCH
                 propobj->state &= ~0x80;
                 propobj->maxdamage = 0.0f;
                 sub_GAME_7F03E18C(prop);
-                propHide(prop);
+                propDisable(prop);
                 return;
             }
         }
         sub_GAME_7F03E18C(prop);
         sub_GAME_7F03A538(prop);
-        propHide(prop);
+        propDisable(prop);
         propFree(prop);
     }
     else if (type == INV_ITEM_PROP)
     {
         sub_GAME_7F03E18C(prop);
         sub_GAME_7F03A538(prop);
-        propHide(prop);
+        propDisable(prop);
     }
     else if (type == INV_ITEM_PICKUP)
     {
         sub_GAME_7F03E18C(prop);
         sub_GAME_7F03A538(prop);
-        propHide(prop);
+        propDisable(prop);
         sub_GAME_7F04C044(prop);
         sub_GAME_7F040CF0(prop);
         attachNewChild(prop, get_curplayer_positiondata());
@@ -3090,7 +3102,7 @@ glabel handle_mp_respawn_and_some_things
 /* 071368 7F03C838 1000001C */  b     .L7F03C8AC
 /* 07136C 7F03C83C 24130001 */   li    $s3, 1
 .L7F03C840:
-/* 071370 7F03C840 0FC0E901 */  jal   set_stateflag_0x04_for_posdata
+/* 071370 7F03C840 0FC0E901 */  jal   propEnable
 /* 071374 7F03C844 02202025 */   move  $a0, $s1
 /* 071378 7F03C848 0FC0F84D */  jal   sub_GAME_7F03E134
 /* 07137C 7F03C84C 02202025 */   move  $a0, $s1
@@ -3373,7 +3385,7 @@ glabel handle_mp_respawn_and_some_things
 /* 06F2E8 7F03C8F8 1000001C */  b     .L7F03C96C
 /* 06F2EC 7F03C8FC 24130001 */   li    $s3, 1
 .L7F03C900:
-/* 06F2F0 7F03C900 0FC0E931 */  jal   set_stateflag_0x04_for_posdata
+/* 06F2F0 7F03C900 0FC0E931 */  jal   propEnable
 /* 06F2F4 7F03C904 02202025 */   move  $a0, $s1
 /* 06F2F8 7F03C908 0FC0F87D */  jal   sub_GAME_7F03E134
 /* 06F2FC 7F03C90C 02202025 */   move  $a0, $s1

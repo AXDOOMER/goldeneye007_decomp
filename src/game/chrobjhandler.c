@@ -2860,7 +2860,7 @@ glabel objFree
 /* 075B1C 7F040FEC AE400010 */   sw    $zero, 0x10($s2)
 /* 075B20 7F040FF0 0FC0E94E */  jal   sub_GAME_7F03A538
 /* 075B24 7F040FF4 8E440010 */   lw    $a0, 0x10($s2)
-/* 075B28 7F040FF8 0FC0E905 */  jal   propHide
+/* 075B28 7F040FF8 0FC0E905 */  jal   propDisable
 /* 075B2C 7F040FFC 8E440010 */   lw    $a0, 0x10($s2)
 /* 075B30 7F041000 0FC0E921 */  jal   propFree
 /* 075B34 7F041004 8E440010 */   lw    $a0, 0x10($s2)
@@ -6028,7 +6028,7 @@ glabel sub_GAME_7F043A6C
 /* 078600 7F043AD0 AE080064 */   sw    $t0, 0x64($s0)
 /* 078604 7F043AD4 0FC0E94E */  jal   sub_GAME_7F03A538
 /* 078608 7F043AD8 02202025 */   move  $a0, $s1
-/* 07860C 7F043ADC 0FC0E905 */  jal   propHide
+/* 07860C 7F043ADC 0FC0E905 */  jal   propDisable
 /* 078610 7F043AE0 02202025 */   move  $a0, $s1
 /* 078614 7F043AE4 8FA900F8 */  lw    $t1, 0xf8($sp)
 /* 078618 7F043AE8 8E0A0014 */  lw    $t2, 0x14($s0)
@@ -30730,7 +30730,7 @@ glabel sub_GAME_7F04C130
 /* 0814B8 7F04C988 8FA40108 */   lw    $a0, 0x108($sp)
 /* 0814BC 7F04C98C 0FC0E929 */  jal   set_current_objposdata_plus_0x28
 /* 0814C0 7F04C990 8FA40108 */   lw    $a0, 0x108($sp)
-/* 0814C4 7F04C994 0FC0E901 */  jal   set_stateflag_0x04_for_posdata
+/* 0814C4 7F04C994 0FC0E901 */  jal   propEnable
 /* 0814C8 7F04C998 8FA40108 */   lw    $a0, 0x108($sp)
 /* 0814CC 7F04C99C C7A000E8 */  lwc1  $f0, 0xe8($sp)
 /* 0814D0 7F04C9A0 8FA80108 */  lw    $t0, 0x108($sp)
@@ -31408,7 +31408,7 @@ glabel sub_GAME_7F04C130
 /* 0814B8 7F04C988 8FA40108 */   lw    $a0, 0x108($sp)
 /* 0814BC 7F04C98C 0FC0E929 */  jal   set_current_objposdata_plus_0x28
 /* 0814C0 7F04C990 8FA40108 */   lw    $a0, 0x108($sp)
-/* 0814C4 7F04C994 0FC0E901 */  jal   set_stateflag_0x04_for_posdata
+/* 0814C4 7F04C994 0FC0E901 */  jal   propEnable
 /* 0814C8 7F04C998 8FA40108 */   lw    $a0, 0x108($sp)
 /* 0814CC 7F04C99C C7A000E8 */  lwc1  $f0, 0xe8($sp)
 /* 0814D0 7F04C9A0 8FA80108 */  lw    $t0, 0x108($sp)

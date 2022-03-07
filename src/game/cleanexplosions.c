@@ -17,7 +17,7 @@ void cleanupExplosions(void)
             if (ptr_explosion_buf[i].prop != NULL)
             {
                 sub_GAME_7F03A538(ptr_explosion_buf[i].prop);
-                propHide(ptr_explosion_buf[i].prop);
+                propDisable(ptr_explosion_buf[i].prop);
                 propFree(ptr_explosion_buf[i].prop);
                 ptr_explosion_buf[i].prop = NULL;
             }
@@ -32,7 +32,7 @@ void cleanupExplosions(void)
             if (ptr_smoke_buf[i].prop != NULL)
             {
                 sub_GAME_7F03A538(ptr_smoke_buf[i].prop);
-                propHide(ptr_smoke_buf[i].prop);
+                propDisable(ptr_smoke_buf[i].prop);
                 propFree(ptr_smoke_buf[i].prop);
                 ptr_smoke_buf[i].prop = NULL;
             }

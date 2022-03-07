@@ -46,8 +46,11 @@ extern s32 objectiveGetStatus_WEAK(s32 objectiveNum, s32);
 #define sub_GAME_7F020D914                chrPositionRelated7F020D94
 
 
-
-
+//bss
+/**
+ * Address 0x80069B70.
+*/
+sfxRecord sfx_related[SFX_RELATED_LEN];
 
 
 
@@ -2364,7 +2367,7 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                         {
                             sub_GAME_7F03E18C(obj->prop);
                             sub_GAME_7F03A538(obj->prop);
-                            propHide(obj->prop);
+                            propDisable(obj->prop);
                         }
                         if (obj->type != PROPDEF_COLLECTABLE || !sub_GAME_7F051E1C(obj, chr))
                         {
