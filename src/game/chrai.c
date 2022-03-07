@@ -37,21 +37,14 @@
 #include "fog.h"
 
 
-// forward declarations
 
-Gfx *chraiResolveRenderProp(Gfx *arg0, PropRecord *arg1, s32 arg2);
-void chraiCheckUseHeldItem(s32 hand);
-void chraiDefaultWeaponFireHandler(s32);
-void chraiFistAttackHandler(s32, s32);
-void sub_GAME_7F03C2BC(PropRecord *prop, INV_ITEM_TYPE type) ;
 
-// end forward declarations
-
-extern s32 objectiveGetStatus_WEAK(s32 objectiveNum, s32);
+//hack? used to match as called with 2 args, but decompiled code takes 1
+extern s32 objectiveGetStatus_WEAK(s32 objectiveNum, s32); 
 
 //shims
 #define sub_GAME_7F020D914                chrPositionRelated7F020D94
-#define get_civilian_casualties           get_civilian_casualties
+
 
 
 
