@@ -38,24 +38,15 @@ u32 D_8004095C = 0;
 
 
 //D:80040960
-// struct rgba_u8 D_80040960[8] = {
-//     { 0xFF, 0xFF, 0xFF, 0xFF }, 
-//     { 0xFF, 0xFF, 0xC8, 0xFF }, 
-//     { 0xFF, 0x00, 0x00, 0xFF },
-//     { 0xFF, 0xFF, 0xFF, 0xFF },
-//     { 0xFF, 0xFF, 0xFF, 0xFF },
-//     { 0xFF, 0xFF, 0xFF, 0xFF },
-//     { 0 },
-//     { 0 }
-// };
-u32 D_80040960[] = {
-    0xFFFFFFFF, 
-    0xFFFFC8FF, 
-    0xFF0000FF, 
-    0xFFFFFFFF, 
-    0xFFFFFFFF, 
-    0xFFFFFFFF,
-    0, 0
+struct rgba_u8 D_80040960[8] = {
+    { 0xFF, 0xFF, 0xFF, 0xFF }, 
+    { 0xFF, 0xFF, 0xC8, 0xFF }, 
+    { 0xFF, 0x00, 0x00, 0xFF },
+    { 0xFF, 0xFF, 0xFF, 0xFF },
+    { 0xFF, 0xFF, 0xFF, 0xFF },
+    { 0xFF, 0xFF, 0xFF, 0xFF },
+    { 0 },
+    { 0 }
 };
 u32 D_80040980 = 0;
 
@@ -3668,58 +3659,27 @@ Gfx *sub_GAME_7F0A3B40(Gfx *gdl, s32 *arg1)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0A3B70(void) {
-
+// unreferenced
+void unused_7F0A3B70(s32 arg0, struct rgba_u8 *arg1)
+{
+    arg1->r = D_80040960[arg0].r;
+    arg1->g = D_80040960[arg0].g;
+    arg1->b = D_80040960[arg0].b;
+    arg1->a = D_80040960[arg0].a;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A3B70
-/* 0D86A0 7F0A3B70 3C0F8004 */  lui   $t7, %hi(D_80040960) 
-/* 0D86A4 7F0A3B74 25EF0960 */  addiu $t7, %lo(D_80040960) # addiu $t7, $t7, 0x960
-/* 0D86A8 7F0A3B78 00047080 */  sll   $t6, $a0, 2
-/* 0D86AC 7F0A3B7C 01CF1021 */  addu  $v0, $t6, $t7
-/* 0D86B0 7F0A3B80 90580000 */  lbu   $t8, ($v0)
-/* 0D86B4 7F0A3B84 A0B80000 */  sb    $t8, ($a1)
-/* 0D86B8 7F0A3B88 90590001 */  lbu   $t9, 1($v0)
-/* 0D86BC 7F0A3B8C A0B90001 */  sb    $t9, 1($a1)
-/* 0D86C0 7F0A3B90 90480002 */  lbu   $t0, 2($v0)
-/* 0D86C4 7F0A3B94 A0A80002 */  sb    $t0, 2($a1)
-/* 0D86C8 7F0A3B98 90490003 */  lbu   $t1, 3($v0)
-/* 0D86CC 7F0A3B9C 03E00008 */  jr    $ra
-/* 0D86D0 7F0A3BA0 A0A90003 */   sb    $t1, 3($a1)
-)
-#endif
 
 
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0A3BA4(void) {
-
+// unreferenced
+void unused_7F0A3BA4(s32 arg0, struct rgba_u8 *arg1)
+{
+    D_80040960[arg0].r = arg1->r;
+    D_80040960[arg0].g = arg1->g;
+    D_80040960[arg0].b = arg1->b;
+    D_80040960[arg0].a = arg1->a;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A3BA4
-/* 0D86D4 7F0A3BA4 90B80000 */  lbu   $t8, ($a1)
-/* 0D86D8 7F0A3BA8 3C0F8004 */  lui   $t7, %hi(D_80040960) 
-/* 0D86DC 7F0A3BAC 25EF0960 */  addiu $t7, %lo(D_80040960) # addiu $t7, $t7, 0x960
-/* 0D86E0 7F0A3BB0 00047080 */  sll   $t6, $a0, 2
-/* 0D86E4 7F0A3BB4 01CF1021 */  addu  $v0, $t6, $t7
-/* 0D86E8 7F0A3BB8 A0580000 */  sb    $t8, ($v0)
-/* 0D86EC 7F0A3BBC 90B90001 */  lbu   $t9, 1($a1)
-/* 0D86F0 7F0A3BC0 A0590001 */  sb    $t9, 1($v0)
-/* 0D86F4 7F0A3BC4 90A80002 */  lbu   $t0, 2($a1)
-/* 0D86F8 7F0A3BC8 A0480002 */  sb    $t0, 2($v0)
-/* 0D86FC 7F0A3BCC 90A90003 */  lbu   $t1, 3($a1)
-/* 0D8700 7F0A3BD0 03E00008 */  jr    $ra
-/* 0D8704 7F0A3BD4 A0490003 */   sb    $t1, 3($v0)
-)
-#endif
-
 
 
 

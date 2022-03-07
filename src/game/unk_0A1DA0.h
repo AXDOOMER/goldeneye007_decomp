@@ -70,7 +70,6 @@ struct WatchVertex {
 extern s32 SHATTERED_WINDOW_PIECES_BUFFER_LEN;
 extern s_shattered_window_piece* ptr_shattered_window_pieces;
 extern u32 D_80040940;
-extern u32 D_80040960[];
 
 extern u32 D_80040980;
 extern u32 D_80040984;
