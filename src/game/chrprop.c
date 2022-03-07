@@ -351,13 +351,28 @@ void propFree(PropRecord *prop)
 
 
 #ifdef NONMATCHING
-void set_current_objposdata_plus_0x28(void) {
+//functionally close, asm out of order
+void propActivate(PropRecord* prop) {
+    PropRecord* cur = ptr_obj_pos_list_current_entry;
+    if (cur) {
+        cur->next = prop;
+        prop->next = 0;
+        prop->prev = ptr_obj_pos_list_current_entry;
+        ptr_obj_pos_list_current_entry = prop;
 
+    }
+    else 
+    {
+        prop->prev = NULL;
+        prop->next = 0;
+        ptr_obj_pos_list_first_entry = prop;
+        ptr_obj_pos_list_current_entry = prop;
+    }
 }
 #else
 GLOBAL_ASM(
 .text
-glabel set_current_objposdata_plus_0x28
+glabel propActivate
 /* 06EFD4 7F03A4A4 3C038003 */  lui   $v1, %hi(ptr_obj_pos_list_current_entry)
 /* 06EFD8 7F03A4A8 24630AA0 */  addiu $v1, %lo(ptr_obj_pos_list_current_entry) # addiu $v1, $v1, 0xaa0
 /* 06EFDC 7F03A4AC 8C620000 */  lw    $v0, ($v1)

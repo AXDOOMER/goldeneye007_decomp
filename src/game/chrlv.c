@@ -330,7 +330,7 @@ void expand_09_characters(s32 arg0, GuardRecord *arg1, s32 arg2)
             
             if (temp_v0_4 != 0)
             {
-                set_current_objposdata_plus_0x28(temp_v0_4);
+                propActivate(temp_v0_4);
                 propEnable(temp_v0_4);
 
                 temp_v0_5 = temp_v0_4->chr;

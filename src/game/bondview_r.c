@@ -730,7 +730,7 @@ def_7F005A74:
 /* 03AC10 7F0060E0 8F3800A8 */  lw    $t8, 0xa8($t9)
 /* 03AC14 7F0060E4 AF0D0014 */  sw    $t5, 0x14($t8)
 /* 03AC18 7F0060E8 8E4F0000 */  lw    $t7, ($s2)
-/* 03AC1C 7F0060EC 0FC0E929 */  jal   set_current_objposdata_plus_0x28
+/* 03AC1C 7F0060EC 0FC0E929 */  jal   propActivate
 /* 03AC20 7F0060F0 8DE400A8 */   lw    $a0, 0xa8($t7)
 /* 03AC24 7F0060F4 8E4E0000 */  lw    $t6, ($s2)
 /* 03AC28 7F0060F8 0FC0E901 */  jal   propEnable
@@ -1442,7 +1442,7 @@ def_7F005A74:
 /* 03AC48 7F0060D8 8D4B00A8 */  lw    $t3, 0xa8($t2)
 /* 03AC4C 7F0060DC AD690014 */  sw    $t1, 0x14($t3)
 /* 03AC50 7F0060E0 8E4C0000 */  lw    $t4, ($s2)
-/* 03AC54 7F0060E4 0FC0E9E9 */  jal   set_current_objposdata_plus_0x28
+/* 03AC54 7F0060E4 0FC0E9E9 */  jal   propActivate
 /* 03AC58 7F0060E8 8D8400A8 */   lw    $a0, 0xa8($t4)
 /* 03AC5C 7F0060EC 8E4D0000 */  lw    $t5, ($s2)
 /* 03AC60 7F0060F0 0FC0E9C1 */  jal   propEnable
@@ -2157,7 +2157,7 @@ def_7F005A74:
 /* 038A48 7F006058 8D4B00A8 */  lw    $t3, 0xa8($t2)
 /* 038A4C 7F00605C AD690014 */  sw    $t1, 0x14($t3)
 /* 038A50 7F006060 8E4C0000 */  lw    $t4, ($s2)
-/* 038A54 7F006064 0FC0E959 */  jal   set_current_objposdata_plus_0x28
+/* 038A54 7F006064 0FC0E959 */  jal   propActivate
 /* 038A58 7F006068 8D8400A8 */   lw    $a0, 0xa8($t4)
 /* 038A5C 7F00606C 8E4D0000 */  lw    $t5, ($s2)
 /* 038A60 7F006070 0FC0E931 */  jal   propEnable

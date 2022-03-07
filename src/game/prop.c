@@ -913,7 +913,7 @@ glabel prepare_load_objects
 .L7F00270C:
 /* 03723C 7F00270C 0FC15B28 */  jal   sub_GAME_7F056CA0
 /* 037240 7F002710 02202025 */   move  $a0, $s1
-/* 037244 7F002714 0FC0E929 */  jal   set_current_objposdata_plus_0x28
+/* 037244 7F002714 0FC0E929 */  jal   propActivate
 /* 037248 7F002718 8FA40060 */   lw    $a0, 0x60($sp)
 /* 03724C 7F00271C 0FC0E901 */  jal   propEnable
 /* 037250 7F002720 8FA40060 */   lw    $a0, 0x60($sp)
@@ -2849,7 +2849,7 @@ glabel expand_type_01_object
 /* 0386D0 7F003BA0 0FC1B39E */  jal   set_obj_instance_controller_scale
 /* 0386D4 7F003BA4 00000000 */   nop   
 .L7F003BA8:
-/* 0386D8 7F003BA8 0FC0E929 */  jal   set_current_objposdata_plus_0x28
+/* 0386D8 7F003BA8 0FC0E929 */  jal   propActivate
 /* 0386DC 7F003BAC 02002025 */   move  $a0, $s0
 /* 0386E0 7F003BB0 0FC0E901 */  jal   propEnable
 /* 0386E4 7F003BB4 02002025 */   move  $a0, $s0
@@ -3372,7 +3372,7 @@ glabel expand_type_01_object
 /* 03651C 7F003B2C 0FC1B4CF */  jal   set_obj_instance_controller_scale
 /* 036520 7F003B30 00000000 */   nop   
 .L7F003B34:
-/* 036524 7F003B34 0FC0E959 */  jal   set_current_objposdata_plus_0x28
+/* 036524 7F003B34 0FC0E959 */  jal   propActivate
 /* 036528 7F003B38 02002025 */   move  $a0, $s0
 /* 03652C 7F003B3C 0FC0E931 */  jal   propEnable
 /* 036530 7F003B40 02002025 */   move  $a0, $s0

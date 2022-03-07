@@ -4510,7 +4510,7 @@ void sub_GAME_7F05EB0C(ObjectRecord *arg0, coord3d *arg1, StandTile *arg2, Mtxf 
 
     if (temp_s1 != NULL)
     {
-        set_current_objposdata_plus_0x28(temp_s1);
+        propActivate(temp_s1);
         propEnable(temp_s1);
         matrix_scalar_multiply(arg0->model->scale, arg3);
         sub_GAME_7F040754(arg0, arg1, arg3, arg2);

@@ -30728,7 +30728,7 @@ glabel sub_GAME_7F04C130
 .L7F04C984:
 /* 0814B4 7F04C984 0FC13011 */  jal   sub_GAME_7F04C044
 /* 0814B8 7F04C988 8FA40108 */   lw    $a0, 0x108($sp)
-/* 0814BC 7F04C98C 0FC0E929 */  jal   set_current_objposdata_plus_0x28
+/* 0814BC 7F04C98C 0FC0E929 */  jal   propActivate
 /* 0814C0 7F04C990 8FA40108 */   lw    $a0, 0x108($sp)
 /* 0814C4 7F04C994 0FC0E901 */  jal   propEnable
 /* 0814C8 7F04C998 8FA40108 */   lw    $a0, 0x108($sp)
@@ -31406,7 +31406,7 @@ glabel sub_GAME_7F04C130
 .L7F04C984:
 /* 0814B4 7F04C984 0FC13011 */  jal   sub_GAME_7F04C044
 /* 0814B8 7F04C988 8FA40108 */   lw    $a0, 0x108($sp)
-/* 0814BC 7F04C98C 0FC0E929 */  jal   set_current_objposdata_plus_0x28
+/* 0814BC 7F04C98C 0FC0E929 */  jal   propActivate
 /* 0814C0 7F04C990 8FA40108 */   lw    $a0, 0x108($sp)
 /* 0814C4 7F04C994 0FC0E901 */  jal   propEnable
 /* 0814C8 7F04C998 8FA40108 */   lw    $a0, 0x108($sp)

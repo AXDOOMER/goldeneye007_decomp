@@ -494,7 +494,7 @@ void          sub_GAME_7F03E18C(PropRecord *);
 void          sub_GAME_7F03E27C(PropRecord *, coord3d *, coord3d *, f32);
 void          sub_GAME_7F03E210(PropRecord *posData);
 
-void          set_current_objposdata_plus_0x28(PropRecord *);
+void          propActivate(PropRecord *);
 void          propEnable(PropRecord *);
 void          sub_GAME_7F03A4F0(Model *);
 void          attachNewChild(PropRecord *newChild, PropRecord *host);
