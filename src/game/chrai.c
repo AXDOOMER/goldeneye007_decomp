@@ -1035,7 +1035,7 @@ PathRecord *pathFindById(s32 ID)
 
 
 
-#ifndef VERSION_EU
+#ifndef VE1RSION_EU
 
 //forward
 extern void sub_GAME_7F03A538(PropRecord *prop);
