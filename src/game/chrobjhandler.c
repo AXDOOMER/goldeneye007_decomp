@@ -44080,7 +44080,7 @@ void play_door_opening_soundeffect_0(DoorRecord *door) {
         soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD2, NULL);
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 7, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, 0x07, pendingState);
         }
         break;
     case 3:
@@ -44101,7 +44101,7 @@ void play_door_opening_soundeffect_0(DoorRecord *door) {
         soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xBC, NULL);
         break;
     case 6:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 7, NULL);
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0x07, NULL);
         break;
     case 7:
         soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xC0, NULL);
@@ -44114,7 +44114,7 @@ void play_door_opening_soundeffect_0(DoorRecord *door) {
         soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xBC, NULL);
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 7, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, 0x07, pendingState);
         }
         break;
     case 9:
@@ -44127,16 +44127,16 @@ void play_door_opening_soundeffect_0(DoorRecord *door) {
         soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xC4, NULL);
         break;
     case 11:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 7, NULL);
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0x07, NULL);
         break;
     case 12:
         soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xC8, NULL);
         break;
     case 13:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 7, NULL);
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0x07, NULL);
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 7, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, 0x07, pendingState);
         }
         break;
     case 14:
@@ -44155,7 +44155,7 @@ void play_door_opening_soundeffect_0(DoorRecord *door) {
         soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD6, NULL);
         break;
     case 17:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 7, NULL);
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0x07, NULL);
         if (soundState != NULL)
         {
             sub_GAME_7F053A10(soundState, &door->prop->pos);
@@ -44165,6 +44165,7 @@ void play_door_opening_soundeffect_0(DoorRecord *door) {
         {
             sndPlaySfx(g_musicSfxBufferPtr, 0xCC, pendingState);
         }
+        break;
     }
 
     if (soundState != NULL)
@@ -44198,85 +44199,85 @@ void play_door_opening_soundeffect_1(DoorRecord *door) {
     switch (door->doorOpenSound)
     {
     case 1:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xd2, NULL);
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD2, NULL);
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0xd3, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, 0xD3, pendingState);
         }
         break;
     case 2:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xd2, NULL);
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD2, NULL);
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 7, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, 0x07, pendingState);
         }
         break;
     case 3:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xca, NULL);
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xCA, NULL);
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0xcc, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, 0xCC, pendingState);
         }
         break;
     case 4:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xd6, NULL);
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD6, NULL);
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0xd8, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, 0xD8, pendingState);
         }
         break;
     case 7:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xc0, NULL);
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xC0, NULL);
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0xbf, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, 0xBF, pendingState);
         }
         break;
     case 8:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xbc, NULL);
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xBC, NULL);
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 7, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, 0x07, pendingState);
         }
         break;
     case 9:
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0xc2, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, 0xC2, pendingState);
         }
         break;
-    case 0xd:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 7, NULL);
+    case 13:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0x07, NULL);
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 7, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, 0x07, pendingState);
         }
         break;
-    case 0xe:
+    case 14:
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0xda, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, 0xDA, pendingState);
         }
         break;
-    case 0xf:
+    case 15:
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0xe1, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, 0xE1, pendingState);
         }
         break;
-    case 0x10:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xd6, NULL);
+    case 16:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD6, NULL);
         break;
-    case 0x11:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 7, NULL);
+    case 17:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0x07, NULL);
         if (soundState != NULL)
         {
             sub_GAME_7F053A10(soundState, &door->prop->pos);
         }
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xca, NULL);
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xCA, NULL);
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0xcc, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, 0xCC, pendingState);
         }
         break;
     }
