@@ -4731,7 +4731,7 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                             sub_GAME_7F03FE14(obj->prop);
                             matrix_4x4_set_identity(&obj->unk6C->m);
                             obj->unk6C->pos.x = 0;
-                            obj->unk6C->pos.y = 1.0f / CHRLV_FRAMERATE_F; //step height?
+                            obj->unk6C->pos.y = 0.016666666f; //step height?
                             obj->unk6C->pos.z = 0;
                             obj->unk6C->vec.x = 0;
                             obj->unk6C->vec.y = 0.29166666f; //direction to move?
@@ -5073,7 +5073,7 @@ glabel D_80052974
 .word 0x3c888888 /*0.016666666*/
 glabel D_80052978
 .word 0x3e955555 /*0.29166666*/
-.word 0
+
 
 .text
 glabel parse_handle_actionblocks
@@ -10904,7 +10904,7 @@ glabel D_80052974
 .word 0x3c888888 /*0.016666666*/
 glabel D_80052978
 .word 0x3e955555 /*0.29166666*/
-.word 0
+
 
 .text
 glabel parse_handle_actionblocks
@@ -16737,7 +16737,7 @@ glabel D_80052974
 .word 0x3c888888 /*0.016666666*/
 glabel D_80052978
 .word 0x3e955555 /*0.29166666*/
-.word 0
+
 
 .text
 glabel parse_handle_actionblocks
@@ -25108,7 +25108,8 @@ glabel sub_GAME_7F03C3FC
 
 
 
-
+//likely file split here
+// .word 0x00000000 in rodata is for padding it temp
 
 #ifdef NONMATCHING
 void bond_interact_object(void) {
@@ -25118,6 +25119,7 @@ void bond_interact_object(void) {
 GLOBAL_ASM(
 .late_rodata
 /*D:80052980*/
+.word 0x00000000
 glabel jpt_80052980
 .word loc_CODE_7F03C534
 .word loc_CODE_7F03C544
