@@ -23,7 +23,7 @@ GZIP := gzipsrc/gzip
 $(GZIP):
 	@$(MAKE) -C gzipsrc
 
-ifeq ($(IDO_RECOMP), YES)
+ifneq ($(IDO_RECOMP), NO)
 
 IDO53 := ido5.3_recomp/cc
 

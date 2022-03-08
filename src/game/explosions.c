@@ -277,7 +277,7 @@ glabel sub_GAME_7F09C250
 /* 0D0E1C 7F09C2EC 51000129 */  beql  $t0, $zero, .L7F09C794
 /* 0D0E20 7F09C2F0 8FBF002C */   lw    $ra, 0x2c($sp)
 /* 0D0E24 7F09C2F4 A7A70056 */  sh    $a3, 0x56($sp)
-/* 0D0E28 7F09C2F8 0FC0E90C */  jal   remove_last_obj_pos_data_entry
+/* 0D0E28 7F09C2F8 0FC0E90C */  jal   chrpropAllocate
 /* 0D0E2C 7F09C2FC AFA80040 */   sw    $t0, 0x40($sp)
 /* 0D0E30 7F09C300 92230039 */  lbu   $v1, 0x39($s1)
 /* 0D0E34 7F09C304 8FA80040 */  lw    $t0, 0x40($sp)
@@ -345,9 +345,9 @@ glabel sub_GAME_7F09C250
 /* 0D0F20 7F09C3F0 A0EE0001 */  sb    $t6, 1($a3)
 .L7F09C3F4:
 /* 0D0F24 7F09C3F4 AFA70030 */  sw    $a3, 0x30($sp)
-/* 0D0F28 7F09C3F8 0FC0E93C */  jal   sub_GAME_7F03A4F0
+/* 0D0F28 7F09C3F8 0FC0E93C */  jal   chrpropActivateThisFrame
 /* 0D0F2C 7F09C3FC AFA80040 */   sw    $t0, 0x40($sp)
-/* 0D0F30 7F09C400 0FC0E901 */  jal   set_stateflag_0x04_for_posdata
+/* 0D0F30 7F09C400 0FC0E901 */  jal   chrpropEnable
 /* 0D0F34 7F09C404 8FA40030 */   lw    $a0, 0x30($sp)
 /* 0D0F38 7F09C408 8FA80040 */  lw    $t0, 0x40($sp)
 /* 0D0F3C 7F09C40C 8FA20058 */  lw    $v0, 0x58($sp)
@@ -644,7 +644,7 @@ glabel sub_GAME_7F09C250
 .Ljp7F09CE6C:
 /* 0D19DC 7F09CE6C 52800124 */  beql  $s4, $zero, .Ljp7F09D300
 /* 0D19E0 7F09CE70 8FBF0034 */   lw    $ra, 0x34($sp)
-/* 0D19E4 7F09CE74 0FC0E9CC */  jal   remove_last_obj_pos_data_entry
+/* 0D19E4 7F09CE74 0FC0E9CC */  jal   chrpropAllocate
 /* 0D19E8 7F09CE78 00000000 */   nop   
 /* 0D19EC 7F09CE7C 87AE005E */  lh    $t6, 0x5e($sp)
 /* 0D19F0 7F09CE80 24010010 */  li    $at, 16
@@ -717,9 +717,9 @@ glabel sub_GAME_7F09C250
 /* 0D1AEC 7F09CF7C 372E0008 */  ori   $t6, $t9, 8
 /* 0D1AF0 7F09CF80 A0EE0001 */  sb    $t6, 1($a3)
 .Ljp7F09CF84:
-/* 0D1AF4 7F09CF84 0FC0E9FC */  jal   sub_GAME_7F03A4F0
+/* 0D1AF4 7F09CF84 0FC0E9FC */  jal   chrpropActivateThisFrame
 /* 0D1AF8 7F09CF88 AFA70038 */   sw    $a3, 0x38($sp)
-/* 0D1AFC 7F09CF8C 0FC0E9C1 */  jal   set_stateflag_0x04_for_posdata
+/* 0D1AFC 7F09CF8C 0FC0E9C1 */  jal   chrpropEnable
 /* 0D1B00 7F09CF90 8FA40038 */   lw    $a0, 0x38($sp)
 /* 0D1B04 7F09CF94 8FA20060 */  lw    $v0, 0x60($sp)
 /* 0D1B08 7F09CF98 8FA70038 */  lw    $a3, 0x38($sp)
@@ -3416,7 +3416,7 @@ glabel sub_GAME_7F09E700
 .L7F09E7B0:
 /* 0D32E0 7F09E7B0 51A0003B */  beql  $t5, $zero, .L7F09E8A0
 /* 0D32E4 7F09E7B4 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0D32E8 7F09E7B8 0FC0E90C */  jal   remove_last_obj_pos_data_entry
+/* 0D32E8 7F09E7B8 0FC0E90C */  jal   chrpropAllocate
 /* 0D32EC 7F09E7BC AFAD002C */   sw    $t5, 0x2c($sp)
 /* 0D32F0 7F09E7C0 24080007 */  li    $t0, 7
 /* 0D32F4 7F09E7C4 8FAD002C */  lw    $t5, 0x2c($sp)
@@ -3466,9 +3466,9 @@ glabel sub_GAME_7F09E700
 /* 0D339C 7F09E86C A0580001 */  sb    $t8, 1($v0)
 /* 0D33A0 7F09E870 8FA4001C */  lw    $a0, 0x1c($sp)
 .L7F09E874:
-/* 0D33A4 7F09E874 0FC0E93C */  jal   sub_GAME_7F03A4F0
+/* 0D33A4 7F09E874 0FC0E93C */  jal   chrpropActivateThisFrame
 /* 0D33A8 7F09E878 AFAD002C */   sw    $t5, 0x2c($sp)
-/* 0D33AC 7F09E87C 0FC0E901 */  jal   set_stateflag_0x04_for_posdata
+/* 0D33AC 7F09E87C 0FC0E901 */  jal   chrpropEnable
 /* 0D33B0 7F09E880 8FA4001C */   lw    $a0, 0x1c($sp)
 /* 0D33B4 7F09E884 8FAD002C */  lw    $t5, 0x2c($sp)
 /* 0D33B8 7F09E888 8FB9001C */  lw    $t9, 0x1c($sp)

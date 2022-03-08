@@ -696,7 +696,7 @@ def_7F005A74:
 /* 03AB88 7F006058 00000000 */   nop   
 /* 03AB8C 7F00605C 0FC22A40 */  jal   sub_GAME_7F08A900
 /* 03AB90 7F006060 00000000 */   nop   
-/* 03AB94 7F006064 0FC0E90C */  jal   remove_last_obj_pos_data_entry
+/* 03AB94 7F006064 0FC0E90C */  jal   chrpropAllocate
 /* 03AB98 7F006068 00000000 */   nop   
 /* 03AB9C 7F00606C 8E480000 */  lw    $t0, ($s2)
 /* 03ABA0 7F006070 240A0006 */  li    $t2, 6
@@ -730,10 +730,10 @@ def_7F005A74:
 /* 03AC10 7F0060E0 8F3800A8 */  lw    $t8, 0xa8($t9)
 /* 03AC14 7F0060E4 AF0D0014 */  sw    $t5, 0x14($t8)
 /* 03AC18 7F0060E8 8E4F0000 */  lw    $t7, ($s2)
-/* 03AC1C 7F0060EC 0FC0E929 */  jal   set_current_objposdata_plus_0x28
+/* 03AC1C 7F0060EC 0FC0E929 */  jal   chrpropActivate
 /* 03AC20 7F0060F0 8DE400A8 */   lw    $a0, 0xa8($t7)
 /* 03AC24 7F0060F4 8E4E0000 */  lw    $t6, ($s2)
-/* 03AC28 7F0060F8 0FC0E901 */  jal   set_stateflag_0x04_for_posdata
+/* 03AC28 7F0060F8 0FC0E901 */  jal   chrpropEnable
 /* 03AC2C 7F0060FC 8DC400A8 */   lw    $a0, 0xa8($t6)
 /* 03AC30 7F006100 8E420000 */  lw    $v0, ($s2)
 /* 03AC34 7F006104 3C018005 */  lui   $at, %hi(D_8004F1E0)
@@ -1408,7 +1408,7 @@ def_7F005A74:
 /* 03ABC0 7F006050 00000000 */   nop   
 /* 03ABC4 7F006054 0FC22C37 */  jal   sub_GAME_7F08A900
 /* 03ABC8 7F006058 00000000 */   nop   
-/* 03ABCC 7F00605C 0FC0E9CC */  jal   remove_last_obj_pos_data_entry
+/* 03ABCC 7F00605C 0FC0E9CC */  jal   chrpropAllocate
 /* 03ABD0 7F006060 00000000 */   nop   
 /* 03ABD4 7F006064 8E590000 */  lw    $t9, ($s2)
 /* 03ABD8 7F006068 240F0006 */  li    $t7, 6
@@ -1442,10 +1442,10 @@ def_7F005A74:
 /* 03AC48 7F0060D8 8D4B00A8 */  lw    $t3, 0xa8($t2)
 /* 03AC4C 7F0060DC AD690014 */  sw    $t1, 0x14($t3)
 /* 03AC50 7F0060E0 8E4C0000 */  lw    $t4, ($s2)
-/* 03AC54 7F0060E4 0FC0E9E9 */  jal   set_current_objposdata_plus_0x28
+/* 03AC54 7F0060E4 0FC0E9E9 */  jal   chrpropActivate
 /* 03AC58 7F0060E8 8D8400A8 */   lw    $a0, 0xa8($t4)
 /* 03AC5C 7F0060EC 8E4D0000 */  lw    $t5, ($s2)
-/* 03AC60 7F0060F0 0FC0E9C1 */  jal   set_stateflag_0x04_for_posdata
+/* 03AC60 7F0060F0 0FC0E9C1 */  jal   chrpropEnable
 /* 03AC64 7F0060F4 8DA400A8 */   lw    $a0, 0xa8($t5)
 /* 03AC68 7F0060F8 8E420000 */  lw    $v0, ($s2)
 /* 03AC6C 7F0060FC 3C018005 */  lui   $at, %hi(D_8004F1E0) # $at, 0x8005
@@ -2123,7 +2123,7 @@ def_7F005A74:
 /* 0389C0 7F005FD0 00000000 */   nop   
 /* 0389C4 7F005FD4 0FC22AD2 */  jal   sub_GAME_7F08A900
 /* 0389C8 7F005FD8 00000000 */   nop   
-/* 0389CC 7F005FDC 0FC0E93C */  jal   remove_last_obj_pos_data_entry
+/* 0389CC 7F005FDC 0FC0E93C */  jal   chrpropAllocate
 /* 0389D0 7F005FE0 00000000 */   nop   
 /* 0389D4 7F005FE4 8E590000 */  lw    $t9, ($s2)
 /* 0389D8 7F005FE8 240F0006 */  li    $t7, 6
@@ -2157,10 +2157,10 @@ def_7F005A74:
 /* 038A48 7F006058 8D4B00A8 */  lw    $t3, 0xa8($t2)
 /* 038A4C 7F00605C AD690014 */  sw    $t1, 0x14($t3)
 /* 038A50 7F006060 8E4C0000 */  lw    $t4, ($s2)
-/* 038A54 7F006064 0FC0E959 */  jal   set_current_objposdata_plus_0x28
+/* 038A54 7F006064 0FC0E959 */  jal   chrpropActivate
 /* 038A58 7F006068 8D8400A8 */   lw    $a0, 0xa8($t4)
 /* 038A5C 7F00606C 8E4D0000 */  lw    $t5, ($s2)
-/* 038A60 7F006070 0FC0E931 */  jal   set_stateflag_0x04_for_posdata
+/* 038A60 7F006070 0FC0E931 */  jal   chrpropEnable
 /* 038A64 7F006074 8DA400A8 */   lw    $a0, 0xa8($t5)
 /* 038A68 7F006078 8E420000 */  lw    $v0, ($s2)
 /* 038A6C 7F00607C 3C018004 */  lui   $at, %hi(D_8004F1E0) # $at, 0x8004

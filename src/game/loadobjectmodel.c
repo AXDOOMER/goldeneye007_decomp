@@ -328,7 +328,7 @@ void sub_GAME_7F056CA0(ObjectRecord *obj)
     f32         phi_f20_4;
 
     temp_s1 = obj->prop;
-    sub_GAME_7F03E18C(temp_s1);
+    chrpropDeregisterRooms(temp_s1);
     phi_f20 = 0.0f;
     if (obj->flags2 & 0x20000)
     {
@@ -393,7 +393,7 @@ void sub_GAME_7F056CA0(ObjectRecord *obj)
             sub_GAME_7F03E27C(temp_f12, temp_s1, temp_a1_2, temp_a2, phi_f20_4);
         }
     }
-    sub_GAME_7F03E210(temp_s1);
+    chrpropRegisterRooms(temp_s1);
 }
 #else
 GLOBAL_ASM(
@@ -450,7 +450,7 @@ glabel sub_GAME_7F056CA0
 /* 08B7E4 7F056CB4 8C910010 */  lw    $s1, 0x10($a0)
 /* 08B7E8 7F056CB8 00808025 */  move  $s0, $a0
 /* 08B7EC 7F056CBC 4480A000 */  mtc1  $zero, $f20
-/* 08B7F0 7F056CC0 0FC0F863 */  jal   sub_GAME_7F03E18C
+/* 08B7F0 7F056CC0 0FC0F863 */  jal   chrpropDeregisterRooms
 /* 08B7F4 7F056CC4 02202025 */   move  $a0, $s1
 /* 08B7F8 7F056CC8 8E0E000C */  lw    $t6, 0xc($s0)
 /* 08B7FC 7F056CCC 000E7B80 */  sll   $t7, $t6, 0xe
@@ -569,7 +569,7 @@ glabel sub_GAME_7F056CA0
 /* 08B9A8 7F056E78 0FC0F89F */  jal   sub_GAME_7F03E27C
 /* 08B9AC 7F056E7C E7A8003C */   swc1  $f8, 0x3c($sp)
 .L7F056E80:
-/* 08B9B0 7F056E80 0FC0F884 */  jal   sub_GAME_7F03E210
+/* 08B9B0 7F056E80 0FC0F884 */  jal   chrpropRegisterRooms
 /* 08B9B4 7F056E84 02202025 */   move  $a0, $s1
 /* 08B9B8 7F056E88 8FBF0024 */  lw    $ra, 0x24($sp)
 /* 08B9BC 7F056E8C D7B40010 */  ldc1  $f20, 0x10($sp)

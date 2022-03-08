@@ -5084,13 +5084,13 @@ _AI_CMD(
             }
             else
             {
-                sub_GAME_7F03E18C(obj->prop);
-                sub_GAME_7F03A538(obj->prop);
-                propHide(obj->prop);
+                chrpropDeregisterRooms(obj->prop);
+                chrpropDelist(obj->prop);
+                chrpropDisable(obj->prop);
             }
             if (obj->type != PROPDEF_COLLECTABLE || !sub_GAME_7F051E1C(obj, chr))
             {
-                attachNewChild(obj->prop, chr->prop);
+                chrpropReparent(obj->prop, chr->prop);
             }
         }
         Offset += CAT(CAT(AI_, CMDNAME), _LENGTH);
@@ -10285,7 +10285,7 @@ _AI_CMD(
         set_unset_ammo_on_screen_setting(2, FALSE);
         if (!(PLAYERFLAG_NOCONTROL & ai->val))
         {
-            bondviewSetIntroCameraFlags(PLAYERFLAG_NOCONTROL);
+            hudmsgsSetOff(PLAYERFLAG_NOCONTROL);
         }
         if (!(ai->val & PLAYERFLAG_LOCKCONTROLS))
         {
@@ -10330,7 +10330,7 @@ _AI_CMD(
     {
         set_unset_bitflags(4, TRUE);
         set_unset_ammo_on_screen_setting(2, TRUE);
-        bondviewUnsetIntroCameraFlags(PLAYERFLAG_NOCONTROL);
+        hudmsgsSetOn(PLAYERFLAG_NOCONTROL);
         sub_GAME_7F08A928(2);
         countdownTimerSetVisible(16, TRUE);
         D_800364B0 = TRUE;

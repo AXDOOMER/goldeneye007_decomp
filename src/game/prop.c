@@ -414,7 +414,7 @@ glabel prepare_load_objects
 /* 036AF8 7F001FC8 00000000 */   nop   
 /* 036AFC 7F001FCC 8FAE006C */  lw    $t6, 0x6c($sp)
 /* 036B00 7F001FD0 02002025 */  move  $a0, $s0
-/* 036B04 7F001FD4 0FC0E969 */  jal   attachNewChild
+/* 036B04 7F001FD4 0FC0E969 */  jal   chrpropReparent
 /* 036B08 7F001FD8 8DC50018 */   lw    $a1, 0x18($t6)
 /* 036B0C 7F001FDC 100001D2 */  b     .L7F002728
 /* 036B10 7F001FE0 8FBF0034 */   lw    $ra, 0x34($sp)
@@ -913,9 +913,9 @@ glabel prepare_load_objects
 .L7F00270C:
 /* 03723C 7F00270C 0FC15B28 */  jal   sub_GAME_7F056CA0
 /* 037240 7F002710 02202025 */   move  $a0, $s1
-/* 037244 7F002714 0FC0E929 */  jal   set_current_objposdata_plus_0x28
+/* 037244 7F002714 0FC0E929 */  jal   chrpropActivate
 /* 037248 7F002718 8FA40060 */   lw    $a0, 0x60($sp)
-/* 03724C 7F00271C 0FC0E901 */  jal   set_stateflag_0x04_for_posdata
+/* 03724C 7F00271C 0FC0E901 */  jal   chrpropEnable
 /* 037250 7F002720 8FA40060 */   lw    $a0, 0x60($sp)
 .L7F002724:
 /* 037254 7F002724 8FBF0034 */  lw    $ra, 0x34($sp)
@@ -2046,7 +2046,7 @@ glabel sub_GAME_7F002E3C
 /* 037B70 7F003040 ADAC001C */  sw    $t4, 0x1c($t5)
 .L7F003044:
 /* 037B74 7F003044 8FA40024 */  lw    $a0, 0x24($sp)
-/* 037B78 7F003048 0FC0E969 */  jal   attachNewChild
+/* 037B78 7F003048 0FC0E969 */  jal   chrpropReparent
 /* 037B7C 7F00304C 8E250010 */   lw    $a1, 0x10($s1)
 /* 037B80 7F003050 8E05006C */  lw    $a1, 0x6c($s0)
 /* 037B84 7F003054 3C018005 */  lui   $at, %hi(D_8004EF58)
@@ -2786,7 +2786,7 @@ glabel expand_type_01_object
 /* 0385F0 7F003AC0 02002025 */  move  $a0, $s0
 /* 0385F4 7F003AC4 904B0003 */  lbu   $t3, 3($v0)
 /* 0385F8 7F003AC8 A20B002C */  sb    $t3, 0x2c($s0)
-/* 0385FC 7F003ACC 0FC0F767 */  jal   sub_GAME_7F03DD9C
+/* 0385FC 7F003ACC 0FC0F767 */  jal   chrpropRegisterRoom
 /* 038600 7F003AD0 90450003 */   lbu   $a1, 3($v0)
 /* 038604 7F003AD4 240200FF */  li    $v0, 255
 /* 038608 7F003AD8 A202002D */  sb    $v0, 0x2d($s0)
@@ -2808,7 +2808,7 @@ glabel expand_type_01_object
 /* 038644 7F003B14 8FAF01B0 */   lw    $t7, 0x1b0($sp)
 /* 038648 7F003B18 A20F002D */  sb    $t7, 0x2d($s0)
 /* 03864C 7F003B1C 87A501B2 */  lh    $a1, 0x1b2($sp)
-/* 038650 7F003B20 0FC0F767 */  jal   sub_GAME_7F03DD9C
+/* 038650 7F003B20 0FC0F767 */  jal   chrpropRegisterRoom
 /* 038654 7F003B24 02002025 */   move  $a0, $s0
 /* 038658 7F003B28 10000008 */  b     .L7F003B4C
 /* 03865C 7F003B2C 9209002D */   lbu   $t1, 0x2d($s0)
@@ -2817,7 +2817,7 @@ glabel expand_type_01_object
 /* 038664 7F003B34 8FA801AC */   lw    $t0, 0x1ac($sp)
 /* 038668 7F003B38 A208002D */  sb    $t0, 0x2d($s0)
 /* 03866C 7F003B3C 87A501AE */  lh    $a1, 0x1ae($sp)
-/* 038670 7F003B40 0FC0F767 */  jal   sub_GAME_7F03DD9C
+/* 038670 7F003B40 0FC0F767 */  jal   chrpropRegisterRoom
 /* 038674 7F003B44 02002025 */   move  $a0, $s0
 .L7F003B48:
 /* 038678 7F003B48 9209002D */  lbu   $t1, 0x2d($s0)
@@ -2849,9 +2849,9 @@ glabel expand_type_01_object
 /* 0386D0 7F003BA0 0FC1B39E */  jal   set_obj_instance_controller_scale
 /* 0386D4 7F003BA4 00000000 */   nop   
 .L7F003BA8:
-/* 0386D8 7F003BA8 0FC0E929 */  jal   set_current_objposdata_plus_0x28
+/* 0386D8 7F003BA8 0FC0E929 */  jal   chrpropActivate
 /* 0386DC 7F003BAC 02002025 */   move  $a0, $s0
-/* 0386E0 7F003BB0 0FC0E901 */  jal   set_stateflag_0x04_for_posdata
+/* 0386E0 7F003BB0 0FC0E901 */  jal   chrpropEnable
 /* 0386E4 7F003BB4 02002025 */   move  $a0, $s0
 /* 0386E8 7F003BB8 8E220080 */  lw    $v0, 0x80($s1)
 /* 0386EC 7F003BBC 8FAB01E0 */  lw    $t3, 0x1e0($sp)
@@ -3309,7 +3309,7 @@ glabel expand_type_01_object
 /* 03643C 7F003A4C 02002025 */  move  $a0, $s0
 /* 036440 7F003A50 904B0003 */  lbu   $t3, 3($v0)
 /* 036444 7F003A54 A20B002C */  sb    $t3, 0x2c($s0)
-/* 036448 7F003A58 0FC0F797 */  jal   sub_GAME_7F03DD9C
+/* 036448 7F003A58 0FC0F797 */  jal   chrpropRegisterRoom
 /* 03644C 7F003A5C 90450003 */   lbu   $a1, 3($v0)
 /* 036450 7F003A60 240200FF */  li    $v0, 255
 /* 036454 7F003A64 A202002D */  sb    $v0, 0x2d($s0)
@@ -3331,7 +3331,7 @@ glabel expand_type_01_object
 /* 036490 7F003AA0 8FAF01B0 */   lw    $t7, 0x1b0($sp)
 /* 036494 7F003AA4 A20F002D */  sb    $t7, 0x2d($s0)
 /* 036498 7F003AA8 87A501B2 */  lh    $a1, 0x1b2($sp)
-/* 03649C 7F003AAC 0FC0F797 */  jal   sub_GAME_7F03DD9C
+/* 03649C 7F003AAC 0FC0F797 */  jal   chrpropRegisterRoom
 /* 0364A0 7F003AB0 02002025 */   move  $a0, $s0
 /* 0364A4 7F003AB4 10000008 */  b     .L7F003AD8
 /* 0364A8 7F003AB8 9209002D */   lbu   $t1, 0x2d($s0)
@@ -3340,7 +3340,7 @@ glabel expand_type_01_object
 /* 0364B0 7F003AC0 8FA801AC */   lw    $t0, 0x1ac($sp)
 /* 0364B4 7F003AC4 A208002D */  sb    $t0, 0x2d($s0)
 /* 0364B8 7F003AC8 87A501AE */  lh    $a1, 0x1ae($sp)
-/* 0364BC 7F003ACC 0FC0F797 */  jal   sub_GAME_7F03DD9C
+/* 0364BC 7F003ACC 0FC0F797 */  jal   chrpropRegisterRoom
 /* 0364C0 7F003AD0 02002025 */   move  $a0, $s0
 .L7F003AD4:
 /* 0364C4 7F003AD4 9209002D */  lbu   $t1, 0x2d($s0)
@@ -3372,9 +3372,9 @@ glabel expand_type_01_object
 /* 03651C 7F003B2C 0FC1B4CF */  jal   set_obj_instance_controller_scale
 /* 036520 7F003B30 00000000 */   nop   
 .L7F003B34:
-/* 036524 7F003B34 0FC0E959 */  jal   set_current_objposdata_plus_0x28
+/* 036524 7F003B34 0FC0E959 */  jal   chrpropActivate
 /* 036528 7F003B38 02002025 */   move  $a0, $s0
-/* 03652C 7F003B3C 0FC0E931 */  jal   set_stateflag_0x04_for_posdata
+/* 03652C 7F003B3C 0FC0E931 */  jal   chrpropEnable
 /* 036530 7F003B40 02002025 */   move  $a0, $s0
 /* 036534 7F003B44 8E220080 */  lw    $v0, 0x80($s1)
 /* 036538 7F003B48 8FAB01E0 */  lw    $t3, 0x1e0($sp)
@@ -4600,7 +4600,7 @@ other_obj_expand:
 /* 0396EC 7F004BBC 0FC1B39E */  jal   set_obj_instance_controller_scale
 /* 0396F0 7F004BC0 8C850014 */   lw    $a1, 0x14($a0)
 /* 0396F4 7F004BC4 8E440010 */  lw    $a0, 0x10($s2)
-/* 0396F8 7F004BC8 0FC0E969 */  jal   attachNewChild
+/* 0396F8 7F004BC8 0FC0E969 */  jal   chrpropReparent
 /* 0396FC 7F004BCC 8E050010 */   lw    $a1, 0x10($s0)
 /* 039700 7F004BD0 10000084 */  b     .L7F004DE4
 /* 039704 7F004BD4 00000000 */   nop   
@@ -5998,7 +5998,7 @@ other_obj_expand:
 /* 03973C 7F004BCC 0FC1B51A */  jal   set_obj_instance_controller_scale
 /* 039740 7F004BD0 8C850014 */   lw    $a1, 0x14($a0)
 /* 039744 7F004BD4 8E440010 */  lw    $a0, 0x10($s2)
-/* 039748 7F004BD8 0FC0EA29 */  jal   attachNewChild
+/* 039748 7F004BD8 0FC0EA29 */  jal   chrpropReparent
 /* 03974C 7F004BDC 8E050010 */   lw    $a1, 0x10($s0)
 /* 039750 7F004BE0 10000084 */  b     .L7F004DF4
 /* 039754 7F004BE4 00000000 */   nop   
@@ -7395,7 +7395,7 @@ other_obj_expand:
 /* 037540 7F004B50 0FC1B4CF */  jal   set_obj_instance_controller_scale
 /* 037544 7F004B54 8C850014 */   lw    $a1, 0x14($a0)
 /* 037548 7F004B58 8E440010 */  lw    $a0, 0x10($s2)
-/* 03754C 7F004B5C 0FC0E999 */  jal   attachNewChild
+/* 03754C 7F004B5C 0FC0E999 */  jal   chrpropReparent
 /* 037550 7F004B60 8E050010 */   lw    $a1, 0x10($s0)
 /* 037554 7F004B64 10000084 */  b     .L7F004DF4
 /* 037558 7F004B68 00000000 */   nop   
