@@ -35,6 +35,37 @@
 #define WATCHZOOM3 3.95f
 #endif
 
+/**
+ * A static buffer for watch menu current screen rectangles
+ * is added to the player struct. This is a compile time
+ * const to know the size of the buffer.
+ * Do not change this value until player struct is fully shiftable.
+*/
+#define WATCH_NUMBER_SCREENS 5
+
+/**
+ * Watch menu screen select menu UI layout should satisfy the following.
+ * Width is the width of each rectangle, and spacer is the space
+ * between the end of one rectangle and start of the next.
+ * For "n" screens:
+ * 
+ *     (n * width) + ((n - 1) * spacer) = 600
+ * 
+ * Assume that all "spacer" space should add up to one rectangle. Then
+ * 
+ *     (n+1) * width = 600
+ *     (n-1) * spacer = width
+*/
+
+#define WATCH_SCREEN_SELECT_RECTANGLE_MIN_X   (-299)
+#define WATCH_SCREEN_SELECT_RECTANGLE_MAX_X   (301)
+// default: 600
+#define WATCH_SCREEN_SELECT_TOTAL_WIDTH       (WATCH_SCREEN_SELECT_RECTANGLE_MAX_X - WATCH_SCREEN_SELECT_RECTANGLE_MIN_X)
+// default: 100
+#define WATCH_SCREEN_SELECT_RECTANGLE_WIDTH   (s32)(WATCH_SCREEN_SELECT_TOTAL_WIDTH / (WATCH_NUMBER_SCREENS + 1))
+// default: 25
+#define WATCH_SCREEN_SELECT_SPACER_WIDTH      (s32)(WATCH_SCREEN_SELECT_RECTANGLE_WIDTH / (WATCH_NUMBER_SCREENS - 1))
+
 typedef enum WATCH_INDEX {
     WATCH_INDEX_MISSION_STATUS = 0,
     WATCH_INDEX_INVENTORY,
@@ -107,6 +138,7 @@ void cur_player_set_control_type(int type);
 void init_watch_at_start_of_stage(int a);
 
 Gfx *sub_GAME_7F0ACA28(Gfx *gdl, Mtx *arg1, s32 watch_transitioning);
+void sub_GAME_7F0A69A8(void);
 
 #endif
 

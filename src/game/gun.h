@@ -262,4 +262,5 @@ void         remove_item_in_hand(GUNHAND hand);
 void         currentPlayerUnEquipWeaponWrapper(GUNHAND hand, s32 weapid);
 s32          currentPlayerGetAmmoCount(AMMOTYPE ammotype);
 s32          get_civilian_casualties(void);
+s32 Gun_hand_without_item(enum GUNHAND arg0);
 #endif
