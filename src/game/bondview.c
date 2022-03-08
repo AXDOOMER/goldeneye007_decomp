@@ -3447,9 +3447,9 @@ variable_body_head:
 /* 0AEC74 7F07A144 3979003F */  xori  $t9, $t3, 0x3f
 /* 0AEC78 7F07A148 018F5021 */  addu  $t2, $t4, $t7
 /* 0AEC7C 7F07A14C AFAA0038 */  sw    $t2, 0x38($sp)
-/* 0AEC80 7F07A150 0FC1D73D */  jal   set_objuse_flag_compute_grp_nums_set_obj_loaded
+/* 0AEC80 7F07A150 0FC1D73D */  jal   modelCalculateRwDataLen
 /* 0AEC84 7F07A154 AFB900E8 */   sw    $t9, 0xe8($sp)
-/* 0AEC88 7F07A158 0FC1D73D */  jal   set_objuse_flag_compute_grp_nums_set_obj_loaded
+/* 0AEC88 7F07A158 0FC1D73D */  jal   modelCalculateRwDataLen
 /* 0AEC8C 7F07A15C 8FA400F8 */   lw    $a0, 0xf8($sp)
 /* 0AEC90 7F07A160 8FA500FC */  lw    $a1, 0xfc($sp)
 /* 0AEC94 7F07A164 8FAF00F8 */  lw    $t7, 0xf8($sp)
@@ -3487,7 +3487,7 @@ variable_body_head:
 /* 0AED10 7F07A1E0 01402025 */  move  $a0, $t2
 /* 0AED14 7F07A1E4 57200004 */  bnezl $t9, .L7F07A1F8
 /* 0AED18 7F07A1E8 8FAD0040 */   lw    $t5, 0x40($sp)
-/* 0AED1C 7F07A1EC 0FC1D953 */  jal   load_object_into_memory
+/* 0AED1C 7F07A1EC 0FC1D953 */  jal   fileLoad
 /* 0AED20 7F07A1F0 8C650004 */   lw    $a1, 4($v1)
 /* 0AED24 7F07A1F4 8FAD0040 */  lw    $t5, 0x40($sp)
 .L7F07A1F8:
@@ -3503,7 +3503,7 @@ variable_body_head:
 /* 0AED4C 7F07A21C 57000006 */  bnezl $t8, .L7F07A238
 /* 0AED50 7F07A220 8FAC0038 */   lw    $t4, 0x38($sp)
 /* 0AED54 7F07A224 8C650004 */  lw    $a1, 4($v1)
-/* 0AED58 7F07A228 0FC1D953 */  jal   load_object_into_memory
+/* 0AED58 7F07A228 0FC1D953 */  jal   fileLoad
 /* 0AED5C 7F07A22C AFA700F8 */   sw    $a3, 0xf8($sp)
 /* 0AED60 7F07A230 8FA700F8 */  lw    $a3, 0xf8($sp)
 .L7F07A234:
@@ -3618,7 +3618,7 @@ variable_body_head:
 /* 0AEF10 7F07A3E0 8FA30028 */  lw    $v1, 0x28($sp)
 /* 0AEF14 7F07A3E4 0FC2F462 */  jal   get_pc_buffer_remaining_value
 /* 0AEF18 7F07A3E8 8C640004 */   lw    $a0, 4($v1)
-/* 0AEF1C 7F07A3EC 0FC1D73D */  jal   set_objuse_flag_compute_grp_nums_set_obj_loaded
+/* 0AEF1C 7F07A3EC 0FC1D73D */  jal   modelCalculateRwDataLen
 /* 0AEF20 7F07A3F0 8FA400F4 */   lw    $a0, 0xf4($sp)
 /* 0AEF24 7F07A3F4 10000004 */  b     .L7F07A408
 /* 0AEF28 7F07A3F8 8FAE00DC */   lw    $t6, 0xdc($sp)
@@ -4039,9 +4039,9 @@ variable_body_head:
 /* 0AF2A4 7F07A734 3979003F */  xori  $t9, $t3, 0x3f
 /* 0AF2A8 7F07A738 018F5021 */  addu  $t2, $t4, $t7
 /* 0AF2AC 7F07A73C AFAA0038 */  sw    $t2, 0x38($sp)
-/* 0AF2B0 7F07A740 0FC1D8B9 */  jal   set_objuse_flag_compute_grp_nums_set_obj_loaded
+/* 0AF2B0 7F07A740 0FC1D8B9 */  jal   modelCalculateRwDataLen
 /* 0AF2B4 7F07A744 AFB900E8 */   sw    $t9, 0xe8($sp)
-/* 0AF2B8 7F07A748 0FC1D8B9 */  jal   set_objuse_flag_compute_grp_nums_set_obj_loaded
+/* 0AF2B8 7F07A748 0FC1D8B9 */  jal   modelCalculateRwDataLen
 /* 0AF2BC 7F07A74C 8FA400F8 */   lw    $a0, 0xf8($sp)
 /* 0AF2C0 7F07A750 8FA500FC */  lw    $a1, 0xfc($sp)
 /* 0AF2C4 7F07A754 8FAF00F8 */  lw    $t7, 0xf8($sp)
@@ -4079,7 +4079,7 @@ variable_body_head:
 /* 0AF340 7F07A7D0 57200006 */  bnezl $t9, .Ljp7F07A7EC
 /* 0AF344 7F07A7D4 906D0011 */   lbu   $t5, 0x11($v1)
 /* 0AF348 7F07A7D8 8C650004 */  lw    $a1, 4($v1)
-/* 0AF34C 7F07A7DC 0FC1DACF */  jal   load_object_into_memory
+/* 0AF34C 7F07A7DC 0FC1DACF */  jal   fileLoad
 /* 0AF350 7F07A7E0 AFA30028 */   sw    $v1, 0x28($sp)
 /* 0AF354 7F07A7E4 8FA30028 */  lw    $v1, 0x28($sp)
 /* 0AF358 7F07A7E8 906D0011 */  lbu   $t5, 0x11($v1)
@@ -4103,7 +4103,7 @@ variable_body_head:
 /* 0AF398 7F07A828 55400005 */  bnezl $t2, .Ljp7F07A840
 /* 0AF39C 7F07A82C 8FB90038 */   lw    $t9, 0x38($sp)
 /* 0AF3A0 7F07A830 8C650004 */  lw    $a1, 4($v1)
-/* 0AF3A4 7F07A834 0FC1DACF */  jal   load_object_into_memory
+/* 0AF3A4 7F07A834 0FC1DACF */  jal   fileLoad
 /* 0AF3A8 7F07A838 AFA400F8 */   sw    $a0, 0xf8($sp)
 .Ljp7F07A83C:
 /* 0AF3AC 7F07A83C 8FB90038 */  lw    $t9, 0x38($sp)
@@ -4223,7 +4223,7 @@ variable_body_head:
 /* 0AF570 7F07AA00 8FA30028 */  lw    $v1, 0x28($sp)
 /* 0AF574 7F07AA04 0FC2F74E */  jal   get_pc_buffer_remaining_value
 /* 0AF578 7F07AA08 8C640004 */   lw    $a0, 4($v1)
-/* 0AF57C 7F07AA0C 0FC1D8B9 */  jal   set_objuse_flag_compute_grp_nums_set_obj_loaded
+/* 0AF57C 7F07AA0C 0FC1D8B9 */  jal   modelCalculateRwDataLen
 /* 0AF580 7F07AA10 8FA400F4 */   lw    $a0, 0xf4($sp)
 /* 0AF584 7F07AA14 10000004 */  b     .Ljp7F07AA28
 /* 0AF588 7F07AA18 8FAC00DC */   lw    $t4, 0xdc($sp)
@@ -4642,9 +4642,9 @@ variable_body_head:
 /* 0ACBA4 7F07A1B4 3979003F */  xori  $t9, $t3, 0x3f
 /* 0ACBA8 7F07A1B8 018F5021 */  addu  $t2, $t4, $t7
 /* 0ACBAC 7F07A1BC AFAA0038 */  sw    $t2, 0x38($sp)
-/* 0ACBB0 7F07A1C0 0FC1D75F */  jal   set_objuse_flag_compute_grp_nums_set_obj_loaded
+/* 0ACBB0 7F07A1C0 0FC1D75F */  jal   modelCalculateRwDataLen
 /* 0ACBB4 7F07A1C4 AFB900E8 */   sw    $t9, 0xe8($sp)
-/* 0ACBB8 7F07A1C8 0FC1D75F */  jal   set_objuse_flag_compute_grp_nums_set_obj_loaded
+/* 0ACBB8 7F07A1C8 0FC1D75F */  jal   modelCalculateRwDataLen
 /* 0ACBBC 7F07A1CC 8FA400F8 */   lw    $a0, 0xf8($sp)
 /* 0ACBC0 7F07A1D0 8FA500FC */  lw    $a1, 0xfc($sp)
 /* 0ACBC4 7F07A1D4 8FAF00F8 */  lw    $t7, 0xf8($sp)
@@ -4682,7 +4682,7 @@ variable_body_head:
 /* 0ACC40 7F07A250 57200006 */  bnezl $t9, .L7F07A26C
 /* 0ACC44 7F07A254 906D0011 */   lbu   $t5, 0x11($v1)
 /* 0ACC48 7F07A258 8C650004 */  lw    $a1, 4($v1)
-/* 0ACC4C 7F07A25C 0FC1D973 */  jal   load_object_into_memory
+/* 0ACC4C 7F07A25C 0FC1D973 */  jal   fileLoad
 /* 0ACC50 7F07A260 AFA30028 */   sw    $v1, 0x28($sp)
 /* 0ACC54 7F07A264 8FA30028 */  lw    $v1, 0x28($sp)
 /* 0ACC58 7F07A268 906D0011 */  lbu   $t5, 0x11($v1)
@@ -4706,7 +4706,7 @@ variable_body_head:
 /* 0ACC98 7F07A2A8 55400005 */  bnezl $t2, .L7F07A2C0
 /* 0ACC9C 7F07A2AC 8FB90038 */   lw    $t9, 0x38($sp)
 /* 0ACCA0 7F07A2B0 8C650004 */  lw    $a1, 4($v1)
-/* 0ACCA4 7F07A2B4 0FC1D973 */  jal   load_object_into_memory
+/* 0ACCA4 7F07A2B4 0FC1D973 */  jal   fileLoad
 /* 0ACCA8 7F07A2B8 AFA400F8 */   sw    $a0, 0xf8($sp)
 .L7F07A2BC:
 /* 0ACCAC 7F07A2BC 8FB90038 */  lw    $t9, 0x38($sp)
@@ -4824,7 +4824,7 @@ variable_body_head:
 /* 0ACE68 7F07A478 8FA30028 */  lw    $v1, 0x28($sp)
 /* 0ACE6C 7F07A47C 0FC2F150 */  jal   get_pc_buffer_remaining_value
 /* 0ACE70 7F07A480 8C640004 */   lw    $a0, 4($v1)
-/* 0ACE74 7F07A484 0FC1D75F */  jal   set_objuse_flag_compute_grp_nums_set_obj_loaded
+/* 0ACE74 7F07A484 0FC1D75F */  jal   modelCalculateRwDataLen
 /* 0ACE78 7F07A488 8FA400F4 */   lw    $a0, 0xf4($sp)
 /* 0ACE7C 7F07A48C 10000004 */  b     .L7F07A4A0
 /* 0ACE80 7F07A490 8FAC00DC */   lw    $t4, 0xdc($sp)
@@ -13023,7 +13023,7 @@ void sub_GAME_7F07E7CC(void)
     ModelFileHeader *objheader;
 
     objheader = get_ptr_itemheader_in_hand(HAND_LEFT);
-    set_objuse_flag_compute_grp_nums_set_obj_loaded(objheader);
+    modelCalculateRwDataLen(objheader);
     #ifndef VERSION_EU
     if (0x32 < objheader->numRecords) {
         return_null();
@@ -13049,7 +13049,7 @@ glabel sub_GAME_7F07E7CC
 /* 0B3304 7F07E7D4 0FC173C6 */  jal   get_ptr_itemheader_in_hand
 /* 0B3308 7F07E7D8 24040001 */   li    $a0, 1
 /* 0B330C 7F07E7DC AFA20024 */  sw    $v0, 0x24($sp)
-/* 0B3310 7F07E7E0 0FC1D73D */  jal   set_objuse_flag_compute_grp_nums_set_obj_loaded
+/* 0B3310 7F07E7E0 0FC1D73D */  jal   modelCalculateRwDataLen
 /* 0B3314 7F07E7E4 00402025 */   move  $a0, $v0
 /* 0B3318 7F07E7E8 8FAE0024 */  lw    $t6, 0x24($sp)
 /* 0B331C 7F07E7EC 85CF0014 */  lh    $t7, 0x14($t6)
@@ -13116,7 +13116,7 @@ glabel sub_GAME_7F07E7CC
 /* 0B1280 7F07E890 0FC174F2 */  jal   get_ptr_itemheader_in_hand
 /* 0B1284 7F07E894 24040001 */   li    $a0, 1
 /* 0B1288 7F07E898 AFA20024 */  sw    $v0, 0x24($sp)
-/* 0B128C 7F07E89C 0FC1D75F */  jal   set_objuse_flag_compute_grp_nums_set_obj_loaded
+/* 0B128C 7F07E89C 0FC1D75F */  jal   modelCalculateRwDataLen
 /* 0B1290 7F07E8A0 00402025 */   move  $a0, $v0
 /* 0B1294 7F07E8A4 3C028007 */  lui   $v0, %hi(g_CurrentPlayer) # $v0, 0x8007
 /* 0B1298 7F07E8A8 8C428BC0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)

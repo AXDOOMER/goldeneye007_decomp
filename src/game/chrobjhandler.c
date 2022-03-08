@@ -40177,7 +40177,7 @@ glabel sub_GAME_7F051028
 /* 085B60 7F051030 AFA40028 */  sw    $a0, 0x28($sp)
 /* 085B64 7F051034 AFA5002C */  sw    $a1, 0x2c($sp)
 /* 085B68 7F051038 84840004 */  lh    $a0, 4($a0)
-/* 085B6C 7F05103C 0FC15B0E */  jal   load_model
+/* 085B6C 7F05103C 0FC15B0E */  jal   modelLoad
 /* 085B70 7F051040 AFA40020 */   sw    $a0, 0x20($sp)
 /* 085B74 7F051044 8FAF0020 */  lw    $t7, 0x20($sp)
 /* 085B78 7F051048 3C068004 */  lui   $a2, %hi(PitemZ_entries)
@@ -40251,7 +40251,7 @@ PropRecord *chrTryEquipHat(ChrRecord *self, s32 index, s32 flags)
     void                *phi_t5;
 
     model = &PitemZ_entries[index];
-    load_model(index);
+    modelLoad(index);
     lastprop = chrpropAllocate();
     prop     = get_obj_instance_controller_for_header(model);
     prop     = prop;
@@ -40309,7 +40309,7 @@ glabel chrTryEquipHat
 /* 085C20 7F0510F0 AFA600C8 */  sw    $a2, 0xc8($sp)
 /* 085C24 7F0510F4 00A02025 */  move  $a0, $a1
 /* 085C28 7F0510F8 AFA500C4 */  sw    $a1, 0xc4($sp)
-/* 085C2C 7F0510FC 0FC15B0E */  jal   load_model
+/* 085C2C 7F0510FC 0FC15B0E */  jal   modelLoad
 /* 085C30 7F051100 AFAF00BC */   sw    $t7, 0xbc($sp)
 /* 085C34 7F051104 0FC0E90C */  jal   chrpropAllocate
 /* 085C38 7F051108 00000000 */   nop   
@@ -40553,7 +40553,7 @@ glabel sub_GAME_7F05126C
 /* 085F68 7F051438 AFB10010 */  sw    $s1, 0x10($sp)
 /* 085F6C 7F05143C AFA80040 */  sw    $t0, 0x40($sp)
 /* 085F70 7F051440 AFA9003C */  sw    $t1, 0x3c($sp)
-/* 085F74 7F051444 0FC15BC2 */  jal   sub_GAME_7F056F08
+/* 085F74 7F051444 0FC15BC2 */  jal   setupFindObjForReuse
 /* 085F78 7F051448 AFAD0014 */   sw    $t5, 0x14($sp)
 /* 085F7C 7F05144C 3C0B8007 */  lui   $t3, %hi(ProjectileData_start_address) 
 /* 085F80 7F051450 256B1E80 */  addiu $t3, %lo(ProjectileData_start_address) # addiu $t3, $t3, 0x1e80
@@ -40798,7 +40798,7 @@ glabel hatCreate
 /* 08626C 7F05173C 27A5005C */  addiu $a1, $sp, 0x5c
 /* 086270 7F051740 27A60058 */  addiu $a2, $sp, 0x58
 /* 086274 7F051744 AFB20010 */  sw    $s2, 0x10($sp)
-/* 086278 7F051748 0FC15BC2 */  jal   sub_GAME_7F056F08
+/* 086278 7F051748 0FC15BC2 */  jal   setupFindObjForReuse
 /* 08627C 7F05174C AFA80014 */   sw    $t0, 0x14($sp)
 /* 086280 7F051750 10400003 */  beqz  $v0, .L7F051760
 /* 086284 7F051754 00401825 */   move  $v1, $v0
@@ -41549,7 +41549,7 @@ glabel sub_GAME_7F051FD4
 /* 086B0C 7F051FDC AFA40028 */  sw    $a0, 0x28($sp)
 /* 086B10 7F051FE0 AFA5002C */  sw    $a1, 0x2c($sp)
 /* 086B14 7F051FE4 84840004 */  lh    $a0, 4($a0)
-/* 086B18 7F051FE8 0FC15B0E */  jal   load_model
+/* 086B18 7F051FE8 0FC15B0E */  jal   modelLoad
 /* 086B1C 7F051FEC AFA40020 */   sw    $a0, 0x20($sp)
 /* 086B20 7F051FF0 8FAF0020 */  lw    $t7, 0x20($sp)
 /* 086B24 7F051FF4 3C068004 */  lui   $a2, %hi(PitemZ_entries)
@@ -41633,7 +41633,7 @@ WeaponObjRecord *create_new_item_instance_of_model(s32 modelnum, ITEM_IDS weapon
     WeaponObjRecord *NewGun;
 
     itemModel = PitemZ_entries[modelnum];
-    load_model();
+    modelLoad();
     lastObj = chrpropAllocate();
     ObjInst = get_obj_instance_controller_for_header(itemModel);
     isObjInstAvailable = ObjInst == 0;
@@ -41721,7 +41721,7 @@ glabel create_new_item_instance_of_model
 /* 086BC0 7F052090 AFB00014 */  sw    $s0, 0x14($sp)
 /* 086BC4 7F052094 AFA500BC */  sw    $a1, 0xbc($sp)
 /* 086BC8 7F052098 AFA400B8 */  sw    $a0, 0xb8($sp)
-/* 086BCC 7F05209C 0FC15B0E */  jal   load_model
+/* 086BCC 7F05209C 0FC15B0E */  jal   modelLoad
 /* 086BD0 7F0520A0 AFAF00B4 */   sw    $t7, 0xb4($sp)
 /* 086BD4 7F0520A4 0FC0E90C */  jal   chrpropAllocate
 /* 086BD8 7F0520A8 00000000 */   nop   
@@ -41840,7 +41840,7 @@ PropRecord *something_with_generating_object(ChrRecord *self, s32 PropID, ITEM_I
     if (!PropItem)
     {
         PropItem = &PitemZ_entries[PropID];
-        load_model(PropID); //move a0a1 and  t9,0xd4(sp) swapped here...
+        modelLoad(PropID); //move a0a1 and  t9,0xd4(sp) swapped here...
     }
     lastobjentry = chrpropAllocate();
     objinst      = get_obj_instance_controller_for_header(PropItem);
@@ -41906,7 +41906,7 @@ glabel something_with_generating_object
 /* 086D80 7F052250 0338C821 */  addu  $t9, $t9, $t8
 /* 086D84 7F052254 8F39A228 */  lw    $t9, %lo(PitemZ_entries)($t9)
 /* 086D88 7F052258 00A02025 */  move  $a0, $a1
-/* 086D8C 7F05225C 0FC15B0E */  jal   load_model
+/* 086D8C 7F05225C 0FC15B0E */  jal   modelLoad
 /* 086D90 7F052260 AFB900D4 */   sw    $t9, 0xd4($sp)
 .L7F052264:
 /* 086D94 7F052264 0FC0E90C */  jal   chrpropAllocate

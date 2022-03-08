@@ -271,7 +271,7 @@ glabel prepare_load_objects
 /* 0368E4 7F001DB4 84A40004 */  lh    $a0, 4($a1)
 /* 0368E8 7F001DB8 00A08825 */  move  $s1, $a1
 /* 0368EC 7F001DBC 00008025 */  move  $s0, $zero
-/* 0368F0 7F001DC0 0FC15B0E */  jal   load_model
+/* 0368F0 7F001DC0 0FC15B0E */  jal   modelLoad
 /* 0368F4 7F001DC4 AFA400F0 */   sw    $a0, 0xf0($sp)
 /* 0368F8 7F001DC8 962E0000 */  lhu   $t6, ($s1)
 /* 0368FC 7F001DCC 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
@@ -1948,10 +1948,10 @@ glabel sub_GAME_7F002E3C
 /* 0379FC 7F002ECC 860C0004 */  lh    $t4, 4($s0)
 /* 037A00 7F002ED0 AFAC002C */  sw    $t4, 0x2c($sp)
 /* 037A04 7F002ED4 8E0D00F4 */  lw    $t5, 0xf4($s0)
-/* 037A08 7F002ED8 0FC15AA2 */  jal   sub_GAME_7F056A88
+/* 037A08 7F002ED8 0FC15AA2 */  jal   setupGetPtrToCommandByIndex
 /* 037A0C 7F002EDC 01B12021 */   addu  $a0, $t5, $s1
 /* 037A10 7F002EE0 00408825 */  move  $s1, $v0
-/* 037A14 7F002EE4 0FC15B0E */  jal   load_model
+/* 037A14 7F002EE4 0FC15B0E */  jal   modelLoad
 /* 037A18 7F002EE8 8FA4002C */   lw    $a0, 0x2c($sp)
 /* 037A1C 7F002EEC 96180000 */  lhu   $t8, ($s0)
 /* 037A20 7F002EF0 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
@@ -2379,7 +2379,7 @@ glabel expand_type_01_object
 /* 037FDC 7F0034AC AFAD01B4 */  sw    $t5, 0x1b4($sp)
 /* 037FE0 7F0034B0 AFAE01B0 */  sw    $t6, 0x1b0($sp)
 /* 037FE4 7F0034B4 AFB801AC */  sw    $t8, 0x1ac($sp)
-/* 037FE8 7F0034B8 0FC15B0E */  jal   load_model
+/* 037FE8 7F0034B8 0FC15B0E */  jal   modelLoad
 /* 037FEC 7F0034BC AFA401D0 */   sw    $a0, 0x1d0($sp)
 /* 037FF0 7F0034C0 86390006 */  lh    $t9, 6($s1)
 /* 037FF4 7F0034C4 8E230008 */  lw    $v1, 8($s1)
@@ -2857,7 +2857,7 @@ glabel expand_type_01_object
 /* 0386EC 7F003BBC 8FAB01E0 */  lw    $t3, 0x1e0($sp)
 /* 0386F0 7F003BC0 50400007 */  beql  $v0, $zero, .L7F003BE0
 /* 0386F4 7F003BC4 8FBF0034 */   lw    $ra, 0x34($sp)
-/* 0386F8 7F003BC8 0FC15AA2 */  jal   sub_GAME_7F056A88
+/* 0386F8 7F003BC8 0FC15AA2 */  jal   setupGetPtrToCommandByIndex
 /* 0386FC 7F003BCC 004B2021 */   addu  $a0, $v0, $t3
 /* 038700 7F003BD0 10000002 */  b     .L7F003BDC
 /* 038704 7F003BD4 AE2200C8 */   sw    $v0, 0xc8($s1)
@@ -2895,7 +2895,7 @@ glabel expand_type_01_object
 /* 035E0C 7F00341C AFAD01B4 */  sw    $t5, 0x1b4($sp)
 /* 035E10 7F003420 AFAE01B0 */  sw    $t6, 0x1b0($sp)
 /* 035E14 7F003424 AFB801AC */  sw    $t8, 0x1ac($sp)
-/* 035E18 7F003428 0FC15BC6 */  jal   load_model
+/* 035E18 7F003428 0FC15BC6 */  jal   modelLoad
 /* 035E1C 7F00342C AFA401D0 */   sw    $a0, 0x1d0($sp)
 /* 035E20 7F003430 86390006 */  lh    $t9, 6($s1)
 /* 035E24 7F003434 8E230008 */  lw    $v1, 8($s1)
@@ -3380,7 +3380,7 @@ glabel expand_type_01_object
 /* 036538 7F003B48 8FAB01E0 */  lw    $t3, 0x1e0($sp)
 /* 03653C 7F003B4C 50400007 */  beql  $v0, $zero, .L7F003B6C
 /* 036540 7F003B50 8FBF0034 */   lw    $ra, 0x34($sp)
-/* 036544 7F003B54 0FC15B5A */  jal   sub_GAME_7F056A88
+/* 036544 7F003B54 0FC15B5A */  jal   setupGetPtrToCommandByIndex
 /* 036548 7F003B58 004B2021 */   addu  $a0, $v0, $t3
 /* 03654C 7F003B5C 10000002 */  b     .L7F003B68
 /* 036550 7F003B60 AE2200C8 */   sw    $v0, 0xc8($s1)
@@ -4332,7 +4332,7 @@ ammo_box_expand:
 /* 03930C 7F0047DC 96040080 */  lhu   $a0, 0x80($s0)
 /* 039310 7F0047E0 52C40004 */  beql  $s6, $a0, .L7F0047F4
 /* 039314 7F0047E4 26310004 */   addiu $s1, $s1, 4
-/* 039318 7F0047E8 0FC15B0E */  jal   load_model
+/* 039318 7F0047E8 0FC15B0E */  jal   modelLoad
 /* 03931C 7F0047EC 00000000 */   nop   
 /* 039320 7F0047F0 26310004 */  addiu $s1, $s1, 4
 .L7F0047F4:
@@ -4462,7 +4462,7 @@ type28_aircraft:
 tag_expand:
 /* 0394FC 7F0049CC 864E0006 */  lh    $t6, 6($s2)
 /* 039500 7F0049D0 02A02025 */  move  $a0, $s5
-/* 039504 7F0049D4 0FC15BA8 */  jal   sub_GAME_7F056EA0
+/* 039504 7F0049D4 0FC15BA8 */  jal   setupCommandGetObject
 /* 039508 7F0049D8 01D32821 */   addu  $a1, $t6, $s3
 /* 03950C 7F0049DC 10400004 */  beqz  $v0, .L7F0049F0
 /* 039510 7F0049E0 AE42000C */   sw    $v0, 0xc($s2)
@@ -4477,7 +4477,7 @@ tag_expand:
 type25_rename:
 /* 039530 7F004A00 8E490004 */  lw    $t1, 4($s2)
 /* 039534 7F004A04 02A02025 */  move  $a0, $s5
-/* 039538 7F004A08 0FC15BA8 */  jal   sub_GAME_7F056EA0
+/* 039538 7F004A08 0FC15BA8 */  jal   setupCommandGetObject
 /* 03953C 7F004A0C 01332821 */   addu  $a1, $t1, $s3
 /* 039540 7F004A10 10400004 */  beqz  $v0, .L7F004A24
 /* 039544 7F004A14 AE420024 */   sw    $v0, 0x24($s2)
@@ -4586,7 +4586,7 @@ other_obj_expand:
 /* 0396B4 7F004B84 00000000 */   nop   
 /* 0396B8 7F004B88 86420006 */  lh    $v0, 6($s2)
 /* 0396BC 7F004B8C 02A02025 */  move  $a0, $s5
-/* 0396C0 7F004B90 0FC15BA8 */  jal   sub_GAME_7F056EA0
+/* 0396C0 7F004B90 0FC15BA8 */  jal   setupCommandGetObject
 /* 0396C4 7F004B94 02622821 */   addu  $a1, $s3, $v0
 /* 0396C8 7F004B98 10400092 */  beqz  $v0, .L7F004DE4
 /* 0396CC 7F004B9C 00408025 */   move  $s0, $v0
@@ -4606,11 +4606,11 @@ other_obj_expand:
 /* 039704 7F004BD4 00000000 */   nop   
 .L7F004BD8:
 /* 039708 7F004BD8 8E4F0004 */  lw    $t7, 4($s2)
-/* 03970C 7F004BDC 0FC15AA2 */  jal   sub_GAME_7F056A88
+/* 03970C 7F004BDC 0FC15AA2 */  jal   setupGetPtrToCommandByIndex
 /* 039710 7F004BE0 01F32021 */   addu  $a0, $t7, $s3
 /* 039714 7F004BE4 8E4E0008 */  lw    $t6, 8($s2)
 /* 039718 7F004BE8 00408025 */  move  $s0, $v0
-/* 03971C 7F004BEC 0FC15AA2 */  jal   sub_GAME_7F056A88
+/* 03971C 7F004BEC 0FC15AA2 */  jal   setupGetPtrToCommandByIndex
 /* 039720 7F004BF0 01D32021 */   addu  $a0, $t6, $s3
 /* 039724 7F004BF4 1200007B */  beqz  $s0, .L7F004DE4
 /* 039728 7F004BF8 00402825 */   move  $a1, $v0
@@ -4630,10 +4630,10 @@ other_obj_expand:
 /* 03975C 7F004C2C 8E420004 */  lw    $v0, 4($s2)
 /* 039760 7F004C30 8E510008 */  lw    $s1, 8($s2)
 /* 039764 7F004C34 02A02025 */  move  $a0, $s5
-/* 039768 7F004C38 0FC15BA8 */  jal   sub_GAME_7F056EA0
+/* 039768 7F004C38 0FC15BA8 */  jal   setupCommandGetObject
 /* 03976C 7F004C3C 02622821 */   addu  $a1, $s3, $v0
 /* 039770 7F004C40 00408025 */  move  $s0, $v0
-/* 039774 7F004C44 0FC15AA2 */  jal   sub_GAME_7F056A88
+/* 039774 7F004C44 0FC15AA2 */  jal   setupGetPtrToCommandByIndex
 /* 039778 7F004C48 02712021 */   addu  $a0, $s3, $s1
 /* 03977C 7F004C4C 12000065 */  beqz  $s0, .L7F004DE4
 /* 039780 7F004C50 00000000 */   nop   
@@ -4663,16 +4663,16 @@ other_obj_expand:
 /* 0397DC 7F004CAC 8E510008 */  lw    $s1, 8($s2)
 /* 0397E0 7F004CB0 02A02025 */  move  $a0, $s5
 /* 0397E4 7F004CB4 02622821 */  addu  $a1, $s3, $v0
-/* 0397E8 7F004CB8 0FC15BA8 */  jal   sub_GAME_7F056EA0
+/* 0397E8 7F004CB8 0FC15BA8 */  jal   setupCommandGetObject
 /* 0397EC 7F004CBC AFAC0080 */   sw    $t4, 0x80($sp)
 /* 0397F0 7F004CC0 00408025 */  move  $s0, $v0
 /* 0397F4 7F004CC4 02A02025 */  move  $a0, $s5
-/* 0397F8 7F004CC8 0FC15BA8 */  jal   sub_GAME_7F056EA0
+/* 0397F8 7F004CC8 0FC15BA8 */  jal   setupCommandGetObject
 /* 0397FC 7F004CCC 02712821 */   addu  $a1, $s3, $s1
 /* 039800 7F004CD0 8FAF0080 */  lw    $t7, 0x80($sp)
 /* 039804 7F004CD4 00408825 */  move  $s1, $v0
 /* 039808 7F004CD8 02A02025 */  move  $a0, $s5
-/* 03980C 7F004CDC 0FC15BA8 */  jal   sub_GAME_7F056EA0
+/* 03980C 7F004CDC 0FC15BA8 */  jal   setupCommandGetObject
 /* 039810 7F004CE0 026F2821 */   addu  $a1, $s3, $t7
 /* 039814 7F004CE4 1200003F */  beqz  $s0, .L7F004DE4
 /* 039818 7F004CE8 00000000 */   nop   
@@ -4713,11 +4713,11 @@ other_obj_expand:
 /* 0398A0 7F004D70 8E420004 */  lw    $v0, 4($s2)
 /* 0398A4 7F004D74 8E510008 */  lw    $s1, 8($s2)
 /* 0398A8 7F004D78 02A02025 */  move  $a0, $s5
-/* 0398AC 7F004D7C 0FC15BA8 */  jal   sub_GAME_7F056EA0
+/* 0398AC 7F004D7C 0FC15BA8 */  jal   setupCommandGetObject
 /* 0398B0 7F004D80 02622821 */   addu  $a1, $s3, $v0
 /* 0398B4 7F004D84 00408025 */  move  $s0, $v0
 /* 0398B8 7F004D88 02A02025 */  move  $a0, $s5
-/* 0398BC 7F004D8C 0FC15BA8 */  jal   sub_GAME_7F056EA0
+/* 0398BC 7F004D8C 0FC15BA8 */  jal   setupCommandGetObject
 /* 0398C0 7F004D90 02712821 */   addu  $a1, $s3, $s1
 /* 0398C4 7F004D94 12000013 */  beqz  $s0, .L7F004DE4
 /* 0398C8 7F004D98 00000000 */   nop   
@@ -5730,7 +5730,7 @@ ammo_box_expand:
 /* 03935C 7F0047EC 96040080 */  lhu   $a0, 0x80($s0)
 /* 039360 7F0047F0 52C40004 */  beql  $s6, $a0, .L7F004804
 /* 039364 7F0047F4 26310004 */   addiu $s1, $s1, 4
-/* 039368 7F0047F8 0FC15C4E */  jal   load_model
+/* 039368 7F0047F8 0FC15C4E */  jal   modelLoad
 /* 03936C 7F0047FC 00000000 */   nop   
 /* 039370 7F004800 26310004 */  addiu $s1, $s1, 4
 .L7F004804:
@@ -5860,7 +5860,7 @@ type28_aircraft:
 tag_expand:
 /* 03954C 7F0049DC 86580006 */  lh    $t8, 6($s2)
 /* 039550 7F0049E0 02A02025 */  move  $a0, $s5
-/* 039554 7F0049E4 0FC15CE8 */  jal   sub_GAME_7F056EA0
+/* 039554 7F0049E4 0FC15CE8 */  jal   setupCommandGetObject
 /* 039558 7F0049E8 03132821 */   addu  $a1, $t8, $s3
 /* 03955C 7F0049EC 10400004 */  beqz  $v0, .L7F004A00
 /* 039560 7F0049F0 AE42000C */   sw    $v0, 0xc($s2)
@@ -5875,7 +5875,7 @@ tag_expand:
 type25_rename:
 /* 039580 7F004A10 8E590004 */  lw    $t9, 4($s2)
 /* 039584 7F004A14 02A02025 */  move  $a0, $s5
-/* 039588 7F004A18 0FC15CE8 */  jal   sub_GAME_7F056EA0
+/* 039588 7F004A18 0FC15CE8 */  jal   setupCommandGetObject
 /* 03958C 7F004A1C 03332821 */   addu  $a1, $t9, $s3
 /* 039590 7F004A20 10400004 */  beqz  $v0, .L7F004A34
 /* 039594 7F004A24 AE420024 */   sw    $v0, 0x24($s2)
@@ -5984,7 +5984,7 @@ other_obj_expand:
 /* 039704 7F004B94 00000000 */   nop   
 /* 039708 7F004B98 86420006 */  lh    $v0, 6($s2)
 /* 03970C 7F004B9C 02A02025 */  move  $a0, $s5
-/* 039710 7F004BA0 0FC15CE8 */  jal   sub_GAME_7F056EA0
+/* 039710 7F004BA0 0FC15CE8 */  jal   setupCommandGetObject
 /* 039714 7F004BA4 02622821 */   addu  $a1, $s3, $v0
 /* 039718 7F004BA8 10400092 */  beqz  $v0, .L7F004DF4
 /* 03971C 7F004BAC 00408025 */   move  $s0, $v0
@@ -6004,11 +6004,11 @@ other_obj_expand:
 /* 039754 7F004BE4 00000000 */   nop   
 .L7F004BE8:
 /* 039758 7F004BE8 8E4E0004 */  lw    $t6, 4($s2)
-/* 03975C 7F004BEC 0FC15BE2 */  jal   sub_GAME_7F056A88
+/* 03975C 7F004BEC 0FC15BE2 */  jal   setupGetPtrToCommandByIndex
 /* 039760 7F004BF0 01D32021 */   addu  $a0, $t6, $s3
 /* 039764 7F004BF4 8E580008 */  lw    $t8, 8($s2)
 /* 039768 7F004BF8 00408025 */  move  $s0, $v0
-/* 03976C 7F004BFC 0FC15BE2 */  jal   sub_GAME_7F056A88
+/* 03976C 7F004BFC 0FC15BE2 */  jal   setupGetPtrToCommandByIndex
 /* 039770 7F004C00 03132021 */   addu  $a0, $t8, $s3
 /* 039774 7F004C04 1200007B */  beqz  $s0, .L7F004DF4
 /* 039778 7F004C08 00402825 */   move  $a1, $v0
@@ -6028,10 +6028,10 @@ other_obj_expand:
 /* 0397AC 7F004C3C 8E420004 */  lw    $v0, 4($s2)
 /* 0397B0 7F004C40 8E510008 */  lw    $s1, 8($s2)
 /* 0397B4 7F004C44 02A02025 */  move  $a0, $s5
-/* 0397B8 7F004C48 0FC15CE8 */  jal   sub_GAME_7F056EA0
+/* 0397B8 7F004C48 0FC15CE8 */  jal   setupCommandGetObject
 /* 0397BC 7F004C4C 02622821 */   addu  $a1, $s3, $v0
 /* 0397C0 7F004C50 00408025 */  move  $s0, $v0
-/* 0397C4 7F004C54 0FC15BE2 */  jal   sub_GAME_7F056A88
+/* 0397C4 7F004C54 0FC15BE2 */  jal   setupGetPtrToCommandByIndex
 /* 0397C8 7F004C58 02712021 */   addu  $a0, $s3, $s1
 /* 0397CC 7F004C5C 12000065 */  beqz  $s0, .L7F004DF4
 /* 0397D0 7F004C60 00000000 */   nop   
@@ -6061,16 +6061,16 @@ other_obj_expand:
 /* 03982C 7F004CBC 8E510008 */  lw    $s1, 8($s2)
 /* 039830 7F004CC0 02A02025 */  move  $a0, $s5
 /* 039834 7F004CC4 02622821 */  addu  $a1, $s3, $v0
-/* 039838 7F004CC8 0FC15CE8 */  jal   sub_GAME_7F056EA0
+/* 039838 7F004CC8 0FC15CE8 */  jal   setupCommandGetObject
 /* 03983C 7F004CCC AFAF0080 */   sw    $t7, 0x80($sp)
 /* 039840 7F004CD0 00408025 */  move  $s0, $v0
 /* 039844 7F004CD4 02A02025 */  move  $a0, $s5
-/* 039848 7F004CD8 0FC15CE8 */  jal   sub_GAME_7F056EA0
+/* 039848 7F004CD8 0FC15CE8 */  jal   setupCommandGetObject
 /* 03984C 7F004CDC 02712821 */   addu  $a1, $s3, $s1
 /* 039850 7F004CE0 8FAE0080 */  lw    $t6, 0x80($sp)
 /* 039854 7F004CE4 00408825 */  move  $s1, $v0
 /* 039858 7F004CE8 02A02025 */  move  $a0, $s5
-/* 03985C 7F004CEC 0FC15CE8 */  jal   sub_GAME_7F056EA0
+/* 03985C 7F004CEC 0FC15CE8 */  jal   setupCommandGetObject
 /* 039860 7F004CF0 026E2821 */   addu  $a1, $s3, $t6
 /* 039864 7F004CF4 1200003F */  beqz  $s0, .L7F004DF4
 /* 039868 7F004CF8 00000000 */   nop   
@@ -6111,11 +6111,11 @@ other_obj_expand:
 /* 0398F0 7F004D80 8E420004 */  lw    $v0, 4($s2)
 /* 0398F4 7F004D84 8E510008 */  lw    $s1, 8($s2)
 /* 0398F8 7F004D88 02A02025 */  move  $a0, $s5
-/* 0398FC 7F004D8C 0FC15CE8 */  jal   sub_GAME_7F056EA0
+/* 0398FC 7F004D8C 0FC15CE8 */  jal   setupCommandGetObject
 /* 039900 7F004D90 02622821 */   addu  $a1, $s3, $v0
 /* 039904 7F004D94 00408025 */  move  $s0, $v0
 /* 039908 7F004D98 02A02025 */  move  $a0, $s5
-/* 03990C 7F004D9C 0FC15CE8 */  jal   sub_GAME_7F056EA0
+/* 03990C 7F004D9C 0FC15CE8 */  jal   setupCommandGetObject
 /* 039910 7F004DA0 02712821 */   addu  $a1, $s3, $s1
 /* 039914 7F004DA4 12000013 */  beqz  $s0, .L7F004DF4
 /* 039918 7F004DA8 00000000 */   nop   
@@ -7127,7 +7127,7 @@ ammo_box_expand:
 /* 037160 7F004770 96040080 */  lhu   $a0, 0x80($s0)
 /* 037164 7F004774 52C40004 */  beql  $s6, $a0, .L7F004804
 /* 037168 7F004778 26310004 */   addiu $s1, $s1, 4
-/* 03716C 7F00477C 0FC15BC6 */  jal   load_model
+/* 03716C 7F00477C 0FC15BC6 */  jal   modelLoad
 /* 037170 7F004780 00000000 */   nop   
 /* 037174 7F004784 26310004 */  addiu $s1, $s1, 4
 .L7F004804:
@@ -7257,7 +7257,7 @@ type28_aircraft:
 tag_expand:
 /* 037350 7F004960 86580006 */  lh    $t8, 6($s2)
 /* 037354 7F004964 02A02025 */  move  $a0, $s5
-/* 037358 7F004968 0FC15C60 */  jal   sub_GAME_7F056EA0
+/* 037358 7F004968 0FC15C60 */  jal   setupCommandGetObject
 /* 03735C 7F00496C 03132821 */   addu  $a1, $t8, $s3
 /* 037360 7F004970 10400004 */  beqz  $v0, .L7F004A00
 /* 037364 7F004974 AE42000C */   sw    $v0, 0xc($s2)
@@ -7272,7 +7272,7 @@ tag_expand:
 type25_rename:
 /* 037384 7F004994 8E590004 */  lw    $t9, 4($s2)
 /* 037388 7F004998 02A02025 */  move  $a0, $s5
-/* 03738C 7F00499C 0FC15C60 */  jal   sub_GAME_7F056EA0
+/* 03738C 7F00499C 0FC15C60 */  jal   setupCommandGetObject
 /* 037390 7F0049A0 03332821 */   addu  $a1, $t9, $s3
 /* 037394 7F0049A4 10400004 */  beqz  $v0, .L7F004A34
 /* 037398 7F0049A8 AE420024 */   sw    $v0, 0x24($s2)
@@ -7381,7 +7381,7 @@ other_obj_expand:
 /* 037508 7F004B18 00000000 */   nop   
 /* 03750C 7F004B1C 86420006 */  lh    $v0, 6($s2)
 /* 037510 7F004B20 02A02025 */  move  $a0, $s5
-/* 037514 7F004B24 0FC15C60 */  jal   sub_GAME_7F056EA0
+/* 037514 7F004B24 0FC15C60 */  jal   setupCommandGetObject
 /* 037518 7F004B28 02622821 */   addu  $a1, $s3, $v0
 /* 03751C 7F004B2C 10400092 */  beqz  $v0, .L7F004DF4
 /* 037520 7F004B30 00408025 */   move  $s0, $v0
@@ -7401,11 +7401,11 @@ other_obj_expand:
 /* 037558 7F004B68 00000000 */   nop   
 .L7F004BE8:
 /* 03755C 7F004B6C 8E4E0004 */  lw    $t6, 4($s2)
-/* 037560 7F004B70 0FC15B5A */  jal   sub_GAME_7F056A88
+/* 037560 7F004B70 0FC15B5A */  jal   setupGetPtrToCommandByIndex
 /* 037564 7F004B74 01D32021 */   addu  $a0, $t6, $s3
 /* 037568 7F004B78 8E580008 */  lw    $t8, 8($s2)
 /* 03756C 7F004B7C 00408025 */  move  $s0, $v0
-/* 037570 7F004B80 0FC15B5A */  jal   sub_GAME_7F056A88
+/* 037570 7F004B80 0FC15B5A */  jal   setupGetPtrToCommandByIndex
 /* 037574 7F004B84 03132021 */   addu  $a0, $t8, $s3
 /* 037578 7F004B88 1200007B */  beqz  $s0, .L7F004DF4
 /* 03757C 7F004B8C 00402825 */   move  $a1, $v0
@@ -7425,10 +7425,10 @@ other_obj_expand:
 /* 0375B0 7F004BC0 8E420004 */  lw    $v0, 4($s2)
 /* 0375B4 7F004BC4 8E510008 */  lw    $s1, 8($s2)
 /* 0375B8 7F004BC8 02A02025 */  move  $a0, $s5
-/* 0375BC 7F004BCC 0FC15C60 */  jal   sub_GAME_7F056EA0
+/* 0375BC 7F004BCC 0FC15C60 */  jal   setupCommandGetObject
 /* 0375C0 7F004BD0 02622821 */   addu  $a1, $s3, $v0
 /* 0375C4 7F004BD4 00408025 */  move  $s0, $v0
-/* 0375C8 7F004BD8 0FC15B5A */  jal   sub_GAME_7F056A88
+/* 0375C8 7F004BD8 0FC15B5A */  jal   setupGetPtrToCommandByIndex
 /* 0375CC 7F004BDC 02712021 */   addu  $a0, $s3, $s1
 /* 0375D0 7F004BE0 12000065 */  beqz  $s0, .L7F004DF4
 /* 0375D4 7F004BE4 00000000 */   nop   
@@ -7458,16 +7458,16 @@ other_obj_expand:
 /* 037630 7F004C40 8E510008 */  lw    $s1, 8($s2)
 /* 037634 7F004C44 02A02025 */  move  $a0, $s5
 /* 037638 7F004C48 02622821 */  addu  $a1, $s3, $v0
-/* 03763C 7F004C4C 0FC15C60 */  jal   sub_GAME_7F056EA0
+/* 03763C 7F004C4C 0FC15C60 */  jal   setupCommandGetObject
 /* 037640 7F004C50 AFAF0080 */   sw    $t7, 0x80($sp)
 /* 037644 7F004C54 00408025 */  move  $s0, $v0
 /* 037648 7F004C58 02A02025 */  move  $a0, $s5
-/* 03764C 7F004C5C 0FC15C60 */  jal   sub_GAME_7F056EA0
+/* 03764C 7F004C5C 0FC15C60 */  jal   setupCommandGetObject
 /* 037650 7F004C60 02712821 */   addu  $a1, $s3, $s1
 /* 037654 7F004C64 8FAE0080 */  lw    $t6, 0x80($sp)
 /* 037658 7F004C68 00408825 */  move  $s1, $v0
 /* 03765C 7F004C6C 02A02025 */  move  $a0, $s5
-/* 037660 7F004C70 0FC15C60 */  jal   sub_GAME_7F056EA0
+/* 037660 7F004C70 0FC15C60 */  jal   setupCommandGetObject
 /* 037664 7F004C74 026E2821 */   addu  $a1, $s3, $t6
 /* 037668 7F004C78 1200003F */  beqz  $s0, .L7F004DF4
 /* 03766C 7F004C7C 00000000 */   nop   
@@ -7508,11 +7508,11 @@ other_obj_expand:
 /* 0376F4 7F004D04 8E420004 */  lw    $v0, 4($s2)
 /* 0376F8 7F004D08 8E510008 */  lw    $s1, 8($s2)
 /* 0376FC 7F004D0C 02A02025 */  move  $a0, $s5
-/* 037700 7F004D10 0FC15C60 */  jal   sub_GAME_7F056EA0
+/* 037700 7F004D10 0FC15C60 */  jal   setupCommandGetObject
 /* 037704 7F004D14 02622821 */   addu  $a1, $s3, $v0
 /* 037708 7F004D18 00408025 */  move  $s0, $v0
 /* 03770C 7F004D1C 02A02025 */  move  $a0, $s5
-/* 037710 7F004D20 0FC15C60 */  jal   sub_GAME_7F056EA0
+/* 037710 7F004D20 0FC15C60 */  jal   setupCommandGetObject
 /* 037714 7F004D24 02712821 */   addu  $a1, $s3, $s1
 /* 037718 7F004D28 12000013 */  beqz  $s0, .L7F004DF4
 /* 03771C 7F004D2C 00000000 */   nop   

@@ -4020,10 +4020,10 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     TagObjectRecord *tag = sub_GAME_7F057080(ai->val[0]);
                     if (tag)
                     {
-                        int TagIndex = check_if_object_type_has_been_loaded(tag); //get index
+                        int TagIndex = tagGetCommandIndex(tag); //get index
                         if (TagIndex >= 0)
                         {
-                            CutsceneRecord *cdef = sub_GAME_7F056A88(tag->OffsetToObj + TagIndex); //get obj
+                            CutsceneRecord *cdef = setupGetPtrToCommandByIndex(tag->OffsetToObj + TagIndex); //get obj
 
 #ifdef DEBUG
                             /*".\\ported\\chrai.c", 0xc2b, "Assertion failed: cdef->type==PROPDEF_CAMERAPOS") */

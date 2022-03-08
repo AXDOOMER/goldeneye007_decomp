@@ -743,7 +743,7 @@ extern int collect_or_interact_object                        (PropRecord *prop, 
 extern int objectiveGetCount                                 ();
 extern u32 randomGetNext();
 extern ObjectRecord *objFindByTagId                          (int TagID);                                                                          // get_handle_to_tagged_object
-extern ObjectRecord *sub_GAME_7F056A88                       (int setupindex);
+extern ObjectRecord *setupGetPtrToCommandByIndex                       (int setupindex);
 extern PropRecord *chrGetEquippedWeaponProp                  (ChrRecord *self, GUNHAND hand);                                                     // something_with_weaponpos_of_guarddata_hand
 extern PropRecord *chrGetEquippedWeaponPropWithCheck         (ChrRecord *self, GUNHAND hand);                                                     // is_weapon_in_guarddata_hand
 extern PropRecord *chrGiveWeapon                             (ChrRecord *self, s32 PropID, ITEM_IDS ItemID, s32 flags);                                // actor_draws_weapon_with_model
@@ -752,7 +752,7 @@ extern PropRecord *chrSpawnAtPad                             (ChrRecord *self, s
 extern PropRecord *get_curplayer_positiondata                (); //bondGetProp
 extern u8 getROOMID_Bitflags                        (int roomnum);
 extern LEVELID bossGetStageNum                                   ();
-extern s32 check_if_object_type_has_been_loaded              (ObjectRecord *obj);                                                                 //getObjIndex
+extern s32 tagGetCommandIndex              (ObjectRecord *obj);                                                                 //getObjIndex
 extern s32 chrResolvePadId                                   (ChrRecord *self, s32 padID);                                                        // convertPadIf9000
 extern s32 currentPlayerGetAmmoCount                         (AMMOTYPE type);                                                                         //check_cur_player_ammo_amount_total
 extern s32 do_something_if_object_destroyed                  (ObjectRecord *obj);
@@ -4452,10 +4452,10 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                     TagObjectRecord *tag = sub_GAME_7F057080(ai->val[0]);
                     if (tag)
                     {
-                        int TagIndex = check_if_object_type_has_been_loaded(tag); //get index
+                        int TagIndex = tagGetCommandIndex(tag); //get index
                         if (TagIndex >= 0)
                         {
-                            CutsceneRecord *cdef = sub_GAME_7F056A88(tag->OffsetToObj + TagIndex); //get obj
+                            CutsceneRecord *cdef = setupGetPtrToCommandByIndex(tag->OffsetToObj + TagIndex); //get obj
 
 #            ifdef DEBUG
                             /*".\\ported\\chrai.c", 0xc2b, "Assertion failed: cdef->type==PROPDEF_CAMERAPOS")                             */

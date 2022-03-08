@@ -62,7 +62,7 @@ u32 set_weapon_model_generated_thrown_object(ITEM_IDS modelid)
 
     if (-1 < model)
     {
-        return load_model(model);
+        return modelLoad(model);
     }
     return 0;
 }  

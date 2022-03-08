@@ -217,7 +217,7 @@ glabel load_object_fill_header
 
 
 
-void load_object_into_memory(struct ModelFileHeader *header,char *name)
+void fileLoad(struct ModelFileHeader *header,char *name)
 {
    load_object_fill_header(header,name,0,0,0);
    return;

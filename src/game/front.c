@@ -1413,7 +1413,7 @@ void init_menu00_legalscreen(void)
     sp20.y = D_8002A9C0.y;
     sp20.z = D_8002A9C0.z;
     load_object_fill_header(&PitemZ_entries[319].header, &PitemZ_entries[319].filename, ptr_logo_and_walletbond_DL, 0x3c000, 0);
-    set_objuse_flag_compute_grp_nums_set_obj_loaded(&PitemZ_entries[319].header);
+    modelCalculateRwDataLen(&PitemZ_entries[319].header);
 
     something_legalscreen_constructor = get_obj_instance_controller_for_header(&PitemZ_entries[319].header);
     set_obj_instance_controller_scale(something_legalscreen_constructor, 1.0f);
@@ -1453,7 +1453,7 @@ glabel init_menu00_legalscreen
 /* 03F180 7F00A650 0FC1D929 */  jal   load_object_fill_header
 /* 03F184 7F00A654 AFA00010 */   sw    $zero, 0x10($sp)
 /* 03F188 7F00A658 3C048004 */  lui   $a0, %hi(PitemZ_entries+0xEF4)
-/* 03F18C 7F00A65C 0FC1D73D */  jal   set_objuse_flag_compute_grp_nums_set_obj_loaded
+/* 03F18C 7F00A65C 0FC1D73D */  jal   modelCalculateRwDataLen
 /* 03F190 7F00A660 8C84B11C */   lw    $a0, %lo(PitemZ_entries+0xEF4)($a0)
 /* 03F194 7F00A664 3C048004 */  lui   $a0, %hi(PitemZ_entries+0xEF4)
 /* 03F198 7F00A668 0FC1B025 */  jal   get_obj_instance_controller_for_header
@@ -1818,7 +1818,7 @@ void init_menu01_nintendo(void)
     local_c.y = D_8002AAFC.y;
     local_c.z = D_8002AAFC.z;
     load_object_fill_header(PitemZ_entries[276].header, PitemZ_entries[276].filename, ptr_logo_and_walletbond_DL,0x3c000,0);
-    set_objuse_flag_compute_grp_nums_set_obj_loaded(PitemZ_entries[276].header);
+    modelCalculateRwDataLen(PitemZ_entries[276].header);
     something_legalscreen_constructor = get_obj_instance_controller_for_header(PitemZ_entries[276].header);
     set_obj_instance_controller_scale(something_legalscreen_constructor, 1.0f);
     setsuboffset(something_legalscreen_constructor, &local_c);
@@ -1860,7 +1860,7 @@ glabel init_menu01_nintendo
 /* 03F74C 7F00AC1C 0FC1D929 */  jal   load_object_fill_header
 /* 03F750 7F00AC20 AFA00010 */   sw    $zero, 0x10($sp)
 /* 03F754 7F00AC24 3C048004 */  lui   $a0, %hi(PitemZ_entries+0xCF0)
-/* 03F758 7F00AC28 0FC1D73D */  jal   set_objuse_flag_compute_grp_nums_set_obj_loaded
+/* 03F758 7F00AC28 0FC1D73D */  jal   modelCalculateRwDataLen
 /* 03F75C 7F00AC2C 8C84AF18 */   lw    $a0, %lo(PitemZ_entries+0xCF0)($a0)
 /* 03F760 7F00AC30 3C048004 */  lui   $a0, %hi(PitemZ_entries+0xCF0)
 /* 03F764 7F00AC34 0FC1B025 */  jal   get_obj_instance_controller_for_header
@@ -2532,7 +2532,7 @@ void init_menu04_goldeneyelogo(void)
     sp24.unk4 = (s32) D_8002AB48.unk4;
     sp24.unk8 = (s32) D_8002AB48.unk8;
     load_object_fill_header(PitemZ_entries.unkCFC, PitemZ_entries.unkD00, ptr_logo_and_walletbond_DL, 0x3c000, 0);
-    set_objuse_flag_compute_grp_nums_set_obj_loaded(PgoldeneyelogoZ_header);
+    modelCalculateRwDataLen(PgoldeneyelogoZ_header);
     temp_ret = get_obj_instance_controller_for_header(PgoldeneyelogoZ_header);
     something_legalscreen_constructor = temp_ret;
     set_obj_instance_controller_scale(temp_ret, 0x3f800000);
@@ -2566,7 +2566,7 @@ glabel init_menu04_goldeneyelogo
 /* 03FDDC 7F00B2AC 0FC1D929 */  jal   load_object_fill_header
 /* 03FDE0 7F00B2B0 AFA00010 */   sw    $zero, 0x10($sp)
 /* 03FDE4 7F00B2B4 3C048004 */  lui   $a0, %hi(PitemZ_entries+0xCFC)
-/* 03FDE8 7F00B2B8 0FC1D73D */  jal   set_objuse_flag_compute_grp_nums_set_obj_loaded
+/* 03FDE8 7F00B2B8 0FC1D73D */  jal   modelCalculateRwDataLen
 /* 03FDEC 7F00B2BC 8C84AF24 */   lw    $a0, %lo(PitemZ_entries+0xCFC)($a0)
 /* 03FDF0 7F00B2C0 3C048004 */  lui   $a0, %hi(PitemZ_entries+0xCFC)
 /* 03FDF4 7F00B2C4 0FC1B025 */  jal   get_obj_instance_controller_for_header
@@ -3069,7 +3069,7 @@ void load_walletbond(void)
     if (ptr_folder_object_instance == 0)
     {
         load_object_fill_header(PitemZ_entries.unkD08, PitemZ_entries.unkD0C, ptr_logo_and_walletbond_DL, 0xa000, 0);
-        set_objuse_flag_compute_grp_nums_set_obj_loaded(PitemZ_entries.unkD08);
+        modelCalculateRwDataLen(PitemZ_entries.unkD08);
         phi_s0 = &ptr_folder_object_instance;
 loop_2:
         temp_ret = get_aircraft_obj_instance_controller(PitemZ_entries.unkD08);
@@ -3109,7 +3109,7 @@ glabel load_walletbond
 /* 040418 7F00B8E8 3407A000 */  li    $a3, 40960
 /* 04041C 7F00B8EC 0FC1D929 */  jal   load_object_fill_header
 /* 040420 7F00B8F0 AFA00010 */   sw    $zero, 0x10($sp)
-/* 040424 7F00B8F4 0FC1D73D */  jal   set_objuse_flag_compute_grp_nums_set_obj_loaded
+/* 040424 7F00B8F4 0FC1D73D */  jal   modelCalculateRwDataLen
 /* 040428 7F00B8F8 8E440D08 */   lw    $a0, 0xd08($s2)
 /* 04042C 7F00B8FC 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 040430 7F00B900 3C108003 */  lui   $s0, %hi(ptr_folder_object_instance)
@@ -23140,7 +23140,7 @@ void init_menu18_displaycast(void)
               (objheader,(int *)PitemZ_entries[iVar6].filename,(int)local_4,(int)local_8,
                (int)aiStack40);
     proc_7F0BD188((u8 *)PitemZ_entries[iVar6].filename);
-    set_objuse_flag_compute_grp_nums_set_obj_loaded(objheader);
+    modelCalculateRwDataLen(objheader);
     ptrobjinstance = (undefined *)get_obj_instance_controller_for_header((ModelFileHeader *)objheader)
     ;
     set_obj_instance_controller_scale((int)ptrobjinstance,scale_00);
@@ -23577,7 +23577,7 @@ glabel init_menu18_displaycast
 /* 04D6E0 7F018BB0 8FA20024 */  lw    $v0, 0x24($sp)
 /* 04D6E4 7F018BB4 0FC2F462 */  jal   get_pc_buffer_remaining_value
 /* 04D6E8 7F018BB8 8C440004 */   lw    $a0, 4($v0)
-/* 04D6EC 7F018BBC 0FC1D73D */  jal   set_objuse_flag_compute_grp_nums_set_obj_loaded
+/* 04D6EC 7F018BBC 0FC1D73D */  jal   modelCalculateRwDataLen
 /* 04D6F0 7F018BC0 8FA40078 */   lw    $a0, 0x78($sp)
 /* 04D6F4 7F018BC4 0FC1B025 */  jal   get_obj_instance_controller_for_header
 /* 04D6F8 7F018BC8 8FA40078 */   lw    $a0, 0x78($sp)
@@ -24173,7 +24173,7 @@ glabel init_menu18_displaycast
 /* 04B618 7F018C28 8FA20024 */  lw    $v0, 0x24($sp)
 /* 04B61C 7F018C2C 0FC2F150 */  jal   get_pc_buffer_remaining_value
 /* 04B620 7F018C30 8C440004 */   lw    $a0, 4($v0)
-/* 04B624 7F018C34 0FC1D75F */  jal   set_objuse_flag_compute_grp_nums_set_obj_loaded
+/* 04B624 7F018C34 0FC1D75F */  jal   modelCalculateRwDataLen
 /* 04B628 7F018C38 8FA40078 */   lw    $a0, 0x78($sp)
 /* 04B62C 7F018C3C 0FC1B1F5 */  jal   get_obj_instance_controller_for_header
 /* 04B630 7F018C40 8FA40078 */   lw    $a0, 0x78($sp)

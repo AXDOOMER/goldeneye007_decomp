@@ -41,9 +41,9 @@ f32 sub_GAME_7F06F610(Model *);
 s32 sub_GAME_7F06FE90(Model *arg0, f32 arg1, f32 arg2);
 f32 getinstsize(Model *arg0);
 
-void load_object_into_memory(ModelFileHeader *header,char *name);
+void fileLoad(ModelFileHeader *header,char *name);
 void load_object_into_memory_unused_maybe(ModelFileHeader *header,int *recallstring,int *targetloc,int sizeleft);
-void set_objuse_flag_compute_grp_nums_set_obj_loaded(ModelFileHeader *objheader);
+void modelCalculateRwDataLen(ModelFileHeader *objheader);
 Model *get_aircraft_obj_instance_controller(ModelFileHeader *);
 void sub_GAME_7F06C3B4(Model *, s32,  ModelFileHeader *);
 

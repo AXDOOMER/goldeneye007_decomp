@@ -10,7 +10,7 @@ s32 load_body_head_if_not_loaded(s32 model)
 {
     if (c_item_entries[model].header->RootNode == 0)
     {
-        load_object_into_memory(c_item_entries[model].header, c_item_entries[model].filename);
+        fileLoad(c_item_entries[model].header, c_item_entries[model].filename);
         return 1;
     }
     return 0;
@@ -45,10 +45,10 @@ struct Model *makeonebody(s32 body, s32 head, struct ModelFileHeader *bodyHeader
 
     if (bodyHeader->RootNode == 0)
     {
-        load_object_into_memory(bodyHeader, c_item_entries[body].filename);
+        fileLoad(bodyHeader, c_item_entries[body].filename);
     }
 
-    set_objuse_flag_compute_grp_nums_set_obj_loaded(bodyHeader);
+    modelCalculateRwDataLen(bodyHeader);
 
     if ((c_item_entries[body].hasHead == 0) && (head >= 0))
     {
@@ -57,14 +57,14 @@ struct Model *makeonebody(s32 body, s32 head, struct ModelFileHeader *bodyHeader
         {
             if (headHeader->RootNode == 0)
             {
-                load_object_into_memory(headHeader, c_item_entries[head].filename);
+                fileLoad(headHeader, c_item_entries[head].filename);
 #ifdef XBLADEBUG
     #error fix XBLADEBUG
       //sprintf("makeonebody: no head attachment for body number %d!\n",lVar3);
 #endif
             }
 
-            set_objuse_flag_compute_grp_nums_set_obj_loaded(headHeader);
+            modelCalculateRwDataLen(headHeader);
 
             bodyHeader->numRecords += headHeader->numRecords;
         }
