@@ -312,7 +312,7 @@ void        chrSetMaxDamage(ChrRecord *chr, f32 maxdamage);
 //tentative signature
 s32         sub_GAME_7F01FC10(Model *, coord3d *, coord3d *, f32 *);
 
-#ifndef VERSION_US
+#ifdef BUGFIX_R1
 s32 not_in_us_7F0209EC(s32 bodynum, s32 headnum);
 #endif
 

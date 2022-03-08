@@ -721,7 +721,7 @@ extern bool sub_GAME_7F033AAC                                (ChrRecord *self, u
 extern bool sub_GAME_7F033B38                                (ChrRecord *self, f32 distance);
 extern bool sub_GAME_7F033F48                                (coord3d *coord3d, void *stantile, f32 facing, bool b);
 extern bool sub_GAME_7F051E1C                                (WeaponObjRecord *prop, ChrRecord *chr);
-extern bool is_prop_in_inventory                                (PropRecord *prop);
+extern bool bondinvHasPropInInv                                (PropRecord *prop);
 extern ObjectRecord* weaponFindThrown                                 (s32 ID);                                                                            // check_if_item_deposited
 extern char *langGet                                         (s32 textID);                                                                        // get_textptr_for_textID
 extern DIFFICULTY lvlGetSelectedDifficulty                              ();                                                                                  // get_current_difficulty
@@ -2607,7 +2607,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType) //sp,sp,-1976
                 {
                     AIRecord *    ai  = AiListp + Offset;
                     ObjectRecord *obj = objFindByTagId(ai->val[0]);
-                    if (obj && obj->prop && is_prop_in_inventory(obj->prop))
+                    if (obj && obj->prop && bondinvHasPropInInv(obj->prop))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
                     }

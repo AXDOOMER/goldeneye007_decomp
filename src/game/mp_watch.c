@@ -387,7 +387,7 @@ glabel end_game_and_show_game_over_menu
 /* 0F7188 7F0C2658 8EAC0000 */  lw    $t4, ($s5)
 /* 0F718C 7F0C265C AD802A10 */  sw    $zero, 0x2a10($t4)
 /* 0F7190 7F0C2660 8EAD0000 */  lw    $t5, ($s5)
-/* 0F7194 7F0C2664 0FC236C2 */  jal   get_weapon_of_choice
+/* 0F7194 7F0C2664 0FC236C2 */  jal   bondinvGetWeaponOfChoice
 /* 0F7198 7F0C2668 ADA02A14 */   sw    $zero, 0x2a14($t5)
 /* 0F719C 7F0C266C 8FA40154 */  lw    $a0, 0x154($sp)
 /* 0F71A0 7F0C2670 0FC075A0 */  jal   store_favorite_weapon_current_player
@@ -1041,7 +1041,7 @@ glabel end_game_and_show_game_over_menu
 /* 0F4528 7F0C1B38 8EAC0000 */  lw    $t4, ($s5)
 /* 0F452C 7F0C1B3C AD802A08 */  sw    $zero, 0x2a08($t4)
 /* 0F4530 7F0C1B40 8EAD0000 */  lw    $t5, ($s5)
-/* 0F4534 7F0C1B44 0FC2381C */  jal   get_weapon_of_choice
+/* 0F4534 7F0C1B44 0FC2381C */  jal   bondinvGetWeaponOfChoice
 /* 0F4538 7F0C1B48 ADA02A0C */   sw    $zero, 0x2a0c($t5)
 /* 0F453C 7F0C1B4C 8FA40154 */  lw    $a0, 0x154($sp)
 /* 0F4540 7F0C1B50 0FC07535 */  jal   store_favorite_weapon_current_player

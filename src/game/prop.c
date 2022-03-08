@@ -930,7 +930,7 @@ glabel prepare_load_objects
 
 #ifdef NONMATCHING
 void expand_08_obj_set_guard_MP_weapons(void) {
-
+    
 }
 #else
 #ifndef VERSION_EU
@@ -4485,7 +4485,7 @@ type25_rename:
 /* 03954C 7F004A1C 372A0400 */  ori   $t2, $t9, 0x400
 /* 039550 7F004A20 AC4A0064 */  sw    $t2, 0x64($v0)
 .L7F004A24:
-/* 039554 7F004A24 0FC23628 */  jal   sub_GAME_7F08D8A0
+/* 039554 7F004A24 0FC23628 */  jal   bondinvAddTextOverride
 /* 039558 7F004A28 02402025 */   move  $a0, $s2
 /* 03955C 7F004A2C 10000033 */  b     other_obj_expand
 /* 039560 7F004A30 00000000 */   nop   
@@ -5883,7 +5883,7 @@ type25_rename:
 /* 03959C 7F004A2C 354B0400 */  ori   $t3, $t2, 0x400
 /* 0395A0 7F004A30 AC4B0064 */  sw    $t3, 0x64($v0)
 .L7F004A34:
-/* 0395A4 7F004A34 0FC238E2 */  jal   sub_GAME_7F08D8A0
+/* 0395A4 7F004A34 0FC238E2 */  jal   bondinvAddTextOverride
 /* 0395A8 7F004A38 02402025 */   move  $a0, $s2
 /* 0395AC 7F004A3C 10000033 */  b     other_obj_expand
 /* 0395B0 7F004A40 00000000 */   nop   
@@ -7280,7 +7280,7 @@ type25_rename:
 /* 0373A0 7F0049B0 354B0400 */  ori   $t3, $t2, 0x400
 /* 0373A4 7F0049B4 AC4B0064 */  sw    $t3, 0x64($v0)
 .L7F004A34:
-/* 0373A8 7F0049B8 0FC23782 */  jal   sub_GAME_7F08D8A0
+/* 0373A8 7F0049B8 0FC23782 */  jal   bondinvAddTextOverride
 /* 0373AC 7F0049BC 02402025 */   move  $a0, $s2
 /* 0373B0 7F0049C0 10000033 */  b     other_obj_expand
 /* 0373B4 7F0049C4 00000000 */   nop   

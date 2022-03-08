@@ -33,7 +33,7 @@ struct Model *makeonebody(s32 body, s32 head, struct ModelFileHeader *bodyHeader
     pov = c_item_entries[body].pov;
 
     if (
-#ifndef VERSION_US
+#ifdef BUGFIX_R1
     cheatIsActive(CHEAT_DK_MODE) && not_in_us_7F0209EC(body, head)
 #else
     cheatIsActive(CHEAT_DK_MODE)
