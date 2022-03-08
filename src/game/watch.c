@@ -252,6 +252,7 @@ Gfx *draw_watch_mission_briefing_page(Gfx *gdl, Mtx *param_2);
 Gfx *draw_background_health_and_armor_transitioning(Gfx *gdl, Mtx *param_2);
 Gfx *draw_background_health_and_armor(Gfx *gdl, Mtx *arg1, s32 zoom_squish);
 void sub_GAME_7F0A68D8(s32 *arg0);
+void game_option_select_value(u32 *param_1, u32 param_2);
 
 // end forward declarations
 

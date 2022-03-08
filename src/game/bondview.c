@@ -16091,6 +16091,12 @@ void trigger_solo_watch_menu(s32 arg0)
             
             sub_GAME_7F0A69A8();
 
+/**
+ * Horizontal spacing between watch menu screen select rectangles.
+ * Default = 125.
+*/
+#define WATCH_SCREEN_SELECT_RECTANGLE_HSTEP (WATCH_SCREEN_SELECT_RECTANGLE_WIDTH + WATCH_SCREEN_SELECT_SPACER_WIDTH)
+
             /**
              * This section is for rendering the selected screen rectangles.
             */
@@ -16098,8 +16104,8 @@ void trigger_solo_watch_menu(s32 arg0)
             ptr_a = g_CurrentPlayer->buffer_for_watch_greenbackdrop_vertices;
 
             for (i=0;
-                i<(WATCH_NUMBER_SCREENS * WATCH_SCREEN_SELECT_RECTANGLE_HSPACE);
-                i+=WATCH_SCREEN_SELECT_RECTANGLE_HSPACE,
+                i<(WATCH_NUMBER_SCREENS * WATCH_SCREEN_SELECT_RECTANGLE_HSTEP);
+                i+=WATCH_SCREEN_SELECT_RECTANGLE_HSTEP,
                     ptr_a = next)
             {
                 ptr_copy = ptr_a;
