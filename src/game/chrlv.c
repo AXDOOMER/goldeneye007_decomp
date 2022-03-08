@@ -85,8 +85,6 @@ void chrlvSurrenderAnimationRelated           (ChrRecord *self);
 void chrlvActorLookFlustered                  (ChrRecord *self);
 void chrlvActorThrowWeaponSurrender           (ChrRecord *self);
 void chrlvActorFadeAway                       (ChrRecord *self);
-void chrlvSideStepAnimationRelated            (ChrRecord *self, s32 arg1);
-void chrlvFireJumpToSideAnimationRelated      (ChrRecord *self, s32 arg1);
 void chrlvDeathStaggerAnimationRelated        (ChrRecord *self);
 void chrlvAttackActionRelated                 (ChrRecord *self);
 f32 chrlvDistanceToChrRelated                 (ChrRecord *self, s32 arg1, s32 arg2);
@@ -128,8 +126,6 @@ s32 chrlvCall7F0B0E24WithChrWidthHeight       (PropRecord *arg0, coord3d *arg1, 
 void chrlvSetTargetToPlayer                   (ChrRecord *self);
 s32 chrSawTargetRecently                      (ChrRecord *);
 s32 chrCheckTargetInSight                     (ChrRecord *self);
-void chrlvNormDistanceToPlayer                (ChrRecord *self, s32 arg1, coord3d *arg2);
-s32 sub_GAME_7F02A0EC                         (ChrRecord *self, s32 arg1, f32 arg2);
 void chrlvModelRotyRelated                    (ChrRecord *self, s32 arg1, coord3d *arg2);
 s32 chrIsNotDeadOrShot                        (ChrRecord *chr);
 void chrlvTickAnim                            (ChrRecord *self);
@@ -154,7 +150,6 @@ void chrlvAttackrollAnimationRelated7F02E3B8  (ChrRecord *self);
 void sub_GAME_7F0256F0                        (ChrRecord *self, s32 attack_type, s32 arg2);
 void chrlvTickAttack                          (ChrRecord *self);
 void chrlvTickAttackCommon                    (ChrRecord *);
-void chrlvInitActAttackRoll                   (ChrRecord *chr, s32);
 void chrlvInitActAttackWalk                   (ChrRecord *chr, s32);
 void sub_GAME_7F024CF8                        (ChrRecord *self, coord3d *arg1);
 void chrlvTickThrowGrenade                    (ChrRecord *self);
@@ -886,9 +881,10 @@ void chrlvActorFadeAway(ChrRecord *self)
 
 
 /**
+ * chrStepToSide
  * Address 0x7F024800.
  */
-void chrlvSideStepAnimationRelated(ChrRecord *self, s32 arg1)
+void chrlvSideStepAnimationRelated(ChrRecord *self, GUNHAND side)
 {
     PropRecord *left;
     PropRecord *right;
@@ -921,7 +917,7 @@ void chrlvSideStepAnimationRelated(ChrRecord *self, s32 arg1)
 
     if (phi_v1 == 0)
     {
-        if (arg1 != 0)
+        if (side != GUNRIGHT)
         {
             modelSetAnimation(self->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_side_step_left], 0, 5.0f, chrlvGetGuard007SpeedRating(self, 0.55f, 0.88000005f), 16.0f);
             modelSetAnimEndFrame(self->model, 27.0f);
@@ -935,7 +931,8 @@ void chrlvSideStepAnimationRelated(ChrRecord *self, s32 arg1)
         return;
     }
 
-    if (((arg1 != 0) && (sp2C == 0)) || ((arg1 == 0) && (sp2C != 0)))
+    if (((side != GUNRIGHT) && (sp2C == 0)) ||
+        ((side == GUNRIGHT) && (sp2C != 0)))
     {
         modelSetAnimation(self->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_slide_left], sp2C, 5.0f, chrlvGetGuard007SpeedRating(self, 0.7f, 1.12f), 16.0f);
         modelSetAnimEndFrame(self->model, 34.0f);
@@ -953,22 +950,23 @@ void chrlvSideStepAnimationRelated(ChrRecord *self, s32 arg1)
 
 
 /**
+ * chrHopToSide
  * Address 0x7F024A84.
  */
-void chrlvFireJumpToSideAnimationRelated(ChrRecord *self, s32 arg1)
+void chrlvFireJumpToSideAnimationRelated(ChrRecord *self, GUNHAND side)
 {
     PropRecord *left;
     PropRecord *right;
-    s32 sp2C;
+    s32 side2;
 
     left = chrGetEquippedWeaponProp(self, GUNLEFT);
-    right = chrGetEquippedWeaponProp(self, 0);
+    right = chrGetEquippedWeaponProp(self, GUNRIGHT);
 
-    sp2C = 0;
+    side2 = GUNRIGHT;
 
     if ((left != NULL) && (right == NULL))
     {
-        sp2C = 1;
+        side2 = GUNLEFT;
     }
     else if (
         ((left != NULL) && (right != NULL))
@@ -976,7 +974,7 @@ void chrlvFireJumpToSideAnimationRelated(ChrRecord *self, s32 arg1)
         || (check_if_item_held_like_pistol(left) != 0)
         || (check_if_item_held_like_pistol(right) != 0))
     {
-        sp2C = randomGetNext() & 1;
+        side2 = randomGetNext() & 1;
     }
 
     sub_GAME_7F02D184(self);
@@ -984,16 +982,17 @@ void chrlvFireJumpToSideAnimationRelated(ChrRecord *self, s32 arg1)
     self->actiontype = ACT_JUMPOUT;
     self->sleep = 0;
 
-    if (((arg1 != 0) && (sp2C == 0)) || ((arg1 == 0) && (sp2C != 0)))
+    if (((side != GUNRIGHT) && (side2 == GUNRIGHT)) ||
+        ((side == GUNRIGHT) && (side2 != GUNRIGHT)))
     {
         if ((randomGetNext() & 1) != 0)
         {
-            modelSetAnimation(self->model, (struct ModelAnimation*)&ptr_animation_table->data[(s32)&ANIM_DATA_fire_jump_to_side_left], sp2C, 5.0f, chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f), 16.0f);
+            modelSetAnimation(self->model, (struct ModelAnimation*)&ptr_animation_table->data[(s32)&ANIM_DATA_fire_jump_to_side_left], side2, 5.0f, chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f), 16.0f);
             modelSetAnimEndFrame(self->model, 49.0f);
         }
         else
         {
-            modelSetAnimation(self->model, (struct ModelAnimation*)&ptr_animation_table->data[(s32)&ANIM_DATA_fire_jump_to_side_right], sp2C, 130.0f, chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f), 16.0f);
+            modelSetAnimation(self->model, (struct ModelAnimation*)&ptr_animation_table->data[(s32)&ANIM_DATA_fire_jump_to_side_right], side2, 130.0f, chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f), 16.0f);
             modelSetAnimEndFrame(self->model, 173.0f);
         }
 
@@ -1002,12 +1001,12 @@ void chrlvFireJumpToSideAnimationRelated(ChrRecord *self, s32 arg1)
 
     if ((randomGetNext() & 1) != 0)
     {
-        modelSetAnimation(self->model, (struct ModelAnimation*)&ptr_animation_table->data[(s32)&ANIM_DATA_fire_jump_to_side_right], sp2C, 20.0f, chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f), 16.0f);
+        modelSetAnimation(self->model, (struct ModelAnimation*)&ptr_animation_table->data[(s32)&ANIM_DATA_fire_jump_to_side_right], side2, 20.0f, chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f), 16.0f);
         modelSetAnimEndFrame(self->model, 63.0f);
     }
     else
     {
-        modelSetAnimation(self->model, (struct ModelAnimation*)&ptr_animation_table->data[(s32)&ANIM_DATA_fire_jump_to_side_left], sp2C, 91.0f, chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f), 16.0f);
+        modelSetAnimation(self->model, (struct ModelAnimation*)&ptr_animation_table->data[(s32)&ANIM_DATA_fire_jump_to_side_left], side2, 91.0f, chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f), 16.0f);
         modelSetAnimEndFrame(self->model, 136.0f);
     }
 
@@ -1017,6 +1016,7 @@ void chrlvFireJumpToSideAnimationRelated(ChrRecord *self, s32 arg1)
 
 
 /**
+ *  // run to coord
  * Address 0x7F024CF8 (not EU).
  * Address 0x7F024CE0 (VERSION_EU).
  */
@@ -1496,6 +1496,7 @@ void sub_GAME_7F0256F0(ChrRecord *self, s32 attack_type, s32 arg2)
 
 
 /**
+ * // run forward shooting
  * Address 0x7F02587C.
 */
 void chrlvInitActAttackWalk(ChrRecord *chr, s32 arg1)
@@ -1676,9 +1677,10 @@ void chrlvInitActAttackWalk(ChrRecord *chr, s32 arg1)
 
 
 /**
+ * chrRollToSide
  * Address 0x7F025C40.
 */
-void chrlvInitActAttackRoll(ChrRecord *chr, s32 arg1)
+void chrlvInitActAttackRoll(ChrRecord *chr, GUNHAND side)
 {
     Model *self_model; // 140
     struct weapon_firing_animation_table *panim_float; // 136
@@ -1750,7 +1752,8 @@ void chrlvInitActAttackRoll(ChrRecord *chr, s32 arg1)
         sp64.p[0] = sp7C == 0;
     }
 
-    if (((arg1 != 0) && (sp7C == 0)) || ((arg1 == 0) && (sp7C != 0)))
+    if (((side != GUNRIGHT) && (sp7C == 0)) ||
+        ((side == GUNRIGHT) && (sp7C != 0)))
     {
         if ((u32)randomGetNext() & 1U)
         {
@@ -4700,13 +4703,14 @@ bool chrCheckTargetInSight(ChrRecord *self)
 
 
 /**
- * @param arg0:
- * @param arg1: flag. If set result is (dz, -dx), otherwise (-dz, dx).
- * @param arg2: Out parameter. Contains result coordinat.
+ * get vector to run on
+ * @param self:
+ * @param side: If GUNLEFT set result is (dz, -dx), otherwise (-dz, dx).
+ * @param arg2: Out parameter. Contains result vector.
  * 
  * Address 0x7F02A044.
 */
-void chrlvNormDistanceToPlayer(ChrRecord *self, s32 arg1, coord3d *arg2)
+void chrlvNormDistanceToPlayer(ChrRecord *self, GUNHAND side, vec3d *vec)
 {
     PropRecord *prop;
     f32 norm;
@@ -4724,17 +4728,17 @@ void chrlvNormDistanceToPlayer(ChrRecord *self, s32 arg1, coord3d *arg2)
     dx = dx / norm;
     dz = dz / norm;
 
-    if (arg1 != 0)
+    if (side != GUNRIGHT)
     {
-        arg2->f[1] = 0;
-        arg2->f[0] = dz;
-        arg2->f[2] = -(dx);
+        vec->f[1]  = 0;
+        vec->f[0]  = dz;
+        vec->f[2]  = -(dx);
     }
     else
     {
-        arg2->f[2] = dx;
-        arg2->f[0] = -(dz);
-        arg2->f[1] = 0;
+        vec->f[2]  = dx;
+        vec->f[0]  = -(dz);
+        vec->f[1]  = 0;
     }
 }
 
@@ -4742,21 +4746,22 @@ void chrlvNormDistanceToPlayer(ChrRecord *self, s32 arg1, coord3d *arg2)
 
 
 /**
+ * chrIsClearLow
  * @see sub_GAME_7F02A1E8
  * Address 0x7F02A0EC.
 */
-s32 sub_GAME_7F02A0EC(ChrRecord *self, s32 arg1, f32 arg2)
+s32 sub_GAME_7F02A0EC(ChrRecord *self, GUNHAND side, f32 distance)
 {
     PropRecord *prop;
     coord3d sp28;
     coord3d sp1C;
 
     prop = self->prop;
-    chrlvNormDistanceToPlayer(self, arg1, &sp28);
+    chrlvNormDistanceToPlayer(self, side, &sp28);
 
-    sp1C.f[0] = prop->pos.f[0] + (sp28.f[0] * arg2);
+    sp1C.f[0] = prop->pos.f[0] + (sp28.f[0] * distance);
     sp1C.f[1] = prop->pos.f[1];
-    sp1C.f[2] = prop->pos.f[2] + (sp28.f[2] * arg2);
+    sp1C.f[2] = prop->pos.f[2] + (sp28.f[2] * distance);
 
     return chrlvCall7F0B0E24WithChrWidthHeight(prop, &sp1C, &sp28);
 }
@@ -4795,22 +4800,23 @@ void chrlvModelRotyRelated(ChrRecord *self, s32 arg1, coord3d *arg2)
 
 
 /**
- * @see sub_GAME_7F02A0EC
+ * chrIsClear
+ * @see sub_GAME_7F02A0EC 
  * 
  * Address 0x7F02A1E8.
 */
-s32 sub_GAME_7F02A1E8(ChrRecord *self, s32 arg1, f32 arg2)
+s32 sub_GAME_7F02A1E8(ChrRecord *self, GUNHAND side, f32 distance)
 {
     PropRecord *prop;
     coord3d sp28;
     coord3d sp1C;
 
     prop = self->prop;
-    chrlvModelRotyRelated(self, arg1, &sp28);
+    chrlvModelRotyRelated(self, side, &sp28);
 
-    sp1C.f[0] = prop->pos.f[0] + (sp28.f[0] * arg2);
+    sp1C.f[0] = prop->pos.f[0] + (sp28.f[0] * distance);
     sp1C.f[1] = prop->pos.f[1];
-    sp1C.f[2] = prop->pos.f[2] + (sp28.f[2] * arg2);
+    sp1C.f[2] = prop->pos.f[2] + (sp28.f[2] * distance);
 
     return chrlvCall7F0B0E24WithChrWidthHeight(prop, &sp1C, &sp28);
 }
@@ -4854,8 +4860,8 @@ bool actor_steps_sideways(ChrRecord *self)
     int pad2; //needed for stack size
     f32 myRadDirectionToBond;
     f32 radChangeToFaceBond;
-    bool HopOtherDirection; //needed for stack size
-    bool HopDirection;
+    GUNHAND HopOtherDirection; //needed for stack size
+    GUNHAND HopDirection;
     f32 myNormalizedRadToBond;
 
     if (chrIsNotDeadOrShot(self))
@@ -4910,8 +4916,8 @@ bool actor_hops_sideways(ChrRecord *self)
     int pad2; //needed for stack size
     f32 myRadDirectionToBond;
     f32 radChangeToFaceBond;
-    bool HopOtherDirection; //needed for stack size
-    bool HopDirection;
+    GUNHAND HopOtherDirection; //needed for stack size
+    GUNHAND HopDirection;
     f32 myNormalizedRadToBond;
 
     if (chrIsNotDeadOrShot(self))
@@ -5082,8 +5088,8 @@ bool actor_rolls_fires_crouched(ChrRecord *self)
 
     vec3d vec;
 
-    bool HopOtherDirection;
-    bool HopDirection;
+    GUNHAND HopOtherDirection;
+    GUNHAND HopDirection;
     float vec2rd;
 
     if (chrIsNotDeadOrShot(self))
@@ -11947,7 +11953,7 @@ bool actor_draws_throws_grenade_at_player_if_possible(ChrRecord *self)
 
     s32 flags;
     //GUNHAND hand;
-
+    //"grenade prob: no chr number %d for obj number %d!\n"
     if (((u32)randomGetNext() % (u32)0xFF) >= self->grenadeprob)
     {
         return FALSE;

@@ -4996,7 +4996,7 @@ glabel sub_GAME_7F03A4F0
 
 
 
-
+//proptreeAdd
 void sub_GAME_7F03A538(PropRecord *prop)
 {
     PropRecord *temp_v0;

@@ -252,9 +252,401 @@ glabel sub_GAME_7F001BD4
 
 
 #ifdef NONMATCHING
-void prepare_load_objects(void) {
+// maybe domakedefaultobj
+void prepare_load_objects(s32 arg0, ObjectRecord *arg1, ? arg2)
+{
+    s32 spF0;
+    ? spE0;
+    StandTile * spDC;
+    f32         spD8;
+    f32         spD4;
+    f32         spD0;
+    StandTile * spCC;
+    Mtxf        sp8C;
+    f32         sp88;
+    f32         sp84;
+    f32         sp80;
+    f32         sp78;
+    s32         sp74;
+    ChrRecord * sp6C;
+    PadRecord * sp64;
+    PropRecord *sp60;
+    f32         sp58;
+    f32         sp54;
+    f32         sp50;
+    f32         sp48;
+    ChrRecord * temp_v0;
+    Model *     temp_a0_2;
+    Model *     temp_a0_3;
+    Model *     temp_a0_5;
+    Model *     temp_a0_6;
+    PadRecord * temp_v0_2;
+    StandTile **temp_a0_4;
+    f32         temp_f0;
+    f32         temp_f0_2;
+    f32         temp_f0_3;
+    f32         temp_f0_4;
+    f32         temp_f0_5;
+    f32         temp_f0_6;
+    f32         temp_f12;
+    f32         temp_f12_2;
+    f32         temp_f12_3;
+    f32         temp_f16;
+    f32         temp_f18;
+    f32         temp_f2;
+    f32         temp_f2_2;
+    f32         temp_f2_3;
+    f32         temp_f2_4;
+    f32         temp_f2_5;
+    f32         temp_f2_6;
+    f32         temp_f6;
+    s16         temp_a0;
+    s16         temp_v1_2;
+    u16         temp_t6;
+    u32         temp_v1;
+    u32         temp_v1_3;
+    u32         temp_v1_4;
+    void *      temp_s0;
+    void *      temp_v0_3;
+    f32         phi_f6;
+    s32         phi_v1;
+    PropRecord *phi_v0;
+    PropRecord *phi_v0_2;
+    void *      phi_s0;
+    f32         phi_f6_2;
+    f32         phi_f16;
+    f32         phi_f18;
+    f32         phi_f0;
+    f32         phi_f14;
+    f32         phi_f12;
+    f32         phi_f14_2;
+    f32         phi_f16_2;
+    f32         phi_f18_2;
+    f32         phi_f16_3;
+    f32         phi_f18_3;
+    f32         phi_f12_2;
+    f32         phi_f0_2;
 
+    temp_a0 = arg1->obj;
+    spF0    = temp_a0;
+    load_model(temp_a0);
+    temp_t6 = arg1->extrascale;
+    temp_f6 = temp_t6;
+    phi_f6  = temp_f6;
+    phi_s0  = NULL;
+    if (temp_t6 < 0)
+    {
+        phi_f6 = temp_f6 + 4294967296.0f;
+    }
+    sp78              = phi_f6 * 0.00390625f;
+    arg1->mtx.m[1][3] = (bitwise s32)(arg1->mtx.m[1][3] / 65536.0f);
+    phi_v1            = 1;
+    if (getPlayerCount() >= 2)
+    {
+        sp74 = 1;
+        if ((get_scenario() == 2) && (arg1->obj == 0x14D))
+        {
+            goto block_8;
+        }
+        sp74 = 1;
+        if ((get_scenario() == 3) && (arg1->obj == 0xD0))
+        {
+block_8:
+            phi_v1 = 0;
+        }
+        if (phi_v1 != 0)
+        {
+            arg1->state |= 4;
+        }
+    }
+    temp_v1 = arg1->flags;
+    if ((temp_v1 & 0x8000) != 0)
+    {
+        if (arg1->type == 8)
+        {
+            sub_GAME_7F051DD8(arg1, PitemZ_entries[spF0].Header);
+        }
+        else
+        {
+            sub_GAME_7F0406F8(arg1, PitemZ_entries[spF0].Header);
+        }
+        temp_a0_2 = arg1->model;
+        set_obj_instance_controller_scale(temp_a0_2, temp_a0_2->scale * sp78);
+        return;
+    }
+    if ((temp_v1 & 0x4000) != 0)
+    {
+        temp_v0 = chrFindByLiteralId(arg1->pad);
+        sp6C    = temp_v0;
+        if ((temp_v0 != 0) && (temp_v0->prop != 0) && (temp_v0->model != 0))
+        {
+            if (arg1->Head.type == 8)
+            {
+                phi_v0 = sub_GAME_7F051DD8(arg1, PitemZ_entries[spF0].Header);
+            }
+            else
+            {
+                phi_v0 = sub_GAME_7F0406F8(arg1, PitemZ_entries[spF0].Header);
+            }
+            temp_a0_3 = arg1->model;
+            set_obj_instance_controller_scale(temp_a0_3, temp_a0_3->scale * sp78);
+            attachNewChild(phi_v0, sp6C->prop);
+        }
+    }
+    else
+    {
+        temp_v1_2 = arg1->pad;
+        if (temp_v1_2 < 0x2710)
+        {
+            temp_v0_2 = &g_chraiCurrentSetup.pads[temp_v1_2];
+            sp64      = temp_v0_2;
+            matrix_4x4_7F059908(&sp8C, 0.0f, 0.0f, 0.0f, -temp_v0_2->target.AsArray[0], -temp_v0_2->target.AsArray[1], -temp_v0_2->target.AsArray[2], temp_v0_2->up.AsArray[0], temp_v0_2->up.AsArray[1], temp_v0_2->up.AsArray[2]);
+            spD0 = sp64->pos.AsArray[0];
+            spD4 = sp64->pos.AsArray[1];
+            spD8 = sp64->pos.AsArray[2];
+            if ((arg1->flags & 2) != 0)
+            {
+                sp80 = sp64->pos.AsArray[0];
+                sp84 = sp64->pos.AsArray[1];
+                sp88 = sp64->pos.AsArray[2];
+            }
+            else
+            {
+                sp80 = sp64->pos.AsArray[0];
+                sp84 = sp64->pos.AsArray[1];
+                sp88 = sp64->pos.AsArray[2];
+            }
+            spCC = sp64->stan;
+        }
+        else
+        {
+            temp_s0 = &g_chraiCurrentSetup.boundpads[temp_v1_2] + 0xFFF59FC0;
+            matrix_4x4_7F059908(&sp8C, 0.0f, 0.0f, 0.0f, -temp_s0->unk18, -temp_s0->unk1C, -temp_s0->unk20, temp_s0->unkC, temp_s0->unk10, temp_s0->unk14);
+            phi_s0 = temp_s0;
+            if ((arg1->flags2 & 1) == 0)
+            {
+                sub_GAME_7F001BD4(temp_s0, &spD0);
+                temp_a0_4 = &spCC;
+                sp80      = (temp_s0->unkC * ((temp_s0->unk34 - temp_s0->unk38) * 0.5f)) + spD0;
+                sp84      = (temp_s0->unk10 * ((temp_s0->unk34 - temp_s0->unk38) * 0.5f)) + spD4;
+                sp88      = (temp_s0->unk14 * ((temp_s0->unk34 - temp_s0->unk38) * 0.5f)) + spD8;
+                spCC      = temp_s0->unk28;
+                if (walkTilesBetweenPoints_NoCallback(temp_a0_4, temp_s0->unk0, temp_s0->unk8, spD0, spD8) == 0)
+                {
+                    spD0      = temp_s0->unk0;
+                    spD4      = temp_s0->unk4;
+                    spD8      = temp_s0->unk8;
+                    spCC      = temp_s0->unk28;
+                    temp_v1_3 = arg1->flags;
+                    if (((temp_v1_3 & 2) == 0) && ((temp_v1_3 & 0x1000) == 0))
+                    {
+                    }
+                }
+            }
+            else
+            {
+                spD0 = temp_s0->unk0;
+                spD4 = temp_s0->unk4;
+                spD8 = temp_s0->unk8;
+                spCC = temp_s0->unk28;
+                sub_GAME_7F001BD4(temp_s0, &sp80);
+                sp80 += (temp_s0->unk34 - temp_s0->unk38) * 0.5f * temp_s0->unkC;
+                sp84 += (temp_s0->unk34 - temp_s0->unk38) * 0.5f * temp_s0->unk10;
+                sp88 += (temp_s0->unk34 - temp_s0->unk38) * 0.5f * temp_s0->unk14;
+            }
+        }
+        if (sub_GAME_7F056850(&spD0, spCC, 0, &spE0, &spDC) != 0)
+        {
+            if (arg1->Head.type == 8)
+            {
+                phi_v0_2 = sub_GAME_7F051DD8(arg1, PitemZ_entries[spF0].Header);
+            }
+            else
+            {
+                phi_v0_2 = sub_GAME_7F04071C(arg1);
+            }
+            sp60 = phi_v0_2;
+            if (phi_s0 != 0)
+            {
+                temp_v0_3 = sub_GAME_7F040078(arg1);
+                if (temp_v0_3 != 0)
+                {
+                    sp58      = 1.0f;
+                    temp_v1_4 = arg1->flags;
+                    phi_f16_3 = 1.0f;
+                    phi_f18_3 = 1.0f;
+                    phi_f16   = 1.0f;
+                    phi_f18   = 1.0f;
+                    if ((temp_v1_4 & 0x30) != 0)
+                    {
+                        temp_f2 = temp_v0_3->unk4;
+                        temp_f0 = temp_v0_3->unk8;
+                        if (temp_f2 < temp_f0)
+                        {
+                            if ((temp_v1_4 & 2) != 0)
+                            {
+                                phi_f6_2 = (phi_s0->unk30 - phi_s0->unk2C) / ((temp_f0 - temp_f2) * arg1->model->scale);
+                            }
+                            else
+                            {
+                                phi_f6_2 = (phi_s0->unk30 - phi_s0->unk2C) / ((temp_f0 - temp_f2) * arg1->model->scale);
+                            }
+                            sp58 = phi_f6_2;
+                        }
+                    }
+                    if ((temp_v1_4 & 0x50) != 0)
+                    {
+                        temp_f2_2 = temp_v0_3->unkC;
+                        temp_f0_2 = temp_v0_3->unk10;
+                        if (temp_f2_2 < temp_f0_2)
+                        {
+                            temp_f12 = arg1->model->scale;
+                            if ((temp_v1_4 & 2) != 0)
+                            {
+                                phi_f18 = (phi_s0->unk40 - phi_s0->unk3C) / ((temp_f0_2 - temp_f2_2) * temp_f12);
+                            }
+                            else
+                            {
+                                phi_f16 = (phi_s0->unk38 - phi_s0->unk34) / ((temp_f0_2 - temp_f2_2) * temp_f12);
+                            }
+                        }
+                    }
+                    if ((temp_v1_4 & 0x90) != 0)
+                    {
+                        temp_f2_3 = temp_v0_3->unk14;
+                        temp_f0_3 = temp_v0_3->unk18;
+                        if (temp_f2_3 < temp_f0_3)
+                        {
+                            temp_f12_2 = arg1->model->scale;
+                            if ((temp_v1_4 & 2) != 0)
+                            {
+                                phi_f16 = (phi_s0->unk38 - phi_s0->unk34) / ((temp_f0_3 - temp_f2_3) * temp_f12_2);
+                            }
+                            else
+                            {
+                                phi_f18 = (phi_s0->unk40 - phi_s0->unk3C) / ((temp_f0_3 - temp_f2_3) * temp_f12_2);
+                            }
+                        }
+                    }
+                    phi_f0    = sp58;
+                    phi_f12   = sp58;
+                    phi_f16_2 = phi_f16;
+                    phi_f18_2 = phi_f18;
+                    if (phi_f16 < sp58)
+                    {
+                        phi_f0 = phi_f16;
+                    }
+                    phi_f0_2 = phi_f0;
+                    if (phi_f18 < phi_f0)
+                    {
+                        phi_f0_2 = phi_f18;
+                    }
+                    phi_f14 = sp58;
+                    if (sp58 < phi_f16)
+                    {
+                        phi_f14 = phi_f16;
+                    }
+                    phi_f14_2 = phi_f14;
+                    if (phi_f14 < phi_f18)
+                    {
+                        phi_f14_2 = phi_f18;
+                    }
+                    if ((temp_v1_4 & 0x10) != 0)
+                    {
+                        phi_f12   = phi_f0_2;
+                        phi_f16_2 = phi_f0_2;
+                        phi_f18_2 = phi_f0_2;
+                    }
+                    else
+                    {
+                        if ((temp_v1_4 & 0x20) == 0)
+                        {
+                            temp_f0_4 = temp_v0_3->unk8;
+                            temp_f2_4 = temp_v0_3->unk4;
+                            if ((temp_v1_4 & 2) != 0)
+                            {
+                                if (temp_f2_4 == temp_f0_4)
+                                {
+                                    goto block_72;
+                                }
+                            }
+                            else if (temp_f2_4 == temp_f0_4)
+                            {
+block_72:
+                                phi_f12 = phi_f14_2;
+                            }
+                        }
+                        if ((temp_v1_4 & 0x40) == 0)
+                        {
+                            temp_f0_5 = temp_v0_3->unk10;
+                            temp_f2_5 = temp_v0_3->unkC;
+                            if ((temp_v1_4 & 2) != 0)
+                            {
+                                if (temp_f2_5 == temp_f0_5)
+                                {
+                                    phi_f18_2 = phi_f14_2;
+                                }
+                            }
+                            else if (temp_f2_5 == temp_f0_5)
+                            {
+                                phi_f16_2 = phi_f14_2;
+                            }
+                        }
+                        if ((temp_v1_4 & 0x80) == 0)
+                        {
+                            temp_f0_6 = temp_v0_3->unk18;
+                            temp_f2_6 = temp_v0_3->unk14;
+                            if ((temp_v1_4 & 2) != 0)
+                            {
+                                if (temp_f2_6 == temp_f0_6)
+                                {
+                                    phi_f16_2 = phi_f14_2;
+                                }
+                            }
+                            else if (temp_f2_6 == temp_f0_6)
+                            {
+                                phi_f18_2 = phi_f14_2;
+                            }
+                        }
+                    }
+                    temp_f12_3 = phi_f12 / phi_f14_2;
+                    temp_f16   = phi_f16_2 / phi_f14_2;
+                    temp_f18   = phi_f18_2 / phi_f14_2;
+                    phi_f16_3  = temp_f16;
+                    phi_f18_3  = temp_f18;
+                    phi_f12_2  = temp_f12_3;
+                    if ((temp_f12_3 <= 0.000001f) || (temp_f16 <= 0.000001f) || (temp_f18 <= 0.000001f))
+                    {
+                        phi_f12_2 = 1.0f;
+                    }
+                    sp48 = phi_f14_2;
+                    sp54 = phi_f16_3;
+                    sp50 = phi_f18_3;
+                    matrix_column_1_scalar_multiply(phi_f12_2, phi_f14_2, &sp8C);
+                    matrix_column_2_scalar_multiply(sp54, &sp8C);
+                    matrix_column_3_scalar_multiply_2(sp50, &sp8C);
+                    temp_a0_5 = arg1->model;
+                    set_obj_instance_controller_scale(temp_a0_5, temp_a0_5->scale * sp48);
+                }
+            }
+            temp_a0_6 = arg1->model;
+            set_obj_instance_controller_scale(temp_a0_6, temp_a0_6->scale * sp78);
+            matrix_scalar_multiply(arg1->model->scale, &sp8C);
+            if ((arg1->flags & 2) != 0)
+            {
+                sub_GAME_7F040BA0(arg1, &spE0, &sp8C, spDC, &sp80);
+            }
+            else
+            {
+                sub_GAME_7F04088C(arg1, &spE0, &sp8C, spDC, &sp80);
+            }
+            sub_GAME_7F056CA0(arg1);
+            set_current_objposdata_plus_0x28(sp60);
+            set_stateflag_0x04_for_posdata(sp60);
+        }
+    }
 }
+
 #else
 GLOBAL_ASM(
 .late_rodata

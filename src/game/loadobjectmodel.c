@@ -231,8 +231,38 @@ glabel check_if_object_type_has_been_loaded
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F056BA8(void) {
 
+s32 sub_GAME_7F056BA8(s32 arg0)
+{
+    PropRecord *temp_s0;
+    PropRecord *temp_s0_2;
+    PropRecord *phi_s0;
+    s32         phi_s1;
+
+    temp_s0 = g_chraiCurrentSetup.props;
+    phi_s0  = temp_s0;
+    if (temp_s0 != 0)
+    {
+        phi_s1 = 0;
+        if (temp_s0->unk3 != 0x30)
+        {
+loop_2:
+            if (arg0 == phi_s0->pos.AsArray[2])
+            {
+                return phi_s1;
+            }
+            temp_s0_2 = (sizepropdef(phi_s0) * 4) + phi_s0;
+            phi_s0    = temp_s0_2;
+            phi_s1 += 1;
+            if (temp_s0_2->unk3 == 0x30)
+            {
+                goto block_5;
+            }
+            goto loop_2;
+        }
+    }
+block_5:
+    return -1;
 }
 #else
 GLOBAL_ASM(
@@ -585,9 +615,46 @@ glabel sub_GAME_7F056CA0
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F056EA0(void) {
+ObjectRecord *sub_GAME_7F056EA0(s32 arg0, s32 index)
+{
+    ObjectRecord *obj;
 
+    obj = sub_GAME_7F056A88(index);
+    if (obj != 0)
+    {
+        switch (obj->type)
+        {
+            case PROPDEF_DOOR_SCALE:      //2
+            case PROPDEF_GUARD:           //9 :
+            case PROPDEF_LINK:            //14:
+            case PROPDEF_GUARD_ATTRIBUTE: //18:
+            case PROPDEF_SWITCH:          //19:
+            case PROPDEF_TAG:             //22:
+            case PROPDEF_OBJECTIVE_START: //23
+            case PROPDEF_OBJECTIVE_END:
+            case PROPDEF_OBJECTIVE_DESTROY_OBJECT:
+            case PROPDEF_OBJECTIVE_COMPLETE_CONDITION:
+            case PROPDEF_OBJECTIVE_FAIL_CONDITION:
+            case PROPDEF_OBJECTIVE_COLLECT_OBJECT:
+            case PROPDEF_OBJECTIVE_DEPOSIT_OBJECT:
+            case PROPDEF_OBJECTIVE_PHOTOGRAPH:
+            case PROPDEF_OBJECTIVE_NULL:
+            case PROPDEF_OBJECTIVE_ENTER_ROOM:
+            case PROPDEF_OBJECTIVE_DEPOSIT_OBJECT_IN_ROOM:
+            case PROPDEF_OBJECTIVE_COPY_ITEM:
+            case PROPDEF_WATCH_MENU_OBJECTIVE_TEXT: //35
+            case PROPDEF_RENAME:                    //37:
+            case PROPDEF_LOCK_DOOR:                 //38:
+            case PROPDEF_SAFE_ITEM:                 //44:
+            case PROPDEF_CAMERAPOS:                 //46:
+                return NULL;
+            default:
+                break;
+        }
+    }
+    return obj;
 }
+
 #else
 GLOBAL_ASM(
 .late_rodata
@@ -684,9 +751,86 @@ def_7F056EDC:
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F056F08(void) {
 
+PropRecord *sub_GAME_7F056F08(s32 arg0, PropRecord **arg1, PropRecord **arg2, s32 arg3, s32 arg4, s32 arg5)
+{
+    PropRecord *temp_s0;
+    PropRecord *temp_s0_2;
+    u8          temp_v1;
+    u8          temp_v1_2;
+    void *      temp_v0;
+    u8          phi_v1;
+    PropRecord *phi_s0;
+    PropRecord *phi_s2;
+    PropRecord *phi_s3;
+    PropRecord *phi_s2_2;
+    PropRecord *phi_s3_2;
+    PropRecord *phi_s2_3;
+    PropRecord *phi_s3_3;
+
+    temp_s0  = g_chraiCurrentSetup.props;
+    phi_s0   = temp_s0;
+    phi_s2   = NULL;
+    phi_s3   = NULL;
+    phi_s2_2 = NULL;
+    phi_s3_2 = NULL;
+    if (temp_s0 != 0)
+    {
+        temp_v1 = temp_s0->unk3;
+        phi_v1  = temp_v1;
+        if (temp_v1 != 0x30)
+        {
+loop_3:
+            phi_s2_3 = phi_s2;
+            phi_s3_3 = phi_s3;
+            phi_s2_3 = phi_s2;
+            if ((arg0 & 0xFF) == phi_v1)
+            {
+                temp_v0 = phi_s0->pos.AsArray[2];
+                if (temp_v0 == 0)
+                {
+                    if ((arg3 == 0) && (arg4 == 0))
+                    {
+                        return phi_s0;
+                    }
+                    goto block_19;
+                }
+                if ((arg0 != 8) && ((phi_s0->unk64 & 0x80) == 0) && ((phi_s0->unk2 & 4) == 0) && (temp_v0->unk1C == 0) && ((arg4 == 0) || (sub_GAME_7F06C060(phi_s0->stan, arg5) != 0)))
+                {
+                    if ((phi_s2 == 0) && ((phi_s0->pos.AsArray[2]->unk1 & 2) == 0))
+                    {
+                        phi_s2_3 = phi_s0;
+                    }
+                    if (phi_s3 == 0)
+                    {
+                        phi_s3_3 = phi_s0;
+                    }
+                }
+                goto block_19;
+            }
+block_19:
+            temp_s0_2 = (sizepropdef(phi_s0) * 4) + phi_s0;
+            temp_v1_2 = temp_s0_2->unk3;
+            phi_v1    = temp_v1_2;
+            phi_s0    = temp_s0_2;
+            phi_s2    = phi_s2_3;
+            phi_s3    = phi_s3_3;
+            phi_s2_2  = phi_s2_3;
+            phi_s3_2  = phi_s3_3;
+            if (temp_v1_2 == 0x30)
+            {
+                goto block_20;
+            }
+            goto loop_3;
+        }
+    }
+block_20:
+    *arg1 = phi_s2_2;
+    *arg2 = phi_s3_2;
+    return NULL;
 }
+
+
 #else
 GLOBAL_ASM(
 .text
