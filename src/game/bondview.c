@@ -3530,7 +3530,7 @@ variable_body_head:
 /* 0AEDA0 7F07A270 C4840014 */  lwc1  $f4, 0x14($a0)
 /* 0AEDA4 7F07A274 46062202 */  mul.s $f8, $f4, $f6
 /* 0AEDA8 7F07A278 44054000 */  mfc1  $a1, $f8
-/* 0AEDAC 7F07A27C 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 0AEDAC 7F07A27C 0FC1B39E */  jal   modelSetScale
 /* 0AEDB0 7F07A280 00000000 */   nop
 /* 0AEDB4 7F07A284 3C038008 */  lui   $v1, %hi(g_CurrentPlayer)
 /* 0AEDB8 7F07A288 8C63A0B0 */  lw    $v1, %lo(g_CurrentPlayer)($v1)
@@ -4130,7 +4130,7 @@ variable_body_head:
 /* 0AF3EC 7F07A87C C4840014 */  lwc1  $f4, 0x14($a0)
 /* 0AF3F0 7F07A880 46062202 */  mul.s $f8, $f4, $f6
 /* 0AF3F4 7F07A884 44054000 */  mfc1  $a1, $f8
-/* 0AF3F8 7F07A888 0FC1B51A */  jal   set_obj_instance_controller_scale
+/* 0AF3F8 7F07A888 0FC1B51A */  jal   modelSetScale
 /* 0AF3FC 7F07A88C 00000000 */   nop
 /* 0AF400 7F07A890 3C038008 */  lui   $v1, %hi(g_CurrentPlayer) # $v1, 0x8008
 /* 0AF404 7F07A894 8C63A120 */  lw    $v1, %lo(g_CurrentPlayer)($v1)
@@ -4733,7 +4733,7 @@ variable_body_head:
 /* 0ACCEC 7F07A2FC C4840014 */  lwc1  $f4, 0x14($a0)
 /* 0ACCF0 7F07A300 46062202 */  mul.s $f8, $f4, $f6
 /* 0ACCF4 7F07A304 44054000 */  mfc1  $a1, $f8
-/* 0ACCF8 7F07A308 0FC1B4CF */  jal   set_obj_instance_controller_scale
+/* 0ACCF8 7F07A308 0FC1B4CF */  jal   modelSetScale
 /* 0ACCFC 7F07A30C 00000000 */   nop
 /* 0ACD00 7F07A310 3C038007 */  lui   $v1, %hi(g_CurrentPlayer) # $v1, 0x8007
 /* 0ACD04 7F07A314 8C638BC0 */  lw    $v1, %lo(g_CurrentPlayer)($v1)
@@ -13035,7 +13035,7 @@ void sub_GAME_7F07E7CC(void)
     }
     #endif
     _sub_GAME_7F075FAC(&g_CurrentPlayer->something_with_watch_object_instance, objheader, &g_CurrentPlayer->field_2EC);
-    set_obj_instance_controller_scale(&g_CurrentPlayer->something_with_watch_object_instance, c_item_entries[41].scale * 0.1f);
+    modelSetScale(&g_CurrentPlayer->something_with_watch_object_instance, c_item_entries[41].scale * 0.1f);
     _ modelSetAnimation(&g_CurrentPlayer->something_with_watch_object_instance, ptr_animation_table + PTR_ANIM_bond_watch, 0, 0.0, watch_transition_time * 0.5, 0.0);
     g_CurrentPlayer->step_in_view_watch_animation = 0;
     return;
@@ -13079,7 +13079,7 @@ glabel sub_GAME_7F07E7CC
 /* 0B3364 7F07E834 46062202 */  mul.s $f8, $f4, $f6
 /* 0B3368 7F07E838 24840230 */  addiu $a0, $a0, 0x230
 /* 0B336C 7F07E83C 44054000 */  mfc1  $a1, $f8
-/* 0B3370 7F07E840 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 0B3370 7F07E840 0FC1B39E */  jal   modelSetScale
 /* 0B3374 7F07E844 00000000 */   nop
 /* 0B3378 7F07E848 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 0B337C 7F07E84C 44815000 */  mtc1  $at, $f10
@@ -13138,7 +13138,7 @@ glabel sub_GAME_7F07E7CC
 /* 0B12C4 7F07E8D4 46062202 */  mul.s $f8, $f4, $f6
 /* 0B12C8 7F07E8D8 24840230 */  addiu $a0, $a0, 0x230
 /* 0B12CC 7F07E8DC 44054000 */  mfc1  $a1, $f8
-/* 0B12D0 7F07E8E0 0FC1B4CF */  jal   set_obj_instance_controller_scale
+/* 0B12D0 7F07E8E0 0FC1B4CF */  jal   modelSetScale
 /* 0B12D4 7F07E8E4 00000000 */   nop
 /* 0B12D8 7F07E8E8 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 0B12DC 7F07E8EC 44815000 */  mtc1  $at, $f10

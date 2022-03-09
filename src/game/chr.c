@@ -5542,7 +5542,7 @@ glabel sub_GAME_7F020EF0
 /* 0562B4 7F021744 C4860014 */  lwc1  $f6, 0x14($a0)
 /* 0562B8 7F021748 46083283 */  div.s $f10, $f6, $f8
 /* 0562BC 7F02174C 44055000 */  mfc1  $a1, $f10
-/* 0562C0 7F021750 0FC1B51A */  jal   set_obj_instance_controller_scale
+/* 0562C0 7F021750 0FC1B51A */  jal   modelSetScale
 /* 0562C4 7F021754 00000000 */   nop   
 .Ljp7F021758:
 /* 0562C8 7F021758 3C0D7F02 */  lui   $t5, %hi(sub_GAME_7F02083C) # $t5, 0x7f02
@@ -6468,7 +6468,7 @@ glabel sub_GAME_7F020EF0
 /* 053E14 7F021424 C4860014 */  lwc1  $f6, 0x14($a0)
 /* 053E18 7F021428 46083283 */  div.s $f10, $f6, $f8
 /* 053E1C 7F02142C 44055000 */  mfc1  $a1, $f10
-/* 053E20 7F021430 0FC1B4CF */  jal   set_obj_instance_controller_scale
+/* 053E20 7F021430 0FC1B4CF */  jal   modelSetScale
 /* 053E24 7F021434 00000000 */   nop   
 .L7F021438:
 /* 053E28 7F021438 3C0D7F02 */  lui   $t5, %hi(sub_GAME_7F02083C) # $t5, 0x7f02

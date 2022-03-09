@@ -9938,7 +9938,7 @@ _AI_CMD(
             if (obj->type == PROPDEF_MONITOR)
             {
                 MonitorObjRecord *sm = (MonitorObjRecord *) obj;
-                imageSlotSetImage(&sm->Monitor.image, ai->val[2]);
+                monitorSetImageByNum(&sm->Monitor.image, ai->val[2]);
             }
             else if (obj->type == PROPDEF_MULTI_MONITOR)
             {
@@ -9946,7 +9946,7 @@ _AI_CMD(
                 if (slot < 4)
                 {
                     multimonitorobj *mm = (multimonitorobj *) obj;
-                    imageSlotSetImage(&mm->Monitor[slot].image, ai->val[2]);
+                    monitorSetImageByNum(&mm->Monitor[slot].image, ai->val[2]);
                 }
             }
         }

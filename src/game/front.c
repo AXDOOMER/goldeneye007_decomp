@@ -1416,7 +1416,7 @@ void init_menu00_legalscreen(void)
     modelCalculateRwDataLen(&PitemZ_entries[319].header);
 
     something_legalscreen_constructor = get_obj_instance_controller_for_header(&PitemZ_entries[319].header);
-    set_obj_instance_controller_scale(something_legalscreen_constructor, 1.0f);
+    modelSetScale(something_legalscreen_constructor, 1.0f);
     setsuboffset(something_legalscreen_constructor, &sp20);
     fileValidateSaves();
 }
@@ -1462,7 +1462,7 @@ glabel init_menu00_legalscreen
 /* 03F1A4 7F00A674 2463A958 */  addiu $v1, %lo(something_legalscreen_constructor) # addiu $v1, $v1, -0x56a8
 /* 03F1A8 7F00A678 AC620000 */  sw    $v0, ($v1)
 /* 03F1AC 7F00A67C 00402025 */  move  $a0, $v0
-/* 03F1B0 7F00A680 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 03F1B0 7F00A680 0FC1B39E */  jal   modelSetScale
 /* 03F1B4 7F00A684 3C053F80 */   lui   $a1, 0x3f80
 /* 03F1B8 7F00A688 3C048003 */  lui   $a0, %hi(something_legalscreen_constructor)
 /* 03F1BC 7F00A68C 8C84A958 */  lw    $a0, %lo(something_legalscreen_constructor)($a0)
@@ -1820,7 +1820,7 @@ void init_menu01_nintendo(void)
     load_object_fill_header(PitemZ_entries[276].header, PitemZ_entries[276].filename, ptr_logo_and_walletbond_DL,0x3c000,0);
     modelCalculateRwDataLen(PitemZ_entries[276].header);
     something_legalscreen_constructor = get_obj_instance_controller_for_header(PitemZ_entries[276].header);
-    set_obj_instance_controller_scale(something_legalscreen_constructor, 1.0f);
+    modelSetScale(something_legalscreen_constructor, 1.0f);
     setsuboffset(something_legalscreen_constructor, &local_c);
     musicTrack1Play(M_INTROSWOOSH);
     maybe_is_in_menu = TRUE;
@@ -1869,7 +1869,7 @@ glabel init_menu01_nintendo
 /* 03F770 7F00AC40 2463A958 */  addiu $v1, %lo(something_legalscreen_constructor) # addiu $v1, $v1, -0x56a8
 /* 03F774 7F00AC44 AC620000 */  sw    $v0, ($v1)
 /* 03F778 7F00AC48 00402025 */  move  $a0, $v0
-/* 03F77C 7F00AC4C 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 03F77C 7F00AC4C 0FC1B39E */  jal   modelSetScale
 /* 03F780 7F00AC50 3C053F80 */   lui   $a1, 0x3f80
 /* 03F784 7F00AC54 3C048003 */  lui   $a0, %hi(something_legalscreen_constructor)
 /* 03F788 7F00AC58 8C84A958 */  lw    $a0, %lo(something_legalscreen_constructor)($a0)
@@ -2535,7 +2535,7 @@ void init_menu04_goldeneyelogo(void)
     modelCalculateRwDataLen(PgoldeneyelogoZ_header);
     temp_ret = get_obj_instance_controller_for_header(PgoldeneyelogoZ_header);
     something_legalscreen_constructor = temp_ret;
-    set_obj_instance_controller_scale(temp_ret, 0x3f800000);
+    modelSetScale(temp_ret, 0x3f800000);
     setsuboffset(something_legalscreen_constructor, &sp24);
 }
 #else
@@ -2575,7 +2575,7 @@ glabel init_menu04_goldeneyelogo
 /* 03FE00 7F00B2D0 2463A958 */  addiu $v1, %lo(something_legalscreen_constructor) # addiu $v1, $v1, -0x56a8
 /* 03FE04 7F00B2D4 AC620000 */  sw    $v0, ($v1)
 /* 03FE08 7F00B2D8 00402025 */  move  $a0, $v0
-/* 03FE0C 7F00B2DC 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 03FE0C 7F00B2DC 0FC1B39E */  jal   modelSetScale
 /* 03FE10 7F00B2E0 3C053F80 */   lui   $a1, 0x3f80
 /* 03FE14 7F00B2E4 3C048003 */  lui   $a0, %hi(something_legalscreen_constructor)
 /* 03FE18 7F00B2E8 8C84A958 */  lw    $a0, %lo(something_legalscreen_constructor)($a0)
@@ -3074,7 +3074,7 @@ void load_walletbond(void)
 loop_2:
         temp_ret = get_aircraft_obj_instance_controller(PitemZ_entries.unkD08);
         *phi_s0 = temp_ret;
-        set_obj_instance_controller_scale(temp_ret, 0x3f800000);
+        modelSetScale(temp_ret, 0x3f800000);
         temp_s0 = phi_s0 + 4;
         phi_s0 = temp_s0;
         if (temp_s0 != &D_8002A96C)
@@ -3122,7 +3122,7 @@ glabel load_walletbond
 /* 040448 7F00B918 8E440D08 */   lw    $a0, 0xd08($s2)
 /* 04044C 7F00B91C 4405A000 */  mfc1  $a1, $f20
 /* 040450 7F00B920 AE020000 */  sw    $v0, ($s0)
-/* 040454 7F00B924 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 040454 7F00B924 0FC1B39E */  jal   modelSetScale
 /* 040458 7F00B928 00402025 */   move  $a0, $v0
 /* 04045C 7F00B92C 26100004 */  addiu $s0, $s0, 4
 /* 040460 7F00B930 1611FFF8 */  bne   $s0, $s1, .L7F00B914
@@ -23095,7 +23095,7 @@ void init_menu18_displaycast(void)
     local_4 = local_4 + uVar3;
   }
   objinstance = (undefined *)setup_chr_instance(bodyID,headID,objheader,headHeader,0);
-  set_obj_instance_controller_scale((int)objinstance,scale);
+  modelSetScale((int)objinstance,scale);
   if (iVar6 == 0) {
     ptrobjinstance = NULL;
   }
@@ -23143,7 +23143,7 @@ void init_menu18_displaycast(void)
     modelCalculateRwDataLen(objheader);
     ptrobjinstance = (undefined *)get_obj_instance_controller_for_header((ModelFileHeader *)objheader)
     ;
-    set_obj_instance_controller_scale((int)ptrobjinstance,scale_00);
+    modelSetScale((int)ptrobjinstance,scale_00);
     iVar6 = 3;
     *(undefined **)(ptrobjinstance + 0x18) = objinstance;
     if ((uVar2 & 1) != 0) {
@@ -23474,7 +23474,7 @@ glabel init_menu18_displaycast
 /* 04D568 7F018A38 3C053DCC */  lui   $a1, (0x3DCCCCCD >> 16) # lui $a1, 0x3dcc
 /* 04D56C 7F018A3C AC620000 */  sw    $v0, ($v1)
 /* 04D570 7F018A40 34A5CCCD */  ori   $a1, (0x3DCCCCCD & 0xFFFF) # ori $a1, $a1, 0xcccd
-/* 04D574 7F018A44 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 04D574 7F018A44 0FC1B39E */  jal   modelSetScale
 /* 04D578 7F018A48 00402025 */   move  $a0, $v0
 /* 04D57C 7F018A4C 8FAC006C */  lw    $t4, 0x6c($sp)
 /* 04D580 7F018A50 24010002 */  li    $at, 2
@@ -23586,7 +23586,7 @@ glabel init_menu18_displaycast
 /* 04D704 7F018BD4 3C053DCC */  lui   $a1, (0x3DCCCCCD >> 16) # lui $a1, 0x3dcc
 /* 04D708 7F018BD8 AC620000 */  sw    $v0, ($v1)
 /* 04D70C 7F018BDC 34A5CCCD */  ori   $a1, (0x3DCCCCCD & 0xFFFF) # ori $a1, $a1, 0xcccd
-/* 04D710 7F018BE0 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 04D710 7F018BE0 0FC1B39E */  jal   modelSetScale
 /* 04D714 7F018BE4 00402025 */   move  $a0, $v0
 /* 04D718 7F018BE8 3C038003 */  lui   $v1, %hi(ptrobjinstance)
 /* 04D71C 7F018BEC 3C068003 */  lui   $a2, %hi(objinstance)
@@ -24070,7 +24070,7 @@ glabel init_menu18_displaycast
 /* 04B4A0 7F018AB0 3C053DCC */  lui   $a1, (0x3DCCCCCD >> 16) # lui $a1, 0x3dcc
 /* 04B4A4 7F018AB4 AC620000 */  sw    $v0, ($v1)
 /* 04B4A8 7F018AB8 34A5CCCD */  ori   $a1, (0x3DCCCCCD & 0xFFFF) # ori $a1, $a1, 0xcccd
-/* 04B4AC 7F018ABC 0FC1B4CF */  jal   set_obj_instance_controller_scale
+/* 04B4AC 7F018ABC 0FC1B4CF */  jal   modelSetScale
 /* 04B4B0 7F018AC0 00402025 */   move  $a0, $v0
 /* 04B4B4 7F018AC4 8FAC006C */  lw    $t4, 0x6c($sp)
 /* 04B4B8 7F018AC8 24010002 */  li    $at, 2
@@ -24182,7 +24182,7 @@ glabel init_menu18_displaycast
 /* 04B63C 7F018C4C 3C053DCC */  lui   $a1, (0x3DCCCCCD >> 16) # lui $a1, 0x3dcc
 /* 04B640 7F018C50 AC620000 */  sw    $v0, ($v1)
 /* 04B644 7F018C54 34A5CCCD */  ori   $a1, (0x3DCCCCCD & 0xFFFF) # ori $a1, $a1, 0xcccd
-/* 04B648 7F018C58 0FC1B4CF */  jal   set_obj_instance_controller_scale
+/* 04B648 7F018C58 0FC1B4CF */  jal   modelSetScale
 /* 04B64C 7F018C5C 00402025 */   move  $a0, $v0
 /* 04B650 7F018C60 3C038002 */  lui   $v1, %hi(ptrobjinstance) # $v1, 0x8002
 /* 04B654 7F018C64 3C068002 */  lui   $a2, %hi(objinstance) # $a2, 0x8002
