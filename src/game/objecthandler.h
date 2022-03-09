@@ -46,6 +46,7 @@ void load_object_into_memory_unused_maybe(ModelFileHeader *header,int *recallstr
 void modelCalculateRwDataLen(ModelFileHeader *objheader);
 Model *get_aircraft_obj_instance_controller(ModelFileHeader *);
 void sub_GAME_7F06C3B4(Model *, s32,  ModelFileHeader *);
+Mtx *getsubmatrix(Model *objinst);
 
 // tentative signature
 void setpartoffset(Model *, ModelNode *, coord3d *);
