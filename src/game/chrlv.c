@@ -284,7 +284,7 @@ s32 get_random_head(s32 id)
 /**
  * Address 0x7F02370C.
 */
-void expand_09_characters(s32 arg0, GuardRecord *arg1, s32 arg2)
+void expand_09_characters(s32 stageid, GuardRecord *arg1, s32 arg2)
 {
     PadRecord *pad;
     s32 unused2;
