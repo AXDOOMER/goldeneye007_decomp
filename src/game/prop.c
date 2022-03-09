@@ -1322,14 +1322,14 @@ glabel domakedefaultobj
 
 
 #ifdef NONMATCHING
-void expand_08_obj_set_guard_MP_weapons(WeaponObjRecord* weapon, s32 cmdindex)
+void expand_08_obj_set_guard_MP_weapons(s32 arg0, WeaponObjRecord* weapon, s32 cmdindex)
 {
     if ((weapon->flags & PROPFLAG_ASSIGNEDTOCHR)) {
         ChrRecord* chr = chrFindByLiteralId(weapon->pad);
         if (chr && chr->prop && chr->model) {
             if (cheatIsActive(CHEAT_ENEMY_ROCKETS))
             {
-                switch (weapon->weaponnum)
+                switch ((s8)weapon->weaponnum)
                 {
                 case ITEM_KNIFE:
                 case ITEM_THROWKNIFE:
@@ -1362,7 +1362,7 @@ void expand_08_obj_set_guard_MP_weapons(WeaponObjRecord* weapon, s32 cmdindex)
                     break;
                 }
             }
-            weaponLoadProjectileModels(weapon->weaponnum);
+            weaponLoadProjectileModels((s8)weapon->weaponnum);
             sub_GAME_7F052030(weapon, chr);
         }
     } else
@@ -1384,9 +1384,9 @@ void expand_08_obj_set_guard_MP_weapons(WeaponObjRecord* weapon, s32 cmdindex)
             case 0xF5:
             case 0xF6:
             case 0xF7:
-                //temp_v0_3 = getPtrMPWeaponSetData();
+                mpweapon = getPtrMPWeaponSetData();
                 lastmpweaponnum = weapon->weaponnum - 0xF0;
-                mpweapon = getPtrMPWeaponSetData() + (lastmpweaponnum * 0x18);
+                mpweapon = &(mpweapon)[lastmpweaponnum];
                 weapon->weaponnum = mpweapon->itemID;
                 weapon->obj = mpweapon->propID;
                 weapon->extrascale = mpweapon->size * 256.0f;
@@ -1404,7 +1404,7 @@ void expand_08_obj_set_guard_MP_weapons(WeaponObjRecord* weapon, s32 cmdindex)
         if ((weapon->weaponnum != ITEM_UNARMED) && giveweapon)
         {
             weaponLoadProjectileModels(weapon->weaponnum);
-            domakedefaultobj(weapon, cmdindex);
+            domakedefaultobj(weapon, arg0, cmdindex);
         }
     }
 }
