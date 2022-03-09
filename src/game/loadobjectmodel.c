@@ -48,7 +48,7 @@ s32 sizepropdef(PropDefHeaderRecord *pdef)
         case PROPDEF_PROP:
             return sizeof(ObjectRecord) / 4;
         case PROPDEF_GLASS:
-            return 0x20;//return sizeof(GlassRecord) / 4;
+            return sizeof(ObjectRecord) / 4;
         case PROPDEF_TINTED_GLASS:
             return 0x25;//return sizeof(TintedGlassRecord) / 4;
         case PROPDEF_SAFE:
@@ -139,7 +139,7 @@ s32 sizepropdef(PropDefHeaderRecord *pdef)
  *Return Item by Setup index
  *Setup Array is most likley PropDefHeaderRecord since size was 4
  */
-ObjectRecord *sub_GAME_7F056A88(s32 index) //#MATCH
+ObjectRecord *setupGetPtrToCommandByIndex(s32 index) //#MATCH
 {
     PropDefHeaderRecord *object = g_chraiCurrentSetup.propDefs; //wow, first use of header, cool
     if (index >= 0 && object)
@@ -161,16 +161,16 @@ ObjectRecord *sub_GAME_7F056A88(s32 index) //#MATCH
 
 
 #ifdef NONMATCHING
-s32 check_if_object_type_has_been_loaded(struct object_standard * arg0)
+s32 tagGetCommandIndex(struct object_standard * tag)
 {
     struct object_standard *object;
     s32 i;
     
     if (g_chraiCurrentSetup.propDefs != 0)
     {
-        for (object = g_chraiCurrentSetup.propDefs, i = 0; 0x30 != object->type; i++)
+        for (object = g_chraiCurrentSetup.propDefs, i = 0; PROPDEF_END != object->type; i++)
         {
-            if (object == arg0)
+            if (object == tag)
             {
                 return i;
             }
@@ -183,7 +183,7 @@ s32 check_if_object_type_has_been_loaded(struct object_standard * arg0)
 #else
 GLOBAL_ASM(
 .text
-glabel check_if_object_type_has_been_loaded
+glabel tagGetCommandIndex
 /* 08B64C 7F056B1C 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 08B650 7F056B20 AFB00014 */  sw    $s0, 0x14($sp)
 /* 08B654 7F056B24 3C108007 */  lui   $s0, %hi(g_chraiCurrentSetup+0x0c)
@@ -231,8 +231,7 @@ glabel check_if_object_type_has_been_loaded
 
 
 #ifdef NONMATCHING
-
-s32 sub_GAME_7F056BA8(s32 arg0)
+s32 setupGetCommandIndexByProp(s32 arg0)
 {
     PropRecord *temp_s0;
     PropRecord *temp_s0_2;
@@ -267,7 +266,7 @@ block_5:
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F056BA8
+glabel setupGetCommandIndexByProp
 /* 08B6D8 7F056BA8 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 08B6DC 7F056BAC AFB00014 */  sw    $s0, 0x14($sp)
 /* 08B6E0 7F056BB0 3C108007 */  lui   $s0, %hi(g_chraiCurrentSetup+0x0c)
@@ -314,12 +313,12 @@ glabel sub_GAME_7F056BA8
 
 
 
-s32 load_model(u32 modelid)
+s32 modelLoad(u32 modelid)
 {
     if (PitemZ_entries[modelid].header->RootNode == NULL) 
     {
-        load_object_into_memory(PitemZ_entries[modelid].header,PitemZ_entries[modelid].filename);
-        set_objuse_flag_compute_grp_nums_set_obj_loaded(PitemZ_entries[modelid].header);
+        fileLoad(PitemZ_entries[modelid].header,PitemZ_entries[modelid].filename);
+        modelCalculateRwDataLen(PitemZ_entries[modelid].header);
         return TRUE;
     }
     return FALSE;
@@ -358,7 +357,7 @@ void sub_GAME_7F056CA0(ObjectRecord *obj)
     f32         phi_f20_4;
 
     temp_s1 = obj->prop;
-    sub_GAME_7F03E18C(temp_s1);
+    chrpropDeregisterRooms(temp_s1);
     phi_f20 = 0.0f;
     if (obj->flags2 & 0x20000)
     {
@@ -423,7 +422,7 @@ void sub_GAME_7F056CA0(ObjectRecord *obj)
             sub_GAME_7F03E27C(temp_f12, temp_s1, temp_a1_2, temp_a2, phi_f20_4);
         }
     }
-    sub_GAME_7F03E210(temp_s1);
+    chrpropRegisterRooms(temp_s1);
 }
 #else
 GLOBAL_ASM(
@@ -480,7 +479,7 @@ glabel sub_GAME_7F056CA0
 /* 08B7E4 7F056CB4 8C910010 */  lw    $s1, 0x10($a0)
 /* 08B7E8 7F056CB8 00808025 */  move  $s0, $a0
 /* 08B7EC 7F056CBC 4480A000 */  mtc1  $zero, $f20
-/* 08B7F0 7F056CC0 0FC0F863 */  jal   sub_GAME_7F03E18C
+/* 08B7F0 7F056CC0 0FC0F863 */  jal   chrpropDeregisterRooms
 /* 08B7F4 7F056CC4 02202025 */   move  $a0, $s1
 /* 08B7F8 7F056CC8 8E0E000C */  lw    $t6, 0xc($s0)
 /* 08B7FC 7F056CCC 000E7B80 */  sll   $t7, $t6, 0xe
@@ -599,7 +598,7 @@ glabel sub_GAME_7F056CA0
 /* 08B9A8 7F056E78 0FC0F89F */  jal   sub_GAME_7F03E27C
 /* 08B9AC 7F056E7C E7A8003C */   swc1  $f8, 0x3c($sp)
 .L7F056E80:
-/* 08B9B0 7F056E80 0FC0F884 */  jal   sub_GAME_7F03E210
+/* 08B9B0 7F056E80 0FC0F884 */  jal   chrpropRegisterRooms
 /* 08B9B4 7F056E84 02202025 */   move  $a0, $s1
 /* 08B9B8 7F056E88 8FBF0024 */  lw    $ra, 0x24($sp)
 /* 08B9BC 7F056E8C D7B40010 */  ldc1  $f20, 0x10($sp)
@@ -615,7 +614,8 @@ glabel sub_GAME_7F056CA0
 
 
 #ifdef NONMATCHING
-ObjectRecord *sub_GAME_7F056EA0(s32 arg0, s32 index)
+ 
+ObjectRecord *setupCommandGetObject(s32 arg0, s32 index)
 {
     ObjectRecord *obj;
 
@@ -710,11 +710,11 @@ GLOBAL_ASM(
 
 /*D:80053608                     .align 4*/
 .text
-glabel sub_GAME_7F056EA0
+glabel setupCommandGetObject
 /* 08B9D0 7F056EA0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 08B9D4 7F056EA4 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 08B9D8 7F056EA8 AFA40018 */  sw    $a0, 0x18($sp)
-/* 08B9DC 7F056EAC 0FC15AA2 */  jal   sub_GAME_7F056A88
+/* 08B9DC 7F056EAC 0FC15AA2 */  jal   setupGetPtrToCommandByIndex
 /* 08B9E0 7F056EB0 00A02025 */   move  $a0, $a1
 /* 08B9E4 7F056EB4 1040000F */  beqz  $v0, .L7F056EF4
 /* 08B9E8 7F056EB8 00401825 */   move  $v1, $v0
@@ -752,7 +752,7 @@ def_7F056EDC:
 
 #ifdef NONMATCHING
 
-PropRecord *sub_GAME_7F056F08(s32 arg0, PropRecord **arg1, PropRecord **arg2, s32 arg3, s32 arg4, s32 arg5)
+PropRecord *setupFindObjForReuse(s32 arg0, PropRecord **arg1, PropRecord **arg2, s32 arg3, s32 arg4, s32 arg5)
 {
     PropRecord *temp_s0;
     PropRecord *temp_s0_2;
@@ -767,6 +767,7 @@ PropRecord *sub_GAME_7F056F08(s32 arg0, PropRecord **arg1, PropRecord **arg2, s3
     PropRecord *phi_s3_2;
     PropRecord *phi_s2_3;
     PropRecord *phi_s3_3;
+
 
     temp_s0  = g_chraiCurrentSetup.props;
     phi_s0   = temp_s0;
@@ -834,7 +835,7 @@ block_20:
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F056F08
+glabel setupFindObjForReuse
 /* 08BA38 7F056F08 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 08BA3C 7F056F0C AFB00018 */  sw    $s0, 0x18($sp)
 /* 08BA40 7F056F10 3C108007 */  lui   $s0, %hi(g_chraiCurrentSetup+0x0c)

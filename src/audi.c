@@ -414,8 +414,6 @@ void amStartAudioThread(void)
  * beginning and end of processing.
  *
  * @param arg unused.
- *
- * decomp status: complete
  */
 void amMain(void* arg)
 {

@@ -267,6 +267,25 @@ typedef union
     } coord16;
 
     #pragma endregion
+
+    // Used for rendering watch menu
+    struct WatchVertex {
+        struct coord16 coord1;
+        struct coord16 coord2;
+        struct rgba_u8 color;
+    };
+
+    // Buffer defined on player struct, used
+    // to render rectangles in bottom of watch menu.
+    // Vertex order:
+    // upper left
+    // lower left
+    // upper right
+    // lower right
+    struct WatchRectangle {
+        struct WatchVertex vtx[4];
+    };
+
     #pragma region volumes and areas
 
     typedef struct bbox2d

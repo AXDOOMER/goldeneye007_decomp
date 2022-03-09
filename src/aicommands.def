@@ -5084,13 +5084,13 @@ _AI_CMD(
             }
             else
             {
-                sub_GAME_7F03E18C(obj->prop);
-                sub_GAME_7F03A538(obj->prop);
-                propHide(obj->prop);
+                chrpropDeregisterRooms(obj->prop);
+                chrpropDelist(obj->prop);
+                chrpropDisable(obj->prop);
             }
             if (obj->type != PROPDEF_COLLECTABLE || !sub_GAME_7F051E1C(obj, chr))
             {
-                attachNewChild(obj->prop, chr->prop);
+                chrpropReparent(obj->prop, chr->prop);
             }
         }
         Offset += CAT(CAT(AI_, CMDNAME), _LENGTH);
@@ -10186,10 +10186,10 @@ _AI_CMD(
         TagObjectRecord *tag = sub_GAME_7F057080(ai->val[0]);
         if (tag)
         {
-            int TagIndex = check_if_object_type_has_been_loaded(tag);
+            int TagIndex = tagGetCommandIndex(tag);
             if (TagIndex >= 0)
             {
-                CutsceneRecord *cdef = sub_GAME_7F056A88(tag->OffsetToObj + TagIndex);
+                CutsceneRecord *cdef = setupGetPtrToCommandByIndex(tag->OffsetToObj + TagIndex);
                 dword_CODE_bss_800799F8 = NULL;
                 gBondViewCutscene = cdef;
                 dword_CODE_bss_80079A18 = CharArrayTo16(ai->val,1);

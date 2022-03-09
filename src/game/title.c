@@ -1099,7 +1099,7 @@ glabel sub_GAME_7F008E80
 /* 03DCC4 7F009194 01495821 */  addu  $t3, $t2, $t1
 /* 03DCC8 7F009198 AFAC0064 */  sw    $t4, 0x64($sp)
 /* 03DCCC 7F00919C AFAB0060 */  sw    $t3, 0x60($sp)
-/* 03DCD0 7F0091A0 0FC1D73D */  jal   set_objuse_flag_compute_grp_nums_set_obj_loaded
+/* 03DCD0 7F0091A0 0FC1D73D */  jal   modelCalculateRwDataLen
 /* 03DCD4 7F0091A4 8E0408F4 */   lw    $a0, 0x8f4($s0)
 /* 03DCD8 7F0091A8 0FC1B025 */  jal   get_obj_instance_controller_for_header
 /* 03DCDC 7F0091AC 8E0408F4 */   lw    $a0, 0x8f4($s0)
@@ -1338,7 +1338,7 @@ glabel sub_GAME_7F008E80
 /* 03BB08 7F009118 01495821 */  addu  $t3, $t2, $t1
 /* 03BB0C 7F00911C AFAC0064 */  sw    $t4, 0x64($sp)
 /* 03BB10 7F009120 AFAB0060 */  sw    $t3, 0x60($sp)
-/* 03BB14 7F009124 0FC1D75F */  jal   set_objuse_flag_compute_grp_nums_set_obj_loaded
+/* 03BB14 7F009124 0FC1D75F */  jal   modelCalculateRwDataLen
 /* 03BB18 7F009128 8E0408F4 */   lw    $a0, 0x8f4($s0)
 /* 03BB1C 7F00912C 0FC1B1F5 */  jal   get_obj_instance_controller_for_header
 /* 03BB20 7F009130 8E0408F4 */   lw    $a0, 0x8f4($s0)

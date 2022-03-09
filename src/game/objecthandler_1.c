@@ -15102,7 +15102,7 @@ def_7F075B60:
 
 
 
-void set_objuse_flag_compute_grp_nums_set_obj_loaded(struct ModelFileHeader *objheader)
+void modelCalculateRwDataLen(struct ModelFileHeader *objheader)
 {
   #if defined(LEFTOVERDEBUG)
     objheader->isLoaded = 1;

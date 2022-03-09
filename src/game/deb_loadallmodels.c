@@ -261,7 +261,7 @@ glabel debug_object_load_all_models
 /* 035E2C 7F0012FC 92080002 */  lbu   $t0, 2($s0)
 /* 035E30 7F001300 0018CA00 */  sll   $t9, $t8, 8
 /* 035E34 7F001304 03281025 */  or    $v0, $t9, $t0
-/* 035E38 7F001308 0FC15B0E */  jal   load_model
+/* 035E38 7F001308 0FC15B0E */  jal   modelLoad
 /* 035E3C 7F00130C 3044FFFF */   andi  $a0, $v0, 0xffff
 /* 035E40 7F001310 5040002A */  beql  $v0, $zero, .L7F0013BC
 /* 035E44 7F001314 02002025 */   move  $a0, $s0
@@ -295,7 +295,7 @@ glabel debug_object_load_all_models
 .L7F00137C:
 /* 035EAC 7F00137C 920C0002 */  lbu   $t4, 2($s0)
 /* 035EB0 7F001380 000A5A00 */  sll   $t3, $t2, 8
-/* 035EB4 7F001384 0FC15B0E */  jal   load_model
+/* 035EB4 7F001384 0FC15B0E */  jal   modelLoad
 /* 035EB8 7F001388 016C2025 */   or    $a0, $t3, $t4
 /* 035EBC 7F00138C 0FC015C4 */  jal   set_weapon_model_generated_thrown_object
 /* 035EC0 7F001390 92040003 */   lbu   $a0, 3($s0)
@@ -307,7 +307,7 @@ glabel debug_object_load_all_models
 .L7F0013A8:
 /* 035ED8 7F0013A8 920F0002 */  lbu   $t7, 2($s0)
 /* 035EDC 7F0013AC 000D7200 */  sll   $t6, $t5, 8
-/* 035EE0 7F0013B0 0FC15B0E */  jal   load_model
+/* 035EE0 7F0013B0 0FC15B0E */  jal   modelLoad
 /* 035EE4 7F0013B4 01CF2025 */   or    $a0, $t6, $t7
 /* 035EE8 7F0013B8 02002025 */  move  $a0, $s0
 .L7F0013BC:
@@ -373,7 +373,7 @@ glabel debug_weapon_load_table
 /* 035FA0 7F001470 8FBF001C */   lw    $ra, 0x1c($sp)
 /* 035FA4 7F001474 8E040000 */  lw    $a0, ($s0)
 .L7F001478:
-/* 035FA8 7F001478 0FC15B0E */  jal   load_model
+/* 035FA8 7F001478 0FC15B0E */  jal   modelLoad
 /* 035FAC 7F00147C 00000000 */   nop   
 /* 035FB0 7F001480 8E040004 */  lw    $a0, 4($s0)
 /* 035FB4 7F001484 26100004 */  addiu $s0, $s0, 4
