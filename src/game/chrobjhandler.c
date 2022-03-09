@@ -42499,15 +42499,6 @@ void sub_GAME_7F052604(void) {
 }
 #else
 GLOBAL_ASM(
-.late_rodata
-/*HACK*/
-/*D:800532F4*/
-glabel jpt_hat_worn
-.word model_hat_fur
-.word model_hat_fur
-.word model_hat_fur
-.word model_hat_greencap
-.word model_hat_greencap
 .text
 glabel sub_GAME_7F052604
 /* 087134 7F052604 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -42550,8 +42541,6 @@ glabel sub_GAME_7F052604
 
 
 
-//todo: fix shared jtbl undefined reference to `model_hat_greencap'
-#ifdef NONMATCHING
 // getHatType
 HATTYPE get_hat_model(PropRecord *prop) //#MATCH
 {
@@ -42600,68 +42589,6 @@ HATTYPE get_hat_model(PropRecord *prop) //#MATCH
         }
     }
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-/*D:800532F4*/
-/*glabel jpt_hat_worn*/
-/*.word model_hat_fur*/
-/*.word model_hat_fur*/
-/*.word model_hat_fur*/
-/*.word model_hat_greencap*/
-/*.word model_hat_greencap*/
-.word model_hat_combat_helmet
-.word model_hat_combat_helmet
-.word model_hat_moonraker_headgear
-.word model_hat_beret
-.word model_hat_beret
-.word model_hat_beret
-.word model_hat_officerhat
-
-.text
-glabel get_hat_model
-/* 0871B4 7F052684 8C820004 */  lw    $v0, 4($a0)
-/* 0871B8 7F052688 844E0004 */  lh    $t6, 4($v0)
-/* 0871BC 7F05268C 2402FFFF */  li    $v0, -1
-/* 0871C0 7F052690 25CFFF2C */  addiu $t7, $t6, -0xd4
-/* 0871C4 7F052694 2DE1000C */  sltiu $at, $t7, 0xc
-/* 0871C8 7F052698 10200012 */  beqz  $at, .L7F0526E4
-/* 0871CC 7F05269C 000F7880 */   sll   $t7, $t7, 2
-/* 0871D0 7F0526A0 3C018005 */  lui   $at, %hi(jpt_hat_worn)
-/* 0871D4 7F0526A4 002F0821 */  addu  $at, $at, $t7
-/* 0871D8 7F0526A8 8C2F32F4 */  lw    $t7, %lo(jpt_hat_worn)($at)
-/* 0871DC 7F0526AC 01E00008 */  jr    $t7
-/* 0871E0 7F0526B0 00000000 */   nop   
-model_hat_fur:
-/* 0871E4 7F0526B4 03E00008 */  jr    $ra
-/* 0871E8 7F0526B8 24020004 */   li    $v0, 4
-
-model_hat_greencap:
-/* 0871EC 7F0526BC 03E00008 */  jr    $ra
-/* 0871F0 7F0526C0 24020001 */   li    $v0, 1
-
-model_hat_combat_helmet:
-/* 0871F4 7F0526C4 03E00008 */  jr    $ra
-/* 0871F8 7F0526C8 24020003 */   li    $v0, 3
-
-model_hat_moonraker_headgear:
-/* 0871FC 7F0526CC 03E00008 */  jr    $ra
-/* 087200 7F0526D0 24020005 */   li    $v0, 5
-
-model_hat_beret:
-/* 087204 7F0526D4 03E00008 */  jr    $ra
-/* 087208 7F0526D8 00001025 */   move  $v0, $zero
-
-model_hat_officerhat:
-/* 08720C 7F0526DC 03E00008 */  jr    $ra
-/* 087210 7F0526E0 24020002 */   li    $v0, 2
-
-model_hat_default:
-.L7F0526E4:
-/* 087214 7F0526E4 03E00008 */  jr    $ra
-/* 087218 7F0526E8 00000000 */   nop   
-)
-#endif
 
 
 
