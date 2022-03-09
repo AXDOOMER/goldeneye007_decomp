@@ -2,6 +2,8 @@
 #    define _GBI_EXT_H_
 #include <PR/gbi.h>
 
+#define TRI4_Ext
+
 /** 
  * This file should contain most of the extensions to gbi avoiding loosing 
  * changes should the OS ever be updated.
@@ -69,27 +71,64 @@
  ***/
 
 //cannot use 2tri with 4tri, so lets just make sure they are undefined so errors happen.
-#    undef gSP2Triangles
-#    undef gsSP2Triangles
+#undef gSP2Triangles
+#undef gsSP2Triangles
 
-#    define gSP4Triangles(pkt, v00, v01, v02, v10, v11, v12, v20, v21, v22, v30, v31, v32 ) \
-            {                                                                  \
-                Gfx *_g = (Gfx *)(pkt);                                        \
-                                                                               \
-                _g->words.w0 = (_SHIFTL(G_TRI4, 24, 8) |                       \
-                                /*STUFF GOES HERE*/);    \
-                _g->words.w1 = /*STUFF GOES HERE*/;      \
-            }
+/**
+  Draw up to 4 triangles at a time.
+  Vertex index is 0-15, to use a higher index use gSP1Triangle
+*/
+#define gSP4Triangles(pkt, x1, y1, z1, x2, y2, z2, x3, y3, z3, x4, y4, z4) \
+{                                                                          \
+    Gfx *_g = (Gfx *)(pkt);                                                \
+                                                                           \
+    _g->words.w0 = (_SHIFTL(G_TRI4, 24, 8)                                 \
+            | _SHIFTL(z4, 12, 4)                                           \
+            | _SHIFTL(z3, 8, 4)                                            \
+            | _SHIFTL(z2, 4, 4)                                            \
+            | _SHIFTL(z1, 0, 4));                                          \
+    _g->words.w1 = (_SHIFTL(y4, 28, 4)                                     \
+            | _SHIFTL(x4, 24, 4)                                           \
+            | _SHIFTL(y3, 20, 4)                                           \
+            | _SHIFTL(x3, 16, 4)                                           \
+            | _SHIFTL(y2, 12, 4)                                           \
+            | _SHIFTL(x2, 8, 4)                                            \
+            | _SHIFTL(y1, 4, 4)                                            \
+            | _SHIFTL(x1, 0, 4));                                          \
+}
 
-#    define gsSP4Triangles(v00, v01, v02, v10, v11, v12, v20, v21, v22, v30, v31, v32) \
-            {                                                              \
-                {                                                          \
-                    (_SHIFTL(G_TRI4, 24, 8) |                              \
-                    /*STUFF GOES HERE*/),           \
-                        /*STUFF GOES HERE*/          \
-                }                                                          \
-            }
-#endif
+/**
+  Draw up to 4 triangles at a time.
+  Vertex index is 0-15, to use a higher index use gSP1Triangle
+*/
+#define gsSP4Triangles(x1, y1, z1, x2, y2, z2, x3, y3, z3, x4, y4, z4) \
+{                                                                      \
+    {                                                                  \
+        (_SHIFTL(G_TRI4, 24, 8)                                        \
+            | _SHIFTL(z4, 12, 4)                                       \
+            | _SHIFTL(z3, 8, 4)                                        \
+            | _SHIFTL(z2, 4, 4)                                        \
+            | _SHIFTL(z1, 0, 4)),                                      \
+        (_SHIFTL(y4, 28, 4)                                            \
+            | _SHIFTL(x4, 24, 4)                                       \
+            | _SHIFTL(y3, 20, 4)                                       \
+            | _SHIFTL(x3, 16, 4)                                       \
+            | _SHIFTL(y2, 12, 4)                                       \
+            | _SHIFTL(x2, 8, 4)                                        \
+            | _SHIFTL(y1, 4, 4)                                        \
+            | _SHIFTL(x1, 0, 4))                                       \
+    }                                                                  \
+}
+
+/**
+  Source compatable F3DEX gSP2Triangles for GE
+  Vertex index is 0-15, to use a higher index use gSP1Triangle
+*/
+#define gSP2Triangles(pkt, x1, y1, z1, flag0, x2, y2, z2, flag1) \
+	gSP4Triangles(pkt, x1, y1, z1, x2, y2, z2, 0, 0, 0, 0, 0, 0)
+#define gsSP2Triangles(x1, y1, z1, flag0, x2, y2, z2, flag1) \
+	gsSP4Triangles(x1, y1, z1, x2, y2, z2, 0, 0, 0, 0, 0, 0)
+
 
 /*
  * Texturing macro Overrides
@@ -103,6 +142,27 @@
             /*STUFF GOES HERE*/       \
         }                             \
     }
+
+
+#endif
+
+/**
+ * Like gDPSetPrimColor, but is useful when the input colour is already in
+ * RGBA format. It avoids unnecessary bitshifting and masking.
+ */
+#define	gDPSetPrimColorViaWord(pkt, m, l, rgba)     \
+{                                                   \
+	Gfx *_g = (Gfx *)(pkt);                         \
+	_g->words.w0 =	(_SHIFTL(G_SETPRIMCOLOR, 24, 8) \
+			| _SHIFTL(m, 8, 8)                      \
+			| _SHIFTL(l, 0, 8));                    \
+	_g->words.w1 =  (rgba);                         \
+}
+
+#define gDPSetEnvColorViaWord(pkt, rgba) gDPSetColor(pkt, G_SETENVCOLOR, rgba)
+#define gDPSetFogColorViaWord(pkt, rgba) gDPSetColor(pkt, G_SETFOGCOLOR, rgba)
+
+
 
 #if 0 //Rare - so far - didnt seem to use this
 #undef gDPLoadTextureBlock
