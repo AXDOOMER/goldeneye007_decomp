@@ -321,7 +321,7 @@ void expand_09_characters(s32 arg0, GuardRecord *arg1, s32 arg2)
                 : select_psuedorandom_heads(bodyid);
         }
 
-        sp38 = retrieve_header_for_body_and_head(bodyid, headid, (u32) arg1->unk10);
+        sp38 = retrieve_header_for_body_and_head(bodyid, headid, (u32) arg1->bitflags);
 
         if (sp38 != 0)
         {
@@ -338,18 +338,18 @@ void expand_09_characters(s32 arg0, GuardRecord *arg1, s32 arg2)
                 temp_v0_5->hearingscale = ((f32)arg1->health) / 1000.0f;
                 temp_v0_5->visionrange = (f32)arg1->ReactionTime;
                 temp_v0_5->padpreset1 = (s16) arg1->Preset;
-                temp_v0_5->chrpreset1 = (s16) arg1->unk0a;
+                temp_v0_5->chrpreset1 = (s16) arg1->chrpreset1;
                 temp_v0_5->headnum = (s8) headid;
                 temp_v0_5->bodynum = (s8) bodyid;
-                
-                if ((arg1->unk10 & 4) != 0)
+
+                if ((arg1->bitflags & 4) != 0)
                 {
-                    temp_v0_5->chrflags |= 2;
+                    temp_v0_5->chrflags |= CHRFLAG_CLONE;
                 }
 
-                if ((arg1->unk10 & 8) != 0)
+                if ((arg1->bitflags & 8) != 0)
                 {
-                    temp_v0_5->chrflags |= 0x10;
+                    temp_v0_5->chrflags |= CHRFLAG_INVINCIBLE;
                 }
 
                 arg1->Data = temp_v0_5;

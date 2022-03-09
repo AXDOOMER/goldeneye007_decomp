@@ -224,6 +224,27 @@ typedef enum CHRFLAG
     CHRFLAG_80000000                     = 0x80000000   // unknown
 }CHRFLAG;
 
+typedef enum GUARD_SETUP_FLAG // u16
+{
+    GUARD_SETUP_FLAG_NONE                = 0,
+    GUARD_SETUP_FLAG_SUNGLASSES          = 0x0001,
+    GUARD_SETUP_FLAG_SUNGLASSES_50       = 0x0002, // 50% chance of sunglasses
+    GUARD_SETUP_FLAG_CHR_CLONE           = 0x0004, // set CHRFLAG_CLONE
+    GUARD_SETUP_FLAG_CHR_INVINCIBLE      = 0x0008, // set CHRFLAG_INVINCIBLE
+    GUARD_SETUP_FLAG_0010                = 0x0010, // unused
+    GUARD_SETUP_FLAG_0020                = 0x0020, // unused
+    GUARD_SETUP_FLAG_0040                = 0x0040, // unknown, used in train
+    GUARD_SETUP_FLAG_0080                = 0x0080, // unused
+    GUARD_SETUP_FLAG_0100                = 0x0100, // unused
+    GUARD_SETUP_FLAG_0200                = 0x0200, // unused
+    GUARD_SETUP_FLAG_0400                = 0x0400, // unused
+    GUARD_SETUP_FLAG_0800                = 0x0800, // unused
+    GUARD_SETUP_FLAG_1000                = 0x1000, // unused
+    GUARD_SETUP_FLAG_2000                = 0x2000, // unused
+    GUARD_SETUP_FLAG_4000                = 0x4000, // unused
+    GUARD_SETUP_FLAG_8000                = 0x8000, // unused
+} GUARD_SETUP_FLAG;
+
 //chr flags2
 BITFLAG(FLAGS2,
         DONT_POINT_AT_BOND,

@@ -1,20 +1,21 @@
 #include <ultra64.h>
-#include <music.h>
 #include <bondconstants.h>
 #include <boss.h>
-#include <random.h>
+#include <fr.h>
+#include <music.h>
+#include <os_extension.h>
 #include <snd.h>
+#include <random.h>
 #include "watch.h"
+#include "bondview.h"
 #include "dyn.h"
-#include "player.h"
-#include "unk_0A1DA0.h"
-#include "unk_0C0A70.h"
+#include "file.h"
 #include "front.h"
 #include "lvl_text.h"
+#include "player.h"
 #include "textrelated.h"
-#include "bondview.h"
-#include <fr.h>
-#include <os_extension.h>
+#include "unk_0A1DA0.h"
+#include "unk_0C0A70.h"
 
 
 #define WATCH_BACKGROUND_VERTEX_COUNT 30
