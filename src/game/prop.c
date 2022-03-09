@@ -8,7 +8,7 @@
 /**
  * EU .bss 0x80068480
 */
-s32 lastmpweaponnum;
+ITEM_IDS lastmpweaponnum;
 
 //.section .rodata
 
@@ -1374,7 +1374,7 @@ void expand_08_obj_set_guard_MP_weapons(s32 arg0, WeaponObjRecord* weapon, s32 c
             struct s_mp_weapon_set* mpweapon;
             
             lastmpweaponnum = -1;
-            switch (weapon->weaponnum)
+            switch ((u8)weapon->weaponnum)
             {
             case 0xF0:
             case 0xF1:
@@ -1385,11 +1385,11 @@ void expand_08_obj_set_guard_MP_weapons(s32 arg0, WeaponObjRecord* weapon, s32 c
             case 0xF6:
             case 0xF7:
                 mpweapon = getPtrMPWeaponSetData();
-                lastmpweaponnum = weapon->weaponnum - 0xF0;
+                lastmpweaponnum = (u8)weapon->weaponnum - 0xF0;
                 mpweapon = &(mpweapon)[lastmpweaponnum];
-                weapon->weaponnum = mpweapon->itemID;
-                weapon->obj = mpweapon->propID;
-                weapon->extrascale = mpweapon->size * 256.0f;
+                (u8)weapon->weaponnum = (u8)mpweapon->itemID;
+                weapon->obj = (s16)mpweapon->propID;
+                weapon->extrascale = (u16)(mpweapon->size * 256.0f);
                 giveweapon = mpweapon->allowpickup;
                 break;
             case ITEM_TOKEN:
@@ -1404,7 +1404,7 @@ void expand_08_obj_set_guard_MP_weapons(s32 arg0, WeaponObjRecord* weapon, s32 c
         if ((weapon->weaponnum != ITEM_UNARMED) && giveweapon)
         {
             weaponLoadProjectileModels(weapon->weaponnum);
-            domakedefaultobj(weapon, arg0, cmdindex);
+            domakedefaultobj(arg0, weapon, cmdindex);
         }
     }
 }
@@ -1827,7 +1827,7 @@ void setupKey(s32 arg0, ObjectRecord* key, s32 cmdindex)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F002A3C(void) {
+void setupCctv(void) {
 
 }
 #else
@@ -1838,7 +1838,7 @@ glabel D_8004EF50
 
 
 .text
-glabel sub_GAME_7F002A3C
+glabel setupCctv
 /* 03756C 7F002A3C 27BDFFA8 */  addiu $sp, $sp, -0x58
 /* 037570 7F002A40 AFBF0034 */  sw    $ra, 0x34($sp)
 /* 037574 7F002A44 AFB00030 */  sw    $s0, 0x30($sp)
@@ -4547,7 +4547,7 @@ surv_camera_expand:
 /* 039014 7F0044E4 01947824 */  and   $t7, $t4, $s4
 /* 039018 7F0044E8 15E00184 */  bnez  $t7, other_obj_expand
 /* 03901C 7F0044EC 00000000 */   nop   
-/* 039020 7F0044F0 0FC00A8F */  jal   sub_GAME_7F002A3C
+/* 039020 7F0044F0 0FC00A8F */  jal   setupCctv
 /* 039024 7F0044F4 02603025 */   move  $a2, $s3
 /* 039028 7F0044F8 10000180 */  b     other_obj_expand
 /* 03902C 7F0044FC 00000000 */   nop   
@@ -5940,7 +5940,7 @@ surv_camera_expand:
 /* 039054 7F0044E4 01947824 */  and   $t7, $t4, $s4
 /* 039058 7F0044E8 15E00188 */  bnez  $t7, other_obj_expand
 /* 03905C 7F0044EC 00000000 */   nop   
-/* 039060 7F0044F0 0FC00A8F */  jal   sub_GAME_7F002A3C
+/* 039060 7F0044F0 0FC00A8F */  jal   setupCctv
 /* 039064 7F0044F4 02603025 */   move  $a2, $s3
 /* 039068 7F0044F8 10000184 */  b     other_obj_expand
 /* 03906C 7F0044FC 00000000 */   nop   
@@ -7338,7 +7338,7 @@ surv_camera_expand:
 /* 036E60 7F004470 01947824 */  and   $t7, $t4, $s4
 /* 036E64 7F004474 15E00186 */  bnez  $t7, other_obj_expand
 /* 036E68 7F004478 00000000 */   nop   
-/* 036E6C 7F00447C 0FC00A69 */  jal   sub_GAME_7F002A3C
+/* 036E6C 7F00447C 0FC00A69 */  jal   setupCctv
 /* 036E70 7F004480 02603025 */   move  $a2, $s3
 /* 036E74 7F004484 10000182 */  b     other_obj_expand
 /* 036E78 7F004488 00000000 */   nop   
