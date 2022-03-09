@@ -330,12 +330,12 @@ weapon:
 /* 03A648 7F005B18 0FC015C4 */  jal   set_weapon_model_generated_thrown_object
 /* 03A64C 7F005B1C 00000000 */   nop   
 /* 03A650 7F005B20 8E040004 */  lw    $a0, 4($s0)
-/* 03A654 7F005B24 0FC23143 */  jal   add_doubles_item_to_inventory
+/* 03A654 7F005B24 0FC23143 */  jal   bondinvAddDoublesInvItem
 /* 03A658 7F005B28 8E050008 */   lw    $a1, 8($s0)
 /* 03A65C 7F005B2C 10000004 */  b     .L7F005B40
 /* 03A660 7F005B30 8FB8007C */   lw    $t8, 0x7c($sp)
 .L7F005B34:
-/* 03A664 7F005B34 0FC23122 */  jal   add_item_to_inventory
+/* 03A664 7F005B34 0FC23122 */  jal   bondinvAddInvItem
 /* 03A668 7F005B38 8E040004 */   lw    $a0, 4($s0)
 /* 03A66C 7F005B3C 8FB8007C */  lw    $t8, 0x7c($sp)
 .L7F005B40:
@@ -557,7 +557,7 @@ def_7F005A74:
 /* 03A978 7F005E48 1C60FFFA */  bgtz  $v1, .L7F005E34
 /* 03A97C 7F005E4C AC2C64C0 */   sw    $t4, %lo(ptr_random06cam_entry)($at)
 .L7F005E50:
-/* 03A980 7F005E50 0FC23122 */  jal   add_item_to_inventory
+/* 03A980 7F005E50 0FC23122 */  jal   bondinvAddInvItem
 /* 03A984 7F005E54 24040001 */   li    $a0, 1
 /* 03A988 7F005E58 8FAD007C */  lw    $t5, 0x7c($sp)
 /* 03A98C 7F005E5C 44809000 */  mtc1  $zero, $f18
@@ -1038,12 +1038,12 @@ weapon:
 /* 03A670 7F005B00 0FC015CC */  jal   set_weapon_model_generated_thrown_object
 /* 03A674 7F005B04 00000000 */   nop   
 /* 03A678 7F005B08 8E040004 */  lw    $a0, 4($s0)
-/* 03A67C 7F005B0C 0FC23381 */  jal   add_doubles_item_to_inventory
+/* 03A67C 7F005B0C 0FC23381 */  jal   bondinvAddDoublesInvItem
 /* 03A680 7F005B10 8E050008 */   lw    $a1, 8($s0)
 /* 03A684 7F005B14 10000004 */  b     .L7F005B28
 /* 03A688 7F005B18 8FB80084 */   lw    $t8, 0x84($sp)
 .L7F005B1C:
-/* 03A68C 7F005B1C 0FC2335A */  jal   add_item_to_inventory
+/* 03A68C 7F005B1C 0FC2335A */  jal   bondinvAddInvItem
 /* 03A690 7F005B20 8E040004 */   lw    $a0, 4($s0)
 /* 03A694 7F005B24 8FB80084 */  lw    $t8, 0x84($sp)
 .L7F005B28:
@@ -1272,7 +1272,7 @@ def_7F005A74:
 /* 03A9BC 7F005E4C 1C60FFFA */  bgtz  $v1, .L7F005E38
 /* 03A9C0 7F005E50 AC286500 */   sw    $t0, %lo(ptr_random06cam_entry)($at)
 .L7F005E54:
-/* 03A9C4 7F005E54 0FC2335A */  jal   add_item_to_inventory
+/* 03A9C4 7F005E54 0FC2335A */  jal   bondinvAddInvItem
 /* 03A9C8 7F005E58 24040001 */   li    $a0, 1
 /* 03A9CC 7F005E5C 8FA90084 */  lw    $t1, 0x84($sp)
 /* 03A9D0 7F005E60 15200003 */  bnez  $t1, .L7F005E70
@@ -1753,12 +1753,12 @@ weapon:
 /* 038470 7F005A80 0FC015AC */  jal   set_weapon_model_generated_thrown_object
 /* 038474 7F005A84 00000000 */   nop   
 /* 038478 7F005A88 8E040004 */  lw    $a0, 4($s0)
-/* 03847C 7F005A8C 0FC23221 */  jal   add_doubles_item_to_inventory
+/* 03847C 7F005A8C 0FC23221 */  jal   bondinvAddDoublesInvItem
 /* 038480 7F005A90 8E050008 */   lw    $a1, 8($s0)
 /* 038484 7F005A94 10000004 */  b     .L7F005AA8
 /* 038488 7F005A98 8FB80084 */   lw    $t8, 0x84($sp)
 .L7F005A9C:
-/* 03848C 7F005A9C 0FC231FA */  jal   add_item_to_inventory
+/* 03848C 7F005A9C 0FC231FA */  jal   bondinvAddInvItem
 /* 038490 7F005AA0 8E040004 */   lw    $a0, 4($s0)
 /* 038494 7F005AA4 8FB80084 */  lw    $t8, 0x84($sp)
 .L7F005AA8:
@@ -1987,7 +1987,7 @@ def_7F005A74:
 /* 0387BC 7F005DCC 1C60FFFA */  bgtz  $v1, .L7F005DB8
 /* 0387C0 7F005DD0 AC281A10 */   sw    $t0, %lo(ptr_random06cam_entry)($at)
 .L7F005DD4:
-/* 0387C4 7F005DD4 0FC231FA */  jal   add_item_to_inventory
+/* 0387C4 7F005DD4 0FC231FA */  jal   bondinvAddInvItem
 /* 0387C8 7F005DD8 24040001 */   li    $a0, 1
 /* 0387CC 7F005DDC 8FA90084 */  lw    $t1, 0x84($sp)
 /* 0387D0 7F005DE0 15200003 */  bnez  $t1, .L7F005DF0

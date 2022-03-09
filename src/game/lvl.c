@@ -5445,7 +5445,7 @@ void lvlUpdateMpPlayerData(void)
 
     if (get_scenario() == SCENARIO_MWTGG)
     {
-        if (checkforgoldengun())
+        if (bondinvHasGoldenGun())
         {
             g_playerPerm->have_token_or_goldengun = 1;
         }
@@ -5660,7 +5660,7 @@ glabel lvlUpdateMpPlayerData
 /* 0F4608 7F0BFAD8 24010003 */  li    $at, 3
 /* 0F460C 7F0BFADC 5441000D */  bnel  $v0, $at, .L7F0BFB14
 /* 0F4610 7F0BFAE0 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F4614 7F0BFAE4 0FC233F0 */  jal   checkforgoldengun
+/* 0F4614 7F0BFAE4 0FC233F0 */  jal   bondinvHasGoldenGun
 /* 0F4618 7F0BFAE8 00000000 */   nop
 /* 0F461C 7F0BFAEC 10400006 */  beqz  $v0, .L7F0BFB08
 /* 0F4620 7F0BFAF0 3C088008 */   lui   $t0, %hi(g_playerPerm)
@@ -5882,7 +5882,7 @@ glabel lvlUpdateMpPlayerData
 /* 0F190C 7F0BEF1C 24010003 */  li    $at, 3
 /* 0F1910 7F0BEF20 5441000D */  bnel  $v0, $at, .L7F0BEF58
 /* 0F1914 7F0BEF24 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F1918 7F0BEF28 0FC234E9 */  jal   checkforgoldengun
+/* 0F1918 7F0BEF28 0FC234E9 */  jal   bondinvHasGoldenGun
 /* 0F191C 7F0BEF2C 00000000 */   nop   
 /* 0F1920 7F0BEF30 10400006 */  beqz  $v0, .L7F0BEF4C
 /* 0F1924 7F0BEF34 3C088007 */   lui   $t0, %hi(g_playerPerm) # $t0, 0x8007

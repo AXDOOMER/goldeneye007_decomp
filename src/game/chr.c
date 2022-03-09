@@ -3413,7 +3413,7 @@ glabel sub_GAME_7F020794
 #endif
 #endif
 
-#ifndef VERSION_US
+#ifdef BUGFIX_R1
 s32 not_in_us_7F0209EC(s32 bodynum, s32 headnum)
 {
     if (j_text_trigger == 0)

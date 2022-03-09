@@ -2125,7 +2125,7 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                 {
                     AIRecord     *ai  = AiListp + Offset;
                     ObjectRecord *obj = objFindByTagId(ai->val[0]);
-                    if (obj && obj->prop && is_prop_in_inventory(obj->prop))
+                    if (obj && obj->prop && bondinvHasPropInInv(obj->prop))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
                     }
@@ -3685,7 +3685,7 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
 #ifdef DEBUG
                     osSyncPrintf("USING HUD MESSAGE Stringy = %d, ai->txt = %d\n", CharArrayTo16(ai->val,0), text);
 #endif
-#ifndef VERSION_US
+#ifdef BUGFIX_R1
                     jp_hudmsgBottomShow(text);
 #else
                     hudmsgBottomShow(text);

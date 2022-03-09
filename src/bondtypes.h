@@ -2797,10 +2797,15 @@ typedef union
         u16        BodyID;       /*0x8*/
         u16        AIListID;     /*0xa*/
         u16        Preset;       /*0xc*/
-        u16        unk0a;        /*0xe*/
+        u16        chrpreset1;   /*0xe*/
         u16        health;       /*0x10*/
         u16        ReactionTime; /*0x12*/
-        u16        unk10;        /*0x14*/
+
+        /**
+         * Bitflags.
+         * See enum GUARD_SETUP_FLAG.
+        */
+        u16        bitflags;     /*0x14*/
         s16        HeadID;       /*0x16*/
         ChrRecord *Data;         /*0x18*/
     } GuardRecord;

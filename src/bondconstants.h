@@ -224,6 +224,27 @@ typedef enum CHRFLAG
     CHRFLAG_80000000                     = 0x80000000   // unknown
 }CHRFLAG;
 
+typedef enum GUARD_SETUP_FLAG // u16
+{
+    GUARD_SETUP_FLAG_NONE                = 0,
+    GUARD_SETUP_FLAG_SUNGLASSES          = 0x0001,
+    GUARD_SETUP_FLAG_SUNGLASSES_50       = 0x0002, // 50% chance of sunglasses
+    GUARD_SETUP_FLAG_CHR_CLONE           = 0x0004, // set CHRFLAG_CLONE
+    GUARD_SETUP_FLAG_CHR_INVINCIBLE      = 0x0008, // set CHRFLAG_INVINCIBLE
+    GUARD_SETUP_FLAG_0010                = 0x0010, // unused
+    GUARD_SETUP_FLAG_0020                = 0x0020, // unused
+    GUARD_SETUP_FLAG_0040                = 0x0040, // unknown, used in train
+    GUARD_SETUP_FLAG_0080                = 0x0080, // unused
+    GUARD_SETUP_FLAG_0100                = 0x0100, // unused
+    GUARD_SETUP_FLAG_0200                = 0x0200, // unused
+    GUARD_SETUP_FLAG_0400                = 0x0400, // unused
+    GUARD_SETUP_FLAG_0800                = 0x0800, // unused
+    GUARD_SETUP_FLAG_1000                = 0x1000, // unused
+    GUARD_SETUP_FLAG_2000                = 0x2000, // unused
+    GUARD_SETUP_FLAG_4000                = 0x4000, // unused
+    GUARD_SETUP_FLAG_8000                = 0x8000, // unused
+} GUARD_SETUP_FLAG;
+
 //chr flags2
 BITFLAG(FLAGS2,
         DONT_POINT_AT_BOND,
@@ -241,7 +262,7 @@ typedef enum PROPFLAG
 {
     PROPFLAG_00000001                    = 0x00000001, // unknown
     PROPFLAG_ONSCREEN                    = 0x00000002, // onscreen
-    PROPFLAG_ENABLED                    = 0x00000004, // unknown
+    PROPFLAG_ENABLED                     = 0x00000004, // unknown
     PROPFLAG_00000008                    = 0x00000008, // unknown
     PROPFLAG_00000010                    = 0x00000010, // unknown
     PROPFLAG_00000020                    = 0x00000020, // unknown
@@ -249,17 +270,17 @@ typedef enum PROPFLAG
     PROPFLAG_00000080                    = 0x00000080, // unknown
     PROPFLAG_00000100                    = 0x00000100, // unknown
     PROPFLAG_00000200                    = 0x00000200, // unknown
-    PROPFLAG_00000400                    = 0x00000400, /* ignore Stan Colour?*/
+    PROPFLAG_ILLUMINATED                 = 0x00000400, /* ignore Stan Colour?*/
     PROPFLAG_00000800                    = 0x00000800, // unknown
     PROPFLAG_00001000                    = 0x00001000, // unknown
-    PROPFLAG_00002000                    = 0x00002000, /* Item Not Droppedz*/
-    PROPFLAG_00004000                    = 0x00004000, // unknown
+    PROPFLAG_AIUNDROPPABLE               = 0x00002000, /* Item Not Droppedz*/
+    PROPFLAG_ASSIGNEDTOCHR               = 0x00004000, // unknown
     PROPFLAG_00008000                    = 0x00008000, // unknown
     PROPFLAG_00010000                    = 0x00010000, // unknown
     PROPFLAG_00020000                    = 0x00020000, // unknown
     PROPFLAG_00040000                    = 0x00040000, // unknown
     PROPFLAG_00080000                    = 0x00080000, // unknown
-    PROPFLAG_00100000                    = 0x00100000, /* Item Not Collectable*/
+    PROPFLAG_UNCOLLECTABLE               = 0x00100000, /* Item Not Collectable*/
     PROPFLAG_00200000                    = 0x00200000, // unknown
     PROPFLAG_00400000                    = 0x00400000, // unknown
     PROPFLAG_00800000                    = 0x00800000, // unknown
@@ -267,7 +288,7 @@ typedef enum PROPFLAG
     PROPFLAG_02000000                    = 0x02000000, // unknown
     PROPFLAG_04000000                    = 0x04000000, // unknown
     PROPFLAG_08000000                    = 0x08000000, // unknown
-    PROPFLAG_10000000                    = 0x10000000, /* Left Handed*/
+    PROPFLAG_WEAPON_LEFTHANDED           = 0x10000000, /* Left Handed*/
     PROPFLAG_NO_AI_INTERACTION           = 0x20000000, /* Concealed*/
     PROPFLAG_40000000                    = 0x40000000, /* No Ammo on pickup*/
     PROPFLAG_80000000                    = 0x80000000 // unknown
