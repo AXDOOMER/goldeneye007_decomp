@@ -22918,14 +22918,14 @@ Gfx *constructor_menu16_nocontrollers(Gfx *DL)
     sub_GAME_7F0AE98C(&y2, &x2, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
     x = 0xDC - (x2 >> 1);
     y = 0x99 - (y2 >> 1);
-#ifndef VERSION_US
+#ifdef BUGFIX_R1
     if (j_text_trigger) {
         DL = jp_text_write_stuff(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, -1, 0x8000FF, viGetX(), viGetY(), 0, 0);
     }
     else {
 #endif
         DL = en_text_write_stuff(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, -1, viGetX(), viGetY(), 0, 0);
-#ifndef VERSION_US
+#ifdef BUGFIX_R1
     }
 #endif
 
@@ -22936,14 +22936,14 @@ Gfx *constructor_menu16_nocontrollers(Gfx *DL)
     sub_GAME_7F0AE98C(&y2, &x2, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
     x = 0xDC - (x2 >> 1);
     y = 0xB1 - (y2 >> 1);
-#ifndef VERSION_US
+#ifdef BUGFIX_R1
     if (j_text_trigger) {
         DL = jp_text_write_stuff(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, -1, 0x8000FF, viGetX(), viGetY(), 0, 0);
     }
     else {
 #endif
         DL = en_text_write_stuff(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, -1, viGetX(), viGetY(), 0, 0);
-#ifndef VERSION_US
+#ifdef BUGFIX_R1
     }
 #endif
 

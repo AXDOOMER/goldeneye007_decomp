@@ -4436,7 +4436,7 @@ _AI_CMD(
     {
         AIRecord *    ai  = AiListp + Offset;
         ObjectRecord *obj = objFindByTagId(ai->val[0]);
-        if (obj && obj->prop && is_prop_in_inventory(obj->prop))
+        if (obj && obj->prop && bondinvHasPropInInv(obj->prop))
         {
             Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
         }

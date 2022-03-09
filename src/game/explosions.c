@@ -1,7 +1,7 @@
 #include <ultra64.h>
 #include <PR/os.h>
 #include <PR/gbi.h>
-#include <gbi_extention.h>
+#include <gbi_extension.h>
 #include <bondconstants.h>
 #include <bondtypes.h>
 #include "bg.h"
@@ -5900,7 +5900,6 @@ glabel sub_GAME_7F0A027C
 
 
 
-
 /**
  * Address 0x7F0A0AB4.
 */
@@ -5943,11 +5942,9 @@ Gfx *sub_GAME_7F0A0AB4(Gfx *arg0)
                 gSPVertex(arg0++, osVirtualToPhysical((void*)ptr_scorch_buf[i].vertex_list), 4, 0);
 
                 {
-                    // todo/fixme
-                    // should use gSP2Triangles from include/gbi_extention.h (typo: extension)
-                    Gfx *_g = (Gfx *)(arg0++); _g->words.w0 = 0xB1000032; _g->words.w1 = 0x2010;
-                    // or ??
-                    //gDma1p(arg0++, 0xb1, 0x2010, 0x32, 0);
+                    gSP2Triangles(arg0++,
+                                  0, 1, 2, 0,
+                                  0, 2, 3, 0);
                 }
             }
         }

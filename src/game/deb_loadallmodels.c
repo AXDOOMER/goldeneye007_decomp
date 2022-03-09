@@ -297,7 +297,7 @@ glabel debug_object_load_all_models
 /* 035EB0 7F001380 000A5A00 */  sll   $t3, $t2, 8
 /* 035EB4 7F001384 0FC15B0E */  jal   modelLoad
 /* 035EB8 7F001388 016C2025 */   or    $a0, $t3, $t4
-/* 035EBC 7F00138C 0FC015C4 */  jal   set_weapon_model_generated_thrown_object
+/* 035EBC 7F00138C 0FC015C4 */  jal   weaponLoadProjectileModels
 /* 035EC0 7F001390 92040003 */   lbu   $a0, 3($s0)
 /* 035EC4 7F001394 50400009 */  beql  $v0, $zero, .L7F0013BC
 /* 035EC8 7F001398 02002025 */   move  $a0, $s0

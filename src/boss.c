@@ -1330,7 +1330,7 @@ LEVELID bossGetStageNum() {
  *     return to title screen from stage
  */
 void bossReturnTitleStage(void) {
-#ifndef VERSION_US
+#ifdef BUGFIX_R1
     display_objective_status_text_on_status_change();
     FUN_7f057a40();
 #endif

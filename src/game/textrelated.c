@@ -9,7 +9,7 @@ s32 text_spacing = 0;
 s32 text_orientation = 0;
 s32 text_wordwrap = 0;
 s32 overlap_correction = -1;
-s32 text_bilevel_filter = 0;
+s32 text_bilevel_filter = FALSE;
 s32 text_x = 0;
 s32 text_y = 0;
 s32 text_s = 0;
@@ -272,7 +272,7 @@ glabel load_font_tables
 )
 #endif
 
-Gfx *microcode_constructor(Gfx *gdl)
+Gfx *microcode_constructor(Gfx *gdl) //fontGfxSetup
 {
 	gDPPipeSync(gdl++);
 	gDPSetCycleType(gdl++, G_CYC_1CYCLE);
@@ -398,29 +398,14 @@ glabel draw_blackbox_to_screen
 
 
 #ifdef NONMATCHING
-s32 microcode_constructor_related_to_menus(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u32 arg5) {
-    void *temp_a0;
-    void *temp_t0;
-    void *temp_t1;
-    void *temp_v1;
-
-    // Node 0
-    *arg0 = 0xb900031d;
-    arg0->unk4 = 0x504240;
-    temp_a0 = (arg0 + 8);
-    *temp_a0 = 0xfcffffff;
-    temp_a0->unk4 = 0xfffdf6fb;
-    temp_t0 = (temp_a0 + 8);
-    *temp_t0 = 0xfa000000;
-    temp_t1 = (temp_t0 + 8);
-    temp_t0->unk4 = (s32) (((((arg5 >> 0x18) << 0x18) | (((arg5 >> 0x10) & 0xff) << 0x10)) | (((arg5 >> 8) & 0xff) << 8)) | (arg5 & 0xff));
-    temp_v1 = (temp_t1 + 8);
-    temp_t1->unk4 = (s32) (((arg1 & 0x3ff) << 0xe) | ((arg2 & 0x3ff) * 4));
-    *temp_t1 = (s32) ((((arg3 & 0x3ff) << 0xe) | 0xf6000000) | ((arg4 & 0x3ff) * 4));
-    temp_v1->unk4 = 0xff2dfeff;
-    *temp_v1 = 0xfcff97ff;
-    return;
-    // (possible return value: (temp_v1 + 8))
+s32 microcode_constructor_related_to_menus(Gfx *gdl, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u32 RGBA)
+{
+    gDPSetRenderMode(gdl++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
+    gDPSetCombineMode(gdl++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
+    gDPSetPrimColor(gdl++, 0, 0, RGBA, RGBA, RGBA, RGBA);
+    gDPFillRectangle(gdl++, arg1, arg2, arg3, arg4);
+    gDPSetCombineLERP(gdl++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0);
+    return gdl;
 }
 
 #else

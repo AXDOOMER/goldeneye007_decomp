@@ -2951,7 +2951,7 @@ void bondviewPlayerSpawnRelated(void)
     g_CurrentPlayer->field_29F4 = getMissiontimer();
     g_CurrentPlayer->healthdisplaytime = 0;
 
-    add_item_to_inventory(ITEM_FIST);
+    bondinvAddInvItem(ITEM_FIST);
 
     if (getPlayerCount() >= 2)
     {
@@ -20552,7 +20552,7 @@ glabel controller_gameplay_interaction
 /* 0B753C 7F082A0C 00002825 */  move  $a1, $zero
 /* 0B7540 7F082A10 0FC1A521 */  jal   add_ammo_to_weapon
 /* 0B7544 7F082A14 ADC200D8 */   sw    $v0, 0xd8($t6)
-/* 0B7548 7F082A18 0FC23187 */  jal   inventory_remove_item_by_id
+/* 0B7548 7F082A18 0FC23187 */  jal   bondinvRemoveItemByID
 /* 0B754C 7F082A1C 24040020 */   li    $a0, 32
 /* 0B7550 7F082A20 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 0B7554 7F082A24 00002025 */   move  $a0, $zero
@@ -20607,7 +20607,7 @@ glabel controller_gameplay_interaction
 /* 0B760C 7F082ADC 24040020 */  li    $a0, 32
 /* 0B7610 7F082AE0 51A00050 */  beql  $t5, $zero, .L7F082C24
 /* 0B7614 7F082AE4 8E0D0000 */   lw    $t5, ($s0)
-/* 0B7618 7F082AE8 0FC23122 */  jal   add_item_to_inventory
+/* 0B7618 7F082AE8 0FC23122 */  jal   bondinvAddInvItem
 /* 0B761C 7F082AEC AFA500EC */   sw    $a1, 0xec($sp)
 /* 0B7620 7F082AF0 8FA300EC */  lw    $v1, 0xec($sp)
 /* 0B7624 7F082AF4 24040020 */  li    $a0, 32
@@ -23288,7 +23288,7 @@ glabel controller_gameplay_interaction
 /* 0B54A0 7F082AB0 00002825 */  move  $a1, $zero
 /* 0B54A4 7F082AB4 0FC1A706 */  jal   add_ammo_to_weapon
 /* 0B54A8 7F082AB8 ADC200D8 */   sw    $v0, 0xd8($t6)
-/* 0B54AC 7F082ABC 0FC23265 */  jal   inventory_remove_item_by_id
+/* 0B54AC 7F082ABC 0FC23265 */  jal   bondinvRemoveItemByID
 /* 0B54B0 7F082AC0 24040020 */   li    $a0, 32
 /* 0B54B4 7F082AC4 0FC177A2 */  jal   getCurrentPlayerWeaponId
 /* 0B54B8 7F082AC8 00002025 */   move  $a0, $zero
@@ -23343,7 +23343,7 @@ glabel controller_gameplay_interaction
 /* 0B5570 7F082B80 24040020 */  li    $a0, 32
 /* 0B5574 7F082B84 51A00050 */  beql  $t5, $zero, .L7F082CC8
 /* 0B5578 7F082B88 8E0D0000 */   lw    $t5, ($s0)
-/* 0B557C 7F082B8C 0FC231FA */  jal   add_item_to_inventory
+/* 0B557C 7F082B8C 0FC231FA */  jal   bondinvAddInvItem
 /* 0B5580 7F082B90 AFA500EC */   sw    $a1, 0xec($sp)
 /* 0B5584 7F082B94 8FA300EC */  lw    $v1, 0xec($sp)
 /* 0B5588 7F082B98 24040020 */  li    $a0, 32
@@ -38235,7 +38235,7 @@ glabel mp_respawn_handler
 /* 0BD680 7F088B50 8E220000 */  lw    $v0, ($s1)
 /* 0BD684 7F088B54 C44804BC */  lwc1  $f8, 0x4bc($v0)
 /* 0BD688 7F088B58 460C4283 */  div.s $f10, $f8, $f12
-/* 0BD68C 7F088B5C 0FC22FFC */  jal   reinit_inventory
+/* 0BD68C 7F088B5C 0FC22FFC */  jal   bondinvReinitInv
 /* 0BD690 7F088B60 E44A03C0 */   swc1  $f10, 0x3c0($v0)
 /* 0BD694 7F088B64 8E290000 */  lw    $t1, ($s1)
 /* 0BD698 7F088B68 24020008 */  li    $v0, 8
@@ -38284,12 +38284,12 @@ mp_spawntype_weapon:
 /* 0BD734 7F088C04 8E050008 */  lw    $a1, 8($s0)
 /* 0BD738 7F088C08 04A00005 */  bltz  $a1, .L7F088C20
 /* 0BD73C 7F088C0C 00000000 */   nop
-/* 0BD740 7F088C10 0FC23143 */  jal   add_doubles_item_to_inventory
+/* 0BD740 7F088C10 0FC23143 */  jal   bondinvAddDoublesInvItem
 /* 0BD744 7F088C14 8E040004 */   lw    $a0, 4($s0)
 /* 0BD748 7F088C18 10000018 */  b     .L7F088C7C
 /* 0BD74C 7F088C1C 26100010 */   addiu $s0, $s0, 0x10
 .L7F088C20:
-/* 0BD750 7F088C20 0FC23122 */  jal   add_item_to_inventory
+/* 0BD750 7F088C20 0FC23122 */  jal   bondinvAddInvItem
 /* 0BD754 7F088C24 8E040004 */   lw    $a0, 4($s0)
 .L7F088C28:
 /* 0BD758 7F088C28 10000014 */  b     .L7F088C7C
@@ -38534,7 +38534,7 @@ glabel mp_respawn_handler
 /* 0BB6A8 7F088CB8 8E220000 */  lw    $v0, ($s1)
 /* 0BB6AC 7F088CBC C44804BC */  lwc1  $f8, 0x4bc($v0)
 /* 0BB6B0 7F088CC0 460C4283 */  div.s $f10, $f8, $f12
-/* 0BB6B4 7F088CC4 0FC230C0 */  jal   reinit_inventory
+/* 0BB6B4 7F088CC4 0FC230C0 */  jal   bondinvReinitInv
 /* 0BB6B8 7F088CC8 E44A03C0 */   swc1  $f10, 0x3c0($v0)
 /* 0BB6BC 7F088CCC 8E290000 */  lw    $t1, ($s1)
 /* 0BB6C0 7F088CD0 24020008 */  li    $v0, 8
@@ -38583,12 +38583,12 @@ mp_spawntype_weapon:
 /* 0BB75C 7F088D6C 8E050008 */  lw    $a1, 8($s0)
 /* 0BB760 7F088D70 04A00005 */  bltz  $a1, .L7F088D88
 /* 0BB764 7F088D74 00000000 */   nop   
-/* 0BB768 7F088D78 0FC23221 */  jal   add_doubles_item_to_inventory
+/* 0BB768 7F088D78 0FC23221 */  jal   bondinvAddDoublesInvItem
 /* 0BB76C 7F088D7C 8E040004 */   lw    $a0, 4($s0)
 /* 0BB770 7F088D80 10000018 */  b     .L7F088DE4
 /* 0BB774 7F088D84 26100010 */   addiu $s0, $s0, 0x10
 .L7F088D88:
-/* 0BB778 7F088D88 0FC231FA */  jal   add_item_to_inventory
+/* 0BB778 7F088D88 0FC231FA */  jal   bondinvAddInvItem
 /* 0BB77C 7F088D8C 8E040004 */   lw    $a0, 4($s0)
 .L7F088D90:
 /* 0BB780 7F088D90 10000014 */  b     .L7F088DE4
@@ -40139,7 +40139,7 @@ glabel record_damage_kills
 /* 0BE838 7F089D08 24010003 */  li    $at, 3
 /* 0BE83C 7F089D0C 54410007 */  bnel  $v0, $at, .L7F089D2C
 /* 0BE840 7F089D10 8FA8002C */   lw    $t0, 0x2c($sp)
-/* 0BE844 7F089D14 0FC233F0 */  jal   checkforgoldengun
+/* 0BE844 7F089D14 0FC233F0 */  jal   bondinvHasGoldenGun
 /* 0BE848 7F089D18 00000000 */   nop
 /* 0BE84C 7F089D1C 10400002 */  beqz  $v0, .L7F089D28
 /* 0BE850 7F089D20 24190001 */   li    $t9, 1
@@ -40510,7 +40510,7 @@ glabel record_damage_kills
 /* 0BEF68 7F08A3F8 24010003 */  li    $at, 3
 /* 0BEF6C 7F08A3FC 14410006 */  bne   $v0, $at, .Ljp7F08A418
 /* 0BEF70 7F08A400 00000000 */   nop
-/* 0BEF74 7F08A404 0FC23649 */  jal   checkforgoldengun
+/* 0BEF74 7F08A404 0FC23649 */  jal   bondinvHasGoldenGun
 /* 0BEF78 7F08A408 00000000 */   nop
 /* 0BEF7C 7F08A40C 10400002 */  beqz  $v0, .Ljp7F08A418
 /* 0BEF80 7F08A410 240F0001 */   li    $t7, 1
@@ -40886,7 +40886,7 @@ glabel record_damage_kills
 /* 0BC87C 7F089E8C 24010003 */  li    $at, 3
 /* 0BC880 7F089E90 14410006 */  bne   $v0, $at, .L7F089EAC
 /* 0BC884 7F089E94 00000000 */   nop   
-/* 0BC888 7F089E98 0FC234E9 */  jal   checkforgoldengun
+/* 0BC888 7F089E98 0FC234E9 */  jal   bondinvHasGoldenGun
 /* 0BC88C 7F089E9C 00000000 */   nop   
 /* 0BC890 7F089EA0 10400002 */  beqz  $v0, .L7F089EAC
 /* 0BC894 7F089EA4 240F0001 */   li    $t7, 1

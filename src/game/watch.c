@@ -45,7 +45,7 @@ s32 D_800409B0 = 0;
 //D:800409B4
 s32 D_800409B4 = 0;
 //D:800409B8
-s32 D_800409B8 = 0;
+s32 g_curWatchItemIndex = 0;
 //D:800409BC
 f32 D_800409BC = 0.0f;
 //D:800409C0
@@ -276,7 +276,7 @@ void init_watch_at_start_of_stage(int stage)
     D_800409AC = 0;
     D_800409B0 = 0;
     D_800409B4 = 0;
-    D_800409B8 = 0;
+    g_curWatchItemIndex = 0;
     D_800409BC = 0.0f;
     D_800409C0 = 0;
     D_800409C4 = 0;
@@ -1116,7 +1116,7 @@ void sub_GAME_7F0A5B80(void)
     int invItems;
     int watchDebugFlag;
     
-    invItems = count_total_items_in_inventory();
+    invItems = bondinvCountTotalItemsInInv();
     watchDebugFlag = get_debug_gunwatchpos_flag();
     if (watchDebugFlag == 0)
     {    
@@ -1154,7 +1154,7 @@ void sub_GAME_7F0A5B80(void)
     
 
 
-    if ((joyGetStickY(PLAYER_1) >= 0x1F) && (joyGetStickY(PLAYER_1) < 0x46) && (D_800409B8 > 0) && (watch_item_is_actively_selected == 0))
+    if ((joyGetStickY(PLAYER_1) >= 0x1F) && (joyGetStickY(PLAYER_1) < 0x46) && (g_curWatchItemIndex > 0) && (watch_item_is_actively_selected == 0))
     {
         D_800409BC -= joyGetStickY(PLAYER_1) / 300.0f;
     }
@@ -1164,11 +1164,11 @@ void sub_GAME_7F0A5B80(void)
     }
 
 
-    if ((sub_GAME_7F0A5160() != 0) && (D_800409B8 > 0) && (watch_item_is_actively_selected == 0))
+    if ((sub_GAME_7F0A5160() != 0) && (g_curWatchItemIndex > 0) && (watch_item_is_actively_selected == 0))
     {
         D_800409BC -= 1.0f;
     }
-    else if ((sub_GAME_7F0A519C() != 0) && (D_800409B8 < (invItems - 1)) && (watch_item_is_actively_selected == 0))
+    else if ((sub_GAME_7F0A519C() != 0) && (g_curWatchItemIndex < (invItems - 1)) && (watch_item_is_actively_selected == 0))
     {
         D_800409BC += 1.0f;
     }
@@ -1193,7 +1193,7 @@ void sub_GAME_7F0A5B80(void)
     {
         D_800409BC = -0.5f;
     }
-    D_800409B8 = D_800409BC;
+    g_curWatchItemIndex = D_800409BC;
     if (j_text_trigger == 0)
     {
         invItems = 0xc;
@@ -1203,7 +1203,7 @@ void sub_GAME_7F0A5B80(void)
         invItems = 0xe;
         watchDebugFlag = 0xe;
     }
-    D_800409B4 = watchDebugFlag * 2 + -D_800409B8 * invItems;
+    D_800409B4 = watchDebugFlag * 2 + -g_curWatchItemIndex * invItems;
     if (D_800409B4 < D_800409B0) {
         D_800409B0 = (D_800409B0 - (D_800409B0 - D_800409B4) / 3) + -1;
         D_800409C0 = 0;
@@ -1217,9 +1217,9 @@ void sub_GAME_7F0A5B80(void)
             D_800409C0 = 1;
         }
     }
-    if ((D_800409BC <= D_800409B8 + 0.55f) || (joyGetButtons(PLAYER_1,ANY_BUTTON) != 0)) 
+    if ((D_800409BC <= g_curWatchItemIndex + 0.55f) || (joyGetButtons(PLAYER_1,ANY_BUTTON) != 0)) 
     {
-        if ((D_800409BC <= D_800409B8 + 0.45f) && (joyGetButtons(PLAYER_1,ANY_BUTTON) == 0)) 
+        if ((D_800409BC <= g_curWatchItemIndex + 0.45f) && (joyGetButtons(PLAYER_1,ANY_BUTTON) == 0)) 
         {
             D_800409BC = D_800409BC + 0.1f;
         }
@@ -1248,7 +1248,7 @@ glabel D_80058490
 glabel sub_GAME_7F0A5B80
 /* 0DA6B0 7F0A5B80 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0DA6B4 7F0A5B84 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0DA6B8 7F0A5B88 0FC2340E */  jal   count_total_items_in_inventory
+/* 0DA6B8 7F0A5B88 0FC2340E */  jal   bondinvCountTotalItemsInInv
 /* 0DA6BC 7F0A5B8C 00000000 */   nop
 /* 0DA6C0 7F0A5B90 0FC24415 */  jal   get_debug_gunwatchpos_flag
 /* 0DA6C4 7F0A5B94 AFA2001C */   sw    $v0, 0x1c($sp)
@@ -1372,8 +1372,8 @@ glabel sub_GAME_7F0A5B80
 /* 0DA880 7F0A5D50 00002025 */   move  $a0, $zero
 /* 0DA884 7F0A5D54 28410046 */  slti  $at, $v0, 0x46
 /* 0DA888 7F0A5D58 10200015 */  beqz  $at, .L7F0A5DB0
-/* 0DA88C 7F0A5D5C 3C0E8004 */   lui   $t6, %hi(D_800409B8)
-/* 0DA890 7F0A5D60 8DCE09B8 */  lw    $t6, %lo(D_800409B8)($t6)
+/* 0DA88C 7F0A5D5C 3C0E8004 */   lui   $t6, %hi(g_curWatchItemIndex)
+/* 0DA890 7F0A5D60 8DCE09B8 */  lw    $t6, %lo(g_curWatchItemIndex)($t6)
 /* 0DA894 7F0A5D64 3C0F8004 */  lui   $t7, %hi(watch_item_is_actively_selected)
 /* 0DA898 7F0A5D68 19C00011 */  blez  $t6, .L7F0A5DB0
 /* 0DA89C 7F0A5D6C 00000000 */   nop
@@ -1436,8 +1436,8 @@ glabel sub_GAME_7F0A5B80
 /* 0DA978 7F0A5E48 3C068004 */  lui   $a2, %hi(D_800409BC)
 /* 0DA97C 7F0A5E4C 10400010 */  beqz  $v0, .L7F0A5E90
 /* 0DA980 7F0A5E50 24C609BC */   addiu $a2, %lo(D_800409BC) # addiu $a2, $a2, 0x9bc
-/* 0DA984 7F0A5E54 3C0D8004 */  lui   $t5, %hi(D_800409B8)
-/* 0DA988 7F0A5E58 8DAD09B8 */  lw    $t5, %lo(D_800409B8)($t5)
+/* 0DA984 7F0A5E54 3C0D8004 */  lui   $t5, %hi(g_curWatchItemIndex)
+/* 0DA988 7F0A5E58 8DAD09B8 */  lw    $t5, %lo(g_curWatchItemIndex)($t5)
 /* 0DA98C 7F0A5E5C 3C0E8004 */  lui   $t6, %hi(watch_item_is_actively_selected)
 /* 0DA990 7F0A5E60 19A0000B */  blez  $t5, .L7F0A5E90
 /* 0DA994 7F0A5E64 00000000 */   nop
@@ -1458,8 +1458,8 @@ glabel sub_GAME_7F0A5B80
 /* 0DA9CC 7F0A5E9C 10400012 */  beqz  $v0, .L7F0A5EE8
 /* 0DA9D0 7F0A5EA0 24C609BC */   addiu $a2, %lo(D_800409BC) # addiu $a2, $a2, 0x9bc
 /* 0DA9D4 7F0A5EA4 8FB8001C */  lw    $t8, 0x1c($sp)
-/* 0DA9D8 7F0A5EA8 3C0F8004 */  lui   $t7, %hi(D_800409B8)
-/* 0DA9DC 7F0A5EAC 8DEF09B8 */  lw    $t7, %lo(D_800409B8)($t7)
+/* 0DA9D8 7F0A5EA8 3C0F8004 */  lui   $t7, %hi(g_curWatchItemIndex)
+/* 0DA9DC 7F0A5EAC 8DEF09B8 */  lw    $t7, %lo(g_curWatchItemIndex)($t7)
 /* 0DA9E0 7F0A5EB0 270AFFFF */  addiu $t2, $t8, -1
 /* 0DA9E4 7F0A5EB4 3C198004 */  lui   $t9, %hi(watch_item_is_actively_selected)
 /* 0DA9E8 7F0A5EB8 01EA082A */  slt   $at, $t7, $t2
@@ -1501,7 +1501,7 @@ glabel sub_GAME_7F0A5B80
 /* 0DAA68 7F0A5F38 C4C00000 */  lwc1  $f0, ($a2)
 /* 0DAA6C 7F0A5F3C 3C01BF00 */  li    $at, 0xBF000000 # -0.500000
 /* 0DAA70 7F0A5F40 46804420 */  cvt.s.w $f16, $f8
-/* 0DAA74 7F0A5F44 3C058004 */  lui   $a1, %hi(D_800409B8)
+/* 0DAA74 7F0A5F44 3C058004 */  lui   $a1, %hi(g_curWatchItemIndex)
 /* 0DAA78 7F0A5F48 460A8081 */  sub.s $f2, $f16, $f10
 /* 0DAA7C 7F0A5F4C 4600103C */  c.lt.s $f2, $f0
 /* 0DAA80 7F0A5F50 00000000 */  nop
@@ -1522,10 +1522,10 @@ glabel sub_GAME_7F0A5B80
 .L7F0A5F88:
 /* 0DAAB8 7F0A5F88 3C028005 */  lui   $v0, %hi(j_text_trigger)
 /* 0DAABC 7F0A5F8C 8C4284D0 */  lw    $v0, %lo(j_text_trigger)($v0)
-/* 0DAAC0 7F0A5F90 3C018004 */  lui   $at, %hi(D_800409B8)
+/* 0DAAC0 7F0A5F90 3C018004 */  lui   $at, %hi(g_curWatchItemIndex)
 /* 0DAAC4 7F0A5F94 440E2000 */  mfc1  $t6, $f4
 /* 0DAAC8 7F0A5F98 10400003 */  beqz  $v0, .L7F0A5FA8
-/* 0DAACC 7F0A5F9C AC2E09B8 */   sw    $t6, %lo(D_800409B8)($at)
+/* 0DAACC 7F0A5F9C AC2E09B8 */   sw    $t6, %lo(g_curWatchItemIndex)($at)
 /* 0DAAD0 7F0A5FA0 10000002 */  b     .L7F0A5FAC
 /* 0DAAD4 7F0A5FA4 2407000E */   li    $a3, 14
 .L7F0A5FA8:
@@ -1537,7 +1537,7 @@ glabel sub_GAME_7F0A5B80
 /* 0DAAE8 7F0A5FB8 2404000E */   li    $a0, 14
 /* 0DAAEC 7F0A5FBC 2404000C */  li    $a0, 12
 .L7F0A5FC0:
-/* 0DAAF0 7F0A5FC0 8CA509B8 */  lw    $a1, %lo(D_800409B8)($a1)
+/* 0DAAF0 7F0A5FC0 8CA509B8 */  lw    $a1, %lo(g_curWatchItemIndex)($a1)
 /* 0DAAF4 7F0A5FC4 3C098004 */  lui   $t1, %hi(D_800409B0)
 /* 0DAAF8 7F0A5FC8 252909B0 */  addiu $t1, %lo(D_800409B0) # addiu $t1, $t1, 0x9b0
 /* 0DAAFC 7F0A5FCC 00057823 */  negu  $t7, $a1
@@ -1601,8 +1601,8 @@ glabel sub_GAME_7F0A5B80
 /* 0DABD8 7F0A60A8 10000018 */  b     .L7F0A610C
 /* 0DABDC 7F0A60AC E4D20000 */   swc1  $f18, ($a2)
 .L7F0A60B0:
-/* 0DABE0 7F0A60B0 3C0C8004 */  lui   $t4, %hi(D_800409B8)
-/* 0DABE4 7F0A60B4 8D8C09B8 */  lw    $t4, %lo(D_800409B8)($t4)
+/* 0DABE0 7F0A60B0 3C0C8004 */  lui   $t4, %hi(g_curWatchItemIndex)
+/* 0DABE4 7F0A60B4 8D8C09B8 */  lw    $t4, %lo(g_curWatchItemIndex)($t4)
 /* 0DABE8 7F0A60B8 3C018006 */  lui   $at, %hi(D_8005848C)
 /* 0DABEC 7F0A60BC C430848C */  lwc1  $f16, %lo(D_8005848C)($at)
 /* 0DABF0 7F0A60C0 448C3000 */  mtc1  $t4, $f6
@@ -2184,7 +2184,7 @@ void sub_GAME_7F0A69A8(void)
     mission_brief_index = BRIEF_INDEX_OBJECTIVES;
     D_800409C8 = 0.999f;
     D_800409CC = 0.9999f;
-    calculate_equip_cur_item();
+    bondinvDetermineEquippedItem();
 }
 
 
@@ -3625,34 +3625,34 @@ glabel draw_current_hand_item_and_ammo
 /* 0DCA00 7F0A7ED0 AFA00084 */  sw    $zero, 0x84($sp)
 /* 0DCA04 7F0A7ED4 AFA00080 */  sw    $zero, 0x80($sp)
 /* 0DCA08 7F0A7ED8 AFAE007C */  sw    $t6, 0x7c($sp)
-/* 0DCA0C 7F0A7EDC 0FC23630 */  jal   get_BONDdata_equipcuritem
+/* 0DCA0C 7F0A7EDC 0FC23630 */  jal   bondinvGetCurEquippedItem
 /* 0DCA10 7F0A7EE0 AFAF0078 */   sw    $t7, 0x78($sp)
 /* 0DCA14 7F0A7EE4 AFA20074 */  sw    $v0, 0x74($sp)
-/* 0DCA18 7F0A7EE8 0FC234AA */  jal   get_weaponnum_by_inv_index
+/* 0DCA18 7F0A7EE8 0FC234AA */  jal   bondinvGetTextbyInvIndex
 /* 0DCA1C 7F0A7EEC 00402025 */   move  $a0, $v0
 /* 0DCA20 7F0A7EF0 AFA20070 */  sw    $v0, 0x70($sp)
-/* 0DCA24 7F0A7EF4 0FC235F6 */  jal   sub_GAME_7F08D7D8
+/* 0DCA24 7F0A7EF4 0FC235F6 */  jal   bondinvGetVposWatchForIndex
 /* 0DCA28 7F0A7EF8 8FA40074 */   lw    $a0, 0x74($sp)
 /* 0DCA2C 7F0A7EFC E7A0006C */  swc1  $f0, 0x6c($sp)
-/* 0DCA30 7F0A7F00 0FC23600 */  jal   sub_GAME_7F08D800
+/* 0DCA30 7F0A7F00 0FC23600 */  jal   bondinvGetHposWatchForIndex
 /* 0DCA34 7F0A7F04 8FA40074 */   lw    $a0, 0x74($sp)
 /* 0DCA38 7F0A7F08 E7A00068 */  swc1  $f0, 0x68($sp)
-/* 0DCA3C 7F0A7F0C 0FC2360A */  jal   sub_GAME_7F08D828
+/* 0DCA3C 7F0A7F0C 0FC2360A */  jal   bondinvGetDepthWatchForIndex
 /* 0DCA40 7F0A7F10 8FA40074 */   lw    $a0, 0x74($sp)
 /* 0DCA44 7F0A7F14 E7A00064 */  swc1  $f0, 0x64($sp)
-/* 0DCA48 7F0A7F18 0FC235EC */  jal   sub_GAME_7F08D7B0
+/* 0DCA48 7F0A7F18 0FC235EC */  jal   bondinvGetDifferent45AngleForIndex
 /* 0DCA4C 7F0A7F1C 8FA40074 */   lw    $a0, 0x74($sp)
 /* 0DCA50 7F0A7F20 E7A00060 */  swc1  $f0, 0x60($sp)
-/* 0DCA54 7F0A7F24 0FC23614 */  jal   sub_GAME_7F08D850
+/* 0DCA54 7F0A7F24 0FC23614 */  jal   bondinvGetXrotWatchForIndex
 /* 0DCA58 7F0A7F28 8FA40074 */   lw    $a0, 0x74($sp)
 /* 0DCA5C 7F0A7F2C E7A0005C */  swc1  $f0, 0x5c($sp)
-/* 0DCA60 7F0A7F30 0FC2361E */  jal   sub_GAME_7F08D878
+/* 0DCA60 7F0A7F30 0FC2361E */  jal   bondinvGetYrotWatchForIndex
 /* 0DCA64 7F0A7F34 8FA40074 */   lw    $a0, 0x74($sp)
 /* 0DCA68 7F0A7F38 E7A00058 */  swc1  $f0, 0x58($sp)
-/* 0DCA6C 7F0A7F3C 0FC23572 */  jal   inv_get_first_title_name_by_index
+/* 0DCA6C 7F0A7F3C 0FC23572 */  jal   bondinvGetFirstTitlebyIndex
 /* 0DCA70 7F0A7F40 8FA40074 */   lw    $a0, 0x74($sp)
 /* 0DCA74 7F0A7F44 AFA20054 */  sw    $v0, 0x54($sp)
-/* 0DCA78 7F0A7F48 0FC235AF */  jal   inv_get_second_title_name_by_index
+/* 0DCA78 7F0A7F48 0FC235AF */  jal   bondinvGetSecondTitlebyIndex
 /* 0DCA7C 7F0A7F4C 8FA40074 */   lw    $a0, 0x74($sp)
 /* 0DCA80 7F0A7F50 0FC24415 */  jal   get_debug_gunwatchpos_flag
 /* 0DCA84 7F0A7F54 AFA20050 */   sw    $v0, 0x50($sp)
@@ -3943,34 +3943,34 @@ glabel draw_current_hand_item_and_ammo
 /* 0D9BD8 7F0A71E8 AFA00084 */  sw    $zero, 0x84($sp)
 /* 0D9BDC 7F0A71EC AFA00080 */  sw    $zero, 0x80($sp)
 /* 0D9BE0 7F0A71F0 AFAE007C */  sw    $t6, 0x7c($sp)
-/* 0D9BE4 7F0A71F4 0FC2378A */  jal   get_BONDdata_equipcuritem
+/* 0D9BE4 7F0A71F4 0FC2378A */  jal   bondinvGetCurEquippedItem
 /* 0D9BE8 7F0A71F8 AFAF0078 */   sw    $t7, 0x78($sp)
 /* 0D9BEC 7F0A71FC AFA20074 */  sw    $v0, 0x74($sp)
-/* 0D9BF0 7F0A7200 0FC235B6 */  jal   get_weaponnum_by_inv_index
+/* 0D9BF0 7F0A7200 0FC235B6 */  jal   bondinvGetTextbyInvIndex
 /* 0D9BF4 7F0A7204 00402025 */   move  $a0, $v0
 /* 0D9BF8 7F0A7208 AFA20070 */  sw    $v0, 0x70($sp)
-/* 0D9BFC 7F0A720C 0FC23750 */  jal   sub_GAME_7F08D7D8
+/* 0D9BFC 7F0A720C 0FC23750 */  jal   bondinvGetVposWatchForIndex
 /* 0D9C00 7F0A7210 8FA40074 */   lw    $a0, 0x74($sp)
 /* 0D9C04 7F0A7214 E7A0006C */  swc1  $f0, 0x6c($sp)
-/* 0D9C08 7F0A7218 0FC2375A */  jal   sub_GAME_7F08D800
+/* 0D9C08 7F0A7218 0FC2375A */  jal   bondinvGetHposWatchForIndex
 /* 0D9C0C 7F0A721C 8FA40074 */   lw    $a0, 0x74($sp)
 /* 0D9C10 7F0A7220 E7A00068 */  swc1  $f0, 0x68($sp)
-/* 0D9C14 7F0A7224 0FC23764 */  jal   sub_GAME_7F08D828
+/* 0D9C14 7F0A7224 0FC23764 */  jal   bondinvGetDepthWatchForIndex
 /* 0D9C18 7F0A7228 8FA40074 */   lw    $a0, 0x74($sp)
 /* 0D9C1C 7F0A722C E7A00064 */  swc1  $f0, 0x64($sp)
-/* 0D9C20 7F0A7230 0FC23746 */  jal   sub_GAME_7F08D7B0
+/* 0D9C20 7F0A7230 0FC23746 */  jal   bondinvGetDifferent45AngleForIndex
 /* 0D9C24 7F0A7234 8FA40074 */   lw    $a0, 0x74($sp)
 /* 0D9C28 7F0A7238 E7A00060 */  swc1  $f0, 0x60($sp)
-/* 0D9C2C 7F0A723C 0FC2376E */  jal   sub_GAME_7F08D850
+/* 0D9C2C 7F0A723C 0FC2376E */  jal   bondinvGetXrotWatchForIndex
 /* 0D9C30 7F0A7240 8FA40074 */   lw    $a0, 0x74($sp)
 /* 0D9C34 7F0A7244 E7A0005C */  swc1  $f0, 0x5c($sp)
-/* 0D9C38 7F0A7248 0FC23778 */  jal   sub_GAME_7F08D878
+/* 0D9C38 7F0A7248 0FC23778 */  jal   bondinvGetYrotWatchForIndex
 /* 0D9C3C 7F0A724C 8FA40074 */   lw    $a0, 0x74($sp)
 /* 0D9C40 7F0A7250 E7A00058 */  swc1  $f0, 0x58($sp)
-/* 0D9C44 7F0A7254 0FC236AC */  jal   inv_get_first_title_name_by_index
+/* 0D9C44 7F0A7254 0FC236AC */  jal   bondinvGetFirstTitlebyIndex
 /* 0D9C48 7F0A7258 8FA40074 */   lw    $a0, 0x74($sp)
 /* 0D9C4C 7F0A725C AFA20054 */  sw    $v0, 0x54($sp)
-/* 0D9C50 7F0A7260 0FC236F9 */  jal   inv_get_second_title_name_by_index
+/* 0D9C50 7F0A7260 0FC236F9 */  jal   bondinvGetSecondTitlebyIndex
 /* 0D9C54 7F0A7264 8FA40074 */   lw    $a0, 0x74($sp)
 /* 0D9C58 7F0A7268 0FC2412A */  jal   get_debug_gunwatchpos_flag
 /* 0D9C5C 7F0A726C AFA20050 */   sw    $v0, 0x50($sp)
@@ -4252,15 +4252,15 @@ void sub_GAME_7F0A8378(void)
             return;
         }
 
-        if (getCurrentPlayerWeaponId(0) == get_weaponnum_by_inv_index(D_800409B8))
+        if (getCurrentPlayerWeaponId(0) == bondinvGetTextbyInvIndex(g_curWatchItemIndex))
         {
             return;
         }
     }
 
-    currentPlayerUnEquipWeaponWrapper(0, get_weaponnum_by_inv_index(D_800409B8));
+    currentPlayerUnEquipWeaponWrapper(0, bondinvGetTextbyInvIndex(g_curWatchItemIndex));
     currentPlayerUnEquipWeaponWrapper(1, 0);
-    set_BONDdata_equipcuritem(D_800409B8);
+    bondinvSetCurEquippedItem(g_curWatchItemIndex);
     D_800409C4 = 10;
     sndPlaySfx(g_musicSfxBufferPtr, CAMERA_BEEP1_SFX, 0);
 }
@@ -4290,34 +4290,34 @@ glabel draw_watch_inventory_page
 /* 0DCF78 7F0A8448 8FBF003C */   lw    $ra, 0x3c($sp)
 /* 0DCF7C 7F0A844C 0FC2F5B8 */  jal   dynAllocateMatrix
 /* 0DCF80 7F0A8450 00000000 */   nop
-/* 0DCF84 7F0A8454 3C048004 */  lui   $a0, %hi(D_800409B8)
+/* 0DCF84 7F0A8454 3C048004 */  lui   $a0, %hi(g_curWatchItemIndex)
 /* 0DCF88 7F0A8458 AFA20924 */  sw    $v0, 0x924($sp)
-/* 0DCF8C 7F0A845C 0FC2354A */  jal   sub_GAME_7F08D528
-/* 0DCF90 7F0A8460 8C8409B8 */   lw    $a0, %lo(D_800409B8)($a0)
-/* 0DCF94 7F0A8464 3C048004 */  lui   $a0, %hi(D_800409B8)
+/* 0DCF8C 7F0A845C 0FC2354A */  jal   bondinvGet45AngleForIndex
+/* 0DCF90 7F0A8460 8C8409B8 */   lw    $a0, %lo(g_curWatchItemIndex)($a0)
+/* 0DCF94 7F0A8464 3C048004 */  lui   $a0, %hi(g_curWatchItemIndex)
 /* 0DCF98 7F0A8468 E7A00894 */  swc1  $f0, 0x894($sp)
-/* 0DCF9C 7F0A846C 0FC23554 */  jal   sub_GAME_7F08D550
-/* 0DCFA0 7F0A8470 8C8409B8 */   lw    $a0, %lo(D_800409B8)($a0)
-/* 0DCFA4 7F0A8474 3C048004 */  lui   $a0, %hi(D_800409B8)
+/* 0DCF9C 7F0A846C 0FC23554 */  jal   bondinvGetHoffsetForIndex
+/* 0DCFA0 7F0A8470 8C8409B8 */   lw    $a0, %lo(g_curWatchItemIndex)($a0)
+/* 0DCFA4 7F0A8474 3C048004 */  lui   $a0, %hi(g_curWatchItemIndex)
 /* 0DCFA8 7F0A8478 E7A00890 */  swc1  $f0, 0x890($sp)
-/* 0DCFAC 7F0A847C 0FC2355E */  jal   sub_GAME_7F08D578
-/* 0DCFB0 7F0A8480 8C8409B8 */   lw    $a0, %lo(D_800409B8)($a0)
-/* 0DCFB4 7F0A8484 3C048004 */  lui   $a0, %hi(D_800409B8)
+/* 0DCFAC 7F0A847C 0FC2355E */  jal   bondinvGetVoffsetForIndex
+/* 0DCFB0 7F0A8480 8C8409B8 */   lw    $a0, %lo(g_curWatchItemIndex)($a0)
+/* 0DCFB4 7F0A8484 3C048004 */  lui   $a0, %hi(g_curWatchItemIndex)
 /* 0DCFB8 7F0A8488 E7A0088C */  swc1  $f0, 0x88c($sp)
-/* 0DCFBC 7F0A848C 0FC23568 */  jal   sub_GAME_7F08D5A0
-/* 0DCFC0 7F0A8490 8C8409B8 */   lw    $a0, %lo(D_800409B8)($a0)
-/* 0DCFC4 7F0A8494 3C048004 */  lui   $a0, %hi(D_800409B8)
+/* 0DCFBC 7F0A848C 0FC23568 */  jal   bondinvGetDepthForIndex
+/* 0DCFC0 7F0A8490 8C8409B8 */   lw    $a0, %lo(g_curWatchItemIndex)($a0)
+/* 0DCFC4 7F0A8494 3C048004 */  lui   $a0, %hi(g_curWatchItemIndex)
 /* 0DCFC8 7F0A8498 E7A00888 */  swc1  $f0, 0x888($sp)
-/* 0DCFCC 7F0A849C 0FC234AA */  jal   get_weaponnum_by_inv_index
-/* 0DCFD0 7F0A84A0 8C8409B8 */   lw    $a0, %lo(D_800409B8)($a0)
-/* 0DCFD4 7F0A84A4 3C048004 */  lui   $a0, %hi(D_800409B8)
+/* 0DCFCC 7F0A849C 0FC234AA */  jal   bondinvGetTextbyInvIndex
+/* 0DCFD0 7F0A84A0 8C8409B8 */   lw    $a0, %lo(g_curWatchItemIndex)($a0)
+/* 0DCFD4 7F0A84A4 3C048004 */  lui   $a0, %hi(g_curWatchItemIndex)
 /* 0DCFD8 7F0A84A8 AFA20884 */  sw    $v0, 0x884($sp)
-/* 0DCFDC 7F0A84AC 0FC23614 */  jal   sub_GAME_7F08D850
-/* 0DCFE0 7F0A84B0 8C8409B8 */   lw    $a0, %lo(D_800409B8)($a0)
-/* 0DCFE4 7F0A84B4 3C048004 */  lui   $a0, %hi(D_800409B8)
+/* 0DCFDC 7F0A84AC 0FC23614 */  jal   bondinvGetXrotWatchForIndex
+/* 0DCFE0 7F0A84B0 8C8409B8 */   lw    $a0, %lo(g_curWatchItemIndex)($a0)
+/* 0DCFE4 7F0A84B4 3C048004 */  lui   $a0, %hi(g_curWatchItemIndex)
 /* 0DCFE8 7F0A84B8 E7A00880 */  swc1  $f0, 0x880($sp)
-/* 0DCFEC 7F0A84BC 0FC2361E */  jal   sub_GAME_7F08D878
-/* 0DCFF0 7F0A84C0 8C8409B8 */   lw    $a0, %lo(D_800409B8)($a0)
+/* 0DCFEC 7F0A84BC 0FC2361E */  jal   bondinvGetYrotWatchForIndex
+/* 0DCFF0 7F0A84C0 8C8409B8 */   lw    $a0, %lo(g_curWatchItemIndex)($a0)
 /* 0DCFF4 7F0A84C4 0FC24415 */  jal   get_debug_gunwatchpos_flag
 /* 0DCFF8 7F0A84C8 E7A0087C */   swc1  $f0, 0x87c($sp)
 /* 0DCFFC 7F0A84CC 50400040 */  beql  $v0, $zero, .L7F0A85D0
@@ -4490,17 +4490,17 @@ glabel draw_watch_inventory_page
 /* 0DD27C 7F0A874C A3A00084 */  sb    $zero, 0x84($sp)
 /* 0DD280 7F0A8750 00008025 */  move  $s0, $zero
 /* 0DD284 7F0A8754 AFA90858 */  sw    $t1, 0x858($sp)
-/* 0DD288 7F0A8758 0FC2340E */  jal   count_total_items_in_inventory
+/* 0DD288 7F0A8758 0FC2340E */  jal   bondinvCountTotalItemsInInv
 /* 0DD28C 7F0A875C AFAA0854 */   sw    $t2, 0x854($sp)
 /* 0DD290 7F0A8760 1840000B */  blez  $v0, .L7F0A8790
 /* 0DD294 7F0A8764 00000000 */   nop
 .L7F0A8768:
-/* 0DD298 7F0A8768 0FC234D0 */  jal   inv_get_name_by_index
+/* 0DD298 7F0A8768 0FC234D0 */  jal   bondinvGetNameByIndex
 /* 0DD29C 7F0A876C 02002025 */   move  $a0, $s0
 /* 0DD2A0 7F0A8770 27A40084 */  addiu $a0, $sp, 0x84
 /* 0DD2A4 7F0A8774 0C0029FF */  jal   strcat
 /* 0DD2A8 7F0A8778 00402825 */   move  $a1, $v0
-/* 0DD2AC 7F0A877C 0FC2340E */  jal   count_total_items_in_inventory
+/* 0DD2AC 7F0A877C 0FC2340E */  jal   bondinvCountTotalItemsInInv
 /* 0DD2B0 7F0A8780 26100001 */   addiu $s0, $s0, 1
 /* 0DD2B4 7F0A8784 0202082A */  slt   $at, $s0, $v0
 /* 0DD2B8 7F0A8788 1420FFF7 */  bnez  $at, .L7F0A8768
@@ -4626,16 +4626,16 @@ glabel draw_watch_inventory_page
 /* 0DD460 7F0A8930 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTableSmall)
 /* 0DD464 7F0A8934 8DAD0EB0 */  lw    $t5, %lo(ptrSecondFontTableSmall)($t5)
 /* 0DD468 7F0A8938 3C108004 */  lui   $s0, %hi(ptrFirstFontTableSmall)
-/* 0DD46C 7F0A893C 3C048004 */  lui   $a0, %hi(D_800409B8)
+/* 0DD46C 7F0A893C 3C048004 */  lui   $a0, %hi(g_curWatchItemIndex)
 /* 0DD470 7F0A8940 AFA20928 */  sw    $v0, 0x928($sp)
 /* 0DD474 7F0A8944 8E100EAC */  lw    $s0, %lo(ptrFirstFontTableSmall)($s0)
-/* 0DD478 7F0A8948 8C8409B8 */  lw    $a0, %lo(D_800409B8)($a0)
-/* 0DD47C 7F0A894C 0FC234D0 */  jal   inv_get_name_by_index
+/* 0DD478 7F0A8948 8C8409B8 */  lw    $a0, %lo(g_curWatchItemIndex)($a0)
+/* 0DD47C 7F0A894C 0FC234D0 */  jal   bondinvGetNameByIndex
 /* 0DD480 7F0A8950 AFAD0058 */   sw    $t5, 0x58($sp)
 /* 0DD484 7F0A8954 3C018004 */  lui   $at, %hi(D_800409BC)
 /* 0DD488 7F0A8958 C43209BC */  lwc1  $f18, %lo(D_800409BC)($at)
-/* 0DD48C 7F0A895C 3C0E8004 */  lui   $t6, %hi(D_800409B8)
-/* 0DD490 7F0A8960 8DCE09B8 */  lw    $t6, %lo(D_800409B8)($t6)
+/* 0DD48C 7F0A895C 3C0E8004 */  lui   $t6, %hi(g_curWatchItemIndex)
+/* 0DD490 7F0A8960 8DCE09B8 */  lw    $t6, %lo(g_curWatchItemIndex)($t6)
 /* 0DD494 7F0A8964 46009121 */  cvt.d.s $f4, $f18
 /* 0DD498 7F0A8968 3C058005 */  lui   $a1, %hi(aDDDF)
 /* 0DD49C 7F0A896C 3C068004 */  lui   $a2, %hi(D_800409B0)
@@ -4773,34 +4773,34 @@ glabel draw_watch_inventory_page
 /* 0DDB50 7F0A8FE0 8FBF003C */   lw    $ra, 0x3c($sp)
 /* 0DDB54 7F0A8FE4 0FC2F8A4 */  jal   dynAllocateMatrix
 /* 0DDB58 7F0A8FE8 00000000 */   nop
-/* 0DDB5C 7F0A8FEC 3C048004 */  lui   $a0, %hi(D_800409B8) # $a0, 0x8004
+/* 0DDB5C 7F0A8FEC 3C048004 */  lui   $a0, %hi(g_curWatchItemIndex) # $a0, 0x8004
 /* 0DDB60 7F0A8FF0 AFA2092C */  sw    $v0, 0x92c($sp)
-/* 0DDB64 7F0A8FF4 0FC237E4 */  jal   sub_GAME_7F08D528
-/* 0DDB68 7F0A8FF8 8C8409E8 */   lw    $a0, %lo(D_800409B8)($a0)
-/* 0DDB6C 7F0A8FFC 3C048004 */  lui   $a0, %hi(D_800409B8) # $a0, 0x8004
+/* 0DDB64 7F0A8FF4 0FC237E4 */  jal   bondinvGet45AngleForIndex
+/* 0DDB68 7F0A8FF8 8C8409E8 */   lw    $a0, %lo(g_curWatchItemIndex)($a0)
+/* 0DDB6C 7F0A8FFC 3C048004 */  lui   $a0, %hi(g_curWatchItemIndex) # $a0, 0x8004
 /* 0DDB70 7F0A9000 E7A0089C */  swc1  $f0, 0x89c($sp)
-/* 0DDB74 7F0A9004 0FC237EE */  jal   sub_GAME_7F08D550
-/* 0DDB78 7F0A9008 8C8409E8 */   lw    $a0, %lo(D_800409B8)($a0)
-/* 0DDB7C 7F0A900C 3C048004 */  lui   $a0, %hi(D_800409B8) # $a0, 0x8004
+/* 0DDB74 7F0A9004 0FC237EE */  jal   bondinvGetHoffsetForIndex
+/* 0DDB78 7F0A9008 8C8409E8 */   lw    $a0, %lo(g_curWatchItemIndex)($a0)
+/* 0DDB7C 7F0A900C 3C048004 */  lui   $a0, %hi(g_curWatchItemIndex) # $a0, 0x8004
 /* 0DDB80 7F0A9010 E7A00898 */  swc1  $f0, 0x898($sp)
-/* 0DDB84 7F0A9014 0FC237F8 */  jal   sub_GAME_7F08D578
-/* 0DDB88 7F0A9018 8C8409E8 */   lw    $a0, %lo(D_800409B8)($a0)
-/* 0DDB8C 7F0A901C 3C048004 */  lui   $a0, %hi(D_800409B8) # $a0, 0x8004
+/* 0DDB84 7F0A9014 0FC237F8 */  jal   bondinvGetVoffsetForIndex
+/* 0DDB88 7F0A9018 8C8409E8 */   lw    $a0, %lo(g_curWatchItemIndex)($a0)
+/* 0DDB8C 7F0A901C 3C048004 */  lui   $a0, %hi(g_curWatchItemIndex) # $a0, 0x8004
 /* 0DDB90 7F0A9020 E7A00894 */  swc1  $f0, 0x894($sp)
-/* 0DDB94 7F0A9024 0FC23802 */  jal   sub_GAME_7F08D5A0
-/* 0DDB98 7F0A9028 8C8409E8 */   lw    $a0, %lo(D_800409B8)($a0)
-/* 0DDB9C 7F0A902C 3C048004 */  lui   $a0, %hi(D_800409B8) # $a0, 0x8004
+/* 0DDB94 7F0A9024 0FC23802 */  jal   bondinvGetDepthForIndex
+/* 0DDB98 7F0A9028 8C8409E8 */   lw    $a0, %lo(g_curWatchItemIndex)($a0)
+/* 0DDB9C 7F0A902C 3C048004 */  lui   $a0, %hi(g_curWatchItemIndex) # $a0, 0x8004
 /* 0DDBA0 7F0A9030 E7A00890 */  swc1  $f0, 0x890($sp)
-/* 0DDBA4 7F0A9034 0FC23716 */  jal   get_weaponnum_by_inv_index
-/* 0DDBA8 7F0A9038 8C8409E8 */   lw    $a0, %lo(D_800409B8)($a0)
-/* 0DDBAC 7F0A903C 3C048004 */  lui   $a0, %hi(D_800409B8) # $a0, 0x8004
+/* 0DDBA4 7F0A9034 0FC23716 */  jal   bondinvGetTextbyInvIndex
+/* 0DDBA8 7F0A9038 8C8409E8 */   lw    $a0, %lo(g_curWatchItemIndex)($a0)
+/* 0DDBAC 7F0A903C 3C048004 */  lui   $a0, %hi(g_curWatchItemIndex) # $a0, 0x8004
 /* 0DDBB0 7F0A9040 AFA2088C */  sw    $v0, 0x88c($sp)
-/* 0DDBB4 7F0A9044 0FC238CE */  jal   sub_GAME_7F08D850
-/* 0DDBB8 7F0A9048 8C8409E8 */   lw    $a0, %lo(D_800409B8)($a0)
-/* 0DDBBC 7F0A904C 3C048004 */  lui   $a0, %hi(D_800409B8) # $a0, 0x8004
+/* 0DDBB4 7F0A9044 0FC238CE */  jal   bondinvGetXrotWatchForIndex
+/* 0DDBB8 7F0A9048 8C8409E8 */   lw    $a0, %lo(g_curWatchItemIndex)($a0)
+/* 0DDBBC 7F0A904C 3C048004 */  lui   $a0, %hi(g_curWatchItemIndex) # $a0, 0x8004
 /* 0DDBC0 7F0A9050 E7A00888 */  swc1  $f0, 0x888($sp)
-/* 0DDBC4 7F0A9054 0FC238D8 */  jal   sub_GAME_7F08D878
-/* 0DDBC8 7F0A9058 8C8409E8 */   lw    $a0, %lo(D_800409B8)($a0)
+/* 0DDBC4 7F0A9054 0FC238D8 */  jal   bondinvGetYrotWatchForIndex
+/* 0DDBC8 7F0A9058 8C8409E8 */   lw    $a0, %lo(g_curWatchItemIndex)($a0)
 /* 0DDBCC 7F0A905C 0FC246CD */  jal   get_debug_gunwatchpos_flag
 /* 0DDBD0 7F0A9060 E7A00884 */   swc1  $f0, 0x884($sp)
 /* 0DDBD4 7F0A9064 50400040 */  beql  $v0, $zero, .Ljp7F0A9168
@@ -4983,17 +4983,17 @@ glabel draw_watch_inventory_page
 /* 0DDE78 7F0A9308 AFAD0084 */  sw    $t5, 0x84($sp)
 .Ljp7F0A930C:
 /* 0DDE7C 7F0A930C A3A0008C */  sb    $zero, 0x8c($sp)
-/* 0DDE80 7F0A9310 0FC23667 */  jal   count_total_items_in_inventory
+/* 0DDE80 7F0A9310 0FC23667 */  jal   bondinvCountTotalItemsInInv
 /* 0DDE84 7F0A9314 00008025 */   move  $s0, $zero
 /* 0DDE88 7F0A9318 1840000B */  blez  $v0, .Ljp7F0A9348
 /* 0DDE8C 7F0A931C 00000000 */   nop
 .Ljp7F0A9320:
-/* 0DDE90 7F0A9320 0FC2374A */  jal   inv_get_name_by_index
+/* 0DDE90 7F0A9320 0FC2374A */  jal   bondinvGetNameByIndex
 /* 0DDE94 7F0A9324 02002025 */   move  $a0, $s0
 /* 0DDE98 7F0A9328 27A4008C */  addiu $a0, $sp, 0x8c
 /* 0DDE9C 7F0A932C 0C002A03 */  jal   strcat
 /* 0DDEA0 7F0A9330 00402825 */   move  $a1, $v0
-/* 0DDEA4 7F0A9334 0FC23667 */  jal   count_total_items_in_inventory
+/* 0DDEA4 7F0A9334 0FC23667 */  jal   bondinvCountTotalItemsInInv
 /* 0DDEA8 7F0A9338 26100001 */   addiu $s0, $s0, 1
 /* 0DDEAC 7F0A933C 0202082A */  slt   $at, $s0, $v0
 /* 0DDEB0 7F0A9340 1420FFF7 */  bnez  $at, .Ljp7F0A9320
@@ -5120,16 +5120,16 @@ glabel draw_watch_inventory_page
 /* 0DE05C 7F0A94EC 3C188004 */  lui   $t8, %hi(ptrSecondFontTableSmall) # $t8, 0x8004
 /* 0DE060 7F0A94F0 8F180EE0 */  lw    $t8, %lo(ptrSecondFontTableSmall)($t8)
 /* 0DE064 7F0A94F4 3C108004 */  lui   $s0, %hi(ptrFirstFontTableSmall) # $s0, 0x8004
-/* 0DE068 7F0A94F8 3C048004 */  lui   $a0, %hi(D_800409B8) # $a0, 0x8004
+/* 0DE068 7F0A94F8 3C048004 */  lui   $a0, %hi(g_curWatchItemIndex) # $a0, 0x8004
 /* 0DE06C 7F0A94FC AFA20930 */  sw    $v0, 0x930($sp)
 /* 0DE070 7F0A9500 8E100EDC */  lw    $s0, %lo(ptrFirstFontTableSmall)($s0)
-/* 0DE074 7F0A9504 8C8409E8 */  lw    $a0, %lo(D_800409B8)($a0)
-/* 0DE078 7F0A9508 0FC2374A */  jal   inv_get_name_by_index
+/* 0DE074 7F0A9504 8C8409E8 */  lw    $a0, %lo(g_curWatchItemIndex)($a0)
+/* 0DE078 7F0A9508 0FC2374A */  jal   bondinvGetNameByIndex
 /* 0DE07C 7F0A950C AFB8005C */   sw    $t8, 0x5c($sp)
 /* 0DE080 7F0A9510 3C018004 */  lui   $at, %hi(D_800409BC) # $at, 0x8004
 /* 0DE084 7F0A9514 C43209EC */  lwc1  $f18, %lo(D_800409BC)($at)
-/* 0DE088 7F0A9518 3C198004 */  lui   $t9, %hi(D_800409B8) # $t9, 0x8004
-/* 0DE08C 7F0A951C 8F3909E8 */  lw    $t9, %lo(D_800409B8)($t9)
+/* 0DE088 7F0A9518 3C198004 */  lui   $t9, %hi(g_curWatchItemIndex) # $t9, 0x8004
+/* 0DE08C 7F0A951C 8F3909E8 */  lw    $t9, %lo(g_curWatchItemIndex)($t9)
 /* 0DE090 7F0A9520 46009121 */  cvt.d.s $f4, $f18
 /* 0DE094 7F0A9524 3C058005 */  lui   $a1, %hi(aDDDF) # $a1, 0x8005
 /* 0DE098 7F0A9528 3C068004 */  lui   $a2, %hi(D_800409B0) # $a2, 0x8004
@@ -5268,34 +5268,34 @@ glabel draw_watch_inventory_page
 /* 0DA150 7F0A7760 8FBF003C */   lw    $ra, 0x3c($sp)
 /* 0DA154 7F0A7764 0FC2F2A4 */  jal   dynAllocateMatrix
 /* 0DA158 7F0A7768 00000000 */   nop   
-/* 0DA15C 7F0A776C 3C048004 */  lui   $a0, %hi(D_800409B8) # $a0, 0x8004
+/* 0DA15C 7F0A776C 3C048004 */  lui   $a0, %hi(g_curWatchItemIndex) # $a0, 0x8004
 /* 0DA160 7F0A7770 AFA2092C */  sw    $v0, 0x92c($sp)
-/* 0DA164 7F0A7774 0FC23684 */  jal   sub_GAME_7F08D528
-/* 0DA168 7F0A7778 8C84A608 */   lw    $a0, %lo(D_800409B8)($a0)
-/* 0DA16C 7F0A777C 3C048004 */  lui   $a0, %hi(D_800409B8) # $a0, 0x8004
+/* 0DA164 7F0A7774 0FC23684 */  jal   bondinvGet45AngleForIndex
+/* 0DA168 7F0A7778 8C84A608 */   lw    $a0, %lo(g_curWatchItemIndex)($a0)
+/* 0DA16C 7F0A777C 3C048004 */  lui   $a0, %hi(g_curWatchItemIndex) # $a0, 0x8004
 /* 0DA170 7F0A7780 E7A0089C */  swc1  $f0, 0x89c($sp)
-/* 0DA174 7F0A7784 0FC2368E */  jal   sub_GAME_7F08D550
-/* 0DA178 7F0A7788 8C84A608 */   lw    $a0, %lo(D_800409B8)($a0)
-/* 0DA17C 7F0A778C 3C048004 */  lui   $a0, %hi(D_800409B8) # $a0, 0x8004
+/* 0DA174 7F0A7784 0FC2368E */  jal   bondinvGetHoffsetForIndex
+/* 0DA178 7F0A7788 8C84A608 */   lw    $a0, %lo(g_curWatchItemIndex)($a0)
+/* 0DA17C 7F0A778C 3C048004 */  lui   $a0, %hi(g_curWatchItemIndex) # $a0, 0x8004
 /* 0DA180 7F0A7790 E7A00898 */  swc1  $f0, 0x898($sp)
-/* 0DA184 7F0A7794 0FC23698 */  jal   sub_GAME_7F08D578
-/* 0DA188 7F0A7798 8C84A608 */   lw    $a0, %lo(D_800409B8)($a0)
-/* 0DA18C 7F0A779C 3C048004 */  lui   $a0, %hi(D_800409B8) # $a0, 0x8004
+/* 0DA184 7F0A7794 0FC23698 */  jal   bondinvGetVoffsetForIndex
+/* 0DA188 7F0A7798 8C84A608 */   lw    $a0, %lo(g_curWatchItemIndex)($a0)
+/* 0DA18C 7F0A779C 3C048004 */  lui   $a0, %hi(g_curWatchItemIndex) # $a0, 0x8004
 /* 0DA190 7F0A77A0 E7A00894 */  swc1  $f0, 0x894($sp)
-/* 0DA194 7F0A77A4 0FC236A2 */  jal   sub_GAME_7F08D5A0
-/* 0DA198 7F0A77A8 8C84A608 */   lw    $a0, %lo(D_800409B8)($a0)
-/* 0DA19C 7F0A77AC 3C048004 */  lui   $a0, %hi(D_800409B8) # $a0, 0x8004
+/* 0DA194 7F0A77A4 0FC236A2 */  jal   bondinvGetDepthForIndex
+/* 0DA198 7F0A77A8 8C84A608 */   lw    $a0, %lo(g_curWatchItemIndex)($a0)
+/* 0DA19C 7F0A77AC 3C048004 */  lui   $a0, %hi(g_curWatchItemIndex) # $a0, 0x8004
 /* 0DA1A0 7F0A77B0 E7A00890 */  swc1  $f0, 0x890($sp)
-/* 0DA1A4 7F0A77B4 0FC235B6 */  jal   get_weaponnum_by_inv_index
-/* 0DA1A8 7F0A77B8 8C84A608 */   lw    $a0, %lo(D_800409B8)($a0)
-/* 0DA1AC 7F0A77BC 3C048004 */  lui   $a0, %hi(D_800409B8) # $a0, 0x8004
+/* 0DA1A4 7F0A77B4 0FC235B6 */  jal   bondinvGetTextbyInvIndex
+/* 0DA1A8 7F0A77B8 8C84A608 */   lw    $a0, %lo(g_curWatchItemIndex)($a0)
+/* 0DA1AC 7F0A77BC 3C048004 */  lui   $a0, %hi(g_curWatchItemIndex) # $a0, 0x8004
 /* 0DA1B0 7F0A77C0 AFA2088C */  sw    $v0, 0x88c($sp)
-/* 0DA1B4 7F0A77C4 0FC2376E */  jal   sub_GAME_7F08D850
-/* 0DA1B8 7F0A77C8 8C84A608 */   lw    $a0, %lo(D_800409B8)($a0)
-/* 0DA1BC 7F0A77CC 3C048004 */  lui   $a0, %hi(D_800409B8) # $a0, 0x8004
+/* 0DA1B4 7F0A77C4 0FC2376E */  jal   bondinvGetXrotWatchForIndex
+/* 0DA1B8 7F0A77C8 8C84A608 */   lw    $a0, %lo(g_curWatchItemIndex)($a0)
+/* 0DA1BC 7F0A77CC 3C048004 */  lui   $a0, %hi(g_curWatchItemIndex) # $a0, 0x8004
 /* 0DA1C0 7F0A77D0 E7A00888 */  swc1  $f0, 0x888($sp)
-/* 0DA1C4 7F0A77D4 0FC23778 */  jal   sub_GAME_7F08D878
-/* 0DA1C8 7F0A77D8 8C84A608 */   lw    $a0, %lo(D_800409B8)($a0)
+/* 0DA1C4 7F0A77D4 0FC23778 */  jal   bondinvGetYrotWatchForIndex
+/* 0DA1C8 7F0A77D8 8C84A608 */   lw    $a0, %lo(g_curWatchItemIndex)($a0)
 /* 0DA1CC 7F0A77DC 0FC2412A */  jal   get_debug_gunwatchpos_flag
 /* 0DA1D0 7F0A77E0 E7A00884 */   swc1  $f0, 0x884($sp)
 /* 0DA1D4 7F0A77E4 50400040 */  beql  $v0, $zero, .Leu7F0A78E8
@@ -5478,17 +5478,17 @@ glabel draw_watch_inventory_page
 /* 0DA478 7F0A7A88 AFAD0084 */  sw    $t5, 0x84($sp)
 .L7F0A7A8C:
 /* 0DA47C 7F0A7A8C A3A0008C */  sb    $zero, 0x8c($sp)
-/* 0DA480 7F0A7A90 0FC23507 */  jal   count_total_items_in_inventory
+/* 0DA480 7F0A7A90 0FC23507 */  jal   bondinvCountTotalItemsInInv
 /* 0DA484 7F0A7A94 00008025 */   move  $s0, $zero
 /* 0DA488 7F0A7A98 1840000B */  blez  $v0, .L7F0A7AC8
 /* 0DA48C 7F0A7A9C 00000000 */   nop   
 .L7F0A7AA0:
-/* 0DA490 7F0A7AA0 0FC235EA */  jal   inv_get_name_by_index
+/* 0DA490 7F0A7AA0 0FC235EA */  jal   bondinvGetNameByIndex
 /* 0DA494 7F0A7AA4 02002025 */   move  $a0, $s0
 /* 0DA498 7F0A7AA8 27A4008C */  addiu $a0, $sp, 0x8c
 /* 0DA49C 7F0A7AAC 0C002717 */  jal   strcat
 /* 0DA4A0 7F0A7AB0 00402825 */   move  $a1, $v0
-/* 0DA4A4 7F0A7AB4 0FC23507 */  jal   count_total_items_in_inventory
+/* 0DA4A4 7F0A7AB4 0FC23507 */  jal   bondinvCountTotalItemsInInv
 /* 0DA4A8 7F0A7AB8 26100001 */   addiu $s0, $s0, 1
 /* 0DA4AC 7F0A7ABC 0202082A */  slt   $at, $s0, $v0
 /* 0DA4B0 7F0A7AC0 1420FFF7 */  bnez  $at, .L7F0A7AA0
@@ -5615,16 +5615,16 @@ glabel draw_watch_inventory_page
 /* 0DA65C 7F0A7C6C 3C188004 */  lui   $t8, %hi(ptrSecondFontTableSmall) # $t8, 0x8004
 /* 0DA660 7F0A7C70 8F18AB00 */  lw    $t8, %lo(ptrSecondFontTableSmall)($t8)
 /* 0DA664 7F0A7C74 3C108004 */  lui   $s0, %hi(ptrFirstFontTableSmall) # $s0, 0x8004
-/* 0DA668 7F0A7C78 3C048004 */  lui   $a0, %hi(D_800409B8) # $a0, 0x8004
+/* 0DA668 7F0A7C78 3C048004 */  lui   $a0, %hi(g_curWatchItemIndex) # $a0, 0x8004
 /* 0DA66C 7F0A7C7C AFA20930 */  sw    $v0, 0x930($sp)
 /* 0DA670 7F0A7C80 8E10AAFC */  lw    $s0, %lo(ptrFirstFontTableSmall)($s0)
-/* 0DA674 7F0A7C84 8C84A608 */  lw    $a0, %lo(D_800409B8)($a0)
-/* 0DA678 7F0A7C88 0FC235EA */  jal   inv_get_name_by_index
+/* 0DA674 7F0A7C84 8C84A608 */  lw    $a0, %lo(g_curWatchItemIndex)($a0)
+/* 0DA678 7F0A7C88 0FC235EA */  jal   bondinvGetNameByIndex
 /* 0DA67C 7F0A7C8C AFB8005C */   sw    $t8, 0x5c($sp)
 /* 0DA680 7F0A7C90 3C018004 */  lui   $at, %hi(D_800409BC) # $at, 0x8004
 /* 0DA684 7F0A7C94 C432A60C */  lwc1  $f18, %lo(D_800409BC)($at)
-/* 0DA688 7F0A7C98 3C198004 */  lui   $t9, %hi(D_800409B8) # $t9, 0x8004
-/* 0DA68C 7F0A7C9C 8F39A608 */  lw    $t9, %lo(D_800409B8)($t9)
+/* 0DA688 7F0A7C98 3C198004 */  lui   $t9, %hi(g_curWatchItemIndex) # $t9, 0x8004
+/* 0DA68C 7F0A7C9C 8F39A608 */  lw    $t9, %lo(g_curWatchItemIndex)($t9)
 /* 0DA690 7F0A7CA0 46009121 */  cvt.d.s $f4, $f18
 /* 0DA694 7F0A7CA4 3C058005 */  lui   $a1, %hi(aDDDF) # $a1, 0x8005
 /* 0DA698 7F0A7CA8 3C068004 */  lui   $a2, %hi(D_800409B0) # $a2, 0x8004
@@ -5772,7 +5772,7 @@ Gfx *unused_draw_watch_inventory_page(Gfx *gdl, Mtx *param_2) {
     ptr_first_font = ptrFirstFontTableSmall;
     ptr_second_font = ptrSecondFontTableSmall;
 
-    long_name = inv_get_long_name_by_index(D_800409B8);
+    long_name = bondinvGetLongNameByIndex(g_curWatchItemIndex);
     gdl = draw_background_health_and_armor(gdl, param_2, 0);
 
     if (check_watch_page_transistion_running() != 1)

@@ -262,7 +262,7 @@ typedef enum PROPFLAG
 {
     PROPFLAG_00000001                    = 0x00000001, // unknown
     PROPFLAG_ONSCREEN                    = 0x00000002, // onscreen
-    PROPFLAG_ENABLED                    = 0x00000004, // unknown
+    PROPFLAG_ENABLED                     = 0x00000004, // unknown
     PROPFLAG_00000008                    = 0x00000008, // unknown
     PROPFLAG_00000010                    = 0x00000010, // unknown
     PROPFLAG_00000020                    = 0x00000020, // unknown
@@ -270,17 +270,17 @@ typedef enum PROPFLAG
     PROPFLAG_00000080                    = 0x00000080, // unknown
     PROPFLAG_00000100                    = 0x00000100, // unknown
     PROPFLAG_00000200                    = 0x00000200, // unknown
-    PROPFLAG_00000400                    = 0x00000400, /* ignore Stan Colour?*/
+    PROPFLAG_ILLUMINATED                 = 0x00000400, /* ignore Stan Colour?*/
     PROPFLAG_00000800                    = 0x00000800, // unknown
     PROPFLAG_00001000                    = 0x00001000, // unknown
-    PROPFLAG_00002000                    = 0x00002000, /* Item Not Droppedz*/
-    PROPFLAG_00004000                    = 0x00004000, // unknown
+    PROPFLAG_AIUNDROPPABLE               = 0x00002000, /* Item Not Droppedz*/
+    PROPFLAG_ASSIGNEDTOCHR               = 0x00004000, // unknown
     PROPFLAG_00008000                    = 0x00008000, // unknown
     PROPFLAG_00010000                    = 0x00010000, // unknown
     PROPFLAG_00020000                    = 0x00020000, // unknown
     PROPFLAG_00040000                    = 0x00040000, // unknown
     PROPFLAG_00080000                    = 0x00080000, // unknown
-    PROPFLAG_00100000                    = 0x00100000, /* Item Not Collectable*/
+    PROPFLAG_UNCOLLECTABLE               = 0x00100000, /* Item Not Collectable*/
     PROPFLAG_00200000                    = 0x00200000, // unknown
     PROPFLAG_00400000                    = 0x00400000, // unknown
     PROPFLAG_00800000                    = 0x00800000, // unknown
@@ -288,7 +288,7 @@ typedef enum PROPFLAG
     PROPFLAG_02000000                    = 0x02000000, // unknown
     PROPFLAG_04000000                    = 0x04000000, // unknown
     PROPFLAG_08000000                    = 0x08000000, // unknown
-    PROPFLAG_10000000                    = 0x10000000, /* Left Handed*/
+    PROPFLAG_WEAPON_LEFTHANDED           = 0x10000000, /* Left Handed*/
     PROPFLAG_NO_AI_INTERACTION           = 0x20000000, /* Concealed*/
     PROPFLAG_40000000                    = 0x40000000, /* No Ammo on pickup*/
     PROPFLAG_80000000                    = 0x80000000 // unknown
@@ -3006,6 +3006,13 @@ typedef enum WAYMODE
     #define ABS_F(val)            (val) < 0 ? (float)(val) + 4294967296.0f /* -1.0f */: (float)(val)
     #define ABS(x)                ((x) < 0 ? -(x) : (x))
 #endif
+#define getVector(vec, a, b) \
+    vec.x = b.x - a.x;       \
+    vec.y = b.y - a.y;       \
+    vec.z = b.z - a.z
+#define getDistanceSquared(vec)             (vec.x * vec.x) + (vec.y * vec.y) + (vec.z * vec.z)
+#define isVectorDistanceLessThan(dist, vec) (dist * dist) <= vec
+
 #define _mkshort(a, b)            ((a << 8) | (b & 0xff))
 #define _mkword(a, b)             ((a << 16) | (b & 0xffff))
 #define CharArrayTo16(val, index) (                                         val[index+1] | val[index] << 8)
@@ -3025,11 +3032,27 @@ typedef enum WAYMODE
 #define getAiGlobalID(ID)        ((ID) - 0)
 #define getAiChrID(ID)           ((ID) - 1025)
 #define getAiBGID(ID)            ((ID) - 4097)
+
     /* language file to slot allocation */
 #define TEXT(TEXTBANK, TEXTSLOT) ((TEXTBANK * 0x0400U) + TEXTSLOT)
+
     /* Image ID to RAM allocation */
 #define IMAGESEG(id)             0xABCD0000 | id
 
+/*Doesnt work! might be handy for something else 
+#define setMask(t)\
+      (t) <=   2 ? 1\
+    : (t) <=   4 ? 2\
+    : (t) <=   8 ? 3\
+    : (t) <=  16 ? 4\
+    : (t) <=  32 ? 5\
+    : (t) <=  64 ? 6\
+    : (t) <= 128 ? 7\
+    : (t) <= 256 ? 8\
+    : (t) <= 512 ? 9\
+    : (t) <=1024 ? 10\
+    : "TEXTURE TOO BIG (>1024)"*/
+    
     //macros for FILERECORDS
 #define SKELETON(NAME)    skeleton_ ## NAME
 #define JOINTLIST(NAME)   jointlist_ ## NAME

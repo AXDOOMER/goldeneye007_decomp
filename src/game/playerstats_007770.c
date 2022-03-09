@@ -12,7 +12,7 @@ void sub_GAME_7F007770(void) {
 
     for (player = 0; player < player_count; player++) {
         set_cur_player(player);
-        get_weapon_of_choice(&right_hand, &left_hand);
+        bondinvGetWeaponOfChoice(&right_hand, &left_hand);
         store_favorite_weapon_current_player(right_hand, left_hand);
     }
 

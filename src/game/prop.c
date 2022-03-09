@@ -252,16 +252,408 @@ glabel sub_GAME_7F001BD4
 
 
 #ifdef NONMATCHING
-void prepare_load_objects(void) {
+// maybe domakedefaultobj
+void domakedefaultobj(s32 arg0, ObjectRecord *arg1, ? arg2)
+{
+    s32 spF0;
+    ? spE0;
+    StandTile * spDC;
+    f32         spD8;
+    f32         spD4;
+    f32         spD0;
+    StandTile * spCC;
+    Mtxf        sp8C;
+    f32         sp88;
+    f32         sp84;
+    f32         sp80;
+    f32         sp78;
+    s32         sp74;
+    ChrRecord * sp6C;
+    PadRecord * sp64;
+    PropRecord *sp60;
+    f32         sp58;
+    f32         sp54;
+    f32         sp50;
+    f32         sp48;
+    ChrRecord * temp_v0;
+    Model *     temp_a0_2;
+    Model *     temp_a0_3;
+    Model *     temp_a0_5;
+    Model *     temp_a0_6;
+    PadRecord * temp_v0_2;
+    StandTile **temp_a0_4;
+    f32         temp_f0;
+    f32         temp_f0_2;
+    f32         temp_f0_3;
+    f32         temp_f0_4;
+    f32         temp_f0_5;
+    f32         temp_f0_6;
+    f32         temp_f12;
+    f32         temp_f12_2;
+    f32         temp_f12_3;
+    f32         temp_f16;
+    f32         temp_f18;
+    f32         temp_f2;
+    f32         temp_f2_2;
+    f32         temp_f2_3;
+    f32         temp_f2_4;
+    f32         temp_f2_5;
+    f32         temp_f2_6;
+    f32         temp_f6;
+    s16         temp_a0;
+    s16         temp_v1_2;
+    u16         temp_t6;
+    u32         temp_v1;
+    u32         temp_v1_3;
+    u32         temp_v1_4;
+    void *      temp_s0;
+    void *      temp_v0_3;
+    f32         phi_f6;
+    s32         phi_v1;
+    PropRecord *phi_v0;
+    PropRecord *phi_v0_2;
+    void *      phi_s0;
+    f32         phi_f6_2;
+    f32         phi_f16;
+    f32         phi_f18;
+    f32         phi_f0;
+    f32         phi_f14;
+    f32         phi_f12;
+    f32         phi_f14_2;
+    f32         phi_f16_2;
+    f32         phi_f18_2;
+    f32         phi_f16_3;
+    f32         phi_f18_3;
+    f32         phi_f12_2;
+    f32         phi_f0_2;
 
+    temp_a0 = arg1->obj;
+    spF0    = temp_a0;
+    load_model(temp_a0);
+    temp_t6 = arg1->extrascale;
+    temp_f6 = temp_t6;
+    phi_f6  = temp_f6;
+    phi_s0  = NULL;
+    if (temp_t6 < 0)
+    {
+        phi_f6 = temp_f6 + 4294967296.0f;
+    }
+    sp78              = phi_f6 * 0.00390625f;
+    arg1->mtx.m[1][3] = (bitwise s32)(arg1->mtx.m[1][3] / 65536.0f);
+    phi_v1            = 1;
+    if (getPlayerCount() >= 2)
+    {
+        sp74 = 1;
+        if ((get_scenario() == 2) && (arg1->obj == 0x14D))
+        {
+            goto block_8;
+        }
+        sp74 = 1;
+        if ((get_scenario() == 3) && (arg1->obj == 0xD0))
+        {
+block_8:
+            phi_v1 = 0;
+        }
+        if (phi_v1 != 0)
+        {
+            arg1->state |= 4;
+        }
+    }
+    temp_v1 = arg1->flags;
+    if ((temp_v1 & 0x8000) != 0)
+    {
+        if (arg1->type == 8)
+        {
+            sub_GAME_7F051DD8(arg1, PitemZ_entries[spF0].Header);
+        }
+        else
+        {
+            sub_GAME_7F0406F8(arg1, PitemZ_entries[spF0].Header);
+        }
+        temp_a0_2 = arg1->model;
+        set_obj_instance_controller_scale(temp_a0_2, temp_a0_2->scale * sp78);
+        return;
+    }
+    if ((temp_v1 & 0x4000) != 0)
+    {
+        temp_v0 = chrFindByLiteralId(arg1->pad);
+        sp6C    = temp_v0;
+        if ((temp_v0 != 0) && (temp_v0->prop != 0) && (temp_v0->model != 0))
+        {
+            if (arg1->Head.type == 8)
+            {
+                phi_v0 = sub_GAME_7F051DD8(arg1, PitemZ_entries[spF0].Header);
+            }
+            else
+            {
+                phi_v0 = sub_GAME_7F0406F8(arg1, PitemZ_entries[spF0].Header);
+            }
+            temp_a0_3 = arg1->model;
+            set_obj_instance_controller_scale(temp_a0_3, temp_a0_3->scale * sp78);
+            attachNewChild(phi_v0, sp6C->prop);
+        }
+    }
+    else
+    {
+        temp_v1_2 = arg1->pad;
+        if (temp_v1_2 < 0x2710)
+        {
+            temp_v0_2 = &g_chraiCurrentSetup.pads[temp_v1_2];
+            sp64      = temp_v0_2;
+            matrix_4x4_7F059908(&sp8C, 0.0f, 0.0f, 0.0f, -temp_v0_2->target.AsArray[0], -temp_v0_2->target.AsArray[1], -temp_v0_2->target.AsArray[2], temp_v0_2->up.AsArray[0], temp_v0_2->up.AsArray[1], temp_v0_2->up.AsArray[2]);
+            spD0 = sp64->pos.AsArray[0];
+            spD4 = sp64->pos.AsArray[1];
+            spD8 = sp64->pos.AsArray[2];
+            if ((arg1->flags & 2) != 0)
+            {
+                sp80 = sp64->pos.AsArray[0];
+                sp84 = sp64->pos.AsArray[1];
+                sp88 = sp64->pos.AsArray[2];
+            }
+            else
+            {
+                sp80 = sp64->pos.AsArray[0];
+                sp84 = sp64->pos.AsArray[1];
+                sp88 = sp64->pos.AsArray[2];
+            }
+            spCC = sp64->stan;
+        }
+        else
+        {
+            temp_s0 = &g_chraiCurrentSetup.boundpads[temp_v1_2] + 0xFFF59FC0;
+            matrix_4x4_7F059908(&sp8C, 0.0f, 0.0f, 0.0f, -temp_s0->unk18, -temp_s0->unk1C, -temp_s0->unk20, temp_s0->unkC, temp_s0->unk10, temp_s0->unk14);
+            phi_s0 = temp_s0;
+            if ((arg1->flags2 & 1) == 0)
+            {
+                sub_GAME_7F001BD4(temp_s0, &spD0);
+                temp_a0_4 = &spCC;
+                sp80      = (temp_s0->unkC * ((temp_s0->unk34 - temp_s0->unk38) * 0.5f)) + spD0;
+                sp84      = (temp_s0->unk10 * ((temp_s0->unk34 - temp_s0->unk38) * 0.5f)) + spD4;
+                sp88      = (temp_s0->unk14 * ((temp_s0->unk34 - temp_s0->unk38) * 0.5f)) + spD8;
+                spCC      = temp_s0->unk28;
+                if (walkTilesBetweenPoints_NoCallback(temp_a0_4, temp_s0->unk0, temp_s0->unk8, spD0, spD8) == 0)
+                {
+                    spD0      = temp_s0->unk0;
+                    spD4      = temp_s0->unk4;
+                    spD8      = temp_s0->unk8;
+                    spCC      = temp_s0->unk28;
+                    temp_v1_3 = arg1->flags;
+                    if (((temp_v1_3 & 2) == 0) && ((temp_v1_3 & 0x1000) == 0))
+                    {
+                    }
+                }
+            }
+            else
+            {
+                spD0 = temp_s0->unk0;
+                spD4 = temp_s0->unk4;
+                spD8 = temp_s0->unk8;
+                spCC = temp_s0->unk28;
+                sub_GAME_7F001BD4(temp_s0, &sp80);
+                sp80 += (temp_s0->unk34 - temp_s0->unk38) * 0.5f * temp_s0->unkC;
+                sp84 += (temp_s0->unk34 - temp_s0->unk38) * 0.5f * temp_s0->unk10;
+                sp88 += (temp_s0->unk34 - temp_s0->unk38) * 0.5f * temp_s0->unk14;
+            }
+        }
+        if (sub_GAME_7F056850(&spD0, spCC, 0, &spE0, &spDC) != 0)
+        {
+            if (arg1->Head.type == 8)
+            {
+                phi_v0_2 = sub_GAME_7F051DD8(arg1, PitemZ_entries[spF0].Header);
+            }
+            else
+            {
+                phi_v0_2 = sub_GAME_7F04071C(arg1);
+            }
+            sp60 = phi_v0_2;
+            if (phi_s0 != 0)
+            {
+                temp_v0_3 = sub_GAME_7F040078(arg1);
+                if (temp_v0_3 != 0)
+                {
+                    sp58      = 1.0f;
+                    temp_v1_4 = arg1->flags;
+                    phi_f16_3 = 1.0f;
+                    phi_f18_3 = 1.0f;
+                    phi_f16   = 1.0f;
+                    phi_f18   = 1.0f;
+                    if ((temp_v1_4 & 0x30) != 0)
+                    {
+                        temp_f2 = temp_v0_3->unk4;
+                        temp_f0 = temp_v0_3->unk8;
+                        if (temp_f2 < temp_f0)
+                        {
+                            if ((temp_v1_4 & 2) != 0)
+                            {
+                                phi_f6_2 = (phi_s0->unk30 - phi_s0->unk2C) / ((temp_f0 - temp_f2) * arg1->model->scale);
+                            }
+                            else
+                            {
+                                phi_f6_2 = (phi_s0->unk30 - phi_s0->unk2C) / ((temp_f0 - temp_f2) * arg1->model->scale);
+                            }
+                            sp58 = phi_f6_2;
+                        }
+                    }
+                    if ((temp_v1_4 & 0x50) != 0)
+                    {
+                        temp_f2_2 = temp_v0_3->unkC;
+                        temp_f0_2 = temp_v0_3->unk10;
+                        if (temp_f2_2 < temp_f0_2)
+                        {
+                            temp_f12 = arg1->model->scale;
+                            if ((temp_v1_4 & 2) != 0)
+                            {
+                                phi_f18 = (phi_s0->unk40 - phi_s0->unk3C) / ((temp_f0_2 - temp_f2_2) * temp_f12);
+                            }
+                            else
+                            {
+                                phi_f16 = (phi_s0->unk38 - phi_s0->unk34) / ((temp_f0_2 - temp_f2_2) * temp_f12);
+                            }
+                        }
+                    }
+                    if ((temp_v1_4 & 0x90) != 0)
+                    {
+                        temp_f2_3 = temp_v0_3->unk14;
+                        temp_f0_3 = temp_v0_3->unk18;
+                        if (temp_f2_3 < temp_f0_3)
+                        {
+                            temp_f12_2 = arg1->model->scale;
+                            if ((temp_v1_4 & 2) != 0)
+                            {
+                                phi_f16 = (phi_s0->unk38 - phi_s0->unk34) / ((temp_f0_3 - temp_f2_3) * temp_f12_2);
+                            }
+                            else
+                            {
+                                phi_f18 = (phi_s0->unk40 - phi_s0->unk3C) / ((temp_f0_3 - temp_f2_3) * temp_f12_2);
+                            }
+                        }
+                    }
+                    phi_f0    = sp58;
+                    phi_f12   = sp58;
+                    phi_f16_2 = phi_f16;
+                    phi_f18_2 = phi_f18;
+                    if (phi_f16 < sp58)
+                    {
+                        phi_f0 = phi_f16;
+                    }
+                    phi_f0_2 = phi_f0;
+                    if (phi_f18 < phi_f0)
+                    {
+                        phi_f0_2 = phi_f18;
+                    }
+                    phi_f14 = sp58;
+                    if (sp58 < phi_f16)
+                    {
+                        phi_f14 = phi_f16;
+                    }
+                    phi_f14_2 = phi_f14;
+                    if (phi_f14 < phi_f18)
+                    {
+                        phi_f14_2 = phi_f18;
+                    }
+                    if ((temp_v1_4 & 0x10) != 0)
+                    {
+                        phi_f12   = phi_f0_2;
+                        phi_f16_2 = phi_f0_2;
+                        phi_f18_2 = phi_f0_2;
+                    }
+                    else
+                    {
+                        if ((temp_v1_4 & 0x20) == 0)
+                        {
+                            temp_f0_4 = temp_v0_3->unk8;
+                            temp_f2_4 = temp_v0_3->unk4;
+                            if ((temp_v1_4 & 2) != 0)
+                            {
+                                if (temp_f2_4 == temp_f0_4)
+                                {
+                                    goto block_72;
+                                }
+                            }
+                            else if (temp_f2_4 == temp_f0_4)
+                            {
+block_72:
+                                phi_f12 = phi_f14_2;
+                            }
+                        }
+                        if ((temp_v1_4 & 0x40) == 0)
+                        {
+                            temp_f0_5 = temp_v0_3->unk10;
+                            temp_f2_5 = temp_v0_3->unkC;
+                            if ((temp_v1_4 & 2) != 0)
+                            {
+                                if (temp_f2_5 == temp_f0_5)
+                                {
+                                    phi_f18_2 = phi_f14_2;
+                                }
+                            }
+                            else if (temp_f2_5 == temp_f0_5)
+                            {
+                                phi_f16_2 = phi_f14_2;
+                            }
+                        }
+                        if ((temp_v1_4 & 0x80) == 0)
+                        {
+                            temp_f0_6 = temp_v0_3->unk18;
+                            temp_f2_6 = temp_v0_3->unk14;
+                            if ((temp_v1_4 & 2) != 0)
+                            {
+                                if (temp_f2_6 == temp_f0_6)
+                                {
+                                    phi_f16_2 = phi_f14_2;
+                                }
+                            }
+                            else if (temp_f2_6 == temp_f0_6)
+                            {
+                                phi_f18_2 = phi_f14_2;
+                            }
+                        }
+                    }
+                    temp_f12_3 = phi_f12 / phi_f14_2;
+                    temp_f16   = phi_f16_2 / phi_f14_2;
+                    temp_f18   = phi_f18_2 / phi_f14_2;
+                    phi_f16_3  = temp_f16;
+                    phi_f18_3  = temp_f18;
+                    phi_f12_2  = temp_f12_3;
+                    if ((temp_f12_3 <= 0.000001f) || (temp_f16 <= 0.000001f) || (temp_f18 <= 0.000001f))
+                    {
+                        phi_f12_2 = 1.0f;
+                    }
+                    sp48 = phi_f14_2;
+                    sp54 = phi_f16_3;
+                    sp50 = phi_f18_3;
+                    matrix_column_1_scalar_multiply(phi_f12_2, phi_f14_2, &sp8C);
+                    matrix_column_2_scalar_multiply(sp54, &sp8C);
+                    matrix_column_3_scalar_multiply_2(sp50, &sp8C);
+                    temp_a0_5 = arg1->model;
+                    set_obj_instance_controller_scale(temp_a0_5, temp_a0_5->scale * sp48);
+                }
+            }
+            temp_a0_6 = arg1->model;
+            set_obj_instance_controller_scale(temp_a0_6, temp_a0_6->scale * sp78);
+            matrix_scalar_multiply(arg1->model->scale, &sp8C);
+            if ((arg1->flags & 2) != 0)
+            {
+                sub_GAME_7F040BA0(arg1, &spE0, &sp8C, spDC, &sp80);
+            }
+            else
+            {
+                sub_GAME_7F04088C(arg1, &spE0, &sp8C, spDC, &sp80);
+            }
+            sub_GAME_7F056CA0(arg1);
+            set_current_objposdata_plus_0x28(sp60);
+            set_stateflag_0x04_for_posdata(sp60);
+        }
+    }
 }
+
 #else
 GLOBAL_ASM(
 .late_rodata
 glabel D_8004EEB4
 .word 0x358637bd
 .text
-glabel prepare_load_objects
+glabel domakedefaultobj
 /* 0368CC 7F001D9C 27BDFF08 */  addiu $sp, $sp, -0xf8
 /* 0368D0 7F001DA0 AFBF0034 */  sw    $ra, 0x34($sp)
 /* 0368D4 7F001DA4 AFB10030 */  sw    $s1, 0x30($sp)
@@ -929,9 +1321,109 @@ glabel prepare_load_objects
 
 
 #ifdef NONMATCHING
-void expand_08_obj_set_guard_MP_weapons(void) {
+void expand_08_obj_set_guard_MP_weapons(void* chr, void* weapon, s32 cmdindex) {
+    void* sp1C;
+    s32 sp18;
+    s32 temp_a0_2;
+    s32 temp_v0_3;
+    s8 temp_a0;
+    s8 temp_a0_3;
+    s8 temp_t0;
+    u8 temp_v0_2;
+    //void* temp_a3;
+    void* temp_v0;
+    void* mpweapon;
+    s32 phi_a1;
 
+    //temp_a3 = weapon;
+    if ((weapon->unk8 & 0x4000) != 0) {
+        temp_v0 = chrFindByLiteralId(weapon->unk6);
+        sp1C = temp_v0;
+        if ((temp_v0 != 0) && (temp_v0->unk18 != 0) && (temp_v0->unk1C != 0)) {
+            weapon = weapon;
+            if (cheatIsActive(0x1C) != 0) { //CHEAT_ENEMY_ROCKETS
+                temp_t0 = weapon->unk80;
+                switch (temp_t0) {                  /* switch 1 */
+                case ITEM_KNIFE:
+                case ITEM_THROWKNIFE:
+                case ITEM_WPPK:
+                case ITEM_WPPKSIL:
+                case ITEM_TT33:
+                case ITEM_SKORPION:
+                case ITEM_AK47:
+                case ITEM_UZI:
+                case ITEM_MP5K:
+                case ITEM_MP5KSIL:
+                case ITEM_SPECTRE:
+                case ITEM_M16:
+                case ITEM_FNP90:
+                case ITEM_SHOTGUN:
+                case ITEM_AUTOSHOT:
+                case ITEM_SNIPERRIFLE:
+                case ITEM_RUGER:
+                case ITEM_GOLDENGUN:
+                case ITEM_SILVERWPPK:
+                case ITEM_GOLDWPPK:
+                case ITEM_LASER:
+                case ITEM_WATCHLASER:
+                case ITEM_REMOTEMINE:
+                case ITEM_TRIGGER:
+                case ITEM_TASER:
+                    weapon->unk80 = 0x19; //ITEM_ROCKETLAUNCH
+                    weapon->unk4 = 0xD3; //PROP_CHRROCKETLAUNCH
+                    weapon->unk0 = 256;
+                    break;
+                }
+            }
+            temp_a0 = weapon->unk80;
+            weapon = weapon;
+            weaponLoadProjectileModels(temp_a0);
+            sub_GAME_7F052030(weapon, sp1C);
+        }
+    } else {
+        sp18 = 1;
+        //weapon = temp_a3;
+        phi_a1 = 1;
+        if (getPlayerCount() >= 2) {
+            lastmpweaponnum = -1;
+            temp_v0_2 = (u8) weapon->unk80;
+            switch ((s32) temp_v0_2) {              /* switch 2; irregular */
+            case 0xF0:                              /* switch 2 */
+            case 0xF1:                              /* switch 2 */
+            case 0xF2:                              /* switch 2 */
+            case 0xF3:                              /* switch 2 */
+            case 0xF4:                              /* switch 2 */
+            case 0xF5:                              /* switch 2 */
+            case 0xF6:                              /* switch 2 */
+            case 0xF7:                              /* switch 2 */
+                weapon = weapon;
+                temp_v0_3 = getPtrMPWeaponSetData();
+                temp_a0_2 = (u8) weapon->unk80 - 0xF0;
+                lastmpweaponnum = temp_a0_2;
+                mpweapon = temp_v0_3 + (temp_a0_2 * 0x18);
+                weapon->unk80 = (s8) mpweapon->unk0;
+                weapon->unk4 = (s16) mpweapon->unk4;
+                weapon->unk0 = (s16) (u32) (mpweapon->unk8 * 256.0f);
+                phi_a1 = mpweapon->unk14;
+                break;
+            case 0x58:                              /* ITEM_TOKEN */
+                sp18 = 1;
+                weapon = weapon;
+                if (get_scenario() != 2) { //SCENARIO_TLD
+                    phi_a1 = 0;
+                }
+                break;
+            }
+        }
+        temp_a0_3 = weapon->unk80;
+        if ((temp_a0_3 != 0) && (phi_a1 != 0)) {
+            weapon = weapon;
+            weaponLoadProjectileModels(temp_a0_3);
+            domakedefaultobj(chr, weapon, cmdindex);
+        }
+    }
 }
+
 #else
 #ifndef VERSION_EU
 GLOBAL_ASM(
@@ -1024,7 +1516,7 @@ glabel expand_08_obj_set_guard_MP_weapons
 /* 03730C 7F0027DC A4EC0000 */  sh    $t4, ($a3)
 .L7F0027E0:
 /* 037310 7F0027E0 80E40080 */  lb    $a0, 0x80($a3)
-/* 037314 7F0027E4 0FC015C4 */  jal   set_weapon_model_generated_thrown_object
+/* 037314 7F0027E4 0FC015C4 */  jal   weaponLoadProjectileModels
 /* 037318 7F0027E8 AFA7002C */   sw    $a3, 0x2c($sp)
 /* 03731C 7F0027EC 8FA4002C */  lw    $a0, 0x2c($sp)
 /* 037320 7F0027F0 0FC1480C */  jal   sub_GAME_7F052030
@@ -1137,11 +1629,11 @@ def_7F002854:
 /* 0374A4 7F002974 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0374A8 7F002978 50A00008 */  beql  $a1, $zero, .L7F00299C
 /* 0374AC 7F00297C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0374B0 7F002980 0FC015C4 */  jal   set_weapon_model_generated_thrown_object
+/* 0374B0 7F002980 0FC015C4 */  jal   weaponLoadProjectileModels
 /* 0374B4 7F002984 AFA7002C */   sw    $a3, 0x2c($sp)
 /* 0374B8 7F002988 8FA5002C */  lw    $a1, 0x2c($sp)
 /* 0374BC 7F00298C 8FA40028 */  lw    $a0, 0x28($sp)
-/* 0374C0 7F002990 0FC00767 */  jal   prepare_load_objects
+/* 0374C0 7F002990 0FC00767 */  jal   domakedefaultobj
 /* 0374C4 7F002994 8FA60030 */   lw    $a2, 0x30($sp)
 .L7F002998:
 /* 0374C8 7F002998 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -1241,7 +1733,7 @@ glabel expand_08_obj_set_guard_MP_weapons
 /* 0351CC 7F0027DC A4EC0000 */  sh    $t4, ($a3)
 .L7F0027E0:
 /* 0351D0 7F0027E0 80E40080 */  lb    $a0, 0x80($a3)
-/* 0351D4 7F0027E4 0FC015AC */  jal   set_weapon_model_generated_thrown_object
+/* 0351D4 7F0027E4 0FC015AC */  jal   weaponLoadProjectileModels
 /* 0351D8 7F0027E8 AFA7002C */   sw    $a3, 0x2c($sp)
 /* 0351DC 7F0027EC 8FA4002C */  lw    $a0, 0x2c($sp)
 /* 0351E0 7F0027F0 0FC148C4 */  jal   sub_GAME_7F052030
@@ -1312,11 +1804,11 @@ glabel expand_08_obj_set_guard_MP_weapons
 /* 0352CC 7F0028DC 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0352D0 7F0028E0 50A00008 */  beql  $a1, $zero, .L7F002904
 /* 0352D4 7F0028E4 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0352D8 7F0028E8 0FC015AC */  jal   set_weapon_model_generated_thrown_object
+/* 0352D8 7F0028E8 0FC015AC */  jal   weaponLoadProjectileModels
 /* 0352DC 7F0028EC AFA7002C */   sw    $a3, 0x2c($sp)
 /* 0352E0 7F0028F0 8FA5002C */  lw    $a1, 0x2c($sp)
 /* 0352E4 7F0028F4 8FA40028 */  lw    $a0, 0x28($sp)
-/* 0352E8 7F0028F8 0FC00767 */  jal   prepare_load_objects
+/* 0352E8 7F0028F8 0FC00767 */  jal   domakedefaultobj
 /* 0352EC 7F0028FC 8FA60030 */   lw    $a2, 0x30($sp)
 .L7F002900:
 /* 0352F0 7F002900 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -1356,11 +1848,11 @@ void MP_weapon_expansion_routine(void *arg1, ? arg7) {
     else
     {
         // Node 5
-        prepare_load_objects(arg1, arg1);
+        domakedefaultobj(arg1, arg1);
     }
     // Node 6
     return;
-    // (possible return value: prepare_load_objects(arg1, arg1))
+    // (possible return value: domakedefaultobj(arg1, arg1))
 }
 
 #else
@@ -1391,7 +1883,7 @@ glabel MP_weapon_expansion_routine
 /* 03752C 7F0029FC 10000004 */  b     .L7F002A10
 /* 037530 7F002A00 8FBF0014 */   lw    $ra, 0x14($sp)
 .L7F002A04:
-/* 037534 7F002A04 0FC00767 */  jal   prepare_load_objects
+/* 037534 7F002A04 0FC00767 */  jal   domakedefaultobj
 /* 037538 7F002A08 00E02825 */   move  $a1, $a3
 .L7F002A0C:
 /* 03753C 7F002A0C 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -1403,8 +1895,8 @@ glabel MP_weapon_expansion_routine
 #endif
 
 
-void jmp_prepare_load_objects(void) {
-    prepare_load_objects();
+void jmp_domakedefaultobj(void) {
+    domakedefaultobj();
 }
 
 
@@ -1425,7 +1917,7 @@ glabel sub_GAME_7F002A3C
 /* 03756C 7F002A3C 27BDFFA8 */  addiu $sp, $sp, -0x58
 /* 037570 7F002A40 AFBF0034 */  sw    $ra, 0x34($sp)
 /* 037574 7F002A44 AFB00030 */  sw    $s0, 0x30($sp)
-/* 037578 7F002A48 0FC00767 */  jal   prepare_load_objects
+/* 037578 7F002A48 0FC00767 */  jal   domakedefaultobj
 /* 03757C 7F002A4C 00A08025 */   move  $s0, $a1
 /* 037580 7F002A50 8E020080 */  lw    $v0, 0x80($s0)
 /* 037584 7F002A54 0442007C */  bltzl $v0, .L7F002C48
@@ -1580,7 +2072,7 @@ void expand_type_0D_object_autoturret(undefined8 param_1,ObjectRecord.conflict *
     float fVar9;
     float vector2;
     
-    prepare_load_objects(param_1._4_4_,param_2);
+    domakedefaultobj(param_1._4_4_,param_2);
     param_2[1].field_0x2c = NULL;
     param_2[1].field_0x38 = 0xffffffff;
     param_2[1].field_0x3c = 0xffffffff;
@@ -1637,7 +2129,7 @@ glabel expand_type_0D_object_autoturret
 /* 037788 7F002C58 27BDFFC8 */  addiu $sp, $sp, -0x38
 /* 03778C 7F002C5C AFBF001C */  sw    $ra, 0x1c($sp)
 /* 037790 7F002C60 AFB00018 */  sw    $s0, 0x18($sp)
-/* 037794 7F002C64 0FC00767 */  jal   prepare_load_objects
+/* 037794 7F002C64 0FC00767 */  jal   domakedefaultobj
 /* 037798 7F002C68 00A08025 */   move  $s0, $a1
 /* 03779C 7F002C6C 8E0E00A4 */  lw    $t6, 0xa4($s0)
 /* 0377A0 7F002C70 8E0F00A8 */  lw    $t7, 0xa8($s0)
@@ -1766,7 +2258,7 @@ glabel expand_type_0D_object_autoturret
 /* 0355B0 7F002BC0 27BDFFC8 */  addiu $sp, $sp, -0x38
 /* 0355B4 7F002BC4 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 0355B8 7F002BC8 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0355BC 7F002BCC 0FC00767 */  jal   prepare_load_objects
+/* 0355BC 7F002BCC 0FC00767 */  jal   domakedefaultobj
 /* 0355C0 7F002BD0 00A08025 */   move  $s0, $a1
 /* 0355C4 7F002BD4 8E0E00A4 */  lw    $t6, 0xa4($s0)
 /* 0355C8 7F002BD8 3C014780 */  li    $at, 0x47800000 # 65536.000000
@@ -1886,8 +2378,8 @@ glabel expand_type_0D_object_autoturret
 #endif
 
 
-void jmp_prepare_load_objects_0(void) {
-    prepare_load_objects();
+void jmp_domakedefaultobj_0(void) {
+    domakedefaultobj();
 }
 
 
@@ -2064,7 +2556,7 @@ glabel sub_GAME_7F002E3C
 /* 037BB4 7F003084 10000004 */  b     .L7F003098
 /* 037BB8 7F003088 8E190008 */   lw    $t9, 8($s0)
 .L7F00308C:
-/* 037BBC 7F00308C 0FC00767 */  jal   prepare_load_objects
+/* 037BBC 7F00308C 0FC00767 */  jal   domakedefaultobj
 /* 037BC0 7F003090 02203025 */   move  $a2, $s1
 /* 037BC4 7F003094 8E190008 */  lw    $t9, 8($s0)
 .L7F003098:
@@ -2187,7 +2679,7 @@ glabel sub_GAME_7F0030D0
 /* 037D54 7F003224 92050253 */   lbu   $a1, 0x253($s0)
 /* 037D58 7F003228 8FA40020 */  lw    $a0, 0x20($sp)
 /* 037D5C 7F00322C 02002825 */  move  $a1, $s0
-/* 037D60 7F003230 0FC00767 */  jal   prepare_load_objects
+/* 037D60 7F003230 0FC00767 */  jal   domakedefaultobj
 /* 037D64 7F003234 8FA60028 */   lw    $a2, 0x28($sp)
 /* 037D68 7F003238 8FBF001C */  lw    $ra, 0x1c($sp)
 /* 037D6C 7F00323C 8FB00018 */  lw    $s0, 0x18($sp)
@@ -4103,7 +4595,7 @@ key_expand:
 /* 038FB0 7F004480 0134C824 */  and   $t9, $t1, $s4
 /* 038FB4 7F004484 1720019D */  bnez  $t9, other_obj_expand
 /* 038FB8 7F004488 00000000 */   nop   
-/* 038FBC 7F00448C 0FC00A87 */  jal   jmp_prepare_load_objects
+/* 038FBC 7F00448C 0FC00A87 */  jal   jmp_domakedefaultobj
 /* 038FC0 7F004490 02603025 */   move  $a2, $s3
 /* 038FC4 7F004494 10000199 */  b     other_obj_expand
 /* 038FC8 7F004498 00000000 */   nop   
@@ -4156,7 +4648,7 @@ rack_expand:
 /* 039074 7F004544 01144824 */  and   $t1, $t0, $s4
 /* 039078 7F004548 1520016C */  bnez  $t1, other_obj_expand
 /* 03907C 7F00454C 00000000 */   nop   
-/* 039080 7F004550 0FC00B87 */  jal   jmp_prepare_load_objects_0
+/* 039080 7F004550 0FC00B87 */  jal   jmp_domakedefaultobj_0
 /* 039084 7F004554 02603025 */   move  $a2, $s3
 /* 039088 7F004558 10000168 */  b     other_obj_expand
 /* 03908C 7F00455C 00000000 */   nop   
@@ -4204,7 +4696,7 @@ body_armor_expand:
 /* 039128 7F0045F8 46062203 */  div.s $f8, $f4, $f6
 /* 03912C 7F0045FC E6480080 */  swc1  $f8, 0x80($s2)
 /* 039130 7F004600 C64A0080 */  lwc1  $f10, 0x80($s2)
-/* 039134 7F004604 0FC00767 */  jal   prepare_load_objects
+/* 039134 7F004604 0FC00767 */  jal   domakedefaultobj
 /* 039138 7F004608 E64A0084 */   swc1  $f10, 0x84($s2)
 /* 03913C 7F00460C 1000013B */  b     other_obj_expand
 /* 039140 7F004610 00000000 */   nop   
@@ -4278,7 +4770,7 @@ type2F_tinted_glass:
 /* 039248 7F004718 02A02025 */  move  $a0, $s5
 .L7F00471C:
 /* 03924C 7F00471C 02402825 */  move  $a1, $s2
-/* 039250 7F004720 0FC00767 */  jal   prepare_load_objects
+/* 039250 7F004720 0FC00767 */  jal   domakedefaultobj
 /* 039254 7F004724 02603025 */   move  $a2, $s3
 /* 039258 7F004728 100000F4 */  b     other_obj_expand
 /* 03925C 7F00472C 00000000 */   nop   
@@ -4291,7 +4783,7 @@ obj_03_expand:
 /* 039274 7F004744 01947824 */  and   $t7, $t4, $s4
 /* 039278 7F004748 15E000EC */  bnez  $t7, other_obj_expand
 /* 03927C 7F00474C 00000000 */   nop   
-/* 039280 7F004750 0FC00767 */  jal   prepare_load_objects
+/* 039280 7F004750 0FC00767 */  jal   domakedefaultobj
 /* 039284 7F004754 02603025 */   move  $a2, $s3
 /* 039288 7F004758 100000E8 */  b     other_obj_expand
 /* 03928C 7F00475C 00000000 */   nop   
@@ -4340,7 +4832,7 @@ ammo_box_expand:
 /* 039328 7F0047F8 26100004 */   addiu $s0, $s0, 4
 /* 03932C 7F0047FC 02A02025 */  move  $a0, $s5
 /* 039330 7F004800 02402825 */  move  $a1, $s2
-/* 039334 7F004804 0FC00767 */  jal   prepare_load_objects
+/* 039334 7F004804 0FC00767 */  jal   domakedefaultobj
 /* 039338 7F004808 02603025 */   move  $a2, $s3
 /* 03933C 7F00480C 100000BB */  b     other_obj_expand
 /* 039340 7F004810 00000000 */   nop   
@@ -4352,11 +4844,11 @@ type2D_tank:
 /* 039354 7F004824 01B46024 */  and   $t4, $t5, $s4
 /* 039358 7F004828 158000B4 */  bnez  $t4, other_obj_expand
 /* 03935C 7F00482C 00000000 */   nop   
-/* 039360 7F004830 0FC015C4 */  jal   set_weapon_model_generated_thrown_object
+/* 039360 7F004830 0FC015C4 */  jal   weaponLoadProjectileModels
 /* 039364 7F004834 E7B400E8 */   swc1  $f20, 0xe8($sp)
 /* 039368 7F004838 02A02025 */  move  $a0, $s5
 /* 03936C 7F00483C 02402825 */  move  $a1, $s2
-/* 039370 7F004840 0FC00767 */  jal   prepare_load_objects
+/* 039370 7F004840 0FC00767 */  jal   domakedefaultobj
 /* 039374 7F004844 02603025 */   move  $a2, $s3
 /* 039378 7F004848 E65400C8 */  swc1  $f20, 0xc8($s2)
 /* 03937C 7F00484C E65400CC */  swc1  $f20, 0xcc($s2)
@@ -4391,7 +4883,7 @@ type27_wheeled_vehicle:
 /* 0393E8 7F0048B8 01F47024 */  and   $t6, $t7, $s4
 /* 0393EC 7F0048BC 15C0008F */  bnez  $t6, other_obj_expand
 /* 0393F0 7F0048C0 00000000 */   nop   
-/* 0393F4 7F0048C4 0FC00767 */  jal   prepare_load_objects
+/* 0393F4 7F0048C4 0FC00767 */  jal   domakedefaultobj
 /* 0393F8 7F0048C8 02603025 */   move  $a2, $s3
 /* 0393FC 7F0048CC 8E440014 */  lw    $a0, 0x14($s2)
 /* 039400 7F0048D0 5080000E */  beql  $a0, $zero, .L7F00490C
@@ -4437,7 +4929,7 @@ type28_aircraft:
 /* 039498 7F004968 01B46024 */  and   $t4, $t5, $s4
 /* 03949C 7F00496C 15800063 */  bnez  $t4, other_obj_expand
 /* 0394A0 7F004970 00000000 */   nop   
-/* 0394A4 7F004974 0FC00767 */  jal   prepare_load_objects
+/* 0394A4 7F004974 0FC00767 */  jal   domakedefaultobj
 /* 0394A8 7F004978 02603025 */   move  $a2, $s3
 /* 0394AC 7F00497C 3C01BF80 */  li    $at, 0xBF800000 # -1.000000
 /* 0394B0 7F004980 44810000 */  mtc1  $at, $f0
@@ -4485,7 +4977,7 @@ type25_rename:
 /* 03954C 7F004A1C 372A0400 */  ori   $t2, $t9, 0x400
 /* 039550 7F004A20 AC4A0064 */  sw    $t2, 0x64($v0)
 .L7F004A24:
-/* 039554 7F004A24 0FC23628 */  jal   sub_GAME_7F08D8A0
+/* 039554 7F004A24 0FC23628 */  jal   bondinvAddTextOverride
 /* 039558 7F004A28 02402025 */   move  $a0, $s2
 /* 03955C 7F004A2C 10000033 */  b     other_obj_expand
 /* 039560 7F004A30 00000000 */   nop   
@@ -5496,7 +5988,7 @@ key_expand:
 /* 038FF0 7F004480 0134C824 */  and   $t9, $t1, $s4
 /* 038FF4 7F004484 172001A1 */  bnez  $t9, other_obj_expand
 /* 038FF8 7F004488 00000000 */   nop   
-/* 038FFC 7F00448C 0FC00A87 */  jal   jmp_prepare_load_objects
+/* 038FFC 7F00448C 0FC00A87 */  jal   jmp_domakedefaultobj
 /* 039000 7F004490 02603025 */   move  $a2, $s3
 /* 039004 7F004494 1000019D */  b     other_obj_expand
 /* 039008 7F004498 00000000 */   nop   
@@ -5549,7 +6041,7 @@ rack_expand:
 /* 0390B4 7F004544 01144824 */  and   $t1, $t0, $s4
 /* 0390B8 7F004548 15200170 */  bnez  $t1, other_obj_expand
 /* 0390BC 7F00454C 00000000 */   nop   
-/* 0390C0 7F004550 0FC00B87 */  jal   jmp_prepare_load_objects_0
+/* 0390C0 7F004550 0FC00B87 */  jal   jmp_domakedefaultobj_0
 /* 0390C4 7F004554 02603025 */   move  $a2, $s3
 /* 0390C8 7F004558 1000016C */  b     other_obj_expand
 /* 0390CC 7F00455C 00000000 */   nop   
@@ -5602,7 +6094,7 @@ body_armor_expand:
 /* 039178 7F004608 46062203 */  div.s $f8, $f4, $f6
 /* 03917C 7F00460C E6480080 */  swc1  $f8, 0x80($s2)
 /* 039180 7F004610 C64A0080 */  lwc1  $f10, 0x80($s2)
-/* 039184 7F004614 0FC00767 */  jal   prepare_load_objects
+/* 039184 7F004614 0FC00767 */  jal   domakedefaultobj
 /* 039188 7F004618 E64A0084 */   swc1  $f10, 0x84($s2)
 /* 03918C 7F00461C 1000013B */  b     other_obj_expand
 /* 039190 7F004620 00000000 */   nop   
@@ -5676,7 +6168,7 @@ type2F_tinted_glass:
 /* 039298 7F004728 02A02025 */  move  $a0, $s5
 .L7F00472C:
 /* 03929C 7F00472C 02402825 */  move  $a1, $s2
-/* 0392A0 7F004730 0FC00767 */  jal   prepare_load_objects
+/* 0392A0 7F004730 0FC00767 */  jal   domakedefaultobj
 /* 0392A4 7F004734 02603025 */   move  $a2, $s3
 /* 0392A8 7F004738 100000F4 */  b     other_obj_expand
 /* 0392AC 7F00473C 00000000 */   nop   
@@ -5689,7 +6181,7 @@ obj_03_expand:
 /* 0392C4 7F004754 01F47024 */  and   $t6, $t7, $s4
 /* 0392C8 7F004758 15C000EC */  bnez  $t6, other_obj_expand
 /* 0392CC 7F00475C 00000000 */   nop   
-/* 0392D0 7F004760 0FC00767 */  jal   prepare_load_objects
+/* 0392D0 7F004760 0FC00767 */  jal   domakedefaultobj
 /* 0392D4 7F004764 02603025 */   move  $a2, $s3
 /* 0392D8 7F004768 100000E8 */  b     other_obj_expand
 /* 0392DC 7F00476C 00000000 */   nop   
@@ -5738,7 +6230,7 @@ ammo_box_expand:
 /* 039378 7F004808 26100004 */   addiu $s0, $s0, 4
 /* 03937C 7F00480C 02A02025 */  move  $a0, $s5
 /* 039380 7F004810 02402825 */  move  $a1, $s2
-/* 039384 7F004814 0FC00767 */  jal   prepare_load_objects
+/* 039384 7F004814 0FC00767 */  jal   domakedefaultobj
 /* 039388 7F004818 02603025 */   move  $a2, $s3
 /* 03938C 7F00481C 100000BB */  b     other_obj_expand
 /* 039390 7F004820 00000000 */   nop   
@@ -5750,11 +6242,11 @@ type2D_tank:
 /* 0393A4 7F004834 01947824 */  and   $t7, $t4, $s4
 /* 0393A8 7F004838 15E000B4 */  bnez  $t7, other_obj_expand
 /* 0393AC 7F00483C 00000000 */   nop   
-/* 0393B0 7F004840 0FC015CC */  jal   set_weapon_model_generated_thrown_object
+/* 0393B0 7F004840 0FC015CC */  jal   weaponLoadProjectileModels
 /* 0393B4 7F004844 E7B400E8 */   swc1  $f20, 0xe8($sp)
 /* 0393B8 7F004848 02A02025 */  move  $a0, $s5
 /* 0393BC 7F00484C 02402825 */  move  $a1, $s2
-/* 0393C0 7F004850 0FC00767 */  jal   prepare_load_objects
+/* 0393C0 7F004850 0FC00767 */  jal   domakedefaultobj
 /* 0393C4 7F004854 02603025 */   move  $a2, $s3
 /* 0393C8 7F004858 E65400C8 */  swc1  $f20, 0xc8($s2)
 /* 0393CC 7F00485C E65400CC */  swc1  $f20, 0xcc($s2)
@@ -5789,7 +6281,7 @@ type27_wheeled_vehicle:
 /* 039438 7F0048C8 01D4C024 */  and   $t8, $t6, $s4
 /* 03943C 7F0048CC 1700008F */  bnez  $t8, other_obj_expand
 /* 039440 7F0048D0 00000000 */   nop   
-/* 039444 7F0048D4 0FC00767 */  jal   prepare_load_objects
+/* 039444 7F0048D4 0FC00767 */  jal   domakedefaultobj
 /* 039448 7F0048D8 02603025 */   move  $a2, $s3
 /* 03944C 7F0048DC 8E440014 */  lw    $a0, 0x14($s2)
 /* 039450 7F0048E0 5080000E */  beql  $a0, $zero, .L7F00491C
@@ -5835,7 +6327,7 @@ type28_aircraft:
 /* 0394E8 7F004978 01947824 */  and   $t7, $t4, $s4
 /* 0394EC 7F00497C 15E00063 */  bnez  $t7, other_obj_expand
 /* 0394F0 7F004980 00000000 */   nop   
-/* 0394F4 7F004984 0FC00767 */  jal   prepare_load_objects
+/* 0394F4 7F004984 0FC00767 */  jal   domakedefaultobj
 /* 0394F8 7F004988 02603025 */   move  $a2, $s3
 /* 0394FC 7F00498C 3C01BF80 */  li    $at, 0xBF800000 # -1.000000
 /* 039500 7F004990 44810000 */  mtc1  $at, $f0
@@ -5883,7 +6375,7 @@ type25_rename:
 /* 03959C 7F004A2C 354B0400 */  ori   $t3, $t2, 0x400
 /* 0395A0 7F004A30 AC4B0064 */  sw    $t3, 0x64($v0)
 .L7F004A34:
-/* 0395A4 7F004A34 0FC238E2 */  jal   sub_GAME_7F08D8A0
+/* 0395A4 7F004A34 0FC238E2 */  jal   bondinvAddTextOverride
 /* 0395A8 7F004A38 02402025 */   move  $a0, $s2
 /* 0395AC 7F004A3C 10000033 */  b     other_obj_expand
 /* 0395B0 7F004A40 00000000 */   nop   
@@ -6894,7 +7386,7 @@ key_expand:
 /* 036DFC 7F00440C 0134C824 */  and   $t9, $t1, $s4
 /* 036E00 7F004410 1720019F */  bnez  $t9, other_obj_expand
 /* 036E04 7F004414 00000000 */   nop   
-/* 036E08 7F004418 0FC00A61 */  jal   jmp_prepare_load_objects
+/* 036E08 7F004418 0FC00A61 */  jal   jmp_domakedefaultobj
 /* 036E0C 7F00441C 02603025 */   move  $a2, $s3
 /* 036E10 7F004420 1000019B */  b     other_obj_expand
 /* 036E14 7F004424 00000000 */   nop   
@@ -6947,7 +7439,7 @@ rack_expand:
 /* 036EC0 7F0044D0 01144824 */  and   $t1, $t0, $s4
 /* 036EC4 7F0044D4 1520016E */  bnez  $t1, other_obj_expand
 /* 036EC8 7F0044D8 00000000 */   nop   
-/* 036ECC 7F0044DC 0FC00B63 */  jal   jmp_prepare_load_objects_0
+/* 036ECC 7F0044DC 0FC00B63 */  jal   jmp_domakedefaultobj_0
 /* 036ED0 7F0044E0 02603025 */   move  $a2, $s3
 /* 036ED4 7F0044E4 1000016A */  b     other_obj_expand
 /* 036ED8 7F0044E8 00000000 */   nop   
@@ -7001,7 +7493,7 @@ body_armor_expand:
 /* 036F84 7F004594 46062203 */  div.s $f8, $f4, $f6
 /* 036F88 7F004598 E6480080 */  swc1  $f8, 0x80($s2)
 /* 036F8C 7F00459C C64A0080 */  lwc1  $f10, 0x80($s2)
-/* 036F90 7F0045A0 0FC00767 */  jal   prepare_load_objects
+/* 036F90 7F0045A0 0FC00767 */  jal   domakedefaultobj
 /* 036F94 7F0045A4 E64A0084 */   swc1  $f10, 0x84($s2)
 /* 036F98 7F0045A8 10000139 */  b     other_obj_expand
 /* 036F9C 7F0045AC 00000000 */   nop   
@@ -7075,7 +7567,7 @@ type2F_tinted_glass:
 /* 0370A4 7F0046B4 02A02025 */  move  $a0, $s5
 .L7F0046B8:
 /* 0370A8 7F0046B8 02402825 */  move  $a1, $s2
-/* 0370AC 7F0046BC 0FC00767 */  jal   prepare_load_objects
+/* 0370AC 7F0046BC 0FC00767 */  jal   domakedefaultobj
 /* 0370B0 7F0046C0 02603025 */   move  $a2, $s3
 /* 0370B4 7F0046C4 100000F2 */  b     other_obj_expand
 /* 0370B8 7F0046C8 00000000 */   nop   
@@ -7088,7 +7580,7 @@ obj_03_expand:
 /* 0370D0 7F0046E0 01F47024 */  and   $t6, $t7, $s4
 /* 0370D4 7F0046E4 15C000EA */  bnez  $t6, other_obj_expand
 /* 0370D8 7F0046E8 00000000 */   nop   
-/* 0370DC 7F0046EC 0FC00767 */  jal   prepare_load_objects
+/* 0370DC 7F0046EC 0FC00767 */  jal   domakedefaultobj
 /* 0370E0 7F0046F0 02603025 */   move  $a2, $s3
 /* 0370E4 7F0046F4 100000E6 */  b     other_obj_expand
 /* 0370E8 7F0046F8 00000000 */   nop   
@@ -7135,7 +7627,7 @@ ammo_box_expand:
 /* 03717C 7F00478C 26100004 */   addiu $s0, $s0, 4
 /* 037180 7F004790 02A02025 */  move  $a0, $s5
 /* 037184 7F004794 02402825 */  move  $a1, $s2
-/* 037188 7F004798 0FC00767 */  jal   prepare_load_objects
+/* 037188 7F004798 0FC00767 */  jal   domakedefaultobj
 /* 03718C 7F00479C 02603025 */   move  $a2, $s3
 /* 037190 7F0047A0 100000BB */  b     other_obj_expand
 /* 037194 7F0047A4 00000000 */   nop   
@@ -7147,11 +7639,11 @@ type2D_tank:
 /* 0371A8 7F0047B8 01947824 */  and   $t7, $t4, $s4
 /* 0371AC 7F0047BC 15E000B4 */  bnez  $t7, other_obj_expand
 /* 0371B0 7F0047C0 00000000 */   nop   
-/* 0371B4 7F0047C4 0FC015AC */  jal   set_weapon_model_generated_thrown_object
+/* 0371B4 7F0047C4 0FC015AC */  jal   weaponLoadProjectileModels
 /* 0371B8 7F0047C8 E7B400E8 */   swc1  $f20, 0xe8($sp)
 /* 0371BC 7F0047CC 02A02025 */  move  $a0, $s5
 /* 0371C0 7F0047D0 02402825 */  move  $a1, $s2
-/* 0371C4 7F0047D4 0FC00767 */  jal   prepare_load_objects
+/* 0371C4 7F0047D4 0FC00767 */  jal   domakedefaultobj
 /* 0371C8 7F0047D8 02603025 */   move  $a2, $s3
 /* 0371CC 7F0047DC E65400C8 */  swc1  $f20, 0xc8($s2)
 /* 0371D0 7F0047E0 E65400CC */  swc1  $f20, 0xcc($s2)
@@ -7186,7 +7678,7 @@ type27_wheeled_vehicle:
 /* 03723C 7F00484C 01D4C024 */  and   $t8, $t6, $s4
 /* 037240 7F004850 1700008F */  bnez  $t8, other_obj_expand
 /* 037244 7F004854 00000000 */   nop   
-/* 037248 7F004858 0FC00767 */  jal   prepare_load_objects
+/* 037248 7F004858 0FC00767 */  jal   domakedefaultobj
 /* 03724C 7F00485C 02603025 */   move  $a2, $s3
 /* 037250 7F004860 8E440014 */  lw    $a0, 0x14($s2)
 /* 037254 7F004864 5080000E */  beql  $a0, $zero, .L7F00491C
@@ -7232,7 +7724,7 @@ type28_aircraft:
 /* 0372EC 7F0048FC 01947824 */  and   $t7, $t4, $s4
 /* 0372F0 7F004900 15E00063 */  bnez  $t7, other_obj_expand
 /* 0372F4 7F004904 00000000 */   nop   
-/* 0372F8 7F004908 0FC00767 */  jal   prepare_load_objects
+/* 0372F8 7F004908 0FC00767 */  jal   domakedefaultobj
 /* 0372FC 7F00490C 02603025 */   move  $a2, $s3
 /* 037300 7F004910 3C01BF80 */  li    $at, 0xBF800000 # -1.000000
 /* 037304 7F004914 44810000 */  mtc1  $at, $f0
@@ -7280,7 +7772,7 @@ type25_rename:
 /* 0373A0 7F0049B0 354B0400 */  ori   $t3, $t2, 0x400
 /* 0373A4 7F0049B4 AC4B0064 */  sw    $t3, 0x64($v0)
 .L7F004A34:
-/* 0373A8 7F0049B8 0FC23782 */  jal   sub_GAME_7F08D8A0
+/* 0373A8 7F0049B8 0FC23782 */  jal   bondinvAddTextOverride
 /* 0373AC 7F0049BC 02402025 */   move  $a0, $s2
 /* 0373B0 7F0049C0 10000033 */  b     other_obj_expand
 /* 0373B4 7F0049C4 00000000 */   nop   

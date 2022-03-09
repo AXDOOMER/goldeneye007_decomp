@@ -19,12 +19,12 @@ f32 jpD_800484D0 = 1.0f;
 #endif
 
 s32 D_8004849C = -1;
-s32 D_800484A0 = 0;
-s32 D_800484A4 = 0;
-s32 D_800484A8 = 0;
+s32 D_800484A0 = 0; // half of D_80048494
+s32 D_800484A4 = 0; // is D_80048494 Odd
+s32 D_800484A8 = 0; // half - D_8004849C
 u32 copy_of_osgetcount_value_0 = 0;
 u32 copy_of_osgetcount_value_1 = 0;
-s32 D_800484B4 = 1;
+s32 D_800484B4 = 1; //usually 1
 
 
 
@@ -35,7 +35,7 @@ void store_osgetcount(void)
     copy_of_osgetcount_value_0 = copy_of_osgetcount_value_1;
 }
 
-
+//timing related
 void sub_GAME_7F0C0AA0(s32 arg0)
 {
     copy_of_osgetcount_value_0 = (s32) copy_of_osgetcount_value_1;
@@ -61,15 +61,15 @@ void sub_GAME_7F0C0AA0(s32 arg0)
 }
 
 
-void sub_GAME_7F0C0B4C(void)
+void sub_GAME_7F0C0B4C(void) //maybe WaitForTick
 {
-  u32 uVar1;
+  u32 uVar1; //next frame time?
   
   do {
     #ifdef REFRESH_PAL
-    uVar1 = ((osGetCount() - copy_of_osgetcount_value_1) + 465525) / 931050;
+    uVar1 = ((osGetCount() - copy_of_osgetcount_value_1) + 465525) / 931050; 
     #else
-    uVar1 = ((osGetCount() - copy_of_osgetcount_value_1) + 387937) / 775875;
+    uVar1 = ((osGetCount() - copy_of_osgetcount_value_1) + 387937) / 775875; //current time + 1/5
     #endif
   } while (uVar1 < D_800484B4);
 

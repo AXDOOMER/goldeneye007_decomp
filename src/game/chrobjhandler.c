@@ -35842,48 +35842,48 @@ void add_ammo_to_inventory(AMMOTYPE ammotype,int amount,int doplaysound,int dodi
 
             if (ammotype == AMMO_GRENADE)
             {
-                add_item_to_inventory(ITEM_GRENADE);
+                bondinvAddInvItem(ITEM_GRENADE);
             }
             else if (ammotype == AMMO_REMOTEMINE)
             {
-                add_item_to_inventory(ITEM_REMOTEMINE);
-                add_item_to_inventory(ITEM_TRIGGER);
+                bondinvAddInvItem(ITEM_REMOTEMINE);
+                bondinvAddInvItem(ITEM_TRIGGER);
             }
             else if (ammotype == AMMO_PROXMINE)
             {
-                add_item_to_inventory(ITEM_PROXIMITYMINE);
+                bondinvAddInvItem(ITEM_PROXIMITYMINE);
             }
             else if (ammotype == AMMO_TIMEDMINE)
             {
-                add_item_to_inventory(ITEM_TIMEDMINE);
+                bondinvAddInvItem(ITEM_TIMEDMINE);
             }
             else if (ammotype == AMMO_KNIFE)
             {
-                add_item_to_inventory(ITEM_THROWKNIFE);
+                bondinvAddInvItem(ITEM_THROWKNIFE);
             }
             else if (ammotype == AMMO_BOMBCASE)
             {
-                add_item_to_inventory(ITEM_BOMBCASE);
+                bondinvAddInvItem(ITEM_BOMBCASE);
             }
             else if (ammotype == AMMO_BUG)
             {
-                add_item_to_inventory(ITEM_BUG);
+                bondinvAddInvItem(ITEM_BUG);
             }
             else if (ammotype == AMMO_MICRO_CAMERA)
             {
-                add_item_to_inventory(ITEM_MICROCAMERA);
+                bondinvAddInvItem(ITEM_MICROCAMERA);
             }
             else if (ammotype == AMMO_GEKEY)
             {
-                add_item_to_inventory(ITEM_GOLDENEYEKEY);
+                bondinvAddInvItem(ITEM_GOLDENEYEKEY);
             }
             else if (ammotype == AMMO_TOKEN)
             {
-                add_item_to_inventory(ITEM_TOKEN);
+                bondinvAddInvItem(ITEM_TOKEN);
             }
             else if (ammotype == AMMO_PLASTIQUE)
             {
-                add_item_to_inventory(ITEM_PLASTIQUE);
+                bondinvAddInvItem(ITEM_PLASTIQUE);
             }
 #if !defined(BUGFIX_R1)
         }
@@ -36697,7 +36697,7 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, bool showstring) //#5
             sndPlaySfx(g_musicSfxBufferPtr, 0xE5, 0);
             if (showstring)
             {
-                char *text = obj_get_activated_text(propobj);
+                char *text = bondinvGetActivatedTextObject(propobj);
                 if (!text)
                 {
                     text = langGet(0xA43C);
@@ -36743,7 +36743,7 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, bool showstring) //#5
 
             if (wep->weaponnum == ITEM_REMOTEMINE)
             {
-                add_item_to_inventory(ITEM_TRIGGER);
+                bondinvAddInvItem(ITEM_TRIGGER);
             }
             else if (wep->weaponnum == ITEM_TOKEN)
             {
@@ -36757,7 +36757,7 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, bool showstring) //#5
                 }
                 if (showstring)
                 {
-                    text = obj_get_activated_text(propobj);
+                    text = bondinvGetActivatedTextObject(propobj);
                     if (text)
                     {
                         hudmsgBottomShow(text);
@@ -36778,7 +36778,7 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, bool showstring) //#5
                 }
                 if (showstring)
                 {
-                    text2 = weapon_get_activated_text(wep->weaponnum);
+                    text2 = bondinvGetActivatedTextWeapon(wep->weaponnum);
 
                     if (text2 != 0)
                     {
@@ -36819,7 +36819,7 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, bool showstring) //#5
             sndPlaySfx(g_musicSfxBufferPtr, 0x51, 0);
             if (showstring)
             {
-                text = obj_get_activated_text(armour);
+                text = bondinvGetActivatedTextObject(armour);
 
                 if (text == 0)
                 {
@@ -36843,7 +36843,7 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, bool showstring) //#5
             sndPlaySfx(g_musicSfxBufferPtr, 0xE5, 0);
             if (showstring)
             {
-                text = obj_get_activated_text(propobj);
+                text = bondinvGetActivatedTextObject(propobj);
                 if (text == 0)
                 {
                     text = langGet(0xA43F);
@@ -36861,7 +36861,7 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, bool showstring) //#5
     }
     if (collectType != 0)
     {
-        add_prop_to_inventory(prop);
+        bondinvAddPropToInv(prop);
         return INV_ITEM_PICKUP;
     }
     return INV_ITEM_NONE; //inventory(4) or ammo(1) or nothing(0)
@@ -36960,7 +36960,7 @@ interact_key_object:
 /* 084E08 7F0502D8 8FAB0074 */  lw    $t3, 0x74($sp)
 /* 084E0C 7F0502DC 1160000A */  beqz  $t3, .L7F050308
 /* 084E10 7F0502E0 00000000 */   nop   
-/* 084E14 7F0502E4 0FC23657 */  jal   obj_get_activated_text
+/* 084E14 7F0502E4 0FC23657 */  jal   bondinvGetActivatedTextObject
 /* 084E18 7F0502E8 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 084E1C 7F0502EC 14400004 */  bnez  $v0, .L7F050300
 /* 084E20 7F0502F0 00402025 */   move  $a0, $v0
@@ -37039,7 +37039,7 @@ interact_weapon_object:
 /* 084F24 7F0503F4 81A40080 */  lb    $a0, 0x80($t5)
 /* 084F28 7F0503F8 54810006 */  bnel  $a0, $at, .L7F050414
 /* 084F2C 7F0503FC 24010058 */   li    $at, 88
-/* 084F30 7F050400 0FC23122 */  jal   add_item_to_inventory
+/* 084F30 7F050400 0FC23122 */  jal   bondinvAddInvItem
 /* 084F34 7F050404 2404001E */   li    $a0, 30
 /* 084F38 7F050408 10000007 */  b     .L7F050428
 /* 084F3C 7F05040C 8FAE006C */   lw    $t6, 0x6c($sp)
@@ -37061,13 +37061,13 @@ interact_weapon_object:
 /* 084F70 7F050440 29010021 */  slti  $at, $t0, 0x21
 /* 084F74 7F050444 50200004 */  beql  $at, $zero, .L7F050458
 /* 084F78 7F050448 8FA90074 */   lw    $t1, 0x74($sp)
-/* 084F7C 7F05044C 0FC231D9 */  jal   add_weapon_by_prop
+/* 084F7C 7F05044C 0FC231D9 */  jal   bondinvAddWeaponByProp
 /* 084F80 7F050450 8FA40070 */   lw    $a0, 0x70($sp)
 /* 084F84 7F050454 8FA90074 */  lw    $t1, 0x74($sp)
 .L7F050458:
 /* 084F88 7F050458 5120000F */  beql  $t1, $zero, .L7F050498
 /* 084F8C 7F05045C 8FAC0048 */   lw    $t4, 0x48($sp)
-/* 084F90 7F050460 0FC23657 */  jal   obj_get_activated_text
+/* 084F90 7F050460 0FC23657 */  jal   bondinvGetActivatedTextObject
 /* 084F94 7F050464 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 084F98 7F050468 10400005 */  beqz  $v0, .L7F050480
 /* 084F9C 7F05046C 00402025 */   move  $a0, $v0
@@ -37088,7 +37088,7 @@ interact_weapon_object:
 /* 084FCC 7F05049C 1000001C */  b     .L7F050510
 /* 084FD0 7F0504A0 81840080 */   lb    $a0, 0x80($t4)
 .L7F0504A4:
-/* 084FD4 7F0504A4 0FC231D9 */  jal   add_weapon_by_prop
+/* 084FD4 7F0504A4 0FC231D9 */  jal   bondinvAddWeaponByProp
 /* 084FD8 7F0504A8 8FA40070 */   lw    $a0, 0x70($sp)
 /* 084FDC 7F0504AC 10400002 */  beqz  $v0, .L7F0504B8
 /* 084FE0 7F0504B0 240D0001 */   li    $t5, 1
@@ -37098,7 +37098,7 @@ interact_weapon_object:
 /* 084FEC 7F0504BC 8FAF0048 */  lw    $t7, 0x48($sp)
 /* 084FF0 7F0504C0 51C00011 */  beql  $t6, $zero, .L7F050508
 /* 084FF4 7F0504C4 8FA90048 */   lw    $t1, 0x48($sp)
-/* 084FF8 7F0504C8 0FC23669 */  jal   weapon_get_activated_text
+/* 084FF8 7F0504C8 0FC23669 */  jal   bondinvGetActivatedTextWeapon
 /* 084FFC 7F0504CC 81E40080 */   lb    $a0, 0x80($t7)
 /* 085000 7F0504D0 10400006 */  beqz  $v0, .L7F0504EC
 /* 085004 7F0504D4 00402025 */   move  $a0, $v0
@@ -37171,7 +37171,7 @@ interact_bodyarmor_object:
 /* 085100 7F0505D0 8FAE0074 */  lw    $t6, 0x74($sp)
 /* 085104 7F0505D4 11C00013 */  beqz  $t6, .L7F050624
 /* 085108 7F0505D8 00000000 */   nop   
-/* 08510C 7F0505DC 0FC23657 */  jal   obj_get_activated_text
+/* 08510C 7F0505DC 0FC23657 */  jal   bondinvGetActivatedTextObject
 /* 085110 7F0505E0 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 085114 7F0505E4 1440000D */  bnez  $v0, .L7F05061C
 /* 085118 7F0505E8 00402025 */   move  $a0, $v0
@@ -37204,7 +37204,7 @@ interact_default_object:
 /* 085170 7F050640 8FAF0074 */  lw    $t7, 0x74($sp)
 /* 085174 7F050644 51E0000B */  beql  $t7, $zero, .L7F050674
 /* 085178 7F050648 24030004 */   li    $v1, 4
-/* 08517C 7F05064C 0FC23657 */  jal   obj_get_activated_text
+/* 08517C 7F05064C 0FC23657 */  jal   bondinvGetActivatedTextObject
 /* 085180 7F050650 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 085184 7F050654 14400004 */  bnez  $v0, .L7F050668
 /* 085188 7F050658 00402025 */   move  $a0, $v0
@@ -37235,7 +37235,7 @@ interact_default_object:
 .L7F0506B0:
 /* 0851E0 7F0506B0 10600005 */  beqz  $v1, .L7F0506C8
 /* 0851E4 7F0506B4 00001025 */   move  $v0, $zero
-/* 0851E8 7F0506B8 0FC231C9 */  jal   add_prop_to_inventory
+/* 0851E8 7F0506B8 0FC231C9 */  jal   bondinvAddPropToInv
 /* 0851EC 7F0506BC 8FA40070 */   lw    $a0, 0x70($sp)
 /* 0851F0 7F0506C0 10000001 */  b     .L7F0506C8
 /* 0851F4 7F0506C4 24020004 */   li    $v0, 4
@@ -37340,7 +37340,7 @@ interact_key_object:
 /* 084E08 7F0502D8 8FAB0074 */  lw    $t3, 0x74($sp)
 /* 084E0C 7F0502DC 1160000A */  beqz  $t3, .L7F050308
 /* 084E10 7F0502E0 00000000 */   nop   
-/* 084E14 7F0502E4 0FC23657 */  jal   obj_get_activated_text
+/* 084E14 7F0502E4 0FC23657 */  jal   bondinvGetActivatedTextObject
 /* 084E18 7F0502E8 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 084E1C 7F0502EC 14400004 */  bnez  $v0, .L7F050300
 /* 084E20 7F0502F0 00402025 */   move  $a0, $v0
@@ -37419,7 +37419,7 @@ interact_weapon_object:
 /* 084F24 7F0503F4 81A40080 */  lb    $a0, 0x80($t5)
 /* 084F28 7F0503F8 54810006 */  bnel  $a0, $at, .L7F050414
 /* 084F2C 7F0503FC 24010058 */   li    $at, 88
-/* 084F30 7F050400 0FC23122 */  jal   add_item_to_inventory
+/* 084F30 7F050400 0FC23122 */  jal   bondinvAddInvItem
 /* 084F34 7F050404 2404001E */   li    $a0, 30
 /* 084F38 7F050408 10000007 */  b     .L7F050428
 /* 084F3C 7F05040C 8FAE006C */   lw    $t6, 0x6c($sp)
@@ -37441,13 +37441,13 @@ interact_weapon_object:
 /* 084F70 7F050440 29010021 */  slti  $at, $t0, 0x21
 /* 084F74 7F050444 50200004 */  beql  $at, $zero, .L7F050458
 /* 084F78 7F050448 8FA90074 */   lw    $t1, 0x74($sp)
-/* 084F7C 7F05044C 0FC231D9 */  jal   add_weapon_by_prop
+/* 084F7C 7F05044C 0FC231D9 */  jal   bondinvAddWeaponByProp
 /* 084F80 7F050450 8FA40070 */   lw    $a0, 0x70($sp)
 /* 084F84 7F050454 8FA90074 */  lw    $t1, 0x74($sp)
 .L7F050458:
 /* 084F88 7F050458 5120000F */  beql  $t1, $zero, .L7F050498
 /* 084F8C 7F05045C 8FAC0048 */   lw    $t4, 0x48($sp)
-/* 084F90 7F050460 0FC23657 */  jal   obj_get_activated_text
+/* 084F90 7F050460 0FC23657 */  jal   bondinvGetActivatedTextObject
 /* 084F94 7F050464 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 084F98 7F050468 10400005 */  beqz  $v0, .L7F050480
 /* 084F9C 7F05046C 00402025 */   move  $a0, $v0
@@ -37468,7 +37468,7 @@ interact_weapon_object:
 /* 084FCC 7F05049C 1000001C */  b     .L7F050510
 /* 084FD0 7F0504A0 81840080 */   lb    $a0, 0x80($t4)
 .L7F0504A4:
-/* 084FD4 7F0504A4 0FC231D9 */  jal   add_weapon_by_prop
+/* 084FD4 7F0504A4 0FC231D9 */  jal   bondinvAddWeaponByProp
 /* 084FD8 7F0504A8 8FA40070 */   lw    $a0, 0x70($sp)
 /* 084FDC 7F0504AC 10400002 */  beqz  $v0, .L7F0504B8
 /* 084FE0 7F0504B0 240D0001 */   li    $t5, 1
@@ -37478,7 +37478,7 @@ interact_weapon_object:
 /* 084FEC 7F0504BC 8FAF0048 */  lw    $t7, 0x48($sp)
 /* 084FF0 7F0504C0 51C00011 */  beql  $t6, $zero, .L7F050508
 /* 084FF4 7F0504C4 8FA90048 */   lw    $t1, 0x48($sp)
-/* 084FF8 7F0504C8 0FC23669 */  jal   weapon_get_activated_text
+/* 084FF8 7F0504C8 0FC23669 */  jal   bondinvGetActivatedTextWeapon
 /* 084FFC 7F0504CC 81E40080 */   lb    $a0, 0x80($t7)
 /* 085000 7F0504D0 10400006 */  beqz  $v0, .L7F0504EC
 /* 085004 7F0504D4 00402025 */   move  $a0, $v0
@@ -37551,7 +37551,7 @@ interact_bodyarmor_object:
 /* 085100 7F0505D0 8FAE0074 */  lw    $t6, 0x74($sp)
 /* 085104 7F0505D4 11C00013 */  beqz  $t6, .L7F050624
 /* 085108 7F0505D8 00000000 */   nop   
-/* 08510C 7F0505DC 0FC23657 */  jal   obj_get_activated_text
+/* 08510C 7F0505DC 0FC23657 */  jal   bondinvGetActivatedTextObject
 /* 085110 7F0505E0 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 085114 7F0505E4 1440000D */  bnez  $v0, .L7F05061C
 /* 085118 7F0505E8 00402025 */   move  $a0, $v0
@@ -37584,7 +37584,7 @@ interact_default_object:
 /* 085170 7F050640 8FAF0074 */  lw    $t7, 0x74($sp)
 /* 085174 7F050644 51E0000B */  beql  $t7, $zero, .L7F050674
 /* 085178 7F050648 24030004 */   li    $v1, 4
-/* 08517C 7F05064C 0FC23657 */  jal   obj_get_activated_text
+/* 08517C 7F05064C 0FC23657 */  jal   bondinvGetActivatedTextObject
 /* 085180 7F050650 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 085184 7F050654 14400004 */  bnez  $v0, .L7F050668
 /* 085188 7F050658 00402025 */   move  $a0, $v0
@@ -37615,7 +37615,7 @@ interact_default_object:
 .L7F0506B0:
 /* 0851E0 7F0506B0 10600005 */  beqz  $v1, .L7F0506C8
 /* 0851E4 7F0506B4 00001025 */   move  $v0, $zero
-/* 0851E8 7F0506B8 0FC231C9 */  jal   add_prop_to_inventory
+/* 0851E8 7F0506B8 0FC231C9 */  jal   bondinvAddPropToInv
 /* 0851EC 7F0506BC 8FA40070 */   lw    $a0, 0x70($sp)
 /* 0851F0 7F0506C0 10000001 */  b     .L7F0506C8
 /* 0851F4 7F0506C4 24020004 */   li    $v0, 4
@@ -37721,7 +37721,7 @@ interact_key_object:
 /* 084E08 7F0502D8 8FAB0074 */  lw    $t3, 0x74($sp)
 /* 084E0C 7F0502DC 1160000A */  beqz  $t3, .L7F050308
 /* 084E10 7F0502E0 00000000 */   nop   
-/* 084E14 7F0502E4 0FC23657 */  jal   obj_get_activated_text
+/* 084E14 7F0502E4 0FC23657 */  jal   bondinvGetActivatedTextObject
 /* 084E18 7F0502E8 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 084E1C 7F0502EC 14400004 */  bnez  $v0, .L7F050300
 /* 084E20 7F0502F0 00402025 */   move  $a0, $v0
@@ -37800,7 +37800,7 @@ interact_weapon_object:
 /* 084F24 7F0503F4 81A40080 */  lb    $a0, 0x80($t5)
 /* 084F28 7F0503F8 54810006 */  bnel  $a0, $at, .L7F050414
 /* 084F2C 7F0503FC 24010058 */   li    $at, 88
-/* 084F30 7F050400 0FC23122 */  jal   add_item_to_inventory
+/* 084F30 7F050400 0FC23122 */  jal   bondinvAddInvItem
 /* 084F34 7F050404 2404001E */   li    $a0, 30
 /* 084F38 7F050408 10000007 */  b     .L7F050428
 /* 084F3C 7F05040C 8FAE006C */   lw    $t6, 0x6c($sp)
@@ -37822,13 +37822,13 @@ interact_weapon_object:
 /* 084F70 7F050440 29010021 */  slti  $at, $t0, 0x21
 /* 084F74 7F050444 50200004 */  beql  $at, $zero, .L7F050458
 /* 084F78 7F050448 8FA90074 */   lw    $t1, 0x74($sp)
-/* 084F7C 7F05044C 0FC231D9 */  jal   add_weapon_by_prop
+/* 084F7C 7F05044C 0FC231D9 */  jal   bondinvAddWeaponByProp
 /* 084F80 7F050450 8FA40070 */   lw    $a0, 0x70($sp)
 /* 084F84 7F050454 8FA90074 */  lw    $t1, 0x74($sp)
 .L7F050458:
 /* 084F88 7F050458 5120000F */  beql  $t1, $zero, .L7F050498
 /* 084F8C 7F05045C 8FAC0048 */   lw    $t4, 0x48($sp)
-/* 084F90 7F050460 0FC23657 */  jal   obj_get_activated_text
+/* 084F90 7F050460 0FC23657 */  jal   bondinvGetActivatedTextObject
 /* 084F94 7F050464 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 084F98 7F050468 10400005 */  beqz  $v0, .L7F050480
 /* 084F9C 7F05046C 00402025 */   move  $a0, $v0
@@ -37849,7 +37849,7 @@ interact_weapon_object:
 /* 084FCC 7F05049C 1000001C */  b     .L7F050510
 /* 084FD0 7F0504A0 81840080 */   lb    $a0, 0x80($t4)
 .L7F0504A4:
-/* 084FD4 7F0504A4 0FC231D9 */  jal   add_weapon_by_prop
+/* 084FD4 7F0504A4 0FC231D9 */  jal   bondinvAddWeaponByProp
 /* 084FD8 7F0504A8 8FA40070 */   lw    $a0, 0x70($sp)
 /* 084FDC 7F0504AC 10400002 */  beqz  $v0, .L7F0504B8
 /* 084FE0 7F0504B0 240D0001 */   li    $t5, 1
@@ -37859,7 +37859,7 @@ interact_weapon_object:
 /* 084FEC 7F0504BC 8FAF0048 */  lw    $t7, 0x48($sp)
 /* 084FF0 7F0504C0 51C00011 */  beql  $t6, $zero, .L7F050508
 /* 084FF4 7F0504C4 8FA90048 */   lw    $t1, 0x48($sp)
-/* 084FF8 7F0504C8 0FC23669 */  jal   weapon_get_activated_text
+/* 084FF8 7F0504C8 0FC23669 */  jal   bondinvGetActivatedTextWeapon
 /* 084FFC 7F0504CC 81E40080 */   lb    $a0, 0x80($t7)
 /* 085000 7F0504D0 10400006 */  beqz  $v0, .L7F0504EC
 /* 085004 7F0504D4 00402025 */   move  $a0, $v0
@@ -37932,7 +37932,7 @@ interact_bodyarmor_object:
 /* 085100 7F0505D0 8FAE0074 */  lw    $t6, 0x74($sp)
 /* 085104 7F0505D4 11C00013 */  beqz  $t6, .L7F050624
 /* 085108 7F0505D8 00000000 */   nop   
-/* 08510C 7F0505DC 0FC23657 */  jal   obj_get_activated_text
+/* 08510C 7F0505DC 0FC23657 */  jal   bondinvGetActivatedTextObject
 /* 085110 7F0505E0 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 085114 7F0505E4 1440000D */  bnez  $v0, .L7F05061C
 /* 085118 7F0505E8 00402025 */   move  $a0, $v0
@@ -37965,7 +37965,7 @@ interact_default_object:
 /* 085170 7F050640 8FAF0074 */  lw    $t7, 0x74($sp)
 /* 085174 7F050644 51E0000B */  beql  $t7, $zero, .L7F050674
 /* 085178 7F050648 24030004 */   li    $v1, 4
-/* 08517C 7F05064C 0FC23657 */  jal   obj_get_activated_text
+/* 08517C 7F05064C 0FC23657 */  jal   bondinvGetActivatedTextObject
 /* 085180 7F050650 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 085184 7F050654 14400004 */  bnez  $v0, .L7F050668
 /* 085188 7F050658 00402025 */   move  $a0, $v0
@@ -37996,7 +37996,7 @@ interact_default_object:
 .L7F0506B0:
 /* 0851E0 7F0506B0 10600005 */  beqz  $v1, .L7F0506C8
 /* 0851E4 7F0506B4 00001025 */   move  $v0, $zero
-/* 0851E8 7F0506B8 0FC231C9 */  jal   add_prop_to_inventory
+/* 0851E8 7F0506B8 0FC231C9 */  jal   bondinvAddPropToInv
 /* 0851EC 7F0506BC 8FA40070 */   lw    $a0, 0x70($sp)
 /* 0851F0 7F0506C0 10000001 */  b     .L7F0506C8
 /* 0851F4 7F0506C4 24020004 */   li    $v0, 4
@@ -38016,9 +38016,305 @@ interact_default_object:
 
 
 #ifdef NONMATCHING
-void object_collectability_routines(void) {
 
+s32 object_collectability_routines(PropRecord *arg0)
+{
+    ObjectRecord *sp84;
+    ObjectRecord *sp80;
+    ObjectRecord *sp74;
+    ObjectRecord *sp70;
+    s32           sp6C;
+    ObjectRecord *sp64;
+    ObjectRecord *sp60;
+    s32           sp5C;
+    s32           sp58;
+    s32           sp40;
+    StandTile *   sp3C;
+    s32           sp38;
+    ObjectRecord *sp34;
+    ObjectRecord *sp30;
+    ObjectRecord *temp_a0;
+    ObjectRecord *temp_a1;
+    ObjectRecord *temp_v1;
+    ObjectRecord *temp_v1_2;
+    PropRecord *  temp_v0_7;
+    StandTile **  temp_a0_3;
+    f32           temp_f0;
+    f32           temp_f12;
+    f32           temp_f2;
+    f32           temp_v0_5;
+    s32           temp_v0_6;
+    s8            temp_a0_2;
+    u32           temp_v0;
+    u32           temp_v0_2;
+    u8            temp_v0_4;
+    void *        temp_v0_3;
+    u32           phi_v0;
+    ObjectRecord *phi_a0;
+    s8            phi_a0_2;
+    s8            phi_a1;
+    ObjectRecord *phi_v0_2;
+    ObjectRecord *phi_v1;
+    ObjectRecord *phi_a0_3;
+    s32           phi_v1_2;
+    s32           phi_v0_3;
+    s32           phi_v0_4;
+    s32           phi_v0_5;
+    s32           phi_v0_6;
+    s32           phi_a2;
+    s32           phi_v1_3;
+    s32           phi_v0_7;
+    s8            phi_a1_2;
+
+    temp_a0 = arg0->chr;
+    sp84    = temp_a0;
+    phi_a0  = temp_a0;
+    if ((check_if_collectable_object(temp_a0) != 0) && (temp_a0->Head.type != 0x11))
+    {
+        temp_v0 = temp_a0->flags;
+        phi_v0  = temp_v0;
+        if (temp_v0 & 0x100000)
+        {
+            return 0;
+        }
+        goto block_6;
+    }
+    temp_v0_2 = sp84->flags;
+    phi_v0    = temp_v0_2;
+    phi_a0    = sp84;
+    if ((temp_v0_2 << 0xD) >= 0)
+    {
+        return 0;
+    }
+block_6:
+    if (phi_v0 & 0x80000)
+    {
+        return 0;
+    }
+    if ((phi_a0->mtx.m[0][3] & 0x80) != 0)
+    {
+        temp_v0_3 = phi_a0->mtx.m[1][1];
+        if ((temp_v0_3->unkBC > 0) && (temp_v0_3->unk90 == 0))
+        {
+            return 0;
+        }
+    }
+    if (sub_GAME_7F03E7AC(phi_a0) == 0)
+    {
+        return 0;
+    }
+    temp_v0_4 = sp84->Head.type;
+    if (temp_v0_4 == 8)
+    {
+        temp_v1   = arg0->chr;
+        temp_a0_2 = temp_v1->unk80;
+        if (((temp_a0_2 == 0x1A) || (temp_a0_2 == 0x57)) && ((temp_v1->unk82 >= 0) || (((bitwise s32)sp84->mtx.m[0][3] & 4) != 0)))
+        {
+            return 0;
+        }
+        if (((temp_a0_2 == 0x1D) || (temp_a0_2 == 0x1C) || (temp_a0_2 == 0x1B) || (temp_a0_2 == 0x21) || (temp_a0_2 == 0x2F) || (temp_a0_2 == 0x30) || (temp_a0_2 == 0x22)) && ((temp_v1->unk82 >= 0) || (((bitwise s32)sp84->mtx.m[0][3] & 4) != 0)))
+        {
+            return 0;
+        }
+        if ((temp_a0_2 == 0x56) && (((bitwise s32)sp84->mtx.m[0][3] & 0x80) != 0))
+        {
+            return 0;
+        }
+        sp80 = temp_v1;
+        if (is_item_in_inventory(temp_a0_2, sp84) != 0)
+        {
+            sp80 = temp_v1;
+            if (get_ammo_type_for_weapon(temp_v1->unk80) != 0)
+            {
+                sp80 = temp_v1;
+                sp38 = get_ammo_count_for_weapon(temp_v1->unk80);
+                if (sp38 >= get_max_ammo_for_weapon(temp_v1->unk80))
+                {
+                    temp_v0_5 = temp_v1->mtx.m[2][3];
+                    if (((bitwise s32)temp_v0_5 != 0) || (temp_v1->unk81 >= 0))
+                    {
+                        if ((bitwise s32)temp_v0_5 != 0)
+                        {
+                            phi_a1_2 = temp_v0_5->unk80;
+                        }
+                        else
+                        {
+                            phi_a1_2 = temp_v1->unk81;
+                        }
+                        phi_a0_2 = phi_a1_2;
+                        phi_a1   = phi_a1_2;
+                        if ((temp_v1->flags * 8) < 0)
+                        {
+                            phi_a1 = temp_v1->unk80;
+                        }
+                        else
+                        {
+                            phi_a0_2 = temp_v1->unk80;
+                        }
+                        if (is_dual_weapon_in_inventory(phi_a0_2, phi_a1, sp38) != 0)
+                        {
+                            return 0;
+                        }
+                        goto block_74;
+                    }
+                    return 0;
+                }
+            }
+        }
+        goto block_74;
+    }
+    if (temp_v0_4 == 7)
+    {
+        temp_v1_2 = arg0->chr;
+        sp74      = temp_v1_2;
+        sp38      = check_cur_player_ammo_amount_in_inventory((bitwise ObjectRecord *)temp_v1_2->mtx.m[2][2], sp84);
+        if (sp38 >= get_max_ammo_for_type((bitwise ObjectRecord *)temp_v1_2->mtx.m[2][2]))
+        {
+            return 0;
+        }
+        goto block_74;
+    }
+    if (temp_v0_4 == 0x14)
+    {
+        sp6C   = 1;
+        sp70   = arg0->chr;
+        phi_v1 = sp70;
+        if (do_something_if_object_destroyed(sp84) != 0)
+        {
+            return 0;
+        }
+        phi_v0_2 = NULL;
+loop_54:
+        temp_a1  = phi_v0_2 + 1;
+        phi_a0_3 = temp_a1;
+        if (phi_v0_2 == 1)
+        {
+            phi_a0_3 = 1;
+        }
+        if ((phi_v1->unk82 > 0) && (sp30 = phi_v1, sp64 = phi_a0_3, sp34 = temp_a1, sp38 = check_cur_player_ammo_amount_in_inventory(phi_a0_3, temp_a1), ((sp38 < get_max_ammo_for_type(phi_a0_3)) != 0)))
+        {
+            sp6C = 0;
+        }
+        else
+        {
+            phi_v0_2 += 1;
+            phi_v1 += 4;
+            if ((phi_v0_2 + 1) != 0xD)
+            {
+                goto loop_54;
+            }
+        }
+        if (sp6C != 0)
+        {
+            return 0;
+        }
+        goto block_74;
+    }
+    if (temp_v0_4 == 0x15)
+    {
+        sp5C = 0;
+        sp60 = arg0->chr;
+        if (sp60->mtx.m[2][3] <= get_BONDdata_watch_armor())
+        {
+            sp5C = 1;
+        }
+        else if (getPlayerCount() >= 2)
+        {
+            temp_v0_6 = get_scenario();
+            phi_v1_2  = temp_v0_6;
+            if ((temp_v0_6 == 2) && (sp58 = temp_v0_6, phi_v1_2 = sp58, (bondinvIsAliveWithFlag() != 0)))
+            {
+                sp5C = 1;
+            }
+            else if ((phi_v1_2 == 3) && (checkforgoldengun() != 0))
+            {
+                sp5C = 1;
+            }
+        }
+        if (sp5C != 0)
+        {
+            return 0;
+        }
+        goto block_74;
+    }
+block_74:
+    if ((get_curplay_vertical_rotation_in_degrees() < -0.7853982f) && (g_CurrentPlayer->unk1270 < 0))
+    {
+        return 0;
+    }
+    temp_v0_7 = get_curplayer_positiondata();
+    temp_f0   = sp84->mtx.m[0][0] - temp_v0_7->pos.AsArray[0];
+    temp_f12  = sp84->mtx.m[0][1] - temp_v0_7->pos.AsArray[1];
+    temp_f2   = sp84->mtx.m[0][2] - temp_v0_7->pos.AsArray[2];
+    if (g_CurrentPlayer->unk1270 >= 0x3C)
+    {
+        phi_v0_3 = 0;
+        phi_v0_4 = 0;
+        if (((temp_f0 * temp_f0) + (temp_f2 * temp_f2)) <= 122500.0f)
+        {
+            phi_v0_3 = 1;
+        }
+        phi_a2 = phi_v0_3;
+        if (phi_v0_3 != 0)
+        {
+            if (temp_f12 >= -500.0f)
+            {
+                phi_v0_4 = 1;
+            }
+            phi_a2 = phi_v0_4;
+            if (phi_v0_4 != 0)
+            {
+                phi_a2 = 0;
+                if (temp_f12 <= 500.0f)
+                {
+                    phi_a2 = 1;
+                }
+            }
+        }
+    }
+    else
+    {
+        phi_v0_5 = 0;
+        phi_v0_6 = 0;
+        if (((temp_f0 * temp_f0) + (temp_f2 * temp_f2)) <= 10000.0f)
+        {
+            phi_v0_5 = 1;
+        }
+        phi_a2 = phi_v0_5;
+        if (phi_v0_5 != 0)
+        {
+            if (temp_f12 >= -200.0f)
+            {
+                phi_v0_6 = 1;
+            }
+            phi_a2 = phi_v0_6;
+            if (phi_v0_6 != 0)
+            {
+                phi_a2 = 0;
+                if (temp_f12 <= 200.0f)
+                {
+                    phi_a2 = 1;
+                }
+            }
+        }
+    }
+    phi_v1_3 = phi_a2;
+    if (phi_a2 != 0)
+    {
+        temp_a0_3 = &sp3C;
+        if (((sp84->flags2 & 0x1000) == 0) && ((sp3C = temp_v0_7->stan, sp40 = phi_a2, phi_v1_3 = phi_a2, (sub_GAME_7F0B0E24(temp_a0_3, temp_v0_7->pos.AsArray[0], temp_v0_7->pos.AsArray[2], arg0->pos.AsArray[0], arg0->pos.AsArray[2], 2, 30.0f, 30.0f, 0.0f, 1.0f) == 0)) || (sp3C != arg0->stan)))
+        {
+            phi_v1_3 = 0;
+        }
+    }
+    phi_v0_7 = 0;
+    if (phi_v1_3 != 0)
+    {
+        phi_v0_7 = collect_or_interact_object(arg0, 1);
+    }
+    return phi_v0_7;
 }
+
 #else
 
 #ifdef VERSION_US
@@ -38152,7 +38448,7 @@ glabel object_collectability_routines
 /* 0853A0 7F050870 1000012B */  b     .L7F050D20
 /* 0853A4 7F050874 00001025 */   move  $v0, $zero
 .L7F050878:
-/* 0853A8 7F050878 0FC230C5 */  jal   is_item_in_inventory
+/* 0853A8 7F050878 0FC230C5 */  jal   bondinvHasInvItem
 /* 0853AC 7F05087C AFA30080 */   sw    $v1, 0x80($sp)
 /* 0853B0 7F050880 1040009B */  beqz  $v0, .L7F050AF0
 /* 0853B4 7F050884 8FA30080 */   lw    $v1, 0x80($sp)
@@ -38197,7 +38493,7 @@ glabel object_collectability_routines
 /* 085444 7F050914 80650080 */   lb    $a1, 0x80($v1)
 /* 085448 7F050918 80640080 */  lb    $a0, 0x80($v1)
 .L7F05091C:
-/* 08544C 7F05091C 0FC230E7 */  jal   is_dual_weapon_in_inventory
+/* 08544C 7F05091C 0FC230E7 */  jal   bondinvHasDualWeapon
 /* 085450 7F050920 00000000 */   nop   
 /* 085454 7F050924 10400072 */  beqz  $v0, .L7F050AF0
 /* 085458 7F050928 00000000 */   nop   
@@ -38315,7 +38611,7 @@ glabel object_collectability_routines
 /* 0855EC 7F050ABC 24010003 */  li    $at, 3
 /* 0855F0 7F050AC0 54610007 */  bnel  $v1, $at, .L7F050AE0
 /* 0855F4 7F050AC4 8FAB005C */   lw    $t3, 0x5c($sp)
-/* 0855F8 7F050AC8 0FC233F0 */  jal   checkforgoldengun
+/* 0855F8 7F050AC8 0FC233F0 */  jal   bondinvHasGoldenGun
 /* 0855FC 7F050ACC 00000000 */   nop   
 /* 085600 7F050AD0 10400002 */  beqz  $v0, .L7F050ADC
 /* 085604 7F050AD4 240A0001 */   li    $t2, 1
@@ -38620,7 +38916,7 @@ glabel object_collectability_routines
 /* 0857E8 7F050C78 10000167 */  b     .Ljp7F051218
 /* 0857EC 7F050C7C 00001025 */   move  $v0, $zero
 .Ljp7F050C80:
-/* 0857F0 7F050C80 0FC232E9 */  jal   is_item_in_inventory
+/* 0857F0 7F050C80 0FC232E9 */  jal   bondinvHasInvItem
 /* 0857F4 7F050C84 00000000 */   nop   
 /* 0857F8 7F050C88 104000D9 */  beqz  $v0, .Ljp7F050FF0
 /* 0857FC 7F050C8C 00000000 */   nop   
@@ -38661,7 +38957,7 @@ glabel object_collectability_routines
 /* 08587C 7F050D0C 82050080 */   lb    $a1, 0x80($s0)
 /* 085880 7F050D10 82040080 */  lb    $a0, 0x80($s0)
 .Ljp7F050D14:
-/* 085884 7F050D14 0FC2330B */  jal   is_dual_weapon_in_inventory
+/* 085884 7F050D14 0FC2330B */  jal   bondinvHasDualWeapon
 /* 085888 7F050D18 00000000 */   nop   
 /* 08588C 7F050D1C 104000B4 */  beqz  $v0, .Ljp7F050FF0
 /* 085890 7F050D20 00000000 */   nop   
@@ -38688,7 +38984,7 @@ glabel object_collectability_routines
 /* 0858DC 7F050D6C 24010005 */  li    $at, 5
 /* 0858E0 7F050D70 54410007 */  bnel  $v0, $at, .Ljp7F050D90
 /* 0858E4 7F050D74 24010007 */   li    $at, 7
-/* 0858E8 7F050D78 0FC232E9 */  jal   is_item_in_inventory
+/* 0858E8 7F050D78 0FC232E9 */  jal   bondinvHasInvItem
 /* 0858EC 7F050D7C 2404001A */   li    $a0, 26
 /* 0858F0 7F050D80 1040009B */  beqz  $v0, .Ljp7F050FF0
 /* 0858F4 7F050D84 00000000 */   nop   
@@ -38697,7 +38993,7 @@ glabel object_collectability_routines
 .Ljp7F050D90:
 /* 085900 7F050D90 54410007 */  bnel  $v0, $at, .Ljp7F050DB0
 /* 085904 7F050D94 24010008 */   li    $at, 8
-/* 085908 7F050D98 0FC232E9 */  jal   is_item_in_inventory
+/* 085908 7F050D98 0FC232E9 */  jal   bondinvHasInvItem
 /* 08590C 7F050D9C 2404001D */   li    $a0, 29
 /* 085910 7F050DA0 10400093 */  beqz  $v0, .Ljp7F050FF0
 /* 085914 7F050DA4 00000000 */   nop   
@@ -38706,7 +39002,7 @@ glabel object_collectability_routines
 .Ljp7F050DB0:
 /* 085920 7F050DB0 54410007 */  bnel  $v0, $at, .Ljp7F050DD0
 /* 085924 7F050DB4 24010009 */   li    $at, 9
-/* 085928 7F050DB8 0FC232E9 */  jal   is_item_in_inventory
+/* 085928 7F050DB8 0FC232E9 */  jal   bondinvHasInvItem
 /* 08592C 7F050DBC 2404001C */   li    $a0, 28
 /* 085930 7F050DC0 1040008B */  beqz  $v0, .Ljp7F050FF0
 /* 085934 7F050DC4 00000000 */   nop   
@@ -38715,7 +39011,7 @@ glabel object_collectability_routines
 .Ljp7F050DD0:
 /* 085940 7F050DD0 54410007 */  bnel  $v0, $at, .Ljp7F050DF0
 /* 085944 7F050DD4 2401000A */   li    $at, 10
-/* 085948 7F050DD8 0FC232E9 */  jal   is_item_in_inventory
+/* 085948 7F050DD8 0FC232E9 */  jal   bondinvHasInvItem
 /* 08594C 7F050DDC 2404001B */   li    $a0, 27
 /* 085950 7F050DE0 10400083 */  beqz  $v0, .Ljp7F050FF0
 /* 085954 7F050DE4 00000000 */   nop   
@@ -38724,7 +39020,7 @@ glabel object_collectability_routines
 .Ljp7F050DF0:
 /* 085960 7F050DF0 14410005 */  bne   $v0, $at, .Ljp7F050E08
 /* 085964 7F050DF4 00000000 */   nop   
-/* 085968 7F050DF8 0FC232E9 */  jal   is_item_in_inventory
+/* 085968 7F050DF8 0FC232E9 */  jal   bondinvHasInvItem
 /* 08596C 7F050DFC 24040003 */   li    $a0, 3
 /* 085970 7F050E00 1040007B */  beqz  $v0, .Ljp7F050FF0
 /* 085974 7F050E04 00000000 */   nop   
@@ -38773,35 +39069,35 @@ glabel object_collectability_routines
 .Ljp7F050E9C:
 /* 085A0C 7F050E9C 56010005 */  bnel  $s0, $at, .Ljp7F050EB4
 /* 085A10 7F050EA0 24010007 */   li    $at, 7
-/* 085A14 7F050EA4 0FC232E9 */  jal   is_item_in_inventory
+/* 085A14 7F050EA4 0FC232E9 */  jal   bondinvHasInvItem
 /* 085A18 7F050EA8 2404001A */   li    $a0, 26
 /* 085A1C 7F050EAC 10400019 */  beqz  $v0, .Ljp7F050F14
 /* 085A20 7F050EB0 24010007 */   li    $at, 7
 .Ljp7F050EB4:
 /* 085A24 7F050EB4 56010005 */  bnel  $s0, $at, .Ljp7F050ECC
 /* 085A28 7F050EB8 24010008 */   li    $at, 8
-/* 085A2C 7F050EBC 0FC232E9 */  jal   is_item_in_inventory
+/* 085A2C 7F050EBC 0FC232E9 */  jal   bondinvHasInvItem
 /* 085A30 7F050EC0 2404001D */   li    $a0, 29
 /* 085A34 7F050EC4 10400013 */  beqz  $v0, .Ljp7F050F14
 /* 085A38 7F050EC8 24010008 */   li    $at, 8
 .Ljp7F050ECC:
 /* 085A3C 7F050ECC 56010005 */  bnel  $s0, $at, .Ljp7F050EE4
 /* 085A40 7F050ED0 24010009 */   li    $at, 9
-/* 085A44 7F050ED4 0FC232E9 */  jal   is_item_in_inventory
+/* 085A44 7F050ED4 0FC232E9 */  jal   bondinvHasInvItem
 /* 085A48 7F050ED8 2404001C */   li    $a0, 28
 /* 085A4C 7F050EDC 1040000D */  beqz  $v0, .Ljp7F050F14
 /* 085A50 7F050EE0 24010009 */   li    $at, 9
 .Ljp7F050EE4:
 /* 085A54 7F050EE4 56010005 */  bnel  $s0, $at, .Ljp7F050EFC
 /* 085A58 7F050EE8 2401000A */   li    $at, 10
-/* 085A5C 7F050EEC 0FC232E9 */  jal   is_item_in_inventory
+/* 085A5C 7F050EEC 0FC232E9 */  jal   bondinvHasInvItem
 /* 085A60 7F050EF0 2404001B */   li    $a0, 27
 /* 085A64 7F050EF4 10400007 */  beqz  $v0, .Ljp7F050F14
 /* 085A68 7F050EF8 2401000A */   li    $at, 10
 .Ljp7F050EFC:
 /* 085A6C 7F050EFC 56010008 */  bnel  $s0, $at, .Ljp7F050F20
 /* 085A70 7F050F00 8FA2003C */   lw    $v0, 0x3c($sp)
-/* 085A74 7F050F04 0FC232E9 */  jal   is_item_in_inventory
+/* 085A74 7F050F04 0FC232E9 */  jal   bondinvHasInvItem
 /* 085A78 7F050F08 24040003 */   li    $a0, 3
 /* 085A7C 7F050F0C 54400004 */  bnezl $v0, .Ljp7F050F20
 /* 085A80 7F050F10 8FA2003C */   lw    $v0, 0x3c($sp)
@@ -38856,7 +39152,7 @@ glabel object_collectability_routines
 /* 085B2C 7F050FBC 24010003 */  li    $at, 3
 /* 085B30 7F050FC0 56010007 */  bnel  $s0, $at, .Ljp7F050FE0
 /* 085B34 7F050FC4 8FA90064 */   lw    $t1, 0x64($sp)
-/* 085B38 7F050FC8 0FC23649 */  jal   checkforgoldengun
+/* 085B38 7F050FC8 0FC23649 */  jal   bondinvHasGoldenGun
 /* 085B3C 7F050FCC 00000000 */   nop   
 /* 085B40 7F050FD0 10400002 */  beqz  $v0, .Ljp7F050FDC
 /* 085B44 7F050FD4 24190001 */   li    $t9, 1
@@ -39160,7 +39456,7 @@ glabel object_collectability_routines
 /* 0857E8 7F050C78 10000167 */  b     .Ljp7F051218
 /* 0857EC 7F050C7C 00001025 */   move  $v0, $zero
 .Ljp7F050C80:
-/* 0857F0 7F050C80 0FC232E9 */  jal   is_item_in_inventory
+/* 0857F0 7F050C80 0FC232E9 */  jal   bondinvHasInvItem
 /* 0857F4 7F050C84 00000000 */   nop   
 /* 0857F8 7F050C88 104000D9 */  beqz  $v0, .Ljp7F050FF0
 /* 0857FC 7F050C8C 00000000 */   nop   
@@ -39201,7 +39497,7 @@ glabel object_collectability_routines
 /* 08587C 7F050D0C 82050080 */   lb    $a1, 0x80($s0)
 /* 085880 7F050D10 82040080 */  lb    $a0, 0x80($s0)
 .Ljp7F050D14:
-/* 085884 7F050D14 0FC2330B */  jal   is_dual_weapon_in_inventory
+/* 085884 7F050D14 0FC2330B */  jal   bondinvHasDualWeapon
 /* 085888 7F050D18 00000000 */   nop   
 /* 08588C 7F050D1C 104000B4 */  beqz  $v0, .Ljp7F050FF0
 /* 085890 7F050D20 00000000 */   nop   
@@ -39228,7 +39524,7 @@ glabel object_collectability_routines
 /* 0858DC 7F050D6C 24010005 */  li    $at, 5
 /* 0858E0 7F050D70 54410007 */  bnel  $v0, $at, .Ljp7F050D90
 /* 0858E4 7F050D74 24010007 */   li    $at, 7
-/* 0858E8 7F050D78 0FC232E9 */  jal   is_item_in_inventory
+/* 0858E8 7F050D78 0FC232E9 */  jal   bondinvHasInvItem
 /* 0858EC 7F050D7C 2404001A */   li    $a0, 26
 /* 0858F0 7F050D80 1040009B */  beqz  $v0, .Ljp7F050FF0
 /* 0858F4 7F050D84 00000000 */   nop   
@@ -39237,7 +39533,7 @@ glabel object_collectability_routines
 .Ljp7F050D90:
 /* 085900 7F050D90 54410007 */  bnel  $v0, $at, .Ljp7F050DB0
 /* 085904 7F050D94 24010008 */   li    $at, 8
-/* 085908 7F050D98 0FC232E9 */  jal   is_item_in_inventory
+/* 085908 7F050D98 0FC232E9 */  jal   bondinvHasInvItem
 /* 08590C 7F050D9C 2404001D */   li    $a0, 29
 /* 085910 7F050DA0 10400093 */  beqz  $v0, .Ljp7F050FF0
 /* 085914 7F050DA4 00000000 */   nop   
@@ -39246,7 +39542,7 @@ glabel object_collectability_routines
 .Ljp7F050DB0:
 /* 085920 7F050DB0 54410007 */  bnel  $v0, $at, .Ljp7F050DD0
 /* 085924 7F050DB4 24010009 */   li    $at, 9
-/* 085928 7F050DB8 0FC232E9 */  jal   is_item_in_inventory
+/* 085928 7F050DB8 0FC232E9 */  jal   bondinvHasInvItem
 /* 08592C 7F050DBC 2404001C */   li    $a0, 28
 /* 085930 7F050DC0 1040008B */  beqz  $v0, .Ljp7F050FF0
 /* 085934 7F050DC4 00000000 */   nop   
@@ -39255,7 +39551,7 @@ glabel object_collectability_routines
 .Ljp7F050DD0:
 /* 085940 7F050DD0 54410007 */  bnel  $v0, $at, .Ljp7F050DF0
 /* 085944 7F050DD4 2401000A */   li    $at, 10
-/* 085948 7F050DD8 0FC232E9 */  jal   is_item_in_inventory
+/* 085948 7F050DD8 0FC232E9 */  jal   bondinvHasInvItem
 /* 08594C 7F050DDC 2404001B */   li    $a0, 27
 /* 085950 7F050DE0 10400083 */  beqz  $v0, .Ljp7F050FF0
 /* 085954 7F050DE4 00000000 */   nop   
@@ -39264,7 +39560,7 @@ glabel object_collectability_routines
 .Ljp7F050DF0:
 /* 085960 7F050DF0 14410005 */  bne   $v0, $at, .Ljp7F050E08
 /* 085964 7F050DF4 00000000 */   nop   
-/* 085968 7F050DF8 0FC232E9 */  jal   is_item_in_inventory
+/* 085968 7F050DF8 0FC232E9 */  jal   bondinvHasInvItem
 /* 08596C 7F050DFC 24040003 */   li    $a0, 3
 /* 085970 7F050E00 1040007B */  beqz  $v0, .Ljp7F050FF0
 /* 085974 7F050E04 00000000 */   nop   
@@ -39313,35 +39609,35 @@ glabel object_collectability_routines
 .Ljp7F050E9C:
 /* 085A0C 7F050E9C 56010005 */  bnel  $s0, $at, .Ljp7F050EB4
 /* 085A10 7F050EA0 24010007 */   li    $at, 7
-/* 085A14 7F050EA4 0FC232E9 */  jal   is_item_in_inventory
+/* 085A14 7F050EA4 0FC232E9 */  jal   bondinvHasInvItem
 /* 085A18 7F050EA8 2404001A */   li    $a0, 26
 /* 085A1C 7F050EAC 10400019 */  beqz  $v0, .Ljp7F050F14
 /* 085A20 7F050EB0 24010007 */   li    $at, 7
 .Ljp7F050EB4:
 /* 085A24 7F050EB4 56010005 */  bnel  $s0, $at, .Ljp7F050ECC
 /* 085A28 7F050EB8 24010008 */   li    $at, 8
-/* 085A2C 7F050EBC 0FC232E9 */  jal   is_item_in_inventory
+/* 085A2C 7F050EBC 0FC232E9 */  jal   bondinvHasInvItem
 /* 085A30 7F050EC0 2404001D */   li    $a0, 29
 /* 085A34 7F050EC4 10400013 */  beqz  $v0, .Ljp7F050F14
 /* 085A38 7F050EC8 24010008 */   li    $at, 8
 .Ljp7F050ECC:
 /* 085A3C 7F050ECC 56010005 */  bnel  $s0, $at, .Ljp7F050EE4
 /* 085A40 7F050ED0 24010009 */   li    $at, 9
-/* 085A44 7F050ED4 0FC232E9 */  jal   is_item_in_inventory
+/* 085A44 7F050ED4 0FC232E9 */  jal   bondinvHasInvItem
 /* 085A48 7F050ED8 2404001C */   li    $a0, 28
 /* 085A4C 7F050EDC 1040000D */  beqz  $v0, .Ljp7F050F14
 /* 085A50 7F050EE0 24010009 */   li    $at, 9
 .Ljp7F050EE4:
 /* 085A54 7F050EE4 56010005 */  bnel  $s0, $at, .Ljp7F050EFC
 /* 085A58 7F050EE8 2401000A */   li    $at, 10
-/* 085A5C 7F050EEC 0FC232E9 */  jal   is_item_in_inventory
+/* 085A5C 7F050EEC 0FC232E9 */  jal   bondinvHasInvItem
 /* 085A60 7F050EF0 2404001B */   li    $a0, 27
 /* 085A64 7F050EF4 10400007 */  beqz  $v0, .Ljp7F050F14
 /* 085A68 7F050EF8 2401000A */   li    $at, 10
 .Ljp7F050EFC:
 /* 085A6C 7F050EFC 56010008 */  bnel  $s0, $at, .Ljp7F050F20
 /* 085A70 7F050F00 8FA2003C */   lw    $v0, 0x3c($sp)
-/* 085A74 7F050F04 0FC232E9 */  jal   is_item_in_inventory
+/* 085A74 7F050F04 0FC232E9 */  jal   bondinvHasInvItem
 /* 085A78 7F050F08 24040003 */   li    $a0, 3
 /* 085A7C 7F050F0C 54400004 */  bnezl $v0, .Ljp7F050F20
 /* 085A80 7F050F10 8FA2003C */   lw    $v0, 0x3c($sp)
@@ -39396,7 +39692,7 @@ glabel object_collectability_routines
 /* 085B2C 7F050FBC 24010003 */  li    $at, 3
 /* 085B30 7F050FC0 56010007 */  bnel  $s0, $at, .Ljp7F050FE0
 /* 085B34 7F050FC4 8FA90064 */   lw    $t1, 0x64($sp)
-/* 085B38 7F050FC8 0FC23649 */  jal   checkforgoldengun
+/* 085B38 7F050FC8 0FC23649 */  jal   bondinvHasGoldenGun
 /* 085B3C 7F050FCC 00000000 */   nop   
 /* 085B40 7F050FD0 10400002 */  beqz  $v0, .Ljp7F050FDC
 /* 085B44 7F050FD4 24190001 */   li    $t9, 1
@@ -41860,15 +42156,6 @@ void sub_GAME_7F052604(void) {
 }
 #else
 GLOBAL_ASM(
-.late_rodata
-/*HACK*/
-/*D:800532F4*/
-glabel jpt_hat_worn
-.word model_hat_fur
-.word model_hat_fur
-.word model_hat_fur
-.word model_hat_greencap
-.word model_hat_greencap
 .text
 glabel sub_GAME_7F052604
 /* 087134 7F052604 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -41911,8 +42198,6 @@ glabel sub_GAME_7F052604
 
 
 
-//todo: fix shared jtbl undefined reference to `model_hat_greencap'
-#ifdef NONMATCHING
 // getHatType
 HATTYPE get_hat_model(PropRecord *prop) //#MATCH
 {
@@ -41961,68 +42246,6 @@ HATTYPE get_hat_model(PropRecord *prop) //#MATCH
         }
     }
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-/*D:800532F4*/
-/*glabel jpt_hat_worn*/
-/*.word model_hat_fur*/
-/*.word model_hat_fur*/
-/*.word model_hat_fur*/
-/*.word model_hat_greencap*/
-/*.word model_hat_greencap*/
-.word model_hat_combat_helmet
-.word model_hat_combat_helmet
-.word model_hat_moonraker_headgear
-.word model_hat_beret
-.word model_hat_beret
-.word model_hat_beret
-.word model_hat_officerhat
-
-.text
-glabel get_hat_model
-/* 0871B4 7F052684 8C820004 */  lw    $v0, 4($a0)
-/* 0871B8 7F052688 844E0004 */  lh    $t6, 4($v0)
-/* 0871BC 7F05268C 2402FFFF */  li    $v0, -1
-/* 0871C0 7F052690 25CFFF2C */  addiu $t7, $t6, -0xd4
-/* 0871C4 7F052694 2DE1000C */  sltiu $at, $t7, 0xc
-/* 0871C8 7F052698 10200012 */  beqz  $at, .L7F0526E4
-/* 0871CC 7F05269C 000F7880 */   sll   $t7, $t7, 2
-/* 0871D0 7F0526A0 3C018005 */  lui   $at, %hi(jpt_hat_worn)
-/* 0871D4 7F0526A4 002F0821 */  addu  $at, $at, $t7
-/* 0871D8 7F0526A8 8C2F32F4 */  lw    $t7, %lo(jpt_hat_worn)($at)
-/* 0871DC 7F0526AC 01E00008 */  jr    $t7
-/* 0871E0 7F0526B0 00000000 */   nop   
-model_hat_fur:
-/* 0871E4 7F0526B4 03E00008 */  jr    $ra
-/* 0871E8 7F0526B8 24020004 */   li    $v0, 4
-
-model_hat_greencap:
-/* 0871EC 7F0526BC 03E00008 */  jr    $ra
-/* 0871F0 7F0526C0 24020001 */   li    $v0, 1
-
-model_hat_combat_helmet:
-/* 0871F4 7F0526C4 03E00008 */  jr    $ra
-/* 0871F8 7F0526C8 24020003 */   li    $v0, 3
-
-model_hat_moonraker_headgear:
-/* 0871FC 7F0526CC 03E00008 */  jr    $ra
-/* 087200 7F0526D0 24020005 */   li    $v0, 5
-
-model_hat_beret:
-/* 087204 7F0526D4 03E00008 */  jr    $ra
-/* 087208 7F0526D8 00001025 */   move  $v0, $zero
-
-model_hat_officerhat:
-/* 08720C 7F0526DC 03E00008 */  jr    $ra
-/* 087210 7F0526E0 24020002 */   li    $v0, 2
-
-model_hat_default:
-.L7F0526E4:
-/* 087214 7F0526E4 03E00008 */  jr    $ra
-/* 087218 7F0526E8 00000000 */   nop   
-)
-#endif
 
 
 
@@ -43183,7 +43406,7 @@ glabel sub_GAME_7F052D8C
 
 
 /**
- * objToggleDoorPortal 
+ * objToggleDoorPortal / doorActivatePortal
  * Toggles (Open/Closed) the portal linked with door
  * @param door: Door to toggle portal on
  */
@@ -43197,8 +43420,11 @@ void sub_GAME_7F053598(DoorRecord *door)
 
 
 
-
-
+/**
+ * objToggleDoorPortal / doorDeactivatePortal
+ * Toggles (Open/Closed) the portal linked with door
+ * @param door: Door to toggle portal on
+ */
 void sub_GAME_7F0535C4(DoorRecord *door) {
     if (door->portalNumber >= 0)
     {
@@ -45743,7 +45969,7 @@ glabel sub_GAME_7F055C40
 /* 08A7A0 7F055C70 1000001C */  b     .L7F055CE4
 /* 08A7A4 7F055C74 24030001 */   li    $v1, 1
 .L7F055C78:
-/* 08A7A8 7F055C78 0FC2339C */  jal   inv_has_key_flags
+/* 08A7A8 7F055C78 0FC2339C */  jal   bondinvCheckHasKeyFlags
 /* 08A7AC 7F055C7C AFA30028 */   sw    $v1, 0x28($sp)
 /* 08A7B0 7F055C80 10400003 */  beqz  $v0, .L7F055C90
 /* 08A7B4 7F055C84 8FA30028 */   lw    $v1, 0x28($sp)
@@ -45805,7 +46031,7 @@ glabel sub_GAME_7F055C40
 /* 08A87C 7F055D4C 304A0004 */  andi  $t2, $v0, 4
 /* 08A880 7F055D50 55400014 */  bnezl $t2, .L7F055DA4
 /* 08A884 7F055D54 8E0C0064 */   lw    $t4, 0x64($s0)
-/* 08A888 7F055D58 0FC23487 */  jal   get_textoverride_by_obj
+/* 08A888 7F055D58 0FC23487 */  jal   bondinvGetTextbyObj
 /* 08A88C 7F055D5C 02002025 */   move  $a0, $s0
 /* 08A890 7F055D60 1040000A */  beqz  $v0, .L7F055D8C
 /* 08A894 7F055D64 00000000 */   nop   
@@ -45858,7 +46084,7 @@ glabel sub_GAME_7F055C40
 /* 08A7A0 7F055C70 1000001C */  b     .L7F055CE4
 /* 08A7A4 7F055C74 24030001 */   li    $v1, 1
 .L7F055C78:
-/* 08A7A8 7F055C78 0FC2339C */  jal   inv_has_key_flags
+/* 08A7A8 7F055C78 0FC2339C */  jal   bondinvCheckHasKeyFlags
 /* 08A7AC 7F055C7C AFA30028 */   sw    $v1, 0x28($sp)
 /* 08A7B0 7F055C80 10400003 */  beqz  $v0, .L7F055C90
 /* 08A7B4 7F055C84 8FA30028 */   lw    $v1, 0x28($sp)
@@ -45920,7 +46146,7 @@ glabel sub_GAME_7F055C40
 /* 08A87C 7F055D4C 304A0004 */  andi  $t2, $v0, 4
 /* 08A880 7F055D50 55400014 */  bnezl $t2, .L7F055DA4
 /* 08A884 7F055D54 8E0C0064 */   lw    $t4, 0x64($s0)
-/* 08A888 7F055D58 0FC23487 */  jal   get_textoverride_by_obj
+/* 08A888 7F055D58 0FC23487 */  jal   bondinvGetTextbyObj
 /* 08A88C 7F055D5C 02002025 */   move  $a0, $s0
 /* 08A890 7F055D60 1040000A */  beqz  $v0, .L7F055D8C
 /* 08A894 7F055D64 00000000 */   nop   
@@ -45974,7 +46200,7 @@ glabel sub_GAME_7F055C40
 /* 08A7A0 7F055C70 1000001C */  b     .L7F055CE4
 /* 08A7A4 7F055C74 24030001 */   li    $v1, 1
 .L7F055C78:
-/* 08A7A8 7F055C78 0FC2339C */  jal   inv_has_key_flags
+/* 08A7A8 7F055C78 0FC2339C */  jal   bondinvCheckHasKeyFlags
 /* 08A7AC 7F055C7C AFA30028 */   sw    $v1, 0x28($sp)
 /* 08A7B0 7F055C80 10400003 */  beqz  $v0, .L7F055C90
 /* 08A7B4 7F055C84 8FA30028 */   lw    $v1, 0x28($sp)
@@ -46036,7 +46262,7 @@ glabel sub_GAME_7F055C40
 /* 08A87C 7F055D4C 304A0004 */  andi  $t2, $v0, 4
 /* 08A880 7F055D50 55400014 */  bnezl $t2, .L7F055DA4
 /* 08A884 7F055D54 8E0C0064 */   lw    $t4, 0x64($s0)
-/* 08A888 7F055D58 0FC23487 */  jal   get_textoverride_by_obj
+/* 08A888 7F055D58 0FC23487 */  jal   bondinvGetTextbyObj
 /* 08A88C 7F055D5C 02002025 */   move  $a0, $s0
 /* 08A890 7F055D60 1040000A */  beqz  $v0, .L7F055D8C
 /* 08A894 7F055D64 00000000 */   nop   
@@ -47248,7 +47474,7 @@ glabel drop_inventory
 /* 08B300 7F0567D0 02002025 */   move  $a0, $s0
 /* 08B304 7F0567D4 04400012 */  bltz  $v0, .L7F056820
 /* 08B308 7F0567D8 00408825 */   move  $s1, $v0
-/* 08B30C 7F0567DC 0FC230C5 */  jal   is_item_in_inventory
+/* 08B30C 7F0567DC 0FC230C5 */  jal   bondinvHasInvItem
 /* 08B310 7F0567E0 02002025 */   move  $a0, $s0
 /* 08B314 7F0567E4 1040000E */  beqz  $v0, .L7F056820
 /* 08B318 7F0567E8 02402025 */   move  $a0, $s2
