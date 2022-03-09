@@ -12,7 +12,7 @@ VERBOSE := 0
 # If COMPARE is 1, check the output sha1sum when building 'all', and if fali to match
 # then compare ELF sections to known md5 checksums.
 # If compare is 2, it will just compare the sha1sum.
-COMPARE := 1
+COMPARE := 2
 
 
 ## VT100 Codes ##

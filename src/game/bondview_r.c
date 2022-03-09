@@ -16,7 +16,7 @@ u32 D_8002A784 = 0;
 u32 D_8002A788 = 0;
 
 
-u32 set_weapon_model_generated_thrown_object(ITEM_IDS modelid)
+u32 weaponLoadProjectileModels(ITEM_IDS modelid)
 {
     s32 model;
   
@@ -322,12 +322,12 @@ weapon:
 /* 03A628 7F005AF8 8E19000C */  lw    $t9, 0xc($s0)
 /* 03A62C 7F005AFC 1459001C */  bne   $v0, $t9, .L7F005B70
 /* 03A630 7F005B00 00000000 */   nop   
-/* 03A634 7F005B04 0FC015C4 */  jal   set_weapon_model_generated_thrown_object
+/* 03A634 7F005B04 0FC015C4 */  jal   weaponLoadProjectileModels
 /* 03A638 7F005B08 8E040004 */   lw    $a0, 4($s0)
 /* 03A63C 7F005B0C 8E040008 */  lw    $a0, 8($s0)
 /* 03A640 7F005B10 04800008 */  bltz  $a0, .L7F005B34
 /* 03A644 7F005B14 00000000 */   nop   
-/* 03A648 7F005B18 0FC015C4 */  jal   set_weapon_model_generated_thrown_object
+/* 03A648 7F005B18 0FC015C4 */  jal   weaponLoadProjectileModels
 /* 03A64C 7F005B1C 00000000 */   nop   
 /* 03A650 7F005B20 8E040004 */  lw    $a0, 4($s0)
 /* 03A654 7F005B24 0FC23143 */  jal   bondinvAddDoublesInvItem
@@ -1030,12 +1030,12 @@ weapon:
 /* 03A650 7F005AE0 8E19000C */  lw    $t9, 0xc($s0)
 /* 03A654 7F005AE4 1459001C */  bne   $v0, $t9, .L7F005B58
 /* 03A658 7F005AE8 00000000 */   nop   
-/* 03A65C 7F005AEC 0FC015CC */  jal   set_weapon_model_generated_thrown_object
+/* 03A65C 7F005AEC 0FC015CC */  jal   weaponLoadProjectileModels
 /* 03A660 7F005AF0 8E040004 */   lw    $a0, 4($s0)
 /* 03A664 7F005AF4 8E040008 */  lw    $a0, 8($s0)
 /* 03A668 7F005AF8 04800008 */  bltz  $a0, .L7F005B1C
 /* 03A66C 7F005AFC 00000000 */   nop   
-/* 03A670 7F005B00 0FC015CC */  jal   set_weapon_model_generated_thrown_object
+/* 03A670 7F005B00 0FC015CC */  jal   weaponLoadProjectileModels
 /* 03A674 7F005B04 00000000 */   nop   
 /* 03A678 7F005B08 8E040004 */  lw    $a0, 4($s0)
 /* 03A67C 7F005B0C 0FC23381 */  jal   bondinvAddDoublesInvItem
@@ -1745,12 +1745,12 @@ weapon:
 /* 038450 7F005A60 8E19000C */  lw    $t9, 0xc($s0)
 /* 038454 7F005A64 1459001C */  bne   $v0, $t9, .L7F005AD8
 /* 038458 7F005A68 00000000 */   nop   
-/* 03845C 7F005A6C 0FC015AC */  jal   set_weapon_model_generated_thrown_object
+/* 03845C 7F005A6C 0FC015AC */  jal   weaponLoadProjectileModels
 /* 038460 7F005A70 8E040004 */   lw    $a0, 4($s0)
 /* 038464 7F005A74 8E040008 */  lw    $a0, 8($s0)
 /* 038468 7F005A78 04800008 */  bltz  $a0, .L7F005A9C
 /* 03846C 7F005A7C 00000000 */   nop   
-/* 038470 7F005A80 0FC015AC */  jal   set_weapon_model_generated_thrown_object
+/* 038470 7F005A80 0FC015AC */  jal   weaponLoadProjectileModels
 /* 038474 7F005A84 00000000 */   nop   
 /* 038478 7F005A88 8E040004 */  lw    $a0, 4($s0)
 /* 03847C 7F005A8C 0FC23221 */  jal   bondinvAddDoublesInvItem
