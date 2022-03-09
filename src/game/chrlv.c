@@ -10418,7 +10418,7 @@ void chrlvActionTick(ChrRecord *self)
         if (((s32) self->sleep < 0) || (self->chrflags & 0x40000))
         {
             self->sleep = 0;
-            parse_handle_actionblocks(self, PROP_TYPE_CHR);
+            ai(self, PROP_TYPE_CHR);
             
             switch (self->actiontype)
             {

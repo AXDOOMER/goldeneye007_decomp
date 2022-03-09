@@ -19,5 +19,5 @@ int bondinvAddInvItem(ITEM_IDS item);
 int bondinvAddDoublesInvItem(ITEM_IDS right, ITEM_IDS left);
 s32 bondinvGetAllGunsFlag(void);
 void bondinvSetAllGunsFlag(s32 all_guns);
-bool          bondinvHasPropInInv(PropRecord *prop);
+bool bondinvHasPropInInv(PropRecord *prop);
 #endif

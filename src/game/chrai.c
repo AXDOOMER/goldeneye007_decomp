@@ -28,7 +28,7 @@
 #include "chr.h"
 #include "mp_music.h"
 #include "objective_status.h"
-#include "bondview.h"
+#include "bondinv.h"
 #include <assert.h>
 #include "loadobjectmodel.h"
 #include "cheat_buttons.h"
@@ -42,9 +42,6 @@
 //hack? used to match as called with 2 args, but decompiled code takes 1
 extern s32 objectiveGetStatus_WEAK(s32 objectiveNum, s32); 
 
-//shims
-#define sub_GAME_7F020D914                chrPositionRelated7F020D94
-
 
 //bss
 /**
@@ -54,8 +51,11 @@ sfxRecord sfx_related[SFX_RELATED_LEN];
 
 
 
-
-void audioPlayFromProp2(s32 slot)//#MATCH :audioPlayFromProp2orpad
+/**
+ * Play Audio in slot X from Prop or Pad 
+ * @param slot: Where audio is loaded
+*/
+void audioPlayFromProp2(s32 slot)
 {
     int tempvol;
     sfxRecord *sfx= &sfx_related[slot]; //always added to stack anyway, cleaner to use
@@ -103,7 +103,9 @@ void audioPlayFromProp2(s32 slot)//#MATCH :audioPlayFromProp2orpad
 
 
 
-
+/**
+ Play All Sounds in all slots 
+*/
 void loop_set_sound_effect_all_slots(void)
 {
     int i;
@@ -114,14 +116,17 @@ void loop_set_sound_effect_all_slots(void)
 }
 
 
-
-void audioPlayFromProp(s32 slot, s16 soundIndex) //#MATCH  audioPlay Not from prop or pos
+/**
+ * Load Audio Slot with sound and Play
+ * @param slot: where to load sound
+ * @param soundIndex: SFX_ID
+*/
+void audioPlayFromProp(s32 slot, s16 soundIndex) 
 {
     sfxRecord *sfx = NULL; //always added to stack anyway, cleaner to use
     //"Existing ai sound number %d!\n"
     if (slot >= 0 && slot < SFX_RELATED_LEN)
     {
-        //NOT Volatile
         if (!sfx_related[slot].state || !sndGetPlayingState(sfx_related[slot].state))
         {
             sfx = &sfx_related[slot];
@@ -137,10 +142,10 @@ void audioPlayFromProp(s32 slot, s16 soundIndex) //#MATCH  audioPlay Not from pr
 }
 
 
-
-
-
-void sub_GAME_7F0349BC(s32 slot) 
+/**
+ Stop All Sounds in all slots 
+*/
+void sub_GAME_7F0349BC(s32 slot)
 {
     if ((slot >= 0) && (slot < SFX_RELATED_LEN))
     {
@@ -157,6 +162,7 @@ void sub_GAME_7F0349BC(s32 slot)
  * @param AIList: u8 Pointer to The AI list containing the command
  * @param offset: The offset (in bytes) to the command you want the size of
  * @return The number of bytes of AI command
+ * @canonical name 
  */
 s32 chraiitemsize(u8 *AIList, s32 offset)
 {
@@ -704,7 +710,7 @@ s32 chraiitemsize(u8 *AIList, s32 offset)
  * @param AIList: Ailist to get ID of
  * @return ID of AIList 
  */
-s32 chraiGetAIListID(AIRecord *AIList, bool *isGlobalAIList) // chraiGetAIListID
+s32 chraiGetAIListID(AIRecord *AIList, bool *isGlobalAIList) 
 {
     s32 i;
 
@@ -742,7 +748,7 @@ s32 chraiGetAIListID(AIRecord *AIList, bool *isGlobalAIList) // chraiGetAIListID
  * @param LabelNum: Integer/enum ID to go to
  * @return Offset of label from beggining of AIList.
  */
-s32 chraiGoToLabel(AIRecord *AIList, s32 Offset, u8 LabelNum) //#MATCH chraiGoToLabel
+s32 chraiGoToLabel(AIRecord *AIList, s32 Offset, u8 LabelNum) 
 {
     s32   listID;
     char *debAIListTypeString;
@@ -783,8 +789,7 @@ s32 chraiGoToLabel(AIRecord *AIList, s32 Offset, u8 LabelNum) //#MATCH chraiGoTo
 
 
 
-//ailistFindById
-AIRecord *ailistFindById(s32 ID) //MATCH https://decomp.me/scratch/Qb0FB
+AIRecord *ailistFindById(s32 ID) 
 {
     s32 i;
 
@@ -840,7 +845,6 @@ PathRecord *pathFindById(s32 ID)
 
 //forward
 extern void chrpropDelist(PropRecord *prop);
-//end forward
 extern PadRecord * dword_CODE_bss_800799F8;
 extern CutsceneRecord *gBondViewCutscene;
 extern s32 dword_CODE_bss_80079A18;
@@ -859,6 +863,7 @@ extern f32 flt_CODE_bss_80079A10;
 //CODE.bss:80079A14
 extern s32 dword_CODE_bss_80079A14;
 extern bool g_isBondKIA;
+//end forward
 
 
 
@@ -870,8 +875,9 @@ extern bool g_isBondKIA;
  @param EntityType: PROPTYPE_CHR or PROPTYPE_OBJ
  @param         PROPTYPE_CHR = Character or BG
  @param         PROPTYPE_OBJ = Object (Vehichle or Aircraft)
+ @canonical name ~ maybe
 */
-void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
+void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
 {
     /*
      * (void *Param, int ParamType) is the correct way to pass a variable
@@ -1365,7 +1371,7 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                 {
                     AIRecord  *ai  = AiListp + Offset;
                     ChrRecord *chr = chrFindById(ChrEntityp, ai->val[0]);
-                    vec3d      vec = {0,0,0};
+                    vec3d      vec = New_Vector();
 
                     if (chr && chr->prop)
                     {
@@ -1385,7 +1391,7 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                     {
                         PropRecord      *prop = chrGetEquippedWeaponPropWithCheck(chr1, GUNRIGHT);
                         WeaponObjRecord *weapon;
-                        vec3d            vec = {0,0,0};
+                        vec3d            vec = New_Vector();
 
                         if (!prop) //not Right hand? try left
                         {
@@ -4528,7 +4534,7 @@ void parse_handle_actionblocks(PropDefHeaderRecord *Entityp, PROP_TYPE EntityTyp
                 }
                 case AI_GasLeakAndFadeFog:
                 {
-                    coord3d emitPos = {0,0,0};
+                    coord3d emitPos = New_Coord3d();
                     init_trigger_toxic_gas_effect(&emitPos);
                     Offset += AI_GasLeakAndFadeFog_LENGTH;
                     break;
