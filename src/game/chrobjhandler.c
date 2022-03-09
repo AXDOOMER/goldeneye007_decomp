@@ -38359,9 +38359,305 @@ interact_default_object:
 
 
 #ifdef NONMATCHING
-void object_collectability_routines(void) {
 
+s32 object_collectability_routines(PropRecord *arg0)
+{
+    ObjectRecord *sp84;
+    ObjectRecord *sp80;
+    ObjectRecord *sp74;
+    ObjectRecord *sp70;
+    s32           sp6C;
+    ObjectRecord *sp64;
+    ObjectRecord *sp60;
+    s32           sp5C;
+    s32           sp58;
+    s32           sp40;
+    StandTile *   sp3C;
+    s32           sp38;
+    ObjectRecord *sp34;
+    ObjectRecord *sp30;
+    ObjectRecord *temp_a0;
+    ObjectRecord *temp_a1;
+    ObjectRecord *temp_v1;
+    ObjectRecord *temp_v1_2;
+    PropRecord *  temp_v0_7;
+    StandTile **  temp_a0_3;
+    f32           temp_f0;
+    f32           temp_f12;
+    f32           temp_f2;
+    f32           temp_v0_5;
+    s32           temp_v0_6;
+    s8            temp_a0_2;
+    u32           temp_v0;
+    u32           temp_v0_2;
+    u8            temp_v0_4;
+    void *        temp_v0_3;
+    u32           phi_v0;
+    ObjectRecord *phi_a0;
+    s8            phi_a0_2;
+    s8            phi_a1;
+    ObjectRecord *phi_v0_2;
+    ObjectRecord *phi_v1;
+    ObjectRecord *phi_a0_3;
+    s32           phi_v1_2;
+    s32           phi_v0_3;
+    s32           phi_v0_4;
+    s32           phi_v0_5;
+    s32           phi_v0_6;
+    s32           phi_a2;
+    s32           phi_v1_3;
+    s32           phi_v0_7;
+    s8            phi_a1_2;
+
+    temp_a0 = arg0->chr;
+    sp84    = temp_a0;
+    phi_a0  = temp_a0;
+    if ((check_if_collectable_object(temp_a0) != 0) && (temp_a0->Head.type != 0x11))
+    {
+        temp_v0 = temp_a0->flags;
+        phi_v0  = temp_v0;
+        if (temp_v0 & 0x100000)
+        {
+            return 0;
+        }
+        goto block_6;
+    }
+    temp_v0_2 = sp84->flags;
+    phi_v0    = temp_v0_2;
+    phi_a0    = sp84;
+    if ((temp_v0_2 << 0xD) >= 0)
+    {
+        return 0;
+    }
+block_6:
+    if (phi_v0 & 0x80000)
+    {
+        return 0;
+    }
+    if ((phi_a0->mtx.m[0][3] & 0x80) != 0)
+    {
+        temp_v0_3 = phi_a0->mtx.m[1][1];
+        if ((temp_v0_3->unkBC > 0) && (temp_v0_3->unk90 == 0))
+        {
+            return 0;
+        }
+    }
+    if (sub_GAME_7F03E7AC(phi_a0) == 0)
+    {
+        return 0;
+    }
+    temp_v0_4 = sp84->Head.type;
+    if (temp_v0_4 == 8)
+    {
+        temp_v1   = arg0->chr;
+        temp_a0_2 = temp_v1->unk80;
+        if (((temp_a0_2 == 0x1A) || (temp_a0_2 == 0x57)) && ((temp_v1->unk82 >= 0) || (((bitwise s32)sp84->mtx.m[0][3] & 4) != 0)))
+        {
+            return 0;
+        }
+        if (((temp_a0_2 == 0x1D) || (temp_a0_2 == 0x1C) || (temp_a0_2 == 0x1B) || (temp_a0_2 == 0x21) || (temp_a0_2 == 0x2F) || (temp_a0_2 == 0x30) || (temp_a0_2 == 0x22)) && ((temp_v1->unk82 >= 0) || (((bitwise s32)sp84->mtx.m[0][3] & 4) != 0)))
+        {
+            return 0;
+        }
+        if ((temp_a0_2 == 0x56) && (((bitwise s32)sp84->mtx.m[0][3] & 0x80) != 0))
+        {
+            return 0;
+        }
+        sp80 = temp_v1;
+        if (is_item_in_inventory(temp_a0_2, sp84) != 0)
+        {
+            sp80 = temp_v1;
+            if (get_ammo_type_for_weapon(temp_v1->unk80) != 0)
+            {
+                sp80 = temp_v1;
+                sp38 = get_ammo_count_for_weapon(temp_v1->unk80);
+                if (sp38 >= get_max_ammo_for_weapon(temp_v1->unk80))
+                {
+                    temp_v0_5 = temp_v1->mtx.m[2][3];
+                    if (((bitwise s32)temp_v0_5 != 0) || (temp_v1->unk81 >= 0))
+                    {
+                        if ((bitwise s32)temp_v0_5 != 0)
+                        {
+                            phi_a1_2 = temp_v0_5->unk80;
+                        }
+                        else
+                        {
+                            phi_a1_2 = temp_v1->unk81;
+                        }
+                        phi_a0_2 = phi_a1_2;
+                        phi_a1   = phi_a1_2;
+                        if ((temp_v1->flags * 8) < 0)
+                        {
+                            phi_a1 = temp_v1->unk80;
+                        }
+                        else
+                        {
+                            phi_a0_2 = temp_v1->unk80;
+                        }
+                        if (is_dual_weapon_in_inventory(phi_a0_2, phi_a1, sp38) != 0)
+                        {
+                            return 0;
+                        }
+                        goto block_74;
+                    }
+                    return 0;
+                }
+            }
+        }
+        goto block_74;
+    }
+    if (temp_v0_4 == 7)
+    {
+        temp_v1_2 = arg0->chr;
+        sp74      = temp_v1_2;
+        sp38      = check_cur_player_ammo_amount_in_inventory((bitwise ObjectRecord *)temp_v1_2->mtx.m[2][2], sp84);
+        if (sp38 >= get_max_ammo_for_type((bitwise ObjectRecord *)temp_v1_2->mtx.m[2][2]))
+        {
+            return 0;
+        }
+        goto block_74;
+    }
+    if (temp_v0_4 == 0x14)
+    {
+        sp6C   = 1;
+        sp70   = arg0->chr;
+        phi_v1 = sp70;
+        if (do_something_if_object_destroyed(sp84) != 0)
+        {
+            return 0;
+        }
+        phi_v0_2 = NULL;
+loop_54:
+        temp_a1  = phi_v0_2 + 1;
+        phi_a0_3 = temp_a1;
+        if (phi_v0_2 == 1)
+        {
+            phi_a0_3 = 1;
+        }
+        if ((phi_v1->unk82 > 0) && (sp30 = phi_v1, sp64 = phi_a0_3, sp34 = temp_a1, sp38 = check_cur_player_ammo_amount_in_inventory(phi_a0_3, temp_a1), ((sp38 < get_max_ammo_for_type(phi_a0_3)) != 0)))
+        {
+            sp6C = 0;
+        }
+        else
+        {
+            phi_v0_2 += 1;
+            phi_v1 += 4;
+            if ((phi_v0_2 + 1) != 0xD)
+            {
+                goto loop_54;
+            }
+        }
+        if (sp6C != 0)
+        {
+            return 0;
+        }
+        goto block_74;
+    }
+    if (temp_v0_4 == 0x15)
+    {
+        sp5C = 0;
+        sp60 = arg0->chr;
+        if (sp60->mtx.m[2][3] <= get_BONDdata_watch_armor())
+        {
+            sp5C = 1;
+        }
+        else if (getPlayerCount() >= 2)
+        {
+            temp_v0_6 = get_scenario();
+            phi_v1_2  = temp_v0_6;
+            if ((temp_v0_6 == 2) && (sp58 = temp_v0_6, phi_v1_2 = sp58, (bondinvIsAliveWithFlag() != 0)))
+            {
+                sp5C = 1;
+            }
+            else if ((phi_v1_2 == 3) && (checkforgoldengun() != 0))
+            {
+                sp5C = 1;
+            }
+        }
+        if (sp5C != 0)
+        {
+            return 0;
+        }
+        goto block_74;
+    }
+block_74:
+    if ((get_curplay_vertical_rotation_in_degrees() < -0.7853982f) && (g_CurrentPlayer->unk1270 < 0))
+    {
+        return 0;
+    }
+    temp_v0_7 = get_curplayer_positiondata();
+    temp_f0   = sp84->mtx.m[0][0] - temp_v0_7->pos.AsArray[0];
+    temp_f12  = sp84->mtx.m[0][1] - temp_v0_7->pos.AsArray[1];
+    temp_f2   = sp84->mtx.m[0][2] - temp_v0_7->pos.AsArray[2];
+    if (g_CurrentPlayer->unk1270 >= 0x3C)
+    {
+        phi_v0_3 = 0;
+        phi_v0_4 = 0;
+        if (((temp_f0 * temp_f0) + (temp_f2 * temp_f2)) <= 122500.0f)
+        {
+            phi_v0_3 = 1;
+        }
+        phi_a2 = phi_v0_3;
+        if (phi_v0_3 != 0)
+        {
+            if (temp_f12 >= -500.0f)
+            {
+                phi_v0_4 = 1;
+            }
+            phi_a2 = phi_v0_4;
+            if (phi_v0_4 != 0)
+            {
+                phi_a2 = 0;
+                if (temp_f12 <= 500.0f)
+                {
+                    phi_a2 = 1;
+                }
+            }
+        }
+    }
+    else
+    {
+        phi_v0_5 = 0;
+        phi_v0_6 = 0;
+        if (((temp_f0 * temp_f0) + (temp_f2 * temp_f2)) <= 10000.0f)
+        {
+            phi_v0_5 = 1;
+        }
+        phi_a2 = phi_v0_5;
+        if (phi_v0_5 != 0)
+        {
+            if (temp_f12 >= -200.0f)
+            {
+                phi_v0_6 = 1;
+            }
+            phi_a2 = phi_v0_6;
+            if (phi_v0_6 != 0)
+            {
+                phi_a2 = 0;
+                if (temp_f12 <= 200.0f)
+                {
+                    phi_a2 = 1;
+                }
+            }
+        }
+    }
+    phi_v1_3 = phi_a2;
+    if (phi_a2 != 0)
+    {
+        temp_a0_3 = &sp3C;
+        if (((sp84->flags2 & 0x1000) == 0) && ((sp3C = temp_v0_7->stan, sp40 = phi_a2, phi_v1_3 = phi_a2, (sub_GAME_7F0B0E24(temp_a0_3, temp_v0_7->pos.AsArray[0], temp_v0_7->pos.AsArray[2], arg0->pos.AsArray[0], arg0->pos.AsArray[2], 2, 30.0f, 30.0f, 0.0f, 1.0f) == 0)) || (sp3C != arg0->stan)))
+        {
+            phi_v1_3 = 0;
+        }
+    }
+    phi_v0_7 = 0;
+    if (phi_v1_3 != 0)
+    {
+        phi_v0_7 = collect_or_interact_object(arg0, 1);
+    }
+    return phi_v0_7;
 }
+
 #else
 
 #ifdef VERSION_US
@@ -43526,7 +43822,7 @@ glabel sub_GAME_7F052D8C
 
 
 /**
- * objToggleDoorPortal 
+ * objToggleDoorPortal / doorActivatePortal
  * Toggles (Open/Closed) the portal linked with door
  * @param door: Door to toggle portal on
  */
@@ -43540,8 +43836,11 @@ void sub_GAME_7F053598(DoorRecord *door)
 
 
 
-
-
+/**
+ * objToggleDoorPortal / doorDeactivatePortal
+ * Toggles (Open/Closed) the portal linked with door
+ * @param door: Door to toggle portal on
+ */
 void sub_GAME_7F0535C4(DoorRecord *door) {
     if (door->portalNumber >= 0)
     {

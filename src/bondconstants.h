@@ -3006,6 +3006,13 @@ typedef enum WAYMODE
     #define ABS_F(val)            (val) < 0 ? (float)(val) + 4294967296.0f /* -1.0f */: (float)(val)
     #define ABS(x)                ((x) < 0 ? -(x) : (x))
 #endif
+#define getVector(vec, a, b) \
+    vec.x = b.x - a.x;       \
+    vec.y = b.y - a.y;       \
+    vec.z = b.z - a.z
+#define getDistanceSquared(vec)             (vec.x * vec.x) + (vec.y * vec.y) + (vec.z * vec.z)
+#define isVectorDistanceLessThan(dist, vec) (dist * dist) <= vec
+
 #define _mkshort(a, b)            ((a << 8) | (b & 0xff))
 #define _mkword(a, b)             ((a << 16) | (b & 0xffff))
 #define CharArrayTo16(val, index) (                                         val[index+1] | val[index] << 8)
@@ -3025,11 +3032,27 @@ typedef enum WAYMODE
 #define getAiGlobalID(ID)        ((ID) - 0)
 #define getAiChrID(ID)           ((ID) - 1025)
 #define getAiBGID(ID)            ((ID) - 4097)
+
     /* language file to slot allocation */
 #define TEXT(TEXTBANK, TEXTSLOT) ((TEXTBANK * 0x0400U) + TEXTSLOT)
+
     /* Image ID to RAM allocation */
 #define IMAGESEG(id)             0xABCD0000 | id
 
+/*Doesnt work! might be handy for something else 
+#define setMask(t)\
+      (t) <=   2 ? 1\
+    : (t) <=   4 ? 2\
+    : (t) <=   8 ? 3\
+    : (t) <=  16 ? 4\
+    : (t) <=  32 ? 5\
+    : (t) <=  64 ? 6\
+    : (t) <= 128 ? 7\
+    : (t) <= 256 ? 8\
+    : (t) <= 512 ? 9\
+    : (t) <=1024 ? 10\
+    : "TEXTURE TOO BIG (>1024)"*/
+    
     //macros for FILERECORDS
 #define SKELETON(NAME)    skeleton_ ## NAME
 #define JOINTLIST(NAME)   jointlist_ ## NAME
