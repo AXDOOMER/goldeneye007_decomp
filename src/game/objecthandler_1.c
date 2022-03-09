@@ -577,7 +577,7 @@ Mtxf *sub_GAME_7F06C660(struct Model *model, struct ModelNode *node, s32 arg2) {
 
 
 //rejoined per EU
-Mtx *getsubmatrix(Model *objinst)
+Mtxf *getsubmatrix(Model *objinst)
 {
     #if defined(LEFTOVERDEBUG)
     if (!objinst)
