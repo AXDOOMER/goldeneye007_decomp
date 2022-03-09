@@ -1312,13 +1312,13 @@ void sub_GAME_7F03FE88(u32 *param_1)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03FE98(void) {
+void monitorthingGetNew(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F03FE98
+glabel monitorthingGetNew
 /* 0749C8 7F03FE98 3C048007 */  lui   $a0, %hi(dword_CODE_bss_80075030)
 /* 0749CC 7F03FE9C 3C028007 */  lui   $v0, %hi(objinst)
 /* 0749D0 7F03FEA0 24425B70 */  addiu $v0, %lo(objinst) # addiu $v0, $v0, 0x5b70
@@ -2010,7 +2010,7 @@ glabel init_standard_object
 /* 075188 7F040658 01EE7823 */  subu  $t7, $t7, $t6
 /* 07518C 7F04065C 000F7880 */  sll   $t7, $t7, 2
 /* 075190 7F040660 00AF2821 */  addu  $a1, $a1, $t7
-/* 075194 7F040664 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 075194 7F040664 0FC1B39E */  jal   modelSetScale
 /* 075198 7F040668 8CA5A230 */   lw    $a1, %lo(PitemZ_entries+8)($a1)
 /* 07519C 7F04066C 44800000 */  mtc1  $zero, $f0
 /* 0751A0 7F040670 24180001 */  li    $t8, 1
@@ -2069,13 +2069,13 @@ PropRecord* sub_GAME_7F0406F8(s32* object, ModelFileHeader* header) {
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F04071C(void) {
+void objInitWithAutoModel(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F04071C
+glabel objInitWithAutoModel
 /* 07524C 7F04071C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 075250 7F040720 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 075254 7F040724 848E0004 */  lh    $t6, 4($a0)
@@ -6013,7 +6013,7 @@ glabel sub_GAME_7F043A6C
 /* 0785C0 7F043A90 31F80002 */  andi  $t8, $t7, 2
 /* 0785C4 7F043A94 53000034 */  beql  $t8, $zero, .L7F043B68
 /* 0785C8 7F043A98 00001025 */   move  $v0, $zero
-/* 0785CC 7F043A9C 0FC0FFA6 */  jal   sub_GAME_7F03FE98
+/* 0785CC 7F043A9C 0FC0FFA6 */  jal   monitorthingGetNew
 /* 0785D0 7F043AA0 8C900004 */   lw    $s0, 4($a0)
 /* 0785D4 7F043AA4 1040002F */  beqz  $v0, .L7F043B64
 /* 0785D8 7F043AA8 AE02006C */   sw    $v0, 0x6c($s0)
@@ -23944,7 +23944,7 @@ void save_ptr_monitor_ani_code_to_obj_ani_slot(MonitorRecord *mon, void *image)
 }
 
 
-void imageSlotSetImage(MonitorRecord *mon, s32 monAnimID)
+void monitorSetImageByNum(MonitorRecord *mon, s32 monAnimID)
 {
     s32 *image = &monAnim00Bond;
     switch (monAnimID)
@@ -33591,7 +33591,7 @@ void maybe_detonate_object(ObjectRecord* self, f32 damage,  coord3d* pos, bool f
                         {
                             //temp_a0 = temp_a2->unk14;
                             
-                            set_obj_instance_controller_scale(temp_a0, 1);//tempa2
+                            modelSetScale(temp_a0, 1);//tempa2
                             chrpropReparent(temp_a2.base.prop, self->prop);
                         }
                         break;
@@ -33963,7 +33963,7 @@ glabel maybe_detonate_object
 /* 08302C 7F04E4FC 8FA600C0 */   lw    $a2, 0xc0($sp)
 /* 083030 7F04E500 8CC40014 */  lw    $a0, 0x14($a2)
 /* 083034 7F04E504 8C850014 */  lw    $a1, 0x14($a0)
-/* 083038 7F04E508 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 083038 7F04E508 0FC1B39E */  jal   modelSetScale
 /* 08303C 7F04E50C AFA600C0 */   sw    $a2, 0xc0($sp)
 /* 083040 7F04E510 8FA600C0 */  lw    $a2, 0xc0($sp)
 /* 083044 7F04E514 8E050010 */  lw    $a1, 0x10($s0)
@@ -40085,7 +40085,7 @@ glabel sub_GAME_7F050F50
 /* 085AF0 7F050FC0 00000000 */  nop   
 /* 085AF4 7F050FC4 46008482 */  mul.s $f18, $f16, $f0
 /* 085AF8 7F050FC8 44059000 */  mfc1  $a1, $f18
-/* 085AFC 7F050FCC 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 085AFC 7F050FCC 0FC1B39E */  jal   modelSetScale
 /* 085B00 7F050FD0 00000000 */   nop   
 /* 085B04 7F050FD4 8FA20024 */  lw    $v0, 0x24($sp)
 /* 085B08 7F050FD8 8E180014 */  lw    $t8, 0x14($s0)
@@ -41470,7 +41470,7 @@ glabel sub_GAME_7F051F30
 /* 086AD0 7F051FA0 00000000 */  nop   
 /* 086AD4 7F051FA4 46008482 */  mul.s $f18, $f16, $f0
 /* 086AD8 7F051FA8 44059000 */  mfc1  $a1, $f18
-/* 086ADC 7F051FAC 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 086ADC 7F051FAC 0FC1B39E */  jal   modelSetScale
 /* 086AE0 7F051FB0 00000000 */   nop   
 /* 086AE4 7F051FB4 02002025 */  move  $a0, $s0
 /* 086AE8 7F051FB8 0FC14787 */  jal   sub_GAME_7F051E1C
@@ -43451,7 +43451,7 @@ glabel initialize_door
 /* 088130 7F053600 AFB10018 */  sw    $s1, 0x18($sp)
 /* 088134 7F053604 AFA50034 */  sw    $a1, 0x34($sp)
 /* 088138 7F053608 AFA60038 */  sw    $a2, 0x38($sp)
-/* 08813C 7F05360C 0FC101C7 */  jal   sub_GAME_7F04071C
+/* 08813C 7F05360C 0FC101C7 */  jal   objInitWithAutoModel
 /* 088140 7F053610 AFA7003C */   sw    $a3, 0x3c($sp)
 /* 088144 7F053614 860E0004 */  lh    $t6, 4($s0)
 /* 088148 7F053618 3C018004 */  lui   $at, %hi(PitemZ_entries+8)

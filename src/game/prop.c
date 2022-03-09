@@ -254,7 +254,7 @@ glabel sub_GAME_7F001BD4
 
 #ifdef NONMATCHING
 // maybe domakedefaultobj
-void domakedefaultobj(s32 arg0, ObjectRecord *arg1, ? arg2)
+void domakedefaultobj(s32 arg0, ObjectRecord *arg1, ? cmdindex)
 {
     s32 spF0;
     ? spE0;
@@ -277,7 +277,7 @@ void domakedefaultobj(s32 arg0, ObjectRecord *arg1, ? arg2)
     f32         sp50;
     f32         sp48;
     ChrRecord * temp_v0;
-    Model *     temp_a0_2;
+    Model *     monitor->model;
     Model *     temp_a0_3;
     Model *     temp_a0_5;
     Model *     temp_a0_6;
@@ -371,8 +371,8 @@ block_8:
         {
             sub_GAME_7F0406F8(arg1, PitemZ_entries[spF0].Header);
         }
-        temp_a0_2 = arg1->model;
-        set_obj_instance_controller_scale(temp_a0_2, temp_a0_2->scale * sp78);
+        monitor->model = arg1->model;
+        modelSetScale(monitor->model, monitor->model->scale * sp78);
         return;
     }
     if ((temp_v1 & 0x4000) != 0)
@@ -390,7 +390,7 @@ block_8:
                 phi_v0 = sub_GAME_7F0406F8(arg1, PitemZ_entries[spF0].Header);
             }
             temp_a0_3 = arg1->model;
-            set_obj_instance_controller_scale(temp_a0_3, temp_a0_3->scale * sp78);
+            modelSetScale(temp_a0_3, temp_a0_3->scale * sp78);
             attachNewChild(phi_v0, sp6C->prop);
         }
     }
@@ -464,7 +464,7 @@ block_8:
             }
             else
             {
-                phi_v0_2 = sub_GAME_7F04071C(arg1);
+                phi_v0_2 = objInitWithAutoModel(arg1);
             }
             sp60 = phi_v0_2;
             if (phi_s0 != 0)
@@ -627,11 +627,11 @@ block_72:
                     matrix_column_2_scalar_multiply(sp54, &sp8C);
                     matrix_column_3_scalar_multiply_2(sp50, &sp8C);
                     temp_a0_5 = arg1->model;
-                    set_obj_instance_controller_scale(temp_a0_5, temp_a0_5->scale * sp48);
+                    modelSetScale(temp_a0_5, temp_a0_5->scale * sp48);
                 }
             }
             temp_a0_6 = arg1->model;
-            set_obj_instance_controller_scale(temp_a0_6, temp_a0_6->scale * sp78);
+            modelSetScale(temp_a0_6, temp_a0_6->scale * sp78);
             matrix_scalar_multiply(arg1->model->scale, &sp8C);
             if ((arg1->flags & 2) != 0)
             {
@@ -755,7 +755,7 @@ glabel domakedefaultobj
 /* 036A34 7F001F04 C4880014 */  lwc1  $f8, 0x14($a0)
 /* 036A38 7F001F08 46064282 */  mul.s $f10, $f8, $f6
 /* 036A3C 7F001F0C 44055000 */  mfc1  $a1, $f10
-/* 036A40 7F001F10 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 036A40 7F001F10 0FC1B39E */  jal   modelSetScale
 /* 036A44 7F001F14 00000000 */   nop   
 /* 036A48 7F001F18 10000203 */  b     .L7F002728
 /* 036A4C 7F001F1C 8FBF0034 */   lw    $ra, 0x34($sp)
@@ -803,7 +803,7 @@ glabel domakedefaultobj
 /* 036AE8 7F001FB8 C4840014 */  lwc1  $f4, 0x14($a0)
 /* 036AEC 7F001FBC 46082182 */  mul.s $f6, $f4, $f8
 /* 036AF0 7F001FC0 44053000 */  mfc1  $a1, $f6
-/* 036AF4 7F001FC4 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 036AF4 7F001FC4 0FC1B39E */  jal   modelSetScale
 /* 036AF8 7F001FC8 00000000 */   nop   
 /* 036AFC 7F001FCC 8FAE006C */  lw    $t6, 0x6c($sp)
 /* 036B00 7F001FD0 02002025 */  move  $a0, $s0
@@ -1036,7 +1036,7 @@ glabel domakedefaultobj
 /* 036E70 7F002340 10000004 */  b     .L7F002354
 /* 036E74 7F002344 AFA20060 */   sw    $v0, 0x60($sp)
 .L7F002348:
-/* 036E78 7F002348 0FC101C7 */  jal   sub_GAME_7F04071C
+/* 036E78 7F002348 0FC101C7 */  jal   objInitWithAutoModel
 /* 036E7C 7F00234C 02202025 */   move  $a0, $s1
 /* 036E80 7F002350 AFA20060 */  sw    $v0, 0x60($sp)
 .L7F002354:
@@ -1268,7 +1268,7 @@ glabel domakedefaultobj
 /* 0371B0 7F002680 C4860014 */  lwc1  $f6, 0x14($a0)
 /* 0371B4 7F002684 460E3282 */  mul.s $f10, $f6, $f14
 /* 0371B8 7F002688 44055000 */  mfc1  $a1, $f10
-/* 0371BC 7F00268C 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 0371BC 7F00268C 0FC1B39E */  jal   modelSetScale
 /* 0371C0 7F002690 00000000 */   nop   
 .L7F002694:
 /* 0371C4 7F002694 8E240014 */  lw    $a0, 0x14($s1)
@@ -1277,7 +1277,7 @@ glabel domakedefaultobj
 /* 0371CC 7F00269C C4840014 */  lwc1  $f4, 0x14($a0)
 /* 0371D0 7F0026A0 46082182 */  mul.s $f6, $f4, $f8
 /* 0371D4 7F0026A4 44053000 */  mfc1  $a1, $f6
-/* 0371D8 7F0026A8 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 0371D8 7F0026A8 0FC1B39E */  jal   modelSetScale
 /* 0371DC 7F0026AC 00000000 */   nop   
 /* 0371E0 7F0026B0 8E2A0014 */  lw    $t2, 0x14($s1)
 /* 0371E4 7F0026B4 27A5008C */  addiu $a1, $sp, 0x8c
@@ -1805,7 +1805,7 @@ glabel expand_08_obj_set_guard_MP_weapons
 #endif
 #endif
 
-
+//i should be object hat
 void setupHat(s32 arg0, ObjectRecord* hat, s32 cmdindex)
 {
     if (hat->flags & PROPFLAG_ASSIGNEDTOCHR) {
@@ -1818,7 +1818,7 @@ void setupHat(s32 arg0, ObjectRecord* hat, s32 cmdindex)
     }
 }
 
-
+//i should be object key
 void setupKey(s32 arg0, ObjectRecord* key, s32 cmdindex)
 {
     domakedefaultobj(arg0, key, cmdindex);
@@ -1983,7 +1983,7 @@ glabel setupCctv
 
 
 #ifdef NONMATCHING
-void expand_type_0D_object_autoturret(undefined8 param_1,ObjectRecord.conflict *param_2)
+void setupAutogun(undefined8 param_1,ObjectRecord.conflict *param_2)
 
 {
     int iVar1;
@@ -2050,7 +2050,7 @@ glabel D_8004EF54
 .word 0x40c90fdb #6.2831855
 
 .text
-glabel expand_type_0D_object_autoturret
+glabel setupAutogun
 /* 037788 7F002C58 27BDFFC8 */  addiu $sp, $sp, -0x38
 /* 03778C 7F002C5C AFBF001C */  sw    $ra, 0x1c($sp)
 /* 037790 7F002C60 AFB00018 */  sw    $s0, 0x18($sp)
@@ -2179,7 +2179,7 @@ glabel D_80047398
 
 
 .text
-glabel expand_type_0D_object_autoturret
+glabel setupAutogun
 /* 0355B0 7F002BC0 27BDFFC8 */  addiu $sp, $sp, -0x38
 /* 0355B4 7F002BC4 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 0355B8 7F002BC8 AFB00018 */  sw    $s0, 0x18($sp)
@@ -2303,16 +2303,60 @@ glabel expand_type_0D_object_autoturret
 #endif
 
 
-void jmp_domakedefaultobj_0(void) {
-    domakedefaultobj();
+//i should be object rack
+void setupHangingMonitors(s32 arg0, ObjectRecord* rack, s32 cmdindex)
+{
+    domakedefaultobj(arg0, rack, cmdindex);
 }
-
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F002E3C(void) {
+void setupSingleMonitor(s32 arg0, void* monitor, s32 cmdindex)
+{
+    monitor->screen = g_MonitorAnimController;
+    monitorSetImageByNum(monitor->screen, monitor->imagenum);
+    if (((s32) monitor->pad < 0) && ((monitor->flags & 0x8000) == 0)) {
+        modelnum = (s32) monitor->modelnum;
+        void* owner = setupGetPtrToCommandByIndex(monitor->owneroffset + cmdindex, monitor);
+        Mtxf sp64;
+        modelLoad(modelnum);
 
+        scale =  monitor->extrascale * (1.0f / 256.0f);
+        monitor->unk74 = (bitwise s32) ((f32) monitor->unk74 / 65536.0f);
+
+        if (getPlayerCount() >= 2) {
+            monitor->hidden2 |=  4;
+        }
+        prop = objInitWithAutoModel(monitor);
+        monitor->monitorthing = monitorthingGetNew();
+
+        if (prop && monitor->monitorthing) {
+            monitor->hidden |= 0x40;
+            modelSetScale(monitor->model, monitor->model->scale * scale);
+            monitor->model->attachedtomodel = owner->model;
+            
+            if (monitor->ownerpart == 0) {
+                monitor->model->attachedtonode = owner->model->filedata->unk8->unk0;
+            } else if (monitor->ownerpart == 1) {
+                    monitor->model->attachedtonode = owner->model->filedata->unk8->unk4;
+            } else if (monitor->ownerpart == 2) {
+                    monitor->model->attachedtonode = owner->model->filedata->unk8->unk8;
+            } else {
+                    monitor->model->attachedtonode = owner->model->filedata->unk8->unkC;
+            }
+            chrpropReparent(prop, owner->prop);
+            matrix_4x4_set_rotation_around_x(0.36651915f, &sp64);
+            matrix_scalar_multiply(monitor->model->scale / owner->model->scale, &sp64);
+        }
+    } else {
+        domakedefaultobj(arg0, monitor, cmdindex);
+    }
+    if (monitor->prop && (monitor->flags & 0x40000000))
+    {
+        monitor->prop->flags |= 1;
+    }
 }
+
 #else
 GLOBAL_ASM(
 .late_rodata
@@ -2324,7 +2368,7 @@ glabel D_8004EF60
 .word 0x3fc90fdb
 
 .text
-glabel sub_GAME_7F002E3C
+glabel setupSingleMonitor
 /* 03796C 7F002E3C 27BDFFC8 */  addiu $sp, $sp, -0x38
 /* 037970 7F002E40 AFA40038 */  sw    $a0, 0x38($sp)
 /* 037974 7F002E44 3C0E8007 */  lui   $t6, %hi(g_MonitorAnimController) 
@@ -2351,7 +2395,7 @@ glabel sub_GAME_7F002E3C
 /* 0379C4 7F002E94 AD010000 */  sw    $at, ($t0)
 /* 0379C8 7F002E98 8DD90004 */  lw    $t9, 4($t6)
 /* 0379CC 7F002E9C AD190004 */  sw    $t9, 4($t0)
-/* 0379D0 7F002EA0 0FC12726 */  jal   imageSlotSetImage
+/* 0379D0 7F002EA0 0FC12726 */  jal   monitorSetImageByNum
 /* 0379D4 7F002EA4 8E0500FC */   lw    $a1, 0xfc($s0)
 /* 0379D8 7F002EA8 86090006 */  lh    $t1, 6($s0)
 /* 0379DC 7F002EAC 8FA40038 */  lw    $a0, 0x38($sp)
@@ -2399,9 +2443,9 @@ glabel sub_GAME_7F002E3C
 /* 037A80 7F002F50 372E0004 */  ori   $t6, $t9, 4
 /* 037A84 7F002F54 A20E0002 */  sb    $t6, 2($s0)
 .L7F002F58:
-/* 037A88 7F002F58 0FC101C7 */  jal   sub_GAME_7F04071C
+/* 037A88 7F002F58 0FC101C7 */  jal   objInitWithAutoModel
 /* 037A8C 7F002F5C 02002025 */   move  $a0, $s0
-/* 037A90 7F002F60 0FC0FFA6 */  jal   sub_GAME_7F03FE98
+/* 037A90 7F002F60 0FC0FFA6 */  jal   monitorthingGetNew
 /* 037A94 7F002F64 AFA20024 */   sw    $v0, 0x24($sp)
 /* 037A98 7F002F68 AE02006C */  sw    $v0, 0x6c($s0)
 /* 037A9C 7F002F6C 8FA80024 */  lw    $t0, 0x24($sp)
@@ -2417,7 +2461,7 @@ glabel sub_GAME_7F002E3C
 /* 037AC4 7F002F94 C48A0014 */  lwc1  $f10, 0x14($a0)
 /* 037AC8 7F002F98 46105482 */  mul.s $f18, $f10, $f16
 /* 037ACC 7F002F9C 44059000 */  mfc1  $a1, $f18
-/* 037AD0 7F002FA0 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 037AD0 7F002FA0 0FC1B39E */  jal   modelSetScale
 /* 037AD4 7F002FA4 00000000 */   nop   
 /* 037AD8 7F002FA8 8E2C0014 */  lw    $t4, 0x14($s1)
 /* 037ADC 7F002FAC 8E0D0014 */  lw    $t5, 0x14($s0)
@@ -2537,7 +2581,7 @@ glabel sub_GAME_7F0030D0
 /* 037C54 7F003124 AD010000 */  sw    $at, ($t0)
 /* 037C58 7F003128 8DD90004 */  lw    $t9, 4($t6)
 /* 037C5C 7F00312C AD190004 */  sw    $t9, 4($t0)
-/* 037C60 7F003130 0FC12726 */  jal   imageSlotSetImage
+/* 037C60 7F003130 0FC12726 */  jal   monitorSetImageByNum
 /* 037C64 7F003134 92050250 */   lbu   $a1, 0x250($s0)
 /* 037C68 7F003138 3C098007 */  lui   $t1, %hi(g_MonitorAnimController) 
 /* 037C6C 7F00313C 25295B98 */  addiu $t1, %lo(g_MonitorAnimController) # addiu $t1, $t1, 0x5b98
@@ -2558,7 +2602,7 @@ glabel sub_GAME_7F0030D0
 /* 037CA4 7F003174 ADA10000 */  sw    $at, ($t5)
 /* 037CA8 7F003178 8D2C0004 */  lw    $t4, 4($t1)
 /* 037CAC 7F00317C ADAC0004 */  sw    $t4, 4($t5)
-/* 037CB0 7F003180 0FC12726 */  jal   imageSlotSetImage
+/* 037CB0 7F003180 0FC12726 */  jal   monitorSetImageByNum
 /* 037CB4 7F003184 92050251 */   lbu   $a1, 0x251($s0)
 /* 037CB8 7F003188 3C188007 */  lui   $t8, %hi(g_MonitorAnimController) 
 /* 037CBC 7F00318C 27185B98 */  addiu $t8, %lo(g_MonitorAnimController) # addiu $t8, $t8, 0x5b98
@@ -2579,7 +2623,7 @@ glabel sub_GAME_7F0030D0
 /* 037CF4 7F0031C4 AD010000 */  sw    $at, ($t0)
 /* 037CF8 7F0031C8 8F0E0004 */  lw    $t6, 4($t8)
 /* 037CFC 7F0031CC AD0E0004 */  sw    $t6, 4($t0)
-/* 037D00 7F0031D0 0FC12726 */  jal   imageSlotSetImage
+/* 037D00 7F0031D0 0FC12726 */  jal   monitorSetImageByNum
 /* 037D04 7F0031D4 92050252 */   lbu   $a1, 0x252($s0)
 /* 037D08 7F0031D8 3C0B8007 */  lui   $t3, %hi(g_MonitorAnimController) 
 /* 037D0C 7F0031DC 256B5B98 */  addiu $t3, %lo(g_MonitorAnimController) # addiu $t3, $t3, 0x5b98
@@ -2600,7 +2644,7 @@ glabel sub_GAME_7F0030D0
 /* 037D44 7F003214 ADA10000 */  sw    $at, ($t5)
 /* 037D48 7F003218 8D690004 */  lw    $t1, 4($t3)
 /* 037D4C 7F00321C ADA90004 */  sw    $t1, 4($t5)
-/* 037D50 7F003220 0FC12726 */  jal   imageSlotSetImage
+/* 037D50 7F003220 0FC12726 */  jal   monitorSetImageByNum
 /* 037D54 7F003224 92050253 */   lbu   $a1, 0x253($s0)
 /* 037D58 7F003228 8FA40020 */  lw    $a0, 0x20($sp)
 /* 037D5C 7F00322C 02002825 */  move  $a1, $s0
@@ -3263,7 +3307,7 @@ glabel expand_type_01_object
 .L7F003B98:
 /* 0386C8 7F003B98 46002202 */  mul.s $f8, $f4, $f0
 /* 0386CC 7F003B9C 44054000 */  mfc1  $a1, $f8
-/* 0386D0 7F003BA0 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 0386D0 7F003BA0 0FC1B39E */  jal   modelSetScale
 /* 0386D4 7F003BA4 00000000 */   nop   
 .L7F003BA8:
 /* 0386D8 7F003BA8 0FC0E929 */  jal   chrpropActivate
@@ -3786,7 +3830,7 @@ glabel expand_type_01_object
 .L7F003B24:
 /* 036514 7F003B24 46005102 */  mul.s $f4, $f10, $f0
 /* 036518 7F003B28 44052000 */  mfc1  $a1, $f4
-/* 03651C 7F003B2C 0FC1B4CF */  jal   set_obj_instance_controller_scale
+/* 03651C 7F003B2C 0FC1B4CF */  jal   modelSetScale
 /* 036520 7F003B30 00000000 */   nop   
 .L7F003B34:
 /* 036524 7F003B34 0FC0E959 */  jal   chrpropActivate
@@ -4560,7 +4604,7 @@ autogun_expand:
 /* 039044 7F004514 01D4C024 */  and   $t8, $t6, $s4
 /* 039048 7F004518 17000178 */  bnez  $t8, other_obj_expand
 /* 03904C 7F00451C 00000000 */   nop   
-/* 039050 7F004520 0FC00B16 */  jal   expand_type_0D_object_autoturret
+/* 039050 7F004520 0FC00B16 */  jal   setupAutogun
 /* 039054 7F004524 02603025 */   move  $a2, $s3
 /* 039058 7F004528 10000174 */  b     other_obj_expand
 /* 03905C 7F00452C 00000000 */   nop   
@@ -4573,7 +4617,7 @@ rack_expand:
 /* 039074 7F004544 01144824 */  and   $t1, $t0, $s4
 /* 039078 7F004548 1520016C */  bnez  $t1, other_obj_expand
 /* 03907C 7F00454C 00000000 */   nop   
-/* 039080 7F004550 0FC00B87 */  jal   jmp_domakedefaultobj_0
+/* 039080 7F004550 0FC00B87 */  jal   setupHangingMonitors
 /* 039084 7F004554 02603025 */   move  $a2, $s3
 /* 039088 7F004558 10000168 */  b     other_obj_expand
 /* 03908C 7F00455C 00000000 */   nop   
@@ -4586,7 +4630,7 @@ single_screen_display_expand:
 /* 0390A4 7F004574 03345024 */  and   $t2, $t9, $s4
 /* 0390A8 7F004578 15400160 */  bnez  $t2, other_obj_expand
 /* 0390AC 7F00457C 00000000 */   nop   
-/* 0390B0 7F004580 0FC00B8F */  jal   sub_GAME_7F002E3C
+/* 0390B0 7F004580 0FC00B8F */  jal   setupSingleMonitor
 /* 0390B4 7F004584 02603025 */   move  $a2, $s3
 /* 0390B8 7F004588 1000015C */  b     other_obj_expand
 /* 0390BC 7F00458C 00000000 */   nop   
@@ -5014,7 +5058,7 @@ other_obj_expand:
 /* 0396E0 7F004BB0 8E440014 */  lw    $a0, 0x14($s2)
 /* 0396E4 7F004BB4 01B76025 */  or    $t4, $t5, $s7
 /* 0396E8 7F004BB8 AE4C0064 */  sw    $t4, 0x64($s2)
-/* 0396EC 7F004BBC 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 0396EC 7F004BBC 0FC1B39E */  jal   modelSetScale
 /* 0396F0 7F004BC0 8C850014 */   lw    $a1, 0x14($a0)
 /* 0396F4 7F004BC4 8E440010 */  lw    $a0, 0x10($s2)
 /* 0396F8 7F004BC8 0FC0E969 */  jal   chrpropReparent
@@ -5953,7 +5997,7 @@ autogun_expand:
 /* 039084 7F004514 01D4C024 */  and   $t8, $t6, $s4
 /* 039088 7F004518 1700017C */  bnez  $t8, other_obj_expand
 /* 03908C 7F00451C 00000000 */   nop   
-/* 039090 7F004520 0FC00B16 */  jal   expand_type_0D_object_autoturret
+/* 039090 7F004520 0FC00B16 */  jal   setupAutogun
 /* 039094 7F004524 02603025 */   move  $a2, $s3
 /* 039098 7F004528 10000178 */  b     other_obj_expand
 /* 03909C 7F00452C 00000000 */   nop   
@@ -5966,7 +6010,7 @@ rack_expand:
 /* 0390B4 7F004544 01144824 */  and   $t1, $t0, $s4
 /* 0390B8 7F004548 15200170 */  bnez  $t1, other_obj_expand
 /* 0390BC 7F00454C 00000000 */   nop   
-/* 0390C0 7F004550 0FC00B87 */  jal   jmp_domakedefaultobj_0
+/* 0390C0 7F004550 0FC00B87 */  jal   setupHangingMonitors
 /* 0390C4 7F004554 02603025 */   move  $a2, $s3
 /* 0390C8 7F004558 1000016C */  b     other_obj_expand
 /* 0390CC 7F00455C 00000000 */   nop   
@@ -5979,7 +6023,7 @@ single_screen_display_expand:
 /* 0390E4 7F004574 03345024 */  and   $t2, $t9, $s4
 /* 0390E8 7F004578 15400164 */  bnez  $t2, other_obj_expand
 /* 0390EC 7F00457C 00000000 */   nop   
-/* 0390F0 7F004580 0FC00B8F */  jal   sub_GAME_7F002E3C
+/* 0390F0 7F004580 0FC00B8F */  jal   setupSingleMonitor
 /* 0390F4 7F004584 02603025 */   move  $a2, $s3
 /* 0390F8 7F004588 10000160 */  b     other_obj_expand
 /* 0390FC 7F00458C 00000000 */   nop   
@@ -6412,7 +6456,7 @@ other_obj_expand:
 /* 039730 7F004BC0 8E440014 */  lw    $a0, 0x14($s2)
 /* 039734 7F004BC4 01977825 */  or    $t7, $t4, $s7
 /* 039738 7F004BC8 AE4F0064 */  sw    $t7, 0x64($s2)
-/* 03973C 7F004BCC 0FC1B51A */  jal   set_obj_instance_controller_scale
+/* 03973C 7F004BCC 0FC1B51A */  jal   modelSetScale
 /* 039740 7F004BD0 8C850014 */   lw    $a1, 0x14($a0)
 /* 039744 7F004BD4 8E440010 */  lw    $a0, 0x10($s2)
 /* 039748 7F004BD8 0FC0EA29 */  jal   chrpropReparent
@@ -7351,7 +7395,7 @@ autogun_expand:
 /* 036E90 7F0044A0 01D4C024 */  and   $t8, $t6, $s4
 /* 036E94 7F0044A4 1700017A */  bnez  $t8, other_obj_expand
 /* 036E98 7F0044A8 00000000 */   nop   
-/* 036E9C 7F0044AC 0FC00AF0 */  jal   expand_type_0D_object_autoturret
+/* 036E9C 7F0044AC 0FC00AF0 */  jal   setupAutogun
 /* 036EA0 7F0044B0 02603025 */   move  $a2, $s3
 /* 036EA4 7F0044B4 10000176 */  b     other_obj_expand
 /* 036EA8 7F0044B8 00000000 */   nop   
@@ -7364,7 +7408,7 @@ rack_expand:
 /* 036EC0 7F0044D0 01144824 */  and   $t1, $t0, $s4
 /* 036EC4 7F0044D4 1520016E */  bnez  $t1, other_obj_expand
 /* 036EC8 7F0044D8 00000000 */   nop   
-/* 036ECC 7F0044DC 0FC00B63 */  jal   jmp_domakedefaultobj_0
+/* 036ECC 7F0044DC 0FC00B63 */  jal   setupHangingMonitors
 /* 036ED0 7F0044E0 02603025 */   move  $a2, $s3
 /* 036ED4 7F0044E4 1000016A */  b     other_obj_expand
 /* 036ED8 7F0044E8 00000000 */   nop   
@@ -7377,7 +7421,7 @@ single_screen_display_expand:
 /* 036EF0 7F004500 03345024 */  and   $t2, $t9, $s4
 /* 036EF4 7F004504 15400162 */  bnez  $t2, other_obj_expand
 /* 036EF8 7F004508 00000000 */   nop   
-/* 036EFC 7F00450C 0FC00B6B */  jal   sub_GAME_7F002E3C
+/* 036EFC 7F00450C 0FC00B6B */  jal   setupSingleMonitor
 /* 036F00 7F004510 02603025 */   move  $a2, $s3
 /* 036F04 7F004514 1000015E */  b     other_obj_expand
 /* 036F08 7F004518 00000000 */   nop   
@@ -7809,7 +7853,7 @@ other_obj_expand:
 /* 037534 7F004B44 8E440014 */  lw    $a0, 0x14($s2)
 /* 037538 7F004B48 01977825 */  or    $t7, $t4, $s7
 /* 03753C 7F004B4C AE4F0064 */  sw    $t7, 0x64($s2)
-/* 037540 7F004B50 0FC1B4CF */  jal   set_obj_instance_controller_scale
+/* 037540 7F004B50 0FC1B4CF */  jal   modelSetScale
 /* 037544 7F004B54 8C850014 */   lw    $a1, 0x14($a0)
 /* 037548 7F004B58 8E440010 */  lw    $a0, 0x10($s2)
 /* 03754C 7F004B5C 0FC0E999 */  jal   chrpropReparent

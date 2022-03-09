@@ -15,7 +15,7 @@ extern s32 vtxallocator;
 // arg0 unknown pointer
 void sub_GAME_7F070090(void *arg0, f32 arg1, f32 arg2);
 void sub_GAME_7F06FF18(Model *, f32, f32);
-void set_obj_instance_controller_scale(Model*, f32);
+void modelSetScale(Model*, f32);
 void getsuboffset(Model *, coord3d *);
 void sub_GAME_7F070AEC(Model *, s32, s32);
 void subcalcpos(Model *);

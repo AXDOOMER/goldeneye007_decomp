@@ -1430,7 +1430,7 @@ glabel setsubroty
 
 
 
-void set_obj_instance_controller_scale(Model *objinst, f32 scale)
+void modelSetScale(Model *objinst, f32 scale)
 {
     objinst->scale = scale;
 }

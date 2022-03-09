@@ -12020,7 +12020,7 @@ bool chrDropItem(ChrRecord *self, s32 modelnum, u8 weaponid)
     
     if (NewModel && NewModel->prop)
     {
-        set_obj_instance_controller_scale(NewModel->model, NewModel->model->scale);
+        modelSetScale(NewModel->model, NewModel->model->scale);
         chrpropReparent(NewModel->prop, self->prop);
         NewModel->timer = CHRLV_DEFAULT_TIMER;
         propobjSetDropped(NewModel->prop, 1);
