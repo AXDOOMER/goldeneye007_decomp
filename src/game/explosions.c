@@ -217,8 +217,11 @@ u32 D_8004093C = 0xDC;
 // rodata
 
 
+/**
+ * Named same as Perfect Dark.
+*/
 #ifdef NONMATCHING
-void sub_GAME_7F09C250(void) {
+void explosionCreate(void) {
 
 }
 #else
@@ -230,7 +233,7 @@ glabel D_800576B0
 glabel D_800576B4
 .word 0x40c90fdb /*6.2831855*/
 .text
-glabel sub_GAME_7F09C250
+glabel explosionCreate
 /* 0D0D80 7F09C250 27BDFFB8 */  addiu $sp, $sp, -0x48
 /* 0D0D84 7F09C254 00077400 */  sll   $t6, $a3, 0x10
 /* 0D0D88 7F09C258 000E7C03 */  sra   $t7, $t6, 0x10
@@ -607,7 +610,7 @@ glabel D_800576B0
 glabel D_800576B4
 .word 0x40c90fdb /*6.2831855*/
 .text
-glabel sub_GAME_7F09C250
+glabel explosionCreate
 /* 0D1960 7F09CDF0 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 0D1964 7F09CDF4 AFA7005C */  sw    $a3, 0x5c($sp)
 /* 0D1968 7F09CDF8 87AE005E */  lh    $t6, 0x5e($sp)

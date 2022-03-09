@@ -2427,7 +2427,7 @@ typedef union
                 00000080    depositted (thrown)
                 00000004    removes object when set
             */
-            int runtime_bitflags;
+            u32 runtime_bitflags;
         };
         int               ptr_allocated_collisiondata_block;
 

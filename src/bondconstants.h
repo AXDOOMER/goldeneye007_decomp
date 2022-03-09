@@ -242,7 +242,7 @@ typedef enum GUARD_SETUP_FLAG // u16
     GUARD_SETUP_FLAG_1000                = 0x1000, // unused
     GUARD_SETUP_FLAG_2000                = 0x2000, // unused
     GUARD_SETUP_FLAG_4000                = 0x4000, // unused
-    GUARD_SETUP_FLAG_8000                = 0x8000, // unused
+    GUARD_SETUP_FLAG_8000                = 0x8000 // unused
 } GUARD_SETUP_FLAG;
 
 //chr flags2
