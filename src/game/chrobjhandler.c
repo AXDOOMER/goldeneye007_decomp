@@ -41871,8 +41871,8 @@ glabel sub_GAME_7F051FD4
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F052030(void) {
-
+void sub_GAME_7F052030(WeaponObjRecord *weapon, ChrRecord *chr)
+{
 }
 #else
 GLOBAL_ASM(

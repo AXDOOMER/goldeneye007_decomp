@@ -3,6 +3,7 @@
 #include "chrlv.h"
 #include "math_atan2f.h"
 #include "prop.h"
+#include "game/mp_weapon.h"
 
 /**
  * EU .bss 0x80068480
@@ -1321,29 +1322,15 @@ glabel domakedefaultobj
 
 
 #ifdef NONMATCHING
-void expand_08_obj_set_guard_MP_weapons(void* chr, void* weapon, s32 cmdindex) {
-    void* sp1C;
-    s32 sp18;
-    s32 temp_a0_2;
-    s32 temp_v0_3;
-    s8 temp_a0;
-    s8 temp_a0_3;
-    s8 temp_t0;
-    u8 temp_v0_2;
-    //void* temp_a3;
-    void* temp_v0;
-    void* mpweapon;
-    s32 phi_a1;
-
-    //temp_a3 = weapon;
-    if ((weapon->unk8 & 0x4000) != 0) {
-        temp_v0 = chrFindByLiteralId(weapon->unk6);
-        sp1C = temp_v0;
-        if ((temp_v0 != 0) && (temp_v0->unk18 != 0) && (temp_v0->unk1C != 0)) {
-            weapon = weapon;
-            if (cheatIsActive(0x1C) != 0) { //CHEAT_ENEMY_ROCKETS
-                temp_t0 = weapon->unk80;
-                switch (temp_t0) {                  /* switch 1 */
+void expand_08_obj_set_guard_MP_weapons(WeaponObjRecord* weapon, s32 cmdindex)
+{
+    if ((weapon->flags & PROPFLAG_ASSIGNEDTOCHR)) {
+        ChrRecord* chr = chrFindByLiteralId(weapon->pad);
+        if (chr && chr->prop && chr->model) {
+            if (cheatIsActive(CHEAT_ENEMY_ROCKETS))
+            {
+                switch (weapon->weaponnum)
+                {
                 case ITEM_KNIFE:
                 case ITEM_THROWKNIFE:
                 case ITEM_WPPK:
@@ -1369,57 +1356,55 @@ void expand_08_obj_set_guard_MP_weapons(void* chr, void* weapon, s32 cmdindex) {
                 case ITEM_REMOTEMINE:
                 case ITEM_TRIGGER:
                 case ITEM_TASER:
-                    weapon->unk80 = 0x19; //ITEM_ROCKETLAUNCH
-                    weapon->unk4 = 0xD3; //PROP_CHRROCKETLAUNCH
-                    weapon->unk0 = 256;
+                    weapon->weaponnum = ITEM_ROCKETLAUNCH; 
+                    weapon->obj = PROP_CHRROCKETLAUNCH; 
+                    weapon->extrascale = 256;
                     break;
                 }
             }
-            temp_a0 = weapon->unk80;
-            weapon = weapon;
-            weaponLoadProjectileModels(temp_a0);
-            sub_GAME_7F052030(weapon, sp1C);
+            weaponLoadProjectileModels(weapon->weaponnum);
+            sub_GAME_7F052030(weapon, chr);
         }
-    } else {
-        sp18 = 1;
-        //weapon = temp_a3;
-        phi_a1 = 1;
-        if (getPlayerCount() >= 2) {
+    } else
+    {
+        bool hastoken = 1;
+        bool giveweapon = 1;
+        if (getPlayerCount() >= 2)
+        {
+            struct s_mp_weapon_set* mpweapon;
+            
             lastmpweaponnum = -1;
-            temp_v0_2 = (u8) weapon->unk80;
-            switch ((s32) temp_v0_2) {              /* switch 2; irregular */
-            case 0xF0:                              /* switch 2 */
-            case 0xF1:                              /* switch 2 */
-            case 0xF2:                              /* switch 2 */
-            case 0xF3:                              /* switch 2 */
-            case 0xF4:                              /* switch 2 */
-            case 0xF5:                              /* switch 2 */
-            case 0xF6:                              /* switch 2 */
-            case 0xF7:                              /* switch 2 */
-                weapon = weapon;
-                temp_v0_3 = getPtrMPWeaponSetData();
-                temp_a0_2 = (u8) weapon->unk80 - 0xF0;
-                lastmpweaponnum = temp_a0_2;
-                mpweapon = temp_v0_3 + (temp_a0_2 * 0x18);
-                weapon->unk80 = (s8) mpweapon->unk0;
-                weapon->unk4 = (s16) mpweapon->unk4;
-                weapon->unk0 = (s16) (u32) (mpweapon->unk8 * 256.0f);
-                phi_a1 = mpweapon->unk14;
+            switch (weapon->weaponnum)
+            {
+            case 0xF0:
+            case 0xF1:
+            case 0xF2:
+            case 0xF3:
+            case 0xF4:
+            case 0xF5:
+            case 0xF6:
+            case 0xF7:
+                //temp_v0_3 = getPtrMPWeaponSetData();
+                lastmpweaponnum = weapon->weaponnum - 0xF0;
+                mpweapon = getPtrMPWeaponSetData() + (lastmpweaponnum * 0x18);
+                weapon->weaponnum = mpweapon->itemID;
+                weapon->obj = mpweapon->propID;
+                weapon->extrascale = mpweapon->size * 256.0f;
+                giveweapon = mpweapon->allowpickup;
                 break;
-            case 0x58:                              /* ITEM_TOKEN */
-                sp18 = 1;
-                weapon = weapon;
-                if (get_scenario() != 2) { //SCENARIO_TLD
-                    phi_a1 = 0;
+            case ITEM_TOKEN:
+                hastoken = 1;
+                if (get_scenario() != SCENARIO_TLD)
+                { 
+                    giveweapon = 0;
                 }
                 break;
             }
         }
-        temp_a0_3 = weapon->unk80;
-        if ((temp_a0_3 != 0) && (phi_a1 != 0)) {
-            weapon = weapon;
-            weaponLoadProjectileModels(temp_a0_3);
-            domakedefaultobj(chr, weapon, cmdindex);
+        if ((weapon->weaponnum != ITEM_UNARMED) && giveweapon)
+        {
+            weaponLoadProjectileModels(weapon->weaponnum);
+            domakedefaultobj(weapon, cmdindex);
         }
     }
 }
