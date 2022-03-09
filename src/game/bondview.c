@@ -5458,7 +5458,7 @@ void set_camera_mode(s32 arg0)
             if ((D_8003648C != 0) && (ptr_playerstank != 0))
             {
                 temp_a0_2 = ptr_playerstank;
-                sub_GAME_7F09C250(temp_a0_2, temp_a0_2 + 8, temp_a0_2->unk14, 0xD, 0, get_cur_playernum(), temp_a0_2 + 0x2C, 0);
+                explosionCreate(temp_a0_2, temp_a0_2 + 8, temp_a0_2->unk14, 0xD, 0, get_cur_playernum(), temp_a0_2 + 0x2C, 0);
                 return;
             }
             // Duplicate return node #56. Try simplifying control flow for better match
@@ -5959,7 +5959,7 @@ glabel set_camera_mode
 /* 0AFBA4 7F07B074 AFA0001C */  sw    $zero, 0x1c($sp)
 /* 0AFBA8 7F07B078 AFA20014 */  sw    $v0, 0x14($sp)
 /* 0AFBAC 7F07B07C AFA00010 */  sw    $zero, 0x10($sp)
-/* 0AFBB0 7F07B080 0FC27094 */  jal   sub_GAME_7F09C250
+/* 0AFBB0 7F07B080 0FC27094 */  jal   explosionCreate
 /* 0AFBB4 7F07B084 24850008 */   addiu $a1, $a0, 8
 /* 0AFBB8 7F07B088 10000042 */  b     .L7F07B194
 /* 0AFBBC 7F07B08C 8FBF002C */   lw    $ra, 0x2c($sp)
@@ -25858,7 +25858,7 @@ glabel sub_GAME_7F084360
 /* 0B9128 7F0845F8 AFAF0018 */  sw    $t7, 0x18($sp)
 /* 0B912C 7F0845FC AFA0001C */  sw    $zero, 0x1c($sp)
 /* 0B9130 7F084600 AFA00014 */  sw    $zero, 0x14($sp)
-/* 0B9134 7F084604 0FC27094 */  jal   sub_GAME_7F09C250
+/* 0B9134 7F084604 0FC27094 */  jal   explosionCreate
 /* 0B9138 7F084608 AFA00010 */   sw    $zero, 0x10($sp)
 /* 0B913C 7F08460C 0C002914 */  jal   randomGetNext
 /* 0B9140 7F084610 00000000 */   nop
@@ -26063,7 +26063,7 @@ glabel sub_GAME_7F084360
 /* 0B712C 7F08473C AFAF0018 */  sw    $t7, 0x18($sp)
 /* 0B7130 7F084740 AFA0001C */  sw    $zero, 0x1c($sp)
 /* 0B7134 7F084744 AFA00014 */  sw    $zero, 0x14($sp)
-/* 0B7138 7F084748 0FC26DE4 */  jal   sub_GAME_7F09C250
+/* 0B7138 7F084748 0FC26DE4 */  jal   explosionCreate
 /* 0B713C 7F08474C AFA00010 */   sw    $zero, 0x10($sp)
 /* 0B7140 7F084750 0C00262C */  jal   randomGetNext
 /* 0B7144 7F084754 00000000 */   nop   

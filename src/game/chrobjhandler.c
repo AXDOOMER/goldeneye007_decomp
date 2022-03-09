@@ -6077,11 +6077,13 @@ glabel sub_GAME_7F043A6C
 
 
 
-
+/**
+ * Named same as Perfect Dark.
+*/
 #if defined(VERSION_JP) || defined(VERSION_EU)
-s32 generate_explosion_at_position(PropRecord *prop, s32 arg1)
+s32 propExplode(PropRecord *prop, s32 arg1)
 #else
-void generate_explosion_at_position(PropRecord *prop, s32 arg1)
+void propExplode(PropRecord *prop, s32 arg1)
 #endif
 {
     ObjectRecord *prop_obj; // sp92
@@ -6131,14 +6133,14 @@ void generate_explosion_at_position(PropRecord *prop, s32 arg1)
 #if defined(VERSION_JP) || defined(VERSION_EU)
     ret =
 #endif
-            sub_GAME_7F09C250(0, &pos, stan, (s16) arg1, (prop_obj->flags & 0xE) == 0, playernum, parent->rooms, 0);
+            explosionCreate(0, &pos, stan, (s16) arg1, (prop_obj->flags & 0xE) == 0, playernum, parent->rooms, 0);
         }
         else
         {
 #if defined(VERSION_JP) || defined(VERSION_EU)
     ret =
 #endif
-            sub_GAME_7F09C250(0, &pos, stan, (s16) arg1, 0, playernum, parent->rooms, 1);
+            explosionCreate(0, &pos, stan, (s16) arg1, 0, playernum, parent->rooms, 1);
         }
     }
     else
@@ -6146,7 +6148,7 @@ void generate_explosion_at_position(PropRecord *prop, s32 arg1)
 #if defined(VERSION_JP) || defined(VERSION_EU)
     ret =
 #endif
-        sub_GAME_7F09C250(
+        explosionCreate(
             0,
             &prop_obj->runtime_pos,
             prop->stan,
@@ -6197,7 +6199,7 @@ glabel handle_thrown_explosive_detonation
 /* 0788E4 7F043DB4 000FC0C0 */  sll   $t8, $t7, 3
 /* 0788E8 7F043DB8 0703010E */  bgezl $t8, .L7F0441F4
 /* 0788EC 7F043DBC 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0788F0 7F043DC0 0FC10EDF */  jal   generate_explosion_at_position
+/* 0788F0 7F043DC0 0FC10EDF */  jal   propExplode
 /* 0788F4 7F043DC4 AFA7001C */   sw    $a3, 0x1c($sp)
 /* 0788F8 7F043DC8 8FA7001C */  lw    $a3, 0x1c($sp)
 /* 0788FC 7F043DCC 8CF90064 */  lw    $t9, 0x64($a3)
@@ -6235,7 +6237,7 @@ glabel handle_thrown_explosive_detonation
 /* 078974 7F043E44 10000001 */  b     .L7F043E4C
 /* 078978 7F043E48 24050011 */   li    $a1, 17
 .L7F043E4C:
-/* 07897C 7F043E4C 0FC10EDF */  jal   generate_explosion_at_position
+/* 07897C 7F043E4C 0FC10EDF */  jal   propExplode
 /* 078980 7F043E50 AFA7001C */   sw    $a3, 0x1c($sp)
 /* 078984 7F043E54 8FA7001C */  lw    $a3, 0x1c($sp)
 /* 078988 7F043E58 8CEF0064 */  lw    $t7, 0x64($a3)
@@ -6258,7 +6260,7 @@ glabel handle_thrown_explosive_detonation
 /* 0789C8 7F043E98 10000001 */  b     .L7F043EA0
 /* 0789CC 7F043E9C 24050011 */   li    $a1, 17
 .L7F043EA0:
-/* 0789D0 7F043EA0 0FC10EDF */  jal   generate_explosion_at_position
+/* 0789D0 7F043EA0 0FC10EDF */  jal   propExplode
 /* 0789D4 7F043EA4 AFA7001C */   sw    $a3, 0x1c($sp)
 /* 0789D8 7F043EA8 8FA7001C */  lw    $a3, 0x1c($sp)
 /* 0789DC 7F043EAC 8CEA0064 */  lw    $t2, 0x64($a3)
@@ -6274,7 +6276,7 @@ glabel handle_thrown_explosive_detonation
 /* 078A00 7F043ED0 24050011 */  li    $a1, 17
 /* 078A04 7F043ED4 558000C7 */  bnezl $t4, .L7F0441F4
 /* 078A08 7F043ED8 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 078A0C 7F043EDC 0FC10EDF */  jal   generate_explosion_at_position
+/* 078A0C 7F043EDC 0FC10EDF */  jal   propExplode
 /* 078A10 7F043EE0 AFA7001C */   sw    $a3, 0x1c($sp)
 /* 078A14 7F043EE4 8FA7001C */  lw    $a3, 0x1c($sp)
 /* 078A18 7F043EE8 24040078 */  li    $a0, 120
@@ -6314,7 +6316,7 @@ glabel handle_thrown_explosive_detonation
 /* 078A98 7F043F68 24050011 */   li    $a1, 17
 .L7F043F6C:
 /* 078A9C 7F043F6C AFA60018 */  sw    $a2, 0x18($sp)
-/* 078AA0 7F043F70 0FC10EDF */  jal   generate_explosion_at_position
+/* 078AA0 7F043F70 0FC10EDF */  jal   propExplode
 /* 078AA4 7F043F74 AFA7001C */   sw    $a3, 0x1c($sp)
 /* 078AA8 7F043F78 8FA60018 */  lw    $a2, 0x18($sp)
 /* 078AAC 7F043F7C 8FA7001C */  lw    $a3, 0x1c($sp)
@@ -6368,7 +6370,7 @@ glabel handle_thrown_explosive_detonation
 /* 078B60 7F044030 05A30008 */  bgezl $t5, .L7F044054
 /* 078B64 7F044034 AFA60018 */   sw    $a2, 0x18($sp)
 /* 078B68 7F044038 AFA60018 */  sw    $a2, 0x18($sp)
-/* 078B6C 7F04403C 0FC10EDF */  jal   generate_explosion_at_position
+/* 078B6C 7F04403C 0FC10EDF */  jal   propExplode
 /* 078B70 7F044040 AFA7001C */   sw    $a3, 0x1c($sp)
 /* 078B74 7F044044 8FA60018 */  lw    $a2, 0x18($sp)
 /* 078B78 7F044048 10000017 */  b     .L7F0440A8
@@ -6384,7 +6386,7 @@ glabel handle_thrown_explosive_detonation
 /* 078B9C 7F04406C 8FA40020 */  lw    $a0, 0x20($sp)
 /* 078BA0 7F044070 24050013 */  li    $a1, 19
 /* 078BA4 7F044074 AFA60018 */  sw    $a2, 0x18($sp)
-/* 078BA8 7F044078 0FC10EDF */  jal   generate_explosion_at_position
+/* 078BA8 7F044078 0FC10EDF */  jal   propExplode
 /* 078BAC 7F04407C AFA7001C */   sw    $a3, 0x1c($sp)
 /* 078BB0 7F044080 8FA60018 */  lw    $a2, 0x18($sp)
 /* 078BB4 7F044084 10000008 */  b     .L7F0440A8
@@ -6393,7 +6395,7 @@ glabel handle_thrown_explosive_detonation
 /* 078BBC 7F04408C 8FA40020 */  lw    $a0, 0x20($sp)
 /* 078BC0 7F044090 2405000D */  li    $a1, 13
 /* 078BC4 7F044094 AFA60018 */  sw    $a2, 0x18($sp)
-/* 078BC8 7F044098 0FC10EDF */  jal   generate_explosion_at_position
+/* 078BC8 7F044098 0FC10EDF */  jal   propExplode
 /* 078BCC 7F04409C AFA7001C */   sw    $a3, 0x1c($sp)
 /* 078BD0 7F0440A0 8FA60018 */  lw    $a2, 0x18($sp)
 /* 078BD4 7F0440A4 8FA7001C */  lw    $a3, 0x1c($sp)
@@ -6475,7 +6477,7 @@ glabel handle_thrown_explosive_detonation
 /* 078CF0 7F0441C0 24050011 */   li    $a1, 17
 .L7F0441C4:
 /* 078CF4 7F0441C4 AFA60018 */  sw    $a2, 0x18($sp)
-/* 078CF8 7F0441C8 0FC10EDF */  jal   generate_explosion_at_position
+/* 078CF8 7F0441C8 0FC10EDF */  jal   propExplode
 /* 078CFC 7F0441CC AFA7001C */   sw    $a3, 0x1c($sp)
 /* 078D00 7F0441D0 8FA40018 */  lw    $a0, 0x18($sp)
 /* 078D04 7F0441D4 8FA7001C */  lw    $a3, 0x1c($sp)
@@ -6521,7 +6523,7 @@ glabel handle_thrown_explosive_detonation
 /* 078C28 7F0440B8 000FC0C0 */  sll   $t8, $t7, 3
 /* 078C2C 7F0440BC 07030107 */  bgezl $t8, .L7F0444DC
 /* 078C30 7F0440C0 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 078C34 7F0440C4 0FC10F9F */  jal   generate_explosion_at_position
+/* 078C34 7F0440C4 0FC10F9F */  jal   propExplode
 /* 078C38 7F0440C8 AFA7002C */   sw    $a3, 0x2c($sp)
 /* 078C3C 7F0440CC 8FA7002C */  lw    $a3, 0x2c($sp)
 /* 078C40 7F0440D0 8CF90064 */  lw    $t9, 0x64($a3)
@@ -6559,7 +6561,7 @@ glabel handle_thrown_explosive_detonation
 /* 078CB8 7F044148 10000001 */  b     .L7F044150
 /* 078CBC 7F04414C 24050011 */   li    $a1, 17
 .L7F044150:
-/* 078CC0 7F044150 0FC10F9F */  jal   generate_explosion_at_position
+/* 078CC0 7F044150 0FC10F9F */  jal   propExplode
 /* 078CC4 7F044154 AFA7002C */   sw    $a3, 0x2c($sp)
 /* 078CC8 7F044158 8FA7002C */  lw    $a3, 0x2c($sp)
 /* 078CCC 7F04415C 8CEF0064 */  lw    $t7, 0x64($a3)
@@ -6582,7 +6584,7 @@ glabel handle_thrown_explosive_detonation
 /* 078D0C 7F04419C 10000001 */  b     .L7F0441A4
 /* 078D10 7F0441A0 24050011 */   li    $a1, 17
 .L7F0441A4:
-/* 078D14 7F0441A4 0FC10F9F */  jal   generate_explosion_at_position
+/* 078D14 7F0441A4 0FC10F9F */  jal   propExplode
 /* 078D18 7F0441A8 AFA7002C */   sw    $a3, 0x2c($sp)
 /* 078D1C 7F0441AC 8FA7002C */  lw    $a3, 0x2c($sp)
 /* 078D20 7F0441B0 8CEA0064 */  lw    $t2, 0x64($a3)
@@ -6598,7 +6600,7 @@ glabel handle_thrown_explosive_detonation
 /* 078D44 7F0441D4 24050011 */  li    $a1, 17
 /* 078D48 7F0441D8 558000C0 */  bnezl $t4, .L7F0444DC
 /* 078D4C 7F0441DC 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 078D50 7F0441E0 0FC10F9F */  jal   generate_explosion_at_position
+/* 078D50 7F0441E0 0FC10F9F */  jal   propExplode
 /* 078D54 7F0441E4 AFA7002C */   sw    $a3, 0x2c($sp)
 /* 078D58 7F0441E8 8FA7002C */  lw    $a3, 0x2c($sp)
 /* 078D5C 7F0441EC 24040078 */  li    $a0, 120
@@ -6638,7 +6640,7 @@ glabel handle_thrown_explosive_detonation
 /* 078DDC 7F04426C 24050011 */   li    $a1, 17
 .L7F044270:
 /* 078DE0 7F044270 AFA60028 */  sw    $a2, 0x28($sp)
-/* 078DE4 7F044274 0FC10F9F */  jal   generate_explosion_at_position
+/* 078DE4 7F044274 0FC10F9F */  jal   propExplode
 /* 078DE8 7F044278 AFA7002C */   sw    $a3, 0x2c($sp)
 /* 078DEC 7F04427C 8FA60028 */  lw    $a2, 0x28($sp)
 /* 078DF0 7F044280 10400095 */  beqz  $v0, .L7F0444D8
@@ -6707,7 +6709,7 @@ glabel handle_thrown_explosive_detonation
 .L7F04436C:
 /* 078EDC 7F04436C 8FA40030 */  lw    $a0, 0x30($sp)
 /* 078EE0 7F044370 AFA60028 */  sw    $a2, 0x28($sp)
-/* 078EE4 7F044374 0FC10F9F */  jal   generate_explosion_at_position
+/* 078EE4 7F044374 0FC10F9F */  jal   propExplode
 /* 078EE8 7F044378 AFA7002C */   sw    $a3, 0x2c($sp)
 /* 078EEC 7F04437C 8FA60028 */  lw    $a2, 0x28($sp)
 /* 078EF0 7F044380 10400055 */  beqz  $v0, .L7F0444D8
@@ -6789,7 +6791,7 @@ glabel handle_thrown_explosive_detonation
 /* 079010 7F0444A0 24050011 */   li    $a1, 17
 .L7F0444A4:
 /* 079014 7F0444A4 AFA60028 */  sw    $a2, 0x28($sp)
-/* 079018 7F0444A8 0FC10F9F */  jal   generate_explosion_at_position
+/* 079018 7F0444A8 0FC10F9F */  jal   propExplode
 /* 07901C 7F0444AC AFA7002C */   sw    $a3, 0x2c($sp)
 /* 079020 7F0444B0 8FA60028 */  lw    $a2, 0x28($sp)
 /* 079024 7F0444B4 10400008 */  beqz  $v0, .L7F0444D8
@@ -6836,7 +6838,7 @@ glabel handle_thrown_explosive_detonation
 /* 076868 7F043E78 000FC0C0 */  sll   $t8, $t7, 3
 /* 07686C 7F043E7C 07030107 */  bgezl $t8, .L7F04429C
 /* 076870 7F043E80 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 076874 7F043E84 0FC10F0F */  jal   generate_explosion_at_position
+/* 076874 7F043E84 0FC10F0F */  jal   propExplode
 /* 076878 7F043E88 AFA7002C */   sw    $a3, 0x2c($sp)
 /* 07687C 7F043E8C 8FA7002C */  lw    $a3, 0x2c($sp)
 /* 076880 7F043E90 8CF90064 */  lw    $t9, 0x64($a3)
@@ -6874,7 +6876,7 @@ glabel handle_thrown_explosive_detonation
 /* 0768F8 7F043F08 10000001 */  b     .L7F043F10
 /* 0768FC 7F043F0C 24050011 */   li    $a1, 17
 .L7F043F10:
-/* 076900 7F043F10 0FC10F0F */  jal   generate_explosion_at_position
+/* 076900 7F043F10 0FC10F0F */  jal   propExplode
 /* 076904 7F043F14 AFA7002C */   sw    $a3, 0x2c($sp)
 /* 076908 7F043F18 8FA7002C */  lw    $a3, 0x2c($sp)
 /* 07690C 7F043F1C 8CEF0064 */  lw    $t7, 0x64($a3)
@@ -6897,7 +6899,7 @@ glabel handle_thrown_explosive_detonation
 /* 07694C 7F043F5C 10000001 */  b     .L7F043F64
 /* 076950 7F043F60 24050011 */   li    $a1, 17
 .L7F043F64:
-/* 076954 7F043F64 0FC10F0F */  jal   generate_explosion_at_position
+/* 076954 7F043F64 0FC10F0F */  jal   propExplode
 /* 076958 7F043F68 AFA7002C */   sw    $a3, 0x2c($sp)
 /* 07695C 7F043F6C 8FA7002C */  lw    $a3, 0x2c($sp)
 /* 076960 7F043F70 8CEA0064 */  lw    $t2, 0x64($a3)
@@ -6913,7 +6915,7 @@ glabel handle_thrown_explosive_detonation
 /* 076984 7F043F94 24050011 */  li    $a1, 17
 /* 076988 7F043F98 558000C0 */  bnezl $t4, .L7F04429C
 /* 07698C 7F043F9C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 076990 7F043FA0 0FC10F0F */  jal   generate_explosion_at_position
+/* 076990 7F043FA0 0FC10F0F */  jal   propExplode
 /* 076994 7F043FA4 AFA7002C */   sw    $a3, 0x2c($sp)
 /* 076998 7F043FA8 8FA7002C */  lw    $a3, 0x2c($sp)
 /* 07699C 7F043FAC 24040064 */  li    $a0, 100
@@ -6953,7 +6955,7 @@ glabel handle_thrown_explosive_detonation
 /* 076A1C 7F04402C 24050011 */   li    $a1, 17
 .L7F044030:
 /* 076A20 7F044030 AFA60028 */  sw    $a2, 0x28($sp)
-/* 076A24 7F044034 0FC10F0F */  jal   generate_explosion_at_position
+/* 076A24 7F044034 0FC10F0F */  jal   propExplode
 /* 076A28 7F044038 AFA7002C */   sw    $a3, 0x2c($sp)
 /* 076A2C 7F04403C 8FA60028 */  lw    $a2, 0x28($sp)
 /* 076A30 7F044040 10400095 */  beqz  $v0, .L7F044298eu
@@ -7022,7 +7024,7 @@ glabel handle_thrown_explosive_detonation
 .L7F04412C:
 /* 076B1C 7F04412C 8FA40030 */  lw    $a0, 0x30($sp)
 /* 076B20 7F044130 AFA60028 */  sw    $a2, 0x28($sp)
-/* 076B24 7F044134 0FC10F0F */  jal   generate_explosion_at_position
+/* 076B24 7F044134 0FC10F0F */  jal   propExplode
 /* 076B28 7F044138 AFA7002C */   sw    $a3, 0x2c($sp)
 /* 076B2C 7F04413C 8FA60028 */  lw    $a2, 0x28($sp)
 /* 076B30 7F044140 10400055 */  beqz  $v0, .L7F044298eu
@@ -7104,7 +7106,7 @@ glabel handle_thrown_explosive_detonation
 /* 076C50 7F044260 24050011 */   li    $a1, 17
 .L7F044264:
 /* 076C54 7F044264 AFA60028 */  sw    $a2, 0x28($sp)
-/* 076C58 7F044268 0FC10F0F */  jal   generate_explosion_at_position
+/* 076C58 7F044268 0FC10F0F */  jal   propExplode
 /* 076C5C 7F04426C AFA7002C */   sw    $a3, 0x2c($sp)
 /* 076C60 7F044270 8FA60028 */  lw    $a2, 0x28($sp)
 /* 076C64 7F044274 10400008 */  beqz  $v0, .L7F044298eu
@@ -9712,7 +9714,7 @@ glabel object_interaction
 /* 07AD68 7F046238 AFA80018 */  sw    $t0, 0x18($sp)
 /* 07AD6C 7F04623C AFA0001C */  sw    $zero, 0x1c($sp)
 /* 07AD70 7F046240 AFA00014 */  sw    $zero, 0x14($sp)
-/* 07AD74 7F046244 0FC27094 */  jal   sub_GAME_7F09C250
+/* 07AD74 7F046244 0FC27094 */  jal   explosionCreate
 /* 07AD78 7F046248 AFA00010 */   sw    $zero, 0x10($sp)
 /* 07AD7C 7F04624C 8E490000 */  lw    $t1, ($s2)
 /* 07AD80 7F046250 24010028 */  li    $at, 40
@@ -14809,7 +14811,7 @@ glabel object_interaction
 /* 07B18C 7F04661C AFAC0018 */  sw    $t4, 0x18($sp)
 /* 07B190 7F046620 AFA0001C */  sw    $zero, 0x1c($sp)
 /* 07B194 7F046624 AFA00014 */  sw    $zero, 0x14($sp)
-/* 07B198 7F046628 0FC2737C */  jal   sub_GAME_7F09C250
+/* 07B198 7F046628 0FC2737C */  jal   explosionCreate
 /* 07B19C 7F04662C AFA00010 */   sw    $zero, 0x10($sp)
 /* 07B1A0 7F046630 8E4E0000 */  lw    $t6, ($s2)
 /* 07B1A4 7F046634 24010028 */  li    $at, 40
@@ -19915,7 +19917,7 @@ glabel object_interaction
 /* 078DCC 7F0463DC AFA90018 */  sw    $t1, 0x18($sp)
 /* 078DD0 7F0463E0 AFA0001C */  sw    $zero, 0x1c($sp)
 /* 078DD4 7F0463E4 AFA00014 */  sw    $zero, 0x14($sp)
-/* 078DD8 7F0463E8 0FC26DE4 */  jal   sub_GAME_7F09C250
+/* 078DD8 7F0463E8 0FC26DE4 */  jal   explosionCreate
 /* 078DDC 7F0463EC AFA00010 */   sw    $zero, 0x10($sp)
 /* 078DE0 7F0463F0 8E4A0000 */  lw    $t2, ($s2)
 /* 078DE4 7F0463F4 24010028 */  li    $at, 40
@@ -31738,7 +31740,7 @@ glabel object_explosion_related
 /* 081A5C 7F04CF2C 8FA5004C */  lw    $a1, 0x4c($sp)
 /* 081A60 7F04CF30 8FA60038 */  lw    $a2, 0x38($sp)
 /* 081A64 7F04CF34 87A7003E */  lh    $a3, 0x3e($sp)
-/* 081A68 7F04CF38 0FC27094 */  jal   sub_GAME_7F09C250
+/* 081A68 7F04CF38 0FC27094 */  jal   explosionCreate
 /* 081A6C 7F04CF3C AFB90014 */   sw    $t9, 0x14($sp)
 /* 081A70 7F04CF40 1000000E */  b     .L7F04CF7C
 /* 081A74 7F04CF44 8E2C000C */   lw    $t4, 0xc($s1)
@@ -31754,7 +31756,7 @@ glabel object_explosion_related
 /* 081A94 7F04CF64 8FA40044 */  lw    $a0, 0x44($sp)
 /* 081A98 7F04CF68 8FA5004C */  lw    $a1, 0x4c($sp)
 /* 081A9C 7F04CF6C 87A7003E */  lh    $a3, 0x3e($sp)
-/* 081AA0 7F04CF70 0FC27094 */  jal   sub_GAME_7F09C250
+/* 081AA0 7F04CF70 0FC27094 */  jal   explosionCreate
 /* 081AA4 7F04CF74 AFA90014 */   sw    $t1, 0x14($sp)
 /* 081AA8 7F04CF78 8E2C000C */  lw    $t4, 0xc($s1)
 .L7F04CF7C:
@@ -31833,7 +31835,7 @@ glabel object_explosion_related
 /* 081BC0 7F04D090 8FA5004C */  lw    $a1, 0x4c($sp)
 /* 081BC4 7F04D094 8FA60038 */  lw    $a2, 0x38($sp)
 /* 081BC8 7F04D098 24070010 */  li    $a3, 16
-/* 081BCC 7F04D09C 0FC27094 */  jal   sub_GAME_7F09C250
+/* 081BCC 7F04D09C 0FC27094 */  jal   explosionCreate
 /* 081BD0 7F04D0A0 AFB90014 */   sw    $t9, 0x14($sp)
 /* 081BD4 7F04D0A4 1000000D */  b     .L7F04D0DC
 /* 081BD8 7F04D0A8 00000000 */   nop   
@@ -31849,7 +31851,7 @@ glabel object_explosion_related
 /* 081BF8 7F04D0C8 8FA40044 */  lw    $a0, 0x44($sp)
 /* 081BFC 7F04D0CC 8FA5004C */  lw    $a1, 0x4c($sp)
 /* 081C00 7F04D0D0 24070010 */  li    $a3, 16
-/* 081C04 7F04D0D4 0FC27094 */  jal   sub_GAME_7F09C250
+/* 081C04 7F04D0D4 0FC27094 */  jal   explosionCreate
 /* 081C08 7F04D0D8 AFA90014 */   sw    $t1, 0x14($sp)
 .L7F04D0DC:
 /* 081C0C 7F04D0DC 0FC0FFF0 */  jal   do_something_if_object_destroyed
@@ -31974,7 +31976,7 @@ glabel object_explosion_related
 /* 07FB04 7F04D114 8FA5004C */  lw    $a1, 0x4c($sp)
 /* 07FB08 7F04D118 8FA60038 */  lw    $a2, 0x38($sp)
 /* 07FB0C 7F04D11C 87A7003E */  lh    $a3, 0x3e($sp)
-/* 07FB10 7F04D120 0FC26DE4 */  jal   sub_GAME_7F09C250
+/* 07FB10 7F04D120 0FC26DE4 */  jal   explosionCreate
 /* 07FB14 7F04D124 AFB80014 */   sw    $t8, 0x14($sp)
 /* 07FB18 7F04D128 1000000E */  b     .L7F04D164
 /* 07FB1C 7F04D12C 8E2B000C */   lw    $t3, 0xc($s1)
@@ -31990,7 +31992,7 @@ glabel object_explosion_related
 /* 07FB3C 7F04D14C 8FA40044 */  lw    $a0, 0x44($sp)
 /* 07FB40 7F04D150 8FA5004C */  lw    $a1, 0x4c($sp)
 /* 07FB44 7F04D154 87A7003E */  lh    $a3, 0x3e($sp)
-/* 07FB48 7F04D158 0FC26DE4 */  jal   sub_GAME_7F09C250
+/* 07FB48 7F04D158 0FC26DE4 */  jal   explosionCreate
 /* 07FB4C 7F04D15C AFA80014 */   sw    $t0, 0x14($sp)
 /* 07FB50 7F04D160 8E2B000C */  lw    $t3, 0xc($s1)
 .L7F04D164:
@@ -32069,7 +32071,7 @@ glabel object_explosion_related
 /* 07FC68 7F04D278 8FA5004C */  lw    $a1, 0x4c($sp)
 /* 07FC6C 7F04D27C 8FA60038 */  lw    $a2, 0x38($sp)
 /* 07FC70 7F04D280 24070010 */  li    $a3, 16
-/* 07FC74 7F04D284 0FC26DE4 */  jal   sub_GAME_7F09C250
+/* 07FC74 7F04D284 0FC26DE4 */  jal   explosionCreate
 /* 07FC78 7F04D288 AFB80014 */   sw    $t8, 0x14($sp)
 /* 07FC7C 7F04D28C 1000000D */  b     .L7F04D2C4eu
 /* 07FC80 7F04D290 00000000 */   nop   
@@ -32085,7 +32087,7 @@ glabel object_explosion_related
 /* 07FCA0 7F04D2B0 8FA40044 */  lw    $a0, 0x44($sp)
 /* 07FCA4 7F04D2B4 8FA5004C */  lw    $a1, 0x4c($sp)
 /* 07FCA8 7F04D2B8 24070010 */  li    $a3, 16
-/* 07FCAC 7F04D2BC 0FC26DE4 */  jal   sub_GAME_7F09C250
+/* 07FCAC 7F04D2BC 0FC26DE4 */  jal   explosionCreate
 /* 07FCB0 7F04D2C0 AFA80014 */   sw    $t0, 0x14($sp)
 .L7F04D2C4eu:
 /* 07FCB4 7F04D2C4 0FC10020 */  jal   do_something_if_object_destroyed
