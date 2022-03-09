@@ -1805,83 +1805,23 @@ glabel expand_08_obj_set_guard_MP_weapons
 #endif
 #endif
 
-#ifdef NONMATCHING
-void MP_weapon_expansion_routine(void *arg1, ? arg7) {
-    ? temp_ret;
 
-    // Node 0
-    if ((arg1->unk8 & 0x4000) != 0)
-    {
-        // Node 1
-        temp_ret = chrFindByLiteralId(arg1->unk6, arg1);
-        if (temp_ret != 0)
-        {
-            // Node 2
-            if (temp_ret->unk18 != 0)
-            {
-                // Node 3
-                if (temp_ret->unk1C != 0)
-                {
-                    // Node 4
-                    sub_GAME_7F051084(arg7, temp_ret, arg7);
-                    return;
-                    // (possible return value: sub_GAME_7F051084(arg7, temp_ret, arg7))
-                }
-            }
+void setupHat(s32 arg0, ObjectRecord* hat, s32 cmdindex)
+{
+    if (hat->flags & PROPFLAG_ASSIGNEDTOCHR) {
+        ChrRecord* chr = chrFindByLiteralId(hat->pad);
+        if (chr && chr->prop && chr->model) {
+            hatAssignToChr(hat, chr);
         }
+    } else {
+        domakedefaultobj(arg0, hat, cmdindex);
     }
-    else
-    {
-        // Node 5
-        domakedefaultobj(arg1, arg1);
-    }
-    // Node 6
-    return;
-    // (possible return value: domakedefaultobj(arg1, arg1))
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel MP_weapon_expansion_routine
-/* 0374D8 7F0029A8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0374DC 7F0029AC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0374E0 7F0029B0 8CAE0008 */  lw    $t6, 8($a1)
-/* 0374E4 7F0029B4 00A03825 */  move  $a3, $a1
-/* 0374E8 7F0029B8 31CF4000 */  andi  $t7, $t6, 0x4000
-/* 0374EC 7F0029BC 11E00011 */  beqz  $t7, .L7F002A04
-/* 0374F0 7F0029C0 00000000 */   nop   
-/* 0374F4 7F0029C4 84A40006 */  lh    $a0, 6($a1)
-/* 0374F8 7F0029C8 0FC08BF2 */  jal   chrFindByLiteralId
-/* 0374FC 7F0029CC AFA5001C */   sw    $a1, 0x1c($sp)
-/* 037500 7F0029D0 8FA7001C */  lw    $a3, 0x1c($sp)
-/* 037504 7F0029D4 1040000D */  beqz  $v0, .L7F002A0C
-/* 037508 7F0029D8 00402825 */   move  $a1, $v0
-/* 03750C 7F0029DC 8C580018 */  lw    $t8, 0x18($v0)
-/* 037510 7F0029E0 5300000B */  beql  $t8, $zero, .L7F002A10
-/* 037514 7F0029E4 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 037518 7F0029E8 8C59001C */  lw    $t9, 0x1c($v0)
-/* 03751C 7F0029EC 53200008 */  beql  $t9, $zero, .L7F002A10
-/* 037520 7F0029F0 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 037524 7F0029F4 0FC14421 */  jal   sub_GAME_7F051084
-/* 037528 7F0029F8 00E02025 */   move  $a0, $a3
-/* 03752C 7F0029FC 10000004 */  b     .L7F002A10
-/* 037530 7F002A00 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F002A04:
-/* 037534 7F002A04 0FC00767 */  jal   domakedefaultobj
-/* 037538 7F002A08 00E02825 */   move  $a1, $a3
-.L7F002A0C:
-/* 03753C 7F002A0C 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F002A10:
-/* 037540 7F002A10 27BD0018 */  addiu $sp, $sp, 0x18
-/* 037544 7F002A14 03E00008 */  jr    $ra
-/* 037548 7F002A18 00000000 */   nop   
-)
-#endif
 
-
-void jmp_domakedefaultobj(void) {
-    domakedefaultobj();
+void setupKey(s32 arg0, ObjectRecord* key, s32 cmdindex)
+{
+    domakedefaultobj(arg0, key, cmdindex);
 }
 
 
@@ -4580,7 +4520,7 @@ key_expand:
 /* 038FB0 7F004480 0134C824 */  and   $t9, $t1, $s4
 /* 038FB4 7F004484 1720019D */  bnez  $t9, other_obj_expand
 /* 038FB8 7F004488 00000000 */   nop   
-/* 038FBC 7F00448C 0FC00A87 */  jal   jmp_domakedefaultobj
+/* 038FBC 7F00448C 0FC00A87 */  jal   setupKey
 /* 038FC0 7F004490 02603025 */   move  $a2, $s3
 /* 038FC4 7F004494 10000199 */  b     other_obj_expand
 /* 038FC8 7F004498 00000000 */   nop   
@@ -4594,7 +4534,7 @@ hat_expand:
 /* 038FE4 7F0044B4 01746824 */  and   $t5, $t3, $s4
 /* 038FE8 7F0044B8 15A00190 */  bnez  $t5, other_obj_expand
 /* 038FEC 7F0044BC 00000000 */   nop   
-/* 038FF0 7F0044C0 0FC00A6A */  jal   MP_weapon_expansion_routine
+/* 038FF0 7F0044C0 0FC00A6A */  jal   setupHat
 /* 038FF4 7F0044C4 02603025 */   move  $a2, $s3
 /* 038FF8 7F0044C8 1000018C */  b     other_obj_expand
 /* 038FFC 7F0044CC 00000000 */   nop   
@@ -5973,7 +5913,7 @@ key_expand:
 /* 038FF0 7F004480 0134C824 */  and   $t9, $t1, $s4
 /* 038FF4 7F004484 172001A1 */  bnez  $t9, other_obj_expand
 /* 038FF8 7F004488 00000000 */   nop   
-/* 038FFC 7F00448C 0FC00A87 */  jal   jmp_domakedefaultobj
+/* 038FFC 7F00448C 0FC00A87 */  jal   setupKey
 /* 039000 7F004490 02603025 */   move  $a2, $s3
 /* 039004 7F004494 1000019D */  b     other_obj_expand
 /* 039008 7F004498 00000000 */   nop   
@@ -5987,7 +5927,7 @@ hat_expand:
 /* 039024 7F0044B4 01746824 */  and   $t5, $t3, $s4
 /* 039028 7F0044B8 15A00194 */  bnez  $t5, other_obj_expand
 /* 03902C 7F0044BC 00000000 */   nop   
-/* 039030 7F0044C0 0FC00A6A */  jal   MP_weapon_expansion_routine
+/* 039030 7F0044C0 0FC00A6A */  jal   setupHat
 /* 039034 7F0044C4 02603025 */   move  $a2, $s3
 /* 039038 7F0044C8 10000190 */  b     other_obj_expand
 /* 03903C 7F0044CC 00000000 */   nop   
@@ -7371,7 +7311,7 @@ key_expand:
 /* 036DFC 7F00440C 0134C824 */  and   $t9, $t1, $s4
 /* 036E00 7F004410 1720019F */  bnez  $t9, other_obj_expand
 /* 036E04 7F004414 00000000 */   nop   
-/* 036E08 7F004418 0FC00A61 */  jal   jmp_domakedefaultobj
+/* 036E08 7F004418 0FC00A61 */  jal   setupKey
 /* 036E0C 7F00441C 02603025 */   move  $a2, $s3
 /* 036E10 7F004420 1000019B */  b     other_obj_expand
 /* 036E14 7F004424 00000000 */   nop   
@@ -7385,7 +7325,7 @@ hat_expand:
 /* 036E30 7F004440 01746824 */  and   $t5, $t3, $s4
 /* 036E34 7F004444 15A00192 */  bnez  $t5, other_obj_expand
 /* 036E38 7F004448 00000000 */   nop   
-/* 036E3C 7F00444C 0FC00A44 */  jal   MP_weapon_expansion_routine
+/* 036E3C 7F00444C 0FC00A44 */  jal   setupHat
 /* 036E40 7F004450 02603025 */   move  $a2, $s3
 /* 036E44 7F004454 1000018E */  b     other_obj_expand
 /* 036E48 7F004458 00000000 */   nop   

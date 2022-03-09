@@ -40156,13 +40156,13 @@ glabel sub_GAME_7F051028
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F051084(void) {
+void hatAssignToChr(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F051084
+glabel hatAssignToChr
 /* 085BB4 7F051084 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 085BB8 7F051088 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 085BBC 7F05108C 8C8E0074 */  lw    $t6, 0x74($a0)
