@@ -4847,7 +4847,7 @@ void generate_player_thrown_grenade(s32 hand)
 
     if (wor != NULL)
     {
-        wor->timer = THROWN_ITEM_TIMER_DEFAULT - g_CurrentPlayer->field_105C;
+        wor->timer = THROWN_ITEM_TIMER_DEFAULT - g_CurrentPlayer->last_z_trigger_timer;
 
         if (wor->timer < 0)
         {
