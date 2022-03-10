@@ -3,6 +3,7 @@
 #include <ultra64.h>
 #include <bondconstants.h>
 #include "bondview.h"
+#include "bondtypes.h"
 
 void bondinvReinitInv(void);
 s32 bondinvIsAliveWithFlag(void);
@@ -20,4 +21,6 @@ int bondinvAddDoublesInvItem(ITEM_IDS right, ITEM_IDS left);
 s32 bondinvGetAllGunsFlag(void);
 void bondinvSetAllGunsFlag(s32 all_guns);
 bool          bondinvHasPropInInv(PropRecord *prop);
+WeaponObjRecord *bondinvRemovePropWeaponByID(ITEM_IDS weaponnum);
+void bondinvRemoveItemByID(ITEM_IDS weaponnum);
 #endif

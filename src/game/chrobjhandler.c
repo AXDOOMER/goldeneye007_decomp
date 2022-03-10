@@ -6097,7 +6097,7 @@ void propExplode(PropRecord *prop, s32 arg1)
     Mtxf *mtx;
 
     prop_obj = prop->obj;
-    playernum = (prop_obj->runtime_bitflags & 0x60000) >> 0x11;
+    playernum = (prop_obj->runtime_bitflags & RUNTIMEBITFLAG_OWNER) >> RUNTIMEBITSHIFT_OWNER;
     
     if (prop->parent)
     {
