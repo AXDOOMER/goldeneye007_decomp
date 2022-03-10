@@ -87,7 +87,7 @@ void                 sub_GAME_7F053B10(DoorRecord *door);
 void                 sub_GAME_7F053598(DoorRecord *door);
 void                 sub_GAME_7F052B00(DoorRecord *door);
 s32                  sub_GAME_7F0539B8(f32 vol);
-void                 imageSlotSetImage(MonitorRecord *mon, s32 monAnimID);
+void                 monitorSetImageByNum(MonitorRecord *mon, s32 monAnimID);
 void                 propweaponSetDual(WeaponObjRecord *leftweapon, WeaponObjRecord *rightweapon);
 f32                  countdownTimerGetValue(void);
 bool                 countdownTimerIsRunning(void);
@@ -104,4 +104,5 @@ bool                 objIsHealthy(ObjectRecord *self);
 ObjectRecord        *weaponFindThrown(s32 ID);
 bool                 check_if_toxic_gas_activated();
 PropRecord          *chrTryEquipHat(ChrRecord *self, s32 index, s32 flags);
+void sub_GAME_7F04C044(PropRecord *prop);
 #endif

@@ -89,7 +89,7 @@ struct Model *makeonebody(s32 body, s32 head, struct ModelFileHeader *bodyHeader
 
     if (model != 0)
     {
-        set_obj_instance_controller_scale(model, scale);
+        modelSetScale(model, scale);
         sub_GAME_7F06CE84(model, pov);
 
         if ((headHeader != 0) && (c_item_entries[body].hasHead == 0))

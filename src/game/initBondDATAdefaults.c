@@ -77,7 +77,7 @@ void sets_a_bunch_of_BONDdata_values_to_default(void)
 #endif
 
     sub_GAME_7F075FAC(&g_CurrentPlayer->model, &player_gait_object_header, &g_CurrentPlayer->field_654);
-    set_obj_instance_controller_scale(&g_CurrentPlayer->model, IDO_POINT_ONE);
+    modelSetScale(&g_CurrentPlayer->model, IDO_POINT_ONE);
 
 #if defined (BUGFIX_R1)
     sub_GAME_7F06FF18(&g_CurrentPlayer->model, ANIMRATE, 0.0f);

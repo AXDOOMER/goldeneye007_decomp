@@ -206,6 +206,12 @@ extern s32 numCasingEntries;
 extern s32 numScorchEntries;
 extern s32 numImpactEntries;
 
+#if defined(VERSION_JP) || defined(VERSION_EU)
+s32 sub_GAME_7F09C250(s32 arg0, struct coord3d *pos, struct StandTile *stan, s16 arg3, s32 flag4, s32 playernum, u8 *rooms, s32 flag7);
+#else
+void sub_GAME_7F09C250(s32 arg0, struct coord3d *pos, struct StandTile *stan, s16 arg3, s32 flag4, s32 playernum, u8 *rooms, s32 flag7);
+#endif
+
 
 void sub_GAME_7F09FD3C(void);
 Gfx * sub_GAME_7F0A0034(Gfx *arg0);

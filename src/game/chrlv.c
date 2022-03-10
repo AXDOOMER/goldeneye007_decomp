@@ -284,7 +284,7 @@ s32 get_random_head(s32 id)
 /**
  * Address 0x7F02370C.
 */
-void expand_09_characters(s32 arg0, GuardRecord *arg1, s32 arg2)
+void expand_09_characters(s32 stageid, GuardRecord *arg1, s32 arg2)
 {
     PadRecord *pad;
     s32 unused2;
@@ -12020,7 +12020,7 @@ bool chrDropItem(ChrRecord *self, s32 modelnum, u8 weaponid)
     
     if (NewModel && NewModel->prop)
     {
-        set_obj_instance_controller_scale(NewModel->model, NewModel->model->scale);
+        modelSetScale(NewModel->model, NewModel->model->scale);
         chrpropReparent(NewModel->prop, self->prop);
         NewModel->timer = CHRLV_DEFAULT_TIMER;
         propobjSetDropped(NewModel->prop, 1);

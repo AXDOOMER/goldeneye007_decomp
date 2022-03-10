@@ -248,22 +248,10 @@ struct hand
   s32 field_ACC;
   s32 field_AD0;
   s32 field_AD4;
-  s32 field_AD8;
-  s32 field_ADC;
-  s32 field_AE0;
-  s32 field_AE4;
-  s32 field_AE8;
-  s32 field_AEC;
-  s32 field_AF0;
-  s32 field_AF4;
-  s32 field_AF8;
-  s32 field_AFC;
-  s32 field_B00;
-  s32 field_B04;
-  s32 field_B08;
-  s32 field_B0C;
-  s32 field_B10;
-  s32 field_B14;
+
+  // offset 0xad8
+  Mtxf throw_item_pos_related;
+  
   s32 field_B18;
   s32 field_B1C;
   s32 field_B20;
@@ -3183,5 +3171,6 @@ void     hudmsgTopShow(s8 *string);
 void     SurroundWithExplosions(int delay);
 s32 check_watch_page_transistion_running(void);
 f32 bondviewWatchAnimationRelated(void);
+struct coord3d *get_BONDdata_field408(void);
 
 #endif

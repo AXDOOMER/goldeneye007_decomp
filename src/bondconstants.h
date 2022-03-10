@@ -242,7 +242,7 @@ typedef enum GUARD_SETUP_FLAG // u16
     GUARD_SETUP_FLAG_1000                = 0x1000, // unused
     GUARD_SETUP_FLAG_2000                = 0x2000, // unused
     GUARD_SETUP_FLAG_4000                = 0x4000, // unused
-    GUARD_SETUP_FLAG_8000                = 0x8000, // unused
+    GUARD_SETUP_FLAG_8000                = 0x8000 // unused
 } GUARD_SETUP_FLAG;
 
 //chr flags2
@@ -395,6 +395,9 @@ BITFLAG(RUNTIMEBITFLAG,
         40000000,
         80000000
 )
+
+#define RUNTIMEBITFLAG_OWNER    0x60000
+#define RUNTIMEBITSHIFT_OWNER   0x11
 
 #define OBJECTTYPE_00 0x00
 #define OBJECTTYPE_01 0x01

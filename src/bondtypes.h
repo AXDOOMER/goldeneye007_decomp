@@ -2427,7 +2427,7 @@ typedef union
                 00000080    depositted (thrown)
                 00000004    removes object when set
             */
-            int runtime_bitflags;
+            u32 runtime_bitflags;
         };
         int               ptr_allocated_collisiondata_block;
 
@@ -2696,33 +2696,85 @@ typedef union
             New_PropDefHeaderRecord(5), 0, pad + 0 \
         }
 
-    // PROPDEF_CCTV (6)
+
     typedef struct AutogunRecord
     {
         inherits ObjectRecord;
-        s16      unk5c;   /*0x80*/
-        u16      lookpad; /*0x82*/
-        u8       firing;
-        u8       firecount;
-        u16      unk64;     /*0x84*/
-        s16      yzero;     /*0x88 */
-        s16      ymaxleft;  /*0x8a how far gun can rotate from center. 0 = free rotate*/
-        s16      ymaxright; /*0x8c */
-        s16      yrot;      /*0x8e how far gun can rotate from center. 0 = free
-                     rotate*/
-        u32      yspeed;    /*0xa0*/
-        u16      unk98;     /*0xa4*/
-        u16      Speed;     /*0xa6 how fast the gun turns*/
-        u16      aimdist;   /*0xa8 distance before deactivating.*/
-        u16      unkaa;     /*0xaa*/
-        u32      unkac;
-        u32      unkb0;
-        u32      unkb4;
-        u32      unkb8;
-        u32      unkbc;
-        u32      unkc0;
+        s16 unk80;   /*0x80*/
+        u16 lookpad; /*0x82*/
+
+        // Units seem to be radians.
+        f32 rot_related;
+
+        // Units seem to be radians.
+        f32 unk88;
+
+        // yzero or limit related. Units might be radians.
+        f32 unk8C;
+
+        // Units seem to be radians. Changes when active/firing.
+        f32 unk90;
+
+        // changes when active/firing
+        f32 unk94;
+        f32 unk98;
+        // changes when active/firing
+        f32 unk9C;
+
+        // Units seem to be radians. Changes when active/firing
+        f32 unkA0;
+
+        // How fast the gun turns. Runway default is around 0.01f.
+        f32 speed;
+
+        /**
+         * Distance before deactivating.
+         * Default (on Runway at least): 7500.0f
+         * Offset 0xa0.
+        */
+        f32 aimdist;
+        u32 unkAC;
+
+        // changes when active/firing
+        s32 unkB0;
+        // changes when active/firing
+        f32 unkB4;
+        f32 unkB8;
+        s32 unkBC;
+
+        s32  unkC0;
+        void *unkC4;
+        void *unkC8;
+        void *unkCC;
+
+        /**
+         * Offset 0xd0.
+         * Used in object_interaction, setting to zero won't disable.
+        */
+        f32 is_active;
+
+        // changes when active/firing
+        u32 unkD8;
+
+        //////////////////////////////////////////////////////
+        // Previously:
+        // u8       firing;
+        // u8       firecount;
+        // u16      unk64;     /*0x84*/
+        // s16      yzero;     /*0x88 */
+        // s16      ymaxleft;  /*0x8a how far gun can rotate from center. 0 = free rotate*/
+        // s16      ymaxright; /*0x8c */
+        // s16      yrot;      /*0x8e how far gun can rotate from center. 0 = free rotate*/
+        // u32      yspeed;    /*0xa0*/
+        // u16      unk98;     /*0xa4*/
+        // u16      Speed;     /*0xa6 how fast the gun turns*/
+        // u16      aimdist;   /*0xa8 distance before deactivating.*/
+        // u16      unkaa;     /*0xaa*/
+        // u32      unkac;
+
     } AutogunRecord;
 
+    // PROPDEF_CCTV (6)
     typedef struct CCTVRecord
     {
         inherits AutogunRecord;
