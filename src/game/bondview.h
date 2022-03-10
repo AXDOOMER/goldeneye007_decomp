@@ -3183,5 +3183,6 @@ void     hudmsgTopShow(s8 *string);
 void     SurroundWithExplosions(int delay);
 s32 check_watch_page_transistion_running(void);
 f32 bondviewWatchAnimationRelated(void);
+struct coord3d *get_BONDdata_field408(void);
 
 #endif

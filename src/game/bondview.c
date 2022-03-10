@@ -41145,8 +41145,9 @@ coord3d * bondviewGetCurrentPlayersPosition3(void)
     return &g_CurrentPlayer->field_488.pos3;
 }
 
-int get_BONDdata_field408(void) {
-    return (int) &g_CurrentPlayer->bondprevpos;
+struct coord3d *get_BONDdata_field408(void)
+{
+    return &g_CurrentPlayer->bondprevpos;
 }
 
 
