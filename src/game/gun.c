@@ -4793,8 +4793,8 @@ glabel sub_GAME_7F05EC1C
 */
 void generate_player_thrown_grenade(s32 hand)
 {
-    Mtxf unk_mtxf;
-    s32 spFC;
+    s32 padding;
+    Mtxf spFC;
     struct coord3d throw_speed_vec;
     f32 base_velocity;
     struct coord3d spE0;
@@ -4885,8 +4885,7 @@ void generate_player_thrown_grenade(s32 hand)
 void generate_player_thrown_knife(s32 hand)
 {
     struct WeaponObjRecord *wor;
-    s32 padding_2[15];
-    s32 spFC;
+    Mtxf spFC;
     struct coord3d throw_speed_vec;
     f32 base_velocity;
     struct coord3d spE0;
@@ -4975,8 +4974,8 @@ void generate_player_thrown_object(s32 hand)
     }
 */
 
+    s32 padding;
     Mtxf unk_mtxf;
-    s32 spFC;
     struct coord3d throw_speed_vec;
     f32 base_velocity;
     struct coord3d spE0;
@@ -5004,7 +5003,7 @@ void generate_player_thrown_object(s32 hand)
         base_velocity = 6.6666665f;
     }
 
-    sub_GAME_7F057C14(&throw_speed_vec, &spFC);
+    sub_GAME_7F057C14(&throw_speed_vec, &unk_mtxf);
     sub_GAME_7F0681CC(&sp94, &base_speed_vec, hand);
     matrix_4x4_rotate_vector_in_place(currentPlayerGetMatrix10D4(), (f32*)&base_speed_vec);
 
@@ -5138,7 +5137,7 @@ void generate_player_thrown_object(s32 hand)
         wor->runtime_bitflags &= ~(RUNTIMEBITFLAG_OWNER);
         wor->runtime_bitflags |= get_cur_playernum() << RUNTIMEBITSHIFT_OWNER;
 
-        sub_GAME_7F05EC1C(wor, &spE0, &spA0_a, &throw_speed_vec, &spFC);
+        sub_GAME_7F05EC1C(wor, &spE0, &spA0_a, &throw_speed_vec, &unk_mtxf);
 
         if ((wor->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT) != 0)
         {
