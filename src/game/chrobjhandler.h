@@ -105,4 +105,5 @@ ObjectRecord        *weaponFindThrown(s32 ID);
 bool                 check_if_toxic_gas_activated();
 PropRecord          *chrTryEquipHat(ChrRecord *self, s32 index, s32 flags);
 void sub_GAME_7F04C044(PropRecord *prop);
+void sub_GAME_7F043650(struct WeaponObjRecord *arg0);
 #endif

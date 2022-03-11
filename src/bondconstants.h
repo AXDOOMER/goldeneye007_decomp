@@ -367,7 +367,7 @@ BITFLAG(RUNTIMEBITFLAG,
         REMOVE, /* removes object when set                                     */
         00000008,
         00000010,
-        00000020,
+        THROWING_KNIFE_RELATED,
         00000040,
         DEPOSIT, /* depositted (thrown/launching)                               */
         00000100,

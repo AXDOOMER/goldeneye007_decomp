@@ -22,6 +22,7 @@
 #include "math_floor.h"
 #include "math_asinfacosf.h"
 #include "math_atan2f.h"
+#include "matrixmath.h"
 #include "objecthandler.h"
 #include "player.h"
 #include "quaternion.h"
@@ -42277,7 +42278,7 @@ void sub_GAME_7F0526EC(DoorRecord *door, Mtxf *rhs)
             sp54.y = sp54.y + (sp38.y * temp_v0_2->bbox.xmax);
             sp54.z = sp54.z + (sp38.z * temp_v0_2->bbox.xmax);
         }
-        else if ((door->flags * 4) < 0)
+        else if (door->flags & PROPFLAG_NO_AI_INTERACTION)
         {
             sp54.x += sp38.x * temp_v0_2->bbox.xmax;
             sp54.y += sp38.y * temp_v0_2->bbox.xmax;
@@ -42300,7 +42301,7 @@ void sub_GAME_7F0526EC(DoorRecord *door, Mtxf *rhs)
 
         if (door->doorType == 9)
         {
-            if ((door->flags * 4) < 0)
+            if (door->flags & PROPFLAG_NO_AI_INTERACTION)
             {
                 matrix_4x4_set_rotation_around_z(6.2831855f - ((door->openPosition * 6.2831855f) / 360.0f), &lhs);
             }
@@ -42309,7 +42310,7 @@ void sub_GAME_7F0526EC(DoorRecord *door, Mtxf *rhs)
                 matrix_4x4_set_rotation_around_z((door->openPosition * 6.2831855f) / 360.0f, &lhs);
             }
         }
-        else if ((door->flags * 4) < 0)
+        else if (door->flags & PROPFLAG_NO_AI_INTERACTION)
         {
             matrix_4x4_set_rotation_around_y(6.2831855f - ((door->openPosition * 6.2831855f) / 360.0f), &lhs);
         }
@@ -42336,9 +42337,9 @@ void sub_GAME_7F0526EC(DoorRecord *door, Mtxf *rhs)
         matrix_4x4_set_position(&sp2C, &rhs);
     }
 
-    if ((door->doorFlags & 8) != 0)
+    if (door->doorFlags & 8)
     {
-        matrix_column_3_scalar_multiply_2(0xBF800000, &rhs);
+        matrix_column_3_scalar_multiply_2(-1.0f, &rhs);
     }
 }
 #else

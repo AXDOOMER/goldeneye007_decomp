@@ -1047,12 +1047,15 @@ struct player
 
   /**
    * Used in lvlRender method, in VERSION_JP build.
+   * Set to one when holding a grenade (primed to explode).
    * Offset 0xfcc.
    */
   s32 field_FCC;
   
+  // Seems to be copy of field_FCC
   s32 field_FD0;
-  s32 field_FD4;
+
+  s32 z_trigger_timer;
   s32 field_FD8;
   u8 field_FDC;
   u8 field_FDD;
@@ -1093,7 +1096,7 @@ struct player
   s32 field_1050;
   s32 field_1054;
   s32 field_1058;
-  s32 field_105C;
+  s32 last_z_trigger_timer;
   s32 copiedgoldeneye;
   s32 somekinda_flags;
   s32 field_1068;
