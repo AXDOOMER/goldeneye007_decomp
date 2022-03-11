@@ -2568,10 +2568,10 @@ typedef union
          * Max fraction open, aka max displacement.
          * Offset 0xa8.
          */
-        u32                frac;
+        f32                frac;
 
-        u32                unkac; /*0xac*/
-        u32                unkb0; /*0xb0*/
+        f32                unkac; /*0xac*/
+        f32                unkb0; /*0xb0*/
 
         /**
          * Current distance travelled, aka displacement percent.
