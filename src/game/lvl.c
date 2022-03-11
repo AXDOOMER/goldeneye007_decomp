@@ -5459,7 +5459,7 @@ void lvlUpdateMpPlayerData(void)
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel lvlUpdateMpPlayerData
@@ -5681,7 +5681,7 @@ glabel lvlUpdateMpPlayerData
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel lvlUpdateMpPlayerData

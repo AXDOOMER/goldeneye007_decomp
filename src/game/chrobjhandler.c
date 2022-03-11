@@ -5538,7 +5538,7 @@ void sub_GAME_7F043650(void) {
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F043650
@@ -5674,7 +5674,7 @@ glabel sub_GAME_7F043650
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F043650
@@ -29101,7 +29101,7 @@ void sub_GAME_7F04BCDC(void) {
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_80052CC4
@@ -29333,7 +29333,7 @@ glabel sub_GAME_7F04BCDC
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 
 /* same asm, different float .rodata */
 
@@ -29760,7 +29760,7 @@ void sub_GAME_7F04C130(void) {
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_80052CF8
@@ -30435,7 +30435,7 @@ glabel sub_GAME_7F04C130
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 
 /* same asm, different float .rodata */
 
@@ -31125,7 +31125,7 @@ void sub_GAME_7F04CA44(void) {
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_80052D6C
@@ -31341,7 +31341,7 @@ glabel sub_GAME_7F04CA44
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 
 /* same asm, different float .rodata */
 
@@ -44663,7 +44663,7 @@ glabel sub_GAME_7F054A64
 
 
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 /**
  * Address 0x7F054B80.
 */
@@ -44697,7 +44697,7 @@ f32 chrobjFogVisRangeRelated(PropRecord *prop, f32 size)
     return ret;
 }
 #endif
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel chrobjFogVisRangeRelated

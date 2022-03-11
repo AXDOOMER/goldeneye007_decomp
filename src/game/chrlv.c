@@ -405,7 +405,7 @@ void chrlvIdleAnimationRelated(ChrRecord *self, f32 arg1)
 
 
 
-//#if defined(VERSION_US) || defined(VERSION_JP)
+
 /**
  * Address 0x7F023A94 (VERSION_US).
  * Address 0x7F023D94 (other)
@@ -8682,7 +8682,7 @@ void chrlvTickBondDieRemoved(ChrRecord *self)
 }
 
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(REFRESH_NTSC)
 /* NTSC */
 #define MAX_SPEED_A 0.2991993f
 #define ACCEL_A 0.014959966f
@@ -8698,7 +8698,7 @@ void chrlvTickBondDieRemoved(ChrRecord *self)
 #define ACCEL_C 0.009817477f
 #endif
 
-#if defined(VERSION_EU)
+#if defined(REFRESH_PAL)
 /* PAL */
 #define MAX_SPEED_A 0.359039157629013f
 #define ACCEL_A 0.0179519578814507f

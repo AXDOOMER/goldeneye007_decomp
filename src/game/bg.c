@@ -728,7 +728,7 @@ void sub_GAME_7F0B38B4(void) {
 
 }
 #else
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B38B4
@@ -810,7 +810,7 @@ glabel sub_GAME_7F0B38B4
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B38B4
@@ -903,7 +903,7 @@ void sub_GAME_7F0B39BC(void) {
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B39BC
@@ -998,7 +998,7 @@ glabel sub_GAME_7F0B39BC
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B39BC
@@ -1151,7 +1151,7 @@ s32 sub_GAME_7F0B3B20(void)
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B3B20
@@ -1213,7 +1213,7 @@ glabel sub_GAME_7F0B3B20
 #endif
 
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B3B20
@@ -1307,7 +1307,7 @@ void sub_GAME_7F0B3BC4(void)
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B3BC4
@@ -1333,7 +1333,7 @@ glabel sub_GAME_7F0B3BC4
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B3BC4
@@ -1534,7 +1534,7 @@ Gfx *sub_GAME_7F0B3C8C(Gfx *arg0)
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B3C8C
@@ -1798,7 +1798,7 @@ glabel sub_GAME_7F0B3C8C
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B3C8C
@@ -2099,7 +2099,7 @@ int sub_GAME_7F0B4034(int room)
   return room;
 }
 #else
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B4034
@@ -2128,7 +2128,7 @@ glabel sub_GAME_7F0B4034
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B4034
@@ -2191,7 +2191,7 @@ loop_2:
     return phi_v1;
 }
 #else
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B4084
@@ -2220,7 +2220,7 @@ glabel sub_GAME_7F0B4084
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B4084
@@ -2284,7 +2284,7 @@ loop_2:
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B40D4
@@ -2313,7 +2313,7 @@ glabel sub_GAME_7F0B40D4
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B40D4
@@ -2354,7 +2354,7 @@ void load_bg_file(LEVEL_INDEX stagenum)
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel load_bg_file
@@ -2825,7 +2825,7 @@ glabel load_bg_file
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel load_bg_file
@@ -3964,7 +3964,7 @@ loop_1:
 }
 
 #else
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B5168
@@ -3985,7 +3985,7 @@ glabel sub_GAME_7F0B5168
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B5168
@@ -4743,7 +4743,7 @@ void sub_GAME_7F0B5864(void) {
 
 }
 #else
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B5864
@@ -4937,7 +4937,7 @@ glabel sub_GAME_7F0B5864
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B5864
@@ -5471,7 +5471,7 @@ loop_3:
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel generate_room_load_string
@@ -5530,7 +5530,7 @@ glabel generate_room_load_string
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel generate_room_load_string
@@ -5626,7 +5626,7 @@ s32 sub_GAME_7F0B5FAC(int roomID, int* data, int size)
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B5FAC
@@ -5695,7 +5695,7 @@ glabel sub_GAME_7F0B5FAC
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B5FAC
@@ -5802,7 +5802,7 @@ u32 * sub_GAME_7F0B609C(int roomID, int *data, u32 size)
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B609C
@@ -5892,7 +5892,7 @@ glabel sub_GAME_7F0B609C
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B609C
@@ -6019,7 +6019,7 @@ u32 sub_GAME_7F0B61DC(s32 roomID, u32 *data, s32 size)
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B61DC
@@ -6107,7 +6107,7 @@ glabel sub_GAME_7F0B61DC
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B61DC
@@ -6384,7 +6384,7 @@ void sub_GAME_7F0B6368(s32 rooms) {
     return;
 }
 #else
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B6368
@@ -6554,7 +6554,7 @@ glabel sub_GAME_7F0B6368
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B6368
@@ -9303,7 +9303,7 @@ void sub_GAME_7F0B7DE4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, void *arg4) {
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B7DE4
@@ -9378,7 +9378,7 @@ glabel sub_GAME_7F0B7DE4
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B7DE4
@@ -9465,7 +9465,7 @@ void sub_GAME_7F0B7EE4(void) {
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B7EE4
@@ -9515,7 +9515,7 @@ glabel sub_GAME_7F0B7EE4
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B7EE4
@@ -9570,7 +9570,7 @@ void sub_GAME_7F0B7F84(void) {
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B7F84
@@ -9851,7 +9851,7 @@ glabel sub_GAME_7F0B7F84
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B7F84
@@ -10143,7 +10143,7 @@ void parse_global_vis_command_list(void) {
 
 }
 #else
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 /*D:80058C80*/
@@ -10657,7 +10657,7 @@ invalid_type_terminate:
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 /*D:80058C80*/
@@ -11200,7 +11200,7 @@ void sub_GAME_7F0B8A6C(void) {
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B8A6C
@@ -11423,7 +11423,7 @@ glabel sub_GAME_7F0B8A6C
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B8A6C

@@ -1066,10 +1066,10 @@ void joyRumblePakStop(void)
 
     for (i = 0; i < MAXCONTROLLERS; i++)
     {
-#if defined(VERSION_US)
+#if defined(BUGFIX_R0)
         g_ContRumblePakCurrentState[i] = RUMBLEPAKSTATE_ON;
         g_ContRumblePakTargetState[i] = RUMBLEPAKSTATE_OFF;
-#elif defined(VERSION_JP) || defined(VERSION_EU)
+#else
         g_ContRumblePakTargetState[i] = RUMBLEPAKSTATE_UNKNOWN;
 #endif
     }

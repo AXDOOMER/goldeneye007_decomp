@@ -3304,7 +3304,7 @@ f32 sub_GAME_7F020794(ChrRecord *arg0)
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F020794
@@ -3355,7 +3355,7 @@ glabel sub_GAME_7F020794
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_80051D28

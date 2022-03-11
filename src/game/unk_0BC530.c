@@ -112,7 +112,7 @@ void sub_GAME_7F0BC7D4(void)
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0BC7D4
@@ -156,7 +156,7 @@ glabel sub_GAME_7F0BC7D4
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0BC7D4
@@ -239,7 +239,7 @@ s32 sub_GAME_7F0BC85C(s32 index)
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0BC85C
@@ -341,7 +341,7 @@ glabel sub_GAME_7F0BC85C
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0BC85C

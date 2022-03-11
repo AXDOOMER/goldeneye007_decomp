@@ -4,6 +4,7 @@
 #include "math_atan2f.h"
 #include "prop.h"
 #include "game/mp_weapon.h"
+#include "game/player_2.h"
 
 /**
  * EU .bss 0x80068480
@@ -1322,10 +1323,12 @@ glabel domakedefaultobj
 
 
 #ifdef NONMATCHING
-void expand_08_obj_set_guard_MP_weapons(s32 arg0, WeaponObjRecord* weapon, s32 cmdindex)
+void weaponAssignToHome(s32 arg0, WeaponObjRecord* weapon, s32 cmdindex)
 {
     if ((weapon->flags & PROPFLAG_ASSIGNEDTOCHR)) {
+        
         ChrRecord* chr = chrFindByLiteralId(weapon->pad);
+        
         if (chr && chr->prop && chr->model) {
             if (cheatIsActive(CHEAT_ENEMY_ROCKETS))
             {
@@ -1373,21 +1376,22 @@ void expand_08_obj_set_guard_MP_weapons(s32 arg0, WeaponObjRecord* weapon, s32 c
         {
             struct s_mp_weapon_set* mpweapon;
             
-            lastmpweaponnum = -1;
+            *(&lastmpweaponnum) = -1;
             switch ((u8)weapon->weaponnum)
             {
-            case 0xF0:
-            case 0xF1:
-            case 0xF2:
-            case 0xF3:
-            case 0xF4:
-            case 0xF5:
-            case 0xF6:
-            case 0xF7:
+            case ITEM_UNARMED + 0xF0:
+            case ITEM_FIST + 0xF0:
+            case ITEM_KNIFE + 0xF0:
+            case ITEM_THROWKNIFE + 0xF0:
+            case ITEM_WPPK + 0xF0:
+            case ITEM_WPPKSIL + 0xF0:
+            case ITEM_TT33 + 0xF0:
+            case ITEM_SKORPION + 0xF0:
                 mpweapon = getPtrMPWeaponSetData();
-                lastmpweaponnum = (u8)weapon->weaponnum - 0xF0;
+                *(&lastmpweaponnum) = (u8)weapon->weaponnum - 0xF0;
+                
                 mpweapon = &(mpweapon)[lastmpweaponnum];
-                (u8)weapon->weaponnum = (u8)mpweapon->itemID;
+                weapon->weaponnum = (u8)mpweapon->itemID;
                 weapon->obj = (s16)mpweapon->propID;
                 weapon->extrascale = (u16)(mpweapon->size * 256.0f);
                 giveweapon = mpweapon->allowpickup;
@@ -1455,7 +1459,7 @@ glabel jpt_mp_ammo_crate_expansion
 .word .L7F002870
 .word .L7F002870
 .text
-glabel expand_08_obj_set_guard_MP_weapons
+glabel weaponAssignToHome
 /* 037268 7F002738 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 03726C 7F00273C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 037270 7F002740 AFA40028 */  sw    $a0, 0x28($sp)
@@ -1672,7 +1676,7 @@ glabel jpt_mp_ammo_crate_expansion
 .word .L7F002870
 .word .L7F002870
 .text
-glabel expand_08_obj_set_guard_MP_weapons
+glabel weaponAssignToHome
 /* 035128 7F002738 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 03512C 7F00273C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 035130 7F002740 AFA40028 */  sw    $a0, 0x28($sp)
@@ -2549,13 +2553,13 @@ glabel setupSingleMonitor
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0030D0(void) {
+void setupMultiMonitor(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0030D0
+glabel setupMultiMonitor
 /* 037C00 7F0030D0 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 037C04 7F0030D4 AFA40020 */  sw    $a0, 0x20($sp)
 /* 037C08 7F0030D8 3C0E8007 */  lui   $t6, %hi(g_MonitorAnimController) 
@@ -2815,7 +2819,7 @@ glabel sub_GAME_7F00324C
 
 
 #ifdef NONMATCHING
-void expand_type_01_object(void) {
+void setupDoor(void) {
 
 }
 #else
@@ -2825,7 +2829,7 @@ GLOBAL_ASM(
 glabel D_8004EF64
 .word 0x358637bd
 .text
-glabel expand_type_01_object
+glabel setupDoor
 /* 037FB0 7F003480 27BDFE28 */  addiu $sp, $sp, -0x1d8
 /* 037FB4 7F003484 AFBF0034 */  sw    $ra, 0x34($sp)
 /* 037FB8 7F003488 AFB10030 */  sw    $s1, 0x30($sp)
@@ -3341,7 +3345,7 @@ glabel D_800473AC
 .word 0x3f99999a #1.2
 
 .text
-glabel expand_type_01_object
+glabel setupDoor
 /* 035DE0 7F0033F0 27BDFE28 */  addiu $sp, $sp, -0x1d8
 /* 035DE4 7F0033F4 AFBF0034 */  sw    $ra, 0x34($sp)
 /* 035DE8 7F0033F8 AFB10030 */  sw    $s1, 0x30($sp)
@@ -4526,7 +4530,7 @@ door_expand:
 /* 038F24 7F0043F4 01746824 */  and   $t5, $t3, $s4
 /* 038F28 7F0043F8 15A001C0 */  bnez  $t5, other_obj_expand
 /* 038F2C 7F0043FC 00000000 */   nop   
-/* 038F30 7F004400 0FC00D20 */  jal   expand_type_01_object
+/* 038F30 7F004400 0FC00D20 */  jal   setupDoor
 /* 038F34 7F004404 02603025 */   move  $a2, $s3
 /* 038F38 7F004408 100001BC */  b     other_obj_expand
 /* 038F3C 7F00440C 00000000 */   nop   
@@ -4550,7 +4554,7 @@ item_expand:
 /* 038F7C 7F00444C 01D4C024 */  and   $t8, $t6, $s4
 /* 038F80 7F004450 170001AA */  bnez  $t8, other_obj_expand
 /* 038F84 7F004454 00000000 */   nop   
-/* 038F88 7F004458 0FC009CE */  jal   expand_08_obj_set_guard_MP_weapons
+/* 038F88 7F004458 0FC009CE */  jal   weaponAssignToHome
 /* 038F8C 7F00445C 02603025 */   move  $a2, $s3
 /* 038F90 7F004460 100001A6 */  b     other_obj_expand
 /* 038F94 7F004464 00000000 */   nop   
@@ -4643,7 +4647,7 @@ multi_screen_display_expand:
 /* 0390D4 7F0045A4 01746824 */  and   $t5, $t3, $s4
 /* 0390D8 7F0045A8 15A00154 */  bnez  $t5, other_obj_expand
 /* 0390DC 7F0045AC 00000000 */   nop   
-/* 0390E0 7F0045B0 0FC00C34 */  jal   sub_GAME_7F0030D0
+/* 0390E0 7F0045B0 0FC00C34 */  jal   setupMultiMonitor
 /* 0390E4 7F0045B4 02603025 */   move  $a2, $s3
 /* 0390E8 7F0045B8 10000150 */  b     other_obj_expand
 /* 0390EC 7F0045BC 00000000 */   nop   
@@ -5919,7 +5923,7 @@ door_expand:
 /* 038F64 7F0043F4 01746824 */  and   $t5, $t3, $s4
 /* 038F68 7F0043F8 15A001C4 */  bnez  $t5, other_obj_expand
 /* 038F6C 7F0043FC 00000000 */   nop   
-/* 038F70 7F004400 0FC00D20 */  jal   expand_type_01_object
+/* 038F70 7F004400 0FC00D20 */  jal   setupDoor
 /* 038F74 7F004404 02603025 */   move  $a2, $s3
 /* 038F78 7F004408 100001C0 */  b     other_obj_expand
 /* 038F7C 7F00440C 00000000 */   nop   
@@ -5943,7 +5947,7 @@ item_expand:
 /* 038FBC 7F00444C 01D4C024 */  and   $t8, $t6, $s4
 /* 038FC0 7F004450 170001AE */  bnez  $t8, other_obj_expand
 /* 038FC4 7F004454 00000000 */   nop   
-/* 038FC8 7F004458 0FC009CE */  jal   expand_08_obj_set_guard_MP_weapons
+/* 038FC8 7F004458 0FC009CE */  jal   weaponAssignToHome
 /* 038FCC 7F00445C 02603025 */   move  $a2, $s3
 /* 038FD0 7F004460 100001AA */  b     other_obj_expand
 /* 038FD4 7F004464 00000000 */   nop   
@@ -6036,7 +6040,7 @@ multi_screen_display_expand:
 /* 039114 7F0045A4 01746824 */  and   $t5, $t3, $s4
 /* 039118 7F0045A8 15A00158 */  bnez  $t5, other_obj_expand
 /* 03911C 7F0045AC 00000000 */   nop   
-/* 039120 7F0045B0 0FC00C34 */  jal   sub_GAME_7F0030D0
+/* 039120 7F0045B0 0FC00C34 */  jal   setupMultiMonitor
 /* 039124 7F0045B4 02603025 */   move  $a2, $s3
 /* 039128 7F0045B8 10000154 */  b     other_obj_expand
 /* 03912C 7F0045BC 00000000 */   nop   
@@ -7317,7 +7321,7 @@ door_expand:
 /* 036D70 7F004380 01746824 */  and   $t5, $t3, $s4
 /* 036D74 7F004384 15A001C2 */  bnez  $t5, other_obj_expand
 /* 036D78 7F004388 00000000 */   nop   
-/* 036D7C 7F00438C 0FC00CFC */  jal   expand_type_01_object
+/* 036D7C 7F00438C 0FC00CFC */  jal   setupDoor
 /* 036D80 7F004390 02603025 */   move  $a2, $s3
 /* 036D84 7F004394 100001BE */  b     other_obj_expand
 /* 036D88 7F004398 00000000 */   nop   
@@ -7341,7 +7345,7 @@ item_expand:
 /* 036DC8 7F0043D8 01D4C024 */  and   $t8, $t6, $s4
 /* 036DCC 7F0043DC 170001AC */  bnez  $t8, other_obj_expand
 /* 036DD0 7F0043E0 00000000 */   nop   
-/* 036DD4 7F0043E4 0FC009CE */  jal   expand_08_obj_set_guard_MP_weapons
+/* 036DD4 7F0043E4 0FC009CE */  jal   weaponAssignToHome
 /* 036DD8 7F0043E8 02603025 */   move  $a2, $s3
 /* 036DDC 7F0043EC 100001A8 */  b     other_obj_expand
 /* 036DE0 7F0043F0 00000000 */   nop   
@@ -7434,7 +7438,7 @@ multi_screen_display_expand:
 /* 036F20 7F004530 01746824 */  and   $t5, $t3, $s4
 /* 036F24 7F004534 15A00156 */  bnez  $t5, other_obj_expand
 /* 036F28 7F004538 00000000 */   nop   
-/* 036F2C 7F00453C 0FC00C10 */  jal   sub_GAME_7F0030D0
+/* 036F2C 7F00453C 0FC00C10 */  jal   setupMultiMonitor
 /* 036F30 7F004540 02603025 */   move  $a2, $s3
 /* 036F34 7F004544 10000152 */  b     other_obj_expand
 /* 036F38 7F004548 00000000 */   nop   

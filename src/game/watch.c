@@ -2892,7 +2892,7 @@ Gfx *sub_GAME_7F0A77C8(Gfx *arg0)
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0A77C8
@@ -3189,7 +3189,7 @@ glabel sub_GAME_7F0A77C8
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0A77C8
@@ -3587,7 +3587,7 @@ void draw_current_hand_item_and_ammo(void) {
 
 }
 #else
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_8005850C
@@ -3905,7 +3905,7 @@ glabel draw_current_hand_item_and_ammo
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_8005850C
@@ -6532,7 +6532,7 @@ void sub_GAME_7F0A97D0(void) {
 
 }
 #else
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0A97D0
@@ -6741,7 +6741,7 @@ glabel sub_GAME_7F0A97D0
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0A97D0
@@ -6979,7 +6979,7 @@ const char aS_0[] =  "(S)\n";
 //D:800577B8
 const char a3d[] =  "(3D)\n";
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
     
 .text
@@ -7860,7 +7860,7 @@ glabel sub_GAME_7F0A9AB8
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0A9AB8
@@ -10983,7 +10983,7 @@ void draw_watch_mission_briefing_page(void) {
 //D:800577C0
 const char D_800577C0[] =  "\n";
 //these 2 blocks are wrong splits most likely, investigate and cleanup
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 //D:800577C4
 const u32 D_800577C4[] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -11038,7 +11038,7 @@ const char D_80058450[] = " \n";
 //D:80058454
 const char D_80058454[] = " \n\n";
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 
 GLOBAL_ASM(
 .late_rodata
@@ -11652,7 +11652,7 @@ glabel draw_watch_mission_briefing_page
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 

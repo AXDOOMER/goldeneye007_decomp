@@ -184,7 +184,7 @@ Gfx *sub_GAME_7F007F30(Gfx*, s32, s32) {
 #else
 Gfx *sub_GAME_7F007F30(Gfx*, s32, s32);
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_8004F2D0
@@ -436,7 +436,7 @@ glabel sub_GAME_7F007F30
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_80047720
