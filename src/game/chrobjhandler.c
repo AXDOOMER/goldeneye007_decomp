@@ -22,6 +22,7 @@
 #include "math_floor.h"
 #include "math_asinfacosf.h"
 #include "math_atan2f.h"
+#include "matrixmath.h"
 #include "objecthandler.h"
 #include "player.h"
 #include "quaternion.h"
@@ -6097,7 +6098,7 @@ void propExplode(PropRecord *prop, s32 arg1)
     Mtxf *mtx;
 
     prop_obj = prop->obj;
-    playernum = (prop_obj->runtime_bitflags & 0x60000) >> 0x11;
+    playernum = (prop_obj->runtime_bitflags & RUNTIMEBITFLAG_OWNER) >> RUNTIMEBITSHIFT_OWNER;
     
     if (prop->parent)
     {
@@ -42252,8 +42253,94 @@ HATTYPE get_hat_model(PropRecord *prop) //#MATCH
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0526EC(void) {
+void sub_GAME_7F0526EC(DoorRecord *door, Mtxf *rhs)
+{
+    Mtxf *lhs;
+    vec3d sp54;
+    vec3d sp48;
+    vec3d sp38;
+    vec3d sp2C;
+    BoundPadRecord* temp_v0_2;
 
+    if ((door->doorType == 5) || (door->doorType == 9))
+    {
+        temp_v0_2 = &g_chraiCurrentSetup.boundpads[door->pad];
+        sp38.x = (temp_v0_2->up.y * temp_v0_2->look.z) - (temp_v0_2->look.y * temp_v0_2->up.z); // cross product
+        sp38.y = (temp_v0_2->up.z * temp_v0_2->look.x) - (temp_v0_2->look.z * temp_v0_2->up.x); // cross product
+        sp38.z = (temp_v0_2->up.x * temp_v0_2->look.y) - (temp_v0_2->look.x * temp_v0_2->up.y); // cross product
+        sp54.x = (temp_v0_2->up.x * temp_v0_2->bbox.ymin) + temp_v0_2->pos.x;
+        sp54.y = (temp_v0_2->up.y * temp_v0_2->bbox.ymin) + temp_v0_2->pos.y;
+        sp54.z = (temp_v0_2->up.z * temp_v0_2->bbox.ymin) + temp_v0_2->pos.z;
+
+        if (door->doorType == 9)
+        {
+            sp54.x = sp54.x + (sp38.x * temp_v0_2->bbox.xmax);
+            sp54.y = sp54.y + (sp38.y * temp_v0_2->bbox.xmax);
+            sp54.z = sp54.z + (sp38.z * temp_v0_2->bbox.xmax);
+        }
+        else if (door->flags & PROPFLAG_NO_AI_INTERACTION)
+        {
+            sp54.x += sp38.x * temp_v0_2->bbox.xmax;
+            sp54.y += sp38.y * temp_v0_2->bbox.xmax;
+            sp54.z += sp38.z * temp_v0_2->bbox.xmax;
+        }
+        else
+        {
+            sp54.x += sp38.x * temp_v0_2->bbox.xmin;
+            sp54.y += sp38.y * temp_v0_2->bbox.xmin;
+            sp54.z += sp38.z * temp_v0_2->bbox.xmin;
+        }
+
+        sp48.x = door->runtime_pos.x - sp54.x;
+        sp48.y = door->runtime_pos.y - sp54.y;
+        sp48.z = door->runtime_pos.z - sp54.z;
+
+        matrix_4x4_copy(&door->mtx, &rhs);
+        matrix_4x4_set_identity_and_position(&sp48, &lhs);
+        matrix_4x4_multiply_in_place(&lhs, &rhs);
+
+        if (door->doorType == 9)
+        {
+            if (door->flags & PROPFLAG_NO_AI_INTERACTION)
+            {
+                matrix_4x4_set_rotation_around_z(6.2831855f - ((door->openPosition * 6.2831855f) / 360.0f), &lhs);
+            }
+            else
+            {
+                matrix_4x4_set_rotation_around_z((door->openPosition * 6.2831855f) / 360.0f, &lhs);
+            }
+        }
+        else if (door->flags & PROPFLAG_NO_AI_INTERACTION)
+        {
+            matrix_4x4_set_rotation_around_y(6.2831855f - ((door->openPosition * 6.2831855f) / 360.0f), &lhs);
+        }
+        else
+        {
+            matrix_4x4_set_rotation_around_y((door->openPosition * 6.2831855f) / 360.0f, &lhs);
+        }
+
+        matrix_4x4_multiply_in_place(&lhs, &rhs);
+        matrix_4x4_set_identity_and_position(&sp54, &lhs);
+        matrix_4x4_multiply_in_place(&lhs, &rhs);
+    }
+    else if ((door->doorType == 6) || (door->doorType == 7))
+    {
+        matrix_4x4_copy(&door->mtx, &rhs);
+        matrix_4x4_set_position(&door->runtime_pos, &rhs);
+    }
+    else
+    {
+        sp2C.x = (door->frac * door->openPosition) + door->runtime_pos.x;
+        sp2C.y = (door->unkac * door->openPosition) + door->runtime_pos.y;
+        sp2C.z = (door->unkb0 * door->openPosition) + door->runtime_pos.z;
+        matrix_4x4_copy(&door->mtx, &rhs);
+        matrix_4x4_set_position(&sp2C, &rhs);
+    }
+
+    if (door->doorFlags & 8)
+    {
+        matrix_column_3_scalar_multiply_2(-1.0f, &rhs);
+    }
 }
 #else
 GLOBAL_ASM(
@@ -43580,7 +43667,7 @@ s32 sub_GAME_7F0537B8(f32 vol, f32 min, f32 max) //#MATCH
     }
     else if (max <= vol)
     {
-        retval = 0;
+        retval = 0.0f;
     }
     else if (min <= vol)
     {
@@ -43588,7 +43675,7 @@ s32 sub_GAME_7F0537B8(f32 vol, f32 min, f32 max) //#MATCH
     }
     else
     {
-        retval = SHRT_MAX - (s32)((sqrtf(vol - 200.0f) * 32767.0f) / sqrtf(min - 200.0f));
+        retval = SHRT_MAX - (s32)((sqrtf(vol - 200.0f) * SHRT_MAX) / sqrtf(min - 200.0f));
     }
     return retval;
 }
@@ -43761,7 +43848,7 @@ glabel sub_GAME_7F053894
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F05396C(ALSoundState *state, coord3d *pos, s32 low, s32 high) {
+void sub_GAME_7F05396C(ALSoundState *state, coord3d *pos, f32 low, f32 high) {
 
     sndCreatePostEvent(state, 8, sub_GAME_7F053894(pos, low, high));
 }
@@ -43822,7 +43909,9 @@ glabel sub_GAME_7F0539B8
 
 
 
-s32 sub_GAME_7F0539E4(coord3d *pos) {
+s32 sub_GAME_7F0539E4(coord3d *pos)
+{
+    //return sub_GAME_7F053894(pos, 5000.0f, 6000.0f);
     return sub_GAME_7F053894(pos, 0x459C4000, 0x45BB8000);
 }
 
@@ -43832,8 +43921,8 @@ s32 sub_GAME_7F0539E4(coord3d *pos) {
 
 void sub_GAME_7F053A10(ALSoundState *state, coord3d *pos)
 {
-    sub_GAME_7F05396C(state, pos, 0x459C4000,  0x45BB8000);
-//                                ^ 5000       ^ 6000
+    //sub_GAME_7F05396C(state, pos, 5000.0f,  6000.0f);
+    sub_GAME_7F05396C(state, pos, 0x459C4000, 0x45BB8000);
 }
 
 

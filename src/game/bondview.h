@@ -248,22 +248,10 @@ struct hand
   s32 field_ACC;
   s32 field_AD0;
   s32 field_AD4;
-  s32 field_AD8;
-  s32 field_ADC;
-  s32 field_AE0;
-  s32 field_AE4;
-  s32 field_AE8;
-  s32 field_AEC;
-  s32 field_AF0;
-  s32 field_AF4;
-  s32 field_AF8;
-  s32 field_AFC;
-  s32 field_B00;
-  s32 field_B04;
-  s32 field_B08;
-  s32 field_B0C;
-  s32 field_B10;
-  s32 field_B14;
+
+  // offset 0xad8
+  Mtxf throw_item_pos_related;
+  
   s32 field_B18;
   s32 field_B1C;
   s32 field_B20;
@@ -1059,12 +1047,15 @@ struct player
 
   /**
    * Used in lvlRender method, in VERSION_JP build.
+   * Set to one when holding a grenade (primed to explode).
    * Offset 0xfcc.
    */
   s32 field_FCC;
   
+  // Seems to be copy of field_FCC
   s32 field_FD0;
-  s32 field_FD4;
+
+  s32 z_trigger_timer;
   s32 field_FD8;
   u8 field_FDC;
   u8 field_FDD;
@@ -1105,7 +1096,7 @@ struct player
   s32 field_1050;
   s32 field_1054;
   s32 field_1058;
-  s32 field_105C;
+  s32 last_z_trigger_timer;
   s32 copiedgoldeneye;
   s32 somekinda_flags;
   s32 field_1068;
@@ -3183,5 +3174,6 @@ void     hudmsgTopShow(s8 *string);
 void     SurroundWithExplosions(int delay);
 s32 check_watch_page_transistion_running(void);
 f32 bondviewWatchAnimationRelated(void);
+struct coord3d *get_BONDdata_field408(void);
 
 #endif

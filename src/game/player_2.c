@@ -352,7 +352,7 @@ void initBONDdataforPlayer(PLAYER_ID player)
     (*ppPVar3)->field_FC8 = 0;
     (*ppPVar3)->field_FCC = 0;
     (*ppPVar3)->field_FD0 = 0;
-    (*ppPVar3)->field_FD4 = 0;
+    (*ppPVar3)->z_trigger_timer = 0;
     (*ppPVar3)->field_FD8 = 0;
     (*ppPVar3)->field_FDC = -1;
     (*ppPVar3)->field_FDD = -1;
@@ -373,7 +373,7 @@ void initBONDdataforPlayer(PLAYER_ID player)
     (*ppPVar3)->field_1010 = 0.00000000;
     (*ppPVar3)->holds_neg_pi = -3.14159274;
     (*ppPVar3)->field_1018 = 0.00000000;
-    (*ppPVar3)->field_105C = 0;
+    (*ppPVar3)->last_z_trigger_timer = 0;
     (*ppPVar3)->copiedgoldeneye = 0;
     (*ppPVar3)->somekinda_flags = 0;
     (*ppPVar3)->field_106C = 0.00000000;

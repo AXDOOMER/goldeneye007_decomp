@@ -119,7 +119,7 @@ bool removed_animation_routine_2B(ChrRecord *self);
 bool chrTryStartAlarm(ChrRecord *self, s32 PadId);
 bool actor_draws_throws_grenade_at_player_if_possible(ChrRecord *self);
 bool chrDropItem(ChrRecord *self, s32 modelnum, u8 weaponid);
-void expand_09_characters(s32 arg0, GuardRecord *arg1, s32 arg2);
+void expand_09_characters(s32 stageid, GuardRecord *arg1, s32 arg2);
 void chrlvGetPatrolPercentOrPosition(ChrRecord *arg0, coord3d *arg1);
 s32 chrlvExplosionDamage(ChrRecord *arg0, coord3d *arg1, f32 arg2, s32 arg3);
 
