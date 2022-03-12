@@ -32754,48 +32754,12 @@ glabel some_kind_of_display_routine
 
 
 
-#ifdef NONMATCHING
-void display_ammo_total_in_a1(s32 arg0, s32 arg1, ? arg2, ? arg3, ?32 arg4, ?32 arg5, ?32 arg6) {
-    ? sp2C;
-
-    // Node 0
-    sprintf(&sp2C, "%d\n", arg1);
-    return some_kind_of_display_routine(arg0, &sp2C, arg2, arg3, arg4, arg5, arg6);
-}
-
-#else
-
 #if defined(VERSION_US) || defined(VERSION_JP)
-GLOBAL_ASM(
-.text
-glabel display_ammo_total_in_a1
-/* 09E7BC 7F069C8C 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 09E7C0 7F069C90 AFA60040 */  sw    $a2, 0x40($sp)
-/* 09E7C4 7F069C94 00A03025 */  move  $a2, $a1
-/* 09E7C8 7F069C98 AFA5003C */  sw    $a1, 0x3c($sp)
-/* 09E7CC 7F069C9C AFBF0024 */  sw    $ra, 0x24($sp)
-/* 09E7D0 7F069CA0 AFA40038 */  sw    $a0, 0x38($sp)
-/* 09E7D4 7F069CA4 3C058005 */  lui   $a1, %hi(aD_9)
-/* 09E7D8 7F069CA8 AFA70044 */  sw    $a3, 0x44($sp)
-/* 09E7DC 7F069CAC 24A53BF4 */  addiu $a1, %lo(aD_9) # addiu $a1, $a1, 0x3bf4
-/* 09E7E0 7F069CB0 0C002B25 */  jal   sprintf
-/* 09E7E4 7F069CB4 27A4002C */   addiu $a0, $sp, 0x2c
-/* 09E7E8 7F069CB8 8FAE0048 */  lw    $t6, 0x48($sp)
-/* 09E7EC 7F069CBC 8FAF004C */  lw    $t7, 0x4c($sp)
-/* 09E7F0 7F069CC0 8FB80050 */  lw    $t8, 0x50($sp)
-/* 09E7F4 7F069CC4 8FA40038 */  lw    $a0, 0x38($sp)
-/* 09E7F8 7F069CC8 27A5002C */  addiu $a1, $sp, 0x2c
-/* 09E7FC 7F069CCC 8FA60040 */  lw    $a2, 0x40($sp)
-/* 09E800 7F069CD0 8FA70044 */  lw    $a3, 0x44($sp)
-/* 09E804 7F069CD4 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 09E808 7F069CD8 AFAF0014 */  sw    $t7, 0x14($sp)
-/* 09E80C 7F069CDC 0FC1A694 */  jal   some_kind_of_display_routine
-/* 09E810 7F069CE0 AFB80018 */   sw    $t8, 0x18($sp)
-/* 09E814 7F069CE4 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 09E818 7F069CE8 27BD0038 */  addiu $sp, $sp, 0x38
-/* 09E81C 7F069CEC 03E00008 */  jr    $ra
-/* 09E820 7F069CF0 00000000 */   nop
-)
+Gfx *display_ammo_total_in_a1(Gfx *arg0, s32 amount, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) {
+    char buffer[12];
+    sprintf(buffer, aD_9, amount);
+    return some_kind_of_display_routine(arg0, buffer, arg2, arg3, arg4, arg5, arg6);
+}
 #endif
 
 #if defined(VERSION_EU)
@@ -32829,7 +32793,6 @@ glabel display_ammo_total_in_a1
 /* 09CE70 7F06A480 03E00008 */  jr    $ra
 /* 09CE74 7F06A484 00000000 */   nop   
 )
-#endif
 #endif
 
 

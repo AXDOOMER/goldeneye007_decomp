@@ -922,7 +922,7 @@ void sub_GAME_7F0785DC()
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0785DC
@@ -1150,7 +1150,7 @@ glabel sub_GAME_7F0785DC
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0785DC
@@ -1537,7 +1537,7 @@ s32 sub_GAME_7F078BF4(coord3d *arg0, f32 arg1, f32 *arg2)
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F078BF4
@@ -1868,7 +1868,7 @@ glabel sub_GAME_7F078BF4
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F078BF4
@@ -2370,7 +2370,7 @@ block_15:
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0790F0
@@ -2584,7 +2584,7 @@ glabel sub_GAME_7F0790F0
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0790F0
@@ -10824,7 +10824,7 @@ s32 cal_player_collision(coord3d *arg0, void *arg1) {
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel cal_player_collision
@@ -11014,7 +11014,7 @@ glabel cal_player_collision
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel cal_player_collision
@@ -11788,7 +11788,7 @@ void sub_GAME_7F07D960(void) {
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F07D960
@@ -12139,7 +12139,7 @@ glabel sub_GAME_7F07D960
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F07D960
@@ -13292,7 +13292,7 @@ void sub_GAME_7F07EAF0(void) {
 
 }
 #else
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F07EAF0
@@ -13397,7 +13397,7 @@ glabel sub_GAME_7F07EAF0
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F07EAF0
@@ -16235,7 +16235,7 @@ void trigger_solo_watch_menu(s32 arg0)
     }
 }
 #else
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_8005508C
@@ -16542,7 +16542,7 @@ glabel trigger_solo_watch_menu
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_8005508C
@@ -17603,7 +17603,7 @@ void bondviewUpdatePlayerClipping(s32 use_stanHeight, f32 stanHeight_offset)
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_800550DC
@@ -18078,7 +18078,7 @@ glabel bondviewUpdatePlayerClipping
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_800550DC
@@ -18666,7 +18666,7 @@ loop_15:
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_80055108
@@ -18884,7 +18884,7 @@ glabel sub_GAME_7F081478
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_80055108
@@ -19336,7 +19336,7 @@ void controller_gameplay_interaction(void) {
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_80055120
@@ -22071,7 +22071,7 @@ glabel controller_gameplay_interaction
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 
 GLOBAL_ASM(
 .late_rodata
@@ -25674,7 +25674,7 @@ void sub_GAME_7F084360(void) {
 
 }
 #else
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F084360
@@ -25879,7 +25879,7 @@ glabel sub_GAME_7F084360
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F084360
@@ -33779,7 +33779,7 @@ void sub_GAME_7F086990(s32 arg0, s32 arg1, ? arg2, ? arg_unalignedA, ? arg3, ? a
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F086990
@@ -33945,7 +33945,7 @@ glabel sub_GAME_7F086990
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F086990
@@ -37665,7 +37665,7 @@ s32 sub_GAME_7F088618(void *arg0) {
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F088618
@@ -37852,7 +37852,7 @@ glabel sub_GAME_7F088618
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 
 GLOBAL_ASM(
 .text
@@ -38051,7 +38051,7 @@ void mp_respawn_handler(void) {
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_80055284
@@ -38350,7 +38350,7 @@ mp_spawntype_default:
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_80055284
@@ -39034,7 +39034,7 @@ Gfx * maybe_mp_interface(Gfx *arg0) {
 
 }
 #else
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel maybe_mp_interface
@@ -39364,7 +39364,7 @@ glabel maybe_mp_interface
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel maybe_mp_interface
@@ -42413,7 +42413,7 @@ void hudmsgTopShow(s8 *string)
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel hudmsgTopShow
@@ -42461,7 +42461,7 @@ glabel hudmsgTopShow
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel hudmsgTopShow
@@ -43870,7 +43870,7 @@ void sub_GAME_7F08B0F0(void) {
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_800552C0
@@ -44707,7 +44707,7 @@ glabel sub_GAME_7F08B0F0
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_8004AE94

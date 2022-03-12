@@ -2581,7 +2581,7 @@ glabel sub_GAME_7F0B0688
 }
 
 #else
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B07BC
@@ -2676,7 +2676,7 @@ glabel sub_GAME_7F0B07BC
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B07BC

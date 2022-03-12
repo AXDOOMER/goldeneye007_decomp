@@ -733,7 +733,7 @@ int get_index_num_of_named_resource(u8 *resname)
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel get_index_num_of_named_resource
@@ -822,7 +822,7 @@ glabel get_index_num_of_named_resource
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel get_index_num_of_named_resource

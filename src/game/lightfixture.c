@@ -35,7 +35,7 @@ void init_lightfixture_tables(void)
     D_80046030[0] = 0;
 }
 #else
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel init_lightfixture_tables
@@ -66,7 +66,7 @@ glabel init_lightfixture_tables
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel init_lightfixture_tables
