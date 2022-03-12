@@ -21,7 +21,7 @@ void sub_GAME_7F070AEC(Model *, s32, s32);
 void subcalcpos(Model *);
  void      modelSetAnimEndFrame(Model *model, float endframe);
 
-void modelSetAnimation(Model *, ModelAnimation *, s32, f32, f32, f32);
+void modelSetAnimation(Model *, ModelAnimation *, s32, f32, f32, f32 duration);
 void modelSetAnimLooping(Model *, f32, f32);
 void modelSetAnimEndFrame(Model *, f32);
 void sub_GAME_7F06CE84(Model *, f32);

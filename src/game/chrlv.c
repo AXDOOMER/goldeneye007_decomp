@@ -376,7 +376,7 @@ u32 check_if_item_held_like_pistol(PropRecord *arg0)
 /**
  * Address 0x7F023948.
  */
-void chrlvIdleAnimationRelated(ChrRecord *self, f32 arg1)
+void chrlvIdleAnimationRelated(ChrRecord *self, f32 duration)
 {
     PropRecord *left;
     PropRecord *right;
@@ -390,12 +390,12 @@ void chrlvIdleAnimationRelated(ChrRecord *self, f32 arg1)
         || (check_if_item_held_like_pistol(left) != 0)
         || (check_if_item_held_like_pistol(right) != 0))
     {
-        modelSetAnimation(self->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_idle_unarmed], randomGetNext() & 1, 0, 0.25f, arg1);
+        modelSetAnimation(self->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_idle_unarmed], randomGetNext() & 1, 0, 0.25f, duration);
         modelSetAnimLooping(self->model, 0, 16.0f);
     }
     else if ((right != NULL) || (left != NULL))
     {
-        modelSetAnimation(self->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_idle], left != NULL, 0, 0.25f, arg1);
+        modelSetAnimation(self->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_idle], left != NULL, 0, 0.25f, duration);
         modelSetAnimLooping(self->model, 0, 16.0f);
         modelSetAnimEndFrame(self->model, 120.0f);
     }
@@ -5325,7 +5325,7 @@ void chrlvTickStand(ChrRecord *self)
 
             if (self->act_stand.unk03c != 1)
             {
-                chrlvIdleAnimationRelated(self, 8);
+                chrlvIdleAnimationRelated(self, 8.0f);
                 self->act_stand.unk038 = 0;
 
                 if (self->act_stand.face_entitytype & 0x10)
