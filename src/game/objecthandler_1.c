@@ -569,7 +569,7 @@ Mtxf *sub_GAME_7F06C660(struct Model *model, struct ModelNode *node, s32 arg2) {
     s32 index = sub_GAME_7F06C570(node, arg2);
 
     if (index >= 0) {
-        return &model->unk0c[index];
+        return &model->render_pos[index].pos;
     }
 
     return NULL;

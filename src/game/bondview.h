@@ -3158,7 +3158,7 @@ Mtxf *currentPlayerGetMatrix10CC(void);
 void sub_GAME_7F077EEC(struct coord2d *in, coord3d *out, f32 value);
 s32 sub_GAME_7F078BF4(coord3d *, f32, struct bbox2d *);
 
-void sub_GAME_7F08BD48(Mtxf *arg0, s32 arg1);
+void bondviewTransformManyPosToViewMatrix(RenderPosView *arg0, s32 arg1);
 s32 sub_GAME_7F078474(void);
 s32 get_BONDdata_field_10E0(void);
 Mtx *currentPlayerGetProjectionMatrix(void);

@@ -27767,7 +27767,7 @@ glabel sub_GAME_7F04AC20
 /* 07FBA4 7F04B074 01EE6824 */  and   $t5, $t7, $t6
 /* 07FBA8 7F04B078 11A00005 */  beqz  $t5, .L7F04B090
 /* 07FBAC 7F04B07C 00E02025 */   move  $a0, $a3
-/* 07FBB0 7F04B080 0FC286A5 */  jal   sub_GAME_7F0A1A94
+/* 07FBB0 7F04B080 0FC286A5 */  jal   explosionRenderBulletImpactOnProp
 /* 07FBB4 7F04B084 8FA50078 */   lw    $a1, 0x78($sp)
 /* 07FBB8 7F04B088 00403825 */  move  $a3, $v0
 /* 07FBBC 7F04B08C 8FA60080 */  lw    $a2, 0x80($sp)
@@ -27817,7 +27817,7 @@ glabel sub_GAME_7F04AC20
 .L7F04B12C:
 /* 07FC5C 7F04B12C 8C4B0008 */  lw    $t3, 8($v0)
 /* 07FC60 7F04B130 8C44000C */  lw    $a0, 0xc($v0)
-/* 07FC64 7F04B134 0FC22F52 */  jal   sub_GAME_7F08BD48
+/* 07FC64 7F04B134 0FC22F52 */  jal   bondviewTransformManyPosToViewMatrix
 /* 07FC68 7F04B138 8565000E */   lh    $a1, 0xe($t3)
 .L7F04B13C:
 /* 07FC6C 7F04B13C 8FBF0024 */  lw    $ra, 0x24($sp)

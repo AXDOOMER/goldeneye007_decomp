@@ -184,7 +184,7 @@ s32 D_80030AB0 = 0;
 
 // forward declarations
 
-Gfx *chrpropRender(Gfx *arg0, PropRecord *arg1, s32 arg2);
+Gfx *chrpropRender(Gfx *arg0, PropRecord *arg1, s32 withalpha);
 void chraiCheckUseHeldItem(s32 hand);
 void chraiDefaultWeaponFireHandler(s32);
 void chraiFistAttackHandler(s32, s32);

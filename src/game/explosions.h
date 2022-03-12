@@ -221,6 +221,6 @@ Gfx *unk09c250RenderPropExplosion(PropRecord *arg0, Gfx *arg1);
 Gfx *unk09c250RenderPropSmoke(PropRecord *arg0, Gfx *arg1);
 
 
-Gfx *sub_GAME_7F0A1A94(Gfx *arg0, PropRecord *arg1, s32 arg2);
+Gfx *explosionRenderBulletImpactOnProp(Gfx *arg0, PropRecord *arg1, s32 arg2);
 
 #endif

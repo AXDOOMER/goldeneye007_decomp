@@ -36509,7 +36509,7 @@ glabel sub_GAME_7F087E74
 /* 0BD0C0 7F088590 0FC16319 */  jal   matrix_4x4_7F058C64
 /* 0BD0C4 7F088594 00000000 */   nop
 /* 0BD0C8 7F088598 27A4004C */  addiu $a0, $sp, 0x4c
-/* 0BD0CC 7F08859C 0FC16327 */  jal   sub_GAME_7F058C9C
+/* 0BD0CC 7F08859C 0FC16327 */  jal   matrix_4x4_f32_to_s32
 /* 0BD0D0 7F0885A0 8FA50048 */   lw    $a1, 0x48($sp)
 /* 0BD0D4 7F0885A4 0FC16322 */  jal   matrix_4x4_7F058C88
 /* 0BD0D8 7F0885A8 00000000 */   nop
@@ -36532,7 +36532,7 @@ glabel sub_GAME_7F087E74
 /* 0BD118 7F0885E8 8DEFA0B0 */  lw    $t7, %lo(g_CurrentPlayer)($t7)
 /* 0BD11C 7F0885EC 8FAD0160 */  lw    $t5, 0x160($sp)
 /* 0BD120 7F0885F0 8DE4023C */  lw    $a0, 0x23c($t7)
-/* 0BD124 7F0885F4 0FC22F52 */  jal   sub_GAME_7F08BD48
+/* 0BD124 7F0885F4 0FC22F52 */  jal   bondviewTransformManyPosToViewMatrix
 /* 0BD128 7F0885F8 85A5000E */   lh    $a1, 0xe($t5)
 /* 0BD12C 7F0885FC 0FC16322 */  jal   matrix_4x4_7F058C88
 /* 0BD130 7F088600 00000000 */   nop
@@ -37032,7 +37032,7 @@ glabel sub_GAME_7F087E74
 /* 0BD7D4 7F088C64 0FC16461 */  jal   matrix_4x4_7F058C64
 /* 0BD7D8 7F088C68 00000000 */   nop
 /* 0BD7DC 7F088C6C 27A4004C */  addiu $a0, $sp, 0x4c
-/* 0BD7E0 7F088C70 0FC1646F */  jal   sub_GAME_7F058C9C
+/* 0BD7E0 7F088C70 0FC1646F */  jal   matrix_4x4_f32_to_s32
 /* 0BD7E4 7F088C74 8FA50048 */   lw    $a1, 0x48($sp)
 /* 0BD7E8 7F088C78 0FC1646A */  jal   matrix_4x4_7F058C88
 /* 0BD7EC 7F088C7C 00000000 */   nop
@@ -37055,7 +37055,7 @@ glabel sub_GAME_7F087E74
 /* 0BD82C 7F088CBC 8D4AA120 */  lw    $t2, %lo(g_CurrentPlayer)($t2)
 /* 0BD830 7F088CC0 8FAF0160 */  lw    $t7, 0x160($sp)
 /* 0BD834 7F088CC4 8D44023C */  lw    $a0, 0x23c($t2)
-/* 0BD838 7F088CC8 0FC23174 */  jal   sub_GAME_7F08BD48
+/* 0BD838 7F088CC8 0FC23174 */  jal   bondviewTransformManyPosToViewMatrix
 /* 0BD83C 7F088CCC 85E5000E */   lh    $a1, 0xe($t7)
 /* 0BD840 7F088CD0 0FC1646A */  jal   matrix_4x4_7F058C88
 /* 0BD844 7F088CD4 00000000 */   nop
@@ -37555,7 +37555,7 @@ glabel sub_GAME_7F087E74
 /* 0BB0E8 7F0886F8 0FC16443 */  jal   matrix_4x4_7F058C64
 /* 0BB0EC 7F0886FC 00000000 */   nop   
 /* 0BB0F0 7F088700 27A4004C */  addiu $a0, $sp, 0x4c
-/* 0BB0F4 7F088704 0FC16451 */  jal   sub_GAME_7F058C9C
+/* 0BB0F4 7F088704 0FC16451 */  jal   matrix_4x4_f32_to_s32
 /* 0BB0F8 7F088708 8FA50048 */   lw    $a1, 0x48($sp)
 /* 0BB0FC 7F08870C 0FC1644C */  jal   matrix_4x4_7F058C88
 /* 0BB100 7F088710 00000000 */   nop   
@@ -37578,7 +37578,7 @@ glabel sub_GAME_7F087E74
 /* 0BB140 7F088750 8D4A8BC0 */  lw    $t2, %lo(g_CurrentPlayer)($t2)
 /* 0BB144 7F088754 8FAF0160 */  lw    $t7, 0x160($sp)
 /* 0BB148 7F088758 8D44023C */  lw    $a0, 0x23c($t2)
-/* 0BB14C 7F08875C 0FC2300F */  jal   sub_GAME_7F08BD48
+/* 0BB14C 7F08875C 0FC2300F */  jal   bondviewTransformManyPosToViewMatrix
 /* 0BB150 7F088760 85E5000E */   lh    $a1, 0xe($t7)
 /* 0BB154 7F088764 0FC1644C */  jal   matrix_4x4_7F058C88
 /* 0BB158 7F088768 00000000 */   nop   
@@ -37628,7 +37628,7 @@ s32 sub_GAME_7F088618(void *arg0) {
     temp_s0 = (arg0 + 8);
     arg0->unk4 = osVirtualToPhysical(spB8);
     matrix_4x4_7F059694(&sp78, 0.0f, &0x43FA0004, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f);
-    sub_GAME_7F058C9C(&sp78, spBC);
+    matrix_4x4_f32_to_s32(&sp78, spBC);
     *temp_s0 = 0x1020040;
     temp_s0_2 = (temp_s0 + 8);
     temp_s0->unk4 = osVirtualToPhysical(spBC);
@@ -37760,7 +37760,7 @@ glabel sub_GAME_7F088618
 /* 0BD2A8 7F088778 0FC165A5 */  jal   matrix_4x4_7F059694
 /* 0BD2AC 7F08877C E7B20024 */   swc1  $f18, 0x24($sp)
 /* 0BD2B0 7F088780 27A40078 */  addiu $a0, $sp, 0x78
-/* 0BD2B4 7F088784 0FC16327 */  jal   sub_GAME_7F058C9C
+/* 0BD2B4 7F088784 0FC16327 */  jal   matrix_4x4_f32_to_s32
 /* 0BD2B8 7F088788 8FA500BC */   lw    $a1, 0xbc($sp)
 /* 0BD2BC 7F08878C 3C0F0102 */  lui   $t7, (0x01020040 >> 16) # lui $t7, 0x102
 /* 0BD2C0 7F088790 35EF0040 */  ori   $t7, (0x01020040 & 0xFFFF) # ori $t7, $t7, 0x40
@@ -37948,7 +37948,7 @@ glabel sub_GAME_7F088618
 /* 0BB2D0 7F0888E0 0FC166CF */  jal   matrix_4x4_7F059694
 /* 0BB2D4 7F0888E4 E7B20024 */   swc1  $f18, 0x24($sp)
 /* 0BB2D8 7F0888E8 27A40078 */  addiu $a0, $sp, 0x78
-/* 0BB2DC 7F0888EC 0FC16451 */  jal   sub_GAME_7F058C9C
+/* 0BB2DC 7F0888EC 0FC16451 */  jal   matrix_4x4_f32_to_s32
 /* 0BB2E0 7F0888F0 8FA500BC */   lw    $a1, 0xbc($sp)
 /* 0BB2E4 7F0888F4 3C0F0102 */  lui   $t7, (0x01020040 >> 16) # lui $t7, 0x102
 /* 0BB2E8 7F0888F8 35EF0040 */  ori   $t7, (0x01020040 & 0xFFFF) # ori $t7, $t7, 0x40
@@ -45603,12 +45603,12 @@ Gfx* bondviewGfxPlayerField5cMatrix(Gfx* gdl)
  * 
  * Address 0x7F08BD18.
  */
-void sub_GAME_7F08BD18(Mtxf *arg0)
+void bondviewTransformPosToViewMatrix(RenderPosView *arg0)
 {
     Mtxf sp18;
 
-    matrix_4x4_copy(arg0, (Mtxf *) &sp18);
-    sub_GAME_7F058C9C((Mtxf *) &sp18, arg0);
+    matrix_4x4_copy(&arg0->pos, (Mtxf *) &sp18);
+    matrix_4x4_f32_to_s32((Mtxf *) &sp18, &arg0->view);
 }
 
 
@@ -45627,23 +45627,23 @@ void sub_GAME_7F08BD18(Mtxf *arg0)
  * 
  * notes: two swapped instructions at start, then just regalloc.
  */
-void sub_GAME_7F08BD48(Mtxf *arg0, s32 arg1)
+void bondviewTransformManyPosToViewMatrix(RenderPosView *arg0, s32 arg1)
 {
     Mtxf sp38;
     s32 i;
     Mtxf *phi_s1;
 
-    for (i=0, phi_s1=arg0; i<arg1; i++, phi_s1++)
+    for (i=0, phi_s1=&arg0[i].pos; i<arg1; i++, phi_s1++)
     {
         // if you get this to match, see sub_GAME_7F08BE2C
         matrix_4x4_copy(phi_s1, (Mtxf *) &sp38);
-        sub_GAME_7F058C9C((Mtxf *) &sp38, &arg0[i]);
+        matrix_4x4_f32_to_s32((Mtxf *) &sp38, &arg0[i].view);
     }
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F08BD48
+glabel bondviewTransformManyPosToViewMatrix
 /* 0C0878 7F08BD48 27BDFF88 */  addiu $sp, $sp, -0x78
 /* 0C087C 7F08BD4C AFB40028 */  sw    $s4, 0x28($sp)
 /* 0C0880 7F08BD50 AFB30024 */  sw    $s3, 0x24($sp)
@@ -45663,7 +45663,7 @@ glabel sub_GAME_7F08BD48
 /* 0C08B4 7F08BD84 02402825 */   move  $a1, $s2
 /* 0C08B8 7F08BD88 00107180 */  sll   $t6, $s0, 6
 /* 0C08BC 7F08BD8C 01D42821 */  addu  $a1, $t6, $s4
-/* 0C08C0 7F08BD90 0FC16327 */  jal   sub_GAME_7F058C9C
+/* 0C08C0 7F08BD90 0FC16327 */  jal   matrix_4x4_f32_to_s32
 /* 0C08C4 7F08BD94 02402025 */   move  $a0, $s2
 /* 0C08C8 7F08BD98 26100001 */  addiu $s0, $s0, 1
 /* 0C08CC 7F08BD9C 1613FFF7 */  bne   $s0, $s3, .L7F08BD7C
@@ -45697,7 +45697,7 @@ void sub_GAME_7F08BDC4(Mtxf *arg0)
     sp20.m[3][0] -= g_CurrentPlayer->previous_model_pos.f[0];
     sp20.m[3][1] -= g_CurrentPlayer->previous_model_pos.f[1];
     sp20.m[3][2] -= g_CurrentPlayer->previous_model_pos.f[2];
-    sub_GAME_7F058C9C((Mtxf *) &sp20, arg0);
+    matrix_4x4_f32_to_s32((Mtxf *) &sp20, arg0);
 }
 
 
@@ -45712,7 +45712,7 @@ void sub_GAME_7F08BDC4(Mtxf *arg0)
  */
 void sub_GAME_7F08BE2C(Mtxf *arg0, s32 arg1)
 {
-    // combination of sub_GAME_7F08BDC4 and sub_GAME_7F08BD48
+    // combination of sub_GAME_7F08BDC4 and bondviewTransformManyPosToViewMatrix
 }
 #else
 GLOBAL_ASM(
@@ -45753,7 +45753,7 @@ glabel sub_GAME_7F08BE2C
 /* 0C09D8 7F08BEA8 E7B2006C */  swc1  $f18, 0x6c($sp)
 /* 0C09DC 7F08BEAC C446004C */  lwc1  $f6, 0x4c($v0)
 /* 0C09E0 7F08BEB0 46062201 */  sub.s $f8, $f4, $f6
-/* 0C09E4 7F08BEB4 0FC16327 */  jal   sub_GAME_7F058C9C
+/* 0C09E4 7F08BEB4 0FC16327 */  jal   matrix_4x4_f32_to_s32
 /* 0C09E8 7F08BEB8 E7A80070 */   swc1  $f8, 0x70($sp)
 /* 0C09EC 7F08BEBC 26100001 */  addiu $s0, $s0, 1
 /* 0C09F0 7F08BEC0 1613FFEA */  bne   $s0, $s3, .L7F08BE6C
@@ -45799,7 +45799,7 @@ void sub_GAME_7F08BEEC(Mtxf *arg0, s32 arg1)
         sp38.m[3][0] -= g_CurrentPlayer->previous_model_pos.f[0];
         sp38.m[3][1] -= g_CurrentPlayer->previous_model_pos.f[1];
         sp38.m[3][2] -= g_CurrentPlayer->previous_model_pos.f[2];
-        sub_GAME_7F058C9C((Mtxf *) &sp38, &arg0[i]);
+        matrix_4x4_f32_to_s32((Mtxf *) &sp38, &arg0[i]);
     }
 }
 #else
@@ -45844,7 +45844,7 @@ glabel sub_GAME_7F08BEEC
 /* 0C0AA4 7F08BF74 E7B20074 */  swc1  $f18, 0x74($sp)
 /* 0C0AA8 7F08BF78 C4460040 */  lwc1  $f6, 0x40($v0)
 /* 0C0AAC 7F08BF7C 46062201 */  sub.s $f8, $f4, $f6
-/* 0C0AB0 7F08BF80 0FC16327 */  jal   sub_GAME_7F058C9C
+/* 0C0AB0 7F08BF80 0FC16327 */  jal   matrix_4x4_f32_to_s32
 /* 0C0AB4 7F08BF84 E7A80078 */   swc1  $f8, 0x78($sp)
 /* 0C0AB8 7F08BF88 26310001 */  addiu $s1, $s1, 1
 /* 0C0ABC 7F08BF8C 1634FFE7 */  bne   $s1, $s4, .L7F08BF2C

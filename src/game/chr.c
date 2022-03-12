@@ -6998,7 +6998,7 @@ void chrGetD_8002CCB8(rgba_u8 *arg0)
 /**
  * Address 0x7F021BFC.
 */
-Gfx *chrRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
+Gfx *chrRenderProp(PropRecord *prop, Gfx *gdl, s32 withalpha)
 {
     ChrRecord *chr;
     Model *chrmodel;
@@ -7032,7 +7032,7 @@ Gfx *chrRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
 
     if ((spB4 < 0xFF) || (chr->chrflags & CHRFLAG_00020000))
     {
-        if (arg2 == 0)
+        if (withalpha == 0)
         {
             // nothing to do
             return gdl;
@@ -7044,7 +7044,7 @@ Gfx *chrRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
     }
     else
     {
-        if (arg2 == 0)
+        if (withalpha == 0)
         {
             spB8 = 1;
         }
@@ -7134,44 +7134,44 @@ Gfx *chrRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
 
             gdl = jlist.gdl;
 
-            if ((held_right_obj != NULL) && (( held_right_obj->state & ((u8)(1 << arg2) )) ))
+            if ((held_right_obj != NULL) && (( held_right_obj->state & ((u8)(1 << withalpha) )) ))
             {
-                gdl = sub_GAME_7F0A1A94(gdl, prop_held_right, arg2);
+                gdl = explosionRenderBulletImpactOnProp(gdl, prop_held_right, withalpha);
             }
 
-            if ((held_left_obj != NULL) && (( held_left_obj->state & ((u8)(1 << arg2) )) ))
+            if ((held_left_obj != NULL) && (( held_left_obj->state & ((u8)(1 << withalpha) )) ))
             {
-                gdl = sub_GAME_7F0A1A94(gdl, prop_held_left, arg2);
+                gdl = explosionRenderBulletImpactOnProp(gdl, prop_held_left, withalpha);
             }
 
-            if ((held_hat_obj != NULL) && (( held_hat_obj->state & ((u8)(1 << arg2) )) ))
+            if ((held_hat_obj != NULL) && (( held_hat_obj->state & ((u8)(1 << withalpha) )) ))
             {
-                gdl = sub_GAME_7F0A1A94(gdl, prop_held_hat, arg2);
+                gdl = explosionRenderBulletImpactOnProp(gdl, prop_held_hat, withalpha);
             }
 
-            if (arg2 != 0)
+            if (withalpha != 0)
             {
-                sub_GAME_7F08BD48(chr->model->unk0c, chr->model->obj->numMatrices);
+                bondviewTransformManyPosToViewMatrix(chr->model->render_pos, chr->model->obj->numMatrices);
 
                 if ((held_right_obj != NULL) && ((held_right_obj->runtime_bitflags & 0x800) == 0))
                 {
-                    sub_GAME_7F08BD48(held_right_obj->model->unk0c, held_right_obj->model->obj->numMatrices);
+                    bondviewTransformManyPosToViewMatrix(held_right_obj->model->render_pos, held_right_obj->model->obj->numMatrices);
                 }
 
                 if ((held_left_obj != NULL) && ((held_left_obj->runtime_bitflags & 0x800) == 0))
                 {
-                    sub_GAME_7F08BD48(held_left_obj->model->unk0c, held_left_obj->model->obj->numMatrices);
+                    bondviewTransformManyPosToViewMatrix(held_left_obj->model->render_pos, held_left_obj->model->obj->numMatrices);
                 }
 
                 if (held_hat_obj != NULL)
                 {
-                    sub_GAME_7F08BD48(held_hat_obj->model->unk0c, held_hat_obj->model->obj->numMatrices);
+                    bondviewTransformManyPosToViewMatrix(held_hat_obj->model->render_pos, held_hat_obj->model->obj->numMatrices);
                 }
             }
         }
     }
 
-    if (arg2 != 0)
+    if (withalpha != 0)
     {
         sub_GAME_7F06B248(chr->field_20);
         chr->field_20 = NULL;

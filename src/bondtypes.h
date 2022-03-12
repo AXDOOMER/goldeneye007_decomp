@@ -102,6 +102,13 @@ typedef union
     s32 unused;
 } Mtxf;
 
+typedef union
+{
+    Mtxf pos;
+    s32 view[4][4];
+} RenderPosView;
+
+
     #pragma region colour
 
     typedef struct rgba_u8
@@ -1210,7 +1217,7 @@ typedef union
             u8                Type;  /*0x01*/
             struct ChrRecord *chr;   /*0x04*/
             ModelFileHeader  *obj;   /*0x08 GE Name confirmed*/
-            Mtxf             *unk0c; /*0x0c*/
+            RenderPosView    *render_pos; /*0x0c*/
             void            **datas; // array of pointers to modeldata structs /*0x10*/
 
             f32               scale;              /*0x14*/

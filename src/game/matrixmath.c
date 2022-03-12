@@ -611,7 +611,7 @@ void matrix_4x4_7F058C88(void)
 //     result[index + 8] = GET_LOW_S16(var1, var2);
 #    define FTOFIX32(x) (long)((x)*D_80032310[0])
 
-void sub_GAME_7F058C9C(f32 mf[4][4], s32 ms[4][4])
+void matrix_4x4_f32_to_s32(f32 mf[4][4], s32 ms[4][4])
 {
     int  i, j;
     int  e1, e2;
@@ -679,7 +679,7 @@ void sub_GAME_7F058C9C(f32 mf[4][4], s32 ms[4][4])
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F058C9C
+glabel matrix_4x4_f32_to_s32
 /* 08D7CC 7F058C9C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 08D7D0 7F058CA0 AFB1000C */  sw    $s1, 0xc($sp)
 /* 08D7D4 7F058CA4 AFB30014 */  sw    $s3, 0x14($sp)
