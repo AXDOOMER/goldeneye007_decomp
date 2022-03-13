@@ -56,5 +56,7 @@ s32 sub_GAME_7F0B18B8(StandTile **, f32, f32, f32, s32, f32, f32);
 s32 getTileRoom(StandTile* tile);
 PropRecord *sub_GAME_7F0B1410(StandTile *arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, s32 arg5);
 s32 copy_tile_RGB_as_24bit(StandTile *tile, f32 p_x, f32 p_z, u8* rtn);
-
+s32 sub_GAME_7F0B2314(struct StandTile *arg0, f32 arg1, f32 arg2, f32 arg3, struct StandTileLocusCallbackRecord *arg4);
+s32 sub_GAME_7F0B239C(struct StandTileLocusCallbackRecord *arg0);
+s32 sub_GAME_7F0B23A4(struct StandTileLocusCallbackRecord *arg0);
 #endif

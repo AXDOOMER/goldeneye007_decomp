@@ -244,7 +244,7 @@ s32 D_80036444 = 0;
 //D:80036448
 s32 in_tank_flag = 0;
 //D:8003644C
-s32 D_8003644C = 0;
+struct PropRecord * D_8003644C = NULL;
 
 //D:80036450
 struct PropRecord *ptr_playerstank = NULL;
@@ -10574,6 +10574,7 @@ struct PropRecord *get_ptr_for_players_tank(void)
     {
         return ptr_playerstank;
     }
+
     return 0;
 }
 
@@ -10629,158 +10630,127 @@ f32 bondviewGet8003646CRad(void)
 
 
 #ifdef NONMATCHING
-s32 cal_player_collision(coord3d *arg0, void *arg1) {
-    ? sp3C;
-    s32 sp7C;
-    ? sp80;
-    f32 sp84;
-    f32 sp88;
-    ?32 sp8C;
-    ?32 sp90;
-    s32 sp94;
-    void *phi_v1;
 
-    // Node 0
+struct cal_player_collision_unk_stan
+{
+    s32 data[16];
+};
+
+/**
+ * Address 0x7F07CF8C.
+ * 
+ * decomp notes:
+ * compiles: yes
+ * stack resize: match
+ * instructions match: false
+ * resgisters match: false
+ * 
+ * decomp notes: The branch in the `if` logic is not behaving well, the instructions
+ * in the area are not in the correct order, and there's some regalloc before and after.
+*/
+s32 cal_player_collision(struct coord3d *arg0, StandTile **stan)
+{
+    s32 sp94;
+    StandTile *sp90;
+    s32 sp8C;
+    f32 sp88;
+    f32 sp84;
+    f32 sp80;
+    s32 sp7C;
+    struct cal_player_collision_unk_stan sp3C;
+
     sp94 = 0;
+
     if ((in_tank_flag == 1) && (dword_CODE_bss_800799B8 != 0))
     {
-        // Node 2
-        sp94 = sub_GAME_7F07CDD4(D_80036464, arg1);
+        sp94 = sub_GAME_7F07CDD4(arg0, D_80036464, stan);
     }
     else
     {
-        // Node 3
-        sp90 = (?32) g_CurrentPlayer->field_488;
+        sp90 = g_CurrentPlayer->field_488.current_tile_ptr;
+
         if (obj_collision_flag != 0)
         {
-            // Node 4
-            sp8C = 0x1f;
+            sp8C = 0x1F;
         }
         else
         {
-            // Node 5
             sp8C = 0;
         }
-        // Node 6
-        bondviewCollisionRadiusRelated(g_CurrentPlayer->field_A8, &sp80, &sp88, &sp84);
-        if (D_8003644C != 0)
+
+        bondviewCollisionRadiusRelated(g_CurrentPlayer->prop, &sp80, &sp88, &sp84);
+
+        if (D_8003644C != NULL)
         {
-            // Node 7
             sub_GAME_7F03D058(D_8003644C, 0);
         }
-        // Node 8
-        sub_GAME_7F03D058(g_CurrentPlayer->field_A8, 0);
-        sp7C = sub_GAME_7F0B2314(&sp90, *arg0, arg0->unk8, sp80, &sp3C);
+
+        sub_GAME_7F03D058(g_CurrentPlayer->prop, 0);
+        sp7C = sub_GAME_7F0B2314(&sp90, arg0->f[0], arg0->f[2], sp80, &sp3C);
+        
         if (sub_GAME_7F0B239C(&sp3C) != 0)
         {
-            // Node 9
             g_CurrentPlayer->autocrouchpos = 0;
         }
-        // Node 10
-        if ((sub_GAME_7F0B0E24(&sp90, g_CurrentPlayer->field_48C, g_CurrentPlayer->field_494, *arg0, (f32) arg0->unk8, sp8C, sp88, sp84, 0.0f, 1.0f) != 0) && (sub_GAME_7F0B18B8(&sp90, *arg0, arg0->unk8, sp80, sp8C, sp88, sp84) < 0))
+        
+        do {
+        if ((sub_GAME_7F0B0E24(
+                &sp90,
+                g_CurrentPlayer->field_488.collision_position.f[0],
+                g_CurrentPlayer->field_488.collision_position.f[2],
+                arg0->f[0],
+                arg0->f[2],
+                sp8C,
+                sp88,
+                sp84,
+                0.0f,
+                1.0f) != 0)
+// begin decomp problem area
+            && (sub_GAME_7F0B18B8(&sp90, arg0->f[0], arg0->f[2], sp80, sp8C, sp88, sp84) < 0))
         {
-            // Node 12
-            if ((-100.0f == g_CurrentPlayer->ducking_height_offset) || (sp7C < 0))
+            if ((g_CurrentPlayer->ducking_height_offset == -100.0f) || (sp7C < 0))
             {
-                // Node 14
-                if ((sub_GAME_7F0B23A4(&sp3C) == 0) && (sub_GAME_7F0B26B8(&sp90, *arg0, arg0->unk8, sp80, (f32) (g_CurrentPlayer->field_490 + 175.0f)) >= 0))
+                if ((sub_GAME_7F0B23A4(&sp3C) == 0) 
+                    && (sub_GAME_7F0B26B8(&sp90, arg0->f[0], arg0->f[2], sp80, g_CurrentPlayer->field_488.collision_position.f[1] + 175.0f) >= 0))
                 {
-                    // Node 16
-                    // Node 19
-                    phi_v1 = g_CurrentPlayer;
-                    if (ptr_playerstank == 0)
-                    {
-                        // Node 20
-                        phi_v1 = g_CurrentPlayer;
-                        if (stanSavedColl_posData != 0)
-                        {
-                            // Node 21
-                            phi_v1 = g_CurrentPlayer;
-                            if (*stanSavedColl_posData == 1)
-                            {
-                                // Node 22
-                                phi_v1 = g_CurrentPlayer;
-                                if (stanSavedColl_posData->unk4->unk3 == &D_8003644C)
-                                {
-                                    // Node 23
-                                    D_8003644C = (void *) stanSavedColl_posData;
-                                    phi_v1 = g_CurrentPlayer;
-                                }
-                            }
-                        }
-                    }
+                    // don't break 
                 }
                 else
                 {
-                    // Node 17
-                    *arg1 = sp90;
+                    *stan = sp90;
                     sp94 = 1;
-                    phi_v1 = g_CurrentPlayer;
-                }
-            }
-            else
-            {
-                // Node 19
-                phi_v1 = g_CurrentPlayer;
-                if (ptr_playerstank == 0)
-                {
-                    // Node 20
-                    phi_v1 = g_CurrentPlayer;
-                    if (stanSavedColl_posData != 0)
-                    {
-                        // Node 21
-                        phi_v1 = g_CurrentPlayer;
-                        if (*stanSavedColl_posData == 1)
-                        {
-                            // Node 22
-                            phi_v1 = g_CurrentPlayer;
-                            if (stanSavedColl_posData->unk4->unk3 == &D_8003644C)
-                            {
-                                // Node 23
-                                D_8003644C = (void *) stanSavedColl_posData;
-                                phi_v1 = g_CurrentPlayer;
-                            }
-                        }
-                    }
+
+                    if (g_CurrentPlayer)
+                    {}
+
+                    // skip check to set D_8003644C
+                    break;
                 }
             }
         }
-        else
+
+        if (ptr_playerstank == NULL)
         {
-            // Node 18
-            // Node 19
-            phi_v1 = g_CurrentPlayer;
-            if (ptr_playerstank == 0)
+            if ((stanSavedColl_posData != NULL)
+                && (stanSavedColl_posData->type == PROP_TYPE_OBJ)
+                && (stanSavedColl_posData->obj->type == PROPDEF_TANK))
             {
-                // Node 20
-                phi_v1 = g_CurrentPlayer;
-                if (stanSavedColl_posData != 0)
-                {
-                    // Node 21
-                    phi_v1 = g_CurrentPlayer;
-                    if (*stanSavedColl_posData == 1)
-                    {
-                        // Node 22
-                        phi_v1 = g_CurrentPlayer;
-                        if (stanSavedColl_posData->unk4->unk3 == &D_8003644C)
-                        {
-                            // Node 23
-                            D_8003644C = (void *) stanSavedColl_posData;
-                            phi_v1 = g_CurrentPlayer;
-                        }
-                    }
-                }
+                D_8003644C = stanSavedColl_posData;
             }
         }
-        // Node 24
-        sub_GAME_7F03D058(phi_v1->unkA8, 1);
+
+        } while (0);
+
+// end decomp problem area
+
+        sub_GAME_7F03D058(g_CurrentPlayer->prop, 1);
+
         if (D_8003644C != 0)
         {
-            // Node 25
             sub_GAME_7F03D058(D_8003644C, 1);
         }
     }
-    // Node 26
+
     return sp94;
 }
 #else
@@ -26063,10 +26033,6 @@ struct move_bond_collision {
     struct coord3d sp1A8;
 };
 
-// arg4: struct move_bond_temp_struct
-void sub_GAME_7F0B2314(struct StandTile *arg0, f32 arg1, f32 arg2, f32 arg3, void *arg4);
-// arg0: struct move_bond_temp_struct
-s32 sub_GAME_7F0B23A4(void *arg0);
 // arg2: move_bond_collision
 void sub_GAME_7F0B2420(struct coord3d *arg0, s32 *arg1, void *arg2);
 

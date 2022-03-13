@@ -2790,7 +2790,7 @@ extern s32 D_80036444;
 //D:80036448
 extern s32 in_tank_flag;
 //D:8003644C
-extern s32 D_8003644C;
+extern struct PropRecord *D_8003644C;
 
 //D:80036450
 extern struct PropRecord *ptr_playerstank;
