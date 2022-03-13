@@ -43657,25 +43657,25 @@ glabel initialize_door
 
 //todo: Code matches however, some data is tied to an earlier func
 #ifdef NONMATCHING
-s32 sub_GAME_7F0537B8(f32 vol, f32 min, f32 max) //#MATCH
+s32 sub_GAME_7F0537B8(f32 distance, f32 min, f32 max) //#MATCH
 {
     s32 retval; //var is needed
 
-    if (vol <= 200.0f)
+    if (distance <= 200.0f)
     {
         retval = SHRT_MAX;
     }
-    else if (max <= vol)
+    else if (max <= distance)
     {
         retval = 0.0f;
     }
-    else if (min <= vol)
+    else if (min <= distance)
     {
-        retval = ((max - vol) * 10000.0f) / (max - min);
+        retval = ((max - distance) * 10000.0f) / (max - min);
     }
     else
     {
-        retval = SHRT_MAX - (s32)((sqrtf(vol - 200.0f) * SHRT_MAX) / sqrtf(min - 200.0f));
+        retval = SHRT_MAX - (s32)((sqrtf(distance - 200.0f) * SHRT_MAX) / sqrtf(min - 200.0f));
     }
     return retval;
 }
@@ -43751,13 +43751,12 @@ glabel sub_GAME_7F0537B8
 
 
 #ifdef NONMATCHING
-// registers and stack are wrong
-// instructions match
-s32 sub_GAME_7F053894(coord3d *pos, f32 high, f32 low)
+// some sp offsets are wrong, the rest matches
+s32 sub_GAME_7F053894(coord3d *pos, f32 low, f32 high)
 {
     PropRecord *prop;
     s32 index;
-    f32 longest_distance = low;
+    f32 shortest_distance = high;
     f32 diffx;
     f32 diffy;
     f32 diffz;
@@ -43772,12 +43771,12 @@ s32 sub_GAME_7F053894(coord3d *pos, f32 high, f32 low)
         diffz = prop->pos.z - pos->z;
         distance = sqrtf(diffx * diffx + diffy * diffy + diffz * diffz);
 
-        if (distance > longest_distance)
+        if (distance < shortest_distance)
         {
-            longest_distance = distance;
+            shortest_distance = distance;
         }
     }
-    return sub_GAME_7F0537B8(longest_distance, high, low);
+    return sub_GAME_7F0537B8(shortest_distance, low, high);
 }
 #else
 GLOBAL_ASM(
