@@ -44,9 +44,9 @@ struct collision434 {
     /**
      * Offset 0x10.
      */
-    s32 field_10;
-    s32 field_14;
-    s32 field_18;
+    f32 field_10;
+    f32 field_14;
+    f32 field_18;
 
     /**
      * Some kind of alternative to pos3 (in player struct).
@@ -554,12 +554,24 @@ struct player
    * How long Bond has been running
   */
   /* 0x017c */ s32 speedmaxtime60;
+  
   coord3d bondshotspeed; //0x180
+
+  // offset 0x18c
   f32 bondfadetime60;
+
+  // offset 0x190
   f32 bondfadetimemax60;
+
+  // offset 0x194
   f32 bondfadefracold;
+
+  // offset 0x198
   f32 bondfadefracnew;
+
+  // offset 0x19c
   f32 bondbreathing;
+  
   s32 field_1A0;
   s32 field_1A4;
   s32 field_1A8;
@@ -2781,7 +2793,7 @@ extern s32 in_tank_flag;
 extern s32 D_8003644C;
 
 //D:80036450
-extern s32 ptr_playerstank;
+extern struct PropRecord *ptr_playerstank;
 
 /**
  * Related to ptr_playerstank.
@@ -2962,12 +2974,7 @@ D:800367EC                     .byte 0
 D:800367ED                     .byte 0, 0, 0x14
 D:800367F0                     .word 0x32
 */
-//D:800367F4
-extern s32 D_800367F4;
-//D:800367F8
-extern s32 D_800367F8;
-//D:800367FC
-extern s32 D_800367FC;
+
 //D:80036800
 extern s32 D_80036800;
 //D:80036804
@@ -3175,5 +3182,5 @@ void     SurroundWithExplosions(int delay);
 s32 check_watch_page_transistion_running(void);
 f32 bondviewWatchAnimationRelated(void);
 struct coord3d *get_BONDdata_field408(void);
-
+struct PropRecord *get_ptr_for_players_tank(void);
 #endif

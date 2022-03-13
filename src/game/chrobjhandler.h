@@ -40,10 +40,10 @@ extern f32 F_80030B24;
 extern f32 g_SoloAmmoMultiplier;
 
 /**
- * @param arg0: entity pointer, maybe PropModel
+ * @param arg0: Prop for tank
  * @param arg1: maybe flags
  */
-void                 sub_GAME_7F04F218(s32 arg0, s32 arg1);
+void                 sub_GAME_7F04F218(struct PropRecord *arg0, s32 arg1);
 
 void                 objFreePermanently(struct ObjectRecord *obj, bool freeprop);
 
