@@ -455,7 +455,7 @@ _AI_CMD(
 
 _AI_CMD_POLYMORPH(SetReturnAiList(GAILIST_STANDARD_GUARD),
                   JUMPTO_THEN_GUARD,
-                  (CHR_SELF, (!isAiBGID(AI_LIST_ID) ? AI_LIST_ID : AI_ERR_SUB)),
+                  (CHR_SELF, (!isBGAIListID(AI_LIST_ID) ? AI_LIST_ID : AI_ERR_SUB)),
                   (AI_LIST_ID))
 
 #undef DESCRIPTION
@@ -470,7 +470,7 @@ _AI_CMD_POLYMORPH(SetReturnAiList(GAILIST_STANDARD_GUARD),
 
 _AI_CMD_POLYMORPH(SetReturnAiList(AI_LIST_ID),
                   JUMPTO_THEN_LOOP,
-                  (CHR_SELF, (!isAiBGID(AI_LIST_ID) ? AI_LIST_ID : AI_ERR_SUB)),
+                  (CHR_SELF, (!isBGAIListID(AI_LIST_ID) ? AI_LIST_ID : AI_ERR_SUB)),
                   (AI_LIST_ID))
 
 #undef DESCRIPTION
@@ -485,7 +485,7 @@ _AI_CMD_POLYMORPH(SetReturnAiList(AI_LIST_ID),
 
 _AI_CMD_POLYMORPH(,
                   JumpTo,
-                  (CHR_SELF, (!isAiBGID(AI_LIST_ID) ? AI_LIST_ID : AI_ERR_SUB)),
+                  (CHR_SELF, (!isBGAIListID(AI_LIST_ID) ? AI_LIST_ID : AI_ERR_SUB)),
                   (AI_LIST_ID))
 
 #undef DESCRIPTION
@@ -500,7 +500,7 @@ _AI_CMD_POLYMORPH(,
 
 _AI_CMD_POLYMORPH(,
                   SetBondsAiList,
-                  (CHR_BOND_CINEMA, (!isAiBGID(AI_LIST_ID) ? AI_LIST_ID : AI_ERR_NOTCHR)),
+                  (CHR_BOND_CINEMA, (!isBGAIListID(AI_LIST_ID) ? AI_LIST_ID : AI_ERR_NOTCHR)),
                   (AI_LIST_ID))
 
 #undef DESCRIPTION
@@ -519,7 +519,7 @@ _AI_CMD_POLYMORPH(\
                    DEFER(RPAREN)() DEFER(LPAREN)() AI_ERR_NO_THIS   DEFER(RPAREN)() DEFER(LPAREN)() DEFER(LPAREN)() \
                   SetReturnAiList(THIS) ,\
                   CALL,\
-                  (CHR_SELF, (!isAiBGID(AI_LIST_ID) && isSubroutine(AI_LIST_ID) ? AI_LIST_ID : AI_ERR_NOTSUB)) DEFER2(RPAREN)() DEFER2(RPAREN)() DEFER2(COMMA)(),\
+                  (CHR_SELF, (!isBGAIListID(AI_LIST_ID) && isSubroutine(AI_LIST_ID) ? AI_LIST_ID : AI_ERR_NOTSUB)) DEFER2(RPAREN)() DEFER2(RPAREN)() DEFER2(COMMA)(),\
                   (AI_LIST_ID)\
 )
 

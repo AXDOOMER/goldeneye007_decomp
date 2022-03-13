@@ -793,7 +793,7 @@ AIRecord *ailistFindById(s32 ID)
 {
     s32 i;
 
-    if (!isAiGlobalID(ID))
+    if (!isGlobalAIListID(ID))
     {
         if (g_chraiCurrentSetup.ailists)
         {
@@ -3865,6 +3865,10 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                         u8 val[];
                     } *ai   = AiListp + Offset;
                     s16 vol = CharArrayTo16(ai->val,0);
+                    /*
+                     * "ai_ifmusicqueueemptyjumpf : %s, State=%x (getlvleveltime60=%f)\n"
+                     */
+
                     if ((ai->slotID >= 0) && (ai->slotID < 8) && (sfx_related[ai->slotID].Volume2 < vol))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
@@ -4468,10 +4472,6 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     Offset += AI_MusicPlaySlot_LENGTH;
                     musicPlaySlot((s8)ai->val[0], ai->val[1], ai->val[2]);
 #ifdef DEBUG
-                    /*
-                     * GE doesnt have this command, but it shows format of commands
-                     * "ai_ifmusicqueueemptyjumpf : %s, State=%x (getlvleveltime60=%f)\n"
-                     */
                     osSyncPrintf("ai: enery tune on (%d, %d, %d)\n", ai->val[0], ai->val[1], ai->val[2]);
 #endif
                     break;
@@ -4586,11 +4586,3 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
     osSyncPrintf("SERIOUS AI ERROR!!!!!! Null ailist!\n");
 #endif
 }             //ai()
-
-
-
-
-
-
-
-
