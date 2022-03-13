@@ -601,6 +601,11 @@ void sub_GAME_7F084360(void);
 void sub_GAME_7F07EAF0(void);
 void sub_GAME_7F07EC54(void);
 void sub_GAME_7F081478(void);
+void sub_GAME_7F07C7B4(void);
+s32 sub_GAME_7F07CAC8(struct coord3d *arg0, struct StandTile *arg1, f32 arg2, f32 *arg3, f32 *arg4);
+s32 sub_GAME_7F07CDA8(struct coord3d *arg0, struct StandTile *arg1, f32 arg2);
+s32 sub_GAME_7F07CDD4(struct coord3d *arg0, f32 arg1, struct StandTile **arg2);
+s32 cal_player_collision(struct coord3d *arg0, struct StandTile **stan);
 
 // end forward declarations
 
@@ -10506,28 +10511,13 @@ glabel sub_GAME_7F07CAC8
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F07CDA8(? arg2) {
-    // Node 0
-    return sub_GAME_7F07CAC8(arg2, arg2, 0, 0);
+/**
+ * Address 0x7F07CDA8.
+*/
+s32 sub_GAME_7F07CDA8(struct coord3d *arg0, StandTile *arg1, f32 arg2)
+{
+    return sub_GAME_7F07CAC8(arg0, arg1, arg2, NULL, NULL);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F07CDA8
-/* 0B18D8 7F07CDA8 44866000 */  mtc1  $a2, $f12
-/* 0B18DC 7F07CDAC 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0B18E0 7F07CDB0 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0B18E4 7F07CDB4 44066000 */  mfc1  $a2, $f12
-/* 0B18E8 7F07CDB8 AFA00010 */  sw    $zero, 0x10($sp)
-/* 0B18EC 7F07CDBC 0FC1F2B2 */  jal   sub_GAME_7F07CAC8
-/* 0B18F0 7F07CDC0 00003825 */   move  $a3, $zero
-/* 0B18F4 7F07CDC4 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0B18F8 7F07CDC8 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0B18FC 7F07CDCC 03E00008 */  jr    $ra
-/* 0B1900 7F07CDD0 00000000 */   nop
-)
-#endif
 
 
 
@@ -10677,7 +10667,7 @@ f32 bondviewGet8003646CRad(void)
 
 
 
-s32 cal_player_collision(coord3d *arg0, void *arg1);
+
 
 #ifdef NONMATCHING
 s32 cal_player_collision(coord3d *arg0, void *arg1) {
@@ -11228,14 +11218,14 @@ glabel cal_player_collision
  */
 s32 bondviewUpdatePlayerCollision(coord3d *arg0, coord3d *arg1, coord3d *arg2)
 {
-    s32 sp1C;
+    struct StandTile *sp1C;
 
     // resets stan global collision variables
     sub_GAME_7F0B1CC4();
 
     if (cal_player_collision(arg0, &sp1C) != 0)
     {
-        g_CurrentPlayer->field_488.current_tile_ptr = (StandTile *)sp1C;
+        g_CurrentPlayer->field_488.current_tile_ptr = sp1C;
         g_CurrentPlayer->field_488.collision_position.f[0] = arg0->f[0];
         g_CurrentPlayer->field_488.collision_position.f[2] = arg0->f[2];
 
@@ -26134,6 +26124,13 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
 
     // boost sideways
     f32 sp388;
+
+    f32 sp358;
+
+    // sp 0x300
+    struct ObjectRecord *tank_obj;
+    struct coord3d sp2F4;
+    Mtxf sp2B4;
     f32 sp2AC;
     Mtxf sp268;
     struct coord3d sp25C;
@@ -26160,7 +26157,8 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
     f32 sp34;
     f32 sp30;
 
-    struct ObjectRecord *tank_obj;
+    f32 tank_tick_increment;
+    f32 tank_tick_last;
     
     s32 phi_a1;
     s32 phi_a2;
@@ -26291,19 +26289,264 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
 
     if (in_tank_flag == 1)
     {
+        temp_f2_3 = g_CurrentPlayer->speedtheta * g_GlobalTimerDelta * 0.017453292f * 3.5f;
+        temp_f0_3 = D_80036464 + temp_f2_3;
+        phi_f0 = temp_f0_3;
+        if (temp_f0_3 >= 6.2831855f)
+        {
+            phi_f0 = temp_f0_3 - 6.2831855f;
+        }
+        phi_f0_2 = phi_f0;
+        if (phi_f0 < 0.0f)
+        {
+            phi_f0_2 = phi_f0 + 6.2831855f;
+        }
+        sp358 = temp_f2_3;
+        sp35C = phi_f0_2;
+        if (sub_GAME_7F07CAC8(
+            6.2831855f,
+            &g_CurrentPlayer->field_488.collision_position,
+            g_CurrentPlayer->field_488.current_tile_ptr,
+            phi_f0_2,
+            &sp374,
+            &sp368) != 0)
+        {
+            D_80036464 = sp35C;
+        }
+        else
+        {
+            sp31C = -1.0f;
+            sp304 = -1.0f;
+            getCollisionEdge_maybe(&unksp348, &unksp33C);
+            temp_f2_4 = unksp33C - unksp348;
+            temp_f14_2 = sp344 - sp350;
+            sp338 = temp_f2_4;
+            sp334 = temp_f14_2;
+            temp_f16_2 = 1.0f / sqrtf((temp_f2_4 * temp_f2_4) + (temp_f14_2 * temp_f14_2));
+            temp_t0_7 = g_CurrentPlayer;
+            temp_f14_3 = temp_f14_2 * temp_f16_2;
+            temp_f12 = -(temp_f2_4 * temp_f16_2);
+            sp320 = temp_f12;
+            sp324 = temp_f14_3;
+            sp48 = temp_t0_7->field_488.collision_position.f[2];
+            sp44 = temp_t0_7->field_488.collision_position.f[0];
+            temp_f18_2 = ((sp48 - sp370) * temp_f12) + ((sp44 - sp368) * temp_f14_3);
+            phi_f18 = temp_f18_2;
+            if (temp_f18_2 < 0.0f)
+            {
+                sp324 = -temp_f14_3;
+                sp320 = -temp_f12;
+                phi_f18 = -temp_f18_2;
+            }
+            temp_f0_4 = ((sp48 - sp350) * sp320) + ((sp44 - unksp348) * sp324);
+            if (temp_f0_4 < phi_f18)
+            {
+                sp31C = phi_f18 - temp_f0_4;
+            }
+            temp_f2_5 = sp368 - sp374;
+            temp_f14_4 = sp370 - sp37C;
+            sp338 = temp_f2_5;
+            sp334 = temp_f14_4;
+            temp_f16_3 = 1.0f / sqrtf((temp_f2_5 * temp_f2_5) + (temp_f14_4 * temp_f14_4));
+            temp_t0_8 = g_CurrentPlayer;
+            temp_f14_5 = temp_f14_4 * temp_f16_3;
+            temp_f12_2 = -(temp_f2_5 * temp_f16_3);
+            sp308 = temp_f12_2;
+            sp30C = temp_f14_5;
+            sp48 = temp_t0_8->field_488.collision_position.f[2];
+            sp44 = temp_t0_8->field_488.collision_position.f[0];
+            temp_f18_3 = ((sp48 - sp370) * temp_f12_2) + ((sp44 - sp368) * temp_f14_5);
+            phi_f18_2 = temp_f18_3;
+            if (temp_f18_3 < 0.0f)
+            {
+                sp308 = -temp_f12_2;
+                sp30C = -temp_f14_5;
+                phi_f18_2 = -temp_f18_3;
+            }
+            temp_f0_5 = ((sp48 - sp350) * sp308) + ((sp44 - unksp348) * sp30C);
+            temp_f2_6 = ((sp48 - sp344) * sp308) + ((sp44 - unksp33C) * sp30C);
+            phi_f0_3 = temp_f0_5;
+            if (temp_f2_6 < temp_f0_5)
+            {
+                phi_f0_3 = temp_f2_6;
+            }
+            if (phi_f0_3 < phi_f18_2)
+            {
+                sp304 = phi_f18_2 - phi_f0_3;
+            }
+            if ((sp304 >= 0.0f) && ((sp304 < sp31C) || (sp31C < 0.0f)))
+            {
+                sp324 = sp30C;
+                sp320 = sp308;
+                sp31C = sp304;
+            }
+            if (sp31C >= 0.0f)
+            {
+                temp_a0 = &sp3AC;
+                sp3AC = sp31C * sp324 * 1.01f;
+                sp3B4 = sp31C * sp320 * 1.01f;
+                sub_GAME_7F07D960(temp_a0, 1);
+                temp_t0_9 = g_CurrentPlayer;
+                sp3AC = 0.0f;
+                sp3B4 = 0.0f;
+                if (sub_GAME_7F07CAC8((bitwise f32) &temp_t0_9->field_488.collision_position, (struct coord3d *) temp_t0_9->field_488.current_tile_ptr, (bitwise StandTile *) sp35C, (bitwise f32) &sp374, &sp368) != 0)
+                {
+                    D_80036464 = sp35C;
+                }
+                else
+                {
+                    sp358 = 0.0f;
+                }
+            }
+            else
+            {
+                sp358 = 0.0f;
+            }
+        }
+        temp_f12_3 = D_80036474;
+        D_80036484 += D_80036488;
+        temp_f0_6 = D_80036484;
+        temp_f16_4 = temp_f12_3;
+        phi_f14 = 6.2831855f;
+        if (temp_f0_6 >= 6.2831855f)
+        {
+            D_80036484 = temp_f0_6 - 6.2831855f;
+        }
+        phi_f0_4 = D_80036484;
+        if (D_80036484 < 0.0f)
+        {
+            D_80036484 += 6.2831855f;
+            phi_f0_4 = D_80036484;
+        }
+        temp_f2_7 = (g_CurrentPlayer->speedtheta * 3.5f * 0.017453292f * 4.0f) + phi_f0_4;
+        phi_f2 = temp_f2_7;
+        if (temp_f2_7 < 0.0f)
+        {
+            phi_f2 = temp_f2_7 + 6.2831855f;
+        }
+        phi_f2_2 = phi_f2;
+        if (phi_f2 >= 6.2831855f)
+        {
+            phi_f2_2 = phi_f2 - 6.2831855f;
+        }
+        temp_f0_7 = phi_f2_2 - temp_f12_3;
+        phi_f2_3 = phi_f2_2;
+        if (temp_f0_7 >= 3.1415927f)
+        {
+            phi_f2_3 = phi_f2_2 - 6.2831855f;
+        }
+        else if (temp_f0_7 < -3.1415927f)
+        {
+            phi_f2_3 = phi_f2_2 + 6.2831855f;
+        }
+        temp_a0_2 = g_ClockTimer;
+        if (temp_a0_2 > 0)
+        {
+            temp_f18_4 = 0.92f * D_80036478;
+            phi_f18_3 = temp_f18_4;
+            phi_v0_2 = 1;
+            phi_f18_4 = temp_f18_4;
+            phi_f14 = 0.92f;
+            if (temp_a0_2 > 1)
+            {
+                do
+                {
+                    temp_v0_5 = phi_v0_2 + 1;
+                    D_80036478 = phi_f18_3 + phi_f2_3;
+                    temp_f18_5 = 0.92f * D_80036478;
+                    phi_f18_3 = temp_f18_5;
+                    phi_v0_2 = temp_v0_5;
+                    phi_f18_4 = temp_f18_5;
+                } while (temp_v0_5 < temp_a0_2);
+            }
+            D_80036478 = phi_f18_4 + phi_f2_3;
+        }
+        D_80036474 = D_80036478 * 0.07999998f;
+        temp_f12_4 = D_80036474;
+        if (temp_f12_4 >= 6.2831855f)
+        {
+            D_80036474 = temp_f12_4 - 6.2831855f;
+            D_80036478 = D_80036474 / 0.07999998f;
+        }
+        if (D_80036474 < 0.0f)
+        {
+            D_80036474 += 6.2831855f;
+            D_80036478 = D_80036474 / 0.07999998f;
+        }
+        sp354 = temp_f16_4;
+        
+        if (sub_GAME_7F07CDA8(
+            D_80036474,
+            phi_f14,
+            g_CurrentPlayer + 0x48C,
+            g_CurrentPlayer->field_488.current_tile_ptr,
+            D_80036464,
+            &D_80036474) == 0)
+        {
+            D_80036474 = temp_f16_4;
+            D_80036484 = temp_f16_4;
+            D_80036478 = D_80036474 / 0.07999998f;
+        }
+
+        if (ptr_playerstank != NULL)
+        {
+            tank_obj = ptr_playerstank->obj;
+
+            sp2F4.f[1] = 0.0f;
+            sp2F4.f[0] = flt_CODE_bss_800799A8;
+            sp2F4.f[2] = flt_CODE_bss_800799B0;
+
+            matrix_4x4_set_rotation_around_y(sp358, &sp2B4);
+            matrix_4x4_rotate_vector_in_place(&sp2B4, &sp2F4);
+            sub_GAME_7F07C7B4();
+
+            sp2F4.f[1] = 0.0f;
+            sp2F4.f[0] = flt_CODE_bss_800799A8 - sp2F4.f[0];
+            sp2F4.f[2] = flt_CODE_bss_800799B0 - sp2F4.f[2];
+            
+            matrix_4x4_set_rotation_around_y(6.2831855f - D_80036464, &sp2B4);
+            matrix_scalar_multiply(tank_obj->model->scale, &sp2B4);
+            matrix_4x4_rotate_vector_in_place(&sp2B4, &sp2F4);
+            sub_GAME_7F07D960(&sp2F4, 1);
+        }
+
+        if ((g_ClockTimer > 0) && (g_ClockTimer > 0))
+        {
+            tank_tick_increment = D_80036488 / g_GlobalTimerDelta;
+            tank_tick_last = 0.92f * D_8003647C;
+            
+            for (i=1; i<g_ClockTimer; i++)
+            {
+                D_8003647C = tank_tick_last + tank_tick_increment;
+                tank_tick_last = 0.92f * D_8003647C;
+            }
+
+            D_8003647C = tank_tick_last + tank_tick_increment;
+        }
+
+        g_CurrentPlayer->vv_theta = ((D_80036464 + D_80036474 + (g_CurrentPlayer->speedtheta * 3.5f * 0.017453292f * 4.0f) + (D_8003647C * 0.07999998f * 4.0f)) * 360.0f) / 6.2831855f;
+
+        while (g_CurrentPlayer->vv_theta < 0.0f)
+        {
+            g_CurrentPlayer->vv_theta += 360.0f;
+        }
+        while (g_CurrentPlayer->vv_theta >= 360.0f)
+        {
+            g_CurrentPlayer->vv_theta -= 360.0f;
+        }
     }
     else
     {
-        temp_f0_12 = g_CurrentPlayer->vv_theta + (g_CurrentPlayer->speedtheta * g_GlobalTimerDelta * 3.5f);
-        while (temp_f0_12 < 0.0f)
+        g_CurrentPlayer->vv_theta = g_CurrentPlayer->vv_theta + (g_CurrentPlayer->speedtheta * g_GlobalTimerDelta * 3.5f);
+        
+        while (g_CurrentPlayer->vv_theta < 0.0f)
         {
-            temp_f0_12 += 360.0f;
+            g_CurrentPlayer->vv_theta += 360.0f;
         }
-        while (temp_f0_12 >= 360.0f)
+        while (g_CurrentPlayer->vv_theta >= 360.0f)
         {
-            temp_f0_12 -= 360.0f;
+            g_CurrentPlayer->vv_theta -= 360.0f;
         }
-        g_CurrentPlayer->vv_theta = temp_f0_12;
     }
     
     sub_GAME_7F081790();
