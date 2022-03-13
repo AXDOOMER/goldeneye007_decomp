@@ -5940,12 +5940,9 @@ Gfx *sub_GAME_7F0A0AB4(Gfx *arg0)
                  * gSPVertex(Gfx *gdl, Vtx *v, u32 n, u32 v0)
                 */
                 gSPVertex(arg0++, osVirtualToPhysical((void*)ptr_scorch_buf[i].vertex_list), 4, 0);
-
-                {
-                    gSP2Triangles(arg0++,
-                                  0, 1, 2, 0,
-                                  0, 2, 3, 0);
-                }
+                gSP2Triangles(arg0++,
+                                0, 1, 2, 0,
+                                0, 2, 3, 0);
             }
         }
 
