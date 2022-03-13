@@ -26135,6 +26135,11 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
     // boost sideways
     f32 sp388;
     f32 sp2AC;
+    Mtxf sp268;
+    struct coord3d sp25C;
+    f32 sp258;
+    f32 sp254;
+    f32 sp244;
     f32 sp220;
     f32 sp21C;
     f32 sp218;
@@ -26154,8 +26159,11 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
     f32 sp48;
     f32 sp34;
     f32 sp30;
+
+    struct ObjectRecord *tank_obj;
     
     s32 phi_a1;
+    s32 phi_a2;
 
     f32 phi_f12_8;
     f32 temp_f0_2;
@@ -26174,6 +26182,14 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
     f32 temp_f0_29;
     f32 temp_f14_12;
     f32 temp_f2_20;
+    f32 temp_f0_19;
+    f32 temp_f2_13;
+    f32 temp_f0_20;
+    f32 temp_f0_18;
+    f32 temp_f2_12;
+    f32 phi_f2_6;
+    f32 phi_at;
+
     s32 i;
 
     sp3AC.f[0] = D_800367F4.f[0];
@@ -26319,77 +26335,74 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
 
     if (in_tank_flag == 1)
     {
-        //dword_CODE_bss_800799B8 = dword_CODE_bss_800799B8;
         if (dword_CODE_bss_800799B8 == 0)
         {
-            temp_v1_3 = ptr_playerstank;
-            if (temp_v1_3 != 0)
+            if (ptr_playerstank != NULL)
             {
-                temp_s0 = temp_v1_3->obj;
+                tank_obj = ptr_playerstank->obj;
                 matrix_4x4_set_rotation_around_y(6.2831855f - D_80036464, &sp268);
-                matrix_scalar_multiply(temp_s0->model->scale, sp268.m[0]);
-                temp_a1 = &sp25C;
-                sp25C = flt_CODE_bss_800799A8.unk0;
-                sp260 = flt_CODE_bss_800799A8.unk4;
-                sp264 = flt_CODE_bss_800799A8.unk8;
-                matrix_4x4_rotate_vector_in_place(&sp268, temp_a1);
-                sp25C += temp_s0->runtime_x_pos;
-                sp260 += temp_s0->runtime_y_pos;
-                sp264 += temp_s0->runtime_z_pos;
-                temp_f2_8 = g_CurrentPlayer->vv_verta;
-                temp_f16_5 = ((D_80036464 + D_80036474) * 360.0f) / 6.2831855f;
-                phi_f2_4 = temp_f2_8;
-                if (temp_f2_8 < -20.0f)
+                matrix_scalar_multiply(tank_obj->model->scale, (f32*)&sp268);
+                
+                sp25C.f[0] = flt_CODE_bss_800799A8;
+                sp25C.f[1] = flt_CODE_bss_800799AC;
+                sp25C.f[2] = flt_CODE_bss_800799B0;
+                matrix_4x4_rotate_vector_in_place(&sp268, (f32*)&sp25C);
+
+                sp25C.f[0] += tank_obj->runtime_pos.f[0];
+                sp25C.f[1] += tank_obj->runtime_pos.f[1];
+                sp25C.f[2] += tank_obj->runtime_pos.f[2];
+
+                sp258 = ((D_80036464 + D_80036474) * 360.0f) / 6.2831855f;
+                sp254 = g_CurrentPlayer->vv_verta;
+                if (g_CurrentPlayer->vv_verta < -20.0f)
                 {
-                    phi_f2_4 = -20.0f;
+                    sp254 = -20.0f;
                 }
+
                 flt_CODE_bss_800799BC += g_GlobalTimerDelta / 45.0f;
                 if (flt_CODE_bss_800799BC >= 1.0f)
                 {
                     flt_CODE_bss_800799BC = 1.0f;
                 }
-                sp254 = phi_f2_4;
-                sp258 = temp_f16_5;
+
                 flt_CODE_bss_800799C0 = (cosf(flt_CODE_bss_800799BC * 6.2831855f * 0.5f) + 1.0f) * 0.5f;
-                temp_f2_9 = flt_CODE_bss_800799C0;
-                g_CurrentPlayer->vv_verta = (temp_f2_9 * flt_CODE_bss_800799C8) + ((1.0f - temp_f2_9) * sp254);
-                temp_f18_8 = flt_CODE_bss_800799C4;
-                temp_f12_5 = temp_f16_5 - temp_f18_8;
-                phi_f16_4 = temp_f16_5;
-                if (temp_f12_5 > 180.0f)
+
+                g_CurrentPlayer->vv_verta = (flt_CODE_bss_800799C0 * flt_CODE_bss_800799C8) + ((1.0f - flt_CODE_bss_800799C0) * sp254);
+                sp258 = sp258 - flt_CODE_bss_800799C4;
+                if (sp258 > 180.0f)
                 {
-                    phi_f16_4 = temp_f16_5 - 360.0f;
+                    sp258 = sp258 - 360.0f;
                 }
-                phi_f16 = phi_f16_4;
-                if (temp_f12_5 < -180.0f)
+                if (sp258 < -180.0f)
                 {
-                    phi_f16 = phi_f16_4 + 360.0f;
+                    sp258 = sp258 + 360.0f;
                 }
-                temp_f2_10 = flt_CODE_bss_800799C0;
-                g_CurrentPlayer->vv_theta = (temp_f2_10 * temp_f18_8) + ((1.0f - temp_f2_10) * phi_f16);
-                temp_t0_13 = g_CurrentPlayer;
-                temp_f0_16 = temp_t0_13->vv_theta;
-                phi_f0_13 = temp_f0_16;
-                if (temp_f0_16 >= 360.0f)
+
+                g_CurrentPlayer->vv_theta = (flt_CODE_bss_800799C0 * flt_CODE_bss_800799C4) + ((1.0f - flt_CODE_bss_800799C0) * sp258);
+
+                if (g_CurrentPlayer->vv_theta >= 360.0f)
                 {
-                    temp_t0_13->vv_theta = temp_f0_16 - 360.0f;
-                    phi_f0_13 = g_CurrentPlayer->vv_theta;
+                    g_CurrentPlayer->vv_theta = g_CurrentPlayer->vv_theta - 360.0f;
                 }
-                phi_t0_2 = g_CurrentPlayer;
-                if (phi_f0_13 < 0.0f)
+                if (g_CurrentPlayer->vv_theta < 0.0f)
                 {
-                    g_CurrentPlayer->vv_theta = phi_f0_13 + 360.0f;
-                    phi_t0_2 = g_CurrentPlayer;
+                    g_CurrentPlayer->vv_theta = g_CurrentPlayer->vv_theta + 360.0f;
                 }
-                temp_f2_11 = flt_CODE_bss_800799C0;
-                temp_f0_17 = 1.0f - temp_f2_11;
-                sp3B0 = 0.0f;
-                sp3AC = ((temp_f2_11 * flt_CODE_bss_800799D0.unk0) + (temp_f0_17 * sp25C)) - phi_t0_2->field_488.collision_position.f[0];
-                sp3B4 = ((temp_f2_11 * flt_CODE_bss_800799D0.unk8) + (temp_f0_17 * sp264)) - phi_t0_2->field_488.collision_position.f[2];
+
+                sp3AC.f[1] = 0.0f;
+                sp3AC.f[0] = (
+                        (flt_CODE_bss_800799C0 * flt_CODE_bss_800799D0) + 
+                        ((1.0f - flt_CODE_bss_800799C0) * sp25C.f[0])
+                    ) - 
+                    g_CurrentPlayer->field_488.collision_position.f[0];
+
+                sp3AC.f[2] = (
+                    (flt_CODE_bss_800799C0 * flt_CODE_bss_800799D8) +
+                    ((1.0f - flt_CODE_bss_800799C0) * sp25C.f[2])
+                    ) - 
+                    g_CurrentPlayer->field_488.collision_position.f[2];
             }
-            temp_t0_14 = g_CurrentPlayer;
-            phi_t0_3 = temp_t0_14;
-            phi_t0_3 = temp_t0_14;
+
             if (!(flt_CODE_bss_800799BC >= 1.0f))
             {
                 phi_at = -1.9025154e-23f;
@@ -26397,7 +26410,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             else
             {
                 dword_CODE_bss_800799B8 = 1;
-                goto block_169;
+                phi_at = 0.75f;
             }
         }
         else
@@ -26405,108 +26418,92 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             if (dword_CODE_bss_800799B8 == 1)
             {
                 dword_CODE_bss_800799B8 = 2;
-                if ((SFX_80036458.unk0 == 0) && (lvlGetControlsLockedFlag() == 0))
+                if ((SFX_80036458 == NULL) && (lvlGetControlsLockedFlag() == 0))
                 {
-                    sndPlaySfx((ALBankAlt_s *) g_musicSfxBufferPtr, 0x42, &SFX_80036458);
+                    sndPlaySfx(g_musicSfxBufferPtr, TRUCK_START_SFX, &SFX_80036458);
                 }
-                sndCreatePostEvent(SFX_80036458.unk0, 8, 0x61A8);
+                sndCreatePostEvent(SFX_80036458, 8, 0x61A8);
                 dword_CODE_bss_800799B4 = 0x61A8;
-                phi_t0_3 = g_CurrentPlayer;
             }
             else
             {
-                temp_t0_15 = g_CurrentPlayer;
-                temp_f0_18 = temp_t0_15->speedforwards / 15.0f;
-                temp_f2_12 = temp_t0_15->speedtheta / 0.3f;
-                phi_f0_14 = temp_f0_18;
-                phi_f2_5 = temp_f2_12;
+                temp_f0_18 = g_CurrentPlayer->speedforwards / 15.0f;
+                temp_f2_12 = g_CurrentPlayer->speedtheta / 0.3f;
+                
                 if (temp_f0_18 < 0.0f)
                 {
-                    phi_f0_14 = -temp_f0_18;
+                    temp_f0_18 = -temp_f0_18;
                 }
                 if (temp_f2_12 < 0.0f)
                 {
-                    phi_f2_5 = -temp_f2_12;
+                    temp_f2_12 = -temp_f2_12;
                 }
-                phi_f12 = phi_f0_14;
-                if (phi_f0_14 < phi_f2_5)
+
+                sp244 = temp_f0_18;
+                if (temp_f0_18 < temp_f2_12)
                 {
-                    phi_f12 = phi_f2_5;
+                    sp244 = temp_f2_12;
                 }
-                phi_f12_2 = phi_f12;
-                phi_f12_3 = phi_f12;
-                if (phi_f12 > 0.0f)
+
+                if (sp244 > 0.0f)
                 {
-                    phi_s0 = &SFX_80036458;
-                    if (phi_f12 > 1.0f)
+                    if (sp244 > 1.0f)
                     {
-                        phi_f12_2 = 1.0f;
+                        sp244 = 1.0f;
                     }
-                    if (SFX_80036458.unk4 == 0)
+                    if (SFX_80036458->sound == NULL)
                     {
-                        sp244 = phi_f12_2;
                         if (lvlGetControlsLockedFlag() == 0)
                         {
-                            sp244 = phi_f12_2;
-                            sndPlaySfx((ALBankAlt_s *) g_musicSfxBufferPtr, 0x3E, &SFX_8003645C);
+                            sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, TANK_SFX, SFX_8003645C);
                         }
                     }
-                    temp_a0_4 = SFX_80036458.unk4;
-                    phi_f12_3 = phi_f12_2;
-                    if (temp_a0_4 != 0)
+
+                    if (SFX_80036458->sound != 0)
                     {
                         phi_a2 = 0x7FFF;
-                        if (phi_f12_2 < 0.15f)
+                        if (sp244 < 0.15f)
                         {
-                            phi_a2 = (s32) ((phi_f12_2 * 20000.0f) / 0.15f);
+                            phi_a2 = (s32) ((sp244 * 20000.0f) / 0.15f);
                         }
-                        else if (phi_f12_2 < 0.9f)
+                        else if (sp244 < 0.9f)
                         {
-                            phi_a2 = (s32) ((((phi_f12_2 - 0.15f) * 12767.0f) / 0.75f) + 20000.0f);
+                            phi_a2 = (s32) ((((sp244 - 0.15f) * 12767.0f) / 0.75f) + 20000.0f);
                         }
-                        sp244 = phi_f12_2;
-                        sndCreatePostEvent(temp_a0_4, 8, phi_a2);
-                        goto block_149;
+                        sndCreatePostEvent(SFX_80036458->sound, 8, phi_a2);
                     }
                 }
                 else
                 {
-                    temp_a0_5 = SFX_80036458.unk4;
-                    phi_s0 = &SFX_80036458;
-                    if (temp_a0_5 != 0)
+                    if (SFX_80036458->sound != NULL)
                     {
-                        sp244 = phi_f12;
-                        phi_f12_3 = phi_f12;
-                        if (sndGetPlayingState(temp_a0_5) != 0)
+                        if (sndGetPlayingState(SFX_80036458->sound) != 0)
                         {
-                            sp244 = phi_f12;
-                            sndDeactivate(SFX_80036458.unk4);
-block_149:
-                            phi_s0 = &SFX_80036458;
-                            phi_f12_3 = sp244;
+                            sndDeactivate(SFX_80036458->sound);
                         }
                     }
                 }
-                if (*phi_s0 == 0)
+
+                if (SFX_80036458 == NULL)
                 {
-                    sp244 = phi_f12_3;
                     if (lvlGetControlsLockedFlag() == 0)
                     {
-                        sp244 = phi_f12_3;
-                        sndPlaySfx((ALBankAlt_s *) g_musicSfxBufferPtr, 0x41, phi_s0);
+                        sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, TRUCK_RUN_SFX, SFX_80036458);
                     }
                 }
-                temp_a0_6 = *phi_s0;
-                if (temp_a0_6 != 0)
+
+                if (SFX_80036458 != NULL)
                 {
                     dword_CODE_bss_800799B4 = 0x7FFF;
-                    if (phi_f12_3 < 0.9f)
+                    if (sp244 < 0.9f)
                     {
-                        dword_CODE_bss_800799B4 = (s32) (((phi_f12_3 * 7767.0f) / 0.9f) + 25000.0f);
+                        dword_CODE_bss_800799B4 = (s32) (((sp244 * 7767.0f) / 0.9f) + 25000.0f);
                     }
-                    sndCreatePostEvent(temp_a0_6, 8, dword_CODE_bss_800799B4);
+
+                    sndCreatePostEvent(SFX_80036458, 8, dword_CODE_bss_800799B4);
                 }
-                if (getCurrentPlayerWeaponId(0) == 0x20)
+
+                if (getCurrentPlayerWeaponId(GUNRIGHT) == ITEM_TANKSHELLS)
                 {
                     phi_f2_6 = g_CurrentPlayer->field_2A08 + 0.17453294f;
                 }
@@ -26514,67 +26511,56 @@ block_149:
                 {
                     phi_f2_6 = D_8003646C;
                 }
-                phi_f2_7 = phi_f2_6;
-                phi_t0_3 = g_CurrentPlayer;
+
                 if (phi_f2_6 > 0.43633232f)
                 {
-                    phi_f2_7 = 0.43633232f;
+                    phi_f2_6 = 0.43633232f;
                 }
-                phi_f2_8 = phi_f2_7;
-                if (phi_f2_7 < -0.08726647f)
+
+                if (phi_f2_6 < -0.08726647f)
                 {
-                    phi_f2_8 = -0.08726647f;
+                    phi_f2_6 = -0.08726647f;
                 }
-                temp_a0_7 = g_ClockTimer;
-                if (temp_a0_7 > 0)
+
+                if (g_ClockTimer > 0)
                 {
-                    temp_f18_9 = 0.94f * D_80036470;
-                    phi_f18_7 = temp_f18_9;
-                    phi_v0_4 = 1;
-                    phi_f18_8 = temp_f18_9;
-                    if (temp_a0_7 > 1)
+                    for (i=1; i<g_ClockTimer; i++)
                     {
-                        do
-                        {
-                            temp_v0_8 = phi_v0_4 + 1;
-                            D_80036470 = phi_f18_7 + phi_f2_8;
-                            temp_f18_10 = 0.94f * D_80036470;
-                            phi_f18_7 = temp_f18_10;
-                            phi_v0_4 = temp_v0_8;
-                            phi_f18_8 = temp_f18_10;
-                        } while (temp_v0_8 < temp_a0_7);
+                        D_80036470 = (0.94f * D_80036470) + phi_f2_6;
                     }
-                    D_80036470 = phi_f18_8 + phi_f2_8;
+                    
+                    D_80036470 = D_80036470 + phi_f2_6;
                 }
+
                 D_8003646C = D_80036470 * 0.060000002f;
             }
-block_169:
+
             phi_at = 0.75f;
         }
-        phi_t0_3->field_19C -= (phi_at * g_GlobalTimerDelta) / 2700.0f;
-        temp_t0_16 = g_CurrentPlayer;
-        if (temp_t0_16->field_19C < 0.0f)
+        
+        g_CurrentPlayer->bondbreathing -= (phi_at * g_GlobalTimerDelta) / 2700.0f;
+
+        if (g_CurrentPlayer->bondbreathing < 0.0f)
         {
-            temp_t0_16->field_19C = 0.0f;
+            g_CurrentPlayer->bondbreathing = 0.0f;
         }
+        
         sub_GAME_7F080B34(0.0f, 0.0f, 0.0f);
-        sp3AC += g_CurrentPlayer->speedforwards * sinf(6.2831855f - D_80036464) * g_GlobalTimerDelta;
-        sp3B4 += g_CurrentPlayer->speedforwards * cosf(6.2831855f - D_80036464) * g_GlobalTimerDelta;
+
+        sp3AC.f[0] += g_CurrentPlayer->speedforwards * sinf(6.2831855f - D_80036464) * g_GlobalTimerDelta;
+        sp3AC.f[2] += g_CurrentPlayer->speedforwards * cosf(6.2831855f - D_80036464) * g_GlobalTimerDelta;
         sub_GAME_7F07D960(&sp3AC, 1);
+        
         if ((dword_CODE_bss_800799B8 == 2) && (g_ClockTimer > 0))
         {
-            temp_t0_17 = g_CurrentPlayer;
-            temp_f14_6 = g_GlobalTimerDelta;
-            temp_f0_19 = (temp_t0_17->field_488.collision_position.f[0] - temp_t0_17->field_408) / temp_f14_6;
-            temp_f2_13 = (temp_t0_17->field_488.collision_position.f[2] - temp_t0_17->field_410) / temp_f14_6;
+            temp_f0_19 = (g_CurrentPlayer->field_488.collision_position.f[0] - g_CurrentPlayer->bondprevpos.f[0]) / g_GlobalTimerDelta;
+            temp_f2_13 = (g_CurrentPlayer->field_488.collision_position.f[2] - g_CurrentPlayer->bondprevpos.f[2]) / g_GlobalTimerDelta;
             temp_f0_20 = sqrtf((temp_f0_19 * temp_f0_19) + (temp_f2_13 * temp_f2_13));
-            temp_t0_18 = g_CurrentPlayer;
-            phi_f2_9 = temp_f0_20;
-            if (temp_t0_18->speedforwards < 0.0f)
+            if (g_CurrentPlayer->speedforwards < 0.0f)
             {
-                phi_f2_9 = -temp_f0_20;
+                temp_f0_20 = -temp_f0_20;
             }
-            temp_t0_18->speedforwards = phi_f2_9;
+            g_CurrentPlayer->speedforwards = temp_f0_20;
         }
     }
     else
