@@ -1355,7 +1355,7 @@ void update_broken_windows(void) {
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 
 GLOBAL_ASM(
 .late_rodata
@@ -1609,7 +1609,7 @@ glabel update_broken_windows
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_8004CE00
@@ -1992,7 +1992,7 @@ glabel sub_GAME_7F0A2C44
 /* 0D7944 7F0A2E14 E7B200C4 */  swc1  $f18, 0xc4($sp)
 /* 0D7948 7F0A2E18 C4460040 */  lwc1  $f6, 0x40($v0)
 /* 0D794C 7F0A2E1C 46062201 */  sub.s $f8, $f4, $f6
-/* 0D7950 7F0A2E20 0FC16327 */  jal   sub_GAME_7F058C9C
+/* 0D7950 7F0A2E20 0FC16327 */  jal   matrix_4x4_f32_to_s32
 /* 0D7954 7F0A2E24 E7A800C8 */   swc1  $f8, 0xc8($sp)
 /* 0D7958 7F0A2E28 8FB200D0 */  lw    $s2, 0xd0($sp)
 /* 0D795C 7F0A2E2C 3C080102 */  lui   $t0, (0x01020040 >> 16) # lui $t0, 0x102
@@ -2075,7 +2075,7 @@ void sub_GAME_7F0A2F30(void) {
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_80057740
@@ -2353,7 +2353,7 @@ glabel sub_GAME_7F0A2F30
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_8004CE10
@@ -2719,7 +2719,7 @@ void sub_GAME_7F0A33F8(void) {
 
 }
 #else
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_8005774C
@@ -3103,7 +3103,7 @@ glabel sub_GAME_7F0A33F8
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_8005774C
@@ -3773,7 +3773,7 @@ void sub_GAME_7F0A3C08(void) {
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_80057750
@@ -3925,7 +3925,7 @@ glabel sub_GAME_7F0A3C08
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 
 /* same asm, but float .rodata references other .rodata */

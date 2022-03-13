@@ -1416,7 +1416,7 @@ void init_menu00_legalscreen(void)
     modelCalculateRwDataLen(&PitemZ_entries[319].header);
 
     something_legalscreen_constructor = get_obj_instance_controller_for_header(&PitemZ_entries[319].header);
-    set_obj_instance_controller_scale(something_legalscreen_constructor, 1.0f);
+    modelSetScale(something_legalscreen_constructor, 1.0f);
     setsuboffset(something_legalscreen_constructor, &sp20);
     fileValidateSaves();
 }
@@ -1462,7 +1462,7 @@ glabel init_menu00_legalscreen
 /* 03F1A4 7F00A674 2463A958 */  addiu $v1, %lo(something_legalscreen_constructor) # addiu $v1, $v1, -0x56a8
 /* 03F1A8 7F00A678 AC620000 */  sw    $v0, ($v1)
 /* 03F1AC 7F00A67C 00402025 */  move  $a0, $v0
-/* 03F1B0 7F00A680 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 03F1B0 7F00A680 0FC1B39E */  jal   modelSetScale
 /* 03F1B4 7F00A684 3C053F80 */   lui   $a1, 0x3f80
 /* 03F1B8 7F00A688 3C048003 */  lui   $a0, %hi(something_legalscreen_constructor)
 /* 03F1BC 7F00A68C 8C84A958 */  lw    $a0, %lo(something_legalscreen_constructor)($a0)
@@ -1605,7 +1605,7 @@ loop_1:
     {
 loop_3:
         matrix_4x4_copy(something_legalscreen_constructor->unkC + phi_s1, &sp58);
-        sub_GAME_7F058C9C(&sp58, something_legalscreen_constructor->unkC + (phi_s0 << 6));
+        matrix_4x4_f32_to_s32(&sp58, something_legalscreen_constructor->unkC + (phi_s0 << 6));
         temp_s0 = phi_s0 + 1;
         phi_s1 = phi_s1 + 0x40;
         phi_s0 = temp_s0;
@@ -1715,7 +1715,7 @@ glabel constructor_menu00_legalscreen
 /* 03F554 7F00AA24 00105180 */  sll   $t2, $s0, 6
 /* 03F558 7F00AA28 02402025 */  move  $a0, $s2
 /* 03F55C 7F00AA2C 8D09000C */  lw    $t1, 0xc($t0)
-/* 03F560 7F00AA30 0FC16327 */  jal   sub_GAME_7F058C9C
+/* 03F560 7F00AA30 0FC16327 */  jal   matrix_4x4_f32_to_s32
 /* 03F564 7F00AA34 012A2821 */   addu  $a1, $t1, $t2
 /* 03F568 7F00AA38 8E620000 */  lw    $v0, ($s3)
 /* 03F56C 7F00AA3C 26100001 */  addiu $s0, $s0, 1
@@ -1820,7 +1820,7 @@ void init_menu01_nintendo(void)
     load_object_fill_header(PitemZ_entries[276].header, PitemZ_entries[276].filename, ptr_logo_and_walletbond_DL,0x3c000,0);
     modelCalculateRwDataLen(PitemZ_entries[276].header);
     something_legalscreen_constructor = get_obj_instance_controller_for_header(PitemZ_entries[276].header);
-    set_obj_instance_controller_scale(something_legalscreen_constructor, 1.0f);
+    modelSetScale(something_legalscreen_constructor, 1.0f);
     setsuboffset(something_legalscreen_constructor, &local_c);
     musicTrack1Play(M_INTROSWOOSH);
     maybe_is_in_menu = TRUE;
@@ -1869,7 +1869,7 @@ glabel init_menu01_nintendo
 /* 03F770 7F00AC40 2463A958 */  addiu $v1, %lo(something_legalscreen_constructor) # addiu $v1, $v1, -0x56a8
 /* 03F774 7F00AC44 AC620000 */  sw    $v0, ($v1)
 /* 03F778 7F00AC48 00402025 */  move  $a0, $v0
-/* 03F77C 7F00AC4C 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 03F77C 7F00AC4C 0FC1B39E */  jal   modelSetScale
 /* 03F780 7F00AC50 3C053F80 */   lui   $a1, 0x3f80
 /* 03F784 7F00AC54 3C048003 */  lui   $a0, %hi(something_legalscreen_constructor)
 /* 03F788 7F00AC58 8C84A958 */  lw    $a0, %lo(something_legalscreen_constructor)($a0)
@@ -2035,7 +2035,7 @@ loop_1:
     {
 loop_9:
         matrix_4x4_copy(something_legalscreen_constructor->unkC + phi_s1, &sp50);
-        sub_GAME_7F058C9C(&sp50, something_legalscreen_constructor->unkC + (phi_s0 << 6));
+        matrix_4x4_f32_to_s32(&sp50, something_legalscreen_constructor->unkC + (phi_s0 << 6));
         temp_s0 = phi_s0 + 1;
         phi_s1 = phi_s1 + 0x40;
         phi_s0 = temp_s0;
@@ -2225,7 +2225,7 @@ glabel constructor_menu01_nintendo
 /* 03FB40 7F00B010 00106180 */  sll   $t4, $s0, 6
 /* 03FB44 7F00B014 02402025 */  move  $a0, $s2
 /* 03FB48 7F00B018 8D4B000C */  lw    $t3, 0xc($t2)
-/* 03FB4C 7F00B01C 0FC16327 */  jal   sub_GAME_7F058C9C
+/* 03FB4C 7F00B01C 0FC16327 */  jal   matrix_4x4_f32_to_s32
 /* 03FB50 7F00B020 016C2821 */   addu  $a1, $t3, $t4
 /* 03FB54 7F00B024 8E620000 */  lw    $v0, ($s3)
 /* 03FB58 7F00B028 26100001 */  addiu $s0, $s0, 1
@@ -2425,7 +2425,7 @@ glabel constructor_menu01_nintendo
 /* 03FB40 7F00B010 00106180 */  sll   $t4, $s0, 6
 /* 03FB44 7F00B014 02402025 */  move  $a0, $s2
 /* 03FB48 7F00B018 8D4B000C */  lw    $t3, 0xc($t2)
-/* 03FB4C 7F00B01C 0FC16327 */  jal   sub_GAME_7F058C9C
+/* 03FB4C 7F00B01C 0FC16327 */  jal   matrix_4x4_f32_to_s32
 /* 03FB50 7F00B020 016C2821 */   addu  $a1, $t3, $t4
 /* 03FB54 7F00B024 8E620000 */  lw    $v0, ($s3)
 /* 03FB58 7F00B028 26100001 */  addiu $s0, $s0, 1
@@ -2535,7 +2535,7 @@ void init_menu04_goldeneyelogo(void)
     modelCalculateRwDataLen(PgoldeneyelogoZ_header);
     temp_ret = get_obj_instance_controller_for_header(PgoldeneyelogoZ_header);
     something_legalscreen_constructor = temp_ret;
-    set_obj_instance_controller_scale(temp_ret, 0x3f800000);
+    modelSetScale(temp_ret, 0x3f800000);
     setsuboffset(something_legalscreen_constructor, &sp24);
 }
 #else
@@ -2575,7 +2575,7 @@ glabel init_menu04_goldeneyelogo
 /* 03FE00 7F00B2D0 2463A958 */  addiu $v1, %lo(something_legalscreen_constructor) # addiu $v1, $v1, -0x56a8
 /* 03FE04 7F00B2D4 AC620000 */  sw    $v0, ($v1)
 /* 03FE08 7F00B2D8 00402025 */  move  $a0, $v0
-/* 03FE0C 7F00B2DC 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 03FE0C 7F00B2DC 0FC1B39E */  jal   modelSetScale
 /* 03FE10 7F00B2E0 3C053F80 */   lui   $a1, 0x3f80
 /* 03FE14 7F00B2E4 3C048003 */  lui   $a0, %hi(something_legalscreen_constructor)
 /* 03FE18 7F00B2E8 8C84A958 */  lw    $a0, %lo(something_legalscreen_constructor)($a0)
@@ -2713,7 +2713,7 @@ loop_1:
     {
 loop_3:
         matrix_4x4_copy(something_legalscreen_constructor->unkC + phi_s1, &sp5C);
-        sub_GAME_7F058C9C(&sp5C, something_legalscreen_constructor->unkC + (phi_s0 << 6));
+        matrix_4x4_f32_to_s32(&sp5C, something_legalscreen_constructor->unkC + (phi_s0 << 6));
         temp_s0_2 = phi_s0 + 1;
         phi_s1 = phi_s1 + 0x40;
         phi_s0 = temp_s0_2;
@@ -2884,7 +2884,7 @@ glabel constructor_menu04_goldeneyelogo
 /* 0401FC 7F00B6CC 00106180 */  sll   $t4, $s0, 6
 /* 040200 7F00B6D0 02402025 */  move  $a0, $s2
 /* 040204 7F00B6D4 8D4B000C */  lw    $t3, 0xc($t2)
-/* 040208 7F00B6D8 0FC16327 */  jal   sub_GAME_7F058C9C
+/* 040208 7F00B6D8 0FC16327 */  jal   matrix_4x4_f32_to_s32
 /* 04020C 7F00B6DC 016C2821 */   addu  $a1, $t3, $t4
 /* 040210 7F00B6E0 8E620000 */  lw    $v0, ($s3)
 /* 040214 7F00B6E4 26100001 */  addiu $s0, $s0, 1
@@ -3074,7 +3074,7 @@ void load_walletbond(void)
 loop_2:
         temp_ret = get_aircraft_obj_instance_controller(PitemZ_entries.unkD08);
         *phi_s0 = temp_ret;
-        set_obj_instance_controller_scale(temp_ret, 0x3f800000);
+        modelSetScale(temp_ret, 0x3f800000);
         temp_s0 = phi_s0 + 4;
         phi_s0 = temp_s0;
         if (temp_s0 != &D_8002A96C)
@@ -3122,7 +3122,7 @@ glabel load_walletbond
 /* 040448 7F00B918 8E440D08 */   lw    $a0, 0xd08($s2)
 /* 04044C 7F00B91C 4405A000 */  mfc1  $a1, $f20
 /* 040450 7F00B920 AE020000 */  sw    $v0, ($s0)
-/* 040454 7F00B924 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 040454 7F00B924 0FC1B39E */  jal   modelSetScale
 /* 040458 7F00B928 00402025 */   move  $a0, $v0
 /* 04045C 7F00B92C 26100004 */  addiu $s0, $s0, 4
 /* 040460 7F00B930 1611FFF8 */  bne   $s0, $s1, .L7F00B914
@@ -4881,7 +4881,7 @@ loop_2:
     {
 loop_4:
         matrix_4x4_copy(temp_v0_3->unkC + phi_s0, &sp108);
-        sub_GAME_7F058C9C(&sp108, (*phi_s2)->unkC + (phi_s1 << 6));
+        matrix_4x4_f32_to_s32(&sp108, (*phi_s2)->unkC + (phi_s1 << 6));
         temp_v0_3 = *phi_s2;
         temp_s1 = phi_s1 + 1;
         phi_s0 = phi_s0 + 0x40;
@@ -5257,7 +5257,7 @@ glabel constructor_menu05_fileselect
 /* 041114 7F00C5E4 0011C980 */  sll   $t9, $s1, 6
 /* 041118 7F00C5E8 02602025 */  move  $a0, $s3
 /* 04111C 7F00C5EC 8DEE000C */  lw    $t6, 0xc($t7)
-/* 041120 7F00C5F0 0FC16327 */  jal   sub_GAME_7F058C9C
+/* 041120 7F00C5F0 0FC16327 */  jal   matrix_4x4_f32_to_s32
 /* 041124 7F00C5F4 01D92821 */   addu  $a1, $t6, $t9
 /* 041128 7F00C5F8 8E420000 */  lw    $v0, ($s2)
 /* 04112C 7F00C5FC 26310001 */  addiu $s1, $s1, 1
@@ -6251,7 +6251,7 @@ loop_1:
     {
 loop_3:
         matrix_4x4_copy(ptr_folder_object_instance->unkC + phi_s1, &sp48);
-        sub_GAME_7F058C9C(&sp48, ptr_folder_object_instance->unkC + (phi_s0 << 6));
+        matrix_4x4_f32_to_s32(&sp48, ptr_folder_object_instance->unkC + (phi_s0 << 6));
         temp_s0 = phi_s0 + 1;
         phi_s1 = phi_s1 + 0x40;
         phi_s0 = temp_s0;
@@ -6383,7 +6383,7 @@ glabel sub_GAME_7F00D5E8
 /* 0422D8 7F00D7A8 00104980 */  sll   $t1, $s0, 6
 /* 0422DC 7F00D7AC 02402025 */  move  $a0, $s2
 /* 0422E0 7F00D7B0 8DCF000C */  lw    $t7, 0xc($t6)
-/* 0422E4 7F00D7B4 0FC16327 */  jal   sub_GAME_7F058C9C
+/* 0422E4 7F00D7B4 0FC16327 */  jal   matrix_4x4_f32_to_s32
 /* 0422E8 7F00D7B8 01E92821 */   addu  $a1, $t7, $t1
 /* 0422EC 7F00D7BC 8E620000 */  lw    $v0, ($s3)
 /* 0422F0 7F00D7C0 26100001 */  addiu $s0, $s0, 1
@@ -23095,7 +23095,7 @@ void init_menu18_displaycast(void)
     local_4 = local_4 + uVar3;
   }
   objinstance = (undefined *)setup_chr_instance(bodyID,headID,objheader,headHeader,0);
-  set_obj_instance_controller_scale((int)objinstance,scale);
+  modelSetScale((int)objinstance,scale);
   if (iVar6 == 0) {
     ptrobjinstance = NULL;
   }
@@ -23143,7 +23143,7 @@ void init_menu18_displaycast(void)
     modelCalculateRwDataLen(objheader);
     ptrobjinstance = (undefined *)get_obj_instance_controller_for_header((ModelFileHeader *)objheader)
     ;
-    set_obj_instance_controller_scale((int)ptrobjinstance,scale_00);
+    modelSetScale((int)ptrobjinstance,scale_00);
     iVar6 = 3;
     *(undefined **)(ptrobjinstance + 0x18) = objinstance;
     if ((uVar2 & 1) != 0) {
@@ -23474,7 +23474,7 @@ glabel init_menu18_displaycast
 /* 04D568 7F018A38 3C053DCC */  lui   $a1, (0x3DCCCCCD >> 16) # lui $a1, 0x3dcc
 /* 04D56C 7F018A3C AC620000 */  sw    $v0, ($v1)
 /* 04D570 7F018A40 34A5CCCD */  ori   $a1, (0x3DCCCCCD & 0xFFFF) # ori $a1, $a1, 0xcccd
-/* 04D574 7F018A44 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 04D574 7F018A44 0FC1B39E */  jal   modelSetScale
 /* 04D578 7F018A48 00402025 */   move  $a0, $v0
 /* 04D57C 7F018A4C 8FAC006C */  lw    $t4, 0x6c($sp)
 /* 04D580 7F018A50 24010002 */  li    $at, 2
@@ -23586,7 +23586,7 @@ glabel init_menu18_displaycast
 /* 04D704 7F018BD4 3C053DCC */  lui   $a1, (0x3DCCCCCD >> 16) # lui $a1, 0x3dcc
 /* 04D708 7F018BD8 AC620000 */  sw    $v0, ($v1)
 /* 04D70C 7F018BDC 34A5CCCD */  ori   $a1, (0x3DCCCCCD & 0xFFFF) # ori $a1, $a1, 0xcccd
-/* 04D710 7F018BE0 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 04D710 7F018BE0 0FC1B39E */  jal   modelSetScale
 /* 04D714 7F018BE4 00402025 */   move  $a0, $v0
 /* 04D718 7F018BE8 3C038003 */  lui   $v1, %hi(ptrobjinstance)
 /* 04D71C 7F018BEC 3C068003 */  lui   $a2, %hi(objinstance)
@@ -24070,7 +24070,7 @@ glabel init_menu18_displaycast
 /* 04B4A0 7F018AB0 3C053DCC */  lui   $a1, (0x3DCCCCCD >> 16) # lui $a1, 0x3dcc
 /* 04B4A4 7F018AB4 AC620000 */  sw    $v0, ($v1)
 /* 04B4A8 7F018AB8 34A5CCCD */  ori   $a1, (0x3DCCCCCD & 0xFFFF) # ori $a1, $a1, 0xcccd
-/* 04B4AC 7F018ABC 0FC1B4CF */  jal   set_obj_instance_controller_scale
+/* 04B4AC 7F018ABC 0FC1B4CF */  jal   modelSetScale
 /* 04B4B0 7F018AC0 00402025 */   move  $a0, $v0
 /* 04B4B4 7F018AC4 8FAC006C */  lw    $t4, 0x6c($sp)
 /* 04B4B8 7F018AC8 24010002 */  li    $at, 2
@@ -24182,7 +24182,7 @@ glabel init_menu18_displaycast
 /* 04B63C 7F018C4C 3C053DCC */  lui   $a1, (0x3DCCCCCD >> 16) # lui $a1, 0x3dcc
 /* 04B640 7F018C50 AC620000 */  sw    $v0, ($v1)
 /* 04B644 7F018C54 34A5CCCD */  ori   $a1, (0x3DCCCCCD & 0xFFFF) # ori $a1, $a1, 0xcccd
-/* 04B648 7F018C58 0FC1B4CF */  jal   set_obj_instance_controller_scale
+/* 04B648 7F018C58 0FC1B4CF */  jal   modelSetScale
 /* 04B64C 7F018C5C 00402025 */   move  $a0, $v0
 /* 04B650 7F018C60 3C038002 */  lui   $v1, %hi(ptrobjinstance) # $v1, 0x8002
 /* 04B654 7F018C64 3C068002 */  lui   $a2, %hi(objinstance) # $a2, 0x8002
@@ -25725,7 +25725,7 @@ glabel constructor_menu18_displaycast
 /* 04E864 7F019D34 00116180 */  sll   $t4, $s1, 6
 /* 04E868 7F019D38 02402025 */  move  $a0, $s2
 /* 04E86C 7F019D3C 8DB8000C */  lw    $t8, 0xc($t5)
-/* 04E870 7F019D40 0FC16327 */  jal   sub_GAME_7F058C9C
+/* 04E870 7F019D40 0FC16327 */  jal   matrix_4x4_f32_to_s32
 /* 04E874 7F019D44 030C2821 */   addu  $a1, $t8, $t4
 /* 04E878 7F019D48 8E820000 */  lw    $v0, ($s4)
 /* 04E87C 7F019D4C 26310001 */  addiu $s1, $s1, 1
@@ -25756,7 +25756,7 @@ glabel constructor_menu18_displaycast
 /* 04E8D8 7F019DA8 0011C980 */  sll   $t9, $s1, 6
 /* 04E8DC 7F019DAC 02402025 */  move  $a0, $s2
 /* 04E8E0 7F019DB0 8F0C000C */  lw    $t4, 0xc($t8)
-/* 04E8E4 7F019DB4 0FC16327 */  jal   sub_GAME_7F058C9C
+/* 04E8E4 7F019DB4 0FC16327 */  jal   matrix_4x4_f32_to_s32
 /* 04E8E8 7F019DB8 01992821 */   addu  $a1, $t4, $t9
 /* 04E8EC 7F019DBC 3C078003 */  lui   $a3, %hi(ptrobjinstance)
 /* 04E8F0 7F019DC0 8CE7B5F8 */  lw    $a3, %lo(ptrobjinstance)($a3)
@@ -26849,7 +26849,7 @@ glabel constructor_menu18_displaycast
 /* 04C7A0 7F019DB0 00116180 */  sll   $t4, $s1, 6
 /* 04C7A4 7F019DB4 02402025 */  move  $a0, $s2
 /* 04C7A8 7F019DB8 8DB8000C */  lw    $t8, 0xc($t5)
-/* 04C7AC 7F019DBC 0FC16451 */  jal   sub_GAME_7F058C9C
+/* 04C7AC 7F019DBC 0FC16451 */  jal   matrix_4x4_f32_to_s32
 /* 04C7B0 7F019DC0 030C2821 */   addu  $a1, $t8, $t4
 /* 04C7B4 7F019DC4 8E820000 */  lw    $v0, ($s4)
 /* 04C7B8 7F019DC8 26310001 */  addiu $s1, $s1, 1
@@ -26880,7 +26880,7 @@ glabel constructor_menu18_displaycast
 /* 04C814 7F019E24 0011C980 */  sll   $t9, $s1, 6
 /* 04C818 7F019E28 02402025 */  move  $a0, $s2
 /* 04C81C 7F019E2C 8F0C000C */  lw    $t4, 0xc($t8)
-/* 04C820 7F019E30 0FC16451 */  jal   sub_GAME_7F058C9C
+/* 04C820 7F019E30 0FC16451 */  jal   matrix_4x4_f32_to_s32
 /* 04C824 7F019E34 01992821 */   addu  $a1, $t4, $t9
 /* 04C828 7F019E38 3C078002 */  lui   $a3, %hi(ptrobjinstance) # $a3, 0x8002
 /* 04C82C 7F019E3C 8CE76B48 */  lw    $a3, %lo(ptrobjinstance)($a3)

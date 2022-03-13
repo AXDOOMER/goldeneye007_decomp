@@ -43,7 +43,7 @@ void init_player_BONDdata_stats(void) {
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_8004F0E0
@@ -281,7 +281,7 @@ glabel init_player_BONDdata_stats
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_8004F0E0

@@ -569,7 +569,7 @@ Mtxf *sub_GAME_7F06C660(struct Model *model, struct ModelNode *node, s32 arg2) {
     s32 index = sub_GAME_7F06C570(node, arg2);
 
     if (index >= 0) {
-        return &model->unk0c[index];
+        return &model->render_pos[index].pos;
     }
 
     return NULL;
@@ -577,7 +577,7 @@ Mtxf *sub_GAME_7F06C660(struct Model *model, struct ModelNode *node, s32 arg2) {
 
 
 //rejoined per EU
-Mtx *getsubmatrix(Model *objinst)
+Mtxf *getsubmatrix(Model *objinst)
 {
     #if defined(LEFTOVERDEBUG)
     if (!objinst)
@@ -1430,7 +1430,7 @@ glabel setsubroty
 
 
 
-void set_obj_instance_controller_scale(Model *objinst, f32 scale)
+void modelSetScale(Model *objinst, f32 scale)
 {
     objinst->scale = scale;
 }

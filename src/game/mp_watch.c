@@ -298,7 +298,7 @@ void end_game_and_show_game_over_menu(int arg0) {
 
 }
 #else
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_8005BC80
@@ -952,7 +952,7 @@ glabel end_game_and_show_game_over_menu
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_8005BC80
@@ -1617,7 +1617,7 @@ void sub_GAME_7F0C2E80(void) {
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0C2E80
@@ -2120,7 +2120,7 @@ glabel sub_GAME_7F0C2E80
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0C2E80

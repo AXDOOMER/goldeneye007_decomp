@@ -254,7 +254,7 @@ void bossEntry(void) {
     }
 }
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 /**
  * Main program loop.
  *
@@ -653,7 +653,7 @@ void bossMainloop(void)
 }
 
 #endif
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 
 
 GLOBAL_ASM(

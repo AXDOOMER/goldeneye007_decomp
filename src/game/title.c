@@ -184,7 +184,7 @@ Gfx *sub_GAME_7F007F30(Gfx*, s32, s32) {
 #else
 Gfx *sub_GAME_7F007F30(Gfx*, s32, s32);
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_8004F2D0
@@ -384,7 +384,7 @@ glabel sub_GAME_7F007F30
 /* 03CD34 7F008204 00126980 */  sll   $t5, $s2, 6
 /* 03CD38 7F008208 02202025 */  move  $a0, $s1
 /* 03CD3C 7F00820C 8D6C000C */  lw    $t4, 0xc($t3)
-/* 03CD40 7F008210 0FC16327 */  jal   sub_GAME_7F058C9C
+/* 03CD40 7F008210 0FC16327 */  jal   matrix_4x4_f32_to_s32
 /* 03CD44 7F008214 018D2821 */   addu  $a1, $t4, $t5
 /* 03CD48 7F008218 8E620000 */  lw    $v0, ($s3)
 /* 03CD4C 7F00821C 26520001 */  addiu $s2, $s2, 1
@@ -412,7 +412,7 @@ glabel sub_GAME_7F007F30
 /* 03CD9C 7F00826C 00125980 */  sll   $t3, $s2, 6
 /* 03CDA0 7F008270 02202025 */  move  $a0, $s1
 /* 03CDA4 7F008274 8D2A000C */  lw    $t2, 0xc($t1)
-/* 03CDA8 7F008278 0FC16327 */  jal   sub_GAME_7F058C9C
+/* 03CDA8 7F008278 0FC16327 */  jal   matrix_4x4_f32_to_s32
 /* 03CDAC 7F00827C 014B2821 */   addu  $a1, $t2, $t3
 /* 03CDB0 7F008280 8E860000 */  lw    $a2, ($s4)
 /* 03CDB4 7F008284 26520001 */  addiu $s2, $s2, 1
@@ -436,7 +436,7 @@ glabel sub_GAME_7F007F30
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_80047720
@@ -636,7 +636,7 @@ glabel sub_GAME_7F007F30
 /* 03AB74 7F008184 00126980 */  sll   $t5, $s2, 6
 /* 03AB78 7F008188 02202025 */  move  $a0, $s1
 /* 03AB7C 7F00818C 8D6C000C */  lw    $t4, 0xc($t3)
-/* 03AB80 7F008190 0FC16451 */  jal   sub_GAME_7F058C9C
+/* 03AB80 7F008190 0FC16451 */  jal   matrix_4x4_f32_to_s32
 /* 03AB84 7F008194 018D2821 */   addu  $a1, $t4, $t5
 /* 03AB88 7F008198 8E620000 */  lw    $v0, ($s3)
 /* 03AB8C 7F00819C 26520001 */  addiu $s2, $s2, 1
@@ -664,7 +664,7 @@ glabel sub_GAME_7F007F30
 /* 03ABDC 7F0081EC 00125980 */  sll   $t3, $s2, 6
 /* 03ABE0 7F0081F0 02202025 */  move  $a0, $s1
 /* 03ABE4 7F0081F4 8D2A000C */  lw    $t2, 0xc($t1)
-/* 03ABE8 7F0081F8 0FC16451 */  jal   sub_GAME_7F058C9C
+/* 03ABE8 7F0081F8 0FC16451 */  jal   matrix_4x4_f32_to_s32
 /* 03ABEC 7F0081FC 014B2821 */   addu  $a1, $t2, $t3
 /* 03ABF0 7F008200 8E860000 */  lw    $a2, ($s4)
 /* 03ABF4 7F008204 26520001 */  addiu $s2, $s2, 1
@@ -1038,7 +1038,7 @@ glabel sub_GAME_7F008E80
 /* 03DBD8 7F0090A8 3C053E40 */  lui   $a1, (0x3E404CEC >> 16) # lui $a1, 0x3e40
 /* 03DBDC 7F0090AC AE220000 */  sw    $v0, ($s1)
 /* 03DBE0 7F0090B0 34A54CEC */  ori   $a1, (0x3E404CEC & 0xFFFF) # ori $a1, $a1, 0x4cec
-/* 03DBE4 7F0090B4 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 03DBE4 7F0090B4 0FC1B39E */  jal   modelSetScale
 /* 03DBE8 7F0090B8 00402025 */   move  $a0, $v0
 /* 03DBEC 7F0090BC 8E240000 */  lw    $a0, ($s1)
 /* 03DBF0 7F0090C0 0FC1B3A1 */  jal   sub_GAME_7F06CE84
@@ -1108,7 +1108,7 @@ glabel sub_GAME_7F008E80
 /* 03DCE8 7F0091B8 3C053E40 */  lui   $a1, (0x3E404CEC >> 16) # lui $a1, 0x3e40
 /* 03DCEC 7F0091BC AE020000 */  sw    $v0, ($s0)
 /* 03DCF0 7F0091C0 34A54CEC */  ori   $a1, (0x3E404CEC & 0xFFFF) # ori $a1, $a1, 0x4cec
-/* 03DCF4 7F0091C4 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 03DCF4 7F0091C4 0FC1B39E */  jal   modelSetScale
 /* 03DCF8 7F0091C8 00402025 */   move  $a0, $v0
 /* 03DCFC 7F0091CC 8E2E0000 */  lw    $t6, ($s1)
 /* 03DD00 7F0091D0 8E0F0000 */  lw    $t7, ($s0)
@@ -1276,7 +1276,7 @@ glabel sub_GAME_7F008E80
 /* 03BA18 7F009028 3C053E40 */  lui   $a1, (0x3E404CEC >> 16) # lui $a1, 0x3e40
 /* 03BA1C 7F00902C AE220000 */  sw    $v0, ($s1)
 /* 03BA20 7F009030 34A54CEC */  ori   $a1, (0x3E404CEC & 0xFFFF) # ori $a1, $a1, 0x4cec
-/* 03BA24 7F009034 0FC1B4CF */  jal   set_obj_instance_controller_scale
+/* 03BA24 7F009034 0FC1B4CF */  jal   modelSetScale
 /* 03BA28 7F009038 00402025 */   move  $a0, $v0
 /* 03BA2C 7F00903C 8E240000 */  lw    $a0, ($s1)
 /* 03BA30 7F009040 0FC1B4D2 */  jal   sub_GAME_7F06CE84
@@ -1347,7 +1347,7 @@ glabel sub_GAME_7F008E80
 /* 03BB2C 7F00913C 3C053E40 */  lui   $a1, (0x3E404CEC >> 16) # lui $a1, 0x3e40
 /* 03BB30 7F009140 AE020000 */  sw    $v0, ($s0)
 /* 03BB34 7F009144 34A54CEC */  ori   $a1, (0x3E404CEC & 0xFFFF) # ori $a1, $a1, 0x4cec
-/* 03BB38 7F009148 0FC1B4CF */  jal   set_obj_instance_controller_scale
+/* 03BB38 7F009148 0FC1B4CF */  jal   modelSetScale
 /* 03BB3C 7F00914C 00402025 */   move  $a0, $v0
 /* 03BB40 7F009150 8E2E0000 */  lw    $t6, ($s1)
 /* 03BB44 7F009154 8E0F0000 */  lw    $t7, ($s0)

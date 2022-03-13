@@ -184,7 +184,7 @@ s32 D_80030AB0 = 0;
 
 // forward declarations
 
-Gfx *chrpropRender(Gfx *arg0, PropRecord *arg1, s32 arg2);
+Gfx *chrpropRender(Gfx *arg0, PropRecord *arg1, s32 withalpha);
 void chraiCheckUseHeldItem(s32 hand);
 void chraiDefaultWeaponFireHandler(s32);
 void chraiFistAttackHandler(s32, s32);
@@ -2045,7 +2045,7 @@ glabel chraiDefaultWeaponFireHandler
 /* 070458 7F03B928 24070001 */  li    $a3, 1
 /* 07045C 7F03B92C AFA00010 */  sw    $zero, 0x10($sp)
 /* 070460 7F03B930 AFA20014 */  sw    $v0, 0x14($sp)
-/* 070464 7F03B934 0FC27094 */  jal   sub_GAME_7F09C250
+/* 070464 7F03B934 0FC27094 */  jal   explosionCreate
 /* 070468 7F03B938 AFA0001C */   sw    $zero, 0x1c($sp)
 .L7F03B93C:
 /* 07046C 7F03B93C 3C0141D0 */  li    $at, 0x41D00000 # 26.000000
@@ -3109,7 +3109,7 @@ glabel handle_mp_respawn_and_some_things
 /* 071344 7F03C814 92180003 */   lbu   $t8, 3($s0)
 /* 071348 7F03C818 8E040014 */  lw    $a0, 0x14($s0)
 /* 07134C 7F03C81C 8C850014 */  lw    $a1, 0x14($a0)
-/* 071350 7F03C820 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 071350 7F03C820 0FC1B39E */  jal   modelSetScale
 /* 071354 7F03C824 AFA20028 */   sw    $v0, 0x28($sp)
 /* 071358 7F03C828 8FA30028 */  lw    $v1, 0x28($sp)
 /* 07135C 7F03C82C 8E040010 */  lw    $a0, 0x10($s0)
@@ -3392,7 +3392,7 @@ glabel handle_mp_respawn_and_some_things
 /* 06F2C4 7F03C8D4 92180003 */   lbu   $t8, 3($s0)
 /* 06F2C8 7F03C8D8 8E040014 */  lw    $a0, 0x14($s0)
 /* 06F2CC 7F03C8DC 8C850014 */  lw    $a1, 0x14($a0)
-/* 06F2D0 7F03C8E0 0FC1B4CF */  jal   set_obj_instance_controller_scale
+/* 06F2D0 7F03C8E0 0FC1B4CF */  jal   modelSetScale
 /* 06F2D4 7F03C8E4 AFA20028 */   sw    $v0, 0x28($sp)
 /* 06F2D8 7F03C8E8 8FA30028 */  lw    $v1, 0x28($sp)
 /* 06F2DC 7F03C8EC 8E040010 */  lw    $a0, 0x10($s0)

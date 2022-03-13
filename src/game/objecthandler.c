@@ -437,7 +437,7 @@ s32 D_80036418 =  0;
 s32 D_8003641C =  0;
 
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 // rodata
 //D:80054420
 const char aDrawjointlistNoGfxlist[] = "drawjointlist: no gfxlist!\n";

@@ -1150,7 +1150,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
 
                 if (g_CurrentPlayer->ptr_char_objectinstance != NULL)
                 {
-                    set_obj_instance_controller_scale((struct Model *)g_CurrentPlayer->ptr_char_objectinstance, ((struct Model *)g_CurrentPlayer->ptr_char_objectinstance)->scale * 0.5f);
+                    modelSetScale((struct Model *)g_CurrentPlayer->ptr_char_objectinstance, ((struct Model *)g_CurrentPlayer->ptr_char_objectinstance)->scale * 0.5f);
                 }
                 return;
             }
@@ -1495,7 +1495,7 @@ void cheatButtonHandleCheatsTurnedOff(CHEAT_ID cheat_id)
                 g_playerPerm->player_perspective_height = 1.0f;
                 if (g_CurrentPlayer->ptr_char_objectinstance)
                 {
-                    set_obj_instance_controller_scale(g_CurrentPlayer->ptr_char_objectinstance, 2.0f * ((struct Model *)g_CurrentPlayer->ptr_char_objectinstance)->scale);
+                    modelSetScale(g_CurrentPlayer->ptr_char_objectinstance, 2.0f * ((struct Model *)g_CurrentPlayer->ptr_char_objectinstance)->scale);
                 }
                 return;
             }
@@ -1691,13 +1691,13 @@ void cheatButtonSetDkMode(CHEAT_ID cheat_id)
         model = (Model*)guard->model;
         if (model)
         {
-            set_obj_instance_controller_scale(model, model->scale * scale);
+            modelSetScale(model, model->scale * scale);
         }
 #else
         if (guard->model && not_in_us_7F0209EC(guard->bodynum, guard->headnum))
         {
             model = (Model*)guard->model;
-            set_obj_instance_controller_scale(model, model->scale * scale);
+            modelSetScale(model, model->scale * scale);
         }
 #endif
     }

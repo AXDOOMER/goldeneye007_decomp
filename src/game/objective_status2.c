@@ -25,7 +25,7 @@ void sub_GAME_7F057AC0(float *param_1)
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 
 GLOBAL_ASM(
 .late_rodata
@@ -134,7 +134,7 @@ glabel sub_GAME_7F057AC0
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 
 /* same asm, different float .rodata */
 

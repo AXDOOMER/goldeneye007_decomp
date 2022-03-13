@@ -284,7 +284,7 @@ s32 get_random_head(s32 id)
 /**
  * Address 0x7F02370C.
 */
-void expand_09_characters(s32 arg0, GuardRecord *arg1, s32 arg2)
+void expand_09_characters(s32 stageid, GuardRecord *arg1, s32 arg2)
 {
     PadRecord *pad;
     s32 unused2;
@@ -405,7 +405,7 @@ void chrlvIdleAnimationRelated(ChrRecord *self, f32 arg1)
 
 
 
-//#if defined(VERSION_US) || defined(VERSION_JP)
+
 /**
  * Address 0x7F023A94 (VERSION_US).
  * Address 0x7F023D94 (other)
@@ -8682,7 +8682,7 @@ void chrlvTickBondDieRemoved(ChrRecord *self)
 }
 
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(REFRESH_NTSC)
 /* NTSC */
 #define MAX_SPEED_A 0.2991993f
 #define ACCEL_A 0.014959966f
@@ -8698,7 +8698,7 @@ void chrlvTickBondDieRemoved(ChrRecord *self)
 #define ACCEL_C 0.009817477f
 #endif
 
-#if defined(VERSION_EU)
+#if defined(REFRESH_PAL)
 /* PAL */
 #define MAX_SPEED_A 0.359039157629013f
 #define ACCEL_A 0.0179519578814507f
@@ -12020,7 +12020,7 @@ bool chrDropItem(ChrRecord *self, s32 modelnum, u8 weaponid)
     
     if (NewModel && NewModel->prop)
     {
-        set_obj_instance_controller_scale(NewModel->model, NewModel->model->scale);
+        modelSetScale(NewModel->model, NewModel->model->scale);
         chrpropReparent(NewModel->prop, self->prop);
         NewModel->timer = CHRLV_DEFAULT_TIMER;
         propobjSetDropped(NewModel->prop, 1);

@@ -217,8 +217,11 @@ u32 D_8004093C = 0xDC;
 // rodata
 
 
+/**
+ * Named same as Perfect Dark.
+*/
 #ifdef NONMATCHING
-void sub_GAME_7F09C250(void) {
+void explosionCreate(void) {
 
 }
 #else
@@ -230,7 +233,7 @@ glabel D_800576B0
 glabel D_800576B4
 .word 0x40c90fdb /*6.2831855*/
 .text
-glabel sub_GAME_7F09C250
+glabel explosionCreate
 /* 0D0D80 7F09C250 27BDFFB8 */  addiu $sp, $sp, -0x48
 /* 0D0D84 7F09C254 00077400 */  sll   $t6, $a3, 0x10
 /* 0D0D88 7F09C258 000E7C03 */  sra   $t7, $t6, 0x10
@@ -607,7 +610,7 @@ glabel D_800576B0
 glabel D_800576B4
 .word 0x40c90fdb /*6.2831855*/
 .text
-glabel sub_GAME_7F09C250
+glabel explosionCreate
 /* 0D1960 7F09CDF0 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 0D1964 7F09CDF4 AFA7005C */  sw    $a3, 0x5c($sp)
 /* 0D1968 7F09CDF8 87AE005E */  lh    $t6, 0x5e($sp)
@@ -5292,7 +5295,7 @@ glabel sub_GAME_7F0A0034
 /* 0D4CEC 7F0A01BC 00000000 */   nop   
 /* 0D4CF0 7F0A01C0 00409025 */  move  $s2, $v0
 /* 0D4CF4 7F0A01C4 02802025 */  move  $a0, $s4
-/* 0D4CF8 7F0A01C8 0FC16327 */  jal   sub_GAME_7F058C9C
+/* 0D4CF8 7F0A01C8 0FC16327 */  jal   matrix_4x4_f32_to_s32
 /* 0D4CFC 7F0A01CC 00402825 */   move  $a1, $v0
 /* 0D4D00 7F0A01D0 02008825 */  move  $s1, $s0
 /* 0D4D04 7F0A01D4 AE370000 */  sw    $s7, ($s1)
@@ -6945,13 +6948,13 @@ glabel sub_GAME_7F0A108C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0A1A94(void) {
+void explosionRenderBulletImpactOnProp(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0A1A94
+glabel explosionRenderBulletImpactOnProp
 /* 0D65C4 7F0A1A94 27BDFFA0 */  addiu $sp, $sp, -0x60
 /* 0D65C8 7F0A1A98 AFB60038 */  sw    $s6, 0x38($sp)
 /* 0D65CC 7F0A1A9C AFB50034 */  sw    $s5, 0x34($sp)
@@ -7158,7 +7161,7 @@ glabel sub_GAME_7F0A1A94
 
 Gfx * sub_GAME_7F0A1D78(Gfx *arg0)
 {
-    return sub_GAME_7F0A1A94(arg0, NULL, 0);
+    return explosionRenderBulletImpactOnProp(arg0, NULL, 0);
 }
 
 

@@ -1,5 +1,5 @@
 //as this file is included c, not standalone object, save the parent: gun.c to rebuild the object
-#ifdef VERSION_US
+#ifdef BUGFIX_R0
 #define SCALEVAL1 0.80000001
 #define SCALEVAL_KNIFE 0.80000001
 #define SCALEVAL_SKORPION 0.80000001
@@ -8,8 +8,8 @@
 #define SCALEVAL_P90 0.80000001
 #define SCALEVAL_RUGER 0.80000001
 #define SCALEVAL_LAUNCHER 0.80000001
-#endif
-#ifdef VERSION_EU
+#else
+#ifdef BUGFIX_R2
 
 #define SCALEVAL1 0.881200015545f
 #define SCALEVAL_KNIFE 0.82279998064f
@@ -20,8 +20,8 @@
 #define SCALEVAL_RUGER 0.834399998188
 #define SCALEVAL_LAUNCHER 0.904799997807
 
-#endif
-#ifdef VERSION_JP
+#else
+#ifdef BUGFIX_R1
 #define SCALEVAL1 0.8812
 #define SCALEVAL_KNIFE 0.8228
 #define SCALEVAL_SKORPION 0.8695
@@ -30,6 +30,8 @@
 #define SCALEVAL_P90 0.8461
 #define SCALEVAL_RUGER 0.8344
 #define SCALEVAL_LAUNCHER 0.9048
+#endif
+#endif
 #endif
 //D:80032494
 WeaponStats default_weaponstats = {
