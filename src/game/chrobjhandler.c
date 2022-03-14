@@ -11043,7 +11043,7 @@ glabel object_interaction
 /* 07C09C 7F04756C C62600A0 */  lwc1  $f6, 0xa0($s1)
 /* 07C0A0 7F047570 AFA00478 */  sw    $zero, 0x478($sp)
 /* 07C0A4 7F047574 24050001 */  li    $a1, 1
-/* 07C0A8 7F047578 0FC0D521 */  jal   parse_handle_actionblocks
+/* 07C0A8 7F047578 0FC0D521 */  jal   ai
 /* 07C0AC 7F04757C E7A6047C */   swc1  $f6, 0x47c($sp)
 /* 07C0B0 7F047580 C62E0098 */  lwc1  $f14, 0x98($s1)
 /* 07C0B4 7F047584 3C018005 */  lui   $at, %hi(g_GlobalTimerDelta)
@@ -11670,7 +11670,7 @@ glabel object_interaction
 /* 07C9EC 7F047EBC 24010028 */  li    $at, 40
 /* 07C9F0 7F047EC0 144100DA */  bne   $v0, $at, .L7F04822C
 /* 07C9F4 7F047EC4 02202025 */   move  $a0, $s1
-/* 07C9F8 7F047EC8 0FC0D521 */  jal   parse_handle_actionblocks
+/* 07C9F8 7F047EC8 0FC0D521 */  jal   ai
 /* 07C9FC 7F047ECC 24050001 */   li    $a1, 1
 /* 07CA00 7F047ED0 8E300014 */  lw    $s0, 0x14($s1)
 /* 07CA04 7F047ED4 26250058 */  addiu $a1, $s1, 0x58
@@ -16149,7 +16149,7 @@ glabel object_interaction
 /* 07C4E0 7F047970 C62600A0 */  lwc1  $f6, 0xa0($s1)
 /* 07C4E4 7F047974 AFA0047C */  sw    $zero, 0x47c($sp)
 /* 07C4E8 7F047978 24050001 */  li    $a1, 1
-/* 07C4EC 7F04797C 0FC0D5E1 */  jal   parse_handle_actionblocks
+/* 07C4EC 7F04797C 0FC0D5E1 */  jal   ai
 /* 07C4F0 7F047980 E7A60480 */   swc1  $f6, 0x480($sp)
 /* 07C4F4 7F047984 C62E0098 */  lwc1  $f14, 0x98($s1)
 /* 07C4F8 7F047988 3C018005 */  lui   $at, %hi(g_GlobalTimerDelta) # $at, 0x8005
@@ -16776,7 +16776,7 @@ glabel object_interaction
 /* 07CE30 7F0482C0 24010028 */  li    $at, 40
 /* 07CE34 7F0482C4 144100DA */  bne   $v0, $at, .Ljp7F048630
 /* 07CE38 7F0482C8 02202025 */   move  $a0, $s1
-/* 07CE3C 7F0482CC 0FC0D5E1 */  jal   parse_handle_actionblocks
+/* 07CE3C 7F0482CC 0FC0D5E1 */  jal   ai
 /* 07CE40 7F0482D0 24050001 */   li    $a1, 1
 /* 07CE44 7F0482D4 8E300014 */  lw    $s0, 0x14($s1)
 /* 07CE48 7F0482D8 26250058 */  addiu $a1, $s1, 0x58
@@ -21262,7 +21262,7 @@ glabel object_interaction
 /* 07A138 7F047748 C62600A0 */  lwc1  $f6, 0xa0($s1)
 /* 07A13C 7F04774C AFA0047C */  sw    $zero, 0x47c($sp)
 /* 07A140 7F047750 24050001 */  li    $a1, 1
-/* 07A144 7F047754 0FC0D531 */  jal   parse_handle_actionblocks
+/* 07A144 7F047754 0FC0D531 */  jal   ai
 /* 07A148 7F047758 E7A60480 */   swc1  $f6, 0x480($sp)
 /* 07A14C 7F04775C C62E0098 */  lwc1  $f14, 0x98($s1)
 /* 07A150 7F047760 3C018004 */  lui   $at, %hi(g_GlobalTimerDelta) # $at, 0x8004
@@ -21887,7 +21887,7 @@ glabel object_interaction
 /* 07AA80 7F048090 24010028 */  li    $at, 40
 /* 07AA84 7F048094 144100DD */  bne   $v0, $at, .L7F04840C
 /* 07AA88 7F048098 02202025 */   move  $a0, $s1
-/* 07AA8C 7F04809C 0FC0D531 */  jal   parse_handle_actionblocks
+/* 07AA8C 7F04809C 0FC0D531 */  jal   ai
 /* 07AA90 7F0480A0 24050001 */   li    $a1, 1
 /* 07AA94 7F0480A4 8E240014 */  lw    $a0, 0x14($s1)
 /* 07AA98 7F0480A8 26300058 */  addiu $s0, $s1, 0x58
@@ -43657,25 +43657,25 @@ glabel initialize_door
 
 //todo: Code matches however, some data is tied to an earlier func
 #ifdef NONMATCHING
-s32 sub_GAME_7F0537B8(f32 vol, f32 min, f32 max) //#MATCH
+s32 sub_GAME_7F0537B8(f32 distance, f32 min, f32 max) //#MATCH
 {
     s32 retval; //var is needed
 
-    if (vol <= 200.0f)
+    if (distance <= 200.0f)
     {
         retval = SHRT_MAX;
     }
-    else if (max <= vol)
+    else if (max <= distance)
     {
         retval = 0.0f;
     }
-    else if (min <= vol)
+    else if (min <= distance)
     {
-        retval = ((max - vol) * 10000.0f) / (max - min);
+        retval = ((max - distance) * 10000.0f) / (max - min);
     }
     else
     {
-        retval = SHRT_MAX - (s32)((sqrtf(vol - 200.0f) * SHRT_MAX) / sqrtf(min - 200.0f));
+        retval = SHRT_MAX - (s32)((sqrtf(distance - 200.0f) * SHRT_MAX) / sqrtf(min - 200.0f));
     }
     return retval;
 }
@@ -43751,13 +43751,12 @@ glabel sub_GAME_7F0537B8
 
 
 #ifdef NONMATCHING
-// registers and stack are wrong
-// instructions match
-s32 sub_GAME_7F053894(coord3d *pos, f32 high, f32 low)
+// some sp offsets are wrong, the rest matches
+s32 sub_GAME_7F053894(coord3d *pos, f32 low, f32 high)
 {
     PropRecord *prop;
     s32 index;
-    f32 longest_distance = low;
+    f32 shortest_distance = high;
     f32 diffx;
     f32 diffy;
     f32 diffz;
@@ -43772,12 +43771,12 @@ s32 sub_GAME_7F053894(coord3d *pos, f32 high, f32 low)
         diffz = prop->pos.z - pos->z;
         distance = sqrtf(diffx * diffx + diffy * diffy + diffz * diffz);
 
-        if (distance > longest_distance)
+        if (distance < shortest_distance)
         {
-            longest_distance = distance;
+            shortest_distance = distance;
         }
     }
-    return sub_GAME_7F0537B8(longest_distance, high, low);
+    return sub_GAME_7F0537B8(shortest_distance, low, high);
 }
 #else
 GLOBAL_ASM(

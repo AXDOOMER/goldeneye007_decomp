@@ -239,7 +239,7 @@
   @exception: AI_LIST_ID Must NOT be a BG List (10XX)  
 ******************************************************************************/  
 #define JUMPTO_THEN_GUARD(AI_LIST_ID)  \
-                SetReturnAiList(GAILIST_STANDARD_GUARD)SetChrAiList(CHR_SELF, (!isAiBGID(AI_LIST_ID) ? AI_LIST_ID : AI_ERR_SUB))   
+                SetReturnAiList(GAILIST_STANDARD_GUARD)SetChrAiList(CHR_SELF, (!isBGAIListID(AI_LIST_ID) ? AI_LIST_ID : AI_ERR_SUB))   
 
 
  
@@ -252,7 +252,7 @@
   @exception: AI_LIST_ID Must NOT be a BG List (10XX)  
 ******************************************************************************/  
 #define JUMPTO_THEN_LOOP(AI_LIST_ID)  \
-                SetReturnAiList(AI_LIST_ID)SetChrAiList(CHR_SELF, (!isAiBGID(AI_LIST_ID) ? AI_LIST_ID : AI_ERR_SUB))   
+                SetReturnAiList(AI_LIST_ID)SetChrAiList(CHR_SELF, (!isBGAIListID(AI_LIST_ID) ? AI_LIST_ID : AI_ERR_SUB))   
 
 
  
@@ -265,7 +265,7 @@
   @exception: AI_LIST_ID Must NOT be a BG List (10XX)  
 ******************************************************************************/  
 #define JumpTo(AI_LIST_ID)  \
-                SetChrAiList(CHR_SELF, (!isAiBGID(AI_LIST_ID) ? AI_LIST_ID : AI_ERR_SUB))   
+                SetChrAiList(CHR_SELF, (!isBGAIListID(AI_LIST_ID) ? AI_LIST_ID : AI_ERR_SUB))   
 
 
  
@@ -278,7 +278,7 @@
               Only use when Bond has a 3rd person model (cutscenes)  
 ******************************************************************************/  
 #define SetBondsAiList(AI_LIST_ID)  \
-                SetChrAiList(CHR_BOND_CINEMA, (!isAiBGID(AI_LIST_ID) ? AI_LIST_ID : AI_ERR_NOTCHR))   
+                SetChrAiList(CHR_BOND_CINEMA, (!isBGAIListID(AI_LIST_ID) ? AI_LIST_ID : AI_ERR_NOTCHR))   
 
 
  
@@ -292,7 +292,7 @@
               THIS must be defined for this function to be able to return 
 ******************************************************************************/  
 #define CALL(AI_LIST_ID)  \
-                                  IF_ELSE (  DEFINED (  THIS )                     )  (  AI_ERR_NO_THIS   )  (  (                    SetReturnAiList(THIS)SetChrAiList(CHR_SELF, (!isAiBGID(AI_LIST_ID) && isSubroutine(AI_LIST_ID) ? AI_LIST_ID : AI_ERR_NOTSUB)) )  )  ,    
+                                  IF_ELSE (  DEFINED (  THIS )                     )  (  AI_ERR_NO_THIS   )  (  (                    SetReturnAiList(THIS)SetChrAiList(CHR_SELF, (!isBGAIListID(AI_LIST_ID) && isSubroutine(AI_LIST_ID) ? AI_LIST_ID : AI_ERR_NOTSUB)) )  )  ,    
 
 
  
