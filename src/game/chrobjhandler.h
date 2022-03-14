@@ -107,4 +107,5 @@ PropRecord          *chrTryEquipHat(ChrRecord *self, s32 index, s32 flags);
 void sub_GAME_7F04C044(PropRecord *prop);
 void sub_GAME_7F043650(struct WeaponObjRecord *arg0);
 s32 sub_GAME_7F0446B8(struct rect4f *arg0, s32 arg1, struct rect4f *arg2, s32 arg3);
+s32 sub_GAME_7F044718(struct coord3d *arg0, f32 arg1, struct rect4f *arg2, s32 arg3);
 #endif
