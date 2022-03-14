@@ -3844,47 +3844,23 @@ void sub_GAME_7F03CF88(PropRecord *arg0, f32 *arg1, f32 *arg2, f32 *arg3)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03CFE8(void) {
+/**
+ * Address 0x7F03CFE8.
+*/
+f32 sub_GAME_7F03CFE8(PropRecord *arg0)
+{
+    if (arg0->type == PROP_TYPE_CHR)
+    {
+        return chrGetChrGround(arg0);
+    }
 
+    if (arg0->type == PROP_TYPE_VIEWER)
+    {
+        return bondviewGetPlayerStanHeight(g_playerPointers[sub_GAME_7F09B15C(arg0)]);
+    }
+
+    return 0.0f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03CFE8
-/* 071B18 7F03CFE8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 071B1C 7F03CFEC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 071B20 7F03CFF0 90820000 */  lbu   $v0, ($a0)
-/* 071B24 7F03CFF4 24010003 */  li    $at, 3
-/* 071B28 7F03CFF8 54410006 */  bnel  $v0, $at, .L7F03D014
-/* 071B2C 7F03CFFC 24010006 */   li    $at, 6
-/* 071B30 7F03D000 0FC08C62 */  jal   chrGetChrGround
-/* 071B34 7F03D004 00000000 */   nop   
-/* 071B38 7F03D008 10000010 */  b     .L7F03D04C
-/* 071B3C 7F03D00C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 071B40 7F03D010 24010006 */  li    $at, 6
-.L7F03D014:
-/* 071B44 7F03D014 5441000B */  bnel  $v0, $at, .L7F03D044
-/* 071B48 7F03D018 44800000 */   mtc1  $zero, $f0
-/* 071B4C 7F03D01C 0FC26C57 */  jal   sub_GAME_7F09B15C
-/* 071B50 7F03D020 00000000 */   nop   
-/* 071B54 7F03D024 00027080 */  sll   $t6, $v0, 2
-/* 071B58 7F03D028 3C048008 */  lui   $a0, %hi(g_playerPointers)
-/* 071B5C 7F03D02C 008E2021 */  addu  $a0, $a0, $t6
-/* 071B60 7F03D030 0FC225DE */  jal   bondviewGetPlayerStanHeight
-/* 071B64 7F03D034 8C849EE0 */   lw    $a0, %lo(g_playerPointers)($a0)
-/* 071B68 7F03D038 10000004 */  b     .L7F03D04C
-/* 071B6C 7F03D03C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 071B70 7F03D040 44800000 */  mtc1  $zero, $f0
-.L7F03D044:
-/* 071B74 7F03D044 00000000 */  nop   
-/* 071B78 7F03D048 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F03D04C:
-/* 071B7C 7F03D04C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 071B80 7F03D050 03E00008 */  jr    $ra
-/* 071B84 7F03D054 00000000 */   nop   
-)
-#endif
 
 
 
