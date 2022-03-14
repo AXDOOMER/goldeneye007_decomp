@@ -13,6 +13,7 @@
 #include "bondinv.h"
 #include "bondhead.h"
 #include "chr.h"
+#include "chrai.h"
 #include "chr_b.h"
 #include "chrlv.h"
 #include "chrobjhandler.h"
@@ -21,6 +22,7 @@
 #include "front.h"
 #include "gun.h"
 #include "initanitable.h"
+#include "loadobjectmodel.h"
 #include "lvl.h"
 #include "math_atan2f.h"
 #include "matrixmath.h"
@@ -602,7 +604,7 @@ void sub_GAME_7F07EAF0(void);
 void sub_GAME_7F07EC54(void);
 void sub_GAME_7F081478(void);
 void sub_GAME_7F07C7B4(void);
-s32 sub_GAME_7F07CAC8(struct coord3d *arg0, struct StandTile *arg1, f32 arg2, f32 *arg3, f32 *arg4);
+s32 sub_GAME_7F07CAC8(struct coord3d *arg0, struct StandTile *arg1, f32 arg2, f32 *arg3, struct coord3d *arg4);
 s32 sub_GAME_7F07CDA8(struct coord3d *arg0, struct StandTile *arg1, f32 arg2);
 s32 sub_GAME_7F07CDD4(struct coord3d *arg0, f32 arg1, struct StandTile **arg2);
 s32 cal_player_collision(struct coord3d *arg0, struct StandTile **stan);
@@ -10215,7 +10217,8 @@ glabel sub_GAME_7F07CA2C
 
 
 #ifdef NONMATCHING
-?32 sub_GAME_7F07CAC8(void *arg0, s32 arg1, f32 arg2, ?32 arg3, ?32 arg4) {
+s32 sub_GAME_7F07CAC8(struct coord3d *arg0, struct StandTile *arg1, f32 arg2, f32 *arg3, f32 *arg4)
+{
     ? sp34;
     f32 sp74;
     f32 sp7C;
@@ -26049,8 +26052,24 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
 
     // boost sideways
     f32 sp388;
+    
+    struct coord3d sp374;
 
+    struct coord3d sp368;
+
+    f32 sp35C;
     f32 sp358;
+    f32 sp354;
+    struct coord3d unksp348;
+    struct coord3d unksp33C;
+    f32 sp338;
+    f32 sp334;
+    f32 sp324;
+    f32 sp320;
+    f32 sp31C;
+    f32 sp30C;
+    f32 sp308;
+    f32 sp304;
 
     // sp 0x300
     struct ObjectRecord *tank_obj;
@@ -26076,9 +26095,11 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
     f32 sp16C;
     f32 sp168;
     f32 sp144;
+    struct ObjectRecord *sp138;
     s32 sp5C;
     f32 sp50;
     f32 sp48;
+    f32 sp44;
     f32 sp34;
     f32 sp30;
 
@@ -26110,6 +26131,12 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
     f32 temp_f0_20;
     f32 temp_f0_18;
     f32 temp_f2_12;
+    f32 temp_f16_2;
+    f32 temp_f18_2;
+    f32 temp_f0_4;
+    f32 temp_f0_5;
+    f32 temp_f2_6;
+    f32 phi_f18_2;
     f32 phi_f2_6;
     f32 phi_at;
 
@@ -26214,26 +26241,21 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
 
     if (in_tank_flag == 1)
     {
-        temp_f2_3 = g_CurrentPlayer->speedtheta * g_GlobalTimerDelta * 0.017453292f * 3.5f;
-        temp_f0_3 = D_80036464 + temp_f2_3;
-        phi_f0 = temp_f0_3;
-        if (temp_f0_3 >= 6.2831855f)
+        sp358 = g_CurrentPlayer->speedtheta * g_GlobalTimerDelta * 0.017453292f * 3.5f;
+        sp35C = D_80036464 + sp358;
+        if (sp35C >= 6.2831855f)
         {
-            phi_f0 = temp_f0_3 - 6.2831855f;
+            sp35C = sp35C - 6.2831855f;
         }
-        phi_f0_2 = phi_f0;
-        if (phi_f0 < 0.0f)
+        if (sp35C < 0.0f)
         {
-            phi_f0_2 = phi_f0 + 6.2831855f;
+            sp35C = sp35C + 6.2831855f;
         }
-        sp358 = temp_f2_3;
-        sp35C = phi_f0_2;
         if (sub_GAME_7F07CAC8(
-            6.2831855f,
             &g_CurrentPlayer->field_488.collision_position,
             g_CurrentPlayer->field_488.current_tile_ptr,
-            phi_f0_2,
-            &sp374,
+            sp35C,
+            &sp374.f[0],
             &sp368) != 0)
         {
             D_80036464 = sp35C;
@@ -26243,61 +26265,49 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             sp31C = -1.0f;
             sp304 = -1.0f;
             getCollisionEdge_maybe(&unksp348, &unksp33C);
-            temp_f2_4 = unksp33C - unksp348;
-            temp_f14_2 = sp344 - sp350;
-            sp338 = temp_f2_4;
-            sp334 = temp_f14_2;
-            temp_f16_2 = 1.0f / sqrtf((temp_f2_4 * temp_f2_4) + (temp_f14_2 * temp_f14_2));
-            temp_t0_7 = g_CurrentPlayer;
-            temp_f14_3 = temp_f14_2 * temp_f16_2;
-            temp_f12 = -(temp_f2_4 * temp_f16_2);
-            sp320 = temp_f12;
-            sp324 = temp_f14_3;
-            sp48 = temp_t0_7->field_488.collision_position.f[2];
-            sp44 = temp_t0_7->field_488.collision_position.f[0];
-            temp_f18_2 = ((sp48 - sp370) * temp_f12) + ((sp44 - sp368) * temp_f14_3);
-            phi_f18 = temp_f18_2;
+            sp338 = unksp33C.f[0] - unksp348.f[0];
+            sp334 = unksp33C.f[2] - unksp348.f[2];
+            temp_f16_2 = 1.0f / sqrtf((sp338 * sp338) + (sp334 * sp334));
+            sp324 = sp334 * temp_f16_2;
+            sp320 = -(sp338 * temp_f16_2);
+            sp48 = g_CurrentPlayer->field_488.collision_position.f[2];
+            sp44 = g_CurrentPlayer->field_488.collision_position.f[0];
+            temp_f18_2 = ((sp48 - sp368.f[2]) * sp320) + ((sp44 - sp368.f[0]) * sp324);
             if (temp_f18_2 < 0.0f)
             {
-                sp324 = -temp_f14_3;
-                sp320 = -temp_f12;
-                phi_f18 = -temp_f18_2;
+                sp324 = -sp324;
+                sp320 = -sp320;
+                temp_f18_2 = -temp_f18_2;
             }
-            temp_f0_4 = ((sp48 - sp350) * sp320) + ((sp44 - unksp348) * sp324);
-            if (temp_f0_4 < phi_f18)
+            temp_f0_4 = ((sp48 - unksp348.f[2]) * sp320) + ((sp44 - unksp348.f[0]) * sp324);
+            if (temp_f0_4 < temp_f18_2)
             {
-                sp31C = phi_f18 - temp_f0_4;
+                sp31C = temp_f18_2 - temp_f0_4;
             }
-            temp_f2_5 = sp368 - sp374;
-            temp_f14_4 = sp370 - sp37C;
-            sp338 = temp_f2_5;
-            sp334 = temp_f14_4;
-            temp_f16_3 = 1.0f / sqrtf((temp_f2_5 * temp_f2_5) + (temp_f14_4 * temp_f14_4));
-            temp_t0_8 = g_CurrentPlayer;
-            temp_f14_5 = temp_f14_4 * temp_f16_3;
-            temp_f12_2 = -(temp_f2_5 * temp_f16_3);
-            sp308 = temp_f12_2;
-            sp30C = temp_f14_5;
-            sp48 = temp_t0_8->field_488.collision_position.f[2];
-            sp44 = temp_t0_8->field_488.collision_position.f[0];
-            temp_f18_3 = ((sp48 - sp370) * temp_f12_2) + ((sp44 - sp368) * temp_f14_5);
-            phi_f18_2 = temp_f18_3;
-            if (temp_f18_3 < 0.0f)
+            sp338 = sp368.f[0] - sp374.f[0];
+            sp334 = sp368.f[2] - sp374.f[2];
+            
+            temp_f16_2 = 1.0f / sqrtf((sp338 * sp338) + (sp334 * sp334));
+            sp30C = sp334 * temp_f16_2;
+            sp308 = -(sp338 * temp_f16_2);
+            sp48 = g_CurrentPlayer->field_488.collision_position.f[2];
+            sp44 = g_CurrentPlayer->field_488.collision_position.f[0];
+            phi_f18_2 = ((sp48 - sp368.f[2]) * sp308) + ((sp44 - sp368.f[0]) * sp30C);
+            if (phi_f18_2 < 0.0f)
             {
-                sp308 = -temp_f12_2;
-                sp30C = -temp_f14_5;
-                phi_f18_2 = -temp_f18_3;
+                sp308 = -sp308;
+                sp30C = -sp30C;
+                phi_f18_2 = -phi_f18_2;
             }
-            temp_f0_5 = ((sp48 - sp350) * sp308) + ((sp44 - unksp348) * sp30C);
-            temp_f2_6 = ((sp48 - sp344) * sp308) + ((sp44 - unksp33C) * sp30C);
-            phi_f0_3 = temp_f0_5;
+            temp_f0_5 = ((sp48 - unksp348.f[2]) * sp308) + ((sp44 - unksp348.f[0]) * sp30C);
+            temp_f2_6 = ((sp48 - unksp33C.f[2]) * sp308) + ((sp44 - unksp33C.f[0]) * sp30C);
             if (temp_f2_6 < temp_f0_5)
             {
-                phi_f0_3 = temp_f2_6;
+                temp_f0_5 = temp_f2_6;
             }
-            if (phi_f0_3 < phi_f18_2)
+            if (temp_f0_5 < phi_f18_2)
             {
-                sp304 = phi_f18_2 - phi_f0_3;
+                sp304 = phi_f18_2 - temp_f0_5;
             }
             if ((sp304 >= 0.0f) && ((sp304 < sp31C) || (sp31C < 0.0f)))
             {
@@ -26307,14 +26317,12 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             }
             if (sp31C >= 0.0f)
             {
-                temp_a0 = &sp3AC;
-                sp3AC = sp31C * sp324 * 1.01f;
-                sp3B4 = sp31C * sp320 * 1.01f;
-                sub_GAME_7F07D960(temp_a0, 1);
-                temp_t0_9 = g_CurrentPlayer;
-                sp3AC = 0.0f;
-                sp3B4 = 0.0f;
-                if (sub_GAME_7F07CAC8((bitwise f32) &temp_t0_9->field_488.collision_position, (struct coord3d *) temp_t0_9->field_488.current_tile_ptr, (bitwise StandTile *) sp35C, (bitwise f32) &sp374, &sp368) != 0)
+                sp3AC.f[0] = sp31C * sp324 * 1.01f;
+                sp3AC.f[2] = sp31C * sp320 * 1.01f;
+                sub_GAME_7F07D960(&sp3AC, 1);
+                sp3AC.f[0] = 0.0f;
+                sp3AC.f[2] = 0.0f;
+                if (sub_GAME_7F07CAC8(&g_CurrentPlayer->field_488.collision_position, g_CurrentPlayer->field_488.current_tile_ptr, sp35C, &sp374.f[0], &sp368.f[0]) != 0)
                 {
                     D_80036464 = sp35C;
                 }
@@ -26328,69 +26336,57 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
                 sp358 = 0.0f;
             }
         }
-        temp_f12_3 = D_80036474;
+
+        sp354 = D_80036474;
         D_80036484 += D_80036488;
-        temp_f0_6 = D_80036484;
-        temp_f16_4 = temp_f12_3;
-        phi_f14 = 6.2831855f;
-        if (temp_f0_6 >= 6.2831855f)
+        //phi_f14 = 6.2831855f;
+        if (D_80036484 >= 6.2831855f)
         {
-            D_80036484 = temp_f0_6 - 6.2831855f;
+            D_80036484 = D_80036484 - 6.2831855f;
         }
-        phi_f0_4 = D_80036484;
         if (D_80036484 < 0.0f)
         {
             D_80036484 += 6.2831855f;
-            phi_f0_4 = D_80036484;
         }
-        temp_f2_7 = (g_CurrentPlayer->speedtheta * 3.5f * 0.017453292f * 4.0f) + phi_f0_4;
-        phi_f2 = temp_f2_7;
-        if (temp_f2_7 < 0.0f)
+
+        tank_tick_increment = (g_CurrentPlayer->speedtheta * 3.5f * 0.017453292f * 4.0f) + D_80036484;
+       
+        if (tank_tick_increment < 0.0f)
         {
-            phi_f2 = temp_f2_7 + 6.2831855f;
+            tank_tick_increment = tank_tick_increment + 6.2831855f;
         }
-        phi_f2_2 = phi_f2;
-        if (phi_f2 >= 6.2831855f)
+        if (tank_tick_increment >= 6.2831855f)
         {
-            phi_f2_2 = phi_f2 - 6.2831855f;
+            tank_tick_increment = tank_tick_increment - 6.2831855f;
         }
-        temp_f0_7 = phi_f2_2 - temp_f12_3;
-        phi_f2_3 = phi_f2_2;
-        if (temp_f0_7 >= 3.1415927f)
+
+        if ((tank_tick_increment - sp354) >= 3.1415927f)
         {
-            phi_f2_3 = phi_f2_2 - 6.2831855f;
+            tank_tick_increment = tank_tick_increment - 6.2831855f;
         }
-        else if (temp_f0_7 < -3.1415927f)
+        else if ((tank_tick_increment - sp354) < -3.1415927f)
         {
-            phi_f2_3 = phi_f2_2 + 6.2831855f;
+            tank_tick_increment = tank_tick_increment + 6.2831855f;
         }
-        temp_a0_2 = g_ClockTimer;
-        if (temp_a0_2 > 0)
+
+        if (g_ClockTimer > 0)
         {
-            temp_f18_4 = 0.92f * D_80036478;
-            phi_f18_3 = temp_f18_4;
-            phi_v0_2 = 1;
-            phi_f18_4 = temp_f18_4;
-            phi_f14 = 0.92f;
-            if (temp_a0_2 > 1)
+            tank_tick_last = 0.92f * D_80036478;
+
+            for (i=1; i<g_ClockTimer; i++)
             {
-                do
-                {
-                    temp_v0_5 = phi_v0_2 + 1;
-                    D_80036478 = phi_f18_3 + phi_f2_3;
-                    temp_f18_5 = 0.92f * D_80036478;
-                    phi_f18_3 = temp_f18_5;
-                    phi_v0_2 = temp_v0_5;
-                    phi_f18_4 = temp_f18_5;
-                } while (temp_v0_5 < temp_a0_2);
+                D_80036478 = tank_tick_last + tank_tick_increment;
+                tank_tick_last = 0.92f * D_80036478;
             }
-            D_80036478 = phi_f18_4 + phi_f2_3;
+
+            D_80036478 = tank_tick_last + tank_tick_increment;
         }
+
         D_80036474 = D_80036478 * 0.07999998f;
-        temp_f12_4 = D_80036474;
-        if (temp_f12_4 >= 6.2831855f)
+
+        if (D_80036474 >= 6.2831855f)
         {
-            D_80036474 = temp_f12_4 - 6.2831855f;
+            D_80036474 = D_80036474 - 6.2831855f;
             D_80036478 = D_80036474 / 0.07999998f;
         }
         if (D_80036474 < 0.0f)
@@ -26398,18 +26394,14 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             D_80036474 += 6.2831855f;
             D_80036478 = D_80036474 / 0.07999998f;
         }
-        sp354 = temp_f16_4;
         
         if (sub_GAME_7F07CDA8(
-            D_80036474,
-            phi_f14,
-            g_CurrentPlayer + 0x48C,
+            &g_CurrentPlayer->field_488.collision_position,
             g_CurrentPlayer->field_488.current_tile_ptr,
-            D_80036464,
-            &D_80036474) == 0)
+            D_80036464) == 0)
         {
-            D_80036474 = temp_f16_4;
-            D_80036484 = temp_f16_4;
+            D_80036474 = sp354;
+            D_80036484 = sp354;
             D_80036478 = D_80036474 / 0.07999998f;
         }
 
@@ -27000,6 +26992,127 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
 
     if ((ptr_playerstank != 0) && (in_tank_flag == 1) && (dword_CODE_bss_800799B8 == 2))
     {
+        temp_v0_9 = temp_v1_4->obj;
+        sp138 = temp_v0_9;
+        sp130 = temp_v0_9->model->obj->Switches->unk14->unk4;
+        temp_a0_11 = getCurrentPlayerWeaponId(GUNRIGHT) == 0x20;
+        phi_a0 = temp_a0_11;
+        if (temp_a0_11 != 0)
+        {
+            phi_a0 = get_hands_firing_status(GUNRIGHT) != 0;
+        }
+        temp_v0_9->unkC4 = phi_a0;
+        temp_v0_9->unkC8 = (f32) D_8003646C;
+        temp_v0_9->unkCC = (f32) D_80036474;
+        temp_v0_9->unkDC = (f32) D_80036464;
+        matrix_4x4_set_rotation_around_y(6.2831855f - D_80036464, &spF0);
+        matrix_scalar_multiply(sp138->model->scale, spF0.m[0]);
+        spE4 = -flt_CODE_bss_800799AC;
+        spE8 = -flt_CODE_bss_800799AC;
+        spEC = -flt_CODE_bss_800799B0;
+        matrix_4x4_rotate_vector_in_place(&spF0, &spE4);
+        temp_t0_29 = g_CurrentPlayer;
+        spE4 += temp_t0_29->field_488.collision_position.f[0];
+        spEC += temp_t0_29->field_488.collision_position.f[2];
+        sp138->prop->stan = temp_t0_29->field_488.current_tile_ptr;
+        temp_t0_30 = g_CurrentPlayer;
+        walkTilesBetweenPoints_NoCallback(&sp138->prop->stan, temp_t0_30->field_488.collision_position.f[0], temp_t0_30->field_488.collision_position.f[2], spE4, spEC);
+        temp_v0_9->unkD4 = stanGetPositionYValue(sp138->prop->stan, spE4, spEC);
+        phi_v0_5 = 0;
+        if (g_ClockTimer > 0)
+        {
+            do
+            {
+                temp_v0_10 = phi_v0_5 + 1;
+                temp_v0_9->unkD0 = (f32) ((temp_v0_9->unkD0 * 0.83f) + temp_v0_9->unkD4);
+                phi_v0_5 = temp_v0_10;
+            } while (temp_v0_10 < g_ClockTimer);
+        }
+        temp_f20_2 = temp_v0_9->unkD0 * 0.17000002f;
+        spE8 = (temp_f20_2 - (chrpropBBOXGetYmin(sp130) * sp138->model->scale)) + 4.0f;
+        matrix_4x4_copy(&spF0, (Mtxf *) &sp138->runtime_MATRIX0);
+        sp138->prop->pos.f[0] = spE4;
+        sp138->runtime_x_pos = spE4;
+        sp138->prop->pos.f[1] = spE8;
+        sp138->runtime_y_pos = spE8;
+        sp138->prop->pos.f[2] = spEC;
+        sp138->runtime_z_pos = spEC;
+        sub_GAME_7F056CA0(sp138);
+        sub_GAME_7F040484(sp138);
+        sub_GAME_7F07C888(&spB4, &g_CurrentPlayer->field_488.collision_position, D_80036464);
+        chraiGetPropRoomIds(sp138->prop, &sp94);
+        sub_GAME_7F03E3FC(&sp94);
+        temp_t6 = ptr_list_object_lookup_indices;
+        sp8C = temp_t6;
+        temp_v0_11 = *temp_t6;
+        phi_v0_6 = temp_v0_11;
+        if ((s32) temp_v0_11 >= 0)
+        {
+            do
+            {
+                temp_s0_2 = (phi_v0_6 * 0x34) + pos_data_entry;
+                if (temp_s0_2 != sp138->prop)
+                {
+                    temp_v0_13 = temp_s0_2->type;
+                    if (temp_v0_13 == 3)
+                    {
+                        sp7C = 1;
+                        sp6C = temp_s0_2->obj;
+                        sub_GAME_7F03CF88(temp_s0_2, &sp80, &sp88, &sp84);
+                        temp_a0_12 = &temp_s0_2->pos;
+                        sp50 = temp_a0_12;
+                        if (sub_GAME_7F03CCD8(temp_a0_12, &spB4, 4) != 0)
+                        {
+                            sp7C = 0;
+                            if (sp6C->actiontype == 4)
+                            {
+                                temp_v1_5 = sp6C->chrflags;
+                                if ((temp_v1_5 << 7) >= 0)
+                                {
+                                    sp6C->chrflags = temp_v1_5 | 0x01000000;
+                                    temp_hi = (s32) D_80048380 % 3;
+                                    phi_v0_7 = temp_hi;
+                                    if (temp_hi < 2)
+                                    {
+                                        sub_GAME_7F053A10(sndPlaySfx((ALBankAlt_s *) g_musicSfxBufferPtr, 0xB7, NULL), sp50);
+                                        phi_v0_7 = (s32) D_80048380 % 3;
+                                    }
+                                    if (phi_v0_7 > 0)
+                                    {
+                                        sub_GAME_7F053A10(sndPlaySfx((ALBankAlt_s *) g_musicSfxBufferPtr, 0xD5, NULL), sp50);
+                                    }
+                                }
+                            }
+                        }
+                        if ((sp7C != 0) && (sub_GAME_7F044718(sp50, sp80, &spB4, 4) != 0))
+                        {
+                            sp7C = 0;
+                        }
+                        if (sp7C == 0)
+                        {
+                            temp_a1_2 = &sp70;
+                            sp70 = sp138->runtime_x_pos;
+                            sp74 = temp_s0_2->pos.f[1];
+                            sp78 = sp138->runtime_z_pos;
+                            chrlvExplosionDamage((ChrRecord *) temp_s0_2->obj, (struct coord3d *) temp_a1_2, 3.0f, 1);
+                        }
+                    }
+                    else if (temp_v0_13 == 1)
+                    {
+                        chraiGetCollisionBoundsWithoutY(temp_s0_2, &sp64, &sp60);
+                        if ((sp60 > 0) && (sub_GAME_7F0446B8(sp64, sp60, &spB4, 4) != 0))
+                        {
+                            sub_GAME_7F04DEFC(temp_s0_2, 0x461C4000, &temp_s0_2->obj->runtime_x_pos, 0x20, get_cur_playernum());
+                            D_80036490 = 0x5A;
+                        }
+                    }
+                }
+                temp_t6_2 = sp8C + 2;
+                sp8C = temp_t6_2;
+                temp_v0_12 = *temp_t6_2;
+                phi_v0_6 = temp_v0_12;
+            } while ((s32) temp_v0_12 >= 0);
+        }
     }
 
     bondviewUpdatePlayerClipping(sp394, sp390);

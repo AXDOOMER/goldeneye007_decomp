@@ -516,4 +516,5 @@ f32           chrpropBBOXGetYmax(ModelNode_BoundingBoxRecord *modelBoundingBox);
 f32           chrpropBBOXGetZmin(ModelNode_BoundingBoxRecord *modelBoundingBox);
 ObjectRecord *sub_GAME_7F03FAB0(PadRecord *pad, s32 RoomID);
 void          chraiGetCollisionBounds(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *arg3, f32 *arg4);
+void sub_GAME_7F03CF88(PropRecord *arg0, f32 *arg1, f32 *arg2, f32 *arg3);
 #endif

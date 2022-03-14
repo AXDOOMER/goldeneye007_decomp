@@ -3821,44 +3821,25 @@ s32 sub_GAME_7F03CCD8(coord3d *arg0, struct rect4f *arg1, s32 arg2)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03CF88(void) {
+/**
+ * Address 0x7F03CF88.
+*/
+void sub_GAME_7F03CF88(PropRecord *arg0, f32 *arg1, f32 *arg2, f32 *arg3)
+{
+    if (arg0->type == PROP_TYPE_CHR)
+    {
+        chrGetChrWidthHeight(arg0, arg1, arg2, arg3);
+        return;
+    }
 
+    if (arg0->type == PROP_TYPE_VIEWER)
+    {
+        bondviewCollisionRadiusRelated(arg0, arg1, arg2, arg3);
+        return;
+    }
+
+    *arg1 = 0.0f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03CF88
-/* 071AB8 7F03CF88 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 071ABC 7F03CF8C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 071AC0 7F03CF90 90820000 */  lbu   $v0, ($a0)
-/* 071AC4 7F03CF94 24010003 */  li    $at, 3
-/* 071AC8 7F03CF98 54410006 */  bnel  $v0, $at, .L7F03CFB4
-/* 071ACC 7F03CF9C 24010006 */   li    $at, 6
-/* 071AD0 7F03CFA0 0FC08C58 */  jal   chrGetChrWidthHeight
-/* 071AD4 7F03CFA4 00000000 */   nop   
-/* 071AD8 7F03CFA8 1000000C */  b     .L7F03CFDC
-/* 071ADC 7F03CFAC 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 071AE0 7F03CFB0 24010006 */  li    $at, 6
-.L7F03CFB4:
-/* 071AE4 7F03CFB4 54410006 */  bnel  $v0, $at, .L7F03CFD0
-/* 071AE8 7F03CFB8 44802000 */   mtc1  $zero, $f4
-/* 071AEC 7F03CFBC 0FC2289D */  jal   bondviewCollisionRadiusRelated
-/* 071AF0 7F03CFC0 00000000 */   nop   
-/* 071AF4 7F03CFC4 10000005 */  b     .L7F03CFDC
-/* 071AF8 7F03CFC8 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 071AFC 7F03CFCC 44802000 */  mtc1  $zero, $f4
-.L7F03CFD0:
-/* 071B00 7F03CFD0 00000000 */  nop   
-/* 071B04 7F03CFD4 E4A40000 */  swc1  $f4, ($a1)
-/* 071B08 7F03CFD8 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F03CFDC:
-/* 071B0C 7F03CFDC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 071B10 7F03CFE0 03E00008 */  jr    $ra
-/* 071B14 7F03CFE4 00000000 */   nop   
-)
-#endif
-
 
 
 
