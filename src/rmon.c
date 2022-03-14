@@ -97,43 +97,30 @@ s32 rmonStatus(void) {
 }
 
 
-#ifdef NONMATCHING
-/**
- * todo/hack/fixme:
- * Incompatible function definition. indy_commands requires the os.h definition,
- * but the function here has no arguments.
-*/
-void osWriteHost(void)
-{
-    // removed
-}
-#else
-GLOBAL_ASM(
-.text
-glabel osWriteHost
-jr $ra
-nop
-)
-#endif
 
-#ifdef NONMATCHING
 /**
- * todo/hack/fixme:
- * Incompatible function definition. indy_commands requires the os.h definition,
- * but the function here has no arguments.
+ * Removed
+ * reimpliment osWriteHost
+ * target rmon and usb
 */
-void osReadHost(void)
+void osWriteHost(void * buffer, u32 size)
 {
-    // removed
+    if (buffer);
+	if (size);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel osReadHost
-jr $ra
-nop
-)
-#endif
+
+
+/**
+ * Removed
+ * reimpliment osReadHost
+ * target rmon and usb
+*/
+void osReadHost(void * buffer, u32 size)
+{
+    if (buffer);
+	if (size);
+}
+
 
 /**
  * Removed
