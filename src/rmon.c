@@ -7,11 +7,6 @@
 #include "deb_print.h"
 #include "rmon.h" /*<PR/rmon.h>*/
 
-#ifdef DEBUG
-#    define ISFINALBUILD 0
-#else
-#    define ISFINALBUILD 1
-#endif
 
 
 /************************************************************************
@@ -76,11 +71,15 @@ void rmonMain(void) {
 }
 
 /**
- * rmonIsFinalBuild
- * returns true if this is the final build
+ * rmonIsDisabled
+ * returns true if this if rmon is disabled
  */
-s32 rmonIsFinalBuild(void) {
-    return ISFINALBUILD;
+s32 rmonIsDisabled(void) {
+    #if defined(DEBUG)
+        return FALSE;
+    #else
+        return TRUE;
+    #endif
 }
 
 /**
@@ -168,6 +167,8 @@ void rmon7000CED8(void) {
         //removed
     #endif
 }
+
+
 
 /**
  * Removed

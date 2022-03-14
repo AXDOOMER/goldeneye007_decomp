@@ -6,11 +6,12 @@
 #ifdef NONMATCHING
 void cleanupplayersoundrelated(void)
 {
-    int i,j;
+    int i;
+    int j=0;
 
-    for(i = 0; i < getPlayerCount(); i++)
+    for(i=0; i < getPlayerCount(); i++)
     {
-        for(j=0;j<2;j++)
+        for(;j<2;j++)
         {
             if((&g_playerPointers[i]->hands[j])->field_A44 && sndGetPlayingState((&g_playerPointers[i]->hands[j])->field_A44))
             {
