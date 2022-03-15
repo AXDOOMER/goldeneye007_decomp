@@ -1,45 +1,168 @@
 #include <ultra64.h>
 #include <memp.h>
 #include "initBondDATA.h"
+#include "bondview.h"
 
-#ifndef VERSION_EU
-struct  BONDdata_item_control_blocks BONDdata_item_control_blocks_initdata = {        
-0, 0xFFFFFFFF, 0, 0x100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.0, 0, 0, 0, 0, 1.0, 0, 0, 0, 0, 1.0, 0, 
-0, 0, 0, 1.0, 0, 0, 0, 0, 0, 0, -1.0, 0, 1.0, 0, 0, 0, 0, 0, 0, -19.999996, 0, 
-19.999996, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1.0, 0, 0, -1.0, 0, 0,
--1.0, 0, 0, -1.0, 0, 1.0, 0, 0, 1.0, 0, 0, 1.0, 0, 0, 1.0, 0, 0, 0, 1.0, 1.0, 
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1000.0, 0, 0, 0, 0, 0xFF000000, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-0, 0, 0
-};
+
+struct  hand hand_data_dummy = {        
+0, 0xFFFFFFFF, 0, 0, 0, 0x1, 0, 0, 0, 0, 
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+1.0f, 0, 0, 0, 0, 1.0f, 0, 0, 0, 0, 1.0f, 0, 0, 0, 0, 1.0f, 0, 0, 0, 0, 0,
+0, -1.0f, 0, 1.0f, 0, 0, 0, 0, 0, 0,
+#ifdef REFRESH_PAL
+-16.750415802f,
 #else
-struct  BONDdata_item_control_blocks BONDdata_item_control_blocks_initdata = {        
-0, 0xFFFFFFFF, 0, 0x100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.0, 0, 0, 0, 0, 1.0, 0, 0, 0, 0, 1.0, 0, 
-0, 0, 0, 1.0, 0, 0, 0, 0, 0, 0, -1.0, 0, 1.0, 0, 0, 0, 0, 0, 0, -16.750415802f, 0, 
-16.750415802f, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1.0, 0, 0, -1.0, 0, 0,
--1.0, 0, 0, -1.0, 0, 1.0, 0, 0, 1.0, 0, 0, 1.0, 0, 0, 1.0, 0, 0, 0, 1.0, 1.0, 
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1000.0, 0, 0, 0, 0, 0xFF000000, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-0, 0, 0
-};
+-19.999996f,
+#endif
+0, 
+
+#ifdef REFRESH_PAL
+16.750415802f,
+#else
+19.999996f,
 #endif
 
-
+ 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1.0f, 0, 0, -1.0f, 0, 0, -1.0f, 0, 
+0, -1.0f, 0, 1.0f, 0, 0, 1.0f, 0, 0, 1.0f, 0, 0, 1.0f, 0, 0, 0, 1.0f, 1.0f, 0, 0, 
+0, 0, 0, 0, 0, 0, 0, 0, 1000.0, 0, 0, 0, 0, 0xFF000000, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+0, 0
+};
 
 
 
 
 #ifdef NONMATCHING
 void init_player_BONDdata_stats(void) {
+    s32 sp24;
+    s32 temp_v0;
+    s32 temp_v0_2;
+    s32* temp_t0;
+    s32* temp_t4;
+    s32* temp_t6;
+    s32* temp_t7;
+    void* temp_t1;
+    void* temp_t5;
+    s32* phi_t7;
+    s32* phi_t6;
+    s32* phi_t4;
+    void* phi_t1;
+    s32* phi_t0;
+    void* phi_t5;
+    s32 phi_v0;
 
+    phi_t7 = &BONDdata_item_control_blocks_initdata;
+    phi_t6 = &sp24;
+    do {
+        temp_t7 = phi_t7 + 0xC;
+        temp_t6 = phi_t6 + 0xC;
+        temp_t6->unk-C = (s32) *phi_t7;
+        temp_t6->unk-8 = (s32) temp_t7->unk-8;
+        temp_t6->unk-4 = (s32) temp_t7->unk-4;
+        phi_t7 = temp_t7;
+        phi_t6 = temp_t6;
+    } while (temp_t7 != (&BONDdata_item_control_blocks_initdata + 0x3A8));
+    g_CurrentPlayer->hand_item[0] = mempAllocBytesInBank(size_item_buffer, 4);
+    if (getPlayerCount() == 1) {
+        g_CurrentPlayer->hand_item[1] = mempAllocBytesInBank(*(&size_item_buffer + 4), 4);
+    }
+    g_CurrentPlayer->hand_invisible[0] = 0;
+    g_CurrentPlayer->hand_invisible[1] = 0;
+    g_CurrentPlayer->hand_item[0] = 0;
+    g_CurrentPlayer->hand_item[1] = 0;
+    g_CurrentPlayer->field_2A44[0] = -1;
+    g_CurrentPlayer->field_2A44[1] = -1;
+    g_CurrentPlayer->lock_hand_model[0] = 0;
+    g_CurrentPlayer->lock_hand_model[1] = 0;
+    phi_t4 = &sp24;
+    phi_t1 = g_CurrentPlayer;
+    phi_t0 = &sp24;
+    phi_v0 = 0;
+    do {
+        temp_t4 = phi_t4 + 0xC;
+        temp_t1 = phi_t1 + 0xC;
+        temp_t1->right_item_related1 = (s32) *phi_t4;
+        temp_t1->right_item_related2 = (s32) temp_t4->unk-8;
+        temp_t1->right_item_related3 = (s32) temp_t4->unk-4;
+        phi_t4 = temp_t4;
+        phi_t1 = temp_t1;
+    } while (temp_t4 != (&sp24 + 0x3A8));
+    phi_t5 = g_CurrentPlayer;
+    do {
+        temp_t0 = phi_t0 + 0xC;
+        temp_t5 = phi_t5 + 0xC;
+        temp_t5->item_related1 = (s32) *phi_t0;
+        temp_t5->item_related2 = (s32) temp_t0->unk-8;
+        temp_t5->item_related3 = (s32) temp_t0->unk-4;
+        phi_t0 = temp_t0;
+        phi_t5 = temp_t5;
+    } while (temp_t0 != (&sp24 + 0x3A8));
+    do {
+        temp_v0 = phi_v0 + 4;
+        (g_CurrentPlayer + phi_v0)->unk1130 = 0;
+        phi_v0 = temp_v0;
+    } while (temp_v0 < 0x78);
+    temp_v0_2 = 3 * 4;
+    g_playerPerm->pos[0] = 0;
+    g_playerPerm->pos[1] = 0;
+    g_playerPerm->pos[2] = 0;
+    *(g_playerPerm + temp_v0_2) = 0;
+    (g_playerPerm + temp_v0_2)->unk4 = 0;
+    (g_playerPerm + temp_v0_2)->unk8 = 0;
+    (g_playerPerm + temp_v0_2)->unkC = 0;
+    g_playerPerm->field_6C = 0;
+    g_playerPerm->unk1C = 0;
+    g_playerPerm->unk20 = 0;
+    g_CurrentPlayer->deathcount = 0;
+    g_CurrentPlayer->num_suicides = 0;
+    g_CurrentPlayer->gunposamplitude = 1;
+    g_CurrentPlayer->gunxamplitude = 1;
+    g_CurrentPlayer->field_FC8 = 0;
+    g_CurrentPlayer->field_FCC = 0;
+    g_CurrentPlayer->field_FD0 = 0;
+    g_CurrentPlayer->z_trigger_timer = 0;
+    g_CurrentPlayer->field_FD8 = 0;
+    g_CurrentPlayer->field_FDC = 0xFF;
+    g_CurrentPlayer->field_FDD = 0xFF;
+    g_CurrentPlayer->field_FDE = 0xFF;
+    g_CurrentPlayer->field_FDF = 0;
+    g_CurrentPlayer->resetshadecol = 1;
+    g_CurrentPlayer->field_FE4 = 0;
+    g_CurrentPlayer->crosshair_angle[] = 0.0f;
+    g_CurrentPlayer->crosshair_angle[] = 0.0f;
+    g_CurrentPlayer->crosshair_x_pos = 0.0f;
+    g_CurrentPlayer->crosshair_y_pos = 0.0f;
+    g_CurrentPlayer->guncrossdamp = 0.9f;
+    g_CurrentPlayer->field_FFC = 0.0f;
+    g_CurrentPlayer->field_1000 = 0.0f;
+    g_CurrentPlayer->gun_azimuth_angle = 0.0f;
+    g_CurrentPlayer->gun_azimuth_turning = 0.0f;
+    g_CurrentPlayer->gunaimdamp = 0.9f;
+    g_CurrentPlayer->field_1010 = 0.0f;
+    g_CurrentPlayer->holds_neg_pi = -3.1415927f;
+    g_CurrentPlayer->unk1018 = 0.0f;
+    g_CurrentPlayer->copiedgoldeneye = FALSE;
+    g_CurrentPlayer->magnetattracttime = -1;
+    g_CurrentPlayer->field_106C = 0.0f;
+    g_CurrentPlayer->field_1070 = 0.0f;
+    g_CurrentPlayer->field_1074 = 0.0f;
+    g_CurrentPlayer->field_1078 = 0;
+    g_CurrentPlayer->field_107C = 0.0f;
+    g_CurrentPlayer->field_1080 = 0.0f;
+    bgunCalculateBlend(GUNRIGHT);
+    bgunCalculateBlend(GUNRIGHT);
+    bgunCalculateBlend(GUNRIGHT);
+    bgunCalculateBlend(GUNLEFT);
+    bgunCalculateBlend(GUNLEFT);
+    bgunCalculateBlend(GUNLEFT);
+    g_CurrentPlayer->gunammooff = 0;
+    g_CurrentPlayer->gunsightmode = 2; //GUNSIGHTREASON_AIMING
+    g_CurrentPlayer->sniper_zoom = sniperrifle_stats.Zoom;
+    g_CurrentPlayer->camera_zoom = camera_stats.Zoom;
 }
 #else
 
@@ -53,8 +176,8 @@ glabel fl_neg_pi
 .text
 glabel init_player_BONDdata_stats
 /* 039C00 7F0050D0 27BDFC30 */  addiu $sp, $sp, -0x3d0
-/* 039C04 7F0050D4 3C0F8003 */  lui   $t7, %hi(BONDdata_item_control_blocks_initdata) 
-/* 039C08 7F0050D8 25EFA3D0 */  addiu $t7, %lo(BONDdata_item_control_blocks_initdata) # addiu $t7, $t7, -0x5c30
+/* 039C04 7F0050D4 3C0F8003 */  lui   $t7, %hi(hand_data_dummy) 
+/* 039C08 7F0050D8 25EFA3D0 */  addiu $t7, %lo(hand_data_dummy) # addiu $t7, $t7, -0x5c30
 /* 039C0C 7F0050DC AFBF001C */  sw    $ra, 0x1c($sp)
 /* 039C10 7F0050E0 AFB00018 */  sw    $s0, 0x18($sp)
 /* 039C14 7F0050E4 25E803A8 */  addiu $t0, $t7, 0x3a8
@@ -248,17 +371,17 @@ glabel init_player_BONDdata_stats
 /* 039EF0 7F0053C0 8E0E0000 */  lw    $t6, ($s0)
 /* 039EF4 7F0053C4 E5C0107C */  swc1  $f0, 0x107c($t6)
 /* 039EF8 7F0053C8 8E0A0000 */  lw    $t2, ($s0)
-/* 039EFC 7F0053CC 0FC17260 */  jal   unknown_takes_playerhand
+/* 039EFC 7F0053CC 0FC17260 */  jal   bgunCalculateBlend
 /* 039F00 7F0053D0 E5401080 */   swc1  $f0, 0x1080($t2)
-/* 039F04 7F0053D4 0FC17260 */  jal   unknown_takes_playerhand
+/* 039F04 7F0053D4 0FC17260 */  jal   bgunCalculateBlend
 /* 039F08 7F0053D8 00002025 */   move  $a0, $zero
-/* 039F0C 7F0053DC 0FC17260 */  jal   unknown_takes_playerhand
+/* 039F0C 7F0053DC 0FC17260 */  jal   bgunCalculateBlend
 /* 039F10 7F0053E0 00002025 */   move  $a0, $zero
-/* 039F14 7F0053E4 0FC17260 */  jal   unknown_takes_playerhand
+/* 039F14 7F0053E4 0FC17260 */  jal   bgunCalculateBlend
 /* 039F18 7F0053E8 24040001 */   li    $a0, 1
-/* 039F1C 7F0053EC 0FC17260 */  jal   unknown_takes_playerhand
+/* 039F1C 7F0053EC 0FC17260 */  jal   bgunCalculateBlend
 /* 039F20 7F0053F0 24040001 */   li    $a0, 1
-/* 039F24 7F0053F4 0FC17260 */  jal   unknown_takes_playerhand
+/* 039F24 7F0053F4 0FC17260 */  jal   bgunCalculateBlend
 /* 039F28 7F0053F8 24040001 */   li    $a0, 1
 /* 039F2C 7F0053FC 8E0B0000 */  lw    $t3, ($s0)
 /* 039F30 7F005400 240C0002 */  li    $t4, 2
@@ -292,8 +415,8 @@ glabel fl_neg_pi
 .text
 glabel init_player_BONDdata_stats
 /* 037A60 7F005070 27BDFC30 */  addiu $sp, $sp, -0x3d0
-/* 037A64 7F005074 3C0F8002 */  lui   $t7, %hi(BONDdata_item_control_blocks_initdata) # $t7, 0x8002
-/* 037A68 7F005078 25EF5920 */  addiu $t7, %lo(BONDdata_item_control_blocks_initdata) # addiu $t7, $t7, 0x5920
+/* 037A64 7F005074 3C0F8002 */  lui   $t7, %hi(hand_data_dummy) # $t7, 0x8002
+/* 037A68 7F005078 25EF5920 */  addiu $t7, %lo(hand_data_dummy) # addiu $t7, $t7, 0x5920
 /* 037A6C 7F00507C AFBF001C */  sw    $ra, 0x1c($sp)
 /* 037A70 7F005080 AFB00018 */  sw    $s0, 0x18($sp)
 /* 037A74 7F005084 25E803A8 */  addiu $t0, $t7, 0x3a8
@@ -487,17 +610,17 @@ glabel init_player_BONDdata_stats
 /* 037D50 7F005360 8E0E0000 */  lw    $t6, ($s0)
 /* 037D54 7F005364 E5C01074 */  swc1  $f0, 0x1074($t6)
 /* 037D58 7F005368 8E0A0000 */  lw    $t2, ($s0)
-/* 037D5C 7F00536C 0FC1738C */  jal   unknown_takes_playerhand
+/* 037D5C 7F00536C 0FC1738C */  jal   bgunCalculateBlend
 /* 037D60 7F005370 E5401078 */   swc1  $f0, 0x1078($t2)
-/* 037D64 7F005374 0FC1738C */  jal   unknown_takes_playerhand
+/* 037D64 7F005374 0FC1738C */  jal   bgunCalculateBlend
 /* 037D68 7F005378 00002025 */   move  $a0, $zero
-/* 037D6C 7F00537C 0FC1738C */  jal   unknown_takes_playerhand
+/* 037D6C 7F00537C 0FC1738C */  jal   bgunCalculateBlend
 /* 037D70 7F005380 00002025 */   move  $a0, $zero
-/* 037D74 7F005384 0FC1738C */  jal   unknown_takes_playerhand
+/* 037D74 7F005384 0FC1738C */  jal   bgunCalculateBlend
 /* 037D78 7F005388 24040001 */   li    $a0, 1
-/* 037D7C 7F00538C 0FC1738C */  jal   unknown_takes_playerhand
+/* 037D7C 7F00538C 0FC1738C */  jal   bgunCalculateBlend
 /* 037D80 7F005390 24040001 */   li    $a0, 1
-/* 037D84 7F005394 0FC1738C */  jal   unknown_takes_playerhand
+/* 037D84 7F005394 0FC1738C */  jal   bgunCalculateBlend
 /* 037D88 7F005398 24040001 */   li    $a0, 1
 /* 037D8C 7F00539C 8E0B0000 */  lw    $t3, ($s0)
 /* 037D90 7F0053A0 240C0002 */  li    $t4, 2

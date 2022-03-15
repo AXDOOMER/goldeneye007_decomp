@@ -2675,7 +2675,7 @@ void chraiCheckUseHeldItem(s32 hand)
         }
         else if (item_id == ITEM_WATCHMAGNETATTRACT)
         {
-            g_CurrentPlayer->index_time_spent_using_item = 0;
+            g_CurrentPlayer->magnetattracttime = 0;
         }
         else
         {
