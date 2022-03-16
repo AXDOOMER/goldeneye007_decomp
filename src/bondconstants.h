@@ -1402,22 +1402,22 @@ typedef enum SFX_ID
 {
     NOTHING_SFX,
     ROCKET_LAUNCH_SFX,
-    GLASS_SHATTERING_SFX,       //*
+    GLASS_SHATTERING_SFX, 
     KNIFE_HIT_WALL_SFX,
-    GRENADE_THROW_SFX,          //Grenade/Mine�or�in�fact�Any�object�thrown.
-    GRENADE_THROW_QUIET_SFX,    //*
-    GRENADE_THROW_FAINT_SFX,    //*
-    TRAIN_SLIDE_DOOR_SLIDE_SFX, //Ding�used�on�elevator
+    GRENADE_THROW_SFX,          //Grenade/Mine or in fact Any object thrown.
+    GRENADE_THROW_QUIET_SFX, 
+    GRENADE_THROW_FAINT_SFX, 
+    TRAIN_SLIDE_DOOR_SLIDE_SFX, //Ding used on elevator
     TRAIN_RAILS_SFX,
     TRAIN_RAILS2_SFX,
     WATCH_INTERFERENCE_SFX,
-    GUN_TANK2BIG_1_SFX,         //Used�for�Tank�rounds
-    GUN_TANK2BIGBIG_1_SFX,      //used�for�Grenade�Launcher
+    GUN_TANK2BIG_1_SFX,         //Used for Tank rounds
+    GUN_TANK2BIGBIG_1_SFX,      //used for Grenade Launcher
     GET_HIT_GIRL1_SFX,
     GET_HIT_GIRL2_SFX,
     GET_HIT_GIRL3_SFX,
-    BEEP_SFX,                   //*
-    BEEP_QUIET_SFX,             //*
+    BEEP_SFX, 
+    BEEP_QUIET_SFX, 
     OPTION_CLICK2_SFX,
     RICO_12_GBU_A_SFX,
     RICO_12_GBU_B_SFX,
@@ -1444,7 +1444,7 @@ typedef enum SFX_ID
     RICO_6_HBBA_C_SFX,
     RICO_6_HBBA_D_SFX,
     OPTION_CHOOSE_SFX,
-    UNKNOWN1_SFX,               //*
+    UNKNOWN1_SFX, 
     DROP_GUN_SFX,
     GUN_SILPPK_A_SFX,
     PUNCH1_SFX,
@@ -1452,12 +1452,12 @@ typedef enum SFX_ID
     PUNCH3_SFX,
     GUN_RIFLECOCK_SFX,
     TRAIN_CLUTTER3_SFX,
-    TRAIN_CLUTTER3B_SFX,         //*
-    TRAIN_CLUTTER3C_SFX,         //*
+    TRAIN_CLUTTER3B_SFX, 
+    TRAIN_CLUTTER3C_SFX, 
     EVIL_LAUGH_SFX,
-    EVIL_LAUGH_QUIET_SFX,       //*
-    EVIL_LAUGH_FAINT_SFX,       //*
-    EVIL_LAUGH_HUSH_SFX,        //*
+    EVIL_LAUGH_QUIET_SFX, 
+    EVIL_LAUGH_FAINT_SFX, 
+    EVIL_LAUGH_HUSH_SFX, 
     HELI_RUN_SFX,
     HELI_FLY_SFX,
     ENGINE_ROOM_SFX,
@@ -1467,18 +1467,18 @@ typedef enum SFX_ID
     TRAIN_GO_SFX,
     TRUCK_RUN_SFX,
     TRUCK_START_SFX,
-    TRUCK_ENGINE_SFX,           //*
+    TRUCK_ENGINE_SFX, 
     BOND_GET_HIT1_SFX,
     HIT_BULLET_FLESH_SFX,
     HIT_BULLET_GLASS_SFX,
     HIT_GLASS_SMASH_SFX,
     HIT_BULLET_METAL_A_SFX,
     HIT_BULLET_METAL_B_SFX,
-    HIT_BULLET_SNOW_SFX,        //Also�used�for�knife�hit
+    HIT_BULLET_SNOW_SFX,        //Also used for knife hit
     HIT_BULLET_WOOD_SFX,
     HIT_BULLET_WATER_SFX,
     PAPER_TURN_SFX,
-    PAPER_TURN_2_SFX,           //*
+    PAPER_TURN_2_SFX, 
     COPY_FILE_SFX,
     RADIO_MESSAGE_SFX,
     ARMOUR_COLLECT_SFX,
@@ -1486,40 +1486,40 @@ typedef enum SFX_ID
     DOOR_DECODER_SFX,
     GIRL_GET_HIT1_SFX,
     CONSOLE_OFF_SFX,
-    CONSOLE_OFF2_SFX,           //*
-    CONSOLE_ON2_SFX,            //*
-    CONSOLE_ON3_SFX,            //*
+    CONSOLE_OFF2_SFX, 
+    CONSOLE_ON2_SFX, 
+    CONSOLE_ON3_SFX, 
     EMPTY_GUN_FIRE_SFX,
-    SHELL_CASE_SFX,             //*
+    SHELL_CASE_SFX, 
     RICO_LASER1_SFX,
     RICO_LASER2_SFX,
     RICO_LASER3_SFX,
-    RADIO_SFX,                  //*
+    RADIO_SFX, 
     KNIFE_THROW1_SFX,
     KNIFE_THROW2_SFX,
     KNIFE_THROW3_SFX,
     COUGH_SFX,
-    COUGH2_SFX,                 //*
+    COUGH2_SFX, 
     GUN_TASER_SFX,
-    GUN_TASER_LOOP_SFX,         //*
+    GUN_TASER_LOOP_SFX, 
     GAS_HISS_SFX,
-    UNKNOWN2_SFX,               //*
-    UNKNOWN3_SFX,               //*
+    UNKNOWN2_SFX, 
+    UNKNOWN3_SFX, 
     PUNCHING_AIR_SFX,
-    GUN_B1_MGUN3_3_SFX,         //Used�for�Skorpion (Klobb)
-    GUN_B2_HEAVY_SFX,           //Used�for�PPK
+    GUN_B1_MGUN3_3_SFX,         //Used for Skorpion (Klobb)
+    GUN_B2_HEAVY_SFX,           //Used for PPK
     GUN_UNKNOWN_SFX,
-    GUN_B4_BOLTACTION_SFX,      //used�for�AK47
+    GUN_B4_BOLTACTION_SFX,      //used for AK47
     GUN_B5_WINC44_SFX,
-    GUN_RIFLE7BIG_1_SFX,        //used�for�Rugar
-    GUN_B8_ANOTHER_SFX,         //used�for�TT33
-    GUN_B9_CANNON_SFX,          //used�for�M16
-    GUN_GRENADE_LAUNCHER_SFX,   //*
-    GUN_UNKNOWN2_SFX,           //*
-    GUN_B12_FULLAMRIFLE_SFX,    //used�for�Auto�Shotgun
-    GUN_B13_M60AMMGUN_SFX,      //used�for�Golden�Gun
+    GUN_RIFLE7BIG_1_SFX,        //used for Rugar
+    GUN_B8_ANOTHER_SFX,         //used for TT33
+    GUN_B9_CANNON_SFX,          //used for M16
+    GUN_GRENADE_LAUNCHER_SFX, 
+    GUN_UNKNOWN2_SFX, 
+    GUN_B12_FULLAMRIFLE_SFX,    //used for Auto Shotgun
+    GUN_B13_M60AMMGUN_SFX,      //used for Golden Gun
     GUN_M60AMMGUN_3_SFX,
-    GUN_UNKNOWN3_SFX,           //*
+    GUN_UNKNOWN3_SFX, 
     HIT_METAL_OBJECT1_SFX,
     GUN_B17_RIFLE_SFX,          //used for Shotgun
     CART_SPENT_SFX,
@@ -1559,8 +1559,8 @@ typedef enum SFX_ID
     GET_HIT_MALE22_SFX,
     GET_HIT_MALE23_SFX,
     GET_HIT_MALE24_SFX,
-    CAMERA_BEEP1_SFX,           //Used�for�Watch�Beeping
-    BING_SFX,                   //*
+    CAMERA_BEEP1_SFX,           //Used for Watch Beeping
+    BING_SFX, 
     ALARM1_SFX,
     ALARM2_SFX,
     ALARM3_SFX,
@@ -1569,18 +1569,18 @@ typedef enum SFX_ID
     RICO_EAR_WHISTLE3_SFX,
     RICO_EAR_WHISTLE4_SFX,
     RICO_EAR_WHISTLE5_SFX,
-    EXPLOSION_2A_SFX,           //*
+    EXPLOSION_2A_SFX, 
     EXPLOSION_2B_SFX,
-    EXPLOSION_3_SFX,            //*
+    EXPLOSION_3_SFX, 
     EXPLOSION_4A_SFX,
     EXPLOSION_4B_SFX,
     EXPLOSION_5A_SFX,
-    EXPLOSION_5B_SFX,           //*
-    EXPLOSION_5C_SFX,           //*
-    EXPLOSION_6_SFX,            //*
-    EXPLOSION_7_SFX,            //*
-    EXPLOSION_8_SFX,            //*
-    EXPLOSION_9_SFX,            //*
+    EXPLOSION_5B_SFX, 
+    EXPLOSION_5C_SFX, 
+    EXPLOSION_6_SFX, 
+    EXPLOSION_7_SFX, 
+    EXPLOSION_8_SFX, 
+    EXPLOSION_9_SFX, 
     EXPLOSION_1B_SFX,
     EXPLOSION_1C_SFX,
     CRUSHED_YELL_SFX,
@@ -1590,10 +1590,10 @@ typedef enum SFX_ID
     DOOR_WOOD_CLOSE_SFX,
     DOOR_WOOD_OPEN_SFX,
     ATOMIC_BOMB_SFX,
-    KEY_ANALYSER2_SFX,          //*
+    KEY_ANALYSER2_SFX, 
     DOOR_WOOD_SLIDE_SFX,
     TRAIN_SLIDE_DOOR_CATCH_SFX,
-    GAS_LEAK_SFX,               //*
+    GAS_LEAK_SFX, 
     DOOR_SHUTTER_OPEN_SFX,
     DOOR_SHUTTER_CLOSE_SFX,
     DOOR_METAL_OPEN_SFX,
@@ -1605,9 +1605,9 @@ typedef enum SFX_ID
     METAL_SLIDE_OPEN_SFX,
     METAL_SLIDE_CLOSE_SFX,
     METAL_SLIDE_LOOP_SFX,
-    UNKNOWN4_SFX,               //*
-    UNKNOWN5_SFX,               //*
-    UNKNOWN6_SFX,               //*
+    UNKNOWN4_SFX, 
+    UNKNOWN5_SFX, 
+    UNKNOWN6_SFX, 
     HIT_BULLET_STONE1_SFX,
     HIT_BULLET_STONE2_SFX,
     DOOR_SMART_CATCH1_SFX,
@@ -1618,15 +1618,15 @@ typedef enum SFX_ID
     HEAVY_SLIDE_CLOSE_SFX,
     HEAVY_SINGLE_LOOP_SFX,
     HIT_BULLET_WOOD2_SFX,
-    DOOR_HYDRAL_CLOSE_SFX,      //�Main�Hydrolic�Door�loop
-    DOOR_HYDRAL_OPEN_SFX,       //�Hudrolic�Door�Stop�sound
+    DOOR_HYDRAL_CLOSE_SFX,      // Main Hydrolic Door loop
+    DOOR_HYDRAL_OPEN_SFX,       // Hudrolic Door Stop sound
     HIT_BULLET_DIRT1_SFX,
     HIT_METAL_OBJECT2_SFX,
-    DOOR_LOCK_SFX,              //Also�used�for�button�Presses
+    DOOR_LOCK_SFX,              //Also used for button Presses
     TRAIN_CLUTTER2_SFX,
     HIT_BULLET_MUD3_SFX,
-    DOOR_SLIDE_STONE_OPEN_SFX,  //Main�Stone�Door�Loop
-    DOOR_SLIDE_STONE_CLOSE_SFX, //Stone�Door�Stop
+    DOOR_SLIDE_STONE_OPEN_SFX,  //Main Stone Door Loop
+    DOOR_SLIDE_STONE_CLOSE_SFX, //Stone Door Stop
     DATA_DOWNLOAD_SFX,
     LASER_GUN_SFX,
     KEYCARD_SFX,
@@ -1640,27 +1640,27 @@ typedef enum SFX_ID
     WATCH_ON_SFX,
     WATCH_OFF_SFX,
     HIT_BULLET_METAL_A3_SFX,
-    HIT_BULLET_METAL_A4_SFX,    //*
+    HIT_BULLET_METAL_A4_SFX, 
     ATTACH_MINE_SFX,
     PICKUP_LASER_SFX,
-    WATCH_DETONATE_MINE_SFX,    //Watch�Trigger
-    CAMERA_CLICK_SFX,           //Camera�Shutter
+    WATCH_DETONATE_MINE_SFX,    //Watch Trigger
+    CAMERA_CLICK_SFX,           //Camera Shutter
     KEY_ANALYSER_SFX,
     MAGNETIC_HUM_SFX,
     BOMB_DEFUSE_SFX,
     BI_PLANE_SFX,
     TRAIN_CLUTTER_SFX,
-    TRAIN_CLUTTERB_SFX,         //*
-    TRAIN_CLUTTERC_SFX,         //*
-    TRAIN_CLUTTERD_SFX,         //*
+    TRAIN_CLUTTERB_SFX, 
+    TRAIN_CLUTTERC_SFX, 
+    TRAIN_CLUTTERD_SFX, 
     GUN_B9_CANNON_SHORT_SFX,
-    UNKNOWN_QUIET_SFX,          //*
-    CAMERA_ZOOM_LOOP_SFX,       //*
-    CAMERA_ZOOM_STOP_SFX,       //*
+    UNKNOWN_QUIET_SFX, 
+    CAMERA_ZOOM_LOOP_SFX, 
+    CAMERA_ZOOM_STOP_SFX, 
     SNEEZE_SFX,
     RARELOGO_SFX,
-    RARELOGO_QUIET_SFX,         //*
-    RARELOGO_FAINT_SFX,         //*
+    RARELOGO_QUIET_SFX, 
+    RARELOGO_FAINT_SFX, 
     BIG_CLANK_SFX
 } SFX_ID;
 
@@ -1670,15 +1670,15 @@ typedef enum SFX_ID
     "1_ROCKET_LAUNCH_SFX",
     "2_GLASS_SHATTERING_SFX",
     "3_KNIFE_HIT_WALL_SFX",
-    "4_GRENADE_THROW_SFX",            //Grenade/Mine�or�in�fact�Any�object�thrown.
+    "4_GRENADE_THROW_SFX",            //Grenade/Mine or in fact Any object thrown.
     "5_GRENADE_THROW_QUIET_SFX",
     "6_GRENADE_THROW_FAINT_SFX",
-    "7_TRAIN_SLIDE_DOOR_SLIDE_SFX",   //Ding�used�on�elevator
+    "7_TRAIN_SLIDE_DOOR_SLIDE_SFX",   //Ding used on elevator
     "8_TRAIN_RAILS_SFX",
     "9_TRAIN_RAILS2_SFX",
     "10_WATCH_INTERFERENCE_SFX",
-    "11_GUN_TANK2BIG_1_SFX",          //Used�for�Tank�rounds
-    "12_GUN_TANK2BIGBIG_1_SFX",       //used�for�Grenade�Launcher
+    "11_GUN_TANK2BIG_1_SFX",          //Used for Tank rounds
+    "12_GUN_TANK2BIGBIG_1_SFX",       //used for Grenade Launcher
     "13_GET_HIT_GIRL1_SFX",
     "14_GET_HIT_GIRL2_SFX",
     "15_GET_HIT_GIRL3_SFX",
@@ -1740,7 +1740,7 @@ typedef enum SFX_ID
     "71_HIT_GLASS_SMASH_SFX",
     "72_HIT_BULLET_METAL_A_SFX",
     "73_HIT_BULLET_METAL_B_SFX",
-    "74_HIT_BULLET_SNOW_SFX",         //Also�used�for�knife�hit
+    "74_HIT_BULLET_SNOW_SFX",         //Also used for knife hit
     "75_HIT_BULLET_WOOD_SFX",
     "76_HIT_BULLET_WATER_SFX",
     "77_PAPER_TURN_SFX",
@@ -1772,18 +1772,18 @@ typedef enum SFX_ID
     "103_UNKNOWN2_SFX",
     "104_UNKNOWN3_SFX",
     "105_PUNCHING_AIR_SFX",
-    "106_GUN_B1_MGUN3_3_SFX",         //Used�for�Spyder (Klobb)
-    "107_GUN_B2_HEAVY_SFX",           //Used�for�PPK
+    "106_GUN_B1_MGUN3_3_SFX",         //Used for Spyder (Klobb)
+    "107_GUN_B2_HEAVY_SFX",           //Used for PPK
     "108_GUN_UNKNOWN_SFX",
-    "109_GUN_B4_BOLTACTION_SFX",      //used�for�AK47
+    "109_GUN_B4_BOLTACTION_SFX",      //used for AK47
     "110_GUN_B5_WINC44_SFX",
-    "111_GUN_RIFLE7BIG_1_SFX",        //used�for�Rugar
-    "112_GUN_B8_ANOTHER_SFX",         //used�for�TT33
-    "113_GUN_B9_CANNON_SFX",          //used�for�M16
+    "111_GUN_RIFLE7BIG_1_SFX",        //used for Rugar
+    "112_GUN_B8_ANOTHER_SFX",         //used for TT33
+    "113_GUN_B9_CANNON_SFX",          //used for M16
     "114_GUN_GRENADE_LAUNCHER_SFX",
     "115_GUN_UNKNOWN2_SFX",
-    "116_GUN_B12_FULLAMRIFLE_SFX",    //used�for�Auto�Shotgun
-    "117_GUN_B13_M60AMMGUN_SFX",      //used�for�Golden�Gun
+    "116_GUN_B12_FULLAMRIFLE_SFX",    //used for Auto Shotgun
+    "117_GUN_B13_M60AMMGUN_SFX",      //used for Golden Gun
     "118_GUN_M60AMMGUN_3_SFX",
     "119_GUN_UNKNOWN3_SFX",
     "120_HIT_METAL_OBJECT1_SFX",
@@ -1825,7 +1825,7 @@ typedef enum SFX_ID
     "156_GET_HIT_MALE22_SFX",
     "157_GET_HIT_MALE23_SFX",
     "158_GET_HIT_MALE24_SFX",
-    "159_CAMERA_BEEP1_SFX",           //Used�for�Watch�Beeping
+    "159_CAMERA_BEEP1_SFX",           //Used for Watch Beeping
     "160_BING_SFX",
     "161_ALARM1_SFX",
     "162_ALARM2_SFX",
@@ -1884,15 +1884,15 @@ typedef enum SFX_ID
     "215_HEAVY_SLIDE_CLOSE_SFX",
     "216_HEAVY_SINGLE_LOOP_SFX",
     "217_HIT_BULLET_WOOD2_SFX",
-    "218_DOOR_HYDRAL_CLOSE_SFX",      //�Main�Hydrolic�Door�loop
-    "219_DOOR_HYDRAL_OPEN_SFX",       //�Hudrolic�Door�Stop�sound
+    "218_DOOR_HYDRAL_CLOSE_SFX",      // Main Hydrolic Door loop
+    "219_DOOR_HYDRAL_OPEN_SFX",       // Hudrolic Door Stop sound
     "220_HIT_BULLET_DIRT1_SFX",
     "221_HIT_METAL_OBJECT2_SFX",
-    "222_DOOR_LOCK_SFX",              //Also�used�for�button�Presses
+    "222_DOOR_LOCK_SFX",              //Also used for button Presses
     "223_TRAIN_CLUTTER2_SFX",
     "224_HIT_BULLET_MUD3_SFX",
-    "225_DOOR_SLIDE_STONE_OPEN_SFX",  //Main�Stone�Door�Loop
-    "226_DOOR_SLIDE_STONE_CLOSE_SFX", //Stone�Door�Stop
+    "225_DOOR_SLIDE_STONE_OPEN_SFX",  //Main Stone Door Loop
+    "226_DOOR_SLIDE_STONE_CLOSE_SFX", //Stone Door Stop
     "227_DATA_DOWNLOAD_SFX",
     "228_LASER_GUN_SFX",
     "229_KEYCARD_SFX",
@@ -1909,8 +1909,8 @@ typedef enum SFX_ID
     "240_HIT_BULLET_METAL_A4_SFX",
     "241_ATTACH_MINE_SFX",
     "242_PICKUP_LASER_SFX",
-    "243_WATCH_DETONATE_MINE_SFX",    //Watch�Trigger
-    "244_CAMERA_CLICK_SFX",           //Camera�Shutter
+    "243_WATCH_DETONATE_MINE_SFX",    //Watch Trigger
+    "244_CAMERA_CLICK_SFX",           //Camera Shutter
     "245_KEY_ANALYSER_SFX",
     "246_MAGNETIC_HUM_SFX",
     "247_BOMB_DEFUSE_SFX",

@@ -503,7 +503,7 @@ void          chraiGetCollisionBounds(PropRecord *arg0, struct rect4f **arg1, s3
 void          sub_GAME_7F03D058(PropRecord *prop, bool unset);
 void          chraiGetCollisionBoundsWithoutY(PropRecord *arg0, struct rect4f **arg1, s32 *arg2);
 s32           sub_GAME_7F03CCD8(coord3d *arg0, struct rect4f *arg1, s32 arg2);
-void          sub_GAME_7F03E3FC(s32 *);
+void          sub_GAME_7F03E3FC(s32 *roomids);
 ObjectRecord *scan_position_data_table_for_normal_object_at_preset(s32 arg0);
 Gfx          *chrpropsRenderPass(Gfx *arg0, s32 roomid, s32 arg2);
 PropRecord   *get_ptr_obj_pos_list_current_entry(void);

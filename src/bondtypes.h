@@ -3283,10 +3283,20 @@ typedef union
         f32      tankvol;     /*0x9c*/
         f32      speedaim;    /*0xa0*/
         f32      speedtime60; /*0xa4*/
-        u32      unk78;       /*0xa4*/
-        u32      unk7c;       /*0xa8*/
-        u32 *    path;        /*0xac*/
-        void *   Sound;       /*0xb0 */
+        u32      unk78;       /*0xa8*/
+        u32      unk7c;       /*0xac*/
+        u32 *    path;        /*0xb0*/
+        void *   Sound;       /*0xb4 */
+        s32 unkB8;
+        s32 unkBC;
+        s32 unkC0;
+        s32 is_firing_tank;
+        f32 unkC8;
+        f32 unkCC;
+        f32 unkD0;
+        f32 stan_y;
+        f32 unkD8;
+        f32 unkDC;
     } TankRecord;
     #define New_TankRecord(pad)                     \
         {                                           \

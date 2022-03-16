@@ -3600,15 +3600,15 @@ void sub_GAME_7F0284DC(ChrRecord *self)
 */
 s32 sub_GAME_7F028510(coord3d *arg0, StandTile *arg1)
 {
-    s32 sp50[8];
+    s32 roomids[8];
     s16 *temp_s0;
     PropRecord *propss = (PropRecord *)&pos_data_entry;
     struct rect4f *prect4f; // 68
     s32 sp40;
     
-    sp50[0] = arg1->room;
-    sp50[1] = -1;
-    sub_GAME_7F03E3FC((s32*)&sp50);
+    roomids[0] = arg1->room;
+    roomids[1] = -1;
+    sub_GAME_7F03E3FC((s32*)&roomids);
     
     for (temp_s0 = ptr_list_object_lookup_indices; *temp_s0 >= 0; temp_s0++)
     {
