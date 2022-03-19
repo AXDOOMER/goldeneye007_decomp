@@ -613,7 +613,7 @@ void sub_GAME_7F07EAF0(void);
 void sub_GAME_7F07EC54(void);
 void sub_GAME_7F081478(void);
 void sub_GAME_7F07C7B4(void);
-s32 sub_GAME_7F07CAC8(struct coord3d *arg0, struct StandTile *arg1, f32 arg2, f32 *arg3, struct coord3d *arg4);
+s32 bondviewTankCollisionStatus(struct coord3d *arg0, struct StandTile *arg1, f32 arg2, struct coord3d *arg3, struct coord3d *arg4);
 s32 sub_GAME_7F07CDA8(struct coord3d *arg0, struct StandTile *arg1, f32 arg2);
 s32 sub_GAME_7F07CDD4(struct coord3d *arg0, f32 arg1, struct StandTile **arg2);
 s32 cal_player_collision(struct coord3d *arg0, struct StandTile **stan);
@@ -10178,98 +10178,101 @@ s32 bondviewTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x
 
 
 #ifdef NONMATCHING
-s32 sub_GAME_7F07CAC8(struct coord3d *arg0, struct StandTile *arg1, f32 arg2, f32 *arg3, f32 *arg4)
+/**
+ * Address 0x7F07CAC8.
+ * 
+ * Decomp status:
+ * - compiles: yes
+ * - stack resize: yes
+ * - identical instructions: yes
+ * - identical registers: no
+ * 
+ * notes: Everything matches except two registers are swapped near the ModelFileHeader dereference.
+ * 
+ * https://decomp.me/scratch/GKM23
+ * 99.89%
+*/
+s32 bondviewTankCollisionStatus(struct coord3d *arg0, StandTile *arg1, f32 arg2, struct coord3d *arg3, struct coord3d *arg4)
 {
-    ? sp34;
-    f32 sp74;
-    f32 sp7C;
-    void *sp8C;
-    ?32 sp94;
-    ? sp98;
-    s32 spBC;
+    StandTile *spBC;
+    ModelFileHeader *mfh;
+    struct rect4f sp98;
+    s32 sp94;
     f32 temp_f0;
-    f32 temp_f6;
-    f32 temp_f16;
-    f32 temp_f4;
-    f32 temp_f10;
-    f32 phi_f0;
-    f32 phi_f0_2;
+    Model *sp8C;
+    ModelNode *model_node;
+    struct coord3d *temp_a1;
+    struct coord3d *temp_a2;
+    struct coord3d sp74;
+    Mtxf sp34;
+    struct coord3d *temp_v1;
 
-    // Node 0
+    spBC = arg1;
     sp94 = 0;
-    sub_GAME_7F07C888(&sp98, arg0);
-    if (ptr_playerstank != 0)
+
+    sub_GAME_7F07C888(&sp98, arg0, arg2);
+    
+    if (ptr_playerstank != NULL)
     {
-        // Node 1
         sub_GAME_7F03D058(ptr_playerstank, 0);
     }
-    // Node 2
-    if (bondviewTestLineUnobstructed(&spBC, *arg0, arg0->unk8, sp98, sp9C, 0x213, arg3, arg4) != 0)
+
+    if ((bondviewTestLineUnobstructed(&spBC, arg0->f[0], arg0->f[2], sp98.points[0].f[0], sp98.points[0].f[1], 0x213, arg3, arg4) != 0) 
+        && (bondviewTestLineUnobstructed(&spBC, sp98.points[0].f[0], sp98.points[0].f[1], sp98.points[1].f[0], sp98.points[1].f[1], 0x213, arg3, arg4) != 0) 
+        && (bondviewTestLineUnobstructed(&spBC, sp98.points[1].f[0], sp98.points[1].f[1], sp98.points[2].f[0], sp98.points[2].f[1], 0x213, arg3, arg4) != 0)
+        && (bondviewTestLineUnobstructed(&spBC, sp98.points[2].f[0], sp98.points[2].f[1], sp98.points[3].f[0], sp98.points[3].f[1], 0x213, arg3, arg4) != 0)
+        && (bondviewTestLineUnobstructed(&spBC, sp98.points[3].f[0], sp98.points[3].f[1], sp98.points[0].f[0], sp98.points[0].f[1], 0x213, arg3, arg4) != 0))
     {
-        // Node 3
-        if (bondviewTestLineUnobstructed(&spBC, sp98, sp9C, spA0, spA4, 0x213, arg3, arg4) != 0)
+        sp94 = 1;
+
+        if (ptr_playerstank != NULL)
         {
-            // Node 4
-            if (bondviewTestLineUnobstructed(&spBC, spA0, spA4, spA8, spAC, 0x213, arg3, arg4) != 0)
+            sp8C = ptr_playerstank->obj->model;
+            mfh = sp8C->obj;
+            model_node = &mfh->Switches[0];
+            temp_v1 = model_node->Next->Data;
+            temp_a1 = model_node->Prev->Data;
+            temp_a2 = model_node->Parent->Data;
+
+            sp74.f[0] = temp_a1->f[0] + temp_v1->f[0] - temp_a2->f[0];
+            sp74.f[1] = 0.0f;
+            sp74.f[2] = temp_a1->f[2] + temp_v1->f[2] - temp_a2->f[2];
+
+            temp_f0 = arg2 + D_80036474;
+
+            if (temp_f0 >= 6.2831855f)
             {
-                // Node 5
-                if (bondviewTestLineUnobstructed(&spBC, spA8, spAC, spB0, spB4, 0x213, arg3, arg4) != 0)
-                {
-                    // Node 6
-                    if (bondviewTestLineUnobstructed(&spBC, spB0, spB4, sp98, sp9C, 0x213, arg3, arg4) != 0)
-                    {
-                        // Node 7
-                        sp94 = 1;
-                        if (ptr_playerstank != 0)
-                        {
-                            // Node 8
-                            sp74 = (f32) ((*ptr_playerstank->unk4->unk14->unk8->unk8->unk10->unk4 + *ptr_playerstank->unk4->unk14->unk8->unk8->unkC->unk4) - *ptr_playerstank->unk4->unk14->unk8->unk8->unk8->unk4);
-                            temp_f0 = (arg2 + D_80036474);
-                            sp7C = (f32) ((ptr_playerstank->unk4->unk14->unk8->unk8->unk10->unk4->unk8 + ptr_playerstank->unk4->unk14->unk8->unk8->unkC->unk4->unk8) - ptr_playerstank->unk4->unk14->unk8->unk8->unk8->unk4->unk8);
-                            phi_f0 = temp_f0;
-                            if (D_80055064 <= temp_f0)
-                            {
-                                // Node 9
-                                phi_f0 = (temp_f0 - D_80055064);
-                            }
-                            // Node 10
-                            phi_f0_2 = phi_f0;
-                            if (phi_f0 < 0.0f)
-                            {
-                                // Node 11
-                                phi_f0_2 = (phi_f0 + D_80055064);
-                            }
-                            // Node 12
-                            sp8C = (void *) ptr_playerstank->unk4->unk14;
-                            matrix_4x4_set_rotation_around_y((D_80055064 - phi_f0_2), ptr_playerstank, &sp34, ptr_playerstank->unk4->unk14->unk8->unk8->unk8->unk4, ptr_playerstank->unk4);
-                            matrix_4x4_rotate_vector_in_place(&sp34, &sp74);
-                            temp_f6 = (sp74 * ptr_playerstank->unk4->unk14->unk14);
-                            sp74 = temp_f6;
-                            temp_f16 = (sp7C * ptr_playerstank->unk4->unk14->unk14);
-                            sp7C = temp_f16;
-                            temp_f4 = (temp_f6 + *arg0);
-                            sp74 = temp_f4;
-                            spBC = arg1;
-                            temp_f10 = (temp_f16 + arg0->unk8);
-                            sp7C = temp_f10;
-                            if (bondviewTestLineUnobstructed(&spBC, *arg0, arg0->unk8, temp_f4, temp_f10, 0x213, arg3, arg4) == 0)
-                            {
-                                // Node 13
-                                sp94 = 0;
-                            }
-                        }
-                    }
-                }
+                temp_f0 -= 6.2831855f;
+            }
+
+            if (temp_f0 < 0.0f)
+            {
+                temp_f0 += 6.2831855f;
+            }
+
+            matrix_4x4_set_rotation_around_y(6.2831855f - temp_f0, &sp34);
+            matrix_4x4_rotate_vector_in_place(&sp34, (f32*)&sp74);
+
+            sp74.f[0] *= sp8C->scale;
+            sp74.f[2] *= sp8C->scale;
+
+            sp74.f[0] += arg0->f[0];
+            sp74.f[2] += arg0->f[2];
+
+            spBC = arg1;
+            
+            if (bondviewTestLineUnobstructed(&spBC, arg0->f[0], arg0->f[2], sp74.f[0], sp74.f[2], 0x213, arg3, arg4) == 0)
+            {
+                sp94 = 0;
             }
         }
     }
-    // Node 14
-    if (ptr_playerstank != 0)
+
+    if (ptr_playerstank != NULL)
     {
-        // Node 15
         sub_GAME_7F03D058(ptr_playerstank, 1);
     }
-    // Node 16
+
     return sp94;
 }
 #else
@@ -10278,7 +10281,7 @@ GLOBAL_ASM(
 glabel D_80055064
 .word 0x40c90fdb /*6.2831855*/
 .text
-glabel sub_GAME_7F07CAC8
+glabel bondviewTankCollisionStatus
 /* 0B15F8 7F07CAC8 27BDFF40 */  addiu $sp, $sp, -0xc0
 /* 0B15FC 7F07CACC AFBF0024 */  sw    $ra, 0x24($sp)
 /* 0B1600 7F07CAD0 AFA400C0 */  sw    $a0, 0xc0($sp)
@@ -10480,7 +10483,7 @@ glabel sub_GAME_7F07CAC8
 */
 s32 sub_GAME_7F07CDA8(struct coord3d *arg0, StandTile *arg1, f32 arg2)
 {
-    return sub_GAME_7F07CAC8(arg0, arg1, arg2, NULL, NULL);
+    return bondviewTankCollisionStatus(arg0, arg1, arg2, NULL, NULL);
 }
 
 
@@ -26249,7 +26252,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
 
         collision_ptr = &g_CurrentPlayer->field_488.collision_position;
 
-        if (sub_GAME_7F07CAC8(
+        if (bondviewTankCollisionStatus(
             collision_ptr,
             g_CurrentPlayer->field_488.current_tile_ptr,
             sp35C,
@@ -26345,7 +26348,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
                 sp3AC.f[0] = 0.0f;
                 sp3AC.f[2] = 0.0f;
 
-                if (sub_GAME_7F07CAC8(
+                if (bondviewTankCollisionStatus(
                         &g_CurrentPlayer->field_488.collision_position,
                         g_CurrentPlayer->field_488.current_tile_ptr,
                         sp35C,
@@ -27559,7 +27562,7 @@ glabel MoveBond
 /* 0B953C 7F084A0C 44060000 */  mfc1  $a2, $f0
 /* 0B9540 7F084A10 E7A20358 */  swc1  $f2, 0x358($sp)
 /* 0B9544 7F084A14 E7A0035C */  swc1  $f0, 0x35c($sp)
-/* 0B9548 7F084A18 0FC1F2B2 */  jal   sub_GAME_7F07CAC8
+/* 0B9548 7F084A18 0FC1F2B2 */  jal   bondviewTankCollisionStatus
 /* 0B954C 7F084A1C AFAD0010 */   sw    $t5, 0x10($sp)
 /* 0B9550 7F084A20 50400007 */  beql  $v0, $zero, .L7F084A40
 /* 0B9554 7F084A24 3C01BF80 */   lui   $at, 0xbf80
@@ -27767,7 +27770,7 @@ glabel MoveBond
 /* 0B985C 7F084D2C AFAE0010 */  sw    $t6, 0x10($sp)
 /* 0B9860 7F084D30 8FA6035C */  lw    $a2, 0x35c($sp)
 /* 0B9864 7F084D34 02003825 */  move  $a3, $s0
-/* 0B9868 7F084D38 0FC1F2B2 */  jal   sub_GAME_7F07CAC8
+/* 0B9868 7F084D38 0FC1F2B2 */  jal   bondviewTankCollisionStatus
 /* 0B986C 7F084D3C 2504048C */   addiu $a0, $t0, 0x48c
 /* 0B9870 7F084D40 10400004 */  beqz  $v0, .L7F084D54
 /* 0B9874 7F084D44 C7A8035C */   lwc1  $f8, 0x35c($sp)
@@ -30099,7 +30102,7 @@ glabel MoveBond
 /* 0B9C2C 7F0850BC 44060000 */  mfc1  $a2, $f0
 /* 0B9C30 7F0850C0 E7A20358 */  swc1  $f2, 0x358($sp)
 /* 0B9C34 7F0850C4 E7A0035C */  swc1  $f0, 0x35c($sp)
-/* 0B9C38 7F0850C8 0FC1F43B */  jal   sub_GAME_7F07CAC8
+/* 0B9C38 7F0850C8 0FC1F43B */  jal   bondviewTankCollisionStatus
 /* 0B9C3C 7F0850CC AFAA0010 */   sw    $t2, 0x10($sp)
 /* 0B9C40 7F0850D0 50400007 */  beql  $v0, $zero, .Ljp7F0850F0
 /* 0B9C44 7F0850D4 3C01BF80 */   lui   $at, 0xbf80
@@ -30307,7 +30310,7 @@ glabel MoveBond
 /* 0B9F4C 7F0853DC AFB90010 */  sw    $t9, 0x10($sp)
 /* 0B9F50 7F0853E0 8FA6035C */  lw    $a2, 0x35c($sp)
 /* 0B9F54 7F0853E4 02003825 */  move  $a3, $s0
-/* 0B9F58 7F0853E8 0FC1F43B */  jal   sub_GAME_7F07CAC8
+/* 0B9F58 7F0853E8 0FC1F43B */  jal   bondviewTankCollisionStatus
 /* 0B9F5C 7F0853EC 2504048C */   addiu $a0, $t0, 0x48c
 /* 0B9F60 7F0853F0 10400004 */  beqz  $v0, .Ljp7F085404
 /* 0B9F64 7F0853F4 C7A8035C */   lwc1  $f8, 0x35c($sp)
@@ -32630,7 +32633,7 @@ glabel MoveBond
 /* 0B7504 7F084B14 44060000 */  mfc1  $a2, $f0
 /* 0B7508 7F084B18 E7A20358 */  swc1  $f2, 0x358($sp)
 /* 0B750C 7F084B1C E7A0035C */  swc1  $f0, 0x35c($sp)
-/* 0B7510 7F084B20 0FC1F2E7 */  jal   sub_GAME_7F07CAC8
+/* 0B7510 7F084B20 0FC1F2E7 */  jal   bondviewTankCollisionStatus
 /* 0B7514 7F084B24 AFB90010 */   sw    $t9, 0x10($sp)
 /* 0B7518 7F084B28 50400007 */  beql  $v0, $zero, .L7F084B48
 /* 0B751C 7F084B2C 3C01BF80 */   lui   $at, 0xbf80
@@ -32838,7 +32841,7 @@ glabel MoveBond
 /* 0B7824 7F084E34 AFAE0010 */  sw    $t6, 0x10($sp)
 /* 0B7828 7F084E38 8FA6035C */  lw    $a2, 0x35c($sp)
 /* 0B782C 7F084E3C 02003825 */  move  $a3, $s0
-/* 0B7830 7F084E40 0FC1F2E7 */  jal   sub_GAME_7F07CAC8
+/* 0B7830 7F084E40 0FC1F2E7 */  jal   bondviewTankCollisionStatus
 /* 0B7834 7F084E44 2504048C */   addiu $a0, $t0, 0x48c
 /* 0B7838 7F084E48 10400004 */  beqz  $v0, .L7F084E5C
 /* 0B783C 7F084E4C C7A4035C */   lwc1  $f4, 0x35c($sp)
