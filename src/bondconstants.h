@@ -3022,19 +3022,19 @@ typedef enum WAYMODE
 #define CharArrayTo24(val, index) (                     val[index+1] << 8 | val[index+2] | val[index] << 16)
 #define CharArrayTo32(val, index) (val[index+1] << 16 | val[index+2] << 8 | val[index+3] | val[index] << 24)
     /* Pad Catagory */
-#define isNotBoundPad(pad)       pad < 10000
-#define getBoundPadNum(pad)      pad - 10000
-#define setBoundPadNum(pad)      pad + 10000
+#define isNotBoundPad(pad)        pad < 10000
+#define getBoundPadNum(pad)       pad - 10000
+#define setBoundPadNum(pad)       pad + 10000
     /* AI Catagory */
-#define isAiGlobalID(ID)         ((ID) < 1025)
-#define isAiBGID(ID)             ((ID) > 4097)
-#define isAiChrID(ID)            (!isAiGlobalID(ID) && !isAiBGID(ID))
-#define setAiGlobalID(ID)        ((ID) + 0)
-#define setAiChrID(ID)           ((ID) + 1025)
-#define setAiBGID(ID)            ((ID) + 4097)
-#define getAiGlobalID(ID)        ((ID) - 0)
-#define getAiChrID(ID)           ((ID) - 1025)
-#define getAiBGID(ID)            ((ID) - 4097)
+#define isGlobalAIListID(ID)      ((ID) < 1025)
+#define isBGAIListID(ID)          ((ID) > 4097)
+#define isChrAIListID(ID)         (!isGlobalAIListID(ID) && !isBGAIListID(ID))
+#define setGlobalAIListID(ID)     ((ID) + 0)
+#define setChrAIListID(ID)        ((ID) + 1025)
+#define setBGAIListID(ID)         ((ID) + 4096)
+#define getGlobalAIListID(ID)     ((ID)-0)
+#define getChrAIListID(ID)        ((ID)-1025)
+#define getBGAIListID(ID)         ((ID)-4096)
 
     /* language file to slot allocation */
 #define TEXT(TEXTBANK, TEXTSLOT) ((TEXTBANK * 0x0400U) + TEXTSLOT)
@@ -3191,6 +3191,7 @@ typedef enum WAYMODE
     )                                      \
 },
 
+#define forever for (;;)
 
 
 #pragma endregion

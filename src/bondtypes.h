@@ -2099,9 +2099,9 @@ typedef union
         u8  state;      
         u8  type;       /*0x3*/
     } PropDefHeaderRecord;
-    #define New_PropDefHeaderRecord(Type) \
+    #define New_PropDefHeaderRecord(scale, Type) \
         {                                 \
-            0x100, 0, Type                \
+            (scale) * 256, PROPSTATE_NORMAL, Type \
         }
 
     #pragma endregion GlobalPropDef

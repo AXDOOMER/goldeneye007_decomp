@@ -256,14 +256,22 @@
 
 /**
  * Is the called AI List a subroutine (will it return)
- * Currently only checks global, you may add more level specific to list
+ * Per Setup Subroutines should be added to SETUPSUBROUTINES at the top of the 
+ * setup.
+ * eg
+ * #define SETUPSUBROUTINES(ID) (ID == ACTIVATE_OBJECT) |\
  */
 #define isSubroutine(ID) ((ID == GAILIST_PLAY_IDLE_ANIMATION) |\
                             (ID == GAILIST_BASH_KEYBOARD) | \
                             (ID == GAILIST_ATTACK_BOND) | \
                             (ID == GAILIST_RUN_TO_BOND) | \
                             (ID == GAILIST_STARTLE_AND_RUN_TO_BOND) | \
-                            (ID == GAILIST_WAIT_ONE_SECOND))
+                            (ID == GAILIST_WAIT_ONE_SECOND) \
+                            IF(NOT(DEFINED(SETUPSUBROUTINES(ID))))\
+                            (\
+                                | SETUPSUBROUTINES(ID)\
+                            ))\
+
 
 typedef enum GAILISTID
 {

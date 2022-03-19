@@ -14,10 +14,6 @@ s32 D_8004EACC = 0x0;
 //D:8004EAD0
 s32 D_8004EAD0 = 0x0;
 
-#pragma weak rmonOsReadHost = osReadHost
-#pragma weak rmonOsWriteHost = osWriteHost
-
-
 
 void indy_buffer_read_command(u8 *buffer,u32 size)
 {

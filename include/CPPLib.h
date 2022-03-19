@@ -237,6 +237,8 @@
     /**
  * Macro version of "defined" however its limited to 1/0/nothing. Any other value 
  * is indistuiguishable from a random name
+ * Certain pre-defined definitions can be "NOTDEFINED" eg THIS.
+ * so checking IF(DEFINED(THIS)) is asking if THIS is NOT defined
  * @return TRUE/FALSE
 */
 #define DEFINED(x) _DEFINED(x)
@@ -247,8 +249,9 @@
 
 /*The following names are NOT defined and need to be regarded as NOTDEFINED */
 #define _DEFINED_THIS_ PROBE(~)
+#define _DEFINED_SETUPSUBROUTINES(ID) PROBE(~),
 
-/**
+    /**
  * Logical negation. 0 or nothing is defined as false and everything else as
  * true.
  *

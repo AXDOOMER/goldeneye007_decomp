@@ -72,6 +72,18 @@ BG_WHITE:= 107
 # Common build print status function
 PRINT_STATUS = @echo "$(call SET_TEXTATTRIB,$(FG_GREEN))$(1) $(call SET_TEXTATTRIB,$(FG_OLIVE))$(2)$(call SET_TEXTATTRIB,$(FG_GRAY)) $(if $3, -> $(call SET_TEXTATTRIB,$(FG_NAVY))$(3))$(RESTORECOLOUR)"
 
+# Seperate "constant" drawing from variable drawing to speed up PBar rendering
+# draws a box and fills it grey ready for blue bar
+SetupProgressBar =                                                                                           \
+	{                                                                                                        \
+		str="$(SAVECURSOR)$(call SET_SCROLLREGION,4,0)$(call CURSOR_GOTO,2,999)\033[1J$(call CURSOR_GOTO,1)";\
+		str=$$str"\033(0lqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqk";   \
+		str=$$str"\nx$(call SET_TEXTATTRIB,$(BG_GRAY))%78s$(RESTORECOLOUR)x\n";                              \
+		str=$$str"mqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqj\033(B";   \
+		str=$$str"$(RESTORECURSOR)";                                                                         \
+		printf $$str "";                                                                                     \
+	}
+
 #(call DrawProgressBar,Percent)
 # OR
 #(call DrawProgressBar,NumberOfItemsDone,TotalNumberOfItems)
@@ -79,7 +91,7 @@ PRINT_STATUS = @echo "$(call SET_TEXTATTRIB,$(FG_GREEN))$(1) $(call SET_TEXTATTR
 # divide the percentage into a 80 char long bar
 # paint the whole bar grey
 # paint the first half, then text, then second half.
-# clear colour codes
+# clear colour codes 
 DrawProgressBar =                                       \
 	{                                                   \
 		$(if $(2),                                      \
@@ -91,23 +103,23 @@ DrawProgressBar =                                       \
 			fi                                          \
 			,_pdone=$(1)                                \
 		);                                              \
-		                                                \
-		pdone=`expr $$_pdone \* 76 / 100`;              \
+		pdone=`expr $$_pdone \* 74 / 100`;              \
 		pdoneb=0;                                       \
-		str="$(SAVECURSOR)$(call SET_SCROLLREGION,3,0)$(call CURSOR_GOTO,2,999)\033[1J$(call CURSOR_GOTO,1)$(call SET_TEXTATTRIB,$(BOLD),$(FG_WHITE))$(call SET_TEXTATTRIB,$(BG_GRAY))%80s$(call CURSOR_GOTO,1)$(call SET_TEXTATTRIB,$(BG_NAVY))" ;    \
+		str="$(SAVECURSOR)$(call CURSOR_GOTO,2,2)";\
+		str=$$str"$(call SET_TEXTATTRIB,$(BOLD),$(FG_WHITE),$(BG_NAVY))" ;    \
 		                                                \
-		if [ "$$pdone" -lt "38" ];                      \
+		if [ "$$pdone" -lt "36" ];                      \
 		then                                            \
 			str=$$str"%$${pdone}s";                     \
 			str=$$str"$(call SET_TEXTATTRIB,$(BG_GRAY))";\
-			pdoneb=`expr 38 - $$pdone`;                 \
+			pdoneb=`expr 36 - $$pdone`;                 \
 			str=$$str"%$${pdoneb}s%3d%%";               \
 		else                                            \
-			pdoneb=`expr $$pdone - 38`;                 \
-			str=$$str"%1s%37s%3d%%%$${pdoneb}s";        \
+			pdoneb=`expr $$pdone - 36`;                 \
+			str=$$str"%1s%35s%3d%%%$${pdoneb}s";        \
 		fi;                                             \
 		str=$$str"$(RESTORECURSOR)$(RESTORECOLOUR)";    \
-		printf $$str "" "" "" $$_pdone;                 \
+		printf $$str "" "" $$_pdone;                 \
 	}
 
 # Increment Progress Bar From percentage (1), and increase by 1 every (2) seconds.
@@ -115,11 +127,27 @@ DrawProgressBar =                                       \
 IncrementProgressBarFromAtRate =         \
 	{                                    \
 		i=$(1);                          \
-		while [ -d /proc/$$! ]; do       \
+		while [ -d /proc/$$! ] && [ $$i -le 100 ]; do       \
 			$(call DrawProgressBar,$$i); \
 			i=$$((i+1));                 \
 			sleep $(2);                  \
 		done;                            \
+	}
+
+# Ask to continue
+# (1) Prompt, (2) Do if Yes,
+# (3) Do if No [can be blank],
+# (4) Do if anything else [can be blank]
+# (5) Timeout [can be blank]
+ContinuePrompt =                                    \
+	{                                               \
+		echo "$1 [y/n]";                            \
+		read REPLY $(if $(5),& (sleep $5; echo n)); \
+		case $$REPLY in                             \
+			y|Y) $2;;                               \
+			n|N) $3;;                               \
+			*) $4;;                                 \
+		esac;                                       \
 	}
 
 # Convert AI Print commands from readable strings to byte arrays automatically.
@@ -332,7 +360,7 @@ ifeq ($(COMPARE),1)
 
 	@echo "\n"
 #   Calculate Checksum                      if fail                                         Allow overspill                                    Which File failed                       Quick Check (data)                    Slow Check (extract .text binary)
-	@$(SHA1SUM) -c ge007.$(OUTCODE).sha1 || ($(PRINTNOMATCH) && echo "$(SAVECURSOR)$(RESTORESCROLLREGION)$(RESTORECURSOR)\033[1DPlease wait while we determine which files are affected..." && $(SHA1SUM) --quiet -c checksums.txt && ./test_files.sh -c -i ge007.$(OUTCODE)-test_basis.csv && exit 1)
+	@$(SHA1SUM) -c ge007.$(OUTCODE).sha1 || ($(PRINTNOMATCH) && echo "$(SAVECURSOR)$(RESTORESCROLLREGION)$(RESTORECURSOR)\033[2D " && $(call ContinuePrompt,"Do you want to check Source Files?",echo "Please wait while we determine which files are affected..." && $(SHA1SUM) --quiet -c checksums.txt && ./test_files.sh -c -i ge007.$(OUTCODE)-test_basis.csv,,,3) && exit 1)
 #   Else complete 
 	@$(PRINTMATCH)
 endif
@@ -383,7 +411,8 @@ $(BUILD_DIR)/src/%.o: src/%.s pb3
 #Build Images
 $(BUILD_DIR)/assets/images/split/%.o: assets/images/split/%.bin pb4
 	$(call PRINT_STATUS,Compiling:,$<,$@)
-	$(LD) -r -b binary $< -o $@
+	$(LD) -r -b binary $< -o $@ 
+
 
 #Compress Obseg
 $(BUILD_DIR)/$(OBSEGMENT): $(OBSEG_RZ) $(IMAGE_OBJS) pb6
@@ -490,6 +519,7 @@ ifeq ($(VERBOSE),1)
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(RSPOBJECTS)
 else
 	@clear
+	$(call SetupProgressBar)
 	@echo "\n\nDeleting All Code Binaries Only [Assets will be left from previous compile]"
 	@rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map
 	@$(call DrawProgressBar,50)
@@ -512,6 +542,7 @@ ifeq ($(VERBOSE),1)
 else
 	@clear
 	@echo "\n\nDeleting All Code and Asset Binaries"
+	$(call SetupProgressBar)
 	@$(call DrawProgressBar,0)
 	@rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map
 	@$(call DrawProgressBar,1,4)
@@ -599,6 +630,7 @@ cmdbuilder:
 	@echo
 	@echo Building AI Command Macros...
 	@echo
+	@$(call SetupProgressBar)
 	@$(call DrawProgressBar,0)
 	@ # copy command definitions to temp
 	@cp $(AI_CMD_LIST_DEFINITIONS) $(AI_CMD_LIST_TEMP)
@@ -652,10 +684,15 @@ endif
 	@rm build/ctx.c build/ctx2.h || exit 0
 	@echo You can find it in Build [build/ctx.h].
 
+testPB:
+	$(call SetupProgressBar)
+	$(call IncrementProgressBarFromAtRate,0,0.125)
+
 colour:
+	@echo "\033[3A"
   ifeq ($(VERBOSE),0)
 #	@clear
-	@echo "\033[3A"
+	@$(call SetupProgressBar)
 	@$(call DrawProgressBar,0)
   endif
 	@$(MAKE) --no-print-directory all 2>&1 | sed -E \
@@ -709,7 +746,7 @@ ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,9,15)
 endif
 pb10:
-ifeq ($(VERBOSE),)
+ifeq ($(VERBOSE),0)
 	@$(call DrawProgressBar,10,15)
 endif
 pb11:
