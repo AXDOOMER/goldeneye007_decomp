@@ -44,9 +44,7 @@ struct collision434 {
     /**
      * Offset 0x10.
      */
-    f32 field_10;
-    f32 field_14;
-    f32 field_18;
+    struct coord3d field_10;
 
     /**
      * Some kind of alternative to pos3 (in player struct).
@@ -2770,7 +2768,7 @@ struct struct_4 {
 };
 
 //D:80036424
-extern s32 camera_80036424;
+extern s32 g_bondviewForceDisarm;
 //D:80036428
 extern s32 resolution;
 //D:8003642C

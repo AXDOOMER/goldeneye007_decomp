@@ -128,9 +128,9 @@ glabel load_camera_intro_type_values
 /* 03A334 7F005804 ADC10008 */  sw    $at, 8($t6)
 /* 03A338 7F005808 3C018003 */  lui   $at, %hi(g_isBondKIA)
 /* 03A33C 7F00580C AC20A928 */  sw    $zero, %lo(g_isBondKIA)($at)
-/* 03A340 7F005810 3C018003 */  lui   $at, %hi(camera_80036424)
+/* 03A340 7F005810 3C018003 */  lui   $at, %hi(g_bondviewForceDisarm)
 /* 03A344 7F005814 3C108007 */  lui   $s0, %hi(g_chraiCurrentSetup+8)
-/* 03A348 7F005818 AC206424 */  sw    $zero, %lo(camera_80036424)($at)
+/* 03A348 7F005818 AC206424 */  sw    $zero, %lo(g_bondviewForceDisarm)($at)
 /* 03A34C 7F00581C 26316428 */  addiu $s1, %lo(resolution) # addiu $s1, $s1, 0x6428
 /* 03A350 7F005820 8E105D08 */  lw    $s0, %lo(g_chraiCurrentSetup+8)($s0)
 /* 03A354 7F005824 AE200000 */  sw    $zero, ($s1)
@@ -851,9 +851,9 @@ glabel load_camera_intro_type_values
 /* 03A398 7F005828 ADC10008 */  sw    $at, 8($t6)
 /* 03A39C 7F00582C 3C018003 */  lui   $at, %hi(g_isBondKIA) # $at, 0x8003
 /* 03A3A0 7F005830 AC20A968 */  sw    $zero, %lo(g_isBondKIA)($at)
-/* 03A3A4 7F005834 3C018003 */  lui   $at, %hi(camera_80036424) # $at, 0x8003
+/* 03A3A4 7F005834 3C018003 */  lui   $at, %hi(g_bondviewForceDisarm) # $at, 0x8003
 /* 03A3A8 7F005838 3C108007 */  lui   $s0, %hi(g_chraiCurrentSetup+8) # $s0, 0x8007
-/* 03A3AC 7F00583C AC206464 */  sw    $zero, %lo(camera_80036424)($at)
+/* 03A3AC 7F00583C AC206464 */  sw    $zero, %lo(g_bondviewForceDisarm)($at)
 /* 03A3B0 7F005840 26316468 */  addiu $s1, %lo(resolution) # addiu $s1, $s1, 0x6468
 /* 03A3B4 7F005844 8E105D48 */  lw    $s0, %lo(g_chraiCurrentSetup+8)($s0)
 /* 03A3B8 7F005848 AE200000 */  sw    $zero, ($s1)
@@ -1566,9 +1566,9 @@ glabel load_camera_intro_type_values
 /* 038198 7F0057A8 ADC10008 */  sw    $at, 8($t6)
 /* 03819C 7F0057AC 3C018002 */  lui   $at, %hi(g_isBondKIA) # $at, 0x8002
 /* 0381A0 7F0057B0 AC205E78 */  sw    $zero, %lo(g_isBondKIA)($at)
-/* 0381A4 7F0057B4 3C018003 */  lui   $at, %hi(camera_80036424) # $at, 0x8003
+/* 0381A4 7F0057B4 3C018003 */  lui   $at, %hi(g_bondviewForceDisarm) # $at, 0x8003
 /* 0381A8 7F0057B8 3C108006 */  lui   $s0, %hi(g_chraiCurrentSetup+8) # $s0, 0x8006
-/* 0381AC 7F0057BC AC201974 */  sw    $zero, %lo(camera_80036424)($at)
+/* 0381AC 7F0057BC AC201974 */  sw    $zero, %lo(g_bondviewForceDisarm)($at)
 /* 0381B0 7F0057C0 26311978 */  addiu $s1, %lo(resolution) # addiu $s1, $s1, 0x1978
 /* 0381B4 7F0057C4 8E104C48 */  lw    $s0, %lo(g_chraiCurrentSetup+8)($s0)
 /* 0381B8 7F0057C8 AE200000 */  sw    $zero, ($s1)

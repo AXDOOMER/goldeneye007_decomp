@@ -229,8 +229,14 @@ s32 flt_CODE_bss_80079E10;
 // data
 //D:80036420
 s32 D_80036420 = 0;
-//D:80036424
-s32 camera_80036424 = 0;
+
+/**
+ * When set, will increment each tick until reaching a threshold value (4).
+ * Then current items will be unequipped from left and run hands.
+ * Address 0x80036424.
+*/
+s32 g_bondviewForceDisarm = 0;
+
 //D:80036428
 s32 resolution = 0;
 //D:8003642C
@@ -4916,7 +4922,7 @@ void maybe_solo_intro_camera_handler(void)
         disable_sounds_attached_to_player_then_something(g_CurrentPlayer->prop);
         g_CurrentPlayer->prop->chr = NULL;
         g_CurrentPlayer->ptr_char_objectinstance = 0;
-        camera_80036424 = 1;
+        g_bondviewForceDisarm = 1;
         sub_GAME_7F07DE9C(g_CurrentPlayer);
     }
 }
@@ -19386,8 +19392,8 @@ glabel controller_gameplay_interaction
 /* 0B65C8 7F081A98 AFB80130 */  sw    $t8, 0x130($sp)
 /* 0B65CC 7F081A9C 8D1900D8 */  lw    $t9, 0xd8($t0)
 /* 0B65D0 7F081AA0 1720001B */  bnez  $t9, .L7F081B10
-/* 0B65D4 7F081AA4 3C0A8003 */   lui   $t2, %hi(camera_80036424)
-/* 0B65D8 7F081AA8 8D4A6424 */  lw    $t2, %lo(camera_80036424)($t2)
+/* 0B65D4 7F081AA4 3C0A8003 */   lui   $t2, %hi(g_bondviewForceDisarm)
+/* 0B65D8 7F081AA8 8D4A6424 */  lw    $t2, %lo(g_bondviewForceDisarm)($t2)
 /* 0B65DC 7F081AAC 5D400019 */  bgtzl $t2, .L7F081B14
 /* 0B65E0 7F081AB0 8E080000 */   lw    $t0, ($s0)
 /* 0B65E4 7F081AB4 8D0201C8 */  lw    $v0, 0x1c8($t0)
@@ -22122,8 +22128,8 @@ glabel controller_gameplay_interaction
 /* 0B452C 7F081B3C AFB80130 */  sw    $t8, 0x130($sp)
 /* 0B4530 7F081B40 8D1900D8 */  lw    $t9, 0xd8($t0)
 /* 0B4534 7F081B44 1720001B */  bnez  $t9, .L7F081BB4
-/* 0B4538 7F081B48 3C0A8003 */   lui   $t2, %hi(camera_80036424) # $t2, 0x8003
-/* 0B453C 7F081B4C 8D4A1974 */  lw    $t2, %lo(camera_80036424)($t2)
+/* 0B4538 7F081B48 3C0A8003 */   lui   $t2, %hi(g_bondviewForceDisarm) # $t2, 0x8003
+/* 0B453C 7F081B4C 8D4A1974 */  lw    $t2, %lo(g_bondviewForceDisarm)($t2)
 /* 0B4540 7F081B50 5D400019 */  bgtzl $t2, .L7F081BB8
 /* 0B4544 7F081B54 8E080000 */   lw    $t0, ($s0)
 /* 0B4548 7F081B58 8D0201C8 */  lw    $v0, 0x1c8($t0)
@@ -26053,15 +26059,15 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
     f32 sp390;
 
     // boost forwards
-    f32 sp38C;
+    f32 shotboost_forward;
 
     // boost sideways
-    f32 sp388;
-    f32 temp_f0_2;
+    f32 shotboost_sideways;
+    f32 shotboost_norm;
     f32 temp_f0_12;    
     struct coord3d sp374;
     struct coord3d sp368;
-    s32 stack_padding_14;
+    struct coord3d *collision_ptr;
     s32 stack_padding_15;
     f32 sp35C;
     f32 sp358;
@@ -26156,7 +26162,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
     struct coord3d spE4;
     s32 stack_padding_22; 
     s32 stack_padding_21; 
-    s32 stack_padding_20; 
+    s32 stemp; 
     s32 stack_padding_18; 
     struct rect4f spB4;
     // roomids
@@ -26192,12 +26198,12 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
         return_null();
     }
 
-    if (camera_80036424 > 0)
+    if (g_bondviewForceDisarm > 0)
     {
-        camera_80036424++;
-        if (camera_80036424 >= 4)
+        g_bondviewForceDisarm++;
+        if (g_bondviewForceDisarm >= 4)
         {
-            camera_80036424 = 0;
+            g_bondviewForceDisarm = 0;
             g_CurrentPlayer->lock_hand_model[GUNLEFT] = 0;
             g_CurrentPlayer->lock_hand_model[GUNRIGHT] = 0;
             currentPlayerUnEquipWeaponWrapper(GUNLEFT, getCurrentPlayerWeaponId(GUNLEFT));
@@ -26222,7 +26228,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
 
     if (in_tank_flag == 0)
     {
-        if (currentPlayerGetCrouchPos() == 0)
+        if (currentPlayerGetCrouchPos() == CROUCH_SQUAT)
         {
             g_CurrentPlayer->speedforwards *= 0.5f;
             g_CurrentPlayer->speedsideways *= 0.5f;
@@ -26230,15 +26236,17 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
 
         if ((g_CurrentPlayer->bondshotspeed.f[0] != 0.0f) || (g_CurrentPlayer->bondshotspeed.f[2] != 0.0f))
         {
-            sp38C = (-g_CurrentPlayer->bondshotspeed.f[0] * g_CurrentPlayer->vv_sintheta) + (g_CurrentPlayer->bondshotspeed.f[2] * g_CurrentPlayer->vv_costheta);
-            sp388 = (-g_CurrentPlayer->bondshotspeed.f[0] * g_CurrentPlayer->vv_costheta) - (g_CurrentPlayer->bondshotspeed.f[2] * g_CurrentPlayer->vv_sintheta);
+            shotboost_forward = (-g_CurrentPlayer->bondshotspeed.f[0] * g_CurrentPlayer->vv_sintheta)
+                + (g_CurrentPlayer->bondshotspeed.f[2] * g_CurrentPlayer->vv_costheta);
+            shotboost_sideways = (-g_CurrentPlayer->bondshotspeed.f[0] * g_CurrentPlayer->vv_costheta)
+                - (g_CurrentPlayer->bondshotspeed.f[2] * g_CurrentPlayer->vv_sintheta);
             
-            temp_f0_2 = sqrtf(
+            shotboost_norm = sqrtf(
                 (g_CurrentPlayer->bondshotspeed.f[2] * g_CurrentPlayer->bondshotspeed.f[2]) + 
                 (g_CurrentPlayer->bondshotspeed.f[0] * g_CurrentPlayer->bondshotspeed.f[0]));
 
-            g_CurrentPlayer->speedforwards += sp38C;
-            g_CurrentPlayer->speedsideways += sp388;
+            g_CurrentPlayer->speedforwards += shotboost_forward;
+            g_CurrentPlayer->speedsideways += shotboost_sideways;
 
             // 3: x,y,z components of bondshotspeed
             for (i=0; i<3; i++)
@@ -26249,7 +26257,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
                     {
                         g_CurrentPlayer->bondshotspeed.f[i] =
                             g_CurrentPlayer->bondshotspeed.f[i] -
-                            ((0.06666667f * g_GlobalTimerDelta * g_CurrentPlayer->bondshotspeed.f[i]) / temp_f0_2);
+                            ((0.06666667f * g_GlobalTimerDelta * g_CurrentPlayer->bondshotspeed.f[i]) / shotboost_norm);
                         
                         if (g_CurrentPlayer->bondshotspeed.f[i] < 0.0f)
                         {
@@ -26260,7 +26268,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
                     {
                         g_CurrentPlayer->bondshotspeed.f[i] =
                             g_CurrentPlayer->bondshotspeed.f[i] -
-                            ((0.06666667f * g_GlobalTimerDelta * g_CurrentPlayer->bondshotspeed.f[i]) / temp_f0_2);
+                            ((0.06666667f * g_GlobalTimerDelta * g_CurrentPlayer->bondshotspeed.f[i]) / shotboost_norm);
                         
                         if (g_CurrentPlayer->bondshotspeed.f[i] < 0.0f)
                         {
@@ -26281,18 +26289,20 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
         {
             sp35C -= 6.2831855f;
         }
+        
         if (sp35C < 0.0f)
         {
             sp35C += 6.2831855f;
         }
 
-        
+        collision_ptr = &g_CurrentPlayer->field_488.collision_position;
+
         if (sub_GAME_7F07CAC8(
-            &g_CurrentPlayer->field_488.collision_position,
+            collision_ptr,
             g_CurrentPlayer->field_488.current_tile_ptr,
             sp35C,
-            &sp374.f[0],
-            &sp368) != 0)
+            &sp374,
+            &sp368))
         {
             D_80036464 = sp35C;
         }
@@ -26309,25 +26319,28 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             sp320 = -(sp338 * temp_f16_2);
             sp324 = sp334 * temp_f16_2;
 
-            temp_f18_2 = (sp324 * (g_CurrentPlayer->field_488.collision_position.f[0] - sp368.f[0])) + 
-                (sp320 * (g_CurrentPlayer->field_488.collision_position.f[2] - sp368.f[2]))                
+            temp_f18_2 = 
+                (sp324 * (g_CurrentPlayer->field_488.collision_position.f[0] - sp368.f[0])) +
+                (sp320 * (g_CurrentPlayer->field_488.collision_position.f[2] - sp368.f[2])) 
                 ;
 
             if (temp_f18_2 < 0.0f)
             {
-                sp320 = -sp320;
                 sp324 = -sp324;
+                sp320 = -sp320;
                 temp_f18_2 = -temp_f18_2;
             }
 
-            temp_f0_4 = (sp324 * (g_CurrentPlayer->field_488.collision_position.f[0] - unksp348.f[0])) + 
-                (sp320 * (g_CurrentPlayer->field_488.collision_position.f[2] - unksp348.f[2]));
+            temp_f0_4 = 
+                (sp324 * (g_CurrentPlayer->field_488.collision_position.f[0] - unksp348.f[0])) +
+                (sp320 * (g_CurrentPlayer->field_488.collision_position.f[2] - unksp348.f[2]))
+                ;
             
             if (temp_f0_4 < temp_f18_2)
             {
                 sp31C = temp_f18_2 - temp_f0_4;
             }
-            
+
             sp338 = sp368.f[0] - sp374.f[0];
             sp334 = sp368.f[2] - sp374.f[2];
             
@@ -26335,7 +26348,10 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             sp308 = -(sp338 * temp_f16_2);
             sp30C = sp334 * temp_f16_2;
             
-            phi_f18_2 = (sp308 * (g_CurrentPlayer->field_488.collision_position.f[2] - sp368.f[2])) + (sp30C * (g_CurrentPlayer->field_488.collision_position.f[0] - sp368.f[0]));
+            phi_f18_2 =
+                (sp30C * (g_CurrentPlayer->field_488.collision_position.f[0] - sp368.f[0])) +
+                (sp308 * (g_CurrentPlayer->field_488.collision_position.f[2] - sp368.f[2]))
+                ;
 
             if (phi_f18_2 < 0.0f)
             {
@@ -26344,14 +26360,17 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
                 phi_f18_2 = -phi_f18_2;
             }
 
-            temp_f0_5 = (sp30C * (g_CurrentPlayer->field_488.collision_position.f[0] - unksp348.f[0])) + (sp308 * (g_CurrentPlayer->field_488.collision_position.f[2] - unksp348.f[2]));
-            temp_f2_6 = (sp30C * (g_CurrentPlayer->field_488.collision_position.f[0] - unksp33C.f[0])) + (sp308 * (g_CurrentPlayer->field_488.collision_position.f[2] - unksp33C.f[2]));
+            temp_f0_5 =
+                (sp30C * (g_CurrentPlayer->field_488.collision_position.f[0] - unksp348.f[0])) +
+                (sp308 * (g_CurrentPlayer->field_488.collision_position.f[2] - unksp348.f[2]));
+            temp_f2_6 =
+                (sp30C * (g_CurrentPlayer->field_488.collision_position.f[0] - unksp33C.f[0])) +
+                (sp308 * (g_CurrentPlayer->field_488.collision_position.f[2] - unksp33C.f[2]));
             
             if (temp_f2_6 < temp_f0_5)
             {
                 temp_f0_5 = temp_f2_6;
             }
-            
             if (temp_f0_5 < phi_f18_2)
             {
                 sp304 = phi_f18_2 - temp_f0_5;
@@ -26396,7 +26415,6 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
 
         sp354 = D_80036474;
         D_80036484 += D_80036488;
-        //phi_f14 = 6.2831855f;
         if (D_80036484 >= 6.2831855f)
         {
             D_80036484 -= 6.2831855f;
@@ -26532,11 +26550,11 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
     sub_GAME_7F081790();
 
     sp2AC = 0.0f;
-    if (currentPlayerGetCrouchPos() == 0)
+    if (currentPlayerGetCrouchPos() == CROUCH_SQUAT)
     {
         sp2AC = -100.0f;
     }
-    else if (currentPlayerGetCrouchPos() == 1)
+    else if (currentPlayerGetCrouchPos() == CROUCH_HALF)
     {
         sp2AC = -60.0f;
     }
@@ -26644,12 +26662,12 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             if (dword_CODE_bss_800799B8 == 1)
             {
                 dword_CODE_bss_800799B8 = 2;
-                if ((SFX_80036458 == NULL) && (lvlGetControlsLockedFlag() == 0))
+                /*if ((SFX_80036458 == NULL) && (lvlGetControlsLockedFlag() == 0))
                 {
                     sndPlaySfx(g_musicSfxBufferPtr, TRUCK_START_SFX, &SFX_80036458);
                 }
                 sndCreatePostEvent(SFX_80036458, 8, 0x61A8);
-                dword_CODE_bss_800799B4 = 0x61A8;
+                dword_CODE_bss_800799B4 = 0x61A8;*/
             }
             else
             {
@@ -26676,16 +26694,16 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
                     if (sp244 > 1.0f)
                     {
                         sp244 = 1.0f;
-                    }
+                    }/*
                     if (SFX_80036458->link.prev == NULL)
                     {
                         if (lvlGetControlsLockedFlag() == 0)
                         {
                             sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, TANK_SFX, &SFX_8003645C);
                         }
-                    }
+                    }*/
 
-                    if (SFX_80036458->link.prev != NULL)
+                    /*if (SFX_80036458->link.prev != NULL)
                     {
                         phi_a2 = 0x7FFF;
                         if (sp244 < 0.15f)
@@ -26697,28 +26715,28 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
                             phi_a2 = (s32) ((((sp244 - 0.15f) * 12767.0f) / 0.75f) + 20000.0f);
                         }
                         sndCreatePostEvent(SFX_80036458->link.prev, 8, phi_a2);
-                    }
+                    }*/
                 }
                 else
                 {
-                    if (SFX_80036458 != NULL)
+                    /*if (SFX_80036458 != NULL)
                     {
                         if (sndGetPlayingState(SFX_80036458) != 0)
                         {
                             sndDeactivate(SFX_80036458);
                         }
-                    }
+                    }*/
                 }
 
-                if (SFX_80036458 == NULL)
+                /*if (SFX_80036458 == NULL)
                 {
                     if (lvlGetControlsLockedFlag() == 0)
                     {
                         sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, TRUCK_RUN_SFX, &SFX_80036458);
                     }
-                }
+                }*/
 
-                if (SFX_80036458 != NULL)
+                /*if (SFX_80036458 != NULL)
                 {
                     dword_CODE_bss_800799B4 = 0x7FFF;
                     if (sp244 < 0.9f)
@@ -26727,7 +26745,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
                     }
 
                     sndCreatePostEvent(SFX_80036458, 8, dword_CODE_bss_800799B4);
-                }
+                }*/
 
                 if (getCurrentPlayerWeaponId(GUNRIGHT) == ITEM_TANKSHELLS)
                 {
@@ -26792,56 +26810,57 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
     }
     else
     {
-        ALSoundState *sfx = (ALSoundState *)SFX_80036458->link.next;
-        if ((sfx != NULL) && (sndGetPlayingState(sfx) != 0))
+        /*if ((SFX_80036458 != NULL) && (sndGetPlayingState(SFX_80036458) != 0))
         {
             dword_CODE_bss_800799B4 -= (g_ClockTimer * 1000);
             if (dword_CODE_bss_800799B4 > 0)
             {
-                sndCreatePostEvent(sfx, 8, dword_CODE_bss_800799B4);
+                sndCreatePostEvent(SFX_80036458, 8, dword_CODE_bss_800799B4);
             }
             else
             {
-                sndDeactivate(sfx);
+                sndDeactivate(SFX_80036458);
             }
-        }
+        }*/
 
-        
-
-        if ((SFX_80036458->link.prev != NULL) && (sndGetPlayingState(SFX_80036458->link.prev) != 0))
+        /*if ((SFX_80036458 != NULL) && (sndGetPlayingState(SFX_80036458) != 0))
         {
-            sndDeactivate(SFX_80036458->link.prev);
-        }
+            sndDeactivate(SFX_80036458);
+        }*/
 
-        sp398 = g_CurrentPlayer->speedforwards;
-        sp3A0 = g_BondMoveAnimationSetup[1].unk0C * 0.5f * g_GlobalTimerDelta * g_CurrentPlayer->speedsideways;
-        sp220 = (g_CurrentPlayer->field_488.field_18 * -g_CurrentPlayer->swaytarget) - g_CurrentPlayer->field_1278;
-        sp21C = (g_CurrentPlayer->field_488.field_10 * g_CurrentPlayer->swaytarget) - g_CurrentPlayer->field_127C;
+        phi_f0_15 = g_CurrentPlayer->speedsideways;
+        temp_f12_6 = g_CurrentPlayer->speedtheta;
 
-        sp218 = (sp21C * sp21C) + (sp220 * sp220);
+        sp3A0 =  0.5f * g_BondMoveAnimationSetup[1].unk0C 
+            * g_CurrentPlayer->speedsideways * g_GlobalTimerDelta;
         
+        sp220 = (g_CurrentPlayer->field_488.field_10.f[2] * -g_CurrentPlayer->swaytarget)
+             - g_CurrentPlayer->field_1278;
+        sp21C = (g_CurrentPlayer->field_488.field_10.f[0] * g_CurrentPlayer->swaytarget)
+            - g_CurrentPlayer->field_127C;
+        
+        sp218 = (sp21C * sp21C) + (sp220 * sp220);
         if (sp218 >= 100.0f)
         {
             sp220 *= 0.6f;
             sp21C *= 0.6f;
         }
+        sp398 = g_CurrentPlayer->speedforwards;
+        phi_f0_15 *= 0.8f;
+        temp_f12_6 *= 0.8f;
 
-        phi_f0_15 = g_CurrentPlayer->speedsideways * 0.8f;
-        temp_f12_6 = g_CurrentPlayer->speedtheta * 0.8f;
-        
         if (phi_f0_15 < 0.0f)
         {
             phi_f0_15 = -phi_f0_15;
-        }
-        if (sp398 < 0.0f)
-        {
-            sp398 = -sp398;
         }
         if (temp_f12_6 < 0.0f)
         {
             temp_f12_6 = -temp_f12_6;
         }
-        
+        if (sp398 < 0.0f)
+        {
+            sp398 = -sp398;
+        }
         if (sp398 < phi_f0_15)
         {
             sp398 = phi_f0_15;
@@ -26850,13 +26869,15 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
         {
             sp398 = temp_f12_6;
         }
+        
         if ((sp218 >= 0.1f) && (sp398 < 0.8f))
         {
             sp398 = 0.8f;
         }
-        if (sp398 >= 0.75f)
+
+        if (sp398 - 0.75f >= 0.0f)
         {
-            g_CurrentPlayer->bondbreathing += ((sp398 - 0.75f) * g_GlobalTimerDelta) / 900.0f;
+            g_CurrentPlayer->bondbreathing += ((sp398 - 0.75f) * g_GlobalTimerDelta) / 900.0f ;
         }
         else
         {
@@ -26872,21 +26893,23 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             g_CurrentPlayer->bondbreathing = 1.0f;
         }
 
-
         sub_GAME_7F080B34(sp398, g_CurrentPlayer->speedforwards, sp3A0);
-        
+
+        ftemp = g_CurrentPlayer->headpos[0];
+        ftemp2 = g_CurrentPlayer->headpos[2];
         sp3AC.f[0] += 
             (
-                (g_CurrentPlayer->field_488.field_10 * g_CurrentPlayer->headpos[2]) -
-                (g_CurrentPlayer->field_488.field_18 * g_CurrentPlayer->headpos[0])
+                (ftemp2 * g_CurrentPlayer->field_488.field_10.f[0]) -
+                (ftemp * g_CurrentPlayer->field_488.field_10.f[2])
             ) * g_GlobalTimerDelta;
 
         sp3AC.f[2] += 
             (
-                (g_CurrentPlayer->field_488.field_18 * g_CurrentPlayer->headpos[2]) +
-                (g_CurrentPlayer->field_488.field_10 * g_CurrentPlayer->headpos[0])
+                (ftemp2 * g_CurrentPlayer->field_488.field_10.f[2]) +
+                (ftemp * g_CurrentPlayer->field_488.field_10.f[0])
             ) * g_GlobalTimerDelta;
-
+            
+ 
         sp3AC.f[0] += sp220;
         sp3AC.f[2] += sp21C;
 
@@ -26898,19 +26921,19 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
         {
             sp3AC.f[0] += 
                 (
-                    (g_CurrentPlayer->field_488.field_10 * g_CurrentPlayer->speedforwards) -
-                    (g_CurrentPlayer->field_488.field_18 * g_CurrentPlayer->speedsideways)
+                    (g_CurrentPlayer->field_488.field_10.f[0] * g_CurrentPlayer->speedforwards) -
+                    (g_CurrentPlayer->field_488.field_10.f[2] * g_CurrentPlayer->speedsideways)
                 ) * g_GlobalTimerDelta * 10.0f;
 
             sp3AC.f[2] += 
                 (
-                    (g_CurrentPlayer->field_488.field_18 * g_CurrentPlayer->speedforwards) +
-                    (g_CurrentPlayer->field_488.field_10 * g_CurrentPlayer->speedsideways)
+                    (g_CurrentPlayer->field_488.field_10.f[2] * g_CurrentPlayer->speedforwards) +
+                    (g_CurrentPlayer->field_488.field_10.f[0] * g_CurrentPlayer->speedsideways)
                 ) * g_GlobalTimerDelta * 10.0f;
         }
         
         sub_GAME_7F07D960(&sp3AC, (g_CurrentPlayer->swaytarget == 0.0f));
-        
+
         sub_GAME_7F0B2314(
             &sp200,
             sp208,
@@ -26953,8 +26976,8 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             sub_GAME_7F0B2420(&sp174, &sp170, &sp184);
             if (g_CurrentPlayer->stanHeight <= sp184.sp19C.f[1])
             {
-                sp168 = sp184.sp184.f[0] - sp184.sp190.f[0];
-                sp16C = sp184.sp190.f[2] - sp184.sp184.f[2];
+                sp168 = sp184.sp184.f[2] - sp184.sp190.f[0];
+                sp16C = sp184.sp190.f[2] - sp184.sp184.f[0];
                 temp_f0_25 = sqrtf((sp16C * sp16C) + (sp168 * sp168));
                 sp168 = sp168 / temp_f0_25;
                 //sp30 = sp204;
@@ -27036,9 +27059,10 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
         g_CurrentPlayer->field_127C += temp_f0_30 * sp21C;
     }
 
+    
     sp144 = (g_CurrentPlayer->speedverta / 0.7f) + (g_CurrentPlayer->field_A4 / 5.0f);
     phi_f12_8 = bheadGetBreathingValue();
-
+    
     if (sp144 > 1.0f)
     {
         sp144 = 1.0f;
@@ -27058,7 +27082,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
 
     if ((ptr_playerstank != 0) && (in_tank_flag == 1) && (dword_CODE_bss_800799B8 == 2))
     {
-        
+        //temp_tank = (struct TankRecord *)ptr_playerstank->obj;
         sp138 = (struct TankRecord *)ptr_playerstank->obj;
         sp130 = (struct ModelNode_BoundingBoxRecord *)((struct ModelNode *)sp138->model->obj->Switches)->Child->Data;
         
@@ -27074,6 +27098,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
         sp138->unkDC = D_80036464;
 
         matrix_4x4_set_rotation_around_y(6.2831855f - D_80036464, &spF0);
+        //sp138 = *(struct TankRecord **)&temp_tank;
         matrix_scalar_multiply(sp138->model->scale, &spF0);
         
         spE4.f[0] = -flt_CODE_bss_800799A8.f[0];
@@ -27096,14 +27121,14 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
 
         sp138->stan_y = stanGetPositionYValue(sp138->prop->stan, spE4.f[0], spE4.f[2]);
         
-        do
-        {
+        //do
+        //{
             for (i=0; i<g_ClockTimer; i++)
             {
                 sp138->unkD0 = (sp138->unkD0 * 0.83f) + sp138->stan_y;
             }
-        break;
-        }while (g_ClockTimer > 0);
+        //break;
+        //}while (g_ClockTimer > 0);
 
         spE4.f[1] = (sp138->unkD0 * 0.17000002f);
         spE4.f[1] += 4.0f - (chrpropBBOXGetYmin(sp130) * sp138->model->scale);
@@ -27366,8 +27391,8 @@ glabel MoveBond
 /* 0B9210 7F0846E0 0FC1B11B */  jal   return_null
 /* 0B9214 7F0846E4 00000000 */   nop
 .L7F0846E8:
-/* 0B9218 7F0846E8 3C038003 */  lui   $v1, %hi(camera_80036424)
-/* 0B921C 7F0846EC 24636424 */  addiu $v1, %lo(camera_80036424) # addiu $v1, $v1, 0x6424
+/* 0B9218 7F0846E8 3C038003 */  lui   $v1, %hi(g_bondviewForceDisarm)
+/* 0B921C 7F0846EC 24636424 */  addiu $v1, %lo(g_bondviewForceDisarm) # addiu $v1, $v1, 0x6424
 /* 0B9220 7F0846F0 8C620000 */  lw    $v0, ($v1)
 /* 0B9224 7F0846F4 18400015 */  blez  $v0, .L7F08474C
 /* 0B9228 7F0846F8 24580001 */   addiu $t8, $v0, 1
@@ -29906,8 +29931,8 @@ glabel MoveBond
 /* 0B9900 7F084D90 0FC1B297 */  jal   return_null
 /* 0B9904 7F084D94 00000000 */   nop
 .Ljp7F084D98:
-/* 0B9908 7F084D98 3C038003 */  lui   $v1, %hi(camera_80036424) # $v1, 0x8003
-/* 0B990C 7F084D9C 24636464 */  addiu $v1, %lo(camera_80036424) # addiu $v1, $v1, 0x6464
+/* 0B9908 7F084D98 3C038003 */  lui   $v1, %hi(g_bondviewForceDisarm) # $v1, 0x8003
+/* 0B990C 7F084D9C 24636464 */  addiu $v1, %lo(g_bondviewForceDisarm) # addiu $v1, $v1, 0x6464
 /* 0B9910 7F084DA0 8C620000 */  lw    $v0, ($v1)
 /* 0B9914 7F084DA4 18400015 */  blez  $v0, .Ljp7F084DFC
 /* 0B9918 7F084DA8 244D0001 */   addiu $t5, $v0, 1
@@ -32428,8 +32453,8 @@ glabel MoveBond
 /* 0B71B0 7F0847C0 8D4B0004 */  lw    $t3, 4($t2)
 /* 0B71B4 7F0847C4 ADC10000 */  sw    $at, ($t6)
 /* 0B71B8 7F0847C8 8D410008 */  lw    $at, 8($t2)
-/* 0B71BC 7F0847CC 3C038003 */  lui   $v1, %hi(camera_80036424) # $v1, 0x8003
-/* 0B71C0 7F0847D0 24631974 */  addiu $v1, %lo(camera_80036424) # addiu $v1, $v1, 0x1974
+/* 0B71BC 7F0847CC 3C038003 */  lui   $v1, %hi(g_bondviewForceDisarm) # $v1, 0x8003
+/* 0B71C0 7F0847D0 24631974 */  addiu $v1, %lo(g_bondviewForceDisarm) # addiu $v1, $v1, 0x1974
 /* 0B71C4 7F0847D4 ADCB0004 */  sw    $t3, 4($t6)
 /* 0B71C8 7F0847D8 ADC10008 */  sw    $at, 8($t6)
 /* 0B71CC 7F0847DC 4480A000 */  mtc1  $zero, $f20
