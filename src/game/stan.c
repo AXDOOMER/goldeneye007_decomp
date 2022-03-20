@@ -4845,7 +4845,7 @@ s32 stanGetLocusField0(struct StandTileLocusCallbackRecord *arg0)
     return arg0->unk00;
 }
 
-s32 sub_GAME_7F0B23A4(struct StandTileLocusCallbackRecord *arg0)
+s32 stanGetLocusCount(struct StandTileLocusCallbackRecord *arg0)
 {
     return arg0->count;
 }

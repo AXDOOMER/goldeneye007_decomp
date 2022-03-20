@@ -59,7 +59,7 @@ PropRecord *sub_GAME_7F0B1410(StandTile *arg0, f32 arg1, f32 arg2, f32 arg3, f32
 s32 copy_tile_RGB_as_24bit(StandTile *tile, f32 p_x, f32 p_z, u8* rtn);
 s32 stanTileDistanceRelated(struct StandTile **arg0, f32 arg1, f32 arg2, f32 arg3, struct StandTileLocusCallbackRecord *arg4);
 s32 stanGetLocusField0(struct StandTileLocusCallbackRecord *arg0);
-s32 sub_GAME_7F0B23A4(struct StandTileLocusCallbackRecord *arg0);
+s32 stanGetLocusCount(struct StandTileLocusCallbackRecord *arg0);
 f32 distBetweenPoints2d(f32 o_x,f32 o_z,f32 p_x,f32 p_z);
 bool sub_GAME_7F0B17E4(f32 x1, f32 z1, f32 x2, f32 z2, f32 x3, f32 z3);
 f32 sub_GAME_7F0B16C4(f32 x1, f32 z1, f32 x2, f32 z2, f32 x3, f32 z3);
