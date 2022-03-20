@@ -64,14 +64,18 @@ struct collision434 {
     coord3d pos;
 
     /**
+     * bondviewMoveAnimationTick calculates 4x4 view matrix transform and then writes rotation
+     * to this property and applied_view2. Removing the update to this property will fix
+     * Bond's camera orientation such that Bond can still turn, but the camera is always
+     * locked facing the starting position.
      * Offset 0x3c.
      */
-    s32 field_3C;
-    s32 field_40;
-    s32 field_44;
-    s32 field_48;
-    s32 field_4C;
-    s32 field_50;
+    struct coord3d applied_view;
+
+    /**
+     * Offset 0x48.
+     */
+    struct coord3d applied_view2;
 
     /**
      * Offset 0x54.
@@ -2865,10 +2869,10 @@ extern f32 D_800364D0;
 //D:800364D4
 extern f32 D_800364D4;
 //D:800364D8
-extern s32 D_800364D8[];
+extern s32 g_bondviewBondDeathAnimations[];
 
 //D:8003650C
-extern s32 D_8003650C;
+extern s32 g_bondviewBondDeathAnimationsCount;
 //D:80036510
 extern s32 D_80036510;
 //D:80036514

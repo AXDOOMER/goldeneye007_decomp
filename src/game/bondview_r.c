@@ -761,13 +761,13 @@ def_7F005A74:
 /* 03AC88 7F006158 0FC1EA6E */  jal   set_camera_mode
 /* 03AC8C 7F00615C 24040009 */   li    $a0, 9
 .L7F006160:
-/* 03AC90 7F006160 3C048003 */  lui   $a0, %hi(D_800364D8)
-/* 03AC94 7F006164 248464D8 */  addiu $a0, %lo(D_800364D8) # addiu $a0, $a0, 0x64d8
+/* 03AC90 7F006160 3C048003 */  lui   $a0, %hi(g_bondviewBondDeathAnimations)
+/* 03AC94 7F006164 248464D8 */  addiu $a0, %lo(g_bondviewBondDeathAnimations) # addiu $a0, $a0, 0x64d8
 /* 03AC98 7F006168 00004080 */  sll   $t0, $zero, 2
 /* 03AC9C 7F00616C 00884821 */  addu  $t1, $a0, $t0
 /* 03ACA0 7F006170 8D2B0000 */  lw    $t3, ($t1)
-/* 03ACA4 7F006174 3C038003 */  lui   $v1, %hi(D_8003650C)
-/* 03ACA8 7F006178 2463650C */  addiu $v1, %lo(D_8003650C) # addiu $v1, $v1, 0x650c
+/* 03ACA4 7F006174 3C038003 */  lui   $v1, %hi(g_bondviewBondDeathAnimationsCount)
+/* 03ACA8 7F006178 2463650C */  addiu $v1, %lo(g_bondviewBondDeathAnimationsCount) # addiu $v1, $v1, 0x650c
 /* 03ACAC 7F00617C AC600000 */  sw    $zero, ($v1)
 /* 03ACB0 7F006180 11600009 */  beqz  $t3, .L7F0061A8
 /* 03ACB4 7F006184 00001025 */   move  $v0, $zero
@@ -1473,13 +1473,13 @@ def_7F005A74:
 /* 03ACC0 7F006150 0FC1EBF6 */  jal   set_camera_mode
 /* 03ACC4 7F006154 24040009 */   li    $a0, 9
 .L7F006158:
-/* 03ACC8 7F006158 3C048003 */  lui   $a0, %hi(D_800364D8) # $a0, 0x8003
-/* 03ACCC 7F00615C 24846518 */  addiu $a0, %lo(D_800364D8) # addiu $a0, $a0, 0x6518
+/* 03ACC8 7F006158 3C048003 */  lui   $a0, %hi(g_bondviewBondDeathAnimations) # $a0, 0x8003
+/* 03ACCC 7F00615C 24846518 */  addiu $a0, %lo(g_bondviewBondDeathAnimations) # addiu $a0, $a0, 0x6518
 /* 03ACD0 7F006160 0000C880 */  sll   $t9, $zero, 2
 /* 03ACD4 7F006164 0099C021 */  addu  $t8, $a0, $t9
 /* 03ACD8 7F006168 8F0E0000 */  lw    $t6, ($t8)
-/* 03ACDC 7F00616C 3C038003 */  lui   $v1, %hi(D_8003650C) # $v1, 0x8003
-/* 03ACE0 7F006170 2463654C */  addiu $v1, %lo(D_8003650C) # addiu $v1, $v1, 0x654c
+/* 03ACDC 7F00616C 3C038003 */  lui   $v1, %hi(g_bondviewBondDeathAnimationsCount) # $v1, 0x8003
+/* 03ACE0 7F006170 2463654C */  addiu $v1, %lo(g_bondviewBondDeathAnimationsCount) # addiu $v1, $v1, 0x654c
 /* 03ACE4 7F006174 AC600000 */  sw    $zero, ($v1)
 /* 03ACE8 7F006178 11C00009 */  beqz  $t6, .L7F0061A0
 /* 03ACEC 7F00617C 00001025 */   move  $v0, $zero
@@ -2188,13 +2188,13 @@ def_7F005A74:
 /* 038AC0 7F0060D0 0FC1EA94 */  jal   set_camera_mode
 /* 038AC4 7F0060D4 24040009 */   li    $a0, 9
 .L7F0060D8:
-/* 038AC8 7F0060D8 3C048003 */  lui   $a0, %hi(D_800364D8) # $a0, 0x8003
-/* 038ACC 7F0060DC 24841A28 */  addiu $a0, %lo(D_800364D8) # addiu $a0, $a0, 0x1a28
+/* 038AC8 7F0060D8 3C048003 */  lui   $a0, %hi(g_bondviewBondDeathAnimations) # $a0, 0x8003
+/* 038ACC 7F0060DC 24841A28 */  addiu $a0, %lo(g_bondviewBondDeathAnimations) # addiu $a0, $a0, 0x1a28
 /* 038AD0 7F0060E0 0000C880 */  sll   $t9, $zero, 2
 /* 038AD4 7F0060E4 0099C021 */  addu  $t8, $a0, $t9
 /* 038AD8 7F0060E8 8F0E0000 */  lw    $t6, ($t8)
-/* 038ADC 7F0060EC 3C038003 */  lui   $v1, %hi(D_8003650C) # $v1, 0x8003
-/* 038AE0 7F0060F0 24631A5C */  addiu $v1, %lo(D_8003650C) # addiu $v1, $v1, 0x1a5c
+/* 038ADC 7F0060EC 3C038003 */  lui   $v1, %hi(g_bondviewBondDeathAnimationsCount) # $v1, 0x8003
+/* 038AE0 7F0060F0 24631A5C */  addiu $v1, %lo(g_bondviewBondDeathAnimationsCount) # addiu $v1, $v1, 0x1a5c
 /* 038AE4 7F0060F4 AC600000 */  sw    $zero, ($v1)
 /* 038AE8 7F0060F8 11C00009 */  beqz  $t6, .L7F006120
 /* 038AEC 7F0060FC 00001025 */   move  $v0, $zero
