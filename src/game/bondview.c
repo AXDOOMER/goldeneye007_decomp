@@ -31,6 +31,7 @@
 #include "player.h"
 #include "player_2.h"
 #include "quaternion.h"
+#include "random.h"
 #include "stan.h"
 #include "textrelated.h"
 #include "unk_0C0A70.h"
@@ -255,6 +256,7 @@ s32 D_80036440 = 0;
 s32 D_80036444 = 0;
 //D:80036448
 s32 in_tank_flag = 0;
+
 //D:8003644C
 struct PropRecord * D_8003644C = NULL;
 
@@ -619,6 +621,9 @@ s32 sub_GAME_7F07CDD4(struct coord3d *arg0, f32 arg1, struct StandTile **arg2);
 s32 cal_player_collision(struct coord3d *arg0, struct StandTile **stan);
 s32 bondviewTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z, s32 objFlags, struct coord3d *coord_p, struct coord3d *coord_dest);
 
+s32 sub_GAME_7F07D2B4(f32 *arg0, struct coord3d *arg1, struct coord3d *arg2, struct coord3d *arg3, struct coord3d *arg4);
+s32 sub_GAME_7F07D4C0(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *arg2);
+s32 sub_GAME_7F07D61C(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *arg2);
 
 // end forward declarations
 
@@ -11681,8 +11686,262 @@ f32 bondviewBitconvertIntToFloat(s32 arg0)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F07D960(void) {
 
+
+struct model_node_unk_b {
+    s32 unk00;
+    s32 unk04;
+    s32 unk08;
+    f32 unk0C;
+    f32 unk10;
+};
+
+struct model_node_unk_a {
+    s32 unk00;
+    struct model_node_unk_b *b;
+};
+
+struct model_node_unk_base {
+    s32 unk00;
+    s32 unk04;
+    s32 unk08;
+    s32 unk0C;
+    s32 unk10;
+    struct model_node_unk_a *p14;
+    struct model_node_unk_a *p18;
+};
+
+/**
+ * decomp status:
+ * - compiles: barely
+ * - stack resize: fail
+ * - identical instructions: fail
+ * - identical registers: fail
+ * 
+ * notes: no where close to matching, but code should be roughly in the same logical outline.
+ * 
+ * https://decomp.me/scratch/GxY5L
+ * 26.93%
+*/
+void sub_GAME_7F07D960(struct coord3d *arg0, s32 arg1)
+{
+    struct coord3d spB4;
+    struct coord3d spA8;
+    struct coord3d sp9C;
+    struct rect4f *sp98;
+    s32 sp94;
+    struct model_node_unk_b *sp84;
+    f32 sp80;
+    struct coord3d sp74;
+    struct coord3d sp68;
+    struct coord3d sp58;
+    struct coord3d sp4C;
+    s32 sp48;
+    s32 sp44;
+    u32 sp3C;
+    struct model_node_unk_base *tank_model_node;
+    struct TankRecord *tank_objrecord;
+    struct model_node_unk_a *temp_a3;
+    PropRecord *tank_prop;
+    StandTile *temp_v0_10;
+    f32 tank_model_scale;
+    f32 g_PlayerTankYOffset;
+    f32 temp_f18;
+    f32 temp_f2;
+    s32 temp_t0;
+    s32 temp_t4;
+    s32 temp_t8;
+    s32 temp_v0_7;
+    s32 temp_v1_2;
+    s32 temp_v1_3;
+    s32 temp_v1_4;
+    u16 temp_a1;
+    struct model_node_unk_a *temp_t3;
+    struct model_node_unk_b *temp_v1;
+    f32 phi_f2;
+    StandTile *phi_s0;
+    StandTile *stan;
+    StandTile *phi_v0;
+    s32 phi_v1;
+    u32 phi_a0;
+    s32 phi_t0;
+    StandTile *phi_v0_2;
+    u32 phi_a0_2;
+    s32 phi_v1_2;
+    StandTile *phi_s0_2;
+    f32 phi_f0;
+    u32 phi_a0_3;
+    u32 phi_a0_4;
+    s32 i;
+    s32 tile_count;
+
+    g_CurrentPlayer->bondprevpos.f[0] = g_CurrentPlayer->field_488.collision_position.f[0];
+    g_CurrentPlayer->bondprevpos.f[1] = g_CurrentPlayer->field_488.collision_position.f[1];
+    g_CurrentPlayer->bondprevpos.f[2] = g_CurrentPlayer->field_488.collision_position.f[2];
+
+    spB4.f[0] = arg0->f[0] + g_CurrentPlayer->field_488.collision_position.f[0];
+    D_80036480 = 0;
+    spB4.f[2] = arg0->f[2] + g_CurrentPlayer->field_488.collision_position.f[2];
+
+    g_CurrentPlayer->autocrouchpos = CROUCH_STAND;
+    
+    if (D_8003644C != 0)
+    {
+        chraiGetCollisionBoundsWithoutY(D_8003644C, &sp98, &sp94);
+
+        if ((in_tank_flag == 1)
+            || (sub_GAME_7F03CCD8(&g_CurrentPlayer->field_488.collision_position, sp98, sp94) != 0)
+            || ((sub_GAME_7F044718(&g_CurrentPlayer->field_488.collision_position, g_CurrentPlayer->field_488.collision_radius, sp98, sp94) != 0)))
+        {
+            tank_prop = D_8003644C;
+            tank_objrecord = tank_prop->obj;
+            tank_model_node = (struct model_node_unk_base *)tank_objrecord->model->obj->Switches;
+            temp_t3 = tank_model_node->p18;
+            temp_v1 = tank_model_node->p14->b;
+
+            ptr_playerstank = tank_prop;
+            temp_f18 = temp_v1->unk10 - temp_v1->unk0C;
+            tank_model_scale = tank_objrecord->model->scale;
+            temp_f2 = temp_f18 * tank_model_scale;
+            phi_f0 = tank_model_scale;
+
+            if (in_tank_flag != 1)
+            {
+                sp80 = temp_f2;
+                sp84 = temp_t3->b;
+                phi_f2 = temp_f2;
+                if (sub_GAME_7F03CCD8(&g_CurrentPlayer->field_488.collision_position, tank_objrecord->rect, tank_objrecord->firing) != 0)
+                {
+                    phi_f0 = tank_objrecord->model->scale;
+                }
+            }
+            else
+            {
+                D_80036480 = 1;
+                phi_f2 = (temp_f18 * tank_model_scale) + ((temp_t3->b->unk10 - temp_t3->b->unk0C) * phi_f0);
+            }
+
+            if ((in_tank_flag == 0) && (g_PlayerTankYOffset < phi_f2))
+            {
+                g_PlayerTankYOffset += (20.0f * g_GlobalTimerDelta);
+                if (phi_f2 < g_PlayerTankYOffset)
+                {
+                    //
+                }
+            }
+            else
+            {
+                g_PlayerTankYOffset = phi_f2;
+                if (in_tank_flag == 1)
+                {
+                    if (dword_CODE_bss_800799B8 == 0)
+                    {
+                        g_PlayerTankYOffset += -37.0f * (1.0f - flt_CODE_bss_800799C0);
+                    }
+                    else
+                    {
+                        g_PlayerTankYOffset += -37.0f;
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (ptr_playerstank != NULL)
+            {
+                D_8003644C = NULL;
+                ptr_playerstank = NULL;
+                g_PlayerTankYOffset = 0.0f;
+            }
+        }
+    }
+    else
+    {
+        
+        if (bondviewUpdatePlayerCollision(&spB4, &spA8, &sp9C) == 0)
+        {
+            temp_v0_7 = sub_GAME_7F07D2B4(&spB4, &spA8, &sp9C, &sp74, &sp68);
+
+            if ((temp_v0_7 > 0) || (temp_v0_7 < 0))
+            {
+                if ((arg1 != 0)
+                    && (sub_GAME_7F07D4C0(&spB4, &spA8, &sp9C) <= 0)
+                    && (sub_GAME_7F07D61C(&spB4, &spA8, &sp9C) == 0))
+                {
+                    //
+                }
+            }
+            else if (temp_v0_7 == 0)
+            {
+                sub_GAME_7F07D2B4(&spB4, &sp74, &sp68, &sp58, &sp4C);
+                if ((arg1 != 0)
+                    && (sub_GAME_7F07D4C0(&spB4, &sp74, &sp68) <= 0)
+                    && (sub_GAME_7F07D4C0(&spB4, &spA8, &sp9C) <= 0)
+                    && (sub_GAME_7F07D61C(&spB4, &sp74, &sp68) == 0))
+                {
+                    sub_GAME_7F07D61C(&spB4, &spA8, &sp9C);
+                }
+            }
+        }
+
+        if (sub_GAME_7F0B0518(
+            g_CurrentPlayer->field_488.current_tile_ptr,
+            g_CurrentPlayer->field_488.collision_position.f[0],
+            g_CurrentPlayer->field_488.collision_position.f[2]) == 0)
+        {
+            for (tile_count=0; tile_count<5; tile_count++)
+            {
+                stan = &g_CurrentPlayer->field_488.current_tile_ptr[tile_count];
+
+                phi_s0_2 = stan;
+
+                temp_t8 = ((s32) stan->tail.half >> 0xC) & 0xF;
+
+                phi_a0_3 = 0;
+                phi_a0_2 = 0;
+
+                for (i=0; i<temp_t8; i++)
+                {
+                    if (((s32) stan->points[i].link >> 4) != 0)
+                    {
+                        phi_a0_3++;
+                    }
+                }
+
+                temp_t8 = ((s32) stan->tail.half >> 0xC) & 0xF;
+
+                for (i=0; i<temp_t8; i++)
+                {
+                    temp_a1 = stan->points[i].link;
+                    if (((s32) temp_a1 >> 4) != 0)
+                    {
+                        if (phi_a0_2 == (randomGetNext() % phi_a0_3))
+                        {
+                            phi_s0_2 = &standTileStart[temp_a1];
+                        }
+                        else
+                        {
+                            phi_a0_2 += 1;
+                        }
+                    }
+                }
+
+                if (sub_GAME_7F0B0518(phi_s0_2, g_CurrentPlayer->field_488.collision_position.f[0], g_CurrentPlayer->field_488.collision_position.f[2]) != 0)
+                {
+                    g_CurrentPlayer->field_488.current_tile_ptr = phi_s0_2;
+                    break;
+                }
+
+            }
+        }
+
+        sub_GAME_7F07DE9C(g_CurrentPlayer);
+
+        if (g_CurrentPlayer->field_488.current_tile_ptr != NULL)
+        {
+            sub_GAME_7F057744(g_CurrentPlayer->field_488.current_tile_ptr->room);
+        }
+    }
 }
 #else
 
@@ -26020,17 +26279,17 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
     f32 shotboost_sideways;
     f32 shotboost_norm;
     f32 temp_f0_12;    
-    struct coord3d sp374;
-    struct coord3d sp368;
+    struct coord3d check_collision_p1;
+    struct coord3d check_collision_p2;
     struct coord3d *collision_ptr;
     s32 stack_padding_15;
     f32 sp35C;
     f32 sp358;
     f32 sp354;
-    struct coord3d unksp348;
-    struct coord3d unksp33C;
-    f32 sp338;
-    f32 sp334;
+    struct coord3d tank_collision_pt1;
+    struct coord3d tank_collision_pt2;
+    f32 tank_collision_dx;
+    f32 tank_collision_dz;
     f32 phi_f0_15;
     f32 temp_f12_6;
     f32 temp_f0_25;    
@@ -26069,7 +26328,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
     f32 sp220;
     f32 sp21C;
     f32 sp218;
-    f32 temp_f16_2;
+    f32 tank_collision_norm;
     f32 temp_f18_2;
     f32 temp_f0_4;
     f32 sp208;
@@ -26256,8 +26515,8 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             collision_ptr,
             g_CurrentPlayer->field_488.current_tile_ptr,
             sp35C,
-            &sp374,
-            &sp368))
+            &check_collision_p1,
+            &check_collision_p2))
         {
             D_80036464 = sp35C;
         }
@@ -26266,17 +26525,17 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             sp31C = -1.0f;
             sp304 = -1.0f;
 
-            getCollisionEdge_maybe(&unksp348, &unksp33C);
+            getCollisionEdge_maybe(&tank_collision_pt1, &tank_collision_pt2);
 
-            sp338 = unksp33C.f[0] - unksp348.f[0];
-            sp334 = unksp33C.f[2] - unksp348.f[2];
-            temp_f16_2 = 1.0f / sqrtf((sp338 * sp338) + (sp334 * sp334));
-            sp320 = -(sp338 * temp_f16_2);
-            sp324 = sp334 * temp_f16_2;
+            tank_collision_dx = tank_collision_pt2.f[0] - tank_collision_pt1.f[0];
+            tank_collision_dz = tank_collision_pt2.f[2] - tank_collision_pt1.f[2];
+            tank_collision_norm = 1.0f / sqrtf((tank_collision_dx * tank_collision_dx) + (tank_collision_dz * tank_collision_dz));
+            sp320 = -(tank_collision_dx * tank_collision_norm);
+            sp324 = tank_collision_dz * tank_collision_norm;
 
             temp_f18_2 = 
-                (sp324 * (g_CurrentPlayer->field_488.collision_position.f[0] - sp368.f[0])) +
-                (sp320 * (g_CurrentPlayer->field_488.collision_position.f[2] - sp368.f[2])) 
+                (sp324 * (g_CurrentPlayer->field_488.collision_position.f[0] - check_collision_p2.f[0])) +
+                (sp320 * (g_CurrentPlayer->field_488.collision_position.f[2] - check_collision_p2.f[2])) 
                 ;
 
             if (temp_f18_2 < 0.0f)
@@ -26287,8 +26546,8 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             }
 
             temp_f0_4 = 
-                (sp324 * (g_CurrentPlayer->field_488.collision_position.f[0] - unksp348.f[0])) +
-                (sp320 * (g_CurrentPlayer->field_488.collision_position.f[2] - unksp348.f[2]))
+                (sp324 * (g_CurrentPlayer->field_488.collision_position.f[0] - tank_collision_pt1.f[0])) +
+                (sp320 * (g_CurrentPlayer->field_488.collision_position.f[2] - tank_collision_pt1.f[2]))
                 ;
             
             if (temp_f0_4 < temp_f18_2)
@@ -26296,16 +26555,16 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
                 sp31C = temp_f18_2 - temp_f0_4;
             }
 
-            sp338 = sp368.f[0] - sp374.f[0];
-            sp334 = sp368.f[2] - sp374.f[2];
+            tank_collision_dx = check_collision_p2.f[0] - check_collision_p1.f[0];
+            tank_collision_dz = check_collision_p2.f[2] - check_collision_p1.f[2];
             
-            temp_f16_2 = 1.0f / sqrtf((sp338 * sp338) + (sp334 * sp334));
-            sp308 = -(sp338 * temp_f16_2);
-            sp30C = sp334 * temp_f16_2;
+            tank_collision_norm = 1.0f / sqrtf((tank_collision_dx * tank_collision_dx) + (tank_collision_dz * tank_collision_dz));
+            sp308 = -(tank_collision_dx * tank_collision_norm);
+            sp30C = tank_collision_dz * tank_collision_norm;
             
             phi_f18_2 =
-                (sp30C * (g_CurrentPlayer->field_488.collision_position.f[0] - sp368.f[0])) +
-                (sp308 * (g_CurrentPlayer->field_488.collision_position.f[2] - sp368.f[2]))
+                (sp30C * (g_CurrentPlayer->field_488.collision_position.f[0] - check_collision_p2.f[0])) +
+                (sp308 * (g_CurrentPlayer->field_488.collision_position.f[2] - check_collision_p2.f[2]))
                 ;
 
             if (phi_f18_2 < 0.0f)
@@ -26316,11 +26575,11 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             }
 
             temp_f0_5 =
-                (sp30C * (g_CurrentPlayer->field_488.collision_position.f[0] - unksp348.f[0])) +
-                (sp308 * (g_CurrentPlayer->field_488.collision_position.f[2] - unksp348.f[2]));
+                (sp30C * (g_CurrentPlayer->field_488.collision_position.f[0] - tank_collision_pt1.f[0])) +
+                (sp308 * (g_CurrentPlayer->field_488.collision_position.f[2] - tank_collision_pt1.f[2]));
             temp_f2_6 =
-                (sp30C * (g_CurrentPlayer->field_488.collision_position.f[0] - unksp33C.f[0])) +
-                (sp308 * (g_CurrentPlayer->field_488.collision_position.f[2] - unksp33C.f[2]));
+                (sp30C * (g_CurrentPlayer->field_488.collision_position.f[0] - tank_collision_pt2.f[0])) +
+                (sp308 * (g_CurrentPlayer->field_488.collision_position.f[2] - tank_collision_pt2.f[2]));
             
             if (temp_f2_6 < temp_f0_5)
             {
@@ -26352,8 +26611,8 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
                         &g_CurrentPlayer->field_488.collision_position,
                         g_CurrentPlayer->field_488.current_tile_ptr,
                         sp35C,
-                        &sp374.f[0],
-                        &sp368) != 0)
+                        &check_collision_p1,
+                        &check_collision_p2) != 0)
                 {
                     D_80036464 = sp35C;
                 }

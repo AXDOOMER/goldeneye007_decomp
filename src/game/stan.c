@@ -80,7 +80,7 @@ u8 list_of_tilesizes[] = {
     0x48,0x50,0x58,0x00
 };
 //D:80040F58
-s32 standTileStart = 0;
+struct StandTile * standTileStart = NULL;
 //D:80040F5C
 s32 ptr_firstroom_0 = 0;
 //D:80040F60

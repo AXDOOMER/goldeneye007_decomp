@@ -3274,7 +3274,7 @@ typedef union
     {
         inherits ObjectRecord;
         u32      firing;      /*0x80*/
-        f32      verta;       /*0x84*/
+        struct rect4f  *rect;       /*0x84*/
         f32      turrettheta; /*0x88*/
         u32      sumground;   /*0x8c*/
         f32      ground;      /*0x90*/
