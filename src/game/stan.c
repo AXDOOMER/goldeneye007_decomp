@@ -4840,37 +4840,15 @@ s32 stanTileDistanceRelated(StandTile **arg0, f32 arg1, f32 arg2, f32 arg3, stru
 
 
 
-#ifdef NONMATCHING
-void *sub_GAME_7F0B239C(void *arg0) {
-    // Node 0
-    return *arg0;
+s32 stanGetLocusField0(struct StandTileLocusCallbackRecord *arg0)
+{
+    return arg0->unk00;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B239C
-/* 0E6ECC 7F0B239C 03E00008 */  jr    $ra
-/* 0E6ED0 7F0B23A0 8C820000 */   lw    $v0, ($a0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0B23A4(void *arg0) {
-    // Node 0
-    return arg0->unk4;
+s32 sub_GAME_7F0B23A4(struct StandTileLocusCallbackRecord *arg0)
+{
+    return arg0->count;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B23A4
-/* 0E6ED4 7F0B23A4 03E00008 */  jr    $ra
-/* 0E6ED8 7F0B23A8 8C820004 */   lw    $v0, 4($a0)
-)
-#endif
 
 
 

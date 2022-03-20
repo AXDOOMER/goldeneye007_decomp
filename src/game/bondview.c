@@ -10679,7 +10679,7 @@ s32 cal_player_collision(struct coord3d *arg0, StandTile **stan)
         sub_GAME_7F03D058(g_CurrentPlayer->prop, 0);
         sp7C = stanTileDistanceRelated(&sp90, arg0->f[0], arg0->f[2], sp80, &sp3C);
         
-        if (sub_GAME_7F0B239C(&sp3C) != 0)
+        if (stanGetLocusField0(&sp3C) != 0)
         {
             g_CurrentPlayer->autocrouchpos = 0;
         }
@@ -10809,7 +10809,7 @@ glabel cal_player_collision
 /* 0B1B8C 7F07D05C 0FC2C8C5 */  jal   stanTileDistanceRelated
 /* 0B1B90 7F07D060 8FA70080 */   lw    $a3, 0x80($sp)
 /* 0B1B94 7F07D064 AFA2007C */  sw    $v0, 0x7c($sp)
-/* 0B1B98 7F07D068 0FC2C8E7 */  jal   sub_GAME_7F0B239C
+/* 0B1B98 7F07D068 0FC2C8E7 */  jal   stanGetLocusField0
 /* 0B1B9C 7F07D06C 27A4003C */   addiu $a0, $sp, 0x3c
 /* 0B1BA0 7F07D070 10400004 */  beqz  $v0, .L7F07D084
 /* 0B1BA4 7F07D074 27A40090 */   addiu $a0, $sp, 0x90
@@ -10999,7 +10999,7 @@ glabel cal_player_collision
 /* 0AFB20 7F07D130 0FC2C575 */  jal   stanTileDistanceRelated
 /* 0AFB24 7F07D134 8FA70080 */   lw    $a3, 0x80($sp)
 /* 0AFB28 7F07D138 AFA2007C */  sw    $v0, 0x7c($sp)
-/* 0AFB2C 7F07D13C 0FC2C597 */  jal   sub_GAME_7F0B239C
+/* 0AFB2C 7F07D13C 0FC2C597 */  jal   stanGetLocusField0
 /* 0AFB30 7F07D140 27A4003C */   addiu $a0, $sp, 0x3c
 /* 0AFB34 7F07D144 10400004 */  beqz  $v0, .L7F07D158
 /* 0AFB38 7F07D148 27A40090 */   addiu $a0, $sp, 0x90
