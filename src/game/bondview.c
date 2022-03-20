@@ -25986,16 +25986,7 @@ struct move_bond_temp_struct {
     s32 unk04;
 };
 
-// placeholder while matching
-struct move_bond_collision {
-    struct coord3d sp184;
-    struct coord3d sp190;
-    struct coord3d sp19C;
-    struct coord3d sp1A8;
-};
 
-// arg2: move_bond_collision
-void sub_GAME_7F0B2420(struct coord3d *arg0, s32 *arg1, void *arg2);
 
 void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
 {
@@ -26087,10 +26078,12 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
     s32 stack_padding_4;
     s32 stack_padding_5;
     struct move_bond_temp_struct sp1B4;
-    struct move_bond_collision sp184;
+    struct StandTileLocusCallbackRecord *sp184;
     f32 sp180;
-    struct coord3d sp174;
-    s32 sp170;
+    s32 stack_padding_21;
+    s32 stack_padding_20;
+    struct StandTile *sp174;
+    struct StandTile *sp170;
     f32 sp16C;
     f32 sp168;
     s32 stack_padding_17;
@@ -26922,7 +26915,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
         if (stanGetLocusCount(&sp1B4) != 0)
         {
             sp394 = 1;
-            sub_GAME_7F0B2420(&sp174, &sp170, &sp184);
+            stanGetMoveBondCollisionTiles(&sp174, &sp170, &sp184);
             if (g_CurrentPlayer->stanHeight <= sp184.sp19C.f[1])
             {
                 sp168 = sp184.sp184.f[2] - sp184.sp190.f[0];
@@ -29078,7 +29071,7 @@ glabel MoveBond
 /* 0BAB70 7F086040 AFAB0394 */  sw    $t3, 0x394($sp)
 /* 0BAB74 7F086044 27A40174 */  addiu $a0, $sp, 0x174
 /* 0BAB78 7F086048 27A50170 */  addiu $a1, $sp, 0x170
-/* 0BAB7C 7F08604C 0FC2C908 */  jal   sub_GAME_7F0B2420
+/* 0BAB7C 7F08604C 0FC2C908 */  jal   stanGetMoveBondCollisionTiles
 /* 0BAB80 7F086050 27A60184 */   addiu $a2, $sp, 0x184
 /* 0BAB84 7F086054 8E380000 */  lw    $t8, ($s1)
 /* 0BAB88 7F086058 C7A801A0 */  lwc1  $f8, 0x1a0($sp)
@@ -31619,7 +31612,7 @@ glabel MoveBond
 /* 0BB264 7F0866F4 AFAC0394 */  sw    $t4, 0x394($sp)
 /* 0BB268 7F0866F8 27A40174 */  addiu $a0, $sp, 0x174
 /* 0BB26C 7F0866FC 27A50170 */  addiu $a1, $sp, 0x170
-/* 0BB270 7F086700 0FC2CBF4 */  jal   sub_GAME_7F0B2420
+/* 0BB270 7F086700 0FC2CBF4 */  jal   stanGetMoveBondCollisionTiles
 /* 0BB274 7F086704 27A60184 */   addiu $a2, $sp, 0x184
 /* 0BB278 7F086708 8E2D0000 */  lw    $t5, ($s1)
 /* 0BB27C 7F08670C C7A801A0 */  lwc1  $f8, 0x1a0($sp)
@@ -34149,7 +34142,7 @@ glabel MoveBond
 /* 0B8B38 7F086148 AFAA0394 */  sw    $t2, 0x394($sp)
 /* 0B8B3C 7F08614C 27A40174 */  addiu $a0, $sp, 0x174
 /* 0B8B40 7F086150 27A50170 */  addiu $a1, $sp, 0x170
-/* 0B8B44 7F086154 0FC2C5B8 */  jal   sub_GAME_7F0B2420
+/* 0B8B44 7F086154 0FC2C5B8 */  jal   stanGetMoveBondCollisionTiles
 /* 0B8B48 7F086158 27A60184 */   addiu $a2, $sp, 0x184
 /* 0B8B4C 7F08615C 8E380000 */  lw    $t8, ($s1)
 /* 0B8B50 7F086160 C7A601A0 */  lwc1  $f6, 0x1a0($sp)

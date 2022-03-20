@@ -19,6 +19,14 @@
 #define STAN_TAIL_D(tile) ((tile->tail.half >> 0x08) & 0xF)
 #define STAN_TAIL_E(tile) ((tile->tail.half >> 0x0C) & 0xF)
 
+struct move_bond_collision {
+    struct coord3d sp184;
+    struct coord3d sp190;
+    struct coord3d sp19C;
+    struct coord3d sp1A8;
+};
+
+
 /////////////////
 // extern
 
@@ -63,4 +71,5 @@ s32 stanGetLocusCount(struct StandTileLocusCallbackRecord *arg0);
 f32 distBetweenPoints2d(f32 o_x,f32 o_z,f32 p_x,f32 p_z);
 bool sub_GAME_7F0B17E4(f32 x1, f32 z1, f32 x2, f32 z2, f32 x3, f32 z3);
 f32 sub_GAME_7F0B16C4(f32 x1, f32 z1, f32 x2, f32 z2, f32 x3, f32 z3);
+void stanGetMoveBondCollisionTiles(struct StandTile **arg0, struct StandTile **arg1, struct move_bond_collision *arg2);
 #endif

@@ -157,6 +157,8 @@ s32 sub_GAME_7F0B1DDC(
     struct StandTileLocusCallbackRecord*
 );
 s32 sub_GAME_7F0B2110(StandTile *tile, struct StandTileLocusCallbackRecord*);
+s32 stanGetLocusField0(struct StandTileLocusCallbackRecord *arg0);
+s32 stanGetLocusCount(struct StandTileLocusCallbackRecord *arg0);
 
 // end forward declarations
 
@@ -4909,13 +4911,13 @@ glabel sub_GAME_7F0B23AC
 
 #ifdef NONMATCHING
 // TODO
-void sub_GAME_7F0B2420(void) {
+void stanGetMoveBondCollisionTiles(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0B2420
+glabel stanGetMoveBondCollisionTiles
 /* 0E6F50 7F0B2420 27BDFFB8 */  addiu $sp, $sp, -0x48
 /* 0E6F54 7F0B2424 3C098008 */  lui   $t1, %hi(dword_CODE_bss_8007BA0C) 
 /* 0E6F58 7F0B2428 8D29BA0C */  lw    $t1, %lo(dword_CODE_bss_8007BA0C)($t1)
