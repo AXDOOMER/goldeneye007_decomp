@@ -10677,7 +10677,7 @@ s32 cal_player_collision(struct coord3d *arg0, StandTile **stan)
         }
 
         sub_GAME_7F03D058(g_CurrentPlayer->prop, 0);
-        sp7C = sub_GAME_7F0B2314(&sp90, arg0->f[0], arg0->f[2], sp80, &sp3C);
+        sp7C = stanTileDistanceRelated(&sp90, arg0->f[0], arg0->f[2], sp80, &sp3C);
         
         if (sub_GAME_7F0B239C(&sp3C) != 0)
         {
@@ -10806,7 +10806,7 @@ glabel cal_player_collision
 /* 0B1B80 7F07D050 8C450000 */  lw    $a1, ($v0)
 /* 0B1B84 7F07D054 8C460008 */  lw    $a2, 8($v0)
 /* 0B1B88 7F07D058 AFAA0010 */  sw    $t2, 0x10($sp)
-/* 0B1B8C 7F07D05C 0FC2C8C5 */  jal   sub_GAME_7F0B2314
+/* 0B1B8C 7F07D05C 0FC2C8C5 */  jal   stanTileDistanceRelated
 /* 0B1B90 7F07D060 8FA70080 */   lw    $a3, 0x80($sp)
 /* 0B1B94 7F07D064 AFA2007C */  sw    $v0, 0x7c($sp)
 /* 0B1B98 7F07D068 0FC2C8E7 */  jal   sub_GAME_7F0B239C
@@ -10996,7 +10996,7 @@ glabel cal_player_collision
 /* 0AFB14 7F07D124 8C450000 */  lw    $a1, ($v0)
 /* 0AFB18 7F07D128 8C460008 */  lw    $a2, 8($v0)
 /* 0AFB1C 7F07D12C AFAA0010 */  sw    $t2, 0x10($sp)
-/* 0AFB20 7F07D130 0FC2C575 */  jal   sub_GAME_7F0B2314
+/* 0AFB20 7F07D130 0FC2C575 */  jal   stanTileDistanceRelated
 /* 0AFB24 7F07D134 8FA70080 */   lw    $a3, 0x80($sp)
 /* 0AFB28 7F07D138 AFA2007C */  sw    $v0, 0x7c($sp)
 /* 0AFB2C 7F07D13C 0FC2C597 */  jal   sub_GAME_7F0B239C
@@ -26883,7 +26883,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
         
         bondviewCalcUpdatePlayerCollision(&sp3AC, (g_CurrentPlayer->swaytarget == 0.0f));
 
-        sub_GAME_7F0B2314(
+        stanTileDistanceRelated(
             &sp200,
             sp208,
             sp204,
@@ -26895,7 +26895,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             sp394 = 1;
         }
 
-        sub_GAME_7F0B2314(
+        stanTileDistanceRelated(
             &g_CurrentPlayer->field_488.current_tile_ptr,
             g_CurrentPlayer->field_488.collision_position.f[0],
             g_CurrentPlayer->field_488.collision_position.f[2],
@@ -26907,7 +26907,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             sp394 = 1;
         }
 
-        sub_GAME_7F0B2314(
+        stanTileDistanceRelated(
             &g_CurrentPlayer->field_488.current_tile_ptr,
             g_CurrentPlayer->field_488.collision_position.f[0],
             g_CurrentPlayer->field_488.collision_position.f[2],
@@ -26916,7 +26916,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
         
         if (sub_GAME_7F0B23A4(&sp1B4) == 0)
         {
-            sub_GAME_7F0B2314(&sp200, sp208, sp204, g_CurrentPlayer->field_488.collision_radius * 0.990099f, &sp1B4);
+            stanTileDistanceRelated(&sp200, sp208, sp204, g_CurrentPlayer->field_488.collision_radius * 0.990099f, &sp1B4);
         }
         
         if (sub_GAME_7F0B23A4(&sp1B4) != 0)
@@ -29021,7 +29021,7 @@ glabel MoveBond
 /* 0BAA98 7F085F68 8FA50208 */  lw    $a1, 0x208($sp)
 /* 0BAA9C 7F085F6C 8FA60204 */  lw    $a2, 0x204($sp)
 /* 0BAAA0 7F085F70 44073000 */  mfc1  $a3, $f6
-/* 0BAAA4 7F085F74 0FC2C8C5 */  jal   sub_GAME_7F0B2314
+/* 0BAAA4 7F085F74 0FC2C8C5 */  jal   stanTileDistanceRelated
 /* 0BAAA8 7F085F78 00000000 */   nop
 /* 0BAAAC 7F085F7C 0FC2C8E9 */  jal   sub_GAME_7F0B23A4
 /* 0BAAB0 7F085F80 02002025 */   move  $a0, $s0
@@ -29039,7 +29039,7 @@ glabel MoveBond
 /* 0BAADC 7F085FAC AFB00010 */  sw    $s0, 0x10($sp)
 /* 0BAAE0 7F085FB0 25040488 */  addiu $a0, $t0, 0x488
 /* 0BAAE4 7F085FB4 44074000 */  mfc1  $a3, $f8
-/* 0BAAE8 7F085FB8 0FC2C8C5 */  jal   sub_GAME_7F0B2314
+/* 0BAAE8 7F085FB8 0FC2C8C5 */  jal   stanTileDistanceRelated
 /* 0BAAEC 7F085FBC 00000000 */   nop
 /* 0BAAF0 7F085FC0 0FC2C8E9 */  jal   sub_GAME_7F0B23A4
 /* 0BAAF4 7F085FC4 02002025 */   move  $a0, $s0
@@ -29052,7 +29052,7 @@ glabel MoveBond
 /* 0BAB0C 7F085FDC 8D060494 */  lw    $a2, 0x494($t0)
 /* 0BAB10 7F085FE0 8D0704B0 */  lw    $a3, 0x4b0($t0)
 /* 0BAB14 7F085FE4 AFB00010 */  sw    $s0, 0x10($sp)
-/* 0BAB18 7F085FE8 0FC2C8C5 */  jal   sub_GAME_7F0B2314
+/* 0BAB18 7F085FE8 0FC2C8C5 */  jal   stanTileDistanceRelated
 /* 0BAB1C 7F085FEC 25040488 */   addiu $a0, $t0, 0x488
 /* 0BAB20 7F085FF0 0FC2C8E9 */  jal   sub_GAME_7F0B23A4
 /* 0BAB24 7F085FF4 02002025 */   move  $a0, $s0
@@ -29068,7 +29068,7 @@ glabel MoveBond
 /* 0BAB4C 7F08601C 8FA50208 */  lw    $a1, 0x208($sp)
 /* 0BAB50 7F086020 8FA60204 */  lw    $a2, 0x204($sp)
 /* 0BAB54 7F086024 44075000 */  mfc1  $a3, $f10
-/* 0BAB58 7F086028 0FC2C8C5 */  jal   sub_GAME_7F0B2314
+/* 0BAB58 7F086028 0FC2C8C5 */  jal   stanTileDistanceRelated
 /* 0BAB5C 7F08602C 00000000 */   nop
 .L7F086030:
 /* 0BAB60 7F086030 0FC2C8E9 */  jal   sub_GAME_7F0B23A4
@@ -31562,7 +31562,7 @@ glabel MoveBond
 /* 0BB18C 7F08661C 8FA50208 */  lw    $a1, 0x208($sp)
 /* 0BB190 7F086620 8FA60204 */  lw    $a2, 0x204($sp)
 /* 0BB194 7F086624 44073000 */  mfc1  $a3, $f6
-/* 0BB198 7F086628 0FC2CBB1 */  jal   sub_GAME_7F0B2314
+/* 0BB198 7F086628 0FC2CBB1 */  jal   stanTileDistanceRelated
 /* 0BB19C 7F08662C 00000000 */   nop
 /* 0BB1A0 7F086630 0FC2CBD5 */  jal   sub_GAME_7F0B23A4
 /* 0BB1A4 7F086634 02002025 */   move  $a0, $s0
@@ -31580,7 +31580,7 @@ glabel MoveBond
 /* 0BB1D0 7F086660 AFB00010 */  sw    $s0, 0x10($sp)
 /* 0BB1D4 7F086664 25040488 */  addiu $a0, $t0, 0x488
 /* 0BB1D8 7F086668 44074000 */  mfc1  $a3, $f8
-/* 0BB1DC 7F08666C 0FC2CBB1 */  jal   sub_GAME_7F0B2314
+/* 0BB1DC 7F08666C 0FC2CBB1 */  jal   stanTileDistanceRelated
 /* 0BB1E0 7F086670 00000000 */   nop
 /* 0BB1E4 7F086674 0FC2CBD5 */  jal   sub_GAME_7F0B23A4
 /* 0BB1E8 7F086678 02002025 */   move  $a0, $s0
@@ -31593,7 +31593,7 @@ glabel MoveBond
 /* 0BB200 7F086690 8D060494 */  lw    $a2, 0x494($t0)
 /* 0BB204 7F086694 8D0704B0 */  lw    $a3, 0x4b0($t0)
 /* 0BB208 7F086698 AFB00010 */  sw    $s0, 0x10($sp)
-/* 0BB20C 7F08669C 0FC2CBB1 */  jal   sub_GAME_7F0B2314
+/* 0BB20C 7F08669C 0FC2CBB1 */  jal   stanTileDistanceRelated
 /* 0BB210 7F0866A0 25040488 */   addiu $a0, $t0, 0x488
 /* 0BB214 7F0866A4 0FC2CBD5 */  jal   sub_GAME_7F0B23A4
 /* 0BB218 7F0866A8 02002025 */   move  $a0, $s0
@@ -31609,7 +31609,7 @@ glabel MoveBond
 /* 0BB240 7F0866D0 8FA50208 */  lw    $a1, 0x208($sp)
 /* 0BB244 7F0866D4 8FA60204 */  lw    $a2, 0x204($sp)
 /* 0BB248 7F0866D8 44075000 */  mfc1  $a3, $f10
-/* 0BB24C 7F0866DC 0FC2CBB1 */  jal   sub_GAME_7F0B2314
+/* 0BB24C 7F0866DC 0FC2CBB1 */  jal   stanTileDistanceRelated
 /* 0BB250 7F0866E0 00000000 */   nop
 .Ljp7F0866E4:
 /* 0BB254 7F0866E4 0FC2CBD5 */  jal   sub_GAME_7F0B23A4
@@ -34092,7 +34092,7 @@ glabel MoveBond
 /* 0B8A60 7F086070 8FA50208 */  lw    $a1, 0x208($sp)
 /* 0B8A64 7F086074 8FA60204 */  lw    $a2, 0x204($sp)
 /* 0B8A68 7F086078 44075000 */  mfc1  $a3, $f10
-/* 0B8A6C 7F08607C 0FC2C575 */  jal   sub_GAME_7F0B2314
+/* 0B8A6C 7F08607C 0FC2C575 */  jal   stanTileDistanceRelated
 /* 0B8A70 7F086080 00000000 */   nop
 /* 0B8A74 7F086084 0FC2C599 */  jal   sub_GAME_7F0B23A4
 /* 0B8A78 7F086088 02002025 */   move  $a0, $s0
@@ -34110,7 +34110,7 @@ glabel MoveBond
 /* 0B8AA4 7F0860B4 AFB00010 */  sw    $s0, 0x10($sp)
 /* 0B8AA8 7F0860B8 25040488 */  addiu $a0, $t0, 0x488
 /* 0B8AAC 7F0860BC 44073000 */  mfc1  $a3, $f6
-/* 0B8AB0 7F0860C0 0FC2C575 */  jal   sub_GAME_7F0B2314
+/* 0B8AB0 7F0860C0 0FC2C575 */  jal   stanTileDistanceRelated
 /* 0B8AB4 7F0860C4 00000000 */   nop
 /* 0B8AB8 7F0860C8 0FC2C599 */  jal   sub_GAME_7F0B23A4
 /* 0B8ABC 7F0860CC 02002025 */   move  $a0, $s0
@@ -34123,7 +34123,7 @@ glabel MoveBond
 /* 0B8AD4 7F0860E4 8D060494 */  lw    $a2, 0x494($t0)
 /* 0B8AD8 7F0860E8 8D0704B0 */  lw    $a3, 0x4b0($t0)
 /* 0B8ADC 7F0860EC AFB00010 */  sw    $s0, 0x10($sp)
-/* 0B8AE0 7F0860F0 0FC2C575 */  jal   sub_GAME_7F0B2314
+/* 0B8AE0 7F0860F0 0FC2C575 */  jal   stanTileDistanceRelated
 /* 0B8AE4 7F0860F4 25040488 */   addiu $a0, $t0, 0x488
 /* 0B8AE8 7F0860F8 0FC2C599 */  jal   sub_GAME_7F0B23A4
 /* 0B8AEC 7F0860FC 02002025 */   move  $a0, $s0
@@ -34139,7 +34139,7 @@ glabel MoveBond
 /* 0B8B14 7F086124 8FA50208 */  lw    $a1, 0x208($sp)
 /* 0B8B18 7F086128 8FA60204 */  lw    $a2, 0x204($sp)
 /* 0B8B1C 7F08612C 44074000 */  mfc1  $a3, $f8
-/* 0B8B20 7F086130 0FC2C575 */  jal   sub_GAME_7F0B2314
+/* 0B8B20 7F086130 0FC2C575 */  jal   stanTileDistanceRelated
 /* 0B8B24 7F086134 00000000 */   nop
 .L7F086138:
 /* 0B8B28 7F086138 0FC2C599 */  jal   sub_GAME_7F0B23A4

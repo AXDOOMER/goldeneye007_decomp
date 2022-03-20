@@ -143,8 +143,20 @@ const char aStanlinelog[] = "-stanlinelog";
 
 // forward declarations
 
-s32 stanIsSpecialBit1Set(StandTile *arg0, s32 *arg1);
+s32 stanIsSpecialBit1Set(StandTile *arg0, struct StandTileLocusCallbackRecord* arg1);
 s32 sub_GAME_7F0B2274(StandTile *arg0, s32 arg1, f32 arg2, f32 arg3, s32 arg4, struct StandTileLocusCallbackRecord *arg5);
+
+s32 sub_GAME_7F0B1DDC(
+    struct StandTile**,
+    f32,
+    f32,
+    f32,
+    standTileLocusCallback_A_t,
+    standTileLocusCallback_B_t,
+    standTileLocusCallback_C_t,
+    struct StandTileLocusCallbackRecord*
+);
+s32 sub_GAME_7F0B2110(StandTile *tile, struct StandTileLocusCallbackRecord*);
 
 // end forward declarations
 
@@ -4341,12 +4353,7 @@ glabel getTileEdgePoints
 )
 #endif
 
-// Sig for caller matches
-// Note it's not clear from caller usage alone what the type of C's 5th parameter is
-s32 sub_GAME_7F0B1DDC(struct StandTile**, f32, f32, f32,
-    standTileLocusCallback_A_t, standTileLocusCallback_B_t, standTileLocusCallback_C_t,
-    struct StandTileLocusCallbackRecord*
-);
+
 
 #ifdef NONMATCHING
 void sub_GAME_7F0B1DDC(void) {
@@ -4573,8 +4580,7 @@ s32 sub_GAME_7F0B20D0(StandTile **tileStack, f32 target_x, f32 target_z, f32 unk
 }
 
 
-// sig for caller matches
-s32 sub_GAME_7F0B2110(StandTile *tile, struct StandTileLocusCallbackRecord*);
+
 
 #ifdef NONMATCHING
 
@@ -4687,12 +4693,12 @@ s32 sub_GAME_7F0B21B0(StandTile **tileStack, f32 target_x, f32 target_z, f32 unk
 /**
  * Address 0x7F0B2244.
 */
-s32 stanIsSpecialBit1Set(StandTile *arg0, s32 *arg1)
+s32 stanIsSpecialBit1Set(StandTile *arg0, struct StandTileLocusCallbackRecord *arg1)
 {
     s32 val = arg0->mid.half >> 0xC;
     if (D_80040F30[val] & 2)
     {
-        *arg1 = 1;
+        arg1->unk00 = 1;
     }
 
     return 0;
@@ -4800,73 +4806,37 @@ glabel sub_GAME_7F0B2274
 
 
 
-#ifdef NONMATCHING
-//#if 1
-s32 sub_GAME_7F0B2314(StandTile **arg0, f32 arg1, f32 arg2, f32 arg3, struct StandTileLocusCallbackRecord *arg4)
+/**
+ * Address 0x7F0B2314.
+*/
+s32 stanTileDistanceRelated(StandTile **arg0, f32 arg1, f32 arg2, f32 arg3, struct StandTileLocusCallbackRecord *arg4)
 {
-    s32 temp_v1;
-    struct StandTileLocusCallbackRecord *phi_v0;
-    s32 phi_v1;
+    s32 i;
 
-    phi_v0 = arg4;
-    phi_v1 = 0;
-
-    do
+    // HACK:
+    for(i=0;;)
     {
-        temp_v1 = phi_v1 + 4;
-        phi_v0->roomBuf = NULL;
-        phi_v0->count = 0;
-        phi_v0->bufMax = 0;
-        phi_v0->nearEdgeCount = 0;
-        phi_v0 += 0x10;
-        phi_v1 = temp_v1;
-    } while (temp_v1 != 0x10);
+        ((s32*)arg4)[i+0] = 0;
+        ((s32*)arg4)[i+1] = 0;
+        ((s32*)arg4)[i+2] = 0;
+        ((s32*)arg4)[i+3] = 0;
+        i+=4;
+        if (i>15) break;
+    }
 
-    return sub_GAME_7F0B1DDC(arg1, arg2, arg0, arg1, arg2, arg3, &stanIsSpecialBit1Set, &sub_GAME_7F0B2274, 0, arg4);
+    // maybe something like:
+    /*
+    for(i=0;i<3;i++)
+    {
+        arg4[i].unk00 = 0;
+        arg4[i].count = 0;
+        arg4[i].bufMax = 0;
+        arg4[i].nearEdgeCount = 0;
+    }
+    */
+
+    return sub_GAME_7F0B1DDC(arg0, arg1, arg2, arg3, stanIsSpecialBit1Set, sub_GAME_7F0B2274, NULL, arg4);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B2314
-/* 0E6E44 7F0B2314 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0E6E48 7F0B2318 AFA40028 */  sw    $a0, 0x28($sp)
-/* 0E6E4C 7F0B231C 44856000 */  mtc1  $a1, $f12
-/* 0E6E50 7F0B2320 44867000 */  mtc1  $a2, $f14
-/* 0E6E54 7F0B2324 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0E6E58 7F0B2328 AFA70034 */  sw    $a3, 0x34($sp)
-/* 0E6E5C 7F0B232C 24040010 */  li    $a0, 16
-/* 0E6E60 7F0B2330 8FA20038 */  lw    $v0, 0x38($sp)
-/* 0E6E64 7F0B2334 00001825 */  move  $v1, $zero
-.L7F0B2338:
-/* 0E6E68 7F0B2338 24630004 */  addiu $v1, $v1, 4
-/* 0E6E6C 7F0B233C AC400000 */  sw    $zero, ($v0)
-/* 0E6E70 7F0B2340 AC400004 */  sw    $zero, 4($v0)
-/* 0E6E74 7F0B2344 AC400008 */  sw    $zero, 8($v0)
-/* 0E6E78 7F0B2348 AC40000C */  sw    $zero, 0xc($v0)
-/* 0E6E7C 7F0B234C 1464FFFA */  bne   $v1, $a0, .L7F0B2338
-/* 0E6E80 7F0B2350 24420010 */   addiu $v0, $v0, 0x10
-/* 0E6E84 7F0B2354 8FB80038 */  lw    $t8, 0x38($sp)
-/* 0E6E88 7F0B2358 3C0E7F0B */  lui   $t6, %hi(stanIsSpecialBit1Set) # $t6, 0x7f0b
-/* 0E6E8C 7F0B235C 3C0F7F0B */  lui   $t7, %hi(sub_GAME_7F0B2274) # $t7, 0x7f0b
-/* 0E6E90 7F0B2360 25EF2274 */  addiu $t7, %lo(sub_GAME_7F0B2274) # addiu $t7, $t7, 0x2274
-/* 0E6E94 7F0B2364 25CE2244 */  addiu $t6, %lo(stanIsSpecialBit1Set) # addiu $t6, $t6, 0x2244
-/* 0E6E98 7F0B2368 44056000 */  mfc1  $a1, $f12
-/* 0E6E9C 7F0B236C 44067000 */  mfc1  $a2, $f14
-/* 0E6EA0 7F0B2370 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 0E6EA4 7F0B2374 AFAF0014 */  sw    $t7, 0x14($sp)
-/* 0E6EA8 7F0B2378 8FA40028 */  lw    $a0, 0x28($sp)
-/* 0E6EAC 7F0B237C 8FA70034 */  lw    $a3, 0x34($sp)
-/* 0E6EB0 7F0B2380 AFA00018 */  sw    $zero, 0x18($sp)
-/* 0E6EB4 7F0B2384 0FC2C777 */  jal   sub_GAME_7F0B1DDC
-/* 0E6EB8 7F0B2388 AFB8001C */   sw    $t8, 0x1c($sp)
-/* 0E6EBC 7F0B238C 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 0E6EC0 7F0B2390 27BD0028 */  addiu $sp, $sp, 0x28
-/* 0E6EC4 7F0B2394 03E00008 */  jr    $ra
-/* 0E6EC8 7F0B2398 00000000 */   nop   
-)
-#endif
-
-
 
 
 
