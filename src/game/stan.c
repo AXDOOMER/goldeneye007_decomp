@@ -66,9 +66,17 @@ StandTile *bfsTileStack[352];
 
 
 // data
+
 //D:80040F30
-u8 D_80040F30[] = {0x8D, 0x86, 0x04, 0xC5, 0x9D, 0xA4, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+u8 D_80040F30[] = { 
+    0x8D, 0x86, 0x04, 0xC5, 
+    0x9D, 0xA4, 0x00, 0x00, 
+    0x00, 0x00, 0x00, 0x00, 
+    0x00, 0x00, 0x00, 0x00
+};
+
 s32 stan_c_debug_notice_list_entry = 0;
+
 //D:80040F44
 f32 level_scale = 1.0;
 //D:80040F48
@@ -132,6 +140,10 @@ const char aCDCC[] = "%c%d%c%c";
 const char aStan_c_debug[] = "stan_c_debug";
 //D:800585BC
 const char aStanlinelog[] = "-stanlinelog";
+
+// forward declarations
+s32 stanIsSpecialBit1Set(StandTile *arg0, s32 *arg1);
+// end forward declarations
 
 
 
@@ -4668,38 +4680,20 @@ s32 sub_GAME_7F0B21B0(StandTile **tileStack, f32 target_x, f32 target_z, f32 unk
 
 
 
-#ifdef NONMATCHING
 
-// TODO
-// s16 headerA : 4   gives just regalloc
-s32 sub_GAME_7F0B2244(StandTile *tile, u8 *rtn) {
-    if (D_80040F30[tile->headerMid >> 0xC] & 2)
+/**
+ * Address 0x7F0B2244.
+*/
+s32 stanIsSpecialBit1Set(StandTile *arg0, s32 *arg1)
+{
+    s32 val = arg0->mid.half >> 0xC;
+    if (D_80040F30[val] & 2)
     {
-        *rtn = 1;
+        *arg1 = 1;
     }
 
     return 0;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B2244
-/* 0E6D74 7F0B2244 84820004 */  lh    $v0, 4($a0)
-/* 0E6D78 7F0B2248 3C0F8004 */  lui   $t7, %hi(D_80040F30)
-/* 0E6D7C 7F0B224C 24190001 */  li    $t9, 1
-/* 0E6D80 7F0B2250 00027303 */  sra   $t6, $v0, 0xc
-/* 0E6D84 7F0B2254 01EE7821 */  addu  $t7, $t7, $t6
-/* 0E6D88 7F0B2258 91EF0F30 */  lbu   $t7, %lo(D_80040F30)($t7)
-/* 0E6D8C 7F0B225C 31F80002 */  andi  $t8, $t7, 2
-/* 0E6D90 7F0B2260 13000002 */  beqz  $t8, .L7F0B226C
-/* 0E6D94 7F0B2264 00000000 */   nop   
-/* 0E6D98 7F0B2268 ACB90000 */  sw    $t9, ($a1)
-.L7F0B226C:
-/* 0E6D9C 7F0B226C 03E00008 */  jr    $ra
-/* 0E6DA0 7F0B2270 00001025 */   move  $v0, $zero
-)
-#endif
 
 
 
@@ -4791,31 +4785,28 @@ glabel sub_GAME_7F0B2274
 
 
 #ifdef NONMATCHING
-// I think they might have abused c a little here, which is what's led to the strange zero-ing.
-// The use the struct (size 0x10) to just hold a bool.
-void sub_GAME_7F0B2314(s32 arg0, s32 arg1, ? arg2, ? arg3, void *arg4) {
+//#if 1
+s32 sub_GAME_7F0B2314(StandTile **arg0, f32 arg1, f32 arg2, f32 arg3, struct StandTileLocusCallbackRecord *arg4)
+{
     s32 temp_v1;
-    void *phi_v0;
+    struct StandTileLocusCallbackRecord *phi_v0;
     s32 phi_v1;
 
-    // Node 0
     phi_v0 = arg4;
     phi_v1 = 0;
-loop_1:
-    // Node 1
-    temp_v1 = (phi_v1 + 4);
-    *phi_v0 = 0;
-    phi_v0->unk4 = 0;
-    phi_v0->unk8 = 0;
-    phi_v0->unkC = 0;
-    phi_v0 = (phi_v0 + 0x10);
-    phi_v1 = temp_v1;
-    if (temp_v1 != 0x10)
+
+    do
     {
-        goto loop_1;
-    }
-    // Node 2
-    return sub_GAME_7F0B1DDC(arg1, arg2, arg0, arg1, arg2, arg3, &sub_GAME_7F0B2244, &sub_GAME_7F0B2274, 0, arg4);
+        temp_v1 = phi_v1 + 4;
+        phi_v0->roomBuf = NULL;
+        phi_v0->count = 0;
+        phi_v0->bufMax = 0;
+        phi_v0->nearEdgeCount = 0;
+        phi_v0 += 0x10;
+        phi_v1 = temp_v1;
+    } while (temp_v1 != 0x10);
+
+    return sub_GAME_7F0B1DDC(arg1, arg2, arg0, arg1, arg2, arg3, &stanIsSpecialBit1Set, &sub_GAME_7F0B2274, 0, arg4);
 }
 #else
 GLOBAL_ASM(
@@ -4839,10 +4830,10 @@ glabel sub_GAME_7F0B2314
 /* 0E6E7C 7F0B234C 1464FFFA */  bne   $v1, $a0, .L7F0B2338
 /* 0E6E80 7F0B2350 24420010 */   addiu $v0, $v0, 0x10
 /* 0E6E84 7F0B2354 8FB80038 */  lw    $t8, 0x38($sp)
-/* 0E6E88 7F0B2358 3C0E7F0B */  lui   $t6, %hi(sub_GAME_7F0B2244) # $t6, 0x7f0b
+/* 0E6E88 7F0B2358 3C0E7F0B */  lui   $t6, %hi(stanIsSpecialBit1Set) # $t6, 0x7f0b
 /* 0E6E8C 7F0B235C 3C0F7F0B */  lui   $t7, %hi(sub_GAME_7F0B2274) # $t7, 0x7f0b
 /* 0E6E90 7F0B2360 25EF2274 */  addiu $t7, %lo(sub_GAME_7F0B2274) # addiu $t7, $t7, 0x2274
-/* 0E6E94 7F0B2364 25CE2244 */  addiu $t6, %lo(sub_GAME_7F0B2244) # addiu $t6, $t6, 0x2244
+/* 0E6E94 7F0B2364 25CE2244 */  addiu $t6, %lo(stanIsSpecialBit1Set) # addiu $t6, $t6, 0x2244
 /* 0E6E98 7F0B2368 44056000 */  mfc1  $a1, $f12
 /* 0E6E9C 7F0B236C 44067000 */  mfc1  $a2, $f14
 /* 0E6EA0 7F0B2370 AFAE0010 */  sw    $t6, 0x10($sp)
