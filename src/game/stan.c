@@ -60,7 +60,7 @@ PropRecord * stanSavedColl_posData;
 //CODE.bss:8007BA08
 s32 dword_CODE_bss_8007BA08;
 //CODE.bss:8007BA0C
-s32 dword_CODE_bss_8007BA0C;
+StandTile * dword_CODE_bss_8007BA0C;
 //CODE.bss:8007BA10
 StandTile *bfsTileStack[352];
 
@@ -142,7 +142,10 @@ const char aStan_c_debug[] = "stan_c_debug";
 const char aStanlinelog[] = "-stanlinelog";
 
 // forward declarations
+
 s32 stanIsSpecialBit1Set(StandTile *arg0, s32 *arg1);
+s32 sub_GAME_7F0B2274(StandTile *arg0, s32 arg1, f32 arg2, f32 arg3, s32 arg4, struct StandTileLocusCallbackRecord *arg5);
+
 // end forward declarations
 
 
@@ -4654,11 +4657,11 @@ s32 incrNearEdgeCount(StandTile **tileStack, s32 stackHeight, struct StandTileLo
 
 
 
-s32 sub_GAME_7F0B21B0(StandTile **tileStack, f32 target_x, f32 target_z, f32 unknown, s32 *roomBuf, s32 *count_rtn, s32 bufMax){
+s32 sub_GAME_7F0B21B0(StandTile **tileStack, f32 target_x, f32 target_z, f32 unknown, s32 unk00, s32 *count_rtn, s32 bufMax){
     struct StandTileLocusCallbackRecord data;
     s32 rtn;
 
-    data.roomBuf = roomBuf;
+    data.unk00 = unk00;
     data.count = 0;
     data.bufMax = bufMax;
     data.nearEdgeCount = 0;
@@ -4699,33 +4702,46 @@ s32 stanIsSpecialBit1Set(StandTile *arg0, s32 *arg1)
 
 
 #ifdef NONMATCHING
-// TODO
-void sub_GAME_7F0B2274(s32 arg0, s32 arg1, ? arg2, ? arg3, void *arg5) {
-    void *temp_t7;
-    void *temp_v1;
+/**
+ * Address 0x7F0B2274.
+ * 
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical instructions: no
+ * - identical registers: fail
+ * 
+ * Notes: the SRA 0xc needs to be calculated twice, but below is a move instruction from previous SRA 0xc.
+ * Seems to match other than that.
+*/
+s32 sub_GAME_7F0B2274(StandTile *arg0, s32 arg1, f32 arg2, f32 arg3, s32 arg4, struct StandTileLocusCallbackRecord *arg5)
+{
+    s32 temp_v0;
+    StandTile *temp_v1;
+    s32 val;
 
-    // Node 0
-    temp_t7 = (arg0 + (arg1 * 8));
-    if (((s32) temp_t7->unkE >> 4) != 0)
+    temp_v0 = arg0->points[arg1].link;
+
+    if ((temp_v0 >> 4) != 0)
     {
-        // Node 1
-        temp_v1 = ((temp_t7->unkE * 8) + standTileStart);
-        if ((*(&D_80040F30 + ((s32) temp_v1->unk4 >> 0xc)) & 2) != 0)
+        temp_v1 = &standTileStart[temp_v0];
+
+        val = temp_v1->mid.half >> 0xc;
+        if (D_80040F30[val] & 2)
         {
-            // Node 2
-            *arg5 = 1;
+            arg5->unk00 = 1;
             return 1;
         }
-        // Node 3
-        if ((*(&D_80040F30 + ((s32) temp_v1->unk4 >> 0xc)) & 0x40) != 0)
+
+        val = temp_v1->mid.half >> 0xc;
+        if (D_80040F30[val] & 0x40)
         {
-            // Node 4
             dword_CODE_bss_8007BA0C = temp_v1;
-            arg5->unk4 = 1;
+            arg5->count = 1;
             return 0;
         }
     }
-    // Node 5
+
     return 0;
 }
 #else

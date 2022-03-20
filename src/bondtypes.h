@@ -473,7 +473,7 @@ typedef union
     // Very similar but definitely different to the above?
     struct StandTileLocusCallbackRecord
     {
-        s32 *roomBuf;
+        s32  unk00;
         s32  count;
         s32  bufMax;
         s32  nearEdgeCount;
