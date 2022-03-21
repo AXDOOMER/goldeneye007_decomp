@@ -524,4 +524,5 @@ f32 sub_GAME_7F03EAFC(struct ObjectRecord* arg0, Mtxf *arg1);
 f32 sub_GAME_7F03E91C(struct ObjectRecord* arg0, Mtxf *arg1);
 f32 sub_GAME_7F03EA5C(struct ObjectRecord* arg0, Mtxf *arg1);
 f32 sub_GAME_7F03EB9C(struct ObjectRecord* arg0, Mtxf *arg1);
+void sub_GAME_7F03F540(struct ObjectRecord *arg0, Mtxf *arg1, s32* arg2, struct collision_data *arg3);
 #endif

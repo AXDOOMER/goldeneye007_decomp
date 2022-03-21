@@ -2256,6 +2256,32 @@ typedef union
 
     #pragma region IndividualObjectTypes
 
+    struct collision_data {
+        s32 unk00;
+        s32 unk04;
+        s32 unk08;
+        s32 unk0C;
+
+        s32 unk10;
+        s32 unk14;
+        s32 unk18;
+        s32 unk1C;
+
+        s32 unk20;
+        s32 unk24;
+        s32 unk28;
+        s32 unk2C;
+
+        s32 unk30;
+        s32 unk34;
+        s32 unk38;
+        s32 unk3C;
+
+        s32 unk40;
+        f32 unk44;
+        f32 unk48;
+    };
+
     /**
      * Object (Prop Definition) Record holds common data such as pad and health.
      */
@@ -2436,7 +2462,7 @@ typedef union
             */
             u32 runtime_bitflags;
         };
-        int               ptr_allocated_collisiondata_block;
+        struct collision_data *ptr_allocated_collisiondata_block;
 
         ObjectRecord_f6c *unk6C; //pointer somewhere at least 0x44 long and the pointer at 0 and 0x44 is also at least 0xb8 long
 

@@ -27081,7 +27081,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
         sp138->runtime_pos.f[2] = sp138->prop->pos.f[2] = spE4.f[2];
 
         setupUpdateObjectRoomPosition(sp138);
-        sub_GAME_7F040484(sp138);
+        chrobjCollisionRelated(sp138);
         sub_GAME_7F07C888(&spB4, &g_CurrentPlayer->field_488.collision_position, D_80036464);
         chraiGetPropRoomIds(sp138->prop, &sp94);
         sub_GAME_7F03E3FC(&sp94);
@@ -29504,7 +29504,7 @@ glabel MoveBond
 /* 0BB1E0 7F0866B0 E5A00010 */  swc1  $f0, 0x10($t5)
 /* 0BB1E4 7F0866B4 0FC15B28 */  jal   setupUpdateObjectRoomPosition
 /* 0BB1E8 7F0866B8 E4800060 */   swc1  $f0, 0x60($a0)
-/* 0BB1EC 7F0866BC 0FC10121 */  jal   sub_GAME_7F040484
+/* 0BB1EC 7F0866BC 0FC10121 */  jal   chrobjCollisionRelated
 /* 0BB1F0 7F0866C0 8FA40138 */   lw    $a0, 0x138($sp)
 /* 0BB1F4 7F0866C4 8E250000 */  lw    $a1, ($s1)
 /* 0BB1F8 7F0866C8 3C068003 */  lui   $a2, %hi(D_80036464)
@@ -32045,7 +32045,7 @@ glabel MoveBond
 /* 0BB8D4 7F086D64 E5400010 */  swc1  $f0, 0x10($t2)
 /* 0BB8D8 7F086D68 0FC15C68 */  jal   setupUpdateObjectRoomPosition
 /* 0BB8DC 7F086D6C E4800060 */   swc1  $f0, 0x60($a0)
-/* 0BB8E0 7F086D70 0FC101E1 */  jal   sub_GAME_7F040484
+/* 0BB8E0 7F086D70 0FC101E1 */  jal   chrobjCollisionRelated
 /* 0BB8E4 7F086D74 8FA40138 */   lw    $a0, 0x138($sp)
 /* 0BB8E8 7F086D78 8E250000 */  lw    $a1, ($s1)
 /* 0BB8EC 7F086D7C 3C068003 */  lui   $a2, %hi(D_80036464) # $a2, 0x8003
@@ -34575,7 +34575,7 @@ glabel MoveBond
 /* 0B91A8 7F0867B8 E7200010 */  swc1  $f0, 0x10($t9)
 /* 0B91AC 7F0867BC 0FC15BE0 */  jal   setupUpdateObjectRoomPosition
 /* 0B91B0 7F0867C0 E4800060 */   swc1  $f0, 0x60($a0)
-/* 0B91B4 7F0867C4 0FC10151 */  jal   sub_GAME_7F040484
+/* 0B91B4 7F0867C4 0FC10151 */  jal   chrobjCollisionRelated
 /* 0B91B8 7F0867C8 8FA40138 */   lw    $a0, 0x138($sp)
 /* 0B91BC 7F0867CC 8E250000 */  lw    $a1, ($s1)
 /* 0B91C0 7F0867D0 3C068003 */  lui   $a2, %hi(D_80036464) # $a2, 0x8003

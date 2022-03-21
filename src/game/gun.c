@@ -4668,7 +4668,7 @@ void sub_GAME_7F05EB0C(ObjectRecord *arg0, coord3d *arg1, StandTile *arg2, Mtxf 
         // loadobjectmodel.c
         setupUpdateObjectRoomPosition(arg0);
         
-        sub_GAME_7F040484(arg0);
+        chrobjCollisionRelated(arg0);
         sub_GAME_7F03FDA8(temp_s1);
 
         if (arg0->runtime_bitflags & 0x80)
@@ -5648,7 +5648,7 @@ glabel sub_GAME_7F05F928
 /* 094508 7F05F9D8 24A502E8 */  addiu $a1, $a1, 0x2e8
 /* 09450C 7F05F9DC 0FC101D5 */  jal   sub_GAME_7F040754
 /* 094510 7F05F9E0 8F270014 */   lw    $a3, 0x14($t9)
-/* 094514 7F05F9E4 0FC10121 */  jal   sub_GAME_7F040484
+/* 094514 7F05F9E4 0FC10121 */  jal   chrobjCollisionRelated
 /* 094518 7F05F9E8 02002025 */   move  $a0, $s0
 /* 09451C 7F05F9EC 8E280008 */  lw    $t0, 8($s1)
 /* 094520 7F05F9F0 8504000E */  lh    $a0, 0xe($t0)
@@ -5741,7 +5741,7 @@ glabel sub_GAME_7F05F928
 /* 092880 7F05FE90 24A502E8 */  addiu $a1, $a1, 0x2e8
 /* 092884 7F05FE94 0FC10205 */  jal   sub_GAME_7F040754
 /* 092888 7F05FE98 8F270014 */   lw    $a3, 0x14($t9)
-/* 09288C 7F05FE9C 0FC10151 */  jal   sub_GAME_7F040484
+/* 09288C 7F05FE9C 0FC10151 */  jal   chrobjCollisionRelated
 /* 092890 7F05FEA0 02002025 */   move  $a0, $s0
 /* 092894 7F05FEA4 8E280008 */  lw    $t0, 8($s1)
 /* 092898 7F05FEA8 8504000E */  lh    $a0, 0xe($t0)

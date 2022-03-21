@@ -62,7 +62,7 @@ void                 maybe_detonate_object(ObjectRecord *arg0, f32 arg1, coord3d
 void                 chrobjMaybeDetonateObjectIfFlags(ObjectRecord *arg0, f32 arg1, coord3d *arg2, ITEM_IDS item, s32 arg4);
 void                 sub_GAME_7F03FDA8(PropRecord *);
 void                 sub_GAME_7F03FE14(PropRecord *);
-void                 sub_GAME_7F040484(ObjectRecord *);
+void                 chrobjCollisionRelated(ObjectRecord *);
 void                 sub_GAME_7F040754(ObjectRecord *, coord3d *, Mtxf *, StandTile *);
 s32                  sub_GAME_7F041074(coord3d *arg0, coord3d *arg1, coord3d *arg2, f32 arg3);
 void                 sub_GAME_7F04F244(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *arg3, f32 *arg4);
