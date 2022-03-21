@@ -642,7 +642,7 @@ block_72:
             {
                 sub_GAME_7F04088C(arg1, &spE0, &sp8C, spDC, &sp80);
             }
-            sub_GAME_7F056CA0(arg1);
+            setupUpdateObjectRoomPosition(arg1);
             set_current_objposdata_plus_0x28(sp60);
             set_stateflag_0x04_for_posdata(sp60);
         }
@@ -1305,7 +1305,7 @@ glabel domakedefaultobj
 /* 037234 7F002704 0FC10223 */  jal   sub_GAME_7F04088C
 /* 037238 7F002708 8FA700DC */   lw    $a3, 0xdc($sp)
 .L7F00270C:
-/* 03723C 7F00270C 0FC15B28 */  jal   sub_GAME_7F056CA0
+/* 03723C 7F00270C 0FC15B28 */  jal   setupUpdateObjectRoomPosition
 /* 037240 7F002710 02202025 */   move  $a0, $s1
 /* 037244 7F002714 0FC0E929 */  jal   chrpropActivate
 /* 037248 7F002718 8FA40060 */   lw    $a0, 0x60($sp)

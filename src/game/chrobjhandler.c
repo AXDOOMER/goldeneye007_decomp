@@ -1532,9 +1532,9 @@ glabel sub_GAME_7F03FFF8
 
 
 
-void sub_GAME_7F040078(ObjectRecord *arg0)
+ObjectRecord * sub_GAME_7F040078(ObjectRecord *arg0)
 {
-    sub_GAME_7F03FFF8(arg0->model->obj);
+    return (ObjectRecord *)sub_GAME_7F03FFF8(arg0->model->obj);
 }
 
 
@@ -9818,7 +9818,7 @@ glabel object_interaction
 /* 07B154 7F046624 AFAF0070 */  sw    $t7, 0x70($sp)
 /* 07B158 7F046628 0FC10121 */  jal   sub_GAME_7F040484
 /* 07B15C 7F04662C 02202025 */   move  $a0, $s1
-/* 07B160 7F046630 0FC15B28 */  jal   sub_GAME_7F056CA0
+/* 07B160 7F046630 0FC15B28 */  jal   setupUpdateObjectRoomPosition
 /* 07B164 7F046634 02202025 */   move  $a0, $s1
 /* 07B168 7F046638 8E240010 */  lw    $a0, 0x10($s1)
 /* 07B16C 7F04663C 0FC100AD */  jal   sub_GAME_7F0402B4
@@ -11240,7 +11240,7 @@ glabel object_interaction
 /* 07C5F0 7F047AC0 E6620010 */  swc1  $f2, 0x10($s3)
 /* 07C5F4 7F047AC4 0FC10121 */  jal   sub_GAME_7F040484
 /* 07C5F8 7F047AC8 E6220060 */   swc1  $f2, 0x60($s1)
-/* 07C5FC 7F047ACC 0FC15B28 */  jal   sub_GAME_7F056CA0
+/* 07C5FC 7F047ACC 0FC15B28 */  jal   setupUpdateObjectRoomPosition
 /* 07C600 7F047AD0 02202025 */   move  $a0, $s1
 /* 07C604 7F047AD4 0FC1122A */  jal   sub_GAME_7F0448A8
 /* 07C608 7F047AD8 02602025 */   move  $a0, $s3
@@ -11459,7 +11459,7 @@ glabel object_interaction
 /* 07C94C 7F047E1C E6620010 */  swc1  $f2, 0x10($s3)
 /* 07C950 7F047E20 0FC10121 */  jal   sub_GAME_7F040484
 /* 07C954 7F047E24 E6220060 */   swc1  $f2, 0x60($s1)
-/* 07C958 7F047E28 0FC15B28 */  jal   sub_GAME_7F056CA0
+/* 07C958 7F047E28 0FC15B28 */  jal   setupUpdateObjectRoomPosition
 /* 07C95C 7F047E2C 02202025 */   move  $a0, $s1
 /* 07C960 7F047E30 10000020 */  b     .L7F047EB4
 /* 07C964 7F047E34 00000000 */   nop   
@@ -14924,7 +14924,7 @@ glabel object_interaction
 /* 07B598 7F046A28 AFAC0074 */  sw    $t4, 0x74($sp)
 /* 07B59C 7F046A2C 0FC101E1 */  jal   sub_GAME_7F040484
 /* 07B5A0 7F046A30 02202025 */   move  $a0, $s1
-/* 07B5A4 7F046A34 0FC15C68 */  jal   sub_GAME_7F056CA0
+/* 07B5A4 7F046A34 0FC15C68 */  jal   setupUpdateObjectRoomPosition
 /* 07B5A8 7F046A38 02202025 */   move  $a0, $s1
 /* 07B5AC 7F046A3C 8E240010 */  lw    $a0, 0x10($s1)
 /* 07B5B0 7F046A40 0FC1016D */  jal   sub_GAME_7F0402B4
@@ -16346,7 +16346,7 @@ glabel object_interaction
 /* 07CA34 7F047EC4 E6620010 */  swc1  $f2, 0x10($s3)
 /* 07CA38 7F047EC8 0FC101E1 */  jal   sub_GAME_7F040484
 /* 07CA3C 7F047ECC E6220060 */   swc1  $f2, 0x60($s1)
-/* 07CA40 7F047ED0 0FC15C68 */  jal   sub_GAME_7F056CA0
+/* 07CA40 7F047ED0 0FC15C68 */  jal   setupUpdateObjectRoomPosition
 /* 07CA44 7F047ED4 02202025 */   move  $a0, $s1
 /* 07CA48 7F047ED8 0FC1131F */  jal   sub_GAME_7F0448A8
 /* 07CA4C 7F047EDC 02602025 */   move  $a0, $s3
@@ -16565,7 +16565,7 @@ glabel object_interaction
 /* 07CD90 7F048220 E6620010 */  swc1  $f2, 0x10($s3)
 /* 07CD94 7F048224 0FC101E1 */  jal   sub_GAME_7F040484
 /* 07CD98 7F048228 E6220060 */   swc1  $f2, 0x60($s1)
-/* 07CD9C 7F04822C 0FC15C68 */  jal   sub_GAME_7F056CA0
+/* 07CD9C 7F04822C 0FC15C68 */  jal   setupUpdateObjectRoomPosition
 /* 07CDA0 7F048230 02202025 */   move  $a0, $s1
 /* 07CDA4 7F048234 10000020 */  b     .Ljp7F0482B8
 /* 07CDA8 7F048238 00000000 */   nop   
@@ -20029,7 +20029,7 @@ glabel object_interaction
 /* 0791D4 7F0467E4 02202025 */   move  $a0, $s1
 /* 0791D8 7F0467E8 0FC10151 */  jal   sub_GAME_7F040484
 /* 0791DC 7F0467EC 26300058 */   addiu $s0, $s1, 0x58
-/* 0791E0 7F0467F0 0FC15BE0 */  jal   sub_GAME_7F056CA0
+/* 0791E0 7F0467F0 0FC15BE0 */  jal   setupUpdateObjectRoomPosition
 /* 0791E4 7F0467F4 02202025 */   move  $a0, $s1
 /* 0791E8 7F0467F8 8E240010 */  lw    $a0, 0x10($s1)
 /* 0791EC 7F0467FC 0FC100DD */  jal   sub_GAME_7F0402B4
@@ -21458,7 +21458,7 @@ glabel object_interaction
 /* 07A688 7F047C98 E6620010 */  swc1  $f2, 0x10($s3)
 /* 07A68C 7F047C9C 0FC10151 */  jal   sub_GAME_7F040484
 /* 07A690 7F047CA0 E6220060 */   swc1  $f2, 0x60($s1)
-/* 07A694 7F047CA4 0FC15BE0 */  jal   sub_GAME_7F056CA0
+/* 07A694 7F047CA4 0FC15BE0 */  jal   setupUpdateObjectRoomPosition
 /* 07A698 7F047CA8 02202025 */   move  $a0, $s1
 /* 07A69C 7F047CAC 0FC1128F */  jal   sub_GAME_7F0448A8
 /* 07A6A0 7F047CB0 02602025 */   move  $a0, $s3
@@ -21676,7 +21676,7 @@ glabel object_interaction
 /* 07A9E0 7F047FF0 E6620010 */  swc1  $f2, 0x10($s3)
 /* 07A9E4 7F047FF4 0FC10151 */  jal   sub_GAME_7F040484
 /* 07A9E8 7F047FF8 E6220060 */   swc1  $f2, 0x60($s1)
-/* 07A9EC 7F047FFC 0FC15BE0 */  jal   sub_GAME_7F056CA0
+/* 07A9EC 7F047FFC 0FC15BE0 */  jal   setupUpdateObjectRoomPosition
 /* 07A9F0 7F048000 02202025 */   move  $a0, $s1
 /* 07A9F4 7F048004 10000020 */  b     .L7F048088
 /* 07A9F8 7F048008 00000000 */   nop   
@@ -30257,7 +30257,7 @@ glabel sub_GAME_7F04C130
 /* 081540 7F04CA10 A24B0078 */  sb    $t3, 0x78($s2)
 /* 081544 7F04CA14 A2580079 */  sb    $t8, 0x79($s2)
 /* 081548 7F04CA18 A24D007A */  sb    $t5, 0x7a($s2)
-/* 08154C 7F04CA1C 0FC15B28 */  jal   sub_GAME_7F056CA0
+/* 08154C 7F04CA1C 0FC15B28 */  jal   setupUpdateObjectRoomPosition
 /* 081550 7F04CA20 A24E007B */   sb    $t6, 0x7b($s2)
 /* 081554 7F04CA24 10000001 */  b     .L7F04CA2C
 /* 081558 7F04CA28 24020001 */   li    $v0, 1
@@ -30935,7 +30935,7 @@ glabel sub_GAME_7F04C130
 /* 081540 7F04CA10 A24B0078 */  sb    $t3, 0x78($s2)
 /* 081544 7F04CA14 A2580079 */  sb    $t8, 0x79($s2)
 /* 081548 7F04CA18 A24D007A */  sb    $t5, 0x7a($s2)
-/* 08154C 7F04CA1C 0FC15B28 */  jal   sub_GAME_7F056CA0
+/* 08154C 7F04CA1C 0FC15B28 */  jal   setupUpdateObjectRoomPosition
 /* 081550 7F04CA20 A24E007B */   sb    $t6, 0x7b($s2)
 /* 081554 7F04CA24 10000001 */  b     .L7F04CA2C
 /* 081558 7F04CA28 24020001 */   li    $v0, 1

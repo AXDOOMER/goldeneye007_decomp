@@ -5447,7 +5447,7 @@ glabel sub_GAME_7F03E134
 /* 072C9C 7F03E16C 54410004 */  bnel  $v0, $at, .L7F03E180
 /* 072CA0 7F03E170 8FBF0014 */   lw    $ra, 0x14($sp)
 .L7F03E174:
-/* 072CA4 7F03E174 0FC15B28 */  jal   sub_GAME_7F056CA0
+/* 072CA4 7F03E174 0FC15B28 */  jal   setupUpdateObjectRoomPosition
 /* 072CA8 7F03E178 8CA40004 */   lw    $a0, 4($a1)
 /* 072CAC 7F03E17C 8FBF0014 */  lw    $ra, 0x14($sp)
 .L7F03E180:

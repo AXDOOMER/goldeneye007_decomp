@@ -518,4 +518,10 @@ ObjectRecord *sub_GAME_7F03FAB0(PadRecord *pad, s32 RoomID);
 void          chraiGetCollisionBounds(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *arg3, f32 *arg4);
 void sub_GAME_7F03CF88(PropRecord *arg0, f32 *arg1, f32 *arg2, f32 *arg3);
 f32 sub_GAME_7F03CFE8(PropRecord *arg0);
+f32 sub_GAME_7F03E87C(struct ObjectRecord* arg0, Mtxf *arg1);
+f32 sub_GAME_7F03E9BC(struct ObjectRecord* arg0, Mtxf *arg1);
+f32 sub_GAME_7F03EAFC(struct ObjectRecord* arg0, Mtxf *arg1);
+f32 sub_GAME_7F03E91C(struct ObjectRecord* arg0, Mtxf *arg1);
+f32 sub_GAME_7F03EA5C(struct ObjectRecord* arg0, Mtxf *arg1);
+f32 sub_GAME_7F03EB9C(struct ObjectRecord* arg0, Mtxf *arg1);
 #endif

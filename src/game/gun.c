@@ -4666,7 +4666,7 @@ void sub_GAME_7F05EB0C(ObjectRecord *arg0, coord3d *arg1, StandTile *arg2, Mtxf 
         sub_GAME_7F040754(arg0, arg1, arg3, arg2);
         
         // loadobjectmodel.c
-        sub_GAME_7F056CA0(arg0);
+        setupUpdateObjectRoomPosition(arg0);
         
         sub_GAME_7F040484(arg0);
         sub_GAME_7F03FDA8(temp_s1);

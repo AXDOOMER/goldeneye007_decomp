@@ -109,4 +109,5 @@ void sub_GAME_7F043650(struct WeaponObjRecord *arg0);
 s32 sub_GAME_7F0446B8(struct rect4f *arg0, s32 arg1, struct rect4f *arg2, s32 arg3);
 s32 sub_GAME_7F044718(struct coord3d *arg0, f32 arg1, struct rect4f *arg2, s32 arg3);
 void sub_GAME_7F04DEFC(PropRecord *arg0, f32 arg1, struct coord3d *arg2, s32 arg3, s32 owner);
+ObjectRecord * sub_GAME_7F040078(ObjectRecord *arg0);
 #endif
