@@ -25975,7 +25975,6 @@ glabel sub_GAME_7F084360
 #ifdef NONMATCHING
 //#if 1
 
-void sub_GAME_7F05E0E4(f32 arg0, f32 arg1, f32 arg2, f32 arg3);
 void sub_GAME_7F05E5F0(f32 arg0);
 void bondviewCalcUpdatePlayerCollision(struct coord3d *arg0, s32 arg1);
 f32 bheadGetBreathingValue(void);
@@ -27019,7 +27018,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
         phi_f12_8 *= 1.2f;
     }
 
-    sub_GAME_7F05E0E4(phi_f12_8, sp398, sp144, g_CurrentPlayer->speedtheta);
+    gunSetBondWeaponSway(phi_f12_8, sp398, sp144, g_CurrentPlayer->speedtheta);
     sub_GAME_7F05E5F0(g_CurrentPlayer->vv_verta360 * 0.017453292f);
 
     if ((ptr_playerstank != 0) && (in_tank_flag == 1) && (dword_CODE_bss_800799B8 == 2))
@@ -29345,7 +29344,7 @@ glabel MoveBond
 /* 0BAF70 7F086440 460A0302 */  mul.s $f12, $f0, $f10
 /* 0BAF74 7F086444 00000000 */  nop
 .L7F086448:
-/* 0BAF78 7F086448 0FC17839 */  jal   sub_GAME_7F05E0E4
+/* 0BAF78 7F086448 0FC17839 */  jal   gunSetBondWeaponSway
 /* 0BAF7C 7F08644C C7AE0398 */   lwc1  $f14, 0x398($sp)
 /* 0BAF80 7F086450 8E2C0000 */  lw    $t4, ($s1)
 /* 0BAF84 7F086454 3C018005 */  lui   $at, %hi(D_80055254)
@@ -31886,7 +31885,7 @@ glabel MoveBond
 /* 0BB664 7F086AF4 460A0302 */  mul.s $f12, $f0, $f10
 /* 0BB668 7F086AF8 00000000 */  nop
 .Ljp7F086AFC:
-/* 0BB66C 7F086AFC 0FC17981 */  jal   sub_GAME_7F05E0E4
+/* 0BB66C 7F086AFC 0FC17981 */  jal   gunSetBondWeaponSway
 /* 0BB670 7F086B00 C7AE0398 */   lwc1  $f14, 0x398($sp)
 /* 0BB674 7F086B04 8E2E0000 */  lw    $t6, ($s1)
 /* 0BB678 7F086B08 3C018005 */  lui   $at, %hi(D_80055254) # $at, 0x8005
@@ -34416,7 +34415,7 @@ glabel MoveBond
 /* 0B8F38 7F086548 46080302 */  mul.s $f12, $f0, $f8
 /* 0B8F3C 7F08654C 00000000 */  nop
 .L7F086550:
-/* 0B8F40 7F086550 0FC17967 */  jal   sub_GAME_7F05E0E4
+/* 0B8F40 7F086550 0FC17967 */  jal   gunSetBondWeaponSway
 /* 0B8F44 7F086554 C7AE0398 */   lwc1  $f14, 0x398($sp)
 /* 0B8F48 7F086558 8E2C0000 */  lw    $t4, ($s1)
 /* 0B8F4C 7F08655C 3C018005 */  lui   $at, %hi(D_80055254) # $at, 0x8005

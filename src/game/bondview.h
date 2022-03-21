@@ -199,12 +199,12 @@ struct hand
   s32 field_A00;
   s32 field_A04;
   s32 field_A08;
-  s32 field_A0C;
+  f32 field_A0C;
   s32 field_A10;
   s32 field_A14;
-  s32 field_A18;
-  s32 field_A1C;
-  s32 field_A20;
+  s32 field_A18; // sway state?
+  f32 weapon_theta_displacement;
+  f32 weapon_verta_displacement;
   s32 field_A24;
   s32 field_A28;
   s32 field_A2C;

@@ -3146,8 +3146,149 @@ u32 bondwalkItemCheckBitflags(ITEM_IDS item, u32 mask)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F05E0E4(void) {
 
+/**
+ * Address 0x7F05E0E4.
+ * 
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical instructions: fail
+ * - identical registers: fail
+ * 
+ * https://decomp.me/scratch/9xPg0
+ * 94.66%
+*/
+void gunSetBondWeaponSway(f32 arg0, f32 arg1, f32 speed_verta, f32 speed_theta)
+{
+    f32 sp60[2];
+    f32 stack_padding_02;
+    f32 stack_padding_03;
+    f32 ft;
+    f32 sp50;
+    f32 sp4C;
+    f32 ft2;
+    f32 phi_f22;
+    f32 ftemp;
+    s32 i;
+    
+    sp50 = speed_verta;
+
+    if (sp50 < 0.0f)
+    {
+        sp50 = -sp50;
+    }
+
+    if (arg1 > 0.8f)
+    {
+        g_CurrentPlayer->field_FC0 = 1.0f;
+    }
+    else if (arg1 > 0.1f)
+    {
+        ft = cosf(((arg1 - 0.1f) * 6.2831855f) / 2.8f);
+        ft2 = (1.0f - ft);
+        g_CurrentPlayer->field_FC0 = 0.8f * ft2 + 0.2f;
+    }
+    else
+    {
+        g_CurrentPlayer->field_FC0 = 0.1f;
+    }
+
+    if (g_CurrentPlayer->field_FC0 < (bondviewGetBondBreathing() * 0.3f))
+    {
+        g_CurrentPlayer->field_FC0 = bondviewGetBondBreathing() * 0.3f;
+    }
+
+    if (g_CurrentPlayer->field_FC0 < 0.5f * sp50)
+    {
+        g_CurrentPlayer->field_FC0 = 0.5f * sp50;
+    }
+
+    for (i=0; i<g_ClockTimer; i++)
+    {
+        g_CurrentPlayer->field_1080 = 
+            (g_CurrentPlayer->field_1080 * 0.95f) 
+            + g_CurrentPlayer->field_FC0 ;
+    }
+    
+    g_CurrentPlayer->field_FC0 = g_CurrentPlayer->field_1080 * 0.050000012f;
+   
+    if (phi_f22 < 0.016666668f * sp50)
+    {
+        phi_f22 = 0.016666668f * sp50;
+    }
+
+    for (i=0; i<g_ClockTimer; i++)
+    {
+        g_CurrentPlayer->field_107C =
+            (g_CurrentPlayer->field_107C * 0.95f) 
+            + phi_f22;
+    }
+
+    sp4C = (g_CurrentPlayer->field_107C * 0.050000012f * g_GlobalTimerDelta);  
+
+    if(1);
+
+    sp60[0] = g_CurrentPlayer->hands[GUNRIGHT].field_A0C + sp4C;
+    while(sp60[0] >= 1.0f)
+    {
+        unknown_takes_playerhand(GUNRIGHT);
+        sp60[0] -= 1.0f;
+        g_CurrentPlayer->field_1078 += 1;
+    }
+
+    g_CurrentPlayer->field_1074 += g_GlobalTimerDelta;
+
+    if (g_CurrentPlayer->field_1074 > 60.0f)
+    {
+        g_CurrentPlayer->field_1074 = 0.0f;
+        ft = ((((f32)randomGetNext() * (1.0f / 4294967295U)) - 0.5f) * 0.2f);
+        g_CurrentPlayer->field_1070 = ft / 60.0f;
+    }
+
+    if ((g_CurrentPlayer->field_1070 + sp4C) > 0.0f)
+    {
+        g_CurrentPlayer->field_106C += g_CurrentPlayer->field_1070;
+    }
+
+    if (g_CurrentPlayer->field_106C > 0.5f)
+    {
+        g_CurrentPlayer->field_106C = 0.5f;
+    }
+    else if (g_CurrentPlayer->field_106C < -0.5f)
+    {
+        g_CurrentPlayer->field_106C = -0.5f;
+    }
+    else if ((g_CurrentPlayer->field_106C < 0.1f) && (g_CurrentPlayer->field_106C > -0.1f))
+    {
+        if (g_CurrentPlayer->field_106C > 0.0f)
+        {
+            g_CurrentPlayer->field_106C = -0.1f;
+        }
+        else
+        {
+            g_CurrentPlayer->field_106C = 0.1f;
+        }
+    }
+
+    sp60[1] = (f32) g_CurrentPlayer->field_1078 + sp60[0] + g_CurrentPlayer->field_106C;
+    
+    while (sp60[1] >= 1.0f)
+    {
+        unknown_takes_playerhand(GUNLEFT);
+        sp60[1] -= 1.0f;
+        g_CurrentPlayer->field_1078 -= 1;
+    }
+
+#define ROTATION_THETA_TURN_SPEED_FACTOR -1.75f
+#define ROTATION_VERTA_TURN_SPEED_FACTOR -2.0f
+
+    for (i=0; i<2; i++)
+    {  
+        g_CurrentPlayer->hands[i].field_A0C = sp60[i];
+        g_CurrentPlayer->hands[i].weapon_theta_displacement = (ROTATION_THETA_TURN_SPEED_FACTOR * speed_theta);
+        g_CurrentPlayer->hands[i].weapon_verta_displacement = (ROTATION_VERTA_TURN_SPEED_FACTOR * speed_verta);
+    }   
 }
 #else
 
@@ -3189,7 +3330,7 @@ glabel D_80053C70
 glabel D_80053C74
 .word 0xbdcccccd /*-0.1*/
 .text
-glabel sub_GAME_7F05E0E4
+glabel gunSetBondWeaponSway
 /* 092C14 7F05E0E4 27BDFF98 */  addiu $sp, $sp, -0x68
 /* 092C18 7F05E0E8 AFA60070 */  sw    $a2, 0x70($sp)
 /* 092C1C 7F05E0EC C7A40070 */  lwc1  $f4, 0x70($sp)
@@ -3578,7 +3719,7 @@ glabel D_80053C70
 glabel D_80053C74
 .word 0xbdcccccd /*-0.1*/
 .text
-glabel sub_GAME_7F05E0E4
+glabel gunSetBondWeaponSway
 /* 090F8C 7F05E59C 27BDFF98 */  addiu $sp, $sp, -0x68
 /* 090F90 7F05E5A0 AFA60070 */  sw    $a2, 0x70($sp)
 /* 090F94 7F05E5A4 C7A40070 */  lwc1  $f4, 0x70($sp)
