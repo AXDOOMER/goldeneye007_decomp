@@ -142,6 +142,7 @@ s32 sizepropdef(PropDefHeaderRecord *pdef)
 ObjectRecord *setupGetPtrToCommandByIndex(s32 index) //#MATCH
 {
     PropDefHeaderRecord *object = g_chraiCurrentSetup.propDefs; //wow, first use of header, cool
+
     if (index >= 0 && object)
     {
         s32 i;
@@ -151,82 +152,42 @@ ObjectRecord *setupGetPtrToCommandByIndex(s32 index) //#MATCH
             {
                 return object;
             }
+
             object = sizepropdef(object) + object; //This is correct order, using += swaps t7/s1
         }
     }
+
     return NULL;
 }
 
 
 
 
-#ifdef NONMATCHING
-s32 tagGetCommandIndex(struct object_standard * tag)
+/**
+ * Address 0x7F056B1C.
+*/
+s32 tagGetCommandIndex(struct ObjectRecord *tag)
 {
-    struct object_standard *object;
+    PropDefHeaderRecord *object;
     s32 i;
-    
-    if (g_chraiCurrentSetup.propDefs != 0)
+
+    object = g_chraiCurrentSetup.propDefs;
+
+    if (object != NULL)
     {
-        for (object = g_chraiCurrentSetup.propDefs, i = 0; PROPDEF_END != object->type; i++)
+        for (i = 0; object->type != PROPDEF_END; i++)
         {
-            if (object == tag)
+            if ((void*)object == (void*)tag)
             {
                 return i;
             }
-            object = (sizepropdef((u8 *)object) * 4) + object;
+
+            object = sizepropdef(object) + object;
         }
     }
+
     return -1;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel tagGetCommandIndex
-/* 08B64C 7F056B1C 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 08B650 7F056B20 AFB00014 */  sw    $s0, 0x14($sp)
-/* 08B654 7F056B24 3C108007 */  lui   $s0, %hi(g_chraiCurrentSetup+0x0c)
-/* 08B658 7F056B28 8E105D0C */  lw    $s0, %lo(g_chraiCurrentSetup+0x0c)($s0)
-/* 08B65C 7F056B2C AFB30020 */  sw    $s3, 0x20($sp)
-/* 08B660 7F056B30 00809825 */  move  $s3, $a0
-/* 08B664 7F056B34 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 08B668 7F056B38 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 08B66C 7F056B3C 12000012 */  beqz  $s0, .L7F056B88
-/* 08B670 7F056B40 AFB10018 */   sw    $s1, 0x18($sp)
-/* 08B674 7F056B44 920E0003 */  lbu   $t6, 3($s0)
-/* 08B678 7F056B48 24120030 */  li    $s2, 48
-/* 08B67C 7F056B4C 00008825 */  move  $s1, $zero
-/* 08B680 7F056B50 524E000E */  beql  $s2, $t6, .L7F056B8C
-/* 08B684 7F056B54 2402FFFF */   li    $v0, -1
-.L7F056B58:
-/* 08B688 7F056B58 16130003 */  bne   $s0, $s3, .L7F056B68
-/* 08B68C 7F056B5C 00000000 */   nop   
-/* 08B690 7F056B60 1000000A */  b     .L7F056B8C
-/* 08B694 7F056B64 02201025 */   move  $v0, $s1
-.L7F056B68:
-/* 08B698 7F056B68 0FC15A3D */  jal   sizepropdef
-/* 08B69C 7F056B6C 02002025 */   move  $a0, $s0
-/* 08B6A0 7F056B70 00027880 */  sll   $t7, $v0, 2
-/* 08B6A4 7F056B74 01F08021 */  addu  $s0, $t7, $s0
-/* 08B6A8 7F056B78 92180003 */  lbu   $t8, 3($s0)
-/* 08B6AC 7F056B7C 26310001 */  addiu $s1, $s1, 1
-/* 08B6B0 7F056B80 1658FFF5 */  bne   $s2, $t8, .L7F056B58
-/* 08B6B4 7F056B84 00000000 */   nop   
-.L7F056B88:
-/* 08B6B8 7F056B88 2402FFFF */  li    $v0, -1
-.L7F056B8C:
-/* 08B6BC 7F056B8C 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 08B6C0 7F056B90 8FB00014 */  lw    $s0, 0x14($sp)
-/* 08B6C4 7F056B94 8FB10018 */  lw    $s1, 0x18($sp)
-/* 08B6C8 7F056B98 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 08B6CC 7F056B9C 8FB30020 */  lw    $s3, 0x20($sp)
-/* 08B6D0 7F056BA0 03E00008 */  jr    $ra
-/* 08B6D4 7F056BA4 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
-
-
 
 
 
