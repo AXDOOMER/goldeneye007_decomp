@@ -389,47 +389,6 @@ void sub_GAME_7F056CA0(ObjectRecord *obj)
 GLOBAL_ASM(
 .late_rodata
 /*hack for below*/
-glabel jpt_8005354C
-.word .L7F056EE4
-.word .L7F056EEC
-.word .L7F056EE4
-.word .L7F056EE4
-.word .L7F056EE4
-.word .L7F056EE4
-.word .L7F056EE4
-.word .L7F056EE4
-.word .L7F056EEC
-.word .L7F056EE4
-.word .L7F056EE4
-.word .L7F056EE4
-.word .L7F056EE4
-.word .L7F056EEC
-.word .L7F056EF4
-.word .L7F056EF4
-.word .L7F056EE4
-.word .L7F056EEC
-.word .L7F056EEC
-.word .L7F056EE4
-.word .L7F056EE4
-.word .L7F056EEC
-.word .L7F056EEC
-.word .L7F056EEC
-.word .L7F056EEC
-.word .L7F056EEC
-.word .L7F056EEC
-.word .L7F056EEC
-.word .L7F056EEC
-.word .L7F056EEC
-.word .L7F056EEC
-.word .L7F056EEC
-.word .L7F056EEC
-.word .L7F056EEC
-.word .L7F056EEC
-.word .L7F056EE4
-.word .L7F056EEC
-.word .L7F056EEC
-.word .L7F056EE4
-
 .text
 glabel sub_GAME_7F056CA0
 /* 08B7D0 7F056CA0 27BDFFB0 */  addiu $sp, $sp, -0x50
@@ -574,18 +533,45 @@ glabel sub_GAME_7F056CA0
 
 
 
-#ifdef NONMATCHING
- 
-ObjectRecord *setupCommandGetObject(s32 arg0, s32 index)
+/**
+ * Address 0x7F056EA0.
+*/
+struct ObjectRecord *setupCommandGetObject(s32 arg0, s32 index)
 {
-    ObjectRecord *obj;
+    struct PropDefHeaderRecord *obj;
 
-    obj = sub_GAME_7F056A88(index);
-    if (obj != 0)
+    obj = setupGetPtrToCommandByIndex(index);
+
+    if (obj != NULL)
     {
         switch (obj->type)
         {
-            case PROPDEF_DOOR_SCALE:      //2
+            case PROPDEF_DOOR:    //1
+            case PROPDEF_PROP: //3:
+            case PROPDEF_KEY:  //4:
+            case PROPDEF_ALARM: // 5:
+            case PROPDEF_CCTV: //6:
+            case PROPDEF_MAGAZINE: //7:
+            case PROPDEF_COLLECTABLE: // 8:
+            case PROPDEF_MONITOR: //10:
+            case PROPDEF_MULTI_MONITOR:// 11:
+            case PROPDEF_RACK: //12:
+            case PROPDEF_AUTOGUN: //13:
+            case PROPDEF_HAT: //17:
+            case PROPDEF_AMMO: //20:
+            case PROPDEF_ARMOUR: //21:
+            case PROPDEF_GAS_RELEASING: //36:
+            case PROPDEF_VEHICHLE: //39:
+            case PROPDEF_AIRCRAFT: //40:
+            case PROPDEF_UNK41: //41:
+            case PROPDEF_GLASS: //42:
+            case PROPDEF_SAFE: //43:
+            case PROPDEF_TANK: //45:
+            case PROPDEF_TINTED_GLASS:                 //47:
+                return obj;
+            break;
+
+            case PROPDEF_DOOR_SCALE: //2
             case PROPDEF_GUARD:           //9 :
             case PROPDEF_LINK:            //14:
             case PROPDEF_GUARD_ATTRIBUTE: //18:
@@ -609,104 +595,16 @@ ObjectRecord *setupCommandGetObject(s32 arg0, s32 index)
             case PROPDEF_SAFE_ITEM:                 //44:
             case PROPDEF_CAMERAPOS:                 //46:
                 return NULL;
-            default:
-                break;
+            break;
+
+            // not included:
+            //case PROPDEF_UNK15: //15:
+            //case PROPDEF_UNK16: //16:
+            // return ???
         }
     }
     return obj;
 }
-
-#else
-GLOBAL_ASM(
-.late_rodata
-/*D:8005354C*/
-/*glabel jpt_8005354C*/
-/*.word .L7F056EE4*/
-/*.word .L7F056EEC*/
-/*.word .L7F056EE4*/
-/*.word .L7F056EE4*/
-/*.word .L7F056EE4*/
-/*.word .L7F056EE4*/
-/*.word .L7F056EE4*/
-/*.word .L7F056EE4*/
-/*.word .L7F056EEC*/
-/*.word .L7F056EE4*/
-/*.word .L7F056EE4*/
-/*.word .L7F056EE4*/
-/*.word .L7F056EE4*/
-/*.word .L7F056EEC*/
-/*.word .L7F056EDC*/
-/*.word .L7F056EDC*/
-/*.word .L7F056EE4*/
-/*.word .L7F056EEC*/
-/*.word .L7F056EEC*/
-/*.word .L7F056EE4*/
-/*.word .L7F056EE4*/
-/*.word .L7F056EEC*/
-/*.word .L7F056EEC*/
-/*.word .L7F056EEC*/
-/*.word .L7F056EEC*/
-/*.word .L7F056EEC*/
-/*.word .L7F056EEC*/
-/*.word .L7F056EEC*/
-/*.word .L7F056EEC*/
-/*.word .L7F056EEC*/
-/*.word .L7F056EEC*/
-/*.word .L7F056EEC*/
-/*.word .L7F056EEC*/
-/*.word .L7F056EEC*/
-/*.word .L7F056EEC*/
-/*.word .L7F056EE4*/
-/*.word .L7F056EEC*/
-/*.word .L7F056EEC*/
-/*.word .L7F056EE4*/
-.word .L7F056EE4
-.word .L7F056EE4
-.word .L7F056EE4
-.word .L7F056EE4
-.word .L7F056EEC
-.word .L7F056EE4
-.word .L7F056EEC
-.word .L7F056EE4
-
-/*D:80053608                     .align 4*/
-.text
-glabel setupCommandGetObject
-/* 08B9D0 7F056EA0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 08B9D4 7F056EA4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 08B9D8 7F056EA8 AFA40018 */  sw    $a0, 0x18($sp)
-/* 08B9DC 7F056EAC 0FC15AA2 */  jal   setupGetPtrToCommandByIndex
-/* 08B9E0 7F056EB0 00A02025 */   move  $a0, $a1
-/* 08B9E4 7F056EB4 1040000F */  beqz  $v0, .L7F056EF4
-/* 08B9E8 7F056EB8 00401825 */   move  $v1, $v0
-/* 08B9EC 7F056EBC 904E0003 */  lbu   $t6, 3($v0)
-/* 08B9F0 7F056EC0 25CFFFFF */  addiu $t7, $t6, -1
-/* 08B9F4 7F056EC4 2DE1002F */  sltiu $at, $t7, 0x2f
-/* 08B9F8 7F056EC8 1020000A */  beqz  $at, .L7F056EF4
-/* 08B9FC 7F056ECC 000F7880 */   sll   $t7, $t7, 2
-/* 08BA00 7F056ED0 3C018005 */  lui   $at, %hi(jpt_8005354C)
-/* 08BA04 7F056ED4 002F0821 */  addu  $at, $at, $t7
-/* 08BA08 7F056ED8 8C2F354C */  lw    $t7, %lo(jpt_8005354C)($at)
-.L7F056EDC:
-/* 08BA0C 7F056EDC 01E00008 */  jr    $t7
-/* 08BA10 7F056EE0 00000000 */   nop   
-.L7F056EE4:
-/* 08BA14 7F056EE4 10000004 */  b     .L7F056EF8
-/* 08BA18 7F056EE8 00601025 */   move  $v0, $v1
-.L7F056EEC:
-/* 08BA1C 7F056EEC 10000002 */  b     .L7F056EF8
-/* 08BA20 7F056EF0 00001025 */   move  $v0, $zero
-def_7F056EDC:
-.L7F056EF4:
-/* 08BA24 7F056EF4 00601025 */  move  $v0, $v1
-.L7F056EF8:
-/* 08BA28 7F056EF8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 08BA2C 7F056EFC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 08BA30 7F056F00 03E00008 */  jr    $ra
-/* 08BA34 7F056F04 00000000 */   nop   
-)
-#endif
-
 
 
 
