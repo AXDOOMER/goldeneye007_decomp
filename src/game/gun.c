@@ -4073,7 +4073,7 @@ glabel gunSetBondWeaponSway
 #endif
 
 
-void sub_GAME_7F05E5F0(f32 param_1)
+void gunSetOffsetRelated(f32 param_1)
 {
     g_CurrentPlayer->hands[GUNRIGHT].field_A30 = (1.0f - cosf(param_1)) * 5.0f;
     g_CurrentPlayer->hands[GUNLEFT].field_A30 = (1.0f - cosf(param_1)) * 5.0f;

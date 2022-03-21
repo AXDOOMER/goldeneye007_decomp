@@ -266,4 +266,5 @@ s32 Gun_hand_without_item(enum GUNHAND arg0);
 
 void unknown_takes_playerhand(s32 arg0);
 void gunSetBondWeaponSway(f32 arg0, f32 arg1, f32 speed_verta, f32 speed_theta);
+void gunSetOffsetRelated(f32 param_1);
 #endif
