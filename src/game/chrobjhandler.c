@@ -1532,9 +1532,9 @@ glabel sub_GAME_7F03FFF8
 
 
 
-ObjectRecord * sub_GAME_7F040078(ObjectRecord *arg0)
+struct modeldata_unk_pos * sub_GAME_7F040078(ObjectRecord *arg0)
 {
-    return (ObjectRecord *)sub_GAME_7F03FFF8(arg0->model->obj);
+    return (struct modeldata_unk_pos *)sub_GAME_7F03FFF8(arg0->model->obj);
 }
 
 
@@ -1871,7 +1871,7 @@ glabel sub_GAME_7F040384
 */
 void chrobjCollisionRelated(ObjectRecord *arg0)
 {
-    ObjectRecord *sp64;
+    struct modeldata_unk_pos *sp64;
     Mtxf sp24;
 
     if (arg0->ptr_allocated_collisiondata_block != NULL)
