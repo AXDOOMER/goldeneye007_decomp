@@ -11684,7 +11684,7 @@ void bondviewCalcUpdatePlayerCollision(struct coord3d *arg0, s32 arg1)
 
         if ((in_tank_flag == 1)
             || (chrpropTestPointInPolygon(&g_CurrentPlayer->field_488.collision_position, sp98, sp94) != 0)
-            || ((sub_GAME_7F044718(&g_CurrentPlayer->field_488.collision_position, g_CurrentPlayer->field_488.collision_radius, sp98, sp94) != 0)))
+            || ((chrobjTestPointPolygonCollision(&g_CurrentPlayer->field_488.collision_position, g_CurrentPlayer->field_488.collision_radius, sp98, sp94) != 0)))
         {
             tank_prop = D_8003644C;
             tank_objrecord = tank_prop->obj;
@@ -11893,7 +11893,7 @@ glabel bondviewCalcUpdatePlayerCollision
 /* 0B2550 7F07DA20 8FA60098 */  lw    $a2, 0x98($sp)
 /* 0B2554 7F07DA24 8FA70094 */  lw    $a3, 0x94($sp)
 /* 0B2558 7F07DA28 2444048C */  addiu $a0, $v0, 0x48c
-/* 0B255C 7F07DA2C 0FC111C6 */  jal   sub_GAME_7F044718
+/* 0B255C 7F07DA2C 0FC111C6 */  jal   chrobjTestPointPolygonCollision
 /* 0B2560 7F07DA30 8C4504B0 */   lw    $a1, 0x4b0($v0)
 /* 0B2564 7F07DA34 10400064 */  beqz  $v0, .L7F07DBC8
 /* 0B2568 7F07DA38 3C058003 */   lui   $a1, %hi(ptr_playerstank)
@@ -12244,7 +12244,7 @@ glabel bondviewCalcUpdatePlayerCollision
 /* 0B04E4 7F07DAF4 8FA60098 */  lw    $a2, 0x98($sp)
 /* 0B04E8 7F07DAF8 8FA70094 */  lw    $a3, 0x94($sp)
 /* 0B04EC 7F07DAFC 2444048C */  addiu $a0, $v0, 0x48c
-/* 0B04F0 7F07DB00 0FC1122B */  jal   sub_GAME_7F044718
+/* 0B04F0 7F07DB00 0FC1122B */  jal   chrobjTestPointPolygonCollision
 /* 0B04F4 7F07DB04 8C4504B0 */   lw    $a1, 0x4b0($v0)
 /* 0B04F8 7F07DB08 10400064 */  beqz  $v0, .L7F07DC9C
 /* 0B04FC 7F07DB0C 3C058003 */   lui   $a1, %hi(ptr_playerstank)
@@ -25979,7 +25979,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
     s32 stack_padding_21; 
     s32 stemp; 
     s32 stack_padding_18; 
-    struct rect4f spB4;
+    struct rect4f spB4_tank_collision_bounds;
     // roomids
     s32 sp94[8];
     s32 stack_padding_19; 
@@ -26956,7 +26956,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
 
         setupUpdateObjectRoomPosition(sp138);
         chrobjCollisionRelated(sp138);
-        bondviewTankCollisionRelated(&spB4, &g_CurrentPlayer->field_488.collision_position, D_80036464);
+        bondviewTankCollisionRelated(&spB4_tank_collision_bounds, &g_CurrentPlayer->field_488.collision_position, D_80036464);
         chraiGetPropRoomIds(sp138->prop, &sp94);
         
         // update num_obj_position_data_entries
@@ -26973,7 +26973,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
                     sp6C = prop->chr;
                     chrpropGetCollisionBounds(prop, &sp80_collision_radius, &sp88_collision_bound_height, &sp84_collision_bound_z);
                     
-                    if (chrpropTestPointInPolygon(&prop->pos, &spB4, 4) != 0)
+                    if (chrpropTestPointInPolygon(&prop->pos, &spB4_tank_collision_bounds, 4) != 0)
                     {
                         sp7C = 0;
 
@@ -26994,7 +26994,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
                         }
                     }
 
-                    if ((sp7C != 0) && (sub_GAME_7F044718(&prop->pos, sp80_collision_radius, &spB4, 4) != 0))
+                    if ((sp7C != 0) && (chrobjTestPointPolygonCollision(&prop->pos, sp80_collision_radius, &spB4_tank_collision_bounds, 4) != 0))
                     {
                         sp7C = 0;
                     }
@@ -27010,7 +27010,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
                 else if (prop->type == PROP_TYPE_OBJ)
                 {
                     chraiGetCollisionBoundsWithoutY(prop, &sp64, &sp68);
-                    if ((sp68 > 0) && (sub_GAME_7F0446B8(sp64, sp68, &spB4, 4) != 0))
+                    if ((sp68 > 0) && (sub_GAME_7F0446B8(sp64, sp68, &spB4_tank_collision_bounds, 4) != 0))
                     {
                         sub_GAME_7F04DEFC(prop, 10000.0f, &prop->obj->runtime_pos.f[0], 0x20, get_cur_playernum());
                         D_80036490 = 0x5A;
@@ -29487,7 +29487,7 @@ glabel MoveBond
 /* 0BB378 7F086848 8FA50080 */  lw    $a1, 0x80($sp)
 /* 0BB37C 7F08684C 11800006 */  beqz  $t4, .L7F086868
 /* 0BB380 7F086850 27A600B4 */   addiu $a2, $sp, 0xb4
-/* 0BB384 7F086854 0FC111C6 */  jal   sub_GAME_7F044718
+/* 0BB384 7F086854 0FC111C6 */  jal   chrobjTestPointPolygonCollision
 /* 0BB388 7F086858 24070004 */   li    $a3, 4
 /* 0BB38C 7F08685C 50400003 */  beql  $v0, $zero, .L7F08686C
 /* 0BB390 7F086860 8FB9007C */   lw    $t9, 0x7c($sp)
@@ -32034,7 +32034,7 @@ glabel MoveBond
 /* 0BBA84 7F086F14 8FA50080 */  lw    $a1, 0x80($sp)
 /* 0BBA88 7F086F18 11E00006 */  beqz  $t7, .Ljp7F086F34
 /* 0BBA8C 7F086F1C 27A600B4 */   addiu $a2, $sp, 0xb4
-/* 0BBA90 7F086F20 0FC112BB */  jal   sub_GAME_7F044718
+/* 0BBA90 7F086F20 0FC112BB */  jal   chrobjTestPointPolygonCollision
 /* 0BBA94 7F086F24 24070004 */   li    $a3, 4
 /* 0BBA98 7F086F28 50400003 */  beql  $v0, $zero, .Ljp7F086F38
 /* 0BBA9C 7F086F2C 8FAA007C */   lw    $t2, 0x7c($sp)
@@ -34564,7 +34564,7 @@ glabel MoveBond
 /* 0B9358 7F086968 8FA50080 */  lw    $a1, 0x80($sp)
 /* 0B935C 7F08696C 11E00006 */  beqz  $t7, .L7F086988
 /* 0B9360 7F086970 27A600B4 */   addiu $a2, $sp, 0xb4
-/* 0B9364 7F086974 0FC1122B */  jal   sub_GAME_7F044718
+/* 0B9364 7F086974 0FC1122B */  jal   chrobjTestPointPolygonCollision
 /* 0B9368 7F086978 24070004 */   li    $a3, 4
 /* 0B936C 7F08697C 50400003 */  beql  $v0, $zero, .L7F08698C
 /* 0B9370 7F086980 8FB9007C */   lw    $t9, 0x7c($sp)

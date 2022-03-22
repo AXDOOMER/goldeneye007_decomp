@@ -7544,39 +7544,45 @@ s32 sub_GAME_7F0446B8(struct rect4f *arg0, s32 arg1, struct rect4f *arg2, s32 ar
 
 
 /**
+ * Checks whether a point collision with a convex polygon is within the specified radius.
+ * @param point: 3d point to test collision with polygon. Only (x,z) are used.
+ * @param collision_radius: Collision radius of point to test.
+ * @param polygon: Convex polygon.
+ * @param edges: Number of edges to test in polygon.
+ * 
  * Address 0x7F044718.
 */
-s32 sub_GAME_7F044718(struct coord3d *arg0, f32 arg1, struct rect4f *arg2, s32 arg3)
+s32 chrobjTestPointPolygonCollision(struct coord3d *point, f32 collision_radius, struct rect4f *polygon, s32 edges)
 {
     f32 temp_f0;
     f32 temp_f26;
-    f32 temp_f22;
-    f32 temp_f24;
+    f32 px;
+    f32 pz;
     f32 temp_f30;
     s32 i;
     struct coord2d *temp_s0;
 
-    temp_f22 = arg0->f[0];
-    temp_f24 = arg0->f[2];
+    px = point->f[0];
+    pz = point->f[2];
 
-    for (i=0; i<arg3; i++)
+    for (i=0; i<edges; i++)
     {
-        temp_s0 = &arg2->points[(i+1) % arg3];
+        temp_s0 = &polygon->points[(i+1) % edges];
 
-        temp_f0 = sub_GAME_7F0B16C4(arg2->points[i].f[0], arg2->points[i].f[1], temp_s0->f[0], temp_s0->f[1], temp_f22, temp_f24);
+        temp_f0 = sub_GAME_7F0B16C4(polygon->points[i].f[0], polygon->points[i].f[1], temp_s0->f[0], temp_s0->f[1], px, pz);
         
         if (temp_f0 < 0.0f)
         {
             temp_f0 = -temp_f0;
         }
 
-        temp_f26 = distBetweenPoints2d(arg2->points[i].f[0], arg2->points[i].f[1], temp_f22, temp_f24);
-        temp_f30 = distBetweenPoints2d(temp_s0->f[0], temp_s0->f[1], temp_f22, temp_f24);
+        temp_f26 = distBetweenPoints2d(polygon->points[i].f[0], polygon->points[i].f[1], px, pz);
+        temp_f30 = distBetweenPoints2d(temp_s0->f[0], temp_s0->f[1], px, pz);
 
-        if ((temp_f0 < arg1) 
-            && ((temp_f26 < arg1) 
-                || (temp_f30 < arg1) 
-                || sub_GAME_7F0B17E4(arg2->points[i].f[0], arg2->points[i].f[1], temp_s0->f[0], temp_s0->f[1], temp_f22, temp_f24)
+        if ((temp_f0 < collision_radius) 
+            && ((temp_f26 < collision_radius) 
+                || (temp_f30 < collision_radius) 
+                || sub_GAME_7F0B17E4(polygon->points[i].f[0], polygon->points[i].f[1], temp_s0->f[0], temp_s0->f[1], px, pz)
             )
         )
         {
@@ -7687,7 +7693,7 @@ glabel sub_GAME_7F0448A8
 /* 079520 7F0449F0 12000007 */  beqz  $s0, .L7F044A10
 /* 079524 7F0449F4 8FA5005C */   lw    $a1, 0x5c($sp)
 /* 079528 7F0449F8 8FA60098 */  lw    $a2, 0x98($sp)
-/* 07952C 7F0449FC 0FC111C6 */  jal   sub_GAME_7F044718
+/* 07952C 7F0449FC 0FC111C6 */  jal   chrobjTestPointPolygonCollision
 /* 079530 7F044A00 8FA70094 */   lw    $a3, 0x94($sp)
 /* 079534 7F044A04 10400002 */  beqz  $v0, .L7F044A10
 /* 079538 7F044A08 00000000 */   nop   
