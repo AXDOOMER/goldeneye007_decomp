@@ -3772,24 +3772,50 @@ void chraiGetCollisionBoundsWithoutY(PropRecord *arg0, struct rect4f **arg1, s32
 
 
 /**
+ * @param point: 3d point to test if inside polygon. Only uses (x,z).
+ * @param polygon: Convex polygon. Iterates edges and checks that
+ * point is oriented correctly inside all of them.
+ * @param edges: Number of edges to iterate in polygon.
  * Address 0x7F03CCD8.
 */
-s32 sub_GAME_7F03CCD8(coord3d *arg0, struct rect4f *arg1, s32 arg2)
+s32 chrpropTestPointInPolygon(coord3d *point, struct rect4f *polygon, s32 edges)
 {
+    /**
+     * Stack overflow: 
+     * 
+     * In any case, for any convex polygon (including rectangle) the test is
+     * very simple: check each edge of the polygon, assuming each edge is
+     * oriented in counterclockwise direction, and test whether the point lies
+     * to the left of the edge (in the left-hand half-plane). If all edges pass
+     * the test - the point is inside. If at least one fails - the point is outside.
+     * 
+     * In order to test whether the point (xp, yp) lies on the left-hand
+     * side of the edge (x1, y1) - (x2, y2), you just need to calculate
+     * 
+     * D = (x2 - x1) * (yp - y1) - (xp - x1) * (y2 - y1)
+     * 
+     * https://stackoverflow.com/a/2752753/1462295
+    */
+
+    /**
+     * Assuming the above is correct, I think that means rectangles (polygons)
+     * are clockwise oriented.
+    */
+
     f32 diff;
     s32 i;
     s32 ret = -1;
 
-    if (arg2 <= 0)
+    if (edges <= 0)
     {
         return 0;
     }
 
-    for (i=0; i<arg2; i++)
+    for (i=0; i<edges; i++)
     {
         // curse you compiler loop unroller
-        diff = (    (arg1->points[(i+1) % arg2].f[1] - arg1->points[i].f[1]) * (arg0->f[0] - arg1->points[i].f[0])) 
-                 - ((arg1->points[(i+1) % arg2].f[0] - arg1->points[i].f[0]) * (arg0->f[2] - arg1->points[i].f[1]));
+        diff = (    (polygon->points[(i+1) % edges].f[1] - polygon->points[i].f[1]) * (point->f[0] - polygon->points[i].f[0])) 
+                 - ((polygon->points[(i+1) % edges].f[0] - polygon->points[i].f[0]) * (point->f[2] - polygon->points[i].f[1]));
 
         if (diff != 0.0f)
         {
@@ -3810,11 +3836,9 @@ s32 sub_GAME_7F03CCD8(coord3d *arg0, struct rect4f *arg1, s32 arg2)
                 return 0;
             }
         }
-
     }
 
     return 1;
-
 }
 
 
@@ -7408,7 +7432,7 @@ ObjectRecord* sub_GAME_7F03FAB0(PadRecord* pad, s32 RoomID)
     if (temp_v0 != 0)
     {
 loop_2:
-        if ((phi_s0->type == 1) && (RoomID == phi_s0->stan->unk3) && (sub_GAME_7F03CCB0(phi_s0, &sp38, &sp34), (sub_GAME_7F03CCD8(pad, sp38, sp34) != 0)))
+        if ((phi_s0->type == 1) && (RoomID == phi_s0->stan->unk3) && (sub_GAME_7F03CCB0(phi_s0, &sp38, &sp34), (chrpropTestPointInPolygon(pad, sp38, sp34) != 0)))
         {
             return phi_s0->chr;
         }
@@ -7457,7 +7481,7 @@ glabel sub_GAME_7F03FAB0
 /* 074648 7F03FB18 02A03025 */   move  $a2, $s5
 /* 07464C 7F03FB1C 02402025 */  move  $a0, $s2
 /* 074650 7F03FB20 8FA50038 */  lw    $a1, 0x38($sp)
-/* 074654 7F03FB24 0FC0F336 */  jal   sub_GAME_7F03CCD8
+/* 074654 7F03FB24 0FC0F336 */  jal   chrpropTestPointInPolygon
 /* 074658 7F03FB28 8FA60034 */   lw    $a2, 0x34($sp)
 /* 07465C 7F03FB2C 50400004 */  beql  $v0, $zero, .L7F03FB40
 /* 074660 7F03FB30 8E100024 */   lw    $s0, 0x24($s0)

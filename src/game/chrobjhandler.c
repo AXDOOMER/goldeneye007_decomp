@@ -7360,7 +7360,7 @@ glabel sub_GAME_7F044414
 /* 07902C 7F0444FC 02C02025 */  move  $a0, $s6
 /* 079030 7F044500 02A02825 */  move  $a1, $s5
 /* 079034 7F044504 02203025 */  move  $a2, $s1
-/* 079038 7F044508 0FC0F336 */  jal   sub_GAME_7F03CCD8
+/* 079038 7F044508 0FC0F336 */  jal   chrpropTestPointInPolygon
 /* 07903C 7F04450C E7A4007C */   swc1  $f4, 0x7c($sp)
 /* 079040 7F044510 50400058 */  beql  $v0, $zero, .L7F044674
 /* 079044 7F044514 02804025 */   move  $t0, $s4
@@ -7506,7 +7506,7 @@ s32 sub_GAME_7F0446B8(struct rect4f *arg0, s32 arg1, struct rect4f *arg2, s32 ar
         sp48.f[1] = 0.0f;
         sp48.f[2] = arg0->points[i].f[1];
 
-        if (sub_GAME_7F03CCD8(&sp48, arg2, arg3) != 0)
+        if (chrpropTestPointInPolygon(&sp48, arg2, arg3) != 0)
         {
             return 1;
         }
@@ -7518,7 +7518,7 @@ s32 sub_GAME_7F0446B8(struct rect4f *arg0, s32 arg1, struct rect4f *arg2, s32 ar
         sp48.f[1] = 0.0f;
         sp48.f[2] = arg2->points[i].f[1];
 
-        if (sub_GAME_7F03CCD8(&sp48, arg0, arg1) != 0)
+        if (chrpropTestPointInPolygon(&sp48, arg0, arg1) != 0)
         {
             return 1;
         }
@@ -7678,7 +7678,7 @@ glabel sub_GAME_7F0448A8
 /* 079500 7F0449D0 02202025 */  move  $a0, $s1
 /* 079504 7F0449D4 4500004A */  bc1f  .L7F044B00
 /* 079508 7F0449D8 8FA50098 */   lw    $a1, 0x98($sp)
-/* 07950C 7F0449DC 0FC0F336 */  jal   sub_GAME_7F03CCD8
+/* 07950C 7F0449DC 0FC0F336 */  jal   chrpropTestPointInPolygon
 /* 079510 7F0449E0 8FA60094 */   lw    $a2, 0x94($sp)
 /* 079514 7F0449E4 10400002 */  beqz  $v0, .L7F0449F0
 /* 079518 7F0449E8 02202025 */   move  $a0, $s1
@@ -31425,7 +31425,7 @@ glabel sub_GAME_7F04CD04
 /* 0818E4 7F04CDB4 31098000 */  andi  $t1, $t0, 0x8000
 /* 0818E8 7F04CDB8 51200008 */  beql  $t1, $zero, .L7F04CDDC
 /* 0818EC 7F04CDBC 8E310024 */   lw    $s1, 0x24($s1)
-/* 0818F0 7F04CDC0 0FC0F336 */  jal   sub_GAME_7F03CCD8
+/* 0818F0 7F04CDC0 0FC0F336 */  jal   chrpropTestPointInPolygon
 /* 0818F4 7F04CDC4 8FA60044 */   lw    $a2, 0x44($sp)
 /* 0818F8 7F04CDC8 10400003 */  beqz  $v0, .L7F04CDD8
 /* 0818FC 7F04CDCC 02002025 */   move  $a0, $s0

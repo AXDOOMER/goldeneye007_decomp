@@ -3618,7 +3618,7 @@ s32 sub_GAME_7F028510(coord3d *arg0, StandTile *arg1)
         {
             chraiGetCollisionBoundsWithoutY(prop, &prect4f, &sp40);
 
-            if ((sp40 > 0) && sub_GAME_7F03CCD8(arg0, prect4f, sp40))
+            if ((sp40 > 0) && chrpropTestPointInPolygon(arg0, prect4f, sp40))
             {
                 return 0;
             }

@@ -502,7 +502,7 @@ AIRecord     *ailistFindById(s32 ID);
 void          chraiGetCollisionBounds(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *arg3, f32 *arg4);
 void          sub_GAME_7F03D058(PropRecord *prop, bool unset);
 void          chraiGetCollisionBoundsWithoutY(PropRecord *arg0, struct rect4f **arg1, s32 *arg2);
-s32           sub_GAME_7F03CCD8(coord3d *arg0, struct rect4f *arg1, s32 arg2);
+s32 chrpropTestPointInPolygon(coord3d *point, struct rect4f *polygon, s32 edges);
 void          sub_GAME_7F03E3FC(s32 *roomids);
 ObjectRecord *scan_position_data_table_for_normal_object_at_preset(s32 arg0);
 Gfx          *chrpropsRenderPass(Gfx *arg0, s32 roomid, s32 arg2);
