@@ -267,13 +267,13 @@ void setupUpdateObjectRoomPosition(ObjectRecord *obj)
 
         if (sp30 != NULL)
         {
-            sp40.f[0] = sub_GAME_7F03E87C(sp30, &obj->mtx) - 30.0f;
-            sp40.f[1] = sub_GAME_7F03E9BC(sp30, &obj->mtx);
-            sp40.f[2] = sub_GAME_7F03EAFC(sp30, &obj->mtx) - 30.0f;
+            sp40.f[0] = chrpropSumMatrixPosX(sp30, &obj->mtx) - 30.0f;
+            sp40.f[1] = chrpropSumMatrixPosY(sp30, &obj->mtx);
+            sp40.f[2] = chrpropSumMatrixPosZ(sp30, &obj->mtx) - 30.0f;
 
-            sp34.f[0] = sub_GAME_7F03E91C(sp30, &obj->mtx) + 30.0f;
-            sp34.f[1] = sub_GAME_7F03EA5C(sp30, &obj->mtx);
-            sp34.f[2] = sub_GAME_7F03EB9C(sp30, &obj->mtx) + 30.0f;
+            sp34.f[0] = chrpropSumMatrixNegX(sp30, &obj->mtx) + 30.0f;
+            sp34.f[1] = chrpropSumMatrixNegY(sp30, &obj->mtx);
+            sp34.f[2] = chrpropSumMatrixNegZ(sp30, &obj->mtx) + 30.0f;
 
             if (phi_f20 < -sp40.f[0])
             {

@@ -518,11 +518,11 @@ ObjectRecord *sub_GAME_7F03FAB0(PadRecord *pad, s32 RoomID);
 void          chraiGetCollisionBounds(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *arg3, f32 *arg4);
 void sub_GAME_7F03CF88(PropRecord *arg0, f32 *arg1, f32 *arg2, f32 *arg3);
 f32 sub_GAME_7F03CFE8(PropRecord *arg0);
-f32 sub_GAME_7F03E87C(struct modeldata_unk_pos* arg0, Mtxf *arg1);
-f32 sub_GAME_7F03E9BC(struct modeldata_unk_pos* arg0, Mtxf *arg1);
-f32 sub_GAME_7F03EAFC(struct modeldata_unk_pos* arg0, Mtxf *arg1);
-f32 sub_GAME_7F03E91C(struct modeldata_unk_pos* arg0, Mtxf *arg1);
-f32 sub_GAME_7F03EA5C(struct modeldata_unk_pos* arg0, Mtxf *arg1);
-f32 sub_GAME_7F03EB9C(struct modeldata_unk_pos* arg0, Mtxf *arg1);
+f32 chrpropSumMatrixPosX(struct modeldata_unk_pos* arg0, Mtxf *arg1);
+f32 chrpropSumMatrixNegX(struct modeldata_unk_pos* arg0, Mtxf *arg1);
+f32 chrpropSumMatrixPosY(struct modeldata_unk_pos* arg0, Mtxf *arg1);
+f32 chrpropSumMatrixNegY(struct modeldata_unk_pos* arg0, Mtxf *arg1);
+f32 chrpropSumMatrixPosZ(struct modeldata_unk_pos* arg0, Mtxf *arg1);
+f32 chrpropSumMatrixNegZ(struct modeldata_unk_pos* arg0, Mtxf *arg1);
 void sub_GAME_7F03F540(struct modeldata_unk_pos *arg0, Mtxf *arg1, s32* arg2, struct collision_data *arg3);
 #endif

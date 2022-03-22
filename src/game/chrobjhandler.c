@@ -1881,8 +1881,8 @@ void chrobjCollisionRelated(ObjectRecord *arg0)
         matrix_4x4_set_position(arg0->runtime_pos.f, &sp24);
         sub_GAME_7F03F540(sp64, &sp24, &arg0->ptr_allocated_collisiondata_block->unk04, arg0->ptr_allocated_collisiondata_block);
         
-        arg0->ptr_allocated_collisiondata_block->unk48 = arg0->runtime_pos.f[1] + sub_GAME_7F03E9BC(sp64, &sp24);
-        arg0->ptr_allocated_collisiondata_block->unk44 = arg0->runtime_pos.f[1] + sub_GAME_7F03EA5C(sp64, &sp24);
+        arg0->ptr_allocated_collisiondata_block->unk48 = arg0->runtime_pos.f[1] + chrpropSumMatrixPosY(sp64, &sp24);
+        arg0->ptr_allocated_collisiondata_block->unk44 = arg0->runtime_pos.f[1] + chrpropSumMatrixNegY(sp64, &sp24);
         
         if (arg0->type == PROPDEF_AIRCRAFT)
         {
@@ -2149,7 +2149,7 @@ glabel sub_GAME_7F0407F4
 /* 07536C 7F04083C 46040180 */  add.s $f6, $f0, $f4
 /* 075370 7F040840 E6060004 */  swc1  $f6, 4($s0)
 /* 075374 7F040844 8FA50030 */  lw    $a1, 0x30($sp)
-/* 075378 7F040848 0FC0FA6F */  jal   sub_GAME_7F03E9BC
+/* 075378 7F040848 0FC0FA6F */  jal   chrpropSumMatrixPosY
 /* 07537C 7F04084C 8FA40020 */   lw    $a0, 0x20($sp)
 /* 075380 7F040850 C6080004 */  lwc1  $f8, 4($s0)
 /* 075384 7F040854 02002825 */  move  $a1, $s0
@@ -9237,7 +9237,7 @@ glabel object_interaction
 /* 07A988 7F045E58 8E660010 */   lw    $a2, 0x10($s3)
 /* 07A98C 7F045E5C 46000506 */  mov.s $f20, $f0
 /* 07A990 7F045E60 8FA40640 */  lw    $a0, 0x640($sp)
-/* 07A994 7F045E64 0FC0FA6F */  jal   sub_GAME_7F03E9BC
+/* 07A994 7F045E64 0FC0FA6F */  jal   chrpropSumMatrixPosY
 /* 07A998 7F045E68 8FA50070 */   lw    $a1, 0x70($sp)
 /* 07A99C 7F045E6C 4600A101 */  sub.s $f4, $f20, $f0
 /* 07A9A0 7F045E70 E7A00638 */  swc1  $f0, 0x638($sp)
@@ -9722,7 +9722,7 @@ glabel object_interaction
 /* 07B06C 7F04653C 8E640014 */   lw    $a0, 0x14($s3)
 /* 07B070 7F046540 46000506 */  mov.s $f20, $f0
 /* 07B074 7F046544 8FA4054C */  lw    $a0, 0x54c($sp)
-/* 07B078 7F046548 0FC0FA6F */  jal   sub_GAME_7F03E9BC
+/* 07B078 7F046548 0FC0FA6F */  jal   chrpropSumMatrixPosY
 /* 07B07C 7F04654C 8FA50070 */   lw    $a1, 0x70($sp)
 /* 07B080 7F046550 3C018005 */  lui   $at, %hi(D_80052ABC)
 /* 07B084 7F046554 C42E2ABC */  lwc1  $f14, %lo(D_80052ABC)($at)
@@ -14334,7 +14334,7 @@ glabel object_interaction
 /* 07ADAC 7F04623C 8E660010 */   lw    $a2, 0x10($s3)
 /* 07ADB0 7F046240 46000506 */  mov.s $f20, $f0
 /* 07ADB4 7F046244 8FA40648 */  lw    $a0, 0x648($sp)
-/* 07ADB8 7F046248 0FC0FB2F */  jal   sub_GAME_7F03E9BC
+/* 07ADB8 7F046248 0FC0FB2F */  jal   chrpropSumMatrixPosY
 /* 07ADBC 7F04624C 8FA50074 */   lw    $a1, 0x74($sp)
 /* 07ADC0 7F046250 4600A101 */  sub.s $f4, $f20, $f0
 /* 07ADC4 7F046254 E7A00640 */  swc1  $f0, 0x640($sp)
@@ -14819,7 +14819,7 @@ glabel object_interaction
 /* 07B490 7F046920 8E640014 */   lw    $a0, 0x14($s3)
 /* 07B494 7F046924 46000506 */  mov.s $f20, $f0
 /* 07B498 7F046928 8FA40554 */  lw    $a0, 0x554($sp)
-/* 07B49C 7F04692C 0FC0FB2F */  jal   sub_GAME_7F03E9BC
+/* 07B49C 7F04692C 0FC0FB2F */  jal   chrpropSumMatrixPosY
 /* 07B4A0 7F046930 8FA50074 */   lw    $a1, 0x74($sp)
 /* 07B4A4 7F046934 3C018005 */  lui   $at, %hi(D_80052ABC) # $at, 0x8005
 /* 07B4A8 7F046938 C42E2AEC */  lwc1  $f14, %lo(D_80052ABC)($at)
@@ -19440,7 +19440,7 @@ glabel object_interaction
 /* 0789EC 7F045FFC 8E660010 */   lw    $a2, 0x10($s3)
 /* 0789F0 7F046000 46000506 */  mov.s $f20, $f0
 /* 0789F4 7F046004 8FA40648 */  lw    $a0, 0x648($sp)
-/* 0789F8 7F046008 0FC0FA9F */  jal   sub_GAME_7F03E9BC
+/* 0789F8 7F046008 0FC0FA9F */  jal   chrpropSumMatrixPosY
 /* 0789FC 7F04600C 8FA50074 */   lw    $a1, 0x74($sp)
 /* 078A00 7F046010 4600A101 */  sub.s $f4, $f20, $f0
 /* 078A04 7F046014 E7A00640 */  swc1  $f0, 0x640($sp)
@@ -19925,7 +19925,7 @@ glabel object_interaction
 /* 0790D0 7F0466E0 8E640014 */   lw    $a0, 0x14($s3)
 /* 0790D4 7F0466E4 46000506 */  mov.s $f20, $f0
 /* 0790D8 7F0466E8 8FA40554 */  lw    $a0, 0x554($sp)
-/* 0790DC 7F0466EC 0FC0FA9F */  jal   sub_GAME_7F03E9BC
+/* 0790DC 7F0466EC 0FC0FA9F */  jal   chrpropSumMatrixPosY
 /* 0790E0 7F0466F0 8FA50074 */   lw    $a1, 0x74($sp)
 /* 0790E4 7F0466F4 3C018005 */  lui   $at, %hi(D_80052ABC) # $at, 0x8005
 /* 0790E8 7F0466F8 C42E8BFC */  lwc1  $f14, %lo(D_80052ABC)($at)
@@ -34109,7 +34109,7 @@ glabel sub_GAME_7F04E9BC
 /* 083540 7F04EA10 316C8000 */  andi  $t4, $t3, 0x8000
 /* 083544 7F04EA14 15800010 */  bnez  $t4, .L7F04EA58
 /* 083548 7F04EA18 00402025 */   move  $a0, $v0
-/* 08354C 7F04EA1C 0FC0FAE7 */  jal   sub_GAME_7F03EB9C
+/* 08354C 7F04EA1C 0FC0FAE7 */  jal   chrpropSumMatrixNegZ
 /* 083550 7F04EA20 8DA5000C */   lw    $a1, 0xc($t5)
 /* 083554 7F04EA24 8FAE001C */  lw    $t6, 0x1c($sp)
 /* 083558 7F04EA28 8FA5002C */  lw    $a1, 0x2c($sp)
@@ -42460,7 +42460,7 @@ void sub_GAME_7F052B00(DoorRecord *door)
     temp_v0_2 = door->doorType;
     if (temp_v0_2 == 4)
     {
-        door->ptr_allocated_collisiondata_block->unk48 = sub_GAME_7F03E9BC(sp28, &sp2C) + door->Pos.y;
+        door->ptr_allocated_collisiondata_block->unk48 = chrpropSumMatrixPosY(sp28, &sp2C) + door->Pos.y;
     }
     else if (temp_v0_2 == 8)
     {
@@ -42468,7 +42468,7 @@ void sub_GAME_7F052B00(DoorRecord *door)
     }
     else
     {
-        door->ptr_allocated_collisiondata_block->unk48 = sub_GAME_7F03E9BC(sp28, &sp2C) + sp60;
+        door->ptr_allocated_collisiondata_block->unk48 = chrpropSumMatrixPosY(sp28, &sp2C) + sp60;
         if ((door->doorFlags & 1) != 0)
         {
             temp_a3_2        = door->ptr_allocated_collisiondata_block;
@@ -42487,7 +42487,7 @@ void sub_GAME_7F052B00(DoorRecord *door)
         door->ptr_allocated_collisiondata_block->unk44 = door->Pos.y + 1000.0f;
         return;
     }
-    door->ptr_allocated_collisiondata_block->unk44 = sub_GAME_7F03EA5C(sp28, &sp2C) + sp60;
+    door->ptr_allocated_collisiondata_block->unk44 = chrpropSumMatrixNegY(sp28, &sp2C) + sp60;
     if ((door->doorFlags & 1) != 0)
     {
         temp_a3_3        = door->ptr_allocated_collisiondata_block;
@@ -42572,7 +42572,7 @@ glabel sub_GAME_7F052B00
 /* 08773C 7F052C0C 8FA40028 */  lw    $a0, 0x28($sp)
 /* 087740 7F052C10 54410009 */  bnel  $v0, $at, .L7F052C38
 /* 087744 7F052C14 24010008 */   li    $at, 8
-/* 087748 7F052C18 0FC0FA6F */  jal   sub_GAME_7F03E9BC
+/* 087748 7F052C18 0FC0FA6F */  jal   chrpropSumMatrixPosY
 /* 08774C 7F052C1C 27A5002C */   addiu $a1, $sp, 0x2c
 /* 087750 7F052C20 C604005C */  lwc1  $f4, 0x5c($s0)
 /* 087754 7F052C24 8E0F0068 */  lw    $t7, 0x68($s0)
@@ -42591,7 +42591,7 @@ glabel sub_GAME_7F052B00
 /* 087784 7F052C54 10000011 */  b     .L7F052C9C
 /* 087788 7F052C58 E7100048 */   swc1  $f16, 0x48($t8)
 .L7F052C5C:
-/* 08778C 7F052C5C 0FC0FA6F */  jal   sub_GAME_7F03E9BC
+/* 08778C 7F052C5C 0FC0FA6F */  jal   chrpropSumMatrixPosY
 /* 087790 7F052C60 27A5002C */   addiu $a1, $sp, 0x2c
 /* 087794 7F052C64 C7B20060 */  lwc1  $f18, 0x60($sp)
 /* 087798 7F052C68 8E190068 */  lw    $t9, 0x68($s0)
@@ -42653,7 +42653,7 @@ glabel sub_GAME_7F052B00
 /* 087860 7F052D30 10000011 */  b     .L7F052D78
 /* 087864 7F052D34 E5520044 */   swc1  $f18, 0x44($t2)
 .L7F052D38:
-/* 087868 7F052D38 0FC0FA97 */  jal   sub_GAME_7F03EA5C
+/* 087868 7F052D38 0FC0FA97 */  jal   chrpropSumMatrixNegY
 /* 08786C 7F052D3C 27A5002C */   addiu $a1, $sp, 0x2c
 /* 087870 7F052D40 C7A40060 */  lwc1  $f4, 0x60($sp)
 /* 087874 7F052D44 8E0B0068 */  lw    $t3, 0x68($s0)

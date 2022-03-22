@@ -6065,7 +6065,7 @@ f32 chrpropBBOXGetZmin(ModelNode_BoundingBoxRecord *modelBoundingBox)
 /**
  * Address 0x7F03E87C.
 */
-f32 sub_GAME_7F03E87C(struct modeldata_unk_pos *arg0, Mtxf *arg1)
+f32 chrpropSumMatrixPosX(struct modeldata_unk_pos *arg0, Mtxf *arg1)
 {
     f32 phi_f2;
 
@@ -6107,7 +6107,7 @@ f32 sub_GAME_7F03E87C(struct modeldata_unk_pos *arg0, Mtxf *arg1)
 /**
  * Address 0x7F03E91C.
 */
-f32 sub_GAME_7F03E91C(struct modeldata_unk_pos *arg0, Mtxf *arg1)
+f32 chrpropSumMatrixNegX(struct modeldata_unk_pos *arg0, Mtxf *arg1)
 {
     f32 phi_f2;
 
@@ -6149,7 +6149,7 @@ f32 sub_GAME_7F03E91C(struct modeldata_unk_pos *arg0, Mtxf *arg1)
 /**
  * Address 0x7F03E9BC.
 */
-f32 sub_GAME_7F03E9BC(struct modeldata_unk_pos *arg0, Mtxf *arg1)
+f32 chrpropSumMatrixPosY(struct modeldata_unk_pos *arg0, Mtxf *arg1)
 {
     f32 phi_f2;
 
@@ -6190,7 +6190,7 @@ f32 sub_GAME_7F03E9BC(struct modeldata_unk_pos *arg0, Mtxf *arg1)
 /**
  * Address 0x7F03EA5C.
 */
-f32 sub_GAME_7F03EA5C(struct modeldata_unk_pos *arg0, Mtxf *arg1)
+f32 chrpropSumMatrixNegY(struct modeldata_unk_pos *arg0, Mtxf *arg1)
 {
     f32 phi_f2;
 
@@ -6231,7 +6231,7 @@ f32 sub_GAME_7F03EA5C(struct modeldata_unk_pos *arg0, Mtxf *arg1)
 /**
  * Address 0x7F03EAFC.
 */
-f32 sub_GAME_7F03EAFC(struct modeldata_unk_pos *arg0, Mtxf *arg1)
+f32 chrpropSumMatrixPosZ(struct modeldata_unk_pos *arg0, Mtxf *arg1)
 {
     f32 phi_f2;
 
@@ -6272,7 +6272,7 @@ f32 sub_GAME_7F03EAFC(struct modeldata_unk_pos *arg0, Mtxf *arg1)
 /**
  * Address 0x7F03EB9C.
 */
-f32 sub_GAME_7F03EB9C(struct modeldata_unk_pos *arg0, Mtxf *arg1)
+f32 chrpropSumMatrixNegZ(struct modeldata_unk_pos *arg0, Mtxf *arg1)
 {
     f32 phi_f2;
 
@@ -7149,12 +7149,12 @@ glabel sub_GAME_7F03F748
 /* 0742F0 7F03F7C0 1680000C */  bnez  $s4, .L7F03F7F4
 /* 0742F4 7F03F7C4 00408825 */   move  $s1, $v0
 /* 0742F8 7F03F7C8 02402025 */  move  $a0, $s2
-/* 0742FC 7F03F7CC 0FC0FA47 */  jal   sub_GAME_7F03E91C
+/* 0742FC 7F03F7CC 0FC0FA47 */  jal   chrpropSumMatrixNegX
 /* 074300 7F03F7D0 00402825 */   move  $a1, $v0
 /* 074304 7F03F7D4 C6240030 */  lwc1  $f4, 0x30($s1)
 /* 074308 7F03F7D8 02402025 */  move  $a0, $s2
 /* 07430C 7F03F7DC 02202825 */  move  $a1, $s1
-/* 074310 7F03F7E0 0FC0FA1F */  jal   sub_GAME_7F03E87C
+/* 074310 7F03F7E0 0FC0FA1F */  jal   chrpropSumMatrixPosX
 /* 074314 7F03F7E4 46002500 */   add.s $f20, $f4, $f0
 /* 074318 7F03F7E8 C6260030 */  lwc1  $f6, 0x30($s1)
 /* 07431C 7F03F7EC 10000017 */  b     .L7F03F84C
@@ -7163,23 +7163,23 @@ glabel sub_GAME_7F03F748
 /* 074324 7F03F7F4 169E000C */  bne   $s4, $fp, .L7F03F828
 /* 074328 7F03F7F8 02402025 */   move  $a0, $s2
 /* 07432C 7F03F7FC 02402025 */  move  $a0, $s2
-/* 074330 7F03F800 0FC0FA97 */  jal   sub_GAME_7F03EA5C
+/* 074330 7F03F800 0FC0FA97 */  jal   chrpropSumMatrixNegY
 /* 074334 7F03F804 02202825 */   move  $a1, $s1
 /* 074338 7F03F808 C6280034 */  lwc1  $f8, 0x34($s1)
 /* 07433C 7F03F80C 02402025 */  move  $a0, $s2
 /* 074340 7F03F810 02202825 */  move  $a1, $s1
-/* 074344 7F03F814 0FC0FA6F */  jal   sub_GAME_7F03E9BC
+/* 074344 7F03F814 0FC0FA6F */  jal   chrpropSumMatrixPosY
 /* 074348 7F03F818 46004500 */   add.s $f20, $f8, $f0
 /* 07434C 7F03F81C C62A0034 */  lwc1  $f10, 0x34($s1)
 /* 074350 7F03F820 1000000A */  b     .L7F03F84C
 /* 074354 7F03F824 46005080 */   add.s $f2, $f10, $f0
 .L7F03F828:
-/* 074358 7F03F828 0FC0FAE7 */  jal   sub_GAME_7F03EB9C
+/* 074358 7F03F828 0FC0FAE7 */  jal   chrpropSumMatrixNegZ
 /* 07435C 7F03F82C 02202825 */   move  $a1, $s1
 /* 074360 7F03F830 C6300038 */  lwc1  $f16, 0x38($s1)
 /* 074364 7F03F834 02402025 */  move  $a0, $s2
 /* 074368 7F03F838 02202825 */  move  $a1, $s1
-/* 07436C 7F03F83C 0FC0FABF */  jal   sub_GAME_7F03EAFC
+/* 07436C 7F03F83C 0FC0FABF */  jal   chrpropSumMatrixPosZ
 /* 074370 7F03F840 46008500 */   add.s $f20, $f16, $f0
 /* 074374 7F03F844 C6320038 */  lwc1  $f18, 0x38($s1)
 /* 074378 7F03F848 46009080 */  add.s $f2, $f18, $f0
