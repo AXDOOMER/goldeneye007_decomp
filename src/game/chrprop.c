@@ -6311,55 +6311,39 @@ f32 sub_GAME_7F03EB9C(struct modeldata_unk_pos *arg0, Mtxf *arg1)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03EC3C(void) {
+/**
+ * Unreferenced.
+ * 0x7F03EC3C.
+*/
+void sub_GAME_7F03EC3C(struct modeldata_unk_pos *arg0, Mtxf *arg1, struct coord3d *arg2)
+{
+    if (arg1->m[0][2] <= 0.0f)
+    {
+        arg2->f[0] = arg0->p1[0];
+    }
+    else
+    {
+        arg2->f[0] = arg0->p1[1];
+    }
 
+    if (arg1->m[1][2] <= 0.0f)
+    {
+        arg2->f[1] = arg0->p2[0];
+    }
+    else
+    {
+        arg2->f[1] = arg0->p2[1];
+    }
+
+    if (arg1->m[2][2] <= 0.0f)
+    {
+        arg2->f[2] = arg0->p3[0];
+    }
+    else
+    {
+        arg2->f[2] = arg0->p3[1];
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03EC3C
-/* 07376C 7F03EC3C 44800000 */  mtc1  $zero, $f0
-/* 073770 7F03EC40 C4A40008 */  lwc1  $f4, 8($a1)
-/* 073774 7F03EC44 4600203E */  c.le.s $f4, $f0
-/* 073778 7F03EC48 00000000 */  nop   
-/* 07377C 7F03EC4C 45020005 */  bc1fl .L7F03EC64
-/* 073780 7F03EC50 C4880008 */   lwc1  $f8, 8($a0)
-/* 073784 7F03EC54 C4860004 */  lwc1  $f6, 4($a0)
-/* 073788 7F03EC58 10000003 */  b     .L7F03EC68
-/* 07378C 7F03EC5C E4C60000 */   swc1  $f6, ($a2)
-/* 073790 7F03EC60 C4880008 */  lwc1  $f8, 8($a0)
-.L7F03EC64:
-/* 073794 7F03EC64 E4C80000 */  swc1  $f8, ($a2)
-.L7F03EC68:
-/* 073798 7F03EC68 C4AA0018 */  lwc1  $f10, 0x18($a1)
-/* 07379C 7F03EC6C 4600503E */  c.le.s $f10, $f0
-/* 0737A0 7F03EC70 00000000 */  nop   
-/* 0737A4 7F03EC74 45020005 */  bc1fl .L7F03EC8C
-/* 0737A8 7F03EC78 C4920010 */   lwc1  $f18, 0x10($a0)
-/* 0737AC 7F03EC7C C490000C */  lwc1  $f16, 0xc($a0)
-/* 0737B0 7F03EC80 10000003 */  b     .L7F03EC90
-/* 0737B4 7F03EC84 E4D00004 */   swc1  $f16, 4($a2)
-/* 0737B8 7F03EC88 C4920010 */  lwc1  $f18, 0x10($a0)
-.L7F03EC8C:
-/* 0737BC 7F03EC8C E4D20004 */  swc1  $f18, 4($a2)
-.L7F03EC90:
-/* 0737C0 7F03EC90 C4A40028 */  lwc1  $f4, 0x28($a1)
-/* 0737C4 7F03EC94 4600203E */  c.le.s $f4, $f0
-/* 0737C8 7F03EC98 00000000 */  nop   
-/* 0737CC 7F03EC9C 45020005 */  bc1fl .L7F03ECB4
-/* 0737D0 7F03ECA0 C4880018 */   lwc1  $f8, 0x18($a0)
-/* 0737D4 7F03ECA4 C4860014 */  lwc1  $f6, 0x14($a0)
-/* 0737D8 7F03ECA8 03E00008 */  jr    $ra
-/* 0737DC 7F03ECAC E4C60008 */   swc1  $f6, 8($a2)
-
-/* 0737E0 7F03ECB0 C4880018 */  lwc1  $f8, 0x18($a0)
-.L7F03ECB4:
-/* 0737E4 7F03ECB4 E4C80008 */  swc1  $f8, 8($a2)
-/* 0737E8 7F03ECB8 03E00008 */  jr    $ra
-/* 0737EC 7F03ECBC 00000000 */   nop   
-)
-#endif
 
 
 
