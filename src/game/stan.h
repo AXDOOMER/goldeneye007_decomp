@@ -33,6 +33,7 @@ struct move_bond_collision {
 extern f32 stanSavedColl_someMin;
 extern PropRecord *stanSavedColl_posData;
 extern struct StandTile *standTileStart;
+extern s32 stanlinelog_flag;
 
 /////////////////
 // prototypes

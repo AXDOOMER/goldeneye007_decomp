@@ -750,9 +750,9 @@ struct player
   */
   u16 buttons_pressed;
   s16 field_3B6;
-  s32 field_3B8;
-  s32 field_3BC;
-  s32 field_3C0;
+
+  struct coord3d field_3B8;
+
   f32 field_3C4;
   f32 field_3C8;
   f32 field_3CC;
@@ -2677,15 +2677,17 @@ struct player
   s32 field_29AC;
   s32 field_29B0;
   s32 field_29B4;
-  s32 field_29B8;
+
+  // Alt field_29C0 ?? Used in EU.
+  f32 field_29B8;
 
   /**
    * Related to player perspective.
    * Offset 0x29bc.
    */
   f32 field_29BC;
-
   f32 field_29C0;
+
   s32 mpmenuon;
   s32 mpmenumode;
   s32 mpquitconfirm;
