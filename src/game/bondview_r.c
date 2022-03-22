@@ -229,8 +229,8 @@ glabel load_camera_intro_type_values
 /* 03A4C4 7F005994 AC2D64B0 */  sw    $t5, %lo(D_800364B0)($at)
 /* 03A4C8 7F005998 3C018003 */  lui   $at, %hi(g_PlayerInvincible)
 /* 03A4CC 7F00599C AC2064B4 */  sw    $zero, %lo(g_PlayerInvincible)($at)
-/* 03A4D0 7F0059A0 3C018003 */  lui   $at, %hi(cameramode)
-/* 03A4D4 7F0059A4 AC206494 */  sw    $zero, %lo(cameramode)($at)
+/* 03A4D0 7F0059A0 3C018003 */  lui   $at, %hi(g_CameraMode)
+/* 03A4D4 7F0059A4 AC206494 */  sw    $zero, %lo(g_CameraMode)($at)
 /* 03A4D8 7F0059A8 3C018003 */  lui   $at, %hi(enable_move_after_cinema)
 /* 03A4DC 7F0059AC AC206498 */  sw    $zero, %lo(enable_move_after_cinema)($at)
 /* 03A4E0 7F0059B0 3C018003 */  lui   $at, %hi(D_8003649C)
@@ -938,8 +938,8 @@ glabel load_camera_intro_type_values
 /* 03A4F0 7F005980 AC2D64F0 */  sw    $t5, %lo(D_800364B0)($at)
 /* 03A4F4 7F005984 3C018003 */  lui   $at, %hi(g_PlayerInvincible) # $at, 0x8003
 /* 03A4F8 7F005988 AC2064F4 */  sw    $zero, %lo(g_PlayerInvincible)($at)
-/* 03A4FC 7F00598C 3C018003 */  lui   $at, %hi(cameramode) # $at, 0x8003
-/* 03A500 7F005990 AC2064D4 */  sw    $zero, %lo(cameramode)($at)
+/* 03A4FC 7F00598C 3C018003 */  lui   $at, %hi(g_CameraMode) # $at, 0x8003
+/* 03A500 7F005990 AC2064D4 */  sw    $zero, %lo(g_CameraMode)($at)
 /* 03A504 7F005994 3C018003 */  lui   $at, %hi(enable_move_after_cinema) # $at, 0x8003
 /* 03A508 7F005998 AC2064D8 */  sw    $zero, %lo(enable_move_after_cinema)($at)
 /* 03A50C 7F00599C 3C018003 */  lui   $at, %hi(D_8003649C) # $at, 0x8003
@@ -1653,8 +1653,8 @@ glabel load_camera_intro_type_values
 /* 0382F0 7F005900 AC2D1A00 */  sw    $t5, %lo(D_800364B0)($at)
 /* 0382F4 7F005904 3C018003 */  lui   $at, %hi(g_PlayerInvincible) # $at, 0x8003
 /* 0382F8 7F005908 AC201A04 */  sw    $zero, %lo(g_PlayerInvincible)($at)
-/* 0382FC 7F00590C 3C018003 */  lui   $at, %hi(cameramode) # $at, 0x8003
-/* 038300 7F005910 AC2019E4 */  sw    $zero, %lo(cameramode)($at)
+/* 0382FC 7F00590C 3C018003 */  lui   $at, %hi(g_CameraMode) # $at, 0x8003
+/* 038300 7F005910 AC2019E4 */  sw    $zero, %lo(g_CameraMode)($at)
 /* 038304 7F005914 3C018003 */  lui   $at, %hi(enable_move_after_cinema) # $at, 0x8003
 /* 038308 7F005918 AC2019E8 */  sw    $zero, %lo(enable_move_after_cinema)($at)
 /* 03830C 7F00591C 3C018003 */  lui   $at, %hi(D_8003649C) # $at, 0x8003

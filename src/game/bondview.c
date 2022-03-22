@@ -306,7 +306,7 @@ s32 D_8003648C = 0;
 //D:80036490
 s32 D_80036490 = 0;
 //D:80036494
-s32 cameramode = 0;
+s32 g_CameraMode = CAMERAMODE_NONE;
 //D:80036498
 s32 enable_move_after_cinema = 0;
 //D:8003649C
@@ -3389,8 +3389,8 @@ variable_body_head:
 /* 0AEAAC 7F079F7C 00402025 */   move  $a0, $v0
 /* 0AEAB0 7F079F80 AFA20044 */  sw    $v0, 0x44($sp)
 .L7F079F84:
-/* 0AEAB4 7F079F84 3C0F8003 */  lui   $t7, %hi(cameramode)
-/* 0AEAB8 7F079F88 8DEF6494 */  lw    $t7, %lo(cameramode)($t7)
+/* 0AEAB4 7F079F84 3C0F8003 */  lui   $t7, %hi(g_CameraMode)
+/* 0AEAB8 7F079F88 8DEF6494 */  lw    $t7, %lo(g_CameraMode)($t7)
 /* 0AEABC 7F079F8C 24010003 */  li    $at, 3
 /* 0AEAC0 7F079F90 15E10003 */  bne   $t7, $at, .L7F079FA0
 /* 0AEAC4 7F079F94 3C0B8008 */   lui   $t3, %hi(starting_right_weapon)
@@ -3981,8 +3981,8 @@ variable_body_head:
 /* 0AF0DC 7F07A56C 00402025 */   move  $a0, $v0
 /* 0AF0E0 7F07A570 AFA20044 */  sw    $v0, 0x44($sp)
 .Ljp7F07A574:
-/* 0AF0E4 7F07A574 3C0F8003 */  lui   $t7, %hi(cameramode) # $t7, 0x8003
-/* 0AF0E8 7F07A578 8DEF64D4 */  lw    $t7, %lo(cameramode)($t7)
+/* 0AF0E4 7F07A574 3C0F8003 */  lui   $t7, %hi(g_CameraMode) # $t7, 0x8003
+/* 0AF0E8 7F07A578 8DEF64D4 */  lw    $t7, %lo(g_CameraMode)($t7)
 /* 0AF0EC 7F07A57C 24010003 */  li    $at, 3
 /* 0AF0F0 7F07A580 15E10003 */  bne   $t7, $at, .Ljp7F07A590
 /* 0AF0F4 7F07A584 3C0B8008 */   lui   $t3, %hi(starting_right_weapon) # $t3, 0x8008
@@ -4588,8 +4588,8 @@ variable_body_head:
 /* 0AC9F0 7F07A000 AFA20044 */  sw    $v0, 0x44($sp)
 .L7F079F84:
 .L7F07A004:
-/* 0AC9F4 7F07A004 3C0F8003 */  lui   $t7, %hi(cameramode) # $t7, 0x8003
-/* 0AC9F8 7F07A008 8DEF19E4 */  lw    $t7, %lo(cameramode)($t7)
+/* 0AC9F4 7F07A004 3C0F8003 */  lui   $t7, %hi(g_CameraMode) # $t7, 0x8003
+/* 0AC9F8 7F07A008 8DEF19E4 */  lw    $t7, %lo(g_CameraMode)($t7)
 /* 0AC9FC 7F07A00C 24010003 */  li    $at, 3
 /* 0ACA00 7F07A010 15E10003 */  bne   $t7, $at, .L7F07A020
 /* 0ACA04 7F07A014 3C0B8007 */   lui   $t3, %hi(starting_right_weapon) # $t3, 0x8007
@@ -4958,7 +4958,7 @@ void maybe_solo_intro_camera_handler(void)
 
 u32 get_camera_mode(void) {
     // Node 0
-    return cameramode;
+    return g_CameraMode;
 }
 
 
@@ -5335,9 +5335,9 @@ void set_camera_mode(s32 arg0)
     f32 phi_f0;
     s32 phi_s0;
 
-    cameramode               = arg0;
+    g_CameraMode               = arg0;
     enable_move_after_cinema = 0;
-    temp_v0                  = cameramode;
+    temp_v0                  = g_CameraMode;
     if (temp_v0 == 1)
     {
         if ((ptr_random06cam_entry != 0) && (get_recording_ramrom_flag() == 0) && (get_is_ramrom_flag() == 0))
@@ -5536,7 +5536,7 @@ void set_camera_mode(s32 arg0)
     if (temp_v0 == 8)
     {
         maybe_solo_intro_camera_handler(0);
-        cameramode = 4;
+        g_CameraMode = CAMERAMODE_FP;
         return;
     }
     if (temp_v0 == 0xA)
@@ -5562,8 +5562,8 @@ GLOBAL_ASM(
 glabel set_camera_mode
 /* 0AF4E8 7F07A9B8 27BDFF78 */  addiu $sp, $sp, -0x88
 /* 0AF4EC 7F07A9BC AFB00028 */  sw    $s0, 0x28($sp)
-/* 0AF4F0 7F07A9C0 3C108003 */  lui   $s0, %hi(cameramode)
-/* 0AF4F4 7F07A9C4 26106494 */  addiu $s0, %lo(cameramode) # addiu $s0, $s0, 0x6494
+/* 0AF4F0 7F07A9C0 3C108003 */  lui   $s0, %hi(g_CameraMode)
+/* 0AF4F4 7F07A9C4 26106494 */  addiu $s0, %lo(g_CameraMode) # addiu $s0, $s0, 0x6494
 /* 0AF4F8 7F07A9C8 AE040000 */  sw    $a0, ($s0)
 /* 0AF4FC 7F07A9CC 3C018003 */  lui   $at, %hi(enable_move_after_cinema)
 /* 0AF500 7F07A9D0 AC206498 */  sw    $zero, %lo(enable_move_after_cinema)($at)
@@ -6110,8 +6110,8 @@ void sub_GAME_7F07B1A4(void) {
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F07B1A4
-/* 0AFCD4 7F07B1A4 3C038003 */  lui   $v1, %hi(cameramode)
-/* 0AFCD8 7F07B1A8 24636494 */  addiu $v1, %lo(cameramode) # addiu $v1, $v1, 0x6494
+/* 0AFCD4 7F07B1A4 3C038003 */  lui   $v1, %hi(g_CameraMode)
+/* 0AFCD8 7F07B1A8 24636494 */  addiu $v1, %lo(g_CameraMode) # addiu $v1, $v1, 0x6494
 /* 0AFCDC 7F07B1AC 8C620000 */  lw    $v0, ($v1)
 /* 0AFCE0 7F07B1B0 AC600000 */  sw    $zero, ($v1)
 /* 0AFCE4 7F07B1B4 3C018003 */  lui   $at, %hi(enable_move_after_cinema)
@@ -6419,8 +6419,8 @@ glabel D_8005505C
 .text
 glabel sub_GAME_7F07B56C
 /* 0B009C 7F07B56C 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 0B00A0 7F07B570 3C028003 */  lui   $v0, %hi(cameramode)
-/* 0B00A4 7F07B574 8C426494 */  lw    $v0, %lo(cameramode)($v0)
+/* 0B00A0 7F07B570 3C028003 */  lui   $v0, %hi(g_CameraMode)
+/* 0B00A4 7F07B574 8C426494 */  lw    $v0, %lo(g_CameraMode)($v0)
 /* 0B00A8 7F07B578 240B0001 */  li    $t3, 1
 /* 0B00AC 7F07B57C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0B00B0 7F07B580 AFA40040 */  sw    $a0, 0x40($sp)
@@ -7510,8 +7510,8 @@ glabel D_8005505C
 .text
 glabel sub_GAME_7F07B56C
 /* 0B06FC 7F07BB8C 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 0B0700 7F07BB90 3C028003 */  lui   $v0, %hi(cameramode) # $v0, 0x8003
-/* 0B0704 7F07BB94 8C4264D4 */  lw    $v0, %lo(cameramode)($v0)
+/* 0B0700 7F07BB90 3C028003 */  lui   $v0, %hi(g_CameraMode) # $v0, 0x8003
+/* 0B0704 7F07BB94 8C4264D4 */  lw    $v0, %lo(g_CameraMode)($v0)
 /* 0B0708 7F07BB98 240B0001 */  li    $t3, 1
 /* 0B070C 7F07BB9C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0B0710 7F07BBA0 AFA40040 */  sw    $a0, 0x40($sp)
@@ -8602,8 +8602,8 @@ glabel D_8005505C
 .text
 glabel sub_GAME_7F07B56C
 /* 0ADFF4 7F07B604 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 0ADFF8 7F07B608 3C028003 */  lui   $v0, %hi(cameramode) # $v0, 0x8003
-/* 0ADFFC 7F07B60C 8C4219E4 */  lw    $v0, %lo(cameramode)($v0)
+/* 0ADFF8 7F07B608 3C028003 */  lui   $v0, %hi(g_CameraMode) # $v0, 0x8003
+/* 0ADFFC 7F07B60C 8C4219E4 */  lw    $v0, %lo(g_CameraMode)($v0)
 /* 0AE000 7F07B610 240B0001 */  li    $t3, 1
 /* 0AE004 7F07B614 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0AE008 7F07B618 AFA40040 */  sw    $a0, 0x40($sp)
@@ -18516,7 +18516,7 @@ void bondviewUpdatePlayerCollisionPositionFields(void)
 
     g_CurrentPlayer->field_488.collision_position.f[1] = g_CurrentPlayer->field_70 + phi_f0;
     
-    if (((cameramode != 5) && (cameramode != 6) && (cameramode != 7))
+    if (((g_CameraMode != CAMERAMODE_UNK5) && (g_CameraMode != CAMERAMODE_UNK6) && (g_CameraMode != CAMERAMODE_POSEND))
         || (g_CurrentPlayer->ptr_char_objectinstance == 0))
     {
         g_CurrentPlayer->field_488.pos.f[0] = g_CurrentPlayer->field_488.collision_position.f[0];
@@ -34252,13 +34252,13 @@ void sub_GAME_7F086990(s32 arg0, s32 arg1, ? arg2, ? arg_unalignedA, ? arg3, ? a
     bondviewCalcUpdatePlayerCollision(0.0f, &sp40, 1);
     bondviewUpdatePlayerClipping(0, 0, 0);
     bondviewUpdatePlayerCollisionPositionFields();
-    if (cameramode != 4)
+    if (g_CameraMode != CAMERAMODE_FP)
     {
         // Node 4
-        if (cameramode != 0xa)
+        if (g_CameraMode != CAMERAMODE_UNK10)
         {
             // Node 5
-            if (cameramode != 0xa)
+            if (g_CameraMode != CAMERAMODE_UNK10)
             {
                 // Node 7
                 sub_GAME_7F07B56C(arg_unalignedA, arg_unalignedE, &sp64, &sp58, &sp4C, &sp3C, &sp30);
@@ -34397,8 +34397,8 @@ glabel sub_GAME_7F086990
 /* 0BB68C 7F086B5C 00000000 */   nop
 /* 0BB690 7F086B60 0FC2051E */  jal   bondviewUpdatePlayerCollisionPositionFields
 /* 0BB694 7F086B64 00000000 */   nop
-/* 0BB698 7F086B68 3C028003 */  lui   $v0, %hi(cameramode)
-/* 0BB69C 7F086B6C 8C426494 */  lw    $v0, %lo(cameramode)($v0)
+/* 0BB698 7F086B68 3C028003 */  lui   $v0, %hi(g_CameraMode)
+/* 0BB69C 7F086B6C 8C426494 */  lw    $v0, %lo(g_CameraMode)($v0)
 /* 0BB6A0 7F086B70 24010008 */  li    $at, 8
 /* 0BB6A4 7F086B74 10410005 */  beq   $v0, $at, .L7F086B8C
 /* 0BB6A8 7F086B78 24010004 */   li    $at, 4
@@ -34563,8 +34563,8 @@ glabel sub_GAME_7F086990
 /* 0B966C 7F086C7C 00000000 */   nop   
 /* 0B9670 7F086C80 0FC20547 */  jal   bondviewUpdatePlayerCollisionPositionFields
 /* 0B9674 7F086C84 00000000 */   nop   
-/* 0B9678 7F086C88 3C028003 */  lui   $v0, %hi(cameramode) # $v0, 0x8003
-/* 0B967C 7F086C8C 8C4219E4 */  lw    $v0, %lo(cameramode)($v0)
+/* 0B9678 7F086C88 3C028003 */  lui   $v0, %hi(g_CameraMode) # $v0, 0x8003
+/* 0B967C 7F086C8C 8C4219E4 */  lw    $v0, %lo(g_CameraMode)($v0)
 /* 0B9680 7F086C90 24010008 */  li    $at, 8
 /* 0B9684 7F086C94 10410005 */  beq   $v0, $at, .L7F086CAC
 /* 0B9688 7F086C98 24010004 */   li    $at, 4
@@ -34894,7 +34894,7 @@ void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2)
             || (getPlayerCount() >= 2 && g_playerPerm->sight != 0)
     );
 
-    if ((cameramode == 0) || ((cameramode == 4) && (D_800364B0 != 0)) || (cameramode == 0xA))
+    if ((g_CameraMode == CAMERAMODE_NONE) || ((g_CameraMode == CAMERAMODE_FP) && (D_800364B0 != 0)) || (g_CameraMode == CAMERAMODE_UNK10))
     {
         if (get_cur_playernum() == 0)
         {
@@ -34968,7 +34968,7 @@ void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2)
         }
     }
 
-    if ((cameramode == 0xA) && currentPlayerIsFadeComplete())
+    if ((g_CameraMode == CAMERAMODE_UNK10) && currentPlayerIsFadeComplete())
     {
         bossRunTitleStage();
     }
@@ -35206,8 +35206,8 @@ glabel bondviewMovePlayerUpdateViewport
 .L7F0873F8:
 /* 0B9DE8 7F0873F8 0FC1AB4F */  jal   set_unset_bitflags
 /* 0B9DEC 7F0873FC 24040001 */   li    $a0, 1
-/* 0B9DF0 7F087400 3C028003 */  lui   $v0, %hi(cameramode) # $v0, 0x8003
-/* 0B9DF4 7F087404 8C4219E4 */  lw    $v0, %lo(cameramode)($v0)
+/* 0B9DF0 7F087400 3C028003 */  lui   $v0, %hi(g_CameraMode) # $v0, 0x8003
+/* 0B9DF4 7F087404 8C4219E4 */  lw    $v0, %lo(g_CameraMode)($v0)
 /* 0B9DF8 7F087408 24010004 */  li    $at, 4
 /* 0B9DFC 7F08740C 10400008 */  beqz  $v0, .L7F087430
 /* 0B9E00 7F087410 00000000 */   nop
@@ -35369,8 +35369,8 @@ glabel bondviewMovePlayerUpdateViewport
 /* 0BA048 7F087658 0C00175E */  jal   bossRunTitleStage
 /* 0BA04C 7F08765C 00000000 */   nop
 .L7F087660:
-/* 0BA050 7F087660 3C0E8003 */  lui   $t6, %hi(cameramode) # $t6, 0x8003
-/* 0BA054 7F087664 8DCE19E4 */  lw    $t6, %lo(cameramode)($t6)
+/* 0BA050 7F087660 3C0E8003 */  lui   $t6, %hi(g_CameraMode) # $t6, 0x8003
+/* 0BA054 7F087664 8DCE19E4 */  lw    $t6, %lo(g_CameraMode)($t6)
 /* 0BA058 7F087668 2401000A */  li    $at, 10
 /* 0BA05C 7F08766C 15C10007 */  bne   $t6, $at, .L7F08768C
 /* 0BA060 7F087670 00000000 */   nop

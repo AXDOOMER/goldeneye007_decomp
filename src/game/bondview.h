@@ -2837,7 +2837,7 @@ extern s32 D_8003648C;
 //D:80036490
 extern s32 D_80036490;
 //D:80036494
-extern s32 cameramode;
+extern s32 g_CameraMode;
 //D:80036498
 extern s32 enable_move_after_cinema;
 //D:8003649C
