@@ -2806,9 +2806,7 @@ extern struct PropRecord *ptr_playerstank;
 extern f32 g_PlayerTankYOffset;
 
 //D:80036458
-extern ALSoundState * SFX_80036458;
-//D:8003645C
-extern ALSoundState * SFX_8003645C;
+extern ALSoundState * SFX_80036458[2];
 
 //D:80036460
 extern s32 D_80036460;

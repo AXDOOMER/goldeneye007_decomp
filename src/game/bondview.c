@@ -270,9 +270,8 @@ struct PropRecord *ptr_playerstank = NULL;
 f32 g_PlayerTankYOffset = 0;
 
 //D:80036458
-ALSoundState * SFX_80036458 = NULL;
-//D:8003645C
-ALSoundState * SFX_8003645C = NULL;
+ALSoundState * SFX_80036458[2] = { NULL, NULL };
+
 //D:80036460
 s32 D_80036460 = 0;
 //D:80036464
@@ -25531,7 +25530,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
     Mtxf spF0;
     struct coord3d spE4;
     s32 stack_padding_22; 
-    s32 stack_padding_21; 
+    s32 stack_padding_23; 
     s32 stemp; 
     s32 stack_padding_18; 
     struct rect4f spB4_tank_collision_bounds;
@@ -27881,8 +27880,8 @@ glabel MoveBond
 /* 0BA278 7F085748 14400009 */  bnez  $v0, .L7F085770
 /* 0BA27C 7F08574C C7AC0244 */   lwc1  $f12, 0x244($sp)
 /* 0BA280 7F085750 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 0BA284 7F085754 3C068003 */  lui   $a2, %hi(SFX_8003645C)
-/* 0BA288 7F085758 24C6645C */  addiu $a2, %lo(SFX_8003645C) # addiu $a2, $a2, 0x645c
+/* 0BA284 7F085754 3C068003 */  lui   $a2, %hi(SFX_80036458 + 4)
+/* 0BA288 7F085758 24C6645C */  addiu $a2, %lo(SFX_80036458 + 4) # addiu $a2, $a2, 0x645c
 /* 0BA28C 7F08575C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0BA290 7F085760 2405003E */  li    $a1, 62
 /* 0BA294 7F085764 0C002382 */  jal   sndPlaySfx
@@ -30421,8 +30420,8 @@ glabel MoveBond
 /* 0BA968 7F085DF8 14400009 */  bnez  $v0, .Ljp7F085E20
 /* 0BA96C 7F085DFC C7AC0244 */   lwc1  $f12, 0x244($sp)
 /* 0BA970 7F085E00 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
-/* 0BA974 7F085E04 3C068003 */  lui   $a2, %hi(SFX_8003645C) # $a2, 0x8003
-/* 0BA978 7F085E08 24C6649C */  addiu $a2, %lo(SFX_8003645C) # addiu $a2, $a2, 0x649c
+/* 0BA974 7F085E04 3C068003 */  lui   $a2, %hi(SFX_80036458 + 4) # $a2, 0x8003
+/* 0BA978 7F085E08 24C6649C */  addiu $a2, %lo(SFX_80036458 + 4) # addiu $a2, $a2, 0x649c
 /* 0BA97C 7F085E0C 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0BA980 7F085E10 2405003E */  li    $a1, 62
 /* 0BA984 7F085E14 0C002386 */  jal   sndPlaySfx
@@ -32952,8 +32951,8 @@ glabel MoveBond
 /* 0B8240 7F085850 14400009 */  bnez  $v0, .L7F085878
 /* 0B8244 7F085854 C7AC0244 */   lwc1  $f12, 0x244($sp)
 /* 0B8248 7F085858 3C048005 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8005
-/* 0B824C 7F08585C 3C068003 */  lui   $a2, %hi(SFX_8003645C) # $a2, 0x8003
-/* 0B8250 7F085860 24C619AC */  addiu $a2, %lo(SFX_8003645C) # addiu $a2, $a2, 0x19ac
+/* 0B824C 7F08585C 3C068003 */  lui   $a2, %hi(SFX_80036458 + 4) # $a2, 0x8003
+/* 0B8250 7F085860 24C619AC */  addiu $a2, %lo(SFX_80036458 + 4) # addiu $a2, $a2, 0x19ac
 /* 0B8254 7F085864 8C846900 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0B8258 7F085868 2405003E */  li    $a1, 62
 /* 0B825C 7F08586C 0C00209A */  jal   sndPlaySfx
