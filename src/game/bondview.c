@@ -26958,6 +26958,8 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
         chrobjCollisionRelated(sp138);
         bondviewTankCollisionRelated(&spB4, &g_CurrentPlayer->field_488.collision_position, D_80036464);
         chraiGetPropRoomIds(sp138->prop, &sp94);
+        
+        // update num_obj_position_data_entries
         sub_GAME_7F03E3FC(&sp94);
 
         for (lookup_index = ptr_list_object_lookup_indices; *lookup_index >= 0; lookup_index++)
@@ -26969,7 +26971,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
                 {
                     sp7C = 1;
                     sp6C = prop->chr;
-                    sub_GAME_7F03CF88(prop, &sp80, &sp88, &sp84);
+                    chrpropGetCollisionBounds(prop, &sp80, &sp88, &sp84);
                     if (sub_GAME_7F03CCD8(&prop->pos, &spB4, 4) != 0)
                     {
                         sp7C = 0;
@@ -29425,7 +29427,7 @@ glabel MoveBond
 /* 0BB298 7F086768 27A50080 */  addiu $a1, $sp, 0x80
 /* 0BB29C 7F08676C 27A60088 */  addiu $a2, $sp, 0x88
 /* 0BB2A0 7F086770 27A70084 */  addiu $a3, $sp, 0x84
-/* 0BB2A4 7F086774 0FC0F3E2 */  jal   sub_GAME_7F03CF88
+/* 0BB2A4 7F086774 0FC0F3E2 */  jal   chrpropGetCollisionBounds
 /* 0BB2A8 7F086778 AFA8006C */   sw    $t0, 0x6c($sp)
 /* 0BB2AC 7F08677C 26040008 */  addiu $a0, $s0, 8
 /* 0BB2B0 7F086780 AFA40050 */  sw    $a0, 0x50($sp)
@@ -31966,7 +31968,7 @@ glabel MoveBond
 /* 0BB98C 7F086E1C 27A50080 */  addiu $a1, $sp, 0x80
 /* 0BB990 7F086E20 27A60088 */  addiu $a2, $sp, 0x88
 /* 0BB994 7F086E24 27A70084 */  addiu $a3, $sp, 0x84
-/* 0BB998 7F086E28 0FC0F4A2 */  jal   sub_GAME_7F03CF88
+/* 0BB998 7F086E28 0FC0F4A2 */  jal   chrpropGetCollisionBounds
 /* 0BB99C 7F086E2C AFA3006C */   sw    $v1, 0x6c($sp)
 /* 0BB9A0 7F086E30 26040008 */  addiu $a0, $s0, 8
 /* 0BB9A4 7F086E34 AFA40050 */  sw    $a0, 0x50($sp)
@@ -34496,7 +34498,7 @@ glabel MoveBond
 /* 0B9260 7F086870 27A50080 */  addiu $a1, $sp, 0x80
 /* 0B9264 7F086874 27A60088 */  addiu $a2, $sp, 0x88
 /* 0B9268 7F086878 27A70084 */  addiu $a3, $sp, 0x84
-/* 0B926C 7F08687C 0FC0F412 */  jal   sub_GAME_7F03CF88
+/* 0B926C 7F08687C 0FC0F412 */  jal   chrpropGetCollisionBounds
 /* 0B9270 7F086880 AFA3006C */   sw    $v1, 0x6c($sp)
 /* 0B9274 7F086884 26040008 */  addiu $a0, $s0, 8
 /* 0B9278 7F086888 AFA40050 */  sw    $a0, 0x50($sp)
@@ -42174,16 +42176,21 @@ void bondviewUpdatePlayerCollisionBounds(void)
 
 
 /**
+ * @param arg0: prop
+ * @param width: out parameter, will be set to field_488.collision_radius
+ * @param height: out parameter, will be set to character height - 30
+ * @param always_30: out parameter, will be set to 30
+ * 
  * Address 0x7F08A274.
  */
-void bondviewCollisionRadiusRelated(PropRecord* arg0, f32 *arg1, f32 *arg2, f32 *arg3)
+void bondviewCollisionRadiusRelated(PropRecord* arg0, f32 *collision_radius, f32 *height, f32 *always_30)
 {
     struct player **temp_v1;
 
     temp_v1 = &g_playerPointers[sub_GAME_7F09B15C(arg0)];
-    *arg1 = (*temp_v1)->field_488.collision_radius;
-    *arg2 = (bondviewGetPlayerDuckingHeightRelated(*temp_v1) + 10.0f) - 30.0f;
-    *arg3 = 30.0f;
+    *collision_radius = (*temp_v1)->field_488.collision_radius;
+    *height = (bondviewGetPlayerDuckingHeightRelated(*temp_v1) + 10.0f) - 30.0f;
+    *always_30 = 30.0f;
 }
 
 

@@ -2286,6 +2286,8 @@ typedef union
 
         s32 unk40;
         f32 unk44;
+
+        // Might be related to collision radius
         f32 unk48;
     };
 

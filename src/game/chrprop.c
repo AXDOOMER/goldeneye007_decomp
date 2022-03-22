@@ -3822,23 +3822,28 @@ s32 sub_GAME_7F03CCD8(coord3d *arg0, struct rect4f *arg1, s32 arg2)
 
 
 /**
+ * @param arg0: prop
+ * @param collision_radius: out parameter, will be set to character width or player collision radius.
+ * @param height: out parameter, will be set to height
+ * @param always_20: out parameter, will be set to either 20 or 30.
+ * 
  * Address 0x7F03CF88.
 */
-void sub_GAME_7F03CF88(PropRecord *arg0, f32 *arg1, f32 *arg2, f32 *arg3)
+void chrpropGetCollisionBounds(PropRecord *arg0, f32 *collision_radius, f32 *height, f32 *arg3)
 {
     if (arg0->type == PROP_TYPE_CHR)
     {
-        chrGetChrWidthHeight(arg0, arg1, arg2, arg3);
+        chrGetChrWidthHeight(arg0, collision_radius, height, arg3);
         return;
     }
 
     if (arg0->type == PROP_TYPE_VIEWER)
     {
-        bondviewCollisionRadiusRelated(arg0, arg1, arg2, arg3);
+        bondviewCollisionRadiusRelated(arg0, collision_radius, height, arg3);
         return;
     }
 
-    *arg1 = 0.0f;
+    *collision_radius = 0.0f;
 }
 
 
@@ -5626,7 +5631,13 @@ glabel sub_GAME_7F03E27C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03E3FC(void) {
+/**
+ * Iterate ptr_list_object_lookup_indices based on arg0 and update num_obj_position_data_entries.
+ * Address 0x7F03E3FC.
+ * @param arg0: (probably) array of s16
+*/
+void sub_GAME_7F03E3FC(s16 *arg0)
+{
 
 }
 #else
