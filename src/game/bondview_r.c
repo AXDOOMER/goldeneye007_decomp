@@ -192,36 +192,36 @@ glabel load_camera_intro_type_values
 /* 03A430 7F005900 44802000 */  mtc1  $zero, $f4
 /* 03A434 7F005904 AC600000 */  sw    $zero, ($v1)
 /* 03A438 7F005908 AC600004 */  sw    $zero, 4($v1)
-/* 03A43C 7F00590C 3C018003 */  lui   $at, %hi(D_80036460)
-/* 03A440 7F005910 E4326460 */  swc1  $f18, %lo(D_80036460)($at)
+/* 03A43C 7F00590C 3C018003 */  lui   $at, %hi(g_TankTurnSpeed)
+/* 03A440 7F005910 E4326460 */  swc1  $f18, %lo(g_TankTurnSpeed)($at)
 /* 03A444 7F005914 44803000 */  mtc1  $zero, $f6
-/* 03A448 7F005918 3C018003 */  lui   $at, %hi(D_80036464)
-/* 03A44C 7F00591C E4246464 */  swc1  $f4, %lo(D_80036464)($at)
+/* 03A448 7F005918 3C018003 */  lui   $at, %hi(g_TankOrientationAngle)
+/* 03A44C 7F00591C E4246464 */  swc1  $f4, %lo(g_TankOrientationAngle)($at)
 /* 03A450 7F005920 44804000 */  mtc1  $zero, $f8
 /* 03A454 7F005924 3C018003 */  lui   $at, %hi(D_80036468)
 /* 03A458 7F005928 E4266468 */  swc1  $f6, %lo(D_80036468)($at)
 /* 03A45C 7F00592C 44805000 */  mtc1  $zero, $f10
-/* 03A460 7F005930 3C018003 */  lui   $at, %hi(D_8003646C)
-/* 03A464 7F005934 E428646C */  swc1  $f8, %lo(D_8003646C)($at)
+/* 03A460 7F005930 3C018003 */  lui   $at, %hi(g_TankTurretVerticalAngle)
+/* 03A464 7F005934 E428646C */  swc1  $f8, %lo(g_TankTurretVerticalAngle)($at)
 /* 03A468 7F005938 44808000 */  mtc1  $zero, $f16
-/* 03A46C 7F00593C 3C018003 */  lui   $at, %hi(D_80036470)
-/* 03A470 7F005940 E42A6470 */  swc1  $f10, %lo(D_80036470)($at)
+/* 03A46C 7F00593C 3C018003 */  lui   $at, %hi(g_TankTurretVerticalAngleRelated)
+/* 03A470 7F005940 E42A6470 */  swc1  $f10, %lo(g_TankTurretVerticalAngleRelated)($at)
 /* 03A474 7F005944 44809000 */  mtc1  $zero, $f18
-/* 03A478 7F005948 3C018003 */  lui   $at, %hi(D_80036474)
-/* 03A47C 7F00594C E4306474 */  swc1  $f16, %lo(D_80036474)($at)
+/* 03A478 7F005948 3C018003 */  lui   $at, %hi(g_TankTurretOrientationAngleRad)
+/* 03A47C 7F00594C E4306474 */  swc1  $f16, %lo(g_TankTurretOrientationAngleRad)($at)
 /* 03A480 7F005950 44802000 */  mtc1  $zero, $f4
 /* 03A484 7F005954 3C018003 */  lui   $at, %hi(D_80036478)
 /* 03A488 7F005958 E4326478 */  swc1  $f18, %lo(D_80036478)($at)
 /* 03A48C 7F00595C 3C018003 */  lui   $at, %hi(D_8003647C)
 /* 03A490 7F005960 E424647C */  swc1  $f4, %lo(D_8003647C)($at)
 /* 03A494 7F005964 44803000 */  mtc1  $zero, $f6
-/* 03A498 7F005968 3C018003 */  lui   $at, %hi(D_80036480)
-/* 03A49C 7F00596C AC206480 */  sw    $zero, %lo(D_80036480)($at)
+/* 03A498 7F005968 3C018003 */  lui   $at, %hi(g_BondCanEnterTank)
+/* 03A49C 7F00596C AC206480 */  sw    $zero, %lo(g_BondCanEnterTank)($at)
 /* 03A4A0 7F005970 44804000 */  mtc1  $zero, $f8
-/* 03A4A4 7F005974 3C018003 */  lui   $at, %hi(D_80036484)
-/* 03A4A8 7F005978 E4266484 */  swc1  $f6, %lo(D_80036484)($at)
-/* 03A4AC 7F00597C 3C018003 */  lui   $at, %hi(D_80036488)
-/* 03A4B0 7F005980 E4286488 */  swc1  $f8, %lo(D_80036488)($at)
+/* 03A4A4 7F005974 3C018003 */  lui   $at, %hi(g_TankTurretAngle)
+/* 03A4A8 7F005978 E4266484 */  swc1  $f6, %lo(g_TankTurretAngle)($at)
+/* 03A4AC 7F00597C 3C018003 */  lui   $at, %hi(g_TankTurretTurn)
+/* 03A4B0 7F005980 E4286488 */  swc1  $f8, %lo(g_TankTurretTurn)($at)
 /* 03A4B4 7F005984 3C018003 */  lui   $at, %hi(D_8003648C)
 /* 03A4B8 7F005988 AC20648C */  sw    $zero, %lo(D_8003648C)($at)
 /* 03A4BC 7F00598C 3C018003 */  lui   $at, %hi(D_800364B0)
@@ -909,28 +909,28 @@ glabel load_camera_intro_type_values
 /* 03A47C 7F00590C 24636498 */  addiu $v1, %lo(SFX_80036458) # addiu $v1, $v1, 0x6498
 /* 03A480 7F005910 AC600000 */  sw    $zero, ($v1)
 /* 03A484 7F005914 AC600004 */  sw    $zero, 4($v1)
-/* 03A488 7F005918 3C018003 */  lui   $at, %hi(D_80036460) # $at, 0x8003
-/* 03A48C 7F00591C E43864A0 */  swc1  $f24, %lo(D_80036460)($at)
-/* 03A490 7F005920 3C018003 */  lui   $at, %hi(D_80036464) # $at, 0x8003
-/* 03A494 7F005924 E43864A4 */  swc1  $f24, %lo(D_80036464)($at)
+/* 03A488 7F005918 3C018003 */  lui   $at, %hi(g_TankTurnSpeed) # $at, 0x8003
+/* 03A48C 7F00591C E43864A0 */  swc1  $f24, %lo(g_TankTurnSpeed)($at)
+/* 03A490 7F005920 3C018003 */  lui   $at, %hi(g_TankOrientationAngle) # $at, 0x8003
+/* 03A494 7F005924 E43864A4 */  swc1  $f24, %lo(g_TankOrientationAngle)($at)
 /* 03A498 7F005928 3C018003 */  lui   $at, %hi(D_80036468) # $at, 0x8003
 /* 03A49C 7F00592C E43864A8 */  swc1  $f24, %lo(D_80036468)($at)
-/* 03A4A0 7F005930 3C018003 */  lui   $at, %hi(D_8003646C) # $at, 0x8003
-/* 03A4A4 7F005934 E43864AC */  swc1  $f24, %lo(D_8003646C)($at)
-/* 03A4A8 7F005938 3C018003 */  lui   $at, %hi(D_80036470) # $at, 0x8003
-/* 03A4AC 7F00593C E43864B0 */  swc1  $f24, %lo(D_80036470)($at)
-/* 03A4B0 7F005940 3C018003 */  lui   $at, %hi(D_80036474) # $at, 0x8003
-/* 03A4B4 7F005944 E43864B4 */  swc1  $f24, %lo(D_80036474)($at)
+/* 03A4A0 7F005930 3C018003 */  lui   $at, %hi(g_TankTurretVerticalAngle) # $at, 0x8003
+/* 03A4A4 7F005934 E43864AC */  swc1  $f24, %lo(g_TankTurretVerticalAngle)($at)
+/* 03A4A8 7F005938 3C018003 */  lui   $at, %hi(g_TankTurretVerticalAngleRelated) # $at, 0x8003
+/* 03A4AC 7F00593C E43864B0 */  swc1  $f24, %lo(g_TankTurretVerticalAngleRelated)($at)
+/* 03A4B0 7F005940 3C018003 */  lui   $at, %hi(g_TankTurretOrientationAngleRad) # $at, 0x8003
+/* 03A4B4 7F005944 E43864B4 */  swc1  $f24, %lo(g_TankTurretOrientationAngleRad)($at)
 /* 03A4B8 7F005948 3C018003 */  lui   $at, %hi(D_80036478) # $at, 0x8003
 /* 03A4BC 7F00594C E43864B8 */  swc1  $f24, %lo(D_80036478)($at)
 /* 03A4C0 7F005950 3C018003 */  lui   $at, %hi(D_8003647C) # $at, 0x8003
 /* 03A4C4 7F005954 E43864BC */  swc1  $f24, %lo(D_8003647C)($at)
-/* 03A4C8 7F005958 3C018003 */  lui   $at, %hi(D_80036480) # $at, 0x8003
-/* 03A4CC 7F00595C AC2064C0 */  sw    $zero, %lo(D_80036480)($at)
-/* 03A4D0 7F005960 3C018003 */  lui   $at, %hi(D_80036484) # $at, 0x8003
-/* 03A4D4 7F005964 E43864C4 */  swc1  $f24, %lo(D_80036484)($at)
-/* 03A4D8 7F005968 3C018003 */  lui   $at, %hi(D_80036488) # $at, 0x8003
-/* 03A4DC 7F00596C E43864C8 */  swc1  $f24, %lo(D_80036488)($at)
+/* 03A4C8 7F005958 3C018003 */  lui   $at, %hi(g_BondCanEnterTank) # $at, 0x8003
+/* 03A4CC 7F00595C AC2064C0 */  sw    $zero, %lo(g_BondCanEnterTank)($at)
+/* 03A4D0 7F005960 3C018003 */  lui   $at, %hi(g_TankTurretAngle) # $at, 0x8003
+/* 03A4D4 7F005964 E43864C4 */  swc1  $f24, %lo(g_TankTurretAngle)($at)
+/* 03A4D8 7F005968 3C018003 */  lui   $at, %hi(g_TankTurretTurn) # $at, 0x8003
+/* 03A4DC 7F00596C E43864C8 */  swc1  $f24, %lo(g_TankTurretTurn)($at)
 /* 03A4E0 7F005970 3C018003 */  lui   $at, %hi(D_8003648C) # $at, 0x8003
 /* 03A4E4 7F005974 AC2064CC */  sw    $zero, %lo(D_8003648C)($at)
 /* 03A4E8 7F005978 3C018003 */  lui   $at, %hi(D_800364B0) # $at, 0x8003
@@ -1624,28 +1624,28 @@ glabel load_camera_intro_type_values
 /* 03827C 7F00588C 246319A8 */  addiu $v1, %lo(SFX_80036458) # addiu $v1, $v1, 0x19a8
 /* 038280 7F005890 AC600000 */  sw    $zero, ($v1)
 /* 038284 7F005894 AC600004 */  sw    $zero, 4($v1)
-/* 038288 7F005898 3C018003 */  lui   $at, %hi(D_80036460) # $at, 0x8003
-/* 03828C 7F00589C E43819B0 */  swc1  $f24, %lo(D_80036460)($at)
-/* 038290 7F0058A0 3C018003 */  lui   $at, %hi(D_80036464) # $at, 0x8003
-/* 038294 7F0058A4 E43819B4 */  swc1  $f24, %lo(D_80036464)($at)
+/* 038288 7F005898 3C018003 */  lui   $at, %hi(g_TankTurnSpeed) # $at, 0x8003
+/* 03828C 7F00589C E43819B0 */  swc1  $f24, %lo(g_TankTurnSpeed)($at)
+/* 038290 7F0058A0 3C018003 */  lui   $at, %hi(g_TankOrientationAngle) # $at, 0x8003
+/* 038294 7F0058A4 E43819B4 */  swc1  $f24, %lo(g_TankOrientationAngle)($at)
 /* 038298 7F0058A8 3C018003 */  lui   $at, %hi(D_80036468) # $at, 0x8003
 /* 03829C 7F0058AC E43819B8 */  swc1  $f24, %lo(D_80036468)($at)
-/* 0382A0 7F0058B0 3C018003 */  lui   $at, %hi(D_8003646C) # $at, 0x8003
-/* 0382A4 7F0058B4 E43819BC */  swc1  $f24, %lo(D_8003646C)($at)
-/* 0382A8 7F0058B8 3C018003 */  lui   $at, %hi(D_80036470) # $at, 0x8003
-/* 0382AC 7F0058BC E43819C0 */  swc1  $f24, %lo(D_80036470)($at)
-/* 0382B0 7F0058C0 3C018003 */  lui   $at, %hi(D_80036474) # $at, 0x8003
-/* 0382B4 7F0058C4 E43819C4 */  swc1  $f24, %lo(D_80036474)($at)
+/* 0382A0 7F0058B0 3C018003 */  lui   $at, %hi(g_TankTurretVerticalAngle) # $at, 0x8003
+/* 0382A4 7F0058B4 E43819BC */  swc1  $f24, %lo(g_TankTurretVerticalAngle)($at)
+/* 0382A8 7F0058B8 3C018003 */  lui   $at, %hi(g_TankTurretVerticalAngleRelated) # $at, 0x8003
+/* 0382AC 7F0058BC E43819C0 */  swc1  $f24, %lo(g_TankTurretVerticalAngleRelated)($at)
+/* 0382B0 7F0058C0 3C018003 */  lui   $at, %hi(g_TankTurretOrientationAngleRad) # $at, 0x8003
+/* 0382B4 7F0058C4 E43819C4 */  swc1  $f24, %lo(g_TankTurretOrientationAngleRad)($at)
 /* 0382B8 7F0058C8 3C018003 */  lui   $at, %hi(D_80036478) # $at, 0x8003
 /* 0382BC 7F0058CC E43819C8 */  swc1  $f24, %lo(D_80036478)($at)
 /* 0382C0 7F0058D0 3C018003 */  lui   $at, %hi(D_8003647C) # $at, 0x8003
 /* 0382C4 7F0058D4 E43819CC */  swc1  $f24, %lo(D_8003647C)($at)
-/* 0382C8 7F0058D8 3C018003 */  lui   $at, %hi(D_80036480) # $at, 0x8003
-/* 0382CC 7F0058DC AC2019D0 */  sw    $zero, %lo(D_80036480)($at)
-/* 0382D0 7F0058E0 3C018003 */  lui   $at, %hi(D_80036484) # $at, 0x8003
-/* 0382D4 7F0058E4 E43819D4 */  swc1  $f24, %lo(D_80036484)($at)
-/* 0382D8 7F0058E8 3C018003 */  lui   $at, %hi(D_80036488) # $at, 0x8003
-/* 0382DC 7F0058EC E43819D8 */  swc1  $f24, %lo(D_80036488)($at)
+/* 0382C8 7F0058D8 3C018003 */  lui   $at, %hi(g_BondCanEnterTank) # $at, 0x8003
+/* 0382CC 7F0058DC AC2019D0 */  sw    $zero, %lo(g_BondCanEnterTank)($at)
+/* 0382D0 7F0058E0 3C018003 */  lui   $at, %hi(g_TankTurretAngle) # $at, 0x8003
+/* 0382D4 7F0058E4 E43819D4 */  swc1  $f24, %lo(g_TankTurretAngle)($at)
+/* 0382D8 7F0058E8 3C018003 */  lui   $at, %hi(g_TankTurretTurn) # $at, 0x8003
+/* 0382DC 7F0058EC E43819D8 */  swc1  $f24, %lo(g_TankTurretTurn)($at)
 /* 0382E0 7F0058F0 3C018003 */  lui   $at, %hi(D_8003648C) # $at, 0x8003
 /* 0382E4 7F0058F4 AC2019DC */  sw    $zero, %lo(D_8003648C)($at)
 /* 0382E8 7F0058F8 3C018003 */  lui   $at, %hi(D_800364B0) # $at, 0x8003

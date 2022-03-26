@@ -98,32 +98,43 @@ s32 dword_CODE_bss_800799A4;
 
 //CODE.bss:800799A8
 struct coord3d flt_CODE_bss_800799A8;
-//CODE.bss:800799AC
-//f32 flt_CODE_bss_800799AC;
-//CODE.bss:800799B0
-//f32 flt_CODE_bss_800799B0;
 
 //CODE.bss:800799B4
-s32 dword_CODE_bss_800799B4;
-//CODE.bss:800799B8
-s32 dword_CODE_bss_800799B8;
-//CODE.bss:800799BC
-f32 flt_CODE_bss_800799BC;
-//CODE.bss:800799C0
-f32 flt_CODE_bss_800799C0;
-//CODE.bss:800799C4
-f32 flt_CODE_bss_800799C4;
-//CODE.bss:800799C8
-f32 flt_CODE_bss_800799C8;
+s32 g_TankEngineSfxVolume;
+
+/**
+ * Address 0x800799B8.
+ * State 0: begin.
+ * State 1: Finished sitting down/turning, queue audio.
+ * State 2: complete
+*/
+s32 g_EnterTankAudioState;
+
+/**
+ * Address 0x800799BC.
+*/
+f32 g_TankEnteringSitHeight;
+
+/**
+ * Address 0x800799C0.
+*/
+f32 g_TankEnteringSitHeightRemain;
+
+/**
+ * Address 0x800799C4.
+*/
+f32 g_TankEnterBondHorizAngleDeg;
+
+/**
+ * Address 0x800799C8.
+*/
+f32 g_TankEnterBondVertAngleDeg;
+
 //CODE.bss:800799CC
 f32 flt_CODE_bss_800799CC;
 
 //CODE.bss:800799D0
-struct coord3d flt_CODE_bss_800799D0;
-//CODE.bss:800799D4
-//f32 flt_CODE_bss_800799D4;
-//CODE.bss:800799D8
-//f32 flt_CODE_bss_800799D8;
+struct coord3d g_EnterTankCoord;
 
 //CODE.bss:800799DC
 f32 flt_CODE_bss_800799DC;
@@ -254,6 +265,7 @@ s32 D_8003643C = 0;
 s32 D_80036440 = 0;
 //D:80036444
 s32 D_80036444 = 0;
+
 //D:80036448
 s32 in_tank_flag = 0;
 
@@ -272,10 +284,17 @@ f32 g_PlayerTankYOffset = 0;
 //D:80036458
 ALSoundState * SFX_80036458[2] = { NULL, NULL };
 
-//D:80036460
-s32 D_80036460 = 0;
-//D:80036464
-f32 D_80036464 = 0;
+/**
+ * min -3.749999, max +3.749999
+ * Address 0x80036460.
+*/
+f32 g_TankTurnSpeed = 0;
+
+/**
+ * Address 0x80036464.
+*/
+f32 g_TankOrientationAngle = 0;
+
 //D:80036468
 s32 D_80036468 = 0;
 
@@ -284,22 +303,40 @@ s32 D_80036468 = 0;
  * 
  * Address 0x8003646C.
  */
-f32 D_8003646C = 0;
+f32 g_TankTurretVerticalAngle = 0;
 
-//D:80036470
-f32 D_80036470 = 0;
-//D:80036474
-f32 D_80036474 = 0;
+/**
+ * Address 0x80036470.
+*/
+f32 g_TankTurretVerticalAngleRelated = 0;
+
+/**
+ * Address 0x80036474.
+*/
+f32 g_TankTurretOrientationAngleRad = 0;
+
 //D:80036478
 f32 D_80036478 = 0;
+
 //D:8003647C
 f32 D_8003647C = 0;
-//D:80036480
-s32 D_80036480 = 0;
-//D:80036484
-f32 D_80036484 = 0;
-//D:80036488
-f32 D_80036488 = 0;
+
+/**
+ * Can enter tank, remains set once Bond is in tank.
+ * Address 0x80036480.80036480
+*/
+s32 g_BondCanEnterTank = 0;
+
+/**
+ * Address 0x80036484.
+*/
+f32 g_TankTurretAngle = 0;
+
+/**
+ * Address 0x80036488.
+*/
+f32 g_TankTurretTurn = 0;
+
 //D:8003648C
 s32 D_8003648C = 0;
 //D:80036490
@@ -642,6 +679,8 @@ s32 sub_GAME_7F07D2B4(f32 *arg0, struct coord3d *arg1, struct coord3d *arg2, str
 s32 sub_GAME_7F07D4C0(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *arg2);
 s32 sub_GAME_7F07D61C(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *arg2);
 void bondviewApplyVertaTheta(void);
+
+f32 bheadGetBreathingValue(void);
 
 // end forward declarations
 
@@ -9927,7 +9966,7 @@ void sub_GAME_7F07C7B4(void) {
     if (ptr_playerstank != 0)
     {
         // Node 1
-        matrix_4x4_set_rotation_around_y((D_80055060 - D_80036474), ptr_playerstank, &sp24, ptr_playerstank->unk4->unk14->unk8->unk8->unk8->unk4, ptr_playerstank->unk4->unk14->unk8->unk8->unk4->unk4);
+        matrix_4x4_set_rotation_around_y((D_80055060 - g_TankTurretOrientationAngleRad), ptr_playerstank, &sp24, ptr_playerstank->unk4->unk14->unk8->unk8->unk8->unk4, ptr_playerstank->unk4->unk14->unk8->unk8->unk4->unk4);
         flt_CODE_bss_800799A8 = (f32) *sp68;
         flt_CODE_bss_800799A8.unk4 = (f32) sp68->unk4;
         flt_CODE_bss_800799A8.unk8 = (f32) sp68->unk8;
@@ -9956,8 +9995,8 @@ glabel sub_GAME_7F07C7B4
 /* 0B1300 7F07C7D0 3C018005 */  lui   $at, %hi(D_80055060)
 /* 0B1304 7F07C7D4 C4245060 */  lwc1  $f4, %lo(D_80055060)($at)
 /* 0B1308 7F07C7D8 8C6E0014 */  lw    $t6, 0x14($v1)
-/* 0B130C 7F07C7DC 3C018003 */  lui   $at, %hi(D_80036474)
-/* 0B1310 7F07C7E0 C4266474 */  lwc1  $f6, %lo(D_80036474)($at)
+/* 0B130C 7F07C7DC 3C018003 */  lui   $at, %hi(g_TankTurretOrientationAngleRad)
+/* 0B1310 7F07C7E0 C4266474 */  lwc1  $f6, %lo(g_TankTurretOrientationAngleRad)($at)
 /* 0B1314 7F07C7E4 8DCF0008 */  lw    $t7, 8($t6)
 /* 0B1318 7F07C7E8 27A50024 */  addiu $a1, $sp, 0x24
 /* 0B131C 7F07C7EC 46062301 */  sub.s $f12, $f4, $f6
@@ -10135,7 +10174,7 @@ s32 bondviewTankCollisionStatus(struct coord3d *arg0, StandTile *arg1, f32 arg2,
             sp74.f[1] = 0.0f;
             sp74.f[2] = temp_a1->f[2] + temp_v1->f[2] - temp_a2->f[2];
 
-            temp_f0 = arg2 + D_80036474;
+            temp_f0 = arg2 + g_TankTurretOrientationAngleRad;
 
             if (temp_f0 >= 6.2831855f)
             {
@@ -10279,7 +10318,7 @@ glabel bondviewTankCollisionStatus
 /* 0B1778 7F07CC48 3C018005 */  lui   $at, %hi(D_80055064)
 /* 0B177C 7F07CC4C 8CE80014 */  lw    $t0, 0x14($a3)
 /* 0B1780 7F07CC50 C4225064 */  lwc1  $f2, %lo(D_80055064)($at)
-/* 0B1784 7F07CC54 3C018003 */  lui   $at, %hi(D_80036474)
+/* 0B1784 7F07CC54 3C018003 */  lui   $at, %hi(g_TankTurretOrientationAngleRad)
 /* 0B1788 7F07CC58 8D0D0008 */  lw    $t5, 8($t0)
 /* 0B178C 7F07CC5C 8DA20008 */  lw    $v0, 8($t5)
 /* 0B1790 7F07CC60 8C4E000C */  lw    $t6, 0xc($v0)
@@ -10300,7 +10339,7 @@ glabel bondviewTankCollisionStatus
 /* 0B17CC 7F07CC9C C7AA00C8 */  lwc1  $f10, 0xc8($sp)
 /* 0B17D0 7F07CCA0 C4C60008 */  lwc1  $f6, 8($a2)
 /* 0B17D4 7F07CCA4 46128100 */  add.s $f4, $f16, $f18
-/* 0B17D8 7F07CCA8 C4306474 */  lwc1  $f16, %lo(D_80036474)($at)
+/* 0B17D8 7F07CCA8 C4306474 */  lwc1  $f16, %lo(g_TankTurretOrientationAngleRad)($at)
 /* 0B17DC 7F07CCAC 27A50034 */  addiu $a1, $sp, 0x34
 /* 0B17E0 7F07CCB0 46105000 */  add.s $f0, $f10, $f16
 /* 0B17E4 7F07CCB4 46062201 */  sub.s $f8, $f4, $f6
@@ -10447,7 +10486,7 @@ struct PropRecord *get_ptr_for_players_tank(void)
 
 
 /**
- * Sets paraameter position based on global variables D_80036464, D_80036474, D_8003646C.
+ * Sets paraameter position based on global variables g_TankOrientationAngle, g_TankTurretOrientationAngleRad, g_TankTurretVerticalAngle.
  * 
  * Address 0x7F07CEB0.
  */
@@ -10455,7 +10494,7 @@ void bondviewSet3dCoord7F07CEB0(coord3d *arg0)
 {
     f32 f;
 
-    f = D_80036464 + D_80036474;
+    f = g_TankOrientationAngle + g_TankTurretOrientationAngleRad;
 
     if (f >= 6.2831855f)
     {
@@ -10467,9 +10506,9 @@ void bondviewSet3dCoord7F07CEB0(coord3d *arg0)
         f = f + 6.2831855f;
     }
 
-    arg0->f[0] = -sinf(f) * cosf(D_8003646C);
-    arg0->f[1] = sinf(D_8003646C);
-    arg0->f[2] = cosf(f) * cosf(D_8003646C);
+    arg0->f[0] = -sinf(f) * cosf(g_TankTurretVerticalAngle);
+    arg0->f[1] = sinf(g_TankTurretVerticalAngle);
+    arg0->f[2] = cosf(f) * cosf(g_TankTurretVerticalAngle);
 }
 
 
@@ -10480,13 +10519,13 @@ void bondviewSet3dCoord7F07CEB0(coord3d *arg0)
 /**
  * Unreferenced.
  * 
- * Returns global variable D_8003646C, which is in radians.
+ * Returns global variable g_TankTurretVerticalAngle, which is in radians.
  * 
  * Address 0x7F07CF80.
  */
 f32 bondviewGet8003646CRad(void)
 {
-    return D_8003646C;
+    return g_TankTurretVerticalAngle;
 }
 
 
@@ -10525,9 +10564,9 @@ s32 cal_player_collision(struct coord3d *arg0, StandTile **stan)
 
     sp94 = 0;
 
-    if ((in_tank_flag == 1) && (dword_CODE_bss_800799B8 != 0))
+    if ((in_tank_flag == 1) && (g_EnterTankAudioState != 0))
     {
-        sp94 = sub_GAME_7F07CDD4(arg0, D_80036464, stan);
+        sp94 = sub_GAME_7F07CDD4(arg0, g_TankOrientationAngle, stan);
     }
     else
     {
@@ -10632,14 +10671,14 @@ glabel cal_player_collision
 /* 0B1AD4 7F07CFA4 AFA5009C */  sw    $a1, 0x9c($sp)
 /* 0B1AD8 7F07CFA8 15C1000B */  bne   $t6, $at, .L7F07CFD8
 /* 0B1ADC 7F07CFAC AFA00094 */   sw    $zero, 0x94($sp)
-/* 0B1AE0 7F07CFB0 3C0F8008 */  lui   $t7, %hi(dword_CODE_bss_800799B8)
-/* 0B1AE4 7F07CFB4 8DEF99B8 */  lw    $t7, %lo(dword_CODE_bss_800799B8)($t7)
-/* 0B1AE8 7F07CFB8 3C058003 */  lui   $a1, %hi(D_80036464)
+/* 0B1AE0 7F07CFB0 3C0F8008 */  lui   $t7, %hi(g_EnterTankAudioState)
+/* 0B1AE4 7F07CFB4 8DEF99B8 */  lw    $t7, %lo(g_EnterTankAudioState)($t7)
+/* 0B1AE8 7F07CFB8 3C058003 */  lui   $a1, %hi(g_TankOrientationAngle)
 /* 0B1AEC 7F07CFBC 8FA6009C */  lw    $a2, 0x9c($sp)
 /* 0B1AF0 7F07CFC0 11E00005 */  beqz  $t7, .L7F07CFD8
 /* 0B1AF4 7F07CFC4 00000000 */   nop
 /* 0B1AF8 7F07CFC8 0FC1F375 */  jal   sub_GAME_7F07CDD4
-/* 0B1AFC 7F07CFCC 8CA56464 */   lw    $a1, %lo(D_80036464)($a1)
+/* 0B1AFC 7F07CFCC 8CA56464 */   lw    $a1, %lo(g_TankOrientationAngle)($a1)
 /* 0B1B00 7F07CFD0 10000093 */  b     .L7F07D220
 /* 0B1B04 7F07CFD4 AFA20094 */   sw    $v0, 0x94($sp)
 .L7F07CFD8:
@@ -10822,14 +10861,14 @@ glabel cal_player_collision
 /* 0AFA68 7F07D078 AFA5009C */  sw    $a1, 0x9c($sp)
 /* 0AFA6C 7F07D07C 15C1000B */  bne   $t6, $at, .L7F07D0AC
 /* 0AFA70 7F07D080 AFA00094 */   sw    $zero, 0x94($sp)
-/* 0AFA74 7F07D084 3C0F8007 */  lui   $t7, %hi(dword_CODE_bss_800799B8) # $t7, 0x8007
-/* 0AFA78 7F07D088 8DEF8498 */  lw    $t7, %lo(dword_CODE_bss_800799B8)($t7)
-/* 0AFA7C 7F07D08C 3C058003 */  lui   $a1, %hi(D_80036464) # $a1, 0x8003
+/* 0AFA74 7F07D084 3C0F8007 */  lui   $t7, %hi(g_EnterTankAudioState) # $t7, 0x8007
+/* 0AFA78 7F07D088 8DEF8498 */  lw    $t7, %lo(g_EnterTankAudioState)($t7)
+/* 0AFA7C 7F07D08C 3C058003 */  lui   $a1, %hi(g_TankOrientationAngle) # $a1, 0x8003
 /* 0AFA80 7F07D090 8FA6009C */  lw    $a2, 0x9c($sp)
 /* 0AFA84 7F07D094 11E00005 */  beqz  $t7, .L7F07D0AC
 /* 0AFA88 7F07D098 00000000 */   nop   
 /* 0AFA8C 7F07D09C 0FC1F3AA */  jal   sub_GAME_7F07CDD4
-/* 0AFA90 7F07D0A0 8CA519B4 */   lw    $a1, %lo(D_80036464)($a1)
+/* 0AFA90 7F07D0A0 8CA519B4 */   lw    $a1, %lo(g_TankOrientationAngle)($a1)
 /* 0AFA94 7F07D0A4 10000093 */  b     .L7F07D2F4
 /* 0AFA98 7F07D0A8 AFA20094 */   sw    $v0, 0x94($sp)
 .L7F07D0AC:
@@ -11672,7 +11711,7 @@ void bondviewCalcUpdatePlayerCollision(struct coord3d *arg0, s32 arg1)
     g_CurrentPlayer->bondprevpos.f[2] = g_CurrentPlayer->field_488.collision_position.f[2];
 
     spB4.f[0] = arg0->f[0] + g_CurrentPlayer->field_488.collision_position.f[0];
-    D_80036480 = 0;
+    g_BondCanEnterTank = 0;
     spB4.f[2] = arg0->f[2] + g_CurrentPlayer->field_488.collision_position.f[2];
 
     g_CurrentPlayer->autocrouchpos = CROUCH_STAND;
@@ -11702,14 +11741,14 @@ void bondviewCalcUpdatePlayerCollision(struct coord3d *arg0, s32 arg1)
                 sp80 = temp_f2;
                 sp84 = temp_t3->b;
                 phi_f2 = temp_f2;
-                if (chrpropTestPointInPolygon(&g_CurrentPlayer->field_488.collision_position, tank_objrecord->rect, tank_objrecord->firing) != 0)
+                if (chrpropTestPointInPolygon(&g_CurrentPlayer->field_488.collision_position, tank_objrecord->rect, tank_objrecord->unk80) != 0)
                 {
                     phi_f0 = tank_objrecord->model->scale;
                 }
             }
             else
             {
-                D_80036480 = 1;
+                g_BondCanEnterTank = 1;
                 phi_f2 = (temp_f18 * tank_model_scale) + ((temp_t3->b->unk10 - temp_t3->b->unk0C) * phi_f0);
             }
 
@@ -11726,9 +11765,9 @@ void bondviewCalcUpdatePlayerCollision(struct coord3d *arg0, s32 arg1)
                 g_PlayerTankYOffset = phi_f2;
                 if (in_tank_flag == 1)
                 {
-                    if (dword_CODE_bss_800799B8 == 0)
+                    if (g_EnterTankAudioState == 0)
                     {
-                        g_PlayerTankYOffset += -37.0f * (1.0f - flt_CODE_bss_800799C0);
+                        g_PlayerTankYOffset += -37.0f * (1.0f - g_TankEnteringSitHeightRemain);
                     }
                     else
                     {
@@ -11849,7 +11888,7 @@ glabel bondviewCalcUpdatePlayerCollision
 /* 0B24A4 7F07D974 AFB00020 */  sw    $s0, 0x20($sp)
 /* 0B24A8 7F07D978 AFA500C4 */  sw    $a1, 0xc4($sp)
 /* 0B24AC 7F07D97C C444048C */  lwc1  $f4, 0x48c($v0)
-/* 0B24B0 7F07D980 3C018003 */  lui   $at, %hi(D_80036480)
+/* 0B24B0 7F07D980 3C018003 */  lui   $at, %hi(g_BondCanEnterTank)
 /* 0B24B4 7F07D984 240E0002 */  li    $t6, 2
 /* 0B24B8 7F07D988 E4440408 */  swc1  $f4, 0x408($v0)
 /* 0B24BC 7F07D98C 8C620000 */  lw    $v0, ($v1)
@@ -11867,7 +11906,7 @@ glabel bondviewCalcUpdatePlayerCollision
 /* 0B24EC 7F07D9BC E7B200B4 */  swc1  $f18, 0xb4($sp)
 /* 0B24F0 7F07D9C0 C4840008 */  lwc1  $f4, 8($a0)
 /* 0B24F4 7F07D9C4 C4460494 */  lwc1  $f6, 0x494($v0)
-/* 0B24F8 7F07D9C8 AC206480 */  sw    $zero, %lo(D_80036480)($at)
+/* 0B24F8 7F07D9C8 AC206480 */  sw    $zero, %lo(g_BondCanEnterTank)($at)
 /* 0B24FC 7F07D9CC 46062200 */  add.s $f8, $f4, $f6
 /* 0B2500 7F07D9D0 E7A800BC */  swc1  $f8, 0xbc($sp)
 /* 0B2504 7F07D9D4 AC4E29FC */  sw    $t6, 0x29fc($v0)
@@ -11939,9 +11978,9 @@ glabel bondviewCalcUpdatePlayerCollision
 .L7F07DAD8:
 /* 0B2608 7F07DAD8 C526000C */  lwc1  $f6, 0xc($t1)
 /* 0B260C 7F07DADC 240F0001 */  li    $t7, 1
-/* 0B2610 7F07DAE0 3C018003 */  lui   $at, %hi(D_80036480)
+/* 0B2610 7F07DAE0 3C018003 */  lui   $at, %hi(g_BondCanEnterTank)
 /* 0B2614 7F07DAE4 46062201 */  sub.s $f8, $f4, $f6
-/* 0B2618 7F07DAE8 AC2F6480 */  sw    $t7, %lo(D_80036480)($at)
+/* 0B2618 7F07DAE8 AC2F6480 */  sw    $t7, %lo(g_BondCanEnterTank)($at)
 /* 0B261C 7F07DAEC 46004282 */  mul.s $f10, $f8, $f0
 /* 0B2620 7F07DAF0 460A1080 */  add.s $f2, $f2, $f10
 .L7F07DAF4:
@@ -11977,15 +12016,15 @@ glabel bondviewCalcUpdatePlayerCollision
 .L7F07DB64:
 /* 0B2694 7F07DB64 24010001 */  li    $at, 1
 /* 0B2698 7F07DB68 14610021 */  bne   $v1, $at, .L7F07DBF0
-/* 0B269C 7F07DB6C 3C188008 */   lui   $t8, %hi(dword_CODE_bss_800799B8)
-/* 0B26A0 7F07DB70 8F1899B8 */  lw    $t8, %lo(dword_CODE_bss_800799B8)($t8)
+/* 0B269C 7F07DB6C 3C188008 */   lui   $t8, %hi(g_EnterTankAudioState)
+/* 0B26A0 7F07DB70 8F1899B8 */  lw    $t8, %lo(g_EnterTankAudioState)($t8)
 /* 0B26A4 7F07DB74 3C01C214 */  lui   $at, 0xc214
 /* 0B26A8 7F07DB78 5700000E */  bnezl $t8, .L7F07DBB4
 /* 0B26AC 7F07DB7C C4500000 */   lwc1  $f16, ($v0)
 /* 0B26B0 7F07DB80 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0B26B4 7F07DB84 44815000 */  mtc1  $at, $f10
-/* 0B26B8 7F07DB88 3C018008 */  lui    $at, %hi(flt_CODE_bss_800799C0)
-/* 0B26BC 7F07DB8C C43099C0 */  lwc1  $f16, %lo(flt_CODE_bss_800799C0)($at)
+/* 0B26B8 7F07DB88 3C018008 */  lui    $at, %hi(g_TankEnteringSitHeightRemain)
+/* 0B26BC 7F07DB8C C43099C0 */  lwc1  $f16, %lo(g_TankEnteringSitHeightRemain)($at)
 /* 0B26C0 7F07DB90 3C01C214 */  li    $at, 0xC2140000 # -37.000000
 /* 0B26C4 7F07DB94 44812000 */  mtc1  $at, $f4
 /* 0B26C8 7F07DB98 46105481 */  sub.s $f18, $f10, $f16
@@ -12200,7 +12239,7 @@ glabel bondviewCalcUpdatePlayerCollision
 /* 0B0438 7F07DA48 AFB00020 */  sw    $s0, 0x20($sp)
 /* 0B043C 7F07DA4C AFA500C4 */  sw    $a1, 0xc4($sp)
 /* 0B0440 7F07DA50 C444048C */  lwc1  $f4, 0x48c($v0)
-/* 0B0444 7F07DA54 3C018003 */  lui   $at, %hi(D_80036480) # $at, 0x8003
+/* 0B0444 7F07DA54 3C018003 */  lui   $at, %hi(g_BondCanEnterTank) # $at, 0x8003
 /* 0B0448 7F07DA58 240E0002 */  li    $t6, 2
 /* 0B044C 7F07DA5C E4440408 */  swc1  $f4, 0x408($v0)
 /* 0B0450 7F07DA60 8C620000 */  lw    $v0, ($v1)
@@ -12218,7 +12257,7 @@ glabel bondviewCalcUpdatePlayerCollision
 /* 0B0480 7F07DA90 E7B200B4 */  swc1  $f18, 0xb4($sp)
 /* 0B0484 7F07DA94 C4840008 */  lwc1  $f4, 8($a0)
 /* 0B0488 7F07DA98 C4460494 */  lwc1  $f6, 0x494($v0)
-/* 0B048C 7F07DA9C AC2019D0 */  sw    $zero, %lo(D_80036480)($at)
+/* 0B048C 7F07DA9C AC2019D0 */  sw    $zero, %lo(g_BondCanEnterTank)($at)
 /* 0B0490 7F07DAA0 46062200 */  add.s $f8, $f4, $f6
 /* 0B0494 7F07DAA4 E7A800BC */  swc1  $f8, 0xbc($sp)
 /* 0B0498 7F07DAA8 AC4E29F4 */  sw    $t6, 0x29f4($v0)
@@ -12290,9 +12329,9 @@ glabel bondviewCalcUpdatePlayerCollision
 .L7F07DBAC:
 /* 0B059C 7F07DBAC C526000C */  lwc1  $f6, 0xc($t1)
 /* 0B05A0 7F07DBB0 240F0001 */  li    $t7, 1
-/* 0B05A4 7F07DBB4 3C018003 */  lui   $at, %hi(D_80036480) # $at, 0x8003
+/* 0B05A4 7F07DBB4 3C018003 */  lui   $at, %hi(g_BondCanEnterTank) # $at, 0x8003
 /* 0B05A8 7F07DBB8 46062201 */  sub.s $f8, $f4, $f6
-/* 0B05AC 7F07DBBC AC2F19D0 */  sw    $t7, %lo(D_80036480)($at)
+/* 0B05AC 7F07DBBC AC2F19D0 */  sw    $t7, %lo(g_BondCanEnterTank)($at)
 /* 0B05B0 7F07DBC0 46004282 */  mul.s $f10, $f8, $f0
 /* 0B05B4 7F07DBC4 460A1080 */  add.s $f2, $f2, $f10
 .L7F07DBC8:
@@ -12328,15 +12367,15 @@ glabel bondviewCalcUpdatePlayerCollision
 .L7F07DC38:
 /* 0B0628 7F07DC38 24010001 */  li    $at, 1
 /* 0B062C 7F07DC3C 14610021 */  bne   $v1, $at, .L7F07DCC4
-/* 0B0630 7F07DC40 3C188007 */   lui   $t8, %hi(dword_CODE_bss_800799B8) # $t8, 0x8007
-/* 0B0634 7F07DC44 8F188498 */  lw    $t8, %lo(dword_CODE_bss_800799B8)($t8)
+/* 0B0630 7F07DC40 3C188007 */   lui   $t8, %hi(g_EnterTankAudioState) # $t8, 0x8007
+/* 0B0634 7F07DC44 8F188498 */  lw    $t8, %lo(g_EnterTankAudioState)($t8)
 /* 0B0638 7F07DC48 3C01C214 */  lui   $at, 0xc214
 /* 0B063C 7F07DC4C 5700000E */  bnezl $t8, .L7F07DC88
 /* 0B0640 7F07DC50 C4500000 */   lwc1  $f16, ($v0)
 /* 0B0644 7F07DC54 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0B0648 7F07DC58 44815000 */  mtc1  $at, $f10
-/* 0B064C 7F07DC5C 3C018007 */  lui    $at, %hi(flt_CODE_bss_800799C0)
-/* 0B0650 7F07DC60 C43084A0 */  lwc1  $f16, %lo(flt_CODE_bss_800799C0)($at)
+/* 0B064C 7F07DC5C 3C018007 */  lui    $at, %hi(g_TankEnteringSitHeightRemain)
+/* 0B0650 7F07DC60 C43084A0 */  lwc1  $f16, %lo(g_TankEnteringSitHeightRemain)($at)
 /* 0B0654 7F07DC64 3C01C214 */  li    $at, 0xC2140000 # -37.000000
 /* 0B0658 7F07DC68 44812000 */  mtc1  $at, $f4
 /* 0B065C 7F07DC6C 46105481 */  sub.s $f18, $f10, $f16
@@ -13373,8 +13412,8 @@ glabel sub_GAME_7F07EAF0
 /* 0B367C 7F07EB4C 1420FFF0 */  bnez  $at, .L7F07EB10
 /* 0B3680 7F07EB50 00000000 */   nop
 /* 0B3684 7F07EB54 3C108003 */  lui   $s0, %hi(SFX_80036458)
-/* 0B3688 7F07EB58 3C118003 */  lui   $s1, %hi(D_80036460)
-/* 0B368C 7F07EB5C 26316460 */  addiu $s1, %lo(D_80036460) # addiu $s1, $s1, 0x6460
+/* 0B3688 7F07EB58 3C118003 */  lui   $s1, %hi(g_TankTurnSpeed)
+/* 0B368C 7F07EB5C 26316460 */  addiu $s1, %lo(g_TankTurnSpeed) # addiu $s1, $s1, 0x6460
 /* 0B3690 7F07EB60 26106458 */  addiu $s0, %lo(SFX_80036458) # addiu $s0, $s0, 0x6458
 /* 0B3694 7F07EB64 8E040000 */  lw    $a0, ($s0)
 .L7F07EB68:
@@ -13478,8 +13517,8 @@ glabel sub_GAME_7F07EAF0
 /* 0B15DC 7F07EBEC 1420FFF0 */  bnez  $at, .L7F07EBB0
 /* 0B15E0 7F07EBF0 00000000 */   nop   
 /* 0B15E4 7F07EBF4 3C108003 */  lui   $s0, %hi(SFX_80036458) # $s0, 0x8003
-/* 0B15E8 7F07EBF8 3C118003 */  lui   $s1, %hi(D_80036460) # $s1, 0x8003
-/* 0B15EC 7F07EBFC 263119B0 */  addiu $s1, %lo(D_80036460) # addiu $s1, $s1, 0x19b0
+/* 0B15E8 7F07EBF8 3C118003 */  lui   $s1, %hi(g_TankTurnSpeed) # $s1, 0x8003
+/* 0B15EC 7F07EBFC 263119B0 */  addiu $s1, %lo(g_TankTurnSpeed) # addiu $s1, $s1, 0x19b0
 /* 0B15F0 7F07EC00 261019A8 */  addiu $s0, %lo(SFX_80036458) # addiu $s0, $s0, 0x19a8
 /* 0B15F4 7F07EC04 8E040000 */  lw    $a0, ($s0)
 .L7F07EC08:
@@ -19910,11 +19949,11 @@ glabel controller_gameplay_interaction
 /* 0B75EC 7F082ABC 8E0D0000 */   lw    $t5, ($s0)
 /* 0B75F0 7F082AC0 8C450004 */  lw    $a1, 4($v0)
 /* 0B75F4 7F082AC4 2401002D */  li    $at, 45
-/* 0B75F8 7F082AC8 3C0D8003 */  lui   $t5, %hi(D_80036480)
+/* 0B75F8 7F082AC8 3C0D8003 */  lui   $t5, %hi(g_BondCanEnterTank)
 /* 0B75FC 7F082ACC 90AB0003 */  lbu   $t3, 3($a1)
 /* 0B7600 7F082AD0 55610054 */  bnel  $t3, $at, .L7F082C24
 /* 0B7604 7F082AD4 8E0D0000 */   lw    $t5, ($s0)
-/* 0B7608 7F082AD8 8DAD6480 */  lw    $t5, %lo(D_80036480)($t5)
+/* 0B7608 7F082AD8 8DAD6480 */  lw    $t5, %lo(g_BondCanEnterTank)($t5)
 /* 0B760C 7F082ADC 24040020 */  li    $a0, 32
 /* 0B7610 7F082AE0 51A00050 */  beql  $t5, $zero, .L7F082C24
 /* 0B7614 7F082AE4 8E0D0000 */   lw    $t5, ($s0)
@@ -19925,26 +19964,26 @@ glabel controller_gameplay_interaction
 /* 0B7628 7F082AF8 0FC1A521 */  jal   add_ammo_to_weapon
 /* 0B762C 7F082AFC 8C6500D8 */   lw    $a1, 0xd8($v1)
 /* 0B7630 7F082B00 8FA300EC */  lw    $v1, 0xec($sp)
-/* 0B7634 7F082B04 3C048003 */  lui   $a0, %hi(D_8003646C)
-/* 0B7638 7F082B08 2484646C */  addiu $a0, %lo(D_8003646C) # addiu $a0, $a0, 0x646c
+/* 0B7634 7F082B04 3C048003 */  lui   $a0, %hi(g_TankTurretVerticalAngle)
+/* 0B7638 7F082B08 2484646C */  addiu $a0, %lo(g_TankTurretVerticalAngle) # addiu $a0, $a0, 0x646c
 /* 0B763C 7F082B0C C46600C8 */  lwc1  $f6, 0xc8($v1)
 /* 0B7640 7F082B10 AC6000D8 */  sw    $zero, 0xd8($v1)
 /* 0B7644 7F082B14 3C018005 */  lui   $at, %hi(D_80055120)
 /* 0B7648 7F082B18 E4860000 */  swc1  $f6, ($a0)
 /* 0B764C 7F082B1C C42A5120 */  lwc1  $f10, %lo(D_80055120)($at)
 /* 0B7650 7F082B20 C4880000 */  lwc1  $f8, ($a0)
-/* 0B7654 7F082B24 3C018003 */  lui   $at, %hi(D_80036470)
-/* 0B7658 7F082B28 3C058003 */  lui   $a1, %hi(D_80036474)
+/* 0B7654 7F082B24 3C018003 */  lui   $at, %hi(g_TankTurretVerticalAngleRelated)
+/* 0B7658 7F082B28 3C058003 */  lui   $a1, %hi(g_TankTurretOrientationAngleRad)
 /* 0B765C 7F082B2C 460A4483 */  div.s $f18, $f8, $f10
-/* 0B7660 7F082B30 24A56474 */  addiu $a1, %lo(D_80036474) # addiu $a1, $a1, 0x6474
+/* 0B7660 7F082B30 24A56474 */  addiu $a1, %lo(g_TankTurretOrientationAngleRad) # addiu $a1, $a1, 0x6474
 /* 0B7664 7F082B34 240C0001 */  li    $t4, 1
 /* 0B7668 7F082B38 24190001 */  li    $t9, 1
-/* 0B766C 7F082B3C 3C028008 */  lui   $v0, %hi(flt_CODE_bss_800799D0)
-/* 0B7670 7F082B40 244299D0 */  addiu $v0, %lo(flt_CODE_bss_800799D0) # addiu $v0, $v0, -0x6630
-/* 0B7674 7F082B44 E4326470 */  swc1  $f18, %lo(D_80036470)($at)
+/* 0B766C 7F082B3C 3C028008 */  lui   $v0, %hi(g_EnterTankCoord)
+/* 0B7670 7F082B40 244299D0 */  addiu $v0, %lo(g_EnterTankCoord) # addiu $v0, $v0, -0x6630
+/* 0B7674 7F082B44 E4326470 */  swc1  $f18, %lo(g_TankTurretVerticalAngleRelated)($at)
 /* 0B7678 7F082B48 C46400CC */  lwc1  $f4, 0xcc($v1)
-/* 0B767C 7F082B4C 3C018003 */  lui   $at, %hi(D_80036484)
-/* 0B7680 7F082B50 E4246484 */  swc1  $f4, %lo(D_80036484)($at)
+/* 0B767C 7F082B4C 3C018003 */  lui   $at, %hi(g_TankTurretAngle)
+/* 0B7680 7F082B50 E4246484 */  swc1  $f4, %lo(g_TankTurretAngle)($at)
 /* 0B7684 7F082B54 C46600CC */  lwc1  $f6, 0xcc($v1)
 /* 0B7688 7F082B58 3C018005 */  lui   $at, %hi(D_80055124)
 /* 0B768C 7F082B5C E4A60000 */  swc1  $f6, ($a1)
@@ -19956,16 +19995,16 @@ glabel controller_gameplay_interaction
 /* 0B76A4 7F082B74 3C018003 */  lui   $at, %hi(D_8003647C)
 /* 0B76A8 7F082B78 E434647C */  swc1  $f20, %lo(D_8003647C)($at)
 /* 0B76AC 7F082B7C C46400DC */  lwc1  $f4, 0xdc($v1)
-/* 0B76B0 7F082B80 3C018003 */  lui   $at, %hi(D_80036464)
-/* 0B76B4 7F082B84 E4246464 */  swc1  $f4, %lo(D_80036464)($at)
-/* 0B76B8 7F082B88 3C018003 */  lui   $at, %hi(D_80036460)
-/* 0B76BC 7F082B8C E4346460 */  swc1  $f20, %lo(D_80036460)($at)
+/* 0B76B0 7F082B80 3C018003 */  lui   $at, %hi(g_TankOrientationAngle)
+/* 0B76B4 7F082B84 E4246464 */  swc1  $f4, %lo(g_TankOrientationAngle)($at)
+/* 0B76B8 7F082B88 3C018003 */  lui   $at, %hi(g_TankTurnSpeed)
+/* 0B76BC 7F082B8C E4346460 */  swc1  $f20, %lo(g_TankTurnSpeed)($at)
 /* 0B76C0 7F082B90 3C018003 */  lui   $at, %hi(in_tank_flag)
 /* 0B76C4 7F082B94 AC2C6448 */  sw    $t4, %lo(in_tank_flag)($at)
-/* 0B76C8 7F082B98 3C018008 */  lui   $at, %hi(dword_CODE_bss_800799B8)
-/* 0B76CC 7F082B9C AC2099B8 */  sw    $zero, %lo(dword_CODE_bss_800799B8)($at)
+/* 0B76C8 7F082B98 3C018008 */  lui   $at, %hi(g_EnterTankAudioState)
+/* 0B76CC 7F082B9C AC2099B8 */  sw    $zero, %lo(g_EnterTankAudioState)($at)
 /* 0B76D0 7F082BA0 8E180000 */  lw    $t8, ($s0)
-/* 0B76D4 7F082BA4 3C018008 */  lui   $at, %hi(flt_CODE_bss_800799BC)
+/* 0B76D4 7F082BA4 3C018008 */  lui   $at, %hi(g_TankEnteringSitHeight)
 /* 0B76D8 7F082BA8 E714016C */  swc1  $f20, 0x16c($t8)
 /* 0B76DC 7F082BAC 8E0E0000 */  lw    $t6, ($s0)
 /* 0B76E0 7F082BB0 E5D40174 */  swc1  $f20, 0x174($t6)
@@ -19973,18 +20012,18 @@ glabel controller_gameplay_interaction
 /* 0B76E8 7F082BB8 E5F4014C */  swc1  $f20, 0x14c($t7)
 /* 0B76EC 7F082BBC 8E0A0000 */  lw    $t2, ($s0)
 /* 0B76F0 7F082BC0 AD59009C */  sw    $t9, 0x9c($t2)
-/* 0B76F4 7F082BC4 E43499BC */  swc1  $f20, %lo(flt_CODE_bss_800799BC)($at)
+/* 0B76F4 7F082BC4 E43499BC */  swc1  $f20, %lo(g_TankEnteringSitHeight)($at)
 /* 0B76F8 7F082BC8 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0B76FC 7F082BCC 44813000 */  mtc1  $at, $f6
-/* 0B7700 7F082BD0 3C018008 */  lui   $at, %hi(flt_CODE_bss_800799C0)
-/* 0B7704 7F082BD4 E42699C0 */  swc1  $f6, %lo(flt_CODE_bss_800799C0)($at)
+/* 0B7700 7F082BD0 3C018008 */  lui   $at, %hi(g_TankEnteringSitHeightRemain)
+/* 0B7704 7F082BD4 E42699C0 */  swc1  $f6, %lo(g_TankEnteringSitHeightRemain)($at)
 /* 0B7708 7F082BD8 8E080000 */  lw    $t0, ($s0)
-/* 0B770C 7F082BDC 3C018008 */  lui   $at, %hi(flt_CODE_bss_800799C4)
+/* 0B770C 7F082BDC 3C018008 */  lui   $at, %hi(g_TankEnterBondHorizAngleDeg)
 /* 0B7710 7F082BE0 C5080148 */  lwc1  $f8, 0x148($t0)
-/* 0B7714 7F082BE4 E42899C4 */  swc1  $f8, %lo(flt_CODE_bss_800799C4)($at)
+/* 0B7714 7F082BE4 E42899C4 */  swc1  $f8, %lo(g_TankEnterBondHorizAngleDeg)($at)
 /* 0B7718 7F082BE8 C50A0158 */  lwc1  $f10, 0x158($t0)
-/* 0B771C 7F082BEC 3C018008 */  lui   $at, %hi(flt_CODE_bss_800799C8)
-/* 0B7720 7F082BF0 E42A99C8 */  swc1  $f10, %lo(flt_CODE_bss_800799C8)($at)
+/* 0B771C 7F082BEC 3C018008 */  lui   $at, %hi(g_TankEnterBondVertAngleDeg)
+/* 0B7720 7F082BF0 E42A99C8 */  swc1  $f10, %lo(g_TankEnterBondVertAngleDeg)($at)
 /* 0B7724 7F082BF4 C512048C */  lwc1  $f18, 0x48c($t0)
 /* 0B7728 7F082BF8 3C018003 */  lui   $at, %hi(D_80036490)
 /* 0B772C 7F082BFC E4520000 */  swc1  $f18, ($v0)
@@ -20122,11 +20161,11 @@ glabel controller_gameplay_interaction
 /* 0B7908 7F082DD8 24010001 */  li    $at, 1
 /* 0B790C 7F082DDC 8FAE0194 */  lw    $t6, 0x194($sp)
 /* 0B7910 7F082DE0 158100C6 */  bne   $t4, $at, .L7F0830FC
-/* 0B7914 7F082DE4 3C028003 */   lui   $v0, %hi(D_80036488)
-/* 0B7918 7F082DE8 24426488 */  addiu $v0, %lo(D_80036488) # addiu $v0, $v0, 0x6488
+/* 0B7914 7F082DE4 3C028003 */   lui   $v0, %hi(g_TankTurretTurn)
+/* 0B7918 7F082DE8 24426488 */  addiu $v0, %lo(g_TankTurretTurn) # addiu $v0, $v0, 0x6488
 /* 0B791C 7F082DEC E4540000 */  swc1  $f20, ($v0)
-/* 0B7920 7F082DF0 3C188008 */  lui   $t8, %hi(dword_CODE_bss_800799B8)
-/* 0B7924 7F082DF4 8F1899B8 */  lw    $t8, %lo(dword_CODE_bss_800799B8)($t8)
+/* 0B7920 7F082DF0 3C188008 */  lui   $t8, %hi(g_EnterTankAudioState)
+/* 0B7924 7F082DF4 8F1899B8 */  lw    $t8, %lo(g_EnterTankAudioState)($t8)
 /* 0B7928 7F082DF8 24010002 */  li    $at, 2
 /* 0B792C 7F082DFC C7A60188 */  lwc1  $f6, 0x188($sp)
 /* 0B7930 7F082E00 170100BC */  bne   $t8, $at, .L7F0830F4
@@ -21035,14 +21074,14 @@ glabel controller_gameplay_interaction
 /* 0B8610 7F083AE0 C50A0158 */  lwc1  $f10, 0x158($t0)
 /* 0B8614 7F083AE4 3C0C8003 */  lui   $t4, %hi(in_tank_flag)
 /* 0B8618 7F083AE8 24010001 */  li    $at, 1
-/* 0B861C 7F083AEC 3C188008 */  lui   $t8, %hi(dword_CODE_bss_800799B8)
+/* 0B861C 7F083AEC 3C188008 */  lui   $t8, %hi(g_EnterTankAudioState)
 /* 0B8620 7F083AF0 46124102 */  mul.s $f4, $f8, $f18
 /* 0B8624 7F083AF4 46045180 */  add.s $f6, $f10, $f4
 /* 0B8628 7F083AF8 E5060158 */  swc1  $f6, 0x158($t0)
 /* 0B862C 7F083AFC 8D8C6448 */  lw    $t4, %lo(in_tank_flag)($t4)
 /* 0B8630 7F083B00 5581000F */  bnel  $t4, $at, .L7F083B40
 /* 0B8634 7F083B04 8FAE01A4 */   lw    $t6, 0x1a4($sp)
-/* 0B8638 7F083B08 8F1899B8 */  lw    $t8, %lo(dword_CODE_bss_800799B8)($t8)
+/* 0B8638 7F083B08 8F1899B8 */  lw    $t8, %lo(g_EnterTankAudioState)($t8)
 /* 0B863C 7F083B0C 24010002 */  li    $at, 2
 /* 0B8640 7F083B10 5701000B */  bnel  $t8, $at, .L7F083B40
 /* 0B8644 7F083B14 8FAE01A4 */   lw    $t6, 0x1a4($sp)
@@ -21138,10 +21177,10 @@ glabel controller_gameplay_interaction
 /* 0B8780 7F083C50 3C0A8003 */  lui   $t2, %hi(in_tank_flag)
 /* 0B8784 7F083C54 8D4A6448 */  lw    $t2, %lo(in_tank_flag)($t2)
 /* 0B8788 7F083C58 24010001 */  li    $at, 1
-/* 0B878C 7F083C5C 3C0B8008 */  lui   $t3, %hi(dword_CODE_bss_800799B8)
+/* 0B878C 7F083C5C 3C0B8008 */  lui   $t3, %hi(g_EnterTankAudioState)
 /* 0B8790 7F083C60 5541004B */  bnel  $t2, $at, .L7F083D90
 /* 0B8794 7F083C64 8FAE014C */   lw    $t6, 0x14c($sp)
-/* 0B8798 7F083C68 8D6B99B8 */  lw    $t3, %lo(dword_CODE_bss_800799B8)($t3)
+/* 0B8798 7F083C68 8D6B99B8 */  lw    $t3, %lo(g_EnterTankAudioState)($t3)
 /* 0B879C 7F083C6C 24010002 */  li    $at, 2
 /* 0B87A0 7F083C70 8FAD01A4 */  lw    $t5, 0x1a4($sp)
 /* 0B87A4 7F083C74 55610044 */  bnel  $t3, $at, .L7F083D88
@@ -21188,8 +21227,8 @@ glabel controller_gameplay_interaction
 /* 0B883C 7F083D0C 8E080000 */  lw    $t0, ($s0)
 /* 0B8840 7F083D10 18600014 */  blez  $v1, .L7F083D64
 /* 0B8844 7F083D14 3C018005 */   lui   $at, %hi(D_80055158)
-/* 0B8848 7F083D18 3C048003 */  lui   $a0, %hi(D_80036460)
-/* 0B884C 7F083D1C 24846460 */  addiu $a0, %lo(D_80036460) # addiu $a0, $a0, 0x6460
+/* 0B8848 7F083D18 3C048003 */  lui   $a0, %hi(g_TankTurnSpeed)
+/* 0B884C 7F083D1C 24846460 */  addiu $a0, %lo(g_TankTurnSpeed) # addiu $a0, $a0, 0x6460
 /* 0B8850 7F083D20 C4205158 */  lwc1  $f0, %lo(D_80055158)($at)
 /* 0B8854 7F083D24 C4920000 */  lwc1  $f18, ($a0)
 /* 0B8858 7F083D28 24420001 */  addiu $v0, $v0, 1
@@ -21210,8 +21249,8 @@ glabel controller_gameplay_interaction
 .L7F083D60:
 /* 0B8890 7F083D60 E4920000 */  swc1  $f18, ($a0)
 .L7F083D64:
-/* 0B8894 7F083D64 3C048003 */  lui   $a0, %hi(D_80036460)
-/* 0B8898 7F083D68 24846460 */  addiu $a0, %lo(D_80036460) # addiu $a0, $a0, 0x6460
+/* 0B8894 7F083D64 3C048003 */  lui   $a0, %hi(g_TankTurnSpeed)
+/* 0B8898 7F083D68 24846460 */  addiu $a0, %lo(g_TankTurnSpeed) # addiu $a0, $a0, 0x6460
 /* 0B889C 7F083D6C 3C018005 */  lui   $at, %hi(D_8005515C)
 /* 0B88A0 7F083D70 C432515C */  lwc1  $f18, %lo(D_8005515C)($at)
 /* 0B88A4 7F083D74 C4880000 */  lwc1  $f8, ($a0)
@@ -22646,11 +22685,11 @@ glabel controller_gameplay_interaction
 /* 0B5550 7F082B60 8E0D0000 */   lw    $t5, ($s0)
 /* 0B5554 7F082B64 8C450004 */  lw    $a1, 4($v0)
 /* 0B5558 7F082B68 2401002D */  li    $at, 45
-/* 0B555C 7F082B6C 3C0D8003 */  lui   $t5, %hi(D_80036480)
+/* 0B555C 7F082B6C 3C0D8003 */  lui   $t5, %hi(g_BondCanEnterTank)
 /* 0B5560 7F082B70 90AB0003 */  lbu   $t3, 3($a1)
 /* 0B5564 7F082B74 55610054 */  bnel  $t3, $at, .L7F082CC8
 /* 0B5568 7F082B78 8E0D0000 */   lw    $t5, ($s0)
-/* 0B556C 7F082B7C 8DAD19D0 */  lw    $t5, %lo(D_80036480)($t5)
+/* 0B556C 7F082B7C 8DAD19D0 */  lw    $t5, %lo(g_BondCanEnterTank)($t5)
 /* 0B5570 7F082B80 24040020 */  li    $a0, 32
 /* 0B5574 7F082B84 51A00050 */  beql  $t5, $zero, .L7F082CC8
 /* 0B5578 7F082B88 8E0D0000 */   lw    $t5, ($s0)
@@ -22661,26 +22700,26 @@ glabel controller_gameplay_interaction
 /* 0B558C 7F082B9C 0FC1A706 */  jal   add_ammo_to_weapon
 /* 0B5590 7F082BA0 8C6500D8 */   lw    $a1, 0xd8($v1)
 /* 0B5594 7F082BA4 8FA300EC */  lw    $v1, 0xec($sp)
-/* 0B5598 7F082BA8 3C048003 */  lui   $a0, %hi(D_8003646C) # $a0, 0x8003
-/* 0B559C 7F082BAC 248419BC */  addiu $a0, %lo(D_8003646C) # addiu $a0, $a0, 0x19bc
+/* 0B5598 7F082BA8 3C048003 */  lui   $a0, %hi(g_TankTurretVerticalAngle) # $a0, 0x8003
+/* 0B559C 7F082BAC 248419BC */  addiu $a0, %lo(g_TankTurretVerticalAngle) # addiu $a0, $a0, 0x19bc
 /* 0B55A0 7F082BB0 C46600C8 */  lwc1  $f6, 0xc8($v1)
 /* 0B55A4 7F082BB4 AC6000D8 */  sw    $zero, 0xd8($v1)
 /* 0B55A8 7F082BB8 3C018005 */  lui   $at, %hi(D_80055120) # $at, 0x8005
 /* 0B55AC 7F082BBC E4860000 */  swc1  $f6, ($a0)
 /* 0B55B0 7F082BC0 C42AACF0 */  lwc1  $f10, %lo(D_80055120)($at)
 /* 0B55B4 7F082BC4 C4880000 */  lwc1  $f8, ($a0)
-/* 0B55B8 7F082BC8 3C018003 */  lui   $at, %hi(D_80036470) # $at, 0x8003
-/* 0B55BC 7F082BCC 3C058003 */  lui   $a1, %hi(D_80036474) # $a1, 0x8003
+/* 0B55B8 7F082BC8 3C018003 */  lui   $at, %hi(g_TankTurretVerticalAngleRelated) # $at, 0x8003
+/* 0B55BC 7F082BCC 3C058003 */  lui   $a1, %hi(g_TankTurretOrientationAngleRad) # $a1, 0x8003
 /* 0B55C0 7F082BD0 460A4483 */  div.s $f18, $f8, $f10
-/* 0B55C4 7F082BD4 24A519C4 */  addiu $a1, %lo(D_80036474) # addiu $a1, $a1, 0x19c4
+/* 0B55C4 7F082BD4 24A519C4 */  addiu $a1, %lo(g_TankTurretOrientationAngleRad) # addiu $a1, $a1, 0x19c4
 /* 0B55C8 7F082BD8 240C0001 */  li    $t4, 1
 /* 0B55CC 7F082BDC 24190001 */  li    $t9, 1
-/* 0B55D0 7F082BE0 3C028007 */  lui   $v0, %hi(flt_CODE_bss_800799D0) # $v0, 0x8007
-/* 0B55D4 7F082BE4 244284B0 */  addiu $v0, %lo(flt_CODE_bss_800799D0) # addiu $v0, $v0, -0x7b50
-/* 0B55D8 7F082BE8 E43219C0 */  swc1  $f18, %lo(D_80036470)($at)
+/* 0B55D0 7F082BE0 3C028007 */  lui   $v0, %hi(g_EnterTankCoord) # $v0, 0x8007
+/* 0B55D4 7F082BE4 244284B0 */  addiu $v0, %lo(g_EnterTankCoord) # addiu $v0, $v0, -0x7b50
+/* 0B55D8 7F082BE8 E43219C0 */  swc1  $f18, %lo(g_TankTurretVerticalAngleRelated)($at)
 /* 0B55DC 7F082BEC C46400CC */  lwc1  $f4, 0xcc($v1)
-/* 0B55E0 7F082BF0 3C018003 */  lui   $at, %hi(D_80036484) # $at, 0x8003
-/* 0B55E4 7F082BF4 E42419D4 */  swc1  $f4, %lo(D_80036484)($at)
+/* 0B55E0 7F082BF0 3C018003 */  lui   $at, %hi(g_TankTurretAngle) # $at, 0x8003
+/* 0B55E4 7F082BF4 E42419D4 */  swc1  $f4, %lo(g_TankTurretAngle)($at)
 /* 0B55E8 7F082BF8 C46600CC */  lwc1  $f6, 0xcc($v1)
 /* 0B55EC 7F082BFC 3C018005 */  lui   $at, %hi(D_80055124) # $at, 0x8005
 /* 0B55F0 7F082C00 E4A60000 */  swc1  $f6, ($a1)
@@ -22692,16 +22731,16 @@ glabel controller_gameplay_interaction
 /* 0B5608 7F082C18 3C018003 */  lui   $at, %hi(D_8003647C) # $at, 0x8003
 /* 0B560C 7F082C1C E43419CC */  swc1  $f20, %lo(D_8003647C)($at)
 /* 0B5610 7F082C20 C46400DC */  lwc1  $f4, 0xdc($v1)
-/* 0B5614 7F082C24 3C018003 */  lui   $at, %hi(D_80036464) # $at, 0x8003
-/* 0B5618 7F082C28 E42419B4 */  swc1  $f4, %lo(D_80036464)($at)
-/* 0B561C 7F082C2C 3C018003 */  lui   $at, %hi(D_80036460) # $at, 0x8003
-/* 0B5620 7F082C30 E43419B0 */  swc1  $f20, %lo(D_80036460)($at)
+/* 0B5614 7F082C24 3C018003 */  lui   $at, %hi(g_TankOrientationAngle) # $at, 0x8003
+/* 0B5618 7F082C28 E42419B4 */  swc1  $f4, %lo(g_TankOrientationAngle)($at)
+/* 0B561C 7F082C2C 3C018003 */  lui   $at, %hi(g_TankTurnSpeed) # $at, 0x8003
+/* 0B5620 7F082C30 E43419B0 */  swc1  $f20, %lo(g_TankTurnSpeed)($at)
 /* 0B5624 7F082C34 3C018003 */  lui   $at, %hi(in_tank_flag) # $at, 0x8003
 /* 0B5628 7F082C38 AC2C1998 */  sw    $t4, %lo(in_tank_flag)($at)
-/* 0B562C 7F082C3C 3C018007 */  lui   $at, %hi(dword_CODE_bss_800799B8) # $at, 0x8007
-/* 0B5630 7F082C40 AC208498 */  sw    $zero, %lo(dword_CODE_bss_800799B8)($at)
+/* 0B562C 7F082C3C 3C018007 */  lui   $at, %hi(g_EnterTankAudioState) # $at, 0x8007
+/* 0B5630 7F082C40 AC208498 */  sw    $zero, %lo(g_EnterTankAudioState)($at)
 /* 0B5634 7F082C44 8E180000 */  lw    $t8, ($s0)
-/* 0B5638 7F082C48 3C018007 */  lui   $at, %hi(flt_CODE_bss_800799BC) # $at, 0x8007
+/* 0B5638 7F082C48 3C018007 */  lui   $at, %hi(g_TankEnteringSitHeight) # $at, 0x8007
 /* 0B563C 7F082C4C E714016C */  swc1  $f20, 0x16c($t8)
 /* 0B5640 7F082C50 8E0E0000 */  lw    $t6, ($s0)
 /* 0B5644 7F082C54 E5D40174 */  swc1  $f20, 0x174($t6)
@@ -22709,18 +22748,18 @@ glabel controller_gameplay_interaction
 /* 0B564C 7F082C5C E5F4014C */  swc1  $f20, 0x14c($t7)
 /* 0B5650 7F082C60 8E0A0000 */  lw    $t2, ($s0)
 /* 0B5654 7F082C64 AD59009C */  sw    $t9, 0x9c($t2)
-/* 0B5658 7F082C68 E434849C */  swc1  $f20, %lo(flt_CODE_bss_800799BC)($at)
+/* 0B5658 7F082C68 E434849C */  swc1  $f20, %lo(g_TankEnteringSitHeight)($at)
 /* 0B565C 7F082C6C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0B5660 7F082C70 44813000 */  mtc1  $at, $f6
-/* 0B5664 7F082C74 3C018007 */  lui   $at, %hi(flt_CODE_bss_800799C0) # $at, 0x8007
-/* 0B5668 7F082C78 E42684A0 */  swc1  $f6, %lo(flt_CODE_bss_800799C0)($at)
+/* 0B5664 7F082C74 3C018007 */  lui   $at, %hi(g_TankEnteringSitHeightRemain) # $at, 0x8007
+/* 0B5668 7F082C78 E42684A0 */  swc1  $f6, %lo(g_TankEnteringSitHeightRemain)($at)
 /* 0B566C 7F082C7C 8E080000 */  lw    $t0, ($s0)
-/* 0B5670 7F082C80 3C018007 */  lui   $at, %hi(flt_CODE_bss_800799C4) # $at, 0x8007
+/* 0B5670 7F082C80 3C018007 */  lui   $at, %hi(g_TankEnterBondHorizAngleDeg) # $at, 0x8007
 /* 0B5674 7F082C84 C5080148 */  lwc1  $f8, 0x148($t0)
-/* 0B5678 7F082C88 E42884A4 */  swc1  $f8, %lo(flt_CODE_bss_800799C4)($at)
+/* 0B5678 7F082C88 E42884A4 */  swc1  $f8, %lo(g_TankEnterBondHorizAngleDeg)($at)
 /* 0B567C 7F082C8C C50A0158 */  lwc1  $f10, 0x158($t0)
-/* 0B5680 7F082C90 3C018007 */  lui   $at, %hi(flt_CODE_bss_800799C8) # $at, 0x8007
-/* 0B5684 7F082C94 E42A84A8 */  swc1  $f10, %lo(flt_CODE_bss_800799C8)($at)
+/* 0B5680 7F082C90 3C018007 */  lui   $at, %hi(g_TankEnterBondVertAngleDeg) # $at, 0x8007
+/* 0B5684 7F082C94 E42A84A8 */  swc1  $f10, %lo(g_TankEnterBondVertAngleDeg)($at)
 /* 0B5688 7F082C98 C512048C */  lwc1  $f18, 0x48c($t0)
 /* 0B568C 7F082C9C 3C018003 */  lui   $at, %hi(D_80036490) # $at, 0x8003
 /* 0B5690 7F082CA0 E4520000 */  swc1  $f18, ($v0)
@@ -22858,11 +22897,11 @@ glabel controller_gameplay_interaction
 /* 0B586C 7F082E7C 24010001 */  li    $at, 1
 /* 0B5870 7F082E80 8FAE0194 */  lw    $t6, 0x194($sp)
 /* 0B5874 7F082E84 158100C6 */  bne   $t4, $at, .L7F0831A0
-/* 0B5878 7F082E88 3C028003 */   lui   $v0, %hi(D_80036488) # $v0, 0x8003
-/* 0B587C 7F082E8C 244219D8 */  addiu $v0, %lo(D_80036488) # addiu $v0, $v0, 0x19d8
+/* 0B5878 7F082E88 3C028003 */   lui   $v0, %hi(g_TankTurretTurn) # $v0, 0x8003
+/* 0B587C 7F082E8C 244219D8 */  addiu $v0, %lo(g_TankTurretTurn) # addiu $v0, $v0, 0x19d8
 /* 0B5880 7F082E90 E4540000 */  swc1  $f20, ($v0)
-/* 0B5884 7F082E94 3C188007 */  lui   $t8, %hi(dword_CODE_bss_800799B8) # $t8, 0x8007
-/* 0B5888 7F082E98 8F188498 */  lw    $t8, %lo(dword_CODE_bss_800799B8)($t8)
+/* 0B5884 7F082E94 3C188007 */  lui   $t8, %hi(g_EnterTankAudioState) # $t8, 0x8007
+/* 0B5888 7F082E98 8F188498 */  lw    $t8, %lo(g_EnterTankAudioState)($t8)
 /* 0B588C 7F082E9C 24010002 */  li    $at, 2
 /* 0B5890 7F082EA0 C7A60188 */  lwc1  $f6, 0x188($sp)
 /* 0B5894 7F082EA4 170100BC */  bne   $t8, $at, .L7F083198
@@ -23771,14 +23810,14 @@ glabel controller_gameplay_interaction
 /* 0B6574 7F083B84 C50A0158 */  lwc1  $f10, 0x158($t0)
 /* 0B6578 7F083B88 3C0C8003 */  lui   $t4, %hi(in_tank_flag) # $t4, 0x8003
 /* 0B657C 7F083B8C 24010001 */  li    $at, 1
-/* 0B6580 7F083B90 3C188007 */  lui   $t8, %hi(dword_CODE_bss_800799B8) # $t8, 0x8007
+/* 0B6580 7F083B90 3C188007 */  lui   $t8, %hi(g_EnterTankAudioState) # $t8, 0x8007
 /* 0B6584 7F083B94 46124102 */  mul.s $f4, $f8, $f18
 /* 0B6588 7F083B98 46045180 */  add.s $f6, $f10, $f4
 /* 0B658C 7F083B9C E5060158 */  swc1  $f6, 0x158($t0)
 /* 0B6590 7F083BA0 8D8C1998 */  lw    $t4, %lo(in_tank_flag)($t4)
 /* 0B6594 7F083BA4 5581000F */  bnel  $t4, $at, .L7F083BE4
 /* 0B6598 7F083BA8 8FAE01A4 */   lw    $t6, 0x1a4($sp)
-/* 0B659C 7F083BAC 8F188498 */  lw    $t8, %lo(dword_CODE_bss_800799B8)($t8)
+/* 0B659C 7F083BAC 8F188498 */  lw    $t8, %lo(g_EnterTankAudioState)($t8)
 /* 0B65A0 7F083BB0 24010002 */  li    $at, 2
 /* 0B65A4 7F083BB4 5701000B */  bnel  $t8, $at, .L7F083BE4
 /* 0B65A8 7F083BB8 8FAE01A4 */   lw    $t6, 0x1a4($sp)
@@ -23874,10 +23913,10 @@ glabel controller_gameplay_interaction
 /* 0B66E4 7F083CF4 3C0A8003 */  lui   $t2, %hi(in_tank_flag) # $t2, 0x8003
 /* 0B66E8 7F083CF8 8D4A1998 */  lw    $t2, %lo(in_tank_flag)($t2)
 /* 0B66EC 7F083CFC 24010001 */  li    $at, 1
-/* 0B66F0 7F083D00 3C0B8007 */  lui   $t3, %hi(dword_CODE_bss_800799B8) # $t3, 0x8007
+/* 0B66F0 7F083D00 3C0B8007 */  lui   $t3, %hi(g_EnterTankAudioState) # $t3, 0x8007
 /* 0B66F4 7F083D04 5541004B */  bnel  $t2, $at, .L7F083E34
 /* 0B66F8 7F083D08 8FAE014C */   lw    $t6, 0x14c($sp)
-/* 0B66FC 7F083D0C 8D6B8498 */  lw    $t3, %lo(dword_CODE_bss_800799B8)($t3)
+/* 0B66FC 7F083D0C 8D6B8498 */  lw    $t3, %lo(g_EnterTankAudioState)($t3)
 /* 0B6700 7F083D10 24010002 */  li    $at, 2
 /* 0B6704 7F083D14 8FAD01A4 */  lw    $t5, 0x1a4($sp)
 /* 0B6708 7F083D18 55610044 */  bnel  $t3, $at, .L7F083E2C
@@ -23924,8 +23963,8 @@ glabel controller_gameplay_interaction
 /* 0B67A0 7F083DB0 8E080000 */  lw    $t0, ($s0)
 /* 0B67A4 7F083DB4 18600014 */  blez  $v1, .L7F083E08
 /* 0B67A8 7F083DB8 3C018005 */   lui   $at, %hi(D_80055158) # $at, 0x8005
-/* 0B67AC 7F083DBC 3C048003 */  lui   $a0, %hi(D_80036460) # $a0, 0x8003
-/* 0B67B0 7F083DC0 248419B0 */  addiu $a0, %lo(D_80036460) # addiu $a0, $a0, 0x19b0
+/* 0B67AC 7F083DBC 3C048003 */  lui   $a0, %hi(g_TankTurnSpeed) # $a0, 0x8003
+/* 0B67B0 7F083DC0 248419B0 */  addiu $a0, %lo(g_TankTurnSpeed) # addiu $a0, $a0, 0x19b0
 /* 0B67B4 7F083DC4 C420AD28 */  lwc1  $f0, %lo(D_80055158)($at)
 /* 0B67B8 7F083DC8 C4920000 */  lwc1  $f18, ($a0)
 /* 0B67BC 7F083DCC 24420001 */  addiu $v0, $v0, 1
@@ -23946,8 +23985,8 @@ glabel controller_gameplay_interaction
 .L7F083E04:
 /* 0B67F4 7F083E04 E4920000 */  swc1  $f18, ($a0)
 .L7F083E08:
-/* 0B67F8 7F083E08 3C048003 */  lui   $a0, %hi(D_80036460) # $a0, 0x8003
-/* 0B67FC 7F083E0C 248419B0 */  addiu $a0, %lo(D_80036460) # addiu $a0, $a0, 0x19b0
+/* 0B67F8 7F083E08 3C048003 */  lui   $a0, %hi(g_TankTurnSpeed) # $a0, 0x8003
+/* 0B67FC 7F083E0C 248419B0 */  addiu $a0, %lo(g_TankTurnSpeed) # addiu $a0, $a0, 0x19b0
 /* 0B6800 7F083E10 3C018005 */  lui   $at, %hi(D_8005515C) # $at, 0x8005
 /* 0B6804 7F083E14 C432AD2C */  lwc1  $f18, %lo(D_8005515C)($at)
 /* 0B6808 7F083E18 C4880000 */  lwc1  $f8, ($a0)
@@ -25403,9 +25442,7 @@ glabel sub_GAME_7F084360
 #ifdef NONMATCHING
 //#if 1
 
-void gunSetOffsetRelated(f32 arg0);
 void bondviewCalcUpdatePlayerCollision(struct coord3d *arg0, s32 arg1);
-f32 bheadGetBreathingValue(void);
 
 // placeholder while matching
 struct move_bond_temp_struct {
@@ -25413,8 +25450,20 @@ struct move_bond_temp_struct {
     s32 unk04;
 };
 
-
-
+/**
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical instructions: fail
+ * - identical registers: fail
+ * 
+ * Notes: Generally pretty close. There are few places with mis-ordered instructions.
+ * Test on emu, Bond will become unable to move once standing on tank, so obviously
+ * some other instructions are just wrong. But majority is just bad regalloc.
+ * 
+ * https://decomp.me/scratch/THz6d
+ * 95.24%
+*/
 void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
 {
     struct coord3d sp3AC;
@@ -25469,7 +25518,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
     f32 sp250;
     f32 sp24C;
     f32 sp248;
-    f32 sp244;
+    f32 sp244_tank_engine_utilization;
     f32 sp240;
     f32 collision_pos_dz;
     f32 collision_pos_dx;
@@ -25507,7 +25556,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
     struct move_bond_temp_struct sp1B4;
     struct move_bond_collision sp184;
     f32 sp180;
-    f32 stack_padding_unused;
+    f32 sp17C;
     f32 stack_padding_20;
     struct StandTile *sp174;
     struct StandTile *sp170;
@@ -25655,7 +25704,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
     if (in_tank_flag == 1)
     {
         sp358 = g_CurrentPlayer->speedtheta * g_GlobalTimerDelta * 0.017453292f * 3.5f;
-        sp35C = D_80036464 + sp358;
+        sp35C = g_TankOrientationAngle + sp358;
         
         if (sp35C >= 6.2831855f)
         {
@@ -25674,7 +25723,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             &check_collision_p1,
             &check_collision_p2))
         {
-            D_80036464 = sp35C;
+            g_TankOrientationAngle = sp35C;
         }
         else
         {
@@ -25772,7 +25821,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
                     &check_collision_p1,
                     &check_collision_p2))
                 {
-                    D_80036464 = sp35C;
+                    g_TankOrientationAngle = sp35C;
                 }
                 else
                 {
@@ -25785,19 +25834,19 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             }
         }
 
-        sp354 = D_80036474;
-        D_80036484 += D_80036488;
-        if (D_80036484 >= 6.2831855f)
+        sp354 = g_TankTurretOrientationAngleRad;
+        g_TankTurretAngle += g_TankTurretTurn;
+        if (g_TankTurretAngle >= 6.2831855f)
         {
-            D_80036484 -= 6.2831855f;
+            g_TankTurretAngle -= 6.2831855f;
         }
 
-        if (D_80036484 < 0.0f)
+        if (g_TankTurretAngle < 0.0f)
         {
-            D_80036484 += 6.2831855f;
+            g_TankTurretAngle += 6.2831855f;
         }
 
-        tank_tick_increment = (g_CurrentPlayer->speedtheta * 3.5f * 0.017453292f * 4.0f) + D_80036484;
+        tank_tick_increment = (g_CurrentPlayer->speedtheta * 3.5f * 0.017453292f * 4.0f) + g_TankTurretAngle;
        
         if (tank_tick_increment < 0.0f)
         {
@@ -25809,11 +25858,11 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             tank_tick_increment -= 6.2831855f;
         }
 
-        if ((tank_tick_increment - D_80036474) >= 3.1415927f)
+        if ((tank_tick_increment - g_TankTurretOrientationAngleRad) >= 3.1415927f)
         {
             tank_tick_increment -= 6.2831855f;
         }
-        else if ((tank_tick_increment - D_80036474) < -3.1415927f)
+        else if ((tank_tick_increment - g_TankTurretOrientationAngleRad) < -3.1415927f)
         {
             tank_tick_increment += 6.2831855f;
         }
@@ -25828,28 +25877,28 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
         break;
         }while (g_ClockTimer > 0);
 
-        D_80036474 = D_80036478 * 0.07999998f;
+        g_TankTurretOrientationAngleRad = D_80036478 * 0.07999998f;
 
-        if (D_80036474 >= 6.2831855f)
+        if (g_TankTurretOrientationAngleRad >= 6.2831855f)
         {
-            D_80036474 -= 6.2831855f;
-            D_80036478 = D_80036474 / 0.07999998f;
+            g_TankTurretOrientationAngleRad -= 6.2831855f;
+            D_80036478 = g_TankTurretOrientationAngleRad / 0.07999998f;
         }
         
-        if (D_80036474 < 0.0f)
+        if (g_TankTurretOrientationAngleRad < 0.0f)
         {
-            D_80036474 += 6.2831855f;
-            D_80036478 = D_80036474 / 0.07999998f;
+            g_TankTurretOrientationAngleRad += 6.2831855f;
+            D_80036478 = g_TankTurretOrientationAngleRad / 0.07999998f;
         }
         
         if (bondviewCallTankCollisionStatus(
             &g_CurrentPlayer->field_488.collision_position,
             g_CurrentPlayer->field_488.current_tile_ptr,
-            D_80036464) == 0)
+            g_TankOrientationAngle) == 0)
         {
-            D_80036474 = sp354;
-            D_80036478 = D_80036474 / 0.07999998f;
-            D_80036484 = sp354;
+            g_TankTurretOrientationAngleRad = sp354;
+            D_80036478 = g_TankTurretOrientationAngleRad / 0.07999998f;
+            g_TankTurretAngle = sp354;
         }
 
         if (ptr_playerstank != NULL)
@@ -25868,27 +25917,26 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             sp2F4.f[0] = flt_CODE_bss_800799A8.f[0] - sp2F4.f[0];
             sp2F4.f[2] = flt_CODE_bss_800799A8.f[2] - sp2F4.f[2];
 
-            matrix_4x4_set_rotation_around_y(6.2831855f - D_80036464, &sp2B4);
+            matrix_4x4_set_rotation_around_y(6.2831855f - g_TankOrientationAngle, &sp2B4);
             matrix_scalar_multiply(temp_tank->model->scale, &sp2B4);
             matrix_4x4_rotate_vector_in_place(&sp2B4, &sp2F4);
             bondviewCalcUpdatePlayerCollision(&sp2F4, 1);
         }
-
         
         if (g_ClockTimer > 0)
         {
             for (i_2=0; i_2<g_ClockTimer; i_2++)
             {
-                D_8003647C = (0.92f * D_8003647C) + (D_80036488 / g_GlobalTimerDelta);
+                D_8003647C = (0.92f * D_8003647C) + (g_TankTurretTurn / g_GlobalTimerDelta);
             }
         }
 
         ftemp2 = D_8003647C * 0.07999998f;
         ftemp3 = g_CurrentPlayer->speedtheta * 3.5f * 0.017453292f;
         g_CurrentPlayer->vv_theta = (
-            D_80036474  +
+            g_TankTurretOrientationAngleRad  +
             (ftemp3 * 4.0f )+
-            D_80036464  +
+            g_TankOrientationAngle  +
             (ftemp2 * 4.0f)            
             ) * 360.0f / 6.2831855f;
 
@@ -25946,46 +25994,45 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
 
     if (in_tank_flag == 1)
     {
-        if (dword_CODE_bss_800799B8 == 0)
+        if (g_EnterTankAudioState == 0)
         {
             if (ptr_playerstank != NULL)
             {
                 tank_obj = ptr_playerstank->obj;
-                matrix_4x4_set_rotation_around_y(6.2831855f - D_80036464, &sp268);
+                matrix_4x4_set_rotation_around_y(6.2831855f - g_TankOrientationAngle, &sp268);
                 matrix_scalar_multiply(tank_obj->model->scale, &sp268);
                 
                 sp25C.f[0] = flt_CODE_bss_800799A8.f[0];
                 sp25C.f[1] = flt_CODE_bss_800799A8.f[1];
                 sp25C.f[2] = flt_CODE_bss_800799A8.f[2];
                 matrix_4x4_rotate_vector_in_place(&sp268, (f32*)&sp25C);
-
                 
                 sp25C.f[0] += tank_obj->runtime_pos.f[0];
                 sp25C.f[1] += tank_obj->runtime_pos.f[1];
                 sp25C.f[2] += tank_obj->runtime_pos.f[2];
 
-                sp258 = ((D_80036464 + D_80036474) * 360.0f) / 6.2831855f;
+                sp258 = ((g_TankOrientationAngle + g_TankTurretOrientationAngleRad) * 360.0f) / 6.2831855f;
                 sp254 = g_CurrentPlayer->vv_verta;
                 if (sp254 < -20.0f)
                 {
                     sp254 = -20.0f;
                 }
 
-                flt_CODE_bss_800799BC += g_GlobalTimerDelta / 45.0f;
-                if (flt_CODE_bss_800799BC >= 1.0f)
+                g_TankEnteringSitHeight += g_GlobalTimerDelta / 45.0f;
+                if (g_TankEnteringSitHeight >= 1.0f)
                 {
-                    flt_CODE_bss_800799BC = 1.0f;
+                    g_TankEnteringSitHeight = 1.0f;
                 }
 
-                flt_CODE_bss_800799C0 = (cosf(flt_CODE_bss_800799BC * 6.2831855f * 0.5f) + 1.0f) * 0.5f;
+                g_TankEnteringSitHeightRemain = (cosf(g_TankEnteringSitHeight * 6.2831855f * 0.5f) + 1.0f) * 0.5f;
 
-                // unused extra assignment
-                stack_padding_unused = g_CurrentPlayer->vv_verta = (
-                    ((1.0f - flt_CODE_bss_800799C0) * sp254) +
-                    (flt_CODE_bss_800799C0 * flt_CODE_bss_800799C8) 
+                // sp17C is unused extra assignment
+                sp17C = g_CurrentPlayer->vv_verta = (
+                    ((1.0f - g_TankEnteringSitHeightRemain) * sp254) +
+                    (g_TankEnteringSitHeightRemain * g_TankEnterBondVertAngleDeg) 
                 );
 
-                sp258 -= flt_CODE_bss_800799C4;
+                sp258 -= g_TankEnterBondHorizAngleDeg;
                 if (sp258 > 180.0f)
                 {
                     sp258 -= 360.0f;
@@ -25996,8 +26043,8 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
                 }
 
                 g_CurrentPlayer->vv_theta = (
-                        ((1.0f - flt_CODE_bss_800799C0) * sp258) +
-                        (flt_CODE_bss_800799C0 * flt_CODE_bss_800799C4) 
+                        ((1.0f - g_TankEnteringSitHeightRemain) * sp258) +
+                        (g_TankEnteringSitHeightRemain * g_TankEnterBondHorizAngleDeg) 
                     );
 
                 if (g_CurrentPlayer->vv_theta >= 360.0f)
@@ -26011,36 +26058,36 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
                 }
 
                 sp3AC.f[0] = (
-                        (flt_CODE_bss_800799C0 * flt_CODE_bss_800799D0.f[0]) + 
-                        ((1.0f - flt_CODE_bss_800799C0) * sp25C.f[0])
+                        (g_TankEnteringSitHeightRemain * g_EnterTankCoord.f[0]) + 
+                        ((1.0f - g_TankEnteringSitHeightRemain) * sp25C.f[0])
                     ) - 
                     g_CurrentPlayer->field_488.collision_position.f[0];
 
                 sp3AC.f[1] = 0.0f;
 
                 sp3AC.f[2] = (
-                    (flt_CODE_bss_800799C0 * flt_CODE_bss_800799D0.f[2]) +
-                    ((1.0f - flt_CODE_bss_800799C0) * sp25C.f[2])
+                    (g_TankEnteringSitHeightRemain * g_EnterTankCoord.f[2]) +
+                    ((1.0f - g_TankEnteringSitHeightRemain) * sp25C.f[2])
                     ) - 
                     g_CurrentPlayer->field_488.collision_position.f[2];
             }
 
-            if (flt_CODE_bss_800799BC <= 1.0f)
+            if (g_TankEnteringSitHeight <= 1.0f)
             {
-                dword_CODE_bss_800799B8 = 1;
+                g_EnterTankAudioState = 1;
             }
         }
         else
         {
-            if (dword_CODE_bss_800799B8 == 1)
+            if (g_EnterTankAudioState == 1)
             {
-                dword_CODE_bss_800799B8 = 2;
+                g_EnterTankAudioState = 2;
                 if ((SFX_80036458[0] == NULL) && (lvlGetControlsLockedFlag() == 0))
                 {
                     sndPlaySfx(g_musicSfxBufferPtr, TRUCK_START_SFX, &SFX_80036458[0]);
                 }
                 sndCreatePostEvent(SFX_80036458[0], 8, 0x61A8);
-                dword_CODE_bss_800799B4 = 0x61A8;
+                g_TankEngineSfxVolume = 0x61A8;
             }
             else
             {
@@ -26056,17 +26103,17 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
                     temp_f2_12 = -temp_f2_12;
                 }
 
-                sp244 = temp_f0_18;
+                sp244_tank_engine_utilization = temp_f0_18;
                 if (temp_f0_18 < temp_f2_12)
                 {
-                    sp244 = temp_f2_12;
+                    sp244_tank_engine_utilization = temp_f2_12;
                 }
 
-                if (sp244 > 0.0f)
+                if (sp244_tank_engine_utilization > 0.0f)
                 {
-                    if (sp244 > 1.0f)
+                    if (sp244_tank_engine_utilization > 1.0f)
                     {
-                        sp244 = 1.0f;
+                        sp244_tank_engine_utilization = 1.0f;
                     }
                     
                     if (SFX_80036458[1] == NULL)
@@ -26080,13 +26127,13 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
                     if (SFX_80036458[1] != NULL)
                     {
                         phi_a2 = 0x7FFF;
-                        if (sp244 < 0.15f)
+                        if (sp244_tank_engine_utilization < 0.15f)
                         {
-                            phi_a2 = (s32) ((sp244 * 20000.0f) / 0.15f);
+                            phi_a2 = (s32) ((sp244_tank_engine_utilization * 20000.0f) / 0.15f);
                         }
-                        else if (sp244 < 0.9f)
+                        else if (sp244_tank_engine_utilization < 0.9f)
                         {
-                            phi_a2 = (s32) ((((sp244 - 0.15f) * 12767.0f) / 0.75f) + 20000.0f);
+                            phi_a2 = (s32) ((((sp244_tank_engine_utilization - 0.15f) * 12767.0f) / 0.75f) + 20000.0f);
                         }
                         sndCreatePostEvent(SFX_80036458[1], 8, phi_a2);
                     }
@@ -26112,13 +26159,13 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
 
                 if (SFX_80036458[0] != NULL)
                 {
-                    dword_CODE_bss_800799B4 = 0x7FFF;
-                    if (sp244 < 0.9f)
+                    g_TankEngineSfxVolume = 0x7FFF;
+                    if (sp244_tank_engine_utilization < 0.9f)
                     {
-                        dword_CODE_bss_800799B4 = (s32) (((sp244 * 7767.0f) / 0.9f) + 25000.0f);
+                        g_TankEngineSfxVolume = (s32) (((sp244_tank_engine_utilization * 7767.0f) / 0.9f) + 25000.0f);
                     }
 
-                    sndCreatePostEvent(SFX_80036458[0], 8, dword_CODE_bss_800799B4);
+                    sndCreatePostEvent(SFX_80036458[0], 8, g_TankEngineSfxVolume);
                 }
 
                 if (getCurrentPlayerWeaponId(GUNRIGHT) == ITEM_TANKSHELLS)
@@ -26127,7 +26174,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
                 }
                 else
                 {
-                    phi_f2_6 = D_8003646C;
+                    phi_f2_6 = g_TankTurretVerticalAngle;
                 }
 
                 if (phi_f2_6 > 0.43633232f)
@@ -26142,10 +26189,10 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
 
                 for (i_4=0; i_4<g_ClockTimer; i_4++)
                 {
-                    D_80036470 = (0.94f * D_80036470) + phi_f2_6;
+                    g_TankTurretVerticalAngleRelated = (0.94f * g_TankTurretVerticalAngleRelated) + phi_f2_6;
                 }
 
-                D_8003646C = D_80036470 * 0.060000002f;
+                g_TankTurretVerticalAngle = g_TankTurretVerticalAngleRelated * 0.060000002f;
             }
         }
         
@@ -26158,12 +26205,12 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
         
         bondviewMoveAnimationTick(0.0f, 0.0f, 0.0f);
 
-        sp3AC.f[0] += g_CurrentPlayer->speedforwards * sinf(6.2831855f - D_80036464) * g_GlobalTimerDelta;
-        sp3AC.f[2] += g_CurrentPlayer->speedforwards * cosf(6.2831855f - D_80036464) * g_GlobalTimerDelta;
+        sp3AC.f[0] += g_CurrentPlayer->speedforwards * sinf(6.2831855f - g_TankOrientationAngle) * g_GlobalTimerDelta;
+        sp3AC.f[2] += g_CurrentPlayer->speedforwards * cosf(6.2831855f - g_TankOrientationAngle) * g_GlobalTimerDelta;
 
         bondviewCalcUpdatePlayerCollision(&sp3AC, 1);
         
-        if ((dword_CODE_bss_800799B8 == 2) && (g_ClockTimer > 0))
+        if ((g_EnterTankAudioState == 2) && (g_ClockTimer > 0))
         {
             temp_f0_19 = (g_CurrentPlayer->field_488.collision_position.f[0] - g_CurrentPlayer->bondprevpos.f[0]) / g_GlobalTimerDelta;
             temp_f2_13 = (g_CurrentPlayer->field_488.collision_position.f[2] - g_CurrentPlayer->bondprevpos.f[2]) / g_GlobalTimerDelta;
@@ -26179,10 +26226,10 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
     {
         if ((SFX_80036458[0] != NULL) && (sndGetPlayingState(SFX_80036458[0]) != 0))
         {
-            dword_CODE_bss_800799B4 -= (g_ClockTimer * 1000);
-            if (dword_CODE_bss_800799B4 > 0)
+            g_TankEngineSfxVolume -= (g_ClockTimer * 1000);
+            if (g_TankEngineSfxVolume > 0)
             {
-                sndCreatePostEvent(SFX_80036458[0], 8, dword_CODE_bss_800799B4);
+                sndCreatePostEvent(SFX_80036458[0], 8, g_TankEngineSfxVolume);
             }
             else
             {
@@ -26195,41 +26242,28 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             sndDeactivate(SFX_80036458[1]);
         }
 
-
         stack_padding_25 = sp3A0 = g_CurrentPlayer->speedsideways;
         if(0);
         sp3A0 *= g_BondMoveAnimationSetup[1].unk0C * 0.5f  * g_GlobalTimerDelta;
 
-        //stack_padding_10 = f32;
         stack_padding_26 = g_CurrentPlayer->field_488.field_10.f[2];
         stack_padding_11 = g_CurrentPlayer->field_488.field_10.f[0];
         sp220 = (stack_padding_26 * -g_CurrentPlayer->swaytarget)
              - g_CurrentPlayer->field_1278;
-             //if(0);
+
         sp21C = (stack_padding_11 * g_CurrentPlayer->swaytarget)
             - g_CurrentPlayer->field_127C;
-            //if(0);
         
         sp218 = (sp21C * sp21C) + (sp220 * sp220);
-//if(0);
+
         if (sp218 >= 100.0f)
         {
             sp220 *= 0.6f;
             sp21C *= 0.6f;
         }
-             //if(0);
 
-        //sp398 = g_CurrentPlayer->speedforwards;
-
-        //sp330 = g_CurrentPlayer->speedsideways;
-        //sp32C = g_CurrentPlayer->speedtheta;
         stack_padding_6 = g_CurrentPlayer->speedforwards;
-        //sp330 *= 0.8f;
-
         stack_padding_25 = stack_padding_25 * 0.8f;
-        
-        //sp32C = stack_padding_11 * 0.8f;
-        //sp330 = g_CurrentPlayer->speedsideways * 0.8f;
         sp32C = g_CurrentPlayer->speedtheta * 0.8f;
 
         if (stack_padding_25 < 0.0f)
@@ -26245,10 +26279,8 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             stack_padding_6 = -stack_padding_6;
         }
 
-        //if(1); 
         if(1);
-        //if(1);
-        //if(1);
+
         sp330 = stack_padding_25;
         sp398 = stack_padding_6;
         if (sp398 < sp330)
@@ -26491,28 +26523,20 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
     gunSetBondWeaponSway(phi_f12_8, sp398, weapon_speed_verta, sp14C_temp);
     gunSetOffsetRelated(g_CurrentPlayer->vv_verta360 * 0.017453292f);
 
-    if ((ptr_playerstank != 0) && (in_tank_flag == 1) && (dword_CODE_bss_800799B8 == 2))
+    if ((ptr_playerstank != NULL) && (in_tank_flag == 1) && (g_EnterTankAudioState == 2))
     {
-        //temp_tank = (struct TankRecord *)ptr_playerstank->obj;
-        //sp140_tank_as_TankRecord = ((struct ObjectRecord *)ptr_playerstank->obj);
-        //sp138_tank_as_ObjectRecord = (struct TankRecord *)ptr_playerstank->obj;
-
         sp140_tank_as_TankRecord = ((struct TankRecord *)ptr_playerstank->obj);
         sp138_tank_as_ObjectRecord = (struct  ObjectRecord*)ptr_playerstank->obj;
-
-        //stack_padding_3 = ((struct ModelNode *)sp138_tank_as_ObjectRecord->model->obj->Switches);
-        //sp130 = (struct ModelNode_BoundingBoxRecord *)stack_padding_3->Child->Data;
         sp130 = (struct ModelNode_BoundingBoxRecord *)((struct ModelNode *)sp138_tank_as_ObjectRecord->model->obj->Switches)->Child->Data;
         
         sp140_tank_as_TankRecord->is_firing_tank = (getCurrentPlayerWeaponId(GUNRIGHT) == ITEM_TANKSHELLS)
             && get_hands_firing_status(GUNRIGHT);
 
-        sp140_tank_as_TankRecord->unkC8 = D_8003646C;
-        sp140_tank_as_TankRecord->unkCC = D_80036474;
-        sp140_tank_as_TankRecord->unkDC = D_80036464;
+        sp140_tank_as_TankRecord->turret_vertical_angle = g_TankTurretVerticalAngle;
+        sp140_tank_as_TankRecord->turret_orientation_angle = g_TankTurretOrientationAngleRad;
+        sp140_tank_as_TankRecord->tank_orientation_angle = g_TankOrientationAngle;
 
-        matrix_4x4_set_rotation_around_y(6.2831855f - D_80036464, &spF0);
-        //sp140_tank_as_TankRecord = *(struct TankRecord **)&sp138_tank_as_ObjectRecord;
+        matrix_4x4_set_rotation_around_y(6.2831855f - g_TankOrientationAngle, &spF0);
         matrix_scalar_multiply(sp138_tank_as_ObjectRecord->model->scale, &spF0);
         
         spE4.f[0] = -flt_CODE_bss_800799A8.f[0];
@@ -26551,7 +26575,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
 
         setupUpdateObjectRoomPosition(sp138_tank_as_ObjectRecord);
         chrobjCollisionRelated(sp138_tank_as_ObjectRecord);
-        bondviewTankCollisionRelated(&spB4_tank_collision_bounds, &g_CurrentPlayer->field_488.collision_position, D_80036464);
+        bondviewTankCollisionRelated(&spB4_tank_collision_bounds, &g_CurrentPlayer->field_488.collision_position, g_TankOrientationAngle);
         chraiGetPropRoomIds(sp138_tank_as_ObjectRecord->prop, &sp94);
         
         // update num_obj_position_data_entries
@@ -26564,7 +26588,6 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             {
                 if (prop->type == PROP_TYPE_CHR)
                 {
-                    //pos_ptr = &sp140_tank_as_TankRecord->runtime_pos;
                     sp7C = 1;
                     sp6C = prop->chr;
                     chrpropGetCollisionBounds(prop, &sp80_collision_radius, &sp88_collision_bound_height, &sp84_collision_bound_z);
@@ -26993,10 +27016,10 @@ glabel MoveBond
 /* 0B94E0 7F0849B0 C4245174 */  lwc1  $f4, %lo(D_80055174)($at)
 /* 0B94E4 7F0849B4 3C014060 */  li    $at, 0x40600000 # 3.500000
 /* 0B94E8 7F0849B8 44813000 */  mtc1  $at, $f6
-/* 0B94EC 7F0849BC 3C018003 */  lui   $at, %hi(D_80036464)
+/* 0B94EC 7F0849BC 3C018003 */  lui   $at, %hi(g_TankOrientationAngle)
 /* 0B94F0 7F0849C0 27B00374 */  addiu $s0, $sp, 0x374
 /* 0B94F4 7F0849C4 46044282 */  mul.s $f10, $f8, $f4
-/* 0B94F8 7F0849C8 C4286464 */  lwc1  $f8, %lo(D_80036464)($at)
+/* 0B94F8 7F0849C8 C4286464 */  lwc1  $f8, %lo(g_TankOrientationAngle)($at)
 /* 0B94FC 7F0849CC 02003825 */  move  $a3, $s0
 /* 0B9500 7F0849D0 2504048C */  addiu $a0, $t0, 0x48c
 /* 0B9504 7F0849D4 27AD0368 */  addiu $t5, $sp, 0x368
@@ -27023,8 +27046,8 @@ glabel MoveBond
 /* 0B9550 7F084A20 50400007 */  beql  $v0, $zero, .L7F084A40
 /* 0B9554 7F084A24 3C01BF80 */   lui   $at, 0xbf80
 /* 0B9558 7F084A28 C7A4035C */  lwc1  $f4, 0x35c($sp)
-/* 0B955C 7F084A2C 3C018003 */  lui    $at, %hi(D_80036464)
-/* 0B9560 7F084A30 E4246464 */  swc1  $f4, %lo(D_80036464)($at)
+/* 0B955C 7F084A2C 3C018003 */  lui    $at, %hi(g_TankOrientationAngle)
+/* 0B9560 7F084A30 E4246464 */  swc1  $f4, %lo(g_TankOrientationAngle)($at)
 /* 0B9564 7F084A34 100000CB */  b     .L7F084D64
 /* 0B9568 7F084A38 8E280000 */   lw    $t0, ($s1)
 /* 0B956C 7F084A3C 3C01BF80 */  li    $at, 0xBF800000 # -1.000000
@@ -27230,9 +27253,9 @@ glabel MoveBond
 /* 0B986C 7F084D3C 2504048C */   addiu $a0, $t0, 0x48c
 /* 0B9870 7F084D40 10400004 */  beqz  $v0, .L7F084D54
 /* 0B9874 7F084D44 C7A8035C */   lwc1  $f8, 0x35c($sp)
-/* 0B9878 7F084D48 3C018003 */  lui   $at, %hi(D_80036464)
+/* 0B9878 7F084D48 3C018003 */  lui   $at, %hi(g_TankOrientationAngle)
 /* 0B987C 7F084D4C 10000002 */  b     .L7F084D58
-/* 0B9880 7F084D50 E4286464 */   swc1  $f8, %lo(D_80036464)($at)
+/* 0B9880 7F084D50 E4286464 */   swc1  $f8, %lo(g_TankOrientationAngle)($at)
 .L7F084D54:
 /* 0B9884 7F084D54 E7B40358 */  swc1  $f20, 0x358($sp)
 .L7F084D58:
@@ -27242,13 +27265,13 @@ glabel MoveBond
 .L7F084D64:
 /* 0B9894 7F084D64 3C018005 */  lui   $at, %hi(D_80055180)
 /* 0B9898 7F084D68 C42E5180 */  lwc1  $f14, %lo(D_80055180)($at)
-/* 0B989C 7F084D6C 3C038003 */  lui   $v1, %hi(D_80036484)
-/* 0B98A0 7F084D70 24636484 */  addiu $v1, %lo(D_80036484) # addiu $v1, $v1, 0x6484
-/* 0B98A4 7F084D74 3C018003 */  lui   $at, %hi(D_80036488)
-/* 0B98A8 7F084D78 C4246488 */  lwc1  $f4, %lo(D_80036488)($at)
+/* 0B989C 7F084D6C 3C038003 */  lui   $v1, %hi(g_TankTurretAngle)
+/* 0B98A0 7F084D70 24636484 */  addiu $v1, %lo(g_TankTurretAngle) # addiu $v1, $v1, 0x6484
+/* 0B98A4 7F084D74 3C018003 */  lui   $at, %hi(g_TankTurretTurn)
+/* 0B98A8 7F084D78 C4246488 */  lwc1  $f4, %lo(g_TankTurretTurn)($at)
 /* 0B98AC 7F084D7C C4660000 */  lwc1  $f6, ($v1)
-/* 0B98B0 7F084D80 3C078003 */  lui   $a3, %hi(D_80036474)
-/* 0B98B4 7F084D84 24E76474 */  addiu $a3, %lo(D_80036474) # addiu $a3, $a3, 0x6474
+/* 0B98B0 7F084D80 3C078003 */  lui   $a3, %hi(g_TankTurretOrientationAngleRad)
+/* 0B98B4 7F084D84 24E76474 */  addiu $a3, %lo(g_TankTurretOrientationAngleRad) # addiu $a3, $a3, 0x6474
 /* 0B98B8 7F084D88 46043280 */  add.s $f10, $f6, $f4
 /* 0B98BC 7F084D8C C4EC0000 */  lwc1  $f12, ($a3)
 /* 0B98C0 7F084D90 3C014060 */  li    $at, 0x40600000 # 3.500000
@@ -27352,7 +27375,7 @@ glabel MoveBond
 /* 0B9A24 7F084EF4 C42251A0 */  lwc1  $f2, %lo(D_800551A0)($at)
 /* 0B9A28 7F084EF8 46004182 */  mul.s $f6, $f8, $f0
 /* 0B9A2C 7F084EFC 2504048C */  addiu $a0, $t0, 0x48c
-/* 0B9A30 7F084F00 3C068003 */  lui   $a2, %hi(D_80036464)
+/* 0B9A30 7F084F00 3C068003 */  lui   $a2, %hi(g_TankOrientationAngle)
 /* 0B9A34 7F084F04 E4E60000 */  swc1  $f6, ($a3)
 /* 0B9A38 7F084F08 C4EC0000 */  lwc1  $f12, ($a3)
 /* 0B9A3C 7F084F0C 460C103E */  c.le.s $f2, $f12
@@ -27378,16 +27401,16 @@ glabel MoveBond
 .L7F084F58:
 /* 0B9A88 7F084F58 E7B00354 */  swc1  $f16, 0x354($sp)
 /* 0B9A8C 7F084F5C 0FC1F36A */  jal   bondviewCallTankCollisionStatus
-/* 0B9A90 7F084F60 8CC66464 */   lw    $a2, %lo(D_80036464)($a2)
-/* 0B9A94 7F084F64 3C038003 */  lui   $v1, %hi(D_80036484)
+/* 0B9A90 7F084F60 8CC66464 */   lw    $a2, %lo(g_TankOrientationAngle)($a2)
+/* 0B9A94 7F084F64 3C038003 */  lui   $v1, %hi(g_TankTurretAngle)
 /* 0B9A98 7F084F68 3C018005 */  lui   $at, %hi(D_800551A8)
 /* 0B9A9C 7F084F6C C42E51A8 */  lwc1  $f14, %lo(D_800551A8)($at)
-/* 0B9AA0 7F084F70 24636484 */  addiu $v1, %lo(D_80036484) # addiu $v1, $v1, 0x6484
+/* 0B9AA0 7F084F70 24636484 */  addiu $v1, %lo(g_TankTurretAngle) # addiu $v1, $v1, 0x6484
 /* 0B9AA4 7F084F74 14400009 */  bnez  $v0, .L7F084F9C
 /* 0B9AA8 7F084F78 C7B00354 */   lwc1  $f16, 0x354($sp)
-/* 0B9AAC 7F084F7C 3C018003 */  lui   $at, %hi(D_80036474)
-/* 0B9AB0 7F084F80 E4306474 */  swc1  $f16, %lo(D_80036474)($at)
-/* 0B9AB4 7F084F84 C42A6474 */  lwc1  $f10, %lo(D_80036474)($at)
+/* 0B9AAC 7F084F7C 3C018003 */  lui   $at, %hi(g_TankTurretOrientationAngleRad)
+/* 0B9AB0 7F084F80 E4306474 */  swc1  $f16, %lo(g_TankTurretOrientationAngleRad)($at)
+/* 0B9AB4 7F084F84 C42A6474 */  lwc1  $f10, %lo(g_TankTurretOrientationAngleRad)($at)
 /* 0B9AB8 7F084F88 3C018005 */  lui   $at, %hi(D_800551AC)
 /* 0B9ABC 7F084F8C C42851AC */  lwc1  $f8, %lo(D_800551AC)($at)
 /* 0B9AC0 7F084F90 E4700000 */  swc1  $f16, ($v1)
@@ -27428,8 +27451,8 @@ glabel MoveBond
 /* 0B9B48 7F085018 E7A402F4 */  swc1  $f4, 0x2f4($sp)
 /* 0B9B4C 7F08501C 46085181 */  sub.s $f6, $f10, $f8
 /* 0B9B50 7F085020 C42451BC */  lwc1  $f4, %lo(D_800551BC)($at)
-/* 0B9B54 7F085024 3C018003 */  lui   $at, %hi(D_80036464)
-/* 0B9B58 7F085028 C42A6464 */  lwc1  $f10, %lo(D_80036464)($at)
+/* 0B9B54 7F085024 3C018003 */  lui   $at, %hi(g_TankOrientationAngle)
+/* 0B9B58 7F085028 C42A6464 */  lwc1  $f10, %lo(g_TankOrientationAngle)($at)
 /* 0B9B5C 7F08502C E7A602FC */  swc1  $f6, 0x2fc($sp)
 /* 0B9B60 7F085030 0FC1617F */  jal   matrix_4x4_set_rotation_around_y
 /* 0B9B64 7F085034 460A2301 */   sub.s $f12, $f4, $f10
@@ -27449,14 +27472,14 @@ glabel MoveBond
 .L7F08506C:
 /* 0B9B9C 7F08506C 3C048005 */  lui   $a0, %hi(g_ClockTimer)
 /* 0B9BA0 7F085070 8C848374 */  lw    $a0, %lo(g_ClockTimer)($a0)
-/* 0B9BA4 7F085074 3C018003 */  lui   $at, %hi(D_80036474)
-/* 0B9BA8 7F085078 C42C6474 */  lwc1  $f12, %lo(D_80036474)($at)
+/* 0B9BA4 7F085074 3C018003 */  lui   $at, %hi(g_TankTurretOrientationAngleRad)
+/* 0B9BA8 7F085078 C42C6474 */  lwc1  $f12, %lo(g_TankTurretOrientationAngleRad)($at)
 /* 0B9BAC 7F08507C 5880001B */  blezl $a0, .L7F0850EC
 /* 0B9BB0 7F085080 3C0143B4 */   lui   $at, 0x43b4
 /* 0B9BB4 7F085084 18800018 */  blez  $a0, .L7F0850E8
 /* 0B9BB8 7F085088 00001025 */   move  $v0, $zero
-/* 0B9BBC 7F08508C 3C018003 */  lui   $at, %hi(D_80036488)
-/* 0B9BC0 7F085090 C4286488 */  lwc1  $f8, %lo(D_80036488)($at)
+/* 0B9BBC 7F08508C 3C018003 */  lui   $at, %hi(g_TankTurretTurn)
+/* 0B9BC0 7F085090 C4286488 */  lwc1  $f8, %lo(g_TankTurretTurn)($at)
 /* 0B9BC4 7F085094 3C018005 */  lui   $at, %hi(g_GlobalTimerDelta)
 /* 0B9BC8 7F085098 C4268378 */  lwc1  $f6, %lo(g_GlobalTimerDelta)($at)
 /* 0B9BCC 7F08509C 3C038003 */  lui   $v1, %hi(D_8003647C)
@@ -27499,9 +27522,9 @@ glabel MoveBond
 /* 0B9C50 7F085120 46085182 */  mul.s $f6, $f10, $f8
 /* 0B9C54 7F085124 3C014080 */  li    $at, 0x40800000 # 4.000000
 /* 0B9C58 7F085128 44814000 */  mtc1  $at, $f8
-/* 0B9C5C 7F08512C 3C018003 */  lui   $at, %hi(D_80036464)
+/* 0B9C5C 7F08512C 3C018003 */  lui   $at, %hi(g_TankOrientationAngle)
 /* 0B9C60 7F085130 46043282 */  mul.s $f10, $f6, $f4
-/* 0B9C64 7F085134 C4246464 */  lwc1  $f4, %lo(D_80036464)($at)
+/* 0B9C64 7F085134 C4246464 */  lwc1  $f4, %lo(g_TankOrientationAngle)($at)
 /* 0B9C68 7F085138 3C014080 */  li    $at, 0x40800000 # 4.000000
 /* 0B9C6C 7F08513C 46085182 */  mul.s $f6, $f10, $f8
 /* 0B9C70 7F085140 460C2280 */  add.s $f10, $f4, $f12
@@ -27639,8 +27662,8 @@ glabel MoveBond
 /* 0B9E48 7F085318 8D8C6448 */  lw    $t4, %lo(in_tank_flag)($t4)
 /* 0B9E4C 7F08531C 24010001 */  li    $at, 1
 /* 0B9E50 7F085320 15810209 */  bne   $t4, $at, .L7F085B48
-/* 0B9E54 7F085324 3C028008 */   lui   $v0, %hi(dword_CODE_bss_800799B8)
-/* 0B9E58 7F085328 8C4299B8 */  lw    $v0, %lo(dword_CODE_bss_800799B8)($v0)
+/* 0B9E54 7F085324 3C028008 */   lui   $v0, %hi(g_EnterTankAudioState)
+/* 0B9E58 7F085328 8C4299B8 */  lw    $v0, %lo(g_EnterTankAudioState)($v0)
 /* 0B9E5C 7F08532C 3C038003 */  lui   $v1, %hi(ptr_playerstank)
 /* 0B9E60 7F085330 24010001 */  li    $at, 1
 /* 0B9E64 7F085334 144000BF */  bnez  $v0, .L7F085634
@@ -27651,8 +27674,8 @@ glabel MoveBond
 /* 0B9E78 7F085348 106000AD */  beqz  $v1, .L7F085600
 /* 0B9E7C 7F08534C 00000000 */   nop
 /* 0B9E80 7F085350 C42451DC */  lwc1  $f4, %lo(D_800551DC)($at)
-/* 0B9E84 7F085354 3C018003 */  lui   $at, %hi(D_80036464)
-/* 0B9E88 7F085358 C42A6464 */  lwc1  $f10, %lo(D_80036464)($at)
+/* 0B9E84 7F085354 3C018003 */  lui   $at, %hi(g_TankOrientationAngle)
+/* 0B9E88 7F085358 C42A6464 */  lwc1  $f10, %lo(g_TankOrientationAngle)($at)
 /* 0B9E8C 7F08535C 8C700004 */  lw    $s0, 4($v1)
 /* 0B9E90 7F085360 0FC1617F */  jal   matrix_4x4_set_rotation_around_y
 /* 0B9E94 7F085364 460A2301 */   sub.s $f12, $f4, $f10
@@ -27682,15 +27705,15 @@ glabel MoveBond
 /* 0B9EF4 7F0853C4 E7A6025C */  swc1  $f6, 0x25c($sp)
 /* 0B9EF8 7F0853C8 C60A005C */  lwc1  $f10, 0x5c($s0)
 /* 0B9EFC 7F0853CC C7A60264 */  lwc1  $f6, 0x264($sp)
-/* 0B9F00 7F0853D0 3C018003 */  lui   $at, %hi(D_80036464)
+/* 0B9F00 7F0853D0 3C018003 */  lui   $at, %hi(g_TankOrientationAngle)
 /* 0B9F04 7F0853D4 460A2200 */  add.s $f8, $f4, $f10
 /* 0B9F08 7F0853D8 8E2A0000 */  lw    $t2, ($s1)
 /* 0B9F0C 7F0853DC E7A80260 */  swc1  $f8, 0x260($sp)
 /* 0B9F10 7F0853E0 C6040060 */  lwc1  $f4, 0x60($s0)
-/* 0B9F14 7F0853E4 C4286464 */  lwc1  $f8, %lo(D_80036464)($at)
-/* 0B9F18 7F0853E8 3C018003 */  lui   $at, %hi(D_80036474)
+/* 0B9F14 7F0853E4 C4286464 */  lwc1  $f8, %lo(g_TankOrientationAngle)($at)
+/* 0B9F18 7F0853E8 3C018003 */  lui   $at, %hi(g_TankTurretOrientationAngleRad)
 /* 0B9F1C 7F0853EC 46043280 */  add.s $f10, $f6, $f4
-/* 0B9F20 7F0853F0 C4266474 */  lwc1  $f6, %lo(D_80036474)($at)
+/* 0B9F20 7F0853F0 C4266474 */  lwc1  $f6, %lo(g_TankTurretOrientationAngleRad)($at)
 /* 0B9F24 7F0853F4 3C018005 */  lui   $at, %hi(D_800551E0)
 /* 0B9F28 7F0853F8 46064100 */  add.s $f4, $f8, $f6
 /* 0B9F2C 7F0853FC E7AA0264 */  swc1  $f10, 0x264($sp)
@@ -27708,8 +27731,8 @@ glabel MoveBond
 /* 0B9F58 7F085428 C4268378 */  lwc1  $f6, %lo(g_GlobalTimerDelta)($at)
 /* 0B9F5C 7F08542C 3C014234 */  li    $at, 0x42340000 # 45.000000
 /* 0B9F60 7F085430 44812000 */  mtc1  $at, $f4
-/* 0B9F64 7F085434 3C108008 */  lui   $s0, %hi(flt_CODE_bss_800799BC)
-/* 0B9F68 7F085438 261099BC */  addiu $s0, %lo(flt_CODE_bss_800799BC) # addiu $s0, $s0, -0x6644
+/* 0B9F64 7F085434 3C108008 */  lui   $s0, %hi(g_TankEnteringSitHeight)
+/* 0B9F68 7F085438 261099BC */  addiu $s0, %lo(g_TankEnteringSitHeight) # addiu $s0, $s0, -0x6644
 /* 0B9F6C 7F08543C 46043283 */  div.s $f10, $f6, $f4
 /* 0B9F70 7F085440 C6080000 */  lwc1  $f8, ($s0)
 /* 0B9F74 7F085444 3C018005 */  lui   $at, %hi(D_800551E4)
@@ -27739,28 +27762,28 @@ glabel MoveBond
 /* 0B9FD0 7F0854A0 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 0B9FD4 7F0854A4 44814000 */  mtc1  $at, $f8
 /* 0B9FD8 7F0854A8 46060100 */  add.s $f4, $f0, $f6
-/* 0B9FDC 7F0854AC 3C028008 */  lui   $v0, %hi(flt_CODE_bss_800799C0)
-/* 0B9FE0 7F0854B0 244299C0 */  addiu $v0, %lo(flt_CODE_bss_800799C0) # addiu $v0, $v0, -0x6640
+/* 0B9FDC 7F0854AC 3C028008 */  lui   $v0, %hi(g_TankEnteringSitHeightRemain)
+/* 0B9FE0 7F0854B0 244299C0 */  addiu $v0, %lo(g_TankEnteringSitHeightRemain) # addiu $v0, $v0, -0x6640
 /* 0B9FE4 7F0854B4 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0B9FE8 7F0854B8 46082282 */  mul.s $f10, $f4, $f8
 /* 0B9FEC 7F0854BC 44813000 */  mtc1  $at, $f6
 /* 0B9FF0 7F0854C0 C7A80254 */  lwc1  $f8, 0x254($sp)
-/* 0B9FF4 7F0854C4 3C018008 */  lui   $at, %hi(flt_CODE_bss_800799C8)
+/* 0B9FF4 7F0854C4 3C018008 */  lui   $at, %hi(g_TankEnterBondVertAngleDeg)
 /* 0B9FF8 7F0854C8 8E2D0000 */  lw    $t5, ($s1)
 /* 0B9FFC 7F0854CC C7B00258 */  lwc1  $f16, 0x258($sp)
-/* 0BA000 7F0854D0 3C038008 */  lui   $v1, %hi(flt_CODE_bss_800799D0)
+/* 0BA000 7F0854D0 3C038008 */  lui   $v1, %hi(g_EnterTankCoord)
 /* 0BA004 7F0854D4 E44A0000 */  swc1  $f10, ($v0)
 /* 0BA008 7F0854D8 C4420000 */  lwc1  $f2, ($v0)
-/* 0BA00C 7F0854DC 246399D0 */  addiu $v1, %lo(flt_CODE_bss_800799D0) # addiu $v1, $v1, -0x6630
+/* 0BA00C 7F0854DC 246399D0 */  addiu $v1, %lo(g_EnterTankCoord) # addiu $v1, $v1, -0x6630
 /* 0BA010 7F0854E0 46023101 */  sub.s $f4, $f6, $f2
-/* 0BA014 7F0854E4 C42699C8 */  lwc1  $f6, %lo(flt_CODE_bss_800799C8)($at)
-/* 0BA018 7F0854E8 3C018008 */  lui   $at, %hi(flt_CODE_bss_800799C4)
+/* 0BA014 7F0854E4 C42699C8 */  lwc1  $f6, %lo(g_TankEnterBondVertAngleDeg)($at)
+/* 0BA018 7F0854E8 3C018008 */  lui   $at, %hi(g_TankEnterBondHorizAngleDeg)
 /* 0BA01C 7F0854EC 46082282 */  mul.s $f10, $f4, $f8
 /* 0BA020 7F0854F0 00000000 */  nop
 /* 0BA024 7F0854F4 46061102 */  mul.s $f4, $f2, $f6
 /* 0BA028 7F0854F8 460A2200 */  add.s $f8, $f4, $f10
 /* 0BA02C 7F0854FC E5A80158 */  swc1  $f8, 0x158($t5)
-/* 0BA030 7F085500 C43299C4 */  lwc1  $f18, %lo(flt_CODE_bss_800799C4)($at)
+/* 0BA030 7F085500 C43299C4 */  lwc1  $f18, %lo(g_TankEnterBondHorizAngleDeg)($at)
 /* 0BA034 7F085504 3C014334 */  li    $at, 0x43340000 # 180.000000
 /* 0BA038 7F085508 44813000 */  mtc1  $at, $f6
 /* 0BA03C 7F08550C 46128301 */  sub.s $f12, $f16, $f18
@@ -27829,26 +27852,26 @@ glabel MoveBond
 /* 0BA128 7F0855F8 460A2201 */  sub.s $f8, $f4, $f10
 /* 0BA12C 7F0855FC E7A803B4 */  swc1  $f8, 0x3b4($sp)
 .L7F085600:
-/* 0BA130 7F085600 3C108008 */  lui   $s0, %hi(flt_CODE_bss_800799BC)
-/* 0BA134 7F085604 261099BC */  addiu $s0, %lo(flt_CODE_bss_800799BC) # addiu $s0, $s0, -0x6644
+/* 0BA130 7F085600 3C108008 */  lui   $s0, %hi(g_TankEnteringSitHeight)
+/* 0BA134 7F085604 261099BC */  addiu $s0, %lo(g_TankEnteringSitHeight) # addiu $s0, $s0, -0x6644
 /* 0BA138 7F085608 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0BA13C 7F08560C 44812000 */  mtc1  $at, $f4
 /* 0BA140 7F085610 C6060000 */  lwc1  $f6, ($s0)
 /* 0BA144 7F085614 8E280000 */  lw    $t0, ($s1)
-/* 0BA148 7F085618 3C018008 */  lui   $at, %hi(dword_CODE_bss_800799B8)
+/* 0BA148 7F085618 3C018008 */  lui   $at, %hi(g_EnterTankAudioState)
 /* 0BA14C 7F08561C 4606203E */  c.le.s $f4, $f6
 /* 0BA150 7F085620 240F0001 */  li    $t7, 1
 /* 0BA154 7F085624 450200EF */  bc1fl .L7F0859E4
 /* 0BA158 7F085628 3C013F40 */   lui   $at, %hi(0x3F3F99B8) # $at, 0x3f40
 /* 0BA15C 7F08562C 100000EC */  b     .L7F0859E0
-/* 0BA160 7F085630 AC2F99B8 */   sw    $t7, %lo(dword_CODE_bss_800799B8)($at)
+/* 0BA160 7F085630 AC2F99B8 */   sw    $t7, %lo(g_EnterTankAudioState)($at)
 .L7F085634:
 /* 0BA164 7F085634 1441001A */  bne   $v0, $at, .L7F0856A0
 /* 0BA168 7F085638 3C108003 */   lui   $s0, %hi(SFX_80036458)
 /* 0BA16C 7F08563C 240B0002 */  li    $t3, 2
-/* 0BA170 7F085640 3C018008 */  lui   $at, %hi(dword_CODE_bss_800799B8)
+/* 0BA170 7F085640 3C018008 */  lui   $at, %hi(g_EnterTankAudioState)
 /* 0BA174 7F085644 26106458 */  addiu $s0, %lo(SFX_80036458) # addiu $s0, $s0, 0x6458
-/* 0BA178 7F085648 AC2B99B8 */  sw    $t3, %lo(dword_CODE_bss_800799B8)($at)
+/* 0BA178 7F085648 AC2B99B8 */  sw    $t3, %lo(g_EnterTankAudioState)($at)
 /* 0BA17C 7F08564C 8E180000 */  lw    $t8, ($s0)
 /* 0BA180 7F085650 5700000A */  bnezl $t8, .L7F08567C
 /* 0BA184 7F085654 8E040000 */   lw    $a0, ($s0)
@@ -27866,8 +27889,8 @@ glabel MoveBond
 /* 0BA1AC 7F08567C 24050008 */  li    $a1, 8
 /* 0BA1B0 7F085680 0C002461 */  jal   sndCreatePostEvent
 /* 0BA1B4 7F085684 240661A8 */   li    $a2, 25000
-/* 0BA1B8 7F085688 3C028008 */  lui   $v0, %hi(dword_CODE_bss_800799B4)
-/* 0BA1BC 7F08568C 244299B4 */  addiu $v0, %lo(dword_CODE_bss_800799B4) # addiu $v0, $v0, -0x664c
+/* 0BA1B8 7F085688 3C028008 */  lui   $v0, %hi(g_TankEngineSfxVolume)
+/* 0BA1BC 7F08568C 244299B4 */  addiu $v0, %lo(g_TankEngineSfxVolume) # addiu $v0, $v0, -0x664c
 /* 0BA1C0 7F085690 240C61A8 */  li    $t4, 25000
 /* 0BA1C4 7F085694 AC4C0000 */  sw    $t4, ($v0)
 /* 0BA1C8 7F085698 100000D1 */  b     .L7F0859E0
@@ -28009,8 +28032,8 @@ glabel MoveBond
 /* 0BA3B4 7F085884 8E040000 */  lw    $a0, ($s0)
 .L7F085888:
 /* 0BA3B8 7F085888 1080001A */  beqz  $a0, .L7F0858F4
-/* 0BA3BC 7F08588C 3C028008 */   lui   $v0, %hi(dword_CODE_bss_800799B4)
-/* 0BA3C0 7F085890 244299B4 */  addiu $v0, %lo(dword_CODE_bss_800799B4) # addiu $v0, $v0, -0x664c
+/* 0BA3BC 7F08588C 3C028008 */   lui   $v0, %hi(g_TankEngineSfxVolume)
+/* 0BA3C0 7F085890 244299B4 */  addiu $v0, %lo(g_TankEngineSfxVolume) # addiu $v0, $v0, -0x664c
 /* 0BA3C4 7F085894 240F7FFF */  li    $t7, 32767
 /* 0BA3C8 7F085898 AC4F0000 */  sw    $t7, ($v0)
 /* 0BA3CC 7F08589C 3C018005 */  lui   $at, %hi(D_80055200)
@@ -28049,8 +28072,8 @@ glabel MoveBond
 /* 0BA448 7F085918 10000004 */  b     .L7F08592C
 /* 0BA44C 7F08591C 46061080 */   add.s $f2, $f2, $f6
 .L7F085920:
-/* 0BA450 7F085920 3C018003 */  lui   $at, %hi(D_8003646C)
-/* 0BA454 7F085924 C422646C */  lwc1  $f2, %lo(D_8003646C)($at)
+/* 0BA450 7F085920 3C018003 */  lui   $at, %hi(g_TankTurretVerticalAngle)
+/* 0BA454 7F085924 C422646C */  lwc1  $f2, %lo(g_TankTurretVerticalAngle)($at)
 /* 0BA458 7F085928 8E280000 */  lw    $t0, ($s1)
 .L7F08592C:
 /* 0BA45C 7F08592C 3C018005 */  lui   $at, %hi(D_80055214)
@@ -28073,8 +28096,8 @@ glabel MoveBond
 /* 0BA498 7F085968 00001025 */  move  $v0, $zero
 /* 0BA49C 7F08596C 18800014 */  blez  $a0, .L7F0859C0
 /* 0BA4A0 7F085970 3C018005 */   lui   $at, %hi(D_8005521C)
-/* 0BA4A4 7F085974 3C038003 */  lui   $v1, %hi(D_80036470)
-/* 0BA4A8 7F085978 24636470 */  addiu $v1, %lo(D_80036470) # addiu $v1, $v1, 0x6470
+/* 0BA4A4 7F085974 3C038003 */  lui   $v1, %hi(g_TankTurretVerticalAngleRelated)
+/* 0BA4A8 7F085978 24636470 */  addiu $v1, %lo(g_TankTurretVerticalAngleRelated) # addiu $v1, $v1, 0x6470
 /* 0BA4AC 7F08597C C420521C */  lwc1  $f0, %lo(D_8005521C)($at)
 /* 0BA4B0 7F085980 C4700000 */  lwc1  $f16, ($v1)
 /* 0BA4B4 7F085984 24420001 */  addiu $v0, $v0, 1
@@ -28095,14 +28118,14 @@ glabel MoveBond
 .L7F0859BC:
 /* 0BA4EC 7F0859BC E4700000 */  swc1  $f16, ($v1)
 .L7F0859C0:
-/* 0BA4F0 7F0859C0 3C038003 */  lui   $v1, %hi(D_80036470)
-/* 0BA4F4 7F0859C4 24636470 */  addiu $v1, %lo(D_80036470) # addiu $v1, $v1, 0x6470
+/* 0BA4F0 7F0859C0 3C038003 */  lui   $v1, %hi(g_TankTurretVerticalAngleRelated)
+/* 0BA4F4 7F0859C4 24636470 */  addiu $v1, %lo(g_TankTurretVerticalAngleRelated) # addiu $v1, $v1, 0x6470
 /* 0BA4F8 7F0859C8 3C018005 */  lui   $at, %hi(D_80055220)
 /* 0BA4FC 7F0859CC C4245220 */  lwc1  $f4, %lo(D_80055220)($at)
 /* 0BA500 7F0859D0 C4660000 */  lwc1  $f6, ($v1)
-/* 0BA504 7F0859D4 3C018003 */  lui   $at, %hi(D_8003646C)
+/* 0BA504 7F0859D4 3C018003 */  lui   $at, %hi(g_TankTurretVerticalAngle)
 /* 0BA508 7F0859D8 46043282 */  mul.s $f10, $f6, $f4
-/* 0BA50C 7F0859DC E42A646C */  swc1  $f10, %lo(D_8003646C)($at)
+/* 0BA50C 7F0859DC E42A646C */  swc1  $f10, %lo(g_TankTurretVerticalAngle)($at)
 .L7F0859E0:
 /* 0BA510 7F0859E0 3C013F40 */  li    $at, 0x3F400000 # 0.750000
 .L7F0859E4:
@@ -28130,8 +28153,8 @@ glabel MoveBond
 /* 0BA564 7F085A34 4600A386 */   mov.s $f14, $f20
 /* 0BA568 7F085A38 3C018005 */  lui   $at, %hi(D_80055228)
 /* 0BA56C 7F085A3C C4285228 */  lwc1  $f8, %lo(D_80055228)($at)
-/* 0BA570 7F085A40 3C018003 */  lui   $at, %hi(D_80036464)
-/* 0BA574 7F085A44 C42A6464 */  lwc1  $f10, %lo(D_80036464)($at)
+/* 0BA570 7F085A40 3C018003 */  lui   $at, %hi(g_TankOrientationAngle)
+/* 0BA574 7F085A44 C42A6464 */  lwc1  $f10, %lo(g_TankOrientationAngle)($at)
 /* 0BA578 7F085A48 0FC15FAB */  jal   sinf
 /* 0BA57C 7F085A4C 460A4301 */   sub.s $f12, $f8, $f10
 /* 0BA580 7F085A50 8E2C0000 */  lw    $t4, ($s1)
@@ -28143,9 +28166,9 @@ glabel MoveBond
 /* 0BA598 7F085A68 C7A603AC */  lwc1  $f6, 0x3ac($sp)
 /* 0BA59C 7F085A6C 46082282 */  mul.s $f10, $f4, $f8
 /* 0BA5A0 7F085A70 C428522C */  lwc1  $f8, %lo(D_8005522C)($at)
-/* 0BA5A4 7F085A74 3C018003 */  lui   $at, %hi(D_80036464)
+/* 0BA5A4 7F085A74 3C018003 */  lui   $at, %hi(g_TankOrientationAngle)
 /* 0BA5A8 7F085A78 460A3100 */  add.s $f4, $f6, $f10
-/* 0BA5AC 7F085A7C C4266464 */  lwc1  $f6, %lo(D_80036464)($at)
+/* 0BA5AC 7F085A7C C4266464 */  lwc1  $f6, %lo(g_TankOrientationAngle)($at)
 /* 0BA5B0 7F085A80 E7A403AC */  swc1  $f4, 0x3ac($sp)
 /* 0BA5B4 7F085A84 0FC15FA8 */  jal   cosf
 /* 0BA5B8 7F085A88 46064301 */   sub.s $f12, $f8, $f6
@@ -28161,8 +28184,8 @@ glabel MoveBond
 /* 0BA5E0 7F085AB0 46065100 */  add.s $f4, $f10, $f6
 /* 0BA5E4 7F085AB4 0FC1F658 */  jal   bondviewCalcUpdatePlayerCollision
 /* 0BA5E8 7F085AB8 E7A403B4 */   swc1  $f4, 0x3b4($sp)
-/* 0BA5EC 7F085ABC 3C0A8008 */  lui   $t2, %hi(dword_CODE_bss_800799B8)
-/* 0BA5F0 7F085AC0 8D4A99B8 */  lw    $t2, %lo(dword_CODE_bss_800799B8)($t2)
+/* 0BA5EC 7F085ABC 3C0A8008 */  lui   $t2, %hi(g_EnterTankAudioState)
+/* 0BA5F0 7F085AC0 8D4A99B8 */  lw    $t2, %lo(g_EnterTankAudioState)($t2)
 /* 0BA5F4 7F085AC4 24010002 */  li    $at, 2
 /* 0BA5F8 7F085AC8 3C0D8005 */  lui   $t5, %hi(g_ClockTimer)
 /* 0BA5FC 7F085ACC 55410237 */  bnel  $t2, $at, .L7F0863AC
@@ -28206,8 +28229,8 @@ glabel MoveBond
 /* 0BA68C 7F085B5C 10400014 */  beqz  $v0, .L7F085BB0
 /* 0BA690 7F085B60 3C0F8005 */   lui   $t7, %hi(g_ClockTimer)
 /* 0BA694 7F085B64 8DEF8374 */  lw    $t7, %lo(g_ClockTimer)($t7)
-/* 0BA698 7F085B68 3C028008 */  lui   $v0, %hi(dword_CODE_bss_800799B4)
-/* 0BA69C 7F085B6C 244299B4 */  addiu $v0, %lo(dword_CODE_bss_800799B4) # addiu $v0, $v0, -0x664c
+/* 0BA698 7F085B68 3C028008 */  lui   $v0, %hi(g_TankEngineSfxVolume)
+/* 0BA69C 7F085B6C 244299B4 */  addiu $v0, %lo(g_TankEngineSfxVolume) # addiu $v0, $v0, -0x664c
 /* 0BA6A0 7F085B70 000F5940 */  sll   $t3, $t7, 5
 /* 0BA6A4 7F085B74 016F5823 */  subu  $t3, $t3, $t7
 /* 0BA6A8 7F085B78 8C4E0000 */  lw    $t6, ($v0)
@@ -28830,10 +28853,10 @@ glabel MoveBond
 /* 0BAFAC 7F08647C 8FA40394 */   lw    $a0, 0x394($sp)
 /* 0BAFB0 7F086480 8F396448 */  lw    $t9, %lo(in_tank_flag)($t9)
 /* 0BAFB4 7F086484 24010001 */  li    $at, 1
-/* 0BAFB8 7F086488 3C0A8008 */  lui   $t2, %hi(dword_CODE_bss_800799B8)
+/* 0BAFB8 7F086488 3C0A8008 */  lui   $t2, %hi(g_EnterTankAudioState)
 /* 0BAFBC 7F08648C 5721012A */  bnel  $t9, $at, .L7F086938
 /* 0BAFC0 7F086490 8FA40394 */   lw    $a0, 0x394($sp)
-/* 0BAFC4 7F086494 8D4A99B8 */  lw    $t2, %lo(dword_CODE_bss_800799B8)($t2)
+/* 0BAFC4 7F086494 8D4A99B8 */  lw    $t2, %lo(g_EnterTankAudioState)($t2)
 /* 0BAFC8 7F086498 24010002 */  li    $at, 2
 /* 0BAFCC 7F08649C 55410126 */  bnel  $t2, $at, .L7F086938
 /* 0BAFD0 7F0864A0 8FA40394 */   lw    $a0, 0x394($sp)
@@ -28857,20 +28880,20 @@ glabel MoveBond
 /* 0BB018 7F0864E8 0002202B */  sltu  $a0, $zero, $v0
 /* 0BB01C 7F0864EC AE0400C4 */  sw    $a0, 0xc4($s0)
 .L7F0864F0:
-/* 0BB020 7F0864F0 3C018003 */  lui   $at, %hi(D_8003646C)
-/* 0BB024 7F0864F4 C428646C */  lwc1  $f8, %lo(D_8003646C)($at)
-/* 0BB028 7F0864F8 3C018003 */  lui   $at, %hi(D_80036474)
+/* 0BB020 7F0864F0 3C018003 */  lui   $at, %hi(g_TankTurretVerticalAngle)
+/* 0BB024 7F0864F4 C428646C */  lwc1  $f8, %lo(g_TankTurretVerticalAngle)($at)
+/* 0BB028 7F0864F8 3C018003 */  lui   $at, %hi(g_TankTurretOrientationAngleRad)
 /* 0BB02C 7F0864FC 27A500F0 */  addiu $a1, $sp, 0xf0
 /* 0BB030 7F086500 E60800C8 */  swc1  $f8, 0xc8($s0)
-/* 0BB034 7F086504 C42A6474 */  lwc1  $f10, %lo(D_80036474)($at)
-/* 0BB038 7F086508 3C018003 */  lui   $at, %hi(D_80036464)
+/* 0BB034 7F086504 C42A6474 */  lwc1  $f10, %lo(g_TankTurretOrientationAngleRad)($at)
+/* 0BB038 7F086508 3C018003 */  lui   $at, %hi(g_TankOrientationAngle)
 /* 0BB03C 7F08650C E60A00CC */  swc1  $f10, 0xcc($s0)
-/* 0BB040 7F086510 C4266464 */  lwc1  $f6, %lo(D_80036464)($at)
+/* 0BB040 7F086510 C4266464 */  lwc1  $f6, %lo(g_TankOrientationAngle)($at)
 /* 0BB044 7F086514 3C018005 */  lui   $at, %hi(D_80055258)
 /* 0BB048 7F086518 E60600DC */  swc1  $f6, 0xdc($s0)
 /* 0BB04C 7F08651C C4245258 */  lwc1  $f4, %lo(D_80055258)($at)
-/* 0BB050 7F086520 3C018003 */  lui   $at, %hi(D_80036464)
-/* 0BB054 7F086524 C4286464 */  lwc1  $f8, %lo(D_80036464)($at)
+/* 0BB050 7F086520 3C018003 */  lui   $at, %hi(g_TankOrientationAngle)
+/* 0BB054 7F086524 C4286464 */  lwc1  $f8, %lo(g_TankOrientationAngle)($at)
 /* 0BB058 7F086528 0FC1617F */  jal   matrix_4x4_set_rotation_around_y
 /* 0BB05C 7F08652C 46082301 */   sub.s $f12, $f4, $f8
 /* 0BB060 7F086530 8FAC0138 */  lw    $t4, 0x138($sp)
@@ -28977,8 +29000,8 @@ glabel MoveBond
 /* 0BB1EC 7F0866BC 0FC10121 */  jal   chrobjCollisionRelated
 /* 0BB1F0 7F0866C0 8FA40138 */   lw    $a0, 0x138($sp)
 /* 0BB1F4 7F0866C4 8E250000 */  lw    $a1, ($s1)
-/* 0BB1F8 7F0866C8 3C068003 */  lui   $a2, %hi(D_80036464)
-/* 0BB1FC 7F0866CC 8CC66464 */  lw    $a2, %lo(D_80036464)($a2)
+/* 0BB1F8 7F0866C8 3C068003 */  lui   $a2, %hi(g_TankOrientationAngle)
+/* 0BB1FC 7F0866CC 8CC66464 */  lw    $a2, %lo(g_TankOrientationAngle)($a2)
 /* 0BB200 7F0866D0 27A400B4 */  addiu $a0, $sp, 0xb4
 /* 0BB204 7F0866D4 0FC1F222 */  jal   bondviewTankCollisionRelated
 /* 0BB208 7F0866D8 24A5048C */   addiu $a1, $a1, 0x48c
@@ -29533,10 +29556,10 @@ glabel MoveBond
 /* 0B9BD0 7F085060 C42451A4 */  lwc1  $f4, %lo(D_80055174)($at)
 /* 0B9BD4 7F085064 3C014060 */  li    $at, 0x40600000 # 3.500000
 /* 0B9BD8 7F085068 44813000 */  mtc1  $at, $f6
-/* 0B9BDC 7F08506C 3C018003 */  lui   $at, %hi(D_80036464) # $at, 0x8003
+/* 0B9BDC 7F08506C 3C018003 */  lui   $at, %hi(g_TankOrientationAngle) # $at, 0x8003
 /* 0B9BE0 7F085070 27B00374 */  addiu $s0, $sp, 0x374
 /* 0B9BE4 7F085074 46044282 */  mul.s $f10, $f8, $f4
-/* 0B9BE8 7F085078 C42864A4 */  lwc1  $f8, %lo(D_80036464)($at)
+/* 0B9BE8 7F085078 C42864A4 */  lwc1  $f8, %lo(g_TankOrientationAngle)($at)
 /* 0B9BEC 7F08507C 02003825 */  move  $a3, $s0
 /* 0B9BF0 7F085080 2504048C */  addiu $a0, $t0, 0x48c
 /* 0B9BF4 7F085084 27AA0368 */  addiu $t2, $sp, 0x368
@@ -29564,7 +29587,7 @@ glabel MoveBond
 /* 0B9C44 7F0850D4 3C01BF80 */   lui   $at, 0xbf80
 /* 0B9C48 7F0850D8 C7A4035C */  lwc1  $f4, 0x35c($sp)
 /* 0B9C4C 7F0850DC 3C018003 */  li    $at, 0x80030000 # -0.000000
-/* 0B9C50 7F0850E0 E42464A4 */  swc1  $f4, %lo(D_80036464)($at)
+/* 0B9C50 7F0850E0 E42464A4 */  swc1  $f4, %lo(g_TankOrientationAngle)($at)
 /* 0B9C54 7F0850E4 100000CB */  b     .Ljp7F085414
 /* 0B9C58 7F0850E8 8E280000 */   lw    $t0, ($s1)
 /* 0B9C5C 7F0850EC 3C01BF80 */  li    $at, 0xBF800000 # -1.000000
@@ -29770,9 +29793,9 @@ glabel MoveBond
 /* 0B9F5C 7F0853EC 2504048C */   addiu $a0, $t0, 0x48c
 /* 0B9F60 7F0853F0 10400004 */  beqz  $v0, .Ljp7F085404
 /* 0B9F64 7F0853F4 C7A8035C */   lwc1  $f8, 0x35c($sp)
-/* 0B9F68 7F0853F8 3C018003 */  lui   $at, %hi(D_80036464) # $at, 0x8003
+/* 0B9F68 7F0853F8 3C018003 */  lui   $at, %hi(g_TankOrientationAngle) # $at, 0x8003
 /* 0B9F6C 7F0853FC 10000002 */  b     .Ljp7F085408
-/* 0B9F70 7F085400 E42864A4 */   swc1  $f8, %lo(D_80036464)($at)
+/* 0B9F70 7F085400 E42864A4 */   swc1  $f8, %lo(g_TankOrientationAngle)($at)
 .Ljp7F085404:
 /* 0B9F74 7F085404 E7B40358 */  swc1  $f20, 0x358($sp)
 .Ljp7F085408:
@@ -29782,13 +29805,13 @@ glabel MoveBond
 .Ljp7F085414:
 /* 0B9F84 7F085414 3C018005 */  lui   $at, %hi(D_80055180) # $at, 0x8005
 /* 0B9F88 7F085418 C42E51B0 */  lwc1  $f14, %lo(D_80055180)($at)
-/* 0B9F8C 7F08541C 3C038003 */  lui   $v1, %hi(D_80036484) # $v1, 0x8003
-/* 0B9F90 7F085420 246364C4 */  addiu $v1, %lo(D_80036484) # addiu $v1, $v1, 0x64c4
-/* 0B9F94 7F085424 3C018003 */  lui   $at, %hi(D_80036488) # $at, 0x8003
-/* 0B9F98 7F085428 C42464C8 */  lwc1  $f4, %lo(D_80036488)($at)
+/* 0B9F8C 7F08541C 3C038003 */  lui   $v1, %hi(g_TankTurretAngle) # $v1, 0x8003
+/* 0B9F90 7F085420 246364C4 */  addiu $v1, %lo(g_TankTurretAngle) # addiu $v1, $v1, 0x64c4
+/* 0B9F94 7F085424 3C018003 */  lui   $at, %hi(g_TankTurretTurn) # $at, 0x8003
+/* 0B9F98 7F085428 C42464C8 */  lwc1  $f4, %lo(g_TankTurretTurn)($at)
 /* 0B9F9C 7F08542C C4660000 */  lwc1  $f6, ($v1)
-/* 0B9FA0 7F085430 3C078003 */  lui   $a3, %hi(D_80036474) # $a3, 0x8003
-/* 0B9FA4 7F085434 24E764B4 */  addiu $a3, %lo(D_80036474) # addiu $a3, $a3, 0x64b4
+/* 0B9FA0 7F085430 3C078003 */  lui   $a3, %hi(g_TankTurretOrientationAngleRad) # $a3, 0x8003
+/* 0B9FA4 7F085434 24E764B4 */  addiu $a3, %lo(g_TankTurretOrientationAngleRad) # addiu $a3, $a3, 0x64b4
 /* 0B9FA8 7F085438 46043280 */  add.s $f10, $f6, $f4
 /* 0B9FAC 7F08543C C4EC0000 */  lwc1  $f12, ($a3)
 /* 0B9FB0 7F085440 3C014060 */  li    $at, 0x40600000 # 3.500000
@@ -29892,7 +29915,7 @@ glabel MoveBond
 /* 0BA114 7F0855A4 C42251D0 */  lwc1  $f2, %lo(D_800551A0)($at)
 /* 0BA118 7F0855A8 46004182 */  mul.s $f6, $f8, $f0
 /* 0BA11C 7F0855AC 2504048C */  addiu $a0, $t0, 0x48c
-/* 0BA120 7F0855B0 3C068003 */  lui   $a2, %hi(D_80036464) # $a2, 0x8003
+/* 0BA120 7F0855B0 3C068003 */  lui   $a2, %hi(g_TankOrientationAngle) # $a2, 0x8003
 /* 0BA124 7F0855B4 E4E60000 */  swc1  $f6, ($a3)
 /* 0BA128 7F0855B8 C4EC0000 */  lwc1  $f12, ($a3)
 /* 0BA12C 7F0855BC 460C103E */  c.le.s $f2, $f12
@@ -29918,16 +29941,16 @@ glabel MoveBond
 .Ljp7F085608:
 /* 0BA178 7F085608 E7B00354 */  swc1  $f16, 0x354($sp)
 /* 0BA17C 7F08560C 0FC1F4F3 */  jal   bondviewCallTankCollisionStatus
-/* 0BA180 7F085610 8CC664A4 */   lw    $a2, %lo(D_80036464)($a2)
-/* 0BA184 7F085614 3C038003 */  lui   $v1, %hi(D_80036484) # $v1, 0x8003
+/* 0BA180 7F085610 8CC664A4 */   lw    $a2, %lo(g_TankOrientationAngle)($a2)
+/* 0BA184 7F085614 3C038003 */  lui   $v1, %hi(g_TankTurretAngle) # $v1, 0x8003
 /* 0BA188 7F085618 3C018005 */  lui   $at, %hi(D_800551A8) # $at, 0x8005
 /* 0BA18C 7F08561C C42E51D8 */  lwc1  $f14, %lo(D_800551A8)($at)
-/* 0BA190 7F085620 246364C4 */  addiu $v1, %lo(D_80036484) # addiu $v1, $v1, 0x64c4
+/* 0BA190 7F085620 246364C4 */  addiu $v1, %lo(g_TankTurretAngle) # addiu $v1, $v1, 0x64c4
 /* 0BA194 7F085624 14400009 */  bnez  $v0, .Ljp7F08564C
 /* 0BA198 7F085628 C7B00354 */   lwc1  $f16, 0x354($sp)
-/* 0BA19C 7F08562C 3C018003 */  lui   $at, %hi(D_80036474) # $at, 0x8003
-/* 0BA1A0 7F085630 E43064B4 */  swc1  $f16, %lo(D_80036474)($at)
-/* 0BA1A4 7F085634 C42A64B4 */  lwc1  $f10, %lo(D_80036474)($at)
+/* 0BA19C 7F08562C 3C018003 */  lui   $at, %hi(g_TankTurretOrientationAngleRad) # $at, 0x8003
+/* 0BA1A0 7F085630 E43064B4 */  swc1  $f16, %lo(g_TankTurretOrientationAngleRad)($at)
+/* 0BA1A4 7F085634 C42A64B4 */  lwc1  $f10, %lo(g_TankTurretOrientationAngleRad)($at)
 /* 0BA1A8 7F085638 3C018005 */  lui   $at, %hi(D_800551AC) # $at, 0x8005
 /* 0BA1AC 7F08563C C42851DC */  lwc1  $f8, %lo(D_800551AC)($at)
 /* 0BA1B0 7F085640 E4700000 */  swc1  $f16, ($v1)
@@ -29968,8 +29991,8 @@ glabel MoveBond
 /* 0BA238 7F0856C8 E7A402F4 */  swc1  $f4, 0x2f4($sp)
 /* 0BA23C 7F0856CC 46085181 */  sub.s $f6, $f10, $f8
 /* 0BA240 7F0856D0 C42451EC */  lwc1  $f4, %lo(D_800551BC)($at)
-/* 0BA244 7F0856D4 3C018003 */  lui   $at, %hi(D_80036464) # $at, 0x8003
-/* 0BA248 7F0856D8 C42A64A4 */  lwc1  $f10, %lo(D_80036464)($at)
+/* 0BA244 7F0856D4 3C018003 */  lui   $at, %hi(g_TankOrientationAngle) # $at, 0x8003
+/* 0BA248 7F0856D8 C42A64A4 */  lwc1  $f10, %lo(g_TankOrientationAngle)($at)
 /* 0BA24C 7F0856DC E7A602FC */  swc1  $f6, 0x2fc($sp)
 /* 0BA250 7F0856E0 0FC162C7 */  jal   matrix_4x4_set_rotation_around_y
 /* 0BA254 7F0856E4 460A2301 */   sub.s $f12, $f4, $f10
@@ -29989,14 +30012,14 @@ glabel MoveBond
 .Ljp7F08571C:
 /* 0BA28C 7F08571C 3C048005 */  lui   $a0, %hi(g_ClockTimer) # $a0, 0x8005
 /* 0BA290 7F085720 8C8483A4 */  lw    $a0, %lo(g_ClockTimer)($a0)
-/* 0BA294 7F085724 3C018003 */  lui   $at, %hi(D_80036474) # $at, 0x8003
-/* 0BA298 7F085728 C42C64B4 */  lwc1  $f12, %lo(D_80036474)($at)
+/* 0BA294 7F085724 3C018003 */  lui   $at, %hi(g_TankTurretOrientationAngleRad) # $at, 0x8003
+/* 0BA298 7F085728 C42C64B4 */  lwc1  $f12, %lo(g_TankTurretOrientationAngleRad)($at)
 /* 0BA29C 7F08572C 5880001B */  blezl $a0, .Ljp7F08579C
 /* 0BA2A0 7F085730 3C0143B4 */   lui   $at, 0x43b4
 /* 0BA2A4 7F085734 18800018 */  blez  $a0, .Ljp7F085798
 /* 0BA2A8 7F085738 00001025 */   move  $v0, $zero
-/* 0BA2AC 7F08573C 3C018003 */  lui   $at, %hi(D_80036488) # $at, 0x8003
-/* 0BA2B0 7F085740 C42864C8 */  lwc1  $f8, %lo(D_80036488)($at)
+/* 0BA2AC 7F08573C 3C018003 */  lui   $at, %hi(g_TankTurretTurn) # $at, 0x8003
+/* 0BA2B0 7F085740 C42864C8 */  lwc1  $f8, %lo(g_TankTurretTurn)($at)
 /* 0BA2B4 7F085744 3C018005 */  lui   $at, %hi(g_GlobalTimerDelta) # $at, 0x8005
 /* 0BA2B8 7F085748 C42683B4 */  lwc1  $f6, %lo(g_GlobalTimerDelta)($at)
 /* 0BA2BC 7F08574C 3C038003 */  lui   $v1, %hi(D_8003647C) # $v1, 0x8003
@@ -30039,9 +30062,9 @@ glabel MoveBond
 /* 0BA340 7F0857D0 46085182 */  mul.s $f6, $f10, $f8
 /* 0BA344 7F0857D4 3C014080 */  li    $at, 0x40800000 # 4.000000
 /* 0BA348 7F0857D8 44814000 */  mtc1  $at, $f8
-/* 0BA34C 7F0857DC 3C018003 */  lui   $at, %hi(D_80036464) # $at, 0x8003
+/* 0BA34C 7F0857DC 3C018003 */  lui   $at, %hi(g_TankOrientationAngle) # $at, 0x8003
 /* 0BA350 7F0857E0 46043282 */  mul.s $f10, $f6, $f4
-/* 0BA354 7F0857E4 C42464A4 */  lwc1  $f4, %lo(D_80036464)($at)
+/* 0BA354 7F0857E4 C42464A4 */  lwc1  $f4, %lo(g_TankOrientationAngle)($at)
 /* 0BA358 7F0857E8 3C014080 */  li    $at, 0x40800000 # 4.000000
 /* 0BA35C 7F0857EC 46085182 */  mul.s $f6, $f10, $f8
 /* 0BA360 7F0857F0 460C2280 */  add.s $f10, $f4, $f12
@@ -30179,8 +30202,8 @@ glabel MoveBond
 /* 0BA538 7F0859C8 8DCE6488 */  lw    $t6, %lo(in_tank_flag)($t6)
 /* 0BA53C 7F0859CC 24010001 */  li    $at, 1
 /* 0BA540 7F0859D0 15C10209 */  bne   $t6, $at, .Ljp7F0861F8
-/* 0BA544 7F0859D4 3C028008 */   lui   $v0, %hi(dword_CODE_bss_800799B8) # $v0, 0x8008
-/* 0BA548 7F0859D8 8C4299F8 */  lw    $v0, %lo(dword_CODE_bss_800799B8)($v0)
+/* 0BA544 7F0859D4 3C028008 */   lui   $v0, %hi(g_EnterTankAudioState) # $v0, 0x8008
+/* 0BA548 7F0859D8 8C4299F8 */  lw    $v0, %lo(g_EnterTankAudioState)($v0)
 /* 0BA54C 7F0859DC 3C038003 */  lui   $v1, %hi(ptr_playerstank) # $v1, 0x8003
 /* 0BA550 7F0859E0 24010001 */  li    $at, 1
 /* 0BA554 7F0859E4 144000BF */  bnez  $v0, .Ljp7F085CE4
@@ -30191,8 +30214,8 @@ glabel MoveBond
 /* 0BA568 7F0859F8 106000AD */  beqz  $v1, .Ljp7F085CB0
 /* 0BA56C 7F0859FC 00000000 */   nop
 /* 0BA570 7F085A00 C424520C */  lwc1  $f4, %lo(D_800551DC)($at)
-/* 0BA574 7F085A04 3C018003 */  lui   $at, %hi(D_80036464) # $at, 0x8003
-/* 0BA578 7F085A08 C42A64A4 */  lwc1  $f10, %lo(D_80036464)($at)
+/* 0BA574 7F085A04 3C018003 */  lui   $at, %hi(g_TankOrientationAngle) # $at, 0x8003
+/* 0BA578 7F085A08 C42A64A4 */  lwc1  $f10, %lo(g_TankOrientationAngle)($at)
 /* 0BA57C 7F085A0C 8C700004 */  lw    $s0, 4($v1)
 /* 0BA580 7F085A10 0FC162C7 */  jal   matrix_4x4_set_rotation_around_y
 /* 0BA584 7F085A14 460A2301 */   sub.s $f12, $f4, $f10
@@ -30222,15 +30245,15 @@ glabel MoveBond
 /* 0BA5E4 7F085A74 E7A6025C */  swc1  $f6, 0x25c($sp)
 /* 0BA5E8 7F085A78 C60A005C */  lwc1  $f10, 0x5c($s0)
 /* 0BA5EC 7F085A7C C7A60264 */  lwc1  $f6, 0x264($sp)
-/* 0BA5F0 7F085A80 3C018003 */  lui   $at, %hi(D_80036464) # $at, 0x8003
+/* 0BA5F0 7F085A80 3C018003 */  lui   $at, %hi(g_TankOrientationAngle) # $at, 0x8003
 /* 0BA5F4 7F085A84 460A2200 */  add.s $f8, $f4, $f10
 /* 0BA5F8 7F085A88 8E2F0000 */  lw    $t7, ($s1)
 /* 0BA5FC 7F085A8C E7A80260 */  swc1  $f8, 0x260($sp)
 /* 0BA600 7F085A90 C6040060 */  lwc1  $f4, 0x60($s0)
-/* 0BA604 7F085A94 C42864A4 */  lwc1  $f8, %lo(D_80036464)($at)
-/* 0BA608 7F085A98 3C018003 */  lui   $at, %hi(D_80036474) # $at, 0x8003
+/* 0BA604 7F085A94 C42864A4 */  lwc1  $f8, %lo(g_TankOrientationAngle)($at)
+/* 0BA608 7F085A98 3C018003 */  lui   $at, %hi(g_TankTurretOrientationAngleRad) # $at, 0x8003
 /* 0BA60C 7F085A9C 46043280 */  add.s $f10, $f6, $f4
-/* 0BA610 7F085AA0 C42664B4 */  lwc1  $f6, %lo(D_80036474)($at)
+/* 0BA610 7F085AA0 C42664B4 */  lwc1  $f6, %lo(g_TankTurretOrientationAngleRad)($at)
 /* 0BA614 7F085AA4 3C018005 */  lui   $at, %hi(D_800551E0) # $at, 0x8005
 /* 0BA618 7F085AA8 46064100 */  add.s $f4, $f8, $f6
 /* 0BA61C 7F085AAC E7AA0264 */  swc1  $f10, 0x264($sp)
@@ -30248,8 +30271,8 @@ glabel MoveBond
 /* 0BA648 7F085AD8 C42683B4 */  lwc1  $f6, %lo(g_GlobalTimerDelta)($at)
 /* 0BA64C 7F085ADC 3C014234 */  li    $at, 0x42340000 # 45.000000
 /* 0BA650 7F085AE0 44812000 */  mtc1  $at, $f4
-/* 0BA654 7F085AE4 3C108008 */  lui   $s0, %hi(flt_CODE_bss_800799BC) # $s0, 0x8008
-/* 0BA658 7F085AE8 261099FC */  addiu $s0, %lo(flt_CODE_bss_800799BC) # addiu $s0, $s0, -0x6604
+/* 0BA654 7F085AE4 3C108008 */  lui   $s0, %hi(g_TankEnteringSitHeight) # $s0, 0x8008
+/* 0BA658 7F085AE8 261099FC */  addiu $s0, %lo(g_TankEnteringSitHeight) # addiu $s0, $s0, -0x6604
 /* 0BA65C 7F085AEC 46043283 */  div.s $f10, $f6, $f4
 /* 0BA660 7F085AF0 C6080000 */  lwc1  $f8, ($s0)
 /* 0BA664 7F085AF4 3C018005 */  lui   $at, %hi(D_800551E4) # $at, 0x8005
@@ -30279,28 +30302,28 @@ glabel MoveBond
 /* 0BA6C0 7F085B50 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 0BA6C4 7F085B54 44814000 */  mtc1  $at, $f8
 /* 0BA6C8 7F085B58 46060100 */  add.s $f4, $f0, $f6
-/* 0BA6CC 7F085B5C 3C028008 */  lui   $v0, %hi(flt_CODE_bss_800799C0) # $v0, 0x8008
-/* 0BA6D0 7F085B60 24429A00 */  addiu $v0, %lo(flt_CODE_bss_800799C0) # addiu $v0, $v0, -0x6600
+/* 0BA6CC 7F085B5C 3C028008 */  lui   $v0, %hi(g_TankEnteringSitHeightRemain) # $v0, 0x8008
+/* 0BA6D0 7F085B60 24429A00 */  addiu $v0, %lo(g_TankEnteringSitHeightRemain) # addiu $v0, $v0, -0x6600
 /* 0BA6D4 7F085B64 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0BA6D8 7F085B68 46082282 */  mul.s $f10, $f4, $f8
 /* 0BA6DC 7F085B6C 44813000 */  mtc1  $at, $f6
 /* 0BA6E0 7F085B70 C7A80254 */  lwc1  $f8, 0x254($sp)
-/* 0BA6E4 7F085B74 3C018008 */  lui   $at, %hi(flt_CODE_bss_800799C8) # $at, 0x8008
+/* 0BA6E4 7F085B74 3C018008 */  lui   $at, %hi(g_TankEnterBondVertAngleDeg) # $at, 0x8008
 /* 0BA6E8 7F085B78 8E2A0000 */  lw    $t2, ($s1)
 /* 0BA6EC 7F085B7C C7B00258 */  lwc1  $f16, 0x258($sp)
-/* 0BA6F0 7F085B80 3C038008 */  lui   $v1, %hi(flt_CODE_bss_800799D0) # $v1, 0x8008
+/* 0BA6F0 7F085B80 3C038008 */  lui   $v1, %hi(g_EnterTankCoord) # $v1, 0x8008
 /* 0BA6F4 7F085B84 E44A0000 */  swc1  $f10, ($v0)
 /* 0BA6F8 7F085B88 C4420000 */  lwc1  $f2, ($v0)
-/* 0BA6FC 7F085B8C 24639A10 */  addiu $v1, %lo(flt_CODE_bss_800799D0) # addiu $v1, $v1, -0x65f0
+/* 0BA6FC 7F085B8C 24639A10 */  addiu $v1, %lo(g_EnterTankCoord) # addiu $v1, $v1, -0x65f0
 /* 0BA700 7F085B90 46023101 */  sub.s $f4, $f6, $f2
-/* 0BA704 7F085B94 C4269A08 */  lwc1  $f6, %lo(flt_CODE_bss_800799C8)($at)
-/* 0BA708 7F085B98 3C018008 */  lui   $at, %hi(flt_CODE_bss_800799C4) # $at, 0x8008
+/* 0BA704 7F085B94 C4269A08 */  lwc1  $f6, %lo(g_TankEnterBondVertAngleDeg)($at)
+/* 0BA708 7F085B98 3C018008 */  lui   $at, %hi(g_TankEnterBondHorizAngleDeg) # $at, 0x8008
 /* 0BA70C 7F085B9C 46082282 */  mul.s $f10, $f4, $f8
 /* 0BA710 7F085BA0 00000000 */  nop
 /* 0BA714 7F085BA4 46061102 */  mul.s $f4, $f2, $f6
 /* 0BA718 7F085BA8 460A2200 */  add.s $f8, $f4, $f10
 /* 0BA71C 7F085BAC E5480158 */  swc1  $f8, 0x158($t2)
-/* 0BA720 7F085BB0 C4329A04 */  lwc1  $f18, %lo(flt_CODE_bss_800799C4)($at)
+/* 0BA720 7F085BB0 C4329A04 */  lwc1  $f18, %lo(g_TankEnterBondHorizAngleDeg)($at)
 /* 0BA724 7F085BB4 3C014334 */  li    $at, 0x43340000 # 180.000000
 /* 0BA728 7F085BB8 44813000 */  mtc1  $at, $f6
 /* 0BA72C 7F085BBC 46128301 */  sub.s $f12, $f16, $f18
@@ -30369,26 +30392,26 @@ glabel MoveBond
 /* 0BA818 7F085CA8 460A2201 */  sub.s $f8, $f4, $f10
 /* 0BA81C 7F085CAC E7A803B4 */  swc1  $f8, 0x3b4($sp)
 .Ljp7F085CB0:
-/* 0BA820 7F085CB0 3C108008 */  lui   $s0, %hi(flt_CODE_bss_800799BC) # $s0, 0x8008
-/* 0BA824 7F085CB4 261099FC */  addiu $s0, %lo(flt_CODE_bss_800799BC) # addiu $s0, $s0, -0x6604
+/* 0BA820 7F085CB0 3C108008 */  lui   $s0, %hi(g_TankEnteringSitHeight) # $s0, 0x8008
+/* 0BA824 7F085CB4 261099FC */  addiu $s0, %lo(g_TankEnteringSitHeight) # addiu $s0, $s0, -0x6604
 /* 0BA828 7F085CB8 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0BA82C 7F085CBC 44812000 */  mtc1  $at, $f4
 /* 0BA830 7F085CC0 C6060000 */  lwc1  $f6, ($s0)
 /* 0BA834 7F085CC4 8E280000 */  lw    $t0, ($s1)
-/* 0BA838 7F085CC8 3C018008 */  lui   $at, %hi(dword_CODE_bss_800799B8)
+/* 0BA838 7F085CC8 3C018008 */  lui   $at, %hi(g_EnterTankAudioState)
 /* 0BA83C 7F085CCC 4606203E */  c.le.s $f4, $f6
 /* 0BA840 7F085CD0 240C0001 */  li    $t4, 1
 /* 0BA844 7F085CD4 450200EF */  bc1fl .Ljp7F086094
 /* 0BA848 7F085CD8 3C013F40 */   lui   $at, %hi(0x3F3F99F8) # $at, 0x3f40
 /* 0BA84C 7F085CDC 100000EC */  b     .Ljp7F086090
-/* 0BA850 7F085CE0 AC2C99F8 */   sw    $t4, %lo(dword_CODE_bss_800799B8)($at)
+/* 0BA850 7F085CE0 AC2C99F8 */   sw    $t4, %lo(g_EnterTankAudioState)($at)
 .Ljp7F085CE4:
 /* 0BA854 7F085CE4 1441001A */  bne   $v0, $at, .Ljp7F085D50
 /* 0BA858 7F085CE8 3C108003 */   lui   $s0, %hi(SFX_80036458) # $s0, 0x8003
 /* 0BA85C 7F085CEC 240B0002 */  li    $t3, 2
-/* 0BA860 7F085CF0 3C018008 */  lui   $at, %hi(dword_CODE_bss_800799B8) # $at, 0x8008
+/* 0BA860 7F085CF0 3C018008 */  lui   $at, %hi(g_EnterTankAudioState) # $at, 0x8008
 /* 0BA864 7F085CF4 26106498 */  addiu $s0, %lo(SFX_80036458) # addiu $s0, $s0, 0x6498
-/* 0BA868 7F085CF8 AC2B99F8 */  sw    $t3, %lo(dword_CODE_bss_800799B8)($at)
+/* 0BA868 7F085CF8 AC2B99F8 */  sw    $t3, %lo(g_EnterTankAudioState)($at)
 /* 0BA86C 7F085CFC 8E0D0000 */  lw    $t5, ($s0)
 /* 0BA870 7F085D00 55A0000A */  bnezl $t5, .Ljp7F085D2C
 /* 0BA874 7F085D04 8E040000 */   lw    $a0, ($s0)
@@ -30406,8 +30429,8 @@ glabel MoveBond
 /* 0BA89C 7F085D2C 24050008 */  li    $a1, 8
 /* 0BA8A0 7F085D30 0C002465 */  jal   sndCreatePostEvent
 /* 0BA8A4 7F085D34 240661A8 */   li    $a2, 25000
-/* 0BA8A8 7F085D38 3C028008 */  lui   $v0, %hi(dword_CODE_bss_800799B4) # $v0, 0x8008
-/* 0BA8AC 7F085D3C 244299F4 */  addiu $v0, %lo(dword_CODE_bss_800799B4) # addiu $v0, $v0, -0x660c
+/* 0BA8A8 7F085D38 3C028008 */  lui   $v0, %hi(g_TankEngineSfxVolume) # $v0, 0x8008
+/* 0BA8AC 7F085D3C 244299F4 */  addiu $v0, %lo(g_TankEngineSfxVolume) # addiu $v0, $v0, -0x660c
 /* 0BA8B0 7F085D40 240E61A8 */  li    $t6, 25000
 /* 0BA8B4 7F085D44 AC4E0000 */  sw    $t6, ($v0)
 /* 0BA8B8 7F085D48 100000D1 */  b     .Ljp7F086090
@@ -30549,8 +30572,8 @@ glabel MoveBond
 /* 0BAAA4 7F085F34 8E040000 */  lw    $a0, ($s0)
 .Ljp7F085F38:
 /* 0BAAA8 7F085F38 1080001A */  beqz  $a0, .Ljp7F085FA4
-/* 0BAAAC 7F085F3C 3C028008 */   lui   $v0, %hi(dword_CODE_bss_800799B4) # $v0, 0x8008
-/* 0BAAB0 7F085F40 244299F4 */  addiu $v0, %lo(dword_CODE_bss_800799B4) # addiu $v0, $v0, -0x660c
+/* 0BAAAC 7F085F3C 3C028008 */   lui   $v0, %hi(g_TankEngineSfxVolume) # $v0, 0x8008
+/* 0BAAB0 7F085F40 244299F4 */  addiu $v0, %lo(g_TankEngineSfxVolume) # addiu $v0, $v0, -0x660c
 /* 0BAAB4 7F085F44 240C7FFF */  li    $t4, 32767
 /* 0BAAB8 7F085F48 AC4C0000 */  sw    $t4, ($v0)
 /* 0BAABC 7F085F4C 3C018005 */  lui   $at, %hi(D_80055200) # $at, 0x8005
@@ -30589,8 +30612,8 @@ glabel MoveBond
 /* 0BAB38 7F085FC8 10000004 */  b     .Ljp7F085FDC
 /* 0BAB3C 7F085FCC 46061080 */   add.s $f2, $f2, $f6
 .Ljp7F085FD0:
-/* 0BAB40 7F085FD0 3C018003 */  lui   $at, %hi(D_8003646C) # $at, 0x8003
-/* 0BAB44 7F085FD4 C42264AC */  lwc1  $f2, %lo(D_8003646C)($at)
+/* 0BAB40 7F085FD0 3C018003 */  lui   $at, %hi(g_TankTurretVerticalAngle) # $at, 0x8003
+/* 0BAB44 7F085FD4 C42264AC */  lwc1  $f2, %lo(g_TankTurretVerticalAngle)($at)
 /* 0BAB48 7F085FD8 8E280000 */  lw    $t0, ($s1)
 .Ljp7F085FDC:
 /* 0BAB4C 7F085FDC 3C018005 */  lui   $at, %hi(D_80055214) # $at, 0x8005
@@ -30613,8 +30636,8 @@ glabel MoveBond
 /* 0BAB88 7F086018 00001025 */  move  $v0, $zero
 /* 0BAB8C 7F08601C 18800014 */  blez  $a0, .Ljp7F086070
 /* 0BAB90 7F086020 3C018005 */   lui   $at, %hi(D_8005521C) # $at, 0x8005
-/* 0BAB94 7F086024 3C038003 */  lui   $v1, %hi(D_80036470) # $v1, 0x8003
-/* 0BAB98 7F086028 246364B0 */  addiu $v1, %lo(D_80036470) # addiu $v1, $v1, 0x64b0
+/* 0BAB94 7F086024 3C038003 */  lui   $v1, %hi(g_TankTurretVerticalAngleRelated) # $v1, 0x8003
+/* 0BAB98 7F086028 246364B0 */  addiu $v1, %lo(g_TankTurretVerticalAngleRelated) # addiu $v1, $v1, 0x64b0
 /* 0BAB9C 7F08602C C420524C */  lwc1  $f0, %lo(D_8005521C)($at)
 /* 0BABA0 7F086030 C4700000 */  lwc1  $f16, ($v1)
 /* 0BABA4 7F086034 24420001 */  addiu $v0, $v0, 1
@@ -30635,14 +30658,14 @@ glabel MoveBond
 .Ljp7F08606C:
 /* 0BABDC 7F08606C E4700000 */  swc1  $f16, ($v1)
 .Ljp7F086070:
-/* 0BABE0 7F086070 3C038003 */  lui   $v1, %hi(D_80036470) # $v1, 0x8003
-/* 0BABE4 7F086074 246364B0 */  addiu $v1, %lo(D_80036470) # addiu $v1, $v1, 0x64b0
+/* 0BABE0 7F086070 3C038003 */  lui   $v1, %hi(g_TankTurretVerticalAngleRelated) # $v1, 0x8003
+/* 0BABE4 7F086074 246364B0 */  addiu $v1, %lo(g_TankTurretVerticalAngleRelated) # addiu $v1, $v1, 0x64b0
 /* 0BABE8 7F086078 3C018005 */  lui   $at, %hi(D_80055220) # $at, 0x8005
 /* 0BABEC 7F08607C C4245250 */  lwc1  $f4, %lo(D_80055220)($at)
 /* 0BABF0 7F086080 C4660000 */  lwc1  $f6, ($v1)
-/* 0BABF4 7F086084 3C018003 */  lui   $at, %hi(D_8003646C) # $at, 0x8003
+/* 0BABF4 7F086084 3C018003 */  lui   $at, %hi(g_TankTurretVerticalAngle) # $at, 0x8003
 /* 0BABF8 7F086088 46043282 */  mul.s $f10, $f6, $f4
-/* 0BABFC 7F08608C E42A64AC */  swc1  $f10, %lo(D_8003646C)($at)
+/* 0BABFC 7F08608C E42A64AC */  swc1  $f10, %lo(g_TankTurretVerticalAngle)($at)
 .Ljp7F086090:
 /* 0BAC00 7F086090 3C013F40 */  li    $at, 0x3F400000 # 0.750000
 .Ljp7F086094:
@@ -30670,8 +30693,8 @@ glabel MoveBond
 /* 0BAC54 7F0860E4 4600A386 */   mov.s $f14, $f20
 /* 0BAC58 7F0860E8 3C018005 */  lui   $at, %hi(D_80055228) # $at, 0x8005
 /* 0BAC5C 7F0860EC C4285258 */  lwc1  $f8, %lo(D_80055228)($at)
-/* 0BAC60 7F0860F0 3C018003 */  lui   $at, %hi(D_80036464) # $at, 0x8003
-/* 0BAC64 7F0860F4 C42A64A4 */  lwc1  $f10, %lo(D_80036464)($at)
+/* 0BAC60 7F0860F0 3C018003 */  lui   $at, %hi(g_TankOrientationAngle) # $at, 0x8003
+/* 0BAC64 7F0860F4 C42A64A4 */  lwc1  $f10, %lo(g_TankOrientationAngle)($at)
 /* 0BAC68 7F0860F8 0FC160F3 */  jal   sinf
 /* 0BAC6C 7F0860FC 460A4301 */   sub.s $f12, $f8, $f10
 /* 0BAC70 7F086100 8E2E0000 */  lw    $t6, ($s1)
@@ -30683,9 +30706,9 @@ glabel MoveBond
 /* 0BAC88 7F086118 C7A603AC */  lwc1  $f6, 0x3ac($sp)
 /* 0BAC8C 7F08611C 46082282 */  mul.s $f10, $f4, $f8
 /* 0BAC90 7F086120 C428525C */  lwc1  $f8, %lo(D_8005522C)($at)
-/* 0BAC94 7F086124 3C018003 */  lui   $at, %hi(D_80036464) # $at, 0x8003
+/* 0BAC94 7F086124 3C018003 */  lui   $at, %hi(g_TankOrientationAngle) # $at, 0x8003
 /* 0BAC98 7F086128 460A3100 */  add.s $f4, $f6, $f10
-/* 0BAC9C 7F08612C C42664A4 */  lwc1  $f6, %lo(D_80036464)($at)
+/* 0BAC9C 7F08612C C42664A4 */  lwc1  $f6, %lo(g_TankOrientationAngle)($at)
 /* 0BACA0 7F086130 E7A403AC */  swc1  $f4, 0x3ac($sp)
 /* 0BACA4 7F086134 0FC160F0 */  jal   cosf
 /* 0BACA8 7F086138 46064301 */   sub.s $f12, $f8, $f6
@@ -30701,8 +30724,8 @@ glabel MoveBond
 /* 0BACD0 7F086160 46065100 */  add.s $f4, $f10, $f6
 /* 0BACD4 7F086164 0FC1F7E1 */  jal   bondviewCalcUpdatePlayerCollision
 /* 0BACD8 7F086168 E7A403B4 */   swc1  $f4, 0x3b4($sp)
-/* 0BACDC 7F08616C 3C0F8008 */  lui   $t7, %hi(dword_CODE_bss_800799B8) # $t7, 0x8008
-/* 0BACE0 7F086170 8DEF99F8 */  lw    $t7, %lo(dword_CODE_bss_800799B8)($t7)
+/* 0BACDC 7F08616C 3C0F8008 */  lui   $t7, %hi(g_EnterTankAudioState) # $t7, 0x8008
+/* 0BACE0 7F086170 8DEF99F8 */  lw    $t7, %lo(g_EnterTankAudioState)($t7)
 /* 0BACE4 7F086174 24010002 */  li    $at, 2
 /* 0BACE8 7F086178 3C0A8005 */  lui   $t2, %hi(g_ClockTimer) # $t2, 0x8005
 /* 0BACEC 7F08617C 55E10238 */  bnel  $t7, $at, .Ljp7F086A60
@@ -30748,8 +30771,8 @@ glabel MoveBond
 /* 0BAD84 7F086214 44815000 */  mtc1  $at, $f10
 /* 0BAD88 7F086218 3C018005 */  lui   $at, %hi(g_GlobalTimerDelta) # $at, 0x8005
 /* 0BAD8C 7F08621C C42683B4 */  lwc1  $f6, %lo(g_GlobalTimerDelta)($at)
-/* 0BAD90 7F086220 3C028008 */  lui   $v0, %hi(dword_CODE_bss_800799B4) # $v0, 0x8008
-/* 0BAD94 7F086224 244299F4 */  addiu $v0, %lo(dword_CODE_bss_800799B4) # addiu $v0, $v0, -0x660c
+/* 0BAD90 7F086220 3C028008 */  lui   $v0, %hi(g_TankEngineSfxVolume) # $v0, 0x8008
+/* 0BAD94 7F086224 244299F4 */  addiu $v0, %lo(g_TankEngineSfxVolume) # addiu $v0, $v0, -0x660c
 /* 0BAD98 7F086228 46065102 */  mul.s $f4, $f10, $f6
 /* 0BAD9C 7F08622C 8C4B0000 */  lw    $t3, ($v0)
 /* 0BADA0 7F086230 24050008 */  li    $a1, 8
@@ -31371,10 +31394,10 @@ glabel MoveBond
 /* 0BB6A0 7F086B30 8FA40394 */   lw    $a0, 0x394($sp)
 /* 0BB6A4 7F086B34 8F186488 */  lw    $t8, %lo(in_tank_flag)($t8)
 /* 0BB6A8 7F086B38 24010001 */  li    $at, 1
-/* 0BB6AC 7F086B3C 3C0F8008 */  lui   $t7, %hi(dword_CODE_bss_800799B8) # $t7, 0x8008
+/* 0BB6AC 7F086B3C 3C0F8008 */  lui   $t7, %hi(g_EnterTankAudioState) # $t7, 0x8008
 /* 0BB6B0 7F086B40 57010130 */  bnel  $t8, $at, .Ljp7F087004
 /* 0BB6B4 7F086B44 8FA40394 */   lw    $a0, 0x394($sp)
-/* 0BB6B8 7F086B48 8DEF99F8 */  lw    $t7, %lo(dword_CODE_bss_800799B8)($t7)
+/* 0BB6B8 7F086B48 8DEF99F8 */  lw    $t7, %lo(g_EnterTankAudioState)($t7)
 /* 0BB6BC 7F086B4C 24010002 */  li    $at, 2
 /* 0BB6C0 7F086B50 55E1012C */  bnel  $t7, $at, .Ljp7F087004
 /* 0BB6C4 7F086B54 8FA40394 */   lw    $a0, 0x394($sp)
@@ -31398,20 +31421,20 @@ glabel MoveBond
 /* 0BB70C 7F086B9C 0002202B */  sltu  $a0, $zero, $v0
 /* 0BB710 7F086BA0 AE0400C4 */  sw    $a0, 0xc4($s0)
 .Ljp7F086BA4:
-/* 0BB714 7F086BA4 3C018003 */  lui   $at, %hi(D_8003646C) # $at, 0x8003
-/* 0BB718 7F086BA8 C42864AC */  lwc1  $f8, %lo(D_8003646C)($at)
-/* 0BB71C 7F086BAC 3C018003 */  lui   $at, %hi(D_80036474) # $at, 0x8003
+/* 0BB714 7F086BA4 3C018003 */  lui   $at, %hi(g_TankTurretVerticalAngle) # $at, 0x8003
+/* 0BB718 7F086BA8 C42864AC */  lwc1  $f8, %lo(g_TankTurretVerticalAngle)($at)
+/* 0BB71C 7F086BAC 3C018003 */  lui   $at, %hi(g_TankTurretOrientationAngleRad) # $at, 0x8003
 /* 0BB720 7F086BB0 27A500F0 */  addiu $a1, $sp, 0xf0
 /* 0BB724 7F086BB4 E60800C8 */  swc1  $f8, 0xc8($s0)
-/* 0BB728 7F086BB8 C42A64B4 */  lwc1  $f10, %lo(D_80036474)($at)
-/* 0BB72C 7F086BBC 3C018003 */  lui   $at, %hi(D_80036464) # $at, 0x8003
+/* 0BB728 7F086BB8 C42A64B4 */  lwc1  $f10, %lo(g_TankTurretOrientationAngleRad)($at)
+/* 0BB72C 7F086BBC 3C018003 */  lui   $at, %hi(g_TankOrientationAngle) # $at, 0x8003
 /* 0BB730 7F086BC0 E60A00CC */  swc1  $f10, 0xcc($s0)
-/* 0BB734 7F086BC4 C42664A4 */  lwc1  $f6, %lo(D_80036464)($at)
+/* 0BB734 7F086BC4 C42664A4 */  lwc1  $f6, %lo(g_TankOrientationAngle)($at)
 /* 0BB738 7F086BC8 3C018005 */  lui   $at, %hi(D_80055258) # $at, 0x8005
 /* 0BB73C 7F086BCC E60600DC */  swc1  $f6, 0xdc($s0)
 /* 0BB740 7F086BD0 C4245288 */  lwc1  $f4, %lo(D_80055258)($at)
-/* 0BB744 7F086BD4 3C018003 */  lui   $at, %hi(D_80036464) # $at, 0x8003
-/* 0BB748 7F086BD8 C42864A4 */  lwc1  $f8, %lo(D_80036464)($at)
+/* 0BB744 7F086BD4 3C018003 */  lui   $at, %hi(g_TankOrientationAngle) # $at, 0x8003
+/* 0BB748 7F086BD8 C42864A4 */  lwc1  $f8, %lo(g_TankOrientationAngle)($at)
 /* 0BB74C 7F086BDC 0FC162C7 */  jal   matrix_4x4_set_rotation_around_y
 /* 0BB750 7F086BE0 46082301 */   sub.s $f12, $f4, $f8
 /* 0BB754 7F086BE4 8FAE0138 */  lw    $t6, 0x138($sp)
@@ -31518,8 +31541,8 @@ glabel MoveBond
 /* 0BB8E0 7F086D70 0FC101E1 */  jal   chrobjCollisionRelated
 /* 0BB8E4 7F086D74 8FA40138 */   lw    $a0, 0x138($sp)
 /* 0BB8E8 7F086D78 8E250000 */  lw    $a1, ($s1)
-/* 0BB8EC 7F086D7C 3C068003 */  lui   $a2, %hi(D_80036464) # $a2, 0x8003
-/* 0BB8F0 7F086D80 8CC664A4 */  lw    $a2, %lo(D_80036464)($a2)
+/* 0BB8EC 7F086D7C 3C068003 */  lui   $a2, %hi(g_TankOrientationAngle) # $a2, 0x8003
+/* 0BB8F0 7F086D80 8CC664A4 */  lw    $a2, %lo(g_TankOrientationAngle)($a2)
 /* 0BB8F4 7F086D84 27A400B4 */  addiu $a0, $sp, 0xb4
 /* 0BB8F8 7F086D88 0FC1F3AB */  jal   bondviewTankCollisionRelated
 /* 0BB8FC 7F086D8C 24A5048C */   addiu $a1, $a1, 0x48c
@@ -32064,10 +32087,10 @@ glabel MoveBond
 /* 0B74A8 7F084AB8 C42AAD44 */  lwc1  $f10, %lo(D_80055174)($at)
 /* 0B74AC 7F084ABC 3C014060 */  li    $at, 0x40600000 # 3.500000
 /* 0B74B0 7F084AC0 44813000 */  mtc1  $at, $f6
-/* 0B74B4 7F084AC4 3C018003 */  lui   $at, %hi(D_80036464) # $at, 0x8003
+/* 0B74B4 7F084AC4 3C018003 */  lui   $at, %hi(g_TankOrientationAngle) # $at, 0x8003
 /* 0B74B8 7F084AC8 27B00374 */  addiu $s0, $sp, 0x374
 /* 0B74BC 7F084ACC 460A2202 */  mul.s $f8, $f4, $f10
-/* 0B74C0 7F084AD0 C42419B4 */  lwc1  $f4, %lo(D_80036464)($at)
+/* 0B74C0 7F084AD0 C42419B4 */  lwc1  $f4, %lo(g_TankOrientationAngle)($at)
 /* 0B74C4 7F084AD4 02003825 */  move  $a3, $s0
 /* 0B74C8 7F084AD8 2504048C */  addiu $a0, $t0, 0x48c
 /* 0B74CC 7F084ADC 27B90368 */  addiu $t9, $sp, 0x368
@@ -32095,7 +32118,7 @@ glabel MoveBond
 /* 0B751C 7F084B2C 3C01BF80 */   lui   $at, 0xbf80
 /* 0B7520 7F084B30 C7AA035C */  lwc1  $f10, 0x35c($sp)
 /* 0B7524 7F084B34 3C018003 */  li    $at, 0x80030000 # -0.000000
-/* 0B7528 7F084B38 E42A19B4 */  swc1  $f10, %lo(D_80036464)($at)
+/* 0B7528 7F084B38 E42A19B4 */  swc1  $f10, %lo(g_TankOrientationAngle)($at)
 /* 0B752C 7F084B3C 100000CB */  b     .L7F084E6C
 /* 0B7530 7F084B40 8E280000 */   lw    $t0, ($s1)
 /* 0B7534 7F084B44 3C01BF80 */  li    $at, 0xBF800000 # -1.000000
@@ -32301,9 +32324,9 @@ glabel MoveBond
 /* 0B7834 7F084E44 2504048C */   addiu $a0, $t0, 0x48c
 /* 0B7838 7F084E48 10400004 */  beqz  $v0, .L7F084E5C
 /* 0B783C 7F084E4C C7A4035C */   lwc1  $f4, 0x35c($sp)
-/* 0B7840 7F084E50 3C018003 */  lui   $at, %hi(D_80036464) # $at, 0x8003
+/* 0B7840 7F084E50 3C018003 */  lui   $at, %hi(g_TankOrientationAngle) # $at, 0x8003
 /* 0B7844 7F084E54 10000002 */  b     .L7F084E60
-/* 0B7848 7F084E58 E42419B4 */   swc1  $f4, %lo(D_80036464)($at)
+/* 0B7848 7F084E58 E42419B4 */   swc1  $f4, %lo(g_TankOrientationAngle)($at)
 .L7F084E5C:
 /* 0B784C 7F084E5C E7B40358 */  swc1  $f20, 0x358($sp)
 .L7F084E60:
@@ -32313,13 +32336,13 @@ glabel MoveBond
 .L7F084E6C:
 /* 0B785C 7F084E6C 3C018005 */  lui   $at, %hi(D_80055180) # $at, 0x8005
 /* 0B7860 7F084E70 C42EAD50 */  lwc1  $f14, %lo(D_80055180)($at)
-/* 0B7864 7F084E74 3C038003 */  lui   $v1, %hi(D_80036484) # $v1, 0x8003
-/* 0B7868 7F084E78 246319D4 */  addiu $v1, %lo(D_80036484) # addiu $v1, $v1, 0x19d4
-/* 0B786C 7F084E7C 3C018003 */  lui   $at, %hi(D_80036488) # $at, 0x8003
-/* 0B7870 7F084E80 C42A19D8 */  lwc1  $f10, %lo(D_80036488)($at)
+/* 0B7864 7F084E74 3C038003 */  lui   $v1, %hi(g_TankTurretAngle) # $v1, 0x8003
+/* 0B7868 7F084E78 246319D4 */  addiu $v1, %lo(g_TankTurretAngle) # addiu $v1, $v1, 0x19d4
+/* 0B786C 7F084E7C 3C018003 */  lui   $at, %hi(g_TankTurretTurn) # $at, 0x8003
+/* 0B7870 7F084E80 C42A19D8 */  lwc1  $f10, %lo(g_TankTurretTurn)($at)
 /* 0B7874 7F084E84 C4660000 */  lwc1  $f6, ($v1)
-/* 0B7878 7F084E88 3C078003 */  lui   $a3, %hi(D_80036474) # $a3, 0x8003
-/* 0B787C 7F084E8C 24E719C4 */  addiu $a3, %lo(D_80036474) # addiu $a3, $a3, 0x19c4
+/* 0B7878 7F084E88 3C078003 */  lui   $a3, %hi(g_TankTurretOrientationAngleRad) # $a3, 0x8003
+/* 0B787C 7F084E8C 24E719C4 */  addiu $a3, %lo(g_TankTurretOrientationAngleRad) # addiu $a3, $a3, 0x19c4
 /* 0B7880 7F084E90 460A3200 */  add.s $f8, $f6, $f10
 /* 0B7884 7F084E94 C4EC0000 */  lwc1  $f12, ($a3)
 /* 0B7888 7F084E98 3C014060 */  li    $at, 0x40600000 # 3.500000
@@ -32423,7 +32446,7 @@ glabel MoveBond
 /* 0B79EC 7F084FFC C422AD70 */  lwc1  $f2, %lo(D_800551A0)($at)
 /* 0B79F0 7F085000 46002182 */  mul.s $f6, $f4, $f0
 /* 0B79F4 7F085004 2504048C */  addiu $a0, $t0, 0x48c
-/* 0B79F8 7F085008 3C068003 */  lui   $a2, %hi(D_80036464) # $a2, 0x8003
+/* 0B79F8 7F085008 3C068003 */  lui   $a2, %hi(g_TankOrientationAngle) # $a2, 0x8003
 /* 0B79FC 7F08500C E4E60000 */  swc1  $f6, ($a3)
 /* 0B7A00 7F085010 C4EC0000 */  lwc1  $f12, ($a3)
 /* 0B7A04 7F085014 460C103E */  c.le.s $f2, $f12
@@ -32449,16 +32472,16 @@ glabel MoveBond
 .L7F085060:
 /* 0B7A50 7F085060 E7B00354 */  swc1  $f16, 0x354($sp)
 /* 0B7A54 7F085064 0FC1F39F */  jal   bondviewCallTankCollisionStatus
-/* 0B7A58 7F085068 8CC619B4 */   lw    $a2, %lo(D_80036464)($a2)
-/* 0B7A5C 7F08506C 3C038003 */  lui   $v1, %hi(D_80036484) # $v1, 0x8003
+/* 0B7A58 7F085068 8CC619B4 */   lw    $a2, %lo(g_TankOrientationAngle)($a2)
+/* 0B7A5C 7F08506C 3C038003 */  lui   $v1, %hi(g_TankTurretAngle) # $v1, 0x8003
 /* 0B7A60 7F085070 3C018005 */  lui   $at, %hi(D_800551A8) # $at, 0x8005
 /* 0B7A64 7F085074 C42EAD78 */  lwc1  $f14, %lo(D_800551A8)($at)
-/* 0B7A68 7F085078 246319D4 */  addiu $v1, %lo(D_80036484) # addiu $v1, $v1, 0x19d4
+/* 0B7A68 7F085078 246319D4 */  addiu $v1, %lo(g_TankTurretAngle) # addiu $v1, $v1, 0x19d4
 /* 0B7A6C 7F08507C 14400009 */  bnez  $v0, .L7F0850A4
 /* 0B7A70 7F085080 C7B00354 */   lwc1  $f16, 0x354($sp)
-/* 0B7A74 7F085084 3C018003 */  lui   $at, %hi(D_80036474) # $at, 0x8003
-/* 0B7A78 7F085088 E43019C4 */  swc1  $f16, %lo(D_80036474)($at)
-/* 0B7A7C 7F08508C C42819C4 */  lwc1  $f8, %lo(D_80036474)($at)
+/* 0B7A74 7F085084 3C018003 */  lui   $at, %hi(g_TankTurretOrientationAngleRad) # $at, 0x8003
+/* 0B7A78 7F085088 E43019C4 */  swc1  $f16, %lo(g_TankTurretOrientationAngleRad)($at)
+/* 0B7A7C 7F08508C C42819C4 */  lwc1  $f8, %lo(g_TankTurretOrientationAngleRad)($at)
 /* 0B7A80 7F085090 3C018005 */  lui   $at, %hi(D_800551AC) # $at, 0x8005
 /* 0B7A84 7F085094 C424AD7C */  lwc1  $f4, %lo(D_800551AC)($at)
 /* 0B7A88 7F085098 E4700000 */  swc1  $f16, ($v1)
@@ -32499,8 +32522,8 @@ glabel MoveBond
 /* 0B7B10 7F085120 E7AA02F4 */  swc1  $f10, 0x2f4($sp)
 /* 0B7B14 7F085124 46044181 */  sub.s $f6, $f8, $f4
 /* 0B7B18 7F085128 C42AAD8C */  lwc1  $f10, %lo(D_800551BC)($at)
-/* 0B7B1C 7F08512C 3C018003 */  lui   $at, %hi(D_80036464) # $at, 0x8003
-/* 0B7B20 7F085130 C42819B4 */  lwc1  $f8, %lo(D_80036464)($at)
+/* 0B7B1C 7F08512C 3C018003 */  lui   $at, %hi(g_TankOrientationAngle) # $at, 0x8003
+/* 0B7B20 7F085130 C42819B4 */  lwc1  $f8, %lo(g_TankOrientationAngle)($at)
 /* 0B7B24 7F085134 E7A602FC */  swc1  $f6, 0x2fc($sp)
 /* 0B7B28 7F085138 0FC162A9 */  jal   matrix_4x4_set_rotation_around_y
 /* 0B7B2C 7F08513C 46085301 */   sub.s $f12, $f10, $f8
@@ -32520,14 +32543,14 @@ glabel MoveBond
 .L7F085174:
 /* 0B7B64 7F085174 3C048004 */  lui   $a0, %hi(g_ClockTimer) # $a0, 0x8004
 /* 0B7B68 7F085178 8C840FF4 */  lw    $a0, %lo(g_ClockTimer)($a0)
-/* 0B7B6C 7F08517C 3C018003 */  lui   $at, %hi(D_80036474) # $at, 0x8003
-/* 0B7B70 7F085180 C42C19C4 */  lwc1  $f12, %lo(D_80036474)($at)
+/* 0B7B6C 7F08517C 3C018003 */  lui   $at, %hi(g_TankTurretOrientationAngleRad) # $at, 0x8003
+/* 0B7B70 7F085180 C42C19C4 */  lwc1  $f12, %lo(g_TankTurretOrientationAngleRad)($at)
 /* 0B7B74 7F085184 5880001B */  blezl $a0, .L7F0851F4
 /* 0B7B78 7F085188 3C0143B4 */   lui   $at, 0x43b4
 /* 0B7B7C 7F08518C 18800018 */  blez  $a0, .L7F0851F0
 /* 0B7B80 7F085190 00001025 */   move  $v0, $zero
-/* 0B7B84 7F085194 3C018003 */  lui   $at, %hi(D_80036488) # $at, 0x8003
-/* 0B7B88 7F085198 C42419D8 */  lwc1  $f4, %lo(D_80036488)($at)
+/* 0B7B84 7F085194 3C018003 */  lui   $at, %hi(g_TankTurretTurn) # $at, 0x8003
+/* 0B7B88 7F085198 C42419D8 */  lwc1  $f4, %lo(g_TankTurretTurn)($at)
 /* 0B7B8C 7F08519C 3C018004 */  lui   $at, %hi(g_GlobalTimerDelta) # $at, 0x8004
 /* 0B7B90 7F0851A0 C4261004 */  lwc1  $f6, %lo(g_GlobalTimerDelta)($at)
 /* 0B7B94 7F0851A4 3C038003 */  lui   $v1, %hi(D_8003647C) # $v1, 0x8003
@@ -32570,9 +32593,9 @@ glabel MoveBond
 /* 0B7C18 7F085228 46044182 */  mul.s $f6, $f8, $f4
 /* 0B7C1C 7F08522C 3C014080 */  li    $at, 0x40800000 # 4.000000
 /* 0B7C20 7F085230 44812000 */  mtc1  $at, $f4
-/* 0B7C24 7F085234 3C018003 */  lui   $at, %hi(D_80036464) # $at, 0x8003
+/* 0B7C24 7F085234 3C018003 */  lui   $at, %hi(g_TankOrientationAngle) # $at, 0x8003
 /* 0B7C28 7F085238 460A3202 */  mul.s $f8, $f6, $f10
-/* 0B7C2C 7F08523C C42A19B4 */  lwc1  $f10, %lo(D_80036464)($at)
+/* 0B7C2C 7F08523C C42A19B4 */  lwc1  $f10, %lo(g_TankOrientationAngle)($at)
 /* 0B7C30 7F085240 3C014080 */  li    $at, 0x40800000 # 4.000000
 /* 0B7C34 7F085244 46044182 */  mul.s $f6, $f8, $f4
 /* 0B7C38 7F085248 460C5200 */  add.s $f8, $f10, $f12
@@ -32710,8 +32733,8 @@ glabel MoveBond
 /* 0B7E10 7F085420 8D8C1998 */  lw    $t4, %lo(in_tank_flag)($t4)
 /* 0B7E14 7F085424 24010001 */  li    $at, 1
 /* 0B7E18 7F085428 15810209 */  bne   $t4, $at, .L7F085C50
-/* 0B7E1C 7F08542C 3C028007 */   lui   $v0, %hi(dword_CODE_bss_800799B8) # $v0, 0x8007
-/* 0B7E20 7F085430 8C428498 */  lw    $v0, %lo(dword_CODE_bss_800799B8)($v0)
+/* 0B7E1C 7F08542C 3C028007 */   lui   $v0, %hi(g_EnterTankAudioState) # $v0, 0x8007
+/* 0B7E20 7F085430 8C428498 */  lw    $v0, %lo(g_EnterTankAudioState)($v0)
 /* 0B7E24 7F085434 3C038003 */  lui   $v1, %hi(ptr_playerstank) # $v1, 0x8003
 /* 0B7E28 7F085438 24010001 */  li    $at, 1
 /* 0B7E2C 7F08543C 144000BF */  bnez  $v0, .L7F08573C
@@ -32722,8 +32745,8 @@ glabel MoveBond
 /* 0B7E40 7F085450 106000AD */  beqz  $v1, .L7F085708
 /* 0B7E44 7F085454 00000000 */   nop
 /* 0B7E48 7F085458 C42AADB0 */  lwc1  $f10, %lo(D_800551DC)($at)
-/* 0B7E4C 7F08545C 3C018003 */  lui   $at, %hi(D_80036464) # $at, 0x8003
-/* 0B7E50 7F085460 C42819B4 */  lwc1  $f8, %lo(D_80036464)($at)
+/* 0B7E4C 7F08545C 3C018003 */  lui   $at, %hi(g_TankOrientationAngle) # $at, 0x8003
+/* 0B7E50 7F085460 C42819B4 */  lwc1  $f8, %lo(g_TankOrientationAngle)($at)
 /* 0B7E54 7F085464 8C700004 */  lw    $s0, 4($v1)
 /* 0B7E58 7F085468 0FC162A9 */  jal   matrix_4x4_set_rotation_around_y
 /* 0B7E5C 7F08546C 46085301 */   sub.s $f12, $f10, $f8
@@ -32753,15 +32776,15 @@ glabel MoveBond
 /* 0B7EBC 7F0854CC E7A6025C */  swc1  $f6, 0x25c($sp)
 /* 0B7EC0 7F0854D0 C608005C */  lwc1  $f8, 0x5c($s0)
 /* 0B7EC4 7F0854D4 C7A60264 */  lwc1  $f6, 0x264($sp)
-/* 0B7EC8 7F0854D8 3C018003 */  lui   $at, %hi(D_80036464) # $at, 0x8003
+/* 0B7EC8 7F0854D8 3C018003 */  lui   $at, %hi(g_TankOrientationAngle) # $at, 0x8003
 /* 0B7ECC 7F0854DC 46085100 */  add.s $f4, $f10, $f8
 /* 0B7ED0 7F0854E0 8E2F0000 */  lw    $t7, ($s1)
 /* 0B7ED4 7F0854E4 E7A40260 */  swc1  $f4, 0x260($sp)
 /* 0B7ED8 7F0854E8 C60A0060 */  lwc1  $f10, 0x60($s0)
-/* 0B7EDC 7F0854EC C42419B4 */  lwc1  $f4, %lo(D_80036464)($at)
-/* 0B7EE0 7F0854F0 3C018003 */  lui   $at, %hi(D_80036474) # $at, 0x8003
+/* 0B7EDC 7F0854EC C42419B4 */  lwc1  $f4, %lo(g_TankOrientationAngle)($at)
+/* 0B7EE0 7F0854F0 3C018003 */  lui   $at, %hi(g_TankTurretOrientationAngleRad) # $at, 0x8003
 /* 0B7EE4 7F0854F4 460A3200 */  add.s $f8, $f6, $f10
-/* 0B7EE8 7F0854F8 C42619C4 */  lwc1  $f6, %lo(D_80036474)($at)
+/* 0B7EE8 7F0854F8 C42619C4 */  lwc1  $f6, %lo(g_TankTurretOrientationAngleRad)($at)
 /* 0B7EEC 7F0854FC 3C018005 */  lui   $at, %hi(D_800551E0) # $at, 0x8005
 /* 0B7EF0 7F085500 46062280 */  add.s $f10, $f4, $f6
 /* 0B7EF4 7F085504 E7A80264 */  swc1  $f8, 0x264($sp)
@@ -32779,8 +32802,8 @@ glabel MoveBond
 /* 0B7F20 7F085530 C4261004 */  lwc1  $f6, %lo(g_GlobalTimerDelta)($at)
 /* 0B7F24 7F085534 3C014234 */  li    $at, 0x42340000 # 45.000000
 /* 0B7F28 7F085538 44815000 */  mtc1  $at, $f10
-/* 0B7F2C 7F08553C 3C108007 */  lui   $s0, %hi(flt_CODE_bss_800799BC) # $s0, 0x8007
-/* 0B7F30 7F085540 2610849C */  addiu $s0, %lo(flt_CODE_bss_800799BC) # addiu $s0, $s0, -0x7b64
+/* 0B7F2C 7F08553C 3C108007 */  lui   $s0, %hi(g_TankEnteringSitHeight) # $s0, 0x8007
+/* 0B7F30 7F085540 2610849C */  addiu $s0, %lo(g_TankEnteringSitHeight) # addiu $s0, $s0, -0x7b64
 /* 0B7F34 7F085544 460A3203 */  div.s $f8, $f6, $f10
 /* 0B7F38 7F085548 C6040000 */  lwc1  $f4, ($s0)
 /* 0B7F3C 7F08554C 3C018005 */  lui   $at, %hi(D_800551E4) # $at, 0x8005
@@ -32810,28 +32833,28 @@ glabel MoveBond
 /* 0B7F98 7F0855A8 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 0B7F9C 7F0855AC 44812000 */  mtc1  $at, $f4
 /* 0B7FA0 7F0855B0 46060280 */  add.s $f10, $f0, $f6
-/* 0B7FA4 7F0855B4 3C028007 */  lui   $v0, %hi(flt_CODE_bss_800799C0) # $v0, 0x8007
-/* 0B7FA8 7F0855B8 244284A0 */  addiu $v0, %lo(flt_CODE_bss_800799C0) # addiu $v0, $v0, -0x7b60
+/* 0B7FA4 7F0855B4 3C028007 */  lui   $v0, %hi(g_TankEnteringSitHeightRemain) # $v0, 0x8007
+/* 0B7FA8 7F0855B8 244284A0 */  addiu $v0, %lo(g_TankEnteringSitHeightRemain) # addiu $v0, $v0, -0x7b60
 /* 0B7FAC 7F0855BC 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0B7FB0 7F0855C0 46045202 */  mul.s $f8, $f10, $f4
 /* 0B7FB4 7F0855C4 44813000 */  mtc1  $at, $f6
 /* 0B7FB8 7F0855C8 C7A40254 */  lwc1  $f4, 0x254($sp)
-/* 0B7FBC 7F0855CC 3C018007 */  lui   $at, %hi(flt_CODE_bss_800799C8) # $at, 0x8007
+/* 0B7FBC 7F0855CC 3C018007 */  lui   $at, %hi(g_TankEnterBondVertAngleDeg) # $at, 0x8007
 /* 0B7FC0 7F0855D0 8E390000 */  lw    $t9, ($s1)
 /* 0B7FC4 7F0855D4 C7B00258 */  lwc1  $f16, 0x258($sp)
-/* 0B7FC8 7F0855D8 3C038007 */  lui   $v1, %hi(flt_CODE_bss_800799D0) # $v1, 0x8007
+/* 0B7FC8 7F0855D8 3C038007 */  lui   $v1, %hi(g_EnterTankCoord) # $v1, 0x8007
 /* 0B7FCC 7F0855DC E4480000 */  swc1  $f8, ($v0)
 /* 0B7FD0 7F0855E0 C4420000 */  lwc1  $f2, ($v0)
-/* 0B7FD4 7F0855E4 246384B0 */  addiu $v1, %lo(flt_CODE_bss_800799D0) # addiu $v1, $v1, -0x7b50
+/* 0B7FD4 7F0855E4 246384B0 */  addiu $v1, %lo(g_EnterTankCoord) # addiu $v1, $v1, -0x7b50
 /* 0B7FD8 7F0855E8 46023281 */  sub.s $f10, $f6, $f2
-/* 0B7FDC 7F0855EC C42684A8 */  lwc1  $f6, %lo(flt_CODE_bss_800799C8)($at)
-/* 0B7FE0 7F0855F0 3C018007 */  lui   $at, %hi(flt_CODE_bss_800799C4) # $at, 0x8007
+/* 0B7FDC 7F0855EC C42684A8 */  lwc1  $f6, %lo(g_TankEnterBondVertAngleDeg)($at)
+/* 0B7FE0 7F0855F0 3C018007 */  lui   $at, %hi(g_TankEnterBondHorizAngleDeg) # $at, 0x8007
 /* 0B7FE4 7F0855F4 46045202 */  mul.s $f8, $f10, $f4
 /* 0B7FE8 7F0855F8 00000000 */  nop
 /* 0B7FEC 7F0855FC 46061282 */  mul.s $f10, $f2, $f6
 /* 0B7FF0 7F085600 46085100 */  add.s $f4, $f10, $f8
 /* 0B7FF4 7F085604 E7240158 */  swc1  $f4, 0x158($t9)
-/* 0B7FF8 7F085608 C43284A4 */  lwc1  $f18, %lo(flt_CODE_bss_800799C4)($at)
+/* 0B7FF8 7F085608 C43284A4 */  lwc1  $f18, %lo(g_TankEnterBondHorizAngleDeg)($at)
 /* 0B7FFC 7F08560C 3C014334 */  li    $at, 0x43340000 # 180.000000
 /* 0B8000 7F085610 44813000 */  mtc1  $at, $f6
 /* 0B8004 7F085614 46128301 */  sub.s $f12, $f16, $f18
@@ -32900,26 +32923,26 @@ glabel MoveBond
 /* 0B80F0 7F085700 46085101 */  sub.s $f4, $f10, $f8
 /* 0B80F4 7F085704 E7A403B4 */  swc1  $f4, 0x3b4($sp)
 .L7F085708:
-/* 0B80F8 7F085708 3C108007 */  lui   $s0, %hi(flt_CODE_bss_800799BC) # $s0, 0x8007
-/* 0B80FC 7F08570C 2610849C */  addiu $s0, %lo(flt_CODE_bss_800799BC) # addiu $s0, $s0, -0x7b64
+/* 0B80F8 7F085708 3C108007 */  lui   $s0, %hi(g_TankEnteringSitHeight) # $s0, 0x8007
+/* 0B80FC 7F08570C 2610849C */  addiu $s0, %lo(g_TankEnteringSitHeight) # addiu $s0, $s0, -0x7b64
 /* 0B8100 7F085710 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0B8104 7F085714 44815000 */  mtc1  $at, $f10
 /* 0B8108 7F085718 C6060000 */  lwc1  $f6, ($s0)
 /* 0B810C 7F08571C 8E280000 */  lw    $t0, ($s1)
-/* 0B8110 7F085720 3C018007 */  lui   $at, %hi(dword_CODE_bss_800799B8)
+/* 0B8110 7F085720 3C018007 */  lui   $at, %hi(g_EnterTankAudioState)
 /* 0B8114 7F085724 4606503E */  c.le.s $f10, $f6
 /* 0B8118 7F085728 240A0001 */  li    $t2, 1
 /* 0B811C 7F08572C 450200EF */  bc1fl .L7F085AEC
 /* 0B8120 7F085730 3C013F40 */   lui   $at, %hi(0x3F3F99B8) # $at, 0x3f40
 /* 0B8124 7F085734 100000EC */  b     .L7F085AE8
-/* 0B8128 7F085738 AC2A8498 */   sw    $t2, %lo(dword_CODE_bss_800799B8)($at)
+/* 0B8128 7F085738 AC2A8498 */   sw    $t2, %lo(g_EnterTankAudioState)($at)
 .L7F08573C:
 /* 0B812C 7F08573C 1441001A */  bne   $v0, $at, .L7F0857A8
 /* 0B8130 7F085740 3C108003 */   lui   $s0, %hi(SFX_80036458) # $s0, 0x8003
 /* 0B8134 7F085744 240B0002 */  li    $t3, 2
-/* 0B8138 7F085748 3C018007 */  lui   $at, %hi(dword_CODE_bss_800799B8) # $at, 0x8007
+/* 0B8138 7F085748 3C018007 */  lui   $at, %hi(g_EnterTankAudioState) # $at, 0x8007
 /* 0B813C 7F08574C 261019A8 */  addiu $s0, %lo(SFX_80036458) # addiu $s0, $s0, 0x19a8
-/* 0B8140 7F085750 AC2B8498 */  sw    $t3, %lo(dword_CODE_bss_800799B8)($at)
+/* 0B8140 7F085750 AC2B8498 */  sw    $t3, %lo(g_EnterTankAudioState)($at)
 /* 0B8144 7F085754 8E180000 */  lw    $t8, ($s0)
 /* 0B8148 7F085758 5700000A */  bnezl $t8, .L7F085784
 /* 0B814C 7F08575C 8E040000 */   lw    $a0, ($s0)
@@ -32937,8 +32960,8 @@ glabel MoveBond
 /* 0B8174 7F085784 24050008 */  li    $a1, 8
 /* 0B8178 7F085788 0C002179 */  jal   sndCreatePostEvent
 /* 0B817C 7F08578C 240661A8 */   li    $a2, 25000
-/* 0B8180 7F085790 3C028007 */  lui   $v0, %hi(dword_CODE_bss_800799B4) # $v0, 0x8007
-/* 0B8184 7F085794 24428494 */  addiu $v0, %lo(dword_CODE_bss_800799B4) # addiu $v0, $v0, -0x7b6c
+/* 0B8180 7F085790 3C028007 */  lui   $v0, %hi(g_TankEngineSfxVolume) # $v0, 0x8007
+/* 0B8184 7F085794 24428494 */  addiu $v0, %lo(g_TankEngineSfxVolume) # addiu $v0, $v0, -0x7b6c
 /* 0B8188 7F085798 240C61A8 */  li    $t4, 25000
 /* 0B818C 7F08579C AC4C0000 */  sw    $t4, ($v0)
 /* 0B8190 7F0857A0 100000D1 */  b     .L7F085AE8
@@ -33080,8 +33103,8 @@ glabel MoveBond
 /* 0B837C 7F08598C 8E040000 */  lw    $a0, ($s0)
 .L7F085990:
 /* 0B8380 7F085990 1080001A */  beqz  $a0, .L7F0859FC
-/* 0B8384 7F085994 3C028007 */   lui   $v0, %hi(dword_CODE_bss_800799B4) # $v0, 0x8007
-/* 0B8388 7F085998 24428494 */  addiu $v0, %lo(dword_CODE_bss_800799B4) # addiu $v0, $v0, -0x7b6c
+/* 0B8384 7F085994 3C028007 */   lui   $v0, %hi(g_TankEngineSfxVolume) # $v0, 0x8007
+/* 0B8388 7F085998 24428494 */  addiu $v0, %lo(g_TankEngineSfxVolume) # addiu $v0, $v0, -0x7b6c
 /* 0B838C 7F08599C 240A7FFF */  li    $t2, 32767
 /* 0B8390 7F0859A0 AC4A0000 */  sw    $t2, ($v0)
 /* 0B8394 7F0859A4 3C018005 */  lui   $at, %hi(D_80055200) # $at, 0x8005
@@ -33120,8 +33143,8 @@ glabel MoveBond
 /* 0B8410 7F085A20 10000004 */  b     .L7F085A34
 /* 0B8414 7F085A24 46061080 */   add.s $f2, $f2, $f6
 .L7F085A28:
-/* 0B8418 7F085A28 3C018003 */  lui   $at, %hi(D_8003646C) # $at, 0x8003
-/* 0B841C 7F085A2C C42219BC */  lwc1  $f2, %lo(D_8003646C)($at)
+/* 0B8418 7F085A28 3C018003 */  lui   $at, %hi(g_TankTurretVerticalAngle) # $at, 0x8003
+/* 0B841C 7F085A2C C42219BC */  lwc1  $f2, %lo(g_TankTurretVerticalAngle)($at)
 /* 0B8420 7F085A30 8E280000 */  lw    $t0, ($s1)
 .L7F085A34:
 /* 0B8424 7F085A34 3C018005 */  lui   $at, %hi(D_80055214) # $at, 0x8005
@@ -33144,8 +33167,8 @@ glabel MoveBond
 /* 0B8460 7F085A70 00001025 */  move  $v0, $zero
 /* 0B8464 7F085A74 18800014 */  blez  $a0, .L7F085AC8
 /* 0B8468 7F085A78 3C018005 */   lui   $at, %hi(D_8005521C) # $at, 0x8005
-/* 0B846C 7F085A7C 3C038003 */  lui   $v1, %hi(D_80036470) # $v1, 0x8003
-/* 0B8470 7F085A80 246319C0 */  addiu $v1, %lo(D_80036470) # addiu $v1, $v1, 0x19c0
+/* 0B846C 7F085A7C 3C038003 */  lui   $v1, %hi(g_TankTurretVerticalAngleRelated) # $v1, 0x8003
+/* 0B8470 7F085A80 246319C0 */  addiu $v1, %lo(g_TankTurretVerticalAngleRelated) # addiu $v1, $v1, 0x19c0
 /* 0B8474 7F085A84 C420ADF0 */  lwc1  $f0, %lo(D_8005521C)($at)
 /* 0B8478 7F085A88 C4700000 */  lwc1  $f16, ($v1)
 /* 0B847C 7F085A8C 24420001 */  addiu $v0, $v0, 1
@@ -33166,14 +33189,14 @@ glabel MoveBond
 .L7F085AC4:
 /* 0B84B4 7F085AC4 E4700000 */  swc1  $f16, ($v1)
 .L7F085AC8:
-/* 0B84B8 7F085AC8 3C038003 */  lui   $v1, %hi(D_80036470) # $v1, 0x8003
-/* 0B84BC 7F085ACC 246319C0 */  addiu $v1, %lo(D_80036470) # addiu $v1, $v1, 0x19c0
+/* 0B84B8 7F085AC8 3C038003 */  lui   $v1, %hi(g_TankTurretVerticalAngleRelated) # $v1, 0x8003
+/* 0B84BC 7F085ACC 246319C0 */  addiu $v1, %lo(g_TankTurretVerticalAngleRelated) # addiu $v1, $v1, 0x19c0
 /* 0B84C0 7F085AD0 3C018005 */  lui   $at, %hi(D_80055220) # $at, 0x8005
 /* 0B84C4 7F085AD4 C42AADF4 */  lwc1  $f10, %lo(D_80055220)($at)
 /* 0B84C8 7F085AD8 C4660000 */  lwc1  $f6, ($v1)
-/* 0B84CC 7F085ADC 3C018003 */  lui   $at, %hi(D_8003646C) # $at, 0x8003
+/* 0B84CC 7F085ADC 3C018003 */  lui   $at, %hi(g_TankTurretVerticalAngle) # $at, 0x8003
 /* 0B84D0 7F085AE0 460A3202 */  mul.s $f8, $f6, $f10
-/* 0B84D4 7F085AE4 E42819BC */  swc1  $f8, %lo(D_8003646C)($at)
+/* 0B84D4 7F085AE4 E42819BC */  swc1  $f8, %lo(g_TankTurretVerticalAngle)($at)
 .L7F085AE8:
 /* 0B84D8 7F085AE8 3C013F40 */  li    $at, 0x3F400000 # 0.750000
 .L7F085AEC:
@@ -33201,8 +33224,8 @@ glabel MoveBond
 /* 0B852C 7F085B3C 4600A386 */   mov.s $f14, $f20
 /* 0B8530 7F085B40 3C018005 */  lui   $at, %hi(D_80055228) # $at, 0x8005
 /* 0B8534 7F085B44 C424ADFC */  lwc1  $f4, %lo(D_80055228)($at)
-/* 0B8538 7F085B48 3C018003 */  lui   $at, %hi(D_80036464) # $at, 0x8003
-/* 0B853C 7F085B4C C42819B4 */  lwc1  $f8, %lo(D_80036464)($at)
+/* 0B8538 7F085B48 3C018003 */  lui   $at, %hi(g_TankOrientationAngle) # $at, 0x8003
+/* 0B853C 7F085B4C C42819B4 */  lwc1  $f8, %lo(g_TankOrientationAngle)($at)
 /* 0B8540 7F085B50 0FC1606B */  jal   sinf
 /* 0B8544 7F085B54 46082301 */   sub.s $f12, $f4, $f8
 /* 0B8548 7F085B58 8E2C0000 */  lw    $t4, ($s1)
@@ -33214,9 +33237,9 @@ glabel MoveBond
 /* 0B8560 7F085B70 C7A603AC */  lwc1  $f6, 0x3ac($sp)
 /* 0B8564 7F085B74 46045202 */  mul.s $f8, $f10, $f4
 /* 0B8568 7F085B78 C424AE00 */  lwc1  $f4, %lo(D_8005522C)($at)
-/* 0B856C 7F085B7C 3C018003 */  lui   $at, %hi(D_80036464) # $at, 0x8003
+/* 0B856C 7F085B7C 3C018003 */  lui   $at, %hi(g_TankOrientationAngle) # $at, 0x8003
 /* 0B8570 7F085B80 46083280 */  add.s $f10, $f6, $f8
-/* 0B8574 7F085B84 C42619B4 */  lwc1  $f6, %lo(D_80036464)($at)
+/* 0B8574 7F085B84 C42619B4 */  lwc1  $f6, %lo(g_TankOrientationAngle)($at)
 /* 0B8578 7F085B88 E7AA03AC */  swc1  $f10, 0x3ac($sp)
 /* 0B857C 7F085B8C 0FC16068 */  jal   cosf
 /* 0B8580 7F085B90 46062301 */   sub.s $f12, $f4, $f6
@@ -33232,8 +33255,8 @@ glabel MoveBond
 /* 0B85A8 7F085BB8 46064280 */  add.s $f10, $f8, $f6
 /* 0B85AC 7F085BBC 0FC1F68D */  jal   bondviewCalcUpdatePlayerCollision
 /* 0B85B0 7F085BC0 E7AA03B4 */   swc1  $f10, 0x3b4($sp)
-/* 0B85B4 7F085BC4 3C0F8007 */  lui   $t7, %hi(dword_CODE_bss_800799B8) # $t7, 0x8007
-/* 0B85B8 7F085BC8 8DEF8498 */  lw    $t7, %lo(dword_CODE_bss_800799B8)($t7)
+/* 0B85B4 7F085BC4 3C0F8007 */  lui   $t7, %hi(g_EnterTankAudioState) # $t7, 0x8007
+/* 0B85B8 7F085BC8 8DEF8498 */  lw    $t7, %lo(g_EnterTankAudioState)($t7)
 /* 0B85BC 7F085BCC 24010002 */  li    $at, 2
 /* 0B85C0 7F085BD0 3C198004 */  lui   $t9, %hi(g_ClockTimer) # $t9, 0x8004
 /* 0B85C4 7F085BD4 55E10237 */  bnel  $t7, $at, .L7F0864B4
@@ -33279,8 +33302,8 @@ glabel MoveBond
 /* 0B865C 7F085C6C 44814000 */  mtc1  $at, $f8
 /* 0B8660 7F085C70 3C018004 */  lui   $at, %hi(g_GlobalTimerDelta) # $at, 0x8004
 /* 0B8664 7F085C74 C4261004 */  lwc1  $f6, %lo(g_GlobalTimerDelta)($at)
-/* 0B8668 7F085C78 3C028007 */  lui   $v0, %hi(dword_CODE_bss_800799B4) # $v0, 0x8007
-/* 0B866C 7F085C7C 24428494 */  addiu $v0, %lo(dword_CODE_bss_800799B4) # addiu $v0, $v0, -0x7b6c
+/* 0B8668 7F085C78 3C028007 */  lui   $v0, %hi(g_TankEngineSfxVolume) # $v0, 0x8007
+/* 0B866C 7F085C7C 24428494 */  addiu $v0, %lo(g_TankEngineSfxVolume) # addiu $v0, $v0, -0x7b6c
 /* 0B8670 7F085C80 46064282 */  mul.s $f10, $f8, $f6
 /* 0B8674 7F085C84 8C4B0000 */  lw    $t3, ($v0)
 /* 0B8678 7F085C88 24050008 */  li    $a1, 8
@@ -33901,10 +33924,10 @@ glabel MoveBond
 /* 0B8F74 7F086584 8FA40394 */   lw    $a0, 0x394($sp)
 /* 0B8F78 7F086588 8DAD1998 */  lw    $t5, %lo(in_tank_flag)($t5)
 /* 0B8F7C 7F08658C 24010001 */  li    $at, 1
-/* 0B8F80 7F086590 3C0F8007 */  lui   $t7, %hi(dword_CODE_bss_800799B8) # $t7, 0x8007
+/* 0B8F80 7F086590 3C0F8007 */  lui   $t7, %hi(g_EnterTankAudioState) # $t7, 0x8007
 /* 0B8F84 7F086594 55A10130 */  bnel  $t5, $at, .L7F086A58
 /* 0B8F88 7F086598 8FA40394 */   lw    $a0, 0x394($sp)
-/* 0B8F8C 7F08659C 8DEF8498 */  lw    $t7, %lo(dword_CODE_bss_800799B8)($t7)
+/* 0B8F8C 7F08659C 8DEF8498 */  lw    $t7, %lo(g_EnterTankAudioState)($t7)
 /* 0B8F90 7F0865A0 24010002 */  li    $at, 2
 /* 0B8F94 7F0865A4 55E1012C */  bnel  $t7, $at, .L7F086A58
 /* 0B8F98 7F0865A8 8FA40394 */   lw    $a0, 0x394($sp)
@@ -33928,20 +33951,20 @@ glabel MoveBond
 /* 0B8FE0 7F0865F0 0002202B */  sltu  $a0, $zero, $v0
 /* 0B8FE4 7F0865F4 AE0400C4 */  sw    $a0, 0xc4($s0)
 .L7F0865F8:
-/* 0B8FE8 7F0865F8 3C018003 */  lui   $at, %hi(D_8003646C) # $at, 0x8003
-/* 0B8FEC 7F0865FC C42619BC */  lwc1  $f6, %lo(D_8003646C)($at)
-/* 0B8FF0 7F086600 3C018003 */  lui   $at, %hi(D_80036474) # $at, 0x8003
+/* 0B8FE8 7F0865F8 3C018003 */  lui   $at, %hi(g_TankTurretVerticalAngle) # $at, 0x8003
+/* 0B8FEC 7F0865FC C42619BC */  lwc1  $f6, %lo(g_TankTurretVerticalAngle)($at)
+/* 0B8FF0 7F086600 3C018003 */  lui   $at, %hi(g_TankTurretOrientationAngleRad) # $at, 0x8003
 /* 0B8FF4 7F086604 27A500F0 */  addiu $a1, $sp, 0xf0
 /* 0B8FF8 7F086608 E60600C8 */  swc1  $f6, 0xc8($s0)
-/* 0B8FFC 7F08660C C42819C4 */  lwc1  $f8, %lo(D_80036474)($at)
-/* 0B9000 7F086610 3C018003 */  lui   $at, %hi(D_80036464) # $at, 0x8003
+/* 0B8FFC 7F08660C C42819C4 */  lwc1  $f8, %lo(g_TankTurretOrientationAngleRad)($at)
+/* 0B9000 7F086610 3C018003 */  lui   $at, %hi(g_TankOrientationAngle) # $at, 0x8003
 /* 0B9004 7F086614 E60800CC */  swc1  $f8, 0xcc($s0)
-/* 0B9008 7F086618 C42A19B4 */  lwc1  $f10, %lo(D_80036464)($at)
+/* 0B9008 7F086618 C42A19B4 */  lwc1  $f10, %lo(g_TankOrientationAngle)($at)
 /* 0B900C 7F08661C 3C018005 */  lui   $at, %hi(D_80055258) # $at, 0x8005
 /* 0B9010 7F086620 E60A00DC */  swc1  $f10, 0xdc($s0)
 /* 0B9014 7F086624 C424AE2C */  lwc1  $f4, %lo(D_80055258)($at)
-/* 0B9018 7F086628 3C018003 */  lui   $at, %hi(D_80036464) # $at, 0x8003
-/* 0B901C 7F08662C C42619B4 */  lwc1  $f6, %lo(D_80036464)($at)
+/* 0B9018 7F086628 3C018003 */  lui   $at, %hi(g_TankOrientationAngle) # $at, 0x8003
+/* 0B901C 7F08662C C42619B4 */  lwc1  $f6, %lo(g_TankOrientationAngle)($at)
 /* 0B9020 7F086630 0FC162A9 */  jal   matrix_4x4_set_rotation_around_y
 /* 0B9024 7F086634 46062301 */   sub.s $f12, $f4, $f6
 /* 0B9028 7F086638 8FAC0138 */  lw    $t4, 0x138($sp)
@@ -34048,8 +34071,8 @@ glabel MoveBond
 /* 0B91B4 7F0867C4 0FC10151 */  jal   chrobjCollisionRelated
 /* 0B91B8 7F0867C8 8FA40138 */   lw    $a0, 0x138($sp)
 /* 0B91BC 7F0867CC 8E250000 */  lw    $a1, ($s1)
-/* 0B91C0 7F0867D0 3C068003 */  lui   $a2, %hi(D_80036464) # $a2, 0x8003
-/* 0B91C4 7F0867D4 8CC619B4 */  lw    $a2, %lo(D_80036464)($a2)
+/* 0B91C0 7F0867D0 3C068003 */  lui   $a2, %hi(g_TankOrientationAngle) # $a2, 0x8003
+/* 0B91C4 7F0867D4 8CC619B4 */  lw    $a2, %lo(g_TankOrientationAngle)($a2)
 /* 0B91C8 7F0867D8 27A400B4 */  addiu $a0, $sp, 0xb4
 /* 0B91CC 7F0867DC 0FC1F257 */  jal   bondviewTankCollisionRelated
 /* 0B91D0 7F0867E0 24A5048C */   addiu $a1, $a1, 0x48c
@@ -41750,7 +41773,7 @@ void bondviewUpdatePlayerCollisionBounds(void)
 
     if (in_tank_flag == 1)
     {
-        bondviewTankCollisionRelated(&g_CurrentPlayer->collision_bounds, &g_CurrentPlayer->field_488.collision_position, D_80036464);
+        bondviewTankCollisionRelated(&g_CurrentPlayer->collision_bounds, &g_CurrentPlayer->field_488.collision_position, g_TankOrientationAngle);
 
         return;
     }

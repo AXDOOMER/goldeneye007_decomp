@@ -2809,27 +2809,27 @@ extern f32 g_PlayerTankYOffset;
 extern ALSoundState * SFX_80036458[2];
 
 //D:80036460
-extern s32 D_80036460;
+extern f32 g_TankTurnSpeed;
 //D:80036464
-extern f32 D_80036464;
+extern f32 g_TankOrientationAngle;
 //D:80036468
 extern s32 D_80036468;
 //D:8003646C
-extern f32 D_8003646C;
+extern f32 g_TankTurretVerticalAngle;
 //D:80036470
-extern f32 D_80036470;
+extern f32 g_TankTurretVerticalAngleRelated;
 //D:80036474
-extern f32 D_80036474;
+extern f32 g_TankTurretOrientationAngleRad;
 //D:80036478
 extern f32 D_80036478;
 //D:8003647C
 extern f32 D_8003647C;
 //D:80036480
-extern s32 D_80036480;
+extern s32 g_BondCanEnterTank;
 //D:80036484
-extern f32 D_80036484;
+extern f32 g_TankTurretAngle;
 //D:80036488
-extern f32 D_80036488;
+extern f32 g_TankTurretTurn;
 //D:8003648C
 extern s32 D_8003648C;
 //D:80036490

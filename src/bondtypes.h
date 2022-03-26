@@ -3311,30 +3311,30 @@ typedef union
     typedef struct TankRecord
     {
         inherits ObjectRecord;
-        u32      firing;      /*0x80*/
+        s32 unk80;
         struct rect4f  *rect;       /*0x84*/
-        f32      turrettheta; /*0x88*/
-        u32      sumground;   /*0x8c*/
-        f32      ground;      /*0x90*/
-        u32      ammo;        /*0x94 */
-        f32      theta;       /*0x98 */
-        f32      tankvol;     /*0x9c*/
-        f32      speedaim;    /*0xa0*/
-        f32      speedtime60; /*0xa4*/
-        u32      unk78;       /*0xa8*/
-        u32      unk7c;       /*0xac*/
-        u32 *    path;        /*0xb0*/
-        void *   Sound;       /*0xb4 */
+        s32 unk88;
+        s32 unk8C;
+        s32 unk90;
+        s32 unk94;
+        s32 unk98;
+        s32 unk9C;
+        s32 unkA0;
+        s32 unkA4;
+        s32 unkA8;
+        s32 unkAC;
+        s32 unkB0;
+        s32 unkB4;
         s32 unkB8;
         s32 unkBC;
         s32 unkC0;
         s32 is_firing_tank;
-        f32 unkC8;
-        f32 unkCC;
+        f32 turret_vertical_angle;
+        f32 turret_orientation_angle;
         f32 unkD0;
         f32 stan_y;
         f32 unkD8;
-        f32 unkDC;
+        f32 tank_orientation_angle;
     } TankRecord;
     #define New_TankRecord(pad)                     \
         {                                           \
