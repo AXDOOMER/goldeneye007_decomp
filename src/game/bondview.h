@@ -2788,7 +2788,7 @@ extern s32 camera_80036438;
 //D:8003643C
 extern s32 D_8003643C;
 //D:80036440
-extern s32 D_80036440;
+extern CreditsEntry *D_80036440;
 //D:80036444
 extern s32 D_80036444;
 //D:80036448
@@ -2847,17 +2847,17 @@ extern s32 D_800364A4;
 //D:800364A8
 extern s32 D_800364A8;
 //D:800364AC
-extern s32 D_800364AC;
+extern struct SetupIntroSwirl *g_IntroSwirl;
 //D:800364B0
 extern s32 D_800364B0;
 //D:800364B4
 extern s32 g_PlayerInvincible;
 //D:800364B8
-extern s32 D_800364B8;
+extern struct SetupIntroCamera* g_CurrentSetupIntroCamera;
 //D:800364BC
-extern s32 D_800364BC;
+extern s32 g_SetupIntroCameraCount;
 //D:800364C0
-extern s32 ptr_random06cam_entry;
+extern struct SetupIntroCamera *ptr_random06cam_entry;
 //D:800364C4
 extern s32 g_VisibleToGuardsFlag;
 //D:800364C8
@@ -2876,7 +2876,7 @@ extern s32 g_bondviewBondDeathAnimationsCount;
 //D:80036510
 extern s32 D_80036510;
 //D:80036514
-extern s32 D_80036514;
+extern s32 g_IntroAnimationIndex;
 /*
 D:80036518     stage_intro_anim_table:struct_4 <0x5744, 95.0, -1.0, 0.02>
 D:80036528                     struct_4 <0x6254, 7.0, 40.0, 0.5>
@@ -3212,4 +3212,8 @@ s32 check_watch_page_transistion_running(void);
 f32 bondviewWatchAnimationRelated(void);
 struct coord3d *get_BONDdata_field408(void);
 struct PropRecord *get_ptr_for_players_tank(void);
+s32 sub_GAME_7F0790F0(void);
+void change_player_pos_to_target(struct collision434* arg0, struct coord3d *arg1, struct StandTile *arg2);
+void sub_GAME_7F089718(f32);
+void sub_GAME_7F08A900(void);
 #endif

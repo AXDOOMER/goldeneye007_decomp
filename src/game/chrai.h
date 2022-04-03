@@ -478,7 +478,7 @@ extern struct object_animation_controller g_MonitorAnimController;
 extern struct object_animation_controller g_UnknownAnimController;
 extern struct object_animation_controller g_TaserAnimController;
 
-extern u32 dword_CODE_bss_80075D28;
+extern CreditsEntry ** dword_CODE_bss_80075D28;
 
 void          alarmDeactivate(void);
 s32           chraiitemsize(u8 *AIList, s32 offset);

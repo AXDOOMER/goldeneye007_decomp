@@ -5,9 +5,16 @@
 #include "math_atan2f.h"
 #include "bondview_r.h"
 #include "bondview.h"
-#include "game/front.h"
+#include "random.h"
+#include "game/bondinv.h"
 #include "game/chrai.h"
+#include "game/front.h"
+#include "game/gun.h"
+#include "game/lvl_text.h"
 #include "game/player.h"
+#include "game/player_2.h"
+#include "game/ramromreplay.h"
+#include "game/stan.h"
 
 
 // data
@@ -89,7 +96,7 @@ void load_camera_intro_type_values(void)
     struct coord3d sp8C;
     f32 sp88;
     StandTile *sp84;
-    s32 sp7C;
+    s32 set_starting_weapon;
     ? *temp_v0_12;
     StandTile *temp_a0_4;
     StandTile *temp_v0_10;
@@ -112,7 +119,7 @@ void load_camera_intro_type_values(void)
     struct player *temp_v0_14;
     struct player *temp_v0_15;
     struct player *temp_v0_9;
-    u32 *temp_s0;
+    struct SetupIntroEmpty *temp_s0;
     u32 *temp_v0_8;
     u32 temp_hi;
     u32 temp_v0_2;
@@ -120,10 +127,10 @@ void load_camera_intro_type_values(void)
     void **temp_s1;
     void *temp_s0_2;
     void *temp_s0_3;
-    void *temp_v0_6;
+    CreditsEntry *temp_v0_6;
     void *temp_v0_7;
     u32 phi_v0;
-    u32 *phi_s0;
+    u32 *temp_s0;
     void *phi_v0_2;
     u32 *phi_s0_2;
     u32 phi_v1;
@@ -141,11 +148,11 @@ void load_camera_intro_type_values(void)
     resolution = 0;
     camera_8003642C = 0;
     camera_80036430 = 0;
-    sp7C = 0;
+    set_starting_weapon = 0;
     camera_80036434 = 0;
     sp88 = 0.0f;
     
-    if (bossGetStageNum() == 0x36)
+    if (bossGetStageNum() == LEVELID_SURFACE)
     {
         temp_v0 = mempAllocBytesInBank(0x46EA0, 4);
         temp_t2 = temp_v0 + 0x3F;
@@ -188,177 +195,200 @@ void load_camera_intro_type_values(void)
     stop_time_flag = 0;
     D_800364A4 = 0.0f;
     D_800364A8 = 1;
-    D_800364AC = NULL;
+    g_IntroSwirl = NULL;
     ptr_random06cam_entry = NULL;
-    D_800364B8 = NULL;
-    D_800364BC = 0;
+    g_CurrentSetupIntroCamera = NULL;
+    g_SetupIntroCameraCount = 0;
     mission_timer = 0;
     watch_time_0 = 0;
-    D_80036514 = 0;
+    g_IntroAnimationIndex = 0;
     watch_transition_time = 0.9090909f;
     starting_left_weapon = ITEM_UNARMED;
     starting_right_weapon = ITEM_UNARMED;
     
     if (temp_s0 != NULL)
     {
-        temp_v0_2 = *temp_s0;
-        phi_v0 = temp_v0_2;
-        if (temp_v0_2 != 9)
+        while (temp_s0->type != INTROTYPE_END)
         {
-            phi_s0 = temp_s0;
-            do
+            switch (temp_s0->type)
             {
-                switch (phi_v0) {
-                case 0:
-                    if ((*(&g_chraiCurrentSetup + 0x18) != 0) && (check_ramrom_flags() == phi_s0->unk8))
+                case INTROTYPE_SPAWN:
+                {
+                    if (g_chraiCurrentSetup.pads != NULL
+                        && (check_ramrom_flags() == ((struct SetupIntroSpawn*)temp_s0)->is_demo_playback))
                     {
-                        temp_v0_4 = startpadcount;
-                        *(&g_Startpad + (temp_v0_4 * 4)) = (phi_s0->unk4 * 0x2C) + *(&g_chraiCurrentSetup + 0x18);
-                        startpadcount = temp_v0_4 + 1;
+                        g_Startpad[startpadcount] = &g_chraiCurrentSetup.pads[((struct SetupIntroSpawn*)temp_s0)->index];
+                        startpadcount++;
                     }
-                    phi_s0_2 = phi_s0 + 0xC;
-                    break;
-                case 1:
-                    if (check_ramrom_flags() == phi_s0->unkC)
+
+                    temp_s0 = (struct SetupIntroEmpty*)((s32)temp_s0 + sizeof(struct SetupIntroSpawn));
+                }
+                break;
+
+                case INTROTYPE_ITEM:
+                {
+                    if (check_ramrom_flags() == ((struct SetupIntroItem*)temp_s0)->is_demo_playback)
                     {
-                        weaponLoadProjectileModels(phi_s0->unk4);
-                        temp_a0 = phi_s0->unk8;
-                        if (temp_a0 >= 0)
+                        weaponLoadProjectileModels(((struct SetupIntroItem*)temp_s0)->item_right);
+
+                        if (((struct SetupIntroItem*)temp_s0)->item_left >= 0)
                         {
-                            weaponLoadProjectileModels(temp_a0);
-                            bondinvAddDoublesInvItem(phi_s0->unk4, phi_s0->unk8);
+                            weaponLoadProjectileModels(((struct SetupIntroItem*)temp_s0)->item_left);
+                            bondinvAddDoublesInvItem(((struct SetupIntroItem*)temp_s0)->item_right, ((struct SetupIntroItem*)temp_s0)->item_left);
                         }
                         else
                         {
-                            bondinvAddInvItem(phi_s0->unk4);
+                            bondinvAddInvItem(((struct SetupIntroItem*)temp_s0)->item_right);
                         }
-                        if (sp7C == 0)
+
+                        if (set_starting_weapon == 0)
                         {
-                            starting_right_weapon = phi_s0->unk4;
-                            temp_a0_2 = phi_s0->unk8;
-                            sp7C = 1;
-                            if (temp_a0_2 >= 0)
+                            starting_right_weapon = ((struct SetupIntroItem*)temp_s0)->item_right;
+
+                            set_starting_weapon = 1;
+                            
+                            if (((struct SetupIntroItem*)temp_s0)->item_left >= 0)
                             {
-                                starting_left_weapon = temp_a0_2;
+                                starting_left_weapon = ((struct SetupIntroItem*)temp_s0)->item_left;
                             }
                         }
                     }
-                    phi_s0_2 = phi_s0 + 0x10;
-                    break;
-                case 2:
-                    if (check_ramrom_flags() == phi_s0->unkC)
+                    
+                    temp_s0 = (struct SetupIntroEmpty*)((s32)temp_s0 + sizeof(struct SetupIntroItem));
+                }
+                break;
+
+                case INTROTYPE_AMMO:
+                {
+                    if (check_ramrom_flags() == ((struct SetupIntroAmmo*)temp_s0)->is_demo_playback)
                     {
-                        give_cur_player_ammo(phi_s0->unk4, phi_s0->unk8);
+                        give_cur_player_ammo(((struct SetupIntroAmmo*)temp_s0)->ammo_type, ((struct SetupIntroAmmo*)temp_s0)->ammo_amount);
                     }
-                    phi_s0_2 = phi_s0 + 0x10;
-                    break;
-                case 3:
-                    if (D_800364AC == 0)
+                   
+                    temp_s0 = (struct SetupIntroEmpty*)((s32)temp_s0 + sizeof(struct SetupIntroAmmo));
+                }
+                break;
+
+                case INTROTYPE_SWIRL:
+                {
+                    if (g_IntroSwirl == NULL)
                     {
-                        D_800364AC = phi_s0;
+                        g_IntroSwirl = (struct SetupIntroSwirl*)temp_s0;
                     }
-                    phi_s0->unk8 = (bitwise s32) ((f32) phi_s0->unk8 / 65536.0f);
-                    phi_s0->unkC = (bitwise s32) ((f32) phi_s0->unkC / 65536.0f);
-                    phi_s0->unk10 = (bitwise s32) ((f32) phi_s0->unk10 / 65536.0f);
-                    phi_s0->unk14 = (bitwise s32) ((f32) phi_s0->unk14 / 65536.0f);
-                    phi_s0->unk18 = (bitwise s32) ((f32) phi_s0->unk18 / 65536.0f);
-                    phi_s0_2 = phi_s0 + 0x20;
-                    break;
-                case 4:
-                    D_80036514 = phi_s0->unk4;
-                    phi_s0_2 = phi_s0 + 8;
-                    break;
-                case 5:
-                    g_CurrentPlayer->bondtype = phi_s0->unk4;
-                    phi_s0_2 = phi_s0 + 8;
-                    break;
-                case 6:
+
+                    ((struct SetupIntroAnim*)temp_s0)->unk8 /= 65536.0f;
+                    ((struct SetupIntroAnim*)temp_s0)->unkC /= 65536.0f;
+                    ((struct SetupIntroAnim*)temp_s0)->unk10 /= 65536.0f;
+                    ((struct SetupIntroAnim*)temp_s0)->unk14 /= 65536.0f;
+                    ((struct SetupIntroAnim*)temp_s0)->unk18 /= 65536.0f;
+                    
+                    temp_s0 = (struct SetupIntroEmpty*)((s32)temp_s0 + sizeof(struct SetupIntroSwirl));
+                }
+                break;
+
+                case INTROTYPE_ANIM:
+                {
+                    g_IntroAnimationIndex = ((struct SetupIntroAnim*)temp_s0)->intro_anim;
+                    
+                    temp_s0 = (struct SetupIntroEmpty*)((s32)temp_s0 + sizeof(struct SetupIntroAnim));
+                }
+                break;
+
+                case INTROTYPE_CUFF:
+                {
+                    g_CurrentPlayer->bondtype = ((struct SetupIntroCuff*)temp_s0)->bondtype;
+                    
+                    temp_s0 = (struct SetupIntroEmpty*)((s32)temp_s0 + sizeof(struct SetupIntroCuff));
+                }
+                break;
+
+                case INTROTYPE_CAMERA:
+                {
                     if (get_cur_playernum() == 0)
                     {
-                        phi_s0->unk24 = (u32 *) D_800364B8;
-                        D_800364B8 = phi_s0;
-                        D_800364BC = D_800364BC + 1;
-                        phi_s0->unk4 = (bitwise s32) ((f32) phi_s0->unk4 / 100.0f);
-                        phi_s0->unk8 = (bitwise s32) ((f32) phi_s0->unk8 / 100.0f);
-                        phi_s0->unkC = (bitwise s32) ((f32) phi_s0->unkC / 100.0f);
-                        phi_s0->unk10 = (bitwise s32) ((f32) phi_s0->unk10 / 65536.0f);
-                        phi_s0->unk14 = (bitwise s32) ((f32) phi_s0->unk14 / 65536.0f);
-                        temp_v1 = phi_s0->unk20;
-                        phi_s0->unk1C = langGet(phi_s0->unk1E);
-                        if (temp_v1 != 0)
+                        ((struct SetupIntroCamera*)temp_s0)->prev = g_CurrentSetupIntroCamera;
+                        g_CurrentSetupIntroCamera = (struct SetupIntroCamera*)temp_s0;
+                        g_SetupIntroCameraCount = g_SetupIntroCameraCount + 1;
+                        
+                        ((struct SetupIntroCamera*)temp_s0)->unk04 /= 100.0f;
+                        ((struct SetupIntroCamera*)temp_s0)->unk08 /= 100.0f;
+                        ((struct SetupIntroCamera*)temp_s0)->unk0C /= 100.0f;
+                        ((struct SetupIntroCamera*)temp_s0)->unk10 /= 65536.0f;
+                        ((struct SetupIntroCamera*)temp_s0)->unk14 /= 65536.0f;
+                        
+                        ((struct SetupIntroCamera*)temp_s0)->lang1c.lang_ptr = langGet(((struct SetupIntroCamera*)temp_s0)->lang1c.lang_index[1]);
+                        
+                        if (((struct SetupIntroCamera*)temp_s0)->lang20.lang_index != 0)
                         {
-                            phi_s0->unk20 = langGet(temp_v1 & 0xFFFF);
+                            ((struct SetupIntroCamera*)temp_s0)->lang20.lang_ptr = langGet(((struct SetupIntroCamera*)temp_s0)->lang20.lang_index[0]);
                         }
                     }
-                    phi_s0_2 = phi_s0 + 0x28;
-                    break;
-                case 7:
-                    watch_time_0 = 0;
-                    temp_a0_3 = phi_s0->unk8;
-                    if (temp_a0_3 > 0)
-                    {
-                        watch_time_0 = (temp_a0_3 % 60) * 0xE10;
-                    }
-                    temp_v0_5 = phi_s0->unk4;
-                    if (temp_v0_5 > 0)
-                    {
-                        watch_time_0 = watch_time_0 + ((temp_v0_5 % 12) * 0x34BC0);
-                    }
-                    phi_s0_2 = phi_s0 + 0xC;
-                    break;
-                case 8:
-                    temp_v0_6 = dword_CODE_bss_80075D28 + phi_s0->unk4;
-                    D_80036440 = temp_v0_6;
-                    phi_v0_2 = temp_v0_6;
-                    if ((temp_v0_6->unk0 != 0) || (temp_v0_6->unk2 != 0))
-                    {
-                        do
-                        {
-loop_38:
-                            temp_v0_7 = phi_v0_2 + 0xC;
-                            phi_v0_2 = temp_v0_7;
-                            if (phi_v0_2->unkC != 0)
-                            {
-                                goto loop_38;
-                            }
-                        } while (temp_v0_7->unk2 != 0);
-                    }
-                    phi_s0_2 = phi_s0 + 8;
-                    break;
-                default:
-                    phi_s0_2 = phi_s0 + 4;
-                    break;
+                    
+                    temp_s0 = (struct SetupIntroEmpty*)((s32)temp_s0 + sizeof(struct SetupIntroCamera));
                 }
-                temp_v0_3 = *phi_s0_2;
-                phi_v0 = temp_v0_3;
-                phi_s0 = phi_s0_2;
-            } while (temp_v0_3 != 9);
+                break;
+
+                case INTROTYPE_WATCH:
+                {
+                    watch_time_0 = 0;
+                    
+                    if (((struct SetupIntroWatch*)temp_s0)->minutes > 0)
+                    {
+                        watch_time_0 = (((struct SetupIntroWatch*)temp_s0)->minutes % 60) * (60*60);
+                    }
+
+                    if (((struct SetupIntroWatch*)temp_s0)->hours > 0)
+                    {
+                        watch_time_0 += ((((struct SetupIntroWatch*)temp_s0)->hours % 12) * (60*60*60));
+                    }
+                    
+                    temp_s0 = (struct SetupIntroEmpty*)((s32)temp_s0 + sizeof(struct SetupIntroWatch));
+                }
+                break;
+                    
+                case INTROTYPE_CREDITS:
+                {
+                    temp_v0_6 = dword_CODE_bss_80075D28[((struct SetupIntroCredits*)temp_s0)->unk04];
+                    D_80036440 = temp_v0_6;
+
+                    if (temp_v0_6->TextId1 != NULL || temp_v0_6->TextId2 != NULL)
+                    {
+                        while (temp_v0_6 != NULL && temp_v0_6->TextId2 != NULL)
+                        {
+                            temp_v0_6++;
+                        }
+                    }
+                    
+                    temp_s0 = (struct SetupIntroEmpty*)((s32)temp_s0 + sizeof(struct SetupIntroCredits));
+                }
+                break;
+
+                default:
+                {
+                    temp_s0 = (struct SetupIntroEmpty*)((s32)temp_s0 + sizeof(struct SetupIntroEmpty));
+                }
+                break;
+
+            }
         }
     }
 
-    temp_v0_8 = D_800364B8;
-
-    if (temp_v0_8 != 0)
+    if (g_CurrentSetupIntroCamera != NULL)
     {
-        ptr_random06cam_entry = temp_v0_8;
-        temp_hi = randomGetNext() % (u32) D_800364BC;
-        phi_v1 = temp_hi;
-        if ((s32) temp_hi > 0)
+        ptr_random06cam_entry = g_CurrentSetupIntroCamera;
+        temp_hi = randomGetNext() % (u32) g_SetupIntroCameraCount;
+        while (temp_hi > 0)
         {
-            do
-            {
-                temp_v1_2 = phi_v1 - 1;
-                ptr_random06cam_entry = ptr_random06cam_entry->unk24;
-                phi_v1 = (u32) temp_v1_2;
-            } while (temp_v1_2 > 0);
+            ptr_random06cam_entry = ptr_random06cam_entry->prev;
+            temp_hi--;
         }
     }
 
-    bondinvAddInvItem(1);
+    bondinvAddInvItem(ITEM_FIST);
 
-    if (sp7C == 0)
+    if (set_starting_weapon == 0)
     {
-        starting_right_weapon = 1;
+        starting_right_weapon = ITEM_FIST;
     }
 
     g_CurrentPlayer->field_78 = 0;
@@ -376,17 +406,14 @@ loop_38:
             phi_v1_2 = 0;
         }
         
-        temp_s1 = (phi_v1_2 * 4) + &g_Startpad;
-        temp_s0_2 = *temp_s1;
-        sp8C.f[0] = temp_s0_2->unk0;
-        sp8C.f[2] = temp_s0_2->unk8;
-        temp_a0_4 = temp_s0_2->unk28;
-        sp84 = temp_a0_4;
-        phi_f20 = bondviewYPositionRelated(temp_a0_4, sp8C.f[0], sp8C.f[2]);
+        sp8C.f[0] = g_Startpad[phi_v1_2]->pos.f[0];
+        sp8C.f[2] = g_Startpad[phi_v1_2]->pos.f[2];
+        sp84 = g_Startpad[phi_v1_2]->stan;
+
+        phi_f20 = bondviewYPositionRelated(sp84, sp8C.f[0], sp8C.f[2]);
         sp8C.f[1] = g_CurrentPlayer->field_29BC + phi_f20;
         g_CurrentPlayer->field_70 = phi_f20;
-        temp_s0_3 = *temp_s1;
-        sp88 = 6.2831855f - atan2f(temp_s0_3->unk18, temp_s0_3->unk20);
+        sp88 = 6.2831855f - atan2f(g_Startpad[phi_v1_2]->look.f[0], g_Startpad[phi_v1_2]->look.f[2]);
     }
     else
     {
@@ -617,21 +644,21 @@ glabel load_camera_intro_type_values
 /* 03A4FC 7F0059CC 3C018003 */  lui   $at, %hi(D_800364A8)
 /* 03A500 7F0059D0 24190001 */  li    $t9, 1
 /* 03A504 7F0059D4 AC3964A8 */  sw    $t9, %lo(D_800364A8)($at)
-/* 03A508 7F0059D8 3C018003 */  lui   $at, %hi(D_800364AC)
-/* 03A50C 7F0059DC AC2064AC */  sw    $zero, %lo(D_800364AC)($at)
+/* 03A508 7F0059D8 3C018003 */  lui   $at, %hi(g_IntroSwirl)
+/* 03A50C 7F0059DC AC2064AC */  sw    $zero, %lo(g_IntroSwirl)($at)
 /* 03A510 7F0059E0 3C018003 */  lui   $at, %hi(ptr_random06cam_entry)
 /* 03A514 7F0059E4 AC2064C0 */  sw    $zero, %lo(ptr_random06cam_entry)($at)
-/* 03A518 7F0059E8 3C018003 */  lui   $at, %hi(D_800364B8)
-/* 03A51C 7F0059EC AC2064B8 */  sw    $zero, %lo(D_800364B8)($at)
-/* 03A520 7F0059F0 3C018003 */  lui   $at, %hi(D_800364BC)
-/* 03A524 7F0059F4 AC2064BC */  sw    $zero, %lo(D_800364BC)($at)
+/* 03A518 7F0059E8 3C018003 */  lui   $at, %hi(g_CurrentSetupIntroCamera)
+/* 03A51C 7F0059EC AC2064B8 */  sw    $zero, %lo(g_CurrentSetupIntroCamera)($at)
+/* 03A520 7F0059F0 3C018003 */  lui   $at, %hi(g_SetupIntroCameraCount)
+/* 03A524 7F0059F4 AC2064BC */  sw    $zero, %lo(g_SetupIntroCameraCount)($at)
 /* 03A528 7F0059F8 3C018008 */  lui   $at, %hi(mission_timer)
 /* 03A52C 7F0059FC 3C118008 */  lui   $s1, %hi(watch_time_0)
 /* 03A530 7F005A00 AC209A20 */  sw    $zero, %lo(mission_timer)($at)
 /* 03A534 7F005A04 26319A24 */  addiu $s1, %lo(watch_time_0) # addiu $s1, $s1, -0x65dc
 /* 03A538 7F005A08 AE200000 */  sw    $zero, ($s1)
-/* 03A53C 7F005A0C 3C018003 */  lui   $at, %hi(D_80036514)
-/* 03A540 7F005A10 AC206514 */  sw    $zero, %lo(D_80036514)($at)
+/* 03A53C 7F005A0C 3C018003 */  lui   $at, %hi(g_IntroAnimationIndex)
+/* 03A540 7F005A10 AC206514 */  sw    $zero, %lo(g_IntroAnimationIndex)($at)
 /* 03A544 7F005A14 3C018005 */  lui   $at, %hi(default_zoom_speed)
 /* 03A548 7F005A18 C430F1A8 */  lwc1  $f16, %lo(default_zoom_speed)($at)
 /* 03A54C 7F005A1C 3C018003 */  lui   $at, %hi(watch_transition_time)
@@ -741,13 +768,13 @@ ammo:
 /* 03A6C8 7F005B98 10000092 */  b     .L7F005DE4
 /* 03A6CC 7F005B9C 26100010 */   addiu $s0, $s0, 0x10
 swirling_intro_cam:
-/* 03A6D0 7F005BA0 3C098003 */  lui   $t1, %hi(D_800364AC) 
-/* 03A6D4 7F005BA4 8D2964AC */  lw    $t1, %lo(D_800364AC)($t1)
+/* 03A6D0 7F005BA0 3C098003 */  lui   $t1, %hi(g_IntroSwirl) 
+/* 03A6D4 7F005BA4 8D2964AC */  lw    $t1, %lo(g_IntroSwirl)($t1)
 /* 03A6D8 7F005BA8 02001025 */  move  $v0, $s0
-/* 03A6DC 7F005BAC 3C018003 */  lui   $at, %hi(D_800364AC)
+/* 03A6DC 7F005BAC 3C018003 */  lui   $at, %hi(g_IntroSwirl)
 /* 03A6E0 7F005BB0 55200003 */  bnezl $t1, .L7F005BC0
 /* 03A6E4 7F005BB4 8C4A0008 */   lw    $t2, 8($v0)
-/* 03A6E8 7F005BB8 AC3064AC */  sw    $s0, %lo(D_800364AC)($at)
+/* 03A6E8 7F005BB8 AC3064AC */  sw    $s0, %lo(g_IntroSwirl)($at)
 /* 03A6EC 7F005BBC 8C4A0008 */  lw    $t2, 8($v0)
 .L7F005BC0:
 /* 03A6F0 7F005BC0 8C4B000C */  lw    $t3, 0xc($v0)
@@ -778,10 +805,10 @@ swirling_intro_cam:
 /* 03A754 7F005C24 E4460018 */   swc1  $f6, 0x18($v0)
 intro_ani:
 /* 03A758 7F005C28 8E180004 */  lw    $t8, 4($s0)
-/* 03A75C 7F005C2C 3C018003 */  lui   $at, %hi(D_80036514)
+/* 03A75C 7F005C2C 3C018003 */  lui   $at, %hi(g_IntroAnimationIndex)
 /* 03A760 7F005C30 26100008 */  addiu $s0, $s0, 8
 /* 03A764 7F005C34 1000006B */  b     .L7F005DE4
-/* 03A768 7F005C38 AC386514 */   sw    $t8, %lo(D_80036514)($at)
+/* 03A768 7F005C38 AC386514 */   sw    $t8, %lo(g_IntroAnimationIndex)($at)
 cuff_char:
 /* 03A76C 7F005C3C 8E0E0004 */  lw    $t6, 4($s0)
 /* 03A770 7F005C40 8E4F0000 */  lw    $t7, ($s2)
@@ -792,16 +819,16 @@ fixed_cam:
 /* 03A780 7F005C50 0FC26C54 */  jal   get_cur_playernum
 /* 03A784 7F005C54 00000000 */   nop   
 /* 03A788 7F005C58 1440002C */  bnez  $v0, .L7F005D0C
-/* 03A78C 7F005C5C 3C088003 */   lui   $t0, %hi(D_800364B8) 
-/* 03A790 7F005C60 8D0864B8 */  lw    $t0, %lo(D_800364B8)($t0)
-/* 03A794 7F005C64 3C098003 */  lui   $t1, %hi(D_800364BC) 
-/* 03A798 7F005C68 3C018003 */  lui   $at, %hi(D_800364B8)
+/* 03A78C 7F005C5C 3C088003 */   lui   $t0, %hi(g_CurrentSetupIntroCamera) 
+/* 03A790 7F005C60 8D0864B8 */  lw    $t0, %lo(g_CurrentSetupIntroCamera)($t0)
+/* 03A794 7F005C64 3C098003 */  lui   $t1, %hi(g_SetupIntroCameraCount) 
+/* 03A798 7F005C68 3C018003 */  lui   $at, %hi(g_CurrentSetupIntroCamera)
 /* 03A79C 7F005C6C AE080024 */  sw    $t0, 0x24($s0)
-/* 03A7A0 7F005C70 8D2964BC */  lw    $t1, %lo(D_800364BC)($t1)
-/* 03A7A4 7F005C74 AC3064B8 */  sw    $s0, %lo(D_800364B8)($at)
-/* 03A7A8 7F005C78 3C018003 */  lui   $at, %hi(D_800364BC)
+/* 03A7A0 7F005C70 8D2964BC */  lw    $t1, %lo(g_SetupIntroCameraCount)($t1)
+/* 03A7A4 7F005C74 AC3064B8 */  sw    $s0, %lo(g_CurrentSetupIntroCamera)($at)
+/* 03A7A8 7F005C78 3C018003 */  lui   $at, %hi(g_SetupIntroCameraCount)
 /* 03A7AC 7F005C7C 252A0001 */  addiu $t2, $t1, 1
-/* 03A7B0 7F005C80 AC2A64BC */  sw    $t2, %lo(D_800364BC)($at)
+/* 03A7B0 7F005C80 AC2A64BC */  sw    $t2, %lo(g_SetupIntroCameraCount)($at)
 /* 03A7B4 7F005C84 8E0B0004 */  lw    $t3, 4($s0)
 /* 03A7B8 7F005C88 8E0C0008 */  lw    $t4, 8($s0)
 /* 03A7BC 7F005C8C 8E0D000C */  lw    $t5, 0xc($s0)
@@ -905,16 +932,16 @@ def_7F005A74:
 /* 03A91C 7F005DEC 5441FF1C */  bnel  $v0, $at, .L7F005A60
 /* 03A920 7F005DF0 2C410009 */   sltiu $at, $v0, 9
 .L7F005DF4:
-/* 03A924 7F005DF4 3C028003 */  lui   $v0, %hi(D_800364B8)
-/* 03A928 7F005DF8 8C4264B8 */  lw    $v0, %lo(D_800364B8)($v0)
+/* 03A924 7F005DF4 3C028003 */  lui   $v0, %hi(g_CurrentSetupIntroCamera)
+/* 03A928 7F005DF8 8C4264B8 */  lw    $v0, %lo(g_CurrentSetupIntroCamera)($v0)
 /* 03A92C 7F005DFC 3C128008 */  lui   $s2, %hi(g_CurrentPlayer)
 /* 03A930 7F005E00 2652A0B0 */  addiu $s2, %lo(g_CurrentPlayer) # addiu $s2, $s2, -0x5f50
 /* 03A934 7F005E04 10400012 */  beqz  $v0, .L7F005E50
 /* 03A938 7F005E08 3C018003 */   lui   $at, %hi(ptr_random06cam_entry)
 /* 03A93C 7F005E0C 0C002914 */  jal   randomGetNext
 /* 03A940 7F005E10 AC2264C0 */   sw    $v0, %lo(ptr_random06cam_entry)($at)
-/* 03A944 7F005E14 3C0B8003 */  lui   $t3, %hi(D_800364BC) 
-/* 03A948 7F005E18 8D6B64BC */  lw    $t3, %lo(D_800364BC)($t3)
+/* 03A944 7F005E14 3C0B8003 */  lui   $t3, %hi(g_SetupIntroCameraCount) 
+/* 03A948 7F005E18 8D6B64BC */  lw    $t3, %lo(g_SetupIntroCameraCount)($t3)
 /* 03A94C 7F005E1C 004B001B */  divu  $zero, $v0, $t3
 /* 03A950 7F005E20 00001810 */  mfhi  $v1
 /* 03A954 7F005E24 15600002 */  bnez  $t3, .L7F005E30
@@ -1325,21 +1352,21 @@ glabel load_camera_intro_type_values
 /* 03A524 7F0059B4 3C018003 */  lui   $at, %hi(D_800364A8) # $at, 0x8003
 /* 03A528 7F0059B8 24190001 */  li    $t9, 1
 /* 03A52C 7F0059BC AC3964E8 */  sw    $t9, %lo(D_800364A8)($at)
-/* 03A530 7F0059C0 3C018003 */  lui   $at, %hi(D_800364AC) # $at, 0x8003
-/* 03A534 7F0059C4 AC2064EC */  sw    $zero, %lo(D_800364AC)($at)
+/* 03A530 7F0059C0 3C018003 */  lui   $at, %hi(g_IntroSwirl) # $at, 0x8003
+/* 03A534 7F0059C4 AC2064EC */  sw    $zero, %lo(g_IntroSwirl)($at)
 /* 03A538 7F0059C8 3C018003 */  lui   $at, %hi(ptr_random06cam_entry) # $at, 0x8003
 /* 03A53C 7F0059CC AC206500 */  sw    $zero, %lo(ptr_random06cam_entry)($at)
-/* 03A540 7F0059D0 3C018003 */  lui   $at, %hi(D_800364B8) # $at, 0x8003
-/* 03A544 7F0059D4 AC2064F8 */  sw    $zero, %lo(D_800364B8)($at)
-/* 03A548 7F0059D8 3C018003 */  lui   $at, %hi(D_800364BC) # $at, 0x8003
-/* 03A54C 7F0059DC AC2064FC */  sw    $zero, %lo(D_800364BC)($at)
+/* 03A540 7F0059D0 3C018003 */  lui   $at, %hi(g_CurrentSetupIntroCamera) # $at, 0x8003
+/* 03A544 7F0059D4 AC2064F8 */  sw    $zero, %lo(g_CurrentSetupIntroCamera)($at)
+/* 03A548 7F0059D8 3C018003 */  lui   $at, %hi(g_SetupIntroCameraCount) # $at, 0x8003
+/* 03A54C 7F0059DC AC2064FC */  sw    $zero, %lo(g_SetupIntroCameraCount)($at)
 /* 03A550 7F0059E0 3C018008 */  lui   $at, %hi(mission_timer) # $at, 0x8008
 /* 03A554 7F0059E4 3C118008 */  lui   $s1, %hi(watch_time_0) # $s1, 0x8008
 /* 03A558 7F0059E8 AC209A60 */  sw    $zero, %lo(mission_timer)($at)
 /* 03A55C 7F0059EC 26319A64 */  addiu $s1, %lo(watch_time_0) # addiu $s1, $s1, -0x659c
 /* 03A560 7F0059F0 E6380000 */  swc1  $f24, ($s1)
-/* 03A564 7F0059F4 3C018003 */  lui   $at, %hi(D_80036514) # $at, 0x8003
-/* 03A568 7F0059F8 AC206554 */  sw    $zero, %lo(D_80036514)($at)
+/* 03A564 7F0059F4 3C018003 */  lui   $at, %hi(g_IntroAnimationIndex) # $at, 0x8003
+/* 03A568 7F0059F8 AC206554 */  sw    $zero, %lo(g_IntroAnimationIndex)($at)
 /* 03A56C 7F0059FC 3C018005 */  lui   $at, %hi(default_zoom_speed) # $at, 0x8005
 /* 03A570 7F005A00 C424F1D8 */  lwc1  $f4, %lo(default_zoom_speed)($at)
 /* 03A574 7F005A04 3C018003 */  lui   $at, %hi(watch_transition_time) # $at, 0x8003
@@ -1449,13 +1476,13 @@ ammo:
 /* 03A6F0 7F005B80 10000099 */  b     .L7F005DE8
 /* 03A6F4 7F005B84 26100010 */   addiu $s0, $s0, 0x10
 swirling_intro_cam:
-/* 03A6F8 7F005B88 3C098003 */  lui   $t1, %hi(D_800364AC) # $t1, 0x8003
-/* 03A6FC 7F005B8C 8D2964EC */  lw    $t1, %lo(D_800364AC)($t1)
+/* 03A6F8 7F005B88 3C098003 */  lui   $t1, %hi(g_IntroSwirl) # $t1, 0x8003
+/* 03A6FC 7F005B8C 8D2964EC */  lw    $t1, %lo(g_IntroSwirl)($t1)
 /* 03A700 7F005B90 02001025 */  move  $v0, $s0
-/* 03A704 7F005B94 3C018003 */  lui   $at, %hi(D_800364AC) # $at, 0x8003
+/* 03A704 7F005B94 3C018003 */  lui   $at, %hi(g_IntroSwirl) # $at, 0x8003
 /* 03A708 7F005B98 55200003 */  bnezl $t1, .L7F005BA8
 /* 03A70C 7F005B9C 8C4A0008 */   lw    $t2, 8($v0)
-/* 03A710 7F005BA0 AC3064EC */  sw    $s0, %lo(D_800364AC)($at)
+/* 03A710 7F005BA0 AC3064EC */  sw    $s0, %lo(g_IntroSwirl)($at)
 /* 03A714 7F005BA4 8C4A0008 */  lw    $t2, 8($v0)
 .L7F005BA8:
 /* 03A718 7F005BA8 8C4B000C */  lw    $t3, 0xc($v0)
@@ -1486,10 +1513,10 @@ swirling_intro_cam:
 /* 03A77C 7F005C0C E44A0018 */   swc1  $f10, 0x18($v0)
 intro_ani:
 /* 03A780 7F005C10 8E180004 */  lw    $t8, 4($s0)
-/* 03A784 7F005C14 3C018003 */  lui   $at, %hi(D_80036514) # $at, 0x8003
+/* 03A784 7F005C14 3C018003 */  lui   $at, %hi(g_IntroAnimationIndex) # $at, 0x8003
 /* 03A788 7F005C18 26100008 */  addiu $s0, $s0, 8
 /* 03A78C 7F005C1C 10000072 */  b     .L7F005DE8
-/* 03A790 7F005C20 AC386554 */   sw    $t8, %lo(D_80036514)($at)
+/* 03A790 7F005C20 AC386554 */   sw    $t8, %lo(g_IntroAnimationIndex)($at)
 cuff_char:
 /* 03A794 7F005C24 8E0E0004 */  lw    $t6, 4($s0)
 /* 03A798 7F005C28 8E4F0000 */  lw    $t7, ($s2)
@@ -1500,16 +1527,16 @@ fixed_cam:
 /* 03A7A8 7F005C38 0FC26F3C */  jal   get_cur_playernum
 /* 03A7AC 7F005C3C 00000000 */   nop   
 /* 03A7B0 7F005C40 1440002C */  bnez  $v0, .L7F005CF4
-/* 03A7B4 7F005C44 3C088003 */   lui   $t0, %hi(D_800364B8) # $t0, 0x8003
-/* 03A7B8 7F005C48 8D0864F8 */  lw    $t0, %lo(D_800364B8)($t0)
-/* 03A7BC 7F005C4C 3C098003 */  lui   $t1, %hi(D_800364BC) # $t1, 0x8003
-/* 03A7C0 7F005C50 3C018003 */  lui   $at, %hi(D_800364B8) # $at, 0x8003
+/* 03A7B4 7F005C44 3C088003 */   lui   $t0, %hi(g_CurrentSetupIntroCamera) # $t0, 0x8003
+/* 03A7B8 7F005C48 8D0864F8 */  lw    $t0, %lo(g_CurrentSetupIntroCamera)($t0)
+/* 03A7BC 7F005C4C 3C098003 */  lui   $t1, %hi(g_SetupIntroCameraCount) # $t1, 0x8003
+/* 03A7C0 7F005C50 3C018003 */  lui   $at, %hi(g_CurrentSetupIntroCamera) # $at, 0x8003
 /* 03A7C4 7F005C54 AE080024 */  sw    $t0, 0x24($s0)
-/* 03A7C8 7F005C58 8D2964FC */  lw    $t1, %lo(D_800364BC)($t1)
-/* 03A7CC 7F005C5C AC3064F8 */  sw    $s0, %lo(D_800364B8)($at)
-/* 03A7D0 7F005C60 3C018003 */  lui   $at, %hi(D_800364BC) # $at, 0x8003
+/* 03A7C8 7F005C58 8D2964FC */  lw    $t1, %lo(g_SetupIntroCameraCount)($t1)
+/* 03A7CC 7F005C5C AC3064F8 */  sw    $s0, %lo(g_CurrentSetupIntroCamera)($at)
+/* 03A7D0 7F005C60 3C018003 */  lui   $at, %hi(g_SetupIntroCameraCount) # $at, 0x8003
 /* 03A7D4 7F005C64 252A0001 */  addiu $t2, $t1, 1
-/* 03A7D8 7F005C68 AC2A64FC */  sw    $t2, %lo(D_800364BC)($at)
+/* 03A7D8 7F005C68 AC2A64FC */  sw    $t2, %lo(g_SetupIntroCameraCount)($at)
 /* 03A7DC 7F005C6C 8E0B0004 */  lw    $t3, 4($s0)
 /* 03A7E0 7F005C70 8E0C0008 */  lw    $t4, 8($s0)
 /* 03A7E4 7F005C74 8E0D000C */  lw    $t5, 0xc($s0)
@@ -1620,16 +1647,16 @@ def_7F005A74:
 /* 03A960 7F005DF0 5441FF15 */  bnel  $v0, $at, .L7F005A48
 /* 03A964 7F005DF4 2C410009 */   sltiu $at, $v0, 9
 .L7F005DF8:
-/* 03A968 7F005DF8 3C028003 */  lui   $v0, %hi(D_800364B8) # $v0, 0x8003
-/* 03A96C 7F005DFC 8C4264F8 */  lw    $v0, %lo(D_800364B8)($v0)
+/* 03A968 7F005DF8 3C028003 */  lui   $v0, %hi(g_CurrentSetupIntroCamera) # $v0, 0x8003
+/* 03A96C 7F005DFC 8C4264F8 */  lw    $v0, %lo(g_CurrentSetupIntroCamera)($v0)
 /* 03A970 7F005E00 3C128008 */  lui   $s2, %hi(g_CurrentPlayer) # $s2, 0x8008
 /* 03A974 7F005E04 2652A120 */  addiu $s2, %lo(g_CurrentPlayer) # addiu $s2, $s2, -0x5ee0
 /* 03A978 7F005E08 10400012 */  beqz  $v0, .L7F005E54
 /* 03A97C 7F005E0C 3C018003 */   lui   $at, %hi(ptr_random06cam_entry) # $at, 0x8003
 /* 03A980 7F005E10 0C002918 */  jal   randomGetNext
 /* 03A984 7F005E14 AC226500 */   sw    $v0, %lo(ptr_random06cam_entry)($at)
-/* 03A988 7F005E18 3C0E8003 */  lui   $t6, %hi(D_800364BC) # $t6, 0x8003
-/* 03A98C 7F005E1C 8DCE64FC */  lw    $t6, %lo(D_800364BC)($t6)
+/* 03A988 7F005E18 3C0E8003 */  lui   $t6, %hi(g_SetupIntroCameraCount) # $t6, 0x8003
+/* 03A98C 7F005E1C 8DCE64FC */  lw    $t6, %lo(g_SetupIntroCameraCount)($t6)
 /* 03A990 7F005E20 004E001B */  divu  $zero, $v0, $t6
 /* 03A994 7F005E24 00001810 */  mfhi  $v1
 /* 03A998 7F005E28 15C00002 */  bnez  $t6, .L7F005E34
@@ -2040,21 +2067,21 @@ glabel load_camera_intro_type_values
 /* 038324 7F005934 3C018003 */  lui   $at, %hi(D_800364A8) # $at, 0x8003
 /* 038328 7F005938 24190001 */  li    $t9, 1
 /* 03832C 7F00593C AC3919F8 */  sw    $t9, %lo(D_800364A8)($at)
-/* 038330 7F005940 3C018003 */  lui   $at, %hi(D_800364AC) # $at, 0x8003
-/* 038334 7F005944 AC2019FC */  sw    $zero, %lo(D_800364AC)($at)
+/* 038330 7F005940 3C018003 */  lui   $at, %hi(g_IntroSwirl) # $at, 0x8003
+/* 038334 7F005944 AC2019FC */  sw    $zero, %lo(g_IntroSwirl)($at)
 /* 038338 7F005948 3C018003 */  lui   $at, %hi(ptr_random06cam_entry) # $at, 0x8003
 /* 03833C 7F00594C AC201A10 */  sw    $zero, %lo(ptr_random06cam_entry)($at)
-/* 038340 7F005950 3C018003 */  lui   $at, %hi(D_800364B8) # $at, 0x8003
-/* 038344 7F005954 AC201A08 */  sw    $zero, %lo(D_800364B8)($at)
-/* 038348 7F005958 3C018003 */  lui   $at, %hi(D_800364BC) # $at, 0x8003
-/* 03834C 7F00595C AC201A0C */  sw    $zero, %lo(D_800364BC)($at)
+/* 038340 7F005950 3C018003 */  lui   $at, %hi(g_CurrentSetupIntroCamera) # $at, 0x8003
+/* 038344 7F005954 AC201A08 */  sw    $zero, %lo(g_CurrentSetupIntroCamera)($at)
+/* 038348 7F005958 3C018003 */  lui   $at, %hi(g_SetupIntroCameraCount) # $at, 0x8003
+/* 03834C 7F00595C AC201A0C */  sw    $zero, %lo(g_SetupIntroCameraCount)($at)
 /* 038350 7F005960 3C018007 */  lui   $at, %hi(mission_timer) # $at, 0x8007
 /* 038354 7F005964 3C118007 */  lui   $s1, %hi(watch_time_0) # $s1, 0x8007
 /* 038358 7F005968 AC208500 */  sw    $zero, %lo(mission_timer)($at)
 /* 03835C 7F00596C 26318504 */  addiu $s1, %lo(watch_time_0) # addiu $s1, $s1, -0x7afc
 /* 038360 7F005970 E6380000 */  swc1  $f24, ($s1)
-/* 038364 7F005974 3C018003 */  lui   $at, %hi(D_80036514) # $at, 0x8003
-/* 038368 7F005978 AC201A64 */  sw    $zero, %lo(D_80036514)($at)
+/* 038364 7F005974 3C018003 */  lui   $at, %hi(g_IntroAnimationIndex) # $at, 0x8003
+/* 038368 7F005978 AC201A64 */  sw    $zero, %lo(g_IntroAnimationIndex)($at)
 /* 03836C 7F00597C 3C018004 */  lui   $at, %hi(default_zoom_speed) # $at, 0x8004
 /* 038370 7F005980 C42475F8 */  lwc1  $f4, %lo(default_zoom_speed)($at)
 /* 038374 7F005984 3C018003 */  lui   $at, %hi(watch_transition_time) # $at, 0x8003
@@ -2164,13 +2191,13 @@ ammo:
 /* 0384F0 7F005B00 10000099 */  b     .L7F005D68
 /* 0384F4 7F005B04 26100010 */   addiu $s0, $s0, 0x10
 swirling_intro_cam:
-/* 0384F8 7F005B08 3C098003 */  lui   $t1, %hi(D_800364AC) # $t1, 0x8003
-/* 0384FC 7F005B0C 8D2919FC */  lw    $t1, %lo(D_800364AC)($t1)
+/* 0384F8 7F005B08 3C098003 */  lui   $t1, %hi(g_IntroSwirl) # $t1, 0x8003
+/* 0384FC 7F005B0C 8D2919FC */  lw    $t1, %lo(g_IntroSwirl)($t1)
 /* 038500 7F005B10 02001025 */  move  $v0, $s0
-/* 038504 7F005B14 3C018003 */  lui   $at, %hi(D_800364AC) # $at, 0x8003
+/* 038504 7F005B14 3C018003 */  lui   $at, %hi(g_IntroSwirl) # $at, 0x8003
 /* 038508 7F005B18 55200003 */  bnezl $t1, .L7F005B28
 /* 03850C 7F005B1C 8C4A0008 */   lw    $t2, 8($v0)
-/* 038510 7F005B20 AC3019FC */  sw    $s0, %lo(D_800364AC)($at)
+/* 038510 7F005B20 AC3019FC */  sw    $s0, %lo(g_IntroSwirl)($at)
 /* 038514 7F005B24 8C4A0008 */  lw    $t2, 8($v0)
 .L7F005B28:
 /* 038518 7F005B28 8C4B000C */  lw    $t3, 0xc($v0)
@@ -2201,10 +2228,10 @@ swirling_intro_cam:
 /* 03857C 7F005B8C E44A0018 */   swc1  $f10, 0x18($v0)
 intro_ani:
 /* 038580 7F005B90 8E180004 */  lw    $t8, 4($s0)
-/* 038584 7F005B94 3C018003 */  lui   $at, %hi(D_80036514) # $at, 0x8003
+/* 038584 7F005B94 3C018003 */  lui   $at, %hi(g_IntroAnimationIndex) # $at, 0x8003
 /* 038588 7F005B98 26100008 */  addiu $s0, $s0, 8
 /* 03858C 7F005B9C 10000072 */  b     .L7F005D68
-/* 038590 7F005BA0 AC381A64 */   sw    $t8, %lo(D_80036514)($at)
+/* 038590 7F005BA0 AC381A64 */   sw    $t8, %lo(g_IntroAnimationIndex)($at)
 cuff_char:
 /* 038594 7F005BA4 8E0E0004 */  lw    $t6, 4($s0)
 /* 038598 7F005BA8 8E4F0000 */  lw    $t7, ($s2)
@@ -2215,16 +2242,16 @@ fixed_cam:
 /* 0385A8 7F005BB8 0FC269A4 */  jal   get_cur_playernum
 /* 0385AC 7F005BBC 00000000 */   nop   
 /* 0385B0 7F005BC0 1440002C */  bnez  $v0, .L7F005C74
-/* 0385B4 7F005BC4 3C088003 */   lui   $t0, %hi(D_800364B8) # $t0, 0x8003
-/* 0385B8 7F005BC8 8D081A08 */  lw    $t0, %lo(D_800364B8)($t0)
-/* 0385BC 7F005BCC 3C098003 */  lui   $t1, %hi(D_800364BC) # $t1, 0x8003
-/* 0385C0 7F005BD0 3C018003 */  lui   $at, %hi(D_800364B8) # $at, 0x8003
+/* 0385B4 7F005BC4 3C088003 */   lui   $t0, %hi(g_CurrentSetupIntroCamera) # $t0, 0x8003
+/* 0385B8 7F005BC8 8D081A08 */  lw    $t0, %lo(g_CurrentSetupIntroCamera)($t0)
+/* 0385BC 7F005BCC 3C098003 */  lui   $t1, %hi(g_SetupIntroCameraCount) # $t1, 0x8003
+/* 0385C0 7F005BD0 3C018003 */  lui   $at, %hi(g_CurrentSetupIntroCamera) # $at, 0x8003
 /* 0385C4 7F005BD4 AE080024 */  sw    $t0, 0x24($s0)
-/* 0385C8 7F005BD8 8D291A0C */  lw    $t1, %lo(D_800364BC)($t1)
-/* 0385CC 7F005BDC AC301A08 */  sw    $s0, %lo(D_800364B8)($at)
-/* 0385D0 7F005BE0 3C018003 */  lui   $at, %hi(D_800364BC) # $at, 0x8003
+/* 0385C8 7F005BD8 8D291A0C */  lw    $t1, %lo(g_SetupIntroCameraCount)($t1)
+/* 0385CC 7F005BDC AC301A08 */  sw    $s0, %lo(g_CurrentSetupIntroCamera)($at)
+/* 0385D0 7F005BE0 3C018003 */  lui   $at, %hi(g_SetupIntroCameraCount) # $at, 0x8003
 /* 0385D4 7F005BE4 252A0001 */  addiu $t2, $t1, 1
-/* 0385D8 7F005BE8 AC2A1A0C */  sw    $t2, %lo(D_800364BC)($at)
+/* 0385D8 7F005BE8 AC2A1A0C */  sw    $t2, %lo(g_SetupIntroCameraCount)($at)
 /* 0385DC 7F005BEC 8E0B0004 */  lw    $t3, 4($s0)
 /* 0385E0 7F005BF0 8E0C0008 */  lw    $t4, 8($s0)
 /* 0385E4 7F005BF4 8E0D000C */  lw    $t5, 0xc($s0)
@@ -2335,16 +2362,16 @@ def_7F005A74:
 /* 038760 7F005D70 5441FF15 */  bnel  $v0, $at, .L7F0059C8
 /* 038764 7F005D74 2C410009 */   sltiu $at, $v0, 9
 .L7F005D78:
-/* 038768 7F005D78 3C028003 */  lui   $v0, %hi(D_800364B8) # $v0, 0x8003
-/* 03876C 7F005D7C 8C421A08 */  lw    $v0, %lo(D_800364B8)($v0)
+/* 038768 7F005D78 3C028003 */  lui   $v0, %hi(g_CurrentSetupIntroCamera) # $v0, 0x8003
+/* 03876C 7F005D7C 8C421A08 */  lw    $v0, %lo(g_CurrentSetupIntroCamera)($v0)
 /* 038770 7F005D80 3C128007 */  lui   $s2, %hi(g_CurrentPlayer) # $s2, 0x8007
 /* 038774 7F005D84 26528BC0 */  addiu $s2, %lo(g_CurrentPlayer) # addiu $s2, $s2, -0x7440
 /* 038778 7F005D88 10400012 */  beqz  $v0, .L7F005DD4
 /* 03877C 7F005D8C 3C018003 */   lui   $at, %hi(ptr_random06cam_entry) # $at, 0x8003
 /* 038780 7F005D90 0C00262C */  jal   randomGetNext
 /* 038784 7F005D94 AC221A10 */   sw    $v0, %lo(ptr_random06cam_entry)($at)
-/* 038788 7F005D98 3C0E8003 */  lui   $t6, %hi(D_800364BC) # $t6, 0x8003
-/* 03878C 7F005D9C 8DCE1A0C */  lw    $t6, %lo(D_800364BC)($t6)
+/* 038788 7F005D98 3C0E8003 */  lui   $t6, %hi(g_SetupIntroCameraCount) # $t6, 0x8003
+/* 03878C 7F005D9C 8DCE1A0C */  lw    $t6, %lo(g_SetupIntroCameraCount)($t6)
 /* 038790 7F005DA0 004E001B */  divu  $zero, $v0, $t6
 /* 038794 7F005DA4 00001810 */  mfhi  $v1
 /* 038798 7F005DA8 15C00002 */  bnez  $t6, .L7F005DB4

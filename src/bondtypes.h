@@ -3376,6 +3376,157 @@ typedef union
     #pragma endregion IndividualObjectTypes
 #pragma endregion
 
+#pragma region Intro
+
+/**
+ * sizeof == 0x4
+*/
+struct SetupIntroEmpty
+{
+    s32 type;
+};
+
+/**
+ * type == INTROTYPE_SPAWN
+ * sizeof == 0xc
+*/
+struct SetupIntroSpawn
+{
+    s32 type;
+    s32 index;
+    s32 is_demo_playback;
+};
+
+/**
+ * type == INTROTYPE_ITEM
+ * sizeof == 0x10
+*/
+struct SetupIntroItem
+{
+    s32 type;
+    s32 item_right;
+    s32 item_left;
+    s32 is_demo_playback;
+};
+
+/**
+ * type == INTROTYPE_AMMO
+ * sizeof == 0x10
+*/
+struct SetupIntroAmmo
+{
+    s32 type;
+    s32 ammo_type;
+    s32 ammo_amount;
+    s32 is_demo_playback;
+};
+
+/**
+ * type == INTROTYPE_SWIRL
+ * sizeof == 0x20
+*/
+struct SetupIntroSwirl
+{
+    s32 type;
+    s32 unk04;
+    s32 unk08;
+    s32 unk0C;
+    s32 unk10;
+    s32 unk14;
+    s32 unk18;
+    s32 unk1C;
+};
+
+/**
+ * type == INTROTYPE_ANIM
+ * sizeof == 0x8
+*/
+struct SetupIntroAnim
+{
+    s32 type;
+    s32 intro_anim;
+};
+
+/**
+ * type == INTROTYPE_CUFF
+ * sizeof == 0x8
+*/
+struct SetupIntroCuff
+{
+    s32 type;
+    s32 bondtype;
+};
+
+/**
+ * type == INTROTYPE_CAMERA
+ * sizeof == 0x28
+*/
+struct SetupIntroCamera
+{
+    s32 type;
+    f32 unk04;
+    f32 unk08;
+    f32 unk0C;
+    f32 unk10;
+    f32 unk14;
+    s32 unk18;
+    union {
+        s16 lang_index[2];
+        char* lang_ptr;
+    } lang1c;
+    union {
+        s16 lang_index[2];
+        char *lang_ptr;
+    } lang20;
+    struct SetupIntroCamera *prev;
+};
+
+/**
+ * type == INTROTYPE_WATCH
+ * sizeof == 0xc
+*/
+struct SetupIntroWatch
+{
+    s32 type;
+    s32 hours;
+    s32 minutes;
+};
+
+/**
+ * sizeof == 0xc
+*/
+typedef struct CreditsEntry_s {
+    u16 TextId1;
+    u16 TextId2;
+    s16 Position1;
+
+    /**
+     * See CREDITS_ALIGNMENT.
+    */
+    u16 Alignment1;
+
+    s16 Position2;
+
+    /**
+     * See CREDITS_ALIGNMENT.
+    */
+    u16 Alignment2;
+
+} CreditsEntry;
+
+/**
+ * type == INTROTYPE_CREDITS
+ * sizeof == 0x8
+*/
+struct SetupIntroCredits
+{
+    s32 type;
+    s32 unk04;
+};
+
+
+#pragma endregion Intro
+
 #pragma region Objectives
     // PROPDEF_WATCH_MENU_OBJECTIVE_TEXT (35)
     struct watchMenuObjectiveText
@@ -3424,7 +3575,7 @@ typedef union
         {
             waypoint       *pathwaypoints;
             waygroup       *waypointgroups;
-            s32            *intro;
+            struct SetupIntroEmpty *intro;
             s32            *propDefs;
             PathRecord     *patrolpaths;
             AIListRecord   *ailists;
@@ -3499,24 +3650,7 @@ typedef struct object_weapon {
 
 
 
-typedef struct CreditsEntry_s {
-    u16 TextId1;
-    u16 TextId2;
-    s16 Position1;
 
-    /**
-     * See CREDITS_ALIGNMENT.
-    */
-    u16 Alignment1;
-
-    s16 Position2;
-
-    /**
-     * See CREDITS_ALIGNMENT.
-    */
-    u16 Alignment2;
-
-} CreditsEntry;
 
 
 #endif
