@@ -3378,6 +3378,12 @@ typedef union
 
 #pragma region Intro
 
+union SetupFloatInt
+{
+    f32 fval;
+    s32 ival;
+};
+
 /**
  * sizeof == 0x4
 */
@@ -3429,11 +3435,11 @@ struct SetupIntroSwirl
 {
     s32 type;
     s32 unk04;
-    s32 unk08;
-    s32 unk0C;
-    s32 unk10;
-    s32 unk14;
-    s32 unk18;
+    union SetupFloatInt unk08;
+    union SetupFloatInt unk0C;
+    union SetupFloatInt unk10;
+    union SetupFloatInt unk14;
+    union SetupFloatInt unk18;
     s32 unk1C;
 };
 
@@ -3464,18 +3470,18 @@ struct SetupIntroCuff
 struct SetupIntroCamera
 {
     s32 type;
-    f32 unk04;
-    f32 unk08;
-    f32 unk0C;
-    f32 unk10;
-    f32 unk14;
+    union SetupFloatInt unk04;
+    union SetupFloatInt unk08;
+    union SetupFloatInt unk0C;
+    union SetupFloatInt unk10;
+    union SetupFloatInt unk14;
     s32 unk18;
     union {
-        s16 lang_index[2];
+        u16 lang_index[2];
         char* lang_ptr;
     } lang1c;
     union {
-        s16 lang_index[2];
+        s32 lang_index;
         char *lang_ptr;
     } lang20;
     struct SetupIntroCamera *prev;

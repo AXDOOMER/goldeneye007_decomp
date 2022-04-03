@@ -427,7 +427,7 @@ struct player
 
   /* 0x0074 0x800c67d4 */ f32 stanHeight;
 
-  /* 0x0078 */ s32 field_78;
+  /* 0x0078 */ f32 field_78;
 
   /**
    * Collision / clipping related.
@@ -436,7 +436,7 @@ struct player
    */
   /* 0x007c */ f32 field_7C;
   
-  /* 0x0080 */ s32 field_80;
+  /* 0x0080 */ f32 field_80;
 
   /**
    * Collision / clipping related.
@@ -2813,7 +2813,7 @@ extern f32 g_TankTurnSpeed;
 //D:80036464
 extern f32 g_TankOrientationAngle;
 //D:80036468
-extern s32 D_80036468;
+extern f32 D_80036468;
 //D:8003646C
 extern f32 g_TankTurretVerticalAngle;
 //D:80036470
@@ -2843,7 +2843,7 @@ extern s32 D_8003649C;
 //D:800364A0
 extern s32 stop_time_flag;
 //D:800364A4
-extern s32 D_800364A4;
+extern f32 D_800364A4;
 //D:800364A8
 extern s32 D_800364A8;
 //D:800364AC
@@ -3079,7 +3079,7 @@ extern s32 startpadcount;
 extern vec3d flt_CODE_bss_80079990;
 extern s32 mission_timer;
 
-#ifdef VERSION_JP
+#if defined(VERSION_JP) || defined(VERSION_EU)
 extern f32 watch_time_0;
 #else
 extern s32 watch_time_0;
@@ -3093,8 +3093,8 @@ extern s32 startpadcount;
 extern StandTilePoint *dword_CODE_bss_80079DA0;
 extern StandTilePoint *dword_CODE_bss_80079DA4;
 
-#define BSS_80079DA8_LENGTH 0x20
-extern char dword_CODE_bss_80079DA8[];
+#define BSS_80079DA8_LENGTH 8
+extern s32 dword_CODE_bss_80079DA8[];
 
 #ifndef VERSION_EU
 extern char dword_CODE_bss_80079DC8[];

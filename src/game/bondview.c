@@ -173,7 +173,7 @@ s32 dword_CODE_bss_80079A1C;
 //CODE.bss:80079A20
 s32 mission_timer;
 
-#ifdef VERSION_JP
+#if defined(VERSION_JP) || defined(VERSION_EU)
 //CODE.bss:80079A24
 f32 watch_time_0;
 #else
@@ -219,7 +219,7 @@ StandTilePoint *dword_CODE_bss_80079DA0;
 StandTilePoint *dword_CODE_bss_80079DA4;
 
 //CODE.bss:80079DA8
-char dword_CODE_bss_80079DA8[BSS_80079DA8_LENGTH];
+s32 dword_CODE_bss_80079DA8[BSS_80079DA8_LENGTH];
 
 #ifndef VERSION_EU
 //CODE.bss:80079DC8
@@ -296,7 +296,7 @@ f32 g_TankTurnSpeed = 0;
 f32 g_TankOrientationAngle = 0;
 
 //D:80036468
-s32 D_80036468 = 0;
+f32 D_80036468 = 0.0f;
 
 /**
  * Argument to sinf,cosf.
@@ -350,7 +350,7 @@ s32 D_8003649C = 0;
 //D:800364A0
 s32 stop_time_flag = 0;
 //D:800364A4
-s32 D_800364A4 = 0;
+f32 D_800364A4 = 0;
 //D:800364A8
 s32 D_800364A8 = 1;
 //D:800364AC

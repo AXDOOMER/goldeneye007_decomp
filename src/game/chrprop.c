@@ -172,7 +172,7 @@ s32 bss_80075CFC;
 stagesetup g_chraiCurrentSetup; //Public Working Setup
 
 //CODE.bss:80075D28
-CreditsEntry **dword_CODE_bss_80075D28;
+CreditsEntry *dword_CODE_bss_80075D28;
 
 PropRecord *ptr_obj_pos_list_current_entry = 0;
 PropRecord *ptr_obj_pos_list_first_entry = 0;
