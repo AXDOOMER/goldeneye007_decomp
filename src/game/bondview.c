@@ -197,7 +197,7 @@ char dword_CODE_bss_jp80079CEC[0x14];
  * Address 80079C28
  * EU .bss 80068738
 */
-char startpad[0x40];
+PadRecord *g_Startpad[0x10];
 
 //CODE.bss:80079C68
 s32 startpadcount;
@@ -219,7 +219,7 @@ StandTilePoint *dword_CODE_bss_80079DA0;
 StandTilePoint *dword_CODE_bss_80079DA4;
 
 //CODE.bss:80079DA8
-char dword_CODE_bss_80079DA8[0x20];
+char dword_CODE_bss_80079DA8[BSS_80079DA8_LENGTH];
 
 #ifndef VERSION_EU
 //CODE.bss:80079DC8
@@ -2354,12 +2354,12 @@ block_3:
                 phi_s1_5 = phi_s1_7;
                 if ((*temp_t3)->unkA8 != 0)
                 {
-                    temp_t6 = (&startpad + (((s32) subroutine_arg0->unk29E0 % (s32) startpadcount) * 4));
+                    temp_t6 = (&g_Startpad + (((s32) subroutine_arg0->unk29E0 % (s32) startpadcount) * 4));
                     temp_f0 = ((*temp_t3)->unkA8->unk8 - **temp_t6);
                     temp_f2 = ((*temp_t3)->unkA8->unk10 - (*temp_t6)->unk8);
                     phi_s1_5 = phi_s1_7;
                     //sprintf("Distance from player %d (%f, %f)->(%f, %f)= %f\n",local_2c,
-                    //    *(&startpad)[local_28],*((&startpad)[local_28] + 8),
+                    //    *(&g_Startpad)[local_28],*((&g_Startpad)[local_28] + 8),
                     //    *(g_playerPointers[local_2c]->position_data_pointer + 0xc),
                     //    *(g_playerPointers[local_2c]->position_data_pointer + 0x14),dVar7);
                     if (sqrtf(((temp_f0 * temp_f0) + (temp_f2 * temp_f2))) < 1000.0f)
@@ -2418,11 +2418,11 @@ block_15:
                     phi_s1_6 = phi_s1_8;
                     if ((*temp_t5)->unkA8 != 0)
                     {
-                        temp_t8 = (&startpad + (temp_hi * 4));
+                        temp_t8 = (&g_Startpad + (temp_hi * 4));
                         temp_f0_2 = ((*temp_t5)->unkA8->unk8 - **temp_t8);
                         temp_f2_2 = ((*temp_t5)->unkA8->unk10 - (*temp_t8)->unk8);
                         phi_s1_6 = phi_s1_8;
-                        //sprintf("Distance from player %d (%f, %f)->(%f, %f)= %f\n",local_2c,*(&startpad)[local_28],*((&startpad)[local_28] + 8),*(g_playerPointers[local_2c]->position_data_pointer + 0xc),*(g_playerPointers[local_2c]->position_data_pointer + 0x14),dVar7);
+                        //sprintf("Distance from player %d (%f, %f)->(%f, %f)= %f\n",local_2c,*(&g_Startpad)[local_28],*((&g_Startpad)[local_28] + 8),*(g_playerPointers[local_2c]->position_data_pointer + 0xc),*(g_playerPointers[local_2c]->position_data_pointer + 0x14),dVar7);
                         if (sqrtf(((temp_f0_2 * temp_f0_2) + (temp_f2_2 * temp_f2_2))) < 100.0f)
                         {
                             //sprintf("Too close to player %d (closer than 1m)\n",local_2c);
@@ -2489,11 +2489,11 @@ glabel sub_GAME_7F0790F0
 /* 0ADC70 7F079140 0000B825 */   move  $s7, $zero
 /* 0ADC74 7F079144 3C01447A */  li    $at, 0x447A0000 # 1000.000000
 /* 0ADC78 7F079148 3C1E8008 */  lui   $fp, %hi(g_CurrentPlayer)
-/* 0ADC7C 7F07914C 3C158008 */  lui   $s5, %hi(startpad)
+/* 0ADC7C 7F07914C 3C158008 */  lui   $s5, %hi(g_Startpad)
 /* 0ADC80 7F079150 3C148008 */  lui   $s4, %hi(g_playerPointers)
 /* 0ADC84 7F079154 4481A000 */  mtc1  $at, $f20
 /* 0ADC88 7F079158 26949EE0 */  addiu $s4, %lo(g_playerPointers) # addiu $s4, $s4, -0x6120
-/* 0ADC8C 7F07915C 26B59C28 */  addiu $s5, %lo(startpad) # addiu $s5, $s5, -0x63d8
+/* 0ADC8C 7F07915C 26B59C28 */  addiu $s5, %lo(g_Startpad) # addiu $s5, $s5, -0x63d8
 /* 0ADC90 7F079160 27DEA0B0 */  addiu $fp, %lo(g_CurrentPlayer) # addiu $fp, $fp, -0x5f50
 /* 0ADC94 7F079164 8FC20000 */  lw    $v0, ($fp)
 .L7F079168:
@@ -2565,10 +2565,10 @@ glabel sub_GAME_7F0790F0
 /* 0ADD88 7F079258 AFB3004C */  sw    $s3, 0x4c($sp)
 .L7F07925C:
 /* 0ADD8C 7F07925C 3C148008 */  lui   $s4, %hi(g_playerPointers)
-/* 0ADD90 7F079260 3C158008 */  lui   $s5, %hi(startpad)
+/* 0ADD90 7F079260 3C158008 */  lui   $s5, %hi(g_Startpad)
 /* 0ADD94 7F079264 3C1E8008 */  lui   $fp, %hi(g_CurrentPlayer)
 /* 0ADD98 7F079268 27DEA0B0 */  addiu $fp, %lo(g_CurrentPlayer) # addiu $fp, $fp, -0x5f50
-/* 0ADD9C 7F07926C 26B59C28 */  addiu $s5, %lo(startpad) # addiu $s5, $s5, -0x63d8
+/* 0ADD9C 7F07926C 26B59C28 */  addiu $s5, %lo(g_Startpad) # addiu $s5, $s5, -0x63d8
 /* 0ADDA0 7F079270 26949EE0 */  addiu $s4, %lo(g_playerPointers) # addiu $s4, $s4, -0x6120
 /* 0ADDA4 7F079274 12200044 */  beqz  $s1, .L7F079388
 /* 0ADDA8 7F079278 8FB3004C */   lw    $s3, 0x4c($sp)
@@ -2703,11 +2703,11 @@ glabel sub_GAME_7F0790F0
 /* 0ABBB0 7F0791C0 0000B825 */   move  $s7, $zero
 /* 0ABBB4 7F0791C4 3C01447A */  li    $at, 0x447A0000 # 1000.000000
 /* 0ABBB8 7F0791C8 3C1E8007 */  lui   $fp, %hi(g_CurrentPlayer) # $fp, 0x8007
-/* 0ABBBC 7F0791CC 3C158007 */  lui   $s5, %hi(startpad) # $s5, 0x8007
+/* 0ABBBC 7F0791CC 3C158007 */  lui   $s5, %hi(g_Startpad) # $s5, 0x8007
 /* 0ABBC0 7F0791D0 3C148007 */  lui   $s4, %hi(g_playerPointers) # $s4, 0x8007
 /* 0ABBC4 7F0791D4 4481A000 */  mtc1  $at, $f20
 /* 0ABBC8 7F0791D8 269489F0 */  addiu $s4, %lo(g_playerPointers) # addiu $s4, $s4, -0x7610
-/* 0ABBCC 7F0791DC 26B58738 */  addiu $s5, %lo(startpad) # addiu $s5, $s5, -0x78c8
+/* 0ABBCC 7F0791DC 26B58738 */  addiu $s5, %lo(g_Startpad) # addiu $s5, $s5, -0x78c8
 /* 0ABBD0 7F0791E0 27DE8BC0 */  addiu $fp, %lo(g_CurrentPlayer) # addiu $fp, $fp, -0x7440
 /* 0ABBD4 7F0791E4 8FC20000 */  lw    $v0, ($fp)
 .L7F0791E8:
@@ -2779,10 +2779,10 @@ glabel sub_GAME_7F0790F0
 /* 0ABCC8 7F0792D8 AFB3004C */  sw    $s3, 0x4c($sp)
 .L7F0792DC:
 /* 0ABCCC 7F0792DC 3C148007 */  lui   $s4, %hi(g_playerPointers) # $s4, 0x8007
-/* 0ABCD0 7F0792E0 3C158007 */  lui   $s5, %hi(startpad) # $s5, 0x8007
+/* 0ABCD0 7F0792E0 3C158007 */  lui   $s5, %hi(g_Startpad) # $s5, 0x8007
 /* 0ABCD4 7F0792E4 3C1E8007 */  lui   $fp, %hi(g_CurrentPlayer) # $fp, 0x8007
 /* 0ABCD8 7F0792E8 27DE8BC0 */  addiu $fp, %lo(g_CurrentPlayer) # addiu $fp, $fp, -0x7440
-/* 0ABCDC 7F0792EC 26B58738 */  addiu $s5, %lo(startpad) # addiu $s5, $s5, -0x78c8
+/* 0ABCDC 7F0792EC 26B58738 */  addiu $s5, %lo(g_Startpad) # addiu $s5, $s5, -0x78c8
 /* 0ABCE0 7F0792F0 269489F0 */  addiu $s4, %lo(g_playerPointers) # addiu $s4, $s4, -0x7610
 /* 0ABCE4 7F0792F4 12200044 */  beqz  $s1, .L7F079408
 /* 0ABCE8 7F0792F8 8FB3004C */   lw    $s3, 0x4c($sp)
@@ -38692,9 +38692,9 @@ glabel mp_respawn_handler
 /* 0BD4F4 7F0889C4 00001825 */  move  $v1, $zero
 .L7F0889C8:
 /* 0BD4F8 7F0889C8 00035080 */  sll   $t2, $v1, 2
-/* 0BD4FC 7F0889CC 3C028008 */  lui   $v0, %hi(startpad)
+/* 0BD4FC 7F0889CC 3C028008 */  lui   $v0, %hi(g_Startpad)
 /* 0BD500 7F0889D0 004A1021 */  addu  $v0, $v0, $t2
-/* 0BD504 7F0889D4 8C429C28 */  lw    $v0, %lo(startpad)($v0)
+/* 0BD504 7F0889D4 8C429C28 */  lw    $v0, %lo(g_Startpad)($v0)
 /* 0BD508 7F0889D8 C4440000 */  lwc1  $f4, ($v0)
 /* 0BD50C 7F0889DC E7A4004C */  swc1  $f4, 0x4c($sp)
 /* 0BD510 7F0889E0 C4460008 */  lwc1  $f6, 8($v0)
@@ -38991,9 +38991,9 @@ glabel mp_respawn_handler
 /* 0BB51C 7F088B2C 00001825 */  move  $v1, $zero
 .L7F088B30:
 /* 0BB520 7F088B30 00035080 */  sll   $t2, $v1, 2
-/* 0BB524 7F088B34 3C028007 */  lui   $v0, %hi(startpad)
+/* 0BB524 7F088B34 3C028007 */  lui   $v0, %hi(g_Startpad)
 /* 0BB528 7F088B38 004A1021 */  addu  $v0, $v0, $t2
-/* 0BB52C 7F088B3C 8C428738 */  lw    $v0, %lo(startpad)($v0)
+/* 0BB52C 7F088B3C 8C428738 */  lw    $v0, %lo(g_Startpad)($v0)
 /* 0BB530 7F088B40 C4440000 */  lwc1  $f4, ($v0)
 /* 0BB534 7F088B44 E7A4004C */  swc1  $f4, 0x4c($sp)
 /* 0BB538 7F088B48 C4460008 */  lwc1  $f6, 8($v0)

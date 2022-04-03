@@ -696,16 +696,16 @@ glabel do_BFS_withinPathSet
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F08F2CC(struct Pad *startPad,struct Pad *endPad)
+void sub_GAME_7F08F2CC(struct Pad *g_Startpad,struct Pad *endPad)
 {
   s32 dist;
   
-  do_BFS_withinPathSet(startPad,endPad,0); // do_BFS_withinPathSet
+  do_BFS_withinPathSet(g_Startpad,endPad,0); // do_BFS_withinPathSet
   dist = endPad->dist_tmp + -1;
 
   while (dist >= 0) {
       endPad->dist_tmp = endPad->dist_tmp + 10000;
-      endPad = findPadWithDistAndSet(endPad->neighbours,dist,startPad->pathSetIndex); // findPadWithDistAndSet
+      endPad = findPadWithDistAndSet(endPad->neighbours,dist,g_Startpad->pathSetIndex); // findPadWithDistAndSet
       dist = dist + -1;
   }
 

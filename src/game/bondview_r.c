@@ -5,15 +5,23 @@
 #include "math_atan2f.h"
 #include "bondview_r.h"
 #include "bondview.h"
+#include "game/front.h"
+#include "game/chrai.h"
+#include "game/player.h"
 
 
 // data
 //D:8002A780
-u32 D_8002A780 = 0;
+//u32 D_8002A780 = 0;
 //D:8002A784
-u32 D_8002A784 = 0;
+//u32 D_8002A784 = 0;
 //D:8002A788
-u32 D_8002A788 = 0;
+//u32 D_8002A788 = 0;
+
+/**
+ * Address 0x8002A780.
+*/
+struct coord3d D_8002A780 = { 0 };
 
 
 u32 weaponLoadProjectileModels(ITEM_IDS modelid)
@@ -69,12 +77,378 @@ u32 weaponLoadProjectileModels(ITEM_IDS modelid)
 
 
 #ifdef NONMATCHING
-        //if (*((&startpad)[local_74] + 0x28) == 0) {
+//#if 1
+        //if (*((&g_Startpad)[local_74] + 0x28) == 0) {
         //    assertPrint_8291E690
-        //              (".\\ported\\bondview_r.cpp",0x171,"Assertion failed: startpad[sp]->stan");
+        //              (".\\ported\\bondview_r.cpp",0x171,"Assertion failed: g_Startpad[sp]->stan");
         //}
-void load_camera_intro_type_values(void) {
+void load_camera_intro_type_values(void)
+{
+    //f32 sp94;
+    //f32 sp90;
+    struct coord3d sp8C;
+    f32 sp88;
+    StandTile *sp84;
+    s32 sp7C;
+    ? *temp_v0_12;
+    StandTile *temp_a0_4;
+    StandTile *temp_v0_10;
+    f32 temp_f0;
+    f32 temp_f0_2;
+    f32 temp_f20;
+    f32 temp_f20_2;
+    s32 temp_a0;
+    s32 temp_a0_2;
+    s32 temp_a0_3;
+    s32 temp_t2;
+    s32 temp_t4;
+    s32 temp_v0;
+    s32 temp_v0_4;
+    s32 temp_v0_5;
+    s32 temp_v1;
+    s32 temp_v1_2;
+    struct player *temp_v0_11;
+    struct player *temp_v0_13;
+    struct player *temp_v0_14;
+    struct player *temp_v0_15;
+    struct player *temp_v0_9;
+    u32 *temp_s0;
+    u32 *temp_v0_8;
+    u32 temp_hi;
+    u32 temp_v0_2;
+    u32 temp_v0_3;
+    void **temp_s1;
+    void *temp_s0_2;
+    void *temp_s0_3;
+    void *temp_v0_6;
+    void *temp_v0_7;
+    u32 phi_v0;
+    u32 *phi_s0;
+    void *phi_v0_2;
+    u32 *phi_s0_2;
+    u32 phi_v1;
+    s32 phi_v1_2;
+    f32 phi_f20;
+    ? *phi_v0_3;
+    s32 phi_v0_4;
+    s32 i;
 
+    sp8C = D_8002A780;
+
+    g_isBondKIA = 0;
+    g_bondviewForceDisarm = 0;
+    temp_s0 = g_chraiCurrentSetup.intro;
+    resolution = 0;
+    camera_8003642C = 0;
+    camera_80036430 = 0;
+    sp7C = 0;
+    camera_80036434 = 0;
+    sp88 = 0.0f;
+    
+    if (bossGetStageNum() == 0x36)
+    {
+        temp_v0 = mempAllocBytesInBank(0x46EA0, 4);
+        temp_t2 = temp_v0 + 0x3F;
+        resolution = temp_v0;
+        resolution = temp_t2 & ~0x3F;
+        camera_80036430 = 1;
+    }
+
+    camera_80036438 = 0;
+    D_8003643C = 0;
+    D_80036440 = NULL;
+    flt_CODE_bss_80079990.f[0] = 0.0f;
+    flt_CODE_bss_80079990.f[1] = 0.0f;
+    flt_CODE_bss_80079990.f[2] = 0.0f;
+    D_80036444 = 0;
+    startpadcount = 0;
+    in_tank_flag = 0;
+    D_8003644C = 0;
+    ptr_playerstank = NULL;
+    g_PlayerTankYOffset = 0.0f;
+    SFX_80036458[0] = NULL;
+    SFX_80036458[1] = NULL;
+    g_TankTurnSpeed = 0.0f;
+    g_TankOrientationAngle = 0.0f;
+    D_80036468 = 0.0f;
+    g_TankTurretVerticalAngle = 0.0f;
+    g_TankTurretVerticalAngleRelated = 0.0f;
+    g_TankTurretOrientationAngleRad = 0.0f;
+    D_80036478 = 0.0f;
+    D_8003647C = 0.0f;
+    g_BondCanEnterTank = 0;
+    g_TankTurretAngle = 0.0f;
+    g_TankTurretTurn = 0.0f;
+    D_8003648C = 0;
+    D_800364B0 = 1;
+    g_PlayerInvincible = 0;
+    g_CameraMode = 0;
+    enable_move_after_cinema = 0;
+    D_8003649C = 0;
+    stop_time_flag = 0;
+    D_800364A4 = 0.0f;
+    D_800364A8 = 1;
+    D_800364AC = NULL;
+    ptr_random06cam_entry = NULL;
+    D_800364B8 = NULL;
+    D_800364BC = 0;
+    mission_timer = 0;
+    watch_time_0 = 0;
+    D_80036514 = 0;
+    watch_transition_time = 0.9090909f;
+    starting_left_weapon = ITEM_UNARMED;
+    starting_right_weapon = ITEM_UNARMED;
+    
+    if (temp_s0 != NULL)
+    {
+        temp_v0_2 = *temp_s0;
+        phi_v0 = temp_v0_2;
+        if (temp_v0_2 != 9)
+        {
+            phi_s0 = temp_s0;
+            do
+            {
+                switch (phi_v0) {
+                case 0:
+                    if ((*(&g_chraiCurrentSetup + 0x18) != 0) && (check_ramrom_flags() == phi_s0->unk8))
+                    {
+                        temp_v0_4 = startpadcount;
+                        *(&g_Startpad + (temp_v0_4 * 4)) = (phi_s0->unk4 * 0x2C) + *(&g_chraiCurrentSetup + 0x18);
+                        startpadcount = temp_v0_4 + 1;
+                    }
+                    phi_s0_2 = phi_s0 + 0xC;
+                    break;
+                case 1:
+                    if (check_ramrom_flags() == phi_s0->unkC)
+                    {
+                        weaponLoadProjectileModels(phi_s0->unk4);
+                        temp_a0 = phi_s0->unk8;
+                        if (temp_a0 >= 0)
+                        {
+                            weaponLoadProjectileModels(temp_a0);
+                            bondinvAddDoublesInvItem(phi_s0->unk4, phi_s0->unk8);
+                        }
+                        else
+                        {
+                            bondinvAddInvItem(phi_s0->unk4);
+                        }
+                        if (sp7C == 0)
+                        {
+                            starting_right_weapon = phi_s0->unk4;
+                            temp_a0_2 = phi_s0->unk8;
+                            sp7C = 1;
+                            if (temp_a0_2 >= 0)
+                            {
+                                starting_left_weapon = temp_a0_2;
+                            }
+                        }
+                    }
+                    phi_s0_2 = phi_s0 + 0x10;
+                    break;
+                case 2:
+                    if (check_ramrom_flags() == phi_s0->unkC)
+                    {
+                        give_cur_player_ammo(phi_s0->unk4, phi_s0->unk8);
+                    }
+                    phi_s0_2 = phi_s0 + 0x10;
+                    break;
+                case 3:
+                    if (D_800364AC == 0)
+                    {
+                        D_800364AC = phi_s0;
+                    }
+                    phi_s0->unk8 = (bitwise s32) ((f32) phi_s0->unk8 / 65536.0f);
+                    phi_s0->unkC = (bitwise s32) ((f32) phi_s0->unkC / 65536.0f);
+                    phi_s0->unk10 = (bitwise s32) ((f32) phi_s0->unk10 / 65536.0f);
+                    phi_s0->unk14 = (bitwise s32) ((f32) phi_s0->unk14 / 65536.0f);
+                    phi_s0->unk18 = (bitwise s32) ((f32) phi_s0->unk18 / 65536.0f);
+                    phi_s0_2 = phi_s0 + 0x20;
+                    break;
+                case 4:
+                    D_80036514 = phi_s0->unk4;
+                    phi_s0_2 = phi_s0 + 8;
+                    break;
+                case 5:
+                    g_CurrentPlayer->bondtype = phi_s0->unk4;
+                    phi_s0_2 = phi_s0 + 8;
+                    break;
+                case 6:
+                    if (get_cur_playernum() == 0)
+                    {
+                        phi_s0->unk24 = (u32 *) D_800364B8;
+                        D_800364B8 = phi_s0;
+                        D_800364BC = D_800364BC + 1;
+                        phi_s0->unk4 = (bitwise s32) ((f32) phi_s0->unk4 / 100.0f);
+                        phi_s0->unk8 = (bitwise s32) ((f32) phi_s0->unk8 / 100.0f);
+                        phi_s0->unkC = (bitwise s32) ((f32) phi_s0->unkC / 100.0f);
+                        phi_s0->unk10 = (bitwise s32) ((f32) phi_s0->unk10 / 65536.0f);
+                        phi_s0->unk14 = (bitwise s32) ((f32) phi_s0->unk14 / 65536.0f);
+                        temp_v1 = phi_s0->unk20;
+                        phi_s0->unk1C = langGet(phi_s0->unk1E);
+                        if (temp_v1 != 0)
+                        {
+                            phi_s0->unk20 = langGet(temp_v1 & 0xFFFF);
+                        }
+                    }
+                    phi_s0_2 = phi_s0 + 0x28;
+                    break;
+                case 7:
+                    watch_time_0 = 0;
+                    temp_a0_3 = phi_s0->unk8;
+                    if (temp_a0_3 > 0)
+                    {
+                        watch_time_0 = (temp_a0_3 % 60) * 0xE10;
+                    }
+                    temp_v0_5 = phi_s0->unk4;
+                    if (temp_v0_5 > 0)
+                    {
+                        watch_time_0 = watch_time_0 + ((temp_v0_5 % 12) * 0x34BC0);
+                    }
+                    phi_s0_2 = phi_s0 + 0xC;
+                    break;
+                case 8:
+                    temp_v0_6 = dword_CODE_bss_80075D28 + phi_s0->unk4;
+                    D_80036440 = temp_v0_6;
+                    phi_v0_2 = temp_v0_6;
+                    if ((temp_v0_6->unk0 != 0) || (temp_v0_6->unk2 != 0))
+                    {
+                        do
+                        {
+loop_38:
+                            temp_v0_7 = phi_v0_2 + 0xC;
+                            phi_v0_2 = temp_v0_7;
+                            if (phi_v0_2->unkC != 0)
+                            {
+                                goto loop_38;
+                            }
+                        } while (temp_v0_7->unk2 != 0);
+                    }
+                    phi_s0_2 = phi_s0 + 8;
+                    break;
+                default:
+                    phi_s0_2 = phi_s0 + 4;
+                    break;
+                }
+                temp_v0_3 = *phi_s0_2;
+                phi_v0 = temp_v0_3;
+                phi_s0 = phi_s0_2;
+            } while (temp_v0_3 != 9);
+        }
+    }
+
+    temp_v0_8 = D_800364B8;
+
+    if (temp_v0_8 != 0)
+    {
+        ptr_random06cam_entry = temp_v0_8;
+        temp_hi = randomGetNext() % (u32) D_800364BC;
+        phi_v1 = temp_hi;
+        if ((s32) temp_hi > 0)
+        {
+            do
+            {
+                temp_v1_2 = phi_v1 - 1;
+                ptr_random06cam_entry = ptr_random06cam_entry->unk24;
+                phi_v1 = (u32) temp_v1_2;
+            } while (temp_v1_2 > 0);
+        }
+    }
+
+    bondinvAddInvItem(1);
+
+    if (sp7C == 0)
+    {
+        starting_right_weapon = 1;
+    }
+
+    g_CurrentPlayer->field_78 = 0;
+    g_CurrentPlayer->field_7C = -0.0001f;
+    g_CurrentPlayer->field_80 = 0;
+
+    if (startpadcount > 0)
+    {
+        if ((getPlayerCount() >= 2) && (startpadcount > 0))
+        {
+            phi_v1_2 = sub_GAME_7F0790F0();
+        }
+        else
+        {
+            phi_v1_2 = 0;
+        }
+        
+        temp_s1 = (phi_v1_2 * 4) + &g_Startpad;
+        temp_s0_2 = *temp_s1;
+        sp8C.f[0] = temp_s0_2->unk0;
+        sp8C.f[2] = temp_s0_2->unk8;
+        temp_a0_4 = temp_s0_2->unk28;
+        sp84 = temp_a0_4;
+        phi_f20 = bondviewYPositionRelated(temp_a0_4, sp8C.f[0], sp8C.f[2]);
+        sp8C.f[1] = g_CurrentPlayer->field_29BC + phi_f20;
+        g_CurrentPlayer->field_70 = phi_f20;
+        temp_s0_3 = *temp_s1;
+        sp88 = 6.2831855f - atan2f(temp_s0_3->unk18, temp_s0_3->unk20);
+    }
+    else
+    {
+        sp84 = sub_GAME_7F0AFB78(&sp8C.f[0], &sp8C.f[1], &sp8C.f[2], 30.0f);
+        phi_f20 = bondviewYPositionRelated(sp84, sp8C.f[0], sp8C.f[2]);
+        sp8C.f[1] = g_CurrentPlayer->field_29BC + phi_f20;
+        g_CurrentPlayer->field_70 = phi_f20;
+    }
+
+    g_CurrentPlayer->vv_theta = (sp88 * 360.0f) / 6.2831855f;
+    g_CurrentPlayer->stanHeight = phi_f20;
+    g_CurrentPlayer->field_6C = phi_f20 / 0.17000002f;
+    change_player_pos_to_target(&g_CurrentPlayer->field_488, &sp8C, sp84);
+    g_CurrentPlayer->field_488.field_10.f[0] = -sinf(sp88);
+    g_CurrentPlayer->field_488.field_10.f[1] = 0.0f;
+    g_CurrentPlayer->field_488.field_10.f[2] = cosf(sp88);
+    sub_GAME_7F089718(D_800364D0);
+    dword_CODE_bss_80079DA0 = 0;
+    dword_CODE_bss_80079DA4 = 0;
+    
+    for (i=0; i<BSS_80079DA8_LENGTH; i++)
+    {
+        dword_CODE_bss_80079DA8[i] = 0;
+    }
+
+    bondviewResetIntroCameraMessageDialogs();
+    sub_GAME_7F08A900();
+    g_CurrentPlayer->prop = chrpropAllocate();
+    g_CurrentPlayer->prop->obj = NULL;
+    g_CurrentPlayer->prop->type = PROP_TYPE_VIEWER;
+    g_CurrentPlayer->bondprevpos.f[0] = sp8C.f[0];
+    g_CurrentPlayer->prop->pos.f[0] = sp8C.f[0];
+    g_CurrentPlayer->bondprevpos.f[1] = sp8C.f[1];
+    g_CurrentPlayer->prop->pos.f[1] = sp8C.f[1];
+    g_CurrentPlayer->bondprevpos.f[2] = sp8C.f[2];
+    g_CurrentPlayer->prop->pos.f[2] = sp8C.f[2];
+    g_CurrentPlayer->prop->stan = sp84;
+    chrpropActivate(g_CurrentPlayer->prop);
+    chrpropEnable(g_CurrentPlayer->prop);
+    g_CurrentPlayer->field_3B8.f[0] = (g_CurrentPlayer->field_488.pos.f[0] / 0.100000024f);
+    g_CurrentPlayer->field_3B8.f[1] = (g_CurrentPlayer->field_488.pos.f[1] / 0.100000024f);
+    g_CurrentPlayer->field_3B8.f[2] = (g_CurrentPlayer->field_488.pos.f[2] / 0.100000024f);
+    
+    if (getPlayerCount() == 1)
+    {
+        set_camera_mode(CAMERAMODE_INTRO);
+    }
+    else
+    {
+        set_camera_mode(CAMERAMODE_MP);
+    }
+
+    g_bondviewBondDeathAnimationsCount = 0;
+    while (g_bondviewBondDeathAnimations[g_bondviewBondDeathAnimationsCount + 1] != 0)
+    {
+        g_bondviewBondDeathAnimationsCount++;
+    }
+    
+    g_CurrentPlayer->startnewbonddie = 1;
+    g_CurrentPlayer->redbloodfinished = 0;
+    g_CurrentPlayer->deathanimfinished = 0;
+    D_80036510 = 0;
 }
 #else
 
@@ -294,7 +668,7 @@ spawn_point:
 /* 03A5C0 7F005A90 00000000 */   nop   
 /* 03A5C4 7F005A94 8E0F0008 */  lw    $t7, 8($s0)
 /* 03A5C8 7F005A98 3C0A8007 */  lui   $t2, %hi(g_chraiCurrentSetup+0x18) 
-/* 03A5CC 7F005A9C 3C018008 */  lui   $at, %hi(startpad)
+/* 03A5CC 7F005A9C 3C018008 */  lui   $at, %hi(g_Startpad)
 /* 03A5D0 7F005AA0 144F0011 */  bne   $v0, $t7, .L7F005AE8
 /* 03A5D4 7F005AA4 00000000 */   nop   
 /* 03A5D8 7F005AA8 8E080004 */  lw    $t0, 4($s0)
@@ -309,7 +683,7 @@ spawn_point:
 /* 03A5FC 7F005ACC 00026080 */  sll   $t4, $v0, 2
 /* 03A600 7F005AD0 002C0821 */  addu  $at, $at, $t4
 /* 03A604 7F005AD4 012A5821 */  addu  $t3, $t1, $t2
-/* 03A608 7F005AD8 AC2B9C28 */  sw    $t3, %lo(startpad)($at)
+/* 03A608 7F005AD8 AC2B9C28 */  sw    $t3, %lo(g_Startpad)($at)
 /* 03A60C 7F005ADC 3C018008 */  lui   $at, %hi(startpadcount)
 /* 03A610 7F005AE0 244D0001 */  addiu $t5, $v0, 1
 /* 03A614 7F005AE4 AC2D9C68 */  sw    $t5, %lo(startpadcount)($at)
@@ -594,8 +968,8 @@ def_7F005A74:
 .L7F005ED4:
 /* 03AA04 7F005ED4 00001825 */  move  $v1, $zero
 .L7F005ED8:
-/* 03AA08 7F005ED8 3C0A8008 */  lui   $t2, %hi(startpad) 
-/* 03AA0C 7F005EDC 254A9C28 */  addiu $t2, %lo(startpad) # addiu $t2, $t2, -0x63d8
+/* 03AA08 7F005ED8 3C0A8008 */  lui   $t2, %hi(g_Startpad) 
+/* 03AA0C 7F005EDC 254A9C28 */  addiu $t2, %lo(g_Startpad) # addiu $t2, $t2, -0x63d8
 /* 03AA10 7F005EE0 00035880 */  sll   $t3, $v1, 2
 /* 03AA14 7F005EE4 016A8821 */  addu  $s1, $t3, $t2
 /* 03AA18 7F005EE8 8E300000 */  lw    $s0, ($s1)
@@ -1002,7 +1376,7 @@ spawn_point:
 /* 03A5E8 7F005A78 00000000 */   nop   
 /* 03A5EC 7F005A7C 8E0F0008 */  lw    $t7, 8($s0)
 /* 03A5F0 7F005A80 3C0A8007 */  lui   $t2, %hi(g_chraiCurrentSetup+0x18) # $t2, 0x8007
-/* 03A5F4 7F005A84 3C018008 */  lui   $at, %hi(startpad)
+/* 03A5F4 7F005A84 3C018008 */  lui   $at, %hi(g_Startpad)
 /* 03A5F8 7F005A88 144F0011 */  bne   $v0, $t7, .L7F005AD0
 /* 03A5FC 7F005A8C 00000000 */   nop   
 /* 03A600 7F005A90 8E080004 */  lw    $t0, 4($s0)
@@ -1017,7 +1391,7 @@ spawn_point:
 /* 03A624 7F005AB4 00026080 */  sll   $t4, $v0, 2
 /* 03A628 7F005AB8 002C0821 */  addu  $at, $at, $t4
 /* 03A62C 7F005ABC 012A5821 */  addu  $t3, $t1, $t2
-/* 03A630 7F005AC0 AC2B9C98 */  sw    $t3, %lo(startpad)($at)
+/* 03A630 7F005AC0 AC2B9C98 */  sw    $t3, %lo(g_Startpad)($at)
 /* 03A634 7F005AC4 3C018008 */  lui   $at, %hi(startpadcount) # $at, 0x8008
 /* 03A638 7F005AC8 244D0001 */  addiu $t5, $v0, 1
 /* 03A63C 7F005ACC AC2D9CD8 */  sw    $t5, %lo(startpadcount)($at)
@@ -1307,8 +1681,8 @@ def_7F005A74:
 .L7F005ED0:
 /* 03AA40 7F005ED0 00001825 */  move  $v1, $zero
 .L7F005ED4:
-/* 03AA44 7F005ED4 3C0F8008 */  lui   $t7, %hi(startpad) # $t7, 0x8008
-/* 03AA48 7F005ED8 25EF9C98 */  addiu $t7, %lo(startpad) # addiu $t7, $t7, -0x6368
+/* 03AA44 7F005ED4 3C0F8008 */  lui   $t7, %hi(g_Startpad) # $t7, 0x8008
+/* 03AA48 7F005ED8 25EF9C98 */  addiu $t7, %lo(g_Startpad) # addiu $t7, $t7, -0x6368
 /* 03AA4C 7F005EDC 00037080 */  sll   $t6, $v1, 2
 /* 03AA50 7F005EE0 01CF8821 */  addu  $s1, $t6, $t7
 /* 03AA54 7F005EE4 8E300000 */  lw    $s0, ($s1)
@@ -1717,7 +2091,7 @@ spawn_point:
 /* 0383E8 7F0059F8 00000000 */   nop   
 /* 0383EC 7F0059FC 8E0F0008 */  lw    $t7, 8($s0)
 /* 0383F0 7F005A00 3C0A8006 */  lui   $t2, %hi(g_chraiCurrentSetup+0x18) # $t2, 0x8006
-/* 0383F4 7F005A04 3C018007 */  lui   $at, %hi(startpad)
+/* 0383F4 7F005A04 3C018007 */  lui   $at, %hi(g_Startpad)
 /* 0383F8 7F005A08 144F0011 */  bne   $v0, $t7, .L7F005A50
 /* 0383FC 7F005A0C 00000000 */   nop   
 /* 038400 7F005A10 8E080004 */  lw    $t0, 4($s0)
@@ -1732,7 +2106,7 @@ spawn_point:
 /* 038424 7F005A34 00026080 */  sll   $t4, $v0, 2
 /* 038428 7F005A38 002C0821 */  addu  $at, $at, $t4
 /* 03842C 7F005A3C 012A5821 */  addu  $t3, $t1, $t2
-/* 038430 7F005A40 AC2B8738 */  sw    $t3, %lo(startpad)($at)
+/* 038430 7F005A40 AC2B8738 */  sw    $t3, %lo(g_Startpad)($at)
 /* 038434 7F005A44 3C018007 */  lui   $at, %hi(startpadcount) # $at, 0x8007
 /* 038438 7F005A48 244D0001 */  addiu $t5, $v0, 1
 /* 03843C 7F005A4C AC2D8778 */  sw    $t5, %lo(startpadcount)($at)
@@ -2022,8 +2396,8 @@ def_7F005A74:
 .L7F005E50:
 /* 038840 7F005E50 00001825 */  move  $v1, $zero
 .L7F005E54:
-/* 038844 7F005E54 3C0F8007 */  lui   $t7, %hi(startpad) # $t7, 0x8007
-/* 038848 7F005E58 25EF8738 */  addiu $t7, %lo(startpad) # addiu $t7, $t7, -0x78c8
+/* 038844 7F005E54 3C0F8007 */  lui   $t7, %hi(g_Startpad) # $t7, 0x8007
+/* 038848 7F005E58 25EF8738 */  addiu $t7, %lo(g_Startpad) # addiu $t7, $t7, -0x78c8
 /* 03884C 7F005E5C 00037080 */  sll   $t6, $v1, 2
 /* 038850 7F005E60 01CF8821 */  addu  $s1, $t6, $t7
 /* 038854 7F005E64 8E300000 */  lw    $s0, ($s1)

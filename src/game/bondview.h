@@ -3075,6 +3075,33 @@ extern f32 D_80036AC0;
 //D:80036AC4
 extern f32 D_80036AC4;
 
+extern s32 startpadcount;
+extern vec3d flt_CODE_bss_80079990;
+extern s32 mission_timer;
+
+#ifdef VERSION_JP
+extern f32 watch_time_0;
+#else
+extern s32 watch_time_0;
+#endif
+
+extern f32 watch_transition_time;
+extern s32 starting_right_weapon;
+extern s32 starting_left_weapon;
+extern PadRecord *g_Startpad[];
+extern s32 startpadcount;
+extern StandTilePoint *dword_CODE_bss_80079DA0;
+extern StandTilePoint *dword_CODE_bss_80079DA4;
+
+#define BSS_80079DA8_LENGTH 0x20
+extern char dword_CODE_bss_80079DA8[];
+
+#ifndef VERSION_EU
+extern char dword_CODE_bss_80079DC8[];
+#else
+extern char dword_CODE_bss_80079DC8[];
+#endif
+
 
 u32 get_camera_mode(void);
 
