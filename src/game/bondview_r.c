@@ -375,7 +375,7 @@ void load_camera_intro_type_values(void)
     {
         if ((getPlayerCount() >= 2) && (startpadcount > 0))
         {
-            rand_pad_index = sub_GAME_7F0790F0();
+            rand_pad_index = bondviewGetRandomSpawnPadIndex();
         }
         else
         {

@@ -3212,7 +3212,7 @@ s32 check_watch_page_transistion_running(void);
 f32 bondviewWatchAnimationRelated(void);
 struct coord3d *get_BONDdata_field408(void);
 struct PropRecord *get_ptr_for_players_tank(void);
-s32 sub_GAME_7F0790F0(void);
+s32 bondviewGetRandomSpawnPadIndex(void);
 void change_player_pos_to_target(struct collision434* arg0, struct coord3d *arg1, struct StandTile *arg2);
 void sub_GAME_7F089718(f32);
 void sub_GAME_7F08A900(void);

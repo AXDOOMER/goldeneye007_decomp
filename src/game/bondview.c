@@ -2297,7 +2297,7 @@ glabel sub_GAME_7F078BF4
 
 
 #ifdef NONMATCHING
-u32 sub_GAME_7F0790F0(void)
+u32 bondviewGetRandomSpawnPadIndex(void)
 {
     s32 temp_s6;
     s32 temp_s2;
@@ -2465,7 +2465,7 @@ block_15:
 #if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0790F0
+glabel bondviewGetRandomSpawnPadIndex
 /* 0ADC20 7F0790F0 27BDFFA0 */  addiu $sp, $sp, -0x60
 /* 0ADC24 7F0790F4 AFBF0044 */  sw    $ra, 0x44($sp)
 /* 0ADC28 7F0790F8 AFBE0040 */  sw    $fp, 0x40($sp)
@@ -2679,7 +2679,7 @@ glabel sub_GAME_7F0790F0
 #if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0790F0
+glabel bondviewGetRandomSpawnPadIndex
 /* 0ABB60 7F079170 27BDFFA0 */  addiu $sp, $sp, -0x60
 /* 0ABB64 7F079174 AFBF0044 */  sw    $ra, 0x44($sp)
 /* 0ABB68 7F079178 AFBE0040 */  sw    $fp, 0x40($sp)
@@ -38684,7 +38684,7 @@ glabel mp_respawn_handler
 /* 0BD4D8 7F0889A8 8D299C68 */  lw    $t1, %lo(startpadcount)($t1)
 /* 0BD4DC 7F0889AC 59200006 */  blezl $t1, .L7F0889C8
 /* 0BD4E0 7F0889B0 00001825 */   move  $v1, $zero
-/* 0BD4E4 7F0889B4 0FC1E43C */  jal   sub_GAME_7F0790F0
+/* 0BD4E4 7F0889B4 0FC1E43C */  jal   bondviewGetRandomSpawnPadIndex
 /* 0BD4E8 7F0889B8 00000000 */   nop
 /* 0BD4EC 7F0889BC 10000002 */  b     .L7F0889C8
 /* 0BD4F0 7F0889C0 00401825 */   move  $v1, $v0
@@ -38983,7 +38983,7 @@ glabel mp_respawn_handler
 /* 0BB500 7F088B10 8D298778 */  lw    $t1, %lo(startpadcount)($t1)
 /* 0BB504 7F088B14 59200006 */  blezl $t1, .L7F088B30
 /* 0BB508 7F088B18 00001825 */   move  $v1, $zero
-/* 0BB50C 7F088B1C 0FC1E45C */  jal   sub_GAME_7F0790F0
+/* 0BB50C 7F088B1C 0FC1E45C */  jal   bondviewGetRandomSpawnPadIndex
 /* 0BB510 7F088B20 00000000 */   nop   
 /* 0BB514 7F088B24 10000002 */  b     .L7F088B30
 /* 0BB518 7F088B28 00401825 */   move  $v1, $v0
