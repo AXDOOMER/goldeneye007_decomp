@@ -73,7 +73,7 @@ u32 weaponLoadProjectileModels(ITEM_IDS modelid)
     return 0;
 }  
 
-void load_camera_intro_type_values(void)
+void bondviewLoadSetupIntroSection(void)
 {
 
 #define FLOAT_INIT 0
