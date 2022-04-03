@@ -142,7 +142,7 @@ void bondviewLoadSetupIntroSection(void)
     SFX_80036458[1] = NULL;
     g_TankTurnSpeed = FLOAT_INIT;
     g_TankOrientationAngle = FLOAT_INIT;
-    D_80036468 = FLOAT_INIT_ALT;                          // different float zero
+    D_80036468 = FLOAT_INIT;
     g_TankTurretVerticalAngle = FLOAT_INIT;
     g_TankTurretVerticalAngleRelated = FLOAT_INIT;
     g_TankTurretOrientationAngleRad = FLOAT_INIT;
