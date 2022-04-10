@@ -229,12 +229,12 @@ void _load_resource_index_to_membank(int index,s32 param_2,u8 *ptrdata,int size)
 }
 #endif
 
-void _load_resource_named_to_membank(u8 *filename,s32 param_2,s32 size,u8 bank)
+void _load_resource_named_to_membank(u8 *filename, s32 param_2, s32 size, u8 bank)
 {
     load_rom_resource_index_to_membank(get_index_num_of_named_resource(filename), param_2, size, bank);
 }
 
-void _load_resource_named_to_buffer(u8 *filename,s32 bank,u8 *ptrdata,int size)
+void _load_resource_named_to_buffer(u8 *filename, s32 bank, u8 *ptrdata, int size)
 {
     load_resource_index_to_buffer(get_index_num_of_named_resource(filename), bank, ptrdata, size);
 }

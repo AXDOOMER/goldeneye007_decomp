@@ -23,6 +23,7 @@
 #include "lvl.h"
 #include "mp_weapon.h"
 #include "math_floor.h"
+#include "objective_status.h"
 #include "player.h"
 #include "spectrum.h"
 #include "textrelated.h"
@@ -34,6 +35,19 @@
 // lvl.c checks for enabled cheats up to the "invalid" index of 0x4b (=75), which
 // is different from the 80 here ...
 #define CHEATS_TRACKED 80
+
+struct BriefingDataSomething
+{
+    u16 difficulty_related;
+    u16 selected_difficulty;
+};
+
+struct BriefingData
+{
+    s32 unk00;
+    s32 unk04;
+    struct BriefingDataSomething datas[10];
+};
 
 
 // bss
@@ -198,7 +212,7 @@ s32 mission_difficulty_highlighted;
 //CODE.bss:80069788
 s32 teamsize;
 //CODE.bss:8006978C
-s32 ptrbriefingdata;
+struct BriefingData *ptrbriefingdata;
 //CODE.bss:80069790
 s32 g_NewCheatUnlocked;
 //CODE.bss:80069794
@@ -1119,7 +1133,6 @@ void menu_control_stick_tracking(void) {
         }
     }
 
-
     if (sticky < -5) {
         sticky = (sticky + 5);
     }
@@ -1139,7 +1152,6 @@ void menu_control_stick_tracking(void) {
         }
     }
 
-
     if (stickx > 0) {
         cursor_h_pos += (f32)(( (f32)stickx * 0.075f + 0.5f) * g_GlobalTimerDelta);
     }
@@ -1155,8 +1167,6 @@ void menu_control_stick_tracking(void) {
             cursor_h_pos = getPlayer_c_screenleft() + 20.0f;
         }
     }
-
-
 
     if (sticky > 0) {
         cursor_v_pos += (f32)(( (f32)sticky * 0.075f + 0.5f) * g_GlobalTimerDelta);
@@ -1218,7 +1228,6 @@ Gfx* add_tab1_start(Gfx* DL)
     s32 sp4C;
     s32 sp48;
 
-
     g_textPtrTAB1 = langGet(TEXT(LTITLE, 0x04));
     setTextSpacingInverted(1);
     sp48 = 0;
@@ -1242,11 +1251,14 @@ Gfx* add_tab1_start(Gfx* DL)
 }
 
 
-s32 isontab1(void) {
-  if ((390.00000000f < cursor_h_pos) && (cursor_v_pos <= 130.5f)) {
-    return TRUE;
-  }
-  return FALSE;
+s32 isontab1(void)
+{
+    if ((390.00000000f < cursor_h_pos) && (cursor_v_pos <= 130.5f))
+    {
+        return TRUE;
+    }
+
+    return FALSE;
 }
 
 
@@ -1257,7 +1269,6 @@ Gfx* add_tab3_previous(Gfx* DL)
 
     s32 sp4C;
     s32 sp48;
-
 
     g_textPtrTAB3 = langGet(TEXT(LTITLE, 0x06));
     setTextSpacingInverted(1);
@@ -1278,24 +1289,27 @@ Gfx* add_tab3_previous(Gfx* DL)
     DL = en_text_write_stuff(DL, &x, &y, g_textPtrTAB3, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xFF, viGetY(), viGetX(), 0, 0);
     setTextOrientation(0);
     setTextSpacingInverted(0);
+
     return DL;
 }
 
 
 u32 isontab3(void)
 {
-    if ((390.0f < cursor_h_pos) && (223.0f < cursor_v_pos)) {
+    if ((390.0f < cursor_h_pos) && (223.0f < cursor_v_pos))
+    {
         return 1;
     }
-    else {
+    else
+    {
         return 0;
     }
 }
 
 void set_cursor_pos_tab2(void)
 {
-  cursor_h_pos = 399.0f;
-  cursor_v_pos = 144.0f;
+    cursor_h_pos = 399.0f;
+    cursor_v_pos = 144.0f;
 }
 
 
@@ -1306,7 +1320,6 @@ Gfx* add_tab2_next(Gfx* DL)
 
     s32 sp4C;
     s32 sp48;
-
 
     g_textPtrTAB2 = langGet(TEXT(LTITLE, 0x05));
     setTextSpacingInverted(1);
@@ -1333,10 +1346,12 @@ Gfx* add_tab2_next(Gfx* DL)
 
 u32 isontab2(void)
 {
-  if (((390.0f < cursor_h_pos) && (130.5f < cursor_v_pos)) && (cursor_v_pos <= 223.00000000f)) {
-    return TRUE;
-  }
-  return FALSE;
+    if (((390.0f < cursor_h_pos) && (130.5f < cursor_v_pos)) && (cursor_v_pos <= 223.00000000f))
+    {
+        return TRUE;
+    }
+
+    return FALSE;
 }
 
 
@@ -19870,108 +19885,28 @@ void interface_menu0C_missionfailed(void)
 
 
 
-#ifdef NONMATCHING
-s32 sub_GAME_7F01631C(void)
-{
-    s32 temp_s0;
-    s32 phi_s1;
-    s32 phi_s0;
 
-    if (mission_failed_or_aborted != 0)
+s32 frontCompleteAllObjectivesAliveSuccess(void)
+{
+    s32 i;
+
+    if (mission_failed_or_aborted || g_isBondKIA)
     {
-block_2:
         return 0;
     }
-    if (g_isBondKIA != 0)
+
+    for (i=0; i<10; i++)
     {
-        goto block_2;
-    }
-    phi_s1 = 0;
-    phi_s0 = 0;
-loop_4:
-    if ((ptrbriefingdata + phi_s1)->unk8 != 0)
-    {
-        if (lvlGetSelectedDifficulty() >= (ptrbriefingdata + phi_s1)->unkA)
-        {
-            if (get_status_of_objective(phi_s0) != 1)
+        if (ptrbriefingdata->datas[i].difficulty_related != 0
+            && lvlGetSelectedDifficulty() >= ptrbriefingdata->datas[i].selected_difficulty
+            && get_status_of_objective(i) != OBJECTIVESTATUS_COMPLETE)
             {
                 return 0;
             }
-        }
     }
-    temp_s0 = phi_s0 + 1;
-    phi_s1 = phi_s1 + 4;
-    phi_s0 = temp_s0;
-    if (temp_s0 != 0xa)
-    {
-        goto loop_4;
-    }
+
     return 1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F01631C
-/* 04AE4C 7F01631C 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 04AE50 7F016320 3C0E8003 */  lui   $t6, %hi(mission_failed_or_aborted)
-/* 04AE54 7F016324 8DCEA924 */  lw    $t6, %lo(mission_failed_or_aborted)($t6)
-/* 04AE58 7F016328 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 04AE5C 7F01632C AFB40028 */  sw    $s4, 0x28($sp)
-/* 04AE60 7F016330 AFB30024 */  sw    $s3, 0x24($sp)
-/* 04AE64 7F016334 AFB20020 */  sw    $s2, 0x20($sp)
-/* 04AE68 7F016338 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 04AE6C 7F01633C 15C00007 */  bnez  $t6, .L7F01635C
-/* 04AE70 7F016340 AFB00018 */   sw    $s0, 0x18($sp)
-/* 04AE74 7F016344 3C0F8003 */  lui   $t7, %hi(g_isBondKIA)
-/* 04AE78 7F016348 8DEFA928 */  lw    $t7, %lo(g_isBondKIA)($t7)
-/* 04AE7C 7F01634C 00008025 */  move  $s0, $zero
-/* 04AE80 7F016350 00008825 */  move  $s1, $zero
-/* 04AE84 7F016354 11E00003 */  beqz  $t7, .L7F016364
-/* 04AE88 7F016358 2414000A */   li    $s4, 10
-.L7F01635C:
-/* 04AE8C 7F01635C 1000001B */  b     .L7F0163CC
-/* 04AE90 7F016360 00001025 */   move  $v0, $zero
-.L7F016364:
-/* 04AE94 7F016364 3C128007 */  lui   $s2, %hi(ptrbriefingdata)
-/* 04AE98 7F016368 2652978C */  addiu $s2, %lo(ptrbriefingdata) # addiu $s2, $s2, -0x6874
-/* 04AE9C 7F01636C 24130001 */  li    $s3, 1
-.L7F016370:
-/* 04AEA0 7F016370 8E580000 */  lw    $t8, ($s2)
-/* 04AEA4 7F016374 0311C821 */  addu  $t9, $t8, $s1
-/* 04AEA8 7F016378 97280008 */  lhu   $t0, 8($t9)
-/* 04AEAC 7F01637C 51000010 */  beql  $t0, $zero, .L7F0163C0
-/* 04AEB0 7F016380 26100001 */   addiu $s0, $s0, 1
-/* 04AEB4 7F016384 0FC2FF04 */  jal   lvlGetSelectedDifficulty
-/* 04AEB8 7F016388 00000000 */   nop
-/* 04AEBC 7F01638C 8E490000 */  lw    $t1, ($s2)
-/* 04AEC0 7F016390 01315021 */  addu  $t2, $t1, $s1
-/* 04AEC4 7F016394 954B000A */  lhu   $t3, 0xa($t2)
-/* 04AEC8 7F016398 004B082A */  slt   $at, $v0, $t3
-/* 04AECC 7F01639C 54200008 */  bnezl $at, .L7F0163C0
-/* 04AED0 7F0163A0 26100001 */   addiu $s0, $s0, 1
-/* 04AED4 7F0163A4 0FC15C8E */  jal   get_status_of_objective
-/* 04AED8 7F0163A8 02002025 */   move  $a0, $s0
-/* 04AEDC 7F0163AC 50530004 */  beql  $v0, $s3, .L7F0163C0
-/* 04AEE0 7F0163B0 26100001 */   addiu $s0, $s0, 1
-/* 04AEE4 7F0163B4 10000005 */  b     .L7F0163CC
-/* 04AEE8 7F0163B8 00001025 */   move  $v0, $zero
-/* 04AEEC 7F0163BC 26100001 */  addiu $s0, $s0, 1
-.L7F0163C0:
-/* 04AEF0 7F0163C0 1614FFEB */  bne   $s0, $s4, .L7F016370
-/* 04AEF4 7F0163C4 26310004 */   addiu $s1, $s1, 4
-/* 04AEF8 7F0163C8 24020001 */  li    $v0, 1
-.L7F0163CC:
-/* 04AEFC 7F0163CC 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 04AF00 7F0163D0 8FB00018 */  lw    $s0, 0x18($sp)
-/* 04AF04 7F0163D4 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 04AF08 7F0163D8 8FB20020 */  lw    $s2, 0x20($sp)
-/* 04AF0C 7F0163DC 8FB30024 */  lw    $s3, 0x24($sp)
-/* 04AF10 7F0163E0 8FB40028 */  lw    $s4, 0x28($sp)
-/* 04AF14 7F0163E4 03E00008 */  jr    $ra
-/* 04AF18 7F0163E8 27BD0030 */   addiu $sp, $sp, 0x30
-)
-#endif
-
 
 
 Gfx * constructor_menu0C_missionfailed(Gfx *DL)
@@ -20020,7 +19955,7 @@ Gfx * constructor_menu0C_missionfailed(Gfx *DL)
         text = langGet(TEXT(LTITLE, 0x65)); // ABORTED*
         phi_v1 = 0x78000000 | 0xFF;
     }
-    else if (sub_GAME_7F01631C())
+    else if (frontCompleteAllObjectivesAliveSuccess())
     {
 
         text = langGet(TEXT(LTITLE, 0x66)); // Completed*
@@ -20291,7 +20226,7 @@ glabel interface_menu0D_missioncomplete
 /* 04B3A8 7F016878 3C098003 */  lui   $t1, %hi(tab_3_selected)
 /* 04B3AC 7F01687C 1300004D */  beqz  $t8, .L7F0169B4
 /* 04B3B0 7F016880 00000000 */   nop
-/* 04B3B4 7F016884 0FC058C7 */  jal   sub_GAME_7F01631C
+/* 04B3B4 7F016884 0FC058C7 */  jal   frontCompleteAllObjectivesAliveSuccess
 /* 04B3B8 7F016888 00000000 */   nop
 /* 04B3BC 7F01688C 10400044 */  beqz  $v0, .L7F0169A0
 /* 04B3C0 7F016890 3C198003 */   lui   $t9, %hi(g_AppendCheatSinglePlayer)
