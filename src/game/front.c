@@ -386,9 +386,7 @@ u32 D_8002AB38 = 0;
 u32 D_8002AB3C = 0;
 u32 D_8002AB40 = 0;
 u32 D_8002AB44 = 0;
-u32 D_8002AB48 = 0;
-u32 D_8002AB4C = 0;
-u32 D_8002AB50 = 0;
+struct coord3d D_8002AB48 = { 0 };
 
 u32 D_8002AB54 = 0;
 u32 D_8002AB58 = 1;
@@ -2331,72 +2329,18 @@ Gfx * constructor_menu03_eye(Gfx * DL) {
 
 
 
-#ifdef NONMATCHING
 void init_menu04_goldeneyelogo(void)
 {
-    s32 sp24;
-    s32 temp_ret;
+    struct coord3d sp24;
 
     menu_timer = 0;
-    sp24.unk0 = (s32) D_8002AB48.unk0;
-    sp24.unk4 = (s32) D_8002AB48.unk4;
-    sp24.unk8 = (s32) D_8002AB48.unk8;
-    load_object_fill_header(PitemZ_entries.unkCFC, PitemZ_entries.unkD00, ptr_logo_and_walletbond_DL, 0x3c000, 0);
-    modelCalculateRwDataLen(PgoldeneyelogoZ_header);
-    temp_ret = get_obj_instance_controller_for_header(PgoldeneyelogoZ_header);
-    something_legalscreen_constructor = temp_ret;
-    modelSetScale(temp_ret, 0x3f800000);
+    sp24 = D_8002AB48;
+    load_object_fill_header(PitemZ_entries[277].header, PitemZ_entries[277].filename, ptr_logo_and_walletbond_DL, 0x3c000, 0);
+    modelCalculateRwDataLen(PitemZ_entries[277].header);
+    something_legalscreen_constructor = get_obj_instance_controller_for_header(PitemZ_entries[277].header);
+    modelSetScale(something_legalscreen_constructor, 1.0f);
     setsuboffset(something_legalscreen_constructor, &sp24);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel init_menu04_goldeneyelogo
-/* 03FD88 7F00B258 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 03FD8C 7F00B25C 3C018003 */  lui   $at, %hi(menu_timer)
-/* 03FD90 7F00B260 3C0F8003 */  lui   $t7, %hi(D_8002AB48)
-/* 03FD94 7F00B264 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 03FD98 7F00B268 AC20A8CC */  sw    $zero, %lo(menu_timer)($at)
-/* 03FD9C 7F00B26C 25EFAB48 */  addiu $t7, %lo(D_8002AB48) # addiu $t7, $t7, -0x54b8
-/* 03FDA0 7F00B270 8DE10000 */  lw    $at, ($t7)
-/* 03FDA4 7F00B274 27AE0024 */  addiu $t6, $sp, 0x24
-/* 03FDA8 7F00B278 8DE80004 */  lw    $t0, 4($t7)
-/* 03FDAC 7F00B27C ADC10000 */  sw    $at, ($t6)
-/* 03FDB0 7F00B280 8DE10008 */  lw    $at, 8($t7)
-/* 03FDB4 7F00B284 ADC80004 */  sw    $t0, 4($t6)
-/* 03FDB8 7F00B288 3C028004 */  lui   $v0, %hi(PitemZ_entries)
-/* 03FDBC 7F00B28C ADC10008 */  sw    $at, 8($t6)
-/* 03FDC0 7F00B290 2442A228 */  addiu $v0, %lo(PitemZ_entries) # addiu $v0, $v0, -0x5dd8
-/* 03FDC4 7F00B294 3C068003 */  lui   $a2, %hi(ptr_logo_and_walletbond_DL)
-/* 03FDC8 7F00B298 3C070003 */  lui   $a3, (0x0003C000 >> 16) # lui $a3, 3
-/* 03FDCC 7F00B29C 34E7C000 */  ori   $a3, (0x0003C000 & 0xFFFF) # ori $a3, $a3, 0xc000
-/* 03FDD0 7F00B2A0 8CC6A950 */  lw    $a2, %lo(ptr_logo_and_walletbond_DL)($a2)
-/* 03FDD4 7F00B2A4 8C440CFC */  lw    $a0, 0xcfc($v0)
-/* 03FDD8 7F00B2A8 8C450D00 */  lw    $a1, 0xd00($v0)
-/* 03FDDC 7F00B2AC 0FC1D929 */  jal   load_object_fill_header
-/* 03FDE0 7F00B2B0 AFA00010 */   sw    $zero, 0x10($sp)
-/* 03FDE4 7F00B2B4 3C048004 */  lui   $a0, %hi(PitemZ_entries+0xCFC)
-/* 03FDE8 7F00B2B8 0FC1D73D */  jal   modelCalculateRwDataLen
-/* 03FDEC 7F00B2BC 8C84AF24 */   lw    $a0, %lo(PitemZ_entries+0xCFC)($a0)
-/* 03FDF0 7F00B2C0 3C048004 */  lui   $a0, %hi(PitemZ_entries+0xCFC)
-/* 03FDF4 7F00B2C4 0FC1B025 */  jal   get_obj_instance_controller_for_header
-/* 03FDF8 7F00B2C8 8C84AF24 */   lw    $a0, %lo(PitemZ_entries+0xCFC)($a0)
-/* 03FDFC 7F00B2CC 3C038003 */  lui   $v1, %hi(something_legalscreen_constructor)
-/* 03FE00 7F00B2D0 2463A958 */  addiu $v1, %lo(something_legalscreen_constructor) # addiu $v1, $v1, -0x56a8
-/* 03FE04 7F00B2D4 AC620000 */  sw    $v0, ($v1)
-/* 03FE08 7F00B2D8 00402025 */  move  $a0, $v0
-/* 03FE0C 7F00B2DC 0FC1B39E */  jal   modelSetScale
-/* 03FE10 7F00B2E0 3C053F80 */   lui   $a1, 0x3f80
-/* 03FE14 7F00B2E4 3C048003 */  lui   $a0, %hi(something_legalscreen_constructor)
-/* 03FE18 7F00B2E8 8C84A958 */  lw    $a0, %lo(something_legalscreen_constructor)($a0)
-/* 03FE1C 7F00B2EC 0FC1B303 */  jal   setsuboffset
-/* 03FE20 7F00B2F0 27A50024 */   addiu $a1, $sp, 0x24
-/* 03FE24 7F00B2F4 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 03FE28 7F00B2F8 27BD0030 */  addiu $sp, $sp, 0x30
-/* 03FE2C 7F00B2FC 03E00008 */  jr    $ra
-/* 03FE30 7F00B300 00000000 */   nop
-)
-#endif
 
 
 
