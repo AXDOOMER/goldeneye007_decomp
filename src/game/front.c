@@ -367,7 +367,7 @@ struct legal_screen_text D_8002A9CC[] = {
 
 struct unk_joint_list D_8002AABC = {NULL, 1, 3, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
 
-coord3d D_8002AAFC = {0};
+struct coord3d D_8002AAFC = {0};
 
 u32 D_8002AB08 = 0;
 
@@ -1688,93 +1688,22 @@ Gfx * constructor_menu17_switchscreens(Gfx * DL)
 
 
 
-
-#ifdef NONMATCHING
 void init_menu01_nintendo(void)
 {
-    coord3d local_c;
+    struct coord3d local_c;
 
     menu_timer = 0;
-    local_c.x = D_8002AAFC.x;
-    local_c.y = D_8002AAFC.y;
-    local_c.z = D_8002AAFC.z;
-    load_object_fill_header(PitemZ_entries[276].header, PitemZ_entries[276].filename, ptr_logo_and_walletbond_DL,0x3c000,0);
+    local_c = D_8002AAFC;
+    load_object_fill_header(PitemZ_entries[276].header, PitemZ_entries[276].filename, ptr_logo_and_walletbond_DL, 0x3c000, 0);
     modelCalculateRwDataLen(PitemZ_entries[276].header);
     something_legalscreen_constructor = get_obj_instance_controller_for_header(PitemZ_entries[276].header);
     modelSetScale(something_legalscreen_constructor, 1.0f);
     setsuboffset(something_legalscreen_constructor, &local_c);
     musicTrack1Play(M_INTROSWOOSH);
     maybe_is_in_menu = TRUE;
-    flt_CODE_bss_80069614 = -1.396263f;
-    flt_CODE_bss_80069618 = 0.01833333f;
+    flt_CODE_bss_80069614 = -1.39626348019f;
+    flt_CODE_bss_80069618 = 0.0183333326131f;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_800519F4
-.word 0xBFB2B8C3 /* -1.3962635;*/
-glabel D_800519F8
-.word 0x3C962FC9 /* 0.018333333;*/
-.text
-glabel init_menu01_nintendo
-/* 03F6F8 7F00ABC8 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 03F6FC 7F00ABCC 3C018003 */  lui   $at, %hi(menu_timer)
-/* 03F700 7F00ABD0 3C0F8003 */  lui   $t7, %hi(D_8002AAFC)
-/* 03F704 7F00ABD4 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 03F708 7F00ABD8 AC20A8CC */  sw    $zero, %lo(menu_timer)($at)
-/* 03F70C 7F00ABDC 25EFAAFC */  addiu $t7, %lo(D_8002AAFC) # addiu $t7, $t7, -0x5504
-/* 03F710 7F00ABE0 8DE10000 */  lw    $at, ($t7)
-/* 03F714 7F00ABE4 27AE0024 */  addiu $t6, $sp, 0x24
-/* 03F718 7F00ABE8 8DE80004 */  lw    $t0, 4($t7)
-/* 03F71C 7F00ABEC ADC10000 */  sw    $at, ($t6)
-/* 03F720 7F00ABF0 8DE10008 */  lw    $at, 8($t7)
-/* 03F724 7F00ABF4 ADC80004 */  sw    $t0, 4($t6)
-/* 03F728 7F00ABF8 3C028004 */  lui   $v0, %hi(PitemZ_entries)
-/* 03F72C 7F00ABFC ADC10008 */  sw    $at, 8($t6)
-/* 03F730 7F00AC00 2442A228 */  addiu $v0, %lo(PitemZ_entries) # addiu $v0, $v0, -0x5dd8
-/* 03F734 7F00AC04 3C068003 */  lui   $a2, %hi(ptr_logo_and_walletbond_DL)
-/* 03F738 7F00AC08 3C070003 */  lui   $a3, (0x0003C000 >> 16) # lui $a3, 3
-/* 03F73C 7F00AC0C 34E7C000 */  ori   $a3, (0x0003C000 & 0xFFFF) # ori $a3, $a3, 0xc000
-/* 03F740 7F00AC10 8CC6A950 */  lw    $a2, %lo(ptr_logo_and_walletbond_DL)($a2)
-/* 03F744 7F00AC14 8C440CF0 */  lw    $a0, 0xcf0($v0)
-/* 03F748 7F00AC18 8C450CF4 */  lw    $a1, 0xcf4($v0)
-/* 03F74C 7F00AC1C 0FC1D929 */  jal   load_object_fill_header
-/* 03F750 7F00AC20 AFA00010 */   sw    $zero, 0x10($sp)
-/* 03F754 7F00AC24 3C048004 */  lui   $a0, %hi(PitemZ_entries+0xCF0)
-/* 03F758 7F00AC28 0FC1D73D */  jal   modelCalculateRwDataLen
-/* 03F75C 7F00AC2C 8C84AF18 */   lw    $a0, %lo(PitemZ_entries+0xCF0)($a0)
-/* 03F760 7F00AC30 3C048004 */  lui   $a0, %hi(PitemZ_entries+0xCF0)
-/* 03F764 7F00AC34 0FC1B025 */  jal   get_obj_instance_controller_for_header
-/* 03F768 7F00AC38 8C84AF18 */   lw    $a0, %lo(PitemZ_entries+0xCF0)($a0)
-/* 03F76C 7F00AC3C 3C038003 */  lui   $v1, %hi(something_legalscreen_constructor)
-/* 03F770 7F00AC40 2463A958 */  addiu $v1, %lo(something_legalscreen_constructor) # addiu $v1, $v1, -0x56a8
-/* 03F774 7F00AC44 AC620000 */  sw    $v0, ($v1)
-/* 03F778 7F00AC48 00402025 */  move  $a0, $v0
-/* 03F77C 7F00AC4C 0FC1B39E */  jal   modelSetScale
-/* 03F780 7F00AC50 3C053F80 */   lui   $a1, 0x3f80
-/* 03F784 7F00AC54 3C048003 */  lui   $a0, %hi(something_legalscreen_constructor)
-/* 03F788 7F00AC58 8C84A958 */  lw    $a0, %lo(something_legalscreen_constructor)($a0)
-/* 03F78C 7F00AC5C 0FC1B303 */  jal   setsuboffset
-/* 03F790 7F00AC60 27A50024 */   addiu $a1, $sp, 0x24
-/* 03F794 7F00AC64 0C001B9F */  jal   musicTrack1Play
-/* 03F798 7F00AC68 2404002C */   li    $a0, 44
-/* 03F79C 7F00AC6C 24090001 */  li    $t1, 1
-/* 03F7A0 7F00AC70 3C018003 */  lui   $at, %hi(maybe_is_in_menu)
-/* 03F7A4 7F00AC74 AC29A93C */  sw    $t1, %lo(maybe_is_in_menu)($at)
-/* 03F7A8 7F00AC78 3C018005 */  lui   $at, %hi(D_800519F4)
-/* 03F7AC 7F00AC7C C42419F4 */  lwc1  $f4, %lo(D_800519F4)($at)
-/* 03F7B0 7F00AC80 3C018007 */  lui   $at, %hi(flt_CODE_bss_80069614)
-/* 03F7B4 7F00AC84 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 03F7B8 7F00AC88 E4249614 */  swc1  $f4, %lo(flt_CODE_bss_80069614)($at)
-/* 03F7BC 7F00AC8C 3C018005 */  lui   $at, %hi(D_800519F8)
-/* 03F7C0 7F00AC90 C42619F8 */  lwc1  $f6, %lo(D_800519F8)($at)
-/* 03F7C4 7F00AC94 3C018007 */  lui   $at, %hi(flt_CODE_bss_80069618)
-/* 03F7C8 7F00AC98 27BD0030 */  addiu $sp, $sp, 0x30
-/* 03F7CC 7F00AC9C 03E00008 */  jr    $ra
-/* 03F7D0 7F00ACA0 E4269618 */   swc1  $f6, %lo(flt_CODE_bss_80069618)($at)
-)
-#endif
-
 
 
 
