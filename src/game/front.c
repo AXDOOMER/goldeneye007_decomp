@@ -32,6 +32,7 @@
 #include "game/bondwalk2.h"
 #include "game/file2.h"
 #include "objecthandler.h"
+#include "dyn.h"
 
 // lvl.c checks for enabled cheats up to the "invalid" index of 0x4b (=75), which
 // is different from the 80 here ...
@@ -364,26 +365,10 @@ struct legal_screen_text D_8002A9CC[] = {
     { 80, 280, 0, 1, TEXT(LTITLE, 0x12), 0}  //"Used by permission of EMI Unart Catalog Inc.\n"
 };
 
-u32 D_8002AABC = 0;
+struct unk_joint_list D_8002AABC = {NULL, 1, 3, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
 
-u32 D_8002AAC0 = 1;
-u32 D_8002AAC4 = 3;
-u32 D_8002AAC8 = 0;
-u32 D_8002AACC = 0;
-u32 D_8002AAD0 = 0;
-u32 D_8002AAD4 = 0;
-u32 D_8002AAD8 = 0;
-u32 D_8002AADC = 0;
-u32 D_8002AAE0 = 0;
-u32 D_8002AAE4 = 0;
-u32 D_8002AAE8 = 0;
-u32 D_8002AAEC = 0;
-u32 D_8002AAF0 = 0;
-u32 D_8002AAF4 = 0;
-u32 D_8002AAF8 = 0;
 coord3d D_8002AAFC = {0};
-//u32 D_8002AB00 = 0;
-//u32 D_8002AB04 = 0;
+
 u32 D_8002AB08 = 0;
 
 u32 D_8002AB0C = 1;
@@ -404,8 +389,8 @@ u32 D_8002AB44 = 0;
 u32 D_8002AB48 = 0;
 u32 D_8002AB4C = 0;
 u32 D_8002AB50 = 0;
-u32 D_8002AB54 = 0;
 
+u32 D_8002AB54 = 0;
 u32 D_8002AB58 = 1;
 u32 D_8002AB5C = 3;
 u32 D_8002AB60 = 0;
@@ -936,6 +921,7 @@ Gfx *constructor_menu19_spectrum(Gfx *DL);
 void disable_all_switches(void *arg0);
 void set_item_visibility_in_objinstance(Model *objinstance, int item, s32 mode);
 s32 set_cursor_to_stage_solo(s32 arg0);
+Gfx *display_aligned_white_text_to_screen(Gfx *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u8 *arg5, s32 arg6, s32 arg7);
 
 // end forward declarations.
 
@@ -1438,7 +1424,7 @@ void interface_menu00_legalscreen(void)
 }
 
 
-Gfx *display_aligned_white_text_to_screen(Gfx *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7)
+Gfx *display_aligned_white_text_to_screen(Gfx *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u8 *arg5, s32 arg6, s32 arg7)
 {
     s32 sp4C;
     s32 sp48;
@@ -1458,76 +1444,67 @@ Gfx *display_aligned_white_text_to_screen(Gfx *arg0, s32 arg1, s32 arg2, s32 arg
 
 
 #ifdef NONMATCHING
-void constructor_menu00_legalscreen(s32 arg0)
+/**
+ * decomp notes:
+ * compiles: yes
+ * stack resize: match
+ * instructions match: yes
+ * resgisters match: false
+ * 
+ * decomp notes: match down to regalloc in final loop.
+ */
+Gfx *constructor_menu00_legalscreen(Gfx *DL)
 {
-    s32 spF4;
-    s32 spEC;
-    s32 spE8;
-    s32 spE4;
-    s32 spA0;
-    s32 sp58;
-    s32 temp_ret;
-    s32 temp_s0;
-    u32 temp_s0_2;
-    void *temp_t0;
-    void *temp_t6;
-    void *phi_t6;
-    void *phi_t0;
-    s32 phi_s1;
-    s32 phi_s0;
-    void *phi_s0_2;
-    s32 phi_s4;
+    s32 padding;
+    struct unk_joint_list spE4;
+    Mtxf *temp;
+    Mtxf spA0;
+    s32 i;
+    u8 *txt;
+    Mtxf sp58;
+    struct legal_screen_text *legal_text_ptr;
 
-    phi_t6 = &D_8002AABC;
-    phi_t0 = &spE4;
-loop_1:
-    temp_t6 = phi_t6 + 0xc;
-    temp_t0 = phi_t0 + 0xc;
-    temp_t0->unk-C = (s32) *phi_t6;
-    temp_t0->unk-8 = (s32) temp_t6->unk-8;
-    temp_t0->unk-4 = (s32) temp_t6->unk-4;
-    phi_t6 = temp_t6;
-    phi_t0 = temp_t0;
-    if (temp_t6 != (&D_8002AABC + 0x3c))
-    {
-        goto loop_1;
-    }
-    temp_t0->unk0 = (s32) temp_t6->unk0;
-    insert_imageDL(arg0);
-    matrix_4x4_7F059694(&spA0, 0.0f, 0.0f, 0x457a0000, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-    temp_ret = dynAllocate(something_legalscreen_constructor->unk8->unkE << 6);
-    spF4 = temp_ret;
-    matrix_4x4_copy(&spA0, temp_ret);
-    something_legalscreen_constructor->unkC = spF4;
+    spE4 = D_8002AABC;
+    
+    DL = insert_imageDL(DL);
+    matrix_4x4_7F059694(&spA0, 0.0f, 0.0f, 4000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+    spE4.unk_matrix = &spA0;
+    spE4.mtxlist = (Mtxf*)dynAllocate(something_legalscreen_constructor->obj->numMatrices << 6);
+    matrix_4x4_copy(&spA0, spE4.mtxlist);
+    something_legalscreen_constructor->render_pos = spE4.mtxlist;
     sub_GAME_7F06EFC4(something_legalscreen_constructor);
-    spEC = 3;
-    spE8 = 0;
+    spE4.unk08 = 3;
+    spE4.unk04 = 0;
+    spE4.gdl = DL;
     subdraw(&spE4, something_legalscreen_constructor);
-    phi_s1 = 0;
-    phi_s0 = 0;
-    if (something_legalscreen_constructor->unk8->unkE > 0)
+    DL = spE4.gdl;
+
+    for (i=0; i<something_legalscreen_constructor->obj->numMatrices; i++)
     {
-loop_3:
-        matrix_4x4_copy(something_legalscreen_constructor->unkC + phi_s1, &sp58);
-        matrix_4x4_f32_to_s32(&sp58, something_legalscreen_constructor->unkC + (phi_s0 << 6));
-        temp_s0 = phi_s0 + 1;
-        phi_s1 = phi_s1 + 0x40;
-        phi_s0 = temp_s0;
-        if (temp_s0 < something_legalscreen_constructor->unk8->unkE)
-        {
-            goto loop_3;
-        }
+        // hack: source address steps by sizeof(Mtxf), but can't get that to match
+        matrix_4x4_copy(&((s8*)something_legalscreen_constructor->render_pos)[i*0x40], &sp58);
+        matrix_4x4_f32_to_s32(&sp58, &((Mtxf*)something_legalscreen_constructor->render_pos)[i]);
     }
-    phi_s0_2 = &D_8002A9CC;
-    phi_s4 = microcode_constructor(spF0);
-loop_5:
-    temp_s0_2 = phi_s0_2 + 0x14;
-    phi_s0_2 = temp_s0_2;
-    phi_s4 = display_aligned_white_text_to_screen(phi_s4, phi_s0_2->unk0, phi_s0_2->unk4, phi_s0_2->unk8, (s32) phi_s0_2->unkC, langGet(phi_s0_2->unk10), (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge);
-    if (temp_s0_2 < &D_8002AABC)
+
+    DL = microcode_constructor(DL);
+
+    for (legal_text_ptr = &D_8002A9CC[0]; legal_text_ptr < &D_8002A9CC[12]; legal_text_ptr++)
     {
-        goto loop_5;
+        txt = langGet(legal_text_ptr->txtID);
+
+        DL = display_aligned_white_text_to_screen(
+            DL,
+            legal_text_ptr->h_pos,
+            legal_text_ptr->v_pos,
+            legal_text_ptr->flag,
+            legal_text_ptr->flag2,
+            txt,
+            ptrSecondFontTableLarge,
+            ptrFirstFontTableLarge);
+
     }
+
+    return DL;
 }
 #else
 GLOBAL_ASM(

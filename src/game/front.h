@@ -5,12 +5,12 @@
 #include <bondconstants.h>
 
 struct legal_screen_text {
-    int h_pos;
-    int v_pos;
-    int flag;
-    int flag2;
-    short txtID;
-    short anonymous_5;
+    s32 h_pos;
+    s32 v_pos;
+    s32 flag;
+    s32 flag2;
+    u16 txtID;
+    u16 anonymous_5;
 };
 
 struct mission_folder_setup {
