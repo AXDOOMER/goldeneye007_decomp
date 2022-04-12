@@ -31,6 +31,7 @@
 #include "game/othermodemicrocode.h"
 #include "game/bondwalk2.h"
 #include "game/file2.h"
+#include "objecthandler.h"
 
 // lvl.c checks for enabled cheats up to the "invalid" index of 0x4b (=75), which
 // is different from the 80 here ...
@@ -317,7 +318,7 @@ s32 is_cheat_menu_available = FALSE;
 
 Gfx * ptr_logo_and_walletbond_DL = 0;
 s32 ptr_menu_videobuffer = 0;
-s32 something_legalscreen_constructor = 0;
+struct Model *something_legalscreen_constructor = NULL;
 struct object_standard * ptr_folder_object_instance = 0;
 s32 set0_never_used = 0;
 s32 set0_never_used_0 = 0;
@@ -1362,82 +1363,23 @@ u32 isontab2(void)
 
 
 
-#ifdef NONMATCHING
-//
 void init_menu00_legalscreen(void)
 {
-    struct point sp20;
+    s32 padding;
+    struct coord3d sp20;
 
     musicTrack1Stop();
     maybe_is_in_menu = 1;
     menu_timer = 0;
-    sp20.x = D_8002A9C0.x;
-    sp20.y = D_8002A9C0.y;
-    sp20.z = D_8002A9C0.z;
-    load_object_fill_header(&PitemZ_entries[319].header, &PitemZ_entries[319].filename, ptr_logo_and_walletbond_DL, 0x3c000, 0);
-    modelCalculateRwDataLen(&PitemZ_entries[319].header);
+    sp20 = D_8002A9C0;
+    load_object_fill_header(PitemZ_entries[319].header, PitemZ_entries[319].filename, ptr_logo_and_walletbond_DL, 0x3c000, 0);
+    modelCalculateRwDataLen(PitemZ_entries[319].header);
 
-    something_legalscreen_constructor = get_obj_instance_controller_for_header(&PitemZ_entries[319].header);
+    something_legalscreen_constructor = get_obj_instance_controller_for_header(PitemZ_entries[319].header);
     modelSetScale(something_legalscreen_constructor, 1.0f);
     setsuboffset(something_legalscreen_constructor, &sp20);
     fileValidateSaves();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel init_menu00_legalscreen
-/* 03F118 7F00A5E8 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 03F11C 7F00A5EC AFBF001C */  sw    $ra, 0x1c($sp)
-/* 03F120 7F00A5F0 0C001BF4 */  jal   musicTrack1Stop
-/* 03F124 7F00A5F4 00000000 */   nop
-/* 03F128 7F00A5F8 240E0001 */  li    $t6, 1
-/* 03F12C 7F00A5FC 3C018003 */  lui   $at, %hi(maybe_is_in_menu)
-/* 03F130 7F00A600 AC2EA93C */  sw    $t6, %lo(maybe_is_in_menu)($at)
-/* 03F134 7F00A604 3C018003 */  lui   $at, %hi(menu_timer)
-/* 03F138 7F00A608 3C188003 */  lui   $t8, %hi(D_8002A9C0)
-/* 03F13C 7F00A60C AC20A8CC */  sw    $zero, %lo(menu_timer)($at)
-/* 03F140 7F00A610 2718A9C0 */  addiu $t8, %lo(D_8002A9C0) # addiu $t8, $t8, -0x5640
-/* 03F144 7F00A614 8F010000 */  lw    $at, ($t8)
-/* 03F148 7F00A618 27AF0020 */  addiu $t7, $sp, 0x20
-/* 03F14C 7F00A61C 8F090004 */  lw    $t1, 4($t8)
-/* 03F150 7F00A620 ADE10000 */  sw    $at, ($t7)
-/* 03F154 7F00A624 8F010008 */  lw    $at, 8($t8)
-/* 03F158 7F00A628 ADE90004 */  sw    $t1, 4($t7)
-/* 03F15C 7F00A62C 3C028004 */  lui   $v0, %hi(PitemZ_entries)
-/* 03F160 7F00A630 ADE10008 */  sw    $at, 8($t7)
-/* 03F164 7F00A634 2442A228 */  addiu $v0, %lo(PitemZ_entries) # addiu $v0, $v0, -0x5dd8
-/* 03F168 7F00A638 3C068003 */  lui   $a2, %hi(ptr_logo_and_walletbond_DL)
-/* 03F16C 7F00A63C 3C070003 */  lui   $a3, (0x0003C000 >> 16) # lui $a3, 3
-/* 03F170 7F00A640 34E7C000 */  ori   $a3, (0x0003C000 & 0xFFFF) # ori $a3, $a3, 0xc000
-/* 03F174 7F00A644 8CC6A950 */  lw    $a2, %lo(ptr_logo_and_walletbond_DL)($a2)
-/* 03F178 7F00A648 8C440EF4 */  lw    $a0, 0xef4($v0)
-/* 03F17C 7F00A64C 8C450EF8 */  lw    $a1, 0xef8($v0)
-/* 03F180 7F00A650 0FC1D929 */  jal   load_object_fill_header
-/* 03F184 7F00A654 AFA00010 */   sw    $zero, 0x10($sp)
-/* 03F188 7F00A658 3C048004 */  lui   $a0, %hi(PitemZ_entries+0xEF4)
-/* 03F18C 7F00A65C 0FC1D73D */  jal   modelCalculateRwDataLen
-/* 03F190 7F00A660 8C84B11C */   lw    $a0, %lo(PitemZ_entries+0xEF4)($a0)
-/* 03F194 7F00A664 3C048004 */  lui   $a0, %hi(PitemZ_entries+0xEF4)
-/* 03F198 7F00A668 0FC1B025 */  jal   get_obj_instance_controller_for_header
-/* 03F19C 7F00A66C 8C84B11C */   lw    $a0, %lo(PitemZ_entries+0xEF4)($a0)
-/* 03F1A0 7F00A670 3C038003 */  lui   $v1, %hi(something_legalscreen_constructor)
-/* 03F1A4 7F00A674 2463A958 */  addiu $v1, %lo(something_legalscreen_constructor) # addiu $v1, $v1, -0x56a8
-/* 03F1A8 7F00A678 AC620000 */  sw    $v0, ($v1)
-/* 03F1AC 7F00A67C 00402025 */  move  $a0, $v0
-/* 03F1B0 7F00A680 0FC1B39E */  jal   modelSetScale
-/* 03F1B4 7F00A684 3C053F80 */   lui   $a1, 0x3f80
-/* 03F1B8 7F00A688 3C048003 */  lui   $a0, %hi(something_legalscreen_constructor)
-/* 03F1BC 7F00A68C 8C84A958 */  lw    $a0, %lo(something_legalscreen_constructor)($a0)
-/* 03F1C0 7F00A690 0FC1B303 */  jal   setsuboffset
-/* 03F1C4 7F00A694 27A50020 */   addiu $a1, $sp, 0x20
-/* 03F1C8 7F00A698 0FC077E4 */  jal   fileValidateSaves
-/* 03F1CC 7F00A69C 00000000 */   nop
-/* 03F1D0 7F00A6A0 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 03F1D4 7F00A6A4 27BD0030 */  addiu $sp, $sp, 0x30
-/* 03F1D8 7F00A6A8 03E00008 */  jr    $ra
-/* 03F1DC 7F00A6AC 00000000 */   nop
-)
-#endif
 
 
 

@@ -54,7 +54,8 @@ glabel sub_GAME_7F06C060
 
 
 #ifdef NONMATCHING
-void get_obj_instance_controller_for_header(void) {
+struct PropRecord * get_obj_instance_controller_for_header(struct ModelFileHeader* arg0)
+{
 
 }
 #else
