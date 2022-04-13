@@ -375,7 +375,7 @@ void initBONDdataforPlayer(PLAYER_ID player)
     (*ppPVar3)->field_1018 = 0.00000000;
     (*ppPVar3)->last_z_trigger_timer = 0;
     (*ppPVar3)->copiedgoldeneye = 0;
-    (*ppPVar3)->gunammooff = 0;
+    (*ppPVar3)->ammodispflags = 0;
     (*ppPVar3)->field_106C = 0.00000000;
     (*ppPVar3)->field_1070 = 0.00000000;
     (*ppPVar3)->field_1074 = 0.00000000;

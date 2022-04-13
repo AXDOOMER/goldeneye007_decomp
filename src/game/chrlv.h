@@ -31,7 +31,7 @@ f32 chrGetDistanceToBond(ChrRecord *guardData);
 s32 chrCheckTargetInSight(ChrRecord *self);
 bool actor_fire_or_aim_at_target_update(ChrRecord *self, s32 newtargettype, s32 newtargetid);
 void chrlvAlertGuardToPlayerPosition(ChrRecord *);
-void chrlvIdleAnimationRelated7F023A94(ChrRecord *arg0, f32 arg1);
+void chrlvIdleAnimationRelated7F023A94(ChrRecord *arg0, f32 duration);
 f32 chrGetAngleToBond(ChrRecord *arg0);
 s32 chrHasStoppedOrPatroling(ChrRecord *);
 s32 chrResolvePadId(ChrRecord *guardData,s32 padNo);

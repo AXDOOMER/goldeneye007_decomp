@@ -473,7 +473,7 @@ typedef union
     // Very similar but definitely different to the above?
     struct StandTileLocusCallbackRecord
     {
-        s32 *roomBuf;
+        s32  unk00;
         s32  count;
         s32  bufMax;
         s32  nearEdgeCount;
@@ -489,7 +489,7 @@ typedef union
     } StandFileFooter;
 
     typedef s32 (*standTileLocusCallback_A_t)(struct StandTile *, struct StandTileLocusCallbackRecord *);
-    typedef s32 (*standTileLocusCallback_B_t)(struct StandTile *, s32, f32, f32, void, f32 *); // 5th parameter uncertain
+    typedef s32 (*standTileLocusCallback_B_t)(StandTile *arg0, s32 arg1, f32 arg2, f32 arg3, s32 arg4, struct StandTileLocusCallbackRecord *arg5);
     typedef s32 (*standTileLocusCallback_C_t)(struct StandTile **, s32, struct StandTileLocusCallbackRecord *);
 
     typedef s32 (*tilePredicate_t)(struct StandTile *);
@@ -1205,6 +1205,13 @@ typedef union
             coord3d unk4c; // "2" version of unk34
             f32     unk58;
             f32     unk5c;
+        };
+
+        struct modeldata_unk_pos {
+            s32 unk00;
+            f32 p1[2];
+            f32 p2[2];
+            f32 p3[2];
         };
 
         /**
@@ -2256,6 +2263,34 @@ typedef union
 
     #pragma region IndividualObjectTypes
 
+    struct collision_data {
+        s32 unk00;
+        s32 unk04;
+        s32 unk08;
+        s32 unk0C;
+
+        s32 unk10;
+        s32 unk14;
+        s32 unk18;
+        s32 unk1C;
+
+        s32 unk20;
+        s32 unk24;
+        s32 unk28;
+        s32 unk2C;
+
+        s32 unk30;
+        s32 unk34;
+        s32 unk38;
+        s32 unk3C;
+
+        s32 unk40;
+        f32 unk44;
+
+        // Might be related to collision radius
+        f32 unk48;
+    };
+
     /**
      * Object (Prop Definition) Record holds common data such as pad and health.
      */
@@ -2436,7 +2471,7 @@ typedef union
             */
             u32 runtime_bitflags;
         };
-        int               ptr_allocated_collisiondata_block;
+        struct collision_data *ptr_allocated_collisiondata_block;
 
         ObjectRecord_f6c *unk6C; //pointer somewhere at least 0x44 long and the pointer at 0 and 0x44 is also at least 0xb8 long
 
@@ -2617,7 +2652,10 @@ typedef union
         u8                 laserFade; /*0xcc*/
         u8                 unkcd;
         s16                unkce;
-        u32                unkd0;
+
+        // maybe struct modeldata_unk_pos *
+        u32 unkd0;
+
         u32                unkd4;
         u32                unkd8;
         u32                unkdc;
@@ -3273,20 +3311,30 @@ typedef union
     typedef struct TankRecord
     {
         inherits ObjectRecord;
-        u32      firing;      /*0x80*/
-        f32      verta;       /*0x84*/
-        f32      turrettheta; /*0x88*/
-        u32      sumground;   /*0x8c*/
-        f32      ground;      /*0x90*/
-        u32      ammo;        /*0x94 */
-        f32      theta;       /*0x98 */
-        f32      tankvol;     /*0x9c*/
-        f32      speedaim;    /*0xa0*/
-        f32      speedtime60; /*0xa4*/
-        u32      unk78;       /*0xa4*/
-        u32      unk7c;       /*0xa8*/
-        u32 *    path;        /*0xac*/
-        void *   Sound;       /*0xb0 */
+        s32 unk80;
+        struct rect4f  *rect;       /*0x84*/
+        s32 unk88;
+        s32 unk8C;
+        s32 unk90;
+        s32 unk94;
+        s32 unk98;
+        s32 unk9C;
+        s32 unkA0;
+        s32 unkA4;
+        s32 unkA8;
+        s32 unkAC;
+        s32 unkB0;
+        s32 unkB4;
+        s32 unkB8;
+        s32 unkBC;
+        s32 unkC0;
+        s32 is_firing_tank;
+        f32 turret_vertical_angle;
+        f32 turret_orientation_angle;
+        f32 unkD0;
+        f32 stan_y;
+        f32 unkD8;
+        f32 tank_orientation_angle;
     } TankRecord;
     #define New_TankRecord(pad)                     \
         {                                           \
@@ -3327,6 +3375,163 @@ typedef union
     #define EndObjectList PropDefHeaderRecord endme = New_PropDefHeaderRecord(48)
     #pragma endregion IndividualObjectTypes
 #pragma endregion
+
+#pragma region Intro
+
+union SetupFloatInt
+{
+    f32 fval;
+    s32 ival;
+};
+
+/**
+ * sizeof == 0x4
+*/
+struct SetupIntroEmpty
+{
+    s32 type;
+};
+
+/**
+ * type == INTROTYPE_SPAWN
+ * sizeof == 0xc
+*/
+struct SetupIntroSpawn
+{
+    s32 type;
+    s32 index;
+    s32 is_demo_playback;
+};
+
+/**
+ * type == INTROTYPE_ITEM
+ * sizeof == 0x10
+*/
+struct SetupIntroItem
+{
+    s32 type;
+    s32 item_right;
+    s32 item_left;
+    s32 is_demo_playback;
+};
+
+/**
+ * type == INTROTYPE_AMMO
+ * sizeof == 0x10
+*/
+struct SetupIntroAmmo
+{
+    s32 type;
+    s32 ammo_type;
+    s32 ammo_amount;
+    s32 is_demo_playback;
+};
+
+/**
+ * type == INTROTYPE_SWIRL
+ * sizeof == 0x20
+*/
+struct SetupIntroSwirl
+{
+    s32 type;
+    s32 unk04;
+    union SetupFloatInt unk08;
+    union SetupFloatInt unk0C;
+    union SetupFloatInt unk10;
+    union SetupFloatInt unk14;
+    union SetupFloatInt unk18;
+    s32 unk1C;
+};
+
+/**
+ * type == INTROTYPE_ANIM
+ * sizeof == 0x8
+*/
+struct SetupIntroAnim
+{
+    s32 type;
+    s32 intro_anim;
+};
+
+/**
+ * type == INTROTYPE_CUFF
+ * sizeof == 0x8
+*/
+struct SetupIntroCuff
+{
+    s32 type;
+    s32 bondtype;
+};
+
+/**
+ * type == INTROTYPE_CAMERA
+ * sizeof == 0x28
+*/
+struct SetupIntroCamera
+{
+    s32 type;
+    union SetupFloatInt unk04;
+    union SetupFloatInt unk08;
+    union SetupFloatInt unk0C;
+    union SetupFloatInt unk10;
+    union SetupFloatInt unk14;
+    s32 unk18;
+    union {
+        u16 lang_index[2];
+        char* lang_ptr;
+    } lang1c;
+    union {
+        s32 lang_index;
+        char *lang_ptr;
+    } lang20;
+    struct SetupIntroCamera *prev;
+};
+
+/**
+ * type == INTROTYPE_WATCH
+ * sizeof == 0xc
+*/
+struct SetupIntroWatch
+{
+    s32 type;
+    s32 hours;
+    s32 minutes;
+};
+
+/**
+ * sizeof == 0xc
+*/
+typedef struct CreditsEntry_s {
+    u16 TextId1;
+    u16 TextId2;
+    s16 Position1;
+
+    /**
+     * See CREDITS_ALIGNMENT.
+    */
+    u16 Alignment1;
+
+    s16 Position2;
+
+    /**
+     * See CREDITS_ALIGNMENT.
+    */
+    u16 Alignment2;
+
+} CreditsEntry;
+
+/**
+ * type == INTROTYPE_CREDITS
+ * sizeof == 0x8
+*/
+struct SetupIntroCredits
+{
+    s32 type;
+    s32 unk04;
+};
+
+
+#pragma endregion Intro
 
 #pragma region Objectives
     // PROPDEF_WATCH_MENU_OBJECTIVE_TEXT (35)
@@ -3376,7 +3581,7 @@ typedef union
         {
             waypoint       *pathwaypoints;
             waygroup       *waypointgroups;
-            s32            *intro;
+            struct SetupIntroEmpty *intro;
             s32            *propDefs;
             PathRecord     *patrolpaths;
             AIListRecord   *ailists;
@@ -3451,24 +3656,7 @@ typedef struct object_weapon {
 
 
 
-typedef struct CreditsEntry_s {
-    u16 TextId1;
-    u16 TextId2;
-    s16 Position1;
 
-    /**
-     * See CREDITS_ALIGNMENT.
-    */
-    u16 Alignment1;
-
-    s16 Position2;
-
-    /**
-     * See CREDITS_ALIGNMENT.
-    */
-    u16 Alignment2;
-
-} CreditsEntry;
 
 
 #endif

@@ -5147,7 +5147,7 @@ _AI_CMD(
                 matrix_scalar_multiply(obj->model->scale, &matrix);
             }
             sub_GAME_7F04088C(obj, pad, &matrix, pad->stan, pad);
-            sub_GAME_7F056CA0(obj);
+            setupUpdateObjectRoomPosition(obj);
         }
         Offset += CAT(CAT(AI_, CMDNAME), _LENGTH);
         break;

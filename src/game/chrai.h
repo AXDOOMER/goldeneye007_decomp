@@ -478,6 +478,8 @@ extern struct object_animation_controller g_MonitorAnimController;
 extern struct object_animation_controller g_UnknownAnimController;
 extern struct object_animation_controller g_TaserAnimController;
 
+extern CreditsEntry *dword_CODE_bss_80075D28;
+
 void          alarmDeactivate(void);
 s32           chraiitemsize(u8 *AIList, s32 offset);
 void          check_deactivate_gas_sound(void);
@@ -502,8 +504,8 @@ AIRecord     *ailistFindById(s32 ID);
 void          chraiGetCollisionBounds(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *arg3, f32 *arg4);
 void          sub_GAME_7F03D058(PropRecord *prop, bool unset);
 void          chraiGetCollisionBoundsWithoutY(PropRecord *arg0, struct rect4f **arg1, s32 *arg2);
-s32           sub_GAME_7F03CCD8(coord3d *arg0, struct rect4f *arg1, s32 arg2);
-void          sub_GAME_7F03E3FC(s32 *);
+s32 chrpropTestPointInPolygon(coord3d *point, struct rect4f *polygon, s32 edges);
+void          sub_GAME_7F03E3FC(s32 *roomids);
 ObjectRecord *scan_position_data_table_for_normal_object_at_preset(s32 arg0);
 Gfx          *chrpropsRenderPass(Gfx *arg0, s32 roomid, s32 arg2);
 PropRecord   *get_ptr_obj_pos_list_current_entry(void);
@@ -516,4 +518,13 @@ f32           chrpropBBOXGetYmax(ModelNode_BoundingBoxRecord *modelBoundingBox);
 f32           chrpropBBOXGetZmin(ModelNode_BoundingBoxRecord *modelBoundingBox);
 ObjectRecord *sub_GAME_7F03FAB0(PadRecord *pad, s32 RoomID);
 void          chraiGetCollisionBounds(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *arg3, f32 *arg4);
+void chrpropGetCollisionBounds(PropRecord *arg0, f32 *arg1, f32 *arg2, f32 *arg3);
+f32 sub_GAME_7F03CFE8(PropRecord *arg0);
+f32 chrpropSumMatrixPosX(struct modeldata_unk_pos* arg0, Mtxf *arg1);
+f32 chrpropSumMatrixNegX(struct modeldata_unk_pos* arg0, Mtxf *arg1);
+f32 chrpropSumMatrixPosY(struct modeldata_unk_pos* arg0, Mtxf *arg1);
+f32 chrpropSumMatrixNegY(struct modeldata_unk_pos* arg0, Mtxf *arg1);
+f32 chrpropSumMatrixPosZ(struct modeldata_unk_pos* arg0, Mtxf *arg1);
+f32 chrpropSumMatrixNegZ(struct modeldata_unk_pos* arg0, Mtxf *arg1);
+void sub_GAME_7F03F540(struct modeldata_unk_pos *arg0, Mtxf *arg1, s32* arg2, struct collision_data *arg3);
 #endif

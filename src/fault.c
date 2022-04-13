@@ -170,12 +170,6 @@ void faultInit(void)
  * 5B54    70004F54
  * 
  * @param arg0 Unused.
- * 
- * decomp status:
- * - compiles: yes
- * - stack resize: yes
- * - identical instructions: yes
- * - identical registers: yes
  */
 extern OSThread *__osRunQueue;
 void faultMain(void* arg0)

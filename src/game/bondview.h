@@ -44,9 +44,7 @@ struct collision434 {
     /**
      * Offset 0x10.
      */
-    s32 field_10;
-    s32 field_14;
-    s32 field_18;
+    struct coord3d field_10;
 
     /**
      * Some kind of alternative to pos3 (in player struct).
@@ -66,14 +64,18 @@ struct collision434 {
     coord3d pos;
 
     /**
+     * bondviewMoveAnimationTick calculates 4x4 view matrix transform and then writes rotation
+     * to this property and applied_view2. Removing the update to this property will fix
+     * Bond's camera orientation such that Bond can still turn, but the camera is always
+     * locked facing the starting position.
      * Offset 0x3c.
      */
-    s32 field_3C;
-    s32 field_40;
-    s32 field_44;
-    s32 field_48;
-    s32 field_4C;
-    s32 field_50;
+    struct coord3d applied_view;
+
+    /**
+     * Offset 0x48.
+     */
+    struct coord3d applied_view2;
 
     /**
      * Offset 0x54.
@@ -117,92 +119,92 @@ struct hand
   s32 field_8C0;
   s32 field_8C4;
   s32 field_8C8;
-  f32 field_8CC;
-  f32 field_8D0;
-  f32 field_8D4;
-  f32 field_8D8;
-  f32 field_8DC;
-  f32 field_8E0;
-  f32 field_8E4;
-  f32 field_8E8;
-  f32 field_8EC;
-  f32 field_8F0;
-  f32 field_8F4;
-  f32 field_8F8;
-  f32 field_8FC;
-  f32 field_900;
-  f32 field_904;
-  f32 field_908;
-  f32 field_90C;
-  f32 field_910;
-  f32 field_914;
-  f32 field_918;
-  f32 field_91C;
-  f32 field_920;
-  f32 field_924;
-  f32 field_928;
-  f32 field_92C;
-  f32 field_930;
-  f32 field_934;
-  f32 field_938;
-  f32 field_93C;
-  f32 field_940;
-  f32 field_944;
-  f32 field_948;
-  f32 field_94C;
-  f32 field_950;
-  f32 field_954;
-  f32 field_958;
-  f32 field_95C;
-  f32 field_960;
-  f32 field_964;
-  f32 field_968;  
-  f32 field_96C;
-  f32 field_970;
-  f32 field_974;
-  f32 field_978;
-  f32 field_97C;
-  f32 field_980;
-  f32 field_984;
-  f32 field_988;
-  f32 field_98C;
-  f32 field_990;
-  f32 field_994;
-  f32 field_998;
-  f32 field_99C;
-  f32 field_9A0;
-  f32 field_9A4;
-  f32 field_9A8;
-  f32 field_9AC;
-  f32 field_9B0;
-  f32 field_9B4;
-  f32 field_9B8;
-  f32 field_9BC;
-  f32 field_9C0;
-  f32 field_9C4;
-  f32 field_9C8;
-  f32 field_9CC;
-  f32 field_9D0;
-  f32 field_9D4;
-  f32 field_9D8;
-  f32 field_9DC;
-  f32 field_9E0;
-  f32 field_9E4;
-  f32 field_9E8;
-  f32 field_9EC;
-  f32 field_9F0;
-  f32 field_9F4;
-  f32 field_9F8;
-  f32 field_9FC;
-  f32 field_A00;
-  f32 field_A04;
-  f32 field_A08;
+  s32 field_8CC;
+  s32 field_8D0;
+  s32 field_8D4;
+  s32 field_8D8;
+  s32 field_8DC;
+  s32 field_8E0;
+  s32 field_8E4;
+  s32 field_8E8;
+  s32 field_8EC;
+  s32 field_8F0;
+  s32 field_8F4;
+  s32 field_8F8;
+  s32 field_8FC;
+  s32 field_900;
+  s32 field_904;
+  s32 field_908;
+  s32 field_90C;
+  s32 field_910;
+  s32 field_914;
+  s32 field_918;
+  s32 field_91C;
+  s32 field_920;
+  s32 field_924;
+  s32 field_928;
+  s32 field_92C;
+  s32 field_930;
+  s32 field_934;
+  s32 field_938;
+  s32 field_93C;
+  s32 field_940;
+  s32 field_944;
+  s32 field_948;
+  s32 field_94C;
+  s32 field_950;
+  s32 field_954;
+  s32 field_958;
+  s32 field_95C;
+  s32 field_960;
+  s32 field_964;
+  s32 field_968;
+  s32 field_96C;
+  s32 field_970;
+  s32 field_974;
+  s32 field_978;
+  s32 field_97C;
+  s32 field_980;
+  s32 field_984;
+  s32 field_988;
+  s32 field_98C;
+  s32 field_990;
+  s32 field_994;
+  s32 field_998;
+  s32 field_99C;
+  s32 field_9A0;
+  s32 field_9A4;
+  s32 field_9A8;
+  s32 field_9AC;
+  s32 field_9B0;
+  s32 field_9B4;
+  s32 field_9B8;
+  s32 field_9BC;
+  s32 field_9C0;
+  s32 field_9C4;
+  s32 field_9C8;
+  s32 field_9CC;
+  s32 field_9D0;
+  s32 field_9D4;
+  s32 field_9D8;
+  s32 field_9DC;
+  s32 field_9E0;
+  s32 field_9E4;
+  s32 field_9E8;
+  s32 field_9EC;
+  s32 field_9F0;
+  s32 field_9F4;
+  s32 field_9F8;
+  s32 field_9FC;
+  s32 field_A00;
+  s32 field_A04;
+  s32 field_A08;
   f32 field_A0C;
-  f32 field_A10;
-  f32 field_A14;
-  f32 field_A18;
-  f32 field_A1C;
-  s32 field_A20;
+  s32 field_A10;
+  s32 field_A14;
+  s32 field_A18; // sway state?
+  f32 weapon_theta_displacement;
+  f32 weapon_verta_displacement;
   s32 field_A24;
   s32 field_A28;
   s32 field_A2C;
@@ -425,7 +427,7 @@ struct player
 
   /* 0x0074 0x800c67d4 */ f32 stanHeight;
 
-  /* 0x0078 */ s32 field_78;
+  /* 0x0078 */ f32 field_78;
 
   /**
    * Collision / clipping related.
@@ -434,7 +436,7 @@ struct player
    */
   /* 0x007c */ f32 field_7C;
   
-  /* 0x0080 */ s32 field_80;
+  /* 0x0080 */ f32 field_80;
 
   /**
    * Collision / clipping related.
@@ -554,12 +556,24 @@ struct player
    * How long Bond has been running
   */
   /* 0x017c */ s32 speedmaxtime60;
+  
   coord3d bondshotspeed; //0x180
+
+  // offset 0x18c
   f32 bondfadetime60;
+
+  // offset 0x190
   f32 bondfadetimemax60;
+
+  // offset 0x194
   f32 bondfadefracold;
+
+  // offset 0x198
   f32 bondfadefracnew;
+
+  // offset 0x19c
   f32 bondbreathing;
+  
   s32 field_1A0;
   s32 field_1A4;
   s32 field_1A8;
@@ -736,9 +750,9 @@ struct player
   */
   u16 buttons_pressed;
   s16 field_3B6;
-  s32 field_3B8;
-  s32 field_3BC;
-  s32 field_3C0;
+
+  struct coord3d field_3B8;
+
   f32 field_3C4;
   f32 field_3C8;
   f32 field_3CC;
@@ -1041,8 +1055,8 @@ struct player
    * Offset 0x870.
    */
   struct hand hands[2];
-  s32 gunposamplitude;
-  s32 gunxamplitude;
+  f32 gunposamplitude;
+  f32 gunxamplitude;
   s32 field_FC8;
 
   /**
@@ -1098,7 +1112,7 @@ struct player
   s32 field_1058;
   s32 last_z_trigger_timer;
   s32 copiedgoldeneye;
-  s32 gunammooff;
+  s32 ammodispflags;
   s32 field_1068;
   f32 field_106C;
   f32 field_1070;
@@ -2663,15 +2677,17 @@ struct player
   s32 field_29AC;
   s32 field_29B0;
   s32 field_29B4;
-  s32 field_29B8;
+
+  // Alt field_29C0 ?? Used in EU.
+  f32 field_29B8;
 
   /**
    * Related to player perspective.
    * Offset 0x29bc.
    */
   f32 field_29BC;
-
   f32 field_29C0;
+
   s32 mpmenuon;
   s32 mpmenumode;
   s32 mpquitconfirm;
@@ -2758,7 +2774,7 @@ struct struct_4 {
 };
 
 //D:80036424
-extern s32 camera_80036424;
+extern s32 g_bondviewForceDisarm;
 //D:80036428
 extern s32 resolution;
 //D:8003642C
@@ -2772,16 +2788,16 @@ extern s32 camera_80036438;
 //D:8003643C
 extern s32 D_8003643C;
 //D:80036440
-extern s32 D_80036440;
+extern CreditsEntry *D_80036440;
 //D:80036444
 extern s32 D_80036444;
 //D:80036448
 extern s32 in_tank_flag;
 //D:8003644C
-extern s32 D_8003644C;
+extern struct PropRecord *D_8003644C;
 
 //D:80036450
-extern s32 ptr_playerstank;
+extern struct PropRecord *ptr_playerstank;
 
 /**
  * Related to ptr_playerstank.
@@ -2790,38 +2806,36 @@ extern s32 ptr_playerstank;
 extern f32 g_PlayerTankYOffset;
 
 //D:80036458
-extern ALSoundState * SFX_80036458;
-//D:8003645C
-extern ALSoundState * SFX_8003645C;
+extern ALSoundState * SFX_80036458[2];
 
 //D:80036460
-extern s32 D_80036460;
+extern f32 g_TankTurnSpeed;
 //D:80036464
-extern f32 D_80036464;
+extern f32 g_TankOrientationAngle;
 //D:80036468
-extern s32 D_80036468;
+extern f32 D_80036468;
 //D:8003646C
-extern f32 D_8003646C;
+extern f32 g_TankTurretVerticalAngle;
 //D:80036470
-extern s32 D_80036470;
+extern f32 g_TankTurretVerticalAngleRelated;
 //D:80036474
-extern f32 D_80036474;
+extern f32 g_TankTurretOrientationAngleRad;
 //D:80036478
-extern s32 D_80036478;
+extern f32 D_80036478;
 //D:8003647C
-extern s32 D_8003647C;
+extern f32 D_8003647C;
 //D:80036480
-extern s32 D_80036480;
+extern s32 g_BondCanEnterTank;
 //D:80036484
-extern s32 D_80036484;
+extern f32 g_TankTurretAngle;
 //D:80036488
-extern s32 D_80036488;
+extern f32 g_TankTurretTurn;
 //D:8003648C
 extern s32 D_8003648C;
 //D:80036490
 extern s32 D_80036490;
 //D:80036494
-extern s32 cameramode;
+extern s32 g_CameraMode;
 //D:80036498
 extern s32 enable_move_after_cinema;
 //D:8003649C
@@ -2829,21 +2843,21 @@ extern s32 D_8003649C;
 //D:800364A0
 extern s32 stop_time_flag;
 //D:800364A4
-extern s32 D_800364A4;
+extern f32 D_800364A4;
 //D:800364A8
 extern s32 D_800364A8;
 //D:800364AC
-extern s32 D_800364AC;
+extern struct SetupIntroSwirl *g_IntroSwirl;
 //D:800364B0
 extern s32 D_800364B0;
 //D:800364B4
 extern s32 g_PlayerInvincible;
 //D:800364B8
-extern s32 D_800364B8;
+extern struct SetupIntroCamera* g_CurrentSetupIntroCamera;
 //D:800364BC
-extern s32 D_800364BC;
+extern s32 g_SetupIntroCameraCount;
 //D:800364C0
-extern s32 ptr_random06cam_entry;
+extern struct SetupIntroCamera *ptr_random06cam_entry;
 //D:800364C4
 extern s32 g_VisibleToGuardsFlag;
 //D:800364C8
@@ -2855,14 +2869,14 @@ extern f32 D_800364D0;
 //D:800364D4
 extern f32 D_800364D4;
 //D:800364D8
-extern s32 D_800364D8[];
+extern s32 g_bondviewBondDeathAnimations[];
 
 //D:8003650C
-extern s32 D_8003650C;
+extern s32 g_bondviewBondDeathAnimationsCount;
 //D:80036510
 extern s32 D_80036510;
 //D:80036514
-extern s32 D_80036514;
+extern s32 g_IntroAnimationIndex;
 /*
 D:80036518     stage_intro_anim_table:struct_4 <0x5744, 95.0, -1.0, 0.02>
 D:80036528                     struct_4 <0x6254, 7.0, 40.0, 0.5>
@@ -2962,12 +2976,7 @@ D:800367EC                     .byte 0
 D:800367ED                     .byte 0, 0, 0x14
 D:800367F0                     .word 0x32
 */
-//D:800367F4
-extern s32 D_800367F4;
-//D:800367F8
-extern s32 D_800367F8;
-//D:800367FC
-extern s32 D_800367FC;
+
 //D:80036800
 extern s32 D_80036800;
 //D:80036804
@@ -3066,6 +3075,33 @@ extern f32 D_80036AC0;
 //D:80036AC4
 extern f32 D_80036AC4;
 
+extern s32 startpadcount;
+extern vec3d flt_CODE_bss_80079990;
+extern s32 mission_timer;
+
+#if defined(VERSION_JP) || defined(VERSION_EU)
+extern f32 watch_time_0;
+#else
+extern s32 watch_time_0;
+#endif
+
+extern f32 watch_transition_time;
+extern s32 starting_right_weapon;
+extern s32 starting_left_weapon;
+extern PadRecord *g_Startpad[];
+extern s32 startpadcount;
+extern StandTilePoint *dword_CODE_bss_80079DA0;
+extern StandTilePoint *dword_CODE_bss_80079DA4;
+
+#define BSS_80079DA8_LENGTH 8
+extern s32 dword_CODE_bss_80079DA8[];
+
+#ifndef VERSION_EU
+extern char dword_CODE_bss_80079DC8[];
+#else
+extern char dword_CODE_bss_80079DC8[];
+#endif
+
 
 u32 get_camera_mode(void);
 
@@ -3123,7 +3159,7 @@ void bondviewUpdateXAutoAimTime(s32 auto_aim_time, f32 auto_aim_x);
 void bondviewSet3dCoord7F07CEB0(coord3d *arg0);
 f32 bondviewYPositionRelated(struct StandTile *arg0, f32 arg1, f32 arg2);
 f32 bondviewGetPlayerDuckingHeightRelated(struct player *player);
-void bondviewCollisionRadiusRelated(PropRecord* arg0, f32 *arg1, f32 *arg2, f32 *arg3);
+void bondviewCollisionRadiusRelated(PropRecord* arg0, f32 *collision_radius, f32 *height, f32 *always_30);
 void bondviewUpdatePlayerClipping(s32 use_stanHeight, f32 stanHeight_offset);
 void currentPlayerSetFadeColour(s32 r, s32 g, s32 b, f32 frac);
 void currentPlayerSetFadeFrac(f32 maxfadetime, f32 frac);
@@ -3175,5 +3211,9 @@ void     SurroundWithExplosions(int delay);
 s32 check_watch_page_transistion_running(void);
 f32 bondviewWatchAnimationRelated(void);
 struct coord3d *get_BONDdata_field408(void);
-
+struct PropRecord *get_ptr_for_players_tank(void);
+s32 bondviewGetRandomSpawnPadIndex(void);
+void change_player_pos_to_target(struct collision434* arg0, struct coord3d *arg1, struct StandTile *arg2);
+void sub_GAME_7F089718(f32);
+void sub_GAME_7F08A900(void);
 #endif

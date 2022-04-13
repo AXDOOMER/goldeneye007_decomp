@@ -134,7 +134,6 @@ void sndDeactivateAllSfxByFlag(u8 flag);
 void sndDeactivateAllSfxByFlag_1(void);
 void sndDeactivateAllSfxByFlag_11(void);
 void sndDeactivateAllSfxByFlag_3(void);
-void sndCreatePostEvent(ALSoundState *state, s16 eventType, s32 arg2);
 u16 sndGetSfxSlotFirstNaturalVolume(void);
 void sndApplyVolumeAllSfxSlot(u16 arg0);
 void sndSetScalerApplyVolumeAllSfxSlot(f32 arg0);
