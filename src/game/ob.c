@@ -162,6 +162,25 @@ glabel obInitDebugNoticeList
 
 
 #if defined(VERSION_EU)
+#ifdef NONMATCHING
+//https://decomp.me/scratch/BCAAu
+void sub_GAME_7F0BC0BC(char* fname, void* dest, s32 arg2, s32 asize) {
+    
+    s32 index = get_index_num_of_named_resource(fname);
+
+    u32 size = resource_lookup_data_array[index].rom_size;
+        
+    if (size != 0) {
+        s32 addr = file_resource_table[index].hw_address;
+        if ((size + 0xF) < (arg2 + asize)) {
+            while(1){};
+        }
+        
+        romCopy(dest, addr + arg2, size);
+    }
+}
+
+#else
 /* VERSION_EU only */
 GLOBAL_ASM(
 .text
@@ -175,9 +194,9 @@ glabel sub_GAME_7F0BC0BC
 /* 0EEAC4 7F0BC0D4 0002C080 */  sll   $t8, $v0, 2
 /* 0EEAC8 7F0BC0D8 0302C021 */  addu  $t8, $t8, $v0
 /* 0EEACC 7F0BC0DC 0018C080 */  sll   $t8, $t8, 2
-/* 0EEAD0 7F0BC0E0 3C038007 */  lui   $v1, 0x8007
+/* 0EEAD0 7F0BC0E0 3C038007 */  lui   $v1, %hi(resource_lookup_data_array)
 /* 0EEAD4 7F0BC0E4 00781821 */  addu  $v1, $v1, $t8
-/* 0EEAD8 7F0BC0E8 8C63F920 */  lw    $v1, -0x6e0($v1)
+/* 0EEAD8 7F0BC0E8 8C63F920 */  lw    $v1, %lo(resource_lookup_data_array)($v1)
 /* 0EEADC 7F0BC0EC 00027080 */  sll   $t6, $v0, 2
 /* 0EEAE0 7F0BC0F0 01C27023 */  subu  $t6, $t6, $v0
 /* 0EEAE4 7F0BC0F4 3C0F8004 */  lui   $t7, %hi(file_resource_table) # $t7, 0x8004
@@ -206,6 +225,7 @@ glabel sub_GAME_7F0BC0BC
 /* 0EEB34 7F0BC144 03E00008 */  jr    $ra
 /* 0EEB38 7F0BC148 00000000 */   nop   
 )
+#endif
 #endif
 
 
