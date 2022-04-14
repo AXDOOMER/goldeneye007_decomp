@@ -2880,7 +2880,7 @@ glabel load_bg_file
 /* 0E5F04 7F0B3514 24070040 */  li    $a3, 64
 /* 0E5F08 7F0B3518 0000C812 */  mflo  $t9
 /* 0E5F0C 7F0B351C 02394021 */  addu  $t0, $s1, $t9
-/* 0E5F10 7F0B3520 0FC2F02F */  jal   sub_GAME_7F0BC0BC
+/* 0E5F10 7F0B3520 0FC2F02F */  jal   obLoadBGFileBytesAtOffset
 /* 0E5F14 7F0B3524 8D040004 */   lw    $a0, 4($t0)
 /* 0E5F18 7F0B3528 8EE20000 */  lw    $v0, ($s7)
 /* 0E5F1C 7F0B352C 3C168007 */  lui   $s6, %hi(ptr_bgdata_offsets) # $s6, 0x8007
@@ -2911,7 +2911,7 @@ glabel load_bg_file
 /* 0E5F80 7F0B3590 02003825 */  move  $a3, $s0
 /* 0E5F84 7F0B3594 0000C812 */  mflo  $t9
 /* 0E5F88 7F0B3598 02394021 */  addu  $t0, $s1, $t9
-/* 0E5F8C 7F0B359C 0FC2F02F */  jal   sub_GAME_7F0BC0BC
+/* 0E5F8C 7F0B359C 0FC2F02F */  jal   obLoadBGFileBytesAtOffset
 /* 0E5F90 7F0B35A0 8D040004 */   lw    $a0, 4($t0)
 /* 0E5F94 7F0B35A4 8E490000 */  lw    $t1, ($s2)
 /* 0E5F98 7F0B35A8 24050002 */  li    $a1, 2
@@ -5747,7 +5747,7 @@ glabel sub_GAME_7F0B5FAC
 /* 0EAB8C 7F0B605C AFA3001C */  sw    $v1, 0x1c($sp)
 /* 0EAB90 7F0B6060 00004812 */  mflo  $t1
 /* 0EAB94 7F0B6064 00892021 */  addu  $a0, $a0, $t1
-/* 0EAB98 7F0B6068 0FC2F35F */  jal   sub_GAME_7F0BC0BC
+/* 0EAB98 7F0B6068 0FC2F35F */  jal   obLoadBGFileBytesAtOffset
 /* 0EAB9C 7F0B606C 8C844490 */   lw    $a0, %lo(levelinfotable+4)($a0)
 /* 0EABA0 7F0B6070 8FA40018 */  lw    $a0, 0x18($sp)
 /* 0EABA4 7F0B6074 0FC2D7E3 */  jal   bgDecompress
@@ -5945,7 +5945,7 @@ glabel sub_GAME_7F0B609C
 /* 0EAC80 7F0B6150 AFA80020 */  sw    $t0, 0x20($sp)
 /* 0EAC84 7F0B6154 00004812 */  mflo  $t1
 /* 0EAC88 7F0B6158 00892021 */  addu  $a0, $a0, $t1
-/* 0EAC8C 7F0B615C 0FC2F35F */  jal   sub_GAME_7F0BC0BC
+/* 0EAC8C 7F0B615C 0FC2F35F */  jal   obLoadBGFileBytesAtOffset
 /* 0EAC90 7F0B6160 8C844490 */   lw    $a0, %lo(levelinfotable+4)($a0)
 /* 0EAC94 7F0B6164 02202025 */  move  $a0, $s1
 /* 0EAC98 7F0B6168 0FC2D7E3 */  jal   bgDecompress
@@ -6160,7 +6160,7 @@ glabel sub_GAME_7F0B61DC
 /* 0EADC0 7F0B6290 AFA80020 */  sw    $t0, 0x20($sp)
 /* 0EADC4 7F0B6294 00004812 */  mflo  $t1
 /* 0EADC8 7F0B6298 00892021 */  addu  $a0, $a0, $t1
-/* 0EADCC 7F0B629C 0FC2F35F */  jal   sub_GAME_7F0BC0BC
+/* 0EADCC 7F0B629C 0FC2F35F */  jal   obLoadBGFileBytesAtOffset
 /* 0EADD0 7F0B62A0 8C844490 */   lw    $a0, %lo(levelinfotable+4)($a0)
 /* 0EADD4 7F0B62A4 02002025 */  move  $a0, $s0
 /* 0EADD8 7F0B62A8 0FC2D7E3 */  jal   bgDecompress
