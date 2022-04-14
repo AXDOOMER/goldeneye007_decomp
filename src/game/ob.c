@@ -5,16 +5,13 @@
 #include <assets/obseg/obseg.h>
 #include "decompress.h"
 #include "indy_comms.h"
-
+#include "assets/obseg/file_resource_id_enums.h"
 
 //bss
 //800888b0
-#ifdef VERSION_EU
-/* EU is actually larger here */
-struct resource_lookup_data_entry resource_lookup_data_array[0x30c]; /* 0x30c = 780 */
-#else
-struct resource_lookup_data_entry resource_lookup_data_array[0x2e0]; /* 0x2e0 = 736 */
-#endif
+
+struct resource_lookup_data_entry resource_lookup_data_array[OBJ_INDEX_MAX];
+
 
 // data
 //D:80046050

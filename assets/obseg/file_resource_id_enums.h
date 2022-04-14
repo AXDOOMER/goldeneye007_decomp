@@ -871,4 +871,8 @@ typedef enum FILEINDEXID
     OBENDSEG
 } FILEINDEXID;
 
+
+#define OBJ_INDEX_END OBENDSEG+1
+#define OBJ_INDEX_MAX OBENDSEG+10
+
 #endif
