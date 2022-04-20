@@ -326,7 +326,7 @@ LD := $(TOOLCHAIN)ld
 LD_SCRIPT := ge007.$(OUTCODE).ld
 
 # --no-warn-mismatch is needed to link -mips3 object files (some libultra math) with the regular files compiled with -mips2
-LDFLAGS := -T undefined_syms.txt -T $(LD_SCRIPT) -Map build/ge007.$(OUTCODE).map --no-warn-mismatch
+LDFLAGS := -T $(LD_SCRIPT) -Map build/ge007.$(OUTCODE).map --no-warn-mismatch
 
 AS := $(TOOLCHAIN)as
 ASFLAGS := -march=vr4300 -mabi=32 $(INCLUDE) $(ASMDEFS)
