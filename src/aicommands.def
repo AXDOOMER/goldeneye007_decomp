@@ -4886,7 +4886,7 @@ _AI_CMD(
 //==============================================================================
 
 /* #define CMDNAME OBJECT_DROP_FROM_CHR */
-#define CMDNAME DropObjectFromChr
+#define CMDNAME DropObject
 
 #define DESCRIPTION \
 /*******************************************************************************
@@ -4931,7 +4931,7 @@ _AI_CMD(
 
 #define DESCRIPTION \
 /*******************************************************************************
-* Make chr drop all concealed attachments
+* Make chr/me drop all concealed attachments
 ********************************************************************************
 * @param      CHR_NUM: ID of Chr (0-255)
 * @exception: Item must be attached to chr, to drop held items use
@@ -4953,6 +4953,13 @@ _AI_CMD(
         Offset += CAT(CAT(AI_, CMDNAME), _LENGTH);
         break;
     })
+
+// POLYMORPHS
+
+_AI_CMD_POLYMORPH(,
+                  DropAllConcealedItems,
+                  (CHR_SELF),
+                  ())
 
 #undef PARAMS
 #undef CMDNAME
@@ -5002,6 +5009,13 @@ _AI_CMD(
         Offset += CAT(CAT(AI_, CMDNAME), _LENGTH);
         break;
     })
+
+// POLYMORPHS
+
+_AI_CMD_POLYMORPH(,
+                  DropAllHeldItems,
+                  (CHR_SELF),
+                  ())
 
 #undef PARAMS
 #undef CMDNAME

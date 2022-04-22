@@ -142,8 +142,8 @@ IncrementProgressBarFromAtRate =         \
 ContinuePrompt =                                    \
 	{                                               \
 		echo "$1 [y/n]";                            \
-		read REPLY $(if $(5),& (sleep $5; echo n)); \
-		case $$REPLY in                             \
+		$(if $(5), readchr(){ old=$$(stty -g);  stty raw -echo min 0 time 30; printf '%s' $$(dd bs=1 count=1 2>/dev/null); stty $$old;}; REPLY=$$(readchr) ,read REPLY ); \
+		echo $$REPLY; case $$REPLY in                             \
 			y|Y) $2;;                               \
 			n|N) $3;;                               \
 			*) $4;;                                 \
@@ -393,73 +393,77 @@ endif
 
 # Build RSP
 $(BUILD_DIR)/rsp/%.bin: rsp/*.s pb1
-	$(call PRINT_STATUS,Assembling:,$<,$@)
+	$(call PRINT_STATUS,Assembling1:,$<,$@)
 	$(ARMIPS) -sym $@.sym -strequ CODE_FILE $(BUILD_DIR)/rsp/$*.bin -strequ DATA_FILE $(BUILD_DIR)/rsp/$*_data.bin $<
 
 $(BUILD_DIR)/src/rspboot.o: $(BUILD_DIR)/rsp/rspboot.bin 
 
 #Build asm files in root
 $(BUILD_DIR)/%.o: src/%.s pb2
-	$(call PRINT_STATUS,Assembling:,$<,$@)
+	$(call PRINT_STATUS,Assembling2:,$<,$@)
 	$(AS) $(ASFLAGS) -o $@ $<
 
 #Build asm files in src/
 $(BUILD_DIR)/src/%.o: src/%.s pb3
-	$(call PRINT_STATUS,Assembling:,$<,$@)
+	$(call PRINT_STATUS,Assembling3:,$<,$@)
 	$(AS) $(ASFLAGS) -o $@ $<
 
 #Build Images
-$(BUILD_DIR)/assets/images/split/%.o: assets/images/split/%.bin pb4
-	$(call PRINT_STATUS,Compiling:,$<,$@)
+$(BUILD_DIR)/assets/images/split/%.o: assets/images/split/%.bin pb5
+	$(call PRINT_STATUS,Compiling5:,$<,$@)
 	$(LD) -r -b binary $< -o $@ 
 
 
 #Compress Obseg
 $(BUILD_DIR)/$(OBSEGMENT): $(OBSEG_RZ) $(IMAGE_OBJS) pb6
-	$(call PRINT_STATUS,Compressing:,$<,$@)
+	$(call PRINT_STATUS,Compressing6:,$<,$@)
 
 #Build C files in root/
 $(BUILD_DIR)/%.o: src/%.c pb7
-	$(call PRINT_STATUS,Compiling:,$<,$@)
+	$(call PRINT_STATUS,Compiling7:,$<,$@)
 	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
 	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
 
 
 #Build C files in src/
 $(BUILD_DIR)/src/%.o: src/%.c pb8
-	$(call PRINT_STATUS,Compiling:,$<,$@)
- #	convert AI_PRINT commands from readable to byte-array
-	$(if $(filter %chraidata.c,$<), @cp $< $<.tmp; $(ConvertAIPRINT) $<.tmp > $<)
-	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION) $(if $(filter %chraidata.c,$<), || (cp $<.tmp $< && exit 1))
-	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
- #	restore file
-	$(if $(filter %chraidata.c,$<), @cp $<.tmp $<; rm $<.tmp)
+	$(call PRINT_STATUS,Compiling8:,$<,$@)
+    # convert AI_PRINT commands from readable to byte-array
+    #	echo $<
+    #	echo filter =  $(filter-out %chraidata.c,$<)
+    # for some reason, normal ifeq doesnt work, so has to be single line...
+	$(if $(filter %chraidata.c,$<), $(ConvertAIPRINT) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION), $(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION); $(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s)
+
 
 #Build RamRom
 $(BUILD_DIR)/assets/ramrom/%.o: assets/ramrom/%.s pb9
-	$(call PRINT_STATUS,Assembling:,$<,$@)
+	$(call PRINT_STATUS,Assembling9:,$<,$@)
 	$(AS) $(ASFLAGS) -o $@ $<
 
 #Build fonts
 $(BUILD_DIR)/assets/font/%.o: assets/font/%.c pb10
-	$(call PRINT_STATUS,Compiling:,$<,$@)
+	$(call PRINT_STATUS,Compiling10:,$<,$@)
 	$(CC) -c $(CFLAGS) -o $@ $(OPTIMIZATION) $<
 
 #Build asm files in assets/
 $(BUILD_DIR)/assets/%.o: assets/%.s pb11
-	$(call PRINT_STATUS,Assembling:,$<,$@)
+	$(call PRINT_STATUS,Assembling11:,$<,$@)
 	$(AS) $(ASFLAGS) -o $@ $<
 
 #Build Obseg
 $(BUILD_DIR)/assets/obseg/%.o: assets/obseg/%.s $(OBSEG_RZ) pb12
-	$(call PRINT_STATUS,Assembling:,$<,$@)
+	$(call PRINT_STATUS,Assembling12:,$<,$@)
 	$(AS) $(ASFLAGS) -o $@ $<
 
 #Build C files in assets/
-$(BUILD_DIR)/assets/%.o: assets/%.c pb13
-	$(call PRINT_STATUS,Compiling:,$<,$@)
+$(BUILD_DIR)/assets/%.o: assets/%.c pb4
+	$(call PRINT_STATUS,Compiling4:,$<,$@)
+ifeq ($(filter-out %setup%,$<),)
+	$(ConvertAIPRINT) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION) 
+else
 	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
 	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
+endif
 
 #$(BUILD_DIR)/src/random.o: OPTIMIZATION := -O3
 #$(BUILD_DIR)/src/random.o: INCLUDE := -I . -I include -I include/PR
@@ -470,7 +474,7 @@ $(BUILD_DIR)/assets/%.o: assets/%.c pb13
 #Link Files
 $(APPELF): $(RSPOBJECTS) $(ULTRAOBJECTS) $(HEADEROBJECTS) $(OBSEG_RZ) $(BUILD_DIR)/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(ASSET_DATAOBJECTS) $(ROMOBJECTS2) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS) pb14
 	@echo "Linking Files into ELF" 
-	$(LD) $(LDFLAGS) -o $@ > /dev/null & $(call IncrementProgressBarFromAtRate,87,1.5)
+	$(LD) $(LDFLAGS) -o $@  & $(call IncrementProgressBarFromAtRate,87,1.5)
 
 $(APPBIN): $(APPELF)
   ifeq ($(VERBOSE),0)

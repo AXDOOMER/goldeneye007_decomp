@@ -2834,11 +2834,11 @@
               Embedded objects will not drop, only works with attached objects. 
               Props can be damaged on drop 
 *******************************************************************************/   
-#define DropObjectFromChr(OBJECT_TAG)  \
-                    AI_DropObjectFromChr  ,  \
+#define DropObject(OBJECT_TAG)  \
+                    AI_DropObject  ,  \
                     OBJECT_TAG ,   
  
-#define AI_DropObjectFromChr_LENGTH   (AICMDSIZE +1    ) 
+#define AI_DropObject_LENGTH   (AICMDSIZE +1    ) 
 
 
  

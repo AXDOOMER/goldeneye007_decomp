@@ -379,8 +379,8 @@ s32 chraiitemsize(u8 *AIList, s32 offset)
             return AI_ActivateObject_LENGTH;
         case AI_DestroyObject:
             return AI_DestroyObject_LENGTH;
-        case AI_DropObjectFromChr:
-            return AI_DropObjectFromChr_LENGTH;
+        case AI_DropObject:
+            return AI_DropObject_LENGTH;
         case AI_ChrDropAllConcealedItems:
             return AI_ChrDropAllConcealedItems_LENGTH;
         case AI_ChrDropAllHeldItems:
@@ -766,7 +766,7 @@ s32 chraiGoToLabel(AIRecord *AIList, s32 Offset, u8 LabelNum)
         }
         else if (AIList[Offset].cmd == AI_EndList)
         {
-            // restart ai list PC if next label not found
+            // restart ai list PC if next label not found - causes infinit loop outside of debug
             listID = chraiGetAIListID(AIList, &isGlobalAIList);
 #    ifdef DEBUG
             if (isGlobalAIList)
@@ -2302,7 +2302,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     Offset += AI_DestroyObject_LENGTH;
                     break;
                 }
-                case AI_DropObjectFromChr:
+                case AI_DropObject:
                 {
                     AIRecord     *ai  = AiListp + Offset;
                     ObjectRecord *obj = objFindByTagId(ai->val[0]);
@@ -2312,7 +2312,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                         propobjSetDropped(obj->prop, 2);
                         chr->hidden |= CHRHIDDEN_DROP_HELD_ITEMS;
                     }
-                    Offset += AI_DropObjectFromChr_LENGTH;
+                    Offset += AI_DropObject_LENGTH;
                     break;
                 }
                 case AI_ChrDropAllConcealedItems:
