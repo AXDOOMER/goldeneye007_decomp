@@ -1,63 +1,24 @@
 #include <ultra64.h>
 #include <PR/libaudio.h>
-
+#include "game/player.h"
 
 
 #ifdef NONMATCHING
-void cleanupplayersoundrelated(void) {
-    ? temp_ret;
-    void *temp_s0;
-    s32 temp_s1;
-    s32 temp_s4;
-    ? temp_ret_2;
-    void *phi_s2;
-    s32 phi_s1;
-    s32 phi_s4;
-    ? phi_return;
+void cleanupplayersoundrelated(void)
+{
+    int i;
+    int j=0;
 
-    // Node 0
-    temp_ret = getPlayerCount();
-    phi_return = temp_ret;
-    if (temp_ret > 0)
+    for(i=0; i < getPlayerCount(); i++)
     {
-        // Node 1
-        phi_s2 = ((0 * 4) + &g_playerPointers);
-        phi_s4 = 0;
-loop_2:
-        // Node 2
-        phi_s1 = 0;
-loop_3:
-        // Node 3
-        temp_s0 = (*phi_s2 + phi_s1);
-        if (temp_s0->unkA44 != 0)
+        for(;j<2;j++)
         {
-            // Node 4
-            if (sndGetPlayingState(temp_s0->unkA44) != AL_STOPPED)
+            if((&g_playerPointers[i]->hands[j])->field_A44 && sndGetPlayingState((&g_playerPointers[i]->hands[j])->field_A44))
             {
-                // Node 5
-                sndDeactivate((temp_s0 + 0x870)->unk1D4);
+                sndDeactivate((&g_playerPointers[i]->hands[j])->field_A44);
             }
         }
-        // Node 6
-        temp_s1 = (phi_s1 + 0x3a8);
-        phi_s1 = temp_s1;
-        if (temp_s1 != 0x750)
-        {
-            goto loop_3;
-        }
-        // Node 7
-        temp_s4 = (phi_s4 + 1);
-        temp_ret_2 = getPlayerCount();
-        phi_s2 = (phi_s2 + 4);
-        phi_s4 = temp_s4;
-        phi_return = temp_ret_2;
-        if (temp_s4 < temp_ret_2)
-        {
-            goto loop_2;
-        }
     }
-    // Node 8
-    return phi_return;
 }
 
 #else

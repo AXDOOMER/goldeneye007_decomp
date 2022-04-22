@@ -21,7 +21,7 @@ void sub_GAME_7F070AEC(Model *, s32, s32);
 void subcalcpos(Model *);
  void      modelSetAnimEndFrame(Model *model, float endframe);
 
-void modelSetAnimation(Model *, ModelAnimation *, s32, f32, f32, f32);
+void modelSetAnimation(Model *, ModelAnimation *, s32, f32, f32, f32 duration);
 void modelSetAnimLooping(Model *, f32, f32);
 void modelSetAnimEndFrame(Model *, f32);
 void sub_GAME_7F06CE84(Model *, f32);
@@ -75,6 +75,10 @@ void sub_GAME_7F075FAC(Model *, ModelFileHeader *, void *);
 void modelSetAnimFlipFunction(Model **, void (*)());
 void subcalcmatrices(struct unk_joint_list *, Model *);
 void instcalcmatrices(struct unk_joint_list *arg0, Model *arg1);
+void load_object_fill_header(struct ModelFileHeader *objheader, u8 *name, void *targetloc, s32 sizeleft, s32 buffer);
+void* get_obj_instance_controller_for_header(struct ModelFileHeader* arg0);
+void subdraw(s32 arg0, struct Model *);
+void sub_GAME_7F06EFC4(struct Model *);
 
 #ifndef VERSION_EU
 void return_null(void);

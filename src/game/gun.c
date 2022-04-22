@@ -1039,7 +1039,7 @@ void copy_item_in_hand_to_main_list(coord3d *pos) {
 
 
 #ifdef NONMATCHING
-void unknown_takes_playerhand(void) {
+void bgunCalculateBlend(void) {
 
 }
 #else
@@ -1056,7 +1056,7 @@ glabel D_80053C1C
 glabel D_80053C20
 .word 0x3dcccccd /*0.1*/
 .text
-glabel unknown_takes_playerhand
+glabel bgunCalculateBlend
 /* 0914B0 7F05C980 27BDFF90 */  addiu $sp, $sp, -0x70
 /* 0914B4 7F05C984 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 0914B8 7F05C988 AFB1002C */  sw    $s1, 0x2c($sp)
@@ -1420,7 +1420,7 @@ glabel D_80053C1C
 glabel D_80053C20
 .word 0x3dcccccd /*0.1*/
 .text
-glabel unknown_takes_playerhand
+glabel bgunCalculateBlend
 /* 08F820 7F05CE30 27BDFF90 */  addiu $sp, $sp, -0x70
 /* 08F824 7F05CE34 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 08F828 7F05CE38 AFB1002C */  sw    $s1, 0x2c($sp)
@@ -3146,8 +3146,149 @@ u32 bondwalkItemCheckBitflags(ITEM_IDS item, u32 mask)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F05E0E4(void) {
 
+/**
+ * Address 0x7F05E0E4.
+ * 
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical instructions: fail
+ * - identical registers: fail
+ * 
+ * https://decomp.me/scratch/9xPg0
+ * 94.66%
+*/
+void gunSetBondWeaponSway(f32 arg0, f32 arg1, f32 speed_verta, f32 speed_theta)
+{
+    f32 sp60[2];
+    f32 stack_padding_02;
+    f32 stack_padding_03;
+    f32 ft;
+    f32 sp50;
+    f32 sp4C;
+    f32 ft2;
+    f32 phi_f22;
+    f32 ftemp;
+    s32 i;
+    
+    sp50 = speed_verta;
+
+    if (sp50 < 0.0f)
+    {
+        sp50 = -sp50;
+    }
+
+    if (arg1 > 0.8f)
+    {
+        g_CurrentPlayer->gunposamplitude = 1.0f;
+    }
+    else if (arg1 > 0.1f)
+    {
+        ft = cosf(((arg1 - 0.1f) * 6.2831855f) / 2.8f);
+        ft2 = (1.0f - ft);
+        g_CurrentPlayer->gunposamplitude = 0.8f * ft2 + 0.2f;
+    }
+    else
+    {
+        g_CurrentPlayer->gunposamplitude = 0.1f;
+    }
+
+    if (g_CurrentPlayer->gunposamplitude < (bondviewGetBondBreathing() * 0.3f))
+    {
+        g_CurrentPlayer->gunposamplitude = bondviewGetBondBreathing() * 0.3f;
+    }
+
+    if (g_CurrentPlayer->gunposamplitude < 0.5f * sp50)
+    {
+        g_CurrentPlayer->gunposamplitude = 0.5f * sp50;
+    }
+
+    for (i=0; i<g_ClockTimer; i++)
+    {
+        g_CurrentPlayer->field_1080 = 
+            (g_CurrentPlayer->field_1080 * 0.95f) 
+            + g_CurrentPlayer->gunposamplitude ;
+    }
+    
+    g_CurrentPlayer->gunposamplitude = g_CurrentPlayer->field_1080 * 0.050000012f;
+   
+    if (phi_f22 < 0.016666668f * sp50)
+    {
+        phi_f22 = 0.016666668f * sp50;
+    }
+
+    for (i=0; i<g_ClockTimer; i++)
+    {
+        g_CurrentPlayer->field_107C =
+            (g_CurrentPlayer->field_107C * 0.95f) 
+            + phi_f22;
+    }
+
+    sp4C = (g_CurrentPlayer->field_107C * 0.050000012f * g_GlobalTimerDelta);  
+
+    if(1);
+
+    sp60[0] = g_CurrentPlayer->hands[GUNRIGHT].field_A0C + sp4C;
+    while(sp60[0] >= 1.0f)
+    {
+        bgunCalculateBlend(GUNRIGHT);
+        sp60[0] -= 1.0f;
+        g_CurrentPlayer->field_1078 += 1;
+    }
+
+    g_CurrentPlayer->field_1074 += g_GlobalTimerDelta;
+
+    if (g_CurrentPlayer->field_1074 > 60.0f)
+    {
+        g_CurrentPlayer->field_1074 = 0.0f;
+        ft = ((((f32)randomGetNext() * (1.0f / 4294967295U)) - 0.5f) * 0.2f);
+        g_CurrentPlayer->field_1070 = ft / 60.0f;
+    }
+
+    if ((g_CurrentPlayer->field_1070 + sp4C) > 0.0f)
+    {
+        g_CurrentPlayer->field_106C += g_CurrentPlayer->field_1070;
+    }
+
+    if (g_CurrentPlayer->field_106C > 0.5f)
+    {
+        g_CurrentPlayer->field_106C = 0.5f;
+    }
+    else if (g_CurrentPlayer->field_106C < -0.5f)
+    {
+        g_CurrentPlayer->field_106C = -0.5f;
+    }
+    else if ((g_CurrentPlayer->field_106C < 0.1f) && (g_CurrentPlayer->field_106C > -0.1f))
+    {
+        if (g_CurrentPlayer->field_106C > 0.0f)
+        {
+            g_CurrentPlayer->field_106C = -0.1f;
+        }
+        else
+        {
+            g_CurrentPlayer->field_106C = 0.1f;
+        }
+    }
+
+    sp60[1] = (f32) g_CurrentPlayer->field_1078 + sp60[0] + g_CurrentPlayer->field_106C;
+    
+    while (sp60[1] >= 1.0f)
+    {
+        bgunCalculateBlend(GUNLEFT);
+        sp60[1] -= 1.0f;
+        g_CurrentPlayer->field_1078 -= 1;
+    }
+
+#define ROTATION_THETA_TURN_SPEED_FACTOR -1.75f
+#define ROTATION_VERTA_TURN_SPEED_FACTOR -2.0f
+
+    for (i=0; i<2; i++)
+    {  
+        g_CurrentPlayer->hands[i].field_A0C = sp60[i];
+        g_CurrentPlayer->hands[i].weapon_theta_displacement = (ROTATION_THETA_TURN_SPEED_FACTOR * speed_theta);
+        g_CurrentPlayer->hands[i].weapon_verta_displacement = (ROTATION_VERTA_TURN_SPEED_FACTOR * speed_verta);
+    }   
 }
 #else
 
@@ -3189,7 +3330,7 @@ glabel D_80053C70
 glabel D_80053C74
 .word 0xbdcccccd /*-0.1*/
 .text
-glabel sub_GAME_7F05E0E4
+glabel gunSetBondWeaponSway
 /* 092C14 7F05E0E4 27BDFF98 */  addiu $sp, $sp, -0x68
 /* 092C18 7F05E0E8 AFA60070 */  sw    $a2, 0x70($sp)
 /* 092C1C 7F05E0EC C7A40070 */  lwc1  $f4, 0x70($sp)
@@ -3359,7 +3500,7 @@ glabel sub_GAME_7F05E0E4
 /* 092E80 7F05E350 45000012 */  bc1f  .L7F05E39C
 /* 092E84 7F05E354 00000000 */   nop
 .L7F05E358:
-/* 092E88 7F05E358 0FC17260 */  jal   unknown_takes_playerhand
+/* 092E88 7F05E358 0FC17260 */  jal   bgunCalculateBlend
 /* 092E8C 7F05E35C 00002025 */   move  $a0, $zero
 /* 092E90 7F05E360 C7AA0060 */  lwc1  $f10, 0x60($sp)
 /* 092E94 7F05E364 8E030000 */  lw    $v1, ($s0)
@@ -3491,7 +3632,7 @@ glabel sub_GAME_7F05E0E4
 /* 093068 7F05E538 45020010 */  bc1fl .L7F05E57C
 /* 09306C 7F05E53C 3C01BFE0 */   lui   $at, 0xbfe0
 .L7F05E540:
-/* 093070 7F05E540 0FC17260 */  jal   unknown_takes_playerhand
+/* 093070 7F05E540 0FC17260 */  jal   bgunCalculateBlend
 /* 093074 7F05E544 24040001 */   li    $a0, 1
 /* 093078 7F05E548 C7B20064 */  lwc1  $f18, 0x64($sp)
 /* 09307C 7F05E54C 8E030000 */  lw    $v1, ($s0)
@@ -3578,7 +3719,7 @@ glabel D_80053C70
 glabel D_80053C74
 .word 0xbdcccccd /*-0.1*/
 .text
-glabel sub_GAME_7F05E0E4
+glabel gunSetBondWeaponSway
 /* 090F8C 7F05E59C 27BDFF98 */  addiu $sp, $sp, -0x68
 /* 090F90 7F05E5A0 AFA60070 */  sw    $a2, 0x70($sp)
 /* 090F94 7F05E5A4 C7A40070 */  lwc1  $f4, 0x70($sp)
@@ -3748,7 +3889,7 @@ glabel sub_GAME_7F05E0E4
 /* 0911F8 7F05E808 45000012 */  bc1f  .L7F05E854
 /* 0911FC 7F05E80C 00000000 */   nop   
 .L7F05E810:
-/* 091200 7F05E810 0FC1738C */  jal   unknown_takes_playerhand
+/* 091200 7F05E810 0FC1738C */  jal   bgunCalculateBlend
 /* 091204 7F05E814 00002025 */   move  $a0, $zero
 /* 091208 7F05E818 C7AA0060 */  lwc1  $f10, 0x60($sp)
 /* 09120C 7F05E81C 8E030000 */  lw    $v1, ($s0)
@@ -3880,7 +4021,7 @@ glabel sub_GAME_7F05E0E4
 /* 0913E0 7F05E9F0 45020010 */  bc1fl .L7F05EA34
 /* 0913E4 7F05E9F4 3C01BFE0 */   lui   $at, 0xbfe0
 .L7F05E9F8:
-/* 0913E8 7F05E9F8 0FC1738C */  jal   unknown_takes_playerhand
+/* 0913E8 7F05E9F8 0FC1738C */  jal   bgunCalculateBlend
 /* 0913EC 7F05E9FC 24040001 */   li    $a0, 1
 /* 0913F0 7F05EA00 C7B20064 */  lwc1  $f18, 0x64($sp)
 /* 0913F4 7F05EA04 8E030000 */  lw    $v1, ($s0)
@@ -3932,7 +4073,7 @@ glabel sub_GAME_7F05E0E4
 #endif
 
 
-void sub_GAME_7F05E5F0(f32 param_1)
+void gunSetOffsetRelated(f32 param_1)
 {
     g_CurrentPlayer->hands[GUNRIGHT].field_A30 = (1.0f - cosf(param_1)) * 5.0f;
     g_CurrentPlayer->hands[GUNLEFT].field_A30 = (1.0f - cosf(param_1)) * 5.0f;
@@ -4525,9 +4666,9 @@ void sub_GAME_7F05EB0C(ObjectRecord *arg0, coord3d *arg1, StandTile *arg2, Mtxf 
         sub_GAME_7F040754(arg0, arg1, arg3, arg2);
         
         // loadobjectmodel.c
-        sub_GAME_7F056CA0(arg0);
+        setupUpdateObjectRoomPosition(arg0);
         
-        sub_GAME_7F040484(arg0);
+        chrobjCollisionRelated(arg0);
         sub_GAME_7F03FDA8(temp_s1);
 
         if (arg0->runtime_bitflags & 0x80)
@@ -5507,7 +5648,7 @@ glabel sub_GAME_7F05F928
 /* 094508 7F05F9D8 24A502E8 */  addiu $a1, $a1, 0x2e8
 /* 09450C 7F05F9DC 0FC101D5 */  jal   sub_GAME_7F040754
 /* 094510 7F05F9E0 8F270014 */   lw    $a3, 0x14($t9)
-/* 094514 7F05F9E4 0FC10121 */  jal   sub_GAME_7F040484
+/* 094514 7F05F9E4 0FC10121 */  jal   chrobjCollisionRelated
 /* 094518 7F05F9E8 02002025 */   move  $a0, $s0
 /* 09451C 7F05F9EC 8E280008 */  lw    $t0, 8($s1)
 /* 094520 7F05F9F0 8504000E */  lh    $a0, 0xe($t0)
@@ -5600,7 +5741,7 @@ glabel sub_GAME_7F05F928
 /* 092880 7F05FE90 24A502E8 */  addiu $a1, $a1, 0x2e8
 /* 092884 7F05FE94 0FC10205 */  jal   sub_GAME_7F040754
 /* 092888 7F05FE98 8F270014 */   lw    $a3, 0x14($t9)
-/* 09288C 7F05FE9C 0FC10151 */  jal   sub_GAME_7F040484
+/* 09288C 7F05FE9C 0FC10151 */  jal   chrobjCollisionRelated
 /* 092890 7F05FEA0 02002025 */   move  $a0, $s0
 /* 092894 7F05FEA4 8E280008 */  lw    $t0, 8($s1)
 /* 092898 7F05FEA8 8504000E */  lh    $a0, 0xe($t0)
@@ -31461,11 +31602,11 @@ void set_unset_ammo_on_screen_setting(s32 flags, bool unset) {
 
 	if (unset)
     {
-		g_CurrentPlayer->somekinda_flags &= ~flags;
+		g_CurrentPlayer->ammodispflags &= ~flags;
 		return;
 	}
 
-	g_CurrentPlayer->somekinda_flags |= flags;
+	g_CurrentPlayer->ammodispflags |= flags;
 }
 
 #ifdef NONMATCHING
@@ -34423,11 +34564,11 @@ void set_unset_bitflags(s32 bitflags, bool unset)
 {
     if (unset)
     {
-        g_CurrentPlayer->somekinda_bitflags &= ~bitflags;
+        g_CurrentPlayer->gunsightmode &= ~bitflags;
         return;
     }
 
-    g_CurrentPlayer->somekinda_bitflags |= bitflags;
+    g_CurrentPlayer->gunsightmode |= bitflags;
 }
 
 
@@ -34437,7 +34578,7 @@ void display_in_game_crosshair(s32 *gdl) {
     f32 xypos[2];
     f32 halfedxy[2];
 
-    if ((g_CurrentPlayer->somekinda_bitflags == 0) && (g_CurrentPlayer->mpmenuon == 0)) {
+    if ((g_CurrentPlayer->gunsightmode == 0) && (g_CurrentPlayer->mpmenuon == 0)) {
         sp54 = *gdl;
         likely_generate_DL_for_image_declaration(&sp54, crosshairimage, 4, 0, 0);
 

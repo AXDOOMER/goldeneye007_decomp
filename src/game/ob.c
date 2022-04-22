@@ -5,16 +5,13 @@
 #include <assets/obseg/obseg.h>
 #include "decompress.h"
 #include "indy_comms.h"
-
+#include "assets/obseg/file_resource_id_enums.h"
 
 //bss
 //800888b0
-#ifdef VERSION_EU
-/* EU is actually larger here */
-struct resource_lookup_data_entry resource_lookup_data_array[0x30c]; /* 0x30c = 780 */
-#else
-struct resource_lookup_data_entry resource_lookup_data_array[0x2e0]; /* 0x2e0 = 736 */
-#endif
+
+struct resource_lookup_data_entry resource_lookup_data_array[OBJ_INDEX_MAX];
+
 
 // data
 //D:80046050
@@ -164,54 +161,29 @@ glabel obInitDebugNoticeList
 #endif
 
 
-#if defined(VERSION_EU)
-/* VERSION_EU only */
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BC0BC
-/* 0EEAAC 7F0BC0BC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0EEAB0 7F0BC0C0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0EEAB4 7F0BC0C4 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 0EEAB8 7F0BC0C8 AFA60020 */  sw    $a2, 0x20($sp)
-/* 0EEABC 7F0BC0CC 0FC2F183 */  jal   get_index_num_of_named_resource
-/* 0EEAC0 7F0BC0D0 AFA70024 */   sw    $a3, 0x24($sp)
-/* 0EEAC4 7F0BC0D4 0002C080 */  sll   $t8, $v0, 2
-/* 0EEAC8 7F0BC0D8 0302C021 */  addu  $t8, $t8, $v0
-/* 0EEACC 7F0BC0DC 0018C080 */  sll   $t8, $t8, 2
-/* 0EEAD0 7F0BC0E0 3C038007 */  lui   $v1, 0x8007
-/* 0EEAD4 7F0BC0E4 00781821 */  addu  $v1, $v1, $t8
-/* 0EEAD8 7F0BC0E8 8C63F920 */  lw    $v1, -0x6e0($v1)
-/* 0EEADC 7F0BC0EC 00027080 */  sll   $t6, $v0, 2
-/* 0EEAE0 7F0BC0F0 01C27023 */  subu  $t6, $t6, $v0
-/* 0EEAE4 7F0BC0F4 3C0F8004 */  lui   $t7, %hi(file_resource_table) # $t7, 0x8004
-/* 0EEAE8 7F0BC0F8 25EFEAC4 */  addiu $t7, %lo(file_resource_table) # addiu $t7, $t7, -0x153c
-/* 0EEAEC 7F0BC0FC 000E7080 */  sll   $t6, $t6, 2
-/* 0EEAF0 7F0BC100 8FA60024 */  lw    $a2, 0x24($sp)
-/* 0EEAF4 7F0BC104 8FA80020 */  lw    $t0, 0x20($sp)
-/* 0EEAF8 7F0BC108 1060000C */  beqz  $v1, .L7F0BC13C
-/* 0EEAFC 7F0BC10C 01CF3821 */   addu  $a3, $t6, $t7
-/* 0EEB00 7F0BC110 0106C821 */  addu  $t9, $t0, $a2
-/* 0EEB04 7F0BC114 2469000F */  addiu $t1, $v1, 0xf
-/* 0EEB08 7F0BC118 0139082B */  sltu  $at, $t1, $t9
-/* 0EEB0C 7F0BC11C 50200004 */  beql  $at, $zero, .L7F0BC130
-/* 0EEB10 7F0BC120 8CEA0008 */   lw    $t2, 8($a3)
-.L7F0BC124:
-/* 0EEB14 7F0BC124 1000FFFF */  b     .L7F0BC124
-/* 0EEB18 7F0BC128 00000000 */   nop   
-/* 0EEB1C 7F0BC12C 8CEA0008 */  lw    $t2, 8($a3)
-.L7F0BC130:
-/* 0EEB20 7F0BC130 8FA4001C */  lw    $a0, 0x1c($sp)
-/* 0EEB24 7F0BC134 0C00140F */  jal   romCopy
-/* 0EEB28 7F0BC138 01482821 */   addu  $a1, $t2, $t0
-.L7F0BC13C:
-/* 0EEB2C 7F0BC13C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0EEB30 7F0BC140 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0EEB34 7F0BC144 03E00008 */  jr    $ra
-/* 0EEB38 7F0BC148 00000000 */   nop   
-)
+#if !defined(LEFTOVERDEBUG)
+/* VERSION_EU */
+/* same as below version, shuffled in EU */
+void obLoadBGFileBytesAtOffset(u8 *bgname, u8 *target, s32 offset, s32 len)
+{
+  s32 index;
+  struct fileentry *fileentry;
+
+  index = get_index_num_of_named_resource(bgname);
+  fileentry = &file_resource_table[index];
+  
+  if (resource_lookup_data_array[index].rom_size != 0)
+  {
+    //if the size of offset data would exceed file size, loop forever
+    if ((resource_lookup_data_array[index].rom_size + 0xF) < (offset + len))
+    {
+      while (1){};
+    }
+    romCopy(target, &fileentry->hw_address[offset], len, fileentry);
+  }
+
+}
 #endif
-
-
 
 #if defined(LEFTOVERDEBUG)
 /* no VERSION_EU */
@@ -229,12 +201,12 @@ void _load_resource_index_to_membank(int index,s32 param_2,u8 *ptrdata,int size)
 }
 #endif
 
-void _load_resource_named_to_membank(u8 *filename,s32 param_2,s32 size,u8 bank)
+void _load_resource_named_to_membank(u8 *filename, s32 param_2, s32 size, u8 bank)
 {
     load_rom_resource_index_to_membank(get_index_num_of_named_resource(filename), param_2, size, bank);
 }
 
-void _load_resource_named_to_buffer(u8 *filename,s32 bank,u8 *ptrdata,int size)
+void _load_resource_named_to_buffer(u8 *filename, s32 bank, u8 *ptrdata, int size)
 {
     load_resource_index_to_buffer(get_index_num_of_named_resource(filename), bank, ptrdata, size);
 }

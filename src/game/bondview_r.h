@@ -3,6 +3,6 @@
 
 #include <ultra64.h>
 
-void load_camera_intro_type_values(void);
+void bondviewLoadSetupIntroSection(void);
 
 #endif

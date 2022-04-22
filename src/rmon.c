@@ -7,11 +7,6 @@
 #include "deb_print.h"
 #include "rmon.h" /*<PR/rmon.h>*/
 
-#ifdef DEBUG
-#    define ISFINALBUILD 0
-#else
-#    define ISFINALBUILD 1
-#endif
 
 
 /************************************************************************
@@ -76,11 +71,15 @@ void rmonMain(void) {
 }
 
 /**
- * rmonIsFinalBuild
- * returns true if this is the final build
+ * rmonIsDisabled
+ * returns true if this if rmon is disabled
  */
-s32 rmonIsFinalBuild(void) {
-    return ISFINALBUILD;
+s32 rmonIsDisabled(void) {
+    #if defined(DEBUG)
+        return FALSE;
+    #else
+        return TRUE;
+    #endif
 }
 
 /**
@@ -98,43 +97,30 @@ s32 rmonStatus(void) {
 }
 
 
-#ifdef NONMATCHING
-/**
- * todo/hack/fixme:
- * Incompatible function definition. indy_commands requires the os.h definition,
- * but the function here has no arguments.
-*/
-void osWriteHost(void)
-{
-    // removed
-}
-#else
-GLOBAL_ASM(
-.text
-glabel osWriteHost
-jr $ra
-nop
-)
-#endif
 
-#ifdef NONMATCHING
 /**
- * todo/hack/fixme:
- * Incompatible function definition. indy_commands requires the os.h definition,
- * but the function here has no arguments.
+ * Removed
+ * reimpliment osWriteHost
+ * target rmon and usb
 */
-void osReadHost(void)
+void osWriteHost(void * buffer, u32 size)
 {
-    // removed
+    if (buffer);
+	if (size);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel osReadHost
-jr $ra
-nop
-)
-#endif
+
+
+/**
+ * Removed
+ * reimpliment osReadHost
+ * target rmon and usb
+*/
+void osReadHost(void * buffer, u32 size)
+{
+    if (buffer);
+	if (size);
+}
+
 
 /**
  * Removed
@@ -168,6 +154,8 @@ void rmon7000CED8(void) {
         //removed
     #endif
 }
+
+
 
 /**
  * Removed

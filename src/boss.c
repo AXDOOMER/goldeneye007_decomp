@@ -160,7 +160,7 @@ void bossInitMainthreadData(void)
     viInitDebugNoticeList();
     viInitVideoSettings();
     indycommInit();
-    g_DebugAndUpdateStageFlag = rmonIsFinalBuild();
+    g_DebugAndUpdateStageFlag = rmonIsDisabled();
     obInitDebugNoticeList();
     rspInitDebugNoticeList();
     dynInitDebugNoticeList();

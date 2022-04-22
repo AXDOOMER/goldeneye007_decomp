@@ -517,7 +517,7 @@ void lvlStageLoad(s32 stage)
             reinit_gunheld_totaltime();
             init_player_BONDdata_stats();
             init_player_BONDdata();
-            load_camera_intro_type_values();
+            bondviewLoadSetupIntroSection();
             bondviewPlayerSpawnRelated();
             sets_a_bunch_of_BONDdata_values_to_default();
             disableOnscreenCheatText();
@@ -793,7 +793,7 @@ glabel lvlStageLoad
 /* 0F2998 7F0BDE68 00000000 */   nop
 /* 0F299C 7F0BDE6C 0FC1E4FB */  jal   init_player_BONDdata
 /* 0F29A0 7F0BDE70 00000000 */   nop
-/* 0F29A4 7F0BDE74 0FC015F1 */  jal   load_camera_intro_type_values
+/* 0F29A4 7F0BDE74 0FC015F1 */  jal   bondviewLoadSetupIntroSection
 /* 0F29A8 7F0BDE78 00000000 */   nop
 /* 0F29AC 7F0BDE7C 0FC1E62E */  jal   bondviewPlayerSpawnRelated
 /* 0F29B0 7F0BDE80 00000000 */   nop
@@ -1098,7 +1098,7 @@ glabel lvlStageLoad
 /* 0F3598 7F0BEA28 00000000 */   nop
 /* 0F359C 7F0BEA2C 0FC1E677 */  jal   init_player_BONDdata
 /* 0F35A0 7F0BEA30 00000000 */   nop
-/* 0F35A4 7F0BEA34 0FC015F9 */  jal   load_camera_intro_type_values
+/* 0F35A4 7F0BEA34 0FC015F9 */  jal   bondviewLoadSetupIntroSection
 /* 0F35A8 7F0BEA38 00000000 */   nop
 /* 0F35AC 7F0BEA3C 0FC1E7AA */  jal   bondviewPlayerSpawnRelated
 /* 0F35B0 7F0BEA40 00000000 */   nop
@@ -1420,7 +1420,7 @@ glabel lvlStageLoad
 /* 0EFC18 7F0BD228 00000000 */   nop   
 /* 0EFC1C 7F0BD22C 0FC1E51B */  jal   init_player_BONDdata
 /* 0EFC20 7F0BD230 00000000 */   nop   
-/* 0EFC24 7F0BD234 0FC015D9 */  jal   load_camera_intro_type_values
+/* 0EFC24 7F0BD234 0FC015D9 */  jal   bondviewLoadSetupIntroSection
 /* 0EFC28 7F0BD238 00000000 */   nop   
 /* 0EFC2C 7F0BD23C 0FC1E64E */  jal   bondviewPlayerSpawnRelated
 /* 0EFC30 7F0BD240 00000000 */   nop   

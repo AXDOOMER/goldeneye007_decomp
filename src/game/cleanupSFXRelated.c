@@ -4,19 +4,19 @@
 #include "bondview.h"
 
 void cleanupSFXRelated(void) {
-    if (SFX_80036458 != 0)
+    if (SFX_80036458[0] != 0)
     {
-        if (sndGetPlayingState(SFX_80036458) != AL_STOPPED)
+        if (sndGetPlayingState(SFX_80036458[0]) != AL_STOPPED)
         {
-            sndDeactivate(SFX_80036458);
+            sndDeactivate(SFX_80036458[0]);
         }
     }
 
-    if (SFX_8003645C != 0)
+    if (SFX_80036458[1] != 0)
     {
-        if (sndGetPlayingState(SFX_8003645C) != AL_STOPPED)
+        if (sndGetPlayingState(SFX_80036458[1]) != AL_STOPPED)
         {
-            sndDeactivate(SFX_8003645C);
+            sndDeactivate(SFX_80036458[1]);
         }
     }
 
