@@ -18,7 +18,10 @@ $(BUILD_DIR)/$(OBSEG_DIR)/setup/%.o: $(OBSEG_DIR)/setup/$(COUNTRYCODE)/%.c
 	$(CC) -c $(CFLAGS) -o $@ -O2 $<
 
 $(BUILD_DIR)/$(OBSEG_DIR)/setup/%.o: $(OBSEG_DIR)/setup/%.c
-	$(CC) -c $(CFLAGS) -o $@ -O2 $<
+#	$(CC) -c $(CFLAGS) -o $@ -O2 $<
+    $(call PRINT_STATUS,CompilingSETUP:,$<,$@)
+ #	convert AI_PRINT commands from readable to byte-array
+	$(ConvertAIPRINT) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION) 
 
 SETUP_NAMES := \
     Ump_setupameZ \

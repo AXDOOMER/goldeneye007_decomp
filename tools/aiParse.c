@@ -60,6 +60,735 @@ char *DOORSTATE_ToString[] = {
 #define getChrAIListID(ID)    ((ID)-1025)
 #define getBGAIListID(ID)     ((ID)-4097)
 
+char *ANIMATIONS_ToString[] = {
+    "ANIM_idle",
+    "ANIM_fire_standing",
+    "ANIM_fire_standing_fast",
+    "ANIM_fire_hip",
+    "ANIM_fire_shoulder_left",
+    "ANIM_fire_turn_right1",
+    "ANIM_fire_turn_right2",
+    "ANIM_fire_kneel_right_leg",
+    "ANIM_fire_kneel_left_leg",
+    "ANIM_fire_kneel_left",
+    "ANIM_fire_kneel_right",
+    "ANIM_fire_roll_left",
+    "ANIM_fire_roll_right1",
+    "ANIM_fire_roll_left_fast",
+    "ANIM_hit_left_shoulder",
+    "ANIM_hit_right_shoulder",
+    "ANIM_hit_left_arm",
+    "ANIM_hit_right_arm",
+    "ANIM_hit_left_hand",
+    "ANIM_hit_right_hand",
+    "ANIM_hit_left_leg",
+    "ANIM_hit_right_leg",
+    "ANIM_death_genitalia", /* Thank you Mr. Botwood", here is your award */
+    "ANIM_hit_neck",
+    "ANIM_death_neck",
+    "ANIM_death_stagger_back_to_wall",
+    "ANIM_death_forward_face_down",
+    "ANIM_death_forward_spin_face_up",
+    "ANIM_death_backward_fall_face_up1",
+    "ANIM_death_backward_spin_face_down_right",
+    "ANIM_death_backward_spin_face_up_right",
+    "ANIM_death_backward_spin_face_down_left",
+    "ANIM_death_backward_spin_face_up_left",
+    "ANIM_death_forward_face_down_hard",
+    "ANIM_death_forward_face_down_soft",
+    "ANIM_death_fetal_position_right",
+    "ANIM_death_fetal_position_left",
+    "ANIM_death_backward_fall_face_up2",
+    "ANIM_side_step_left",
+    "ANIM_fire_roll_right2",
+    "ANIM_walking",
+    "ANIM_sprinting",
+    "ANIM_running",
+    "ANIM_bond_eye_walk",
+    "ANIM_bond_eye_fire",
+    "ANIM_bond_watch",
+    "ANIM_surrendering_armed",
+    "ANIM_surrendering_armed_drop_weapon",
+    "ANIM_fire_walking",
+    "ANIM_fire_running",
+    "ANIM_null50", /* invalid slot */
+    "ANIM_null51", /* invalid slot */
+    "ANIM_fire_jump_to_side_left",
+    "ANIM_fire_jump_to_side_right",
+    "ANIM_hit_butt_long",
+    "ANIM_hit_butt_short",
+    "ANIM_death_head",
+    "ANIM_death_left_leg",
+    "ANIM_slide_right",
+    "ANIM_slide_left",
+    "ANIM_jump_backwards",
+    "ANIM_extending_left_hand",
+    "ANIM_fire_throw_grenade",
+    "ANIM_spotting_bond", /* used by chr ai command guard_points_at_bond */
+    "ANIM_look_around",   /* used by chr ai command GUARD_ANIM_LOOKS_AROUND_SELF  */
+    "ANIM_fire_standing_one_handed_weapon",
+    "ANIM_fire_standing_draw_one_handed_weapon_fast",
+    "ANIM_fire_standing_draw_one_handed_weapon_slow",
+    "ANIM_fire_hip_one_handed_weapon_fast",
+    "ANIM_fire_hip_one_handed_weapon_slow",
+    "ANIM_fire_hip_forward_one_handed_weapon",
+    "ANIM_fire_standing_right_one_handed_weapon",
+    "ANIM_fire_step_right_one_handed_weapon",
+    "ANIM_fire_standing_left_one_handed_weapon_slow",
+    "ANIM_fire_standing_left_one_handed_weapon_fast",
+    "ANIM_fire_kneel_forward_one_handed_weapon_slow",
+    "ANIM_fire_kneel_forward_one_handed_weapon_fast",
+    "ANIM_fire_kneel_right_one_handed_weapon_slow",
+    "ANIM_fire_kneel_right_one_handed_weapon_fast",
+    "ANIM_fire_kneel_left_one_handed_weapon_slow",
+    "ANIM_fire_kneel_left_one_handed_weapon_fast",
+    "ANIM_fire_kneel_left_one_handed_weapon",
+    "ANIM_aim_walking_one_handed_weapon",
+    "ANIM_aim_walking_left_one_handed_weapon",
+    "ANIM_aim_walking_right_one_handed_weapon",
+    "ANIM_aim_running_one_handed_weapon",
+    "ANIM_aim_running_right_one_handed_weapon",
+    "ANIM_aim_running_left_one_handed_weapon",
+    "ANIM_aim_sprinting_one_handed_weapon",
+    "ANIM_running_one_handed_weapon",
+    "ANIM_sprinting_one_handed_weapon",
+    "ANIM_null91", /* invalid slot */
+    "ANIM_null92", /* invalid slot */
+    "ANIM_null93", /* invalid slot */
+    "ANIM_null94", /* invalid slot */
+    "ANIM_null95", /* invalid slot */
+    "ANIM_null96", /* invalid slot */
+    "ANIM_draw_one_handed_weapon_and_look_around",
+    "ANIM_draw_one_handed_weapon_and_stand_up",
+    "ANIM_aim_one_handed_weapon_left_right",
+    "ANIM_cock_one_handed_weapon_and_turn_around",
+    "ANIM_holster_one_handed_weapon_and_cross_arms",
+    "ANIM_cock_one_handed_weapon_turn_around_and_stand_up",
+    "ANIM_draw_one_handed_weapon_and_turn_around",
+    "ANIM_step_foward_and_hold_one_handed_weapon",
+    "ANIM_holster_one_handed_weapon_and_adjust_suit",
+    "ANIM_idle_unarmed",
+    "ANIM_walking_unarmed",
+    "ANIM_fire_walking_dual_wield",
+    "ANIM_fire_walking_dual_wield_hands_crossed",
+    "ANIM_fire_running_dual_wield",
+    "ANIM_fire_running_dual_wield_hands_crossed",
+    "ANIM_fire_sprinting_dual_wield",
+    "ANIM_fire_sprinting_dual_wield_hands_crossed",
+    "ANIM_walking_female",
+    "ANIM_running_female",
+    "ANIM_fire_kneel_dual_wield",
+    "ANIM_fire_kneel_dual_wield_left",
+    "ANIM_fire_kneel_dual_wield_right",
+    "ANIM_fire_kneel_dual_wield_hands_crossed",
+    "ANIM_fire_kneel_dual_wield_hands_crossed_left",
+    "ANIM_fire_kneel_dual_wield_hands_crossed_right",
+    "ANIM_fire_standing_dual_wield",
+    "ANIM_fire_standing_dual_wield_left",
+    "ANIM_fire_standing_dual_wield_right",
+    "ANIM_fire_standing_dual_wield_hands_crossed_left",
+    "ANIM_fire_standing_dual_wield_hands_crossed_right",
+    "ANIM_fire_standing_aiming_down_sights",
+    "ANIM_fire_kneel_aiming_down_sights",
+    "ANIM_hit_taser", /* unused tazer boy hit reaction */
+    "ANIM_death_explosion_forward",
+    "ANIM_death_explosion_left1",
+    "ANIM_death_explosion_back_left",
+    "ANIM_death_explosion_back1",
+    "ANIM_death_explosion_right",
+    "ANIM_death_explosion_forward_right1",
+    "ANIM_death_explosion_back2",
+    "ANIM_death_explosion_forward_roll",
+    "ANIM_death_explosion_forward_face_down",
+    "ANIM_death_explosion_left2",
+    "ANIM_death_explosion_forward_right2",
+    "ANIM_death_explosion_forward_right2_alt", /* copy of right2 with different fall */
+    "ANIM_death_explosion_forward_right3",
+    "ANIM_null143", /* invalid slot */
+    "ANIM_null144", /* invalid slot */
+    "ANIM_null145", /* invalid slot */
+    "ANIM_null146", /* invalid slot */
+    "ANIM_running_hands_up",
+    "ANIM_sprinting_hands_up",
+    "ANIM_aim_and_blow_one_handed_weapon",
+    "ANIM_aim_one_handed_weapon_left",
+    "ANIM_aim_one_handed_weapon_right",
+    "ANIM_conversation",
+    "ANIM_drop_weapon_and_show_fight_stance", /* orthodox stance woo */
+    "ANIM_yawning",
+    "ANIM_swatting_flies",
+    "ANIM_scratching_leg",
+    "ANIM_scratching_butt",
+    "ANIM_adjusting_crotch",
+    "ANIM_sneeze",
+    "ANIM_conversation_cleaned", /* cleaned up copy of "ANIM_conversation (compare left wrist) */
+    "ANIM_conversation_listener",
+    "ANIM_startled_and_looking_around",
+    "ANIM_laughing_in_disbelief",
+    "ANIM_surrendering_unarmed",
+    "ANIM_coughing_standing",
+    "ANIM_coughing_kneel1",
+    "ANIM_coughing_kneel2",
+    "ANIM_standing_up",
+    "ANIM_null169", /* invalid slot */
+    "ANIM_dancing",
+    "ANIM_dancing_one_handed_weapon",
+    "ANIM_keyboard_right_hand1",
+    "ANIM_keyboard_right_hand2",
+    "ANIM_keyboard_left_hand",
+    "ANIM_keyboard_right_hand_tapping",
+    "ANIM_bond_eye_fire_alt", /* unused */
+    "ANIM_dam_jump",
+    "ANIM_surface_vent_jump",
+    "ANIM_cradle_jump",
+    "ANIM_cradle_fall",
+    "ANIM_credits_bond_kissing",
+    "ANIM_credits_natalya_kissing"};
+
+char *AIRCRAFT_ANIMATION_ToString[] = {
+    "AIRCRAFT_ANIMATION_helicopter_cradle",
+    "AIRCRAFT_ANIMATION_plane_runway",
+    "AIRCRAFT_ANIMATION_helicopter_takeoff"};
+
+// Add 1 to ID for correct string
+char *DIFFICULTY_ToString[] = {
+    "DIFFICULTY_MULTI", //-1
+    "DIFFICULTY_AGENT",
+    "DIFFICULTY_SECRET",
+    "DIFFICULTY_00",
+    "DIFFICULTY_007",
+};
+
+char *ITEM_IDS_ToString[] = {
+    "ITEM_UNARMED",
+    "ITEM_FIST",
+    "ITEM_KNIFE",
+    "ITEM_THROWKNIFE",
+    "ITEM_WPPK",
+    "ITEM_WPPKSIL",
+    "ITEM_TT33",
+    "ITEM_SKORPION",
+    "ITEM_AK47",
+    "ITEM_UZI",
+    "ITEM_MP5K",
+    "ITEM_MP5KSIL",
+    "ITEM_SPECTRE",
+    "ITEM_M16",
+    "ITEM_FNP90",
+    "ITEM_SHOTGUN",
+    "ITEM_AUTOSHOT",
+    "ITEM_SNIPERRIFLE",
+    "ITEM_RUGER",
+    "ITEM_GOLDENGUN",
+    "ITEM_SILVERWPPK",
+    "ITEM_GOLDWPPK",
+    "ITEM_LASER",
+    "ITEM_WATCHLASER",
+    "ITEM_GRENADELAUNCH",
+    "ITEM_ROCKETLAUNCH",
+    "ITEM_GRENADE",
+    "ITEM_TIMEDMINE",
+    "ITEM_PROXIMITYMINE",
+    "ITEM_REMOTEMINE",
+    "ITEM_TRIGGER",
+    "ITEM_TASER",
+    "ITEM_TANKSHELLS",
+    "ITEM_BOMBCASE",
+    "ITEM_PLASTIQUE",
+    "ITEM_FLAREPISTOL",
+    "ITEM_PITONGUN",
+    "ITEM_BUNGEE",
+    "ITEM_DOORDECODER",
+    "ITEM_BOMBDEFUSER",
+    "ITEM_CAMERA",
+    "ITEM_LOCKEXPLODER",
+    "ITEM_DOOREXPLODER",
+    "ITEM_BRIEFCASE",
+    "ITEM_WEAPONCASE",
+    "ITEM_SAFECRACKERCASE",
+    "ITEM_KEYANALYSERCASE",
+    "ITEM_BUG",
+    "ITEM_MICROCAMERA",
+    "ITEM_BUGDETECTOR",
+    "ITEM_EXPLOSIVEFLOPPY",
+    "ITEM_POLARIZEDGLASSES",
+    "ITEM_DARKGLASSES",
+    "ITEM_CREDITCARD",
+    "ITEM_GASKEYRING",
+    "ITEM_DATATHIEF",
+    "ITEM_WATCHIDENTIFIER",
+    "ITEM_WATCHCOMMUNICATOR",
+    "ITEM_WATCHGEIGERCOUNTER",
+    "ITEM_WATCHMAGNETREPEL",
+    "ITEM_WATCHMAGNETATTRACT",
+    "ITEM_GOLDENEYEKEY",
+    "ITEM_BLACKBOX",
+    "ITEM_CIRCUITBOARD",
+    "ITEM_CLIPBOARD",
+    "ITEM_STAFFLIST",
+    "ITEM_DOSSIERRED",
+    "ITEM_PLANS",
+    "ITEM_SPYFILE",
+    "ITEM_BLUEPRINTS",
+    "ITEM_MAP",
+    "ITEM_AUDIOTAPE",
+    "ITEM_VIDEOTAPE",
+    "ITEM_DATTAPE",
+    "ITEM_SPOOLTAPE",
+    "ITEM_MICROFILM",
+    "ITEM_MICROCODE",
+    "ITEM_LECTRE",
+    "ITEM_MONEY",
+    "ITEM_GOLDBAR",
+    "ITEM_HEROIN",
+    "ITEM_KEYCARD",
+    "ITEM_KEYYALE",
+    "ITEM_KEYBOLT",
+    "ITEM_SUIT_LF_HAND",
+    "ITEM_JOYPAD",
+    "ITEM_NULL86",
+    "ITEM_NULL87",
+    "ITEM_TOKEN",
+    "ITEM_IDS_MAX"};
+
+char *PROPDEF_TYPE_ToString[] = {
+        "PROPDEF_NOTHING",
+        "PROPDEF_DOOR",
+        "PROPDEF_DOOR_SCALE",
+        "PROPDEF_PROP",
+        "PROPDEF_KEY",
+        "PROPDEF_ALARM",
+        "PROPDEF_CCTV",
+        "PROPDEF_MAGAZINE",
+        "PROPDEF_COLLECTABLE",
+        "PROPDEF_GUARD",
+        "PROPDEF_MONITOR",
+        "PROPDEF_MULTI_MONITOR",
+        "PROPDEF_RACK",
+        "PROPDEF_AUTOGUN",
+        "PROPDEF_LINK",
+        "PROPDEF_UNK15",
+        "PROPDEF_UNK16",
+        "PROPDEF_HAT",
+        "PROPDEF_GUARD_ATTRIBUTE",
+        "PROPDEF_SWITCH",
+        "PROPDEF_AMMO",
+        "PROPDEF_ARMOUR",
+        "PROPDEF_TAG",
+        "PROPDEF_OBJECTIVE_START",
+        "PROPDEF_OBJECTIVE_END",
+        "PROPDEF_OBJECTIVE_DESTROY_OBJECT",
+        "PROPDEF_OBJECTIVE_COMPLETE_CONDITION",
+        "PROPDEF_OBJECTIVE_FAIL_CONDITION",
+        "PROPDEF_OBJECTIVE_COLLECT_OBJECT",
+        "PROPDEF_OBJECTIVE_DEPOSIT_OBJECT",
+        "PROPDEF_OBJECTIVE_PHOTOGRAPH",
+        "PROPDEF_OBJECTIVE_NULL",
+        "PROPDEF_OBJECTIVE_ENTER_ROOM",
+        "PROPDEF_OBJECTIVE_DEPOSIT_OBJECT_IN_ROOM",
+        "PROPDEF_OBJECTIVE_COPY_ITEM",
+        "PROPDEF_WATCH_MENU_OBJECTIVE_TEXT",
+        "PROPDEF_GAS_RELEASING",
+        "PROPDEF_RENAME",
+        "PROPDEF_LOCK_DOOR",
+        "PROPDEF_VEHICHLE",
+        "PROPDEF_AIRCRAFT",
+        "PROPDEF_UNK41",
+        "PROPDEF_GLASS",
+        "PROPDEF_SAFE",
+        "PROPDEF_SAFE_ITEM",
+        "PROPDEF_TANK",
+        "PROPDEF_CAMERAPOS", // canonical name
+        "PROPDEF_TINTED_GLASS",
+        "PROPDEF_END",
+};
+
+char *PROP_ToString[] = {
+    "PROP_ALARM1",              /* Beta Alarm / Default Multi Weapon                                  */
+    "PROP_ALARM2",              /* Alarm                                                              */
+    "PROP_EXPLOSIONBIT",        /* White Pyramid (Explosion Bit)                                      */
+    "PROP_AMMO_CRATE1",         /* Ammo Crate (Brown w/ Edge Brace", 6x240 Black)                      */
+    "PROP_AMMO_CRATE2",         /* Ammo Crate (Brown w/ Center Brace", 12x8 Black)                     */
+    "PROP_AMMO_CRATE3",         /* Ammo Crate (Green w/ Center Brace", 12x8 Brown)                     */
+    "PROP_AMMO_CRATE4",         /* Ammo Crate (Green w/ Edge Brace", 6x8 White)                        */
+    "PROP_AMMO_CRATE5",         /* Ammo Crate (Green w/ Double Brace", 24x60 Black)                    */
+    "PROP_BIN1",                /* Rusted Trash Bin                                                   */
+    "PROP_BLOTTER1",            /* Desk Blotter                                                       */
+    "PROP_BOOK1",               /* Red Book                                                           */
+    "PROP_BOOKSHELF1",          /* Bookshelf                                                          */
+    "PROP_BRIDGE_CONSOLE1A",    /* Bridge Console w/ Monitor", Navigation + Keyboard 1A                */
+    "PROP_BRIDGE_CONSOLE1B",    /* Bridge Console w/ Navigation 1B                                    */
+    "PROP_BRIDGE_CONSOLE2A",    /* Bridge Console w/ Navigation", Monitor + Keyboard 2A                */
+    "PROP_BRIDGE_CONSOLE2B",    /* Bridge Console w/ Various Controls 2B                              */
+    "PROP_BRIDGE_CONSOLE3A",    /* Bridge Console w/ Monitor", Navigation + Keyboard 3A                */
+    "PROP_BRIDGE_CONSOLE3B",    /* Bridge Console w/ Monitor", Keyboard + Navigation 3B                */
+    "PROP_CARD_BOX1",           /* Cardboard Box", Kapto|Enb                                           */
+    "PROP_CARD_BOX2",           /* Cardboard Box", Red Arrow", Bahko                                    */
+    "PROP_CARD_BOX3",           /* Cardboard Box", Scrawled Text", Bahah                                */
+    "PROP_CARD_BOX4_LG",        /* Cardboard Box", Three Seams                                         */
+    "PROP_CARD_BOX5_LG",        /* Cardboard Box", Two Seams", Bahah                                    */
+    "PROP_CARD_BOX6_LG",        /* Cardboard Box", Bahko                                               */
+    "PROP_CCTV",                /* Surveillance Camera                                                */
+    "PROP_CONSOLE1",            /* Double Screen Consoles w/ Keyboards                                */
+    "PROP_CONSOLE2",            /* Double Screen Consoles w/ Left Keyboard                            */
+    "PROP_CONSOLE3",            /* Double Screen Consoles w/ Right Keyboard                           */
+    "PROP_CONSOLE_SEVA",        /* Console w/ Keyboard                                                */
+    "PROP_CONSOLE_SEVB",        /* Console w/ Monitor + Keyboard                                      */
+    "PROP_CONSOLE_SEVC",        /* Console w/ Switches                                                */
+    "PROP_CONSOLE_SEVD",        /* Console w/ Five Gauges                                             */
+    "PROP_CONSOLE_SEV2A",       /* Console w/ Four Faders                                             */
+    "PROP_CONSOLE_SEV2B",       /* Console w/ Monitor", Keyboard + Switches                            */
+    "PROP_CONSOLE_SEV2C",       /* Console w/ Three Gauges                                            */
+    "PROP_CONSOLE_SEV2D",       /* Console w/ Pressure Gauge                                          */
+    "PROP_CONSOLE_SEV_GEA",     /* Console w/ GoldenEye Key Slot                                      */
+    "PROP_CONSOLE_SEV_GEB",     /* Console w/ Faders + Pressure Gauge                                 */
+    "PROP_DESK1",               /* Desk w/ Kickplate                                                  */
+    "PROP_DESK2",               /* Desk                                                               */
+    "PROP_DESK_LAMP2",          /* Desk Lamp                                                          */
+    "PROP_DISC_READER",         /* External Hard Drive                                                */
+    "PROP_DISK_DRIVE1",         /* Floppy Disc Drive                                                  */
+    "PROP_FILING_CABINET1",     /* Filing Cabinet                                                     */
+    "PROP_JERRY_CAN1",          /* Jerrycan (Fuel Container)                                          */
+    "PROP_KEYBOARD1",           /* Computer Keyboard                                                  */
+    "PROP_KIT_UNITS1",          /* Kitchen Cabinets                                                   */
+    "PROP_LETTER_TRAY1",        /* Letter Tray                                                        */
+    "PROP_MAINFRAME1",          /* Mainframe", Basic                                                   */
+    "PROP_MAINFRAME2",          /* Mainframe", Advanced                                                */
+    "PROP_METAL_CHAIR1",        /* Chair (Metal)                                                      */
+    "PROP_METAL_CRATE1",        /* Metal Crate", 6 Top Corner                                          */
+    "PROP_METAL_CRATE2",        /* Metal Crate", 6 Bottom Corner                                       */
+    "PROP_METAL_CRATE3",        /* Metal Crate", Toxic Materials                                       */
+    "PROP_METAL_CRATE4",        /* Metal Crate", Double Stripe - Class D1 Hazard                       */
+    "PROP_MISSILE_RACK",        /* Naval Harpoon Missile in Containment Rack                          */
+    "PROP_MISSILE_RACK2",       /* Naval Harpoon Missiles in Containment Racks x4                     */
+    "PROP_OIL_DRUM1",           /* Oil Drum", Single Stripe", Ribbed                                    */
+    "PROP_OIL_DRUM2",           /* Oil Drum", Single Stripe", Ribbed - Class D1 Hazard                  */
+    "PROP_OIL_DRUM3",           /* Oil Drum", Single Stripe", Ribbed - Toxic Materials                  */
+    "PROP_OIL_DRUM5",           /* Oil Drum", Double Stripe - Toxic Materials                          */
+    "PROP_OIL_DRUM6",           /* Oil Drum - Toxic Materials                                         */
+    "PROP_OIL_DRUM7",           /* Oil Drum", Double Dashes - Class D1 Hazard                          */
+    "PROP_PADLOCK",             /* Padlock                                                            */
+    "PROP_PHONE1",              /* Telephone                                                          */
+    "PROP_RADIO_UNIT1",         /* Radio Tuner w/ 1 Knob + 2 Gauges                                   */
+    "PROP_RADIO_UNIT2",         /* Radio Tuner w/ 1 Knob + 5 Gauges                                   */
+    "PROP_RADIO_UNIT3",         /* Radio Tuner w/ 3 Knobs + 5 Gauges                                  */
+    "PROP_RADIO_UNIT4",         /* Radio Tuner w/ 3 Knobs + 2 Gauges                                  */
+    "PROP_SAT1_REFLECT",        /* GoldenEye Satellite                                                */
+    "PROP_SATDISH",             /* Satellite Dish (Arkangelsk)                                        */
+    "PROP_SATBOX",              /* Uplink Box                                                         */
+    "PROP_STOOL1",              /* Wooden Stool                                                       */
+    "PROP_SWIVEL_CHAIR1",       /* Swivel Chair                                                       */
+    "PROP_TORPEDO_RACK",        /* Naval Torpedo Rack x3                                              */
+    "PROP_TV1",                 /* Television Monitor                                                 */
+    "PROP_TV_HOLDER",           /* Hanging Monitor Rack                                               */
+    "PROP_TVSCREEN",            /* Wall Monitor Screen                                                */
+    "PROP_TV4SCREEN",           /* Wall Monitor Screens", 4-in-1                                       */
+    "PROP_WOOD_LG_CRATE1",      /* Wooden Crate w/ #4 Label", Bahah                                    */
+    "PROP_WOOD_LG_CRATE2",      /* Wooden Crate", Darker Shading", Kapto|Enb                            */
+    "PROP_WOOD_MD_CRATE3",      /* Wooden Crates x8", Bahko                                            */
+    "PROP_WOOD_SM_CRATE4",      /* Wooden Crate w/ #2 Label", Bahko                                    */
+    "PROP_WOOD_SM_CRATE5",      /* Wooden Crate w/ #4 Label", Darker Shading", Bahah                    */
+    "PROP_WOOD_SM_CRATE6",      /* Wooden Crate w/ UP Arrow", Kapto|Enb                                */
+    "PROP_WOODEN_TABLE1",       /* Wooden Table                                                       */
+    "PROP_SWIPE_CARD2",         /* Keycard                                                            */
+    "PROP_BORG_CRATE",          /* Blue and Gold Printed Circuit Cube (Borg Crate)                    */
+    "PROP_BOXES4X4",            /* Metal Crate Stack", 4x4                                             */
+    "PROP_BOXES3X4",            /* Metal Crate Stack", 3x4                                             */
+    "PROP_BOXES2X4",            /* Metal Crate Stack", 2x4                                             */
+    "PROP_SEC_PANEL",           /* Security Card Panel                                                */
+    "PROP_ICBM_NOSE",           /* Silo Missile (ICBM)", Nose Cone Only                                */
+    "PROP_ICBM",                /* Silo Missile (ICBM)                                                */
+    "PROP_TUNING_CONSOLE1",     /* Dual Consoles on Castors                                           */
+    "PROP_DESK_ARECIBO1",       /* Computer Work Desk                                                 */
+    "PROP_LOCKER3",             /* Lockers", Single Venting                                            */
+    "PROP_LOCKER4",             /* Lockers", Double Venting                                            */
+    "PROP_ROOFGUN",             /* Ceiling Mounted Drone Gun                                          */
+    "PROP_DEST_ENGINE",         /* Frigate Engine                                                     */
+    "PROP_DEST_EXOCET",         /* Naval MK 29 Missile Launcher (Exocet)                              */
+    "PROP_DEST_GUN",            /* Naval 100 mm Gun Turret (TR 100)                                   */
+    "PROP_DEST_HARPOON",        /* Naval MK 141 Launch Canisters (Harpoon)                            */
+    "PROP_DEST_SEAWOLF",        /* Naval MK 26 Dual Missile Launcher (Seawolf)                        */
+    "PROP_WINDOW",              /* Window Glass                                                       */
+    "PROP_WINDOW_LIB_LG1",      /* Window Glass", Lattice Frame", 4x10 (single-sided)                   */
+    "PROP_WINDOW_LIB_SM1",      /* Window Glass", Lattice Frame", 4x3 (double-sided)                    */
+    "PROP_WINDOW_COR11",        /* Window Glass", Lattice Frame", 4x4 (single-sided)                    */
+    "PROP_JUNGLE3_TREE",        /* Jungle Large Tree                                                  */
+    "PROP_PALM",                /* Jungle Palm Tree                                                   */
+    "PROP_PALMTREE",            /* Jungle Palm Tree", Resprouting After Loss of Fronds                 */
+    "PROP_PLANT2B",             /* Jungle Plant", Low Shrub                                            */
+    "PROP_LABBENCH",            /* Laboratory Table w/ Sink Drains                                    */
+    "PROP_GASBARREL",           /* White Bin                                                          */
+    "PROP_GASBARRELS",          /* White Bins x4                                                      */
+    "PROP_BODYARMOUR",          /* Body Armor                                                         */
+    "PROP_BODYARMOURVEST",      /* Body Armor (Vest)                                                  */
+    "PROP_GASTANK",             /* Bottling Tank                                                      */
+    "PROP_GLASSWARE1",          /* Glass Cup                                                          */
+    "PROP_HATCHBOLT",           /* Metallic Securing Strip (Hatch Bolt)                               */
+    "PROP_BRAKEUNIT",           /* Train Brake Controller                                             */
+    "PROP_AK47MAG",             /* Gun Magazine (KF7 Soviet)                                          */
+    "PROP_M16MAG",              /* Gun Magazine (AR33 Assault Rifle)                                  */
+    "PROP_MP5KMAG",             /* Gun Magazine (D5K Deutsche)                                        */
+    "PROP_SKORPIONMAG",         /* Gun Magazine (Klobb)                                               */
+    "PROP_SPECTREMAG",          /* Gun Magazine (Phantom)                                             */
+    "PROP_UZIMAG",              /* Gun Magazine (ZMG (9mm))                                           */
+    "PROP_SILENCER",            /* Silencer                                                           */
+    "PROP_CHREXTINGUISHER",     /* Fire Extinguisher                                                  */
+    "PROP_BOXCARTRIDGES",       /* Box of Shells (Shotgun Cartridges)                                 */
+    "PROP_FNP90MAG",            /* Gun Magazine (RC-P90)                                              */
+    "PROP_GOLDENSHELLS",        /* Box of Shells (Golden Gun Bullets)                                 */
+    "PROP_MAGNUMSHELLS",        /* Box of Shells (Magnum Rounds)                                      */
+    "PROP_WPPKMAG",             /* Gun Magazine (PP7)                                                 */
+    "PROP_TT33MAG",             /* Gun Magazine (DD44 Dostovei)                                       */
+    "PROP_SEV_DOOR",            /* Grey Containment Door w/ Caution Stripes and Window                */
+    "PROP_SEV_DOOR3",           /* Grey Electronic Door w/ LEFT Arrow                                 */
+    "PROP_SEV_DOOR3_WIND",      /* BETA Electronic Door w/ LEFT Arrow and Fake Window                 */
+    "PROP_SEV_DOOR4_WIND",      /* Grey Electronic Door w/ LEFT Arrow and Window                      */
+    "PROP_SEV_TRISLIDE",        /* Glass Door w/ Stone Frame                                          */
+    "PROP_SEV_DOOR_V1",         /* Grey Electronic Door w/ UP Arrow                                   */
+    "PROP_STEEL_DOOR1",         /* Silver Corrugated Door w/ Caution Stripes                          */
+    "PROP_STEEL_DOOR2",         /* Rusty Door w/ Handle                                               */
+    "PROP_STEEL_DOOR3",         /* Double Cross Brace Door                                            */
+    "PROP_SILO_LIFT_DOOR",      /* Elevator Door                                                      */
+    "PROP_STEEL_DOOR2B",        /* Rusty Door w/o Handle                                              */
+    "PROP_DOOR_ROLLER1",        /* Blue Bay Door w/ Caution Stripes                                   */
+    "PROP_DOOR_ROLLER2",        /* Blue Bay Door w/ Venting and Caution Stripes                       */
+    "PROP_DOOR_ROLLER3",        /* Blue Bay Door w/ Venting and Caution Stripes                       */
+    "PROP_DOOR_ROLLER4",        /* Cargo Bay Door w/ UP Arrow and Transportation Stripes              */
+    "PROP_DOOR_ST_AREC1",       /* Blue Corrugated Door w/ Transportation Stripes                     */
+    "PROP_DOOR_ST_AREC2",       /* Blue Reversed Corrugated Door w/ Transportation Stripes            */
+    "PROP_DOOR_DEST1",          /* Grey Frigate Door w/ Indents and Caution Stripes                   */
+    "PROP_DOOR_DEST2",          /* Grey Frigate Door w/ Indents", Caution Stripes and KEEP CLEAR Label */
+    "PROP_GAS_PLANT_SW_DO1",    /* Grey Swinging Door w/ Blue Stripe                                  */
+    "PROP_GAS_PLANT_SW2_DO1",   /* Grey Swinging Door", Darker                                         */
+    "PROP_GAS_PLANT_SW3_DO1",   /* Grey Swinging Door", Lighter                                        */
+    "PROP_GAS_PLANT_SW4_DO1",   /* Light Wooden Door (Looks Like Sand)                                */
+    "PROP_GAS_PLANT_MET1_DO1",  /* Brown Electronic Door                                              */
+    "PROP_GAS_PLANT_WC_CUB1",   /* Bathroom Stall Door                                                */
+    "PROP_GASPLANT_CLEAR_DOOR", /* Laboratory Glass Door                                              */
+    "PROP_TRAIN_DOOR",          /* Dark Wooden Door                                                   */
+    "PROP_TRAIN_DOOR2",         /* Dark Wooden Door w/ Window                                         */
+    "PROP_TRAIN_DOOR3",         /* Dark Wooden Door w/ Window + Shutter                               */
+    "PROP_DOOR_EYELID",         /* Eyelid Door                                                        */
+    "PROP_DOOR_IRIS",           /* Iris Door                                                          */
+    "PROP_SEVDOORWOOD",         /* Cabin Door                                                         */
+    "PROP_SEVDOORWIND",         /* Weathered Swinging Door w/ Window                                  */
+    "PROP_SEVDOORNOWIND",       /* Weathered Swinging Door                                            */
+    "PROP_SEVDOORMETSLIDE",     /* Brown Corrugated Electronic Door                                   */
+    "PROP_CRYPTDOOR1A",         /* Stone Door w/ Prints (Set A)                                       */
+    "PROP_CRYPTDOOR1B",         /* Sand Door w/ Damage (Set A)                                        */
+    "PROP_CRYPTDOOR2A",         /* Stone Door w/ Prints", Darker (Set B)                               */
+    "PROP_CRYPTDOOR2B",         /* Sand Door w/ Damage", Darker (Set B)                                */
+    "PROP_CRYPTDOOR3",          /* Egyptian Moving Wall                                               */
+    "PROP_CRYPTDOOR4",          /* Brown Sand Door (Temple)                                           */
+    "PROP_VERTDOOR",            /* Blast Door (Control)                                               */
+    "PROP_HATCHDOOR",           /* Train Floor Hatch                                                  */
+    "PROP_DAMGATEDOOR",         /* Security Gate (Dam)                                                */
+    "PROP_DAMTUNDOOR",          /* Tunnel Flood Door (Dam)                                            */
+    "PROP_DAMCHAINDOOR",        /* Mesh Gate                                                          */
+    "PROP_SILOTOPDOOR",         /* Launch Tube Ceiling Shutter (Silo)                                 */
+    "PROP_DOORPRISON1",         /* Cell Door                                                          */
+    "PROP_DOORSTATGATE",        /* Park Gate                                                          */
+    "PROP_CHRKALASH",           /* KF7 Soviet                                                         */
+    "PROP_CHRGRENADELAUNCH",    /* Grenade Launcher                                                   */
+    "PROP_CHRKNIFE",            /* Hunting Knife                                                      */
+    "PROP_CHRLASER",            /* Moonraker Laser                                                    */
+    "PROP_CHRM16",              /* AR33 Assault Rifle                                                 */
+    "PROP_CHRMP5K",             /* D5K Deutsche                                                       */
+    "PROP_CHRRUGER",            /* Cougar Magnum                                                      */
+    "PROP_CHRWPPK",             /* PP7 Special Issue                                                  */
+    "PROP_CHRSHOTGUN",          /* Shotgun                                                            */
+    "PROP_CHRSKORPION",         /* Klobb                                                              */
+    "PROP_CHRSPECTRE",          /* Phantom                                                            */
+    "PROP_CHRUZI",              /* ZMG (9mm)                                                          */
+    "PROP_CHRGRENADE",          /* Hand Grenade                                                       */
+    "PROP_CHRFNP90",            /* RC-P90                                                             */
+    "PROP_CHRBRIEFCASE",        /* Briefcase                                                          */
+    "PROP_CHRREMOTEMINE",       /* Remote Mine                                                        */
+    "PROP_CHRPROXIMITYMINE",    /* Proximity Mine                                                     */
+    "PROP_CHRTIMEDMINE",        /* Timed Mine                                                         */
+    "PROP_CHRROCKET",           /* Rocket                                                             */
+    "PROP_CHRGRENADEROUND",     /* Grenade Round                                                      */
+    "PROP_CHRWPPKSIL",          /* PP7 (Silenced)                                                     */
+    "PROP_CHRTT33",             /* DD44 Dostovei                                                      */
+    "PROP_CHRMP5KSIL",          /* D5K (Silenced)                                                     */
+    "PROP_CHRAUTOSHOT",         /* Automatic Shotgun                                                  */
+    "PROP_CHRGOLDEN",           /* Golden Gun                                                         */
+    "PROP_CHRTHROWKNIFE",       /* Throwing Knife                                                     */
+    "PROP_CHRSNIPERRIFLE",      /* Sniper Rifle                                                       */
+    "PROP_CHRROCKETLAUNCH",     /* Rocket Launcher                                                    */
+    "PROP_HATFURRY",            /* Fur Hat", Blue                                                      */
+    "PROP_HATFURRYBROWN",       /* Fur Hat", Brown                                                     */
+    "PROP_HATFURRYBLACK",       /* Fur Hat", Black                                                     */
+    "PROP_HATTBIRD",            /* Side Cap", Light Green                                              */
+    "PROP_HATTBIRDBROWN",       /* Side Cap", Dark Green                                               */
+    "PROP_HATHELMET",           /* Combat Helmet", Green                                               */
+    "PROP_HATHELMETGREY",       /* Combat Helmet", Grey                                                */
+    "PROP_HATMOON",             /* Elite Headgear                                                     */
+    "PROP_HATBERET",            /* Special Forces Beret", Black                                        */
+    "PROP_HATBERETBLUE",        /* Special Forces Beret", Navy                                         */
+    "PROP_HATBERETRED",         /* Special Forces Beret", Burgundy                                     */
+    "PROP_HATPEAKED",           /* Officer's Peaked Visor Cap                                         */
+    "PROP_CHRWRISTDART",        /* Pchrwristdart (BETA)                                               */
+    "PROP_CHREXPLOSIVEPEN",     /* Pchrexplosivepen (BETA)                                            */
+    "PROP_CHRBOMBCASE",         /* Bomb Case (Briefcase Laying Down)                                  */
+    "PROP_CHRFLAREPISTOL",      /* Pchrflarepistol (BETA Pickup)                                      */
+    "PROP_CHRPITONGUN",         /* Pchrpitongun (BETA Pickup)                                         */
+    "PROP_CHRFINGERGUN",        /* Pchrfingergun (BETA Pickup)                                        */
+    "PROP_CHRSILVERWPPK",       /* Pchrsilverwppk (BETA Pickup)                                       */
+    "PROP_CHRGOLDWPPK",         /* Pchrgoldwppk (BETA Pickup)                                         */
+    "PROP_CHRDYNAMITE",         /* Pchrdynamite (BETA Pickup)                                         */
+    "PROP_CHRBUNGEE",           /* Pchrbungee (BETA Pickup)                                           */
+    "PROP_CHRDOORDECODER",      /* Door Decoder                                                       */
+    "PROP_CHRBOMBDEFUSER",      /* Bomb Defuser                                                       */
+    "PROP_CHRBUGDETECTOR",      /* Pchrbugdetector (BETA Pickup)                                      */
+    "PROP_CHRSAFECRACKERCASE",  /* Safe Cracker Case (Briefcase Laying Down)                          */
+    "PROP_CHRCAMERA",           /* Photo Camera (007)                                                 */
+    "PROP_CHRLOCKEXPLODER",     /* Pchrlockexploder (BETA Pickup)                                     */
+    "PROP_CHRDOOREXPLODER",     /* Pchrdoorexploder (BETA Pickup)                                     */
+    "PROP_CHRKEYANALYSERCASE",  /* Key Analyzer Case (Briefcase Laying Down)                          */
+    "PROP_CHRWEAPONCASE",       /* Weapon Case (Briefcase Standing Up)                                */
+    "PROP_CHRKEYYALE",          /* Yale Key                                                           */
+    "PROP_CHRKEYBOLT",          /* Bolt Key                                                           */
+    "PROP_CHRBUG",              /* Covert Modem / Tracker Bug                                         */
+    "PROP_CHRMICROCAMERA",      /* Micro Camera                                                       */
+    "PROP_FLOPPY",              /* Floppy Disc                                                        */
+    "PROP_CHRGOLDENEYEKEY",     /* GoldenEye Key                                                      */
+    "PROP_CHRPOLARIZEDGLASSES", /* Polarized Glasses                                                  */
+    "PROP_CHRCREDITCARD",       /* Pchrcreditcard (BETA Pickup)                                       */
+    "PROP_CHRDARKGLASSES",      /* Pchrdarkglasses (BETA Pickup)                                      */
+    "PROP_CHRGASKEYRING",       /* Gas Keyring                                                        */
+    "PROP_CHRDATATHIEF",        /* Datathief                                                          */
+    "PROP_SAFE",                /* Safe Body                                                          */
+    "PROP_BOMB",                /* Pbomb (BETA Pickup)                                                */
+    "PROP_CHRPLANS",            /* Plans (Briefing Folder)                                            */
+    "PROP_CHRSPYFILE",          /* Pchrspyfile (BETA Pickup)                                          */
+    "PROP_CHRBLUEPRINTS",       /* Pirate Blueprints                                                  */
+    "PROP_CHRCIRCUITBOARD",     /* Circuitboard                                                       */
+    "PROP_CHRMAP",              /* Bunker Expansion Plans                                             */
+    "PROP_CHRSPOOLTAPE",        /* Pchrspooltape (BETA Pickup)                                        */
+    "PROP_CHRAUDIOTAPE",        /* Audiotape                                                          */
+    "PROP_CHRMICROFILM",        /* Pchrmicrofilm (BETA Pickup)                                        */
+    "PROP_CHRMICROCODE",        /* Pchrmicrocode (BETA Pickup)                                        */
+    "PROP_CHRLECTRE",           /* Pchrlectre (BETA Pickup)                                           */
+    "PROP_CHRMONEY",            /* Pchrmoney (BETA Pickup)                                            */
+    "PROP_CHRGOLDBAR",          /* Pchrgoldbar (BETA Pickup)                                          */
+    "PROP_CHRHEROIN",           /* Pchrheroin (BETA Pickup)                                           */
+    "PROP_CHRCLIPBOARD",        /* Clipboard                                                          */
+    "PROP_CHRDOSSIERRED",       /* Red Dossier                                                        */
+    "PROP_CHRSTAFFLIST",        /* Staff List                                                         */
+    "PROP_CHRDATTAPE",          /* DAT                                                                */
+    "PROP_CHRPLASTIQUE",        /* Plastique                                                          */
+    "PROP_CHRBLACKBOX",         /* Black Box (Orange Flight Recorder)                                 */
+    "PROP_CHRVIDEOTAPE",        /* CCTV Tape (GoldenEye VHS)                                          */
+    "PROP_NINTENDOLOGO",        /* Nintendo Logo                                                      */
+    "PROP_GOLDENEYELOGO",       /* GoldenEye Logo                                                     */
+    "PROP_WALLETBOND",          /* Classified Folder w/ Royal Crest (Folder Menus)                    */
+    "PROP_MILTRUCK",            /* Supply Truck                                                       */
+    "PROP_JEEP",                /* Military Jeep                                                      */
+    "PROP_ARTIC",               /* Red Prime Mover                                                    */
+    "PROP_HELICOPTER",          /* Transport Helicopter w/ Natalya                                    */
+    "PROP_TIGER",               /* Pirate Euro Chopper                                                */
+    "PROP_MILCOPTER",           /* Hound Helicopter                                                   */
+    "PROP_HIND",                /* Soviet Camouflage Chopper                                          */
+    "PROP_ARTICTRAILER",        /* Black Trailer                                                      */
+    "PROP_MOTORBIKE",           /* Motorbike                                                          */
+    "PROP_TANK",                /* Tank                                                               */
+    "PROP_APC",                 /* Armored Personnel Carrier                                          */
+    "PROP_SPEEDBOAT",           /* Speedboat                                                          */
+    "PROP_PLANE",               /* Aeroplane                                                          */
+    "PROP_GUN_RUNWAY1",         /* Heavy Gun Emplacement                                              */
+    "PROP_SAFEDOOR",            /* Safe Door                                                          */
+    "PROP_KEY_HOLDER",          /* Key Rack                                                           */
+    "PROP_HATCHSEVX",           /* Grating (Ventshaft Hatch)                                          */
+    "PROP_SEVDISH",             /* Satellite Dish (Severnaya)                                         */
+    "PROP_ARCHSECDOOR1",        /* Archives Moving Wall (Dark)                                        */
+    "PROP_ARCHSECDOOR2",        /* Archives Moving Wall (Light)                                       */
+    "PROP_GROUNDGUN",           /* Free Standing Drone Gun                                            */
+    "PROP_TRAINEXTDOOR",        /* Train Exterior Door                                                */
+    "PROP_CARBMW",              /* White Car #1 (BMW)                                                 */
+    "PROP_CARESCORT",           /* White Car #2 (Escort)                                              */
+    "PROP_CARGOLF",             /* White Car #3 (Golf)                                                */
+    "PROP_CARWEIRD",            /* Red Car (Cadillac)                                                 */
+    "PROP_CARZIL",              /* Ourumov's Car (ZIL)                                                */
+    "PROP_SHUTTLE_DOOR_L",      /* Exhaust Bay Doors", Left Side                                       */
+    "PROP_SHUTTLE_DOOR_R",      /* Exhaust Bay Doors", Right Side                                      */
+    "PROP_DEPOT_GATE_ENTRY",    /* Metallic Gate w/ Red Star                                          */
+    "PROP_DEPOT_DOOR_STEEL",    /* Rusty Door w/ Handle (Lo-Res)                                      */
+    "PROP_GLASSWARE2",          /* Beaker w/ Blue Topper                                              */
+    "PROP_GLASSWARE3",          /* Erlenmeyer Flask                                                   */
+    "PROP_GLASSWARE4",          /* Set of Five Beakers                                                */
+    "PROP_LANDMINE",            /* Land Mine                                                          */
+    "PROP_PLANT1",              /* Jungle Plant", Withered and Dying                                   */
+    "PROP_PLANT11",             /* Jungle Plant", Turning Colour                                       */
+    "PROP_PLANT2",              /* Jungle Plant", Healthy and Thick                                    */
+    "PROP_PLANT3",              /* Jungle Plant", Tall Leaves                                          */
+    "PROP_JUNGLE5_TREE",        /* Jungle Tree", Moss Covered                                          */
+    "PROP_LEGALPAGE",           /* GoldenEye Certification Screen                                     */
+    "PROP_ST_PETE_ROOM_1I",     /* Roads and Buildings #1 (stretch of road)                           */
+    "PROP_ST_PETE_ROOM_2I",     /* Roads and Buildings #2 (stretch of road)                           */
+    "PROP_ST_PETE_ROOM_3T",     /* Roads and Buildings #3 (intersection)                              */
+    "PROP_ST_PETE_ROOM_5C",     /* Roads and Buildings #4 (street corner)                             */
+    "PROP_ST_PETE_ROOM_6C",     /* Roads and Buildings #5 (street corner)                             */
+    "PROP_DOOR_ROLLERTRAIN",    /* Roller Door                                                        */
+    "PROP_DOOR_WIN",            /* Glass Sliding Door (Aztec)                                         */
+    "PROP_DOOR_AZTEC",          /* Stone Sliding Door (Aztec)                                         */
+    "PROP_SHUTTLE",             /* Moonraker Shuttle                                                  */
+    "PROP_DOOR_AZT_DESK",       /* Boardroom Table (Aztec Exhaust Bay)                                */
+    "PROP_DOOR_AZT_DESK_TOP",   /* Boardroom Table Extension (Aztec Exhaust Bay)                      */
+    "PROP_DOOR_AZT_CHAIR",      /* Boardroom Chair (Aztec Exhaust Bay)                                */
+    "PROP_DOOR_MF",             /* Mainframe Door                                                     */
+    "PROP_FLAG",                /* Flag Tag Token                                                     */
+    "PROP_BARRICADE",           /* Road Barricade                                                     */
+    "PROP_MODEMBOX",            /* Covert Modem Connection Screen                                     */
+    "PROP_DOORPANEL",           /* Sliding Door Activation Switch                                     */
+    "PROP_DOORCONSOLE",         /* Console w/ Activation Light                                        */
+    "PROP_CHRTESTTUBE",         /* Glass Test Tube                                                    */
+    "PROP_BOLLARD",             /* Bollard                                                            */
+};
+
+char *CAMERAMODE_ToString[] = {
+    "CAMERAMODE_NONE",
+    "CAMERAMODE_INTRO",
+    "CAMERAMODE_FADESWIRL",
+    "CAMERAMODE_SWIRL",
+    "CAMERAMODE_FP",
+    "CAMERAMODE_UNK5",
+    "CAMERAMODE_UNK6",
+    "CAMERAMODE_POSEND",
+    "CAMERAMODE_FP_NOINPUT",
+    "CAMERAMODE_MP",
+    "CAMERAMODE_UNK10",
+};
+
+char *INTRO_TYPE_ToString[] = {
+    "INTROTYPE_SPAWN",
+    "INTROTYPE_ITEM",
+    "INTROTYPE_AMMO",
+    "INTROTYPE_SWIRL",
+    "INTROTYPE_ANIM",
+    "INTROTYPE_CUFF",
+    "INTROTYPE_CAMERA",
+    "INTROTYPE_WATCH",
+    "INTROTYPE_CREDITS",
+    "INTROTYPE_END",
+};
+
+char *MISSION_STATE_IDS_ToString[] = {
+    "MISSION_STATE_0",
+    "MISSION_STATE_1",
+    "MISSION_STATE_2",
+    "MISSION_STATE_3",
+    "MISSION_STATE_4",
+    "MISSION_STATE_5",
+    "MISSION_STATE_6"
+};
+
+char *OBJECTIVESTATUS_ToString[] = {
+    "OBJECTIVESTATUS_INCOMPLETE",
+    "OBJECTIVESTATUS_COMPLETE",
+    "OBJECTIVESTATUS_FAILED"
+};
+
 char *GAILIST_ToString[] = {
     "GAILIST_AIM_AT_BOND",
     "GAILIST_DEAD_AI",
@@ -80,6 +809,7 @@ char *GAILIST_ToString[] = {
     "GAILIST_DRAW_TT33_AND_ATTCK_BOND",
     "GAILIST_REMOVE_CHR"};
 
+#pragma region lengths
 #define AI_GotoNext_LENGTH                                       2
 #define AI_GotoFirst_LENGTH                                      2
 #define AI_Label_LENGTH                                          2
@@ -178,7 +908,7 @@ char *GAILIST_ToString[] = {
 #define AI_IFBondUsedGadgetOnObject_LENGTH                       3
 #define AI_ActivateObject_LENGTH                                 2
 #define AI_DestroyObject_LENGTH                                  2
-#define AI_DropObjectFromChr_LENGTH                              2
+#define AI_DropObject_LENGTH                              2
 #define AI_ChrDropAllConcealedItems_LENGTH                       2
 #define AI_ChrDropAllHeldItems_LENGTH                            2
 #define AI_BondCollectObject_LENGTH                              2
@@ -332,6 +1062,7 @@ char *GAILIST_ToString[] = {
 #define AI_RaiseArms_LENGTH                                      1
 #define AI_GasLeakAndFadeFog_LENGTH                              1
 #define AI_ObjectRocketLaunch_LENGTH                             2
+#pragma endregion
 
 int AI_CMD_LENGTHS_ToInt[] = {
     AI_GotoNext_LENGTH,
@@ -430,7 +1161,7 @@ int AI_CMD_LENGTHS_ToInt[] = {
     AI_IFBondUsedGadgetOnObject_LENGTH,
     AI_ActivateObject_LENGTH,
     AI_DestroyObject_LENGTH,
-    AI_DropObjectFromChr_LENGTH,
+    AI_DropObject_LENGTH,
     AI_ChrDropAllConcealedItems_LENGTH,
     AI_ChrDropAllHeldItems_LENGTH,
     AI_BondCollectObject_LENGTH,
@@ -686,7 +1417,7 @@ typedef enum AI_CMD
     AI_IFBondUsedGadgetOnObject,
     AI_ActivateObject,
     AI_DestroyObject,
-    AI_DropObjectFromChr,
+    AI_DropObject,
     AI_ChrDropAllConcealedItems,
     AI_ChrDropAllHeldItems,
     AI_BondCollectObject,
@@ -943,7 +1674,7 @@ char *AI_CMD_ToString[] = {
     "IFBondUsedGadgetOnObject",
     "ActivateObject",
     "DestroyObject",
-    "DropObjectFromChr",
+    "DropObject",
     "ChrDropAllConcealedItems",
     "ChrDropAllHeldItems",
     "BondCollectObject",
@@ -1101,6 +1832,7 @@ char *AI_CMD_ToString[] = {
     "GasLeakAndFadeFog",
     "ObjectRocketLaunch"};
 
+
 #define MAX 10
 
 int  top = -1;
@@ -1190,7 +1922,7 @@ void ai(unsigned char *AiList, short ID)
 
         switch (AiList[Offset])
         {
-            case AI_GotoNext:
+            case AI_GotoNext: // BYTE(LABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1198,7 +1930,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_GotoNext_LENGTH;
                 break;
             }
-            case AI_GotoFirst:
+            case AI_GotoFirst: // BYTE(LABEL)
             {
                 if (AiList[Offset + 1] == sniff())
                 {
@@ -1219,7 +1951,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_GotoFirst_LENGTH;
                 break;
             }
-            case AI_Label:
+            case AI_Label: // BYTE(ID)
             {
                 if (AiList[Offset + 2] == AI_Yield)
                 {
@@ -1246,20 +1978,20 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_Label_LENGTH;
                 break;
             }
-            case AI_Yield:
+            case AI_Yield: // /*NONE*/
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf(")\n");
                 Offset += AI_Yield_LENGTH;
                 break;
             }
-            case AI_EndList:
+            case AI_EndList /*canonical name*/: // /*NONE*/
             {
                 printf("\n%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf(")\n\n");
                 return;
             }
-            case AI_SetChrAiList:
+            case AI_SetChrAiList: // BYTE(CHR_NUM), DBYTE(AI_LIST_ID)
             {
                 unsigned short AI_LIST_ID = CharArrayTo16(AiList, (Offset + 1 + 1)); /* This is the only way to match despite assetrs below */
                 signed char    CHR_NUM    = AiList[Offset + 1];
@@ -1302,7 +2034,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SetChrAiList_LENGTH;
                 break;
             }
-            case AI_SetReturnAiList:
+            case AI_SetReturnAiList: // DBYTE(AI_LIST_ID)
             {
                 unsigned short AI_LIST_ID = CharArrayTo16(AiList, (Offset + 1));
 
@@ -1317,7 +2049,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SetReturnAiList_LENGTH;
                 break;
             }
-            case AI_Return:
+            case AI_Return: // /*NONE*/
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf(")\n");
@@ -1325,21 +2057,21 @@ void ai(unsigned char *AiList, short ID)
                 ;
                 break;
             }
-            case AI_Stop:
+            case AI_Stop: // /*NONE*/
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf(")\n");
                 Offset += AI_Stop_LENGTH;
                 break;
             }
-            case AI_Kneel:
+            case AI_Kneel: // /*NONE*/
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf(")\n");
                 Offset += AI_Kneel_LENGTH;
                 break;
             }
-            case AI_PlayAnimation:
+            case AI_PlayAnimation: // DBYTE(ANIMATION_ID), DBYTE(START_TIME30),DBYTE(END_TIME30), BYTE(BITFIELD), BYTE(INTERPOL_TIME60)
             {
                 int startframe, anim_id, zero, endframe;
 
@@ -1360,7 +2092,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_PlayAnimation_LENGTH;
                 break;
             }
-            case AI_IFPlayingAnimation:
+            case AI_IFPlayingAnimation: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1368,21 +2100,21 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFPlayingAnimation_LENGTH;
                 break;
             }
-            case AI_PointAtBond:
+            case AI_PointAtBond: // /*NONE*/
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf(")\n");
                 Offset += AI_PointAtBond_LENGTH;
                 break;
             }
-            case AI_LookSurprised:
+            case AI_LookSurprised: // /*NONE*/
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf(")\n");
                 Offset += AI_LookSurprised_LENGTH;
                 break;
             }
-            case AI_IFImOnPatrolOrStopped:
+            case AI_IFImOnPatrolOrStopped: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1390,7 +2122,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFImOnPatrolOrStopped_LENGTH;
                 break;
             }
-            case AI_IFChrDyingOrDead:
+            case AI_IFChrDyingOrDead: // BYTE(CHR_NUM), BYTE(GOTOLABEL)
             {
                 signed char chr = AiList[Offset + 1];
                 if (chr == CHR_SELF)
@@ -1407,7 +2139,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFChrDyingOrDead_LENGTH;
                 break;
             }
-            case AI_IFChrDoesNotExist:
+            case AI_IFChrDoesNotExist: // BYTE(CHR_NUM), BYTE(GOTOLABEL)
             {
                 signed char chr = AiList[Offset + 1];
                 if (chr == CHR_SELF)
@@ -1424,7 +2156,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFChrDoesNotExist_LENGTH;
                 break;
             }
-            case AI_IFISeeBond:
+            case AI_IFISeeBond: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1432,8 +2164,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFISeeBond_LENGTH;
                 break;
             }
-
-            case AI_TRYSidestepping:
+            case AI_TRYSidestepping: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1441,7 +2172,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TRYSidestepping_LENGTH;
                 break;
             }
-            case AI_TRYSideHopping:
+            case AI_TRYSideHopping: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1450,7 +2181,7 @@ void ai(unsigned char *AiList, short ID)
 
                 break;
             }
-            case AI_TRYSideRunning:
+            case AI_TRYSideRunning: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1458,7 +2189,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TRYSideRunning_LENGTH;
                 break;
             }
-            case AI_TRYFiringWalk:
+            case AI_TRYFiringWalk: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1466,7 +2197,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TRYFiringWalk_LENGTH;
                 break;
             }
-            case AI_TRYFiringRun:
+            case AI_TRYFiringRun: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1474,7 +2205,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TRYFiringRun_LENGTH;
                 break;
             }
-            case AI_TRYFiringRoll:
+            case AI_TRYFiringRoll: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1482,7 +2213,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TRYFiringRoll_LENGTH;
                 break;
             }
-            case AI_TRYFireOrAimAtTarget:
+            case AI_TRYFireOrAimAtTarget: // DBYTE(BITFIELD), DBYTE(TARGET), BYTE(GOTOLABEL)
             {
                 int targetid   = CharArrayTo16(AiList, Offset + 1 + 2);
                 int targettype = CharArrayTo16(AiList, Offset + 1 + 0);
@@ -1516,7 +2247,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TRYFireOrAimAtTarget_LENGTH;
                 break;
             }
-            case AI_TRYFireOrAimAtTargetKneel:
+            case AI_TRYFireOrAimAtTargetKneel: // DBYTE(BITFIELD), DBYTE(TARGET), BYTE(GOTOLABEL)
             {
                 int targetid   = CharArrayTo16(AiList, Offset + 1 + 2);
                 int targettype = CharArrayTo16(AiList, Offset + 1 + 0);
@@ -1550,7 +2281,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TRYFireOrAimAtTargetKneel_LENGTH;
                 break;
             }
-            case AI_IFImFiringAndLockedForward:
+            case AI_IFImFiringAndLockedForward: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1558,7 +2289,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFImFiringAndLockedForward_LENGTH;
                 break;
             }
-            case AI_IFImFiring:
+            case AI_IFImFiring: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1566,8 +2297,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFImFiring_LENGTH;
                 break;
             }
-
-            case AI_TRYFireOrAimAtTargetUpdate:
+            case AI_TRYFireOrAimAtTargetUpdate: // DBYTE(BITFIELD), DBYTE(TARGET), BYTE(GOTOLABEL)
             {
                 int targetid   = CharArrayTo16(AiList, Offset + 1 + 2);
                 int targettype = CharArrayTo16(AiList, Offset + 1 + 0);
@@ -1601,7 +2331,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TRYFireOrAimAtTargetUpdate_LENGTH;
                 break;
             }
-            case AI_TRYFacingTarget:
+            case AI_TRYFacingTarget: // DBYTE(BITFIELD),DBYTE(TARGET),BYTE(GOTOLABEL)
             {
                 int targetid   = CharArrayTo16(AiList, Offset + 1 + 2);
                 int targettype = CharArrayTo16(AiList, Offset + 1 + 0);
@@ -1625,7 +2355,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TRYFacingTarget_LENGTH;
                 break;
             }
-            case AI_HitChrWithItem:
+            case AI_HitChrWithItem: // BYTE(CHR_NUM),BYTE(PART_NUM),BYTE(ITEM_NUM)
             {
                 if (AiList[Offset + 1] == CHR_SELF)
                 {
@@ -1642,7 +2372,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_HitChrWithItem_LENGTH;
                 break;
             }
-            case AI_ChrHitChr:
+            case AI_ChrHitChr: // BYTE(CHR_NUM),BYTE(CHR_NUM_TARGET),BYTE(PART_NUM)
             {
                 if ((signed char)AiList[Offset + 1] == CHR_SELF)
                 {
@@ -1664,7 +2394,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_ChrHitChr_LENGTH;
                 break;
             }
-            case AI_TRYThrowingGrenade:
+            case AI_TRYThrowingGrenade: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1673,7 +2403,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TRYThrowingGrenade_LENGTH;
                 break;
             }
-            case AI_TRYDroppingItem:
+            case AI_TRYDroppingItem: // DBYTE(PROP_NUM),BYTE(ITEM_NUM),BYTE(GOTOLABEL)
             {
                 unsigned short modelnum = CharArrayTo16(AiList, Offset + 1 + 0);
 
@@ -1683,22 +2413,21 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TRYDroppingItem_LENGTH;
                 break;
             }
-
-            case AI_Surrender:
+            case AI_Surrender: // /*NONE*/
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf(")\n");
                 Offset += AI_Surrender_LENGTH;
                 break;
             }
-            case AI_RemoveMe:
+            case AI_RemoveMe: // /*NONE*/
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf(")\n");
                 Offset += AI_RemoveMe_LENGTH;
                 break;
             }
-            case AI_ChrRemoveInstant:
+            case AI_ChrRemoveInstant: // BYTE(CHR_NUM)
             {
                 if ((signed char)AiList[Offset + 1] == CHR_SELF)
                 {
@@ -1713,7 +2442,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_ChrRemoveInstant_LENGTH;
                 break;
             }
-            case AI_TRYTriggeringAlarmAtPad:
+            case AI_TRYTriggeringAlarmAtPad: // DBYTE(PAD),BYTE(GOTOLABEL)
             {
                 unsigned short pad = CharArrayTo16(AiList, Offset + 1 + 0);
 
@@ -1745,8 +2474,8 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_AlarmOff_LENGTH;
                 break;
             }
-            case AI_TRYRunFromBond:
-            { // run from bond
+            case AI_TRYRunFromBond: // BYTE(GOTOLABEL)
+            {                       // run from bond
 
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1754,7 +2483,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TRYRunFromBond_LENGTH;
                 break;
             }
-            case AI_TRYRunToBond:
+            case AI_TRYRunToBond: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1762,7 +2491,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TRYRunToBond_LENGTH;
                 break;
             }
-            case AI_TRYWalkToBond:
+            case AI_TRYWalkToBond: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1771,7 +2500,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TRYWalkToBond_LENGTH;
                 break;
             }
-            case AI_TRYSprintToBond:
+            case AI_TRYSprintToBond: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1779,15 +2508,15 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TRYSprintToBond_LENGTH;
                 break;
             }
-            case AI_TRYFindCover:
-            { // Find Cover
+            case AI_TRYFindCover: // BYTE(GOTOLABEL)
+            {                     // Find Cover
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
                 printf(")\n");
                 Offset += AI_TRYFindCover_LENGTH;
                 break;
             }
-            case AI_TRYRunToChr:
+            case AI_TRYRunToChr: // BYTE(CHR_NUM), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -1795,7 +2524,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TRYRunToChr_LENGTH;
                 break;
             }
-            case AI_TRYWalkToChr:
+            case AI_TRYWalkToChr: // BYTE(CHR_NUM), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -1803,7 +2532,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TRYWalkToChr_LENGTH;
                 break;
             }
-            case AI_TRYSprintToChr:
+            case AI_TRYSprintToChr: // BYTE(CHR_NUM), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -1811,7 +2540,6 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TRYSprintToChr_LENGTH;
                 break;
             }
-
             case AI_SetNewRandom:
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
@@ -1819,7 +2547,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SetNewRandom_LENGTH;
                 break;
             }
-            case AI_IFRandomLessThan:
+            case AI_IFRandomLessThan: // BYTE(BYTE), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -1827,7 +2555,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFRandomLessThan_LENGTH;
                 break;
             }
-            case AI_IFRandomGreaterThan:
+            case AI_IFRandomGreaterThan: // BYTE(BYTE), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -1835,8 +2563,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFRandomGreaterThan_LENGTH;
                 break;
             }
-
-            case AI_RunToPad:
+            case AI_RunToPad: // DBYTE(PAD)
             {
                 unsigned short pad = CharArrayTo16(AiList, Offset + 1 + 0);
 
@@ -1853,14 +2580,14 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_RunToPad_LENGTH;
                 break;
             }
-            case AI_RunToPadPreset:
+            case AI_RunToPadPreset: // /*NONE*/
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf(")\n");
                 Offset += AI_RunToPadPreset_LENGTH;
                 break;
             }
-            case AI_WalkToPad:
+            case AI_WalkToPad: // DBYTE(PAD)
             {
                 unsigned short pad = CharArrayTo16(AiList, Offset + 1 + 0);
 
@@ -1877,7 +2604,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_WalkToPad_LENGTH;
                 break;
             }
-            case AI_SprintToPad:
+            case AI_SprintToPad: // DBYTE(PAD)
             {
                 unsigned short pad = CharArrayTo16(AiList, Offset + 1 + 0);
 
@@ -1894,7 +2621,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SprintToPad_LENGTH;
                 break;
             }
-            case AI_StartPatrol:
+            case AI_StartPatrol: // BYTE(PATH_NUM)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
@@ -1902,7 +2629,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_StartPatrol_LENGTH;
                 break;
             }
-            case AI_IFICanHearAlarm:
+            case AI_IFICanHearAlarm: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1910,7 +2637,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFICanHearAlarm_LENGTH;
                 break;
             }
-            case AI_IFAlarmIsOn:
+            case AI_IFAlarmIsOn: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1918,7 +2645,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFAlarmIsOn_LENGTH;
                 break;
             }
-            case AI_IFGasIsLeaking:
+            case AI_IFGasIsLeaking: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1926,7 +2653,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFGasIsLeaking_LENGTH;
                 break;
             }
-            case AI_IFIHeardBond:
+            case AI_IFIHeardBond: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1934,7 +2661,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFIHeardBond_LENGTH;
                 break;
             }
-            case AI_IFISeeSomeoneShot:
+            case AI_IFISeeSomeoneShot: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1942,7 +2669,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFISeeSomeoneShot_LENGTH;
                 break;
             }
-            case AI_IFISeeSomeoneDie:
+            case AI_IFISeeSomeoneDie: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1950,7 +2677,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFISeeSomeoneDie_LENGTH;
                 break;
             }
-            case AI_IFICouldSeeBond:
+            case AI_IFICouldSeeBond: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1958,7 +2685,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFICouldSeeBond_LENGTH;
                 break;
             }
-            case AI_IFICouldSeeBondsStan:
+            case AI_IFICouldSeeBondsStan: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1966,7 +2693,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFICouldSeeBondsStan_LENGTH;
                 break;
             }
-            case AI_IFIWasShotRecently:
+            case AI_IFIWasShotRecently: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1974,7 +2701,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFIWasShotRecently_LENGTH;
                 break;
             }
-            case AI_IFIHeardBondRecently:
+            case AI_IFIHeardBondRecently: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1982,7 +2709,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFIHeardBondRecently_LENGTH;
                 break;
             }
-            case AI_IFImInRoomWithChr:
+            case AI_IFImInRoomWithChr: // BYTE(CHR_NUM), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -1990,7 +2717,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFImInRoomWithChr_LENGTH;
                 break;
             }
-            case AI_IFIveNotBeenSeen:
+            case AI_IFIveNotBeenSeen:// BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -1998,7 +2725,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFIveNotBeenSeen_LENGTH;
                 break;
             }
-            case AI_IFImOnScreen:
+            case AI_IFImOnScreen:// BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -2006,7 +2733,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFImOnScreen_LENGTH;
                 break;
             }
-            case AI_IFMyRoomIsOnScreen:
+            case AI_IFMyRoomIsOnScreen:// BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -2014,7 +2741,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFMyRoomIsOnScreen_LENGTH;
                 break;
             }
-            case AI_IFRoomWithPadIsOnScreen:
+            case AI_IFRoomWithPadIsOnScreen: // DBYTE(PAD), BYTE(GOTOLABEL)
             {
                 unsigned short pad = CharArrayTo16(AiList, Offset + 1 + 0);
 
@@ -2031,7 +2758,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFRoomWithPadIsOnScreen_LENGTH;
                 break;
             }
-            case AI_IFImTargetedByBond:
+            case AI_IFImTargetedByBond: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -2039,7 +2766,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFImTargetedByBond_LENGTH;
                 break;
             }
-            case AI_IFBondMissedMe:
+            case AI_IFBondMissedMe: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -2047,7 +2774,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFBondMissedMe_LENGTH;
                 break;
             }
-            case AI_IFMyAngleToBondLessThan:
+            case AI_IFMyAngleToBondLessThan: // BYTE(ANGLE), BYTE(GOTOLABEL)
             {
                 printf("%s%sDeg(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%f,lbl%d", RadToDeg(ByteToRadian((AiList[Offset + 1 + 0]))), AiList[Offset + 2]);
@@ -2055,7 +2782,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFMyAngleToBondLessThan_LENGTH;
                 break;
             }
-            case AI_IFMyAngleToBondGreaterThan:
+            case AI_IFMyAngleToBondGreaterThan: // BYTE(ANGLE), BYTE(GOTOLABEL)
             {
                 printf("%s%sDeg(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%f,lbl%d", RadToDeg(ByteToRadian((AiList[Offset + 1 + 0]))), AiList[Offset + 2]);
@@ -2063,7 +2790,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFMyAngleToBondGreaterThan_LENGTH;
                 break;
             }
-            case AI_IFMyAngleFromBondLessThan:
+            case AI_IFMyAngleFromBondLessThan: // BYTE(ANGLE), BYTE(GOTOLABEL)
             {
                 printf("%s%sDeg(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%f,lbl%d", RadToDeg(ByteToRadian((AiList[Offset + 1 + 0]))), AiList[Offset + 2]);
@@ -2071,7 +2798,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFMyAngleFromBondLessThan_LENGTH;
                 break;
             }
-            case AI_IFMyAngleFromBondGreaterThan:
+            case AI_IFMyAngleFromBondGreaterThan: // BYTE(ANGLE), BYTE(GOTOLABEL)
             {
                 printf("%s%sDeg(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%f,lbl%d", RadToDeg(ByteToRadian((AiList[Offset + 1 + 0]))), AiList[Offset + 2]);
@@ -2079,7 +2806,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFMyAngleFromBondGreaterThan_LENGTH;
                 break;
             }
-            case AI_IFMyDistanceToBondLessThanDecimeter:
+            case AI_IFMyDistanceToBondLessThanDecimeter: // DBYTE(DISTANCE), BYTE(GOTOLABEL)
             {
                 float distance = CharArrayTo16(AiList, Offset + 1 + 0) * 10.0f;
 
@@ -2090,7 +2817,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFMyDistanceToBondLessThanDecimeter_LENGTH;
                 break;
             }
-            case AI_IFMyDistanceToBondGreaterThanDecimeter:
+            case AI_IFMyDistanceToBondGreaterThanDecimeter: // DBYTE(DISTANCE), BYTE(GOTOLABEL)
             {
                 float distance = CharArrayTo16(AiList, Offset + 1 + 0) * 10.0f;
 
@@ -2100,7 +2827,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFMyDistanceToBondGreaterThanDecimeter_LENGTH;
                 break;
             }
-            case AI_IFChrDistanceToPadLessThanDecimeter:
+            case AI_IFChrDistanceToPadLessThanDecimeter: // BYTE(CHR_NUM), DBYTE(DISTANCE), DBYTE(PAD), BYTE(GOTOLABEL)
             {
                 unsigned short pad   = CharArrayTo16(AiList, Offset + 1 + 3);
                 float          value = CharArrayTo16(AiList, Offset + 1 + 1) * 10.0f;
@@ -2128,7 +2855,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFChrDistanceToPadLessThanDecimeter_LENGTH;
                 break;
             }
-            case AI_IFChrDistanceToPadGreaterThanDecimeter:
+            case AI_IFChrDistanceToPadGreaterThanDecimeter: // BYTE(CHR_NUM), DBYTE(DISTANCE), DBYTE(PAD), BYTE(GOTOLABEL)
             {
                 unsigned short pad   = CharArrayTo16(AiList, Offset + 1 + 3);
                 float          value = CharArrayTo16(AiList, Offset + 1 + 1) * 10.0f;
@@ -2156,7 +2883,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFChrDistanceToPadGreaterThanDecimeter_LENGTH;
                 break;
             }
-            case AI_IFMyDistanceToChrLessThanDecimeter:
+            case AI_IFMyDistanceToChrLessThanDecimeter: // DBYTE(DISTANCE), BYTE(CHR_NUM), BYTE(GOTOLABEL)
             {
                 float cutoff = CharArrayTo16(AiList, Offset + 1 + 0) * 10.0f;
 
@@ -2166,7 +2893,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFMyDistanceToChrLessThanDecimeter_LENGTH;
                 break;
             }
-            case AI_IFMyDistanceToChrGreaterThanDecimeter:
+            case AI_IFMyDistanceToChrGreaterThanDecimeter: // DBYTE(DISTANCE), BYTE(CHR_NUM), BYTE(GOTOLABEL)
             {
                 float cutoff = CharArrayTo16(AiList, Offset + 1 + 0) * 10.0f;
 
@@ -2176,7 +2903,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFMyDistanceToChrGreaterThanDecimeter_LENGTH;
                 break;
             }
-            case AI_TRYSettingMyPresetToChrWithinDistanceDecimeter:
+            case AI_TRYSettingMyPresetToChrWithinDistanceDecimeter: // DBYTE(DISTANCE), BYTE(GOTOLABEL)
             {
                 float distance = CharArrayTo16(AiList, Offset + 1 + 0) * 10.0f;
 
@@ -2186,7 +2913,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TRYSettingMyPresetToChrWithinDistanceDecimeter_LENGTH;
                 break;
             }
-            case AI_IFBondDistanceToPadLessThanDecimeter:
+            case AI_IFBondDistanceToPadLessThanDecimeter: // DBYTE(DISTANCE), DBYTE(PAD), BYTE(GOTOLABEL)
             {
                 unsigned short pad   = CharArrayTo16(AiList, Offset + 1 + 2);
                 float          value = CharArrayTo16(AiList, Offset + 1 + 0) * 10.0f;
@@ -2206,7 +2933,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFBondDistanceToPadLessThanDecimeter_LENGTH;
                 break;
             }
-            case AI_IFBondDistanceToPadGreaterThanDecimeter:
+            case AI_IFBondDistanceToPadGreaterThanDecimeter: // DBYTE(DISTANCE), DBYTE(PAD), BYTE(GOTOLABEL)
             {
                 unsigned short pad   = CharArrayTo16(AiList, Offset + 1 + 2);
                 float          value = CharArrayTo16(AiList, Offset + 1 + 0) * 10.0f;
@@ -2226,7 +2953,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFBondDistanceToPadGreaterThanDecimeter_LENGTH;
                 break;
             }
-            case AI_IFChrInRoomWithPad:
+            case AI_IFChrInRoomWithPad: // BYTE(CHR_NUM), DBYTE(PAD), BYTE(GOTOLABEL)
             {
                 unsigned short pad = CharArrayTo16(AiList, Offset + 1 + 1);
 
@@ -2244,7 +2971,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFChrInRoomWithPad_LENGTH;
                 break;
             }
-            case AI_IFBondInRoomWithPad:
+            case AI_IFBondInRoomWithPad: // DBYTE(PAD), BYTE(GOTOLABEL)
             {
                 unsigned short pad = CharArrayTo16(AiList, Offset + 1 + 0);
 
@@ -2261,7 +2988,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFBondInRoomWithPad_LENGTH;
                 break;
             }
-            case AI_IFBondCollectedObject:
+            case AI_IFBondCollectedObject: // BYTE(OBJECT_TAG), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2269,7 +2996,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFBondCollectedObject_LENGTH;
                 break;
             }
-            case AI_IFItemIsStationaryWithinLevel:
+            case AI_IFItemIsStationaryWithinLevel: // BYTE(ITEM_NUM), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2277,7 +3004,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFItemIsStationaryWithinLevel_LENGTH;
                 break;
             }
-            case AI_IFItemIsAttachedToObject:
+            case AI_IFItemIsAttachedToObject: // BYTE(ITEM_NUM), BYTE(OBJECT_TAG), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2], AiList[Offset + 3]);
@@ -2286,7 +3013,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFItemIsAttachedToObject_LENGTH;
                 break;
             }
-            case AI_IFBondHasItemEquipped:
+            case AI_IFBondHasItemEquipped: // BYTE(ITEM_NUM), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2294,7 +3021,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFBondHasItemEquipped_LENGTH;
                 break;
             }
-            case AI_IFObjectExists:
+            case AI_IFObjectExists: // BYTE(OBJECT_TAG), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2302,7 +3029,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFObjectExists_LENGTH;
                 break;
             }
-            case AI_IFObjectNotDestroyed:
+            case AI_IFObjectNotDestroyed:// BYTE(OBJECT_TAG), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2311,7 +3038,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFObjectNotDestroyed_LENGTH;
                 break;
             }
-            case AI_IFObjectWasActivated:
+            case AI_IFObjectWasActivated:// BYTE(OBJECT_TAG), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2320,7 +3047,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFObjectWasActivated_LENGTH;
                 break;
             }
-            case AI_IFBondUsedGadgetOnObject:
+            case AI_IFBondUsedGadgetOnObject:// BYTE(OBJECT_TAG), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2329,7 +3056,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFBondUsedGadgetOnObject_LENGTH;
                 break;
             }
-            case AI_ActivateObject:
+            case AI_ActivateObject: // BYTE(OBJECT_TAG)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
@@ -2338,7 +3065,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_ActivateObject_LENGTH;
                 break;
             }
-            case AI_DestroyObject: // canonicly destroyobj
+            case AI_DestroyObject:  // BYTE(OBJECT_TAG)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
@@ -2347,15 +3074,15 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_DestroyObject_LENGTH;
                 break;
             }
-            case AI_DropObjectFromChr:
+            case AI_DropObject: // BYTE(OBJECT_TAG)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
                 printf(")\n");
-                Offset += AI_DropObjectFromChr_LENGTH;
+                Offset += AI_DropObject_LENGTH;
                 break;
             }
-            case AI_ChrDropAllConcealedItems:
+            case AI_ChrDropAllConcealedItems: // BYTE(CHR_NUM)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
@@ -2363,7 +3090,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_ChrDropAllConcealedItems_LENGTH;
                 break;
             }
-            case AI_ChrDropAllHeldItems:
+            case AI_ChrDropAllHeldItems: // BYTE(CHR_NUM)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
@@ -2372,7 +3099,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_ChrDropAllHeldItems_LENGTH;
                 break;
             }
-            case AI_BondCollectObject:
+            case AI_BondCollectObject: // BYTE(OBJECT_TAG)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
@@ -2381,7 +3108,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_BondCollectObject_LENGTH;
                 break;
             }
-            case AI_ChrEquipObject:
+            case AI_ChrEquipObject: // BYTE(OBJECT_TAG), BYTE(CHR_NUM)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2390,7 +3117,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_ChrEquipObject_LENGTH;
                 break;
             }
-            case AI_MoveObject: // canonicly aiMoveObj
+            case AI_MoveObject: // BYTE(OBJECT_TAG), DBYTE(PAD)
             {
                 unsigned short pad = CharArrayTo16(AiList, Offset + 1 + 1);
 
@@ -2408,7 +3135,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_MoveObject_LENGTH;
                 break;
             }
-            case AI_DoorOpen:
+            case AI_DoorOpen: // BYTE(OBJECT_TAG)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
@@ -2416,7 +3143,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_DoorOpen_LENGTH;
                 break;
             }
-            case AI_DoorClose:
+            case AI_DoorClose: // BYTE(OBJECT_TAG)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
@@ -2424,7 +3151,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_DoorClose_LENGTH;
                 break;
             }
-            case AI_IFDoorStateEqual:
+            case AI_IFDoorStateEqual: // BYTE(OBJECT_TAG), BYTE(DOOR_STATE), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,%s,lbl%d", AiList[Offset + 1], DOORSTATE_ToString[AiList[Offset + 2] >> 1], AiList[Offset + 3]);
@@ -2433,7 +3160,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFDoorStateEqual_LENGTH;
                 break;
             }
-            case AI_IFDoorHasBeenOpenedBefore:
+            case AI_IFDoorHasBeenOpenedBefore: // BYTE(OBJECT_TAG), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2441,7 +3168,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFDoorHasBeenOpenedBefore_LENGTH;
                 break;
             }
-            case AI_DoorSetLock:
+            case AI_DoorSetLock: // BYTE(OBJECT_TAG), BYTE(LOCK_FLAG)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2449,7 +3176,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_DoorSetLock_LENGTH;
                 break;
             }
-            case AI_DoorUnsetLock:
+            case AI_DoorUnsetLock: // BYTE(OBJECT_TAG), BYTE(LOCK_FLAG)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2457,7 +3184,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_DoorUnsetLock_LENGTH;
                 break;
             }
-            case AI_IFDoorLockEqual:
+            case AI_IFDoorLockEqual: // BYTE(OBJECT_TAG), BYTE(LOCK_FLAG), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,%d,%d", AiList[Offset + 1], AiList[Offset + 2], AiList[Offset + 3]);
@@ -2466,7 +3193,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFDoorLockEqual_LENGTH;
                 break;
             }
-            case AI_IFObjectiveNumComplete:
+            case AI_IFObjectiveNumComplete: // BYTE(OBJ_NUM), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2474,7 +3201,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFObjectiveNumComplete_LENGTH;
                 break;
             }
-            case AI_TRYUnknown6e:
+            case AI_TRYUnknown6e: // BYTE(UNKNOWN_FLAG), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2482,7 +3209,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TRYUnknown6e_LENGTH;
                 break;
             }
-            case AI_TRYUnknown6f:
+            case AI_TRYUnknown6f: // BYTE(UNKNOWN_FLAG), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2490,8 +3217,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TRYUnknown6f_LENGTH;
                 break;
             }
-
-            case AI_IFMyNumArghsLessThan:
+            case AI_IFMyNumArghsLessThan: // BYTE(HIT_NUM), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2499,7 +3225,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFMyNumArghsLessThan_LENGTH;
                 break;
             }
-            case AI_IFMyNumArghsGreaterThan:
+            case AI_IFMyNumArghsGreaterThan: // BYTE(HIT_NUM), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2507,7 +3233,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFMyNumArghsGreaterThan_LENGTH;
                 break;
             }
-            case AI_IFMyNumCloseArghsLessThan:
+            case AI_IFMyNumCloseArghsLessThan: // BYTE(MISSED_NUM), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2515,7 +3241,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFMyNumCloseArghsLessThan_LENGTH;
                 break;
             }
-            case AI_IFMyNumCloseArghsGreaterThan:
+            case AI_IFMyNumCloseArghsGreaterThan: // BYTE(MISSED_NUM), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2523,7 +3249,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFMyNumCloseArghsGreaterThan_LENGTH;
                 break;
             }
-            case AI_IFChrHealthLessThan:
+            case AI_IFChrHealthLessThan: // BYTE(CHR_NUM), BYTE(HEALTH), BYTE(GOTOLABEL)
             {
                 float value = (AiList[Offset + 1 + 1]) * 0.1f;
 
@@ -2534,7 +3260,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFChrHealthLessThan_LENGTH;
                 break;
             }
-            case AI_IFChrHealthGreaterThan:
+            case AI_IFChrHealthGreaterThan: // BYTE(CHR_NUM), BYTE(HEALTH), BYTE(GOTOLABEL)
             {
                 float value = (AiList[Offset + 1 + 1]) * 0.1f;
 
@@ -2544,7 +3270,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFChrHealthGreaterThan_LENGTH;
                 break;
             }
-            case AI_IFChrWasDamagedSinceLastCheck:
+            case AI_IFChrWasDamagedSinceLastCheck: // BYTE(CHR_NUM), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2552,7 +3278,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFChrWasDamagedSinceLastCheck_LENGTH;
                 break;
             }
-            case AI_IFBondHealthLessThan:
+            case AI_IFBondHealthLessThan: // BYTE(HEALTH), BYTE(GOTOLABEL)
             {
                 float val = (AiList[Offset + 1 + 0]) / 255.0f;
 
@@ -2562,7 +3288,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFBondHealthLessThan_LENGTH;
                 break;
             }
-            case AI_IFBondHealthGreaterThan:
+            case AI_IFBondHealthGreaterThan: // BYTE(HEALTH), BYTE(GOTOLABEL)
             {
                 float val = (AiList[Offset + 1 + 0]) / 255.0f;
 
@@ -2572,7 +3298,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFBondHealthGreaterThan_LENGTH;
                 break;
             }
-            case AI_IFGameDifficultyLessThan:
+            case AI_IFGameDifficultyLessThan: // BYTE(DIFICULTY_ID), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2580,7 +3306,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFGameDifficultyLessThan_LENGTH;
                 break;
             }
-            case AI_IFGameDifficultyGreaterThan:
+            case AI_IFGameDifficultyGreaterThan: // BYTE(DIFICULTY_ID), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2588,7 +3314,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFGameDifficultyGreaterThan_LENGTH;
                 break;
             }
-            case AI_IFMissionTimeLessThan:
+            case AI_IFMissionTimeLessThan: // DBYTE(SECONDS), BYTE(GOTOLABEL)
             {
                 float target = CharArrayTo16(AiList, Offset + 1 + 0);
 
@@ -2598,7 +3324,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFMissionTimeLessThan_LENGTH;
                 break;
             }
-            case AI_IFMissionTimeGreaterThan:
+            case AI_IFMissionTimeGreaterThan: // DBYTE(SECONDS), BYTE(GOTOLABEL)
             {
                 float target = CharArrayTo16(AiList, Offset + 1 + 0);
 
@@ -2608,7 +3334,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFMissionTimeGreaterThan_LENGTH;
                 break;
             }
-            case AI_IFSystemPowerTimeLessThan:
+            case AI_IFSystemPowerTimeLessThan: // DBYTE(MINUTES), BYTE(GOTOLABEL)
             {
                 float target = CharArrayTo16(AiList, Offset + 1 + 0);
 
@@ -2618,7 +3344,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFSystemPowerTimeLessThan_LENGTH;
                 break;
             }
-            case AI_IFSystemPowerTimeGreaterThan:
+            case AI_IFSystemPowerTimeGreaterThan: // DBYTE(MINUTES), BYTE(GOTOLABEL)
             {
                 float target = CharArrayTo16(AiList, Offset + 1 + 0);
 
@@ -2628,7 +3354,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFSystemPowerTimeGreaterThan_LENGTH;
                 break;
             }
-            case AI_IFLevelIdLessThan:
+            case AI_IFLevelIdLessThan: // BYTE(LEVEL_ID), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2636,7 +3362,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFLevelIdLessThan_LENGTH;
                 break;
             }
-            case AI_IFLevelIdGreaterThan:
+            case AI_IFLevelIdGreaterThan: // BYTE(LEVEL_ID), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2644,7 +3370,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFLevelIdGreaterThan_LENGTH;
                 break;
             }
-            case AI_SetMyMorale:
+            case AI_SetMyMorale:// BYTE(CHRBYTE)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
@@ -2652,7 +3378,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SetMyMorale_LENGTH;
                 break;
             }
-            case AI_AddToMyMorale:
+            case AI_AddToMyMorale:// BYTE(CHRBYTE)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
@@ -2661,7 +3387,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_AddToMyMorale_LENGTH;
                 break;
             }
-            case AI_SubtractFromMyMorale:
+            case AI_SubtractFromMyMorale:// BYTE(CHRBYTE)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
@@ -2669,7 +3395,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SubtractFromMyMorale_LENGTH;
                 break;
             }
-            case AI_IFMyMoraleLessThan:
+            case AI_IFMyMoraleLessThan: // BYTE(CHRBYTE), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2678,7 +3404,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFMyMoraleLessThan_LENGTH;
                 break;
             }
-            case AI_IFMyMoraleLessThanRandom:
+            case AI_IFMyMoraleLessThanRandom:// BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -2686,7 +3412,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFMyMoraleLessThanRandom_LENGTH;
                 break;
             }
-            case AI_SetMyAlertness:
+            case AI_SetMyAlertness: // BYTE(CHRBYTE)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
@@ -2694,7 +3420,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SetMyAlertness_LENGTH;
                 break;
             }
-            case AI_AddToMyAlertness:
+            case AI_AddToMyAlertness: // BYTE(CHRBYTE)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
@@ -2702,7 +3428,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_AddToMyAlertness_LENGTH;
                 break;
             }
-            case AI_SubtractFromMyAlertness:
+            case AI_SubtractFromMyAlertness: // BYTE(CHRBYTE)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
@@ -2710,7 +3436,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SubtractFromMyAlertness_LENGTH;
                 break;
             }
-            case AI_IFMyAlertnessLessThan:
+            case AI_IFMyAlertnessLessThan: // BYTE(CHRBYTE), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2718,7 +3444,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFMyAlertnessLessThan_LENGTH;
                 break;
             }
-            case AI_IFMyAlertnessLessThanRandom:
+            case AI_IFMyAlertnessLessThanRandom: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -2726,7 +3452,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFMyAlertnessLessThanRandom_LENGTH;
                 break;
             }
-            case AI_SetMyHearingScale:
+            case AI_SetMyHearingScale: // DBYTE(HEARING_SCALE)
             {
                 float distance = CharArrayTo16(AiList, Offset + 1 + 0) / 1000.0f;
 
@@ -2736,7 +3462,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SetMyHearingScale_LENGTH;
                 break;
             }
-            case AI_SetMyVisionRange:
+            case AI_SetMyVisionRange:// BYTE(VISION_RANGE)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
@@ -2744,7 +3470,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SetMyVisionRange_LENGTH;
                 break;
             }
-            case AI_SetMyGrenadeProbability:
+            case AI_SetMyGrenadeProbability: // BYTE(GRENADE_PROB)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
@@ -2752,7 +3478,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SetMyGrenadeProbability_LENGTH;
                 break;
             }
-            case AI_SetMyChrNum:
+            case AI_SetMyChrNum: // BYTE(CHR_NUM)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
@@ -2760,7 +3486,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SetMyChrNum_LENGTH;
                 break;
             }
-            case AI_SetMyHealthTotal:
+            case AI_SetMyHealthTotal: // DBYTE(HEALTH)
             {
                 float amount = CharArrayTo16(AiList, Offset + 1 + 0) * 0.1f;
 
@@ -2770,7 +3496,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SetMyHealthTotal_LENGTH;
                 break;
             }
-            case AI_SetMyArmour:
+            case AI_SetMyArmour: // DBYTE(AMOUNT)
             {
                 float amount = CharArrayTo16(AiList, Offset + 1 + 0) * 0.1f; /*if (cheatIsActive(CHEAT_ENEMYSHIELDS)) { amount = amount < 8 ? 8 : amount; } */
 
@@ -2780,7 +3506,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SetMyArmour_LENGTH;
                 break;
             }
-            case AI_SetMySpeedRating:
+            case AI_SetMySpeedRating: // BYTE(SPEED_RATING)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
@@ -2788,7 +3514,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SetMySpeedRating_LENGTH;
                 break;
             }
-            case AI_SetMyArghRating:
+            case AI_SetMyArghRating: // BYTE(ARGH_RATING)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
@@ -2796,7 +3522,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SetMyArghRating_LENGTH;
                 break;
             }
-            case AI_SetMyAccuracyRating:
+            case AI_SetMyAccuracyRating: // BYTE(ACCURACY_RATING)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
@@ -2804,7 +3530,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SetMyAccuracyRating_LENGTH;
                 break;
             }
-            case AI_SetMyFlags2:
+            case AI_SetMyFlags2:// BYTE(BITS)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("0x%x", AiList[Offset + 1]);
@@ -2812,7 +3538,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SetMyFlags2_LENGTH;
                 break;
             }
-            case AI_UnsetMyFlags2:
+            case AI_UnsetMyFlags2:// BYTE(BITS)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("0x%x", AiList[Offset + 1]);
@@ -2820,7 +3546,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_UnsetMyFlags2_LENGTH;
                 break;
             }
-            case AI_IFMyFlags2Has:
+            case AI_IFMyFlags2Has:// BYTE(BITS) BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("0x%x,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2828,7 +3554,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFMyFlags2Has_LENGTH;
                 break;
             }
-            case AI_SetChrBitfield:
+            case AI_SetChrBitfield:// BYTE(CHR_NUM), BYTE(BITS)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,0x%x", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2836,7 +3562,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SetChrBitfield_LENGTH;
                 break;
             }
-            case AI_UnsetChrBitfield:
+            case AI_UnsetChrBitfield:// BYTE(CHR_NUM), BYTE(BITS)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,0x%x", AiList[Offset + 1], AiList[Offset + 2]);
@@ -2844,7 +3570,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_UnsetChrBitfield_LENGTH;
                 break;
             }
-            case AI_IFChrBitfieldHas:
+            case AI_IFChrBitfieldHas: // BYTE(CHR_NUM), BYTE(BITS), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,0x%x,lbl%d", AiList[Offset + 1], AiList[Offset + 2], AiList[Offset + 3]);
@@ -2852,7 +3578,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFChrBitfieldHas_LENGTH;
                 break;
             }
-            case AI_SetObjectiveBitfield:
+            case AI_SetObjectiveBitfield: // QBYTE(BITFIELD)
             {
                 int flags = CharArrayTo32(AiList, Offset + 1 + 0);
 
@@ -2862,7 +3588,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SetObjectiveBitfield_LENGTH;
                 break;
             }
-            case AI_UnsetObjectiveBitfield:
+            case AI_UnsetObjectiveBitfield: // QBYTE(BITFIELD)
             {
                 int flags = CharArrayTo32(AiList, Offset + 1 + 0);
 
@@ -2872,7 +3598,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_UnsetObjectiveBitfield_LENGTH;
                 break;
             }
-            case AI_IFObjectiveBitfieldHas:
+            case AI_IFObjectiveBitfieldHas:// QBYTE(BITS), BYTE(GOTOLABEL)
             {
                 int flags = CharArrayTo32(AiList, Offset + 1 + 0);
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
@@ -2881,7 +3607,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFObjectiveBitfieldHas_LENGTH;
                 break;
             }
-            case AI_SetMychrflags:
+            case AI_SetMychrflags:// QBYTE(CHRFLAGS)
             {
                 int flags = CharArrayTo32(AiList, Offset + 1 + 0);
 
@@ -2891,7 +3617,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SetMychrflags_LENGTH;
                 break;
             }
-            case AI_UnsetMychrflags:
+            case AI_UnsetMychrflags:// QBYTE(CHRFLAGS)
             {
                 int flags = CharArrayTo32(AiList, Offset + 1 + 0);
 
@@ -2901,7 +3627,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_UnsetMychrflags_LENGTH;
                 break;
             }
-            case AI_IFMychrflagsHas:
+            case AI_IFMychrflagsHas: // QBYTE(CHRFLAGS), BYTE(GOTOLABEL)
             {
                 int flags = CharArrayTo32(AiList, Offset + 1 + 0);
 
@@ -2911,7 +3637,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFMychrflagsHas_LENGTH;
                 break;
             }
-            case AI_SetChrchrflags:
+            case AI_SetChrchrflags: // BYTE(CHR_NUM), QBYTE(CHRFLAGS)
             {
                 int flags = CharArrayTo32(AiList, Offset + 1 + 1);
 
@@ -2921,7 +3647,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SetChrchrflags_LENGTH;
                 break;
             }
-            case AI_UnsetChrchrflags:
+            case AI_UnsetChrchrflags: // BYTE(CHR_NUM), QBYTE(CHRFLAGS)
             {
                 int flags = CharArrayTo32(AiList, Offset + 1 + 1);
 
@@ -2931,7 +3657,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_UnsetChrchrflags_LENGTH;
                 break;
             }
-            case AI_IFChrchrflagsHas:
+            case AI_IFChrchrflagsHas: // BYTE(CHR_NUM), QBYTE(CHRFLAGS), BYTE(GOTOLABEL)
             {
                 int flags = CharArrayTo32(AiList, Offset + 1 + 1);
 
@@ -2941,7 +3667,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFChrchrflagsHas_LENGTH;
                 break;
             }
-            case AI_SetObjectFlags:
+            case AI_SetObjectFlags: // BYTE(OBJECT_TAG), QBYTE(BITFIELD)
             {
                 int flags = CharArrayTo32(AiList, Offset + 1 + 1);
 
@@ -2951,7 +3677,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SetObjectFlags_LENGTH;
                 break;
             }
-            case AI_UnsetObjectFlags:
+            case AI_UnsetObjectFlags: // BYTE(OBJECT_TAG), QBYTE(BITFIELD)
             {
                 int flags = CharArrayTo32(AiList, Offset + 1 + 1);
 
@@ -2961,7 +3687,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_UnsetObjectFlags_LENGTH;
                 break;
             }
-            case AI_IFObjectFlagsHas:
+            case AI_IFObjectFlagsHas: // BYTE(OBJECT_TAG), QBYTE(BITS), BYTE(GOTOLABEL)
             {
                 int flags = CharArrayTo32(AiList, Offset + 1 + 1);
 
@@ -2971,7 +3697,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFObjectFlagsHas_LENGTH;
                 break;
             }
-            case AI_SetObjectFlags2:
+            case AI_SetObjectFlags2: // BYTE(OBJECT_TAG), QBYTE(BITS)
             {
                 int flags = CharArrayTo32(AiList, Offset + 1 + 1);
 
@@ -2981,7 +3707,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SetObjectFlags2_LENGTH;
                 break;
             }
-            case AI_UnsetObjectFlags2:
+            case AI_UnsetObjectFlags2: // BYTE(OBJECT_TAG), QBYTE(BITS)
             {
                 int flags = CharArrayTo32(AiList, Offset + 1 + 1);
 
@@ -2991,7 +3717,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_UnsetObjectFlags2_LENGTH;
                 break;
             }
-            case AI_IFObjectFlags2Has:
+            case AI_IFObjectFlags2Has: // BYTE(OBJECT_TAG), QBYTE(BITFIELD), BYTE(GOTOLABEL)
             {
                 int flags = CharArrayTo32(AiList, Offset + 1 + 1);
 
@@ -3001,7 +3727,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFObjectFlags2Has_LENGTH;
                 break;
             }
-            case AI_SetMyChrPreset:
+            case AI_SetMyChrPreset: // BYTE(CHR_PRESET)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
@@ -3009,7 +3735,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SetMyChrPreset_LENGTH;
                 break;
             }
-            case AI_SetChrChrPreset:
+            case AI_SetChrChrPreset: // BYTE(CHR_NUM), BYTE(CHR_PRESET)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -3017,7 +3743,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SetChrChrPreset_LENGTH;
                 break;
             }
-            case AI_SetMyPadPreset:
+            case AI_SetMyPadPreset: // DBYTE(PAD_PRESET)
             {
                 unsigned short pad = CharArrayTo16(AiList, Offset + 1 + 0);
 
@@ -3035,7 +3761,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SetMyPadPreset_LENGTH;
                 break;
             }
-            case AI_SetChrPadPreset:
+            case AI_SetChrPadPreset: // BYTE(CHR_NUM), DBYTE(PAD_PRESET)
             {
                 unsigned short pad = CharArrayTo16(AiList, Offset + 1 + 1);
 
@@ -3056,11 +3782,18 @@ void ai(unsigned char *AiList, short ID)
             case AI_PRINT:
             {
                 int j = 1;
-                printf("PRINT(\"");
+                printf("%sPRINT(\"", tabs);
 
                 for (; AiList[Offset + j] != 0; j++)
                 {
-                    printf("%c", AiList[Offset + j]);
+                    if (AiList[Offset + j] == '\n')
+                    {
+                        printf("\\n");
+                    }
+                    else
+                    {
+                        printf("%c", AiList[Offset + j]);
+                    }
                 }
                 Offset += j + 1;
                 printf("\")\n");
@@ -3094,7 +3827,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_MyTimerResume_LENGTH;
                 break;
             }
-            case AI_IFMyTimerIsNotRunning:
+            case AI_IFMyTimerIsNotRunning: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -3102,7 +3835,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFMyTimerIsNotRunning_LENGTH;
                 break;
             }
-            case AI_IFMyTimerLessThanTicks:
+            case AI_IFMyTimerLessThanTicks: // TBYTE(TICKS), BYTE(GOTOLABEL)
             {
                 float valf = ((unsigned)CharArrayTo24(AiList, Offset + 1 + 0));
 
@@ -3112,7 +3845,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFMyTimerLessThanTicks_LENGTH;
                 break;
             }
-            case AI_IFMyTimerGreaterThanTicks:
+            case AI_IFMyTimerGreaterThanTicks: // TBYTE(TICKS), BYTE(GOTOLABEL)
             {
                 float valf = ((unsigned)CharArrayTo24(AiList, Offset + 1 + 0));
 
@@ -3136,7 +3869,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_HudCountdownHide_LENGTH;
                 break;
             }
-            case AI_HudCountdownSet:
+            case AI_HudCountdownSet: // DBYTE(SECONDS)
             {
                 float seconds = CharArrayTo16(AiList, Offset + 1 + 0);
 
@@ -3160,7 +3893,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_HudCountdownStart_LENGTH;
                 break;
             }
-            case AI_IFHudCountdownIsNotRunning:
+            case AI_IFHudCountdownIsNotRunning: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
@@ -3168,7 +3901,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFHudCountdownIsNotRunning_LENGTH;
                 break;
             }
-            case AI_IFHudCountdownLessThan:
+            case AI_IFHudCountdownLessThan: // DBYTE(SECONDS), BYTE(GOTOLABEL)
             {
                 float value = CharArrayTo16(AiList, Offset + 1 + 0);
 
@@ -3178,7 +3911,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFHudCountdownLessThan_LENGTH;
                 break;
             }
-            case AI_IFHudCountdownGreaterThan:
+            case AI_IFHudCountdownGreaterThan: // DBYTE(SECONDS), BYTE(GOTOLABEL)
             {
                 float value = CharArrayTo16(AiList, Offset + 1 + 0);
 
@@ -3188,7 +3921,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFHudCountdownGreaterThan_LENGTH;
                 break;
             }
-            case AI_TRYSpawningChrAtPad:
+            case AI_TRYSpawningChrAtPad: // BYTE(BODY_NUM), BYTE(HEAD_NUM), DBYTE(PAD), DBYTE(AI_LIST_ID), QBYTE(BITFIELD), BYTE(GOTOLABEL)
             {
                 unsigned short pad      = CharArrayTo16(AiList, Offset + 1 + 2);
                 int            flags    = CharArrayTo32(AiList, Offset + 1 + 6);
@@ -3210,7 +3943,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TRYSpawningChrAtPad_LENGTH;
                 break;
             }
-            case AI_TRYSpawningChrNextToChr:
+            case AI_TRYSpawningChrNextToChr: // BYTE(BODY_NUM), BYTE(HEAD_NUM), BYTE(CHR_NUM_TARGET), DBYTE(AI_LIST_ID), QBYTE(BITFIELD), BYTE(GOTOLABEL)
             {
                 int            flags    = CharArrayTo32(AiList, Offset + 1 + 5);
                 unsigned short ailistid = CharArrayTo16(AiList, Offset + 1 + 3);
@@ -3221,7 +3954,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TRYSpawningChrNextToChr_LENGTH;
                 break;
             }
-            case AI_TRYGiveMeItem:
+            case AI_TRYGiveMeItem: // DBYTE(PROP_NUM), BYTE(ITEM_NUM), QBYTE(PROPFLAG), BYTE(GOTOLABEL)
             {
                 int flags = CharArrayTo32(AiList, Offset + 1 + 3);
                 int model = CharArrayTo16(AiList, Offset + 1 + 0);
@@ -3232,7 +3965,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TRYGiveMeItem_LENGTH;
                 break;
             }
-            case AI_TRYGiveMeHat:
+            case AI_TRYGiveMeHat: // DBYTE(PROP_NUM), QBYTE(PROP_BITFIELD), BYTE(GOTOLABEL)
             {
                 int flags    = CharArrayTo32(AiList, Offset + 1 + 2);
                 int modelnum = CharArrayTo16(AiList, Offset + 1 + 0);
@@ -3243,7 +3976,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TRYGiveMeHat_LENGTH;
                 break;
             }
-            case AI_TRYCloningChr:
+            case AI_TRYCloningChr: // BYTE(CHR_NUM), DBYTE(AI_LIST_ID), BYTE(GOTOLABEL)
             {
                 unsigned short ailistid = CharArrayTo16(AiList, Offset + 1 + 1);
 
@@ -3253,7 +3986,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TRYCloningChr_LENGTH;
                 break;
             }
-            case AI_TextPrintBottom:
+            case AI_TextPrintBottom:// DBYTE(TEXT_SLOT)
             {
                 printf("//USING HUD MESSAGE Stringy = %d, ai->txt = %d\n", 0, CharArrayTo16(AiList, Offset + 1 + 0));
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
@@ -3262,7 +3995,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TextPrintBottom_LENGTH;
                 break;
             }
-            case AI_TextPrintTop:
+            case AI_TextPrintTop:// DBYTE(TEXT_SLOT)
             {
                 printf("//USING HUD MESSAGE Stringy = %d, ai->txt = %d\n", 0, CharArrayTo16(AiList, Offset + 1 + 0));
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
@@ -3271,7 +4004,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_TextPrintTop_LENGTH;
                 break;
             }
-            case AI_SfxPlay:
+            case AI_SfxPlay: // DBYTE(SOUND_NUM), BYTE(CHANNEL_NUM)
             {
                 short audio_id = CharArrayTo16(AiList, Offset + 1 + 0);
 
@@ -3281,8 +4014,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SfxPlay_LENGTH;
                 break;
             }
-
-            case AI_SfxStopChannel:
+            case AI_SfxStopChannel: // BYTE(CHANNEL_NUM)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 3]);
@@ -3290,7 +4022,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SfxStopChannel_LENGTH;
                 break;
             }
-            case AI_SfxSetChannelVolume:
+            case AI_SfxSetChannelVolume: // BYTE(CHANNEL_NUM), DBYTE(TARGET_VOLUME), DBYTE(TRANSITION_TIME60)
             {
                 short          vol   = CharArrayTo16(AiList, Offset + 2 + 0);
                 unsigned short sfxID = CharArrayTo16(AiList, Offset + 2 + 2);
@@ -3301,7 +4033,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SfxSetChannelVolume_LENGTH;
                 break;
             }
-            case AI_SfxFadeChannelVolume:
+            case AI_SfxFadeChannelVolume: // BYTE(CHANNEL_NUM), DBYTE(TARGET_VOLUME), DBYTE(TRANSITION_TIME60)
             {
                 short          vol   = CharArrayTo16(AiList, Offset + 2 + 0);
                 unsigned short sfxID = CharArrayTo16(AiList, Offset + 2 + 2);
@@ -3313,7 +4045,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SfxFadeChannelVolume_LENGTH;
                 break;
             }
-            case AI_SfxEmitFromObject:
+            case AI_SfxEmitFromObject: // BYTE(CHANNEL_NUM), BYTE(OBJECT_TAG), DBYTE(VOL_DECAY_TIME60)
             {
                 unsigned short sfxID = CharArrayTo16(AiList, Offset + 2 + 1);
 
@@ -3323,7 +4055,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SfxEmitFromObject_LENGTH;
                 break;
             }
-            case AI_SfxEmitFromPad:
+            case AI_SfxEmitFromPad: // BYTE(CHANNEL_NUM), DBYTE(PAD), DBYTE(VOL_DECAY_TIME60)
             {
                 unsigned short pad   = CharArrayTo16(AiList, Offset + 2 + 0);
                 unsigned short sfxID = CharArrayTo16(AiList, Offset + 2 + 2);
@@ -3344,8 +4076,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_SfxEmitFromPad_LENGTH;
                 break;
             }
-
-            case AI_IFSfxChannelVolumeLessThan:
+            case AI_IFSfxChannelVolumeLessThan: // BYTE(CHANNEL_NUM), DBYTE(VOLUME), BYTE(GOTOLABEL)
             {
                 short vol = CharArrayTo16(AiList, Offset + 2 + 0);
 
@@ -3355,7 +4086,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFSfxChannelVolumeLessThan_LENGTH;
                 break;
             }
-            case AI_VehicleStartPath:
+            case AI_VehicleStartPath: // BYTE(PATH_NUM)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1 + 0]);
@@ -3363,7 +4094,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_VehicleStartPath_LENGTH;
                 break;
             }
-            case AI_VehicleSpeed:
+            case AI_VehicleSpeed: // DBYTE(TOP_SPEED), DBYTE(ACCELERATION_TIME60)
             {
                 float speedtime = CharArrayTo16(AiList, Offset + 1 + 2);
                 float speedaim  = CharArrayTo16(AiList, Offset + 1 + 0) * 100.0f / 15360.0f;
@@ -3374,7 +4105,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_VehicleSpeed_LENGTH;
                 break;
             }
-            case AI_AircraftRotorSpeed:
+            case AI_AircraftRotorSpeed: // DBYTE(ROTOR_SPEED), DBYTE(ACCELERATION_TIME60)
             {
                 float speedtime = CharArrayTo16(AiList, Offset + 1 + 2);
                 float speedaim  = CharArrayTo16(AiList, Offset + 1 + 0) * M_TAU_F / 3600.0f;
@@ -3385,7 +4116,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_AircraftRotorSpeed_LENGTH;
                 break;
             }
-            case AI_IFCameraIsInIntro:
+            case AI_IFCameraIsInIntro: // BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1 + 0]);
@@ -3393,7 +4124,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFCameraIsInIntro_LENGTH;
                 break;
             }
-            case AI_IFCameraIsInBondSwirl:
+            case AI_IFCameraIsInBondSwirl:// BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1 + 0]);
@@ -3401,7 +4132,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFCameraIsInBondSwirl_LENGTH;
                 break;
             }
-            case AI_TvChangeScreenBank:
+            case AI_TvChangeScreenBank: // BYTE(OBJECT_TAG), BYTE(SCREEN_INDEX), BYTE(SCREEN_BANK)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,%d,$d", AiList[Offset + 1], AiList[Offset + 2], AiList[Offset + 3]);
@@ -3432,7 +4163,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_CameraReturnToBond_LENGTH;
                 break;
             }
-            case AI_CameraLookAtBondFromPad:
+            case AI_CameraLookAtBondFromPad: // DBYTE(PAD)
             {
                 unsigned short pad = CharArrayTo16(AiList, Offset + 1 + 0);
 
@@ -3450,14 +4181,15 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_CameraLookAtBondFromPad_LENGTH;
                 break;
             }
-            case AI_CameraSwitch:
+            case AI_CameraSwitch: // BYTE(OBJECT_TAG), DBYTE(LOOK_AT_BOND_FLAG), DBYTE(UNUSED_FLAG)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,%d,%d", AiList[Offset + 1 + 0], CharArrayTo16(AiList, Offset + 1 + 1), CharArrayTo16(AiList, Offset + 1 + 3));
                 printf(")\n");
+                Offset += AI_CameraSwitch_LENGTH;
                 break;
             }
-            case AI_IFBondYPosLessThan:
+            case AI_IFBondYPosLessThan: // DBYTE(Y_POS), BYTE(GOTOLABEL)
             {
                 float bondpos = (short)CharArrayTo16(AiList, Offset + 1 + 0);
 
@@ -3467,7 +4199,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFBondYPosLessThan_LENGTH;
                 break;
             }
-            case AI_BondDisableControl:
+            case AI_BondDisableControl: // BYTE(BITFIELD)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
@@ -3482,7 +4214,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_BondEnableControl_LENGTH;
                 break;
             }
-            case AI_TRYTeleportingChrToPad:
+            case AI_TRYTeleportingChrToPad: // BYTE(CHR_NUM), DBYTE(PAD), BYTE(GOTOLABEL)
             {
                 int pad = CharArrayTo16(AiList, Offset + 1 + 1);
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
@@ -3516,7 +4248,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_ScreenFadeFromBlack_LENGTH;
                 break;
             }
-            case AI_IFScreenFadeCompleted:
+            case AI_IFScreenFadeCompleted:// BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -3538,7 +4270,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_ShowAllChrs_LENGTH;
                 break;
             }
-            case AI_DoorOpenInstant:
+            case AI_DoorOpenInstant: // BYTE(OBJECT_TAG)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
@@ -3546,7 +4278,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_DoorOpenInstant_LENGTH;
                 break;
             }
-            case AI_ChrRemoveItemInHand:
+            case AI_ChrRemoveItemInHand: // BYTE(CHR_NUM), BYTE(HAND_INDEX)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,%s", AiList[Offset + 1], AiList[Offset + 2] == 0 ? "GUNRIGHT" : "GUNLEFT");
@@ -3554,7 +4286,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_ChrRemoveItemInHand_LENGTH;
                 break;
             }
-            case AI_IfNumberOfActivePlayersLessThan:
+            case AI_IfNumberOfActivePlayersLessThan: // BYTE(NUMBER), BYTE(GOTOLABEL)
             {
                 if (AiList[Offset + 1] == 2)
                 {
@@ -3570,7 +4302,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IfNumberOfActivePlayersLessThan_LENGTH;
                 break;
             }
-            case AI_IFBondItemTotalAmmoLessThan:
+            case AI_IFBondItemTotalAmmoLessThan: // BYTE(ITEM_NUM), BYTE(AMMO_TOTAL), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2], AiList[Offset + 3]);
@@ -3578,7 +4310,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFBondItemTotalAmmoLessThan_LENGTH;
                 break;
             }
-            case AI_BondEquipItem:
+            case AI_BondEquipItem: // BYTE(ITEM_NUM)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
@@ -3586,7 +4318,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_BondEquipItem_LENGTH;
                 break;
             }
-            case AI_BondEquipItemCinema:
+            case AI_BondEquipItemCinema: // BYTE(ITEM_NUM)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
@@ -3594,7 +4326,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_BondEquipItemCinema_LENGTH;
                 break;
             }
-            case AI_BondSetLockedVelocity:
+            case AI_BondSetLockedVelocity: // BYTE(X_SPEED60), BYTE(Z_SPEED60)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -3602,7 +4334,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_BondSetLockedVelocity_LENGTH;
                 break;
             }
-            case AI_IFObjectInRoomWithPad:
+            case AI_IFObjectInRoomWithPad: // BYTE(OBJECT_TAG), DBYTE(PAD), BYTE(GOTOLABEL)
             {
                 unsigned short pad = CharArrayTo16(AiList, Offset + 1 + 1);
 
@@ -3658,7 +4390,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_BondHideWeapons_LENGTH;
                 break;
             }
-            case AI_CameraOrbitPad: // sp order from xbla
+            case AI_CameraOrbitPad: 
             {
                 int pad;
                 int speed60;
@@ -3712,7 +4444,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFObjectiveAllCompleted_LENGTH;
                 break;
             }
-            case AI_IFFolderActorIsEqual:
+            case AI_IFFolderActorIsEqual: // BYTE(BOND_ACTOR_INDEX), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("lbl%d", AiList[Offset + 1]);
@@ -3728,22 +4460,22 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFBondDamageAndPickupsDisabled_LENGTH;
                 break;
             }
-            case AI_MusicPlaySlot:
+            case AI_MusicPlaySlot: // BYTE(MUSIC_SLOT), BYTE(SECONDS_STOPPED_DURATION), BYTE(SECONDS_TOTAL_DURATION)
             {
-                Offset += AI_MusicPlaySlot_LENGTH;
                 printf("//ai: enery tune on (%d, %d, %d)\n", AiList[Offset + 1 + 0], AiList[Offset + 1 + 1], AiList[Offset + 1 + 2]);
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,%d,%d", AiList[Offset + 1 + 0], AiList[Offset + 1 + 1], AiList[Offset + 1 + 2]);
                 printf(")\n");
+                Offset += AI_MusicPlaySlot_LENGTH;
                 break;
             }
             case AI_MusicStopSlot:
             {
-                Offset += AI_MusicStopSlot_LENGTH;
                 printf("//ai: enery tune off (%d)\n", AiList[Offset + 1 + 0]);
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1 + 0]);
                 printf(")\n");
+                Offset += AI_MusicStopSlot_LENGTH;
                 break;
             }
             case AI_TriggerExplosionsAroundBond:
@@ -3761,7 +4493,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_IFKilledCiviliansGreaterThan_LENGTH;
                 break;
             }
-            case AI_IFChrWasShotSinceLastCheck:
+            case AI_IFChrWasShotSinceLastCheck: // BYTE(CHR_NUM), BYTE(GOTOLABEL)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d,lbl%d", AiList[Offset + 1], AiList[Offset + 2]);
@@ -3790,7 +4522,7 @@ void ai(unsigned char *AiList, short ID)
                 Offset += AI_GasLeakAndFadeFog_LENGTH;
                 break;
             }
-            case AI_ObjectRocketLaunch:
+            case AI_ObjectRocketLaunch: // BYTE(OBJECT_TAG)
             {
                 printf("%s%s(", tabs, AI_CMD_ToString[AiList[Offset]]);
                 printf("%d", AiList[Offset + 1]);
@@ -3841,17 +4573,16 @@ enum chrAIListIDs
 int main()
 {
     unsigned char
-          ai_0[] = {0x02, 0x04, 0x1c, 0x00, 0x9e, 0x00, 0x2a, 0x02, 0x2a, 0x03, 0x2f, 0x08, 0x01, 0x2a, 0x02, 0x08, 0x4d, 0xfd, 0x00, 0x32, 0x00, 0x9e, 0x05, 0x45, 0x09, 0x07, 0x02, 0x09, 0x01, 0x04, 0x02, 0x05, 0x08, 0x94, 0x20, 0x95, 0x80, 0x07, 0x04, 0x00};
-    short ID     = chrai_10;
+          ai_0[] = {0x02, 0x03, 0x03, 0xeb, 0x36, 0x55, 0x00, 0xd0, 0x2a, 0x01, 0x03, 0x02, 0x2a, 0xec, 0xd7, 0x00, 0xda, 0x02, 0x08, 0x03, 0xdc, 0x2a, 0x01, 0x08, 0x02, 0x2a, 0xf1, 0x2a, 0x05, 0xfd, 0x00, 0x0f, 0x02, 0x2a, 0xdd, 0xea, 0x59, 0x18, 0x2a, 0x59, 0x19, 0x2a, 0x59, 0x04, 0x2a, 0x59, 0x05, 0x2a, 0x59, 0x06, 0x2a, 0x59, 0x07, 0x2a, 0x59, 0x08, 0x2a, 0x59, 0x09, 0x2a, 0x59, 0x0a, 0x2a, 0x59, 0x0b, 0x2a, 0x59, 0x0c, 0x2a, 0x59, 0x0d, 0x2a, 0x59, 0x0e, 0x2a, 0x59, 0x0f, 0x2a, 0x59, 0x10, 0x2a, 0x59, 0x11, 0x2a, 0x59, 0x12, 0x2a, 0x59, 0x13, 0x2a, 0x59, 0x16, 0x2a, 0x59, 0x14, 0x2a, 0x59, 0x15, 0x2a, 0xe4, 0x04, 0x02, 0x2a, 0xed, 0x03, 0x03, 0x03, 0xd5, 0x05, 0x00, 0x02, 0x00, 0x00, 0xd9, 0xf8, 0x00, 0xab, 0x2a, 0x02, 0x2a, 0x05, 0xf8, 0x04, 0x12, 0xa1, 0x00, 0x00, 0x00, 0x04, 0x00, 0xd9, 0x00, 0x00, 0xaa, 0x2a, 0x02, 0x2a, 0x05, 0x00, 0x04, 0x13, 0xdb, 0xf4, 0x00, 0x00, 0xff, 0x05, 0xfd, 0x00, 0x01, 0x02, 0x36, 0x05, 0xfd, 0x00, 0x01, 0x04, 0x00, 0x00, 0x00};
+    short ID     = 1;
 
     // char          str[999];
     // printf("Enter a string: ");
     // gets(str);
 
-    printf("/*\n");
     if (isChrAIListID(ID))
     {
-        printf("u8 chrAi_%d[] = {\n #define THIS chrai_%d\n", getChrAIListID(ID), getChrAIListID(ID));
+        printf("u8 chrAI_%d[] = {\n #define THIS chrai_%d\n", getChrAIListID(ID), getChrAIListID(ID));
     }
     else
     {
@@ -3861,7 +4592,7 @@ int main()
     // un-closed loops
     if (top != -1) displayStack();
 
-    printf("#undef THIS \n};\n*/");
+    printf("#undef THIS \n};\n");
 
     return 0;
 }

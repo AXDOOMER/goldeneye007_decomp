@@ -1221,7 +1221,7 @@ typedef union
         typedef struct Model
         {
             u8                unk00; /*0x00*/
-            u8                Type;  /*0x01*/
+            s16                Type;  /*0x01*/ //per sub_GAME_7F075F68 should be s16?
             struct ChrRecord *chr;   /*0x04*/
             ModelFileHeader  *obj;   /*0x08 GE Name confirmed*/
             RenderPosView    *render_pos; /*0x0c*/

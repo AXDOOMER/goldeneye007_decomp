@@ -15321,41 +15321,16 @@ def_7F075D80:
 
 
 
-#ifdef NONMATCHING
 void sub_GAME_7F075F68(struct Model *objinst,struct ModelFileHeader *header,u32 *data)
 {
   objinst->obj = header;
-  objinst->data = data;
-  *&objinst->field_0x2 = 0xffff;
+  objinst->datas = data;
+  objinst->Type = -1;
   objinst->attachedto = NULL;
-  objinst->field_0x1c = NULL;
+  objinst->attachedto_objinst = NULL;
   objinst->scale = 1.0;
   unknown_object_microcode_handler(objinst,header->RootNode);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F075F68
-/* 0AAA98 7F075F68 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0AAA9C 7F075F6C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0AAAA0 7F075F70 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0AAAA4 7F075F74 44812000 */  mtc1  $at, $f4
-/* 0AAAA8 7F075F78 240EFFFF */  li    $t6, -1
-/* 0AAAAC 7F075F7C AC850008 */  sw    $a1, 8($a0)
-/* 0AAAB0 7F075F80 AC860010 */  sw    $a2, 0x10($a0)
-/* 0AAAB4 7F075F84 A48E0002 */  sh    $t6, 2($a0)
-/* 0AAAB8 7F075F88 AC800018 */  sw    $zero, 0x18($a0)
-/* 0AAABC 7F075F8C AC80001C */  sw    $zero, 0x1c($a0)
-/* 0AAAC0 7F075F90 E4840014 */  swc1  $f4, 0x14($a0)
-/* 0AAAC4 7F075F94 0FC1D74B */  jal   unknown_object_microcode_handler
-/* 0AAAC8 7F075F98 8CA50000 */   lw    $a1, ($a1)
-/* 0AAACC 7F075F9C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0AAAD0 7F075FA0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0AAAD4 7F075FA4 03E00008 */  jr    $ra
-/* 0AAAD8 7F075FA8 00000000 */   nop   
-)
-#endif
-
 
 
 
