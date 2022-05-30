@@ -6089,40 +6089,17 @@ s32 sub_GAME_7F06FE90(Model *arg0, f32 arg1, f32 arg2)
     return modelSetAnimSpeed(arg0, t, arg2);
 }
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F06FF18(Model *param_1,s32 ani_rate,s32 param_3)
-{
-
+void sub_GAME_7F06FF18(Model *model, f32 animation_rate, f32 arg2) {
+    if (arg2 > 0.0f) {
+        model->unkb0 = arg2;
+        model->unka8 = animation_rate;
+        model->unkb4 = 0.0f;
+        model->unkac = model->unka4;
+        return;
+    }
+    model->unka4 = animation_rate;
+    model->unkb0 = 0.0f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06FF18
-/* 0A4A48 7F06FF18 44866000 */  mtc1  $a2, $f12
-/* 0A4A4C 7F06FF1C 44800000 */  mtc1  $zero, $f0
-/* 0A4A50 7F06FF20 44857000 */  mtc1  $a1, $f14
-/* 0A4A54 7F06FF24 460C003C */  c.lt.s $f0, $f12
-/* 0A4A58 7F06FF28 00000000 */  nop   
-/* 0A4A5C 7F06FF2C 45020008 */  bc1fl .L7F06FF50
-/* 0A4A60 7F06FF30 E48E00A4 */   swc1  $f14, 0xa4($a0)
-/* 0A4A64 7F06FF34 C48400A4 */  lwc1  $f4, 0xa4($a0)
-/* 0A4A68 7F06FF38 E48C00B0 */  swc1  $f12, 0xb0($a0)
-/* 0A4A6C 7F06FF3C E48E00A8 */  swc1  $f14, 0xa8($a0)
-/* 0A4A70 7F06FF40 E48000B4 */  swc1  $f0, 0xb4($a0)
-/* 0A4A74 7F06FF44 03E00008 */  jr    $ra
-/* 0A4A78 7F06FF48 E48400AC */   swc1  $f4, 0xac($a0)
-
-/* 0A4A7C 7F06FF4C E48E00A4 */  swc1  $f14, 0xa4($a0)
-.L7F06FF50:
-/* 0A4A80 7F06FF50 E48000B0 */  swc1  $f0, 0xb0($a0)
-/* 0A4A84 7F06FF54 03E00008 */  jr    $ra
-/* 0A4A88 7F06FF58 00000000 */   nop   
-)
-#endif
 
 
 void sub_GAME_7F06FF5C(Model *model, s32 arg1) {

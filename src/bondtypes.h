@@ -1307,11 +1307,11 @@ typedef union
             // 0xa0
             s32               unka0;
             f32               unka4; // used by ACT_STAND in chrlv
-            s32               unka8;
-            s32               unkac;
+            f32               unka8;
+            f32               unkac;
             // 0xb0
-            s32               unkb0;
-            s32               unkb4;
+            f32               unkb0;
+            f32               unkb4;
             f32               unkb8; // used by ACT_ANIM in chrlv
             s32               unkbc;
         } Model;
