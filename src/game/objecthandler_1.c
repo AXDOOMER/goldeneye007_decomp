@@ -6125,25 +6125,9 @@ glabel sub_GAME_7F06FF18
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F06FF5C(void) {
-
+void sub_GAME_7F06FF5C(Model *model, s32 arg1) {
+    model->unka0 = arg1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06FF5C
-/* 0A4A8C 7F06FF5C 03E00008 */  jr    $ra
-/* 0A4A90 7F06FF60 AC8500A0 */   sw    $a1, 0xa0($a0)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F06FF64(void) {
