@@ -5992,25 +5992,10 @@ glabel modelSetAnimFlipFunction
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F06FE44(void) {
-
+// Unused function
+void sub_GAME_7F06FE44(Model *model, s32 arg1) {
+    model->unk9c = arg1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06FE44
-/* 0A4974 7F06FE44 03E00008 */  jr    $ra
-/* 0A4978 7F06FE48 AC85009C */   sw    $a1, 0x9c($a0)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void modelSetAnimSpeed(void) {
