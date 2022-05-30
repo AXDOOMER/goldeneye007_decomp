@@ -1258,11 +1258,11 @@ typedef union
             s32               unk3c;
             // 0x40
             f32               unk40;
-            s32               unk44;
-            s32               unk48;
-            s32               unk4c;
+            f32               unk44;
+            f32               unk48;
+            f32               unk4c;
             // 0x50
-            s32               unk50;
+            f32               unk50;
 
             ModelAnimation   *anim2;
 

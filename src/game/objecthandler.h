@@ -37,9 +37,9 @@ ModelAnimation * objecthandlerGetModelAnim(Model *);
 f32 modelGetAbsAnimSpeed(Model*);
 s32 sub_GAME_7F06F5B4(Model *);
 f32 sub_GAME_7F06F5C4(Model *);
-s32 modelSetAnimSpeed(Model *, f32, f32);
+void modelSetAnimSpeed(Model *, f32, f32);
 f32 sub_GAME_7F06F610(Model *);
-s32 sub_GAME_7F06FE90(Model *arg0, f32 arg1, f32 arg2);
+void sub_GAME_7F06FE90(Model *arg0, f32 arg1, f32 arg2);
 f32 getinstsize(Model *arg0);
 
 void fileLoad(ModelFileHeader *header,char *name);
