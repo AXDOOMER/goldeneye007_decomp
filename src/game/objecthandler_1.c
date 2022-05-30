@@ -5923,26 +5923,11 @@ glabel sub_GAME_7F06FCFC
 
 
 
-#ifdef NONMATCHING
-void modelSetAnimLooping(void) {
-
+void modelSetAnimLooping(Model *model, f32 arg1, f32 arg2) {
+    model->unk26 = 1;
+    model->unk90 = arg1;
+    model->unk94 = arg2;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel modelSetAnimLooping
-/* 0A48FC 7F06FDCC 44856000 */  mtc1  $a1, $f12
-/* 0A4900 7F06FDD0 44867000 */  mtc1  $a2, $f14
-/* 0A4904 7F06FDD4 240E0001 */  li    $t6, 1
-/* 0A4908 7F06FDD8 A08E0026 */  sb    $t6, 0x26($a0)
-/* 0A490C 7F06FDDC E48C0090 */  swc1  $f12, 0x90($a0)
-/* 0A4910 7F06FDE0 03E00008 */  jr    $ra
-/* 0A4914 7F06FDE4 E48E0094 */   swc1  $f14, 0x94($a0)
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING

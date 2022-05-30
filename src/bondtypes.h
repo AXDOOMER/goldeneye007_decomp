@@ -1300,8 +1300,8 @@ typedef union
             s32               unk88;
             s32               unk8c;
             // 0x90
-            s32               unk90;
-            s32               unk94;
+            f32               unk90;
+            f32               unk94;
             s32               unk98;
             s32               unk9c;
             // 0xa0
