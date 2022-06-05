@@ -5024,12 +5024,12 @@ f32 sub_GAME_7F06F610(Model *model)
     return model->unk40;
 }
 
-#ifdef NONMATCHING
+
 /**
  * Address 0x7F06F618.
  * PD: modelGetAbsAnimSpeed
 */
-f32 modelGetAbsAnimSpeed(struct Model *model)
+f32 modelGetAbsAnimSpeed(Model *model)
 {
     f32 speed;
 
@@ -5042,23 +5042,6 @@ f32 modelGetAbsAnimSpeed(struct Model *model)
     
     return speed;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel modelGetAbsAnimSpeed
-/* 0A4148 7F06F618 C4820040 */  lwc1  $f2, 0x40($a0)
-/* 0A414C 7F06F61C 44802000 */  mtc1  $zero, $f4
-/* 0A4150 7F06F620 00000000 */  nop   
-/* 0A4154 7F06F624 4604103C */  c.lt.s $f2, $f4
-/* 0A4158 7F06F628 00000000 */  nop   
-/* 0A415C 7F06F62C 45000002 */  bc1f  .L7F06F638
-/* 0A4160 7F06F630 00000000 */   nop   
-/* 0A4164 7F06F634 46001087 */  neg.s $f2, $f2
-.L7F06F638:
-/* 0A4168 7F06F638 03E00008 */  jr    $ra
-/* 0A416C 7F06F63C 46001006 */   mov.s $f0, $f2
-)
-#endif
 
 
 
