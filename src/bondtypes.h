@@ -1255,7 +1255,7 @@ typedef union
             s16               frameb;
             s32               unk34;
             s32               unk38;
-            s32               unk3c;
+            f32               unk3c;
             // 0x40
             f32               unk40;
             f32               unk44;

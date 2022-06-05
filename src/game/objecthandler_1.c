@@ -4998,67 +4998,31 @@ f32 objecthandlerGetModelField28(Model *model)
     return model->unk28;
 }
 
-#ifdef NONMATCHING
 f32 sub_GAME_7F06F5C4(Model *model)
 {
-    f32   temp_f2;
-    ModelAnimation *temp_v0;
+    f32 unk3c;
+    ModelAnimation *modelAnimation;
 
-    temp_f2 = model->unk3C;
-    if (temp_f2 >= 0.0f)
+    unk3c = model->unk3c;
+    if (unk3c >= 0.0f)
     {
-        return temp_f2;
+        return unk3c;
     }
-    temp_v0 = model->anim;
-    if (temp_v0 != 0)
+
+    modelAnimation = model->anim;
+    
+    if (modelAnimation != NULL)
     {
-        return temp_v0->unk04 - 1;
+        return modelAnimation->unk04 - 1;
     }
     return 0.0f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06F5C4
-/* 0A40F4 7F06F5C4 44806000 */  mtc1  $zero, $f12
-/* 0A40F8 7F06F5C8 C482003C */  lwc1  $f2, 0x3c($a0)
-/* 0A40FC 7F06F5CC 4602603E */  c.le.s $f12, $f2
-/* 0A4100 7F06F5D0 00000000 */  nop   
-/* 0A4104 7F06F5D4 45020004 */  bc1fl .L7F06F5E8
-/* 0A4108 7F06F5D8 8C820020 */   lw    $v0, 0x20($a0)
-/* 0A410C 7F06F5DC 03E00008 */  jr    $ra
-/* 0A4110 7F06F5E0 46001006 */   mov.s $f0, $f2
-
-/* 0A4114 7F06F5E4 8C820020 */  lw    $v0, 0x20($a0)
-.L7F06F5E8:
-/* 0A4118 7F06F5E8 50400007 */  beql  $v0, $zero, .L7F06F608
-/* 0A411C 7F06F5EC 46006006 */   mov.s $f0, $f12
-/* 0A4120 7F06F5F0 944E0004 */  lhu   $t6, 4($v0)
-/* 0A4124 7F06F5F4 25CFFFFF */  addiu $t7, $t6, -1
-/* 0A4128 7F06F5F8 448F2000 */  mtc1  $t7, $f4
-/* 0A412C 7F06F5FC 03E00008 */  jr    $ra
-/* 0A4130 7F06F600 46802020 */   cvt.s.w $f0, $f4
-
-/* 0A4134 7F06F604 46006006 */  mov.s $f0, $f12
-.L7F06F608:
-/* 0A4138 7F06F608 03E00008 */  jr    $ra
-/* 0A413C 7F06F60C 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 f32 sub_GAME_7F06F610(Model *model)
 {
     return model->unk40;
 }
-
-
-
-
-
 
 #ifdef NONMATCHING
 /**
