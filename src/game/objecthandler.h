@@ -73,7 +73,7 @@ void sub_GAME_7F06D2E4(s32, s32, ModelSkeleton*, void* anim, s32, s16*);
 
 // arg2 unknown type.
 void sub_GAME_7F075FAC(Model *, ModelFileHeader *, void *);
-void modelSetAnimFlipFunction(Model **, void (*)());
+void modelSetAnimFlipFunction(Model *model, void (*arg1)());
 void subcalcmatrices(struct unk_joint_list *, Model *);
 void instcalcmatrices(struct unk_joint_list *arg0, Model *arg1);
 void load_object_fill_header(struct ModelFileHeader *objheader, u8 *name, void *targetloc, s32 sizeleft, s32 buffer);

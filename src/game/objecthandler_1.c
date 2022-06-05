@@ -5978,18 +5978,9 @@ glabel modelSetAnimEndFrame
 
 
 
-#ifdef NONMATCHING
-void modelSetAnimFlipFunction(void) {
-
+void modelSetAnimFlipFunction(Model *model, void (*arg1)()) {
+    model->unk98 = arg1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel modelSetAnimFlipFunction
-/* 0A496C 7F06FE3C 03E00008 */  jr    $ra
-/* 0A4970 7F06FE40 AC850098 */   sw    $a1, 0x98($a0)
-)
-#endif
 
 
 // Unused function
