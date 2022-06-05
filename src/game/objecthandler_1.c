@@ -5832,60 +5832,24 @@ void modelSetAnimLooping(Model *model, f32 loopframe, f32 loopmerge) {
 }
 
 
-#ifdef NONMATCHING
-void modelSetAnimEndFrame(Model *model, f32 endframe)
-{
-    void *temp_v0;
-
-    temp_v0 = model->anim;
-    if ((temp_v0 != 0) && (endframe < (temp_v0->unk4 - 1)))
-    {
-        model->unk3C = endframe;
-        return;
+void modelSetAnimEndFrame(Model *model, f32 endframe) {
+    ModelAnimation *modelAnimation = model->anim;
+    
+    if ((modelAnimation != NULL) && (endframe < (modelAnimation->unk04 - 1))) {
+        model->unk3c = endframe;
+    } else {
+        model->unk3c = -1.0f;
     }
-    model->unk3C = -1.0f;
-
 }
-#else
-GLOBAL_ASM(
-.text
-glabel modelSetAnimEndFrame
-/* 0A4918 7F06FDE8 8C820020 */  lw    $v0, 0x20($a0)
-/* 0A491C 7F06FDEC 44856000 */  mtc1  $a1, $f12
-/* 0A4920 7F06FDF0 3C01BF80 */  li    $at, 0xBF800000 # -1.000000
-/* 0A4924 7F06FDF4 5040000D */  beql  $v0, $zero, .L7F06FE2C
-/* 0A4928 7F06FDF8 44814000 */   mtc1  $at, $f8
-/* 0A492C 7F06FDFC 944E0004 */  lhu   $t6, 4($v0)
-/* 0A4930 7F06FE00 25CFFFFF */  addiu $t7, $t6, -1
-/* 0A4934 7F06FE04 448F2000 */  mtc1  $t7, $f4
-/* 0A4938 7F06FE08 00000000 */  nop   
-/* 0A493C 7F06FE0C 468021A0 */  cvt.s.w $f6, $f4
-/* 0A4940 7F06FE10 4606603C */  c.lt.s $f12, $f6
-/* 0A4944 7F06FE14 00000000 */  nop   
-/* 0A4948 7F06FE18 45020004 */  bc1fl .L7F06FE2C
-/* 0A494C 7F06FE1C 44814000 */   mtc1  $at, $f8
-/* 0A4950 7F06FE20 03E00008 */  jr    $ra
-/* 0A4954 7F06FE24 E48C003C */   swc1  $f12, 0x3c($a0)
-
-/* 0A4958 7F06FE28 44814000 */  mtc1  $at, $f8
-.L7F06FE2C:
-/* 0A495C 7F06FE2C 00000000 */  nop   
-/* 0A4960 7F06FE30 E488003C */  swc1  $f8, 0x3c($a0)
-/* 0A4964 7F06FE34 03E00008 */  jr    $ra
-/* 0A4968 7F06FE38 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 void modelSetAnimFlipFunction(Model *model, void *callback) {
     model->animflipfunc = callback;
 }
 
 
-// Unused function
+/**
+ * Unused Function
+*/
 void sub_GAME_7F06FE44(Model *model, s32 arg1) {
     model->unk9c = arg1;
 }

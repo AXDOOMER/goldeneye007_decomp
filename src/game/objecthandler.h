@@ -20,7 +20,7 @@ void modelSetScale(Model*, f32);
 void getsuboffset(Model *, coord3d *);
 void sub_GAME_7F070AEC(Model *, s32, s32);
 void subcalcpos(Model *);
- void      modelSetAnimEndFrame(Model *model, float endframe);
+void modelSetAnimEndFrame(Model *model, f32 endframe);
 
 void modelSetAnimation(Model *, ModelAnimation *, s32, f32, f32, f32 duration);
 void modelSetAnimLooping(Model *, f32, f32);
