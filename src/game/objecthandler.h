@@ -38,7 +38,7 @@ f32 modelGetAbsAnimSpeed(Model*);
 s8 objecthandlerGetModelGunhand(Model *);
 f32 sub_GAME_7F06F5C4(Model *);
 void modelSetAnimSpeed(Model *, f32, f32);
-f32 sub_GAME_7F06F610(Model *);
+f32 modelGetAnimSpeed(Model *);
 void sub_GAME_7F06FE90(Model *arg0, f32 arg1, f32 arg2);
 f32 getinstsize(Model *arg0);
 

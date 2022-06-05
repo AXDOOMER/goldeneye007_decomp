@@ -4587,8 +4587,8 @@ bool chrHasStoppedOrPatroling(ChrRecord *self) //chrHasStoppedOrPatroling
     else if (self->actiontype == ACT_ANIM)
     {
         if (self->act_anim.unk034 ||
-            ((sub_GAME_7F06F610(self->model) >= 0.0f) && objecthandlerGetModelField28(self->model) >= (sub_GAME_7F06F5C4(self->model))) ||
-            ((sub_GAME_7F06F610(self->model) < 0.0f) && (objecthandlerGetModelField28(self->model) <= 0.0f)))
+            ((modelGetAnimSpeed(self->model) >= 0.0f) && objecthandlerGetModelField28(self->model) >= (sub_GAME_7F06F5C4(self->model))) ||
+            ((modelGetAnimSpeed(self->model) < 0.0f) && (objecthandlerGetModelField28(self->model) <= 0.0f)))
         {
             return TRUE;
         }
@@ -8657,7 +8657,7 @@ void chrlvTickBondIntro(ChrRecord *self)
             (struct ModelAnimation *)&ptr_animation_table->data[(s32)&ANIM_DATA_fire_standing_draw_one_handed_weapon_fast],
             0,
             86.0f,
-            sub_GAME_7F06F610(self_model),
+            modelGetAnimSpeed(self_model),
             24.0f);
 
         modelSetAnimEndFrame(self_model, 131.0f);

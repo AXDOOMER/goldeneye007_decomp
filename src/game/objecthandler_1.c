@@ -5019,7 +5019,7 @@ f32 sub_GAME_7F06F5C4(Model *model)
 }
 
 
-f32 sub_GAME_7F06F610(Model *model)
+f32 modelGetAnimSpeed(Model *model)
 {
     return model->unk40;
 }
@@ -5047,7 +5047,7 @@ f32 modelGetAbsAnimSpeed(Model *model)
  * Unused Function
 */
 f32 sub_GAME_7F06F640(Model *model) {
-    return sub_GAME_7F06F610(model) * model->unka4;
+    return modelGetAnimSpeed(model) * model->unka4;
 }
 
 
