@@ -5825,10 +5825,10 @@ glabel sub_GAME_7F06FCFC
 
 
 
-void modelSetAnimLooping(Model *model, f32 arg1, f32 arg2) {
-    model->unk26 = 1;
-    model->unk90 = arg1;
-    model->unk94 = arg2;
+void modelSetAnimLooping(Model *model, f32 loopframe, f32 loopmerge) {
+    model->animlooping = 1;
+    model->animloopframe = loopframe;
+    model->animloopmerge = loopmerge;
 }
 
 
