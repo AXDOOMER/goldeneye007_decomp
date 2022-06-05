@@ -5912,21 +5912,17 @@ void sub_GAME_7F06FE44(Model *model, s32 arg1) {
     model->unk9c = arg1;
 }
 
-void modelSetAnimSpeed(Model *arg0, f32 arg1, f32 arg2) {
-    if (arg2 > 0.0f) {
-        arg0->unk4c = arg2;
-        arg0->unk44 = arg1;
-        arg0->unk50 = 0.0f;
-        arg0->unk48 = arg0->unk40;
+void modelSetAnimSpeed(Model *model, f32 anim_speed, f32 startframe) {
+    if (startframe > 0.0f) {
+        model->unk4c = startframe;
+        model->unk44 = anim_speed;
+        model->unk50 = 0.0f;
+        model->unk48 = model->unk40;
         return;
     }
-    arg0->unk40 = arg1;
-    arg0->unk4c = 0.0f;
+    model->unk40 = anim_speed;
+    model->unk4c = 0.0f;
 }
-
-
-
-
 
 /**
  * @param arg0:
