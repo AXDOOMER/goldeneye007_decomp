@@ -5043,34 +5043,12 @@ f32 modelGetAbsAnimSpeed(Model *model)
     return speed;
 }
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F06F640(void) {
-
+/**
+ * Unused Function
+*/
+f32 sub_GAME_7F06F640(Model *model) {
+    return sub_GAME_7F06F610(model) * model->unka4;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06F640
-/* 0A4170 7F06F640 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0A4174 7F06F644 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A4178 7F06F648 0FC1BD84 */  jal   sub_GAME_7F06F610
-/* 0A417C 7F06F64C AFA40018 */   sw    $a0, 0x18($sp)
-/* 0A4180 7F06F650 8FAE0018 */  lw    $t6, 0x18($sp)
-/* 0A4184 7F06F654 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0A4188 7F06F658 C5C400A4 */  lwc1  $f4, 0xa4($t6)
-/* 0A418C 7F06F65C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0A4190 7F06F660 46040002 */  mul.s $f0, $f0, $f4
-/* 0A4194 7F06F664 03E00008 */  jr    $ra
-/* 0A4198 7F06F668 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
