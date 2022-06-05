@@ -1256,13 +1256,12 @@ typedef union
             s32               unk34;
             s32               unk38;
             f32               unk3c;
-            // 0x40
-            f32               unk40;
-            f32               unk44;
-            f32               unk48;
-            f32               unk4c;
-            // 0x50
-            f32               unk50;
+
+            f32               speed; /*0x40*/
+            f32               newspeed; /*0x44*/
+            f32               oldspeed; /*0x48*/
+            f32               timespeed; /*0x4C*/
+            f32               elapsespeed; /*0x50*/
 
             ModelAnimation   *anim2;
 

@@ -5021,7 +5021,7 @@ f32 sub_GAME_7F06F5C4(Model *model)
 
 f32 modelGetAnimSpeed(Model *model)
 {
-    return model->unk40;
+    return model->speed;
 }
 
 
@@ -5033,7 +5033,7 @@ f32 modelGetAbsAnimSpeed(Model *model)
 {
     f32 speed;
 
-    speed = model->unk40;
+    speed = model->speed;
     
     if (speed < 0.0f)
     {
@@ -5166,11 +5166,11 @@ void sub_GAME_7F06F780(Model *model, f32 arg1)
         model->unk25 = model->unk24;
         model->unk60 = model->unk30;
         model->unk62 = model->unk32;
-        model->unk70 = model->unk40;
-        model->unk74 = model->unk44;
-        model->unk78 = model->unk48;
-        model->unk7C = model->unk4C;
-        model->unk80 = model->unk50;
+        model->unk70 = model->speed;
+        model->unk74 = model->newspeed;
+        model->unk78 = model->oldspeed;
+        model->unk7C = model->timespeed;
+        model->unk80 = model->elapsespeed;
         model->unk6C = model->unk3C;
         if ((temp_a1->Opcode & 0xFF) == 1)
         {
@@ -5320,8 +5320,8 @@ void sub_GAME_7F06F878(Model *model, void *anim, s32 arg2, f32 startframe, f32 h
     model->anim  = anim;
     model->unk24 = arg2;
     model->unk3C = -1.0f;
-    model->unk40 = half;
-    model->unk4C = 0.0f;
+    model->speed = half;
+    model->timespeed = 0.0f;
     sub_GAME_7F06FF64(startframe, model, startframe, anim);
     model->unk26 = 0;
     temp_a1      = model->obj->RootNode;
@@ -5893,15 +5893,15 @@ void sub_GAME_7F06FE44(Model *model, s32 arg1) {
 void modelSetAnimSpeed(Model *model, f32 anim_speed, f32 startframe) {
     
     if (startframe > 0.0f) {
-        model->unk4c = startframe;
-        model->unk44 = anim_speed;
-        model->unk50 = 0.0f;
-        model->unk48 = model->unk40;
+        model->timespeed = startframe;
+        model->newspeed = anim_speed;
+        model->elapsespeed = 0.0f;
+        model->oldspeed = model->speed;
         return;
     }
 
-    model->unk40 = anim_speed;
-    model->unk4c = 0.0f;
+    model->speed = anim_speed;
+    model->timespeed = 0.0f;
 }
 
 /**
@@ -5911,13 +5911,13 @@ void modelSetAnimSpeed(Model *model, f32 anim_speed, f32 startframe) {
  * 
  * Address 0x7F06FE90.
 */
-void sub_GAME_7F06FE90(Model *arg0, f32 arg1, f32 arg2)
+void sub_GAME_7F06FE90(Model *model, f32 arg1, f32 arg2)
 {
     f32 temp_f0;
     f32 phi_f2;
     f32 t;
 
-    temp_f0 = arg0->unk28;
+    temp_f0 = model->unk28;
     
     if (temp_f0 <= arg1)
     {
@@ -5925,11 +5925,11 @@ void sub_GAME_7F06FE90(Model *arg0, f32 arg1, f32 arg2)
     }
     else
     {
-        phi_f2 = ( (f32)arg0->anim->unk04 - temp_f0) + arg1;
+        phi_f2 = ( (f32)model->anim->unk04 - temp_f0) + arg1;
     }
     
-    t = arg0->unk40 + ((2.0f * phi_f2) / arg2);
-    modelSetAnimSpeed(arg0, t, arg2);
+    t = model->speed + ((2.0f * phi_f2) / arg2);
+    modelSetAnimSpeed(model, t, arg2);
 }
 
 void sub_GAME_7F06FF18(Model *model, f32 animation_rate, f32 arg2) {
