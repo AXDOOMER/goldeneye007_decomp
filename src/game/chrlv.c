@@ -5730,7 +5730,7 @@ void chrlvTickDie(ChrRecord *self)
             modelSetAnimation(
                 model,
                 (void*)((s32)&ANIM_DATA_jump_backwards + (s32)&ptr_animation_table->data),
-                sub_GAME_7F06F5B4(model) == 0,
+                objecthandlerGetModelGunhand(model) == 0,
                 50.0f,
                 0.3f,
                 (((u16*)((s32)&ANIM_DATA_jump_backwards + (s32)&ptr_animation_table->data))[2] - 1.0f) - 50.0f);

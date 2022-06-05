@@ -35,7 +35,7 @@ f32 objecthandlerGetModelField28(Model *model);
 
 ModelAnimation * objecthandlerGetModelAnim(Model *);
 f32 modelGetAbsAnimSpeed(Model*);
-s8 sub_GAME_7F06F5B4(Model *);
+s8 objecthandlerGetModelGunhand(Model *);
 f32 sub_GAME_7F06F5C4(Model *);
 void modelSetAnimSpeed(Model *, f32, f32);
 f32 sub_GAME_7F06F610(Model *);

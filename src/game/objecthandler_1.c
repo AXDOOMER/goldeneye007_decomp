@@ -4979,9 +4979,6 @@ void subcalcmatrices(struct unk_joint_list *arg0, struct Model *arg1)
     instcalcmatrices(arg0, arg1);
 }
 
-
-
-
 /**
  * Address 0x7F06F5AC.
 */
@@ -4989,15 +4986,9 @@ struct ModelAnimation * objecthandlerGetModelAnim(struct Model* model) {
     return model->anim;
 }
 
-
-
-
-s8 sub_GAME_7F06F5B4(Model *model) {
+s8 objecthandlerGetModelGunhand(Model *model) {
     return model->gunhand;
 }
-
-
-
 
 /**
  * Address 0x7F06F5BC.
@@ -5006,10 +4997,6 @@ f32 objecthandlerGetModelField28(Model *model)
 {
     return model->unk28;
 }
-
-
-
-
 
 #ifdef NONMATCHING
 f32 sub_GAME_7F06F5C4(Model *model)
