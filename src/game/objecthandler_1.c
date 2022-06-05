@@ -5913,6 +5913,7 @@ void sub_GAME_7F06FE44(Model *model, s32 arg1) {
 }
 
 void modelSetAnimSpeed(Model *model, f32 anim_speed, f32 startframe) {
+    
     if (startframe > 0.0f) {
         model->unk4c = startframe;
         model->unk44 = anim_speed;
@@ -5920,6 +5921,7 @@ void modelSetAnimSpeed(Model *model, f32 anim_speed, f32 startframe) {
         model->unk48 = model->unk40;
         return;
     }
+
     model->unk40 = anim_speed;
     model->unk4c = 0.0f;
 }
