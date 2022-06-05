@@ -5880,8 +5880,8 @@ glabel modelSetAnimEndFrame
 
 
 
-void modelSetAnimFlipFunction(Model *model, void (*arg1)()) {
-    model->unk98 = arg1;
+void modelSetAnimFlipFunction(Model *model, void *callback) {
+    model->animflipfunc = callback;
 }
 
 

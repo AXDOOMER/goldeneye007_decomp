@@ -1301,7 +1301,7 @@ typedef union
             // 0x90
             f32               unk90;
             f32               unk94;
-            s32               unk98;
+            s32               animflipfunc; /*0x98*/
             s32               unk9c;
             // 0xa0
             s32               unka0;
