@@ -4992,19 +4992,9 @@ struct ModelAnimation * objecthandlerGetModelAnim(struct Model* model) {
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F06F5B4(void) {
-
+s8 sub_GAME_7F06F5B4(Model *model) {
+    return model->gunhand;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06F5B4
-/* 0A40E4 7F06F5B4 03E00008 */  jr    $ra
-/* 0A40E8 7F06F5B8 80820024 */   lb    $v0, 0x24($a0)
-)
-#endif
-
 
 
 
