@@ -33,7 +33,7 @@ void sub_GAME_7F06CE84(Model *, f32);
 void *extract_id_from_object_structure_microcode(Model *Objinst, ModelNode *root);
 f32 getsubroty(Model *objinst);
 void setsubroty(Model *objinst, f32 radHeading);
-void sub_GAME_7F06FC4C(Model *, ModelAnimation *, s32, f32, f32, f32, s32);
+void modelSetAnimationWithMerge(Model *, ModelAnimation *, s32, f32, f32, f32, s32);
 f32 objecthandlerGetModelField28(Model *model);
 
 ModelAnimation * objecthandlerGetModelAnim(Model *);

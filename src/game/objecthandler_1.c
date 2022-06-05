@@ -5679,11 +5679,11 @@ glabel sub_GAME_7F06F878
 #endif
 
 
-void sub_GAME_7F06FC4C(Model *model, ModelAnimation *modelAnimation, s32 flip, f32 startframe, f32 speed, f32 merge, s32 flag) {
-    if (flag != 0) {
-        sub_GAME_7F06F780(model, merge);
+void modelSetAnimationWithMerge(Model *model, ModelAnimation *modelAnimation, s32 flip, f32 startframe, f32 speed, f32 timemerge, s32 domerge) {
+    if (domerge != 0) {
+        sub_GAME_7F06F780(model, timemerge);
     }
-    sub_GAME_7F06F878(model, modelAnimation, flip, startframe, speed, merge);
+    sub_GAME_7F06F878(model, modelAnimation, flip, startframe, speed, timemerge);
 }
 
 
