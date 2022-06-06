@@ -597,7 +597,7 @@ extern u32 _sfxtblSegmentRomStart;
 extern u32 _sfxctlSegmentRomStart;
 extern u32 _instrumentstblSegmentRomStart;
 extern u32 _instrumentsctlSegmentRomStart;
-extern u32 _musicSbkSegmentRomStart;
+extern u32 _musicsampletblSegmentRomStart;
 
 /**
  * 75F0	700069F0
@@ -632,7 +632,7 @@ void musicSeqPlayerInit(void)
     ALBankFile *instrumentBank; // sp 204
 
     // This type/cast is not correct, but this is how it matches.
-    s32 tblSegmentRomStartAddress = (s32)&_musicSbkSegmentRomStart; // ??
+    s32 tblSegmentRomStartAddress = (s32)&_musicsampletblSegmentRomStart; // ??
 
     ALSynConfig synconfig; // sp 164-192
     ALSeqpConfig track1SeqpConfig; // sp 136-160
@@ -692,7 +692,7 @@ void musicSeqPlayerInit(void)
 
     // end auReadSeqFileHeader
 
-    musicSeqFileNew(g_musicDataTable, (u8*)&_musicSbkSegmentRomStart);
+    musicSeqFileNew(g_musicDataTable, (u8*)&_musicsampletblSegmentRomStart);
     
     size = TRACK_1_DATA_SEQ_SIZE_BYTES;
     g_musicXTrack1SeqData = alHeapAlloc(&g_musicHeap, 1, size);

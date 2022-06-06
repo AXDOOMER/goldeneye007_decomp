@@ -547,12 +547,12 @@ SECTIONS
    _musicfilesSegmentStart = ADDR(.musicfiles);
    _musicfilesSegmentRomStart = _fonttablectllarge1SegmentRomEnd;
    .musicfiles _musicfilesSegmentRomStart : AT(_musicfilesSegmentRomStart) {
-      build/e/assets/audio/sfx.ctl.o (.data);
-      build/e/assets/audio/sfx.tbl.o (.data);
-      build/e/assets/audio/instruments.ctl.o (.data);
-      build/e/assets/audio/instruments.tbl.o (.data);
-      build/e/assets/audio/music.o (.music);
-      build/e/assets/audio/music.o (.musiccompressed);
+      build/e/assets/music/sfx.ctl.o (.data);
+      build/e/assets/music/sfx.tbl.o (.data);
+      build/e/assets/music/instruments.ctl.o (.data);
+      build/e/assets/music/instruments.tbl.o (.data);
+      build/e/assets/music/music.o (.music);
+      build/e/assets/music/music.o (.musiccompressed);
    }
    _musicfilesSegmentEnd = ADDR(.musicfiles) + SIZEOF(.musicfiles);
    _musicfilesSegmentRomEnd = _musicfilesSegmentRomStart + SIZEOF(.musicfiles);
