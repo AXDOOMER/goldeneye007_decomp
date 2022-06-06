@@ -33,7 +33,7 @@ fi
 
 true="1"
 
-DIRs='assets assets/font assets/images assets/images/split assets/audio assets/ramrom/e assets/obseg assets/obseg/bg assets/obseg/brief assets/obseg/chr assets/obseg/gun assets/obseg/prop assets/obseg/setup assets/obseg/setup/u assets/obseg/stan assets/obseg/text assets/obseg/text/u'
+DIRs='assets assets/font assets/images assets/images/split assets/music assets/ramrom/e assets/obseg assets/obseg/bg assets/obseg/brief assets/obseg/chr assets/obseg/gun assets/obseg/prop assets/obseg/setup assets/obseg/setup/u assets/obseg/stan assets/obseg/text assets/obseg/text/u'
 
 for DIR in $DIRs
 do

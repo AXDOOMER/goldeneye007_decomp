@@ -31,7 +31,7 @@
 
 unsigned char *rom_buf;
 unsigned char tmp_buf[MAX_THREADS][MBTOBYTES(2)] = {0}; /* holds our input/output for gzip inflate (max output file supported 2MB) */
-pthread_t puff_threads[MAX_THREADS] = {0};
+pthread_t puff_threads[MAX_THREADS];
 unsigned long int counted = 0, success_thread[MAX_THREADS] = {0}, failed_thread[MAX_THREADS] = {0};
 
 struct pthread_arg
@@ -234,7 +234,7 @@ void extract_files(FILE *csvfile, const int max_threads)
 	cur_thread = 0;
 	while(cur_thread < max_threads) /* wait for thread to finish task */
 	{
-		if(puff_threads[cur_thread] != 0 && pthread_join(puff_threads[cur_thread], NULL) != 0)
+		if(pthread_join(puff_threads[cur_thread], NULL) != 0)
 		{
 			continue;
 		}
