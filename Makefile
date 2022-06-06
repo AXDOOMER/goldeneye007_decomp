@@ -572,7 +572,7 @@ help:
 	@echo "    all                            $(call SET_TEXTATTRIB,$(FG_LIME)) Build$(RESTORECOLOUR) all (default)"
 	@echo "    clean                          $(call SET_TEXTATTRIB,$(FG_RED)) Delete all$(RESTORECOLOUR) build artifacts"
 	@echo "    dataclean                      $(call SET_TEXTATTRIB,$(FG_RED)) Delete$(RESTORECOLOUR) only asset build artifacts"
-  @echo "    audioclean                     $(FGRED) Delete$(RESTORECOLOUR) only audio asset build artifacts"
+	@echo "    audioclean                     $(call SET_TEXTATTRIB,$(FG_RED)) Delete$(RESTORECOLOUR) only audio asset build artifacts"
 	@echo "    codeclean                      $(call SET_TEXTATTRIB,$(FG_RED)) Delete$(RESTORECOLOUR) only code (asm, .c) build artifacts"
 	@echo "    libultraclean                  $(call SET_TEXTATTRIB,$(FG_RED)) Delete$(RESTORECOLOUR) only code (asm, .c) build artifacts "
 	@echo "                                    from Rare's libultra files"
