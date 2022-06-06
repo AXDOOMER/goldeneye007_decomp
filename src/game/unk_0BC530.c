@@ -112,7 +112,7 @@ void sub_GAME_7F0BC7D4(void)
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0BC7D4
@@ -156,7 +156,7 @@ glabel sub_GAME_7F0BC7D4
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0BC7D4
@@ -230,7 +230,7 @@ s32 sub_GAME_7F0BC85C(s32 index)
     mtx[3][0] = (room->pos).x * room_data_float2 - g_CurrentPlayer->current_model_pos.f[0];
     mtx[3][1] = (room->pos).y * room_data_float2 - g_CurrentPlayer->current_model_pos.f[1];
     mtx[3][2] = (room->pos).z * room_data_float2 - g_CurrentPlayer->current_model_pos.f[2];
-    sub_GAME_7F058C9C(mtx,mtx_array_bss_80083DB0[iVar2]);
+    matrix_4x4_f32_to_s32(mtx,mtx_array_bss_80083DB0[iVar2]);
   }
   else {
     dword_CODE_bss_80083320[iVar2] = 0;
@@ -239,7 +239,7 @@ s32 sub_GAME_7F0BC85C(s32 index)
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0BC85C
@@ -329,7 +329,7 @@ glabel sub_GAME_7F0BC85C
 /* 0F14C8 7F0BC998 C4500040 */  lwc1  $f16, 0x40($v0)
 /* 0F14CC 7F0BC99C 46004282 */  mul.s $f10, $f8, $f0
 /* 0F14D0 7F0BC9A0 46105481 */  sub.s $f18, $f10, $f16
-/* 0F14D4 7F0BC9A4 0FC16327 */  jal   sub_GAME_7F058C9C
+/* 0F14D4 7F0BC9A4 0FC16327 */  jal   matrix_4x4_f32_to_s32
 /* 0F14D8 7F0BC9A8 E7B20064 */   swc1  $f18, 0x64($sp)
 /* 0F14DC 7F0BC9AC 02001025 */  move  $v0, $s0
 .L7F0BC9B0:
@@ -341,7 +341,7 @@ glabel sub_GAME_7F0BC85C
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0BC85C
@@ -431,7 +431,7 @@ glabel sub_GAME_7F0BC85C
 /* 0EE788 7F0BBD98 C4500040 */  lwc1  $f16, 0x40($v0)
 /* 0EE78C 7F0BBD9C 46004282 */  mul.s $f10, $f8, $f0
 /* 0EE790 7F0BBDA0 46105481 */  sub.s $f18, $f10, $f16
-/* 0EE794 7F0BBDA4 0FC16451 */  jal   sub_GAME_7F058C9C
+/* 0EE794 7F0BBDA4 0FC16451 */  jal   matrix_4x4_f32_to_s32
 /* 0EE798 7F0BBDA8 E7B20064 */   swc1  $f18, 0x64($sp)
 /* 0EE79C 7F0BBDAC 02001025 */  move  $v0, $s0
 .L7F0BBDB0:

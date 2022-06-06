@@ -15,13 +15,17 @@ extern s32 vtxallocator;
 // arg0 unknown pointer
 void sub_GAME_7F070090(void *arg0, f32 arg1, f32 arg2);
 void sub_GAME_7F06FF18(Model *, f32, f32);
-void set_obj_instance_controller_scale(Model*, f32);
+void sub_GAME_7F06FF5C(Model *model, s32 arg1);
+void modelSetScale(Model*, f32);
 void getsuboffset(Model *, coord3d *);
 void sub_GAME_7F070AEC(Model *, s32, s32);
 void subcalcpos(Model *);
- void      modelSetAnimEndFrame(Model *model, float endframe);
+void modelSetAnimEndFrame(Model *model, f32 endframe);
 
-void modelSetAnimation(Model *, ModelAnimation *, s32, f32, f32, f32);
+void sub_GAME_7F06F780(Model *, f32);
+void sub_GAME_7F06F878(Model *, ModelAnimation *, s32, f32, f32, f32);
+
+void modelSetAnimation(Model *, ModelAnimation *, s32, f32, f32, f32 duration);
 void modelSetAnimLooping(Model *, f32, f32);
 void modelSetAnimEndFrame(Model *, f32);
 void sub_GAME_7F06CE84(Model *, f32);
@@ -29,23 +33,24 @@ void sub_GAME_7F06CE84(Model *, f32);
 void *extract_id_from_object_structure_microcode(Model *Objinst, ModelNode *root);
 f32 getsubroty(Model *objinst);
 void setsubroty(Model *objinst, f32 radHeading);
-void sub_GAME_7F06FC4C(Model *, u8 *, s32, f32, f32, f32, s32);
+void modelSetAnimationWithMerge(Model *, ModelAnimation *, s32, f32, f32, f32, s32);
 f32 objecthandlerGetModelField28(Model *model);
 
 ModelAnimation * objecthandlerGetModelAnim(Model *);
 f32 modelGetAbsAnimSpeed(Model*);
-s32 sub_GAME_7F06F5B4(Model *);
+s8 objecthandlerGetModelGunhand(Model *);
 f32 sub_GAME_7F06F5C4(Model *);
-s32 modelSetAnimSpeed(Model *, f32, f32);
-f32 sub_GAME_7F06F610(Model *);
-s32 sub_GAME_7F06FE90(Model *arg0, f32 arg1, f32 arg2);
+void modelSetAnimSpeed(Model *, f32, f32);
+f32 modelGetAnimSpeed(Model *);
+void sub_GAME_7F06FE90(Model *arg0, f32 arg1, f32 arg2);
 f32 getinstsize(Model *arg0);
 
-void load_object_into_memory(ModelFileHeader *header,char *name);
+void fileLoad(ModelFileHeader *header,char *name);
 void load_object_into_memory_unused_maybe(ModelFileHeader *header,int *recallstring,int *targetloc,int sizeleft);
-void set_objuse_flag_compute_grp_nums_set_obj_loaded(ModelFileHeader *objheader);
+void modelCalculateRwDataLen(ModelFileHeader *objheader);
 Model *get_aircraft_obj_instance_controller(ModelFileHeader *);
 void sub_GAME_7F06C3B4(Model *, s32,  ModelFileHeader *);
+Mtxf *getsubmatrix(Model *objinst);
 
 // tentative signature
 void setpartoffset(Model *, ModelNode *, coord3d *);
@@ -71,9 +76,13 @@ void sub_GAME_7F06D2E4(s32, s32, ModelSkeleton*, void* anim, s32, s16*);
 
 // arg2 unknown type.
 void sub_GAME_7F075FAC(Model *, ModelFileHeader *, void *);
-void modelSetAnimFlipFunction(Model **, void (*)());
+void modelSetAnimFlipFunction(Model *, void *);
 void subcalcmatrices(struct unk_joint_list *, Model *);
 void instcalcmatrices(struct unk_joint_list *arg0, Model *arg1);
+void load_object_fill_header(struct ModelFileHeader *objheader, u8 *name, void *targetloc, s32 sizeleft, s32 buffer);
+void* get_obj_instance_controller_for_header(struct ModelFileHeader* arg0);
+void subdraw(s32 arg0, struct Model *);
+void sub_GAME_7F06EFC4(struct Model *);
 
 #ifndef VERSION_EU
 void return_null(void);

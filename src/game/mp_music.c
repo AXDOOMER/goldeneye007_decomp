@@ -1975,16 +1975,20 @@ glabel reset_all_music_slots
 
 
 
-void musicSetXReason(s32 slot, s32 min, s32 sec)
+void musicPlaySlot(s32 slot, s32 min, s32 sec)
 {
-    if ((&music_slot_active_0)[slot] == 0) {
-        (&music_slot_active_0)[slot] = 1;
+#ifdef DEBUG
+    osSyncPrintf("ai_ifmusicqueueemptyjumpf : %s, State=%x (getlvleveltime60=%f)\n", MUSIC_TRACK_ToString[slot], (&music_slot_active_0)[slot], getlvleveltime60);
+#endif
+    if ((&music_slot_active_0)[slot] == FALSE)
+    {
+        (&music_slot_active_0)[slot] = TRUE;
         (&music_slot_minutes_0)[slot] = min * MP_MUSIC_FRAMERATE;
         (&music_slot_seconds_0)[slot] = sec * MP_MUSIC_FRAMERATE;
     }
 }
 
-void musicUnsetXReason(s32 slot)
+void musicStopSlot(s32 slot)
 {
     if (-1 < slot)
     {

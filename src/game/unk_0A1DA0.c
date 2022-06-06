@@ -38,14 +38,15 @@ u32 D_8004095C = 0;
 
 
 //D:80040960
-u32 D_80040960[] = {
-    0xFFFFFFFF, 
-    0xFFFFC8FF, 
-    0xFF0000FF, 
-    0xFFFFFFFF, 
-    0xFFFFFFFF, 
-    0xFFFFFFFF,
-    0, 0
+struct rgba_u8 D_80040960[8] = {
+    { 0xFF, 0xFF, 0xFF, 0xFF }, 
+    { 0xFF, 0xFF, 0xC8, 0xFF }, 
+    { 0xFF, 0x00, 0x00, 0xFF },
+    { 0xFF, 0xFF, 0xFF, 0xFF },
+    { 0xFF, 0xFF, 0xFF, 0xFF },
+    { 0xFF, 0xFF, 0xFF, 0xFF },
+    { 0 },
+    { 0 }
 };
 u32 D_80040980 = 0;
 
@@ -1354,7 +1355,7 @@ void update_broken_windows(void) {
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 
 GLOBAL_ASM(
 .late_rodata
@@ -1608,7 +1609,7 @@ glabel update_broken_windows
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_8004CE00
@@ -1991,7 +1992,7 @@ glabel sub_GAME_7F0A2C44
 /* 0D7944 7F0A2E14 E7B200C4 */  swc1  $f18, 0xc4($sp)
 /* 0D7948 7F0A2E18 C4460040 */  lwc1  $f6, 0x40($v0)
 /* 0D794C 7F0A2E1C 46062201 */  sub.s $f8, $f4, $f6
-/* 0D7950 7F0A2E20 0FC16327 */  jal   sub_GAME_7F058C9C
+/* 0D7950 7F0A2E20 0FC16327 */  jal   matrix_4x4_f32_to_s32
 /* 0D7954 7F0A2E24 E7A800C8 */   swc1  $f8, 0xc8($sp)
 /* 0D7958 7F0A2E28 8FB200D0 */  lw    $s2, 0xd0($sp)
 /* 0D795C 7F0A2E2C 3C080102 */  lui   $t0, (0x01020040 >> 16) # lui $t0, 0x102
@@ -2074,7 +2075,7 @@ void sub_GAME_7F0A2F30(void) {
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_80057740
@@ -2352,7 +2353,7 @@ glabel sub_GAME_7F0A2F30
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_8004CE10
@@ -2718,7 +2719,7 @@ void sub_GAME_7F0A33F8(void) {
 
 }
 #else
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_8005774C
@@ -3102,7 +3103,7 @@ glabel sub_GAME_7F0A33F8
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_8005774C
@@ -3591,13 +3592,68 @@ glabel sub_GAME_7F0A3978
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0A3AB8(void) {
+/**
+ * Setup watch rectangles in the usual manner.
+ * This is called to setup the screen select rectangles, but note
+ * that the colors are overwritten in set_page_rectangle_colors.
+ * Also used to initialize watch static.
+ * @param vtx: Pointer to first vertex in a {@code struct WatchRectangle}.
+ * @param startx:
+ * @param startz:
+ * @param width:
+ * @param height:
+ * @param horizontal_offset:
+ * @param vertical_offset:
+ * 
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical instructions: no
+ * - identical registers: fail
+ * 
+ * Notes: Instruction order is just wrong until the loop starts.
+ * There's an extra move instruction.
+*/
+struct WatchVertex *setup_watch_rectangles(struct WatchVertex *vtx, s32 startx, s32 startz, s32 width, s32 height, s32 horizontal_offset, s32 vertical_offset)
+{
+    s32 i;
+    s32 j;
+    s32 xval;
+    s32 zval;
+    
+    xval = startx + horizontal_offset;
 
+    if(vtx); // seems to be needed to match return and last few lines.
+
+    for (i=0; i<2; i++, xval += width)
+    {
+        zval = startz + vertical_offset;
+
+        for (j=0; j<2; j++, zval += height)
+        {
+            vtx->coord1.AsArray[0] = xval;
+            vtx->coord1.AsArray[1] = 0;
+            vtx->coord1.AsArray[2] = zval;
+
+            vtx->coord2.AsArray[0] = 0;
+            vtx->coord2.AsArray[1] = 0;
+            vtx->coord2.AsArray[2] = 0;
+
+            vtx->color.rgba[0] = 0x20;
+            vtx->color.rgba[1] = 0x70;
+            vtx->color.rgba[2] = 0x20;
+            vtx->color.rgba[3] = 0xF0;
+
+            vtx++;
+        }
+    }
+
+    return vtx;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0A3AB8
+glabel setup_watch_rectangles
 /* 0D85E8 7F0A3AB8 27BDFFF8 */  addiu $sp, $sp, -8
 /* 0D85EC 7F0A3ABC 8FAE001C */  lw    $t6, 0x1c($sp)
 /* 0D85F0 7F0A3AC0 AFB00004 */  sw    $s0, 4($sp)
@@ -3641,85 +3697,44 @@ glabel sub_GAME_7F0A3AB8
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0A3B40(void) {
+Gfx *sub_GAME_7F0A3B40(Gfx *gdl, s32 *arg1)
+{
+    gSPVertex(gdl++, arg1, 4, 0);
 
+    // gfxdis can't parse this, but maybe?: gSPModifyVertex(gdl++, 16, 0, 0x2110);
+    // manual specification:
+    {								\
+        Gfx *_g = (Gfx *)(gdl++);		\
+        _g->words.w0 = 0xB1000032;	\
+        _g->words.w1 = 0x2110;		\
+    }
+
+    return gdl;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A3B40
-/* 0D8670 7F0A3B40 3C0E0430 */  lui   $t6, (0x04300040 >> 16) # lui $t6, 0x430
-/* 0D8674 7F0A3B44 35CE0040 */  ori   $t6, (0x04300040 & 0xFFFF) # ori $t6, $t6, 0x40
-/* 0D8678 7F0A3B48 24860008 */  addiu $a2, $a0, 8
-/* 0D867C 7F0A3B4C 3C0FB100 */  lui   $t7, (0xB1000032 >> 16) # lui $t7, 0xb100
-/* 0D8680 7F0A3B50 AC8E0000 */  sw    $t6, ($a0)
-/* 0D8684 7F0A3B54 AC850004 */  sw    $a1, 4($a0)
-/* 0D8688 7F0A3B58 35EF0032 */  ori   $t7, (0xB1000032 & 0xFFFF) # ori $t7, $t7, 0x32
-/* 0D868C 7F0A3B5C 24182110 */  li    $t8, 8464
-/* 0D8690 7F0A3B60 ACD80004 */  sw    $t8, 4($a2)
-/* 0D8694 7F0A3B64 ACCF0000 */  sw    $t7, ($a2)
-/* 0D8698 7F0A3B68 03E00008 */  jr    $ra
-/* 0D869C 7F0A3B6C 24C20008 */   addiu $v0, $a2, 8
-)
-#endif
 
 
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0A3B70(void) {
-
+// unreferenced
+void unused_7F0A3B70(s32 arg0, struct rgba_u8 *arg1)
+{
+    arg1->r = D_80040960[arg0].r;
+    arg1->g = D_80040960[arg0].g;
+    arg1->b = D_80040960[arg0].b;
+    arg1->a = D_80040960[arg0].a;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A3B70
-/* 0D86A0 7F0A3B70 3C0F8004 */  lui   $t7, %hi(D_80040960) 
-/* 0D86A4 7F0A3B74 25EF0960 */  addiu $t7, %lo(D_80040960) # addiu $t7, $t7, 0x960
-/* 0D86A8 7F0A3B78 00047080 */  sll   $t6, $a0, 2
-/* 0D86AC 7F0A3B7C 01CF1021 */  addu  $v0, $t6, $t7
-/* 0D86B0 7F0A3B80 90580000 */  lbu   $t8, ($v0)
-/* 0D86B4 7F0A3B84 A0B80000 */  sb    $t8, ($a1)
-/* 0D86B8 7F0A3B88 90590001 */  lbu   $t9, 1($v0)
-/* 0D86BC 7F0A3B8C A0B90001 */  sb    $t9, 1($a1)
-/* 0D86C0 7F0A3B90 90480002 */  lbu   $t0, 2($v0)
-/* 0D86C4 7F0A3B94 A0A80002 */  sb    $t0, 2($a1)
-/* 0D86C8 7F0A3B98 90490003 */  lbu   $t1, 3($v0)
-/* 0D86CC 7F0A3B9C 03E00008 */  jr    $ra
-/* 0D86D0 7F0A3BA0 A0A90003 */   sb    $t1, 3($a1)
-)
-#endif
 
 
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0A3BA4(void) {
-
+// unreferenced
+void unused_7F0A3BA4(s32 arg0, struct rgba_u8 *arg1)
+{
+    D_80040960[arg0].r = arg1->r;
+    D_80040960[arg0].g = arg1->g;
+    D_80040960[arg0].b = arg1->b;
+    D_80040960[arg0].a = arg1->a;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A3BA4
-/* 0D86D4 7F0A3BA4 90B80000 */  lbu   $t8, ($a1)
-/* 0D86D8 7F0A3BA8 3C0F8004 */  lui   $t7, %hi(D_80040960) 
-/* 0D86DC 7F0A3BAC 25EF0960 */  addiu $t7, %lo(D_80040960) # addiu $t7, $t7, 0x960
-/* 0D86E0 7F0A3BB0 00047080 */  sll   $t6, $a0, 2
-/* 0D86E4 7F0A3BB4 01CF1021 */  addu  $v0, $t6, $t7
-/* 0D86E8 7F0A3BB8 A0580000 */  sb    $t8, ($v0)
-/* 0D86EC 7F0A3BBC 90B90001 */  lbu   $t9, 1($a1)
-/* 0D86F0 7F0A3BC0 A0590001 */  sb    $t9, 1($v0)
-/* 0D86F4 7F0A3BC4 90A80002 */  lbu   $t0, 2($a1)
-/* 0D86F8 7F0A3BC8 A0480002 */  sb    $t0, 2($v0)
-/* 0D86FC 7F0A3BCC 90A90003 */  lbu   $t1, 3($a1)
-/* 0D8700 7F0A3BD0 03E00008 */  jr    $ra
-/* 0D8704 7F0A3BD4 A0490003 */   sb    $t1, 3($v0)
-)
-#endif
-
 
 
 
@@ -3758,7 +3773,7 @@ void sub_GAME_7F0A3C08(void) {
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_80057750
@@ -3910,7 +3925,7 @@ glabel sub_GAME_7F0A3C08
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 
 /* same asm, but float .rodata references other .rodata */

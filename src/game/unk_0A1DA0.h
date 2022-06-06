@@ -53,7 +53,6 @@ typedef struct s_shattered_window_piece {
 extern s32 SHATTERED_WINDOW_PIECES_BUFFER_LEN;
 extern s_shattered_window_piece* ptr_shattered_window_pieces;
 extern u32 D_80040940;
-extern u32 D_80040960[];
 
 extern u32 D_80040980;
 extern u32 D_80040984;
@@ -73,5 +72,11 @@ Gfx * sub_GAME_7F0A2C44(Gfx *arg0);
 
 // tentative signature
 void *sub_GAME_7F0A3E1C(coord3d *arg0, s32 arg1, f32 arg2, s16 arg3);
+void sub_GAME_7F0A33F8(struct WatchVertex *arg0, s32 arg1, f32 arg2, s32 arg3);
+Gfx *sub_GAME_7F0A3978(Gfx *gdl, void *arg1, s32 unused_arg2, s32 arg3);
+Gfx *sub_GAME_7F0A3B40(Gfx *gdl, s32 *arg1);
+Gfx * sub_GAME_7F0A3330(Gfx *arg0, void * arg1, s32 arg2);
+void sub_GAME_7F0A2F30(s32 *arg0, s32 arg1, s32 arg2, f32 arg3);
+struct WatchVertex *setup_watch_rectangles(struct WatchVertex *vtx, s32 startx, s32 startz, s32 width, s32 height, s32 horizontal_offset, s32 vertical_offset);
 
 #endif

@@ -160,7 +160,7 @@ void bossInitMainthreadData(void)
     viInitDebugNoticeList();
     viInitVideoSettings();
     indycommInit();
-    g_DebugAndUpdateStageFlag = rmonIsFinalBuild();
+    g_DebugAndUpdateStageFlag = rmonIsDisabled();
     obInitDebugNoticeList();
     rspInitDebugNoticeList();
     dynInitDebugNoticeList();
@@ -254,7 +254,7 @@ void bossEntry(void) {
     }
 }
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 /**
  * Main program loop.
  *
@@ -321,6 +321,7 @@ void bossMainloop(void)
         tokenFindLevel = (const unsigned char *)tokenFind(1, "-level_");
 
         // quick hack strltolon, converts the two digit ASCII level to 32bit int
+        // eg, "09" = 48*10 + 57 - 528 = 9
         g_StageNum = (((s32)(tokenFindLevel[0] * 10) + (s32)tokenFindLevel[1]) - 0x210);
     }
 
@@ -333,7 +334,7 @@ void bossMainloop(void)
 
         if (tokenFind(1, "-hard"))
         {
-            // convert ASCII difficulty value to int in set difficulty calls
+            // convert ASCII difficulty value to int in set difficulty calls eg '1' = 49, 49-48 = 1
             set_selected_difficulty(*(const unsigned char*)tokenFind(1, "-hard") - '0');
             lvlSetSelectedDifficulty(*(const unsigned char*)tokenFind(1, "-hard") - '0');
         }
@@ -653,7 +654,7 @@ void bossMainloop(void)
 }
 
 #endif
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 
 
 GLOBAL_ASM(
@@ -1084,7 +1085,7 @@ glabel bossMainloop
 /* 006654 70005A54 02602025 */   move  $a0, $s3
 /* 006658 70005A58 0FC2411C */  jal   get_debug_VisCVG_flag
 /* 00665C 70005A5C 00409825 */   move  $s3, $v0
-/* 006660 70005A60 10400037 */  beqz  $v0, .L70005B40
+/* 006660 70005A60 10400037 */  beqz  $v0, .L70005B40 /*NOP this so vis-cvg are always drawn*/
 /* 006664 70005A64 2407FFFF */   li    $a3, -1
 /* 006668 70005A68 02601025 */  move  $v0, $s3
 /* 00666C 70005A6C 26730008 */  addiu $s3, $s3, 8
@@ -1138,8 +1139,8 @@ glabel bossMainloop
 /* 00672C 70005B2C 01415825 */  or    $t3, $t2, $at
 /* 006730 70005B30 000EC380 */  sll   $t8, $t6, 0xe
 /* 006734 70005B34 0178C825 */  or    $t9, $t3, $t8
-/* 006738 70005B38 AE190000 */  sw    $t9, ($s0)
-/* 00673C 70005B3C AE000004 */  sw    $zero, 4($s0)
+/* 006738 70005B38 AE190000 */  sw    $t9, ($s0)/*NOP this so vis_cvg are always drawn*/
+/* 00673C 70005B3C AE000004 */  sw    $zero, 4($s0)/*NOP this so vis_cvg are always drawn*/
 .L70005B40:
 /* 006740 70005B40 0C00289B */  jal   debmenuDraw
 /* 006744 70005B44 02602025 */   move  $a0, $s3
@@ -1330,7 +1331,7 @@ LEVELID bossGetStageNum() {
  *     return to title screen from stage
  */
 void bossReturnTitleStage(void) {
-#ifndef VERSION_US
+#ifdef BUGFIX_R1
     display_objective_status_text_on_status_change();
     FUN_7f057a40();
 #endif

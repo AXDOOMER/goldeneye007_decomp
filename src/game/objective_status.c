@@ -226,7 +226,7 @@ glabel get_difficulty_for_objective
 
 
 
-
+//horrible hack to get ai matching, but it does correctly refrence this func with 2 params
 #pragma weak    objectiveGetStatus_WEAK = get_status_of_objective
 
 /*
@@ -288,7 +288,7 @@ OBJECTIVESTATUS get_status_of_objective(s32 objectiveNum) //#MATCH
                             {
                                 currentstatus = OBJECTIVESTATUS_FAILED;
                             }
-                            else if (!is_prop_in_inventory(obj->prop))
+                            else if (!bondinvHasPropInInv(obj->prop))
                             {
                                 currentstatus = OBJECTIVESTATUS_INCOMPLETE;
                             }
@@ -297,7 +297,7 @@ OBJECTIVESTATUS get_status_of_objective(s32 objectiveNum) //#MATCH
                         case PROPDEF_OBJECTIVE_DEPOSIT_OBJECT:
                         {
                             ObjectRecord *obj = objFindByTagId(objective->ObjRefID);
-                            if (obj && obj->prop && is_prop_in_inventory(obj->prop))
+                            if (obj && obj->prop && bondinvHasPropInInv(obj->prop))
                             {
                                 currentstatus = OBJECTIVESTATUS_INCOMPLETE;
                             }
@@ -403,7 +403,7 @@ bool objectiveIsAllComplete(void)
 }
 
 
-#ifndef VERSION_US
+#ifdef BUGFIX_R1
 void FUN_7f057a40(void)
 {
   num_objective_ptrs[1] = 1;

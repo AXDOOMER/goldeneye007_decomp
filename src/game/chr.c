@@ -2991,7 +2991,7 @@ PropRecord * replace_GUARDdata_with_actual_values( Model * arg0, coord3d * arg1,
     PropRecord * ret;
     s32 phi_a0;
 
-    ret = remove_last_obj_pos_data_entry();
+    ret = chrpropAllocate();
 
     if (ret != 0)
     {
@@ -3046,7 +3046,7 @@ void disable_sounds_attached_to_player_then_something(PropRecord *prop)
     }
 
     sub_GAME_7F050DE8(model);
-    sub_GAME_7F03E18C(prop);
+    chrpropDeregisterRooms(prop);
 
     p = prop->child;
     while (p != NULL)
@@ -3120,7 +3120,7 @@ glabel disable_sounds_attached_to_player_then_something
 .L7F0204C8:
 /* 054FF8 7F0204C8 0FC1437A */  jal   sub_GAME_7F050DE8
 /* 054FFC 7F0204CC 8FA40028 */   lw    $a0, 0x28($sp)
-/* 055000 7F0204D0 0FC0F863 */  jal   sub_GAME_7F03E18C
+/* 055000 7F0204D0 0FC0F863 */  jal   chrpropDeregisterRooms
 /* 055004 7F0204D4 02002025 */   move  $a0, $s0
 /* 055008 7F0204D8 8E040020 */  lw    $a0, 0x20($s0)
 /* 05500C 7F0204DC 10800009 */  beqz  $a0, .L7F020504
@@ -3304,7 +3304,7 @@ f32 sub_GAME_7F020794(ChrRecord *arg0)
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F020794
@@ -3355,7 +3355,7 @@ glabel sub_GAME_7F020794
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
 glabel D_80051D28
@@ -3413,7 +3413,7 @@ glabel sub_GAME_7F020794
 #endif
 #endif
 
-#ifndef VERSION_US
+#ifdef BUGFIX_R1
 s32 not_in_us_7F0209EC(s32 bodynum, s32 headnum)
 {
     if (j_text_trigger == 0)
@@ -4237,9 +4237,9 @@ void chrPositionRelated7F020D94(ChrRecord *self)
     upperbounds.x = myprop->pos.x + 50.0f;
     upperbounds.y = myprop->pos.y + 100.0f;
     upperbounds.z = myprop->pos.z + 50.0f;
-    sub_GAME_7F03E18C(myprop);
+    chrpropDeregisterRooms(myprop);
     sub_GAME_7F03E27C(myprop, &lowerbounds, &upperbounds, 50.0f);
-    sub_GAME_7F03E210(myprop);
+    chrpropRegisterRooms(myprop);
 }
 
 
@@ -5542,7 +5542,7 @@ glabel sub_GAME_7F020EF0
 /* 0562B4 7F021744 C4860014 */  lwc1  $f6, 0x14($a0)
 /* 0562B8 7F021748 46083283 */  div.s $f10, $f6, $f8
 /* 0562BC 7F02174C 44055000 */  mfc1  $a1, $f10
-/* 0562C0 7F021750 0FC1B51A */  jal   set_obj_instance_controller_scale
+/* 0562C0 7F021750 0FC1B51A */  jal   modelSetScale
 /* 0562C4 7F021754 00000000 */   nop   
 .Ljp7F021758:
 /* 0562C8 7F021758 3C0D7F02 */  lui   $t5, %hi(sub_GAME_7F02083C) # $t5, 0x7f02
@@ -6468,7 +6468,7 @@ glabel sub_GAME_7F020EF0
 /* 053E14 7F021424 C4860014 */  lwc1  $f6, 0x14($a0)
 /* 053E18 7F021428 46083283 */  div.s $f10, $f6, $f8
 /* 053E1C 7F02142C 44055000 */  mfc1  $a1, $f10
-/* 053E20 7F021430 0FC1B4CF */  jal   set_obj_instance_controller_scale
+/* 053E20 7F021430 0FC1B4CF */  jal   modelSetScale
 /* 053E24 7F021434 00000000 */   nop   
 .L7F021438:
 /* 053E28 7F021438 3C0D7F02 */  lui   $t5, %hi(sub_GAME_7F02083C) # $t5, 0x7f02
@@ -6998,7 +6998,7 @@ void chrGetD_8002CCB8(rgba_u8 *arg0)
 /**
  * Address 0x7F021BFC.
 */
-Gfx *chrRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
+Gfx *chrRenderProp(PropRecord *prop, Gfx *gdl, s32 withalpha)
 {
     ChrRecord *chr;
     Model *chrmodel;
@@ -7024,15 +7024,15 @@ Gfx *chrRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
     chrmodel = chr->model;
     spB4 = (s32) chr->fadealpha;
 
-    if ((chr->chrflags << 5) >= 0)
+    if ((chr->chrflags << 5) >= 0) //CHRFLAG_04000000
     {
         f32 f = chrobjFogVisRangeRelated(prop, getinstsize(chrmodel));
         spB4 = (s32) (f * (f32) spB4);
     }
 
-    if ((spB4 < 0xFF) || (chr->chrflags & 0x20000))
+    if ((spB4 < 0xFF) || (chr->chrflags & CHRFLAG_00020000))
     {
-        if (arg2 == 0)
+        if (withalpha == 0)
         {
             // nothing to do
             return gdl;
@@ -7044,7 +7044,7 @@ Gfx *chrRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
     }
     else
     {
-        if (arg2 == 0)
+        if (withalpha == 0)
         {
             spB8 = 1;
         }
@@ -7085,7 +7085,7 @@ Gfx *chrRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
                 held_hat_obj = prop_held_hat->obj;
             }
 
-            if ((sub_GAME_7F054A64(prop, &sp60) > 0) && ((chr->chrflags << 8) >= 0))
+            if ((sub_GAME_7F054A64(prop, &sp60) > 0) && ((chr->chrflags << 8) >= 0))//CHRFLAG_CULL_USING_HITBOX
             {
                 gdl = bgScissorCurrentPlayerViewF(gdl, sp60.left, sp60.top, sp60.width, sp60.height);
             }
@@ -7098,7 +7098,7 @@ Gfx *chrRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
             jlist.unk04 = 1;
             jlist.gdl = gdl;
             
-            if ((chr->chrflags & 0x2000) != 0)
+            if ((chr->chrflags & CHRFLAG_NO_SHADOW) != 0)
             {
                 sp4C = 0;
             }
@@ -7134,44 +7134,44 @@ Gfx *chrRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
 
             gdl = jlist.gdl;
 
-            if ((held_right_obj != NULL) && (( held_right_obj->state & ((u8)(1 << arg2) )) ))
+            if ((held_right_obj != NULL) && (( held_right_obj->state & ((u8)(1 << withalpha) )) ))
             {
-                gdl = sub_GAME_7F0A1A94(gdl, prop_held_right, arg2);
+                gdl = explosionRenderBulletImpactOnProp(gdl, prop_held_right, withalpha);
             }
 
-            if ((held_left_obj != NULL) && (( held_left_obj->state & ((u8)(1 << arg2) )) ))
+            if ((held_left_obj != NULL) && (( held_left_obj->state & ((u8)(1 << withalpha) )) ))
             {
-                gdl = sub_GAME_7F0A1A94(gdl, prop_held_left, arg2);
+                gdl = explosionRenderBulletImpactOnProp(gdl, prop_held_left, withalpha);
             }
 
-            if ((held_hat_obj != NULL) && (( held_hat_obj->state & ((u8)(1 << arg2) )) ))
+            if ((held_hat_obj != NULL) && (( held_hat_obj->state & ((u8)(1 << withalpha) )) ))
             {
-                gdl = sub_GAME_7F0A1A94(gdl, prop_held_hat, arg2);
+                gdl = explosionRenderBulletImpactOnProp(gdl, prop_held_hat, withalpha);
             }
 
-            if (arg2 != 0)
+            if (withalpha != 0)
             {
-                sub_GAME_7F08BD48(chr->model->unk0c, chr->model->obj->numMatrices);
+                bondviewTransformManyPosToViewMatrix(chr->model->render_pos, chr->model->obj->numMatrices);
 
                 if ((held_right_obj != NULL) && ((held_right_obj->runtime_bitflags & 0x800) == 0))
                 {
-                    sub_GAME_7F08BD48(held_right_obj->model->unk0c, held_right_obj->model->obj->numMatrices);
+                    bondviewTransformManyPosToViewMatrix(held_right_obj->model->render_pos, held_right_obj->model->obj->numMatrices);
                 }
 
                 if ((held_left_obj != NULL) && ((held_left_obj->runtime_bitflags & 0x800) == 0))
                 {
-                    sub_GAME_7F08BD48(held_left_obj->model->unk0c, held_left_obj->model->obj->numMatrices);
+                    bondviewTransformManyPosToViewMatrix(held_left_obj->model->render_pos, held_left_obj->model->obj->numMatrices);
                 }
 
                 if (held_hat_obj != NULL)
                 {
-                    sub_GAME_7F08BD48(held_hat_obj->model->unk0c, held_hat_obj->model->obj->numMatrices);
+                    bondviewTransformManyPosToViewMatrix(held_hat_obj->model->render_pos, held_hat_obj->model->obj->numMatrices);
                 }
             }
         }
     }
 
-    if (arg2 != 0)
+    if (withalpha != 0)
     {
         sub_GAME_7F06B248(chr->field_20);
         chr->field_20 = NULL;
@@ -8341,10 +8341,11 @@ void chrUpdateCollisionBounds(PropRecord *arg0, rect4f **arg1, s32 *arg2, f32 *y
     chr = arg0->chr;
 
     if (
-        (chr->actiontype != ACT_DIE)
-        && (chr->actiontype != ACT_DEAD)
-        && ((chr->chrflags & 0x10400) == 0)
-        && ((chr->hidden & 0x100) == 0))
+        (chr->actiontype != ACT_DIE) &&
+        (chr->actiontype != ACT_DEAD) &&
+        ((chr->chrflags & (CHRFLAG_00010000 | CHRFLAG_HIDDEN)) == 0) && 
+        ((chr->hidden & 0x100) == 0)
+        )
     {
         *arg2 = 4;
         *arg1 = &chr->collision_bounds;

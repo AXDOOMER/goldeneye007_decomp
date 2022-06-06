@@ -499,7 +499,7 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
                 for (i = 0; i < getPlayerCount(); i++)
                 {
                     set_cur_player(i);
-                    set_BONDdata_allguns_flag(get_BONDdata_allguns_flag() == 0);
+                    bondinvSetAllGunsFlag(bondinvGetAllGunsFlag() == 0);
                 }
                 break;
             case 18: // max ammo
@@ -644,6 +644,17 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
                         player_pos_x.x = (f32) playerprop->position.x;
                         player_pos_x.y = (f32) playerprop->position.y;
                         player_pos_x.z = (f32) playerprop->position.z;
+                        #ifdef DEBUG
+                        osSyncPrintf("%s%sbond world pos=%f,%f,%f dist from prev=%f\n",
+                                     "",
+                                     "",
+                                     playerprop->position.x,
+                                     playerprop->position.y,
+                                     playerprop->position.z,
+                                     sqrtf(((playerprop->position.x - player_pos_x.x) * (playerprop->position.x - player_pos_x.x)) +
+                                           ((playerprop->position.y - player_pos_x.y) * (playerprop->position.y - player_pos_x.y)) +
+                                           ((playerprop->position.z - player_pos_x.z) * (playerprop->position.z - player_pos_x.z))));
+                        #endif
                     }
                 }
                 break;
@@ -1069,9 +1080,9 @@ debug_allguns:
 .L7F0908F4:
 /* 0C5424 7F0908F4 0FC26C43 */  jal   set_cur_player
 /* 0C5428 7F0908F8 8FA4005C */   lw    $a0, 0x5c($sp)
-/* 0C542C 7F0908FC 0FC230AB */  jal   get_BONDdata_allguns_flag
+/* 0C542C 7F0908FC 0FC230AB */  jal   bondinvGetAllGunsFlag
 /* 0C5430 7F090900 00000000 */   nop   
-/* 0C5434 7F090904 0FC230A7 */  jal   set_BONDdata_allguns_flag
+/* 0C5434 7F090904 0FC230A7 */  jal   bondinvSetAllGunsFlag
 /* 0C5438 7F090908 2C440001 */   sltiu $a0, $v0, 1
 /* 0C543C 7F09090C 8FAA005C */  lw    $t2, 0x5c($sp)
 /* 0C5440 7F090910 254B0001 */  addiu $t3, $t2, 1

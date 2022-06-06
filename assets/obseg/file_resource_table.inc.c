@@ -881,8 +881,4 @@ struct fileentry file_resource_table[] = {
     {0}
 };
 
-//only defined here as used (so far) exclusively in ob.c
-//and easy to generate at compile time
-#define OBJ_INDEX_END OBENDSEG+1
-#define OBJ_INDEX_MAX OBENDSEG+10
 

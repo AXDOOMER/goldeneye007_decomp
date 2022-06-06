@@ -17,6 +17,6 @@
 // Public Records
 
 // Global Ai Lists
-extern AIListRecord gGlobalAILists[];
+extern AIListRecord g_GlobalAILists[];
 
 

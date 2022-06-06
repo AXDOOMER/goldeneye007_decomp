@@ -21,7 +21,7 @@ void matrix_4x4_7F058C4C(f32 arg0);
 void matrix_4x4_copy(Mtxf *src, Mtxf *dst);
 s32  matrix_4x4_multiply_homogeneous(Mtxf *lhs, Mtxf *rhs, Mtxf *result);
 
-void sub_GAME_7F058C9C(Mtxf *a, Mtxf *b);
+void matrix_4x4_f32_to_s32(Mtxf *a, Mtxf *b);
 void matrix_4x4_multiply_homogeneous_in_place(Mtxf *lhs, Mtxf *rhs);
 void matrix_4x4_transform_vector_in_place(Mtxf *matrix, vec3 vector);
 void matrix_4x4_set_identity(Mtxf *matrix);
@@ -31,6 +31,8 @@ void matrix_scalar_multiply(f32 scalar, f32 *matrix);
 void matrix_4x4_7F059908(Mtxf *arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9);
 void matrix_4x4_set_rotation_around_z(f32 angle, Mtxf *matrix);
 void matrix_4x4_multiply_in_place(Mtxf *lhs, Mtxf *rhs);
+void matrix_4x4_set_identity_and_position(vec3 position, Mtxf *matrix);
+void matrix_column_3_scalar_multiply_2(f32 scalar, f32 *matrix);
 
 // tenative guess
 void sub_GAME_7F058E78(Mtxf *arg0, Mtxf *arg1);

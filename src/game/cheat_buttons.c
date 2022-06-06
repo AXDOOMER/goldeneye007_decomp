@@ -672,9 +672,9 @@ u16 mBtnCheatUnlockAllGuns[] = {
     L_TRIG |          D_JPAD,
     L_TRIG |          L_JPAD,
     L_TRIG |          U_JPAD,
-                  L_CBUTTONS,
+                      L_CBUTTONS,
                       L_JPAD,
-                  D_CBUTTONS
+                      D_CBUTTONS
 };
 #pragma endregion
 
@@ -1024,10 +1024,10 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             return;
 
         case CHEAT_ALLGUNS:
-            if (!get_BONDdata_allguns_flag())
+            if (!bondinvGetAllGunsFlag())
             {
                 HUDMESSAGEBOTTOM((char *)langGet(TEXT(LMISC, 0x10)));
-                set_BONDdata_allguns_flag(TRUE);
+                bondinvSetAllGunsFlag(TRUE);
                 return;
             }
             return;
@@ -1061,7 +1061,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
 
                     if (flag)
                     {
-                        sndPlaySfx(g_musicSfxBufferPtr, WATCH_BEEP1_SFX, 0);
+                        sndPlaySfx(g_musicSfxBufferPtr, CAMERA_BEEP1_SFX, 0);
                         return;
                     }
 
@@ -1124,11 +1124,11 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             {
                 s32 vvv;
 
-                vvv = add_item_to_inventory(ITEM_RUGER);
-                vvv += add_item_to_inventory(ITEM_LASER);
-                vvv += add_item_to_inventory(ITEM_GOLDENGUN);
-                vvv += add_item_to_inventory(ITEM_SILVERWPPK);
-                vvv += add_item_to_inventory(ITEM_GOLDWPPK);
+                vvv = bondinvAddInvItem(ITEM_RUGER);
+                vvv += bondinvAddInvItem(ITEM_LASER);
+                vvv += bondinvAddInvItem(ITEM_GOLDENGUN);
+                vvv += bondinvAddInvItem(ITEM_SILVERWPPK);
+                vvv += bondinvAddInvItem(ITEM_GOLDWPPK);
 
                 give_cur_player_ammo(AMMO_MAGNUM, get_max_ammo_for_type(AMMO_MAGNUM));
                 give_cur_player_ammo(AMMO_GGUN, get_max_ammo_for_type(AMMO_GGUN));
@@ -1150,7 +1150,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
 
                 if (g_CurrentPlayer->ptr_char_objectinstance != NULL)
                 {
-                    set_obj_instance_controller_scale((struct Model *)g_CurrentPlayer->ptr_char_objectinstance, ((struct Model *)g_CurrentPlayer->ptr_char_objectinstance)->scale * 0.5f);
+                    modelSetScale((struct Model *)g_CurrentPlayer->ptr_char_objectinstance, ((struct Model *)g_CurrentPlayer->ptr_char_objectinstance)->scale * 0.5f);
                 }
                 return;
             }
@@ -1179,7 +1179,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_MAGNUM:
             if (player_count == 1)
             {
-                add_item_to_inventory(ITEM_RUGER);
+                bondinvAddInvItem(ITEM_RUGER);
                 give_cur_player_ammo(AMMO_MAGNUM, get_max_ammo_for_type(AMMO_MAGNUM));
                 return;
             }
@@ -1188,7 +1188,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_LASER:
             if (player_count == 1)
             {
-                add_item_to_inventory(ITEM_LASER);
+                bondinvAddInvItem(ITEM_LASER);
                 return;
             }
             return;
@@ -1196,7 +1196,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_GOLDEN_GUN:
             if (player_count == 1)
             {
-                add_item_to_inventory(ITEM_GOLDENGUN);
+                bondinvAddInvItem(ITEM_GOLDENGUN);
                 give_cur_player_ammo(AMMO_GGUN, get_max_ammo_for_type(AMMO_GGUN));
                 return;
             }
@@ -1205,7 +1205,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_SILVER_PP7:
             if (player_count == 1)
             {
-                add_item_to_inventory(ITEM_SILVERWPPK);
+                bondinvAddInvItem(ITEM_SILVERWPPK);
                 give_cur_player_ammo(AMMO_9MM, get_max_ammo_for_type(AMMO_9MM));
                 return;
             }
@@ -1214,7 +1214,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
         case CHEAT_GOLD_PP7:
             if (player_count == 1)
             {
-                add_item_to_inventory(ITEM_GOLDWPPK);
+                bondinvAddInvItem(ITEM_GOLDWPPK);
                 give_cur_player_ammo(AMMO_9MM, get_max_ammo_for_type(AMMO_9MM));
                 return;
             }
@@ -1263,9 +1263,9 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             if (player_count == 1)
             {
 #if defined(BUGFIX_R1)
-                add_item_to_inventory(ITEM_ROCKETLAUNCH);
+                bondinvAddInvItem(ITEM_ROCKETLAUNCH);
 #endif
-                add_doubles_item_to_inventory(ITEM_ROCKETLAUNCH, ITEM_ROCKETLAUNCH);
+                bondinvAddDoublesInvItem(ITEM_ROCKETLAUNCH, ITEM_ROCKETLAUNCH);
                 give_cur_player_ammo(AMMO_ROCKETS, get_max_ammo_for_type(AMMO_ROCKETS));
                 return;
             }
@@ -1275,9 +1275,9 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             if (player_count == 1)
             {
 #if defined(BUGFIX_R1)
-                add_item_to_inventory(ITEM_GRENADELAUNCH);
+                bondinvAddInvItem(ITEM_GRENADELAUNCH);
 #endif
-                add_doubles_item_to_inventory(ITEM_GRENADELAUNCH, ITEM_GRENADELAUNCH);
+                bondinvAddDoublesInvItem(ITEM_GRENADELAUNCH, ITEM_GRENADELAUNCH);
                 give_cur_player_ammo(AMMO_GRENADEROUND, get_max_ammo_for_type(AMMO_GRENADEROUND));
                 return;
             }
@@ -1287,9 +1287,9 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             if (player_count == 1)
             {
 #if defined(BUGFIX_R1)
-                add_item_to_inventory(ITEM_FNP90);
+                bondinvAddInvItem(ITEM_FNP90);
 #endif
-                add_doubles_item_to_inventory(ITEM_FNP90, ITEM_FNP90);
+                bondinvAddDoublesInvItem(ITEM_FNP90, ITEM_FNP90);
                 give_cur_player_ammo(AMMO_9MM, get_max_ammo_for_type(AMMO_9MM));
                 return;
             }
@@ -1299,9 +1299,9 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             if (player_count == 1)
             {
 #if defined(BUGFIX_R1)
-                add_item_to_inventory(ITEM_THROWKNIFE);
+                bondinvAddInvItem(ITEM_THROWKNIFE);
 #endif
-                add_doubles_item_to_inventory(ITEM_THROWKNIFE, ITEM_THROWKNIFE);
+                bondinvAddDoublesInvItem(ITEM_THROWKNIFE, ITEM_THROWKNIFE);
                 give_cur_player_ammo(AMMO_KNIFE, get_max_ammo_for_type(AMMO_KNIFE));
                 return;
             }
@@ -1313,16 +1313,16 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
 #if defined(BUGFIX_R1)
                 if (j_text_trigger)
                 {
-                    add_item_to_inventory(ITEM_ROCKETLAUNCH);
-                    add_item_to_inventory(ITEM_SNIPERRIFLE);
-                    add_doubles_item_to_inventory(ITEM_SNIPERRIFLE, ITEM_ROCKETLAUNCH);
+                    bondinvAddInvItem(ITEM_ROCKETLAUNCH);
+                    bondinvAddInvItem(ITEM_SNIPERRIFLE);
+                    bondinvAddDoublesInvItem(ITEM_SNIPERRIFLE, ITEM_ROCKETLAUNCH);
                     give_cur_player_ammo(AMMO_ROCKETS, get_max_ammo_for_type(AMMO_ROCKETS));
                     give_cur_player_ammo(ITEM_THROWKNIFE, get_max_ammo_for_type(ITEM_THROWKNIFE));
                     return;
                 }
-                add_item_to_inventory(ITEM_KNIFE);
+                bondinvAddInvItem(ITEM_KNIFE);
 #endif
-                add_doubles_item_to_inventory(ITEM_KNIFE, ITEM_KNIFE);
+                bondinvAddDoublesInvItem(ITEM_KNIFE, ITEM_KNIFE);
                 return;
             }
             return;
@@ -1331,9 +1331,9 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             if (player_count == 1)
             {
 #if defined(BUGFIX_R1)
-                add_item_to_inventory(ITEM_LASER);
+                bondinvAddInvItem(ITEM_LASER);
 #endif
-                add_doubles_item_to_inventory(ITEM_LASER, ITEM_LASER);
+                bondinvAddDoublesInvItem(ITEM_LASER, ITEM_LASER);
                 return;
             }
             return;
@@ -1363,7 +1363,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
                 if ((selected_folder_num >= 0) && (selected_folder_num < 4))
                 {
                     sub_GAME_7F01E760(selected_folder_num, val);
-                    sndPlaySfx(g_musicSfxBufferPtr, WATCH_BEEP1_SFX, 0);
+                    sndPlaySfx(g_musicSfxBufferPtr, CAMERA_BEEP1_SFX, 0);
                     return;
                 }
             }
@@ -1408,7 +1408,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
                     if (max - 1 == (unlock_count))
                     {
                         fileUnlockStageInFolderAtDifficulty(selected_folder_num, max - 1, DIFFICULTY_AGENT, 0x5F5E0FF);
-                        sndPlaySfx(g_musicSfxBufferPtr, WATCH_BEEP1_SFX, 0);
+                        sndPlaySfx(g_musicSfxBufferPtr, CAMERA_BEEP1_SFX, 0);
                     }
                 }
             }
@@ -1458,10 +1458,10 @@ void cheatButtonHandleCheatsTurnedOff(CHEAT_ID cheat_id)
             return;
             
         case CHEAT_ALLGUNS:
-            if (get_BONDdata_allguns_flag())
+            if (bondinvGetAllGunsFlag())
             {
                 HUDMESSAGEBOTTOM((char *)langGet(TEXT(LMISC, 0x1F)));
-                set_BONDdata_allguns_flag(FALSE);
+                bondinvSetAllGunsFlag(FALSE);
                 return;
             }
             return;
@@ -1495,7 +1495,7 @@ void cheatButtonHandleCheatsTurnedOff(CHEAT_ID cheat_id)
                 g_playerPerm->player_perspective_height = 1.0f;
                 if (g_CurrentPlayer->ptr_char_objectinstance)
                 {
-                    set_obj_instance_controller_scale(g_CurrentPlayer->ptr_char_objectinstance, 2.0f * ((struct Model *)g_CurrentPlayer->ptr_char_objectinstance)->scale);
+                    modelSetScale(g_CurrentPlayer->ptr_char_objectinstance, 2.0f * ((struct Model *)g_CurrentPlayer->ptr_char_objectinstance)->scale);
                 }
                 return;
             }
@@ -1691,13 +1691,13 @@ void cheatButtonSetDkMode(CHEAT_ID cheat_id)
         model = (Model*)guard->model;
         if (model)
         {
-            set_obj_instance_controller_scale(model, model->scale * scale);
+            modelSetScale(model, model->scale * scale);
         }
 #else
         if (guard->model && not_in_us_7F0209EC(guard->bodynum, guard->headnum))
         {
             model = (Model*)guard->model;
-            set_obj_instance_controller_scale(model, model->scale * scale);
+            modelSetScale(model, model->scale * scale);
         }
 #endif
     }

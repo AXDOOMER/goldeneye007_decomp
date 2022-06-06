@@ -10,7 +10,7 @@
 #include "lvl.h"
 #include <bondtypes.h>
 
-void reinit_inventory(void)
+void bondinvReinitInv(void)
 {
     s32 i;
 
@@ -21,7 +21,7 @@ void reinit_inventory(void)
 
     g_CurrentPlayer->ptr_inventory_first_in_cycle = NULL;
     g_CurrentPlayer->textoverrides                = NULL;
-    g_CurrentPlayer->equipcuritem                 = 0;
+    g_CurrentPlayer->equipcuritem                 = ITEM_UNARMED;
 }
 
 /**
@@ -30,7 +30,7 @@ void reinit_inventory(void)
  * Subject is expected to initially be at the head of the list. It works by
  * swapping the subject with the item to its right as many times as needed.
  */
-void inv_sort_item(InvItem *subject)
+void bondinvSortInv(InvItem *subject)
 {
     InvItem *candidate;
     s32      subjweapon1 = -1;
@@ -110,7 +110,7 @@ void inv_sort_item(InvItem *subject)
     }
 }
 
-void inv_insert_item(InvItem *item)
+void bondinvInsertItem(InvItem *item)
 {
     if (g_CurrentPlayer->ptr_inventory_first_in_cycle)
     {
@@ -127,11 +127,11 @@ void inv_insert_item(InvItem *item)
     }
 
     g_CurrentPlayer->ptr_inventory_first_in_cycle = item;
-    inv_sort_item(item);
+    bondinvSortInv(item);
     return;
 }
 
-void inventory_remove_item(InvItem *item)
+void bondinvRemoveItem(InvItem *item)
 {
     InvItem *prev;
     InvItem *next;
@@ -157,7 +157,7 @@ void inventory_remove_item(InvItem *item)
     return;
 }
 
-InvItem *get_ptr_next_available_weapon(void)
+InvItem *bondinvGetNextAvailItem(void)
 {
     int i;
 
@@ -172,17 +172,17 @@ InvItem *get_ptr_next_available_weapon(void)
     return NULL;
 }
 
-void set_BONDdata_allguns_flag(s32 all_guns)
+void bondinvSetAllGunsFlag(s32 all_guns)
 {
     g_CurrentPlayer->equipallguns = all_guns;
 }
 
-s32 get_BONDdata_allguns_flag(void)
+s32 bondinvGetAllGunsFlag(void)
 {
     return g_CurrentPlayer->equipallguns;
 }
 
-InvItem *get_inventory_item(ITEM_IDS weapon)
+InvItem *bondinvGetInvItem(ITEM_IDS weapon)
 {
     InvItem *first = g_CurrentPlayer->ptr_inventory_first_in_cycle;
     InvItem *item  = first;
@@ -210,12 +210,12 @@ InvItem *get_inventory_item(ITEM_IDS weapon)
  * @param item: enum Item ID eg: ITEM_KNIFE
  * @return TRUE/FALSE
  */
-int is_item_in_inventory(ITEM_IDS item)
+int bondinvHasInvItem(ITEM_IDS item)
 {
-    return get_inventory_item(item) != NULL;
+    return bondinvGetInvItem(item) != NULL;
 }
 
-InvItem *get_dual_weapon(ITEM_IDS right, ITEM_IDS left)
+InvItem *bondinvGetDualWeapon(ITEM_IDS right, ITEM_IDS left)
 {
     InvItem *first = g_CurrentPlayer->ptr_inventory_first_in_cycle;
     InvItem *item  = first;
@@ -246,42 +246,42 @@ InvItem *get_dual_weapon(ITEM_IDS right, ITEM_IDS left)
  * @param left: enum Item ID eg: ITEM_KNIFE
  * @return TRUE/FALSE
  */
-int is_dual_weapon_in_inventory(ITEM_IDS right, ITEM_IDS left)
+int bondinvHasDualWeapon(ITEM_IDS right, ITEM_IDS left)
 {
-    return get_dual_weapon(right, left) != NULL;
+    return bondinvGetDualWeapon(right, left) != NULL;
 }
 
-int check_if_item_available(ITEM_IDS weaponid)
+int bondinvItemAvailable(ITEM_IDS weaponid)
 {
     if (((g_CurrentPlayer->equipallguns) && (weaponid != ITEM_UNARMED) && (weaponid < ITEM_BOMBCASE)))
     {
-#ifndef VERSION_US
+#ifdef BUGFIX_R1
         if ((!j_text_trigger || (weaponid != ITEM_KNIFE)))
         {
-            return 1;
+            return TRUE;
         }
 #else
-        return 1;
+        return TRUE;
 #endif
     }
-    return is_item_in_inventory(weaponid);
+    return bondinvHasInvItem(weaponid);
 }
 
-int check_if_item_for_hand_available(ITEM_IDS right, ITEM_IDS left)
+int bondinvItemAvailableForHand(ITEM_IDS right, ITEM_IDS left)
 {
-#ifdef VERSION_US
+#ifdef BUGFIX_R0
     if (g_CurrentPlayer->equipallguns &&
         right < ITEM_BOMBCASE &&
         right == left &&
         getPlayerCount() == 1 &&
         bondwalkItemCheckBitflags(right, 0x100000))
     {
-        return 1;
+        return TRUE;
     }
 #else
-    if (left == 0)
+    if (left == ITEM_UNARMED)
     {
-        return 1;
+        return TRUE;
     }
     else
     {
@@ -290,33 +290,33 @@ int check_if_item_for_hand_available(ITEM_IDS right, ITEM_IDS left)
             right == left &&
             getPlayerCount() == 1 &&
             bondwalkItemCheckBitflags(right, 0x100000) &&
-            (j_text_trigger == 0 || (right != ITEM_KNIFE)))
+            (j_text_trigger == FALSE || (right != ITEM_KNIFE)))
         {
-            return 1;
+            return TRUE;
         }
     }
 #endif
 
-    return is_dual_weapon_in_inventory(right, left);
+    return bondinvHasDualWeapon(right, left);
 }
 
-int add_item_to_inventory(ITEM_IDS item)
+int bondinvAddInvItem(ITEM_IDS item)
 {
     InvItem *nextItem;
 
-    if (is_item_in_inventory(item) == 0)
+    if (bondinvHasInvItem(item) == FALSE)
     {
-        nextItem = get_ptr_next_available_weapon();
+        nextItem = bondinvGetNextAvailItem();
         if (nextItem)
         {
             nextItem->type = INV_ITEM_WEAPON;
             nextItem->type_inv_item.type_weap.weapon = item;
-            inv_insert_item(nextItem);
+            bondinvInsertItem(nextItem);
         }
 
         if ((g_CurrentPlayer->equipallguns) && (item < ITEM_BOMBCASE))
         {
-#ifndef VERSION_US
+#ifdef BUGFIX_R1
             if ((!j_text_trigger || (item != ITEM_KNIFE)))
             {
                 return FALSE;
@@ -330,20 +330,20 @@ int add_item_to_inventory(ITEM_IDS item)
     return FALSE;
 }
 
-int add_doubles_item_to_inventory(ITEM_IDS right, ITEM_IDS left)
+int bondinvAddDoublesInvItem(ITEM_IDS right, ITEM_IDS left)
 {
     InvItem *item;
 
-    if (is_dual_weapon_in_inventory(right, left) == 0)
+    if (bondinvHasDualWeapon(right, left) == FALSE)
     {
-        item = get_ptr_next_available_weapon();
+        item = bondinvGetNextAvailItem();
 
         if (item)
         {
             item->type                                 = INV_ITEM_DUAL;
             item->type_inv_item.type_dual.weapon_right = right;
             item->type_inv_item.type_dual.weapon_left  = left;
-            inv_insert_item(item);
+            bondinvInsertItem(item);
         }
         return TRUE;
     }
@@ -353,7 +353,7 @@ int add_doubles_item_to_inventory(ITEM_IDS right, ITEM_IDS left)
     }
 }
 
-WeaponObjRecord *inventory_remove_prop_weapon_by_id(ITEM_IDS weaponnum)
+WeaponObjRecord *bondinvRemovePropWeaponByID(ITEM_IDS weaponnum)
 {
     if (g_CurrentPlayer->ptr_inventory_first_in_cycle)
     {
@@ -377,7 +377,7 @@ WeaponObjRecord *inventory_remove_prop_weapon_by_id(ITEM_IDS weaponnum)
 
                         if (weapon->weaponnum == weaponnum)
                         {
-                            inventory_remove_item(item);
+                            bondinvRemoveItem(item);
                             return weapon;
                         }
                     }
@@ -396,7 +396,7 @@ WeaponObjRecord *inventory_remove_prop_weapon_by_id(ITEM_IDS weaponnum)
     return NULL;
 }
 
-void inventory_remove_item_by_id(ITEM_IDS weaponnum)
+void bondinvRemoveItemByID(ITEM_IDS weaponnum)
 {
     if (g_CurrentPlayer->ptr_inventory_first_in_cycle)
     {
@@ -420,7 +420,7 @@ void inventory_remove_item_by_id(ITEM_IDS weaponnum)
 
                         if (weapon->weaponnum == weaponnum)
                         {
-                            inventory_remove_item(item);
+                            bondinvRemoveItem(item);
                         }
                     }
                 }
@@ -429,7 +429,7 @@ void inventory_remove_item_by_id(ITEM_IDS weaponnum)
             {
                 if (item->type_inv_item.type_weap.weapon == weaponnum)
                 {
-                    inventory_remove_item(item);
+                    bondinvRemoveItem(item);
                 }
             }
 
@@ -443,24 +443,23 @@ void inventory_remove_item_by_id(ITEM_IDS weaponnum)
     }
 }
 
-int add_prop_to_inventory(PropRecord *prop)
+int bondinvAddPropToInv(PropRecord *prop)
 {
     InvItem *item;
 
-    item = get_ptr_next_available_weapon();
+    item = bondinvGetNextAvailItem();
 
     if (item)
     {
         item->type                         = INV_ITEM_PROP;
         item->type_inv_item.type_prop.prop = prop;
-        inv_insert_item(item);
+        bondinvInsertItem(item);
     }
 
     return TRUE;
 }
 
-
-int add_weapon_by_prop(PropRecord *prop)
+int bondinvAddWeaponByProp(PropRecord *prop)
 {
     int added;
     added = FALSE;
@@ -475,34 +474,34 @@ int add_weapon_by_prop(PropRecord *prop)
             WeaponObjRecord *otherweapon;
 
             s8 weaponnum = weapon->weaponnum;
-            added = add_item_to_inventory(weaponnum);
+            added = bondinvAddInvItem(weaponnum);
 
             otherweapon = weapon->dualweapon;
-            if (otherweapon != 0)
+            if (otherweapon)
             {
-                if (weapon->flags & PROPFLAG_10000000)
+                if (weapon->flags & PROPFLAG_WEAPON_LEFTHANDED)
                 {
-                    added = is_dual_weapon_in_inventory(otherweapon->weaponnum, weaponnum) == 0;
+                    added = bondinvHasDualWeapon(otherweapon->weaponnum, weaponnum) == 0;
                 }
                 else
                 {
-                    added = is_dual_weapon_in_inventory(weaponnum, otherweapon->weaponnum) == 0;
+                    added = bondinvHasDualWeapon(weaponnum, otherweapon->weaponnum) == 0;
                 }
                 weapon->dualweapon->LinkedWeaponType = weaponnum;
-                weapon->dualweapon->dualweapon       = 0;
+                weapon->dualweapon->dualweapon       = NULL;
                 weapon->dualweapon                   = NULL;
             }
             else
             {
                 if (weapon->LinkedWeaponType >= 0)
                 {
-                    if (weapon->flags & PROPFLAG_10000000)
+                    if (weapon->flags & PROPFLAG_WEAPON_LEFTHANDED)
                     {
-                        added = add_doubles_item_to_inventory(weapon->LinkedWeaponType, weaponnum);
+                        added = bondinvAddDoublesInvItem(weapon->LinkedWeaponType, weaponnum);
                     }
                     else
                     {
-                        added = add_doubles_item_to_inventory(weaponnum, weapon->LinkedWeaponType);
+                        added = bondinvAddDoublesInvItem(weaponnum, weapon->LinkedWeaponType);
                     }
                 }
             }
@@ -511,9 +510,7 @@ int add_weapon_by_prop(PropRecord *prop)
     return added;
 }
 
-
-
-void choose_cycle_forward_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
+void bondinvCycleForward(s32 *nextright, s32 *nextleft, s32 requireammo)
 {
     s32      weapon1 = *nextright;
     s32      weapon2 = *nextleft;
@@ -565,8 +562,8 @@ void choose_cycle_forward_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
         s32 candidate = *nextright;
 
         if (getPlayerCount() == 1 && bondwalkItemCheckBitflags(*nextright, 0x100000) && (*nextleft < *nextright) && (requireammo == FALSE || bondwalkItemHasAmmo(*nextright)) && (weapon1 != *nextright || *nextright < weapon2)
-#ifndef VERSION_US
-            && (j_text_trigger == 0 || *nextright != 2)
+#ifdef BUGFIX_R1
+            && (!j_text_trigger || *nextright != ITEM_KNIFE)
 #endif
         )
         {
@@ -582,19 +579,19 @@ void choose_cycle_forward_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
                 {
                     candidate = (candidate + 1) % ITEM_BOMBCASE;
 
-                    if (candidate == 0)
+                    if (candidate == ITEM_UNARMED)
                     {
                         candidate = (candidate + 1) % ITEM_BOMBCASE;
                     }
 
                     if ((requireammo == FALSE || bondwalkItemHasAmmo(candidate))
-#ifndef VERSION_US
-                        && (j_text_trigger == 0 || candidate != 2)
+#ifdef BUGFIX_R1
+                        && (!j_text_trigger || candidate != ITEM_KNIFE)
 #endif
                     )
                     {
                         weapon1 = candidate;
-                        weapon2 = 0;
+                        weapon2 = ITEM_UNARMED;
                         break;
                     }
                 } while (candidate != weapon1);
@@ -606,7 +603,7 @@ void choose_cycle_forward_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
     *nextleft  = weapon2;
 }
 
-void choose_cycle_back_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
+void bondinvCycleBackward(s32 *nextright, s32 *nextleft, s32 requireammo)
 {
     s32 weapon1 = *nextright;
     s32 weapon2 = *nextleft;
@@ -624,7 +621,7 @@ void choose_cycle_back_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
                     if (requireammo == FALSE || bondwalkItemHasAmmo(item->type_inv_item.type_weap.weapon))
                     {
                         weapon1 = item->type_inv_item.type_weap.weapon;
-                        weapon2 = 0;
+                        weapon2 = ITEM_UNARMED;
                         break;
                     }
                 }
@@ -661,10 +658,10 @@ void choose_cycle_back_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
     {
         s32 candidate = *nextright;
 
-        if (*nextleft == 0)
+        if (*nextleft == ITEM_UNARMED)
         {
             candidate = (candidate + ITEM_BOMBCASE - 1) % ITEM_BOMBCASE;
-            if (candidate == 0)
+            if (candidate == ITEM_UNARMED)
             {
                 candidate = (candidate + ITEM_BOMBCASE - 1) % ITEM_BOMBCASE;
             }
@@ -675,8 +672,8 @@ void choose_cycle_back_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
             if (candidate == weapon1)
             {
                 if (getPlayerCount() == 1 && bondwalkItemCheckBitflags(candidate, 0x100000) && (requireammo == FALSE || bondwalkItemHasAmmo(candidate)) && (candidate != *nextright || candidate < *nextleft) && (weapon2 < candidate)
-#ifndef VERSION_US
-                    && (j_text_trigger == 0 || candidate != 2)
+#ifdef BUGFIX_R1
+                    && (!j_text_trigger || candidate != ITEM_KNIFE)
 #endif
                 )
                 {
@@ -688,8 +685,8 @@ void choose_cycle_back_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
             }
             else if (
                 (requireammo == FALSE || bondwalkItemHasAmmo(candidate))
-#ifndef VERSION_US
-                && (j_text_trigger == 0 || candidate != 2)
+#ifdef BUGFIX_R1
+                && (!j_text_trigger || candidate != ITEM_KNIFE)
 #endif
             )
             {
@@ -701,7 +698,7 @@ void choose_cycle_back_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
                 else
                 {
                     weapon1 = candidate;
-                    weapon2 = 0;
+                    weapon2 = ITEM_UNARMED;
                 }
 
                 break;
@@ -709,7 +706,7 @@ void choose_cycle_back_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
             else
             {
                 candidate = (candidate + ITEM_BOMBCASE - 1) % ITEM_BOMBCASE;
-                if (candidate == 0)
+                if (candidate == ITEM_UNARMED)
                 {
                     candidate = (candidate + ITEM_BOMBCASE - 1) % ITEM_BOMBCASE;
                 }
@@ -721,7 +718,7 @@ void choose_cycle_back_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
     *nextleft  = weapon2;
 }
 
-bool inv_has_key_flags(u32 wantkeyflags)
+bool bondinvCheckHasKeyFlags(u32 wantkeyflags)
 {
     u32      heldkeyflags = 0;
     InvItem *item         = g_CurrentPlayer->ptr_inventory_first_in_cycle;
@@ -761,7 +758,7 @@ bool inv_has_key_flags(u32 wantkeyflags)
     return FALSE;
 }
 
-bool checkHasGEKey(void)
+bool bondinvHasGEKey(void)
 {
     InvItem      *item;
     PropRecord   *prop;
@@ -805,7 +802,7 @@ bool bondinvIsAliveWithFlag(void)
 {
     if (!g_CurrentPlayer->bonddead)
     {
-        return is_item_in_inventory(ITEM_TOKEN);
+        return bondinvHasInvItem(ITEM_TOKEN);
     }
 
     return FALSE;
@@ -815,12 +812,12 @@ bool bondinvIsAliveWithFlag(void)
  * Is the Golden Gun in inventory
  * @return TRUE/FALSE
  */
-bool checkforgoldengun(void)
+bool bondinvHasGoldenGun(void)
 {
-    return is_item_in_inventory(ITEM_GOLDENGUN);
+    return bondinvHasInvItem(ITEM_GOLDENGUN);
 }
 
-bool is_prop_in_inventory(PropRecord *prop)
+bool bondinvHasPropInInv(PropRecord *prop)
 {
     InvItem *item = g_CurrentPlayer->ptr_inventory_first_in_cycle;
 
@@ -842,14 +839,14 @@ bool is_prop_in_inventory(PropRecord *prop)
     return FALSE;
 }
 
-s32 count_total_items_in_inventory(void)
+s32 bondinvCountTotalItemsInInv(void)
 {
     InvItem *item;
     s32      numitems = 0;
 
     if (g_CurrentPlayer->equipallguns)
     {
-#ifndef VERSION_US
+#ifdef BUGFIX_R1
         numitems = (j_text_trigger ? ITEM_TASER : ITEM_TANKSHELLS);
 #else
         numitems = ITEM_TANKSHELLS;
@@ -900,13 +897,13 @@ s32 count_total_items_in_inventory(void)
     return numitems;
 }
 
-InvItem *inv_get_item_by_index(s32 index)
+InvItem *bondinvGetItemByIndex(s32 index)
 {
     InvItem *item;
 
     if (g_CurrentPlayer->equipallguns)
     {
-#ifndef VERSION_US
+#ifdef BUGFIX_R1
         if (index < (j_text_trigger ? ITEM_TASER : ITEM_TANKSHELLS))
 #else
         if (index < ITEM_TANKSHELLS)
@@ -915,7 +912,7 @@ InvItem *inv_get_item_by_index(s32 index)
             return NULL;
         }
 
-#ifndef VERSION_US
+#ifdef BUGFIX_R1
         index = index - (j_text_trigger ? ITEM_TASER : ITEM_TANKSHELLS);
 #else
         index = index - ITEM_TANKSHELLS;
@@ -978,7 +975,7 @@ InvItem *inv_get_item_by_index(s32 index)
     return NULL;
 }
 
-textoverride *get_textoverride_by_obj(ObjectRecord *obj)
+textoverride *bondinvGetTextbyObj(ObjectRecord *obj)
 {
     textoverride *override = g_CurrentPlayer->textoverrides;
 
@@ -995,7 +992,7 @@ textoverride *get_textoverride_by_obj(ObjectRecord *obj)
     return NULL;
 }
 
-textoverride *get_textoverride_by_weaponum(ITEM_IDS weaponnum)
+textoverride *bondinvGetTextbyWeaponID(ITEM_IDS weaponnum)
 {
     textoverride *override = g_CurrentPlayer->textoverrides;
 
@@ -1012,12 +1009,12 @@ textoverride *get_textoverride_by_weaponum(ITEM_IDS weaponnum)
     return NULL;
 }
 
-s32 get_weaponnum_by_inv_index(s32 index)
+s32 bondinvGetTextbyInvIndex(s32 index)
 {
     textoverride *override;
     InvItem *     inv_item;
 
-    inv_item = inv_get_item_by_index(index);
+    inv_item = bondinvGetItemByIndex(index);
 
     if (inv_item)
     {
@@ -1025,7 +1022,7 @@ s32 get_weaponnum_by_inv_index(s32 index)
         {
             PropRecord *prop = inv_item->type_inv_item.type_prop.prop;
 
-            override = get_textoverride_by_obj(prop->obj);
+            override = bondinvGetTextbyObj(prop->obj);
 
             if (override)
             {
@@ -1041,10 +1038,10 @@ s32 get_weaponnum_by_inv_index(s32 index)
     {
         if (g_CurrentPlayer->equipallguns)
         {
-#ifndef VERSION_US
+#ifdef BUGFIX_R1
             if (index < (j_text_trigger ? ITEM_TASER : ITEM_TANKSHELLS))
             {
-                if (j_text_trigger && ((index + 1) >= 2))
+                if (j_text_trigger && ((index + 1) >= ITEM_KNIFE))
                 {
                     return index + 2;
                 }
@@ -1063,9 +1060,9 @@ s32 get_weaponnum_by_inv_index(s32 index)
     return 0;
 }
 
-u16 *inv_get_name_by_index(s32 index)
+u16 *bondinvGetNameByIndex(s32 index)
 {
-    InvItem      *item      = inv_get_item_by_index(index);
+    InvItem      *item      = bondinvGetItemByIndex(index);
     ITEM_IDS      weaponnum = 0;
     textoverride *override;
 
@@ -1074,7 +1071,7 @@ u16 *inv_get_name_by_index(s32 index)
         if (item->type == INV_ITEM_PROP)
         {
             PropRecord *prop = item->type_inv_item.type_prop.prop;
-            override         = get_textoverride_by_obj(prop->obj);
+            override         = bondinvGetTextbyObj(prop->obj);
 
             if (override)
             {
@@ -1089,7 +1086,7 @@ u16 *inv_get_name_by_index(s32 index)
         else if (item->type == INV_ITEM_WEAPON)
         {
             weaponnum = item->type_inv_item.type_weap.weapon;
-            override  = get_textoverride_by_weaponum(weaponnum);
+            override  = bondinvGetTextbyWeaponID(weaponnum);
 
             if (override && override->unk6)
             {
@@ -1101,10 +1098,10 @@ u16 *inv_get_name_by_index(s32 index)
     {
         if (g_CurrentPlayer->equipallguns)
         {
-#ifndef VERSION_US
+#ifdef BUGFIX_R1
             if (index < (j_text_trigger ? ITEM_TASER : ITEM_TANKSHELLS))
             {
-                if (j_text_trigger && ((index + 1) >= 2))
+                if (j_text_trigger && ((index + 1) >= ITEM_KNIFE))
                 {
                     return get_ptr_short_watch_text_for_item(index + 2);
                 }
@@ -1123,9 +1120,9 @@ u16 *inv_get_name_by_index(s32 index)
     return get_ptr_short_watch_text_for_item(weaponnum);
 }
 
-u16 *inv_get_long_name_by_index(s32 index)
+u16 *bondinvGetLongNameByIndex(s32 index)
 {
-    InvItem      *item      = inv_get_item_by_index(index);
+    InvItem      *item      = bondinvGetItemByIndex(index);
     ITEM_IDS      weaponnum = 0;
     textoverride *override;
 
@@ -1134,7 +1131,7 @@ u16 *inv_get_long_name_by_index(s32 index)
         if (item->type == INV_ITEM_PROP)
         {
             PropRecord *prop = item->type_inv_item.type_prop.prop;
-            override         = get_textoverride_by_obj(prop->obj);
+            override         = bondinvGetTextbyObj(prop->obj);
 
             if (override)
             {
@@ -1149,7 +1146,7 @@ u16 *inv_get_long_name_by_index(s32 index)
         else if (item->type == INV_ITEM_WEAPON)
         {
             weaponnum = item->type_inv_item.type_weap.weapon;
-            override  = get_textoverride_by_weaponum(weaponnum);
+            override  = bondinvGetTextbyWeaponID(weaponnum);
 
             if (override && override->unk7)
             {
@@ -1161,10 +1158,10 @@ u16 *inv_get_long_name_by_index(s32 index)
     {
         if (g_CurrentPlayer->equipallguns)
         {
-#ifndef VERSION_US
+#ifdef BUGFIX_R1
             if (index < (j_text_trigger ? ITEM_TASER : ITEM_TANKSHELLS))
             {
-                if (j_text_trigger && ((index + 1) >= 2))
+                if (j_text_trigger && ((index + 1) >= ITEM_KNIFE))
                 {
                     return get_ptr_long_watch_text_for_item(index + 2);
                 }
@@ -1183,29 +1180,29 @@ u16 *inv_get_long_name_by_index(s32 index)
     return get_ptr_long_watch_text_for_item(weaponnum);
 }
 
-int sub_GAME_7F08D528(int index)
+int bondinvGet45AngleForIndex(int index)
 {
-    return get_45_degree_angle_0(get_weaponnum_by_inv_index(index));
+    return get_45_degree_angle_0(bondinvGetTextbyInvIndex(index));
 }
 
-int sub_GAME_7F08D550(int index)
+int bondinvGetHoffsetForIndex(int index)
 {
-    return get_horizontal_offset_on_solo_watch_menu_for_item(get_weaponnum_by_inv_index(index));
+    return get_horizontal_offset_on_solo_watch_menu_for_item(bondinvGetTextbyInvIndex(index));
 }
 
-int sub_GAME_7F08D578(int index)
+int bondinvGetVoffsetForIndex(int index)
 {
-    return get_vertical_offset_on_solo_watch_menu_for_item(get_weaponnum_by_inv_index(index));
+    return get_vertical_offset_on_solo_watch_menu_for_item(bondinvGetTextbyInvIndex(index));
 }
 
-int sub_GAME_7F08D5A0(int index)
+int bondinvGetDepthForIndex(int index)
 {
-    return get_depth_offset_solo_watch_menu_inventory_page_for_item(get_weaponnum_by_inv_index(index));
+    return get_depth_offset_solo_watch_menu_inventory_page_for_item(bondinvGetTextbyInvIndex(index));
 }
 
-u16 *inv_get_first_title_name_by_index(s32 index)
+u16 *bondinvGetFirstTitlebyIndex(s32 index)
 {
-    InvItem      *item      = inv_get_item_by_index(index);
+    InvItem      *item      = bondinvGetItemByIndex(index);
     ITEM_IDS      weaponnum = 0;
     textoverride *override;
 
@@ -1214,7 +1211,7 @@ u16 *inv_get_first_title_name_by_index(s32 index)
         if (item->type == INV_ITEM_PROP)
         {
             PropRecord *prop = item->type_inv_item.type_prop.prop;
-            override         = get_textoverride_by_obj(prop->obj);
+            override         = bondinvGetTextbyObj(prop->obj);
 
             if (override)
             {
@@ -1229,7 +1226,7 @@ u16 *inv_get_first_title_name_by_index(s32 index)
         else if (item->type == INV_ITEM_WEAPON)
         {
             weaponnum = item->type_inv_item.type_weap.weapon;
-            override  = get_textoverride_by_weaponum(weaponnum);
+            override  = bondinvGetTextbyWeaponID(weaponnum);
 
             if (override && override->unk4)
             {
@@ -1241,10 +1238,10 @@ u16 *inv_get_first_title_name_by_index(s32 index)
     {
         if (g_CurrentPlayer->equipallguns)
         {
-#ifndef VERSION_US
+#ifdef BUGFIX_R1
             if (index < (j_text_trigger ? ITEM_TASER : ITEM_TANKSHELLS))
             {
-                if (j_text_trigger && ((index + 1) >= 2))
+                if (j_text_trigger && ((index + 1) >= ITEM_KNIFE))
                 {
                     return get_ptr_first_title_line_item(index + 2);
                 }
@@ -1263,9 +1260,9 @@ u16 *inv_get_first_title_name_by_index(s32 index)
     return get_ptr_first_title_line_item(weaponnum);
 }
 
-u16 *inv_get_second_title_name_by_index(s32 index)
+u16 *bondinvGetSecondTitlebyIndex(s32 index)
 {
-    InvItem      *item      = inv_get_item_by_index(index);
+    InvItem      *item      = bondinvGetItemByIndex(index);
     ITEM_IDS      weaponnum = 0;
     textoverride *override;
 
@@ -1274,7 +1271,7 @@ u16 *inv_get_second_title_name_by_index(s32 index)
         if (item->type == INV_ITEM_PROP)
         {
             PropRecord *prop = item->type_inv_item.type_prop.prop;
-            override         = get_textoverride_by_obj(prop->obj);
+            override         = bondinvGetTextbyObj(prop->obj);
 
             if (override)
             {
@@ -1289,7 +1286,7 @@ u16 *inv_get_second_title_name_by_index(s32 index)
         else if (item->type == INV_ITEM_WEAPON)
         {
             weaponnum = item->type_inv_item.type_weap.weapon;
-            override  = get_textoverride_by_weaponum(weaponnum);
+            override  = bondinvGetTextbyWeaponID(weaponnum);
 
             if (override && override->unk5)
             {
@@ -1301,10 +1298,10 @@ u16 *inv_get_second_title_name_by_index(s32 index)
     {
         if (g_CurrentPlayer->equipallguns)
         {
-#ifndef VERSION_US
+#ifdef BUGFIX_R1
             if (index < (j_text_trigger ? ITEM_TASER : ITEM_TANKSHELLS))
             {
-                if (j_text_trigger && ((index + 1) >= 2))
+                if (j_text_trigger && ((index + 1) >= ITEM_KNIFE))
                 {
                     return get_ptr_second_title_line_item(index + 2);
                 }
@@ -1323,64 +1320,64 @@ u16 *inv_get_second_title_name_by_index(s32 index)
     return get_ptr_second_title_line_item(weaponnum);
 }
 
-int sub_GAME_7F08D7B0(int index)
+int bondinvGetDifferent45AngleForIndex(int index)
 {
-    return get_45_degree_angle(get_weaponnum_by_inv_index(index));
+    return get_45_degree_angle(bondinvGetTextbyInvIndex(index));
 }
 
-int sub_GAME_7F08D7D8(int index)
+int bondinvGetVposWatchForIndex(int index)
 {
-    return get_vertical_position_solo_watch_menu_main_page_for_item(get_weaponnum_by_inv_index(index));
+    return get_vertical_position_solo_watch_menu_main_page_for_item(bondinvGetTextbyInvIndex(index));
 }
 
-int sub_GAME_7F08D800(int index)
+int bondinvGetHposWatchForIndex(int index)
 {
-    return get_lateral_position_solo_watch_menu_main_page_for_item(get_weaponnum_by_inv_index(index));
+    return get_lateral_position_solo_watch_menu_main_page_for_item(bondinvGetTextbyInvIndex(index));
 }
 
-int sub_GAME_7F08D828(int index)
+int bondinvGetDepthWatchForIndex(int index)
 {
-    return get_depth_on_solo_watch_menu_page_for_item(get_weaponnum_by_inv_index(index));
+    return get_depth_on_solo_watch_menu_page_for_item(bondinvGetTextbyInvIndex(index));
 }
 
-int sub_GAME_7F08D850(int index)
+int bondinvGetXrotWatchForIndex(int index)
 {
-    return get_xrotation_solo_watch_menu_for_item(get_weaponnum_by_inv_index(index));
+    return get_xrotation_solo_watch_menu_for_item(bondinvGetTextbyInvIndex(index));
 }
 
-int sub_GAME_7F08D878(int index)
+int bondinvGetYrotWatchForIndex(int index)
 {
-    return get_yrotation_solo_watch_menu_for_item(get_weaponnum_by_inv_index(index));
+    return get_yrotation_solo_watch_menu_for_item(bondinvGetTextbyInvIndex(index));
 }
 
-void sub_GAME_7F08D8A0(textoverride *override)
+void bondinvAddTextOverride(textoverride *override)
 {
     override->next                 = g_CurrentPlayer->textoverrides;
     g_CurrentPlayer->textoverrides = override;
 }
 
-int get_BONDdata_equipcuritem(void)
+int bondinvGetCurEquippedItem(void)
 {
     return g_CurrentPlayer->equipcuritem;
 }
 
-void set_BONDdata_equipcuritem(int current_item)
+void bondinvSetCurEquippedItem(int current_item)
 {
     g_CurrentPlayer->equipcuritem = current_item;
 }
 
-void calculate_equip_cur_item(void)
+void bondinvDetermineEquippedItem(void)
 {
     s32 current_weapon;
     s32 i;
 
     current_weapon = getCurrentPlayerWeaponId(GUNRIGHT);
 
-    g_CurrentPlayer->equipcuritem = 0;
+    g_CurrentPlayer->equipcuritem = ITEM_UNARMED;
 
-    for (i = 0; i < count_total_items_in_inventory(); i++)
+    for (i = 0; i < bondinvCountTotalItemsInInv(); i++)
     {
-        if (get_weaponnum_by_inv_index(i) == current_weapon)
+        if (bondinvGetTextbyInvIndex(i) == current_weapon)
         {
             g_CurrentPlayer->equipcuritem = i;
             return;
@@ -1388,9 +1385,9 @@ void calculate_equip_cur_item(void)
     }
 }
 
-u8 *obj_get_activated_text(ObjectRecord *obj)
+u8 *bondinvGetActivatedTextObject(ObjectRecord *obj)
 {
-    textoverride *override = get_textoverride_by_obj(obj);
+    textoverride *override = bondinvGetTextbyObj(obj);
 
     if (override && override->unk8)
     {
@@ -1400,9 +1397,9 @@ u8 *obj_get_activated_text(ObjectRecord *obj)
     return NULL;
 }
 
-u8 *weapon_get_activated_text(ITEM_IDS weaponnum)
+u8 *bondinvGetActivatedTextWeapon(ITEM_IDS weaponnum)
 {
-    textoverride *override = get_textoverride_by_weaponum(weaponnum);
+    textoverride *override = bondinvGetTextbyWeaponID(weaponnum);
 
     if (override && override->unk8)
     {
@@ -1412,7 +1409,7 @@ u8 *weapon_get_activated_text(ITEM_IDS weaponnum)
     return NULL;
 }
 
-void increment_held_time(s32 weapon1, s32 weapon2)
+void bondinvIncrementHeldTime(s32 weapon1, s32 weapon2)
 {
     s32 leastusedtime;
     s32 leastusedindex;
@@ -1428,7 +1425,7 @@ void increment_held_time(s32 weapon1, s32 weapon2)
 
     if (!bondwalkItemCheckBitflags(weapon2, 0x20000))
     {
-        weapon2 = 0;
+        weapon2 = ITEM_UNARMED;
     }
 
     for (i = 0; i < 10; i++)
@@ -1466,13 +1463,13 @@ void increment_held_time(s32 weapon1, s32 weapon2)
     }
 }
 
-s32 get_weapon_of_choice(s32 *weapon1, s32 *weapon2)
+s32 bondinvGetWeaponOfChoice(s32 *weapon1, s32 *weapon2)
 {
     s32 mosttime = -1;
     s32 i;
 
-    *weapon1 = 0;
-    *weapon2 = 0;
+    *weapon1 = ITEM_UNARMED;
+    *weapon2 = ITEM_UNARMED;
 
     for (i = 0; i < 10; i++)
     {

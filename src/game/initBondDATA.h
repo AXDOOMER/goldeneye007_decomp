@@ -3,7 +3,7 @@
 #include <ultra64.h>
 
 struct BONDdata_item_control_blocks {
-    int BONDdata_item_control_blocks_initdata;
+    int hand_data_dummy;
     int field_4;
     int field_8;
     int field_C;

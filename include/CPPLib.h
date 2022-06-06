@@ -161,7 +161,7 @@
 #define INC_9  0
 
 #define DEC(x) CAT(DEC_, x)
-#define DEC_0  0
+#define DEC_0  (1/0)
 #define DEC_1  0
 #define DEC_2  1
 #define DEC_3  2
@@ -237,6 +237,8 @@
     /**
  * Macro version of "defined" however its limited to 1/0/nothing. Any other value 
  * is indistuiguishable from a random name
+ * Certain pre-defined definitions can be "NOTDEFINED" eg THIS.
+ * so checking IF(DEFINED(THIS)) is asking if THIS is NOT defined
  * @return TRUE/FALSE
 */
 #define DEFINED(x) _DEFINED(x)
@@ -245,7 +247,11 @@
 #define _DEFINED_1_ PROBE(~)
 #define _DEFINED__  PROBE(~)
 
-/**
+/*The following names are NOT defined and need to be regarded as NOTDEFINED */
+#define _DEFINED_THIS_ PROBE(~)
+#define _DEFINED_SETUPSUBROUTINES(ID) PROBE(~),
+
+    /**
  * Logical negation. 0 or nothing is defined as false and everything else as
  * true.
  *
@@ -277,8 +283,12 @@
 */
 #define BOOL(x) NOT(NOT(x))
 
-    /* this little anoying block may look out of place, but it needs to be right
- * here */
+/* this little anoying block may look out of place, but it needs to be right here */
+
+/**
+    If Statement (Non-Expanding)
+    @param c: If True, output the contents of parenthises else output nothing.
+*/
 #define IF_VA(c)    _IF_VA(BOOL(c))
 #define _IF_VA(c)   CAT(_IF_VA_, c)
 #define _IF_VA_1(a) a
@@ -289,14 +299,107 @@
  * Allows up to 32 Args on the stack
  */
 #define EXPAND_ARGS_STACK(A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,AA,AB,AC,AD,AE,AF,ERROR) \
-IF_VA(NOT(IS_EMPTY(A)))(         A  IF_VA(NOT(IS_EMPTY(B)))(COMMA()  B  IF_VA(NOT(IS_EMPTY(C)))(COMMA()  C  IF_VA(NOT(IS_EMPTY(D)))(COMMA()  D  IF_VA(NOT(IS_EMPTY(E)))(COMMA()  E \
-IF_VA(NOT(IS_EMPTY(F)))(COMMA()  F  IF_VA(NOT(IS_EMPTY(G)))(COMMA()  G  IF_VA(NOT(IS_EMPTY(H)))(COMMA()  H  IF_VA(NOT(IS_EMPTY(I)))(COMMA()  I  IF_VA(NOT(IS_EMPTY(J)))(COMMA()  J \
-IF_VA(NOT(IS_EMPTY(K)))(COMMA()  K  IF_VA(NOT(IS_EMPTY(L)))(COMMA()  L  IF_VA(NOT(IS_EMPTY(M)))(COMMA()  M  IF_VA(NOT(IS_EMPTY(N)))(COMMA()  N  IF_VA(NOT(IS_EMPTY(O)))(COMMA()  O \
-IF_VA(NOT(IS_EMPTY(P)))(COMMA()  P  IF_VA(NOT(IS_EMPTY(Q)))(COMMA()  Q  IF_VA(NOT(IS_EMPTY(R)))(COMMA()  R  IF_VA(NOT(IS_EMPTY(S)))(COMMA()  S  IF_VA(NOT(IS_EMPTY(T)))(COMMA()  T \
-IF_VA(NOT(IS_EMPTY(U)))(COMMA()  U  IF_VA(NOT(IS_EMPTY(V)))(COMMA()  V  IF_VA(NOT(IS_EMPTY(W)))(COMMA()  W  IF_VA(NOT(IS_EMPTY(X)))(COMMA()  X  IF_VA(NOT(IS_EMPTY(Y)))(COMMA()  Y \
-IF_VA(NOT(IS_EMPTY(Z)))(COMMA()  Z  IF_VA(NOT(IS_EMPTY(AA)))(COMMA() AA IF_VA(NOT(IS_EMPTY(AB)))(COMMA() AB IF_VA(NOT(IS_EMPTY(AC)))(COMMA() AC IF_VA(NOT(IS_EMPTY(AD)))(COMMA() AD \
-IF_VA(NOT(IS_EMPTY(AE)))(COMMA() AE IF_VA(NOT(IS_EMPTY(AF)))(COMMA() AF IF_VA(NOT(IS_EMPTY(ERROR)))(COMMA() 1/0 "_VA_ARGS Stack full")))))))))))))))))))))))))))))))))
-
+IF_VA(NOT(IS_EMPTY(A)))/*
+*/(/*
+	*/A /*
+	*/IF_VA(NOT(IS_EMPTY(B)))/*
+	*/(/*
+		*/COMMA() B /*
+		*/IF_VA(NOT(IS_EMPTY(C)))/*
+		*/(/*
+			*/COMMA() C /*
+			*/IF_VA(NOT(IS_EMPTY(D)))/*
+			*/(/*
+				*/COMMA() D /*
+				*/IF_VA(NOT(IS_EMPTY(E)))/*
+				*/(/*
+					*/COMMA() E/*
+					*/IF_VA(NOT(IS_EMPTY(F)))/*
+					*/(/*
+						*/COMMA() F /*
+						*/IF_VA(NOT(IS_EMPTY(G)))/*
+						*/(/*
+							*/COMMA() G /*
+							*/IF_VA(NOT(IS_EMPTY(H)))/*
+							*/(/*
+								*/COMMA() H /*
+								*/IF_VA(NOT(IS_EMPTY(I)))/*
+								*/(/*
+									*/COMMA() I /*
+									*/IF_VA(NOT(IS_EMPTY(J)))/*
+									*/(/*
+										*/COMMA() J /*
+										*/IF_VA(NOT(IS_EMPTY(K)))/*
+										*/(/*
+											*/COMMA() K /*
+											*/IF_VA(NOT(IS_EMPTY(L)))/*
+											*/(/*
+												*/COMMA() L /*
+												*/IF_VA(NOT(IS_EMPTY(M)))/*
+												*/(/*
+													*/COMMA() M /*
+													*/IF_VA(NOT(IS_EMPTY(N)))/*
+													*/(/*
+														*/COMMA() N /*
+														*/IF_VA(NOT(IS_EMPTY(O)))/*
+														*/(/*
+															*/COMMA() O /*
+															*/IF_VA(NOT(IS_EMPTY(P)))/*
+															*/(/*
+																*/COMMA() P /*
+																*/IF_VA(NOT(IS_EMPTY(Q)))/*
+																*/(/*
+																	*/COMMA() Q /*
+																	*/IF_VA(NOT(IS_EMPTY(R)))/*
+																	*/(/*
+																		*/COMMA() R /*
+																		*/IF_VA(NOT(IS_EMPTY(S)))/*
+																		*/(/*
+																			*/COMMA() S /*
+																			*/IF_VA(NOT(IS_EMPTY(T)))/*
+																			*/(/*
+																				*/COMMA() T /*
+																				*/IF_VA(NOT(IS_EMPTY(U)))/*
+																				*/(/*
+																					*/COMMA() U /*
+																					*/IF_VA(NOT(IS_EMPTY(V)))/*
+																					*/(/*
+																						*/COMMA() V /*
+																						*/IF_VA(NOT(IS_EMPTY(W)))/*
+																						*/(/*
+																							*/COMMA() W /*
+																							*/IF_VA(NOT(IS_EMPTY(X)))/*
+																							*/(/*
+																								*/COMMA() X /*
+																								*/IF_VA(NOT(IS_EMPTY(Y)))/*
+																								*/(/*
+																									*/COMMA() Y /*
+																									*/IF_VA(NOT(IS_EMPTY(Z)))/*
+																									*/(/*
+																										*/COMMA() Z /*
+																										*/IF_VA(NOT(IS_EMPTY(AA)))/*
+																										*/(/*
+																											*/COMMA() AA /*
+																											*/IF_VA(NOT(IS_EMPTY(AB)))/*
+																											*/(/*
+																												*/COMMA() AB /*
+																												*/IF_VA(NOT(IS_EMPTY(AC)))/*
+																												*/(/*
+																													*/COMMA() AC /*
+																													*/IF_VA(NOT(IS_EMPTY(AD)))/*
+																													*/(/*
+																														*/COMMA() AD /*
+																														*/IF_VA(NOT(IS_EMPTY(AE)))/*
+																														*/(/*
+																															*/COMMA() AE /*
+																															*/IF_VA(NOT(IS_EMPTY(AF)))/*
+																															*/(/*
+																																*/COMMA() AF /*
+																																*/IF_VA(NOT(IS_EMPTY(ERROR)))/*
+																																*/(/*
+																																	*/COMMA() undefinedlocal = 1/0 "_VA_ARGS Stack full"/*
+																																*/)/*
+*/)	)	)	)	)	)	)	)	)	)	)	)	)	)	)	)	)	)	)	)	)	)	)	)	)	)	)	)	)	)	)	)	
 /**
  * Push/Pop VA Args arrays
  */
@@ -357,8 +460,8 @@ IF_VA(NOT(IS_EMPTY(AE)))(COMMA() AE IF_VA(NOT(IS_EMPTY(AF)))(COMMA() AF IF_VA(NO
 #define _AND_11   1
 
 /**
- * Macro if statement. Usage:
- *
+ * Macro if statement. 
+ * Usage:
  *   IF(condition)          \
  *   (                      \
  *     expansion when true  \
@@ -409,7 +512,7 @@ IF_VA(NOT(IS_EMPTY(AE)))(COMMA() AE IF_VA(NOT(IS_EMPTY(AF)))(COMMA() AF IF_VA(NO
  * that the first argument exists.
  * @return TRUE/FALSE
  */
-#define HAS_ARGS(a)      BOOL(_END_OF_ARGUMENTS_ EVAL1(FIRST(a))())
+#define HAS_ARGS(a)      BOOL(EXPAND(_END_OF_ARGUMENTS_ FIRST(a)()))
 #define _END_OF_ARGUMENTS_() 0
 
 /*
@@ -424,7 +527,6 @@ for_each(v.begin(), v.end(), [](int &number)
  */
 #define foreach(var, collection) for (var = *collection; var; var++)
 
-
 #ifdef EXPAND_EXAMPLES
 //do I have args?
 //yes
@@ -433,6 +535,7 @@ HAS_ARGS((a, b, c))
 //no
 HAS_ARGS()
 HAS_ARGS(())
+HAS_ARGS((      ()))
 
 #    define test() Im expanded
         DEFER8(test)() EVAL1(EVAL4(DEFER4(test)()))
@@ -441,16 +544,39 @@ HAS_ARGS(())
 #    define _RECURSE() RECURSE
     // RECURSE
     EVAL16(RECURSE((this, is, a, test, WITH, MANY, ARGS)))
+#endif
 
-#    define COUNTPARAMS(X) \
-        IF(IS_PAREN(X))  \
-        (EVAL8(COUNTPARAMS_INNER(X, 0)))
-#    define COUNTPARAMS_INNER(X, COUNT) \
-        IF_ELSE(HAS_ARGS X)           \
-        (DEFER3(_COUNTPARMS)()(POP_ARG X, INC(COUNT)))(COUNT)
+#define COUNTPARAMS(X) \
+    IF_ELSE(IS_PAREN(X)) /*
+    */( /*
+        */EVAL8(COUNTPARAMS_INNER(X, 0)) /*
+    */) /*
+    */( /*
+        */0() /*
+    */)
+#define COUNTPARAMS_INNER(X, COUNT) \
+    IF_ELSE(HAS_ARGS(X))/*
+    */( /*
+        */DEFER3(_COUNTPARMS)()(POP_ARG(X), INC(COUNT))/*
+    */) /*
+    */( /*
+        */COUNT /*
+    */)
 #    define _COUNTPARMS() COUNTPARAMS_INNER
+
+
+#ifdef EXPAND_EXAMPLES
     // COUNTPARAMS - IT WORKS!!!, THIS WILL BE GREAT FOR AI
-    COUNTPARAMS((this, is, a, test, WITH, LOTS, OF, args, max))
+    COUNTPARAMS(())
+    COUNTPARAMS((A))
+    COUNTPARAMS((A, B))
+    COUNTPARAMS((A, B, C))
+    COUNTPARAMS((A, B, C, D))
+    COUNTPARAMS((A, B, C, D, E))
+    COUNTPARAMS((A, B, C, D, E, F))
+    COUNTPARAMS((A, B, C, D, E, F, G))
+    COUNTPARAMS((A, B, C, D, E, F,G,H))
+    COUNTPARAMS((A, B, C, D, E,  F,G,H,I))
 
 #enAdif
 #define LIST_TO_TUPLE(list) \	

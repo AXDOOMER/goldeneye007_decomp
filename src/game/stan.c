@@ -60,15 +60,23 @@ PropRecord * stanSavedColl_posData;
 //CODE.bss:8007BA08
 s32 dword_CODE_bss_8007BA08;
 //CODE.bss:8007BA0C
-s32 dword_CODE_bss_8007BA0C;
+StandTile * dword_CODE_bss_8007BA0C;
 //CODE.bss:8007BA10
 StandTile *bfsTileStack[352];
 
 
 // data
+
 //D:80040F30
-u8 D_80040F30[] = {0x8D, 0x86, 0x04, 0xC5, 0x9D, 0xA4, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+u8 D_80040F30[] = { 
+    0x8D, 0x86, 0x04, 0xC5, 
+    0x9D, 0xA4, 0x00, 0x00, 
+    0x00, 0x00, 0x00, 0x00, 
+    0x00, 0x00, 0x00, 0x00
+};
+
 s32 stan_c_debug_notice_list_entry = 0;
+
 //D:80040F44
 f32 level_scale = 1.0;
 //D:80040F48
@@ -80,7 +88,7 @@ u8 list_of_tilesizes[] = {
     0x48,0x50,0x58,0x00
 };
 //D:80040F58
-s32 standTileStart = 0;
+struct StandTile * standTileStart = NULL;
 //D:80040F5C
 s32 ptr_firstroom_0 = 0;
 //D:80040F60
@@ -132,6 +140,27 @@ const char aCDCC[] = "%c%d%c%c";
 const char aStan_c_debug[] = "stan_c_debug";
 //D:800585BC
 const char aStanlinelog[] = "-stanlinelog";
+
+// forward declarations
+
+s32 stanIsSpecialBit1Set(StandTile *arg0, struct StandTileLocusCallbackRecord* arg1);
+s32 sub_GAME_7F0B2274(StandTile *arg0, s32 arg1, f32 arg2, f32 arg3, s32 arg4, struct StandTileLocusCallbackRecord *arg5);
+
+s32 sub_GAME_7F0B1DDC(
+    struct StandTile**,
+    f32,
+    f32,
+    f32,
+    standTileLocusCallback_A_t,
+    standTileLocusCallback_B_t,
+    standTileLocusCallback_C_t,
+    struct StandTileLocusCallbackRecord*
+);
+s32 sub_GAME_7F0B2110(StandTile *tile, struct StandTileLocusCallbackRecord*);
+s32 stanGetLocusField0(struct StandTileLocusCallbackRecord *arg0);
+s32 stanGetLocusCount(struct StandTileLocusCallbackRecord *arg0);
+
+// end forward declarations
 
 
 
@@ -2581,7 +2610,7 @@ glabel sub_GAME_7F0B0688
 }
 
 #else
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B07BC
@@ -2676,7 +2705,7 @@ glabel sub_GAME_7F0B07BC
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B07BC
@@ -3195,8 +3224,6 @@ glabel sub_GAME_7F0B0D0C
 
 
 // sig for caller matches
-s32 sub_GAME_7F0B0E24(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z,
-    int objFlags, f32 unkHeight, f32 unkA, f32 unkB, f32 unkC);
 
 #ifdef NONMATCHING
 // 'testLineUnobstructed'
@@ -4328,12 +4355,7 @@ glabel getTileEdgePoints
 )
 #endif
 
-// Sig for caller matches
-// Note it's not clear from caller usage alone what the type of C's 5th parameter is
-s32 sub_GAME_7F0B1DDC(struct StandTile**, f32, f32, f32,
-    standTileLocusCallback_A_t, standTileLocusCallback_B_t, standTileLocusCallback_C_t,
-    struct StandTileLocusCallbackRecord*
-);
+
 
 #ifdef NONMATCHING
 void sub_GAME_7F0B1DDC(void) {
@@ -4560,8 +4582,7 @@ s32 sub_GAME_7F0B20D0(StandTile **tileStack, f32 target_x, f32 target_z, f32 unk
 }
 
 
-// sig for caller matches
-s32 sub_GAME_7F0B2110(StandTile *tile, struct StandTileLocusCallbackRecord*);
+
 
 #ifdef NONMATCHING
 
@@ -4644,11 +4665,11 @@ s32 incrNearEdgeCount(StandTile **tileStack, s32 stackHeight, struct StandTileLo
 
 
 
-s32 sub_GAME_7F0B21B0(StandTile **tileStack, f32 target_x, f32 target_z, f32 unknown, s32 *roomBuf, s32 *count_rtn, s32 bufMax){
+s32 sub_GAME_7F0B21B0(StandTile **tileStack, f32 target_x, f32 target_z, f32 unknown, s32 unk00, s32 *count_rtn, s32 bufMax){
     struct StandTileLocusCallbackRecord data;
     s32 rtn;
 
-    data.roomBuf = roomBuf;
+    data.unk00 = unk00;
     data.count = 0;
     data.bufMax = bufMax;
     data.nearEdgeCount = 0;
@@ -4670,70 +4691,65 @@ s32 sub_GAME_7F0B21B0(StandTile **tileStack, f32 target_x, f32 target_z, f32 unk
 
 
 
-#ifdef NONMATCHING
 
-// TODO
-// s16 headerA : 4   gives just regalloc
-s32 sub_GAME_7F0B2244(StandTile *tile, u8 *rtn) {
-    if (D_80040F30[tile->headerMid >> 0xC] & 2)
+/**
+ * Address 0x7F0B2244.
+*/
+s32 stanIsSpecialBit1Set(StandTile *arg0, struct StandTileLocusCallbackRecord *arg1)
+{
+    s32 val = arg0->mid.half >> 0xC;
+    if (D_80040F30[val] & 2)
     {
-        *rtn = 1;
+        arg1->unk00 = 1;
     }
 
     return 0;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B2244
-/* 0E6D74 7F0B2244 84820004 */  lh    $v0, 4($a0)
-/* 0E6D78 7F0B2248 3C0F8004 */  lui   $t7, %hi(D_80040F30)
-/* 0E6D7C 7F0B224C 24190001 */  li    $t9, 1
-/* 0E6D80 7F0B2250 00027303 */  sra   $t6, $v0, 0xc
-/* 0E6D84 7F0B2254 01EE7821 */  addu  $t7, $t7, $t6
-/* 0E6D88 7F0B2258 91EF0F30 */  lbu   $t7, %lo(D_80040F30)($t7)
-/* 0E6D8C 7F0B225C 31F80002 */  andi  $t8, $t7, 2
-/* 0E6D90 7F0B2260 13000002 */  beqz  $t8, .L7F0B226C
-/* 0E6D94 7F0B2264 00000000 */   nop   
-/* 0E6D98 7F0B2268 ACB90000 */  sw    $t9, ($a1)
-.L7F0B226C:
-/* 0E6D9C 7F0B226C 03E00008 */  jr    $ra
-/* 0E6DA0 7F0B2270 00001025 */   move  $v0, $zero
-)
-#endif
-
 
 
 
 #ifdef NONMATCHING
-// TODO
-void sub_GAME_7F0B2274(s32 arg0, s32 arg1, ? arg2, ? arg3, void *arg5) {
-    void *temp_t7;
-    void *temp_v1;
+/**
+ * Address 0x7F0B2274.
+ * 
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical instructions: no
+ * - identical registers: fail
+ * 
+ * Notes: the SRA 0xc needs to be calculated twice, but below is a move instruction from previous SRA 0xc.
+ * Seems to match other than that.
+*/
+s32 sub_GAME_7F0B2274(StandTile *arg0, s32 arg1, f32 arg2, f32 arg3, s32 arg4, struct StandTileLocusCallbackRecord *arg5)
+{
+    s32 temp_v0;
+    StandTile *temp_v1;
+    s32 val;
 
-    // Node 0
-    temp_t7 = (arg0 + (arg1 * 8));
-    if (((s32) temp_t7->unkE >> 4) != 0)
+    temp_v0 = arg0->points[arg1].link;
+
+    if ((temp_v0 >> 4) != 0)
     {
-        // Node 1
-        temp_v1 = ((temp_t7->unkE * 8) + standTileStart);
-        if ((*(&D_80040F30 + ((s32) temp_v1->unk4 >> 0xc)) & 2) != 0)
+        temp_v1 = &standTileStart[temp_v0];
+
+        val = temp_v1->mid.half >> 0xc;
+        if (D_80040F30[val] & 2)
         {
-            // Node 2
-            *arg5 = 1;
+            arg5->unk00 = 1;
             return 1;
         }
-        // Node 3
-        if ((*(&D_80040F30 + ((s32) temp_v1->unk4 >> 0xc)) & 0x40) != 0)
+
+        val = temp_v1->mid.half >> 0xc;
+        if (D_80040F30[val] & 0x40)
         {
-            // Node 4
             dword_CODE_bss_8007BA0C = temp_v1;
-            arg5->unk4 = 1;
+            arg5->count = 1;
             return 0;
         }
     }
-    // Node 5
+
     return 0;
 }
 #else
@@ -4792,110 +4808,49 @@ glabel sub_GAME_7F0B2274
 
 
 
-#ifdef NONMATCHING
-// I think they might have abused c a little here, which is what's led to the strange zero-ing.
-// The use the struct (size 0x10) to just hold a bool.
-void sub_GAME_7F0B2314(s32 arg0, s32 arg1, ? arg2, ? arg3, void *arg4) {
-    s32 temp_v1;
-    void *phi_v0;
-    s32 phi_v1;
+/**
+ * Address 0x7F0B2314.
+*/
+s32 stanTileDistanceRelated(StandTile **arg0, f32 arg1, f32 arg2, f32 arg3, struct StandTileLocusCallbackRecord *arg4)
+{
+    s32 i;
 
-    // Node 0
-    phi_v0 = arg4;
-    phi_v1 = 0;
-loop_1:
-    // Node 1
-    temp_v1 = (phi_v1 + 4);
-    *phi_v0 = 0;
-    phi_v0->unk4 = 0;
-    phi_v0->unk8 = 0;
-    phi_v0->unkC = 0;
-    phi_v0 = (phi_v0 + 0x10);
-    phi_v1 = temp_v1;
-    if (temp_v1 != 0x10)
+    // HACK:
+    for(i=0;;)
     {
-        goto loop_1;
+        ((s32*)arg4)[i+0] = 0;
+        ((s32*)arg4)[i+1] = 0;
+        ((s32*)arg4)[i+2] = 0;
+        ((s32*)arg4)[i+3] = 0;
+        i+=4;
+        if (i>15) break;
     }
-    // Node 2
-    return sub_GAME_7F0B1DDC(arg1, arg2, arg0, arg1, arg2, arg3, &sub_GAME_7F0B2244, &sub_GAME_7F0B2274, 0, arg4);
+
+    // maybe something like:
+    /*
+    for(i=0;i<3;i++)
+    {
+        arg4[i].unk00 = 0;
+        arg4[i].count = 0;
+        arg4[i].bufMax = 0;
+        arg4[i].nearEdgeCount = 0;
+    }
+    */
+
+    return sub_GAME_7F0B1DDC(arg0, arg1, arg2, arg3, stanIsSpecialBit1Set, sub_GAME_7F0B2274, NULL, arg4);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B2314
-/* 0E6E44 7F0B2314 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0E6E48 7F0B2318 AFA40028 */  sw    $a0, 0x28($sp)
-/* 0E6E4C 7F0B231C 44856000 */  mtc1  $a1, $f12
-/* 0E6E50 7F0B2320 44867000 */  mtc1  $a2, $f14
-/* 0E6E54 7F0B2324 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0E6E58 7F0B2328 AFA70034 */  sw    $a3, 0x34($sp)
-/* 0E6E5C 7F0B232C 24040010 */  li    $a0, 16
-/* 0E6E60 7F0B2330 8FA20038 */  lw    $v0, 0x38($sp)
-/* 0E6E64 7F0B2334 00001825 */  move  $v1, $zero
-.L7F0B2338:
-/* 0E6E68 7F0B2338 24630004 */  addiu $v1, $v1, 4
-/* 0E6E6C 7F0B233C AC400000 */  sw    $zero, ($v0)
-/* 0E6E70 7F0B2340 AC400004 */  sw    $zero, 4($v0)
-/* 0E6E74 7F0B2344 AC400008 */  sw    $zero, 8($v0)
-/* 0E6E78 7F0B2348 AC40000C */  sw    $zero, 0xc($v0)
-/* 0E6E7C 7F0B234C 1464FFFA */  bne   $v1, $a0, .L7F0B2338
-/* 0E6E80 7F0B2350 24420010 */   addiu $v0, $v0, 0x10
-/* 0E6E84 7F0B2354 8FB80038 */  lw    $t8, 0x38($sp)
-/* 0E6E88 7F0B2358 3C0E7F0B */  lui   $t6, %hi(sub_GAME_7F0B2244) # $t6, 0x7f0b
-/* 0E6E8C 7F0B235C 3C0F7F0B */  lui   $t7, %hi(sub_GAME_7F0B2274) # $t7, 0x7f0b
-/* 0E6E90 7F0B2360 25EF2274 */  addiu $t7, %lo(sub_GAME_7F0B2274) # addiu $t7, $t7, 0x2274
-/* 0E6E94 7F0B2364 25CE2244 */  addiu $t6, %lo(sub_GAME_7F0B2244) # addiu $t6, $t6, 0x2244
-/* 0E6E98 7F0B2368 44056000 */  mfc1  $a1, $f12
-/* 0E6E9C 7F0B236C 44067000 */  mfc1  $a2, $f14
-/* 0E6EA0 7F0B2370 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 0E6EA4 7F0B2374 AFAF0014 */  sw    $t7, 0x14($sp)
-/* 0E6EA8 7F0B2378 8FA40028 */  lw    $a0, 0x28($sp)
-/* 0E6EAC 7F0B237C 8FA70034 */  lw    $a3, 0x34($sp)
-/* 0E6EB0 7F0B2380 AFA00018 */  sw    $zero, 0x18($sp)
-/* 0E6EB4 7F0B2384 0FC2C777 */  jal   sub_GAME_7F0B1DDC
-/* 0E6EB8 7F0B2388 AFB8001C */   sw    $t8, 0x1c($sp)
-/* 0E6EBC 7F0B238C 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 0E6EC0 7F0B2390 27BD0028 */  addiu $sp, $sp, 0x28
-/* 0E6EC4 7F0B2394 03E00008 */  jr    $ra
-/* 0E6EC8 7F0B2398 00000000 */   nop   
-)
-#endif
 
 
 
-
-
-#ifdef NONMATCHING
-void *sub_GAME_7F0B239C(void *arg0) {
-    // Node 0
-    return *arg0;
+s32 stanGetLocusField0(struct StandTileLocusCallbackRecord *arg0)
+{
+    return arg0->unk00;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B239C
-/* 0E6ECC 7F0B239C 03E00008 */  jr    $ra
-/* 0E6ED0 7F0B23A0 8C820000 */   lw    $v0, ($a0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0B23A4(void *arg0) {
-    // Node 0
-    return arg0->unk4;
+s32 stanGetLocusCount(struct StandTileLocusCallbackRecord *arg0)
+{
+    return arg0->count;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B23A4
-/* 0E6ED4 7F0B23A4 03E00008 */  jr    $ra
-/* 0E6ED8 7F0B23A8 8C820004 */   lw    $v0, 4($a0)
-)
-#endif
 
 
 
@@ -4956,13 +4911,13 @@ glabel sub_GAME_7F0B23AC
 
 #ifdef NONMATCHING
 // TODO
-void sub_GAME_7F0B2420(void) {
+void stanGetMoveBondCollisionTiles(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0B2420
+glabel stanGetMoveBondCollisionTiles
 /* 0E6F50 7F0B2420 27BDFFB8 */  addiu $sp, $sp, -0x48
 /* 0E6F54 7F0B2424 3C098008 */  lui   $t1, %hi(dword_CODE_bss_8007BA0C) 
 /* 0E6F58 7F0B2428 8D29BA0C */  lw    $t1, %lo(dword_CODE_bss_8007BA0C)($t1)
@@ -5440,31 +5395,31 @@ glabel sub_GAME_7F0B2718
  * @param pntA: out parameter, will contain stanSavedColl_pntA (x,z)
  * @param pntB: out parameter, will contain stanSavedColl_pntB (x,z)
  */
-s32 getCollisionEdge_maybe(coord3d *pntA, coord3d *pntB)
+bool getCollisionEdge_maybe(coord3d *pntA, coord3d *pntB)
 {
     if (stanSavedColl_tile)
     {
         getTileEdgePoints(stanSavedColl_tile, stanSavedColl_pointI, pntA, pntB);
 
-        return 1;
+        return TRUE;
     }
     else
     {
         if (D_800413BC)
         {
-            pntA->f[0] = stanSavedColl_pntA[0];
-            pntA->f[1] = 0;
-            pntA->f[2] = stanSavedColl_pntA[1];
+            pntA->x = stanSavedColl_pntA[0];
+            pntA->y = 0;
+            pntA->z = stanSavedColl_pntA[1];
 
-            pntB->f[0] = stanSavedColl_pntB[0];
-            pntB->f[1] = 0;
-            pntB->f[2] = stanSavedColl_pntB[1];
+            pntB->x = stanSavedColl_pntB[0];
+            pntB->y = 0;
+            pntB->z = stanSavedColl_pntB[1];
 
-            return 1;
+            return TRUE;
         }
         else
         {
-            return 0;
+            return FALSE;
         }
     }
 }
@@ -6078,8 +6033,14 @@ glabel stanDetermineEOF
 #endif
 
 
-
-u8 getTileRoom(StandTile *tile) {
+/**
+ Get the room the tile belongs to
+ @param tile: Tile to quiry
+ @return the room number the tile is located in
+ @exception Although room is u8, this needs to be s32 for matching ai.
+ */
+s32 getTileRoom(StandTile *tile)
+{
     return tile->room;
 }
 
@@ -6087,7 +6048,8 @@ u8 getTileRoom(StandTile *tile) {
 
 
 
-s32 sub_GAME_7F0B2FE0(StandTile *tile) {
+s32 sub_GAME_7F0B2FE0(StandTile *tile)
+{
     // u8 -> s32 -> u8 causes the odd asm
 
     s32 room = tile->room;

@@ -6,6 +6,7 @@
 #include "watch.h"
 #include "file.h"
 #include "file2.h"
+#include "front.h"
 
 /**
  *
@@ -504,7 +505,6 @@ void fileValidateSaves(void)
                 checksumOK2 = FALSE;
             }
 
-
             if (!checksumOK2)
             {
                 fileResetSave(&saves[i]);
@@ -539,7 +539,6 @@ void fileValidateSaves(void)
                             fileResetSave(&saves[jif]);
                             jif = j;
                             flag18 = flag18_2;
-
                         }
                         else
                         {
@@ -548,6 +547,7 @@ void fileValidateSaves(void)
                     }
                 }
             }
+
             // 80 was not set
             if (jif < 0)
             {

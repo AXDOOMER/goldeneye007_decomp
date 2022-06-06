@@ -517,7 +517,7 @@ void lvlStageLoad(s32 stage)
             reinit_gunheld_totaltime();
             init_player_BONDdata_stats();
             init_player_BONDdata();
-            load_camera_intro_type_values();
+            bondviewLoadSetupIntroSection();
             bondviewPlayerSpawnRelated();
             sets_a_bunch_of_BONDdata_values_to_default();
             disableOnscreenCheatText();
@@ -793,7 +793,7 @@ glabel lvlStageLoad
 /* 0F2998 7F0BDE68 00000000 */   nop
 /* 0F299C 7F0BDE6C 0FC1E4FB */  jal   init_player_BONDdata
 /* 0F29A0 7F0BDE70 00000000 */   nop
-/* 0F29A4 7F0BDE74 0FC015F1 */  jal   load_camera_intro_type_values
+/* 0F29A4 7F0BDE74 0FC015F1 */  jal   bondviewLoadSetupIntroSection
 /* 0F29A8 7F0BDE78 00000000 */   nop
 /* 0F29AC 7F0BDE7C 0FC1E62E */  jal   bondviewPlayerSpawnRelated
 /* 0F29B0 7F0BDE80 00000000 */   nop
@@ -1098,7 +1098,7 @@ glabel lvlStageLoad
 /* 0F3598 7F0BEA28 00000000 */   nop
 /* 0F359C 7F0BEA2C 0FC1E677 */  jal   init_player_BONDdata
 /* 0F35A0 7F0BEA30 00000000 */   nop
-/* 0F35A4 7F0BEA34 0FC015F9 */  jal   load_camera_intro_type_values
+/* 0F35A4 7F0BEA34 0FC015F9 */  jal   bondviewLoadSetupIntroSection
 /* 0F35A8 7F0BEA38 00000000 */   nop
 /* 0F35AC 7F0BEA3C 0FC1E7AA */  jal   bondviewPlayerSpawnRelated
 /* 0F35B0 7F0BEA40 00000000 */   nop
@@ -1420,7 +1420,7 @@ glabel lvlStageLoad
 /* 0EFC18 7F0BD228 00000000 */   nop   
 /* 0EFC1C 7F0BD22C 0FC1E51B */  jal   init_player_BONDdata
 /* 0EFC20 7F0BD230 00000000 */   nop   
-/* 0EFC24 7F0BD234 0FC015D9 */  jal   load_camera_intro_type_values
+/* 0EFC24 7F0BD234 0FC015D9 */  jal   bondviewLoadSetupIntroSection
 /* 0EFC28 7F0BD238 00000000 */   nop   
 /* 0EFC2C 7F0BD23C 0FC1E64E */  jal   bondviewPlayerSpawnRelated
 /* 0EFC30 7F0BD240 00000000 */   nop   
@@ -2277,7 +2277,7 @@ void lvlManageMpGame(void)
                 if (p->bonddead != 0)
                 {
                     mp_alive_count++;
-                    if (p->field_424 != 0)
+                    if (p->redbloodfinished != 0)
                     {
                         mp_player_field424_count++;
                     }
@@ -2346,7 +2346,7 @@ void lvlManageMpGame(void)
                 p = g_playerPointers[i];
 
                 if (p->bonddead != 0 &&
-                    (p->field_424 == 0 || p->field_428 == 0 || p->colourfadetimemax60 >= 0.0f))
+                    (p->redbloodfinished == 0 || p->deathanimfinished == 0 || p->colourfadetimemax60 >= 0.0f))
                 {
                     mp_player_currently_in_dying_animation++;
                 }
@@ -2441,7 +2441,7 @@ void lvlManageMpGame(void)
                             g_playerPlayerData[i].order_out_in_yolt = (u8) (phi_a2_5 + 1);
                         }
 
-                        if ((g_playerPointers[i]->field_424 != 0) && (g_playerPointers[i]->field_428 != 0) && (g_playerPointers[i]->colourfadetimemax60 < 0.0f))
+                        if ((g_playerPointers[i]->redbloodfinished != 0) && (g_playerPointers[i]->deathanimfinished != 0) && (g_playerPointers[i]->colourfadetimemax60 < 0.0f))
                         {
                             phi_ra_2 = phi_ra_3 + 1;
                         }
@@ -5413,8 +5413,8 @@ void lvlUpdateMpPlayerData(void)
     }
 
     // decomp issue: `g_CurrentPlayer->prop` and `g_CurrentPlayer` registers are swapped.
-    temp_f0 = g_CurrentPlayer->prop->position.x - g_CurrentPlayer->field_408;
-    temp_f2 = g_CurrentPlayer->prop->position.z - g_CurrentPlayer->field_410;
+    temp_f0 = g_CurrentPlayer->prop->position.x - g_CurrentPlayer->bondprevpos.x;
+    temp_f2 = g_CurrentPlayer->prop->position.z - g_CurrentPlayer->bondprevpos.z;
 
     g_playerPerm->distance_traveled += sqrtf((temp_f0 * temp_f0) + (temp_f2 * temp_f2));
 
@@ -5445,7 +5445,7 @@ void lvlUpdateMpPlayerData(void)
 
     if (get_scenario() == SCENARIO_MWTGG)
     {
-        if (checkforgoldengun())
+        if (bondinvHasGoldenGun())
         {
             g_playerPerm->have_token_or_goldengun = 1;
         }
@@ -5459,7 +5459,7 @@ void lvlUpdateMpPlayerData(void)
 }
 #else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
+#if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel lvlUpdateMpPlayerData
@@ -5660,7 +5660,7 @@ glabel lvlUpdateMpPlayerData
 /* 0F4608 7F0BFAD8 24010003 */  li    $at, 3
 /* 0F460C 7F0BFADC 5441000D */  bnel  $v0, $at, .L7F0BFB14
 /* 0F4610 7F0BFAE0 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F4614 7F0BFAE4 0FC233F0 */  jal   checkforgoldengun
+/* 0F4614 7F0BFAE4 0FC233F0 */  jal   bondinvHasGoldenGun
 /* 0F4618 7F0BFAE8 00000000 */   nop
 /* 0F461C 7F0BFAEC 10400006 */  beqz  $v0, .L7F0BFB08
 /* 0F4620 7F0BFAF0 3C088008 */   lui   $t0, %hi(g_playerPerm)
@@ -5681,7 +5681,7 @@ glabel lvlUpdateMpPlayerData
 )
 #endif
 
-#if defined(VERSION_EU)
+#if !defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .text
 glabel lvlUpdateMpPlayerData
@@ -5882,7 +5882,7 @@ glabel lvlUpdateMpPlayerData
 /* 0F190C 7F0BEF1C 24010003 */  li    $at, 3
 /* 0F1910 7F0BEF20 5441000D */  bnel  $v0, $at, .L7F0BEF58
 /* 0F1914 7F0BEF24 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F1918 7F0BEF28 0FC234E9 */  jal   checkforgoldengun
+/* 0F1918 7F0BEF28 0FC234E9 */  jal   bondinvHasGoldenGun
 /* 0F191C 7F0BEF2C 00000000 */   nop   
 /* 0F1920 7F0BEF30 10400006 */  beqz  $v0, .L7F0BEF4C
 /* 0F1924 7F0BEF34 3C088007 */   lui   $t0, %hi(g_playerPerm) # $t0, 0x8007
