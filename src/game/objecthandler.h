@@ -20,7 +20,10 @@ void modelSetScale(Model*, f32);
 void getsuboffset(Model *, coord3d *);
 void sub_GAME_7F070AEC(Model *, s32, s32);
 void subcalcpos(Model *);
- void      modelSetAnimEndFrame(Model *model, float endframe);
+void modelSetAnimEndFrame(Model *model, f32 endframe);
+
+void sub_GAME_7F06F780(Model *, f32);
+void sub_GAME_7F06F878(Model *, ModelAnimation *, s32, f32, f32, f32);
 
 void modelSetAnimation(Model *, ModelAnimation *, s32, f32, f32, f32 duration);
 void modelSetAnimLooping(Model *, f32, f32);
@@ -30,15 +33,15 @@ void sub_GAME_7F06CE84(Model *, f32);
 void *extract_id_from_object_structure_microcode(Model *Objinst, ModelNode *root);
 f32 getsubroty(Model *objinst);
 void setsubroty(Model *objinst, f32 radHeading);
-void sub_GAME_7F06FC4C(Model *, u8 *, s32, f32, f32, f32, s32);
+void modelSetAnimationWithMerge(Model *, ModelAnimation *, s32, f32, f32, f32, s32);
 f32 objecthandlerGetModelField28(Model *model);
 
 ModelAnimation * objecthandlerGetModelAnim(Model *);
 f32 modelGetAbsAnimSpeed(Model*);
-s32 sub_GAME_7F06F5B4(Model *);
+s8 objecthandlerGetModelGunhand(Model *);
 f32 sub_GAME_7F06F5C4(Model *);
 void modelSetAnimSpeed(Model *, f32, f32);
-f32 sub_GAME_7F06F610(Model *);
+f32 modelGetAnimSpeed(Model *);
 void sub_GAME_7F06FE90(Model *arg0, f32 arg1, f32 arg2);
 f32 getinstsize(Model *arg0);
 
@@ -73,7 +76,7 @@ void sub_GAME_7F06D2E4(s32, s32, ModelSkeleton*, void* anim, s32, s16*);
 
 // arg2 unknown type.
 void sub_GAME_7F075FAC(Model *, ModelFileHeader *, void *);
-void modelSetAnimFlipFunction(Model **, void (*)());
+void modelSetAnimFlipFunction(Model *, void *);
 void subcalcmatrices(struct unk_joint_list *, Model *);
 void instcalcmatrices(struct unk_joint_list *arg0, Model *arg1);
 void load_object_fill_header(struct ModelFileHeader *objheader, u8 *name, void *targetloc, s32 sizeleft, s32 buffer);

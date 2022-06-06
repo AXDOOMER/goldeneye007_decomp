@@ -5503,7 +5503,7 @@ void set_camera_mode(s32 arg0)
             currentPlayerStartChrFade(0.0f, 0x3F800000);
             solo_char_load();
             sp38 = sub_GAME_7F06F5AC(pPlayer + 0x598);
-            modelSetAnimation(pPlayer->unkD4, sp38, sub_GAME_7F06F5B4(pPlayer + 0x598), 0.0f, 0.5f, 0.0f);
+            modelSetAnimation(pPlayer->unkD4, sp38, objecthandlerGetModelGunhand(pPlayer + 0x598), 0.0f, 0.5f, 0.0f);
             temp_v1        = pPlayer->unkA8->unk4;
             temp_v1->unk7  = 0x18;
             temp_v1->unk8  = 0;
@@ -5933,7 +5933,7 @@ glabel set_camera_mode
 /* 0AF9E0 7F07AEB0 24840598 */   addiu $a0, $a0, 0x598
 /* 0AF9E4 7F07AEB4 8E040000 */  lw    $a0, ($s0)
 /* 0AF9E8 7F07AEB8 AFA20038 */  sw    $v0, 0x38($sp)
-/* 0AF9EC 7F07AEBC 0FC1BD6D */  jal   sub_GAME_7F06F5B4
+/* 0AF9EC 7F07AEBC 0FC1BD6D */  jal   objecthandlerGetModelGunhand
 /* 0AF9F0 7F07AEC0 24840598 */   addiu $a0, $a0, 0x598
 /* 0AF9F4 7F07AEC4 44800000 */  mtc1  $zero, $f0
 /* 0AF9F8 7F07AEC8 8E0E0000 */  lw    $t6, ($s0)

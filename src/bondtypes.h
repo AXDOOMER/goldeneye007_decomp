@@ -1236,7 +1236,7 @@ typedef union
 
             s8                gunhand; // used by ACT_STAND
             s8                unk25;
-            s8                unk26;
+            s8                animlooping; /*0x26*/
             s8                unk27;
 
             f32               unk28; // animation related
@@ -1255,14 +1255,13 @@ typedef union
             s16               frameb;
             s32               unk34;
             s32               unk38;
-            s32               unk3c;
-            // 0x40
-            f32               unk40;
-            f32               unk44;
-            f32               unk48;
-            f32               unk4c;
-            // 0x50
-            f32               unk50;
+            f32               unk3c;
+
+            f32               speed; /*0x40*/
+            f32               newspeed; /*0x44*/
+            f32               oldspeed; /*0x48*/
+            f32               timespeed; /*0x4C*/
+            f32               elapsespeed; /*0x50*/
 
             ModelAnimation   *anim2;
 
@@ -1300,9 +1299,9 @@ typedef union
             s32               unk88;
             s32               unk8c;
             // 0x90
-            f32               unk90;
-            f32               unk94;
-            s32               unk98;
+            f32               animloopframe; /*0x90*/
+            f32               animloopmerge; /*0x94*/
+            s32               animflipfunc; /*0x98*/
             s32               unk9c;
             // 0xa0
             s32               unka0;
