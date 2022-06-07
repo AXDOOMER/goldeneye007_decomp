@@ -2653,7 +2653,7 @@ Gfx *draw_background_health_and_armor_transitioning(Gfx *gdl, Mtx *param_2)
 }
 
 
-Gfx *sub_GAME_7F0A77C8(Gfx *gdl)
+Gfx *draw_abort_cancel_confirm(Gfx *gdl)
 {
     s32 sp7C;
     s32 sp78;
@@ -2787,7 +2787,7 @@ Gfx *draw_text_mission_status(Gfx *gdl)
     sp60 = sp60 - sp5C;
     sub_GAME_7F0AE98C(&sp5C, &sp58, txtptr_2, ptr_second_font, ptr_first_font, 0);
     gdl = en_text_write_stuff(gdl, &sp64, &sp60, txtptr_2, ptr_second_font, ptr_first_font, sp4C, sp58, sp5C, 0, 0);
-    gdl = sub_GAME_7F0A77C8(gdl);
+    gdl = draw_abort_cancel_confirm(gdl);
 
     return gdl;
 }
