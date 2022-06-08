@@ -4,7 +4,7 @@
 
 #include <bondtypes.h>
 
-
+#define CHRAI_TICKRATE_F 60.0f
 
 /*
 Stop Scolling:

@@ -6,12 +6,8 @@
 
 // Value is 3, it just needs to be less than MAX_CHRWAYPOINTS
 #define PATH_FINDING_WP_LIMIT (MAX_CHRWAYPOINTS - 3)
-#    ifdef REFRESH_PAL
-#    define CHRLV_FRAMERATE_F 50.0f
 
-#endif
 
-#define CHRLV_FRAMERATE_F 60.0f
 
 
 

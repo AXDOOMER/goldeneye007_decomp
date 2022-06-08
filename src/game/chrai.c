@@ -2773,7 +2773,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 case AI_IFSystemPowerTimeLessThan:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    f32       target = CharArrayTo16(ai->val,0) * CHRLV_FRAMERATE_F;
+                    f32       target = CharArrayTo16(ai->val,0) * CHRAI_TICKRATE_F;
                     if (target > lvlGetCurrentMultiPlayerMin())
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
@@ -2787,7 +2787,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 case AI_IFSystemPowerTimeGreaterThan:
                 {
                     AIRecord *ai     = AiListp + Offset;
-                    f32       target = CharArrayTo16(ai->val,0) * CHRLV_FRAMERATE_F;
+                    f32       target = CharArrayTo16(ai->val,0) * CHRAI_TICKRATE_F;
                     if (target < lvlGetCurrentMultiPlayerMin())
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
@@ -3367,7 +3367,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 case AI_IFMyTimerLessThanTicks:
                 {
                     AIRecord *ai   = AiListp + Offset;
-                    f32       valf = ((unsigned)CharArrayTo24(ai->val,0)) / CHRLV_FRAMERATE_F;
+                    f32       valf = ((unsigned)CharArrayTo24(ai->val,0)) / CHRAI_TICKRATE_F;
 
                     if (chrGetTimer(ChrEntityp) < valf)
                     {
@@ -3382,7 +3382,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 case AI_IFMyTimerGreaterThanTicks:
                 {
                     AIRecord *ai   = AiListp + Offset;
-                    f32       valf = ((unsigned)CharArrayTo24(ai->val,0)) / CHRLV_FRAMERATE_F;
+                    f32       valf = ((unsigned)CharArrayTo24(ai->val,0)) / CHRAI_TICKRATE_F;
                     if (chrGetTimer(ChrEntityp) > valf)
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[3]);
@@ -3409,7 +3409,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 {
                     AIRecord *ai      = AiListp + Offset;
                     f32       seconds = CharArrayTo16(ai->val,0);
-                    countdownTimerSetValue(seconds * CHRLV_FRAMERATE_F);
+                    countdownTimerSetValue(seconds * CHRAI_TICKRATE_F);
                     Offset += AI_HudCountdownSet_LENGTH;
                     break;
                 }
@@ -3442,7 +3442,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 {
                     AIRecord *ai    = AiListp + Offset;
                     f32       value = CharArrayTo16(ai->val,0);
-                    if (countdownTimerGetValue() < value * CHRLV_FRAMERATE_F)
+                    if (countdownTimerGetValue() < value * CHRAI_TICKRATE_F)
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
                     }
@@ -3456,7 +3456,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 {
                     AIRecord *ai    = AiListp + Offset;
                     f32       value = CharArrayTo16(ai->val,0);
-                    if (countdownTimerGetValue() > value * CHRLV_FRAMERATE_F)
+                    if (countdownTimerGetValue() > value * CHRAI_TICKRATE_F)
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
                     }
@@ -4170,7 +4170,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     if (stop_time_flag != 2)
                     {
                         currentPlayerSetFadeColour(0, 0, 0, 0);
-                        currentPlayerSetFadeFrac(CHRLV_FRAMERATE_F, 1);
+                        currentPlayerSetFadeFrac(CHRAI_TICKRATE_F, 1);
                     }
                     Offset += AI_ScreenFadeToBlack_LENGTH;
                     break;
@@ -4180,7 +4180,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     if (stop_time_flag != 2)
                     {
                         currentPlayerSetFadeColour(0, 0, 0, 1);
-                        currentPlayerSetFadeFrac(CHRLV_FRAMERATE_F, 0);
+                        currentPlayerSetFadeFrac(CHRAI_TICKRATE_F, 0);
                     }
                     Offset += AI_ScreenFadeFromBlack_LENGTH;
                     break;
