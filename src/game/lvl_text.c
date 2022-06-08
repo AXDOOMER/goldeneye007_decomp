@@ -862,5 +862,5 @@ u8 * langGet(s32 slotID)
 
     u32 output_slot = textslot_offset; /* add the text slot offset to the base ptr to get the ptr to text file's slot */
     output_slot += (u32)textbank_ptr;
-    return (textslot_offset != 0) ? output_slot : NULL;
+    return (textslot_offset != 0) ? (u8*)output_slot : NULL;
 }
