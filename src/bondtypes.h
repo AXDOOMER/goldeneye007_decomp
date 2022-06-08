@@ -1282,12 +1282,12 @@ typedef union
 
             s32               unk64;
             s32               unk68;
-            s32               unk6c;
+            f32               unk6c;
             // 0x70
-            s32               unk70;
+            f32               unk70;
             s32               unk74;
             s32               unk78;
-            s32               unk7c;
+            f32               unk7c;
             // 0x80
             s32               unk80;
 
@@ -1296,7 +1296,7 @@ typedef union
             */
             f32               unk84;
 
-            s32               unk88;
+            f32               unk88;
             s32               unk8c;
             // 0x90
             f32               animloopframe; /*0x90*/

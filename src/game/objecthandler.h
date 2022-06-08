@@ -74,8 +74,8 @@ u32 sub_GAME_7F0701E0(void);
 // arg0: unknown type. arg1: unknown type. arg5: unknown type, maybe struct.
 void sub_GAME_7F06D2E4(s32, s32, ModelSkeleton*, void* anim, s32, s16*);
 
-// arg2 unknown type.
-void sub_GAME_7F075FAC(Model *, ModelFileHeader *, void *);
+void sub_GAME_7F075F68(struct Model *, struct ModelFileHeader *, u32 *);
+void sub_GAME_7F075FAC(struct Model *, struct ModelFileHeader *, u32 *);
 void modelSetAnimFlipFunction(Model *, void *);
 void subcalcmatrices(struct unk_joint_list *, Model *);
 void instcalcmatrices(struct unk_joint_list *arg0, Model *arg1);
