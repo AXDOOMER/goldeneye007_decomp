@@ -307,33 +307,15 @@ Gfx *combiner_bayer_lod_perspective(Gfx *gdl)
 }
 
 #ifdef NONMATCHING
-s32 draw_blackbox_to_screen(void *arg0, void *arg1, void *arg2, void *arg3, void *arg4) {
-    void *temp_a0;
-    void *temp_t0;
-    void *temp_t1;
-    void *temp_v1;
-    void *temp_a1;
-
-    // Node 0
-    *arg0 = 0xb900031d;
-    arg0->unk4 = 0x504240;
-    temp_a0 = (arg0 + 8);
-    *temp_a0 = 0xfcffffff;
-    temp_a0->unk4 = 0xfffdf6fb;
-    temp_t0 = (temp_a0 + 8);
-    *temp_t0 = 0xfa000000;
-    temp_t0->unk4 = 0;
-    temp_t1 = (temp_t0 + 8);
-    *temp_t1 = (s32) ((((*arg4 & 0x3ff) * 4) | 0xf6000000) | ((*arg3 & 0x3ff) << 0xe));
-    temp_v1 = (temp_t1 + 8);
-    temp_t1->unk4 = (s32) (((*arg2 & 0x3ff) * 4) | ((*arg1 & 0x3ff) << 0xe));
-    temp_a1 = (temp_v1 + 8);
-    temp_v1->unk4 = 0x504240;
-    *temp_v1 = 0xb900031d;
-    *temp_a1 = 0xfcff97ff;
-    temp_a1->unk4 = 0xff2dfeff;
-    return;
-    // (possible return value: (temp_a1 + 8))
+Gfx* draw_blackbox_to_screen(Gfx *glist, s32 ulx, s32 uly, s32 lrx, s32 lry)
+{
+    gDPSetRenderMode(glist++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
+    gDPSetCombineMode(glist++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
+    gDPSetPrimColor(glist++, 0, 0, 0x00, 0x00, 0x00, 0x00);
+    gDPFillRectangle(glist++, ulx, uly, lrx, lry);
+    gDPSetRenderMode(glist++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
+    gDPSetCombineLERP(glist++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0);
+    return glist;
 }
 
 #else
