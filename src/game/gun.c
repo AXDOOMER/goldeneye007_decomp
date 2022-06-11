@@ -597,17 +597,6 @@ u16 ammo_related[]  = {
 u32 D_80036060 = 0;
 
 
-// rodata
-
-
-//D:80053BF4
-const char aD_9[] = "%d\n";
-//D:80053BF8
-const char aSD[] = "%s: %d\n";
-//D:80053C00
-const char aSDS[] = "%s %d %s\n";
-//D:80053C0C
-const char aSD_0[] = "%s: %d\n";
 
 
 // forward declarations
@@ -32894,47 +32883,13 @@ glabel some_kind_of_display_routine
 
 
 
-
-#if defined(VERSION_US) || defined(VERSION_JP)
-Gfx *display_ammo_total_in_a1(Gfx *arg0, s32 amount, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) {
+Gfx *display_ammo_total_in_a1(Gfx *arg0, s32 amount, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6)
+{
     char buffer[12];
-    sprintf(buffer, aD_9, amount);
+    sprintf(buffer, "%d\n", amount);
     return some_kind_of_display_routine(arg0, buffer, arg2, arg3, arg4, arg5, arg6);
 }
-#endif
 
-#if defined(VERSION_EU)
-GLOBAL_ASM(
-.text
-glabel display_ammo_total_in_a1
-/* 09CE10 7F06A420 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 09CE14 7F06A424 AFA60040 */  sw    $a2, 0x40($sp)
-/* 09CE18 7F06A428 00A03025 */  move  $a2, $a1
-/* 09CE1C 7F06A42C AFA5003C */  sw    $a1, 0x3c($sp)
-/* 09CE20 7F06A430 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 09CE24 7F06A434 AFA40038 */  sw    $a0, 0x38($sp)
-/* 09CE28 7F06A438 3C058005 */  lui   $a1, %hi(aD_9) # $a1, 0x8005
-/* 09CE2C 7F06A43C AFA70044 */  sw    $a3, 0x44($sp)
-/* 09CE30 7F06A440 24A59D34 */  addiu $a1, %lo(aD_9) # addiu $a1, $a1, -0x62cc
-/* 09CE34 7F06A444 0C00283D */  jal   sprintf
-/* 09CE38 7F06A448 27A4002C */   addiu $a0, $sp, 0x2c
-/* 09CE3C 7F06A44C 8FAE0048 */  lw    $t6, 0x48($sp)
-/* 09CE40 7F06A450 8FAF004C */  lw    $t7, 0x4c($sp)
-/* 09CE44 7F06A454 8FB80050 */  lw    $t8, 0x50($sp)
-/* 09CE48 7F06A458 8FA40038 */  lw    $a0, 0x38($sp)
-/* 09CE4C 7F06A45C 27A5002C */  addiu $a1, $sp, 0x2c
-/* 09CE50 7F06A460 8FA60040 */  lw    $a2, 0x40($sp)
-/* 09CE54 7F06A464 8FA70044 */  lw    $a3, 0x44($sp)
-/* 09CE58 7F06A468 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 09CE5C 7F06A46C AFAF0014 */  sw    $t7, 0x14($sp)
-/* 09CE60 7F06A470 0FC1A879 */  jal   some_kind_of_display_routine
-/* 09CE64 7F06A474 AFB80018 */   sw    $t8, 0x18($sp)
-/* 09CE68 7F06A478 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 09CE6C 7F06A47C 27BD0038 */  addiu $sp, $sp, 0x38
-/* 09CE70 7F06A480 03E00008 */  jr    $ra
-/* 09CE74 7F06A484 00000000 */   nop   
-)
-#endif
 
 
 
@@ -34622,6 +34577,11 @@ s32 get_civilian_casualties(void)
     return g_playerPerm->killed_civilians;
 }
 
+
+//D:80053BF8
+const char aSD[] = "%s: %d\n";
+
+
 #ifdef NONMATCHING
 void *increment_num_kills_display_text_in_MP(void) {
     s32 sp34;
@@ -35071,10 +35031,14 @@ s32 get_times_killed_mwtgx(void) {
     return g_playerPerm->killed_gg_owner_count;
 }
 
+//D:80053C00
+const char aSDS[] = "%s %d %s\n";
+
+
 #ifdef NONMATCHING
 void increment_num_deaths(void)
 {
-	char acStack256 [256]
+	char acStack256 [256];
     g_CurrentPlayer->deathcount = (s32) (g_CurrentPlayer->deathcount + 1);
     if (getPlayerCount() >= 2)
     {
@@ -35084,7 +35048,7 @@ void increment_num_deaths(void)
         }
         else
         {
-            sprintf(acStack256, &aSDS, langGet(TEXT(LGUN, 0xDC))), g_CurrentPlayer->deathcount, langGet(TEXT(LGUN, 0xDD))); //died times
+            sprintf(acStack256, "%s %d %s\n", langGet(TEXT(LGUN, 0xDC))), g_CurrentPlayer->deathcount, langGet(TEXT(LGUN, 0xDD)); //died times
         }
 		hudmsgBottomShow(acStack256);
     }
@@ -35255,6 +35219,9 @@ glabel increment_num_deaths
 s32 get_curplayer_numdeaths(void) {
     return g_CurrentPlayer->deathcount;
 }
+
+//D:80053C0C
+const char aSD_0[] = "%s: %d\n";
 
 #ifdef NONMATCHING
 void *increment_num_suicides_display_MP(void) {
