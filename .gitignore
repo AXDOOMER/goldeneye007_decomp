@@ -63,7 +63,7 @@ tools/gzipsrc/gzip
 tools/gzipsrc/*.o
 tools/report/report
 /StructLayoutSettings.json
-
+bin/*
 
 
 assets/obseg/text/e/LameP.c

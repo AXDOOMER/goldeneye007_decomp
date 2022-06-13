@@ -92,3 +92,5 @@ if [ "$DOALL" == "1" ] || [ $1 == 'images' ]; then
     #formatting matters, no comments, no extra lines, unix line endings only
     #and always end with a newline
 fi
+
+./extract_asp_gsp_rsp.sh
