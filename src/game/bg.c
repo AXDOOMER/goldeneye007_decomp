@@ -242,7 +242,7 @@ struct levelentry levelinfotable[] = {
 //D:8004481C
 u32 D_8004481C[] = {0x1000100, 0};
 //D:80044824
-u32 D_80044824[] = {0x32C2E32, 0x373E3F4E, 0x56595D72, 0x76797AFF, 0x11003AFF};
+u32 D_80044824[] = {0x032C2E32, 0x373E3F4E, 0x56595D72, 0x76797AFF, 0x11003AFF};
 
 /**
  * Bond's current room.
