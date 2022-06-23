@@ -551,7 +551,7 @@ s32 D_80036894 = 0;
 s32 status_bar_text_buffer_index = 0;
 //D:8003689C
 s32 display_statusbar = 0;
-#ifdef VERSION_US
+#ifdef BUGFIX_R0
 //D:800368A0
 s32 copy_1stfonttable = 0;
 //D:800368A4
