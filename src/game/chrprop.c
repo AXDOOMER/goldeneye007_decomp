@@ -292,14 +292,14 @@ PropRecord* chrpropAllocate(void) {
     {
         ptr_obj_pos_list_final_entry = prop->prev;
         prop->prev = NULL;
-        prop->next = 0;
-        prop->parent = 0;
-        prop->child = 0;
+        prop->next = NULL;
+        prop->parent = NULL;
+        prop->child = NULL;
 
         prop->flags = 0;
-        prop->stan = 0;
+        prop->stan = NULL;
         prop->timetoregen = 0;
-        prop->rooms[0] = -1;
+        prop->rooms[0] = 0xFF;
         return prop;
     }
     return NULL;
@@ -356,18 +356,15 @@ void chrpropActivate(PropRecord* prop) {
     PropRecord* cur = ptr_obj_pos_list_current_entry;
     if (cur) {
         cur->next = prop;
-        prop->next = 0;
+        prop->next = NULL;
         prop->prev = ptr_obj_pos_list_current_entry;
         ptr_obj_pos_list_current_entry = prop;
-
+        return;
     }
-    else 
-    {
-        prop->prev = NULL;
-        prop->next = 0;
-        ptr_obj_pos_list_first_entry = prop;
-        ptr_obj_pos_list_current_entry = prop;
-    }
+    prop->prev = NULL;
+    prop->next = NULL;
+    ptr_obj_pos_list_first_entry = prop;
+    ptr_obj_pos_list_current_entry = prop;
 }
 #else
 GLOBAL_ASM(
@@ -401,36 +398,23 @@ glabel chrpropActivate
 
 
 
-#ifdef NONMATCHING
-void chrpropActivateThisFrame(void) {
+void chrpropActivateThisFrame(PropRecord* prop) {
+    PropRecord* first;
 
+    first = ptr_obj_pos_list_first_entry;
+    if (first != NULL) {
+        first->prev = prop;
+        prop->next = ptr_obj_pos_list_first_entry;
+        prop->prev = NULL;
+        ptr_obj_pos_list_first_entry = prop;
+        return;
+    }
+    prop->prev = NULL;
+    prop->next = NULL;
+    ptr_obj_pos_list_first_entry = prop;
+    ptr_obj_pos_list_current_entry = prop;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel chrpropActivateThisFrame
-/* 06F020 7F03A4F0 3C038003 */  lui   $v1, %hi(ptr_obj_pos_list_first_entry)
-/* 06F024 7F03A4F4 24630AA4 */  addiu $v1, %lo(ptr_obj_pos_list_first_entry) # addiu $v1, $v1, 0xaa4
-/* 06F028 7F03A4F8 8C620000 */  lw    $v0, ($v1)
-/* 06F02C 7F03A4FC 3C018003 */  lui   $at, %hi(ptr_obj_pos_list_current_entry)
-/* 06F030 7F03A500 50400008 */  beql  $v0, $zero, .L7F03A524
-/* 06F034 7F03A504 AC800024 */   sw    $zero, 0x24($a0)
-/* 06F038 7F03A508 AC440024 */  sw    $a0, 0x24($v0)
-/* 06F03C 7F03A50C 8C6E0000 */  lw    $t6, ($v1)
-/* 06F040 7F03A510 AC800024 */  sw    $zero, 0x24($a0)
-/* 06F044 7F03A514 AC8E0028 */  sw    $t6, 0x28($a0)
-/* 06F048 7F03A518 03E00008 */  jr    $ra
-/* 06F04C 7F03A51C AC640000 */   sw    $a0, ($v1)
 
-/* 06F050 7F03A520 AC800024 */  sw    $zero, 0x24($a0)
-.L7F03A524:
-/* 06F054 7F03A524 AC800028 */  sw    $zero, 0x28($a0)
-/* 06F058 7F03A528 AC640000 */  sw    $a0, ($v1)
-/* 06F05C 7F03A52C AC240AA0 */  sw    $a0, %lo(ptr_obj_pos_list_current_entry)($at)
-/* 06F060 7F03A530 03E00008 */  jr    $ra
-/* 06F064 7F03A534 00000000 */   nop   
-)
-#endif
 
 
 

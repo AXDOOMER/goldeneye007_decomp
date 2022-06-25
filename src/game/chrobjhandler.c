@@ -950,8 +950,21 @@ s32 sub_GAME_7F044414(struct rect4f *arg0, s32 arg1, struct rect4f *arg2, s32 ar
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03FB70(void) {
+void sub_GAME_7F03FB70(void* arg0) {
+    s32 temp_a0;
+    s32 temp_a0_2;
 
+    if ((arg0->unk0 & 0x80) != 0) {
+        temp_a0 = arg0->unk98;
+        if ((temp_a0 != 0) && (sndGetPlayingState(temp_a0) != 0)) {
+            sndDeactivate(arg0->unk98);
+        }
+        temp_a0_2 = arg0->unk9C;
+        if ((temp_a0_2 != 0) && (sndGetPlayingState(temp_a0_2) != 0)) {
+            sndDeactivate(arg0->unk9C);
+        }
+    }
+    arg0->unk0 = (s32) (arg0->unk0 | 0x80000000);
 }
 #else
 GLOBAL_ASM(
