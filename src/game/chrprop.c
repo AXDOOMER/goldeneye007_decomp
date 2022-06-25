@@ -858,8 +858,28 @@ glabel chrpropsRenderPass
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03A97C(void) {
+s32 sub_GAME_7F03A97C(s32 index, coord3d* arg1, coord3d* arg2) {
+    s32 sp34;
+    s32 sp30;
+    s32 sp2C;
+    s32 sp28;
+    s32 sp24;
+    s32 sp20;
+    s_room_info* temp_v0;
 
+    temp_v0 = &array_room_info[index];
+    if (temp_v0->ptr_unique_collision_points != NULL) {
+        sp20 = (s32) temp_v0->minbounds.f[0];
+        sp24 = (s32) temp_v0->minbounds.f[1];
+        sp28 = (s32) temp_v0->minbounds.f[2];
+        sp2C = (s32) temp_v0->maxbounds.f[0];
+        sp30 = (s32) temp_v0->maxbounds.f[1];
+        sp34 = (s32) temp_v0->maxbounds.f[2];
+        if (sub_GAME_7F0B6CEC(arg1, arg2, &sp20, &sp2C) != 0) {
+            return 1;
+        }
+    }
+    return 0;
 }
 #else
 GLOBAL_ASM(

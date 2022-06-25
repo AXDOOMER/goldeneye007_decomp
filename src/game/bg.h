@@ -35,12 +35,8 @@ typedef struct s_room_info {
     u8 room_loaded_mask;
     u8 field_35;
     s16 field_36;
-    f32 minxbounds;
-    f32 minybounds;
-    f32 minzbounds;
-    f32 maxxbounds;
-    f32 maxybounds;
-    f32 maxzbounds;
+    coord3d minbounds;
+    coord3d maxbounds;
 } s_room_info;
 
 typedef struct s_bound_info 
