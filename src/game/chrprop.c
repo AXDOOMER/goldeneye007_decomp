@@ -469,45 +469,30 @@ void chrpropReparent(PropRecord *newChild, PropRecord *host)
 
 
 
+void chrpropDetach(PropRecord* prop) {
+    PropRecord* parent;
+    PropRecord* prev;
+    PropRecord* next;
 
-
-#ifdef NONMATCHING
-void chrpropDetach(void) {
-
+    parent = prop->parent;
+    if (parent) {
+        if (prop == parent->child) {
+            parent->child = prop->prev;
+        }
+        prev = prop->prev;
+        if (prev) {
+            prev->next = prop->next;
+        }
+        next = prop->next;
+        if (next) {
+            next->prev = prop->prev;
+        }
+        prop->parent = NULL;
+        prop->prev = NULL;
+        prop->next = NULL;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel chrpropDetach
-/* 06F100 7F03A5D0 8C82001C */  lw    $v0, 0x1c($a0)
-/* 06F104 7F03A5D4 10400013 */  beqz  $v0, .L7F03A624
-/* 06F108 7F03A5D8 00000000 */   nop   
-/* 06F10C 7F03A5DC 8C4E0020 */  lw    $t6, 0x20($v0)
-/* 06F110 7F03A5E0 548E0004 */  bnel  $a0, $t6, .L7F03A5F4
-/* 06F114 7F03A5E4 8C820024 */   lw    $v0, 0x24($a0)
-/* 06F118 7F03A5E8 8C8F0024 */  lw    $t7, 0x24($a0)
-/* 06F11C 7F03A5EC AC4F0020 */  sw    $t7, 0x20($v0)
-/* 06F120 7F03A5F0 8C820024 */  lw    $v0, 0x24($a0)
-.L7F03A5F4:
-/* 06F124 7F03A5F4 50400004 */  beql  $v0, $zero, .L7F03A608
-/* 06F128 7F03A5F8 8C820028 */   lw    $v0, 0x28($a0)
-/* 06F12C 7F03A5FC 8C980028 */  lw    $t8, 0x28($a0)
-/* 06F130 7F03A600 AC580028 */  sw    $t8, 0x28($v0)
-/* 06F134 7F03A604 8C820028 */  lw    $v0, 0x28($a0)
-.L7F03A608:
-/* 06F138 7F03A608 50400004 */  beql  $v0, $zero, .L7F03A61C
-/* 06F13C 7F03A60C AC80001C */   sw    $zero, 0x1c($a0)
-/* 06F140 7F03A610 8C990024 */  lw    $t9, 0x24($a0)
-/* 06F144 7F03A614 AC590024 */  sw    $t9, 0x24($v0)
-/* 06F148 7F03A618 AC80001C */  sw    $zero, 0x1c($a0)
-.L7F03A61C:
-/* 06F14C 7F03A61C AC800024 */  sw    $zero, 0x24($a0)
-/* 06F150 7F03A620 AC800028 */  sw    $zero, 0x28($a0)
-.L7F03A624:
-/* 06F154 7F03A624 03E00008 */  jr    $ra
-/* 06F158 7F03A628 00000000 */   nop   
-)
-#endif
+
 
 
 
