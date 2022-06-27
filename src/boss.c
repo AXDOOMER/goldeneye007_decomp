@@ -500,7 +500,7 @@ void bossMainloop(void)
                                 g_DebugMode = g_DebugHighlightedOption;
 			                } else 
 #endif
-#ifndef DEBUGMEN
+#ifndef DEBUGMENU
                             if (g_BossIsDebugMenuOpen)
 #endif
                             {
