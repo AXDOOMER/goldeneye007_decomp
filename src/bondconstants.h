@@ -2959,7 +2959,13 @@ typedef enum WAYMODE
     } VIDEOMODE;
 #pragma endregion
 
- 
+#if !defined(VERSION_EU)
+#define MAXROOMCOUNT    150
+#else
+#define MAXROOMCOUNT    139
+#endif 
+
+
 /* special chr num IDs */
 #define CHR_BOND_CINEMA -8 /* only works when bond has a third person model (intro/exit cutscene) */
 #define CHR_CLONE       -7

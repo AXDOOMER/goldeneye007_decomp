@@ -171,15 +171,12 @@ s32 levelentry_index = 1;
  */
 s32 bgViewRelated[] = { 1, 1, -1, -1 };
 
-#if defined(VERSION_EU)
-s_room_info array_room_info[0x8b] = {0};
-s32 MaxNumRooms = 0x8b ;
-#else
+
 //D:80041414 //This is why 150 is room limit
-s_room_info array_room_info[0x96] = {0};
+s_room_info array_room_info[MAXROOMCOUNT] = {0};
 //D:800442F4
-s32 MaxNumRooms = 0x96 ;
-#endif
+s32 MaxNumRooms = MAXROOMCOUNT;
+
 
 //D:800442F8
 s32 D_800442F8 = 0;
@@ -1132,7 +1129,7 @@ s32 sub_GAME_7F0B3B20(void)
     if (array_room_info[1].bitflags2) {
         return 1;
     }
-    for (i=2;i<0x96;i+=4)
+    for (i=2;i<MAXROOMCOUNT;i+=4)
     {
         if (array_room_info[i].bitflags2) {
             return i;
