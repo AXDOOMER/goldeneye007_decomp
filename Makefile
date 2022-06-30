@@ -312,7 +312,7 @@ INCLUDE := -I . -I include -I include/ultra64 -I include/PR -I src -I src/game -
 # 712 : illegal combination of pointer and integer                                    - could be fixed by casting, but implicit is fine.
 # 807 : member cannot be of function or incomplete type                               - Variable length structs
 # 838 : Microsoft extension (unnamed structs)                                         - used for "Inheritance" and member/array call swapping
-WOFF :=  -woff 609,649,709,712,807,838
+WOFF :=  -woff 609,649,709,712,807,838,763
 
 ifeq ($(IDO_RECOMP), NO)
   CC := $(QEMU_IRIX) -silent -L $(IRIX_ROOT) $(IRIX_ROOT)/usr/bin/cc
