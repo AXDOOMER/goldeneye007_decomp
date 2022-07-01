@@ -238,8 +238,14 @@ struct levelentry levelinfotable[] = {
 
 //D:8004481C
 u32 D_8004481C[] = {0x1000100, 0};
+
 //D:80044824
-u32 D_80044824[] = {0x032C2E32, 0x373E3F4E, 0x56595D72, 0x76797AFF, 0x11003AFF};
+s_specialportal specialportalarray[] = {
+    {0x03,
+        {0x2C,0x2E,0x32, 0x37,0x3E,0x3F,0x4E, 0x56,0x59,0x5D,0x72, 0x76,0x79,0x7A,0xFF}},
+    {0x11,
+        {0x00,0x3A,0xFF}}
+};
 
 /**
  * Bond's current room.
@@ -650,18 +656,39 @@ void bgInitDebugNoticeList(void) {
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B37EC(void) {
+//logically close, not close codegen
+void sub_GAME_7F0B37EC(void) 
+{
+    u8* portals;
+    s32 i;
+    s32 p;
 
+    for ( i=0; i!=2; i++)
+    {
+        if (levelentry_index == specialportalarray[i].levelid & 0xFF) {
+            portals = specialportalarray[i].portallist;
+            for ( p=0; (portals[p] & 0xFF) != 0xFF; p++)
+            {
+                ptr_bgdata_portals[portals[p] & 0xff].controlbytes1 |= 2;
+            }
+        } else {
+            portals = specialportalarray[i].portallist;
+            for ( p=0; portals[p] != 0xFF; p++)
+            {
+                ;
+            }
+        }
+    }
 }
 #else
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B37EC
-/* 0E831C 7F0B37EC 3C028004 */  lui   $v0, %hi(D_80044824)
+/* 0E831C 7F0B37EC 3C028004 */  lui   $v0, %hi(specialportalarray)
 /* 0E8320 7F0B37F0 3C038004 */  lui   $v1, %hi(g_BgCurrentRoom)
 /* 0E8324 7F0B37F4 3C088008 */  lui   $t0, %hi(ptr_bgdata_portals) 
 /* 0E8328 7F0B37F8 3C078004 */  lui   $a3, %hi(levelentry_index)
-/* 0E832C 7F0B37FC 24424824 */  addiu $v0, %lo(D_80044824) # addiu $v0, $v0, 0x4824
+/* 0E832C 7F0B37FC 24424824 */  addiu $v0, %lo(specialportalarray) # addiu $v0, $v0, 0x4824
 /* 0E8330 7F0B3800 24634838 */  addiu $v1, %lo(g_BgCurrentRoom) # addiu $v1, $v1, 0x4838
 /* 0E8334 7F0B3804 24E71400 */  addiu $a3, %lo(levelentry_index) # addiu $a3, $a3, 0x1400
 /* 0E8338 7F0B3808 2508FF80 */  addiu $t0, %lo(ptr_bgdata_portals) # addiu $t0, $t0, -0x80

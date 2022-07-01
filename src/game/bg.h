@@ -86,6 +86,12 @@ typedef struct bg_room_data
     coord3d pos;
 } bg_room_data;
 
+typedef struct s_specialportal 
+{
+    u8 levelid;
+    u8 portallist[];
+} s_specialportal;
+
 extern s32 MaxNumRooms;
 extern f32 room_data_float2;
 
