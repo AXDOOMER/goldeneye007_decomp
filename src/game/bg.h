@@ -128,5 +128,6 @@ f32 get_room_data_float1(void);
 u8 getROOMID_Bitflags(int roomID);
 s32 bgGet2dBboxByRoomId(s32 room_id, struct bbox2d *result);
 f32 bgGetLevelVisibilityScale(void);
+void sub_GAME_7F0B5CC0(struct bbox2d *a, struct bbox2d *b);
 
 #endif
