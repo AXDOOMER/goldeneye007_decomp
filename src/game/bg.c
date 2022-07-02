@@ -2995,37 +2995,10 @@ f32 get_room_data_float1(void){
 }
 
 
-
-
-
-
-#ifdef NONMATCHING
-f32 sub_GAME_7F0B4848(void) {
-    void *temp_v0;
-
-    temp_v0 = ((levelentry_index * 0x18) + &levelinfotable);
-    return (temp_v0->unk14 / temp_v0->unkC);
+f32 sub_GAME_7F0B4848(void)
+{
+    return levelinfotable[levelentry_index].unknownfloat / levelinfotable[levelentry_index].levelscale;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B4848
-/* 0E9378 7F0B4848 3C0E8004 */  lui   $t6, %hi(levelentry_index) 
-/* 0E937C 7F0B484C 8DCE1400 */  lw    $t6, %lo(levelentry_index)($t6)
-/* 0E9380 7F0B4850 3C188004 */  lui   $t8, %hi(levelinfotable) 
-/* 0E9384 7F0B4854 2718448C */  addiu $t8, %lo(levelinfotable) # addiu $t8, $t8, 0x448c
-/* 0E9388 7F0B4858 000E7880 */  sll   $t7, $t6, 2
-/* 0E938C 7F0B485C 01EE7823 */  subu  $t7, $t7, $t6
-/* 0E9390 7F0B4860 000F78C0 */  sll   $t7, $t7, 3
-/* 0E9394 7F0B4864 01F81021 */  addu  $v0, $t7, $t8
-/* 0E9398 7F0B4868 C4440014 */  lwc1  $f4, 0x14($v0)
-/* 0E939C 7F0B486C C446000C */  lwc1  $f6, 0xc($v0)
-/* 0E93A0 7F0B4870 03E00008 */  jr    $ra
-/* 0E93A4 7F0B4874 46062003 */   div.s $f0, $f4, $f6
-)
-#endif
-
-
 
 
 //sub_GAME_7F0B4878
