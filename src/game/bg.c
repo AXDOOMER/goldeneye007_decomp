@@ -1194,19 +1194,15 @@ s32 sub_GAME_7F0B3B20(void)
 
 
 #ifdef NONMATCHING
+//unrolled sb are in reverse order
 void sub_GAME_7F0B3BC4(void)
 {
   s32 i;
   
   g_BgNumberOfRoomsDrawn = 0;
-  array_room_info[0].bitflags2 = '\0';
-  array_room_info[1].bitflags2 = '\0';
-  for (i=2;i!=MaxNumRooms;i=i+4)
+  for (i=0;i!=MAXROOMCOUNT;i++)
   {
     array_room_info[i].bitflags2 = '\0';
-    array_room_info[i+1].bitflags2 = '\0';
-    array_room_info[i+2].bitflags2 = '\0';
-    array_room_info[i+3].bitflags2 = '\0';
   }
 }
 #else
