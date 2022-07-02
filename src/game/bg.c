@@ -104,7 +104,7 @@ bg_room_data * ptr_bgdata_room_fileposition_list;
 s32 dword_CODE_bss_8007FF90;
 
 //CODE.bss:8007FF94
-s32 dword_CODE_bss_8007FF94;
+f32* dword_CODE_bss_8007FF94;
 
 #ifndef VERSION_EU
 //CODE.bss:8007FF98
@@ -3477,22 +3477,11 @@ Gfx *bgLevelRender(Gfx *arg0)
 
 
 
-#ifdef NONMATCHING
-s32 sub_GAME_7F0B4F9C(u8 arg0) {
-    return (dword_CODE_bss_8007FF94 + (arg0 * 4))->unk4;
+f32 sub_GAME_7F0B4F9C(s32 arg0) 
+{
+	return dword_CODE_bss_8007FF94[arg0 + 1];
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B4F9C
-/* 0E9ACC 7F0B4F9C 3C0E8008 */  lui   $t6, %hi(dword_CODE_bss_8007FF94) 
-/* 0E9AD0 7F0B4FA0 8DCEFF94 */  lw    $t6, %lo(dword_CODE_bss_8007FF94)($t6)
-/* 0E9AD4 7F0B4FA4 00047880 */  sll   $t7, $a0, 2
-/* 0E9AD8 7F0B4FA8 01CFC021 */  addu  $t8, $t6, $t7
-/* 0E9ADC 7F0B4FAC 03E00008 */  jr    $ra
-/* 0E9AE0 7F0B4FB0 C7000004 */   lwc1  $f0, 4($t8)
-)
-#endif
+
 
 
 
