@@ -144,7 +144,7 @@ s32 eu_bss_8007BFA4;
 char dword_CODE_bss_80081600[0x18];
 
 //CODE.bss:80081618
-char table_for_portals[0xFA0];
+struct unk_portalstruct table_for_portals[200]
 
 
 // data
@@ -3569,72 +3569,15 @@ Gfx *bgScissorCurrentPlayerView(Gfx *arg0, s32 left, s32 top, s32 width, s32 hei
 
 
 
-#ifdef NONMATCHING
-s32 sub_GAME_7F0B5168(void) {
-    void *temp_v1;
-    void *phi_v1;
 
-    // Node 0
-    phi_v1 = &table_for_portals;
-loop_1:
-    // Node 1
-    temp_v1 = (phi_v1 + 0x50);
-    temp_v1->unk-3C = -1;
-    temp_v1->unk-28 = -1;
-    temp_v1->unk-14 = -1;
-    temp_v1->unk-50 = -1;
-    phi_v1 = temp_v1;
-    if (temp_v1 != &table_for_portals+0xFA0)
-    {
-        goto loop_1;
+void sub_GAME_7F0B5168(void) {
+    s32 i;
+
+    for (i = 0; i < 200; i++) {
+        table_for_portals[i].unk0 = -1;
     }
-    // Node 2
-    return -1;
 }
 
-#else
-#if defined(LEFTOVERDEBUG)
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B5168
-/* 0E9C98 7F0B5168 3C038008 */  lui   $v1, %hi(table_for_portals)
-/* 0E9C9C 7F0B516C 3C048008 */  lui   $a0, %hi(table_for_portals+0xFA0)
-/* 0E9CA0 7F0B5170 248425B8 */  addiu $a0, %lo(table_for_portals+0xFA0) # addiu $a0, $a0, 0x25b8
-/* 0E9CA4 7F0B5174 24631618 */  addiu $v1, %lo(table_for_portals) # addiu $v1, $v1, 0x1618
-/* 0E9CA8 7F0B5178 2402FFFF */  li    $v0, -1
-.L7F0B517C:
-/* 0E9CAC 7F0B517C 24630050 */  addiu $v1, $v1, 0x50
-/* 0E9CB0 7F0B5180 AC62FFC4 */  sw    $v0, -0x3c($v1)
-/* 0E9CB4 7F0B5184 AC62FFD8 */  sw    $v0, -0x28($v1)
-/* 0E9CB8 7F0B5188 AC62FFEC */  sw    $v0, -0x14($v1)
-/* 0E9CBC 7F0B518C 1464FFFB */  bne   $v1, $a0, .L7F0B517C
-/* 0E9CC0 7F0B5190 AC62FFB0 */   sw    $v0, -0x50($v1)
-/* 0E9CC4 7F0B5194 03E00008 */  jr    $ra
-/* 0E9CC8 7F0B5198 00000000 */   nop   
-)
-#endif
-
-#if !defined(LEFTOVERDEBUG)
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B5168
-/* 0E6E94 7F0B44A4 3C038007 */  lui   $v1, %hi(table_for_portals) # $v1, 0x8007
-/* 0E6E98 7F0B44A8 3C048007 */  lui   $a0, %hi(table_for_portals+0xFA0) # $a0, 0x8007
-/* 0E6E9C 7F0B44AC 2484CF60 */  addiu $a0, %lo(table_for_portals+0xFA0) # addiu $a0, $a0, -0x30a0
-/* 0E6EA0 7F0B44B0 2463BFC0 */  addiu $v1, %lo(table_for_portals) # addiu $v1, $v1, -0x4040
-/* 0E6EA4 7F0B44B4 2402FFFF */  li    $v0, -1
-.L7F0B44B8:
-/* 0E6EA8 7F0B44B8 24630050 */  addiu $v1, $v1, 0x50
-/* 0E6EAC 7F0B44BC AC62FFC4 */  sw    $v0, -0x3c($v1)
-/* 0E6EB0 7F0B44C0 AC62FFD8 */  sw    $v0, -0x28($v1)
-/* 0E6EB4 7F0B44C4 AC62FFEC */  sw    $v0, -0x14($v1)
-/* 0E6EB8 7F0B44C8 1464FFFB */  bne   $v1, $a0, .L7F0B44B8
-/* 0E6EBC 7F0B44CC AC62FFB0 */   sw    $v0, -0x50($v1)
-/* 0E6EC0 7F0B44D0 03E00008 */  jr    $ra
-/* 0E6EC4 7F0B44D4 00000000 */   nop   
-)
-#endif
-#endif
 
 
 

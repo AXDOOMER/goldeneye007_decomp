@@ -92,6 +92,14 @@ typedef struct s_specialportal
     u8 portallist[];
 } s_specialportal;
 
+typedef struct unk_portalstruct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    s32 unk10;
+} unk_portalstruct;
+extern struct unk_portalstruct table_for_portals[200];
 extern s32 MaxNumRooms;
 extern f32 room_data_float2;
 
