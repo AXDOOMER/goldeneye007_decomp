@@ -144,7 +144,7 @@ s32 eu_bss_8007BFA4;
 char dword_CODE_bss_80081600[0x18];
 
 //CODE.bss:80081618
-struct unk_portalstruct table_for_portals[200]
+struct unk_portalstruct table_for_portals[200];
 
 
 // data
