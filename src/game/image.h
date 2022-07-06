@@ -3,6 +3,21 @@
 #include <ultra64.h>
 #include <bondconstants.h>
 
+#define TEXFORMAT_RGBA32     0x00 // 32-bit RGBA (8/8/8/8)
+#define TEXFORMAT_RGBA16     0x01 // 16-bit RGBA (5/5/5/1)
+#define TEXFORMAT_RGB24      0x02 // 24-bit RGB (8/8/8)
+#define TEXFORMAT_RGB15      0x03 // 15-bit RGB (5/5/5)
+#define TEXFORMAT_IA16       0x04 // 16-bit grayscale+alpha
+#define TEXFORMAT_IA8        0x05 // 8-bit grayscale+alpha (4/4)
+#define TEXFORMAT_IA4        0x06 // 4-bit grayscale+alpha (3/1)
+#define TEXFORMAT_I8         0x07 // 8-bit grayscale
+#define TEXFORMAT_I4         0x08 // 4-bit grayscale
+#define TEXFORMAT_RGBA16_CI8 0x09 // 16-bit 5551 paletted colour with 8-bit palette indexes
+#define TEXFORMAT_RGBA16_CI4 0x0a // 16-bit 5551 paletted colour with 4-bit palette indexes
+#define TEXFORMAT_IA16_CI8   0x0b // 16-bit 88 paletted greyscale+alpha with 8-bit palette indexes
+#define TEXFORMAT_0C         0x0c
+
+
 struct image_entry
 {
     HIT_TYPE hitSound : 4;  //HitType-Sound

@@ -383,7 +383,7 @@ void lvlStageLoad(s32 stage)
     set_contents_of_80036078(1);
     set_mt_tex_alloc();
     sub_GAME_7F0A47D4();
-    load_prepare_global_image_bank();
+    texReset();
     load_font_tables();
 
     /* If title screen, initialize screen and folder setup. 
@@ -599,7 +599,7 @@ glabel lvlStageLoad
 /* 0F26C4 7F0BDB94 00000000 */   nop
 /* 0F26C8 7F0BDB98 0FC291F5 */  jal   sub_GAME_7F0A47D4
 /* 0F26CC 7F0BDB9C 00000000 */   nop
-/* 0F26D0 7F0BDBA0 0FC32FEC */  jal   load_prepare_global_image_bank
+/* 0F26D0 7F0BDBA0 0FC32FEC */  jal   texReset
 /* 0F26D4 7F0BDBA4 00000000 */   nop
 /* 0F26D8 7F0BDBA8 0FC2B2EB */  jal   load_font_tables
 /* 0F26DC 7F0BDBAC 00000000 */   nop
@@ -904,7 +904,7 @@ glabel lvlStageLoad
 /* 0F32C4 7F0BE754 00000000 */   nop
 /* 0F32C8 7F0BE758 0FC294DD */  jal   sub_GAME_7F0A47D4
 /* 0F32CC 7F0BE75C 00000000 */   nop
-/* 0F32D0 7F0BE760 0FC33324 */  jal   load_prepare_global_image_bank
+/* 0F32D0 7F0BE760 0FC33324 */  jal   texReset
 /* 0F32D4 7F0BE764 00000000 */   nop
 /* 0F32D8 7F0BE768 0FC2B5D7 */  jal   load_font_tables
 /* 0F32DC 7F0BE76C 00000000 */   nop
@@ -1226,7 +1226,7 @@ glabel lvlStageLoad
 /* 0EF944 7F0BCF54 00000000 */   nop   
 /* 0EF948 7F0BCF58 0FC28EC6 */  jal   sub_GAME_7F0A45D8
 /* 0EF94C 7F0BCF5C 00000000 */   nop   
-/* 0EF950 7F0BCF60 0FC32D34 */  jal   load_prepare_global_image_bank
+/* 0EF950 7F0BCF60 0FC32D34 */  jal   texReset
 /* 0EF954 7F0BCF64 00000000 */   nop   
 /* 0EF958 7F0BCF68 0FC2AF9B */  jal   load_font_tables
 /* 0EF95C 7F0BCF6C 00000000 */   nop   

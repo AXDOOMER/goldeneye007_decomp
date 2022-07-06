@@ -85,7 +85,7 @@ struct sImageTableEntry *mpstageselimages;
 extern u8* _GlobalimagetableSegmentRomStart;
 
 
-void makeemptyimageatpos(s32 pos) {
+void texSetBitstring(s32 pos) {
     img_curpos = pos;
     img_curdatatable = 0;
     img_bitcount = 0;
@@ -93,7 +93,7 @@ void makeemptyimageatpos(s32 pos) {
 
 
 
-u32 extractImageBitCount(s32 bitCount)
+u32 texReadBits(s32 bitCount)
 {
     if (img_bitcount < bitCount)
     {
@@ -165,7 +165,7 @@ extern Gfx* globalDL_0x9a8;
 extern Gfx* globalDL_0xa50;
 
 #ifdef NONMATCHING
-void load_prepare_global_image_bank(void)
+void texReset(void)
 {
 
     s32 size;
@@ -238,7 +238,7 @@ void load_prepare_global_image_bank(void)
 #else
 GLOBAL_ASM(
 .text
-glabel load_prepare_global_image_bank
+glabel texReset
 /* 100AE0 7F0CBFB0 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 100AE4 7F0CBFB4 3C0E0200 */  lui   $t6, %hi(_GlobalimagetableSegmentEnd) # $t6, 0x200
 /* 100AE8 7F0CBFB8 3C0F0200 */  lui   $t7, %hi(_GlobalimagetableSegmentStart) # $t7, 0x200
