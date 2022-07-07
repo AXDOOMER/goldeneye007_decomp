@@ -1,10 +1,12 @@
 #include <ultra64.h>
 #include "image.h"
 #include <assets/image_externs.h>
+#include <PR/R4300.h>
+#include "ramrom.h"
 
 // bss
 //8008C720
-s32 ptr_texture_alloc_start;
+struct texturething *ptr_texture_alloc_start;
 //8008C724
 s32 ptr_texture_alloc_end;
 //8008C728
@@ -16,7 +18,7 @@ s32 word_CODE_bss_8008C730[0x258];
 //8008D090
 s32 dword_CODE_bss_8008D090;
 //8008D094
-s32 dword_CODE_bss_8008D094;
+s32 imageid;
 
 
 // data
@@ -96,7 +98,7 @@ s32 D_800492E4[] =
 
 //D:80049300
 //need way to calculate size at compile time from external data
-struct image_entry image_entries[] = {
+struct image_entry g_Textures[] = {
     #include <assets/images.def>
     {HIT_DEFAULT, HIT_DEFAULT,0xFFFF,0,0,0,0}
 };
@@ -113,13 +115,13 @@ void nullsub_41(s32 arg0) {
 
 
 #ifdef NONMATCHING
-void image_related_calls_decompressdata_function(void) {
+void texInflateZlib(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel image_related_calls_decompressdata_function
+glabel texInflateZlib
 /* 0FB188 7F0C6658 27BDD458 */  addiu $sp, $sp, -0x2ba8
 /* 0FB18C 7F0C665C AFBF004C */  sw    $ra, 0x4c($sp)
 /* 0FB190 7F0C6660 AFB5003C */  sw    $s5, 0x3c($sp)
@@ -1895,7 +1897,7 @@ glabel sub_GAME_7F0C7BD8
 
 
 #ifdef NONMATCHING
-void process_huffman_compressed_images(void) {
+void texInflateNonZlib(void) {
 
 }
 #else
@@ -1914,7 +1916,7 @@ glabel jpt_8005BD30
 .word huffman_type8
 .word huffman_type9
 .text
-glabel process_huffman_compressed_images
+glabel texInflateNonZlib
 /* 0FC92C 7F0C7DFC 27BDCF58 */  addiu $sp, $sp, -0x30a8
 /* 0FC930 7F0C7E00 AFBF004C */  sw    $ra, 0x4c($sp)
 /* 0FC934 7F0C7E04 AFBE0048 */  sw    $fp, 0x48($sp)
@@ -5801,8 +5803,46 @@ glabel sub_GAME_7F0CBAF4
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0CBB0C(void) {
+struct texloadthing *sub_GAME_7F0CBB0C(s32 texturenum, struct texturething *arg1)
+{
+	struct texloadthing *end;
+	struct texloadthing *cur;
+	s32 i;
 
+	if (arg1 == NULL) {
+		arg1 = &ptr_texture_alloc_start;
+	}
+
+	if (arg1 == ptr_texture_alloc_start) {
+		cur = arg1->unk04;
+
+		while (cur) {
+			if (cur->texturenum == texturenum) {
+				return cur;
+			}
+
+			if (!cur->unk0c_04) {
+				return NULL;
+			}
+
+			cur = (struct texloadthing *)PHYS_TO_K0(cur->unk0c_04);
+		}
+
+		return NULL;
+	}
+
+	end = arg1->unk04;
+	cur = arg1->unk0c;
+
+	while (cur < end) {
+		if (cur->texturenum == texturenum) {
+			return cur;
+		}
+
+		cur++;
+	}
+
+	return NULL;
 }
 #else
 GLOBAL_ASM(
@@ -5842,33 +5882,34 @@ glabel sub_GAME_7F0CBB0C
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0CBB64(void) {
 
+s32 texFreeBytesInBuffer(struct texturething *arg0)
+{
+	return (u32)arg0->unk0c - (u32)arg0->unk08;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0CBB64
-/* 100694 7F0CBB64 8C8E000C */  lw    $t6, 0xc($a0)
-/* 100698 7F0CBB68 8C8F0008 */  lw    $t7, 8($a0)
-/* 10069C 7F0CBB6C 03E00008 */  jr    $ra
-/* 1006A0 7F0CBB70 01CF1023 */   subu  $v0, $t6, $t7
-)
-#endif
 
 
 
 
 
 #ifdef NONMATCHING
-void check_load_image_to_buffer(void) {
+void texLoadFromDisplayList(Gfx *gdl, struct texturething *arg1, s32 arg2)
+{
+	u8 *bytes = (u8 *)gdl;
 
+	while (bytes[0] != (u8)G_ENDDL) {
+		// Look for GBI sequence: fd...... abcd....
+		if (bytes[0] == G_SETTIMG && bytes[4] == 0xab && bytes[5] == 0xcd) {
+			texLoad((u32 *)((s32)bytes + 4), arg1, arg2);
+		}
+
+		bytes += 8;
+	}
 }
 #else
 GLOBAL_ASM(
 .text
-glabel check_load_image_to_buffer
+glabel texLoadFromDisplayList
 /* 1006A4 7F0CBB74 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 1006A8 7F0CBB78 AFBF002C */  sw    $ra, 0x2c($sp)
 /* 1006AC 7F0CBB7C AFB50028 */  sw    $s5, 0x28($sp)
@@ -5896,7 +5937,7 @@ glabel check_load_image_to_buffer
 /* 100700 7F0CBBD0 26040004 */  addiu $a0, $s0, 4
 /* 100704 7F0CBBD4 56B80004 */  bnel  $s5, $t8, .L7F0CBBE8
 /* 100708 7F0CBBD8 92020008 */   lbu   $v0, 8($s0)
-/* 10070C 7F0CBBDC 0FC32F06 */  jal   load_image_to_buffer
+/* 10070C 7F0CBBDC 0FC32F06 */  jal   texLoad
 /* 100710 7F0CBBE0 02202825 */   move  $a1, $s1
 /* 100714 7F0CBBE4 92020008 */  lbu   $v0, 8($s0)
 .L7F0CBBE8:
@@ -5921,13 +5962,148 @@ glabel check_load_image_to_buffer
 
 
 #ifdef NONMATCHING
-void load_image_to_buffer(void) {
+extern u8 _imagesSegmentRomStart;
+void texLoad(u32 *ptr, struct texturething *arg1)
+{
+	//u8 sp14b0[0x1400];
+	u8 *sp14ac_ptr;
+	s32 sp14a8;
+	s32 sp14a4_iszlib;
+	s32 sp14a0_lod;
+	struct texloadthing *ptVar3;
+	//u32 freebytes;
+	//u32 stack;
+	//struct texloadthing *sp1490;
+	//u32 stack2;
+	//u8 sp148b_usingsharedstruct;
+	//s8 sp48[5187];
+	s32 image_load_address;
+	s32 sp38;
+	//struct texloadthing *sp34;
+	//s32 sp30;
+	u8 imagebuffer[4010];
 
+	//sp148b_usingsharedstruct = 0;
+
+	if (arg1 == NULL) {
+		arg1 = &ptr_texture_alloc_start;
+	}
+
+	//if (arg1 == &ptr_texture_alloc_start) {
+	//	sp148b_usingsharedstruct = 1;
+	//}
+
+	//if ((*ptr & 0xffff0000) == 0 || (*ptr & 0xffff0000) == 0xabcd0000) {
+	imageid = *ptr & 0xffff;
+
+	ptVar3 = sub_GAME_7F0CBB0C(imageid, arg1);
+
+	if (ptVar3 == NULL /*&& imageid < NUM_TEXTURES//*/) {
+		*imagebuffer = (u8)(((u32)imagebuffer + 0xf) >> 4 << 4);
+
+		//if (imagebuffer);
+
+		osWritebackDCacheAll();
+		osInvalDCache(imagebuffer, 0x2000);
+
+		//if (g_Textures[imageid].dataoffset == g_Textures[imageid + 1].dataoffset) {
+		//	return;
+		//}
+
+		image_load_address = g_Textures[imageid].dataoffset;
+
+		romCopy(imagebuffer,
+				(u32)&_imagesSegmentRomStart + (image_load_address & ~7),
+				(((g_Textures[imageid + 1].dataoffset - image_load_address) + 0x1f) >> 4) * 0x10);
+
+		//if (sp148b_usingsharedstruct);
+		sp14ac_ptr = imagebuffer + (image_load_address & 7);
+		sp14a8 = (*sp14ac_ptr & 0x80) >> 7;
+		sp14a4_iszlib = (*sp14ac_ptr & 0x40) >> 6;
+		sp14a0_lod = *sp14ac_ptr & 0x3f;
+
+		//if (sp14a0_lod > 5) {
+		//	sp14a0_lod = 5;
+		//}
+
+		sp14ac_ptr++;
+
+		//if (sp148b_usingsharedstruct) {
+		//	freebytes = mempGetPoolFree(MEMPOOL_STAGE, MEMBANK_ONBOARD) + mempGetPoolFree(MEMPOOL_STAGE, MEMBANK_EXPANSION);
+		//} else {
+				//freebytes = texFreeBytesInBuffer(arg1);
+		//}
+
+		if ((sp14a4_iszlib == 0 && texFreeBytesInBuffer(arg1) < 4300) || (sp14a4_iszlib != 0 && texFreeBytesInBuffer(arg1) < 2600)) {
+			*ptr = osVirtualToPhysical(arg1->unk00);
+			return;
+		}
+
+		//if (sp148b_usingsharedstruct) {
+		//	sp1490 = arg1->unk0c;
+		//	arg1->unk0c = (struct texloadthing *)((((u32)sp48 + 0xf) >> 4 << 4) + 0x10);
+		//	arg1->unk08 = arg1->unk0c + 1;
+        //
+		//	while (sp1490) {
+		//		if (sp1490->unk0c_04 == 0) {
+		//			break;
+		//		}
+        //
+		//		sp1490 = (struct texloadthing *)PHYS_TO_K0(sp1490->unk0c_04);
+		//	}
+		//}
+
+		*(s16 *)(arg1->unk08) = imageid;
+		arg1->unk08 = (void *)((u32)arg1->unk08 + 8);
+		ptVar3 = (struct texloadthing *)(arg1->unk0c - 1);
+		arg1->unk0c = ptVar3;
+		ptVar3->texturenum = imageid;
+		ptVar3->unk04 = arg1->unk08;
+		ptVar3->unk0c_03 = 0;
+
+		if (sp14a4_iszlib) {
+			sp38 = texInflateZlib(sp14ac_ptr, (u32 *)arg1->unk08, sp14a8, sp14a0_lod, arg1/*, arg2//*/);
+		} else {
+			sp38 = texInflateNonZlib(sp14ac_ptr, (u32 *)arg1->unk08, sp14a8, sp14a0_lod, arg1/*, arg2//*/);
+			}
+
+		//if (sp148b_usingsharedstruct) {
+		//	sp34 = mempAllocFromRight(ALIGN16(sp38 + 0x20), MEMPOOL_STAGE);
+		//	arg1->unk0c = sp34;
+		//
+		//	bcopy(ptVar3, sp34, 0x10);
+		//
+		//	ptVar3 = sp34;
+		//	sp34++;
+		//
+		//	bcopy((void *)((u32)arg1->unk08 - 8), sp34, sp38 + 8);
+		//
+		//	arg1->unk0c->unk04 = (void *)((u32)sp34 + 8);
+		//	arg1->unk0c->unk0c_04 = 0;
+		//
+		//	if (sp1490 != NULL) {
+		//		sp1490->unk0c_04 = (u32)arg1->unk0c & 0xffffff;
+		//	} else {
+		//		arg1->unk04 = arg1->unk0c;
+		//	}
+		//
+		//	arg1->unk00 = arg1->unk0c;
+		//}
+
+		arg1->unk08 = (void *)((u32)arg1->unk08 + sp38);
+
+		//if (!sp148b_usingsharedstruct) {
+		texFreeBytesInBuffer(arg1);
+		//}
+		
+	}
+
+	*ptr = osVirtualToPhysical(ptVar3->unk04);
 }
 #else
 GLOBAL_ASM(
 .text
-glabel load_image_to_buffer
+glabel texLoad
 /* 100748 7F0CBC18 27BDF008 */  addiu $sp, $sp, -0xff8
 /* 10074C 7F0CBC1C AFB00020 */  sw    $s0, 0x20($sp)
 /* 100750 7F0CBC20 00A08025 */  move  $s0, $a1
@@ -5938,8 +6114,8 @@ glabel load_image_to_buffer
 /* 100764 7F0CBC34 2610C720 */  addiu $s0, %lo(ptr_texture_alloc_start) # addiu $s0, $s0, -0x38e0
 .L7F0CBC38:
 /* 100768 7F0CBC38 8FAE0FF8 */  lw    $t6, 0xff8($sp)
-/* 10076C 7F0CBC3C 3C028009 */  lui   $v0, %hi(dword_CODE_bss_8008D094)
-/* 100770 7F0CBC40 2442D094 */  addiu $v0, %lo(dword_CODE_bss_8008D094) # addiu $v0, $v0, -0x2f6c
+/* 10076C 7F0CBC3C 3C028009 */  lui   $v0, %hi(imageid)
+/* 100770 7F0CBC40 2442D094 */  addiu $v0, %lo(imageid) # addiu $v0, $v0, -0x2f6c
 /* 100774 7F0CBC44 8DCF0000 */  lw    $t7, ($t6)
 /* 100778 7F0CBC48 02002825 */  move  $a1, $s0
 /* 10077C 7F0CBC4C 31E4FFFF */  andi  $a0, $t7, 0xffff
@@ -5955,10 +6131,10 @@ glabel load_image_to_buffer
 /* 1007A4 7F0CBC74 8FA4002C */  lw    $a0, 0x2c($sp)
 /* 1007A8 7F0CBC78 0C0042C8 */  jal   osInvalDCache
 /* 1007AC 7F0CBC7C 24052000 */   li    $a1, 8192
-/* 1007B0 7F0CBC80 3C098009 */  lui   $t1, %hi(dword_CODE_bss_8008D094) 
-/* 1007B4 7F0CBC84 8D29D094 */  lw    $t1, %lo(dword_CODE_bss_8008D094)($t1)
-/* 1007B8 7F0CBC88 3C0B8005 */  lui   $t3, %hi(image_entries) 
-/* 1007BC 7F0CBC8C 256B9300 */  addiu $t3, %lo(image_entries) # addiu $t3, $t3, -0x6d00
+/* 1007B0 7F0CBC80 3C098009 */  lui   $t1, %hi(imageid) 
+/* 1007B4 7F0CBC84 8D29D094 */  lw    $t1, %lo(imageid)($t1)
+/* 1007B8 7F0CBC88 3C0B8005 */  lui   $t3, %hi(g_Textures) 
+/* 1007BC 7F0CBC8C 256B9300 */  addiu $t3, %lo(g_Textures) # addiu $t3, $t3, -0x6d00
 /* 1007C0 7F0CBC90 000950C0 */  sll   $t2, $t1, 3
 /* 1007C4 7F0CBC94 014B1021 */  addu  $v0, $t2, $t3
 /* 1007C8 7F0CBC98 8C430000 */  lw    $v1, ($v0)
@@ -5998,7 +6174,7 @@ glabel load_image_to_buffer
 /* 100850 7F0CBD20 3047003F */   andi  $a3, $v0, 0x3f
 /* 100854 7F0CBD24 AFAC004C */  sw    $t4, 0x4c($sp)
 /* 100858 7F0CBD28 AFAB0050 */  sw    $t3, 0x50($sp)
-/* 10085C 7F0CBD2C 0FC32ED9 */  jal   sub_GAME_7F0CBB64
+/* 10085C 7F0CBD2C 0FC32ED9 */  jal   texFreeBytesInBuffer
 /* 100860 7F0CBD30 AFA70048 */   sw    $a3, 0x48($sp)
 /* 100864 7F0CBD34 284110CC */  slti  $at, $v0, 0x10cc
 /* 100868 7F0CBD38 8FA5004C */  lw    $a1, 0x4c($sp)
@@ -6010,7 +6186,7 @@ glabel load_image_to_buffer
 /* 10087C 7F0CBD4C 02002025 */   move  $a0, $s0
 /* 100880 7F0CBD50 AFA5004C */  sw    $a1, 0x4c($sp)
 /* 100884 7F0CBD54 AFA60050 */  sw    $a2, 0x50($sp)
-/* 100888 7F0CBD58 0FC32ED9 */  jal   sub_GAME_7F0CBB64
+/* 100888 7F0CBD58 0FC32ED9 */  jal   texFreeBytesInBuffer
 /* 10088C 7F0CBD5C AFA70048 */   sw    $a3, 0x48($sp)
 /* 100890 7F0CBD60 28410A28 */  slti  $at, $v0, 0xa28
 /* 100894 7F0CBD64 8FA5004C */  lw    $a1, 0x4c($sp)
@@ -6024,10 +6200,10 @@ glabel load_image_to_buffer
 /* 1008B0 7F0CBD80 1000002E */  b     .L7F0CBE3C
 /* 1008B4 7F0CBD84 ADC20000 */   sw    $v0, ($t6)
 .L7F0CBD88:
-/* 1008B8 7F0CBD88 3C0F8009 */  lui   $t7, %hi(dword_CODE_bss_8008D094) 
+/* 1008B8 7F0CBD88 3C0F8009 */  lui   $t7, %hi(imageid) 
 /* 1008BC 7F0CBD8C 8E020008 */  lw    $v0, 8($s0)
-/* 1008C0 7F0CBD90 8DEFD094 */  lw    $t7, %lo(dword_CODE_bss_8008D094)($t7)
-/* 1008C4 7F0CBD94 3C0B8009 */  lui   $t3, %hi(dword_CODE_bss_8008D094) 
+/* 1008C0 7F0CBD90 8DEFD094 */  lw    $t7, %lo(imageid)($t7)
+/* 1008C4 7F0CBD94 3C0B8009 */  lui   $t3, %hi(imageid) 
 /* 1008C8 7F0CBD98 A44F0000 */  sh    $t7, ($v0)
 /* 1008CC 7F0CBD9C 8E180008 */  lw    $t8, 8($s0)
 /* 1008D0 7F0CBDA0 8E08000C */  lw    $t0, 0xc($s0)
@@ -6036,7 +6212,7 @@ glabel load_image_to_buffer
 /* 1008DC 7F0CBDAC AE190008 */  sw    $t9, 8($s0)
 /* 1008E0 7F0CBDB0 AE09000C */  sw    $t1, 0xc($s0)
 /* 1008E4 7F0CBDB4 952E0000 */  lhu   $t6, ($t1)
-/* 1008E8 7F0CBDB8 8D6CD094 */  lw    $t4, %lo(dword_CODE_bss_8008D094)($t3)
+/* 1008E8 7F0CBDB8 8D6CD094 */  lw    $t4, %lo(imageid)($t3)
 /* 1008EC 7F0CBDBC 01201825 */  move  $v1, $t1
 /* 1008F0 7F0CBDC0 31CF000F */  andi  $t7, $t6, 0xf
 /* 1008F4 7F0CBDC4 000C6900 */  sll   $t5, $t4, 4
@@ -6048,7 +6224,7 @@ glabel load_image_to_buffer
 /* 10090C 7F0CBDDC 8E050008 */  lw    $a1, 8($s0)
 /* 100910 7F0CBDE0 AFA90044 */  sw    $t1, 0x44($sp)
 /* 100914 7F0CBDE4 AFB00010 */  sw    $s0, 0x10($sp)
-/* 100918 7F0CBDE8 0FC31996 */  jal   image_related_calls_decompressdata_function
+/* 100918 7F0CBDE8 0FC31996 */  jal   texInflateZlib
 /* 10091C 7F0CBDEC 8FA40054 */   lw    $a0, 0x54($sp)
 /* 100920 7F0CBDF0 10000007 */  b     .L7F0CBE10
 /* 100924 7F0CBDF4 8FA30044 */   lw    $v1, 0x44($sp)
@@ -6056,7 +6232,7 @@ glabel load_image_to_buffer
 /* 100928 7F0CBDF8 8E050008 */  lw    $a1, 8($s0)
 /* 10092C 7F0CBDFC AFA30044 */  sw    $v1, 0x44($sp)
 /* 100930 7F0CBE00 AFB00010 */  sw    $s0, 0x10($sp)
-/* 100934 7F0CBE04 0FC31F7F */  jal   process_huffman_compressed_images
+/* 100934 7F0CBE04 0FC31F7F */  jal   texInflateNonZlib
 /* 100938 7F0CBE08 8FA40054 */   lw    $a0, 0x54($sp)
 /* 10093C 7F0CBE0C 8FA30044 */  lw    $v1, 0x44($sp)
 .L7F0CBE10:
@@ -6064,7 +6240,7 @@ glabel load_image_to_buffer
 /* 100944 7F0CBE14 02002025 */  move  $a0, $s0
 /* 100948 7F0CBE18 01024821 */  addu  $t1, $t0, $v0
 /* 10094C 7F0CBE1C AE090008 */  sw    $t1, 8($s0)
-/* 100950 7F0CBE20 0FC32ED9 */  jal   sub_GAME_7F0CBB64
+/* 100950 7F0CBE20 0FC32ED9 */  jal   texFreeBytesInBuffer
 /* 100954 7F0CBE24 AFA30044 */   sw    $v1, 0x44($sp)
 /* 100958 7F0CBE28 8FA30044 */  lw    $v1, 0x44($sp)
 .L7F0CBE2C:
@@ -6115,7 +6291,7 @@ glabel sub_GAME_7F0CBE50
 /* 1009C8 7F0CBE98 29C10BB9 */  slti  $at, $t6, 0xbb9
 /* 1009CC 7F0CBE9C 50200005 */  beql  $at, $zero, .L7F0CBEB4
 /* 1009D0 7F0CBEA0 26520001 */   addiu $s2, $s2, 1
-/* 1009D4 7F0CBEA4 0FC32F06 */  jal   load_image_to_buffer
+/* 1009D4 7F0CBEA4 0FC32F06 */  jal   texLoad
 /* 1009D8 7F0CBEA8 02A02825 */   move  $a1, $s5
 /* 1009DC 7F0CBEAC 86820016 */  lh    $v0, 0x16($s4)
 /* 1009E0 7F0CBEB0 26520001 */  addiu $s2, $s2, 1
@@ -6144,7 +6320,7 @@ glabel sub_GAME_7F0CBE50
 #ifdef NONMATCHING
 void calls_load_image_to_buffer(uint *image,uint *buffer)
 {
-    load_image_to_buffer(&image,buffer);
+    texLoad(&image,buffer);
 }
 #else
 GLOBAL_ASM(
@@ -6153,7 +6329,7 @@ glabel calls_load_image_to_buffer
 /* 100A18 7F0CBEE8 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 100A1C 7F0CBEEC AFBF0014 */  sw    $ra, 0x14($sp)
 /* 100A20 7F0CBEF0 AFA4001C */  sw    $a0, 0x1c($sp)
-/* 100A24 7F0CBEF4 0FC32F06 */  jal   load_image_to_buffer
+/* 100A24 7F0CBEF4 0FC32F06 */  jal   texLoad
 /* 100A28 7F0CBEF8 27A4001C */   addiu $a0, $sp, 0x1c
 /* 100A2C 7F0CBEFC 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 100A30 7F0CBF00 27BD0020 */  addiu $sp, $sp, 0x20

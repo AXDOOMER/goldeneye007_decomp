@@ -1934,9 +1934,9 @@ glabel chraiDefaultWeaponFireHandler
 /* 0702E4 7F03B7B4 8E10E86C */   lw    $s0, %lo(D_8004E86C)($s0)
 .L7F03B7B8:
 /* 0702E8 7F03B7B8 000B60C0 */  sll   $t4, $t3, 3
-/* 0702EC 7F03B7BC 3C0D8005 */  lui   $t5, %hi(image_entries)
+/* 0702EC 7F03B7BC 3C0D8005 */  lui   $t5, %hi(g_Textures)
 /* 0702F0 7F03B7C0 01AC6821 */  addu  $t5, $t5, $t4
-/* 0702F4 7F03B7C4 91AD9300 */  lbu   $t5, %lo(image_entries)($t5)
+/* 0702F4 7F03B7C4 91AD9300 */  lbu   $t5, %lo(g_Textures)($t5)
 /* 0702F8 7F03B7C8 3C108005 */  lui   $s0, %hi(D_8004E86C)
 /* 0702FC 7F03B7CC 31AE000F */  andi  $t6, $t5, 0xf
 /* 070300 7F03B7D0 000E7880 */  sll   $t7, $t6, 2
@@ -2012,11 +2012,11 @@ glabel chraiDefaultWeaponFireHandler
 /* 070400 7F03B8D0 0FC191DD */  jal   recall_joy2_hits_edit_flag
 /* 070404 7F03B8D4 8FA60540 */   lw    $a2, 0x540($sp)
 /* 070408 7F03B8D8 8FAD0540 */  lw    $t5, 0x540($sp)
-/* 07040C 7F03B8DC 3C028005 */  lui   $v0, %hi(image_entries)
+/* 07040C 7F03B8DC 3C028005 */  lui   $v0, %hi(g_Textures)
 /* 070410 7F03B8E0 24010005 */  li    $at, 5
 /* 070414 7F03B8E4 000D70C0 */  sll   $t6, $t5, 3
 /* 070418 7F03B8E8 004E1021 */  addu  $v0, $v0, $t6
-/* 07041C 7F03B8EC 90429300 */  lbu   $v0, %lo(image_entries)($v0)
+/* 07041C 7F03B8EC 90429300 */  lbu   $v0, %lo(g_Textures)($v0)
 /* 070420 7F03B8F0 304F000F */  andi  $t7, $v0, 0xf
 /* 070424 7F03B8F4 11E10011 */  beq   $t7, $at, .L7F03B93C
 /* 070428 7F03B8F8 24010006 */   li    $at, 6

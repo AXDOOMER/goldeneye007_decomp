@@ -16464,7 +16464,7 @@ glabel sub_GAME_7F0643A0
 /**
  * @param arg0: enum ITEM_IDS, will play sound effect for this item
  * @param arg1: pointer to integral type, looks like PROP_TYPE
- * @param arg2: index into image_entries, used to play related sound effect (via D_8004E86C)
+ * @param arg2: index into g_Textures, used to play related sound effect (via D_8004E86C)
  * 
  * Address 0x7F06441C.
 */
@@ -16642,11 +16642,11 @@ glabel recall_joy2_hits_edit_detail_edit_flag
 /* 0991AC 7F06467C 10400024 */  beqz  $v0, .L7F064710
 /* 0991B0 7F064680 AFA20060 */   sw    $v0, 0x60($sp)
 /* 0991B4 7F064684 8FAC0078 */  lw    $t4, 0x78($sp)
-/* 0991B8 7F064688 3C0E8005 */  lui   $t6, %hi(image_entries)
+/* 0991B8 7F064688 3C0E8005 */  lui   $t6, %hi(g_Textures)
 /* 0991BC 7F06468C 05800020 */  bltz  $t4, .L7F064710
 /* 0991C0 7F064690 000C78C0 */   sll   $t7, $t4, 3
 /* 0991C4 7F064694 01CF7021 */  addu  $t6, $t6, $t7
-/* 0991C8 7F064698 8DCE9300 */  lw    $t6, %lo(image_entries)($t6)
+/* 0991C8 7F064698 8DCE9300 */  lw    $t6, %lo(g_Textures)($t6)
 /* 0991CC 7F06469C 3C028005 */  lui   $v0, %hi(D_8004E86C)
 /* 0991D0 7F0646A0 000E6F02 */  srl   $t5, $t6, 0x1c
 /* 0991D4 7F0646A4 000DC880 */  sll   $t9, $t5, 2
@@ -16858,11 +16858,11 @@ glabel recall_joy2_hits_edit_detail_edit_flag
 /* 099724 7F064BB4 10400024 */  beqz  $v0, .L7F064C48
 /* 099728 7F064BB8 AFA20060 */   sw    $v0, 0x60($sp)
 /* 09972C 7F064BBC 8FAD0078 */  lw    $t5, 0x78($sp)
-/* 099730 7F064BC0 3C0F8005 */  lui   $t7, %hi(image_entries)
+/* 099730 7F064BC0 3C0F8005 */  lui   $t7, %hi(g_Textures)
 /* 099734 7F064BC4 05A00020 */  bltz  $t5, .L7F064C48
 /* 099738 7F064BC8 000DC0C0 */   sll   $t8, $t5, 3
 /* 09973C 7F064BCC 01F87821 */  addu  $t7, $t7, $t8
-/* 099740 7F064BD0 8DEF9330 */  lw    $t7, %lo(image_entries)($t7)
+/* 099740 7F064BD0 8DEF9330 */  lw    $t7, %lo(g_Textures)($t7)
 /* 099744 7F064BD4 3C028005 */  lui   $v0, %hi(D_8004E86C)
 /* 099748 7F064BD8 000F7702 */  srl   $t6, $t7, 0x1c
 /* 09974C 7F064BDC 000E4080 */  sll   $t0, $t6, 2
@@ -17074,11 +17074,11 @@ glabel recall_joy2_hits_edit_detail_edit_flag
 /* 09753C 7F064B4C 10400024 */  beqz  $v0, .L7F064BE0
 /* 097540 7F064B50 AFA20060 */   sw    $v0, 0x60($sp)
 /* 097544 7F064B54 8FAD0078 */  lw    $t5, 0x78($sp)
-/* 097548 7F064B58 3C0F8004 */  lui   $t7, %hi(image_entries)
+/* 097548 7F064B58 3C0F8004 */  lui   $t7, %hi(g_Textures)
 /* 09754C 7F064B5C 05A00020 */  bltz  $t5, .L7F064BE0
 /* 097550 7F064B60 000DC0C0 */   sll   $t8, $t5, 3
 /* 097554 7F064B64 01F87821 */  addu  $t7, $t7, $t8
-/* 097558 7F064B68 8DEF1880 */  lw    $t7, %lo(image_entries)($t7)
+/* 097558 7F064B68 8DEF1880 */  lw    $t7, %lo(g_Textures)($t7)
 /* 09755C 7F064B6C 3C028004 */  lui   $v0, %hi(D_8004E86C)
 /* 097560 7F064B70 000F7702 */  srl   $t6, $t7, 0x1c
 /* 097564 7F064B74 000E4080 */  sll   $t0, $t6, 2
@@ -17203,7 +17203,7 @@ glabel sub_GAME_7F064720
 /**
  * arg0: enum ITEM_IDS, will play sound effect for this item
  * arg1: 
- * arg2: index into image_entries, used to play related sound effect (via D_8004E86C)
+ * arg2: index into g_Textures, used to play related sound effect (via D_8004E86C)
  * 
  * Address 0x7F064774.
 */
@@ -17295,11 +17295,11 @@ glabel recall_joy2_hits_edit_flag
 /* 0993C0 7F064890 10400024 */  beqz  $v0, .L7F064924
 /* 0993C4 7F064894 00403025 */   move  $a2, $v0
 /* 0993C8 7F064898 8FAB0088 */  lw    $t3, 0x88($sp)
-/* 0993CC 7F06489C 3C0D8005 */  lui   $t5, %hi(image_entries)
+/* 0993CC 7F06489C 3C0D8005 */  lui   $t5, %hi(g_Textures)
 /* 0993D0 7F0648A0 05600020 */  bltz  $t3, .L7F064924
 /* 0993D4 7F0648A4 000B70C0 */   sll   $t6, $t3, 3
 /* 0993D8 7F0648A8 01AE6821 */  addu  $t5, $t5, $t6
-/* 0993DC 7F0648AC 8DAD9300 */  lw    $t5, %lo(image_entries)($t5)
+/* 0993DC 7F0648AC 8DAD9300 */  lw    $t5, %lo(g_Textures)($t5)
 /* 0993E0 7F0648B0 3C028005 */  lui   $v0, %hi(D_8004E86C)
 /* 0993E4 7F0648B4 000DC702 */  srl   $t8, $t5, 0x1c
 /* 0993E8 7F0648B8 00186080 */  sll   $t4, $t8, 2
@@ -17426,11 +17426,11 @@ glabel recall_joy2_hits_edit_flag
 /* 099958 7F064DE8 10400024 */  beqz  $v0, .L7F064E7C
 /* 09995C 7F064DEC 00403025 */   move  $a2, $v0
 /* 099960 7F064DF0 8FAC0088 */  lw    $t4, 0x88($sp)
-/* 099964 7F064DF4 3C0E8005 */  lui   $t6, %hi(image_entries)
+/* 099964 7F064DF4 3C0E8005 */  lui   $t6, %hi(g_Textures)
 /* 099968 7F064DF8 05800020 */  bltz  $t4, .L7F064E7C
 /* 09996C 7F064DFC 000C78C0 */   sll   $t7, $t4, 3
 /* 099970 7F064E00 01CF7021 */  addu  $t6, $t6, $t7
-/* 099974 7F064E04 8DCE9330 */  lw    $t6, %lo(image_entries)($t6)
+/* 099974 7F064E04 8DCE9330 */  lw    $t6, %lo(g_Textures)($t6)
 /* 099978 7F064E08 3C028005 */  lui   $v0, %hi(D_8004E86C)
 /* 09997C 7F064E0C 000ECF02 */  srl   $t9, $t6, 0x1c
 /* 099980 7F064E10 00196880 */  sll   $t5, $t9, 2
