@@ -2773,6 +2773,38 @@ struct struct_4 {
     float anonymous_3;
 };
 
+#ifdef BUGFIX_R0
+typedef struct bondstruct_unk_80036634
+{
+    u32 field_0x0;
+    u32 field_0x4;
+    u32 field_0x8;
+    f32 field_0xC;
+    u32 field_0x10;
+    u32 field_0x14;
+    u32 field_0x18;
+    f32 field_0x1c;
+    u32 field_0x20;
+    u32 field_0x24;
+    u32 field_0x28;
+} bondstruct_unk_80036634;
+#else
+typedef struct bondstruct_unk_80036634
+{
+    u32 field_0x0;
+    f32 field_0x4;
+    f32 field_0x8;
+    f32 field_0xC;
+    u32 field_0x10;
+    f32 field_0x14;
+    f32 field_0x18;
+    f32 field_0x1c;
+    u32 field_0x20;
+    u32 field_0x24;
+    u32 field_0x28;
+} bondstruct_unk_80036634;
+#endif
+
 //D:80036424
 extern s32 g_bondviewForceDisarm;
 //D:80036428
@@ -2910,7 +2942,7 @@ D:80036624                     .word 0xFFFFFF00, 0xFFFFFF00, 0x4FFFFFF
 //D:80036630
 extern u32 D_80036630;
 //D:80036634
-extern u32 D_80036634[];
+extern bondstruct_unk_80036634 D_80036634[];
 /*
 D:80036638                     .byte 0
 D:80036639                     .byte 0, 0, 0xA

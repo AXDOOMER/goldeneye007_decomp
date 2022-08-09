@@ -597,17 +597,6 @@ u16 ammo_related[]  = {
 u32 D_80036060 = 0;
 
 
-// rodata
-
-
-//D:80053BF4
-const char aD_9[] = "%d\n";
-//D:80053BF8
-const char aSD[] = "%s: %d\n";
-//D:80053C00
-const char aSDS[] = "%s %d %s\n";
-//D:80053C0C
-const char aSD_0[] = "%s: %d\n";
 
 
 // forward declarations
@@ -16475,7 +16464,7 @@ glabel sub_GAME_7F0643A0
 /**
  * @param arg0: enum ITEM_IDS, will play sound effect for this item
  * @param arg1: pointer to integral type, looks like PROP_TYPE
- * @param arg2: index into image_entries, used to play related sound effect (via D_8004E86C)
+ * @param arg2: index into g_Textures, used to play related sound effect (via D_8004E86C)
  * 
  * Address 0x7F06441C.
 */
@@ -16653,11 +16642,11 @@ glabel recall_joy2_hits_edit_detail_edit_flag
 /* 0991AC 7F06467C 10400024 */  beqz  $v0, .L7F064710
 /* 0991B0 7F064680 AFA20060 */   sw    $v0, 0x60($sp)
 /* 0991B4 7F064684 8FAC0078 */  lw    $t4, 0x78($sp)
-/* 0991B8 7F064688 3C0E8005 */  lui   $t6, %hi(image_entries)
+/* 0991B8 7F064688 3C0E8005 */  lui   $t6, %hi(g_Textures)
 /* 0991BC 7F06468C 05800020 */  bltz  $t4, .L7F064710
 /* 0991C0 7F064690 000C78C0 */   sll   $t7, $t4, 3
 /* 0991C4 7F064694 01CF7021 */  addu  $t6, $t6, $t7
-/* 0991C8 7F064698 8DCE9300 */  lw    $t6, %lo(image_entries)($t6)
+/* 0991C8 7F064698 8DCE9300 */  lw    $t6, %lo(g_Textures)($t6)
 /* 0991CC 7F06469C 3C028005 */  lui   $v0, %hi(D_8004E86C)
 /* 0991D0 7F0646A0 000E6F02 */  srl   $t5, $t6, 0x1c
 /* 0991D4 7F0646A4 000DC880 */  sll   $t9, $t5, 2
@@ -16869,11 +16858,11 @@ glabel recall_joy2_hits_edit_detail_edit_flag
 /* 099724 7F064BB4 10400024 */  beqz  $v0, .L7F064C48
 /* 099728 7F064BB8 AFA20060 */   sw    $v0, 0x60($sp)
 /* 09972C 7F064BBC 8FAD0078 */  lw    $t5, 0x78($sp)
-/* 099730 7F064BC0 3C0F8005 */  lui   $t7, %hi(image_entries)
+/* 099730 7F064BC0 3C0F8005 */  lui   $t7, %hi(g_Textures)
 /* 099734 7F064BC4 05A00020 */  bltz  $t5, .L7F064C48
 /* 099738 7F064BC8 000DC0C0 */   sll   $t8, $t5, 3
 /* 09973C 7F064BCC 01F87821 */  addu  $t7, $t7, $t8
-/* 099740 7F064BD0 8DEF9330 */  lw    $t7, %lo(image_entries)($t7)
+/* 099740 7F064BD0 8DEF9330 */  lw    $t7, %lo(g_Textures)($t7)
 /* 099744 7F064BD4 3C028005 */  lui   $v0, %hi(D_8004E86C)
 /* 099748 7F064BD8 000F7702 */  srl   $t6, $t7, 0x1c
 /* 09974C 7F064BDC 000E4080 */  sll   $t0, $t6, 2
@@ -17085,11 +17074,11 @@ glabel recall_joy2_hits_edit_detail_edit_flag
 /* 09753C 7F064B4C 10400024 */  beqz  $v0, .L7F064BE0
 /* 097540 7F064B50 AFA20060 */   sw    $v0, 0x60($sp)
 /* 097544 7F064B54 8FAD0078 */  lw    $t5, 0x78($sp)
-/* 097548 7F064B58 3C0F8004 */  lui   $t7, %hi(image_entries)
+/* 097548 7F064B58 3C0F8004 */  lui   $t7, %hi(g_Textures)
 /* 09754C 7F064B5C 05A00020 */  bltz  $t5, .L7F064BE0
 /* 097550 7F064B60 000DC0C0 */   sll   $t8, $t5, 3
 /* 097554 7F064B64 01F87821 */  addu  $t7, $t7, $t8
-/* 097558 7F064B68 8DEF1880 */  lw    $t7, %lo(image_entries)($t7)
+/* 097558 7F064B68 8DEF1880 */  lw    $t7, %lo(g_Textures)($t7)
 /* 09755C 7F064B6C 3C028004 */  lui   $v0, %hi(D_8004E86C)
 /* 097560 7F064B70 000F7702 */  srl   $t6, $t7, 0x1c
 /* 097564 7F064B74 000E4080 */  sll   $t0, $t6, 2
@@ -17214,7 +17203,7 @@ glabel sub_GAME_7F064720
 /**
  * arg0: enum ITEM_IDS, will play sound effect for this item
  * arg1: 
- * arg2: index into image_entries, used to play related sound effect (via D_8004E86C)
+ * arg2: index into g_Textures, used to play related sound effect (via D_8004E86C)
  * 
  * Address 0x7F064774.
 */
@@ -17306,11 +17295,11 @@ glabel recall_joy2_hits_edit_flag
 /* 0993C0 7F064890 10400024 */  beqz  $v0, .L7F064924
 /* 0993C4 7F064894 00403025 */   move  $a2, $v0
 /* 0993C8 7F064898 8FAB0088 */  lw    $t3, 0x88($sp)
-/* 0993CC 7F06489C 3C0D8005 */  lui   $t5, %hi(image_entries)
+/* 0993CC 7F06489C 3C0D8005 */  lui   $t5, %hi(g_Textures)
 /* 0993D0 7F0648A0 05600020 */  bltz  $t3, .L7F064924
 /* 0993D4 7F0648A4 000B70C0 */   sll   $t6, $t3, 3
 /* 0993D8 7F0648A8 01AE6821 */  addu  $t5, $t5, $t6
-/* 0993DC 7F0648AC 8DAD9300 */  lw    $t5, %lo(image_entries)($t5)
+/* 0993DC 7F0648AC 8DAD9300 */  lw    $t5, %lo(g_Textures)($t5)
 /* 0993E0 7F0648B0 3C028005 */  lui   $v0, %hi(D_8004E86C)
 /* 0993E4 7F0648B4 000DC702 */  srl   $t8, $t5, 0x1c
 /* 0993E8 7F0648B8 00186080 */  sll   $t4, $t8, 2
@@ -17437,11 +17426,11 @@ glabel recall_joy2_hits_edit_flag
 /* 099958 7F064DE8 10400024 */  beqz  $v0, .L7F064E7C
 /* 09995C 7F064DEC 00403025 */   move  $a2, $v0
 /* 099960 7F064DF0 8FAC0088 */  lw    $t4, 0x88($sp)
-/* 099964 7F064DF4 3C0E8005 */  lui   $t6, %hi(image_entries)
+/* 099964 7F064DF4 3C0E8005 */  lui   $t6, %hi(g_Textures)
 /* 099968 7F064DF8 05800020 */  bltz  $t4, .L7F064E7C
 /* 09996C 7F064DFC 000C78C0 */   sll   $t7, $t4, 3
 /* 099970 7F064E00 01CF7021 */  addu  $t6, $t6, $t7
-/* 099974 7F064E04 8DCE9330 */  lw    $t6, %lo(image_entries)($t6)
+/* 099974 7F064E04 8DCE9330 */  lw    $t6, %lo(g_Textures)($t6)
 /* 099978 7F064E08 3C028005 */  lui   $v0, %hi(D_8004E86C)
 /* 09997C 7F064E0C 000ECF02 */  srl   $t9, $t6, 0x1c
 /* 099980 7F064E10 00196880 */  sll   $t5, $t9, 2
@@ -32894,47 +32883,13 @@ glabel some_kind_of_display_routine
 
 
 
-
-#if defined(VERSION_US) || defined(VERSION_JP)
-Gfx *display_ammo_total_in_a1(Gfx *arg0, s32 amount, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) {
+Gfx *display_ammo_total_in_a1(Gfx *arg0, s32 amount, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6)
+{
     char buffer[12];
-    sprintf(buffer, aD_9, amount);
+    sprintf(buffer, "%d\n", amount);
     return some_kind_of_display_routine(arg0, buffer, arg2, arg3, arg4, arg5, arg6);
 }
-#endif
 
-#if defined(VERSION_EU)
-GLOBAL_ASM(
-.text
-glabel display_ammo_total_in_a1
-/* 09CE10 7F06A420 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 09CE14 7F06A424 AFA60040 */  sw    $a2, 0x40($sp)
-/* 09CE18 7F06A428 00A03025 */  move  $a2, $a1
-/* 09CE1C 7F06A42C AFA5003C */  sw    $a1, 0x3c($sp)
-/* 09CE20 7F06A430 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 09CE24 7F06A434 AFA40038 */  sw    $a0, 0x38($sp)
-/* 09CE28 7F06A438 3C058005 */  lui   $a1, %hi(aD_9) # $a1, 0x8005
-/* 09CE2C 7F06A43C AFA70044 */  sw    $a3, 0x44($sp)
-/* 09CE30 7F06A440 24A59D34 */  addiu $a1, %lo(aD_9) # addiu $a1, $a1, -0x62cc
-/* 09CE34 7F06A444 0C00283D */  jal   sprintf
-/* 09CE38 7F06A448 27A4002C */   addiu $a0, $sp, 0x2c
-/* 09CE3C 7F06A44C 8FAE0048 */  lw    $t6, 0x48($sp)
-/* 09CE40 7F06A450 8FAF004C */  lw    $t7, 0x4c($sp)
-/* 09CE44 7F06A454 8FB80050 */  lw    $t8, 0x50($sp)
-/* 09CE48 7F06A458 8FA40038 */  lw    $a0, 0x38($sp)
-/* 09CE4C 7F06A45C 27A5002C */  addiu $a1, $sp, 0x2c
-/* 09CE50 7F06A460 8FA60040 */  lw    $a2, 0x40($sp)
-/* 09CE54 7F06A464 8FA70044 */  lw    $a3, 0x44($sp)
-/* 09CE58 7F06A468 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 09CE5C 7F06A46C AFAF0014 */  sw    $t7, 0x14($sp)
-/* 09CE60 7F06A470 0FC1A879 */  jal   some_kind_of_display_routine
-/* 09CE64 7F06A474 AFB80018 */   sw    $t8, 0x18($sp)
-/* 09CE68 7F06A478 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 09CE6C 7F06A47C 27BD0038 */  addiu $sp, $sp, 0x38
-/* 09CE70 7F06A480 03E00008 */  jr    $ra
-/* 09CE74 7F06A484 00000000 */   nop   
-)
-#endif
 
 
 
@@ -34622,6 +34577,11 @@ s32 get_civilian_casualties(void)
     return g_playerPerm->killed_civilians;
 }
 
+
+//D:80053BF8
+const char aSD[] = "%s: %d\n";
+
+
 #ifdef NONMATCHING
 void *increment_num_kills_display_text_in_MP(void) {
     s32 sp34;
@@ -35071,10 +35031,14 @@ s32 get_times_killed_mwtgx(void) {
     return g_playerPerm->killed_gg_owner_count;
 }
 
+//D:80053C00
+const char aSDS[] = "%s %d %s\n";
+
+
 #ifdef NONMATCHING
 void increment_num_deaths(void)
 {
-	char acStack256 [256]
+	char acStack256 [256];
     g_CurrentPlayer->deathcount = (s32) (g_CurrentPlayer->deathcount + 1);
     if (getPlayerCount() >= 2)
     {
@@ -35084,7 +35048,7 @@ void increment_num_deaths(void)
         }
         else
         {
-            sprintf(acStack256, &aSDS, langGet(TEXT(LGUN, 0xDC))), g_CurrentPlayer->deathcount, langGet(TEXT(LGUN, 0xDD))); //died times
+            sprintf(acStack256, "%s %d %s\n", langGet(TEXT(LGUN, 0xDC))), g_CurrentPlayer->deathcount, langGet(TEXT(LGUN, 0xDD)); //died times
         }
 		hudmsgBottomShow(acStack256);
     }
@@ -35255,6 +35219,9 @@ glabel increment_num_deaths
 s32 get_curplayer_numdeaths(void) {
     return g_CurrentPlayer->deathcount;
 }
+
+//D:80053C0C
+const char aSD_0[] = "%s: %d\n";
 
 #ifdef NONMATCHING
 void *increment_num_suicides_display_MP(void) {

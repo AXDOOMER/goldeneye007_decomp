@@ -30,39 +30,7 @@
 #include "bondhead.h"
 #include "unk_0A1DA0.h"
 
-#ifdef REFRESH_PAL
-#define CHRLV_RECENT_TIME_CHECK 151
-#define CHRLV_TICK_DEAD_CHECK 75
-#define CHRLV_SEEN_RECENT_CHECK 100
-#define CHRLV_LASTMOVEOK60_CHECK 50
-#define CHRLV_ATTACKWALK_CLOCK_TIMER30_MIN 0x11
-#define CHRLV_ATTACKWALK_CLOCK_TIMER30_MAX 0x1a
-#define CHRLV_ATTACKWALK_TIMER40_A 0x4b
-#define CHRLV_ATTACKWALK_TIMER40_B 0x10
-#define CHRLV_ATTACKWALK_TIMER40_C 0x96
-#define CHRLV_ATTACKWALK_TIMER40_D 0x21
 
-#define CHRLV_DEFAULT_TIMER 0x96
-#define CHRLV_10_SEC_TIMER 0x1f4 /* 500 */
-#define CHRLV_FRAMERATE_F 50.0f
-
-#else
-
-#define CHRLV_RECENT_TIME_CHECK 181
-#define CHRLV_TICK_DEAD_CHECK 90
-#define CHRLV_SEEN_RECENT_CHECK 120
-#define CHRLV_LASTMOVEOK60_CHECK 60
-#define CHRLV_ATTACKWALK_CLOCK_TIMER30_MIN 0x15
-#define CHRLV_ATTACKWALK_CLOCK_TIMER30_MAX 0x1F
-#define CHRLV_ATTACKWALK_TIMER40_A 0x5a
-#define CHRLV_ATTACKWALK_TIMER40_B 0x14
-#define CHRLV_ATTACKWALK_TIMER40_C 0xb4
-#define CHRLV_ATTACKWALK_TIMER40_D 0x28
-
-#define CHRLV_DEFAULT_TIMER 0xb4
-#define CHRLV_10_SEC_TIMER 0x258 /* 600 */
-#define CHRLV_FRAMERATE_F 60.0f
-#endif
 
 
 // forward declarations
@@ -2149,7 +2117,7 @@ void triggered_on_shot_hit(ChrRecord *self, coord3d *arg1, f32 arg2, s32 req_ani
                         self->sleep = 0;
                         self->act_die.timeextra = 0.0f;
 
-                        sub_GAME_7F06FC4C(model, (void*)struck_ani->anonymous_0, struck_ani->anonymous_1, 0.0f, struck_ani->anonymous_3, 16.0f, flag1 == 0);
+                        modelSetAnimationWithMerge(model, (void*)struck_ani->anonymous_0, struck_ani->anonymous_1, 0.0f, struck_ani->anonymous_3, 16.0f, flag1 == 0);
 
                         if (struck_ani->anonymous_2 >= 0.0f)
                         {
@@ -2189,7 +2157,7 @@ void triggered_on_shot_hit(ChrRecord *self, coord3d *arg1, f32 arg2, s32 req_ani
                     self->sleep = 0;
                     self->act_die.timeextra = 0.0f;
 
-                    sub_GAME_7F06FC4C(model, (void*)struck_anib->anonymous_0, struck_anib->anonymous_1, 0.0f, struck_anib->anonymous_3, 16.0f, flag1 == 0);
+                    modelSetAnimationWithMerge(model, (void*)struck_anib->anonymous_0, struck_anib->anonymous_1, 0.0f, struck_anib->anonymous_3, 16.0f, flag1 == 0);
 
                     if ((s32)struck_anib->anonymous_0 == ((s32)&ptr_animation_table->data[(s32)&ANIM_DATA_death_neck]) && ((randomGetNext() % (u32)0x64) != 0))
                     {
@@ -2240,7 +2208,7 @@ void triggered_on_shot_hit(ChrRecord *self, coord3d *arg1, f32 arg2, s32 req_ani
                 if ((randomGetNext() & 1) != 0)
                 {
                     sp80 = &ptr_animation_table->data[(s32)&ANIM_DATA_hit_butt_long];
-                    sub_GAME_7F06FC4C(model, sp80, randomGetNext() & 1, 10.f, 0.5f, 16.0f, flag1 == 0);
+                    modelSetAnimationWithMerge(model, sp80, randomGetNext() & 1, 10.f, 0.5f, 16.0f, flag1 == 0);
 
                     if (sp54 < 2U)
                     {
@@ -2258,7 +2226,7 @@ void triggered_on_shot_hit(ChrRecord *self, coord3d *arg1, f32 arg2, s32 req_ani
                 else
                 {
                     sp80 = &ptr_animation_table->data[(s32)&ANIM_DATA_hit_butt_short];
-                    sub_GAME_7F06FC4C(model, sp80, randomGetNext() & 1, 0.0f, 0.5f, 16.0f, flag1 == 0);
+                    modelSetAnimationWithMerge(model, sp80, randomGetNext() & 1, 0.0f, 0.5f, 16.0f, flag1 == 0);
                     
                     if (sp54 < 2U)
                     {
@@ -2310,7 +2278,7 @@ void triggered_on_shot_hit(ChrRecord *self, coord3d *arg1, f32 arg2, s32 req_ani
                     self->act_argh.unk30 = g_GlobalTimer;
                     self->sleep = 0;
 
-                    sub_GAME_7F06FC4C(model, (void*)struck_ani->anonymous_0, struck_ani->anonymous_1, 0.0f, struck_ani->anonymous_3, 16.0f, ff);
+                    modelSetAnimationWithMerge(model, (void*)struck_ani->anonymous_0, struck_ani->anonymous_1, 0.0f, struck_ani->anonymous_3, 16.0f, ff);
 
                     if (struck_ani->anonymous_2 >= 0.0f)
                     {
@@ -4587,8 +4555,8 @@ bool chrHasStoppedOrPatroling(ChrRecord *self) //chrHasStoppedOrPatroling
     else if (self->actiontype == ACT_ANIM)
     {
         if (self->act_anim.unk034 ||
-            ((sub_GAME_7F06F610(self->model) >= 0.0f) && objecthandlerGetModelField28(self->model) >= (sub_GAME_7F06F5C4(self->model))) ||
-            ((sub_GAME_7F06F610(self->model) < 0.0f) && (objecthandlerGetModelField28(self->model) <= 0.0f)))
+            ((modelGetAnimSpeed(self->model) >= 0.0f) && objecthandlerGetModelField28(self->model) >= (sub_GAME_7F06F5C4(self->model))) ||
+            ((modelGetAnimSpeed(self->model) < 0.0f) && (objecthandlerGetModelField28(self->model) <= 0.0f)))
         {
             return TRUE;
         }
@@ -5730,7 +5698,7 @@ void chrlvTickDie(ChrRecord *self)
             modelSetAnimation(
                 model,
                 (void*)((s32)&ANIM_DATA_jump_backwards + (s32)&ptr_animation_table->data),
-                sub_GAME_7F06F5B4(model) == 0,
+                objecthandlerGetModelGunhand(model) == 0,
                 50.0f,
                 0.3f,
                 (((u16*)((s32)&ANIM_DATA_jump_backwards + (s32)&ptr_animation_table->data))[2] - 1.0f) - 50.0f);
@@ -8657,7 +8625,7 @@ void chrlvTickBondIntro(ChrRecord *self)
             (struct ModelAnimation *)&ptr_animation_table->data[(s32)&ANIM_DATA_fire_standing_draw_one_handed_weapon_fast],
             0,
             86.0f,
-            sub_GAME_7F06F610(self_model),
+            modelGetAnimSpeed(self_model),
             24.0f);
 
         modelSetAnimEndFrame(self_model, 131.0f);

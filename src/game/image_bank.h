@@ -9,6 +9,6 @@ extern struct sImageTableEntry *crosshairimage;
 extern struct sImageTableEntry *mainfolderimages;
 extern struct sImageTableEntry *genericimage;
 
-void load_prepare_global_image_bank(void);
+void texReset(void);
 
 #endif

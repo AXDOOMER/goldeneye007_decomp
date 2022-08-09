@@ -292,14 +292,14 @@ PropRecord* chrpropAllocate(void) {
     {
         ptr_obj_pos_list_final_entry = prop->prev;
         prop->prev = NULL;
-        prop->next = 0;
-        prop->parent = 0;
-        prop->child = 0;
+        prop->next = NULL;
+        prop->parent = NULL;
+        prop->child = NULL;
 
         prop->flags = 0;
-        prop->stan = 0;
+        prop->stan = NULL;
         prop->timetoregen = 0;
-        prop->rooms[0] = -1;
+        prop->rooms[0] = 0xFF;
         return prop;
     }
     return NULL;
@@ -356,18 +356,15 @@ void chrpropActivate(PropRecord* prop) {
     PropRecord* cur = ptr_obj_pos_list_current_entry;
     if (cur) {
         cur->next = prop;
-        prop->next = 0;
+        prop->next = NULL;
         prop->prev = ptr_obj_pos_list_current_entry;
         ptr_obj_pos_list_current_entry = prop;
-
+        return;
     }
-    else 
-    {
-        prop->prev = NULL;
-        prop->next = 0;
-        ptr_obj_pos_list_first_entry = prop;
-        ptr_obj_pos_list_current_entry = prop;
-    }
+    prop->prev = NULL;
+    prop->next = NULL;
+    ptr_obj_pos_list_first_entry = prop;
+    ptr_obj_pos_list_current_entry = prop;
 }
 #else
 GLOBAL_ASM(
@@ -401,36 +398,23 @@ glabel chrpropActivate
 
 
 
-#ifdef NONMATCHING
-void chrpropActivateThisFrame(void) {
+void chrpropActivateThisFrame(PropRecord* prop) {
+    PropRecord* first;
 
+    first = ptr_obj_pos_list_first_entry;
+    if (first != NULL) {
+        first->prev = prop;
+        prop->next = ptr_obj_pos_list_first_entry;
+        prop->prev = NULL;
+        ptr_obj_pos_list_first_entry = prop;
+        return;
+    }
+    prop->prev = NULL;
+    prop->next = NULL;
+    ptr_obj_pos_list_first_entry = prop;
+    ptr_obj_pos_list_current_entry = prop;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel chrpropActivateThisFrame
-/* 06F020 7F03A4F0 3C038003 */  lui   $v1, %hi(ptr_obj_pos_list_first_entry)
-/* 06F024 7F03A4F4 24630AA4 */  addiu $v1, %lo(ptr_obj_pos_list_first_entry) # addiu $v1, $v1, 0xaa4
-/* 06F028 7F03A4F8 8C620000 */  lw    $v0, ($v1)
-/* 06F02C 7F03A4FC 3C018003 */  lui   $at, %hi(ptr_obj_pos_list_current_entry)
-/* 06F030 7F03A500 50400008 */  beql  $v0, $zero, .L7F03A524
-/* 06F034 7F03A504 AC800024 */   sw    $zero, 0x24($a0)
-/* 06F038 7F03A508 AC440024 */  sw    $a0, 0x24($v0)
-/* 06F03C 7F03A50C 8C6E0000 */  lw    $t6, ($v1)
-/* 06F040 7F03A510 AC800024 */  sw    $zero, 0x24($a0)
-/* 06F044 7F03A514 AC8E0028 */  sw    $t6, 0x28($a0)
-/* 06F048 7F03A518 03E00008 */  jr    $ra
-/* 06F04C 7F03A51C AC640000 */   sw    $a0, ($v1)
 
-/* 06F050 7F03A520 AC800024 */  sw    $zero, 0x24($a0)
-.L7F03A524:
-/* 06F054 7F03A524 AC800028 */  sw    $zero, 0x28($a0)
-/* 06F058 7F03A528 AC640000 */  sw    $a0, ($v1)
-/* 06F05C 7F03A52C AC240AA0 */  sw    $a0, %lo(ptr_obj_pos_list_current_entry)($at)
-/* 06F060 7F03A530 03E00008 */  jr    $ra
-/* 06F064 7F03A534 00000000 */   nop   
-)
-#endif
 
 
 
@@ -485,45 +469,30 @@ void chrpropReparent(PropRecord *newChild, PropRecord *host)
 
 
 
+void chrpropDetach(PropRecord* prop) {
+    PropRecord* parent;
+    PropRecord* prev;
+    PropRecord* next;
 
-
-#ifdef NONMATCHING
-void chrpropDetach(void) {
-
+    parent = prop->parent;
+    if (parent) {
+        if (prop == parent->child) {
+            parent->child = prop->prev;
+        }
+        prev = prop->prev;
+        if (prev) {
+            prev->next = prop->next;
+        }
+        next = prop->next;
+        if (next) {
+            next->prev = prop->prev;
+        }
+        prop->parent = NULL;
+        prop->prev = NULL;
+        prop->next = NULL;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel chrpropDetach
-/* 06F100 7F03A5D0 8C82001C */  lw    $v0, 0x1c($a0)
-/* 06F104 7F03A5D4 10400013 */  beqz  $v0, .L7F03A624
-/* 06F108 7F03A5D8 00000000 */   nop   
-/* 06F10C 7F03A5DC 8C4E0020 */  lw    $t6, 0x20($v0)
-/* 06F110 7F03A5E0 548E0004 */  bnel  $a0, $t6, .L7F03A5F4
-/* 06F114 7F03A5E4 8C820024 */   lw    $v0, 0x24($a0)
-/* 06F118 7F03A5E8 8C8F0024 */  lw    $t7, 0x24($a0)
-/* 06F11C 7F03A5EC AC4F0020 */  sw    $t7, 0x20($v0)
-/* 06F120 7F03A5F0 8C820024 */  lw    $v0, 0x24($a0)
-.L7F03A5F4:
-/* 06F124 7F03A5F4 50400004 */  beql  $v0, $zero, .L7F03A608
-/* 06F128 7F03A5F8 8C820028 */   lw    $v0, 0x28($a0)
-/* 06F12C 7F03A5FC 8C980028 */  lw    $t8, 0x28($a0)
-/* 06F130 7F03A600 AC580028 */  sw    $t8, 0x28($v0)
-/* 06F134 7F03A604 8C820028 */  lw    $v0, 0x28($a0)
-.L7F03A608:
-/* 06F138 7F03A608 50400004 */  beql  $v0, $zero, .L7F03A61C
-/* 06F13C 7F03A60C AC80001C */   sw    $zero, 0x1c($a0)
-/* 06F140 7F03A610 8C990024 */  lw    $t9, 0x24($a0)
-/* 06F144 7F03A614 AC590024 */  sw    $t9, 0x24($v0)
-/* 06F148 7F03A618 AC80001C */  sw    $zero, 0x1c($a0)
-.L7F03A61C:
-/* 06F14C 7F03A61C AC800024 */  sw    $zero, 0x24($a0)
-/* 06F150 7F03A620 AC800028 */  sw    $zero, 0x28($a0)
-.L7F03A624:
-/* 06F154 7F03A624 03E00008 */  jr    $ra
-/* 06F158 7F03A628 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -889,8 +858,28 @@ glabel chrpropsRenderPass
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03A97C(void) {
+s32 sub_GAME_7F03A97C(s32 index, coord3d* arg1, coord3d* arg2) {
+    s32 sp34;
+    s32 sp30;
+    s32 sp2C;
+    s32 sp28;
+    s32 sp24;
+    s32 sp20;
+    s_room_info* temp_v0;
 
+    temp_v0 = &array_room_info[index];
+    if (temp_v0->ptr_unique_collision_points != NULL) {
+        sp20 = (s32) temp_v0->minbounds.f[0];
+        sp24 = (s32) temp_v0->minbounds.f[1];
+        sp28 = (s32) temp_v0->minbounds.f[2];
+        sp2C = (s32) temp_v0->maxbounds.f[0];
+        sp30 = (s32) temp_v0->maxbounds.f[1];
+        sp34 = (s32) temp_v0->maxbounds.f[2];
+        if (sub_GAME_7F0B6CEC(arg1, arg2, &sp20, &sp2C) != 0) {
+            return 1;
+        }
+    }
+    return 0;
 }
 #else
 GLOBAL_ASM(
@@ -1945,9 +1934,9 @@ glabel chraiDefaultWeaponFireHandler
 /* 0702E4 7F03B7B4 8E10E86C */   lw    $s0, %lo(D_8004E86C)($s0)
 .L7F03B7B8:
 /* 0702E8 7F03B7B8 000B60C0 */  sll   $t4, $t3, 3
-/* 0702EC 7F03B7BC 3C0D8005 */  lui   $t5, %hi(image_entries)
+/* 0702EC 7F03B7BC 3C0D8005 */  lui   $t5, %hi(g_Textures)
 /* 0702F0 7F03B7C0 01AC6821 */  addu  $t5, $t5, $t4
-/* 0702F4 7F03B7C4 91AD9300 */  lbu   $t5, %lo(image_entries)($t5)
+/* 0702F4 7F03B7C4 91AD9300 */  lbu   $t5, %lo(g_Textures)($t5)
 /* 0702F8 7F03B7C8 3C108005 */  lui   $s0, %hi(D_8004E86C)
 /* 0702FC 7F03B7CC 31AE000F */  andi  $t6, $t5, 0xf
 /* 070300 7F03B7D0 000E7880 */  sll   $t7, $t6, 2
@@ -2023,11 +2012,11 @@ glabel chraiDefaultWeaponFireHandler
 /* 070400 7F03B8D0 0FC191DD */  jal   recall_joy2_hits_edit_flag
 /* 070404 7F03B8D4 8FA60540 */   lw    $a2, 0x540($sp)
 /* 070408 7F03B8D8 8FAD0540 */  lw    $t5, 0x540($sp)
-/* 07040C 7F03B8DC 3C028005 */  lui   $v0, %hi(image_entries)
+/* 07040C 7F03B8DC 3C028005 */  lui   $v0, %hi(g_Textures)
 /* 070410 7F03B8E0 24010005 */  li    $at, 5
 /* 070414 7F03B8E4 000D70C0 */  sll   $t6, $t5, 3
 /* 070418 7F03B8E8 004E1021 */  addu  $v0, $v0, $t6
-/* 07041C 7F03B8EC 90429300 */  lbu   $v0, %lo(image_entries)($v0)
+/* 07041C 7F03B8EC 90429300 */  lbu   $v0, %lo(g_Textures)($v0)
 /* 070420 7F03B8F0 304F000F */  andi  $t7, $v0, 0xf
 /* 070424 7F03B8F4 11E10011 */  beq   $t7, $at, .L7F03B93C
 /* 070428 7F03B8F8 24010006 */   li    $at, 6

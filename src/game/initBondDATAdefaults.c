@@ -146,11 +146,11 @@ void sets_a_bunch_of_BONDdata_values_to_default(void)
         sub_GAME_7F0062C0(
             // match hack: addu address calculated backwards
             (void*)((s32)g_BondMoveAnimationSetup[i].anim_id + (s32)&ptr_animation_table->data),
-            (s32)g_BondMoveAnimationSetup[i].unk04,
-            (s32)g_BondMoveAnimationSetup[i].unk08,
+            (s32)g_BondMoveAnimationSetup[i].loopframe,
+            (s32)g_BondMoveAnimationSetup[i].endframe,
             &spD0);
 
-        g_BondMoveAnimationSetup[i].unk0C = (f32) (((f32) spD0[2] * IDO_POINT_ONE) / (g_BondMoveAnimationSetup[i].unk08 - g_BondMoveAnimationSetup[i].unk04));
+        g_BondMoveAnimationSetup[i].unk0C = (f32) (((f32) spD0[2] * IDO_POINT_ONE) / (g_BondMoveAnimationSetup[i].endframe - g_BondMoveAnimationSetup[i].loopframe));
     }
 
     sp90 = D_8002A790;
@@ -175,12 +175,12 @@ void sets_a_bunch_of_BONDdata_values_to_default(void)
         // match hack: addu address calculated backwards
         (struct ModelAnimation *) ((s32)g_BondMoveAnimationSetup[g_CurrentPlayer->headanim].anim_id + (s32)&ptr_animation_table->data),
         0,
-        g_BondMoveAnimationSetup[g_CurrentPlayer->headanim].unk04,
+        g_BondMoveAnimationSetup[g_CurrentPlayer->headanim].loopframe,
         0.5f,
         0.0f);
 
-    modelSetAnimLooping(&g_CurrentPlayer->model, g_BondMoveAnimationSetup[g_CurrentPlayer->headanim].unk04, 0.0f);
-    modelSetAnimEndFrame(&g_CurrentPlayer->model, g_BondMoveAnimationSetup[g_CurrentPlayer->headanim].unk08);
+    modelSetAnimLooping(&g_CurrentPlayer->model, g_BondMoveAnimationSetup[g_CurrentPlayer->headanim].loopframe, 0.0f);
+    modelSetAnimEndFrame(&g_CurrentPlayer->model, g_BondMoveAnimationSetup[g_CurrentPlayer->headanim].endframe);
     modelSetAnimFlipFunction(&g_CurrentPlayer->model, bheadFlipAnimation);
 
     bheadUpdateIdleRoll();

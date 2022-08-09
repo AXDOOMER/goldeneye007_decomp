@@ -470,55 +470,29 @@ glabel sub_GAME_7F06ABB0
 
 
 #ifdef NONMATCHING
-f32 display_image_at_on_screen_coord(void *arg0, void *arg2, ?32 arg4, ?32 arg5, ?32 arg6, ?32 arg7, s32 arg8, s32 arg9, s32 argA, s32 argB, s32 argC, s32 argD) {
-    void *temp_v0;
-    void *phi_v0;
-    f32 phi_return_reg;
+void display_image_at_on_screen_coord(Gfx *DL,int *xypos,f32 wdivh,int width,int height,int rotateleft90,int fliph,int flipv,int red,int green,int blue,int alpha,int format,int param_14)
 
-    // Node 0
-    phi_return_reg = 0.0f;
-    if (0.0f < *arg2)
+{
+    int in_stack_00000034;
+    
+    if ((0.0 < *width) && (0.0 < *(width + 4)))
     {
-        // Node 1
-        phi_return_reg = 0.0f;
-        if (0.0f < arg2->unk4)
-        {
-            // Node 2
-            **arg0 = 0xfb000000;
-            *arg0->unk4 = (s32) ((((arg8 << 0x18) | ((arg9 & 0xff) << 0x10)) | ((argA & 0xff) << 8)) | (argB & 0xff));
-            temp_v0 = (*arg0 + 8);
-            if (argC != 0)
-            {
-                // Node 3
-                *temp_v0 = 0xfc26a005;
-                temp_v0->unk4 = 0x1f1493ff;
-                phi_v0 = (temp_v0 + 8);
+        gsDPSetEnvColor(DL++, red, blue, green, alpha);
+
+        if (format == 0) {
+            if (param_14 == 0) {
+                gDPSetCombineLERP(DL++, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0);
             }
-            else
-            {
-                // Node 4
-                if (argD != 0)
-                {
-                    // Node 5
-                    temp_v0->unk4 = -0x1c8;
-                    *temp_v0 = 0xfc129bff;
-                    phi_v0 = (temp_v0 + 8);
-                }
-                else
-                {
-                    // Node 6
-                    *temp_v0 = 0xfc129a25;
-                    temp_v0->unk4 = 0xff37ffff;
-                    phi_v0 = (temp_v0 + 8);
-                }
+            else {
+                gDPSetCombineLERP(DL++, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED);
             }
-            // Node 7
-            *arg0 = (void *) phi_v0;
-            phi_return_reg = sub_GAME_7F06ABB0(arg4, arg5, arg6, arg7);
         }
+        else {
+            gDPSetCombineLERP(DL++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, COMBINED, 0, ENVIRONMENT, 0, COMBINED, 0, ENVIRONMENT, 0);
+        }
+        proc_7F06ABB0(DL,xypos,width,height,rotateleft90,fliph,flipv,red);
     }
-    // Node 8
-    return phi_return_reg;
+    return;
 }
 #else
 GLOBAL_ASM(

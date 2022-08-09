@@ -8,6 +8,51 @@
 #include "file2.h"
 #include "front.h"
 
+
+
+// bss
+//CODE.bss:80069920
+//CODE.bss:80069980
+//CODE.bss:800699E0
+//CODE.bss:80069A40
+//CODE.bss:80069AA0
+//CODE.bss:80069B00
+save_data saves[6];
+
+//CODE.bss:80069B60
+u32 dword_CODE_bss_80069B60;
+
+//data
+//D:8002C510
+s32 save_selected_bond[] = {0,0,0,0};
+
+//D:8002C520
+save_data D_8002C520 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0};
+//D:8002C580
+// Default Save
+save_data D_8002C580 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0};
+//D:8002C5E0
+save_data D_8002C5E0 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0};
+//D:8002C640
+smallSave blankSmallSave = {0, 0, 0x42};
+
+//D:8002C660
+save_data D_8002C660 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0};
+
+//D:8002C6C0
+save_data D_8002C6C0 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:8002C720
+save_data D_8002C720 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:8002C780
+save_data D_8002C780 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:8002C7E0
+save_data D_8002C7E0 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:8002C840
+save_data D_8002C840 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:8002C8A0
+save_data blank_eeprom = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+
 /**
  *
  *

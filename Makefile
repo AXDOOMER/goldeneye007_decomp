@@ -9,7 +9,7 @@ FINAL := YES
 VERSION := US
 IDO_RECOMP := YES
 VERBOSE := 0
-# If COMPARE is 1, check the output sha1sum when building 'all', and if fali to match
+# If COMPARE is 1, check the output sha1sum when building 'all', and if fail to match
 # then compare ELF sections to known md5 checksums.
 # If compare is 2, it will just compare the sha1sum.
 COMPARE := 1
@@ -201,22 +201,22 @@ endif
 ifeq ($(VERSION), US)
  COUNTRYCODE := u
  OUTCODE := $(COUNTRYCODE)
- LCDEFS := -DVERSION_US -DLANG_US -DREFRESH_NTSC -DLEFTOVERDEBUG -DLEFTOVERSPECTRUM -DBUGFIX_R0
- ASMDEFS := --defsym VERSION_US=1 --defsym LANG_US=1 --defsym REFRESH_NTSC=1 --defsym LEFTOVERDEBUG=1 --defsym LEFTOVERSPECTRUM=1 --defsym BUGFIX_R0=1
+ LCDEFS := -DVERSION_US -DLANG_US -DREFRESH_NTSC -DLEFTOVERDEBUG -DLEFTOVERSPECTRUM -DBUGFIX_R0 -DBYTEMATCH
+ ASMDEFS := --defsym VERSION_US=1 --defsym LANG_US=1 --defsym REFRESH_NTSC=1 --defsym LEFTOVERDEBUG=1 --defsym LEFTOVERSPECTRUM=1 --defsym BUGFIX_R0=1 --defsym BYTEMATCH=1
 endif
 
 ifeq ($(VERSION), EU)
  COUNTRYCODE := e
  OUTCODE := $(COUNTRYCODE)
- LCDEFS := -DVERSION_EU -DLANG_EU -DREFRESH_PAL -DBUGFIX_R1 -DBUGFIX_R2 
- ASMDEFS := --defsym VERSION_EU=1 --defsym LANG_EU=1 --defsym REFRESH_PAL=1 --defsym BUGFIX_R1=1 --defsym BUGFIX_R2=1
+ LCDEFS := -DVERSION_EU -DLANG_EU -DREFRESH_PAL -DBUGFIX_R1 -DBUGFIX_R2 -DBYTEMATCH
+ ASMDEFS := --defsym VERSION_EU=1 --defsym LANG_EU=1 --defsym REFRESH_PAL=1 --defsym BUGFIX_R1=1 --defsym BUGFIX_R2=1 --defsym BYTEMATCH=1
 endif
 
 ifeq ($(VERSION), JP)
  COUNTRYCODE := j
  OUTCODE := $(COUNTRYCODE)
- LCDEFS := -DVERSION_JP -DLANG_JP -DREFRESH_NTSC -DBUGFIX_R1 -DLEFTOVERDEBUG -DLEFTOVERSPECTRUM
- ASMDEFS := --defsym VERSION_JP=1 --defsym LANG_JP=1 --defsym REFRESH_NTSC=1 --defsym BUGFIX_R1=1 --defsym LEFTOVERDEBUG=1 --defsym LEFTOVERSPECTRUM=1
+ LCDEFS := -DVERSION_JP -DLANG_JP -DREFRESH_NTSC -DBUGFIX_R1 -DLEFTOVERDEBUG -DLEFTOVERSPECTRUM -DBYTEMATCH
+ ASMDEFS := --defsym VERSION_JP=1 --defsym LANG_JP=1 --defsym REFRESH_NTSC=1 --defsym BUGFIX_R1=1 --defsym LEFTOVERDEBUG=1 --defsym LEFTOVERSPECTRUM=1 --defsym BYTEMATCH=1
 endif
 
 ifeq ($(VERSION), DEBUG)
@@ -312,7 +312,8 @@ INCLUDE := -I . -I include -I include/ultra64 -I include/PR -I src -I src/game -
 # 712 : illegal combination of pointer and integer                                    - could be fixed by casting, but implicit is fine.
 # 807 : member cannot be of function or incomplete type                               - Variable length structs
 # 838 : Microsoft extension (unnamed structs)                                         - used for "Inheritance" and member/array call swapping
-WOFF :=  -woff 609,649,709,712,807,838
+# 763 : Max Float
+WOFF :=  -woff 609,649,709,712,807,838,763
 
 ifeq ($(IDO_RECOMP), NO)
   CC := $(QEMU_IRIX) -silent -L $(IRIX_ROOT) $(IRIX_ROOT)/usr/bin/cc

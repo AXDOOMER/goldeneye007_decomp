@@ -63,7 +63,7 @@ tools/gzipsrc/gzip
 tools/gzipsrc/*.o
 tools/report/report
 /StructLayoutSettings.json
-
+bin/*
 
 
 assets/obseg/text/e/LameP.c
@@ -153,3 +153,4 @@ tools/report/JPN.htm
 tools/gaudio/*
 bondtypes_AI.h
 baserom*
+assets/images/split/png/*

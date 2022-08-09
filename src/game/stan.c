@@ -6045,8 +6045,8 @@ s32 getTileRoom(StandTile *tile)
 }
 
 
-
-
+//incorrect here so that both this and sub_GAME_7F0B4F9C match
+extern s32 sub_GAME_7F0B4F9C(u8 arg0) ;
 
 s32 sub_GAME_7F0B2FE0(StandTile *tile)
 {

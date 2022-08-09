@@ -85,7 +85,7 @@ struct sImageTableEntry *mpstageselimages;
 extern u8* _GlobalimagetableSegmentRomStart;
 
 
-void makeemptyimageatpos(s32 pos) {
+void texSetBitstring(s32 pos) {
     img_curpos = pos;
     img_curdatatable = 0;
     img_bitcount = 0;
@@ -93,7 +93,7 @@ void makeemptyimageatpos(s32 pos) {
 
 
 
-u32 extractImageBitCount(s32 bitCount)
+u32 texReadBits(s32 bitCount)
 {
     if (img_bitcount < bitCount)
     {
@@ -165,7 +165,7 @@ extern Gfx* globalDL_0x9a8;
 extern Gfx* globalDL_0xa50;
 
 #ifdef NONMATCHING
-void load_prepare_global_image_bank(void)
+void texReset(void)
 {
 
     s32 size;
@@ -207,38 +207,38 @@ void load_prepare_global_image_bank(void)
     mpradarimages = (void *) (globalbank_rdram_offset + &s_mpradarimages);
     mpcharselimages = (void *) (globalbank_rdram_offset + &s_mpcharselimages);
     mpstageselimages = (void *) (globalbank_rdram_offset + &s_mpstageselimages);
-    check_load_image_to_buffer(globalbank_rdram_offset + &globalDL_0x000, 0);
-    check_load_image_to_buffer(globalbank_rdram_offset + &globalDL_0x078, 0);
-    check_load_image_to_buffer(globalbank_rdram_offset + &globalDL_0x120, 0);
-    check_load_image_to_buffer(globalbank_rdram_offset + &globalDL_0x1c8, 0);
-    check_load_image_to_buffer(globalbank_rdram_offset + &globalDL_0x270, 0);
-    check_load_image_to_buffer(globalbank_rdram_offset + &globalDL_0x318, 0);
-    check_load_image_to_buffer(globalbank_rdram_offset + &globalDL_0x3c0, 0);
-    check_load_image_to_buffer(globalbank_rdram_offset + &globalDL_0x468, 0);
-    check_load_image_to_buffer(globalbank_rdram_offset + &globalDL_0x510, 0);
-    check_load_image_to_buffer(globalbank_rdram_offset + &globalDL_0x5b8, 0);
-    check_load_image_to_buffer(globalbank_rdram_offset + &globalDL_0x660, 0);
-    check_load_image_to_buffer(globalbank_rdram_offset + &globalDL_0x708, 0);
-    check_load_image_to_buffer(globalbank_rdram_offset + &globalDL_0x7b0, 0);
-    check_load_image_to_buffer(globalbank_rdram_offset + &globalDL_0x858, 0);
-    check_load_image_to_buffer(globalbank_rdram_offset + &globalDL_0x900, 0);
-    check_load_image_to_buffer(globalbank_rdram_offset + &globalDL_0x9a8, 0);
-    check_load_image_to_buffer(globalbank_rdram_offset + &globalDL_0xa50, 0);
-    load_image_to_buffer(genericimage, 0);
+    texLoadFromDisplayList(globalbank_rdram_offset + &globalDL_0x000, 0);
+    texLoadFromDisplayList(globalbank_rdram_offset + &globalDL_0x078, 0);
+    texLoadFromDisplayList(globalbank_rdram_offset + &globalDL_0x120, 0);
+    texLoadFromDisplayList(globalbank_rdram_offset + &globalDL_0x1c8, 0);
+    texLoadFromDisplayList(globalbank_rdram_offset + &globalDL_0x270, 0);
+    texLoadFromDisplayList(globalbank_rdram_offset + &globalDL_0x318, 0);
+    texLoadFromDisplayList(globalbank_rdram_offset + &globalDL_0x3c0, 0);
+    texLoadFromDisplayList(globalbank_rdram_offset + &globalDL_0x468, 0);
+    texLoadFromDisplayList(globalbank_rdram_offset + &globalDL_0x510, 0);
+    texLoadFromDisplayList(globalbank_rdram_offset + &globalDL_0x5b8, 0);
+    texLoadFromDisplayList(globalbank_rdram_offset + &globalDL_0x660, 0);
+    texLoadFromDisplayList(globalbank_rdram_offset + &globalDL_0x708, 0);
+    texLoadFromDisplayList(globalbank_rdram_offset + &globalDL_0x7b0, 0);
+    texLoadFromDisplayList(globalbank_rdram_offset + &globalDL_0x858, 0);
+    texLoadFromDisplayList(globalbank_rdram_offset + &globalDL_0x900, 0);
+    texLoadFromDisplayList(globalbank_rdram_offset + &globalDL_0x9a8, 0);
+    texLoadFromDisplayList(globalbank_rdram_offset + &globalDL_0xa50, 0);
+    texLoad(genericimage, 0);
 
     for (i=0; i<0x48; i+=0xC)
     {
-        load_image_to_buffer(&explosion_smokeimages+i, 0);
+        texLoad(&explosion_smokeimages+i, 0);
     }
     for (i=0; i<0x48; i+=0xC)
     {
-        load_image_to_buffer(&scattered_explosions+i, 0);
+        texLoad(&scattered_explosions+i, 0);
     }
 }
 #else
 GLOBAL_ASM(
 .text
-glabel load_prepare_global_image_bank
+glabel texReset
 /* 100AE0 7F0CBFB0 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 100AE4 7F0CBFB4 3C0E0200 */  lui   $t6, %hi(_GlobalimagetableSegmentEnd) # $t6, 0x200
 /* 100AE8 7F0CBFB8 3C0F0200 */  lui   $t7, %hi(_GlobalimagetableSegmentStart) # $t7, 0x200
@@ -435,113 +435,113 @@ glabel load_prepare_global_image_bank
 /* 100DE4 7F0CC2B4 25EF0000 */  addiu $t7, $t7, 0
 /* 100DE8 7F0CC2B8 AC2ED134 */  sw    $t6, %lo(mpstageselimages)($at)
 /* 100DEC 7F0CC2BC 004F2021 */  addu  $a0, $v0, $t7
-/* 100DF0 7F0CC2C0 0FC32EDD */  jal   check_load_image_to_buffer
+/* 100DF0 7F0CC2C0 0FC32EDD */  jal   texLoadFromDisplayList
 /* 100DF4 7F0CC2C4 00002825 */   move  $a1, $zero
 /* 100DF8 7F0CC2C8 8E180000 */  lw    $t8, ($s0)
 /* 100DFC 7F0CC2CC 3C190200 */  lui   $t9, %hi(globalDL_0x078) # $t9, 0x200
 /* 100E00 7F0CC2D0 27390078 */  addiu $t9, %lo(globalDL_0x078) # addiu $t9, $t9, 0x78
 /* 100E04 7F0CC2D4 00002825 */  move  $a1, $zero
-/* 100E08 7F0CC2D8 0FC32EDD */  jal   check_load_image_to_buffer
+/* 100E08 7F0CC2D8 0FC32EDD */  jal   texLoadFromDisplayList
 /* 100E0C 7F0CC2DC 03192021 */   addu  $a0, $t8, $t9
 /* 100E10 7F0CC2E0 8E080000 */  lw    $t0, ($s0)
 /* 100E14 7F0CC2E4 3C090200 */  lui   $t1, %hi(globalDL_0x120) # $t1, 0x200
 /* 100E18 7F0CC2E8 25290120 */  addiu $t1, %lo(globalDL_0x120) # addiu $t1, $t1, 0x120
 /* 100E1C 7F0CC2EC 00002825 */  move  $a1, $zero
-/* 100E20 7F0CC2F0 0FC32EDD */  jal   check_load_image_to_buffer
+/* 100E20 7F0CC2F0 0FC32EDD */  jal   texLoadFromDisplayList
 /* 100E24 7F0CC2F4 01092021 */   addu  $a0, $t0, $t1
 /* 100E28 7F0CC2F8 8E0A0000 */  lw    $t2, ($s0)
 /* 100E2C 7F0CC2FC 3C0B0200 */  lui   $t3, %hi(globalDL_0x1c8) # $t3, 0x200
 /* 100E30 7F0CC300 256B01C8 */  addiu $t3, %lo(globalDL_0x1c8) # addiu $t3, $t3, 0x1c8
 /* 100E34 7F0CC304 00002825 */  move  $a1, $zero
-/* 100E38 7F0CC308 0FC32EDD */  jal   check_load_image_to_buffer
+/* 100E38 7F0CC308 0FC32EDD */  jal   texLoadFromDisplayList
 /* 100E3C 7F0CC30C 014B2021 */   addu  $a0, $t2, $t3
 /* 100E40 7F0CC310 8E0C0000 */  lw    $t4, ($s0)
 /* 100E44 7F0CC314 3C0D0200 */  lui   $t5, %hi(globalDL_0x270) # $t5, 0x200
 /* 100E48 7F0CC318 25AD0270 */  addiu $t5, %lo(globalDL_0x270) # addiu $t5, $t5, 0x270
 /* 100E4C 7F0CC31C 00002825 */  move  $a1, $zero
-/* 100E50 7F0CC320 0FC32EDD */  jal   check_load_image_to_buffer
+/* 100E50 7F0CC320 0FC32EDD */  jal   texLoadFromDisplayList
 /* 100E54 7F0CC324 018D2021 */   addu  $a0, $t4, $t5
 /* 100E58 7F0CC328 8E0E0000 */  lw    $t6, ($s0)
 /* 100E5C 7F0CC32C 3C0F0200 */  lui   $t7, %hi(globalDL_0x318) # $t7, 0x200
 /* 100E60 7F0CC330 25EF0318 */  addiu $t7, %lo(globalDL_0x318) # addiu $t7, $t7, 0x318
 /* 100E64 7F0CC334 00002825 */  move  $a1, $zero
-/* 100E68 7F0CC338 0FC32EDD */  jal   check_load_image_to_buffer
+/* 100E68 7F0CC338 0FC32EDD */  jal   texLoadFromDisplayList
 /* 100E6C 7F0CC33C 01CF2021 */   addu  $a0, $t6, $t7
 /* 100E70 7F0CC340 8E180000 */  lw    $t8, ($s0)
 /* 100E74 7F0CC344 3C190200 */  lui   $t9, %hi(globalDL_0x3c0) # $t9, 0x200
 /* 100E78 7F0CC348 273903C0 */  addiu $t9, %lo(globalDL_0x3c0) # addiu $t9, $t9, 0x3c0
 /* 100E7C 7F0CC34C 00002825 */  move  $a1, $zero
-/* 100E80 7F0CC350 0FC32EDD */  jal   check_load_image_to_buffer
+/* 100E80 7F0CC350 0FC32EDD */  jal   texLoadFromDisplayList
 /* 100E84 7F0CC354 03192021 */   addu  $a0, $t8, $t9
 /* 100E88 7F0CC358 8E080000 */  lw    $t0, ($s0)
 /* 100E8C 7F0CC35C 3C090200 */  lui   $t1, %hi(globalDL_0x468) # $t1, 0x200
 /* 100E90 7F0CC360 25290468 */  addiu $t1, %lo(globalDL_0x468) # addiu $t1, $t1, 0x468
 /* 100E94 7F0CC364 00002825 */  move  $a1, $zero
-/* 100E98 7F0CC368 0FC32EDD */  jal   check_load_image_to_buffer
+/* 100E98 7F0CC368 0FC32EDD */  jal   texLoadFromDisplayList
 /* 100E9C 7F0CC36C 01092021 */   addu  $a0, $t0, $t1
 /* 100EA0 7F0CC370 8E0A0000 */  lw    $t2, ($s0)
 /* 100EA4 7F0CC374 3C0B0200 */  lui   $t3, %hi(globalDL_0x510) # $t3, 0x200
 /* 100EA8 7F0CC378 256B0510 */  addiu $t3, %lo(globalDL_0x510) # addiu $t3, $t3, 0x510
 /* 100EAC 7F0CC37C 00002825 */  move  $a1, $zero
-/* 100EB0 7F0CC380 0FC32EDD */  jal   check_load_image_to_buffer
+/* 100EB0 7F0CC380 0FC32EDD */  jal   texLoadFromDisplayList
 /* 100EB4 7F0CC384 014B2021 */   addu  $a0, $t2, $t3
 /* 100EB8 7F0CC388 8E0C0000 */  lw    $t4, ($s0)
 /* 100EBC 7F0CC38C 3C0D0200 */  lui   $t5, %hi(globalDL_0x5b8) # $t5, 0x200
 /* 100EC0 7F0CC390 25AD05B8 */  addiu $t5, %lo(globalDL_0x5b8) # addiu $t5, $t5, 0x5b8
 /* 100EC4 7F0CC394 00002825 */  move  $a1, $zero
-/* 100EC8 7F0CC398 0FC32EDD */  jal   check_load_image_to_buffer
+/* 100EC8 7F0CC398 0FC32EDD */  jal   texLoadFromDisplayList
 /* 100ECC 7F0CC39C 018D2021 */   addu  $a0, $t4, $t5
 /* 100ED0 7F0CC3A0 8E0E0000 */  lw    $t6, ($s0)
 /* 100ED4 7F0CC3A4 3C0F0200 */  lui   $t7, %hi(globalDL_0x660) # $t7, 0x200
 /* 100ED8 7F0CC3A8 25EF0660 */  addiu $t7, %lo(globalDL_0x660) # addiu $t7, $t7, 0x660
 /* 100EDC 7F0CC3AC 00002825 */  move  $a1, $zero
-/* 100EE0 7F0CC3B0 0FC32EDD */  jal   check_load_image_to_buffer
+/* 100EE0 7F0CC3B0 0FC32EDD */  jal   texLoadFromDisplayList
 /* 100EE4 7F0CC3B4 01CF2021 */   addu  $a0, $t6, $t7
 /* 100EE8 7F0CC3B8 8E180000 */  lw    $t8, ($s0)
 /* 100EEC 7F0CC3BC 3C190200 */  lui   $t9, %hi(globalDL_0x708) # $t9, 0x200
 /* 100EF0 7F0CC3C0 27390708 */  addiu $t9, %lo(globalDL_0x708) # addiu $t9, $t9, 0x708
 /* 100EF4 7F0CC3C4 00002825 */  move  $a1, $zero
-/* 100EF8 7F0CC3C8 0FC32EDD */  jal   check_load_image_to_buffer
+/* 100EF8 7F0CC3C8 0FC32EDD */  jal   texLoadFromDisplayList
 /* 100EFC 7F0CC3CC 03192021 */   addu  $a0, $t8, $t9
 /* 100F00 7F0CC3D0 8E080000 */  lw    $t0, ($s0)
 /* 100F04 7F0CC3D4 3C090200 */  lui   $t1, %hi(globalDL_0x7b0) # $t1, 0x200
 /* 100F08 7F0CC3D8 252907B0 */  addiu $t1, %lo(globalDL_0x7b0) # addiu $t1, $t1, 0x7b0
 /* 100F0C 7F0CC3DC 00002825 */  move  $a1, $zero
-/* 100F10 7F0CC3E0 0FC32EDD */  jal   check_load_image_to_buffer
+/* 100F10 7F0CC3E0 0FC32EDD */  jal   texLoadFromDisplayList
 /* 100F14 7F0CC3E4 01092021 */   addu  $a0, $t0, $t1
 /* 100F18 7F0CC3E8 8E0A0000 */  lw    $t2, ($s0)
 /* 100F1C 7F0CC3EC 3C0B0200 */  lui   $t3, %hi(globalDL_0x858) # $t3, 0x200
 /* 100F20 7F0CC3F0 256B0858 */  addiu $t3, %lo(globalDL_0x858) # addiu $t3, $t3, 0x858
 /* 100F24 7F0CC3F4 00002825 */  move  $a1, $zero
-/* 100F28 7F0CC3F8 0FC32EDD */  jal   check_load_image_to_buffer
+/* 100F28 7F0CC3F8 0FC32EDD */  jal   texLoadFromDisplayList
 /* 100F2C 7F0CC3FC 014B2021 */   addu  $a0, $t2, $t3
 /* 100F30 7F0CC400 8E0C0000 */  lw    $t4, ($s0)
 /* 100F34 7F0CC404 3C0D0200 */  lui   $t5, %hi(globalDL_0x900) # $t5, 0x200
 /* 100F38 7F0CC408 25AD0900 */  addiu $t5, %lo(globalDL_0x900) # addiu $t5, $t5, 0x900
 /* 100F3C 7F0CC40C 00002825 */  move  $a1, $zero
-/* 100F40 7F0CC410 0FC32EDD */  jal   check_load_image_to_buffer
+/* 100F40 7F0CC410 0FC32EDD */  jal   texLoadFromDisplayList
 /* 100F44 7F0CC414 018D2021 */   addu  $a0, $t4, $t5
 /* 100F48 7F0CC418 8E0E0000 */  lw    $t6, ($s0)
 /* 100F4C 7F0CC41C 3C0F0200 */  lui   $t7, %hi(globalDL_0x9a8) # $t7, 0x200
 /* 100F50 7F0CC420 25EF09A8 */  addiu $t7, %lo(globalDL_0x9a8) # addiu $t7, $t7, 0x9a8
 /* 100F54 7F0CC424 00002825 */  move  $a1, $zero
-/* 100F58 7F0CC428 0FC32EDD */  jal   check_load_image_to_buffer
+/* 100F58 7F0CC428 0FC32EDD */  jal   texLoadFromDisplayList
 /* 100F5C 7F0CC42C 01CF2021 */   addu  $a0, $t6, $t7
 /* 100F60 7F0CC430 8E180000 */  lw    $t8, ($s0)
 /* 100F64 7F0CC434 3C190200 */  lui   $t9, %hi(globalDL_0xa50) # $t9, 0x200
 /* 100F68 7F0CC438 27390A50 */  addiu $t9, %lo(globalDL_0xa50) # addiu $t9, $t9, 0xa50
 /* 100F6C 7F0CC43C 00002825 */  move  $a1, $zero
-/* 100F70 7F0CC440 0FC32EDD */  jal   check_load_image_to_buffer
+/* 100F70 7F0CC440 0FC32EDD */  jal   texLoadFromDisplayList
 /* 100F74 7F0CC444 03192021 */   addu  $a0, $t8, $t9
 /* 100F78 7F0CC448 3C048009 */  lui   $a0, %hi(genericimage)
 /* 100F7C 7F0CC44C 8C84D0B8 */  lw    $a0, %lo(genericimage)($a0)
-/* 100F80 7F0CC450 0FC32F06 */  jal   load_image_to_buffer
+/* 100F80 7F0CC450 0FC32F06 */  jal   texLoad
 /* 100F84 7F0CC454 00002825 */   move  $a1, $zero
 /* 100F88 7F0CC458 00008025 */  move  $s0, $zero
 /* 100F8C 7F0CC45C 8E480000 */  lw    $t0, ($s2)
 .L7F0CC460:
 /* 100F90 7F0CC460 00002825 */  move  $a1, $zero
-/* 100F94 7F0CC464 0FC32F06 */  jal   load_image_to_buffer
+/* 100F94 7F0CC464 0FC32F06 */  jal   texLoad
 /* 100F98 7F0CC468 02082021 */   addu  $a0, $s0, $t0
 /* 100F9C 7F0CC46C 2610000C */  addiu $s0, $s0, 0xc
 /* 100FA0 7F0CC470 2A010048 */  slti  $at, $s0, 0x48
@@ -552,7 +552,7 @@ glabel load_prepare_global_image_bank
 /* 100FB4 7F0CC484 8E690000 */  lw    $t1, ($s3)
 .L7F0CC488:
 /* 100FB8 7F0CC488 00002825 */  move  $a1, $zero
-/* 100FBC 7F0CC48C 0FC32F06 */  jal   load_image_to_buffer
+/* 100FBC 7F0CC48C 0FC32F06 */  jal   texLoad
 /* 100FC0 7F0CC490 02092021 */   addu  $a0, $s0, $t1
 /* 100FC4 7F0CC494 2610000C */  addiu $s0, $s0, 0xc
 /* 100FC8 7F0CC498 5611FFFB */  bnel  $s0, $s1, .L7F0CC488

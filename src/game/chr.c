@@ -7992,9 +7992,9 @@ glabel sub_GAME_7F022980
 /* 0576DC 7F022BAC 10000008 */  b     .L7F022BD0
 /* 0576E0 7F022BB0 8EA30000 */   lw    $v1, ($s5)
 .L7F022BB4:
-/* 0576E4 7F022BB4 3C0C8005 */  lui   $t4, %hi(image_entries)
+/* 0576E4 7F022BB4 3C0C8005 */  lui   $t4, %hi(g_Textures)
 /* 0576E8 7F022BB8 018B6021 */  addu  $t4, $t4, $t3
-/* 0576EC 7F022BBC 918C9300 */  lbu   $t4, %lo(image_entries)($t4)
+/* 0576EC 7F022BBC 918C9300 */  lbu   $t4, %lo(g_Textures)($t4)
 /* 0576F0 7F022BC0 318D000F */  andi  $t5, $t4, 0xf
 /* 0576F4 7F022BC4 000D7080 */  sll   $t6, $t5, 2
 /* 0576F8 7F022BC8 02AE7821 */  addu  $t7, $s5, $t6
@@ -8036,7 +8036,7 @@ glabel sub_GAME_7F022980
 /* 057778 7F022C48 00003025 */   move  $a2, $zero
 /* 05777C 7F022C4C 8622003A */  lh    $v0, 0x3a($s1)
 /* 057780 7F022C50 3C158005 */  lui   $s5, %hi(D_8004E86C)
-/* 057784 7F022C54 3C0C8005 */  lui   $t4, %hi(image_entries)
+/* 057784 7F022C54 3C0C8005 */  lui   $t4, %hi(g_Textures)
 /* 057788 7F022C58 04410004 */  bgez  $v0, .L7F022C6C
 /* 05778C 7F022C5C 000258C0 */   sll   $t3, $v0, 3
 /* 057790 7F022C60 26B5E86C */  addiu $s5, %lo(D_8004E86C) # addiu $s5, $s5, -0x1794
@@ -8044,7 +8044,7 @@ glabel sub_GAME_7F022980
 /* 057798 7F022C68 8EB00000 */   lw    $s0, ($s5)
 .L7F022C6C:
 /* 05779C 7F022C6C 018B6021 */  addu  $t4, $t4, $t3
-/* 0577A0 7F022C70 918C9300 */  lbu   $t4, %lo(image_entries)($t4)
+/* 0577A0 7F022C70 918C9300 */  lbu   $t4, %lo(g_Textures)($t4)
 /* 0577A4 7F022C74 3C158005 */  lui   $s5, %hi(D_8004E86C)
 /* 0577A8 7F022C78 26B5E86C */  addiu $s5, %lo(D_8004E86C) # addiu $s5, $s5, -0x1794
 /* 0577AC 7F022C7C 318D000F */  andi  $t5, $t4, 0xf

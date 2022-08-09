@@ -950,8 +950,21 @@ s32 sub_GAME_7F044414(struct rect4f *arg0, s32 arg1, struct rect4f *arg2, s32 ar
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03FB70(void) {
+void sub_GAME_7F03FB70(void* arg0) {
+    s32 temp_a0;
+    s32 temp_a0_2;
 
+    if ((arg0->unk0 & 0x80) != 0) {
+        temp_a0 = arg0->unk98;
+        if ((temp_a0 != 0) && (sndGetPlayingState(temp_a0) != 0)) {
+            sndDeactivate(arg0->unk98);
+        }
+        temp_a0_2 = arg0->unk9C;
+        if ((temp_a0_2 != 0) && (sndGetPlayingState(temp_a0_2) != 0)) {
+            sndDeactivate(arg0->unk9C);
+        }
+    }
+    arg0->unk0 = (s32) (arg0->unk0 | 0x80000000);
 }
 #else
 GLOBAL_ASM(
@@ -34300,7 +34313,7 @@ glabel sub_GAME_7F04EA68
 /* 0837C4 7F04EC94 8602003A */  lh    $v0, 0x3a($s0)
 .L7F04EC98:
 /* 0837C8 7F04EC98 00004825 */  move  $t1, $zero
-/* 0837CC 7F04EC9C 3C0F8005 */  lui   $t7, %hi(image_entries)
+/* 0837CC 7F04EC9C 3C0F8005 */  lui   $t7, %hi(g_Textures)
 /* 0837D0 7F04ECA0 04410004 */  bgez  $v0, .L7F04ECB4
 /* 0837D4 7F04ECA4 0002C8C0 */   sll   $t9, $v0, 3
 /* 0837D8 7F04ECA8 3C088005 */  lui   $t0, %hi(D_8004E86C) 
@@ -34308,7 +34321,7 @@ glabel sub_GAME_7F04EA68
 /* 0837E0 7F04ECB0 8D08E86C */   lw    $t0, %lo(D_8004E86C)($t0)
 .L7F04ECB4:
 /* 0837E4 7F04ECB4 01F97821 */  addu  $t7, $t7, $t9
-/* 0837E8 7F04ECB8 91EF9300 */  lbu   $t7, %lo(image_entries)($t7)
+/* 0837E8 7F04ECB8 91EF9300 */  lbu   $t7, %lo(g_Textures)($t7)
 /* 0837EC 7F04ECBC 3C088005 */  lui   $t0, %hi(D_8004E86C)
 /* 0837F0 7F04ECC0 31EB000F */  andi  $t3, $t7, 0xf
 /* 0837F4 7F04ECC4 000B6080 */  sll   $t4, $t3, 2
