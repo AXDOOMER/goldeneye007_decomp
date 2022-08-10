@@ -820,7 +820,7 @@ Gfx *retrieve_display_rareware_logo(Gfx *gdl)
     return gdl;
 }
 
-s32 sub_GAME_7F008DD0(void) {
+s32 isGunBarrelInMode2(void) {
     return (gunbarrel_mode == 2);
 }
 
@@ -829,11 +829,11 @@ s32 sub_GAME_7F008DD0(void) {
 void sub_GAME_7F01B0E0(s32, s32);
 extern void *unknown2;
 extern void *unknown2_end;
-void sub_GAME_7F008DE4(u8 **arg0, s32 *arg1) {
-    dword_CODE_bss_8006958C = *arg0;
-    *arg1 -= 0x40400;
-    *arg0 += 0x40400;
-    dword_CODE_bss_80069588 = *arg0;
+void sub_GAME_7F008DE4(u8 **addr, s32 *size) {
+    dword_CODE_bss_8006958C = *addr;
+    *size -= 0x40400;
+    *addr += 0x40400;
+    dword_CODE_bss_80069588 = *addr;
     romCopy(dword_CODE_bss_80069588, &unknown2, ALIGN64_V2(((u32)&unknown2_end - (u32)&unknown2)));
     sub_GAME_7F01B0E0(dword_CODE_bss_80069588, dword_CODE_bss_8006958C);
 }
@@ -1514,6 +1514,6 @@ Gfx *sub_GAME_7F009254(Gfx *gdl) {
     return gdl;
 }
 
-s32 sub_GAME_7F009744(void) {
+s32 isGunBarrelInMode9(void) {
     return (gunbarrel_mode == 9);
 }

@@ -779,7 +779,9 @@ typedef enum CHEAT_IDS
     CHEAT_UNLOCK_AZTEK,
     CHEAT_UNLOCK_EGYPT,
 
-    CHEAT_INVALID
+    CHEAT_INVALID,
+
+    CHEAT_MAX = CHEAT_INVALID+5
 } CHEAT_ID;
 
 //Controller stuff including Rumble Pak are in joy.c
@@ -1388,6 +1390,8 @@ typedef enum PLAYER_ID
     PLAYER_3,
     PLAYER_4
 } PLAYER_ID;
+
+#define MAX_PLAYER_COUNT 4
 
 typedef enum RGBA_ENUM
 {

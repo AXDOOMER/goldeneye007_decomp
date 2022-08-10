@@ -154,9 +154,9 @@ extern f32 flt_CODE_bss_8006960C;
 //CODE.bss:80069610
 extern f32 flt_CODE_bss_80069610;
 //CODE.bss:80069614
-extern f32 flt_CODE_bss_80069614;
+extern f32 ninLogoRotRate;
 //CODE.bss:80069618
-extern f32 flt_CODE_bss_80069618;
+extern f32 ninLogoScale;
 //CODE.bss:80069620
 extern coord3d dword_CODE_bss_80069620[0x4];
 
@@ -267,13 +267,13 @@ CODE.bss:800697F0     dword_CODE_bss_800697F0:.space 0x130
 extern MENU current_menu;
 extern MENU menu_update;
 extern MENU maybe_prev_menu;
-extern s32 menu_timer;
-extern s32 tab_1_selected;
-extern s32 tab_2_selected;
-extern s32 tab_3_selected;
-extern s32 tab_1_highlight;
-extern s32 tab_2_highlight;
-extern s32 tab_3_highlight;
+extern s32 g_MenuTimer;
+extern s32 tab_start_selected;
+extern s32 tab_next_selected;
+extern s32 tab_prev_selected;
+extern s32 tab_start_highlight;
+extern s32 tab_next_highlight;
+extern s32 tab_prev_highlight;
 
 extern f32 tab2_first_x_coord;
 extern f32 tab1_max_x_coord;
@@ -286,7 +286,7 @@ extern s32 selected_stage;
 extern s32 briefingpage;
 extern DIFFICULTY selected_difficulty;
 extern s32 g_AppendCheatSinglePlayer;
-extern s32 append_cheat_mp;
+extern s32 g_AppendCheatMultiPlayer;
 extern f32 cursor_h_pos;
 extern f32 cursor_v_pos;
 extern s32 final_menu_briefing_page;
@@ -307,7 +307,7 @@ extern s32 is_emulating_spectrum;
 extern s32 is_cheat_menu_available;
 extern Gfx * ptr_logo_and_walletbond_DL;
 extern s32 ptr_menu_videobuffer;
-extern struct object_standard * ptr_folder_object_instance;
+extern  Model * walletinst;
 extern s32 set0_never_used;
 extern s32 set0_never_used_0;
 extern s32 D_8002A968;
