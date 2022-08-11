@@ -39767,7 +39767,7 @@ glabel maybe_mp_interface
 /* 0BE014 7F0894E4 240D0001 */  li    $t5, 1
 /* 0BE018 7F0894E8 ADCD0424 */  sw    $t5, 0x424($t6)
 .L7F0894EC:
-/* 0BE01C 7F0894EC 0FC0719C */  jal   sub_GAME_7F01C670
+/* 0BE01C 7F0894EC 0FC0719C */  jal   gameplayBloodOverlayDL
 /* 0BE020 7F0894F0 8FA40058 */   lw    $a0, 0x58($sp)
 /* 0BE024 7F0894F4 3C038008 */  lui   $v1, %hi(g_CurrentPlayer)
 /* 0BE028 7F0894F8 8C63A0B0 */  lw    $v1, %lo(g_CurrentPlayer)($v1)
@@ -40097,7 +40097,7 @@ glabel maybe_mp_interface
 /* 0BC03C 7F08964C 240D0001 */  li    $t5, 1
 /* 0BC040 7F089650 ADCD0424 */  sw    $t5, 0x424($t6)
 .L7F089654:
-/* 0BC044 7F089654 0FC07134 */  jal   sub_GAME_7F01C670
+/* 0BC044 7F089654 0FC07134 */  jal   gameplayBloodOverlayDL
 /* 0BC048 7F089658 8FA40058 */   lw    $a0, 0x58($sp)
 /* 0BC04C 7F08965C 3C038007 */  lui   $v1, %hi(g_CurrentPlayer) # $v1, 0x8007
 /* 0BC050 7F089660 8C638BC0 */  lw    $v1, %lo(g_CurrentPlayer)($v1)

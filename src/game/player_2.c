@@ -418,9 +418,9 @@ void initBONDdataforPlayer(PLAYER_ID player)
     (*ppPVar3)->screenxmaxf = 320.00000000;
     (*ppPVar3)->screenymaxf = 240.00000000;
     (*ppPVar3)->gunsightmode = 0;
-    (*ppPVar3)->field_11B0 = 0;
+    (*ppPVar3)->bloodImgBufPtrArray = 0;
     (*ppPVar3)->field_11B4 = 0;
-    (*ppPVar3)->field_11B8 = 0;
+    (*ppPVar3)->bloodImgIdx = 0;
     (*ppPVar3)->zoomintime = 0.00000000;
     (*ppPVar3)->zoomintimemax = 0.00000000;
     (*ppPVar3)->zoominfovy = 60.00000000;

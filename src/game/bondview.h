@@ -1236,10 +1236,10 @@ struct player
   s32 gunsightmode;
   s32 field_112C;
   s32 ammoheldarr[30];
-  u8 *field_11A8;
-  u8 *field_11AC;
-  u8 *field_11B0[2];
-  s32 field_11B8;
+  u8 *bloodImgCur;
+  u8 *bloodImgNxt;
+  u8 *bloodImgBufPtrArray[2];
+  s32 bloodImgIdx;
   f32 zoomintime;
   f32 zoomintimemax;
   f32 zoominfovy;
