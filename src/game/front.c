@@ -15601,7 +15601,7 @@ void interface_menu12_mpstage(void)
         }
         else
         {
-            if (current_mp_stage_highlighted >= 0)
+            if (current_mp_stage_highlighted >= MP_STAGE_RANDOM)
             {
                 tab_next_selected = TRUE;
                 MP_stage_selected = current_mp_stage_highlighted;
@@ -17017,26 +17017,10 @@ glabel get_players_team_or_scenario_item_flag
 
 
 
-#ifdef NONMATCHING
-void set_players_team_or_scenario_item_flag(int player,char flag)
+void set_players_team_or_scenario_item_flag(int player,s32 flag)
 {
   g_playerPlayerData[player].have_token_or_goldengun = flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_players_team_or_scenario_item_flag
-/* 0497D4 7F014CA4 000470C0 */  sll   $t6, $a0, 3
-/* 0497D8 7F014CA8 01C47023 */  subu  $t6, $t6, $a0
-/* 0497DC 7F014CAC 000E7100 */  sll   $t6, $t6, 4
-/* 0497E0 7F014CB0 3C018008 */  lui   $at, %hi(g_playerPlayerData+105)
-/* 0497E4 7F014CB4 002E0821 */  addu  $at, $at, $t6
-/* 0497E8 7F014CB8 03E00008 */  jr    $ra
-/* 0497EC 7F014CBC A0259F59 */   sb    $a1, %lo(g_playerPlayerData+105)($at)
-)
-#endif
-
-
 
 
 
@@ -17926,32 +17910,24 @@ glabel set_briefing_page
 
 
 #ifdef NONMATCHING
-s32 load_briefing_text_for_stage(void)
-{
-    s32 sp20;
-    s32 temp_s0;
-    s32 temp_v0;
-    void *phi_v1;
-    s32 phi_v0;
+s32 load_briefing_text_for_stage(void) {
+    //s32 sp20;
+    Gfx *temp_s0;
+    s32 i;
+    struct BriefingData *pbriefdata;
 
-    temp_s0 = ptr_logo_and_walletbond_DL + 0xa000;
-    ptrbriefingdata = _load_resource_named_to_buffer((0x80030000 + (briefingpage * 0x1c))->unk-5404, 1, temp_s0, 0x200);
-    sp20 = 0x6de00;
-    load_briefing_text_bank(get_textbank_number_for_stagenum((0x80030000 + (briefingpage * 0x1c))->unk-5414), temp_s0 + 0x200, sp20);
-    phi_v1 = ptrbriefingdata;
-    phi_v0 = 0;
-loop_1:
-    temp_v0 = phi_v0 + 4;
-    if (phi_v1->unk8 != 0)
+    temp_s0 = ptr_logo_and_walletbond_DL + 0xA000;
+    ptrbriefingdata = _load_resource_named_to_buffer(mission_folder_setup_entries[briefingpage].briefing_name_ptr, 1, temp_s0, 0x200);
+    //sp20 = 0x6DE00;
+    load_briefing_text_bank(get_textbank_number_for_stagenum(mission_folder_setup_entries[briefingpage].stage_id, temp_s0 + 0x200, 0x6DE00));
+    pbriefdata = ptrbriefingdata;
+    for(i = 0; i!= 0x28;i++)
     {
-        phi_v1 = phi_v1 + 4;
-        phi_v0 = temp_v0;
-        if (temp_v0 != 0x28)
-        {
-            goto loop_1;
+        if (pbriefdata[i].datas[0] != 0) {
+        break;
         }
     }
-    return temp_v0;
+    return i;
 }
 #else
 GLOBAL_ASM(

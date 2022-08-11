@@ -161,7 +161,7 @@ void rmon7000CED8(void) {
  * Removed
  * rmonPrintf
  */
-void rmon7000CEE0(void)
+void rmonPrintf(void)
 {
 }
 #if 0 /* rmonPrintf no longer supported !! */
@@ -191,7 +191,7 @@ void rmonPrintf(const char *fmt, ...)
 /**
  * Send text to Remote Debugger, GE redirects to screen (deboutWriteChar)
  */
-static void *proutSyncPrintf(void *str, const char *buf, size_t n)
+void *proutSyncPrintf(void *str, const char *buf, size_t n)
 {
     u32 sent = 0;
 
