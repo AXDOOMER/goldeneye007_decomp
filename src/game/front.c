@@ -16993,29 +16993,11 @@ glabel constructor_menu13_mpscenario
 
 
 
-#ifdef NONMATCHING
+
 s32 get_players_team_or_scenario_item_flag(int player)
 {
-  return (s32)(u8)g_playerPlayerData[player].have_token_or_goldengun;
+  return g_playerPlayerData[player].have_token_or_goldengun;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_players_team_or_scenario_item_flag
-/* 0497B8 7F014C88 000470C0 */  sll   $t6, $a0, 3
-/* 0497BC 7F014C8C 01C47023 */  subu  $t6, $t6, $a0
-/* 0497C0 7F014C90 000E7100 */  sll   $t6, $t6, 4
-/* 0497C4 7F014C94 3C028008 */  lui   $v0, %hi(g_playerPlayerData+105)
-/* 0497C8 7F014C98 004E1021 */  addu  $v0, $v0, $t6
-/* 0497CC 7F014C9C 03E00008 */  jr    $ra
-/* 0497D0 7F014CA0 90429F59 */   lbu   $v0, %lo(g_playerPlayerData+105)($v0)
-)
-#endif
-
-
-
-
-
 
 void set_players_team_or_scenario_item_flag(int player,s32 flag)
 {
