@@ -477,7 +477,7 @@ void bossMainloop(void)
 #if defined(VERSION_EU)
                             profileSetMarker();
                             speedGraphVideoRelated_2();
-                            speedGraphDisplay(0x20004);
+                            speedGraphDisplay(0x20000);
 #else
                             video_DL_related_4();
                             speedGraphVideoRelated_2();
