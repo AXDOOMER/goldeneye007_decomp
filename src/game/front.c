@@ -22090,7 +22090,6 @@ void update_menu18_displaycast(void) {
 //better than what was here
 void interface_menu18_displaycast(void)
 {
-    s32 intro_character_index;
     s32 body;
     viSetFovY(46.0f);
     viSetZRange(10.0f, 2000.0f);
@@ -22101,10 +22100,10 @@ void interface_menu18_displaycast(void)
     set_cur_player_viewport_size(0, 0);
     viSetViewPosition(0, 0);
     g_MenuTimer += g_ClockTimer;
-    if (g_MenuTimer >= 181)
+    if (g_MenuTimer >= 181) // the equivalent would be 151 in the EU rom
     {
         intro_character_index++;
-//loop_2:
+loop_2:
         body =intro_char_table[intro_character_index].body;
         if (((intro_char_table[intro_character_index].flag ) && ( !full_actor_intro)) ||
             ((body == BODY_Moonraker_Elite_1_Male) && (!check_aztec_completed_any_folder_secret_00())) ||
@@ -22114,8 +22113,9 @@ void interface_menu18_displaycast(void)
             ((body == BODY_Oddjob) && (! fileIsEgyptCompletedOn00AnyFolder()) && (randomGetNext() % 0x2710U)) ||
             ((body == BODY_Baron_Samedi) && (! fileIsEgyptCompletedOn00AnyFolder()) && (randomGetNext() % 0x2710U)))
         {
+            // Skip characters that we don't want to show
             intro_character_index++;
-            //goto loop_2;
+            goto loop_2;
         }
 
         if (body < 0)
