@@ -80,7 +80,7 @@ void sets_a_bunch_of_BONDdata_values_to_default(void)
     modelSetScale(&g_CurrentPlayer->model, IDO_POINT_ONE);
 
 #if defined (BUGFIX_R1)
-    sub_GAME_7F06FF18(&g_CurrentPlayer->model, ANIMRATE, 0.0f);
+    modelSetAnimRateForDuration(&g_CurrentPlayer->model, ANIMRATE, 0.0f);
 #endif
 
     g_CurrentPlayer->headanim = 0;

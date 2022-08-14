@@ -21719,7 +21719,7 @@ glabel object_interaction
 /* 07AAB0 7F0480C0 3C053F99 */  lui   $a1, (0x3F99999A >> 16) # lui $a1, 0x3f99
 /* 07AAB4 7F0480C4 4406B000 */  mfc1  $a2, $f22
 /* 07AAB8 7F0480C8 34A5999A */  ori   $a1, (0x3F99999A & 0xFFFF) # ori $a1, $a1, 0x999a
-/* 07AABC 7F0480CC 0FC1C02E */  jal   sub_GAME_7F06FF18
+/* 07AABC 7F0480CC 0FC1C02E */  jal   modelSetAnimRateForDuration
 /* 07AAC0 7F0480D0 8E240014 */   lw    $a0, 0x14($s1)
 /* 07AAC4 7F0480D4 8E240014 */  lw    $a0, 0x14($s1)
 /* 07AAC8 7F0480D8 3C188002 */  lui   $t8, %hi(animation_table_ptrs2+4) # $t8, 0x8002

@@ -1306,7 +1306,7 @@ typedef union
             // 0xa0
             s32               unka0;
             f32               unka4; // used by ACT_STAND in chrlv
-            f32               unka8;
+            f32               animrate;
             f32               unkac;
             // 0xb0
             f32               unkb0;
@@ -2059,7 +2059,7 @@ typedef union
 
         u32                  unka0;
         u32                  unka4;
-        u32                  unka8;
+        u32                  animrate;
         u32                  unkac;
 
         f32                  unkb0; // runtime y position?

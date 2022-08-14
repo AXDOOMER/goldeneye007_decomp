@@ -5833,10 +5833,10 @@ void sub_GAME_7F06FE90(Model *model, f32 arg1, f32 arg2)
     modelSetAnimSpeed(model, t, arg2);
 }
 
-void sub_GAME_7F06FF18(Model *model, f32 animation_rate, f32 arg2) {
+void modelSetAnimRateForDuration(Model *model, f32 animation_rate, f32 arg2) {
     if (arg2 > 0.0f) {
         model->unkb0 = arg2;
-        model->unka8 = animation_rate;
+        model->animrate = animation_rate;
         model->unkb4 = 0.0f;
         model->unkac = model->unka4;
         return;
@@ -14568,8 +14568,15 @@ def_7F075670:
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F075A90(void) {
-
+void sub_GAME_7F075A90(ModelFileHeader *header, s32 arg1, ModelNode **node) {
+    s32 i;
+    for(i = 0;i < header->numSwitches;i++)
+    {
+        if (header->Switches[i] != 0) {
+            header->Switches[i] = header->Switches[i] + (node - arg1);
+        }
+    }
+    convert_obj_microcode_offset_to_rdram_addr(header->RootNode, arg1, header->numSwitches);
 }
 #else
 GLOBAL_ASM(
