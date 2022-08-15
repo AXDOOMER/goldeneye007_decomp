@@ -827,6 +827,20 @@ s32 crashPrintFloat(s32 index, f32 value)
     return crashIsDouble(value);
 }
 
+#ifdef VERSION_DEBUG
+void crashPrint2Floats(s32 index, f32 value1, f32 value2)
+{
+	crashPrintFloat(index, value1);
+	crashPrintFloat(index + 1, value2);
+}
+
+void crashPrint3Floats(s32 index, f32 value1, f32 value2, f32 value3)
+{
+	crashPrintFloat(index, value1);
+	crashPrintFloat(index + 1, value2);
+	crashPrintFloat(index + 2, value3);
+}
+#endif
 /**
  * 61C8	700055C8
  *     removed: set normality of single-precision floats A1, A2, A3, SP+10 in table at A0
