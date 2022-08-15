@@ -5,7 +5,11 @@
 #include "str.h"
 #include "memp.h"
 #include "crash.h"
-
+#include <PR/os.h>
+#include "fr.h"
+#include "tlb_manage.h"
+#include <PR/R4300.h>
+#include "thread_config.h"
 struct deblistentry
 {
     struct deblistentry *next;
@@ -76,7 +80,7 @@ void debAdd(const char *name, void *data) {
 
 void debInit(void) {
     debTryAdd(&g_DebDebugData, "deb_c_debug");
-    faultInit();
+    crashInit();
 }
 
 void debTryAdd(void* data, const char *name) {

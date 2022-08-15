@@ -18,12 +18,12 @@ extern void *g_StackPtrs1[STACK_POINTER_COUNT];
 extern void *g_StackPtrs2[STACK_POINTER_COUNT];
 extern void *g_StackPtrs3[STACK_POINTER_COUNT];
 
-void faultInit(void);
-void faultMain(void* arg0);
+void crashInit(void);
+void crashMain(void* arg0);
 
 void crashAppendChar(unsigned char c);
 void crashScroll(s32 numlines);
-void deboutInitBuffers();
+void crashInitBuffers();
 void crashRenderFrame(u16 *buffer);
 
 

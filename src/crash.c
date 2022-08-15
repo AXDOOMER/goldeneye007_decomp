@@ -311,18 +311,18 @@ u32 D_80024184[4] = {0};
 
 // forward declarations
 
-void faultMain(void* arg0);
+void crashMain(void* arg0);
 
 // end forward declarations
 
 /**
  * 5AE0    70004EE0
  */
-void faultInit(void)
+void crashInit(void)
 {
-    deboutInitBuffers();
+    crashInitBuffers();
     osCreateMesgQueue(&g_faultMesgQ, (OSMesg *)&g_faultMesgBuf, TLB_MESSAGE_QUEUE_SIZE);
-    osCreateThread(&g_tlbThread, TLB_THREAD_ID, &faultMain, NULL, &g_tlbStack, TLB_THREAD_PRIORITY);
+    osCreateThread(&g_tlbThread, TLB_THREAD_ID, &crashMain, NULL, &g_tlbStack, TLB_THREAD_PRIORITY);
     osStartThread(&g_tlbThread);
 }
 
@@ -332,7 +332,7 @@ void faultInit(void)
  * @param arg0 Unused.
  */
 extern OSThread *__osRunQueue;
-void faultMain(void* arg0)
+void crashMain(void* arg0)
 {
     OSMesg msg = 0;
     OSIntMask mask;
@@ -543,7 +543,7 @@ s32 crashIsReturnAddress(u32 *instruction)
  * 
  * Max length returned is 256.
  */
-s32 indyStrlen(u8 *arg0)
+s32 crashGetStrLen(u8 *arg0)
 {
     s32 count = 0;
     u8 c;
@@ -572,7 +572,7 @@ char g_indyReadBuffer[g_indyReadBuffer_LEN];
  *     V0= total size of one word, two strings at hardware A0
  *     accepts: A0=hardware address
  */
-u8 *indyFileGetAddressSubsequentData(u8 *arg0)
+u8 *crashIndyFileGetAddressSubsequentData(u8 *arg0)
 {
     u32 returnAddress;
 
@@ -581,13 +581,13 @@ u8 *indyFileGetAddressSubsequentData(u8 *arg0)
     g_indyCurrentReadBufferResourceId = (u32*)(*(s32*) &g_indyReadBuffer);
     g_indyReadBufferString1 = (u8*)&g_indyReadBuffer[4];
     g_indyReadBufferString2 = (u8 *) (
-        indyStrlen(g_indyReadBufferString1)
+        crashGetStrLen(g_indyReadBufferString1)
         + (u32)g_indyReadBufferString1
         + 1);
     
     returnAddress = 
-        indyStrlen(g_indyReadBufferString1) 
-        + ((u32)arg0 + indyStrlen(g_indyReadBufferString2))
+        crashGetStrLen(g_indyReadBufferString1) 
+        + ((u32)arg0 + crashGetStrLen(g_indyReadBufferString2))
         + 6;
 
     if (returnAddress & 3)
@@ -603,7 +603,7 @@ u8 *indyFileGetAddressSubsequentData(u8 *arg0)
  *     scan for and load resourceID A0 from indy.read.buf
  *     accepts: A0=resourceID
  */
-s32 indyScanLoadResourceIdFromBuffer(u32 arg0)
+s32 crashIndyScanLoadResourceIdFromBuffer(u32 arg0)
 {
     u32 *temp_v1;
     u8 *phi_s0 = (u8 *)0xE00004;
@@ -615,7 +615,7 @@ s32 indyScanLoadResourceIdFromBuffer(u32 arg0)
 
     while (1)
     {
-        v0 = indyFileGetAddressSubsequentData(phi_s0);
+        v0 = crashIndyFileGetAddressSubsequentData(phi_s0);
 
         temp_v1 = g_indyCurrentReadBufferResourceId;
 
@@ -634,7 +634,7 @@ s32 indyScanLoadResourceIdFromBuffer(u32 arg0)
         phi_s0 = v0;
     }
 
-    indyFileGetAddressSubsequentData(phi_s3);
+    crashIndyFileGetAddressSubsequentData(phi_s3);
 
     return 1;
 }
@@ -643,9 +643,9 @@ s32 indyScanLoadResourceIdFromBuffer(u32 arg0)
  * 5FC8    700053C8
  *     V0= TRUE if valid indy.read.buf.resourceID    [matches 826475BE]
  */
-u32 indyIsValidReadBufferResourceId(void)
+u32 crashIidyIsValidReadBufferResourceId(void)
 {
-    indyFileGetAddressSubsequentData((u8*)0xe00000);
+    crashIndyFileGetAddressSubsequentData((u8*)0xe00000);
     return ((u32)g_indyCurrentReadBufferResourceId ^ 0x826475be) == 0;
 }
 
@@ -653,7 +653,7 @@ u32 indyIsValidReadBufferResourceId(void)
  * 5FFC    700053FC
  *     unconditional return
  */
-void indyRemoved01(void)
+void crashIndyRemoved01(void)
 {
     //from pd
 #ifdef VERSION_DEBUG
@@ -679,7 +679,7 @@ void indyRemoved01(void)
  * 6004    70005404
  *     unconditional return
  */
-void indyRemoved02(void)
+void crashIndyRemoved02(void)
 {
 #ifdef VERSION_DEBUG
 	s32 numvalid = 0;
@@ -704,7 +704,7 @@ void indyRemoved02(void)
  * 600C    7000540C
  *     unconditional return
  */
-void indyPrintReadBufferResourceId(void)
+void crashIndyPrintReadBufferResourceIdI(void)
 {
     #ifdef DEBUG
     rmonPrintf("%08x",_g_indyCurrentReadBufferResourceId); //from pd beta
@@ -716,7 +716,7 @@ void indyPrintReadBufferResourceId(void)
  * 6014    70005414
  *     V0= indy.read.buf.resourceID    [80063664]
  */
-u32 * indyGetReadBufferResourceId(void)
+u32 * crashIndyGetReadBufferResourceId(void)
 {
     return g_indyCurrentReadBufferResourceId;
 }
@@ -987,7 +987,7 @@ void crashRenderChar(s32 x, s32 y, unsigned char c)
  * @param cfba | A0000000 -> 8002417C
  * @param cfbb | A0000000 -> 80024180
  */
-void deboutSetBuffers(u16 *buffer1, u16 *buffer2)
+void crashSetBuffers(u16 *buffer1, u16 *buffer2)
 {
     g_DebugOutputVideoBuffer1 = (void *)K0_TO_K1(buffer1);
     g_DebugOutputVideoBuffer2 = (void *)K0_TO_K1(buffer2);
@@ -996,9 +996,9 @@ void deboutSetBuffers(u16 *buffer1, u16 *buffer2)
 /**
  * Set up the 2 16bit CFBs to Direct mapped, uncached memory
  */
-void deboutInitBuffers(void)
+void crashInitBuffers(void)
 {
-    deboutSetBuffers(&cfb_16[0], &cfb_16[1]);
+    crashSetBuffers(&cfb_16[0], &cfb_16[1]);
 }
 
 /**
@@ -1014,7 +1014,7 @@ void crashRenderFrame(u16 *buffer)
     s32 output_h;
     s32 x;
     s32 y;
-    deboutInitBuffers();
+    crashInitBuffers();
     g_DebugOutputVideoBuffer1 = (void *)K0_TO_K1(buffer); // overwrite cfba
     screen_w                  = ((viGetX() - 13) / 4);
     screen_h                  = ((viGetY() - 10) / 7);
