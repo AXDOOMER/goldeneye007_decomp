@@ -4,7 +4,7 @@
 #include <stdarg.h>
 #include <ultra64.h>
 #include "libultra/libc/xstdio.h"
-#include "deb_print.h"
+#include "crash.h"
 #include "rmon.h" /*<PR/rmon.h>*/
 
 
@@ -189,7 +189,7 @@ void rmonPrintf(const char *fmt, ...)
 
 
 /**
- * Send text to Remote Debugger, GE redirects to screen (deboutWriteChar)
+ * Send text to Remote Debugger, GE redirects to screen (crashAppendChar)
  */
 void *proutSyncPrintf(void *str, const char *buf, size_t n)
 {
@@ -201,7 +201,7 @@ void *proutSyncPrintf(void *str, const char *buf, size_t n)
 #    ifdef USERDB
         sent += __osRdbSend((u8 *)&buf[sent], n - sent, RDB_TYPE_GtoH_PRINT);
 #    endif
-        deboutWriteChar(buf[sent++]);
+        crashAppendChar(buf[sent++]);
     }    
 #endif
     return ((void *)1); /* return a fake pointer so that it's not NULL */

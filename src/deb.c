@@ -4,7 +4,7 @@
 #include "deb.h"
 #include "str.h"
 #include "memp.h"
-#include "fault.h"
+#include "crash.h"
 
 struct deblistentry
 {
