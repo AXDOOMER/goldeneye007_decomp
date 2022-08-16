@@ -542,7 +542,8 @@ u32 D_80035EB0[] = {0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 u32 dword_D_80035EEC = 0;
 
 //D:80035EF0
-AmmoStats ammo_related[]  = {
+#define AMMO_RELATED_MAX 30
+AmmoStats ammo_related[AMMO_RELATED_MAX]  = {
     {    0x0,       0x0,       0x0,       0x0,       0x0, },
     {  0x320,     0x200,     0xC84,       0x0,       0x0, },
     {   0xC8,       0x0,       0x0,       0x0,       0x0, },
@@ -31645,40 +31646,16 @@ s32 get_max_ammo_for_type(s32 arg0)
 
 
 
-#ifdef NONMATCHING
-void set_max_ammo_for_cur_player(void) {
 
+void set_max_ammo_for_cur_player(void)
+{
+    s32 ammo_type;
+
+    for (ammo_type = 0; ammo_type < AMMO_RELATED_MAX; ammo_type++)
+    {
+        give_cur_player_ammo(ammo_type, ammo_related[ammo_type].MaxAmmo);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_max_ammo_for_cur_player
-/* 09DE20 7F0692F0 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 09DE24 7F0692F4 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 09DE28 7F0692F8 AFB20020 */  sw    $s2, 0x20($sp)
-/* 09DE2C 7F0692FC AFB00018 */  sw    $s0, 0x18($sp)
-/* 09DE30 7F069300 3C118003 */  lui   $s1, %hi(ammo_related)
-/* 09DE34 7F069304 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 09DE38 7F069308 26315EF0 */  addiu $s1, %lo(ammo_related) # addiu $s1, $s1, 0x5ef0
-/* 09DE3C 7F06930C 00008025 */  move  $s0, $zero
-/* 09DE40 7F069310 2412001E */  li    $s2, 30
-.L7F069314:
-/* 09DE44 7F069314 02002025 */  move  $a0, $s0
-/* 09DE48 7F069318 0FC1A44C */  jal   give_cur_player_ammo
-/* 09DE4C 7F06931C 8E250000 */   lw    $a1, ($s1)
-/* 09DE50 7F069320 26100001 */  addiu $s0, $s0, 1
-/* 09DE54 7F069324 1612FFFB */  bne   $s0, $s2, .L7F069314
-/* 09DE58 7F069328 2631000C */   addiu $s1, $s1, 0xc
-/* 09DE5C 7F06932C 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 09DE60 7F069330 8FB00018 */  lw    $s0, 0x18($sp)
-/* 09DE64 7F069334 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 09DE68 7F069338 8FB20020 */  lw    $s2, 0x20($sp)
-/* 09DE6C 7F06933C 03E00008 */  jr    $ra
-/* 09DE70 7F069340 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
-
-
 
 
 
