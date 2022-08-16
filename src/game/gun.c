@@ -26883,86 +26883,11 @@ glabel sub_GAME_7F0671A4
 
 
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0673B4(void) {
-
+s32 sub_GAME_7F0673B4(enum GUNHAND hand)
+{
+    return (get_ammo_type_for_weapon(getCurrentPlayerWeaponId(hand)) == 0)
+        || (g_CurrentPlayer->hands[hand].weapon_ammo_in_magazine > 0);
 }
-#else
-
-#if defined(VERSION_US) || defined(VERSION_JP)
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0673B4
-/* 09BEE4 7F0673B4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 09BEE8 7F0673B8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09BEEC 7F0673BC 0FC17674 */  jal   getCurrentPlayerWeaponId
-/* 09BEF0 7F0673C0 AFA40018 */   sw    $a0, 0x18($sp)
-/* 09BEF4 7F0673C4 0FC1A50B */  jal   get_ammo_type_for_weapon
-/* 09BEF8 7F0673C8 00402025 */   move  $a0, $v0
-/* 09BEFC 7F0673CC 2C4E0001 */  sltiu $t6, $v0, 1
-/* 09BF00 7F0673D0 15C0000F */  bnez  $t6, .L7F067410
-/* 09BF04 7F0673D4 01C01025 */   move  $v0, $t6
-/* 09BF08 7F0673D8 8FB80018 */  lw    $t8, 0x18($sp)
-/* 09BF0C 7F0673DC 3C0F8008 */  lui   $t7, %hi(g_CurrentPlayer)
-/* 09BF10 7F0673E0 8DEFA0B0 */  lw    $t7, %lo(g_CurrentPlayer)($t7)
-/* 09BF14 7F0673E4 0018C8C0 */  sll   $t9, $t8, 3
-/* 09BF18 7F0673E8 0338C823 */  subu  $t9, $t9, $t8
-/* 09BF1C 7F0673EC 0019C880 */  sll   $t9, $t9, 2
-/* 09BF20 7F0673F0 0338C821 */  addu  $t9, $t9, $t8
-/* 09BF24 7F0673F4 0019C880 */  sll   $t9, $t9, 2
-/* 09BF28 7F0673F8 0338C821 */  addu  $t9, $t9, $t8
-/* 09BF2C 7F0673FC 0019C8C0 */  sll   $t9, $t9, 3
-/* 09BF30 7F067400 01F94021 */  addu  $t0, $t7, $t9
-/* 09BF34 7F067404 8D02089C */  lw    $v0, 0x89c($t0)
-/* 09BF38 7F067408 0002482A */  slt   $t1, $zero, $v0
-/* 09BF3C 7F06740C 01201025 */  move  $v0, $t1
-.L7F067410:
-/* 09BF40 7F067410 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09BF44 7F067414 27BD0018 */  addiu $sp, $sp, 0x18
-/* 09BF48 7F067418 03E00008 */  jr    $ra
-/* 09BF4C 7F06741C 00000000 */   nop
-)
-#endif
-
-#if defined(VERSION_EU)
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0673B4
-/* 09A54C 7F067B5C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 09A550 7F067B60 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09A554 7F067B64 0FC177A2 */  jal   getCurrentPlayerWeaponId
-/* 09A558 7F067B68 AFA40018 */   sw    $a0, 0x18($sp)
-/* 09A55C 7F067B6C 0FC1A6F0 */  jal   get_ammo_type_for_weapon
-/* 09A560 7F067B70 00402025 */   move  $a0, $v0
-/* 09A564 7F067B74 2C4E0001 */  sltiu $t6, $v0, 1
-/* 09A568 7F067B78 15C0000F */  bnez  $t6, .L7F067BB8
-/* 09A56C 7F067B7C 01C01025 */   move  $v0, $t6
-/* 09A570 7F067B80 8FB80018 */  lw    $t8, 0x18($sp)
-/* 09A574 7F067B84 3C0F8007 */  lui   $t7, %hi(g_CurrentPlayer) # $t7, 0x8007
-/* 09A578 7F067B88 8DEF8BC0 */  lw    $t7, %lo(g_CurrentPlayer)($t7)
-/* 09A57C 7F067B8C 0018C8C0 */  sll   $t9, $t8, 3
-/* 09A580 7F067B90 0338C823 */  subu  $t9, $t9, $t8
-/* 09A584 7F067B94 0019C880 */  sll   $t9, $t9, 2
-/* 09A588 7F067B98 0338C821 */  addu  $t9, $t9, $t8
-/* 09A58C 7F067B9C 0019C880 */  sll   $t9, $t9, 2
-/* 09A590 7F067BA0 0338C821 */  addu  $t9, $t9, $t8
-/* 09A594 7F067BA4 0019C8C0 */  sll   $t9, $t9, 3
-/* 09A598 7F067BA8 01F94021 */  addu  $t0, $t7, $t9
-/* 09A59C 7F067BAC 8D020894 */  lw    $v0, 0x894($t0)
-/* 09A5A0 7F067BB0 0002482A */  slt   $t1, $zero, $v0
-/* 09A5A4 7F067BB4 01201025 */  move  $v0, $t1
-.L7F067BB8:
-/* 09A5A8 7F067BB8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09A5AC 7F067BBC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 09A5B0 7F067BC0 03E00008 */  jr    $ra
-/* 09A5B4 7F067BC4 00000000 */   nop   
-)
-#endif
-#endif
-
-
 
 
 
