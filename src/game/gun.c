@@ -540,54 +540,44 @@ u32 D_80035EAC = 0;
 u32 D_80035EB0[] = {0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 //D:80035EEC
 u32 dword_D_80035EEC = 0;
+
 //D:80035EF0
-u16 ammo_related[]  = {
-	      0,     0,     0,     0,
-	      0,     0,     0, 0x320,
-	  0x200, 0xC84,     0,     0,
-	      0,  0xC8,     0,     0,
-	      0,     0,     0, 0x190,
-	  0x200, 0xC90,0xC000,     0,
-	      0,  0x64, 0x200, 0xC9C,
-	      0,     0,     0,   0xC,
-	  0x200, 0xCD8,     0,     0,
-	      0,     3, 0x200, 0xCC0,
-	 0xC000,     0,     0,   0xA,
-	  0x200, 0xCFC,0x3F80,     0,
-	      0,   0xA, 0x200, 0xD14,
-	 0x3F80,     0,     0,   0xA,
-	  0x200, 0xD08,0x3F80,     0,
-	      0,   0xA, 0x200, 0xCA8,
-	      0,     0,     0,   0xC,
-	  0x200, 0xCB4,     0,     0,
-	      0,  0xC8, 0x200, 0xCE4,
-	      0,     0,     0,  0x64,
-	  0x200, 0xCF0,     0,     0,
-	      0,  0x32,     0,     0,
-	      0,     0,     0,   0xA,
-	      0,     0,     0,     0,
-	      0,     2,     0,     0,
-	      0,     0,     0,     8,
-	      0,     0,     0,     0,
-	      0,     6,     0,     0,
-	      0,     0,     0,   0xA,
-	      0,     0,     0,     0,
-	      0,   0xA,     0,     0,
-	      0,     0,     0,   0xA,
-	      0,     0,     0,     0,
-	      0,     1,     0,     0,
-	      0,     0,     0,   0xA,
-	      0,     0,     0,     0,
-	      0, 0x3E8,     0,     0,
-	      0,     0,     0,   0xA,
-	      0,     0,     0,     0,
-	      0,   0xA,     0,     0,
-	      0,     0,     0,   0xA,
-	      0,     0,     0,     0,
-	      0,  0x32, 0x200, 0xD20,
-	 0xBF80,     0,     0,     1,
-	      0,     0,     0,     0,
-	      0,     0,     0,     0};
+AmmoStats ammo_related[]  = {
+    {    0x0,       0x0,       0x0,       0x0,       0x0, },
+    {  0x320,     0x200,     0xC84,       0x0,       0x0, },
+    {   0xC8,       0x0,       0x0,       0x0,       0x0, },
+    {  0x190,     0x200,     0xC90,    0xC000,       0x0, },
+    {   0x64,     0x200,     0xC9C,       0x0,       0x0, },
+    {    0xC,     0x200,     0xCD8,       0x0,       0x0, },
+    {    0x3,     0x200,     0xCC0,    0xC000,       0x0, },
+    {    0xA,     0x200,     0xCFC,    0x3F80,       0x0, },
+    {    0xA,     0x200,     0xD14,    0x3F80,       0x0, },
+    {    0xA,     0x200,     0xD08,    0x3F80,       0x0, },
+    {    0xA,     0x200,     0xCA8,       0x0,       0x0, },
+    {    0xC,     0x200,     0xCB4,       0x0,       0x0, },
+    {   0xC8,     0x200,     0xCE4,       0x0,       0x0, },
+    {   0x64,     0x200,     0xCF0,       0x0,       0x0, },
+    {   0x32,       0x0,       0x0,       0x0,       0x0, },
+    {    0xA,       0x0,       0x0,       0x0,       0x0, },
+    {    0x2,       0x0,       0x0,       0x0,       0x0, },
+    {    0x8,       0x0,       0x0,       0x0,       0x0, },
+    {    0x6,       0x0,       0x0,       0x0,       0x0, },
+    {    0xA,       0x0,       0x0,       0x0,       0x0, },
+    {    0xA,       0x0,       0x0,       0x0,       0x0, },
+    {    0xA,       0x0,       0x0,       0x0,       0x0, },
+    {    0x1,       0x0,       0x0,       0x0,       0x0, },
+    {    0xA,       0x0,       0x0,       0x0,       0x0, },
+    {  0x3E8,       0x0,       0x0,       0x0,       0x0, },
+    {    0xA,       0x0,       0x0,       0x0,       0x0, },
+    {    0xA,       0x0,       0x0,       0x0,       0x0, },
+    {    0xA,       0x0,       0x0,       0x0,       0x0, },
+    {   0x32,     0x200,     0xD20,    0xBF80,       0x0, },
+    {    0x1,       0x0,       0x0,       0x0,       0x0, },
+};
+
+//was previously attached to ammo_related[] (array at D:80035EF0)
+//D:80036058
+u16 D_80036058[] = { 0, 0, 0, 0, };
 
 
 //i may belong to objecthandler.c
@@ -31784,25 +31774,10 @@ s32 currentPlayerGetAmmoCount(AMMOTYPE ammotype) {
 
 
 
-#ifdef NONMATCHING
-void get_max_ammo_for_type(void) {
-
+s32 get_max_ammo_for_type(s32 arg0)
+{
+    return ammo_related[arg0].MaxAmmo;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_max_ammo_for_type
-/* 09DE04 7F0692D4 00047080 */  sll   $t6, $a0, 2
-/* 09DE08 7F0692D8 01C47023 */  subu  $t6, $t6, $a0
-/* 09DE0C 7F0692DC 000E7080 */  sll   $t6, $t6, 2
-/* 09DE10 7F0692E0 3C028003 */  lui   $v0, %hi(ammo_related)
-/* 09DE14 7F0692E4 004E1021 */  addu  $v0, $v0, $t6
-/* 09DE18 7F0692E8 03E00008 */  jr    $ra
-/* 09DE1C 7F0692EC 8C425EF0 */   lw    $v0, %lo(ammo_related)($v0)
-)
-#endif
-
-
 
 
 
@@ -32026,32 +32001,10 @@ void add_ammo_to_weapon(ITEM_IDS weapon, s32 ammo) {
     give_cur_player_ammo(get_ptr_item_statistics(weapon)->AmmoType, ammo);
 }
 
-#ifdef NONMATCHING
-void get_max_ammo_for_weapon(void) {
-
+s32 get_max_ammo_for_weapon(enum ITEM_IDS weapon)
+{
+    return ammo_related[get_ptr_item_statistics(weapon)->AmmoType].MaxAmmo;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_max_ammo_for_weapon
-/* 09DFE0 7F0694B0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 09DFE4 7F0694B4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09DFE8 7F0694B8 0FC1722D */  jal   get_ptr_item_statistics
-/* 09DFEC 7F0694BC 00000000 */   nop
-/* 09DFF0 7F0694C0 8C4E001C */  lw    $t6, 0x1c($v0)
-/* 09DFF4 7F0694C4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09DFF8 7F0694C8 3C028003 */  lui   $v0, %hi(ammo_related)
-/* 09DFFC 7F0694CC 000E7880 */  sll   $t7, $t6, 2
-/* 09E000 7F0694D0 01EE7823 */  subu  $t7, $t7, $t6
-/* 09E004 7F0694D4 000F7880 */  sll   $t7, $t7, 2
-/* 09E008 7F0694D8 004F1021 */  addu  $v0, $v0, $t7
-/* 09E00C 7F0694DC 8C425EF0 */  lw    $v0, %lo(ammo_related)($v0)
-/* 09E010 7F0694E0 03E00008 */  jr    $ra
-/* 09E014 7F0694E4 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
-
-
 
 
 
