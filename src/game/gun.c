@@ -5859,83 +5859,21 @@ glabel sub_GAME_7F05FA7C
 
 
 
+/* This function frees some sort of ObjectRecord from the given hand */
+void sub_GAME_7F05FB00(enum GUNHAND hand)
+{
+    struct hand* hand_ptr;
+    ObjectRecord* hand_obj_record;
 
+    hand_ptr = &g_CurrentPlayer->hands[hand];
+    hand_obj_record = hand_ptr->field_A90;
 
-#ifdef NONMATCHING
-void sub_GAME_7F05FB00(void) {
-
+    if (hand_obj_record != NULL)
+    {
+        objFreePermanently(hand_obj_record, 1);
+        hand_ptr->field_A90 = NULL;
+    }
 }
-#else
-
-#if defined(VERSION_US) || defined(VERSION_JP)
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05FB00
-/* 094630 7F05FB00 000478C0 */  sll   $t7, $a0, 3
-/* 094634 7F05FB04 01E47823 */  subu  $t7, $t7, $a0
-/* 094638 7F05FB08 000F7880 */  sll   $t7, $t7, 2
-/* 09463C 7F05FB0C 01E47821 */  addu  $t7, $t7, $a0
-/* 094640 7F05FB10 3C0E8008 */  lui   $t6, %hi(g_CurrentPlayer)
-/* 094644 7F05FB14 8DCEA0B0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
-/* 094648 7F05FB18 000F7880 */  sll   $t7, $t7, 2
-/* 09464C 7F05FB1C 01E47821 */  addu  $t7, $t7, $a0
-/* 094650 7F05FB20 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 094654 7F05FB24 000F78C0 */  sll   $t7, $t7, 3
-/* 094658 7F05FB28 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09465C 7F05FB2C 01CF1021 */  addu  $v0, $t6, $t7
-/* 094660 7F05FB30 8C460A90 */  lw    $a2, 0xa90($v0)
-/* 094664 7F05FB34 24420870 */  addiu $v0, $v0, 0x870
-/* 094668 7F05FB38 24050001 */  li    $a1, 1
-/* 09466C 7F05FB3C 10C00005 */  beqz  $a2, .L7F05FB54
-/* 094670 7F05FB40 00C02025 */   move  $a0, $a2
-/* 094674 7F05FB44 0FC10409 */  jal   objFreePermanently
-/* 094678 7F05FB48 AFA2001C */   sw    $v0, 0x1c($sp)
-/* 09467C 7F05FB4C 8FA2001C */  lw    $v0, 0x1c($sp)
-/* 094680 7F05FB50 AC400220 */  sw    $zero, 0x220($v0)
-.L7F05FB54:
-/* 094684 7F05FB54 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 094688 7F05FB58 27BD0020 */  addiu $sp, $sp, 0x20
-/* 09468C 7F05FB5C 03E00008 */  jr    $ra
-/* 094690 7F05FB60 00000000 */   nop
-)
-#endif
-
-#if defined(VERSION_EU)
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05FB00
-/* 0929A8 7F05FFB8 000478C0 */  sll   $t7, $a0, 3
-/* 0929AC 7F05FFBC 01E47823 */  subu  $t7, $t7, $a0
-/* 0929B0 7F05FFC0 000F7880 */  sll   $t7, $t7, 2
-/* 0929B4 7F05FFC4 01E47821 */  addu  $t7, $t7, $a0
-/* 0929B8 7F05FFC8 3C0E8007 */  lui   $t6, %hi(g_CurrentPlayer) # $t6, 0x8007
-/* 0929BC 7F05FFCC 8DCE8BC0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
-/* 0929C0 7F05FFD0 000F7880 */  sll   $t7, $t7, 2
-/* 0929C4 7F05FFD4 01E47821 */  addu  $t7, $t7, $a0
-/* 0929C8 7F05FFD8 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0929CC 7F05FFDC 000F78C0 */  sll   $t7, $t7, 3
-/* 0929D0 7F05FFE0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0929D4 7F05FFE4 01CF1021 */  addu  $v0, $t6, $t7
-/* 0929D8 7F05FFE8 8C460A88 */  lw    $a2, 0xa88($v0)
-/* 0929DC 7F05FFEC 24420868 */  addiu $v0, $v0, 0x868
-/* 0929E0 7F05FFF0 24050001 */  li    $a1, 1
-/* 0929E4 7F05FFF4 10C00005 */  beqz  $a2, .L7F06000C
-/* 0929E8 7F05FFF8 00C02025 */   move  $a0, $a2
-/* 0929EC 7F05FFFC 0FC10439 */  jal   objFreePermanently
-/* 0929F0 7F060000 AFA2001C */   sw    $v0, 0x1c($sp)
-/* 0929F4 7F060004 8FA2001C */  lw    $v0, 0x1c($sp)
-/* 0929F8 7F060008 AC400220 */  sw    $zero, 0x220($v0)
-.L7F06000C:
-/* 0929FC 7F06000C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 092A00 7F060010 27BD0020 */  addiu $sp, $sp, 0x20
-/* 092A04 7F060014 03E00008 */  jr    $ra
-/* 092A08 7F060018 00000000 */   nop   
-)
-#endif
-
-#endif
-
-
 
 
 

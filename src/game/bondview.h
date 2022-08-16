@@ -232,7 +232,7 @@ struct hand
   s32 field_A84;
   s32 field_A88;
   s32 field_A8C;
-  s32 field_A90;
+  ObjectRecord* field_A90;
   s32 field_A94;
   s32 field_A98;
   s32 field_A9C;
