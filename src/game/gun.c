@@ -31659,53 +31659,9 @@ void set_max_ammo_for_cur_player(void)
 
 
 
-#ifdef NONMATCHING
-void get_ammo_in_hands_magazine(void) {
-
+s32 get_ammo_in_hands_magazine(GUNHAND hand) {
+    return g_CurrentPlayer->hands[hand].weapon_ammo_in_magazine;
 }
-#else
-
-#if defined(VERSION_US) || defined(VERSION_JP)
-GLOBAL_ASM(
-.text
-glabel get_ammo_in_hands_magazine
-/* 09DE74 7F069344 000478C0 */  sll   $t7, $a0, 3
-/* 09DE78 7F069348 01E47823 */  subu  $t7, $t7, $a0
-/* 09DE7C 7F06934C 000F7880 */  sll   $t7, $t7, 2
-/* 09DE80 7F069350 01E47821 */  addu  $t7, $t7, $a0
-/* 09DE84 7F069354 3C0E8008 */  lui   $t6, %hi(g_CurrentPlayer)
-/* 09DE88 7F069358 8DCEA0B0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
-/* 09DE8C 7F06935C 000F7880 */  sll   $t7, $t7, 2
-/* 09DE90 7F069360 01E47821 */  addu  $t7, $t7, $a0
-/* 09DE94 7F069364 000F78C0 */  sll   $t7, $t7, 3
-/* 09DE98 7F069368 01CFC021 */  addu  $t8, $t6, $t7
-/* 09DE9C 7F06936C 03E00008 */  jr    $ra
-/* 09DEA0 7F069370 8F02089C */   lw    $v0, 0x89c($t8)
-)
-#endif
-
-#if defined(VERSION_EU)
-GLOBAL_ASM(
-.text
-glabel get_ammo_in_hands_magazine
-/* 09C4C8 7F069AD8 000478C0 */  sll   $t7, $a0, 3
-/* 09C4CC 7F069ADC 01E47823 */  subu  $t7, $t7, $a0
-/* 09C4D0 7F069AE0 000F7880 */  sll   $t7, $t7, 2
-/* 09C4D4 7F069AE4 01E47821 */  addu  $t7, $t7, $a0
-/* 09C4D8 7F069AE8 3C0E8007 */  lui   $t6, %hi(g_CurrentPlayer) # $t6, 0x8007
-/* 09C4DC 7F069AEC 8DCE8BC0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
-/* 09C4E0 7F069AF0 000F7880 */  sll   $t7, $t7, 2
-/* 09C4E4 7F069AF4 01E47821 */  addu  $t7, $t7, $a0
-/* 09C4E8 7F069AF8 000F78C0 */  sll   $t7, $t7, 3
-/* 09C4EC 7F069AFC 01CFC021 */  addu  $t8, $t6, $t7
-/* 09C4F0 7F069B00 03E00008 */  jr    $ra
-/* 09C4F4 7F069B04 8F020894 */   lw    $v0, 0x894($t8)
-)
-#endif
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
