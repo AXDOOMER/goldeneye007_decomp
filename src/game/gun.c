@@ -27923,80 +27923,23 @@ void caclulate_gun_crosshair_position_rotation(f32 turn_x, f32 turn_y, f32 guncr
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F067F58(void) {
-
-}
-#else
+void sub_GAME_7F067F58(f32 turn_x, f32 turn_y, f32 max_aim_lock_speed)
+{
+    f32 aim_lock_speed;
 
 #if defined(VERSION_US) || defined(VERSION_JP)
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F067F58
-/* 09CA88 7F067F58 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 09CA8C 7F067F5C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09CA90 7F067F60 E7AC0018 */  swc1  $f12, 0x18($sp)
-/* 09CA94 7F067F64 E7AE001C */  swc1  $f14, 0x1c($sp)
-/* 09CA98 7F067F68 AFA60020 */  sw    $a2, 0x20($sp)
-/* 09CA9C 7F067F6C 0FC17674 */  jal   getCurrentPlayerWeaponId
-/* 09CAA0 7F067F70 00002025 */   move  $a0, $zero
-/* 09CAA4 7F067F74 0FC1722D */  jal   get_ptr_item_statistics
-/* 09CAA8 7F067F78 00402025 */   move  $a0, $v0
-/* 09CAAC 7F067F7C C7A20020 */  lwc1  $f2, 0x20($sp)
-/* 09CAB0 7F067F80 C440003C */  lwc1  $f0, 0x3c($v0)
-/* 09CAB4 7F067F84 C7AC0018 */  lwc1  $f12, 0x18($sp)
-/* 09CAB8 7F067F88 44061000 */  mfc1  $a2, $f2
-/* 09CABC 7F067F8C 4602003C */  c.lt.s $f0, $f2
-/* 09CAC0 7F067F90 00000000 */  nop
-/* 09CAC4 7F067F94 45020003 */  bc1fl .L7F067FA4
-/* 09CAC8 7F067F98 44070000 */   mfc1  $a3, $f0
-/* 09CACC 7F067F9C 46001006 */  mov.s $f0, $f2
-/* 09CAD0 7F067FA0 44070000 */  mfc1  $a3, $f0
-.L7F067FA4:
-/* 09CAD4 7F067FA4 0FC19EE5 */  jal   caclulate_gun_crosshair_position_rotation
-/* 09CAD8 7F067FA8 C7AE001C */   lwc1  $f14, 0x1c($sp)
-/* 09CADC 7F067FAC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09CAE0 7F067FB0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 09CAE4 7F067FB4 03E00008 */  jr    $ra
-/* 09CAE8 7F067FB8 00000000 */   nop
-)
+    aim_lock_speed = get_ptr_item_statistics(getCurrentPlayerWeaponId(GUNRIGHT))->AimLockSpeed;
+#elif defined(VERSION_EU)
+    aim_lock_speed = get_ptr_item_statistics(getCurrentPlayerWeaponId(GUNRIGHT))->CrosshairSpeed;
 #endif
 
-#if defined(VERSION_EU)
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F067F58
-/* 09B0F0 7F068700 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 09B0F4 7F068704 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09B0F8 7F068708 E7AC0018 */  swc1  $f12, 0x18($sp)
-/* 09B0FC 7F06870C E7AE001C */  swc1  $f14, 0x1c($sp)
-/* 09B100 7F068710 AFA60020 */  sw    $a2, 0x20($sp)
-/* 09B104 7F068714 0FC177A2 */  jal   getCurrentPlayerWeaponId
-/* 09B108 7F068718 00002025 */   move  $a0, $zero
-/* 09B10C 7F06871C 0FC17359 */  jal   get_ptr_item_statistics
-/* 09B110 7F068720 00402025 */   move  $a0, $v0
-/* 09B114 7F068724 C7A20020 */  lwc1  $f2, 0x20($sp)
-/* 09B118 7F068728 C4400038 */  lwc1  $f0, 0x38($v0)
-/* 09B11C 7F06872C C7AC0018 */  lwc1  $f12, 0x18($sp)
-/* 09B120 7F068730 44061000 */  mfc1  $a2, $f2
-/* 09B124 7F068734 4602003C */  c.lt.s $f0, $f2
-/* 09B128 7F068738 00000000 */  nop   
-/* 09B12C 7F06873C 45020003 */  bc1fl .L7F06874C
-/* 09B130 7F068740 44070000 */   mfc1  $a3, $f0
-/* 09B134 7F068744 46001006 */  mov.s $f0, $f2
-/* 09B138 7F068748 44070000 */  mfc1  $a3, $f0
-.L7F06874C:
-/* 09B13C 7F06874C 0FC1A0CF */  jal   caclulate_gun_crosshair_position_rotation
-/* 09B140 7F068750 C7AE001C */   lwc1  $f14, 0x1c($sp)
-/* 09B144 7F068754 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09B148 7F068758 27BD0018 */  addiu $sp, $sp, 0x18
-/* 09B14C 7F06875C 03E00008 */  jr    $ra
-/* 09B150 7F068760 00000000 */   nop   
-)
-#endif
-#endif
+    if (aim_lock_speed < max_aim_lock_speed)
+    {
+        aim_lock_speed = max_aim_lock_speed;
+    }
 
-
+    caclulate_gun_crosshair_position_rotation(turn_x, turn_y, max_aim_lock_speed, aim_lock_speed);
+}
 
 
 
