@@ -28574,122 +28574,25 @@ void sub_GAME_7F06802C(void)
 
 
 
-#ifdef NONMATCHING
-void glabel(void) {
+void sub_GAME_7F0680D4(coord3d * coord)
+{
+    coord3d tmp;
 
+    g_CurrentPlayer->field_1010.x = coord->x;
+    g_CurrentPlayer->field_1010.y = coord->y;
+    g_CurrentPlayer->field_1010.z = coord->z;
+    matrix_4x4_set_rotation_around_xyz(coord->f, &g_CurrentPlayer->field_101C);
+
+    tmp.x = g_CurrentPlayer->field_101C.m[2][0] * 1000.0f;
+    tmp.y = g_CurrentPlayer->field_101C.m[2][1] * 1000.0f;
+    tmp.z = g_CurrentPlayer->field_101C.m[2][2] * 1000.0f;
+    sub_GAME_7F077FF4(&tmp, (coord3d* ) &g_CurrentPlayer->crosshair_angle);
+
+    g_CurrentPlayer->field_FFC = g_CurrentPlayer->crosshair_angle.f[0];
+    g_CurrentPlayer->field_1000 = g_CurrentPlayer->crosshair_angle.f[1];
+
+    sub_GAME_7F067AB4(&tmp);
 }
-#else
-
-#if defined(VERSION_US) || defined(VERSION_JP)
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0680D4
-/* 09CC04 7F0680D4 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 09CC08 7F0680D8 3C038008 */  lui   $v1, %hi(g_CurrentPlayer)
-/* 09CC0C 7F0680DC 2463A0B0 */  addiu $v1, %lo(g_CurrentPlayer) # addiu $v1, $v1, -0x5f50
-/* 09CC10 7F0680E0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09CC14 7F0680E4 C4840000 */  lwc1  $f4, ($a0)
-/* 09CC18 7F0680E8 8C6E0000 */  lw    $t6, ($v1)
-/* 09CC1C 7F0680EC E5C41010 */  swc1  $f4, 0x1010($t6)
-/* 09CC20 7F0680F0 8C6F0000 */  lw    $t7, ($v1)
-/* 09CC24 7F0680F4 C4860004 */  lwc1  $f6, 4($a0)
-/* 09CC28 7F0680F8 E5E61014 */  swc1  $f6, 0x1014($t7)
-/* 09CC2C 7F0680FC 8C780000 */  lw    $t8, ($v1)
-/* 09CC30 7F068100 C4880008 */  lwc1  $f8, 8($a0)
-/* 09CC34 7F068104 E7081018 */  swc1  $f8, 0x1018($t8)
-/* 09CC38 7F068108 8C650000 */  lw    $a1, ($v1)
-/* 09CC3C 7F06810C 0FC161C5 */  jal   matrix_4x4_set_rotation_around_xyz
-/* 09CC40 7F068110 24A5101C */   addiu $a1, $a1, 0x101c
-/* 09CC44 7F068114 3C038008 */  lui   $v1, %hi(g_CurrentPlayer)
-/* 09CC48 7F068118 2463A0B0 */  addiu $v1, %lo(g_CurrentPlayer) # addiu $v1, $v1, -0x5f50
-/* 09CC4C 7F06811C 8C620000 */  lw    $v0, ($v1)
-/* 09CC50 7F068120 3C01447A */  li    $at, 0x447A0000 # 1000.000000
-/* 09CC54 7F068124 44810000 */  mtc1  $at, $f0
-/* 09CC58 7F068128 C44A103C */  lwc1  $f10, 0x103c($v0)
-/* 09CC5C 7F06812C 27A4001C */  addiu $a0, $sp, 0x1c
-/* 09CC60 7F068130 24450FE8 */  addiu $a1, $v0, 0xfe8
-/* 09CC64 7F068134 46005402 */  mul.s $f16, $f10, $f0
-/* 09CC68 7F068138 E7B0001C */  swc1  $f16, 0x1c($sp)
-/* 09CC6C 7F06813C C4521040 */  lwc1  $f18, 0x1040($v0)
-/* 09CC70 7F068140 46009102 */  mul.s $f4, $f18, $f0
-/* 09CC74 7F068144 E7A40020 */  swc1  $f4, 0x20($sp)
-/* 09CC78 7F068148 C4461044 */  lwc1  $f6, 0x1044($v0)
-/* 09CC7C 7F06814C 46003202 */  mul.s $f8, $f6, $f0
-/* 09CC80 7F068150 0FC1DFFD */  jal   sub_GAME_7F077FF4
-/* 09CC84 7F068154 E7A80024 */   swc1  $f8, 0x24($sp)
-/* 09CC88 7F068158 3C038008 */  lui   $v1, %hi(g_CurrentPlayer)
-/* 09CC8C 7F06815C 2463A0B0 */  addiu $v1, %lo(g_CurrentPlayer) # addiu $v1, $v1, -0x5f50
-/* 09CC90 7F068160 8C620000 */  lw    $v0, ($v1)
-/* 09CC94 7F068164 27A4001C */  addiu $a0, $sp, 0x1c
-/* 09CC98 7F068168 C44A0FE8 */  lwc1  $f10, 0xfe8($v0)
-/* 09CC9C 7F06816C E44A0FFC */  swc1  $f10, 0xffc($v0)
-/* 09CCA0 7F068170 8C620000 */  lw    $v0, ($v1)
-/* 09CCA4 7F068174 C4500FEC */  lwc1  $f16, 0xfec($v0)
-/* 09CCA8 7F068178 0FC19EAD */  jal   sub_GAME_7F067AB4
-/* 09CCAC 7F06817C E4501000 */   swc1  $f16, 0x1000($v0)
-/* 09CCB0 7F068180 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09CCB4 7F068184 27BD0028 */  addiu $sp, $sp, 0x28
-/* 09CCB8 7F068188 03E00008 */  jr    $ra
-/* 09CCBC 7F06818C 00000000 */   nop
-)
-#endif
-
-#if defined(VERSION_EU)
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0680D4
-/* 09B26C 7F06887C 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 09B270 7F068880 3C038007 */  lui   $v1, %hi(g_CurrentPlayer) # $v1, 0x8007
-/* 09B274 7F068884 24638BC0 */  addiu $v1, %lo(g_CurrentPlayer) # addiu $v1, $v1, -0x7440
-/* 09B278 7F068888 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09B27C 7F06888C C4840000 */  lwc1  $f4, ($a0)
-/* 09B280 7F068890 8C6E0000 */  lw    $t6, ($v1)
-/* 09B284 7F068894 E5C41008 */  swc1  $f4, 0x1008($t6)
-/* 09B288 7F068898 8C6F0000 */  lw    $t7, ($v1)
-/* 09B28C 7F06889C C4860004 */  lwc1  $f6, 4($a0)
-/* 09B290 7F0688A0 E5E6100C */  swc1  $f6, 0x100c($t7)
-/* 09B294 7F0688A4 8C780000 */  lw    $t8, ($v1)
-/* 09B298 7F0688A8 C4880008 */  lwc1  $f8, 8($a0)
-/* 09B29C 7F0688AC E7081010 */  swc1  $f8, 0x1010($t8)
-/* 09B2A0 7F0688B0 8C650000 */  lw    $a1, ($v1)
-/* 09B2A4 7F0688B4 0FC162EF */  jal   matrix_4x4_set_rotation_around_xyz
-/* 09B2A8 7F0688B8 24A51014 */   addiu $a1, $a1, 0x1014
-/* 09B2AC 7F0688BC 3C038007 */  lui   $v1, %hi(g_CurrentPlayer) # $v1, 0x8007
-/* 09B2B0 7F0688C0 24638BC0 */  addiu $v1, %lo(g_CurrentPlayer) # addiu $v1, $v1, -0x7440
-/* 09B2B4 7F0688C4 8C620000 */  lw    $v0, ($v1)
-/* 09B2B8 7F0688C8 3C01447A */  li    $at, 0x447A0000 # 1000.000000
-/* 09B2BC 7F0688CC 44810000 */  mtc1  $at, $f0
-/* 09B2C0 7F0688D0 C44A1034 */  lwc1  $f10, 0x1034($v0)
-/* 09B2C4 7F0688D4 27A4001C */  addiu $a0, $sp, 0x1c
-/* 09B2C8 7F0688D8 24450FE0 */  addiu $a1, $v0, 0xfe0
-/* 09B2CC 7F0688DC 46005402 */  mul.s $f16, $f10, $f0
-/* 09B2D0 7F0688E0 E7B0001C */  swc1  $f16, 0x1c($sp)
-/* 09B2D4 7F0688E4 C4521038 */  lwc1  $f18, 0x1038($v0)
-/* 09B2D8 7F0688E8 46009102 */  mul.s $f4, $f18, $f0
-/* 09B2DC 7F0688EC E7A40020 */  swc1  $f4, 0x20($sp)
-/* 09B2E0 7F0688F0 C446103C */  lwc1  $f6, 0x103c($v0)
-/* 09B2E4 7F0688F4 46003202 */  mul.s $f8, $f6, $f0
-/* 09B2E8 7F0688F8 0FC1E01D */  jal   sub_GAME_7F077FF4
-/* 09B2EC 7F0688FC E7A80024 */   swc1  $f8, 0x24($sp)
-/* 09B2F0 7F068900 3C038007 */  lui   $v1, %hi(g_CurrentPlayer) # $v1, 0x8007
-/* 09B2F4 7F068904 24638BC0 */  addiu $v1, %lo(g_CurrentPlayer) # addiu $v1, $v1, -0x7440
-/* 09B2F8 7F068908 8C620000 */  lw    $v0, ($v1)
-/* 09B2FC 7F06890C 27A4001C */  addiu $a0, $sp, 0x1c
-/* 09B300 7F068910 C44A0FE0 */  lwc1  $f10, 0xfe0($v0)
-/* 09B304 7F068914 E44A0FF4 */  swc1  $f10, 0xff4($v0)
-/* 09B308 7F068918 8C620000 */  lw    $v0, ($v1)
-/* 09B30C 7F06891C C4500FE4 */  lwc1  $f16, 0xfe4($v0)
-/* 09B310 7F068920 0FC1A097 */  jal   sub_GAME_7F067AB4
-/* 09B314 7F068924 E4500FF8 */   swc1  $f16, 0xff8($v0)
-/* 09B318 7F068928 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09B31C 7F06892C 27BD0028 */  addiu $sp, $sp, 0x28
-/* 09B320 7F068930 03E00008 */  jr    $ra
-/* 09B324 7F068934 00000000 */   nop   
-)
-#endif
-#endif
-
-
 
 
 
