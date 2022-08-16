@@ -20059,13 +20059,13 @@ glabel controller_gameplay_interaction
 /* 0B77F8 7F082CC8 00002025 */   move  $a0, $zero
 /* 0B77FC 7F082CCC 1040000A */  beqz  $v0, .L7F082CF8
 /* 0B7800 7F082CD0 00000000 */   nop
-/* 0B7804 7F082CD4 0FC19C5D */  jal   sub_GAME_7F067174
+/* 0B7804 7F082CD4 0FC19C5D */  jal   getCurrentPlayerNoise
 /* 0B7808 7F082CD8 00002025 */   move  $a0, $zero
 /* 0B780C 7F082CDC 4600A03C */  c.lt.s $f20, $f0
 /* 0B7810 7F082CE0 00000000 */  nop
 /* 0B7814 7F082CE4 45000004 */  bc1f  .L7F082CF8
 /* 0B7818 7F082CE8 00000000 */   nop
-/* 0B781C 7F082CEC 0FC19C5D */  jal   sub_GAME_7F067174
+/* 0B781C 7F082CEC 0FC19C5D */  jal   getCurrentPlayerNoise
 /* 0B7820 7F082CF0 00002025 */   move  $a0, $zero
 /* 0B7824 7F082CF4 E7A000E4 */  swc1  $f0, 0xe4($sp)
 .L7F082CF8:
@@ -20073,14 +20073,14 @@ glabel controller_gameplay_interaction
 /* 0B782C 7F082CFC 24040001 */   li    $a0, 1
 /* 0B7830 7F082D00 1040000B */  beqz  $v0, .L7F082D30
 /* 0B7834 7F082D04 00000000 */   nop
-/* 0B7838 7F082D08 0FC19C5D */  jal   sub_GAME_7F067174
+/* 0B7838 7F082D08 0FC19C5D */  jal   getCurrentPlayerNoise
 /* 0B783C 7F082D0C 24040001 */   li    $a0, 1
 /* 0B7840 7F082D10 C7AA00E4 */  lwc1  $f10, 0xe4($sp)
 /* 0B7844 7F082D14 4600503C */  c.lt.s $f10, $f0
 /* 0B7848 7F082D18 00000000 */  nop
 /* 0B784C 7F082D1C 45000004 */  bc1f  .L7F082D30
 /* 0B7850 7F082D20 00000000 */   nop
-/* 0B7854 7F082D24 0FC19C5D */  jal   sub_GAME_7F067174
+/* 0B7854 7F082D24 0FC19C5D */  jal   getCurrentPlayerNoise
 /* 0B7858 7F082D28 24040001 */   li    $a0, 1
 /* 0B785C 7F082D2C E7A000E4 */  swc1  $f0, 0xe4($sp)
 .L7F082D30:
@@ -22795,13 +22795,13 @@ glabel controller_gameplay_interaction
 /* 0B575C 7F082D6C 00002025 */   move  $a0, $zero
 /* 0B5760 7F082D70 1040000A */  beqz  $v0, .L7F082D9C
 /* 0B5764 7F082D74 00000000 */   nop   
-/* 0B5768 7F082D78 0FC19E47 */  jal   sub_GAME_7F067174
+/* 0B5768 7F082D78 0FC19E47 */  jal   getCurrentPlayerNoise
 /* 0B576C 7F082D7C 00002025 */   move  $a0, $zero
 /* 0B5770 7F082D80 4600A03C */  c.lt.s $f20, $f0
 /* 0B5774 7F082D84 00000000 */  nop   
 /* 0B5778 7F082D88 45000004 */  bc1f  .L7F082D9C
 /* 0B577C 7F082D8C 00000000 */   nop   
-/* 0B5780 7F082D90 0FC19E47 */  jal   sub_GAME_7F067174
+/* 0B5780 7F082D90 0FC19E47 */  jal   getCurrentPlayerNoise
 /* 0B5784 7F082D94 00002025 */   move  $a0, $zero
 /* 0B5788 7F082D98 E7A000E4 */  swc1  $f0, 0xe4($sp)
 .L7F082D9C:
@@ -22809,14 +22809,14 @@ glabel controller_gameplay_interaction
 /* 0B5790 7F082DA0 24040001 */   li    $a0, 1
 /* 0B5794 7F082DA4 1040000B */  beqz  $v0, .L7F082DD4
 /* 0B5798 7F082DA8 00000000 */   nop   
-/* 0B579C 7F082DAC 0FC19E47 */  jal   sub_GAME_7F067174
+/* 0B579C 7F082DAC 0FC19E47 */  jal   getCurrentPlayerNoise
 /* 0B57A0 7F082DB0 24040001 */   li    $a0, 1
 /* 0B57A4 7F082DB4 C7AA00E4 */  lwc1  $f10, 0xe4($sp)
 /* 0B57A8 7F082DB8 4600503C */  c.lt.s $f10, $f0
 /* 0B57AC 7F082DBC 00000000 */  nop   
 /* 0B57B0 7F082DC0 45000004 */  bc1f  .L7F082DD4
 /* 0B57B4 7F082DC4 00000000 */   nop   
-/* 0B57B8 7F082DC8 0FC19E47 */  jal   sub_GAME_7F067174
+/* 0B57B8 7F082DC8 0FC19E47 */  jal   getCurrentPlayerNoise
 /* 0B57BC 7F082DCC 24040001 */   li    $a0, 1
 /* 0B57C0 7F082DD0 E7A000E4 */  swc1  $f0, 0xe4($sp)
 .L7F082DD4:

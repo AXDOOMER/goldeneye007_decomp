@@ -228,11 +228,11 @@ struct hand
   s32 field_A74;
   s32 field_A78;
   s32 field_A7C;
-  s32 noise;
+  f32 noise;
   s32 field_A84;
   s32 field_A88;
   s32 field_A8C;
-  s32 field_A90;
+  ObjectRecord* field_A90;
   s32 field_A94;
   s32 field_A98;
   s32 field_A9C;
@@ -1091,25 +1091,8 @@ struct player
   f32 gun_azimuth_angle;
   f32 gun_azimuth_turning;
   f32 gunaimdamp;
-  f32 field_1010;
-  f32 holds_neg_pi;
-  f32 field_1018;
-  s32 field_101C;
-  s32 field_1020;
-  s32 field_1024;
-  s32 field_1028;
-  s32 field_102C;
-  s32 field_1030;
-  s32 field_1034;
-  s32 field_1038;
-  s32 field_103C;
-  s32 field_1040;
-  s32 field_1044;
-  s32 field_1048;
-  s32 field_104C;
-  s32 field_1050;
-  s32 field_1054;
-  s32 field_1058;
+  coord3d field_1010;
+  Mtxf field_101C;
   s32 last_z_trigger_timer;
   s32 copiedgoldeneye;
   s32 ammodispflags;
@@ -2696,10 +2679,7 @@ struct player
   s32 deathcount;
   s32 num_suicides;
   s32 field_29E0;
-  s32 last_kill_time;
-  s32 field_29E8;
-  s32 field_29EC;
-  s32 field_29F0;
+  s32 last_kill_time[4];
 
   /**
    * Holds mission offset timer value.

@@ -2993,7 +2993,6 @@ typedef enum WAYMODE
 #define PROPRECORD_STAN_ROOM_LEN 4
 #define NUMBER_SHOTGUN_BULLETS   5
 
-
 #pragma endregion
 
 #pragma region Inline Macro Functions

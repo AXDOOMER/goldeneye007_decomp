@@ -3550,7 +3550,9 @@ struct SetupIntroCredits
         enum WATCH_BRIEFING_PAGE       menu;//4
         u16                            reserved;//8
         u16                            text; //a
-        struct watchMenuObjectiveText *nextentry; //c
+        u16                            unkC; //c
+        s8                             unkD; //d
+        s8                             difficulty; //f
     };
 #pragma endregion Objectives
 
