@@ -228,7 +228,7 @@ struct hand
   s32 field_A74;
   s32 field_A78;
   s32 field_A7C;
-  s32 noise;
+  f32 noise;
   s32 field_A84;
   s32 field_A88;
   s32 field_A8C;

@@ -26486,53 +26486,10 @@ f32 get_depth_offset_solo_watch_menu_inventory_page_for_item(ITEM_IDS item)
 
 
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F067174(void) {
-
+f32 getCurrentPlayerNoise(GUNHAND hand)
+{
+    return g_CurrentPlayer->hands[hand].noise;
 }
-#else
-#if defined(VERSION_US) || defined(VERSION_JP)
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F067174
-/* 09BCA4 7F067174 000478C0 */  sll   $t7, $a0, 3
-/* 09BCA8 7F067178 01E47823 */  subu  $t7, $t7, $a0
-/* 09BCAC 7F06717C 000F7880 */  sll   $t7, $t7, 2
-/* 09BCB0 7F067180 01E47821 */  addu  $t7, $t7, $a0
-/* 09BCB4 7F067184 3C0E8008 */  lui   $t6, %hi(g_CurrentPlayer)
-/* 09BCB8 7F067188 8DCEA0B0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
-/* 09BCBC 7F06718C 000F7880 */  sll   $t7, $t7, 2
-/* 09BCC0 7F067190 01E47821 */  addu  $t7, $t7, $a0
-/* 09BCC4 7F067194 000F78C0 */  sll   $t7, $t7, 3
-/* 09BCC8 7F067198 01CFC021 */  addu  $t8, $t6, $t7
-/* 09BCCC 7F06719C 03E00008 */  jr    $ra
-/* 09BCD0 7F0671A0 C7000A80 */   lwc1  $f0, 0xa80($t8)
-)
-#endif
-
-#if defined(VERSION_EU)
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F067174
-/* 09A30C 7F06791C 000478C0 */  sll   $t7, $a0, 3
-/* 09A310 7F067920 01E47823 */  subu  $t7, $t7, $a0
-/* 09A314 7F067924 000F7880 */  sll   $t7, $t7, 2
-/* 09A318 7F067928 01E47821 */  addu  $t7, $t7, $a0
-/* 09A31C 7F06792C 3C0E8007 */  lui   $t6, %hi(g_CurrentPlayer) # $t6, 0x8007
-/* 09A320 7F067930 8DCE8BC0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
-/* 09A324 7F067934 000F7880 */  sll   $t7, $t7, 2
-/* 09A328 7F067938 01E47821 */  addu  $t7, $t7, $a0
-/* 09A32C 7F06793C 000F78C0 */  sll   $t7, $t7, 3
-/* 09A330 7F067940 01CFC021 */  addu  $t8, $t6, $t7
-/* 09A334 7F067944 03E00008 */  jr    $ra
-/* 09A338 7F067948 C7000A78 */   lwc1  $f0, 0xa78($t8)
-)
-#endif
-#endif
-
-
 
 
 
