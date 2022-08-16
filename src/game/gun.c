@@ -15184,52 +15184,18 @@ glabel sub_GAME_7F0634FC
 
 
 
+void sub_GAME_7F06351C(f32* arg0, Mtxf* arg1, Mtxf* arg2, Mtxf* arg3, f32* arg4, Mtxf* arg5, Mtxf* arg6)
+{
+    Mtxf sp20;
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F06351C(void) {
-
+    matrix_4x4_set_identity_and_position(arg0, arg6);
+    matrix_4x4_multiply_in_place(arg1, arg6);
+    matrix_4x4_multiply_in_place(arg2, arg6);
+    matrix_4x4_multiply_in_place(arg3, arg6);
+    matrix_4x4_set_identity_and_position(arg4, &sp20);
+    matrix_4x4_multiply_in_place(&sp20, arg6);
+    matrix_4x4_multiply_in_place(arg5, arg6);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06351C
-/* 09804C 7F06351C 27BDFFA0 */  addiu $sp, $sp, -0x60
-/* 098050 7F063520 AFB00018 */  sw    $s0, 0x18($sp)
-/* 098054 7F063524 8FB00078 */  lw    $s0, 0x78($sp)
-/* 098058 7F063528 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 09805C 7F06352C AFA50064 */  sw    $a1, 0x64($sp)
-/* 098060 7F063530 AFA60068 */  sw    $a2, 0x68($sp)
-/* 098064 7F063534 AFA7006C */  sw    $a3, 0x6c($sp)
-/* 098068 7F063538 0FC16259 */  jal   matrix_4x4_set_identity_and_position
-/* 09806C 7F06353C 02002825 */   move  $a1, $s0
-/* 098070 7F063540 8FA40064 */  lw    $a0, 0x64($sp)
-/* 098074 7F063544 0FC1601A */  jal   matrix_4x4_multiply_in_place
-/* 098078 7F063548 02002825 */   move  $a1, $s0
-/* 09807C 7F06354C 8FA40068 */  lw    $a0, 0x68($sp)
-/* 098080 7F063550 0FC1601A */  jal   matrix_4x4_multiply_in_place
-/* 098084 7F063554 02002825 */   move  $a1, $s0
-/* 098088 7F063558 8FA4006C */  lw    $a0, 0x6c($sp)
-/* 09808C 7F06355C 0FC1601A */  jal   matrix_4x4_multiply_in_place
-/* 098090 7F063560 02002825 */   move  $a1, $s0
-/* 098094 7F063564 8FA40070 */  lw    $a0, 0x70($sp)
-/* 098098 7F063568 0FC16259 */  jal   matrix_4x4_set_identity_and_position
-/* 09809C 7F06356C 27A50020 */   addiu $a1, $sp, 0x20
-/* 0980A0 7F063570 27A40020 */  addiu $a0, $sp, 0x20
-/* 0980A4 7F063574 0FC1601A */  jal   matrix_4x4_multiply_in_place
-/* 0980A8 7F063578 02002825 */   move  $a1, $s0
-/* 0980AC 7F06357C 8FA40074 */  lw    $a0, 0x74($sp)
-/* 0980B0 7F063580 0FC1601A */  jal   matrix_4x4_multiply_in_place
-/* 0980B4 7F063584 02002825 */   move  $a1, $s0
-/* 0980B8 7F063588 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0980BC 7F06358C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0980C0 7F063590 27BD0060 */  addiu $sp, $sp, 0x60
-/* 0980C4 7F063594 03E00008 */  jr    $ra
-/* 0980C8 7F063598 00000000 */   nop
-)
-#endif
-
-
 
 
 
