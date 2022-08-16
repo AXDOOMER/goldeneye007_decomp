@@ -6,8 +6,8 @@
 //Public variables - move to header
 // bss
 //CODE.bss:80075D30
-struct objective_entry * objective_ptrs[10];
-OBJECTIVESTATUS         dword_CODE_bss_80075D58[10]; //This is an array of 10 OBJECTIVESTATUS,
+struct objective_entry * objective_ptrs[OBJECTIVES_MAX];
+OBJECTIVESTATUS         dword_CODE_bss_80075D58[OBJECTIVES_MAX]; //This is an array of 10 OBJECTIVESTATUS,
 
 //CODE.bss:80075D80
 u32 *ptr_last_tag_entry_type16;
@@ -135,34 +135,20 @@ u8 * get_text_for_objective(int objective)
 
 
 
+s8 get_difficulty_for_objective(s32 objective)
+{
+    struct objective_entry * entry;
 
-
-#ifdef NONMATCHING
-void get_difficulty_for_objective(void) {
-
+    if (objective < OBJECTIVES_MAX)
+    {
+        entry = objective_ptrs[objective];
+        if (entry != NULL)
+        {
+            return entry->difficulty;
+        }
+    }
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_difficulty_for_objective
-/* 08BD34 7F057204 2881000A */  slti  $at, $a0, 0xa
-/* 08BD38 7F057208 10200008 */  beqz  $at, .L7F05722C
-/* 08BD3C 7F05720C 00047080 */   sll   $t6, $a0, 2
-/* 08BD40 7F057210 3C038007 */  lui   $v1, %hi(objective_ptrs)
-/* 08BD44 7F057214 006E1821 */  addu  $v1, $v1, $t6
-/* 08BD48 7F057218 8C635D30 */  lw    $v1, %lo(objective_ptrs)($v1)
-/* 08BD4C 7F05721C 50600004 */  beql  $v1, $zero, .L7F057230
-/* 08BD50 7F057220 00001025 */   move  $v0, $zero
-/* 08BD54 7F057224 03E00008 */  jr    $ra
-/* 08BD58 7F057228 8062000F */   lb    $v0, 0xf($v1)
-
-.L7F05722C:
-/* 08BD5C 7F05722C 00001025 */  move  $v0, $zero
-.L7F057230:
-/* 08BD60 7F057230 03E00008 */  jr    $ra
-/* 08BD64 7F057234 00000000 */   nop   
-)
-#endif
 
 
 
