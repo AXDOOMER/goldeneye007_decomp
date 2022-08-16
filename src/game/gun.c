@@ -27943,92 +27943,29 @@ void sub_GAME_7F067F58(f32 turn_x, f32 turn_y, f32 max_aim_lock_speed)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F067FBC(void) {
+void sub_GAME_7F067FBC(f32 turn_x, f32 turn_y)
+{
+    WeaponStats * item_stats;
+    f32 guncrossdamp;
+    f32 gunaimdamp;
 
+    item_stats = get_ptr_item_statistics(getCurrentPlayerWeaponId(GUNRIGHT));
+
+#if defined(VERSION_US)
+    guncrossdamp = item_stats->CrosshairSpeed;
+    gunaimdamp = item_stats->AimLockSpeed;
+#elif defined(VERSION_EU)
+    guncrossdamp = 0.7651f;
+    gunaimdamp = item_stats->CrosshairSpeed;
+#elif defined(VERSION_JP)
+    guncrossdamp = 0.8f;
+    gunaimdamp = item_stats->AimLockSpeed;
+#endif
+
+    caclulate_gun_crosshair_position_rotation(turn_x, turn_y, guncrossdamp, gunaimdamp);
 }
-#else
-
-#ifdef VERSION_US
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F067FBC
-/* 09CAEC 7F067FBC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 09CAF0 7F067FC0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09CAF4 7F067FC4 E7AC0018 */  swc1  $f12, 0x18($sp)
-/* 09CAF8 7F067FC8 E7AE001C */  swc1  $f14, 0x1c($sp)
-/* 09CAFC 7F067FCC 0FC17674 */  jal   getCurrentPlayerWeaponId
-/* 09CB00 7F067FD0 00002025 */   move  $a0, $zero
-/* 09CB04 7F067FD4 0FC1722D */  jal   get_ptr_item_statistics
-/* 09CB08 7F067FD8 00402025 */   move  $a0, $v0
-/* 09CB0C 7F067FDC C4400038 */  lwc1  $f0, 0x38($v0)
-/* 09CB10 7F067FE0 C442003C */  lwc1  $f2, 0x3c($v0)
-/* 09CB14 7F067FE4 C7AC0018 */  lwc1  $f12, 0x18($sp)
-/* 09CB18 7F067FE8 44060000 */  mfc1  $a2, $f0
-/* 09CB1C 7F067FEC 44071000 */  mfc1  $a3, $f2
-/* 09CB20 7F067FF0 0FC19EE5 */  jal   caclulate_gun_crosshair_position_rotation
-/* 09CB24 7F067FF4 C7AE001C */   lwc1  $f14, 0x1c($sp)
-/* 09CB28 7F067FF8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09CB2C 7F067FFC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 09CB30 7F068000 03E00008 */  jr    $ra
-/* 09CB34 7F068004 00000000 */   nop
-)
-#endif
-
-#ifdef VERSION_JP
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F067FBC
-/* 09D104 7F068594 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 09D108 7F068598 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09D10C 7F06859C E7AC0018 */  swc1  $f12, 0x18($sp)
-/* 09D110 7F0685A0 E7AE001C */  swc1  $f14, 0x1c($sp)
-/* 09D114 7F0685A4 0FC177BC */  jal   getCurrentPlayerWeaponId
-/* 09D118 7F0685A8 00002025 */   move  $a0, $zero
-/* 09D11C 7F0685AC 0FC17375 */  jal   get_ptr_item_statistics
-/* 09D120 7F0685B0 00402025 */   move  $a0, $v0
-/* 09D124 7F0685B4 C440003C */  lwc1  $f0, 0x3c($v0)
-/* 09D128 7F0685B8 3C063F4C */  lui   $a2, (0x3F4CCCCD >> 16) # lui $a2, 0x3f4c
-/* 09D12C 7F0685BC 34C6CCCD */  ori   $a2, (0x3F4CCCCD & 0xFFFF) # ori $a2, $a2, 0xcccd
-/* 09D130 7F0685C0 44070000 */  mfc1  $a3, $f0
-/* 09D134 7F0685C4 C7AC0018 */  lwc1  $f12, 0x18($sp)
-/* 09D138 7F0685C8 0FC1A05B */  jal   caclulate_gun_crosshair_position_rotation
-/* 09D13C 7F0685CC C7AE001C */   lwc1  $f14, 0x1c($sp)
-/* 09D140 7F0685D0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09D144 7F0685D4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 09D148 7F0685D8 03E00008 */  jr    $ra
-/* 09D14C 7F0685DC 00000000 */   nop
-)
-#endif
-
-#ifdef VERSION_EU
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F067FBC
-/* 09B154 7F068764 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 09B158 7F068768 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09B15C 7F06876C E7AC0018 */  swc1  $f12, 0x18($sp)
-/* 09B160 7F068770 E7AE001C */  swc1  $f14, 0x1c($sp)
-/* 09B164 7F068774 0FC177A2 */  jal   getCurrentPlayerWeaponId
-/* 09B168 7F068778 00002025 */   move  $a0, $zero
-/* 09B16C 7F06877C 0FC17359 */  jal   get_ptr_item_statistics
-/* 09B170 7F068780 00402025 */   move  $a0, $v0
-/* 09B174 7F068784 C4400038 */  lwc1  $f0, 0x38($v0)
-/* 09B178 7F068788 3C063F43 */  lui   $a2, (0x3F43DD98 >> 16) # lui $a2, 0x3f43
-/* 09B17C 7F06878C 34C6DD98 */  ori   $a2, (0x3F43DD98 & 0xFFFF) # ori $a2, $a2, 0xdd98
-/* 09B180 7F068790 44070000 */  mfc1  $a3, $f0
-/* 09B184 7F068794 C7AC0018 */  lwc1  $f12, 0x18($sp)
-/* 09B188 7F068798 0FC1A0CF */  jal   caclulate_gun_crosshair_position_rotation
-/* 09B18C 7F06879C C7AE001C */   lwc1  $f14, 0x1c($sp)
-/* 09B190 7F0687A0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09B194 7F0687A4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 09B198 7F0687A8 03E00008 */  jr    $ra
-/* 09B19C 7F0687AC 00000000 */   nop   
-)
-#endif
 
 
-#endif
 
 void get_bullet_angle(f32* horizontal_angle, f32* vertical_angle) {
 	*horizontal_angle = g_CurrentPlayer->crosshair_angle.f[0];
