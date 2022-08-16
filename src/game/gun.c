@@ -32955,442 +32955,70 @@ s32 get_civilian_casualties(void)
 const char aSD[] = "%s: %d\n";
 
 
-#ifdef NONMATCHING
-void *increment_num_kills_display_text_in_MP(void) {
-    s32 sp34;
-    ? sp40;
-    void *temp_ret;
-    s32 temp_v0;
-    s32 temp_a0;
-    s32 phi_a0;
-    void *phi_return_reg;
 
-    // Node 0
-    g_playerPerm->killcount = (s32) (g_playerPerm->killcount + 1);
-    g_CurrentPlayer->field_29F8 = (s32) (g_CurrentPlayer->field_29F8 + 1);
-    temp_ret = getPlayerCount();
-    phi_return_reg = temp_ret;
-    if (temp_ret >= 2)
+void increment_num_kills_display_text_in_MP(void)
+{
+    s8 buffer[0x100];
+    s32 time_since_kill;
+    s32 recent_kill_count;
+    s32 mission_time;
+    s32 unused; // needed this variable to match
+
+    g_playerPerm->kill_count += 1;
+    g_CurrentPlayer->field_29F8 += 1;
+
+    if (getPlayerCount() < 2) { return; }
+
+    mission_time = getMissiontimer();
+    sprintf(&buffer, aSD, langGet(0x98DA), g_playerPerm->kill_count);
+
+#if defined(VERSION_US)
+    hudmsgBottomShow(&buffer);
+#elif defined(VERSION_JP) || defined(VERSION_EU)
+    jp_hudmsgBottomShow(&buffer);
+#endif
+
+    if (g_playerPerm->kill_count >= 2)
     {
-        // Node 1
-        sp34 = getMissiontimer();
-        sprintf(&sp40, &aSD, langGet(TEXT(LGUN, 0xDA)), g_playerPerm->killcount); // kill count
-        hudmsgBottomShow(&sp40);
-        if (g_playerPerm->killcount >= 2)
+        time_since_kill = mission_time - g_CurrentPlayer->last_kill_time[0];
+        if (g_playerPerm->max_time_between_kills < time_since_kill)
         {
-            // Node 2
-            temp_v0 = (sp34 - g_CurrentPlayer->last_kill_time);
-            if (g_playerPerm->slowest2kills < temp_v0)
-            {
-                // Node 3
-                g_playerPerm->slowest2kills = temp_v0;
-            }
-            // Node 4
-            if (temp_v0 < g_playerPerm->fastest2kills)
-            {
-                // Node 5
-                g_playerPerm->fastest2kills = temp_v0;
-            }
+            g_playerPerm->max_time_between_kills = time_since_kill;
         }
-        // Node 6
-        g_CurrentPlayer->unk29F0 = (s32) g_CurrentPlayer->unk29EC;
-        g_CurrentPlayer->unk29EC = (s32) g_CurrentPlayer->unk29E8;
-        g_CurrentPlayer->unk29E8 = (s32) g_CurrentPlayer->last_kill_time;
-        g_CurrentPlayer->last_kill_time = sp34;
-        phi_a0 = 1;
-        if (-1 != g_CurrentPlayer->unk29E8)
+
+        if (time_since_kill < g_playerPerm->min_time_between_kills)
         {
-            // Node 7
-            phi_a0 = 1;
-            if ((g_CurrentPlayer->last_kill_time - g_CurrentPlayer->unk29E8) < 0x78)
-            {
-                // Node 8
-                phi_a0 = 2;
-                if (-1 != g_CurrentPlayer->unk29EC)
-                {
-                    // Node 9
-                    phi_a0 = 2;
-                    if ((g_CurrentPlayer->last_kill_time - g_CurrentPlayer->unk29EC) < 0x78)
-                    {
-                        // Node 10
-                        temp_a0 = (2 + 1);
-                        phi_a0 = temp_a0;
-                        if (-1 != g_CurrentPlayer->unk29F0)
-                        {
-                            // Node 11
-                            phi_a0 = temp_a0;
-                            if ((g_CurrentPlayer->last_kill_time - g_CurrentPlayer->unk29F0) < 0x78)
-                            {
-                                // Node 12
-                                phi_a0 = (temp_a0 + 1);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        // Node 13
-        phi_return_reg = g_CurrentPlayer;
-        if (g_playerPerm->most_killed_one_time < phi_a0)
-        {
-            // Node 14
-            g_playerPerm->most_killed_one_time = (s32) phi_a0;
-            phi_return_reg = g_CurrentPlayer;
+            g_playerPerm->min_time_between_kills = time_since_kill;
         }
     }
-    // Node 15
-    return phi_return_reg;
+
+    recent_kill_count = 1;
+    g_CurrentPlayer->last_kill_time[3] = g_CurrentPlayer->last_kill_time[2];
+    g_CurrentPlayer->last_kill_time[2] = g_CurrentPlayer->last_kill_time[1];
+    g_CurrentPlayer->last_kill_time[1] = g_CurrentPlayer->last_kill_time[0];
+    g_CurrentPlayer->last_kill_time[0] = mission_time;
+
+    // I tried to turn this into a loop but it didn't match
+    if (g_CurrentPlayer->last_kill_time[1] != -1 && (g_CurrentPlayer->last_kill_time[0] - g_CurrentPlayer->last_kill_time[1]) < 0x78)
+    {
+        recent_kill_count++;
+        if ((g_CurrentPlayer->last_kill_time[2] != -1) && ((g_CurrentPlayer->last_kill_time[0] - g_CurrentPlayer->last_kill_time[2]) < 0x78))
+        {
+            recent_kill_count++;
+            if ((g_CurrentPlayer->last_kill_time[3] != -1) && ((g_CurrentPlayer->last_kill_time[0] - g_CurrentPlayer->last_kill_time[3]) < 0x78))
+            {
+                recent_kill_count++;
+            }
+        }
+    }
+
+    if (g_playerPerm->most_killed_one_time < recent_kill_count)
+    {
+        g_playerPerm->most_killed_one_time = recent_kill_count;
+    }
 }
-#else
-#ifdef VERSION_US
-GLOBAL_ASM(
-.text
-glabel increment_num_kills_display_text_in_MP
-/* 09F2B0 7F06A780 3C038008 */  lui   $v1, %hi(g_playerPerm)
-/* 09F2B4 7F06A784 8C63A0B4 */  lw    $v1, %lo(g_playerPerm)($v1)
-/* 09F2B8 7F06A788 27BDFEC0 */  addiu $sp, $sp, -0x140
-/* 09F2BC 7F06A78C AFBF001C */  sw    $ra, 0x1c($sp)
-/* 09F2C0 7F06A790 AFB00018 */  sw    $s0, 0x18($sp)
-/* 09F2C4 7F06A794 8C6E001C */  lw    $t6, 0x1c($v1)
-/* 09F2C8 7F06A798 3C108008 */  lui   $s0, %hi(g_CurrentPlayer)
-/* 09F2CC 7F06A79C 2610A0B0 */  addiu $s0, %lo(g_CurrentPlayer) # addiu $s0, $s0, -0x5f50
-/* 09F2D0 7F06A7A0 25CF0001 */  addiu $t7, $t6, 1
-/* 09F2D4 7F06A7A4 AC6F001C */  sw    $t7, 0x1c($v1)
-/* 09F2D8 7F06A7A8 8E020000 */  lw    $v0, ($s0)
-/* 09F2DC 7F06A7AC 8C5829F8 */  lw    $t8, 0x29f8($v0)
-/* 09F2E0 7F06A7B0 27190001 */  addiu $t9, $t8, 1
-/* 09F2E4 7F06A7B4 0FC26919 */  jal   getPlayerCount
-/* 09F2E8 7F06A7B8 AC5929F8 */   sw    $t9, 0x29f8($v0)
-/* 09F2EC 7F06A7BC 28410002 */  slti  $at, $v0, 2
-/* 09F2F0 7F06A7C0 54200054 */  bnezl $at, .L7F06A914
-/* 09F2F4 7F06A7C4 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 09F2F8 7F06A7C8 0FC22FEE */  jal   getMissiontimer
-/* 09F2FC 7F06A7CC 00000000 */   nop
-/* 09F300 7F06A7D0 AFA20034 */  sw    $v0, 0x34($sp)
-/* 09F304 7F06A7D4 0FC30776 */  jal   langGet
-/* 09F308 7F06A7D8 340498DA */   li    $a0, 39130
-/* 09F30C 7F06A7DC 3C088008 */  lui   $t0, %hi(g_playerPerm)
-/* 09F310 7F06A7E0 8D08A0B4 */  lw    $t0, %lo(g_playerPerm)($t0)
-/* 09F314 7F06A7E4 3C058005 */  lui   $a1, %hi(aSD)
-/* 09F318 7F06A7E8 24A53BF8 */  addiu $a1, %lo(aSD) # addiu $a1, $a1, 0x3bf8
-/* 09F31C 7F06A7EC 27A40040 */  addiu $a0, $sp, 0x40
-/* 09F320 7F06A7F0 00403025 */  move  $a2, $v0
-/* 09F324 7F06A7F4 0C002B25 */  jal   sprintf
-/* 09F328 7F06A7F8 8D07001C */   lw    $a3, 0x1c($t0)
-/* 09F32C 7F06A7FC 0FC228F2 */  jal   hudmsgBottomShow
-/* 09F330 7F06A800 27A40040 */   addiu $a0, $sp, 0x40
-/* 09F334 7F06A804 3C038008 */  lui   $v1, %hi(g_playerPerm)
-/* 09F338 7F06A808 8C63A0B4 */  lw    $v1, %lo(g_playerPerm)($v1)
-/* 09F33C 7F06A80C 8C69001C */  lw    $t1, 0x1c($v1)
-/* 09F340 7F06A810 29210002 */  slti  $at, $t1, 2
-/* 09F344 7F06A814 54200012 */  bnezl $at, .L7F06A860
-/* 09F348 7F06A818 8E020000 */   lw    $v0, ($s0)
-/* 09F34C 7F06A81C 8E0B0000 */  lw    $t3, ($s0)
-/* 09F350 7F06A820 8FAA0034 */  lw    $t2, 0x34($sp)
-/* 09F354 7F06A824 8C6D0048 */  lw    $t5, 0x48($v1)
-/* 09F358 7F06A828 8D6C29E4 */  lw    $t4, 0x29e4($t3)
-/* 09F35C 7F06A82C 014C1023 */  subu  $v0, $t2, $t4
-/* 09F360 7F06A830 01A2082A */  slt   $at, $t5, $v0
-/* 09F364 7F06A834 50200005 */  beql  $at, $zero, .L7F06A84C
-/* 09F368 7F06A838 8C6E0044 */   lw    $t6, 0x44($v1)
-/* 09F36C 7F06A83C AC620048 */  sw    $v0, 0x48($v1)
-/* 09F370 7F06A840 3C038008 */  lui   $v1, %hi(g_playerPerm)
-/* 09F374 7F06A844 8C63A0B4 */  lw    $v1, %lo(g_playerPerm)($v1)
-/* 09F378 7F06A848 8C6E0044 */  lw    $t6, 0x44($v1)
-.L7F06A84C:
-/* 09F37C 7F06A84C 004E082A */  slt   $at, $v0, $t6
-/* 09F380 7F06A850 50200003 */  beql  $at, $zero, .L7F06A860
-/* 09F384 7F06A854 8E020000 */   lw    $v0, ($s0)
-/* 09F388 7F06A858 AC620044 */  sw    $v0, 0x44($v1)
-/* 09F38C 7F06A85C 8E020000 */  lw    $v0, ($s0)
-.L7F06A860:
-/* 09F390 7F06A860 2406FFFF */  li    $a2, -1
-/* 09F394 7F06A864 24040001 */  li    $a0, 1
-/* 09F398 7F06A868 8C4F29EC */  lw    $t7, 0x29ec($v0)
-/* 09F39C 7F06A86C AC4F29F0 */  sw    $t7, 0x29f0($v0)
-/* 09F3A0 7F06A870 8E020000 */  lw    $v0, ($s0)
-/* 09F3A4 7F06A874 8C5829E8 */  lw    $t8, 0x29e8($v0)
-/* 09F3A8 7F06A878 AC5829EC */  sw    $t8, 0x29ec($v0)
-/* 09F3AC 7F06A87C 8E020000 */  lw    $v0, ($s0)
-/* 09F3B0 7F06A880 8C5929E4 */  lw    $t9, 0x29e4($v0)
-/* 09F3B4 7F06A884 AC5929E8 */  sw    $t9, 0x29e8($v0)
-/* 09F3B8 7F06A888 8E090000 */  lw    $t1, ($s0)
-/* 09F3BC 7F06A88C 8FA80034 */  lw    $t0, 0x34($sp)
-/* 09F3C0 7F06A890 AD2829E4 */  sw    $t0, 0x29e4($t1)
-/* 09F3C4 7F06A894 8E020000 */  lw    $v0, ($s0)
-/* 09F3C8 7F06A898 8C4529E8 */  lw    $a1, 0x29e8($v0)
-/* 09F3CC 7F06A89C 10C50015 */  beq   $a2, $a1, .L7F06A8F4
-/* 09F3D0 7F06A8A0 00000000 */   nop
-/* 09F3D4 7F06A8A4 8C4329E4 */  lw    $v1, 0x29e4($v0)
-/* 09F3D8 7F06A8A8 00655823 */  subu  $t3, $v1, $a1
-/* 09F3DC 7F06A8AC 29610078 */  slti  $at, $t3, 0x78
-/* 09F3E0 7F06A8B0 10200010 */  beqz  $at, .L7F06A8F4
-/* 09F3E4 7F06A8B4 00000000 */   nop
-/* 09F3E8 7F06A8B8 8C4529EC */  lw    $a1, 0x29ec($v0)
-/* 09F3EC 7F06A8BC 24040002 */  li    $a0, 2
-/* 09F3F0 7F06A8C0 10C5000C */  beq   $a2, $a1, .L7F06A8F4
-/* 09F3F4 7F06A8C4 00655023 */   subu  $t2, $v1, $a1
-/* 09F3F8 7F06A8C8 29410078 */  slti  $at, $t2, 0x78
-/* 09F3FC 7F06A8CC 10200009 */  beqz  $at, .L7F06A8F4
-/* 09F400 7F06A8D0 00000000 */   nop
-/* 09F404 7F06A8D4 8C4529F0 */  lw    $a1, 0x29f0($v0)
-/* 09F408 7F06A8D8 24840001 */  addiu $a0, $a0, 1
-/* 09F40C 7F06A8DC 10C50005 */  beq   $a2, $a1, .L7F06A8F4
-/* 09F410 7F06A8E0 00656023 */   subu  $t4, $v1, $a1
-/* 09F414 7F06A8E4 29810078 */  slti  $at, $t4, 0x78
-/* 09F418 7F06A8E8 10200002 */  beqz  $at, .L7F06A8F4
-/* 09F41C 7F06A8EC 00000000 */   nop
-/* 09F420 7F06A8F0 24840001 */  addiu $a0, $a0, 1
-.L7F06A8F4:
-/* 09F424 7F06A8F4 3C038008 */  lui   $v1, %hi(g_playerPerm)
-/* 09F428 7F06A8F8 8C63A0B4 */  lw    $v1, %lo(g_playerPerm)($v1)
-/* 09F42C 7F06A8FC 8C6D0058 */  lw    $t5, 0x58($v1)
-/* 09F430 7F06A900 01A4082A */  slt   $at, $t5, $a0
-/* 09F434 7F06A904 50200003 */  beql  $at, $zero, .L7F06A914
-/* 09F438 7F06A908 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 09F43C 7F06A90C AC640058 */  sw    $a0, 0x58($v1)
-/* 09F440 7F06A910 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F06A914:
-/* 09F444 7F06A914 8FB00018 */  lw    $s0, 0x18($sp)
-/* 09F448 7F06A918 27BD0140 */  addiu $sp, $sp, 0x140
-/* 09F44C 7F06A91C 03E00008 */  jr    $ra
-/* 09F450 7F06A920 00000000 */   nop
-)
-#endif
-#ifdef VERSION_JP
-GLOBAL_ASM(
-.text
-glabel increment_num_kills_display_text_in_MP
-/* 09F2B0 7F06A780 3C038008 */  lui   $v1, %hi(g_playerPerm)
-/* 09F2B4 7F06A784 8C63A0B4 */  lw    $v1, %lo(g_playerPerm)($v1)
-/* 09F2B8 7F06A788 27BDFEC0 */  addiu $sp, $sp, -0x140
-/* 09F2BC 7F06A78C AFBF001C */  sw    $ra, 0x1c($sp)
-/* 09F2C0 7F06A790 AFB00018 */  sw    $s0, 0x18($sp)
-/* 09F2C4 7F06A794 8C6E001C */  lw    $t6, 0x1c($v1)
-/* 09F2C8 7F06A798 3C108008 */  lui   $s0, %hi(g_CurrentPlayer)
-/* 09F2CC 7F06A79C 2610A0B0 */  addiu $s0, %lo(g_CurrentPlayer) # addiu $s0, $s0, -0x5f50
-/* 09F2D0 7F06A7A0 25CF0001 */  addiu $t7, $t6, 1
-/* 09F2D4 7F06A7A4 AC6F001C */  sw    $t7, 0x1c($v1)
-/* 09F2D8 7F06A7A8 8E020000 */  lw    $v0, ($s0)
-/* 09F2DC 7F06A7AC 8C5829F8 */  lw    $t8, 0x29f8($v0)
-/* 09F2E0 7F06A7B0 27190001 */  addiu $t9, $t8, 1
-/* 09F2E4 7F06A7B4 0FC26919 */  jal   getPlayerCount
-/* 09F2E8 7F06A7B8 AC5929F8 */   sw    $t9, 0x29f8($v0)
-/* 09F2EC 7F06A7BC 28410002 */  slti  $at, $v0, 2
-/* 09F2F0 7F06A7C0 54200054 */  bnezl $at, .L7F06A914
-/* 09F2F4 7F06A7C4 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 09F2F8 7F06A7C8 0FC22FEE */  jal   getMissiontimer
-/* 09F2FC 7F06A7CC 00000000 */   nop
-/* 09F300 7F06A7D0 AFA20034 */  sw    $v0, 0x34($sp)
-/* 09F304 7F06A7D4 0FC30776 */  jal   langGet
-/* 09F308 7F06A7D8 340498DA */   li    $a0, 39130
-/* 09F30C 7F06A7DC 3C088008 */  lui   $t0, %hi(g_playerPerm)
-/* 09F310 7F06A7E0 8D08A0B4 */  lw    $t0, %lo(g_playerPerm)($t0)
-/* 09F314 7F06A7E4 3C058005 */  lui   $a1, %hi(aSD)
-/* 09F318 7F06A7E8 24A53BF8 */  addiu $a1, %lo(aSD) # addiu $a1, $a1, 0x3bf8
-/* 09F31C 7F06A7EC 27A40040 */  addiu $a0, $sp, 0x40
-/* 09F320 7F06A7F0 00403025 */  move  $a2, $v0
-/* 09F324 7F06A7F4 0C002B25 */  jal   sprintf
-/* 09F328 7F06A7F8 8D07001C */   lw    $a3, 0x1c($t0)
-/* 09F32C 7F06A7FC 0FC228F2 */  jal   jp_hudmsgBottomShow
-/* 09F330 7F06A800 27A40040 */   addiu $a0, $sp, 0x40
-/* 09F334 7F06A804 3C038008 */  lui   $v1, %hi(g_playerPerm)
-/* 09F338 7F06A808 8C63A0B4 */  lw    $v1, %lo(g_playerPerm)($v1)
-/* 09F33C 7F06A80C 8C69001C */  lw    $t1, 0x1c($v1)
-/* 09F340 7F06A810 29210002 */  slti  $at, $t1, 2
-/* 09F344 7F06A814 54200012 */  bnezl $at, .L7F06A860
-/* 09F348 7F06A818 8E020000 */   lw    $v0, ($s0)
-/* 09F34C 7F06A81C 8E0B0000 */  lw    $t3, ($s0)
-/* 09F350 7F06A820 8FAA0034 */  lw    $t2, 0x34($sp)
-/* 09F354 7F06A824 8C6D0048 */  lw    $t5, 0x48($v1)
-/* 09F358 7F06A828 8D6C29E4 */  lw    $t4, 0x29e4($t3)
-/* 09F35C 7F06A82C 014C1023 */  subu  $v0, $t2, $t4
-/* 09F360 7F06A830 01A2082A */  slt   $at, $t5, $v0
-/* 09F364 7F06A834 50200005 */  beql  $at, $zero, .L7F06A84C
-/* 09F368 7F06A838 8C6E0044 */   lw    $t6, 0x44($v1)
-/* 09F36C 7F06A83C AC620048 */  sw    $v0, 0x48($v1)
-/* 09F370 7F06A840 3C038008 */  lui   $v1, %hi(g_playerPerm)
-/* 09F374 7F06A844 8C63A0B4 */  lw    $v1, %lo(g_playerPerm)($v1)
-/* 09F378 7F06A848 8C6E0044 */  lw    $t6, 0x44($v1)
-.L7F06A84C:
-/* 09F37C 7F06A84C 004E082A */  slt   $at, $v0, $t6
-/* 09F380 7F06A850 50200003 */  beql  $at, $zero, .L7F06A860
-/* 09F384 7F06A854 8E020000 */   lw    $v0, ($s0)
-/* 09F388 7F06A858 AC620044 */  sw    $v0, 0x44($v1)
-/* 09F38C 7F06A85C 8E020000 */  lw    $v0, ($s0)
-.L7F06A860:
-/* 09F390 7F06A860 2406FFFF */  li    $a2, -1
-/* 09F394 7F06A864 24040001 */  li    $a0, 1
-/* 09F398 7F06A868 8C4F29EC */  lw    $t7, 0x29ec($v0)
-/* 09F39C 7F06A86C AC4F29F0 */  sw    $t7, 0x29f0($v0)
-/* 09F3A0 7F06A870 8E020000 */  lw    $v0, ($s0)
-/* 09F3A4 7F06A874 8C5829E8 */  lw    $t8, 0x29e8($v0)
-/* 09F3A8 7F06A878 AC5829EC */  sw    $t8, 0x29ec($v0)
-/* 09F3AC 7F06A87C 8E020000 */  lw    $v0, ($s0)
-/* 09F3B0 7F06A880 8C5929E4 */  lw    $t9, 0x29e4($v0)
-/* 09F3B4 7F06A884 AC5929E8 */  sw    $t9, 0x29e8($v0)
-/* 09F3B8 7F06A888 8E090000 */  lw    $t1, ($s0)
-/* 09F3BC 7F06A88C 8FA80034 */  lw    $t0, 0x34($sp)
-/* 09F3C0 7F06A890 AD2829E4 */  sw    $t0, 0x29e4($t1)
-/* 09F3C4 7F06A894 8E020000 */  lw    $v0, ($s0)
-/* 09F3C8 7F06A898 8C4529E8 */  lw    $a1, 0x29e8($v0)
-/* 09F3CC 7F06A89C 10C50015 */  beq   $a2, $a1, .L7F06A8F4
-/* 09F3D0 7F06A8A0 00000000 */   nop
-/* 09F3D4 7F06A8A4 8C4329E4 */  lw    $v1, 0x29e4($v0)
-/* 09F3D8 7F06A8A8 00655823 */  subu  $t3, $v1, $a1
-/* 09F3DC 7F06A8AC 29610078 */  slti  $at, $t3, 0x78
-/* 09F3E0 7F06A8B0 10200010 */  beqz  $at, .L7F06A8F4
-/* 09F3E4 7F06A8B4 00000000 */   nop
-/* 09F3E8 7F06A8B8 8C4529EC */  lw    $a1, 0x29ec($v0)
-/* 09F3EC 7F06A8BC 24040002 */  li    $a0, 2
-/* 09F3F0 7F06A8C0 10C5000C */  beq   $a2, $a1, .L7F06A8F4
-/* 09F3F4 7F06A8C4 00655023 */   subu  $t2, $v1, $a1
-/* 09F3F8 7F06A8C8 29410078 */  slti  $at, $t2, 0x78
-/* 09F3FC 7F06A8CC 10200009 */  beqz  $at, .L7F06A8F4
-/* 09F400 7F06A8D0 00000000 */   nop
-/* 09F404 7F06A8D4 8C4529F0 */  lw    $a1, 0x29f0($v0)
-/* 09F408 7F06A8D8 24840001 */  addiu $a0, $a0, 1
-/* 09F40C 7F06A8DC 10C50005 */  beq   $a2, $a1, .L7F06A8F4
-/* 09F410 7F06A8E0 00656023 */   subu  $t4, $v1, $a1
-/* 09F414 7F06A8E4 29810078 */  slti  $at, $t4, 0x78
-/* 09F418 7F06A8E8 10200002 */  beqz  $at, .L7F06A8F4
-/* 09F41C 7F06A8EC 00000000 */   nop
-/* 09F420 7F06A8F0 24840001 */  addiu $a0, $a0, 1
-.L7F06A8F4:
-/* 09F424 7F06A8F4 3C038008 */  lui   $v1, %hi(g_playerPerm)
-/* 09F428 7F06A8F8 8C63A0B4 */  lw    $v1, %lo(g_playerPerm)($v1)
-/* 09F42C 7F06A8FC 8C6D0058 */  lw    $t5, 0x58($v1)
-/* 09F430 7F06A900 01A4082A */  slt   $at, $t5, $a0
-/* 09F434 7F06A904 50200003 */  beql  $at, $zero, .L7F06A914
-/* 09F438 7F06A908 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 09F43C 7F06A90C AC640058 */  sw    $a0, 0x58($v1)
-/* 09F440 7F06A910 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F06A914:
-/* 09F444 7F06A914 8FB00018 */  lw    $s0, 0x18($sp)
-/* 09F448 7F06A918 27BD0140 */  addiu $sp, $sp, 0x140
-/* 09F44C 7F06A91C 03E00008 */  jr    $ra
-/* 09F450 7F06A920 00000000 */   nop
-)
-#endif
-
-#ifdef VERSION_EU
-GLOBAL_ASM(
-.text
-glabel increment_num_kills_display_text_in_MP
-/* 09D918 7F06AF28 3C038007 */  lui   $v1, %hi(g_playerPerm) # $v1, 0x8007
-/* 09D91C 7F06AF2C 8C638BC4 */  lw    $v1, %lo(g_playerPerm)($v1)
-/* 09D920 7F06AF30 27BDFEC0 */  addiu $sp, $sp, -0x140
-/* 09D924 7F06AF34 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 09D928 7F06AF38 AFB00018 */  sw    $s0, 0x18($sp)
-/* 09D92C 7F06AF3C 8C6E001C */  lw    $t6, 0x1c($v1)
-/* 09D930 7F06AF40 3C108007 */  lui   $s0, %hi(g_CurrentPlayer) # $s0, 0x8007
-/* 09D934 7F06AF44 26108BC0 */  addiu $s0, %lo(g_CurrentPlayer) # addiu $s0, $s0, -0x7440
-/* 09D938 7F06AF48 25CF0001 */  addiu $t7, $t6, 1
-/* 09D93C 7F06AF4C AC6F001C */  sw    $t7, 0x1c($v1)
-/* 09D940 7F06AF50 8E020000 */  lw    $v0, ($s0)
-/* 09D944 7F06AF54 8C5829F0 */  lw    $t8, 0x29f0($v0)
-/* 09D948 7F06AF58 27190001 */  addiu $t9, $t8, 1
-/* 09D94C 7F06AF5C 0FC26669 */  jal   getPlayerCount
-/* 09D950 7F06AF60 AC5929F0 */   sw    $t9, 0x29f0($v0)
-/* 09D954 7F06AF64 28410002 */  slti  $at, $v0, 2
-/* 09D958 7F06AF68 54200054 */  bnezl $at, .L7F06B0BC
-/* 09D95C 7F06AF6C 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 09D960 7F06AF70 0FC230AB */  jal   getMissiontimer
-/* 09D964 7F06AF74 00000000 */   nop   
-/* 09D968 7F06AF78 AFA20034 */  sw    $v0, 0x34($sp)
-/* 09D96C 7F06AF7C 0FC304AE */  jal   langGet
-/* 09D970 7F06AF80 340498DA */   li    $a0, 39130
-/* 09D974 7F06AF84 3C088007 */  lui   $t0, %hi(g_playerPerm) # $t0, 0x8007
-/* 09D978 7F06AF88 8D088BC4 */  lw    $t0, %lo(g_playerPerm)($t0)
-/* 09D97C 7F06AF8C 3C058005 */  lui   $a1, %hi(aSD) # $a1, 0x8005
-/* 09D980 7F06AF90 24A59D38 */  addiu $a1, %lo(aSD) # addiu $a1, $a1, -0x62c8
-/* 09D984 7F06AF94 27A40040 */  addiu $a0, $sp, 0x40
-/* 09D988 7F06AF98 00403025 */  move  $a2, $v0
-/* 09D98C 7F06AF9C 0C00283D */  jal   sprintf
-/* 09D990 7F06AFA0 8D07001C */   lw    $a3, 0x1c($t0)
-/* 09D994 7F06AFA4 0FC229B5 */  jal   jp_hudmsgBottomShow
-/* 09D998 7F06AFA8 27A40040 */   addiu $a0, $sp, 0x40
-/* 09D99C 7F06AFAC 3C038007 */  lui   $v1, %hi(g_playerPerm) # $v1, 0x8007
-/* 09D9A0 7F06AFB0 8C638BC4 */  lw    $v1, %lo(g_playerPerm)($v1)
-/* 09D9A4 7F06AFB4 8C69001C */  lw    $t1, 0x1c($v1)
-/* 09D9A8 7F06AFB8 29210002 */  slti  $at, $t1, 2
-/* 09D9AC 7F06AFBC 54200012 */  bnezl $at, .L7F06B008
-/* 09D9B0 7F06AFC0 8E020000 */   lw    $v0, ($s0)
-/* 09D9B4 7F06AFC4 8E0B0000 */  lw    $t3, ($s0)
-/* 09D9B8 7F06AFC8 8FAA0034 */  lw    $t2, 0x34($sp)
-/* 09D9BC 7F06AFCC 8C6D0048 */  lw    $t5, 0x48($v1)
-/* 09D9C0 7F06AFD0 8D6C29DC */  lw    $t4, 0x29dc($t3)
-/* 09D9C4 7F06AFD4 014C1023 */  subu  $v0, $t2, $t4
-/* 09D9C8 7F06AFD8 01A2082A */  slt   $at, $t5, $v0
-/* 09D9CC 7F06AFDC 50200005 */  beql  $at, $zero, .L7F06AFF4
-/* 09D9D0 7F06AFE0 8C6E0044 */   lw    $t6, 0x44($v1)
-/* 09D9D4 7F06AFE4 AC620048 */  sw    $v0, 0x48($v1)
-/* 09D9D8 7F06AFE8 3C038007 */  lui   $v1, %hi(g_playerPerm) # $v1, 0x8007
-/* 09D9DC 7F06AFEC 8C638BC4 */  lw    $v1, %lo(g_playerPerm)($v1)
-/* 09D9E0 7F06AFF0 8C6E0044 */  lw    $t6, 0x44($v1)
-.L7F06AFF4:
-/* 09D9E4 7F06AFF4 004E082A */  slt   $at, $v0, $t6
-/* 09D9E8 7F06AFF8 50200003 */  beql  $at, $zero, .L7F06B008
-/* 09D9EC 7F06AFFC 8E020000 */   lw    $v0, ($s0)
-/* 09D9F0 7F06B000 AC620044 */  sw    $v0, 0x44($v1)
-/* 09D9F4 7F06B004 8E020000 */  lw    $v0, ($s0)
-.L7F06B008:
-/* 09D9F8 7F06B008 2406FFFF */  li    $a2, -1
-/* 09D9FC 7F06B00C 24040001 */  li    $a0, 1
-/* 09DA00 7F06B010 8C4F29E4 */  lw    $t7, 0x29e4($v0)
-/* 09DA04 7F06B014 AC4F29E8 */  sw    $t7, 0x29e8($v0)
-/* 09DA08 7F06B018 8E020000 */  lw    $v0, ($s0)
-/* 09DA0C 7F06B01C 8C5829E0 */  lw    $t8, 0x29e0($v0)
-/* 09DA10 7F06B020 AC5829E4 */  sw    $t8, 0x29e4($v0)
-/* 09DA14 7F06B024 8E020000 */  lw    $v0, ($s0)
-/* 09DA18 7F06B028 8C5929DC */  lw    $t9, 0x29dc($v0)
-/* 09DA1C 7F06B02C AC5929E0 */  sw    $t9, 0x29e0($v0)
-/* 09DA20 7F06B030 8E090000 */  lw    $t1, ($s0)
-/* 09DA24 7F06B034 8FA80034 */  lw    $t0, 0x34($sp)
-/* 09DA28 7F06B038 AD2829DC */  sw    $t0, 0x29dc($t1)
-/* 09DA2C 7F06B03C 8E020000 */  lw    $v0, ($s0)
-/* 09DA30 7F06B040 8C4529E0 */  lw    $a1, 0x29e0($v0)
-/* 09DA34 7F06B044 10C50015 */  beq   $a2, $a1, .L7F06B09C
-/* 09DA38 7F06B048 00000000 */   nop   
-/* 09DA3C 7F06B04C 8C4329DC */  lw    $v1, 0x29dc($v0)
-/* 09DA40 7F06B050 00655823 */  subu  $t3, $v1, $a1
-/* 09DA44 7F06B054 29610078 */  slti  $at, $t3, 0x78
-/* 09DA48 7F06B058 10200010 */  beqz  $at, .L7F06B09C
-/* 09DA4C 7F06B05C 00000000 */   nop   
-/* 09DA50 7F06B060 8C4529E4 */  lw    $a1, 0x29e4($v0)
-/* 09DA54 7F06B064 24040002 */  li    $a0, 2
-/* 09DA58 7F06B068 10C5000C */  beq   $a2, $a1, .L7F06B09C
-/* 09DA5C 7F06B06C 00655023 */   subu  $t2, $v1, $a1
-/* 09DA60 7F06B070 29410078 */  slti  $at, $t2, 0x78
-/* 09DA64 7F06B074 10200009 */  beqz  $at, .L7F06B09C
-/* 09DA68 7F06B078 00000000 */   nop   
-/* 09DA6C 7F06B07C 8C4529E8 */  lw    $a1, 0x29e8($v0)
-/* 09DA70 7F06B080 24840001 */  addiu $a0, $a0, 1
-/* 09DA74 7F06B084 10C50005 */  beq   $a2, $a1, .L7F06B09C
-/* 09DA78 7F06B088 00656023 */   subu  $t4, $v1, $a1
-/* 09DA7C 7F06B08C 29810078 */  slti  $at, $t4, 0x78
-/* 09DA80 7F06B090 10200002 */  beqz  $at, .L7F06B09C
-/* 09DA84 7F06B094 00000000 */   nop   
-/* 09DA88 7F06B098 24840001 */  addiu $a0, $a0, 1
-.L7F06B09C:
-/* 09DA8C 7F06B09C 3C038007 */  lui   $v1, %hi(g_playerPerm) # $v1, 0x8007
-/* 09DA90 7F06B0A0 8C638BC4 */  lw    $v1, %lo(g_playerPerm)($v1)
-/* 09DA94 7F06B0A4 8C6D0058 */  lw    $t5, 0x58($v1)
-/* 09DA98 7F06B0A8 01A4082A */  slt   $at, $t5, $a0
-/* 09DA9C 7F06B0AC 50200003 */  beql  $at, $zero, .L7F06B0BC
-/* 09DAA0 7F06B0B0 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 09DAA4 7F06B0B4 AC640058 */  sw    $a0, 0x58($v1)
-/* 09DAA8 7F06B0B8 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F06B0BC:
-/* 09DAAC 7F06B0BC 8FB00018 */  lw    $s0, 0x18($sp)
-/* 09DAB0 7F06B0C0 27BD0140 */  addiu $sp, $sp, 0x140
-/* 09DAB4 7F06B0C4 03E00008 */  jr    $ra
-/* 09DAB8 7F06B0C8 00000000 */   nop   
-)
-#endif
 
 
-#endif
 
 s32 get_curplay_killcount(void) {
     return g_playerPerm->kill_count;
@@ -33619,7 +33247,7 @@ void *increment_num_suicides_display_MP(void) {
         if (g_playerPerm->killcount >= 2)
         {
             // Node 2
-            temp_v1 = (sp34 - g_CurrentPlayer->last_kill_time);
+            temp_v1 = (sp34 - g_CurrentPlayer->last_kill_time[0]);
             if (g_playerPerm->slowest2kills < temp_v1)
             {
                 // Node 3
@@ -33635,14 +33263,14 @@ void *increment_num_suicides_display_MP(void) {
         // Node 6
         g_CurrentPlayer->unk29F0 = (s32) g_CurrentPlayer->unk29EC;
         g_CurrentPlayer->unk29EC = (s32) g_CurrentPlayer->unk29E8;
-        g_CurrentPlayer->unk29E8 = (s32) g_CurrentPlayer->last_kill_time;
-        g_CurrentPlayer->last_kill_time = sp34;
+        g_CurrentPlayer->unk29E8 = (s32) g_CurrentPlayer->last_kill_time[0];
+        g_CurrentPlayer->last_kill_time[0] = sp34;
         phi_v1 = 1;
         if (-1 != g_CurrentPlayer->unk29E8)
         {
             // Node 7
             phi_v1 = 1;
-            if ((g_CurrentPlayer->last_kill_time - g_CurrentPlayer->unk29E8) < 0x78)
+            if ((g_CurrentPlayer->last_kill_time[0] - g_CurrentPlayer->unk29E8) < 0x78)
             {
                 // Node 8
                 phi_v1 = 2;
@@ -33650,7 +33278,7 @@ void *increment_num_suicides_display_MP(void) {
                 {
                     // Node 9
                     phi_v1 = 2;
-                    if ((g_CurrentPlayer->last_kill_time - g_CurrentPlayer->unk29EC) < 0x78)
+                    if ((g_CurrentPlayer->last_kill_time[0] - g_CurrentPlayer->unk29EC) < 0x78)
                     {
                         // Node 10
                         temp_v1_2 = (2 + 1);
@@ -33659,7 +33287,7 @@ void *increment_num_suicides_display_MP(void) {
                         {
                             // Node 11
                             phi_v1 = temp_v1_2;
-                            if ((g_CurrentPlayer->last_kill_time - g_CurrentPlayer->unk29F0) < 0x78)
+                            if ((g_CurrentPlayer->last_kill_time[0] - g_CurrentPlayer->unk29F0) < 0x78)
                             {
                                 // Node 12
                                 phi_v1 = (temp_v1_2 + 1);

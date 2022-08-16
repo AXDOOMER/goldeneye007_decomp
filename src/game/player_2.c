@@ -448,10 +448,10 @@ void initBONDdataforPlayer(PLAYER_ID player)
     (*ppPVar3)->deathcount = 0;
     (*ppPVar3)->field_29E0 = random_byte;
     random_byte = random_byte + 1;
-    (*ppPVar3)->field_29E4 = -1;
-    (*ppPVar3)->field_29E8 = -1;
-    (*ppPVar3)->field_29EC = -1;
-    (*ppPVar3)->field_29F0 = -1;
+    (*ppPVar3)->last_kill_time[0] = -1;
+    (*ppPVar3)->last_kill_time[1] = -1;
+    (*ppPVar3)->last_kill_time[2] = -1;
+    (*ppPVar3)->last_kill_time[3] = -1;
     (*ppPVar3)->healthdisplaytime = 0;
     (*ppPVar3)->field_2A30 = 0;
     (*ppPVar3)->field_2A34 = 0;

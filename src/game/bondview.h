@@ -2679,10 +2679,7 @@ struct player
   s32 deathcount;
   s32 num_suicides;
   s32 field_29E0;
-  s32 last_kill_time;
-  s32 field_29E8;
-  s32 field_29EC;
-  s32 field_29F0;
+  s32 last_kill_time[4];
 
   /**
    * Holds mission offset timer value.
