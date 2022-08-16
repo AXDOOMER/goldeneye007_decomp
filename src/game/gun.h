@@ -183,6 +183,33 @@ typedef struct WeaponStats
     u32 BitFlags;
 } WeaponStats;
 
+typedef struct AmmoStats {
+    /**
+     * The maximum amount of ammo.
+     */
+    u32 MaxAmmo;
+
+    /**
+     * Unknown (field 0x04).
+     */
+    u16 field_04;
+
+    /**
+     * Unknown (field 0x06).
+     */
+    u16 field_06;
+
+    /**
+     * Unknown (field 0x08).
+     */
+    u16 field_08;
+
+    /**
+     * Unknown (field 0x0A).
+     */
+    u16 field_0A;
+} AmmoStats;
+
 typedef struct GunModelFileRecord
 {
   ModelFileHeader * item_header;
