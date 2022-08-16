@@ -31664,126 +31664,33 @@ s32 get_ammo_in_hands_magazine(GUNHAND hand) {
 }
 
 
-#ifdef NONMATCHING
-void get_ammo_in_hands_weapon(void) {
 
+s32 get_ammo_in_hands_weapon(enum GUNHAND hand)
+{
+    s32 weapon_id;
+    s32 ammo_count;
+
+    weapon_id = getCurrentPlayerWeaponId(hand);
+    ammo_count = get_ammo_count_for_weapon(weapon_id);
+
+    if ((weapon_id == ITEM_SHOTGUN) || (weapon_id == ITEM_AUTOSHOT))
+    {
+        s32 other_weapon_id;
+        other_weapon_id = getCurrentPlayerWeaponId(1 - hand);
+
+        if ((other_weapon_id == ITEM_SHOTGUN) || (other_weapon_id == ITEM_AUTOSHOT))
+        {
+            return ammo_count - g_CurrentPlayer->hands[1 - hand].field_8A4;
+        }
+
+        /* I don't know why there's an extra return here, but it's needed to match */
+        return ammo_count;
+    }
+
+    return ammo_count;
 }
-#else
 
-#if defined(VERSION_US) || defined(VERSION_JP)
-GLOBAL_ASM(
-.text
-glabel get_ammo_in_hands_weapon
-/* 09DEA4 7F069374 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 09DEA8 7F069378 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09DEAC 7F06937C 0FC17674 */  jal   getCurrentPlayerWeaponId
-/* 09DEB0 7F069380 AFA40020 */   sw    $a0, 0x20($sp)
-/* 09DEB4 7F069384 00402025 */  move  $a0, $v0
-/* 09DEB8 7F069388 0FC1A514 */  jal   get_ammo_count_for_weapon
-/* 09DEBC 7F06938C AFA2001C */   sw    $v0, 0x1c($sp)
-/* 09DEC0 7F069390 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 09DEC4 7F069394 2401000F */  li    $at, 15
-/* 09DEC8 7F069398 00402825 */  move  $a1, $v0
-/* 09DECC 7F06939C 10610004 */  beq   $v1, $at, .L7F0693B0
-/* 09DED0 7F0693A0 8FAE0020 */   lw    $t6, 0x20($sp)
-/* 09DED4 7F0693A4 24010010 */  li    $at, 16
-/* 09DED8 7F0693A8 1461001C */  bne   $v1, $at, .L7F06941C
-/* 09DEDC 7F0693AC 00A01025 */   move  $v0, $a1
-.L7F0693B0:
-/* 09DEE0 7F0693B0 240F0001 */  li    $t7, 1
-/* 09DEE4 7F0693B4 01EE2023 */  subu  $a0, $t7, $t6
-/* 09DEE8 7F0693B8 0FC17674 */  jal   getCurrentPlayerWeaponId
-/* 09DEEC 7F0693BC AFA50018 */   sw    $a1, 0x18($sp)
-/* 09DEF0 7F0693C0 2401000F */  li    $at, 15
-/* 09DEF4 7F0693C4 10410004 */  beq   $v0, $at, .L7F0693D8
-/* 09DEF8 7F0693C8 8FA50018 */   lw    $a1, 0x18($sp)
-/* 09DEFC 7F0693CC 24010010 */  li    $at, 16
-/* 09DF00 7F0693D0 14410010 */  bne   $v0, $at, .L7F069414
-/* 09DF04 7F0693D4 00000000 */   nop
-.L7F0693D8:
-/* 09DF08 7F0693D8 8FB90020 */  lw    $t9, 0x20($sp)
-/* 09DF0C 7F0693DC 3C188008 */  lui   $t8, %hi(g_CurrentPlayer)
-/* 09DF10 7F0693E0 8F18A0B0 */  lw    $t8, %lo(g_CurrentPlayer)($t8)
-/* 09DF14 7F0693E4 001940C0 */  sll   $t0, $t9, 3
-/* 09DF18 7F0693E8 01194023 */  subu  $t0, $t0, $t9
-/* 09DF1C 7F0693EC 00084080 */  sll   $t0, $t0, 2
-/* 09DF20 7F0693F0 01194021 */  addu  $t0, $t0, $t9
-/* 09DF24 7F0693F4 00084080 */  sll   $t0, $t0, 2
-/* 09DF28 7F0693F8 01194021 */  addu  $t0, $t0, $t9
-/* 09DF2C 7F0693FC 000840C0 */  sll   $t0, $t0, 3
-/* 09DF30 7F069400 00084823 */  negu  $t1, $t0
-/* 09DF34 7F069404 03095021 */  addu  $t2, $t8, $t1
-/* 09DF38 7F069408 8D4B0C4C */  lw    $t3, 0xc4c($t2)
-/* 09DF3C 7F06940C 10000003 */  b     .L7F06941C
-/* 09DF40 7F069410 00AB1023 */   subu  $v0, $a1, $t3
-.L7F069414:
-/* 09DF44 7F069414 10000001 */  b     .L7F06941C
-/* 09DF48 7F069418 00A01025 */   move  $v0, $a1
-.L7F06941C:
-/* 09DF4C 7F06941C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09DF50 7F069420 27BD0020 */  addiu $sp, $sp, 0x20
-/* 09DF54 7F069424 03E00008 */  jr    $ra
-/* 09DF58 7F069428 00000000 */   nop
-)
-#endif
 
-#if defined(VERSION_EU)
-GLOBAL_ASM(
-.text
-glabel get_ammo_in_hands_weapon
-/* 09C4F8 7F069B08 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 09C4FC 7F069B0C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09C500 7F069B10 0FC177A2 */  jal   getCurrentPlayerWeaponId
-/* 09C504 7F069B14 AFA40020 */   sw    $a0, 0x20($sp)
-/* 09C508 7F069B18 00402025 */  move  $a0, $v0
-/* 09C50C 7F069B1C 0FC1A6F9 */  jal   get_ammo_count_for_weapon
-/* 09C510 7F069B20 AFA2001C */   sw    $v0, 0x1c($sp)
-/* 09C514 7F069B24 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 09C518 7F069B28 2401000F */  li    $at, 15
-/* 09C51C 7F069B2C 00402825 */  move  $a1, $v0
-/* 09C520 7F069B30 10610004 */  beq   $v1, $at, .Leu7F069B44
-/* 09C524 7F069B34 8FAE0020 */   lw    $t6, 0x20($sp)
-/* 09C528 7F069B38 24010010 */  li    $at, 16
-/* 09C52C 7F069B3C 1461001C */  bne   $v1, $at, .L7F069BB0
-/* 09C530 7F069B40 00A01025 */   move  $v0, $a1
-.Leu7F069B44:
-/* 09C534 7F069B44 240F0001 */  li    $t7, 1
-/* 09C538 7F069B48 01EE2023 */  subu  $a0, $t7, $t6
-/* 09C53C 7F069B4C 0FC177A2 */  jal   getCurrentPlayerWeaponId
-/* 09C540 7F069B50 AFA50018 */   sw    $a1, 0x18($sp)
-/* 09C544 7F069B54 2401000F */  li    $at, 15
-/* 09C548 7F069B58 10410004 */  beq   $v0, $at, .L7F069B6C
-/* 09C54C 7F069B5C 8FA50018 */   lw    $a1, 0x18($sp)
-/* 09C550 7F069B60 24010010 */  li    $at, 16
-/* 09C554 7F069B64 14410010 */  bne   $v0, $at, .L7F069BA8
-/* 09C558 7F069B68 00000000 */   nop   
-.L7F069B6C:
-/* 09C55C 7F069B6C 8FB90020 */  lw    $t9, 0x20($sp)
-/* 09C560 7F069B70 3C188007 */  lui   $t8, %hi(g_CurrentPlayer) # $t8, 0x8007
-/* 09C564 7F069B74 8F188BC0 */  lw    $t8, %lo(g_CurrentPlayer)($t8)
-/* 09C568 7F069B78 001940C0 */  sll   $t0, $t9, 3
-/* 09C56C 7F069B7C 01194023 */  subu  $t0, $t0, $t9
-/* 09C570 7F069B80 00084080 */  sll   $t0, $t0, 2
-/* 09C574 7F069B84 01194021 */  addu  $t0, $t0, $t9
-/* 09C578 7F069B88 00084080 */  sll   $t0, $t0, 2
-/* 09C57C 7F069B8C 01194021 */  addu  $t0, $t0, $t9
-/* 09C580 7F069B90 000840C0 */  sll   $t0, $t0, 3
-/* 09C584 7F069B94 00084823 */  negu  $t1, $t0
-/* 09C588 7F069B98 03095021 */  addu  $t2, $t8, $t1
-/* 09C58C 7F069B9C 8D4B0C44 */  lw    $t3, 0xc44($t2)
-/* 09C590 7F069BA0 10000003 */  b     .L7F069BB0
-/* 09C594 7F069BA4 00AB1023 */   subu  $v0, $a1, $t3
-.L7F069BA8:
-/* 09C598 7F069BA8 10000001 */  b     .L7F069BB0
-/* 09C59C 7F069BAC 00A01025 */   move  $v0, $a1
-.L7F069BB0:
-/* 09C5A0 7F069BB0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09C5A4 7F069BB4 27BD0020 */  addiu $sp, $sp, 0x20
-/* 09C5A8 7F069BB8 03E00008 */  jr    $ra
-/* 09C5AC 7F069BBC 00000000 */   nop   
-)
-#endif
-#endif
 
 s32 get_ammo_type_for_weapon(ITEM_IDS weapon) {
     return get_ptr_item_statistics(weapon)->AmmoType;
