@@ -365,8 +365,8 @@ void initBONDdataforPlayer(PLAYER_ID player)
     (*ppPVar3)->field_FF0 = 0.00000000;
     (*ppPVar3)->field_FF4 = 0.00000000;
     (*ppPVar3)->guncrossdamp = 0.89999998;
-    (*ppPVar3)->field_FFC = 0.00000000;
-    (*ppPVar3)->field_1000 = 0.00000000;
+    (*ppPVar3)->field_FFC.x = 0.00000000;
+    (*ppPVar3)->field_FFC.y = 0.00000000;
     (*ppPVar3)->field_1004 = 0.00000000;
     (*ppPVar3)->field_1008 = 0.00000000;
     (*ppPVar3)->gunaimdamp = 0.89999998;

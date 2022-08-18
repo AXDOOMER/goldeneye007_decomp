@@ -1086,8 +1086,7 @@ struct player
   f32 crosshair_x_pos;
   f32 crosshair_y_pos;
   f32 guncrossdamp;
-  f32 field_FFC;
-  f32 field_1000;
+  coord2d field_FFC;
   f32 gun_azimuth_angle;
   f32 gun_azimuth_turning;
   f32 gunaimdamp;
