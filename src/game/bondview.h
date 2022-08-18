@@ -228,11 +228,11 @@ struct hand
   s32 field_A74;
   s32 field_A78;
   s32 field_A7C;
-  s32 noise;
+  f32 noise;
   s32 field_A84;
   s32 field_A88;
   s32 field_A8C;
-  s32 field_A90;
+  ObjectRecord* field_A90;
   s32 field_A94;
   s32 field_A98;
   s32 field_A9C;
@@ -601,15 +601,15 @@ struct player
   */
   s32 outside_watch_menu;
   s32 open_close_solo_watch_menu;
-  s32 field_1D4;
-  s32 field_1D8;
-  s32 pause_watch_position;
-  s32 field_1E0;
-  s32 field_1E4;
-  s32 field_1E8;
-  s32 field_1EC;
-  s32 field_1F0;
-  s32 field_1F4;
+  f32 field_1D4;
+  f32 field_1D8;
+  f32 pause_watch_position;
+  f32 field_1E0;
+  f32 field_1E4;
+  f32 field_1E8;
+  f32 field_1EC;
+  f32 field_1F0;
+  f32 field_1F4;
   s32 field_1F8;
   s32 field_1FC;
   /**
@@ -803,9 +803,9 @@ struct player
   struct collision434 previous_collision_info;
   struct collision434 field_488;
 
-  u32 resetheadpos; // bool
-  u32 resetheadrot; // bool
-  u32 resetheadtick; // bool 0x4e4
+  s32 resetheadpos; // bool
+  s32 resetheadrot; // bool
+  s32 resetheadtick; // bool 0x4e4
 
   s32 headanim; // index into array of pointers. Pointers are for animations.
 
@@ -1086,30 +1086,12 @@ struct player
   f32 crosshair_x_pos;
   f32 crosshair_y_pos;
   f32 guncrossdamp;
-  f32 field_FFC;
-  f32 field_1000;
+  coord2d field_FFC;
   f32 gun_azimuth_angle;
   f32 gun_azimuth_turning;
   f32 gunaimdamp;
-  f32 field_1010;
-  f32 holds_neg_pi;
-  f32 field_1018;
-  s32 field_101C;
-  s32 field_1020;
-  s32 field_1024;
-  s32 field_1028;
-  s32 field_102C;
-  s32 field_1030;
-  s32 field_1034;
-  s32 field_1038;
-  s32 field_103C;
-  s32 field_1040;
-  s32 field_1044;
-  s32 field_1048;
-  s32 field_104C;
-  s32 field_1050;
-  s32 field_1054;
-  s32 field_1058;
+  coord3d field_1010;
+  Mtxf field_101C;
   s32 last_z_trigger_timer;
   s32 copiedgoldeneye;
   s32 ammodispflags;
@@ -1236,10 +1218,10 @@ struct player
   s32 gunsightmode;
   s32 field_112C;
   s32 ammoheldarr[30];
-  u8 *field_11A8;
-  u8 *field_11AC;
-  u8 *field_11B0[2];
-  s32 field_11B8;
+  u8 *bloodImgCur;
+  u8 *bloodImgNxt;
+  u8 *bloodImgBufPtrArray[2];
+  s32 bloodImgIdx;
   f32 zoomintime;
   f32 zoomintimemax;
   f32 zoominfovy;
@@ -1260,9 +1242,9 @@ struct player
   f32 swaytarget;
   f32 field_1278;
   f32 field_127C;
-  s32 field_1280;
+  f32 field_1280;
   s32 players_cur_animation;
-  s32 field_1288;
+  f32 field_1288;
 
   /**
    * This buffers button presses.
@@ -2679,7 +2661,7 @@ struct player
   s32 field_29B4;
 
   // Alt field_29C0 ?? Used in EU.
-  f32 field_29B8;
+  s32 field_29B8;
 
   /**
    * Related to player perspective.
@@ -2696,10 +2678,7 @@ struct player
   s32 deathcount;
   s32 num_suicides;
   s32 field_29E0;
-  s32 last_kill_time;
-  s32 field_29E8;
-  s32 field_29EC;
-  s32 field_29F0;
+  s32 last_kill_time[4];
 
   /**
    * Holds mission offset timer value.
@@ -2772,6 +2751,38 @@ struct struct_4 {
     float anonymous_2;
     float anonymous_3;
 };
+
+#ifdef BUGFIX_R0
+typedef struct bondstruct_unk_80036634
+{
+    u32 field_0x0;
+    u32 field_0x4;
+    u32 field_0x8;
+    f32 field_0xC;
+    u32 field_0x10;
+    u32 field_0x14;
+    u32 field_0x18;
+    f32 field_0x1c;
+    u32 field_0x20;
+    u32 field_0x24;
+    u32 field_0x28;
+} bondstruct_unk_80036634;
+#else
+typedef struct bondstruct_unk_80036634
+{
+    u32 field_0x0;
+    f32 field_0x4;
+    f32 field_0x8;
+    f32 field_0xC;
+    u32 field_0x10;
+    f32 field_0x14;
+    f32 field_0x18;
+    f32 field_0x1c;
+    u32 field_0x20;
+    u32 field_0x24;
+    u32 field_0x28;
+} bondstruct_unk_80036634;
+#endif
 
 //D:80036424
 extern s32 g_bondviewForceDisarm;
@@ -2910,7 +2921,7 @@ D:80036624                     .word 0xFFFFFF00, 0xFFFFFF00, 0x4FFFFFF
 //D:80036630
 extern u32 D_80036630;
 //D:80036634
-extern u32 D_80036634[];
+extern bondstruct_unk_80036634 D_80036634[];
 /*
 D:80036638                     .byte 0
 D:80036639                     .byte 0, 0, 0xA

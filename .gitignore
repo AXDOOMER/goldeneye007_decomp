@@ -64,7 +64,7 @@ tools/gzipsrc/gzip
 tools/gzipsrc/*.o
 tools/report/report
 /StructLayoutSettings.json
-
+bin/*
 
 
 assets/obseg/text/e/LameP.c
@@ -154,3 +154,15 @@ tools/report/JPN.htm
 tools/gaudio/*
 bondtypes_AI.h
 baserom*
+assets/images/split/png/*
+acpp_c.c
+as1_c.c
+cc_c.c
+cfe_c.c
+copt_c.c
+ugen_c.c
+ujoin_c.c
+uld_c.c
+umerge_c.c
+uopt_c.c
+usplit_c.c

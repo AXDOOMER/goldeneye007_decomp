@@ -4,7 +4,7 @@
 
 #include <bondtypes.h>
 
-
+#define CHRAI_TICKRATE_F 60.0f
 
 /*
 Stop Scolling:
@@ -498,7 +498,7 @@ void          chrpropRegisterRooms(PropRecord *posData);
 
 void          chrpropActivate(PropRecord *);
 void          chrpropEnable(PropRecord *);
-void          chrpropActivateThisFrame(Model *);
+void          chrpropActivateThisFrame(PropRecord *);
 void          chrpropReparent(PropRecord *newChild, PropRecord *host);
 AIRecord     *ailistFindById(s32 ID);
 void          chraiGetCollisionBounds(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *arg3, f32 *arg4);

@@ -1236,7 +1236,7 @@ typedef union
 
             s8                gunhand; // used by ACT_STAND
             s8                unk25;
-            s8                unk26;
+            s8                animlooping; /*0x26*/
             s8                unk27;
 
             f32               unk28; // animation related
@@ -1255,14 +1255,13 @@ typedef union
             s16               frameb;
             s32               unk34;
             s32               unk38;
-            s32               unk3c;
-            // 0x40
-            f32               unk40;
-            s32               unk44;
-            s32               unk48;
-            s32               unk4c;
-            // 0x50
-            s32               unk50;
+            f32               unk3c;
+
+            f32               speed; /*0x40*/
+            f32               newspeed; /*0x44*/
+            f32               oldspeed; /*0x48*/
+            f32               timespeed; /*0x4C*/
+            f32               elapsespeed; /*0x50*/
 
             ModelAnimation   *anim2;
 
@@ -1283,12 +1282,12 @@ typedef union
 
             s32               unk64;
             s32               unk68;
-            s32               unk6c;
+            f32               unk6c;
             // 0x70
-            s32               unk70;
+            f32               unk70;
             s32               unk74;
             s32               unk78;
-            s32               unk7c;
+            f32               unk7c;
             // 0x80
             s32               unk80;
 
@@ -1297,21 +1296,21 @@ typedef union
             */
             f32               unk84;
 
-            s32               unk88;
+            f32               unk88;
             s32               unk8c;
             // 0x90
-            s32               unk90;
-            s32               unk94;
-            s32               unk98;
+            f32               animloopframe; /*0x90*/
+            f32               animloopmerge; /*0x94*/
+            s32               animflipfunc; /*0x98*/
             s32               unk9c;
             // 0xa0
             s32               unka0;
             f32               unka4; // used by ACT_STAND in chrlv
-            s32               unka8;
-            s32               unkac;
+            f32               animrate;
+            f32               unkac;
             // 0xb0
-            s32               unkb0;
-            s32               unkb4;
+            f32               unkb0;
+            f32               unkb4;
             f32               unkb8; // used by ACT_ANIM in chrlv
             s32               unkbc;
         } Model;
@@ -2060,7 +2059,7 @@ typedef union
 
         u32                  unka0;
         u32                  unka4;
-        u32                  unka8;
+        u32                  animrate;
         u32                  unkac;
 
         f32                  unkb0; // runtime y position?
@@ -3563,7 +3562,9 @@ struct SetupIntroCredits
         enum WATCH_BRIEFING_PAGE       menu;//4
         u16                            reserved;//8
         u16                            text; //a
-        struct watchMenuObjectiveText *nextentry; //c
+        u16                            unkC; //c
+        s8                             unkD; //d
+        s8                             difficulty; //f
     };
 #pragma endregion Objectives
 
@@ -3594,7 +3595,7 @@ struct SetupIntroCredits
             waypoint       *pathwaypoints;
             waygroup       *waypointgroups;
             struct SetupIntroEmpty *intro;
-            s32            *propDefs;
+            PropDefHeaderRecord    *propDefs;
             PathRecord     *patrolpaths;
             AIListRecord   *ailists;
             PadRecord      *pads;

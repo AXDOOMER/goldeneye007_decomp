@@ -35,6 +35,7 @@ The requirements for Debian / Ubuntu should be:
 ```bash
 sudo apt-get update
 sudo apt-get install binutils-mips-linux-gnu make git python3
+sudo apt-get install libcapstone-dev pkg-config
 ```
 
 If you don't have host development tools already installed then you will also need to install `build-essential`:
@@ -49,14 +50,15 @@ Additionally [qemu-irix](https://github.com/n64decomp/qemu-irix/releases) is nee
 sudo dpkg -i qemu-irix-2.11.0-2169-g32ab296eef_amd64.deb
 ```
 
-**Optional:** For increased compile speed you may recompile ido for your platform:
+#### Step 2: Recompile IDO
+
+Recompile IDO for your platform for increased compile speed
 ```bash
-sudo apt install libcapstone-dev pkg-config
 cd tools/ido5.3_recomp 
 make
 ```
 
-#### Step 2: Clone the repository
+#### Step 3: Clone the repository
 
 Clone this repository where you wish to have the project, with a command such as:
 
@@ -64,7 +66,7 @@ Clone this repository where you wish to have the project, with a command such as
 git clone https://github.com/kholdfuzion/goldeneye_src
 ```
 
-#### Step 3: Prepare baserom(s) for asset extraction
+#### Step 4: Prepare baserom(s) for asset extraction
 
 Place an unmodified copy of your existing NTSC (US) ROM inside the root of this repository with the name `baserom.u.z64`.
 
@@ -126,17 +128,13 @@ make VERSION=JP -j4       # build JP version instead with 4 jobs
 make VERSION=EU COMPARE=0 # build PAL (EU) version but do not compare ROM hashes
 ```
 
-Note: If you recompiled IDO in Step 1, you must use `IDO_RECOMP` flag:
-
-```bash
-make IDO_RECOMP=YES VERSION=US -j
-```
-
 The full list of configurable variables are listed below, with the default being the first listed:
 
 * ``VERSION``: ``US``, ``JP``, ``EU``
 * ``COMPARE``: ``1`` (compare ROM hash), ``0`` (do not compare ROM hash)
-* ``IDO_RECOMP``: ``NO``, ``YES``
+* ``IDO_RECOMP``: ``YES`` (build with IDO recomp), ``NO`` (build using [qemu-irix](https://github.com/n64decomp/qemu-irix/releases))
+* ``FINAL``: ``YES`` (builds final version with -O2 optimization), ``NO`` (debug)
+* ``VERBOSE``: ``0`` (quiet), ``1``
 
 Additional documentation of the build process can be found [here](readme-build.md).
 

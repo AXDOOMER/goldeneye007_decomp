@@ -793,7 +793,7 @@ glabel likely_generate_DL_for_image_declaration
 /* 0AB978 7F076E48 2C410BB9 */  sltiu $at, $v0, 0xbb9
 /* 0AB97C 7F076E4C 10200004 */  beqz  $at, .L7F076E60
 /* 0AB980 7F076E50 02E02025 */   move  $a0, $s7
-/* 0AB984 7F076E54 0FC32F06 */  jal   load_image_to_buffer
+/* 0AB984 7F076E54 0FC32F06 */  jal   texLoad
 /* 0AB988 7F076E58 00002825 */   move  $a1, $zero
 /* 0AB98C 7F076E5C 8EE20000 */  lw    $v0, ($s7)
 .L7F076E60:

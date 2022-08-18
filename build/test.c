@@ -3740,12 +3740,12 @@ float M315             = DegToRad(315.00001);
 u16 * g_DebugOutputVideoBuffer1 = NULL;
 u16 * g_DebugOutputVideoBuffer2 = NULL;
 
-void  deboutSetBuffers(u16 *buffer1, u16 *buffer2)
+void  crashSetBuffers(u16 *buffer1, u16 *buffer2)
 {
     g_DebugOutputVideoBuffer1 = (void*)K0_TO_K1(buffer1);
     g_DebugOutputVideoBuffer2 = (void*)K0_TO_K1(buffer2);
 }
-void deboutSetBuffers2(u16 *buffer1, u16 *buffer2)
+void crashSetBuffers2(u16 *buffer1, u16 *buffer2)
 {
     g_DebugOutputVideoBuffer1 = OS_PHYSICAL_TO_K1(buffer1);
     g_DebugOutputVideoBuffer2 = OS_PHYSICAL_TO_K1(buffer2);

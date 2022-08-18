@@ -149,17 +149,17 @@ void load_object_fill_header(struct ModelFileHeader *objheader, s8 *name, s32 ta
 
     if (targetloc != 0)
     {
-        phi_v0 = _load_resource_named_to_buffer(name, 0, (s32 *) targetloc, sizeleft);
+        phi_v0 = _load_resource_named_to_buffer(name, 0, targetloc, sizeleft);
     }
     else
     {
-        phi_v0 = _load_resource_named_to_membank(name, 0, 0x100, 4U);
+        phi_v0 = _load_resource_named_to_membank(name, 0, 0x100, 4);
     }
     objheader->Switches = phi_v0;
     objheader->Textures = &phi_v0[objheader->numSwitches];
     objheader->RootNode = objheader->Textures + (objheader->numtextures * 0xC);
     sub_GAME_7F075A90(objheader, 0x5000000, phi_v0);
-    sub_GAME_7F0762E0(objheader, (u8 *) name, targetloc, (u32 *) buffer);
+    sub_GAME_7F0762E0(objheader, name, targetloc, buffer);
 }
 
 #else

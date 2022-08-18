@@ -443,63 +443,36 @@ u32 dummy_08_pp7_obj[] = {
 };
 //D:80036630
 u32 D_80036630 = 0;
-#ifdef BUGFIX_R1
+
+
 //D:80036634
-u32 D_80036634[] = {
-           0x0,    0x41200000,    0x42700000,    0x3F19999A,
-           0x0,    0x40A00000,    0x42200000,    0x3F800000,
-          0xFF,          0xFF,          0xFF,
-           0x0,    0x41200000,    0x42700000,    0x3F19999A,
-           0x0,    0x40A00000,    0x42200000,    0x3F800000,
-          0xFF,          0xFF,          0xFF,
-           0x0,    0x41200000,    0x42480000,    0x3F19999A,
-           0x0,    0x40A00000,    0x41F00000,    0x3F4CCCCD,
-          0xFF,          0xFF,          0xFF,
-           0x0,    0x41200000,    0x42200000,    0x3F19999A,
-           0x0,    0x40A00000,    0x41C80000,    0x3F19999A,
-          0xFF,          0xFF,          0xFF,
-           0x0,    0x41200000,    0x420C0000,    0x3F19999A,
-           0x0,    0x40A00000,    0x41B00000,    0x3F0CCCCD,
-          0xFF,          0xFF,          0xFF,
-           0x0,    0x41200000,    0x41F00000,    0x3F19999A,
-           0x0,    0x40A00000,    0x41980000,    0x3F000000,
-          0xFF,          0xFF,          0xFF,
-           0x0,    0x41200000,    0x41F00000,    0x3F19999A,
-           0x0,    0x40A00000,    0x41880000,    0x3EE66666,
-          0xFF,          0xFF,          0xFF,
-           0x0,    0x41200000,    0x41F00000,    0x3F19999A,
-           0x0,    0x40A00000,    0x41700000,    0x3ECCCCCD,
-          0xFF,          0xFF,          0xFF
+bondstruct_unk_80036634 D_80036634[] = {
+        {   0x0,    10.0,    60.0,    0.600000023842,
+           0x0,    5.0,    40.0,    1.0,
+          0xFF,          0xFF,          0xFF},
+        {   0x0,    10.0,    60.0,    0.600000023842,
+           0x0,    5.0,    40.0,    1.0,
+          0xFF,          0xFF,          0xFF},
+        {   0x0,    10.0,    50.0,    0.600000023842,
+           0x0,    5.0,    30.0,    0.800000011921,
+          0xFF,          0xFF,          0xFF},
+        {   0x0,    10.0,    40.0,    0.600000023842,
+           0x0,    5.0,    25.0,    0.600000023842,
+          0xFF,          0xFF,          0xFF},
+        {   0x0,    10.0,    35.0,    0.600000023842,
+           0x0,    5.0,    22.0,    0.550000011921,
+          0xFF,          0xFF,          0xFF},
+        {   0x0,    10.0,    30.0,    0.600000023842,
+           0x0,    5.0,    19.0,    0.5,
+          0xFF,          0xFF,          0xFF},
+        {   0x0,    10.0,    30.0,    0.600000023842,
+           0x0,    5.0,    17.0,    0.449999988079,
+          0xFF,          0xFF,          0xFF},
+        {   0x0,    10.0,    30.0,    0.600000023842,
+           0x0,    5.0,    15.0,    0.40000000596,
+          0xFF,          0xFF,          0xFF}
 };
-#else
-//D:80036634
-u32 D_80036634[] = {
-           0x0,           0xA,          0x3C,    0x3F19999A,
-           0x0,           0x5,          0x28,    0x3F800000,
-          0xFF,          0xFF,          0xFF,
-           0x0,           0xA,          0x3C,    0x3F19999A,
-           0x0,           0x5,          0x28,    0x3F800000,
-          0xFF,          0xFF,          0xFF,
-           0x0,           0xA,          0x32,    0x3F19999A,
-           0x0,           0x5,          0x1E,    0x3F4CCCCD,
-          0xFF,          0xFF,          0xFF,
-           0x0,           0xA,          0x28,    0x3F19999A,
-           0x0,           0x5,          0x19,    0x3F19999A,
-          0xFF,          0xFF,          0xFF,
-           0x0,           0xA,          0x23,    0x3F19999A,
-           0x0,           0x5,          0x16,    0x3F0CCCCD,
-          0xFF,          0xFF,          0xFF,
-           0x0,           0xA,          0x1E,    0x3F19999A,
-           0x0,           0x5,          0x13,    0x3F000000,
-          0xFF,          0xFF,          0xFF,
-           0x0,           0xA,          0x1E,    0x3F19999A,
-           0x0,           0x5,          0x11,    0x3EE66666,
-          0xFF,          0xFF,          0xFF,
-           0x0,           0xA,          0x1E,    0x3F19999A,
-           0x0,           0x5,           0xF,    0x3ECCCCCD,
-          0xFF,          0xFF,          0xFF
-};
-#endif
+
 
 //D:80036794
 u32 D_80036794 = 0;
@@ -578,7 +551,7 @@ s32 D_80036894 = 0;
 s32 status_bar_text_buffer_index = 0;
 //D:8003689C
 s32 display_statusbar = 0;
-#ifdef VERSION_US
+#ifdef BUGFIX_R0
 //D:800368A0
 s32 copy_1stfonttable = 0;
 //D:800368A4
@@ -5503,7 +5476,7 @@ void set_camera_mode(s32 arg0)
             currentPlayerStartChrFade(0.0f, 0x3F800000);
             solo_char_load();
             sp38 = sub_GAME_7F06F5AC(pPlayer + 0x598);
-            modelSetAnimation(pPlayer->unkD4, sp38, sub_GAME_7F06F5B4(pPlayer + 0x598), 0.0f, 0.5f, 0.0f);
+            modelSetAnimation(pPlayer->unkD4, sp38, objecthandlerGetModelGunhand(pPlayer + 0x598), 0.0f, 0.5f, 0.0f);
             temp_v1        = pPlayer->unkA8->unk4;
             temp_v1->unk7  = 0x18;
             temp_v1->unk8  = 0;
@@ -5933,7 +5906,7 @@ glabel set_camera_mode
 /* 0AF9E0 7F07AEB0 24840598 */   addiu $a0, $a0, 0x598
 /* 0AF9E4 7F07AEB4 8E040000 */  lw    $a0, ($s0)
 /* 0AF9E8 7F07AEB8 AFA20038 */  sw    $v0, 0x38($sp)
-/* 0AF9EC 7F07AEBC 0FC1BD6D */  jal   sub_GAME_7F06F5B4
+/* 0AF9EC 7F07AEBC 0FC1BD6D */  jal   objecthandlerGetModelGunhand
 /* 0AF9F0 7F07AEC0 24840598 */   addiu $a0, $a0, 0x598
 /* 0AF9F4 7F07AEC4 44800000 */  mtc1  $zero, $f0
 /* 0AF9F8 7F07AEC8 8E0E0000 */  lw    $t6, ($s0)
@@ -20086,13 +20059,13 @@ glabel controller_gameplay_interaction
 /* 0B77F8 7F082CC8 00002025 */   move  $a0, $zero
 /* 0B77FC 7F082CCC 1040000A */  beqz  $v0, .L7F082CF8
 /* 0B7800 7F082CD0 00000000 */   nop
-/* 0B7804 7F082CD4 0FC19C5D */  jal   sub_GAME_7F067174
+/* 0B7804 7F082CD4 0FC19C5D */  jal   getCurrentPlayerNoise
 /* 0B7808 7F082CD8 00002025 */   move  $a0, $zero
 /* 0B780C 7F082CDC 4600A03C */  c.lt.s $f20, $f0
 /* 0B7810 7F082CE0 00000000 */  nop
 /* 0B7814 7F082CE4 45000004 */  bc1f  .L7F082CF8
 /* 0B7818 7F082CE8 00000000 */   nop
-/* 0B781C 7F082CEC 0FC19C5D */  jal   sub_GAME_7F067174
+/* 0B781C 7F082CEC 0FC19C5D */  jal   getCurrentPlayerNoise
 /* 0B7820 7F082CF0 00002025 */   move  $a0, $zero
 /* 0B7824 7F082CF4 E7A000E4 */  swc1  $f0, 0xe4($sp)
 .L7F082CF8:
@@ -20100,14 +20073,14 @@ glabel controller_gameplay_interaction
 /* 0B782C 7F082CFC 24040001 */   li    $a0, 1
 /* 0B7830 7F082D00 1040000B */  beqz  $v0, .L7F082D30
 /* 0B7834 7F082D04 00000000 */   nop
-/* 0B7838 7F082D08 0FC19C5D */  jal   sub_GAME_7F067174
+/* 0B7838 7F082D08 0FC19C5D */  jal   getCurrentPlayerNoise
 /* 0B783C 7F082D0C 24040001 */   li    $a0, 1
 /* 0B7840 7F082D10 C7AA00E4 */  lwc1  $f10, 0xe4($sp)
 /* 0B7844 7F082D14 4600503C */  c.lt.s $f10, $f0
 /* 0B7848 7F082D18 00000000 */  nop
 /* 0B784C 7F082D1C 45000004 */  bc1f  .L7F082D30
 /* 0B7850 7F082D20 00000000 */   nop
-/* 0B7854 7F082D24 0FC19C5D */  jal   sub_GAME_7F067174
+/* 0B7854 7F082D24 0FC19C5D */  jal   getCurrentPlayerNoise
 /* 0B7858 7F082D28 24040001 */   li    $a0, 1
 /* 0B785C 7F082D2C E7A000E4 */  swc1  $f0, 0xe4($sp)
 .L7F082D30:
@@ -22822,13 +22795,13 @@ glabel controller_gameplay_interaction
 /* 0B575C 7F082D6C 00002025 */   move  $a0, $zero
 /* 0B5760 7F082D70 1040000A */  beqz  $v0, .L7F082D9C
 /* 0B5764 7F082D74 00000000 */   nop   
-/* 0B5768 7F082D78 0FC19E47 */  jal   sub_GAME_7F067174
+/* 0B5768 7F082D78 0FC19E47 */  jal   getCurrentPlayerNoise
 /* 0B576C 7F082D7C 00002025 */   move  $a0, $zero
 /* 0B5770 7F082D80 4600A03C */  c.lt.s $f20, $f0
 /* 0B5774 7F082D84 00000000 */  nop   
 /* 0B5778 7F082D88 45000004 */  bc1f  .L7F082D9C
 /* 0B577C 7F082D8C 00000000 */   nop   
-/* 0B5780 7F082D90 0FC19E47 */  jal   sub_GAME_7F067174
+/* 0B5780 7F082D90 0FC19E47 */  jal   getCurrentPlayerNoise
 /* 0B5784 7F082D94 00002025 */   move  $a0, $zero
 /* 0B5788 7F082D98 E7A000E4 */  swc1  $f0, 0xe4($sp)
 .L7F082D9C:
@@ -22836,14 +22809,14 @@ glabel controller_gameplay_interaction
 /* 0B5790 7F082DA0 24040001 */   li    $a0, 1
 /* 0B5794 7F082DA4 1040000B */  beqz  $v0, .L7F082DD4
 /* 0B5798 7F082DA8 00000000 */   nop   
-/* 0B579C 7F082DAC 0FC19E47 */  jal   sub_GAME_7F067174
+/* 0B579C 7F082DAC 0FC19E47 */  jal   getCurrentPlayerNoise
 /* 0B57A0 7F082DB0 24040001 */   li    $a0, 1
 /* 0B57A4 7F082DB4 C7AA00E4 */  lwc1  $f10, 0xe4($sp)
 /* 0B57A8 7F082DB8 4600503C */  c.lt.s $f10, $f0
 /* 0B57AC 7F082DBC 00000000 */  nop   
 /* 0B57B0 7F082DC0 45000004 */  bc1f  .L7F082DD4
 /* 0B57B4 7F082DC4 00000000 */   nop   
-/* 0B57B8 7F082DC8 0FC19E47 */  jal   sub_GAME_7F067174
+/* 0B57B8 7F082DC8 0FC19E47 */  jal   getCurrentPlayerNoise
 /* 0B57BC 7F082DCC 24040001 */   li    $a0, 1
 /* 0B57C0 7F082DD0 E7A000E4 */  swc1  $f0, 0xe4($sp)
 .L7F082DD4:
@@ -39794,7 +39767,7 @@ glabel maybe_mp_interface
 /* 0BE014 7F0894E4 240D0001 */  li    $t5, 1
 /* 0BE018 7F0894E8 ADCD0424 */  sw    $t5, 0x424($t6)
 .L7F0894EC:
-/* 0BE01C 7F0894EC 0FC0719C */  jal   sub_GAME_7F01C670
+/* 0BE01C 7F0894EC 0FC0719C */  jal   gameplayBloodOverlayDL
 /* 0BE020 7F0894F0 8FA40058 */   lw    $a0, 0x58($sp)
 /* 0BE024 7F0894F4 3C038008 */  lui   $v1, %hi(g_CurrentPlayer)
 /* 0BE028 7F0894F8 8C63A0B0 */  lw    $v1, %lo(g_CurrentPlayer)($v1)
@@ -40124,7 +40097,7 @@ glabel maybe_mp_interface
 /* 0BC03C 7F08964C 240D0001 */  li    $t5, 1
 /* 0BC040 7F089650 ADCD0424 */  sw    $t5, 0x424($t6)
 .L7F089654:
-/* 0BC044 7F089654 0FC07134 */  jal   sub_GAME_7F01C670
+/* 0BC044 7F089654 0FC07134 */  jal   gameplayBloodOverlayDL
 /* 0BC048 7F089658 8FA40058 */   lw    $a0, 0x58($sp)
 /* 0BC04C 7F08965C 3C038007 */  lui   $v1, %hi(g_CurrentPlayer) # $v1, 0x8007
 /* 0BC050 7F089660 8C638BC0 */  lw    $v1, %lo(g_CurrentPlayer)($v1)
@@ -46176,74 +46149,31 @@ void bondviewTransformPosToViewMatrix(RenderPosView *arg0)
 
 
 
-
-
-#ifdef NONMATCHING
 /**
  * Address 0x7F08BD48.
  * 
- * decomp status:
- * - compiles: yes
- * - stack resize: ok
- * - identical instructions: fail
- * - identical registers: fail
+ * Notes: Similar to sub_GAME_7F08BE2C.
  * 
- * notes: two swapped instructions at start, then just regalloc.
  */
-void bondviewTransformManyPosToViewMatrix(RenderPosView *arg0, s32 arg1)
+void bondviewTransformManyPosToViewMatrix(RenderPosView * arg0, s32 arg1)
 {
-    Mtxf sp38;
+    Mtxf mtx;
+    RenderPosView* rpv_entry;
     s32 i;
-    Mtxf *phi_s1;
 
-    for (i=0, phi_s1=&arg0[i].pos; i<arg1; i++, phi_s1++)
+    i = 0;
+    if (arg1 <= 0) { return; }
+
+    // Couldn't find a better matching loop
+    rpv_entry = arg0;
+    do
     {
-        // if you get this to match, see sub_GAME_7F08BE2C
-        matrix_4x4_copy(phi_s1, (Mtxf *) &sp38);
-        matrix_4x4_f32_to_s32((Mtxf *) &sp38, &arg0[i].view);
-    }
+        matrix_4x4_copy(&rpv_entry->pos, &mtx);
+        matrix_4x4_f32_to_s32(&mtx, &arg0[i].pos);
+        i++;
+        rpv_entry++;
+    } while (i != arg1);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel bondviewTransformManyPosToViewMatrix
-/* 0C0878 7F08BD48 27BDFF88 */  addiu $sp, $sp, -0x78
-/* 0C087C 7F08BD4C AFB40028 */  sw    $s4, 0x28($sp)
-/* 0C0880 7F08BD50 AFB30024 */  sw    $s3, 0x24($sp)
-/* 0C0884 7F08BD54 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0C0888 7F08BD58 00A09825 */  move  $s3, $a1
-/* 0C088C 7F08BD5C 0080A025 */  move  $s4, $a0
-/* 0C0890 7F08BD60 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 0C0894 7F08BD64 AFB20020 */  sw    $s2, 0x20($sp)
-/* 0C0898 7F08BD68 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 0C089C 7F08BD6C 18A0000D */  blez  $a1, .L7F08BDA4
-/* 0C08A0 7F08BD70 00008025 */   move  $s0, $zero
-/* 0C08A4 7F08BD74 00808825 */  move  $s1, $a0
-/* 0C08A8 7F08BD78 27B20038 */  addiu $s2, $sp, 0x38
-.L7F08BD7C:
-/* 0C08AC 7F08BD7C 02202025 */  move  $a0, $s1
-/* 0C08B0 7F08BD80 0FC16008 */  jal   matrix_4x4_copy
-/* 0C08B4 7F08BD84 02402825 */   move  $a1, $s2
-/* 0C08B8 7F08BD88 00107180 */  sll   $t6, $s0, 6
-/* 0C08BC 7F08BD8C 01D42821 */  addu  $a1, $t6, $s4
-/* 0C08C0 7F08BD90 0FC16327 */  jal   matrix_4x4_f32_to_s32
-/* 0C08C4 7F08BD94 02402025 */   move  $a0, $s2
-/* 0C08C8 7F08BD98 26100001 */  addiu $s0, $s0, 1
-/* 0C08CC 7F08BD9C 1613FFF7 */  bne   $s0, $s3, .L7F08BD7C
-/* 0C08D0 7F08BDA0 26310040 */   addiu $s1, $s1, 0x40
-.L7F08BDA4:
-/* 0C08D4 7F08BDA4 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 0C08D8 7F08BDA8 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0C08DC 7F08BDAC 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 0C08E0 7F08BDB0 8FB20020 */  lw    $s2, 0x20($sp)
-/* 0C08E4 7F08BDB4 8FB30024 */  lw    $s3, 0x24($sp)
-/* 0C08E8 7F08BDB8 8FB40028 */  lw    $s4, 0x28($sp)
-/* 0C08EC 7F08BDBC 03E00008 */  jr    $ra
-/* 0C08F0 7F08BDC0 27BD0078 */   addiu $sp, $sp, 0x78
-)
-#endif
-
-
 
 
 
@@ -46265,18 +46195,42 @@ void sub_GAME_7F08BDC4(Mtxf *arg0)
 
 
 
-
-
 #ifdef NONMATCHING
 /**
  * Unreferenced.
  * 
  * Address 0x7F08BE2C.
+ *
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical instructions: two swapped instructions that don't affect each other
+ * - identical registers: ok
+ *
  */
-void sub_GAME_7F08BE2C(Mtxf *arg0, s32 arg1)
+void sub_GAME_7F08BE2C(Mtxf * arg0, s32 arg1)
 {
-    // combination of sub_GAME_7F08BDC4 and bondviewTransformManyPosToViewMatrix
+    Mtxf sp38;
+    s32 var_s0;
+    Mtxf* var_s1;
+
+    var_s0 = 0;
+
+    if (arg1 <= 0) { return; }
+
+    var_s1 = arg0;
+    do
+    {
+        matrix_4x4_copy(var_s1, &sp38);
+        sp38.m[3][0] -= g_CurrentPlayer->previous_model_pos.f[0];
+        sp38.m[3][1] -= g_CurrentPlayer->previous_model_pos.f[1];
+        sp38.m[3][2] -= g_CurrentPlayer->previous_model_pos.f[2];
+        matrix_4x4_f32_to_s32(&sp38, &arg0[var_s0]);
+        var_s0++;
+        var_s1++;
+    } while (var_s0 != arg1);
 }
+
 #else
 GLOBAL_ASM(
 .text

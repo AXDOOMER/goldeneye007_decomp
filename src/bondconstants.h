@@ -779,7 +779,9 @@ typedef enum CHEAT_IDS
     CHEAT_UNLOCK_AZTEK,
     CHEAT_UNLOCK_EGYPT,
 
-    CHEAT_INVALID
+    CHEAT_INVALID,
+
+    CHEAT_MAX = CHEAT_INVALID+5
 } CHEAT_ID;
 
 //Controller stuff including Rumble Pak are in joy.c
@@ -1388,6 +1390,8 @@ typedef enum PLAYER_ID
     PLAYER_3,
     PLAYER_4
 } PLAYER_ID;
+
+#define MAX_PLAYER_COUNT 4
 
 typedef enum RGBA_ENUM
 {
@@ -2966,7 +2970,13 @@ typedef enum WAYMODE
     } VIDEOMODE;
 #pragma endregion
 
- 
+#if !defined(VERSION_EU)
+#define MAXROOMCOUNT    150
+#else
+#define MAXROOMCOUNT    139
+#endif 
+
+
 /* special chr num IDs */
 #define CHR_BOND_CINEMA -8 /* only works when bond has a third person model (intro/exit cutscene) */
 #define CHR_CLONE       -7
@@ -2989,7 +2999,6 @@ typedef enum WAYMODE
 #define MAX_WAYMODE              ((s32)WAYMODE_MAGIC)
 #define PROPRECORD_STAN_ROOM_LEN 4
 #define NUMBER_SHOTGUN_BULLETS   5
-
 
 #pragma endregion
 
