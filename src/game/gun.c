@@ -27649,13 +27649,13 @@ void caclulate_gun_crosshair_position_rotation(f32 turn_x, f32 turn_y, f32 guncr
         g_CurrentPlayer->gun_azimuth_turning = (g_CurrentPlayer->gun_azimuth_turning * gunaimdamp) + turn_y;
     }
 
-    g_CurrentPlayer->field_FFC = (g_CurrentPlayer->gun_azimuth_angle * (1.0f - gunaimdamp) * screen_width * 0.5f) + (screen_width * 0.5f);
-    g_CurrentPlayer->field_1000 = (g_CurrentPlayer->gun_azimuth_turning * (1.0f - gunaimdamp) * screen_height * 0.5f) + (screen_height * 0.5f);
+    g_CurrentPlayer->field_FFC.x = (g_CurrentPlayer->gun_azimuth_angle * (1.0f - gunaimdamp) * screen_width * 0.5f) + (screen_width * 0.5f);
+    g_CurrentPlayer->field_FFC.y = (g_CurrentPlayer->gun_azimuth_turning * (1.0f - gunaimdamp) * screen_height * 0.5f) + (screen_height * 0.5f);
 
-    g_CurrentPlayer->field_FFC += getPlayer_c_screenleft();
-    g_CurrentPlayer->field_1000 += getPlayer_c_screentop();
+    g_CurrentPlayer->field_FFC.x += getPlayer_c_screenleft();
+    g_CurrentPlayer->field_FFC.y += getPlayer_c_screentop();
 
-    sub_GAME_7F077EEC((coord2d* ) &g_CurrentPlayer->field_FFC, &coords, 1000.0f);
+    sub_GAME_7F077EEC(&g_CurrentPlayer->field_FFC, &coords, 1000.0f);
     sub_GAME_7F067AB4(&coords);
 }
 
@@ -27718,12 +27718,12 @@ void sub_GAME_7F06802C(void)
     f32 tmp;
 
     tmp = getPlayer_c_screenleft() + (getPlayer_c_screenwidth() * 0.5f);
-    g_CurrentPlayer->crosshair_angle.f[0] = tmp;
-    g_CurrentPlayer->field_FFC = tmp;
+    g_CurrentPlayer->crosshair_angle.x = tmp;
+    g_CurrentPlayer->field_FFC.x = tmp;
 
     tmp = getPlayer_c_screentop() + (getPlayer_c_screenheight() * 0.5f);
-    g_CurrentPlayer->crosshair_angle.f[1] = tmp;
-    g_CurrentPlayer->field_1000 = tmp;
+    g_CurrentPlayer->crosshair_angle.y = tmp;
+    g_CurrentPlayer->field_FFC.y = tmp;
 
     sub_GAME_7F077EEC((coord2d *) &g_CurrentPlayer->field_FFC, &coord, 1000.0f);
     sub_GAME_7F067AB4(&coord);
@@ -27745,8 +27745,8 @@ void sub_GAME_7F0680D4(coord3d * coord)
     tmp.z = g_CurrentPlayer->field_101C.m[2][2] * 1000.0f;
     sub_GAME_7F077FF4(&tmp, (coord3d* ) &g_CurrentPlayer->crosshair_angle);
 
-    g_CurrentPlayer->field_FFC = g_CurrentPlayer->crosshair_angle.f[0];
-    g_CurrentPlayer->field_1000 = g_CurrentPlayer->crosshair_angle.f[1];
+    g_CurrentPlayer->field_FFC.x = g_CurrentPlayer->crosshair_angle.x;
+    g_CurrentPlayer->field_FFC.y = g_CurrentPlayer->crosshair_angle.y;
 
     sub_GAME_7F067AB4(&tmp);
 }

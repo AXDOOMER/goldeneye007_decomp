@@ -3583,7 +3583,7 @@ struct SetupIntroCredits
             waypoint       *pathwaypoints;
             waygroup       *waypointgroups;
             struct SetupIntroEmpty *intro;
-            s32            *propDefs;
+            PropDefHeaderRecord    *propDefs;
             PathRecord     *patrolpaths;
             AIListRecord   *ailists;
             PadRecord      *pads;

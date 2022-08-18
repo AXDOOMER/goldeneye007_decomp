@@ -601,15 +601,15 @@ struct player
   */
   s32 outside_watch_menu;
   s32 open_close_solo_watch_menu;
-  s32 field_1D4;
-  s32 field_1D8;
-  s32 pause_watch_position;
-  s32 field_1E0;
-  s32 field_1E4;
-  s32 field_1E8;
-  s32 field_1EC;
-  s32 field_1F0;
-  s32 field_1F4;
+  f32 field_1D4;
+  f32 field_1D8;
+  f32 pause_watch_position;
+  f32 field_1E0;
+  f32 field_1E4;
+  f32 field_1E8;
+  f32 field_1EC;
+  f32 field_1F0;
+  f32 field_1F4;
   s32 field_1F8;
   s32 field_1FC;
   /**
@@ -803,9 +803,9 @@ struct player
   struct collision434 previous_collision_info;
   struct collision434 field_488;
 
-  u32 resetheadpos; // bool
-  u32 resetheadrot; // bool
-  u32 resetheadtick; // bool 0x4e4
+  s32 resetheadpos; // bool
+  s32 resetheadrot; // bool
+  s32 resetheadtick; // bool 0x4e4
 
   s32 headanim; // index into array of pointers. Pointers are for animations.
 
@@ -1086,8 +1086,7 @@ struct player
   f32 crosshair_x_pos;
   f32 crosshair_y_pos;
   f32 guncrossdamp;
-  f32 field_FFC;
-  f32 field_1000;
+  coord2d field_FFC;
   f32 gun_azimuth_angle;
   f32 gun_azimuth_turning;
   f32 gunaimdamp;
@@ -1243,9 +1242,9 @@ struct player
   f32 swaytarget;
   f32 field_1278;
   f32 field_127C;
-  s32 field_1280;
+  f32 field_1280;
   s32 players_cur_animation;
-  s32 field_1288;
+  f32 field_1288;
 
   /**
    * This buffers button presses.
@@ -2662,7 +2661,7 @@ struct player
   s32 field_29B4;
 
   // Alt field_29C0 ?? Used in EU.
-  f32 field_29B8;
+  s32 field_29B8;
 
   /**
    * Related to player perspective.
