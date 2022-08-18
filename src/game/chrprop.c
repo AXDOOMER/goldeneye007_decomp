@@ -2857,75 +2857,34 @@ def_7F03C52C:
 
 
 
+/* Not quite sure what to name this, it returns true when the given prop isn't within 400 units of any player prop */
+s32 sub_GAME_7F03C574(PropRecord* prop)
+{
+    PropRecord* player_prop;
+    coord3d pos_diff;
+    s32 uninitialized; // needed for match
+    s32 rc;
+    s32 i;
+    s32 player_count;
 
+    player_count = getPlayerCount();
+    rc = 1;
 
-#ifdef NONMATCHING
-void sub_GAME_7F03C574(void) {
-
+    for (i = 0; i < player_count; i++)
+    {
+        player_prop = g_playerPointers[i]->prop;
+        pos_diff.x = player_prop->pos.x - prop->pos.x;
+        pos_diff.y = player_prop->pos.y - prop->pos.y;
+        pos_diff.z = player_prop->pos.z - prop->pos.z;
+        if (sqrtf((pos_diff.x * pos_diff.x) + (pos_diff.y * pos_diff.y) + (pos_diff.z * pos_diff.z)) < 400.0f)
+        {
+            rc = 0;
+            break;
+        }
+    }
+    
+    return rc;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03C574
-/* 0710A4 7F03C574 27BDFFB8 */  addiu $sp, $sp, -0x48
-/* 0710A8 7F03C578 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 0710AC 7F03C57C AFB20024 */  sw    $s2, 0x24($sp)
-/* 0710B0 7F03C580 00809025 */  move  $s2, $a0
-/* 0710B4 7F03C584 AFB30028 */  sw    $s3, 0x28($sp)
-/* 0710B8 7F03C588 AFB10020 */  sw    $s1, 0x20($sp)
-/* 0710BC 7F03C58C AFB0001C */  sw    $s0, 0x1c($sp)
-/* 0710C0 7F03C590 0FC26919 */  jal   getPlayerCount
-/* 0710C4 7F03C594 F7B40010 */   sdc1  $f20, 0x10($sp)
-/* 0710C8 7F03C598 240E0001 */  li    $t6, 1
-/* 0710CC 7F03C59C 00409825 */  move  $s3, $v0
-/* 0710D0 7F03C5A0 AFAE0030 */  sw    $t6, 0x30($sp)
-/* 0710D4 7F03C5A4 1840001F */  blez  $v0, .L7F03C624
-/* 0710D8 7F03C5A8 00008025 */   move  $s0, $zero
-/* 0710DC 7F03C5AC 3C0143C8 */  li    $at, 0x43C80000 # 400.000000
-/* 0710E0 7F03C5B0 3C118008 */  lui   $s1, %hi(g_playerPointers)
-/* 0710E4 7F03C5B4 4481A000 */  mtc1  $at, $f20
-/* 0710E8 7F03C5B8 26319EE0 */  addiu $s1, %lo(g_playerPointers) # addiu $s1, $s1, -0x6120
-.L7F03C5BC:
-/* 0710EC 7F03C5BC 8E2F0000 */  lw    $t7, ($s1)
-/* 0710F0 7F03C5C0 C6460008 */  lwc1  $f6, 8($s2)
-/* 0710F4 7F03C5C4 C64A000C */  lwc1  $f10, 0xc($s2)
-/* 0710F8 7F03C5C8 8DE200A8 */  lw    $v0, 0xa8($t7)
-/* 0710FC 7F03C5CC C6520010 */  lwc1  $f18, 0x10($s2)
-/* 071100 7F03C5D0 C4440008 */  lwc1  $f4, 8($v0)
-/* 071104 7F03C5D4 C448000C */  lwc1  $f8, 0xc($v0)
-/* 071108 7F03C5D8 C4500010 */  lwc1  $f16, 0x10($v0)
-/* 07110C 7F03C5DC 46062001 */  sub.s $f0, $f4, $f6
-/* 071110 7F03C5E0 460A4081 */  sub.s $f2, $f8, $f10
-/* 071114 7F03C5E4 46000102 */  mul.s $f4, $f0, $f0
-/* 071118 7F03C5E8 46128381 */  sub.s $f14, $f16, $f18
-/* 07111C 7F03C5EC 46021182 */  mul.s $f6, $f2, $f2
-/* 071120 7F03C5F0 46062200 */  add.s $f8, $f4, $f6
-/* 071124 7F03C5F4 460E7282 */  mul.s $f10, $f14, $f14
-/* 071128 7F03C5F8 0C007DF8 */  jal   sqrtf
-/* 07112C 7F03C5FC 460A4300 */   add.s $f12, $f8, $f10
-/* 071130 7F03C600 4614003C */  c.lt.s $f0, $f20
-/* 071134 7F03C604 26100001 */  addiu $s0, $s0, 1
-/* 071138 7F03C608 0213082A */  slt   $at, $s0, $s3
-/* 07113C 7F03C60C 45000003 */  bc1f  .L7F03C61C
-/* 071140 7F03C610 00000000 */   nop   
-/* 071144 7F03C614 10000003 */  b     .L7F03C624
-/* 071148 7F03C618 AFA00030 */   sw    $zero, 0x30($sp)
-.L7F03C61C:
-/* 07114C 7F03C61C 1420FFE7 */  bnez  $at, .L7F03C5BC
-/* 071150 7F03C620 26310004 */   addiu $s1, $s1, 4
-.L7F03C624:
-/* 071154 7F03C624 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 071158 7F03C628 8FA20030 */  lw    $v0, 0x30($sp)
-/* 07115C 7F03C62C D7B40010 */  ldc1  $f20, 0x10($sp)
-/* 071160 7F03C630 8FB0001C */  lw    $s0, 0x1c($sp)
-/* 071164 7F03C634 8FB10020 */  lw    $s1, 0x20($sp)
-/* 071168 7F03C638 8FB20024 */  lw    $s2, 0x24($sp)
-/* 07116C 7F03C63C 8FB30028 */  lw    $s3, 0x28($sp)
-/* 071170 7F03C640 03E00008 */  jr    $ra
-/* 071174 7F03C644 27BD0048 */   addiu $sp, $sp, 0x48
-)
-#endif
-
 
 
 
