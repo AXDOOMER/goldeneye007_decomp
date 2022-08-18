@@ -7244,97 +7244,27 @@ glabel scan_position_data_table_for_normal_object_at_preset
 
 
 
-
-
-#ifdef NONMATCHING
-ObjectRecord* sub_GAME_7F03FAB0(PadRecord* pad, s32 RoomID)
+ObjectRecord * sub_GAME_7F03FAB0(PadRecord * pad, s32 RoomID)
 {
-    s32 sp38;
-    s32 sp34;
-    PropRecord* temp_s0;
-    PropRecord* temp_v0;
-    PropRecord* phi_s0;
+    s32 unused;
+    rect4f * polygon;
+    s32 edges;
+    PropRecord * prop;
 
-    temp_v0 = get_ptr_obj_pos_list_current_entry(pad);
-    phi_s0 = temp_v0;
-    if (temp_v0 != 0)
+    prop = get_ptr_obj_pos_list_current_entry();
+    while (prop != NULL)
     {
-loop_2:
-        if ((phi_s0->type == 1) && (RoomID == phi_s0->stan->unk3) && (sub_GAME_7F03CCB0(phi_s0, &sp38, &sp34), (chrpropTestPointInPolygon(pad, sp38, sp34) != 0)))
+        if ((prop->type == 1) && (RoomID == prop->stan->room))
         {
-            return phi_s0->chr;
+            chraiGetCollisionBoundsWithoutY(prop, &polygon, &edges);
+            if (chrpropTestPointInPolygon(&pad->pos, polygon, edges) != 0)
+            {
+                return (ObjectRecord *) prop->chr;
+            }
         }
-        temp_s0 = phi_s0->prev;
-        phi_s0 = temp_s0;
-        if (temp_s0 == 0)
-        {
-            goto block_7;
-        }
-        goto loop_2;
+        prop = prop->prev;
     }
-block_7:
+
     return NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03FAB0
-/* 0745E0 7F03FAB0 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 0745E4 7F03FAB4 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 0745E8 7F03FAB8 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 0745EC 7F03FABC AFB10018 */  sw    $s1, 0x18($sp)
-/* 0745F0 7F03FAC0 00A08825 */  move  $s1, $a1
-/* 0745F4 7F03FAC4 00809025 */  move  $s2, $a0
-/* 0745F8 7F03FAC8 AFB50028 */  sw    $s5, 0x28($sp)
-/* 0745FC 7F03FACC AFB40024 */  sw    $s4, 0x24($sp)
-/* 074600 7F03FAD0 AFB30020 */  sw    $s3, 0x20($sp)
-/* 074604 7F03FAD4 0FC0E909 */  jal   get_ptr_obj_pos_list_current_entry
-/* 074608 7F03FAD8 AFB00014 */   sw    $s0, 0x14($sp)
-/* 07460C 7F03FADC 1040001A */  beqz  $v0, .L7F03FB48
-/* 074610 7F03FAE0 00408025 */   move  $s0, $v0
-/* 074614 7F03FAE4 27B50034 */  addiu $s5, $sp, 0x34
-/* 074618 7F03FAE8 27B40038 */  addiu $s4, $sp, 0x38
-/* 07461C 7F03FAEC 24130001 */  li    $s3, 1
-/* 074620 7F03FAF0 920E0000 */  lbu   $t6, ($s0)
-.L7F03FAF4:
-/* 074624 7F03FAF4 566E0012 */  bnel  $s3, $t6, .L7F03FB40
-/* 074628 7F03FAF8 8E100024 */   lw    $s0, 0x24($s0)
-/* 07462C 7F03FAFC 8E0F0014 */  lw    $t7, 0x14($s0)
-/* 074630 7F03FB00 02002025 */  move  $a0, $s0
-/* 074634 7F03FB04 02802825 */  move  $a1, $s4
-/* 074638 7F03FB08 91F80003 */  lbu   $t8, 3($t7)
-/* 07463C 7F03FB0C 5638000C */  bnel  $s1, $t8, .L7F03FB40
-/* 074640 7F03FB10 8E100024 */   lw    $s0, 0x24($s0)
-/* 074644 7F03FB14 0FC0F32C */  jal   chraiGetCollisionBoundsWithoutY
-/* 074648 7F03FB18 02A03025 */   move  $a2, $s5
-/* 07464C 7F03FB1C 02402025 */  move  $a0, $s2
-/* 074650 7F03FB20 8FA50038 */  lw    $a1, 0x38($sp)
-/* 074654 7F03FB24 0FC0F336 */  jal   chrpropTestPointInPolygon
-/* 074658 7F03FB28 8FA60034 */   lw    $a2, 0x34($sp)
-/* 07465C 7F03FB2C 50400004 */  beql  $v0, $zero, .L7F03FB40
-/* 074660 7F03FB30 8E100024 */   lw    $s0, 0x24($s0)
-/* 074664 7F03FB34 10000005 */  b     .L7F03FB4C
-/* 074668 7F03FB38 8E020004 */   lw    $v0, 4($s0)
-/* 07466C 7F03FB3C 8E100024 */  lw    $s0, 0x24($s0)
-.L7F03FB40:
-/* 074670 7F03FB40 5600FFEC */  bnezl $s0, .L7F03FAF4
-/* 074674 7F03FB44 920E0000 */   lbu   $t6, ($s0)
-.L7F03FB48:
-/* 074678 7F03FB48 00001025 */  move  $v0, $zero
-.L7F03FB4C:
-/* 07467C 7F03FB4C 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 074680 7F03FB50 8FB00014 */  lw    $s0, 0x14($sp)
-/* 074684 7F03FB54 8FB10018 */  lw    $s1, 0x18($sp)
-/* 074688 7F03FB58 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 07468C 7F03FB5C 8FB30020 */  lw    $s3, 0x20($sp)
-/* 074690 7F03FB60 8FB40024 */  lw    $s4, 0x24($sp)
-/* 074694 7F03FB64 8FB50028 */  lw    $s5, 0x28($sp)
-/* 074698 7F03FB68 03E00008 */  jr    $ra
-/* 07469C 7F03FB6C 27BD0040 */   addiu $sp, $sp, 0x40
-)
-#endif
-
-
-
-
 
