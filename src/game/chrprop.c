@@ -6244,10 +6244,12 @@ void sub_GAME_7F03EC3C(struct modeldata_unk_pos *arg0, Mtxf *arg1, struct coord3
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03ECC0(void) {
+void sub_GAME_7F03ECC0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, void* arg6, void* arg7, s32* arg8) {
 
 }
 #else
+/* This forward declaration is required for sub_GAME_7F03F540() to link until sub_GAME_7F03ECC0() is properly decompiled */
+void sub_GAME_7F03ECC0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, void* arg6, void* arg7, s32* arg8);
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F03ECC0
@@ -6833,43 +6835,10 @@ glabel sub_GAME_7F03ECC0
 
 
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F03F540(void) {
-
+void sub_GAME_7F03F540(struct modeldata_unk_pos* arg0, Mtxf* arg1, s32* arg2, struct collision_data* arg3)
+{
+    sub_GAME_7F03ECC0(arg0->p1[0], arg0->p1[1], arg0->p2[0], arg0->p2[1], arg0->p3[0], arg0->p3[1], arg1, arg2, arg3);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03F540
-/* 074070 7F03F540 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 074074 7F03F544 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 074078 7F03F548 AFA60038 */  sw    $a2, 0x38($sp)
-/* 07407C 7F03F54C AFA7003C */  sw    $a3, 0x3c($sp)
-/* 074080 7F03F550 C4840014 */  lwc1  $f4, 0x14($a0)
-/* 074084 7F03F554 8C870010 */  lw    $a3, 0x10($a0)
-/* 074088 7F03F558 8C86000C */  lw    $a2, 0xc($a0)
-/* 07408C 7F03F55C C48E0008 */  lwc1  $f14, 8($a0)
-/* 074090 7F03F560 C48C0004 */  lwc1  $f12, 4($a0)
-/* 074094 7F03F564 E7A40010 */  swc1  $f4, 0x10($sp)
-/* 074098 7F03F568 C4860018 */  lwc1  $f6, 0x18($a0)
-/* 07409C 7F03F56C 8FAF003C */  lw    $t7, 0x3c($sp)
-/* 0740A0 7F03F570 8FAE0038 */  lw    $t6, 0x38($sp)
-/* 0740A4 7F03F574 AFA50018 */  sw    $a1, 0x18($sp)
-/* 0740A8 7F03F578 E7A60014 */  swc1  $f6, 0x14($sp)
-/* 0740AC 7F03F57C AFAF0020 */  sw    $t7, 0x20($sp)
-/* 0740B0 7F03F580 0FC0FB30 */  jal   sub_GAME_7F03ECC0
-/* 0740B4 7F03F584 AFAE001C */   sw    $t6, 0x1c($sp)
-/* 0740B8 7F03F588 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 0740BC 7F03F58C 27BD0030 */  addiu $sp, $sp, 0x30
-/* 0740C0 7F03F590 03E00008 */  jr    $ra
-/* 0740C4 7F03F594 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
