@@ -13,7 +13,7 @@
  */
 
 //bss
-MemoryPool g_mempPools[8];
+MemoryPool g_mempPools[7];
 
 enum MEMPOOL
 {
