@@ -4647,49 +4647,32 @@ glabel sub_GAME_7F03DA50
 
 
 
+/* I think the arguments are lists of roomids but I'm not certain. This function checks if any item in the two lists match */
+s32 sub_GAME_7F03DB70(s32* roomids1, s32* roomids2)
+{
+    s32* itr1;
+    s32* itr2;
+    s32 itr1_val;
+    s32 itr2_val;
 
+    itr1 = roomids1;
+    itr1_val = *itr1;
+    while (itr1_val >= 0)
+    {
+        itr2 = roomids2;
+        itr2_val = *itr2;
+        while(itr2_val >= 0)
+        {
+            if (itr1_val == itr2_val) { return 1; }
+            itr2++;
+            itr2_val = *itr2;
+        }
+        itr1++;
+        itr1_val = *itr1;
+    }
 
-#ifdef NONMATCHING
-void sub_GAME_7F03DB70(void) {
-
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03DB70
-/* 0726A0 7F03DB70 8C830000 */  lw    $v1, ($a0)
-/* 0726A4 7F03DB74 00801025 */  move  $v0, $a0
-/* 0726A8 7F03DB78 04620012 */  bltzl $v1, .L7F03DBC4
-/* 0726AC 7F03DB7C 00001025 */   move  $v0, $zero
-/* 0726B0 7F03DB80 8CA70000 */  lw    $a3, ($a1)
-/* 0726B4 7F03DB84 00A02025 */  move  $a0, $a1
-.L7F03DB88:
-/* 0726B8 7F03DB88 04E00009 */  bltz  $a3, .L7F03DBB0
-/* 0726BC 7F03DB8C 00E03025 */   move  $a2, $a3
-.L7F03DB90:
-/* 0726C0 7F03DB90 54660004 */  bnel  $v1, $a2, .L7F03DBA4
-/* 0726C4 7F03DB94 8C860004 */   lw    $a2, 4($a0)
-/* 0726C8 7F03DB98 03E00008 */  jr    $ra
-/* 0726CC 7F03DB9C 24020001 */   li    $v0, 1
-
-/* 0726D0 7F03DBA0 8C860004 */  lw    $a2, 4($a0)
-.L7F03DBA4:
-/* 0726D4 7F03DBA4 24840004 */  addiu $a0, $a0, 4
-/* 0726D8 7F03DBA8 04C1FFF9 */  bgez  $a2, .L7F03DB90
-/* 0726DC 7F03DBAC 00000000 */   nop   
-.L7F03DBB0:
-/* 0726E0 7F03DBB0 8C430004 */  lw    $v1, 4($v0)
-/* 0726E4 7F03DBB4 24420004 */  addiu $v0, $v0, 4
-/* 0726E8 7F03DBB8 0463FFF3 */  bgezl $v1, .L7F03DB88
-/* 0726EC 7F03DBBC 00A02025 */   move  $a0, $a1
-/* 0726F0 7F03DBC0 00001025 */  move  $v0, $zero
-.L7F03DBC4:
-/* 0726F4 7F03DBC4 03E00008 */  jr    $ra
-/* 0726F8 7F03DBC8 00000000 */   nop   
-)
-#endif
-
-
 
 
 
