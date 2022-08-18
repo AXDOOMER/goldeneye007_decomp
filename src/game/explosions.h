@@ -149,7 +149,9 @@ struct BulletImpact {
     u32 unk40;
     u32 unk44;
     u32 unk48;
-    u32 unk4C;
+    s8 unk4C;
+    s8 unk4D;
+    s16 unk4E;
 };
 
 struct EjectedCasing {

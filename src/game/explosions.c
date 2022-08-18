@@ -5967,74 +5967,17 @@ s32 sub_GAME_7F0A0C74(f32 arg0)
 
 
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0A0CCC(void) {
-
+void sub_GAME_7F0A0CCC(s32 arg0, s8 arg1)
+{
+    s32 i;
+    for (i = 0; i < BULLET_IMPACT_BUFFER_LEN; i++)
+    {
+        if ((arg0 == ptr_bullet_impact_buf[i].unk48) && (arg1 == ptr_bullet_impact_buf[i].unk4D))
+        {
+            ptr_bullet_impact_buf[i].unk00 = -1;
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A0CCC
-/* 0D57FC 7F0A0CCC AFA50004 */  sw    $a1, 4($sp)
-/* 0D5800 7F0A0CD0 00057600 */  sll   $t6, $a1, 0x18
-/* 0D5804 7F0A0CD4 3C068008 */  lui   $a2, %hi(ptr_bullet_impact_buf)
-/* 0D5808 7F0A0CD8 000E2E03 */  sra   $a1, $t6, 0x18
-/* 0D580C 7F0A0CDC 24C6A154 */  addiu $a2, %lo(ptr_bullet_impact_buf) # addiu $a2, $a2, -0x5eac
-/* 0D5810 7F0A0CE0 00001825 */  move  $v1, $zero
-/* 0D5814 7F0A0CE4 24081F40 */  li    $t0, 8000
-/* 0D5818 7F0A0CE8 2407FFFF */  li    $a3, -1
-/* 0D581C 7F0A0CEC 8CD80000 */  lw    $t8, ($a2)
-.L7F0A0CF0:
-/* 0D5820 7F0A0CF0 03031021 */  addu  $v0, $t8, $v1
-/* 0D5824 7F0A0CF4 8C590048 */  lw    $t9, 0x48($v0)
-/* 0D5828 7F0A0CF8 54990008 */  bnel  $a0, $t9, .L7F0A0D1C
-/* 0D582C 7F0A0CFC 8C4B0098 */   lw    $t3, 0x98($v0)
-/* 0D5830 7F0A0D00 8049004D */  lb    $t1, 0x4d($v0)
-/* 0D5834 7F0A0D04 54A90005 */  bnel  $a1, $t1, .L7F0A0D1C
-/* 0D5838 7F0A0D08 8C4B0098 */   lw    $t3, 0x98($v0)
-/* 0D583C 7F0A0D0C A4470000 */  sh    $a3, ($v0)
-/* 0D5840 7F0A0D10 8CCA0000 */  lw    $t2, ($a2)
-/* 0D5844 7F0A0D14 01431021 */  addu  $v0, $t2, $v1
-/* 0D5848 7F0A0D18 8C4B0098 */  lw    $t3, 0x98($v0)
-.L7F0A0D1C:
-/* 0D584C 7F0A0D1C 548B0008 */  bnel  $a0, $t3, .L7F0A0D40
-/* 0D5850 7F0A0D20 8C4E00E8 */   lw    $t6, 0xe8($v0)
-/* 0D5854 7F0A0D24 804C009D */  lb    $t4, 0x9d($v0)
-/* 0D5858 7F0A0D28 54AC0005 */  bnel  $a1, $t4, .L7F0A0D40
-/* 0D585C 7F0A0D2C 8C4E00E8 */   lw    $t6, 0xe8($v0)
-/* 0D5860 7F0A0D30 A4470050 */  sh    $a3, 0x50($v0)
-/* 0D5864 7F0A0D34 8CCD0000 */  lw    $t5, ($a2)
-/* 0D5868 7F0A0D38 01A31021 */  addu  $v0, $t5, $v1
-/* 0D586C 7F0A0D3C 8C4E00E8 */  lw    $t6, 0xe8($v0)
-.L7F0A0D40:
-/* 0D5870 7F0A0D40 548E0008 */  bnel  $a0, $t6, .L7F0A0D64
-/* 0D5874 7F0A0D44 8C590138 */   lw    $t9, 0x138($v0)
-/* 0D5878 7F0A0D48 804F00ED */  lb    $t7, 0xed($v0)
-/* 0D587C 7F0A0D4C 54AF0005 */  bnel  $a1, $t7, .L7F0A0D64
-/* 0D5880 7F0A0D50 8C590138 */   lw    $t9, 0x138($v0)
-/* 0D5884 7F0A0D54 A44700A0 */  sh    $a3, 0xa0($v0)
-/* 0D5888 7F0A0D58 8CD80000 */  lw    $t8, ($a2)
-/* 0D588C 7F0A0D5C 03031021 */  addu  $v0, $t8, $v1
-/* 0D5890 7F0A0D60 8C590138 */  lw    $t9, 0x138($v0)
-.L7F0A0D64:
-/* 0D5894 7F0A0D64 24630140 */  addiu $v1, $v1, 0x140
-/* 0D5898 7F0A0D68 14990005 */  bne   $a0, $t9, .L7F0A0D80
-/* 0D589C 7F0A0D6C 00000000 */   nop   
-/* 0D58A0 7F0A0D70 8049013D */  lb    $t1, 0x13d($v0)
-/* 0D58A4 7F0A0D74 14A90002 */  bne   $a1, $t1, .L7F0A0D80
-/* 0D58A8 7F0A0D78 00000000 */   nop   
-/* 0D58AC 7F0A0D7C A44700F0 */  sh    $a3, 0xf0($v0)
-.L7F0A0D80:
-/* 0D58B0 7F0A0D80 5468FFDB */  bnel  $v1, $t0, .L7F0A0CF0
-/* 0D58B4 7F0A0D84 8CD80000 */   lw    $t8, ($a2)
-/* 0D58B8 7F0A0D88 03E00008 */  jr    $ra
-/* 0D58BC 7F0A0D8C 00000000 */   nop   
-)
-#endif
-
-
 
 
 
