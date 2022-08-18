@@ -5925,36 +5925,11 @@ glabel sub_GAME_7F03E7AC
 )
 #endif
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F03E830(void) {
-
+void sub_GAME_7F03E830(ObjectRecord* arg0)
+{
+    PropRecord* prop = arg0->prop;
+    stanGetPositionYValue(prop->stan, prop->pos.x, prop->pos.z);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03E830
-/* 073360 7F03E830 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 073364 7F03E834 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 073368 7F03E838 8C820010 */  lw    $v0, 0x10($a0)
-/* 07336C 7F03E83C 8C440014 */  lw    $a0, 0x14($v0)
-/* 073370 7F03E840 8C450008 */  lw    $a1, 8($v0)
-/* 073374 7F03E844 0FC2CA5C */  jal   stanGetPositionYValue
-/* 073378 7F03E848 8C460010 */   lw    $a2, 0x10($v0)
-/* 07337C 7F03E84C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 073380 7F03E850 27BD0018 */  addiu $sp, $sp, 0x18
-/* 073384 7F03E854 03E00008 */  jr    $ra
-/* 073388 7F03E858 00000000 */   nop   
-)
-#endif
-
-
-
-
-
 
 f32 chrpropBBOXGetXmin(ModelNode_BoundingBoxRecord *modelBoundingBox)
 {
