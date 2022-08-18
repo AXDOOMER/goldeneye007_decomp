@@ -5981,89 +5981,17 @@ void sub_GAME_7F0A0CCC(s32 arg0, s8 arg1)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0A0D90(void) {
-
+void sub_GAME_7F0A0D90(s32 arg0)
+{
+    s32 i;
+    for (i = 0; i < BULLET_IMPACT_BUFFER_LEN; i++)
+    {
+        if ((arg0 == ptr_bullet_impact_buf[i].unk48) && (D_8004080C[ptr_bullet_impact_buf[i].unk02].unk1 == 2))
+        {
+            ptr_bullet_impact_buf[i].unk00 = -1;
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A0D90
-/* 0D58C0 7F0A0D90 3C078004 */  lui   $a3, %hi(D_8004080C)
-/* 0D58C4 7F0A0D94 3C058008 */  lui   $a1, %hi(ptr_bullet_impact_buf)
-/* 0D58C8 7F0A0D98 24A5A154 */  addiu $a1, %lo(ptr_bullet_impact_buf) # addiu $a1, $a1, -0x5eac
-/* 0D58CC 7F0A0D9C 24E7080C */  addiu $a3, %lo(D_8004080C) # addiu $a3, $a3, 0x80c
-/* 0D58D0 7F0A0DA0 00001825 */  move  $v1, $zero
-/* 0D58D4 7F0A0DA4 240A1F40 */  li    $t2, 8000
-/* 0D58D8 7F0A0DA8 2409FFFF */  li    $t1, -1
-/* 0D58DC 7F0A0DAC 2408000C */  li    $t0, 12
-/* 0D58E0 7F0A0DB0 24060002 */  li    $a2, 2
-/* 0D58E4 7F0A0DB4 8CAE0000 */  lw    $t6, ($a1)
-.L7F0A0DB8:
-/* 0D58E8 7F0A0DB8 01C31021 */  addu  $v0, $t6, $v1
-/* 0D58EC 7F0A0DBC 8C4F0048 */  lw    $t7, 0x48($v0)
-/* 0D58F0 7F0A0DC0 548F000C */  bnel  $a0, $t7, .L7F0A0DF4
-/* 0D58F4 7F0A0DC4 8C4E0098 */   lw    $t6, 0x98($v0)
-/* 0D58F8 7F0A0DC8 84580002 */  lh    $t8, 2($v0)
-/* 0D58FC 7F0A0DCC 03080019 */  multu $t8, $t0
-/* 0D5900 7F0A0DD0 0000C812 */  mflo  $t9
-/* 0D5904 7F0A0DD4 00F95821 */  addu  $t3, $a3, $t9
-/* 0D5908 7F0A0DD8 916C0009 */  lbu   $t4, 9($t3)
-/* 0D590C 7F0A0DDC 54CC0005 */  bnel  $a2, $t4, .L7F0A0DF4
-/* 0D5910 7F0A0DE0 8C4E0098 */   lw    $t6, 0x98($v0)
-/* 0D5914 7F0A0DE4 A4490000 */  sh    $t1, ($v0)
-/* 0D5918 7F0A0DE8 8CAD0000 */  lw    $t5, ($a1)
-/* 0D591C 7F0A0DEC 01A31021 */  addu  $v0, $t5, $v1
-/* 0D5920 7F0A0DF0 8C4E0098 */  lw    $t6, 0x98($v0)
-.L7F0A0DF4:
-/* 0D5924 7F0A0DF4 548E000C */  bnel  $a0, $t6, .L7F0A0E28
-/* 0D5928 7F0A0DF8 8C4D00E8 */   lw    $t5, 0xe8($v0)
-/* 0D592C 7F0A0DFC 844F0052 */  lh    $t7, 0x52($v0)
-/* 0D5930 7F0A0E00 01E80019 */  multu $t7, $t0
-/* 0D5934 7F0A0E04 0000C012 */  mflo  $t8
-/* 0D5938 7F0A0E08 00F8C821 */  addu  $t9, $a3, $t8
-/* 0D593C 7F0A0E0C 932B0009 */  lbu   $t3, 9($t9)
-/* 0D5940 7F0A0E10 54CB0005 */  bnel  $a2, $t3, .L7F0A0E28
-/* 0D5944 7F0A0E14 8C4D00E8 */   lw    $t5, 0xe8($v0)
-/* 0D5948 7F0A0E18 A4490050 */  sh    $t1, 0x50($v0)
-/* 0D594C 7F0A0E1C 8CAC0000 */  lw    $t4, ($a1)
-/* 0D5950 7F0A0E20 01831021 */  addu  $v0, $t4, $v1
-/* 0D5954 7F0A0E24 8C4D00E8 */  lw    $t5, 0xe8($v0)
-.L7F0A0E28:
-/* 0D5958 7F0A0E28 548D000C */  bnel  $a0, $t5, .L7F0A0E5C
-/* 0D595C 7F0A0E2C 8C4C0138 */   lw    $t4, 0x138($v0)
-/* 0D5960 7F0A0E30 844E00A2 */  lh    $t6, 0xa2($v0)
-/* 0D5964 7F0A0E34 01C80019 */  multu $t6, $t0
-/* 0D5968 7F0A0E38 00007812 */  mflo  $t7
-/* 0D596C 7F0A0E3C 00EFC021 */  addu  $t8, $a3, $t7
-/* 0D5970 7F0A0E40 93190009 */  lbu   $t9, 9($t8)
-/* 0D5974 7F0A0E44 54D90005 */  bnel  $a2, $t9, .L7F0A0E5C
-/* 0D5978 7F0A0E48 8C4C0138 */   lw    $t4, 0x138($v0)
-/* 0D597C 7F0A0E4C A44900A0 */  sh    $t1, 0xa0($v0)
-/* 0D5980 7F0A0E50 8CAB0000 */  lw    $t3, ($a1)
-/* 0D5984 7F0A0E54 01631021 */  addu  $v0, $t3, $v1
-/* 0D5988 7F0A0E58 8C4C0138 */  lw    $t4, 0x138($v0)
-.L7F0A0E5C:
-/* 0D598C 7F0A0E5C 24630140 */  addiu $v1, $v1, 0x140
-/* 0D5990 7F0A0E60 148C0009 */  bne   $a0, $t4, .L7F0A0E88
-/* 0D5994 7F0A0E64 00000000 */   nop   
-/* 0D5998 7F0A0E68 844D00F2 */  lh    $t5, 0xf2($v0)
-/* 0D599C 7F0A0E6C 01A80019 */  multu $t5, $t0
-/* 0D59A0 7F0A0E70 00007012 */  mflo  $t6
-/* 0D59A4 7F0A0E74 00EE7821 */  addu  $t7, $a3, $t6
-/* 0D59A8 7F0A0E78 91F80009 */  lbu   $t8, 9($t7)
-/* 0D59AC 7F0A0E7C 14D80002 */  bne   $a2, $t8, .L7F0A0E88
-/* 0D59B0 7F0A0E80 00000000 */   nop   
-/* 0D59B4 7F0A0E84 A44900F0 */  sh    $t1, 0xf0($v0)
-.L7F0A0E88:
-/* 0D59B8 7F0A0E88 546AFFCB */  bnel  $v1, $t2, .L7F0A0DB8
-/* 0D59BC 7F0A0E8C 8CAE0000 */   lw    $t6, ($a1)
-/* 0D59C0 7F0A0E90 03E00008 */  jr    $ra
-/* 0D59C4 7F0A0E94 00000000 */   nop   
-)
-#endif
-
-
 
 
 
