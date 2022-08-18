@@ -28,6 +28,7 @@ assets/ge007.u.117940.jfont_chardata.bin
 assets/ge007.u.123040.efont_chardata.bin
 assets/ge007.u.29E560.Globalimagetable_commandblock.bin
 assets/images/split/*.bin*
+assets/images/out/*
 assets/music/*.bin
 assets/music/*.ctl
 assets/music/*.tbl

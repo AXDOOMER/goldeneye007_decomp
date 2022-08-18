@@ -166,10 +166,10 @@ void sub_GAME_7F0349BC(s32 slot)
  */
 s32 chraiitemsize(u8 *AIList, s32 offset)
 {
-	//matches only as u8* despite text evidence of ai->val structs
+    //matches only as u8* despite text evidence of ai->val structs
     switch (AIList[offset])
     {
-		//Cant Use CMD Builder due to different order...
+        //Cant Use CMD Builder due to different order...
 #if defined(USECMDBUILDER)
 #    ifndef _SYNHILITE
 #        define _AI_CMD(CMD)                                             /*  \
@@ -688,14 +688,14 @@ s32 chraiitemsize(u8 *AIList, s32 offset)
         case AI_ObjectRocketLaunch:
             return AI_ObjectRocketLaunch_LENGTH;
         case AI_PRINT:
-		{   
+        {   
             s32 pos = offset + 1;
             while (AIList[pos] != 0) 
             {
                 ++pos;
             }
             return (pos - offset) + 1;
-		}
+        }
         default:
 #       if defined(DEBUG)
             osSyncPrintf("chraiitemsize: unknown type %d!\n", *AIList);
@@ -714,14 +714,14 @@ s32 chraiGetAIListID(AIRecord *AIList, bool *isGlobalAIList)
 {
     s32 i;
 
-    if (g_chraiCurrentSetup.ailists)
+    if (g_CurrentSetup.ailists)
     {
-        for (i = 0; g_chraiCurrentSetup.ailists[i].ailist; i++)
+        for (i = 0; g_CurrentSetup.ailists[i].ailist; i++)
         {
-            if (g_chraiCurrentSetup.ailists[i].ailist == AIList)
+            if (g_CurrentSetup.ailists[i].ailist == AIList)
             {
                 *isGlobalAIList = FALSE;
-                return g_chraiCurrentSetup.ailists[i].ID;
+                return g_CurrentSetup.ailists[i].ID;
             }
         }
     }
@@ -795,13 +795,13 @@ AIRecord *ailistFindById(s32 ID)
 
     if (!isGlobalAIListID(ID))
     {
-        if (g_chraiCurrentSetup.ailists)
+        if (g_CurrentSetup.ailists)
         {
-            for (i = 0; g_chraiCurrentSetup.ailists[i].ailist; i++)
+            for (i = 0; g_CurrentSetup.ailists[i].ailist; i++)
             {
-                if (g_chraiCurrentSetup.ailists[i].ID == ID)
+                if (g_CurrentSetup.ailists[i].ID == ID)
                 {
-                    return g_chraiCurrentSetup.ailists[i].ailist;
+                    return g_CurrentSetup.ailists[i].ailist;
                 }
             }
         }
@@ -827,11 +827,11 @@ PathRecord *pathFindById(s32 ID)
 {
     int i;
 
-        for  (i=0;g_chraiCurrentSetup.patrolpaths[i].waypoints;i++)
+        for  (i=0;g_CurrentSetup.patrolpaths[i].waypoints;i++)
         {
-            if ( ID == g_chraiCurrentSetup.patrolpaths[i].ID )
+            if ( ID == g_CurrentSetup.patrolpaths[i].ID )
             {
-                return &g_chraiCurrentSetup.patrolpaths[i];
+                return &g_CurrentSetup.patrolpaths[i];
             }
            
         }
@@ -2395,11 +2395,11 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     {
                         if (isNotBoundPad(padnum))
                         {
-                            pad = &g_chraiCurrentSetup.pads[padnum];
+                            pad = &g_CurrentSetup.pads[padnum];
                         }
                         else
                         {
-                            pad = (PadRecord *)&g_chraiCurrentSetup.boundpads[getBoundPadNum(padnum)];
+                            pad = (PadRecord *)&g_CurrentSetup.boundpads[getBoundPadNum(padnum)];
                         }
 #ifdef DEBUG
                             osSyncPrintf("aiMoveObj: moving object to pad %d\n");
@@ -3832,11 +3832,11 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     u16        sfxID = CharArrayTo16(ai->val,2);
                     if (isNotBoundPad(padnum))
                     {
-                        pad = &g_chraiCurrentSetup.pads[padnum];
+                        pad = &g_CurrentSetup.pads[padnum];
                     }
                     else
                     {
-                        pad = (PadRecord *)&g_chraiCurrentSetup.boundpads[getBoundPadNum(padnum)];
+                        pad = (PadRecord *)&g_CurrentSetup.boundpads[getBoundPadNum(padnum)];
                     }
                     if (ai->slotID >= 0 && ai->slotID < 8 && pad)
                     {
@@ -4014,11 +4014,11 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     u16       padnum = CharArrayTo16(ai->val,0);
                     if (isNotBoundPad(padnum))
                     {
-                        dword_CODE_bss_800799F8 = &g_chraiCurrentSetup.pads[padnum];
+                        dword_CODE_bss_800799F8 = &g_CurrentSetup.pads[padnum];
                     }
                     else
                     {
-                        dword_CODE_bss_800799F8 = (PadRecord *)&g_chraiCurrentSetup.boundpads[getBoundPadNum(padnum)];
+                        dword_CODE_bss_800799F8 = (PadRecord *)&g_CurrentSetup.boundpads[getBoundPadNum(padnum)];
                     }
                     set_camera_mode(CAMERAMODE_POSEND);
                     Offset += AI_CameraLookAtBondFromPad_LENGTH;
@@ -4114,11 +4114,11 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                         padnum = chrResolvePadId(ChrEntityp, padnum);
                         if (isNotBoundPad(padnum))
                         {
-                            pad = &g_chraiCurrentSetup.pads[padnum];
+                            pad = &g_CurrentSetup.pads[padnum];
                         }
                         else
                         {
-                            pad = (PadRecord *)&g_chraiCurrentSetup.boundpads[getBoundPadNum(padnum)];
+                            pad = (PadRecord *)&g_CurrentSetup.boundpads[getBoundPadNum(padnum)];
                         }
 
                         FacingDirection = atan2f(pad->look.x, pad->look.z);
@@ -4321,11 +4321,11 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
 
                     if (isNotBoundPad(padnum))
                     {
-                        pad = &g_chraiCurrentSetup.pads[padnum * 1]; //needs a mult by 1 to correct s0/v1
+                        pad = &g_CurrentSetup.pads[padnum * 1]; //needs a mult by 1 to correct s0/v1
                     }
                     else
                     {
-                        pad = (PadRecord *)&g_chraiCurrentSetup.boundpads[getBoundPadNum(padnum)];
+                        pad = (PadRecord *)&g_CurrentSetup.boundpads[getBoundPadNum(padnum)];
                     }
 
                     if (pad->stan && obj && obj->prop && (pad->stan->room == obj->prop->stan->room))

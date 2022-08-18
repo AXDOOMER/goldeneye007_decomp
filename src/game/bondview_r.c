@@ -109,7 +109,7 @@ void bondviewLoadSetupIntroSection(void)
 
     start_pos = D_8002A780;
 
-    intro_record = (struct SetupIntroEmpty *)g_chraiCurrentSetup.intro;
+    intro_record = (struct SetupIntroEmpty *)g_CurrentSetup.intro;
     g_isBondKIA = 0;
     g_bondviewForceDisarm = 0;
     resolution = 0;
@@ -179,10 +179,10 @@ void bondviewLoadSetupIntroSection(void)
             {
                 case INTROTYPE_SPAWN:
                 {
-                    if (g_chraiCurrentSetup.pads != NULL
+                    if (g_CurrentSetup.pads != NULL
                         && (check_ramrom_flags() == ((struct SetupIntroSpawn*)intro_record)->is_demo_playback))
                     {
-                        g_Startpad[startpadcount] = &g_chraiCurrentSetup.pads[((struct SetupIntroSpawn*)intro_record)->index];
+                        g_Startpad[startpadcount] = &g_CurrentSetup.pads[((struct SetupIntroSpawn*)intro_record)->index];
                         startpadcount++;
                     }
 
@@ -326,7 +326,7 @@ void bondviewLoadSetupIntroSection(void)
                     intro_credits = (struct SetupIntroCredits*)intro_record;
                     
                     // hack: bad address math
-                    credits = (CreditsEntry*)((s32)dword_CODE_bss_80075D28 + (s32)intro_credits->unk04);
+                    credits = (CreditsEntry*)((s32)g_ptrStageSetupFile + (s32)intro_credits->unk04);
                     D_80036440 = credits;
 
                     // what is the point of this?

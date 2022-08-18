@@ -8,7 +8,7 @@ default: colour
 FINAL := YES
 VERSION := US
 IDO_RECOMP := YES
-VERBOSE := 0
+VERBOSE := 1
 # If COMPARE is 1, check the output sha1sum when building 'all', and if fali to match
 # then compare ELF sections to known md5 checksums.
 # If compare is 2, it will just compare the sha1sum.
@@ -691,6 +691,9 @@ endif
 testPB:
 	$(call SetupProgressBar)
 	$(call IncrementProgressBarFromAtRate,0,0.125)
+
+textures:
+	for file in assets/images/split/*.bin; do ../../tools/mktex/build/tex2png $file .assets/images/out; done
 
 colour:
 	@echo "\033[3A"

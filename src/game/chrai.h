@@ -453,7 +453,7 @@ extern u32 temp_mine_table[30];
 extern f32 gas_damage_flag;
 extern u32 gas_cutoff_flag;
 extern f32 difficulty ;
-extern stagesetup g_chraiCurrentSetup;
+extern stagesetup g_CurrentSetup;
 extern s16 * ptr_list_object_lookup_indices;
 extern PropRecord pos_data_entry[];
 
@@ -478,7 +478,7 @@ extern struct object_animation_controller g_MonitorAnimController;
 extern struct object_animation_controller g_UnknownAnimController;
 extern struct object_animation_controller g_TaserAnimController;
 
-extern CreditsEntry *dword_CODE_bss_80075D28;
+extern stagesetup                        *g_ptrStageSetupFile;
 
 void          alarmDeactivate(void);
 s32           chraiitemsize(u8 *AIList, s32 offset);
