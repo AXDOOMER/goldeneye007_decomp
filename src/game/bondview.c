@@ -46155,7 +46155,7 @@ void bondviewTransformPosToViewMatrix(RenderPosView *arg0)
  * Notes: Similar to sub_GAME_7F08BE2C.
  * 
  */
-void bondviewTransformManyPosToViewMatrix(RenderPosView* arg0, s32 arg1)
+void bondviewTransformManyPosToViewMatrix(RenderPosView * arg0, s32 arg1)
 {
     Mtxf mtx;
     RenderPosView* rpv_entry;
@@ -46208,7 +46208,7 @@ void sub_GAME_7F08BDC4(Mtxf *arg0)
  * - identical registers: ok
  *
  */
-void sub_GAME_7F08BE2C(Mtxf* arg0, s32 arg1)
+void sub_GAME_7F08BE2C(Mtxf * arg0, s32 arg1)
 {
     Mtxf sp38;
     s32 var_s0;
