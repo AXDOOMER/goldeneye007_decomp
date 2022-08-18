@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include <memp.h>
+#include "chrai.h"
 #include "chrlv.h"
 #include "math_atan2f.h"
 #include "prop.h"
@@ -29,56 +30,28 @@ const char aMp_[] = "mp_";
 
 
 
+s32 load_proptype(s32 arg0)
+{
+    PropDefHeaderRecord * prop_record;
+    s32 count;
 
+    prop_record = (PropDefHeaderRecord *) g_chraiCurrentSetup.propDefs;
+    count = 0;
 
-
-#ifdef NONMATCHING
-void load_proptype(void) {
-
+    if (prop_record != NULL)
+    {
+        while (prop_record->type != 0x30)
+        {
+            if (prop_record->type == (arg0 & 0xFF))
+            {
+                count += 1;
+            }
+            prop_record = &prop_record[sizepropdef((PropDefHeaderRecord* ) prop_record)];
+        }
+    }
+    return count;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel load_proptype
-/* 036680 7F001B50 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 036684 7F001B54 AFB00014 */  sw    $s0, 0x14($sp)
-/* 036688 7F001B58 3C108007 */  lui   $s0, %hi(g_chraiCurrentSetup+0x0c)
-/* 03668C 7F001B5C 8E105D0C */  lw    $s0, %lo(g_chraiCurrentSetup+0x0c)($s0)
-/* 036690 7F001B60 AFB10018 */  sw    $s1, 0x18($sp)
-/* 036694 7F001B64 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 036698 7F001B68 AFB30020 */  sw    $s3, 0x20($sp)
-/* 03669C 7F001B6C AFB2001C */  sw    $s2, 0x1c($sp)
-/* 0366A0 7F001B70 12000010 */  beqz  $s0, .L7F001BB4
-/* 0366A4 7F001B74 00008825 */   move  $s1, $zero
-/* 0366A8 7F001B78 92030003 */  lbu   $v1, 3($s0)
-/* 0366AC 7F001B7C 24130030 */  li    $s3, 48
-/* 0366B0 7F001B80 309200FF */  andi  $s2, $a0, 0xff
-/* 0366B4 7F001B84 5263000C */  beql  $s3, $v1, .L7F001BB8
-/* 0366B8 7F001B88 8FBF0024 */   lw    $ra, 0x24($sp)
-.L7F001B8C:
-/* 0366BC 7F001B8C 16430002 */  bne   $s2, $v1, .L7F001B98
-/* 0366C0 7F001B90 00000000 */   nop   
-/* 0366C4 7F001B94 26310001 */  addiu $s1, $s1, 1
-.L7F001B98:
-/* 0366C8 7F001B98 0FC15A3D */  jal   sizepropdef
-/* 0366CC 7F001B9C 02002025 */   move  $a0, $s0
-/* 0366D0 7F001BA0 00027080 */  sll   $t6, $v0, 2
-/* 0366D4 7F001BA4 01D08021 */  addu  $s0, $t6, $s0
-/* 0366D8 7F001BA8 92030003 */  lbu   $v1, 3($s0)
-/* 0366DC 7F001BAC 1663FFF7 */  bne   $s3, $v1, .L7F001B8C
-/* 0366E0 7F001BB0 00000000 */   nop   
-.L7F001BB4:
-/* 0366E4 7F001BB4 8FBF0024 */  lw    $ra, 0x24($sp)
-.L7F001BB8:
-/* 0366E8 7F001BB8 02201025 */  move  $v0, $s1
-/* 0366EC 7F001BBC 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0366F0 7F001BC0 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0366F4 7F001BC4 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 0366F8 7F001BC8 8FB30020 */  lw    $s3, 0x20($sp)
-/* 0366FC 7F001BCC 03E00008 */  jr    $ra
-/* 036700 7F001BD0 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
+
 
 
 #ifdef NONMATCHING
