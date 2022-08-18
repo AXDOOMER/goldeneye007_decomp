@@ -281,16 +281,15 @@ PropRecord *get_ptr_obj_pos_list_current_entry(void)
 
 
 
+PropRecord* chrpropAllocate(void)
+{
+    PropRecord* prop;
 
-
-
-#ifdef NONMATCHING
-//matches except uses a0 instead of a1
-PropRecord* chrpropAllocate(void) {
-    PropRecord* prop = ptr_obj_pos_list_final_entry;
-    if (prop)
+    if (ptr_obj_pos_list_final_entry)
     {
+        prop = ptr_obj_pos_list_final_entry;
         ptr_obj_pos_list_final_entry = prop->prev;
+
         prop->prev = NULL;
         prop->next = NULL;
         prop->parent = NULL;
@@ -302,40 +301,9 @@ PropRecord* chrpropAllocate(void) {
         prop->rooms[0] = 0xFF;
         return prop;
     }
+
     return NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel chrpropAllocate
-/* 06EF60 7F03A430 3C058003 */  lui   $a1, %hi(ptr_obj_pos_list_final_entry)
-/* 06EF64 7F03A434 24A50AA8 */  addiu $a1, %lo(ptr_obj_pos_list_final_entry) # addiu $a1, $a1, 0xaa8
-/* 06EF68 7F03A438 8CA30000 */  lw    $v1, ($a1)
-/* 06EF6C 7F03A43C 5060000F */  beql  $v1, $zero, .L7F03A47C
-/* 06EF70 7F03A440 00001025 */   move  $v0, $zero
-/* 06EF74 7F03A444 8C6E0024 */  lw    $t6, 0x24($v1)
-/* 06EF78 7F03A448 240F00FF */  li    $t7, 255
-/* 06EF7C 7F03A44C 00601025 */  move  $v0, $v1
-/* 06EF80 7F03A450 ACAE0000 */  sw    $t6, ($a1)
-/* 06EF84 7F03A454 AC600024 */  sw    $zero, 0x24($v1)
-/* 06EF88 7F03A458 AC600028 */  sw    $zero, 0x28($v1)
-/* 06EF8C 7F03A45C AC60001C */  sw    $zero, 0x1c($v1)
-/* 06EF90 7F03A460 AC600020 */  sw    $zero, 0x20($v1)
-/* 06EF94 7F03A464 A0600001 */  sb    $zero, 1($v1)
-/* 06EF98 7F03A468 AC600014 */  sw    $zero, 0x14($v1)
-/* 06EF9C 7F03A46C A4600002 */  sh    $zero, 2($v1)
-/* 06EFA0 7F03A470 03E00008 */  jr    $ra
-/* 06EFA4 7F03A474 A06F002C */   sb    $t7, 0x2c($v1)
-
-/* 06EFA8 7F03A478 00001025 */  move  $v0, $zero
-.L7F03A47C:
-/* 06EFAC 7F03A47C 03E00008 */  jr    $ra
-/* 06EFB0 7F03A480 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 
