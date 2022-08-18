@@ -5437,45 +5437,13 @@ glabel chrpropDeregisterRoom
 
 
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F03E134(void) {
-
+void sub_GAME_7F03E134(PropRecord* arg0) {
+    if (arg0->type == 3) {
+        chrPositionRelated7F020D94(arg0->chr);
+    } else if ((arg0->type == 1) || (arg0->type == 4)) {
+        setupUpdateObjectRoomPosition((ObjectRecord* ) arg0->chr);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03E134
-/* 072C64 7F03E134 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 072C68 7F03E138 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 072C6C 7F03E13C 90820000 */  lbu   $v0, ($a0)
-/* 072C70 7F03E140 24010003 */  li    $at, 3
-/* 072C74 7F03E144 00802825 */  move  $a1, $a0
-/* 072C78 7F03E148 54410006 */  bnel  $v0, $at, .L7F03E164
-/* 072C7C 7F03E14C 24010001 */   li    $at, 1
-/* 072C80 7F03E150 0FC08365 */  jal   chrPositionRelated7F020D94
-/* 072C84 7F03E154 8C840004 */   lw    $a0, 4($a0)
-/* 072C88 7F03E158 10000009 */  b     .L7F03E180
-/* 072C8C 7F03E15C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 072C90 7F03E160 24010001 */  li    $at, 1
-.L7F03E164:
-/* 072C94 7F03E164 10410003 */  beq   $v0, $at, .L7F03E174
-/* 072C98 7F03E168 24010004 */   li    $at, 4
-/* 072C9C 7F03E16C 54410004 */  bnel  $v0, $at, .L7F03E180
-/* 072CA0 7F03E170 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F03E174:
-/* 072CA4 7F03E174 0FC15B28 */  jal   setupUpdateObjectRoomPosition
-/* 072CA8 7F03E178 8CA40004 */   lw    $a0, 4($a1)
-/* 072CAC 7F03E17C 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F03E180:
-/* 072CB0 7F03E180 27BD0018 */  addiu $sp, $sp, 0x18
-/* 072CB4 7F03E184 03E00008 */  jr    $ra
-/* 072CB8 7F03E188 00000000 */   nop   
-)
-#endif
-
-
 
 
 
