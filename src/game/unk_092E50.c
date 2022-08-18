@@ -49,6 +49,8 @@ Gfx MipMap2C_Something2_Setup[] = {
 
 u32 D_8003FD90 = 0;
 f32 D_8003FD94[] = {0, 0, 0};
+
+// TODO: D_8003FDA0 is actually a `struct hand`
 u32 D_8003FDA0 = 0;
 u32 D_8003FDA4 = 0xFFFFFFFF;
 //D:D_8003FDA8
