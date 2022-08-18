@@ -46149,74 +46149,31 @@ void bondviewTransformPosToViewMatrix(RenderPosView *arg0)
 
 
 
-
-
-#ifdef NONMATCHING
 /**
  * Address 0x7F08BD48.
  * 
- * decomp status:
- * - compiles: yes
- * - stack resize: ok
- * - identical instructions: fail
- * - identical registers: fail
+ * Notes: Similar to sub_GAME_7F08BE2C.
  * 
- * notes: two swapped instructions at start, then just regalloc.
  */
-void bondviewTransformManyPosToViewMatrix(RenderPosView *arg0, s32 arg1)
+void bondviewTransformManyPosToViewMatrix(RenderPosView* arg0, s32 arg1)
 {
-    Mtxf sp38;
+    Mtxf mtx;
+    RenderPosView* rpv_entry;
     s32 i;
-    Mtxf *phi_s1;
 
-    for (i=0, phi_s1=&arg0[i].pos; i<arg1; i++, phi_s1++)
+    i = 0;
+    if (arg1 <= 0) { return; }
+
+    // Couldn't find a better matching loop
+    rpv_entry = arg0;
+    do
     {
-        // if you get this to match, see sub_GAME_7F08BE2C
-        matrix_4x4_copy(phi_s1, (Mtxf *) &sp38);
-        matrix_4x4_f32_to_s32((Mtxf *) &sp38, &arg0[i].view);
-    }
+        matrix_4x4_copy(&rpv_entry->pos, &mtx);
+        matrix_4x4_f32_to_s32(&mtx, &arg0[i].pos);
+        i++;
+        rpv_entry++;
+    } while (i != arg1);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel bondviewTransformManyPosToViewMatrix
-/* 0C0878 7F08BD48 27BDFF88 */  addiu $sp, $sp, -0x78
-/* 0C087C 7F08BD4C AFB40028 */  sw    $s4, 0x28($sp)
-/* 0C0880 7F08BD50 AFB30024 */  sw    $s3, 0x24($sp)
-/* 0C0884 7F08BD54 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0C0888 7F08BD58 00A09825 */  move  $s3, $a1
-/* 0C088C 7F08BD5C 0080A025 */  move  $s4, $a0
-/* 0C0890 7F08BD60 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 0C0894 7F08BD64 AFB20020 */  sw    $s2, 0x20($sp)
-/* 0C0898 7F08BD68 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 0C089C 7F08BD6C 18A0000D */  blez  $a1, .L7F08BDA4
-/* 0C08A0 7F08BD70 00008025 */   move  $s0, $zero
-/* 0C08A4 7F08BD74 00808825 */  move  $s1, $a0
-/* 0C08A8 7F08BD78 27B20038 */  addiu $s2, $sp, 0x38
-.L7F08BD7C:
-/* 0C08AC 7F08BD7C 02202025 */  move  $a0, $s1
-/* 0C08B0 7F08BD80 0FC16008 */  jal   matrix_4x4_copy
-/* 0C08B4 7F08BD84 02402825 */   move  $a1, $s2
-/* 0C08B8 7F08BD88 00107180 */  sll   $t6, $s0, 6
-/* 0C08BC 7F08BD8C 01D42821 */  addu  $a1, $t6, $s4
-/* 0C08C0 7F08BD90 0FC16327 */  jal   matrix_4x4_f32_to_s32
-/* 0C08C4 7F08BD94 02402025 */   move  $a0, $s2
-/* 0C08C8 7F08BD98 26100001 */  addiu $s0, $s0, 1
-/* 0C08CC 7F08BD9C 1613FFF7 */  bne   $s0, $s3, .L7F08BD7C
-/* 0C08D0 7F08BDA0 26310040 */   addiu $s1, $s1, 0x40
-.L7F08BDA4:
-/* 0C08D4 7F08BDA4 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 0C08D8 7F08BDA8 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0C08DC 7F08BDAC 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 0C08E0 7F08BDB0 8FB20020 */  lw    $s2, 0x20($sp)
-/* 0C08E4 7F08BDB4 8FB30024 */  lw    $s3, 0x24($sp)
-/* 0C08E8 7F08BDB8 8FB40028 */  lw    $s4, 0x28($sp)
-/* 0C08EC 7F08BDBC 03E00008 */  jr    $ra
-/* 0C08F0 7F08BDC0 27BD0078 */   addiu $sp, $sp, 0x78
-)
-#endif
-
-
 
 
 
@@ -46238,18 +46195,42 @@ void sub_GAME_7F08BDC4(Mtxf *arg0)
 
 
 
-
-
 #ifdef NONMATCHING
 /**
  * Unreferenced.
  * 
  * Address 0x7F08BE2C.
+ *
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical instructions: two swapped instructions that don't affect each other
+ * - identical registers: ok
+ *
  */
-void sub_GAME_7F08BE2C(Mtxf *arg0, s32 arg1)
+void sub_GAME_7F08BE2C(Mtxf* arg0, s32 arg1)
 {
-    // combination of sub_GAME_7F08BDC4 and bondviewTransformManyPosToViewMatrix
+    Mtxf sp38;
+    s32 var_s0;
+    Mtxf* var_s1;
+
+    var_s0 = 0;
+
+    if (arg1 <= 0) { return; }
+
+    var_s1 = arg0;
+    do
+    {
+        matrix_4x4_copy(var_s1, &sp38);
+        sp38.m[3][0] -= g_CurrentPlayer->previous_model_pos.f[0];
+        sp38.m[3][1] -= g_CurrentPlayer->previous_model_pos.f[1];
+        sp38.m[3][2] -= g_CurrentPlayer->previous_model_pos.f[2];
+        matrix_4x4_f32_to_s32(&sp38, &arg0[var_s0]);
+        var_s0++;
+        var_s1++;
+    } while (var_s0 != arg1);
 }
+
 #else
 GLOBAL_ASM(
 .text
