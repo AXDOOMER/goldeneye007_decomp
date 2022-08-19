@@ -366,48 +366,12 @@ void sub_GAME_7F057D44(f32* arg0, f32* arg1, f32 arg2)
 }
 
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F057D88(void) {
-
+void sub_GAME_7F057D88(f32* arg0, f32* arg1, f32 arg2)
+{
+    sub_GAME_7F057D44(arg0 + 1, arg1 + 1, arg2);
+    arg0[0] += (arg2 * arg1[0]);
+    arg0[2] += (arg2 * arg1[2]);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F057D88
-/* 08C8B8 7F057D88 44866000 */  mtc1  $a2, $f12
-/* 08C8BC 7F057D8C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 08C8C0 7F057D90 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 08C8C4 7F057D94 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 08C8C8 7F057D98 00803825 */  move  $a3, $a0
-/* 08C8CC 7F057D9C 44066000 */  mfc1  $a2, $f12
-/* 08C8D0 7F057DA0 AFA70018 */  sw    $a3, 0x18($sp)
-/* 08C8D4 7F057DA4 24840004 */  addiu $a0, $a0, 4
-/* 08C8D8 7F057DA8 24A50004 */  addiu $a1, $a1, 4
-/* 08C8DC 7F057DAC 0FC15F51 */  jal   sub_GAME_7F057D44
-/* 08C8E0 7F057DB0 E7AC0020 */   swc1  $f12, 0x20($sp)
-/* 08C8E4 7F057DB4 8FA2001C */  lw    $v0, 0x1c($sp)
-/* 08C8E8 7F057DB8 C7AC0020 */  lwc1  $f12, 0x20($sp)
-/* 08C8EC 7F057DBC 8FA70018 */  lw    $a3, 0x18($sp)
-/* 08C8F0 7F057DC0 C4460000 */  lwc1  $f6, ($v0)
-/* 08C8F4 7F057DC4 C4E40000 */  lwc1  $f4, ($a3)
-/* 08C8F8 7F057DC8 46066202 */  mul.s $f8, $f12, $f6
-/* 08C8FC 7F057DCC C4F00008 */  lwc1  $f16, 8($a3)
-/* 08C900 7F057DD0 46082280 */  add.s $f10, $f4, $f8
-/* 08C904 7F057DD4 E4EA0000 */  swc1  $f10, ($a3)
-/* 08C908 7F057DD8 C4520008 */  lwc1  $f18, 8($v0)
-/* 08C90C 7F057DDC 46126182 */  mul.s $f6, $f12, $f18
-/* 08C910 7F057DE0 46068100 */  add.s $f4, $f16, $f6
-/* 08C914 7F057DE4 E4E40008 */  swc1  $f4, 8($a3)
-/* 08C918 7F057DE8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 08C91C 7F057DEC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 08C920 7F057DF0 03E00008 */  jr    $ra
-/* 08C924 7F057DF4 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 void sub_GAME_7F057DF8(struct Mtxf *arg0, struct Mtxf *arg1, s32 count)
