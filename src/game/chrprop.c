@@ -306,7 +306,6 @@ PropRecord* chrpropAllocate(void)
 }
 
 
-
 void chrpropFree(PropRecord *prop)
 {
     prop->prev = ptr_obj_pos_list_final_entry;
@@ -316,54 +315,26 @@ void chrpropFree(PropRecord *prop)
 }
 
 
+void chrpropActivate(PropRecord* prop)
+{
+    PropRecord* cur;
 
-
-#ifdef NONMATCHING
-//functionally close, asm out of order
-void chrpropActivate(PropRecord* prop) {
-    PropRecord* cur = ptr_obj_pos_list_current_entry;
-    if (cur) {
+    cur = ptr_obj_pos_list_current_entry;
+    if (cur != NULL)
+    {
         cur->next = prop;
-        prop->next = NULL;
+
         prop->prev = ptr_obj_pos_list_current_entry;
+        prop->next = NULL;
+
         ptr_obj_pos_list_current_entry = prop;
         return;
     }
+
     prop->prev = NULL;
     prop->next = NULL;
-    ptr_obj_pos_list_first_entry = prop;
-    ptr_obj_pos_list_current_entry = prop;
+    ptr_obj_pos_list_current_entry = ptr_obj_pos_list_first_entry = prop;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel chrpropActivate
-/* 06EFD4 7F03A4A4 3C038003 */  lui   $v1, %hi(ptr_obj_pos_list_current_entry)
-/* 06EFD8 7F03A4A8 24630AA0 */  addiu $v1, %lo(ptr_obj_pos_list_current_entry) # addiu $v1, $v1, 0xaa0
-/* 06EFDC 7F03A4AC 8C620000 */  lw    $v0, ($v1)
-/* 06EFE0 7F03A4B0 10400007 */  beqz  $v0, .L7F03A4D0
-/* 06EFE4 7F03A4B4 00000000 */   nop   
-/* 06EFE8 7F03A4B8 AC440028 */  sw    $a0, 0x28($v0)
-/* 06EFEC 7F03A4BC 8C6E0000 */  lw    $t6, ($v1)
-/* 06EFF0 7F03A4C0 AC800028 */  sw    $zero, 0x28($a0)
-/* 06EFF4 7F03A4C4 AC8E0024 */  sw    $t6, 0x24($a0)
-/* 06EFF8 7F03A4C8 03E00008 */  jr    $ra
-/* 06EFFC 7F03A4CC AC640000 */   sw    $a0, ($v1)
-
-.L7F03A4D0:
-/* 06F000 7F03A4D0 3C028003 */  lui   $v0, %hi(ptr_obj_pos_list_first_entry)
-/* 06F004 7F03A4D4 AC800024 */  sw    $zero, 0x24($a0)
-/* 06F008 7F03A4D8 AC800028 */  sw    $zero, 0x28($a0)
-/* 06F00C 7F03A4DC 24420AA4 */  addiu $v0, %lo(ptr_obj_pos_list_first_entry) # addiu $v0, $v0, 0xaa4
-/* 06F010 7F03A4E0 AC440000 */  sw    $a0, ($v0)
-/* 06F014 7F03A4E4 AC640000 */  sw    $a0, ($v1)
-/* 06F018 7F03A4E8 03E00008 */  jr    $ra
-/* 06F01C 7F03A4EC 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 void chrpropActivateThisFrame(PropRecord* prop) {
@@ -382,10 +353,6 @@ void chrpropActivateThisFrame(PropRecord* prop) {
     ptr_obj_pos_list_first_entry = prop;
     ptr_obj_pos_list_current_entry = prop;
 }
-
-
-
-
 
 
 void chrpropDelist(PropRecord *prop)
