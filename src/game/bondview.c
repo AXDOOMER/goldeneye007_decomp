@@ -2266,603 +2266,92 @@ glabel sub_GAME_7F078BF4
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-u32 bondviewGetRandomSpawnPadIndex(void)
+s32 bondviewGetRandomSpawnPadIndex(void)
 {
-    s32 temp_s6;
-    s32 temp_s2;
-    s32 temp_s7;
-    void *temp_t3;
-    void *temp_t6;
-    f32 temp_f0;
-    f32 temp_f2;
-    s32 temp_s0;
-    s32 temp_s7_2;
-    s32 temp_hi;
-    void *temp_t5;
-    void *temp_t8;
-    f32 temp_f0_2;
-    f32 temp_f2_2;
-    s32 temp_s0_2;
-    s32 phi_s0;
-    s32 phi_s1;
-    s32 phi_s7;
-    s32 phi_s1_2;
-    s32 phi_s7_2;
-    s32 phi_s0_2;
-    s32 phi_s1_3;
-    s32 phi_s7_3;
-    s32 phi_s1_4;
-    u32 phi_s3;
-    s32 phi_s1_5;
-    s32 phi_s1_6;
-    s32 phi_s1_7;
-    s32 phi_s1_8;
+    PadRecord *pad;
+    PropRecord *player_prop;
+    s32 player_count;
+    f32 diff_x;
+    s32 pad_index;
+    s32 player_num;
+    s32 player_index;
+    s32 enemy_nearby;
+    s32 attempt_num;
+    f32 dist;
+    f32 diff_z;
 
-    temp_s6 = get_cur_playernum();
-    temp_s2 = getPlayerCount();
-    phi_s1_2 = 1;
-    phi_s7_2 = 0;
-    //sprintf("choosing a start pad for player %d\n",__format);
-    if (startpadcount > 0)
+    // set up initial values
+    player_num = get_cur_playernum();
+    player_count = getPlayerCount();
+    enemy_nearby = TRUE;
+
+    // loop pads until no enemy is within 1000 units
+    for (attempt_num = 0; enemy_nearby && (attempt_num < startpadcount);)
     {
-        phi_s7 = 0;
-block_2:
-        temp_s7 = (phi_s7 + 1);
-        subroutine_arg0->unk29E0 = (s32) (subroutine_arg0->unk29E0 + 1);
-        phi_s0 = 0;
-        phi_s1 = 0;
-        phi_s1_7 = 0;
-        //sprintf("testing pad %d\n",local_28);
-        if (temp_s2 > 0)
+        attempt_num++;
+        enemy_nearby = FALSE;
+        g_CurrentPlayer->field_29E0++;
+        pad_index = ( g_CurrentPlayer->field_29E0) % (startpadcount);
+
+        for (player_index = 0; player_index < player_count; player_index++)
         {
-block_3:
-            phi_s1_5 = phi_s1_7;
-            if (phi_s0 != temp_s6)
-            {
-                temp_t3 = (&g_playerPointers + (phi_s0 * 4));
-                phi_s1_5 = phi_s1_7;
-                if ((*temp_t3)->unkA8 != 0)
-                {
-                    temp_t6 = (&g_Startpad + (((s32) subroutine_arg0->unk29E0 % (s32) startpadcount) * 4));
-                    temp_f0 = ((*temp_t3)->unkA8->unk8 - **temp_t6);
-                    temp_f2 = ((*temp_t3)->unkA8->unk10 - (*temp_t6)->unk8);
-                    phi_s1_5 = phi_s1_7;
-                    //sprintf("Distance from player %d (%f, %f)->(%f, %f)= %f\n",local_2c,
-                    //    *(&g_Startpad)[local_28],*((&g_Startpad)[local_28] + 8),
-                    //    *(g_playerPointers[local_2c]->position_data_pointer + 0xc),
-                    //    *(g_playerPointers[local_2c]->position_data_pointer + 0x14),dVar7);
-                    if (sqrtf(((temp_f0 * temp_f0) + (temp_f2 * temp_f2))) < 1000.0f)
-                    {
-                        //sprintf("Too close to player %d (closer than 10m)\n",local_2c);
-                        phi_s1_5 = 1;
-                    }
-                }
-            }
-            temp_s0 = (phi_s0 + 1);
-            phi_s0 = temp_s0;
-            phi_s1 = phi_s1_5;
-            phi_s1_7 = phi_s1_5;
-            if (temp_s0 != temp_s2)
-            {
-                goto block_3;
-            }
-        }
-        phi_s1_2 = phi_s1;
-        phi_s7_2 = temp_s7;
-        if (phi_s1 != 0)
-        {
-            phi_s7 = temp_s7;
-            if (temp_s7 < startpadcount)
-            {
-                goto block_2;
-            }
-            phi_s1_2 = phi_s1;
-            phi_s7_2 = temp_s7;
+            // don't consider yourself as an enemy
+            if (player_index == player_num) { continue; }
+
+            // make sure the player prop is valid
+            player_prop = g_playerPointers[player_index]->prop;
+            if (player_prop == 0) { continue; }
+
+            // find distance between enemy and this pad
+            pad = g_Startpad[pad_index];
+            diff_x = player_prop->pos.x - pad->pos.x;
+            diff_z = player_prop->pos.z - pad->pos.z;
+            dist = sqrtf((diff_x * diff_x) + (diff_z * diff_z));
+
+            // if pad is within 1000, don't pick it
+            if (dist < 1000) { enemy_nearby = TRUE; }
         }
     }
-    phi_s1_4 = phi_s1_2;
-    phi_s3 = sp4C;
-    if (phi_s1_2 != 0)
+
+    do {  } while(0); // leftover debug code?
+
+    // loop pads until no enemy is within 100 units
+    for (; enemy_nearby && (attempt_num < startpadcount);)
     {
-        phi_s1_4 = phi_s1_2;
-        phi_s3 = sp4C;
-        if (phi_s7_2 < startpadcount)
+        attempt_num++;
+        enemy_nearby = FALSE;
+        g_CurrentPlayer->field_29E0++;
+        pad_index = ((s32) g_CurrentPlayer->field_29E0) % ((s32) startpadcount);
+
+        for (player_index = 0; player_index < player_count; player_index++)
         {
-            phi_s7_3 = phi_s7_2;
-block_14:
-            temp_s7_2 = (phi_s7_3 + 1);
-            subroutine_arg0->unk29E0 = (s32) (subroutine_arg0->unk29E0 + 1);
-            temp_hi = ((s32) subroutine_arg0->unk29E0 % (s32) startpadcount);
-            //sprintf("testing pad %d (second try)\n",local_28);
-            phi_s0_2 = 0;
-            phi_s1_3 = 0;
-            phi_s1_8 = 0;
-            if (temp_s2 > 0)
-            {
-block_15:
-                phi_s1_6 = phi_s1_8;
-                if (phi_s0_2 != temp_s6)
-                {
-                    temp_t5 = (&g_playerPointers + (phi_s0_2 * 4));
-                    phi_s1_6 = phi_s1_8;
-                    if ((*temp_t5)->unkA8 != 0)
-                    {
-                        temp_t8 = (&g_Startpad + (temp_hi * 4));
-                        temp_f0_2 = ((*temp_t5)->unkA8->unk8 - **temp_t8);
-                        temp_f2_2 = ((*temp_t5)->unkA8->unk10 - (*temp_t8)->unk8);
-                        phi_s1_6 = phi_s1_8;
-                        //sprintf("Distance from player %d (%f, %f)->(%f, %f)= %f\n",local_2c,*(&g_Startpad)[local_28],*((&g_Startpad)[local_28] + 8),*(g_playerPointers[local_2c]->position_data_pointer + 0xc),*(g_playerPointers[local_2c]->position_data_pointer + 0x14),dVar7);
-                        if (sqrtf(((temp_f0_2 * temp_f0_2) + (temp_f2_2 * temp_f2_2))) < 100.0f)
-                        {
-                            //sprintf("Too close to player %d (closer than 1m)\n",local_2c);
-                            phi_s1_6 = 1;
-                        }
-                    }
-                }
-                temp_s0_2 = (phi_s0_2 + 1);
-                phi_s0_2 = temp_s0_2;
-                phi_s1_3 = phi_s1_6;
-                phi_s1_8 = phi_s1_6;
-                if (temp_s0_2 != temp_s2)
-                {
-                    goto block_15;
-                }
-            }
-            phi_s1_4 = phi_s1_3;
-            phi_s3 = temp_hi;
-            if (phi_s1_3 != 0)
-            {
-                phi_s7_3 = temp_s7_2;
-                phi_s1_4 = phi_s1_3;
-                phi_s3 = temp_hi;
-                if (temp_s7_2 < startpadcount)
-                {
-                    goto block_14;
-                }
-            }
+            // don't consider yourself as an enemy
+            if (player_index == player_num) { continue; }
+
+            // make sure the player prop is valid
+            player_prop = g_playerPointers[player_index]->prop;
+            if (player_prop == 0) { continue; }
+
+            // find distance between enemy and this pad
+            pad = g_Startpad[pad_index];
+            diff_x = player_prop->pos.x - pad->pos.x;
+            diff_z = player_prop->pos.z - pad->pos.z;
+            dist = sqrtf((diff_x * diff_x) + (diff_z * diff_z));
+
+            // if pad is within 100, don't pick it
+            if (dist < 100.f) { enemy_nearby = TRUE; }
         }
     }
-    if (phi_s1_4 != 0)
+
+    // if we searched through all pads and failed to find a safe one, just pick one at random
+    if (enemy_nearby)
     {
-        //        sprintf("**** No decent start pad found for player %d - picking a random one ****\n", __format + 1);
-        phi_s3 = (randomGetNext() % (u32) startpadcount);
+        pad_index = (randomGetNext() % (startpadcount));
     }
-    return phi_s3;
+
+    return pad_index;
 }
-#else
 
-#if defined(LEFTOVERDEBUG)
-GLOBAL_ASM(
-.text
-glabel bondviewGetRandomSpawnPadIndex
-/* 0ADC20 7F0790F0 27BDFFA0 */  addiu $sp, $sp, -0x60
-/* 0ADC24 7F0790F4 AFBF0044 */  sw    $ra, 0x44($sp)
-/* 0ADC28 7F0790F8 AFBE0040 */  sw    $fp, 0x40($sp)
-/* 0ADC2C 7F0790FC AFB7003C */  sw    $s7, 0x3c($sp)
-/* 0ADC30 7F079100 AFB60038 */  sw    $s6, 0x38($sp)
-/* 0ADC34 7F079104 AFB50034 */  sw    $s5, 0x34($sp)
-/* 0ADC38 7F079108 AFB40030 */  sw    $s4, 0x30($sp)
-/* 0ADC3C 7F07910C AFB3002C */  sw    $s3, 0x2c($sp)
-/* 0ADC40 7F079110 AFB20028 */  sw    $s2, 0x28($sp)
-/* 0ADC44 7F079114 AFB10024 */  sw    $s1, 0x24($sp)
-/* 0ADC48 7F079118 AFB00020 */  sw    $s0, 0x20($sp)
-/* 0ADC4C 7F07911C 0FC26C54 */  jal   get_cur_playernum
-/* 0ADC50 7F079120 F7B40018 */   sdc1  $f20, 0x18($sp)
-/* 0ADC54 7F079124 0FC26919 */  jal   getPlayerCount
-/* 0ADC58 7F079128 0040B025 */   move  $s6, $v0
-/* 0ADC5C 7F07912C 3C0E8008 */  lui   $t6, %hi(startpadcount)
-/* 0ADC60 7F079130 8DCE9C68 */  lw    $t6, %lo(startpadcount)($t6)
-/* 0ADC64 7F079134 00409025 */  move  $s2, $v0
-/* 0ADC68 7F079138 24110001 */  li    $s1, 1
-/* 0ADC6C 7F07913C 19C00047 */  blez  $t6, .L7F07925C
-/* 0ADC70 7F079140 0000B825 */   move  $s7, $zero
-/* 0ADC74 7F079144 3C01447A */  li    $at, 0x447A0000 # 1000.000000
-/* 0ADC78 7F079148 3C1E8008 */  lui   $fp, %hi(g_CurrentPlayer)
-/* 0ADC7C 7F07914C 3C158008 */  lui   $s5, %hi(g_Startpad)
-/* 0ADC80 7F079150 3C148008 */  lui   $s4, %hi(g_playerPointers)
-/* 0ADC84 7F079154 4481A000 */  mtc1  $at, $f20
-/* 0ADC88 7F079158 26949EE0 */  addiu $s4, %lo(g_playerPointers) # addiu $s4, $s4, -0x6120
-/* 0ADC8C 7F07915C 26B59C28 */  addiu $s5, %lo(g_Startpad) # addiu $s5, $s5, -0x63d8
-/* 0ADC90 7F079160 27DEA0B0 */  addiu $fp, %lo(g_CurrentPlayer) # addiu $fp, $fp, -0x5f50
-/* 0ADC94 7F079164 8FC20000 */  lw    $v0, ($fp)
-.L7F079168:
-/* 0ADC98 7F079168 3C098008 */  lui   $t1, %hi(startpadcount)
-/* 0ADC9C 7F07916C 26F70001 */  addiu $s7, $s7, 1
-/* 0ADCA0 7F079170 8C4F29E0 */  lw    $t7, 0x29e0($v0)
-/* 0ADCA4 7F079174 00008825 */  move  $s1, $zero
-/* 0ADCA8 7F079178 00008025 */  move  $s0, $zero
-/* 0ADCAC 7F07917C 25F80001 */  addiu $t8, $t7, 1
-/* 0ADCB0 7F079180 AC5829E0 */  sw    $t8, 0x29e0($v0)
-/* 0ADCB4 7F079184 8FD90000 */  lw    $t9, ($fp)
-/* 0ADCB8 7F079188 8D299C68 */  lw    $t1, %lo(startpadcount)($t1)
-/* 0ADCBC 7F07918C 8F2829E0 */  lw    $t0, 0x29e0($t9)
-/* 0ADCC0 7F079190 0109001A */  div   $zero, $t0, $t1
-/* 0ADCC4 7F079194 00009810 */  mfhi  $s3
-/* 0ADCC8 7F079198 15200002 */  bnez  $t1, .L7F0791A4
-/* 0ADCCC 7F07919C 00000000 */   nop
-/* 0ADCD0 7F0791A0 0007000D */  break 7
-.L7F0791A4:
-/* 0ADCD4 7F0791A4 2401FFFF */  li    $at, -1
-/* 0ADCD8 7F0791A8 15210004 */  bne   $t1, $at, .L7F0791BC
-/* 0ADCDC 7F0791AC 3C018000 */   lui   $at, 0x8000
-/* 0ADCE0 7F0791B0 15010002 */  bne   $t0, $at, .L7F0791BC
-/* 0ADCE4 7F0791B4 00000000 */   nop
-/* 0ADCE8 7F0791B8 0006000D */  break 6
-.L7F0791BC:
-/* 0ADCEC 7F0791BC 1A40001F */  blez  $s2, .L7F07923C
-/* 0ADCF0 7F0791C0 00000000 */   nop
-.L7F0791C4:
-/* 0ADCF4 7F0791C4 5216001B */  beql  $s0, $s6, .L7F079234
-/* 0ADCF8 7F0791C8 26100001 */   addiu $s0, $s0, 1
-/* 0ADCFC 7F0791CC 00105080 */  sll   $t2, $s0, 2
-/* 0ADD00 7F0791D0 028A5821 */  addu  $t3, $s4, $t2
-/* 0ADD04 7F0791D4 8D6C0000 */  lw    $t4, ($t3)
-/* 0ADD08 7F0791D8 8D8200A8 */  lw    $v0, 0xa8($t4)
-/* 0ADD0C 7F0791DC 50400015 */  beql  $v0, $zero, .L7F079234
-/* 0ADD10 7F0791E0 26100001 */   addiu $s0, $s0, 1
-/* 0ADD14 7F0791E4 00136880 */  sll   $t5, $s3, 2
-/* 0ADD18 7F0791E8 02AD7021 */  addu  $t6, $s5, $t5
-/* 0ADD1C 7F0791EC 8DC30000 */  lw    $v1, ($t6)
-/* 0ADD20 7F0791F0 C4440008 */  lwc1  $f4, 8($v0)
-/* 0ADD24 7F0791F4 C4480010 */  lwc1  $f8, 0x10($v0)
-/* 0ADD28 7F0791F8 C4660000 */  lwc1  $f6, ($v1)
-/* 0ADD2C 7F0791FC C46A0008 */  lwc1  $f10, 8($v1)
-/* 0ADD30 7F079200 46062001 */  sub.s $f0, $f4, $f6
-/* 0ADD34 7F079204 460A4081 */  sub.s $f2, $f8, $f10
-/* 0ADD38 7F079208 46000402 */  mul.s $f16, $f0, $f0
-/* 0ADD3C 7F07920C 00000000 */  nop
-/* 0ADD40 7F079210 46021482 */  mul.s $f18, $f2, $f2
-/* 0ADD44 7F079214 0C007DF8 */  jal   sqrtf
-/* 0ADD48 7F079218 46128300 */   add.s $f12, $f16, $f18
-/* 0ADD4C 7F07921C 4614003C */  c.lt.s $f0, $f20
-/* 0ADD50 7F079220 00000000 */  nop
-/* 0ADD54 7F079224 45020003 */  bc1fl .L7F079234
-/* 0ADD58 7F079228 26100001 */   addiu $s0, $s0, 1
-/* 0ADD5C 7F07922C 24110001 */  li    $s1, 1
-/* 0ADD60 7F079230 26100001 */  addiu $s0, $s0, 1
-.L7F079234:
-/* 0ADD64 7F079234 1612FFE3 */  bne   $s0, $s2, .L7F0791C4
-/* 0ADD68 7F079238 00000000 */   nop
-.L7F07923C:
-/* 0ADD6C 7F07923C 12200007 */  beqz  $s1, .L7F07925C
-/* 0ADD70 7F079240 AFB3004C */   sw    $s3, 0x4c($sp)
-/* 0ADD74 7F079244 3C0F8008 */  lui   $t7, %hi(startpadcount)
-/* 0ADD78 7F079248 8DEF9C68 */  lw    $t7, %lo(startpadcount)($t7)
-/* 0ADD7C 7F07924C 02EF082A */  slt   $at, $s7, $t7
-/* 0ADD80 7F079250 5420FFC5 */  bnezl $at, .L7F079168
-/* 0ADD84 7F079254 8FC20000 */   lw    $v0, ($fp)
-/* 0ADD88 7F079258 AFB3004C */  sw    $s3, 0x4c($sp)
-.L7F07925C:
-/* 0ADD8C 7F07925C 3C148008 */  lui   $s4, %hi(g_playerPointers)
-/* 0ADD90 7F079260 3C158008 */  lui   $s5, %hi(g_Startpad)
-/* 0ADD94 7F079264 3C1E8008 */  lui   $fp, %hi(g_CurrentPlayer)
-/* 0ADD98 7F079268 27DEA0B0 */  addiu $fp, %lo(g_CurrentPlayer) # addiu $fp, $fp, -0x5f50
-/* 0ADD9C 7F07926C 26B59C28 */  addiu $s5, %lo(g_Startpad) # addiu $s5, $s5, -0x63d8
-/* 0ADDA0 7F079270 26949EE0 */  addiu $s4, %lo(g_playerPointers) # addiu $s4, $s4, -0x6120
-/* 0ADDA4 7F079274 12200044 */  beqz  $s1, .L7F079388
-/* 0ADDA8 7F079278 8FB3004C */   lw    $s3, 0x4c($sp)
-/* 0ADDAC 7F07927C 3C188008 */  lui   $t8, %hi(startpadcount)
-/* 0ADDB0 7F079280 8F189C68 */  lw    $t8, %lo(startpadcount)($t8)
-/* 0ADDB4 7F079284 02F8082A */  slt   $at, $s7, $t8
-/* 0ADDB8 7F079288 1020003F */  beqz  $at, .L7F079388
-/* 0ADDBC 7F07928C 3C0142C8 */   li    $at, 0x42C80000 # 100.000000
-/* 0ADDC0 7F079290 4481A000 */  mtc1  $at, $f20
-/* 0ADDC4 7F079294 00000000 */  nop
-/* 0ADDC8 7F079298 8FC20000 */  lw    $v0, ($fp)
-.L7F07929C:
-/* 0ADDCC 7F07929C 3C0B8008 */  lui   $t3, %hi(startpadcount)
-/* 0ADDD0 7F0792A0 26F70001 */  addiu $s7, $s7, 1
-/* 0ADDD4 7F0792A4 8C5929E0 */  lw    $t9, 0x29e0($v0)
-/* 0ADDD8 7F0792A8 00008825 */  move  $s1, $zero
-/* 0ADDDC 7F0792AC 00008025 */  move  $s0, $zero
-/* 0ADDE0 7F0792B0 27280001 */  addiu $t0, $t9, 1
-/* 0ADDE4 7F0792B4 AC4829E0 */  sw    $t0, 0x29e0($v0)
-/* 0ADDE8 7F0792B8 8FC90000 */  lw    $t1, ($fp)
-/* 0ADDEC 7F0792BC 8D6B9C68 */  lw    $t3, %lo(startpadcount)($t3)
-/* 0ADDF0 7F0792C0 8D2A29E0 */  lw    $t2, 0x29e0($t1)
-/* 0ADDF4 7F0792C4 014B001A */  div   $zero, $t2, $t3
-/* 0ADDF8 7F0792C8 00009810 */  mfhi  $s3
-/* 0ADDFC 7F0792CC 15600002 */  bnez  $t3, .L7F0792D8
-/* 0ADE00 7F0792D0 00000000 */   nop
-/* 0ADE04 7F0792D4 0007000D */  break 7
-.L7F0792D8:
-/* 0ADE08 7F0792D8 2401FFFF */  li    $at, -1
-/* 0ADE0C 7F0792DC 15610004 */  bne   $t3, $at, .L7F0792F0
-/* 0ADE10 7F0792E0 3C018000 */   lui   $at, 0x8000
-/* 0ADE14 7F0792E4 15410002 */  bne   $t2, $at, .L7F0792F0
-/* 0ADE18 7F0792E8 00000000 */   nop
-/* 0ADE1C 7F0792EC 0006000D */  break 6
-.L7F0792F0:
-/* 0ADE20 7F0792F0 1A40001F */  blez  $s2, .L7F079370
-/* 0ADE24 7F0792F4 00000000 */   nop
-.L7F0792F8:
-/* 0ADE28 7F0792F8 5216001B */  beql  $s0, $s6, .L7F079368
-/* 0ADE2C 7F0792FC 26100001 */   addiu $s0, $s0, 1
-/* 0ADE30 7F079300 00106080 */  sll   $t4, $s0, 2
-/* 0ADE34 7F079304 028C6821 */  addu  $t5, $s4, $t4
-/* 0ADE38 7F079308 8DAE0000 */  lw    $t6, ($t5)
-/* 0ADE3C 7F07930C 8DC200A8 */  lw    $v0, 0xa8($t6)
-/* 0ADE40 7F079310 50400015 */  beql  $v0, $zero, .L7F079368
-/* 0ADE44 7F079314 26100001 */   addiu $s0, $s0, 1
-/* 0ADE48 7F079318 00137880 */  sll   $t7, $s3, 2
-/* 0ADE4C 7F07931C 02AFC021 */  addu  $t8, $s5, $t7
-/* 0ADE50 7F079320 8F030000 */  lw    $v1, ($t8)
-/* 0ADE54 7F079324 C4440008 */  lwc1  $f4, 8($v0)
-/* 0ADE58 7F079328 C4480010 */  lwc1  $f8, 0x10($v0)
-/* 0ADE5C 7F07932C C4660000 */  lwc1  $f6, ($v1)
-/* 0ADE60 7F079330 C46A0008 */  lwc1  $f10, 8($v1)
-/* 0ADE64 7F079334 46062001 */  sub.s $f0, $f4, $f6
-/* 0ADE68 7F079338 460A4081 */  sub.s $f2, $f8, $f10
-/* 0ADE6C 7F07933C 46000402 */  mul.s $f16, $f0, $f0
-/* 0ADE70 7F079340 00000000 */  nop
-/* 0ADE74 7F079344 46021482 */  mul.s $f18, $f2, $f2
-/* 0ADE78 7F079348 0C007DF8 */  jal   sqrtf
-/* 0ADE7C 7F07934C 46128300 */   add.s $f12, $f16, $f18
-/* 0ADE80 7F079350 4614003C */  c.lt.s $f0, $f20
-/* 0ADE84 7F079354 00000000 */  nop
-/* 0ADE88 7F079358 45020003 */  bc1fl .L7F079368
-/* 0ADE8C 7F07935C 26100001 */   addiu $s0, $s0, 1
-/* 0ADE90 7F079360 24110001 */  li    $s1, 1
-/* 0ADE94 7F079364 26100001 */  addiu $s0, $s0, 1
-.L7F079368:
-/* 0ADE98 7F079368 1612FFE3 */  bne   $s0, $s2, .L7F0792F8
-/* 0ADE9C 7F07936C 00000000 */   nop
-.L7F079370:
-/* 0ADEA0 7F079370 12200005 */  beqz  $s1, .L7F079388
-/* 0ADEA4 7F079374 3C198008 */   lui   $t9, %hi(startpadcount)
-/* 0ADEA8 7F079378 8F399C68 */  lw    $t9, %lo(startpadcount)($t9)
-/* 0ADEAC 7F07937C 02F9082A */  slt   $at, $s7, $t9
-/* 0ADEB0 7F079380 5420FFC6 */  bnezl $at, .L7F07929C
-/* 0ADEB4 7F079384 8FC20000 */   lw    $v0, ($fp)
-.L7F079388:
-/* 0ADEB8 7F079388 5220000B */  beql  $s1, $zero, .L7F0793B8
-/* 0ADEBC 7F07938C 8FBF0044 */   lw    $ra, 0x44($sp)
-/* 0ADEC0 7F079390 0C002914 */  jal   randomGetNext
-/* 0ADEC4 7F079394 00000000 */   nop
-/* 0ADEC8 7F079398 3C088008 */  lui   $t0, %hi(startpadcount)
-/* 0ADECC 7F07939C 8D089C68 */  lw    $t0, %lo(startpadcount)($t0)
-/* 0ADED0 7F0793A0 0048001B */  divu  $zero, $v0, $t0
-/* 0ADED4 7F0793A4 00009810 */  mfhi  $s3
-/* 0ADED8 7F0793A8 15000002 */  bnez  $t0, .L7F0793B4
-/* 0ADEDC 7F0793AC 00000000 */   nop
-/* 0ADEE0 7F0793B0 0007000D */  break 7
-.L7F0793B4:
-/* 0ADEE4 7F0793B4 8FBF0044 */  lw    $ra, 0x44($sp)
-.L7F0793B8:
-/* 0ADEE8 7F0793B8 02601025 */  move  $v0, $s3
-/* 0ADEEC 7F0793BC 8FB3002C */  lw    $s3, 0x2c($sp)
-/* 0ADEF0 7F0793C0 D7B40018 */  ldc1  $f20, 0x18($sp)
-/* 0ADEF4 7F0793C4 8FB00020 */  lw    $s0, 0x20($sp)
-/* 0ADEF8 7F0793C8 8FB10024 */  lw    $s1, 0x24($sp)
-/* 0ADEFC 7F0793CC 8FB20028 */  lw    $s2, 0x28($sp)
-/* 0ADF00 7F0793D0 8FB40030 */  lw    $s4, 0x30($sp)
-/* 0ADF04 7F0793D4 8FB50034 */  lw    $s5, 0x34($sp)
-/* 0ADF08 7F0793D8 8FB60038 */  lw    $s6, 0x38($sp)
-/* 0ADF0C 7F0793DC 8FB7003C */  lw    $s7, 0x3c($sp)
-/* 0ADF10 7F0793E0 8FBE0040 */  lw    $fp, 0x40($sp)
-/* 0ADF14 7F0793E4 03E00008 */  jr    $ra
-/* 0ADF18 7F0793E8 27BD0060 */   addiu $sp, $sp, 0x60
-)
-#endif
-
-#if !defined(LEFTOVERDEBUG)
-GLOBAL_ASM(
-.text
-glabel bondviewGetRandomSpawnPadIndex
-/* 0ABB60 7F079170 27BDFFA0 */  addiu $sp, $sp, -0x60
-/* 0ABB64 7F079174 AFBF0044 */  sw    $ra, 0x44($sp)
-/* 0ABB68 7F079178 AFBE0040 */  sw    $fp, 0x40($sp)
-/* 0ABB6C 7F07917C AFB7003C */  sw    $s7, 0x3c($sp)
-/* 0ABB70 7F079180 AFB60038 */  sw    $s6, 0x38($sp)
-/* 0ABB74 7F079184 AFB50034 */  sw    $s5, 0x34($sp)
-/* 0ABB78 7F079188 AFB40030 */  sw    $s4, 0x30($sp)
-/* 0ABB7C 7F07918C AFB3002C */  sw    $s3, 0x2c($sp)
-/* 0ABB80 7F079190 AFB20028 */  sw    $s2, 0x28($sp)
-/* 0ABB84 7F079194 AFB10024 */  sw    $s1, 0x24($sp)
-/* 0ABB88 7F079198 AFB00020 */  sw    $s0, 0x20($sp)
-/* 0ABB8C 7F07919C 0FC269A4 */  jal   get_cur_playernum
-/* 0ABB90 7F0791A0 F7B40018 */   sdc1  $f20, 0x18($sp)
-/* 0ABB94 7F0791A4 0FC26669 */  jal   getPlayerCount
-/* 0ABB98 7F0791A8 0040B025 */   move  $s6, $v0
-/* 0ABB9C 7F0791AC 3C0E8007 */  lui   $t6, %hi(startpadcount) # $t6, 0x8007
-/* 0ABBA0 7F0791B0 8DCE8778 */  lw    $t6, %lo(startpadcount)($t6)
-/* 0ABBA4 7F0791B4 00409025 */  move  $s2, $v0
-/* 0ABBA8 7F0791B8 24110001 */  li    $s1, 1
-/* 0ABBAC 7F0791BC 19C00047 */  blez  $t6, .L7F0792DC
-/* 0ABBB0 7F0791C0 0000B825 */   move  $s7, $zero
-/* 0ABBB4 7F0791C4 3C01447A */  li    $at, 0x447A0000 # 1000.000000
-/* 0ABBB8 7F0791C8 3C1E8007 */  lui   $fp, %hi(g_CurrentPlayer) # $fp, 0x8007
-/* 0ABBBC 7F0791CC 3C158007 */  lui   $s5, %hi(g_Startpad) # $s5, 0x8007
-/* 0ABBC0 7F0791D0 3C148007 */  lui   $s4, %hi(g_playerPointers) # $s4, 0x8007
-/* 0ABBC4 7F0791D4 4481A000 */  mtc1  $at, $f20
-/* 0ABBC8 7F0791D8 269489F0 */  addiu $s4, %lo(g_playerPointers) # addiu $s4, $s4, -0x7610
-/* 0ABBCC 7F0791DC 26B58738 */  addiu $s5, %lo(g_Startpad) # addiu $s5, $s5, -0x78c8
-/* 0ABBD0 7F0791E0 27DE8BC0 */  addiu $fp, %lo(g_CurrentPlayer) # addiu $fp, $fp, -0x7440
-/* 0ABBD4 7F0791E4 8FC20000 */  lw    $v0, ($fp)
-.L7F0791E8:
-/* 0ABBD8 7F0791E8 3C098007 */  lui   $t1, %hi(startpadcount) # $t1, 0x8007
-/* 0ABBDC 7F0791EC 26F70001 */  addiu $s7, $s7, 1
-/* 0ABBE0 7F0791F0 8C4F29D8 */  lw    $t7, 0x29d8($v0)
-/* 0ABBE4 7F0791F4 00008825 */  move  $s1, $zero
-/* 0ABBE8 7F0791F8 00008025 */  move  $s0, $zero
-/* 0ABBEC 7F0791FC 25F80001 */  addiu $t8, $t7, 1
-/* 0ABBF0 7F079200 AC5829D8 */  sw    $t8, 0x29d8($v0)
-/* 0ABBF4 7F079204 8FD90000 */  lw    $t9, ($fp)
-/* 0ABBF8 7F079208 8D298778 */  lw    $t1, %lo(startpadcount)($t1)
-/* 0ABBFC 7F07920C 8F2829D8 */  lw    $t0, 0x29d8($t9)
-/* 0ABC00 7F079210 0109001A */  div   $zero, $t0, $t1
-/* 0ABC04 7F079214 00009810 */  mfhi  $s3
-/* 0ABC08 7F079218 15200002 */  bnez  $t1, .L7F079224
-/* 0ABC0C 7F07921C 00000000 */   nop   
-/* 0ABC10 7F079220 0007000D */  break 7
-.L7F079224:
-/* 0ABC14 7F079224 2401FFFF */  li    $at, -1
-/* 0ABC18 7F079228 15210004 */  bne   $t1, $at, .L7F07923C
-/* 0ABC1C 7F07922C 3C018000 */   lui   $at, 0x8000
-/* 0ABC20 7F079230 15010002 */  bne   $t0, $at, .L7F07923C
-/* 0ABC24 7F079234 00000000 */   nop   
-/* 0ABC28 7F079238 0006000D */  break 6
-.L7F07923C:
-/* 0ABC2C 7F07923C 1A40001F */  blez  $s2, .L7F0792BC
-/* 0ABC30 7F079240 00000000 */   nop   
-.L7F079244:
-/* 0ABC34 7F079244 5216001B */  beql  $s0, $s6, .L7F0792B4
-/* 0ABC38 7F079248 26100001 */   addiu $s0, $s0, 1
-/* 0ABC3C 7F07924C 00105080 */  sll   $t2, $s0, 2
-/* 0ABC40 7F079250 028A5821 */  addu  $t3, $s4, $t2
-/* 0ABC44 7F079254 8D6C0000 */  lw    $t4, ($t3)
-/* 0ABC48 7F079258 8D8200A8 */  lw    $v0, 0xa8($t4)
-/* 0ABC4C 7F07925C 50400015 */  beql  $v0, $zero, .L7F0792B4
-/* 0ABC50 7F079260 26100001 */   addiu $s0, $s0, 1
-/* 0ABC54 7F079264 00136880 */  sll   $t5, $s3, 2
-/* 0ABC58 7F079268 02AD7021 */  addu  $t6, $s5, $t5
-/* 0ABC5C 7F07926C 8DC30000 */  lw    $v1, ($t6)
-/* 0ABC60 7F079270 C4440008 */  lwc1  $f4, 8($v0)
-/* 0ABC64 7F079274 C4480010 */  lwc1  $f8, 0x10($v0)
-/* 0ABC68 7F079278 C4660000 */  lwc1  $f6, ($v1)
-/* 0ABC6C 7F07927C C46A0008 */  lwc1  $f10, 8($v1)
-/* 0ABC70 7F079280 46062001 */  sub.s $f0, $f4, $f6
-/* 0ABC74 7F079284 460A4081 */  sub.s $f2, $f8, $f10
-/* 0ABC78 7F079288 46000402 */  mul.s $f16, $f0, $f0
-/* 0ABC7C 7F07928C 00000000 */  nop   
-/* 0ABC80 7F079290 46021482 */  mul.s $f18, $f2, $f2
-/* 0ABC84 7F079294 0C007614 */  jal   sqrtf
-/* 0ABC88 7F079298 46128300 */   add.s $f12, $f16, $f18
-/* 0ABC8C 7F07929C 4614003C */  c.lt.s $f0, $f20
-/* 0ABC90 7F0792A0 00000000 */  nop   
-/* 0ABC94 7F0792A4 45020003 */  bc1fl .L7F0792B4
-/* 0ABC98 7F0792A8 26100001 */   addiu $s0, $s0, 1
-/* 0ABC9C 7F0792AC 24110001 */  li    $s1, 1
-/* 0ABCA0 7F0792B0 26100001 */  addiu $s0, $s0, 1
-.L7F0792B4:
-/* 0ABCA4 7F0792B4 1612FFE3 */  bne   $s0, $s2, .L7F079244
-/* 0ABCA8 7F0792B8 00000000 */   nop   
-.L7F0792BC:
-/* 0ABCAC 7F0792BC 12200007 */  beqz  $s1, .L7F0792DC
-/* 0ABCB0 7F0792C0 AFB3004C */   sw    $s3, 0x4c($sp)
-/* 0ABCB4 7F0792C4 3C0F8007 */  lui   $t7, %hi(startpadcount) # $t7, 0x8007
-/* 0ABCB8 7F0792C8 8DEF8778 */  lw    $t7, %lo(startpadcount)($t7)
-/* 0ABCBC 7F0792CC 02EF082A */  slt   $at, $s7, $t7
-/* 0ABCC0 7F0792D0 5420FFC5 */  bnezl $at, .L7F0791E8
-/* 0ABCC4 7F0792D4 8FC20000 */   lw    $v0, ($fp)
-/* 0ABCC8 7F0792D8 AFB3004C */  sw    $s3, 0x4c($sp)
-.L7F0792DC:
-/* 0ABCCC 7F0792DC 3C148007 */  lui   $s4, %hi(g_playerPointers) # $s4, 0x8007
-/* 0ABCD0 7F0792E0 3C158007 */  lui   $s5, %hi(g_Startpad) # $s5, 0x8007
-/* 0ABCD4 7F0792E4 3C1E8007 */  lui   $fp, %hi(g_CurrentPlayer) # $fp, 0x8007
-/* 0ABCD8 7F0792E8 27DE8BC0 */  addiu $fp, %lo(g_CurrentPlayer) # addiu $fp, $fp, -0x7440
-/* 0ABCDC 7F0792EC 26B58738 */  addiu $s5, %lo(g_Startpad) # addiu $s5, $s5, -0x78c8
-/* 0ABCE0 7F0792F0 269489F0 */  addiu $s4, %lo(g_playerPointers) # addiu $s4, $s4, -0x7610
-/* 0ABCE4 7F0792F4 12200044 */  beqz  $s1, .L7F079408
-/* 0ABCE8 7F0792F8 8FB3004C */   lw    $s3, 0x4c($sp)
-/* 0ABCEC 7F0792FC 3C188007 */  lui   $t8, %hi(startpadcount) # $t8, 0x8007
-/* 0ABCF0 7F079300 8F188778 */  lw    $t8, %lo(startpadcount)($t8)
-/* 0ABCF4 7F079304 02F8082A */  slt   $at, $s7, $t8
-/* 0ABCF8 7F079308 1020003F */  beqz  $at, .L7F079408
-/* 0ABCFC 7F07930C 3C0142C8 */   li    $at, 0x42C80000 # 100.000000
-/* 0ABD00 7F079310 4481A000 */  mtc1  $at, $f20
-/* 0ABD04 7F079314 00000000 */  nop   
-/* 0ABD08 7F079318 8FC20000 */  lw    $v0, ($fp)
-.L7F07931C:
-/* 0ABD0C 7F07931C 3C0B8007 */  lui   $t3, %hi(startpadcount) # $t3, 0x8007
-/* 0ABD10 7F079320 26F70001 */  addiu $s7, $s7, 1
-/* 0ABD14 7F079324 8C5929D8 */  lw    $t9, 0x29d8($v0)
-/* 0ABD18 7F079328 00008825 */  move  $s1, $zero
-/* 0ABD1C 7F07932C 00008025 */  move  $s0, $zero
-/* 0ABD20 7F079330 27280001 */  addiu $t0, $t9, 1
-/* 0ABD24 7F079334 AC4829D8 */  sw    $t0, 0x29d8($v0)
-/* 0ABD28 7F079338 8FC90000 */  lw    $t1, ($fp)
-/* 0ABD2C 7F07933C 8D6B8778 */  lw    $t3, %lo(startpadcount)($t3)
-/* 0ABD30 7F079340 8D2A29D8 */  lw    $t2, 0x29d8($t1)
-/* 0ABD34 7F079344 014B001A */  div   $zero, $t2, $t3
-/* 0ABD38 7F079348 00009810 */  mfhi  $s3
-/* 0ABD3C 7F07934C 15600002 */  bnez  $t3, .L7F079358
-/* 0ABD40 7F079350 00000000 */   nop   
-/* 0ABD44 7F079354 0007000D */  break 7
-.L7F079358:
-/* 0ABD48 7F079358 2401FFFF */  li    $at, -1
-/* 0ABD4C 7F07935C 15610004 */  bne   $t3, $at, .L7F079370
-/* 0ABD50 7F079360 3C018000 */   lui   $at, 0x8000
-/* 0ABD54 7F079364 15410002 */  bne   $t2, $at, .L7F079370
-/* 0ABD58 7F079368 00000000 */   nop   
-/* 0ABD5C 7F07936C 0006000D */  break 6
-.L7F079370:
-/* 0ABD60 7F079370 1A40001F */  blez  $s2, .L7F0793F0
-/* 0ABD64 7F079374 00000000 */   nop   
-.L7F079378:
-/* 0ABD68 7F079378 5216001B */  beql  $s0, $s6, .L7F0793E8
-/* 0ABD6C 7F07937C 26100001 */   addiu $s0, $s0, 1
-/* 0ABD70 7F079380 00106080 */  sll   $t4, $s0, 2
-/* 0ABD74 7F079384 028C6821 */  addu  $t5, $s4, $t4
-/* 0ABD78 7F079388 8DAE0000 */  lw    $t6, ($t5)
-/* 0ABD7C 7F07938C 8DC200A8 */  lw    $v0, 0xa8($t6)
-/* 0ABD80 7F079390 50400015 */  beql  $v0, $zero, .L7F0793E8
-/* 0ABD84 7F079394 26100001 */   addiu $s0, $s0, 1
-/* 0ABD88 7F079398 00137880 */  sll   $t7, $s3, 2
-/* 0ABD8C 7F07939C 02AFC021 */  addu  $t8, $s5, $t7
-/* 0ABD90 7F0793A0 8F030000 */  lw    $v1, ($t8)
-/* 0ABD94 7F0793A4 C4440008 */  lwc1  $f4, 8($v0)
-/* 0ABD98 7F0793A8 C4480010 */  lwc1  $f8, 0x10($v0)
-/* 0ABD9C 7F0793AC C4660000 */  lwc1  $f6, ($v1)
-/* 0ABDA0 7F0793B0 C46A0008 */  lwc1  $f10, 8($v1)
-/* 0ABDA4 7F0793B4 46062001 */  sub.s $f0, $f4, $f6
-/* 0ABDA8 7F0793B8 460A4081 */  sub.s $f2, $f8, $f10
-/* 0ABDAC 7F0793BC 46000402 */  mul.s $f16, $f0, $f0
-/* 0ABDB0 7F0793C0 00000000 */  nop   
-/* 0ABDB4 7F0793C4 46021482 */  mul.s $f18, $f2, $f2
-/* 0ABDB8 7F0793C8 0C007614 */  jal   sqrtf
-/* 0ABDBC 7F0793CC 46128300 */   add.s $f12, $f16, $f18
-/* 0ABDC0 7F0793D0 4614003C */  c.lt.s $f0, $f20
-/* 0ABDC4 7F0793D4 00000000 */  nop   
-/* 0ABDC8 7F0793D8 45020003 */  bc1fl .L7F0793E8
-/* 0ABDCC 7F0793DC 26100001 */   addiu $s0, $s0, 1
-/* 0ABDD0 7F0793E0 24110001 */  li    $s1, 1
-/* 0ABDD4 7F0793E4 26100001 */  addiu $s0, $s0, 1
-.L7F0793E8:
-/* 0ABDD8 7F0793E8 1612FFE3 */  bne   $s0, $s2, .L7F079378
-/* 0ABDDC 7F0793EC 00000000 */   nop   
-.L7F0793F0:
-/* 0ABDE0 7F0793F0 12200005 */  beqz  $s1, .L7F079408
-/* 0ABDE4 7F0793F4 3C198007 */   lui   $t9, %hi(startpadcount) # $t9, 0x8007
-/* 0ABDE8 7F0793F8 8F398778 */  lw    $t9, %lo(startpadcount)($t9)
-/* 0ABDEC 7F0793FC 02F9082A */  slt   $at, $s7, $t9
-/* 0ABDF0 7F079400 5420FFC6 */  bnezl $at, .L7F07931C
-/* 0ABDF4 7F079404 8FC20000 */   lw    $v0, ($fp)
-.L7F079408:
-/* 0ABDF8 7F079408 5220000B */  beql  $s1, $zero, .L7F079438
-/* 0ABDFC 7F07940C 8FBF0044 */   lw    $ra, 0x44($sp)
-/* 0ABE00 7F079410 0C00262C */  jal   randomGetNext
-/* 0ABE04 7F079414 00000000 */   nop   
-/* 0ABE08 7F079418 3C088007 */  lui   $t0, %hi(startpadcount) # $t0, 0x8007
-/* 0ABE0C 7F07941C 8D088778 */  lw    $t0, %lo(startpadcount)($t0)
-/* 0ABE10 7F079420 0048001B */  divu  $zero, $v0, $t0
-/* 0ABE14 7F079424 00009810 */  mfhi  $s3
-/* 0ABE18 7F079428 15000002 */  bnez  $t0, .L7F079434
-/* 0ABE1C 7F07942C 00000000 */   nop   
-/* 0ABE20 7F079430 0007000D */  break 7
-.L7F079434:
-/* 0ABE24 7F079434 8FBF0044 */  lw    $ra, 0x44($sp)
-.L7F079438:
-/* 0ABE28 7F079438 02601025 */  move  $v0, $s3
-/* 0ABE2C 7F07943C 8FB3002C */  lw    $s3, 0x2c($sp)
-/* 0ABE30 7F079440 D7B40018 */  ldc1  $f20, 0x18($sp)
-/* 0ABE34 7F079444 8FB00020 */  lw    $s0, 0x20($sp)
-/* 0ABE38 7F079448 8FB10024 */  lw    $s1, 0x24($sp)
-/* 0ABE3C 7F07944C 8FB20028 */  lw    $s2, 0x28($sp)
-/* 0ABE40 7F079450 8FB40030 */  lw    $s4, 0x30($sp)
-/* 0ABE44 7F079454 8FB50034 */  lw    $s5, 0x34($sp)
-/* 0ABE48 7F079458 8FB60038 */  lw    $s6, 0x38($sp)
-/* 0ABE4C 7F07945C 8FB7003C */  lw    $s7, 0x3c($sp)
-/* 0ABE50 7F079460 8FBE0040 */  lw    $fp, 0x40($sp)
-/* 0ABE54 7F079464 03E00008 */  jr    $ra
-/* 0ABE58 7F079468 27BD0060 */   addiu $sp, $sp, 0x60
-)
-#endif
-#endif
 
 //file split per pd
 void init_player_BONDdata(void)
