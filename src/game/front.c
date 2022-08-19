@@ -17870,24 +17870,16 @@ glabel constructor_menu14_mpteams
 
 
 
-#ifdef NONMATCHING
 void set_briefing_page(WATCH_BRIEFING_PAGE page)
 {
-  current_menu_briefing_page = page;
+    short new_var;
+
+    // could be a dev typo
+    if (current_menu_briefing_page = page)
+    {
+        // maybe previous code was optimized out
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_briefing_page
-/* 04A040 7F015510 3C028003 */  lui   $v0, %hi(current_menu_briefing_page)
-/* 04A044 7F015514 2442A914 */  addiu $v0, %lo(current_menu_briefing_page) # addiu $v0, $v0, -0x56ec
-/* 04A048 7F015518 03E00008 */  jr    $ra
-/* 04A04C 7F01551C AC440000 */   sw    $a0, ($v0)
-)
-#endif
-
-
-
 
 
 
