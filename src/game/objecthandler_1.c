@@ -11942,23 +11942,10 @@ glabel dogfnegx
 
 
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F073FC8(void) {
-
+void sub_GAME_7F073FC8(s32 arg0)
+{
+    D_800363F0 = arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F073FC8
-/* 0A8AF8 7F073FC8 3C018003 */  lui   $at, %hi(D_800363F0)
-/* 0A8AFC 7F073FCC 03E00008 */  jr    $ra
-/* 0A8B00 7F073FD0 AC2463F0 */   sw    $a0, %lo(D_800363F0)($at)
-)
-#endif
-
-
 
 
 
