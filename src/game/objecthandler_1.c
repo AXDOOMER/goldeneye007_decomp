@@ -1437,26 +1437,10 @@ void modelSetScale(Model *objinst, f32 scale)
 }
 
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F06CE84(Model *objinst, f32 arg1)
+void sub_GAME_7F06CE84(Model* arg0, f32 arg1)
 {
-    objinst->b8 = arg1;
+    arg0->unkb8 = arg1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06CE84
-/* 0A19B4 7F06CE84 44856000 */  mtc1  $a1, $f12
-/* 0A19B8 7F06CE88 03E00008 */  jr    $ra
-/* 0A19BC 7F06CE8C E48C00B8 */   swc1  $f12, 0xb8($a0)
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
