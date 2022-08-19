@@ -354,40 +354,16 @@ glabel sub_GAME_7F057C14
 
 
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F057D44(void) {
-
+void sub_GAME_7F057D44(f32* arg0, f32* arg1, f32 arg2)
+{
+    f32 temp_f0;
+    f32 temp_f2;
+    temp_f0 = *arg1;
+    temp_f2 = temp_f0;
+    temp_f0 = temp_f2 - (arg2 * 0.2777778f);
+    *arg0 += (arg2 * (temp_f2 + temp_f0)) * 0.5f;
+    *arg1 = temp_f0;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel npc_gravity_modifier
-.word 0x3e8e38e4 /*0.27777779*/
-.text
-glabel sub_GAME_7F057D44
-/* 08C874 7F057D44 3C018005 */  lui   $at, %hi(npc_gravity_modifier)
-/* 08C878 7F057D48 44866000 */  mtc1  $a2, $f12
-/* 08C87C 7F057D4C C42436BC */  lwc1  $f4, %lo(npc_gravity_modifier)($at)
-/* 08C880 7F057D50 C4A20000 */  lwc1  $f2, ($a1)
-/* 08C884 7F057D54 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 08C888 7F057D58 46046182 */  mul.s $f6, $f12, $f4
-/* 08C88C 7F057D5C 44818000 */  mtc1  $at, $f16
-/* 08C890 7F057D60 C4840000 */  lwc1  $f4, ($a0)
-/* 08C894 7F057D64 46061001 */  sub.s $f0, $f2, $f6
-/* 08C898 7F057D68 46001200 */  add.s $f8, $f2, $f0
-/* 08C89C 7F057D6C 46086282 */  mul.s $f10, $f12, $f8
-/* 08C8A0 7F057D70 00000000 */  nop   
-/* 08C8A4 7F057D74 46105482 */  mul.s $f18, $f10, $f16
-/* 08C8A8 7F057D78 46122180 */  add.s $f6, $f4, $f18
-/* 08C8AC 7F057D7C E4860000 */  swc1  $f6, ($a0)
-/* 08C8B0 7F057D80 03E00008 */  jr    $ra
-/* 08C8B4 7F057D84 E4A00000 */   swc1  $f0, ($a1)
-)
-#endif
-
-
 
 
 
