@@ -215,15 +215,10 @@ s32 highlight_enemy_damage;
 s32 dword_CODE_bss_800697A4;
 
 //CODE.bss:800697A8
-s32 handicap_player1;
-//CODE.bss:800697AC
-s32 handicap_player2;
-//CODE.bss:800697B0
-s32 handicap_player3;
-//CODE.bss:800697B4
-s32 handicap_player4;
+s32 player_handicap[MAX_PLAYER_COUNT];
+
 //CODE.bss:800697B8
-u32 controlstyle_player[4];
+u32 controlstyle_player[MAX_PLAYER_COUNT];
 
 //CODE.bss:800697C8
 s32 highlight_players;
@@ -9984,7 +9979,7 @@ u16 get_player_mp_char_body(int player)
 
 f32 get_player_mp_handicap(int player)
 {
-    return MP_handicap_table[(&handicap_player1)[player]].damage_modifier;
+    return MP_handicap_table[player_handicap[player]].damage_modifier;
 }
 
 f32 get_player_mp_char_height(int player)
@@ -10091,7 +10086,7 @@ void init_mp_options_for_scenario(u32 numplayers)
         if (player_char[i] == -1)
         {
             player_char[i] = i;
-            &handicap_player1[i] = 5;
+            player_handicap[i] = 5;
         }
         if ((numplayers >= 3) && (&controlstyle_player[i] >= CONTROLLER_CONFIG_PLENTY))
         {
@@ -10128,8 +10123,8 @@ glabel init_mp_options_for_scenario
 /* 045168 7F010638 02003025 */   move  $a2, $s0
 /* 04516C 7F01063C 3C058003 */  lui   $a1, %hi(player_char)
 /* 045170 7F010640 3C0A8007 */  lui   $t2, %hi(controlstyle_player)
-/* 045174 7F010644 3C088007 */  lui   $t0, %hi(handicap_player1)
-/* 045178 7F010648 250897A8 */  addiu $t0, %lo(handicap_player1) # addiu $t0, $t0, -0x6858
+/* 045174 7F010644 3C088007 */  lui   $t0, %hi(player_handicap)
+/* 045178 7F010648 250897A8 */  addiu $t0, %lo(player_handicap) # addiu $t0, $t0, -0x6858
 /* 04517C 7F01064C 254A97B8 */  addiu $t2, %lo(controlstyle_player) # addiu $t2, $t2, -0x6848
 /* 045180 7F010650 24A5B524 */  addiu $a1, %lo(player_char) # addiu $a1, $a1, -0x4adc
 /* 045184 7F010654 00002025 */  move  $a0, $zero
@@ -13265,7 +13260,7 @@ loop_2:
         temp_t9 = (s32) (phi_s3 << 0x18) >> 0x18;
         if (*phi_s1 == 0)
         {
-            temp_s2 = phi_s4 + &handicap_player1;
+            temp_s2 = phi_s4 + &player_handicap;
             if ((joyGetButtonsPressedThisFrame((s32) (temp_t9 << 0x18) >> 0x18, 0x202) == 0) && (joyGetStickXInRange((s32) (temp_t9 << 0x18) >> 0x18, -2, 1) < -1))
             {
                 if ((*temp_s2 != 0) && (*temp_v0 > 0))
@@ -13293,7 +13288,7 @@ block_15:
                     }
                     else
                     {
-                        temp_v0_2 = &handicap_player1 + phi_s4;
+                        temp_v0_2 = &player_handicap + phi_s4;
                         if (*temp_v0_2 < 0xa)
                         {
                             goto block_15;
@@ -13303,7 +13298,7 @@ block_15:
             }
             else
             {
-                temp_v0 = &handicap_player1 + phi_s4;
+                temp_v0 = &player_handicap + phi_s4;
                 if (*temp_v0 > 0)
                 {
                     goto block_10;
@@ -13384,10 +13379,10 @@ glabel interface_menu10_mphandicap
 /* 047A68 7F012F38 0000A025 */  move  $s4, $zero
 /* 047A6C 7F012F3C 19C0006F */  blez  $t6, .L7F0130FC
 /* 047A70 7F012F40 3C118007 */   lui   $s1, %hi(player_has_selected_char)
-/* 047A74 7F012F44 3C168007 */  lui   $s6, %hi(handicap_player1)
+/* 047A74 7F012F44 3C168007 */  lui   $s6, %hi(player_handicap)
 /* 047A78 7F012F48 3C158006 */  lui   $s5, %hi(g_musicSfxBufferPtr)
 /* 047A7C 7F012F4C 26B53720 */  addiu $s5, %lo(g_musicSfxBufferPtr) # addiu $s5, $s5, 0x3720
-/* 047A80 7F012F50 26D697A8 */  addiu $s6, %lo(handicap_player1) # addiu $s6, $s6, -0x6858
+/* 047A80 7F012F50 26D697A8 */  addiu $s6, %lo(player_handicap) # addiu $s6, $s6, -0x6858
 /* 047A84 7F012F54 26319740 */  addiu $s1, %lo(player_has_selected_char) # addiu $s1, $s1, -0x68c0
 /* 047A88 7F012F58 24170001 */  li    $s7, 1
 .L7F012F5C:
@@ -13590,7 +13585,7 @@ void constructor_menu10_mphandicap(s32 arg0)
     if (spCC > 0)
     {
         sp74 = &has_selected_char_player1;
-        sp70 = &handicap_player1;
+        sp70 = &player_handicap;
         phi_s6 = 0;
 loop_4:
         if (spCC == 2)
@@ -13720,9 +13715,9 @@ glabel constructor_menu10_mphandicap
 /* 047D74 7F013244 190000BC */  blez  $t0, .L7F013538
 /* 047D78 7F013248 0000B025 */   move  $s6, $zero
 /* 047D7C 7F01324C 3C098007 */  lui   $t1, %hi(player_has_selected_char)
-/* 047D80 7F013250 3C0A8007 */  lui   $t2, %hi(handicap_player1)
+/* 047D80 7F013250 3C0A8007 */  lui   $t2, %hi(player_handicap)
 /* 047D84 7F013254 3C014080 */  li    $at, 0x40800000 # 4.000000
-/* 047D88 7F013258 254A97A8 */  addiu $t2, %lo(handicap_player1) # addiu $t2, $t2, -0x6858
+/* 047D88 7F013258 254A97A8 */  addiu $t2, %lo(player_handicap) # addiu $t2, $t2, -0x6858
 /* 047D8C 7F01325C 25299740 */  addiu $t1, %lo(player_has_selected_char) # addiu $t1, $t1, -0x68c0
 /* 047D90 7F013260 3C1E8004 */  lui   $fp, %hi(ptrFirstFontTableLarge)
 /* 047D94 7F013264 3C178004 */  lui   $s7, %hi(ptrSecondFontTableLarge)
@@ -14003,7 +13998,7 @@ loop_2:
         temp_t8 = (s32) (phi_s1 << 0x18) >> 0x18;
         if (*phi_s2 == 0)
         {
-            temp_s4 = phi_s5 + &handicap_player1;
+            temp_s4 = phi_s5 + &player_handicap;
             if ((joyGetButtonsPressedThisFrame((s32) (temp_t8 << 0x18) >> 0x18, 0x202) == 0) && (joyGetStickXInRange((s32) (temp_t8 << 0x18) >> 0x18, -2, 1) < -1))
             {
                 if ((*temp_s4 != 0) && (*temp_v1 > 0))

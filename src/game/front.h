@@ -189,13 +189,7 @@ extern s32 size_mp_select_image_player3;
 //CODE.bss:8006975C
 extern s32 size_mp_select_image_player4;
 //CODE.bss:80069760
-extern s32 handicap_player1;
-//CODE.bss:80069764
-extern s32 handicap_player2;
-//CODE.bss:80069768
-extern s32 handicap_player3;
-//CODE.bss:8006976C
-extern s32 handicap_player4;
+extern s32 player_handicap[];
 //CODE.bss:80069770
 extern char* g_textPtrTAB1;
 //CODE.bss:80069774
@@ -224,13 +218,7 @@ extern s32 highlight_enemy_damage;
 //CODE.bss:800697A4                     .align 3
 
 //CODE.bss:800697A8
-extern s32 handicap_player1;
-//CODE.bss:800697AC
-extern s32 handicap_player2;
-//CODE.bss:800697B0
-extern s32 handicap_player3;
-//CODE.bss:800697B4
-extern s32 handicap_player4;
+extern s32 player_handicap[];
 //CODE.bss:800697B8
 extern u32 controlstyle_player[];
 
