@@ -7,6 +7,7 @@
 
 void init_menus_or_reset(void)
 {
+    s32 i;
     current_menu = ~MENU_LEGAL_SCREEN;
     maybe_prev_menu = ~MENU_LEGAL_SCREEN;
     screen_size = SCREEN_SIZE_320x240;
@@ -35,14 +36,15 @@ void init_menus_or_reset(void)
 #if defined(VERSION_EU)
     ptr_menu_videobuffer = mempAllocBytesInBank(0x55040, 4);
 #else
-    ptr_menu_videobuffer = mempAllocBytesInBank(0x4b040, 4);
+     ptr_menu_videobuffer = mempAllocBytesInBank(0x4b040, 4);
 #endif
+
     ptr_menu_videobuffer = ALIGN64_V1(ptr_menu_videobuffer);
 
-    walletinst = 0x0;
-    set0_never_used = 0;
-    set0_never_used_0 = 0;
-    D_8002A968 = 0;
+    for (i = 0; i < 4; i++)
+    {
+        walletinst[i] = NULL;
+    }
 
     alloc_intro_matrices();
 }

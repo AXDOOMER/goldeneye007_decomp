@@ -541,9 +541,51 @@ f32 get_cur_player_fovy(void) {
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F09B244(void) {
 
+/* looks vaguely like this, couldn't quite get there */
+PROP sub_GAME_7F09B244(ITEM_IDS arg0)
+{
+    PROP ret = -1;
+    switch (arg0)
+    {
+        case ITEM_KNIFE:         return PROP_CHRKNIFE;         /* weapon_multi_hunting_knife */
+        case ITEM_WPPK:          return PROP_CHRWPPK;          /* weapon_multi_pp7 */
+        case ITEM_SKORPION:      return PROP_CHRSKORPION;      /* weapon_multi_klobb */
+        case ITEM_AK47:          return PROP_CHRKALASH;        /* weapon_multi_kf7 */
+        case ITEM_UZI:           return PROP_CHRUZI;           /* weapon_multi_zmg */
+        case ITEM_MP5K:          return PROP_CHRMP5K;          /* weapon_multi_d5k */
+        case ITEM_SPECTRE:       return PROP_CHRSPECTRE;       /* weapon_multi_phantom */
+        case ITEM_M16:           return PROP_CHRM16;           /* weapon_multi_ar33 */
+        case ITEM_FNP90:         return PROP_CHRFNP90;         /* weapon_multi_rcp90 */
+        case ITEM_SHOTGUN:       return PROP_CHRSHOTGUN;       /* weapon_multi_shotgun */
+        case ITEM_GRENADELAUNCH: return PROP_CHRGRENADELAUNCH; /* weapon_multi_grenade_laun */
+        case ITEM_GRENADE:       return PROP_CHRGRENADE;       /* weapon_multi_hand */
+        case ITEM_REMOTEMINE:    return PROP_CHRREMOTEMINE;    /* weapon_multi_remote */
+        case ITEM_PROXIMITYMINE: return PROP_CHRPROXIMITYMINE; /* weapon_multi_prox */
+        case ITEM_TIMEDMINE:     return PROP_CHRTIMEDMINE;     /* weapon_multi_timed */
+        case ITEM_RUGER:         return PROP_CHRRUGER;         /* weapon_multi_cougar */
+        case ITEM_LASER:         return PROP_CHRLASER;         /* weapon_multi_moonraker */
+        case ITEM_SNIPERRIFLE:   return PROP_CHRSNIPERRIFLE;   /* weapon_multi_sniper */
+        case ITEM_MP5KSIL:       return PROP_CHRMP5KSIL;       /* weapon_multi_d5k_silent */
+        case ITEM_TT33:          return PROP_CHRTT33;          /* weapon_multi_dd44 */
+        case ITEM_WPPKSIL:       return PROP_CHRWPPKSIL;       /* weapon_multi_pp7_silent */
+        case ITEM_THROWKNIFE:    return PROP_CHRTHROWKNIFE;    /* weapon_multi_throwing_knife */
+        case ITEM_AUTOSHOT:      return PROP_CHRAUTOSHOT;      /* weapon_multi_auto_shot */
+        case ITEM_ROCKETLAUNCH:  return PROP_CHRROCKETLAUNCH;  /* weapon_multi_rocket_launch */
+        case ITEM_GOLDENGUN:     return PROP_CHRGOLDEN;        /* weapon_multi_goldengun */
+        case ITEM_SILVERWPPK:    return PROP_CHRWPPK;          /* weapon_multi_pp7_special1 */
+        case ITEM_GOLDWPPK:      return PROP_CHRWPPK;          /* weapon_multi_pp7_special2 */
+        case ITEM_TOKEN:         ret = PROP_FLAG;
+        /* weapon_multi_none */
+        case ITEM_UNARMED:
+        case ITEM_FIST:
+        default:
+            return ret;
+    }
+    return ret;
 }
+
+
 #else
 GLOBAL_ASM(
 .late_rodata
@@ -723,11 +765,11 @@ weapon_multi_none:
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F09B368(s32 arg0) {
-    // Node 0
-    return chrSetWeaponFlag4(g_CurrentPlayer->unkA8->unk4, arg0);
+/* I think the late_rodata stuff is messing this up. It's supposed to match */
+void sub_GAME_7F09B368(enum GUNHAND hand)
+{
+    chrSetWeaponFlag4(g_CurrentPlayer->prop->chr, hand);
 }
-
 #else
 GLOBAL_ASM(
 .late_rodata

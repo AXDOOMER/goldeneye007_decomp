@@ -1437,26 +1437,10 @@ void modelSetScale(Model *objinst, f32 scale)
 }
 
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F06CE84(Model *objinst, f32 arg1)
+void sub_GAME_7F06CE84(Model* arg0, f32 arg1)
 {
-    objinst->b8 = arg1;
+    arg0->unkb8 = arg1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06CE84
-/* 0A19B4 7F06CE84 44856000 */  mtc1  $a1, $f12
-/* 0A19B8 7F06CE88 03E00008 */  jr    $ra
-/* 0A19BC 7F06CE8C E48C00B8 */   swc1  $f12, 0xb8($a0)
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
@@ -11942,23 +11926,10 @@ glabel dogfnegx
 
 
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F073FC8(void) {
-
+void sub_GAME_7F073FC8(s32 arg0)
+{
+    D_800363F0 = arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F073FC8
-/* 0A8AF8 7F073FC8 3C018003 */  lui   $at, %hi(D_800363F0)
-/* 0A8AFC 7F073FCC 03E00008 */  jr    $ra
-/* 0A8B00 7F073FD0 AC2463F0 */   sw    $a0, %lo(D_800363F0)($at)
-)
-#endif
-
-
 
 
 

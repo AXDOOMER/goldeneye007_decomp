@@ -162,27 +162,11 @@ s32 stanGetLocusCount(struct StandTileLocusCallbackRecord *arg0);
 
 // end forward declarations
 
-
-
-
-#ifdef NONMATCHING
-f32 sub_GAME_7F0AEF30(f32 arg0) {
-    // Node 0
-    return arg0;
+s32 stanBitwiseCastF32(f32 arg0)
+{
+    // disgusting
+    return *(s32*)&arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0AEF30
-/* 0E3A60 7F0AEF30 E7AC0000 */  swc1  $f12, ($sp)
-/* 0E3A64 7F0AEF34 03E00008 */  jr    $ra
-/* 0E3A68 7F0AEF38 8FA20000 */   lw    $v0, ($sp)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 s32 sub_GAME_7F0AEF3C(void *arg0) {

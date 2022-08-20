@@ -10,6 +10,7 @@ extern s32 D_80036410;
 extern s32 D_80036414;
 extern s32 D_80036418;
 extern s32 D_8003641C;
+extern u32 D_800363F0;
 extern s32 vtxallocator;
 
 // arg0 unknown pointer

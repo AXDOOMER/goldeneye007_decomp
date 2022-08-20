@@ -34712,44 +34712,19 @@ INV_ITEM_TYPE propobjInteract(PropRecord *prop) //#MATCH
 }
 
 
+void sub_GAME_7F04F218(PropRecord* prop, s32 arg1) {
+    ChrRecord* chr;
+    chr = prop->chr;
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F04F218(void *arg0, s32 arg1)
-{
-    void *temp_v0;
-
-    temp_v0 = arg0->unk4;
     if (arg1 != 0)
     {
-        temp_v0->unk2 = (u8) (temp_v0->unk2 & 0xFFDF);
-        return;
+        chr->accuracyrating = (u8) chr->accuracyrating & 0xFFDF;
     }
-    temp_v0->unk2 = (u8) (temp_v0->unk2 | 0x20);
+    else
+    {
+        chr->accuracyrating = (u8) chr->accuracyrating | 0x20;        
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F04F218
-/* 083D48 7F04F218 10A00005 */  beqz  $a1, .L7F04F230
-/* 083D4C 7F04F21C 8C820004 */   lw    $v0, 4($a0)
-/* 083D50 7F04F220 904E0002 */  lbu   $t6, 2($v0)
-/* 083D54 7F04F224 31CFFFDF */  andi  $t7, $t6, 0xffdf
-/* 083D58 7F04F228 03E00008 */  jr    $ra
-/* 083D5C 7F04F22C A04F0002 */   sb    $t7, 2($v0)
-
-.L7F04F230:
-/* 083D60 7F04F230 90580002 */  lbu   $t8, 2($v0)
-/* 083D64 7F04F234 37190020 */  ori   $t9, $t8, 0x20
-/* 083D68 7F04F238 A0590002 */  sb    $t9, 2($v0)
-/* 083D6C 7F04F23C 03E00008 */  jr    $ra
-/* 083D70 7F04F240 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
