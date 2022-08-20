@@ -316,14 +316,14 @@ struct bss_80073370 {
 
 struct bss_80073DC0 {
     u32 unk00;
-    u32 unk04;
-    u32 unk08;
-    u32 unk0C;
+    f32 unk04;
+    f32 unk08;
+    f32 unk0C;
 
-    u32 unk10;
-    u32 unk14;
-    u32 unk18;
-    u32 unk1C;
+    f32 unk10;
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
 
     u32 unk20;
     u32 unk24;
@@ -345,7 +345,7 @@ struct bss_80073DC0 {
     u32 unk58;
     u32 unk5C;
 
-    u32 unk60;
+    f32 unk60;
     u32 unk64;
     u32 unk68;
     u32 unk6C;
@@ -358,10 +358,10 @@ struct bss_80073DC0 {
     u32 unk80;
     u32 unk84;
     u32 unk88;
-    u32 unk8C; 
+    f32 unk8C; 
 
     u32 unk90;
-    u32 unk94;
+    f32 unk94;
     u32 unk98;
     u32 unk9C;
 
@@ -375,9 +375,9 @@ struct bss_80073DC0 {
     u32 unkB8;
     u32 unkBC;
 
-    u32 unkC0;
-    u32 unkC4;
-    u32 unkC8;
+    f32 unkC0;
+    f32 unkC4;
+    f32 unkC8;
     u32 unkCC;
 
     u32 unkD0;
@@ -389,6 +389,7 @@ struct bss_80073DC0 {
     u32 unkE4;
     u32 unkE8;
 };
+
 
 struct bss_80075030 {
     s32 unk00;

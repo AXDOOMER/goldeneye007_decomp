@@ -1015,9 +1015,37 @@ glabel sub_GAME_7F03FB70
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03FBFC(void) {
-
+/* matches according to decomp.me, I believe it doesn't build yet because the asm references label 'D_80052A48', which is defined elsewhere */
+void sub_GAME_7F03FBFC(struct bss_80073DC0 *arg0)
+{
+    arg0->unk00 = 0;
+    arg0->unk88 = 0;
+    arg0->unk04 = 0;
+    arg0->unk08 = 0;
+    arg0->unk0C = 0;
+    arg0->unk10 = 0;
+    arg0->unk14 = 0;
+    arg0->unk18 = 0;
+    arg0->unk1C = 0;
+    arg0->unk60 = 1.0f;
+    arg0->unk8C = 0.050000001f;
+    arg0->unk90 = 0;
+    arg0->unkA0 = -1U;
+    arg0->unkA4 = 0;
+    arg0->unkA8 = 0;
+    arg0->unkAC = -1U;
+    arg0->unkB8 = 1;
+    arg0->unkBC = 0;
+    arg0->unkE0 = 0;
+    arg0->unkE4 = 0;
+    arg0->unkE8 = 0;
+    arg0->unk94 = 0;
+    arg0->unkC0 = 1.0f;
+    arg0->unkC4 = 1.0f;
+    arg0->unkC8 = 1.0f;
+    arg0->unk8C = 0.050000001f;
 }
+
 #else
 GLOBAL_ASM(
 
