@@ -91,6 +91,7 @@ struct hand
   ITEM_IDS weaponnum;
   ITEM_IDS weaponnum_watchmenu;
   ITEM_IDS previous_weapon;
+
   s8 weapon_firing_status;
 
   s8 field_87D;

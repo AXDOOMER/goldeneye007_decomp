@@ -462,12 +462,12 @@ u32 D_8002AFC0 = 0;
 u32 D_8002AFC4 = 0;
 f32 D_8002AFC8 = 190.0;
 f32 D_8002AFCC = -3300.0;
-u32 cursor_xpos_table_mission_select[] = {73, 142, 212, 282, 352};
+s32 cursor_xpos_table_mission_select[] = {73, 142, 212, 282, 352};
 
 #if defined(VERSION_EU)
-u32 cursor_ypos_table_mission_select[] = {62, 130, 201, 270};
+s32 cursor_ypos_table_mission_select[] = {62, 130, 201, 270};
 #else
-u32 cursor_ypos_table_mission_select[] = {62, 131, 201, 270};
+s32 cursor_ypos_table_mission_select[] = {62, 131, 201, 270};
 #endif
 
 struct MP_game_length_settings multi_game_lengths[] = {
@@ -894,7 +894,7 @@ Gfx *constructor_menu18_displaycast(Gfx *DL);
 Gfx *constructor_menu19_spectrum(Gfx *DL);
 void disable_all_switches(void *arg0);
 void set_item_visibility_in_objinstance(Model *objinstance, int item, s32 mode);
-s32 set_cursor_to_stage_solo(s32 arg0);
+void set_cursor_to_stage_solo(LEVEL_SOLO_SEQUENCE level);
 Gfx *display_aligned_white_text_to_screen(Gfx *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u8 *arg5, s32 arg6, s32 arg7);
 
 // end forward declarations.
@@ -7695,54 +7695,11 @@ glabel interface_menu07_missionsel
 #endif
 
 
-#ifdef NONMATCHING
-s32 set_cursor_to_stage_solo(s32 arg0)
+void set_cursor_to_stage_solo(LEVEL_SOLO_SEQUENCE level)
 {
-    cursor_h_pos = (f32) *(&cursor_xpos_table_mission_select + ((arg0 % 5) * 4));
-    cursor_v_pos = (f32) *(&cursor_ypos_table_mission_select + ((arg0 / 5) * 4));
-    return 5;
+    cursor_h_pos = cursor_xpos_table_mission_select[level % 5];
+    cursor_v_pos = cursor_ypos_table_mission_select[level / 5];
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_cursor_to_stage_solo
-/* 042F10 7F00E3E0 24020005 */  li    $v0, 5
-/* 042F14 7F00E3E4 0082001A */  div   $zero, $a0, $v0
-/* 042F18 7F00E3E8 00007010 */  mfhi  $t6
-/* 042F1C 7F00E3EC 000E7880 */  sll   $t7, $t6, 2
-/* 042F20 7F00E3F0 3C188003 */  lui   $t8, %hi(cursor_xpos_table_mission_select)
-/* 042F24 7F00E3F4 030FC021 */  addu  $t8, $t8, $t7
-/* 042F28 7F00E3F8 8F18AFD0 */  lw    $t8, %lo(cursor_xpos_table_mission_select)($t8)
-/* 042F2C 7F00E3FC 0000C812 */  mflo  $t9
-/* 042F30 7F00E400 00194080 */  sll   $t0, $t9, 2
-/* 042F34 7F00E404 3C098003 */  lui   $t1, %hi(cursor_ypos_table_mission_select)
-/* 042F38 7F00E408 01284821 */  addu  $t1, $t1, $t0
-/* 042F3C 7F00E40C 8D29AFE4 */  lw    $t1, %lo(cursor_ypos_table_mission_select)($t1)
-/* 042F40 7F00E410 44982000 */  mtc1  $t8, $f4
-/* 042F44 7F00E414 14400002 */  bnez  $v0, .L7F00E420
-/* 042F48 7F00E418 00000000 */   nop
-/* 042F4C 7F00E41C 0007000D */  break 7
-.L7F00E420:
-/* 042F50 7F00E420 2401FFFF */  li    $at, -1
-/* 042F54 7F00E424 14410004 */  bne   $v0, $at, .L7F00E438
-/* 042F58 7F00E428 3C018000 */   lui   $at, 0x8000
-/* 042F5C 7F00E42C 14810002 */  bne   $a0, $at, .L7F00E438
-/* 042F60 7F00E430 00000000 */   nop
-/* 042F64 7F00E434 0006000D */  break 6
-.L7F00E438:
-/* 042F68 7F00E438 468021A0 */  cvt.s.w $f6, $f4
-/* 042F6C 7F00E43C 44894000 */  mtc1  $t1, $f8
-/* 042F70 7F00E440 3C018003 */  lui   $at, %hi(cursor_h_pos)
-/* 042F74 7F00E444 468042A0 */  cvt.s.w $f10, $f8
-/* 042F78 7F00E448 E426A908 */  swc1  $f6, %lo(cursor_h_pos)($at)
-/* 042F7C 7F00E44C 3C018003 */  lui   $at, %hi(cursor_v_pos)
-/* 042F80 7F00E450 03E00008 */  jr    $ra
-/* 042F84 7F00E454 E42AA90C */   swc1  $f10, %lo(cursor_v_pos)($at)
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
