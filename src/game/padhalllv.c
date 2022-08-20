@@ -1,5 +1,7 @@
 #include <ultra64.h>
 #include "padhalllv.h"
+#include "bondtypes.h"
+#include "chrai.h"
 
 //pd decomp has a filesplit here
 //all ge versions align properly 
@@ -1019,42 +1021,17 @@ glabel waypointFindRoute
 
 
 
+void resetWaypointDistances(void)
+{
+    waypoint * waypoint;
+    waypoint = g_chraiCurrentSetup.pathwaypoints;
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F08F67C(void) {
-    // func0f115390 in PD: 
-    struct waypoint *waypoint = g_StageSetup.waypoints;
-
-    while (waypoint->padnum >= 0) {
-        waypoint->unk0c = -1;
+    while(waypoint->padID >= 0)
+    {
+        waypoint->dist = -1;
         waypoint++;
     }
-
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08F67C
-/* 0C41AC 7F08F67C 3C028007 */  lui   $v0, %hi(g_chraiCurrentSetup+0)
-/* 0C41B0 7F08F680 8C425D00 */  lw    $v0, %lo(g_chraiCurrentSetup+0)($v0)
-/* 0C41B4 7F08F684 2403FFFF */  li    $v1, -1
-/* 0C41B8 7F08F688 8C4E0000 */  lw    $t6, ($v0)
-/* 0C41BC 7F08F68C 05C00006 */  bltz  $t6, .L7F08F6A8
-/* 0C41C0 7F08F690 00000000 */   nop   
-/* 0C41C4 7F08F694 8C4F0010 */  lw    $t7, 0x10($v0)
-.L7F08F698:
-/* 0C41C8 7F08F698 AC43000C */  sw    $v1, 0xc($v0)
-/* 0C41CC 7F08F69C 24420010 */  addiu $v0, $v0, 0x10
-/* 0C41D0 7F08F6A0 05E3FFFD */  bgezl $t7, .L7F08F698
-/* 0C41D4 7F08F6A4 8C4F0010 */   lw    $t7, 0x10($v0)
-.L7F08F6A8:
-/* 0C41D8 7F08F6A8 03E00008 */  jr    $ra
-/* 0C41DC 7F08F6AC 00000000 */   nop   
-)
-#endif
-
-
 
 
 
@@ -1473,7 +1450,7 @@ glabel sub_GAME_7F08FB90
 /* 0C4708 7F08FBD8 03262021 */  addu  $a0, $t9, $a2
 /* 0C470C 7F08FBDC 16040016 */  bne   $s0, $a0, .L7F08FC38
 /* 0C4710 7F08FBE0 00000000 */   nop   
-/* 0C4714 7F08FBE4 0FC23D9F */  jal   sub_GAME_7F08F67C
+/* 0C4714 7F08FBE4 0FC23D9F */  jal   resetWaypointDistances
 /* 0C4718 7F08FBE8 AFA5005C */   sw    $a1, 0x5c($sp)
 /* 0C471C 7F08FBEC 8FA4005C */  lw    $a0, 0x5c($sp)
 /* 0C4720 7F08FBF0 02202825 */  move  $a1, $s1
