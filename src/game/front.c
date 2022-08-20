@@ -319,10 +319,7 @@ s32 is_cheat_menu_available = FALSE;
 Gfx * ptr_logo_and_walletbond_DL = 0;
 s32 ptr_menu_videobuffer = 0;
 struct Model *logoinst = NULL;
-struct Model * walletinst = NULL;
-s32 set0_never_used = 0;
-s32 set0_never_used_0 = 0;
-s32 D_8002A968 = 0;
+struct Model * walletinst[] = { NULL, NULL, NULL, NULL};
 s32 D_8002A96C = 0;
 struct rgba_u8 RGBA_8002A970 = {0x96, 0x96, 0x96, 0};
 struct rgba_u8 RGBA_8002A974 = {0x96, 0x96, 0x96, 0};
@@ -2853,11 +2850,11 @@ void load_walletbond(void)
     void *temp_s0;
     void *phi_s0;
 
-    if (walletinst == 0)
+    if (walletinst[0] == 0)
     {
         load_object_fill_header(PitemZ_entries.unkD08, PitemZ_entries.unkD0C, ptr_logo_and_walletbond_DL, 0xa000, 0);
         modelCalculateRwDataLen(PitemZ_entries.unkD08);
-        phi_s0 = &walletinst;
+        phi_s0 = &walletinst[0];
 loop_2:
         temp_ret = get_aircraft_obj_instance_controller(PitemZ_entries.unkD08);
         *phi_s0 = temp_ret;
@@ -2900,9 +2897,9 @@ glabel load_walletbond
 /* 040428 7F00B8F8 8E440D08 */   lw    $a0, 0xd08($s2)
 /* 04042C 7F00B8FC 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 040430 7F00B900 3C108003 */  lui   $s0, %hi(walletinst)
-/* 040434 7F00B904 3C118003 */  lui   $s1, %hi(D_8002A96C)
+/* 040434 7F00B904 3C118003 */  lui   $s1, %hi(walletinst+0x10)
 /* 040438 7F00B908 4481A000 */  mtc1  $at, $f20
-/* 04043C 7F00B90C 2631A96C */  addiu $s1, %lo(D_8002A96C) # addiu $s1, $s1, -0x5694
+/* 04043C 7F00B90C 2631A96C */  addiu $s1, %lo(walletinst+0x10) # addiu $s1, $s1, -0x5694
 /* 040440 7F00B910 2610A95C */  addiu $s0, %lo(walletinst) # addiu $s0, $s0, -0x56a4
 .L7F00B914:
 /* 040444 7F00B914 0FC1B08F */  jal   get_aircraft_obj_instance_controller
@@ -2943,58 +2940,17 @@ glabel load_walletbond
 
 
 
-#ifdef NONMATCHING
 void sub_GAME_7F00B990(void)
 {
-    s32 temp_a0;
-    void *temp_s0;
-    void *phi_s0;
+    s32 i;
 
-    phi_s0 = &walletinst;
-loop_1:
-    temp_a0 = *phi_s0;
-    if (temp_a0 != 0)
-    {
-        set_aircraft_obj_inst_scale_to_zero(temp_a0);
-        *phi_s0 = 0;
-    }
-    temp_s0 = phi_s0 + 4;
-    phi_s0 = temp_s0;
-    if (temp_s0 != &D_8002A96C)
-    {
-        goto loop_1;
+    for (i = 0; i < 4; i++) {
+        if (walletinst[i] == NULL) { continue; }
+        set_aircraft_obj_inst_scale_to_zero(walletinst[i]);
+        walletinst[i] = NULL;
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F00B990
-/* 0404C0 7F00B990 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0404C4 7F00B994 AFB10018 */  sw    $s1, 0x18($sp)
-/* 0404C8 7F00B998 AFB00014 */  sw    $s0, 0x14($sp)
-/* 0404CC 7F00B99C 3C108003 */  lui   $s0, %hi(walletinst)
-/* 0404D0 7F00B9A0 3C118003 */  lui   $s1, %hi(D_8002A96C)
-/* 0404D4 7F00B9A4 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0404D8 7F00B9A8 2631A96C */  addiu $s1, %lo(D_8002A96C) # addiu $s1, $s1, -0x5694
-/* 0404DC 7F00B9AC 2610A95C */  addiu $s0, %lo(walletinst) # addiu $s0, $s0, -0x56a4
-/* 0404E0 7F00B9B0 8E040000 */  lw    $a0, ($s0)
-.L7F00B9B4:
-/* 0404E4 7F00B9B4 50800005 */  beql  $a0, $zero, .L7F00B9CC
-/* 0404E8 7F00B9B8 26100004 */   addiu $s0, $s0, 4
-/* 0404EC 7F00B9BC 0FC1B0FE */  jal   set_aircraft_obj_inst_scale_to_zero
-/* 0404F0 7F00B9C0 00000000 */   nop
-/* 0404F4 7F00B9C4 AE000000 */  sw    $zero, ($s0)
-/* 0404F8 7F00B9C8 26100004 */  addiu $s0, $s0, 4
-.L7F00B9CC:
-/* 0404FC 7F00B9CC 5611FFF9 */  bnel  $s0, $s1, .L7F00B9B4
-/* 040500 7F00B9D0 8E040000 */   lw    $a0, ($s0)
-/* 040504 7F00B9D4 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 040508 7F00B9D8 8FB00014 */  lw    $s0, 0x14($sp)
-/* 04050C 7F00B9DC 8FB10018 */  lw    $s1, 0x18($sp)
-/* 040510 7F00B9E0 03E00008 */  jr    $ra
-/* 040514 7F00B9E4 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
+
 
 
 //********************************************************************************************************
@@ -3216,7 +3172,7 @@ s32 interface_menu05_fileselect(void)
     viSetZRange(0x42c80000, D_80051A20);
     viSetUseZBuf(0);
     sp54 = &D_8002AB94;
-    phi_s0 = &walletinst;
+    phi_s0 = &walletinst[0];
     phi_s1 = &dword_CODE_bss_80069620;
     phi_s2 = 0;
 loop_8:
@@ -4669,7 +4625,7 @@ loop_4:
     }
     temp_s2 = phi_s2 + -4;
     phi_s2 = temp_s2;
-    if (temp_s2 >= &walletinst)
+    if (temp_s2 >= &walletinst[0])
     {
         goto loop_1;
     }
@@ -4984,10 +4940,10 @@ glabel constructor_menu05_fileselect
 /* 04105C 7F00C52C 27180040 */  addiu $t8, $t8, 0x40
 /* 041060 7F00C530 258D0008 */  addiu $t5, $t4, 8
 /* 041064 7F00C534 AFAD01B8 */  sw    $t5, 0x1b8($sp)
-/* 041068 7F00C538 3C128003 */  lui   $s2, %hi(D_8002A968)
+/* 041068 7F00C538 3C128003 */  lui   $s2, %hi(walletinst+0xc)
 /* 04106C 7F00C53C 3C148003 */  lui   $s4, %hi(unknown_folderselect)
 /* 041070 7F00C540 2694AF44 */  addiu $s4, %lo(unknown_folderselect) # addiu $s4, $s4, -0x50bc
-/* 041074 7F00C544 2652A968 */  addiu $s2, %lo(D_8002A968) # addiu $s2, $s2, -0x5698
+/* 041074 7F00C544 2652A968 */  addiu $s2, %lo(walletinst+0xc) # addiu $s2, $s2, -0x5698
 /* 041078 7F00C548 27B30108 */  addiu $s3, $sp, 0x108
 /* 04107C 7F00C54C AD980004 */  sw    $t8, 4($t4)
 /* 041080 7F00C550 AD850000 */  sw    $a1, ($t4)
@@ -5893,13 +5849,13 @@ void interface_menu06_modesel(void)
     viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(FALSE);
 
-    disable_all_switches(walletinst);
-    select_load_bond_picture(walletinst, fileGetBondForFolder(selected_folder_num));
-    set_item_visibility_in_objinstance(walletinst, 0, TRUE);
-    set_item_visibility_in_objinstance(walletinst, 1, TRUE);
-    set_item_visibility_in_objinstance(walletinst, 3, TRUE);
-    set_item_visibility_in_objinstance(walletinst, 7, TRUE);
-    set_item_visibility_in_objinstance(walletinst, 2, TRUE);
+    disable_all_switches(walletinst[0]);
+    select_load_bond_picture(walletinst[0], fileGetBondForFolder(selected_folder_num));
+    set_item_visibility_in_objinstance(walletinst[0], 0, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], 1, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], 3, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], 7, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], 2, TRUE);
     tab_prev_highlight = FALSE;
     mission_difficulty_highlighted = DIFFICULTY_MULTI;
     if (isontab3())
@@ -6014,26 +5970,26 @@ loop_1:
     matrix_4x4_set_identity_and_position(&D_8002AB94 + (selected_folder_num * 0xc), &sp88);
     matrix_scalar_multiply(0x3e800000, &sp88);
     matrix_4x4_multiply_in_place(&spC8, &sp88);
-    temp_ret = dynAllocate(walletinst->unk8->unkE << 6);
+    temp_ret = dynAllocate(walletinst[0]->unk8->unkE << 6);
     sp11C = temp_ret;
     matrix_4x4_copy(&sp88, temp_ret);
-    walletinst->unkC = sp11C;
+    walletinst[0]->unkC = sp11C;
     sp114 = 3;
     sp110 = 0;
     sp118 = arg0;
-    subdraw(&sp10C, walletinst);
+    subdraw(&sp10C, walletinst[0]);
     arg0 = sp118;
     phi_s1 = 0;
     phi_s0 = 0;
-    if (walletinst->unk8->unkE > 0)
+    if (walletinst[0]->unk8->unkE > 0)
     {
 loop_3:
-        matrix_4x4_copy(walletinst->unkC + phi_s1, &sp48);
-        matrix_4x4_f32_to_s32(&sp48, walletinst->unkC + (phi_s0 << 6));
+        matrix_4x4_copy(walletinst[0]->unkC + phi_s1, &sp48);
+        matrix_4x4_f32_to_s32(&sp48, walletinst[0]->unkC + (phi_s0 << 6));
         temp_s0 = phi_s0 + 1;
         phi_s1 = phi_s1 + 0x40;
         phi_s0 = temp_s0;
-        if (temp_s0 < walletinst->unk8->unkE)
+        if (temp_s0 < walletinst[0]->unk8->unkE)
         {
             goto loop_3;
         }
@@ -6410,10 +6366,10 @@ void interface_menu07_missionsel(void)
     viSetAspect(D_80051A44);
     viSetZRange(0x42c80000, D_80051A48);
     viSetUseZBuf(0);
-    disable_all_switches(walletinst);
-    set_item_visibility_in_objinstance(walletinst, 0, 1);
-    set_item_visibility_in_objinstance(walletinst, 0x13, 1);
-    set_item_visibility_in_objinstance(walletinst, 0x14, 1);
+    disable_all_switches(walletinst[0]);
+    set_item_visibility_in_objinstance(walletinst[0], 0, 1);
+    set_item_visibility_in_objinstance(walletinst[0], 0x13, 1);
+    set_item_visibility_in_objinstance(walletinst[0], 0x14, 1);
     tab_prev_highlight = 0;
     mission_difficulty_highlighted = -1;
     if (isontab3() != 0)
@@ -6533,16 +6489,16 @@ loop_23:
         }
         mission_difficulty_highlighted = (s32) (temp_s5 + phi_s4_6);
     }
-    if (walletinst->unk8->unk8->unk54 != 0)
+    if (walletinst[0]->unk8->unk8->unk54 != 0)
     {
-        temp_s1_2 = extract_id_from_object_structure_microcode(walletinst, walletinst->unk8->unk8->unk54);
-        *temp_s1_2 = dynAllocate7F0BD6C4(walletinst->unk8->unk8->unk54->unk4->unkC);
-        if (walletinst->unk8->unk8->unk54->unk4->unkC > 0)
+        temp_s1_2 = extract_id_from_object_structure_microcode(walletinst[0], walletinst[0]->unk8->unk8->unk54);
+        *temp_s1_2 = dynAllocate7F0BD6C4(walletinst[0]->unk8->unk8->unk54->unk4->unkC);
+        if (walletinst[0]->unk8->unk8->unk54->unk4->unkC > 0)
         {
             phi_s0_4 = 0;
             phi_s2_5 = 0;
 loop_29:
-            temp_t3 = walletinst->unk8->unk8->unk54->unk4->unk8 + phi_s0_4;
+            temp_t3 = walletinst[0]->unk8->unk8->unk54->unk4->unk8 + phi_s0_4;
             temp_t1 = *temp_s1_2 + phi_s0_4;
             temp_t1->unk0 = (s32) temp_t3->unk0;
             temp_t1->unk4 = (s32) temp_t3->unk4;
@@ -6580,7 +6536,7 @@ loop_29:
             temp_s2_3 = phi_s2_5 + 1;
             phi_s0_4 = phi_s0_4 + 0x10;
             phi_s2_5 = temp_s2_3;
-            if (temp_s2_3 < walletinst->unk8->unk8->unk54->unk4->unkC)
+            if (temp_s2_3 < walletinst[0]->unk8->unk8->unk54->unk4->unkC)
             {
                 goto loop_29;
             }
@@ -8156,11 +8112,11 @@ void interface_menu08_difficulty(void)
     viSetAspect(1.3333334f);
     viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(FALSE);
-    disable_all_switches(walletinst);
-    set_item_visibility_in_objinstance(walletinst, 0, TRUE);
-    set_item_visibility_in_objinstance(walletinst, 1, TRUE);
-    set_item_visibility_in_objinstance(walletinst, 3, TRUE);
-    set_item_visibility_in_objinstance(walletinst, 4, TRUE);
+    disable_all_switches(walletinst[0]);
+    set_item_visibility_in_objinstance(walletinst[0], 0, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], 1, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], 3, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], 4, TRUE);
     tab_prev_highlight = FALSE;
     mission_difficulty_highlighted = DIFFICULTY_MULTI;
     
@@ -8587,11 +8543,11 @@ void interface_menu09_007options(void)
             slider_007_mode_damage = (f32) (temp_x * temp_x * 10.0f);
         }
     }
-    disable_all_switches(walletinst);
-    set_item_visibility_in_objinstance(walletinst, 0, TRUE);
-    set_item_visibility_in_objinstance(walletinst, 1, TRUE);
-    set_item_visibility_in_objinstance(walletinst, 3, TRUE);
-    set_item_visibility_in_objinstance(walletinst, 6, TRUE);
+    disable_all_switches(walletinst[0]);
+    set_item_visibility_in_objinstance(walletinst[0], 0, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], 1, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], 3, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], 6, TRUE);
     menu_control_stick_tracking();
     if (tab_start_selected)
     {
@@ -9979,55 +9935,18 @@ void select_game_length(void)
 }
 
 
-
-
-
-#ifdef NONMATCHING
 void copy_aim_settings_to_playerdata(void)
 {
-  g_playerPlayerData[0].autoaim = mp_sight_adjust_table[aim_sight_adjustment].autoaim;
-  g_playerPlayerData[0].sight = mp_sight_adjust_table[aim_sight_adjustment].sight;
-  g_playerPlayerData[1].autoaim = mp_sight_adjust_table[aim_sight_adjustment].autoaim;
-  g_playerPlayerData[1].sight = mp_sight_adjust_table[aim_sight_adjustment].sight;
-  g_playerPlayerData[2].autoaim = mp_sight_adjust_table[aim_sight_adjustment].autoaim;
-  g_playerPlayerData[2].sight = mp_sight_adjust_table[aim_sight_adjustment].sight;
-  g_playerPlayerData[3].autoaim = mp_sight_adjust_table[aim_sight_adjustment].autoaim;
-  g_playerPlayerData[3].sight = mp_sight_adjust_table[aim_sight_adjustment].sight;
+    s32 i;
+    struct player_data * p;
+
+    for (i = 0; i < 4; i++)
+    {
+        p = &g_playerPlayerData[i];
+        p->autoaim = mp_sight_adjust_table[aim_sight_adjustment].autoaim;
+        p->sight   = mp_sight_adjust_table[aim_sight_adjustment].sight;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel copy_aim_settings_to_playerdata
-/* 044D08 7F0101D8 3C0E8003 */  lui   $t6, %hi(aim_sight_adjustment)
-/* 044D0C 7F0101DC 8DCEB53C */  lw    $t6, %lo(aim_sight_adjustment)($t6)
-/* 044D10 7F0101E0 3C188003 */  lui   $t8, %hi(mp_sight_adjust_table)
-/* 044D14 7F0101E4 2718B510 */  addiu $t8, %lo(mp_sight_adjust_table) # addiu $t8, $t8, -0x4af0
-/* 044D18 7F0101E8 000E7880 */  sll   $t7, $t6, 2
-/* 044D1C 7F0101EC 01F81021 */  addu  $v0, $t7, $t8
-/* 044D20 7F0101F0 90430003 */  lbu   $v1, 3($v0)
-/* 044D24 7F0101F4 3C018008 */  lui   $at, %hi(g_playerPlayerData+0x6A)
-/* 044D28 7F0101F8 A0239F5A */  sb    $v1, %lo(g_playerPlayerData+0x6A)($at)
-/* 044D2C 7F0101FC 90440002 */  lbu   $a0, 2($v0)
-/* 044D30 7F010200 3C018008 */  lui   $at, %hi(g_playerPlayerData+0x6B)
-/* 044D34 7F010204 A0249F5B */  sb    $a0, %lo(g_playerPlayerData+0x6B)($at)
-/* 044D38 7F010208 3C018008 */  lui   $at, %hi(g_playerPlayerData+0x70+0x6A)
-/* 044D3C 7F01020C A0239FCA */  sb    $v1, %lo(g_playerPlayerData+0x70+0x6A)($at)
-/* 044D40 7F010210 3C018008 */  lui   $at, %hi(g_playerPlayerData+0x70+0x6B)
-/* 044D44 7F010214 A0249FCB */  sb    $a0, %lo(g_playerPlayerData+0x70+0x6B)($at)
-/* 044D48 7F010218 3C018008 */  lui   $at, %hi(g_playerPlayerData+0x70+0x70+0x6A)
-/* 044D4C 7F01021C A023A03A */  sb    $v1, %lo(g_playerPlayerData+0x70+0x70+0x6A)($at)
-/* 044D50 7F010220 3C018008 */  lui   $at, %hi(g_playerPlayerData+0x70+0x70+0x6B)
-/* 044D54 7F010224 A024A03B */  sb    $a0, %lo(g_playerPlayerData+0x70+0x70+0x6B)($at)
-/* 044D58 7F010228 3C018008 */  lui   $at, %hi(g_playerPlayerData+0x70+0x70+0x70+0x6A)
-/* 044D5C 7F01022C A023A0AA */  sb    $v1, %lo(g_playerPlayerData+0x70+0x70+0x70+0x6A)($at)
-/* 044D60 7F010230 3C018008 */  lui   $at, %hi(g_playerPlayerData+0x70+0x70+0x70+0x6B)
-/* 044D64 7F010234 03E00008 */  jr    $ra
-/* 044D68 7F010238 A024A0AB */   sb    $a0, %lo(g_playerPlayerData+0x70+0x70+0x70+0x6B)($at)
-)
-#endif
-
-
-
 
 
 void advance_aim_settings_selection(void)
@@ -10522,11 +10441,11 @@ void interface_menu0E_mpoptions(void)
         tab_prev_selected = TRUE;
         sndPlaySfx(g_musicSfxBufferPtr, 0xC7, 0);
     }
-    disable_all_switches(walletinst);
-    set_item_visibility_in_objinstance(walletinst, 0, TRUE);
-    set_item_visibility_in_objinstance(walletinst, 1, TRUE);
-    set_item_visibility_in_objinstance(walletinst, 3, TRUE);
-    set_item_visibility_in_objinstance(walletinst, 5, TRUE);
+    disable_all_switches(walletinst[0]);
+    set_item_visibility_in_objinstance(walletinst[0], 0, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], 1, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], 3, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], 5, TRUE);
     menu_control_stick_tracking();
     if (tab_prev_selected)
     {
@@ -11860,9 +11779,9 @@ LAB_7f012164:
       pBVar11 = pBVar11 + 1;
     } while (iVar13 != iVar4);
   }
-  disable_all_switches((int)walletinst);
-  set_item_visibility_in_objinstance((int)walletinst,0,1);
-  set_item_visibility_in_objinstance((int)walletinst,0x2a,1);
+  disable_all_switches((int)walletinst[0]);
+  set_item_visibility_in_objinstance((int)walletinst[0],0,1);
+  set_item_visibility_in_objinstance((int)walletinst[0],0x2a,1);
   menu_control_stick_tracking();
   if (iStack12 == iVar4) {
     set_menu_to_mode(MENU_MP_OPTIONS,0);
@@ -13491,9 +13410,9 @@ block_15:
             goto loop_2;
         }
     }
-    disable_all_switches(walletinst);
-    set_item_visibility_in_objinstance(walletinst, 0, 1);
-    set_item_visibility_in_objinstance(walletinst, 0x2a, 1);
+    disable_all_switches(walletinst[0]);
+    set_item_visibility_in_objinstance(walletinst[0], 0, 1);
+    set_item_visibility_in_objinstance(walletinst[0], 0x2a, 1);
     menu_control_stick_tracking();
     if (phi_fp == sp44)
     {
@@ -14283,9 +14202,9 @@ block_31:
             goto loop_2;
         }
     }
-    disable_all_switches(walletinst);
-    set_item_visibility_in_objinstance(walletinst, 0, 1);
-    set_item_visibility_in_objinstance(walletinst, 0x2a, 1);
+    disable_all_switches(walletinst[0]);
+    set_item_visibility_in_objinstance(walletinst[0], 0, 1);
+    set_item_visibility_in_objinstance(walletinst[0], 0x2a, 1);
     menu_control_stick_tracking();
     if (sp44 == temp_s6)
     {
@@ -15614,10 +15533,10 @@ void interface_menu12_mpstage(void)
         tab_prev_selected = TRUE;
         sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
     }
-    disable_all_switches(walletinst);
-    set_item_visibility_in_objinstance(walletinst, 0x0,  TRUE);
-    set_item_visibility_in_objinstance(walletinst, 0x2A, TRUE);
-    set_item_visibility_in_objinstance(walletinst, 0x3,  TRUE);
+    disable_all_switches(walletinst[0]);
+    set_item_visibility_in_objinstance(walletinst[0], 0x0,  TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], 0x2A, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], 0x3,  TRUE);
     menu_control_stick_tracking();
     if (tab_next_selected)
     {
@@ -16422,11 +16341,11 @@ void interface_menu13_mpscenario(void)
         tab_prev_selected = TRUE;
         sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
     }
-    disable_all_switches(walletinst);
-    set_item_visibility_in_objinstance(walletinst, 0, TRUE);
-    set_item_visibility_in_objinstance(walletinst, 1, TRUE);
-    set_item_visibility_in_objinstance(walletinst, 3, TRUE);
-    set_item_visibility_in_objinstance(walletinst, 6, TRUE);
+    disable_all_switches(walletinst[0]);
+    set_item_visibility_in_objinstance(walletinst[0], 0, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], 1, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], 3, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], 6, TRUE);
     menu_control_stick_tracking();
     if (isTeam)
     {
@@ -17139,9 +17058,9 @@ void interface_menu14_mpteams(void)
             }
         }
     }
-    disable_all_switches(walletinst);
-    set_item_visibility_in_objinstance(walletinst, 0, 1);
-    set_item_visibility_in_objinstance(walletinst, 0x2a, 1);
+    disable_all_switches(walletinst[0]);
+    set_item_visibility_in_objinstance(walletinst[0], 0, 1);
+    set_item_visibility_in_objinstance(walletinst[0], 0x2a, 1);
     menu_control_stick_tracking();
     phi_s0 = 0;
     if (joyGetButtonsPressedThisFrame(PLAYER_1, 0xb000) != 0)
@@ -17870,24 +17789,16 @@ glabel constructor_menu14_mpteams
 
 
 
-#ifdef NONMATCHING
 void set_briefing_page(WATCH_BRIEFING_PAGE page)
 {
-  current_menu_briefing_page = page;
+    short new_var;
+
+    // could be a dev typo
+    if (current_menu_briefing_page = page)
+    {
+        // maybe previous code was optimized out
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_briefing_page
-/* 04A040 7F015510 3C028003 */  lui   $v0, %hi(current_menu_briefing_page)
-/* 04A044 7F015514 2442A914 */  addiu $v0, %lo(current_menu_briefing_page) # addiu $v0, $v0, -0x56ec
-/* 04A048 7F015518 03E00008 */  jr    $ra
-/* 04A04C 7F01551C AC440000 */   sw    $a0, ($v0)
-)
-#endif
-
-
-
 
 
 
@@ -18066,13 +17977,13 @@ void interface_menu0A_briefing(void)
         }
         sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
     }
-    disable_all_switches(walletinst);
-    set_item_visibility_in_objinstance(walletinst, 0xC, current_menu_briefing_page == BRIEFING_TITLE);
-    set_item_visibility_in_objinstance(walletinst, mission_folder_setup_entries[briefingpage].mission_num + 0x16, current_menu_briefing_page == 0);
-    set_item_visibility_in_objinstance(walletinst, 0, TRUE);
-    set_item_visibility_in_objinstance(walletinst, 1, TRUE);
-    set_item_visibility_in_objinstance(walletinst, 3, TRUE);
-    set_item_visibility_in_objinstance(walletinst, 6, TRUE);
+    disable_all_switches(walletinst[0]);
+    set_item_visibility_in_objinstance(walletinst[0], 0xC, current_menu_briefing_page == BRIEFING_TITLE);
+    set_item_visibility_in_objinstance(walletinst[0], mission_folder_setup_entries[briefingpage].mission_num + 0x16, current_menu_briefing_page == 0);
+    set_item_visibility_in_objinstance(walletinst[0], 0, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], 1, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], 3, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], 6, TRUE);
     menu_control_stick_tracking();
     if (tab_next_selected)
     {
@@ -19029,11 +18940,11 @@ void interface_menu0C_missionfailed(void)
             sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
         }
     }
-    disable_all_switches(walletinst);
-    set_item_visibility_in_objinstance(walletinst, 0, TRUE);
-    set_item_visibility_in_objinstance(walletinst, 1, TRUE);
-    set_item_visibility_in_objinstance(walletinst, 3, TRUE);
-    set_item_visibility_in_objinstance(walletinst, 6, TRUE);
+    disable_all_switches(walletinst[0]);
+    set_item_visibility_in_objinstance(walletinst[0], 0, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], 1, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], 3, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], 6, TRUE);
     menu_control_stick_tracking();
     if (tab_next_selected)
     {
@@ -19216,11 +19127,11 @@ void interface_menu0D_missioncomplete()
         sndPlaySfx((struct ALBankAlt_s *)g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
     }
 
-    disable_all_switches(walletinst);
-    set_item_visibility_in_objinstance(walletinst, 0, 1);
-    set_item_visibility_in_objinstance(walletinst, 1, 1);
-    set_item_visibility_in_objinstance(walletinst, 3, 1);
-    set_item_visibility_in_objinstance(walletinst, 6, 1);
+    disable_all_switches(walletinst[0]);
+    set_item_visibility_in_objinstance(walletinst[0], 0, 1);
+    set_item_visibility_in_objinstance(walletinst[0], 1, 1);
+    set_item_visibility_in_objinstance(walletinst[0], 3, 1);
+    set_item_visibility_in_objinstance(walletinst[0], 6, 1);
     menu_control_stick_tracking();
 
     if (tab_next_selected)
@@ -19634,10 +19545,10 @@ void interface_menu15_cheat(u32 param_1,u32 param_2)
     }
     sndPlaySfx((s32)(int)g_musicSfxBufferPtr,DOOR_METAL_CLOSE2_SFX,NULL);
   }
-  disable_all_switches((int)walletinst);
-  set_item_visibility_in_objinstance((int)walletinst,0,1);
-  set_item_visibility_in_objinstance((int)walletinst,0x2a,1);
-  set_item_visibility_in_objinstance((int)walletinst,6,1);
+  disable_all_switches((int)walletinst[0]);
+  set_item_visibility_in_objinstance((int)walletinst[0],0,1);
+  set_item_visibility_in_objinstance((int)walletinst[0],0x2a,1);
+  set_item_visibility_in_objinstance((int)walletinst[0],6,1);
   menu_control_stick_tracking();
   if (tab_prev_selected == FALSE) {
     if (MP_menu_selected_option != 0) {
