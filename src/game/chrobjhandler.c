@@ -1749,51 +1749,20 @@ glabel sub_GAME_7F0402B4
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-void update_color_shading(void) {
+void update_color_shading(rgba_u8 *dest, rgba_u8 *src)
+{
+    s32 val_diff;
+    s32 val_new;
+    s32 i;
+    
+    for (i = 0; i < 4; i++)
+    {
+        val_diff = (src->rgba[i] - dest->rgba[i]);
+        val_new = dest->rgba[i] + ((val_diff + 7) >> 3);
+        dest->rgba[i] = val_new;
+    }
 
 }
-#else
-GLOBAL_ASM(
-.text
-glabel update_color_shading
-/* 074E40 7F040310 90880000 */  lbu   $t0, ($a0)
-/* 074E44 7F040314 90AE0000 */  lbu   $t6, ($a1)
-/* 074E48 7F040318 90890001 */  lbu   $t1, 1($a0)
-/* 074E4C 7F04031C 908A0002 */  lbu   $t2, 2($a0)
-/* 074E50 7F040320 01C81023 */  subu  $v0, $t6, $t0
-/* 074E54 7F040324 244F0007 */  addiu $t7, $v0, 7
-/* 074E58 7F040328 000FC0C3 */  sra   $t8, $t7, 3
-/* 074E5C 7F04032C 01181821 */  addu  $v1, $t0, $t8
-/* 074E60 7F040330 A0830000 */  sb    $v1, ($a0)
-/* 074E64 7F040334 90B90001 */  lbu   $t9, 1($a1)
-/* 074E68 7F040338 908B0003 */  lbu   $t3, 3($a0)
-/* 074E6C 7F04033C 03291023 */  subu  $v0, $t9, $t1
-/* 074E70 7F040340 244C0007 */  addiu $t4, $v0, 7
-/* 074E74 7F040344 000C68C3 */  sra   $t5, $t4, 3
-/* 074E78 7F040348 012D1821 */  addu  $v1, $t1, $t5
-/* 074E7C 7F04034C A0830001 */  sb    $v1, 1($a0)
-/* 074E80 7F040350 90AE0002 */  lbu   $t6, 2($a1)
-/* 074E84 7F040354 01CA1023 */  subu  $v0, $t6, $t2
-/* 074E88 7F040358 244F0007 */  addiu $t7, $v0, 7
-/* 074E8C 7F04035C 000FC0C3 */  sra   $t8, $t7, 3
-/* 074E90 7F040360 01581821 */  addu  $v1, $t2, $t8
-/* 074E94 7F040364 A0830002 */  sb    $v1, 2($a0)
-/* 074E98 7F040368 90B90003 */  lbu   $t9, 3($a1)
-/* 074E9C 7F04036C 032B1023 */  subu  $v0, $t9, $t3
-/* 074EA0 7F040370 244C0007 */  addiu $t4, $v0, 7
-/* 074EA4 7F040374 000C68C3 */  sra   $t5, $t4, 3
-/* 074EA8 7F040378 016D1821 */  addu  $v1, $t3, $t5
-/* 074EAC 7F04037C 03E00008 */  jr    $ra
-/* 074EB0 7F040380 A0830003 */   sb    $v1, 3($a0)
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
