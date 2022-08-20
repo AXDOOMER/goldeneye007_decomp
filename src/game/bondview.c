@@ -9351,30 +9351,31 @@ void bondviewUpdateXAutoAimTime(s32 auto_aim_time, f32 auto_aim_x)
 
 
 #ifdef NONMATCHING
-f32 change_player_pos_to_target(void *arg0, void *arg1, ?32 arg2) {
-    // Node 0
-    arg0->unk4 = (f32) *arg1;
-    arg0->unk8 = (f32) arg1->unk4;
-    arg0->unkC = (f32) arg1->unk8;
-    *arg0 = arg2;
-    arg0->unk50 = arg2;
-    arg0->unk3C = 0.0f;
-    arg0->unk40 = 0.0f;
-    arg0->unk44 = 0.0f;
-    arg0->unk4C = 0.0f;
-    arg0->unk10 = 0.0f;
-    arg0->unk14 = 0.0f;
-    arg0->unk2C = (f32) arg0->unk4;
-    arg0->unk1C = (f32) arg0->unk4;
-    arg0->unk38 = 1.0f;
-    arg0->unk48 = 1.0f;
-    arg0->unk18 = 1.0f;
-    arg0->unk30 = (f32) arg0->unk8;
-    arg0->unk20 = (f32) arg0->unk8;
-    arg0->unk34 = (f32) arg0->unkC;
-    arg0->unk24 = (f32) arg0->unkC;
-    arg0->unk28 = 30.0f;
-    return arg0->unk4;
+// very close - reg allocs fails, swaps two float regs
+void change_player_pos_to_target(struct collision434 *arg0, coord3d *arg1, StandTile *arg2)
+{
+    arg0->collision_position.f[0] = arg1->f[0];
+    arg0->collision_position.f[1] = arg1->f[1];
+    arg0->collision_position.f[2] = arg1->f[2];
+    arg0->current_tile_ptr = arg2;
+    arg0->current_tile_ptr_for_portals = arg2;
+    if (1) { }
+    arg0->applied_view.f[1] = 0.0f;
+    arg0->applied_view.f[2] = 0.0f;
+    arg0->applied_view2.f[0] = 0.0f;
+    arg0->applied_view2.f[2] = 0.0f;
+    arg0->field_10.f[0] = 0.0f;
+    arg0->field_10.f[1] = 0.0f;
+    arg0->pos.f[0] = arg0->collision_position.f[0];
+    arg0->pos3.f[0] = arg0->collision_position.f[0];
+    arg0->applied_view.f[0] = 1.0f;
+    arg0->applied_view2.f[1] = 1.0f;
+    arg0->field_10.f[2] = 1.0f;
+    arg0->pos.f[1] = arg0->collision_position.f[1];
+    arg0->pos3.f[1] = arg0->collision_position.f[1];
+    arg0->pos.f[2] = arg0->collision_position.f[2];
+    arg0->pos3.f[2] = arg0->collision_position.f[2];
+    arg0->collision_radius = 30.0f;
 }
 #else
 GLOBAL_ASM(

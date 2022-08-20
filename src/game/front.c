@@ -11941,68 +11941,25 @@ glabel interface_menu0F_mpcharsel
 #endif
 
 
-
-#ifdef NONMATCHING
 s32 sub_GAME_7F0122A8(s32 arg0, s32 arg1, s32 arg2)
 {
-    if (arg1 >= arg0)
+    if ((arg1 >= arg0) || (arg0 >= arg2))
     {
         return 0;
     }
-    if (arg0 >= arg2)
-    {
-        return 0;
-    }
+
     if (arg0 < (arg1 + 0x28))
     {
-        return 0xf - ((arg1 - arg0) * 6);
+        return 0xF - ((arg1 - arg0) * 6);
     }
-    if ((arg2 + -0x28) < arg0)
-    {
-        return 0xf - ((arg0 - arg2) * 6);
-    }
-    return 0xff;
-}
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0122A8
-/* 046DD8 7F0122A8 00A4082A */  slt   $at, $a1, $a0
-/* 046DDC 7F0122AC 10200003 */  beqz  $at, .L7F0122BC
-/* 046DE0 7F0122B0 0086082A */   slt   $at, $a0, $a2
-/* 046DE4 7F0122B4 14200003 */  bnez  $at, .L7F0122C4
-/* 046DE8 7F0122B8 24AE0028 */   addiu $t6, $a1, 0x28
-.L7F0122BC:
-/* 046DEC 7F0122BC 03E00008 */  jr    $ra
-/* 046DF0 7F0122C0 00001025 */   move  $v0, $zero
-.L7F0122C4:
-/* 046DF4 7F0122C4 008E082A */  slt   $at, $a0, $t6
-/* 046DF8 7F0122C8 10200008 */  beqz  $at, .L7F0122EC
-/* 046DFC 7F0122CC 24C8FFD8 */   addiu $t0, $a2, -0x28
-/* 046E00 7F0122D0 00A47823 */  subu  $t7, $a1, $a0
-/* 046E04 7F0122D4 000FC080 */  sll   $t8, $t7, 2
-/* 046E08 7F0122D8 030FC023 */  subu  $t8, $t8, $t7
-/* 046E0C 7F0122DC 0018C040 */  sll   $t8, $t8, 1
-/* 046E10 7F0122E0 2419000F */  li    $t9, 15
-/* 046E14 7F0122E4 03E00008 */  jr    $ra
-/* 046E18 7F0122E8 03381023 */   subu  $v0, $t9, $t8
-.L7F0122EC:
-/* 046E1C 7F0122EC 0104082A */  slt   $at, $t0, $a0
-/* 046E20 7F0122F0 10200008 */  beqz  $at, .L7F012314
-/* 046E24 7F0122F4 240200FF */   li    $v0, 255
-/* 046E28 7F0122F8 00864823 */  subu  $t1, $a0, $a2
-/* 046E2C 7F0122FC 00095080 */  sll   $t2, $t1, 2
-/* 046E30 7F012300 01495023 */  subu  $t2, $t2, $t1
-/* 046E34 7F012304 000A5040 */  sll   $t2, $t2, 1
-/* 046E38 7F012308 240B000F */  li    $t3, 15
-/* 046E3C 7F01230C 03E00008 */  jr    $ra
-/* 046E40 7F012310 016A1023 */   subu  $v0, $t3, $t2
-.L7F012314:
-/* 046E44 7F012314 03E00008 */  jr    $ra
-/* 046E48 7F012318 00000000 */   nop
-)
-#endif
 
+    if ((arg2 - 0x28) < arg0)
+    {
+        return 0xF - ((arg0 - arg2) * 6);
+    }
+
+    return 0xFF;
+}
 
 
 #ifdef NONMATCHING
