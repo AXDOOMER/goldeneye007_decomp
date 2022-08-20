@@ -698,6 +698,9 @@ testPB:
 	$(call SetupProgressBar)
 	$(call IncrementProgressBarFromAtRate,0,0.125)
 
+textures:
+	for file in assets/images/split/*.bin; do ../../tools/mktex/build/tex2png $file .assets/images/out; done
+
 colour:
 	@echo "\033[3A"
   ifeq ($(VERBOSE),0)

@@ -51,8 +51,22 @@ void load_resource(u8 *ptrdata, u32 bytes, struct fileentry *srcfile, struct res
     }
     else
     {
+#if DEBUG
+        char sp54[128];
+        u32  stack[2];
+#endif
+
         romCopy(source, srcfile->hw_address, lookupdata->rom_size);
         lookupdata->pc_remaining = decompressdata(source, ptrdata, buffer);;
+#if DEBUG
+        if (result == 0)
+        {
+            sprintf(sp54, "DMA-Crash %s %d Ram: %02x%02x%02x%02x%02x%02x%02x%02x", "ob.c", 204, scratch[0], scratch[1], scratch[2], scratch[3], scratch[4], scratch[5], scratch[6], scratch[7]);
+            crashSetMessage(sp54);
+            CRASH();
+        }
+#endif
+
     }
 }
 

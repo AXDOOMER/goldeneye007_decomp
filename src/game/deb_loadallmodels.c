@@ -42,8 +42,8 @@ void alloc_false_GUARDdata_to_exec_global_action(void) {
 GLOBAL_ASM(
 .text
 glabel alloc_false_GUARDdata_to_exec_global_action
-/* 035B8C 7F00105C 3C0D8007 */  lui   $t5, %hi(g_chraiCurrentSetup+0) 
-/* 035B90 7F001060 25AD5D00 */  addiu $t5, %lo(g_chraiCurrentSetup+0) # addiu $t5, $t5, 0x5d00
+/* 035B8C 7F00105C 3C0D8007 */  lui   $t5, %hi(g_CurrentSetup+0) 
+/* 035B90 7F001060 25AD5D00 */  addiu $t5, %lo(g_CurrentSetup+0) # addiu $t5, $t5, 0x5d00
 /* 035B94 7F001064 8DA50014 */  lw    $a1, 0x14($t5)
 /* 035B98 7F001068 3C028003 */  lui   $v0, %hi(g_ActiveChrsCount)
 /* 035B9C 7F00106C 3C068003 */  lui   $a2, %hi(g_ActiveChrs)
@@ -86,8 +86,8 @@ glabel alloc_false_GUARDdata_to_exec_global_action
 /* 035C24 7F0010F4 39E4000F */  xori  $a0, $t7, 0xf
 /* 035C28 7F0010F8 0C0025C8 */  jal   mempAllocBytesInBank
 /* 035C2C 7F0010FC AFA70200 */   sw    $a3, 0x200($sp)
-/* 035C30 7F001100 3C0D8007 */  lui   $t5, %hi(g_chraiCurrentSetup+0) 
-/* 035C34 7F001104 25AD5D00 */  addiu $t5, %lo(g_chraiCurrentSetup+0) # addiu $t5, $t5, 0x5d00
+/* 035C30 7F001100 3C0D8007 */  lui   $t5, %hi(g_CurrentSetup+0) 
+/* 035C34 7F001104 25AD5D00 */  addiu $t5, %lo(g_CurrentSetup+0) # addiu $t5, $t5, 0x5d00
 /* 035C38 7F001108 8DA50014 */  lw    $a1, 0x14($t5)
 /* 035C3C 7F00110C 3C068003 */  lui   $a2, %hi(g_ActiveChrs)
 /* 035C40 7F001110 24C6097C */  addiu $a2, %lo(g_ActiveChrs) # addiu $a2, $a2, 0x97c
@@ -214,8 +214,8 @@ GLOBAL_ASM(
 .text
 glabel debug_object_load_all_models
 /* 035D88 7F001258 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 035D8C 7F00125C 3C0E8007 */  lui   $t6, %hi(g_chraiCurrentSetup+0x14) 
-/* 035D90 7F001260 8DCE5D14 */  lw    $t6, %lo(g_chraiCurrentSetup+0x14)($t6)
+/* 035D8C 7F00125C 3C0E8007 */  lui   $t6, %hi(g_CurrentSetup+0x14) 
+/* 035D90 7F001260 8DCE5D14 */  lw    $t6, %lo(g_CurrentSetup+0x14)($t6)
 /* 035D94 7F001264 AFBF0034 */  sw    $ra, 0x34($sp)
 /* 035D98 7F001268 AFB70030 */  sw    $s7, 0x30($sp)
 /* 035D9C 7F00126C AFB6002C */  sw    $s6, 0x2c($sp)
@@ -237,10 +237,10 @@ glabel debug_object_load_all_models
 .L7F0012AC:
 /* 035DDC 7F0012AC 92030000 */  lbu   $v1, ($s0)
 .L7F0012B0:
-/* 035DE0 7F0012B0 3C0F8007 */  lui   $t7, %hi(g_chraiCurrentSetup+0x14) 
+/* 035DE0 7F0012B0 3C0F8007 */  lui   $t7, %hi(g_CurrentSetup+0x14) 
 /* 035DE4 7F0012B4 16230004 */  bne   $s1, $v1, .L7F0012C8
 /* 035DE8 7F0012B8 00000000 */   nop   
-/* 035DEC 7F0012BC 8DEF5D14 */  lw    $t7, %lo(g_chraiCurrentSetup+0x14)($t7)
+/* 035DEC 7F0012BC 8DEF5D14 */  lw    $t7, %lo(g_CurrentSetup+0x14)($t7)
 /* 035DF0 7F0012C0 10000042 */  b     .L7F0013CC
 /* 035DF4 7F0012C4 01F71021 */   addu  $v0, $t7, $s7
 .L7F0012C8:

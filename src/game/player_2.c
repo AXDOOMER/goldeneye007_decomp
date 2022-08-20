@@ -18,7 +18,7 @@
 #define DEFAULT_C_HALFHEIGHT    136.0f
 #define DEFAULT_SCREENYMAXF     272.0f
 #define DEFAULT_ASPECT          1.1764706f
-#else if defined(VERSION_US) || defined(VERSION_JP)
+#elif defined(VERSION_US) || defined(VERSION_JP)
 #define DEFAULT_FIELD_3B8_Z     9.999998f
 #define DEFAULT_HEADDAMP        0.93f
 #define DEFAULT_HEADLOOKSUM_VAL 14.285716f

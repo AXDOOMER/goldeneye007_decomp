@@ -2708,7 +2708,7 @@ typedef union
     typedef struct GlobalDoorScaleRecord 
     {
         inherits PropDefHeaderRecord;
-        u32      Scale;
+        s32      Scale;
     } GlobalDoorScaleRecord;
 
     #define New_GlobalDoorScaleRecord(Scale)      \
@@ -3014,6 +3014,18 @@ typedef union
     // PROPDEF_HAT (17)
 
     // PROPDEF_GUARD_ATTRIBUTE (18)
+    typedef struct GuardAttributeRecord
+    {
+        inherits PropDefHeaderRecord;
+        s32      chrnum; //0x4
+        s16      unk8; //0x8
+        s8       unkA;   // 0xa  
+        s8       GrenadeProb; //0xb
+    } GuardAttributeRecord;
+    #define New_SwitchRecord(ID1, ID2)                    \
+        {                                                 \
+            New_PropDefHeaderRecord(19), ID1 + 0, ID2 + 0 \
+        }
 
     // PROPDEF_SWITCH (19) - see LinkRecord
     #define New_SwitchRecord(ID1, ID2)                    \
@@ -3364,8 +3376,8 @@ typedef union
         s32      CullDist;
         s32      unk88;
         s32      unk8c;
-        s32      unk90;
-    } GlassData;
+        f32      unk90;
+    } TintedGlassRecord;
     #define New_TintedGlassRecord(pad)              \
         {                                           \
             New_PropDefHeaderRecord(47), 0, pad + 0 \

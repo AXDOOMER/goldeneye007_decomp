@@ -267,7 +267,7 @@ void expand_09_characters(s32 stageid, GuardRecord *arg1, s32 arg2)
     s32 bodyid;
     s32 headid;
 
-    pad = &g_chraiCurrentSetup.pads[arg1->PadID];
+    pad = &g_CurrentSetup.pads[arg1->PadID];
 
     if (sub_GAME_7F056850(pad, pad->stan, 20.0f, (PadRecord *)&sp48, &sp54) != 0)
     {
@@ -2968,11 +2968,11 @@ waypoint *get_ptrpreset_in_table_matching_tile(StandTile* stan)
     waypoint  *waypoint;
     PadRecord *pad;
 
-    if (g_chraiCurrentSetup.pathwaypoints != NULL)
+    if (g_CurrentSetup.pathwaypoints != NULL)
     {
-        for (waypoint = g_chraiCurrentSetup.pathwaypoints; waypoint->padID >= 0; waypoint++)
+        for (waypoint = g_CurrentSetup.pathwaypoints; waypoint->padID >= 0; waypoint++)
         {
-            pad = &((PadRecord *)g_chraiCurrentSetup.pads)[waypoint->padID];
+            pad = &((PadRecord *)g_CurrentSetup.pads)[waypoint->padID];
 
             if (pad->stan == stan)
             {
@@ -2987,18 +2987,18 @@ waypoint *get_ptrpreset_in_table_matching_tile(StandTile* stan)
 GLOBAL_ASM(
 .text
 glabel get_ptrpreset_in_table_matching_tile
-/* 05C724 7F027BF4 3C028007 */  lui   $v0, %hi(g_chraiCurrentSetup+0)
-/* 05C728 7F027BF8 8C425D00 */  lw    $v0, %lo(g_chraiCurrentSetup+0)($v0)
+/* 05C724 7F027BF4 3C028007 */  lui   $v0, %hi(g_CurrentSetup+0)
+/* 05C728 7F027BF8 8C425D00 */  lw    $v0, %lo(g_CurrentSetup+0)($v0)
 /* 05C72C 7F027BFC 00803025 */  move  $a2, $a0
 /* 05C730 7F027C00 50400015 */  beql  $v0, $zero, .L7F027C58
 /* 05C734 7F027C04 00001025 */   move  $v0, $zero
 /* 05C738 7F027C08 8C4E0000 */  lw    $t6, ($v0)
 /* 05C73C 7F027C0C 00401825 */  move  $v1, $v0
-/* 05C740 7F027C10 3C058007 */  lui   $a1, %hi(g_chraiCurrentSetup+0x18)
+/* 05C740 7F027C10 3C058007 */  lui   $a1, %hi(g_CurrentSetup+0x18)
 /* 05C744 7F027C14 05C0000F */  bltz  $t6, .L7F027C54
 /* 05C748 7F027C18 2407002C */   li    $a3, 44
 /* 05C74C 7F027C1C 8C440000 */  lw    $a0, ($v0)
-/* 05C750 7F027C20 8CA55D18 */  lw    $a1, %lo(g_chraiCurrentSetup+0x18)($a1)
+/* 05C750 7F027C20 8CA55D18 */  lw    $a1, %lo(g_CurrentSetup+0x18)($a1)
 .L7F027C24:
 /* 05C754 7F027C24 00870019 */  multu $a0, $a3
 /* 05C758 7F027C28 00007812 */  mflo  $t7
@@ -3043,7 +3043,7 @@ f32 chrlvPadPresetRelated(coord3d *arg0, waypoint *arg1)
     f32 temp_f2;
     PadRecord *temp_v0;
 
-    temp_v0 = &g_chraiCurrentSetup.pads[arg1->padID];
+    temp_v0 = &g_CurrentSetup.pads[arg1->padID];
     temp_f2 = temp_v0->pos.f[0] - arg0->f[0];
     temp_f12 = temp_v0->pos.f[2] - arg0->f[2];
     return (temp_f2 * temp_f2) + (temp_f12 * temp_f12);
@@ -3073,7 +3073,7 @@ waypoint *chrlvStanPathRelated(coord3d *arg0, StandTile *arg1)
 
             for (n = ret->neighbours; *n >= 0; n++)
             {
-                wayp = &g_chraiCurrentSetup.pathwaypoints[*n];
+                wayp = &g_CurrentSetup.pathwaypoints[*n];
                 
                 if (chrlvPadPresetRelated(arg0, wayp) < temp_f20)
                 {
@@ -3176,7 +3176,7 @@ void chrlvActGoposRelated(ChrRecord *self, coord3d *target_point, StandTile **ta
 
     if (temp_v0 != 0)
     {
-        temp_v1 = &g_chraiCurrentSetup.pads[temp_v0->padID];
+        temp_v1 = &g_CurrentSetup.pads[temp_v0->padID];
 
         target_point->f[0] = temp_v1->pos.f[0];
         target_point->f[1] = temp_v1->pos.f[1];
@@ -3478,8 +3478,8 @@ PadRecord * chrlvGetPatrolStepPad(ChrRecord *self, s32 arg1)
 
     step = self->act_patrol.path->data[step];
 
-     return &((struct SetupPtrs *)&g_chraiCurrentSetup.pathwaypoints)->pads[
-         ((struct SetupPtrs *)&g_chraiCurrentSetup.pathwaypoints)->pathwaypoints[step].padID
+     return &((struct SetupPtrs *)&g_CurrentSetup.pathwaypoints)->pads[
+         ((struct SetupPtrs *)&g_CurrentSetup.pathwaypoints)->pathwaypoints[step].padID
          ];
 }
 
@@ -3497,9 +3497,9 @@ glabel chrlvGetPatrolStepPad
 /* 05CF48 7F028418 AFAE0020 */   sw    $t6, 0x20($sp)
 /* 05CF4C 7F02841C 8FA70028 */  lw    $a3, 0x28($sp)
 /* 05CF50 7F028420 0002C880 */  sll   $t9, $v0, 2
-/* 05CF54 7F028424 3C058007 */  lui   $a1, %hi(g_chraiCurrentSetup+0)
+/* 05CF54 7F028424 3C058007 */  lui   $a1, %hi(g_CurrentSetup+0)
 /* 05CF58 7F028428 8CEF002C */  lw    $t7, 0x2c($a3)
-/* 05CF5C 7F02842C 24A55D00 */  addiu $a1, %lo(g_chraiCurrentSetup+0) # addiu $a1, $a1, 0x5d00
+/* 05CF5C 7F02842C 24A55D00 */  addiu $a1, %lo(g_CurrentSetup+0) # addiu $a1, $a1, 0x5d00
 /* 05CF60 7F028430 8CAA0000 */  lw    $t2, ($a1)
 /* 05CF64 7F028434 8DF80000 */  lw    $t8, ($t7)
 /* 05CF68 7F028438 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -3659,7 +3659,7 @@ void chrlvTravelTickMagic(ChrRecord *self, struct waydata *arg1, f32 arg2, coord
                     if (curindex > 0)
                     {
                         pta = self->act_gopos.waypoints[curindex - 1];
-                        pad = &g_chraiCurrentSetup.pads[pta->padID];
+                        pad = &g_CurrentSetup.pads[pta->padID];
 
                         setsubroty(
                             self->model,
@@ -4011,10 +4011,10 @@ void set_actor_on_path(ChrRecord *self, struct patrol_path *path)
     {
         //s32 aa;
 
-        //aa = g_chraiCurrentSetup.pathwaypoints[index].id;
-        //pad = &g_chraiCurrentSetup.pads[aa];
-        waypoint *pta = &g_chraiCurrentSetup.pathwaypoints[index];
-        pad = &g_chraiCurrentSetup.pads[pta->padID];
+        //aa = g_CurrentSetup.pathwaypoints[index].id;
+        //pad = &g_CurrentSetup.pads[aa];
+        waypoint *pta = &g_CurrentSetup.pathwaypoints[index];
+        pad = &g_CurrentSetup.pads[pta->padID];
 
         if ((pad->stan != NULL) && (prop->stan == pad->stan))
         {
@@ -4079,12 +4079,12 @@ glabel set_actor_on_path
 /* 05DC48 7F029118 8C870018 */  lw    $a3, 0x18($a0)
 /* 05DC4C 7F02911C 00003025 */  move  $a2, $zero
 /* 05DC50 7F029120 05E0002C */  bltz  $t7, .L7F0291D4
-/* 05DC54 7F029124 3C098007 */   lui   $t1, %hi(g_chraiCurrentSetup+0) 
-/* 05DC58 7F029128 3C0A8007 */  lui   $t2, %hi(g_chraiCurrentSetup+0x18) 
+/* 05DC54 7F029124 3C098007 */   lui   $t1, %hi(g_CurrentSetup+0) 
+/* 05DC58 7F029128 3C0A8007 */  lui   $t2, %hi(g_CurrentSetup+0x18) 
 /* 05DC5C 7F02912C 3C018005 */  lui   $at, %hi(D_80051DF8)
 /* 05DC60 7F029130 C42C1DF8 */  lwc1  $f12, %lo(D_80051DF8)($at)
-/* 05DC64 7F029134 8D4A5D18 */  lw    $t2, %lo(g_chraiCurrentSetup+0x18)($t2)
-/* 05DC68 7F029138 8D295D00 */  lw    $t1, %lo(g_chraiCurrentSetup+0)($t1)
+/* 05DC64 7F029134 8D4A5D18 */  lw    $t2, %lo(g_CurrentSetup+0x18)($t2)
+/* 05DC68 7F029138 8D295D00 */  lw    $t1, %lo(g_CurrentSetup+0)($t1)
 /* 05DC6C 7F02913C 240B002C */  li    $t3, 44
 /* 05DC70 7F029140 0006C080 */  sll   $t8, $a2, 2
 .L7F029144:
@@ -5191,11 +5191,11 @@ bool chrGoToPad(ChrRecord *self, s32 padid, SPEED speed)
         padid = chrResolvePadId(self, padid);
         if (isNotBoundPad(padid))
         {
-            pad = &g_chraiCurrentSetup.pads[padid];
+            pad = &g_CurrentSetup.pads[padid];
         }
         else
         {
-            pad = (PadRecord *)&g_chraiCurrentSetup.boundpads[getBoundPadNum(padid)];
+            pad = (PadRecord *)&g_CurrentSetup.boundpads[getBoundPadNum(padid)];
         }
 
         stan = pad->stan;
@@ -10205,7 +10205,7 @@ void chrlvTickGoPos(ChrRecord *self)
 
     if (wp != NULL)
     {
-        if (chrlvIsArrivingLaterallyAtPos(&self->prevpos, &self_prop->pos, &g_chraiCurrentSetup.pads[wp->padID].pos, 30.0f) != 0)
+        if (chrlvIsArrivingLaterallyAtPos(&self->prevpos, &self_prop->pos, &g_CurrentSetup.pads[wp->padID].pos, 30.0f) != 0)
         {
             phi_v1 = 1;
         }
@@ -10239,7 +10239,7 @@ void chrlvTickGoPos(ChrRecord *self)
 
                 if (wp != NULL)
                 {
-                    pad = &g_chraiCurrentSetup.pads[wp->padID];
+                    pad = &g_CurrentSetup.pads[wp->padID];
                     wp_pos = &pad->pos;
                     wp_stan = pad->stan;
                 }
@@ -10269,7 +10269,7 @@ void chrlvTickGoPos(ChrRecord *self)
 
             if (wp != NULL)
             {
-                pad = &g_chraiCurrentSetup.pads[wp->padID];
+                pad = &g_CurrentSetup.pads[wp->padID];
                 wp_pos = &pad->pos;
                 wp_stan = pad->stan;
             }
@@ -10291,7 +10291,7 @@ void chrlvTickGoPos(ChrRecord *self)
 
     if (wp != NULL)
     {
-        pad = &g_chraiCurrentSetup.pads[wp->padID];
+        pad = &g_CurrentSetup.pads[wp->padID];
         wp_pos = &pad->pos;
         wp_stan = pad->stan;
     }
@@ -10602,11 +10602,11 @@ coord3d *chrlvGetChrOrPresetLocation(ChrRecord *self, s32 flags, s32 lookup_id, 
 
         if (isNotBoundPad(padid))
         {
-            preset_pad = &g_chraiCurrentSetup.pads[padid];
+            preset_pad = &g_CurrentSetup.pads[padid];
         }
         else
         {
-            preset_pad = (PadRecord *)&g_chraiCurrentSetup.boundpads[getBoundPadNum(padid)];
+            preset_pad = (PadRecord *)&g_CurrentSetup.boundpads[getBoundPadNum(padid)];
         }
 
         *stan = (StandTile *) preset_pad->stan;
@@ -10675,11 +10675,11 @@ f32 chrGetDistanceToPad(ChrRecord *self, s32 padID)
 
     if (isNotBoundPad(padID))
     {
-        pad = (PadRecord *)&g_chraiCurrentSetup.pads[padID];
+        pad = (PadRecord *)&g_CurrentSetup.pads[padID];
     }
     else
     {
-        pad = (PadRecord *)&g_chraiCurrentSetup.boundpads[getBoundPadNum(padID)];
+        pad = (PadRecord *)&g_CurrentSetup.boundpads[getBoundPadNum(padID)];
     }
 
     return sqrtf(
@@ -10702,11 +10702,11 @@ bool check_if_room_for_preset_loaded(ChrRecord *self, s32 padnum)
 
     if (isNotBoundPad(padnum))
     {
-        pad = (PadRecord *)&g_chraiCurrentSetup.pads[padnum];
+        pad = (PadRecord *)&g_CurrentSetup.pads[padnum];
     }
     else
     {
-        pad = (PadRecord *)&g_chraiCurrentSetup.boundpads[getBoundPadNum(padnum)];
+        pad = (PadRecord *)&g_CurrentSetup.boundpads[getBoundPadNum(padnum)];
     }
 
     padstan = pad->stan;
@@ -10838,11 +10838,11 @@ f32 chrGetDistanceFromBondToPad(ChrRecord *self, s32 padid)
 
     if (isNotBoundPad(padid))
     {
-        pad = (PadRecord *)&g_chraiCurrentSetup.pads[padid];
+        pad = (PadRecord *)&g_CurrentSetup.pads[padid];
     }
     else
     {
-        pad = (PadRecord *)&g_chraiCurrentSetup.boundpads[getBoundPadNum(padid)];
+        pad = (PadRecord *)&g_CurrentSetup.boundpads[getBoundPadNum(padid)];
     }
 
     return sqrtf(
@@ -11295,7 +11295,7 @@ s32 sub_GAME_7F033780(waypoint *arg0, coord3d *arg1, f32 angle)
     f32 dz;
     f32 ff;
 
-    pad = &g_chraiCurrentSetup.pads[arg0->padID];
+    pad = &g_CurrentSetup.pads[arg0->padID];
     dx = pad->pos.f[0] - arg1->f[0];
     dz = pad->pos.f[2] - arg1->f[2];
     
@@ -11381,9 +11381,9 @@ s32 chrlvFindPathNeighborRelated(coord3d *bondpos, StandTile *stan, f32 rot, u8 
             neighbor_index++, path_id = waypoint->neighbours[neighbor_index]
             )
         {
-            if (sub_GAME_7F033780(&g_chraiCurrentSetup.pathwaypoints[path_id], bondpos, rot) != 0)
+            if (sub_GAME_7F033780(&g_CurrentSetup.pathwaypoints[path_id], bondpos, rot) != 0)
             {
-                return g_chraiCurrentSetup.pathwaypoints[path_id].padID;
+                return g_CurrentSetup.pathwaypoints[path_id].padID;
             }
         }
     }
@@ -11765,11 +11765,11 @@ PropRecord *chrSpawnAtPad(ChrRecord *self, s32 bodynum, s32 headnum, s32 padid, 
 
     if (isNotBoundPad(padid))
     {
-        pad = (PadRecord *)&g_chraiCurrentSetup.pads[padid];
+        pad = (PadRecord *)&g_CurrentSetup.pads[padid];
     }
     else
     {
-        pad = (PadRecord *)&g_chraiCurrentSetup.boundpads[getBoundPadNum(padid)];
+        pad = (PadRecord *)&g_CurrentSetup.boundpads[getBoundPadNum(padid)];
     }
     #ifdef DEBUG
     osSyncPrintf("%s%s new char x = %f, y = %f, z = %f \n", "", "", pad->pos.x, pad->pos.y, pad->pos.z);
@@ -11813,11 +11813,11 @@ bool chrIfInPadRoom(ChrRecord *self, s32 chrnum, s32 padnum)
 
     if (isNotBoundPad(padnum))
     {
-        pad = (PadRecord *)&g_chraiCurrentSetup.pads[padnum];
+        pad = (PadRecord *)&g_CurrentSetup.pads[padnum];
     }
     else
     {
-        pad = (PadRecord *)&g_chraiCurrentSetup.boundpads[getBoundPadNum(padnum)];
+        pad = (PadRecord *)&g_CurrentSetup.boundpads[getBoundPadNum(padnum)];
     }
 
     if (pad->stan && chr)
@@ -11845,11 +11845,11 @@ bool check_if_actor_is_at_preset(ChrRecord *self, s32 padnum)
 
     if (isNotBoundPad(padnum))
     {
-        pad = (PadRecord *)&g_chraiCurrentSetup.pads[padnum];
+        pad = (PadRecord *)&g_CurrentSetup.pads[padnum];
     }
     else
     {
-        pad = (PadRecord *)&g_chraiCurrentSetup.boundpads[getBoundPadNum(padnum)];
+        pad = (PadRecord *)&g_CurrentSetup.boundpads[getBoundPadNum(padnum)];
     }
 
     if (pad->stan && (pad->stan->room == bondprop->stan->room))
