@@ -191,56 +191,17 @@ glabel ceil2000
 #endif
 
 
+s32 ceil1000(s32 arg0)
+{
+    f32 temp_f0;
+    s32 temp_f10;
 
+    temp_f0 = 4096.0f / ((((s32) (arg0 + 3)) / 4) * 4);
+    temp_f10 = temp_f0;
 
-
-#ifdef NONMATCHING
-s32 ceil1000(s32 arg0) {
-    // Node 0
-    if ((arg0 + 3) < 0)
-    {
-        // Node 1
-        return;
-        // (possible return value: ((s32) (4096.0f / (f32) (((s32) (arg0 + 3) >> 2) * 4)) + (s32) (((4096.0f / (f32) (((s32) (arg0 + 3) >> 2) * 4)) - (f32) (s32) (4096.0f / (f32) (((s32) (arg0 + 3) >> 2) * 4))) + D_80054F9C)))
-    }
-    // (possible return value: ((s32) (4096.0f / (f32) (((s32) (arg0 + 3) >> 2) * 4)) + (s32) (((4096.0f / (f32) (((s32) (arg0 + 3) >> 2) * 4)) - (f32) (s32) (4096.0f / (f32) (((s32) (arg0 + 3) >> 2) * 4))) + D_80054F9C)))
+    return (temp_f10 & 0xFFFFFFFF)
+         + ((s32) ((temp_f0 - temp_f10) + 0.999999f));
 }
-
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80054F9C
-.word 0x3f7fffef /*0.99999899*/
-.text
-glabel ceil1000
-/* 0AB2A4 7F076774 3C014580 */  li    $at, 0x45800000 # 4096.000000
-/* 0AB2A8 7F076778 44812000 */  mtc1  $at, $f4
-/* 0AB2AC 7F07677C 248E0003 */  addiu $t6, $a0, 3
-/* 0AB2B0 7F076780 05C10003 */  bgez  $t6, .L7F076790
-/* 0AB2B4 7F076784 000E7883 */   sra   $t7, $t6, 2
-/* 0AB2B8 7F076788 25C10003 */  addiu $at, $t6, 3
-/* 0AB2BC 7F07678C 00017883 */  sra   $t7, $at, 2
-.L7F076790:
-/* 0AB2C0 7F076790 000FC080 */  sll   $t8, $t7, 2
-/* 0AB2C4 7F076794 44983000 */  mtc1  $t8, $f6
-/* 0AB2C8 7F076798 3C018005 */  lui   $at, %hi(D_80054F9C)
-/* 0AB2CC 7F07679C 46803220 */  cvt.s.w $f8, $f6
-/* 0AB2D0 7F0767A0 46082003 */  div.s $f0, $f4, $f8
-/* 0AB2D4 7F0767A4 C4244F9C */  lwc1  $f4, %lo(D_80054F9C)($at)
-/* 0AB2D8 7F0767A8 4600028D */  trunc.w.s $f10, $f0
-/* 0AB2DC 7F0767AC 44035000 */  mfc1  $v1, $f10
-/* 0AB2E0 7F0767B0 00000000 */  nop   
-/* 0AB2E4 7F0767B4 44838000 */  mtc1  $v1, $f16
-/* 0AB2E8 7F0767B8 00000000 */  nop   
-/* 0AB2EC 7F0767BC 468084A0 */  cvt.s.w $f18, $f16
-/* 0AB2F0 7F0767C0 46120181 */  sub.s $f6, $f0, $f18
-/* 0AB2F4 7F0767C4 46043200 */  add.s $f8, $f6, $f4
-/* 0AB2F8 7F0767C8 4600428D */  trunc.w.s $f10, $f8
-/* 0AB2FC 7F0767CC 44095000 */  mfc1  $t1, $f10
-/* 0AB300 7F0767D0 03E00008 */  jr    $ra
-/* 0AB304 7F0767D4 00691021 */   addu  $v0, $v1, $t1
-)
-#endif
 
 
 s32 sub_GAME_7F0767D8(s32 arg0, s32 arg1, s32 arg2) {
