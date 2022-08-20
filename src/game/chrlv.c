@@ -3457,32 +3457,23 @@ s32 chrlvPatrolCalculateStep(ChrRecord *self, bool *forward, s32 numsteps)
 
 #ifdef NONMATCHING
 
-// notes: struct SetupPtrs isn't (currently defined), it's theoretical update
-// to struct stagesetup. Requires AI Branch merge first.
-
 /**
  * Address 0x7F0283FC.
 */
-PadRecord * chrlvGetPatrolStepPad(ChrRecord *self, s32 arg1)
+// notes: 99.33% match, only failing regalloc on a single line
+PadRecord *chrlvGetPatrolStepPad(ChrRecord *self, s32 numsteps)
 {
-    //struct patrol_path *path;
+    s32 data;
     s32 forward;
     s32 step;
-    //s32 nextstep;
+    s32 * padnumptr;
 
     forward = self->act_patrol.forward;
-
-    step = chrlvPatrolCalculateStep(self, &forward, arg1);
-
-    //path = self->act_patrol.path;
-
-    step = self->act_patrol.path->data[step];
-
-     return &((struct SetupPtrs *)&g_CurrentSetup.pathwaypoints)->pads[
-         ((struct SetupPtrs *)&g_CurrentSetup.pathwaypoints)->pathwaypoints[step].padID
-         ];
+    step = chrlvPatrolCalculateStep(self, &forward, numsteps);
+    data = self->act_patrol.path->data[step]; // <---- this line fails regalloc, swapping t0 and v1
+    padnumptr = &g_CurrentSetup.pathwaypoints[data].padID;
+    return &g_CurrentSetup.pads[*padnumptr];
 }
-
 #else
 GLOBAL_ASM(
 .text

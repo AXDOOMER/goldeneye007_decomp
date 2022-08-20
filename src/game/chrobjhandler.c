@@ -1761,7 +1761,6 @@ void update_color_shading(rgba_u8 *dest, rgba_u8 *src)
         val_new = dest->rgba[i] + ((val_diff + 7) >> 3);
         dest->rgba[i] = val_new;
     }
-
 }
 
 

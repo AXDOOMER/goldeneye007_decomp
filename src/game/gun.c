@@ -1834,92 +1834,28 @@ void remove_item_in_hand(GUNHAND hand)
 }
 
 
+void place_item_in_hand_swap_and_make_visible(GUNHAND hand, ITEM_IDS item)
+{
+    if (g_CurrentPlayer->lock_hand_model[hand]) { return; }
 
+    if (g_CurrentPlayer->hand_invisible[hand] >= 0)
+    {
+        if (item != g_CurrentPlayer->hand_item[hand])
+        {
+            g_CurrentPlayer->hand_invisible[hand] = -1;
+            g_CurrentPlayer->field_2A44[hand] = item;
+        }
+        return;
+    }
 
-#ifdef NONMATCHING
-void place_item_in_hand_swap_and_make_visible(void) {
+    if (item != g_CurrentPlayer->hand_item[hand])
+    {
+        g_CurrentPlayer->field_2A44[hand] = item;
+        return;
+    }
 
+    g_CurrentPlayer->hand_invisible[hand] = 1;
 }
-#else
-
-#if defined(VERSION_US) || defined(VERSION_JP)
-GLOBAL_ASM(
-.text
-glabel place_item_in_hand_swap_and_make_visible
-/* 091AD4 7F05CFA4 3C068008 */  lui   $a2, %hi(g_CurrentPlayer)
-/* 091AD8 7F05CFA8 24C6A0B0 */  addiu $a2, %lo(g_CurrentPlayer) # addiu $a2, $a2, -0x5f50
-/* 091ADC 7F05CFAC 8CCE0000 */  lw    $t6, ($a2)
-/* 091AE0 7F05CFB0 00041080 */  sll   $v0, $a0, 2
-/* 091AE4 7F05CFB4 01C21821 */  addu  $v1, $t6, $v0
-/* 091AE8 7F05CFB8 8C6F2A50 */  lw    $t7, 0x2a50($v1)
-/* 091AEC 7F05CFBC 15E00014 */  bnez  $t7, .L7F05D010
-/* 091AF0 7F05CFC0 00000000 */   nop
-/* 091AF4 7F05CFC4 8C7807F8 */  lw    $t8, 0x7f8($v1)
-/* 091AF8 7F05CFC8 0702000B */  bltzl $t8, .L7F05CFF8
-/* 091AFC 7F05CFCC 8C6B0800 */   lw    $t3, 0x800($v1)
-/* 091B00 7F05CFD0 8C790800 */  lw    $t9, 0x800($v1)
-/* 091B04 7F05CFD4 2408FFFF */  li    $t0, -1
-/* 091B08 7F05CFD8 10B9000D */  beq   $a1, $t9, .L7F05D010
-/* 091B0C 7F05CFDC 00000000 */   nop
-/* 091B10 7F05CFE0 AC6807F8 */  sw    $t0, 0x7f8($v1)
-/* 091B14 7F05CFE4 8CC90000 */  lw    $t1, ($a2)
-/* 091B18 7F05CFE8 01225021 */  addu  $t2, $t1, $v0
-/* 091B1C 7F05CFEC 03E00008 */  jr    $ra
-/* 091B20 7F05CFF0 AD452A44 */   sw    $a1, 0x2a44($t2)
-/* 091B24 7F05CFF4 8C6B0800 */  lw    $t3, 0x800($v1)
-.L7F05CFF8:
-/* 091B28 7F05CFF8 240C0001 */  li    $t4, 1
-/* 091B2C 7F05CFFC 50AB0004 */  beql  $a1, $t3, .L7F05D010
-/* 091B30 7F05D000 AC6C07F8 */   sw    $t4, 0x7f8($v1)
-/* 091B34 7F05D004 03E00008 */  jr    $ra
-/* 091B38 7F05D008 AC652A44 */   sw    $a1, 0x2a44($v1)
-/* 091B3C 7F05D00C AC6C07F8 */  sw    $t4, 0x7f8($v1)
-.L7F05D010:
-/* 091B40 7F05D010 03E00008 */  jr    $ra
-/* 091B44 7F05D014 00000000 */   nop
-)
-#endif
-
-#if defined(VERSION_EU)
-GLOBAL_ASM(
-.text
-glabel place_item_in_hand_swap_and_make_visible
-/* 08FE4C 7F05D45C 3C068007 */  lui   $a2, %hi(g_CurrentPlayer) # $a2, 0x8007
-/* 08FE50 7F05D460 24C68BC0 */  addiu $a2, %lo(g_CurrentPlayer) # addiu $a2, $a2, -0x7440
-/* 08FE54 7F05D464 8CCE0000 */  lw    $t6, ($a2)
-/* 08FE58 7F05D468 00041080 */  sll   $v0, $a0, 2
-/* 08FE5C 7F05D46C 01C21821 */  addu  $v1, $t6, $v0
-/* 08FE60 7F05D470 8C6F2A48 */  lw    $t7, 0x2a48($v1)
-/* 08FE64 7F05D474 15E00014 */  bnez  $t7, .L7F05D4C8
-/* 08FE68 7F05D478 00000000 */   nop   
-/* 08FE6C 7F05D47C 8C7807F8 */  lw    $t8, 0x7f8($v1)
-/* 08FE70 7F05D480 0702000B */  bltzl $t8, .L7F05D4B0
-/* 08FE74 7F05D484 8C6B0800 */   lw    $t3, 0x800($v1)
-/* 08FE78 7F05D488 8C790800 */  lw    $t9, 0x800($v1)
-/* 08FE7C 7F05D48C 2408FFFF */  li    $t0, -1
-/* 08FE80 7F05D490 10B9000D */  beq   $a1, $t9, .L7F05D4C8
-/* 08FE84 7F05D494 00000000 */   nop   
-/* 08FE88 7F05D498 AC6807F8 */  sw    $t0, 0x7f8($v1)
-/* 08FE8C 7F05D49C 8CC90000 */  lw    $t1, ($a2)
-/* 08FE90 7F05D4A0 01225021 */  addu  $t2, $t1, $v0
-/* 08FE94 7F05D4A4 03E00008 */  jr    $ra
-/* 08FE98 7F05D4A8 AD452A3C */   sw    $a1, 0x2a3c($t2)
-/* 08FE9C 7F05D4AC 8C6B0800 */  lw    $t3, 0x800($v1)
-.L7F05D4B0:
-/* 08FEA0 7F05D4B0 240C0001 */  li    $t4, 1
-/* 08FEA4 7F05D4B4 50AB0004 */  beql  $a1, $t3, .L7F05D4C8
-/* 08FEA8 7F05D4B8 AC6C07F8 */   sw    $t4, 0x7f8($v1)
-/* 08FEAC 7F05D4BC 03E00008 */  jr    $ra
-/* 08FEB0 7F05D4C0 AC652A3C */   sw    $a1, 0x2a3c($v1)
-/* 08FEB4 7F05D4C4 AC6C07F8 */  sw    $t4, 0x7f8($v1)
-.L7F05D4C8:
-/* 08FEB8 7F05D4C8 03E00008 */  jr    $ra
-/* 08FEBC 7F05D4CC 00000000 */   nop   
-)
-#endif
-#endif
-
-
 
 
 char * get_ptr_item_text_call_line(ITEM_IDS item)
@@ -2763,8 +2699,8 @@ s32 get_item_in_hand_or_watch_menu(GUNHAND hand) {
 	}
 }
 
-void sub_GAME_7F05DA8C(GUNHAND hand, s32 weaponnum_watchmenu) {
-    place_item_in_hand_swap_and_make_visible();
+void sub_GAME_7F05DA8C(GUNHAND hand, ITEM_IDS weaponnum_watchmenu) {
+    place_item_in_hand_swap_and_make_visible(hand, weaponnum_watchmenu);
 	g_CurrentPlayer->hands[hand].weaponnum_watchmenu = weaponnum_watchmenu;
 }
 
