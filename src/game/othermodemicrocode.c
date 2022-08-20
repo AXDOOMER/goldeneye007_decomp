@@ -87,56 +87,17 @@ glabel ceil8000
 #endif
 
 
+s32 ceil4000(s32 arg0)
+{
+    f32 temp_f0;
+    s32 temp_f10;
 
+    temp_f0 = 16384.0f / ((((s32) (arg0 + 7)) / 8) * 8);
+    temp_f10 = temp_f0;
 
-
-#ifdef NONMATCHING
-s32 ceil4000(s32 arg0) {
-    // Node 0
-    if ((arg0 + 7) < 0)
-    {
-        // Node 1
-        return;
-        // (possible return value: ((s32) (16384.0f / (f32) (((s32) (arg0 + 7) >> 3) * 8)) + (s32) (((16384.0f / (f32) (((s32) (arg0 + 7) >> 3) * 8)) - (f32) (s32) (16384.0f / (f32) (((s32) (arg0 + 7) >> 3) * 8))) + D_80054F94)))
-    }
-    // (possible return value: ((s32) (16384.0f / (f32) (((s32) (arg0 + 7) >> 3) * 8)) + (s32) (((16384.0f / (f32) (((s32) (arg0 + 7) >> 3) * 8)) - (f32) (s32) (16384.0f / (f32) (((s32) (arg0 + 7) >> 3) * 8))) + D_80054F94)))
+    return (temp_f10 & 0xFFFFFFFF)
+         + ((s32) ((temp_f0 - temp_f10) + 0.999999f));
 }
-
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80054F94
-.word 0x3f7fffef /*0.99999899*/
-.text
-glabel ceil4000
-/* 0AB1DC 7F0766AC 3C014680 */  li    $at, 0x46800000 # 16384.000000
-/* 0AB1E0 7F0766B0 44812000 */  mtc1  $at, $f4
-/* 0AB1E4 7F0766B4 248E0007 */  addiu $t6, $a0, 7
-/* 0AB1E8 7F0766B8 05C10003 */  bgez  $t6, .L7F0766C8
-/* 0AB1EC 7F0766BC 000E78C3 */   sra   $t7, $t6, 3
-/* 0AB1F0 7F0766C0 25C10007 */  addiu $at, $t6, 7
-/* 0AB1F4 7F0766C4 000178C3 */  sra   $t7, $at, 3
-.L7F0766C8:
-/* 0AB1F8 7F0766C8 000FC0C0 */  sll   $t8, $t7, 3
-/* 0AB1FC 7F0766CC 44983000 */  mtc1  $t8, $f6
-/* 0AB200 7F0766D0 3C018005 */  lui   $at, %hi(D_80054F94)
-/* 0AB204 7F0766D4 46803220 */  cvt.s.w $f8, $f6
-/* 0AB208 7F0766D8 46082003 */  div.s $f0, $f4, $f8
-/* 0AB20C 7F0766DC C4244F94 */  lwc1  $f4, %lo(D_80054F94)($at)
-/* 0AB210 7F0766E0 4600028D */  trunc.w.s $f10, $f0
-/* 0AB214 7F0766E4 44035000 */  mfc1  $v1, $f10
-/* 0AB218 7F0766E8 00000000 */  nop   
-/* 0AB21C 7F0766EC 44838000 */  mtc1  $v1, $f16
-/* 0AB220 7F0766F0 00000000 */  nop   
-/* 0AB224 7F0766F4 468084A0 */  cvt.s.w $f18, $f16
-/* 0AB228 7F0766F8 46120181 */  sub.s $f6, $f0, $f18
-/* 0AB22C 7F0766FC 46043200 */  add.s $f8, $f6, $f4
-/* 0AB230 7F076700 4600428D */  trunc.w.s $f10, $f8
-/* 0AB234 7F076704 44095000 */  mfc1  $t1, $f10
-/* 0AB238 7F076708 03E00008 */  jr    $ra
-/* 0AB23C 7F07670C 00691021 */   addu  $v0, $v1, $t1
-)
-#endif
 
 
 s32 ceil2000(s32 arg0)
