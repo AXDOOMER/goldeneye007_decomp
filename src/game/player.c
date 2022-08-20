@@ -4,6 +4,7 @@
 #include "unk_092E50.h"
 #include "bondview.h"
 #include "lvl.h"
+#include "fog.h"
 
 // bss
 s32 copyof_stagenum;
@@ -29,62 +30,18 @@ PLAYER_ID array_PLAYER_IDs[4];
 
 
 
+void sub_GAME_7F093880(f32 offset_x, f32 offset_y, coord3d* out) {
+    Mtxf* player_mtxf;
+    coord2d coords;
+    f32 screen_top;
 
-#ifdef NONMATCHING
-void sub_GAME_7F093880(f32 arg0, f32 arg1, ? arg2) {
-    f32 sp18;
-    f32 sp1C;
-    f32 sp20;
-    s32 sp24;
-
-    // Node 0
-    sp24 = currentPlayerGetMatrix10D4();
-    sp1C = (f32) (getPlayer_c_screenleft() + arg0);
-    sp18 = getPlayer_c_screentop();
-    sp20 = (f32) (fogGetCurrentEnvironmentp()->unk38 + (arg1 + sp18));
-    sub_GAME_7F077EEC(&sp1C, arg2, 0x42c80000);
-    return matrix_4x4_rotate_vector_in_place(sp24, arg2);
+    player_mtxf = currentPlayerGetMatrix10D4();
+    coords.x = getPlayer_c_screenleft() + offset_x;
+    screen_top = getPlayer_c_screentop();
+    coords.y = fogGetCurrentEnvironmentp()->WaterConcavity + (offset_y + screen_top);
+    sub_GAME_7F077EEC(&coords, out, 100.0f);
+    matrix_4x4_rotate_vector_in_place(player_mtxf, out->f);
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F093880
-/* 0C83B0 7F093880 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0C83B4 7F093884 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C83B8 7F093888 E7AC0028 */  swc1  $f12, 0x28($sp)
-/* 0C83BC 7F09388C E7AE002C */  swc1  $f14, 0x2c($sp)
-/* 0C83C0 7F093890 0FC1E111 */  jal   currentPlayerGetMatrix10D4
-/* 0C83C4 7F093894 AFA60030 */   sw    $a2, 0x30($sp)
-/* 0C83C8 7F093898 0FC1E131 */  jal   getPlayer_c_screenleft
-/* 0C83CC 7F09389C AFA20024 */   sw    $v0, 0x24($sp)
-/* 0C83D0 7F0938A0 C7A40028 */  lwc1  $f4, 0x28($sp)
-/* 0C83D4 7F0938A4 46040180 */  add.s $f6, $f0, $f4
-/* 0C83D8 7F0938A8 0FC1E135 */  jal   getPlayer_c_screentop
-/* 0C83DC 7F0938AC E7A6001C */   swc1  $f6, 0x1c($sp)
-/* 0C83E0 7F0938B0 0FC2E9CB */  jal   fogGetCurrentEnvironmentp
-/* 0C83E4 7F0938B4 E7A00018 */   swc1  $f0, 0x18($sp)
-/* 0C83E8 7F0938B8 C7A8002C */  lwc1  $f8, 0x2c($sp)
-/* 0C83EC 7F0938BC C7AA0018 */  lwc1  $f10, 0x18($sp)
-/* 0C83F0 7F0938C0 C4520038 */  lwc1  $f18, 0x38($v0)
-/* 0C83F4 7F0938C4 27A4001C */  addiu $a0, $sp, 0x1c
-/* 0C83F8 7F0938C8 460A4400 */  add.s $f16, $f8, $f10
-/* 0C83FC 7F0938CC 8FA50030 */  lw    $a1, 0x30($sp)
-/* 0C8400 7F0938D0 3C0642C8 */  lui   $a2, 0x42c8
-/* 0C8404 7F0938D4 46109100 */  add.s $f4, $f18, $f16
-/* 0C8408 7F0938D8 0FC1DFBB */  jal   sub_GAME_7F077EEC
-/* 0C840C 7F0938DC E7A40020 */   swc1  $f4, 0x20($sp)
-/* 0C8410 7F0938E0 8FA40024 */  lw    $a0, 0x24($sp)
-/* 0C8414 7F0938E4 0FC160F6 */  jal   matrix_4x4_rotate_vector_in_place
-/* 0C8418 7F0938E8 8FA50030 */   lw    $a1, 0x30($sp)
-/* 0C841C 7F0938EC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C8420 7F0938F0 27BD0028 */  addiu $sp, $sp, 0x28
-/* 0C8424 7F0938F4 03E00008 */  jr    $ra
-/* 0C8428 7F0938F8 00000000 */   nop
-)
-#endif
-
-
 
 
 

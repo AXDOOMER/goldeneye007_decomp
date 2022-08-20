@@ -1306,7 +1306,7 @@ typedef union
             // 0xa0
             s32               unka0;
             f32               unka4; // used by ACT_STAND in chrlv
-            f32               unka8;
+            f32               animrate;
             f32               unkac;
             // 0xb0
             f32               unkb0;
@@ -2059,7 +2059,7 @@ typedef union
 
         u32                  unka0;
         u32                  unka4;
-        u32                  unka8;
+        u32                  animrate;
         u32                  unkac;
 
         f32                  unkb0; // runtime y position?
@@ -2708,7 +2708,7 @@ typedef union
     typedef struct GlobalDoorScaleRecord 
     {
         inherits PropDefHeaderRecord;
-        u32      Scale;
+        s32      Scale;
     } GlobalDoorScaleRecord;
 
     #define New_GlobalDoorScaleRecord(Scale)      \
@@ -3014,6 +3014,18 @@ typedef union
     // PROPDEF_HAT (17)
 
     // PROPDEF_GUARD_ATTRIBUTE (18)
+    typedef struct GuardAttributeRecord
+    {
+        inherits PropDefHeaderRecord;
+        s32      chrnum; //0x4
+        s16      unk8; //0x8
+        s8       unkA;   // 0xa  
+        s8       GrenadeProb; //0xb
+    } GuardAttributeRecord;
+    #define New_SwitchRecord(ID1, ID2)                    \
+        {                                                 \
+            New_PropDefHeaderRecord(19), ID1 + 0, ID2 + 0 \
+        }
 
     // PROPDEF_SWITCH (19) - see LinkRecord
     #define New_SwitchRecord(ID1, ID2)                    \
@@ -3364,8 +3376,8 @@ typedef union
         s32      CullDist;
         s32      unk88;
         s32      unk8c;
-        s32      unk90;
-    } GlassData;
+        f32      unk90;
+    } TintedGlassRecord;
     #define New_TintedGlassRecord(pad)              \
         {                                           \
             New_PropDefHeaderRecord(47), 0, pad + 0 \
@@ -3550,7 +3562,9 @@ struct SetupIntroCredits
         enum WATCH_BRIEFING_PAGE       menu;//4
         u16                            reserved;//8
         u16                            text; //a
-        struct watchMenuObjectiveText *nextentry; //c
+        u16                            unkC; //c
+        s8                             unkD; //d
+        s8                             difficulty; //f
     };
 #pragma endregion Objectives
 
@@ -3581,7 +3595,7 @@ struct SetupIntroCredits
             waypoint       *pathwaypoints;
             waygroup       *waypointgroups;
             struct SetupIntroEmpty *intro;
-            s32            *propDefs;
+            PropDefHeaderRecord    *propDefs;
             PathRecord     *patrolpaths;
             AIListRecord   *ailists;
             PadRecord      *pads;

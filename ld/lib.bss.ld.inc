@@ -13,9 +13,9 @@
       build/OUTCODE/src/speed_graph.o (.bss);
       build/OUTCODE/src/fr.o (.bss);
       build/OUTCODE/src/deb.o (.bss);
-      build/OUTCODE/src/fault.o (.bss);
+      build/OUTCODE/src/crash.o (.bss);
       /*deb_print may be part of fault per pd beta (.bss);*/
-      build/OUTCODE/src/deb_print.o (.bss);
+      /*build/OUTCODE/src/deb_print.o (.bss);*/
       build/OUTCODE/src/getra.o (.bss);
       build/OUTCODE/src/ramrom.o (.bss);
       build/OUTCODE/src/boss.o (.bss);

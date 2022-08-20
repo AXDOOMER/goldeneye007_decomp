@@ -21300,7 +21300,7 @@ glabel init_menu18_displaycast
 /* 04D7B4 7F018C84 3C048003 */  lui   $a0, %hi(objinstance)
 /* 04D7B8 7F018C88 8C84B5F4 */  lw    $a0, %lo(objinstance)($a0)
 /* 04D7BC 7F018C8C 3C053F00 */  lui   $a1, 0x3f00
-/* 04D7C0 7F018C90 0FC1BFC6 */  jal   sub_GAME_7F06FF18
+/* 04D7C0 7F018C90 0FC1BFC6 */  jal   modelSetAnimRateForDuration
 /* 04D7C4 7F018C94 24060000 */   li    $a2, 0
 /* 04D7C8 7F018C98 3C198003 */  lui   $t9, %hi(randomly_selected_intro_animation)
 /* 04D7CC 7F018C9C 8F39B5EC */  lw    $t9, %lo(randomly_selected_intro_animation)($t9)
@@ -21897,7 +21897,7 @@ glabel init_menu18_displaycast
 /* 04B6F0 7F018D00 3C053F19 */  lui   $a1, (0x3F19999A >> 16) # lui $a1, 0x3f19
 /* 04B6F4 7F018D04 34A5999A */  ori   $a1, (0x3F19999A & 0xFFFF) # ori $a1, $a1, 0x999a
 /* 04B6F8 7F018D08 8C846B44 */  lw    $a0, %lo(objinstance)($a0)
-/* 04B6FC 7F018D0C 0FC1C02E */  jal   sub_GAME_7F06FF18
+/* 04B6FC 7F018D0C 0FC1C02E */  jal   modelSetAnimRateForDuration
 /* 04B700 7F018D10 24060000 */   li    $a2, 0
 /* 04B704 7F018D14 3C198002 */  lui   $t9, %hi(randomly_selected_intro_animation) # $t9, 0x8002
 /* 04B708 7F018D18 8F396B3C */  lw    $t9, %lo(randomly_selected_intro_animation)($t9)

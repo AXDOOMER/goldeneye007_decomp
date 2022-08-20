@@ -1,7 +1,7 @@
 #include <ultra64.h>
 #include "indy_commands.h"
 #include <PR/os.h>
-
+#include "rmon.h"
 // data
 //D:8004EAC0
 s32 D_8004EAC0 = 0;

@@ -1051,7 +1051,7 @@ glabel sub_GAME_7F008E80
 /* 03DC0C 7F0090DC 24050000 */   li    $a1, 0
 /* 03DC10 7F0090E0 8E240000 */  lw    $a0, ($s1)
 /* 03DC14 7F0090E4 3C053F00 */  lui   $a1, 0x3f00
-/* 03DC18 7F0090E8 0FC1BFC6 */  jal   sub_GAME_7F06FF18
+/* 03DC18 7F0090E8 0FC1BFC6 */  jal   modelSetAnimRateForDuration
 /* 03DC1C 7F0090EC 24060000 */   li    $a2, 0
 /* 03DC20 7F0090F0 3C0F8007 */  lui   $t7, %hi(ptr_animation_table) 
 /* 03DC24 7F0090F4 8DEF9538 */  lw    $t7, %lo(ptr_animation_table)($t7)
@@ -1290,7 +1290,7 @@ glabel sub_GAME_7F008E80
 /* 03BA50 7F009060 3C053F19 */  lui   $a1, (0x3F19999A >> 16) # lui $a1, 0x3f19
 /* 03BA54 7F009064 34A5999A */  ori   $a1, (0x3F19999A & 0xFFFF) # ori $a1, $a1, 0x999a
 /* 03BA58 7F009068 8E240000 */  lw    $a0, ($s1)
-/* 03BA5C 7F00906C 0FC1C02E */  jal   sub_GAME_7F06FF18
+/* 03BA5C 7F00906C 0FC1C02E */  jal   modelSetAnimRateForDuration
 /* 03BA60 7F009070 24060000 */   li    $a2, 0
 /* 03BA64 7F009074 3C0F8006 */  lui   $t7, %hi(ptr_animation_table) # $t7, 0x8006
 /* 03BA68 7F009078 8DEF8478 */  lw    $t7, %lo(ptr_animation_table)($t7)
@@ -1466,7 +1466,10 @@ Gfx *sub_GAME_7F009254(Gfx *gdl) {
             intro_state_blood_animation = die_blood_image_routine(1);
             intro_eye_counter = 2;
         }
-        gdl = sub_GAME_7F01C400(insert_bond_eye_intro(insert_sight_backdrop_eye_intro(insert_sniper_sight_eye_intro(gdl))));
+        gdl = insert_sniper_sight_eye_intro(gdl);
+        gdl = insert_sight_backdrop_eye_intro(gdl);
+        gdl = insert_bond_eye_intro(gdl);
+        gdl = gunbarrelBloodOverlayDL(gdl);
         if (intro_state_blood_animation != 0) {
             gunbarrel_mode++;
             word_CODE_bss_80069584 = 0;
@@ -1479,7 +1482,10 @@ Gfx *sub_GAME_7F009254(Gfx *gdl) {
         word_CODE_bss_80069584 += INCVAL;
         intro_eye_counter++;
         g_TitleX = ((sins(word_CODE_bss_80069584) * 64.0f) / 32768.0f) + dword_CODE_bss_8006957C;
-        gdl = sub_GAME_7F01CA18(insert_bond_eye_intro(insert_sight_backdrop_eye_intro(insert_sniper_sight_eye_intro(gdl))));
+        gdl = insert_sniper_sight_eye_intro(gdl);
+        gdl = insert_sight_backdrop_eye_intro(gdl);
+        gdl = insert_bond_eye_intro(gdl);
+        gdl = sub_GAME_7F01CA18(gdl);
         if (intro_eye_counter >= INTRO_EYE_COUNTER_CASE_4)
         {
             intro_eye_counter = 0;
@@ -1490,7 +1496,10 @@ Gfx *sub_GAME_7F009254(Gfx *gdl) {
     case 5:
         word_CODE_bss_80069584 += INCVAL;
         g_TitleX = ((sins(word_CODE_bss_80069584) * 64.0f) / 32768.0f) + dword_CODE_bss_8006957C;
-        gdl = sub_GAME_7F01CA18(insert_bond_eye_intro(insert_sight_backdrop_eye_intro(insert_sniper_sight_eye_intro(gdl))));
+        gdl = insert_sniper_sight_eye_intro(gdl);
+        gdl = insert_sight_backdrop_eye_intro(gdl);
+        gdl = insert_bond_eye_intro(gdl);
+        gdl = sub_GAME_7F01CA18(gdl);
         
         intro_eye_counter += INTRO_EYE_COUNTER_CASE_5_ADD;
         

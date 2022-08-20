@@ -2634,7 +2634,7 @@ glabel init_GUARDdata_with_set_values
 /* 054CC4 7F020194 3C058003 */  lui   $a1, %hi(animation_rate)
 /* 054CC8 7F020198 8CA5C900 */  lw    $a1, %lo(animation_rate)($a1)
 /* 054CCC 7F02019C 4406A000 */  mfc1  $a2, $f20
-/* 054CD0 7F0201A0 0FC1BFC6 */  jal   sub_GAME_7F06FF18
+/* 054CD0 7F0201A0 0FC1BFC6 */  jal   modelSetAnimRateForDuration
 /* 054CD4 7F0201A4 02402025 */   move  $a0, $s2
 /* 054CD8 7F0201A8 3C028003 */  lui   $v0, %hi(player1_guardID)
 /* 054CDC 7F0201AC 2442CC60 */  addiu $v0, %lo(player1_guardID) # addiu $v0, $v0, -0x33a0
@@ -2843,7 +2843,7 @@ glabel init_GUARDdata_with_set_values
 /* 0529F8 7F020008 46105482 */  mul.s $f18, $f10, $f16
 /* 0529FC 7F02000C 4406A000 */  mfc1  $a2, $f20
 /* 052A00 7F020010 44059000 */  mfc1  $a1, $f18
-/* 052A04 7F020014 0FC1C02E */  jal   sub_GAME_7F06FF18
+/* 052A04 7F020014 0FC1C02E */  jal   modelSetAnimRateForDuration
 /* 052A08 7F020018 00000000 */   nop   
 /* 052A0C 7F02001C 3C028003 */  lui   $v0, %hi(player1_guardID) # $v0, 0x8003
 /* 052A10 7F020020 244281B0 */  addiu $v0, %lo(player1_guardID) # addiu $v0, $v0, -0x7e50
@@ -3160,7 +3160,7 @@ glabel disable_sounds_attached_to_player_then_something
  * Address 0x7F020540 (VERSION_US, VERSION_JP).
  * Address 0x7F0203B4 (VERSION_EU).
  */
-void animation_speed_related(f32 arg0)
+void setAnimationRate(f32 arg0)
 {
     s32 i;
 
@@ -3172,9 +3172,9 @@ void animation_speed_related(f32 arg0)
         {
 #if defined(REFRESH_PAL)
 /* should reference D_80047E4C (1.2f) */
-            sub_GAME_7F06FF18(ptr_guard_data[i].model, animation_rate * 1.2f, 600.0f);
+            modelSetAnimRateForDuration(ptr_guard_data[i].model, animation_rate * 1.2f, 600.0f);
 #else
-            sub_GAME_7F06FF18(ptr_guard_data[i].model, animation_rate, 600.0f);
+            modelSetAnimRateForDuration(ptr_guard_data[i].model, animation_rate, 600.0f);
 #endif
         }
     }
@@ -3183,7 +3183,7 @@ void animation_speed_related(f32 arg0)
 
 
 
-f32 get_animation_rate(void)
+f32 getAnimationRate(void)
 {
   return animation_rate;
 }

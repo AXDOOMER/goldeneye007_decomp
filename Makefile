@@ -226,7 +226,7 @@ ifeq ($(VERSION), DEBUG)
  COUNTRYCODE := u
  OUTCODE := d
  LANG := US
- LCDEFS := -DVERSION_US -DLANG_US -DREFRESH_NTSC -DLEFTOVERDEBUG -DLEFTOVERSPECTRUM -DBUGFIX_R0 -DDEBUGMENU
+ LCDEFS := -DVERSION_US -DLANG_US -DREFRESH_NTSC -DLEFTOVERDEBUG -DLEFTOVERSPECTRUM -DBUGFIX_R0 -DDEBUGMENU -DVERSION_DEBUG
  ASMDEFS := --defsym VERSION_DEBUG=1 --defsym LANG_US=1 --defsym REFRESH_NTSC=1 --defsym LEFTOVERDEBUG=1 --defsym LEFTOVERSPECTRUM=1 --defsym BUGFIX_R0=1 --defsym DEBUGMENU=1
  COMPARE := 0
 endif
@@ -697,6 +697,9 @@ endif
 testPB:
 	$(call SetupProgressBar)
 	$(call IncrementProgressBarFromAtRate,0,0.125)
+
+textures:
+	for file in assets/images/split/*.bin; do ../../tools/mktex/build/tex2png $file .assets/images/out; done
 
 colour:
 	@echo "\033[3A"
