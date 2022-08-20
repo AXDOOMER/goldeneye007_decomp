@@ -9935,55 +9935,18 @@ void select_game_length(void)
 }
 
 
-
-
-
-#ifdef NONMATCHING
 void copy_aim_settings_to_playerdata(void)
 {
-  g_playerPlayerData[0].autoaim = mp_sight_adjust_table[aim_sight_adjustment].autoaim;
-  g_playerPlayerData[0].sight = mp_sight_adjust_table[aim_sight_adjustment].sight;
-  g_playerPlayerData[1].autoaim = mp_sight_adjust_table[aim_sight_adjustment].autoaim;
-  g_playerPlayerData[1].sight = mp_sight_adjust_table[aim_sight_adjustment].sight;
-  g_playerPlayerData[2].autoaim = mp_sight_adjust_table[aim_sight_adjustment].autoaim;
-  g_playerPlayerData[2].sight = mp_sight_adjust_table[aim_sight_adjustment].sight;
-  g_playerPlayerData[3].autoaim = mp_sight_adjust_table[aim_sight_adjustment].autoaim;
-  g_playerPlayerData[3].sight = mp_sight_adjust_table[aim_sight_adjustment].sight;
+    s32 i;
+    struct player_data * p;
+
+    for (i = 0; i < 4; i++)
+    {
+        p = &g_playerPlayerData[i];
+        p->autoaim = mp_sight_adjust_table[aim_sight_adjustment].autoaim;
+        p->sight   = mp_sight_adjust_table[aim_sight_adjustment].sight;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel copy_aim_settings_to_playerdata
-/* 044D08 7F0101D8 3C0E8003 */  lui   $t6, %hi(aim_sight_adjustment)
-/* 044D0C 7F0101DC 8DCEB53C */  lw    $t6, %lo(aim_sight_adjustment)($t6)
-/* 044D10 7F0101E0 3C188003 */  lui   $t8, %hi(mp_sight_adjust_table)
-/* 044D14 7F0101E4 2718B510 */  addiu $t8, %lo(mp_sight_adjust_table) # addiu $t8, $t8, -0x4af0
-/* 044D18 7F0101E8 000E7880 */  sll   $t7, $t6, 2
-/* 044D1C 7F0101EC 01F81021 */  addu  $v0, $t7, $t8
-/* 044D20 7F0101F0 90430003 */  lbu   $v1, 3($v0)
-/* 044D24 7F0101F4 3C018008 */  lui   $at, %hi(g_playerPlayerData+0x6A)
-/* 044D28 7F0101F8 A0239F5A */  sb    $v1, %lo(g_playerPlayerData+0x6A)($at)
-/* 044D2C 7F0101FC 90440002 */  lbu   $a0, 2($v0)
-/* 044D30 7F010200 3C018008 */  lui   $at, %hi(g_playerPlayerData+0x6B)
-/* 044D34 7F010204 A0249F5B */  sb    $a0, %lo(g_playerPlayerData+0x6B)($at)
-/* 044D38 7F010208 3C018008 */  lui   $at, %hi(g_playerPlayerData+0x70+0x6A)
-/* 044D3C 7F01020C A0239FCA */  sb    $v1, %lo(g_playerPlayerData+0x70+0x6A)($at)
-/* 044D40 7F010210 3C018008 */  lui   $at, %hi(g_playerPlayerData+0x70+0x6B)
-/* 044D44 7F010214 A0249FCB */  sb    $a0, %lo(g_playerPlayerData+0x70+0x6B)($at)
-/* 044D48 7F010218 3C018008 */  lui   $at, %hi(g_playerPlayerData+0x70+0x70+0x6A)
-/* 044D4C 7F01021C A023A03A */  sb    $v1, %lo(g_playerPlayerData+0x70+0x70+0x6A)($at)
-/* 044D50 7F010220 3C018008 */  lui   $at, %hi(g_playerPlayerData+0x70+0x70+0x6B)
-/* 044D54 7F010224 A024A03B */  sb    $a0, %lo(g_playerPlayerData+0x70+0x70+0x6B)($at)
-/* 044D58 7F010228 3C018008 */  lui   $at, %hi(g_playerPlayerData+0x70+0x70+0x70+0x6A)
-/* 044D5C 7F01022C A023A0AA */  sb    $v1, %lo(g_playerPlayerData+0x70+0x70+0x70+0x6A)($at)
-/* 044D60 7F010230 3C018008 */  lui   $at, %hi(g_playerPlayerData+0x70+0x70+0x70+0x6B)
-/* 044D64 7F010234 03E00008 */  jr    $ra
-/* 044D68 7F010238 A024A0AB */   sb    $a0, %lo(g_playerPlayerData+0x70+0x70+0x70+0x6B)($at)
-)
-#endif
-
-
-
 
 
 void advance_aim_settings_selection(void)

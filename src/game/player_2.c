@@ -765,11 +765,11 @@ weapon_multi_none:
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F09B368(s32 arg0) {
-    // Node 0
-    return chrSetWeaponFlag4(g_CurrentPlayer->unkA8->unk4, arg0);
+/* I think the late_rodata stuff is messing this up. It's supposed to match */
+void sub_GAME_7F09B368(enum GUNHAND hand)
+{
+    chrSetWeaponFlag4(g_CurrentPlayer->prop->chr, hand);
 }
-
 #else
 GLOBAL_ASM(
 .late_rodata
