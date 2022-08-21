@@ -128,22 +128,7 @@ struct hand
   s32 field_8E0;
   s32 field_8E4;
   s32 field_8E8;
-  s32 field_8EC;
-  s32 field_8F0;
-  s32 field_8F4;
-  s32 field_8F8;
-  s32 field_8FC;
-  s32 field_900;
-  s32 field_904;
-  s32 field_908;
-  s32 field_90C;
-  s32 field_910;
-  s32 field_914;
-  s32 field_918;
-  s32 field_91C;
-  s32 field_920;
-  s32 field_924;
-  s32 field_928;
+  Mtxf field_8EC;
   s32 field_92C;
   s32 field_930;
   s32 field_934;
@@ -2791,9 +2776,7 @@ typedef struct bondstruct_unk_80036794 { // time related idk
 
 typedef struct bondstruct_unk_80035904 {
     u32 unk00;
-    f32 unk04;
-    f32 unk08;
-    f32 unk0C;
+    coord3d unk04;
     coord3d unk10;
     f32 unk1C;
     f32 unk20;
