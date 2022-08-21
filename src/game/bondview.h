@@ -316,9 +316,7 @@ struct hand
   s32 field_C00;
   s32 field_C04;
   s32 field_C08;  
-  s32 item_related1;
-  s32 item_related2;
-  s32 item_related3;
+  coord3d item_related;
 };
 
 typedef struct InvItem {

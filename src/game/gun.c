@@ -27430,64 +27430,12 @@ void sub_GAME_7F067AB4(coord3d *param_1)
 }
 
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F067B4C(void) {
-
+void sub_GAME_7F067B4C(coord3d* pos)
+{
+    g_CurrentPlayer->hands[GUNLEFT].item_related.x = g_CurrentPlayer->hands[GUNRIGHT].item_related.x = pos->x;
+    g_CurrentPlayer->hands[GUNLEFT].item_related.y = g_CurrentPlayer->hands[GUNRIGHT].item_related.y = pos->y;
+    g_CurrentPlayer->hands[GUNLEFT].item_related.z = g_CurrentPlayer->hands[GUNRIGHT].item_related.z = pos->z;
 }
-#else
-#if defined(VERSION_US) || defined(VERSION_JP)
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F067B4C
-/* 09C67C 7F067B4C 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
-/* 09C680 7F067B50 2442A0B0 */  addiu $v0, %lo(g_CurrentPlayer) # addiu $v0, $v0, -0x5f50
-/* 09C684 7F067B54 8C4E0000 */  lw    $t6, ($v0)
-/* 09C688 7F067B58 C4800000 */  lwc1  $f0, ($a0)
-/* 09C68C 7F067B5C E5C00C0C */  swc1  $f0, 0xc0c($t6)
-/* 09C690 7F067B60 8C4F0000 */  lw    $t7, ($v0)
-/* 09C694 7F067B64 E5E00FB4 */  swc1  $f0, 0xfb4($t7)
-/* 09C698 7F067B68 8C580000 */  lw    $t8, ($v0)
-/* 09C69C 7F067B6C C4800004 */  lwc1  $f0, 4($a0)
-/* 09C6A0 7F067B70 E7000C10 */  swc1  $f0, 0xc10($t8)
-/* 09C6A4 7F067B74 8C590000 */  lw    $t9, ($v0)
-/* 09C6A8 7F067B78 E7200FB8 */  swc1  $f0, 0xfb8($t9)
-/* 09C6AC 7F067B7C 8C480000 */  lw    $t0, ($v0)
-/* 09C6B0 7F067B80 C4800008 */  lwc1  $f0, 8($a0)
-/* 09C6B4 7F067B84 E5000C14 */  swc1  $f0, 0xc14($t0)
-/* 09C6B8 7F067B88 8C490000 */  lw    $t1, ($v0)
-/* 09C6BC 7F067B8C 03E00008 */  jr    $ra
-/* 09C6C0 7F067B90 E5200FBC */   swc1  $f0, 0xfbc($t1)
-)
-#endif
-
-#if defined(VERSION_EU)
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F067B4C
-/* 09ACE4 7F0682F4 3C028007 */  lui   $v0, %hi(g_CurrentPlayer) # $v0, 0x8007
-/* 09ACE8 7F0682F8 24428BC0 */  addiu $v0, %lo(g_CurrentPlayer) # addiu $v0, $v0, -0x7440
-/* 09ACEC 7F0682FC 8C4E0000 */  lw    $t6, ($v0)
-/* 09ACF0 7F068300 C4800000 */  lwc1  $f0, ($a0)
-/* 09ACF4 7F068304 E5C00C04 */  swc1  $f0, 0xc04($t6)
-/* 09ACF8 7F068308 8C4F0000 */  lw    $t7, ($v0)
-/* 09ACFC 7F06830C E5E00FAC */  swc1  $f0, 0xfac($t7)
-/* 09AD00 7F068310 8C580000 */  lw    $t8, ($v0)
-/* 09AD04 7F068314 C4800004 */  lwc1  $f0, 4($a0)
-/* 09AD08 7F068318 E7000C08 */  swc1  $f0, 0xc08($t8)
-/* 09AD0C 7F06831C 8C590000 */  lw    $t9, ($v0)
-/* 09AD10 7F068320 E7200FB0 */  swc1  $f0, 0xfb0($t9)
-/* 09AD14 7F068324 8C480000 */  lw    $t0, ($v0)
-/* 09AD18 7F068328 C4800008 */  lwc1  $f0, 8($a0)
-/* 09AD1C 7F06832C E5000C0C */  swc1  $f0, 0xc0c($t0)
-/* 09AD20 7F068330 8C490000 */  lw    $t1, ($v0)
-/* 09AD24 7F068334 03E00008 */  jr    $ra
-/* 09AD28 7F068338 E5200FB4 */   swc1  $f0, 0xfb4($t1)
-)
-#endif
-#endif
-
 
 
 void caclulate_gun_crosshair_position_rotation(f32 turn_x, f32 turn_y, f32 guncrossdamp, f32 gunaimdamp)
