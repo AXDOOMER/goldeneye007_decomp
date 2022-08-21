@@ -1015,9 +1015,37 @@ glabel sub_GAME_7F03FB70
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03FBFC(void) {
-
+/* matches according to decomp.me, I believe it doesn't build yet because the asm references label 'D_80052A48', which is defined elsewhere */
+void sub_GAME_7F03FBFC(struct bss_80073DC0 *arg0)
+{
+    arg0->unk00 = 0;
+    arg0->unk88 = 0;
+    arg0->unk04 = 0;
+    arg0->unk08 = 0;
+    arg0->unk0C = 0;
+    arg0->unk10 = 0;
+    arg0->unk14 = 0;
+    arg0->unk18 = 0;
+    arg0->unk1C = 0;
+    arg0->unk60 = 1.0f;
+    arg0->unk8C = 0.050000001f;
+    arg0->unk90 = 0;
+    arg0->unkA0 = -1U;
+    arg0->unkA4 = 0;
+    arg0->unkA8 = 0;
+    arg0->unkAC = -1U;
+    arg0->unkB8 = 1;
+    arg0->unkBC = 0;
+    arg0->unkE0 = 0;
+    arg0->unkE4 = 0;
+    arg0->unkE8 = 0;
+    arg0->unk94 = 0;
+    arg0->unkC0 = 1.0f;
+    arg0->unkC4 = 1.0f;
+    arg0->unkC8 = 1.0f;
+    arg0->unk8C = 0.050000001f;
 }
+
 #else
 GLOBAL_ASM(
 
@@ -1749,51 +1777,19 @@ glabel sub_GAME_7F0402B4
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-void update_color_shading(void) {
-
+void update_color_shading(rgba_u8 *dest, rgba_u8 *src)
+{
+    s32 val_diff;
+    s32 val_new;
+    s32 i;
+    
+    for (i = 0; i < 4; i++)
+    {
+        val_diff = (src->rgba[i] - dest->rgba[i]);
+        val_new = dest->rgba[i] + ((val_diff + 7) >> 3);
+        dest->rgba[i] = val_new;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel update_color_shading
-/* 074E40 7F040310 90880000 */  lbu   $t0, ($a0)
-/* 074E44 7F040314 90AE0000 */  lbu   $t6, ($a1)
-/* 074E48 7F040318 90890001 */  lbu   $t1, 1($a0)
-/* 074E4C 7F04031C 908A0002 */  lbu   $t2, 2($a0)
-/* 074E50 7F040320 01C81023 */  subu  $v0, $t6, $t0
-/* 074E54 7F040324 244F0007 */  addiu $t7, $v0, 7
-/* 074E58 7F040328 000FC0C3 */  sra   $t8, $t7, 3
-/* 074E5C 7F04032C 01181821 */  addu  $v1, $t0, $t8
-/* 074E60 7F040330 A0830000 */  sb    $v1, ($a0)
-/* 074E64 7F040334 90B90001 */  lbu   $t9, 1($a1)
-/* 074E68 7F040338 908B0003 */  lbu   $t3, 3($a0)
-/* 074E6C 7F04033C 03291023 */  subu  $v0, $t9, $t1
-/* 074E70 7F040340 244C0007 */  addiu $t4, $v0, 7
-/* 074E74 7F040344 000C68C3 */  sra   $t5, $t4, 3
-/* 074E78 7F040348 012D1821 */  addu  $v1, $t1, $t5
-/* 074E7C 7F04034C A0830001 */  sb    $v1, 1($a0)
-/* 074E80 7F040350 90AE0002 */  lbu   $t6, 2($a1)
-/* 074E84 7F040354 01CA1023 */  subu  $v0, $t6, $t2
-/* 074E88 7F040358 244F0007 */  addiu $t7, $v0, 7
-/* 074E8C 7F04035C 000FC0C3 */  sra   $t8, $t7, 3
-/* 074E90 7F040360 01581821 */  addu  $v1, $t2, $t8
-/* 074E94 7F040364 A0830002 */  sb    $v1, 2($a0)
-/* 074E98 7F040368 90B90003 */  lbu   $t9, 3($a1)
-/* 074E9C 7F04036C 032B1023 */  subu  $v0, $t9, $t3
-/* 074EA0 7F040370 244C0007 */  addiu $t4, $v0, 7
-/* 074EA4 7F040374 000C68C3 */  sra   $t5, $t4, 3
-/* 074EA8 7F040378 016D1821 */  addu  $v1, $t3, $t5
-/* 074EAC 7F04037C 03E00008 */  jr    $ra
-/* 074EB0 7F040380 A0830003 */   sb    $v1, 3($a0)
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
@@ -2017,7 +2013,7 @@ glabel init_standard_object
 /* 0751EC 7F0406BC 10000003 */  b     .L7F0406CC
 /* 0751F0 7F0406C0 00000000 */   nop   
 .L7F0406C4:
-/* 0751F4 7F0406C4 0FC1B08D */  jal   set_obj_instance_scale_to_zero
+/* 0751F4 7F0406C4 0FC1B08D */  jal   clear_model_obj
 /* 0751F8 7F0406C8 00E02025 */   move  $a0, $a3
 .L7F0406CC:
 /* 0751FC 7F0406CC 52200005 */  beql  $s1, $zero, .L7F0406E4
@@ -2834,7 +2830,7 @@ glabel objFree
 /* 075B04 7F040FD4 10000004 */  b     .L7F040FE8
 /* 075B08 7F040FD8 8FB9002C */   lw    $t9, 0x2c($sp)
 .L7F040FDC:
-/* 075B0C 7F040FDC 0FC1B08D */  jal   set_obj_instance_scale_to_zero
+/* 075B0C 7F040FDC 0FC1B08D */  jal   clear_model_obj
 /* 075B10 7F040FE0 8E440014 */   lw    $a0, 0x14($s2)
 /* 075B14 7F040FE4 8FB9002C */  lw    $t9, 0x2c($sp)
 .L7F040FE8:
@@ -6148,8 +6144,104 @@ void propExplode(PropRecord *prop, s32 arg1)
 
 
 #ifdef NONMATCHING
-void handle_thrown_explosive_detonation(void) {
+// still needs work
+void handle_thrown_explosive_detonation(PropRecord* prop) {
+    PropRecord* player_prop;
+    WeaponObjRecord* weapon;
+    f32 diff_x;
+    f32 diff_z;
+    f32 diff_y;
+    s32 var_a1;
+    f32 dist_sqr;
 
+    weapon = prop->weapon;
+
+    if (sub_GAME_7F09B4D8(get_cur_playernum()) != 0) { return; }
+
+    if (weapon->type == 7) {
+        if (((s32)weapon->flags * 8) < 0) {
+            propExplode(prop, 0xC);
+            weapon->runtime_bitflags = (s32) (weapon->runtime_bitflags | 4);
+        }
+        return;
+    }
+
+    if (weapon->type == 8) {
+        if (((weapon->weaponnum == 0x1A) || (weapon->weaponnum == 0x57)) && (weapon->timer >= 0)) {
+            weapon->timer = (s16) (weapon->timer - g_ClockTimer);
+            if (weapon->timer < 0) {
+                var_a1 = (weapon->flags2 & 0x80000000) ? 0x11 : 0xD;
+                propExplode(prop, var_a1);
+                weapon->runtime_bitflags = (s32) (weapon->runtime_bitflags | 4);
+            }
+        } else if (weapon->weaponnum == 0x56) {
+            if (weapon->timer == 0) {
+                var_a1 = (weapon->flags2 & 0x80000000) ? 0x11 : 0xD;
+
+                propExplode(prop, var_a1);
+                weapon->runtime_bitflags = (s32) (weapon->runtime_bitflags | 4);
+            }
+        } else if (weapon->weaponnum == 0x22) {
+            if (weapon->timer == 0) {
+                propExplode(prop, 0x11);
+                weapon->runtime_bitflags = (s32) (weapon->runtime_bitflags | 4);
+                SurroundWithExplosions(0x78);
+                countdownTimerSetVisible(2, 0);
+            }
+        } else if (((weapon->weaponnum == 0x1B) || (weapon->weaponnum == 0x21)) && (weapon->timer >= 0)) {
+            weapon->timer = (s16) (weapon->timer - g_ClockTimer);
+            if (weapon->timer < 0) {
+                var_a1 = (weapon->flags2 & 0x80000000) ? 0x11 : 0xD;
+                propExplode(prop, var_a1);
+                weapon->timer = -1;
+                weapon->runtime_bitflags = (s32) (weapon->runtime_bitflags | 4);
+            }
+        } else if (weapon->weaponnum == 0x1D) {
+            if ((D_80030AF4 != 0) && (D_80030AF4 & (1 << ((u32) (weapon->runtime_bitflags & 0x60000) >> 0x11)))) {
+                weapon->timer = 0;
+            }
+            if (weapon->timer >= 2) {
+                weapon->timer = (s16) (weapon->timer - g_ClockTimer);
+                if (weapon->timer < 2) {
+                    weapon->timer = 1;
+                }
+            } else if (weapon->timer == 0) {
+                if (weapon->flags2 & 0x80000000) {
+                    propExplode(prop, 0x11);
+                } else if (bossGetStageNum(prop, 0x11, weapon, weapon) == LEVELID_FACILITY) {
+                    propExplode(prop, 0x13);
+                } else {
+                    propExplode(prop, 0xD);
+                }
+                weapon->timer = -1;
+                weapon->runtime_bitflags = (s32) (weapon->runtime_bitflags | 4);
+            }
+        } else if (weapon->weaponnum == 0x1C) {
+            if (weapon->timer >= 2) {
+                weapon->timer = (s16) (weapon->timer - g_ClockTimer);
+                if (weapon->timer < 2) {
+                    weapon->timer = 1;
+                    add_obj_to_temp_proxmine_table(weapon);
+                }
+            } else if (weapon->timer == 1) {
+                player_prop = get_curplayer_positiondata();
+                diff_x = player_prop->pos.f[0] - prop->pos.f[0];
+                diff_y = player_prop->pos.f[1] - prop->pos.f[1];
+                diff_z = player_prop->pos.f[2] - prop->pos.f[2];
+                dist_sqr = (diff_x * diff_x) + (diff_y * diff_y) + (diff_z * diff_z);
+                if (dist_sqr < 62500.0f) {
+                    weapon->timer = 0;
+                }
+            }
+            if (weapon->timer == 0) {
+                var_a1 = (weapon->flags2 & 0x80000000) ? 0x11 : 0xD;
+                propExplode(prop, var_a1);
+                weapon->timer = -1;
+                weapon->runtime_bitflags = (s32) (weapon->runtime_bitflags | 4);
+                remove_obj_from_temp_proxmine_table(weapon);
+            }
+        }
+    }
 }
 #else
 
@@ -38083,10 +38175,6 @@ glabel D_800532E4
 .word 0x47ef4200 /*122500.0*/
 glabel D_800532E8
 .word 0x461c4000 /*10000.0*/
-glabel D_800532EC
-.word 0x47742400 /*62500.0*/
-glabel D_800532F0
-.word 0x40490fdb /*3.1415927*/
 .text
 glabel object_collectability_routines
 /* 08520C 7F0506DC 27BDFF78 */  addiu $sp, $sp, -0x88
@@ -38550,10 +38638,6 @@ glabel D_800532E4
 .word 0x47ef4200 /*122500.0*/
 glabel D_800532E8
 .word 0x461c4000 /*10000.0*/
-glabel D_800532EC
-.word 0x47742400 /*62500.0*/
-glabel D_800532F0
-.word 0x40490fdb /*3.1415927*/
 .text
 glabel object_collectability_routines
 /* 085650 7F050AE0 27BDFF70 */  addiu $sp, $sp, -0x90
@@ -39090,10 +39174,6 @@ glabel D_800532E4
 .word 0x47ef4200 /*122500.0*/
 glabel D_800532E8
 .word 0x461c4000 /*10000.0*/
-glabel D_800532EC
-.word 0x47742400 /*62500.0*/
-glabel D_800532F0
-.word 0x40490fdb /*3.1415927*/
 .text
 glabel object_collectability_routines
 /* 085650 7F050AE0 27BDFF70 */  addiu $sp, $sp, -0x90
@@ -39990,7 +40070,7 @@ PropRecord *chrTryEquipHat(ChrRecord *self, s32 index, s32 flags)
     {
         if (prop != 0)
         {
-            set_obj_instance_scale_to_zero(prop);
+            clear_model_obj(prop);
         }
         if (lastprop != 0)
         {
@@ -40102,7 +40182,7 @@ glabel chrTryEquipHat
 .L7F05122C:
 /* 085D5C 7F05122C 12200003 */  beqz  $s1, .L7F05123C
 /* 085D60 7F051230 00000000 */   nop   
-/* 085D64 7F051234 0FC1B08D */  jal   set_obj_instance_scale_to_zero
+/* 085D64 7F051234 0FC1B08D */  jal   clear_model_obj
 /* 085D68 7F051238 02202025 */   move  $a0, $s1
 .L7F05123C:
 /* 085D6C 7F05123C 52000005 */  beql  $s0, $zero, .L7F051254
@@ -40791,12 +40871,12 @@ ObjectRecord *weaponFindThrown(s32 ID) //MATCH
 
 
 
-void add_obj_to_temp_proxmine_table(s32 arg) {
+void add_obj_to_temp_proxmine_table(WeaponObjRecord* proxy) {
     s32 i = 0;
 
     while (1) {
-        if (temp_mine_table[i] == 0) {
-            temp_mine_table[i] = arg;
+        if (temp_mine_table[i] == NULL) {
+            temp_mine_table[i] = proxy;
             return;
         }
         i++;
@@ -40811,12 +40891,12 @@ void add_obj_to_temp_proxmine_table(s32 arg) {
 
 
 
-void remove_obj_from_temp_proxmine_table(s32 arg) {
+void remove_obj_from_temp_proxmine_table(WeaponObjRecord* proxy) {
     s32 i = 0;
 
     while (1) {
-        if (temp_mine_table[i] == arg) {
-            temp_mine_table[i] = 0;
+        if (temp_mine_table[i] == proxy) {
+            temp_mine_table[i] = NULL;
             return;
         }
         i++;
@@ -40826,150 +40906,52 @@ void remove_obj_from_temp_proxmine_table(s32 arg) {
     }
 }
 
+void detonate_proxmine_In_range(coord3d* pos)
+{
+    s32 i;
+    for (i = 0; i < 30; i++)
+    {
+        WeaponObjRecord* obj = temp_mine_table[i];
 
+        if (obj && (obj->timer == 1))
+        {
+            f32 diff_x;
+            f32 diff_z;
+            f32 diff_y;
+            f32 dist_sqr;
+            diff_x = pos->x - obj->runtime_pos.x;
+            diff_y = pos->y - obj->runtime_pos.y;
+            diff_z = pos->z - obj->runtime_pos.z;
+            dist_sqr = (diff_x * diff_x) + (diff_y * diff_y) + (diff_z * diff_z);
 
-
-
-#ifdef NONMATCHING
-void detonate_proxmine_In_range(void) {
-
+            if (dist_sqr < 62500.0f)
+            {
+                obj->timer = 0;
+            }
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel detonate_proxmine_In_range
-/* 0866FC 7F051BCC 3C038007 */  lui   $v1, %hi(temp_mine_table)
-/* 086700 7F051BD0 3C018005 */  lui   $at, %hi(D_800532EC)
-/* 086704 7F051BD4 3C078007 */  lui   $a3, %hi(gas_damage_flag)
-/* 086708 7F051BD8 00802825 */  move  $a1, $a0
-/* 08670C 7F051BDC 24E71E78 */  addiu $a3, %lo(gas_damage_flag) # addiu $a3, $a3, 0x1e78
-/* 086710 7F051BE0 C42E32EC */  lwc1  $f14, %lo(D_800532EC)($at)
-/* 086714 7F051BE4 24631E00 */  addiu $v1, %lo(temp_mine_table) # addiu $v1, $v1, 0x1e00
-/* 086718 7F051BE8 24060001 */  li    $a2, 1
-/* 08671C 7F051BEC 8C640000 */  lw    $a0, ($v1)
-.L7F051BF0:
-/* 086720 7F051BF0 50800018 */  beql  $a0, $zero, .L7F051C54
-/* 086724 7F051BF4 8C620004 */   lw    $v0, 4($v1)
-/* 086728 7F051BF8 848E0082 */  lh    $t6, 0x82($a0)
-/* 08672C 7F051BFC 54CE0015 */  bnel  $a2, $t6, .L7F051C54
-/* 086730 7F051C00 8C620004 */   lw    $v0, 4($v1)
-/* 086734 7F051C04 C4A40000 */  lwc1  $f4, ($a1)
-/* 086738 7F051C08 C4860058 */  lwc1  $f6, 0x58($a0)
-/* 08673C 7F051C0C C4A80004 */  lwc1  $f8, 4($a1)
-/* 086740 7F051C10 C48A005C */  lwc1  $f10, 0x5c($a0)
-/* 086744 7F051C14 46062001 */  sub.s $f0, $f4, $f6
-/* 086748 7F051C18 C4B00008 */  lwc1  $f16, 8($a1)
-/* 08674C 7F051C1C C4920060 */  lwc1  $f18, 0x60($a0)
-/* 086750 7F051C20 460A4081 */  sub.s $f2, $f8, $f10
-/* 086754 7F051C24 46000102 */  mul.s $f4, $f0, $f0
-/* 086758 7F051C28 46128301 */  sub.s $f12, $f16, $f18
-/* 08675C 7F051C2C 46021182 */  mul.s $f6, $f2, $f2
-/* 086760 7F051C30 46062200 */  add.s $f8, $f4, $f6
-/* 086764 7F051C34 460C6282 */  mul.s $f10, $f12, $f12
-/* 086768 7F051C38 460A4400 */  add.s $f16, $f8, $f10
-/* 08676C 7F051C3C 460E803C */  c.lt.s $f16, $f14
-/* 086770 7F051C40 00000000 */  nop   
-/* 086774 7F051C44 45020003 */  bc1fl .L7F051C54
-/* 086778 7F051C48 8C620004 */   lw    $v0, 4($v1)
-/* 08677C 7F051C4C A4800082 */  sh    $zero, 0x82($a0)
-/* 086780 7F051C50 8C620004 */  lw    $v0, 4($v1)
-.L7F051C54:
-/* 086784 7F051C54 24630008 */  addiu $v1, $v1, 8
-/* 086788 7F051C58 10400017 */  beqz  $v0, .L7F051CB8
-/* 08678C 7F051C5C 00000000 */   nop   
-/* 086790 7F051C60 844F0082 */  lh    $t7, 0x82($v0)
-/* 086794 7F051C64 14CF0014 */  bne   $a2, $t7, .L7F051CB8
-/* 086798 7F051C68 00000000 */   nop   
-/* 08679C 7F051C6C C4B20000 */  lwc1  $f18, ($a1)
-/* 0867A0 7F051C70 C4440058 */  lwc1  $f4, 0x58($v0)
-/* 0867A4 7F051C74 C4A60004 */  lwc1  $f6, 4($a1)
-/* 0867A8 7F051C78 C448005C */  lwc1  $f8, 0x5c($v0)
-/* 0867AC 7F051C7C 46049001 */  sub.s $f0, $f18, $f4
-/* 0867B0 7F051C80 C4AA0008 */  lwc1  $f10, 8($a1)
-/* 0867B4 7F051C84 C4500060 */  lwc1  $f16, 0x60($v0)
-/* 0867B8 7F051C88 46083081 */  sub.s $f2, $f6, $f8
-/* 0867BC 7F051C8C 46000482 */  mul.s $f18, $f0, $f0
-/* 0867C0 7F051C90 46105301 */  sub.s $f12, $f10, $f16
-/* 0867C4 7F051C94 46021102 */  mul.s $f4, $f2, $f2
-/* 0867C8 7F051C98 46049180 */  add.s $f6, $f18, $f4
-/* 0867CC 7F051C9C 460C6202 */  mul.s $f8, $f12, $f12
-/* 0867D0 7F051CA0 46083280 */  add.s $f10, $f6, $f8
-/* 0867D4 7F051CA4 460E503C */  c.lt.s $f10, $f14
-/* 0867D8 7F051CA8 00000000 */  nop   
-/* 0867DC 7F051CAC 45000002 */  bc1f  .L7F051CB8
-/* 0867E0 7F051CB0 00000000 */   nop   
-/* 0867E4 7F051CB4 A4400082 */  sh    $zero, 0x82($v0)
-.L7F051CB8:
-/* 0867E8 7F051CB8 5467FFCD */  bnel  $v1, $a3, .L7F051BF0
-/* 0867EC 7F051CBC 8C640000 */   lw    $a0, ($v1)
-/* 0867F0 7F051CC0 03E00008 */  jr    $ra
-/* 0867F4 7F051CC4 00000000 */   nop   
-)
-#endif
 
 
+void check_guard_detonate_proxmine(void)
+{
+    ChrRecord* guard;
+    s32 num_guards;
+    s32 i;
 
+    num_guards = get_numguards();
 
-
-#ifdef NONMATCHING
-void check_guard_detonate_proxmine(void) {
-
+    for (i = 0; i < num_guards; i++)
+    {
+        guard = &ptr_guard_data[i];
+        if ((guard->model != NULL) && (guard->hidden & 0x200))
+        {
+            coord3d pos;
+            chrlvGetPatrolPercentOrPosition(guard, &pos);
+            detonate_proxmine_In_range(&pos);
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_guard_detonate_proxmine
-/* 0867F8 7F051CC8 27BDFFB0 */  addiu $sp, $sp, -0x50
-/* 0867FC 7F051CCC AFBF002C */  sw    $ra, 0x2c($sp)
-/* 086800 7F051CD0 AFB40028 */  sw    $s4, 0x28($sp)
-/* 086804 7F051CD4 AFB30024 */  sw    $s3, 0x24($sp)
-/* 086808 7F051CD8 AFB20020 */  sw    $s2, 0x20($sp)
-/* 08680C 7F051CDC AFB1001C */  sw    $s1, 0x1c($sp)
-/* 086810 7F051CE0 0FC07D4C */  jal   get_numguards
-/* 086814 7F051CE4 AFB00018 */   sw    $s0, 0x18($sp)
-/* 086818 7F051CE8 1840001A */  blez  $v0, .L7F051D54
-/* 08681C 7F051CEC 00008025 */   move  $s0, $zero
-/* 086820 7F051CF0 00029900 */  sll   $s3, $v0, 4
-/* 086824 7F051CF4 02629823 */  subu  $s3, $s3, $v0
-/* 086828 7F051CF8 001398C0 */  sll   $s3, $s3, 3
-/* 08682C 7F051CFC 02629823 */  subu  $s3, $s3, $v0
-/* 086830 7F051D00 3C148003 */  lui   $s4, %hi(ptr_guard_data)
-/* 086834 7F051D04 2694CC64 */  addiu $s4, %lo(ptr_guard_data) # addiu $s4, $s4, -0x339c
-/* 086838 7F051D08 00139880 */  sll   $s3, $s3, 2
-/* 08683C 7F051D0C 27B10038 */  addiu $s1, $sp, 0x38
-/* 086840 7F051D10 8E8E0000 */  lw    $t6, ($s4)
-.L7F051D14:
-/* 086844 7F051D14 020E2021 */  addu  $a0, $s0, $t6
-/* 086848 7F051D18 8C8F001C */  lw    $t7, 0x1c($a0)
-/* 08684C 7F051D1C 51E0000A */  beql  $t7, $zero, .L7F051D48
-/* 086850 7F051D20 261001DC */   addiu $s0, $s0, 0x1dc
-/* 086854 7F051D24 94980012 */  lhu   $t8, 0x12($a0)
-/* 086858 7F051D28 33190200 */  andi  $t9, $t8, 0x200
-/* 08685C 7F051D2C 53200006 */  beql  $t9, $zero, .L7F051D48
-/* 086860 7F051D30 261001DC */   addiu $s0, $s0, 0x1dc
-/* 086864 7F051D34 0FC0A225 */  jal   chrlvGetPatrolPercentOrPosition
-/* 086868 7F051D38 02202825 */   move  $a1, $s1
-/* 08686C 7F051D3C 0FC146F3 */  jal   detonate_proxmine_In_range
-/* 086870 7F051D40 02202025 */   move  $a0, $s1
-/* 086874 7F051D44 261001DC */  addiu $s0, $s0, 0x1dc
-.L7F051D48:
-/* 086878 7F051D48 0213082A */  slt   $at, $s0, $s3
-/* 08687C 7F051D4C 5420FFF1 */  bnezl $at, .L7F051D14
-/* 086880 7F051D50 8E8E0000 */   lw    $t6, ($s4)
-.L7F051D54:
-/* 086884 7F051D54 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 086888 7F051D58 8FB00018 */  lw    $s0, 0x18($sp)
-/* 08688C 7F051D5C 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 086890 7F051D60 8FB20020 */  lw    $s2, 0x20($sp)
-/* 086894 7F051D64 8FB30024 */  lw    $s3, 0x24($sp)
-/* 086898 7F051D68 8FB40028 */  lw    $s4, 0x28($sp)
-/* 08689C 7F051D6C 03E00008 */  jr    $ra
-/* 0868A0 7F051D70 27BD0050 */   addiu $sp, $sp, 0x50
-)
-#endif
-
-
-
 
 
 void propweaponSetDual(WeaponObjRecord *leftweapon, WeaponObjRecord *rightweapon) //#MATCH
@@ -41402,7 +41384,7 @@ WeaponObjRecord *create_new_item_instance_of_model(s32 modelnum, ITEM_IDS weapon
         NewGun = NULL;
         if (ObjInst != 0)
         {
-            set_obj_instance_scale_to_zero(ObjInst);
+            clear_model_obj(ObjInst);
         }
         if (lastObj != 0)
         {
@@ -41507,7 +41489,7 @@ glabel create_new_item_instance_of_model
 .L7F0521B0:
 /* 086CE0 7F0521B0 10E00003 */  beqz  $a3, .L7F0521C0
 /* 086CE4 7F0521B4 00008825 */   move  $s1, $zero
-/* 086CE8 7F0521B8 0FC1B08D */  jal   set_obj_instance_scale_to_zero
+/* 086CE8 7F0521B8 0FC1B08D */  jal   clear_model_obj
 /* 086CEC 7F0521BC 00E02025 */   move  $a0, $a3
 .L7F0521C0:
 /* 086CF0 7F0521C0 52000004 */  beql  $s0, $zero, .L7F0521D4
@@ -41583,7 +41565,7 @@ PropRecord *something_with_generating_object(ChrRecord *self, s32 PropID, ITEM_I
     {
         if (objinst)
         {
-            set_obj_instance_scale_to_zero(objinst);
+            clear_model_obj(objinst);
         }
         if (lastobjentry)
         {
@@ -41703,7 +41685,7 @@ glabel something_with_generating_object
 .L7F052394:
 /* 086EC4 7F052394 12400003 */  beqz  $s2, .L7F0523A4
 /* 086EC8 7F052398 00000000 */   nop   
-/* 086ECC 7F05239C 0FC1B08D */  jal   set_obj_instance_scale_to_zero
+/* 086ECC 7F05239C 0FC1B08D */  jal   clear_model_obj
 /* 086ED0 7F0523A0 02402025 */   move  $a0, $s2
 .L7F0523A4:
 /* 086ED4 7F0523A4 52200005 */  beql  $s1, $zero, .L7F0523BC
@@ -41744,6 +41726,9 @@ void sub_GAME_7F0523F8(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_800532F0
+.word 0x40490fdb /*3.1415927*/
 .text
 glabel sub_GAME_7F0523F8
 /* 086F28 7F0523F8 27BDFF48 */  addiu $sp, $sp, -0xb8

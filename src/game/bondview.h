@@ -88,9 +88,10 @@ struct collision434 {
 */
 struct hand
 {
-  s32 weaponnum;
-  s32 weaponnum_watchmenu;
-  s32 previous_weapon;
+  ITEM_IDS weaponnum;
+  ITEM_IDS weaponnum_watchmenu;
+  ITEM_IDS previous_weapon;
+
   s8 weapon_firing_status;
 
   s8 field_87D;
@@ -1022,7 +1023,7 @@ struct player
   s16 viewtop;
   
   s32 hand_invisible[2];
-  s32 hand_item[2];
+  ITEM_IDS hand_item[2];
   u8 *ptr_hand_weapon_buffer[2];
   
   /**
@@ -2711,7 +2712,7 @@ struct player
   s32 cur_item_weapon_getname;
   f32 actual_health;
   f32 actual_armor;
-  s32 field_2A44[2];
+  ITEM_IDS field_2A44[2];
   f32 field_2A4C;
   s32 lock_hand_model[2];
   s32 cur_player_control_type_0;
@@ -2757,11 +2758,11 @@ typedef struct bondstruct_unk_80036634
 {
     u32 field_0x0;
     u32 field_0x4;
-    u32 field_0x8;
+    s32 field_0x8;
     f32 field_0xC;
     u32 field_0x10;
     u32 field_0x14;
-    u32 field_0x18;
+    s32 field_0x18;
     f32 field_0x1c;
     u32 field_0x20;
     u32 field_0x24;
@@ -2770,11 +2771,11 @@ typedef struct bondstruct_unk_80036634
 #else
 typedef struct bondstruct_unk_80036634
 {
-    u32 field_0x0;
+    f32 field_0x0;
     f32 field_0x4;
     f32 field_0x8;
     f32 field_0xC;
-    u32 field_0x10;
+    f32 field_0x10;
     f32 field_0x14;
     f32 field_0x18;
     f32 field_0x1c;
@@ -2783,6 +2784,12 @@ typedef struct bondstruct_unk_80036634
     u32 field_0x28;
 } bondstruct_unk_80036634;
 #endif
+
+typedef struct bondstruct_unk_80036794 { // time related idk
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+} bondstruct_unk_80036794;
 
 //D:80036424
 extern s32 g_bondviewForceDisarm;

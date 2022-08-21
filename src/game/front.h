@@ -179,13 +179,7 @@ extern s32 mp_char_prev_select_player[4];
 extern s32 dword_CODE_bss_80069730[4];
 
 //CODE.bss:80069740
-extern s32 has_selected_char_player1;
-//CODE.bss:80069744
-extern s32 has_selected_char_player2;
-//CODE.bss:80069748
-extern s32 has_selected_char_player3;
-//CODE.bss:8006974C
-extern s32 has_selected_char_player4;
+extern s32 player_has_selected_char[];
 //CODE.bss:80069750
 extern s32 size_mp_select_image_player1;
 //CODE.bss:80069754
@@ -195,13 +189,7 @@ extern s32 size_mp_select_image_player3;
 //CODE.bss:8006975C
 extern s32 size_mp_select_image_player4;
 //CODE.bss:80069760
-extern s32 handicap_player1;
-//CODE.bss:80069764
-extern s32 handicap_player2;
-//CODE.bss:80069768
-extern s32 handicap_player3;
-//CODE.bss:8006976C
-extern s32 handicap_player4;
+extern s32 player_handicap[];
 //CODE.bss:80069770
 extern char* g_textPtrTAB1;
 //CODE.bss:80069774
@@ -230,13 +218,7 @@ extern s32 highlight_enemy_damage;
 //CODE.bss:800697A4                     .align 3
 
 //CODE.bss:800697A8
-extern s32 handicap_player1;
-//CODE.bss:800697AC
-extern s32 handicap_player2;
-//CODE.bss:800697B0
-extern s32 handicap_player3;
-//CODE.bss:800697B4
-extern s32 handicap_player4;
+extern s32 player_handicap[];
 //CODE.bss:800697B8
 extern u32 controlstyle_player[];
 
@@ -329,10 +311,7 @@ extern f32 slider_007_mode_accuracy;
 extern struct mission_folder_setup mission_folder_setup_entries[];
 
 extern s32 selected_num_players;
-extern s32 player_1_char;
-extern s32 player_2_char;
-extern s32 player_3_char;
-extern s32 player_4_char;
+extern s32 player_char[];
 extern s32 MP_stage_selected;
 extern s32 game_length;
 extern s32 aim_sight_adjustment;
