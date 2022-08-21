@@ -179,24 +179,9 @@ glabel get_obj_instance_controller_for_header
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-void set_obj_instance_scale_to_zero(void) {
-
+void clear_model_obj(Model* model) {
+    model->obj = NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_obj_instance_scale_to_zero
-/* 0A0D64 7F06C234 03E00008 */  jr    $ra
-/* 0A0D68 7F06C238 AC800008 */   sw    $zero, 8($a0)
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING

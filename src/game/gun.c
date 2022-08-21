@@ -333,33 +333,22 @@ u32 D_80035778[99] = {
 	       0x0,           0x0,           0x0
 };
 
-u32 D_80035904[99] ={
-	       0x0,           0x0,           0x0,           0x0,
-	       0x0,           0x0,           0x0,    0x3F000000,
-	0x41100000,           0x0,           0x0,           0x0,
-	       0x0,           0x0,           0x0,           0x0,
-	0x3F000000,    0x41000000,           0x0,    0xC1780000,
-	0x3F000000,    0x41700000,    0x3F6F3B21,    0x3F2027FA,
-	0x3E652B0A,    0x3F000000,    0x41000000,           0x0,
-	0xC1B80000,    0x40000000,    0x41400000,    0x3FE69C24,
-	0x3F730C35,    0x3F21781C,    0x3F000000,    0x41000000,
-	       0x0,    0xC1900000,    0xBF000000,    0x40800000,
-	0x3F590B0F,    0x3F6CBD66,    0x3D9E9A70,    0x3F000000,
-	0x40E00000,           0x0,    0x41280000,    0x40A00000,
-	0x40200000,    0x3E6AE968,    0x3E7B99D4,    0x3DCAE18B,
-	0x3F000000,    0x40E00000,           0x0,    0x41900000,
-	0x40A00000,    0x40200000,    0x3D0666ED,    0x40C6B2E4,
-	0x3E0A4E38,    0x3F000000,    0x40E00000,           0x0,
-	0x41180000,    0x40600000,    0xBFC00000,    0x40C8BE5E,
-	0x40C02F79,    0x3DB7BC7F,    0x3F000000,    0x40E00000,
-	       0x0,           0x0,           0x0,           0x0,
-	       0x0,           0x0,           0x0,    0x3F000000,
-	0x41A00000,           0x0,           0x0,           0x0,
-	       0x0,           0x0,           0x0,           0x0,
-	0x3F000000,    0x41A00000,           0x1,           0x0,
-	       0x0,           0x0,           0x0,           0x0,
-	       0x0,           0x0,           0x0
+
+// D_80035904 could be an array of structs, unsure
+u32 D_80035904[11][9] = {
+    {          0x0,           0x0,           0x0,           0x0,           0x0,           0x0,           0x0,    0x3F000000,    0x41100000 },
+    {          0x0,           0x0,           0x0,           0x0,           0x0,           0x0,           0x0,    0x3F000000,    0x41000000 },
+    {          0x0,    0xC1780000,    0x3F000000,    0x41700000,    0x3F6F3B21,    0x3F2027FA,    0x3E652B0A,    0x3F000000,    0x41000000 },
+    {          0x0,    0xC1B80000,    0x40000000,    0x41400000,    0x3FE69C24,    0x3F730C35,    0x3F21781C,    0x3F000000,    0x41000000 },
+    {          0x0,    0xC1900000,    0xBF000000,    0x40800000,    0x3F590B0F,    0x3F6CBD66,    0x3D9E9A70,    0x3F000000,    0x40E00000 },
+    {          0x0,    0x41280000,    0x40A00000,    0x40200000,    0x3E6AE968,    0x3E7B99D4,    0x3DCAE18B,    0x3F000000,    0x40E00000 },
+    {          0x0,    0x41900000,    0x40A00000,    0x40200000,    0x3D0666ED,    0x40C6B2E4,    0x3E0A4E38,    0x3F000000,    0x40E00000 },
+    {          0x0,    0x41180000,    0x40600000,    0xBFC00000,    0x40C8BE5E,    0x40C02F79,    0x3DB7BC7F,    0x3F000000,    0x40E00000 },
+    {          0x0,           0x0,           0x0,           0x0,           0x0,           0x0,           0x0,    0x3F000000,    0x41A00000 },
+    {          0x0,           0x0,           0x0,           0x0,           0x0,           0x0,           0x0,    0x3F000000,    0x41A00000 },
+    {          0x1,           0x0,           0x0,           0x0,           0x0,           0x0,           0x0,           0x0,           0x0 },
 };
+
 
 u32 D_80035A90[54] = {
 	       0x0,           0x0,           0x0,           0x0,
@@ -809,38 +798,14 @@ glabel sub_GAME_7F05C614
 
 
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F05C6B8(void) {
-
+void sub_GAME_7F05C6B8(void)
+{
+    D_80034CA0++;
+    if (D_80035904[D_80034CA0][0] & 1)
+    {
+        D_80034CA0 = 0;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05C6B8
-/* 0911E8 7F05C6B8 3C028003 */  lui   $v0, %hi(D_80034CA0)
-/* 0911EC 7F05C6BC 24424CA0 */  addiu $v0, %lo(D_80034CA0) # addiu $v0, $v0, 0x4ca0
-/* 0911F0 7F05C6C0 8C4E0000 */  lw    $t6, ($v0)
-/* 0911F4 7F05C6C4 3C088003 */  lui   $t0, %hi(D_80035904)
-/* 0911F8 7F05C6C8 25CF0001 */  addiu $t7, $t6, 1
-/* 0911FC 7F05C6CC 000FC8C0 */  sll   $t9, $t7, 3
-/* 091200 7F05C6D0 032FC821 */  addu  $t9, $t9, $t7
-/* 091204 7F05C6D4 0019C880 */  sll   $t9, $t9, 2
-/* 091208 7F05C6D8 AC4F0000 */  sw    $t7, ($v0)
-/* 09120C 7F05C6DC 01194021 */  addu  $t0, $t0, $t9
-/* 091210 7F05C6E0 8D085904 */  lw    $t0, %lo(D_80035904)($t0)
-/* 091214 7F05C6E4 31090001 */  andi  $t1, $t0, 1
-/* 091218 7F05C6E8 11200002 */  beqz  $t1, .L7F05C6F4
-/* 09121C 7F05C6EC 00000000 */   nop
-/* 091220 7F05C6F0 AC400000 */  sw    $zero, ($v0)
-.L7F05C6F4:
-/* 091224 7F05C6F4 03E00008 */  jr    $ra
-/* 091228 7F05C6F8 00000000 */   nop
-)
-#endif
-
-
 
 
 
@@ -1834,92 +1799,28 @@ void remove_item_in_hand(GUNHAND hand)
 }
 
 
+void place_item_in_hand_swap_and_make_visible(GUNHAND hand, ITEM_IDS item)
+{
+    if (g_CurrentPlayer->lock_hand_model[hand]) { return; }
 
+    if (g_CurrentPlayer->hand_invisible[hand] >= 0)
+    {
+        if (item != g_CurrentPlayer->hand_item[hand])
+        {
+            g_CurrentPlayer->hand_invisible[hand] = -1;
+            g_CurrentPlayer->field_2A44[hand] = item;
+        }
+        return;
+    }
 
-#ifdef NONMATCHING
-void place_item_in_hand_swap_and_make_visible(void) {
+    if (item != g_CurrentPlayer->hand_item[hand])
+    {
+        g_CurrentPlayer->field_2A44[hand] = item;
+        return;
+    }
 
+    g_CurrentPlayer->hand_invisible[hand] = 1;
 }
-#else
-
-#if defined(VERSION_US) || defined(VERSION_JP)
-GLOBAL_ASM(
-.text
-glabel place_item_in_hand_swap_and_make_visible
-/* 091AD4 7F05CFA4 3C068008 */  lui   $a2, %hi(g_CurrentPlayer)
-/* 091AD8 7F05CFA8 24C6A0B0 */  addiu $a2, %lo(g_CurrentPlayer) # addiu $a2, $a2, -0x5f50
-/* 091ADC 7F05CFAC 8CCE0000 */  lw    $t6, ($a2)
-/* 091AE0 7F05CFB0 00041080 */  sll   $v0, $a0, 2
-/* 091AE4 7F05CFB4 01C21821 */  addu  $v1, $t6, $v0
-/* 091AE8 7F05CFB8 8C6F2A50 */  lw    $t7, 0x2a50($v1)
-/* 091AEC 7F05CFBC 15E00014 */  bnez  $t7, .L7F05D010
-/* 091AF0 7F05CFC0 00000000 */   nop
-/* 091AF4 7F05CFC4 8C7807F8 */  lw    $t8, 0x7f8($v1)
-/* 091AF8 7F05CFC8 0702000B */  bltzl $t8, .L7F05CFF8
-/* 091AFC 7F05CFCC 8C6B0800 */   lw    $t3, 0x800($v1)
-/* 091B00 7F05CFD0 8C790800 */  lw    $t9, 0x800($v1)
-/* 091B04 7F05CFD4 2408FFFF */  li    $t0, -1
-/* 091B08 7F05CFD8 10B9000D */  beq   $a1, $t9, .L7F05D010
-/* 091B0C 7F05CFDC 00000000 */   nop
-/* 091B10 7F05CFE0 AC6807F8 */  sw    $t0, 0x7f8($v1)
-/* 091B14 7F05CFE4 8CC90000 */  lw    $t1, ($a2)
-/* 091B18 7F05CFE8 01225021 */  addu  $t2, $t1, $v0
-/* 091B1C 7F05CFEC 03E00008 */  jr    $ra
-/* 091B20 7F05CFF0 AD452A44 */   sw    $a1, 0x2a44($t2)
-/* 091B24 7F05CFF4 8C6B0800 */  lw    $t3, 0x800($v1)
-.L7F05CFF8:
-/* 091B28 7F05CFF8 240C0001 */  li    $t4, 1
-/* 091B2C 7F05CFFC 50AB0004 */  beql  $a1, $t3, .L7F05D010
-/* 091B30 7F05D000 AC6C07F8 */   sw    $t4, 0x7f8($v1)
-/* 091B34 7F05D004 03E00008 */  jr    $ra
-/* 091B38 7F05D008 AC652A44 */   sw    $a1, 0x2a44($v1)
-/* 091B3C 7F05D00C AC6C07F8 */  sw    $t4, 0x7f8($v1)
-.L7F05D010:
-/* 091B40 7F05D010 03E00008 */  jr    $ra
-/* 091B44 7F05D014 00000000 */   nop
-)
-#endif
-
-#if defined(VERSION_EU)
-GLOBAL_ASM(
-.text
-glabel place_item_in_hand_swap_and_make_visible
-/* 08FE4C 7F05D45C 3C068007 */  lui   $a2, %hi(g_CurrentPlayer) # $a2, 0x8007
-/* 08FE50 7F05D460 24C68BC0 */  addiu $a2, %lo(g_CurrentPlayer) # addiu $a2, $a2, -0x7440
-/* 08FE54 7F05D464 8CCE0000 */  lw    $t6, ($a2)
-/* 08FE58 7F05D468 00041080 */  sll   $v0, $a0, 2
-/* 08FE5C 7F05D46C 01C21821 */  addu  $v1, $t6, $v0
-/* 08FE60 7F05D470 8C6F2A48 */  lw    $t7, 0x2a48($v1)
-/* 08FE64 7F05D474 15E00014 */  bnez  $t7, .L7F05D4C8
-/* 08FE68 7F05D478 00000000 */   nop   
-/* 08FE6C 7F05D47C 8C7807F8 */  lw    $t8, 0x7f8($v1)
-/* 08FE70 7F05D480 0702000B */  bltzl $t8, .L7F05D4B0
-/* 08FE74 7F05D484 8C6B0800 */   lw    $t3, 0x800($v1)
-/* 08FE78 7F05D488 8C790800 */  lw    $t9, 0x800($v1)
-/* 08FE7C 7F05D48C 2408FFFF */  li    $t0, -1
-/* 08FE80 7F05D490 10B9000D */  beq   $a1, $t9, .L7F05D4C8
-/* 08FE84 7F05D494 00000000 */   nop   
-/* 08FE88 7F05D498 AC6807F8 */  sw    $t0, 0x7f8($v1)
-/* 08FE8C 7F05D49C 8CC90000 */  lw    $t1, ($a2)
-/* 08FE90 7F05D4A0 01225021 */  addu  $t2, $t1, $v0
-/* 08FE94 7F05D4A4 03E00008 */  jr    $ra
-/* 08FE98 7F05D4A8 AD452A3C */   sw    $a1, 0x2a3c($t2)
-/* 08FE9C 7F05D4AC 8C6B0800 */  lw    $t3, 0x800($v1)
-.L7F05D4B0:
-/* 08FEA0 7F05D4B0 240C0001 */  li    $t4, 1
-/* 08FEA4 7F05D4B4 50AB0004 */  beql  $a1, $t3, .L7F05D4C8
-/* 08FEA8 7F05D4B8 AC6C07F8 */   sw    $t4, 0x7f8($v1)
-/* 08FEAC 7F05D4BC 03E00008 */  jr    $ra
-/* 08FEB0 7F05D4C0 AC652A3C */   sw    $a1, 0x2a3c($v1)
-/* 08FEB4 7F05D4C4 AC6C07F8 */  sw    $t4, 0x7f8($v1)
-.L7F05D4C8:
-/* 08FEB8 7F05D4C8 03E00008 */  jr    $ra
-/* 08FEBC 7F05D4CC 00000000 */   nop   
-)
-#endif
-#endif
-
-
 
 
 char * get_ptr_item_text_call_line(ITEM_IDS item)
@@ -2763,8 +2664,8 @@ s32 get_item_in_hand_or_watch_menu(GUNHAND hand) {
 	}
 }
 
-void sub_GAME_7F05DA8C(GUNHAND hand, s32 weaponnum_watchmenu) {
-    place_item_in_hand_swap_and_make_visible();
+void sub_GAME_7F05DA8C(GUNHAND hand, ITEM_IDS weaponnum_watchmenu) {
+    place_item_in_hand_swap_and_make_visible(hand, weaponnum_watchmenu);
 	g_CurrentPlayer->hands[hand].weaponnum_watchmenu = weaponnum_watchmenu;
 }
 

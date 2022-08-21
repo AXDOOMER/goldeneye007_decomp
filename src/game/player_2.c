@@ -761,47 +761,10 @@ weapon_multi_none:
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-/* I think the late_rodata stuff is messing this up. It's supposed to match */
 void sub_GAME_7F09B368(enum GUNHAND hand)
 {
     chrSetWeaponFlag4(g_CurrentPlayer->prop->chr, hand);
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-/*hack for jtbl*/
-.word weapon_multi_none
-.word weapon_multi_grenade_laun
-.word weapon_multi_rocket_launch
-/*.word weapon_multi_hand*/
-/*.word weapon_multi_timed*/
-/*.word weapon_multi_prox*/
-/*.word weapon_multi_remote*/
-/*.word weapon_multi_none*/
-/*.word weapon_multi_none*/
-.text
-glabel sub_GAME_7F09B368
-/* 0CFE98 7F09B368 3C0E8008 */  lui   $t6, %hi(g_CurrentPlayer)
-/* 0CFE9C 7F09B36C 8DCEA0B0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
-/* 0CFEA0 7F09B370 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0CFEA4 7F09B374 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0CFEA8 7F09B378 8DCF00A8 */  lw    $t7, 0xa8($t6)
-/* 0CFEAC 7F09B37C 00802825 */  move  $a1, $a0
-/* 0CFEB0 7F09B380 0FC1487A */  jal   chrSetWeaponFlag4
-/* 0CFEB4 7F09B384 8DE40004 */   lw    $a0, 4($t7)
-/* 0CFEB8 7F09B388 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0CFEBC 7F09B38C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0CFEC0 7F09B390 03E00008 */  jr    $ra
-/* 0CFEC4 7F09B394 00000000 */   nop
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
@@ -826,6 +789,9 @@ void sub_GAME_7F09B398(GUNHAND hand) {
 GLOBAL_ASM(
 .late_rodata
 /*hack for jtbl*/
+.word weapon_multi_none
+.word weapon_multi_grenade_laun
+.word weapon_multi_rocket_launch
 .word weapon_multi_hand
 .word weapon_multi_timed
 .word weapon_multi_prox
