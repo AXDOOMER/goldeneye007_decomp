@@ -2771,11 +2771,11 @@ typedef struct bondstruct_unk_80036634
 #else
 typedef struct bondstruct_unk_80036634
 {
-    u32 field_0x0;
+    f32 field_0x0;
     f32 field_0x4;
     f32 field_0x8;
     f32 field_0xC;
-    u32 field_0x10;
+    f32 field_0x10;
     f32 field_0x14;
     f32 field_0x18;
     f32 field_0x1c;

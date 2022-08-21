@@ -23648,7 +23648,8 @@ glabel controller_gameplay_interaction
 
 #ifdef VERSION_US
 
-void sub_GAME_7F083FC8(void) {
+void sub_GAME_7F083FC8(void)
+{
     f32 frac;
     s32 unk_field10;
     s32 unk_field14;
@@ -23745,7 +23746,7 @@ void sub_GAME_7F083FC8(void) {
             }
         }
 
-        if (g_CurrentPlayer->bonddead == 0)
+        if (!g_CurrentPlayer->bonddead)
         {
             timerelated = &D_80036794[g_CurrentPlayer->field_29B8];
             unk_field14_2 = timerelated->unk0;
@@ -23772,6 +23773,7 @@ void sub_GAME_7F083FC8(void) {
 #endif
 
 #ifdef VERSION_JP
+/* looks a lot like the EU version */
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F083FC8
@@ -24068,6 +24070,136 @@ glabel sub_GAME_7F083FC8
 #endif
 
 #ifdef VERSION_EU
+#ifdef NONMATCHING
+/* mostly regalloc failures */
+void sub_GAME_7F083FC8(void)
+{
+    f32 frac;
+    f32 unk_field10;
+    f32 unk_field14;
+    s32 unk_field14_2;
+    f32 dmg_time_diff;
+    f32 unk_field18;
+    f32 unk_field_diff;
+    bondstruct_unk_80036794 * timerelated;
+    bondstruct_unk_80036634 * unknown;
+
+    // update damage showtime
+    if (g_CurrentPlayer->damageshowtime >= 0)
+    {
+        if (g_CurrentPlayer->damageshowtime == 0)
+        {
+            set_unset_ammo_on_screen_setting(8, 0);
+            set_unset_bitflags(0x10, 0);
+            hudmsgsSetOff(4);
+            sub_GAME_7F08A944(PLAYERFLAG_NOTIMER);
+            countdownTimerSetVisible(8, 0);
+
+            g_CurrentPlayer->damagetype = (s32)(bondviewGetCurrentPlayerHealth() * 8.0f);
+            if (g_CurrentPlayer->damagetype >= 8)
+            {
+                g_CurrentPlayer->damagetype = 7;
+            }
+            if (g_CurrentPlayer->damagetype < 0) {
+                g_CurrentPlayer->damagetype = 0;
+            }
+        }
+
+        if ((!g_CurrentPlayer->bonddead) && ((D_80036634[g_CurrentPlayer->damagetype].field_0x8 >= g_CurrentPlayer->damageshowtime) || (D_80036634[g_CurrentPlayer->damagetype].field_0x18 >= g_CurrentPlayer->damageshowtime)))
+        {
+            unknown = &D_80036634[g_CurrentPlayer->damagetype];
+            unk_field10 = unknown->field_0x10;
+            if (g_CurrentPlayer->damageshowtime >= unk_field10)
+            {
+                unk_field18 = unknown->field_0x18;
+                if (unk_field18 >= g_CurrentPlayer->damageshowtime)
+                {
+                    unk_field14 = unknown->field_0x14;
+                    dmg_time_diff = g_CurrentPlayer->damageshowtime;
+                    dmg_time_diff = dmg_time_diff - unk_field10;
+                    unk_field_diff = unk_field18 - unk_field10;
+                    unk_field18 = dmg_time_diff;
+
+                    if (unk_field18 < unk_field14)
+                    {
+                        frac = (unknown->field_0x1c * ((f32) dmg_time_diff)) / ((f32) unk_field14);
+                    }
+                    else
+                    {
+                        frac = (unknown->field_0x1c * ((f32)(unk_field_diff - unk_field18))) / ((f32)(unk_field_diff - unk_field14));
+                    }
+
+                    currentPlayerSetFadeColour(unknown->field_0x20, unknown->field_0x24, unknown->field_0x28, frac);
+                }
+            }
+
+            if (g_CurrentPlayer->watch_animation_state == 0)
+            {
+                g_CurrentPlayer->damageshowtime += g_GlobalTimerDelta;
+            }
+            else
+            {
+                g_CurrentPlayer->damageshowtime += jpD_800484D0;
+            }
+
+        }
+        else // (damage showtime is over)
+        {
+            g_CurrentPlayer->damageshowtime = -1;
+            currentPlayerSetFadeColour(0xFF, 0xFF, 0xFF, 0.0f);
+            if (!g_CurrentPlayer->bonddead)
+            {
+                set_unset_ammo_on_screen_setting(8, 1);
+                set_unset_bitflags(0x10, 1);
+                hudmsgsSetOn(4);
+                sub_GAME_7F08A928(4);
+                countdownTimerSetVisible(8, 1);
+            }
+        }
+    }
+
+    // update health showtime
+    if (g_CurrentPlayer->healthshowtime >= 0)
+    {
+        if (g_CurrentPlayer->healthshowtime == 0)
+        {
+            g_CurrentPlayer->field_29B8 = (s32)(bondviewGetCurrentPlayerHealth() * 8.0f);
+            if (g_CurrentPlayer->field_29B8 >= 8)
+            {
+                g_CurrentPlayer->field_29B8 = 7;
+            }
+            if (g_CurrentPlayer->field_29B8 < 0)
+            {
+                g_CurrentPlayer->field_29B8 = 0;
+            }
+        }
+
+        if (!g_CurrentPlayer->bonddead)
+        {
+            timerelated = &D_80036794[g_CurrentPlayer->field_29B8];
+            unk_field14_2 = timerelated->unk0;
+            if ((g_CurrentPlayer->healthshowtime >= unk_field14_2) && (timerelated->unk4 >= g_CurrentPlayer->healthshowtime))
+            {
+                g_CurrentPlayer->apparenthealth = g_CurrentPlayer->oldhealth;
+                g_CurrentPlayer->apparentarmour = g_CurrentPlayer->oldarmour;
+                g_CurrentPlayer->healthshowtime += g_GlobalTimerDelta;
+                return;
+            }
+            if ((g_CurrentPlayer->healthshowtime >= unk_field14_2) && (timerelated->unk8 >= g_CurrentPlayer->healthshowtime))
+            {
+                g_CurrentPlayer->apparenthealth = g_CurrentPlayer->bondhealth;
+                g_CurrentPlayer->apparentarmour = g_CurrentPlayer->bondarmour;
+                g_CurrentPlayer->healthshowtime += g_GlobalTimerDelta;
+                return;
+            }
+            g_CurrentPlayer->healthshowtime = -1;
+            return;
+        }
+        g_CurrentPlayer->healthshowtime = -1;
+    }
+}
+
+#else
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F083FC8
@@ -24361,6 +24493,7 @@ glabel sub_GAME_7F083FC8
 /* 0B6E8C 7F08449C 03E00008 */  jr    $ra
 /* 0B6E90 7F0844A0 00000000 */   nop
 )
+#endif
 #endif
 
 
