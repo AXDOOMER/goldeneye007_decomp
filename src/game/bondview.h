@@ -2789,6 +2789,16 @@ typedef struct bondstruct_unk_80036794 { // time related idk
     s32 unk8;
 } bondstruct_unk_80036794;
 
+typedef struct bondstruct_unk_80035904 {
+    u32 unk00;
+    f32 unk04;
+    f32 unk08;
+    f32 unk0C;
+    coord3d unk10;
+    f32 unk1C;
+    f32 unk20;
+} bondstruct_unk_80035904;
+
 //D:80036424
 extern s32 g_bondviewForceDisarm;
 //D:80036428
