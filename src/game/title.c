@@ -1379,7 +1379,7 @@ void sub_GAME_7F00920C(void)
 
     if (D_8002A7F8)
     {
-        set_obj_instance_scale_to_zero(D_8002A7F8);
+        clear_model_obj(D_8002A7F8);
     }
 }
 

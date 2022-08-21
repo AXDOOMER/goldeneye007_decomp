@@ -2013,7 +2013,7 @@ glabel init_standard_object
 /* 0751EC 7F0406BC 10000003 */  b     .L7F0406CC
 /* 0751F0 7F0406C0 00000000 */   nop   
 .L7F0406C4:
-/* 0751F4 7F0406C4 0FC1B08D */  jal   set_obj_instance_scale_to_zero
+/* 0751F4 7F0406C4 0FC1B08D */  jal   clear_model_obj
 /* 0751F8 7F0406C8 00E02025 */   move  $a0, $a3
 .L7F0406CC:
 /* 0751FC 7F0406CC 52200005 */  beql  $s1, $zero, .L7F0406E4
@@ -2830,7 +2830,7 @@ glabel objFree
 /* 075B04 7F040FD4 10000004 */  b     .L7F040FE8
 /* 075B08 7F040FD8 8FB9002C */   lw    $t9, 0x2c($sp)
 .L7F040FDC:
-/* 075B0C 7F040FDC 0FC1B08D */  jal   set_obj_instance_scale_to_zero
+/* 075B0C 7F040FDC 0FC1B08D */  jal   clear_model_obj
 /* 075B10 7F040FE0 8E440014 */   lw    $a0, 0x14($s2)
 /* 075B14 7F040FE4 8FB9002C */  lw    $t9, 0x2c($sp)
 .L7F040FE8:
@@ -6144,8 +6144,104 @@ void propExplode(PropRecord *prop, s32 arg1)
 
 
 #ifdef NONMATCHING
-void handle_thrown_explosive_detonation(void) {
+// still needs work
+void handle_thrown_explosive_detonation(PropRecord* prop) {
+    PropRecord* player_prop;
+    WeaponObjRecord* weapon;
+    f32 diff_x;
+    f32 diff_z;
+    f32 diff_y;
+    s32 var_a1;
+    f32 dist_sqr;
 
+    weapon = prop->weapon;
+
+    if (sub_GAME_7F09B4D8(get_cur_playernum()) != 0) { return; }
+
+    if (weapon->type == 7) {
+        if (((s32)weapon->flags * 8) < 0) {
+            propExplode(prop, 0xC);
+            weapon->runtime_bitflags = (s32) (weapon->runtime_bitflags | 4);
+        }
+        return;
+    }
+
+    if (weapon->type == 8) {
+        if (((weapon->weaponnum == 0x1A) || (weapon->weaponnum == 0x57)) && (weapon->timer >= 0)) {
+            weapon->timer = (s16) (weapon->timer - g_ClockTimer);
+            if (weapon->timer < 0) {
+                var_a1 = (weapon->flags2 & 0x80000000) ? 0x11 : 0xD;
+                propExplode(prop, var_a1);
+                weapon->runtime_bitflags = (s32) (weapon->runtime_bitflags | 4);
+            }
+        } else if (weapon->weaponnum == 0x56) {
+            if (weapon->timer == 0) {
+                var_a1 = (weapon->flags2 & 0x80000000) ? 0x11 : 0xD;
+
+                propExplode(prop, var_a1);
+                weapon->runtime_bitflags = (s32) (weapon->runtime_bitflags | 4);
+            }
+        } else if (weapon->weaponnum == 0x22) {
+            if (weapon->timer == 0) {
+                propExplode(prop, 0x11);
+                weapon->runtime_bitflags = (s32) (weapon->runtime_bitflags | 4);
+                SurroundWithExplosions(0x78);
+                countdownTimerSetVisible(2, 0);
+            }
+        } else if (((weapon->weaponnum == 0x1B) || (weapon->weaponnum == 0x21)) && (weapon->timer >= 0)) {
+            weapon->timer = (s16) (weapon->timer - g_ClockTimer);
+            if (weapon->timer < 0) {
+                var_a1 = (weapon->flags2 & 0x80000000) ? 0x11 : 0xD;
+                propExplode(prop, var_a1);
+                weapon->timer = -1;
+                weapon->runtime_bitflags = (s32) (weapon->runtime_bitflags | 4);
+            }
+        } else if (weapon->weaponnum == 0x1D) {
+            if ((D_80030AF4 != 0) && (D_80030AF4 & (1 << ((u32) (weapon->runtime_bitflags & 0x60000) >> 0x11)))) {
+                weapon->timer = 0;
+            }
+            if (weapon->timer >= 2) {
+                weapon->timer = (s16) (weapon->timer - g_ClockTimer);
+                if (weapon->timer < 2) {
+                    weapon->timer = 1;
+                }
+            } else if (weapon->timer == 0) {
+                if (weapon->flags2 & 0x80000000) {
+                    propExplode(prop, 0x11);
+                } else if (bossGetStageNum(prop, 0x11, weapon, weapon) == LEVELID_FACILITY) {
+                    propExplode(prop, 0x13);
+                } else {
+                    propExplode(prop, 0xD);
+                }
+                weapon->timer = -1;
+                weapon->runtime_bitflags = (s32) (weapon->runtime_bitflags | 4);
+            }
+        } else if (weapon->weaponnum == 0x1C) {
+            if (weapon->timer >= 2) {
+                weapon->timer = (s16) (weapon->timer - g_ClockTimer);
+                if (weapon->timer < 2) {
+                    weapon->timer = 1;
+                    add_obj_to_temp_proxmine_table(weapon);
+                }
+            } else if (weapon->timer == 1) {
+                player_prop = get_curplayer_positiondata();
+                diff_x = player_prop->pos.f[0] - prop->pos.f[0];
+                diff_y = player_prop->pos.f[1] - prop->pos.f[1];
+                diff_z = player_prop->pos.f[2] - prop->pos.f[2];
+                dist_sqr = (diff_x * diff_x) + (diff_y * diff_y) + (diff_z * diff_z);
+                if (dist_sqr < 62500.0f) {
+                    weapon->timer = 0;
+                }
+            }
+            if (weapon->timer == 0) {
+                var_a1 = (weapon->flags2 & 0x80000000) ? 0x11 : 0xD;
+                propExplode(prop, var_a1);
+                weapon->timer = -1;
+                weapon->runtime_bitflags = (s32) (weapon->runtime_bitflags | 4);
+                remove_obj_from_temp_proxmine_table(weapon);
+            }
+        }
+    }
 }
 #else
 
@@ -39974,7 +40070,7 @@ PropRecord *chrTryEquipHat(ChrRecord *self, s32 index, s32 flags)
     {
         if (prop != 0)
         {
-            set_obj_instance_scale_to_zero(prop);
+            clear_model_obj(prop);
         }
         if (lastprop != 0)
         {
@@ -40086,7 +40182,7 @@ glabel chrTryEquipHat
 .L7F05122C:
 /* 085D5C 7F05122C 12200003 */  beqz  $s1, .L7F05123C
 /* 085D60 7F051230 00000000 */   nop   
-/* 085D64 7F051234 0FC1B08D */  jal   set_obj_instance_scale_to_zero
+/* 085D64 7F051234 0FC1B08D */  jal   clear_model_obj
 /* 085D68 7F051238 02202025 */   move  $a0, $s1
 .L7F05123C:
 /* 085D6C 7F05123C 52000005 */  beql  $s0, $zero, .L7F051254
@@ -40854,7 +40950,7 @@ void check_guard_detonate_proxmine(void)
             chrlvGetPatrolPercentOrPosition(guard, &pos);
             detonate_proxmine_In_range(&pos);
         }
-    }    
+    }
 }
 
 
@@ -41288,7 +41384,7 @@ WeaponObjRecord *create_new_item_instance_of_model(s32 modelnum, ITEM_IDS weapon
         NewGun = NULL;
         if (ObjInst != 0)
         {
-            set_obj_instance_scale_to_zero(ObjInst);
+            clear_model_obj(ObjInst);
         }
         if (lastObj != 0)
         {
@@ -41393,7 +41489,7 @@ glabel create_new_item_instance_of_model
 .L7F0521B0:
 /* 086CE0 7F0521B0 10E00003 */  beqz  $a3, .L7F0521C0
 /* 086CE4 7F0521B4 00008825 */   move  $s1, $zero
-/* 086CE8 7F0521B8 0FC1B08D */  jal   set_obj_instance_scale_to_zero
+/* 086CE8 7F0521B8 0FC1B08D */  jal   clear_model_obj
 /* 086CEC 7F0521BC 00E02025 */   move  $a0, $a3
 .L7F0521C0:
 /* 086CF0 7F0521C0 52000004 */  beql  $s0, $zero, .L7F0521D4
@@ -41469,7 +41565,7 @@ PropRecord *something_with_generating_object(ChrRecord *self, s32 PropID, ITEM_I
     {
         if (objinst)
         {
-            set_obj_instance_scale_to_zero(objinst);
+            clear_model_obj(objinst);
         }
         if (lastobjentry)
         {
@@ -41589,7 +41685,7 @@ glabel something_with_generating_object
 .L7F052394:
 /* 086EC4 7F052394 12400003 */  beqz  $s2, .L7F0523A4
 /* 086EC8 7F052398 00000000 */   nop   
-/* 086ECC 7F05239C 0FC1B08D */  jal   set_obj_instance_scale_to_zero
+/* 086ECC 7F05239C 0FC1B08D */  jal   clear_model_obj
 /* 086ED0 7F0523A0 02402025 */   move  $a0, $s2
 .L7F0523A4:
 /* 086ED4 7F0523A4 52200005 */  beql  $s1, $zero, .L7F0523BC

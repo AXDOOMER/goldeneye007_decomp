@@ -1349,7 +1349,7 @@ void init_menu00_legalscreen(void)
 void update_menu00_legalscreen(void)
 {
     is_first_time_on_legal_screen = FALSE;
-    set_obj_instance_scale_to_zero(logoinst);
+    clear_model_obj(logoinst);
 }
 
 
@@ -1691,7 +1691,7 @@ void init_menu01_nintendo(void)
 
 void update_menu01_nintendo(void)
 {
-    set_obj_instance_scale_to_zero(logoinst);
+    clear_model_obj(logoinst);
 }
 
 
@@ -2356,7 +2356,7 @@ void init_menu04_goldeneyelogo(void)
 
 void update_menu04_goldeneye(void) {
     is_first_time_on_main_menu = 0;
-    set_obj_instance_scale_to_zero(logoinst);
+    clear_model_obj(logoinst);
 }
 
 void interface_menu04_goldeneyelogo(void)
@@ -21818,7 +21818,7 @@ void update_menu18_displaycast(void) {
         set_aircraft_obj_inst_scale_to_zero(objinstance);
     }
     if (ptrobjinstance != 0) {
-        set_obj_instance_scale_to_zero(ptrobjinstance);
+        clear_model_obj(ptrobjinstance);
         return;
     }
 }
