@@ -33,8 +33,23 @@ void reset_counter_rand_body_head(void)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0001F0(void) {
-
+//close, ops swapped
+//34d80:    addu    s1,s1,v0                        | 34d80:    addiu   s0,s0,1
+//34d84:    addiu   s0,s0,1                         | 34d84:    addu    s1,s1,v0
+u32 sub_GAME_7F0001F0(void *ani,int aniid,int param_3)
+{
+  short asStack8 [4];
+  u32 uVar1;
+  u32 i;
+  
+  
+  i = 0;
+  while (aniid < param_3) {
+      uVar1 = sub_GAME_7F06D2E4(0,0,&skeleton_guard,ani,aniid,asStack8);
+      aniid=1+aniid;
+      i = i + uVar1 & 0xffff;
+  }
+  return i;
 }
 #else
 GLOBAL_ASM(
