@@ -40837,65 +40837,25 @@ void detonate_proxmine_In_range(coord3d* pos)
 }
 
 
-#ifdef NONMATCHING
-void check_guard_detonate_proxmine(void) {
+void check_guard_detonate_proxmine(void)
+{
+    ChrRecord* guard;
+    s32 num_guards;
+    s32 i;
 
+    num_guards = get_numguards();
+
+    for (i = 0; i < num_guards; i++)
+    {
+        guard = &ptr_guard_data[i];
+        if ((guard->model != NULL) && (guard->hidden & 0x200))
+        {
+            coord3d pos;
+            chrlvGetPatrolPercentOrPosition(guard, &pos);
+            detonate_proxmine_In_range(&pos);
+        }
+    }    
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_guard_detonate_proxmine
-/* 0867F8 7F051CC8 27BDFFB0 */  addiu $sp, $sp, -0x50
-/* 0867FC 7F051CCC AFBF002C */  sw    $ra, 0x2c($sp)
-/* 086800 7F051CD0 AFB40028 */  sw    $s4, 0x28($sp)
-/* 086804 7F051CD4 AFB30024 */  sw    $s3, 0x24($sp)
-/* 086808 7F051CD8 AFB20020 */  sw    $s2, 0x20($sp)
-/* 08680C 7F051CDC AFB1001C */  sw    $s1, 0x1c($sp)
-/* 086810 7F051CE0 0FC07D4C */  jal   get_numguards
-/* 086814 7F051CE4 AFB00018 */   sw    $s0, 0x18($sp)
-/* 086818 7F051CE8 1840001A */  blez  $v0, .L7F051D54
-/* 08681C 7F051CEC 00008025 */   move  $s0, $zero
-/* 086820 7F051CF0 00029900 */  sll   $s3, $v0, 4
-/* 086824 7F051CF4 02629823 */  subu  $s3, $s3, $v0
-/* 086828 7F051CF8 001398C0 */  sll   $s3, $s3, 3
-/* 08682C 7F051CFC 02629823 */  subu  $s3, $s3, $v0
-/* 086830 7F051D00 3C148003 */  lui   $s4, %hi(ptr_guard_data)
-/* 086834 7F051D04 2694CC64 */  addiu $s4, %lo(ptr_guard_data) # addiu $s4, $s4, -0x339c
-/* 086838 7F051D08 00139880 */  sll   $s3, $s3, 2
-/* 08683C 7F051D0C 27B10038 */  addiu $s1, $sp, 0x38
-/* 086840 7F051D10 8E8E0000 */  lw    $t6, ($s4)
-.L7F051D14:
-/* 086844 7F051D14 020E2021 */  addu  $a0, $s0, $t6
-/* 086848 7F051D18 8C8F001C */  lw    $t7, 0x1c($a0)
-/* 08684C 7F051D1C 51E0000A */  beql  $t7, $zero, .L7F051D48
-/* 086850 7F051D20 261001DC */   addiu $s0, $s0, 0x1dc
-/* 086854 7F051D24 94980012 */  lhu   $t8, 0x12($a0)
-/* 086858 7F051D28 33190200 */  andi  $t9, $t8, 0x200
-/* 08685C 7F051D2C 53200006 */  beql  $t9, $zero, .L7F051D48
-/* 086860 7F051D30 261001DC */   addiu $s0, $s0, 0x1dc
-/* 086864 7F051D34 0FC0A225 */  jal   chrlvGetPatrolPercentOrPosition
-/* 086868 7F051D38 02202825 */   move  $a1, $s1
-/* 08686C 7F051D3C 0FC146F3 */  jal   detonate_proxmine_In_range
-/* 086870 7F051D40 02202025 */   move  $a0, $s1
-/* 086874 7F051D44 261001DC */  addiu $s0, $s0, 0x1dc
-.L7F051D48:
-/* 086878 7F051D48 0213082A */  slt   $at, $s0, $s3
-/* 08687C 7F051D4C 5420FFF1 */  bnezl $at, .L7F051D14
-/* 086880 7F051D50 8E8E0000 */   lw    $t6, ($s4)
-.L7F051D54:
-/* 086884 7F051D54 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 086888 7F051D58 8FB00018 */  lw    $s0, 0x18($sp)
-/* 08688C 7F051D5C 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 086890 7F051D60 8FB20020 */  lw    $s2, 0x20($sp)
-/* 086894 7F051D64 8FB30024 */  lw    $s3, 0x24($sp)
-/* 086898 7F051D68 8FB40028 */  lw    $s4, 0x28($sp)
-/* 08689C 7F051D6C 03E00008 */  jr    $ra
-/* 0868A0 7F051D70 27BD0050 */   addiu $sp, $sp, 0x50
-)
-#endif
-
-
-
 
 
 void propweaponSetDual(WeaponObjRecord *leftweapon, WeaponObjRecord *rightweapon) //#MATCH
