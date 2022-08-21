@@ -38079,10 +38079,6 @@ glabel D_800532E4
 .word 0x47ef4200 /*122500.0*/
 glabel D_800532E8
 .word 0x461c4000 /*10000.0*/
-glabel D_800532EC
-.word 0x47742400 /*62500.0*/
-glabel D_800532F0
-.word 0x40490fdb /*3.1415927*/
 .text
 glabel object_collectability_routines
 /* 08520C 7F0506DC 27BDFF78 */  addiu $sp, $sp, -0x88
@@ -38546,10 +38542,6 @@ glabel D_800532E4
 .word 0x47ef4200 /*122500.0*/
 glabel D_800532E8
 .word 0x461c4000 /*10000.0*/
-glabel D_800532EC
-.word 0x47742400 /*62500.0*/
-glabel D_800532F0
-.word 0x40490fdb /*3.1415927*/
 .text
 glabel object_collectability_routines
 /* 085650 7F050AE0 27BDFF70 */  addiu $sp, $sp, -0x90
@@ -39086,10 +39078,6 @@ glabel D_800532E4
 .word 0x47ef4200 /*122500.0*/
 glabel D_800532E8
 .word 0x461c4000 /*10000.0*/
-glabel D_800532EC
-.word 0x47742400 /*62500.0*/
-glabel D_800532F0
-.word 0x40490fdb /*3.1415927*/
 .text
 glabel object_collectability_routines
 /* 085650 7F050AE0 27BDFF70 */  addiu $sp, $sp, -0x90
@@ -40787,12 +40775,12 @@ ObjectRecord *weaponFindThrown(s32 ID) //MATCH
 
 
 
-void add_obj_to_temp_proxmine_table(s32 arg) {
+void add_obj_to_temp_proxmine_table(WeaponObjRecord* proxy) {
     s32 i = 0;
 
     while (1) {
-        if (temp_mine_table[i] == 0) {
-            temp_mine_table[i] = arg;
+        if (temp_mine_table[i] == NULL) {
+            temp_mine_table[i] = proxy;
             return;
         }
         i++;
@@ -40807,12 +40795,12 @@ void add_obj_to_temp_proxmine_table(s32 arg) {
 
 
 
-void remove_obj_from_temp_proxmine_table(s32 arg) {
+void remove_obj_from_temp_proxmine_table(WeaponObjRecord* proxy) {
     s32 i = 0;
 
     while (1) {
-        if (temp_mine_table[i] == arg) {
-            temp_mine_table[i] = 0;
+        if (temp_mine_table[i] == proxy) {
+            temp_mine_table[i] = NULL;
             return;
         }
         i++;
@@ -40822,89 +40810,31 @@ void remove_obj_from_temp_proxmine_table(s32 arg) {
     }
 }
 
+void detonate_proxmine_In_range(coord3d* pos)
+{
+    s32 i;
+    for (i = 0; i < 30; i++)
+    {
+        WeaponObjRecord* obj = temp_mine_table[i];
 
+        if (obj && (obj->timer == 1))
+        {
+            f32 diff_x;
+            f32 diff_z;
+            f32 diff_y;
+            f32 dist_sqr;
+            diff_x = pos->x - obj->runtime_pos.x;
+            diff_y = pos->y - obj->runtime_pos.y;
+            diff_z = pos->z - obj->runtime_pos.z;
+            dist_sqr = (diff_x * diff_x) + (diff_y * diff_y) + (diff_z * diff_z);
 
-
-
-#ifdef NONMATCHING
-void detonate_proxmine_In_range(void) {
-
+            if (dist_sqr < 62500.0f)
+            {
+                obj->timer = 0;
+            }
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel detonate_proxmine_In_range
-/* 0866FC 7F051BCC 3C038007 */  lui   $v1, %hi(temp_mine_table)
-/* 086700 7F051BD0 3C018005 */  lui   $at, %hi(D_800532EC)
-/* 086704 7F051BD4 3C078007 */  lui   $a3, %hi(gas_damage_flag)
-/* 086708 7F051BD8 00802825 */  move  $a1, $a0
-/* 08670C 7F051BDC 24E71E78 */  addiu $a3, %lo(gas_damage_flag) # addiu $a3, $a3, 0x1e78
-/* 086710 7F051BE0 C42E32EC */  lwc1  $f14, %lo(D_800532EC)($at)
-/* 086714 7F051BE4 24631E00 */  addiu $v1, %lo(temp_mine_table) # addiu $v1, $v1, 0x1e00
-/* 086718 7F051BE8 24060001 */  li    $a2, 1
-/* 08671C 7F051BEC 8C640000 */  lw    $a0, ($v1)
-.L7F051BF0:
-/* 086720 7F051BF0 50800018 */  beql  $a0, $zero, .L7F051C54
-/* 086724 7F051BF4 8C620004 */   lw    $v0, 4($v1)
-/* 086728 7F051BF8 848E0082 */  lh    $t6, 0x82($a0)
-/* 08672C 7F051BFC 54CE0015 */  bnel  $a2, $t6, .L7F051C54
-/* 086730 7F051C00 8C620004 */   lw    $v0, 4($v1)
-/* 086734 7F051C04 C4A40000 */  lwc1  $f4, ($a1)
-/* 086738 7F051C08 C4860058 */  lwc1  $f6, 0x58($a0)
-/* 08673C 7F051C0C C4A80004 */  lwc1  $f8, 4($a1)
-/* 086740 7F051C10 C48A005C */  lwc1  $f10, 0x5c($a0)
-/* 086744 7F051C14 46062001 */  sub.s $f0, $f4, $f6
-/* 086748 7F051C18 C4B00008 */  lwc1  $f16, 8($a1)
-/* 08674C 7F051C1C C4920060 */  lwc1  $f18, 0x60($a0)
-/* 086750 7F051C20 460A4081 */  sub.s $f2, $f8, $f10
-/* 086754 7F051C24 46000102 */  mul.s $f4, $f0, $f0
-/* 086758 7F051C28 46128301 */  sub.s $f12, $f16, $f18
-/* 08675C 7F051C2C 46021182 */  mul.s $f6, $f2, $f2
-/* 086760 7F051C30 46062200 */  add.s $f8, $f4, $f6
-/* 086764 7F051C34 460C6282 */  mul.s $f10, $f12, $f12
-/* 086768 7F051C38 460A4400 */  add.s $f16, $f8, $f10
-/* 08676C 7F051C3C 460E803C */  c.lt.s $f16, $f14
-/* 086770 7F051C40 00000000 */  nop   
-/* 086774 7F051C44 45020003 */  bc1fl .L7F051C54
-/* 086778 7F051C48 8C620004 */   lw    $v0, 4($v1)
-/* 08677C 7F051C4C A4800082 */  sh    $zero, 0x82($a0)
-/* 086780 7F051C50 8C620004 */  lw    $v0, 4($v1)
-.L7F051C54:
-/* 086784 7F051C54 24630008 */  addiu $v1, $v1, 8
-/* 086788 7F051C58 10400017 */  beqz  $v0, .L7F051CB8
-/* 08678C 7F051C5C 00000000 */   nop   
-/* 086790 7F051C60 844F0082 */  lh    $t7, 0x82($v0)
-/* 086794 7F051C64 14CF0014 */  bne   $a2, $t7, .L7F051CB8
-/* 086798 7F051C68 00000000 */   nop   
-/* 08679C 7F051C6C C4B20000 */  lwc1  $f18, ($a1)
-/* 0867A0 7F051C70 C4440058 */  lwc1  $f4, 0x58($v0)
-/* 0867A4 7F051C74 C4A60004 */  lwc1  $f6, 4($a1)
-/* 0867A8 7F051C78 C448005C */  lwc1  $f8, 0x5c($v0)
-/* 0867AC 7F051C7C 46049001 */  sub.s $f0, $f18, $f4
-/* 0867B0 7F051C80 C4AA0008 */  lwc1  $f10, 8($a1)
-/* 0867B4 7F051C84 C4500060 */  lwc1  $f16, 0x60($v0)
-/* 0867B8 7F051C88 46083081 */  sub.s $f2, $f6, $f8
-/* 0867BC 7F051C8C 46000482 */  mul.s $f18, $f0, $f0
-/* 0867C0 7F051C90 46105301 */  sub.s $f12, $f10, $f16
-/* 0867C4 7F051C94 46021102 */  mul.s $f4, $f2, $f2
-/* 0867C8 7F051C98 46049180 */  add.s $f6, $f18, $f4
-/* 0867CC 7F051C9C 460C6202 */  mul.s $f8, $f12, $f12
-/* 0867D0 7F051CA0 46083280 */  add.s $f10, $f6, $f8
-/* 0867D4 7F051CA4 460E503C */  c.lt.s $f10, $f14
-/* 0867D8 7F051CA8 00000000 */  nop   
-/* 0867DC 7F051CAC 45000002 */  bc1f  .L7F051CB8
-/* 0867E0 7F051CB0 00000000 */   nop   
-/* 0867E4 7F051CB4 A4400082 */  sh    $zero, 0x82($v0)
-.L7F051CB8:
-/* 0867E8 7F051CB8 5467FFCD */  bnel  $v1, $a3, .L7F051BF0
-/* 0867EC 7F051CBC 8C640000 */   lw    $a0, ($v1)
-/* 0867F0 7F051CC0 03E00008 */  jr    $ra
-/* 0867F4 7F051CC4 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
@@ -41740,6 +41670,9 @@ void sub_GAME_7F0523F8(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_800532F0
+.word 0x40490fdb /*3.1415927*/
 .text
 glabel sub_GAME_7F0523F8
 /* 086F28 7F0523F8 27BDFF48 */  addiu $sp, $sp, -0xb8

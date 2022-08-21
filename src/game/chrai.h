@@ -450,7 +450,7 @@ extern u32 monAnim2DRandEffectFlash[];
 extern u32 monAnim00Bond[];
 extern u32 monAnim34[];
 extern u32 monAnim35Taser[];
-extern u32 temp_mine_table[30];
+extern WeaponObjRecord* temp_mine_table[30];
 extern f32 gas_damage_flag;
 extern u32 gas_cutoff_flag;
 extern f32 difficulty ;
