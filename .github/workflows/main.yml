@@ -47,7 +47,7 @@ jobs:
         run: ./extract_baserom.u.sh
       
       - name: Make US 
-        run: make -j IDO_RECOMP=YES VERSION=US
+        run: make -j IDO_RECOMP=YES VERSION=US VERBOSE=1
           
       - name: Make report
         run: make -C tools/report

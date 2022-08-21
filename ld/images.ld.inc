@@ -1,3 +1,4 @@
+	  build/OUTCODE/assets/images/split/image0.o (.data);
 	  build/OUTCODE/assets/images/split/image1.o (.data);
       build/OUTCODE/assets/images/split/image2.o (.data);
       build/OUTCODE/assets/images/split/image3.o (.data);
@@ -2696,4 +2697,3 @@
       build/OUTCODE/assets/images/split/image2696.o (.data);
       build/OUTCODE/assets/images/split/image2697.o (.data);
       build/OUTCODE/assets/images/split/image2698.o (.data);
-      build/OUTCODE/assets/images/split/image2699.o (.data);

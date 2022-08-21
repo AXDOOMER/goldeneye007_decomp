@@ -68,6 +68,15 @@ BG_VIOLET:= 105
 BG_CYAN:= 106
 BG_WHITE:= 107
 
+# define a "newline" variable to be used in make scripts
+# use with ${\n}
+# https://stackoverflow.com/questions/12528637/how-do-i-execute-each-command-in-a-list
+define \n
+
+
+endef
+#end newline.
+
 ### Build Functions ###
 # Common build print status function
 PRINT_STATUS = @echo "$(call SET_TEXTATTRIB,$(FG_GREEN))$(1) $(call SET_TEXTATTRIB,$(FG_OLIVE))$(2)$(call SET_TEXTATTRIB,$(FG_GRAY)) $(if $3, -> $(call SET_TEXTATTRIB,$(FG_NAVY))$(3))$(RESTORECOLOUR)"
@@ -232,6 +241,7 @@ ifeq ($(VERSION), DEBUG)
 endif
 
 ALLOWED_VERSIONS := US EU JP DEBUG
+ALLOWED_COUNTRYCODE := u e j
 
 BUILD_DIR_BASE := build
 # BUILD_DIR is the location where all build artifacts are placed
@@ -379,7 +389,7 @@ endif
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) 
 
-ifeq ($(filter clean dataclean help codeclean context cmdbuilder test stanclean setupclean colour print-%,$(MAKECMDGOALS)),)
+ifeq ($(filter clean nuke dataclean help codeclean context cmdbuilder test stanclean setupclean colour print-%,$(MAKECMDGOALS)),)
 # Dont print version on "default" since it will be spat out twice
     ifneq ($(filter $(VERSION),$(ALLOWED_VERSIONS)),)
       #$(info VERSION=$(VERSION))
@@ -543,14 +553,17 @@ dataclean:
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) \
 	$(STAN_BUILD_FILES) $(SETUP_BUILD_FILES)
 
-clean:
+# "Conditionals control what 'make' actually "sees" in the makefile, so they cannot be used to control recipes at the time of execution."
+# https://www.gnu.org/software/make/manual/html_node/Conditionals.html
 ifeq ($(VERBOSE),1)
+clean::
+	# if this command is modified, make sure to update this in the `nuke` recipe.
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map \
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) $(RSPOBJECTS) \
 	$(STAN_BUILD_FILES) $(SETUP_BUILD_FILES)
 else
-	@clear
+clean::
 	@echo "\n\nDeleting All Code and Asset Binaries"
 	$(call SetupProgressBar)
 	@$(call DrawProgressBar,0)
@@ -562,9 +575,26 @@ else
 	@$(call DrawProgressBar,3,4)
 	@rm -f $(IMAGE_OBJS) $(MUSIC_RZ_FILES) $(RSPOBJECTS) $(STAN_BUILD_FILES) $(SETUP_BUILD_FILES)
 	@$(call DrawProgressBar,100)
-endif
 	@echo "\033[1J$(RESTORESCROLLREGION)\nAll Code and Asset Binaries Cleared! Make will Re-Build these next time.\n"
+endif
 
+nuke:
+	@echo deleting files specified from make clean ...
+	@# if this command is modified, update the `clean` recipe above.
+	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map \
+	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
+	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) $(RSPOBJECTS) \
+	$(STAN_BUILD_FILES) $(SETUP_BUILD_FILES)
+	@echo
+	@echo make: deleting build folders and files
+	$(foreach x,$(ALLOWED_COUNTRYCODE),rm -r -f -d "$(BUILD_DIR_BASE)/$(x)/"${\n})
+	@echo
+	@echo make: deleting bin / rsp / asp
+	rm -r -f -d "bin/"
+	@echo
+	@echo make: deleting assets
+	rm -r -f -d "assets/images/split/"
+	rm -r -f "assets/music/*.bin" "assets/obseg/bg/*.bin" "assets/obseg/brief/*.bin" "assets/obseg/chr/*.bin" "assets/obseg/gun/*.bin" "assets/obseg/prop/*.bin" "assets/obseg/setup/*.bin" "assets/obseg/setup/e/*.bin" "assets/obseg/setup/u/*.bin" "assets/obseg/setup/j/*.bin" "assets/obseg/stan/*.bin" "assets/obseg/text/*.bin" "assets/obseg/text/e/*.bin" "assets/obseg/text/u/*.bin" "assets/obseg/text/j/*.bin" "assets/ramrom/*.bin" "assets/ramrom/e/*.bin" "assets/ramrom/u/*.bin" "assets/ramrom/j/*.bin"
 
 #         0    4                             35                                            80             80(with colour codes)
 help:
@@ -573,7 +603,10 @@ help:
 	@echo "  supported targets:"
 	@echo ""
 	@echo "    all                            $(call SET_TEXTATTRIB,$(FG_LIME)) Build$(RESTORECOLOUR) all (default)"
-	@echo "    clean                          $(call SET_TEXTATTRIB,$(FG_RED)) Delete all$(RESTORECOLOUR) build artifacts"
+	@echo "    clean                          $(call SET_TEXTATTRIB,$(FG_RED)) Delete all$(RESTORECOLOUR) known build artifacts"
+	@echo "    nuke                           $(call SET_TEXTATTRIB,$(FG_RED)) Delete all$(RESTORECOLOUR) files explicitly listed in Makefile (same as make clean),"
+	@echo "                                    all build output for all versions, any .bin file in assets folders,"
+	@echo "                                    and asp/rsp bin."
 	@echo "    dataclean                      $(call SET_TEXTATTRIB,$(FG_RED)) Delete$(RESTORECOLOUR) only asset build artifacts"
 	@echo "    codeclean                      $(call SET_TEXTATTRIB,$(FG_RED)) Delete$(RESTORECOLOUR) only code (asm, .c) build artifacts"
 	@echo "    libultraclean                  $(call SET_TEXTATTRIB,$(FG_RED)) Delete$(RESTORECOLOUR) only code (asm, .c) build artifacts "
@@ -716,8 +749,12 @@ colour:
 	-e "s/((([^\/]*([^s][^t][^d][^i][^n])\.c)|([^\/]*\.o))\s)/$$(echo "$(call SET_TEXTATTRIB,$(FG_WHITE))")&$$(echo "$(RESTORECOLOUR)")/g" 
 	@echo "$(SAVECURSOR)$(RESTORESCROLLREGION)$(RESTORECURSOR)\033[1A"
 
-ifeq ($(VERBOSE),0)
-.SILENT:
+# hide output by default, unless this one of the following targets
+ifeq ($(filter nuke,$(MAKECMDGOALS)),)
+else
+	ifeq ($(VERBOSE),0)
+	.SILENT:
+	endif
 endif
 
 
