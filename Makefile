@@ -490,7 +490,7 @@ endif
 $(APPELF): $(RSPOBJECTS) $(ULTRAOBJECTS) $(HEADEROBJECTS) $(OBSEG_RZ) $(BUILD_DIR)/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(ASSET_DATAOBJECTS) $(ROMOBJECTS2) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS) pb14 ge007.ld
 	cpp -DVERSION_$(LANG) -DOUTCODE=$(OUTCODE) -P ge007.ld -o build/ge007.$(OUTCODE).ld
 	@echo "Linking Files into ELF" 
-	$(LD) $(LDFLAGS) -o $@  & $(call IncrementProgressBarFromAtRate,87,1.5)
+	$(LD) $(LDFLAGS) -o $@
 
 $(APPBIN): $(APPELF)
   ifeq ($(VERBOSE),0)
@@ -539,8 +539,8 @@ ifeq ($(VERBOSE),1)
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(RSPOBJECTS)
 else
 	@clear
-	$(call SetupProgressBar)
-	@echo "\n\nDeleting All Code Binaries Only [Assets will be left from previous compile]"
+	@$(call SetupProgressBar)
+	@echo "\n\n\nDeleting All Code Binaries Only [Assets will be left from previous compile]"
 	@rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map
 	@$(call DrawProgressBar,50)
 	@rm -f $(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(RSPOBJECTS)
@@ -564,16 +564,14 @@ clean::
 	$(STAN_BUILD_FILES) $(SETUP_BUILD_FILES)
 else
 clean::
-	@echo "\n\nDeleting All Code and Asset Binaries"
-	$(call SetupProgressBar)
-	@$(call DrawProgressBar,0)
-	@rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map
-	@$(call DrawProgressBar,1,4)
-	@rm -f $(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS)
-	@$(call DrawProgressBar,2,4)
-	@rm -f $(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS)
-	@$(call DrawProgressBar,3,4)
-	@rm -f $(IMAGE_OBJS) $(MUSIC_RZ_FILES) $(RSPOBJECTS) $(STAN_BUILD_FILES) $(SETUP_BUILD_FILES)
+	@clear
+	@echo "\n\n\nDeleting All Code and Asset Binaries"
+	@$(call SetupProgressBar)
+	@rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map & $(call IncrementProgressBarFromAtRate,0,0.125)
+	@rm -f $(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) & $(call IncrementProgressBarFromAtRate,25,0.125)
+	@rm -f $(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) & $(call IncrementProgressBarFromAtRate,50,0.125)
+	@rm -f $(IMAGE_OBJS) $(MUSIC_RZ_FILES) $(RSPOBJECTS) $(STAN_BUILD_FILES) $(SETUP_BUILD_FILES)& $(call IncrementProgressBarFromAtRate,75,0.125)
+
 	@$(call DrawProgressBar,100)
 	@echo "\033[1J$(RESTORESCROLLREGION)\nAll Code and Asset Binaries Cleared! Make will Re-Build these next time.\n"
 endif
