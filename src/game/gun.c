@@ -24,7 +24,7 @@
 // bss
 s32 dword_CODE_bss_80075DB0;
 s32 dword_CODE_bss_80075DB4;
-s32 dword_CODE_bss_80075DB8[4];
+ALSoundState* dword_CODE_bss_80075DB8[4];
 
 #if defined(VERSION_EU)
 char dword_CODE_bss_80075DC8[20][104];
@@ -16108,7 +16108,7 @@ glabel sub_GAME_7F064364
 
 
 
-s32* sub_GAME_7F0643A0(void)
+ALSoundState* sub_GAME_7F0643A0(void)
 {
     s32 i;
     for (i = 0; i < 4; i++) {
@@ -16784,80 +16784,28 @@ glabel recall_joy2_hits_edit_detail_edit_flag
 #endif
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F064720(void) {
-
-}
-#else
-
-#ifdef BUGFIX_R0
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F064720
-/* 099250 7F064720 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 099254 7F064724 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 099258 7F064728 0FC190E8 */  jal   sub_GAME_7F0643A0
-/* 09925C 7F06472C AFA40020 */   sw    $a0, 0x20($sp)
-/* 099260 7F064730 1040000C */  beqz  $v0, .L7F064764
-/* 099264 7F064734 00403025 */   move  $a2, $v0
-/* 099268 7F064738 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 09926C 7F06473C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 099270 7F064740 24050046 */  li    $a1, 70
-/* 099274 7F064744 0C002382 */  jal   sndPlaySfx
-/* 099278 7F064748 AFA2001C */   sw    $v0, 0x1c($sp)
-/* 09927C 7F06474C 8FA6001C */  lw    $a2, 0x1c($sp)
-/* 099280 7F064750 8CC40000 */  lw    $a0, ($a2)
-/* 099284 7F064754 50800004 */  beql  $a0, $zero, .L7F064768
-/* 099288 7F064758 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 09928C 7F06475C 0FC14E84 */  jal   sub_GAME_7F053A10
-/* 099290 7F064760 8FA50020 */   lw    $a1, 0x20($sp)
-.L7F064764:
-/* 099294 7F064764 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F064768:
-/* 099298 7F064768 27BD0020 */  addiu $sp, $sp, 0x20
-/* 09929C 7F06476C 03E00008 */  jr    $ra
-/* 0992A0 7F064770 00000000 */   nop
-)
-#endif
+void sub_GAME_7F064720(coord3d* pos)
+{
+    ALSoundState* sound;
+    ALLink* link;
 
 #ifdef BUGFIX_R1
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F064720
-/* 0997C8 7F064C58 3C0E8005 */  lui   $t6, %hi(g_ClockTimer) # $t6, 0x8005
-/* 0997CC 7F064C5C 8DCE83A4 */  lw    $t6, %lo(g_ClockTimer)($t6)
-/* 0997D0 7F064C60 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0997D4 7F064C64 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0997D8 7F064C68 19C00010 */  blez  $t6, .L7F064CAC
-/* 0997DC 7F064C6C AFA40020 */   sw    $a0, 0x20($sp)
-/* 0997E0 7F064C70 0FC19233 */  jal   sub_GAME_7F0643A0
-/* 0997E4 7F064C74 00000000 */   nop
-/* 0997E8 7F064C78 1040000C */  beqz  $v0, .L7F064CAC
-/* 0997EC 7F064C7C 00403025 */   move  $a2, $v0
-/* 0997F0 7F064C80 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
-/* 0997F4 7F064C84 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 0997F8 7F064C88 24050046 */  li    $a1, 70
-/* 0997FC 7F064C8C 0C002386 */  jal   sndPlaySfx
-/* 099800 7F064C90 AFA2001C */   sw    $v0, 0x1c($sp)
-/* 099804 7F064C94 8FA6001C */  lw    $a2, 0x1c($sp)
-/* 099808 7F064C98 8CC40000 */  lw    $a0, ($a2)
-/* 09980C 7F064C9C 50800004 */  beql  $a0, $zero, .L7F064CB0
-/* 099810 7F064CA0 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 099814 7F064CA4 0FC14FC3 */  jal   sub_GAME_7F053A10
-/* 099818 7F064CA8 8FA50020 */   lw    $a1, 0x20($sp)
-.L7F064CAC:
-/* 09981C 7F064CAC 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F064CB0:
-/* 099820 7F064CB0 27BD0020 */  addiu $sp, $sp, 0x20
-/* 099824 7F064CB4 03E00008 */  jr    $ra
-/* 099828 7F064CB8 00000000 */   nop
-)
+    if (g_ClockTimer <= 0) { return; }
 #endif
 
+    sound = sub_GAME_7F0643A0();
 
+    if (sound != NULL)
+    {
+        sndPlaySfx((struct ALBankAlt_s* ) g_musicSfxBufferPtr, 0x46, sound);
 
-#endif
-
+        link = sound->link.next;
+        if (link != NULL)
+        {
+            sub_GAME_7F053A10((ALSoundState* ) link, pos);
+        }
+    }
+}
 
 
 #ifdef NONMATCHING
