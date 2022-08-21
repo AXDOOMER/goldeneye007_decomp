@@ -286,10 +286,11 @@ void inc_curplayer_hitcount_with_weapon(ITEM_IDS item, SHOT_REGISTER shot_regist
 s8 get_hands_firing_status(GUNHAND hand);
 void gunFireTankShell(s32 hand);
 void         remove_item_in_hand(GUNHAND hand);
-void         currentPlayerUnEquipWeaponWrapper(GUNHAND hand, s32 weapid);
+void currentPlayerUnEquipWeaponWrapper(enum GUNHAND hand, enum ITEM_IDS weapid);
 s32          currentPlayerGetAmmoCount(AMMOTYPE ammotype);
 s32          get_civilian_casualties(void);
 s32 Gun_hand_without_item(enum GUNHAND arg0);
+void sub_GAME_7F05FB00(enum GUNHAND hand);
 
 void bgunCalculateBlend(s32 arg0);
 void gunSetBondWeaponSway(f32 arg0, f32 arg1, f32 speed_verta, f32 speed_theta);
