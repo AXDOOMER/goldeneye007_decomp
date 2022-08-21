@@ -668,7 +668,7 @@ def main():
     if print_method == 'non_matching' and not run_report:
         mtime_use_os = True
 
-    print(subprocess.run(['git', 'log', '-1', '--name-only', '--pretty=format: sort | uniq']).stdout)
+    print(subprocess.run(['git', 'diff', '-1', '--name-only']).stdout)
     # Default to using git log to get the file's modified date.
     # Git log will be much slower, but cloning a new repo (i.e., github actions online)
     # will reset all the modified timestamps to the same value, so will need to
