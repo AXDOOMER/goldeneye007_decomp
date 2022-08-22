@@ -215,7 +215,7 @@ struct hand
   s32 field_A78;
   s32 field_A7C;
   f32 noise;
-  s32 field_A84;
+  f32 field_A84;
   f32 field_A88;
   s32 field_A8C;
   ObjectRecord* field_A90;
