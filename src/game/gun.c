@@ -594,48 +594,15 @@ void nullsub_73(void) {
 }
 
 
+void sub_GAME_7F05C540(coord3d* pos)
+{
+    bondstruct_unk_80035904* temp_v0;
 
-
-
-
-#ifdef NONMATCHING
-void *sub_GAME_7F05C540(void *arg0) {
-    void *temp_v0;
-
-    // Node 0
-    temp_v0 = ((D_80034CA0 * 0x24) + &D_80035904);
-    temp_v0->unk4 = (f32) (temp_v0->unk4 + *arg0);
-    temp_v0->unk8 = (f32) (temp_v0->unk8 + arg0->unk4);
-    temp_v0->unkC = (f32) (temp_v0->unkC + arg0->unk8);
-    return temp_v0;
+    temp_v0 = &D_80035904[D_80034CA0];
+    temp_v0->unk04.x += pos->x;
+    temp_v0->unk04.y += pos->y;
+    temp_v0->unk04.z += pos->z;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05C540
-/* 091070 7F05C540 3C0E8003 */  lui   $t6, %hi(D_80034CA0)
-/* 091074 7F05C544 8DCE4CA0 */  lw    $t6, %lo(D_80034CA0)($t6)
-/* 091078 7F05C548 3C188003 */  lui   $t8, %hi(D_80035904)
-/* 09107C 7F05C54C 27185904 */  addiu $t8, %lo(D_80035904) # addiu $t8, $t8, 0x5904
-/* 091080 7F05C550 000E78C0 */  sll   $t7, $t6, 3
-/* 091084 7F05C554 01EE7821 */  addu  $t7, $t7, $t6
-/* 091088 7F05C558 000F7880 */  sll   $t7, $t7, 2
-/* 09108C 7F05C55C 01F81021 */  addu  $v0, $t7, $t8
-/* 091090 7F05C560 C4440004 */  lwc1  $f4, 4($v0)
-/* 091094 7F05C564 C4860000 */  lwc1  $f6, ($a0)
-/* 091098 7F05C568 C44A0008 */  lwc1  $f10, 8($v0)
-/* 09109C 7F05C56C 46062200 */  add.s $f8, $f4, $f6
-/* 0910A0 7F05C570 C444000C */  lwc1  $f4, 0xc($v0)
-/* 0910A4 7F05C574 E4480004 */  swc1  $f8, 4($v0)
-/* 0910A8 7F05C578 C4900004 */  lwc1  $f16, 4($a0)
-/* 0910AC 7F05C57C 46105480 */  add.s $f18, $f10, $f16
-/* 0910B0 7F05C580 E4520008 */  swc1  $f18, 8($v0)
-/* 0910B4 7F05C584 C4860008 */  lwc1  $f6, 8($a0)
-/* 0910B8 7F05C588 46062200 */  add.s $f8, $f4, $f6
-/* 0910BC 7F05C58C 03E00008 */  jr    $ra
-/* 0910C0 7F05C590 E448000C */   swc1  $f8, 0xc($v0)
-)
-#endif
 
 
 void sub_GAME_7F05C594(Mtxf* mtxf)
