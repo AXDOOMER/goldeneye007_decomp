@@ -154,44 +154,45 @@ struct BulletImpact {
     s16 unk4E;
 };
 
+struct EjectedCasing_unk38 {
+    s16 unk00;
+    s16 unk02;
+    s16 unk04;
+    s16 unk06;
+    s16 unk08;
+    s16 unk0A;
+    s8 unk0C;
+    s8 unk0D;
+    s8 unk0E;
+    u8 unk0F;
+};
+
 struct EjectedCasing {
     s32 unk00;
-    u32 unk04;
-    u32 unk08;
-    u32 unk0C;
 
-    u32 unk10;
-    u32 unk14;
-    u32 unk18;
-    u32 unk1C;
+    // coord3d?
+    f32 unk04;
+    f32 unk08;
+    f32 unk0C;
 
-    u32 unk20;
-    u32 unk24;
-    u32 unk28;
-    u32 unk2C;
+    // coord3d?
+    f32 unk10;
+    f32 unk14;
+    f32 unk18;
 
-    u32 unk30;
-    u32 unk34;
-    u32 unk38;
-    u32 unk3C;
+    // coord3d?
+    f32 unk1C;
+    f32 unk20;
+    f32 unk24;
 
-    u32 unk40;
-    u32 unk44;
-    u32 unk48;
-    u32 unk4C;
+    // coord3d?
+    f32 unk28;
+    f32 unk2C;
+    f32 unk30;
 
-    u32 unk50;
-    u32 unk54;
-    u32 unk58;
-    u32 unk5C;
+    s32 unk34;
 
-    u32 unk60;
-    u32 unk64;
-    u32 unk68;
-    u32 unk6C;
-
-    u32 unk70;
-    u32 unk74;
+    struct EjectedCasing_unk38 unk38[4];
 };
 
 extern f32 D_80040178;
