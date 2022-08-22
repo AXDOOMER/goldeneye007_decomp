@@ -9,6 +9,7 @@
 #include "othermodemicrocode.h"
 #include "explosions.h"
 #include "unk_0BC530.h"
+#include "lvl.h"
 #include <assets/GlobalImageTable.h>
 
 // bss
@@ -2099,70 +2100,29 @@ glabel sub_GAME_7F09CEE8
 #endif
 
 
+u8 sub_GAME_7F09D4EC(PropRecord* prop)
+{
+    Mtxf* player_matrix;
 
+    player_matrix = currentPlayerGetMatrix10CC();
+    prop->Unk18 = -((((player_matrix->m[0][2] * prop->pos.x) + (player_matrix->m[1][2] * prop->pos.y)) + (player_matrix->m[2][2] * prop->pos.z)) + player_matrix->m[3][2]);
 
+    if (prop->Unk18 < 100.0f)
+    {
+        prop->Unk18 *= 0.5f;
+    }
+    else
+    {
+        prop->Unk18 -= 100.0f;
+    }
 
-#ifdef NONMATCHING
-void sub_GAME_7F09D4EC(void) {
+    if (g_ClockTimer == 0)
+    {
+        return 0;
+    }
 
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F09D4EC
-/* 0D201C 7F09D4EC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0D2020 7F09D4F0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0D2024 7F09D4F4 0FC1E0F1 */  jal   currentPlayerGetMatrix10CC
-/* 0D2028 7F09D4F8 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0D202C 7F09D4FC 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0D2030 7F09D500 C4440008 */  lwc1  $f4, 8($v0)
-/* 0D2034 7F09D504 C44A0018 */  lwc1  $f10, 0x18($v0)
-/* 0D2038 7F09D508 C4860008 */  lwc1  $f6, 8($a0)
-/* 0D203C 7F09D50C C490000C */  lwc1  $f16, 0xc($a0)
-/* 0D2040 7F09D510 3C0142C8 */  li    $at, 0x42C80000 # 100.000000
-/* 0D2044 7F09D514 46062202 */  mul.s $f8, $f4, $f6
-/* 0D2048 7F09D518 C4460028 */  lwc1  $f6, 0x28($v0)
-/* 0D204C 7F09D51C 44811000 */  mtc1  $at, $f2
-/* 0D2050 7F09D520 46105482 */  mul.s $f18, $f10, $f16
-/* 0D2054 7F09D524 C48A0010 */  lwc1  $f10, 0x10($a0)
-/* 0D2058 7F09D528 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 0D205C 7F09D52C 3C0E8005 */  lui   $t6, %hi(g_ClockTimer) 
-/* 0D2060 7F09D530 460A3402 */  mul.s $f16, $f6, $f10
-/* 0D2064 7F09D534 46124100 */  add.s $f4, $f8, $f18
-/* 0D2068 7F09D538 C4520038 */  lwc1  $f18, 0x38($v0)
-/* 0D206C 7F09D53C 00001025 */  move  $v0, $zero
-/* 0D2070 7F09D540 46102200 */  add.s $f8, $f4, $f16
-/* 0D2074 7F09D544 46089180 */  add.s $f6, $f18, $f8
-/* 0D2078 7F09D548 46003287 */  neg.s $f10, $f6
-/* 0D207C 7F09D54C E48A0018 */  swc1  $f10, 0x18($a0)
-/* 0D2080 7F09D550 C4800018 */  lwc1  $f0, 0x18($a0)
-/* 0D2084 7F09D554 4602003C */  c.lt.s $f0, $f2
-/* 0D2088 7F09D558 00000000 */  nop   
-/* 0D208C 7F09D55C 45020007 */  bc1fl .L7F09D57C
-/* 0D2090 7F09D560 46020481 */   sub.s $f18, $f0, $f2
-/* 0D2094 7F09D564 44812000 */  mtc1  $at, $f4
-/* 0D2098 7F09D568 00000000 */  nop   
-/* 0D209C 7F09D56C 46040402 */  mul.s $f16, $f0, $f4
-/* 0D20A0 7F09D570 10000003 */  b     .L7F09D580
-/* 0D20A4 7F09D574 E4900018 */   swc1  $f16, 0x18($a0)
-/* 0D20A8 7F09D578 46020481 */  sub.s $f18, $f0, $f2
-.L7F09D57C:
-/* 0D20AC 7F09D57C E4920018 */  swc1  $f18, 0x18($a0)
-.L7F09D580:
-/* 0D20B0 7F09D580 8DCE8374 */  lw    $t6, %lo(g_ClockTimer)($t6)
-/* 0D20B4 7F09D584 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0D20B8 7F09D588 15C00003 */  bnez  $t6, .L7F09D598
-/* 0D20BC 7F09D58C 00000000 */   nop   
-/* 0D20C0 7F09D590 10000001 */  b     .L7F09D598
-/* 0D20C4 7F09D594 00001025 */   move  $v0, $zero
-.L7F09D598:
-/* 0D20C8 7F09D598 03E00008 */  jr    $ra
-/* 0D20CC 7F09D59C 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
@@ -3995,64 +3955,24 @@ glabel sub_GAME_7F09E8AC
 #endif
 
 
+u8 sub_GAME_7F09EF9C(PropRecord* prop)
+{
+    Mtxf* player_matrix;
 
+    player_matrix = currentPlayerGetMatrix10CC();
+    prop->Unk18 = -((((player_matrix->m[0][2] * prop->pos.x) + (player_matrix->m[1][2] * prop->pos.y)) + (player_matrix->m[2][2] * prop->pos.z)) + player_matrix->m[3][2]);
 
+    if (prop->Unk18 < 100.0f)
+    {
+        prop->Unk18 *= 0.5f;
+    }
+    else
+    {
+        prop->Unk18 -= 100.0f;
+    }
 
-#ifdef NONMATCHING
-void sub_GAME_7F09EF9C(void) {
-
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F09EF9C
-/* 0D3ACC 7F09EF9C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0D3AD0 7F09EFA0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0D3AD4 7F09EFA4 0FC1E0F1 */  jal   currentPlayerGetMatrix10CC
-/* 0D3AD8 7F09EFA8 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0D3ADC 7F09EFAC 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0D3AE0 7F09EFB0 C4440008 */  lwc1  $f4, 8($v0)
-/* 0D3AE4 7F09EFB4 C44A0018 */  lwc1  $f10, 0x18($v0)
-/* 0D3AE8 7F09EFB8 C4860008 */  lwc1  $f6, 8($a0)
-/* 0D3AEC 7F09EFBC C490000C */  lwc1  $f16, 0xc($a0)
-/* 0D3AF0 7F09EFC0 3C0142C8 */  li    $at, 0x42C80000 # 100.000000
-/* 0D3AF4 7F09EFC4 46062202 */  mul.s $f8, $f4, $f6
-/* 0D3AF8 7F09EFC8 C4460028 */  lwc1  $f6, 0x28($v0)
-/* 0D3AFC 7F09EFCC 44811000 */  mtc1  $at, $f2
-/* 0D3B00 7F09EFD0 46105482 */  mul.s $f18, $f10, $f16
-/* 0D3B04 7F09EFD4 C48A0010 */  lwc1  $f10, 0x10($a0)
-/* 0D3B08 7F09EFD8 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 0D3B0C 7F09EFDC 460A3402 */  mul.s $f16, $f6, $f10
-/* 0D3B10 7F09EFE0 46124100 */  add.s $f4, $f8, $f18
-/* 0D3B14 7F09EFE4 C4520038 */  lwc1  $f18, 0x38($v0)
-/* 0D3B18 7F09EFE8 46102200 */  add.s $f8, $f4, $f16
-/* 0D3B1C 7F09EFEC 46089180 */  add.s $f6, $f18, $f8
-/* 0D3B20 7F09EFF0 46003287 */  neg.s $f10, $f6
-/* 0D3B24 7F09EFF4 E48A0018 */  swc1  $f10, 0x18($a0)
-/* 0D3B28 7F09EFF8 C4800018 */  lwc1  $f0, 0x18($a0)
-/* 0D3B2C 7F09EFFC 4602003C */  c.lt.s $f0, $f2
-/* 0D3B30 7F09F000 00000000 */  nop   
-/* 0D3B34 7F09F004 45020007 */  bc1fl .L7F09F024
-/* 0D3B38 7F09F008 46020481 */   sub.s $f18, $f0, $f2
-/* 0D3B3C 7F09F00C 44812000 */  mtc1  $at, $f4
-/* 0D3B40 7F09F010 00000000 */  nop   
-/* 0D3B44 7F09F014 46040402 */  mul.s $f16, $f0, $f4
-/* 0D3B48 7F09F018 10000003 */  b     .L7F09F028
-/* 0D3B4C 7F09F01C E4900018 */   swc1  $f16, 0x18($a0)
-/* 0D3B50 7F09F020 46020481 */  sub.s $f18, $f0, $f2
-.L7F09F024:
-/* 0D3B54 7F09F024 E4920018 */  swc1  $f18, 0x18($a0)
-.L7F09F028:
-/* 0D3B58 7F09F028 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0D3B5C 7F09F02C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0D3B60 7F09F030 00001025 */  move  $v0, $zero
-/* 0D3B64 7F09F034 03E00008 */  jr    $ra
-/* 0D3B68 7F09F038 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING

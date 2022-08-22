@@ -128,22 +128,7 @@ struct hand
   s32 field_8E0;
   s32 field_8E4;
   s32 field_8E8;
-  s32 field_8EC;
-  s32 field_8F0;
-  s32 field_8F4;
-  s32 field_8F8;
-  s32 field_8FC;
-  s32 field_900;
-  s32 field_904;
-  s32 field_908;
-  s32 field_90C;
-  s32 field_910;
-  s32 field_914;
-  s32 field_918;
-  s32 field_91C;
-  s32 field_920;
-  s32 field_924;
-  s32 field_928;
+  Mtxf field_8EC;
   s32 field_92C;
   s32 field_930;
   s32 field_934;
@@ -218,20 +203,10 @@ struct hand
   s32 field_A48;
   s32 field_A4C;
   s32 field_A50;
-  s32 field_A54;
-  s32 field_A58;
-  s32 field_A5C;
-  s32 field_A60;
-  s32 field_A64;
-  s32 field_A68;
-  s32 field_A6C;
-  s32 field_A70;
-  s32 field_A74;
-  s32 field_A78;
-  s32 field_A7C;
+  ChrRecord_f180 field_A54;
   f32 noise;
-  s32 field_A84;
-  s32 field_A88;
+  f32 field_A84;
+  f32 field_A88;
   s32 field_A8C;
   ObjectRecord* field_A90;
   s32 field_A94;
@@ -271,10 +246,8 @@ struct hand
   s32 field_B4C;
   s32 field_B50;
   s32 field_B54;
-  s32 field_B58;
-  s32 field_B5C;
-  s32 field_B60;
-  s32 field_B64;
+  coord3d field_B58;
+  f32 field_B64;
   s32 field_B68;
   s32 field_B6C;
   s32 field_B70;
@@ -316,9 +289,7 @@ struct hand
   s32 field_C00;
   s32 field_C04;
   s32 field_C08;  
-  s32 item_related1;
-  s32 item_related2;
-  s32 item_related3;
+  coord3d item_related;
 };
 
 typedef struct InvItem {
@@ -2701,12 +2672,7 @@ struct player
   f32 field_2A0C;
   s32 ptr_text_first_mp_award;
   s32 ptr_text_second_mp_award;
-  s32 field_2A18;
-  s32 field_2A1C;
-  s32 field_2A20;
-  s32 field_2A24;
-  s32 field_2A28;
-  s32 field_2A2C;
+  coord3d field_2A18[2];
   s32 field_2A30;
   s32 field_2A34;
   s32 cur_item_weapon_getname;
@@ -2790,6 +2756,14 @@ typedef struct bondstruct_unk_80036794 { // time related idk
     s32 unk4;
     s32 unk8;
 } bondstruct_unk_80036794;
+
+typedef struct bondstruct_unk_80035904 {
+    u32 unk00;
+    coord3d unk04;
+    coord3d unk10;
+    f32 unk1C;
+    f32 unk20;
+} bondstruct_unk_80035904;
 
 //D:80036424
 extern s32 g_bondviewForceDisarm;
