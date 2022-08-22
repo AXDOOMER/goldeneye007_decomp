@@ -4,7 +4,7 @@
 
 
 extern f32 D_8003FD94[];
-extern u32 D_8003FDA0;
+extern u32 D_8003FDA0[];
 
 extern f32 flt_CODE_bss_80079E80;
 extern f32 flt_CODE_bss_80079E84;

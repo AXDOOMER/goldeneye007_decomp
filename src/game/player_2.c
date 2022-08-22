@@ -105,7 +105,7 @@ void initBONDdataforPlayer(s32 player_num)
     struct hand default_hand;
     s32 one;
 
-    default_hand = *((struct hand*)&D_8003FDA0);
+    default_hand = *((struct hand*)D_8003FDA0);
 #if defined(VERSION_US) || defined(VERSION_JP)
     g_playerPointers[player_num] = mempAllocBytesInBank(0x2A80U, 4U);
 #elif defined(VERSION_EU)
