@@ -11009,9 +11009,69 @@ void sub_GAME_7F061948(struct ChrRecord_f180 *arg0, ITEM_IDS item, coord3d *arg2
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F061BF4(void) {
 
+/* ~98% match, regalloc issues */
+void sub_GAME_7F061BF4(enum GUNHAND hand) {
+    coord3d *field_2A18;
+    Mtxf *player_matrix;
+    struct hand *hand_ptr;
+    f32 val;
+    struct ChrRecord *chr;
+    f32 diff1_z;
+    f32 diff1_y;
+    f32 diff1_x;
+    f32 diff2_z;
+    f32 diff2_y;
+    f32 diff2_x;
+    ChrRecord_f180 *field_A54;
+
+    hand_ptr = &g_CurrentPlayer->hands[hand];
+    player_matrix = currentPlayerGetMatrix10CC();
+
+    val = player_matrix->m[3][2] + (
+        + (hand_ptr->item_related.x * player_matrix->m[0][2])
+        + (hand_ptr->item_related.y * player_matrix->m[1][2])
+        + (hand_ptr->item_related.z * player_matrix->m[2][2])
+        );
+
+
+    if (-val < hand_ptr->field_B64) { return; }
+
+    field_A54 = &hand_ptr->field_A54;
+    sub_GAME_7F061948(
+        field_A54,
+        getCurrentPlayerWeaponId(hand),
+        &hand_ptr->field_B58,
+        &hand_ptr->item_related);
+
+    if ((g_CurrentPlayer->prop->chr == NULL) || (getPlayerCount() < 2)) { return; }
+
+    chr = g_CurrentPlayer->prop->chr;
+
+    diff1_x = hand_ptr->item_related.x - g_CurrentPlayer->field_2A18[hand].x;
+    diff1_y = hand_ptr->item_related.y - g_CurrentPlayer->field_2A18[hand].y;
+    diff1_z = hand_ptr->item_related.z - g_CurrentPlayer->field_2A18[hand].z;
+    guNormalize(&diff1_x, &diff1_y, &diff1_z);
+
+    diff2_x = hand_ptr->item_related.x - hand_ptr->field_B58.x;
+    diff2_y = hand_ptr->item_related.y - hand_ptr->field_B58.y;
+    diff2_z = hand_ptr->item_related.z - hand_ptr->field_B58.z;
+    guNormalize(&diff2_x, &diff2_y, &diff2_z);
+
+    val = acosf(
+        + (diff1_x * diff2_x)
+        + (diff1_y * diff2_y)
+        + (diff2_z * diff1_z)
+        );
+    if (val > 0.08726647f) { return; }
+
+    sub_GAME_7F061948(
+        &chr->unk180[hand],
+        getCurrentPlayerWeaponId(hand),
+        &g_CurrentPlayer->field_2A18[hand],
+        &hand_ptr->item_related);
 }
+
 #else
 
 #if defined(VERSION_US) || defined(VERSION_JP)
