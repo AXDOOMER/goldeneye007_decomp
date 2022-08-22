@@ -30,7 +30,7 @@ jobs:
         id: changes
         # Set outputs using the command.
         run: |
-          echo "::set-output name=all::$()"
+          echo "::set-output name=all::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)"
    
   buildus:
     
@@ -77,7 +77,7 @@ jobs:
         
       - name: Stats
         run: |
-            git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs
+            git diff --name-only ${{ github.event.before }} ${{ github.sha }} | xargs
             python3 tools/ge-stats.py --version us --report
 
         #git diff HEAD^ HEAD --name-only
