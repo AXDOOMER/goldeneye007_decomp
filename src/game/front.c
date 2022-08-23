@@ -3051,50 +3051,20 @@ void update_menu05_filesel(void) {
 
 
 
-
-
-#ifdef NONMATCHING
-//a0 used in place of v1 as the move never occurs
 s32 get_chapter_briefing_entry(s32 briefing)
 {
-    while (briefing >= 0)
-    {
-        if (mission_folder_setup_entries[briefing].type != MISSION_PART) {
-            return briefing;
-        }
-        briefing--;
-    };
-  return -1;
-}
-#else
-GLOBAL_ASM(
-.text
-glabel get_chapter_briefing_entry
-/* 04064C 7F00BB1C 0480000F */  bltz  $a0, .L7F00BB5C
-/* 040650 7F00BB20 00801825 */   move  $v1, $a0
-/* 040654 7F00BB24 000470C0 */  sll   $t6, $a0, 3
-/* 040658 7F00BB28 01C47023 */  subu  $t6, $t6, $a0
-/* 04065C 7F00BB2C 3C0F8003 */  lui   $t7, %hi(mission_folder_setup_entries)
-/* 040660 7F00BB30 25EFABE4 */  addiu $t7, %lo(mission_folder_setup_entries) # addiu $t7, $t7, -0x541c
-/* 040664 7F00BB34 000E7080 */  sll   $t6, $t6, 2
-/* 040668 7F00BB38 01CF1021 */  addu  $v0, $t6, $t7
-.L7F00BB3C:
-/* 04066C 7F00BB3C 8C580010 */  lw    $t8, 0x10($v0)
-/* 040670 7F00BB40 53000004 */  beql  $t8, $zero, .L7F00BB54
-/* 040674 7F00BB44 2463FFFF */   addiu $v1, $v1, -1
-/* 040678 7F00BB48 03E00008 */  jr    $ra
-/* 04067C 7F00BB4C 00601025 */   move  $v0, $v1
+    s32 i;
 
-/* 040680 7F00BB50 2463FFFF */  addiu $v1, $v1, -1
-.L7F00BB54:
-/* 040684 7F00BB54 0461FFF9 */  bgez  $v1, .L7F00BB3C
-/* 040688 7F00BB58 2442FFE4 */   addiu $v0, $v0, -0x1c
-.L7F00BB5C:
-/* 04068C 7F00BB5C 2402FFFF */  li    $v0, -1
-/* 040690 7F00BB60 03E00008 */  jr    $ra
-/* 040694 7F00BB64 00000000 */   nop
-)
-#endif
+    for (i = briefing; i >= 0; i--)
+    {
+        if (mission_folder_setup_entries[i].type != MISSION_PART)
+        {
+            return i;
+        }
+    }
+
+    return -1;
+}
 
 
 void toggle_deletion_menu_for_folder(int index)
