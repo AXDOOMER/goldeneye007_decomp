@@ -9371,78 +9371,38 @@ void bondviewUpdateXAutoAimTime(s32 auto_aim_time, f32 auto_aim_x)
 }
 
 
-
-
-
-#ifdef NONMATCHING
-// very close - reg allocs fails, swaps two float regs
-void change_player_pos_to_target(struct collision434 *arg0, coord3d *arg1, StandTile *arg2)
+void change_player_pos_to_target(struct collision434 *col, coord3d *pos, StandTile *stan)
 {
-    arg0->collision_position.f[0] = arg1->f[0];
-    arg0->collision_position.f[1] = arg1->f[1];
-    arg0->collision_position.f[2] = arg1->f[2];
-    arg0->current_tile_ptr = arg2;
-    arg0->current_tile_ptr_for_portals = arg2;
-    if (1) { }
-    arg0->applied_view.f[1] = 0.0f;
-    arg0->applied_view.f[2] = 0.0f;
-    arg0->applied_view2.f[0] = 0.0f;
-    arg0->applied_view2.f[2] = 0.0f;
-    arg0->field_10.f[0] = 0.0f;
-    arg0->field_10.f[1] = 0.0f;
-    arg0->pos.f[0] = arg0->collision_position.f[0];
-    arg0->pos3.f[0] = arg0->collision_position.f[0];
-    arg0->applied_view.f[0] = 1.0f;
-    arg0->applied_view2.f[1] = 1.0f;
-    arg0->field_10.f[2] = 1.0f;
-    arg0->pos.f[1] = arg0->collision_position.f[1];
-    arg0->pos3.f[1] = arg0->collision_position.f[1];
-    arg0->pos.f[2] = arg0->collision_position.f[2];
-    arg0->pos3.f[2] = arg0->collision_position.f[2];
-    arg0->collision_radius = 30.0f;
+    f32 store_x;
+    f32 store_x2;
+    f32 store_z;
+    f32 store_y;
+    col->collision_position.x = pos->x;
+    store_x = col->collision_position.x;
+    col->collision_position.y = pos->y;
+    store_y = col->collision_position.y;
+    col->collision_position.z = pos->z;
+    store_z = col->collision_position.z;
+    store_x2 = pos->x;
+    col->current_tile_ptr = stan;
+    col->current_tile_ptr_for_portals = stan;
+    col->applied_view.y = 0.0f;
+    col->applied_view.z = 0.0f;
+    col->applied_view2.x = 0.0f;
+    col->applied_view2.z = store_x2 * 0.0f;
+    col->field_10.x = 0.0f;
+    col->field_10.y = 0.0f;
+    col->pos.x = store_x;
+    col->pos3.x = store_x;
+    col->applied_view.x = 1.0f;
+    col->applied_view2.y = 1.0f;
+    col->field_10.z = 1.0f;
+    col->pos.y = store_y;
+    col->pos3.y = store_y;
+    col->pos.z = store_z;
+    col->pos3.z = store_z;
+    col->collision_radius = 30;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel change_player_pos_to_target
-/* 0B1260 7F07C730 C4A40000 */  lwc1  $f4, ($a1)
-/* 0B1264 7F07C734 44808000 */  mtc1  $zero, $f16
-/* 0B1268 7F07C738 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0B126C 7F07C73C E4840004 */  swc1  $f4, 4($a0)
-/* 0B1270 7F07C740 C4A60004 */  lwc1  $f6, 4($a1)
-/* 0B1274 7F07C744 44817000 */  mtc1  $at, $f14
-/* 0B1278 7F07C748 C4800004 */  lwc1  $f0, 4($a0)
-/* 0B127C 7F07C74C E4860008 */  swc1  $f6, 8($a0)
-/* 0B1280 7F07C750 C4A80008 */  lwc1  $f8, 8($a1)
-/* 0B1284 7F07C754 C4820008 */  lwc1  $f2, 8($a0)
-/* 0B1288 7F07C758 3C0141F0 */  li    $at, 0x41F00000 # 30.000000
-/* 0B128C 7F07C75C E488000C */  swc1  $f8, 0xc($a0)
-/* 0B1290 7F07C760 C48C000C */  lwc1  $f12, 0xc($a0)
-/* 0B1294 7F07C764 44815000 */  mtc1  $at, $f10
-/* 0B1298 7F07C768 AC860000 */  sw    $a2, ($a0)
-/* 0B129C 7F07C76C AC860050 */  sw    $a2, 0x50($a0)
-/* 0B12A0 7F07C770 E490003C */  swc1  $f16, 0x3c($a0)
-/* 0B12A4 7F07C774 E4900040 */  swc1  $f16, 0x40($a0)
-/* 0B12A8 7F07C778 E4900044 */  swc1  $f16, 0x44($a0)
-/* 0B12AC 7F07C77C E490004C */  swc1  $f16, 0x4c($a0)
-/* 0B12B0 7F07C780 E4900010 */  swc1  $f16, 0x10($a0)
-/* 0B12B4 7F07C784 E4900014 */  swc1  $f16, 0x14($a0)
-/* 0B12B8 7F07C788 E480002C */  swc1  $f0, 0x2c($a0)
-/* 0B12BC 7F07C78C E480001C */  swc1  $f0, 0x1c($a0)
-/* 0B12C0 7F07C790 E48E0038 */  swc1  $f14, 0x38($a0)
-/* 0B12C4 7F07C794 E48E0048 */  swc1  $f14, 0x48($a0)
-/* 0B12C8 7F07C798 E48E0018 */  swc1  $f14, 0x18($a0)
-/* 0B12CC 7F07C79C E4820030 */  swc1  $f2, 0x30($a0)
-/* 0B12D0 7F07C7A0 E4820020 */  swc1  $f2, 0x20($a0)
-/* 0B12D4 7F07C7A4 E48C0034 */  swc1  $f12, 0x34($a0)
-/* 0B12D8 7F07C7A8 E48C0024 */  swc1  $f12, 0x24($a0)
-/* 0B12DC 7F07C7AC 03E00008 */  jr    $ra
-/* 0B12E0 7F07C7B0 E48A0028 */   swc1  $f10, 0x28($a0)
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
