@@ -3318,139 +3318,64 @@ glabel sub_GAME_7F09DDA4
 #endif
 
 
+void sub_GAME_7F09E700(coord3d *pos, StandTile *stan, s16 arg2, u8 *rooms, s32 arg4)
+{
+    struct Smoke *smoke;
+    struct Smoke *smoke_tmp;
+    s32 i;
+    s32 player_count;
+    PropRecord *prop;
 
+    smoke = NULL;
+    player_count = getPlayerCount();
 
+    for (i = 0; i < 20; i++)
+    {
+        if (ptr_smoke_buf[i].prop == NULL)
+        {
+            smoke = &ptr_smoke_buf[i];
+            break;
+        }
+        else if (player_count >= 2)
+        {
+            smoke_tmp = (i + ptr_smoke_buf);
+            if (((smoke_tmp->unk06 != 7) && (smoke_tmp->unk06 != 8)) && (smoke_tmp->unk06 != 9))
+            {
+                smoke_tmp->unk04 = (s16) array_smoke_types[smoke_tmp->unk06].duration;
+            }
+        }
+    }
 
-#ifdef NONMATCHING
-void sub_GAME_7F09E700(void) {
+    if (smoke == NULL) { return; }
 
+    prop = chrpropAllocate();
+    if (prop == NULL) { return; }
+
+    prop->type = 8;
+    prop->flags |= 2;
+    prop->smoke = smoke;
+    prop->stan = stan;
+    prop->pos.x = pos->x;
+    prop->pos.y = pos->y;
+    prop->pos.z = pos->z;
+
+    for (i = 0; (rooms[i] != 0xFF) && (i < 7); i++)
+    {
+        prop->rooms[i] = rooms[i];
+    }
+    prop->rooms[i] = 0xFF;
+
+    if (arg4 != 0)
+    {
+        prop->flags |= 8;
+    }
+
+    chrpropActivateThisFrame(prop);
+    chrpropEnable(prop);
+    smoke->prop = prop;
+    smoke->unk04 = 0;
+    smoke->unk06 = arg2;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F09E700
-/* 0D3230 7F09E700 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0D3234 7F09E704 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0D3238 7F09E708 AFA40030 */  sw    $a0, 0x30($sp)
-/* 0D323C 7F09E70C AFA50034 */  sw    $a1, 0x34($sp)
-/* 0D3240 7F09E710 AFA60038 */  sw    $a2, 0x38($sp)
-/* 0D3244 7F09E714 AFA7003C */  sw    $a3, 0x3c($sp)
-/* 0D3248 7F09E718 0FC26919 */  jal   getPlayerCount
-/* 0D324C 7F09E71C AFA0002C */   sw    $zero, 0x2c($sp)
-/* 0D3250 7F09E720 3C0B8004 */  lui   $t3, %hi(array_smoke_types) 
-/* 0D3254 7F09E724 3C078008 */  lui   $a3, %hi(ptr_smoke_buf)
-/* 0D3258 7F09E728 8FAD002C */  lw    $t5, 0x2c($sp)
-/* 0D325C 7F09E72C 24E7A140 */  addiu $a3, %lo(ptr_smoke_buf) # addiu $a3, $a3, -0x5ec0
-/* 0D3260 7F09E730 256B017C */  addiu $t3, %lo(array_smoke_types) # addiu $t3, $t3, 0x17c
-/* 0D3264 7F09E734 00002025 */  move  $a0, $zero
-/* 0D3268 7F09E738 240C0018 */  li    $t4, 24
-/* 0D326C 7F09E73C 240A0009 */  li    $t2, 9
-/* 0D3270 7F09E740 24090008 */  li    $t1, 8
-/* 0D3274 7F09E744 24080007 */  li    $t0, 7
-/* 0D3278 7F09E748 8CE50000 */  lw    $a1, ($a3)
-.L7F09E74C:
-/* 0D327C 7F09E74C 28410002 */  slti  $at, $v0, 2
-/* 0D3280 7F09E750 00A47021 */  addu  $t6, $a1, $a0
-/* 0D3284 7F09E754 8DCF0000 */  lw    $t7, ($t6)
-/* 0D3288 7F09E758 00853021 */  addu  $a2, $a0, $a1
-/* 0D328C 7F09E75C 15E00003 */  bnez  $t7, .L7F09E76C
-/* 0D3290 7F09E760 00000000 */   nop   
-/* 0D3294 7F09E764 10000012 */  b     .L7F09E7B0
-/* 0D3298 7F09E768 00856821 */   addu  $t5, $a0, $a1
-.L7F09E76C:
-/* 0D329C 7F09E76C 1420000D */  bnez  $at, .L7F09E7A4
-/* 0D32A0 7F09E770 24840198 */   addiu $a0, $a0, 0x198
-/* 0D32A4 7F09E774 84C30006 */  lh    $v1, 6($a2)
-/* 0D32A8 7F09E778 5103000B */  beql  $t0, $v1, .L7F09E7A8
-/* 0D32AC 7F09E77C 28811FE0 */   slti  $at, $a0, 0x1fe0
-/* 0D32B0 7F09E780 51230009 */  beql  $t1, $v1, .L7F09E7A8
-/* 0D32B4 7F09E784 28811FE0 */   slti  $at, $a0, 0x1fe0
-/* 0D32B8 7F09E788 51430007 */  beql  $t2, $v1, .L7F09E7A8
-/* 0D32BC 7F09E78C 28811FE0 */   slti  $at, $a0, 0x1fe0
-/* 0D32C0 7F09E790 006C0019 */  multu $v1, $t4
-/* 0D32C4 7F09E794 0000C012 */  mflo  $t8
-/* 0D32C8 7F09E798 0178C821 */  addu  $t9, $t3, $t8
-/* 0D32CC 7F09E79C 872E0000 */  lh    $t6, ($t9)
-/* 0D32D0 7F09E7A0 A4CE0004 */  sh    $t6, 4($a2)
-.L7F09E7A4:
-/* 0D32D4 7F09E7A4 28811FE0 */  slti  $at, $a0, 0x1fe0
-.L7F09E7A8:
-/* 0D32D8 7F09E7A8 5420FFE8 */  bnezl $at, .L7F09E74C
-/* 0D32DC 7F09E7AC 8CE50000 */   lw    $a1, ($a3)
-.L7F09E7B0:
-/* 0D32E0 7F09E7B0 51A0003B */  beql  $t5, $zero, .L7F09E8A0
-/* 0D32E4 7F09E7B4 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0D32E8 7F09E7B8 0FC0E90C */  jal   chrpropAllocate
-/* 0D32EC 7F09E7BC AFAD002C */   sw    $t5, 0x2c($sp)
-/* 0D32F0 7F09E7C0 24080007 */  li    $t0, 7
-/* 0D32F4 7F09E7C4 8FAD002C */  lw    $t5, 0x2c($sp)
-/* 0D32F8 7F09E7C8 8FBF0030 */  lw    $ra, 0x30($sp)
-/* 0D32FC 7F09E7CC 10400033 */  beqz  $v0, .L7F09E89C
-/* 0D3300 7F09E7D0 AFA2001C */   sw    $v0, 0x1c($sp)
-/* 0D3304 7F09E7D4 90580001 */  lbu   $t8, 1($v0)
-/* 0D3308 7F09E7D8 8FA9003C */  lw    $t1, 0x3c($sp)
-/* 0D330C 7F09E7DC 240F0008 */  li    $t7, 8
-/* 0D3310 7F09E7E0 37190002 */  ori   $t9, $t8, 2
-/* 0D3314 7F09E7E4 A04F0000 */  sb    $t7, ($v0)
-/* 0D3318 7F09E7E8 A0590001 */  sb    $t9, 1($v0)
-/* 0D331C 7F09E7EC AC4D0004 */  sw    $t5, 4($v0)
-/* 0D3320 7F09E7F0 8FAE0034 */  lw    $t6, 0x34($sp)
-/* 0D3324 7F09E7F4 240700FF */  li    $a3, 255
-/* 0D3328 7F09E7F8 00003025 */  move  $a2, $zero
-/* 0D332C 7F09E7FC AC4E0014 */  sw    $t6, 0x14($v0)
-/* 0D3330 7F09E800 C7E40000 */  lwc1  $f4, ($ra)
-/* 0D3334 7F09E804 00402821 */  addu  $a1, $v0, $zero
-/* 0D3338 7F09E808 241800FF */  li    $t8, 255
-/* 0D333C 7F09E80C E4440008 */  swc1  $f4, 8($v0)
-/* 0D3340 7F09E810 C7E60004 */  lwc1  $f6, 4($ra)
-/* 0D3344 7F09E814 01201821 */  addu  $v1, $t1, $zero
-/* 0D3348 7F09E818 E446000C */  swc1  $f6, 0xc($v0)
-/* 0D334C 7F09E81C C7E80008 */  lwc1  $f8, 8($ra)
-/* 0D3350 7F09E820 E4480010 */  swc1  $f8, 0x10($v0)
-/* 0D3354 7F09E824 912F0000 */  lbu   $t7, ($t1)
-/* 0D3358 7F09E828 10EF0009 */  beq   $a3, $t7, .L7F09E850
-/* 0D335C 7F09E82C 31E400FF */   andi  $a0, $t7, 0xff
-/* 0D3360 7F09E830 A0A4002C */  sb    $a0, 0x2c($a1)
-.L7F09E834:
-/* 0D3364 7F09E834 90640001 */  lbu   $a0, 1($v1)
-/* 0D3368 7F09E838 24C60001 */  addiu $a2, $a2, 1
-/* 0D336C 7F09E83C 24630001 */  addiu $v1, $v1, 1
-/* 0D3370 7F09E840 10E40003 */  beq   $a3, $a0, .L7F09E850
-/* 0D3374 7F09E844 24A50001 */   addiu $a1, $a1, 1
-/* 0D3378 7F09E848 54C8FFFA */  bnel  $a2, $t0, .L7F09E834
-/* 0D337C 7F09E84C A0A4002C */   sb    $a0, 0x2c($a1)
-.L7F09E850:
-/* 0D3380 7F09E850 0046C821 */  addu  $t9, $v0, $a2
-/* 0D3384 7F09E854 A338002C */  sb    $t8, 0x2c($t9)
-/* 0D3388 7F09E858 8FAE0040 */  lw    $t6, 0x40($sp)
-/* 0D338C 7F09E85C 51C00005 */  beql  $t6, $zero, .L7F09E874
-/* 0D3390 7F09E860 8FA4001C */   lw    $a0, 0x1c($sp)
-/* 0D3394 7F09E864 904F0001 */  lbu   $t7, 1($v0)
-/* 0D3398 7F09E868 35F80008 */  ori   $t8, $t7, 8
-/* 0D339C 7F09E86C A0580001 */  sb    $t8, 1($v0)
-/* 0D33A0 7F09E870 8FA4001C */  lw    $a0, 0x1c($sp)
-.L7F09E874:
-/* 0D33A4 7F09E874 0FC0E93C */  jal   chrpropActivateThisFrame
-/* 0D33A8 7F09E878 AFAD002C */   sw    $t5, 0x2c($sp)
-/* 0D33AC 7F09E87C 0FC0E901 */  jal   chrpropEnable
-/* 0D33B0 7F09E880 8FA4001C */   lw    $a0, 0x1c($sp)
-/* 0D33B4 7F09E884 8FAD002C */  lw    $t5, 0x2c($sp)
-/* 0D33B8 7F09E888 8FB9001C */  lw    $t9, 0x1c($sp)
-/* 0D33BC 7F09E88C A5A00004 */  sh    $zero, 4($t5)
-/* 0D33C0 7F09E890 ADB90000 */  sw    $t9, ($t5)
-/* 0D33C4 7F09E894 87AE003A */  lh    $t6, 0x3a($sp)
-/* 0D33C8 7F09E898 A5AE0006 */  sh    $t6, 6($t5)
-.L7F09E89C:
-/* 0D33CC 7F09E89C 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F09E8A0:
-/* 0D33D0 7F09E8A0 27BD0030 */  addiu $sp, $sp, 0x30
-/* 0D33D4 7F09E8A4 03E00008 */  jr    $ra
-/* 0D33D8 7F09E8A8 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING

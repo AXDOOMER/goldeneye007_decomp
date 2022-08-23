@@ -92,7 +92,8 @@ struct SmokePart
 
 struct Smoke {
     PropRecord *prop;
-    u32 unk04;
+    s16 unk04;
+    s16 unk06;
     struct SmokePart parts[SMOKE_PARTS_LEN]; /*0x008*/
 };
 
