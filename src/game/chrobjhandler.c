@@ -40996,40 +40996,18 @@ glabel complete_object_data_block_return_position_entry
 #endif
 
 
+PropRecord* sub_GAME_7F051DD8(s32* arg0, ModelFileHeader* arg1)
+{
+    PropRecord* prop;
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F051DD8(void) {
-
+    prop = sub_GAME_7F0406F8(arg0, arg1);
+    if (prop != NULL)
+    {
+        prop->type = PROP_TYPE_WEAPON;
+        sub_GAME_7F052574(prop, 0);
+    }
+    return prop;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F051DD8
-/* 086908 7F051DD8 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 08690C 7F051DDC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 086910 7F051DE0 0FC101BE */  jal   sub_GAME_7F0406F8
-/* 086914 7F051DE4 00000000 */   nop   
-/* 086918 7F051DE8 10400007 */  beqz  $v0, .L7F051E08
-/* 08691C 7F051DEC 00402025 */   move  $a0, $v0
-/* 086920 7F051DF0 240E0004 */  li    $t6, 4
-/* 086924 7F051DF4 A04E0000 */  sb    $t6, ($v0)
-/* 086928 7F051DF8 AFA2001C */  sw    $v0, 0x1c($sp)
-/* 08692C 7F051DFC 0FC1495D */  jal   sub_GAME_7F052574
-/* 086930 7F051E00 00002825 */   move  $a1, $zero
-/* 086934 7F051E04 8FA4001C */  lw    $a0, 0x1c($sp)
-.L7F051E08:
-/* 086938 7F051E08 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 08693C 7F051E0C 27BD0020 */  addiu $sp, $sp, 0x20
-/* 086940 7F051E10 00801025 */  move  $v0, $a0
-/* 086944 7F051E14 03E00008 */  jr    $ra
-/* 086948 7F051E18 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
