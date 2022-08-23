@@ -78,7 +78,7 @@ jobs:
         run: make -C tools/report
 
       - name: difftest1
-        run: git diff --name-only origin/master ${{GITHUB_HEAD_REF}}
+        run: git diff --name-only origin/master ${GITHUB_HEAD_REF}
 
       - name: difftest2    
         run: git diff --name-only ${{ github.event.before }} ${{ github.sha }} 
@@ -87,7 +87,7 @@ jobs:
         run: git diff --name-only -1
 
       - name: difftest4
-        run: git diff --name-only @"{{10 minutes ago}}"
+        run: git diff --name-only @"{10 minutes ago}"
 
       - name: Stats
         run: python3 tools/ge-stats.py --version us --report           
