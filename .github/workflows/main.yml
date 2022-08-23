@@ -59,6 +59,7 @@ jobs:
           FILE_US: ${{ secrets.SECRET_FILE_US  }}
         run: wget -O baserom.u.z64 $FILE_US
 
+      # cach is only usefull if downloading things takes longer than copying things - in this case, extraction is quicker
       #- name: Cache Assets
       #  id: cache-assets
       #  uses: actions/cache@v3
@@ -75,15 +76,21 @@ jobs:
           
       - name: Make report
         run: make -C tools/report
-        
-      - name: Stats
-        run: |
-            git diff --name-only origin/master origin/${GITHUB_HEAD_REF}
-            git diff --name-only ${{ github.event.before }} ${{ github.sha }} | xargs
-            python3 tools/ge-stats.py --version us --report
 
-        #git diff HEAD^ HEAD --name-only
-            
+      - name: difftest1
+        run: git diff --name-only origin/master ${{GITHUB_HEAD_REF}}
+
+      - name: difftest2    
+        run: git diff --name-only ${{ github.event.before }} ${{ github.sha }} 
+
+      - name: difftest3
+        run: git diff --name-only -1
+
+      - name: difftest4
+        run: git diff --name-only @"{{10 minutes ago}}"
+
+      - name: Stats
+        run: python3 tools/ge-stats.py --version us --report           
         # expected args
         # 1481 15854 12774 232276 564 1312 652 20330 15471 269772 49 336 tools/report/index.html "src/game/bondview.c"
       
