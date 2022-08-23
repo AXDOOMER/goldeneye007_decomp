@@ -12946,37 +12946,12 @@ glabel subdraw
 #endif
 
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F074790(void) {
-
+void sub_GAME_7F074790(struct unk_joint_list* arg0, Model* arg1)
+{
+    subcalcpos(arg1);
+    subcalcmatrices(arg0, arg1);
+    subdraw((s32) arg0, arg1);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F074790
-/* 0A92C0 7F074790 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0A92C4 7F074794 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A92C8 7F074798 AFA40018 */  sw    $a0, 0x18($sp)
-/* 0A92CC 7F07479C AFA5001C */  sw    $a1, 0x1c($sp)
-/* 0A92D0 7F0747A0 0FC1B5AC */  jal   subcalcpos
-/* 0A92D4 7F0747A4 00A02025 */   move  $a0, $a1
-/* 0A92D8 7F0747A8 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0A92DC 7F0747AC 0FC1BCBE */  jal   subcalcmatrices
-/* 0A92E0 7F0747B0 8FA5001C */   lw    $a1, 0x1c($sp)
-/* 0A92E4 7F0747B4 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0A92E8 7F0747B8 0FC1D1A1 */  jal   subdraw
-/* 0A92EC 7F0747BC 8FA5001C */   lw    $a1, 0x1c($sp)
-/* 0A92F0 7F0747C0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0A92F4 7F0747C4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0A92F8 7F0747C8 03E00008 */  jr    $ra
-/* 0A92FC 7F0747CC 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
