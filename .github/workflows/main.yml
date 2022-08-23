@@ -38,7 +38,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
+        with:
+          fetch-depth: 2
       - name: Install Depedencies
         run: |
           sudo apt update
@@ -77,6 +78,7 @@ jobs:
         
       - name: Stats
         run: |
+            git diff --name-only origin/master origin/${GITHUB_HEAD_REF}
             git diff --name-only ${{ github.event.before }} ${{ github.sha }} | xargs
             python3 tools/ge-stats.py --version us --report
 
