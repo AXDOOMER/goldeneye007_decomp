@@ -64,6 +64,8 @@
 
 #endif
 
+#define BONDVIEW_DEBUG_BUFFER_LENGTH 0x97
+
 // bss
 coord3d flt_CODE_bss_80079940;
 f32 flt_CODE_bss_8007994C;
@@ -207,7 +209,8 @@ s32 dword_CODE_bss_80079C6C;
 #if defined LEFTOVERDEBUG
 //CODE.bss:80079C70
 /***/
-char stringbuffer_top[0x130];
+char stringbuffer_top[0x2][BONDVIEW_DEBUG_BUFFER_LENGTH];
+u16 dword_CODE_bss_80079d9E;
 #endif
 
 //CODE.bss:80079DA0
@@ -225,7 +228,8 @@ s32 dword_CODE_bss_80079DA8[BSS_80079DA8_LENGTH];
 //CODE.bss:80079DC8
 char dword_CODE_bss_80079DC8[0x3C];
 #else
-char dword_CODE_bss_80079DC8[0x16C];
+char dword_CODE_bss_80079DC8[0x2][BONDVIEW_DEBUG_BUFFER_LENGTH];
+char dword_CODE_bss_80079EF6[0x3C];
 #endif
 
 //CODE.bss:80079E04
@@ -42403,125 +42407,24 @@ void sub_GAME_7F08A944(PLAYERFLAG flag)
     D_800368B4 |= flag;
 }
 
-#ifdef NONMATCHING
-/**
- * Address 0x7F08A95C.
- */
-void hudmsgTopShow(s8 *string)
+
+void hudmsgTopShow(char* string)
 {
-    char *cc;
     s32 index;
 
-    if (display_upper_text_window < 2)
-    {
-        index = ((upper_text_buffer_index + display_upper_text_window) % 2) * 0x97;
-        cc = &stringbuffer_top[index];
-        strncpy(cc, string, 0x96U);
-        display_upper_text_window += 1;
-        cc[0x96] = '\0';
-    }
-}
-#else
+    if (display_upper_text_window >= 2) { return; }
 
+    index = (upper_text_buffer_index + display_upper_text_window) % 2;
 #if defined(LEFTOVERDEBUG)
-GLOBAL_ASM(
-.text
-glabel hudmsgTopShow
-/* 0BF48C 7F08A95C 3C078003 */  lui   $a3, %hi(display_upper_text_window)
-/* 0BF490 7F08A960 24E768AC */  addiu $a3, %lo(display_upper_text_window) # addiu $a3, $a3, 0x68ac
-/* 0BF494 7F08A964 8CE30000 */  lw    $v1, ($a3)
-/* 0BF498 7F08A968 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0BF49C 7F08A96C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0BF4A0 7F08A970 28610002 */  slti  $at, $v1, 2
-/* 0BF4A4 7F08A974 1020001C */  beqz  $at, .L7F08A9E8
-/* 0BF4A8 7F08A978 00802825 */   move  $a1, $a0
-/* 0BF4AC 7F08A97C 3C0E8003 */  lui   $t6, %hi(upper_text_buffer_index)
-/* 0BF4B0 7F08A980 8DCE68A8 */  lw    $t6, %lo(upper_text_buffer_index)($t6)
-/* 0BF4B4 7F08A984 3C198008 */  lui   $t9, %hi(stringbuffer_top)
-/* 0BF4B8 7F08A988 27399C70 */  addiu $t9, %lo(stringbuffer_top) # addiu $t9, $t9, -0x6390
-/* 0BF4BC 7F08A98C 01C31021 */  addu  $v0, $t6, $v1
-/* 0BF4C0 7F08A990 04410004 */  bgez  $v0, .L7F08A9A4
-/* 0BF4C4 7F08A994 304F0001 */   andi  $t7, $v0, 1
-/* 0BF4C8 7F08A998 11E00002 */  beqz  $t7, .L7F08A9A4
-/* 0BF4CC 7F08A99C 00000000 */   nop
-/* 0BF4D0 7F08A9A0 25EFFFFE */  addiu $t7, $t7, -2
-.L7F08A9A4:
-/* 0BF4D4 7F08A9A4 000FC080 */  sll   $t8, $t7, 2
-/* 0BF4D8 7F08A9A8 030FC021 */  addu  $t8, $t8, $t7
-/* 0BF4DC 7F08A9AC 0018C080 */  sll   $t8, $t8, 2
-/* 0BF4E0 7F08A9B0 030FC023 */  subu  $t8, $t8, $t7
-/* 0BF4E4 7F08A9B4 0018C0C0 */  sll   $t8, $t8, 3
-/* 0BF4E8 7F08A9B8 030FC023 */  subu  $t8, $t8, $t7
-/* 0BF4EC 7F08A9BC 03192021 */  addu  $a0, $t8, $t9
-/* 0BF4F0 7F08A9C0 AFA4001C */  sw    $a0, 0x1c($sp)
-/* 0BF4F4 7F08A9C4 0C0029E8 */  jal   strncpy
-/* 0BF4F8 7F08A9C8 24060096 */   li    $a2, 150
-/* 0BF4FC 7F08A9CC 3C078003 */  lui   $a3, %hi(display_upper_text_window)
-/* 0BF500 7F08A9D0 24E768AC */  addiu $a3, %lo(display_upper_text_window) # addiu $a3, $a3, 0x68ac
-/* 0BF504 7F08A9D4 8CE80000 */  lw    $t0, ($a3)
-/* 0BF508 7F08A9D8 8FA4001C */  lw    $a0, 0x1c($sp)
-/* 0BF50C 7F08A9DC 25090001 */  addiu $t1, $t0, 1
-/* 0BF510 7F08A9E0 ACE90000 */  sw    $t1, ($a3)
-/* 0BF514 7F08A9E4 A0800096 */  sb    $zero, 0x96($a0)
-.L7F08A9E8:
-/* 0BF518 7F08A9E8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0BF51C 7F08A9EC 27BD0028 */  addiu $sp, $sp, 0x28
-/* 0BF520 7F08A9F0 03E00008 */  jr    $ra
-/* 0BF524 7F08A9F4 00000000 */   nop
-)
+    strncpy(stringbuffer_top[index], string, (BONDVIEW_DEBUG_BUFFER_LENGTH-1));
+    display_upper_text_window += 1;
+    stringbuffer_top[index][(BONDVIEW_DEBUG_BUFFER_LENGTH-1)] = 0;
+#else
+    strncpy(dword_CODE_bss_80079DC8[index], string, (BONDVIEW_DEBUG_BUFFER_LENGTH-1));
+    display_upper_text_window += 1;
+    dword_CODE_bss_80079DC8[index][(BONDVIEW_DEBUG_BUFFER_LENGTH-1)] = 0;
 #endif
-
-#if !defined(LEFTOVERDEBUG)
-GLOBAL_ASM(
-.text
-glabel hudmsgTopShow
-/* 0BD594 7F08ABA4 3C078003 */  lui   $a3, %hi(display_upper_text_window) # $a3, 0x8003
-/* 0BD598 7F08ABA8 24E71DF4 */  addiu $a3, %lo(display_upper_text_window) # addiu $a3, $a3, 0x1df4
-/* 0BD59C 7F08ABAC 8CE30000 */  lw    $v1, ($a3)
-/* 0BD5A0 7F08ABB0 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0BD5A4 7F08ABB4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0BD5A8 7F08ABB8 28610002 */  slti  $at, $v1, 2
-/* 0BD5AC 7F08ABBC 1020001C */  beqz  $at, .Leu7F08AC30
-/* 0BD5B0 7F08ABC0 00802825 */   move  $a1, $a0
-/* 0BD5B4 7F08ABC4 3C0E8003 */  lui   $t6, %hi(upper_text_buffer_index) # $t6, 0x8003
-/* 0BD5B8 7F08ABC8 8DCE1DF0 */  lw    $t6, %lo(upper_text_buffer_index)($t6)
-/* 0BD5BC 7F08ABCC 3C198007 */  lui   $t9, %hi(dword_CODE_bss_80079DC8) # $t9, 0x8007
-/* 0BD5C0 7F08ABD0 273987A8 */  addiu $t9, %lo(dword_CODE_bss_80079DC8) # addiu $t9, $t9, -0x7858
-/* 0BD5C4 7F08ABD4 01C31021 */  addu  $v0, $t6, $v1
-/* 0BD5C8 7F08ABD8 04410004 */  bgez  $v0, .L7F08ABEC
-/* 0BD5CC 7F08ABDC 304F0001 */   andi  $t7, $v0, 1
-/* 0BD5D0 7F08ABE0 11E00002 */  beqz  $t7, .L7F08ABEC
-/* 0BD5D4 7F08ABE4 00000000 */   nop   
-/* 0BD5D8 7F08ABE8 25EFFFFE */  addiu $t7, $t7, -2
-.L7F08ABEC:
-/* 0BD5DC 7F08ABEC 000FC080 */  sll   $t8, $t7, 2
-/* 0BD5E0 7F08ABF0 030FC021 */  addu  $t8, $t8, $t7
-/* 0BD5E4 7F08ABF4 0018C080 */  sll   $t8, $t8, 2
-/* 0BD5E8 7F08ABF8 030FC023 */  subu  $t8, $t8, $t7
-/* 0BD5EC 7F08ABFC 0018C0C0 */  sll   $t8, $t8, 3
-/* 0BD5F0 7F08AC00 030FC023 */  subu  $t8, $t8, $t7
-/* 0BD5F4 7F08AC04 03192021 */  addu  $a0, $t8, $t9
-/* 0BD5F8 7F08AC08 AFA4001C */  sw    $a0, 0x1c($sp)
-/* 0BD5FC 7F08AC0C 0C002700 */  jal   strncpy
-/* 0BD600 7F08AC10 24060096 */   li    $a2, 150
-/* 0BD604 7F08AC14 3C078003 */  lui   $a3, %hi(display_upper_text_window) # $a3, 0x8003
-/* 0BD608 7F08AC18 24E71DF4 */  addiu $a3, %lo(display_upper_text_window) # addiu $a3, $a3, 0x1df4
-/* 0BD60C 7F08AC1C 8CE80000 */  lw    $t0, ($a3)
-/* 0BD610 7F08AC20 8FA4001C */  lw    $a0, 0x1c($sp)
-/* 0BD614 7F08AC24 25090001 */  addiu $t1, $t0, 1
-/* 0BD618 7F08AC28 ACE90000 */  sw    $t1, ($a3)
-/* 0BD61C 7F08AC2C A0800096 */  sb    $zero, 0x96($a0)
-.Leu7F08AC30:
-/* 0BD620 7F08AC30 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0BD624 7F08AC34 27BD0028 */  addiu $sp, $sp, 0x28
-/* 0BD628 7F08AC38 03E00008 */  jr    $ra
-/* 0BD62C 7F08AC3C 00000000 */   nop   
-)
-#endif
-#endif
-
-
-
+}
 
 
 /**

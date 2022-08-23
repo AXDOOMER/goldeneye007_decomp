@@ -3088,12 +3088,6 @@ extern StandTilePoint *dword_CODE_bss_80079DA4;
 #define BSS_80079DA8_LENGTH 8
 extern s32 dword_CODE_bss_80079DA8[];
 
-#ifndef VERSION_EU
-extern char dword_CODE_bss_80079DC8[];
-#else
-extern char dword_CODE_bss_80079DC8[];
-#endif
-
 
 u32 get_camera_mode(void);
 
@@ -3198,7 +3192,7 @@ void     sub_GAME_7F08A928(int param_1);
 void     sub_GAME_7F08A944(PLAYERFLAG flag);
 void     set_camera_mode(s32 arg0);
 bool     isBondInTank(void);
-void     hudmsgTopShow(s8 *string);
+void     hudmsgTopShow(char* string);
 void     SurroundWithExplosions(int delay);
 s32 check_watch_page_transistion_running(void);
 f32 bondviewWatchAnimationRelated(void);
