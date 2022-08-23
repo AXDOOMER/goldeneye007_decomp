@@ -39755,52 +39755,20 @@ Gfx *write_stan_tiles_in_yellow(Gfx *gdl)
 }
 
 
+void sub_GAME_7F089718(f32 arg0)
+{
+    f32 scalar;
+    struct collision434* col;
 
+    scalar = D_800364D0 / arg0;
 
+    col = &g_CurrentPlayer->field_488;
+    col->collision_position.x *= scalar;
+    col->collision_position.z *= scalar;
 
-
-#ifdef NONMATCHING
-void *sub_GAME_7F089718(f32 arg0) {
-    f32 temp_f0;
-    void *temp_v0;
-
-    // Node 0
-    temp_f0 = (D_800364D0 / arg0);
-    temp_v0 = (g_CurrentPlayer + 0x488);
-    temp_v0->unk4 = (f32) (g_CurrentPlayer->field_48C * temp_f0);
-    temp_v0->unkC = (f32) (g_CurrentPlayer->field_494 * temp_f0);
     D_800364D0 = arg0;
-    D_800364D4 = (f32) (1.0f / arg0);
-    return temp_v0;
+    D_800364D4 = 1.0f / arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F089718
-/* 0BE248 7F089718 3C038003 */  lui   $v1, %hi(D_800364D0)
-/* 0BE24C 7F08971C 246364D0 */  addiu $v1, %lo(D_800364D0) # addiu $v1, $v1, 0x64d0
-/* 0BE250 7F089720 C4640000 */  lwc1  $f4, ($v1)
-/* 0BE254 7F089724 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0BE258 7F089728 44819000 */  mtc1  $at, $f18
-/* 0BE25C 7F08972C 460C2003 */  div.s $f0, $f4, $f12
-/* 0BE260 7F089730 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
-/* 0BE264 7F089734 8C42A0B0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
-/* 0BE268 7F089738 3C018003 */  lui   $at, %hi(D_800364D4)
-/* 0BE26C 7F08973C C446048C */  lwc1  $f6, 0x48c($v0)
-/* 0BE270 7F089740 C44A0494 */  lwc1  $f10, 0x494($v0)
-/* 0BE274 7F089744 24420488 */  addiu $v0, $v0, 0x488
-/* 0BE278 7F089748 460C9103 */  div.s $f4, $f18, $f12
-/* 0BE27C 7F08974C 46003202 */  mul.s $f8, $f6, $f0
-/* 0BE280 7F089750 00000000 */  nop
-/* 0BE284 7F089754 46005402 */  mul.s $f16, $f10, $f0
-/* 0BE288 7F089758 E4480004 */  swc1  $f8, 4($v0)
-/* 0BE28C 7F08975C E450000C */  swc1  $f16, 0xc($v0)
-/* 0BE290 7F089760 E46C0000 */  swc1  $f12, ($v1)
-/* 0BE294 7F089764 03E00008 */  jr    $ra
-/* 0BE298 7F089768 E42464D4 */   swc1  $f4, %lo(D_800364D4)($at)
-)
-#endif
-
 
 
 void sub_GAME_7F08976C(f32 param_1) {
