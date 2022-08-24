@@ -40910,37 +40910,17 @@ void propweaponSetDual(WeaponObjRecord *leftweapon, WeaponObjRecord *rightweapon
 }
 
 
+PropRecord* complete_object_data_block_return_position_entry(ObjectRecord* obj, ModelFileHeader* model_header, PropRecord* prop, Model* model)
+{
+    prop = init_standard_object(obj, model_header, prop, model);
+    if (prop != NULL)
+    {
+        prop->type = 4;
+        sub_GAME_7F052574(prop, 0);
+    }
 
-
-#ifdef NONMATCHING
-void complete_object_data_block_return_position_entry(void) {
-
+    return prop;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel complete_object_data_block_return_position_entry
-/* 0868C0 7F051D90 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0868C4 7F051D94 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0868C8 7F051D98 0FC10153 */  jal   init_standard_object
-/* 0868CC 7F051D9C 00000000 */   nop   
-/* 0868D0 7F051DA0 10400008 */  beqz  $v0, .L7F051DC4
-/* 0868D4 7F051DA4 00403025 */   move  $a2, $v0
-/* 0868D8 7F051DA8 240E0004 */  li    $t6, 4
-/* 0868DC 7F051DAC A04E0000 */  sb    $t6, ($v0)
-/* 0868E0 7F051DB0 AFA20020 */  sw    $v0, 0x20($sp)
-/* 0868E4 7F051DB4 00402025 */  move  $a0, $v0
-/* 0868E8 7F051DB8 0FC1495D */  jal   sub_GAME_7F052574
-/* 0868EC 7F051DBC 00002825 */   move  $a1, $zero
-/* 0868F0 7F051DC0 8FA60020 */  lw    $a2, 0x20($sp)
-.L7F051DC4:
-/* 0868F4 7F051DC4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0868F8 7F051DC8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0868FC 7F051DCC 00C01025 */  move  $v0, $a2
-/* 086900 7F051DD0 03E00008 */  jr    $ra
-/* 086904 7F051DD4 00000000 */   nop   
-)
-#endif
 
 
 PropRecord* sub_GAME_7F051DD8(s32* arg0, ModelFileHeader* arg1)
