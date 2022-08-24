@@ -1901,140 +1901,87 @@ void chrobjCollisionRelated(ObjectRecord *arg0)
 }
 
 
+PropRecord* init_standard_object(ObjectRecord* obj, ModelFileHeader* model_header, PropRecord* prop, Model* model)
+{
+    if (prop == NULL)
+    {
+        prop = chrpropAllocate();
+    }
 
+    if (model == NULL)
+    {
+        if (obj->type == 0x28)
+        {
+            model = get_aircraft_obj_instance_controller(model_header);
+        }
+        else
+        {
+            model = get_obj_instance_controller_for_header(model_header);
+        }
+    }
 
+    if ((prop != NULL) && (model != NULL))
+    {
+        obj->model = model;
+        obj->ptr_allocated_collisiondata_block = NULL;
 
-#ifdef NONMATCHING
-void init_standard_object(void) {
+        if (obj->flags & 0x100)
+        {
+            obj->ptr_allocated_collisiondata_block = mempAllocBytesInBank(0x50U, 4U);
+            obj->state = (u8) (obj->state | 8);
+        }
+        else
+        {
+            obj->state = (u8) (obj->state & 0xFFF7);
+        }
 
+        obj->prop = prop;
+        obj->unk6C = 0;
+        obj->field_78.r = 0;
+        obj->field_78.g = 0;
+        obj->field_78.b = 0;
+        obj->field_78.a = 0;
+        obj->field_7C = 0;
+        obj->field_7D = 0;
+        obj->field_7E = 0;
+        obj->field_7F = 0;
+        obj->maxdamage = 0.0f;
+        *((s16*)&obj->model->unk00) = -1;
+        obj->model->chr = NULL;
+        modelSetScale(obj->model, PitemZ_entries[obj->obj].scale);
+        prop->type = 1;
+        prop->obj = obj;
+        prop->pos.x = 0.0f;
+        obj->runtime_pos.x = 0.0f;
+        prop->pos.y = 0.0f;
+        obj->runtime_pos.y = 0.0f;
+        prop->pos.z = 0.0f;
+        obj->runtime_pos.z = 0.0f;
+        prop->stan = NULL;
+    }
+    else
+    {
+        if (model != NULL)
+        {
+            if (obj->type == 0x28)
+            {
+                set_aircraft_obj_inst_scale_to_zero(model);
+            }
+            else
+            {
+                clear_model_obj(model);
+            }
+        }
+
+        if (prop != NULL)
+        {
+            chrpropFree(prop);
+            prop = NULL;
+        }
+    }
+
+    return prop;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel init_standard_object
-/* 07507C 7F04054C 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 075080 7F040550 AFB10018 */  sw    $s1, 0x18($sp)
-/* 075084 7F040554 AFB00014 */  sw    $s0, 0x14($sp)
-/* 075088 7F040558 00808025 */  move  $s0, $a0
-/* 07508C 7F04055C 00C08825 */  move  $s1, $a2
-/* 075090 7F040560 14C00007 */  bnez  $a2, .L7F040580
-/* 075094 7F040564 AFBF001C */   sw    $ra, 0x1c($sp)
-/* 075098 7F040568 AFA50024 */  sw    $a1, 0x24($sp)
-/* 07509C 7F04056C 0FC0E90C */  jal   chrpropAllocate
-/* 0750A0 7F040570 AFA7002C */   sw    $a3, 0x2c($sp)
-/* 0750A4 7F040574 8FA50024 */  lw    $a1, 0x24($sp)
-/* 0750A8 7F040578 8FA7002C */  lw    $a3, 0x2c($sp)
-/* 0750AC 7F04057C 00408825 */  move  $s1, $v0
-.L7F040580:
-/* 0750B0 7F040580 14E0000C */  bnez  $a3, .L7F0405B4
-/* 0750B4 7F040584 00000000 */   nop   
-/* 0750B8 7F040588 920E0003 */  lbu   $t6, 3($s0)
-/* 0750BC 7F04058C 24010028 */  li    $at, 40
-/* 0750C0 7F040590 15C10005 */  bne   $t6, $at, .L7F0405A8
-/* 0750C4 7F040594 00000000 */   nop   
-/* 0750C8 7F040598 0FC1B08F */  jal   get_aircraft_obj_instance_controller
-/* 0750CC 7F04059C 00A02025 */   move  $a0, $a1
-/* 0750D0 7F0405A0 10000004 */  b     .L7F0405B4
-/* 0750D4 7F0405A4 00403825 */   move  $a3, $v0
-.L7F0405A8:
-/* 0750D8 7F0405A8 0FC1B025 */  jal   get_obj_instance_controller_for_header
-/* 0750DC 7F0405AC 00A02025 */   move  $a0, $a1
-/* 0750E0 7F0405B0 00403825 */  move  $a3, $v0
-.L7F0405B4:
-/* 0750E4 7F0405B4 12200039 */  beqz  $s1, .L7F04069C
-/* 0750E8 7F0405B8 00000000 */   nop   
-/* 0750EC 7F0405BC 10E00037 */  beqz  $a3, .L7F04069C
-/* 0750F0 7F0405C0 00000000 */   nop   
-/* 0750F4 7F0405C4 8E0F0008 */  lw    $t7, 8($s0)
-/* 0750F8 7F0405C8 AE070014 */  sw    $a3, 0x14($s0)
-/* 0750FC 7F0405CC AE000068 */  sw    $zero, 0x68($s0)
-/* 075100 7F0405D0 31F80100 */  andi  $t8, $t7, 0x100
-/* 075104 7F0405D4 13000008 */  beqz  $t8, .L7F0405F8
-/* 075108 7F0405D8 24040050 */   li    $a0, 80
-/* 07510C 7F0405DC 0C0025C8 */  jal   mempAllocBytesInBank
-/* 075110 7F0405E0 24050004 */   li    $a1, 4
-/* 075114 7F0405E4 92190002 */  lbu   $t9, 2($s0)
-/* 075118 7F0405E8 AE020068 */  sw    $v0, 0x68($s0)
-/* 07511C 7F0405EC 37280008 */  ori   $t0, $t9, 8
-/* 075120 7F0405F0 10000004 */  b     .L7F040604
-/* 075124 7F0405F4 A2080002 */   sb    $t0, 2($s0)
-.L7F0405F8:
-/* 075128 7F0405F8 92090002 */  lbu   $t1, 2($s0)
-/* 07512C 7F0405FC 312AFFF7 */  andi  $t2, $t1, 0xfff7
-/* 075130 7F040600 A20A0002 */  sb    $t2, 2($s0)
-.L7F040604:
-/* 075134 7F040604 44800000 */  mtc1  $zero, $f0
-/* 075138 7F040608 8E0C0014 */  lw    $t4, 0x14($s0)
-/* 07513C 7F04060C AE110010 */  sw    $s1, 0x10($s0)
-/* 075140 7F040610 AE00006C */  sw    $zero, 0x6c($s0)
-/* 075144 7F040614 A2000078 */  sb    $zero, 0x78($s0)
-/* 075148 7F040618 A2000079 */  sb    $zero, 0x79($s0)
-/* 07514C 7F04061C A200007A */  sb    $zero, 0x7a($s0)
-/* 075150 7F040620 A200007B */  sb    $zero, 0x7b($s0)
-/* 075154 7F040624 A200007C */  sb    $zero, 0x7c($s0)
-/* 075158 7F040628 A200007D */  sb    $zero, 0x7d($s0)
-/* 07515C 7F04062C A200007E */  sb    $zero, 0x7e($s0)
-/* 075160 7F040630 A200007F */  sb    $zero, 0x7f($s0)
-/* 075164 7F040634 240BFFFF */  li    $t3, -1
-/* 075168 7F040638 E6000070 */  swc1  $f0, 0x70($s0)
-/* 07516C 7F04063C A58B0000 */  sh    $t3, ($t4)
-/* 075170 7F040640 8E0D0014 */  lw    $t5, 0x14($s0)
-/* 075174 7F040644 3C058004 */  lui   $a1, %hi(PitemZ_entries+8)
-/* 075178 7F040648 ADA00004 */  sw    $zero, 4($t5)
-/* 07517C 7F04064C 860E0004 */  lh    $t6, 4($s0)
-/* 075180 7F040650 8E040014 */  lw    $a0, 0x14($s0)
-/* 075184 7F040654 000E7880 */  sll   $t7, $t6, 2
-/* 075188 7F040658 01EE7823 */  subu  $t7, $t7, $t6
-/* 07518C 7F04065C 000F7880 */  sll   $t7, $t7, 2
-/* 075190 7F040660 00AF2821 */  addu  $a1, $a1, $t7
-/* 075194 7F040664 0FC1B39E */  jal   modelSetScale
-/* 075198 7F040668 8CA5A230 */   lw    $a1, %lo(PitemZ_entries+8)($a1)
-/* 07519C 7F04066C 44800000 */  mtc1  $zero, $f0
-/* 0751A0 7F040670 24180001 */  li    $t8, 1
-/* 0751A4 7F040674 A2380000 */  sb    $t8, ($s1)
-/* 0751A8 7F040678 AE300004 */  sw    $s0, 4($s1)
-/* 0751AC 7F04067C E6200008 */  swc1  $f0, 8($s1)
-/* 0751B0 7F040680 E6000058 */  swc1  $f0, 0x58($s0)
-/* 0751B4 7F040684 E620000C */  swc1  $f0, 0xc($s1)
-/* 0751B8 7F040688 E600005C */  swc1  $f0, 0x5c($s0)
-/* 0751BC 7F04068C E6200010 */  swc1  $f0, 0x10($s1)
-/* 0751C0 7F040690 E6000060 */  swc1  $f0, 0x60($s0)
-/* 0751C4 7F040694 10000012 */  b     .L7F0406E0
-/* 0751C8 7F040698 AE200014 */   sw    $zero, 0x14($s1)
-.L7F04069C:
-/* 0751CC 7F04069C 10E0000B */  beqz  $a3, .L7F0406CC
-/* 0751D0 7F0406A0 00000000 */   nop   
-/* 0751D4 7F0406A4 92190003 */  lbu   $t9, 3($s0)
-/* 0751D8 7F0406A8 24010028 */  li    $at, 40
-/* 0751DC 7F0406AC 17210005 */  bne   $t9, $at, .L7F0406C4
-/* 0751E0 7F0406B0 00000000 */   nop   
-/* 0751E4 7F0406B4 0FC1B0FE */  jal   set_aircraft_obj_inst_scale_to_zero
-/* 0751E8 7F0406B8 00E02025 */   move  $a0, $a3
-/* 0751EC 7F0406BC 10000003 */  b     .L7F0406CC
-/* 0751F0 7F0406C0 00000000 */   nop   
-.L7F0406C4:
-/* 0751F4 7F0406C4 0FC1B08D */  jal   clear_model_obj
-/* 0751F8 7F0406C8 00E02025 */   move  $a0, $a3
-.L7F0406CC:
-/* 0751FC 7F0406CC 52200005 */  beql  $s1, $zero, .L7F0406E4
-/* 075200 7F0406D0 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 075204 7F0406D4 0FC0E921 */  jal   chrpropFree
-/* 075208 7F0406D8 02202025 */   move  $a0, $s1
-/* 07520C 7F0406DC 00008825 */  move  $s1, $zero
-.L7F0406E0:
-/* 075210 7F0406E0 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F0406E4:
-/* 075214 7F0406E4 02201025 */  move  $v0, $s1
-/* 075218 7F0406E8 8FB10018 */  lw    $s1, 0x18($sp)
-/* 07521C 7F0406EC 8FB00014 */  lw    $s0, 0x14($sp)
-/* 075220 7F0406F0 03E00008 */  jr    $ra
-/* 075224 7F0406F4 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
-
-
-
-
 
 
 PropRecord* sub_GAME_7F0406F8(s32* object, ModelFileHeader* header) {

@@ -1220,8 +1220,10 @@ typedef union
          */
         typedef struct Model
         {
-            u8                unk00; /*0x00*/
-            s16                Type;  /*0x01*/ //per sub_GAME_7F075F68 should be s16?
+            u8                unk00; /*0x00*/   // init_standard_object() indicates that unk00 is a s16...
+            s16                Type;  /*0x01*/  // but sub_GAME_7F075F68() indicates that Type is a s16...
+                                                // not sure which is correct.
+
             struct ChrRecord *chr;   /*0x04*/
             ModelFileHeader  *obj;   /*0x08 GE Name confirmed*/
             RenderPosView    *render_pos; /*0x0c*/
