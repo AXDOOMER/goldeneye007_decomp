@@ -2163,7 +2163,7 @@ glabel sub_GAME_7F05D334
 )
 #endif
 
-s32 get_next_weapon_in_cycle_for_hand(GUNHAND hand, s32 direction)
+ITEM_IDS get_next_weapon_in_cycle_for_hand(GUNHAND hand, s32 direction)
 {
 	if (g_CurrentPlayer->hands[hand].when_detonating_mines_is_0 == 5) {
 		if (
@@ -2218,15 +2218,15 @@ void likely_change_weapon_in_hand(enum GUNHAND hand, s32 arg1, s32 arg2)
 }
 
 
-void sub_GAME_7F05D610(int param_1)
+void sub_GAME_7F05D610(GUNHAND hand)
 {
-  	likely_change_weapon_in_hand(param_1, sub_GAME_7F05D334(get_next_weapon_in_cycle_for_hand(param_1, 0), 1), 0);
+    likely_change_weapon_in_hand(hand, sub_GAME_7F05D334(get_next_weapon_in_cycle_for_hand(hand, 0), 1), 0);
 }
 
 
-void sub_GAME_7F05D650(int param_1)
+void sub_GAME_7F05D650(GUNHAND hand)
 {
-	likely_change_weapon_in_hand(param_1, sub_GAME_7F05D334(get_next_weapon_in_cycle_for_hand(param_1, 0), -1), 0);
+    likely_change_weapon_in_hand(hand, sub_GAME_7F05D334(get_next_weapon_in_cycle_for_hand(hand, 0), -1), 0);
 }
 
 
@@ -2336,7 +2336,7 @@ void attempt_reload_item_in_hand(GUNHAND hand) {
     }
 }
 
-s32 getCurrentPlayerWeaponId(GUNHAND hand) {
+ITEM_IDS getCurrentPlayerWeaponId(GUNHAND hand) {
     return g_CurrentPlayer->hands[hand].weaponnum;
 }
 
