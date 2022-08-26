@@ -80,15 +80,15 @@ void save_ptrDL_enpoint_to_current_init_lightfixture_table(Gfx *param_1)
 
 s32 check_if_imageID_is_light(s32 imageID)
 {
-    if ((imageID == IMAGE_WALL_LAMP)     || 
-        (imageID == IMAGE_203_LIGHT)  || 
-        (imageID == IMAGE_205_LIGHT)  || 
-        (imageID == IMAGE_252_LIGHT)  || 
-        (imageID == IMAGE_PANEL_LAMP)    || 
-        (imageID == IMAGE_255_LIGHT)  || 
-        (imageID == IMAGE_256_LIGHT)  || 
-        (imageID == IMAGE_HANGING_LAMP)  || 
-        (imageID == IMAGE_NEON_LAMP)     || 
+    if ((imageID == IMAGE_WALL_LAMP)     ||
+        (imageID == IMAGE_203_LIGHT)     ||
+        (imageID == IMAGE_205_LIGHT)     ||
+        (imageID == IMAGE_252_LIGHT)     ||
+        (imageID == IMAGE_PANEL_LAMP)    ||
+        (imageID == IMAGE_255_LIGHT)     ||
+        (imageID == IMAGE_256_LIGHT)     ||
+        (imageID == IMAGE_HANGING_LAMP)  ||
+        (imageID == IMAGE_NEON_LAMP)     ||
         (imageID == IMAGE_LINEAR_LAMP))
     {
         // Will darken when shot
@@ -101,16 +101,16 @@ s32 check_if_imageID_is_light(s32 imageID)
 }
 
 
-s_room_data * return_ptr_vertex_of_entry_room(struct bondstruct_unk_room_related* arg0, s32 arg1)
+s_room_data * return_ptr_vertex_of_entry_room(u_room_data_blob * blob, s32 arg1)
 {
     s_room_data * ret;
 
-    while (arg0->unk00 != 4)
+    while (blob->unk00 != 4)
     {
-        arg0--;
+        blob--;
     }
 
-    ret = arg0->unk04;
+    ret = blob->room_data;
 
     // weird memory checking, not sure what's going on here
     if (((s32) ret & 0xFF000000) == 0x0E000000) {
@@ -121,136 +121,37 @@ s_room_data * return_ptr_vertex_of_entry_room(struct bondstruct_unk_room_related
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0BB6F4(struct bondstruct_unk_room_related* arg0, u32 arg1, s32* arg2, s32* arg3, s32* arg4) {
-
+void sub_GAME_7F0BB6F4(u_room_data_blob * blob, u32 type, s32* idx1, s32* idx2, s32* idx3)
+{
+    switch (type)
+    {
+        case 0:
+            *idx1 = (s32) blob->asU8[5] / 10;
+            *idx2 = (u32) ((s32) blob->asU8[6] / 10);
+            *idx3 = (s32) blob->asU8[7] / 10;
+            break;
+        case 1:
+            *idx1 = blob->asU32[1] & 0xF;
+            *idx2 = (((u8) blob->asU8[7]) & 0xFFFFFFFFu) >> 4;
+            *idx3 = blob->asU32[0] & 0xF;
+            break;
+        case 2:
+            *idx1 = blob->asU8[6] & 0xF;
+            *idx2 = (((u16) blob->asU16[3]) & 0xFFFFFFFFu) >> 0xC;
+            *idx3 = (((s32) ((u8) blob->asU8[3]) & 0xFFFFFFFFu) >> 4);
+            break;
+        case 3:
+            *idx1 = blob->asU16[2] & 0xF;
+            *idx2 = (((u8) blob->asU8[5]) & 0xFFFFFFFFu) >> 4;
+            *idx3 = blob->asU8[2] & 0xF;
+            break;
+        case 4:
+            *idx1 = blob->asU8[4] & 0xF;
+            *idx2 = blob->asU32[1] >> 0x1C;
+            *idx3 = (((u16) blob->asU16[1]) & 0xFFFFFFFFu) >> 0xC;
+            break;
+    }
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-/*D:80058D80*/
-glabel jpt_80058D80
-.word .L7F0BB714
-.word .L7F0BB7C0
-.word .L7F0BB7EC
-.word .L7F0BB818
-.word .L7F0BB844
-.text
-glabel sub_GAME_7F0BB6F4
-/* 0F0224 7F0BB6F4 2CA10005 */  sltiu $at, $a1, 5
-/* 0F0228 7F0BB6F8 1020005C */  beqz  $at, .L7F0BB86C
-/* 0F022C 7F0BB6FC 00057080 */   sll   $t6, $a1, 2
-/* 0F0230 7F0BB700 3C018006 */  lui   $at, %hi(jpt_80058D80)
-/* 0F0234 7F0BB704 002E0821 */  addu  $at, $at, $t6
-/* 0F0238 7F0BB708 8C2E8D80 */  lw    $t6, %lo(jpt_80058D80)($at)
-/* 0F023C 7F0BB70C 01C00008 */  jr    $t6
-/* 0F0240 7F0BB710 00000000 */   nop   
-.L7F0BB714:
-/* 0F0244 7F0BB714 2402000A */  li    $v0, 10
-/* 0F0248 7F0BB718 908F0005 */  lbu   $t7, 5($a0)
-/* 0F024C 7F0BB71C 01E2001A */  div   $zero, $t7, $v0
-/* 0F0250 7F0BB720 0000C012 */  mflo  $t8
-/* 0F0254 7F0BB724 ACD80000 */  sw    $t8, ($a2)
-/* 0F0258 7F0BB728 90990006 */  lbu   $t9, 6($a0)
-/* 0F025C 7F0BB72C 14400002 */  bnez  $v0, .L7F0BB738
-/* 0F0260 7F0BB730 00000000 */   nop   
-/* 0F0264 7F0BB734 0007000D */  break 7
-.L7F0BB738:
-/* 0F0268 7F0BB738 2401FFFF */  li    $at, -1
-/* 0F026C 7F0BB73C 14410004 */  bne   $v0, $at, .L7F0BB750
-/* 0F0270 7F0BB740 3C018000 */   lui   $at, 0x8000
-/* 0F0274 7F0BB744 15E10002 */  bne   $t7, $at, .L7F0BB750
-/* 0F0278 7F0BB748 00000000 */   nop   
-/* 0F027C 7F0BB74C 0006000D */  break 6
-.L7F0BB750:
-/* 0F0280 7F0BB750 0322001A */  div   $zero, $t9, $v0
-/* 0F0284 7F0BB754 00004012 */  mflo  $t0
-/* 0F0288 7F0BB758 ACE80000 */  sw    $t0, ($a3)
-/* 0F028C 7F0BB75C 90890007 */  lbu   $t1, 7($a0)
-/* 0F0290 7F0BB760 14400002 */  bnez  $v0, .L7F0BB76C
-/* 0F0294 7F0BB764 00000000 */   nop   
-/* 0F0298 7F0BB768 0007000D */  break 7
-.L7F0BB76C:
-/* 0F029C 7F0BB76C 2401FFFF */  li    $at, -1
-/* 0F02A0 7F0BB770 14410004 */  bne   $v0, $at, .L7F0BB784
-/* 0F02A4 7F0BB774 3C018000 */   lui   $at, 0x8000
-/* 0F02A8 7F0BB778 17210002 */  bne   $t9, $at, .L7F0BB784
-/* 0F02AC 7F0BB77C 00000000 */   nop   
-/* 0F02B0 7F0BB780 0006000D */  break 6
-.L7F0BB784:
-/* 0F02B4 7F0BB784 0122001A */  div   $zero, $t1, $v0
-/* 0F02B8 7F0BB788 8FAB0010 */  lw    $t3, 0x10($sp)
-/* 0F02BC 7F0BB78C 00005012 */  mflo  $t2
-/* 0F02C0 7F0BB790 14400002 */  bnez  $v0, .L7F0BB79C
-/* 0F02C4 7F0BB794 00000000 */   nop   
-/* 0F02C8 7F0BB798 0007000D */  break 7
-.L7F0BB79C:
-/* 0F02CC 7F0BB79C 2401FFFF */  li    $at, -1
-/* 0F02D0 7F0BB7A0 14410004 */  bne   $v0, $at, .L7F0BB7B4
-/* 0F02D4 7F0BB7A4 3C018000 */   lui   $at, 0x8000
-/* 0F02D8 7F0BB7A8 15210002 */  bne   $t1, $at, .L7F0BB7B4
-/* 0F02DC 7F0BB7AC 00000000 */   nop   
-/* 0F02E0 7F0BB7B0 0006000D */  break 6
-.L7F0BB7B4:
-/* 0F02E4 7F0BB7B4 AD6A0000 */  sw    $t2, ($t3)
-/* 0F02E8 7F0BB7B8 03E00008 */  jr    $ra
-/* 0F02EC 7F0BB7BC 00000000 */   nop   
-.L7F0BB7C0:
-/* 0F02F0 7F0BB7C0 8C8C0004 */  lw    $t4, 4($a0)
-/* 0F02F4 7F0BB7C4 318D000F */  andi  $t5, $t4, 0xf
-/* 0F02F8 7F0BB7C8 ACCD0000 */  sw    $t5, ($a2)
-/* 0F02FC 7F0BB7CC 908E0007 */  lbu   $t6, 7($a0)
-/* 0F0300 7F0BB7D0 000E7902 */  srl   $t7, $t6, 4
-/* 0F0304 7F0BB7D4 ACEF0000 */  sw    $t7, ($a3)
-/* 0F0308 7F0BB7D8 8C980000 */  lw    $t8, ($a0)
-/* 0F030C 7F0BB7DC 8FA80010 */  lw    $t0, 0x10($sp)
-/* 0F0310 7F0BB7E0 3319000F */  andi  $t9, $t8, 0xf
-/* 0F0314 7F0BB7E4 03E00008 */  jr    $ra
-/* 0F0318 7F0BB7E8 AD190000 */   sw    $t9, ($t0)
-.L7F0BB7EC:
-/* 0F031C 7F0BB7EC 90890006 */  lbu   $t1, 6($a0)
-/* 0F0320 7F0BB7F0 312A000F */  andi  $t2, $t1, 0xf
-/* 0F0324 7F0BB7F4 ACCA0000 */  sw    $t2, ($a2)
-/* 0F0328 7F0BB7F8 948B0006 */  lhu   $t3, 6($a0)
-/* 0F032C 7F0BB7FC 000B6302 */  srl   $t4, $t3, 0xc
-/* 0F0330 7F0BB800 ACEC0000 */  sw    $t4, ($a3)
-/* 0F0334 7F0BB804 908D0003 */  lbu   $t5, 3($a0)
-/* 0F0338 7F0BB808 8FAF0010 */  lw    $t7, 0x10($sp)
-/* 0F033C 7F0BB80C 000D7102 */  srl   $t6, $t5, 4
-/* 0F0340 7F0BB810 03E00008 */  jr    $ra
-/* 0F0344 7F0BB814 ADEE0000 */   sw    $t6, ($t7)
-.L7F0BB818:
-/* 0F0348 7F0BB818 94980004 */  lhu   $t8, 4($a0)
-/* 0F034C 7F0BB81C 3319000F */  andi  $t9, $t8, 0xf
-/* 0F0350 7F0BB820 ACD90000 */  sw    $t9, ($a2)
-/* 0F0354 7F0BB824 90880005 */  lbu   $t0, 5($a0)
-/* 0F0358 7F0BB828 00084902 */  srl   $t1, $t0, 4
-/* 0F035C 7F0BB82C ACE90000 */  sw    $t1, ($a3)
-/* 0F0360 7F0BB830 908A0002 */  lbu   $t2, 2($a0)
-/* 0F0364 7F0BB834 8FAC0010 */  lw    $t4, 0x10($sp)
-/* 0F0368 7F0BB838 314B000F */  andi  $t3, $t2, 0xf
-/* 0F036C 7F0BB83C 03E00008 */  jr    $ra
-/* 0F0370 7F0BB840 AD8B0000 */   sw    $t3, ($t4)
-.L7F0BB844:
-/* 0F0374 7F0BB844 908D0004 */  lbu   $t5, 4($a0)
-/* 0F0378 7F0BB848 31AE000F */  andi  $t6, $t5, 0xf
-/* 0F037C 7F0BB84C ACCE0000 */  sw    $t6, ($a2)
-/* 0F0380 7F0BB850 8C8F0004 */  lw    $t7, 4($a0)
-/* 0F0384 7F0BB854 000FC702 */  srl   $t8, $t7, 0x1c
-/* 0F0388 7F0BB858 ACF80000 */  sw    $t8, ($a3)
-/* 0F038C 7F0BB85C 94990002 */  lhu   $t9, 2($a0)
-/* 0F0390 7F0BB860 8FA90010 */  lw    $t1, 0x10($sp)
-/* 0F0394 7F0BB864 00194302 */  srl   $t0, $t9, 0xc
-/* 0F0398 7F0BB868 AD280000 */  sw    $t0, ($t1)
-def_7F0BB70C:
-.L7F0BB86C:
-/* 0F039C 7F0BB86C 03E00008 */  jr    $ra
-/* 0F03A0 7F0BB870 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
@@ -399,7 +300,7 @@ s32 sub_GAME_7F0BBADC(s_room_data * arg0, s32 arg1)
 }
 
 
-void sub_GAME_7F0BBBA8(struct bondstruct_unk_room_related *arg0, u32 arg1, s32 arg2)
+void sub_GAME_7F0BBBA8(u_room_data_blob *blob, u32 arg1, s32 arg2)
 {
     s_room_data *room_data_2;
     s32 idx1;
@@ -407,8 +308,8 @@ void sub_GAME_7F0BBBA8(struct bondstruct_unk_room_related *arg0, u32 arg1, s32 a
     s32 idx3;
     s_room_data *room_data;
 
-    sub_GAME_7F0BB6F4(arg0, arg1, &idx1, &idx2, &idx3);
-    room_data = return_ptr_vertex_of_entry_room(arg0, arg2);
+    sub_GAME_7F0BB6F4(blob, arg1, &idx1, &idx2, &idx3);
+    room_data = return_ptr_vertex_of_entry_room(blob, arg2);
 
     sub_GAME_7F0BBA20(&room_data[idx1], arg2);
     sub_GAME_7F0BBA20(&room_data[idx2], arg2);
@@ -418,7 +319,7 @@ void sub_GAME_7F0BBBA8(struct bondstruct_unk_room_related *arg0, u32 arg1, s32 a
 }
 
 
-s32 sub_GAME_7F0BBC30(struct bondstruct_unk_room_related* arg0, u32 arg1, s32 arg2)
+s32 sub_GAME_7F0BBC30(u_room_data_blob* blob, u32 arg1, s32 arg2)
 {
     s32 out3;
     s32 idx1;
@@ -428,8 +329,8 @@ s32 sub_GAME_7F0BBC30(struct bondstruct_unk_room_related* arg0, u32 arg1, s32 ar
     s32 out2;
     s32 out1;
 
-    sub_GAME_7F0BB6F4(arg0, arg1, &idx1, &idx2, &idx3);
-    data = return_ptr_vertex_of_entry_room(arg0, arg2);
+    sub_GAME_7F0BB6F4(blob, arg1, &idx1, &idx2, &idx3);
+    data = return_ptr_vertex_of_entry_room(blob, arg2);
     out1 = sub_GAME_7F0BBADC(&data[idx2], arg2);
     out2 = sub_GAME_7F0BBADC(&data[idx1], arg2);
     out3 = sub_GAME_7F0BBADC(&data[idx3], arg2);
@@ -437,7 +338,7 @@ s32 sub_GAME_7F0BBC30(struct bondstruct_unk_room_related* arg0, u32 arg1, s32 ar
 }
 
 
-s32 sub_GAME_7F0BBCCC(s_room_data * arg0, s32 arg1)
+s32 sub_GAME_7F0BBCCC(s_room_data * blob, s32 arg1)
 {
     s32 var_s0;
     s32 var_s1;
@@ -452,9 +353,9 @@ s32 sub_GAME_7F0BBCCC(s_room_data * arg0, s32 arg1)
         {
             room_data = &array_room_info[arg1].ptr_point_index[word_CODE_bss_80082B18[i].unk02];
 
-            var_s0 = room_data->unk00 - arg0->unk00;
-            var_s1 = room_data->unk02 - arg0->unk02;
-            var_s2 = room_data->unk04 - arg0->unk04;
+            var_s0 = room_data->unk00 - blob->unk00;
+            var_s1 = room_data->unk02 - blob->unk02;
+            var_s2 = room_data->unk04 - blob->unk04;
 
             if (var_s0 < 0) { var_s0 = -var_s0; }
             if (var_s1 < 0) { var_s1 = -var_s1; }

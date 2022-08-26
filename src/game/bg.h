@@ -27,12 +27,20 @@ typedef struct s_room_data {
     u8 unk0F;
 } s_room_data;
 
-struct bondstruct_unk_room_related {
-    s8 unk00;
-    s8 unk01;
-    s16 unk02;
-    s_room_data * unk04;
-};
+typedef union u_room_data_blob {
+    struct {
+        s8 unk00;
+        s8 unk01;
+        s16 unk02;
+        s_room_data* room_data;
+    };
+    u8 asU8[8];
+    u16 asU16[4];
+    u32 asU32[2];
+    s8 asS8[8];
+    s16 asS16[4];
+    s32 asS32[2];
+} u_room_data_blob;
 
 typedef struct s_room_info {
     u8 bitflags0;
