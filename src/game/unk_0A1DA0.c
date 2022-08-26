@@ -324,10 +324,11 @@ glabel sub_GAME_7F0A1DA0
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0A2160(void) {
+void sub_GAME_7F0A2160(coord3d * arg0, f32 arg1, f32 arg2) {
 
 }
 #else
+
 #ifndef VERSION_EU
 GLOBAL_ASM(
 .late_rodata

@@ -78,5 +78,6 @@ Gfx *sub_GAME_7F0A3B40(Gfx *gdl, s32 *arg1);
 Gfx * sub_GAME_7F0A3330(Gfx *arg0, void * arg1, s32 arg2);
 void sub_GAME_7F0A2F30(s32 *arg0, s32 arg1, s32 arg2, f32 arg3);
 struct WatchVertex *setup_watch_rectangles(struct WatchVertex *vtx, s32 startx, s32 startz, s32 width, s32 height, s32 horizontal_offset, s32 vertical_offset);
+void sub_GAME_7F0A2160(coord3d * arg0, f32 arg1, f32 arg2);
 
 #endif
