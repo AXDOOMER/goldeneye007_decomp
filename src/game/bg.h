@@ -15,39 +15,12 @@ struct levelentry
     f32 unknownfloat;
 };
 
-typedef struct s_room_data {
-    s16 unk00;
-    s16 unk02;
-    s16 unk04;
-    s16 unk06;
-    s32 unk08;
-    u8 unk0C;
-    u8 unk0D;
-    u8 unk0E;
-    u8 unk0F;
-} s_room_data;
-
-typedef union u_room_data_blob {
-    struct {
-        s8 unk00;
-        s8 unk01;
-        s16 unk02;
-        s_room_data* room_data;
-    };
-    u8 asU8[8];
-    u16 asU16[4];
-    u32 asU32[2];
-    s8 asS8[8];
-    s16 asS16[4];
-    s32 asS32[2];
-} u_room_data_blob;
-
 typedef struct s_room_info {
     u8 bitflags0;
     u8 bitflags1;
     u8 model_bin_loaded;
     u8 bitflags2;
-    s_room_data * ptr_point_index;
+    Vtx * ptr_point_index;
     void * ptr_expanded_mapping_info;
     void * ptr_secondary_expanded_mapping_info;
     s32 csize_point_index_binary;

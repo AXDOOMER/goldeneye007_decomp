@@ -101,16 +101,13 @@ s32 check_if_imageID_is_light(s32 imageID)
 }
 
 
-s_room_data * return_ptr_vertex_of_entry_room(u_room_data_blob * blob, s32 arg1)
+Vtx * return_ptr_vertex_of_entry_room(Gfx * gfx, s32 arg1)
 {
-    s_room_data * ret;
+    Vtx * ret;
 
-    while (blob->unk00 != 4)
-    {
-        blob--;
-    }
+    while (gfx->dma.cmd != G_VTX ){ gfx--; }
 
-    ret = blob->room_data;
+    ret = gfx->dma.addr;
 
     // weird memory checking, not sure what's going on here
     if (((s32) ret & 0xFF000000) == 0x0E000000) {
@@ -121,71 +118,71 @@ s_room_data * return_ptr_vertex_of_entry_room(u_room_data_blob * blob, s32 arg1)
 }
 
 
-void sub_GAME_7F0BB6F4(u_room_data_blob * blob, u32 type, s32* idx1, s32* idx2, s32* idx3)
+void sub_GAME_7F0BB6F4(Gfx* gfx, u32 type, s32* idx1, s32* idx2, s32* idx3)
 {
-    switch (type)
-    {
+    switch (type) {
         case 0:
-            *idx1 = (s32) blob->asU8[5] / 10;
-            *idx2 = (u32) ((s32) blob->asU8[6] / 10);
-            *idx3 = (s32) blob->asU8[7] / 10;
+            *idx1 = (s32) gfx->tri.tri.v[0] / 10;
+            *idx2 = (s32) gfx->tri.tri.v[1] / 10;
+            *idx3 = (s32) gfx->tri.tri.v[2] / 10;
             break;
+        // unsure of how to cleanly access the below versions
         case 1:
-            *idx1 = blob->asU32[1] & 0xF;
-            *idx2 = (((u8) blob->asU8[7]) & 0xFFFFFFFFu) >> 4;
-            *idx3 = blob->asU32[0] & 0xF;
+            *idx1 = ((u32*)gfx)[1] & 0xF;
+            *idx2 = ((((u8*)gfx)[7]) & 0xFFFFFFFFu) >> 4;
+            *idx3 = ((s32*)gfx)[0] & 0xF;
             break;
         case 2:
-            *idx1 = blob->asU8[6] & 0xF;
-            *idx2 = (((u16) blob->asU16[3]) & 0xFFFFFFFFu) >> 0xC;
-            *idx3 = (((s32) ((u8) blob->asU8[3]) & 0xFFFFFFFFu) >> 4);
+            *idx1 = ((u8*)gfx)[6] & 0xF;
+            *idx2 = ((((u16*)gfx)[3]) & 0xFFFFFFFFu) >> 0xC;
+            *idx3 = ((((u8*)gfx)[3]) & 0xFFFFFFFFu) >> 4;
             break;
         case 3:
-            *idx1 = blob->asU16[2] & 0xF;
-            *idx2 = (((u8) blob->asU8[5]) & 0xFFFFFFFFu) >> 4;
-            *idx3 = blob->asU8[2] & 0xF;
+            *idx1 = ((u16*)gfx)[2] & 0xF;
+            *idx2 = ((((u8*)gfx)[5]) & 0xFFFFFFFFu) >> 4;
+            *idx3 = ((u8*)gfx)[2] & 0xF;
             break;
         case 4:
-            *idx1 = blob->asU8[4] & 0xF;
-            *idx2 = blob->asU32[1] >> 0x1C;
-            *idx3 = (((u16) blob->asU16[1]) & 0xFFFFFFFFu) >> 0xC;
+            *idx1 = ((u8*)gfx)[4] & 0xF;
+            *idx2 = ((u32*)gfx)[1] >> 0x1C;
+            *idx3 = ((((u16*)gfx)[1]) & 0xFFFFFFFFu) >> 0xC;
             break;
     }
 }
 
 
-void sub_GAME_7F0BB874(u_room_data_blob * blob, u32 arg1, s32 arg2, coord16 * arg3, coord16 * arg4, coord16 * arg5)
+void sub_GAME_7F0BB874(Gfx * gfx, u32 arg1, s32 arg2, Vtx * arg3, Vtx * arg4, Vtx * arg5)
 {
     s32 idx1;
     s32 idx2;
     s32 idx3;
-    s_room_data* room_data;
+    Vtx * vertices;
 
-    sub_GAME_7F0BB6F4(blob, arg1, &idx1, &idx2, &idx3);
-    room_data = return_ptr_vertex_of_entry_room(blob, arg2);
+    sub_GAME_7F0BB6F4(gfx, arg1, &idx1, &idx2, &idx3);
+    vertices = return_ptr_vertex_of_entry_room(gfx, arg2);
 
-    arg3->x = (s16) room_data[idx1].unk00;
-    arg3->y = (s16) room_data[idx1].unk02;
-    arg3->z = (s16) room_data[idx1].unk04;
+    arg3->v.ob[0] = (s16) vertices[idx1].v.ob[0];
+    arg3->v.ob[1] = (s16) vertices[idx1].v.ob[1];
+    arg3->v.ob[2] = (s16) vertices[idx1].v.ob[2];
 
-    arg4->x = (s16) room_data[idx2].unk00;
-    arg4->y = (s16) room_data[idx2].unk02;
-    arg4->z = (s16) room_data[idx2].unk04;
+    arg4->v.ob[0] = (s16) vertices[idx2].v.ob[0];
+    arg4->v.ob[1] = (s16) vertices[idx2].v.ob[1];
+    arg4->v.ob[2] = (s16) vertices[idx2].v.ob[2];
 
-    arg5->x = (s16) room_data[idx3].unk00;
-    arg5->y = (s16) room_data[idx3].unk02;
-    arg5->z = (s16) room_data[idx3].unk04;
+    arg5->v.ob[0] = (s16) vertices[idx3].v.ob[0];
+    arg5->v.ob[1] = (s16) vertices[idx3].v.ob[1];
+    arg5->v.ob[2] = (s16) vertices[idx3].v.ob[2];
 }
 
 
 void sub_GAME_7F0BB978(s32 arg0)
 {
-    s_room_data * room_data;
+    Vtx * vertices;
     s32 i;
     struct bondstruct_unk_80082B18* unk;
 
 
-    room_data = array_room_info[arg0].ptr_point_index;
+    vertices = array_room_info[arg0].ptr_point_index;
 
     for (i = 0; i < BSS_80082B18_MAX; i++)
     {
@@ -193,30 +190,30 @@ void sub_GAME_7F0BB978(s32 arg0)
 
         if (arg0 != unk->unk00) { continue; }
 
-        room_data[unk->unk02].unk0C >>= 2;
-        room_data[unk->unk02].unk0D >>= 2;
-        room_data[unk->unk02].unk0E >>= 2;
-        room_data[unk->unk02].unk0F >>= 2;
+        vertices[unk->unk02].v.cn[0] >>= 2;
+        vertices[unk->unk02].v.cn[1] >>= 2;
+        vertices[unk->unk02].v.cn[2] >>= 2;
+        vertices[unk->unk02].v.cn[3] >>= 2;
     }
 }
 
 
-void sub_GAME_7F0BBA20(s_room_data* arg0, s32 arg1)
+void sub_GAME_7F0BBA20(Vtx * vertices, s32 arg1)
 {
     s32 room_index;
 
-    if (sub_GAME_7F0BBADC(arg0, arg1) != 0) { return; }
+    if (sub_GAME_7F0BBADC(vertices, arg1) != 0) { return; }
 
     // weird memory stuff going on here
-    room_index = ((u32)arg0 - (u32)array_room_info[arg1].ptr_point_index) >> 4;
+    room_index = ((u32)vertices - (u32)array_room_info[arg1].ptr_point_index) >> 4;
 
     word_CODE_bss_80082B18[D_80046030].unk00 = (u16) arg1;
     word_CODE_bss_80082B18[D_80046030].unk02 = room_index;
 
-    arg0->unk0C >>= 2;
-    arg0->unk0D >>= 2;
-    arg0->unk0E >>= 2;
-    arg0->unk0F >>= 2;
+    vertices->v.cn[0] >>= 2;
+    vertices->v.cn[1] >>= 2;
+    vertices->v.cn[2] >>= 2;
+    vertices->v.cn[3] >>= 2;
 
     D_80046030++;
 
@@ -227,13 +224,13 @@ void sub_GAME_7F0BBA20(s_room_data* arg0, s32 arg1)
 }
 
 
-s32 sub_GAME_7F0BBADC(s_room_data * arg0, s32 arg1)
+s32 sub_GAME_7F0BBADC(Vtx * vertices, s32 arg1)
 {
     u32 value;
     s32 i;
 
     // weird memory stuff going on here
-    value = ((u32)arg0 - (u32)array_room_info[arg1].ptr_point_index) >> 4;
+    value = ((u32)vertices - (u32)array_room_info[arg1].ptr_point_index) >> 4;
 
     for (i = 0; i < BSS_80082B18_MAX; i++)
     {
@@ -247,62 +244,62 @@ s32 sub_GAME_7F0BBADC(s_room_data * arg0, s32 arg1)
 }
 
 
-void sub_GAME_7F0BBBA8(u_room_data_blob *blob, u32 arg1, s32 arg2)
+void sub_GAME_7F0BBBA8(Gfx *gfx, u32 arg1, s32 arg2)
 {
-    s_room_data *room_data_2;
+    Vtx * vertices_2;
     s32 idx1;
     s32 idx2;
     s32 idx3;
-    s_room_data *room_data;
+    Vtx * vertices;
 
-    sub_GAME_7F0BB6F4(blob, arg1, &idx1, &idx2, &idx3);
-    room_data = return_ptr_vertex_of_entry_room(blob, arg2);
+    sub_GAME_7F0BB6F4(gfx, arg1, &idx1, &idx2, &idx3);
+    vertices = return_ptr_vertex_of_entry_room(gfx, arg2);
 
-    sub_GAME_7F0BBA20(&room_data[idx1], arg2);
-    sub_GAME_7F0BBA20(&room_data[idx2], arg2);
+    sub_GAME_7F0BBA20(&vertices[idx1], arg2);
+    sub_GAME_7F0BBA20(&vertices[idx2], arg2);
 
-    room_data_2 = &room_data[idx3];
-    sub_GAME_7F0BBA20(room_data_2, arg2);
+    vertices_2 = &vertices[idx3];
+    sub_GAME_7F0BBA20(vertices_2, arg2);
 }
 
 
-s32 sub_GAME_7F0BBC30(u_room_data_blob* blob, u32 arg1, s32 arg2)
+s32 sub_GAME_7F0BBC30(Gfx * gfx, u32 arg1, s32 arg2)
 {
     s32 out3;
     s32 idx1;
     s32 idx2;
     s32 idx3;
-    s_room_data *data;
+    Vtx * vertices;
     s32 out2;
     s32 out1;
 
-    sub_GAME_7F0BB6F4(blob, arg1, &idx1, &idx2, &idx3);
-    data = return_ptr_vertex_of_entry_room(blob, arg2);
-    out1 = sub_GAME_7F0BBADC(&data[idx2], arg2);
-    out2 = sub_GAME_7F0BBADC(&data[idx1], arg2);
-    out3 = sub_GAME_7F0BBADC(&data[idx3], arg2);
+    sub_GAME_7F0BB6F4(gfx, arg1, &idx1, &idx2, &idx3);
+    vertices = return_ptr_vertex_of_entry_room(gfx, arg2);
+    out1 = sub_GAME_7F0BBADC(&vertices[idx2], arg2);
+    out2 = sub_GAME_7F0BBADC(&vertices[idx1], arg2);
+    out3 = sub_GAME_7F0BBADC(&vertices[idx3], arg2);
     return out3 + out2 + out1;
 }
 
 
-s32 sub_GAME_7F0BBCCC(s_room_data * blob, s32 arg1)
+s32 sub_GAME_7F0BBCCC(Vtx * vertices, s32 arg1)
 {
     s32 var_s0;
     s32 var_s1;
     s32 i;
     s32 var_s2;
-    s_room_data * room_data;
+    Vtx * vertices2;
 
     i = 0;
     do
     {
         if (arg1 == word_CODE_bss_80082B18[i].unk00)
         {
-            room_data = &array_room_info[arg1].ptr_point_index[word_CODE_bss_80082B18[i].unk02];
+            vertices2 = &array_room_info[arg1].ptr_point_index[word_CODE_bss_80082B18[i].unk02];
 
-            var_s0 = room_data->unk00 - blob->unk00;
-            var_s1 = room_data->unk02 - blob->unk02;
-            var_s2 = room_data->unk04 - blob->unk04;
+            var_s0 = vertices2->v.ob[0] - vertices->v.ob[0];
+            var_s1 = vertices2->v.ob[1] - vertices->v.ob[1];
+            var_s2 = vertices2->v.ob[2] - vertices->v.ob[2];
 
             if (var_s0 < 0) { var_s0 = -var_s0; }
             if (var_s1 < 0) { var_s1 = -var_s1; }
