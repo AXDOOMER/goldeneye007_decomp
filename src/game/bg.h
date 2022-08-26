@@ -19,7 +19,10 @@ typedef struct s_room_data {
     s32 unk00;
     s32 unk04;
     s32 unk08;
-    s32 unk0C;
+    u8 unk0C;
+    u8 unk0D;
+    u8 unk0E;
+    u8 unk0F;
 } s_room_data;
 
 struct bondstruct_unk_room_related {

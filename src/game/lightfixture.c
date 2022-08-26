@@ -389,65 +389,29 @@ glabel sub_GAME_7F0BB978
 #endif
 
 
+void sub_GAME_7F0BBA20(s_room_data* arg0, s32 arg1)
+{
+    s32 room_index;
 
+    if (sub_GAME_7F0BBADC(arg0, arg1) != 0) { return; }
 
+    room_index = ((u32)arg0 - (u32)array_room_info[arg1].ptr_point_index) >> 4;
 
-#ifdef NONMATCHING
+    word_CODE_bss_80082B18[D_80046030].unk00 = (u16) arg1;
+    word_CODE_bss_80082B18[D_80046030].unk02 = room_index;
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BBA20
-/* 0F0550 7F0BBA20 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F0554 7F0BBA24 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F0558 7F0BBA28 AFA40018 */  sw    $a0, 0x18($sp)
-/* 0F055C 7F0BBA2C 0FC2EEB7 */  jal   sub_GAME_7F0BBADC
-/* 0F0560 7F0BBA30 AFA5001C */   sw    $a1, 0x1c($sp)
-/* 0F0564 7F0BBA34 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0F0568 7F0BBA38 14400024 */  bnez  $v0, .L7F0BBACC
-/* 0F056C 7F0BBA3C 8FA6001C */   lw    $a2, 0x1c($sp)
-/* 0F0570 7F0BBA40 00067080 */  sll   $t6, $a2, 2
-/* 0F0574 7F0BBA44 3C058004 */  lui   $a1, %hi(D_80046030)
-/* 0F0578 7F0BBA48 01C67021 */  addu  $t6, $t6, $a2
-/* 0F057C 7F0BBA4C 24A56030 */  addiu $a1, %lo(D_80046030) # addiu $a1, $a1, 0x6030
-/* 0F0580 7F0BBA50 000E7100 */  sll   $t6, $t6, 4
-/* 0F0584 7F0BBA54 3C0F8004 */  lui   $t7, %hi(array_room_info + 0x4)
-/* 0F0588 7F0BBA58 8CB90000 */  lw    $t9, ($a1)
-/* 0F058C 7F0BBA5C 01EE7821 */  addu  $t7, $t7, $t6
-/* 0F0590 7F0BBA60 8DEF1418 */  lw    $t7, %lo(array_room_info + 0x4)($t7)
-/* 0F0594 7F0BBA64 3C098008 */  lui   $t1, %hi(word_CODE_bss_80082B18) 
-/* 0F0598 7F0BBA68 25292B18 */  addiu $t1, %lo(word_CODE_bss_80082B18) # addiu $t1, $t1, 0x2b18
-/* 0F059C 7F0BBA6C 00194080 */  sll   $t0, $t9, 2
-/* 0F05A0 7F0BBA70 01091021 */  addu  $v0, $t0, $t1
-/* 0F05A4 7F0BBA74 008F1823 */  subu  $v1, $a0, $t7
-/* 0F05A8 7F0BBA78 0003C102 */  srl   $t8, $v1, 4
-/* 0F05AC 7F0BBA7C A4460000 */  sh    $a2, ($v0)
-/* 0F05B0 7F0BBA80 A4580002 */  sh    $t8, 2($v0)
-/* 0F05B4 7F0BBA84 908A000C */  lbu   $t2, 0xc($a0)
-/* 0F05B8 7F0BBA88 908C000D */  lbu   $t4, 0xd($a0)
-/* 0F05BC 7F0BBA8C 908E000E */  lbu   $t6, 0xe($a0)
-/* 0F05C0 7F0BBA90 9098000F */  lbu   $t8, 0xf($a0)
-/* 0F05C4 7F0BBA94 000A5882 */  srl   $t3, $t2, 2
-/* 0F05C8 7F0BBA98 000C6882 */  srl   $t5, $t4, 2
-/* 0F05CC 7F0BBA9C 000E7882 */  srl   $t7, $t6, 2
-/* 0F05D0 7F0BBAA0 0018C882 */  srl   $t9, $t8, 2
-/* 0F05D4 7F0BBAA4 A08B000C */  sb    $t3, 0xc($a0)
-/* 0F05D8 7F0BBAA8 A08D000D */  sb    $t5, 0xd($a0)
-/* 0F05DC 7F0BBAAC A08F000E */  sb    $t7, 0xe($a0)
-/* 0F05E0 7F0BBAB0 A099000F */  sb    $t9, 0xf($a0)
-/* 0F05E4 7F0BBAB4 8CA80000 */  lw    $t0, ($a1)
-/* 0F05E8 7F0BBAB8 25090001 */  addiu $t1, $t0, 1
-/* 0F05EC 7F0BBABC 29210200 */  slti  $at, $t1, 0x200
-/* 0F05F0 7F0BBAC0 14200002 */  bnez  $at, .L7F0BBACC
-/* 0F05F4 7F0BBAC4 ACA90000 */   sw    $t1, ($a1)
-/* 0F05F8 7F0BBAC8 ACA00000 */  sw    $zero, ($a1)
-.L7F0BBACC:
-/* 0F05FC 7F0BBACC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F0600 7F0BBAD0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F0604 7F0BBAD4 03E00008 */  jr    $ra
-/* 0F0608 7F0BBAD8 00000000 */   nop   
-)
-#endif
+    arg0->unk0C >>= 2;
+    arg0->unk0D >>= 2;
+    arg0->unk0E >>= 2;
+    arg0->unk0F >>= 2;
+
+    D_80046030++;
+
+    if (D_80046030 >= 0x200)
+    {
+        D_80046030 = 0;
+    }
+}
 
 
 s32 sub_GAME_7F0BBADC(s_room_data * arg0, s32 arg1)
@@ -455,6 +419,7 @@ s32 sub_GAME_7F0BBADC(s_room_data * arg0, s32 arg1)
     u32 value;
     s32 i;
 
+    // weird memory stuff going on here
     value = ((u32)arg0 - (u32)array_room_info[arg1].ptr_point_index) >> sizeof(s_room_data*);
 
     for (i = 0; i < BSS_80082B18_MAX; i++)
