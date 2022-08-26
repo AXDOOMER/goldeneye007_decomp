@@ -14,7 +14,7 @@ s16 cur_entry_lightfixture_table;
 s16 index_of_cur_entry_lightfixture_table;
 //CODE.bss:80082B14                     .align 3
 //CODE.bss:80082B18
-s16 word_CODE_bss_80082B18[0x400];
+struct bondstruct_unk_80082B18 word_CODE_bss_80082B18[0x80];
 //CODE.bss:80083318
 s32 dword_CODE_bss_80083318;
 
@@ -25,77 +25,26 @@ s32 D_80046030 = 0;
 s32 D_80046034[] = {0, 0, 0, 0, 0, 0, 0};
 
 
-//this mostly matches 4 bytes different
-#ifdef NONMATCHING
 void init_lightfixture_tables(void)
 {
     s32 i;
-    for (i=0;i<0x64;i++) {light_fixture_table[i].index = 0;}
-    for (i=0;i<0x400;i++) {word_CODE_bss_80082B18[i] = 0;}
-    D_80046030[0] = 0;
-}
-#else
-#if defined(LEFTOVERDEBUG)
-GLOBAL_ASM(
-.text
-glabel init_lightfixture_tables
-/* 0F0000 7F0BB4D0 3C038008 */  lui   $v1, %hi(light_fixture_table)
-/* 0F0004 7F0BB4D4 3C028008 */  lui   $v0, %hi(cur_entry_lightfixture_table)
-/* 0F0008 7F0BB4D8 24422B10 */  addiu $v0, %lo(cur_entry_lightfixture_table) # addiu $v0, $v0, 0x2b10
-/* 0F000C 7F0BB4DC 24632660 */  addiu $v1, %lo(light_fixture_table) # addiu $v1, $v1, 0x2660
-.L7F0BB4E0:
-/* 0F0010 7F0BB4E0 2463000C */  addiu $v1, $v1, 0xc
-/* 0F0014 7F0BB4E4 0062082B */  sltu  $at, $v1, $v0
-/* 0F0018 7F0BB4E8 1420FFFD */  bnez  $at, .L7F0BB4E0
-/* 0F001C 7F0BB4EC A460FFF4 */   sh    $zero, -0xc($v1)
-/* 0F0020 7F0BB4F0 3C038008 */  lui   $v1, %hi(word_CODE_bss_80082B18)
-/* 0F0024 7F0BB4F4 3C028008 */  lui   $v0, %hi(dword_CODE_bss_80083318)
-/* 0F0028 7F0BB4F8 24423318 */  addiu $v0, %lo(dword_CODE_bss_80083318) # addiu $v0, $v0, 0x3318
-/* 0F002C 7F0BB4FC 24632B18 */  addiu $v1, %lo(word_CODE_bss_80082B18) # addiu $v1, $v1, 0x2b18
-.L7F0BB500:
-                                /*v1 offsets don't match*/
-/* 0F0030 7F0BB500 24630010 */  addiu $v1, $v1, 0x10
-/* 0F0034 7F0BB504 A460FFF4 */  sh    $zero, -0xc($v1)
-/* 0F0038 7F0BB508 A460FFF8 */  sh    $zero, -8($v1)
-/* 0F003C 7F0BB50C A460FFFC */  sh    $zero, -4($v1)
-/* 0F0040 7F0BB510 1462FFFB */  bne   $v1, $v0, .L7F0BB500
-/* 0F0044 7F0BB514 A460FFF0 */   sh    $zero, -0x10($v1)
-/* 0F0048 7F0BB518 3C018004 */  lui   $at, %hi(D_80046030)
-/* 0F004C 7F0BB51C 03E00008 */  jr    $ra
-/* 0F0050 7F0BB520 AC206030 */   sw    $zero, %lo(D_80046030)($at)
-)
-#endif
 
-#if !defined(LEFTOVERDEBUG)
-GLOBAL_ASM(
-.text
-glabel init_lightfixture_tables
-/* 0ED2C0 7F0BA8D0 3C038007 */  lui   $v1, %hi(light_fixture_table) # $v1, 0x8007
-/* 0ED2C4 7F0BA8D4 3C028007 */  lui   $v0, %hi(cur_entry_lightfixture_table) # $v0, 0x8007
-/* 0ED2C8 7F0BA8D8 2442D480 */  addiu $v0, %lo(cur_entry_lightfixture_table) # addiu $v0, $v0, -0x2b80
-/* 0ED2CC 7F0BA8DC 2463CFD0 */  addiu $v1, %lo(light_fixture_table) # addiu $v1, $v1, -0x3030
-.L7F0BA8E0:
-/* 0ED2D0 7F0BA8E0 2463000C */  addiu $v1, $v1, 0xc
-/* 0ED2D4 7F0BA8E4 0062082B */  sltu  $at, $v1, $v0
-/* 0ED2D8 7F0BA8E8 1420FFFD */  bnez  $at, .L7F0BA8E0
-/* 0ED2DC 7F0BA8EC A460FFF4 */   sh    $zero, -0xc($v1)
-/* 0ED2E0 7F0BA8F0 3C038007 */  lui   $v1, %hi(word_CODE_bss_80082B18) # $v1, 0x8007
-/* 0ED2E4 7F0BA8F4 3C028007 */  lui   $v0, %hi(dword_CODE_bss_80083318) # $v0, 0x8007
-/* 0ED2E8 7F0BA8F8 2442DC88 */  addiu $v0, %lo(dword_CODE_bss_80083318) # addiu $v0, $v0, -0x2378
-/* 0ED2EC 7F0BA8FC 2463D488 */  addiu $v1, %lo(word_CODE_bss_80082B18) # addiu $v1, $v1, -0x2b78
-.L7F0BA900:
-/* 0ED2F0 7F0BA900 24630010 */  addiu $v1, $v1, 0x10
-/* 0ED2F4 7F0BA904 A460FFF4 */  sh    $zero, -0xc($v1)
-/* 0ED2F8 7F0BA908 A460FFF8 */  sh    $zero, -8($v1)
-/* 0ED2FC 7F0BA90C A460FFFC */  sh    $zero, -4($v1)
-/* 0ED300 7F0BA910 1462FFFB */  bne   $v1, $v0, .L7F0BA900
-/* 0ED304 7F0BA914 A460FFF0 */   sh    $zero, -0x10($v1)
-/* 0ED308 7F0BA918 3C018004 */  lui   $at, 0x8004
-/* 0ED30C 7F0BA91C 03E00008 */  jr    $ra
-/* 0ED310 7F0BA920 AC20EAA0 */   sw    $zero, -0x1560($at)
-)
-#endif
-#endif
+    for (i = 0; i < 0x64; i++)
+    {
+        light_fixture_table[i].index = 0;
+    }
+
+    for (i = 0; i < 0x80; i++)
+    {
+        word_CODE_bss_80082B18[i].unk04 = 0;
+        word_CODE_bss_80082B18[i].unk08 = 0;
+        word_CODE_bss_80082B18[i].unk0C = 0;
+        word_CODE_bss_80082B18[i].unk00 = 0;
+        if (1) { continue; }
+    }
+
+    D_80046030 = 0;
+}
 
 
 s32 get_index_of_current_entry_in_init_lightfixture_table(void)
