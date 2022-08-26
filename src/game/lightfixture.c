@@ -317,9 +317,150 @@ s32 sub_GAME_7F0BBCCC(Vtx * vertices, s32 arg1)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0BBE0C(void) {
 
+// somewhat close to matching: 86.40%, mostly regalloc issues
+void sub_GAME_7F0BBE0C(Gfx * gfx, u32 arg1, s32 arg2) {
+    Vtx vert2;
+    Vtx vert3;
+    s32 i;
+    Vtx vert1;
+    f32 dist_tween;
+    s16 diff_x_12;
+    s16 diff_x_13;
+    s32 j;
+    s16 diff_y_13;
+    f32 dist_23;
+    s16 diff_y_23;
+    s16 diff_z_12;
+    s16 diff_z_13;
+    s16 diff_x_23;
+    f32 dist_12;
+    s16 diff_z_23;
+    coord3d origin;
+    s32 exec;
+    f32 dist_13;
+    s16 diff_y_12;
+    coord3d calc_coord;
+    Gfx *gfx2;
+    f32 dist_nn;
+
+    for (i = 0; i < LIGHTFIXTURE_TABLE_MAX; i++)
+    {
+        if (arg2 != light_fixture_table[i].index) { continue; }
+
+        if (gfx < light_fixture_table[i].ptr_start_pertinent_DL) { return; }
+        if (gfx >= light_fixture_table[i].ptr_end_pertinent_DL) { return; }
+
+        if (sub_GAME_7F0BBC30(gfx, arg1, light_fixture_table[i].index) != 0) { return; }
+
+        sub_GAME_7F0BBBA8(gfx, arg1, light_fixture_table[i].index);
+        sub_GAME_7F0BB874(gfx, arg1, light_fixture_table[i].index, &vert1, &vert2, &vert3);
+
+        diff_y_23 = vert2.v.ob[1] - vert3.v.ob[1];
+        diff_x_23 = vert2.v.ob[0] - vert3.v.ob[0];
+        diff_x_12 = vert1.v.ob[0] - vert2.v.ob[0];
+        diff_y_12 = vert1.v.ob[1] - vert2.v.ob[1];
+        diff_x_13 = vert1.v.ob[0] - vert3.v.ob[0];
+        diff_z_12 = vert1.v.ob[2] - vert2.v.ob[2];
+        diff_z_23 = vert2.v.ob[2] - vert3.v.ob[2];
+        diff_y_13 = vert1.v.ob[1] - vert3.v.ob[1];
+        diff_z_13 = vert1.v.ob[2] - vert3.v.ob[2];
+
+        dist_nn = sqrtf((diff_x_12 * diff_x_12) + (diff_y_12 * diff_y_12) + (diff_z_12 * diff_z_12));
+        dist_12 = 10.0f / (get_room_data_float2() * dist_nn);
+
+        dist_nn = sqrtf((diff_x_23 * diff_x_23) + (diff_y_23 * diff_y_23) + (diff_z_23 * diff_z_23));
+        dist_23 = 10.0f / (get_room_data_float2() * dist_nn);
+
+        dist_nn = sqrtf((diff_x_13 * diff_x_13) + (diff_y_13 * diff_y_13) + (diff_z_13 * diff_z_13));
+        dist_13 = 10.0f / (get_room_data_float2() * dist_nn);
+
+        sub_GAME_7F0BCA34(light_fixture_table[i].index, &origin);
+
+        for (dist_tween = 0.0f; dist_tween < 1.0f; dist_tween += dist_12)
+        {
+            calc_coord.x = origin.x + ((vert2.v.ob[0] + (diff_x_12 * dist_tween)) * get_room_data_float2());
+            calc_coord.y = origin.y + ((vert2.v.ob[1] + (diff_y_12 * dist_tween)) * get_room_data_float2());
+            calc_coord.z = origin.z + ((vert2.v.ob[2] + (diff_z_12 * dist_tween)) * get_room_data_float2());
+            sub_GAME_7F0A2160(&calc_coord, 0.0f, 10.0f);
+        }
+
+        for (dist_tween = 0.0f; dist_tween < 1.0f; dist_tween += dist_13)
+        {
+            calc_coord.x = origin.x + ((vert3.v.ob[0] + (diff_x_13 * dist_tween)) * get_room_data_float2());
+            calc_coord.y = origin.y + ((vert3.v.ob[1] + (diff_y_13 * dist_tween)) * get_room_data_float2());
+            calc_coord.z = origin.z + ((vert3.v.ob[2] + (diff_z_13 * dist_tween)) * get_room_data_float2());
+            sub_GAME_7F0A2160(&calc_coord, 0.0f, 10.0f);
+        }
+
+        for (dist_tween = 0.0f; dist_tween < 1.0f; dist_tween += dist_23)
+        {
+            calc_coord.x = origin.x + ((vert3.v.ob[0] + (diff_x_23 * dist_tween)) * get_room_data_float2());
+            calc_coord.y = origin.y + ((vert3.v.ob[1] + (diff_y_23 * dist_tween)) * get_room_data_float2());
+            calc_coord.z = origin.z + ((vert3.v.ob[2] + (diff_z_23 * dist_tween)) * get_room_data_float2());
+            sub_GAME_7F0A2160(&calc_coord, 0.0f, 10.0f);
+        }
+
+        for (gfx2 = light_fixture_table[i].ptr_start_pertinent_DL; gfx2 < light_fixture_table[i].ptr_end_pertinent_DL; gfx2++)
+        {
+            if (gfx2->dma.cmd == G_TRI1)
+            {
+                exec = 0;
+
+                sub_GAME_7F0BB874(gfx2, 0U, light_fixture_table[i].index, &vert1, &vert2, &vert3);
+
+                if (sub_GAME_7F0BBCCC(&vert1, light_fixture_table[i].index) != 0)
+                {
+                    exec = 1;
+                }
+                else if (sub_GAME_7F0BBCCC(&vert2, light_fixture_table[i].index) != 0)
+                {
+                    exec = 1;
+                }
+                else if (sub_GAME_7F0BBCCC(&vert3, light_fixture_table[i].index) != 0)
+                {
+                    exec = 1;
+                }
+
+                if (exec != 0)
+                {
+                    sub_GAME_7F0BBBA8(gfx2, 0U, light_fixture_table[i].index);
+                }
+            }
+            else if (gfx2->dma.cmd == G_TRI2)
+            {
+                j = 0;
+                while (j < 4)
+                {
+                    j++;
+                    exec = 0;
+
+                    sub_GAME_7F0BB874(gfx2, j, light_fixture_table[i].index, &vert1, &vert2, &vert3);
+
+                    if (sub_GAME_7F0BBCCC(&vert1, light_fixture_table[i].index) != 0)
+                    {
+                        exec = 1;
+                    }
+                    else if (sub_GAME_7F0BBCCC(&vert2, light_fixture_table[i].index) != 0)
+                    {
+                        exec = 1;
+                    }
+                    else if (sub_GAME_7F0BBCCC(&vert3, light_fixture_table[i].index) != 0)
+                    {
+                        exec = 1;
+                    }
+
+                    if (exec != 0)
+                    {
+                        sub_GAME_7F0BBBA8(gfx2, j, light_fixture_table[i].index);
+                    }
+                }
+            }
+        }
+        break;
+    }
 }
+
 #else
 GLOBAL_ASM(
 .text
