@@ -15,4 +15,11 @@ struct bondstruct_unk_80082B18 {
     u16 unk02;
 };
 
+struct bondstruct_unk_room_related {
+    s8 unk00;
+    s8 unk01;
+    s16 unk02;
+    s32 unk04;
+};
+
 #endif

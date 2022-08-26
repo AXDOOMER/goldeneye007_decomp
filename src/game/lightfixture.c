@@ -101,50 +101,23 @@ s32 check_if_imageID_is_light(s32 imageID)
 }
 
 
+s32 return_ptr_vertex_of_entry_room(struct bondstruct_unk_room_related* arg0, s32 arg1)
+{
+    s32 ret;
 
+    while (arg0->unk00 != 4)
+    {
+        arg0--;
+    }
 
+    ret = arg0->unk04;
 
-
-#ifdef NONMATCHING
-void return_ptr_vertex_of_entry_room(void) {
-
+    if ((ret & 0xFF000000) == 0x0E000000)
+    {
+        ret = array_room_info[arg1].ptr_point_index + (ret & 0xFFFFFF);
+    }
+    return ret;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel return_ptr_vertex_of_entry_room
-/* 0F01C4 7F0BB694 808E0000 */  lb    $t6, ($a0)
-/* 0F01C8 7F0BB698 24020004 */  li    $v0, 4
-/* 0F01CC 7F0BB69C 0005C880 */  sll   $t9, $a1, 2
-/* 0F01D0 7F0BB6A0 104E0005 */  beq   $v0, $t6, .L7F0BB6B8
-/* 0F01D4 7F0BB6A4 0325C821 */   addu  $t9, $t9, $a1
-/* 0F01D8 7F0BB6A8 808FFFF8 */  lb    $t7, -8($a0)
-.L7F0BB6AC:
-/* 0F01DC 7F0BB6AC 2484FFF8 */  addiu $a0, $a0, -8
-/* 0F01E0 7F0BB6B0 544FFFFE */  bnel  $v0, $t7, .L7F0BB6AC
-/* 0F01E4 7F0BB6B4 808FFFF8 */   lb    $t7, -8($a0)
-.L7F0BB6B8:
-/* 0F01E8 7F0BB6B8 8C830004 */  lw    $v1, 4($a0)
-/* 0F01EC 7F0BB6BC 3C01FF00 */  lui   $at, 0xff00
-/* 0F01F0 7F0BB6C0 0019C900 */  sll   $t9, $t9, 4
-/* 0F01F4 7F0BB6C4 0061C024 */  and   $t8, $v1, $at
-/* 0F01F8 7F0BB6C8 3C010E00 */  lui   $at, 0xe00
-/* 0F01FC 7F0BB6CC 17010007 */  bne   $t8, $at, .L7F0BB6EC
-/* 0F0200 7F0BB6D0 3C088004 */   lui   $t0, %hi(array_room_info + 0x4)
-/* 0F0204 7F0BB6D4 01194021 */  addu  $t0, $t0, $t9
-/* 0F0208 7F0BB6D8 8D081418 */  lw    $t0, %lo(array_room_info + 0x4)($t0)
-/* 0F020C 7F0BB6DC 3C0100FF */  lui   $at, (0x00FFFFFF >> 16) # lui $at, 0xff
-/* 0F0210 7F0BB6E0 3421FFFF */  ori   $at, (0x00FFFFFF & 0xFFFF) # ori $at, $at, 0xffff
-/* 0F0214 7F0BB6E4 00614824 */  and   $t1, $v1, $at
-/* 0F0218 7F0BB6E8 01091821 */  addu  $v1, $t0, $t1
-.L7F0BB6EC:
-/* 0F021C 7F0BB6EC 03E00008 */  jr    $ra
-/* 0F0220 7F0BB6F0 00601025 */   move  $v0, $v1
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
