@@ -154,81 +154,28 @@ void sub_GAME_7F0BB6F4(u_room_data_blob * blob, u32 type, s32* idx1, s32* idx2, 
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0BB874(void) {
+void sub_GAME_7F0BB874(u_room_data_blob * blob, u32 arg1, s32 arg2, coord16 * arg3, coord16 * arg4, coord16 * arg5)
+{
+    s32 idx1;
+    s32 idx2;
+    s32 idx3;
+    s_room_data* room_data;
 
+    sub_GAME_7F0BB6F4(blob, arg1, &idx1, &idx2, &idx3);
+    room_data = return_ptr_vertex_of_entry_room(blob, arg2);
+
+    arg3->x = (s16) room_data[idx1].unk00;
+    arg3->y = (s16) room_data[idx1].unk02;
+    arg3->z = (s16) room_data[idx1].unk04;
+
+    arg4->x = (s16) room_data[idx2].unk00;
+    arg4->y = (s16) room_data[idx2].unk02;
+    arg4->z = (s16) room_data[idx2].unk04;
+
+    arg5->x = (s16) room_data[idx3].unk00;
+    arg5->y = (s16) room_data[idx3].unk02;
+    arg5->z = (s16) room_data[idx3].unk04;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BB874
-/* 0F03A4 7F0BB874 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0F03A8 7F0BB878 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0F03AC 7F0BB87C AFA60038 */  sw    $a2, 0x38($sp)
-/* 0F03B0 7F0BB880 AFA7003C */  sw    $a3, 0x3c($sp)
-/* 0F03B4 7F0BB884 27AE0024 */  addiu $t6, $sp, 0x24
-/* 0F03B8 7F0BB888 AFA40030 */  sw    $a0, 0x30($sp)
-/* 0F03BC 7F0BB88C AFAE0010 */  sw    $t6, 0x10($sp)
-/* 0F03C0 7F0BB890 27A70028 */  addiu $a3, $sp, 0x28
-/* 0F03C4 7F0BB894 0FC2EDBD */  jal   sub_GAME_7F0BB6F4
-/* 0F03C8 7F0BB898 27A6002C */   addiu $a2, $sp, 0x2c
-/* 0F03CC 7F0BB89C 8FA40030 */  lw    $a0, 0x30($sp)
-/* 0F03D0 7F0BB8A0 0FC2EDA5 */  jal   return_ptr_vertex_of_entry_room
-/* 0F03D4 7F0BB8A4 8FA50038 */   lw    $a1, 0x38($sp)
-/* 0F03D8 7F0BB8A8 8FAF002C */  lw    $t7, 0x2c($sp)
-/* 0F03DC 7F0BB8AC 8FA5003C */  lw    $a1, 0x3c($sp)
-/* 0F03E0 7F0BB8B0 8FA30040 */  lw    $v1, 0x40($sp)
-/* 0F03E4 7F0BB8B4 000FC100 */  sll   $t8, $t7, 4
-/* 0F03E8 7F0BB8B8 0058C821 */  addu  $t9, $v0, $t8
-/* 0F03EC 7F0BB8BC 87280000 */  lh    $t0, ($t9)
-/* 0F03F0 7F0BB8C0 8FA40044 */  lw    $a0, 0x44($sp)
-/* 0F03F4 7F0BB8C4 A4A80000 */  sh    $t0, ($a1)
-/* 0F03F8 7F0BB8C8 8FA9002C */  lw    $t1, 0x2c($sp)
-/* 0F03FC 7F0BB8CC 00095100 */  sll   $t2, $t1, 4
-/* 0F0400 7F0BB8D0 004A5821 */  addu  $t3, $v0, $t2
-/* 0F0404 7F0BB8D4 856C0002 */  lh    $t4, 2($t3)
-/* 0F0408 7F0BB8D8 A4AC0002 */  sh    $t4, 2($a1)
-/* 0F040C 7F0BB8DC 8FAD002C */  lw    $t5, 0x2c($sp)
-/* 0F0410 7F0BB8E0 000D7100 */  sll   $t6, $t5, 4
-/* 0F0414 7F0BB8E4 004E7821 */  addu  $t7, $v0, $t6
-/* 0F0418 7F0BB8E8 85F80004 */  lh    $t8, 4($t7)
-/* 0F041C 7F0BB8EC A4B80004 */  sh    $t8, 4($a1)
-/* 0F0420 7F0BB8F0 8FB90028 */  lw    $t9, 0x28($sp)
-/* 0F0424 7F0BB8F4 00194100 */  sll   $t0, $t9, 4
-/* 0F0428 7F0BB8F8 00484821 */  addu  $t1, $v0, $t0
-/* 0F042C 7F0BB8FC 852A0000 */  lh    $t2, ($t1)
-/* 0F0430 7F0BB900 A46A0000 */  sh    $t2, ($v1)
-/* 0F0434 7F0BB904 8FAB0028 */  lw    $t3, 0x28($sp)
-/* 0F0438 7F0BB908 000B6100 */  sll   $t4, $t3, 4
-/* 0F043C 7F0BB90C 004C6821 */  addu  $t5, $v0, $t4
-/* 0F0440 7F0BB910 85AE0002 */  lh    $t6, 2($t5)
-/* 0F0444 7F0BB914 A46E0002 */  sh    $t6, 2($v1)
-/* 0F0448 7F0BB918 8FAF0028 */  lw    $t7, 0x28($sp)
-/* 0F044C 7F0BB91C 000FC100 */  sll   $t8, $t7, 4
-/* 0F0450 7F0BB920 0058C821 */  addu  $t9, $v0, $t8
-/* 0F0454 7F0BB924 87280004 */  lh    $t0, 4($t9)
-/* 0F0458 7F0BB928 A4680004 */  sh    $t0, 4($v1)
-/* 0F045C 7F0BB92C 8FA90024 */  lw    $t1, 0x24($sp)
-/* 0F0460 7F0BB930 00095100 */  sll   $t2, $t1, 4
-/* 0F0464 7F0BB934 004A5821 */  addu  $t3, $v0, $t2
-/* 0F0468 7F0BB938 856C0000 */  lh    $t4, ($t3)
-/* 0F046C 7F0BB93C A48C0000 */  sh    $t4, ($a0)
-/* 0F0470 7F0BB940 8FAD0024 */  lw    $t5, 0x24($sp)
-/* 0F0474 7F0BB944 000D7100 */  sll   $t6, $t5, 4
-/* 0F0478 7F0BB948 004E7821 */  addu  $t7, $v0, $t6
-/* 0F047C 7F0BB94C 85F80002 */  lh    $t8, 2($t7)
-/* 0F0480 7F0BB950 A4980002 */  sh    $t8, 2($a0)
-/* 0F0484 7F0BB954 8FB90024 */  lw    $t9, 0x24($sp)
-/* 0F0488 7F0BB958 00194100 */  sll   $t0, $t9, 4
-/* 0F048C 7F0BB95C 00484821 */  addu  $t1, $v0, $t0
-/* 0F0490 7F0BB960 852A0004 */  lh    $t2, 4($t1)
-/* 0F0494 7F0BB964 A48A0004 */  sh    $t2, 4($a0)
-/* 0F0498 7F0BB968 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0F049C 7F0BB96C 27BD0030 */  addiu $sp, $sp, 0x30
-/* 0F04A0 7F0BB970 03E00008 */  jr    $ra
-/* 0F04A4 7F0BB974 00000000 */   nop   
-)
-#endif
 
 
 void sub_GAME_7F0BB978(s32 arg0)
