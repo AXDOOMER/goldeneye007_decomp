@@ -20,7 +20,7 @@ typedef struct s_room_info {
     u8 bitflags1;
     u8 model_bin_loaded;
     u8 bitflags2;
-    void * ptr_point_index;
+    u32 ptr_point_index;
     void * ptr_expanded_mapping_info;
     void * ptr_secondary_expanded_mapping_info;
     s32 csize_point_index_binary;

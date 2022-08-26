@@ -1,20 +1,22 @@
 #include <ultra64.h>
 #include "lightfixture.h"
+#include "bg.h"
 #include <bondconstants.h>
 #include <assets/image_externs.h>
 
 #define LIGHTFIXTURE_TABLE_MAX 0x64
+#define BSS_80082B18_MAX 0x200
 
 // bss
 //CODE.bss:80082660
-s_lightfixture light_fixture_table[0x64];
+s_lightfixture light_fixture_table[LIGHTFIXTURE_TABLE_MAX];
 //CODE.bss:80082B10
 s16 cur_entry_lightfixture_table;
 //CODE.bss:80082B12
 s16 index_of_cur_entry_lightfixture_table;
 //CODE.bss:80082B14                     .align 3
 //CODE.bss:80082B18
-struct bondstruct_unk_80082B18 word_CODE_bss_80082B18[0x80];
+struct bondstruct_unk_80082B18 word_CODE_bss_80082B18[BSS_80082B18_MAX];
 //CODE.bss:80083318
 s32 dword_CODE_bss_80083318;
 
@@ -34,13 +36,9 @@ void init_lightfixture_tables(void)
         light_fixture_table[i].index = 0;
     }
 
-    for (i = 0; i < 0x80; i++)
+    for (i = 0; i < BSS_80082B18_MAX; i++)
     {
-        word_CODE_bss_80082B18[i].unk04 = 0;
-        word_CODE_bss_80082B18[i].unk08 = 0;
-        word_CODE_bss_80082B18[i].unk0C = 0;
         word_CODE_bss_80082B18[i].unk00 = 0;
-        if (1) { continue; }
     }
 
     D_80046030 = 0;
@@ -421,9 +419,7 @@ glabel sub_GAME_7F0BB978
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0BBA20(void) {
 
-}
 #else
 GLOBAL_ASM(
 .text
@@ -480,82 +476,23 @@ glabel sub_GAME_7F0BBA20
 #endif
 
 
+s32 sub_GAME_7F0BBADC(s32 arg0, s32 arg1)
+{
+    u32 value;
+    s32 i;
 
+    value = (u32) (arg0 - array_room_info[arg1].ptr_point_index) >> 4;
 
+    for (i = 0; i < BSS_80082B18_MAX; i++)
+    {
+        if ((arg1 == word_CODE_bss_80082B18[i].unk00) && (value == word_CODE_bss_80082B18[i].unk02))
+        {
+            return 1;
+        }
+    }
 
-#ifdef NONMATCHING
-void sub_GAME_7F0BBADC(void) {
-
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BBADC
-/* 0F060C 7F0BBADC 00057080 */  sll   $t6, $a1, 2
-/* 0F0610 7F0BBAE0 01C57021 */  addu  $t6, $t6, $a1
-/* 0F0614 7F0BBAE4 000E7100 */  sll   $t6, $t6, 4
-/* 0F0618 7F0BBAE8 3C0F8004 */  lui   $t7, %hi(array_room_info + 0x4)
-/* 0F061C 7F0BBAEC 01EE7821 */  addu  $t7, $t7, $t6
-/* 0F0620 7F0BBAF0 8DEF1418 */  lw    $t7, %lo(array_room_info + 0x4)($t7)
-/* 0F0624 7F0BBAF4 3C068008 */  lui   $a2, %hi(word_CODE_bss_80082B18)
-/* 0F0628 7F0BBAF8 3C038008 */  lui   $v1, %hi(dword_CODE_bss_80083318)
-/* 0F062C 7F0BBAFC 008F1023 */  subu  $v0, $a0, $t7
-/* 0F0630 7F0BBB00 0002C102 */  srl   $t8, $v0, 4
-/* 0F0634 7F0BBB04 03001025 */  move  $v0, $t8
-/* 0F0638 7F0BBB08 24633318 */  addiu $v1, %lo(dword_CODE_bss_80083318) # addiu $v1, $v1, 0x3318
-/* 0F063C 7F0BBB0C 24C62B18 */  addiu $a2, %lo(word_CODE_bss_80082B18) # addiu $a2, $a2, 0x2b18
-/* 0F0640 7F0BBB10 94D90000 */  lhu   $t9, ($a2)
-.L7F0BBB14:
-/* 0F0644 7F0BBB14 54B90007 */  bnel  $a1, $t9, .L7F0BBB34
-/* 0F0648 7F0BBB18 94C90004 */   lhu   $t1, 4($a2)
-/* 0F064C 7F0BBB1C 94C80002 */  lhu   $t0, 2($a2)
-/* 0F0650 7F0BBB20 54480004 */  bnel  $v0, $t0, .L7F0BBB34
-/* 0F0654 7F0BBB24 94C90004 */   lhu   $t1, 4($a2)
-/* 0F0658 7F0BBB28 03E00008 */  jr    $ra
-/* 0F065C 7F0BBB2C 24020001 */   li    $v0, 1
-
-/* 0F0660 7F0BBB30 94C90004 */  lhu   $t1, 4($a2)
-.L7F0BBB34:
-/* 0F0664 7F0BBB34 54A90007 */  bnel  $a1, $t1, .L7F0BBB54
-/* 0F0668 7F0BBB38 94CB0008 */   lhu   $t3, 8($a2)
-/* 0F066C 7F0BBB3C 94CA0006 */  lhu   $t2, 6($a2)
-/* 0F0670 7F0BBB40 544A0004 */  bnel  $v0, $t2, .L7F0BBB54
-/* 0F0674 7F0BBB44 94CB0008 */   lhu   $t3, 8($a2)
-/* 0F0678 7F0BBB48 03E00008 */  jr    $ra
-/* 0F067C 7F0BBB4C 24020001 */   li    $v0, 1
-
-/* 0F0680 7F0BBB50 94CB0008 */  lhu   $t3, 8($a2)
-.L7F0BBB54:
-/* 0F0684 7F0BBB54 54AB0007 */  bnel  $a1, $t3, .L7F0BBB74
-/* 0F0688 7F0BBB58 94CD000C */   lhu   $t5, 0xc($a2)
-/* 0F068C 7F0BBB5C 94CC000A */  lhu   $t4, 0xa($a2)
-/* 0F0690 7F0BBB60 544C0004 */  bnel  $v0, $t4, .L7F0BBB74
-/* 0F0694 7F0BBB64 94CD000C */   lhu   $t5, 0xc($a2)
-/* 0F0698 7F0BBB68 03E00008 */  jr    $ra
-/* 0F069C 7F0BBB6C 24020001 */   li    $v0, 1
-
-/* 0F06A0 7F0BBB70 94CD000C */  lhu   $t5, 0xc($a2)
-.L7F0BBB74:
-/* 0F06A4 7F0BBB74 54AD0007 */  bnel  $a1, $t5, .L7F0BBB94
-/* 0F06A8 7F0BBB78 24C60010 */   addiu $a2, $a2, 0x10
-/* 0F06AC 7F0BBB7C 94CE000E */  lhu   $t6, 0xe($a2)
-/* 0F06B0 7F0BBB80 544E0004 */  bnel  $v0, $t6, .L7F0BBB94
-/* 0F06B4 7F0BBB84 24C60010 */   addiu $a2, $a2, 0x10
-/* 0F06B8 7F0BBB88 03E00008 */  jr    $ra
-/* 0F06BC 7F0BBB8C 24020001 */   li    $v0, 1
-
-/* 0F06C0 7F0BBB90 24C60010 */  addiu $a2, $a2, 0x10
-.L7F0BBB94:
-/* 0F06C4 7F0BBB94 54C3FFDF */  bnel  $a2, $v1, .L7F0BBB14
-/* 0F06C8 7F0BBB98 94D90000 */   lhu   $t9, ($a2)
-/* 0F06CC 7F0BBB9C 00001025 */  move  $v0, $zero
-/* 0F06D0 7F0BBBA0 03E00008 */  jr    $ra
-/* 0F06D4 7F0BBBA4 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
