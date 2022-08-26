@@ -16,8 +16,10 @@ struct levelentry
 };
 
 typedef struct s_room_data {
-    s32 unk00;
-    s32 unk04;
+    s16 unk00;
+    s16 unk02;
+    s16 unk04;
+    s16 unk06;
     s32 unk08;
     u8 unk0C;
     u8 unk0D;
