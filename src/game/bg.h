@@ -15,12 +15,26 @@ struct levelentry
     f32 unknownfloat;
 };
 
+typedef struct s_room_data {
+    s32 unk00;
+    s32 unk04;
+    s32 unk08;
+    s32 unk0C;
+} s_room_data;
+
+struct bondstruct_unk_room_related {
+    s8 unk00;
+    s8 unk01;
+    s16 unk02;
+    s_room_data * unk04;
+};
+
 typedef struct s_room_info {
     u8 bitflags0;
     u8 bitflags1;
     u8 model_bin_loaded;
     u8 bitflags2;
-    u32 ptr_point_index;
+    s_room_data * ptr_point_index;
     void * ptr_expanded_mapping_info;
     void * ptr_secondary_expanded_mapping_info;
     s32 csize_point_index_binary;

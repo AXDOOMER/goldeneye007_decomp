@@ -101,9 +101,9 @@ s32 check_if_imageID_is_light(s32 imageID)
 }
 
 
-s32 return_ptr_vertex_of_entry_room(struct bondstruct_unk_room_related* arg0, s32 arg1)
+s_room_data * return_ptr_vertex_of_entry_room(struct bondstruct_unk_room_related* arg0, s32 arg1)
 {
-    s32 ret;
+    s_room_data * ret;
 
     while (arg0->unk00 != 4)
     {
@@ -112,10 +112,11 @@ s32 return_ptr_vertex_of_entry_room(struct bondstruct_unk_room_related* arg0, s3
 
     ret = arg0->unk04;
 
-    if ((ret & 0xFF000000) == 0x0E000000)
-    {
-        ret = array_room_info[arg1].ptr_point_index + (ret & 0xFFFFFF);
+    // weird memory checking, not sure what's going on here
+    if (((s32) ret & 0xFF000000) == 0x0E000000) {
+        ret = (s32)array_room_info[arg1].ptr_point_index + ((s32) ret & 0xFFFFFF);
     }
+
     return ret;
 }
 
@@ -449,16 +450,16 @@ glabel sub_GAME_7F0BBA20
 #endif
 
 
-s32 sub_GAME_7F0BBADC(s32 arg0, s32 arg1)
+s32 sub_GAME_7F0BBADC(s_room_data * arg0, s32 arg1)
 {
     u32 value;
     s32 i;
 
-    value = (u32) (arg0 - array_room_info[arg1].ptr_point_index) >> 4;
+    value = ((u32)arg0 - (u32)array_room_info[arg1].ptr_point_index) >> sizeof(s_room_data*);
 
     for (i = 0; i < BSS_80082B18_MAX; i++)
     {
-        if ((arg1 == word_CODE_bss_80082B18[i].unk00) && (value == word_CODE_bss_80082B18[i].unk02))
+        if ((arg1 == word_CODE_bss_80082B18[i].unk00) && ((s32)value == word_CODE_bss_80082B18[i].unk02))
         {
             return 1;
         }
@@ -514,61 +515,23 @@ glabel sub_GAME_7F0BBBA8
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0BBC30(void) {
-
+s32 sub_GAME_7F0BBC30(struct bondstruct_unk_room_related* arg0, u32 arg1, s32 arg2)
+{
+    s32 out3;
+    s32 idx1;
+    s32 idx2;
+    s32 idx3;
+    s_room_data *data;
+    s32 out2;
+    s32 out1;
+    
+    sub_GAME_7F0BB6F4(arg0, arg1, &idx1, &idx2, &idx3);
+    data = return_ptr_vertex_of_entry_room(arg0, arg2);
+    out1 = sub_GAME_7F0BBADC(&data[idx2], arg2);
+    out2 = sub_GAME_7F0BBADC(&data[idx1], arg2);
+    out3 = sub_GAME_7F0BBADC(&data[idx3], arg2);
+    return out3 + out2 + out1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BBC30
-/* 0F0760 7F0BBC30 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 0F0764 7F0BBC34 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0F0768 7F0BBC38 AFA60048 */  sw    $a2, 0x48($sp)
-/* 0F076C 7F0BBC3C 27AE0030 */  addiu $t6, $sp, 0x30
-/* 0F0770 7F0BBC40 AFA40040 */  sw    $a0, 0x40($sp)
-/* 0F0774 7F0BBC44 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 0F0778 7F0BBC48 27A60038 */  addiu $a2, $sp, 0x38
-/* 0F077C 7F0BBC4C 0FC2EDBD */  jal   sub_GAME_7F0BB6F4
-/* 0F0780 7F0BBC50 27A70034 */   addiu $a3, $sp, 0x34
-/* 0F0784 7F0BBC54 8FA40040 */  lw    $a0, 0x40($sp)
-/* 0F0788 7F0BBC58 0FC2EDA5 */  jal   return_ptr_vertex_of_entry_room
-/* 0F078C 7F0BBC5C 8FA50048 */   lw    $a1, 0x48($sp)
-/* 0F0790 7F0BBC60 8FAF0034 */  lw    $t7, 0x34($sp)
-/* 0F0794 7F0BBC64 AFA2002C */  sw    $v0, 0x2c($sp)
-/* 0F0798 7F0BBC68 8FA50048 */  lw    $a1, 0x48($sp)
-/* 0F079C 7F0BBC6C 000FC100 */  sll   $t8, $t7, 4
-/* 0F07A0 7F0BBC70 0FC2EEB7 */  jal   sub_GAME_7F0BBADC
-/* 0F07A4 7F0BBC74 03022021 */   addu  $a0, $t8, $v0
-/* 0F07A8 7F0BBC78 8FB90038 */  lw    $t9, 0x38($sp)
-/* 0F07AC 7F0BBC7C 8FA9002C */  lw    $t1, 0x2c($sp)
-/* 0F07B0 7F0BBC80 AFA20024 */  sw    $v0, 0x24($sp)
-/* 0F07B4 7F0BBC84 00194100 */  sll   $t0, $t9, 4
-/* 0F07B8 7F0BBC88 8FA50048 */  lw    $a1, 0x48($sp)
-/* 0F07BC 7F0BBC8C 0FC2EEB7 */  jal   sub_GAME_7F0BBADC
-/* 0F07C0 7F0BBC90 01092021 */   addu  $a0, $t0, $t1
-/* 0F07C4 7F0BBC94 8FAA0030 */  lw    $t2, 0x30($sp)
-/* 0F07C8 7F0BBC98 8FAC002C */  lw    $t4, 0x2c($sp)
-/* 0F07CC 7F0BBC9C AFA20028 */  sw    $v0, 0x28($sp)
-/* 0F07D0 7F0BBCA0 000A5900 */  sll   $t3, $t2, 4
-/* 0F07D4 7F0BBCA4 8FA50048 */  lw    $a1, 0x48($sp)
-/* 0F07D8 7F0BBCA8 0FC2EEB7 */  jal   sub_GAME_7F0BBADC
-/* 0F07DC 7F0BBCAC 016C2021 */   addu  $a0, $t3, $t4
-/* 0F07E0 7F0BBCB0 8FAD0028 */  lw    $t5, 0x28($sp)
-/* 0F07E4 7F0BBCB4 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0F07E8 7F0BBCB8 8FAF0024 */  lw    $t7, 0x24($sp)
-/* 0F07EC 7F0BBCBC 004D7021 */  addu  $t6, $v0, $t5
-/* 0F07F0 7F0BBCC0 27BD0040 */  addiu $sp, $sp, 0x40
-/* 0F07F4 7F0BBCC4 03E00008 */  jr    $ra
-/* 0F07F8 7F0BBCC8 01CF1021 */   addu  $v0, $t6, $t7
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
