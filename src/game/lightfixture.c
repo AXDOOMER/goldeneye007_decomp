@@ -122,7 +122,7 @@ s_room_data * return_ptr_vertex_of_entry_room(struct bondstruct_unk_room_related
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0BB6F4(void) {
+void sub_GAME_7F0BB6F4(struct bondstruct_unk_room_related* arg0, u32 arg1, s32* arg2, s32* arg3, s32* arg4) {
 
 }
 #else
@@ -469,50 +469,23 @@ s32 sub_GAME_7F0BBADC(s_room_data * arg0, s32 arg1)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0BBBA8(void) {
+void sub_GAME_7F0BBBA8(struct bondstruct_unk_room_related *arg0, u32 arg1, s32 arg2)
+{
+    s_room_data *room_data_2;
+    s32 idx1;
+    s32 idx2;
+    s32 idx3;
+    s_room_data *room_data;
 
+    sub_GAME_7F0BB6F4(arg0, arg1, &idx1, &idx2, &idx3);
+    room_data = return_ptr_vertex_of_entry_room(arg0, arg2);
+
+    sub_GAME_7F0BBA20(&room_data[idx1], arg2);
+    sub_GAME_7F0BBA20(&room_data[idx2], arg2);
+
+    room_data_2 = &room_data[idx3];
+    sub_GAME_7F0BBA20(room_data_2, arg2);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BBBA8
-/* 0F06D8 7F0BBBA8 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 0F06DC 7F0BBBAC AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0F06E0 7F0BBBB0 AFA60040 */  sw    $a2, 0x40($sp)
-/* 0F06E4 7F0BBBB4 27AE0028 */  addiu $t6, $sp, 0x28
-/* 0F06E8 7F0BBBB8 AFA40038 */  sw    $a0, 0x38($sp)
-/* 0F06EC 7F0BBBBC AFAE0010 */  sw    $t6, 0x10($sp)
-/* 0F06F0 7F0BBBC0 27A60030 */  addiu $a2, $sp, 0x30
-/* 0F06F4 7F0BBBC4 0FC2EDBD */  jal   sub_GAME_7F0BB6F4
-/* 0F06F8 7F0BBBC8 27A7002C */   addiu $a3, $sp, 0x2c
-/* 0F06FC 7F0BBBCC 8FA40038 */  lw    $a0, 0x38($sp)
-/* 0F0700 7F0BBBD0 0FC2EDA5 */  jal   return_ptr_vertex_of_entry_room
-/* 0F0704 7F0BBBD4 8FA50040 */   lw    $a1, 0x40($sp)
-/* 0F0708 7F0BBBD8 8FAF0030 */  lw    $t7, 0x30($sp)
-/* 0F070C 7F0BBBDC AFA20024 */  sw    $v0, 0x24($sp)
-/* 0F0710 7F0BBBE0 8FA50040 */  lw    $a1, 0x40($sp)
-/* 0F0714 7F0BBBE4 000FC100 */  sll   $t8, $t7, 4
-/* 0F0718 7F0BBBE8 0FC2EE88 */  jal   sub_GAME_7F0BBA20
-/* 0F071C 7F0BBBEC 03022021 */   addu  $a0, $t8, $v0
-/* 0F0720 7F0BBBF0 8FB9002C */  lw    $t9, 0x2c($sp)
-/* 0F0724 7F0BBBF4 8FA90024 */  lw    $t1, 0x24($sp)
-/* 0F0728 7F0BBBF8 8FA50040 */  lw    $a1, 0x40($sp)
-/* 0F072C 7F0BBBFC 00194100 */  sll   $t0, $t9, 4
-/* 0F0730 7F0BBC00 0FC2EE88 */  jal   sub_GAME_7F0BBA20
-/* 0F0734 7F0BBC04 01092021 */   addu  $a0, $t0, $t1
-/* 0F0738 7F0BBC08 8FAA0028 */  lw    $t2, 0x28($sp)
-/* 0F073C 7F0BBC0C 8FAC0024 */  lw    $t4, 0x24($sp)
-/* 0F0740 7F0BBC10 8FA50040 */  lw    $a1, 0x40($sp)
-/* 0F0744 7F0BBC14 000A5900 */  sll   $t3, $t2, 4
-/* 0F0748 7F0BBC18 0FC2EE88 */  jal   sub_GAME_7F0BBA20
-/* 0F074C 7F0BBC1C 016C2021 */   addu  $a0, $t3, $t4
-/* 0F0750 7F0BBC20 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0F0754 7F0BBC24 27BD0038 */  addiu $sp, $sp, 0x38
-/* 0F0758 7F0BBC28 03E00008 */  jr    $ra
-/* 0F075C 7F0BBC2C 00000000 */   nop   
-)
-#endif
 
 
 s32 sub_GAME_7F0BBC30(struct bondstruct_unk_room_related* arg0, u32 arg1, s32 arg2)
