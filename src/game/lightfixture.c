@@ -35,12 +35,12 @@ void init_lightfixture_tables(void)
 
     for (i = 0; i < LIGHTFIXTURE_TABLE_MAX; i++)
     {
-        light_fixture_table[i].index = 0;
+        light_fixture_table[i].room_index = 0;
     }
 
     for (i = 0; i < BSS_80082B18_MAX; i++)
     {
-        word_CODE_bss_80082B18[i].unk00 = 0;
+        word_CODE_bss_80082B18[i].room_index = 0;
     }
 
     D_80046030 = 0;
@@ -53,7 +53,7 @@ s32 get_index_of_current_entry_in_init_lightfixture_table(void)
 
     for (i = 0; i != LIGHTFIXTURE_TABLE_MAX; i++)
     {
-        if (light_fixture_table[i].index == 0)
+        if (light_fixture_table[i].room_index == 0)
         {
             return i;
         }
@@ -66,7 +66,7 @@ void add_entry_to_init_lightfixture_table(Gfx *DL)
 {
   cur_entry_lightfixture_table = get_index_of_current_entry_in_init_lightfixture_table();
   if (cur_entry_lightfixture_table != 100) {
-    light_fixture_table[cur_entry_lightfixture_table].index = index_of_cur_entry_lightfixture_table;
+    light_fixture_table[cur_entry_lightfixture_table].room_index = index_of_cur_entry_lightfixture_table;
     light_fixture_table[cur_entry_lightfixture_table].ptr_start_pertinent_DL = DL;
   }
 }
@@ -103,7 +103,7 @@ s32 check_if_imageID_is_light(s32 imageID)
 }
 
 
-Vtx * return_ptr_vertex_of_entry_room(Gfx * gfx, s32 arg1)
+Vtx * return_ptr_vertex_of_entry_room(Gfx * gfx, s32 room_index)
 {
     Vtx * ret;
 
@@ -113,7 +113,7 @@ Vtx * return_ptr_vertex_of_entry_room(Gfx * gfx, s32 arg1)
 
     // weird memory checking, not sure what's going on here
     if (((s32) ret & 0xFF000000) == 0x0E000000) {
-        ret = (s32)array_room_info[arg1].ptr_point_index + ((s32) ret & 0xFFFFFF);
+        ret = (s32)array_room_info[room_index].ptr_point_index + ((s32) ret & 0xFFFFFF);
     }
 
     return ret;
@@ -153,7 +153,7 @@ void sub_GAME_7F0BB6F4(Gfx* gfx, u32 type, s32* idx1, s32* idx2, s32* idx3)
 }
 
 
-void sub_GAME_7F0BB874(Gfx * gfx, u32 arg1, s32 arg2, coord16 * out1, coord16 * out2, coord16 * out3)
+void sub_GAME_7F0BB874(Gfx * gfx, u32 arg1, s32 room_index, coord16 * out1, coord16 * out2, coord16 * out3)
 {
     s32 idx1;
     s32 idx2;
@@ -161,7 +161,7 @@ void sub_GAME_7F0BB874(Gfx * gfx, u32 arg1, s32 arg2, coord16 * out1, coord16 * 
     Vtx * vertices;
 
     sub_GAME_7F0BB6F4(gfx, arg1, &idx1, &idx2, &idx3);
-    vertices = return_ptr_vertex_of_entry_room(gfx, arg2);
+    vertices = return_ptr_vertex_of_entry_room(gfx, room_index);
 
     out1->AsArray[0] = (s16) vertices[idx1].v.ob[0];
     out1->AsArray[1] = (s16) vertices[idx1].v.ob[1];
@@ -177,40 +177,40 @@ void sub_GAME_7F0BB874(Gfx * gfx, u32 arg1, s32 arg2, coord16 * out1, coord16 * 
 }
 
 
-void sub_GAME_7F0BB978(s32 arg0)
+void sub_GAME_7F0BB978(s32 room_index)
 {
     Vtx * vertices;
     s32 i;
     struct bondstruct_unk_80082B18* unk;
 
 
-    vertices = array_room_info[arg0].ptr_point_index;
+    vertices = array_room_info[room_index].ptr_point_index;
 
     for (i = 0; i < BSS_80082B18_MAX; i++)
     {
         unk = &word_CODE_bss_80082B18[i];
 
-        if (arg0 != unk->unk00) { continue; }
+        if (room_index != unk->room_index) { continue; }
 
-        vertices[unk->unk02].v.cn[0] >>= 2;
-        vertices[unk->unk02].v.cn[1] >>= 2;
-        vertices[unk->unk02].v.cn[2] >>= 2;
-        vertices[unk->unk02].v.cn[3] >>= 2;
+        vertices[unk->vtx_index].v.cn[0] >>= 2;
+        vertices[unk->vtx_index].v.cn[1] >>= 2;
+        vertices[unk->vtx_index].v.cn[2] >>= 2;
+        vertices[unk->vtx_index].v.cn[3] >>= 2;
     }
 }
 
 
-void sub_GAME_7F0BBA20(Vtx * vertices, s32 arg1)
+void sub_GAME_7F0BBA20(Vtx * vertices, s32 room_index)
 {
-    s32 room_index;
+    s32 vtx_index;
 
-    if (sub_GAME_7F0BBADC(vertices, arg1) != 0) { return; }
+    if (sub_GAME_7F0BBADC(vertices, room_index) != 0) { return; }
 
     // weird memory stuff going on here
-    room_index = ((u32)vertices - (u32)array_room_info[arg1].ptr_point_index) >> 4;
+    vtx_index = ((u32)vertices - (u32)array_room_info[room_index].ptr_point_index) >> 4;
 
-    word_CODE_bss_80082B18[D_80046030].unk00 = (u16) arg1;
-    word_CODE_bss_80082B18[D_80046030].unk02 = room_index;
+    word_CODE_bss_80082B18[D_80046030].room_index = (u16) room_index;
+    word_CODE_bss_80082B18[D_80046030].vtx_index = vtx_index;
 
     vertices->v.cn[0] >>= 2;
     vertices->v.cn[1] >>= 2;
@@ -226,17 +226,17 @@ void sub_GAME_7F0BBA20(Vtx * vertices, s32 arg1)
 }
 
 
-s32 sub_GAME_7F0BBADC(Vtx * vertices, s32 arg1)
+s32 sub_GAME_7F0BBADC(Vtx * vertices, s32 room_index)
 {
     u32 value;
     s32 i;
 
     // weird memory stuff going on here
-    value = ((u32)vertices - (u32)array_room_info[arg1].ptr_point_index) >> 4;
+    value = ((u32)vertices - (u32)array_room_info[room_index].ptr_point_index) >> 4;
 
     for (i = 0; i < BSS_80082B18_MAX; i++)
     {
-        if ((arg1 == word_CODE_bss_80082B18[i].unk00) && ((s32)value == word_CODE_bss_80082B18[i].unk02))
+        if ((room_index == word_CODE_bss_80082B18[i].room_index) && ((s32)value == word_CODE_bss_80082B18[i].vtx_index))
         {
             return 1;
         }
@@ -246,7 +246,7 @@ s32 sub_GAME_7F0BBADC(Vtx * vertices, s32 arg1)
 }
 
 
-void sub_GAME_7F0BBBA8(Gfx *gfx, u32 arg1, s32 arg2)
+void sub_GAME_7F0BBBA8(Gfx *gfx, u32 arg1, s32 room_index)
 {
     Vtx * vertices_2;
     s32 idx1;
@@ -255,17 +255,17 @@ void sub_GAME_7F0BBBA8(Gfx *gfx, u32 arg1, s32 arg2)
     Vtx * vertices;
 
     sub_GAME_7F0BB6F4(gfx, arg1, &idx1, &idx2, &idx3);
-    vertices = return_ptr_vertex_of_entry_room(gfx, arg2);
+    vertices = return_ptr_vertex_of_entry_room(gfx, room_index);
 
-    sub_GAME_7F0BBA20(&vertices[idx1], arg2);
-    sub_GAME_7F0BBA20(&vertices[idx2], arg2);
+    sub_GAME_7F0BBA20(&vertices[idx1], room_index);
+    sub_GAME_7F0BBA20(&vertices[idx2], room_index);
 
     vertices_2 = &vertices[idx3];
-    sub_GAME_7F0BBA20(vertices_2, arg2);
+    sub_GAME_7F0BBA20(vertices_2, room_index);
 }
 
 
-s32 sub_GAME_7F0BBC30(Gfx * gfx, u32 arg1, s32 arg2)
+s32 sub_GAME_7F0BBC30(Gfx * gfx, u32 arg1, s32 room_index)
 {
     s32 out3;
     s32 idx1;
@@ -276,15 +276,15 @@ s32 sub_GAME_7F0BBC30(Gfx * gfx, u32 arg1, s32 arg2)
     s32 out1;
 
     sub_GAME_7F0BB6F4(gfx, arg1, &idx1, &idx2, &idx3);
-    vertices = return_ptr_vertex_of_entry_room(gfx, arg2);
-    out1 = sub_GAME_7F0BBADC(&vertices[idx2], arg2);
-    out2 = sub_GAME_7F0BBADC(&vertices[idx1], arg2);
-    out3 = sub_GAME_7F0BBADC(&vertices[idx3], arg2);
+    vertices = return_ptr_vertex_of_entry_room(gfx, room_index);
+    out1 = sub_GAME_7F0BBADC(&vertices[idx2], room_index);
+    out2 = sub_GAME_7F0BBADC(&vertices[idx1], room_index);
+    out3 = sub_GAME_7F0BBADC(&vertices[idx3], room_index);
     return out3 + out2 + out1;
 }
 
 
-s32 sub_GAME_7F0BBCCC(coord16 * coord, s32 arg1)
+s32 sub_GAME_7F0BBCCC(coord16 * coord, s32 room_index)
 {
     s32 var_s0;
     s32 var_s1;
@@ -295,9 +295,9 @@ s32 sub_GAME_7F0BBCCC(coord16 * coord, s32 arg1)
     i = 0;
     do
     {
-        if (arg1 == word_CODE_bss_80082B18[i].unk00)
+        if (room_index == word_CODE_bss_80082B18[i].room_index)
         {
-            vertices = &array_room_info[arg1].ptr_point_index[word_CODE_bss_80082B18[i].unk02];
+            vertices = &array_room_info[room_index].ptr_point_index[word_CODE_bss_80082B18[i].vtx_index];
 
             var_s0 = vertices->v.ob[0] - coord->AsArray[0];
             var_s1 = vertices->v.ob[1] - coord->AsArray[1];
@@ -350,15 +350,15 @@ void sub_GAME_7F0BBE0C(Gfx * gfx, u32 arg1, s32 arg2)
 
     for (i = 0; i < LIGHTFIXTURE_TABLE_MAX; i++)
     {
-        if (arg2 != light_fixture_table[i].index) { continue; }
+        if (arg2 != light_fixture_table[i].room_index) { continue; }
 
         if (gfx < light_fixture_table[i].ptr_start_pertinent_DL) { continue; }
         if (gfx >= light_fixture_table[i].ptr_end_pertinent_DL) { continue; }
 
-        if (sub_GAME_7F0BBC30(gfx, arg1, light_fixture_table[i].index) != 0) { return; }
+        if (sub_GAME_7F0BBC30(gfx, arg1, light_fixture_table[i].room_index) != 0) { return; }
 
-        sub_GAME_7F0BBBA8(gfx, arg1, light_fixture_table[i].index);
-        sub_GAME_7F0BB874(gfx, arg1, light_fixture_table[i].index, &coord1, &coord2, &coord3);
+        sub_GAME_7F0BBBA8(gfx, arg1, light_fixture_table[i].room_index);
+        sub_GAME_7F0BB874(gfx, arg1, light_fixture_table[i].room_index, &coord1, &coord2, &coord3);
 
 		diff_x_12 = coord1.AsArray[0] - coord2.AsArray[0];
 		diff_x_23 = coord1.AsArray[0] - coord3.AsArray[0];
@@ -381,7 +381,7 @@ void sub_GAME_7F0BBE0C(Gfx * gfx, u32 arg1, s32 arg2)
         dist_nn = sqrtf((diff_x_13 * diff_x_13) + (diff_y_13 * diff_y_13) + (diff_z_13 * diff_z_13));
         inv_dist_13 = 10.0f / (get_room_data_float2() * dist_nn);
 
-        sub_GAME_7F0BCA34(light_fixture_table[i].index, &origin);
+        sub_GAME_7F0BCA34(light_fixture_table[i].room_index, &origin);
 
         for (dist_tween = 0.0f; dist_tween < 1.0f; dist_tween += inv_dist_12)
         {
@@ -413,24 +413,24 @@ void sub_GAME_7F0BBE0C(Gfx * gfx, u32 arg1, s32 arg2)
             {
                 exec = 0;
 
-                sub_GAME_7F0BB874(gfx2, 0U, light_fixture_table[i].index, &coord4, &coord5, &coord6);
+                sub_GAME_7F0BB874(gfx2, 0U, light_fixture_table[i].room_index, &coord4, &coord5, &coord6);
 
-                if (sub_GAME_7F0BBCCC(&coord4, light_fixture_table[i].index) != 0)
+                if (sub_GAME_7F0BBCCC(&coord4, light_fixture_table[i].room_index) != 0)
                 {
                     exec = 1;
                 }
-                else if (sub_GAME_7F0BBCCC(&coord5, light_fixture_table[i].index) != 0)
+                else if (sub_GAME_7F0BBCCC(&coord5, light_fixture_table[i].room_index) != 0)
                 {
                     exec = 1;
                 }
-                else if (sub_GAME_7F0BBCCC(&coord6, light_fixture_table[i].index) != 0)
+                else if (sub_GAME_7F0BBCCC(&coord6, light_fixture_table[i].room_index) != 0)
                 {
                     exec = 1;
                 }
 
                 if (exec != 0)
                 {
-                    sub_GAME_7F0BBBA8(gfx2, 0U, light_fixture_table[i].index);
+                    sub_GAME_7F0BBBA8(gfx2, 0U, light_fixture_table[i].room_index);
                 }
             }
             else if (gfx2->dma.cmd == -0x4f /* G_TRI2 ? */)
@@ -439,24 +439,24 @@ void sub_GAME_7F0BBE0C(Gfx * gfx, u32 arg1, s32 arg2)
                 {
                     exec2 = 0;
 
-                    sub_GAME_7F0BB874(gfx2, j + 1, light_fixture_table[i].index, &coord4, &coord5, &coord6);
+                    sub_GAME_7F0BB874(gfx2, j + 1, light_fixture_table[i].room_index, &coord4, &coord5, &coord6);
 
-                    if (sub_GAME_7F0BBCCC(&coord4, light_fixture_table[i].index) != 0)
+                    if (sub_GAME_7F0BBCCC(&coord4, light_fixture_table[i].room_index) != 0)
                     {
                         exec2 = 1;
                     }
-                    else if (sub_GAME_7F0BBCCC(&coord5, light_fixture_table[i].index) != 0)
+                    else if (sub_GAME_7F0BBCCC(&coord5, light_fixture_table[i].room_index) != 0)
                     {
                         exec2 = 1;
                     }
-                    else if (sub_GAME_7F0BBCCC(&coord6, light_fixture_table[i].index) != 0)
+                    else if (sub_GAME_7F0BBCCC(&coord6, light_fixture_table[i].room_index) != 0)
                     {
                         exec2 = 1;
                     }
 
                     if (exec2 != 0)
                     {
-                        sub_GAME_7F0BBBA8(gfx2, j + 1, light_fixture_table[i].index);
+                        sub_GAME_7F0BBBA8(gfx2, j + 1, light_fixture_table[i].room_index);
                     }
                 }
             }
@@ -466,16 +466,16 @@ void sub_GAME_7F0BBE0C(Gfx * gfx, u32 arg1, s32 arg2)
 }
 
 
-void sub_GAME_7F0BC4C4(s32 arg0)
+void sub_GAME_7F0BC4C4(s32 room_index)
 {
     s32 i;
     for (i = 0; i < LIGHTFIXTURE_TABLE_MAX; i++)
     {
-        if (arg0 == light_fixture_table[i].index)
+        if (room_index == light_fixture_table[i].room_index)
         {
-            light_fixture_table[i].index = 0;
+            light_fixture_table[i].room_index = 0;
         }
     }
-    index_of_cur_entry_lightfixture_table = arg0;
+    index_of_cur_entry_lightfixture_table = room_index;
 }
 
