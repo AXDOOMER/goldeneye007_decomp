@@ -1917,41 +1917,16 @@ PropRecord* init_standard_object(ObjectRecord* obj, ModelFileHeader* model_heade
 }
 
 
-PropRecord* sub_GAME_7F0406F8(s32* object, ModelFileHeader* header) {
+PropRecord* sub_GAME_7F0406F8(ObjectRecord* object, ModelFileHeader* header)
+{
   return init_standard_object(object, header, 0, 0);
 }
 
 
-
-
-
-#ifdef NONMATCHING
-void objInitWithAutoModel(void) {
-
+void objInitWithAutoModel(ObjectRecord* obj)
+{
+    sub_GAME_7F0406F8(obj, PitemZ_entries[obj->obj].header);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel objInitWithAutoModel
-/* 07524C 7F04071C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 075250 7F040720 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 075254 7F040724 848E0004 */  lh    $t6, 4($a0)
-/* 075258 7F040728 3C058004 */  lui   $a1, %hi(PitemZ_entries)
-/* 07525C 7F04072C 000E7880 */  sll   $t7, $t6, 2
-/* 075260 7F040730 01EE7823 */  subu  $t7, $t7, $t6
-/* 075264 7F040734 000F7880 */  sll   $t7, $t7, 2
-/* 075268 7F040738 00AF2821 */  addu  $a1, $a1, $t7
-/* 07526C 7F04073C 0FC101BE */  jal   sub_GAME_7F0406F8
-/* 075270 7F040740 8CA5A228 */   lw    $a1, %lo(PitemZ_entries)($a1)
-/* 075274 7F040744 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 075278 7F040748 27BD0018 */  addiu $sp, $sp, 0x18
-/* 07527C 7F04074C 03E00008 */  jr    $ra
-/* 075280 7F040750 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
