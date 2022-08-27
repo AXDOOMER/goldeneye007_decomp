@@ -3169,9 +3169,23 @@ glabel sub_GAME_7F0A3E1C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0A3EA0(void) {
+// not close to matching but functionally equivalent
+void sub_GAME_7F0A3EA0(void)
+{
+    s32 i;
 
+    for (i = 0; (i < UNK_8007A170_MAX); i++)
+    {
+        if (dword_CODE_bss_8007A170[i].unk04 <= 0) { continue; }
+
+        dword_CODE_bss_8007A170[i].unk00 += g_ClockTimer;
+
+        if ((dword_CODE_bss_8007A170[i].unk00 >= 0) && (dword_CODE_bss_8007A170[i].unk00 >= dword_CODE_bss_8007A170[i].unk04)) {
+            dword_CODE_bss_8007A170[i].unk04 = 0;
+        }
+    }
 }
+
 #else
 GLOBAL_ASM(
 .text

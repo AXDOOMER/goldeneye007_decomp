@@ -4002,74 +4002,28 @@ glabel sub_GAME_7F0B5208
 #endif
 
 
+s32 sub_GAME_7F0B5488(coord3d* arg0, coord3d* arg1)
+{
+    Mtxf* temp_a0;
+    s32 var_v0;
 
+    temp_a0 = currentPlayerGetMatrix10CC();
+    arg1->x = arg0->x * room_data_float2;
+    arg1->y = arg0->y * room_data_float2;
+    arg1->z = arg0->z * room_data_float2;
+    matrix_4x4_transform_vector_in_place(temp_a0, arg1->f);
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F0B5488(void *arg0, void *arg1) {
-    // Node 0
-    *arg1 = (f32) (*arg0 * room_data_float2);
-    arg1->unk4 = (f32) (arg0->unk4 * room_data_float2);
-    arg1->unk8 = (f32) (arg0->unk8 * room_data_float2);
-    matrix_4x4_transform_vector_in_place(currentPlayerGetMatrix10CC(), arg1, arg0);
     sub_GAME_7F078060(arg1, arg1);
-    if (0.0f < arg1->unk8)
+
+    if (arg1->z > 0.0f)
     {
-        // Node 1
+        return 0;
     }
-    // Node 2
-    return 1;
+    else
+    {
+        return 1;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B5488
-/* 0E9FB8 7F0B5488 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0E9FBC 7F0B548C AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0E9FC0 7F0B5490 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0E9FC4 7F0B5494 00A08025 */  move  $s0, $a1
-/* 0E9FC8 7F0B5498 0FC1E0F1 */  jal   currentPlayerGetMatrix10CC
-/* 0E9FCC 7F0B549C AFA40020 */   sw    $a0, 0x20($sp)
-/* 0E9FD0 7F0B54A0 8FA60020 */  lw    $a2, 0x20($sp)
-/* 0E9FD4 7F0B54A4 3C038004 */  lui   $v1, %hi(room_data_float2)
-/* 0E9FD8 7F0B54A8 246313F8 */  addiu $v1, %lo(room_data_float2) # addiu $v1, $v1, 0x13f8
-/* 0E9FDC 7F0B54AC C4660000 */  lwc1  $f6, ($v1)
-/* 0E9FE0 7F0B54B0 C4C40000 */  lwc1  $f4, ($a2)
-/* 0E9FE4 7F0B54B4 00402025 */  move  $a0, $v0
-/* 0E9FE8 7F0B54B8 02002825 */  move  $a1, $s0
-/* 0E9FEC 7F0B54BC 46062202 */  mul.s $f8, $f4, $f6
-/* 0E9FF0 7F0B54C0 E6080000 */  swc1  $f8, ($s0)
-/* 0E9FF4 7F0B54C4 C4700000 */  lwc1  $f16, ($v1)
-/* 0E9FF8 7F0B54C8 C4CA0004 */  lwc1  $f10, 4($a2)
-/* 0E9FFC 7F0B54CC 46105482 */  mul.s $f18, $f10, $f16
-/* 0EA000 7F0B54D0 E6120004 */  swc1  $f18, 4($s0)
-/* 0EA004 7F0B54D4 C4660000 */  lwc1  $f6, ($v1)
-/* 0EA008 7F0B54D8 C4C40008 */  lwc1  $f4, 8($a2)
-/* 0EA00C 7F0B54DC 46062202 */  mul.s $f8, $f4, $f6
-/* 0EA010 7F0B54E0 0FC1611D */  jal   matrix_4x4_transform_vector_in_place
-/* 0EA014 7F0B54E4 E6080008 */   swc1  $f8, 8($s0)
-/* 0EA018 7F0B54E8 02002025 */  move  $a0, $s0
-/* 0EA01C 7F0B54EC 0FC1E018 */  jal   sub_GAME_7F078060
-/* 0EA020 7F0B54F0 02002825 */   move  $a1, $s0
-/* 0EA024 7F0B54F4 44805000 */  mtc1  $zero, $f10
-/* 0EA028 7F0B54F8 C6100008 */  lwc1  $f16, 8($s0)
-/* 0EA02C 7F0B54FC 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0EA030 7F0B5500 24020001 */  li    $v0, 1
-/* 0EA034 7F0B5504 4610503C */  c.lt.s $f10, $f16
-/* 0EA038 7F0B5508 00000000 */  nop   
-/* 0EA03C 7F0B550C 45000003 */  bc1f  .L7F0B551C
-/* 0EA040 7F0B5510 00000000 */   nop   
-/* 0EA044 7F0B5514 10000001 */  b     .L7F0B551C
-/* 0EA048 7F0B5518 00001025 */   move  $v0, $zero
-.L7F0B551C:
-/* 0EA04C 7F0B551C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0EA050 7F0B5520 03E00008 */  jr    $ra
-/* 0EA054 7F0B5524 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
