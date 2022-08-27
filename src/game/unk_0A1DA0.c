@@ -14,6 +14,8 @@
 #define SCALAR_3_7F0A2160 0.12f
 #endif
 
+#define UNK_8007A170_MAX 20
+
 // bss
 //CODE.bss:8007A160
 s32 SHATTERED_WINDOW_PIECES_BUFFER_LEN;
@@ -27,7 +29,7 @@ u32 dword_CODE_bss_8007A16C;
 // something explosion related
 // size of each item is 0x2c (see sub_GAME_7F0A3E1C)
 //CODE.bss:8007A170
-u8 dword_CODE_bss_8007A170[0x370];
+bondstruct_unk_8007A170 dword_CODE_bss_8007A170[UNK_8007A170_MAX];
 
 #ifndef VERSION_EU
 //CODE.bss:8007A4E0
@@ -2786,34 +2788,20 @@ void unused_7F0A3BA4(s32 arg0, struct rgba_u8 *arg1)
 }
 
 
+void sub_GAME_7F0A3BD8(void)
+{
+    s32 i;
+    s32 start_index;
 
+    if (1) { start_index = 0; }
 
-#ifdef NONMATCHING
-void sub_GAME_7F0A3BD8(void) {
-
+    for (i = start_index; (i < UNK_8007A170_MAX) ^ 0; i++)
+    {
+        dword_CODE_bss_8007A170[i].unk0C = 0;
+        dword_CODE_bss_8007A170[i].unk04 = 0;
+        dword_CODE_bss_8007A170[i].unk00 = 0;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A3BD8
-/* 0D8708 7F0A3BD8 3C028008 */  lui   $v0, %hi(dword_CODE_bss_8007A170)
-/* 0D870C 7F0A3BDC 3C038008 */  lui   $v1, %hi(dword_CODE_bss_8007A170 + 0x370)
-/* 0D8710 7F0A3BE0 2463A4E0 */  addiu $v1, %lo(dword_CODE_bss_8007A170 + 0x370) # addiu $v1, $v1, -0x5b20
-/* 0D8714 7F0A3BE4 2442A170 */  addiu $v0, %lo(dword_CODE_bss_8007A170) # addiu $v0, $v0, -0x5e90
-.L7F0A3BE8:
-/* 0D8718 7F0A3BE8 2442002C */  addiu $v0, $v0, 0x2c
-/* 0D871C 7F0A3BEC 0043082B */  sltu  $at, $v0, $v1
-/* 0D8720 7F0A3BF0 AC40FFE0 */  sw    $zero, -0x20($v0)
-/* 0D8724 7F0A3BF4 A440FFD8 */  sh    $zero, -0x28($v0)
-/* 0D8728 7F0A3BF8 1420FFFB */  bnez  $at, .L7F0A3BE8
-/* 0D872C 7F0A3BFC AC40FFD4 */   sw    $zero, -0x2c($v0)
-/* 0D8730 7F0A3C00 03E00008 */  jr    $ra
-/* 0D8734 7F0A3C04 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING

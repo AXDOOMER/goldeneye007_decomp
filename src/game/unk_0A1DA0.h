@@ -50,6 +50,21 @@ typedef struct s_shattered_window_piece {
     u8 field_0x67;
 } s_shattered_window_piece;
 
+typedef struct bondstruct_unk_8007A170 {
+    u32 unk00;
+    s16 unk04;
+    s16 unk06;
+    u32 unk08;
+    u32 unk0C;
+    u32 unk10;
+    u32 unk14;
+    u32 unk18;
+    u32 unk1c;
+    u32 unk20;
+    u32 unk24;
+    u32 unk28;
+} bondstruct_unk_8007A170;
+
 extern s32 SHATTERED_WINDOW_PIECES_BUFFER_LEN;
 extern s_shattered_window_piece* ptr_shattered_window_pieces;
 extern s32 D_80040940;
