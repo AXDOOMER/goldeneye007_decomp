@@ -10,7 +10,7 @@ typedef struct s_lightfixture {
     Gfx *ptr_end_pertinent_DL;
 } s_lightfixture;
 
-struct bondstruct_unk_80082B18 {
+struct s_darkened_light {
     u16 room_index;
     u16 vtx_index;
 };

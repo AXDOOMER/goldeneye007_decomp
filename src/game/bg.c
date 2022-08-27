@@ -5362,7 +5362,7 @@ u32 * sub_GAME_7F0B609C(int roomID, int *data, u32 size)
     dest = bgDecompress(source,data);
     puVar1 = (size - dest) + data;
     sub_GAME_7F0CE794(data,puVar1,dest);
-    sub_GAME_7F0BC4C4(roomID);
+    clear_light_fixturetable_in_room(roomID);
     puVar1 = process_microcode_sort_display_modes_expand_image_calls(puVar1,dest,data,NULL);
     if (dest < puVar1) {
       dest = puVar1;
@@ -5440,7 +5440,7 @@ glabel sub_GAME_7F0B609C
 /* 0EACB4 7F0B6184 AFA50028 */  sw    $a1, 0x28($sp)
 /* 0EACB8 7F0B6188 0FC339E5 */  jal   sub_GAME_7F0CE794
 /* 0EACBC 7F0B618C 00403025 */   move  $a2, $v0
-/* 0EACC0 7F0B6190 0FC2F131 */  jal   sub_GAME_7F0BC4C4
+/* 0EACC0 7F0B6190 0FC2F131 */  jal   clear_light_fixturetable_in_room
 /* 0EACC4 7F0B6194 8FA40038 */   lw    $a0, 0x38($sp)
 /* 0EACC8 7F0B6198 8FA40028 */  lw    $a0, 0x28($sp)
 /* 0EACCC 7F0B619C 02202825 */  move  $a1, $s1
@@ -5530,7 +5530,7 @@ glabel sub_GAME_7F0B609C
 /* 0EACB4 7F0B6184 AFA50028 */  sw    $a1, 0x28($sp)
 /* 0EACB8 7F0B6188 0FC339E5 */  jal   sub_GAME_7F0CE794
 /* 0EACBC 7F0B618C 00403025 */   move  $a2, $v0
-/* 0EACC0 7F0B6190 0FC2F131 */  jal   sub_GAME_7F0BC4C4
+/* 0EACC0 7F0B6190 0FC2F131 */  jal   clear_light_fixturetable_in_room
 /* 0EACC4 7F0B6194 8FA40038 */   lw    $a0, 0x38($sp)
 /* 0EACC8 7F0B6198 8FA40028 */  lw    $a0, 0x28($sp)
 /* 0EACCC 7F0B619C 02202825 */  move  $a1, $s1
@@ -5857,7 +5857,7 @@ void sub_GAME_7F0B6368(s32 rooms) {
                         // Node 9
                         sp1C = temp_v1_2;
                         sp28 = temp_ret_2;
-                        sub_GAME_7F0BB978(rooms, sp28);
+                        redarken_lights_in_room(rooms, sp28);
                     }
                 }
                 else
@@ -6020,7 +6020,7 @@ glabel sub_GAME_7F0B6368
 /* 0EAF74 7F0B6444 8FA70028 */   lw    $a3, 0x28($sp)
 /* 0EAF78 7F0B6448 8FA40030 */  lw    $a0, 0x30($sp)
 /* 0EAF7C 7F0B644C AFA3001C */  sw    $v1, 0x1c($sp)
-/* 0EAF80 7F0B6450 0FC2EE5E */  jal   sub_GAME_7F0BB978
+/* 0EAF80 7F0B6450 0FC2EE5E */  jal   redarken_lights_in_room
 /* 0EAF84 7F0B6454 AFA20028 */   sw    $v0, 0x28($sp)
 /* 0EAF88 7F0B6458 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0EAF8C 7F0B645C 10000003 */  b     .L7F0B646C
@@ -6190,7 +6190,7 @@ glabel sub_GAME_7F0B6368
 /* 0E8170 7F0B5780 8FA70028 */   lw    $a3, 0x28($sp)
 /* 0E8174 7F0B5784 8FA40030 */  lw    $a0, 0x30($sp)
 /* 0E8178 7F0B5788 AFA3001C */  sw    $v1, 0x1c($sp)
-/* 0E817C 7F0B578C 0FC2EB5E */  jal   sub_GAME_7F0BB978
+/* 0E817C 7F0B578C 0FC2EB5E */  jal   redarken_lights_in_room
 /* 0E8180 7F0B5790 AFA20028 */   sw    $v0, 0x28($sp)
 /* 0E8184 7F0B5794 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0E8188 7F0B5798 10000003 */  b     .L7F0B57A8
