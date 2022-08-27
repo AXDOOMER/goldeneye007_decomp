@@ -4,13 +4,13 @@
 #include <bondtypes.h>
 
 typedef struct s_shattered_window_piece {
-    s32* piece;
+    s32 piece;
     f32 x;
     f32 y;
     f32 z;
     f32 field_0x10;
     f32 field_0x14;
-    s32 field_0x18;
+    f32 field_0x18;
     f32 field_0x1c;
     f32 field_0x20;
     f32 field_0x24;
@@ -52,7 +52,7 @@ typedef struct s_shattered_window_piece {
 
 extern s32 SHATTERED_WINDOW_PIECES_BUFFER_LEN;
 extern s_shattered_window_piece* ptr_shattered_window_pieces;
-extern u32 D_80040940;
+extern s32 D_80040940;
 
 extern u32 D_80040980;
 extern u32 D_80040984;

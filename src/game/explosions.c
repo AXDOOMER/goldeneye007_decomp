@@ -4,6 +4,7 @@
 #include <gbi_extension.h>
 #include <bondconstants.h>
 #include <bondtypes.h>
+#include <limits.h>
 #include "bg.h"
 #include "image_bank.h"
 #include "othermodemicrocode.h"
@@ -4062,9 +4063,9 @@ void sub_GAME_7F09F254(coord3d *arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
     s16 unk0A_upper;
     s8 rand_s8;
 
-    rand1 = (2.0f * (((f32) randomGetNext()) * 2.3283064e-10f)) - 1.0f;
-    rand2 = ((((f32) randomGetNext()) * 2.3283064e-10f) * 1.12f) - 0.12f;
-    rand3 = (2.0f * (((f32) randomGetNext()) * 2.3283064e-10f)) - 1.0f;
+    rand1 = (2.0f * (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX))) - 1.0f;
+    rand2 = ((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 1.12f) - 0.12f;
+    rand3 = (2.0f * (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX))) - 1.0f;
 
     ptr_ejected_casing_buf[numCasingEntries].unk00 = 1;
 
@@ -4076,23 +4077,23 @@ void sub_GAME_7F09F254(coord3d *arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
     ptr_ejected_casing_buf[numCasingEntries].unk20 = rand2 * arg3;
     ptr_ejected_casing_buf[numCasingEntries].unk24 = rand3 * arg2;
 
-    ptr_ejected_casing_buf[numCasingEntries].unk38[0].unk00 = (s16) ((s32) ((((((f32) randomGetNext()) * 2.3283064e-10f) * 0.75f) + 0.75f) * arg4));
+    ptr_ejected_casing_buf[numCasingEntries].unk38[0].unk00 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * arg4));
     ptr_ejected_casing_buf[numCasingEntries].unk38[0].unk02 = 0;
-    ptr_ejected_casing_buf[numCasingEntries].unk38[0].unk04 = (s16) ((s32) ((((((f32) randomGetNext()) * 2.3283064e-10f) * 0.75f) + 0.75f) * arg4));
+    ptr_ejected_casing_buf[numCasingEntries].unk38[0].unk04 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * arg4));
 
     if (1)
     {
-        ptr_ejected_casing_buf[numCasingEntries].unk38[1].unk00 = (s16) ((s32) ((((((f32) randomGetNext()) * 2.3283064e-10f) * 0.75f) + 0.75f) * arg4));
+        ptr_ejected_casing_buf[numCasingEntries].unk38[1].unk00 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * arg4));
         ptr_ejected_casing_buf[numCasingEntries].unk38[1].unk02 = 0;
-        ptr_ejected_casing_buf[numCasingEntries].unk38[1].unk04 = (s16) ((s32) ((((((f32) randomGetNext()) * 2.3283064e-10f) * 0.75f) + 0.75f) * (-arg4)));
+        ptr_ejected_casing_buf[numCasingEntries].unk38[1].unk04 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-arg4)));
 
-        ptr_ejected_casing_buf[numCasingEntries].unk38[2].unk00 = (s16) ((s32) ((((((f32) randomGetNext()) * 2.3283064e-10f) * 0.75f) + 0.75f) * (-arg4)));
+        ptr_ejected_casing_buf[numCasingEntries].unk38[2].unk00 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-arg4)));
         ptr_ejected_casing_buf[numCasingEntries].unk38[2].unk02 = 0;
-        ptr_ejected_casing_buf[numCasingEntries].unk38[2].unk04 = (s16) ((s32) ((((((f32) randomGetNext()) * 2.3283064e-10f) * 0.75f) + 0.75f) * (-arg4)));
+        ptr_ejected_casing_buf[numCasingEntries].unk38[2].unk04 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-arg4)));
 
-        ptr_ejected_casing_buf[numCasingEntries].unk38[3].unk00 = (s16) ((s32) ((((((f32) randomGetNext()) * 2.3283064e-10f) * 0.75f) + 0.75f) * (-arg4)));
+        ptr_ejected_casing_buf[numCasingEntries].unk38[3].unk00 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-arg4)));
         ptr_ejected_casing_buf[numCasingEntries].unk38[3].unk02 = 0;
-        ptr_ejected_casing_buf[numCasingEntries].unk38[3].unk04 = (s16) ((s32) ((((((f32) randomGetNext()) * 2.3283064e-10f) * 0.75f) + 0.75f) * arg4));
+        ptr_ejected_casing_buf[numCasingEntries].unk38[3].unk04 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * arg4));
     }
 
     if (1) {}
@@ -4153,13 +4154,13 @@ void sub_GAME_7F09F254(coord3d *arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
     ptr_ejected_casing_buf[numCasingEntries].unk38[2].unk0F = 0xdc;
     ptr_ejected_casing_buf[numCasingEntries].unk38[3].unk0F = 0xdc;
 
-    ptr_ejected_casing_buf[numCasingEntries].unk10 = (((f32) randomGetNext()) * 2.3283064e-10f) * 6.2831855f;
-    ptr_ejected_casing_buf[numCasingEntries].unk14 = (((f32) randomGetNext()) * 2.3283064e-10f) * 6.2831855f;
-    ptr_ejected_casing_buf[numCasingEntries].unk18 = (((f32) randomGetNext()) * 2.3283064e-10f) * 6.2831855f;
+    ptr_ejected_casing_buf[numCasingEntries].unk10 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 6.2831855f;
+    ptr_ejected_casing_buf[numCasingEntries].unk14 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 6.2831855f;
+    ptr_ejected_casing_buf[numCasingEntries].unk18 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 6.2831855f;
 
-    ptr_ejected_casing_buf[numCasingEntries].unk28 = (((f32) randomGetNext()) * 2.3283064e-10f) * 0.1f;
-    ptr_ejected_casing_buf[numCasingEntries].unk2C = (((f32) randomGetNext()) * 2.3283064e-10f) * 0.1f;
-    ptr_ejected_casing_buf[numCasingEntries].unk30 = (((f32) randomGetNext()) * 2.3283064e-10f) * 0.1f;
+    ptr_ejected_casing_buf[numCasingEntries].unk28 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.1f;
+    ptr_ejected_casing_buf[numCasingEntries].unk2C = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.1f;
+    ptr_ejected_casing_buf[numCasingEntries].unk30 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.1f;
 
     numCasingEntries++;
     if (numCasingEntries >= max_casings)
