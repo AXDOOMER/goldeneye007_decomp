@@ -3275,29 +3275,13 @@ void texBlur(u8 *pixels, s32 width, s32 height, s32 method, s32 chansize)
 }
 
 
-
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F0CBAF4(struct texturething *arg0, u8 *arg1, s32 arg2)
 {
-	arg0->unk00 = (struct texloadthing *)arg1;
-	arg0->unk04 = (struct texloadthing *)(arg1 + arg2);
-	arg0->unk08 = (struct texloadthing *)arg1;
-	arg0->unk0c = (struct texloadthing *)((s32)arg1 + arg2);
+    arg0->unk00 = (struct texloadthing *)arg1;
+    arg0->unk04 = (struct texloadthing *)(arg1 + arg2);
+    arg0->unk08 = (struct texloadthing *)arg1;
+    arg0->unk0c = (struct texloadthing *)(arg1 + arg2);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0CBAF4
-/* 100624 7F0CBAF4 00A61021 */  addu  $v0, $a1, $a2
-/* 100628 7F0CBAF8 AC850000 */  sw    $a1, ($a0)
-/* 10062C 7F0CBAFC AC820004 */  sw    $v0, 4($a0)
-/* 100630 7F0CBB00 AC850008 */  sw    $a1, 8($a0)
-/* 100634 7F0CBB04 03E00008 */  jr    $ra
-/* 100638 7F0CBB08 AC82000C */   sw    $v0, 0xc($a0)
-)
-#endif
 
 
 struct texloadthing *sub_GAME_7F0CBB0C(s32 texturenum, struct texturething *arg1)
