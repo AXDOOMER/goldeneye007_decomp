@@ -1425,52 +1425,15 @@ glabel monitorthingGetNew
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
 s32 sub_GAME_7F03FF60(ObjectRecord *arg0)
 {
     if (!(arg0->state & PROPSTATE_DESTROYED))
     {
-        return (s32) ((arg0->maxdamage * 3.0f) / (f32)(arg0->damage));
+        return (arg0->maxdamage * 3.0f) / arg0->damage;
     }
-    return (s32) (arg0->maxdamage + 4.0f);
+
+    return arg0->maxdamage + 4.0f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03FF60
-/* 074A90 7F03FF60 908E0002 */  lbu   $t6, 2($a0)
-/* 074A94 7F03FF64 3C014080 */  lui   $at, 0x4080
-/* 074A98 7F03FF68 31CF0080 */  andi  $t7, $t6, 0x80
-/* 074A9C 7F03FF6C 55E0000C */  bnezl $t7, .L7F03FFA0
-/* 074AA0 7F03FF70 C4840070 */   lwc1  $f4, 0x70($a0)
-/* 074AA4 7F03FF74 3C014040 */  li    $at, 0x40400000 # 3.000000
-/* 074AA8 7F03FF78 44813000 */  mtc1  $at, $f6
-/* 074AAC 7F03FF7C C4840070 */  lwc1  $f4, 0x70($a0)
-/* 074AB0 7F03FF80 C48A0074 */  lwc1  $f10, 0x74($a0)
-/* 074AB4 7F03FF84 46062202 */  mul.s $f8, $f4, $f6
-/* 074AB8 7F03FF88 460A4403 */  div.s $f16, $f8, $f10
-/* 074ABC 7F03FF8C 4600848D */  trunc.w.s $f18, $f16
-/* 074AC0 7F03FF90 44029000 */  mfc1  $v0, $f18
-/* 074AC4 7F03FF94 03E00008 */  jr    $ra
-/* 074AC8 7F03FF98 00000000 */   nop   
-
-/* 074ACC 7F03FF9C C4840070 */  lwc1  $f4, 0x70($a0)
-.L7F03FFA0:
-/* 074AD0 7F03FFA0 44813000 */  mtc1  $at, $f6
-/* 074AD4 7F03FFA4 00000000 */  nop   
-/* 074AD8 7F03FFA8 46062200 */  add.s $f8, $f4, $f6
-/* 074ADC 7F03FFAC 4600428D */  trunc.w.s $f10, $f8
-/* 074AE0 7F03FFB0 44025000 */  mfc1  $v0, $f10
-/* 074AE4 7F03FFB4 00000000 */  nop   
-/* 074AE8 7F03FFB8 03E00008 */  jr    $ra
-/* 074AEC 7F03FFBC 00000000 */   nop   
-)
-#endif
-
-
 
 
 /*
@@ -44179,10 +44142,14 @@ void doorActivate(DoorRecord *door, DOORSTATE State) //#MATCH
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F054A20(void) {
-
+s32 sub_GAME_7F054A20(DoorRecord *door)
+{
+    return (door->openstate == DOORSTATE_WAITING) || ((door->openstate == DOORSTATE_STATIONARY) && (door->openPosition <= 0.0f));
 }
 #else
+
+s32 sub_GAME_7F054A20(DoorRecord *door);
+
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F054A20
