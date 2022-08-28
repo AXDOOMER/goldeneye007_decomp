@@ -502,131 +502,47 @@ glabel texInflateZlib
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-/* pd version
+/**
+ * Copy a list of palette indices to the dst buffer, but ensure each row is
+ * aligned to an 8 byte boundary.
+ *
+ * Return the number of output bytes.
+ */
 s32 texAlignIndices(u8 *src, s32 width, s32 height, s32 format, u8 *dst)
 {
-	u8 *outptr = dst;
-	s32 x;
-	s32 y;
-	s32 indicesperbyte;
+    s32 x;
+    s32 y;
+    u8 *outptr;
+    s32 indicesperbyte;
 
-	if (format == TEXFORMAT_RGBA16_CI8 || format == TEXFORMAT_IA16_CI8) {
-		indicesperbyte = 1;
-	} else if (format == TEXFORMAT_RGBA16_CI4 || format == TEXFORMAT_0C) {
-		indicesperbyte = 2;
-	}
+    outptr = dst;
 
-	for (y = 0; y < height; y++) {
-		for (x = 0; x < width; x += indicesperbyte) {
-			*outptr = *src;
-			outptr++;
-			src++;
-		}
+    if (format == TEXFORMAT_RGBA16_CI8 || format == TEXFORMAT_IA16_CI8)
+    {
+        indicesperbyte = 1;
+    }
+    else if (format == TEXFORMAT_RGBA16_CI4 || format == TEXFORMAT_0C)
+    {
+        indicesperbyte = 2;
+    }
+    else if (indicesperbyte)
+    {
+    }
 
-		outptr = (u8 *)(((u32)outptr + 7) & ~7);
-	}
+    for (y = 0; y < height; y++)
+    {
+        for (x = 0; x < width; x += indicesperbyte)
+        {
+            *outptr = *src;
+            outptr++;
+            src++;
+        }
 
-	return outptr - dst;
+        outptr = (u8 *)(((u32)outptr + 7) & ~7);
+    }
+
+    return outptr - dst;
 }
-//*/
-
-
-//uses extra a0 for copy 
-//fb744:    li      v0,2                            r fb744:    li      a0,2
-//                                                  > fb748:    move    v0,a0
-s32 texAlignIndices(u8 *src, s32 width, s32 height, s32 format, u8 *dst, s32 indicesperbyte)
-{
-    
-    //s32 indicesperbyte;
-	
-	s32 x;
-	s32 y;
-    u8 *outptr = dst;
-	s32 unused;
-    indicesperbyte = (format == TEXFORMAT_RGBA16_CI8 || format == TEXFORMAT_IA16_CI8) ? 1 : (format == TEXFORMAT_RGBA16_CI4 || format == TEXFORMAT_0C) ? 2:unused;
-	//if (format == TEXFORMAT_RGBA16_CI8 || format == TEXFORMAT_IA16_CI8) {
-	//	indicesperbyte = 1;
-	//} else if (format == TEXFORMAT_RGBA16_CI4 || format == TEXFORMAT_0C) {
-	//	indicesperbyte = 2;
-	//}
-
-	for (y = 0; y < height; y++) {
-		for (x = 0; x < width; x += indicesperbyte) {
-			*outptr = *src;
-			outptr++;
-			src++;
-		}
-
-		outptr = (u8 *)(((u32)outptr + 7) & ~7);
-	}
-
-	return outptr - dst;
-}
-
-
-#else
-GLOBAL_ASM(
-.text
-glabel texAlignIndices
-/* 0FB6F8 7F0C6BC8 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0FB6FC 7F0C6BCC AFB1000C */  sw    $s1, 0xc($sp)
-/* 0FB700 7F0C6BD0 AFB00008 */  sw    $s0, 8($sp)
-/* 0FB704 7F0C6BD4 24010009 */  li    $at, 9
-/* 0FB708 7F0C6BD8 00A08025 */  move  $s0, $a1
-/* 0FB70C 7F0C6BDC 00808825 */  move  $s1, $a0
-/* 0FB710 7F0C6BE0 10E10004 */  beq   $a3, $at, .L7F0C6BF4
-/* 0FB714 7F0C6BE4 8FA30030 */   lw    $v1, 0x30($sp)
-/* 0FB718 7F0C6BE8 2401000B */  li    $at, 11
-/* 0FB71C 7F0C6BEC 54E10004 */  bnel  $a3, $at, .L7F0C6C00
-/* 0FB720 7F0C6BF0 2401000A */   li    $at, 10
-.L7F0C6BF4:
-/* 0FB724 7F0C6BF4 10000008 */  b     .L7F0C6C18
-/* 0FB728 7F0C6BF8 24020001 */   li    $v0, 1
-/* 0FB72C 7F0C6BFC 2401000A */  li    $at, 10
-.L7F0C6C00:
-/* 0FB730 7F0C6C00 10E10003 */  beq   $a3, $at, .L7F0C6C10
-/* 0FB734 7F0C6C04 2401000C */   li    $at, 12
-/* 0FB738 7F0C6C08 14E10003 */  bne   $a3, $at, .L7F0C6C18
-/* 0FB73C 7F0C6C0C 8FA20010 */   lw    $v0, 0x10($sp)
-.L7F0C6C10:
-/* 0FB740 7F0C6C10 10000001 */  b     .L7F0C6C18
-/* 0FB744 7F0C6C14 24020002 */   li    $v0, 2
-.L7F0C6C18:
-/* 0FB748 7F0C6C18 18C0000F */  blez  $a2, .L7F0C6C58
-/* 0FB74C 7F0C6C1C 00002025 */   move  $a0, $zero
-/* 0FB750 7F0C6C20 2407FFF8 */  li    $a3, -8
-.L7F0C6C24:
-/* 0FB754 7F0C6C24 1A000008 */  blez  $s0, .L7F0C6C48
-/* 0FB758 7F0C6C28 00002825 */   move  $a1, $zero
-.L7F0C6C2C:
-/* 0FB75C 7F0C6C2C 922E0000 */  lbu   $t6, ($s1)
-/* 0FB760 7F0C6C30 00A22821 */  addu  $a1, $a1, $v0
-/* 0FB764 7F0C6C34 00B0082A */  slt   $at, $a1, $s0
-/* 0FB768 7F0C6C38 24630001 */  addiu $v1, $v1, 1
-/* 0FB76C 7F0C6C3C 26310001 */  addiu $s1, $s1, 1
-/* 0FB770 7F0C6C40 1420FFFA */  bnez  $at, .L7F0C6C2C
-/* 0FB774 7F0C6C44 A06EFFFF */   sb    $t6, -1($v1)
-.L7F0C6C48:
-/* 0FB778 7F0C6C48 24840001 */  addiu $a0, $a0, 1
-/* 0FB77C 7F0C6C4C 246F0007 */  addiu $t7, $v1, 7
-/* 0FB780 7F0C6C50 1486FFF4 */  bne   $a0, $a2, .L7F0C6C24
-/* 0FB784 7F0C6C54 01E71824 */   and   $v1, $t7, $a3
-.L7F0C6C58:
-/* 0FB788 7F0C6C58 8FB80030 */  lw    $t8, 0x30($sp)
-/* 0FB78C 7F0C6C5C 8FB00008 */  lw    $s0, 8($sp)
-/* 0FB790 7F0C6C60 8FB1000C */  lw    $s1, 0xc($sp)
-/* 0FB794 7F0C6C64 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0FB798 7F0C6C68 03E00008 */  jr    $ra
-/* 0FB79C 7F0C6C6C 00781023 */   subu  $v0, $v1, $t8
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
