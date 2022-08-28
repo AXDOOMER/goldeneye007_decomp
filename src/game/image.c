@@ -3384,88 +3384,32 @@ glabel sub_GAME_7F0CBAF4
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
 struct texloadthing *sub_GAME_7F0CBB0C(s32 texturenum, struct texturething *arg1)
 {
-	struct texloadthing *end;
-	struct texloadthing *cur;
-	s32 i;
+    struct texloadthing *end;
+    struct texloadthing *cur;
+    s32 i;
 
-	if (arg1 == NULL) {
-		arg1 = &ptr_texture_alloc_start;
-	}
+    if (arg1 == NULL)
+    {
+        arg1 = &ptr_texture_alloc_start;
+    }
 
-	if (arg1 == ptr_texture_alloc_start) {
-		cur = arg1->unk04;
+    end = arg1->unk04;
+    cur = arg1->unk0c;
 
-		while (cur) {
-			if (cur->texturenum == texturenum) {
-				return cur;
-			}
+    while (cur < end)
+    {
+        if (cur->texturenum == texturenum)
+        {
+            return cur;
+        }
 
-			if (!cur->unk0c_04) {
-				return NULL;
-			}
+        cur++;
+    }
 
-			cur = (struct texloadthing *)PHYS_TO_K0(cur->unk0c_04);
-		}
-
-		return NULL;
-	}
-
-	end = arg1->unk04;
-	cur = arg1->unk0c;
-
-	while (cur < end) {
-		if (cur->texturenum == texturenum) {
-			return cur;
-		}
-
-		cur++;
-	}
-
-	return NULL;
+    return NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0CBB0C
-/* 10063C 7F0CBB0C 54A00004 */  bnezl $a1, .L7F0CBB20
-/* 100640 7F0CBB10 8CA20004 */   lw    $v0, 4($a1)
-/* 100644 7F0CBB14 3C058009 */  lui   $a1, %hi(ptr_texture_alloc_start)
-/* 100648 7F0CBB18 24A5C720 */  addiu $a1, %lo(ptr_texture_alloc_start) # addiu $a1, $a1, -0x38e0
-/* 10064C 7F0CBB1C 8CA20004 */  lw    $v0, 4($a1)
-.L7F0CBB20:
-/* 100650 7F0CBB20 8CA3000C */  lw    $v1, 0xc($a1)
-/* 100654 7F0CBB24 0062082B */  sltu  $at, $v1, $v0
-/* 100658 7F0CBB28 5020000C */  beql  $at, $zero, .L7F0CBB5C
-/* 10065C 7F0CBB2C 00001025 */   move  $v0, $zero
-/* 100660 7F0CBB30 8C6E0000 */  lw    $t6, ($v1)
-.L7F0CBB34:
-/* 100664 7F0CBB34 000E7D02 */  srl   $t7, $t6, 0x14
-/* 100668 7F0CBB38 548F0004 */  bnel  $a0, $t7, .L7F0CBB4C
-/* 10066C 7F0CBB3C 24630010 */   addiu $v1, $v1, 0x10
-/* 100670 7F0CBB40 03E00008 */  jr    $ra
-/* 100674 7F0CBB44 00601025 */   move  $v0, $v1
-
-/* 100678 7F0CBB48 24630010 */  addiu $v1, $v1, 0x10
-.L7F0CBB4C:
-/* 10067C 7F0CBB4C 0062082B */  sltu  $at, $v1, $v0
-/* 100680 7F0CBB50 5420FFF8 */  bnezl $at, .L7F0CBB34
-/* 100684 7F0CBB54 8C6E0000 */   lw    $t6, ($v1)
-/* 100688 7F0CBB58 00001025 */  move  $v0, $zero
-.L7F0CBB5C:
-/* 10068C 7F0CBB5C 03E00008 */  jr    $ra
-/* 100690 7F0CBB60 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 
 s32 texFreeBytesInBuffer(struct texturething *arg0)
