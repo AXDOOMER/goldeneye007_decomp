@@ -39684,45 +39684,14 @@ glabel sub_GAME_7F050F50
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F051028(void) {
-
+void sub_GAME_7F051028(ObjectRecord *arg0, PropRecord *arg1)
+{
+    s32 unused;
+    s32 obj_idx;
+    obj_idx = (u32) arg0->obj;
+    modelLoad(obj_idx);
+    sub_GAME_7F050F50(arg0, arg1, PitemZ_entries[obj_idx].header, NULL, 0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F051028
-/* 085B58 7F051028 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 085B5C 7F05102C AFBF001C */  sw    $ra, 0x1c($sp)
-/* 085B60 7F051030 AFA40028 */  sw    $a0, 0x28($sp)
-/* 085B64 7F051034 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 085B68 7F051038 84840004 */  lh    $a0, 4($a0)
-/* 085B6C 7F05103C 0FC15B0E */  jal   modelLoad
-/* 085B70 7F051040 AFA40020 */   sw    $a0, 0x20($sp)
-/* 085B74 7F051044 8FAF0020 */  lw    $t7, 0x20($sp)
-/* 085B78 7F051048 3C068004 */  lui   $a2, %hi(PitemZ_entries)
-/* 085B7C 7F05104C 8FA40028 */  lw    $a0, 0x28($sp)
-/* 085B80 7F051050 000FC080 */  sll   $t8, $t7, 2
-/* 085B84 7F051054 030FC023 */  subu  $t8, $t8, $t7
-/* 085B88 7F051058 0018C080 */  sll   $t8, $t8, 2
-/* 085B8C 7F05105C 00D83021 */  addu  $a2, $a2, $t8
-/* 085B90 7F051060 8CC6A228 */  lw    $a2, %lo(PitemZ_entries)($a2)
-/* 085B94 7F051064 8FA5002C */  lw    $a1, 0x2c($sp)
-/* 085B98 7F051068 00003825 */  move  $a3, $zero
-/* 085B9C 7F05106C 0FC143D4 */  jal   sub_GAME_7F050F50
-/* 085BA0 7F051070 AFA00010 */   sw    $zero, 0x10($sp)
-/* 085BA4 7F051074 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 085BA8 7F051078 27BD0028 */  addiu $sp, $sp, 0x28
-/* 085BAC 7F05107C 03E00008 */  jr    $ra
-/* 085BB0 7F051080 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
