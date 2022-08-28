@@ -1019,31 +1019,30 @@ glabel sub_GAME_7F03FB70
 void sub_GAME_7F03FBFC(struct bss_80073DC0 *arg0)
 {
     arg0->unk00 = 0;
-    arg0->unk88 = 0;
-    arg0->unk04 = 0;
-    arg0->unk08 = 0;
-    arg0->unk0C = 0;
-    arg0->unk10 = 0;
-    arg0->unk14 = 0;
-    arg0->unk18 = 0;
-    arg0->unk1C = 0;
+    arg0->unk04 = 0.0f;
+    arg0->unk08 = 0.0f;
+    arg0->unk0C = 0.0f;
+    arg0->unk10 = 0.0f;
+    arg0->unk14 = 0.0f;
+    arg0->unk18 = 0.0f;
+    arg0->unk1C = 0.0f;
     arg0->unk60 = 1.0f;
-    arg0->unk8C = 0.050000001f;
+    arg0->unk88 = 0;
+    arg0->unk8C = 0.05f;
     arg0->unk90 = 0;
-    arg0->unkA0 = -1U;
+    arg0->unk94 = 0.0f;
+    arg0->unkA0 = -1;
     arg0->unkA4 = 0;
     arg0->unkA8 = 0;
-    arg0->unkAC = -1U;
+    arg0->unkAC = -1;
     arg0->unkB8 = 1;
     arg0->unkBC = 0;
-    arg0->unkE0 = 0;
-    arg0->unkE4 = 0;
-    arg0->unkE8 = 0;
-    arg0->unk94 = 0;
     arg0->unkC0 = 1.0f;
     arg0->unkC4 = 1.0f;
     arg0->unkC8 = 1.0f;
-    arg0->unk8C = 0.050000001f;
+    arg0->unkE0 = 0;
+    arg0->unkE4 = 0;
+    arg0->unkE8 = 0;
 }
 
 #else
@@ -1351,78 +1350,22 @@ void sub_GAME_7F03FE88(u32 *param_1)
 }
 
 
+struct bss_80075030 *monitorthingGetNew(void)
+{
+    s32 i;
 
+    for (i = 0; i < BSS_80075030_DATA_LEN; i++)
+    {
+        if (dword_CODE_bss_80075030[i].unk00 & 1)
+        {
+            dword_CODE_bss_80075030[i].unk00 = 0;
+            dword_CODE_bss_80075030[i].unk44 = 0;
+            return &dword_CODE_bss_80075030[(u32)i];
+        }
+    }
 
-
-#ifdef NONMATCHING
-void monitorthingGetNew(void) {
-
+    return NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel monitorthingGetNew
-/* 0749C8 7F03FE98 3C048007 */  lui   $a0, %hi(dword_CODE_bss_80075030)
-/* 0749CC 7F03FE9C 3C028007 */  lui   $v0, %hi(objinst)
-/* 0749D0 7F03FEA0 24425B70 */  addiu $v0, %lo(objinst) # addiu $v0, $v0, 0x5b70
-/* 0749D4 7F03FEA4 24845030 */  addiu $a0, %lo(dword_CODE_bss_80075030) # addiu $a0, $a0, 0x5030
-/* 0749D8 7F03FEA8 00001825 */  move  $v1, $zero
-.L7F03FEAC:
-/* 0749DC 7F03FEAC 8C8E0000 */  lw    $t6, ($a0)
-/* 0749E0 7F03FEB0 31CF0001 */  andi  $t7, $t6, 1
-/* 0749E4 7F03FEB4 11E00006 */  beqz  $t7, .L7F03FED0
-/* 0749E8 7F03FEB8 3C188007 */   lui   $t8, %hi(dword_CODE_bss_80075030) 
-/* 0749EC 7F03FEBC 27185030 */  addiu $t8, %lo(dword_CODE_bss_80075030) # addiu $t8, $t8, 0x5030
-/* 0749F0 7F03FEC0 AC800000 */  sw    $zero, ($a0)
-/* 0749F4 7F03FEC4 AC800044 */  sw    $zero, 0x44($a0)
-/* 0749F8 7F03FEC8 03E00008 */  jr    $ra
-/* 0749FC 7F03FECC 00781021 */   addu  $v0, $v1, $t8
-
-.L7F03FED0:
-/* 074A00 7F03FED0 8C990048 */  lw    $t9, 0x48($a0)
-/* 074A04 7F03FED4 33280001 */  andi  $t0, $t9, 1
-/* 074A08 7F03FED8 11000007 */  beqz  $t0, .L7F03FEF8
-/* 074A0C 7F03FEDC 3C0A8007 */   lui   $t2, %hi(dword_CODE_bss_80075030) 
-/* 074A10 7F03FEE0 254A5030 */  addiu $t2, %lo(dword_CODE_bss_80075030) # addiu $t2, $t2, 0x5030
-/* 074A14 7F03FEE4 24690048 */  addiu $t1, $v1, 0x48
-/* 074A18 7F03FEE8 012A1021 */  addu  $v0, $t1, $t2
-/* 074A1C 7F03FEEC AC800048 */  sw    $zero, 0x48($a0)
-/* 074A20 7F03FEF0 03E00008 */  jr    $ra
-/* 074A24 7F03FEF4 AC80008C */   sw    $zero, 0x8c($a0)
-
-.L7F03FEF8:
-/* 074A28 7F03FEF8 8C8B0090 */  lw    $t3, 0x90($a0)
-/* 074A2C 7F03FEFC 316C0001 */  andi  $t4, $t3, 1
-/* 074A30 7F03FF00 11800007 */  beqz  $t4, .L7F03FF20
-/* 074A34 7F03FF04 3C0E8007 */   lui   $t6, %hi(dword_CODE_bss_80075030) 
-/* 074A38 7F03FF08 25CE5030 */  addiu $t6, %lo(dword_CODE_bss_80075030) # addiu $t6, $t6, 0x5030
-/* 074A3C 7F03FF0C 246D0090 */  addiu $t5, $v1, 0x90
-/* 074A40 7F03FF10 01AE1021 */  addu  $v0, $t5, $t6
-/* 074A44 7F03FF14 AC800090 */  sw    $zero, 0x90($a0)
-/* 074A48 7F03FF18 03E00008 */  jr    $ra
-/* 074A4C 7F03FF1C AC8000D4 */   sw    $zero, 0xd4($a0)
-
-.L7F03FF20:
-/* 074A50 7F03FF20 8C8F00D8 */  lw    $t7, 0xd8($a0)
-/* 074A54 7F03FF24 31F80001 */  andi  $t8, $t7, 1
-/* 074A58 7F03FF28 13000007 */  beqz  $t8, .L7F03FF48
-/* 074A5C 7F03FF2C 3C088007 */   lui   $t0, %hi(dword_CODE_bss_80075030) 
-/* 074A60 7F03FF30 25085030 */  addiu $t0, %lo(dword_CODE_bss_80075030) # addiu $t0, $t0, 0x5030
-/* 074A64 7F03FF34 247900D8 */  addiu $t9, $v1, 0xd8
-/* 074A68 7F03FF38 03281021 */  addu  $v0, $t9, $t0
-/* 074A6C 7F03FF3C AC8000D8 */  sw    $zero, 0xd8($a0)
-/* 074A70 7F03FF40 03E00008 */  jr    $ra
-/* 074A74 7F03FF44 AC80011C */   sw    $zero, 0x11c($a0)
-
-.L7F03FF48:
-/* 074A78 7F03FF48 24840120 */  addiu $a0, $a0, 0x120
-/* 074A7C 7F03FF4C 1482FFD7 */  bne   $a0, $v0, .L7F03FEAC
-/* 074A80 7F03FF50 24630120 */   addiu $v1, $v1, 0x120
-/* 074A84 7F03FF54 00001025 */  move  $v0, $zero
-/* 074A88 7F03FF58 03E00008 */  jr    $ra
-/* 074A8C 7F03FF5C 00000000 */   nop   
-)
-#endif
 
 
 s32 sub_GAME_7F03FF60(ObjectRecord *arg0)
