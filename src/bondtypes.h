@@ -2266,16 +2266,9 @@ typedef union
 
     struct collision_data {
         s32 unk00;
-        s32 unk04;
-        s32 unk08;
-        s32 unk0C;
 
-        s32 unk10;
-        s32 unk14;
-        s32 unk18;
-        s32 unk1C;
+        rect4f unk04;
 
-        s32 unk20;
         s32 unk24;
         s32 unk28;
         s32 unk2C;

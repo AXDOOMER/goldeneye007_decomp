@@ -34637,50 +34637,22 @@ void sub_GAME_7F04F218(PropRecord* prop, s32 arg1) {
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F04F244(void) {
+void sub_GAME_7F04F244(PropRecord* prop, rect4f** arg1, s32* arg2, f32* arg3, f32* arg4)
+{
+    ObjectRecord* obj;
+    obj = prop->obj;
 
+    if ((obj->ptr_allocated_collisiondata_block != NULL) && (obj->flags & PROPFLAG_00000100) && !(obj->state & PROPSTATE_20))
+    {
+        *arg2 = obj->ptr_allocated_collisiondata_block->unk00;
+        *arg1 = &obj->ptr_allocated_collisiondata_block->unk04;
+        *arg4 = obj->ptr_allocated_collisiondata_block->unk48;
+        *arg3 = obj->ptr_allocated_collisiondata_block->unk44;
+        return;
+    }
+
+    *arg2 = 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F04F244
-/* 083D74 7F04F244 8C820004 */  lw    $v0, 4($a0)
-/* 083D78 7F04F248 8C430068 */  lw    $v1, 0x68($v0)
-/* 083D7C 7F04F24C 50600017 */  beql  $v1, $zero, .L7F04F2AC
-/* 083D80 7F04F250 ACC00000 */   sw    $zero, ($a2)
-/* 083D84 7F04F254 8C4E0008 */  lw    $t6, 8($v0)
-/* 083D88 7F04F258 31CF0100 */  andi  $t7, $t6, 0x100
-/* 083D8C 7F04F25C 51E00013 */  beql  $t7, $zero, .L7F04F2AC
-/* 083D90 7F04F260 ACC00000 */   sw    $zero, ($a2)
-/* 083D94 7F04F264 90580002 */  lbu   $t8, 2($v0)
-/* 083D98 7F04F268 33190020 */  andi  $t9, $t8, 0x20
-/* 083D9C 7F04F26C 5720000F */  bnezl $t9, .L7F04F2AC
-/* 083DA0 7F04F270 ACC00000 */   sw    $zero, ($a2)
-/* 083DA4 7F04F274 8C680000 */  lw    $t0, ($v1)
-/* 083DA8 7F04F278 ACC80000 */  sw    $t0, ($a2)
-/* 083DAC 7F04F27C 8C490068 */  lw    $t1, 0x68($v0)
-/* 083DB0 7F04F280 252A0004 */  addiu $t2, $t1, 4
-/* 083DB4 7F04F284 ACAA0000 */  sw    $t2, ($a1)
-/* 083DB8 7F04F288 8C4B0068 */  lw    $t3, 0x68($v0)
-/* 083DBC 7F04F28C 8FAC0010 */  lw    $t4, 0x10($sp)
-/* 083DC0 7F04F290 C5640048 */  lwc1  $f4, 0x48($t3)
-/* 083DC4 7F04F294 E5840000 */  swc1  $f4, ($t4)
-/* 083DC8 7F04F298 8C4D0068 */  lw    $t5, 0x68($v0)
-/* 083DCC 7F04F29C C5A60044 */  lwc1  $f6, 0x44($t5)
-/* 083DD0 7F04F2A0 03E00008 */  jr    $ra
-/* 083DD4 7F04F2A4 E4E60000 */   swc1  $f6, ($a3)
-
-/* 083DD8 7F04F2A8 ACC00000 */  sw    $zero, ($a2)
-.L7F04F2AC:
-/* 083DDC 7F04F2AC 03E00008 */  jr    $ra
-/* 083DE0 7F04F2B0 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 
 void append_text_picked_up(u8 *buffer,u8 * param2,u8 * param3)
