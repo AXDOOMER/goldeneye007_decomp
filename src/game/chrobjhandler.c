@@ -7,6 +7,7 @@
 #include <snd.h>
 #include <music.h>
 #include <memp.h>
+#include <snd.h>
 #include "bg.h"
 #include "bondview.h"
 #include "bondinv.h"
@@ -43326,96 +43327,48 @@ void sub_GAME_7F053A10(ALSoundState *state, coord3d *pos)
 }
 
 
+void sub_GAME_7F053A3C(DoorRecord* arg0)
+{
+    s32 open_playing;
+    s32 close_playing;
+    s32 sp1C;
 
+    open_playing = (arg0->openSoundState != NULL) && (sndGetPlayingState(arg0->openSoundState) != 0);
+    close_playing = (arg0->closeSoundState != NULL) && (sndGetPlayingState(arg0->closeSoundState) != 0);
 
+    if ((open_playing != 0) || (close_playing != 0))
+    {
 
-#ifdef NONMATCHING
-void sub_GAME_7F053A3C(void) {
+        sp1C = sub_GAME_7F0539E4(&arg0->prop->pos);
 
+        if (lvlGetControlsLockedFlag() != 0)
+        {
+            sp1C = 0;
+        }
+
+        if (open_playing != 0)
+        {
+            sndCreatePostEvent(arg0->openSoundState, 8, sp1C);
+        }
+
+        if (close_playing != 0)
+        {
+            sndCreatePostEvent(arg0->closeSoundState, 8, sp1C);
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F053A3C
-/* 08856C 7F053A3C 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 088570 7F053A40 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 088574 7F053A44 AFA40028 */  sw    $a0, 0x28($sp)
-/* 088578 7F053A48 8C8500F4 */  lw    $a1, 0xf4($a0)
-/* 08857C 7F053A4C 0005182B */  sltu  $v1, $zero, $a1
-/* 088580 7F053A50 50600005 */  beql  $v1, $zero, .L7F053A68
-/* 088584 7F053A54 8FAF0028 */   lw    $t7, 0x28($sp)
-/* 088588 7F053A58 0C00237C */  jal   sndGetPlayingState
-/* 08858C 7F053A5C 00A02025 */   move  $a0, $a1
-/* 088590 7F053A60 0002182B */  sltu  $v1, $zero, $v0
-/* 088594 7F053A64 8FAF0028 */  lw    $t7, 0x28($sp)
-.L7F053A68:
-/* 088598 7F053A68 AFA30024 */  sw    $v1, 0x24($sp)
-/* 08859C 7F053A6C 8DE400F8 */  lw    $a0, 0xf8($t7)
-/* 0885A0 7F053A70 0004182B */  sltu  $v1, $zero, $a0
-/* 0885A4 7F053A74 50600005 */  beql  $v1, $zero, .L7F053A8C
-/* 0885A8 7F053A78 8FB80024 */   lw    $t8, 0x24($sp)
-/* 0885AC 7F053A7C 0C00237C */  jal   sndGetPlayingState
-/* 0885B0 7F053A80 00000000 */   nop   
-/* 0885B4 7F053A84 0002182B */  sltu  $v1, $zero, $v0
-/* 0885B8 7F053A88 8FB80024 */  lw    $t8, 0x24($sp)
-.L7F053A8C:
-/* 0885BC 7F053A8C 8FB90028 */  lw    $t9, 0x28($sp)
-/* 0885C0 7F053A90 57000004 */  bnezl $t8, .L7F053AA4
-/* 0885C4 7F053A94 8F240010 */   lw    $a0, 0x10($t9)
-/* 0885C8 7F053A98 5060001A */  beql  $v1, $zero, .L7F053B04
-/* 0885CC 7F053A9C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0885D0 7F053AA0 8F240010 */  lw    $a0, 0x10($t9)
-.L7F053AA4:
-/* 0885D4 7F053AA4 AFA30018 */  sw    $v1, 0x18($sp)
-/* 0885D8 7F053AA8 0FC14E79 */  jal   sub_GAME_7F0539E4
-/* 0885DC 7F053AAC 24840008 */   addiu $a0, $a0, 8
-/* 0885E0 7F053AB0 0FC2FF01 */  jal   lvlGetControlsLockedFlag
-/* 0885E4 7F053AB4 AFA2001C */   sw    $v0, 0x1c($sp)
-/* 0885E8 7F053AB8 10400002 */  beqz  $v0, .L7F053AC4
-/* 0885EC 7F053ABC 8FA30018 */   lw    $v1, 0x18($sp)
-/* 0885F0 7F053AC0 AFA0001C */  sw    $zero, 0x1c($sp)
-.L7F053AC4:
-/* 0885F4 7F053AC4 8FA80024 */  lw    $t0, 0x24($sp)
-/* 0885F8 7F053AC8 8FA90028 */  lw    $t1, 0x28($sp)
-/* 0885FC 7F053ACC 24050008 */  li    $a1, 8
-/* 088600 7F053AD0 11000005 */  beqz  $t0, .L7F053AE8
-/* 088604 7F053AD4 8FA6001C */   lw    $a2, 0x1c($sp)
-/* 088608 7F053AD8 8D2400F4 */  lw    $a0, 0xf4($t1)
-/* 08860C 7F053ADC 0C002461 */  jal   sndCreatePostEvent
-/* 088610 7F053AE0 AFA30018 */   sw    $v1, 0x18($sp)
-/* 088614 7F053AE4 8FA30018 */  lw    $v1, 0x18($sp)
-.L7F053AE8:
-/* 088618 7F053AE8 10600005 */  beqz  $v1, .L7F053B00
-/* 08861C 7F053AEC 8FAA0028 */   lw    $t2, 0x28($sp)
-/* 088620 7F053AF0 8D4400F8 */  lw    $a0, 0xf8($t2)
-/* 088624 7F053AF4 24050008 */  li    $a1, 8
-/* 088628 7F053AF8 0C002461 */  jal   sndCreatePostEvent
-/* 08862C 7F053AFC 8FA6001C */   lw    $a2, 0x1c($sp)
-.L7F053B00:
-/* 088630 7F053B00 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F053B04:
-/* 088634 7F053B04 27BD0028 */  addiu $sp, $sp, 0x28
-/* 088638 7F053B08 03E00008 */  jr    $ra
-/* 08863C 7F053B0C 00000000 */   nop   
-)
-#endif
 
 
-
-
-
-
-#include <snd.h>
 void sub_GAME_7F053B10(DoorRecord *door) //#MATCH
 {
-    if (door->unkf4 && sndGetPlayingState(door->unkf4))
+    if (door->openSoundState && sndGetPlayingState(door->openSoundState))
     {
-        sndDeactivate(door->unkf4);
+        sndDeactivate(door->openSoundState);
     }
 
-    if (door->unkf8 && sndGetPlayingState(door->unkf8))
+    if (door->closeSoundState && sndGetPlayingState(door->closeSoundState))
     {
-        sndDeactivate(door->unkf8);
+        sndDeactivate(door->closeSoundState);
     }
 }
 
@@ -43428,13 +43381,13 @@ void play_door_opening_soundeffect_0(DoorRecord *door) {
 
     sub_GAME_7F053B10(door);
 
-    if (door->unkf4 == NULL)
+    if (door->openSoundState == NULL)
     {
-        pendingState = &door->unkf4;
+        pendingState = &door->openSoundState;
     }
-    else if (door->unkf8 == NULL)
+    else if (door->closeSoundState == NULL)
     {
-        pendingState = &door->unkf8;
+        pendingState = &door->closeSoundState;
     }
 
     switch (door->doorOpenSound)
@@ -43557,13 +43510,13 @@ void play_door_opening_soundeffect_1(DoorRecord *door) {
 
     sub_GAME_7F053B10(door);
 
-    if (door->unkf4 == NULL)
+    if (door->openSoundState == NULL)
     {
-        pendingState = &door->unkf4;
+        pendingState = &door->openSoundState;
     }
-    else if (door->unkf8 == NULL)
+    else if (door->closeSoundState == NULL)
     {
-        pendingState = &door->unkf8;
+        pendingState = &door->closeSoundState;
     }
 
     switch (door->doorOpenSound)

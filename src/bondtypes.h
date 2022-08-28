@@ -2678,9 +2678,9 @@ typedef union
          * If you reset this to 0 (NULL pointer), then the door opening
          * sound never stops playing.
          */
-        void              *unkf4; // ALSoundState *openSoundState;
+        ALSoundState *openSoundState;
 
-        void              *unkf8; // ALSoundState *closeSoundState;
+        ALSoundState *closeSoundState;
 
         /**
          * Copy of global timer value.

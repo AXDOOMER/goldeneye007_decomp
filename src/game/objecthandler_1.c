@@ -179,7 +179,8 @@ glabel get_obj_instance_controller_for_header
 #endif
 
 
-void clear_model_obj(Model* model) {
+void clear_model_obj(Model* model)
+{
     model->obj = NULL;
 }
 
