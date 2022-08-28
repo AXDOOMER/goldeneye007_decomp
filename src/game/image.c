@@ -3318,76 +3318,21 @@ s32 texFreeBytesInBuffer(struct texturething *arg0)
 }
 
 
-
-
-
-#ifdef NONMATCHING
-void texLoadFromDisplayList(Gfx *gdl, struct texturething *arg1, s32 arg2)
+void texLoadFromDisplayList(Gfx *gdl, struct texturething *arg1)
 {
-	u8 *bytes = (u8 *)gdl;
+    u8 *bytes = (u8 *)gdl;
 
-	while (bytes[0] != (u8)G_ENDDL) {
-		// Look for GBI sequence: fd...... abcd....
-		if (bytes[0] == G_SETTIMG && bytes[4] == 0xab && bytes[5] == 0xcd) {
-			texLoad((u32 *)((s32)bytes + 4), arg1, arg2);
-		}
+    while (bytes[0] != (u8)G_ENDDL)
+    {
+        // Look for GBI sequence: fd...... abcd....
+        if (bytes[0] == G_SETTIMG && bytes[4] == 0xab && bytes[5] == 0xcd)
+        {
+            texLoad((u32 *)((s32)bytes + 4), arg1);
+        }
 
-		bytes += 8;
-	}
+        bytes += 8;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel texLoadFromDisplayList
-/* 1006A4 7F0CBB74 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 1006A8 7F0CBB78 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 1006AC 7F0CBB7C AFB50028 */  sw    $s5, 0x28($sp)
-/* 1006B0 7F0CBB80 AFB40024 */  sw    $s4, 0x24($sp)
-/* 1006B4 7F0CBB84 AFB30020 */  sw    $s3, 0x20($sp)
-/* 1006B8 7F0CBB88 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 1006BC 7F0CBB8C AFB10018 */  sw    $s1, 0x18($sp)
-/* 1006C0 7F0CBB90 AFB00014 */  sw    $s0, 0x14($sp)
-/* 1006C4 7F0CBB94 908E0000 */  lbu   $t6, ($a0)
-/* 1006C8 7F0CBB98 241200B8 */  li    $s2, 184
-/* 1006CC 7F0CBB9C 00A08825 */  move  $s1, $a1
-/* 1006D0 7F0CBBA0 124E0014 */  beq   $s2, $t6, .L7F0CBBF4
-/* 1006D4 7F0CBBA4 00808025 */   move  $s0, $a0
-/* 1006D8 7F0CBBA8 90820000 */  lbu   $v0, ($a0)
-/* 1006DC 7F0CBBAC 241500CD */  li    $s5, 205
-/* 1006E0 7F0CBBB0 241400AB */  li    $s4, 171
-/* 1006E4 7F0CBBB4 241300FD */  li    $s3, 253
-.L7F0CBBB8:
-/* 1006E8 7F0CBBB8 5662000B */  bnel  $s3, $v0, .L7F0CBBE8
-/* 1006EC 7F0CBBBC 92020008 */   lbu   $v0, 8($s0)
-/* 1006F0 7F0CBBC0 920F0004 */  lbu   $t7, 4($s0)
-/* 1006F4 7F0CBBC4 568F0008 */  bnel  $s4, $t7, .L7F0CBBE8
-/* 1006F8 7F0CBBC8 92020008 */   lbu   $v0, 8($s0)
-/* 1006FC 7F0CBBCC 92180005 */  lbu   $t8, 5($s0)
-/* 100700 7F0CBBD0 26040004 */  addiu $a0, $s0, 4
-/* 100704 7F0CBBD4 56B80004 */  bnel  $s5, $t8, .L7F0CBBE8
-/* 100708 7F0CBBD8 92020008 */   lbu   $v0, 8($s0)
-/* 10070C 7F0CBBDC 0FC32F06 */  jal   texLoad
-/* 100710 7F0CBBE0 02202825 */   move  $a1, $s1
-/* 100714 7F0CBBE4 92020008 */  lbu   $v0, 8($s0)
-.L7F0CBBE8:
-/* 100718 7F0CBBE8 26100008 */  addiu $s0, $s0, 8
-/* 10071C 7F0CBBEC 1642FFF2 */  bne   $s2, $v0, .L7F0CBBB8
-/* 100720 7F0CBBF0 00000000 */   nop   
-.L7F0CBBF4:
-/* 100724 7F0CBBF4 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 100728 7F0CBBF8 8FB00014 */  lw    $s0, 0x14($sp)
-/* 10072C 7F0CBBFC 8FB10018 */  lw    $s1, 0x18($sp)
-/* 100730 7F0CBC00 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 100734 7F0CBC04 8FB30020 */  lw    $s3, 0x20($sp)
-/* 100738 7F0CBC08 8FB40024 */  lw    $s4, 0x24($sp)
-/* 10073C 7F0CBC0C 8FB50028 */  lw    $s5, 0x28($sp)
-/* 100740 7F0CBC10 03E00008 */  jr    $ra
-/* 100744 7F0CBC14 27BD0030 */   addiu $sp, $sp, 0x30
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
