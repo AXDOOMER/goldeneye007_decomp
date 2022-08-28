@@ -5,7 +5,7 @@
 
 void set_mt_tex_alloc(void)
 {  
-    dword_CODE_bss_8008D090 = 0;
+    g_TexCacheCount = 0;
 
     if (tokenFind(1, "-mt"))
     {

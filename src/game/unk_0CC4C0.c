@@ -297,17 +297,17 @@ glabel sub_GAME_7F0CC714
 
 .L7F0CC724:
 /* 101254 7F0CC724 8C8E000C */  lw    $t6, 0xc($a0)
-/* 101258 7F0CC728 3C028009 */  lui   $v0, %hi(dword_CODE_bss_8008D090)
+/* 101258 7F0CC728 3C028009 */  lui   $v0, %hi(g_TexCacheCount)
 /* 10125C 7F0CC72C 000EC080 */  sll   $t8, $t6, 2
 /* 101260 7F0CC730 07010018 */  bgez  $t8, .L7F0CC794
 /* 101264 7F0CC734 00000000 */   nop   
-/* 101268 7F0CC738 8C42D090 */  lw    $v0, %lo(dword_CODE_bss_8008D090)($v0)
+/* 101268 7F0CC738 8C42D090 */  lw    $v0, %lo(g_TexCacheCount)($v0)
 /* 10126C 7F0CC73C 00003025 */  move  $a2, $zero
 /* 101270 7F0CC740 18400012 */  blez  $v0, .L7F0CC78C
 /* 101274 7F0CC744 00000000 */   nop   
 /* 101278 7F0CC748 8C830000 */  lw    $v1, ($a0)
-/* 10127C 7F0CC74C 3C078009 */  lui   $a3, %hi(word_CODE_bss_8008C730)
-/* 101280 7F0CC750 24E7C730 */  addiu $a3, %lo(word_CODE_bss_8008C730) # addiu $a3, $a3, -0x38d0
+/* 10127C 7F0CC74C 3C078009 */  lui   $a3, %hi(g_TexCacheItems)
+/* 101280 7F0CC750 24E7C730 */  addiu $a3, %lo(g_TexCacheItems) # addiu $a3, $a3, -0x38d0
 /* 101284 7F0CC754 0003CD02 */  srl   $t9, $v1, 0x14
 /* 101288 7F0CC758 03201825 */  move  $v1, $t9
 .L7F0CC75C:
@@ -315,10 +315,10 @@ glabel sub_GAME_7F0CC714
 /* 101290 7F0CC760 14680006 */  bne   $v1, $t0, .L7F0CC77C
 /* 101294 7F0CC764 00064900 */   sll   $t1, $a2, 4
 /* 101298 7F0CC768 01255021 */  addu  $t2, $t1, $a1
-/* 10129C 7F0CC76C 3C028009 */  lui   $v0, %hi(word_CODE_bss_8008C730+1)
+/* 10129C 7F0CC76C 3C028009 */  lui   $v0, %hi(g_TexCacheItems+1)
 /* 1012A0 7F0CC770 004A1021 */  addu  $v0, $v0, $t2
 /* 1012A4 7F0CC774 03E00008 */  jr    $ra
-/* 1012A8 7F0CC778 9042C731 */   lbu   $v0, %lo(word_CODE_bss_8008C730+1)($v0)
+/* 1012A8 7F0CC778 9042C731 */   lbu   $v0, %lo(g_TexCacheItems+1)($v0)
 
 .L7F0CC77C:
 /* 1012AC 7F0CC77C 24C60001 */  addiu $a2, $a2, 1
@@ -382,17 +382,17 @@ glabel sub_GAME_7F0CC7FC
 
 .L7F0CC80C:
 /* 10133C 7F0CC80C 8C8E000C */  lw    $t6, 0xc($a0)
-/* 101340 7F0CC810 3C028009 */  lui   $v0, %hi(dword_CODE_bss_8008D090)
+/* 101340 7F0CC810 3C028009 */  lui   $v0, %hi(g_TexCacheCount)
 /* 101344 7F0CC814 000EC080 */  sll   $t8, $t6, 2
 /* 101348 7F0CC818 07010018 */  bgez  $t8, .L7F0CC87C
 /* 10134C 7F0CC81C 00000000 */   nop   
-/* 101350 7F0CC820 8C42D090 */  lw    $v0, %lo(dword_CODE_bss_8008D090)($v0)
+/* 101350 7F0CC820 8C42D090 */  lw    $v0, %lo(g_TexCacheCount)($v0)
 /* 101354 7F0CC824 00003025 */  move  $a2, $zero
 /* 101358 7F0CC828 18400012 */  blez  $v0, .L7F0CC874
 /* 10135C 7F0CC82C 00000000 */   nop   
 /* 101360 7F0CC830 8C830000 */  lw    $v1, ($a0)
-/* 101364 7F0CC834 3C078009 */  lui   $a3, %hi(word_CODE_bss_8008C730)
-/* 101368 7F0CC838 24E7C730 */  addiu $a3, %lo(word_CODE_bss_8008C730) # addiu $a3, $a3, -0x38d0
+/* 101364 7F0CC834 3C078009 */  lui   $a3, %hi(g_TexCacheItems)
+/* 101368 7F0CC838 24E7C730 */  addiu $a3, %lo(g_TexCacheItems) # addiu $a3, $a3, -0x38d0
 /* 10136C 7F0CC83C 0003CD02 */  srl   $t9, $v1, 0x14
 /* 101370 7F0CC840 03201825 */  move  $v1, $t9
 .L7F0CC844:
@@ -400,10 +400,10 @@ glabel sub_GAME_7F0CC7FC
 /* 101378 7F0CC848 14680006 */  bne   $v1, $t0, .L7F0CC864
 /* 10137C 7F0CC84C 00064900 */   sll   $t1, $a2, 4
 /* 101380 7F0CC850 01255021 */  addu  $t2, $t1, $a1
-/* 101384 7F0CC854 3C028009 */  lui   $v0, %hi(word_CODE_bss_8008C730+8)
+/* 101384 7F0CC854 3C028009 */  lui   $v0, %hi(g_TexCacheItems+8)
 /* 101388 7F0CC858 004A1021 */  addu  $v0, $v0, $t2
 /* 10138C 7F0CC85C 03E00008 */  jr    $ra
-/* 101390 7F0CC860 9042C738 */   lbu   $v0, %lo(word_CODE_bss_8008C730+8)($v0)
+/* 101390 7F0CC860 9042C738 */   lbu   $v0, %lo(g_TexCacheItems+8)($v0)
 
 .L7F0CC864:
 /* 101394 7F0CC864 24C60001 */  addiu $a2, $a2, 1

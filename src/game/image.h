@@ -17,6 +17,17 @@
 #define TEXFORMAT_IA16_CI8   0x0b // 16-bit 88 paletted greyscale+alpha with 8-bit palette indexes
 #define TEXFORMAT_0C         0x0c
 
+#define TEXCOMPMETHOD_UNCOMPRESSED0      0
+#define TEXCOMPMETHOD_UNCOMPRESSED1      1
+#define TEXCOMPMETHOD_HUFFMAN            2
+#define TEXCOMPMETHOD_HUFFMANPERHCHANNEL 3
+#define TEXCOMPMETHOD_RLE                4
+#define TEXCOMPMETHOD_LOOKUP             5
+#define TEXCOMPMETHOD_HUFFMANLOOKUP      6
+#define TEXCOMPMETHOD_RLELOOKUP          7
+#define TEXCOMPMETHOD_HUFFMANBLUR        8
+#define TEXCOMPMETHOD_RLEBLUR            9
+
 struct texturething {
 	struct texloadthing *unk00;
 	struct texloadthing *unk04;
@@ -51,11 +62,23 @@ struct image_entry
     char flag6; //padding
 };
 
+struct texcacheitem {
+    s16 texturenum;
+    u8 widths[7];
+    u8 heights[7];
+};
+
 extern struct texturething *ptr_texture_alloc_start;
 extern struct image_entry g_Textures[];
-extern s32 dword_CODE_bss_8008D090;
+extern s32 g_TexCacheCount;
 extern u32 bytes;
 
 void nullsub_41(s32 arg0);
+
+void texInflateHuffman(u8 *dst, s32 numiterations, s32 chansize);
+void texInflateRle(u8 *dst, s32 blockstotal);
+void texReadAlphaBits(u8 *image,s32 count);
+void texSwapAltRowBytes(u8 *dst, s32 width, s32 height, s32 format);
+void texBlur(u8 *pixels, s32 width, s32 height, s32 method, s32 chansize);
 
 #endif

@@ -9,6 +9,9 @@ extern struct sImageTableEntry *crosshairimage;
 extern struct sImageTableEntry *mainfolderimages;
 extern struct sImageTableEntry *genericimage;
 
+extern u8* img_curpos;
+extern s32 img_bitcount;
+
 void texReset(void);
 
 #endif

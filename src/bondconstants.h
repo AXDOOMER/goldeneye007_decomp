@@ -16,6 +16,8 @@
 #include <ultra64.h>
 #include <CPPLib.h>
 
+#define ARRAYCOUNT(a) (s32)(sizeof(a) / sizeof(a[0]))
+
 #pragma region Tools
 #ifdef __INTELLISENSE__
 /* This is only a helper for VS as the IF macro is a little complex for it to work out */
