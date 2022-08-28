@@ -3759,9 +3759,9 @@ glabel sub_GAME_7F0CBE50
 #endif
 
 
-void calls_load_image_to_buffer(u32 arg0, struct texturething* arg1)
+void texLoadFromTextureNum(u32 texturenum, struct texturething *arg1)
 {
-    u32 tmp;
-    tmp = arg0;
-    texLoad(&tmp, arg1);
+    u32 texturenumcopy;
+    texturenumcopy = texturenum;
+    texLoad(&texturenumcopy, arg1);
 }

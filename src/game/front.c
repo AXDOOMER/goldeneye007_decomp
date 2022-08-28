@@ -11209,27 +11209,27 @@ loop_1:
     phi_v0 = temp_v0;
     if ((u32) *temp_v0 < 0xbb8U)
     {
-        calls_load_image_to_buffer(*temp_v0, 0, *temp_v0);
+        texLoadFromTextureNum(*temp_v0, 0, *temp_v0);
         phi_v0 = mpcharselimages + temp_lo;
     }
     temp_v1 = phi_v0->unkC;
     phi_v0_2 = phi_v0;
     if (temp_v1 < 0xbb8U)
     {
-        calls_load_image_to_buffer(temp_v1, 0);
+        texLoadFromTextureNum(temp_v1, 0);
         phi_v0_2 = mpcharselimages + temp_lo;
     }
     temp_v1_2 = phi_v0_2->unk18;
     phi_v0_3 = phi_v0_2;
     if (temp_v1_2 < 0xbb8U)
     {
-        calls_load_image_to_buffer(temp_v1_2, 0);
+        texLoadFromTextureNum(temp_v1_2, 0);
         phi_v0_3 = mpcharselimages + temp_lo;
     }
     temp_v1_3 = phi_v0_3->unk24;
     if (temp_v1_3 < 0xbb8U)
     {
-        calls_load_image_to_buffer(temp_v1_3, 0);
+        texLoadFromTextureNum(temp_v1_3, 0);
     }
     temp_s1 = phi_s1 + 0xc;
     phi_s1 = temp_s1;
@@ -11340,7 +11340,7 @@ glabel init_menu0f_mpcharsel
 /* 0467F0 7F011CC0 2CC10BB8 */  sltiu $at, $a2, 0xbb8
 /* 0467F4 7F011CC4 10200005 */  beqz  $at, .L7F011CDC
 /* 0467F8 7F011CC8 00C02025 */   move  $a0, $a2
-/* 0467FC 7F011CCC 0FC32FBA */  jal   calls_load_image_to_buffer
+/* 0467FC 7F011CCC 0FC32FBA */  jal   texLoadFromTextureNum
 /* 046800 7F011CD0 00002825 */   move  $a1, $zero
 /* 046804 7F011CD4 8E580000 */  lw    $t8, ($s2)
 /* 046808 7F011CD8 03101021 */  addu  $v0, $t8, $s0
@@ -11349,7 +11349,7 @@ glabel init_menu0f_mpcharsel
 /* 046810 7F011CE0 2C610BB8 */  sltiu $at, $v1, 0xbb8
 /* 046814 7F011CE4 10200005 */  beqz  $at, .L7F011CFC
 /* 046818 7F011CE8 00602025 */   move  $a0, $v1
-/* 04681C 7F011CEC 0FC32FBA */  jal   calls_load_image_to_buffer
+/* 04681C 7F011CEC 0FC32FBA */  jal   texLoadFromTextureNum
 /* 046820 7F011CF0 00002825 */   move  $a1, $zero
 /* 046824 7F011CF4 8E590000 */  lw    $t9, ($s2)
 /* 046828 7F011CF8 03301021 */  addu  $v0, $t9, $s0
@@ -11358,7 +11358,7 @@ glabel init_menu0f_mpcharsel
 /* 046830 7F011D00 2C610BB8 */  sltiu $at, $v1, 0xbb8
 /* 046834 7F011D04 10200005 */  beqz  $at, .L7F011D1C
 /* 046838 7F011D08 00602025 */   move  $a0, $v1
-/* 04683C 7F011D0C 0FC32FBA */  jal   calls_load_image_to_buffer
+/* 04683C 7F011D0C 0FC32FBA */  jal   texLoadFromTextureNum
 /* 046840 7F011D10 00002825 */   move  $a1, $zero
 /* 046844 7F011D14 8E480000 */  lw    $t0, ($s2)
 /* 046848 7F011D18 01101021 */  addu  $v0, $t0, $s0
@@ -11367,7 +11367,7 @@ glabel init_menu0f_mpcharsel
 /* 046850 7F011D20 2C610BB8 */  sltiu $at, $v1, 0xbb8
 /* 046854 7F011D24 10200003 */  beqz  $at, .L7F011D34
 /* 046858 7F011D28 00602025 */   move  $a0, $v1
-/* 04685C 7F011D2C 0FC32FBA */  jal   calls_load_image_to_buffer
+/* 04685C 7F011D2C 0FC32FBA */  jal   texLoadFromTextureNum
 /* 046860 7F011D30 00002825 */   move  $a1, $zero
 .L7F011D34:
 /* 046864 7F011D34 2631000C */  addiu $s1, $s1, 0xc
