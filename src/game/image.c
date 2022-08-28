@@ -3759,28 +3759,9 @@ glabel sub_GAME_7F0CBE50
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-void calls_load_image_to_buffer(uint *image,uint *buffer)
+void calls_load_image_to_buffer(u32 arg0, struct texturething* arg1)
 {
-    texLoad(&image,buffer);
+    u32 tmp;
+    tmp = arg0;
+    texLoad(&tmp, arg1);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel calls_load_image_to_buffer
-/* 100A18 7F0CBEE8 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 100A1C 7F0CBEEC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 100A20 7F0CBEF0 AFA4001C */  sw    $a0, 0x1c($sp)
-/* 100A24 7F0CBEF4 0FC32F06 */  jal   texLoad
-/* 100A28 7F0CBEF8 27A4001C */   addiu $a0, $sp, 0x1c
-/* 100A2C 7F0CBEFC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 100A30 7F0CBF00 27BD0020 */  addiu $sp, $sp, 0x20
-/* 100A34 7F0CBF04 03E00008 */  jr    $ra
-/* 100A38 7F0CBF08 00000000 */   nop   
-)
-#endif
-
-
