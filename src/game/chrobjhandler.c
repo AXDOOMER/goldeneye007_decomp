@@ -39695,34 +39695,11 @@ void sub_GAME_7F051028(ObjectRecord *arg0, PropRecord *arg1)
 }
 
 
-#ifdef NONMATCHING
-void hatAssignToChr(void) {
-
+void hatAssignToChr(ObjectRecord* hat, ChrRecord* chr)
+{
+    hat->damage = (*(s32*)&hat->damage / 65536.0f);
+    sub_GAME_7F051028(hat, chr);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel hatAssignToChr
-/* 085BB4 7F051084 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 085BB8 7F051088 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 085BBC 7F05108C 8C8E0074 */  lw    $t6, 0x74($a0)
-/* 085BC0 7F051090 3C014780 */  li    $at, 0x47800000 # 65536.000000
-/* 085BC4 7F051094 44814000 */  mtc1  $at, $f8
-/* 085BC8 7F051098 448E2000 */  mtc1  $t6, $f4
-/* 085BCC 7F05109C 00000000 */  nop   
-/* 085BD0 7F0510A0 468021A0 */  cvt.s.w $f6, $f4
-/* 085BD4 7F0510A4 46083283 */  div.s $f10, $f6, $f8
-/* 085BD8 7F0510A8 0FC1440A */  jal   sub_GAME_7F051028
-/* 085BDC 7F0510AC E48A0074 */   swc1  $f10, 0x74($a0)
-/* 085BE0 7F0510B0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 085BE4 7F0510B4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 085BE8 7F0510B8 03E00008 */  jr    $ra
-/* 085BEC 7F0510BC 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
