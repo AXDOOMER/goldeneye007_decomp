@@ -112,14 +112,179 @@ void nullsub_41(s32 arg0) {
 }
 
 
-
-
-
-
 #ifdef NONMATCHING
-void texInflateZlib(void) {
 
+u32 decompressdata(void *src, void *dst, void *hlist);
+s32 rzipGetSomething(void) ;
+s32 sub_GAME_7F0C6C70(u8 *src, u8 *dst, s32 srcwidth, s32 srcheight, s32 format, u16 *palette, s32 numcolours);
+s32 texAlignIndices(u8 *src, s32 width, s32 height, s32 format, u8 *dst);
+u32 texReadBits(s32 bitCount);
+void texSetBitstring(s32 pos);
+
+// close to matching: 98.70%, regalloc problems
+
+s32 texInflateZlib(u8 *src, u8 *dst, s32 arg2, s32 forcenumimages, struct texturething *arg4)
+{
+    s32 i;
+    s32 imagebytesout;
+    s32 numimages;
+    bool writetocache;
+    s32 format;
+    bool foundthething;
+    s32 totalbytesout;
+    s32 width;
+    s32 height;
+    u8 *end;
+    u8 *start;
+    s32 numcolours;
+    s32 j;
+    s32 unused;
+    u8 scratch2[0x800];
+    u8 scratch[0x2100];
+    u16 palette[0x100];
+
+    writetocache = FALSE;
+    totalbytesout = 0;
+
+    texSetBitstring(src);
+
+    if (arg2 && forcenumimages)
+    {
+        numimages = forcenumimages;
+    }
+    else
+    {
+        numimages = 1;
+    }
+
+    arg4->unk0c->maxlod = forcenumimages;
+    arg4->unk0c->unk0c_02 = arg2;
+
+    if (arg2)
+    {
+        writetocache = TRUE;
+
+        for (i = 0; i < g_TexCacheCount; i++)
+        {
+            if (g_TexCacheItems[i].texturenum == arg4->unk0c->texturenum)
+            {
+                writetocache = FALSE;
+            }
+        }
+    }
+
+    format = texReadBits(8);
+    numcolours = texReadBits(8) + 1;
+
+    for (i = 0; i < numcolours; i++)
+    {
+        palette[i] = texReadBits(16);
+    }
+
+    foundthething = FALSE;
+
+    for (j = 0; j < numimages; j++)
+    {
+        width = texReadBits(8);
+        height = texReadBits(8);
+
+        if (j == 0)
+        {
+            arg4->unk0c->width = width;
+            arg4->unk0c->height = height;
+            arg4->unk0c->unk0a = numcolours - 1;
+            arg4->unk0c->gbiformat = g_TexFormatGbiMappings[format];
+            arg4->unk0c->depth = g_TexFormatDepths[format];
+            arg4->unk0c->lutmodeindex = g_TexFormatLutModes[format] >> G_MDSFT_TEXTLUT;
+        }
+        else if (writetocache)
+        {
+            g_TexCacheItems[g_TexCacheCount].widths[j - 1] = width;
+            g_TexCacheItems[g_TexCacheCount].heights[j - 1] = height;
+        }
+
+        if ((width * height) >= 4097)
+        {
+            return 0;
+        }
+
+        decompressdata(img_curpos, &scratch2, &scratch);
+        imagebytesout = texAlignIndices(scratch2, width, height, format, &dst[totalbytesout]);
+        texSetBitstring(rzipGetSomething());
+
+        if ((arg2 == 1) && (forcenumimages > 0))
+        {
+            texSwapAltRowBytes(&dst[totalbytesout], width, height, format);
+        }
+        totalbytesout += imagebytesout;
+    }
+
+    if (writetocache)
+    {
+        g_TexCacheItems[g_TexCacheCount].texturenum = arg4->unk0c->texturenum;
+
+        g_TexCacheCount++;
+
+        if (g_TexCacheCount >= ARRAYCOUNT(g_TexCacheItems))
+        {
+            g_TexCacheCount = 0;
+        }
+    }
+
+    if (!arg2)
+    {
+        if (forcenumimages >= 2)
+        {
+            s32 tmpwidth;
+            s32 tmpheight;
+
+            tmpwidth = width;
+            tmpheight = height;
+
+            start = dst;
+            end = &dst[totalbytesout];
+
+            for (j = 1; j < forcenumimages; j++)
+            {
+                imagebytesout = sub_GAME_7F0C6C70(start, end, tmpwidth, tmpheight, format, palette, numcolours);
+
+                if (totalbytesout + imagebytesout > 0x800)
+                {
+                    arg4->unk0c->maxlod = j;
+                    break;
+                }
+
+                texSwapAltRowBytes(start, tmpwidth, tmpheight, format);
+
+                totalbytesout += imagebytesout;
+
+                tmpwidth = (tmpwidth + 1) >> 1;
+                tmpheight = (tmpheight + 1) >> 1;
+
+                start = end;
+                end += imagebytesout;
+            }
+
+            texSwapAltRowBytes(start, tmpwidth, tmpheight, format);
+        }
+        else if (forcenumimages == 1)
+        {
+            texSwapAltRowBytes(dst, width, height, format);
+        }
+    }
+
+    for (i = 0; i < numcolours; i++)
+    {
+        dst[totalbytesout + 0] = palette[i] >> 8;
+        dst[totalbytesout + 1] = palette[i] & 0xff;
+        totalbytesout += 2;
+    }
+
+    totalbytesout = (totalbytesout + 7) & ~7;
+
+    return totalbytesout;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -546,6 +711,7 @@ s32 texAlignIndices(u8 *src, s32 width, s32 height, s32 format, u8 *dst)
 
 
 #ifdef NONMATCHING
+// looks like PD's texShrinkNonPaletted
 void sub_GAME_7F0C6C70(void) {
 
 }
@@ -1643,6 +1809,7 @@ glabel sub_GAME_7F0C77AC
 
 
 #ifdef NONMATCHING
+// Appears to be a combination of PD's texFindClosestColourIndexRGBA and texFindClosestColourIndexIA
 void sub_GAME_7F0C7BD8(void) {
 
 }
