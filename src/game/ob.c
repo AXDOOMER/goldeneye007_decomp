@@ -47,7 +47,7 @@ void load_resource(u8 *ptrdata, u32 bytes, struct fileentry *srcfile, struct res
     source = (ptrdata + bytes) - ((lookupdata->rom_size + 7) & -8);
     if ((u32) (source - ptrdata) < 8U)
     {
-        lookupdata->pc_remaining = 0;
+        lookupdata->poolRemaining = 0;
     }
     else
     {
@@ -57,7 +57,7 @@ void load_resource(u8 *ptrdata, u32 bytes, struct fileentry *srcfile, struct res
 #endif
 
         romCopy(source, srcfile->hw_address, lookupdata->rom_size);
-        lookupdata->pc_remaining = decompressdata(source, ptrdata, buffer);;
+        lookupdata->poolRemaining = decompressdata(source, ptrdata, buffer);;
 #if DEBUG
         if (result == 0)
         {
@@ -87,7 +87,7 @@ void resource_load_from_indy(u8 *ptrdata, u32 bytes, struct fileentry *srcfile, 
     pPayload = (ptrdata + bytes) - ((lookupdata->pc_size + 7) & -8);
     if ((pPayload - ptrdata) < (u32)8)
     {
-        lookupdata->pc_remaining = 0;
+        lookupdata->poolRemaining = 0;
     }
     else
     {
@@ -101,7 +101,7 @@ void resource_load_from_indy(u8 *ptrdata, u32 bytes, struct fileentry *srcfile, 
             bcopy(pPayload, ptrdata, lookupdata->pc_size);
             size = lookupdata->pc_size;
         }
-        lookupdata->pc_remaining = size;
+        lookupdata->poolRemaining = size;
     }
 }
 
@@ -118,7 +118,7 @@ void obInitDebugNoticeList(void)
     for (i = 0; i < (file_entry_max - 1); i++)
     {
         resource_lookup_data_array[i].rom_size = (file_resource_table[i+1].hw_address - file_resource_table[i].hw_address);
-        resource_lookup_data_array[i].pc_remaining = 0;
+        resource_lookup_data_array[i].poolRemaining = 0;
         resource_lookup_data_array[i].pc_size = 0;
         resource_lookup_data_array[i].rom_remaining = 0;
     }
@@ -255,59 +255,70 @@ void obLoadBGFileBytesAtOffset(u8 *bgname, u8 *target, s32 offset, s32 len)
 
 
 
-#ifdef NONMATCHING
-u8 * load_rom_resource_index_to_membank(s32 index,s32 param_2,s32 size,u8 bank)
+#if 1
 
+void *load_rom_resource_index_to_membank(s32 index, s32 loadMethod, s32 size, u8 bank) //#MATCH https://decomp.me/scratch/uqiBe
 {
-    u32 unk;
-  u32 bytes;
-  u8 *ptrdata;
- 
-  if (((param_2 == 0) || (param_2 == 1)) || (param_2 == 2)) {
-    bytes = resource_lookup_data_array[index].pc_remaining;
-    if (bytes == 0) {
-      bytes = mempGetBankSizeLeft(bank);
-      resource_lookup_data_array[index].pc_remaining = bytes;
+    struct resource_lookup_data_entry *info = &resource_lookup_data_array[index];
+    s32                                bytes;
+    void                              *ptrdata = NULL;
+
+    if (loadMethod == FILELOADMETHOD_EXTRAMEM || loadMethod == FILELOADMETHOD_DEFAULT || loadMethod == 2)
+    {
+        // bytes = info->poolRemaining;
+        if (info->poolRemaining == 0)
+        { // verify pool remaining is 0
+            info->poolRemaining = mempGetBankSizeLeft(bank);
+            // info->poolRemaining = bytes;
+        }
+        // bytes = info->poolRemaining;
+        ptrdata             = mempAllocBytesInBank(info->poolRemaining, bank); // get pointer to allocated space
+        info->rom_remaining = info->poolRemaining;
+
+        if (file_resource_table[index].hw_address == 0)
+        {
+            resource_load_from_indy(ptrdata, info->poolRemaining, &file_resource_table[index], info);
+        }
+        else
+        {
+            load_resource(ptrdata, info->poolRemaining, &file_resource_table[index], info);
+        }
+        if (loadMethod != FILELOADMETHOD_EXTRAMEM)
+        {
+            // mempRealloc
+            mempAddEntryOfSizeToBank(ptrdata, info->poolRemaining, bank);
+        }
     }
-    ptrdata = mempAllocBytesInBank(bytes,bank);
-    bytes = resource_lookup_data_array[index].pc_remaining;
-    resource_lookup_data_array[index].rom_remaining = bytes;
-    if (file_resource_table[index].hw_address == 0) {
-      resource_load_from_indy(ptrdata, bytes, &file_resource_table[index], &resource_lookup_data_array[index]);
+    else // skipped in PD
+    {
+        if (info->poolRemaining == 0)
+        {
+            if (info->rom_size != 0)
+            {
+                info->poolRemaining = info->rom_size;
+            }
+            else
+            {
+                info->poolRemaining = info->pc_size;
+            }
+        }
+        ptrdata             = mempAllocBytesInBank(info->poolRemaining, bank);
+        info->rom_remaining = info->poolRemaining;
+
+        if (file_resource_table[index].hw_address == 0)
+        {
+            resource_load_from_indy(ptrdata, 0, &file_resource_table[index], info);
+        }
+        else
+        {
+            load_resource(ptrdata, 0, &file_resource_table[index], info);
+        }
+        if (size == 0)
+        {
+            info->loaded_bank = bank;
+        }
     }
-    else {
-      load_resource(ptrdata, bytes, &file_resource_table[index], &resource_lookup_data_array[index]);
-    }
-    if (param_2 != 0) {
-      mempAddEntryOfSizeToBank(ptrdata, resource_lookup_data_array[index].pc_remaining, bank);
-    }
-  }
-  else {
-    bytes = resource_lookup_data_array[index].pc_remaining;
-    if (bytes == 0) {
-      bytes = resource_lookup_data_array[index].rom_size;
-      if (bytes == 0) {
-        bytes = resource_lookup_data_array[index].pc_size;
-        resource_lookup_data_array[index].pc_remaining = bytes;
-      }
-      else {
-        resource_lookup_data_array[index].pc_remaining = bytes;
-      }
-    }
-    ptrdata = mempAllocBytesInBank(bytes,bank);
-    resource_lookup_data_array[index].rom_remaining =
-         resource_lookup_data_array[index].pc_remaining;
-    if (file_resource_table[index].hw_address == 0) {
-      resource_load_from_indy(ptrdata, 0, &file_resource_table[index], &resource_lookup_data_array[index]);
-    }
-    else {
-      load_resource(ptrdata,0, &file_resource_table[index], &resource_lookup_data_array[index]);
-    }
-    if (size == 0) {
-      resource_lookup_data_array[index].loaded_bank = bank;
-    }
-  }
-  return ptrdata;
+    return ptrdata;
 }
 #else
 GLOBAL_ASM(
@@ -456,15 +467,15 @@ f1bcc:    lw      a0,0x28(sp)                     r f1bcc:    lw      a1,0x2c(sp
 #ifdef NONMATCHING
 u8* load_resource_index_to_buffer(s32 index,s32 bank,u8 *ptrdata,u32 bytes)
 {
-    if (resource_lookup_data_array[index].pc_remaining == 0)
+    if (resource_lookup_data_array[index].poolRemaining == 0)
     {
         if (resource_lookup_data_array[index].rom_size > 0)
         {
-            resource_lookup_data_array[index].pc_remaining = resource_lookup_data_array[index].rom_size;
+            resource_lookup_data_array[index].poolRemaining = resource_lookup_data_array[index].rom_size;
         }
         else
         {
-            resource_lookup_data_array[index].pc_remaining = resource_lookup_data_array[index].pc_size;
+            resource_lookup_data_array[index].poolRemaining = resource_lookup_data_array[index].pc_size;
         }
     }
     if (((bank == 0) || (bank == 1)) || (bank == 2))
@@ -588,7 +599,7 @@ glabel load_resource_index_to_buffer
 
 s32 get_pc_remaining_buffer_for_index(s32 index)
 {
-    return resource_lookup_data_array[index].pc_remaining;
+    return resource_lookup_data_array[index].poolRemaining;
 }
 
 
@@ -609,7 +620,7 @@ s32 get_rom_remaining_buffer_for_index(s32 index)
 //f1c88:    sw      a1,0x1c(sp)                     r f1c8c:    sw      a2,0x20(sp) //extra reg save
 void sub_GAME_7F0BD138(int index, u8 *ptrdata, u32 size, u32 param_4)
 {
-    resource_lookup_data_array[index].pc_remaining = size;
+    resource_lookup_data_array[index].poolRemaining = size;
     resource_lookup_data_array[index].rom_remaining = size;
 
 
@@ -656,7 +667,7 @@ s32 get_pc_buffer_remaining_value(u8 *name)
     int index;
     
     index = get_index_num_of_named_resource(name);
-    return resource_lookup_data_array[index].pc_remaining;
+    return resource_lookup_data_array[index].poolRemaining;
 }
 
 
@@ -668,7 +679,7 @@ void obBlankResourcesLoadedInBank(u8 bank)
             resource_lookup_data_array[i].loaded_bank = '\0';
         }
         if (bank == 4) {
-            resource_lookup_data_array[i].pc_remaining = 0;
+            resource_lookup_data_array[i].poolRemaining = 0;
         }
     }
 }
@@ -711,7 +722,7 @@ int get_index_num_of_named_resource(u8 *resname)
     resource_lookup_data_array[i].unk_11 = '\0';
     file_resource_table[i].hw_address = 0;
     resource_lookup_data_array[i].rom_size = 0;
-    resource_lookup_data_array[i].pc_remaining = 0;
+    resource_lookup_data_array[i].poolRemaining = 0;
     resource_lookup_data_array[i].rom_remaining = 0;
     resource_lookup_data_array[i].loaded_bank = '\0';
     resource_lookup_data_array[i].pc_size = (size + 0xf | 0xf) ^ 0xf;
