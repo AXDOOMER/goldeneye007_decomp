@@ -4472,50 +4472,28 @@ glabel sub_GAME_7F03D78C
 #endif
 
 
+s32 sub_GAME_7F03D9EC(PropRecord* arg0)
+{
+    s32 var_v1;
 
+    if (arg0->door->openPosition <= 0.0f)
+    {
+        var_v1 = 0x1000;
+    }
+    else
+    {
+        var_v1 = (arg0->door->maxFrac <= arg0->door->openPosition)
+            ? 0x2000
+            : 0x4000;
+    }
 
+    if (((s32)arg0->door->flags2 * 4) < 0)
+    {
+        var_v1 |= 0x8000;
+    }
 
-#ifdef NONMATCHING
-void sub_GAME_7F03D9EC(void) {
-
+    return var_v1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03D9EC
-/* 07251C 7F03D9EC 8C820004 */  lw    $v0, 4($a0)
-/* 072520 7F03D9F0 44802000 */  mtc1  $zero, $f4
-/* 072524 7F03D9F4 C44000B4 */  lwc1  $f0, 0xb4($v0)
-/* 072528 7F03D9F8 4604003E */  c.le.s $f0, $f4
-/* 07252C 7F03D9FC 00000000 */  nop   
-/* 072530 7F03DA00 45020004 */  bc1fl .L7F03DA14
-/* 072534 7F03DA04 C4460084 */   lwc1  $f6, 0x84($v0)
-/* 072538 7F03DA08 10000009 */  b     .L7F03DA30
-/* 07253C 7F03DA0C 24031000 */   li    $v1, 4096
-/* 072540 7F03DA10 C4460084 */  lwc1  $f6, 0x84($v0)
-.L7F03DA14:
-/* 072544 7F03DA14 24034000 */  li    $v1, 16384
-/* 072548 7F03DA18 4600303E */  c.le.s $f6, $f0
-/* 07254C 7F03DA1C 00000000 */  nop   
-/* 072550 7F03DA20 45000003 */  bc1f  .L7F03DA30
-/* 072554 7F03DA24 00000000 */   nop   
-/* 072558 7F03DA28 10000001 */  b     .L7F03DA30
-/* 07255C 7F03DA2C 24032000 */   li    $v1, 8192
-.L7F03DA30:
-/* 072560 7F03DA30 8C4E000C */  lw    $t6, 0xc($v0)
-/* 072564 7F03DA34 34788000 */  ori   $t8, $v1, 0x8000
-/* 072568 7F03DA38 000E7880 */  sll   $t7, $t6, 2
-/* 07256C 7F03DA3C 05E10002 */  bgez  $t7, .L7F03DA48
-/* 072570 7F03DA40 00000000 */   nop   
-/* 072574 7F03DA44 03001825 */  move  $v1, $t8
-.L7F03DA48:
-/* 072578 7F03DA48 03E00008 */  jr    $ra
-/* 07257C 7F03DA4C 00601025 */   move  $v0, $v1
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
