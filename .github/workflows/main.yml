@@ -38,8 +38,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 2
+      #  with:
+      #    fetch-depth: 2
       - name: Install Depedencies
         run: |
           sudo apt update
@@ -77,17 +77,19 @@ jobs:
       - name: Make report
         run: make -C tools/report
 
-      - name: difftest1
-        run: git diff --name-only origin/master ${GITHUB_HEAD_REF}
+      # for refrence, these diff commands wont work in GHA, so, "Last modified file" will never work
+      # GHA makes new copies of all files (so modified date is all the same) and wont lok at logs (commands below)
+      #- name: difftest1
+      #  run: git diff --name-only origin/master ${GITHUB_HEAD_REF}
 
-      - name: difftest2    
-        run: git diff --name-only ${{ github.event.before }} ${{ github.sha }} 
+      #- name: difftest2    
+      #  run: git diff --name-only ${{ github.event.before }} ${{ github.sha }} 
 
-      - name: difftest3
-        run: git diff --name-only -1
+      #- name: difftest3
+      #  run: git diff --name-only -1
 
-      - name: difftest4
-        run: git diff --name-only @"{10 minutes ago}"
+      #- name: difftest4
+      #  run: git diff --name-only @"{10 minutes ago}"
 
       - name: Stats
         run: python3 tools/ge-stats.py --version us --report           
