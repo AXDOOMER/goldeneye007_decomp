@@ -840,10 +840,44 @@ glabel texFindClosestColourIndexRGBA
 
 
 #ifdef NONMATCHING
-// Appears to be a combination of PD's texFindClosestColourIndexRGBA and texFindClosestColourIndexIA
-void texFindClosestColourIndexIA(void) {
+// still needs a lot of work, it's hard due to loop unrolling
+s32 texFindClosestColourIndexIA(u16* palette, s32 numcolours, s32 intensity, s32 alpha)
+{
+    s32 i;
 
+    s32 bestindex;
+    s32 bestvalue;
+
+    // this loop looks good
+    for (i = 0; i < numcolours; i++)
+    {
+        if (palette[i] == ((intensity << 8 | alpha) & 0xFFFU))
+        {
+            return i;
+        }
+    }
+
+    // the problems start here (taken from PD)
+    bestindex = 0;
+    bestvalue = 99999999;
+
+    for (i = 0; i < numcolours; i++)
+    {
+        s32 value = palette[i];
+        s32 a = ((value >> 8) & 0xff) - intensity;
+        s32 b = (value & 0xff) - alpha;
+        s32 sum = a * a + b * b;
+
+        if (sum < bestvalue)
+        {
+            bestindex = i;
+            bestvalue = sum;
+        }
+    }
+
+    return bestindex;
 }
+
 #else
 GLOBAL_ASM(
 .text
