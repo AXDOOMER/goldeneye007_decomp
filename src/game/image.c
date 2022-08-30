@@ -2689,57 +2689,21 @@ void texLoad(s32 *updateword, struct texpool *pool)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0CBE50(void) {
+void texLoadFromModelFileHeader(ModelFileHeader* arg0, struct texpool* arg1)
+{
+    s32 i;
+    ModelFileTextures* textures;
 
+    textures = arg0->Textures;
+
+    for (i = 0; i < arg0->numtextures; i++)
+    {
+        if ((s32)textures[i].TextureID < (s32)MAX_TEXTURES)
+        {
+            texLoad(&textures[i], arg1);
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0CBE50
-/* 100980 7F0CBE50 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 100984 7F0CBE54 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 100988 7F0CBE58 AFB50028 */  sw    $s5, 0x28($sp)
-/* 10098C 7F0CBE5C AFB40024 */  sw    $s4, 0x24($sp)
-/* 100990 7F0CBE60 AFB30020 */  sw    $s3, 0x20($sp)
-/* 100994 7F0CBE64 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 100998 7F0CBE68 AFB10018 */  sw    $s1, 0x18($sp)
-/* 10099C 7F0CBE6C AFB00014 */  sw    $s0, 0x14($sp)
-/* 1009A0 7F0CBE70 84820016 */  lh    $v0, 0x16($a0)
-/* 1009A4 7F0CBE74 0080A025 */  move  $s4, $a0
-/* 1009A8 7F0CBE78 00A0A825 */  move  $s5, $a1
-/* 1009AC 7F0CBE7C 8C930018 */  lw    $s3, 0x18($a0)
-/* 1009B0 7F0CBE80 18400010 */  blez  $v0, .L7F0CBEC4
-/* 1009B4 7F0CBE84 00009025 */   move  $s2, $zero
-/* 1009B8 7F0CBE88 00008025 */  move  $s0, $zero
-/* 1009BC 7F0CBE8C 02608825 */  move  $s1, $s3
-.L7F0CBE90:
-/* 1009C0 7F0CBE90 8E2E0000 */  lw    $t6, ($s1)
-/* 1009C4 7F0CBE94 02132021 */  addu  $a0, $s0, $s3
-/* 1009C8 7F0CBE98 29C10BB9 */  slti  $at, $t6, 0xbb9
-/* 1009CC 7F0CBE9C 50200005 */  beql  $at, $zero, .L7F0CBEB4
-/* 1009D0 7F0CBEA0 26520001 */   addiu $s2, $s2, 1
-/* 1009D4 7F0CBEA4 0FC32F06 */  jal   texLoad
-/* 1009D8 7F0CBEA8 02A02825 */   move  $a1, $s5
-/* 1009DC 7F0CBEAC 86820016 */  lh    $v0, 0x16($s4)
-/* 1009E0 7F0CBEB0 26520001 */  addiu $s2, $s2, 1
-.L7F0CBEB4:
-/* 1009E4 7F0CBEB4 0242082A */  slt   $at, $s2, $v0
-/* 1009E8 7F0CBEB8 2610000C */  addiu $s0, $s0, 0xc
-/* 1009EC 7F0CBEBC 1420FFF4 */  bnez  $at, .L7F0CBE90
-/* 1009F0 7F0CBEC0 2631000C */   addiu $s1, $s1, 0xc
-.L7F0CBEC4:
-/* 1009F4 7F0CBEC4 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 1009F8 7F0CBEC8 8FB00014 */  lw    $s0, 0x14($sp)
-/* 1009FC 7F0CBECC 8FB10018 */  lw    $s1, 0x18($sp)
-/* 100A00 7F0CBED0 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 100A04 7F0CBED4 8FB30020 */  lw    $s3, 0x20($sp)
-/* 100A08 7F0CBED8 8FB40024 */  lw    $s4, 0x24($sp)
-/* 100A0C 7F0CBEDC 8FB50028 */  lw    $s5, 0x28($sp)
-/* 100A10 7F0CBEE0 03E00008 */  jr    $ra
-/* 100A14 7F0CBEE4 27BD0030 */   addiu $sp, $sp, 0x30
-)
-#endif
 
 
 void texLoadFromTextureNum(u32 texturenum, struct texpool *arg1)
