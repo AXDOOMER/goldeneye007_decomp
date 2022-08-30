@@ -30,10 +30,7 @@
 
 struct texpool {
 	u8 *start;
-    union {
-        struct tex *head; // for shared pool
-        struct tex *end; // for dedicated pools
-    };
+    struct tex *end;
 	u8 *leftpos;
 	struct tex *rightpos;
 };
@@ -41,7 +38,7 @@ struct texpool {
 struct tex {
 	/*0x00*/ u16 texturenum : 12;
 	/*0x00*/ u16 unk00_0c : 4;
-	/*0x04*/ u32 unk04;
+	/*0x04*/ u8* data;
 	/*0x08*/ u8 width;
 	/*0x09*/ u8 height;
 	/*0x0a*/ u8 unk0a;
@@ -51,7 +48,7 @@ struct tex {
 	/*0x0c*/ u32 lutmodeindex : 2;
 	/*0x0c*/ u32 unk0c_02 : 1;
 	/*0x0c*/ u32 unk0c_03 : 1;
-	/*0x0c*/ u32 unk0c_04 : 24;
+	/*0x0c*/ u32 next : 24;
 };
 
 struct image_entry
@@ -87,5 +84,10 @@ s32 texAlignIndices(u8 *src, s32 width, s32 height, s32 format, u8 *dst);
 s32 texFindClosestColourIndexRGBA(u16 *palette, s32 numcolours, s32 r, s32 g, s32 b, s32 a);
 s32 texFindClosestColourIndexIA(u16 *palette, s32 numcolours, s32 intensity, s32 alpha);
 s32 texShrinkPaletted(u8 *src, u8 *dst, s32 srcwidth, s32 srcheight, s32 format, u16 *palette, s32 numcolours);
+struct tex *texFindInPool(s32 texturenum, struct texpool *arg1);
+s32 texFreeBytesInBuffer(struct texpool *arg0);
+s32 texInflateNonZlib(u8 *src, u8 *dst, s32 arg2, s32 forcenumimages, struct texpool *arg4);
+s32 texInflateZlib(u8 *src, u8 *dst, s32 arg2, s32 forcenumimages, struct texpool *arg4);
+void texLoad(s32 *updateword, struct texpool *pool);
 
 #endif

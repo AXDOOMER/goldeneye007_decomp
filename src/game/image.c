@@ -21,8 +21,7 @@ struct texcacheitem g_TexCacheItems[150];
 //8008D090
 s32 g_TexCacheCount;
 //8008D094
-s32 imageid;
-
+s32 g_TexNumToLoad;
 
 // data
 //D:80049170
@@ -1056,7 +1055,7 @@ glabel texFindClosestColourIndexIA
  * h = height in pixels
  * c = compression method (see TEXCOMPMETHOD constants)
  */
-s32 texInflateNonZlib(u8 *src, u8 *dst, s32 arg2, s32 forcenumimages, struct texpool *arg4, s32 arg5)
+s32 texInflateNonZlib(u8 *src, u8 *dst, s32 arg2, s32 forcenumimages, struct texpool *arg4)
 {
     u8 scratch[0x2000];
     u8 lookup[0x1000];
@@ -2567,304 +2566,127 @@ void texLoadFromDisplayList(Gfx *gdl, struct texpool *arg1)
 }
 
 
-#ifdef NONMATCHING
 extern u8 _imagesSegmentRomStart;
-void texLoad(u32 *ptr, struct texpool *arg1)
+
+/**
+ * Load and decompress a texture from ROM.
+ *
+ * The given pointer points to a word which determines what to load.
+ * The formats of the word are:
+ *
+ *     abcdxxxx -> load texture number xxxx
+ *     0000xxxx -> load texture number xxxx
+ *     (memory address) -> the texture is already loaded, so do nothing
+ *
+ * After loading and decompressing the texture, the value that's pointed to is
+ * changed to be a pointer to... something.
+ *
+ * There are two types of textures:
+ *
+ * - Zlib-compressed textures, which are always paletted
+ * - Non-zlib textures, which use a variety of (non-zlib) compression methods
+ *   and are sometimes paletted
+ *
+ * Both types have support for multiple levels of detail (ie. multiple images
+ * of varying size) within each texture. There are enough bits in the header
+ * byte to support 64 levels of detail, but this function caps it to 5. Some
+ * textures actually specify up to 7 levels of detail. However testing suggests
+ * that the additional levels of detail are not even read.
+ *
+ * This function reads the above information from the first byte of texture data,
+ * then calls the texInflateZlib or texInflateNonZlib to inflate the images.
+ *
+ * The format of the first byte is:
+ * uzllllll
+ *
+ * u = unknown
+ * z = texture is compressed with zlib
+ * l = number of levels of detail within the texture
+ */
+void texLoad(s32 *updateword, struct texpool *pool)
 {
-	//u8 sp14b0[0x1400];
-	u8 *sp14ac_ptr;
-	s32 sp14a8;
-	s32 sp14a4_iszlib;
-	s32 sp14a0_lod;
-	struct tex *ptVar3;
-	//u32 freebytes;
-	//u32 stack;
-	//struct tex *sp1490;
-	//u32 stack2;
-	//u8 sp148b_usingsharedstruct;
-	//s8 sp48[5187];
-	s32 image_load_address;
-	s32 sp38;
-	//struct tex *sp34;
-	//s32 sp30;
-	u8 imagebuffer[4010];
+    u8 compbuffer[4000];
+    u8 *compptr;
+    s32 sp14a8;
+    s32 iszlib;
+    s32 lod;
+    struct tex *tex;
+    u8 *alignedcompbuffer;
+    s32 thisoffset;
+    s32 nextoffset;
+    s16 *texnumptr;
+    s32 bytesout;
 
-	//sp148b_usingsharedstruct = 0;
+    if (pool == NULL)
+    {
+        pool = (struct texpool*) &ptr_texture_alloc_start;
+    }
 
-	if (arg1 == NULL) {
-		arg1 = &ptr_texture_alloc_start;
-	}
+    g_TexNumToLoad = *updateword & 0xffff;
+    tex = texFindInPool(g_TexNumToLoad, pool);
 
-	//if (arg1 == &ptr_texture_alloc_start) {
-	//	sp148b_usingsharedstruct = 1;
-	//}
+    if (tex == NULL)
+    {
+        alignedcompbuffer = (u8 *) (((u32)compbuffer + 0xF) >> 4 << 4);
 
-	//if ((*ptr & 0xffff0000) == 0 || (*ptr & 0xffff0000) == 0xabcd0000) {
-	imageid = *ptr & 0xffff;
+        if (alignedcompbuffer);
+        if (tex);
 
-	ptVar3 = texFindInPool(imageid, arg1);
+        osWritebackDCacheAll();
+        osInvalDCache(alignedcompbuffer, DCACHE_SIZE);
 
-	if (ptVar3 == NULL /*&& imageid < NUM_TEXTURES//*/) {
-		*imagebuffer = (u8)(((u32)imagebuffer + 0xf) >> 4 << 4);
+        thisoffset = *((s32*)&g_Textures[g_TexNumToLoad]) & 0xFFFFFF;
+        nextoffset = (*((s32 *) (&g_Textures[g_TexNumToLoad + 1]))) & ((unsigned long) 0xFFFFFF);
 
-		//if (imagebuffer);
+        if(1)
+        {
+            // Copy the compressed texture to RAM
+            romCopy(alignedcompbuffer,
+                    (u32) &_imagesSegmentRomStart + (thisoffset & 0xfffffff8),
+                    ((u32) (nextoffset - thisoffset) + 0x1f) >> 4 << 4);
 
-		osWritebackDCacheAll();
-		osInvalDCache(imagebuffer, 0x2000);
+            compptr = (u8 *) alignedcompbuffer + (thisoffset & 7);
+            thisoffset = 0;
+            sp14a8 = (*compptr & 0x80) >> 7;
+            iszlib = (*compptr & 0x40) >> 6;
+            lod = *compptr & 0x3f;
+            compptr++;
 
-		//if (g_Textures[imageid].dataoffset == g_Textures[imageid + 1].dataoffset) {
-		//	return;
-		//}
+            // If there's not enough memory to load the texture, set the texture
+            // pointer to the start of the pool. It'll be garbage data but the
+            // only other option is a crash. GBI commands contain texture IDs
+            // instead of pointers, and they must be replaced with pointers.
+            if ((!iszlib && (texFreeBytesInBuffer(pool) < 0x10CC)) || (iszlib && texFreeBytesInBuffer(pool) < 0xA28)) {
+                *updateword = osVirtualToPhysical(pool->start);
+                return;
+            }
 
-		image_load_address = g_Textures[imageid].dataoffset;
+            // Write the texturenum into the allocation
+            texnumptr = (s16 *) pool->leftpos;
+            *texnumptr = g_TexNumToLoad;
+            pool->leftpos += 8;
 
-		romCopy(imagebuffer,
-				(u32)&_imagesSegmentRomStart + (image_load_address & ~7),
-				(((g_Textures[imageid + 1].dataoffset - image_load_address) + 0x1f) >> 4) * 0x10);
+            // Write a tex into the allocation
+            pool->rightpos--;
+            tex = pool->rightpos;
+            tex->texturenum = g_TexNumToLoad;
+            tex->data = pool->leftpos;
 
-		//if (sp148b_usingsharedstruct);
-		sp14ac_ptr = imagebuffer + (image_load_address & 7);
-		sp14a8 = (*sp14ac_ptr & 0x80) >> 7;
-		sp14a4_iszlib = (*sp14ac_ptr & 0x40) >> 6;
-		sp14a0_lod = *sp14ac_ptr & 0x3f;
+            // Extract the texture data to the allocation (pool->leftpos)
+            if (iszlib) {
+                bytesout = texInflateZlib(compptr, pool->leftpos, sp14a8, lod, pool);
+            } else {
+                bytesout = texInflateNonZlib(compptr, pool->leftpos, sp14a8, lod, pool);
+            }
 
-		//if (sp14a0_lod > 5) {
-		//	sp14a0_lod = 5;
-		//}
+            pool->leftpos += bytesout;
+        }
 
-		sp14ac_ptr++;
+        texFreeBytesInBuffer(pool);
+    }
 
-		//if (sp148b_usingsharedstruct) {
-		//	freebytes = mempGetPoolFree(MEMPOOL_STAGE, MEMBANK_ONBOARD) + mempGetPoolFree(MEMPOOL_STAGE, MEMBANK_EXPANSION);
-		//} else {
-				//freebytes = texFreeBytesInBuffer(arg1);
-		//}
-
-		if ((sp14a4_iszlib == 0 && texFreeBytesInBuffer(arg1) < 4300) || (sp14a4_iszlib != 0 && texFreeBytesInBuffer(arg1) < 2600)) {
-			*ptr = osVirtualToPhysical(arg1->unk00);
-			return;
-		}
-
-		//if (sp148b_usingsharedstruct) {
-		//	sp1490 = arg1->unk0c;
-		//	arg1->unk0c = (struct tex *)((((u32)sp48 + 0xf) >> 4 << 4) + 0x10);
-		//	arg1->unk08 = arg1->unk0c + 1;
-        //
-		//	while (sp1490) {
-		//		if (sp1490->unk0c_04 == 0) {
-		//			break;
-		//		}
-        //
-		//		sp1490 = (struct tex *)PHYS_TO_K0(sp1490->unk0c_04);
-		//	}
-		//}
-
-		*(s16 *)(arg1->unk08) = imageid;
-		arg1->unk08 = (void *)((u32)arg1->unk08 + 8);
-		ptVar3 = (struct tex *)(arg1->unk0c - 1);
-		arg1->unk0c = ptVar3;
-		ptVar3->texturenum = imageid;
-		ptVar3->unk04 = arg1->unk08;
-		ptVar3->unk0c_03 = 0;
-
-		if (sp14a4_iszlib) {
-			sp38 = texInflateZlib(sp14ac_ptr, (u32 *)arg1->unk08, sp14a8, sp14a0_lod, arg1/*, arg2//*/);
-		} else {
-			sp38 = texInflateNonZlib(sp14ac_ptr, (u32 *)arg1->unk08, sp14a8, sp14a0_lod, arg1/*, arg2//*/);
-			}
-
-		//if (sp148b_usingsharedstruct) {
-		//	sp34 = mempAllocFromRight(ALIGN16(sp38 + 0x20), MEMPOOL_STAGE);
-		//	arg1->unk0c = sp34;
-		//
-		//	bcopy(ptVar3, sp34, 0x10);
-		//
-		//	ptVar3 = sp34;
-		//	sp34++;
-		//
-		//	bcopy((void *)((u32)arg1->unk08 - 8), sp34, sp38 + 8);
-		//
-		//	arg1->unk0c->unk04 = (void *)((u32)sp34 + 8);
-		//	arg1->unk0c->unk0c_04 = 0;
-		//
-		//	if (sp1490 != NULL) {
-		//		sp1490->unk0c_04 = (u32)arg1->unk0c & 0xffffff;
-		//	} else {
-		//		arg1->unk04 = arg1->unk0c;
-		//	}
-		//
-		//	arg1->unk00 = arg1->unk0c;
-		//}
-
-		arg1->unk08 = (void *)((u32)arg1->unk08 + sp38);
-
-		//if (!sp148b_usingsharedstruct) {
-		texFreeBytesInBuffer(arg1);
-		//}
-		
-	}
-
-	*ptr = osVirtualToPhysical(ptVar3->unk04);
+    *updateword = osVirtualToPhysical(tex->data);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel texLoad
-/* 100748 7F0CBC18 27BDF008 */  addiu $sp, $sp, -0xff8
-/* 10074C 7F0CBC1C AFB00020 */  sw    $s0, 0x20($sp)
-/* 100750 7F0CBC20 00A08025 */  move  $s0, $a1
-/* 100754 7F0CBC24 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 100758 7F0CBC28 14A00003 */  bnez  $a1, .L7F0CBC38
-/* 10075C 7F0CBC2C AFA40FF8 */   sw    $a0, 0xff8($sp)
-/* 100760 7F0CBC30 3C108009 */  lui   $s0, %hi(ptr_texture_alloc_start)
-/* 100764 7F0CBC34 2610C720 */  addiu $s0, %lo(ptr_texture_alloc_start) # addiu $s0, $s0, -0x38e0
-.L7F0CBC38:
-/* 100768 7F0CBC38 8FAE0FF8 */  lw    $t6, 0xff8($sp)
-/* 10076C 7F0CBC3C 3C028009 */  lui   $v0, %hi(imageid)
-/* 100770 7F0CBC40 2442D094 */  addiu $v0, %lo(imageid) # addiu $v0, $v0, -0x2f6c
-/* 100774 7F0CBC44 8DCF0000 */  lw    $t7, ($t6)
-/* 100778 7F0CBC48 02002825 */  move  $a1, $s0
-/* 10077C 7F0CBC4C 31E4FFFF */  andi  $a0, $t7, 0xffff
-/* 100780 7F0CBC50 0FC32EC3 */  jal   texFindInPool
-/* 100784 7F0CBC54 AC440000 */   sw    $a0, ($v0)
-/* 100788 7F0CBC58 14400074 */  bnez  $v0, .L7F0CBE2C
-/* 10078C 7F0CBC5C 00401825 */   move  $v1, $v0
-/* 100790 7F0CBC60 27A30067 */  addiu $v1, $sp, 0x67
-/* 100794 7F0CBC64 0003C902 */  srl   $t9, $v1, 4
-/* 100798 7F0CBC68 00194100 */  sll   $t0, $t9, 4
-/* 10079C 7F0CBC6C 0C0034C8 */  jal   osWritebackDCacheAll
-/* 1007A0 7F0CBC70 AFA8002C */   sw    $t0, 0x2c($sp)
-/* 1007A4 7F0CBC74 8FA4002C */  lw    $a0, 0x2c($sp)
-/* 1007A8 7F0CBC78 0C0042C8 */  jal   osInvalDCache
-/* 1007AC 7F0CBC7C 24052000 */   li    $a1, 8192
-/* 1007B0 7F0CBC80 3C098009 */  lui   $t1, %hi(imageid) 
-/* 1007B4 7F0CBC84 8D29D094 */  lw    $t1, %lo(imageid)($t1)
-/* 1007B8 7F0CBC88 3C0B8005 */  lui   $t3, %hi(g_Textures) 
-/* 1007BC 7F0CBC8C 256B9300 */  addiu $t3, %lo(g_Textures) # addiu $t3, $t3, -0x6d00
-/* 1007C0 7F0CBC90 000950C0 */  sll   $t2, $t1, 3
-/* 1007C4 7F0CBC94 014B1021 */  addu  $v0, $t2, $t3
-/* 1007C8 7F0CBC98 8C430000 */  lw    $v1, ($v0)
-/* 1007CC 7F0CBC9C 8C470008 */  lw    $a3, 8($v0)
-/* 1007D0 7F0CBCA0 3C0100FF */  lui   $at, (0x00FFFFFF >> 16) # lui $at, 0xff
-/* 1007D4 7F0CBCA4 3421FFFF */  ori   $at, (0x00FFFFFF & 0xFFFF) # ori $at, $at, 0xffff
-/* 1007D8 7F0CBCA8 00616024 */  and   $t4, $v1, $at
-/* 1007DC 7F0CBCAC 00E16824 */  and   $t5, $a3, $at
-/* 1007E0 7F0CBCB0 01AC3023 */  subu  $a2, $t5, $t4
-/* 1007E4 7F0CBCB4 24C6001F */  addiu $a2, $a2, 0x1f
-/* 1007E8 7F0CBCB8 2401FFF8 */  li    $at, -8
-/* 1007EC 7F0CBCBC 3C0F008F */  lui   $t7, %hi(_imagesSegmentRomStart) # $t7, 0x8f
-/* 1007F0 7F0CBCC0 25EF7DF0 */  addiu $t7, %lo(_imagesSegmentRomStart) # addiu $t7, $t7, 0x7df0
-/* 1007F4 7F0CBCC4 01817024 */  and   $t6, $t4, $at
-/* 1007F8 7F0CBCC8 0006C102 */  srl   $t8, $a2, 4
-/* 1007FC 7F0CBCCC 00183100 */  sll   $a2, $t8, 4
-/* 100800 7F0CBCD0 01CF2821 */  addu  $a1, $t6, $t7
-/* 100804 7F0CBCD4 AFAC003C */  sw    $t4, 0x3c($sp)
-/* 100808 7F0CBCD8 0C001707 */  jal   romCopy
-/* 10080C 7F0CBCDC 8FA4002C */   lw    $a0, 0x2c($sp)
-/* 100810 7F0CBCE0 8FA3003C */  lw    $v1, 0x3c($sp)
-/* 100814 7F0CBCE4 8FA8002C */  lw    $t0, 0x2c($sp)
-/* 100818 7F0CBCE8 02002025 */  move  $a0, $s0
-/* 10081C 7F0CBCEC 30690007 */  andi  $t1, $v1, 7
-/* 100820 7F0CBCF0 01095021 */  addu  $t2, $t0, $t1
-/* 100824 7F0CBCF4 AFAA0054 */  sw    $t2, 0x54($sp)
-/* 100828 7F0CBCF8 91420000 */  lbu   $v0, ($t2)
-/* 10082C 7F0CBCFC 254D0001 */  addiu $t5, $t2, 1
-/* 100830 7F0CBD00 AFAD0054 */  sw    $t5, 0x54($sp)
-/* 100834 7F0CBD04 30460080 */  andi  $a2, $v0, 0x80
-/* 100838 7F0CBD08 30450040 */  andi  $a1, $v0, 0x40
-/* 10083C 7F0CBD0C 000659C3 */  sra   $t3, $a2, 7
-/* 100840 7F0CBD10 00056183 */  sra   $t4, $a1, 6
-/* 100844 7F0CBD14 01603025 */  move  $a2, $t3
-/* 100848 7F0CBD18 01802825 */  move  $a1, $t4
-/* 10084C 7F0CBD1C 1580000A */  bnez  $t4, .L7F0CBD48
-/* 100850 7F0CBD20 3047003F */   andi  $a3, $v0, 0x3f
-/* 100854 7F0CBD24 AFAC004C */  sw    $t4, 0x4c($sp)
-/* 100858 7F0CBD28 AFAB0050 */  sw    $t3, 0x50($sp)
-/* 10085C 7F0CBD2C 0FC32ED9 */  jal   texFreeBytesInBuffer
-/* 100860 7F0CBD30 AFA70048 */   sw    $a3, 0x48($sp)
-/* 100864 7F0CBD34 284110CC */  slti  $at, $v0, 0x10cc
-/* 100868 7F0CBD38 8FA5004C */  lw    $a1, 0x4c($sp)
-/* 10086C 7F0CBD3C 8FA60050 */  lw    $a2, 0x50($sp)
-/* 100870 7F0CBD40 1420000C */  bnez  $at, .L7F0CBD74
-/* 100874 7F0CBD44 8FA70048 */   lw    $a3, 0x48($sp)
-.L7F0CBD48:
-/* 100878 7F0CBD48 10A0000F */  beqz  $a1, .L7F0CBD88
-/* 10087C 7F0CBD4C 02002025 */   move  $a0, $s0
-/* 100880 7F0CBD50 AFA5004C */  sw    $a1, 0x4c($sp)
-/* 100884 7F0CBD54 AFA60050 */  sw    $a2, 0x50($sp)
-/* 100888 7F0CBD58 0FC32ED9 */  jal   texFreeBytesInBuffer
-/* 10088C 7F0CBD5C AFA70048 */   sw    $a3, 0x48($sp)
-/* 100890 7F0CBD60 28410A28 */  slti  $at, $v0, 0xa28
-/* 100894 7F0CBD64 8FA5004C */  lw    $a1, 0x4c($sp)
-/* 100898 7F0CBD68 8FA60050 */  lw    $a2, 0x50($sp)
-/* 10089C 7F0CBD6C 10200006 */  beqz  $at, .L7F0CBD88
-/* 1008A0 7F0CBD70 8FA70048 */   lw    $a3, 0x48($sp)
-.L7F0CBD74:
-/* 1008A4 7F0CBD74 0C003A2C */  jal   osVirtualToPhysical
-/* 1008A8 7F0CBD78 8E040000 */   lw    $a0, ($s0)
-/* 1008AC 7F0CBD7C 8FAE0FF8 */  lw    $t6, 0xff8($sp)
-/* 1008B0 7F0CBD80 1000002E */  b     .L7F0CBE3C
-/* 1008B4 7F0CBD84 ADC20000 */   sw    $v0, ($t6)
-.L7F0CBD88:
-/* 1008B8 7F0CBD88 3C0F8009 */  lui   $t7, %hi(imageid) 
-/* 1008BC 7F0CBD8C 8E020008 */  lw    $v0, 8($s0)
-/* 1008C0 7F0CBD90 8DEFD094 */  lw    $t7, %lo(imageid)($t7)
-/* 1008C4 7F0CBD94 3C0B8009 */  lui   $t3, %hi(imageid) 
-/* 1008C8 7F0CBD98 A44F0000 */  sh    $t7, ($v0)
-/* 1008CC 7F0CBD9C 8E180008 */  lw    $t8, 8($s0)
-/* 1008D0 7F0CBDA0 8E08000C */  lw    $t0, 0xc($s0)
-/* 1008D4 7F0CBDA4 27190008 */  addiu $t9, $t8, 8
-/* 1008D8 7F0CBDA8 2509FFF0 */  addiu $t1, $t0, -0x10
-/* 1008DC 7F0CBDAC AE190008 */  sw    $t9, 8($s0)
-/* 1008E0 7F0CBDB0 AE09000C */  sw    $t1, 0xc($s0)
-/* 1008E4 7F0CBDB4 952E0000 */  lhu   $t6, ($t1)
-/* 1008E8 7F0CBDB8 8D6CD094 */  lw    $t4, %lo(imageid)($t3)
-/* 1008EC 7F0CBDBC 01201825 */  move  $v1, $t1
-/* 1008F0 7F0CBDC0 31CF000F */  andi  $t7, $t6, 0xf
-/* 1008F4 7F0CBDC4 000C6900 */  sll   $t5, $t4, 4
-/* 1008F8 7F0CBDC8 01AFC025 */  or    $t8, $t5, $t7
-/* 1008FC 7F0CBDCC A5380000 */  sh    $t8, ($t1)
-/* 100900 7F0CBDD0 8E190008 */  lw    $t9, 8($s0)
-/* 100904 7F0CBDD4 10A00008 */  beqz  $a1, .L7F0CBDF8
-/* 100908 7F0CBDD8 AD390004 */   sw    $t9, 4($t1)
-/* 10090C 7F0CBDDC 8E050008 */  lw    $a1, 8($s0)
-/* 100910 7F0CBDE0 AFA90044 */  sw    $t1, 0x44($sp)
-/* 100914 7F0CBDE4 AFB00010 */  sw    $s0, 0x10($sp)
-/* 100918 7F0CBDE8 0FC31996 */  jal   texInflateZlib
-/* 10091C 7F0CBDEC 8FA40054 */   lw    $a0, 0x54($sp)
-/* 100920 7F0CBDF0 10000007 */  b     .L7F0CBE10
-/* 100924 7F0CBDF4 8FA30044 */   lw    $v1, 0x44($sp)
-.L7F0CBDF8:
-/* 100928 7F0CBDF8 8E050008 */  lw    $a1, 8($s0)
-/* 10092C 7F0CBDFC AFA30044 */  sw    $v1, 0x44($sp)
-/* 100930 7F0CBE00 AFB00010 */  sw    $s0, 0x10($sp)
-/* 100934 7F0CBE04 0FC31F7F */  jal   texInflateNonZlib
-/* 100938 7F0CBE08 8FA40054 */   lw    $a0, 0x54($sp)
-/* 10093C 7F0CBE0C 8FA30044 */  lw    $v1, 0x44($sp)
-.L7F0CBE10:
-/* 100940 7F0CBE10 8E080008 */  lw    $t0, 8($s0)
-/* 100944 7F0CBE14 02002025 */  move  $a0, $s0
-/* 100948 7F0CBE18 01024821 */  addu  $t1, $t0, $v0
-/* 10094C 7F0CBE1C AE090008 */  sw    $t1, 8($s0)
-/* 100950 7F0CBE20 0FC32ED9 */  jal   texFreeBytesInBuffer
-/* 100954 7F0CBE24 AFA30044 */   sw    $v1, 0x44($sp)
-/* 100958 7F0CBE28 8FA30044 */  lw    $v1, 0x44($sp)
-.L7F0CBE2C:
-/* 10095C 7F0CBE2C 0C003A2C */  jal   osVirtualToPhysical
-/* 100960 7F0CBE30 8C640004 */   lw    $a0, 4($v1)
-/* 100964 7F0CBE34 8FAB0FF8 */  lw    $t3, 0xff8($sp)
-/* 100968 7F0CBE38 AD620000 */  sw    $v0, ($t3)
-.L7F0CBE3C:
-/* 10096C 7F0CBE3C 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 100970 7F0CBE40 8FB00020 */  lw    $s0, 0x20($sp)
-/* 100974 7F0CBE44 27BD0FF8 */  addiu $sp, $sp, 0xff8
-/* 100978 7F0CBE48 03E00008 */  jr    $ra
-/* 10097C 7F0CBE4C 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
