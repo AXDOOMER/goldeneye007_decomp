@@ -2391,7 +2391,7 @@ glabel process_microcode_sort_display_modes_expand_image_calls
 /* 102D8C 7F0CE25C 0FC32FBA */  jal   texLoadFromTextureNum
 /* 102D90 7F0CE260 02602025 */   move  $a0, $s3
 /* 102D94 7F0CE264 02602025 */  move  $a0, $s3
-/* 102D98 7F0CE268 0FC32EC3 */  jal   sub_GAME_7F0CBB0C
+/* 102D98 7F0CE268 0FC32EC3 */  jal   texFindInPool
 /* 102D9C 7F0CE26C 02C02825 */   move  $a1, $s6
 /* 102DA0 7F0CE270 104000F4 */  beqz  $v0, .L7F0CE644
 /* 102DA4 7F0CE274 00409025 */   move  $s2, $v0
@@ -2514,7 +2514,7 @@ glabel process_microcode_sort_display_modes_expand_image_calls
 /* 102F68 7F0CE438 0FC32FBA */  jal   texLoadFromTextureNum
 /* 102F6C 7F0CE43C AFA40080 */   sw    $a0, 0x80($sp)
 /* 102F70 7F0CE440 8FA40080 */  lw    $a0, 0x80($sp)
-/* 102F74 7F0CE444 0FC32EC3 */  jal   sub_GAME_7F0CBB0C
+/* 102F74 7F0CE444 0FC32EC3 */  jal   texFindInPool
 /* 102F78 7F0CE448 02C02825 */   move  $a1, $s6
 /* 102F7C 7F0CE44C 10400068 */  beqz  $v0, .L7F0CE5F0
 /* 102F80 7F0CE450 02002025 */   move  $a0, $s0

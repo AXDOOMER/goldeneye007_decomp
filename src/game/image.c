@@ -9,7 +9,7 @@
 
 // bss
 //8008C720
-struct texturething *ptr_texture_alloc_start;
+struct texpool *ptr_texture_alloc_start;
 //8008C724
 s32 ptr_texture_alloc_end;
 //8008C728
@@ -138,7 +138,7 @@ void nullsub_41(s32 arg0) {
  *
  * The zlib data is prefixed with the standard 5-byte rarezip header.
  */
-s32 texInflateZlib(u8 *src, u8 *dst, s32 arg2, s32 forcenumimages, struct texturething *arg4)
+s32 texInflateZlib(u8 *src, u8 *dst, s32 arg2, s32 forcenumimages, struct texpool *arg4)
 {
     s32 i;
     s32 imagebytesout;
@@ -172,8 +172,8 @@ s32 texInflateZlib(u8 *src, u8 *dst, s32 arg2, s32 forcenumimages, struct textur
         numimages = 1;
     }
 
-    arg4->unk0c->maxlod = forcenumimages;
-    arg4->unk0c->unk0c_02 = arg2;
+    arg4->rightpos->maxlod = forcenumimages;
+    arg4->rightpos->unk0c_02 = arg2;
 
     if (arg2)
     {
@@ -181,7 +181,7 @@ s32 texInflateZlib(u8 *src, u8 *dst, s32 arg2, s32 forcenumimages, struct textur
 
         for (i = 0; i < g_TexCacheCount; i++)
         {
-            if (g_TexCacheItems[i].texturenum == arg4->unk0c->texturenum)
+            if (g_TexCacheItems[i].texturenum == arg4->rightpos->texturenum)
             {
                 writetocache = FALSE;
             }
@@ -205,12 +205,12 @@ s32 texInflateZlib(u8 *src, u8 *dst, s32 arg2, s32 forcenumimages, struct textur
 
         if (j == 0)
         {
-            arg4->unk0c->width = width;
-            arg4->unk0c->height = height;
-            arg4->unk0c->unk0a = numcolours - 1;
-            arg4->unk0c->gbiformat = g_TexFormatGbiMappings[format];
-            arg4->unk0c->depth = g_TexFormatDepths[format];
-            arg4->unk0c->lutmodeindex = g_TexFormatLutModes[format] >> G_MDSFT_TEXTLUT;
+            arg4->rightpos->width = width;
+            arg4->rightpos->height = height;
+            arg4->rightpos->unk0a = numcolours - 1;
+            arg4->rightpos->gbiformat = g_TexFormatGbiMappings[format];
+            arg4->rightpos->depth = g_TexFormatDepths[format];
+            arg4->rightpos->lutmodeindex = g_TexFormatLutModes[format] >> G_MDSFT_TEXTLUT;
         }
         else if (writetocache)
         {
@@ -236,7 +236,7 @@ s32 texInflateZlib(u8 *src, u8 *dst, s32 arg2, s32 forcenumimages, struct textur
 
     if (writetocache)
     {
-        g_TexCacheItems[g_TexCacheCount].texturenum = arg4->unk0c->texturenum;
+        g_TexCacheItems[g_TexCacheCount].texturenum = arg4->rightpos->texturenum;
 
         g_TexCacheCount++;
 
@@ -265,7 +265,7 @@ s32 texInflateZlib(u8 *src, u8 *dst, s32 arg2, s32 forcenumimages, struct textur
 
                 if (totalbytesout + imagebytesout > 0x800)
                 {
-                    arg4->unk0c->maxlod = j;
+                    arg4->rightpos->maxlod = j;
                     break;
                 }
 
@@ -1056,7 +1056,7 @@ glabel texFindClosestColourIndexIA
  * h = height in pixels
  * c = compression method (see TEXCOMPMETHOD constants)
  */
-s32 texInflateNonZlib(u8 *src, u8 *dst, s32 arg2, s32 forcenumimages, struct texturething *arg4, s32 arg5)
+s32 texInflateNonZlib(u8 *src, u8 *dst, s32 arg2, s32 forcenumimages, struct texpool *arg4, s32 arg5)
 {
     u8 scratch[0x2000];
     u8 lookup[0x1000];
@@ -1079,8 +1079,8 @@ s32 texInflateNonZlib(u8 *src, u8 *dst, s32 arg2, s32 forcenumimages, struct tex
 
     numimages = arg2 && forcenumimages ? forcenumimages : 1;
 
-    arg4->unk0c->maxlod = forcenumimages;
-    arg4->unk0c->unk0c_02 = arg2;
+    arg4->rightpos->maxlod = forcenumimages;
+    arg4->rightpos->unk0c_02 = arg2;
 
     if (arg2)
     {
@@ -1088,7 +1088,7 @@ s32 texInflateNonZlib(u8 *src, u8 *dst, s32 arg2, s32 forcenumimages, struct tex
 
         for (i = 0; i < g_TexCacheCount; i++)
         {
-            if (g_TexCacheItems[i].texturenum == arg4->unk0c->texturenum)
+            if (g_TexCacheItems[i].texturenum == arg4->rightpos->texturenum)
             {
                 writetocache = FALSE;
             }
@@ -1104,11 +1104,11 @@ s32 texInflateNonZlib(u8 *src, u8 *dst, s32 arg2, s32 forcenumimages, struct tex
 
         if (i == 0)
         {
-            arg4->unk0c->width = width;
-            arg4->unk0c->height = height;
-            arg4->unk0c->gbiformat = g_TexFormatGbiMappings[format];
-            arg4->unk0c->depth = g_TexFormatDepths[format];
-            arg4->unk0c->lutmodeindex = g_TexFormatLutModes[format] >> G_MDSFT_TEXTLUT;
+            arg4->rightpos->width = width;
+            arg4->rightpos->height = height;
+            arg4->rightpos->gbiformat = g_TexFormatGbiMappings[format];
+            arg4->rightpos->depth = g_TexFormatDepths[format];
+            arg4->rightpos->lutmodeindex = g_TexFormatLutModes[format] >> G_MDSFT_TEXTLUT;
         }
         else if (writetocache)
         {
@@ -1235,7 +1235,7 @@ s32 texInflateNonZlib(u8 *src, u8 *dst, s32 arg2, s32 forcenumimages, struct tex
 
     if (writetocache)
     {
-        g_TexCacheItems[g_TexCacheCount].texturenum = arg4->unk0c->texturenum;
+        g_TexCacheItems[g_TexCacheCount].texturenum = arg4->rightpos->texturenum;
 
         g_TexCacheCount++;
 
@@ -2507,19 +2507,19 @@ void texBlur(u8 *pixels, s32 width, s32 height, s32 method, s32 chansize)
 }
 
 
-void sub_GAME_7F0CBAF4(struct texturething *arg0, u8 *arg1, s32 arg2)
+void texInitPool(struct texpool *arg0, u8 *arg1, s32 arg2)
 {
-    arg0->unk00 = (struct texloadthing *)arg1;
-    arg0->unk04 = (struct texloadthing *)(arg1 + arg2);
-    arg0->unk08 = (struct texloadthing *)arg1;
-    arg0->unk0c = (struct texloadthing *)(arg1 + arg2);
+    arg0->start = arg1;
+	arg0->end = (struct tex *)(arg1 + arg2);
+    arg0->leftpos = arg1;
+    arg0->rightpos = (struct tex *)(arg1 + arg2);
 }
 
 
-struct texloadthing *sub_GAME_7F0CBB0C(s32 texturenum, struct texturething *arg1)
+struct tex *texFindInPool(s32 texturenum, struct texpool *arg1)
 {
-    struct texloadthing *end;
-    struct texloadthing *cur;
+    struct tex *end;
+    struct tex *cur;
     s32 i;
 
     if (arg1 == NULL)
@@ -2527,8 +2527,8 @@ struct texloadthing *sub_GAME_7F0CBB0C(s32 texturenum, struct texturething *arg1
         arg1 = &ptr_texture_alloc_start;
     }
 
-    end = arg1->unk04;
-    cur = arg1->unk0c;
+    end = arg1->end;
+    cur = arg1->rightpos;
 
     while (cur < end)
     {
@@ -2544,13 +2544,13 @@ struct texloadthing *sub_GAME_7F0CBB0C(s32 texturenum, struct texturething *arg1
 }
 
 
-s32 texFreeBytesInBuffer(struct texturething *arg0)
+s32 texFreeBytesInBuffer(struct texpool *arg0)
 {
-	return (u32)arg0->unk0c - (u32)arg0->unk08;
+	return (u32)arg0->rightpos - (u32)arg0->leftpos;
 }
 
 
-void texLoadFromDisplayList(Gfx *gdl, struct texturething *arg1)
+void texLoadFromDisplayList(Gfx *gdl, struct texpool *arg1)
 {
     u8 *bytes = (u8 *)gdl;
 
@@ -2569,23 +2569,23 @@ void texLoadFromDisplayList(Gfx *gdl, struct texturething *arg1)
 
 #ifdef NONMATCHING
 extern u8 _imagesSegmentRomStart;
-void texLoad(u32 *ptr, struct texturething *arg1)
+void texLoad(u32 *ptr, struct texpool *arg1)
 {
 	//u8 sp14b0[0x1400];
 	u8 *sp14ac_ptr;
 	s32 sp14a8;
 	s32 sp14a4_iszlib;
 	s32 sp14a0_lod;
-	struct texloadthing *ptVar3;
+	struct tex *ptVar3;
 	//u32 freebytes;
 	//u32 stack;
-	//struct texloadthing *sp1490;
+	//struct tex *sp1490;
 	//u32 stack2;
 	//u8 sp148b_usingsharedstruct;
 	//s8 sp48[5187];
 	s32 image_load_address;
 	s32 sp38;
-	//struct texloadthing *sp34;
+	//struct tex *sp34;
 	//s32 sp30;
 	u8 imagebuffer[4010];
 
@@ -2602,7 +2602,7 @@ void texLoad(u32 *ptr, struct texturething *arg1)
 	//if ((*ptr & 0xffff0000) == 0 || (*ptr & 0xffff0000) == 0xabcd0000) {
 	imageid = *ptr & 0xffff;
 
-	ptVar3 = sub_GAME_7F0CBB0C(imageid, arg1);
+	ptVar3 = texFindInPool(imageid, arg1);
 
 	if (ptVar3 == NULL /*&& imageid < NUM_TEXTURES//*/) {
 		*imagebuffer = (u8)(((u32)imagebuffer + 0xf) >> 4 << 4);
@@ -2647,7 +2647,7 @@ void texLoad(u32 *ptr, struct texturething *arg1)
 
 		//if (sp148b_usingsharedstruct) {
 		//	sp1490 = arg1->unk0c;
-		//	arg1->unk0c = (struct texloadthing *)((((u32)sp48 + 0xf) >> 4 << 4) + 0x10);
+		//	arg1->unk0c = (struct tex *)((((u32)sp48 + 0xf) >> 4 << 4) + 0x10);
 		//	arg1->unk08 = arg1->unk0c + 1;
         //
 		//	while (sp1490) {
@@ -2655,13 +2655,13 @@ void texLoad(u32 *ptr, struct texturething *arg1)
 		//			break;
 		//		}
         //
-		//		sp1490 = (struct texloadthing *)PHYS_TO_K0(sp1490->unk0c_04);
+		//		sp1490 = (struct tex *)PHYS_TO_K0(sp1490->unk0c_04);
 		//	}
 		//}
 
 		*(s16 *)(arg1->unk08) = imageid;
 		arg1->unk08 = (void *)((u32)arg1->unk08 + 8);
-		ptVar3 = (struct texloadthing *)(arg1->unk0c - 1);
+		ptVar3 = (struct tex *)(arg1->unk0c - 1);
 		arg1->unk0c = ptVar3;
 		ptVar3->texturenum = imageid;
 		ptVar3->unk04 = arg1->unk08;
@@ -2725,7 +2725,7 @@ glabel texLoad
 /* 100774 7F0CBC44 8DCF0000 */  lw    $t7, ($t6)
 /* 100778 7F0CBC48 02002825 */  move  $a1, $s0
 /* 10077C 7F0CBC4C 31E4FFFF */  andi  $a0, $t7, 0xffff
-/* 100780 7F0CBC50 0FC32EC3 */  jal   sub_GAME_7F0CBB0C
+/* 100780 7F0CBC50 0FC32EC3 */  jal   texFindInPool
 /* 100784 7F0CBC54 AC440000 */   sw    $a0, ($v0)
 /* 100788 7F0CBC58 14400074 */  bnez  $v0, .L7F0CBE2C
 /* 10078C 7F0CBC5C 00401825 */   move  $v1, $v0
@@ -2920,7 +2920,7 @@ glabel sub_GAME_7F0CBE50
 #endif
 
 
-void texLoadFromTextureNum(u32 texturenum, struct texturething *arg1)
+void texLoadFromTextureNum(u32 texturenum, struct texpool *arg1)
 {
     u32 texturenumcopy;
     texturenumcopy = texturenum;

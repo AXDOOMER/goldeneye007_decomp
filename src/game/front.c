@@ -20776,7 +20776,7 @@ glabel init_menu18_displaycast
 /* 04D438 7F018908 3C060001 */  lui   $a2, (0x00019000 >> 16) # lui $a2, 1
 /* 04D43C 7F01890C 34C69000 */  ori   $a2, (0x00019000 & 0xFFFF) # ori $a2, $a2, 0x9000
 /* 04D440 7F018910 27A40090 */  addiu $a0, $sp, 0x90
-/* 04D444 7F018914 0FC32EBD */  jal   sub_GAME_7F0CBAF4
+/* 04D444 7F018914 0FC32EBD */  jal   texInitPool
 /* 04D448 7F018918 8FA500B4 */   lw    $a1, 0xb4($sp)
 /* 04D44C 7F01891C 8FAA008C */  lw    $t2, 0x8c($sp)
 /* 04D450 7F018920 3C0C8004 */  lui   $t4, %hi(c_item_entries)
@@ -21372,7 +21372,7 @@ glabel init_menu18_displaycast
 /* 04B370 7F018980 3C060001 */  lui   $a2, (0x00019000 >> 16) # lui $a2, 1
 /* 04B374 7F018984 34C69000 */  ori   $a2, (0x00019000 & 0xFFFF) # ori $a2, $a2, 0x9000
 /* 04B378 7F018988 27A40090 */  addiu $a0, $sp, 0x90
-/* 04B37C 7F01898C 0FC32C05 */  jal   sub_GAME_7F0CBAF4
+/* 04B37C 7F01898C 0FC32C05 */  jal   texInitPool
 /* 04B380 7F018990 8FA500B4 */   lw    $a1, 0xb4($sp)
 /* 04B384 7F018994 8FAA008C */  lw    $t2, 0x8c($sp)
 /* 04B388 7F018998 3C0C8003 */  lui   $t4, %hi(c_item_entries) # $t4, 0x8003

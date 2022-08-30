@@ -28,14 +28,17 @@
 #define TEXCOMPMETHOD_HUFFMANBLUR        8
 #define TEXCOMPMETHOD_RLEBLUR            9
 
-struct texturething {
-	struct texloadthing *unk00;
-	struct texloadthing *unk04;
-	struct texloadthing *unk08;
-	struct texloadthing *unk0c;
+struct texpool {
+	u8 *start;
+    union {
+        struct tex *head; // for shared pool
+        struct tex *end; // for dedicated pools
+    };
+	u8 *leftpos;
+	struct tex *rightpos;
 };
 
-struct texloadthing {
+struct tex {
 	/*0x00*/ u16 texturenum : 12;
 	/*0x00*/ u16 unk00_0c : 4;
 	/*0x04*/ u32 unk04;
@@ -68,7 +71,7 @@ struct texcacheitem {
     u8 heights[7];
 };
 
-extern struct texturething *ptr_texture_alloc_start;
+extern struct texpool *ptr_texture_alloc_start;
 extern struct image_entry g_Textures[];
 extern s32 g_TexCacheCount;
 extern u32 bytes;

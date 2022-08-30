@@ -2956,7 +2956,7 @@ variable_body_head:
 /* 0AEAF0 7F079FC0 00002025 */   move  $a0, $zero
 /* 0AEAF4 7F079FC4 27A40100 */  addiu $a0, $sp, 0x100
 /* 0AEAF8 7F079FC8 8FA500EC */  lw    $a1, 0xec($sp)
-/* 0AEAFC 7F079FCC 0FC32EBD */  jal   sub_GAME_7F0CBAF4
+/* 0AEAFC 7F079FCC 0FC32EBD */  jal   texInitPool
 /* 0AEB00 7F079FD0 8FA600E0 */   lw    $a2, 0xe0($sp)
 /* 0AEB04 7F079FD4 0FC173C6 */  jal   get_ptr_itemheader_in_hand
 /* 0AEB08 7F079FD8 00002025 */   move  $a0, $zero
@@ -3548,7 +3548,7 @@ variable_body_head:
 /* 0AF120 7F07A5B0 00002025 */   move  $a0, $zero
 /* 0AF124 7F07A5B4 27A40100 */  addiu $a0, $sp, 0x100
 /* 0AF128 7F07A5B8 8FA500EC */  lw    $a1, 0xec($sp)
-/* 0AF12C 7F07A5BC 0FC331F5 */  jal   sub_GAME_7F0CBAF4
+/* 0AF12C 7F07A5BC 0FC331F5 */  jal   texInitPool
 /* 0AF130 7F07A5C0 8FA600E0 */   lw    $a2, 0xe0($sp)
 /* 0AF134 7F07A5C4 0FC1750E */  jal   get_ptr_itemheader_in_hand
 /* 0AF138 7F07A5C8 00002025 */   move  $a0, $zero
@@ -4155,7 +4155,7 @@ variable_body_head:
 /* 0ACA30 7F07A040 00002025 */   move  $a0, $zero
 /* 0ACA34 7F07A044 27A40100 */  addiu $a0, $sp, 0x100
 /* 0ACA38 7F07A048 8FA500EC */  lw    $a1, 0xec($sp)
-/* 0ACA3C 7F07A04C 0FC32C05 */  jal   sub_GAME_7F0CBAF4
+/* 0ACA3C 7F07A04C 0FC32C05 */  jal   texInitPool
 /* 0ACA40 7F07A050 8FA600E0 */   lw    $a2, 0xe0($sp)
 /* 0ACA44 7F07A054 0FC174F2 */  jal   get_ptr_itemheader_in_hand
 /* 0ACA48 7F07A058 00002025 */   move  $a0, $zero

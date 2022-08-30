@@ -1764,7 +1764,7 @@ glabel used_to_load_1st_person_model_on_demand
 /* 091CD8 7F05D1A8 24840850 */  addiu $a0, $a0, 0x850
 /* 091CDC 7F05D1AC 00413021 */  addu  $a2, $v0, $at
 /* 091CE0 7F05D1B0 AFA30030 */  sw    $v1, 0x30($sp)
-/* 091CE4 7F05D1B4 0FC32EBD */  jal   sub_GAME_7F0CBAF4
+/* 091CE4 7F05D1B4 0FC32EBD */  jal   texInitPool
 /* 091CE8 7F05D1B8 AFA90034 */   sw    $t1, 0x34($sp)
 /* 091CEC 7F05D1BC 8FA30030 */  lw    $v1, 0x30($sp)
 /* 091CF0 7F05D1C0 8E020000 */  lw    $v0, ($s0)
@@ -1798,7 +1798,7 @@ glabel used_to_load_1st_person_model_on_demand
 /* 091D58 7F05D228 24840850 */  addiu $a0, $a0, 0x850
 /* 091D5C 7F05D22C 00E13021 */  addu  $a2, $a3, $at
 /* 091D60 7F05D230 AFA30030 */  sw    $v1, 0x30($sp)
-/* 091D64 7F05D234 0FC32EBD */  jal   sub_GAME_7F0CBAF4
+/* 091D64 7F05D234 0FC32EBD */  jal   texInitPool
 /* 091D68 7F05D238 AFA90034 */   sw    $t1, 0x34($sp)
 /* 091D6C 7F05D23C 8FA30030 */  lw    $v1, 0x30($sp)
 /* 091D70 7F05D240 8E020000 */  lw    $v0, ($s0)
@@ -1828,7 +1828,7 @@ glabel used_to_load_1st_person_model_on_demand
 /* 091DCC 7F05D29C AFA8002C */  sw    $t0, 0x2c($sp)
 /* 091DD0 7F05D2A0 AFA90034 */  sw    $t1, 0x34($sp)
 /* 091DD4 7F05D2A4 00E23023 */  subu  $a2, $a3, $v0
-/* 091DD8 7F05D2A8 0FC32EBD */  jal   sub_GAME_7F0CBAF4
+/* 091DD8 7F05D2A8 0FC32EBD */  jal   texInitPool
 /* 091DDC 7F05D2AC 00582821 */   addu  $a1, $v0, $t8
 /* 091DE0 7F05D2B0 8FA30030 */  lw    $v1, 0x30($sp)
 /* 091DE4 7F05D2B4 8E020000 */  lw    $v0, ($s0)
@@ -1950,7 +1950,7 @@ glabel used_to_load_1st_person_model_on_demand
 /* 090050 7F05D660 24840848 */  addiu $a0, $a0, 0x848
 /* 090054 7F05D664 00413021 */  addu  $a2, $v0, $at
 /* 090058 7F05D668 AFA30030 */  sw    $v1, 0x30($sp)
-/* 09005C 7F05D66C 0FC32C05 */  jal   sub_GAME_7F0CBAF4
+/* 09005C 7F05D66C 0FC32C05 */  jal   texInitPool
 /* 090060 7F05D670 AFA90034 */   sw    $t1, 0x34($sp)
 /* 090064 7F05D674 8FA30030 */  lw    $v1, 0x30($sp)
 /* 090068 7F05D678 8E020000 */  lw    $v0, ($s0)
@@ -1984,7 +1984,7 @@ glabel used_to_load_1st_person_model_on_demand
 /* 0900D0 7F05D6E0 24840848 */  addiu $a0, $a0, 0x848
 /* 0900D4 7F05D6E4 00E13021 */  addu  $a2, $a3, $at
 /* 0900D8 7F05D6E8 AFA30030 */  sw    $v1, 0x30($sp)
-/* 0900DC 7F05D6EC 0FC32C05 */  jal   sub_GAME_7F0CBAF4
+/* 0900DC 7F05D6EC 0FC32C05 */  jal   texInitPool
 /* 0900E0 7F05D6F0 AFA90034 */   sw    $t1, 0x34($sp)
 /* 0900E4 7F05D6F4 8FA30030 */  lw    $v1, 0x30($sp)
 /* 0900E8 7F05D6F8 8E020000 */  lw    $v0, ($s0)
@@ -2014,7 +2014,7 @@ glabel used_to_load_1st_person_model_on_demand
 /* 090144 7F05D754 AFA8002C */  sw    $t0, 0x2c($sp)
 /* 090148 7F05D758 AFA90034 */  sw    $t1, 0x34($sp)
 /* 09014C 7F05D75C 00E23023 */  subu  $a2, $a3, $v0
-/* 090150 7F05D760 0FC32C05 */  jal   sub_GAME_7F0CBAF4
+/* 090150 7F05D760 0FC32C05 */  jal   texInitPool
 /* 090154 7F05D764 00582821 */   addu  $a1, $v0, $t8
 /* 090158 7F05D768 8FA30030 */  lw    $v1, 0x30($sp)
 /* 09015C 7F05D76C 8E020000 */  lw    $v0, ($s0)

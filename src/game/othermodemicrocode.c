@@ -512,7 +512,7 @@ glabel likely_generate_DL_for_image_declaration
 /* 0AB990 7F076E60 3C018000 */  lui   $at, 0x8000
 /* 0AB994 7F076E64 00411825 */  or    $v1, $v0, $at
 /* 0AB998 7F076E68 9464FFF8 */  lhu   $a0, -8($v1)
-/* 0AB99C 7F076E6C 0FC32EC3 */  jal   sub_GAME_7F0CBB0C
+/* 0AB99C 7F076E6C 0FC32EC3 */  jal   texFindInPool
 /* 0AB9A0 7F076E70 00002825 */   move  $a1, $zero
 /* 0AB9A4 7F076E74 92E30006 */  lbu   $v1, 6($s7)
 /* 0AB9A8 7F076E78 0040B025 */  move  $s6, $v0
