@@ -2638,7 +2638,7 @@ void texLoad(s32 *updateword, struct texpool *pool)
         thisoffset = *((s32*)&g_Textures[g_TexNumToLoad]) & 0xFFFFFF;
         nextoffset = (*((s32 *) (&g_Textures[g_TexNumToLoad + 1]))) & ((unsigned long) 0xFFFFFF);
 
-        if(1)
+        if (TRUE)
         {
             // Copy the compressed texture to RAM
             romCopy(alignedcompbuffer,
