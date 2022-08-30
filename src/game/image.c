@@ -5,6 +5,7 @@
 #include <assets/image_externs.h>
 #include <PR/R4300.h>
 #include "ramrom.h"
+#include "decompress.h"
 
 // bss
 //8008C720
@@ -112,26 +113,40 @@ void nullsub_41(s32 arg0) {
 }
 
 
-#ifdef NONMATCHING
-
-u32 decompressdata(void *src, void *dst, void *hlist);
-s32 rzipGetSomething(void) ;
-s32 sub_GAME_7F0C6C70(u8 *src, u8 *dst, s32 srcwidth, s32 srcheight, s32 format, u16 *palette, s32 numcolours);
-s32 texAlignIndices(u8 *src, s32 width, s32 height, s32 format, u8 *dst);
-u32 texReadBits(s32 bitCount);
-void texSetBitstring(s32 pos);
-
-// close to matching: 98.70%, regalloc problems
-
+/**
+ * Inflate images (levels of detail) from a zlib-compressed texture.
+ *
+ * Zlib-compressed textures are always paletted and always use 16-bit colours.
+ * The texture header contains palette information, then each image follows with
+ * its own header and zlib compresed data.
+ *
+ * The texture header is:
+ *
+ * ffffffff nnnnnnnn [palette]
+ *
+ * f = pixel format (see TEXFORMAT constants)
+ * n = number of colours in the palette minus 1
+ * [palette] = 16 bits * number of colours
+ *
+ * Each images's header is:
+ *
+ * wwwwwwww hhhhhhhh [data]
+ *
+ * w = width in pixels
+ * h = height in pixels
+ * [data] = zlib compressed list of indices into the palette
+ *
+ * The zlib data is prefixed with the standard 5-byte rarezip header.
+ */
 s32 texInflateZlib(u8 *src, u8 *dst, s32 arg2, s32 forcenumimages, struct texturething *arg4)
 {
     s32 i;
     s32 imagebytesout;
     s32 numimages;
-    bool writetocache;
+    s32 totalbytesout;
     s32 format;
     bool foundthething;
-    s32 totalbytesout;
+    bool writetocache;
     s32 width;
     s32 height;
     u8 *end;
@@ -143,8 +158,8 @@ s32 texInflateZlib(u8 *src, u8 *dst, s32 arg2, s32 forcenumimages, struct textur
     u8 scratch[0x2100];
     u16 palette[0x100];
 
-    writetocache = FALSE;
     totalbytesout = 0;
+    writetocache = FALSE;
 
     texSetBitstring(src);
 
@@ -205,10 +220,10 @@ s32 texInflateZlib(u8 *src, u8 *dst, s32 arg2, s32 forcenumimages, struct textur
 
         if ((width * height) >= 4097)
         {
-            return 0;
+            return j * 0;
         }
 
-        decompressdata(img_curpos, &scratch2, &scratch);
+        decompressdata(img_curpos, &scratch2, (struct huft *)&scratch);
         imagebytesout = texAlignIndices(scratch2, width, height, format, &dst[totalbytesout]);
         texSetBitstring(rzipGetSomething());
 
@@ -263,6 +278,7 @@ s32 texInflateZlib(u8 *src, u8 *dst, s32 arg2, s32 forcenumimages, struct textur
 
                 start = end;
                 end += imagebytesout;
+                if (1);
             }
 
             texSwapAltRowBytes(start, tmpwidth, tmpheight, format);
@@ -275,6 +291,7 @@ s32 texInflateZlib(u8 *src, u8 *dst, s32 arg2, s32 forcenumimages, struct textur
 
     for (i = 0; i < numcolours; i++)
     {
+        if ((!totalbytesout) && (!totalbytesout));
         dst[totalbytesout + 0] = palette[i] >> 8;
         dst[totalbytesout + 1] = palette[i] & 0xff;
         totalbytesout += 2;
@@ -284,387 +301,6 @@ s32 texInflateZlib(u8 *src, u8 *dst, s32 arg2, s32 forcenumimages, struct textur
 
     return totalbytesout;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel texInflateZlib
-/* 0FB188 7F0C6658 27BDD458 */  addiu $sp, $sp, -0x2ba8
-/* 0FB18C 7F0C665C AFBF004C */  sw    $ra, 0x4c($sp)
-/* 0FB190 7F0C6660 AFB5003C */  sw    $s5, 0x3c($sp)
-/* 0FB194 7F0C6664 AFB1002C */  sw    $s1, 0x2c($sp)
-/* 0FB198 7F0C6668 AFBE0048 */  sw    $fp, 0x48($sp)
-/* 0FB19C 7F0C666C AFB70044 */  sw    $s7, 0x44($sp)
-/* 0FB1A0 7F0C6670 AFB60040 */  sw    $s6, 0x40($sp)
-/* 0FB1A4 7F0C6674 AFB40038 */  sw    $s4, 0x38($sp)
-/* 0FB1A8 7F0C6678 AFB30034 */  sw    $s3, 0x34($sp)
-/* 0FB1AC 7F0C667C AFB20030 */  sw    $s2, 0x30($sp)
-/* 0FB1B0 7F0C6680 AFB00028 */  sw    $s0, 0x28($sp)
-/* 0FB1B4 7F0C6684 AFA52BAC */  sw    $a1, 0x2bac($sp)
-/* 0FB1B8 7F0C6688 AFA62BB0 */  sw    $a2, 0x2bb0($sp)
-/* 0FB1BC 7F0C668C AFA72BB4 */  sw    $a3, 0x2bb4($sp)
-/* 0FB1C0 7F0C6690 00008825 */  move  $s1, $zero
-/* 0FB1C4 7F0C6694 0FC32FC4 */  jal   texSetBitstring
-/* 0FB1C8 7F0C6698 0000A825 */   move  $s5, $zero
-/* 0FB1CC 7F0C669C 8FA62BB0 */  lw    $a2, 0x2bb0($sp)
-/* 0FB1D0 7F0C66A0 8FA72BB4 */  lw    $a3, 0x2bb4($sp)
-/* 0FB1D4 7F0C66A4 00004025 */  move  $t0, $zero
-/* 0FB1D8 7F0C66A8 50C00006 */  beql  $a2, $zero, .L7F0C66C4
-/* 0FB1DC 7F0C66AC 240E0001 */   li    $t6, 1
-/* 0FB1E0 7F0C66B0 50E00004 */  beql  $a3, $zero, .L7F0C66C4
-/* 0FB1E4 7F0C66B4 240E0001 */   li    $t6, 1
-/* 0FB1E8 7F0C66B8 10000004 */  b     .L7F0C66CC
-/* 0FB1EC 7F0C66BC AFA72B9C */   sw    $a3, 0x2b9c($sp)
-/* 0FB1F0 7F0C66C0 240E0001 */  li    $t6, 1
-.L7F0C66C4:
-/* 0FB1F4 7F0C66C4 8FA72BB4 */  lw    $a3, 0x2bb4($sp)
-/* 0FB1F8 7F0C66C8 AFAE2B9C */  sw    $t6, 0x2b9c($sp)
-.L7F0C66CC:
-/* 0FB1FC 7F0C66CC 8FBE2BB8 */  lw    $fp, 0x2bb8($sp)
-/* 0FB200 7F0C66D0 0007C940 */  sll   $t9, $a3, 5
-/* 0FB204 7F0C66D4 00066940 */  sll   $t5, $a2, 5
-/* 0FB208 7F0C66D8 8FC3000C */  lw    $v1, 0xc($fp)
-/* 0FB20C 7F0C66DC 31AE0020 */  andi  $t6, $t5, 0x20
-/* 0FB210 7F0C66E0 3C058009 */  lui   $a1, %hi(g_TexCacheCount)
-/* 0FB214 7F0C66E4 9069000B */  lbu   $t1, 0xb($v1)
-/* 0FB218 7F0C66E8 312AFF1F */  andi  $t2, $t1, 0xff1f
-/* 0FB21C 7F0C66EC 032A5825 */  or    $t3, $t9, $t2
-/* 0FB220 7F0C66F0 A06B000B */  sb    $t3, 0xb($v1)
-/* 0FB224 7F0C66F4 8FC3000C */  lw    $v1, 0xc($fp)
-/* 0FB228 7F0C66F8 906F000C */  lbu   $t7, 0xc($v1)
-/* 0FB22C 7F0C66FC 31F8FFDF */  andi  $t8, $t7, 0xffdf
-/* 0FB230 7F0C6700 01D84825 */  or    $t1, $t6, $t8
-/* 0FB234 7F0C6704 10C00015 */  beqz  $a2, .L7F0C675C
-/* 0FB238 7F0C6708 A069000C */   sb    $t1, 0xc($v1)
-/* 0FB23C 7F0C670C 8CA5D090 */  lw    $a1, %lo(g_TexCacheCount)($a1)
-/* 0FB240 7F0C6710 24150001 */  li    $s5, 1
-/* 0FB244 7F0C6714 18A00011 */  blez  $a1, .L7F0C675C
-/* 0FB248 7F0C6718 00000000 */   nop   
-/* 0FB24C 7F0C671C 8FD9000C */  lw    $t9, 0xc($fp)
-/* 0FB250 7F0C6720 3C0B8009 */  lui   $t3, %hi(g_TexCacheItems)
-/* 0FB254 7F0C6724 2562C730 */  addiu $v0, $t3, %lo(g_TexCacheItems)
-/* 0FB258 7F0C6728 8F230000 */  lw    $v1, ($t9)
-/* 0FB25C 7F0C672C 00056100 */  sll   $t4, $a1, 4
-/* 0FB260 7F0C6730 01822021 */  addu  $a0, $t4, $v0
-/* 0FB264 7F0C6734 00035502 */  srl   $t2, $v1, 0x14
-/* 0FB268 7F0C6738 01401825 */  move  $v1, $t2
-/* 0FB26C 7F0C673C 844D0000 */  lh    $t5, ($v0)
-.L7F0C6740:
-/* 0FB270 7F0C6740 24420010 */  addiu $v0, $v0, 0x10
-/* 0FB274 7F0C6744 0044082B */  sltu  $at, $v0, $a0
-/* 0FB278 7F0C6748 146D0002 */  bne   $v1, $t5, .L7F0C6754
-/* 0FB27C 7F0C674C 00000000 */   nop   
-/* 0FB280 7F0C6750 0000A825 */  move  $s5, $zero
-.L7F0C6754:
-/* 0FB284 7F0C6754 5420FFFA */  bnezl $at, .L7F0C6740
-/* 0FB288 7F0C6758 844D0000 */   lh    $t5, ($v0)
-.L7F0C675C:
-/* 0FB28C 7F0C675C 0FC32FCB */  jal   texReadBits
-/* 0FB290 7F0C6760 24040008 */   li    $a0, 8
-/* 0FB294 7F0C6764 AFA22B94 */  sw    $v0, 0x2b94($sp)
-/* 0FB298 7F0C6768 0FC32FCB */  jal   texReadBits
-/* 0FB29C 7F0C676C 24040008 */   li    $a0, 8
-/* 0FB2A0 7F0C6770 24430001 */  addiu $v1, $v0, 1
-/* 0FB2A4 7F0C6774 1860000D */  blez  $v1, .L7F0C67AC
-/* 0FB2A8 7F0C6778 AFA32B78 */   sw    $v1, 0x2b78($sp)
-/* 0FB2AC 7F0C677C 8FAE2B78 */  lw    $t6, 0x2b78($sp)
-/* 0FB2B0 7F0C6780 27A30070 */  addiu $v1, $sp, 0x70
-/* 0FB2B4 7F0C6784 000EC040 */  sll   $t8, $t6, 1
-/* 0FB2B8 7F0C6788 03038021 */  addu  $s0, $t8, $v1
-.L7F0C678C:
-/* 0FB2BC 7F0C678C 24040010 */  li    $a0, 16
-/* 0FB2C0 7F0C6790 0FC32FCB */  jal   texReadBits
-/* 0FB2C4 7F0C6794 AFA3005C */   sw    $v1, 0x5c($sp)
-/* 0FB2C8 7F0C6798 8FA3005C */  lw    $v1, 0x5c($sp)
-/* 0FB2CC 7F0C679C 24630002 */  addiu $v1, $v1, 2
-/* 0FB2D0 7F0C67A0 0070082B */  sltu  $at, $v1, $s0
-/* 0FB2D4 7F0C67A4 1420FFF9 */  bnez  $at, .L7F0C678C
-/* 0FB2D8 7F0C67A8 A462FFFE */   sh    $v0, -2($v1)
-.L7F0C67AC:
-/* 0FB2DC 7F0C67AC 8FA92B9C */  lw    $t1, 0x2b9c($sp)
-/* 0FB2E0 7F0C67B0 3C178005 */  lui   $s7, %hi(g_TexFormatGbiMappings) 
-/* 0FB2E4 7F0C67B4 26F79248 */  addiu $s7, %lo(g_TexFormatGbiMappings) # addiu $s7, $s7, -0x6db8
-/* 0FB2E8 7F0C67B8 19200064 */  blez  $t1, .L7F0C694C
-/* 0FB2EC 7F0C67BC 00009825 */   move  $s3, $zero
-/* 0FB2F0 7F0C67C0 27B42370 */  addiu $s4, $sp, 0x2370
-.L7F0C67C4:
-/* 0FB2F4 7F0C67C4 0FC32FCB */  jal   texReadBits
-/* 0FB2F8 7F0C67C8 24040008 */   li    $a0, 8
-/* 0FB2FC 7F0C67CC 0040B025 */  move  $s6, $v0
-/* 0FB300 7F0C67D0 0FC32FCB */  jal   texReadBits
-/* 0FB304 7F0C67D4 24040008 */   li    $a0, 8
-/* 0FB308 7F0C67D8 16600029 */  bnez  $s3, .L7F0C6880
-/* 0FB30C 7F0C67DC AFA22B84 */   sw    $v0, 0x2b84($sp)
-/* 0FB310 7F0C67E0 8FD9000C */  lw    $t9, 0xc($fp)
-/* 0FB314 7F0C67E4 A3360008 */  sb    $s6, 8($t9)
-/* 0FB318 7F0C67E8 8FCA000C */  lw    $t2, 0xc($fp)
-/* 0FB31C 7F0C67EC A1420009 */  sb    $v0, 9($t2)
-/* 0FB320 7F0C67F0 8FAC2B78 */  lw    $t4, 0x2b78($sp)
-/* 0FB324 7F0C67F4 8FCD000C */  lw    $t5, 0xc($fp)
-/* 0FB328 7F0C67F8 258BFFFF */  addiu $t3, $t4, -1
-/* 0FB32C 7F0C67FC A1AB000A */  sb    $t3, 0xa($t5)
-/* 0FB330 7F0C6800 8FA42B94 */  lw    $a0, 0x2b94($sp)
-/* 0FB334 7F0C6804 8FC3000C */  lw    $v1, 0xc($fp)
-/* 0FB338 7F0C6808 00047080 */  sll   $t6, $a0, 2
-/* 0FB33C 7F0C680C 02EEC021 */  addu  $t8, $s7, $t6
-/* 0FB340 7F0C6810 8F090000 */  lw    $t1, ($t8)
-/* 0FB344 7F0C6814 906C000B */  lbu   $t4, 0xb($v1)
-/* 0FB348 7F0C6818 01C02025 */  move  $a0, $t6
-/* 0FB34C 7F0C681C 0009C880 */  sll   $t9, $t1, 2
-/* 0FB350 7F0C6820 332A001C */  andi  $t2, $t9, 0x1c
-/* 0FB354 7F0C6824 318BFFE3 */  andi  $t3, $t4, 0xffe3
-/* 0FB358 7F0C6828 014B6825 */  or    $t5, $t2, $t3
-/* 0FB35C 7F0C682C A06D000B */  sb    $t5, 0xb($v1)
-/* 0FB360 7F0C6830 8FC3000C */  lw    $v1, 0xc($fp)
-/* 0FB364 7F0C6834 3C0E8005 */  lui   $t6, %hi(g_TexFormatDepths)
-/* 0FB368 7F0C6838 01C47021 */  addu  $t6, $t6, $a0
-/* 0FB36C 7F0C683C 8DD8927C */  lw    $t8, %lo(g_TexFormatDepths)($t6)
-/* 0FB370 7F0C6840 9069000B */  lbu   $t1, 0xb($v1)
-/* 0FB374 7F0C6844 3C0A8005 */  lui   $t2, %hi(g_TexFormatLutModes)
-/* 0FB378 7F0C6848 330F0003 */  andi  $t7, $t8, 3
-/* 0FB37C 7F0C684C 3139FFFC */  andi  $t9, $t1, 0xfffc
-/* 0FB380 7F0C6850 01F96025 */  or    $t4, $t7, $t9
-/* 0FB384 7F0C6854 A06C000B */  sb    $t4, 0xb($v1)
-/* 0FB388 7F0C6858 8FC3000C */  lw    $v1, 0xc($fp)
-/* 0FB38C 7F0C685C 01445021 */  addu  $t2, $t2, $a0
-/* 0FB390 7F0C6860 8D4A92B0 */  lw    $t2, %lo(g_TexFormatLutModes)($t2)
-/* 0FB394 7F0C6864 9069000C */  lbu   $t1, 0xc($v1)
-/* 0FB398 7F0C6868 000A6B83 */  sra   $t5, $t2, 0xe
-/* 0FB39C 7F0C686C 000DC180 */  sll   $t8, $t5, 6
-/* 0FB3A0 7F0C6870 312FFF3F */  andi  $t7, $t1, 0xff3f
-/* 0FB3A4 7F0C6874 030FC825 */  or    $t9, $t8, $t7
-/* 0FB3A8 7F0C6878 1000000B */  b     .L7F0C68A8
-/* 0FB3AC 7F0C687C A079000C */   sb    $t9, 0xc($v1)
-.L7F0C6880:
-/* 0FB3B0 7F0C6880 12A00009 */  beqz  $s5, .L7F0C68A8
-/* 0FB3B4 7F0C6884 3C0C8009 */   lui   $t4, %hi(g_TexCacheCount) 
-/* 0FB3B8 7F0C6888 8D8CD090 */  lw    $t4, %lo(g_TexCacheCount)($t4)
-/* 0FB3BC 7F0C688C 3C0D8009 */  lui   $t5, %hi(g_TexCacheItems) 
-/* 0FB3C0 7F0C6890 25ADC730 */  addiu $t5, %lo(g_TexCacheItems) # addiu $t5, $t5, -0x38d0
-/* 0FB3C4 7F0C6894 000C5100 */  sll   $t2, $t4, 4
-/* 0FB3C8 7F0C6898 01535821 */  addu  $t3, $t2, $s3
-/* 0FB3CC 7F0C689C 016D1821 */  addu  $v1, $t3, $t5
-/* 0FB3D0 7F0C68A0 A0760001 */  sb    $s6, 1($v1)
-/* 0FB3D4 7F0C68A4 A0620008 */  sb    $v0, 8($v1)
-.L7F0C68A8:
-/* 0FB3D8 7F0C68A8 02C20019 */  multu $s6, $v0
-/* 0FB3DC 7F0C68AC 3C048009 */  lui   $a0, %hi(img_curpos)
-/* 0FB3E0 7F0C68B0 02802825 */  move  $a1, $s4
-/* 0FB3E4 7F0C68B4 27A60270 */  addiu $a2, $sp, 0x270
-/* 0FB3E8 7F0C68B8 00007012 */  mflo  $t6
-/* 0FB3EC 7F0C68BC 29C11001 */  slti  $at, $t6, 0x1001
-/* 0FB3F0 7F0C68C0 14200003 */  bnez  $at, .L7F0C68D0
-/* 0FB3F4 7F0C68C4 00000000 */   nop   
-/* 0FB3F8 7F0C68C8 100000B3 */  b     .L7F0C6B98
-/* 0FB3FC 7F0C68CC 00001025 */   move  $v0, $zero
-.L7F0C68D0:
-/* 0FB400 7F0C68D0 0FC339FC */  jal   decompressdata
-/* 0FB404 7F0C68D4 8C84D0A0 */   lw    $a0, %lo(img_curpos)($a0)
-/* 0FB408 7F0C68D8 8FA92BAC */  lw    $t1, 0x2bac($sp)
-/* 0FB40C 7F0C68DC 02802025 */  move  $a0, $s4
-/* 0FB410 7F0C68E0 02C02825 */  move  $a1, $s6
-/* 0FB414 7F0C68E4 01318021 */  addu  $s0, $t1, $s1
-/* 0FB418 7F0C68E8 AFB00010 */  sw    $s0, 0x10($sp)
-/* 0FB41C 7F0C68EC 8FA62B84 */  lw    $a2, 0x2b84($sp)
-/* 0FB420 7F0C68F0 0FC31AF2 */  jal   texAlignIndices
-/* 0FB424 7F0C68F4 8FA72B94 */   lw    $a3, 0x2b94($sp)
-/* 0FB428 7F0C68F8 0FC33A25 */  jal   rzipGetSomething
-/* 0FB42C 7F0C68FC 00409025 */   move  $s2, $v0
-/* 0FB430 7F0C6900 0FC32FC4 */  jal   texSetBitstring
-/* 0FB434 7F0C6904 00402025 */   move  $a0, $v0
-/* 0FB438 7F0C6908 8FB82BB0 */  lw    $t8, 0x2bb0($sp)
-/* 0FB43C 7F0C690C 24010001 */  li    $at, 1
-/* 0FB440 7F0C6910 8FAF2BB4 */  lw    $t7, 0x2bb4($sp)
-/* 0FB444 7F0C6914 57010008 */  bnel  $t8, $at, .L7F0C6938
-/* 0FB448 7F0C6918 8FB92B9C */   lw    $t9, 0x2b9c($sp)
-/* 0FB44C 7F0C691C 19E00005 */  blez  $t7, .L7F0C6934
-/* 0FB450 7F0C6920 02002025 */   move  $a0, $s0
-/* 0FB454 7F0C6924 02C02825 */  move  $a1, $s6
-/* 0FB458 7F0C6928 8FA62B84 */  lw    $a2, 0x2b84($sp)
-/* 0FB45C 7F0C692C 0FC32D9F */  jal   texSwapAltRowBytes
-/* 0FB460 7F0C6930 8FA72B94 */   lw    $a3, 0x2b94($sp)
-.L7F0C6934:
-/* 0FB464 7F0C6934 8FB92B9C */  lw    $t9, 0x2b9c($sp)
-.L7F0C6938:
-/* 0FB468 7F0C6938 26730001 */  addiu $s3, $s3, 1
-/* 0FB46C 7F0C693C 02328821 */  addu  $s1, $s1, $s2
-/* 0FB470 7F0C6940 1679FFA0 */  bne   $s3, $t9, .L7F0C67C4
-/* 0FB474 7F0C6944 00000000 */   nop   
-/* 0FB478 7F0C6948 AFB62B88 */  sw    $s6, 0x2b88($sp)
-.L7F0C694C:
-/* 0FB47C 7F0C694C 8FB62B88 */  lw    $s6, 0x2b88($sp)
-/* 0FB480 7F0C6950 12A00010 */  beqz  $s5, .L7F0C6994
-/* 0FB484 7F0C6954 00004025 */   move  $t0, $zero
-/* 0FB488 7F0C6958 8FCC000C */  lw    $t4, 0xc($fp)
-/* 0FB48C 7F0C695C 3C028009 */  lui   $v0, %hi(g_TexCacheCount)
-/* 0FB490 7F0C6960 2442D090 */  addiu $v0, %lo(g_TexCacheCount) # addiu $v0, $v0, -0x2f70
-/* 0FB494 7F0C6964 8C450000 */  lw    $a1, ($v0)
-/* 0FB498 7F0C6968 8D8A0000 */  lw    $t2, ($t4)
-/* 0FB49C 7F0C696C 3C018009 */  lui   $at, %hi(g_TexCacheItems)
-/* 0FB4A0 7F0C6970 00056900 */  sll   $t5, $a1, 4
-/* 0FB4A4 7F0C6974 002D0821 */  addu  $at, $at, $t5
-/* 0FB4A8 7F0C6978 000A5D02 */  srl   $t3, $t2, 0x14
-/* 0FB4AC 7F0C697C A42BC730 */  sh    $t3, %lo(g_TexCacheItems)($at)
-/* 0FB4B0 7F0C6980 24AE0001 */  addiu $t6, $a1, 1
-/* 0FB4B4 7F0C6984 29C10096 */  slti  $at, $t6, 0x96
-/* 0FB4B8 7F0C6988 14200002 */  bnez  $at, .L7F0C6994
-/* 0FB4BC 7F0C698C AC4E0000 */   sw    $t6, ($v0)
-/* 0FB4C0 7F0C6990 AC400000 */  sw    $zero, ($v0)
-.L7F0C6994:
-/* 0FB4C4 7F0C6994 8FB82BB0 */  lw    $t8, 0x2bb0($sp)
-/* 0FB4C8 7F0C6998 8FAF2BB4 */  lw    $t7, 0x2bb4($sp)
-/* 0FB4CC 7F0C699C 17000046 */  bnez  $t8, .L7F0C6AB8
-/* 0FB4D0 7F0C69A0 29F90002 */   slti  $t9, $t7, 2
-/* 0FB4D4 7F0C69A4 3B390001 */  xori  $t9, $t9, 1
-/* 0FB4D8 7F0C69A8 1320003A */  beqz  $t9, .L7F0C6A94
-/* 0FB4DC 7F0C69AC 8FAE2BB4 */   lw    $t6, 0x2bb4($sp)
-/* 0FB4E0 7F0C69B0 8FB72BAC */  lw    $s7, 0x2bac($sp)
-/* 0FB4E4 7F0C69B4 02C0A025 */  move  $s4, $s6
-/* 0FB4E8 7F0C69B8 8FB52B84 */  lw    $s5, 0x2b84($sp)
-/* 0FB4EC 7F0C69BC 24130001 */  li    $s3, 1
-/* 0FB4F0 7F0C69C0 1320002C */  beqz  $t9, .L7F0C6A74
-/* 0FB4F4 7F0C69C4 02F18021 */   addu  $s0, $s7, $s1
-/* 0FB4F8 7F0C69C8 27B60070 */  addiu $s6, $sp, 0x70
-.L7F0C69CC:
-/* 0FB4FC 7F0C69CC 8FAA2B94 */  lw    $t2, 0x2b94($sp)
-/* 0FB500 7F0C69D0 8FAB2B78 */  lw    $t3, 0x2b78($sp)
-/* 0FB504 7F0C69D4 02E02025 */  move  $a0, $s7
-/* 0FB508 7F0C69D8 02002825 */  move  $a1, $s0
-/* 0FB50C 7F0C69DC 02803025 */  move  $a2, $s4
-/* 0FB510 7F0C69E0 02A03825 */  move  $a3, $s5
-/* 0FB514 7F0C69E4 AFB60014 */  sw    $s6, 0x14($sp)
-/* 0FB518 7F0C69E8 AFA82BA4 */  sw    $t0, 0x2ba4($sp)
-/* 0FB51C 7F0C69EC AFAA0010 */  sw    $t2, 0x10($sp)
-/* 0FB520 7F0C69F0 0FC31B1C */  jal   sub_GAME_7F0C6C70
-/* 0FB524 7F0C69F4 AFAB0018 */   sw    $t3, 0x18($sp)
-/* 0FB528 7F0C69F8 02226821 */  addu  $t5, $s1, $v0
-/* 0FB52C 7F0C69FC 29A10801 */  slti  $at, $t5, 0x801
-/* 0FB530 7F0C6A00 8FA82BA4 */  lw    $t0, 0x2ba4($sp)
-/* 0FB534 7F0C6A04 14200008 */  bnez  $at, .L7F0C6A28
-/* 0FB538 7F0C6A08 00409025 */   move  $s2, $v0
-/* 0FB53C 7F0C6A0C 8FC3000C */  lw    $v1, 0xc($fp)
-/* 0FB540 7F0C6A10 0013C140 */  sll   $t8, $s3, 5
-/* 0FB544 7F0C6A14 906F000B */  lbu   $t7, 0xb($v1)
-/* 0FB548 7F0C6A18 31ECFF1F */  andi  $t4, $t7, 0xff1f
-/* 0FB54C 7F0C6A1C 030CC825 */  or    $t9, $t8, $t4
-/* 0FB550 7F0C6A20 10000014 */  b     .L7F0C6A74
-/* 0FB554 7F0C6A24 A079000B */   sb    $t9, 0xb($v1)
-.L7F0C6A28:
-/* 0FB558 7F0C6A28 02E02025 */  move  $a0, $s7
-/* 0FB55C 7F0C6A2C 02802825 */  move  $a1, $s4
-/* 0FB560 7F0C6A30 02A03025 */  move  $a2, $s5
-/* 0FB564 7F0C6A34 8FA72B94 */  lw    $a3, 0x2b94($sp)
-/* 0FB568 7F0C6A38 0FC32D9F */  jal   texSwapAltRowBytes
-/* 0FB56C 7F0C6A3C AFA82BA4 */   sw    $t0, 0x2ba4($sp)
-/* 0FB570 7F0C6A40 8FAD2BB4 */  lw    $t5, 0x2bb4($sp)
-/* 0FB574 7F0C6A44 26940001 */  addiu $s4, $s4, 1
-/* 0FB578 7F0C6A48 26B50001 */  addiu $s5, $s5, 1
-/* 0FB57C 7F0C6A4C 26730001 */  addiu $s3, $s3, 1
-/* 0FB580 7F0C6A50 00145043 */  sra   $t2, $s4, 1
-/* 0FB584 7F0C6A54 00155843 */  sra   $t3, $s5, 1
-/* 0FB588 7F0C6A58 0200B825 */  move  $s7, $s0
-/* 0FB58C 7F0C6A5C 8FA82BA4 */  lw    $t0, 0x2ba4($sp)
-/* 0FB590 7F0C6A60 02328821 */  addu  $s1, $s1, $s2
-/* 0FB594 7F0C6A64 0140A025 */  move  $s4, $t2
-/* 0FB598 7F0C6A68 0160A825 */  move  $s5, $t3
-/* 0FB59C 7F0C6A6C 166DFFD7 */  bne   $s3, $t5, .L7F0C69CC
-/* 0FB5A0 7F0C6A70 02128021 */   addu  $s0, $s0, $s2
-.L7F0C6A74:
-/* 0FB5A4 7F0C6A74 02E02025 */  move  $a0, $s7
-/* 0FB5A8 7F0C6A78 02802825 */  move  $a1, $s4
-/* 0FB5AC 7F0C6A7C 02A03025 */  move  $a2, $s5
-/* 0FB5B0 7F0C6A80 8FA72B94 */  lw    $a3, 0x2b94($sp)
-/* 0FB5B4 7F0C6A84 0FC32D9F */  jal   texSwapAltRowBytes
-/* 0FB5B8 7F0C6A88 AFA82BA4 */   sw    $t0, 0x2ba4($sp)
-/* 0FB5BC 7F0C6A8C 1000000A */  b     .L7F0C6AB8
-/* 0FB5C0 7F0C6A90 8FA82BA4 */   lw    $t0, 0x2ba4($sp)
-.L7F0C6A94:
-/* 0FB5C4 7F0C6A94 24010001 */  li    $at, 1
-/* 0FB5C8 7F0C6A98 15C10007 */  bne   $t6, $at, .L7F0C6AB8
-/* 0FB5CC 7F0C6A9C 8FA42BAC */   lw    $a0, 0x2bac($sp)
-/* 0FB5D0 7F0C6AA0 02C02825 */  move  $a1, $s6
-/* 0FB5D4 7F0C6AA4 8FA62B84 */  lw    $a2, 0x2b84($sp)
-/* 0FB5D8 7F0C6AA8 8FA72B94 */  lw    $a3, 0x2b94($sp)
-/* 0FB5DC 7F0C6AAC 0FC32D9F */  jal   texSwapAltRowBytes
-/* 0FB5E0 7F0C6AB0 AFA82BA4 */   sw    $t0, 0x2ba4($sp)
-/* 0FB5E4 7F0C6AB4 8FA82BA4 */  lw    $t0, 0x2ba4($sp)
-.L7F0C6AB8:
-/* 0FB5E8 7F0C6AB8 8FA92B78 */  lw    $t1, 0x2b78($sp)
-/* 0FB5EC 7F0C6ABC 8FAF2BAC */  lw    $t7, 0x2bac($sp)
-/* 0FB5F0 7F0C6AC0 2401FFF8 */  li    $at, -8
-/* 0FB5F4 7F0C6AC4 19200032 */  blez  $t1, .L7F0C6B90
-/* 0FB5F8 7F0C6AC8 31240003 */   andi  $a0, $t1, 3
-/* 0FB5FC 7F0C6ACC 10800012 */  beqz  $a0, .L7F0C6B18
-/* 0FB600 7F0C6AD0 01F18021 */   addu  $s0, $t7, $s1
-/* 0FB604 7F0C6AD4 0008C040 */  sll   $t8, $t0, 1
-/* 0FB608 7F0C6AD8 27AC0070 */  addiu $t4, $sp, 0x70
-/* 0FB60C 7F0C6ADC 030C1821 */  addu  $v1, $t8, $t4
-/* 0FB610 7F0C6AE0 00801025 */  move  $v0, $a0
-.L7F0C6AE4:
-/* 0FB614 7F0C6AE4 94790000 */  lhu   $t9, ($v1)
-/* 0FB618 7F0C6AE8 25080001 */  addiu $t0, $t0, 1
-/* 0FB61C 7F0C6AEC 26310002 */  addiu $s1, $s1, 2
-/* 0FB620 7F0C6AF0 00195203 */  sra   $t2, $t9, 8
-/* 0FB624 7F0C6AF4 A20A0000 */  sb    $t2, ($s0)
-/* 0FB628 7F0C6AF8 946D0000 */  lhu   $t5, ($v1)
-/* 0FB62C 7F0C6AFC 26100002 */  addiu $s0, $s0, 2
-/* 0FB630 7F0C6B00 24630002 */  addiu $v1, $v1, 2
-/* 0FB634 7F0C6B04 1448FFF7 */  bne   $v0, $t0, .L7F0C6AE4
-/* 0FB638 7F0C6B08 A20DFFFF */   sb    $t5, -1($s0)
-/* 0FB63C 7F0C6B0C 8FAE2B78 */  lw    $t6, 0x2b78($sp)
-/* 0FB640 7F0C6B10 510E0020 */  beql  $t0, $t6, .L7F0C6B94
-/* 0FB644 7F0C6B14 26310007 */   addiu $s1, $s1, 7
-.L7F0C6B18:
-/* 0FB648 7F0C6B18 8FB82B78 */  lw    $t8, 0x2b78($sp)
-/* 0FB64C 7F0C6B1C 27A90070 */  addiu $t1, $sp, 0x70
-/* 0FB650 7F0C6B20 00087840 */  sll   $t7, $t0, 1
-/* 0FB654 7F0C6B24 00186040 */  sll   $t4, $t8, 1
-/* 0FB658 7F0C6B28 01891021 */  addu  $v0, $t4, $t1
-/* 0FB65C 7F0C6B2C 01E91821 */  addu  $v1, $t7, $t1
-.L7F0C6B30:
-/* 0FB660 7F0C6B30 94790000 */  lhu   $t9, ($v1)
-/* 0FB664 7F0C6B34 24630008 */  addiu $v1, $v1, 8
-/* 0FB668 7F0C6B38 26310008 */  addiu $s1, $s1, 8
-/* 0FB66C 7F0C6B3C 00195203 */  sra   $t2, $t9, 8
-/* 0FB670 7F0C6B40 A20A0000 */  sb    $t2, ($s0)
-/* 0FB674 7F0C6B44 946DFFF8 */  lhu   $t5, -8($v1)
-/* 0FB678 7F0C6B48 26100008 */  addiu $s0, $s0, 8
-/* 0FB67C 7F0C6B4C A20DFFF9 */  sb    $t5, -7($s0)
-/* 0FB680 7F0C6B50 946EFFFA */  lhu   $t6, -6($v1)
-/* 0FB684 7F0C6B54 000E7A03 */  sra   $t7, $t6, 8
-/* 0FB688 7F0C6B58 A20FFFFA */  sb    $t7, -6($s0)
-/* 0FB68C 7F0C6B5C 946CFFFA */  lhu   $t4, -6($v1)
-/* 0FB690 7F0C6B60 A20CFFFB */  sb    $t4, -5($s0)
-/* 0FB694 7F0C6B64 9469FFFC */  lhu   $t1, -4($v1)
-/* 0FB698 7F0C6B68 0009CA03 */  sra   $t9, $t1, 8
-/* 0FB69C 7F0C6B6C A219FFFC */  sb    $t9, -4($s0)
-/* 0FB6A0 7F0C6B70 946BFFFC */  lhu   $t3, -4($v1)
-/* 0FB6A4 7F0C6B74 A20BFFFD */  sb    $t3, -3($s0)
-/* 0FB6A8 7F0C6B78 946DFFFE */  lhu   $t5, -2($v1)
-/* 0FB6AC 7F0C6B7C 000D7203 */  sra   $t6, $t5, 8
-/* 0FB6B0 7F0C6B80 A20EFFFE */  sb    $t6, -2($s0)
-/* 0FB6B4 7F0C6B84 9478FFFE */  lhu   $t8, -2($v1)
-/* 0FB6B8 7F0C6B88 1462FFE9 */  bne   $v1, $v0, .L7F0C6B30
-/* 0FB6BC 7F0C6B8C A218FFFF */   sb    $t8, -1($s0)
-.L7F0C6B90:
-/* 0FB6C0 7F0C6B90 26310007 */  addiu $s1, $s1, 7
-.L7F0C6B94:
-/* 0FB6C4 7F0C6B94 02211024 */  and   $v0, $s1, $at
-.L7F0C6B98:
-/* 0FB6C8 7F0C6B98 8FBF004C */  lw    $ra, 0x4c($sp)
-/* 0FB6CC 7F0C6B9C 8FB00028 */  lw    $s0, 0x28($sp)
-/* 0FB6D0 7F0C6BA0 8FB1002C */  lw    $s1, 0x2c($sp)
-/* 0FB6D4 7F0C6BA4 8FB20030 */  lw    $s2, 0x30($sp)
-/* 0FB6D8 7F0C6BA8 8FB30034 */  lw    $s3, 0x34($sp)
-/* 0FB6DC 7F0C6BAC 8FB40038 */  lw    $s4, 0x38($sp)
-/* 0FB6E0 7F0C6BB0 8FB5003C */  lw    $s5, 0x3c($sp)
-/* 0FB6E4 7F0C6BB4 8FB60040 */  lw    $s6, 0x40($sp)
-/* 0FB6E8 7F0C6BB8 8FB70044 */  lw    $s7, 0x44($sp)
-/* 0FB6EC 7F0C6BBC 8FBE0048 */  lw    $fp, 0x48($sp)
-/* 0FB6F0 7F0C6BC0 03E00008 */  jr    $ra
-/* 0FB6F4 7F0C6BC4 27BD2BA8 */   addiu $sp, $sp, 0x2ba8
-)
-#endif
 
 
 /**
@@ -712,7 +348,7 @@ s32 texAlignIndices(u8 *src, s32 width, s32 height, s32 format, u8 *dst)
 
 #ifdef NONMATCHING
 // looks like PD's texShrinkNonPaletted
-void sub_GAME_7F0C6C70(void) {
+s32 sub_GAME_7F0C6C70(u8 *src, u8 *dst, s32 srcwidth, s32 srcheight, s32 format, u16 *palette, s32 numcolours) {
 
 }
 #else

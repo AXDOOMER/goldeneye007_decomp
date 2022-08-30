@@ -13,5 +13,7 @@ extern u8* img_curpos;
 extern s32 img_bitcount;
 
 void texReset(void);
+u32 texReadBits(s32 bitCount);
+void texSetBitstring(s32 pos);
 
 #endif

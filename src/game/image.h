@@ -80,5 +80,8 @@ void texInflateRle(u8 *dst, s32 blockstotal);
 void texReadAlphaBits(u8 *image,s32 count);
 void texSwapAltRowBytes(u8 *dst, s32 width, s32 height, s32 format);
 void texBlur(u8 *pixels, s32 width, s32 height, s32 method, s32 chansize);
+s32 texAlignIndices(u8 *src, s32 width, s32 height, s32 format, u8 *dst);
+
+s32 sub_GAME_7F0C6C70(u8 *src, u8 *dst, s32 srcwidth, s32 srcheight, s32 format, u16 *palette, s32 numcolours);
 
 #endif
