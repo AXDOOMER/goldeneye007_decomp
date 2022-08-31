@@ -14058,34 +14058,14 @@ glabel sub_GAME_7F0754BC
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0755B0(void) {
-
+void sub_GAME_7F0755B0(void)
+{
+    if (D_80036414 != NULL)
+    {
+        D_80036414->unk08 = D_80036414->unk04;
+        D_80036414->unk00 = NULL;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0755B0
-/* 0AA0E0 7F0755B0 3C038003 */  lui   $v1, %hi(D_80036414)
-/* 0AA0E4 7F0755B4 24636414 */  addiu $v1, %lo(D_80036414) # addiu $v1, $v1, 0x6414
-/* 0AA0E8 7F0755B8 8C620000 */  lw    $v0, ($v1)
-/* 0AA0EC 7F0755BC 10400005 */  beqz  $v0, .L7F0755D4
-/* 0AA0F0 7F0755C0 00000000 */   nop   
-/* 0AA0F4 7F0755C4 8C4E0004 */  lw    $t6, 4($v0)
-/* 0AA0F8 7F0755C8 AC4E0008 */  sw    $t6, 8($v0)
-/* 0AA0FC 7F0755CC 8C6F0000 */  lw    $t7, ($v1)
-/* 0AA100 7F0755D0 ADE00000 */  sw    $zero, ($t7)
-.L7F0755D4:
-/* 0AA104 7F0755D4 03E00008 */  jr    $ra
-/* 0AA108 7F0755D8 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING

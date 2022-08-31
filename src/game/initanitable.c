@@ -1,7 +1,7 @@
 #include <ultra64.h>
 #include <memp.h>
 #include "initanitable.h"
-
+#include "objecthandler.h"
 
 //bss
 char dword_CODE_bss_80069170[0x2D0];
@@ -11,7 +11,11 @@ OSMesg animMesg[8];
 struct animation_table_data * ptr_animation_table;
 
 //data
-void * D_80029D60[] = {NULL, &dword_CODE_bss_80069170, &dword_CODE_bss_80069170};
+struct bondstruct_unk_animation_related D_80029D60 = {
+    NULL,
+    &dword_CODE_bss_80069170,
+    &dword_CODE_bss_80069170
+};
 
 s32 animation_table_ptrs1[] = {
     PTR_ANIM_idle,

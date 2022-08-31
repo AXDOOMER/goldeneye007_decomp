@@ -3,11 +3,17 @@
 #include <ultra64.h>
 #include <bondtypes.h>
 
+struct bondstruct_unk_animation_related {
+    char* unk00;
+    char* unk04;
+    char* unk08;
+};
+
 extern s32 D_80036084;
 extern f32 D_80036088;
 extern u32 D_80036250;
 extern s32 D_80036410;
-extern s32 D_80036414;
+extern struct bondstruct_unk_animation_related* D_80036414;
 extern s32 D_80036418;
 extern s32 D_8003641C;
 extern u32 D_800363F0;
