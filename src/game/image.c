@@ -839,42 +839,101 @@ glabel texFindClosestColourIndexRGBA
 
 
 #ifdef NONMATCHING
-// still needs a lot of work, it's hard due to loop unrolling
-s32 texFindClosestColourIndexIA(u16* palette, s32 numcolours, s32 intensity, s32 alpha)
+// 99.38% : regalloc problems
+
+s32 texFindClosestColourIndexIA(u16 *palette, s32 numcolours, s32 intensity, s32 alpha)
 {
-    s32 i;
+    s32 loop_start;
+    s32 loop_end;
 
-    s32 bestindex;
-    s32 bestvalue;
-
-    // this loop looks good
-    for (i = 0; i < numcolours; i++)
+    // check palette for existing color
     {
-        if (palette[i] == ((intensity << 8 | alpha) & 0xFFFU))
+        s32 i;
+        s32 colour;
+        colour = (intensity << 8) | alpha;
+        for (i = 0; i < numcolours; i++)
         {
-            return i;
+            if (palette[i] == (colour & 0xFFFFU))
+            {
+                return i;
+            }
         }
     }
 
-    // the problems start here (taken from PD)
-    bestindex = 0;
-    bestvalue = 99999999;
-
-    for (i = 0; i < numcolours; i++)
+    // binary search for a region
     {
-        s32 value = palette[i];
-        s32 a = ((value >> 8) & 0xff) - intensity;
-        s32 b = (value & 0xff) - alpha;
-        s32 sum = a * a + b * b;
+        s32 low;
+        s32 colour;
+        s32 a;
+        s32 b;
+        s32 sum;
+        s32 index;
+        s32 value;
 
-        if (sum < bestvalue)
+        low = 0;
+        loop_end = numcolours - 1;
+        colour = (intensity * intensity) + (alpha * alpha);
+
+        while ((loop_end - low) >= 2)
         {
-            bestindex = i;
-            bestvalue = sum;
+            index = (loop_end + low) >> 1;
+            value = palette[index];
+            a = (((s32) value) >> 8) & 0xFF;
+            b = value & 0xFF;
+            sum = (a * a) + (b * b);
+            if (sum < colour)
+            {
+                low = index;
+                continue;
+            }
+            if (colour < sum)
+            {
+                loop_end = index;
+            }
+            else
+            {
+                low = index;
+                loop_end = index;
+            }
         }
+
+        loop_start = loop_end - 4;
+        if (loop_start < 0) { loop_start = 0; }
+
+        loop_end += 4;
+        if (loop_end >= numcolours) { loop_end = numcolours - 1; }
     }
 
-    return bestindex;
+    // search for best within the region
+    {
+        s32 bestindex;
+        s32 bestvalue;
+        s32 value;
+        s32 a;
+        s32 b;
+        u32 sum2;
+        s32 sum;
+        s32 index;
+
+        bestindex = 0;
+        bestvalue = 999999;
+
+        for (index = loop_start; index <= loop_end; index++)
+        {
+            value = palette[index];
+            a = ((value >> 8) & 0xff) - intensity;
+            b = (value & 0xff) - alpha;
+            sum2 = (a * a) + (b * b);
+            sum = sum2;
+            if (sum < bestvalue)
+            {
+                bestindex = index;
+                bestvalue = sum;
+            }
+        }
+
+        return bestindex;
+    }
 }
 
 #else
