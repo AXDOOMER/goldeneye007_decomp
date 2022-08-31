@@ -161,64 +161,24 @@ void sub_GAME_7F0CC4C8(void)
 }
 
 
+s32 unused_copy_byte_array(u8* src, s32 count, u8* dst)
+{
+    u8* src_itr;
+    u8* dst_itr;
 
+    src_itr = src;
+    dst_itr = dst;
 
-#ifdef NONMATCHING
-s32 sub_GAME_7F0CC51C(void *arg0, s32 arg1, void *arg2) {
-    s32 temp_a1;
-    void *temp_v1;
-    void *phi_v0;
-    void *phi_v1;
-    s32 phi_a1;
-    void *phi_v1_2;
-
-    // Node 0
-    phi_v0 = arg0;
-    phi_v1 = arg2;
-    phi_a1 = arg1;
-    phi_v1_2 = arg2;
-    if (arg1 > 0)
+    while (count > 0)
     {
-        loop_1:
-        // Node 1
-        temp_a1 = (phi_a1 + -1);
-        temp_v1 = (phi_v1 + 1);
-        temp_v1->unk-1 = (s8) *phi_v0;
-        phi_v0 = (phi_v0 + 1);
-        phi_v1 = temp_v1;
-        phi_a1 = temp_a1;
-        phi_v1_2 = temp_v1;
-        if (temp_a1 > 0)
-        {
-            goto loop_1;
-        }
+        *dst_itr = *src_itr;
+        dst_itr++;
+        src_itr++;
+        count--;
     }
-    // Node 2
-    return (phi_v1_2 - arg2);
+
+    return dst_itr - dst;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0CC51C
-/* 10104C 7F0CC51C 00801025 */  move  $v0, $a0
-/* 101050 7F0CC520 18A00007 */  blez  $a1, .L7F0CC540
-/* 101054 7F0CC524 00C01825 */   move  $v1, $a2
-.L7F0CC528:
-/* 101058 7F0CC528 904E0000 */  lbu   $t6, ($v0)
-/* 10105C 7F0CC52C 24A5FFFF */  addiu $a1, $a1, -1
-/* 101060 7F0CC530 24630001 */  addiu $v1, $v1, 1
-/* 101064 7F0CC534 24420001 */  addiu $v0, $v0, 1
-/* 101068 7F0CC538 1CA0FFFB */  bgtz  $a1, .L7F0CC528
-/* 10106C 7F0CC53C A06EFFFF */   sb    $t6, -1($v1)
-.L7F0CC540:
-/* 101070 7F0CC540 03E00008 */  jr    $ra
-/* 101074 7F0CC544 00661023 */   subu  $v0, $v1, $a2
-)
-#endif
-
-
-
 
 
 u32 sub_GAME_7F0CC548(s32 arg0) {
