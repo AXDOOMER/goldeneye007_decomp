@@ -71,7 +71,9 @@ struct Explosion {
     u32 unk04;
     struct ExplosionPart parts[EXPLOSION_PARTS_LEN];
     u32 unk3C8;
-    u32 unk3CC;
+    s8 unk3CC;
+    u8 unk3CD;
+    u16 unk3CE;
     u32 unk3D0;
     u32 unk3D4;
     u32 unk3D8;
