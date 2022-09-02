@@ -67,9 +67,9 @@ u32 D_8003607C = 0;
 //D:80036080
 u32 D_80036080 = 0;
 //D:80036084
-s32 D_80036084 = 0;
+s32 g_ModelDistanceDisabled = 0;
 //D:80036088
-f32 D_80036088 = 1.0;
+f32 g_ModelDistanceScale = 1.0;
 //D:8003608C
 s32 vtxallocator = 0;
 //D:80036090

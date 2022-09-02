@@ -9,8 +9,8 @@ struct bondstruct_unk_animation_related {
     char* unk08;
 };
 
-extern s32 D_80036084;
-extern f32 D_80036088;
+extern s32 g_ModelDistanceDisabled;
+extern f32 g_ModelDistanceScale;
 extern u32 D_80036250;
 extern s32 D_80036410;
 extern struct bondstruct_unk_animation_related* D_80036414;
