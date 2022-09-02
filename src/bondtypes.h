@@ -871,6 +871,11 @@ typedef union
             u16        reserved;    /*0xE padding*/
         } ModelRoData_LODRecord;
 
+        typedef struct ModelRwData_LODRecord
+        {
+            bool visible;
+        } ModelRwData_LODRecord;
+
         /**
          *  Opcode 9
          *  Binary Separating Plane
@@ -997,6 +1002,11 @@ typedef union
             u16        reserved; /*0x6 padding*/
         } ModelRoData_SwitchRecord;
 
+        typedef struct ModelRwData_SwitchRecord
+        {
+            bool visible;
+        } ModelRwData_SwitchRecord;
+
         /**
          *  Opcode 19
          *  unused
@@ -1062,7 +1072,7 @@ typedef union
     #pragma endregion Model Node OpCode Definitions
 
     /*
-     * Handy Union for each type of Node
+     * Handy Union for each type of RoData
      */
     union ModelRoData
     {
@@ -1083,6 +1093,15 @@ typedef union
         struct ModelRoData_DisplayListPrimaryRecord DisplayListPrimary;
         struct ModelRoData_HeadPlaceholderRecord HeadPlaceholder;
         struct ModelRoData_DisplayList_CollisionRecord DisplayListCollisions;
+    };
+
+    /*
+     * Handy Union for each type of RwData
+     */
+    union ModelRwData
+    {
+        struct ModelRwData_LODRecord LOD;
+        struct ModelRwData_SwitchRecord Switch;
     };
 
 

@@ -3754,7 +3754,7 @@ glabel process_15_subposition
 void process_08_distance_triggers(Model* model, ModelNode* node)
 {
     union ModelRoData *rodata = node->Data;
-    union ModelRoData *rwdata = extract_id_from_object_structure_microcode(model, node);
+    union ModelRwData *rwdata = extract_id_from_object_structure_microcode(model, node);
     Mtxf *mtx = sub_GAME_7F06C660(model, node, 0);
     f32 distance;
 
@@ -3776,25 +3776,25 @@ void process_08_distance_triggers(Model* model, ModelNode* node)
     {
         if (distance <= rodata->LOD.MaxDistance * model->scale)
         {
-            rwdata->Header.ModelType = TRUE;
+            rwdata->LOD.visible = TRUE;
             node->Child = rodata->LOD.Affects;
             return;
         }
     }
 
-    rwdata->Header.ModelType = FALSE;
+    rwdata->LOD.visible = FALSE;
     node->Child = NULL;
 }
 
 
 void sub_GAME_7F06E970(Model* model, ModelNode* node)
 {
-    ModelRoData_LODRecord *lod_record = &node->Data->LOD;
-    ModelRoData_HeaderRecord *header_record = extract_id_from_object_structure_microcode(model, node);
+    ModelRoData_LODRecord *rodata = &node->Data->LOD;
+    ModelRwData_LODRecord *rwdata = extract_id_from_object_structure_microcode(model, node);
 
-    if (header_record->ModelType)
+    if (rwdata->visible)
     {
-        node->Child = lod_record->Affects;
+        node->Child = rodata->Affects;
     }
     else
     {
@@ -3805,12 +3805,12 @@ void sub_GAME_7F06E970(Model* model, ModelNode* node)
 
 void process_12_handle_switch(Model* model, ModelNode* node)
 {
-    ModelRoData_SwitchRecord *switch_record = &node->Data->Switch;
-    ModelRoData_HeaderRecord *header_record = extract_id_from_object_structure_microcode(model, node);
+    ModelRoData_SwitchRecord *rodata = &node->Data->Switch;
+    ModelRwData_SwitchRecord *rwdata = extract_id_from_object_structure_microcode(model, node);
 
-    if (header_record->ModelType != 0)
+    if (rwdata->visible)
     {
-        node->Child = switch_record->Controls;
+        node->Child = rodata->Controls;
     }
     else
     {
