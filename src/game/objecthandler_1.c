@@ -3841,47 +3841,20 @@ glabel process_08_distance_triggers
 #endif
 
 
+void sub_GAME_7F06E970(Model* model, ModelNode* node)
+{
+    ModelNode_LODRecord *lod_record = &node->Data->LOD;
+    ModelNode_HeaderRecord *header_record = extract_id_from_object_structure_microcode(model, node);
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F06E970(struct Model *model, struct ModelNode *node) {
-    // May match with PD's model0001c784 function
-    struct modelrodata_distance *rodata = &node->Data->distance;
-    struct modelrwdata_distance *rwdata = modelGetNodeRwData(model, node);
-
-    if (rwdata->visible) {
-        node->child = rodata->target;
-    } else {
-        node->child = NULL;
+    if (header_record->ModelType)
+    {
+        node->Child = lod_record->Affects;
+    }
+    else
+    {
+        node->Child = NULL;
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06E970
-/* 0A34A0 7F06E970 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0A34A4 7F06E974 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A34A8 7F06E978 8CAE0004 */  lw    $t6, 4($a1)
-/* 0A34AC 7F06E97C AFA50024 */  sw    $a1, 0x24($sp)
-/* 0A34B0 7F06E980 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
-/* 0A34B4 7F06E984 AFAE001C */   sw    $t6, 0x1c($sp)
-/* 0A34B8 7F06E988 8C4F0000 */  lw    $t7, ($v0)
-/* 0A34BC 7F06E98C 8FA50024 */  lw    $a1, 0x24($sp)
-/* 0A34C0 7F06E990 8FB8001C */  lw    $t8, 0x1c($sp)
-/* 0A34C4 7F06E994 51E00005 */  beql  $t7, $zero, .L7F06E9AC
-/* 0A34C8 7F06E998 ACA00014 */   sw    $zero, 0x14($a1)
-/* 0A34CC 7F06E99C 8F190008 */  lw    $t9, 8($t8)
-/* 0A34D0 7F06E9A0 10000002 */  b     .L7F06E9AC
-/* 0A34D4 7F06E9A4 ACB90014 */   sw    $t9, 0x14($a1)
-/* 0A34D8 7F06E9A8 ACA00014 */  sw    $zero, 0x14($a1)
-.L7F06E9AC:
-/* 0A34DC 7F06E9AC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0A34E0 7F06E9B0 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0A34E4 7F06E9B4 03E00008 */  jr    $ra
-/* 0A34E8 7F06E9B8 00000000 */   nop   
-)
-#endif
 
 
 void process_12_handle_switch(Model* model, ModelNode* node)
