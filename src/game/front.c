@@ -893,7 +893,7 @@ Gfx *constructor_menu17_switchscreens(Gfx *DL);
 Gfx *constructor_menu18_displaycast(Gfx *DL);
 Gfx *constructor_menu19_spectrum(Gfx *DL);
 void disable_all_switches(void *arg0);
-void set_item_visibility_in_objinstance(Model *objinstance, int item, s32 mode);
+void set_item_visibility_in_objinstance(Model* objinstance, s32 item, s32 mode);
 void set_cursor_to_stage_solo(LEVEL_SOLO_SEQUENCE level);
 Gfx *display_aligned_white_text_to_screen(Gfx *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u8 *arg5, s32 arg6, s32 arg7);
 
@@ -2763,50 +2763,21 @@ glabel disable_all_switches
 #endif
 
 
-
-#ifdef NONMATCHING
-void set_item_visibility_in_objinstance(Model *objinstance,int item,s32 mode)
+void set_item_visibility_in_objinstance(Model* objinstance, s32 item, s32 mode)
 {
-  ModelNode *partdesc;
-
-  partdesc = objinstance->obj->Switches[item];
-  if (partdesc != 0x0) {
-    extract_id_from_object_structure_microcode(objinstance,partdesc) = mode;
-  }
+    if (objinstance->obj->Switches[item] != NULL)
+    {
+        struct ModelNode_HeaderRecord *node = extract_id_from_object_structure_microcode(objinstance, objinstance->obj->Switches[item]);
+        node->ModelType = mode;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_item_visibility_in_objinstance
-/* 0402F0 7F00B7C0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0402F4 7F00B7C4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0402F8 7F00B7C8 AFA60020 */  sw    $a2, 0x20($sp)
-/* 0402FC 7F00B7CC 8C8E0008 */  lw    $t6, 8($a0)
-/* 040300 7F00B7D0 0005C080 */  sll   $t8, $a1, 2
-/* 040304 7F00B7D4 8DCF0008 */  lw    $t7, 8($t6)
-/* 040308 7F00B7D8 01F8C821 */  addu  $t9, $t7, $t8
-/* 04030C 7F00B7DC 8F270000 */  lw    $a3, ($t9)
-/* 040310 7F00B7E0 50E00006 */  beql  $a3, $zero, .L7F00B7FC
-/* 040314 7F00B7E4 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 040318 7F00B7E8 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
-/* 04031C 7F00B7EC 00E02825 */   move  $a1, $a3
-/* 040320 7F00B7F0 8FA80020 */  lw    $t0, 0x20($sp)
-/* 040324 7F00B7F4 AC480000 */  sw    $t0, ($v0)
-/* 040328 7F00B7F8 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F00B7FC:
-/* 04032C 7F00B7FC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 040330 7F00B800 03E00008 */  jr    $ra
-/* 040334 7F00B804 00000000 */   nop
-)
-#endif
-
 
 
 //********************************************************************************************************
 //WALLETINIT
 //********************************************************************************************************
 
-void select_load_bond_picture(s32 *objinstance,u32 bondID)
+void select_load_bond_picture(Model *objinstance, u32 bondID)
 {
     set_item_visibility_in_objinstance(objinstance,8,1); //brosnan picture
     set_item_visibility_in_objinstance(objinstance,9,0);
