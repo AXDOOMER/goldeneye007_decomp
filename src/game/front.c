@@ -2767,7 +2767,7 @@ void set_item_visibility_in_objinstance(Model* objinstance, s32 item, s32 mode)
 {
     if (objinstance->obj->Switches[item] != NULL)
     {
-        struct ModelNode_HeaderRecord *node = extract_id_from_object_structure_microcode(objinstance, objinstance->obj->Switches[item]);
+        struct ModelRoData_HeaderRecord *node = extract_id_from_object_structure_microcode(objinstance, objinstance->obj->Switches[item]);
         node->ModelType = mode;
     }
 }

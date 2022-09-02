@@ -714,7 +714,7 @@ void *extract_id_from_object_structure_microcode(Model *Objinst, ModelNode *root
         root = root->Parent;
         if ((root->Opcode & 0xFF) == MODELNODE_OPCODE_HEADPLACEHOLDERRECORD)
         {
-            data = ((ModelNode_HeaderRecord *)extract_id_from_object_structure_microcode(Objinst, root))->FirstGroup;
+            data = ((ModelRoData_HeaderRecord *)extract_id_from_object_structure_microcode(Objinst, root))->FirstGroup;
             break;
         }
     }
@@ -751,7 +751,7 @@ void getpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#MATCH - 
         }
         case 2:
         {
-            ModelNode_GroupRecord *prt = &part->Data->Group;
+            ModelRoData_GroupRecord *prt = &part->Data->Group;
             offset->x                  = prt->Origin.x;
             offset->y                  = prt->Origin.y;
             offset->z                  = prt->Origin.z;
@@ -759,7 +759,7 @@ void getpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#MATCH - 
         }
         case 3:
         {
-            ModelNode_GroupSimpleRecord *prt = &part->Data->GroupSimple; //UNUSED at this time
+            ModelRoData_GroupSimpleRecord *prt = &part->Data->GroupSimple; //UNUSED at this time
             offset->x                        = prt->Origin.x;
             offset->y                        = prt->Origin.y;
             offset->z                        = prt->Origin.z;
@@ -767,7 +767,7 @@ void getpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#MATCH - 
         }
         case 21:
         {
-            ModelNode_GroupSimpleRecord *prt = &part->Data->GroupSimple;
+            ModelRoData_GroupSimpleRecord *prt = &part->Data->GroupSimple;
             offset->x                        = prt->Origin.x;
             offset->y                        = prt->Origin.y;
             offset->z                        = prt->Origin.z;
@@ -826,7 +826,7 @@ void setpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#75% s0 s
         }
         case 2:
         {
-            ModelNode_GroupRecord *prt = &part->Data->Group;
+            ModelRoData_GroupRecord *prt = &part->Data->Group;
             prt->Origin.x              = offset->x;
             prt->Origin.y              = offset->y;
             prt->Origin.z              = offset->z;
@@ -834,7 +834,7 @@ void setpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#75% s0 s
         }
         case 3:
         {
-            ModelNode_GroupSimpleRecord *prt = &part->Data->GroupSimple; //UNUSED at this time
+            ModelRoData_GroupSimpleRecord *prt = &part->Data->GroupSimple; //UNUSED at this time
             prt->Origin.x                    = offset->x;
             prt->Origin.y                    = offset->y;
             prt->Origin.z                    = offset->z;
@@ -842,7 +842,7 @@ void setpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#75% s0 s
         }
         case 21:
         {
-            ModelNode_GroupSimpleRecord *prt = &part->Data->GroupSimple;
+            ModelRoData_GroupSimpleRecord *prt = &part->Data->GroupSimple;
             prt->Origin.x                    = offset->x;
             prt->Origin.y                    = offset->y;
             prt->Origin.z                    = offset->z;
@@ -1453,47 +1453,47 @@ f32 getjointsize(Model *objinst, ModelNode *part) //#76%
             {
                 case 1:
                 {
-                    ModelNode_HeaderRecord *prt = part->Data;
+                    ModelRoData_HeaderRecord *prt = part->Data;
                     return prt->Group1 * objinst->scale;
                 }
                 case 2:
                 {
-                    ModelNode_GroupRecord *prt = part->Data;
+                    ModelRoData_GroupRecord *prt = part->Data;
                     return prt->BoundingVolumeRadius * objinst->scale;
                 }
                 case 3:
                 {
-                    ModelNode_GroupRecord *prt = part->Data;
+                    ModelRoData_GroupRecord *prt = part->Data;
                     return prt->BoundingVolumeRadius * objinst->scale;
                 }
                 case 21:
                 {
-                    ModelNode_GroupSimpleRecord *prt = part->Data;
+                    ModelRoData_GroupSimpleRecord *prt = part->Data;
                     return prt->BoundingVolumeRadius * objinst->scale;
                 }
                 case 11:
                 {
-                    ModelNode_Op11Record *prt = part->Data;
+                    ModelRoData_Op11Record *prt = part->Data;
                     return prt->BoundingVolumeRadius * objinst->scale;
                 }
                 case 12:
                 {
-                    ModelNode_GunfireRecord *prt = part->Data;
+                    ModelRoData_GunfireRecord *prt = part->Data;
                     return prt->Scale * objinst->scale;
                 }
                 case 13:
                 {
-                    ModelNode_ShadowRecord *prt = part->Data;
+                    ModelRoData_ShadowRecord *prt = part->Data;
                     return prt->Scale * objinst->scale;
                 }
                 case 14:
                 {
-                    ModelNode_Op14Record *prt = part->Data;
+                    ModelRoData_Op14Record *prt = part->Data;
                     return prt->Scale * objinst->scale;
                 }
                 case 15:
                 {
-                    ModelNode_InterlinkageRecord *prt = part->Data;
+                    ModelRoData_InterlinkageRecord *prt = part->Data;
                     return prt->Scale * objinst->scale;
                 }
                 case 16:
@@ -3753,8 +3753,8 @@ glabel process_15_subposition
 
 void process_08_distance_triggers(Model* model, ModelNode* node)
 {
-    union ModelNode_Data *rodata = node->Data;
-    union ModelNode_Data *rwdata = extract_id_from_object_structure_microcode(model, node);
+    union ModelRoData *rodata = node->Data;
+    union ModelRoData *rwdata = extract_id_from_object_structure_microcode(model, node);
     Mtxf *mtx = sub_GAME_7F06C660(model, node, 0);
     f32 distance;
 
@@ -3789,8 +3789,8 @@ void process_08_distance_triggers(Model* model, ModelNode* node)
 
 void sub_GAME_7F06E970(Model* model, ModelNode* node)
 {
-    ModelNode_LODRecord *lod_record = &node->Data->LOD;
-    ModelNode_HeaderRecord *header_record = extract_id_from_object_structure_microcode(model, node);
+    ModelRoData_LODRecord *lod_record = &node->Data->LOD;
+    ModelRoData_HeaderRecord *header_record = extract_id_from_object_structure_microcode(model, node);
 
     if (header_record->ModelType)
     {
@@ -3805,8 +3805,8 @@ void sub_GAME_7F06E970(Model* model, ModelNode* node)
 
 void process_12_handle_switch(Model* model, ModelNode* node)
 {
-    ModelNode_SwitchRecord *switch_record = &node->Data->Switch;
-    ModelNode_HeaderRecord *header_record = extract_id_from_object_structure_microcode(model, node);
+    ModelRoData_SwitchRecord *switch_record = &node->Data->Switch;
+    ModelRoData_HeaderRecord *header_record = extract_id_from_object_structure_microcode(model, node);
 
     if (header_record->ModelType != 0)
     {

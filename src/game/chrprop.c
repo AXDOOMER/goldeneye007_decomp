@@ -5859,21 +5859,21 @@ void sub_GAME_7F03E830(ObjectRecord* arg0)
     stanGetPositionYValue(prop->stan, prop->pos.x, prop->pos.z);
 }
 
-f32 chrpropBBOXGetXmin(ModelNode_BoundingBoxRecord *modelBoundingBox)
+f32 chrpropBBOXGetXmin(ModelRoData_BoundingBoxRecord *modelBoundingBox)
 {
     return modelBoundingBox->Bounds.xmin;
 }
 
-f32 chrpropBBOXGetYmin(ModelNode_BoundingBoxRecord *modelBoundingBox)
+f32 chrpropBBOXGetYmin(ModelRoData_BoundingBoxRecord *modelBoundingBox)
 {
     return modelBoundingBox->Bounds.ymin;
 }
 
-f32 chrpropBBOXGetYmax(ModelNode_BoundingBoxRecord *modelBoundingBox)
+f32 chrpropBBOXGetYmax(ModelRoData_BoundingBoxRecord *modelBoundingBox)
 {
     return modelBoundingBox->Bounds.ymax;
 }
-f32 chrpropBBOXGetZmin(ModelNode_BoundingBoxRecord *modelBoundingBox)
+f32 chrpropBBOXGetZmin(ModelRoData_BoundingBoxRecord *modelBoundingBox)
 {
     return modelBoundingBox->Bounds.zmin;
 }

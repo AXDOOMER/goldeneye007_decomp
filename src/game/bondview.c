@@ -25042,7 +25042,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
     f32 stack_padding_10;
     struct ObjectRecord *sp138_tank_as_ObjectRecord;
     s32 i_2;
-    struct ModelNode_BoundingBoxRecord *sp130;
+    struct ModelRoData_BoundingBoxRecord *sp130;
     Mtxf spF0;
     struct coord3d spE4;
     s32 i_3; 
@@ -25994,7 +25994,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
     {
         sp140_tank_as_TankRecord = ((struct TankRecord *)ptr_playerstank->obj);
         sp138_tank_as_ObjectRecord = (struct  ObjectRecord*)ptr_playerstank->obj;
-        sp130 = (struct ModelNode_BoundingBoxRecord *)((struct ModelNode *)sp138_tank_as_ObjectRecord->model->obj->Switches)->Child->Data;
+        sp130 = (struct ModelRoData_BoundingBoxRecord *)((struct ModelNode *)sp138_tank_as_ObjectRecord->model->obj->Switches)->Child->Data;
         
         sp140_tank_as_TankRecord->is_firing_tank = (getCurrentPlayerWeaponId(GUNRIGHT) == ITEM_TANKSHELLS)
             && get_hands_firing_status(GUNRIGHT);
