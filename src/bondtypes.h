@@ -1024,7 +1024,7 @@ typedef union
         typedef struct ModelRoData_GroupSimpleRecord
         {
             coord3d Origin;               /*0x0*/
-            u16     Group1;               /*0xC*/
+            s16     Group1;               /*0xC*/
             u16     Group2;               /*0xE*/
             f32     BoundingVolumeRadius; /*0x10*/
         } ModelRoData_GroupSimpleRecord;

@@ -3688,67 +3688,34 @@ glabel process_03_unknown
 #endif
 
 
+/* Note: PD treats arg0 as a struct modelrenderdata, we're probably missing a struct here */
+void process_15_subposition(Mtxf** arg0, Model *model, ModelNode *node)
+{
+    union ModelRoData *rodata = node->Data;
+    Mtxf *sp68;
+    Mtxf sp28;
+    s32 mtxindex = rodata->GroupSimple.Group1;
+    RenderPosView *matrices = model->render_pos;
 
+    if (node->Parent)
+    {
+        sp68 = sub_GAME_7F06C660(model, node->Parent, 0);
+    }
+    else
+    {
+        sp68 = *arg0;
+    }
 
-
-#ifdef NONMATCHING
-void process_15_subposition(void) {
-    // May match model0001c5b4 in PD
+    if (sp68)
+    {
+        matrix_4x4_set_identity_and_position(&rodata->GroupSimple.Origin, &sp28);
+        matrix_4x4_multiply_homogeneous(sp68, &sp28, &matrices[mtxindex]);
+    }
+    else
+    {
+        matrix_4x4_set_identity_and_position(&rodata->GroupSimple.Origin, &matrices[mtxindex]);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel process_15_subposition
-/* 0A32D8 7F06E7A8 27BDFF90 */  addiu $sp, $sp, -0x70
-/* 0A32DC 7F06E7AC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A32E0 7F06E7B0 AFA50074 */  sw    $a1, 0x74($sp)
-/* 0A32E4 7F06E7B4 8CCE0004 */  lw    $t6, 4($a2)
-/* 0A32E8 7F06E7B8 AFAE006C */  sw    $t6, 0x6c($sp)
-/* 0A32EC 7F06E7BC 8CC70008 */  lw    $a3, 8($a2)
-/* 0A32F0 7F06E7C0 8CA8000C */  lw    $t0, 0xc($a1)
-/* 0A32F4 7F06E7C4 00003025 */  move  $a2, $zero
-/* 0A32F8 7F06E7C8 10E0000A */  beqz  $a3, .L7F06E7F4
-/* 0A32FC 7F06E7CC 85C3000C */   lh    $v1, 0xc($t6)
-/* 0A3300 7F06E7D0 00A02025 */  move  $a0, $a1
-/* 0A3304 7F06E7D4 00E02825 */  move  $a1, $a3
-/* 0A3308 7F06E7D8 AFA30024 */  sw    $v1, 0x24($sp)
-/* 0A330C 7F06E7DC 0FC1B198 */  jal   sub_GAME_7F06C660
-/* 0A3310 7F06E7E0 AFA80020 */   sw    $t0, 0x20($sp)
-/* 0A3314 7F06E7E4 8FA30024 */  lw    $v1, 0x24($sp)
-/* 0A3318 7F06E7E8 8FA80020 */  lw    $t0, 0x20($sp)
-/* 0A331C 7F06E7EC 10000002 */  b     .L7F06E7F8
-/* 0A3320 7F06E7F0 00403825 */   move  $a3, $v0
-.L7F06E7F4:
-/* 0A3324 7F06E7F4 8C870000 */  lw    $a3, ($a0)
-.L7F06E7F8:
-/* 0A3328 7F06E7F8 10E00010 */  beqz  $a3, .L7F06E83C
-/* 0A332C 7F06E7FC 8FA4006C */   lw    $a0, 0x6c($sp)
-/* 0A3330 7F06E800 8FA4006C */  lw    $a0, 0x6c($sp)
-/* 0A3334 7F06E804 27A50028 */  addiu $a1, $sp, 0x28
-/* 0A3338 7F06E808 AFA30024 */  sw    $v1, 0x24($sp)
-/* 0A333C 7F06E80C AFA70068 */  sw    $a3, 0x68($sp)
-/* 0A3340 7F06E810 0FC16259 */  jal   matrix_4x4_set_identity_and_position
-/* 0A3344 7F06E814 AFA80020 */   sw    $t0, 0x20($sp)
-/* 0A3348 7F06E818 8FA30024 */  lw    $v1, 0x24($sp)
-/* 0A334C 7F06E81C 8FA80020 */  lw    $t0, 0x20($sp)
-/* 0A3350 7F06E820 8FA40068 */  lw    $a0, 0x68($sp)
-/* 0A3354 7F06E824 0003C980 */  sll   $t9, $v1, 6
-/* 0A3358 7F06E828 27A50028 */  addiu $a1, $sp, 0x28
-/* 0A335C 7F06E82C 0FC16063 */  jal   matrix_4x4_multiply_homogeneous
-/* 0A3360 7F06E830 03283021 */   addu  $a2, $t9, $t0
-/* 0A3364 7F06E834 10000005 */  b     .L7F06E84C
-/* 0A3368 7F06E838 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F06E83C:
-/* 0A336C 7F06E83C 00034980 */  sll   $t1, $v1, 6
-/* 0A3370 7F06E840 0FC16259 */  jal   matrix_4x4_set_identity_and_position
-/* 0A3374 7F06E844 01282821 */   addu  $a1, $t1, $t0
-/* 0A3378 7F06E848 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F06E84C:
-/* 0A337C 7F06E84C 27BD0070 */  addiu $sp, $sp, 0x70
-/* 0A3380 7F06E850 03E00008 */  jr    $ra
-/* 0A3384 7F06E854 00000000 */   nop   
-)
-#endif
 
 
 void process_08_distance_triggers(Model* model, ModelNode* node)
