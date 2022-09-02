@@ -55,6 +55,7 @@ struct PropRecord;
 struct ObjectRecord;
 struct WeaponObjRecord;
 struct WeaponObjRecordExtended;
+union ModelNode_Data;
 
 /**
  * The following region deals with various AI structures that can be applied to 
@@ -751,40 +752,17 @@ typedef union
     } ModelFileTextures;
 
     /*
-     Handy Union for each type of Node
-     More Verbose than void *Data
-     Note: Probably cant actually use this since would need to know the type before hand
-    union ModelNode_Data
-    {
-        struct ModelNode_HeaderRecord Header;
-        struct ModelNode_GroupRecord Group;
-        struct ModelNode_DisplayListRecord DisplayList;
-        struct ModelNode_LODRecord LOD;
-        struct ModelNode_BSPRecord BSP;
-        struct ModelNode_BoundingBoxRecord BoundingBox;
-        struct ModelNode_GunfireRecord Gunfire;
-        struct ModelNode_ShadowRecord Shadow;
-        struct ModelNode_InterlinkageRecord Interlinkage;
-        struct ModelNode_SwitchRecord Switch;
-        struct ModelNode_GroupSimpleRecord GroupSimple;
-        struct ModelNode_DisplayListPrimaryRecord DisplayListPrimary;
-        struct ModelNode_HeadPlaceholderRecord HeadPlaceholder;
-        struct ModelNode_DisplayList_CollisionRecord DisplayListCollisions;
-    };
-     */
-
-    /*
      This defines each row of the Node Table
      */
     typedef struct ModelNode
     {
         //u8 UseAdditionalMatrices; //1 = group use MatrixID1 also. not actually used
-        u16               Opcode; /*0x00*/
-        void             *Data;   /*0x04 Node Data*/
-        struct ModelNode *Parent; /*0x08*/
-        struct ModelNode *Next;   /*0x0c*/
-        struct ModelNode *Prev;   /*0x10*/
-        struct ModelNode *Child;  /*0x14*/
+        u16                  Opcode; /*0x00*/
+        union ModelNode_Data *Data;   /*0x04 Node Data*/
+        struct ModelNode     *Parent; /*0x08*/
+        struct ModelNode     *Next;   /*0x0c*/
+        struct ModelNode     *Prev;   /*0x10*/
+        struct ModelNode     *Child;  /*0x14*/
     } ModelNode;
 
     #pragma region Model Node OpCode Definitions
@@ -1082,6 +1060,30 @@ typedef union
         } ModelNode_DisplayList_CollisionRecord;
 
     #pragma endregion Model Node OpCode Definitions
+
+    /*
+     * Handy Union for each type of Node
+     */
+    union ModelNode_Data
+    {
+        struct ModelNode_HeaderRecord Header;
+        struct ModelNode_GroupRecord Group;
+        struct ModelNode_DisplayListRecord DisplayList;
+        struct ModelNode_Op07Record Op07;
+        struct ModelNode_LODRecord LOD;
+        struct ModelNode_BSPRecord BSP;
+        struct ModelNode_BoundingBoxRecord BoundingBox;
+        struct ModelNode_Op11Record Op11;
+        struct ModelNode_GunfireRecord Gunfire;
+        struct ModelNode_ShadowRecord Shadow;
+        struct ModelNode_Op14Record Op14;
+        struct ModelNode_InterlinkageRecord Interlinkage;
+        struct ModelNode_SwitchRecord Switch;
+        struct ModelNode_GroupSimpleRecord GroupSimple;
+        struct ModelNode_DisplayListPrimaryRecord DisplayListPrimary;
+        struct ModelNode_HeadPlaceholderRecord HeadPlaceholder;
+        struct ModelNode_DisplayList_CollisionRecord DisplayListCollisions;
+    };
 
 
 #pragma endregion OpenFlight Records

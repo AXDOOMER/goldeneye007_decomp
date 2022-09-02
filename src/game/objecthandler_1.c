@@ -663,47 +663,47 @@ void *extract_id_from_object_structure_microcode(Model *Objinst, ModelNode *root
     { // get "number" from each node, number = dataseg? - always 0
         case MODELNODE_OPCODE_HEADERRECORD:
         {
-            number = ((ModelNode_HeaderRecord *)root->Data)->number;
+            number = root->Data->Header.number;
             break;
         }
         case MODELNODE_OPCODE_DISPLAYLIST_COLLISIONRECORD:
         {
-            number = ((ModelNode_DisplayList_CollisionRecord *)root->Data)->unknown;
+            number = root->Data->DisplayListCollisions.unknown;
             break;
         }
         case MODELNODE_OPCODE_OP07RECORD:
         {
-            number = ((ModelNode_Op07Record *)root->Data)->number;
+            number = root->Data->Op07.number;
             break;
         }
         case MODELNODE_OPCODE_LODRECORD:
         {
-            number = ((ModelNode_LODRecord *)root->Data)->number;
+            number = root->Data->LOD.number;
             break;
         }
         case MODELNODE_OPCODE_SWITCHRECORD:
         {
-            number = ((ModelNode_SwitchRecord *)root->Data)->number;
+            number = root->Data->Switch.number;
             break;
         }
         case MODELNODE_OPCODE_BSPRECORD:
         {
-            number = ((ModelNode_BSPRecord *)root->Data)->number;
+            number = root->Data->BSP.number;
             break;
         }
         case MODELNODE_OPCODE_OP11RECORD:
         {
-            number = ((ModelNode_Op11Record *)root->Data)->number;
+            number = root->Data->Op11.number;
             break;
         }
         case MODELNODE_OPCODE_GUNFIRERECORD:
         {
-            number = ((ModelNode_GunfireRecord *)root->Data)->number;
+            number = root->Data->Gunfire.number;
             break;
         }
         case MODELNODE_OPCODE_HEADPLACEHOLDERRECORD:
         {
-            number = ((ModelNode_HeadPlaceholderRecord *)root->Data)->number;
+            number = root->Data->HeadPlaceholder.number;
             break;
         }
     }
@@ -750,7 +750,7 @@ void getpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#MATCH - 
         }
         case 2:
         {
-            ModelNode_GroupRecord *prt = part->Data;
+            ModelNode_GroupRecord *prt = &part->Data->Group;
             offset->x                  = prt->Origin.x;
             offset->y                  = prt->Origin.y;
             offset->z                  = prt->Origin.z;
@@ -758,7 +758,7 @@ void getpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#MATCH - 
         }
         case 3:
         {
-            ModelNode_GroupSimpleRecord *prt = part->Data; //UNUSED at this time
+            ModelNode_GroupSimpleRecord *prt = &part->Data->GroupSimple; //UNUSED at this time
             offset->x                        = prt->Origin.x;
             offset->y                        = prt->Origin.y;
             offset->z                        = prt->Origin.z;
@@ -766,7 +766,7 @@ void getpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#MATCH - 
         }
         case 21:
         {
-            ModelNode_GroupSimpleRecord *prt = part->Data;
+            ModelNode_GroupSimpleRecord *prt = &part->Data->GroupSimple;
             offset->x                        = prt->Origin.x;
             offset->y                        = prt->Origin.y;
             offset->z                        = prt->Origin.z;
@@ -825,7 +825,7 @@ void setpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#75% s0 s
         }
         case 2:
         {
-            ModelNode_GroupRecord *prt = part->Data;
+            ModelNode_GroupRecord *prt = &part->Data->Group;
             prt->Origin.x              = offset->x;
             prt->Origin.y              = offset->y;
             prt->Origin.z              = offset->z;
@@ -833,7 +833,7 @@ void setpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#75% s0 s
         }
         case 3:
         {
-            ModelNode_GroupSimpleRecord *prt = part->Data; //UNUSED at this time
+            ModelNode_GroupSimpleRecord *prt = &part->Data->GroupSimple; //UNUSED at this time
             prt->Origin.x                    = offset->x;
             prt->Origin.y                    = offset->y;
             prt->Origin.z                    = offset->z;
@@ -841,7 +841,7 @@ void setpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#75% s0 s
         }
         case 21:
         {
-            ModelNode_GroupSimpleRecord *prt = part->Data;
+            ModelNode_GroupSimpleRecord *prt = &part->Data->GroupSimple;
             prt->Origin.x                    = offset->x;
             prt->Origin.y                    = offset->y;
             prt->Origin.z                    = offset->z;
@@ -3884,50 +3884,20 @@ glabel sub_GAME_7F06E970
 #endif
 
 
+void process_12_handle_switch(Model* model, ModelNode* node)
+{
+    ModelNode_SwitchRecord *switch_record = &node->Data->Switch;
+    ModelNode_HeaderRecord *header_record = extract_id_from_object_structure_microcode(model, node);
 
-
-
-#ifdef NONMATCHING
-void process_12_handle_switch(struct Model *model, struct ModelNode *node) {
-    // May match with PD's model0001c7d0
-    struct modelrodata_toggle *rodata = &node->Data->toggle;
-    struct modelrwdata_toggle *rwdata = modelGetNodeRwData(model, node);
-
-    if (rwdata->visible) {
-        node->child = rodata->target;
-    } else {
-        node->child = NULL;
+    if (header_record->ModelType != 0)
+    {
+        node->Child = switch_record->Controls;
+    }
+    else
+    {
+        node->Child = NULL;
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel process_12_handle_switch
-/* 0A34EC 7F06E9BC 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0A34F0 7F06E9C0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A34F4 7F06E9C4 8CAE0004 */  lw    $t6, 4($a1)
-/* 0A34F8 7F06E9C8 AFA50024 */  sw    $a1, 0x24($sp)
-/* 0A34FC 7F06E9CC 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
-/* 0A3500 7F06E9D0 AFAE001C */   sw    $t6, 0x1c($sp)
-/* 0A3504 7F06E9D4 8C4F0000 */  lw    $t7, ($v0)
-/* 0A3508 7F06E9D8 8FA50024 */  lw    $a1, 0x24($sp)
-/* 0A350C 7F06E9DC 8FB8001C */  lw    $t8, 0x1c($sp)
-/* 0A3510 7F06E9E0 51E00005 */  beql  $t7, $zero, .L7F06E9F8
-/* 0A3514 7F06E9E4 ACA00014 */   sw    $zero, 0x14($a1)
-/* 0A3518 7F06E9E8 8F190000 */  lw    $t9, ($t8)
-/* 0A351C 7F06E9EC 10000002 */  b     .L7F06E9F8
-/* 0A3520 7F06E9F0 ACB90014 */   sw    $t9, 0x14($a1)
-/* 0A3524 7F06E9F4 ACA00014 */  sw    $zero, 0x14($a1)
-.L7F06E9F8:
-/* 0A3528 7F06E9F8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0A352C 7F06E9FC 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0A3530 7F06EA00 03E00008 */  jr    $ra
-/* 0A3534 7F06EA04 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
