@@ -3895,10 +3895,11 @@ void process_09_head_hat_placement_interlink(Model *model, ModelNode *node)
 
 
 #ifdef NONMATCHING
-void process_07_unknown(void) {
+void process_07_unknown(Model *model, ModelNode *node) {
 
 }
 #else
+void process_07_unknown(Model *model, ModelNode *node);
 GLOBAL_ASM(
 .late_rodata
 glabel D_80054C18
@@ -4019,137 +4020,72 @@ glabel process_07_unknown
 #endif
 
 
+void sub_GAME_7F06EEA4(Model *model, ModelNode *parent)
+{
+    ModelNode *node = parent->Child;
+    ModelNode **unused_parent;
 
+    while (node)
+    {
+        s32 type = node->Opcode & 0xff;
+        bool dochildren = TRUE;
 
+        switch (type)
+        {
+            case MODELNODE_OPCODE_HEADERRECORD:
+            case MODELNODE_OPCODE_GROUPRECORD:
+            case MODELNODE_OPCODE_UNUSED_03:
+            case MODELNODE_OPCODE_OP11RECORD:
+            case MODELNODE_OPCODE_GUNFIRERECORD:
+            case MODELNODE_OPCODE_SHADOWRECORD:
+            case MODELNODE_OPCODE_OP14RECORD:
+            case MODELNODE_OPCODE_INTERLINKAGERECORD:
+            case MODELNODE_OPCODE_OP16RECORD:
+            case MODELNODE_OPCODE_GROUPSIMPLERECORD:
+                dochildren = FALSE;
+                break;
+            case MODELNODE_OPCODE_LODRECORD:
+                process_08_distance_triggers(model, node);
+                break;
+            case MODELNODE_OPCODE_BSPRECORD:
+                process_09_head_hat_placement_interlink(model, node);
+                break;
+            case MODELNODE_OPCODE_OP07RECORD:
+                process_07_unknown(model, node);
+                break;
+            case MODELNODE_OPCODE_HEADPLACEHOLDERRECORD:
+                process_17_pointer_to_head(model, node);
+                break;
+            case MODELNODE_OPCODE_DISPLAYLIST_COLLISIONRECORD:
+                break;
+        }
 
-#ifdef NONMATCHING
-void sub_GAME_7F06EEA4(void) {
+        if (dochildren && node->Child)
+        {
+            node = node->Child;
+        }
+        else
+        {
+            unused_parent = &parent;
+            while (node)
+            {
+                if (node == parent->Parent)
+                {
+                    node = NULL;
+                    break;
+                }
 
+                if (node->Next)
+                {
+                    node = node->Next;
+                    break;
+                }
+
+                node = node->Parent;
+            }
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-/*D:80054C20*/
-glabel jpt_80054C20
-.word .L7F06EEFC
-.word .L7F06EEFC
-.word .L7F06EEFC
-.word .L7F06EF4C
-.word .L7F06EF4C
-.word .L7F06EF4C
-.word .L7F06EF2C
-.word .L7F06EF04
-.word .L7F06EF18
-.word .L7F06EF4C
-.word .L7F06EEFC
-.word .L7F06EEFC
-.word .L7F06EEFC
-.word .L7F06EEFC
-.word .L7F06EEFC
-.word .L7F06EEFC
-.word .L7F06EF4C
-.word .L7F06EF4C
-.word .L7F06EF4C
-.word .L7F06EF4C
-.word .L7F06EEFC
-.word .L7F06EF4C
-.word .L7F06EF40
-/*.word .L7F06EF4C*/
-
-.text
-glabel sub_GAME_7F06EEA4
-/* 0A39D4 7F06EEA4 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0A39D8 7F06EEA8 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0A39DC 7F06EEAC AFB20020 */  sw    $s2, 0x20($sp)
-/* 0A39E0 7F06EEB0 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 0A39E4 7F06EEB4 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0A39E8 7F06EEB8 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 0A39EC 7F06EEBC 8CB00014 */  lw    $s0, 0x14($a1)
-/* 0A39F0 7F06EEC0 00809025 */  move  $s2, $a0
-/* 0A39F4 7F06EEC4 5200003A */  beql  $s0, $zero, .L7F06EFB0
-/* 0A39F8 7F06EEC8 8FBF0024 */   lw    $ra, 0x24($sp)
-/* 0A39FC 7F06EECC 96020000 */  lhu   $v0, ($s0)
-.L7F06EED0:
-/* 0A3A00 7F06EED0 24110001 */  li    $s1, 1
-/* 0A3A04 7F06EED4 304F00FF */  andi  $t7, $v0, 0xff
-/* 0A3A08 7F06EED8 25F8FFFF */  addiu $t8, $t7, -1
-/* 0A3A0C 7F06EEDC 2F010018 */  sltiu $at, $t8, 0x18
-/* 0A3A10 7F06EEE0 1020001A */  beqz  $at, .L7F06EF4C
-/* 0A3A14 7F06EEE4 0018C080 */   sll   $t8, $t8, 2
-/* 0A3A18 7F06EEE8 3C018005 */  lui   $at, %hi(jpt_80054C20)
-/* 0A3A1C 7F06EEEC 00380821 */  addu  $at, $at, $t8
-/* 0A3A20 7F06EEF0 8C384C20 */  lw    $t8, %lo(jpt_80054C20)($at)
-.L7F06EEF4:
-/* 0A3A24 7F06EEF4 03000008 */  jr    $t8
-/* 0A3A28 7F06EEF8 00000000 */   nop   
-.L7F06EEFC:
-/* 0A3A2C 7F06EEFC 10000013 */  b     .L7F06EF4C
-/* 0A3A30 7F06EF00 00008825 */   move  $s1, $zero
-.L7F06EF04:
-/* 0A3A34 7F06EF04 02402025 */  move  $a0, $s2
-/* 0A3A38 7F06EF08 0FC1BA16 */  jal   process_08_distance_triggers
-/* 0A3A3C 7F06EF0C 02002825 */   move  $a1, $s0
-/* 0A3A40 7F06EF10 1000000E */  b     .L7F06EF4C
-/* 0A3A44 7F06EF14 00000000 */   nop   
-.L7F06EF18:
-/* 0A3A48 7F06EF18 02402025 */  move  $a0, $s2
-/* 0A3A4C 7F06EF1C 0FC1BACF */  jal   process_09_head_hat_placement_interlink
-/* 0A3A50 7F06EF20 02002825 */   move  $a1, $s0
-/* 0A3A54 7F06EF24 10000009 */  b     .L7F06EF4C
-/* 0A3A58 7F06EF28 00000000 */   nop   
-.L7F06EF2C:
-/* 0A3A5C 7F06EF2C 02402025 */  move  $a0, $s2
-/* 0A3A60 7F06EF30 0FC1BB3E */  jal   process_07_unknown
-/* 0A3A64 7F06EF34 02002825 */   move  $a1, $s0
-/* 0A3A68 7F06EF38 10000004 */  b     .L7F06EF4C
-/* 0A3A6C 7F06EF3C 00000000 */   nop   
-.L7F06EF40:
-/* 0A3A70 7F06EF40 02402025 */  move  $a0, $s2
-/* 0A3A74 7F06EF44 0FC1BA82 */  jal   process_17_pointer_to_head
-/* 0A3A78 7F06EF48 02002825 */   move  $a1, $s0
-def_7F06EEF4:
-.L7F06EF4C:
-/* 0A3A7C 7F06EF4C 12200006 */  beqz  $s1, .L7F06EF68
-/* 0A3A80 7F06EF50 00000000 */   nop   
-/* 0A3A84 7F06EF54 8E020014 */  lw    $v0, 0x14($s0)
-/* 0A3A88 7F06EF58 10400003 */  beqz  $v0, .L7F06EF68
-/* 0A3A8C 7F06EF5C 00000000 */   nop   
-/* 0A3A90 7F06EF60 10000010 */  b     .L7F06EFA4
-/* 0A3A94 7F06EF64 00408025 */   move  $s0, $v0
-.L7F06EF68:
-/* 0A3A98 7F06EF68 1200000E */  beqz  $s0, .L7F06EFA4
-/* 0A3A9C 7F06EF6C 8FB9002C */   lw    $t9, 0x2c($sp)
-/* 0A3AA0 7F06EF70 8F230008 */  lw    $v1, 8($t9)
-.L7F06EF74:
-/* 0A3AA4 7F06EF74 56030004 */  bnel  $s0, $v1, .L7F06EF88
-/* 0A3AA8 7F06EF78 8E02000C */   lw    $v0, 0xc($s0)
-/* 0A3AAC 7F06EF7C 10000009 */  b     .L7F06EFA4
-/* 0A3AB0 7F06EF80 00008025 */   move  $s0, $zero
-/* 0A3AB4 7F06EF84 8E02000C */  lw    $v0, 0xc($s0)
-.L7F06EF88:
-/* 0A3AB8 7F06EF88 50400004 */  beql  $v0, $zero, .L7F06EF9C
-/* 0A3ABC 7F06EF8C 8E100008 */   lw    $s0, 8($s0)
-/* 0A3AC0 7F06EF90 10000004 */  b     .L7F06EFA4
-/* 0A3AC4 7F06EF94 00408025 */   move  $s0, $v0
-/* 0A3AC8 7F06EF98 8E100008 */  lw    $s0, 8($s0)
-.L7F06EF9C:
-/* 0A3ACC 7F06EF9C 1600FFF5 */  bnez  $s0, .L7F06EF74
-/* 0A3AD0 7F06EFA0 00000000 */   nop   
-.L7F06EFA4:
-/* 0A3AD4 7F06EFA4 5600FFCA */  bnezl $s0, .L7F06EED0
-/* 0A3AD8 7F06EFA8 96020000 */   lhu   $v0, ($s0)
-/* 0A3ADC 7F06EFAC 8FBF0024 */  lw    $ra, 0x24($sp)
-.L7F06EFB0:
-/* 0A3AE0 7F06EFB0 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0A3AE4 7F06EFB4 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 0A3AE8 7F06EFB8 8FB20020 */  lw    $s2, 0x20($sp)
-/* 0A3AEC 7F06EFBC 03E00008 */  jr    $ra
-/* 0A3AF0 7F06EFC0 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
@@ -4159,9 +4095,6 @@ void sub_GAME_7F06EFC4(void) {
 #else
 GLOBAL_ASM(
 .late_rodata
-/*hack for above jtbl being too big*/
-.word .L7F06EF4C
-
 /*D:80054C80*/
 glabel jpt_80054C80
 .word .L7F06F078
