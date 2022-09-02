@@ -583,59 +583,23 @@ Mtxf *getsubmatrix(Model *objinst)
 }
 
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F06C710(Model *objinst, coord3d *arg1)
+void sub_GAME_7F06C710(Model* model, coord3d* pos)
 {
-    void *temp_v0;
+    Mtxf* mtx;
 
-    temp_v0 = getsubmatrix(objinst);
-    if (temp_v0)
+    mtx = getsubmatrix(model);
+    if (mtx != NULL)
     {
-        arg1->x = temp_v0->unk30;
-        arg1->y = temp_v0->unk34;
-        arg1->z = temp_v0->unk38;
+        pos->f[0] = (f32) mtx->m[3][0];
+        pos->f[1] = (f32) mtx->m[3][1];
+        pos->f[2] = (f32) mtx->m[3][2];
         return;
     }
-    arg1->x = 0.0f;
-    arg1->y = 0.0f;
-    arg1->z = 0.0f;
+
+    pos->f[0] = 0.0f;
+    pos->f[1] = 0.0f;
+    pos->f[2] = 0.0f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06C710
-/* 0A1240 7F06C710 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0A1244 7F06C714 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A1248 7F06C718 0FC1B1A8 */  jal   getsubmatrix
-/* 0A124C 7F06C71C AFA5001C */   sw    $a1, 0x1c($sp)
-/* 0A1250 7F06C720 10400008 */  beqz  $v0, .L7F06C744
-/* 0A1254 7F06C724 8FA5001C */   lw    $a1, 0x1c($sp)
-/* 0A1258 7F06C728 C4440030 */  lwc1  $f4, 0x30($v0)
-/* 0A125C 7F06C72C E4A40000 */  swc1  $f4, ($a1)
-/* 0A1260 7F06C730 C4460034 */  lwc1  $f6, 0x34($v0)
-/* 0A1264 7F06C734 E4A60004 */  swc1  $f6, 4($a1)
-/* 0A1268 7F06C738 C4480038 */  lwc1  $f8, 0x38($v0)
-/* 0A126C 7F06C73C 10000006 */  b     .L7F06C758
-/* 0A1270 7F06C740 E4A80008 */   swc1  $f8, 8($a1)
-.L7F06C744:
-/* 0A1274 7F06C744 44800000 */  mtc1  $zero, $f0
-/* 0A1278 7F06C748 00000000 */  nop   
-/* 0A127C 7F06C74C E4A00000 */  swc1  $f0, ($a1)
-/* 0A1280 7F06C750 E4A00004 */  swc1  $f0, 4($a1)
-/* 0A1284 7F06C754 E4A00008 */  swc1  $f0, 8($a1)
-.L7F06C758:
-/* 0A1288 7F06C758 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0A128C 7F06C75C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0A1290 7F06C760 03E00008 */  jr    $ra
-/* 0A1294 7F06C764 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 f32 sub_GAME_7F06C768(Model *objinst)
@@ -647,9 +611,6 @@ f32 sub_GAME_7F06C768(Model *objinst)
     }
     return 0.0f;
 }
-
-
-
 
 
 /**
