@@ -891,6 +891,11 @@ typedef union
             u16        number;     /*0x22*/
         } ModelRoData_BSPRecord;
 
+        typedef struct ModelRwData_BSPRecord
+        {
+            bool visible;
+        } ModelRwData_BSPRecord;
+
         /**
          *  Opcode 10 0xA
          *  Box within which collisions are tested
@@ -1107,6 +1112,7 @@ typedef union
     union ModelRwData
     {
         struct ModelRwData_LODRecord LOD;
+        struct ModelRwData_BSPRecord BSP;
         struct ModelRwData_SwitchRecord Switch;
         struct ModelRwData_HeadPlaceholderRecord HeadPlaceholder;
     };

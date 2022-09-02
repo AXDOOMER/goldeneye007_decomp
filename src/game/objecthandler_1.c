@@ -3870,30 +3870,11 @@ void sub_GAME_7F06EA54(ModelNode *basenode, bool visible)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F06EB10(void) {
-
+void sub_GAME_7F06EB10(Model* model, ModelNode* node)
+{
+    union ModelRwData *rwdata = extract_id_from_object_structure_microcode(model, node);
+    sub_GAME_7F06EA54(node, rwdata->BSP.visible);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06EB10
-/* 0A3640 7F06EB10 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0A3644 7F06EB14 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A3648 7F06EB18 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
-/* 0A364C 7F06EB1C AFA5001C */   sw    $a1, 0x1c($sp)
-/* 0A3650 7F06EB20 8FA4001C */  lw    $a0, 0x1c($sp)
-/* 0A3654 7F06EB24 0FC1BA95 */  jal   sub_GAME_7F06EA54
-/* 0A3658 7F06EB28 8C450000 */   lw    $a1, ($v0)
-/* 0A365C 7F06EB2C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0A3660 7F06EB30 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0A3664 7F06EB34 03E00008 */  jr    $ra
-/* 0A3668 7F06EB38 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
