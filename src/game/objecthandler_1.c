@@ -3805,75 +3805,69 @@ void process_17_pointer_to_head(Model* model, ModelNode* bodynode)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F06EA54(void) {
+void sub_GAME_7F06EA54(ModelNode *basenode, bool visible)
+{
+    union ModelRoData *rodata = basenode->Data;
+    ModelNode *node1;
+    ModelNode *node2;
+    ModelNode *loopnode;
 
+    if (visible)
+    {
+        node1 = rodata->BSP.leftChild;
+        node2 = rodata->BSP.rightChild;
+    }
+    else
+    {
+        node1 = rodata->BSP.rightChild;
+        node2 = rodata->BSP.leftChild;
+    }
+
+    if (node1)
+    {
+        // I think what's happening here is there's two groups of siblings,
+        // where node1 and node2 are the head nodes. Either group can be first,
+        // and this is ensuring the node1 group is first.
+        // Note that node2 might be NULL.
+
+        basenode->Child = node1;
+        node1->Prev = NULL;
+
+        // Skip through node1's siblings until node2 is found or the end is
+        // reached
+        loopnode = node1;
+
+        while (loopnode->Next && loopnode->Next != node2)
+        {
+            loopnode = loopnode->Next;
+        }
+
+        loopnode->Next = node2;
+
+        if (node2)
+        {
+            // Append node2 and its siblings to node1's siblings
+            node2->Prev = loopnode;
+            loopnode = node2;
+
+            while (loopnode->Next && loopnode->Next != node1)
+            {
+                loopnode = loopnode->Next;
+            }
+
+            loopnode->Next = NULL;
+        }
+    }
+    else
+    {
+        basenode->Child = node2;
+
+        if (node2)
+        {
+            node2->Prev = NULL;
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06EA54
-/* 0A3584 7F06EA54 10A00004 */  beqz  $a1, .L7F06EA68
-/* 0A3588 7F06EA58 8C820004 */   lw    $v0, 4($a0)
-/* 0A358C 7F06EA5C 8C430018 */  lw    $v1, 0x18($v0)
-/* 0A3590 7F06EA60 10000003 */  b     .L7F06EA70
-/* 0A3594 7F06EA64 8C45001C */   lw    $a1, 0x1c($v0)
-.L7F06EA68:
-/* 0A3598 7F06EA68 8C43001C */  lw    $v1, 0x1c($v0)
-/* 0A359C 7F06EA6C 8C450018 */  lw    $a1, 0x18($v0)
-.L7F06EA70:
-/* 0A35A0 7F06EA70 10600022 */  beqz  $v1, .L7F06EAFC
-/* 0A35A4 7F06EA74 00000000 */   nop   
-/* 0A35A8 7F06EA78 AC830014 */  sw    $v1, 0x14($a0)
-/* 0A35AC 7F06EA7C 8C66000C */  lw    $a2, 0xc($v1)
-/* 0A35B0 7F06EA80 AC600010 */  sw    $zero, 0x10($v1)
-/* 0A35B4 7F06EA84 00601025 */  move  $v0, $v1
-/* 0A35B8 7F06EA88 10C0000A */  beqz  $a2, .L7F06EAB4
-/* 0A35BC 7F06EA8C 00000000 */   nop   
-/* 0A35C0 7F06EA90 10A60008 */  beq   $a1, $a2, .L7F06EAB4
-/* 0A35C4 7F06EA94 00000000 */   nop   
-/* 0A35C8 7F06EA98 8C44000C */  lw    $a0, 0xc($v0)
-/* 0A35CC 7F06EA9C 00801025 */  move  $v0, $a0
-.L7F06EAA0:
-/* 0A35D0 7F06EAA0 8C84000C */  lw    $a0, 0xc($a0)
-/* 0A35D4 7F06EAA4 10800003 */  beqz  $a0, .L7F06EAB4
-/* 0A35D8 7F06EAA8 00000000 */   nop   
-/* 0A35DC 7F06EAAC 54A4FFFC */  bnel  $a1, $a0, .L7F06EAA0
-/* 0A35E0 7F06EAB0 00801025 */   move  $v0, $a0
-.L7F06EAB4:
-/* 0A35E4 7F06EAB4 10A00014 */  beqz  $a1, .L7F06EB08
-/* 0A35E8 7F06EAB8 AC45000C */   sw    $a1, 0xc($v0)
-/* 0A35EC 7F06EABC 8CA4000C */  lw    $a0, 0xc($a1)
-/* 0A35F0 7F06EAC0 ACA20010 */  sw    $v0, 0x10($a1)
-/* 0A35F4 7F06EAC4 00A01025 */  move  $v0, $a1
-/* 0A35F8 7F06EAC8 1080000A */  beqz  $a0, .L7F06EAF4
-/* 0A35FC 7F06EACC 00000000 */   nop   
-/* 0A3600 7F06EAD0 10640008 */  beq   $v1, $a0, .L7F06EAF4
-/* 0A3604 7F06EAD4 00000000 */   nop   
-/* 0A3608 7F06EAD8 8CA4000C */  lw    $a0, 0xc($a1)
-/* 0A360C 7F06EADC 00801025 */  move  $v0, $a0
-.L7F06EAE0:
-/* 0A3610 7F06EAE0 8C84000C */  lw    $a0, 0xc($a0)
-/* 0A3614 7F06EAE4 10800003 */  beqz  $a0, .L7F06EAF4
-/* 0A3618 7F06EAE8 00000000 */   nop   
-/* 0A361C 7F06EAEC 5464FFFC */  bnel  $v1, $a0, .L7F06EAE0
-/* 0A3620 7F06EAF0 00801025 */   move  $v0, $a0
-.L7F06EAF4:
-/* 0A3624 7F06EAF4 03E00008 */  jr    $ra
-/* 0A3628 7F06EAF8 AC40000C */   sw    $zero, 0xc($v0)
-
-.L7F06EAFC:
-/* 0A362C 7F06EAFC 10A00002 */  beqz  $a1, .L7F06EB08
-/* 0A3630 7F06EB00 AC850014 */   sw    $a1, 0x14($a0)
-/* 0A3634 7F06EB04 ACA00010 */  sw    $zero, 0x10($a1)
-.L7F06EB08:
-/* 0A3638 7F06EB08 03E00008 */  jr    $ra
-/* 0A363C 7F06EB0C 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
