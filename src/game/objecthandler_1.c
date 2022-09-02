@@ -382,10 +382,11 @@ void return_null(void) {
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F06C474(void) {
+void sub_GAME_7F06C474(Model* model, coord3d* coord) {
 
 }
 #else
+void sub_GAME_7F06C474(Model* model, coord3d* coord);
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F06C474
@@ -453,8 +454,8 @@ glabel sub_GAME_7F06C474
 
 
 
-void sub_GAME_7F06C550(void) {
-  sub_GAME_7F06C474();
+void sub_GAME_7F06C550(Model* model, coord3d* coord) {
+  sub_GAME_7F06C474(model, coord);
 }
 
 
