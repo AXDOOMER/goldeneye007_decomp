@@ -887,7 +887,7 @@ typedef union
             coord3d    Vector;     /*0xC*/
             ModelNode *leftChild;  /*0x18 back/first */
             ModelNode *rightChild; /*0x1C front/last */
-            u16        reserved;   /*0x20 padding or u32*/
+            s16        reserved;   /*0x20 padding or u32*/
             u16        number;     /*0x22*/
         } ModelRoData_BSPRecord;
 
