@@ -1050,6 +1050,12 @@ typedef union
             u16 number; //referenced by extract_id_from_object_structure_microcode()
         } ModelRoData_HeadPlaceholderRecord;
 
+        typedef struct ModelRwData_HeadPlaceholderRecord
+        {
+            struct ModelFileHeader *ModelFileHeader;
+            void *RwDatas;
+        } ModelRwData_HeadPlaceholderRecord;
+
         /**
          *  Opcode 24 0x18
          *  Full Display List with Collision Table
@@ -1102,6 +1108,7 @@ typedef union
     {
         struct ModelRwData_LODRecord LOD;
         struct ModelRwData_SwitchRecord Switch;
+        struct ModelRwData_HeadPlaceholderRecord HeadPlaceholder;
     };
 
 

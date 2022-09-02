@@ -3786,41 +3786,23 @@ void process_12_handle_switch(Model* model, ModelNode* node)
 }
 
 
-#ifdef NONMATCHING
-void process_17_pointer_to_head(void) {
+void process_17_pointer_to_head(Model* model, ModelNode* bodynode)
+{
+    struct ModelRwData_HeadPlaceholderRecord *rwdata = extract_id_from_object_structure_microcode(model, bodynode);
 
+    if (rwdata->ModelFileHeader)
+    {
+        ModelNode *headnode = rwdata->ModelFileHeader->RootNode;
+
+        bodynode->Child = headnode;
+
+        while (headnode)
+        {
+            headnode->Parent = bodynode;
+            headnode = headnode->Next;
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel process_17_pointer_to_head
-/* 0A3538 7F06EA08 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0A353C 7F06EA0C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A3540 7F06EA10 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
-/* 0A3544 7F06EA14 AFA5001C */   sw    $a1, 0x1c($sp)
-/* 0A3548 7F06EA18 8C440000 */  lw    $a0, ($v0)
-/* 0A354C 7F06EA1C 8FA5001C */  lw    $a1, 0x1c($sp)
-/* 0A3550 7F06EA20 50800009 */  beql  $a0, $zero, .L7F06EA48
-/* 0A3554 7F06EA24 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0A3558 7F06EA28 8C830000 */  lw    $v1, ($a0)
-/* 0A355C 7F06EA2C 10600005 */  beqz  $v1, .L7F06EA44
-/* 0A3560 7F06EA30 ACA30014 */   sw    $v1, 0x14($a1)
-/* 0A3564 7F06EA34 AC650008 */  sw    $a1, 8($v1)
-.L7F06EA38:
-/* 0A3568 7F06EA38 8C63000C */  lw    $v1, 0xc($v1)
-/* 0A356C 7F06EA3C 5460FFFE */  bnezl $v1, .L7F06EA38
-/* 0A3570 7F06EA40 AC650008 */   sw    $a1, 8($v1)
-.L7F06EA44:
-/* 0A3574 7F06EA44 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F06EA48:
-/* 0A3578 7F06EA48 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0A357C 7F06EA4C 03E00008 */  jr    $ra
-/* 0A3580 7F06EA50 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
