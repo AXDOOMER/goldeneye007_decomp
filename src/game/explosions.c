@@ -3899,9 +3899,9 @@ void sub_GAME_7F09F254(coord3d *arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
     ptr_ejected_casing_buf[numCasingEntries].unk38[2].unk0F = 0xdc;
     ptr_ejected_casing_buf[numCasingEntries].unk38[3].unk0F = 0xdc;
 
-    ptr_ejected_casing_buf[numCasingEntries].unk10 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 6.2831855f;
-    ptr_ejected_casing_buf[numCasingEntries].unk14 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 6.2831855f;
-    ptr_ejected_casing_buf[numCasingEntries].unk18 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 6.2831855f;
+    ptr_ejected_casing_buf[numCasingEntries].unk10 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * M_TAU_F;
+    ptr_ejected_casing_buf[numCasingEntries].unk14 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * M_TAU_F;
+    ptr_ejected_casing_buf[numCasingEntries].unk18 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * M_TAU_F;
 
     ptr_ejected_casing_buf[numCasingEntries].unk28 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.1f;
     ptr_ejected_casing_buf[numCasingEntries].unk2C = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.1f;

@@ -3916,12 +3916,12 @@ void process_07_unknown(Model *model, ModelNode *node)
 
     if ((coord_multiplied < 0.0f) && (ratio > 0.0f))
     {
-        ratio = 6.2831855f - ratio;
+        ratio = M_TAU_F - ratio;
     }
 
-    index1 = (theta * 64.0f) / 6.2831855f;
+    index1 = (theta * 64.0f) / M_TAU_F;
 
-    index2 = (s32) ((ratio * 65536.0f) / 6.2831855f);
+    index2 = (s32) ((ratio * M_U16_MAX_VALUE_F) / M_TAU_F);
     index2 += D_800360C4[index1].unk04;
     index2 = index2 >> D_800360C4[index1].unk0C;
 
@@ -4873,9 +4873,9 @@ void sub_GAME_7F06F878(Model *model, void *anim, s32 arg2, f32 startframe, f32 h
             {
                 temp_f0_2      = temp_v0->unk30 + sp58;
                 temp_v0->unk20 = temp_f0_2;
-                if (temp_f0_2 >= 6.2831855f)
+                if (temp_f0_2 >= M_TAU_F)
                 {
-                    temp_v0->unk20 -= 6.2831855f;
+                    temp_v0->unk20 -= M_TAU_F;
                 }
             }
             temp_v0->unk1 = 1;
@@ -4902,16 +4902,16 @@ void sub_GAME_7F06F878(Model *model, void *anim, s32 arg2, f32 startframe, f32 h
             phi_f14                   = temp_f14_2;
             if (temp_f14_2 < 0.0f)
             {
-                phi_f14 = temp_f14_2 + 6.2831855f;
+                phi_f14 = temp_f14_2 + M_TAU_F;
             }
             temp_v0->unk30 = sub_GAME_7F06D0CC(temp_f12_2, phi_f14, model->unk2C);
             if (temp_v0->unk18 == 0.0f)
             {
                 temp_f0_3      = temp_v0->unk30 + sp58;
                 temp_v0->unk20 = temp_f0_3;
-                if (temp_f0_3 >= 6.2831855f)
+                if (temp_f0_3 >= M_TAU_F)
                 {
-                    temp_v0->unk20 -= 6.2831855f;
+                    temp_v0->unk20 -= M_TAU_F;
                 }
             }
             temp_v0->unk1 = 1;

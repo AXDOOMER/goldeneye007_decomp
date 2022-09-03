@@ -313,7 +313,7 @@ void domakedefaultobj(s32 arg0, ObjectRecord *arg1, ? cmdindex)
         phi_f6 = temp_f6 + 4294967296.0f;
     }
     sp78              = phi_f6 * 0.00390625f;
-    arg1->mtx.m[1][3] = (bitwise s32)(arg1->mtx.m[1][3] / 65536.0f);
+    arg1->mtx.m[1][3] = (bitwise s32)(arg1->mtx.m[1][3] / M_U16_MAX_VALUE_F);
     phi_v1            = 1;
     if (getPlayerCount() >= 2)
     {
@@ -2298,7 +2298,7 @@ void setupSingleMonitor(s32 arg0, void* monitor, s32 cmdindex)
         modelLoad(modelnum);
 
         scale =  monitor->extrascale * (1.0f / 256.0f);
-        monitor->unk74 = (bitwise s32) ((f32) monitor->unk74 / 65536.0f);
+        monitor->unk74 = (bitwise s32) ((f32) monitor->unk74 / M_U16_MAX_VALUE_F);
 
         if (getPlayerCount() >= 2) {
             monitor->hidden2 |=  4;

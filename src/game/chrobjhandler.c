@@ -23913,8 +23913,8 @@ void *process_monitor_animation_microcode(Model *arg0, ModelNode *arg1, MonitorR
         spA8    = temp_t8;
         spA4    = arg1->Data;
         spA0    = extract_id_from_object_structure_microcode(arg0, arg1);
-        phi_f2  = 65536.0f;
-        phi_f2  = 65536.0f;
+        phi_f2  = M_U16_MAX_VALUE_F;
+        phi_f2  = M_U16_MAX_VALUE_F;
         phi_s1  = 0;
         do
         {
@@ -24080,18 +24080,18 @@ void *process_monitor_animation_microcode(Model *arg0, ModelNode *arg1, MonitorR
                     break;
                 case 14:
                     arg2->offset = temp_v0 + 2;
-                    arg2->rot    = (temp_v1->unk4 * 6.2831855f) / phi_f2;
+                    arg2->rot    = (temp_v1->unk4 * M_TAU_F) / phi_f2;
                     break;
                 case 15:
-                    arg2->rot += (g_GlobalTimerDelta * temp_v1->unk4 * 6.2831855f) / phi_f2;
+                    arg2->rot += (g_GlobalTimerDelta * temp_v1->unk4 * M_TAU_F) / phi_f2;
                     temp_f12 = arg2->rot;
-                    if (temp_f12 >= 6.2831855f)
+                    if (temp_f12 >= M_TAU_F)
                     {
-                        arg2->rot = temp_f12 - 6.2831855f;
+                        arg2->rot = temp_f12 - M_TAU_F;
                     }
                     if (arg2->rot < 0.0f)
                     {
-                        arg2->rot += 6.2831855f;
+                        arg2->rot += M_TAU_F;
                     }
                     arg2->offset += 2;
                     break;
@@ -39697,7 +39697,7 @@ void sub_GAME_7F051028(ObjectRecord *arg0, PropRecord *arg1)
 
 void hatAssignToChr(ObjectRecord* hat, ChrRecord* chr)
 {
-    hat->damage = (*(s32*)&hat->damage / 65536.0f);
+    hat->damage = (*(s32*)&hat->damage / M_U16_MAX_VALUE_F);
     sub_GAME_7F051028(hat, chr);
 }
 
@@ -41682,20 +41682,20 @@ void sub_GAME_7F0526EC(DoorRecord *door, Mtxf *rhs)
         {
             if (door->flags & PROPFLAG_NO_AI_INTERACTION)
             {
-                matrix_4x4_set_rotation_around_z(6.2831855f - ((door->openPosition * 6.2831855f) / 360.0f), &lhs);
+                matrix_4x4_set_rotation_around_z(M_TAU_F - ((door->openPosition * M_TAU_F) / 360.0f), &lhs);
             }
             else
             {
-                matrix_4x4_set_rotation_around_z((door->openPosition * 6.2831855f) / 360.0f, &lhs);
+                matrix_4x4_set_rotation_around_z((door->openPosition * M_TAU_F) / 360.0f, &lhs);
             }
         }
         else if (door->flags & PROPFLAG_NO_AI_INTERACTION)
         {
-            matrix_4x4_set_rotation_around_y(6.2831855f - ((door->openPosition * 6.2831855f) / 360.0f), &lhs);
+            matrix_4x4_set_rotation_around_y(M_TAU_F - ((door->openPosition * M_TAU_F) / 360.0f), &lhs);
         }
         else
         {
-            matrix_4x4_set_rotation_around_y((door->openPosition * 6.2831855f) / 360.0f, &lhs);
+            matrix_4x4_set_rotation_around_y((door->openPosition * M_TAU_F) / 360.0f, &lhs);
         }
 
         matrix_4x4_multiply_in_place(&lhs, &rhs);

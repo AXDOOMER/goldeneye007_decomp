@@ -9647,17 +9647,17 @@ s32 bondviewTankCollisionStatus(struct coord3d *arg0, StandTile *arg1, f32 arg2,
 
             temp_f0 = arg2 + g_TankTurretOrientationAngleRad;
 
-            if (temp_f0 >= 6.2831855f)
+            if (temp_f0 >= M_TAU_F)
             {
-                temp_f0 -= 6.2831855f;
+                temp_f0 -= M_TAU_F;
             }
 
             if (temp_f0 < 0.0f)
             {
-                temp_f0 += 6.2831855f;
+                temp_f0 += M_TAU_F;
             }
 
-            matrix_4x4_set_rotation_around_y(6.2831855f - temp_f0, &sp34);
+            matrix_4x4_set_rotation_around_y(M_TAU_F - temp_f0, &sp34);
             matrix_4x4_rotate_vector_in_place(&sp34, (f32*)&sp74);
 
             sp74.f[0] *= sp8C->scale;
@@ -9967,14 +9967,14 @@ void bondviewSet3dCoord7F07CEB0(coord3d *arg0)
 
     f = g_TankOrientationAngle + g_TankTurretOrientationAngleRad;
 
-    if (f >= 6.2831855f)
+    if (f >= M_TAU_F)
     {
-        f = f - 6.2831855f;
+        f = f - M_TAU_F;
     }
 
     if (f < 0.0f)
     {
-        f = f + 6.2831855f;
+        f = f + M_TAU_F;
     }
 
     arg0->f[0] = -sinf(f) * cosf(g_TankTurretVerticalAngle);
@@ -25173,14 +25173,14 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
         sp358 = g_CurrentPlayer->speedtheta * g_GlobalTimerDelta * 0.017453292f * 3.5f;
         sp35C = g_TankOrientationAngle + sp358;
         
-        if (sp35C >= 6.2831855f)
+        if (sp35C >= M_TAU_F)
         {
-            sp35C -= 6.2831855f;
+            sp35C -= M_TAU_F;
         }
         
         if (sp35C < 0.0f)
         {
-            sp35C += 6.2831855f;
+            sp35C += M_TAU_F;
         }
 
         if (bondviewTankCollisionStatus(
@@ -25303,35 +25303,35 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
 
         sp354 = g_TankTurretOrientationAngleRad;
         g_TankTurretAngle += g_TankTurretTurn;
-        if (g_TankTurretAngle >= 6.2831855f)
+        if (g_TankTurretAngle >= M_TAU_F)
         {
-            g_TankTurretAngle -= 6.2831855f;
+            g_TankTurretAngle -= M_TAU_F;
         }
 
         if (g_TankTurretAngle < 0.0f)
         {
-            g_TankTurretAngle += 6.2831855f;
+            g_TankTurretAngle += M_TAU_F;
         }
 
         tank_tick_increment = (g_CurrentPlayer->speedtheta * 3.5f * 0.017453292f * 4.0f) + g_TankTurretAngle;
        
         if (tank_tick_increment < 0.0f)
         {
-            tank_tick_increment += 6.2831855f;
+            tank_tick_increment += M_TAU_F;
         }
         
-        if (tank_tick_increment >= 6.2831855f)
+        if (tank_tick_increment >= M_TAU_F)
         {
-            tank_tick_increment -= 6.2831855f;
+            tank_tick_increment -= M_TAU_F;
         }
 
         if ((tank_tick_increment - g_TankTurretOrientationAngleRad) >= 3.1415927f)
         {
-            tank_tick_increment -= 6.2831855f;
+            tank_tick_increment -= M_TAU_F;
         }
         else if ((tank_tick_increment - g_TankTurretOrientationAngleRad) < -3.1415927f)
         {
-            tank_tick_increment += 6.2831855f;
+            tank_tick_increment += M_TAU_F;
         }
 
         do
@@ -25346,15 +25346,15 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
 
         g_TankTurretOrientationAngleRad = D_80036478 * 0.07999998f;
 
-        if (g_TankTurretOrientationAngleRad >= 6.2831855f)
+        if (g_TankTurretOrientationAngleRad >= M_TAU_F)
         {
-            g_TankTurretOrientationAngleRad -= 6.2831855f;
+            g_TankTurretOrientationAngleRad -= M_TAU_F;
             D_80036478 = g_TankTurretOrientationAngleRad / 0.07999998f;
         }
         
         if (g_TankTurretOrientationAngleRad < 0.0f)
         {
-            g_TankTurretOrientationAngleRad += 6.2831855f;
+            g_TankTurretOrientationAngleRad += M_TAU_F;
             D_80036478 = g_TankTurretOrientationAngleRad / 0.07999998f;
         }
         
@@ -25384,7 +25384,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             sp2F4.f[0] = flt_CODE_bss_800799A8.f[0] - sp2F4.f[0];
             sp2F4.f[2] = flt_CODE_bss_800799A8.f[2] - sp2F4.f[2];
 
-            matrix_4x4_set_rotation_around_y(6.2831855f - g_TankOrientationAngle, &sp2B4);
+            matrix_4x4_set_rotation_around_y(M_TAU_F - g_TankOrientationAngle, &sp2B4);
             matrix_scalar_multiply(temp_tank->model->scale, &sp2B4);
             matrix_4x4_rotate_vector_in_place(&sp2B4, &sp2F4);
             bondviewCalcUpdatePlayerCollision(&sp2F4, 1);
@@ -25405,7 +25405,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             (ftemp3 * 4.0f )+
             g_TankOrientationAngle  +
             (ftemp2 * 4.0f)            
-            ) * 360.0f / 6.2831855f;
+            ) * 360.0f / M_TAU_F;
 
         while (g_CurrentPlayer->vv_theta < 0.0f)
         {
@@ -25466,7 +25466,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             if (ptr_playerstank != NULL)
             {
                 tank_obj = ptr_playerstank->obj;
-                matrix_4x4_set_rotation_around_y(6.2831855f - g_TankOrientationAngle, &sp268);
+                matrix_4x4_set_rotation_around_y(M_TAU_F - g_TankOrientationAngle, &sp268);
                 matrix_scalar_multiply(tank_obj->model->scale, &sp268);
                 
                 sp25C.f[0] = flt_CODE_bss_800799A8.f[0];
@@ -25478,7 +25478,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
                 sp25C.f[1] += tank_obj->runtime_pos.f[1];
                 sp25C.f[2] += tank_obj->runtime_pos.f[2];
 
-                sp258 = ((g_TankOrientationAngle + g_TankTurretOrientationAngleRad) * 360.0f) / 6.2831855f;
+                sp258 = ((g_TankOrientationAngle + g_TankTurretOrientationAngleRad) * 360.0f) / M_TAU_F;
                 sp254 = g_CurrentPlayer->vv_verta;
                 if (sp254 < -20.0f)
                 {
@@ -25491,7 +25491,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
                     g_TankEnteringSitHeight = 1.0f;
                 }
 
-                g_TankEnteringSitHeightRemain = (cosf(g_TankEnteringSitHeight * 6.2831855f * 0.5f) + 1.0f) * 0.5f;
+                g_TankEnteringSitHeightRemain = (cosf(g_TankEnteringSitHeight * M_TAU_F * 0.5f) + 1.0f) * 0.5f;
 
                 // sp17C is unused extra assignment
                 sp17C = g_CurrentPlayer->vv_verta = (
@@ -25672,8 +25672,8 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
         
         bondviewMoveAnimationTick(0.0f, 0.0f, 0.0f);
 
-        sp3AC.f[0] += g_CurrentPlayer->speedforwards * sinf(6.2831855f - g_TankOrientationAngle) * g_GlobalTimerDelta;
-        sp3AC.f[2] += g_CurrentPlayer->speedforwards * cosf(6.2831855f - g_TankOrientationAngle) * g_GlobalTimerDelta;
+        sp3AC.f[0] += g_CurrentPlayer->speedforwards * sinf(M_TAU_F - g_TankOrientationAngle) * g_GlobalTimerDelta;
+        sp3AC.f[2] += g_CurrentPlayer->speedforwards * cosf(M_TAU_F - g_TankOrientationAngle) * g_GlobalTimerDelta;
 
         bondviewCalcUpdatePlayerCollision(&sp3AC, 1);
         
@@ -26003,7 +26003,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
         sp140_tank_as_TankRecord->turret_orientation_angle = g_TankTurretOrientationAngleRad;
         sp140_tank_as_TankRecord->tank_orientation_angle = g_TankOrientationAngle;
 
-        matrix_4x4_set_rotation_around_y(6.2831855f - g_TankOrientationAngle, &spF0);
+        matrix_4x4_set_rotation_around_y(M_TAU_F - g_TankOrientationAngle, &spF0);
         matrix_scalar_multiply(sp138_tank_as_ObjectRecord->model->scale, &spF0);
         
         spE4.f[0] = -flt_CODE_bss_800799A8.f[0];

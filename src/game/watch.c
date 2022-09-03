@@ -2196,11 +2196,11 @@ f32 sub_GAME_7F0A6A2C(f32 arg0)
 {
     if (arg0 > 3.1415927f)
     {
-        arg0 = arg0 - 6.2831855f;
+        arg0 = arg0 - M_TAU_F;
     }
     else if (arg0 < -3.1415927f)
     {
-        arg0 = arg0 + 6.2831855f;
+        arg0 = arg0 + M_TAU_F;
     }
     return arg0;
 }
@@ -2277,9 +2277,9 @@ void sub_GAME_7F0A6A80(void)
         D_80040B00 = 0xF;
     }
     #ifdef VERSION_US
-    D_80040B14 += ((D_80040B1C * speedgraphframes * 6.2831855f) / 360.0f);
+    D_80040B14 += ((D_80040B1C * speedgraphframes * M_TAU_F) / 360.0f);
     #else
-    D_80040B14 += ((D_80040B1C * jpD_800484D0 * 6.2831855f) / 360.0f);
+    D_80040B14 += ((D_80040B1C * jpD_800484D0 * M_TAU_F) / 360.0f);
     #endif
 
     D_80040B14 = sub_GAME_7F0A6A2C(D_80040B14);

@@ -2572,7 +2572,7 @@ void gunSetBondWeaponSway(f32 arg0, f32 arg1, f32 speed_verta, f32 speed_theta)
     }
     else if (arg1 > 0.1f)
     {
-        ft = cosf(((arg1 - 0.1f) * 6.2831855f) / 2.8f);
+        ft = cosf(((arg1 - 0.1f) * M_TAU_F) / 2.8f);
         ft2 = (1.0f - ft);
         g_CurrentPlayer->gunposamplitude = 0.8f * ft2 + 0.2f;
     }
