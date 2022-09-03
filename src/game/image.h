@@ -68,6 +68,7 @@ struct texcacheitem {
     u8 heights[7];
 };
 
+extern struct texcacheitem g_TexCacheItems[];
 extern struct texpool *ptr_texture_alloc_start;
 extern struct image_entry g_Textures[];
 extern s32 g_TexCacheCount;
