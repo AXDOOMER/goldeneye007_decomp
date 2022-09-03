@@ -3457,7 +3457,7 @@ Gfx *bgLevelRender(Gfx *arg0)
 {
     gSPSetLights1(arg0++, GlobalLight);
     gSPLookAt(arg0++, sub_GAME_7F078474());
-    gSPSegment(arg0++, 0x0F, ptr_bg_data);
+    gSPSegment(arg0++, SPSEGMENT_BG_DL, ptr_bg_data);
 
     if (dword_CODE_bss_8007FF88 == 1)
     {
@@ -6410,7 +6410,7 @@ Gfx *sub_GAME_7F0B677C(Gfx *arg0, s32 room_index)
         {
             arg0 = sub_GAME_7F0BC9C4(arg0, room_index);
 
-            gSPSegment(arg0++, 0x0E, OS_K0_TO_PHYSICAL(array_room_info[room_index].ptr_point_index));
+            gSPSegment(arg0++, SPSEGMENT_BG_VTX, OS_K0_TO_PHYSICAL(array_room_info[room_index].ptr_point_index));
             gSPDisplayList(arg0++, OS_K0_TO_PHYSICAL(array_room_info[room_index].ptr_expanded_mapping_info));
 
             array_room_info[room_index].model_bin_loaded = 1;
@@ -6442,7 +6442,7 @@ Gfx *sub_GAME_7F0B6898(Gfx *arg0, s32 room_index)
         {
             arg0 = sub_GAME_7F0BC9C4(arg0, room_index);
 
-            gSPSegment(arg0++, 0x0E, OS_K0_TO_PHYSICAL(array_room_info[room_index].ptr_point_index));
+            gSPSegment(arg0++, SPSEGMENT_BG_VTX, OS_K0_TO_PHYSICAL(array_room_info[room_index].ptr_point_index));
             gSPDisplayList(arg0++, OS_K0_TO_PHYSICAL(array_room_info[room_index].ptr_secondary_expanded_mapping_info));
 
             array_room_info[room_index].model_bin_loaded = 1;

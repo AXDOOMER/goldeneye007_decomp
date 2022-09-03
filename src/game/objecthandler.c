@@ -72,7 +72,7 @@ s32 g_ModelDistanceDisabled = 0;
 //D:80036088
 f32 g_ModelDistanceScale = 1.0;
 //D:8003608C
-s32 vtxallocator = 0;
+struct Vertex* (*vtxallocator)(s32 numvertices) = NULL;
 //D:80036090
 u32 D_80036090 = 0;
 //D:80036094

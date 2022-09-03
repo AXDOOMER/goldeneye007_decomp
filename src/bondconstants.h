@@ -16,8 +16,6 @@
 #include <ultra64.h>
 #include <CPPLib.h>
 
-#define ARRAYCOUNT(a) (s32)(sizeof(a) / sizeof(a[0]))
-
 #pragma region Tools
 #ifdef __INTELLISENSE__
 /* This is only a helper for VS as the IF macro is a little complex for it to work out */
@@ -2044,6 +2042,20 @@ typedef enum WAYMODE
     WAYMODE_MAGIC
 } WAYMODE;
 
+typedef enum SPSEGMENT
+{
+    SPSEGMENT_PHYSICAL   = 0,
+    SPSEGMENT_UNKNOWN    = 1,
+    SPSEGMENT_GETITLE    = 2,
+    SPSEGMENT_MODEL_MTX  = 3,
+    SPSEGMENT_MODEL_VTX  = 4,
+    SPSEGMENT_MODEL_COL1 = 5,
+    SPSEGMENT_MODEL_COL2 = 6,
+    SPSEGMENT_BG_COL     = 13,
+    SPSEGMENT_BG_VTX     = 14,
+    SPSEGMENT_BG_DL      = 15
+} SPSEGMENT;
+
 #pragma region Object Instance Stuff
     typedef enum BODIES
     {
@@ -3212,7 +3224,10 @@ typedef enum WAYMODE
 
 #define forever for (;;)
 
+#define ARRAYCOUNT(a) (s32)(sizeof(a) / sizeof(a[0]))
+#define ALIGN8(val)         (((val) + 0x7 | 0x7) ^ 0x7)
 
 #pragma endregion
+
 #endif
 

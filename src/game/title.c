@@ -788,7 +788,7 @@ Gfx *retrieve_display_rareware_logo(Gfx *gdl)
 #endif
 
     D_8002A7D0 = (1 - D_8002A7D0);
-    gSPSegment(gdl++, 2, osVirtualToPhysical(virtualaddress));
+    gSPSegment(gdl++, SPSEGMENT_GETITLE, osVirtualToPhysical(virtualaddress));
     if ((gunbarrel_mode == 0) || (gunbarrel_mode == 1)) {
         s32 var1;
         s32 var2;

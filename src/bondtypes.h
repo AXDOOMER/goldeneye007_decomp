@@ -656,6 +656,28 @@ typedef union
 #pragma region ModelTypes
 
     /**
+     * Taken from PD, unsure that all of the fields line up
+     */
+    typedef struct ModelRenderData {
+        /*0x00*/ Mtxf *unk00;
+        /*0x04*/ bool zbufferenabled;
+        /*0x08*/ u32 flags;
+        /*0x0c*/ Gfx *gdl;
+        /*0x10*/ Mtxf *unk10;
+        /*0x14*/ u32 unk14;
+        /*0x18*/ u32 unk18;
+        /*0x1c*/ u32 unk1c;
+        /*0x20*/ u32 unk20;
+        /*0x24*/ u32 unk24;
+        /*0x28*/ u32 unk28;
+        /*0x2c*/ u32 unk2c;
+        /*0x30*/ s32 unk30;
+        /*0x34*/ u32 envcolour;
+        /*0x38*/ u32 fogcolour;
+        /*0x3c*/ u32 cullmode;
+    } ModelRenderData;
+
+    /**
      * Binary compatible with gbi Vtx but more verbose and  with "collision" 
      * information in place of "flags" for use in Openflight Records below
      */
@@ -1045,7 +1067,7 @@ typedef union
          */
         typedef struct ModelRoData_DisplayListPrimaryRecord
         {
-            u16     numVertices; /*0x0*/
+            s32     numVertices; /*0x0*/
             Vertex *Vertices;    /*0x4*/
             Gfx    *Primary;     /*0x8*/
             u32     reserved;    /*0xC*/
