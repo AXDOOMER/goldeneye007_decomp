@@ -6125,28 +6125,9 @@ glabel sub_GAME_7F0B3044
 )
 #endif
 
-
-
-
-
-#ifdef NONMATCHING
 Gfx * sub_GAME_7F0B312C(Gfx *arg0, s32 arg1) {
-    // Node 0
     return arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B312C
-/* 0E7C5C 7F0B312C AFA50004 */  sw    $a1, 4($sp)
-/* 0E7C60 7F0B3130 03E00008 */  jr    $ra
-/* 0E7C64 7F0B3134 00801025 */   move  $v0, $a0
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 // Only difference is an extra sw a1,0x34(sp) appearing.
