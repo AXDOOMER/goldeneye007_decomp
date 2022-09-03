@@ -2087,42 +2087,16 @@ def_7F0CE2B4:
 #endif
 
 
+void sub_GAME_7F0CE794(Gfx *arg0, Gfx *arg1, s32 arg2)
+{
+    arg2 = (arg2 >> 3);
+    arg0 = arg0 + (arg2 - 1);
+    arg1 = arg1 + (arg2 - 1);
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0CE794(void) {
-
+    while (arg2--)
+    {
+        arg1->force_structure_alignment = arg0->force_structure_alignment;
+        arg1--;
+        arg0--;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0CE794
-/* 1032C4 7F0CE794 000670C3 */  sra   $t6, $a2, 3
-/* 1032C8 7F0CE798 25C2FFFF */  addiu $v0, $t6, -1
-/* 1032CC 7F0CE79C 01C03025 */  move  $a2, $t6
-/* 1032D0 7F0CE7A0 000218C0 */  sll   $v1, $v0, 3
-/* 1032D4 7F0CE7A4 00642021 */  addu  $a0, $v1, $a0
-/* 1032D8 7F0CE7A8 00652821 */  addu  $a1, $v1, $a1
-/* 1032DC 7F0CE7AC 01C03825 */  move  $a3, $t6
-/* 1032E0 7F0CE7B0 10C0000A */  beqz  $a2, .L7F0CE7DC
-/* 1032E4 7F0CE7B4 00403025 */   move  $a2, $v0
-.L7F0CE7B8:
-/* 1032E8 7F0CE7B8 8C980000 */  lw    $t8, ($a0)
-/* 1032EC 7F0CE7BC 8C990004 */  lw    $t9, 4($a0)
-/* 1032F0 7F0CE7C0 00C03825 */  move  $a3, $a2
-/* 1032F4 7F0CE7C4 24A5FFF8 */  addiu $a1, $a1, -8
-/* 1032F8 7F0CE7C8 2484FFF8 */  addiu $a0, $a0, -8
-/* 1032FC 7F0CE7CC ACB80008 */  sw    $t8, 8($a1)
-/* 103300 7F0CE7D0 ACB9000C */  sw    $t9, 0xc($a1)
-/* 103304 7F0CE7D4 14C0FFF8 */  bnez  $a2, .L7F0CE7B8
-/* 103308 7F0CE7D8 24C6FFFF */   addiu $a2, $a2, -1
-.L7F0CE7DC:
-/* 10330C 7F0CE7DC 03E00008 */  jr    $ra
-/* 103310 7F0CE7E0 00000000 */   nop   
-)
-#endif
-
-
-
-
