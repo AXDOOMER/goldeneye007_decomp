@@ -512,7 +512,7 @@ glabel likely_generate_DL_for_image_declaration
 /* 0AB990 7F076E60 3C018000 */  lui   $at, 0x8000
 /* 0AB994 7F076E64 00411825 */  or    $v1, $v0, $at
 /* 0AB998 7F076E68 9464FFF8 */  lhu   $a0, -8($v1)
-/* 0AB99C 7F076E6C 0FC32EC3 */  jal   sub_GAME_7F0CBB0C
+/* 0AB99C 7F076E6C 0FC32EC3 */  jal   texFindInPool
 /* 0AB9A0 7F076E70 00002825 */   move  $a1, $zero
 /* 0AB9A4 7F076E74 92E30006 */  lbu   $v1, 6($s7)
 /* 0AB9A8 7F076E78 0040B025 */  move  $s6, $v0
@@ -1246,11 +1246,11 @@ glabel likely_generate_DL_for_image_declaration
 /* 0AC44C 7F07791C 000E7880 */  sll   $t7, $t6, 2
 /* 0AC450 7F077920 05E1000A */  bgez  $t7, .L7F07794C
 /* 0AC454 7F077924 00000000 */   nop   
-/* 0AC458 7F077928 0FC331C5 */  jal   sub_GAME_7F0CC714
+/* 0AC458 7F077928 0FC331C5 */  jal   texGetWidthAtLod
 /* 0AC45C 7F07792C 02202825 */   move  $a1, $s1
 /* 0AC460 7F077930 0040A825 */  move  $s5, $v0
 /* 0AC464 7F077934 02C02025 */  move  $a0, $s6
-/* 0AC468 7F077938 0FC331FF */  jal   sub_GAME_7F0CC7FC
+/* 0AC468 7F077938 0FC331FF */  jal   texGetHeightAtLod
 /* 0AC46C 7F07793C 02202825 */   move  $a1, $s1
 /* 0AC470 7F077940 0040A025 */  move  $s4, $v0
 /* 0AC474 7F077944 10000008 */  b     .L7F077968

@@ -387,7 +387,7 @@ void sub_GAME_7F0A2160(coord3d* arg0, f32 arg1, f32 arg2)
     ptr_shattered_window_pieces[D_80040940].field_0x10 = arg1;
     ptr_shattered_window_pieces[D_80040940].field_0x14 = 0.0f;
 
-    ptr_shattered_window_pieces[D_80040940].field_0x18 = (randomGetNext() * (1.0f / (f32)UINT_MAX)) * 6.2831855f;
+    ptr_shattered_window_pieces[D_80040940].field_0x18 = (randomGetNext() * (1.0f / (f32)UINT_MAX)) * M_TAU_F;
 
     ptr_shattered_window_pieces[D_80040940].field_0x28 = (randomGetNext() * (1.0f / (f32)UINT_MAX)) * SCALAR_3_7F0A2160;
     ptr_shattered_window_pieces[D_80040940].field_0x2c = (randomGetNext() * (1.0f / (f32)UINT_MAX)) * SCALAR_3_7F0A2160;

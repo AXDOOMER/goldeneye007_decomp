@@ -788,7 +788,7 @@ Gfx *retrieve_display_rareware_logo(Gfx *gdl)
 #endif
 
     D_8002A7D0 = (1 - D_8002A7D0);
-    gSPSegment(gdl++, 2, osVirtualToPhysical(virtualaddress));
+    gSPSegment(gdl++, SPSEGMENT_GETITLE, osVirtualToPhysical(virtualaddress));
     if ((gunbarrel_mode == 0) || (gunbarrel_mode == 1)) {
         s32 var1;
         s32 var2;
@@ -985,7 +985,7 @@ glabel sub_GAME_7F008E80
 /* 03DB04 7F008FD4 AD410008 */  sw    $at, 8($t2)
 /* 03DB08 7F008FD8 8FA50060 */  lw    $a1, 0x60($sp)
 /* 03DB0C 7F008FDC 02203025 */  move  $a2, $s1
-/* 03DB10 7F008FE0 0FC32EBD */  jal   sub_GAME_7F0CBAF4
+/* 03DB10 7F008FE0 0FC32EBD */  jal   texInitPool
 /* 03DB14 7F008FE4 27A40040 */   addiu $a0, $sp, 0x40
 /* 03DB18 7F008FE8 8FA60060 */  lw    $a2, 0x60($sp)
 /* 03DB1C 7F008FEC 8FA70064 */  lw    $a3, 0x64($sp)
@@ -1223,7 +1223,7 @@ glabel sub_GAME_7F008E80
 /* 03B944 7F008F54 AD410008 */  sw    $at, 8($t2)
 /* 03B948 7F008F58 8FA50060 */  lw    $a1, 0x60($sp)
 /* 03B94C 7F008F5C 02203025 */  move  $a2, $s1
-/* 03B950 7F008F60 0FC32C05 */  jal   sub_GAME_7F0CBAF4
+/* 03B950 7F008F60 0FC32C05 */  jal   texInitPool
 /* 03B954 7F008F64 27A40040 */   addiu $a0, $sp, 0x40
 /* 03B958 7F008F68 8FA60060 */  lw    $a2, 0x60($sp)
 /* 03B95C 7F008F6C 8FA70064 */  lw    $a3, 0x64($sp)

@@ -1397,7 +1397,7 @@ s32 do_something_if_object_destroyed(ObjectRecord *obj)
 
 
 #ifndef NONMATCHING
-ModelNode_BoundingBoxRecord *sub_GAME_7F03FFF8(ModelFileHeader *obj)
+ModelRoData_BoundingBoxRecord *sub_GAME_7F03FFF8(ModelFileHeader *obj)
 {
     ModelNode *mdlnext;
 
@@ -1949,7 +1949,7 @@ glabel sub_GAME_7F0407F4
 void sub_GAME_7F04088C(ObjectRecord *baseobj, PadRecord *pad, Mtxf *matrix, StandTile *stan, PadRecord *pad2) //#MATCH
 {
     int                          padd[1];
-    ModelNode_BoundingBoxRecord *modelBoundingBox = sub_GAME_7F03FFF8(baseobj->model->obj); //GetBoundingBox //a0 yes
+    ModelRoData_BoundingBoxRecord *modelBoundingBox = sub_GAME_7F03FFF8(baseobj->model->obj); //GetBoundingBox //a0 yes
     f32                          xmax             = chrpropBBOXGetYmin(modelBoundingBox);    //GetXMax//9c yes
     f32                          ymin             = chrpropBBOXGetYmax(modelBoundingBox);    //GetYMin//98 yes
     coord3d                      newPos;                                                    //8c 90 94 yes
@@ -23913,8 +23913,8 @@ void *process_monitor_animation_microcode(Model *arg0, ModelNode *arg1, MonitorR
         spA8    = temp_t8;
         spA4    = arg1->Data;
         spA0    = extract_id_from_object_structure_microcode(arg0, arg1);
-        phi_f2  = 65536.0f;
-        phi_f2  = 65536.0f;
+        phi_f2  = M_U16_MAX_VALUE_F;
+        phi_f2  = M_U16_MAX_VALUE_F;
         phi_s1  = 0;
         do
         {
@@ -24080,18 +24080,18 @@ void *process_monitor_animation_microcode(Model *arg0, ModelNode *arg1, MonitorR
                     break;
                 case 14:
                     arg2->offset = temp_v0 + 2;
-                    arg2->rot    = (temp_v1->unk4 * 6.2831855f) / phi_f2;
+                    arg2->rot    = (temp_v1->unk4 * M_TAU_F) / phi_f2;
                     break;
                 case 15:
-                    arg2->rot += (g_GlobalTimerDelta * temp_v1->unk4 * 6.2831855f) / phi_f2;
+                    arg2->rot += (g_GlobalTimerDelta * temp_v1->unk4 * M_TAU_F) / phi_f2;
                     temp_f12 = arg2->rot;
-                    if (temp_f12 >= 6.2831855f)
+                    if (temp_f12 >= M_TAU_F)
                     {
-                        arg2->rot = temp_f12 - 6.2831855f;
+                        arg2->rot = temp_f12 - M_TAU_F;
                     }
                     if (arg2->rot < 0.0f)
                     {
-                        arg2->rot += 6.2831855f;
+                        arg2->rot += M_TAU_F;
                     }
                     arg2->offset += 2;
                     break;
@@ -39695,34 +39695,11 @@ void sub_GAME_7F051028(ObjectRecord *arg0, PropRecord *arg1)
 }
 
 
-#ifdef NONMATCHING
-void hatAssignToChr(void) {
-
+void hatAssignToChr(ObjectRecord* hat, ChrRecord* chr)
+{
+    hat->damage = (*(s32*)&hat->damage / M_U16_MAX_VALUE_F);
+    sub_GAME_7F051028(hat, chr);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel hatAssignToChr
-/* 085BB4 7F051084 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 085BB8 7F051088 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 085BBC 7F05108C 8C8E0074 */  lw    $t6, 0x74($a0)
-/* 085BC0 7F051090 3C014780 */  li    $at, 0x47800000 # 65536.000000
-/* 085BC4 7F051094 44814000 */  mtc1  $at, $f8
-/* 085BC8 7F051098 448E2000 */  mtc1  $t6, $f4
-/* 085BCC 7F05109C 00000000 */  nop   
-/* 085BD0 7F0510A0 468021A0 */  cvt.s.w $f6, $f4
-/* 085BD4 7F0510A4 46083283 */  div.s $f10, $f6, $f8
-/* 085BD8 7F0510A8 0FC1440A */  jal   sub_GAME_7F051028
-/* 085BDC 7F0510AC E48A0074 */   swc1  $f10, 0x74($a0)
-/* 085BE0 7F0510B0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 085BE4 7F0510B4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 085BE8 7F0510B8 03E00008 */  jr    $ra
-/* 085BEC 7F0510BC 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
@@ -41705,20 +41682,20 @@ void sub_GAME_7F0526EC(DoorRecord *door, Mtxf *rhs)
         {
             if (door->flags & PROPFLAG_NO_AI_INTERACTION)
             {
-                matrix_4x4_set_rotation_around_z(6.2831855f - ((door->openPosition * 6.2831855f) / 360.0f), &lhs);
+                matrix_4x4_set_rotation_around_z(M_TAU_F - ((door->openPosition * M_TAU_F) / 360.0f), &lhs);
             }
             else
             {
-                matrix_4x4_set_rotation_around_z((door->openPosition * 6.2831855f) / 360.0f, &lhs);
+                matrix_4x4_set_rotation_around_z((door->openPosition * M_TAU_F) / 360.0f, &lhs);
             }
         }
         else if (door->flags & PROPFLAG_NO_AI_INTERACTION)
         {
-            matrix_4x4_set_rotation_around_y(6.2831855f - ((door->openPosition * 6.2831855f) / 360.0f), &lhs);
+            matrix_4x4_set_rotation_around_y(M_TAU_F - ((door->openPosition * M_TAU_F) / 360.0f), &lhs);
         }
         else
         {
-            matrix_4x4_set_rotation_around_y((door->openPosition * 6.2831855f) / 360.0f, &lhs);
+            matrix_4x4_set_rotation_around_y((door->openPosition * M_TAU_F) / 360.0f, &lhs);
         }
 
         matrix_4x4_multiply_in_place(&lhs, &rhs);

@@ -7605,7 +7605,7 @@ void chrlvTickAttackCommon(ChrRecord *self)
 
         if (self_model->gunhand != GUNRIGHT)
         {
-            fn40 = 6.2831855f - fn40;
+            fn40 = M_TAU_F - fn40;
         }
 
         self->act_attack.unk30 = chrlvSetSubroty(

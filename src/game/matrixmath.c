@@ -269,7 +269,7 @@ void matrix_4x4_multiply(Mtxf *lhs, Mtxf *rhs, Mtxf *result)
     }
 }
 
-s32 matrix_4x4_multiply_homogeneous(Mtxf *lhs, Mtxf *rhs, Mtxf *result)
+void matrix_4x4_multiply_homogeneous(Mtxf *lhs, Mtxf *rhs, Mtxf *result)
 {
     s32 i, j;
     for (i = 0; i < 3; i++)

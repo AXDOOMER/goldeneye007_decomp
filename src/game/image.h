@@ -28,17 +28,17 @@
 #define TEXCOMPMETHOD_HUFFMANBLUR        8
 #define TEXCOMPMETHOD_RLEBLUR            9
 
-struct texturething {
-	struct texloadthing *unk00;
-	struct texloadthing *unk04;
-	struct texloadthing *unk08;
-	struct texloadthing *unk0c;
+struct texpool {
+	u8 *start;
+    struct tex *end;
+	u8 *leftpos;
+	struct tex *rightpos;
 };
 
-struct texloadthing {
+struct tex {
 	/*0x00*/ u16 texturenum : 12;
 	/*0x00*/ u16 unk00_0c : 4;
-	/*0x04*/ u32 unk04;
+	/*0x04*/ u8* data;
 	/*0x08*/ u8 width;
 	/*0x09*/ u8 height;
 	/*0x0a*/ u8 unk0a;
@@ -48,18 +48,18 @@ struct texloadthing {
 	/*0x0c*/ u32 lutmodeindex : 2;
 	/*0x0c*/ u32 unk0c_02 : 1;
 	/*0x0c*/ u32 unk0c_03 : 1;
-	/*0x0c*/ u32 unk0c_04 : 24;
+	/*0x0c*/ u32 next : 24;
 };
 
 struct image_entry
 {
-    HIT_TYPE hitSound : 4;  //HitType-Sound
-    HIT_TYPE hitTexture : 4;  //HitType-Texture
-    s32  dataoffset    : 24; //this is u32 Size:24 - 24bit size/address
-    char flag3; //Detailflag1 used once with value 0x38D2 (S/T offset of detail)
-    char flag4; //DetailFlag2  difference from detail image, to large image, in terms of 2 to the power of value. It is subtracted from the small one, and absolute value or something. (Zoinkity)
-    char flag5; //padding
-    char flag6; //padding
+    HIT_TYPE hitSound   : 4;  // HitType-Sound
+    HIT_TYPE hitTexture : 4;  // HitType-Texture
+    u32  dataoffset     : 24; // this is u32 Size:24 - 24bit size/address
+    u32 flag3 : 4; // Detailflag1 used once with value 0x38D2 (S/T offset of detail)
+	u32 flag4 : 4;
+	u32 flag5 : 4; // DetailFlag2  difference from detail image, to large image, in terms of 2 to the power of value. It is subtracted from the small one, and absolute value or something. (Zoinkity)
+	u32 flag6 : 4;
 };
 
 struct texcacheitem {
@@ -68,7 +68,8 @@ struct texcacheitem {
     u8 heights[7];
 };
 
-extern struct texturething *ptr_texture_alloc_start;
+extern struct texcacheitem g_TexCacheItems[];
+extern struct texpool *ptr_texture_alloc_start;
 extern struct image_entry g_Textures[];
 extern s32 g_TexCacheCount;
 extern u32 bytes;
@@ -80,5 +81,14 @@ void texInflateRle(u8 *dst, s32 blockstotal);
 void texReadAlphaBits(u8 *image,s32 count);
 void texSwapAltRowBytes(u8 *dst, s32 width, s32 height, s32 format);
 void texBlur(u8 *pixels, s32 width, s32 height, s32 method, s32 chansize);
+s32 texAlignIndices(u8 *src, s32 width, s32 height, s32 format, u8 *dst);
+s32 texFindClosestColourIndexRGBA(u16 *palette, s32 numcolours, s32 r, s32 g, s32 b, s32 a);
+s32 texFindClosestColourIndexIA(u16 *palette, s32 numcolours, s32 intensity, s32 alpha);
+s32 texShrinkPaletted(u8 *src, u8 *dst, s32 srcwidth, s32 srcheight, s32 format, u16 *palette, s32 numcolours);
+struct tex *texFindInPool(s32 texturenum, struct texpool *arg1);
+s32 texFreeBytesInBuffer(struct texpool *arg0);
+s32 texInflateNonZlib(u8 *src, u8 *dst, s32 arg2, s32 forcenumimages, struct texpool *arg4);
+s32 texInflateZlib(u8 *src, u8 *dst, s32 arg2, s32 forcenumimages, struct texpool *arg4);
+void texLoad(s32 *updateword, struct texpool *pool);
 
 #endif

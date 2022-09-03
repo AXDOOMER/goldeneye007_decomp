@@ -1907,8 +1907,8 @@ glabel lvlPortalDebug7F0BDF10
 
 Gfx* lvlRender(Gfx* DL)
 {
-    gSPSegment(DL++, 0, NULL);
-    gSPSegment(DL++, 1, osVirtualToPhysical(ptr_font_DL));
+    gSPSegment(DL++, SPSEGMENT_PHYSICAL, NULL);
+    gSPSegment(DL++, SPSEGMENT_UNKNOWN, osVirtualToPhysical(ptr_font_DL));
 
     gSPDisplayList(DL++, &fontDL_0x040);
     gSPDisplayList(DL++, &fontDL_0x020);

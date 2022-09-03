@@ -19,7 +19,7 @@ f32  matrix_2x2_determinant(f32 a, f32 c, f32 b, f32 d);
 
 void matrix_4x4_7F058C4C(f32 arg0);
 void matrix_4x4_copy(Mtxf *src, Mtxf *dst);
-s32  matrix_4x4_multiply_homogeneous(Mtxf *lhs, Mtxf *rhs, Mtxf *result);
+void matrix_4x4_multiply_homogeneous(Mtxf *lhs, Mtxf *rhs, Mtxf *result);
 
 void matrix_4x4_f32_to_s32(Mtxf *a, Mtxf *b);
 void matrix_4x4_multiply_homogeneous_in_place(Mtxf *lhs, Mtxf *rhs);

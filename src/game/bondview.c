@@ -2956,7 +2956,7 @@ variable_body_head:
 /* 0AEAF0 7F079FC0 00002025 */   move  $a0, $zero
 /* 0AEAF4 7F079FC4 27A40100 */  addiu $a0, $sp, 0x100
 /* 0AEAF8 7F079FC8 8FA500EC */  lw    $a1, 0xec($sp)
-/* 0AEAFC 7F079FCC 0FC32EBD */  jal   sub_GAME_7F0CBAF4
+/* 0AEAFC 7F079FCC 0FC32EBD */  jal   texInitPool
 /* 0AEB00 7F079FD0 8FA600E0 */   lw    $a2, 0xe0($sp)
 /* 0AEB04 7F079FD4 0FC173C6 */  jal   get_ptr_itemheader_in_hand
 /* 0AEB08 7F079FD8 00002025 */   move  $a0, $zero
@@ -3548,7 +3548,7 @@ variable_body_head:
 /* 0AF120 7F07A5B0 00002025 */   move  $a0, $zero
 /* 0AF124 7F07A5B4 27A40100 */  addiu $a0, $sp, 0x100
 /* 0AF128 7F07A5B8 8FA500EC */  lw    $a1, 0xec($sp)
-/* 0AF12C 7F07A5BC 0FC331F5 */  jal   sub_GAME_7F0CBAF4
+/* 0AF12C 7F07A5BC 0FC331F5 */  jal   texInitPool
 /* 0AF130 7F07A5C0 8FA600E0 */   lw    $a2, 0xe0($sp)
 /* 0AF134 7F07A5C4 0FC1750E */  jal   get_ptr_itemheader_in_hand
 /* 0AF138 7F07A5C8 00002025 */   move  $a0, $zero
@@ -4155,7 +4155,7 @@ variable_body_head:
 /* 0ACA30 7F07A040 00002025 */   move  $a0, $zero
 /* 0ACA34 7F07A044 27A40100 */  addiu $a0, $sp, 0x100
 /* 0ACA38 7F07A048 8FA500EC */  lw    $a1, 0xec($sp)
-/* 0ACA3C 7F07A04C 0FC32C05 */  jal   sub_GAME_7F0CBAF4
+/* 0ACA3C 7F07A04C 0FC32C05 */  jal   texInitPool
 /* 0ACA40 7F07A050 8FA600E0 */   lw    $a2, 0xe0($sp)
 /* 0ACA44 7F07A054 0FC174F2 */  jal   get_ptr_itemheader_in_hand
 /* 0ACA48 7F07A058 00002025 */   move  $a0, $zero
@@ -9647,17 +9647,17 @@ s32 bondviewTankCollisionStatus(struct coord3d *arg0, StandTile *arg1, f32 arg2,
 
             temp_f0 = arg2 + g_TankTurretOrientationAngleRad;
 
-            if (temp_f0 >= 6.2831855f)
+            if (temp_f0 >= M_TAU_F)
             {
-                temp_f0 -= 6.2831855f;
+                temp_f0 -= M_TAU_F;
             }
 
             if (temp_f0 < 0.0f)
             {
-                temp_f0 += 6.2831855f;
+                temp_f0 += M_TAU_F;
             }
 
-            matrix_4x4_set_rotation_around_y(6.2831855f - temp_f0, &sp34);
+            matrix_4x4_set_rotation_around_y(M_TAU_F - temp_f0, &sp34);
             matrix_4x4_rotate_vector_in_place(&sp34, (f32*)&sp74);
 
             sp74.f[0] *= sp8C->scale;
@@ -9967,14 +9967,14 @@ void bondviewSet3dCoord7F07CEB0(coord3d *arg0)
 
     f = g_TankOrientationAngle + g_TankTurretOrientationAngleRad;
 
-    if (f >= 6.2831855f)
+    if (f >= M_TAU_F)
     {
-        f = f - 6.2831855f;
+        f = f - M_TAU_F;
     }
 
     if (f < 0.0f)
     {
-        f = f + 6.2831855f;
+        f = f + M_TAU_F;
     }
 
     arg0->f[0] = -sinf(f) * cosf(g_TankTurretVerticalAngle);
@@ -25042,7 +25042,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
     f32 stack_padding_10;
     struct ObjectRecord *sp138_tank_as_ObjectRecord;
     s32 i_2;
-    struct ModelNode_BoundingBoxRecord *sp130;
+    struct ModelRoData_BoundingBoxRecord *sp130;
     Mtxf spF0;
     struct coord3d spE4;
     s32 i_3; 
@@ -25173,14 +25173,14 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
         sp358 = g_CurrentPlayer->speedtheta * g_GlobalTimerDelta * 0.017453292f * 3.5f;
         sp35C = g_TankOrientationAngle + sp358;
         
-        if (sp35C >= 6.2831855f)
+        if (sp35C >= M_TAU_F)
         {
-            sp35C -= 6.2831855f;
+            sp35C -= M_TAU_F;
         }
         
         if (sp35C < 0.0f)
         {
-            sp35C += 6.2831855f;
+            sp35C += M_TAU_F;
         }
 
         if (bondviewTankCollisionStatus(
@@ -25303,35 +25303,35 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
 
         sp354 = g_TankTurretOrientationAngleRad;
         g_TankTurretAngle += g_TankTurretTurn;
-        if (g_TankTurretAngle >= 6.2831855f)
+        if (g_TankTurretAngle >= M_TAU_F)
         {
-            g_TankTurretAngle -= 6.2831855f;
+            g_TankTurretAngle -= M_TAU_F;
         }
 
         if (g_TankTurretAngle < 0.0f)
         {
-            g_TankTurretAngle += 6.2831855f;
+            g_TankTurretAngle += M_TAU_F;
         }
 
         tank_tick_increment = (g_CurrentPlayer->speedtheta * 3.5f * 0.017453292f * 4.0f) + g_TankTurretAngle;
        
         if (tank_tick_increment < 0.0f)
         {
-            tank_tick_increment += 6.2831855f;
+            tank_tick_increment += M_TAU_F;
         }
         
-        if (tank_tick_increment >= 6.2831855f)
+        if (tank_tick_increment >= M_TAU_F)
         {
-            tank_tick_increment -= 6.2831855f;
+            tank_tick_increment -= M_TAU_F;
         }
 
         if ((tank_tick_increment - g_TankTurretOrientationAngleRad) >= 3.1415927f)
         {
-            tank_tick_increment -= 6.2831855f;
+            tank_tick_increment -= M_TAU_F;
         }
         else if ((tank_tick_increment - g_TankTurretOrientationAngleRad) < -3.1415927f)
         {
-            tank_tick_increment += 6.2831855f;
+            tank_tick_increment += M_TAU_F;
         }
 
         do
@@ -25346,15 +25346,15 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
 
         g_TankTurretOrientationAngleRad = D_80036478 * 0.07999998f;
 
-        if (g_TankTurretOrientationAngleRad >= 6.2831855f)
+        if (g_TankTurretOrientationAngleRad >= M_TAU_F)
         {
-            g_TankTurretOrientationAngleRad -= 6.2831855f;
+            g_TankTurretOrientationAngleRad -= M_TAU_F;
             D_80036478 = g_TankTurretOrientationAngleRad / 0.07999998f;
         }
         
         if (g_TankTurretOrientationAngleRad < 0.0f)
         {
-            g_TankTurretOrientationAngleRad += 6.2831855f;
+            g_TankTurretOrientationAngleRad += M_TAU_F;
             D_80036478 = g_TankTurretOrientationAngleRad / 0.07999998f;
         }
         
@@ -25384,7 +25384,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             sp2F4.f[0] = flt_CODE_bss_800799A8.f[0] - sp2F4.f[0];
             sp2F4.f[2] = flt_CODE_bss_800799A8.f[2] - sp2F4.f[2];
 
-            matrix_4x4_set_rotation_around_y(6.2831855f - g_TankOrientationAngle, &sp2B4);
+            matrix_4x4_set_rotation_around_y(M_TAU_F - g_TankOrientationAngle, &sp2B4);
             matrix_scalar_multiply(temp_tank->model->scale, &sp2B4);
             matrix_4x4_rotate_vector_in_place(&sp2B4, &sp2F4);
             bondviewCalcUpdatePlayerCollision(&sp2F4, 1);
@@ -25405,7 +25405,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             (ftemp3 * 4.0f )+
             g_TankOrientationAngle  +
             (ftemp2 * 4.0f)            
-            ) * 360.0f / 6.2831855f;
+            ) * 360.0f / M_TAU_F;
 
         while (g_CurrentPlayer->vv_theta < 0.0f)
         {
@@ -25466,7 +25466,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             if (ptr_playerstank != NULL)
             {
                 tank_obj = ptr_playerstank->obj;
-                matrix_4x4_set_rotation_around_y(6.2831855f - g_TankOrientationAngle, &sp268);
+                matrix_4x4_set_rotation_around_y(M_TAU_F - g_TankOrientationAngle, &sp268);
                 matrix_scalar_multiply(tank_obj->model->scale, &sp268);
                 
                 sp25C.f[0] = flt_CODE_bss_800799A8.f[0];
@@ -25478,7 +25478,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
                 sp25C.f[1] += tank_obj->runtime_pos.f[1];
                 sp25C.f[2] += tank_obj->runtime_pos.f[2];
 
-                sp258 = ((g_TankOrientationAngle + g_TankTurretOrientationAngleRad) * 360.0f) / 6.2831855f;
+                sp258 = ((g_TankOrientationAngle + g_TankTurretOrientationAngleRad) * 360.0f) / M_TAU_F;
                 sp254 = g_CurrentPlayer->vv_verta;
                 if (sp254 < -20.0f)
                 {
@@ -25491,7 +25491,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
                     g_TankEnteringSitHeight = 1.0f;
                 }
 
-                g_TankEnteringSitHeightRemain = (cosf(g_TankEnteringSitHeight * 6.2831855f * 0.5f) + 1.0f) * 0.5f;
+                g_TankEnteringSitHeightRemain = (cosf(g_TankEnteringSitHeight * M_TAU_F * 0.5f) + 1.0f) * 0.5f;
 
                 // sp17C is unused extra assignment
                 sp17C = g_CurrentPlayer->vv_verta = (
@@ -25672,8 +25672,8 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
         
         bondviewMoveAnimationTick(0.0f, 0.0f, 0.0f);
 
-        sp3AC.f[0] += g_CurrentPlayer->speedforwards * sinf(6.2831855f - g_TankOrientationAngle) * g_GlobalTimerDelta;
-        sp3AC.f[2] += g_CurrentPlayer->speedforwards * cosf(6.2831855f - g_TankOrientationAngle) * g_GlobalTimerDelta;
+        sp3AC.f[0] += g_CurrentPlayer->speedforwards * sinf(M_TAU_F - g_TankOrientationAngle) * g_GlobalTimerDelta;
+        sp3AC.f[2] += g_CurrentPlayer->speedforwards * cosf(M_TAU_F - g_TankOrientationAngle) * g_GlobalTimerDelta;
 
         bondviewCalcUpdatePlayerCollision(&sp3AC, 1);
         
@@ -25994,7 +25994,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
     {
         sp140_tank_as_TankRecord = ((struct TankRecord *)ptr_playerstank->obj);
         sp138_tank_as_ObjectRecord = (struct  ObjectRecord*)ptr_playerstank->obj;
-        sp130 = (struct ModelNode_BoundingBoxRecord *)((struct ModelNode *)sp138_tank_as_ObjectRecord->model->obj->Switches)->Child->Data;
+        sp130 = (struct ModelRoData_BoundingBoxRecord *)((struct ModelNode *)sp138_tank_as_ObjectRecord->model->obj->Switches)->Child->Data;
         
         sp140_tank_as_TankRecord->is_firing_tank = (getCurrentPlayerWeaponId(GUNRIGHT) == ITEM_TANKSHELLS)
             && get_hands_firing_status(GUNRIGHT);
@@ -26003,7 +26003,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
         sp140_tank_as_TankRecord->turret_orientation_angle = g_TankTurretOrientationAngleRad;
         sp140_tank_as_TankRecord->tank_orientation_angle = g_TankOrientationAngle;
 
-        matrix_4x4_set_rotation_around_y(6.2831855f - g_TankOrientationAngle, &spF0);
+        matrix_4x4_set_rotation_around_y(M_TAU_F - g_TankOrientationAngle, &spF0);
         matrix_scalar_multiply(sp138_tank_as_ObjectRecord->model->scale, &spF0);
         
         spE4.f[0] = -flt_CODE_bss_800799A8.f[0];
@@ -44800,99 +44800,23 @@ glabel sub_GAME_7F08BE2C
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-/**
- * Address 0x7F08BEEC.
- * 
- * decomp status:
- * - compiles: yes
- * - stack resize: ok
- * - identical instructions: fail
- * - identical registers: fail
- * 
- * notes: two swapped instructions at start, then just regalloc.
- */
-void sub_GAME_7F08BEEC(Mtxf *arg0, s32 arg1)
+void sub_GAME_7F08BEEC(Mtxf *matrices, s32 count)
 {
-    Mtxf sp38;
+    Mtxf sp40;
     s32 i;
-    Mtxf *phi_s1;
+    s32 j;
 
-    for (i=0, phi_s1=arg0; i<arg1; i++, phi_s1++)
+    for (i = 0, j = 0; i < count; i++, j += sizeof(Mtxf))
     {
-        matrix_4x4_multiply_homogeneous(currentPlayerGetMatrix10D4(), phi_s1, (Mtxf *) &sp38);
-        sp38.m[3][0] -= g_CurrentPlayer->previous_model_pos.f[0];
-        sp38.m[3][1] -= g_CurrentPlayer->previous_model_pos.f[1];
-        sp38.m[3][2] -= g_CurrentPlayer->previous_model_pos.f[2];
-        matrix_4x4_f32_to_s32((Mtxf *) &sp38, &arg0[i]);
+        matrix_4x4_multiply_homogeneous(currentPlayerGetMatrix10D4(), (Mtxf *)((u32)matrices + j), &sp40);
+
+        sp40.m[3][0] -= g_CurrentPlayer->current_model_pos.f[0];
+        sp40.m[3][1] -= g_CurrentPlayer->current_model_pos.f[1];
+        sp40.m[3][2] -= g_CurrentPlayer->current_model_pos.f[2];
+
+        matrix_4x4_f32_to_s32(&sp40, matrices + i);
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08BEEC
-/* 0C0A1C 7F08BEEC 27BDFF80 */  addiu $sp, $sp, -0x80
-/* 0C0A20 7F08BEF0 AFB50028 */  sw    $s5, 0x28($sp)
-/* 0C0A24 7F08BEF4 AFB40024 */  sw    $s4, 0x24($sp)
-/* 0C0A28 7F08BEF8 AFB10018 */  sw    $s1, 0x18($sp)
-/* 0C0A2C 7F08BEFC 00A0A025 */  move  $s4, $a1
-/* 0C0A30 7F08BF00 0080A825 */  move  $s5, $a0
-/* 0C0A34 7F08BF04 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 0C0A38 7F08BF08 AFB30020 */  sw    $s3, 0x20($sp)
-/* 0C0A3C 7F08BF0C AFB2001C */  sw    $s2, 0x1c($sp)
-/* 0C0A40 7F08BF10 AFB00014 */  sw    $s0, 0x14($sp)
-/* 0C0A44 7F08BF14 18A0001F */  blez  $a1, .L7F08BF94
-/* 0C0A48 7F08BF18 00008825 */   move  $s1, $zero
-/* 0C0A4C 7F08BF1C 3C138008 */  lui   $s3, %hi(g_CurrentPlayer)
-/* 0C0A50 7F08BF20 2673A0B0 */  addiu $s3, %lo(g_CurrentPlayer) # addiu $s3, $s3, -0x5f50
-/* 0C0A54 7F08BF24 00808025 */  move  $s0, $a0
-/* 0C0A58 7F08BF28 27B20040 */  addiu $s2, $sp, 0x40
-.L7F08BF2C:
-/* 0C0A5C 7F08BF2C 0FC1E111 */  jal   currentPlayerGetMatrix10D4
-/* 0C0A60 7F08BF30 00000000 */   nop
-/* 0C0A64 7F08BF34 00402025 */  move  $a0, $v0
-/* 0C0A68 7F08BF38 02002825 */  move  $a1, $s0
-/* 0C0A6C 7F08BF3C 0FC16063 */  jal   matrix_4x4_multiply_homogeneous
-/* 0C0A70 7F08BF40 02403025 */   move  $a2, $s2
-/* 0C0A74 7F08BF44 8E620000 */  lw    $v0, ($s3)
-/* 0C0A78 7F08BF48 C7A40070 */  lwc1  $f4, 0x70($sp)
-/* 0C0A7C 7F08BF4C C7AA0074 */  lwc1  $f10, 0x74($sp)
-/* 0C0A80 7F08BF50 C4460038 */  lwc1  $f6, 0x38($v0)
-/* 0C0A84 7F08BF54 00117180 */  sll   $t6, $s1, 6
-/* 0C0A88 7F08BF58 01D52821 */  addu  $a1, $t6, $s5
-/* 0C0A8C 7F08BF5C 46062201 */  sub.s $f8, $f4, $f6
-/* 0C0A90 7F08BF60 C7A40078 */  lwc1  $f4, 0x78($sp)
-/* 0C0A94 7F08BF64 02402025 */  move  $a0, $s2
-/* 0C0A98 7F08BF68 E7A80070 */  swc1  $f8, 0x70($sp)
-/* 0C0A9C 7F08BF6C C450003C */  lwc1  $f16, 0x3c($v0)
-/* 0C0AA0 7F08BF70 46105481 */  sub.s $f18, $f10, $f16
-/* 0C0AA4 7F08BF74 E7B20074 */  swc1  $f18, 0x74($sp)
-/* 0C0AA8 7F08BF78 C4460040 */  lwc1  $f6, 0x40($v0)
-/* 0C0AAC 7F08BF7C 46062201 */  sub.s $f8, $f4, $f6
-/* 0C0AB0 7F08BF80 0FC16327 */  jal   matrix_4x4_f32_to_s32
-/* 0C0AB4 7F08BF84 E7A80078 */   swc1  $f8, 0x78($sp)
-/* 0C0AB8 7F08BF88 26310001 */  addiu $s1, $s1, 1
-/* 0C0ABC 7F08BF8C 1634FFE7 */  bne   $s1, $s4, .L7F08BF2C
-/* 0C0AC0 7F08BF90 26100040 */   addiu $s0, $s0, 0x40
-.L7F08BF94:
-/* 0C0AC4 7F08BF94 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 0C0AC8 7F08BF98 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0C0ACC 7F08BF9C 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0C0AD0 7F08BFA0 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 0C0AD4 7F08BFA4 8FB30020 */  lw    $s3, 0x20($sp)
-/* 0C0AD8 7F08BFA8 8FB40024 */  lw    $s4, 0x24($sp)
-/* 0C0ADC 7F08BFAC 8FB50028 */  lw    $s5, 0x28($sp)
-/* 0C0AE0 7F08BFB0 03E00008 */  jr    $ra
-/* 0C0AE4 7F08BFB4 27BD0080 */   addiu $sp, $sp, 0x80
-)
-#endif
-
-
-
-
 
 
 s32 getMissiontimer(void) {
