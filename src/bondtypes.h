@@ -851,10 +851,15 @@ typedef union
          */
         typedef struct ModelRoData_Op07Record
         {
-            u32 unk00[106]; /*0x0*/
+            u8 unk00[424]; /*0x0*/
             u16 unk1A8;     /*0x1A8*/
             u16 number;     /*0x1AA*/
         } ModelRoData_Op07Record;
+
+        typedef struct ModelRwData_Op07Record
+        {
+            bool visible;
+        } ModelRwData_Op07Record;
 
         /**
          *  Opcode 8
@@ -1111,6 +1116,7 @@ typedef union
      */
     union ModelRwData
     {
+        struct ModelRwData_Op07Record Op07;
         struct ModelRwData_LODRecord LOD;
         struct ModelRwData_BSPRecord BSP;
         struct ModelRwData_SwitchRecord Switch;

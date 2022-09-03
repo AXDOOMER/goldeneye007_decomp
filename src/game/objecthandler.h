@@ -9,6 +9,12 @@ struct bondstruct_unk_animation_related {
     char* unk08;
 };
 
+struct bondstruct_unk_op07_related {
+    s32 unk00;
+    s32 unk04;
+    s32 unk0C;
+};
+
 extern s32 g_ModelDistanceDisabled;
 extern f32 g_ModelDistanceScale;
 extern u32 D_80036250;
@@ -18,6 +24,7 @@ extern s32 D_80036418;
 extern s32 D_8003641C;
 extern u32 D_800363F0;
 extern s32 vtxallocator;
+extern struct bondstruct_unk_op07_related D_800360C4[];
 
 // arg0 unknown pointer
 void sub_GAME_7F070090(void *arg0, f32 arg1, f32 arg2);
