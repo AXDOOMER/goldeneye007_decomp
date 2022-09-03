@@ -1246,7 +1246,7 @@ glabel likely_generate_DL_for_image_declaration
 /* 0AC44C 7F07791C 000E7880 */  sll   $t7, $t6, 2
 /* 0AC450 7F077920 05E1000A */  bgez  $t7, .L7F07794C
 /* 0AC454 7F077924 00000000 */   nop   
-/* 0AC458 7F077928 0FC331C5 */  jal   sub_GAME_7F0CC714
+/* 0AC458 7F077928 0FC331C5 */  jal   texGetWidthAtLod
 /* 0AC45C 7F07792C 02202825 */   move  $a1, $s1
 /* 0AC460 7F077930 0040A825 */  move  $s5, $v0
 /* 0AC464 7F077934 02C02025 */  move  $a0, $s6

@@ -243,13 +243,14 @@ s32 sub_GAME_7F0CC690(s32 index,s32 arg1,s32 arg2,s32 arg3,s32 arg4)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0CC714(void) {
+s32 texGetWidthAtLod(struct tex *tex, s32 lod) {
 
 }
 #else
+s32 texGetWidthAtLod(struct tex *tex, s32 lod);
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0CC714
+glabel texGetWidthAtLod
 /* 101244 7F0CC714 14A00003 */  bnez  $a1, .L7F0CC724
 /* 101248 7F0CC718 90830008 */   lbu   $v1, 8($a0)
 /* 10124C 7F0CC71C 03E00008 */  jr    $ra
@@ -409,72 +410,28 @@ glabel sub_GAME_7F0CC7FC
 #endif
 
 
+s32 texGetLineSizeInBytes(struct tex *tex, s32 lod)
+{
+    s32 depth = tex->depth;
+    s32 width = texGetWidthAtLod(tex, lod);
 
+    if (depth == G_IM_SIZ_32b)
+    {
+        return (width + 3) / 4;
+    }
 
+    if (depth == G_IM_SIZ_16b)
+    {
+        return (width + 3) / 4;
+    }
 
-#ifdef NONMATCHING
-s32 texGetLineSizeInBytes(struct tex *tex, s32 lod) {
+    if (depth == G_IM_SIZ_8b)
+    {
+        return (width + 7) / 8;
+    }
 
+    return (width + 15) / 16;
 }
-#else
-s32 texGetLineSizeInBytes(struct tex *tex, s32 lod);
-GLOBAL_ASM(
-.text
-glabel texGetLineSizeInBytes
-/* 101414 7F0CC8E4 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 101418 7F0CC8E8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 10141C 7F0CC8EC 8C830008 */  lw    $v1, 8($a0)
-/* 101420 7F0CC8F0 306E0003 */  andi  $t6, $v1, 3
-/* 101424 7F0CC8F4 0FC331C5 */  jal   sub_GAME_7F0CC714
-/* 101428 7F0CC8F8 AFAE001C */   sw    $t6, 0x1c($sp)
-/* 10142C 7F0CC8FC 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 101430 7F0CC900 24010003 */  li    $at, 3
-/* 101434 7F0CC904 00402025 */  move  $a0, $v0
-/* 101438 7F0CC908 14610008 */  bne   $v1, $at, .L7F0CC92C
-/* 10143C 7F0CC90C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 101440 7F0CC910 24420003 */  addiu $v0, $v0, 3
-/* 101444 7F0CC914 04410003 */  bgez  $v0, .L7F0CC924
-/* 101448 7F0CC918 00027883 */   sra   $t7, $v0, 2
-/* 10144C 7F0CC91C 24410003 */  addiu $at, $v0, 3
-/* 101450 7F0CC920 00017883 */  sra   $t7, $at, 2
-.L7F0CC924:
-/* 101454 7F0CC924 10000019 */  b     .L7F0CC98C
-/* 101458 7F0CC928 01E01025 */   move  $v0, $t7
-.L7F0CC92C:
-/* 10145C 7F0CC92C 24010002 */  li    $at, 2
-/* 101460 7F0CC930 14610007 */  bne   $v1, $at, .L7F0CC950
-/* 101464 7F0CC934 24820003 */   addiu $v0, $a0, 3
-/* 101468 7F0CC938 04410003 */  bgez  $v0, .L7F0CC948
-/* 10146C 7F0CC93C 0002C083 */   sra   $t8, $v0, 2
-/* 101470 7F0CC940 24410003 */  addiu $at, $v0, 3
-/* 101474 7F0CC944 0001C083 */  sra   $t8, $at, 2
-.L7F0CC948:
-/* 101478 7F0CC948 10000010 */  b     .L7F0CC98C
-/* 10147C 7F0CC94C 03001025 */   move  $v0, $t8
-.L7F0CC950:
-/* 101480 7F0CC950 24010001 */  li    $at, 1
-/* 101484 7F0CC954 14610008 */  bne   $v1, $at, .L7F0CC978
-/* 101488 7F0CC958 2482000F */   addiu $v0, $a0, 0xf
-/* 10148C 7F0CC95C 24820007 */  addiu $v0, $a0, 7
-/* 101490 7F0CC960 04410003 */  bgez  $v0, .L7F0CC970
-/* 101494 7F0CC964 0002C8C3 */   sra   $t9, $v0, 3
-/* 101498 7F0CC968 24410007 */  addiu $at, $v0, 7
-/* 10149C 7F0CC96C 0001C8C3 */  sra   $t9, $at, 3
-.L7F0CC970:
-/* 1014A0 7F0CC970 10000006 */  b     .L7F0CC98C
-/* 1014A4 7F0CC974 03201025 */   move  $v0, $t9
-.L7F0CC978:
-/* 1014A8 7F0CC978 04410003 */  bgez  $v0, .L7F0CC988
-/* 1014AC 7F0CC97C 00024103 */   sra   $t0, $v0, 4
-/* 1014B0 7F0CC980 2441000F */  addiu $at, $v0, 0xf
-/* 1014B4 7F0CC984 00014103 */  sra   $t0, $at, 4
-.L7F0CC988:
-/* 1014B8 7F0CC988 01001025 */  move  $v0, $t0
-.L7F0CC98C:
-/* 1014BC 7F0CC98C 03E00008 */  jr    $ra
-/* 1014C0 7F0CC990 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
 
 
 s32 sub_GAME_7F0CC994(void *param_1,void *param_2)
@@ -1299,7 +1256,7 @@ glabel sub_GAME_7F0CD430
 /* 101FC4 7F0CD494 AFA80064 */  sw    $t0, 0x64($sp)
 .L7F0CD498:
 /* 101FC8 7F0CD498 02A02025 */  move  $a0, $s5
-/* 101FCC 7F0CD49C 0FC331C5 */  jal   sub_GAME_7F0CC714
+/* 101FCC 7F0CD49C 0FC331C5 */  jal   texGetWidthAtLod
 /* 101FD0 7F0CD4A0 02402825 */   move  $a1, $s2
 /* 101FD4 7F0CD4A4 0FC332A7 */  jal   sub_GAME_7F0CCA9C
 /* 101FD8 7F0CD4A8 00402025 */   move  $a0, $v0
@@ -1423,7 +1380,7 @@ glabel sub_GAME_7F0CD430
 .L7F0CD670:
 /* 1021A0 7F0CD670 00008025 */  move  $s0, $zero
 .L7F0CD674:
-/* 1021A4 7F0CD674 0FC331C5 */  jal   sub_GAME_7F0CC714
+/* 1021A4 7F0CD674 0FC331C5 */  jal   texGetWidthAtLod
 /* 1021A8 7F0CD678 0200B825 */   move  $s7, $s0
 /* 1021AC 7F0CD67C 8FAF00C8 */  lw    $t7, 0xc8($sp)
 /* 1021B0 7F0CD680 00409825 */  move  $s3, $v0
