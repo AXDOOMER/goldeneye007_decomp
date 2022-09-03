@@ -53,13 +53,13 @@ struct tex {
 
 struct image_entry
 {
-    HIT_TYPE hitSound : 4;  //HitType-Sound
-    HIT_TYPE hitTexture : 4;  //HitType-Texture
-    s32  dataoffset    : 24; //this is u32 Size:24 - 24bit size/address
-    char flag3; //Detailflag1 used once with value 0x38D2 (S/T offset of detail)
-    char flag4; //DetailFlag2  difference from detail image, to large image, in terms of 2 to the power of value. It is subtracted from the small one, and absolute value or something. (Zoinkity)
-    char flag5; //padding
-    char flag6; //padding
+    HIT_TYPE hitSound   : 4;  // HitType-Sound
+    HIT_TYPE hitTexture : 4;  // HitType-Texture
+    u32  dataoffset     : 24; // this is u32 Size:24 - 24bit size/address
+    u32 flag3 : 4; // Detailflag1 used once with value 0x38D2 (S/T offset of detail)
+	u32 flag4 : 4;
+	u32 flag5 : 4; // DetailFlag2  difference from detail image, to large image, in terms of 2 to the power of value. It is subtracted from the small one, and absolute value or something. (Zoinkity)
+	u32 flag6 : 4;
 };
 
 struct texcacheitem {
