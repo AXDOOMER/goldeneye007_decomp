@@ -377,156 +377,41 @@ s32 texGetLineSizeInBytes(struct tex *tex, s32 lod)
 }
 
 
-s32 sub_GAME_7F0CC994(void *param_1,void *param_2)
+s32 texGetSizeInBytes(struct tex *tex, s32 lod)
 {
-    return sub_GAME_7F0CC7FC(param_1,param_2) * texGetLineSizeInBytes(param_1,param_2);
+    return sub_GAME_7F0CC7FC(tex, lod) * texGetLineSizeInBytes(tex, lod);
 }
 
 
+void sub_GAME_7F0CC9D4(struct tex *tex, s32 *deptharg, s32 *lenarg)
+{
+    s32 depth = tex->depth;
+    s32 maxlod = tex->maxlod ? tex->maxlod : 1;
+    s32 lod;
 
+    *lenarg = 0;
 
-
-
-
-#ifdef NONMATCHING
-s32 sub_GAME_7F0CC9D4(void *arg0, void *arg1, void *arg2) {
-    s32 temp_t6;
-    u32 temp_t7;
-    s32 temp_ret;
-    s32 temp_s0;
-    u32 phi_s2;
-    s32 phi_s0;
-    s32 phi_return;
-
-    // Node 0
-    temp_t6 = (arg0->unk8 & 3);
-    temp_t7 = ((u32) arg0->unkB >> 5);
-    if (temp_t7 != 0)
+    if (depth == G_IM_SIZ_32b)
     {
-        // Node 1
-        phi_s2 = temp_t7;
+        *deptharg = G_IM_SIZ_32b;
+    }
+    else if (depth == G_IM_SIZ_16b)
+    {
+        *deptharg = G_IM_SIZ_16b;
+    }
+    else if (depth == G_IM_SIZ_8b)
+    {
+        *deptharg = G_IM_SIZ_16b;
     }
     else
     {
-        // Node 2
-        phi_s2 = 1U;
+        *deptharg = G_IM_SIZ_16b;
     }
-    // Node 3
-    *arg2 = 0;
-    if (temp_t6 == 3)
-    {
-        // Node 4
-        *arg1 = 3;
+
+    for (lod = 0; lod < maxlod; lod++) {
+        *lenarg += texGetSizeInBytes(tex, lod) * 4;
     }
-    else
-    {
-        // Node 5
-        if (temp_t6 == 2)
-        {
-            // Node 6
-            *arg1 = 2;
-        }
-        else
-        {
-            // Node 7
-            if (temp_t6 == 1)
-            {
-                // Node 8
-                *arg1 = 2;
-            }
-            else
-            {
-                // Node 9
-                *arg1 = 2;
-            }
-        }
-    }
-    // Node 10
-    phi_s0 = 0;
-    phi_return = 3;
-    if (phi_s2 > 0)
-    {
-loop_11:
-        // Node 11
-        temp_ret = sub_GAME_7F0CC994(arg0, phi_s0);
-        temp_s0 = (phi_s0 + 1);
-        *arg2 = (s32) (*arg2 + (temp_ret * 4));
-        phi_s0 = temp_s0;
-        phi_return = temp_ret;
-        if (temp_s0 != phi_s2)
-        {
-            goto loop_11;
-        }
-    }
-    // Node 12
-    return phi_return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0CC9D4
-/* 101504 7F0CC9D4 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 101508 7F0CC9D8 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 10150C 7F0CC9DC AFB30020 */  sw    $s3, 0x20($sp)
-/* 101510 7F0CC9E0 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 101514 7F0CC9E4 AFB10018 */  sw    $s1, 0x18($sp)
-/* 101518 7F0CC9E8 AFB00014 */  sw    $s0, 0x14($sp)
-/* 10151C 7F0CC9EC 8C830008 */  lw    $v1, 8($a0)
-/* 101520 7F0CC9F0 9082000B */  lbu   $v0, 0xb($a0)
-/* 101524 7F0CC9F4 00C08825 */  move  $s1, $a2
-/* 101528 7F0CC9F8 306E0003 */  andi  $t6, $v1, 3
-/* 10152C 7F0CC9FC 00027942 */  srl   $t7, $v0, 5
-/* 101530 7F0CCA00 00809825 */  move  $s3, $a0
-/* 101534 7F0CCA04 11E00003 */  beqz  $t7, .L7F0CCA14
-/* 101538 7F0CCA08 01C01825 */   move  $v1, $t6
-/* 10153C 7F0CCA0C 10000002 */  b     .L7F0CCA18
-/* 101540 7F0CCA10 01E09025 */   move  $s2, $t7
-.L7F0CCA14:
-/* 101544 7F0CCA14 24120001 */  li    $s2, 1
-.L7F0CCA18:
-/* 101548 7F0CCA18 24020003 */  li    $v0, 3
-/* 10154C 7F0CCA1C 14620003 */  bne   $v1, $v0, .L7F0CCA2C
-/* 101550 7F0CCA20 AE200000 */   sw    $zero, ($s1)
-/* 101554 7F0CCA24 1000000B */  b     .L7F0CCA54
-/* 101558 7F0CCA28 ACA20000 */   sw    $v0, ($a1)
-.L7F0CCA2C:
-/* 10155C 7F0CCA2C 24020002 */  li    $v0, 2
-/* 101560 7F0CCA30 14620003 */  bne   $v1, $v0, .L7F0CCA40
-/* 101564 7F0CCA34 24010001 */   li    $at, 1
-/* 101568 7F0CCA38 10000006 */  b     .L7F0CCA54
-/* 10156C 7F0CCA3C ACA20000 */   sw    $v0, ($a1)
-.L7F0CCA40:
-/* 101570 7F0CCA40 54610004 */  bnel  $v1, $at, .L7F0CCA54
-/* 101574 7F0CCA44 ACA20000 */   sw    $v0, ($a1)
-/* 101578 7F0CCA48 10000002 */  b     .L7F0CCA54
-/* 10157C 7F0CCA4C ACA20000 */   sw    $v0, ($a1)
-/* 101580 7F0CCA50 ACA20000 */  sw    $v0, ($a1)
-.L7F0CCA54:
-/* 101584 7F0CCA54 1A40000A */  blez  $s2, .L7F0CCA80
-/* 101588 7F0CCA58 00008025 */   move  $s0, $zero
-.L7F0CCA5C:
-/* 10158C 7F0CCA5C 02602025 */  move  $a0, $s3
-/* 101590 7F0CCA60 0FC33265 */  jal   sub_GAME_7F0CC994
-/* 101594 7F0CCA64 02002825 */   move  $a1, $s0
-/* 101598 7F0CCA68 8E380000 */  lw    $t8, ($s1)
-/* 10159C 7F0CCA6C 0002C880 */  sll   $t9, $v0, 2
-/* 1015A0 7F0CCA70 26100001 */  addiu $s0, $s0, 1
-/* 1015A4 7F0CCA74 03194021 */  addu  $t0, $t8, $t9
-/* 1015A8 7F0CCA78 1612FFF8 */  bne   $s0, $s2, .L7F0CCA5C
-/* 1015AC 7F0CCA7C AE280000 */   sw    $t0, ($s1)
-.L7F0CCA80:
-/* 1015B0 7F0CCA80 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 1015B4 7F0CCA84 8FB00014 */  lw    $s0, 0x14($sp)
-/* 1015B8 7F0CCA88 8FB10018 */  lw    $s1, 0x18($sp)
-/* 1015BC 7F0CCA8C 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 1015C0 7F0CCA90 8FB30020 */  lw    $s3, 0x20($sp)
-/* 1015C4 7F0CCA94 03E00008 */  jr    $ra
-/* 1015C8 7F0CCA98 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
-
-
-
 
 
 s32 sub_GAME_7F0CCA9C(s32 arg0) {
@@ -1215,7 +1100,7 @@ glabel sub_GAME_7F0CD430
 /* 102000 7F0CD4D0 02402825 */   move  $a1, $s2
 /* 102004 7F0CD4D4 00408025 */  move  $s0, $v0
 /* 102008 7F0CD4D8 02A02025 */  move  $a0, $s5
-/* 10200C 7F0CD4DC 0FC33265 */  jal   sub_GAME_7F0CC994
+/* 10200C 7F0CD4DC 0FC33265 */  jal   texGetSizeInBytes
 /* 102010 7F0CD4E0 02402825 */   move  $a1, $s2
 /* 102014 7F0CD4E4 AFA20080 */  sw    $v0, 0x80($sp)
 /* 102018 7F0CD4E8 8EA3000C */  lw    $v1, 0xc($s5)
@@ -1783,7 +1668,7 @@ Gfx * sub_GAME_7F0CDEA8(Gfx *DL,u8 *arg1,s32 arg2,s32 arg3,s32 arg4,u32 arg5,u32
     u32 uVar1;
 
     
-    uVar1 = sub_GAME_7F0CC994(arg5,NULL);
+    uVar1 = texGetSizeInBytes(arg5,NULL);
     DL = sub_GAME_7F0CD7AC(DL,arg5);
     gDPTileSync(DL++);
     DL = expland_c0DL_psuedocommands(DL,arg1,uVar1);
@@ -1807,7 +1692,7 @@ glabel sub_GAME_7F0CDEA8
 /* 1029EC 7F0CDEBC AFA60040 */  sw    $a2, 0x40($sp)
 /* 1029F0 7F0CDEC0 AFA70044 */  sw    $a3, 0x44($sp)
 /* 1029F4 7F0CDEC4 00002825 */  move  $a1, $zero
-/* 1029F8 7F0CDEC8 0FC33265 */  jal   sub_GAME_7F0CC994
+/* 1029F8 7F0CDEC8 0FC33265 */  jal   texGetSizeInBytes
 /* 1029FC 7F0CDECC 8FA4004C */   lw    $a0, 0x4c($sp)
 /* 102A00 7F0CDED0 AFA20034 */  sw    $v0, 0x34($sp)
 /* 102A04 7F0CDED4 02002025 */  move  $a0, $s0
