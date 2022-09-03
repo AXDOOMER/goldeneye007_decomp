@@ -1783,99 +1783,36 @@ void interpolate3dVectors(vec3d *v, vec3d *w, float k)
 }
 
 
-
-
-#ifdef NONMATCHING
-f32 sub_GAME_7F06D0CC(f32 arg0, f32 arg1, f32 arg2)
+f32 sub_GAME_7F06D0CC(f32 arg0, f32 angle, f32 mult)
 {
-    f32 temp_f12;
-    f32 temp_f12_2;
-    f32 temp_f2;
-    f32 phi_f0;
-    f32 phi_f12;
+    f32 value = angle - arg0;
 
-    temp_f2 = arg1 - arg0;
-    phi_f0  = temp_f2;
-    if (arg1 < arg0)
+    if (angle < arg0)
     {
-        phi_f0 = temp_f2 + M_TAU;
+        value += M_TAU_F;
     }
-    if (phi_f0 < M_PI)
+
+    if (value < M_PI_F)
     {
-        temp_f12 = arg0 + (phi_f0 * arg2);
-        phi_f12  = temp_f12;
-        if (temp_f12 >= M_TAU)
+        arg0 += value * mult;
+
+        if (arg0 >= M_TAU_F)
         {
-            return temp_f12 - M_TAU;
+            arg0 -= M_TAU_F;
         }
-        // Duplicate return node #7. Try simplifying control flow for better match
-        return phi_f12;
     }
-    temp_f12_2 = arg0 - ((M_TAU - phi_f0) * arg2);
-    phi_f12    = temp_f12_2;
-    if (temp_f12_2 < 0.0f)
+    else
     {
-        phi_f12 = temp_f12_2 + M_TAU;
+        arg0 -= (M_TAU_F - value) * mult;
+
+        if (arg0 < 0)
+        {
+            arg0 += M_TAU_F;
+        }
     }
-    return phi_f12;
+
+    return arg0;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80054BB4
-.word 0x40c90fdb /*6.2831855*/
-glabel D_80054BB8
-.word 0x40c90fdb /*6.2831855*/
-glabel D_80054BBC
-.word 0x40490fdb /*3.1415927*/
-.text
-glabel sub_GAME_7F06D0CC
-/* 0A1BFC 7F06D0CC 460C703C */  c.lt.s $f14, $f12
-/* 0A1C00 7F06D0D0 AFA60008 */  sw    $a2, 8($sp)
-/* 0A1C04 7F06D0D4 460C7081 */  sub.s $f2, $f14, $f12
-/* 0A1C08 7F06D0D8 3C018005 */  lui   $at, %hi(D_80054BB4)
-/* 0A1C0C 7F06D0DC C7A60008 */  lwc1  $f6, 8($sp)
-/* 0A1C10 7F06D0E0 45000003 */  bc1f  .L7F06D0F0
-/* 0A1C14 7F06D0E4 46001006 */   mov.s $f0, $f2
-/* 0A1C18 7F06D0E8 C42E4BB4 */  lwc1  $f14, %lo(D_80054BB4)($at)
-/* 0A1C1C 7F06D0EC 460E1000 */  add.s $f0, $f2, $f14
-.L7F06D0F0:
-/* 0A1C20 7F06D0F0 3C018005 */  lui   $at, %hi(D_80054BB8)
-/* 0A1C24 7F06D0F4 C42E4BB8 */  lwc1  $f14, %lo(D_80054BB8)($at)
-/* 0A1C28 7F06D0F8 3C018005 */  lui   $at, %hi(D_80054BBC)
-/* 0A1C2C 7F06D0FC C4244BBC */  lwc1  $f4, %lo(D_80054BBC)($at)
-/* 0A1C30 7F06D100 4604003C */  c.lt.s $f0, $f4
-/* 0A1C34 7F06D104 00000000 */  nop   
-/* 0A1C38 7F06D108 4502000A */  bc1fl .L7F06D134
-/* 0A1C3C 7F06D10C 46007281 */   sub.s $f10, $f14, $f0
-/* 0A1C40 7F06D110 46060202 */  mul.s $f8, $f0, $f6
-/* 0A1C44 7F06D114 46086300 */  add.s $f12, $f12, $f8
-/* 0A1C48 7F06D118 460C703E */  c.le.s $f14, $f12
-/* 0A1C4C 7F06D11C 00000000 */  nop   
-/* 0A1C50 7F06D120 4500000D */  bc1f  .L7F06D158
-/* 0A1C54 7F06D124 00000000 */   nop   
-/* 0A1C58 7F06D128 03E00008 */  jr    $ra
-/* 0A1C5C 7F06D12C 460E6001 */   sub.s $f0, $f12, $f14
-
-/* 0A1C60 7F06D130 46007281 */  sub.s $f10, $f14, $f0
-.L7F06D134:
-/* 0A1C64 7F06D134 C7B00008 */  lwc1  $f16, 8($sp)
-/* 0A1C68 7F06D138 44802000 */  mtc1  $zero, $f4
-/* 0A1C6C 7F06D13C 46105482 */  mul.s $f18, $f10, $f16
-/* 0A1C70 7F06D140 46126301 */  sub.s $f12, $f12, $f18
-/* 0A1C74 7F06D144 4604603C */  c.lt.s $f12, $f4
-/* 0A1C78 7F06D148 00000000 */  nop   
-/* 0A1C7C 7F06D14C 45000002 */  bc1f  .L7F06D158
-/* 0A1C80 7F06D150 00000000 */   nop   
-/* 0A1C84 7F06D154 460E6300 */  add.s $f12, $f12, $f14
-.L7F06D158:
-/* 0A1C88 7F06D158 03E00008 */  jr    $ra
-/* 0A1C8C 7F06D15C 46006006 */   mov.s $f0, $f12
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
