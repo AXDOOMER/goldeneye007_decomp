@@ -44800,99 +44800,23 @@ glabel sub_GAME_7F08BE2C
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-/**
- * Address 0x7F08BEEC.
- * 
- * decomp status:
- * - compiles: yes
- * - stack resize: ok
- * - identical instructions: fail
- * - identical registers: fail
- * 
- * notes: two swapped instructions at start, then just regalloc.
- */
-void sub_GAME_7F08BEEC(Mtxf *arg0, s32 arg1)
+void sub_GAME_7F08BEEC(Mtxf *matrices, s32 count)
 {
-    Mtxf sp38;
+    Mtxf sp40;
     s32 i;
-    Mtxf *phi_s1;
+    s32 j;
 
-    for (i=0, phi_s1=arg0; i<arg1; i++, phi_s1++)
+    for (i = 0, j = 0; i < count; i++, j += sizeof(Mtxf))
     {
-        matrix_4x4_multiply_homogeneous(currentPlayerGetMatrix10D4(), phi_s1, (Mtxf *) &sp38);
-        sp38.m[3][0] -= g_CurrentPlayer->previous_model_pos.f[0];
-        sp38.m[3][1] -= g_CurrentPlayer->previous_model_pos.f[1];
-        sp38.m[3][2] -= g_CurrentPlayer->previous_model_pos.f[2];
-        matrix_4x4_f32_to_s32((Mtxf *) &sp38, &arg0[i]);
+        matrix_4x4_multiply_homogeneous(currentPlayerGetMatrix10D4(), (Mtxf *)((u32)matrices + j), &sp40);
+
+        sp40.m[3][0] -= g_CurrentPlayer->current_model_pos.f[0];
+        sp40.m[3][1] -= g_CurrentPlayer->current_model_pos.f[1];
+        sp40.m[3][2] -= g_CurrentPlayer->current_model_pos.f[2];
+
+        matrix_4x4_f32_to_s32(&sp40, matrices + i);
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08BEEC
-/* 0C0A1C 7F08BEEC 27BDFF80 */  addiu $sp, $sp, -0x80
-/* 0C0A20 7F08BEF0 AFB50028 */  sw    $s5, 0x28($sp)
-/* 0C0A24 7F08BEF4 AFB40024 */  sw    $s4, 0x24($sp)
-/* 0C0A28 7F08BEF8 AFB10018 */  sw    $s1, 0x18($sp)
-/* 0C0A2C 7F08BEFC 00A0A025 */  move  $s4, $a1
-/* 0C0A30 7F08BF00 0080A825 */  move  $s5, $a0
-/* 0C0A34 7F08BF04 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 0C0A38 7F08BF08 AFB30020 */  sw    $s3, 0x20($sp)
-/* 0C0A3C 7F08BF0C AFB2001C */  sw    $s2, 0x1c($sp)
-/* 0C0A40 7F08BF10 AFB00014 */  sw    $s0, 0x14($sp)
-/* 0C0A44 7F08BF14 18A0001F */  blez  $a1, .L7F08BF94
-/* 0C0A48 7F08BF18 00008825 */   move  $s1, $zero
-/* 0C0A4C 7F08BF1C 3C138008 */  lui   $s3, %hi(g_CurrentPlayer)
-/* 0C0A50 7F08BF20 2673A0B0 */  addiu $s3, %lo(g_CurrentPlayer) # addiu $s3, $s3, -0x5f50
-/* 0C0A54 7F08BF24 00808025 */  move  $s0, $a0
-/* 0C0A58 7F08BF28 27B20040 */  addiu $s2, $sp, 0x40
-.L7F08BF2C:
-/* 0C0A5C 7F08BF2C 0FC1E111 */  jal   currentPlayerGetMatrix10D4
-/* 0C0A60 7F08BF30 00000000 */   nop
-/* 0C0A64 7F08BF34 00402025 */  move  $a0, $v0
-/* 0C0A68 7F08BF38 02002825 */  move  $a1, $s0
-/* 0C0A6C 7F08BF3C 0FC16063 */  jal   matrix_4x4_multiply_homogeneous
-/* 0C0A70 7F08BF40 02403025 */   move  $a2, $s2
-/* 0C0A74 7F08BF44 8E620000 */  lw    $v0, ($s3)
-/* 0C0A78 7F08BF48 C7A40070 */  lwc1  $f4, 0x70($sp)
-/* 0C0A7C 7F08BF4C C7AA0074 */  lwc1  $f10, 0x74($sp)
-/* 0C0A80 7F08BF50 C4460038 */  lwc1  $f6, 0x38($v0)
-/* 0C0A84 7F08BF54 00117180 */  sll   $t6, $s1, 6
-/* 0C0A88 7F08BF58 01D52821 */  addu  $a1, $t6, $s5
-/* 0C0A8C 7F08BF5C 46062201 */  sub.s $f8, $f4, $f6
-/* 0C0A90 7F08BF60 C7A40078 */  lwc1  $f4, 0x78($sp)
-/* 0C0A94 7F08BF64 02402025 */  move  $a0, $s2
-/* 0C0A98 7F08BF68 E7A80070 */  swc1  $f8, 0x70($sp)
-/* 0C0A9C 7F08BF6C C450003C */  lwc1  $f16, 0x3c($v0)
-/* 0C0AA0 7F08BF70 46105481 */  sub.s $f18, $f10, $f16
-/* 0C0AA4 7F08BF74 E7B20074 */  swc1  $f18, 0x74($sp)
-/* 0C0AA8 7F08BF78 C4460040 */  lwc1  $f6, 0x40($v0)
-/* 0C0AAC 7F08BF7C 46062201 */  sub.s $f8, $f4, $f6
-/* 0C0AB0 7F08BF80 0FC16327 */  jal   matrix_4x4_f32_to_s32
-/* 0C0AB4 7F08BF84 E7A80078 */   swc1  $f8, 0x78($sp)
-/* 0C0AB8 7F08BF88 26310001 */  addiu $s1, $s1, 1
-/* 0C0ABC 7F08BF8C 1634FFE7 */  bne   $s1, $s4, .L7F08BF2C
-/* 0C0AC0 7F08BF90 26100040 */   addiu $s0, $s0, 0x40
-.L7F08BF94:
-/* 0C0AC4 7F08BF94 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 0C0AC8 7F08BF98 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0C0ACC 7F08BF9C 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0C0AD0 7F08BFA0 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 0C0AD4 7F08BFA4 8FB30020 */  lw    $s3, 0x20($sp)
-/* 0C0AD8 7F08BFA8 8FB40024 */  lw    $s4, 0x24($sp)
-/* 0C0ADC 7F08BFAC 8FB50028 */  lw    $s5, 0x28($sp)
-/* 0C0AE0 7F08BFB0 03E00008 */  jr    $ra
-/* 0C0AE4 7F08BFB4 27BD0080 */   addiu $sp, $sp, 0x80
-)
-#endif
-
-
-
-
 
 
 s32 getMissiontimer(void) {
