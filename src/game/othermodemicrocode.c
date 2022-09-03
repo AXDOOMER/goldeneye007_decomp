@@ -1250,7 +1250,7 @@ glabel likely_generate_DL_for_image_declaration
 /* 0AC45C 7F07792C 02202825 */   move  $a1, $s1
 /* 0AC460 7F077930 0040A825 */  move  $s5, $v0
 /* 0AC464 7F077934 02C02025 */  move  $a0, $s6
-/* 0AC468 7F077938 0FC331FF */  jal   sub_GAME_7F0CC7FC
+/* 0AC468 7F077938 0FC331FF */  jal   texGetHeightAtLod
 /* 0AC46C 7F07793C 02202825 */   move  $a1, $s1
 /* 0AC470 7F077940 0040A025 */  move  $s4, $v0
 /* 0AC474 7F077944 10000008 */  b     .L7F077968
