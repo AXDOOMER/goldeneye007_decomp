@@ -6006,38 +6006,13 @@ s32 sub_GAME_7F0B2FE0(StandTile *tile)
     return sub_GAME_7F0B4F9C(room);
 }
 
-
-
-
-
 f32 sub_GAME_7F0B3004(StandTile *tile) {
     return sub_GAME_7F0B2D14(tile);
 }
 
-
-
-
-
-#ifdef NONMATCHING
 Gfx * sub_GAME_7F0B3024(Gfx *ptrdl, StandTilePoint *tile_point, u32 RGBAColor) {
-    return *ptrdl;
+    return ptrdl;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B3024
-/* 0E7B54 7F0B3024 AFA50004 */  sw    $a1, 4($sp)
-/* 0E7B58 7F0B3028 AFA60008 */  sw    $a2, 8($sp)
-/* 0E7B5C 7F0B302C 03E00008 */  jr    $ra
-/* 0E7B60 7F0B3030 00801025 */   move  $v0, $a0
-)
-#endif
-
-
-
-
-
 
 Gfx * sub_GAME_7F0B3034(Gfx *arg0) {
     return arg0;
@@ -6046,11 +6021,6 @@ Gfx * sub_GAME_7F0B3034(Gfx *arg0) {
 Gfx * sub_GAME_7F0B303C(Gfx * arg0) {
     return arg0;
 }
-
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F0B3044(void) {
