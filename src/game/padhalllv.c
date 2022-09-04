@@ -472,69 +472,38 @@ s32 sub_GAME_7F08F350(waypoint *from, waypoint *to, waypoint **arr, s32 arrlen)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F08F438(waygroup *groupa, waygroup *groupb, waypoint **pointa, waypoint **pointb) {
+void sub_GAME_7F08F438(waygroup *groupa, waygroup *groupb, waypoint **pointa, waypoint **pointb)
+{
+    waypoint *points = g_CurrentSetup.pathwaypoints;
+    waygroup *groups = g_CurrentSetup.waypointgroups;
+    s32 *groupapointnums = groupa->waypoints;
+    s32 stack;
 
+    while (*groupapointnums >= 0)
+    {
+        waypoint *groupapoint = &points[*groupapointnums];
+        s32 *neighbournums = groupapoint->neighbours;
+
+        while (*neighbournums >= 0)
+        {
+            waypoint *neighbour = &points[*neighbournums];
+
+            if (groupb == &groups[neighbour->groupNum])
+            {
+                *pointa = groupapoint;
+                *pointb = neighbour;
+                return;
+            }
+
+            neighbournums++;
+        }
+
+        groupapointnums++;
+    }
+    *pointb = NULL;
+    *pointa = NULL;
 }
-#else
-void sub_GAME_7F08F438(waygroup *groupa, waygroup *groupb, waypoint **pointa, waypoint **pointb);
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08F438
-/* 0C3F68 7F08F438 27BDFFF8 */  addiu $sp, $sp, -8
-/* 0C3F6C 7F08F43C AFB00004 */  sw    $s0, 4($sp)
-/* 0C3F70 7F08F440 AFA60010 */  sw    $a2, 0x10($sp)
-/* 0C3F74 7F08F444 AFA70014 */  sw    $a3, 0x14($sp)
-/* 0C3F78 7F08F448 8C880004 */  lw    $t0, 4($a0)
-/* 0C3F7C 7F08F44C 3C0A8007 */  lui   $t2, %hi(g_CurrentSetup+0) 
-/* 0C3F80 7F08F450 254A5D00 */  addiu $t2, %lo(g_CurrentSetup+0) # addiu $t2, $t2, 0x5d00
-/* 0C3F84 7F08F454 8D090000 */  lw    $t1, ($t0)
-/* 0C3F88 7F08F458 00A08025 */  move  $s0, $a1
-/* 0C3F8C 7F08F45C 8D420000 */  lw    $v0, ($t2)
-/* 0C3F90 7F08F460 0520001C */  bltz  $t1, .L7F08F4D4
-/* 0C3F94 7F08F464 8D430004 */   lw    $v1, 4($t2)
-/* 0C3F98 7F08F468 240A000C */  li    $t2, 12
-/* 0C3F9C 7F08F46C 00097100 */  sll   $t6, $t1, 4
-.L7F08F470:
-/* 0C3FA0 7F08F470 01C22021 */  addu  $a0, $t6, $v0
-/* 0C3FA4 7F08F474 8C850004 */  lw    $a1, 4($a0)
-/* 0C3FA8 7F08F478 8CA60000 */  lw    $a2, ($a1)
-/* 0C3FAC 7F08F47C 04C00011 */  bltz  $a2, .L7F08F4C4
-/* 0C3FB0 7F08F480 00067900 */   sll   $t7, $a2, 4
-.L7F08F484:
-/* 0C3FB4 7F08F484 01E23821 */  addu  $a3, $t7, $v0
-/* 0C3FB8 7F08F488 8CF80008 */  lw    $t8, 8($a3)
-/* 0C3FBC 7F08F48C 030A0019 */  multu $t8, $t2
-/* 0C3FC0 7F08F490 0000C812 */  mflo  $t9
-/* 0C3FC4 7F08F494 03235821 */  addu  $t3, $t9, $v1
-/* 0C3FC8 7F08F498 560B0007 */  bnel  $s0, $t3, .L7F08F4B8
-/* 0C3FCC 7F08F49C 8CA60004 */   lw    $a2, 4($a1)
-/* 0C3FD0 7F08F4A0 8FAC0010 */  lw    $t4, 0x10($sp)
-/* 0C3FD4 7F08F4A4 AD840000 */  sw    $a0, ($t4)
-/* 0C3FD8 7F08F4A8 8FAD0014 */  lw    $t5, 0x14($sp)
-/* 0C3FDC 7F08F4AC 1000000D */  b     .L7F08F4E4
-/* 0C3FE0 7F08F4B0 ADA70000 */   sw    $a3, ($t5)
-/* 0C3FE4 7F08F4B4 8CA60004 */  lw    $a2, 4($a1)
-.L7F08F4B8:
-/* 0C3FE8 7F08F4B8 24A50004 */  addiu $a1, $a1, 4
-/* 0C3FEC 7F08F4BC 04C3FFF1 */  bgezl $a2, .L7F08F484
-/* 0C3FF0 7F08F4C0 00067900 */   sll   $t7, $a2, 4
-.L7F08F4C4:
-/* 0C3FF4 7F08F4C4 8D090004 */  lw    $t1, 4($t0)
-/* 0C3FF8 7F08F4C8 25080004 */  addiu $t0, $t0, 4
-/* 0C3FFC 7F08F4CC 0523FFE8 */  bgezl $t1, .L7F08F470
-/* 0C4000 7F08F4D0 00097100 */   sll   $t6, $t1, 4
-.L7F08F4D4:
-/* 0C4004 7F08F4D4 8FAE0014 */  lw    $t6, 0x14($sp)
-/* 0C4008 7F08F4D8 ADC00000 */  sw    $zero, ($t6)
-/* 0C400C 7F08F4DC 8FAF0010 */  lw    $t7, 0x10($sp)
-/* 0C4010 7F08F4E0 ADE00000 */  sw    $zero, ($t7)
-.L7F08F4E4:
-/* 0C4014 7F08F4E4 8FB00004 */  lw    $s0, 4($sp)
-/* 0C4018 7F08F4E8 03E00008 */  jr    $ra
-/* 0C401C 7F08F4EC 27BD0008 */   addiu $sp, $sp, 8
-)
-#endif
+
 
 /**
  * Find a route from frompoint to topoint. The arr argument will be populated
