@@ -32,9 +32,9 @@ struct Smoke *ptr_smoke_buf;
 struct Explosion *ptr_explosion_buf;
 
 //CODE.bss:8007A148
-s32 max_casings;
+s32 max_particles;
 //CODE.bss:8007A14C
-struct EjectedCasing *ptr_ejected_casing_buf;
+struct FlyingParticles *ptr_flying_particles_buf;
 
 /**
  * ptr_scorch_buf = mempAllocBytesInBank(0x6E0, 4);
@@ -159,7 +159,7 @@ u32 array_explosion_dl_ptrs[] = {
     &globalDL_0x900,
     &globalDL_0x9a8       
 };
-s32 numCasingEntries = 0;
+s32 numParticleEntries = 0;
 s32 numScorchEntries = 0;
 s32 numImpactEntries = 0;
 //D:8004080C
@@ -488,7 +488,7 @@ glabel explosionCreate
 /* 0D1124 7F09C5F4 8E260030 */  lw    $a2, 0x30($s1)
 /* 0D1128 7F09C5F8 8E270034 */  lw    $a3, 0x34($s1)
 /* 0D112C 7F09C5FC 02602025 */  move  $a0, $s3
-/* 0D1130 7F09C600 0FC27C95 */  jal   sub_GAME_7F09F254
+/* 0D1130 7F09C600 0FC27C95 */  jal   init_gray_flying_particles
 /* 0D1134 7F09C604 E7A80010 */   swc1  $f8, 0x10($sp)
 /* 0D1138 7F09C608 8FB90044 */  lw    $t9, 0x44($sp)
 /* 0D113C 7F09C60C 26100001 */  addiu $s0, $s0, 1
@@ -852,7 +852,7 @@ glabel explosionCreate
 /* 0D1CD0 7F09D160 8E260030 */  lw    $a2, 0x30($s1)
 /* 0D1CD4 7F09D164 8E270034 */  lw    $a3, 0x34($s1)
 /* 0D1CD8 7F09D168 02602025 */  move  $a0, $s3
-/* 0D1CDC 7F09D16C 0FC27F7E */  jal   sub_GAME_7F09F254
+/* 0D1CDC 7F09D16C 0FC27F7E */  jal   init_gray_flying_particles
 /* 0D1CE0 7F09D170 E7A80010 */   swc1  $f8, 0x10($sp)
 /* 0D1CE4 7F09D174 8FB9004C */  lw    $t9, 0x4c($sp)
 /* 0D1CE8 7F09D178 26100001 */  addiu $s0, $s0, 1
@@ -3799,8 +3799,11 @@ glabel unk09c250RenderPropSmoke
 #endif
 
 
-void sub_GAME_7F09F254(coord3d *arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
+void init_gray_flying_particles(coord3d *spawnpos, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
 {
+    // these are gray rectangles of dust created from shooting walls with guns that fall down with gravity
+    // a bullet will create a group of them flying off the wall
+
     f32 rand1;
     f32 rand2;
     f32 rand3;
@@ -3812,33 +3815,33 @@ void sub_GAME_7F09F254(coord3d *arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
     rand2 = ((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 1.12f) - 0.12f;
     rand3 = (2.0f * (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX))) - 1.0f;
 
-    ptr_ejected_casing_buf[numCasingEntries].unk00 = 1;
+    ptr_flying_particles_buf[numParticleEntries].unk00 = 1;
 
-    ptr_ejected_casing_buf[numCasingEntries].unk04 = arg0->f[0] + (arg1 * rand1);
-    ptr_ejected_casing_buf[numCasingEntries].unk08 = arg0->f[1] + (arg1 * rand2);
-    ptr_ejected_casing_buf[numCasingEntries].unk0C = arg0->f[2] + (arg1 * rand3);
+    ptr_flying_particles_buf[numParticleEntries].x = spawnpos->f[0] + (arg1 * rand1);
+    ptr_flying_particles_buf[numParticleEntries].y = spawnpos->f[1] + (arg1 * rand2);
+    ptr_flying_particles_buf[numParticleEntries].z = spawnpos->f[2] + (arg1 * rand3);
 
-    ptr_ejected_casing_buf[numCasingEntries].unk1C = rand1 * arg2;
-    ptr_ejected_casing_buf[numCasingEntries].unk20 = rand2 * arg3;
-    ptr_ejected_casing_buf[numCasingEntries].unk24 = rand3 * arg2;
+    ptr_flying_particles_buf[numParticleEntries].unk1C = rand1 * arg2;
+    ptr_flying_particles_buf[numParticleEntries].unk20 = rand2 * arg3;
+    ptr_flying_particles_buf[numParticleEntries].unk24 = rand3 * arg2;
 
-    ptr_ejected_casing_buf[numCasingEntries].unk38[0].unk00 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * arg4));
-    ptr_ejected_casing_buf[numCasingEntries].unk38[0].unk02 = 0;
-    ptr_ejected_casing_buf[numCasingEntries].unk38[0].unk04 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * arg4));
+    ptr_flying_particles_buf[numParticleEntries].unk38[0].unk00 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * arg4));
+    ptr_flying_particles_buf[numParticleEntries].unk38[0].unk02 = 0;
+    ptr_flying_particles_buf[numParticleEntries].unk38[0].unk04 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * arg4));
 
     if (1)
     {
-        ptr_ejected_casing_buf[numCasingEntries].unk38[1].unk00 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * arg4));
-        ptr_ejected_casing_buf[numCasingEntries].unk38[1].unk02 = 0;
-        ptr_ejected_casing_buf[numCasingEntries].unk38[1].unk04 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-arg4)));
+        ptr_flying_particles_buf[numParticleEntries].unk38[1].unk00 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * arg4));
+        ptr_flying_particles_buf[numParticleEntries].unk38[1].unk02 = 0;
+        ptr_flying_particles_buf[numParticleEntries].unk38[1].unk04 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-arg4)));
 
-        ptr_ejected_casing_buf[numCasingEntries].unk38[2].unk00 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-arg4)));
-        ptr_ejected_casing_buf[numCasingEntries].unk38[2].unk02 = 0;
-        ptr_ejected_casing_buf[numCasingEntries].unk38[2].unk04 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-arg4)));
+        ptr_flying_particles_buf[numParticleEntries].unk38[2].unk00 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-arg4)));
+        ptr_flying_particles_buf[numParticleEntries].unk38[2].unk02 = 0;
+        ptr_flying_particles_buf[numParticleEntries].unk38[2].unk04 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-arg4)));
 
-        ptr_ejected_casing_buf[numCasingEntries].unk38[3].unk00 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-arg4)));
-        ptr_ejected_casing_buf[numCasingEntries].unk38[3].unk02 = 0;
-        ptr_ejected_casing_buf[numCasingEntries].unk38[3].unk04 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * arg4));
+        ptr_flying_particles_buf[numParticleEntries].unk38[3].unk00 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-arg4)));
+        ptr_flying_particles_buf[numParticleEntries].unk38[3].unk02 = 0;
+        ptr_flying_particles_buf[numParticleEntries].unk38[3].unk04 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * arg4));
     }
 
     if (1) {}
@@ -3846,81 +3849,77 @@ void sub_GAME_7F09F254(coord3d *arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
     unk08_upper = (randomGetNext() & 3) << 8;
     unk0A_upper = (randomGetNext() & 3) << 8;
 
-    ptr_ejected_casing_buf[numCasingEntries].unk38[0].unk08 = unk08_upper + 0xE0;
-    ptr_ejected_casing_buf[numCasingEntries].unk38[0].unk0A = unk0A_upper + 0xE0;
-    ptr_ejected_casing_buf[numCasingEntries].unk38[1].unk08 = unk08_upper + 0xE0;
-    ptr_ejected_casing_buf[numCasingEntries].unk38[1].unk0A = unk0A_upper;
-    ptr_ejected_casing_buf[numCasingEntries].unk38[2].unk08 = unk08_upper;
-    ptr_ejected_casing_buf[numCasingEntries].unk38[2].unk0A = unk0A_upper;
-    ptr_ejected_casing_buf[numCasingEntries].unk38[3].unk08 = unk08_upper;
-    ptr_ejected_casing_buf[numCasingEntries].unk38[3].unk0A = unk0A_upper + 0xE0;
+    ptr_flying_particles_buf[numParticleEntries].unk38[0].unk08 = unk08_upper + 0xE0;
+    ptr_flying_particles_buf[numParticleEntries].unk38[0].unk0A = unk0A_upper + 0xE0;
+    ptr_flying_particles_buf[numParticleEntries].unk38[1].unk08 = unk08_upper + 0xE0;
+    ptr_flying_particles_buf[numParticleEntries].unk38[1].unk0A = unk0A_upper;
+    ptr_flying_particles_buf[numParticleEntries].unk38[2].unk08 = unk08_upper;
+    ptr_flying_particles_buf[numParticleEntries].unk38[2].unk0A = unk0A_upper;
+    ptr_flying_particles_buf[numParticleEntries].unk38[3].unk08 = unk08_upper;
+    ptr_flying_particles_buf[numParticleEntries].unk38[3].unk0A = unk0A_upper + 0xE0;
 
     if (randomGetNext() & 1)
     {
         rand_s8 = 0xFF - (randomGetNext() & 0x3F);
-        ptr_ejected_casing_buf[numCasingEntries].unk38[0].unk0E = rand_s8;
-        ptr_ejected_casing_buf[numCasingEntries].unk38[0].unk0D = rand_s8;
-        ptr_ejected_casing_buf[numCasingEntries].unk38[0].unk0C = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].unk38[0].unk0E = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].unk38[0].unk0D = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].unk38[0].unk0C = rand_s8;
         rand_s8 = 0xFF - (randomGetNext() & 0x3F);
-        ptr_ejected_casing_buf[numCasingEntries].unk38[1].unk0E = rand_s8;
-        ptr_ejected_casing_buf[numCasingEntries].unk38[1].unk0D = rand_s8;
-        ptr_ejected_casing_buf[numCasingEntries].unk38[1].unk0C = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].unk38[1].unk0E = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].unk38[1].unk0D = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].unk38[1].unk0C = rand_s8;
         rand_s8 = 0xFF - (randomGetNext() & 0x3F);
-        ptr_ejected_casing_buf[numCasingEntries].unk38[2].unk0E = rand_s8;
-        ptr_ejected_casing_buf[numCasingEntries].unk38[2].unk0D = rand_s8;
-        ptr_ejected_casing_buf[numCasingEntries].unk38[2].unk0C = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].unk38[2].unk0E = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].unk38[2].unk0D = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].unk38[2].unk0C = rand_s8;
         rand_s8 = 0xFF - (randomGetNext() & 0x3F);
-        ptr_ejected_casing_buf[numCasingEntries].unk38[3].unk0E = rand_s8;
-        ptr_ejected_casing_buf[numCasingEntries].unk38[3].unk0D = rand_s8;
-        ptr_ejected_casing_buf[numCasingEntries].unk38[3].unk0C = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].unk38[3].unk0E = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].unk38[3].unk0D = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].unk38[3].unk0C = rand_s8;
     }
     else
     {
         rand_s8 = randomGetNext() & 0x3F;
-        ptr_ejected_casing_buf[numCasingEntries].unk38[0].unk0E = rand_s8;
-        ptr_ejected_casing_buf[numCasingEntries].unk38[0].unk0D = rand_s8;
-        ptr_ejected_casing_buf[numCasingEntries].unk38[0].unk0C = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].unk38[0].unk0E = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].unk38[0].unk0D = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].unk38[0].unk0C = rand_s8;
         rand_s8 = randomGetNext() & 0x3F;
-        ptr_ejected_casing_buf[numCasingEntries].unk38[1].unk0E = rand_s8;
-        ptr_ejected_casing_buf[numCasingEntries].unk38[1].unk0D = rand_s8;
-        ptr_ejected_casing_buf[numCasingEntries].unk38[1].unk0C = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].unk38[1].unk0E = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].unk38[1].unk0D = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].unk38[1].unk0C = rand_s8;
         rand_s8 = randomGetNext() & 0x3F;
-        ptr_ejected_casing_buf[numCasingEntries].unk38[2].unk0E = rand_s8;
-        ptr_ejected_casing_buf[numCasingEntries].unk38[2].unk0D = rand_s8;
-        ptr_ejected_casing_buf[numCasingEntries].unk38[2].unk0C = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].unk38[2].unk0E = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].unk38[2].unk0D = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].unk38[2].unk0C = rand_s8;
         rand_s8 = randomGetNext() & 0x3F;
-        ptr_ejected_casing_buf[numCasingEntries].unk38[3].unk0E = rand_s8;
-        ptr_ejected_casing_buf[numCasingEntries].unk38[3].unk0D = rand_s8;
-        ptr_ejected_casing_buf[numCasingEntries].unk38[3].unk0C = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].unk38[3].unk0E = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].unk38[3].unk0D = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].unk38[3].unk0C = rand_s8;
     }
 
-    ptr_ejected_casing_buf[numCasingEntries].unk38[0].unk0F = 0xdc;
-    ptr_ejected_casing_buf[numCasingEntries].unk38[1].unk0F = 0xdc;
-    ptr_ejected_casing_buf[numCasingEntries].unk38[2].unk0F = 0xdc;
-    ptr_ejected_casing_buf[numCasingEntries].unk38[3].unk0F = 0xdc;
+    ptr_flying_particles_buf[numParticleEntries].unk38[0].unk0F = 0xdc;
+    ptr_flying_particles_buf[numParticleEntries].unk38[1].unk0F = 0xdc;
+    ptr_flying_particles_buf[numParticleEntries].unk38[2].unk0F = 0xdc;
+    ptr_flying_particles_buf[numParticleEntries].unk38[3].unk0F = 0xdc;
 
-    ptr_ejected_casing_buf[numCasingEntries].unk10 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * M_TAU_F;
-    ptr_ejected_casing_buf[numCasingEntries].unk14 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * M_TAU_F;
-    ptr_ejected_casing_buf[numCasingEntries].unk18 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * M_TAU_F;
+    ptr_flying_particles_buf[numParticleEntries].unk10 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * M_TAU_F;
+    ptr_flying_particles_buf[numParticleEntries].unk14 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * M_TAU_F;
+    ptr_flying_particles_buf[numParticleEntries].unk18 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * M_TAU_F;
 
-    ptr_ejected_casing_buf[numCasingEntries].unk28 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.1f;
-    ptr_ejected_casing_buf[numCasingEntries].unk2C = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.1f;
-    ptr_ejected_casing_buf[numCasingEntries].unk30 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.1f;
+    ptr_flying_particles_buf[numParticleEntries].unk28 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.1f;
+    ptr_flying_particles_buf[numParticleEntries].unk2C = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.1f;
+    ptr_flying_particles_buf[numParticleEntries].unk30 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.1f;
 
-    numCasingEntries++;
-    if (numCasingEntries >= max_casings)
+    numParticleEntries++;
+    if (numParticleEntries >= max_particles)
     {
-        numCasingEntries = 0;
+        numParticleEntries = 0;
     }
 }
 
 
 void update_gray_flying_particles(void)
 {
-    // these are created from shooting walls with guns
-    // these are limited to 5 at a time
-    // spawning more will delete the oldest one to spawn a new one
-
     f32 scalar;
     s32 i;
     s32 j;
@@ -3935,35 +3934,40 @@ void update_gray_flying_particles(void)
     }
 
 
-    for (i = 0; i < max_casings; i++)
+    for (i = 0; i < max_particles; i++)
     {
-        if (ptr_ejected_casing_buf[i].unk00 > 0)
+        if (ptr_flying_particles_buf[i].unk00 > 0)
         {
-            ptr_ejected_casing_buf[i].unk00 += (s32) scalar;
+            ptr_flying_particles_buf[i].unk00 += (s32) scalar;
 
-            ptr_ejected_casing_buf[i].unk10 += ptr_ejected_casing_buf[i].unk28 * scalar;
-            ptr_ejected_casing_buf[i].unk14 += ptr_ejected_casing_buf[i].unk2C * scalar;
-            ptr_ejected_casing_buf[i].unk18 += ptr_ejected_casing_buf[i].unk30 * scalar;
-            ptr_ejected_casing_buf[i].unk04 += ptr_ejected_casing_buf[i].unk1C * scalar;
-            ptr_ejected_casing_buf[i].unk0C += ptr_ejected_casing_buf[i].unk24 * scalar;
+            ptr_flying_particles_buf[i].unk10 += ptr_flying_particles_buf[i].unk28 * scalar;
+            ptr_flying_particles_buf[i].unk14 += ptr_flying_particles_buf[i].unk2C * scalar;
+            ptr_flying_particles_buf[i].unk18 += ptr_flying_particles_buf[i].unk30 * scalar;
+            ptr_flying_particles_buf[i].x += ptr_flying_particles_buf[i].unk1C * scalar;
+            ptr_flying_particles_buf[i].z += ptr_flying_particles_buf[i].unk24 * scalar;
 
             for (j = 0; j < (s32)scalar; j++)
             {
-                ptr_ejected_casing_buf[i].unk08 += ptr_ejected_casing_buf[i].unk20;
-                if (ptr_ejected_casing_buf[i].unk20 > -3.75f)
+                // initially sends particles flying up
+                ptr_flying_particles_buf[i].y += ptr_flying_particles_buf[i].unk20;
+
+                // applies gravity so particles fall down
+                if (ptr_flying_particles_buf[i].unk20 > -3.75f)
                 {
-                    ptr_ejected_casing_buf[i].unk20 -= 0.2f;
+                    ptr_flying_particles_buf[i].unk20 -= 0.2f;
                 }
             }
 
-            if ((ptr_ejected_casing_buf[i].unk00 >= 0x65) && (!(randomGetNext() & 0x1F) || (ptr_ejected_casing_buf[i].unk00 == 0x12C)))
+            // handles particles life time
+            if ((ptr_flying_particles_buf[i].unk00 >= 0x65) && (!(randomGetNext() & 0x1F) || (ptr_flying_particles_buf[i].unk00 == 0x12C)))
             {
-                ptr_ejected_casing_buf[i].unk00 = 0;
+                ptr_flying_particles_buf[i].unk00 = 0;
             }
 
-            if ((ptr_ejected_casing_buf[i].unk08 < -30000.0f) || (ptr_ejected_casing_buf[i].unk08 > 30000.0f))
+            // position-related. deletes particles that are too low or too high.
+            if ((ptr_flying_particles_buf[i].y < -30000.0f) || (ptr_flying_particles_buf[i].y > 30000.0f))
             {
-                ptr_ejected_casing_buf[i].unk00 = 0;
+                ptr_flying_particles_buf[i].unk00 = 0;
             }
         }
     }
@@ -4024,8 +4028,8 @@ glabel sub_GAME_7F0A0034
 /* 0D4BFC 7F0A00CC 3529031D */  ori   $t1, (0xB900031D & 0xFFFF) # ori $t1, $t1, 0x31d
 /* 0D4C00 7F0A00D0 AC890000 */  sw    $t1, ($a0)
 /* 0D4C04 7F0A00D4 AC8A0004 */  sw    $t2, 4($a0)
-/* 0D4C08 7F0A00D8 3C0B8008 */  lui   $t3, %hi(max_casings) 
-/* 0D4C0C 7F0A00DC 8D6BA148 */  lw    $t3, %lo(max_casings)($t3)
+/* 0D4C08 7F0A00D8 3C0B8008 */  lui   $t3, %hi(max_particles) 
+/* 0D4C0C 7F0A00DC 8D6BA148 */  lw    $t3, %lo(max_particles)($t3)
 /* 0D4C10 7F0A00E0 26100008 */  addiu $s0, $s0, 8
 /* 0D4C14 7F0A00E4 0000A825 */  move  $s5, $zero
 /* 0D4C18 7F0A00E8 19600055 */  blez  $t3, .L7F0A0240
@@ -4035,8 +4039,8 @@ glabel sub_GAME_7F0A0034
 /* 0D4C28 7F0A00F8 3C018005 */  lui   $at, %hi(D_80057700)
 /* 0D4C2C 7F0A00FC 3C1E0430 */  lui   $fp, (0x04300040 >> 16) # lui $fp, 0x430
 /* 0D4C30 7F0A0100 3C170102 */  lui   $s7, (0x01020040 >> 16) # lui $s7, 0x102
-/* 0D4C34 7F0A0104 3C168008 */  lui   $s6, %hi(ptr_ejected_casing_buf)
-/* 0D4C38 7F0A0108 26D6A14C */  addiu $s6, %lo(ptr_ejected_casing_buf) # addiu $s6, $s6, -0x5eb4
+/* 0D4C34 7F0A0104 3C168008 */  lui   $s6, %hi(ptr_flying_particles_buf)
+/* 0D4C38 7F0A0108 26D6A14C */  addiu $s6, %lo(ptr_flying_particles_buf) # addiu $s6, $s6, -0x5eb4
 /* 0D4C3C 7F0A010C 36F70040 */  ori   $s7, (0x01020040 & 0xFFFF) # ori $s7, $s7, 0x40
 /* 0D4C40 7F0A0110 37DE0040 */  ori   $fp, (0x04300040 & 0xFFFF) # ori $fp, $fp, 0x40
 /* 0D4C44 7F0A0114 C4347700 */  lwc1  $f20, %lo(D_80057700)($at)
@@ -4109,8 +4113,8 @@ glabel sub_GAME_7F0A0034
 /* 0D4D4C 7F0A021C AC6F0000 */  sw    $t7, ($v1)
 /* 0D4D50 7F0A0220 26100008 */  addiu $s0, $s0, 8
 .L7F0A0224:
-/* 0D4D54 7F0A0224 3C198008 */  lui   $t9, %hi(max_casings) 
-/* 0D4D58 7F0A0228 8F39A148 */  lw    $t9, %lo(max_casings)($t9)
+/* 0D4D54 7F0A0224 3C198008 */  lui   $t9, %hi(max_particles) 
+/* 0D4D58 7F0A0228 8F39A148 */  lw    $t9, %lo(max_particles)($t9)
 /* 0D4D5C 7F0A022C 26B50001 */  addiu $s5, $s5, 1
 /* 0D4D60 7F0A0230 26730078 */  addiu $s3, $s3, 0x78
 /* 0D4D64 7F0A0234 02B9082A */  slt   $at, $s5, $t9
