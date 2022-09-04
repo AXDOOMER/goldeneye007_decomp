@@ -517,42 +517,22 @@ glabel findPadWithDistAndSet
 #endif
 
 
+void sub_GAME_7F08F0E8(s32 *pointnums, s32 value, s32 groupnum)
+{
+    waypoint *waypoints = g_CurrentSetup.pathwaypoints;
 
+    while (*pointnums >= 0)
+    {
+        waypoint *waypoint = &waypoints[*pointnums];
 
-#ifdef NONMATCHING
-void sub_GAME_7F08F0E8(s32 *pointnums, s32 value, s32 groupnum) {
+        if (waypoint->groupNum == groupnum && waypoint->dist < 0)
+        {
+            waypoint->dist = value;
+        }
 
+        *pointnums++;
+    }
 }
-#else
-void sub_GAME_7F08F0E8(s32 *pointnums, s32 value, s32 groupnum);
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08F0E8
-/* 0C3C18 7F08F0E8 8C830000 */  lw    $v1, ($a0)
-/* 0C3C1C 7F08F0EC 3C028007 */  lui   $v0, %hi(g_CurrentSetup+0)
-/* 0C3C20 7F08F0F0 00A03825 */  move  $a3, $a1
-/* 0C3C24 7F08F0F4 0460000E */  bltz  $v1, .L7F08F130
-/* 0C3C28 7F08F0F8 8C425D00 */   lw    $v0, %lo(g_CurrentSetup+0)($v0)
-/* 0C3C2C 7F08F0FC 00037100 */  sll   $t6, $v1, 4
-.L7F08F100:
-/* 0C3C30 7F08F100 01C22821 */  addu  $a1, $t6, $v0
-/* 0C3C34 7F08F104 8CAF0008 */  lw    $t7, 8($a1)
-/* 0C3C38 7F08F108 54CF0006 */  bnel  $a2, $t7, .L7F08F124
-/* 0C3C3C 7F08F10C 8C830004 */   lw    $v1, 4($a0)
-/* 0C3C40 7F08F110 8CB8000C */  lw    $t8, 0xc($a1)
-/* 0C3C44 7F08F114 07030003 */  bgezl $t8, .L7F08F124
-/* 0C3C48 7F08F118 8C830004 */   lw    $v1, 4($a0)
-/* 0C3C4C 7F08F11C ACA7000C */  sw    $a3, 0xc($a1)
-/* 0C3C50 7F08F120 8C830004 */  lw    $v1, 4($a0)
-.L7F08F124:
-/* 0C3C54 7F08F124 24840004 */  addiu $a0, $a0, 4
-/* 0C3C58 7F08F128 0463FFF5 */  bgezl $v1, .L7F08F100
-/* 0C3C5C 7F08F12C 00037100 */   sll   $t6, $v1, 4
-.L7F08F130:
-/* 0C3C60 7F08F130 03E00008 */  jr    $ra
-/* 0C3C64 7F08F134 00000000 */   nop   
-)
-#endif
 
 
 bool sub_GAME_7F08F138(s32 *pointnums, s32 arg1, s32 groupnum)
