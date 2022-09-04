@@ -2,6 +2,7 @@
 #include "padhalllv.h"
 #include "bondtypes.h"
 #include "chrai.h"
+#include "random.h"
 
 //pd decomp has a filesplit here
 //all ge versions align properly 
@@ -641,7 +642,7 @@ void resetWaypointDistances(void)
     waypoint * waypoint;
     waypoint = g_CurrentSetup.pathwaypoints;
 
-    while(waypoint->padID >= 0)
+    while (waypoint->padID >= 0)
     {
         waypoint->dist = -1;
         waypoint++;
@@ -649,192 +650,47 @@ void resetWaypointDistances(void)
 }
 
 
-#ifdef NONMATCHING
-waypoint *sub_GAME_7F08F6B0(s32 *pointnums, s32 arg1) {
+waypoint *sub_GAME_7F08F6B0(s32 *pointnums, s32 arg1)
+{
+	s32 len = 0;
+	s32 randomindex;
+	s32 i;
 
+	while (pointnums[len] >= 0)
+    {
+		len++;
+	}
+
+	// This is effectively randomly dividing the pointnums list into two,
+	// then checking the upper portion before the lower portion. Both loops
+	// have the same logic so this seems unusual, but there is reason to do
+	// this if they want the returned waypoint to be any random waypoint that
+	// meets the arg1 criteria, with equal weighting.
+
+	randomindex = randomGetNext() % len;
+
+	for (i = randomindex; i < len; i++)
+    {
+		waypoint *point = &g_CurrentSetup.pathwaypoints[pointnums[i]];
+
+		if (point->dist == arg1)
+        {
+			return point;
+		}
+	}
+
+	for (i = 0; i < randomindex; i++)
+    {
+		waypoint *point = &g_CurrentSetup.pathwaypoints[pointnums[i]];
+
+		if (point->dist == arg1)
+        {
+			return point;
+		}
+	}
+
+	return NULL;
 }
-#else
-waypoint *sub_GAME_7F08F6B0(s32 *pointnums, s32 arg1);
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08F6B0
-/* 0C41E0 7F08F6B0 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0C41E4 7F08F6B4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C41E8 7F08F6B8 8C8E0000 */  lw    $t6, ($a0)
-/* 0C41EC 7F08F6BC 00A03825 */  move  $a3, $a1
-/* 0C41F0 7F08F6C0 00004825 */  move  $t1, $zero
-/* 0C41F4 7F08F6C4 05C00006 */  bltz  $t6, .L7F08F6E0
-/* 0C41F8 7F08F6C8 00801025 */   move  $v0, $a0
-/* 0C41FC 7F08F6CC 8C4F0004 */  lw    $t7, 4($v0)
-.L7F08F6D0:
-/* 0C4200 7F08F6D0 25290001 */  addiu $t1, $t1, 1
-/* 0C4204 7F08F6D4 24420004 */  addiu $v0, $v0, 4
-/* 0C4208 7F08F6D8 05E3FFFD */  bgezl $t7, .L7F08F6D0
-/* 0C420C 7F08F6DC 8C4F0004 */   lw    $t7, 4($v0)
-.L7F08F6E0:
-/* 0C4210 7F08F6E0 AFA40020 */  sw    $a0, 0x20($sp)
-/* 0C4214 7F08F6E4 AFA70024 */  sw    $a3, 0x24($sp)
-/* 0C4218 7F08F6E8 0C002914 */  jal   randomGetNext
-/* 0C421C 7F08F6EC AFA9001C */   sw    $t1, 0x1c($sp)
-/* 0C4220 7F08F6F0 8FA9001C */  lw    $t1, 0x1c($sp)
-/* 0C4224 7F08F6F4 8FA70024 */  lw    $a3, 0x24($sp)
-/* 0C4228 7F08F6F8 8FAC0020 */  lw    $t4, 0x20($sp)
-/* 0C422C 7F08F6FC 0049001B */  divu  $zero, $v0, $t1
-/* 0C4230 7F08F700 00005810 */  mfhi  $t3
-/* 0C4234 7F08F704 0169082A */  slt   $at, $t3, $t1
-/* 0C4238 7F08F708 15200002 */  bnez  $t1, .L7F08F714
-/* 0C423C 7F08F70C 00000000 */   nop   
-/* 0C4240 7F08F710 0007000D */  break 7
-.L7F08F714:
-/* 0C4244 7F08F714 01605025 */  move  $t2, $t3
-/* 0C4248 7F08F718 1020003C */  beqz  $at, .L7F08F80C
-/* 0C424C 7F08F71C 01603025 */   move  $a2, $t3
-/* 0C4250 7F08F720 012B1823 */  subu  $v1, $t1, $t3
-/* 0C4254 7F08F724 30780003 */  andi  $t8, $v1, 3
-/* 0C4258 7F08F728 13000011 */  beqz  $t8, .L7F08F770
-/* 0C425C 7F08F72C 030B4021 */   addu  $t0, $t8, $t3
-/* 0C4260 7F08F730 0006C880 */  sll   $t9, $a2, 2
-/* 0C4264 7F08F734 3C058007 */  lui   $a1, %hi(g_CurrentSetup+0)
-/* 0C4268 7F08F738 8CA55D00 */  lw    $a1, %lo(g_CurrentSetup+0)($a1)
-/* 0C426C 7F08F73C 01991021 */  addu  $v0, $t4, $t9
-.L7F08F740:
-/* 0C4270 7F08F740 8C4D0000 */  lw    $t5, ($v0)
-/* 0C4274 7F08F744 24C60001 */  addiu $a2, $a2, 1
-/* 0C4278 7F08F748 000D7100 */  sll   $t6, $t5, 4
-/* 0C427C 7F08F74C 01C52021 */  addu  $a0, $t6, $a1
-/* 0C4280 7F08F750 8C8F000C */  lw    $t7, 0xc($a0)
-/* 0C4284 7F08F754 14EF0003 */  bne   $a3, $t7, .L7F08F764
-/* 0C4288 7F08F758 00000000 */   nop   
-/* 0C428C 7F08F75C 10000066 */  b     .L7F08F8F8
-/* 0C4290 7F08F760 00801025 */   move  $v0, $a0
-.L7F08F764:
-/* 0C4294 7F08F764 1506FFF6 */  bne   $t0, $a2, .L7F08F740
-/* 0C4298 7F08F768 24420004 */   addiu $v0, $v0, 4
-/* 0C429C 7F08F76C 10C90027 */  beq   $a2, $t1, .L7F08F80C
-.L7F08F770:
-/* 0C42A0 7F08F770 0006C080 */   sll   $t8, $a2, 2
-/* 0C42A4 7F08F774 3C058007 */  lui   $a1, %hi(g_CurrentSetup+0)
-/* 0C42A8 7F08F778 8CA55D00 */  lw    $a1, %lo(g_CurrentSetup+0)($a1)
-/* 0C42AC 7F08F77C 01981021 */  addu  $v0, $t4, $t8
-.L7F08F780:
-/* 0C42B0 7F08F780 8C590000 */  lw    $t9, ($v0)
-/* 0C42B4 7F08F784 24C60004 */  addiu $a2, $a2, 4
-/* 0C42B8 7F08F788 00196900 */  sll   $t5, $t9, 4
-/* 0C42BC 7F08F78C 01A52021 */  addu  $a0, $t5, $a1
-/* 0C42C0 7F08F790 8C8E000C */  lw    $t6, 0xc($a0)
-/* 0C42C4 7F08F794 54EE0004 */  bnel  $a3, $t6, .L7F08F7A8
-/* 0C42C8 7F08F798 8C4F0004 */   lw    $t7, 4($v0)
-/* 0C42CC 7F08F79C 10000056 */  b     .L7F08F8F8
-/* 0C42D0 7F08F7A0 00801025 */   move  $v0, $a0
-/* 0C42D4 7F08F7A4 8C4F0004 */  lw    $t7, 4($v0)
-.L7F08F7A8:
-/* 0C42D8 7F08F7A8 000FC100 */  sll   $t8, $t7, 4
-/* 0C42DC 7F08F7AC 03051821 */  addu  $v1, $t8, $a1
-/* 0C42E0 7F08F7B0 8C79000C */  lw    $t9, 0xc($v1)
-/* 0C42E4 7F08F7B4 54F90004 */  bnel  $a3, $t9, .L7F08F7C8
-/* 0C42E8 7F08F7B8 8C4D0008 */   lw    $t5, 8($v0)
-/* 0C42EC 7F08F7BC 1000004E */  b     .L7F08F8F8
-/* 0C42F0 7F08F7C0 00601025 */   move  $v0, $v1
-/* 0C42F4 7F08F7C4 8C4D0008 */  lw    $t5, 8($v0)
-.L7F08F7C8:
-/* 0C42F8 7F08F7C8 000D7100 */  sll   $t6, $t5, 4
-/* 0C42FC 7F08F7CC 01C51821 */  addu  $v1, $t6, $a1
-/* 0C4300 7F08F7D0 8C6F000C */  lw    $t7, 0xc($v1)
-/* 0C4304 7F08F7D4 54EF0004 */  bnel  $a3, $t7, .L7F08F7E8
-/* 0C4308 7F08F7D8 8C58000C */   lw    $t8, 0xc($v0)
-/* 0C430C 7F08F7DC 10000046 */  b     .L7F08F8F8
-/* 0C4310 7F08F7E0 00601025 */   move  $v0, $v1
-/* 0C4314 7F08F7E4 8C58000C */  lw    $t8, 0xc($v0)
-.L7F08F7E8:
-/* 0C4318 7F08F7E8 0018C900 */  sll   $t9, $t8, 4
-/* 0C431C 7F08F7EC 03251821 */  addu  $v1, $t9, $a1
-/* 0C4320 7F08F7F0 8C6D000C */  lw    $t5, 0xc($v1)
-/* 0C4324 7F08F7F4 14ED0003 */  bne   $a3, $t5, .L7F08F804
-/* 0C4328 7F08F7F8 00000000 */   nop   
-/* 0C432C 7F08F7FC 1000003E */  b     .L7F08F8F8
-/* 0C4330 7F08F800 00601025 */   move  $v0, $v1
-.L7F08F804:
-/* 0C4334 7F08F804 14C9FFDE */  bne   $a2, $t1, .L7F08F780
-/* 0C4338 7F08F808 24420010 */   addiu $v0, $v0, 0x10
-.L7F08F80C:
-/* 0C433C 7F08F80C 19600039 */  blez  $t3, .L7F08F8F4
-/* 0C4340 7F08F810 00003025 */   move  $a2, $zero
-/* 0C4344 7F08F814 3C058007 */  lui   $a1, %hi(g_CurrentSetup+0)
-/* 0C4348 7F08F818 31630003 */  andi  $v1, $t3, 3
-/* 0C434C 7F08F81C 10600010 */  beqz  $v1, .L7F08F860
-/* 0C4350 7F08F820 8CA55D00 */   lw    $a1, %lo(g_CurrentSetup+0)($a1)
-/* 0C4354 7F08F824 00007080 */  sll   $t6, $zero, 2
-/* 0C4358 7F08F828 018E1021 */  addu  $v0, $t4, $t6
-/* 0C435C 7F08F82C 00604025 */  move  $t0, $v1
-.L7F08F830:
-/* 0C4360 7F08F830 8C4F0000 */  lw    $t7, ($v0)
-/* 0C4364 7F08F834 24C60001 */  addiu $a2, $a2, 1
-/* 0C4368 7F08F838 000FC100 */  sll   $t8, $t7, 4
-/* 0C436C 7F08F83C 03052021 */  addu  $a0, $t8, $a1
-/* 0C4370 7F08F840 8C99000C */  lw    $t9, 0xc($a0)
-/* 0C4374 7F08F844 14F90003 */  bne   $a3, $t9, .L7F08F854
-/* 0C4378 7F08F848 00000000 */   nop   
-/* 0C437C 7F08F84C 1000002A */  b     .L7F08F8F8
-/* 0C4380 7F08F850 00801025 */   move  $v0, $a0
-.L7F08F854:
-/* 0C4384 7F08F854 1506FFF6 */  bne   $t0, $a2, .L7F08F830
-/* 0C4388 7F08F858 24420004 */   addiu $v0, $v0, 4
-/* 0C438C 7F08F85C 10CB0025 */  beq   $a2, $t3, .L7F08F8F4
-.L7F08F860:
-/* 0C4390 7F08F860 00066880 */   sll   $t5, $a2, 2
-/* 0C4394 7F08F864 018D1021 */  addu  $v0, $t4, $t5
-.L7F08F868:
-/* 0C4398 7F08F868 8C4E0000 */  lw    $t6, ($v0)
-/* 0C439C 7F08F86C 24C60004 */  addiu $a2, $a2, 4
-/* 0C43A0 7F08F870 000E7900 */  sll   $t7, $t6, 4
-/* 0C43A4 7F08F874 01E52021 */  addu  $a0, $t7, $a1
-/* 0C43A8 7F08F878 8C98000C */  lw    $t8, 0xc($a0)
-/* 0C43AC 7F08F87C 54F80004 */  bnel  $a3, $t8, .L7F08F890
-/* 0C43B0 7F08F880 8C590004 */   lw    $t9, 4($v0)
-/* 0C43B4 7F08F884 1000001C */  b     .L7F08F8F8
-/* 0C43B8 7F08F888 00801025 */   move  $v0, $a0
-/* 0C43BC 7F08F88C 8C590004 */  lw    $t9, 4($v0)
-.L7F08F890:
-/* 0C43C0 7F08F890 00196900 */  sll   $t5, $t9, 4
-/* 0C43C4 7F08F894 01A51821 */  addu  $v1, $t5, $a1
-/* 0C43C8 7F08F898 8C6E000C */  lw    $t6, 0xc($v1)
-/* 0C43CC 7F08F89C 54EE0004 */  bnel  $a3, $t6, .L7F08F8B0
-/* 0C43D0 7F08F8A0 8C4F0008 */   lw    $t7, 8($v0)
-/* 0C43D4 7F08F8A4 10000014 */  b     .L7F08F8F8
-/* 0C43D8 7F08F8A8 00601025 */   move  $v0, $v1
-/* 0C43DC 7F08F8AC 8C4F0008 */  lw    $t7, 8($v0)
-.L7F08F8B0:
-/* 0C43E0 7F08F8B0 000FC100 */  sll   $t8, $t7, 4
-/* 0C43E4 7F08F8B4 03051821 */  addu  $v1, $t8, $a1
-/* 0C43E8 7F08F8B8 8C79000C */  lw    $t9, 0xc($v1)
-/* 0C43EC 7F08F8BC 54F90004 */  bnel  $a3, $t9, .L7F08F8D0
-/* 0C43F0 7F08F8C0 8C4D000C */   lw    $t5, 0xc($v0)
-/* 0C43F4 7F08F8C4 1000000C */  b     .L7F08F8F8
-/* 0C43F8 7F08F8C8 00601025 */   move  $v0, $v1
-/* 0C43FC 7F08F8CC 8C4D000C */  lw    $t5, 0xc($v0)
-.L7F08F8D0:
-/* 0C4400 7F08F8D0 000D7100 */  sll   $t6, $t5, 4
-/* 0C4404 7F08F8D4 01C51821 */  addu  $v1, $t6, $a1
-/* 0C4408 7F08F8D8 8C6F000C */  lw    $t7, 0xc($v1)
-/* 0C440C 7F08F8DC 14EF0003 */  bne   $a3, $t7, .L7F08F8EC
-/* 0C4410 7F08F8E0 00000000 */   nop   
-/* 0C4414 7F08F8E4 10000004 */  b     .L7F08F8F8
-/* 0C4418 7F08F8E8 00601025 */   move  $v0, $v1
-.L7F08F8EC:
-/* 0C441C 7F08F8EC 14CAFFDE */  bne   $a2, $t2, .L7F08F868
-/* 0C4420 7F08F8F0 24420010 */   addiu $v0, $v0, 0x10
-.L7F08F8F4:
-/* 0C4424 7F08F8F4 00001025 */  move  $v0, $zero
-.L7F08F8F8:
-/* 0C4428 7F08F8F8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C442C 7F08F8FC 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0C4430 7F08F900 03E00008 */  jr    $ra
-/* 0C4434 7F08F904 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
