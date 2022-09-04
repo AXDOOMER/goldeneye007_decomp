@@ -567,80 +567,37 @@ void sub_GAME_7F08F2CC(waypoint *from, waypoint *to)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F08F350(void) {
+s32 sub_GAME_7F08F350(waypoint *from, waypoint *to, waypoint **arr, s32 arrlen)
+{
+    waypoint **arrptr = arr;
+    waypoint *curfrom;
+    s32 i;
 
+    if (arrlen >= 2)
+    {
+        sub_GAME_7F08F2CC(from, to);
+
+        *arr = from;
+        arrptr++;
+
+        curfrom = from;
+        arrlen += 9999;
+        i = 10001;
+
+        while (i <= to->dist && i < arrlen)
+        {
+            curfrom = findPadWithDistAndSet(curfrom->neighbours, i, from->groupNum);
+            *arrptr = curfrom;
+            arrptr++;
+            i++;
+        }
+    }
+
+    *arrptr = NULL;
+    arrptr++;
+
+    return arrptr - arr;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08F350
-/* 0C3E80 7F08F350 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0C3E84 7F08F354 AFB50028 */  sw    $s5, 0x28($sp)
-/* 0C3E88 7F08F358 AFB40024 */  sw    $s4, 0x24($sp)
-/* 0C3E8C 7F08F35C AFB30020 */  sw    $s3, 0x20($sp)
-/* 0C3E90 7F08F360 AFB10018 */  sw    $s1, 0x18($sp)
-/* 0C3E94 7F08F364 28E10002 */  slti  $at, $a3, 2
-/* 0C3E98 7F08F368 00E09825 */  move  $s3, $a3
-/* 0C3E9C 7F08F36C 0080A025 */  move  $s4, $a0
-/* 0C3EA0 7F08F370 00A0A825 */  move  $s5, $a1
-/* 0C3EA4 7F08F374 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 0C3EA8 7F08F378 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 0C3EAC 7F08F37C AFB00014 */  sw    $s0, 0x14($sp)
-/* 0C3EB0 7F08F380 AFA60038 */  sw    $a2, 0x38($sp)
-/* 0C3EB4 7F08F384 1420001D */  bnez  $at, .L7F08F3FC
-/* 0C3EB8 7F08F388 00C08825 */   move  $s1, $a2
-/* 0C3EBC 7F08F38C 0FC23CB3 */  jal   sub_GAME_7F08F2CC
-/* 0C3EC0 7F08F390 00000000 */   nop   
-/* 0C3EC4 7F08F394 8FA20038 */  lw    $v0, 0x38($sp)
-/* 0C3EC8 7F08F398 02809025 */  move  $s2, $s4
-/* 0C3ECC 7F08F39C 2673270F */  addiu $s3, $s3, 0x270f
-/* 0C3ED0 7F08F3A0 AC540000 */  sw    $s4, ($v0)
-/* 0C3ED4 7F08F3A4 8EAE000C */  lw    $t6, 0xc($s5)
-/* 0C3ED8 7F08F3A8 24102711 */  li    $s0, 10001
-/* 0C3EDC 7F08F3AC 24510004 */  addiu $s1, $v0, 4
-/* 0C3EE0 7F08F3B0 29C12711 */  slti  $at, $t6, 0x2711
-/* 0C3EE4 7F08F3B4 14200011 */  bnez  $at, .L7F08F3FC
-/* 0C3EE8 7F08F3B8 2A612712 */   slti  $at, $s3, 0x2712
-/* 0C3EEC 7F08F3BC 54200010 */  bnezl $at, .L7F08F400
-/* 0C3EF0 7F08F3C0 AE200000 */   sw    $zero, ($s1)
-/* 0C3EF4 7F08F3C4 8E440004 */  lw    $a0, 4($s2)
-.L7F08F3C8:
-/* 0C3EF8 7F08F3C8 02002825 */  move  $a1, $s0
-/* 0C3EFC 7F08F3CC 0FC23C24 */  jal   findPadWithDistAndSet
-/* 0C3F00 7F08F3D0 8E860008 */   lw    $a2, 8($s4)
-/* 0C3F04 7F08F3D4 AE220000 */  sw    $v0, ($s1)
-/* 0C3F08 7F08F3D8 8EAF000C */  lw    $t7, 0xc($s5)
-/* 0C3F0C 7F08F3DC 26100001 */  addiu $s0, $s0, 1
-/* 0C3F10 7F08F3E0 00409025 */  move  $s2, $v0
-/* 0C3F14 7F08F3E4 01F0082A */  slt   $at, $t7, $s0
-/* 0C3F18 7F08F3E8 14200004 */  bnez  $at, .L7F08F3FC
-/* 0C3F1C 7F08F3EC 26310004 */   addiu $s1, $s1, 4
-/* 0C3F20 7F08F3F0 0213082A */  slt   $at, $s0, $s3
-/* 0C3F24 7F08F3F4 5420FFF4 */  bnezl $at, .L7F08F3C8
-/* 0C3F28 7F08F3F8 8E440004 */   lw    $a0, 4($s2)
-.L7F08F3FC:
-/* 0C3F2C 7F08F3FC AE200000 */  sw    $zero, ($s1)
-.L7F08F400:
-/* 0C3F30 7F08F400 8FB80038 */  lw    $t8, 0x38($sp)
-/* 0C3F34 7F08F404 26310004 */  addiu $s1, $s1, 4
-/* 0C3F38 7F08F408 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 0C3F3C 7F08F40C 02381023 */  subu  $v0, $s1, $t8
-/* 0C3F40 7F08F410 0002C883 */  sra   $t9, $v0, 2
-/* 0C3F44 7F08F414 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0C3F48 7F08F418 8FB50028 */  lw    $s5, 0x28($sp)
-/* 0C3F4C 7F08F41C 8FB40024 */  lw    $s4, 0x24($sp)
-/* 0C3F50 7F08F420 8FB30020 */  lw    $s3, 0x20($sp)
-/* 0C3F54 7F08F424 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 0C3F58 7F08F428 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0C3F5C 7F08F42C 27BD0030 */  addiu $sp, $sp, 0x30
-/* 0C3F60 7F08F430 03E00008 */  jr    $ra
-/* 0C3F64 7F08F434 03201025 */   move  $v0, $t9
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
