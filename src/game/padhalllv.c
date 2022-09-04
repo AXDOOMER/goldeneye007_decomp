@@ -182,42 +182,26 @@ glabel sub_GAME_7F08ED60
 #endif
 
 
+/**
+ * For each group number in the given list assign value to their
+ * dist if their dist has no value (ie. is negative).
+ */
+void sub_GAME_7F08EDB4(s32 *groupnums, s32 value)
+{
+    waygroup *groups = g_CurrentSetup.waypointgroups;
 
+    while (*groupnums >= 0)
+    {
+        waygroup *group = &groups[*groupnums];
 
+        if (group->dist < 0)
+        {
+            group->dist = value;
+        }
 
-#ifdef NONMATCHING
-void sub_GAME_7F08EDB4(s32 *groupnums, s32 value) {
-
+        groupnums++;
+    }
 }
-#else
-void sub_GAME_7F08EDB4(s32 *groupnums, s32 value);
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08EDB4
-/* 0C38E4 7F08EDB4 8C830000 */  lw    $v1, ($a0)
-/* 0C38E8 7F08EDB8 3C028007 */  lui   $v0, %hi(g_CurrentSetup+4)
-/* 0C38EC 7F08EDBC 00A03025 */  move  $a2, $a1
-/* 0C38F0 7F08EDC0 0460000D */  bltz  $v1, .L7F08EDF8
-/* 0C38F4 7F08EDC4 8C425D04 */   lw    $v0, %lo(g_CurrentSetup+4)($v0)
-/* 0C38F8 7F08EDC8 2407000C */  li    $a3, 12
-.L7F08EDCC:
-/* 0C38FC 7F08EDCC 00670019 */  multu $v1, $a3
-/* 0C3900 7F08EDD0 00007012 */  mflo  $t6
-/* 0C3904 7F08EDD4 01C22821 */  addu  $a1, $t6, $v0
-/* 0C3908 7F08EDD8 8CAF0008 */  lw    $t7, 8($a1)
-/* 0C390C 7F08EDDC 05E30003 */  bgezl $t7, .L7F08EDEC
-/* 0C3910 7F08EDE0 8C830004 */   lw    $v1, 4($a0)
-/* 0C3914 7F08EDE4 ACA60008 */  sw    $a2, 8($a1)
-/* 0C3918 7F08EDE8 8C830004 */  lw    $v1, 4($a0)
-.L7F08EDEC:
-/* 0C391C 7F08EDEC 24840004 */  addiu $a0, $a0, 4
-/* 0C3920 7F08EDF0 0461FFF6 */  bgez  $v1, .L7F08EDCC
-/* 0C3924 7F08EDF4 00000000 */   nop   
-.L7F08EDF8:
-/* 0C3928 7F08EDF8 03E00008 */  jr    $ra
-/* 0C392C 7F08EDFC 00000000 */   nop   
-)
-#endif
 
 
 /**
