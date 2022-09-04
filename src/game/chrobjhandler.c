@@ -39613,76 +39613,24 @@ glabel sub_GAME_7F050DE8
 #endif
 
 
+PropRecord *sub_GAME_7F050F50(WeaponObjRecord *weapon, ChrRecord *chr, ModelFileHeader *filedata, PropRecord *prop, Model *model)
+{
+    prop = init_standard_object((ObjectRecord*)weapon, filedata, prop, model);
 
+    if (prop && weapon->model)
+    {
+        f32 scale = weapon->extrascale * (1.0f / 256.0f);
 
+        modelSetScale(weapon->model, weapon->model->scale * scale);
+        weapon->model->attachedto = chr->model;
+        weapon->model->attachedto_objinst = chr->model->obj->Switches[6];
 
-#ifdef NONMATCHING
-void sub_GAME_7F050F50(void) {
+        chrpropReparent(prop, chr->prop);
+        chr->handle_positiondata_hat = prop;
+    }
 
+    return prop;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F050F50
-/* 085A80 7F050F50 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 085A84 7F050F54 AFA50024 */  sw    $a1, 0x24($sp)
-/* 085A88 7F050F58 AFA60028 */  sw    $a2, 0x28($sp)
-/* 085A8C 7F050F5C 00C02825 */  move  $a1, $a2
-/* 085A90 7F050F60 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 085A94 7F050F64 AFB00014 */  sw    $s0, 0x14($sp)
-/* 085A98 7F050F68 00E03025 */  move  $a2, $a3
-/* 085A9C 7F050F6C 00808025 */  move  $s0, $a0
-/* 085AA0 7F050F70 AFB10018 */  sw    $s1, 0x18($sp)
-/* 085AA4 7F050F74 0FC10153 */  jal   init_standard_object
-/* 085AA8 7F050F78 8FA70030 */   lw    $a3, 0x30($sp)
-/* 085AAC 7F050F7C 10400024 */  beqz  $v0, .L7F051010
-/* 085AB0 7F050F80 00408825 */   move  $s1, $v0
-/* 085AB4 7F050F84 8E040014 */  lw    $a0, 0x14($s0)
-/* 085AB8 7F050F88 50800022 */  beql  $a0, $zero, .L7F051014
-/* 085ABC 7F050F8C 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 085AC0 7F050F90 960E0000 */  lhu   $t6, ($s0)
-/* 085AC4 7F050F94 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
-/* 085AC8 7F050F98 448E2000 */  mtc1  $t6, $f4
-/* 085ACC 7F050F9C 05C10004 */  bgez  $t6, .L7F050FB0
-/* 085AD0 7F050FA0 468021A0 */   cvt.s.w $f6, $f4
-/* 085AD4 7F050FA4 44814000 */  mtc1  $at, $f8
-/* 085AD8 7F050FA8 00000000 */  nop   
-/* 085ADC 7F050FAC 46083180 */  add.s $f6, $f6, $f8
-.L7F050FB0:
-/* 085AE0 7F050FB0 3C013B80 */  li    $at, 0x3B800000 # 0.003906
-/* 085AE4 7F050FB4 44815000 */  mtc1  $at, $f10
-/* 085AE8 7F050FB8 C4900014 */  lwc1  $f16, 0x14($a0)
-/* 085AEC 7F050FBC 460A3002 */  mul.s $f0, $f6, $f10
-/* 085AF0 7F050FC0 00000000 */  nop   
-/* 085AF4 7F050FC4 46008482 */  mul.s $f18, $f16, $f0
-/* 085AF8 7F050FC8 44059000 */  mfc1  $a1, $f18
-/* 085AFC 7F050FCC 0FC1B39E */  jal   modelSetScale
-/* 085B00 7F050FD0 00000000 */   nop   
-/* 085B04 7F050FD4 8FA20024 */  lw    $v0, 0x24($sp)
-/* 085B08 7F050FD8 8E180014 */  lw    $t8, 0x14($s0)
-/* 085B0C 7F050FDC 02202025 */  move  $a0, $s1
-/* 085B10 7F050FE0 8C4F001C */  lw    $t7, 0x1c($v0)
-/* 085B14 7F050FE4 AF0F0018 */  sw    $t7, 0x18($t8)
-/* 085B18 7F050FE8 8C59001C */  lw    $t9, 0x1c($v0)
-/* 085B1C 7F050FEC 8E0B0014 */  lw    $t3, 0x14($s0)
-/* 085B20 7F050FF0 8F280008 */  lw    $t0, 8($t9)
-/* 085B24 7F050FF4 8D090008 */  lw    $t1, 8($t0)
-/* 085B28 7F050FF8 8D2A0018 */  lw    $t2, 0x18($t1)
-/* 085B2C 7F050FFC AD6A001C */  sw    $t2, 0x1c($t3)
-/* 085B30 7F051000 0FC0E969 */  jal   chrpropReparent
-/* 085B34 7F051004 8C450018 */   lw    $a1, 0x18($v0)
-/* 085B38 7F051008 8FAC0024 */  lw    $t4, 0x24($sp)
-/* 085B3C 7F05100C AD9101D8 */  sw    $s1, 0x1d8($t4)
-.L7F051010:
-/* 085B40 7F051010 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F051014:
-/* 085B44 7F051014 02201025 */  move  $v0, $s1
-/* 085B48 7F051018 8FB10018 */  lw    $s1, 0x18($sp)
-/* 085B4C 7F05101C 8FB00014 */  lw    $s0, 0x14($sp)
-/* 085B50 7F051020 03E00008 */  jr    $ra
-/* 085B54 7F051024 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
 
 
 void sub_GAME_7F051028(ObjectRecord *arg0, PropRecord *arg1)
