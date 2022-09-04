@@ -459,6 +459,7 @@ glabel sub_GAME_7F08EFA0
 
 
 #ifdef NONMATCHING
+waypoint *findPadWithDistAndSet(s32 *pointnums, s32 arg1, s32 groupnum);
 struct Pad* findPadWithDistAndSet(s32 *padNumList,s32 desiredDist, u32 setIndex) // findPadWithDistAndSet
 {
     s32 padNum;
@@ -482,6 +483,7 @@ struct Pad* findPadWithDistAndSet(s32 *padNumList,s32 desiredDist, u32 setIndex)
     return (struct Pad*)0;
 }
 #else
+waypoint *findPadWithDistAndSet(s32 *pointnums, s32 arg1, s32 groupnum);
 GLOBAL_ASM(
 .text
 glabel findPadWithDistAndSet
@@ -614,10 +616,11 @@ glabel sub_GAME_7F08F138
 
 
 #ifdef NONMATCHING
-void do_BFS_withinPathSet(void) {
+void do_BFS_withinPathSet(waypoint *from, waypoint *to, s32 arg2) {
 
 }
 #else
+void do_BFS_withinPathSet(waypoint *from, waypoint *to, s32 arg2);
 GLOBAL_ASM(
 .text
 glabel do_BFS_withinPathSet
@@ -692,74 +695,26 @@ glabel do_BFS_withinPathSet
 #endif
 
 
-
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F08F2CC(struct Pad *g_Startpad,struct Pad *endPad)
+void sub_GAME_7F08F2CC(waypoint *from, waypoint *to)
 {
-  s32 dist;
-  
-  do_BFS_withinPathSet(g_Startpad,endPad,0); // do_BFS_withinPathSet
-  dist = endPad->dist_tmp + -1;
+    waypoint *curto;
+    s32 value;
 
-  while (dist >= 0) {
-      endPad->dist_tmp = endPad->dist_tmp + 10000;
-      endPad = findPadWithDistAndSet(endPad->neighbours,dist,g_Startpad->pathSetIndex); // findPadWithDistAndSet
-      dist = dist + -1;
-  }
+    do_BFS_withinPathSet(from, to, 0);
 
+    value = to->dist - 1;
+    curto = to;
 
-  dist = endPad->dist_tmp;
-  endPad->dist_tmp = dist + 10000;
-  return;
+    while (value >= 0)
+    {
+        curto->dist += 10000;
+        curto = findPadWithDistAndSet(curto->neighbours, value, from->groupNum);
+
+        value--;
+    }
+
+    curto->dist += 10000;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08F2CC
-/* 0C3DFC 7F08F2CC 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0C3E00 7F08F2D0 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0C3E04 7F08F2D4 AFB20020 */  sw    $s2, 0x20($sp)
-/* 0C3E08 7F08F2D8 00809025 */  move  $s2, $a0
-/* 0C3E0C 7F08F2DC AFB1001C */  sw    $s1, 0x1c($sp)
-/* 0C3E10 7F08F2E0 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0C3E14 7F08F2E4 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 0C3E18 7F08F2E8 0FC23C76 */  jal   do_BFS_withinPathSet
-/* 0C3E1C 7F08F2EC 00003025 */   move  $a2, $zero
-/* 0C3E20 7F08F2F0 8FB1002C */  lw    $s1, 0x2c($sp)
-/* 0C3E24 7F08F2F4 8E30000C */  lw    $s0, 0xc($s1)
-/* 0C3E28 7F08F2F8 2610FFFF */  addiu $s0, $s0, -1
-/* 0C3E2C 7F08F2FC 0602000C */  bltzl $s0, .L7F08F330
-/* 0C3E30 7F08F300 8E38000C */   lw    $t8, 0xc($s1)
-.L7F08F304:
-/* 0C3E34 7F08F304 8E2E000C */  lw    $t6, 0xc($s1)
-/* 0C3E38 7F08F308 8E240004 */  lw    $a0, 4($s1)
-/* 0C3E3C 7F08F30C 02002825 */  move  $a1, $s0
-/* 0C3E40 7F08F310 25CF2710 */  addiu $t7, $t6, 0x2710
-/* 0C3E44 7F08F314 AE2F000C */  sw    $t7, 0xc($s1)
-/* 0C3E48 7F08F318 0FC23C24 */  jal   findPadWithDistAndSet
-/* 0C3E4C 7F08F31C 8E460008 */   lw    $a2, 8($s2)
-/* 0C3E50 7F08F320 2610FFFF */  addiu $s0, $s0, -1
-/* 0C3E54 7F08F324 0601FFF7 */  bgez  $s0, .L7F08F304
-/* 0C3E58 7F08F328 00408825 */   move  $s1, $v0
-/* 0C3E5C 7F08F32C 8E38000C */  lw    $t8, 0xc($s1)
-.L7F08F330:
-/* 0C3E60 7F08F330 27192710 */  addiu $t9, $t8, 0x2710
-/* 0C3E64 7F08F334 AE39000C */  sw    $t9, 0xc($s1)
-/* 0C3E68 7F08F338 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 0C3E6C 7F08F33C 8FB20020 */  lw    $s2, 0x20($sp)
-/* 0C3E70 7F08F340 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 0C3E74 7F08F344 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0C3E78 7F08F348 03E00008 */  jr    $ra
-/* 0C3E7C 7F08F34C 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
