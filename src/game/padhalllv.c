@@ -520,10 +520,11 @@ glabel findPadWithDistAndSet
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F08F0E8(void) {
+void sub_GAME_7F08F0E8(s32 *pointnums, s32 value, s32 groupnum) {
 
 }
 #else
+void sub_GAME_7F08F0E8(s32 *pointnums, s32 value, s32 groupnum);
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F08F0E8
@@ -554,63 +555,26 @@ glabel sub_GAME_7F08F0E8
 #endif
 
 
+bool sub_GAME_7F08F138(s32 *pointnums, s32 arg1, s32 groupnum)
+{
+    bool result = FALSE;
+    struct waypoint *points = g_CurrentSetup.pathwaypoints;
 
+    while (*pointnums >= 0)
+    {
+        struct waypoint *point = &points[*pointnums];
 
+        if (arg1 == point->dist && point->neighbours)
+        {
+            result = TRUE;
+            sub_GAME_7F08F0E8(point->neighbours, arg1 + 1, groupnum);
+        }
 
-#ifdef NONMATCHING
-bool sub_GAME_7F08F138(s32 *pointnums, s32 arg1, s32 groupnum) {
+        pointnums++;
+    }
 
+    return result;
 }
-#else
-bool sub_GAME_7F08F138(s32 *pointnums, s32 arg1, s32 groupnum);
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08F138
-/* 0C3C68 7F08F138 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0C3C6C 7F08F13C AFBF002C */  sw    $ra, 0x2c($sp)
-/* 0C3C70 7F08F140 AFB40028 */  sw    $s4, 0x28($sp)
-/* 0C3C74 7F08F144 AFB30024 */  sw    $s3, 0x24($sp)
-/* 0C3C78 7F08F148 AFB20020 */  sw    $s2, 0x20($sp)
-/* 0C3C7C 7F08F14C AFB1001C */  sw    $s1, 0x1c($sp)
-/* 0C3C80 7F08F150 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0C3C84 7F08F154 8C820000 */  lw    $v0, ($a0)
-/* 0C3C88 7F08F158 3C138007 */  lui   $s3, %hi(g_CurrentSetup+0)
-/* 0C3C8C 7F08F15C 00808025 */  move  $s0, $a0
-/* 0C3C90 7F08F160 00A08825 */  move  $s1, $a1
-/* 0C3C94 7F08F164 00C0A025 */  move  $s4, $a2
-/* 0C3C98 7F08F168 00009025 */  move  $s2, $zero
-/* 0C3C9C 7F08F16C 04400011 */  bltz  $v0, .L7F08F1B4
-/* 0C3CA0 7F08F170 8E735D00 */   lw    $s3, %lo(g_CurrentSetup+0)($s3)
-/* 0C3CA4 7F08F174 00027100 */  sll   $t6, $v0, 4
-.L7F08F178:
-/* 0C3CA8 7F08F178 01D31821 */  addu  $v1, $t6, $s3
-/* 0C3CAC 7F08F17C 8C6F000C */  lw    $t7, 0xc($v1)
-/* 0C3CB0 7F08F180 562F0009 */  bnel  $s1, $t7, .L7F08F1A8
-/* 0C3CB4 7F08F184 8E020004 */   lw    $v0, 4($s0)
-/* 0C3CB8 7F08F188 8C640004 */  lw    $a0, 4($v1)
-/* 0C3CBC 7F08F18C 26250001 */  addiu $a1, $s1, 1
-/* 0C3CC0 7F08F190 02803025 */  move  $a2, $s4
-/* 0C3CC4 7F08F194 50800004 */  beql  $a0, $zero, .L7F08F1A8
-/* 0C3CC8 7F08F198 8E020004 */   lw    $v0, 4($s0)
-/* 0C3CCC 7F08F19C 0FC23C3A */  jal   sub_GAME_7F08F0E8
-/* 0C3CD0 7F08F1A0 24120001 */   li    $s2, 1
-/* 0C3CD4 7F08F1A4 8E020004 */  lw    $v0, 4($s0)
-.L7F08F1A8:
-/* 0C3CD8 7F08F1A8 26100004 */  addiu $s0, $s0, 4
-/* 0C3CDC 7F08F1AC 0443FFF2 */  bgezl $v0, .L7F08F178
-/* 0C3CE0 7F08F1B0 00027100 */   sll   $t6, $v0, 4
-.L7F08F1B4:
-/* 0C3CE4 7F08F1B4 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 0C3CE8 7F08F1B8 02401025 */  move  $v0, $s2
-/* 0C3CEC 7F08F1BC 8FB20020 */  lw    $s2, 0x20($sp)
-/* 0C3CF0 7F08F1C0 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0C3CF4 7F08F1C4 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 0C3CF8 7F08F1C8 8FB30024 */  lw    $s3, 0x24($sp)
-/* 0C3CFC 7F08F1CC 8FB40028 */  lw    $s4, 0x28($sp)
-/* 0C3D00 7F08F1D0 03E00008 */  jr    $ra
-/* 0C3D04 7F08F1D4 27BD0030 */   addiu $sp, $sp, 0x30
-)
-#endif
 
 
 void do_BFS_withinPathSet(struct waypoint *from, struct waypoint *to, s32 arg2)
