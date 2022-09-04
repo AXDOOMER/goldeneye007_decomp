@@ -558,10 +558,11 @@ glabel sub_GAME_7F08F0E8
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F08F138(void) {
+bool sub_GAME_7F08F138(s32 *pointnums, s32 arg1, s32 groupnum) {
 
 }
 #else
+bool sub_GAME_7F08F138(s32 *pointnums, s32 arg1, s32 groupnum);
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F08F138
@@ -612,87 +613,31 @@ glabel sub_GAME_7F08F138
 #endif
 
 
+void do_BFS_withinPathSet(struct waypoint *from, struct waypoint *to, s32 arg2)
+{
+    struct waygroup *groups = g_CurrentSetup.waypointgroups;
+    struct waypoint *points = g_CurrentSetup.pathwaypoints;
+    struct waypoint *point;
+    s32 *pointnums = groups[from->groupNum].waypoints;
+    s32 i;
+    bool more;
 
+    while (*pointnums >= 0)
+    {
+        point = &points[*pointnums];
+        point->dist = -1;
+        pointnums++;
+    }
 
+    from->dist = 0;
 
-#ifdef NONMATCHING
-void do_BFS_withinPathSet(waypoint *from, waypoint *to, s32 arg2) {
+    more = TRUE;
 
+    for (i = 0; (arg2 || to->dist < 0) && more; i++)
+    {
+        more = sub_GAME_7F08F138(groups[from->groupNum].waypoints, i, from->groupNum);
+    }
 }
-#else
-void do_BFS_withinPathSet(waypoint *from, waypoint *to, s32 arg2);
-GLOBAL_ASM(
-.text
-glabel do_BFS_withinPathSet
-/* 0C3D08 7F08F1D8 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0C3D0C 7F08F1DC AFBF002C */  sw    $ra, 0x2c($sp)
-/* 0C3D10 7F08F1E0 AFB50028 */  sw    $s5, 0x28($sp)
-/* 0C3D14 7F08F1E4 AFB40024 */  sw    $s4, 0x24($sp)
-/* 0C3D18 7F08F1E8 AFB30020 */  sw    $s3, 0x20($sp)
-/* 0C3D1C 7F08F1EC AFB2001C */  sw    $s2, 0x1c($sp)
-/* 0C3D20 7F08F1F0 AFB10018 */  sw    $s1, 0x18($sp)
-/* 0C3D24 7F08F1F4 AFB00014 */  sw    $s0, 0x14($sp)
-/* 0C3D28 7F08F1F8 8C8E0008 */  lw    $t6, 8($a0)
-/* 0C3D2C 7F08F1FC 2415000C */  li    $s5, 12
-/* 0C3D30 7F08F200 3C028007 */  lui   $v0, %hi(g_CurrentSetup+0)
-/* 0C3D34 7F08F204 01D50019 */  multu $t6, $s5
-/* 0C3D38 7F08F208 24425D00 */  addiu $v0, %lo(g_CurrentSetup+0) # addiu $v0, $v0, 0x5d00
-/* 0C3D3C 7F08F20C 8C510004 */  lw    $s1, 4($v0)
-/* 0C3D40 7F08F210 00809025 */  move  $s2, $a0
-/* 0C3D44 7F08F214 00C09825 */  move  $s3, $a2
-/* 0C3D48 7F08F218 00A0A025 */  move  $s4, $a1
-/* 0C3D4C 7F08F21C 8C480000 */  lw    $t0, ($v0)
-/* 0C3D50 7F08F220 2404FFFF */  li    $a0, -1
-/* 0C3D54 7F08F224 00008025 */  move  $s0, $zero
-/* 0C3D58 7F08F228 00007812 */  mflo  $t7
-/* 0C3D5C 7F08F22C 022FC021 */  addu  $t8, $s1, $t7
-/* 0C3D60 7F08F230 8F030004 */  lw    $v1, 4($t8)
-/* 0C3D64 7F08F234 8C670000 */  lw    $a3, ($v1)
-/* 0C3D68 7F08F238 04E00007 */  bltz  $a3, .L7F08F258
-/* 0C3D6C 7F08F23C 0007C900 */   sll   $t9, $a3, 4
-.L7F08F240:
-/* 0C3D70 7F08F240 03281021 */  addu  $v0, $t9, $t0
-/* 0C3D74 7F08F244 AC44000C */  sw    $a0, 0xc($v0)
-/* 0C3D78 7F08F248 8C670004 */  lw    $a3, 4($v1)
-/* 0C3D7C 7F08F24C 24630004 */  addiu $v1, $v1, 4
-/* 0C3D80 7F08F250 04E3FFFB */  bgezl $a3, .L7F08F240
-/* 0C3D84 7F08F254 0007C900 */   sll   $t9, $a3, 4
-.L7F08F258:
-/* 0C3D88 7F08F258 16600004 */  bnez  $s3, .L7F08F26C
-/* 0C3D8C 7F08F25C AE40000C */   sw    $zero, 0xc($s2)
-/* 0C3D90 7F08F260 8E89000C */  lw    $t1, 0xc($s4)
-/* 0C3D94 7F08F264 05230011 */  bgezl $t1, .L7F08F2AC
-/* 0C3D98 7F08F268 8FBF002C */   lw    $ra, 0x2c($sp)
-.L7F08F26C:
-/* 0C3D9C 7F08F26C 8E460008 */  lw    $a2, 8($s2)
-.L7F08F270:
-/* 0C3DA0 7F08F270 02002825 */  move  $a1, $s0
-/* 0C3DA4 7F08F274 00D50019 */  multu $a2, $s5
-/* 0C3DA8 7F08F278 00005012 */  mflo  $t2
-/* 0C3DAC 7F08F27C 022A5821 */  addu  $t3, $s1, $t2
-/* 0C3DB0 7F08F280 0FC23C4E */  jal   sub_GAME_7F08F138
-/* 0C3DB4 7F08F284 8D640004 */   lw    $a0, 4($t3)
-/* 0C3DB8 7F08F288 26100001 */  addiu $s0, $s0, 1
-/* 0C3DBC 7F08F28C 16600004 */  bnez  $s3, .L7F08F2A0
-/* 0C3DC0 7F08F290 00401825 */   move  $v1, $v0
-/* 0C3DC4 7F08F294 8E8C000C */  lw    $t4, 0xc($s4)
-/* 0C3DC8 7F08F298 05830004 */  bgezl $t4, .L7F08F2AC
-/* 0C3DCC 7F08F29C 8FBF002C */   lw    $ra, 0x2c($sp)
-.L7F08F2A0:
-/* 0C3DD0 7F08F2A0 5460FFF3 */  bnezl $v1, .L7F08F270
-/* 0C3DD4 7F08F2A4 8E460008 */   lw    $a2, 8($s2)
-/* 0C3DD8 7F08F2A8 8FBF002C */  lw    $ra, 0x2c($sp)
-.L7F08F2AC:
-/* 0C3DDC 7F08F2AC 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0C3DE0 7F08F2B0 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0C3DE4 7F08F2B4 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 0C3DE8 7F08F2B8 8FB30020 */  lw    $s3, 0x20($sp)
-/* 0C3DEC 7F08F2BC 8FB40024 */  lw    $s4, 0x24($sp)
-/* 0C3DF0 7F08F2C0 8FB50028 */  lw    $s5, 0x28($sp)
-/* 0C3DF4 7F08F2C4 03E00008 */  jr    $ra
-/* 0C3DF8 7F08F2C8 27BD0030 */   addiu $sp, $sp, 0x30
-)
-#endif
 
 
 void sub_GAME_7F08F2CC(waypoint *from, waypoint *to)
