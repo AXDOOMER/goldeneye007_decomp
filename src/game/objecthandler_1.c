@@ -1815,46 +1815,12 @@ f32 sub_GAME_7F06D0CC(f32 arg0, f32 angle, f32 mult)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F06D160(void) {
-
+void sub_GAME_7F06D160(coord3d *arg0, coord3d *arg1, f32 mult)
+{
+    arg0->x = sub_GAME_7F06D0CC(arg0->x, arg1->x, mult);
+    arg0->y = sub_GAME_7F06D0CC(arg0->y, arg1->y, mult);
+    arg0->z = sub_GAME_7F06D0CC(arg0->z, arg1->z, mult);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06D160
-/* 0A1C90 7F06D160 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0A1C94 7F06D164 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0A1C98 7F06D168 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0A1C9C 7F06D16C AFA50024 */  sw    $a1, 0x24($sp)
-/* 0A1CA0 7F06D170 AFA60028 */  sw    $a2, 0x28($sp)
-/* 0A1CA4 7F06D174 00808025 */  move  $s0, $a0
-/* 0A1CA8 7F06D178 C4AE0000 */  lwc1  $f14, ($a1)
-/* 0A1CAC 7F06D17C 0FC1B433 */  jal   sub_GAME_7F06D0CC
-/* 0A1CB0 7F06D180 C48C0000 */   lwc1  $f12, ($a0)
-/* 0A1CB4 7F06D184 E6000000 */  swc1  $f0, ($s0)
-/* 0A1CB8 7F06D188 8FAF0024 */  lw    $t7, 0x24($sp)
-/* 0A1CBC 7F06D18C 8FA60028 */  lw    $a2, 0x28($sp)
-/* 0A1CC0 7F06D190 C60C0004 */  lwc1  $f12, 4($s0)
-/* 0A1CC4 7F06D194 0FC1B433 */  jal   sub_GAME_7F06D0CC
-/* 0A1CC8 7F06D198 C5EE0004 */   lwc1  $f14, 4($t7)
-/* 0A1CCC 7F06D19C E6000004 */  swc1  $f0, 4($s0)
-/* 0A1CD0 7F06D1A0 8FB80024 */  lw    $t8, 0x24($sp)
-/* 0A1CD4 7F06D1A4 8FA60028 */  lw    $a2, 0x28($sp)
-/* 0A1CD8 7F06D1A8 C60C0008 */  lwc1  $f12, 8($s0)
-/* 0A1CDC 7F06D1AC 0FC1B433 */  jal   sub_GAME_7F06D0CC
-/* 0A1CE0 7F06D1B0 C70E0008 */   lwc1  $f14, 8($t8)
-/* 0A1CE4 7F06D1B4 E6000008 */  swc1  $f0, 8($s0)
-/* 0A1CE8 7F06D1B8 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0A1CEC 7F06D1BC 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0A1CF0 7F06D1C0 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0A1CF4 7F06D1C4 03E00008 */  jr    $ra
-/* 0A1CF8 7F06D1C8 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
