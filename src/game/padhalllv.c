@@ -256,6 +256,7 @@ bool sub_GAME_7F08EF1C(waygroup *from, waygroup *to, waygroup *groups)
 
 
 #ifdef NONMATCHING
+// unused and similar to waypointFindRoute
 void sub_GAME_7F08EFA0(void) {
 
 }
@@ -732,75 +733,39 @@ waypoint *sub_GAME_7F08FB90(waypoint *pointa, waypoint *pointb)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F08FD1C(void) {
+void sub_GAME_7F08FD1C(void)
+{
+    waypoint* waypoints;
+    s32 count;
+    waypoint* entry;
+    waypoint* from;
+    waypoint* to;
+    waypoint** arr_entry;
+    u32 unused[0x30];
 
+    waypoints = g_CurrentSetup.pathwaypoints;
+
+    if (waypoints != NULL)
+    {
+        waypoint *arr;
+        count = 0;
+        entry = waypoints;
+
+        while (entry->padID >= 0)
+        {
+            entry++;
+            count++;
+        }
+
+        from = &waypoints[randomGetNext() % count];
+        to = &waypoints[randomGetNext() % count];
+
+        if (waypointFindRoute(from, to, &arr, 0x32) != 0)
+        {
+            for (arr_entry = &arr; *arr_entry; arr_entry++)
+            {
+                // do nothing
+            }
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08FD1C
-/* 0C484C 7F08FD1C 3C088007 */  lui   $t0, %hi(g_CurrentSetup+0) 
-/* 0C4850 7F08FD20 8D085D00 */  lw    $t0, %lo(g_CurrentSetup+0)($t0)
-/* 0C4854 7F08FD24 27BDFF08 */  addiu $sp, $sp, -0xf8
-/* 0C4858 7F08FD28 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C485C 7F08FD2C 5100002F */  beql  $t0, $zero, .L7F08FDEC
-/* 0C4860 7F08FD30 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0C4864 7F08FD34 8D0E0000 */  lw    $t6, ($t0)
-/* 0C4868 7F08FD38 00001825 */  move  $v1, $zero
-/* 0C486C 7F08FD3C 01001025 */  move  $v0, $t0
-/* 0C4870 7F08FD40 05C20007 */  bltzl $t6, .L7F08FD60
-/* 0C4874 7F08FD44 AFA300F0 */   sw    $v1, 0xf0($sp)
-/* 0C4878 7F08FD48 8C4F0010 */  lw    $t7, 0x10($v0)
-.L7F08FD4C:
-/* 0C487C 7F08FD4C 24420010 */  addiu $v0, $v0, 0x10
-/* 0C4880 7F08FD50 24630001 */  addiu $v1, $v1, 1
-/* 0C4884 7F08FD54 05E3FFFD */  bgezl $t7, .L7F08FD4C
-/* 0C4888 7F08FD58 8C4F0010 */   lw    $t7, 0x10($v0)
-/* 0C488C 7F08FD5C AFA300F0 */  sw    $v1, 0xf0($sp)
-.L7F08FD60:
-/* 0C4890 7F08FD60 0C002914 */  jal   randomGetNext
-/* 0C4894 7F08FD64 AFA800F4 */   sw    $t0, 0xf4($sp)
-/* 0C4898 7F08FD68 8FA300F0 */  lw    $v1, 0xf0($sp)
-/* 0C489C 7F08FD6C 8FA800F4 */  lw    $t0, 0xf4($sp)
-/* 0C48A0 7F08FD70 0043001B */  divu  $zero, $v0, $v1
-/* 0C48A4 7F08FD74 0000C010 */  mfhi  $t8
-/* 0C48A8 7F08FD78 0018C900 */  sll   $t9, $t8, 4
-/* 0C48AC 7F08FD7C 14600002 */  bnez  $v1, .L7F08FD88
-/* 0C48B0 7F08FD80 00000000 */   nop   
-/* 0C48B4 7F08FD84 0007000D */  break 7
-.L7F08FD88:
-/* 0C48B8 7F08FD88 03284821 */  addu  $t1, $t9, $t0
-/* 0C48BC 7F08FD8C 0C002914 */  jal   randomGetNext
-/* 0C48C0 7F08FD90 AFA900E8 */   sw    $t1, 0xe8($sp)
-/* 0C48C4 7F08FD94 8FA300F0 */  lw    $v1, 0xf0($sp)
-/* 0C48C8 7F08FD98 8FA800F4 */  lw    $t0, 0xf4($sp)
-/* 0C48CC 7F08FD9C 8FA400E8 */  lw    $a0, 0xe8($sp)
-/* 0C48D0 7F08FDA0 0043001B */  divu  $zero, $v0, $v1
-/* 0C48D4 7F08FDA4 00005010 */  mfhi  $t2
-/* 0C48D8 7F08FDA8 000A5900 */  sll   $t3, $t2, 4
-/* 0C48DC 7F08FDAC 14600002 */  bnez  $v1, .L7F08FDB8
-/* 0C48E0 7F08FDB0 00000000 */   nop   
-/* 0C48E4 7F08FDB4 0007000D */  break 7
-.L7F08FDB8:
-/* 0C48E8 7F08FDB8 27A6001C */  addiu $a2, $sp, 0x1c
-/* 0C48EC 7F08FDBC 24070032 */  li    $a3, 50
-/* 0C48F0 7F08FDC0 0FC23D3C */  jal   waypointFindRoute
-/* 0C48F4 7F08FDC4 01682821 */   addu  $a1, $t3, $t0
-/* 0C48F8 7F08FDC8 10400007 */  beqz  $v0, .L7F08FDE8
-/* 0C48FC 7F08FDCC 8FAC001C */   lw    $t4, 0x1c($sp)
-/* 0C4900 7F08FDD0 11800005 */  beqz  $t4, .L7F08FDE8
-/* 0C4904 7F08FDD4 27A2001C */   addiu $v0, $sp, 0x1c
-/* 0C4908 7F08FDD8 8C4D0004 */  lw    $t5, 4($v0)
-.L7F08FDDC:
-/* 0C490C 7F08FDDC 24420004 */  addiu $v0, $v0, 4
-/* 0C4910 7F08FDE0 55A0FFFE */  bnezl $t5, .L7F08FDDC
-/* 0C4914 7F08FDE4 8C4D0004 */   lw    $t5, 4($v0)
-.L7F08FDE8:
-/* 0C4918 7F08FDE8 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F08FDEC:
-/* 0C491C 7F08FDEC 27BD00F8 */  addiu $sp, $sp, 0xf8
-/* 0C4920 7F08FDF0 03E00008 */  jr    $ra
-/* 0C4924 7F08FDF4 00000000 */   nop   
-)
-#endif
