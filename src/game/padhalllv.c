@@ -458,63 +458,24 @@ glabel sub_GAME_7F08EFA0
 #endif
 
 
-#ifdef NONMATCHING
-waypoint *findPadWithDistAndSet(s32 *pointnums, s32 arg1, s32 groupnum);
-struct Pad* findPadWithDistAndSet(s32 *padNumList,s32 desiredDist, u32 setIndex) // findPadWithDistAndSet
+waypoint *findPadWithDistAndSet(s32 *pointnums, s32 arg1, s32 groupnum)
 {
-    s32 padNum;
-    struct Pad *currPad;
+    waypoint *points = g_CurrentSetup.pathwaypoints;
 
-    padNum = padNumList[0];
-    
-    while (padNum >= 0)
+    while (*pointnums >= 0)
     {
-        currPad = g_CurrentSetup.pathwaypoints + padNum;
-        if (setIndex == currPad->pathSetIndex) {
-            if (desiredDist == currPad->dist_tmp) {
-                return currPad;
-            }
+        waypoint *point = &points[*pointnums];
+
+        if (point->groupNum == groupnum && point->dist == arg1)
+        {
+            return point;
         }
 
-        padNumList += 1;
-        padNum = *padNumList;
-    } 
+        *pointnums++;
+    }
 
-    return (struct Pad*)0;
+    return NULL;
 }
-#else
-waypoint *findPadWithDistAndSet(s32 *pointnums, s32 arg1, s32 groupnum);
-GLOBAL_ASM(
-.text
-glabel findPadWithDistAndSet
-/* 0C3BC0 7F08F090 8C830000 */  lw    $v1, ($a0)
-/* 0C3BC4 7F08F094 3C028007 */  lui   $v0, %hi(g_CurrentSetup+0)
-/* 0C3BC8 7F08F098 00A03825 */  move  $a3, $a1
-/* 0C3BCC 7F08F09C 0460000F */  bltz  $v1, .L7F08F0DC
-/* 0C3BD0 7F08F0A0 8C425D00 */   lw    $v0, %lo(g_CurrentSetup+0)($v0)
-/* 0C3BD4 7F08F0A4 00037100 */  sll   $t6, $v1, 4
-.L7F08F0A8:
-/* 0C3BD8 7F08F0A8 01C22821 */  addu  $a1, $t6, $v0
-/* 0C3BDC 7F08F0AC 8CAF0008 */  lw    $t7, 8($a1)
-/* 0C3BE0 7F08F0B0 54CF0007 */  bnel  $a2, $t7, .L7F08F0D0
-/* 0C3BE4 7F08F0B4 8C830004 */   lw    $v1, 4($a0)
-/* 0C3BE8 7F08F0B8 8CB8000C */  lw    $t8, 0xc($a1)
-/* 0C3BEC 7F08F0BC 54F80004 */  bnel  $a3, $t8, .L7F08F0D0
-/* 0C3BF0 7F08F0C0 8C830004 */   lw    $v1, 4($a0)
-/* 0C3BF4 7F08F0C4 03E00008 */  jr    $ra
-/* 0C3BF8 7F08F0C8 00A01025 */   move  $v0, $a1
-
-/* 0C3BFC 7F08F0CC 8C830004 */  lw    $v1, 4($a0)
-.L7F08F0D0:
-/* 0C3C00 7F08F0D0 24840004 */  addiu $a0, $a0, 4
-/* 0C3C04 7F08F0D4 0463FFF4 */  bgezl $v1, .L7F08F0A8
-/* 0C3C08 7F08F0D8 00037100 */   sll   $t6, $v1, 4
-.L7F08F0DC:
-/* 0C3C0C 7F08F0DC 00001025 */  move  $v0, $zero
-/* 0C3C10 7F08F0E0 03E00008 */  jr    $ra
-/* 0C3C14 7F08F0E4 00000000 */   nop   
-)
-#endif
 
 
 void sub_GAME_7F08F0E8(s32 *pointnums, s32 value, s32 groupnum)
