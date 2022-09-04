@@ -145,10 +145,11 @@ glabel sub_GAME_7F08EC8C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F08ED60(void) {
+waygroup* sub_GAME_7F08ED60(s32 *groupnums, s32 value) {
 
 }
 #else
+waygroup* sub_GAME_7F08ED60(s32 *groupnums, s32 value);
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F08ED60
@@ -333,10 +334,11 @@ glabel sub_GAME_7F08EE70
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F08EF1C(void) {
+bool sub_GAME_7F08EF1C(waygroup *from, waygroup *to, waygroup *groups) {
 
 }
 #else
+bool sub_GAME_7F08EF1C(waygroup *from, waygroup *to, waygroup *groups);
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F08EF1C
@@ -601,10 +603,11 @@ s32 sub_GAME_7F08F350(waypoint *from, waypoint *to, waypoint **arr, s32 arrlen)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F08F438(void) {
+void sub_GAME_7F08F438(waygroup *groupa, waygroup *groupb, waypoint **pointa, waypoint **pointb) {
 
 }
 #else
+void sub_GAME_7F08F438(waygroup *groupa, waygroup *groupb, waypoint **pointa, waypoint **pointb);
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F08F438
@@ -663,123 +666,55 @@ glabel sub_GAME_7F08F438
 )
 #endif
 
+/**
+ * Find a route from frompoint to topoint. The arr argument will be populated
+ * with pointers to the route's waypoints. If arr is not big enough then only
+ * the first part of the route will be populated into the array.
+ *
+ * The return value is the number of elements populated into the array.
+ */
+s32 waypointFindRoute(waypoint *frompoint, waypoint *topoint, waypoint **arr, s32 arrlen)
+{
+    waypoint **arrptr = arr;
+    waygroup *groups = g_CurrentSetup.waypointgroups;
 
+    if (groups)
+    {
+        waygroup *fromgroup = &groups[frompoint->groupNum];
+        waygroup *togroup = &groups[topoint->groupNum];
 
+        if (sub_GAME_7F08EF1C(fromgroup, togroup, groups))
+        {
+            waypoint *curfrompoint = frompoint;
+            waygroup *curfromgroup = fromgroup;
+            s32 i;
 
+            for (i = fromgroup->dist + 1; i <= togroup->dist && arrlen >= 2; i++)
+            {
+                s32 numwritten;
+                waygroup *nextfromgroup = sub_GAME_7F08ED60(curfromgroup->neighbours, i);
+                waypoint *tmppoint;
+                waypoint *nextfrompoint;
 
-#ifdef NONMATCHING
-void waypointFindRoute(void) {
+                sub_GAME_7F08F438(curfromgroup, nextfromgroup, &tmppoint, &nextfrompoint);
+                numwritten = sub_GAME_7F08F350(curfrompoint, tmppoint, arrptr, arrlen) - 1;
 
+                arrlen -= numwritten;
+                arrptr += numwritten;
+
+                curfrompoint = nextfrompoint;
+                curfromgroup = nextfromgroup;
+            }
+
+            arrptr += sub_GAME_7F08F350(curfrompoint, topoint, arrptr, arrlen) - 1;
+        }
+    }
+
+    *arrptr = NULL;
+    arrptr++;
+
+    return arrptr - arr;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel waypointFindRoute
-/* 0C4020 7F08F4F0 27BDFF90 */  addiu $sp, $sp, -0x70
-/* 0C4024 7F08F4F4 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0C4028 7F08F4F8 3C108007 */  lui   $s0, %hi(g_CurrentSetup+4)
-/* 0C402C 7F08F4FC 8E105D04 */  lw    $s0, %lo(g_CurrentSetup+4)($s0)
-/* 0C4030 7F08F500 AFB60030 */  sw    $s6, 0x30($sp)
-/* 0C4034 7F08F504 AFB40028 */  sw    $s4, 0x28($sp)
-/* 0C4038 7F08F508 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 0C403C 7F08F50C 00E08825 */  move  $s1, $a3
-/* 0C4040 7F08F510 0080B025 */  move  $s6, $a0
-/* 0C4044 7F08F514 AFBF003C */  sw    $ra, 0x3c($sp)
-/* 0C4048 7F08F518 AFBE0038 */  sw    $fp, 0x38($sp)
-/* 0C404C 7F08F51C AFB70034 */  sw    $s7, 0x34($sp)
-/* 0C4050 7F08F520 AFB5002C */  sw    $s5, 0x2c($sp)
-/* 0C4054 7F08F524 AFB30024 */  sw    $s3, 0x24($sp)
-/* 0C4058 7F08F528 AFB20020 */  sw    $s2, 0x20($sp)
-/* 0C405C 7F08F52C AFA50074 */  sw    $a1, 0x74($sp)
-/* 0C4060 7F08F530 AFA60078 */  sw    $a2, 0x78($sp)
-/* 0C4064 7F08F534 1200003F */  beqz  $s0, .L7F08F634
-/* 0C4068 7F08F538 00C0A025 */   move  $s4, $a2
-/* 0C406C 7F08F53C 8C8E0008 */  lw    $t6, 8($a0)
-/* 0C4070 7F08F540 2402000C */  li    $v0, 12
-/* 0C4074 7F08F544 8CB90008 */  lw    $t9, 8($a1)
-/* 0C4078 7F08F548 01C20019 */  multu $t6, $v0
-/* 0C407C 7F08F54C 02003025 */  move  $a2, $s0
-/* 0C4080 7F08F550 00007812 */  mflo  $t7
-/* 0C4084 7F08F554 01F09821 */  addu  $s3, $t7, $s0
-/* 0C4088 7F08F558 02602025 */  move  $a0, $s3
-/* 0C408C 7F08F55C 03220019 */  multu $t9, $v0
-/* 0C4090 7F08F560 00004012 */  mflo  $t0
-/* 0C4094 7F08F564 0110F021 */  addu  $fp, $t0, $s0
-/* 0C4098 7F08F568 0FC23BC7 */  jal   sub_GAME_7F08EF1C
-/* 0C409C 7F08F56C 03C02825 */   move  $a1, $fp
-/* 0C40A0 7F08F570 50400031 */  beql  $v0, $zero, .L7F08F638
-/* 0C40A4 7F08F574 AE800000 */   sw    $zero, ($s4)
-/* 0C40A8 7F08F578 8E700008 */  lw    $s0, 8($s3)
-/* 0C40AC 7F08F57C 8FC90008 */  lw    $t1, 8($fp)
-/* 0C40B0 7F08F580 02C0A825 */  move  $s5, $s6
-/* 0C40B4 7F08F584 26100001 */  addiu $s0, $s0, 1
-/* 0C40B8 7F08F588 0130082A */  slt   $at, $t1, $s0
-/* 0C40BC 7F08F58C 14200021 */  bnez  $at, .L7F08F614
-/* 0C40C0 7F08F590 02609025 */   move  $s2, $s3
-/* 0C40C4 7F08F594 2A210002 */  slti  $at, $s1, 2
-/* 0C40C8 7F08F598 1420001E */  bnez  $at, .L7F08F614
-/* 0C40CC 7F08F59C 27B70044 */   addiu $s7, $sp, 0x44
-/* 0C40D0 7F08F5A0 27B60048 */  addiu $s6, $sp, 0x48
-/* 0C40D4 7F08F5A4 8E440000 */  lw    $a0, ($s2)
-.L7F08F5A8:
-/* 0C40D8 7F08F5A8 0FC23B58 */  jal   sub_GAME_7F08ED60
-/* 0C40DC 7F08F5AC 02002825 */   move  $a1, $s0
-/* 0C40E0 7F08F5B0 00409825 */  move  $s3, $v0
-/* 0C40E4 7F08F5B4 02402025 */  move  $a0, $s2
-/* 0C40E8 7F08F5B8 00402825 */  move  $a1, $v0
-/* 0C40EC 7F08F5BC 02C03025 */  move  $a2, $s6
-/* 0C40F0 7F08F5C0 0FC23D0E */  jal   sub_GAME_7F08F438
-/* 0C40F4 7F08F5C4 02E03825 */   move  $a3, $s7
-/* 0C40F8 7F08F5C8 02A02025 */  move  $a0, $s5
-/* 0C40FC 7F08F5CC 8FA50048 */  lw    $a1, 0x48($sp)
-/* 0C4100 7F08F5D0 02803025 */  move  $a2, $s4
-/* 0C4104 7F08F5D4 0FC23CD4 */  jal   sub_GAME_7F08F350
-/* 0C4108 7F08F5D8 02203825 */   move  $a3, $s1
-/* 0C410C 7F08F5DC 8FCC0008 */  lw    $t4, 8($fp)
-/* 0C4110 7F08F5E0 26100001 */  addiu $s0, $s0, 1
-/* 0C4114 7F08F5E4 244AFFFF */  addiu $t2, $v0, -1
-/* 0C4118 7F08F5E8 02228823 */  subu  $s1, $s1, $v0
-/* 0C411C 7F08F5EC 000A5880 */  sll   $t3, $t2, 2
-/* 0C4120 7F08F5F0 0190082A */  slt   $at, $t4, $s0
-/* 0C4124 7F08F5F4 26310001 */  addiu $s1, $s1, 1
-/* 0C4128 7F08F5F8 028BA021 */  addu  $s4, $s4, $t3
-/* 0C412C 7F08F5FC 8FB50044 */  lw    $s5, 0x44($sp)
-/* 0C4130 7F08F600 14200004 */  bnez  $at, .L7F08F614
-/* 0C4134 7F08F604 02609025 */   move  $s2, $s3
-/* 0C4138 7F08F608 2A210002 */  slti  $at, $s1, 2
-/* 0C413C 7F08F60C 5020FFE6 */  beql  $at, $zero, .L7F08F5A8
-/* 0C4140 7F08F610 8E440000 */   lw    $a0, ($s2)
-.L7F08F614:
-/* 0C4144 7F08F614 02A02025 */  move  $a0, $s5
-/* 0C4148 7F08F618 8FA50074 */  lw    $a1, 0x74($sp)
-/* 0C414C 7F08F61C 02803025 */  move  $a2, $s4
-/* 0C4150 7F08F620 0FC23CD4 */  jal   sub_GAME_7F08F350
-/* 0C4154 7F08F624 02203825 */   move  $a3, $s1
-/* 0C4158 7F08F628 244DFFFF */  addiu $t5, $v0, -1
-/* 0C415C 7F08F62C 000D7080 */  sll   $t6, $t5, 2
-/* 0C4160 7F08F630 028EA021 */  addu  $s4, $s4, $t6
-.L7F08F634:
-/* 0C4164 7F08F634 AE800000 */  sw    $zero, ($s4)
-.L7F08F638:
-/* 0C4168 7F08F638 8FAF0078 */  lw    $t7, 0x78($sp)
-/* 0C416C 7F08F63C 26940004 */  addiu $s4, $s4, 4
-/* 0C4170 7F08F640 8FBF003C */  lw    $ra, 0x3c($sp)
-/* 0C4174 7F08F644 028F1023 */  subu  $v0, $s4, $t7
-/* 0C4178 7F08F648 0002C083 */  sra   $t8, $v0, 2
-/* 0C417C 7F08F64C 8FB40028 */  lw    $s4, 0x28($sp)
-/* 0C4180 7F08F650 8FBE0038 */  lw    $fp, 0x38($sp)
-/* 0C4184 7F08F654 8FB70034 */  lw    $s7, 0x34($sp)
-/* 0C4188 7F08F658 8FB60030 */  lw    $s6, 0x30($sp)
-/* 0C418C 7F08F65C 8FB5002C */  lw    $s5, 0x2c($sp)
-/* 0C4190 7F08F660 8FB30024 */  lw    $s3, 0x24($sp)
-/* 0C4194 7F08F664 8FB20020 */  lw    $s2, 0x20($sp)
-/* 0C4198 7F08F668 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 0C419C 7F08F66C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0C41A0 7F08F670 27BD0070 */  addiu $sp, $sp, 0x70
-/* 0C41A4 7F08F674 03E00008 */  jr    $ra
-/* 0C41A8 7F08F678 03001025 */   move  $v0, $t8
-)
-#endif
 
 
 void resetWaypointDistances(void)
