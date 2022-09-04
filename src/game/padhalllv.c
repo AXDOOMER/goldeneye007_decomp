@@ -231,56 +231,28 @@ bool sub_GAME_7F08EE70(struct waygroup *from, struct waygroup *to, struct waygro
 }
 
 
-#ifdef NONMATCHING
-bool sub_GAME_7F08EF1C(waygroup *from, waygroup *to, waygroup *groups) {
+bool sub_GAME_7F08EF1C(waygroup *from, waygroup *to, waygroup *groups)
+{
+    u32 stack[2];
+    bool result = sub_GAME_7F08EE70(from, to, groups, 0);
 
+    if (result)
+    {
+        waygroup *curto = to;
+        s32 i = curto->dist - 1;
+
+        while (i >= 0)
+        {
+            curto->dist += 10000;
+            curto = sub_GAME_7F08ED60(curto->neighbours, i);
+            i--;
+        }
+
+        curto->dist += 10000;
+    }
+
+    return result;
 }
-#else
-bool sub_GAME_7F08EF1C(waygroup *from, waygroup *to, waygroup *groups);
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08EF1C
-/* 0C3A4C 7F08EF1C 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0C3A50 7F08EF20 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0C3A54 7F08EF24 AFB10018 */  sw    $s1, 0x18($sp)
-/* 0C3A58 7F08EF28 AFB00014 */  sw    $s0, 0x14($sp)
-/* 0C3A5C 7F08EF2C AFA50034 */  sw    $a1, 0x34($sp)
-/* 0C3A60 7F08EF30 0FC23B9C */  jal   sub_GAME_7F08EE70
-/* 0C3A64 7F08EF34 00003825 */   move  $a3, $zero
-/* 0C3A68 7F08EF38 8FA50034 */  lw    $a1, 0x34($sp)
-/* 0C3A6C 7F08EF3C 10400012 */  beqz  $v0, .L7F08EF88
-/* 0C3A70 7F08EF40 AFA20024 */   sw    $v0, 0x24($sp)
-/* 0C3A74 7F08EF44 8CB00008 */  lw    $s0, 8($a1)
-/* 0C3A78 7F08EF48 00A08825 */  move  $s1, $a1
-/* 0C3A7C 7F08EF4C 2610FFFF */  addiu $s0, $s0, -1
-/* 0C3A80 7F08EF50 0602000B */  bltzl $s0, .L7F08EF80
-/* 0C3A84 7F08EF54 8E380008 */   lw    $t8, 8($s1)
-.L7F08EF58:
-/* 0C3A88 7F08EF58 8E2E0008 */  lw    $t6, 8($s1)
-/* 0C3A8C 7F08EF5C 8E240000 */  lw    $a0, ($s1)
-/* 0C3A90 7F08EF60 02002825 */  move  $a1, $s0
-/* 0C3A94 7F08EF64 25CF2710 */  addiu $t7, $t6, 0x2710
-/* 0C3A98 7F08EF68 0FC23B58 */  jal   sub_GAME_7F08ED60
-/* 0C3A9C 7F08EF6C AE2F0008 */   sw    $t7, 8($s1)
-/* 0C3AA0 7F08EF70 2610FFFF */  addiu $s0, $s0, -1
-/* 0C3AA4 7F08EF74 0601FFF8 */  bgez  $s0, .L7F08EF58
-/* 0C3AA8 7F08EF78 00408825 */   move  $s1, $v0
-/* 0C3AAC 7F08EF7C 8E380008 */  lw    $t8, 8($s1)
-.L7F08EF80:
-/* 0C3AB0 7F08EF80 27192710 */  addiu $t9, $t8, 0x2710
-/* 0C3AB4 7F08EF84 AE390008 */  sw    $t9, 8($s1)
-.L7F08EF88:
-/* 0C3AB8 7F08EF88 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0C3ABC 7F08EF8C 8FA20024 */  lw    $v0, 0x24($sp)
-/* 0C3AC0 7F08EF90 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0C3AC4 7F08EF94 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0C3AC8 7F08EF98 03E00008 */  jr    $ra
-/* 0C3ACC 7F08EF9C 27BD0030 */   addiu $sp, $sp, 0x30
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
