@@ -13205,84 +13205,20 @@ glabel sub_GAME_7F0B9F14
 #endif
 
 
+bool bgIsBboxOverlapping(coord3d *portalbbmin, coord3d *portalbbmax, coord3d *propbbmin, coord3d *propbbmax)
+{
+    s32 i;
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0BA26C(s32 arg0, void *arg1, void *arg2, s32 arg3) {
-    s32 temp_v1;
-    void *phi_t0;
-    void *phi_t1;
-    s32 phi_v1;
-
-    // Node 0
-    phi_t0 = arg1;
-    phi_t1 = arg2;
-    phi_v1 = 0;
-loop_1:
-    // Node 1
-    temp_v1 = (phi_v1 + 4);
-    if (*phi_t0 < *phi_t1)
+    for (i = 0; i < 3; i++)
     {
-        // Node 3
-        return 0;
+        if (propbbmin->f[i] > portalbbmax->f[i] || propbbmax->f[i] < portalbbmin->f[i])
+        {
+            return FALSE;
+        }
     }
-    // Node 2
-    if (*(arg3 + phi_v1) < *(arg0 + phi_v1))
-    {
-        // Node 3
-        return 0;
-    }
-    // Node 4
-    phi_t0 = (phi_t0 + 4);
-    phi_t1 = (phi_t1 + 4);
-    phi_v1 = temp_v1;
-    if (temp_v1 != 0xc)
-    {
-        goto loop_1;
-    }
-    // Node 5
-    return 1;
+
+    return TRUE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BA26C
-/* 0EED9C 7F0BA26C 00001825 */  move  $v1, $zero
-/* 0EEDA0 7F0BA270 00A04025 */  move  $t0, $a1
-/* 0EEDA4 7F0BA274 00C04825 */  move  $t1, $a2
-/* 0EEDA8 7F0BA278 2402000C */  li    $v0, 12
-.L7F0BA27C:
-/* 0EEDAC 7F0BA27C C5040000 */  lwc1  $f4, ($t0)
-/* 0EEDB0 7F0BA280 C5260000 */  lwc1  $f6, ($t1)
-/* 0EEDB4 7F0BA284 00E37021 */  addu  $t6, $a3, $v1
-/* 0EEDB8 7F0BA288 00837821 */  addu  $t7, $a0, $v1
-/* 0EEDBC 7F0BA28C 4606203C */  c.lt.s $f4, $f6
-/* 0EEDC0 7F0BA290 24630004 */  addiu $v1, $v1, 4
-/* 0EEDC4 7F0BA294 25080004 */  addiu $t0, $t0, 4
-/* 0EEDC8 7F0BA298 45010007 */  bc1t  .L7F0BA2B8
-/* 0EEDCC 7F0BA29C 00000000 */   nop   
-/* 0EEDD0 7F0BA2A0 C5C80000 */  lwc1  $f8, ($t6)
-/* 0EEDD4 7F0BA2A4 C5EA0000 */  lwc1  $f10, ($t7)
-/* 0EEDD8 7F0BA2A8 460A403C */  c.lt.s $f8, $f10
-/* 0EEDDC 7F0BA2AC 00000000 */  nop   
-/* 0EEDE0 7F0BA2B0 45000003 */  bc1f  .L7F0BA2C0
-/* 0EEDE4 7F0BA2B4 00000000 */   nop   
-.L7F0BA2B8:
-/* 0EEDE8 7F0BA2B8 03E00008 */  jr    $ra
-/* 0EEDEC 7F0BA2BC 00001025 */   move  $v0, $zero
-
-.L7F0BA2C0:
-/* 0EEDF0 7F0BA2C0 1462FFEE */  bne   $v1, $v0, .L7F0BA27C
-/* 0EEDF4 7F0BA2C4 25290004 */   addiu $t1, $t1, 4
-/* 0EEDF8 7F0BA2C8 24020001 */  li    $v0, 1
-/* 0EEDFC 7F0BA2CC 03E00008 */  jr    $ra
-/* 0EEE00 7F0BA2D0 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
@@ -13420,7 +13356,7 @@ glabel sub_GAME_7F0BA2D4
 /* 0EEFD0 7F0BA4A0 02C02025 */  move  $a0, $s6
 /* 0EEFD4 7F0BA4A4 02E02825 */  move  $a1, $s7
 /* 0EEFD8 7F0BA4A8 27A600A0 */  addiu $a2, $sp, 0xa0
-/* 0EEFDC 7F0BA4AC 0FC2E89B */  jal   sub_GAME_7F0BA26C
+/* 0EEFDC 7F0BA4AC 0FC2E89B */  jal   bgIsBboxOverlapping
 /* 0EEFE0 7F0BA4B0 27A70094 */   addiu $a3, $sp, 0x94
 /* 0EEFE4 7F0BA4B4 1040001F */  beqz  $v0, .L7F0BA534
 /* 0EEFE8 7F0BA4B8 3C0E8008 */   lui   $t6, %hi(ptr_bgdata_portals) 
