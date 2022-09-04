@@ -142,45 +142,23 @@ glabel sub_GAME_7F08EC8C
 #endif
 
 
+waygroup *sub_GAME_7F08ED60(s32 *groupnums, s32 value)
+{
+    waygroup *groups = g_CurrentSetup.waypointgroups;
 
+    while (*groupnums >= 0)
+    {
+        waygroup *group = &groups[*groupnums];
 
+        if (group->dist == value)
+        {
+            return group;
+        }
+        *groupnums++;
+    }
 
-#ifdef NONMATCHING
-waygroup* sub_GAME_7F08ED60(s32 *groupnums, s32 value) {
-
+    return NULL;
 }
-#else
-waygroup* sub_GAME_7F08ED60(s32 *groupnums, s32 value);
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08ED60
-/* 0C3890 7F08ED60 8C830000 */  lw    $v1, ($a0)
-/* 0C3894 7F08ED64 3C028007 */  lui   $v0, %hi(g_CurrentSetup+4)
-/* 0C3898 7F08ED68 00A03025 */  move  $a2, $a1
-/* 0C389C 7F08ED6C 0460000E */  bltz  $v1, .L7F08EDA8
-/* 0C38A0 7F08ED70 8C425D04 */   lw    $v0, %lo(g_CurrentSetup+4)($v0)
-/* 0C38A4 7F08ED74 2407000C */  li    $a3, 12
-.L7F08ED78:
-/* 0C38A8 7F08ED78 00670019 */  multu $v1, $a3
-/* 0C38AC 7F08ED7C 00007012 */  mflo  $t6
-/* 0C38B0 7F08ED80 01C22821 */  addu  $a1, $t6, $v0
-/* 0C38B4 7F08ED84 8CAF0008 */  lw    $t7, 8($a1)
-/* 0C38B8 7F08ED88 54CF0004 */  bnel  $a2, $t7, .L7F08ED9C
-/* 0C38BC 7F08ED8C 8C830004 */   lw    $v1, 4($a0)
-/* 0C38C0 7F08ED90 03E00008 */  jr    $ra
-/* 0C38C4 7F08ED94 00A01025 */   move  $v0, $a1
-
-/* 0C38C8 7F08ED98 8C830004 */  lw    $v1, 4($a0)
-.L7F08ED9C:
-/* 0C38CC 7F08ED9C 24840004 */  addiu $a0, $a0, 4
-/* 0C38D0 7F08EDA0 0461FFF5 */  bgez  $v1, .L7F08ED78
-/* 0C38D4 7F08EDA4 00000000 */   nop   
-.L7F08EDA8:
-/* 0C38D8 7F08EDA8 00001025 */  move  $v0, $zero
-/* 0C38DC 7F08EDAC 03E00008 */  jr    $ra
-/* 0C38E0 7F08EDB0 00000000 */   nop   
-)
-#endif
 
 
 /**
