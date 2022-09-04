@@ -186,10 +186,11 @@ glabel sub_GAME_7F08ED60
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F08EDB4(void) {
+void sub_GAME_7F08EDB4(s32 *groupnums, s32 value) {
 
 }
 #else
+void sub_GAME_7F08EDB4(s32 *groupnums, s32 value);
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F08EDB4
@@ -219,51 +220,30 @@ glabel sub_GAME_7F08EDB4
 #endif
 
 
+/**
+ * Iterate the given groups and find any with an dist matching arg1.
+ * For all groups that match, iterate their neighbouring groups and set their
+ * dist to arg1 + 1, but only if their they have no existing dist value.
+ *
+ * Return true if any matched.
+ */
+bool sub_GAME_7F08EE00(struct waygroup *group, s32 arg1)
+{
+    bool result = FALSE;
 
+    while (group->neighbours)
+    {
+        if (group->dist == arg1)
+        {
+            result = TRUE;
+            sub_GAME_7F08EDB4(group->neighbours, arg1 + 1);
+        }
 
+        group++;
+    }
 
-#ifdef NONMATCHING
-bool sub_GAME_7F08EE00(struct waygroup *group, s32 arg1) {
-
+    return result;
 }
-#else
-bool sub_GAME_7F08EE00(struct waygroup *group, s32 arg1);
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08EE00
-/* 0C3930 7F08EE00 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0C3934 7F08EE04 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0C3938 7F08EE08 AFB20020 */  sw    $s2, 0x20($sp)
-/* 0C393C 7F08EE0C AFB1001C */  sw    $s1, 0x1c($sp)
-/* 0C3940 7F08EE10 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0C3944 7F08EE14 8C860000 */  lw    $a2, ($a0)
-/* 0C3948 7F08EE18 00808025 */  move  $s0, $a0
-/* 0C394C 7F08EE1C 00A08825 */  move  $s1, $a1
-/* 0C3950 7F08EE20 10C0000C */  beqz  $a2, .L7F08EE54
-/* 0C3954 7F08EE24 00009025 */   move  $s2, $zero
-/* 0C3958 7F08EE28 8E0E0008 */  lw    $t6, 8($s0)
-.L7F08EE2C:
-/* 0C395C 7F08EE2C 00C02025 */  move  $a0, $a2
-/* 0C3960 7F08EE30 26250001 */  addiu $a1, $s1, 1
-/* 0C3964 7F08EE34 562E0004 */  bnel  $s1, $t6, .L7F08EE48
-/* 0C3968 7F08EE38 8E06000C */   lw    $a2, 0xc($s0)
-/* 0C396C 7F08EE3C 0FC23B6D */  jal   sub_GAME_7F08EDB4
-/* 0C3970 7F08EE40 24120001 */   li    $s2, 1
-/* 0C3974 7F08EE44 8E06000C */  lw    $a2, 0xc($s0)
-.L7F08EE48:
-/* 0C3978 7F08EE48 2610000C */  addiu $s0, $s0, 0xc
-/* 0C397C 7F08EE4C 54C0FFF7 */  bnezl $a2, .L7F08EE2C
-/* 0C3980 7F08EE50 8E0E0008 */   lw    $t6, 8($s0)
-.L7F08EE54:
-/* 0C3984 7F08EE54 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 0C3988 7F08EE58 02401025 */  move  $v0, $s2
-/* 0C398C 7F08EE5C 8FB20020 */  lw    $s2, 0x20($sp)
-/* 0C3990 7F08EE60 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0C3994 7F08EE64 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 0C3998 7F08EE68 03E00008 */  jr    $ra
-/* 0C399C 7F08EE6C 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
 
 
 bool sub_GAME_7F08EE70(struct waygroup *from, struct waygroup *to, struct waygroup *groups, s32 arg3)
