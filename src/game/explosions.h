@@ -9,7 +9,7 @@
 #define SMOKE_PARTS_LEN 10
 #define SCORCH_BUFFER_LEN 20
 #define BULLET_IMPACT_BUFFER_LEN 100
-#define MAX_BULLET_CASINGS 200
+#define MAX_FLYING_PARTICLES 200
 
 typedef struct s_smoketype {
     s16 duration;
@@ -165,7 +165,7 @@ struct BulletImpact {
     s16 unk4E;
 };
 
-struct EjectedCasing_unk38 {
+struct FlyingParticles_unk38 {
     s16 unk00;
     s16 unk02;
     s16 unk04;
@@ -178,13 +178,13 @@ struct EjectedCasing_unk38 {
     u8 unk0F;
 };
 
-struct EjectedCasing {
+struct FlyingParticles {
     s32 unk00;
 
     // coord3d?
-    f32 unk04;
-    f32 unk08;
-    f32 unk0C;
+    f32 x;
+    f32 y;
+    f32 z;
 
     // coord3d?
     f32 unk10;
@@ -203,20 +203,20 @@ struct EjectedCasing {
 
     s32 unk34;
 
-    struct EjectedCasing_unk38 unk38[4];
+    struct FlyingParticles_unk38 unk38[4];
 };
 
 extern f32 D_80040178;
 extern char dword_CODE_bss_8007A100[];
 extern struct Smoke *ptr_smoke_buf;
 extern struct Explosion *ptr_explosion_buf;
-extern s32 max_casings;
-extern struct EjectedCasing *ptr_ejected_casing_buf;
+extern s32 max_particles;
+extern struct FlyingParticles *ptr_flying_particles_buf;
 extern struct Scorch *ptr_scorch_buf;
 extern struct BulletImpact *ptr_bullet_impact_buf;
 extern s32 numExplosionEntries;
 extern s32 numSmokeEntries;
-extern s32 numCasingEntries;
+extern s32 numParticleEntries;
 extern s32 numScorchEntries;
 extern s32 numImpactEntries;
 
