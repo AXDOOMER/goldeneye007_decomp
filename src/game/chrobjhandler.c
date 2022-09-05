@@ -39437,66 +39437,35 @@ glabel object_collectability_routines
 
 #endif
 
-#ifdef NONMATCHING
-void sub_GAME_7F050D30(void) {
 
+bool sub_GAME_7F050D30(PropRecord *prop, coord3d *arg1, f32 *arg2, f32 *arg3)
+{
+    if (prop->flags & PROPFLAG_ONSCREEN)
+    {
+        ObjectRecord *obj = prop->obj;
+        Mtxf *matrix = getsubmatrix(obj->model);
+
+        arg1->z = matrix->m[3][2];
+
+        if (arg1->z < 0)
+        {
+            arg1->x = matrix->m[3][0];
+            arg1->y = matrix->m[3][1];
+
+            arg3[0] = 0;
+            arg3[1] = 0;
+
+            arg2[0] = 0;
+            arg2[1] = 0;
+
+            sub_GAME_7F03F90C(obj->model, &arg2[1], &arg2[0], &arg3[1], &arg3[0]);
+
+            return TRUE;
+        }
+    }
+
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F050D30
-/* 085860 7F050D30 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 085864 7F050D34 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 085868 7F050D38 AFA40028 */  sw    $a0, 0x28($sp)
-/* 08586C 7F050D3C AFA5002C */  sw    $a1, 0x2c($sp)
-/* 085870 7F050D40 AFA70034 */  sw    $a3, 0x34($sp)
-/* 085874 7F050D44 908F0001 */  lbu   $t7, 1($a0)
-/* 085878 7F050D48 31F80002 */  andi  $t8, $t7, 2
-/* 08587C 7F050D4C 53000022 */  beql  $t8, $zero, .L7F050DD8
-/* 085880 7F050D50 00001025 */   move  $v0, $zero
-/* 085884 7F050D54 8C830004 */  lw    $v1, 4($a0)
-/* 085888 7F050D58 8C640014 */  lw    $a0, 0x14($v1)
-/* 08588C 7F050D5C AFA60030 */  sw    $a2, 0x30($sp)
-/* 085890 7F050D60 0FC1B1A8 */  jal   getsubmatrix
-/* 085894 7F050D64 AFA30024 */   sw    $v1, 0x24($sp)
-/* 085898 7F050D68 8FA9002C */  lw    $t1, 0x2c($sp)
-/* 08589C 7F050D6C C4440038 */  lwc1  $f4, 0x38($v0)
-/* 0858A0 7F050D70 8FA30024 */  lw    $v1, 0x24($sp)
-/* 0858A4 7F050D74 8FA60030 */  lw    $a2, 0x30($sp)
-/* 0858A8 7F050D78 8FAA0034 */  lw    $t2, 0x34($sp)
-/* 0858AC 7F050D7C E5240008 */  swc1  $f4, 8($t1)
-/* 0858B0 7F050D80 44800000 */  mtc1  $zero, $f0
-/* 0858B4 7F050D84 C5260008 */  lwc1  $f6, 8($t1)
-/* 0858B8 7F050D88 4600303C */  c.lt.s $f6, $f0
-/* 0858BC 7F050D8C 00000000 */  nop   
-/* 0858C0 7F050D90 45020011 */  bc1fl .L7F050DD8
-/* 0858C4 7F050D94 00001025 */   move  $v0, $zero
-/* 0858C8 7F050D98 C4480030 */  lwc1  $f8, 0x30($v0)
-/* 0858CC 7F050D9C 24C50004 */  addiu $a1, $a2, 4
-/* 0858D0 7F050DA0 25470004 */  addiu $a3, $t2, 4
-/* 0858D4 7F050DA4 E5280000 */  swc1  $f8, ($t1)
-/* 0858D8 7F050DA8 C44A0034 */  lwc1  $f10, 0x34($v0)
-/* 0858DC 7F050DAC E52A0004 */  swc1  $f10, 4($t1)
-/* 0858E0 7F050DB0 E5400000 */  swc1  $f0, ($t2)
-/* 0858E4 7F050DB4 E5400004 */  swc1  $f0, 4($t2)
-/* 0858E8 7F050DB8 E4C00000 */  swc1  $f0, ($a2)
-/* 0858EC 7F050DBC E4C00004 */  swc1  $f0, 4($a2)
-/* 0858F0 7F050DC0 8C640014 */  lw    $a0, 0x14($v1)
-/* 0858F4 7F050DC4 0FC0FE43 */  jal   sub_GAME_7F03F90C
-/* 0858F8 7F050DC8 AFAA0010 */   sw    $t2, 0x10($sp)
-/* 0858FC 7F050DCC 10000002 */  b     .L7F050DD8
-/* 085900 7F050DD0 24020001 */   li    $v0, 1
-/* 085904 7F050DD4 00001025 */  move  $v0, $zero
-.L7F050DD8:
-/* 085908 7F050DD8 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 08590C 7F050DDC 27BD0028 */  addiu $sp, $sp, 0x28
-/* 085910 7F050DE0 03E00008 */  jr    $ra
-/* 085914 7F050DE4 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING

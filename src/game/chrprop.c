@@ -7038,16 +7038,11 @@ glabel sub_GAME_7F03F748
 #endif
 
 
-
-
-
-void sub_GAME_7F03F90C(struct model *model, f32 *arg1, f32 *arg2, f32 *arg3, f32 *arg4) {
+void sub_GAME_7F03F90C(Model *model, f32 *arg1, f32 *arg2, f32 *arg3, f32 *arg4)
+{
     sub_GAME_7F03F748(model, arg1, arg2, 0);
     sub_GAME_7F03F748(model, arg3, arg4, 1);
 }
-
-
-
 
 
 #ifdef NONMATCHING
