@@ -3644,6 +3644,24 @@ struct SetupIntroCredits
 #pragma endregion Images
 
 #pragma region Player
+
+typedef struct SkyRelated38 {
+	/*0x00*/ f32 unk00;
+	/*0x04*/ f32 unk04;
+	/*0x08*/ f32 unk08;
+	/*0x0c*/ f32 unk0c;
+	/*0x10*/ f32 r;
+	/*0x14*/ f32 g;
+	/*0x18*/ f32 b;
+	/*0x1c*/ f32 a;
+	/*0x20*/ f32 unk20;
+	/*0x24*/ f32 unk24;
+	/*0x28*/ f32 unk28;
+	/*0x2c*/ f32 unk2c;
+	/*0x30*/ f32 unk30;
+	/*0x34*/ f32 unk34;
+} SkyRelated38;
+
 #pragma endregion Player
 
 #pragma region stagesetup.h
