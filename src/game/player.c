@@ -223,183 +223,50 @@ glabel sub_GAME_7F0938FC
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-bool sub_GAME_7F093A78(coord3d *arg0, coord3d *arg1, f32 *arg2) {
+bool sub_GAME_7F093A78(coord3d *arg0, coord3d *arg1, f32 *arg2)
+{
+    coord3d *campos = bondviewGetCurrentPlayersPosition();
+    f32 f12 = -2.0f * arg0->y / sqrtf(arg0->f[0] * arg0->f[0] + arg0->f[2] * arg0->f[2] + 0.0001f);
+    f32 sp2c;
+    f32 f12_2;
     f32 sp24;
-    f32 sp2C;
-    s32 temp_s1;
-    f32 temp_f2_2;
-    f32 temp_f2;
-    f32 temp_f12;
-    f32 phi_f2;
-    f32 phi_f16;
-    f32 phi_f2_2;
-    f32 phi_return;
+    u32 stack[2];
 
-    // Node 0
-    temp_s1 = bondviewGetCurrentPlayersPosition();
-    temp_f2_2 = ((-2.0f * arg0->unk4) / sqrtf((((arg0->unk8 * arg0->unk8) + (*arg0 * *arg0)) + D_8005752C), *arg0));
-    phi_f2 = temp_f2_2;
-    if (1.0f < temp_f2_2)
+    if (f12 > 1.0f)
     {
-        // Node 1
-        phi_f2 = 1.0f;
+        f12 = 1.0f;
     }
-    // Node 2
-    *arg2 = (f32) (1.0f - phi_f2);
-    if (0.0f == arg0->unk4)
+
+    *arg2 = 1.0f - f12;
+
+    if (arg0->y == 0.0f)
     {
-        // Node 3
-        phi_f16 = D_80057530;
+        sp24 = -0.01f;
     }
     else
     {
-        // Node 4
-        phi_f16 = arg0->unk4;
+        sp24 = arg0->y;
     }
-    // Node 5
-    phi_return = arg0->unk4;
-    if (phi_f16 < 0.0f)
-    {
-        // Node 6
-        sp24 = (f32) phi_f16;
-        temp_f2 = ((fogGetCurrentEnvironmentp(1.0f, 0.0f)->unk24 - temp_s1->unk4) / phi_f16);
-        sp2C = temp_f2;
-        temp_f12 = (sqrtf(((arg0->unk8 * arg0->unk8) + (*arg0 * *arg0)), *arg0) * temp_f2);
-        phi_f2_2 = temp_f2;
-        if (D_80057534 < temp_f12)
-        {
-            // Node 7
-            phi_f2_2 = (temp_f2 * (D_80057534 / temp_f12));
-        }
-        // Node 8
-        *arg1 = (f32) ((*arg0 * phi_f2_2) + *temp_s1);
-        arg1->unk4 = (f32) (temp_s1->unk4 + (phi_f2_2 * phi_f16));
-        arg1->unk8 = (f32) ((arg0->unk8 * phi_f2_2) + temp_s1->unk8);
-        phi_return = 1.401298464324817e-45f;
-    }
-    // Node 9
-    return phi_return;
-}
-#else
-bool sub_GAME_7F093A78(coord3d *arg0, coord3d *arg1, f32 *arg2);
-GLOBAL_ASM(
-.late_rodata
-glabel D_8005752C
-.word 0x38d1b717 /*0.000099999997*/
-glabel D_80057530
-.word 0xbc23d70a /*-0.01*/
-glabel D_80057534
-.word 0x48927c00 /*300000.0*/
-.text
-glabel sub_GAME_7F093A78
-/* 0C85A8 7F093A78 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 0C85AC 7F093A7C AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0C85B0 7F093A80 AFB00014 */  sw    $s0, 0x14($sp)
-/* 0C85B4 7F093A84 00808025 */  move  $s0, $a0
-/* 0C85B8 7F093A88 AFB10018 */  sw    $s1, 0x18($sp)
-/* 0C85BC 7F093A8C AFA5003C */  sw    $a1, 0x3c($sp)
-/* 0C85C0 7F093A90 0FC227F5 */  jal   bondviewGetCurrentPlayersPosition
-/* 0C85C4 7F093A94 AFA60040 */   sw    $a2, 0x40($sp)
-/* 0C85C8 7F093A98 C6000008 */  lwc1  $f0, 8($s0)
-/* 0C85CC 7F093A9C C60E0000 */  lwc1  $f14, ($s0)
-/* 0C85D0 7F093AA0 3C018005 */  lui   $at, %hi(D_8005752C)
-/* 0C85D4 7F093AA4 46000102 */  mul.s $f4, $f0, $f0
-/* 0C85D8 7F093AA8 C42A752C */  lwc1  $f10, %lo(D_8005752C)($at)
-/* 0C85DC 7F093AAC 00408825 */  move  $s1, $v0
-/* 0C85E0 7F093AB0 460E7182 */  mul.s $f6, $f14, $f14
-/* 0C85E4 7F093AB4 46062200 */  add.s $f8, $f4, $f6
-/* 0C85E8 7F093AB8 0C007DF8 */  jal   sqrtf
-/* 0C85EC 7F093ABC 460A4300 */   add.s $f12, $f8, $f10
-/* 0C85F0 7F093AC0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0C85F4 7F093AC4 44816000 */  mtc1  $at, $f12
-/* 0C85F8 7F093AC8 3C01C000 */  li    $at, 0xC0000000 # -2.000000
-/* 0C85FC 7F093ACC 44812000 */  mtc1  $at, $f4
-/* 0C8600 7F093AD0 C6060004 */  lwc1  $f6, 4($s0)
-/* 0C8604 7F093AD4 3C018005 */  lui   $at, %hi(D_80057530)
-/* 0C8608 7F093AD8 00001025 */  move  $v0, $zero
-/* 0C860C 7F093ADC 46062202 */  mul.s $f8, $f4, $f6
-/* 0C8610 7F093AE0 46004083 */  div.s $f2, $f8, $f0
-/* 0C8614 7F093AE4 4602603C */  c.lt.s $f12, $f2
-/* 0C8618 7F093AE8 00000000 */  nop
-/* 0C861C 7F093AEC 45020003 */  bc1fl .L7F093AFC
-/* 0C8620 7F093AF0 46026281 */   sub.s $f10, $f12, $f2
-/* 0C8624 7F093AF4 46006086 */  mov.s $f2, $f12
-/* 0C8628 7F093AF8 46026281 */  sub.s $f10, $f12, $f2
-.L7F093AFC:
-/* 0C862C 7F093AFC 8FAE0040 */  lw    $t6, 0x40($sp)
-/* 0C8630 7F093B00 44807000 */  mtc1  $zero, $f14
-/* 0C8634 7F093B04 E5CA0000 */  swc1  $f10, ($t6)
-/* 0C8638 7F093B08 C6000004 */  lwc1  $f0, 4($s0)
-/* 0C863C 7F093B0C 46007032 */  c.eq.s $f14, $f0
-/* 0C8640 7F093B10 00000000 */  nop
-/* 0C8644 7F093B14 45020004 */  bc1fl .L7F093B28
-/* 0C8648 7F093B18 46000406 */   mov.s $f16, $f0
-/* 0C864C 7F093B1C 10000002 */  b     .L7F093B28
-/* 0C8650 7F093B20 C4307530 */   lwc1  $f16, %lo(D_80057530)($at)
-/* 0C8654 7F093B24 46000406 */  mov.s $f16, $f0
-.L7F093B28:
-/* 0C8658 7F093B28 460E803C */  c.lt.s $f16, $f14
-/* 0C865C 7F093B2C 00000000 */  nop
-/* 0C8660 7F093B30 4500002D */  bc1f  .L7F093BE8
-/* 0C8664 7F093B34 00000000 */   nop
-/* 0C8668 7F093B38 0FC2E9CB */  jal   fogGetCurrentEnvironmentp
-/* 0C866C 7F093B3C E7B00024 */   swc1  $f16, 0x24($sp)
-/* 0C8670 7F093B40 C4440024 */  lwc1  $f4, 0x24($v0)
-/* 0C8674 7F093B44 C6260004 */  lwc1  $f6, 4($s1)
-/* 0C8678 7F093B48 C7B00024 */  lwc1  $f16, 0x24($sp)
-/* 0C867C 7F093B4C C6000008 */  lwc1  $f0, 8($s0)
-/* 0C8680 7F093B50 46062201 */  sub.s $f8, $f4, $f6
-/* 0C8684 7F093B54 C60E0000 */  lwc1  $f14, ($s0)
-/* 0C8688 7F093B58 46000282 */  mul.s $f10, $f0, $f0
-/* 0C868C 7F093B5C 00000000 */  nop
-/* 0C8690 7F093B60 460E7102 */  mul.s $f4, $f14, $f14
-/* 0C8694 7F093B64 46104083 */  div.s $f2, $f8, $f16
-/* 0C8698 7F093B68 46045300 */  add.s $f12, $f10, $f4
-/* 0C869C 7F093B6C 0C007DF8 */  jal   sqrtf
-/* 0C86A0 7F093B70 E7A2002C */   swc1  $f2, 0x2c($sp)
-/* 0C86A4 7F093B74 C7A2002C */  lwc1  $f2, 0x2c($sp)
-/* 0C86A8 7F093B78 3C018005 */  lui   $at, %hi(D_80057534)
-/* 0C86AC 7F093B7C C4327534 */  lwc1  $f18, %lo(D_80057534)($at)
-/* 0C86B0 7F093B80 46020302 */  mul.s $f12, $f0, $f2
-/* 0C86B4 7F093B84 C7B00024 */  lwc1  $f16, 0x24($sp)
-/* 0C86B8 7F093B88 460C903C */  c.lt.s $f18, $f12
-/* 0C86BC 7F093B8C 00000000 */  nop
-/* 0C86C0 7F093B90 45020005 */  bc1fl .L7F093BA8
-/* 0C86C4 7F093B94 C6080000 */   lwc1  $f8, ($s0)
-/* 0C86C8 7F093B98 460C9183 */  div.s $f6, $f18, $f12
-/* 0C86CC 7F093B9C 46061082 */  mul.s $f2, $f2, $f6
-/* 0C86D0 7F093BA0 00000000 */  nop
-/* 0C86D4 7F093BA4 C6080000 */  lwc1  $f8, ($s0)
-.L7F093BA8:
-/* 0C86D8 7F093BA8 C6240000 */  lwc1  $f4, ($s1)
-/* 0C86DC 7F093BAC 8FA3003C */  lw    $v1, 0x3c($sp)
-/* 0C86E0 7F093BB0 46024282 */  mul.s $f10, $f8, $f2
-/* 0C86E4 7F093BB4 24020001 */  li    $v0, 1
-/* 0C86E8 7F093BB8 46045180 */  add.s $f6, $f10, $f4
-/* 0C86EC 7F093BBC 46101282 */  mul.s $f10, $f2, $f16
-/* 0C86F0 7F093BC0 E4660000 */  swc1  $f6, ($v1)
-/* 0C86F4 7F093BC4 C6280004 */  lwc1  $f8, 4($s1)
-/* 0C86F8 7F093BC8 460A4100 */  add.s $f4, $f8, $f10
-/* 0C86FC 7F093BCC E4640004 */  swc1  $f4, 4($v1)
-/* 0C8700 7F093BD0 C6060008 */  lwc1  $f6, 8($s0)
-/* 0C8704 7F093BD4 C62A0008 */  lwc1  $f10, 8($s1)
-/* 0C8708 7F093BD8 46023202 */  mul.s $f8, $f6, $f2
-/* 0C870C 7F093BDC 460A4100 */  add.s $f4, $f8, $f10
-/* 0C8710 7F093BE0 10000001 */  b     .L7F093BE8
-/* 0C8714 7F093BE4 E4640008 */   swc1  $f4, 8($v1)
-.L7F093BE8:
-/* 0C8718 7F093BE8 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0C871C 7F093BEC 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0C8720 7F093BF0 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0C8724 7F093BF4 03E00008 */  jr    $ra
-/* 0C8728 7F093BF8 27BD0038 */   addiu $sp, $sp, 0x38
-)
-#endif
 
+    if (sp24 < 0.0f)
+    {
+        sp2c = (fogGetCurrentEnvironmentp()->WaterRepeat - campos->y) / sp24;
+        f12_2 = sqrtf(arg0->f[0] * arg0->f[0] + arg0->f[2] * arg0->f[2]) * sp2c;
+
+        if (f12_2 > 300000)
+        {
+            sp2c *= 300000 / f12_2;
+        }
+
+        arg1->x = campos->x + sp2c * arg0->f[0];
+        arg1->y = campos->y + sp2c * sp24;
+        arg1->z = campos->z + sp2c * arg0->f[2];
+
+        return TRUE;
+    }
+
+    return FALSE;
+}
 
 
 void sub_GAME_7F093BFC(coord3d *arg0, coord3d* arg1, coord3d* out) 
