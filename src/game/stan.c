@@ -3786,13 +3786,6 @@ glabel sub_GAME_7F0B1410
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-// general regalloc
-// almost matching, a single assembly line is wrong:
-// e629c:    mul.s   $f6,$f16,$f4         r e629c:    mul.s   $f6,$f4,$f16
 f32 sub_GAME_7F0B16C4(f32 x1, f32 z1, f32 x2, f32 z2, f32 x3, f32 z3)
 {
     u32 stack[8];
@@ -3800,75 +3793,13 @@ f32 sub_GAME_7F0B16C4(f32 x1, f32 z1, f32 x2, f32 z2, f32 x3, f32 z3)
 
     result = sqrtf((x2 - x1) * (x2 - x1) + (z2 - z1) * (z2 - z1));
 
-    if (result == 0.0f) {
+    if (result == 0.0f)
+    {
         return sqrtf((x3 - x2) * (x3 - x2) + (z3 - z2) * (z3 - z2));
     }
 
-    return ((x3 - x1) * (z2 - z1) + -(x2 - x1) * (z3 - z1)) / result;
+    return ((z2 - z1) * (x3 - x1) + -(x2 - x1) * (z3 - z1)) / result;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B16C4
-/* 0E61F4 7F0B16C4 27BDFFB8 */  addiu $sp, $sp, -0x48
-/* 0E61F8 7F0B16C8 E7AC0048 */  swc1  $f12, 0x48($sp)
-/* 0E61FC 7F0B16CC AFA60050 */  sw    $a2, 0x50($sp)
-/* 0E6200 7F0B16D0 C7A40050 */  lwc1  $f4, 0x50($sp)
-/* 0E6204 7F0B16D4 C7A60048 */  lwc1  $f6, 0x48($sp)
-/* 0E6208 7F0B16D8 E7AE004C */  swc1  $f14, 0x4c($sp)
-/* 0E620C 7F0B16DC AFA70054 */  sw    $a3, 0x54($sp)
-/* 0E6210 7F0B16E0 46062081 */  sub.s $f2, $f4, $f6
-/* 0E6214 7F0B16E4 C7A80054 */  lwc1  $f8, 0x54($sp)
-/* 0E6218 7F0B16E8 C7AA004C */  lwc1  $f10, 0x4c($sp)
-/* 0E621C 7F0B16EC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0E6220 7F0B16F0 46021482 */  mul.s $f18, $f2, $f2
-/* 0E6224 7F0B16F4 460A4401 */  sub.s $f16, $f8, $f10
-/* 0E6228 7F0B16F8 E7A20020 */  swc1  $f2, 0x20($sp)
-/* 0E622C 7F0B16FC 46108102 */  mul.s $f4, $f16, $f16
-/* 0E6230 7F0B1700 E7B0001C */  swc1  $f16, 0x1c($sp)
-/* 0E6234 7F0B1704 0C007DF8 */  jal   sqrtf
-/* 0E6238 7F0B1708 46049300 */   add.s $f12, $f18, $f4
-/* 0E623C 7F0B170C 44803000 */  mtc1  $zero, $f6
-/* 0E6240 7F0B1710 C7A20020 */  lwc1  $f2, 0x20($sp)
-/* 0E6244 7F0B1714 C7B0001C */  lwc1  $f16, 0x1c($sp)
-/* 0E6248 7F0B1718 46060032 */  c.eq.s $f0, $f6
-/* 0E624C 7F0B171C 46000306 */  mov.s $f12, $f0
-/* 0E6250 7F0B1720 C7A80058 */  lwc1  $f8, 0x58($sp)
-/* 0E6254 7F0B1724 C7AA0058 */  lwc1  $f10, 0x58($sp)
-/* 0E6258 7F0B1728 4500000D */  bc1f  .L7F0B1760
-/* 0E625C 7F0B172C C7B20048 */   lwc1  $f18, 0x48($sp)
-/* 0E6260 7F0B1730 C7AA0050 */  lwc1  $f10, 0x50($sp)
-/* 0E6264 7F0B1734 C7B2005C */  lwc1  $f18, 0x5c($sp)
-/* 0E6268 7F0B1738 C7A40054 */  lwc1  $f4, 0x54($sp)
-/* 0E626C 7F0B173C 460A4001 */  sub.s $f0, $f8, $f10
-/* 0E6270 7F0B1740 46049081 */  sub.s $f2, $f18, $f4
-/* 0E6274 7F0B1744 46000182 */  mul.s $f6, $f0, $f0
-/* 0E6278 7F0B1748 00000000 */  nop   
-/* 0E627C 7F0B174C 46021202 */  mul.s $f8, $f2, $f2
-/* 0E6280 7F0B1750 0C007DF8 */  jal   sqrtf
-/* 0E6284 7F0B1754 46083300 */   add.s $f12, $f6, $f8
-/* 0E6288 7F0B1758 1000000B */  b     .L7F0B1788
-/* 0E628C 7F0B175C 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0B1760:
-/* 0E6290 7F0B1760 46125101 */  sub.s $f4, $f10, $f18
-/* 0E6294 7F0B1764 C7AA004C */  lwc1  $f10, 0x4c($sp)
-/* 0E6298 7F0B1768 C7A8005C */  lwc1  $f8, 0x5c($sp)
-/* 0E629C 7F0B176C 46048182 */  mul.s $f6, $f16, $f4
-/* 0E62A0 7F0B1770 460A4481 */  sub.s $f18, $f8, $f10
-/* 0E62A4 7F0B1774 46001107 */  neg.s $f4, $f2
-/* 0E62A8 7F0B1778 46122202 */  mul.s $f8, $f4, $f18
-/* 0E62AC 7F0B177C 46083280 */  add.s $f10, $f6, $f8
-/* 0E62B0 7F0B1780 460C5003 */  div.s $f0, $f10, $f12
-/* 0E62B4 7F0B1784 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0B1788:
-/* 0E62B8 7F0B1788 27BD0048 */  addiu $sp, $sp, 0x48
-/* 0E62BC 7F0B178C 03E00008 */  jr    $ra
-/* 0E62C0 7F0B1790 00000000 */   nop   
-)
-#endif
-
-
 
 
 f32 distBetweenPoints2d(f32 o_x,f32 o_z,f32 p_x,f32 p_z)
