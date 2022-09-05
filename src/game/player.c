@@ -5,6 +5,7 @@
 #include "bondview.h"
 #include "lvl.h"
 #include "fog.h"
+#include "bg.h"
 
 #define SKYABS(val) (val >= 0.0f ? (val) : -(val))
 
@@ -4061,10 +4062,74 @@ def_7F095E0C:
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F097388(void) {
+// matches, but uses labels from sub_GAME_7F094488
+void sub_GAME_7F097388(SkyRelated18 *arg0, Mtxf *arg1, u16 arg2, f32 arg3, f32 arg4, SkyRelated38 *arg5)
+{
+    f32 sp68[4];
+    f32 sp64;
+    f32 sp60;
+    f32 f22;
+    f32 f0;
+    f32 sp48[4];
+    f32 sp38[4];
+    f32 mult;
 
+    mult = arg2 / 65536.0f;
+
+    sp68[0] = (arg0->unk00 * arg1->m[0][0] + arg0->unk04 * arg1->m[1][0] + arg0->unk08 * arg1->m[2][0]) + arg1->m[3][0];
+    sp68[1] = (arg0->unk00 * arg1->m[0][1] + arg0->unk04 * arg1->m[1][1] + arg0->unk08 * arg1->m[2][1]) + arg1->m[3][1];
+    sp68[2] = (arg0->unk00 * arg1->m[0][2] + arg0->unk04 * arg1->m[1][2] + arg0->unk08 * arg1->m[2][2]) + arg1->m[3][2];
+    sp68[3] = (arg0->unk00 * arg1->m[0][3] + arg0->unk04 * arg1->m[1][3] + arg0->unk08 * arg1->m[2][3]) + arg1->m[3][3];
+
+    sp60 = arg0->unk0c * (arg3 / 65536.0f);
+    sp64 = arg0->unk10 * (arg4 / 65536.0f);
+
+    if (sp68[3] == 0.0f)
+    {
+        f22 = 32767.0f;
+    }
+    else
+    {
+        f22 = 1.0f / (sp68[3] * mult);
+    }
+
+    f0 = f22;
+    if (f0 < 0.0f) { f0 = 32767.0f; }
+
+    sp48[0] = sp68[0] * f0 * mult;
+    sp48[1] = sp68[1] * f0 * mult;
+    sp48[2] = sp68[2] * f0 * mult;
+    sp48[3] = sp68[3] * f0 * mult;
+
+    sp38[0] = sp48[0] * (getPlayer_c_screenwidth() * 2) + (getPlayer_c_screenwidth() * 2 + getPlayer_c_screenleft() * 4);
+    sp38[1] = -sp48[1] * (getPlayer_c_screenheight() * 2) + (getPlayer_c_screenheight() * 2 + getPlayer_c_screentop() * 4);
+
+    sp38[2] = sp48[2] * 511.0f + 511.0f;
+    sp38[3] = sp48[3] * 0 + 0;
+
+    sp38[0] = sub_GAME_7F093C48(sp38[0], -4090.0f, 4090.0f);
+    sp38[1] = sub_GAME_7F093C48(sp38[1], -4090.0f, 4090.0f);
+    sp38[2] = sub_GAME_7F093C48(sp38[2], 0.0f, 32767.0f);
+    sp38[3] = sub_GAME_7F093C48(sp38[3], 0.0f, 32767.0f);
+
+    arg5->unk00 = sp68[0];
+    arg5->unk04 = sp68[1];
+    arg5->unk08 = sp68[2];
+    arg5->unk0c = sp68[3];
+    arg5->unk20 = sp60;
+    arg5->unk24 = sp64;
+    arg5->unk28 = sp38[0];
+    arg5->unk2c = sp38[1] - fogGetCurrentEnvironmentp()->WaterConcavity * 4.0f;
+    arg5->unk30 = sp38[2];
+    arg5->unk34 = f22;
+
+    arg5->r = arg0->r;
+    arg5->g = arg0->g;
+    arg5->b = arg0->b;
+    arg5->a = arg0->a;
 }
 #else
+void sub_GAME_7F097388(SkyRelated18 *arg0, Mtxf *arg1, u16 arg2, f32 arg3, f32 arg4, SkyRelated38 *arg5);
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F097388
