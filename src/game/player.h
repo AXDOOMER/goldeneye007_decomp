@@ -106,7 +106,7 @@ void set_cur_player(s32 playernum);
 s32 getPlayerCount(void);
 void set_cur_player_screen_size(u32 width, u32 height);
 void set_cur_player_viewport_size(u32 ulx, u32 uly);
-void store_stagenum_to_copyof_stagenum(s32 stagenum);
+void skySetStageNum(s32 stagenum);
 void sub_GAME_7F094438(void);
 Gfx * skyRender(Gfx *arg0);
 void sub_GAME_7F097388(SkyRelated18 *arg0, Mtxf *arg1, u16 arg2, f32 arg3, f32 arg4, SkyRelated38 *arg5);

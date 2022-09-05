@@ -13,7 +13,7 @@
 #define SKYABS(val) (val >= 0.0f ? (val) : -(val))
 
 // bss
-s32 copyof_stagenum;
+s32 g_SkyStageNum;
 
 s32 dword_CODE_bss_80079E94;
 Mtxf dword_CODE_bss_80079E98;
@@ -151,27 +151,29 @@ void sub_GAME_7F093BFC(coord3d *arg0, coord3d* arg1, coord3d* out)
     out->z = ((arg1->z - arg0->z) * temp_f0) + arg0->z;
 }
 
-f32 sub_GAME_7F093C48(f32 a, f32 b, f32 c)
+f32 skyClamp(f32 a, f32 b, f32 c)
 {
     if (a < b)
     {
         return b;
     }
+
     if (c < a)
     {
         return c;
     }
+
     return a;
 }
 
 
-
-f32 addpoint5tofloat(f32 arg0) {
+f32 skyRound(f32 arg0)
+{
     return (f32) (s32) (arg0 + 0.5f);
 }
 
 
-void sub_GAME_7F093CB0(SkyRelated18 *arg0, f32 arg1)
+void skyChooseCloudVtxColour(SkyRelated18 *arg0, f32 arg1)
 {
     f32 r = fogGetCurrentEnvironmentp()->Red;
     f32 g = fogGetCurrentEnvironmentp()->Green;
@@ -221,8 +223,8 @@ u32 sub_GAME_7F094298(f32 arg0)
 }
 
 
-void store_stagenum_to_copyof_stagenum(s32 stagenum) {
-  copyof_stagenum = stagenum;
+void skySetStageNum(s32 stagenum) {
+  g_SkyStageNum = stagenum;
 }
 
 
@@ -800,8 +802,8 @@ Gfx *skyRender(Gfx *gdl)
         {
             sub_GAME_7F097388(&sp43c[i], &sp38c, 130, 65535.0f, 65535.0f, &sp274[i]);
 
-            sp274[i].unk28 = sub_GAME_7F093C48(sp274[i].unk28, getPlayer_c_screenleft() * 4.0f, (getPlayer_c_screenleft() + getPlayer_c_screenwidth()) * 4.0f - 1.0f);
-            sp274[i].unk2c = sub_GAME_7F093C48(sp274[i].unk2c, getPlayer_c_screentop() * 4.0f, (getPlayer_c_screentop() + getPlayer_c_screenheight()) * 4.0f - 1.0f);
+            sp274[i].unk28 = skyClamp(sp274[i].unk28, getPlayer_c_screenleft() * 4.0f, (getPlayer_c_screenleft() + getPlayer_c_screenwidth()) * 4.0f - 1.0f);
+            sp274[i].unk2c = skyClamp(sp274[i].unk2c, getPlayer_c_screentop() * 4.0f, (getPlayer_c_screentop() + getPlayer_c_screenheight()) * 4.0f - 1.0f);
 
             if (sp274[i].unk2c > getPlayer_c_screentop() * 4.0f + 4.0f
                     && sp274[i].unk2c < (getPlayer_c_screentop() + getPlayer_c_screenheight()) * 4.0f - 4.0f)
@@ -897,10 +899,10 @@ Gfx *skyRender(Gfx *gdl)
             sp4b4[3].unk0c = sp620.f[0] * 0.1f;
             sp4b4[3].unk10 = sp620.f[2] * 0.1f + g_SkyCloudOffset;
 
-            sub_GAME_7F093CB0(&sp4b4[0], sp58c);
-            sub_GAME_7F093CB0(&sp4b4[1], sp588);
-            sub_GAME_7F093CB0(&sp4b4[2], sp584);
-            sub_GAME_7F093CB0(&sp4b4[3], sp580);
+            skyChooseCloudVtxColour(&sp4b4[0], sp58c);
+            skyChooseCloudVtxColour(&sp4b4[1], sp588);
+            skyChooseCloudVtxColour(&sp4b4[2], sp584);
+            skyChooseCloudVtxColour(&sp4b4[3], sp580);
             break;
 
         case 12:
@@ -926,10 +928,10 @@ Gfx *skyRender(Gfx *gdl)
             sp4b4[3].unk0c = sp5f0.f[0] * 0.1f;
             sp4b4[3].unk10 = sp5f0.f[2] * 0.1f + g_SkyCloudOffset;
 
-            sub_GAME_7F093CB0(&sp4b4[0], sp58c);
-            sub_GAME_7F093CB0(&sp4b4[1], sp588);
-            sub_GAME_7F093CB0(&sp4b4[2], sp574);
-            sub_GAME_7F093CB0(&sp4b4[3], sp570);
+            skyChooseCloudVtxColour(&sp4b4[0], sp58c);
+            skyChooseCloudVtxColour(&sp4b4[1], sp588);
+            skyChooseCloudVtxColour(&sp4b4[2], sp574);
+            skyChooseCloudVtxColour(&sp4b4[3], sp570);
             break;
 
         case 3:
@@ -955,10 +957,10 @@ Gfx *skyRender(Gfx *gdl)
             sp4b4[3].unk0c = sp5fc.f[0] * 0.1f;
             sp4b4[3].unk10 = sp5fc.f[2] * 0.1f + g_SkyCloudOffset;
 
-            sub_GAME_7F093CB0(&sp4b4[0], sp580);
-            sub_GAME_7F093CB0(&sp4b4[1], sp584);
-            sub_GAME_7F093CB0(&sp4b4[2], sp570);
-            sub_GAME_7F093CB0(&sp4b4[3], sp574);
+            skyChooseCloudVtxColour(&sp4b4[0], sp580);
+            skyChooseCloudVtxColour(&sp4b4[1], sp584);
+            skyChooseCloudVtxColour(&sp4b4[2], sp570);
+            skyChooseCloudVtxColour(&sp4b4[3], sp574);
             break;
 
         case 5:
@@ -984,10 +986,10 @@ Gfx *skyRender(Gfx *gdl)
             sp4b4[3].unk0c = sp608.f[0] * 0.1f;
             sp4b4[3].unk10 = sp608.f[2] * 0.1f + g_SkyCloudOffset;
 
-            sub_GAME_7F093CB0(&sp4b4[0], sp588);
-            sub_GAME_7F093CB0(&sp4b4[1], sp580);
-            sub_GAME_7F093CB0(&sp4b4[2], sp57c);
-            sub_GAME_7F093CB0(&sp4b4[3], sp578);
+            skyChooseCloudVtxColour(&sp4b4[0], sp588);
+            skyChooseCloudVtxColour(&sp4b4[1], sp580);
+            skyChooseCloudVtxColour(&sp4b4[2], sp57c);
+            skyChooseCloudVtxColour(&sp4b4[3], sp578);
             break;
 
         case 10:
@@ -1013,10 +1015,10 @@ Gfx *skyRender(Gfx *gdl)
             sp4b4[3].unk0c = sp614.f[0] * 0.1f;
             sp4b4[3].unk10 = sp614.f[2] * 0.1f + g_SkyCloudOffset;
 
-            sub_GAME_7F093CB0(&sp4b4[0], sp584);
-            sub_GAME_7F093CB0(&sp4b4[1], sp58c);
-            sub_GAME_7F093CB0(&sp4b4[2], sp578);
-            sub_GAME_7F093CB0(&sp4b4[3], sp57c);
+            skyChooseCloudVtxColour(&sp4b4[0], sp584);
+            skyChooseCloudVtxColour(&sp4b4[1], sp58c);
+            skyChooseCloudVtxColour(&sp4b4[2], sp578);
+            skyChooseCloudVtxColour(&sp4b4[3], sp57c);
             break;
 
         case 1:
@@ -1037,9 +1039,9 @@ Gfx *skyRender(Gfx *gdl)
             sp4b4[2].unk0c = sp5f0.f[0] * 0.1f;
             sp4b4[2].unk10 = sp5f0.f[2] * 0.1f + g_SkyCloudOffset;
 
-            sub_GAME_7F093CB0(&sp4b4[0], sp580);
-            sub_GAME_7F093CB0(&sp4b4[1], sp578);
-            sub_GAME_7F093CB0(&sp4b4[2], sp570);
+            skyChooseCloudVtxColour(&sp4b4[0], sp580);
+            skyChooseCloudVtxColour(&sp4b4[1], sp578);
+            skyChooseCloudVtxColour(&sp4b4[2], sp570);
             break;
 
         case 2:
@@ -1060,9 +1062,9 @@ Gfx *skyRender(Gfx *gdl)
             sp4b4[2].unk0c = sp608.f[0] * 0.1f;
             sp4b4[2].unk10 = sp608.f[2] * 0.1f + g_SkyCloudOffset;
 
-            sub_GAME_7F093CB0(&sp4b4[0], sp584);
-            sub_GAME_7F093CB0(&sp4b4[1], sp574);
-            sub_GAME_7F093CB0(&sp4b4[2], sp578);
+            skyChooseCloudVtxColour(&sp4b4[0], sp584);
+            skyChooseCloudVtxColour(&sp4b4[1], sp574);
+            skyChooseCloudVtxColour(&sp4b4[2], sp578);
             break;
 
         case 4:
@@ -1083,9 +1085,9 @@ Gfx *skyRender(Gfx *gdl)
             sp4b4[2].unk0c = sp614.f[0] * 0.1f;
             sp4b4[2].unk10 = sp614.f[2] * 0.1f + g_SkyCloudOffset;
 
-            sub_GAME_7F093CB0(&sp4b4[0], sp588);
-            sub_GAME_7F093CB0(&sp4b4[1], sp570);
-            sub_GAME_7F093CB0(&sp4b4[2], sp57c);
+            skyChooseCloudVtxColour(&sp4b4[0], sp588);
+            skyChooseCloudVtxColour(&sp4b4[1], sp570);
+            skyChooseCloudVtxColour(&sp4b4[2], sp57c);
             break;
 
         case 8:
@@ -1106,9 +1108,9 @@ Gfx *skyRender(Gfx *gdl)
             sp4b4[2].unk0c = sp5fc.f[0] * 0.1f;
             sp4b4[2].unk10 = sp5fc.f[2] * 0.1f + g_SkyCloudOffset;
 
-            sub_GAME_7F093CB0(&sp4b4[0], sp58c);
-            sub_GAME_7F093CB0(&sp4b4[1], sp57c);
-            sub_GAME_7F093CB0(&sp4b4[2], sp574);
+            skyChooseCloudVtxColour(&sp4b4[0], sp58c);
+            skyChooseCloudVtxColour(&sp4b4[1], sp57c);
+            skyChooseCloudVtxColour(&sp4b4[2], sp574);
             break;
 
         case 14:
@@ -1139,11 +1141,11 @@ Gfx *skyRender(Gfx *gdl)
             sp4b4[4].unk0c = sp608.f[0] * 0.1f;
             sp4b4[4].unk10 = sp608.f[2] * 0.1f + g_SkyCloudOffset;
 
-            sub_GAME_7F093CB0(&sp4b4[0], sp584);
-            sub_GAME_7F093CB0(&sp4b4[1], sp58c);
-            sub_GAME_7F093CB0(&sp4b4[2], sp588);
-            sub_GAME_7F093CB0(&sp4b4[3], sp570);
-            sub_GAME_7F093CB0(&sp4b4[4], sp578);
+            skyChooseCloudVtxColour(&sp4b4[0], sp584);
+            skyChooseCloudVtxColour(&sp4b4[1], sp58c);
+            skyChooseCloudVtxColour(&sp4b4[2], sp588);
+            skyChooseCloudVtxColour(&sp4b4[3], sp570);
+            skyChooseCloudVtxColour(&sp4b4[4], sp578);
             break;
 
         case 13:
@@ -1174,11 +1176,11 @@ Gfx *skyRender(Gfx *gdl)
             sp4b4[4].unk0c = sp5fc.f[0] * 0.1f;
             sp4b4[4].unk10 = sp5fc.f[2] * 0.1f + g_SkyCloudOffset;
 
-            sub_GAME_7F093CB0(&sp4b4[0], sp58c);
-            sub_GAME_7F093CB0(&sp4b4[1], sp588);
-            sub_GAME_7F093CB0(&sp4b4[2], sp580);
-            sub_GAME_7F093CB0(&sp4b4[3], sp578);
-            sub_GAME_7F093CB0(&sp4b4[4], sp574);
+            skyChooseCloudVtxColour(&sp4b4[0], sp58c);
+            skyChooseCloudVtxColour(&sp4b4[1], sp588);
+            skyChooseCloudVtxColour(&sp4b4[2], sp580);
+            skyChooseCloudVtxColour(&sp4b4[3], sp578);
+            skyChooseCloudVtxColour(&sp4b4[4], sp574);
             break;
 
         case 11:
@@ -1209,11 +1211,11 @@ Gfx *skyRender(Gfx *gdl)
             sp4b4[4].unk0c = sp5f0.f[0] * 0.1f;
             sp4b4[4].unk10 = sp5f0.f[2] * 0.1f + g_SkyCloudOffset;
 
-            sub_GAME_7F093CB0(&sp4b4[0], sp580);
-            sub_GAME_7F093CB0(&sp4b4[1], sp584);
-            sub_GAME_7F093CB0(&sp4b4[2], sp58c);
-            sub_GAME_7F093CB0(&sp4b4[3], sp57c);
-            sub_GAME_7F093CB0(&sp4b4[4], sp570);
+            skyChooseCloudVtxColour(&sp4b4[0], sp580);
+            skyChooseCloudVtxColour(&sp4b4[1], sp584);
+            skyChooseCloudVtxColour(&sp4b4[2], sp58c);
+            skyChooseCloudVtxColour(&sp4b4[3], sp57c);
+            skyChooseCloudVtxColour(&sp4b4[4], sp570);
             break;
 
         case 7:
@@ -1244,11 +1246,11 @@ Gfx *skyRender(Gfx *gdl)
             sp4b4[4].unk0c = sp614.f[0] * 0.1f;
             sp4b4[4].unk10 = sp614.f[2] * 0.1f + g_SkyCloudOffset;
 
-            sub_GAME_7F093CB0(&sp4b4[0], sp588);
-            sub_GAME_7F093CB0(&sp4b4[1], sp580);
-            sub_GAME_7F093CB0(&sp4b4[2], sp584);
-            sub_GAME_7F093CB0(&sp4b4[3], sp574);
-            sub_GAME_7F093CB0(&sp4b4[4], sp57c);
+            skyChooseCloudVtxColour(&sp4b4[0], sp588);
+            skyChooseCloudVtxColour(&sp4b4[1], sp580);
+            skyChooseCloudVtxColour(&sp4b4[2], sp584);
+            skyChooseCloudVtxColour(&sp4b4[3], sp574);
+            skyChooseCloudVtxColour(&sp4b4[4], sp57c);
             break;
 
         default:
@@ -1281,8 +1283,8 @@ Gfx *skyRender(Gfx *gdl)
         {
             sub_GAME_7F097388(&sp4b4[i], &sp1ac, 130, 65535.0f, 65535.0f, &sp94[i]);
 
-            sp94[i].unk28 = sub_GAME_7F093C48(sp94[i].unk28, getPlayer_c_screenleft() * 4.0f, (getPlayer_c_screenleft() + getPlayer_c_screenwidth()) * 4.0f - 1.0f);
-            sp94[i].unk2c = sub_GAME_7F093C48(sp94[i].unk2c, getPlayer_c_screentop() * 4.0f, (getPlayer_c_screentop() + getPlayer_c_screenheight()) * 4.0f - 1.0f);
+            sp94[i].unk28 = skyClamp(sp94[i].unk28, getPlayer_c_screenleft() * 4.0f, (getPlayer_c_screenleft() + getPlayer_c_screenwidth()) * 4.0f - 1.0f);
+            sp94[i].unk2c = skyClamp(sp94[i].unk2c, getPlayer_c_screentop() * 4.0f, (getPlayer_c_screentop() + getPlayer_c_screenheight()) * 4.0f - 1.0f);
         }
 
         if (s1 == 4)
@@ -1389,10 +1391,10 @@ void sub_GAME_7F097388(SkyRelated18 *arg0, Mtxf *arg1, u16 arg2, f32 arg3, f32 a
     sp38[2] = sp48[2] * 511.0f + 511.0f;
     sp38[3] = sp48[3] * 0 + 0;
 
-    sp38[0] = sub_GAME_7F093C48(sp38[0], -4090.0f, 4090.0f);
-    sp38[1] = sub_GAME_7F093C48(sp38[1], -4090.0f, 4090.0f);
-    sp38[2] = sub_GAME_7F093C48(sp38[2], 0.0f, 32767.0f);
-    sp38[3] = sub_GAME_7F093C48(sp38[3], 0.0f, 32767.0f);
+    sp38[0] = skyClamp(sp38[0], -4090.0f, 4090.0f);
+    sp38[1] = skyClamp(sp38[1], -4090.0f, 4090.0f);
+    sp38[2] = skyClamp(sp38[2], 0.0f, 32767.0f);
+    sp38[3] = skyClamp(sp38[3], 0.0f, 32767.0f);
 
     arg5->unk00 = sp68[0];
     arg5->unk04 = sp68[1];
@@ -1659,14 +1661,14 @@ Gfx *sub_GAME_7F097818(Gfx *gdl, SkyRelated38 *arg1, SkyRelated38 *arg2, SkyRela
     sp38c[0] = sp474 / sp470;
     sp394[0] = sp46c / sp468;
 
-    sp384[0] = sub_GAME_7F093C48(sp384[0], -1878.0f, 1877.0f);
-    sp38c[0] = sub_GAME_7F093C48(sp38c[0], -1878.0f, 1877.0f);
-    sp394[0] = sub_GAME_7F093C48(sp394[0], -1878.0f, 1877.0f);
+    sp384[0] = skyClamp(sp384[0], -1878.0f, 1877.0f);
+    sp38c[0] = skyClamp(sp38c[0], -1878.0f, 1877.0f);
+    sp394[0] = skyClamp(sp394[0], -1878.0f, 1877.0f);
 
     f2 = (sp484->unk2c * 0.25f);
     sp37c = f2 - (s32) f2;
-    sp408 = sp428[0] - addpoint5tofloat(sp38c[0] * 8192.0f) * (1.0f / 8192.0f) * sp37c;
-    sp410 = sp430[0] - addpoint5tofloat(sp394[0] * 8192.0f) * (1.0f / 8192.0f) * sp37c;
+    sp408 = sp428[0] - skyRound(sp38c[0] * 8192.0f) * (1.0f / 8192.0f) * sp37c;
+    sp410 = sp430[0] - skyRound(sp394[0] * 8192.0f) * (1.0f / 8192.0f) * sp37c;
 
     gImmp1(gdl++, G_RDPHALF_1, (textured ? (G_TRI_SHADE_TXTR << 24) : (G_TRI_FILL << 24))
             | (sp444 < 0.0f ? 0x00800000 : 0)
@@ -2158,9 +2160,9 @@ Gfx *sub_GAME_7F098A2C(Gfx *gdl, SkyRelated38 *arg1, SkyRelated38 *arg2, SkyRela
     sp3d0[0] = sp4b8 / sp4b4;
     sp3d8[0] = sp4b0 / sp4ac;
 
-    sp3c8[0] = sub_GAME_7F093C48(sp3c8[0], -1878.0f, 1877.0f);
-    sp3d0[0] = sub_GAME_7F093C48(sp3d0[0], -1878.0f, 1877.0f);
-    sp3d8[0] = sub_GAME_7F093C48(sp3d8[0], -1878.0f, 1877.0f);
+    sp3c8[0] = skyClamp(sp3c8[0], -1878.0f, 1877.0f);
+    sp3d0[0] = skyClamp(sp3d0[0], -1878.0f, 1877.0f);
+    sp3d8[0] = skyClamp(sp3d8[0], -1878.0f, 1877.0f);
 
     sp44c[0] = sp46c[0];
     sp454[0] = sp474[0];
