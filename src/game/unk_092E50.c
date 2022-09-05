@@ -48,7 +48,8 @@ Gfx MipMap2C_Something2_Setup[] = {
 //End Dl means this gfx list cannot go any further. perhaps below is a vtx array?
 
 u32 D_8003FD90 = 0;
-f32 D_8003FD94[] = {0, 0, 0};
+f32 g_SkyCloudOffset = 0;
+f32 D_8003FD98[] = { 0, 0 };
 
 // TODO: D_8003FDA0 is actually a `struct hand`
 u32 D_8003FDA0[] = {
@@ -962,10 +963,14 @@ glabel sub_GAME_7F092E50
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F09343C(void) {
+// unsure of arguments
+Gfx* sub_GAME_7F09343C(Gfx*, s32) {
 
 }
 #else
+// unsure of arguments
+Gfx* sub_GAME_7F09343C(Gfx*, s32);
+
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F09343C

@@ -3202,4 +3202,5 @@ s32 bondviewGetRandomSpawnPadIndex(void);
 void change_player_pos_to_target(struct collision434* arg0, struct coord3d *arg1, struct StandTile *arg2);
 void sub_GAME_7F089718(f32);
 void sub_GAME_7F08A900(void);
+Mtxf *currentPlayerGetProjectionMatrixF(void);
 #endif

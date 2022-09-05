@@ -436,7 +436,7 @@ glabel generate_microcode_for_othermode_setting
 
 
 #ifdef NONMATCHING
-void likely_generate_DL_for_image_declaration(void) {
+void likely_generate_DL_for_image_declaration(Gfx**, struct sImageTableEntry*, s32, s32, s32) {
 
 }
 #else

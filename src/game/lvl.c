@@ -1957,7 +1957,7 @@ Gfx* lvlRender(Gfx* DL)
             }
 
             DL = viSetupScreensForNumPlayers(DL);
-            DL = sub_GAME_7F094488(DL);
+            DL = skyRender(DL);
             sub_GAME_7F0B4884();
             determing_type_of_object_and_detection();
             chraiUpdateOnscreenPropCount();
