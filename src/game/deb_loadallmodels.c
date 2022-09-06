@@ -4,6 +4,9 @@
 #include "chr.h"
 #include "chr_b.h"
 #include "deb_loadallmodels.h"
+#include "loadobjectmodel.h"
+#include "aicommands2.h"
+
 //i belong in a header, probably to another file
 
 
@@ -180,161 +183,58 @@ glabel alloc_false_GUARDdata_to_exec_global_action
 )
 #endif
 
-#ifdef NONMATCHING
+
 void debug_object_load_all_models(void)
 {
-    for i = 0 to sizeof(g_currentsetup.ailist)/4)
-    switch (g_currentSetup.ailist[i])
-    case AI_DROPGUNTYPE:
-#    ifdef DEBUG
-    osSyncPrintf("loaded dropguntype obj = % d\n", obj);
-#    endif
-    case AI_CREATECHRHEADATCHR:
-#    ifdef DEBUG
-        osSyncPrintf("loaded createchrheadatchr obj=%d\n", obj);
-        osSyncPrintf("loaded createchrheadatchr obj=%d (head)\n", obj);
-#    endif
-    case AI_CREATECHRHEAD:
-#    ifdef DEBUG
-        osSyncPrintf("loaded createchrhead obj=%d (body)\n", obj);
-        osSyncPrintf("loaded createchrhead obj=%d (head)\n", obj);
-#    endif
-    case AI_CREATEWEAPONHELDCHR:
-#    ifdef DEBUG
-        osSyncPrintf("loaded createweaponheldchr obj=%d\n", obj);
-        osSyncPrintf("loaded createweaponheldchr obj=%d (ammo)\n", obj);
-#    endif
-    case AI_CREATEHATONCHR:
-#    ifdef DEBUG
-        osSyncPrintf("loaded createhatonchr obj=%d\n", obj);
-#    endif
+    u8 *cmd = &g_CurrentSetup.ailists[0].ailist->cmd;
+    s32 i = 0;
+    u16 id;
+
+    if (!cmd) { return; }
+
+    do
+    {
+        while (TRUE)
+        {
+            if (cmd[0] == AI_EndList)
+            {
+                break;
+            }
+
+            switch (cmd[0])
+            {
+                case AI_TRYDroppingItem:
+                    id = cmd[2] | (cmd[1] << 8);
+                    if (modelLoad(id));
+                    break;
+
+                case AI_TRYSpawningChrAtPad:
+                    load_body_head_if_not_loaded(cmd[1]);
+                    if ((s8)cmd[2] >= 0 && load_body_head_if_not_loaded((s8)cmd[2]));
+                    break;
+
+                case AI_TRYSpawningChrNextToChr:
+                    load_body_head_if_not_loaded(cmd[1]);
+                    if ((s8)cmd[2] >= 0 && load_body_head_if_not_loaded((s8)cmd[2]));
+                    break;
+
+                case AI_TRYGiveMeItem:
+                    modelLoad(cmd[2] | (cmd[1] << 8));
+                    if (weaponLoadProjectileModels(cmd[3]));
+                    break;
+
+                case AI_TRYGiveMeHat:
+                    modelLoad(cmd[2] | (cmd[1] << 8));
+                    break;
+            }
+
+            cmd += chraiitemsize(cmd, 0);
+        }
+
+        i++;
+        cmd = &g_CurrentSetup.ailists[i].ailist->cmd;
+    } while (cmd);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel debug_object_load_all_models
-/* 035D88 7F001258 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 035D8C 7F00125C 3C0E8007 */  lui   $t6, %hi(g_CurrentSetup+0x14) 
-/* 035D90 7F001260 8DCE5D14 */  lw    $t6, %lo(g_CurrentSetup+0x14)($t6)
-/* 035D94 7F001264 AFBF0034 */  sw    $ra, 0x34($sp)
-/* 035D98 7F001268 AFB70030 */  sw    $s7, 0x30($sp)
-/* 035D9C 7F00126C AFB6002C */  sw    $s6, 0x2c($sp)
-/* 035DA0 7F001270 AFB50028 */  sw    $s5, 0x28($sp)
-/* 035DA4 7F001274 AFB40024 */  sw    $s4, 0x24($sp)
-/* 035DA8 7F001278 AFB30020 */  sw    $s3, 0x20($sp)
-/* 035DAC 7F00127C AFB2001C */  sw    $s2, 0x1c($sp)
-/* 035DB0 7F001280 AFB10018 */  sw    $s1, 0x18($sp)
-/* 035DB4 7F001284 AFB00014 */  sw    $s0, 0x14($sp)
-/* 035DB8 7F001288 8DD00000 */  lw    $s0, ($t6)
-/* 035DBC 7F00128C 241500BF */  li    $s5, 191
-/* 035DC0 7F001290 241600C0 */  li    $s6, 192
-/* 035DC4 7F001294 12000052 */  beqz  $s0, .L7F0013E0
-/* 035DC8 7F001298 0000B825 */   move  $s7, $zero
-/* 035DCC 7F00129C 241400BE */  li    $s4, 190
-/* 035DD0 7F0012A0 241300BD */  li    $s3, 189
-/* 035DD4 7F0012A4 2412001B */  li    $s2, 27
-/* 035DD8 7F0012A8 24110004 */  li    $s1, 4
-.L7F0012AC:
-/* 035DDC 7F0012AC 92030000 */  lbu   $v1, ($s0)
-.L7F0012B0:
-/* 035DE0 7F0012B0 3C0F8007 */  lui   $t7, %hi(g_CurrentSetup+0x14) 
-/* 035DE4 7F0012B4 16230004 */  bne   $s1, $v1, .L7F0012C8
-/* 035DE8 7F0012B8 00000000 */   nop   
-/* 035DEC 7F0012BC 8DEF5D14 */  lw    $t7, %lo(g_CurrentSetup+0x14)($t7)
-/* 035DF0 7F0012C0 10000042 */  b     .L7F0013CC
-/* 035DF4 7F0012C4 01F71021 */   addu  $v0, $t7, $s7
-.L7F0012C8:
-/* 035DF8 7F0012C8 5072000C */  beql  $v1, $s2, .L7F0012FC
-/* 035DFC 7F0012CC 92180001 */   lbu   $t8, 1($s0)
-/* 035E00 7F0012D0 10730013 */  beq   $v1, $s3, .L7F001320
-/* 035E04 7F0012D4 00000000 */   nop   
-/* 035E08 7F0012D8 1074001C */  beq   $v1, $s4, .L7F00134C
-/* 035E0C 7F0012DC 00000000 */   nop   
-/* 035E10 7F0012E0 50750026 */  beql  $v1, $s5, .L7F00137C
-/* 035E14 7F0012E4 920A0001 */   lbu   $t2, 1($s0)
-/* 035E18 7F0012E8 5076002F */  beql  $v1, $s6, .L7F0013A8
-/* 035E1C 7F0012EC 920D0001 */   lbu   $t5, 1($s0)
-/* 035E20 7F0012F0 10000032 */  b     .L7F0013BC
-/* 035E24 7F0012F4 02002025 */   move  $a0, $s0
-/* 035E28 7F0012F8 92180001 */  lbu   $t8, 1($s0)
-.L7F0012FC:
-/* 035E2C 7F0012FC 92080002 */  lbu   $t0, 2($s0)
-/* 035E30 7F001300 0018CA00 */  sll   $t9, $t8, 8
-/* 035E34 7F001304 03281025 */  or    $v0, $t9, $t0
-/* 035E38 7F001308 0FC15B0E */  jal   modelLoad
-/* 035E3C 7F00130C 3044FFFF */   andi  $a0, $v0, 0xffff
-/* 035E40 7F001310 5040002A */  beql  $v0, $zero, .L7F0013BC
-/* 035E44 7F001314 02002025 */   move  $a0, $s0
-/* 035E48 7F001318 10000028 */  b     .L7F0013BC
-/* 035E4C 7F00131C 02002025 */   move  $a0, $s0
-.L7F001320:
-/* 035E50 7F001320 0FC08CA4 */  jal   load_body_head_if_not_loaded
-/* 035E54 7F001324 92040001 */   lbu   $a0, 1($s0)
-/* 035E58 7F001328 82040002 */  lb    $a0, 2($s0)
-/* 035E5C 7F00132C 04820023 */  bltzl $a0, .L7F0013BC
-/* 035E60 7F001330 02002025 */   move  $a0, $s0
-/* 035E64 7F001334 0FC08CA4 */  jal   load_body_head_if_not_loaded
-/* 035E68 7F001338 00000000 */   nop   
-/* 035E6C 7F00133C 5040001F */  beql  $v0, $zero, .L7F0013BC
-/* 035E70 7F001340 02002025 */   move  $a0, $s0
-/* 035E74 7F001344 1000001D */  b     .L7F0013BC
-/* 035E78 7F001348 02002025 */   move  $a0, $s0
-.L7F00134C:
-/* 035E7C 7F00134C 0FC08CA4 */  jal   load_body_head_if_not_loaded
-/* 035E80 7F001350 92040001 */   lbu   $a0, 1($s0)
-/* 035E84 7F001354 82040002 */  lb    $a0, 2($s0)
-/* 035E88 7F001358 04820018 */  bltzl $a0, .L7F0013BC
-/* 035E8C 7F00135C 02002025 */   move  $a0, $s0
-/* 035E90 7F001360 0FC08CA4 */  jal   load_body_head_if_not_loaded
-/* 035E94 7F001364 00000000 */   nop   
-/* 035E98 7F001368 50400014 */  beql  $v0, $zero, .L7F0013BC
-/* 035E9C 7F00136C 02002025 */   move  $a0, $s0
-/* 035EA0 7F001370 10000012 */  b     .L7F0013BC
-/* 035EA4 7F001374 02002025 */   move  $a0, $s0
-/* 035EA8 7F001378 920A0001 */  lbu   $t2, 1($s0)
-.L7F00137C:
-/* 035EAC 7F00137C 920C0002 */  lbu   $t4, 2($s0)
-/* 035EB0 7F001380 000A5A00 */  sll   $t3, $t2, 8
-/* 035EB4 7F001384 0FC15B0E */  jal   modelLoad
-/* 035EB8 7F001388 016C2025 */   or    $a0, $t3, $t4
-/* 035EBC 7F00138C 0FC015C4 */  jal   weaponLoadProjectileModels
-/* 035EC0 7F001390 92040003 */   lbu   $a0, 3($s0)
-/* 035EC4 7F001394 50400009 */  beql  $v0, $zero, .L7F0013BC
-/* 035EC8 7F001398 02002025 */   move  $a0, $s0
-/* 035ECC 7F00139C 10000007 */  b     .L7F0013BC
-/* 035ED0 7F0013A0 02002025 */   move  $a0, $s0
-/* 035ED4 7F0013A4 920D0001 */  lbu   $t5, 1($s0)
-.L7F0013A8:
-/* 035ED8 7F0013A8 920F0002 */  lbu   $t7, 2($s0)
-/* 035EDC 7F0013AC 000D7200 */  sll   $t6, $t5, 8
-/* 035EE0 7F0013B0 0FC15B0E */  jal   modelLoad
-/* 035EE4 7F0013B4 01CF2025 */   or    $a0, $t6, $t7
-/* 035EE8 7F0013B8 02002025 */  move  $a0, $s0
-.L7F0013BC:
-/* 035EEC 7F0013BC 0FC0D27F */  jal   chraiitemsize
-/* 035EF0 7F0013C0 00002825 */   move  $a1, $zero
-/* 035EF4 7F0013C4 1000FFB9 */  b     .L7F0012AC
-/* 035EF8 7F0013C8 02028021 */   addu  $s0, $s0, $v0
-.L7F0013CC:
-/* 035EFC 7F0013CC 8C500008 */  lw    $s0, 8($v0)
-/* 035F00 7F0013D0 26F70008 */  addiu $s7, $s7, 8
-/* 035F04 7F0013D4 24420008 */  addiu $v0, $v0, 8
-/* 035F08 7F0013D8 5600FFB5 */  bnezl $s0, .L7F0012B0
-/* 035F0C 7F0013DC 92030000 */   lbu   $v1, ($s0)
-.L7F0013E0:
-/* 035F10 7F0013E0 8FBF0034 */  lw    $ra, 0x34($sp)
-/* 035F14 7F0013E4 8FB00014 */  lw    $s0, 0x14($sp)
-/* 035F18 7F0013E8 8FB10018 */  lw    $s1, 0x18($sp)
-/* 035F1C 7F0013EC 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 035F20 7F0013F0 8FB30020 */  lw    $s3, 0x20($sp)
-/* 035F24 7F0013F4 8FB40024 */  lw    $s4, 0x24($sp)
-/* 035F28 7F0013F8 8FB50028 */  lw    $s5, 0x28($sp)
-/* 035F2C 7F0013FC 8FB6002C */  lw    $s6, 0x2c($sp)
-/* 035F30 7F001400 8FB70030 */  lw    $s7, 0x30($sp)
-/* 035F34 7F001404 03E00008 */  jr    $ra
-/* 035F38 7F001408 27BD0038 */   addiu $sp, $sp, 0x38
-)
-#endif
 
 
 #ifdef NONMATCHING
