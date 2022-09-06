@@ -3226,6 +3226,7 @@ typedef enum SPSEGMENT
 
 #define ARRAYCOUNT(a) (s32)(sizeof(a) / sizeof(a[0]))
 #define ALIGN8(val)         (((val) + 0x7 | 0x7) ^ 0x7)
+#define RANDOMFRAC() ((f32) randomGetNext() * 2.3283064e-10f)
 
 #pragma endregion
 

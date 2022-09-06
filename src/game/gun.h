@@ -292,7 +292,7 @@ s32          get_civilian_casualties(void);
 s32 Gun_hand_without_item(enum GUNHAND arg0);
 void sub_GAME_7F05FB00(enum GUNHAND hand);
 
-void bgunCalculateBlend(s32 arg0);
+void bgunCalculateBlend(enum GUNHAND handnum);
 void gunSetBondWeaponSway(f32 arg0, f32 arg1, f32 speed_verta, f32 speed_theta);
 void gunSetOffsetRelated(f32 param_1);
 #endif
