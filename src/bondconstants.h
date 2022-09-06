@@ -3015,6 +3015,15 @@ typedef enum SPSEGMENT
 #define PROPRECORD_STAN_ROOM_LEN 4
 #define NUMBER_SHOTGUN_BULLETS   5
 
+
+#ifdef VERSION_EU
+#define NTSC 0
+#define PAL 1
+#else
+#define NTSC 1
+#define PAL 0
+#endif
+
 #pragma endregion
 
 #pragma region Inline Macro Functions

@@ -1035,10 +1035,10 @@ struct player
   s32 copiedgoldeneye;
   s32 ammodispflags;
   s32 field_1068;
-  f32 field_106C;
-  f32 field_1070;
-  f32 field_1074;
-  s32 field_1078;
+  f32 gunsync;
+  f32 syncchange;
+  f32 synccount;
+  s32 syncoffset;
   f32 field_107C;
   f32 field_1080;
   f32 sniper_zoom;

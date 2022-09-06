@@ -366,10 +366,10 @@ void initBONDdataforPlayer(s32 player_num)
     g_playerPointers[player_num]->last_z_trigger_timer = 0;
     g_playerPointers[player_num]->copiedgoldeneye = 0;
     g_playerPointers[player_num]->ammodispflags = 0;
-    g_playerPointers[player_num]->field_106C = 0.0f;
-    g_playerPointers[player_num]->field_1070 = 0.0f;
-    g_playerPointers[player_num]->field_1074 = 0.0f;
-    g_playerPointers[player_num]->field_1078 = 0;
+    g_playerPointers[player_num]->gunsync = 0.0f;
+    g_playerPointers[player_num]->syncchange = 0.0f;
+    g_playerPointers[player_num]->synccount = 0.0f;
+    g_playerPointers[player_num]->syncoffset = 0;
     g_playerPointers[player_num]->field_107C = 0.0f;
     g_playerPointers[player_num]->field_1080 = 0.0f;
     g_playerPointers[player_num]->sniper_zoom = 60.0f;
