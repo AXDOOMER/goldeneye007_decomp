@@ -15,18 +15,6 @@
 //bss
 MemoryPool g_mempPools[7];
 
-enum MEMPOOL
-{
-    MEMPOOL_0,
-    MEMPOOL_MF,
-    MEMPOOL_2,
-    MEMPOOL_ML,
-    MEMPOOL_STAGE,
-    MEMPOOL_ME,
-    MEMPOOL_PERMANENT,
-    MEMPOOL_7
-};
-
 //data
 void *ptr_memp_c_debug_debug_notice_list = 0;
 s32 needmemallocation = 0;

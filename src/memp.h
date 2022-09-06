@@ -26,6 +26,18 @@ typedef struct s_mempMVALS {
     u32 var8;
 } s_mempMVALS;
 
+enum MEMPOOL
+{
+    MEMPOOL_0,
+    MEMPOOL_MF,
+    MEMPOOL_2,
+    MEMPOOL_ML,
+    MEMPOOL_STAGE,
+    MEMPOOL_ME,
+    MEMPOOL_PERMANENT,
+    MEMPOOL_7
+};
+
 void mempInitDebugNoticeList(void);
 void mempCheckMemflagTokens(int bstart,int bsize);
 void mempSetBankStarts(s32 banks[8]);
