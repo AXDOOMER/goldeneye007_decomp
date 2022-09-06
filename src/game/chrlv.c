@@ -11632,7 +11632,7 @@ s32 sub_GAME_7F033EAC(coord3d *arg0, StandTile *arg1)
     {
         if (bgGet2dBboxByRoomId(getTileRoom(arg1), &sp1C))
         {
-            pass = sub_GAME_7F078BF4(arg0, 200.0f, &sp1C) == 0;
+            pass = camIsPosInScreenBox(arg0, 200.0f, &sp1C) == 0;
         }
         else
         {

@@ -220,7 +220,7 @@ s32 setupGetCommandIndexByProp(struct PropRecord *prop)
 
 
 
-s32 modelLoad(u32 modelid)
+s32 modelLoad(s32 modelid)
 {
     if (PitemZ_entries[modelid].header->RootNode == NULL) 
     {

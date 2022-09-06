@@ -44,7 +44,7 @@ glabel sub_GAME_7F0762E0
 /* 0AAE74 7F076344 AFA00074 */  sw    $zero, 0x74($sp)
 /* 0AAE78 7F076348 02A02025 */  move  $a0, $s5
 /* 0AAE7C 7F07634C 27A50074 */  addiu $a1, $sp, 0x74
-/* 0AAE80 7F076350 0FC1D831 */  jal   sub_GAME_7F0760C4
+/* 0AAE80 7F076350 0FC1D831 */  jal   modelIterateDisplayLists
 /* 0AAE84 7F076354 27A6006C */   addiu $a2, $sp, 0x6c
 /* 0AAE88 7F076358 8FB7006C */  lw    $s7, 0x6c($sp)
 /* 0AAE8C 7F07635C 3C1600FF */  lui   $s6, (0x00FFFFFF >> 16) # lui $s6, 0xff
@@ -73,7 +73,7 @@ glabel sub_GAME_7F0762E0
 /* 0AAEE4 7F0763B4 8FB40074 */  lw    $s4, 0x74($sp)
 /* 0AAEE8 7F0763B8 02A02025 */  move  $a0, $s5
 /* 0AAEEC 7F0763BC 27A50074 */  addiu $a1, $sp, 0x74
-/* 0AAEF0 7F0763C0 0FC1D831 */  jal   sub_GAME_7F0760C4
+/* 0AAEF0 7F0763C0 0FC1D831 */  jal   modelIterateDisplayLists
 /* 0AAEF4 7F0763C4 27A6006C */   addiu $a2, $sp, 0x6c
 /* 0AAEF8 7F0763C8 8FB7006C */  lw    $s7, 0x6c($sp)
 /* 0AAEFC 7F0763CC 02A02025 */  move  $a0, $s5

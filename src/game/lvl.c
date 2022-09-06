@@ -418,7 +418,7 @@ void lvlStageLoad(s32 stage)
         }
 
         load_bg_file(g_CurrentStageToLoad);
-        store_stagenum_to_copyof_stagenum(g_CurrentStageToLoad);
+        skySetStageNum(g_CurrentStageToLoad);
         init_watch_at_start_of_stage();
         sub_GAME_7F0C11FC(stage);
 
@@ -652,7 +652,7 @@ glabel lvlStageLoad
 /* 0F2788 7F0BDC58 0FC2D049 */  jal   load_bg_file
 /* 0F278C 7F0BDC5C 00000000 */   nop
 /* 0F2790 7F0BDC60 3C048005 */  lui   $a0, %hi(g_CurrentStageToLoad)
-/* 0F2794 7F0BDC64 0FC2510B */  jal   store_stagenum_to_copyof_stagenum
+/* 0F2794 7F0BDC64 0FC2510B */  jal   skySetStageNum
 /* 0F2798 7F0BDC68 8C848364 */   lw    $a0, %lo(g_CurrentStageToLoad)($a0)
 /* 0F279C 7F0BDC6C 0FC2921A */  jal   init_watch_at_start_of_stage
 /* 0F27A0 7F0BDC70 00000000 */   nop
@@ -957,7 +957,7 @@ glabel lvlStageLoad
 /* 0F3388 7F0BE818 0FC2D335 */  jal   load_bg_file
 /* 0F338C 7F0BE81C 00000000 */   nop
 /* 0F3390 7F0BE820 3C048005 */  lui   $a0, %hi(g_CurrentStageToLoad) # $a0, 0x8005
-/* 0F3394 7F0BE824 0FC253F3 */  jal   store_stagenum_to_copyof_stagenum
+/* 0F3394 7F0BE824 0FC253F3 */  jal   skySetStageNum
 /* 0F3398 7F0BE828 8C848394 */   lw    $a0, %lo(g_CurrentStageToLoad)($a0)
 /* 0F339C 7F0BE82C 0FC29502 */  jal   init_watch_at_start_of_stage
 /* 0F33A0 7F0BE830 00000000 */   nop
@@ -1279,7 +1279,7 @@ glabel lvlStageLoad
 /* 0EFA08 7F0BD018 0FC2CD18 */  jal   load_bg_file
 /* 0EFA0C 7F0BD01C 00000000 */   nop   
 /* 0EFA10 7F0BD020 3C048004 */  lui   $a0, %hi(g_CurrentStageToLoad) # $a0, 0x8004
-/* 0EFA14 7F0BD024 0FC24E5B */  jal   store_stagenum_to_copyof_stagenum
+/* 0EFA14 7F0BD024 0FC24E5B */  jal   skySetStageNum
 /* 0EFA18 7F0BD028 8C840FE4 */   lw    $a0, %lo(g_CurrentStageToLoad)($a0)
 /* 0EFA1C 7F0BD02C 0FC28EE2 */  jal   init_watch_at_start_of_stage
 /* 0EFA20 7F0BD030 00000000 */   nop   
@@ -1957,7 +1957,7 @@ Gfx* lvlRender(Gfx* DL)
             }
 
             DL = viSetupScreensForNumPlayers(DL);
-            DL = sub_GAME_7F094488(DL);
+            DL = skyRender(DL);
             sub_GAME_7F0B4884();
             determing_type_of_object_and_detection();
             chraiUpdateOnscreenPropCount();
