@@ -3145,7 +3145,7 @@ Mtxf *currentPlayerGetMatrix10EC(void);
 f32 get_curplay_horizontal_rotation_in_degrees(void);
 Mtxf *currentPlayerGetMatrix10CC(void);
 void sub_GAME_7F077EEC(struct coord2d *in, coord3d *out, f32 value);
-s32 sub_GAME_7F078BF4(coord3d *, f32, struct bbox2d *);
+s32 camIsPosInScreenBox(coord3d *, f32, struct bbox2d *);
 
 void bondviewTransformManyPosToViewMatrix(RenderPosView *arg0, s32 arg1);
 s32 sub_GAME_7F078474(void);
