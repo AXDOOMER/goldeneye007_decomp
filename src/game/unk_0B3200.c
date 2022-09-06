@@ -1,92 +1,29 @@
 #include <ultra64.h>
-
+#include "bondtypes.h"
 
 // rodata
 
-
-
-#ifdef NONMATCHING
-f32 sub_GAME_7F0B3200(f32 *param_1,f32 *param_2,f32 *param_3,f32 *param_4)
-
+f32 sub_GAME_7F0B3200(coord2d *arg0, coord2d *arg1, coord2d *arg2, coord2d *arg3)
 {
-  if ((*param_2 - *param_1) * param_3[1] - param_4[1] + (param_2[1] - param_1[1]) * *param_4 - *param_3 == 0.00000000) {
-    return 1.00000000;
-  }
-  else {
-    
-    if ((((*param_3 - *param_1) * param_3[1] - param_4[1] + (param_3[1] - param_1[1]) * *param_4 - *param_3) / (*param_2 - *param_1) * param_3[1] - param_4[1] + (param_2[1] - param_1[1]) * *param_4 - *param_3 < 0.00000000) || (1.00000000 < ((*param_3 - *param_1) * param_3[1] - param_4[1] + (param_3[1] - param_1[1]) * *param_4 - *param_3) / (*param_2 - *param_1) * param_3[1] - param_4[1] + (param_2[1] - param_1[1]) * *param_4 - *param_3)) {
-      return 1.00000000;
+    f32 mult1 = arg2->f[1] - arg3->f[1];
+    f32 mult2 = arg3->f[0] - arg2->f[0];
+    f32 a = (arg2->f[1] - arg0->f[1]) * mult2 + (arg2->f[0] - arg0->f[0]) * mult1;
+    f32 b = (arg1->f[1] - arg0->f[1]) * mult2 + (arg1->f[0] - arg0->f[0]) * mult1;
+
+    if (b == 0.0f)
+    {
+        return 1.0f;
     }
-  }
 
+    a /= b;
+
+    if (a < 0.0f || a > 1.0f)
+    {
+        return 1.0f;
+    }
+
+    return a;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B3200
-/* 0E7D30 7F0B3200 C4CE0000 */  lwc1  $f14, ($a2)
-/* 0E7D34 7F0B3204 C4E60000 */  lwc1  $f6, ($a3)
-/* 0E7D38 7F0B3208 C4880004 */  lwc1  $f8, 4($a0)
-/* 0E7D3C 7F0B320C C4C20004 */  lwc1  $f2, 4($a2)
-/* 0E7D40 7F0B3210 C4E40004 */  lwc1  $f4, 4($a3)
-/* 0E7D44 7F0B3214 C4920000 */  lwc1  $f18, ($a0)
-/* 0E7D48 7F0B3218 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0E7D4C 7F0B321C 460E3301 */  sub.s $f12, $f6, $f14
-/* 0E7D50 7F0B3220 E7A80000 */  swc1  $f8, ($sp)
-/* 0E7D54 7F0B3224 C7A60000 */  lwc1  $f6, ($sp)
-/* 0E7D58 7F0B3228 46041001 */  sub.s $f0, $f2, $f4
-/* 0E7D5C 7F0B322C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0E7D60 7F0B3230 46127281 */  sub.s $f10, $f14, $f18
-/* 0E7D64 7F0B3234 46061201 */  sub.s $f8, $f2, $f6
-/* 0E7D68 7F0B3238 46005102 */  mul.s $f4, $f10, $f0
-/* 0E7D6C 7F0B323C 00000000 */  nop   
-/* 0E7D70 7F0B3240 460C4282 */  mul.s $f10, $f8, $f12
-/* 0E7D74 7F0B3244 C4A80004 */  lwc1  $f8, 4($a1)
-/* 0E7D78 7F0B3248 460A2400 */  add.s $f16, $f4, $f10
-/* 0E7D7C 7F0B324C 46064101 */  sub.s $f4, $f8, $f6
-/* 0E7D80 7F0B3250 C4A80000 */  lwc1  $f8, ($a1)
-/* 0E7D84 7F0B3254 46124181 */  sub.s $f6, $f8, $f18
-/* 0E7D88 7F0B3258 460C2282 */  mul.s $f10, $f4, $f12
-/* 0E7D8C 7F0B325C 00000000 */  nop   
-/* 0E7D90 7F0B3260 46003102 */  mul.s $f4, $f6, $f0
-/* 0E7D94 7F0B3264 44803000 */  mtc1  $zero, $f6
-/* 0E7D98 7F0B3268 460A2200 */  add.s $f8, $f4, $f10
-/* 0E7D9C 7F0B326C 46064032 */  c.eq.s $f8, $f6
-/* 0E7DA0 7F0B3270 E7A80010 */  swc1  $f8, 0x10($sp)
-/* 0E7DA4 7F0B3274 C7A40010 */  lwc1  $f4, 0x10($sp)
-/* 0E7DA8 7F0B3278 45000004 */  bc1f  .L7F0B328C
-/* 0E7DAC 7F0B327C 00000000 */   nop   
-/* 0E7DB0 7F0B3280 44810000 */  mtc1  $at, $f0
-/* 0E7DB4 7F0B3284 10000012 */  b     .L7F0B32D0
-/* 0E7DB8 7F0B3288 00000000 */   nop   
-.L7F0B328C:
-/* 0E7DBC 7F0B328C 46048403 */  div.s $f16, $f16, $f4
-/* 0E7DC0 7F0B3290 44805000 */  mtc1  $zero, $f10
-/* 0E7DC4 7F0B3294 3C013F80 */  lui   $at, 0x3f80
-/* 0E7DC8 7F0B3298 460A803C */  c.lt.s $f16, $f10
-/* 0E7DCC 7F0B329C 00000000 */  nop   
-/* 0E7DD0 7F0B32A0 45030007 */  bc1tl .L7F0B32C0
-/* 0E7DD4 7F0B32A4 3C013F80 */   li    $at, 0x3F800000 # 1.000000
-/* 0E7DD8 7F0B32A8 44814000 */  mtc1  $at, $f8
-/* 0E7DDC 7F0B32AC 00000000 */  nop   
-/* 0E7DE0 7F0B32B0 4610403C */  c.lt.s $f8, $f16
-/* 0E7DE4 7F0B32B4 00000000 */  nop   
-/* 0E7DE8 7F0B32B8 45000004 */  bc1f  .L7F0B32CC
-/* 0E7DEC 7F0B32BC 3C013F80 */   li    $at, 0x3F800000 # 1.000000
-.L7F0B32C0:
-/* 0E7DF0 7F0B32C0 44810000 */  mtc1  $at, $f0
-/* 0E7DF4 7F0B32C4 10000002 */  b     .L7F0B32D0
-/* 0E7DF8 7F0B32C8 00000000 */   nop   
-.L7F0B32CC:
-/* 0E7DFC 7F0B32CC 46008006 */  mov.s $f0, $f16
-.L7F0B32D0:
-/* 0E7E00 7F0B32D0 03E00008 */  jr    $ra
-/* 0E7E04 7F0B32D4 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
