@@ -295,4 +295,7 @@ void sub_GAME_7F05FB00(enum GUNHAND hand);
 void bgunCalculateBlend(enum GUNHAND handnum);
 void gunSetBondWeaponSway(f32 arg0, f32 arg1, f32 speed_verta, f32 speed_theta);
 void gunSetOffsetRelated(f32 param_1);
+
+s32 get_curplayer_shot_register(SHOT_REGISTER shot_register);
+
 #endif
