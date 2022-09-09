@@ -6316,7 +6316,233 @@ void sub_GAME_7F070F80(ModelRenderData *renderdata)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F071030(void) {
+// somewhat close, 91.35%. Regalloc issues, and instruction ordering.
+// similar to PD's model0001f890, but uses something other than gDPSetFogColorViaWord/gDPSetEnvColorViaWord
+void sub_GAME_7F071030(ModelRenderData *renderdata, bool arg1)
+{
+    if (renderdata->unk30 == 7) {
+        if (arg1) {
+            u8 r, g, b, a;
+            gDPPipeSync(renderdata->gdl++);
+            gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
+
+            {
+                r = _SHIFTR(renderdata->fogcolour, 24, 8);
+                g = _SHIFTR(renderdata->fogcolour, 16, 8);
+                b = _SHIFTR(renderdata->fogcolour, 8, 8);
+                a = _SHIFTR(renderdata->fogcolour, 0, 8);
+                gDPSetFogColor(renderdata->gdl++, r, g, b, a);
+            }
+
+            {
+                r = _SHIFTR(renderdata->envcolour, 24, 8);
+                g = _SHIFTR(renderdata->envcolour, 16, 8);
+                b = _SHIFTR(renderdata->envcolour, 8, 8);
+                a = 0xFF;
+                gDPSetEnvColor(renderdata->gdl++, r, g, b, a);
+            }
+
+            gDPSetCombineLERP(renderdata->gdl++, TEXEL0, ENVIRONMENT, SHADE_ALPHA, ENVIRONMENT, TEXEL0, ENVIRONMENT, SHADE, ENVIRONMENT, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED);
+
+            if (renderdata->zbufferenabled) {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_OPA_SURF2);
+            } else {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_OPA_SURF2);
+            }
+        } else {
+            if (renderdata->zbufferenabled) {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_XLU_SURF2);
+            } else {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
+            }
+        }
+    } else if (renderdata->unk30 == 8) {
+        if (arg1) {
+            u8 r, g, b, a;
+            gDPPipeSync(renderdata->gdl++);
+            gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
+
+            {
+                r = _SHIFTR(renderdata->fogcolour, 24, 8);
+                g = _SHIFTR(renderdata->fogcolour, 16, 8);
+                b = _SHIFTR(renderdata->fogcolour, 8, 8);
+                a = _SHIFTR(renderdata->fogcolour, 0, 8);
+                gDPSetFogColor(renderdata->gdl++, r, g, b, a);
+            }
+
+            {
+                r = _SHIFTR(renderdata->envcolour, 24, 8);
+                g = _SHIFTR(renderdata->envcolour, 16, 8);
+                b = _SHIFTR(renderdata->envcolour, 8, 8);
+                a = _SHIFTR(renderdata->envcolour, 0, 8);
+                gDPSetEnvColor(renderdata->gdl++, r, g, b, a);
+            }
+
+            gDPSetCombineLERP(renderdata->gdl++, TEXEL0, ENVIRONMENT, SHADE_ALPHA, ENVIRONMENT, TEXEL0, 0, ENVIRONMENT, 0, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED);
+
+            if (renderdata->zbufferenabled) {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_XLU_SURF2);
+            } else {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
+            }
+        }
+    } else if (renderdata->unk30 == 9) {
+        if ((renderdata->envcolour & 0xff) == 0) {
+            if (arg1) { // the branch-likely here messes things up
+                u8 r, g, b, a;
+                gDPPipeSync(renderdata->gdl++);
+                gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
+
+                {
+                    r = _SHIFTR(renderdata->fogcolour, 24, 8);
+                    g = _SHIFTR(renderdata->fogcolour, 16, 8);
+                    b = _SHIFTR(renderdata->fogcolour, 8, 8);
+                    a = _SHIFTR(renderdata->fogcolour, 0, 8);
+                    gDPSetFogColor(renderdata->gdl++, r, g, b, a);
+                }
+
+                gDPSetEnvColor(renderdata->gdl++, 0xFF, 0xFF, 0xFF, 0xFF);
+
+                gDPSetPrimColor(renderdata->gdl++, 0, 0, 0, 0, 0, (renderdata->envcolour >> 8) & 0xff);
+                gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, PRIMITIVE);
+
+                if (renderdata->zbufferenabled) {
+                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_OPA_SURF2);
+                } else {
+                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_OPA_SURF2);
+                }
+            } else {
+                if (renderdata->zbufferenabled) {
+                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_XLU_SURF2);
+                } else {
+                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
+                }
+            }
+        } else {
+            if (arg1) { // the branch-likely here messes things up
+                u8 r, g, b, a;
+                gDPPipeSync(renderdata->gdl++);
+                gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
+
+                {
+                    r = _SHIFTR(renderdata->fogcolour, 24, 8);
+                    g = _SHIFTR(renderdata->fogcolour, 16, 8);
+                    b = _SHIFTR(renderdata->fogcolour, 8, 8);
+                    a = _SHIFTR(renderdata->fogcolour, 0, 8);
+                    gDPSetFogColor(renderdata->gdl++, r, g, b, a);
+                }
+
+                gDPSetEnvColor(renderdata->gdl++, 0, 0, 0, renderdata->envcolour);
+
+                gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, 0, SHADE, ENVIRONMENT, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED);
+
+                if (renderdata->zbufferenabled) {
+                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_TEX_EDGE2);
+                } else {
+                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_TEX_EDGE2);
+                }
+            } else {
+                gDPSetPrimColor(renderdata->gdl++, 0, 0, 0, 0, 0, (renderdata->envcolour >> 8) & 0xff);
+                gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, SHADE, ENVIRONMENT, TEXEL0, 0, COMBINED, 0, SHADE, 0, 1, 0, PRIMITIVE, COMBINED);
+
+                if (renderdata->zbufferenabled) {
+                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_TEX_EDGE2);
+                } else {
+                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_TEX_EDGE2);
+                }
+            }
+        }
+    } else if (renderdata->unk30 == 4) {
+        if (arg1) { // the branch-likely here messes things up
+            u8 r, g, b, a;
+            gDPPipeSync(renderdata->gdl++);
+            gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
+
+            {
+                // this is weird, dev typo?
+                r = _SHIFTR(renderdata->envcolour, 24, 8);
+                g = _SHIFTR(renderdata->envcolour, 16, 8);
+                b = _SHIFTR(renderdata->envcolour, 8, 8);
+                a = _SHIFTR(renderdata->envcolour, 0, 8);
+                gDPSetFogColor(renderdata->gdl++, r, g, b, a);
+            }
+
+            gDPSetCombineMode(renderdata->gdl++, G_CC_TRILERP, G_CC_MODULATEIA2);
+
+            if (renderdata->zbufferenabled) {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_OPA_SURF2);
+            } else {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_OPA_SURF2);
+            }
+        } else {
+            if (renderdata->zbufferenabled) {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_XLU_SURF2);
+            } else {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
+            }
+        }
+    } else if (renderdata->unk30 == 5) {
+        u8 r, g, b, a;
+        if (arg1) {
+            gDPPipeSync(renderdata->gdl++);
+            gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
+
+            {
+                r = _SHIFTR(renderdata->fogcolour, 24, 8);
+                g = _SHIFTR(renderdata->fogcolour, 16, 8);
+                b = _SHIFTR(renderdata->fogcolour, 8, 8);
+                a = _SHIFTR(renderdata->fogcolour, 0, 8);
+                gDPSetFogColor(renderdata->gdl++, r, g, b, a);
+            }
+
+            a = renderdata->envcolour & 0xff;
+
+            if (a < 255) {
+                gDPSetEnvColor(renderdata->gdl++, 0xff, 0xff, 0xff, a);
+
+                if (renderdata->envcolour & 0xff00) {
+                    gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, SHADE, ENVIRONMENT, 0, COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, 0);
+                } else {
+                    gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, 0, ENVIRONMENT, 0, COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, 0);
+                }
+            } else {
+                gDPSetCombineMode(renderdata->gdl++, G_CC_TRILERP, G_CC_MODULATEIA2);
+            }
+
+            if (renderdata->zbufferenabled) {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_XLU_SURF2);
+            } else {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
+            }
+        } else {
+            a = renderdata->envcolour & 0xff;
+
+            if (a < 255) {
+                gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, TEXEL0, 0, ENVIRONMENT, 0, COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, 0);
+            } else {
+                gDPSetCombineMode(renderdata->gdl++, G_CC_TRILERP, G_CC_MODULATEIA2);
+            }
+        }
+    } else {
+        if (arg1) {
+            gDPPipeSync(renderdata->gdl++);
+            gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
+            gDPSetCombineMode(renderdata->gdl++, G_CC_TRILERP, G_CC_MODULATEIA2);
+
+            if (renderdata->zbufferenabled) {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_PASS, G_RM_AA_ZB_OPA_SURF2);
+            } else {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_PASS, G_RM_AA_OPA_SURF2);
+            }
+        } else {
+            if (renderdata->zbufferenabled) {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_PASS, G_RM_AA_ZB_XLU_SURF2);
+            } else {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_PASS, G_RM_AA_XLU_SURF2);
+            }
+        }
+    }
+}
 /*
 --Copy/Paste from Doc
 DisplayList Setups Depend on Object Type, Prop Guard or Gun. 
@@ -6452,7 +6678,6 @@ Model Type 4: Normal Fog/Lighting object
       B900031DC41041C8 SetRendermode(AA_OPA_StanFOG_2)//FcBl ClrOnCvg
     endif
 */
-}
 #else
 GLOBAL_ASM(
 .text
