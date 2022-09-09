@@ -509,7 +509,7 @@ void lvlStageLoad(s32 stage)
         s32 s0;
         
         init_path_table_links();
-        something_with_ejected_cartridges();
+        init_ejected_cartridges();
 
         for (s0 = 0; s0 < getPlayerCount(); s0++)
         {
@@ -778,7 +778,7 @@ glabel lvlStageLoad
 .L7F0BDE34:
 /* 0F2964 7F0BDE34 0FC01A24 */  jal   init_path_table_links
 /* 0F2968 7F0BDE38 00000000 */   nop
-/* 0F296C 7F0BDE3C 0FC01410 */  jal   something_with_ejected_cartridges
+/* 0F296C 7F0BDE3C 0FC01410 */  jal   init_ejected_cartridges
 /* 0F2970 7F0BDE40 00000000 */   nop
 /* 0F2974 7F0BDE44 0FC26919 */  jal   getPlayerCount
 /* 0F2978 7F0BDE48 00008025 */   move  $s0, $zero
@@ -1083,7 +1083,7 @@ glabel lvlStageLoad
 .Ljp7F0BE9F4:
 /* 0F3564 7F0BE9F4 0FC01A2C */  jal   init_path_table_links
 /* 0F3568 7F0BE9F8 00000000 */   nop
-/* 0F356C 7F0BE9FC 0FC01418 */  jal   something_with_ejected_cartridges
+/* 0F356C 7F0BE9FC 0FC01418 */  jal   init_ejected_cartridges
 /* 0F3570 7F0BEA00 00000000 */   nop
 /* 0F3574 7F0BEA04 0FC26C01 */  jal   getPlayerCount
 /* 0F3578 7F0BEA08 00008025 */   move  $s0, $zero
@@ -1405,7 +1405,7 @@ glabel lvlStageLoad
 .L7F0BD1F4:
 /* 0EFBE4 7F0BD1F4 0FC01A04 */  jal   init_path_table_links
 /* 0EFBE8 7F0BD1F8 00000000 */   nop   
-/* 0EFBEC 7F0BD1FC 0FC013F8 */  jal   something_with_ejected_cartridges
+/* 0EFBEC 7F0BD1FC 0FC013F8 */  jal   init_ejected_cartridges
 /* 0EFBF0 7F0BD200 00000000 */   nop   
 /* 0EFBF4 7F0BD204 0FC26669 */  jal   getPlayerCount
 /* 0EFBF8 7F0BD208 00008025 */   move  $s0, $zero

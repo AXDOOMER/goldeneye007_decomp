@@ -13,7 +13,7 @@ extern u32 D_80034CA0;
 
 extern CartridgeModelFileRecord ejected_cartridge[] ;
 
-void something_with_ejected_cartridges(void) {
+void init_ejected_cartridges(void) {
     int i = 0;
     dword_CODE_bss_80075DB0 = 0;
 
