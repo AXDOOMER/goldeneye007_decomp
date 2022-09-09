@@ -3037,13 +3037,6 @@ typedef enum SPSEGMENT
 #define PROPRECORD_STAN_ROOM_LEN 4
 #define NUMBER_SHOTGUN_BULLETS   5
 
-
-#ifdef LEFTOVERDEBUG
-#define HASLEFTOVERDEBUG 1
-#else
-#define HASLEFTOVERDEBUG 0
-#endif
-
 #ifdef VERSION_EU
 #define NTSC 0
 #define PAL 1

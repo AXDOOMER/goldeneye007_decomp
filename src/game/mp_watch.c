@@ -324,7 +324,7 @@ void mpCalculateAwards(s32 arg0)
 
     if (arg0 != 0)
     {
-        g_gameOverFlag = (HASLEFTOVERDEBUG ? 0x12C : 0xFA);
+        g_gameOverFlag = (PAL ? 0xFA : 0x12C);
     }
     else
     {
@@ -333,7 +333,7 @@ void mpCalculateAwards(s32 arg0)
 
     time_trigger_alt_gameover_msg = 1;
 
-    dword_CODE_bss_8008C714 =  (HASLEFTOVERDEBUG ? 0x14 : 0x10);
+    dword_CODE_bss_8008C714 =  (PAL ? 0x10 : 0x14);
 
     dword_CODE_bss_8008C708 = 0;
     dword_CODE_bss_8008C70C = 0;
@@ -569,15 +569,15 @@ void sub_GAME_7F0C2E80(void)
                 dword_CODE_bss_8008C70C += speedgraphframes;
                 dword_CODE_bss_8008C714 += speedgraphframes;
 
-                if (dword_CODE_bss_8008C70C >= (HASLEFTOVERDEBUG ? 0x14 : 0x10))
+                if (dword_CODE_bss_8008C70C >= (PAL ? 0x10 : 0x14))
                 {
-                    dword_CODE_bss_8008C70C -= (HASLEFTOVERDEBUG ? 0x14 : 0x10);
+                    dword_CODE_bss_8008C70C -= (PAL ? 0x10 : 0x14);
                     dword_CODE_bss_8008C708 = !dword_CODE_bss_8008C708;
                 }
 
-                if (dword_CODE_bss_8008C714 >= (HASLEFTOVERDEBUG ? 0x78 : 0x64))
+                if (dword_CODE_bss_8008C714 >= (PAL ? 0x64 : 0x78))
                 {
-                    dword_CODE_bss_8008C714 -= (HASLEFTOVERDEBUG ? 0x78 : 0x64);
+                    dword_CODE_bss_8008C714 -= (PAL ? 0x64: 0x78);
                     time_trigger_alt_gameover_msg = !time_trigger_alt_gameover_msg;
                 }
             }
@@ -662,7 +662,7 @@ void sub_GAME_7F0C2E80(void)
                     else
                     {
                         g_CurrentPlayer->mpmenuon = 0;
-                        g_CurrentPlayer->healthdisplaytime = (HASLEFTOVERDEBUG ? 0x3C : 0x32);
+                        g_CurrentPlayer->healthdisplaytime = (PAL ? 0x32 : 0x3C);
                         if (get_cur_playernum() == who_paused)
                         {
                             g_pausedFlag = 0;

@@ -2681,7 +2681,7 @@ Gfx *draw_abort_cancel_confirm(Gfx *gdl)
     
     sp74 = (j_text_trigger ? 0xA : 0) + 0x88;
     
-    sp70 = sp6C = sp68 = (j_text_trigger ? 3 : 0) + (HASLEFTOVERDEBUG ? 0x4C : 0x4E);
+    sp70 = sp6C = sp68 = (j_text_trigger ? 3 : 0) + (PAL ? 0x4E : 0x4C);
 
     if (watch_item_is_actively_selected != 0)
     {
