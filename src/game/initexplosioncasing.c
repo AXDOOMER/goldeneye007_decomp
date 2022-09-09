@@ -43,6 +43,7 @@ void alloc_explosion_smoke_casing_scorch_impact_buffers(void)
 
     if (getPlayerCount() == 1)
     {
+        // scorches are the circle burn marks left on the ground from explosions
         ptr_scorch_buf = (struct Scorch*)mempAllocBytesInBank(SCORCH_BUFFER_LEN * sizeof(struct Scorch), 4);
 
         for (i=0; i<SCORCH_BUFFER_LEN; i++)

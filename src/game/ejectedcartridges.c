@@ -7,8 +7,25 @@
 
 
 #ifdef NONMATCHING
+// Almost a match. Extra "lw t6,0(v0)" instruction, then "sw zero,8(t6)" is used instead of "sw zero,-4(v0)".
 void something_with_ejected_cartridges(void) {
+    int i = 0;
+    dword_CODE_bss_80075DB0 = 0;
 
+    while (i < 4)
+    {
+        dword_CODE_bss_80075DB8[i]->sound = NULL;
+        i++;
+    }
+
+    i = 0;
+    cartridges_eject = 0;
+    D_80034CA0 = 0;
+
+    while (ejected_cartridge[i].header != 0) {
+        fileLoad(ejected_cartridge[i].header, ejected_cartridge[i].text);
+        i++;
+    }
 }
 #else
 GLOBAL_ASM(
