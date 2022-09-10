@@ -7043,7 +7043,7 @@ void modelApplyCullMode(ModelRenderData *renderdata)
 }
 
 
-void sub_GAME_7F072784(ModelRenderData* renderdata, ModelNode* arg1)
+void modelRenderNodeGundl(ModelRenderData* renderdata, ModelNode* arg1)
 {
     ModelRoData_DisplayListRecord* rodata = &arg1->Data->DisplayList;
 
@@ -10364,7 +10364,7 @@ glabel sub_GAME_7F074534
 /* 0A9134 7F074604 1000001C */  b     .L7F074678
 /* 0A9138 7F074608 8FBF0014 */   lw    $ra, 0x14($sp)
 .L7F07460C:
-/* 0A913C 7F07460C 0FC1C9E1 */  jal   sub_GAME_7F072784
+/* 0A913C 7F07460C 0FC1C9E1 */  jal   modelRenderNodeGundl
 /* 0A9140 7F074610 00C02825 */   move  $a1, $a2
 /* 0A9144 7F074614 10000018 */  b     .L7F074678
 /* 0A9148 7F074618 8FBF0014 */   lw    $ra, 0x14($sp)
