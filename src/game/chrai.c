@@ -697,7 +697,7 @@ s32 chraiitemsize(u8 *AIList, s32 offset)
             return (pos - offset) + 1;
         }
         default:
-#       if defined(DEBUG)
+#       if defined(ENABLE_LOG)
             osSyncPrintf("chraiitemsize: unknown type %d!\n", *AIList);
 #       endif
             return 1;
@@ -955,8 +955,8 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 {
                     AIRecord1 *ai = AiListp + Offset;
                     Offset        = chraiGoToLabel(AiListp, Offset, ai->val);
-#ifdef DEBUG
-                    osSyncPrintf(" (%d)\n", ai->val);
+#ifdef ENABLE_LOG
+                    osSyncPrintf("GOTO Next (%d)\n", ai->val);
 #endif
                     break;
                 }
@@ -964,8 +964,8 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 {
                     AIRecord1 *ai = AiListp + Offset;
                     Offset        = chraiGoToLabel(AiListp, 0, ai->val);
-#ifdef DEBUG
-                    osSyncPrintf(" (%d)\n", ai->val);
+#ifdef ENABLE_LOG
+                    osSyncPrintf("GOTO First (%d)\n", ai->val);
 #endif
                     break;
                 }
@@ -2113,7 +2113,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     u16       pad_id = CharArrayTo16(ai->val,0);
                     if (check_if_actor_is_at_preset(ChrEntityp, pad_id))
                     {
-#ifdef DEBUG
+#ifdef ENABLE_LOG
                         osSyncPrintf("BOND IN ROOM\n");
 #endif
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[2]);
@@ -2285,17 +2285,18 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 {
                     AIRecord     *ai  = AiListp + Offset;
                     ObjectRecord *obj = objFindByTagId(ai->val[0]);
-#ifdef DEBUG
+#ifdef ENABLE_LOG
                     osSyncPrintf("ai_destroyobj 1 : \n");
 #endif
                     if (obj && obj->prop)
                     {
                         if (!do_something_if_object_destroyed(obj))
                         {
-#ifdef DEBUG
+                            f32 damage = ((obj->damage - obj->maxdamage) + 1) / 250.0f;
+#ifdef ENABLE_LOG
                             osSyncPrintf("ai_destroyobj 3 : adddamageobj\n");
 #endif
-                            f32 damage = ((obj->damage - obj->maxdamage) + 1) / 250.0f;
+
                             maybe_detonate_object(obj, damage, &obj->runtime_pos, 29, -1);
                         }
                     }
@@ -2401,8 +2402,8 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                         {
                             pad = (PadRecord *)&g_CurrentSetup.boundpads[getBoundPadNum(padnum)];
                         }
-#ifdef DEBUG
-                            osSyncPrintf("aiMoveObj: moving object to pad %d\n");
+#ifdef ENABLE_LOG
+                            osSyncPrintf("aiMoveObj: moving object to pad %d\n", pad);
 #endif
                         matrix_4x4_7F059908(&matrix, 0, 0, 0, -pad->look.x, -pad->look.y, -pad->look.z, pad->up.x, pad->up.y, pad->up.z);
                         if (obj->model)
@@ -2828,7 +2829,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 {
                     AIRecord1 *ai      = AiListp + Offset;
                     ChrEntityp->morale = ai->val;
-#ifdef DEBUG
+#ifdef ENABLE_LOG
                     osSyncPrintf("MORALE IS NOW %d \n",ChrEntityp->morale);
 #endif
                     Offset += AI_SetMyMorale_LENGTH;
@@ -2845,7 +2846,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     {
                         ChrEntityp->morale += ai->val;
                     }
-#ifdef DEBUG
+#ifdef ENABLE_LOG
                     osSyncPrintf("MORALE IS NOW %d \n",ChrEntityp->morale);
 #endif
 
@@ -2863,7 +2864,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     {
                         ChrEntityp->morale -= ai->val;
                     }
-#ifdef DEBUG
+#ifdef ENABLE_LOG
                     osSyncPrintf("MORALE IS NOW %d \n", ChrEntityp->morale);
 #endif
                     Offset += AI_SubtractFromMyMorale_LENGTH;
@@ -2899,7 +2900,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 {
                     AIRecord1 *ai         = AiListp + Offset;
                     ChrEntityp->alertness = ai->val;
-#ifdef DEBUG
+#ifdef ENABLE_LOG
                     osSyncPrintf("AI_PRINT(void) Alertness =  %d!\n", ChrEntityp->alertness);
 #endif
                     Offset += AI_SetMyAlertness_LENGTH;
@@ -3294,7 +3295,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     u16       pad_id = CharArrayTo16(ai->val,0);
                     if (ChrEntityp)
                     {
-#ifdef DEBUG
+#ifdef ENABLE_LOG
                         if (pad_id == PAD_PRESET1 && ChrEntityp->padpreset1 == PAD_PRESET1)
                         {
                             osSyncPrintf("RUSS : Pad is bollox -> Num=%d (%d) - PAD_PRESET1=%d\n", pad_id, ChrEntityp->padpreset1, PAD_PRESET1);
@@ -3319,7 +3320,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 }
                 case AI_PRINT:
                 {
-#ifdef DEBUG
+#ifdef ENABLE_LOG
                     AIRecord *ai = AiListp + Offset;
                     //PD = osSyncPrintf("AI_PRINT(void) [%d] %s\n", ai-val);
                     osSyncPrintf("AI_PRINT: %s\n", ai->val);
@@ -3473,7 +3474,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     CHRFLAG   flags    = CharArrayTo32(ai->val,6);
                     u16       ailistid = CharArrayTo16(ai->val,4);
                     AIRecord *ailist   = ailistFindById(ailistid);
-#ifdef DEBUG
+#ifdef ENABLE_LOG
                     if (flags & 32)
                     {
                         osSyncPrintf("ai_createchrheadthenjumpf : Flag set CHRSTART_FORCENOBLOOD\n");
@@ -3688,7 +3689,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 {
                     AIRecord *ai   = AiListp + Offset;
                     char     *text = langGet(CharArrayTo16(ai->val,0));
-#ifdef DEBUG
+#ifdef ENABLE_LOG
                     osSyncPrintf("USING HUD MESSAGE Stringy = %d, ai->txt = %d\n", CharArrayTo16(ai->val,0), text);
 #endif
 #ifdef BUGFIX_R1
@@ -3704,7 +3705,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     AIRecord *ai   = AiListp + Offset;
                     char     *text = langGet(CharArrayTo16(ai->val,0));
 
-#ifdef DEBUG
+#ifdef ENABLE_LOG
                     osSyncPrintf("ptop =  %f \n", text);
                     osSyncPrintf("USING HUD MESSAGE Stringy = %d, ai->txt = %d\n", CharArrayTo16(ai->val,0), text);
 
@@ -3969,12 +3970,10 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 }
                 case AI_IFBondInTank: //canonical name
                 {
-                    /*
-#ifdef DEBUG && PD 
-                    osSyncPrintf("ai_ifbondintank: tank code has been removed.\n"); 
-#endif 
-                     */
                     AIRecord *ai = AiListp + Offset;
+#ifdef ENABLE_LOG
+                    osSyncPrintf("ai_ifbondintank\n"); 
+#endif 
                     if (isBondInTank() == TRUE)
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
@@ -4035,7 +4034,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                         {
                             CutsceneRecord *cdef = setupGetPtrToCommandByIndex(tag->OffsetToObj + TagIndex); //get obj
 
-#ifdef DEBUG
+#ifdef ENABLE_LOG
                             /*".\\ported\\chrai.c", 0xc2b, "Assertion failed: cdef->type==PROPDEF_CAMERAPOS") */
                             assert(cdef->type == PROPDEF_CAMERAPOS);
 #endif
@@ -4086,7 +4085,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 }
                 case AI_BondEnableControl:
                 {
-#ifdef DEBUG
+#ifdef ENABLE_LOG
                     osSyncPrintf("AI_BONDENABLECONTROL\n");
 #endif
                     set_unset_bitflags(4, TRUE);
@@ -4471,7 +4470,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     AIRecord *ai = AiListp + Offset;
                     Offset += AI_MusicPlaySlot_LENGTH;
                     musicPlaySlot((s8)ai->val[0], ai->val[1], ai->val[2]);
-#ifdef DEBUG
+#ifdef ENABLE_LOG
                     osSyncPrintf("ai: enery tune on (%d, %d, %d)\n", ai->val[0], ai->val[1], ai->val[2]);
 #endif
                     break;
@@ -4481,7 +4480,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     AIRecord *ai = AiListp + Offset;
                     Offset += AI_MusicStopSlot_LENGTH;
                     musicStopSlot((s8)ai->val[0]);
-#ifdef DEBUG
+#ifdef ENABLE_LOG
                     osSyncPrintf("ai: enery tune off (%d)\n", ai->val[0]);
 #endif
                     break;
@@ -4582,7 +4581,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
             } // switch
         }     // for
     }         // Has ailist
-#ifdef DEBUG
+#ifdef ENABLE_LOG
     osSyncPrintf("SERIOUS AI ERROR!!!!!! Null ailist!\n");
 #endif
 }             //ai()

@@ -706,7 +706,7 @@ void crashIndyRemoved02(void)
  */
 void crashIndyPrintReadBufferResourceIdI(void)
 {
-    #ifdef DEBUG
+    #ifdef ENABLE_LOG
     rmonPrintf("%08x",g_indyCurrentReadBufferResourceId); //from pd beta
     #endif
     return;
