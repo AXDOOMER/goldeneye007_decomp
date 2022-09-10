@@ -1095,17 +1095,24 @@ typedef union
         typedef struct ModelRoData_DisplayList_CollisionRecord
         {
             Gfx    *Primary;              /*0x0*/
-            Gfx    *Secondary; /*0x4*/    // optional
+            Gfx    *Secondary;            /*0x4*/    // optional
             Vertex *Vertices;             /*0x8*/
             u16     numVertices;          /*0xC*/
             u16     numCollisionVertices; /*0xE*/
             Vertex *CollisionVertices;    /*0x10 Table of vertices with unique point in space (UV's and Colour are disregarded). */
             s16    *PointUsage;           /*0x14*/
-            u16     ModelType;            /*0x18*/
+            s16     ModelType;            /*0x18*/
             u16     unknown;              /*0x1A*/
-            u16     number;               /*0x1C*/
-            u16     reserved;             /*0x1E*/
+            s32     number;               /*0x1C*/
+
         } ModelRoData_DisplayList_CollisionRecord;
+
+        typedef struct ModelRwData_DisplayList_CollisionRecord
+        {
+            Vertex *Vertices;
+            Gfx *gdl;
+            rgba_u8 *Colours;
+        } ModelRwData_DisplayList_CollisionRecord;
 
     #pragma endregion Model Node OpCode Definitions
 
@@ -1143,6 +1150,7 @@ typedef union
         struct ModelRwData_BSPRecord BSP;
         struct ModelRwData_SwitchRecord Switch;
         struct ModelRwData_HeadPlaceholderRecord HeadPlaceholder;
+        struct ModelRwData_DisplayList_CollisionRecord DisplayListCollisions;
     };
 
 
