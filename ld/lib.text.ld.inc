@@ -37,7 +37,9 @@
       build/OUTCODE/src/libultrare/io/leointerrupt.o (.text);
 #endif
       build/OUTCODE/src/rmon.o (.text);
-
+#ifdef ENABLE_USB
+      build/OUTCODE/src/usb.o (.text);
+#endif
       /*build/OUTCODE/src/libultra/osPiRawStartDma.o (.text);*/
       build/OUTCODE/src/libultra/io/pirawdma.o (.text);
       build/OUTCODE/src/libultra/io/pigetstat.o (.text);
@@ -132,6 +134,9 @@
       build/OUTCODE/src/libultra/audio/synfreevoice.o (.text);
       build/OUTCODE/src/libultra/audio/cents2ratio.o (.text);
       build/OUTCODE/src/libultra/io/piread.o (.text);
+#ifdef ENABLE_USB
+      build/OUTCODE/src/libultra/io/piwrite.o (.text);
+#endif
       build/OUTCODE/src/libultra/libc/string.o (.text);
       build/OUTCODE/src/libultrare/libc/xprintf.o (.text);
 #ifndef VERSION_EU
@@ -168,6 +173,9 @@
       build/OUTCODE/src/libultra/io/sirawread.o (.text);
       build/OUTCODE/src/libultra/io/sirawwrite.o (.text);
       build/OUTCODE/src/libultra/io/pirawread.o (.text);
+#ifdef ENABLE_USB
+      build/OUTCODE/src/libultra/io/pirawwrite.o (.text);
+#endif
       build/OUTCODE/src/libultra/libc/bzero.o (.text);
       build/OUTCODE/src/libultra/os/sethwinterrupt.o (.text);
 #ifndef VERSION_EU
