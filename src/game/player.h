@@ -16,16 +16,7 @@ struct player_data {
     int killed_gg_owner_count;
 
     /* 0x24 */
-    int killed_p1;
-
-    /* 0x28 */
-    int killed_p2;
-
-    /* 0x2c */
-    int killed_p3;
-
-    /* 0x30 */
-    int killed_p4;
+    int kill_counts[MAX_PLAYER_COUNT];
 
     /* 0x34 */
     int time_other_players_on_screen;

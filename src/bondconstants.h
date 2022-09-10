@@ -444,6 +444,10 @@ BITFLAG(RUNTIMEBITFLAG,
 #define QUADRANT_2NDWPTOTARGET 0x10 // second waypoint on route to target
 #define QUADRANT_20            0x20 // second waypoint on route to target
 
+#define CULLMODE_NONE  1
+#define CULLMODE_FRONT 2
+#define CULLMODE_BACK  3
+
 #pragma endregion
 
 #pragma region Constants
@@ -2031,6 +2035,28 @@ typedef enum WATCH_BRIEFING_PAGE
 } WATCH_BRIEFING_PAGE;
 
 
+typedef enum AWARD {
+
+    AWARD_MOSTSUICIDAL     = 0x00001,
+    AWARD_WHONEEDSAMMO     = 0x00002,
+    AWARD_WHERESTHEARMOR   = 0x00004,
+    AWARD_ACNEGATIVE10     = 0x00008,
+    AWARD_MARKSMANSHIP     = 0x00010,
+    AWARD_MOSTPROFESSIONAL = 0x00020,
+    AWARD_MOSTDEADLY       = 0x00040,
+    AWARD_MOSTHARMLESS     = 0x00080,
+    AWARD_MOSTCOWARDLY     = 0x00100,
+    AWARD_MOSTFRANTIC      = 0x00200,
+    AWARD_MOSTHONORABLE    = 0x00400,
+    AWARD_MOSTDISHONORABLE = 0x00800,
+    AWARD_SHORTESTINNINGS  = 0x01000,
+    AWARD_LONGESTINNINGS   = 0x02000,
+    AWARD_DOUBLEKILL       = 0x04000,
+    AWARD_TRIPLEKILL       = 0x08000,
+    AWARD_QUADKILL         = 0x10000
+} AWARD;
+
+
 typedef enum WAYMODE
 {
     WAYMODE_0,
@@ -3014,7 +3040,6 @@ typedef enum SPSEGMENT
 #define MAX_TEXTURES             3001
 #define PROPRECORD_STAN_ROOM_LEN 4
 #define NUMBER_SHOTGUN_BULLETS   5
-
 
 #ifdef VERSION_EU
 #define NTSC 0
