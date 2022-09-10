@@ -444,6 +444,10 @@ BITFLAG(RUNTIMEBITFLAG,
 #define QUADRANT_2NDWPTOTARGET 0x10 // second waypoint on route to target
 #define QUADRANT_20            0x20 // second waypoint on route to target
 
+#define CULLMODE_NONE  1
+#define CULLMODE_FRONT 2
+#define CULLMODE_BACK  3
+
 #pragma endregion
 
 #pragma region Constants

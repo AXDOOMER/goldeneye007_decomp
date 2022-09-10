@@ -7026,57 +7026,16 @@ void sub_GAME_7F072644(ModelRenderData *renderdata)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0726F8(void) {
-
+void modelApplyCullMode(ModelRenderData *renderdata)
+{
+	if (renderdata->cullmode == CULLMODE_NONE) {
+		gSPClearGeometryMode(renderdata->gdl++, G_CULL_BOTH);
+	} else if (renderdata->cullmode == CULLMODE_FRONT) {
+		gSPSetGeometryMode(renderdata->gdl++, G_CULL_FRONT);
+	} else if (renderdata->cullmode == CULLMODE_BACK) {
+		gSPSetGeometryMode(renderdata->gdl++, G_CULL_BACK);
+	}
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0726F8
-/* 0A7228 7F0726F8 8C82003C */  lw    $v0, 0x3c($a0)
-/* 0A722C 7F0726FC 24010001 */  li    $at, 1
-/* 0A7230 7F072700 5441000A */  bnel  $v0, $at, .L7F07272C
-/* 0A7234 7F072704 24010002 */   li    $at, 2
-/* 0A7238 7F072708 8C83000C */  lw    $v1, 0xc($a0)
-/* 0A723C 7F07270C 3C0FB600 */  lui   $t7, 0xb600
-/* 0A7240 7F072710 24183000 */  li    $t8, 12288
-/* 0A7244 7F072714 246E0008 */  addiu $t6, $v1, 8
-/* 0A7248 7F072718 AC8E000C */  sw    $t6, 0xc($a0)
-/* 0A724C 7F07271C AC780004 */  sw    $t8, 4($v1)
-/* 0A7250 7F072720 03E00008 */  jr    $ra
-/* 0A7254 7F072724 AC6F0000 */   sw    $t7, ($v1)
-
-/* 0A7258 7F072728 24010002 */  li    $at, 2
-.L7F07272C:
-/* 0A725C 7F07272C 5441000A */  bnel  $v0, $at, .L7F072758
-/* 0A7260 7F072730 24010003 */   li    $at, 3
-/* 0A7264 7F072734 8C83000C */  lw    $v1, 0xc($a0)
-/* 0A7268 7F072738 3C08B700 */  lui   $t0, 0xb700
-/* 0A726C 7F07273C 24091000 */  li    $t1, 4096
-/* 0A7270 7F072740 24790008 */  addiu $t9, $v1, 8
-/* 0A7274 7F072744 AC99000C */  sw    $t9, 0xc($a0)
-/* 0A7278 7F072748 AC690004 */  sw    $t1, 4($v1)
-/* 0A727C 7F07274C 03E00008 */  jr    $ra
-/* 0A7280 7F072750 AC680000 */   sw    $t0, ($v1)
-
-/* 0A7284 7F072754 24010003 */  li    $at, 3
-.L7F072758:
-/* 0A7288 7F072758 14410008 */  bne   $v0, $at, .L7F07277C
-/* 0A728C 7F07275C 00000000 */   nop   
-/* 0A7290 7F072760 8C83000C */  lw    $v1, 0xc($a0)
-/* 0A7294 7F072764 3C0BB700 */  lui   $t3, 0xb700
-/* 0A7298 7F072768 240C2000 */  li    $t4, 8192
-/* 0A729C 7F07276C 246A0008 */  addiu $t2, $v1, 8
-/* 0A72A0 7F072770 AC8A000C */  sw    $t2, 0xc($a0)
-/* 0A72A4 7F072774 AC6C0004 */  sw    $t4, 4($v1)
-/* 0A72A8 7F072778 AC6B0000 */  sw    $t3, ($v1)
-.L7F07277C:
-/* 0A72AC 7F07277C 03E00008 */  jr    $ra
-/* 0A72B0 7F072780 00000000 */   nop   
-)
-#endif
-
 
 
 
@@ -7119,7 +7078,7 @@ glabel sub_GAME_7F072784
 /* 0A7320 7F0727F0 8E0A003C */  lw    $t2, 0x3c($s0)
 /* 0A7324 7F0727F4 51400004 */  beql  $t2, $zero, .L7F072808
 /* 0A7328 7F0727F8 82220012 */   lb    $v0, 0x12($s1)
-/* 0A732C 7F0727FC 0FC1C9BE */  jal   sub_GAME_7F0726F8
+/* 0A732C 7F0727FC 0FC1C9BE */  jal   modelApplyCullMode
 /* 0A7330 7F072800 02002025 */   move  $a0, $s0
 /* 0A7334 7F072804 82220012 */  lb    $v0, 0x12($s1)
 .L7F072808:
@@ -7206,7 +7165,7 @@ glabel sub_GAME_7F072784
 /* 0A7464 7F072934 8E18003C */  lw    $t8, 0x3c($s0)
 /* 0A7468 7F072938 53000004 */  beql  $t8, $zero, .L7F07294C
 /* 0A746C 7F07293C 02002025 */   move  $a0, $s0
-/* 0A7470 7F072940 0FC1C9BE */  jal   sub_GAME_7F0726F8
+/* 0A7470 7F072940 0FC1C9BE */  jal   modelApplyCullMode
 /* 0A7474 7F072944 02002025 */   move  $a0, $s0
 /* 0A7478 7F072948 02002025 */  move  $a0, $s0
 .L7F07294C:
@@ -7276,7 +7235,7 @@ glabel sub_GAME_7F072984
 /* 0A7538 7F072A08 8E0B003C */  lw    $t3, 0x3c($s0)
 /* 0A753C 7F072A0C 51600004 */  beql  $t3, $zero, .L7F072A20
 /* 0A7540 7F072A10 86220018 */   lh    $v0, 0x18($s1)
-/* 0A7544 7F072A14 0FC1C9BE */  jal   sub_GAME_7F0726F8
+/* 0A7544 7F072A14 0FC1C9BE */  jal   modelApplyCullMode
 /* 0A7548 7F072A18 02002025 */   move  $a0, $s0
 /* 0A754C 7F072A1C 86220018 */  lh    $v0, 0x18($s1)
 .L7F072A20:
@@ -7380,7 +7339,7 @@ glabel sub_GAME_7F072984
 /* 0A76C0 7F072B90 8E0B003C */  lw    $t3, 0x3c($s0)
 /* 0A76C4 7F072B94 51600004 */  beql  $t3, $zero, .L7F072BA8
 /* 0A76C8 7F072B98 8E03000C */   lw    $v1, 0xc($s0)
-/* 0A76CC 7F072B9C 0FC1C9BE */  jal   sub_GAME_7F0726F8
+/* 0A76CC 7F072B9C 0FC1C9BE */  jal   modelApplyCullMode
 /* 0A76D0 7F072BA0 02002025 */   move  $a0, $s0
 /* 0A76D4 7F072BA4 8E03000C */  lw    $v1, 0xc($s0)
 .L7F072BA8:
