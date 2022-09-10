@@ -7268,44 +7268,16 @@ void dorottex(ModelRenderData *renderdata, ModelNode *node)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F073038(void) {
-
+void sub_GAME_7F073038(ModelRenderData *renderdata, struct sImageTableEntry *tconfig, s32 arg2)
+{
+	likely_generate_DL_for_image_declaration(&renderdata->gdl, tconfig, arg2, renderdata->zbufferenabled, 2);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F073038
-/* 0A7B68 7F073038 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0A7B6C 7F07303C AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0A7B70 7F073040 AFA40020 */  sw    $a0, 0x20($sp)
-/* 0A7B74 7F073044 00807025 */  move  $t6, $a0
-/* 0A7B78 7F073048 8DC70004 */  lw    $a3, 4($t6)
-/* 0A7B7C 7F07304C 240F0002 */  li    $t7, 2
-/* 0A7B80 7F073050 AFAF0010 */  sw    $t7, 0x10($sp)
-/* 0A7B84 7F073054 0FC1DB5A */  jal   likely_generate_DL_for_image_declaration
-/* 0A7B88 7F073058 2484000C */   addiu $a0, $a0, 0xc
-/* 0A7B8C 7F07305C 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0A7B90 7F073060 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0A7B94 7F073064 03E00008 */  jr    $ra
-/* 0A7B98 7F073068 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 
 void sub_GAME_7F07306C(s32 param_1,struct Model *param_2,struct ModelNode *param_3)
 {
     return;
 }
-
-
-
-
-
 
 
 #ifdef NONMATCHING
