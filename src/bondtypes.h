@@ -854,7 +854,7 @@ typedef union
                 3 = GunLighting - Reduced Secondary Commands (guns)
                 4 = Normal Fog/Lighting object
             */
-            u8      ModelType;         
+            s8      ModelType;
         } ModelRoData_DisplayListRecord;
 
         /**
