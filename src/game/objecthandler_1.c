@@ -11806,69 +11806,52 @@ void modelIterateDisplayLists(ModelFileHeader *fileheader, ModelNode **nodeptr, 
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F07623C(void) {
+void modelNodeReplaceGdl(u32 arg0, ModelNode *node, Gfx *find, Gfx *replacement)
+{
+    union ModelRoData *rodata;
+    u32 type = node->Opcode & 0xff;
 
+    switch (type) {
+        case MODELNODE_OPCODE_DISPLAYLISTRECORD:
+            rodata = node->Data;
+
+            if (rodata->DisplayList.Primary == find)
+            {
+                rodata->DisplayList.Primary = replacement;
+                return;
+            }
+
+            if (rodata->DisplayList.Secondary == find)
+            {
+                rodata->DisplayList.Secondary = replacement;
+                return;
+            }
+            break;
+
+        case MODELNODE_OPCODE_DISPLAYLIST_COLLISIONRECORD:
+            rodata = node->Data;
+
+            if (rodata->DisplayListCollisions.Primary == find)
+            {
+                rodata->DisplayListCollisions.Primary = replacement;
+                return;
+            }
+
+            if (rodata->DisplayListCollisions.Secondary == find)
+            {
+                rodata->DisplayListCollisions.Secondary = replacement;
+                return;
+            }
+            break;
+
+        case MODELNODE_OPCODE_DISPLAYLISTPRIMARYRECORD:
+            rodata = node->Data;
+
+            if (rodata->DisplayListPrimary.Primary == find)
+            {
+                rodata->DisplayListPrimary.Primary = replacement;
+                return;
+            }
+            break;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F07623C
-/* 0AAD6C 7F07623C AFA40000 */  sw    $a0, ($sp)
-/* 0AAD70 7F076240 94A20000 */  lhu   $v0, ($a1)
-/* 0AAD74 7F076244 24010004 */  li    $at, 4
-/* 0AAD78 7F076248 304E00FF */  andi  $t6, $v0, 0xff
-/* 0AAD7C 7F07624C 11C10007 */  beq   $t6, $at, .L7F07626C
-/* 0AAD80 7F076250 24010016 */   li    $at, 22
-/* 0AAD84 7F076254 11C1001B */  beq   $t6, $at, .L7F0762C4
-/* 0AAD88 7F076258 24010018 */   li    $at, 24
-/* 0AAD8C 7F07625C 51C1000F */  beql  $t6, $at, .L7F07629C
-/* 0AAD90 7F076260 8CA20004 */   lw    $v0, 4($a1)
-/* 0AAD94 7F076264 03E00008 */  jr    $ra
-/* 0AAD98 7F076268 00000000 */   nop   
-
-.L7F07626C:
-/* 0AAD9C 7F07626C 8CA20004 */  lw    $v0, 4($a1)
-/* 0AADA0 7F076270 8C4F0000 */  lw    $t7, ($v0)
-/* 0AADA4 7F076274 54CF0004 */  bnel  $a2, $t7, .L7F076288
-/* 0AADA8 7F076278 8C580004 */   lw    $t8, 4($v0)
-/* 0AADAC 7F07627C 03E00008 */  jr    $ra
-/* 0AADB0 7F076280 AC470000 */   sw    $a3, ($v0)
-
-/* 0AADB4 7F076284 8C580004 */  lw    $t8, 4($v0)
-.L7F076288:
-/* 0AADB8 7F076288 14D80013 */  bne   $a2, $t8, .L7F0762D8
-/* 0AADBC 7F07628C 00000000 */   nop   
-/* 0AADC0 7F076290 03E00008 */  jr    $ra
-/* 0AADC4 7F076294 AC470004 */   sw    $a3, 4($v0)
-
-/* 0AADC8 7F076298 8CA20004 */  lw    $v0, 4($a1)
-.L7F07629C:
-/* 0AADCC 7F07629C 8C590000 */  lw    $t9, ($v0)
-/* 0AADD0 7F0762A0 54D90004 */  bnel  $a2, $t9, .L7F0762B4
-/* 0AADD4 7F0762A4 8C480004 */   lw    $t0, 4($v0)
-/* 0AADD8 7F0762A8 03E00008 */  jr    $ra
-/* 0AADDC 7F0762AC AC470000 */   sw    $a3, ($v0)
-
-/* 0AADE0 7F0762B0 8C480004 */  lw    $t0, 4($v0)
-.L7F0762B4:
-/* 0AADE4 7F0762B4 14C80008 */  bne   $a2, $t0, .L7F0762D8
-/* 0AADE8 7F0762B8 00000000 */   nop   
-/* 0AADEC 7F0762BC 03E00008 */  jr    $ra
-/* 0AADF0 7F0762C0 AC470004 */   sw    $a3, 4($v0)
-
-.L7F0762C4:
-/* 0AADF4 7F0762C4 8CA20004 */  lw    $v0, 4($a1)
-/* 0AADF8 7F0762C8 8C490008 */  lw    $t1, 8($v0)
-/* 0AADFC 7F0762CC 14C90002 */  bne   $a2, $t1, .L7F0762D8
-/* 0AAE00 7F0762D0 00000000 */   nop   
-/* 0AAE04 7F0762D4 AC470008 */  sw    $a3, 8($v0)
-.L7F0762D8:
-/* 0AAE08 7F0762D8 03E00008 */  jr    $ra
-/* 0AAE0C 7F0762DC 00000000 */   nop   
-)
-#endif
-
-
-
-

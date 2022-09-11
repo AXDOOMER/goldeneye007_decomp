@@ -91,7 +91,7 @@ glabel sub_GAME_7F0762E0
 /* 0AAF28 7F0763F8 01AEC023 */  subu  $t8, $t5, $t6
 /* 0AAF2C 7F0763FC 03119023 */  subu  $s2, $t8, $s1
 .L7F076400:
-/* 0AAF30 7F076400 0FC1D88F */  jal   sub_GAME_7F07623C
+/* 0AAF30 7F076400 0FC1D88F */  jal   modelNodeReplaceGdl
 /* 0AAF34 7F076404 02603825 */   move  $a3, $s3
 /* 0AAF38 7F076408 8EA20008 */  lw    $v0, 8($s5)
 /* 0AAF3C 7F07640C 8FB90058 */  lw    $t9, 0x58($sp)
