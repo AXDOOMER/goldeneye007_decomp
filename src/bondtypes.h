@@ -804,6 +804,26 @@ typedef union
             u16                           reserved;   /*0xE padding*/
         } ModelRoData_HeaderRecord;
 
+        typedef struct ModelRwData_HeaderRecord
+        {
+            s8 unk00;
+            s8 unk01;
+            s8 unk02;
+            f32 ground;
+            coord3d pos;
+            f32 unk14; // angle
+            f32 unk18;
+            f32 unk1c;
+            f32 unk20; // angle
+            coord3d unk24;
+            f32 unk30; // angle
+            coord3d unk34;
+            coord3d unk40; // "2" version of unk24
+            coord3d unk4c; // "2" version of unk34
+            f32 unk58;
+            f32 unk5c;
+        } ModelRwData_HeaderRecord;
+
         /**
          * Opcode 2
          * Positions Child nodes reletivly.

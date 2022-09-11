@@ -620,314 +620,69 @@ void getpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#MATCH - 
 }
 
 
-
-
-#ifdef NONMATCHING
-//https://decomp.me/scratch/S3JNh
-void setpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#75% s0 should not be used
+void setpartoffset(Model *model, ModelNode *node, coord3d *pos)
 {
-    if (!objinst)
-    {
+#if defined(LEFTOVERDEBUG)
+    if (!model) {
         osSyncPrintf("setpartoffset: no objinst!");
         return_null();
     }
-    if (!part)
-    {
+
+    if (!node) {
         osSyncPrintf("setpartoffset: no partdesc!");
         return_null();
     }
-
-    switch (part->Opcode & 0xFF)
+    else
     {
-        case 1:
-        {
-            volatile float         deltay, deltax;
-            struct modeldata_root *objinstroot = extract_id_from_object_structure_microcode(objinst, part);
+        // huh?
+    }
+#endif
+    switch (node->Opcode & 0xff)
+    {
+        case MODELNODE_OPCODE_HEADERRECORD:
+            {
+                ModelRwData_HeaderRecord *rwdata = extract_id_from_object_structure_microcode(model, node);
+                coord3d diff[1];
 
-            deltax = offset->x - objinstroot->pos.x;
-            deltay = offset->z - objinstroot->pos.z;
+                diff[0].x = pos->x - rwdata->pos.x;
+                diff[0].z = pos->z - rwdata->pos.z;
 
-            objinstroot->pos.x = offset->x;
-            objinstroot->pos.y = offset->y;
-            objinstroot->pos.z = offset->z;
-            objinstroot->unk24.x += deltax;
-            objinstroot->unk24.z += deltay;
-            objinstroot->unk34.x += deltax;
-            objinstroot->unk34.z += deltay;
-            objinstroot->unk40.x += deltax;
-            objinstroot->unk40.z += deltay;
-            objinstroot->unk4c.x += deltax;
-            objinstroot->unk4c.z += deltay;
-            return;
-        }
-        case 2:
-        {
-            ModelRoData_GroupRecord *prt = &part->Data->Group;
-            prt->Origin.x              = offset->x;
-            prt->Origin.y              = offset->y;
-            prt->Origin.z              = offset->z;
-            return;
-        }
-        case 3:
-        {
-            ModelRoData_GroupSimpleRecord *prt = &part->Data->GroupSimple; //UNUSED at this time
-            prt->Origin.x                    = offset->x;
-            prt->Origin.y                    = offset->y;
-            prt->Origin.z                    = offset->z;
-            return;
-        }
-        case 21:
-        {
-            ModelRoData_GroupSimpleRecord *prt = &part->Data->GroupSimple;
-            prt->Origin.x                    = offset->x;
-            prt->Origin.y                    = offset->y;
-            prt->Origin.z                    = offset->z;
-            return;
-        }
+                rwdata->pos.x = pos->x;
+                rwdata->pos.y = pos->y;
+                rwdata->pos.z = pos->z;
+
+                rwdata->unk24.x += diff[0].x; rwdata->unk24.z += diff[0].z;
+                rwdata->unk34.x += diff[0].x; rwdata->unk34.z += diff[0].z;
+                rwdata->unk40.x += diff[0].x; rwdata->unk40.z += diff[0].z;
+                rwdata->unk4c.x += diff[0].x; rwdata->unk4c.z += diff[0].z;
+            }
+            break;
+        case MODELNODE_OPCODE_GROUPRECORD:
+            {
+                ModelRoData_GroupRecord *rodata = &node->Data->Group;
+                rodata->Origin.x = pos->x;
+                rodata->Origin.y = pos->y;
+                rodata->Origin.z = pos->z;
+            }
+            break;
+        case MODELNODE_OPCODE_UNUSED_03:
+            {
+                ModelRoData_GroupRecord *rodata = &node->Data->Group;
+                rodata->Origin.x = pos->x;
+                rodata->Origin.y = pos->y;
+                rodata->Origin.z = pos->z;
+            }
+            break;
+        case MODELNODE_OPCODE_GROUPSIMPLERECORD:
+            {
+                ModelRoData_GroupSimpleRecord *rodata = &node->Data->GroupSimple;
+                rodata->Origin.x = pos->x;
+                rodata->Origin.y = pos->y;
+                rodata->Origin.z = pos->z;
+            }
+            break;
     }
 }
-#else
-#ifndef VERSION_EU
-//D:8005467C
-const char aSetpartoffsetNoObjinst[] = "setpartoffset: no objinst!";
-//D:80054698
-const char aSetpartoffsetNoPartdesc[] = "setpartoffset: no partdesc!";
-GLOBAL_ASM(
-.text
-glabel setpartoffset
-/* 0A1500 7F06C9D0 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0A1504 7F06C9D4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A1508 7F06C9D8 1480000A */  bnez  $a0, .L7F06CA04
-/* 0A150C 7F06C9DC AFA40028 */   sw    $a0, 0x28($sp)
-/* 0A1510 7F06C9E0 3C048005 */  lui   $a0, %hi(aSetpartoffsetNoObjinst)
-/* 0A1514 7F06C9E4 2484467C */  addiu $a0, %lo(aSetpartoffsetNoObjinst) # addiu $a0, $a0, 0x467c
-/* 0A1518 7F06C9E8 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 0A151C 7F06C9EC 0C0033D1 */  jal   osSyncPrintf
-/* 0A1520 7F06C9F0 AFA60030 */   sw    $a2, 0x30($sp)
-/* 0A1524 7F06C9F4 0FC1B11B */  jal   return_null
-/* 0A1528 7F06C9F8 00000000 */   nop   
-/* 0A152C 7F06C9FC 8FA5002C */  lw    $a1, 0x2c($sp)
-/* 0A1530 7F06CA00 8FA60030 */  lw    $a2, 0x30($sp)
-.L7F06CA04:
-/* 0A1534 7F06CA04 14A00009 */  bnez  $a1, .L7F06CA2C
-/* 0A1538 7F06CA08 3C048005 */   lui   $a0, %hi(aSetpartoffsetNoPartdesc)
-/* 0A153C 7F06CA0C 24844698 */  addiu $a0, %lo(aSetpartoffsetNoPartdesc) # addiu $a0, $a0, 0x4698
-/* 0A1540 7F06CA10 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 0A1544 7F06CA14 0C0033D1 */  jal   osSyncPrintf
-/* 0A1548 7F06CA18 AFA60030 */   sw    $a2, 0x30($sp)
-/* 0A154C 7F06CA1C 0FC1B11B */  jal   return_null
-/* 0A1550 7F06CA20 00000000 */   nop   
-/* 0A1554 7F06CA24 8FA5002C */  lw    $a1, 0x2c($sp)
-/* 0A1558 7F06CA28 8FA60030 */  lw    $a2, 0x30($sp)
-.L7F06CA2C:
-/* 0A155C 7F06CA2C 94A20000 */  lhu   $v0, ($a1)
-/* 0A1560 7F06CA30 24010001 */  li    $at, 1
-/* 0A1564 7F06CA34 8FA40028 */  lw    $a0, 0x28($sp)
-/* 0A1568 7F06CA38 304F00FF */  andi  $t7, $v0, 0xff
-/* 0A156C 7F06CA3C 11E10009 */  beq   $t7, $at, .L7F06CA64
-/* 0A1570 7F06CA40 24010002 */   li    $at, 2
-/* 0A1574 7F06CA44 11E10039 */  beq   $t7, $at, .L7F06CB2C
-/* 0A1578 7F06CA48 24010003 */   li    $at, 3
-/* 0A157C 7F06CA4C 11E1003F */  beq   $t7, $at, .L7F06CB4C
-/* 0A1580 7F06CA50 24010015 */   li    $at, 21
-/* 0A1584 7F06CA54 51E10046 */  beql  $t7, $at, .L7F06CB70
-/* 0A1588 7F06CA58 8CA20004 */   lw    $v0, 4($a1)
-/* 0A158C 7F06CA5C 1000004B */  b     .L7F06CB8C
-/* 0A1590 7F06CA60 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F06CA64:
-/* 0A1594 7F06CA64 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
-/* 0A1598 7F06CA68 AFA60030 */   sw    $a2, 0x30($sp)
-/* 0A159C 7F06CA6C 8FA60030 */  lw    $a2, 0x30($sp)
-/* 0A15A0 7F06CA70 C4460008 */  lwc1  $f6, 8($v0)
-/* 0A15A4 7F06CA74 C4C40000 */  lwc1  $f4, ($a2)
-/* 0A15A8 7F06CA78 46062201 */  sub.s $f8, $f4, $f6
-/* 0A15AC 7F06CA7C E7A80018 */  swc1  $f8, 0x18($sp)
-/* 0A15B0 7F06CA80 C4500010 */  lwc1  $f16, 0x10($v0)
-/* 0A15B4 7F06CA84 C4CA0008 */  lwc1  $f10, 8($a2)
-/* 0A15B8 7F06CA88 46105481 */  sub.s $f18, $f10, $f16
-/* 0A15BC 7F06CA8C E7B20020 */  swc1  $f18, 0x20($sp)
-/* 0A15C0 7F06CA90 C4C40000 */  lwc1  $f4, ($a2)
-/* 0A15C4 7F06CA94 C44A0024 */  lwc1  $f10, 0x24($v0)
-/* 0A15C8 7F06CA98 E4440008 */  swc1  $f4, 8($v0)
-/* 0A15CC 7F06CA9C C4C60004 */  lwc1  $f6, 4($a2)
-/* 0A15D0 7F06CAA0 C444002C */  lwc1  $f4, 0x2c($v0)
-/* 0A15D4 7F06CAA4 E446000C */  swc1  $f6, 0xc($v0)
-/* 0A15D8 7F06CAA8 C4C80008 */  lwc1  $f8, 8($a2)
-/* 0A15DC 7F06CAAC E4480010 */  swc1  $f8, 0x10($v0)
-/* 0A15E0 7F06CAB0 C7B00018 */  lwc1  $f16, 0x18($sp)
-/* 0A15E4 7F06CAB4 46105480 */  add.s $f18, $f10, $f16
-/* 0A15E8 7F06CAB8 C44A0034 */  lwc1  $f10, 0x34($v0)
-/* 0A15EC 7F06CABC E4520024 */  swc1  $f18, 0x24($v0)
-/* 0A15F0 7F06CAC0 C7A60020 */  lwc1  $f6, 0x20($sp)
-/* 0A15F4 7F06CAC4 46062200 */  add.s $f8, $f4, $f6
-/* 0A15F8 7F06CAC8 C444003C */  lwc1  $f4, 0x3c($v0)
-/* 0A15FC 7F06CACC E448002C */  swc1  $f8, 0x2c($v0)
-/* 0A1600 7F06CAD0 C7B00018 */  lwc1  $f16, 0x18($sp)
-/* 0A1604 7F06CAD4 46105480 */  add.s $f18, $f10, $f16
-/* 0A1608 7F06CAD8 C44A0040 */  lwc1  $f10, 0x40($v0)
-/* 0A160C 7F06CADC E4520034 */  swc1  $f18, 0x34($v0)
-/* 0A1610 7F06CAE0 C7A60020 */  lwc1  $f6, 0x20($sp)
-/* 0A1614 7F06CAE4 46062200 */  add.s $f8, $f4, $f6
-/* 0A1618 7F06CAE8 C4440048 */  lwc1  $f4, 0x48($v0)
-/* 0A161C 7F06CAEC E448003C */  swc1  $f8, 0x3c($v0)
-/* 0A1620 7F06CAF0 C7B00018 */  lwc1  $f16, 0x18($sp)
-/* 0A1624 7F06CAF4 46105480 */  add.s $f18, $f10, $f16
-/* 0A1628 7F06CAF8 C44A004C */  lwc1  $f10, 0x4c($v0)
-/* 0A162C 7F06CAFC E4520040 */  swc1  $f18, 0x40($v0)
-/* 0A1630 7F06CB00 C7A60020 */  lwc1  $f6, 0x20($sp)
-/* 0A1634 7F06CB04 46062200 */  add.s $f8, $f4, $f6
-/* 0A1638 7F06CB08 C4440054 */  lwc1  $f4, 0x54($v0)
-/* 0A163C 7F06CB0C E4480048 */  swc1  $f8, 0x48($v0)
-/* 0A1640 7F06CB10 C7B00018 */  lwc1  $f16, 0x18($sp)
-/* 0A1644 7F06CB14 46105480 */  add.s $f18, $f10, $f16
-/* 0A1648 7F06CB18 E452004C */  swc1  $f18, 0x4c($v0)
-/* 0A164C 7F06CB1C C7A60020 */  lwc1  $f6, 0x20($sp)
-/* 0A1650 7F06CB20 46062200 */  add.s $f8, $f4, $f6
-/* 0A1654 7F06CB24 10000018 */  b     .L7F06CB88
-/* 0A1658 7F06CB28 E4480054 */   swc1  $f8, 0x54($v0)
-.L7F06CB2C:
-/* 0A165C 7F06CB2C 8CA20004 */  lw    $v0, 4($a1)
-/* 0A1660 7F06CB30 C4CA0000 */  lwc1  $f10, ($a2)
-/* 0A1664 7F06CB34 E44A0000 */  swc1  $f10, ($v0)
-/* 0A1668 7F06CB38 C4D00004 */  lwc1  $f16, 4($a2)
-/* 0A166C 7F06CB3C E4500004 */  swc1  $f16, 4($v0)
-/* 0A1670 7F06CB40 C4D20008 */  lwc1  $f18, 8($a2)
-/* 0A1674 7F06CB44 10000010 */  b     .L7F06CB88
-/* 0A1678 7F06CB48 E4520008 */   swc1  $f18, 8($v0)
-.L7F06CB4C:
-/* 0A167C 7F06CB4C 8CA20004 */  lw    $v0, 4($a1)
-/* 0A1680 7F06CB50 C4C40000 */  lwc1  $f4, ($a2)
-/* 0A1684 7F06CB54 E4440000 */  swc1  $f4, ($v0)
-/* 0A1688 7F06CB58 C4C60004 */  lwc1  $f6, 4($a2)
-/* 0A168C 7F06CB5C E4460004 */  swc1  $f6, 4($v0)
-/* 0A1690 7F06CB60 C4C80008 */  lwc1  $f8, 8($a2)
-/* 0A1694 7F06CB64 10000008 */  b     .L7F06CB88
-/* 0A1698 7F06CB68 E4480008 */   swc1  $f8, 8($v0)
-/* 0A169C 7F06CB6C 8CA20004 */  lw    $v0, 4($a1)
-.L7F06CB70:
-/* 0A16A0 7F06CB70 C4CA0000 */  lwc1  $f10, ($a2)
-/* 0A16A4 7F06CB74 E44A0000 */  swc1  $f10, ($v0)
-/* 0A16A8 7F06CB78 C4D00004 */  lwc1  $f16, 4($a2)
-/* 0A16AC 7F06CB7C E4500004 */  swc1  $f16, 4($v0)
-/* 0A16B0 7F06CB80 C4D20008 */  lwc1  $f18, 8($a2)
-/* 0A16B4 7F06CB84 E4520008 */  swc1  $f18, 8($v0)
-.L7F06CB88:
-/* 0A16B8 7F06CB88 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F06CB8C:
-/* 0A16BC 7F06CB8C 27BD0028 */  addiu $sp, $sp, 0x28
-/* 0A16C0 7F06CB90 03E00008 */  jr    $ra
-/* 0A16C4 7F06CB94 00000000 */   nop   
-)
-#endif
-
-#ifdef VERSION_EU
-GLOBAL_ASM(
-.text
-glabel setpartoffset
-/* 09FA58 7F06D068 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 09FA5C 7F06D06C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09FA60 7F06D070 94A20000 */  lhu   $v0, ($a1)
-/* 09FA64 7F06D074 24010001 */  li    $at, 1
-/* 09FA68 7F06D078 304E00FF */  andi  $t6, $v0, 0xff
-/* 09FA6C 7F06D07C 11C10009 */  beq   $t6, $at, .L7F06D0A4
-/* 09FA70 7F06D080 24010002 */   li    $at, 2
-/* 09FA74 7F06D084 11C10039 */  beq   $t6, $at, .L7F06D16C
-/* 09FA78 7F06D088 24010003 */   li    $at, 3
-/* 09FA7C 7F06D08C 11C1003F */  beq   $t6, $at, .L7F06D18C
-/* 09FA80 7F06D090 24010015 */   li    $at, 21
-/* 09FA84 7F06D094 51C10046 */  beql  $t6, $at, .L7F06D1B0
-/* 09FA88 7F06D098 8CA20004 */   lw    $v0, 4($a1)
-/* 09FA8C 7F06D09C 1000004B */  b     .L7F06D1CC
-/* 09FA90 7F06D0A0 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F06D0A4:
-/* 09FA94 7F06D0A4 0FC1B3A3 */  jal   extract_id_from_object_structure_microcode
-/* 09FA98 7F06D0A8 AFA60030 */   sw    $a2, 0x30($sp)
-/* 09FA9C 7F06D0AC 8FA60030 */  lw    $a2, 0x30($sp)
-/* 09FAA0 7F06D0B0 C4460008 */  lwc1  $f6, 8($v0)
-/* 09FAA4 7F06D0B4 C4C40000 */  lwc1  $f4, ($a2)
-/* 09FAA8 7F06D0B8 46062201 */  sub.s $f8, $f4, $f6
-/* 09FAAC 7F06D0BC E7A80018 */  swc1  $f8, 0x18($sp)
-/* 09FAB0 7F06D0C0 C4500010 */  lwc1  $f16, 0x10($v0)
-/* 09FAB4 7F06D0C4 C4CA0008 */  lwc1  $f10, 8($a2)
-/* 09FAB8 7F06D0C8 46105481 */  sub.s $f18, $f10, $f16
-/* 09FABC 7F06D0CC E7B20020 */  swc1  $f18, 0x20($sp)
-/* 09FAC0 7F06D0D0 C4C40000 */  lwc1  $f4, ($a2)
-/* 09FAC4 7F06D0D4 C44A0024 */  lwc1  $f10, 0x24($v0)
-/* 09FAC8 7F06D0D8 E4440008 */  swc1  $f4, 8($v0)
-/* 09FACC 7F06D0DC C4C60004 */  lwc1  $f6, 4($a2)
-/* 09FAD0 7F06D0E0 C444002C */  lwc1  $f4, 0x2c($v0)
-/* 09FAD4 7F06D0E4 E446000C */  swc1  $f6, 0xc($v0)
-/* 09FAD8 7F06D0E8 C4C80008 */  lwc1  $f8, 8($a2)
-/* 09FADC 7F06D0EC E4480010 */  swc1  $f8, 0x10($v0)
-/* 09FAE0 7F06D0F0 C7B00018 */  lwc1  $f16, 0x18($sp)
-/* 09FAE4 7F06D0F4 46105480 */  add.s $f18, $f10, $f16
-/* 09FAE8 7F06D0F8 C44A0034 */  lwc1  $f10, 0x34($v0)
-/* 09FAEC 7F06D0FC E4520024 */  swc1  $f18, 0x24($v0)
-/* 09FAF0 7F06D100 C7A60020 */  lwc1  $f6, 0x20($sp)
-/* 09FAF4 7F06D104 46062200 */  add.s $f8, $f4, $f6
-/* 09FAF8 7F06D108 C444003C */  lwc1  $f4, 0x3c($v0)
-/* 09FAFC 7F06D10C E448002C */  swc1  $f8, 0x2c($v0)
-/* 09FB00 7F06D110 C7B00018 */  lwc1  $f16, 0x18($sp)
-/* 09FB04 7F06D114 46105480 */  add.s $f18, $f10, $f16
-/* 09FB08 7F06D118 C44A0040 */  lwc1  $f10, 0x40($v0)
-/* 09FB0C 7F06D11C E4520034 */  swc1  $f18, 0x34($v0)
-/* 09FB10 7F06D120 C7A60020 */  lwc1  $f6, 0x20($sp)
-/* 09FB14 7F06D124 46062200 */  add.s $f8, $f4, $f6
-/* 09FB18 7F06D128 C4440048 */  lwc1  $f4, 0x48($v0)
-/* 09FB1C 7F06D12C E448003C */  swc1  $f8, 0x3c($v0)
-/* 09FB20 7F06D130 C7B00018 */  lwc1  $f16, 0x18($sp)
-/* 09FB24 7F06D134 46105480 */  add.s $f18, $f10, $f16
-/* 09FB28 7F06D138 C44A004C */  lwc1  $f10, 0x4c($v0)
-/* 09FB2C 7F06D13C E4520040 */  swc1  $f18, 0x40($v0)
-/* 09FB30 7F06D140 C7A60020 */  lwc1  $f6, 0x20($sp)
-/* 09FB34 7F06D144 46062200 */  add.s $f8, $f4, $f6
-/* 09FB38 7F06D148 C4440054 */  lwc1  $f4, 0x54($v0)
-/* 09FB3C 7F06D14C E4480048 */  swc1  $f8, 0x48($v0)
-/* 09FB40 7F06D150 C7B00018 */  lwc1  $f16, 0x18($sp)
-/* 09FB44 7F06D154 46105480 */  add.s $f18, $f10, $f16
-/* 09FB48 7F06D158 E452004C */  swc1  $f18, 0x4c($v0)
-/* 09FB4C 7F06D15C C7A60020 */  lwc1  $f6, 0x20($sp)
-/* 09FB50 7F06D160 46062200 */  add.s $f8, $f4, $f6
-/* 09FB54 7F06D164 10000018 */  b     .L7F06D1C8
-/* 09FB58 7F06D168 E4480054 */   swc1  $f8, 0x54($v0)
-.L7F06D16C:
-/* 09FB5C 7F06D16C 8CA20004 */  lw    $v0, 4($a1)
-/* 09FB60 7F06D170 C4CA0000 */  lwc1  $f10, ($a2)
-/* 09FB64 7F06D174 E44A0000 */  swc1  $f10, ($v0)
-/* 09FB68 7F06D178 C4D00004 */  lwc1  $f16, 4($a2)
-/* 09FB6C 7F06D17C E4500004 */  swc1  $f16, 4($v0)
-/* 09FB70 7F06D180 C4D20008 */  lwc1  $f18, 8($a2)
-/* 09FB74 7F06D184 10000010 */  b     .L7F06D1C8
-/* 09FB78 7F06D188 E4520008 */   swc1  $f18, 8($v0)
-.L7F06D18C:
-/* 09FB7C 7F06D18C 8CA20004 */  lw    $v0, 4($a1)
-/* 09FB80 7F06D190 C4C40000 */  lwc1  $f4, ($a2)
-/* 09FB84 7F06D194 E4440000 */  swc1  $f4, ($v0)
-/* 09FB88 7F06D198 C4C60004 */  lwc1  $f6, 4($a2)
-/* 09FB8C 7F06D19C E4460004 */  swc1  $f6, 4($v0)
-/* 09FB90 7F06D1A0 C4C80008 */  lwc1  $f8, 8($a2)
-/* 09FB94 7F06D1A4 10000008 */  b     .L7F06D1C8
-/* 09FB98 7F06D1A8 E4480008 */   swc1  $f8, 8($v0)
-/* 09FB9C 7F06D1AC 8CA20004 */  lw    $v0, 4($a1)
-.L7F06D1B0:
-/* 09FBA0 7F06D1B0 C4CA0000 */  lwc1  $f10, ($a2)
-/* 09FBA4 7F06D1B4 E44A0000 */  swc1  $f10, ($v0)
-/* 09FBA8 7F06D1B8 C4D00004 */  lwc1  $f16, 4($a2)
-/* 09FBAC 7F06D1BC E4500004 */  swc1  $f16, 4($v0)
-/* 09FBB0 7F06D1C0 C4D20008 */  lwc1  $f18, 8($a2)
-/* 09FBB4 7F06D1C4 E4520008 */  swc1  $f18, 8($v0)
-.L7F06D1C8:
-/* 09FBB8 7F06D1C8 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F06D1CC:
-/* 09FBBC 7F06D1CC 27BD0028 */  addiu $sp, $sp, 0x28
-/* 09FBC0 7F06D1D0 03E00008 */  jr    $ra
-/* 09FBC4 7F06D1D4 00000000 */   nop   
-)
-#endif
-
-#endif
-
-
 
 
 void getsuboffset(Model *objinst, coord3d *offset) //#MATCH
