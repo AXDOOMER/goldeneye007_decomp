@@ -981,6 +981,7 @@ typedef union
         typedef struct ModelRwData_Op11Record
         {
             s16 unk00;
+            s16 unk02;
         } ModelRwData_Op11Record;
 
         /**
@@ -1156,7 +1157,6 @@ typedef union
         {
             Vertex *Vertices;
             Gfx *gdl;
-            rgba_u8 *Colours;
         } ModelRwData_DisplayList_CollisionRecord;
 
     #pragma endregion Model Node OpCode Definitions
