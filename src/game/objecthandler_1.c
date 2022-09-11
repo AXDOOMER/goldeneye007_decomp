@@ -784,229 +784,47 @@ f32 getsubroty(Model *objinst)
 }
 
 
-
-
-#ifdef NONMATCHING
-//https://decomp.me/scratch/4syS1
-/*
- * Sets the Heading (in Radians) of the Object Instance
- */
-void setsubroty(Model *objinst, f32 radHeading) //#95%
+void setsubroty(Model *model, f32 angle)
 {
-    if (!objinst)
+    ModelNode* node;
+#if defined(LEFTOVERDEBUG)
+    if (!model)
     {
         osSyncPrintf("setsubroty: no objinst!");
         return_null();
     }
-    if (!objinst->obj) //< needs to be v1 not a1
+
+    if (!model->obj) //< needs to be v1 not a1
     {
         osSyncPrintf("setsubroty: objinst has no object!");
         return_null();
     }
 
-    if (!objinst->obj->RootNode)
+    if (!model->obj->RootNode)
     {
         osSyncPrintf("setsubroty: objinst has no root part!");
         return_null();
     }
-
-    if ((objinst->obj->RootNode->Opcode & 0xff) == 1)
+#endif
+    node = model->obj->RootNode;
+    if ((node->Opcode & 0xff) == MODELNODE_OPCODE_HEADERRECORD)
     {
-        struct modeldata_root *objinstroot      = extract_id_from_object_structure_microcode(objinst, objinst->obj->RootNode); //< needs to move v1 to a1
-        f32                    radHeadingChange = radHeading - objinstroot->subroty;
+        ModelRwData_HeaderRecord *rwdata = extract_id_from_object_structure_microcode(model, node);
+        f32 diff = angle - rwdata->unk14;
 
-        if (radHeadingChange < 0)
-        {
-            radHeadingChange += M_TAU_F;
-        }
+        if (diff < 0) { diff += M_TAU_F; }
 
-        objinstroot->unk30 += radHeadingChange;
-        if (objinstroot->unk30 >= M_TAU_F)
-        {
-            objinstroot->unk30 -= M_TAU_F;
-        }
+        rwdata->unk30 += diff;
 
-        objinstroot->unk20 += radHeadingChange;
-        if (objinstroot->unk20 >= M_TAU_F)
-        {
-            objinstroot->unk20 -= M_TAU_F;
-        }
-        objinstroot->subroty = radHeading; //roty
+        if (rwdata->unk30 >= M_TAU_F) { rwdata->unk30 -= M_TAU_F; }
+
+        rwdata->unk20 += diff;
+
+        if (rwdata->unk20 >= M_TAU_F) { rwdata->unk20 -= M_TAU_F; }
+
+        rwdata->unk14 = angle;
     }
 }
-#else
-#ifndef VERSION_EU
-//D:800547A0
-const char aSetsubrotyNoObjinst[] = "setsubroty: no objinst!";
-//D:800547B8
-const char aSetsubrotyObjinstHasNoObject[] = "setsubroty: objinst has no object!";
-//D:800547DC
-const char aSetsubrotyObjinstHasNoRootPart[] = "setsubroty: objinst has no root part!";
-GLOBAL_ASM(
-.late_rodata
-glabel D_80054B58
-.word 0x40c90fdb /*6.2831855*/
-glabel D_80054B5C
-.word 0x40c90fdb /*6.2831855*/
-.text
-glabel setsubroty
-/* 0A186C 7F06CD3C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0A1870 7F06CD40 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A1874 7F06CD44 AFA40018 */  sw    $a0, 0x18($sp)
-/* 0A1878 7F06CD48 14800006 */  bnez  $a0, .L7F06CD64
-/* 0A187C 7F06CD4C AFA5001C */   sw    $a1, 0x1c($sp)
-/* 0A1880 7F06CD50 3C048005 */  lui   $a0, %hi(aSetsubrotyNoObjinst)
-/* 0A1884 7F06CD54 0C0033D1 */  jal   osSyncPrintf
-/* 0A1888 7F06CD58 248447A0 */   addiu $a0, %lo(aSetsubrotyNoObjinst) # addiu $a0, $a0, 0x47a0
-/* 0A188C 7F06CD5C 0FC1B11B */  jal   return_null
-/* 0A1890 7F06CD60 00000000 */   nop   
-.L7F06CD64:
-/* 0A1894 7F06CD64 8FAF0018 */  lw    $t7, 0x18($sp)
-/* 0A1898 7F06CD68 3C048005 */  lui   $a0, %hi(aSetsubrotyObjinstHasNoObject)
-/* 0A189C 7F06CD6C 8DE20008 */  lw    $v0, 8($t7)
-/* 0A18A0 7F06CD70 54400008 */  bnezl $v0, .L7F06CD94
-/* 0A18A4 7F06CD74 8C430000 */   lw    $v1, ($v0)
-/* 0A18A8 7F06CD78 0C0033D1 */  jal   osSyncPrintf
-/* 0A18AC 7F06CD7C 248447B8 */   addiu $a0, %lo(aSetsubrotyObjinstHasNoObject) # addiu $a0, $a0, 0x47b8
-/* 0A18B0 7F06CD80 0FC1B11B */  jal   return_null
-/* 0A18B4 7F06CD84 00000000 */   nop   
-/* 0A18B8 7F06CD88 8FB80018 */  lw    $t8, 0x18($sp)
-/* 0A18BC 7F06CD8C 8F020008 */  lw    $v0, 8($t8)
-/* 0A18C0 7F06CD90 8C430000 */  lw    $v1, ($v0)
-.L7F06CD94:
-/* 0A18C4 7F06CD94 3C048005 */  lui   $a0, %hi(aSetsubrotyObjinstHasNoRootPart)
-/* 0A18C8 7F06CD98 54600009 */  bnezl $v1, .L7F06CDC0
-/* 0A18CC 7F06CD9C 94690000 */   lhu   $t1, ($v1)
-/* 0A18D0 7F06CDA0 0C0033D1 */  jal   osSyncPrintf
-/* 0A18D4 7F06CDA4 248447DC */   addiu $a0, %lo(aSetsubrotyObjinstHasNoRootPart) # addiu $a0, $a0, 0x47dc
-/* 0A18D8 7F06CDA8 0FC1B11B */  jal   return_null
-/* 0A18DC 7F06CDAC 00000000 */   nop   
-/* 0A18E0 7F06CDB0 8FB90018 */  lw    $t9, 0x18($sp)
-/* 0A18E4 7F06CDB4 8F280008 */  lw    $t0, 8($t9)
-/* 0A18E8 7F06CDB8 8D030000 */  lw    $v1, ($t0)
-/* 0A18EC 7F06CDBC 94690000 */  lhu   $t1, ($v1)
-.L7F06CDC0:
-/* 0A18F0 7F06CDC0 24010001 */  li    $at, 1
-/* 0A18F4 7F06CDC4 00602825 */  move  $a1, $v1
-/* 0A18F8 7F06CDC8 312A00FF */  andi  $t2, $t1, 0xff
-/* 0A18FC 7F06CDCC 55410027 */  bnel  $t2, $at, .L7F06CE6C
-/* 0A1900 7F06CDD0 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0A1904 7F06CDD4 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
-/* 0A1908 7F06CDD8 8FA40018 */   lw    $a0, 0x18($sp)
-/* 0A190C 7F06CDDC C7A4001C */  lwc1  $f4, 0x1c($sp)
-/* 0A1910 7F06CDE0 C4460014 */  lwc1  $f6, 0x14($v0)
-/* 0A1914 7F06CDE4 44804000 */  mtc1  $zero, $f8
-/* 0A1918 7F06CDE8 3C018005 */  lui   $at, %hi(D_80054B58)
-/* 0A191C 7F06CDEC 46062001 */  sub.s $f0, $f4, $f6
-/* 0A1920 7F06CDF0 4608003C */  c.lt.s $f0, $f8
-/* 0A1924 7F06CDF4 00000000 */  nop   
-/* 0A1928 7F06CDF8 45020004 */  bc1fl .L7F06CE0C
-/* 0A192C 7F06CDFC C44A0030 */   lwc1  $f10, 0x30($v0)
-/* 0A1930 7F06CE00 C42C4B58 */  lwc1  $f12, %lo(D_80054B58)($at)
-/* 0A1934 7F06CE04 460C0000 */  add.s $f0, $f0, $f12
-/* 0A1938 7F06CE08 C44A0030 */  lwc1  $f10, 0x30($v0)
-.L7F06CE0C:
-/* 0A193C 7F06CE0C 3C018005 */  lui   $at, %hi(D_80054B5C)
-/* 0A1940 7F06CE10 C42C4B5C */  lwc1  $f12, %lo(D_80054B5C)($at)
-/* 0A1944 7F06CE14 46005400 */  add.s $f16, $f10, $f0
-/* 0A1948 7F06CE18 E4500030 */  swc1  $f16, 0x30($v0)
-/* 0A194C 7F06CE1C C4420030 */  lwc1  $f2, 0x30($v0)
-/* 0A1950 7F06CE20 4602603E */  c.le.s $f12, $f2
-/* 0A1954 7F06CE24 00000000 */  nop   
-/* 0A1958 7F06CE28 45020004 */  bc1fl .L7F06CE3C
-/* 0A195C 7F06CE2C C4440020 */   lwc1  $f4, 0x20($v0)
-/* 0A1960 7F06CE30 460C1481 */  sub.s $f18, $f2, $f12
-/* 0A1964 7F06CE34 E4520030 */  swc1  $f18, 0x30($v0)
-/* 0A1968 7F06CE38 C4440020 */  lwc1  $f4, 0x20($v0)
-.L7F06CE3C:
-/* 0A196C 7F06CE3C 46002180 */  add.s $f6, $f4, $f0
-/* 0A1970 7F06CE40 E4460020 */  swc1  $f6, 0x20($v0)
-/* 0A1974 7F06CE44 C4420020 */  lwc1  $f2, 0x20($v0)
-/* 0A1978 7F06CE48 4602603E */  c.le.s $f12, $f2
-/* 0A197C 7F06CE4C 00000000 */  nop   
-/* 0A1980 7F06CE50 45020004 */  bc1fl .L7F06CE64
-/* 0A1984 7F06CE54 C7AA001C */   lwc1  $f10, 0x1c($sp)
-/* 0A1988 7F06CE58 460C1201 */  sub.s $f8, $f2, $f12
-/* 0A198C 7F06CE5C E4480020 */  swc1  $f8, 0x20($v0)
-/* 0A1990 7F06CE60 C7AA001C */  lwc1  $f10, 0x1c($sp)
-.L7F06CE64:
-/* 0A1994 7F06CE64 E44A0014 */  swc1  $f10, 0x14($v0)
-/* 0A1998 7F06CE68 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F06CE6C:
-/* 0A199C 7F06CE6C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0A19A0 7F06CE70 03E00008 */  jr    $ra
-/* 0A19A4 7F06CE74 00000000 */   nop   
-)
-#endif
-#ifdef VERSION_EU
-GLOBAL_ASM(
-.late_rodata
-glabel D_80054B58
-.word 0x40c90fdb /*6.2831855*/
-glabel D_80054B5C
-.word 0x40c90fdb /*6.2831855*/
-.text
-glabel setsubroty
-/* 09FC64 7F06D274 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 09FC68 7F06D278 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09FC6C 7F06D27C 8C8E0008 */  lw    $t6, 8($a0)
-/* 09FC70 7F06D280 44857000 */  mtc1  $a1, $f14
-/* 09FC74 7F06D284 24010001 */  li    $at, 1
-/* 09FC78 7F06D288 8DC50000 */  lw    $a1, ($t6)
-/* 09FC7C 7F06D28C 94AF0000 */  lhu   $t7, ($a1)
-/* 09FC80 7F06D290 31F800FF */  andi  $t8, $t7, 0xff
-/* 09FC84 7F06D294 57010026 */  bnel  $t8, $at, .L7F06D330
-/* 09FC88 7F06D298 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 09FC8C 7F06D29C 0FC1B3A3 */  jal   extract_id_from_object_structure_microcode
-/* 09FC90 7F06D2A0 E7AE001C */   swc1  $f14, 0x1c($sp)
-/* 09FC94 7F06D2A4 C7AE001C */  lwc1  $f14, 0x1c($sp)
-/* 09FC98 7F06D2A8 C4440014 */  lwc1  $f4, 0x14($v0)
-/* 09FC9C 7F06D2AC 44803000 */  mtc1  $zero, $f6
-/* 09FCA0 7F06D2B0 3C018005 */  lui   $at, %hi(D_80054B58) # $at, 0x8005
-/* 09FCA4 7F06D2B4 46047001 */  sub.s $f0, $f14, $f4
-/* 09FCA8 7F06D2B8 4606003C */  c.lt.s $f0, $f6
-/* 09FCAC 7F06D2BC 00000000 */  nop   
-/* 09FCB0 7F06D2C0 45020004 */  bc1fl .L7F06D2D4eu
-/* 09FCB4 7F06D2C4 C4480030 */   lwc1  $f8, 0x30($v0)
-/* 09FCB8 7F06D2C8 C42CA730 */  lwc1  $f12, %lo(D_80054B58)($at)
-/* 09FCBC 7F06D2CC 460C0000 */  add.s $f0, $f0, $f12
-/* 09FCC0 7F06D2D0 C4480030 */  lwc1  $f8, 0x30($v0)
-.L7F06D2D4eu:
-/* 09FCC4 7F06D2D4 3C018005 */  lui   $at, %hi(D_80054B5C) # $at, 0x8005
-/* 09FCC8 7F06D2D8 C42CA734 */  lwc1  $f12, %lo(D_80054B5C)($at)
-/* 09FCCC 7F06D2DC 46004280 */  add.s $f10, $f8, $f0
-/* 09FCD0 7F06D2E0 E44A0030 */  swc1  $f10, 0x30($v0)
-/* 09FCD4 7F06D2E4 C4420030 */  lwc1  $f2, 0x30($v0)
-/* 09FCD8 7F06D2E8 4602603E */  c.le.s $f12, $f2
-/* 09FCDC 7F06D2EC 00000000 */  nop   
-/* 09FCE0 7F06D2F0 45020004 */  bc1fl .L7F06D304
-/* 09FCE4 7F06D2F4 C4520020 */   lwc1  $f18, 0x20($v0)
-/* 09FCE8 7F06D2F8 460C1401 */  sub.s $f16, $f2, $f12
-/* 09FCEC 7F06D2FC E4500030 */  swc1  $f16, 0x30($v0)
-/* 09FCF0 7F06D300 C4520020 */  lwc1  $f18, 0x20($v0)
-.L7F06D304:
-/* 09FCF4 7F06D304 46009100 */  add.s $f4, $f18, $f0
-/* 09FCF8 7F06D308 E4440020 */  swc1  $f4, 0x20($v0)
-/* 09FCFC 7F06D30C C4420020 */  lwc1  $f2, 0x20($v0)
-/* 09FD00 7F06D310 4602603E */  c.le.s $f12, $f2
-/* 09FD04 7F06D314 00000000 */  nop   
-/* 09FD08 7F06D318 45020004 */  bc1fl .L7F06D32C
-/* 09FD0C 7F06D31C E44E0014 */   swc1  $f14, 0x14($v0)
-/* 09FD10 7F06D320 460C1181 */  sub.s $f6, $f2, $f12
-/* 09FD14 7F06D324 E4460020 */  swc1  $f6, 0x20($v0)
-/* 09FD18 7F06D328 E44E0014 */  swc1  $f14, 0x14($v0)
-.L7F06D32C:
-/* 09FD1C 7F06D32C 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F06D330:
-/* 09FD20 7F06D330 27BD0018 */  addiu $sp, $sp, 0x18
-/* 09FD24 7F06D334 03E00008 */  jr    $ra
-/* 09FD28 7F06D338 00000000 */   nop   
-)
-#endif
-#endif
-
-
-
 
 
 void modelSetScale(Model *objinst, f32 scale)
