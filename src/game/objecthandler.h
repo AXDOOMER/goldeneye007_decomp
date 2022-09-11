@@ -44,7 +44,7 @@ void modelSetAnimLooping(Model *, f32, f32);
 void modelSetAnimEndFrame(Model *, f32);
 void sub_GAME_7F06CE84(Model *, f32);
 
-void *extract_id_from_object_structure_microcode(Model *Objinst, ModelNode *root);
+void *modelGetNodeRwData(Model *Objinst, ModelNode *root);
 f32 getsubroty(Model *objinst);
 void setsubroty(Model *objinst, f32 radHeading);
 void modelSetAnimationWithMerge(Model *, ModelAnimation *, s32, f32, f32, f32, s32);
@@ -98,6 +98,7 @@ void* get_obj_instance_controller_for_header(struct ModelFileHeader* arg0);
 void subdraw(s32 arg0, struct Model *);
 void sub_GAME_7F06EFC4(struct Model *);
 void sub_GAME_7F076030(Model *pmodel, ModelFileHeader *pmodeldef, ModelNode *pnode, ModelFileHeader *cmodeldef);
+void modelInitRwData(Model *model, ModelNode *startnode);
 
 #ifndef VERSION_EU
 void return_null(void);

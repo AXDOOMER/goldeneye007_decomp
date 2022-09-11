@@ -978,6 +978,11 @@ typedef union
             u16 number; /*0x44*/
         } ModelRoData_Op11Record;
 
+        typedef struct ModelRwData_Op11Record
+        {
+            s16 unk00;
+        } ModelRwData_Op11Record;
+
         /**
          *  Opcode 12 0xC
          */
@@ -1119,7 +1124,7 @@ typedef union
          */
         typedef struct ModelRoData_HeadPlaceholderRecord
         {
-            u16 number; //referenced by extract_id_from_object_structure_microcode()
+            u16 number; //referenced by modelGetNodeRwData()
         } ModelRoData_HeadPlaceholderRecord;
 
         typedef struct ModelRwData_HeadPlaceholderRecord
@@ -1190,6 +1195,7 @@ typedef union
         struct ModelRwData_Op07Record Op07;
         struct ModelRwData_LODRecord LOD;
         struct ModelRwData_BSPRecord BSP;
+        struct ModelRwData_Op11Record Op11;
         struct ModelRwData_GunfireRecord Gunfire;
         struct ModelRwData_SwitchRecord Switch;
         struct ModelRwData_HeadPlaceholderRecord HeadPlaceholder;
@@ -1306,7 +1312,7 @@ typedef union
             u16     unk00;   /*0*/
             u8      unk02;   /*2*/
             f32     ground;  /*4*/
-            coord3d pos;     //8, 12, 16 - this is the right poition for this, but no idea what this node actually is (used in extract_id_from_object_structure_microcode)
+            coord3d pos;     //8, 12, 16 - this is the right poition for this, but no idea what this node actually is (used in modelGetNodeRwData)
             f32     subroty; //14 angle - this also happens to fit best for getsubroty
             f32     unk18;   /*18*/
             u32     unk1c;   /*1c*/

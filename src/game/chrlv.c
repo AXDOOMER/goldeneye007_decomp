@@ -6486,7 +6486,7 @@ s32 chrlvUpdateAimendsideback(ChrRecord *self, struct weapon_firing_animation_ta
                 calc_aimendsideback = t1 - subroty + M_TAU_F;
             }
 
-            temp_v0_4 = (struct modeldata_root*)extract_id_from_object_structure_microcode(self->model, self->model->obj->RootNode);
+            temp_v0_4 = (struct modeldata_root*)modelGetNodeRwData(self->model, self->model->obj->RootNode);
 
             if (temp_v0_4->unk5c > 0.0f)
             {
@@ -8494,7 +8494,7 @@ void chrlvTickAttackRoll(ChrRecord *self)
 
                 if (self->act_attackroll.animfloats->anonymous_3 != 0.0f)
                 {
-                    temp_v0_2 = (struct modeldata_root *)extract_id_from_object_structure_microcode(temp_a0, temp_a0->obj->RootNode);
+                    temp_v0_2 = (struct modeldata_root *)modelGetNodeRwData(temp_a0, temp_a0->obj->RootNode);
                     temp_v0_2->unk5c = phi_f2_2;
                     temp_v0_2->unk58 = (-self->act_attackroll.animfloats->anonymous_3 / phi_f2_2);
 

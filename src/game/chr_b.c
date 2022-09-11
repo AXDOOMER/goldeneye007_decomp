@@ -101,7 +101,7 @@ struct Model *makeonebody(s32 body, s32 head, struct ModelFileHeader *bodyHeader
             {
                 if (headHeader->Switches[0] != 0)
                 {
-                    node = extract_id_from_object_structure_microcode(model, headHeader->Switches[0]);
+                    node = modelGetNodeRwData(model, headHeader->Switches[0]);
                     node->ModelType = 0;
                 }
             }

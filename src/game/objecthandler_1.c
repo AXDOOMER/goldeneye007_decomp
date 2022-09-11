@@ -287,7 +287,7 @@ glabel get_aircraft_obj_instance_controller
 void sub_GAME_7F06C3B4(Model *model, s32 node,  ModelFileHeader *header)
 {
     sub_GAME_7F076030(model,model->obj,node,header);
-    unknown_object_microcode_handler(model,header->RootNode);
+    modelInitRwData(model,header->RootNode);
 }
 
 void set_aircraft_obj_inst_scale_to_zero(Model *objinstance)
@@ -491,7 +491,7 @@ f32 sub_GAME_7F06C768(Model *objinst)
 /**
  * Address 0x7F06C79C.
 */
-void *extract_id_from_object_structure_microcode(Model *Objinst, ModelNode *root)
+void *modelGetNodeRwData(Model *Objinst, ModelNode *root)
 {
     s32 number  = 0;
     void **data = Objinst->datas;
@@ -550,7 +550,7 @@ void *extract_id_from_object_structure_microcode(Model *Objinst, ModelNode *root
         root = root->Parent;
         if ((root->Opcode & 0xFF) == MODELNODE_OPCODE_HEADPLACEHOLDERRECORD)
         {
-            data = ((ModelRoData_HeaderRecord *)extract_id_from_object_structure_microcode(Objinst, root))->FirstGroup;
+            data = ((ModelRoData_HeaderRecord *)modelGetNodeRwData(Objinst, root))->FirstGroup;
             break;
         }
     }
@@ -579,7 +579,7 @@ void getpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#MATCH - 
     {
         case 1:
         {
-            struct modeldata_root *root = extract_id_from_object_structure_microcode(objinst, part);
+            struct modeldata_root *root = modelGetNodeRwData(objinst, part);
             offset->x                   = root->pos.x;
             offset->y                   = root->pos.y;
             offset->z                   = root->pos.z;
@@ -641,7 +641,7 @@ void setpartoffset(Model *model, ModelNode *node, coord3d *pos)
     {
         case MODELNODE_OPCODE_HEADERRECORD:
             {
-                ModelRwData_HeaderRecord *rwdata = extract_id_from_object_structure_microcode(model, node);
+                ModelRwData_HeaderRecord *rwdata = modelGetNodeRwData(model, node);
                 coord3d diff[1];
 
                 diff[0].x = pos->x - rwdata->pos.x;
@@ -777,7 +777,7 @@ f32 getsubroty(Model *objinst)
     root = objinst->obj->RootNode;
     if ((root->Opcode & 0xFF) == 1)
     {
-        return ((struct modeldata_root *)extract_id_from_object_structure_microcode(objinst, root))->subroty;
+        return ((struct modeldata_root *)modelGetNodeRwData(objinst, root))->subroty;
     }
 
     return 0.0f;
@@ -809,7 +809,7 @@ void setsubroty(Model *model, f32 angle)
     node = model->obj->RootNode;
     if ((node->Opcode & 0xff) == MODELNODE_OPCODE_HEADERRECORD)
     {
-        ModelRwData_HeaderRecord *rwdata = extract_id_from_object_structure_microcode(model, node);
+        ModelRwData_HeaderRecord *rwdata = modelGetNodeRwData(model, node);
         f32 diff = angle - rwdata->unk14;
 
         if (diff < 0) { diff += M_TAU_F; }
@@ -1239,7 +1239,7 @@ glabel sub_GAME_7F06D490
 /* 0A1FC4 7F06D494 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 0A1FC8 7F06D498 AFB10018 */  sw    $s1, 0x18($sp)
 /* 0A1FCC 7F06D49C 00808825 */  move  $s1, $a0
-/* 0A1FD0 7F06D4A0 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
+/* 0A1FD0 7F06D4A0 0FC1B1E7 */  jal   modelGetNodeRwData
 /* 0A1FD4 7F06D4A4 AFB00014 */   sw    $s0, 0x14($sp)
 /* 0A1FD8 7F06D4A8 804E0000 */  lb    $t6, ($v0)
 /* 0A1FDC 7F06D4AC 00408025 */  move  $s0, $v0
@@ -1433,7 +1433,7 @@ glabel process_01_group_heading
 /* 0A2280 7F06D750 00C02825 */  move  $a1, $a2
 /* 0A2284 7F06D754 AFA70084 */  sw    $a3, 0x84($sp)
 /* 0A2288 7F06D758 AFA60088 */  sw    $a2, 0x88($sp)
-/* 0A228C 7F06D75C 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
+/* 0A228C 7F06D75C 0FC1B1E7 */  jal   modelGetNodeRwData
 /* 0A2290 7F06D760 AFAE007C */   sw    $t6, 0x7c($sp)
 /* 0A2294 7F06D764 8FA70084 */  lw    $a3, 0x84($sp)
 /* 0A2298 7F06D768 8FB8007C */  lw    $t8, 0x7c($sp)
@@ -2757,7 +2757,7 @@ void process_15_subposition(ModelRenderData* arg0, Model *model, ModelNode *node
 void process_08_distance_triggers(Model* model, ModelNode* node)
 {
     union ModelRoData *rodata = node->Data;
-    union ModelRwData *rwdata = extract_id_from_object_structure_microcode(model, node);
+    union ModelRwData *rwdata = modelGetNodeRwData(model, node);
     Mtxf *mtx = sub_GAME_7F06C660(model, node, 0);
     f32 distance;
 
@@ -2793,7 +2793,7 @@ void process_08_distance_triggers(Model* model, ModelNode* node)
 void sub_GAME_7F06E970(Model* model, ModelNode* node)
 {
     ModelRoData_LODRecord *rodata = &node->Data->LOD;
-    ModelRwData_LODRecord *rwdata = extract_id_from_object_structure_microcode(model, node);
+    ModelRwData_LODRecord *rwdata = modelGetNodeRwData(model, node);
 
     if (rwdata->visible)
     {
@@ -2809,7 +2809,7 @@ void sub_GAME_7F06E970(Model* model, ModelNode* node)
 void process_12_handle_switch(Model* model, ModelNode* node)
 {
     ModelRoData_SwitchRecord *rodata = &node->Data->Switch;
-    ModelRwData_SwitchRecord *rwdata = extract_id_from_object_structure_microcode(model, node);
+    ModelRwData_SwitchRecord *rwdata = modelGetNodeRwData(model, node);
 
     if (rwdata->visible)
     {
@@ -2824,7 +2824,7 @@ void process_12_handle_switch(Model* model, ModelNode* node)
 
 void process_17_pointer_to_head(Model* model, ModelNode* bodynode)
 {
-    struct ModelRwData_HeadPlaceholderRecord *rwdata = extract_id_from_object_structure_microcode(model, bodynode);
+    struct ModelRwData_HeadPlaceholderRecord *rwdata = modelGetNodeRwData(model, bodynode);
 
     if (rwdata->ModelFileHeader)
     {
@@ -2908,7 +2908,7 @@ void sub_GAME_7F06EA54(ModelNode *basenode, bool visible)
 
 void sub_GAME_7F06EB10(Model* model, ModelNode* node)
 {
-    union ModelRwData *rwdata = extract_id_from_object_structure_microcode(model, node);
+    union ModelRwData *rwdata = modelGetNodeRwData(model, node);
     sub_GAME_7F06EA54(node, rwdata->BSP.visible);
 }
 
@@ -2916,7 +2916,7 @@ void sub_GAME_7F06EB10(Model* model, ModelNode* node)
 void process_09_head_hat_placement_interlink(Model *model, ModelNode *node)
 {
     union ModelRoData *rodata = node->Data;
-    union ModelRwData *rwdata = extract_id_from_object_structure_microcode(model, node);
+    union ModelRwData *rwdata = modelGetNodeRwData(model, node);
     Mtxf *mtx = sub_GAME_7F06C660(model, node, 0);
     coord3d sp38;
     coord3d sp2c;
@@ -2972,7 +2972,7 @@ void process_09_head_hat_placement_interlink(Model *model, ModelNode *node)
 void process_07_unknown(Model *model, ModelNode *node)
 {
     union ModelRoData *rodata = node->Data;
-    union ModelRwData *rwdata = extract_id_from_object_structure_microcode(model, node);
+    union ModelRwData *rwdata = modelGetNodeRwData(model, node);
     Mtxf *mtx = sub_GAME_7F06C660(model, node, 0);
     f32 ratio;
     f32 coord_multiplied;
@@ -3602,7 +3602,7 @@ void sub_GAME_7F06F780(Model *model, f32 arg1)
         model->unk6C = model->unk3C;
         if ((temp_a1->Opcode & 0xFF) == 1)
         {
-            temp_v0_2                   = extract_id_from_object_structure_microcode(model, temp_a1);
+            temp_v0_2                   = modelGetNodeRwData(model, temp_a1);
             temp_f10                    = temp_v0_2->unk34.x;
             temp_f16                    = temp_v0_2->unk34.AsArray[1];
             temp_f18                    = temp_v0_2->unk34.AsArray[2];
@@ -3667,7 +3667,7 @@ glabel sub_GAME_7F06F780
 /* 0A4344 7F06F814 E4860080 */  swc1  $f6, 0x80($a0)
 /* 0A4348 7F06F818 15E10013 */  bne   $t7, $at, .L7F06F868
 /* 0A434C 7F06F81C E488006C */   swc1  $f8, 0x6c($a0)
-/* 0A4350 7F06F820 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
+/* 0A4350 7F06F820 0FC1B1E7 */  jal   modelGetNodeRwData
 /* 0A4354 7F06F824 00000000 */   nop   
 /* 0A4358 7F06F828 C44A0034 */  lwc1  $f10, 0x34($v0)
 /* 0A435C 7F06F82C C4500038 */  lwc1  $f16, 0x38($v0)
@@ -3756,7 +3756,7 @@ void sub_GAME_7F06F878(Model *model, void *anim, s32 arg2, f32 startframe, f32 h
     if ((temp_a1->Opcode & 0xFF) == 1)
     {
         sp80      = temp_a1->Data;
-        temp_v0   = extract_id_from_object_structure_microcode(model, temp_a1);
+        temp_v0   = modelGetNodeRwData(model, temp_a1);
         sp5C.unk0 = D_80036244.unk0;
         temp_f2   = model->scale * model->unkB8;
         sp5C.unk4 = D_80036244.unk4;
@@ -3899,7 +3899,7 @@ glabel sub_GAME_7F06F878
 /* 0A4458 7F06F928 8FBF0024 */   lw    $ra, 0x24($sp)
 /* 0A445C 7F06F92C 8CA90004 */  lw    $t1, 4($a1)
 /* 0A4460 7F06F930 02202025 */  move  $a0, $s1
-/* 0A4464 7F06F934 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
+/* 0A4464 7F06F934 0FC1B1E7 */  jal   modelGetNodeRwData
 /* 0A4468 7F06F938 AFA90080 */   sw    $t1, 0x80($sp)
 /* 0A446C 7F06F93C 3C0C8003 */  lui   $t4, %hi(D_80036244) 
 /* 0A4470 7F06F940 8FAA0080 */  lw    $t2, 0x80($sp)
@@ -4529,7 +4529,7 @@ glabel sub_GAME_7F0701EC
 /* 0A4D6C 7F07023C 304F00FF */  andi  $t7, $v0, 0xff
 /* 0A4D70 7F070240 55E10218 */  bnel  $t7, $at, .L7F070AA4
 /* 0A4D74 7F070244 C7B40108 */   lwc1  $f20, 0x108($sp)
-/* 0A4D78 7F070248 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
+/* 0A4D78 7F070248 0FC1B1E7 */  jal   modelGetNodeRwData
 /* 0A4D7C 7F07024C 8CB20004 */   lw    $s2, 4($a1)
 /* 0A4D80 7F070250 80580000 */  lb    $t8, ($v0)
 /* 0A4D84 7F070254 00408025 */  move  $s0, $v0
@@ -6277,7 +6277,7 @@ void modelRenderNodeDl(ModelRenderData *renderdata, Model *model, ModelNode *nod
     {
         if (renderdata->flags & 1)
         {
-            union ModelRwData *rwdata = extract_id_from_object_structure_microcode(model, node);
+            union ModelRwData *rwdata = modelGetNodeRwData(model, node);
 
             if (rwdata->DisplayListCollisions.gdl)
             {
@@ -6319,7 +6319,7 @@ void modelRenderNodeDl(ModelRenderData *renderdata, Model *model, ModelNode *nod
 
         if (renderdata->flags & 2)
         {
-            union ModelRwData *rwdata = extract_id_from_object_structure_microcode(model, node);
+            union ModelRwData *rwdata = modelGetNodeRwData(model, node);
 
             if (rwdata->DisplayListCollisions.gdl && rodata->DisplayListCollisions.ModelType == 4 && rodata->DisplayListCollisions.Secondary)
             {
@@ -6476,7 +6476,7 @@ glabel dotube
 /* 0A7BE0 7F0730B0 00A02025 */  move  $a0, $a1
 /* 0A7BE4 7F0730B4 00C08825 */  move  $s1, $a2
 /* 0A7BE8 7F0730B8 8CD60004 */  lw    $s6, 4($a2)
-/* 0A7BEC 7F0730BC 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
+/* 0A7BEC 7F0730BC 0FC1B1E7 */  jal   modelGetNodeRwData
 /* 0A7BF0 7F0730C0 00C02825 */   move  $a1, $a2
 /* 0A7BF4 7F0730C4 8EC30000 */  lw    $v1, ($s6)
 /* 0A7BF8 7F0730C8 00409025 */  move  $s2, $v0
@@ -6488,7 +6488,7 @@ glabel dotube
 .L7F0730E0:
 /* 0A7C10 7F0730E0 8CAE0004 */  lw    $t6, 4($a1)
 /* 0A7C14 7F0730E4 02602025 */  move  $a0, $s3
-/* 0A7C18 7F0730E8 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
+/* 0A7C18 7F0730E8 0FC1B1E7 */  jal   modelGetNodeRwData
 /* 0A7C1C 7F0730EC AFAE00C0 */   sw    $t6, 0xc0($sp)
 /* 0A7C20 7F0730F0 240F0001 */  li    $t7, 1
 /* 0A7C24 7F0730F4 AFAF009C */  sw    $t7, 0x9c($sp)
@@ -7006,7 +7006,7 @@ glabel dotube
 /* 0A5C04 7F073214 00A02025 */  move  $a0, $a1
 /* 0A5C08 7F073218 00C08825 */  move  $s1, $a2
 /* 0A5C0C 7F07321C 8CD60004 */  lw    $s6, 4($a2)
-/* 0A5C10 7F073220 0FC1B3A3 */  jal   extract_id_from_object_structure_microcode
+/* 0A5C10 7F073220 0FC1B3A3 */  jal   modelGetNodeRwData
 /* 0A5C14 7F073224 00C02825 */   move  $a1, $a2
 /* 0A5C18 7F073228 8EC30000 */  lw    $v1, ($s6)
 /* 0A5C1C 7F07322C 00409025 */  move  $s2, $v0
@@ -7018,7 +7018,7 @@ glabel dotube
 .L7F073244:
 /* 0A5C34 7F073244 8CAE0004 */  lw    $t6, 4($a1)
 /* 0A5C38 7F073248 02602025 */  move  $a0, $s3
-/* 0A5C3C 7F07324C 0FC1B3A3 */  jal   extract_id_from_object_structure_microcode
+/* 0A5C3C 7F07324C 0FC1B3A3 */  jal   modelGetNodeRwData
 /* 0A5C40 7F073250 AFAE00C0 */   sw    $t6, 0xc0($sp)
 /* 0A5C44 7F073254 240F0001 */  li    $t7, 1
 /* 0A5C48 7F073258 AFAF009C */  sw    $t7, 0x9c($sp)
@@ -7556,7 +7556,7 @@ glabel dogfnegx
 /* 0A8358 7F073828 00A02025 */  move  $a0, $a1
 /* 0A835C 7F07382C 00C08025 */  move  $s0, $a2
 /* 0A8360 7F073830 8CD10004 */  lw    $s1, 4($a2)
-/* 0A8364 7F073834 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
+/* 0A8364 7F073834 0FC1B1E7 */  jal   modelGetNodeRwData
 /* 0A8368 7F073838 00C02825 */   move  $a1, $a2
 /* 0A836C 7F07383C 3C0F8003 */  lui   $t7, %hi(D_800363E0) 
 /* 0A8370 7F073840 25EF63E0 */  addiu $t7, %lo(D_800363E0) # addiu $t7, $t7, 0x63e0
@@ -8069,7 +8069,7 @@ glabel dogfnegx
 /* 0A6360 7F073970 00A02025 */  move  $a0, $a1
 /* 0A6364 7F073974 00C08025 */  move  $s0, $a2
 /* 0A6368 7F073978 8CD10004 */  lw    $s1, 4($a2)
-/* 0A636C 7F07397C 0FC1B3A3 */  jal   extract_id_from_object_structure_microcode
+/* 0A636C 7F07397C 0FC1B3A3 */  jal   modelGetNodeRwData
 /* 0A6370 7F073980 00C02825 */   move  $a1, $a2
 /* 0A6374 7F073984 3C0C8003 */  lui   $t4, %hi(D_800363E0) # $t4, 0x8003
 /* 0A6378 7F073988 258C1930 */  addiu $t4, %lo(D_800363E0) # addiu $t4, $t4, 0x1930
@@ -8597,7 +8597,7 @@ glabel doshadow
 /* 0A8B5C 7F07402C AF010008 */  sw    $at, 8($t8)
 /* 0A8B60 7F074030 8CC50014 */  lw    $a1, 0x14($a2)
 /* 0A8B64 7F074034 AFA7007C */  sw    $a3, 0x7c($sp)
-/* 0A8B68 7F074038 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
+/* 0A8B68 7F074038 0FC1B1E7 */  jal   modelGetNodeRwData
 /* 0A8B6C 7F07403C AFA6006C */   sw    $a2, 0x6c($sp)
 /* 0A8B70 7F074040 8E0A0008 */  lw    $t2, 8($s0)
 /* 0A8B74 7F074044 8FA6006C */  lw    $a2, 0x6c($sp)
@@ -8951,7 +8951,7 @@ glabel doshadow
 /* 0A6B30 7F074140 AF010008 */  sw    $at, 8($t8)
 /* 0A6B34 7F074144 8CC50014 */  lw    $a1, 0x14($a2)
 /* 0A6B38 7F074148 AFA7007C */  sw    $a3, 0x7c($sp)
-/* 0A6B3C 7F07414C 0FC1B3A3 */  jal   extract_id_from_object_structure_microcode
+/* 0A6B3C 7F07414C 0FC1B3A3 */  jal   modelGetNodeRwData
 /* 0A6B40 7F074150 AFA6006C */   sw    $a2, 0x6c($sp)
 /* 0A6B44 7F074154 8E0B0008 */  lw    $t3, 8($s0)
 /* 0A6B48 7F074158 8FA6006C */  lw    $a2, 0x6c($sp)
@@ -11379,213 +11379,153 @@ void modelCalculateRwDataLen(struct ModelFileHeader *objheader)
 }
 
 
+void modelInitRwData(Model *model, ModelNode *startnode)
+{
+    ModelNode *node = startnode;
+
+    while (node)
+    {
+        u32 type = node->Opcode & 0xFF;
+
+        switch (type)
+        {
+            case MODELNODE_OPCODE_HEADERRECORD:
+                if (1)
+                {
+                    ModelRwData_HeaderRecord* rwdata = &((union ModelRwData*)modelGetNodeRwData(model, node))->Header;
+
+                    rwdata->unk00 = 0;
+                    rwdata->ground = 0;
+                    rwdata->pos.x = 0;
+                    rwdata->pos.y = 0;
+                    rwdata->pos.z = 0;
+                    rwdata->unk14 = 0;
+                    rwdata->unk18 = 0;
+                    rwdata->unk1c = 0;
+
+                    rwdata->unk01 = 0;
+                    rwdata->unk34.x = 0;
+                    rwdata->unk34.y = 0;
+                    rwdata->unk34.z = 0;
+                    rwdata->unk30 = 0;
+                    rwdata->unk24.x = 0;
+                    rwdata->unk24.y = 0;
+                    rwdata->unk24.z = 0;
+                    rwdata->unk20 = 0;
+
+                    rwdata->unk02 = 0;
+                    rwdata->unk4c.x = 0;
+                    rwdata->unk4c.y = 0;
+                    rwdata->unk4c.z = 0;
+                    rwdata->unk40.x = 0;
+                    rwdata->unk40.y = 0;
+                    rwdata->unk40.z = 0;
+                    rwdata->unk5c = 0;
+                    break;
+                }
+
+            case MODELNODE_OPCODE_OP07RECORD:
+                if (1)
+                {
+                    ModelRwData_Op07Record* rwdata = &((union ModelRwData*)modelGetNodeRwData(model, node))->Op07;
+                    rwdata->visible = FALSE;
+                    break;
+                }
 
 
+            case MODELNODE_OPCODE_LODRECORD:
+                if (1)
+                {
+                    ModelRoData_LODRecord* rodata = &node->Data->LOD;
+                    ModelRwData_LODRecord* rwdata = &((union ModelRwData*)modelGetNodeRwData(model, node))->LOD;
+                    rwdata->visible = FALSE;
+                    node->Child = rodata->Affects;
+                    break;
+                }
 
-#ifdef NONMATCHING
-void unknown_object_microcode_handler(void) {
+            case MODELNODE_OPCODE_SWITCHRECORD:
+                if (1)
+                {
+                    ModelRoData_SwitchRecord* rodata = &node->Data->Switch;
+                    ModelRwData_SwitchRecord* rwdata = &((union ModelRwData*)modelGetNodeRwData(model, node))->Switch;
+                    rwdata->visible = TRUE;
+                    node->Child = rodata->Controls;
+                    break;
+                }
 
+            case MODELNODE_OPCODE_HEADPLACEHOLDERRECORD:
+                if (1)
+                {
+                    ModelRwData_HeadPlaceholderRecord* rwdata = &((union ModelRwData*)modelGetNodeRwData(model, node))->HeadPlaceholder;
+                    rwdata->ModelFileHeader = NULL;
+                    rwdata->RwDatas = NULL;
+                    break;
+                }
+
+            case MODELNODE_OPCODE_BSPRECORD:
+                if (1)
+                {
+                    ModelRwData_BSPRecord* rwdata = &((union ModelRwData*)modelGetNodeRwData(model, node))->BSP;
+                    rwdata->visible = FALSE;
+                    sub_GAME_7F06EB10(model, node);
+                    break;
+                }
+
+            case MODELNODE_OPCODE_OP11RECORD:
+                if (1)
+                {
+                    ModelRwData_Op11Record* rwdata = &((union ModelRwData*)modelGetNodeRwData(model, node))->Op11;
+                    rwdata->unk00 = FALSE;
+                    break;
+                }
+
+            case MODELNODE_OPCODE_GUNFIRERECORD:
+                if (1)
+                {
+                    ModelRwData_GunfireRecord* rwdata = &((union ModelRwData*)modelGetNodeRwData(model, node))->Gunfire;
+                    rwdata->visible = FALSE;
+                    break;
+                }
+
+            case MODELNODE_OPCODE_DISPLAYLIST_COLLISIONRECORD:
+                if (1)
+                {
+                    ModelRoData_DisplayList_CollisionRecord* rodata = &node->Data->DisplayListCollisions;
+                    ModelRwData_DisplayList_CollisionRecord* rwdata = &((union ModelRwData*)modelGetNodeRwData(model, node))->DisplayListCollisions;
+                    rwdata->Vertices = rodata->Vertices;
+                    rwdata->gdl = rodata->Primary;
+                    break;
+                }
+
+            default:
+                break;
+        }
+
+        if (node->Child)
+        {
+            node = node->Child;
+        }
+        else
+        {
+            while (node)
+            {
+                if (node == startnode->Parent)
+                {
+                    node = NULL;
+                    break;
+                }
+
+                if (node->Next)
+                {
+                    node = node->Next;
+                    break;
+                }
+
+                node = node->Parent;
+            }
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-/*D:80054ED4*/
-glabel jpt_80054ED4
-.word .L7F075D88
-.word .L7F075EF4
-.word .L7F075EF4
-.word .L7F075EF4
-.word .L7F075EF4
-.word .L7F075EF4
-.word .L7F075E00
-.word .L7F075E18
-.word .L7F075E78
-.word .L7F075EF4
-.word .L7F075E9C
-.word .L7F075EB4
-.word .L7F075EF4
-.word .L7F075EF4
-.word .L7F075EF4
-.word .L7F075EF4
-.word .L7F075EF4
-.word .L7F075E38
-.word .L7F075EF4
-.word .L7F075EF4
-.word .L7F075EF4
-.word .L7F075EF4
-.word .L7F075E5C
-.word .L7F075ECC
-
-.text
-glabel unknown_object_microcode_handler
-/* 0AA85C 7F075D2C 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0AA860 7F075D30 AFB20028 */  sw    $s2, 0x28($sp)
-/* 0AA864 7F075D34 AFB00020 */  sw    $s0, 0x20($sp)
-/* 0AA868 7F075D38 00809025 */  move  $s2, $a0
-/* 0AA86C 7F075D3C AFBF002C */  sw    $ra, 0x2c($sp)
-/* 0AA870 7F075D40 AFB10024 */  sw    $s1, 0x24($sp)
-/* 0AA874 7F075D44 F7B40018 */  sdc1  $f20, 0x18($sp)
-/* 0AA878 7F075D48 AFA50034 */  sw    $a1, 0x34($sp)
-/* 0AA87C 7F075D4C 10A0007F */  beqz  $a1, .L7F075F4C
-/* 0AA880 7F075D50 00A08025 */   move  $s0, $a1
-/* 0AA884 7F075D54 4480A000 */  mtc1  $zero, $f20
-/* 0AA888 7F075D58 00000000 */  nop   
-/* 0AA88C 7F075D5C 96020000 */  lhu   $v0, ($s0)
-.L7F075D60:
-/* 0AA890 7F075D60 304F00FF */  andi  $t7, $v0, 0xff
-/* 0AA894 7F075D64 25F8FFFF */  addiu $t8, $t7, -1
-/* 0AA898 7F075D68 2F010018 */  sltiu $at, $t8, 0x18
-/* 0AA89C 7F075D6C 10200061 */  beqz  $at, .L7F075EF4
-/* 0AA8A0 7F075D70 0018C080 */   sll   $t8, $t8, 2
-/* 0AA8A4 7F075D74 3C018005 */  lui   $at, %hi(jpt_80054ED4)
-/* 0AA8A8 7F075D78 00380821 */  addu  $at, $at, $t8
-/* 0AA8AC 7F075D7C 8C384ED4 */  lw    $t8, %lo(jpt_80054ED4)($at)
-.L7F075D80:
-/* 0AA8B0 7F075D80 03000008 */  jr    $t8
-/* 0AA8B4 7F075D84 00000000 */   nop   
-.L7F075D88:
-/* 0AA8B8 7F075D88 02402025 */  move  $a0, $s2
-/* 0AA8BC 7F075D8C 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
-/* 0AA8C0 7F075D90 02002825 */   move  $a1, $s0
-/* 0AA8C4 7F075D94 A0400000 */  sb    $zero, ($v0)
-/* 0AA8C8 7F075D98 E4540004 */  swc1  $f20, 4($v0)
-/* 0AA8CC 7F075D9C E4540008 */  swc1  $f20, 8($v0)
-/* 0AA8D0 7F075DA0 E454000C */  swc1  $f20, 0xc($v0)
-/* 0AA8D4 7F075DA4 E4540010 */  swc1  $f20, 0x10($v0)
-/* 0AA8D8 7F075DA8 E4540014 */  swc1  $f20, 0x14($v0)
-/* 0AA8DC 7F075DAC E4540018 */  swc1  $f20, 0x18($v0)
-/* 0AA8E0 7F075DB0 E454001C */  swc1  $f20, 0x1c($v0)
-/* 0AA8E4 7F075DB4 A0400001 */  sb    $zero, 1($v0)
-/* 0AA8E8 7F075DB8 E4540034 */  swc1  $f20, 0x34($v0)
-/* 0AA8EC 7F075DBC E4540038 */  swc1  $f20, 0x38($v0)
-/* 0AA8F0 7F075DC0 E454003C */  swc1  $f20, 0x3c($v0)
-/* 0AA8F4 7F075DC4 E4540030 */  swc1  $f20, 0x30($v0)
-/* 0AA8F8 7F075DC8 E4540024 */  swc1  $f20, 0x24($v0)
-/* 0AA8FC 7F075DCC E4540028 */  swc1  $f20, 0x28($v0)
-/* 0AA900 7F075DD0 E454002C */  swc1  $f20, 0x2c($v0)
-/* 0AA904 7F075DD4 E4540020 */  swc1  $f20, 0x20($v0)
-/* 0AA908 7F075DD8 A0400002 */  sb    $zero, 2($v0)
-/* 0AA90C 7F075DDC E454004C */  swc1  $f20, 0x4c($v0)
-/* 0AA910 7F075DE0 E4540050 */  swc1  $f20, 0x50($v0)
-/* 0AA914 7F075DE4 E4540054 */  swc1  $f20, 0x54($v0)
-/* 0AA918 7F075DE8 E4540040 */  swc1  $f20, 0x40($v0)
-/* 0AA91C 7F075DEC E4540044 */  swc1  $f20, 0x44($v0)
-/* 0AA920 7F075DF0 E4540048 */  swc1  $f20, 0x48($v0)
-/* 0AA924 7F075DF4 E454005C */  swc1  $f20, 0x5c($v0)
-/* 0AA928 7F075DF8 1000003F */  b     .L7F075EF8
-/* 0AA92C 7F075DFC 8E030014 */   lw    $v1, 0x14($s0)
-.L7F075E00:
-/* 0AA930 7F075E00 02402025 */  move  $a0, $s2
-/* 0AA934 7F075E04 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
-/* 0AA938 7F075E08 02002825 */   move  $a1, $s0
-/* 0AA93C 7F075E0C AC400000 */  sw    $zero, ($v0)
-/* 0AA940 7F075E10 10000039 */  b     .L7F075EF8
-/* 0AA944 7F075E14 8E030014 */   lw    $v1, 0x14($s0)
-.L7F075E18:
-/* 0AA948 7F075E18 8E110004 */  lw    $s1, 4($s0)
-/* 0AA94C 7F075E1C 02402025 */  move  $a0, $s2
-/* 0AA950 7F075E20 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
-/* 0AA954 7F075E24 02002825 */   move  $a1, $s0
-/* 0AA958 7F075E28 AC400000 */  sw    $zero, ($v0)
-/* 0AA95C 7F075E2C 8E230008 */  lw    $v1, 8($s1)
-/* 0AA960 7F075E30 10000031 */  b     .L7F075EF8
-/* 0AA964 7F075E34 AE030014 */   sw    $v1, 0x14($s0)
-.L7F075E38:
-/* 0AA968 7F075E38 8E110004 */  lw    $s1, 4($s0)
-/* 0AA96C 7F075E3C 02402025 */  move  $a0, $s2
-/* 0AA970 7F075E40 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
-/* 0AA974 7F075E44 02002825 */   move  $a1, $s0
-/* 0AA978 7F075E48 24080001 */  li    $t0, 1
-/* 0AA97C 7F075E4C AC480000 */  sw    $t0, ($v0)
-/* 0AA980 7F075E50 8E230000 */  lw    $v1, ($s1)
-/* 0AA984 7F075E54 10000028 */  b     .L7F075EF8
-/* 0AA988 7F075E58 AE030014 */   sw    $v1, 0x14($s0)
-.L7F075E5C:
-/* 0AA98C 7F075E5C 02402025 */  move  $a0, $s2
-/* 0AA990 7F075E60 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
-/* 0AA994 7F075E64 02002825 */   move  $a1, $s0
-/* 0AA998 7F075E68 AC400000 */  sw    $zero, ($v0)
-/* 0AA99C 7F075E6C AC400004 */  sw    $zero, 4($v0)
-/* 0AA9A0 7F075E70 10000021 */  b     .L7F075EF8
-/* 0AA9A4 7F075E74 8E030014 */   lw    $v1, 0x14($s0)
-.L7F075E78:
-/* 0AA9A8 7F075E78 02402025 */  move  $a0, $s2
-/* 0AA9AC 7F075E7C 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
-/* 0AA9B0 7F075E80 02002825 */   move  $a1, $s0
-/* 0AA9B4 7F075E84 AC400000 */  sw    $zero, ($v0)
-/* 0AA9B8 7F075E88 02402025 */  move  $a0, $s2
-/* 0AA9BC 7F075E8C 0FC1BAC4 */  jal   sub_GAME_7F06EB10
-/* 0AA9C0 7F075E90 02002825 */   move  $a1, $s0
-/* 0AA9C4 7F075E94 10000018 */  b     .L7F075EF8
-/* 0AA9C8 7F075E98 8E030014 */   lw    $v1, 0x14($s0)
-.L7F075E9C:
-/* 0AA9CC 7F075E9C 02402025 */  move  $a0, $s2
-/* 0AA9D0 7F075EA0 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
-/* 0AA9D4 7F075EA4 02002825 */   move  $a1, $s0
-/* 0AA9D8 7F075EA8 A4400000 */  sh    $zero, ($v0)
-/* 0AA9DC 7F075EAC 10000012 */  b     .L7F075EF8
-/* 0AA9E0 7F075EB0 8E030014 */   lw    $v1, 0x14($s0)
-.L7F075EB4:
-/* 0AA9E4 7F075EB4 02402025 */  move  $a0, $s2
-/* 0AA9E8 7F075EB8 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
-/* 0AA9EC 7F075EBC 02002825 */   move  $a1, $s0
-/* 0AA9F0 7F075EC0 A4400000 */  sh    $zero, ($v0)
-/* 0AA9F4 7F075EC4 1000000C */  b     .L7F075EF8
-/* 0AA9F8 7F075EC8 8E030014 */   lw    $v1, 0x14($s0)
-.L7F075ECC:
-/* 0AA9FC 7F075ECC 8E110004 */  lw    $s1, 4($s0)
-/* 0AAA00 7F075ED0 02402025 */  move  $a0, $s2
-/* 0AAA04 7F075ED4 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
-/* 0AAA08 7F075ED8 02002825 */   move  $a1, $s0
-/* 0AAA0C 7F075EDC 8E2A0008 */  lw    $t2, 8($s1)
-/* 0AAA10 7F075EE0 AC4A0000 */  sw    $t2, ($v0)
-/* 0AAA14 7F075EE4 8E2B0000 */  lw    $t3, ($s1)
-/* 0AAA18 7F075EE8 AC4B0004 */  sw    $t3, 4($v0)
-/* 0AAA1C 7F075EEC 10000002 */  b     .L7F075EF8
-/* 0AAA20 7F075EF0 8E030014 */   lw    $v1, 0x14($s0)
-def_7F075D80:
-.L7F075EF4:
-/* 0AAA24 7F075EF4 8E030014 */  lw    $v1, 0x14($s0)
-.L7F075EF8:
-/* 0AAA28 7F075EF8 10600003 */  beqz  $v1, .L7F075F08
-/* 0AAA2C 7F075EFC 00000000 */   nop   
-/* 0AAA30 7F075F00 10000010 */  b     .L7F075F44
-/* 0AAA34 7F075F04 00608025 */   move  $s0, $v1
-.L7F075F08:
-/* 0AAA38 7F075F08 1200000E */  beqz  $s0, .L7F075F44
-/* 0AAA3C 7F075F0C 8FAC0034 */   lw    $t4, 0x34($sp)
-/* 0AAA40 7F075F10 8D830008 */  lw    $v1, 8($t4)
-.L7F075F14:
-/* 0AAA44 7F075F14 56030004 */  bnel  $s0, $v1, .L7F075F28
-/* 0AAA48 7F075F18 8E02000C */   lw    $v0, 0xc($s0)
-/* 0AAA4C 7F075F1C 10000009 */  b     .L7F075F44
-/* 0AAA50 7F075F20 00008025 */   move  $s0, $zero
-/* 0AAA54 7F075F24 8E02000C */  lw    $v0, 0xc($s0)
-.L7F075F28:
-/* 0AAA58 7F075F28 50400004 */  beql  $v0, $zero, .L7F075F3C
-/* 0AAA5C 7F075F2C 8E100008 */   lw    $s0, 8($s0)
-/* 0AAA60 7F075F30 10000004 */  b     .L7F075F44
-/* 0AAA64 7F075F34 00408025 */   move  $s0, $v0
-/* 0AAA68 7F075F38 8E100008 */  lw    $s0, 8($s0)
-.L7F075F3C:
-/* 0AAA6C 7F075F3C 1600FFF5 */  bnez  $s0, .L7F075F14
-/* 0AAA70 7F075F40 00000000 */   nop   
-.L7F075F44:
-/* 0AAA74 7F075F44 5600FF86 */  bnezl $s0, .L7F075D60
-/* 0AAA78 7F075F48 96020000 */   lhu   $v0, ($s0)
-.L7F075F4C:
-/* 0AAA7C 7F075F4C 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 0AAA80 7F075F50 D7B40018 */  ldc1  $f20, 0x18($sp)
-/* 0AAA84 7F075F54 8FB00020 */  lw    $s0, 0x20($sp)
-/* 0AAA88 7F075F58 8FB10024 */  lw    $s1, 0x24($sp)
-/* 0AAA8C 7F075F5C 8FB20028 */  lw    $s2, 0x28($sp)
-/* 0AAA90 7F075F60 03E00008 */  jr    $ra
-/* 0AAA94 7F075F64 27BD0030 */   addiu $sp, $sp, 0x30
-)
-#endif
-
-
-
 
 
 void sub_GAME_7F075F68(struct Model *objinst, struct ModelFileHeader *header, u32 *data)
@@ -11596,7 +11536,7 @@ void sub_GAME_7F075F68(struct Model *objinst, struct ModelFileHeader *header, u3
   objinst->attachedto = NULL;
   objinst->attachedto_objinst = NULL;
   objinst->scale = 1.0;
-  unknown_object_microcode_handler(objinst, header->RootNode);
+  modelInitRwData(objinst, header->RootNode);
 }
 
 
@@ -11627,7 +11567,7 @@ void sub_GAME_7F075FAC(struct Model *objinst, struct ModelFileHeader *header, u3
 
 void sub_GAME_7F076030(Model *pmodel, ModelFileHeader *pmodeldef, ModelNode *pnode, ModelFileHeader *cmodeldef)
 {
-    ModelRwData_HeadPlaceholderRecord *rwdata = extract_id_from_object_structure_microcode(pmodel, pnode);
+    ModelRwData_HeadPlaceholderRecord *rwdata = modelGetNodeRwData(pmodel, pnode);
     ModelNode *node;
 
     rwdata->ModelFileHeader = cmodeldef;

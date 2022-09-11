@@ -4838,7 +4838,7 @@ type27_wheeled_vehicle:
 /* 039410 7F0048E0 8D050014 */  lw    $a1, 0x14($t0)
 /* 039414 7F0048E4 50A00009 */  beql  $a1, $zero, .L7F00490C
 /* 039418 7F0048E8 3C01BF80 */   lui   $at, 0xbf80
-/* 03941C 7F0048EC 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
+/* 03941C 7F0048EC 0FC1B1E7 */  jal   modelGetNodeRwData
 /* 039420 7F0048F0 00000000 */   nop   
 /* 039424 7F0048F4 8E490008 */  lw    $t1, 8($s2)
 /* 039428 7F0048F8 3C011000 */  li    $at, 0x10000000 # 0.000000
@@ -6236,7 +6236,7 @@ type27_wheeled_vehicle:
 /* 039460 7F0048F0 8D250014 */  lw    $a1, 0x14($t1)
 /* 039464 7F0048F4 50A00009 */  beql  $a1, $zero, .L7F00491C
 /* 039468 7F0048F8 3C01BF80 */   lui   $at, 0xbf80
-/* 03946C 7F0048FC 0FC1B363 */  jal   extract_id_from_object_structure_microcode
+/* 03946C 7F0048FC 0FC1B363 */  jal   modelGetNodeRwData
 /* 039470 7F004900 00000000 */   nop   
 /* 039474 7F004904 8E590008 */  lw    $t9, 8($s2)
 /* 039478 7F004908 3C011000 */  li    $at, 0x10000000 # 0.000000
@@ -7633,7 +7633,7 @@ type27_wheeled_vehicle:
 /* 037264 7F004874 8D250014 */  lw    $a1, 0x14($t1)
 /* 037268 7F004878 50A00009 */  beql  $a1, $zero, .L7F00491C
 /* 03726C 7F00487C 3C01BF80 */   lui   $at, 0xbf80
-/* 037270 7F004880 0FC1B3A3 */  jal   extract_id_from_object_structure_microcode
+/* 037270 7F004880 0FC1B3A3 */  jal   modelGetNodeRwData
 /* 037274 7F004884 00000000 */   nop   
 /* 037278 7F004888 8E590008 */  lw    $t9, 8($s2)
 /* 03727C 7F00488C 3C011000 */  li    $at, 0x10000000 # 0.000000

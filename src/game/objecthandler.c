@@ -750,7 +750,7 @@ glabel sub_GAME_7F06B29C
 /* 0A0174 7F06B644 8E240000 */  lw    $a0, ($s1)
 /* 0A0178 7F06B648 8CC50014 */  lw    $a1, 0x14($a2)
 /* 0A017C 7F06B64C AFA200A0 */  sw    $v0, 0xa0($sp)
-/* 0A0180 7F06B650 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
+/* 0A0180 7F06B650 0FC1B1E7 */  jal   modelGetNodeRwData
 /* 0A0184 7F06B654 AFA6009C */   sw    $a2, 0x9c($sp)
 /* 0A0188 7F06B658 8FA300A0 */  lw    $v1, 0xa0($sp)
 /* 0A018C 7F06B65C 8FA6009C */  lw    $a2, 0x9c($sp)

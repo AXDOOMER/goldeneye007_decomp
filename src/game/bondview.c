@@ -35112,7 +35112,7 @@ s32 seems_to_load_cuff_microcode(s32 arg0, void *arg1, s32 arg2) {
     if (*temp_a0 != 0)
     {
         // Node 1
-        *extract_id_from_object_structure_microcode(arg0, *temp_a0, arg1->unk8, temp_a3) = (s32) ((u32) (g_CurrentPlayer->field_41C ^ 3) < 1U);
+        *modelGetNodeRwData(arg0, *temp_a0, arg1->unk8, temp_a3) = (s32) ((u32) (g_CurrentPlayer->field_41C ^ 3) < 1U);
         phi_a0 = (arg1->unk8 + sp1C);
         phi_a3 = sp1C;
     }
@@ -35150,7 +35150,7 @@ s32 seems_to_load_cuff_microcode(s32 arg0, void *arg1, s32 arg2) {
             }
         }
         // Node 8
-        *extract_id_from_object_structure_microcode(arg0, *(arg1->unk8 + ((arg2 + 1) * 4)), arg1->unk8, phi_a3) = (s32) phi_v1;
+        *modelGetNodeRwData(arg0, *(arg1->unk8 + ((arg2 + 1) * 4)), arg1->unk8, phi_a3) = (s32) phi_v1;
         phi_a0_2 = (arg1->unk8 + sp1C);
         phi_a2 = arg1->unk8;
         phi_v1_2 = arg2;
@@ -35178,7 +35178,7 @@ s32 seems_to_load_cuff_microcode(s32 arg0, void *arg1, s32 arg2) {
             }
         }
         // Node 13
-        *extract_id_from_object_structure_microcode(arg0, *(phi_a2 + ((phi_v1_2 + 2) * 4)), phi_a2, phi_a3_2) = (s32) phi_v1_3;
+        *modelGetNodeRwData(arg0, *(phi_a2 + ((phi_v1_2 + 2) * 4)), phi_a2, phi_a3_2) = (s32) phi_v1_3;
         phi_a0_3 = (arg1->unk8 + sp1C);
         phi_a2_2 = arg1->unk8;
         phi_v1_4 = arg2;
@@ -35192,7 +35192,7 @@ s32 seems_to_load_cuff_microcode(s32 arg0, void *arg1, s32 arg2) {
     if (phi_a0_3->unkC != 0)
     {
         // Node 15
-        *extract_id_from_object_structure_microcode(arg0, *(phi_a2_2 + ((phi_v1_4 + 3) * 4)), phi_a2_2, phi_a3_3) = (s32) ((u32) g_CurrentPlayer->field_41C < 1U);
+        *modelGetNodeRwData(arg0, *(phi_a2_2 + ((phi_v1_4 + 3) * 4)), phi_a2_2, phi_a3_3) = (s32) ((u32) g_CurrentPlayer->field_41C < 1U);
         phi_a0_4 = (arg1->unk8 + sp1C);
         phi_a2_3 = arg1->unk8;
         phi_v1_5 = arg2;
@@ -35206,7 +35206,7 @@ s32 seems_to_load_cuff_microcode(s32 arg0, void *arg1, s32 arg2) {
     if (phi_a0_4->unk10 != 0)
     {
         // Node 17
-        *extract_id_from_object_structure_microcode(arg0, *(phi_a2_3 + ((phi_v1_5 + 4) * 4)), phi_a2_3, phi_a3_4) = (s32) ((u32) (g_CurrentPlayer->field_41C ^ 2) < 1U);
+        *modelGetNodeRwData(arg0, *(phi_a2_3 + ((phi_v1_5 + 4) * 4)), phi_a2_3, phi_a3_4) = (s32) ((u32) (g_CurrentPlayer->field_41C ^ 2) < 1U);
         phi_a0_5 = (arg1->unk8 + sp1C);
         phi_a2_4 = arg1->unk8;
         phi_v1_6 = arg2;
@@ -35218,7 +35218,7 @@ s32 seems_to_load_cuff_microcode(s32 arg0, void *arg1, s32 arg2) {
     if (phi_a0_5->unk14 != 0)
     {
         // Node 19
-        temp_ret = extract_id_from_object_structure_microcode(arg0, *(phi_a2_4 + (temp_v0 * 4)), phi_a2_4, phi_a3_5);
+        temp_ret = modelGetNodeRwData(arg0, *(phi_a2_4 + (temp_v0 * 4)), phi_a2_4, phi_a3_5);
         *temp_ret = (s32) ((u32) (g_CurrentPlayer->field_41C ^ 4) < 1U);
         phi_return = temp_ret;
     }
@@ -35245,7 +35245,7 @@ glabel seems_to_load_cuff_microcode
 /* 0BC778 7F087C48 50A00010 */  beql  $a1, $zero, .L7F087C8C
 /* 0BC77C 7F087C4C 8C890004 */   lw    $t1, 4($a0)
 /* 0BC780 7F087C50 8FA40048 */  lw    $a0, 0x48($sp)
-/* 0BC784 7F087C54 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
+/* 0BC784 7F087C54 0FC1B1E7 */  jal   modelGetNodeRwData
 /* 0BC788 7F087C58 AFA7001C */   sw    $a3, 0x1c($sp)
 /* 0BC78C 7F087C5C 3C0F8008 */  lui   $t7, %hi(g_CurrentPlayer)
 /* 0BC790 7F087C60 8DEFA0B0 */  lw    $t7, %lo(g_CurrentPlayer)($t7)
@@ -35266,7 +35266,7 @@ glabel seems_to_load_cuff_microcode
 /* 0BC7C8 7F087C98 00CA5821 */   addu  $t3, $a2, $t2
 /* 0BC7CC 7F087C9C 8D650000 */  lw    $a1, ($t3)
 /* 0BC7D0 7F087CA0 AFA7001C */  sw    $a3, 0x1c($sp)
-/* 0BC7D4 7F087CA4 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
+/* 0BC7D4 7F087CA4 0FC1B1E7 */  jal   modelGetNodeRwData
 /* 0BC7D8 7F087CA8 8FA40048 */   lw    $a0, 0x48($sp)
 /* 0BC7DC 7F087CAC 3C0C8008 */  lui   $t4, %hi(g_CurrentPlayer)
 /* 0BC7E0 7F087CB0 8D8CA0B0 */  lw    $t4, %lo(g_CurrentPlayer)($t4)
@@ -35305,7 +35305,7 @@ glabel seems_to_load_cuff_microcode
 /* 0BC85C 7F087D2C 00D8C821 */   addu  $t9, $a2, $t8
 /* 0BC860 7F087D30 8F250000 */  lw    $a1, ($t9)
 /* 0BC864 7F087D34 AFA7001C */  sw    $a3, 0x1c($sp)
-/* 0BC868 7F087D38 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
+/* 0BC868 7F087D38 0FC1B1E7 */  jal   modelGetNodeRwData
 /* 0BC86C 7F087D3C 8FA40048 */   lw    $a0, 0x48($sp)
 /* 0BC870 7F087D40 3C088008 */  lui   $t0, %hi(g_CurrentPlayer)
 /* 0BC874 7F087D44 8D08A0B0 */  lw    $t0, %lo(g_CurrentPlayer)($t0)
@@ -35336,7 +35336,7 @@ glabel seems_to_load_cuff_microcode
 /* 0BC8D0 7F087DA0 00CC6821 */   addu  $t5, $a2, $t4
 /* 0BC8D4 7F087DA4 8DA50000 */  lw    $a1, ($t5)
 /* 0BC8D8 7F087DA8 AFA7001C */  sw    $a3, 0x1c($sp)
-/* 0BC8DC 7F087DAC 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
+/* 0BC8DC 7F087DAC 0FC1B1E7 */  jal   modelGetNodeRwData
 /* 0BC8E0 7F087DB0 8FA40048 */   lw    $a0, 0x48($sp)
 /* 0BC8E4 7F087DB4 3C0E8008 */  lui   $t6, %hi(g_CurrentPlayer)
 /* 0BC8E8 7F087DB8 8DCEA0B0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
@@ -35356,7 +35356,7 @@ glabel seems_to_load_cuff_microcode
 /* 0BC91C 7F087DEC 00C95021 */   addu  $t2, $a2, $t1
 /* 0BC920 7F087DF0 8D450000 */  lw    $a1, ($t2)
 /* 0BC924 7F087DF4 AFA7001C */  sw    $a3, 0x1c($sp)
-/* 0BC928 7F087DF8 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
+/* 0BC928 7F087DF8 0FC1B1E7 */  jal   modelGetNodeRwData
 /* 0BC92C 7F087DFC 8FA40048 */   lw    $a0, 0x48($sp)
 /* 0BC930 7F087E00 3C0B8008 */  lui   $t3, %hi(g_CurrentPlayer)
 /* 0BC934 7F087E04 8D6BA0B0 */  lw    $t3, %lo(g_CurrentPlayer)($t3)
@@ -35376,7 +35376,7 @@ glabel seems_to_load_cuff_microcode
 /* 0BC968 7F087E38 11E0000A */  beqz  $t7, .L7F087E64
 /* 0BC96C 7F087E3C 8FA40048 */   lw    $a0, 0x48($sp)
 /* 0BC970 7F087E40 00D8C821 */  addu  $t9, $a2, $t8
-/* 0BC974 7F087E44 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
+/* 0BC974 7F087E44 0FC1B1E7 */  jal   modelGetNodeRwData
 /* 0BC978 7F087E48 8F250000 */   lw    $a1, ($t9)
 /* 0BC97C 7F087E4C 3C088008 */  lui   $t0, %hi(g_CurrentPlayer)
 /* 0BC980 7F087E50 8D08A0B0 */  lw    $t0, %lo(g_CurrentPlayer)($t0)
@@ -35452,7 +35452,7 @@ glabel sub_GAME_7F087E74
 /* 0BCA3C 7F087F0C 8C4A0008 */  lw    $t2, 8($v0)
 /* 0BCA40 7F087F10 8C84A0B0 */  lw    $a0, %lo(g_CurrentPlayer)($a0)
 /* 0BCA44 7F087F14 8D45000C */  lw    $a1, 0xc($t2)
-/* 0BCA48 7F087F18 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
+/* 0BCA48 7F087F18 0FC1B1E7 */  jal   modelGetNodeRwData
 /* 0BCA4C 7F087F1C 24840230 */   addiu $a0, $a0, 0x230
 /* 0BCA50 7F087F20 0FC2F5B8 */  jal   dynAllocateMatrix
 /* 0BCA54 7F087F24 AFA20158 */   sw    $v0, 0x158($sp)
@@ -35973,7 +35973,7 @@ glabel sub_GAME_7F087E74
 /* 0BD148 7F0885D8 8C4A0008 */  lw    $t2, 8($v0)
 /* 0BD14C 7F0885DC 8C84A120 */  lw    $a0, %lo(g_CurrentPlayer)($a0)
 /* 0BD150 7F0885E0 8D45000C */  lw    $a1, 0xc($t2)
-/* 0BD154 7F0885E4 0FC1B363 */  jal   extract_id_from_object_structure_microcode
+/* 0BD154 7F0885E4 0FC1B363 */  jal   modelGetNodeRwData
 /* 0BD158 7F0885E8 24840230 */   addiu $a0, $a0, 0x230
 /* 0BD15C 7F0885EC 0FC2F8A4 */  jal   dynAllocateMatrix
 /* 0BD160 7F0885F0 AFA20158 */   sw    $v0, 0x158($sp)
@@ -36496,7 +36496,7 @@ glabel sub_GAME_7F087E74
 /* 0BAA5C 7F08806C 8C4A0008 */  lw    $t2, 8($v0)
 /* 0BAA60 7F088070 8C848BC0 */  lw    $a0, %lo(g_CurrentPlayer)($a0)
 /* 0BAA64 7F088074 8D45000C */  lw    $a1, 0xc($t2)
-/* 0BAA68 7F088078 0FC1B3A3 */  jal   extract_id_from_object_structure_microcode
+/* 0BAA68 7F088078 0FC1B3A3 */  jal   modelGetNodeRwData
 /* 0BAA6C 7F08807C 24840230 */   addiu $a0, $a0, 0x230
 /* 0BAA70 7F088080 0FC2F2A4 */  jal   dynAllocateMatrix
 /* 0BAA74 7F088084 AFA20158 */   sw    $v0, 0x158($sp)

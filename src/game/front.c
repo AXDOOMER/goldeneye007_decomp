@@ -2698,7 +2698,7 @@ loop_1:
             phi_v1 = phi_v1;
             if (0x12 == (**temp_t7 & 0xff))
             {
-                *extract_id_from_object_structure_microcode(arg0, *temp_t7, phi_a2) = 0;
+                *modelGetNodeRwData(arg0, *temp_t7, phi_a2) = 0;
                 phi_a2_2 = arg0->unk8->unkC;
                 phi_v1 = arg0->unk8;
             }
@@ -2741,7 +2741,7 @@ glabel disable_all_switches
 /* 0402A4 7F00B774 331900FF */  andi  $t9, $t8, 0xff
 /* 0402A8 7F00B778 56790007 */  bnel  $s3, $t9, .L7F00B798
 /* 0402AC 7F00B77C 26100001 */   addiu $s0, $s0, 1
-/* 0402B0 7F00B780 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
+/* 0402B0 7F00B780 0FC1B1E7 */  jal   modelGetNodeRwData
 /* 0402B4 7F00B784 02402025 */   move  $a0, $s2
 /* 0402B8 7F00B788 AC400000 */  sw    $zero, ($v0)
 /* 0402BC 7F00B78C 8E430008 */  lw    $v1, 8($s2)
@@ -2767,7 +2767,7 @@ void set_item_visibility_in_objinstance(Model* objinstance, s32 item, s32 mode)
 {
     if (objinstance->obj->Switches[item] != NULL)
     {
-        struct ModelRoData_HeaderRecord *node = extract_id_from_object_structure_microcode(objinstance, objinstance->obj->Switches[item]);
+        struct ModelRoData_HeaderRecord *node = modelGetNodeRwData(objinstance, objinstance->obj->Switches[item]);
         node->ModelType = mode;
     }
 }
@@ -6412,7 +6412,7 @@ loop_23:
     }
     if (walletinst[0]->unk8->unk8->unk54 != 0)
     {
-        temp_s1_2 = extract_id_from_object_structure_microcode(walletinst[0], walletinst[0]->unk8->unk8->unk54);
+        temp_s1_2 = modelGetNodeRwData(walletinst[0], walletinst[0]->unk8->unk8->unk54);
         *temp_s1_2 = dynAllocate7F0BD6C4(walletinst[0]->unk8->unk8->unk54->unk4->unkC);
         if (walletinst[0]->unk8->unk8->unk54->unk4->unkC > 0)
         {
@@ -6680,7 +6680,7 @@ glabel interface_menu07_missionsel
 /* 042C38 7F00E108 8F050054 */  lw    $a1, 0x54($t8)
 /* 042C3C 7F00E10C 50A00054 */  beql  $a1, $zero, .L7F00E260
 /* 042C40 7F00E110 00002025 */   move  $a0, $zero
-/* 042C44 7F00E114 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
+/* 042C44 7F00E114 0FC1B1E7 */  jal   modelGetNodeRwData
 /* 042C48 7F00E118 8CB40004 */   lw    $s4, 4($a1)
 /* 042C4C 7F00E11C 00408825 */  move  $s1, $v0
 /* 042C50 7F00E120 0FC2F5B1 */  jal   dynAllocate7F0BD6C4
@@ -7050,7 +7050,7 @@ glabel interface_menu07_missionsel
 /* 042C98 7F00E128 8F050054 */  lw    $a1, 0x54($t8)
 /* 042C9C 7F00E12C 50A00054 */  beql  $a1, $zero, .L7F00E280
 /* 042CA0 7F00E130 00002025 */   move  $a0, $zero
-/* 042CA4 7F00E134 0FC1B363 */  jal   extract_id_from_object_structure_microcode
+/* 042CA4 7F00E134 0FC1B363 */  jal   modelGetNodeRwData
 /* 042CA8 7F00E138 8CB40004 */   lw    $s4, 4($a1)
 /* 042CAC 7F00E13C 00408825 */  move  $s1, $v0
 /* 042CB0 7F00E140 0FC2F89D */  jal   dynAllocate7F0BD6C4
@@ -7430,7 +7430,7 @@ glabel interface_menu07_missionsel
 /* 042C98 7F00E128 8F050054 */  lw    $a1, 0x54($t8)
 /* 042C9C 7F00E12C 50A00054 */  beql  $a1, $zero, .L7F00E280
 /* 042CA0 7F00E130 00002025 */   move  $a0, $zero
-/* 042CA4 7F00E134 0FC1B363 */  jal   extract_id_from_object_structure_microcode
+/* 042CA4 7F00E134 0FC1B363 */  jal   modelGetNodeRwData
 /* 042CA8 7F00E138 8CB40004 */   lw    $s4, 4($a1)
 /* 042CAC 7F00E13C 00408825 */  move  $s1, $v0
 /* 042CB0 7F00E140 0FC2F89D */  jal   dynAllocate7F0BD6C4
@@ -22691,7 +22691,7 @@ glabel constructor_menu18_displaycast
 /* 04E2A0 7F019770 8F250000 */  lw    $a1, ($t9)
 /* 04E2A4 7F019774 10A00006 */  beqz  $a1, .L7F019790
 /* 04E2A8 7F019778 00000000 */   nop
-/* 04E2AC 7F01977C 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
+/* 04E2AC 7F01977C 0FC1B1E7 */  jal   modelGetNodeRwData
 /* 04E2B0 7F019780 00E02025 */   move  $a0, $a3
 /* 04E2B4 7F019784 A4400000 */  sh    $zero, ($v0)
 /* 04E2B8 7F019788 3C078003 */  lui   $a3, %hi(ptrobjinstance)
@@ -22704,7 +22704,7 @@ glabel constructor_menu18_displaycast
 /* 04E2D0 7F0197A0 8DE50008 */  lw    $a1, 8($t7)
 /* 04E2D4 7F0197A4 50A00005 */  beql  $a1, $zero, .L7F0197BC
 /* 04E2D8 7F0197A8 8E8D0000 */   lw    $t5, ($s4)
-/* 04E2DC 7F0197AC 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
+/* 04E2DC 7F0197AC 0FC1B1E7 */  jal   modelGetNodeRwData
 /* 04E2E0 7F0197B0 00E02025 */   move  $a0, $a3
 /* 04E2E4 7F0197B4 AC400000 */  sw    $zero, ($v0)
 /* 04E2E8 7F0197B8 8E8D0000 */  lw    $t5, ($s4)
@@ -23815,7 +23815,7 @@ glabel constructor_menu18_displaycast
 /* 04C1DC 7F0197EC 8F250000 */  lw    $a1, ($t9)
 /* 04C1E0 7F0197F0 10A00006 */  beqz  $a1, .L7F01980C
 /* 04C1E4 7F0197F4 00000000 */   nop
-/* 04C1E8 7F0197F8 0FC1B3A3 */  jal   extract_id_from_object_structure_microcode
+/* 04C1E8 7F0197F8 0FC1B3A3 */  jal   modelGetNodeRwData
 /* 04C1EC 7F0197FC 00E02025 */   move  $a0, $a3
 /* 04C1F0 7F019800 A4400000 */  sh    $zero, ($v0)
 /* 04C1F4 7F019804 3C078002 */  lui   $a3, %hi(ptrobjinstance) # $a3, 0x8002
@@ -23828,7 +23828,7 @@ glabel constructor_menu18_displaycast
 /* 04C20C 7F01981C 8DE50008 */  lw    $a1, 8($t7)
 /* 04C210 7F019820 50A00005 */  beql  $a1, $zero, .L7F019838
 /* 04C214 7F019824 8E8D0000 */   lw    $t5, ($s4)
-/* 04C218 7F019828 0FC1B3A3 */  jal   extract_id_from_object_structure_microcode
+/* 04C218 7F019828 0FC1B3A3 */  jal   modelGetNodeRwData
 /* 04C21C 7F01982C 00E02025 */   move  $a0, $a3
 /* 04C220 7F019830 AC400000 */  sw    $zero, ($v0)
 /* 04C224 7F019834 8E8D0000 */  lw    $t5, ($s4)
