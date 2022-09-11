@@ -3001,7 +3001,7 @@ void process_07_unknown(Model *model, ModelNode *node)
 
     index3 = index2 + D_800360C4[index1].unk00;
 
-    rwdata->Op07.visible = rodata->Op07.unk00[index3 + 0x18];
+    rwdata->Op07.visible = rodata->Op07.unk18[index3];
 }
 
 
@@ -6220,7 +6220,7 @@ void modelRenderNodeGundl(ModelRenderData* renderdata, ModelNode* arg1)
     {
         if ((renderdata->flags & 1) && rodata->Primary)
         {
-            gSPSegment(renderdata->gdl++, SPSEGMENT_MODEL_COL1, osVirtualToPhysical(rodata->reserved));
+            gSPSegment(renderdata->gdl++, SPSEGMENT_MODEL_COL1, osVirtualToPhysical(rodata->BaseAddr));
 
             if (renderdata->cullmode)
             {
@@ -6255,7 +6255,7 @@ void modelRenderNodeGundl(ModelRenderData* renderdata, ModelNode* arg1)
 
         if ((renderdata->flags & 2) && rodata->Primary && (rodata->ModelType == 4) && rodata->Secondary)
         {
-            gSPSegment(renderdata->gdl++, SPSEGMENT_MODEL_COL1, osVirtualToPhysical(rodata->reserved));
+            gSPSegment(renderdata->gdl++, SPSEGMENT_MODEL_COL1, osVirtualToPhysical(rodata->BaseAddr));
 
             if (renderdata->cullmode)
             {
@@ -6281,7 +6281,7 @@ void modelRenderNodeDl(ModelRenderData *renderdata, Model *model, ModelNode *nod
 
             if (rwdata->DisplayListCollisions.gdl)
             {
-                gSPSegment(renderdata->gdl++, SPSEGMENT_MODEL_COL1, osVirtualToPhysical(rodata->DisplayListCollisions.number));
+                gSPSegment(renderdata->gdl++, SPSEGMENT_MODEL_COL1, osVirtualToPhysical(rodata->DisplayListCollisions.BaseAddr));
 
                 if (renderdata->cullmode)
                 {
@@ -6323,7 +6323,7 @@ void modelRenderNodeDl(ModelRenderData *renderdata, Model *model, ModelNode *nod
 
             if (rwdata->DisplayListCollisions.gdl && rodata->DisplayListCollisions.ModelType == 4 && rodata->DisplayListCollisions.Secondary)
             {
-                gSPSegment(renderdata->gdl++, SPSEGMENT_MODEL_COL1, osVirtualToPhysical(rodata->DisplayListCollisions.number));
+                gSPSegment(renderdata->gdl++, SPSEGMENT_MODEL_COL1, osVirtualToPhysical(rodata->DisplayListCollisions.BaseAddr));
 
                 if (renderdata->cullmode)
                 {
@@ -6383,7 +6383,7 @@ void dorottex(ModelRenderData *renderdata, ModelNode *node)
             dst = vtxallocator(rodata->numVertices * 4);
 
             gSPSegment(renderdata->gdl++, SPSEGMENT_MODEL_VTX, osVirtualToPhysical(dst));
-            gSPSegment(renderdata->gdl++, SPSEGMENT_MODEL_COL1, osVirtualToPhysical(rodata->reserved));
+            gSPSegment(renderdata->gdl++, SPSEGMENT_MODEL_COL1, osVirtualToPhysical(rodata->BaseAddr));
 
             gDPSetFogColor(renderdata->gdl++, 0x00, 0x00, 0x00, 0x00);
             gSPDisplayList(renderdata->gdl++, rodata->Primary);
@@ -10711,10 +10711,157 @@ void sub_GAME_7F0755B0(void)
 
 
 #ifdef NONMATCHING
-void convert_obj_microcode_offset_to_rdram_addr(void) {
 
+#define PROMOTE(var) \
+    if (var) \
+        var = (void *)((u32)var + diff)
+
+// Somewhat close to matching: 88.90%
+// the problem is that Op05/Op07 has some sort of overlap that hasn't been figured out yet
+// named 'modelPromoteNodeOffsetsToPointers' in PD
+
+void convert_obj_microcode_offset_to_rdram_addr(ModelNode *node, u32 vma, u32 fileramaddr)
+{
+    union ModelRoData *rodata;
+    s32 diff = fileramaddr - vma;
+    s32 i;
+
+    while (node) {
+        u32 type = node->Opcode & 0xff;
+
+        PROMOTE(node->Data);
+        PROMOTE(node->Parent);
+        PROMOTE(node->Next);
+        PROMOTE(node->Prev);
+        PROMOTE(node->Child);
+
+        switch (type) {
+        case MODELNODE_OPCODE_HEADERRECORD:
+            rodata = node->Data;
+            PROMOTE(rodata->Header.FirstGroup);
+            break;
+        case MODELNODE_OPCODE_GROUPRECORD:
+            rodata = node->Data;
+            PROMOTE(rodata->Group.ChildGroup);
+            break;
+        case MODELNODE_OPCODE_UNUSED_03:
+            rodata = node->Data;
+            PROMOTE(rodata->Group.ChildGroup);
+            break;
+        case MODELNODE_OPCODE_DISPLAYLISTRECORD:
+            rodata = node->Data;
+            PROMOTE(rodata->DisplayList.Vertices);
+            rodata->DisplayList.BaseAddr = (void *)fileramaddr;
+            break;
+        case MODELNODE_OPCODE_DISPLAYLIST_COLLISIONRECORD:
+            rodata = node->Data;
+            PROMOTE(rodata->DisplayListCollisions.Vertices);
+            PROMOTE(rodata->DisplayListCollisions.CollisionVertices);
+            PROMOTE(rodata->DisplayListCollisions.PointUsage);
+            for (i = 0; i < rodata->DisplayListCollisions.numCollisionVertices; i++) {
+                PROMOTE(rodata->DisplayListCollisions.CollisionVertices[i].LinkedTo);
+            }
+            rodata->DisplayListCollisions.BaseAddr = (void *)fileramaddr;
+            break;
+        case MODELNODE_OPCODE_UNUSED_20:
+            rodata = node->Data;
+            PROMOTE(rodata->Group.ChildGroup);
+            break;
+        case MODELNODE_OPCODE_UNUSED_05:
+            rodata = node->Data;
+
+            // v similar to OP06RECORD (same issues) v
+            PROMOTE(rodata->Op05.unk04);
+            PROMOTE(rodata->Op05.unk08);
+            PROMOTE(rodata->Op05.unk0C);
+            for (i = 0; i < rodata->Op05.unk00; i++) {
+                // this loop iterates by 8 bytes, and starts from unk04
+                //PROMOTE(rodata->Op05.unk04[i].unk04);
+            }
+            // ^ similar to OP06RECORD (same issues) ^
+
+            rodata->Op05.BaseAddr = (void *)fileramaddr;
+            break;
+        case MODELNODE_OPCODE_OP07RECORD:
+            rodata = node->Data;
+            PROMOTE(rodata->Op07.unk00);
+            PROMOTE(rodata->Op07.unk04);
+
+            // v similar to OP05RECORD (same issues) v
+            PROMOTE(rodata->Op07.unk0C);
+            PROMOTE(rodata->Op07.unk10);
+            PROMOTE(rodata->Op07.unk14);
+            for (i = 0; i < rodata->Op07.unk08; i++) {
+                // this loop iterates by 8 bytes, and starts from unk0C
+                //PROMOTE(rodata->Op07.unk04[i].unk0C);
+            }
+            // ^ similar to OP05RECORD (same issues) ^
+
+            rodata->Op07.BaseAddr = (void *)fileramaddr;
+            break;
+        case MODELNODE_OPCODE_UNUSED_06:
+            rodata = node->Data;
+            rodata->Op06.BaseAddr = (void *)fileramaddr;
+            break;
+        case MODELNODE_OPCODE_LODRECORD:
+            rodata = node->Data;
+            PROMOTE(rodata->LOD.Affects);
+            node->Child = rodata->LOD.Affects;
+            break;
+        case MODELNODE_OPCODE_SWITCHRECORD:
+            rodata = node->Data;
+            PROMOTE(rodata->Switch.Controls);
+            break;
+        case MODELNODE_OPCODE_BSPRECORD:
+            rodata = node->Data;
+            PROMOTE(rodata->BSP.leftChild);
+            PROMOTE(rodata->BSP.rightChild);
+            break;
+        case MODELNODE_OPCODE_UNUSED_17:
+            rodata = node->Data;
+            PROMOTE(rodata->Group.ChildGroup);
+            break;
+        case MODELNODE_OPCODE_OP11RECORD:
+            rodata = node->Data;
+            PROMOTE(rodata->Op11.unk0c[15]);
+            rodata->Op11.BaseAddr = (void *)fileramaddr;
+            break;
+        case MODELNODE_OPCODE_GUNFIRERECORD:
+            rodata = node->Data;
+            PROMOTE(rodata->Gunfire.Image);
+            rodata->Gunfire.BaseAddr = (void *)fileramaddr;
+            break;
+        case MODELNODE_OPCODE_SHADOWRECORD:
+            rodata = node->Data;
+            PROMOTE(rodata->Shadow.image);
+            PROMOTE(rodata->Shadow.Header);
+            rodata->Shadow.BaseAddr = (void *)fileramaddr;
+            break;
+        case MODELNODE_OPCODE_DISPLAYLISTPRIMARYRECORD:
+            rodata = node->Data;
+            PROMOTE(rodata->DisplayListPrimary.Vertices);
+            rodata->DisplayListPrimary.BaseAddr = (void *)fileramaddr;
+            break;
+        default:
+            break;
+        }
+
+        if (node->Child) {
+            node = node->Child;
+        } else {
+            while (node) {
+                if (node->Next) {
+                    node = node->Next;
+                    break;
+                }
+
+                node = node->Parent;
+            }
+        }
+    }
 }
 #else
+void convert_obj_microcode_offset_to_rdram_addr(ModelNode *node, u32 vma, u32 fileramaddr);
 GLOBAL_ASM(
 .late_rodata
 /*D:80054E14*/
@@ -11173,13 +11320,9 @@ glabel sub_GAME_7F075A90
 #endif
 
 
-
-
-
-
 void REMOVED_sub_GAME_7F075B08(s32 param_1,s32 param_2,s32 param_3,s32 param_4)
 {
-  return;
+    return;
 }
 
 
