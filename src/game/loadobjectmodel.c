@@ -434,7 +434,7 @@ loop_3:
                     }
                     goto block_19;
                 }
-                if ((stageID != 8) && ((phi_s0->unk64 & 0x80) == 0) && ((phi_s0->unk2 & 4) == 0) && (temp_v0->unk1C == 0) && ((arg4 == 0) || (sub_GAME_7F06C060(phi_s0->stan, arg5) != 0)))
+                if ((stageID != 8) && ((phi_s0->unk64 & 0x80) == 0) && ((phi_s0->unk2 & 4) == 0) && (temp_v0->unk1C == 0) && ((arg4 == 0) || (modelmgrCanSlotFitRwdata(phi_s0->stan, arg5) != 0)))
                 {
                     if ((phi_s2 == 0) && ((phi_s0->pos.AsArray[2]->unk1 & 2) == 0))
                     {
@@ -529,7 +529,7 @@ glabel setupFindObjForReuse
 /* 08BB00 7F056FD0 00000000 */   nop   
 /* 08BB04 7F056FD4 12200005 */  beqz  $s1, .L7F056FEC
 /* 08BB08 7F056FD8 02A02825 */   move  $a1, $s5
-/* 08BB0C 7F056FDC 0FC1B018 */  jal   sub_GAME_7F06C060
+/* 08BB0C 7F056FDC 0FC1B018 */  jal   modelmgrCanSlotFitRwdata
 /* 08BB10 7F056FE0 8E040014 */   lw    $a0, 0x14($s0)
 /* 08BB14 7F056FE4 1040000C */  beqz  $v0, .L7F057018
 /* 08BB18 7F056FE8 00000000 */   nop   

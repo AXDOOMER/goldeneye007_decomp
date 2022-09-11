@@ -963,6 +963,12 @@ typedef union
             u32     reserved2; /*0x24 padding*/
         } ModelRoData_GunfireRecord;
 
+        typedef struct ModelRwData_GunfireRecord
+        {
+            s16 visible;
+            u16 unk02;
+        } ModelRwData_GunfireRecord;
+
         /**
          *  Opcode 13 0xD
          *  Draws a shadow under character only
@@ -1153,6 +1159,7 @@ typedef union
         struct ModelRwData_Op07Record Op07;
         struct ModelRwData_LODRecord LOD;
         struct ModelRwData_BSPRecord BSP;
+        struct ModelRwData_GunfireRecord Gunfire;
         struct ModelRwData_SwitchRecord Switch;
         struct ModelRwData_HeadPlaceholderRecord HeadPlaceholder;
         struct ModelRwData_DisplayList_CollisionRecord DisplayListCollisions;
@@ -1299,10 +1306,10 @@ typedef union
             s16                Type;  /*0x01*/  // but sub_GAME_7F075F68() indicates that Type is a s16...
                                                 // not sure which is correct.
 
-            struct ChrRecord *chr;   /*0x04*/
-            ModelFileHeader  *obj;   /*0x08 GE Name confirmed*/
-            RenderPosView    *render_pos; /*0x0c*/
-            void            **datas; // array of pointers to modeldata structs /*0x10*/
+            struct ChrRecord  *chr;   /*0x04*/
+            ModelFileHeader   *obj;   /*0x08 GE Name confirmed*/
+            RenderPosView     *render_pos; /*0x0c*/
+            union ModelRwData **datas; // array of pointers to modeldata structs /*0x10*/
 
             f32               scale;              /*0x14*/
             struct Model     *attachedto;         /*0x18*/

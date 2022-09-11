@@ -25,33 +25,11 @@ s32 sub_GAME_7F0754BC(struct ModelAnimation *, s16, struct ModelSkeleton*);
 
 
 //newfile per EU
-#ifdef NONMATCHING
-void sub_GAME_7F06C060(void) {
-
+bool modelmgrCanSlotFitRwdata(Model *modelslot, ModelFileHeader *modeldef)
+{
+	return modeldef->numRecords <= 0
+		|| (modelslot->datas != NULL && modelslot->Type >= modeldef->numRecords);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06C060
-/* 0A0B90 7F06C060 84A30014 */  lh    $v1, 0x14($a1)
-/* 0A0B94 7F06C064 28620001 */  slti  $v0, $v1, 1
-/* 0A0B98 7F06C068 14400008 */  bnez  $v0, .L7F06C08C
-/* 0A0B9C 7F06C06C 00000000 */   nop   
-/* 0A0BA0 7F06C070 8C820010 */  lw    $v0, 0x10($a0)
-/* 0A0BA4 7F06C074 0002702B */  sltu  $t6, $zero, $v0
-/* 0A0BA8 7F06C078 11C00004 */  beqz  $t6, .L7F06C08C
-/* 0A0BAC 7F06C07C 01C01025 */   move  $v0, $t6
-/* 0A0BB0 7F06C080 848F0002 */  lh    $t7, 2($a0)
-/* 0A0BB4 7F06C084 01E3102A */  slt   $v0, $t7, $v1
-/* 0A0BB8 7F06C088 38420001 */  xori  $v0, $v0, 1
-.L7F06C08C:
-/* 0A0BBC 7F06C08C 03E00008 */  jr    $ra
-/* 0A0BC0 7F06C090 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
@@ -137,7 +115,7 @@ glabel get_obj_instance_controller_for_header
 /* 0A0CC8 7F06C198 02462021 */  addu  $a0, $s2, $a2
 /* 0A0CCC 7F06C19C 55A0000E */  bnezl $t5, .L7F06C1D8
 /* 0A0CD0 7F06C1A0 8E980000 */   lw    $t8, ($s4)
-/* 0A0CD4 7F06C1A4 0FC1B018 */  jal   sub_GAME_7F06C060
+/* 0A0CD4 7F06C1A4 0FC1B018 */  jal   modelmgrCanSlotFitRwdata
 /* 0A0CD8 7F06C1A8 02A02825 */   move  $a1, $s5
 /* 0A0CDC 7F06C1AC 5040000A */  beql  $v0, $zero, .L7F06C1D8
 /* 0A0CE0 7F06C1B0 8E980000 */   lw    $t8, ($s4)

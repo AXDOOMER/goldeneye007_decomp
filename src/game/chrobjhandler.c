@@ -39831,7 +39831,7 @@ glabel sub_GAME_7F05126C
 /* 085EA4 7F051374 8E040014 */  lw    $a0, 0x14($s0)
 /* 085EA8 7F051378 AFA70054 */  sw    $a3, 0x54($sp)
 /* 085EAC 7F05137C AFA80040 */  sw    $t0, 0x40($sp)
-/* 085EB0 7F051380 0FC1B018 */  jal   sub_GAME_7F06C060
+/* 085EB0 7F051380 0FC1B018 */  jal   modelmgrCanSlotFitRwdata
 /* 085EB4 7F051384 AFA9003C */   sw    $t1, 0x3c($sp)
 /* 085EB8 7F051388 3C0B8007 */  lui   $t3, %hi(ProjectileData_start_address) 
 /* 085EBC 7F05138C 256B1E80 */  addiu $t3, %lo(ProjectileData_start_address) # addiu $t3, $t3, 0x1e80
@@ -40066,7 +40066,7 @@ glabel hatCreate
 /* 086190 7F051660 8E040014 */  lw    $a0, 0x14($s0)
 /* 086194 7F051664 8FA50070 */  lw    $a1, 0x70($sp)
 /* 086198 7F051668 AFA30064 */  sw    $v1, 0x64($sp)
-/* 08619C 7F05166C 0FC1B018 */  jal   sub_GAME_7F06C060
+/* 08619C 7F05166C 0FC1B018 */  jal   modelmgrCanSlotFitRwdata
 /* 0861A0 7F051670 AFA70068 */   sw    $a3, 0x68($sp)
 /* 0861A4 7F051674 8FA30064 */  lw    $v1, 0x64($sp)
 /* 0861A8 7F051678 1040000C */  beqz  $v0, .L7F0516AC
