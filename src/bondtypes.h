@@ -823,9 +823,14 @@ typedef union
         {
             coord3d                       Origin;               /*0x0*/
             u16                           JointID;              /*0xC*/
-            u16                           MatrixID0;            /*0xE*/
-            u16                           MatrixID1;            /*0x10*/
-            u16                           MatrixID2;            /*0x12 never used*/
+            union {
+                s16 MatrixIDs[3]; /*0xE*/
+                struct {
+                    s16 MatrixID0; /*0xE*/
+                    s16 MatrixID1; /*0x10*/
+                    s16 MatrixID2; /*0x12 never used*/
+                };
+            };
             struct ModelRoData_GroupRecord *ChildGroup;           /*0x14*/
             f32                           BoundingVolumeRadius; /*0x18*/
         } ModelRoData_GroupRecord;

@@ -451,107 +451,47 @@ glabel sub_GAME_7F06C474
 #endif
 
 
-
-
-
-void sub_GAME_7F06C550(Model* model, coord3d* coord) {
+void sub_GAME_7F06C550(Model* model, coord3d* coord)
+{
   sub_GAME_7F06C474(model, coord);
 }
 
 
+s32 sub_GAME_7F06C570(ModelNode *node, s32 arg1)
+{
+    s32 index;
+    union ModelRoData *rodata1;
+    union ModelRoData *rodata2;
+    union ModelRoData *rodata3;
+    union ModelRoData *rodata4;
 
+    while (node)
+    {
+        switch (node->Opcode & 0xff)
+        {
+            case MODELNODE_OPCODE_HEADERRECORD:
+                rodata1 = node->Data;
+                return (s16)rodata1->Header.ModelType;
 
+            case MODELNODE_OPCODE_GROUPRECORD:
+                rodata2 = node->Data;
+                return rodata2->Group.MatrixIDs[arg1 == 0x200 ? 2 : (arg1 == 0x100 ? 1 : 0)];
 
-#ifdef NONMATCHING
-void sub_GAME_7F06C570(void) {
+            case MODELNODE_OPCODE_UNUSED_03:
+                rodata3 = node->Data;
+                return rodata3->Group.MatrixIDs[arg1 == 0x200 ? 2 : (arg1 == 0x100 ? 1 : 0)];
 
+            case MODELNODE_OPCODE_GROUPSIMPLERECORD:
+                rodata4 = node->Data;
+                return rodata4->GroupSimple.Group1;
+                break;
+        }
+
+        node = node->Parent;
+    }
+
+    return -1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06C570
-/* 0A10A0 7F06C570 10800038 */  beqz  $a0, .L7F06C654
-/* 0A10A4 7F06C574 00A03025 */   move  $a2, $a1
-/* 0A10A8 7F06C578 24080015 */  li    $t0, 21
-/* 0A10AC 7F06C57C 24070003 */  li    $a3, 3
-/* 0A10B0 7F06C580 24050002 */  li    $a1, 2
-/* 0A10B4 7F06C584 24020001 */  li    $v0, 1
-/* 0A10B8 7F06C588 94830000 */  lhu   $v1, ($a0)
-.L7F06C58C:
-/* 0A10BC 7F06C58C 306E00FF */  andi  $t6, $v1, 0xff
-/* 0A10C0 7F06C590 51C2000A */  beql  $t6, $v0, .L7F06C5BC
-/* 0A10C4 7F06C594 8C830004 */   lw    $v1, 4($a0)
-/* 0A10C8 7F06C598 51C5000B */  beql  $t6, $a1, .L7F06C5C8
-/* 0A10CC 7F06C59C 24010200 */   li    $at, 512
-/* 0A10D0 7F06C5A0 51C70018 */  beql  $t6, $a3, .L7F06C604
-/* 0A10D4 7F06C5A4 24010200 */   li    $at, 512
-/* 0A10D8 7F06C5A8 51C80025 */  beql  $t6, $t0, .L7F06C640
-/* 0A10DC 7F06C5AC 8C830004 */   lw    $v1, 4($a0)
-/* 0A10E0 7F06C5B0 10000026 */  b     .L7F06C64C
-/* 0A10E4 7F06C5B4 8C840008 */   lw    $a0, 8($a0)
-/* 0A10E8 7F06C5B8 8C830004 */  lw    $v1, 4($a0)
-.L7F06C5BC:
-/* 0A10EC 7F06C5BC 03E00008 */  jr    $ra
-/* 0A10F0 7F06C5C0 84620002 */   lh    $v0, 2($v1)
-
-/* 0A10F4 7F06C5C4 24010200 */  li    $at, 512
-.L7F06C5C8:
-/* 0A10F8 7F06C5C8 14C10003 */  bne   $a2, $at, .L7F06C5D8
-/* 0A10FC 7F06C5CC 8C850004 */   lw    $a1, 4($a0)
-/* 0A1100 7F06C5D0 10000007 */  b     .L7F06C5F0
-/* 0A1104 7F06C5D4 24030002 */   li    $v1, 2
-.L7F06C5D8:
-/* 0A1108 7F06C5D8 24010100 */  li    $at, 256
-/* 0A110C 7F06C5DC 14C10003 */  bne   $a2, $at, .L7F06C5EC
-/* 0A1110 7F06C5E0 00001025 */   move  $v0, $zero
-/* 0A1114 7F06C5E4 10000001 */  b     .L7F06C5EC
-/* 0A1118 7F06C5E8 24020001 */   li    $v0, 1
-.L7F06C5EC:
-/* 0A111C 7F06C5EC 00401825 */  move  $v1, $v0
-.L7F06C5F0:
-/* 0A1120 7F06C5F0 00037840 */  sll   $t7, $v1, 1
-/* 0A1124 7F06C5F4 00AFC021 */  addu  $t8, $a1, $t7
-/* 0A1128 7F06C5F8 03E00008 */  jr    $ra
-/* 0A112C 7F06C5FC 8702000E */   lh    $v0, 0xe($t8)
-
-/* 0A1130 7F06C600 24010200 */  li    $at, 512
-.L7F06C604:
-/* 0A1134 7F06C604 14C10003 */  bne   $a2, $at, .L7F06C614
-/* 0A1138 7F06C608 8C850004 */   lw    $a1, 4($a0)
-/* 0A113C 7F06C60C 10000007 */  b     .L7F06C62C
-/* 0A1140 7F06C610 24030002 */   li    $v1, 2
-.L7F06C614:
-/* 0A1144 7F06C614 24010100 */  li    $at, 256
-/* 0A1148 7F06C618 14C10003 */  bne   $a2, $at, .L7F06C628
-/* 0A114C 7F06C61C 00001025 */   move  $v0, $zero
-/* 0A1150 7F06C620 10000001 */  b     .L7F06C628
-/* 0A1154 7F06C624 24020001 */   li    $v0, 1
-.L7F06C628:
-/* 0A1158 7F06C628 00401825 */  move  $v1, $v0
-.L7F06C62C:
-/* 0A115C 7F06C62C 0003C840 */  sll   $t9, $v1, 1
-/* 0A1160 7F06C630 00B94821 */  addu  $t1, $a1, $t9
-/* 0A1164 7F06C634 03E00008 */  jr    $ra
-/* 0A1168 7F06C638 8522000E */   lh    $v0, 0xe($t1)
-
-/* 0A116C 7F06C63C 8C830004 */  lw    $v1, 4($a0)
-.L7F06C640:
-/* 0A1170 7F06C640 03E00008 */  jr    $ra
-/* 0A1174 7F06C644 8462000C */   lh    $v0, 0xc($v1)
-
-/* 0A1178 7F06C648 8C840008 */  lw    $a0, 8($a0)
-.L7F06C64C:
-/* 0A117C 7F06C64C 5480FFCF */  bnezl $a0, .L7F06C58C
-/* 0A1180 7F06C650 94830000 */   lhu   $v1, ($a0)
-.L7F06C654:
-/* 0A1184 7F06C654 2402FFFF */  li    $v0, -1
-/* 0A1188 7F06C658 03E00008 */  jr    $ra
-/* 0A118C 7F06C65C 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 Mtxf *sub_GAME_7F06C660(struct Model *model, struct ModelNode *node, s32 arg2) {
