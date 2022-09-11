@@ -11189,10 +11189,11 @@ void REMOVED_sub_GAME_7F075B08(s32 param_1,s32 param_2,s32 param_3,s32 param_4)
 
 
 #ifdef NONMATCHING
-void set_microcode_entry_numbers(void) {
+s32 modelCalculateRwDataIndexes(ModelNode *basenode) {
 
 }
 #else
+s32 modelCalculateRwDataIndexes(ModelNode *basenode);
 GLOBAL_ASM(
 .late_rodata
 /*D:80054E74*/
@@ -11223,7 +11224,7 @@ glabel jpt_80054E74
 .word .L7F075C68
 
 .text
-glabel set_microcode_entry_numbers
+glabel modelCalculateRwDataIndexes
 /* 0AA64C 7F075B1C 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0AA650 7F075B20 AFB10018 */  sw    $s1, 0x18($sp)
 /* 0AA654 7F075B24 AFB00014 */  sw    $s0, 0x14($sp)
@@ -11374,7 +11375,7 @@ void modelCalculateRwDataLen(struct ModelFileHeader *objheader)
   #if defined(LEFTOVERDEBUG)
     objheader->isLoaded = 1;
   #endif
-    objheader->numRecords = set_microcode_entry_numbers(objheader->RootNode);
+    objheader->numRecords = modelCalculateRwDataIndexes(objheader->RootNode);
 }
 
 
@@ -11624,81 +11625,26 @@ void sub_GAME_7F075FAC(struct Model *objinst, struct ModelFileHeader *header, u3
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F076030(Model *model, ModelFileHeader *header1, ModelNode *node, ModelFileHeader *header2)
+void sub_GAME_7F076030(Model *pmodel, ModelFileHeader *pmodeldef, ModelNode *pnode, ModelFileHeader *cmodeldef)
 {
-    ModelNode *temp_v1;
-    ModelNode *temp_v1_2;
-    void *temp_v0;
-    ModelNode *phi_v1;
-    ModelNode *phi_a0;
+    ModelRwData_HeadPlaceholderRecord *rwdata = extract_id_from_object_structure_microcode(pmodel, pnode);
+    ModelNode *node;
 
-    temp_v0 = extract_id_from_object_structure_microcode(model, node);
-    temp_v0->unk0 = header2;
-    temp_v0->unk4 = (s32) (model->unk10 + (header1->numRecords * 4));
-    temp_v1 = header2->RootNode;
-    node->Child = temp_v1;
-    phi_v1 = temp_v1;
-    phi_a0 = temp_v1;
-    if (temp_v1 != 0)
+    rwdata->ModelFileHeader = cmodeldef;
+    rwdata->RwDatas = &pmodel->datas[pmodeldef->numRecords];
+
+    pnode->Child = cmodeldef->RootNode;
+
+    node = pnode->Child;
+
+    while (node)
     {
-        do
-        {
-            phi_v1->Parent = node;
-            temp_v1_2 = phi_v1->Next;
-            phi_v1 = temp_v1_2;
-        } while (temp_v1_2 != 0);
-        phi_a0 = node->Child;
+        node->Parent = pnode;
+        node = node->Next;
     }
-    header1->numRecords += set_microcode_entry_numbers(phi_a0);
+
+    pmodeldef->numRecords += modelCalculateRwDataIndexes(pnode->Child);
 }
-
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F076030
-/* 0AAB60 7F076030 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0AAB64 7F076034 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0AAB68 7F076038 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 0AAB6C 7F07603C AFA40018 */  sw    $a0, 0x18($sp)
-/* 0AAB70 7F076040 AFA70024 */  sw    $a3, 0x24($sp)
-/* 0AAB74 7F076044 00C02825 */  move  $a1, $a2
-/* 0AAB78 7F076048 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
-/* 0AAB7C 7F07604C AFA60020 */   sw    $a2, 0x20($sp)
-/* 0AAB80 7F076050 8FA50024 */  lw    $a1, 0x24($sp)
-/* 0AAB84 7F076054 8FA60020 */  lw    $a2, 0x20($sp)
-/* 0AAB88 7F076058 8FA7001C */  lw    $a3, 0x1c($sp)
-/* 0AAB8C 7F07605C AC450000 */  sw    $a1, ($v0)
-/* 0AAB90 7F076060 8FAE0018 */  lw    $t6, 0x18($sp)
-/* 0AAB94 7F076064 84F80014 */  lh    $t8, 0x14($a3)
-/* 0AAB98 7F076068 8DCF0010 */  lw    $t7, 0x10($t6)
-/* 0AAB9C 7F07606C 0018C880 */  sll   $t9, $t8, 2
-/* 0AABA0 7F076070 01F94021 */  addu  $t0, $t7, $t9
-/* 0AABA4 7F076074 AC480004 */  sw    $t0, 4($v0)
-/* 0AABA8 7F076078 8CA30000 */  lw    $v1, ($a1)
-/* 0AABAC 7F07607C ACC30014 */  sw    $v1, 0x14($a2)
-/* 0AABB0 7F076080 10600006 */  beqz  $v1, .L7F07609C
-/* 0AABB4 7F076084 00602025 */   move  $a0, $v1
-/* 0AABB8 7F076088 AC660008 */  sw    $a2, 8($v1)
-.L7F07608C:
-/* 0AABBC 7F07608C 8C63000C */  lw    $v1, 0xc($v1)
-/* 0AABC0 7F076090 5460FFFE */  bnezl $v1, .L7F07608C
-/* 0AABC4 7F076094 AC660008 */   sw    $a2, 8($v1)
-/* 0AABC8 7F076098 8CC40014 */  lw    $a0, 0x14($a2)
-.L7F07609C:
-/* 0AABCC 7F07609C 0FC1D6C7 */  jal   set_microcode_entry_numbers
-/* 0AABD0 7F0760A0 00000000 */   nop   
-/* 0AABD4 7F0760A4 8FA7001C */  lw    $a3, 0x1c($sp)
-/* 0AABD8 7F0760A8 84EA0014 */  lh    $t2, 0x14($a3)
-/* 0AABDC 7F0760AC 01425821 */  addu  $t3, $t2, $v0
-/* 0AABE0 7F0760B0 A4EB0014 */  sh    $t3, 0x14($a3)
-/* 0AABE4 7F0760B4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0AABE8 7F0760B8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0AABEC 7F0760BC 03E00008 */  jr    $ra
-/* 0AABF0 7F0760C0 00000000 */   nop   
-)
-#endif
 
 
 /**

@@ -97,6 +97,7 @@ void load_object_fill_header(struct ModelFileHeader *objheader, u8 *name, void *
 void* get_obj_instance_controller_for_header(struct ModelFileHeader* arg0);
 void subdraw(s32 arg0, struct Model *);
 void sub_GAME_7F06EFC4(struct Model *);
+void sub_GAME_7F076030(Model *pmodel, ModelFileHeader *pmodeldef, ModelNode *pnode, ModelFileHeader *cmodeldef);
 
 #ifndef VERSION_EU
 void return_null(void);
