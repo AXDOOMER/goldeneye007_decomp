@@ -839,362 +839,84 @@ void sub_GAME_7F06CE84(Model* arg0, f32 arg1)
 }
 
 
-#ifdef NONMATCHING
-//https://decomp.me/scratch/LR3SV
-f32 getjointsize(Model *objinst, ModelNode *part) //#76%
+f32 getjointsize(Model *model, ModelNode *node)
 {
-    Model *    temp_a2;
+    Model     *temp_a2;
     ModelNode *temp_a1;
     s32        temp_t7;
-    //ModelNode *part;
 
-    if (!objinst)
+#if defined(LEFTOVERDEBUG)
+    if (!model)
     {
         osSyncPrintf("getjointsize: no objinst!\n");
         return_null();
     }
-    part = part;
-    if (part)
+#endif
+
+    if (node)
     {
         do
         {
-            switch (part->Opcode & 0xFF)
+            switch (node->Opcode & 0xFF)
             {
-                case 1:
+                case MODELNODE_OPCODE_HEADERRECORD:
                 {
-                    ModelRoData_HeaderRecord *prt = part->Data;
-                    return prt->Group1 * objinst->scale;
+                    ModelRoData_HeaderRecord *rodata = &node->Data->Header;
+                    return rodata->GroupsAsF32 * model->scale;
                 }
-                case 2:
+                case MODELNODE_OPCODE_GROUPRECORD:
                 {
-                    ModelRoData_GroupRecord *prt = part->Data;
-                    return prt->BoundingVolumeRadius * objinst->scale;
+                    ModelRoData_GroupRecord *rodata = &node->Data->Group;
+                    return rodata->BoundingVolumeRadius * model->scale;
                 }
-                case 3:
+                case MODELNODE_OPCODE_UNUSED_03:
                 {
-                    ModelRoData_GroupRecord *prt = part->Data;
-                    return prt->BoundingVolumeRadius * objinst->scale;
+                    ModelRoData_GroupRecord *rodata = &node->Data->Group;
+                    return rodata->BoundingVolumeRadius * model->scale;
                 }
-                case 21:
+                case MODELNODE_OPCODE_GROUPSIMPLERECORD:
                 {
-                    ModelRoData_GroupSimpleRecord *prt = part->Data;
-                    return prt->BoundingVolumeRadius * objinst->scale;
+                    ModelRoData_GroupSimpleRecord *rodata = &node->Data->GroupSimple;
+                    return rodata->BoundingVolumeRadius * model->scale;
                 }
-                case 11:
+                case MODELNODE_OPCODE_OP11RECORD:
                 {
-                    ModelRoData_Op11Record *prt = part->Data;
-                    return prt->BoundingVolumeRadius * objinst->scale;
+                    ModelRoData_Op11Record *rodata = &node->Data->Op11;
+                    return rodata->BoundingVolumeRadius * model->scale;
                 }
-                case 12:
+                case MODELNODE_OPCODE_GUNFIRERECORD:
                 {
-                    ModelRoData_GunfireRecord *prt = part->Data;
-                    return prt->Scale * objinst->scale;
+                    ModelRoData_GunfireRecord *rodata = &node->Data->Gunfire;
+                    return rodata->Scale * model->scale;
                 }
-                case 13:
+                case MODELNODE_OPCODE_SHADOWRECORD:
                 {
-                    ModelRoData_ShadowRecord *prt = part->Data;
-                    return prt->Scale * objinst->scale;
+                    ModelRoData_ShadowRecord *rodata = &node->Data->Shadow;
+                    return rodata->Scale * model->scale;
                 }
-                case 14:
+                case MODELNODE_OPCODE_OP14RECORD:
                 {
-                    ModelRoData_Op14Record *prt = part->Data;
-                    return prt->Scale * objinst->scale;
+                    ModelRoData_Op14Record *rodata = &node->Data->Op14;
+                    return rodata->Scale * model->scale;
                 }
-                case 15:
+                case MODELNODE_OPCODE_INTERLINKAGERECORD:
                 {
-                    ModelRoData_InterlinkageRecord *prt = part->Data;
-                    return prt->Scale * objinst->scale;
+                    ModelRoData_InterlinkageRecord *rodata = &node->Data->Interlinkage;
+                    return rodata->Scale * model->scale;
                 }
-                case 16:
+                case MODELNODE_OPCODE_OP16RECORD:
                 {
-                    ModelNode_Op16Record *prt = part->Data;
-                    return prt->Scale * objinst->scale;
+                    ModelNode_Op16Record *rodata = &node->Data->Op16;
+                    return rodata->Scale * model->scale;
                 }
                 default:
-                    part = part->Parent;
+                    node = node->Parent;
             }
-        } while (part);
+        } while (node);
     }
 
     return 0.0f;
 }
-#else
-#ifndef VERSION_EU
-//D:80054804
-const char aGetjointsizeNoObjinst[] = "getjointsize: no objinst!\n";
-GLOBAL_ASM(
-.late_rodata
-/*D:80054B60*/
-glabel jpt_getjointsize
-.word .L7F06CEF8
-.word .L7F06CF10
-.word .L7F06CF28
-.word .L7F06CFE8
-.word .L7F06CFE8
-.word .L7F06CFE8
-.word .L7F06CFE8
-.word .L7F06CFE8
-.word .L7F06CFE8
-.word .L7F06CFE8
-.word .L7F06CF58
-.word .L7F06CF70
-.word .L7F06CF88
-.word .L7F06CFA0
-.word .L7F06CFB8
-.word .L7F06CFD0
-.word .L7F06CFE8
-.word .L7F06CFE8
-.word .L7F06CFE8
-.word .L7F06CFE8
-.word .L7F06CF40
-
-.text
-glabel getjointsize
-/* 0A19C0 7F06CE90 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0A19C4 7F06CE94 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A19C8 7F06CE98 1480000A */  bnez  $a0, .L7F06CEC4
-/* 0A19CC 7F06CE9C 00803025 */   move  $a2, $a0
-/* 0A19D0 7F06CEA0 3C048005 */  lui   $a0, %hi(aGetjointsizeNoObjinst)
-/* 0A19D4 7F06CEA4 24844804 */  addiu $a0, %lo(aGetjointsizeNoObjinst) # addiu $a0, $a0, 0x4804
-/* 0A19D8 7F06CEA8 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 0A19DC 7F06CEAC 0C0033D1 */  jal   osSyncPrintf
-/* 0A19E0 7F06CEB0 AFA60018 */   sw    $a2, 0x18($sp)
-/* 0A19E4 7F06CEB4 0FC1B11B */  jal   return_null
-/* 0A19E8 7F06CEB8 00000000 */   nop   
-/* 0A19EC 7F06CEBC 8FA5001C */  lw    $a1, 0x1c($sp)
-/* 0A19F0 7F06CEC0 8FA60018 */  lw    $a2, 0x18($sp)
-.L7F06CEC4:
-/* 0A19F4 7F06CEC4 50A0004C */  beql  $a1, $zero, .L7F06CFF8
-/* 0A19F8 7F06CEC8 44800000 */   mtc1  $zero, $f0
-/* 0A19FC 7F06CECC 94AE0000 */  lhu   $t6, ($a1)
-.L7F06CED0:
-/* 0A1A00 7F06CED0 31CF00FF */  andi  $t7, $t6, 0xff
-/* 0A1A04 7F06CED4 25F8FFFF */  addiu $t8, $t7, -1
-/* 0A1A08 7F06CED8 2F010015 */  sltiu $at, $t8, 0x15
-/* 0A1A0C 7F06CEDC 10200042 */  beqz  $at, .L7F06CFE8
-/* 0A1A10 7F06CEE0 0018C080 */   sll   $t8, $t8, 2
-/* 0A1A14 7F06CEE4 3C018005 */  lui   $at, %hi(jpt_getjointsize)
-/* 0A1A18 7F06CEE8 00380821 */  addu  $at, $at, $t8
-/* 0A1A1C 7F06CEEC 8C384B60 */  lw    $t8, %lo(jpt_getjointsize)($at)
-.L7F06CEF0:
-/* 0A1A20 7F06CEF0 03000008 */  jr    $t8
-/* 0A1A24 7F06CEF4 00000000 */   nop   
-.L7F06CEF8:
-/* 0A1A28 7F06CEF8 8CA20004 */  lw    $v0, 4($a1)
-/* 0A1A2C 7F06CEFC C4C60014 */  lwc1  $f6, 0x14($a2)
-/* 0A1A30 7F06CF00 C4440008 */  lwc1  $f4, 8($v0)
-/* 0A1A34 7F06CF04 46062002 */  mul.s $f0, $f4, $f6
-/* 0A1A38 7F06CF08 1000003D */  b     .L7F06D000
-/* 0A1A3C 7F06CF0C 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F06CF10:
-/* 0A1A40 7F06CF10 8CA20004 */  lw    $v0, 4($a1)
-/* 0A1A44 7F06CF14 C4CA0014 */  lwc1  $f10, 0x14($a2)
-/* 0A1A48 7F06CF18 C4480018 */  lwc1  $f8, 0x18($v0)
-/* 0A1A4C 7F06CF1C 460A4002 */  mul.s $f0, $f8, $f10
-/* 0A1A50 7F06CF20 10000037 */  b     .L7F06D000
-/* 0A1A54 7F06CF24 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F06CF28:
-/* 0A1A58 7F06CF28 8CA20004 */  lw    $v0, 4($a1)
-/* 0A1A5C 7F06CF2C C4D20014 */  lwc1  $f18, 0x14($a2)
-/* 0A1A60 7F06CF30 C4500018 */  lwc1  $f16, 0x18($v0)
-/* 0A1A64 7F06CF34 46128002 */  mul.s $f0, $f16, $f18
-/* 0A1A68 7F06CF38 10000031 */  b     .L7F06D000
-/* 0A1A6C 7F06CF3C 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F06CF40:
-/* 0A1A70 7F06CF40 8CA20004 */  lw    $v0, 4($a1)
-/* 0A1A74 7F06CF44 C4C60014 */  lwc1  $f6, 0x14($a2)
-/* 0A1A78 7F06CF48 C4440010 */  lwc1  $f4, 0x10($v0)
-/* 0A1A7C 7F06CF4C 46062002 */  mul.s $f0, $f4, $f6
-/* 0A1A80 7F06CF50 1000002B */  b     .L7F06D000
-/* 0A1A84 7F06CF54 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F06CF58:
-/* 0A1A88 7F06CF58 8CA20004 */  lw    $v0, 4($a1)
-/* 0A1A8C 7F06CF5C C4CA0014 */  lwc1  $f10, 0x14($a2)
-/* 0A1A90 7F06CF60 C4480040 */  lwc1  $f8, 0x40($v0)
-/* 0A1A94 7F06CF64 460A4002 */  mul.s $f0, $f8, $f10
-/* 0A1A98 7F06CF68 10000025 */  b     .L7F06D000
-/* 0A1A9C 7F06CF6C 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F06CF70:
-/* 0A1AA0 7F06CF70 8CA20004 */  lw    $v0, 4($a1)
-/* 0A1AA4 7F06CF74 C4D20014 */  lwc1  $f18, 0x14($a2)
-/* 0A1AA8 7F06CF78 C450001C */  lwc1  $f16, 0x1c($v0)
-/* 0A1AAC 7F06CF7C 46128002 */  mul.s $f0, $f16, $f18
-/* 0A1AB0 7F06CF80 1000001F */  b     .L7F06D000
-/* 0A1AB4 7F06CF84 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F06CF88:
-/* 0A1AB8 7F06CF88 8CA20004 */  lw    $v0, 4($a1)
-/* 0A1ABC 7F06CF8C C4C60014 */  lwc1  $f6, 0x14($a2)
-/* 0A1AC0 7F06CF90 C4440018 */  lwc1  $f4, 0x18($v0)
-/* 0A1AC4 7F06CF94 46062002 */  mul.s $f0, $f4, $f6
-/* 0A1AC8 7F06CF98 10000019 */  b     .L7F06D000
-/* 0A1ACC 7F06CF9C 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F06CFA0:
-/* 0A1AD0 7F06CFA0 8CA20004 */  lw    $v0, 4($a1)
-/* 0A1AD4 7F06CFA4 C4CA0014 */  lwc1  $f10, 0x14($a2)
-/* 0A1AD8 7F06CFA8 C448000C */  lwc1  $f8, 0xc($v0)
-/* 0A1ADC 7F06CFAC 460A4002 */  mul.s $f0, $f8, $f10
-/* 0A1AE0 7F06CFB0 10000013 */  b     .L7F06D000
-/* 0A1AE4 7F06CFB4 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F06CFB8:
-/* 0A1AE8 7F06CFB8 8CA20004 */  lw    $v0, 4($a1)
-/* 0A1AEC 7F06CFBC C4D20014 */  lwc1  $f18, 0x14($a2)
-/* 0A1AF0 7F06CFC0 C4500018 */  lwc1  $f16, 0x18($v0)
-/* 0A1AF4 7F06CFC4 46128002 */  mul.s $f0, $f16, $f18
-/* 0A1AF8 7F06CFC8 1000000D */  b     .L7F06D000
-/* 0A1AFC 7F06CFCC 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F06CFD0:
-/* 0A1B00 7F06CFD0 8CA20004 */  lw    $v0, 4($a1)
-/* 0A1B04 7F06CFD4 C4C60014 */  lwc1  $f6, 0x14($a2)
-/* 0A1B08 7F06CFD8 C4440014 */  lwc1  $f4, 0x14($v0)
-/* 0A1B0C 7F06CFDC 46062002 */  mul.s $f0, $f4, $f6
-/* 0A1B10 7F06CFE0 10000007 */  b     .L7F06D000
-/* 0A1B14 7F06CFE4 8FBF0014 */   lw    $ra, 0x14($sp)
-def_7F06CEF0:
-.L7F06CFE8:
-/* 0A1B18 7F06CFE8 8CA50008 */  lw    $a1, 8($a1)
-/* 0A1B1C 7F06CFEC 54A0FFB8 */  bnezl $a1, .L7F06CED0
-/* 0A1B20 7F06CFF0 94AE0000 */   lhu   $t6, ($a1)
-/* 0A1B24 7F06CFF4 44800000 */  mtc1  $zero, $f0
-.L7F06CFF8:
-/* 0A1B28 7F06CFF8 00000000 */  nop   
-/* 0A1B2C 7F06CFFC 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F06D000:
-/* 0A1B30 7F06D000 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0A1B34 7F06D004 03E00008 */  jr    $ra
-/* 0A1B38 7F06D008 00000000 */   nop   
-)
-#endif
-#ifdef VERSION_EU
-GLOBAL_ASM(
-.late_rodata
-/*D:80054B60*/
-glabel jpt_getjointsize
-.word .L7F06CEF8
-.word .L7F06CF10
-.word .L7F06CF28
-.word .L7F06CFE8
-.word .L7F06CFE8
-.word .L7F06CFE8
-.word .L7F06CFE8
-.word .L7F06CFE8
-.word .L7F06CFE8
-.word .L7F06CFE8
-.word .L7F06CF58
-.word .L7F06CF70
-.word .L7F06CF88
-.word .L7F06CFA0
-.word .L7F06CFB8
-.word .L7F06CFD0
-.word .L7F06CFE8
-.word .L7F06CFE8
-.word .L7F06CFE8
-.word .L7F06CFE8
-.word .L7F06CF40
-
-.text
-glabel getjointsize
-/* 09FD44 7F06D354 50A0004C */  beql  $a1, $zero, .L7F06D488
-/* 09FD48 7F06D358 44800000 */   mtc1  $zero, $f0
-/* 09FD4C 7F06D35C 94AE0000 */  lhu   $t6, ($a1)
-.L7F06D360:
-/* 09FD50 7F06D360 31CF00FF */  andi  $t7, $t6, 0xff
-/* 09FD54 7F06D364 25F8FFFF */  addiu $t8, $t7, -1
-/* 09FD58 7F06D368 2F010015 */  sltiu $at, $t8, 0x15
-/* 09FD5C 7F06D36C 10200042 */  beqz  $at, .L7F06D478
-/* 09FD60 7F06D370 0018C080 */   sll   $t8, $t8, 2
-/* 09FD64 7F06D374 3C018005 */  lui   $at, %hi(jpt_getjointsize)
-/* 09FD68 7F06D378 00380821 */  addu  $at, $at, $t8
-/* 09FD6C 7F06D37C 8C38A738 */  lw    $t8, %lo(jpt_getjointsize)($at)
-.L7F06CEF0:
-/* 09FD70 7F06D380 03000008 */  jr    $t8
-/* 09FD74 7F06D384 00000000 */   nop   
-.L7F06CEF8:
-/* 09FD78 7F06D388 8CA20004 */  lw    $v0, 4($a1)
-/* 09FD7C 7F06D38C C4860014 */  lwc1  $f6, 0x14($a0)
-/* 09FD80 7F06D390 C4440008 */  lwc1  $f4, 8($v0)
-/* 09FD84 7F06D394 46062002 */  mul.s $f0, $f4, $f6
-/* 09FD88 7F06D398 03E00008 */  jr    $ra
-/* 09FD8C 7F06D39C 00000000 */   nop   
-.L7F06CF10:
-/* 09FD90 7F06D3A0 8CA20004 */  lw    $v0, 4($a1)
-/* 09FD94 7F06D3A4 C48A0014 */  lwc1  $f10, 0x14($a0)
-/* 09FD98 7F06D3A8 C4480018 */  lwc1  $f8, 0x18($v0)
-/* 09FD9C 7F06D3AC 460A4002 */  mul.s $f0, $f8, $f10
-/* 09FDA0 7F06D3B0 03E00008 */  jr    $ra
-/* 09FDA4 7F06D3B4 00000000 */   nop   
-.L7F06CF28:
-/* 09FDA8 7F06D3B8 8CA20004 */  lw    $v0, 4($a1)
-/* 09FDAC 7F06D3BC C4920014 */  lwc1  $f18, 0x14($a0)
-/* 09FDB0 7F06D3C0 C4500018 */  lwc1  $f16, 0x18($v0)
-/* 09FDB4 7F06D3C4 46128002 */  mul.s $f0, $f16, $f18
-/* 09FDB8 7F06D3C8 03E00008 */  jr    $ra
-/* 09FDBC 7F06D3CC 00000000 */   nop   
-.L7F06CF40:
-/* 09FDC0 7F06D3D0 8CA20004 */  lw    $v0, 4($a1)
-/* 09FDC4 7F06D3D4 C4860014 */  lwc1  $f6, 0x14($a0)
-/* 09FDC8 7F06D3D8 C4440010 */  lwc1  $f4, 0x10($v0)
-/* 09FDCC 7F06D3DC 46062002 */  mul.s $f0, $f4, $f6
-/* 09FDD0 7F06D3E0 03E00008 */  jr    $ra
-/* 09FDD4 7F06D3E4 00000000 */   nop   
-.L7F06CF58:
-/* 09FDD8 7F06D3E8 8CA20004 */  lw    $v0, 4($a1)
-/* 09FDDC 7F06D3EC C48A0014 */  lwc1  $f10, 0x14($a0)
-/* 09FDE0 7F06D3F0 C4480040 */  lwc1  $f8, 0x40($v0)
-/* 09FDE4 7F06D3F4 460A4002 */  mul.s $f0, $f8, $f10
-/* 09FDE8 7F06D3F8 03E00008 */  jr    $ra
-/* 09FDEC 7F06D3FC 00000000 */   nop   
-.L7F06CF70:
-/* 09FDF0 7F06D400 8CA20004 */  lw    $v0, 4($a1)
-/* 09FDF4 7F06D404 C4920014 */  lwc1  $f18, 0x14($a0)
-/* 09FDF8 7F06D408 C450001C */  lwc1  $f16, 0x1c($v0)
-/* 09FDFC 7F06D40C 46128002 */  mul.s $f0, $f16, $f18
-/* 09FE00 7F06D410 03E00008 */  jr    $ra
-/* 09FE04 7F06D414 00000000 */   nop   
-.L7F06CF88:
-/* 09FE08 7F06D418 8CA20004 */  lw    $v0, 4($a1)
-/* 09FE0C 7F06D41C C4860014 */  lwc1  $f6, 0x14($a0)
-/* 09FE10 7F06D420 C4440018 */  lwc1  $f4, 0x18($v0)
-/* 09FE14 7F06D424 46062002 */  mul.s $f0, $f4, $f6
-/* 09FE18 7F06D428 03E00008 */  jr    $ra
-/* 09FE1C 7F06D42C 00000000 */   nop   
-.L7F06CFA0:
-/* 09FE20 7F06D430 8CA20004 */  lw    $v0, 4($a1)
-/* 09FE24 7F06D434 C48A0014 */  lwc1  $f10, 0x14($a0)
-/* 09FE28 7F06D438 C448000C */  lwc1  $f8, 0xc($v0)
-/* 09FE2C 7F06D43C 460A4002 */  mul.s $f0, $f8, $f10
-/* 09FE30 7F06D440 03E00008 */  jr    $ra
-/* 09FE34 7F06D444 00000000 */   nop   
-.L7F06CFB8:
-/* 09FE38 7F06D448 8CA20004 */  lw    $v0, 4($a1)
-/* 09FE3C 7F06D44C C4920014 */  lwc1  $f18, 0x14($a0)
-/* 09FE40 7F06D450 C4500018 */  lwc1  $f16, 0x18($v0)
-/* 09FE44 7F06D454 46128002 */  mul.s $f0, $f16, $f18
-/* 09FE48 7F06D458 03E00008 */  jr    $ra
-/* 09FE4C 7F06D45C 00000000 */   nop   
-.L7F06CFD0:
-/* 09FE50 7F06D460 8CA20004 */  lw    $v0, 4($a1)
-/* 09FE54 7F06D464 C4860014 */  lwc1  $f6, 0x14($a0)
-/* 09FE58 7F06D468 C4440014 */  lwc1  $f4, 0x14($v0)
-/* 09FE5C 7F06D46C 46062002 */  mul.s $f0, $f4, $f6
-/* 09FE60 7F06D470 03E00008 */  jr    $ra
-/* 09FE64 7F06D474 00000000 */   nop   
-def_7F06CEF0:
-.L7F06CFE8:
-.L7F06D478:
-/* 09FE68 7F06D478 8CA50008 */  lw    $a1, 8($a1)
-/* 09FE6C 7F06D47C 54A0FFB8 */  bnezl $a1, .L7F06D360
-/* 09FE70 7F06D480 94AE0000 */   lhu   $t6, ($a1)
-/* 09FE74 7F06D484 44800000 */  mtc1  $zero, $f0
-.L7F06D000:
-.L7F06D488:
-/* 09FE78 7F06D488 00000000 */  nop   
-/* 09FE7C 7F06D48C 03E00008 */  jr    $ra
-/* 09FE80 7F06D490 00000000 */   nop   
-)
-#endif
-#endif
-
-
 
 
 /**

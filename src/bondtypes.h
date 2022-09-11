@@ -796,12 +796,21 @@ typedef union
          */
         typedef struct ModelRoData_HeaderRecord
         {
-            u32                           ModelType;  /*0x0 Legnth of Record (4)*/
+            u32                           ModelType;    /*0x0 Legnth of Record (4)*/
             struct ModelRoData_GroupRecord *FirstGroup; /*0x4 First group in tree*/
-            u16                           Group1;     /*0x8*/
-            u16                           Group2;     /*0xA*/
-            u16                           number;     /*0xC*/
-            u16                           reserved;   /*0xE padding*/
+
+            union
+            {
+                struct
+                {
+                    u16 Group1;      /*0x8*/
+                    u16 Group2;      /*0xA*/
+                };
+                f32 GroupsAsF32; /*0x8*/
+            };
+
+            u16 number;      /*0xC*/
+            u16 reserved;    /*0xE padding*/
         } ModelRoData_HeaderRecord;
 
         typedef struct ModelRwData_HeaderRecord
@@ -1164,6 +1173,7 @@ typedef union
         struct ModelRoData_ShadowRecord Shadow;
         struct ModelRoData_Op14Record Op14;
         struct ModelRoData_InterlinkageRecord Interlinkage;
+        struct ModelNode_Op16Record Op16;
         struct ModelRoData_SwitchRecord Switch;
         struct ModelRoData_GroupSimpleRecord GroupSimple;
         struct ModelRoData_DisplayListPrimaryRecord DisplayListPrimary;
@@ -1176,6 +1186,7 @@ typedef union
      */
     union ModelRwData
     {
+        struct ModelRwData_HeaderRecord Header;
         struct ModelRwData_Op07Record Op07;
         struct ModelRwData_LODRecord LOD;
         struct ModelRwData_BSPRecord BSP;
