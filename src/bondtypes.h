@@ -809,7 +809,7 @@ typedef union
                 f32 GroupsAsF32; /*0x8*/
             };
 
-            u16 number;      /*0xC*/
+            u16 RwDataIndex; /*0xC*/
             u16 reserved;    /*0xE padding*/
         } ModelRoData_HeaderRecord;
 
@@ -907,9 +907,9 @@ typedef union
          */
         typedef struct ModelRoData_Op07Record
         {
-            u8 unk00[424]; /*0x0*/
-            u16 unk1A8;     /*0x1A8*/
-            u16 number;     /*0x1AA*/
+            u8 unk00[424];   /*0x0*/
+            u16 unk1A8;      /*0x1A8*/
+            u16 RwDataIndex; /*0x1AA*/
         } ModelRoData_Op07Record;
 
         typedef struct ModelRwData_Op07Record
@@ -928,7 +928,7 @@ typedef union
             f32        MinDistance; /*0x0 Switch in distance*/
             f32        MaxDistance; /*0x4 Switch out distance*/
             ModelNode *Affects;     /*0x8 Affects this node (Must be child)*/
-            u16        number;      /*0xC*/
+            u16        RwDataIndex; /*0xC*/
             u16        reserved;    /*0xE padding*/
         } ModelRoData_LODRecord;
 
@@ -944,12 +944,12 @@ typedef union
          */
         typedef struct ModelRoData_BSPRecord
         {
-            coord3d    Point;      /*0x0*/
-            coord3d    Vector;     /*0xC*/
-            ModelNode *leftChild;  /*0x18 back/first */
-            ModelNode *rightChild; /*0x1C front/last */
-            s16        reserved;   /*0x20 padding or u32*/
-            u16        number;     /*0x22*/
+            coord3d    Point;       /*0x0*/
+            coord3d    Vector;      /*0xC*/
+            ModelNode *leftChild;   /*0x18 back/first */
+            ModelNode *rightChild;  /*0x1C front/last */
+            s16        reserved;    /*0x20 padding or u32*/
+            u16        RwDataIndex; /*0x22*/
         } ModelRoData_BSPRecord;
 
         typedef struct ModelRwData_BSPRecord
@@ -975,7 +975,7 @@ typedef union
         {
             u32 unk0c[16]; /*0x0*/
             f32 BoundingVolumeRadius;
-            u16 number; /*0x44*/
+            u16 RwDataIndex; /*0x44*/
         } ModelRoData_Op11Record;
 
         typedef struct ModelRwData_Op11Record
@@ -988,13 +988,13 @@ typedef union
          */
         typedef struct ModelRoData_GunfireRecord
         {
-            coord3d Offset;    /*0x0*/
-            coord3d Size;      /*0xC*/
-            void *  Image;     /*0x18*/
-            f32     Scale;     /*0x1c*/
-            u16     number;    /*0x20*/
-            u16     reserved;  /*0x22 padding*/
-            u32     reserved2; /*0x24 padding*/
+            coord3d Offset;      /*0x0*/
+            coord3d Size;        /*0xC*/
+            void *  Image;       /*0x18*/
+            f32     Scale;       /*0x1c*/
+            u16     RwDataIndex; /*0x20*/
+            u16     reserved;    /*0x22 padding*/
+            u32     reserved2;   /*0x24 padding*/
         } ModelRoData_GunfireRecord;
 
         typedef struct ModelRwData_GunfireRecord
@@ -1074,9 +1074,9 @@ typedef union
          */
         typedef struct ModelRoData_SwitchRecord
         {
-            ModelNode *Controls; /*0x0 Which node to display (Must be Child)*/
-            u16        number;   /*0x4*/
-            u16        reserved; /*0x6 padding*/
+            ModelNode *Controls;    /*0x0 Which node to display (Must be Child)*/
+            u16        RwDataIndex; /*0x4*/
+            u16        reserved;    /*0x6 padding*/
         } ModelRoData_SwitchRecord;
 
         typedef struct ModelRwData_SwitchRecord
@@ -1124,7 +1124,7 @@ typedef union
          */
         typedef struct ModelRoData_HeadPlaceholderRecord
         {
-            u16 number; //referenced by modelGetNodeRwData()
+            u16 RwDataIndex;
         } ModelRoData_HeadPlaceholderRecord;
 
         typedef struct ModelRwData_HeadPlaceholderRecord
@@ -1147,7 +1147,7 @@ typedef union
             Vertex *CollisionVertices;    /*0x10 Table of vertices with unique point in space (UV's and Colour are disregarded). */
             s16    *PointUsage;           /*0x14*/
             s16     ModelType;            /*0x18*/
-            u16     unknown;              /*0x1A*/
+            u16     RwDataIndex;          /*0x1A*/
             s32     number;               /*0x1C*/
 
         } ModelRoData_DisplayList_CollisionRecord;

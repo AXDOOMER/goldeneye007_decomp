@@ -491,56 +491,56 @@ f32 sub_GAME_7F06C768(Model *objinst)
 /**
  * Address 0x7F06C79C.
 */
-void *modelGetNodeRwData(Model *Objinst, ModelNode *root)
+union ModelRwData* modelGetNodeRwData(Model *Objinst, ModelNode *root)
 {
-    s32 number  = 0;
-    void **data = Objinst->datas;
+    s32 index  = 0;
+    union ModelRwData **data = Objinst->datas;
 
     switch (root->Opcode & 0xff)
-    { // get "number" from each node, number = dataseg? - always 0
+    {
         case MODELNODE_OPCODE_HEADERRECORD:
         {
-            number = root->Data->Header.number;
+            index = root->Data->Header.RwDataIndex;
             break;
         }
         case MODELNODE_OPCODE_DISPLAYLIST_COLLISIONRECORD:
         {
-            number = root->Data->DisplayListCollisions.unknown;
+            index = root->Data->DisplayListCollisions.RwDataIndex;
             break;
         }
         case MODELNODE_OPCODE_OP07RECORD:
         {
-            number = root->Data->Op07.number;
+            index = root->Data->Op07.RwDataIndex;
             break;
         }
         case MODELNODE_OPCODE_LODRECORD:
         {
-            number = root->Data->LOD.number;
+            index = root->Data->LOD.RwDataIndex;
             break;
         }
         case MODELNODE_OPCODE_SWITCHRECORD:
         {
-            number = root->Data->Switch.number;
+            index = root->Data->Switch.RwDataIndex;
             break;
         }
         case MODELNODE_OPCODE_BSPRECORD:
         {
-            number = root->Data->BSP.number;
+            index = root->Data->BSP.RwDataIndex;
             break;
         }
         case MODELNODE_OPCODE_OP11RECORD:
         {
-            number = root->Data->Op11.number;
+            index = root->Data->Op11.RwDataIndex;
             break;
         }
         case MODELNODE_OPCODE_GUNFIRERECORD:
         {
-            number = root->Data->Gunfire.number;
+            index = root->Data->Gunfire.RwDataIndex;
             break;
         }
         case MODELNODE_OPCODE_HEADPLACEHOLDERRECORD:
         {
-            number = root->Data->HeadPlaceholder.number;
+            index = root->Data->HeadPlaceholder.RwDataIndex;
             break;
         }
     }
@@ -550,14 +550,14 @@ void *modelGetNodeRwData(Model *Objinst, ModelNode *root)
         root = root->Parent;
         if ((root->Opcode & 0xFF) == MODELNODE_OPCODE_HEADPLACEHOLDERRECORD)
         {
-            data = ((ModelRoData_HeaderRecord *)modelGetNodeRwData(Objinst, root))->FirstGroup;
+			ModelRwData_HeadPlaceholderRecord *tmp = modelGetNodeRwData(Objinst, root);
+            data = tmp->RwDatas;
             break;
         }
     }
 
-    return &data[number];
+    return &data[index];
 }
-
 
 
 
@@ -11392,7 +11392,7 @@ void modelInitRwData(Model *model, ModelNode *startnode)
             case MODELNODE_OPCODE_HEADERRECORD:
                 if (1)
                 {
-                    ModelRwData_HeaderRecord* rwdata = &((union ModelRwData*)modelGetNodeRwData(model, node))->Header;
+                    ModelRwData_HeaderRecord* rwdata = &modelGetNodeRwData(model, node)->Header;
 
                     rwdata->unk00 = 0;
                     rwdata->ground = 0;
@@ -11427,7 +11427,7 @@ void modelInitRwData(Model *model, ModelNode *startnode)
             case MODELNODE_OPCODE_OP07RECORD:
                 if (1)
                 {
-                    ModelRwData_Op07Record* rwdata = &((union ModelRwData*)modelGetNodeRwData(model, node))->Op07;
+                    ModelRwData_Op07Record* rwdata = &modelGetNodeRwData(model, node)->Op07;
                     rwdata->visible = FALSE;
                     break;
                 }
@@ -11437,7 +11437,7 @@ void modelInitRwData(Model *model, ModelNode *startnode)
                 if (1)
                 {
                     ModelRoData_LODRecord* rodata = &node->Data->LOD;
-                    ModelRwData_LODRecord* rwdata = &((union ModelRwData*)modelGetNodeRwData(model, node))->LOD;
+                    ModelRwData_LODRecord* rwdata = &modelGetNodeRwData(model, node)->LOD;
                     rwdata->visible = FALSE;
                     node->Child = rodata->Affects;
                     break;
@@ -11447,7 +11447,7 @@ void modelInitRwData(Model *model, ModelNode *startnode)
                 if (1)
                 {
                     ModelRoData_SwitchRecord* rodata = &node->Data->Switch;
-                    ModelRwData_SwitchRecord* rwdata = &((union ModelRwData*)modelGetNodeRwData(model, node))->Switch;
+                    ModelRwData_SwitchRecord* rwdata = &modelGetNodeRwData(model, node)->Switch;
                     rwdata->visible = TRUE;
                     node->Child = rodata->Controls;
                     break;
@@ -11456,7 +11456,7 @@ void modelInitRwData(Model *model, ModelNode *startnode)
             case MODELNODE_OPCODE_HEADPLACEHOLDERRECORD:
                 if (1)
                 {
-                    ModelRwData_HeadPlaceholderRecord* rwdata = &((union ModelRwData*)modelGetNodeRwData(model, node))->HeadPlaceholder;
+                    ModelRwData_HeadPlaceholderRecord* rwdata = &modelGetNodeRwData(model, node)->HeadPlaceholder;
                     rwdata->ModelFileHeader = NULL;
                     rwdata->RwDatas = NULL;
                     break;
@@ -11465,7 +11465,7 @@ void modelInitRwData(Model *model, ModelNode *startnode)
             case MODELNODE_OPCODE_BSPRECORD:
                 if (1)
                 {
-                    ModelRwData_BSPRecord* rwdata = &((union ModelRwData*)modelGetNodeRwData(model, node))->BSP;
+                    ModelRwData_BSPRecord* rwdata = &modelGetNodeRwData(model, node)->BSP;
                     rwdata->visible = FALSE;
                     sub_GAME_7F06EB10(model, node);
                     break;
@@ -11474,7 +11474,7 @@ void modelInitRwData(Model *model, ModelNode *startnode)
             case MODELNODE_OPCODE_OP11RECORD:
                 if (1)
                 {
-                    ModelRwData_Op11Record* rwdata = &((union ModelRwData*)modelGetNodeRwData(model, node))->Op11;
+                    ModelRwData_Op11Record* rwdata = &modelGetNodeRwData(model, node)->Op11;
                     rwdata->unk00 = FALSE;
                     break;
                 }
@@ -11482,7 +11482,7 @@ void modelInitRwData(Model *model, ModelNode *startnode)
             case MODELNODE_OPCODE_GUNFIRERECORD:
                 if (1)
                 {
-                    ModelRwData_GunfireRecord* rwdata = &((union ModelRwData*)modelGetNodeRwData(model, node))->Gunfire;
+                    ModelRwData_GunfireRecord* rwdata = &modelGetNodeRwData(model, node)->Gunfire;
                     rwdata->visible = FALSE;
                     break;
                 }
@@ -11491,7 +11491,7 @@ void modelInitRwData(Model *model, ModelNode *startnode)
                 if (1)
                 {
                     ModelRoData_DisplayList_CollisionRecord* rodata = &node->Data->DisplayListCollisions;
-                    ModelRwData_DisplayList_CollisionRecord* rwdata = &((union ModelRwData*)modelGetNodeRwData(model, node))->DisplayListCollisions;
+                    ModelRwData_DisplayList_CollisionRecord* rwdata = &modelGetNodeRwData(model, node)->DisplayListCollisions;
                     rwdata->Vertices = rodata->Vertices;
                     rwdata->gdl = rodata->Primary;
                     break;

@@ -44,7 +44,7 @@ void modelSetAnimLooping(Model *, f32, f32);
 void modelSetAnimEndFrame(Model *, f32);
 void sub_GAME_7F06CE84(Model *, f32);
 
-void *modelGetNodeRwData(Model *Objinst, ModelNode *root);
+union ModelRwData* modelGetNodeRwData(Model *Objinst, ModelNode *root);
 f32 getsubroty(Model *objinst);
 void setsubroty(Model *objinst, f32 radHeading);
 void modelSetAnimationWithMerge(Model *, ModelAnimation *, s32, f32, f32, f32, s32);
