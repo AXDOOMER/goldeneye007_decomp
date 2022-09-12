@@ -9282,200 +9282,68 @@ void sub_GAME_7F074524(Gfx *param_1,struct Model *param_2, struct ModelNode *par
 
 
 
-#ifdef NONMATCHING
+
 void sub_GAME_7F074534(ModelRenderData* data, Model* model, ModelNode* node) {
-    //i should use v0 to match
-    u8 id = node->Opcode & 0xFF;
+    u32 id = node->Opcode & 0xFF;
     switch (id) {
-    case 8:
+    case MODELNODE_OPCODE_LODRECORD:
         sub_GAME_7F06E970(model, node);
         return;
-    case 18:
+    case MODELNODE_OPCODE_SWITCHRECORD:
         process_12_handle_switch(model, node);
         return;
-    case 23:
+    case MODELNODE_OPCODE_HEADPLACEHOLDERRECORD:
         process_17_pointer_to_head(model, node);
         return;
-    case 9:
+    case MODELNODE_OPCODE_BSPRECORD:
         sub_GAME_7F06EB10(model, node);
         return;
-    case 11:
+    case MODELNODE_OPCODE_OP11RECORD:
         sub_GAME_7F0737FC(data, model, node);
         return;
-    case 12:
+    case MODELNODE_OPCODE_GUNFIRERECORD:
         dogfnegx(data, model, node);
         return;
-    case 13:
+    case MODELNODE_OPCODE_SHADOWRECORD:
         doshadow(data, model, node);
         return;
-    case 10:
+    case MODELNODE_OPCODE_BOUNDINGBOXRECORD:
         sub_GAME_7F074514(data, model, node);
         return;
-    case 17:
+    case MODELNODE_OPCODE_UNUSED_17:
         sub_GAME_7F074524(data, model, node);
         return;
-    case 4:
+    case MODELNODE_OPCODE_DISPLAYLISTRECORD:
         modelRenderNodeGundl(data, node);
         return;
-    case 24:
+    case MODELNODE_OPCODE_DISPLAYLIST_COLLISIONRECORD:
         modelRenderNodeDl(data, model, node);
         return;
-    case 20:
+    case MODELNODE_OPCODE_UNUSED_20:
         sub_GAME_7F072C10(data, model, node);
         return;
-    case 22:
+    case MODELNODE_OPCODE_DISPLAYLISTPRIMARYRECORD:
         dorottex(data, node);
         return;
-    case 5:
+    case MODELNODE_OPCODE_UNUSED_05:
         sub_GAME_7F07306C(data, model, node);
         return;
-    case 7:
+    case MODELNODE_OPCODE_OP07RECORD:
         dotube(data, model, node);
         return;
-    case 6:
+    case MODELNODE_OPCODE_UNUSED_06:
         sub_GAME_7F0737EC(data,model,node);
         return;
+    case MODELNODE_OPCODE_HEADERRECORD:
+    case MODELNODE_OPCODE_GROUPRECORD:
+    case MODELNODE_OPCODE_UNUSED_03:
+    case MODELNODE_OPCODE_OP14RECORD:
+    case MODELNODE_OPCODE_INTERLINKAGERECORD:
+    case MODELNODE_OPCODE_OP16RECORD:
     default:
         return;
     }
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-/*80054D54*/
-glabel jpt_80054D54
-.word .L7F074674
-.word .L7F074674
-.word .L7F074674
-.word .L7F07460C
-.word .L7F07464C
-.word .L7F07466C
-.word .L7F07465C
-.word .L7F07456C
-.word .L7F0745A8
-.word .L7F0745EC
-.word .L7F0745BC
-.word .L7F0745CC
-.word .L7F0745DC
-.word .L7F074674
-.word .L7F074674
-.word .L7F074674
-.word .L7F0745FC
-.word .L7F074580
-.word .L7F074674
-.word .L7F07462C
-.word .L7F074674
-.word .L7F07463C
-.word .L7F074594
-.word .L7F07461C
-.text
-glabel sub_GAME_7F074534
-/* 0A9064 7F074534 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0A9068 7F074538 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A906C 7F07453C 94C20000 */  lhu   $v0, ($a2)
-/* 0A9070 7F074540 00A03825 */  move  $a3, $a1
-/* 0A9074 7F074544 304E00FF */  andi  $t6, $v0, 0xff
-/* 0A9078 7F074548 25CFFFFF */  addiu $t7, $t6, -1
-/* 0A907C 7F07454C 2DE10018 */  sltiu $at, $t7, 0x18
-/* 0A9080 7F074550 10200048 */  beqz  $at, .L7F074674
-/* 0A9084 7F074554 000F7880 */   sll   $t7, $t7, 2
-/* 0A9088 7F074558 3C018005 */  lui   $at, %hi(jpt_80054D54)
-/* 0A908C 7F07455C 002F0821 */  addu  $at, $at, $t7
-/* 0A9090 7F074560 8C2F4D54 */  lw    $t7, %lo(jpt_80054D54)($at)
-.L7F074564:
-/* 0A9094 7F074564 01E00008 */  jr    $t7
-/* 0A9098 7F074568 00000000 */   nop   
-.L7F07456C:
-/* 0A909C 7F07456C 00E02025 */  move  $a0, $a3
-/* 0A90A0 7F074570 0FC1BA5C */  jal   sub_GAME_7F06E970
-/* 0A90A4 7F074574 00C02825 */   move  $a1, $a2
-/* 0A90A8 7F074578 1000003F */  b     .L7F074678
-/* 0A90AC 7F07457C 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F074580:
-/* 0A90B0 7F074580 00E02025 */  move  $a0, $a3
-/* 0A90B4 7F074584 0FC1BA6F */  jal   process_12_handle_switch
-/* 0A90B8 7F074588 00C02825 */   move  $a1, $a2
-/* 0A90BC 7F07458C 1000003A */  b     .L7F074678
-/* 0A90C0 7F074590 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F074594:
-/* 0A90C4 7F074594 00E02025 */  move  $a0, $a3
-/* 0A90C8 7F074598 0FC1BA82 */  jal   process_17_pointer_to_head
-/* 0A90CC 7F07459C 00C02825 */   move  $a1, $a2
-/* 0A90D0 7F0745A0 10000035 */  b     .L7F074678
-/* 0A90D4 7F0745A4 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0745A8:
-/* 0A90D8 7F0745A8 00E02025 */  move  $a0, $a3
-/* 0A90DC 7F0745AC 0FC1BAC4 */  jal   sub_GAME_7F06EB10
-/* 0A90E0 7F0745B0 00C02825 */   move  $a1, $a2
-/* 0A90E4 7F0745B4 10000030 */  b     .L7F074678
-/* 0A90E8 7F0745B8 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0745BC:
-/* 0A90EC 7F0745BC 0FC1CDFF */  jal   sub_GAME_7F0737FC
-/* 0A90F0 7F0745C0 00E02825 */   move  $a1, $a3
-/* 0A90F4 7F0745C4 1000002C */  b     .L7F074678
-/* 0A90F8 7F0745C8 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0745CC:
-/* 0A90FC 7F0745CC 0FC1CE03 */  jal   dogfnegx
-/* 0A9100 7F0745D0 00E02825 */   move  $a1, $a3
-/* 0A9104 7F0745D4 10000028 */  b     .L7F074678
-/* 0A9108 7F0745D8 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0745DC:
-/* 0A910C 7F0745DC 0FC1CFF5 */  jal   doshadow
-/* 0A9110 7F0745E0 00E02825 */   move  $a1, $a3
-/* 0A9114 7F0745E4 10000024 */  b     .L7F074678
-/* 0A9118 7F0745E8 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0745EC:
-/* 0A911C 7F0745EC 0FC1D145 */  jal   sub_GAME_7F074514
-/* 0A9120 7F0745F0 00E02825 */   move  $a1, $a3
-/* 0A9124 7F0745F4 10000020 */  b     .L7F074678
-/* 0A9128 7F0745F8 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0745FC:
-/* 0A912C 7F0745FC 0FC1D149 */  jal   sub_GAME_7F074524
-/* 0A9130 7F074600 00E02825 */   move  $a1, $a3
-/* 0A9134 7F074604 1000001C */  b     .L7F074678
-/* 0A9138 7F074608 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F07460C:
-/* 0A913C 7F07460C 0FC1C9E1 */  jal   modelRenderNodeGundl
-/* 0A9140 7F074610 00C02825 */   move  $a1, $a2
-/* 0A9144 7F074614 10000018 */  b     .L7F074678
-/* 0A9148 7F074618 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F07461C:
-/* 0A914C 7F07461C 0FC1CA61 */  jal   modelRenderNodeDl
-/* 0A9150 7F074620 00E02825 */   move  $a1, $a3
-/* 0A9154 7F074624 10000014 */  b     .L7F074678
-/* 0A9158 7F074628 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F07462C:
-/* 0A915C 7F07462C 0FC1CB04 */  jal   sub_GAME_7F072C10
-/* 0A9160 7F074630 00E02825 */   move  $a1, $a3
-/* 0A9164 7F074634 10000010 */  b     .L7F074678
-/* 0A9168 7F074638 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F07463C:
-/* 0A916C 7F07463C 0FC1CB08 */  jal   dorottex
-/* 0A9170 7F074640 00C02825 */   move  $a1, $a2
-/* 0A9174 7F074644 1000000C */  b     .L7F074678
-/* 0A9178 7F074648 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F07464C:
-/* 0A917C 7F07464C 0FC1CC1B */  jal   sub_GAME_7F07306C
-/* 0A9180 7F074650 00E02825 */   move  $a1, $a3
-/* 0A9184 7F074654 10000008 */  b     .L7F074678
-/* 0A9188 7F074658 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F07465C:
-/* 0A918C 7F07465C 0FC1CC1F */  jal   dotube
-/* 0A9190 7F074660 00E02825 */   move  $a1, $a3
-/* 0A9194 7F074664 10000004 */  b     .L7F074678
-/* 0A9198 7F074668 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F07466C:
-/* 0A919C 7F07466C 0FC1CDFB */  jal   sub_GAME_7F0737EC
-/* 0A91A0 7F074670 00E02825 */   move  $a1, $a3
-def_7F074564:
-.L7F074674:
-/* 0A91A4 7F074674 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F074678:
-/* 0A91A8 7F074678 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0A91AC 7F07467C 03E00008 */  jr    $ra
-/* 0A91B0 7F074680 00000000 */   nop   
-)
-#endif
 
 
 
