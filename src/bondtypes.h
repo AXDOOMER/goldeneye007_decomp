@@ -796,13 +796,42 @@ typedef union
          */
         typedef struct ModelRoData_HeaderRecord
         {
-            u32                           ModelType;  /*0x0 Legnth of Record (4)*/
+            u32                           ModelType;    /*0x0 Legnth of Record (4)*/
             struct ModelRoData_GroupRecord *FirstGroup; /*0x4 First group in tree*/
-            u16                           Group1;     /*0x8*/
-            u16                           Group2;     /*0xA*/
-            u16                           number;     /*0xC*/
-            u16                           reserved;   /*0xE padding*/
+
+            union
+            {
+                struct
+                {
+                    u16 Group1;      /*0x8*/
+                    u16 Group2;      /*0xA*/
+                };
+                f32 GroupsAsF32; /*0x8*/
+            };
+
+            u16 RwDataIndex; /*0xC*/
+            u16 reserved;    /*0xE padding*/
         } ModelRoData_HeaderRecord;
+
+        typedef struct ModelRwData_HeaderRecord
+        {
+            s8 unk00;
+            s8 unk01;
+            s8 unk02;
+            f32 ground;
+            coord3d pos;
+            f32 unk14; // angle
+            f32 unk18;
+            f32 unk1c;
+            f32 unk20; // angle
+            coord3d unk24;
+            f32 unk30; // angle
+            coord3d unk34;
+            coord3d unk40; // "2" version of unk24
+            coord3d unk4c; // "2" version of unk34
+            f32 unk58;
+            f32 unk5c;
+        } ModelRwData_HeaderRecord;
 
         /**
          * Opcode 2
@@ -823,9 +852,14 @@ typedef union
         {
             coord3d                       Origin;               /*0x0*/
             u16                           JointID;              /*0xC*/
-            u16                           MatrixID0;            /*0xE*/
-            u16                           MatrixID1;            /*0x10*/
-            u16                           MatrixID2;            /*0x12 never used*/
+            union {
+                s16 MatrixIDs[3]; /*0xE*/
+                struct {
+                    s16 MatrixID0; /*0xE*/
+                    s16 MatrixID1; /*0x10*/
+                    s16 MatrixID2; /*0x12 never used*/
+                };
+            };
             struct ModelRoData_GroupRecord *ChildGroup;           /*0x14*/
             f32                           BoundingVolumeRadius; /*0x18*/
         } ModelRoData_GroupRecord;
@@ -843,7 +877,7 @@ typedef union
         {
             Gfx    *Primary;           /*0x0*/
             Gfx    *Secondary;         /*0x4*/ // optional
-            u32     reserved;          /*0x8*/
+            void   *BaseAddr;          /*0x8*/
             Vertex *Vertices;          /*0xC*/
             u16     numVertices;       /*0x10*/
             /*
@@ -861,11 +895,34 @@ typedef union
          *  Opcode 5
          *  unused
          */
+        typedef struct ModelRoData_Op05Record
+        {
+            s32 unk00;      /*0x00*/
+
+            // convert_obj_microcode_offset_to_rdram_addr indicates:
+            // unk04 <---> unk10 overlap in some way
+            void* unk04;    /*0x04*/
+            void* unk08;    /*0x08*/
+            void* unk0C;    /*0x0C*/
+            u8 unk10[400];  /*0x10*/
+
+            u32 unk1A0;     /*0x1A0*/
+            void* BaseAddr; /*0x1A4*/
+        } ModelRoData_Op05Record;
 
         /**
          *  Opcode 6
          *  unused
          */
+        typedef struct ModelRoData_Op06Record
+        {
+            u32 unk00;
+            u32 unk04;
+            u32 unk08;
+            u32 unk0C;
+            u32 unk10;
+            void* BaseAddr; /*0x14*/
+        } ModelRoData_Op06Record;
 
         /**
          *  Opcode 7
@@ -873,9 +930,20 @@ typedef union
          */
         typedef struct ModelRoData_Op07Record
         {
-            u8 unk00[424]; /*0x0*/
-            u16 unk1A8;     /*0x1A8*/
-            u16 number;     /*0x1AA*/
+            void* unk00;     /*0x00*/
+            void* unk04;     /*0x04*/
+            s32   unk08;     /*0x08*/
+
+            // convert_obj_microcode_offset_to_rdram_addr indicates:
+            // unk0C <---> unk14 overlap in some way
+            void* unk0C;     /*0x0C*/
+            void* unk10;     /*0x10*/
+            void* unk14;     /*0x14*/
+            u8 unk18[400];   /*0x18*/
+
+            u16 unk1A8;      /*0x1A8*/
+            u16 RwDataIndex; /*0x1AA*/
+            void* BaseAddr;
         } ModelRoData_Op07Record;
 
         typedef struct ModelRwData_Op07Record
@@ -894,7 +962,7 @@ typedef union
             f32        MinDistance; /*0x0 Switch in distance*/
             f32        MaxDistance; /*0x4 Switch out distance*/
             ModelNode *Affects;     /*0x8 Affects this node (Must be child)*/
-            u16        number;      /*0xC*/
+            u16        RwDataIndex; /*0xC*/
             u16        reserved;    /*0xE padding*/
         } ModelRoData_LODRecord;
 
@@ -910,12 +978,12 @@ typedef union
          */
         typedef struct ModelRoData_BSPRecord
         {
-            coord3d    Point;      /*0x0*/
-            coord3d    Vector;     /*0xC*/
-            ModelNode *leftChild;  /*0x18 back/first */
-            ModelNode *rightChild; /*0x1C front/last */
-            s16        reserved;   /*0x20 padding or u32*/
-            u16        number;     /*0x22*/
+            coord3d    Point;       /*0x0*/
+            coord3d    Vector;      /*0xC*/
+            ModelNode *leftChild;   /*0x18 back/first */
+            ModelNode *rightChild;  /*0x1C front/last */
+            s16        reserved;    /*0x20 padding or u32*/
+            u16        RwDataIndex; /*0x22*/
         } ModelRoData_BSPRecord;
 
         typedef struct ModelRwData_BSPRecord
@@ -941,22 +1009,36 @@ typedef union
         {
             u32 unk0c[16]; /*0x0*/
             f32 BoundingVolumeRadius;
-            u16 number; /*0x44*/
+            u16 RwDataIndex; /*0x44*/
+            u16 unk46;
+            void* BaseAddr;
         } ModelRoData_Op11Record;
+
+        typedef struct ModelRwData_Op11Record
+        {
+            s16 unk00;
+            s16 unk02;
+        } ModelRwData_Op11Record;
 
         /**
          *  Opcode 12 0xC
          */
         typedef struct ModelRoData_GunfireRecord
         {
-            coord3d Offset;    /*0x0*/
-            coord3d Size;      /*0xC*/
-            void *  Image;     /*0x18*/
-            f32     Scale;     /*0x1c*/
-            u16     number;    /*0x20*/
-            u16     reserved;  /*0x22 padding*/
-            u32     reserved2; /*0x24 padding*/
+            coord3d Offset;      /*0x0*/
+            coord3d Size;        /*0xC*/
+            void *  Image;       /*0x18*/
+            f32     Scale;       /*0x1c*/
+            u16     RwDataIndex; /*0x20*/
+            u16     reserved;    /*0x22 padding*/
+            u32     BaseAddr;    /*0x24 padding*/
         } ModelRoData_GunfireRecord;
+
+        typedef struct ModelRwData_GunfireRecord
+        {
+            s16 visible;
+            u16 unk02;
+        } ModelRwData_GunfireRecord;
 
         /**
          *  Opcode 13 0xD
@@ -964,13 +1046,12 @@ typedef union
          */
         typedef struct ModelRoData_ShadowRecord
         {
-            coord2d                 pos;      /*0x0*/
-            coord2d                 size;     /*0x8*/
-            void                   *image;    /*0x10*/
+            coord2d                   pos;      /*0x0*/
+            coord2d                   size;     /*0x8*/
+            void                     *image;    /*0x10*/
             ModelRoData_HeaderRecord *Header;   /*0x14*/
-            f32                     Scale;    /*0x18*/
-            u16                     number;   /*0x1C*/
-            u16                     reserved; /*0x1E padding*/
+            f32                       Scale;    /*0x18*/
+            void                     *BaseAddr; /*0x1C*/
         } ModelRoData_ShadowRecord;
 
         /**
@@ -1029,9 +1110,9 @@ typedef union
          */
         typedef struct ModelRoData_SwitchRecord
         {
-            ModelNode *Controls; /*0x0 Which node to display (Must be Child)*/
-            u16        number;   /*0x4*/
-            u16        reserved; /*0x6 padding*/
+            ModelNode *Controls;    /*0x0 Which node to display (Must be Child)*/
+            u16        RwDataIndex; /*0x4*/
+            u16        reserved;    /*0x6 padding*/
         } ModelRoData_SwitchRecord;
 
         typedef struct ModelRwData_SwitchRecord
@@ -1070,7 +1151,7 @@ typedef union
             s32     numVertices; /*0x0*/
             Vertex *Vertices;    /*0x4*/
             Gfx    *Primary;     /*0x8*/
-            u32     reserved;    /*0xC*/
+            void   *BaseAddr;    /*0xC*/
         } ModelRoData_DisplayListPrimaryRecord;
 
         /**
@@ -1079,7 +1160,7 @@ typedef union
          */
         typedef struct ModelRoData_HeadPlaceholderRecord
         {
-            u16 number; //referenced by extract_id_from_object_structure_microcode()
+            u16 RwDataIndex;
         } ModelRoData_HeadPlaceholderRecord;
 
         typedef struct ModelRwData_HeadPlaceholderRecord
@@ -1094,16 +1175,16 @@ typedef union
          */
         typedef struct ModelRoData_DisplayList_CollisionRecord
         {
-            Gfx    *Primary;              /*0x0*/
-            Gfx    *Secondary;            /*0x4*/    // optional
-            Vertex *Vertices;             /*0x8*/
-            u16     numVertices;          /*0xC*/
-            u16     numCollisionVertices; /*0xE*/
-            Vertex *CollisionVertices;    /*0x10 Table of vertices with unique point in space (UV's and Colour are disregarded). */
-            s16    *PointUsage;           /*0x14*/
-            s16     ModelType;            /*0x18*/
-            u16     unknown;              /*0x1A*/
-            s32     number;               /*0x1C*/
+            Gfx     *Primary;              /*0x0*/
+            Gfx     *Secondary;            /*0x4*/    // optional
+            Vertex  *Vertices;             /*0x8*/
+            u16      numVertices;          /*0xC*/
+            s16      numCollisionVertices; /*0xE*/
+            Vertex  *CollisionVertices;    /*0x10 Table of vertices with unique point in space (UV's and Colour are disregarded). */
+            s16     *PointUsage;           /*0x14*/
+            s16      ModelType;            /*0x18*/
+            u16      RwDataIndex;          /*0x1A*/
+            void    *BaseAddr;             /*0x1C*/
 
         } ModelRoData_DisplayList_CollisionRecord;
 
@@ -1111,7 +1192,6 @@ typedef union
         {
             Vertex *Vertices;
             Gfx *gdl;
-            rgba_u8 *Colours;
         } ModelRwData_DisplayList_CollisionRecord;
 
     #pragma endregion Model Node OpCode Definitions
@@ -1124,6 +1204,8 @@ typedef union
         struct ModelRoData_HeaderRecord Header;
         struct ModelRoData_GroupRecord Group;
         struct ModelRoData_DisplayListRecord DisplayList;
+        struct ModelRoData_Op05Record Op05;
+        struct ModelRoData_Op06Record Op06;
         struct ModelRoData_Op07Record Op07;
         struct ModelRoData_LODRecord LOD;
         struct ModelRoData_BSPRecord BSP;
@@ -1133,6 +1215,7 @@ typedef union
         struct ModelRoData_ShadowRecord Shadow;
         struct ModelRoData_Op14Record Op14;
         struct ModelRoData_InterlinkageRecord Interlinkage;
+        struct ModelNode_Op16Record Op16;
         struct ModelRoData_SwitchRecord Switch;
         struct ModelRoData_GroupSimpleRecord GroupSimple;
         struct ModelRoData_DisplayListPrimaryRecord DisplayListPrimary;
@@ -1145,9 +1228,12 @@ typedef union
      */
     union ModelRwData
     {
+        struct ModelRwData_HeaderRecord Header;
         struct ModelRwData_Op07Record Op07;
         struct ModelRwData_LODRecord LOD;
         struct ModelRwData_BSPRecord BSP;
+        struct ModelRwData_Op11Record Op11;
+        struct ModelRwData_GunfireRecord Gunfire;
         struct ModelRwData_SwitchRecord Switch;
         struct ModelRwData_HeadPlaceholderRecord HeadPlaceholder;
         struct ModelRwData_DisplayList_CollisionRecord DisplayListCollisions;
@@ -1263,7 +1349,7 @@ typedef union
             u16     unk00;   /*0*/
             u8      unk02;   /*2*/
             f32     ground;  /*4*/
-            coord3d pos;     //8, 12, 16 - this is the right poition for this, but no idea what this node actually is (used in extract_id_from_object_structure_microcode)
+            coord3d pos;     //8, 12, 16 - this is the right poition for this, but no idea what this node actually is (used in modelGetNodeRwData)
             f32     subroty; //14 angle - this also happens to fit best for getsubroty
             f32     unk18;   /*18*/
             u32     unk1c;   /*1c*/
@@ -1294,10 +1380,10 @@ typedef union
             s16                Type;  /*0x01*/  // but sub_GAME_7F075F68() indicates that Type is a s16...
                                                 // not sure which is correct.
 
-            struct ChrRecord *chr;   /*0x04*/
-            ModelFileHeader  *obj;   /*0x08 GE Name confirmed*/
-            RenderPosView    *render_pos; /*0x0c*/
-            void            **datas; // array of pointers to modeldata structs /*0x10*/
+            struct ChrRecord  *chr;   /*0x04*/
+            ModelFileHeader   *obj;   /*0x08 GE Name confirmed*/
+            RenderPosView     *render_pos; /*0x0c*/
+            union ModelRwData **datas; // array of pointers to modeldata structs /*0x10*/
 
             f32               scale;              /*0x14*/
             struct Model     *attachedto;         /*0x18*/
