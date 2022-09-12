@@ -7172,7 +7172,7 @@ void modelRenderNodeDl(ModelRenderData *renderdata, Model *model, ModelNode *nod
 }
 
 
-void sub_GAME_7F072C10(Gfx *param_1, struct Model *param_2, struct ModelNode *param_3)
+void sub_GAME_7F072C10(ModelRenderData *param_1, struct Model *param_2, struct ModelNode *param_3)
 {
     return;
 }
@@ -10114,15 +10114,61 @@ void sub_GAME_7F074524(Gfx *param_1,struct Model *param_2, struct ModelNode *par
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F074534(void) {
-    /*
-     switch case modeltype
-     case 0
-     parse type0(model)
-     case1
-     parsetype1(model)
-     ...
-     */
+void sub_GAME_7F074534(ModelRenderData* data, Model* model, ModelNode* node) {
+    //i should use v0 to match
+    u8 id = node->Opcode & 0xFF;
+    switch (id) {
+    case 8:
+        sub_GAME_7F06E970(model, node);
+        return;
+    case 18:
+        process_12_handle_switch(model, node);
+        return;
+    case 23:
+        process_17_pointer_to_head(model, node);
+        return;
+    case 9:
+        sub_GAME_7F06EB10(model, node);
+        return;
+    case 11:
+        sub_GAME_7F0737FC(data, model, node);
+        return;
+    case 12:
+        dogfnegx(data, model, node);
+        return;
+    case 13:
+        doshadow(data, model, node);
+        return;
+    case 10:
+        sub_GAME_7F074514(data, model, node);
+        return;
+    case 17:
+        sub_GAME_7F074524(data, model, node);
+        return;
+    case 4:
+        modelRenderNodeGundl(data, node);
+        return;
+    case 24:
+        modelRenderNodeDl(data, model, node);
+        return;
+    case 20:
+        sub_GAME_7F072C10(data, model, node);
+        return;
+    case 22:
+        dorottex(data, node);
+        return;
+    case 5:
+        sub_GAME_7F07306C(data, model, node);
+        return;
+    case 7:
+        dotube(data, model, node);
+        return;
+    case 6:
+        sub_GAME_7F0737EC(data,model,node);
+        return;
+    default:
+        return;
+    }
 }
 #else
 GLOBAL_ASM(
