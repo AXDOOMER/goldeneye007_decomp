@@ -20,6 +20,7 @@
 #include "random.h"
 #include "math_asinfacosf.h"
 #include "loadobjectmodel.h"
+#include "objecthandler.h"
 
 // bss
 s32 dword_CODE_bss_80075DB0;
@@ -2132,55 +2133,28 @@ glabel sub_GAME_7F05E978
 )
 #endif
 
+void sub_GAME_7F05EA94(Model* model, s32 val)
+{
+    ModelNode* switch_14;
+    ModelNode* switch_15;
 
+    if (model->obj->numSwitches >= 0x10)
+    {
+        switch_14 = model->obj->Switches[14];
+        if (switch_14 != NULL)
+        {
+            // Guessing DisplayList here
+            modelGetNodeRwData(model, switch_14)->DisplayList.unk00 = val;
+        }
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F05EA94(void) {
-
+        switch_15 = model->obj->Switches[15];
+        if (switch_15 != NULL)
+        {
+            // Guessing DisplayList here
+            modelGetNodeRwData(model, switch_15)->DisplayList.unk00 = val;
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05EA94
-/* 0935C4 7F05EA94 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0935C8 7F05EA98 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0935CC 7F05EA9C AFA5001C */  sw    $a1, 0x1c($sp)
-/* 0935D0 7F05EAA0 8C820008 */  lw    $v0, 8($a0)
-/* 0935D4 7F05EAA4 844E000C */  lh    $t6, 0xc($v0)
-/* 0935D8 7F05EAA8 29C10010 */  slti  $at, $t6, 0x10
-/* 0935DC 7F05EAAC 54200014 */  bnezl $at, .L7F05EB00
-/* 0935E0 7F05EAB0 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0935E4 7F05EAB4 8C430008 */  lw    $v1, 8($v0)
-/* 0935E8 7F05EAB8 8C650038 */  lw    $a1, 0x38($v1)
-/* 0935EC 7F05EABC 50A00009 */  beql  $a1, $zero, .L7F05EAE4
-/* 0935F0 7F05EAC0 8C65003C */   lw    $a1, 0x3c($v1)
-/* 0935F4 7F05EAC4 0FC1B1E7 */  jal   modelGetNodeRwData
-/* 0935F8 7F05EAC8 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0935FC 7F05EACC 8FAF001C */  lw    $t7, 0x1c($sp)
-/* 093600 7F05EAD0 8FA40018 */  lw    $a0, 0x18($sp)
-/* 093604 7F05EAD4 AC4F0000 */  sw    $t7, ($v0)
-/* 093608 7F05EAD8 8C980008 */  lw    $t8, 8($a0)
-/* 09360C 7F05EADC 8F030008 */  lw    $v1, 8($t8)
-/* 093610 7F05EAE0 8C65003C */  lw    $a1, 0x3c($v1)
-.L7F05EAE4:
-/* 093614 7F05EAE4 50A00006 */  beql  $a1, $zero, .L7F05EB00
-/* 093618 7F05EAE8 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 09361C 7F05EAEC 0FC1B1E7 */  jal   modelGetNodeRwData
-/* 093620 7F05EAF0 00000000 */   nop
-/* 093624 7F05EAF4 8FB9001C */  lw    $t9, 0x1c($sp)
-/* 093628 7F05EAF8 AC590000 */  sw    $t9, ($v0)
-/* 09362C 7F05EAFC 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F05EB00:
-/* 093630 7F05EB00 27BD0018 */  addiu $sp, $sp, 0x18
-/* 093634 7F05EB04 03E00008 */  jr    $ra
-/* 093638 7F05EB08 00000000 */   nop
-)
-#endif
-
-
-
 
 
 /**

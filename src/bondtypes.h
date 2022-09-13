@@ -933,6 +933,11 @@ typedef union
             s8      ModelType;
         } ModelRoData_DisplayListRecord;
 
+        typedef struct ModelRwData_DisplayListRecord // this record is a guess
+        {
+            s32 unk00;
+        } ModelRwData_DisplayListRecord;
+
         /**
          *  Opcode 5
          *  unused
@@ -1268,6 +1273,7 @@ typedef union
     union ModelRwData
     {
         struct ModelRwData_HeaderRecord Header;
+        struct ModelRwData_DisplayListRecord DisplayList;
         struct ModelRwData_Op07Record Op07;
         struct ModelRwData_LODRecord LOD;
         struct ModelRwData_BSPRecord BSP;
