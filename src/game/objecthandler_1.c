@@ -3202,98 +3202,31 @@ void sub_GAME_7F06F0D0(ModelRenderData *arg0, Model *model)
 }
 
 
-#ifdef NONMATCHING
-void instcalcmatrices(void) {
+void instcalcmatrices(struct unk_joint_list* arg0, Model* arg1)
+{
+#if defined(LEFTOVERDEBUG)
+    if (arg1 == NULL)
+    {
+        osSyncPrintf("instcalcmatrices: no objinst!\n");
+        return_null();
+    }
 
+    if (arg0->unk_matrix == NULL)
+    {
+        osSyncPrintf("instcalcmatrices: no basemtx!\n");
+        return_null();
+    }
+
+    if (arg0->mtxlist == NULL)
+    {
+        osSyncPrintf("instcalcmatrices: no mtxlist!\n");
+        return_null();
+    }
+#endif
+    arg1->render_pos = (RenderPosView* ) arg0->mtxlist;
+    arg0->mtxlist += arg1->obj->numMatrices;
+    sub_GAME_7F06F0D0((ModelRenderData* ) arg0, arg1);
 }
-#else
-#ifndef VERSION_EU
-//D:80054890
-const char aInstcalcmatricesNoObjinst[] = "instcalcmatrices: no objinst!\n";
-//D:800548B0
-const char aInstcalcmatricesNoBasemtx[] = "instcalcmatrices: no basemtx!\n";
-//D:800548D0
-const char aInstcalcmatricesNoMtxlist[] = "instcalcmatrices: no mtxlist!\n";
-GLOBAL_ASM(
-.text
-glabel instcalcmatrices
-/* 0A3D78 7F06F248 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0A3D7C 7F06F24C AFB00018 */  sw    $s0, 0x18($sp)
-/* 0A3D80 7F06F250 00808025 */  move  $s0, $a0
-/* 0A3D84 7F06F254 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0A3D88 7F06F258 14A00006 */  bnez  $a1, .L7F06F274
-/* 0A3D8C 7F06F25C AFA50024 */   sw    $a1, 0x24($sp)
-/* 0A3D90 7F06F260 3C048005 */  lui   $a0, %hi(aInstcalcmatricesNoObjinst)
-/* 0A3D94 7F06F264 0C0033D1 */  jal   osSyncPrintf
-/* 0A3D98 7F06F268 24844890 */   addiu $a0, %lo(aInstcalcmatricesNoObjinst) # addiu $a0, $a0, 0x4890
-/* 0A3D9C 7F06F26C 0FC1B11B */  jal   return_null
-/* 0A3DA0 7F06F270 00000000 */   nop   
-.L7F06F274:
-/* 0A3DA4 7F06F274 8E0F0000 */  lw    $t7, ($s0)
-/* 0A3DA8 7F06F278 3C048005 */  lui   $a0, %hi(aInstcalcmatricesNoBasemtx)
-/* 0A3DAC 7F06F27C 55E00006 */  bnezl $t7, .L7F06F298
-/* 0A3DB0 7F06F280 8E020010 */   lw    $v0, 0x10($s0)
-/* 0A3DB4 7F06F284 0C0033D1 */  jal   osSyncPrintf
-/* 0A3DB8 7F06F288 248448B0 */   addiu $a0, %lo(aInstcalcmatricesNoBasemtx) # addiu $a0, $a0, 0x48b0
-/* 0A3DBC 7F06F28C 0FC1B11B */  jal   return_null
-/* 0A3DC0 7F06F290 00000000 */   nop   
-/* 0A3DC4 7F06F294 8E020010 */  lw    $v0, 0x10($s0)
-.L7F06F298:
-/* 0A3DC8 7F06F298 3C048005 */  lui   $a0, %hi(aInstcalcmatricesNoMtxlist)
-/* 0A3DCC 7F06F29C 54400007 */  bnezl $v0, .L7F06F2BC
-/* 0A3DD0 7F06F2A0 8FB80024 */   lw    $t8, 0x24($sp)
-/* 0A3DD4 7F06F2A4 0C0033D1 */  jal   osSyncPrintf
-/* 0A3DD8 7F06F2A8 248448D0 */   addiu $a0, %lo(aInstcalcmatricesNoMtxlist) # addiu $a0, $a0, 0x48d0
-/* 0A3DDC 7F06F2AC 0FC1B11B */  jal   return_null
-/* 0A3DE0 7F06F2B0 00000000 */   nop   
-/* 0A3DE4 7F06F2B4 8E020010 */  lw    $v0, 0x10($s0)
-/* 0A3DE8 7F06F2B8 8FB80024 */  lw    $t8, 0x24($sp)
-.L7F06F2BC:
-/* 0A3DEC 7F06F2BC 02002025 */  move  $a0, $s0
-/* 0A3DF0 7F06F2C0 8F080008 */  lw    $t0, 8($t8)
-/* 0A3DF4 7F06F2C4 AF02000C */  sw    $v0, 0xc($t8)
-/* 0A3DF8 7F06F2C8 8E190010 */  lw    $t9, 0x10($s0)
-/* 0A3DFC 7F06F2CC 8509000E */  lh    $t1, 0xe($t0)
-/* 0A3E00 7F06F2D0 00095180 */  sll   $t2, $t1, 6
-/* 0A3E04 7F06F2D4 032A5821 */  addu  $t3, $t9, $t2
-/* 0A3E08 7F06F2D8 AE0B0010 */  sw    $t3, 0x10($s0)
-/* 0A3E0C 7F06F2DC 0FC1BC34 */  jal   sub_GAME_7F06F0D0
-/* 0A3E10 7F06F2E0 8FA50024 */   lw    $a1, 0x24($sp)
-/* 0A3E14 7F06F2E4 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0A3E18 7F06F2E8 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0A3E1C 7F06F2EC 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0A3E20 7F06F2F0 03E00008 */  jr    $ra
-/* 0A3E24 7F06F2F4 00000000 */   nop   
-)
-#endif
-#ifdef VERSION_EU
-GLOBAL_ASM(
-.text
-glabel instcalcmatrices
-/* 0A2024 7F06F634 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0A2028 7F06F638 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A202C 7F06F63C 8C8E0010 */  lw    $t6, 0x10($a0)
-/* 0A2030 7F06F640 8CB80008 */  lw    $t8, 8($a1)
-/* 0A2034 7F06F644 ACAE000C */  sw    $t6, 0xc($a1)
-/* 0A2038 7F06F648 8719000E */  lh    $t9, 0xe($t8)
-/* 0A203C 7F06F64C 8C8F0010 */  lw    $t7, 0x10($a0)
-/* 0A2040 7F06F650 00194180 */  sll   $t0, $t9, 6
-/* 0A2044 7F06F654 01E84821 */  addu  $t1, $t7, $t0
-/* 0A2048 7F06F658 0FC1BD2F */  jal   sub_GAME_7F06F0D0
-/* 0A204C 7F06F65C AC890010 */   sw    $t1, 0x10($a0)
-/* 0A2050 7F06F660 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0A2054 7F06F664 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0A2058 7F06F668 03E00008 */  jr    $ra
-/* 0A205C 7F06F66C 00000000 */   nop   
-)
-#endif
-#endif
-
-
-
-
-
-
 
 
 /**

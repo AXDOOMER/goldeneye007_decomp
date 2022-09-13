@@ -863,81 +863,8 @@ struct player
   s32 field_6C8;
   s32 field_6CC;
 
-  // struct? this gets pointed to. Pointer called "mtxlist" takes address of this property.
-  // bondheadmatrices 0 - 3 
-  s32 field_6D0;
-  s32 field_6D4;
-  s32 field_6D8;
-  s32 field_6DC;
-  
-  f32 field_6E0;
-  f32 field_6E4;
-  f32 field_6E8;
+  Mtxf bondheadmatrices[4];
 
-  s32 field_6EC;
-  
-  f32 field_6F0;
-  f32 field_6F4;
-  f32 field_6F8;
-
-  s32 field_6FC;
-
-
-  f32 field_700;
-  f32 field_704;  // related to standheight
-  f32 field_708;
-
-  s32 field_70C;
-  s32 field_710;
-  s32 field_714;
-  s32 field_718;
-  s32 field_71C;
-  s32 field_720;
-  s32 field_724;
-  s32 field_728;
-  s32 field_72C;
-  s32 field_730;
-  s32 field_734;
-  s32 field_738;
-  s32 field_73C;
-  s32 field_740;
-
-  f32 field_744;
-  f32 field_748;
-
-  s32 field_74C;
-  s32 field_750;
-  s32 field_754;
-  s32 field_758;
-  s32 field_75C;
-  s32 field_760;
-  s32 field_764;
-  s32 field_768;
-  s32 field_76C;
-  s32 field_770;
-  s32 field_774;
-  s32 field_778;
-  s32 field_77C;
-  s32 field_780;
-  s32 field_784;
-  s32 field_788;
-  s32 field_78C;
-  s32 field_790;
-  s32 field_794;
-  s32 field_798;
-  s32 field_79C;
-  s32 field_7A0;
-  s32 field_7A4;
-  s32 field_7A8;
-  s32 field_7AC;
-  s32 field_7B0;
-  s32 field_7B4;
-  s32 field_7B8;
-  s32 field_7BC;
-  s32 field_7C0;
-  s32 field_7C4;
-  s32 field_7C8;
-  s32 field_7CC;
   Vp viewports[2];
 
   /**

@@ -161,14 +161,14 @@ void sets_a_bunch_of_BONDdata_values_to_default(void)
     matrix_4x4_set_identity(&sp50);
 
     sp90.unk_matrix = &sp50;
-    sp90.mtxlist = &g_CurrentPlayer->field_6D0;
+    sp90.mtxlist = &g_CurrentPlayer->bondheadmatrices[0];
 
     subcalcmatrices(&sp90, &g_CurrentPlayer->model);
 
-    g_CurrentPlayer->standheight = g_CurrentPlayer->field_704;
+    g_CurrentPlayer->standheight = g_CurrentPlayer->bondheadmatrices[0].m[3][1];
     g_CurrentPlayer->standbodyoffset.x = 0.0f;
-    g_CurrentPlayer->standbodyoffset.y = g_CurrentPlayer->field_744 - g_CurrentPlayer->field_704;
-    g_CurrentPlayer->standbodyoffset.z = g_CurrentPlayer->field_748 - g_CurrentPlayer->field_708;
+    g_CurrentPlayer->standbodyoffset.y = g_CurrentPlayer->bondheadmatrices[1].m[3][1] - g_CurrentPlayer->bondheadmatrices[0].m[3][1];
+    g_CurrentPlayer->standbodyoffset.z = g_CurrentPlayer->bondheadmatrices[1].m[3][2] - g_CurrentPlayer->bondheadmatrices[0].m[3][2];
 
     modelSetAnimation(
         &g_CurrentPlayer->model,

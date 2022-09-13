@@ -232,7 +232,7 @@ void bheadUpdate(f32 arg0, f32 arg1)
     matrix_4x4_set_identity(&sp40);
 
     sp80.unk_matrix = &sp40;
-    sp80.mtxlist = &g_CurrentPlayer->field_6D0;
+    sp80.mtxlist = &g_CurrentPlayer->bondheadmatrices[0];
 
     subcalcmatrices(&sp80, &g_CurrentPlayer->model);
 
@@ -242,35 +242,35 @@ void bheadUpdate(f32 arg0, f32 arg1)
 
     getsuboffset(&g_CurrentPlayer->model, (struct float3 *) &sp34);
 
-    sp34.f[0] -= g_CurrentPlayer->field_700;
-    sp34.f[2] -= g_CurrentPlayer->field_708;
+    sp34.f[0] -= g_CurrentPlayer->bondheadmatrices[0].m[3][0];
+    sp34.f[2] -= g_CurrentPlayer->bondheadmatrices[0].m[3][2];
     
     setsuboffset(&g_CurrentPlayer->model, (coord3d *) &sp34);
 
     if (spC0 > 0.0f)
     {
-        g_CurrentPlayer->field_700 += arg1;
-        g_CurrentPlayer->field_708 *= arg0;
+        g_CurrentPlayer->bondheadmatrices[0].m[3][0] += arg1;
+        g_CurrentPlayer->bondheadmatrices[0].m[3][2] *= arg0;
 
         if (g_ClockTimer > 0)
         {
-            g_CurrentPlayer->field_700 /= g_GlobalTimerDelta;
-            g_CurrentPlayer->field_708 /= g_GlobalTimerDelta;
+            g_CurrentPlayer->bondheadmatrices[0].m[3][0] /= g_GlobalTimerDelta;
+            g_CurrentPlayer->bondheadmatrices[0].m[3][2] /= g_GlobalTimerDelta;
         }
 
-        headpos.f[0] = g_CurrentPlayer->field_700 * g_CurrentPlayer->headamplitude;
-        headpos.f[1] = ((g_CurrentPlayer->field_704 - g_CurrentPlayer->standheight) * g_CurrentPlayer->headamplitude) + g_CurrentPlayer->standheight;
-        headpos.f[2] = g_CurrentPlayer->field_708 * g_CurrentPlayer->headamplitude;
+        headpos.f[0] = g_CurrentPlayer->bondheadmatrices[0].m[3][0] * g_CurrentPlayer->headamplitude;
+        headpos.f[1] = ((g_CurrentPlayer->bondheadmatrices[0].m[3][1] - g_CurrentPlayer->standheight) * g_CurrentPlayer->headamplitude) + g_CurrentPlayer->standheight;
+        headpos.f[2] = g_CurrentPlayer->bondheadmatrices[0].m[3][2] * g_CurrentPlayer->headamplitude;
 
         if (g_CurrentPlayer->headanim >= 0)
         {
-            lookvel.f[0] = g_CurrentPlayer->field_6F0 * g_CurrentPlayer->sideamplitude;
-            lookvel.f[1] = g_CurrentPlayer->field_6F4 * g_CurrentPlayer->headamplitude;
-            lookvel.f[2] = ((g_CurrentPlayer->field_6F8 - 1.0f) * g_CurrentPlayer->headamplitude) + 1.0f;
+            lookvel.f[0] = g_CurrentPlayer->bondheadmatrices[0].m[2][0] * g_CurrentPlayer->sideamplitude;
+            lookvel.f[1] = g_CurrentPlayer->bondheadmatrices[0].m[2][1] * g_CurrentPlayer->headamplitude;
+            lookvel.f[2] = ((g_CurrentPlayer->bondheadmatrices[0].m[2][2] - 1.0f) * g_CurrentPlayer->headamplitude) + 1.0f;
 
-            upvel.f[0] = g_CurrentPlayer->field_6E0 * g_CurrentPlayer->headamplitude;
-            upvel.f[1] = ((g_CurrentPlayer->field_6E4 - 1.0f) * g_CurrentPlayer->headamplitude) + 1.0f;
-            upvel.f[2] = g_CurrentPlayer->field_6E8 * g_CurrentPlayer->headamplitude;
+            upvel.f[0] = g_CurrentPlayer->bondheadmatrices[0].m[1][0] * g_CurrentPlayer->headamplitude;
+            upvel.f[1] = ((g_CurrentPlayer->bondheadmatrices[0].m[1][1] - 1.0f) * g_CurrentPlayer->headamplitude) + 1.0f;
+            upvel.f[2] = g_CurrentPlayer->bondheadmatrices[0].m[1][2] * g_CurrentPlayer->headamplitude;
 
             g_CurrentPlayer->headwalkingtime60 += g_ClockTimer;
 
@@ -296,13 +296,13 @@ void bheadUpdate(f32 arg0, f32 arg1)
         }
         else
         {
-            lookvel.f[0] = g_CurrentPlayer->field_6F0;
-            lookvel.f[1] = g_CurrentPlayer->field_6F4;
-            lookvel.f[2] = g_CurrentPlayer->field_6F8;
+            lookvel.f[0] = g_CurrentPlayer->bondheadmatrices[0].m[2][0];
+            lookvel.f[1] = g_CurrentPlayer->bondheadmatrices[0].m[2][1];
+            lookvel.f[2] = g_CurrentPlayer->bondheadmatrices[0].m[2][2];
 
-            upvel.f[0] = g_CurrentPlayer->field_6E0;
-            upvel.f[1] = g_CurrentPlayer->field_6E4;
-            upvel.f[2] = g_CurrentPlayer->field_6E8;
+            upvel.f[0] = g_CurrentPlayer->bondheadmatrices[0].m[1][0];
+            upvel.f[1] = g_CurrentPlayer->bondheadmatrices[0].m[1][1];
+            upvel.f[2] = g_CurrentPlayer->bondheadmatrices[0].m[1][2];
 
             bheadSetdamp(0.85f);
         }
