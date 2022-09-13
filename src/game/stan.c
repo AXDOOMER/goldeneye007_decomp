@@ -5365,52 +5365,15 @@ f32 stanGetPositionYValue(StandTile *tile, f32 p_x, f32 p_z)
 }
 
 
-
-
-
-#ifdef NONMATCHING
-
-// Some instructions misordered
-s32 copy_tile_RGB_as_24bit(StandTile *tile, f32 p_x, f32 p_z, u8* rtn) {
-    
-    u8 B;
-    u8 C;
-    u8 D;
-
-    B = tile->headerMid >> 0x8 & 0xF;
-    C = tile->headerMid >> 0x4 & 0xF;
-    D = tile->headerMid & 0xF;
-
-    rtn[0] = (B << 4) | B;
-    rtn[1] = (C << 4) | C;
-    rtn[2] = (D << 4) | D;
-
+void copy_tile_RGB_as_24bit(StandTile *tile, f32 p_x, f32 p_z, u8 *rtn)
+{
+    u8 B = (tile->mid.half >> 0x8) & 0xF;
+    u8 C = (tile->mid.half >> 0x4) & 0xF;
+    u8 D = (tile->mid.half >> 0x0) & 0xF;
+    rtn[0] = (B << 0x4) | B;
+    rtn[1] = (C << 0x4) | C;
+    rtn[2] = (D << 0x4) | D;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel copy_tile_RGB_as_24bit
-/* 0E775C 7F0B2C2C AFA50004 */  sw    $a1, 4($sp)
-/* 0E7760 7F0B2C30 AFA60008 */  sw    $a2, 8($sp)
-/* 0E7764 7F0B2C34 84830004 */  lh    $v1, 4($a0)
-/* 0E7768 7F0B2C38 00031203 */  sra   $v0, $v1, 8
-/* 0E776C 7F0B2C3C 304F000F */  andi  $t7, $v0, 0xf
-/* 0E7770 7F0B2C40 00032903 */  sra   $a1, $v1, 4
-/* 0E7774 7F0B2C44 30B9000F */  andi  $t9, $a1, 0xf
-/* 0E7778 7F0B2C48 000F6100 */  sll   $t4, $t7, 4
-/* 0E777C 7F0B2C4C 018F6825 */  or    $t5, $t4, $t7
-/* 0E7780 7F0B2C50 00197100 */  sll   $t6, $t9, 4
-/* 0E7784 7F0B2C54 306B000F */  andi  $t3, $v1, 0xf
-/* 0E7788 7F0B2C58 01D97825 */  or    $t7, $t6, $t9
-/* 0E778C 7F0B2C5C 000BC100 */  sll   $t8, $t3, 4
-/* 0E7790 7F0B2C60 030BC825 */  or    $t9, $t8, $t3
-/* 0E7794 7F0B2C64 A0ED0000 */  sb    $t5, ($a3)
-/* 0E7798 7F0B2C68 A0EF0001 */  sb    $t7, 1($a3)
-/* 0E779C 7F0B2C6C 03E00008 */  jr    $ra
-/* 0E77A0 7F0B2C70 A0F90002 */   sb    $t9, 2($a3)
-)
-#endif
-
 
 
 f32 sub_GAME_7F0B2C74(StandTile *tile, f32 *heights);
