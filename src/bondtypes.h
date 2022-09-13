@@ -787,6 +787,45 @@ typedef union
         struct ModelNode     *Child;  /*0x14*/
     } ModelNode;
 
+
+    #pragma region Model Node OpCode Definitions
+
+        /*
+         * These are some extra RoData structs that are used by Op07 (and presumably Op05)
+         * Not sure how these fit in with the rest, they appear to be separate
+         */
+
+        typedef struct ModelRoData_Child
+        {
+            u8   NumEntries; /*0x00*/
+            u8   unk01;      /*0x01*/
+            u16  unk02;      /*0x02*/
+            u8  *unk04;      /*0x04*/
+        } ModelRoData_Child;
+
+        typedef struct ModelRoData_Child_Vtx
+        {
+            u8  Type;     /*0x00*/
+            u8  unk01;    /*0x01*/
+            u16 VtxIndex; /*0x02*/
+        } ModelRoData_Child_Vtx;
+
+        typedef struct ModelRoData_Child_Tri
+        {
+            u8 Type;      /*0x00*/
+            u8 VtxIndex1; /*0x01*/
+            u8 VtxIndex2; /*0x02*/
+            u8 VtxIndex3; /*0x03*/
+        } ModelRoData_Child_Tri;
+
+        typedef struct ModelRoData_Child_Image
+        {
+            u8 Type;       /*0x00*/
+            u8 ImageIndex; /*0x01*/
+        } ModelRoData_Child_Image;
+
+    #pragma endregion
+
     #pragma region Model Node OpCode Definitions
 
         /**
@@ -897,13 +936,12 @@ typedef union
          */
         typedef struct ModelRoData_Op05Record
         {
-            // convert_obj_microcode_offset_to_rdram_addr indicates:
-            // unk04 <---> unk10 overlap in some way
-            s32 unk00;      /*0x00*/
-            void* unk04;    /*0x04*/
-            void* unk08;    /*0x08*/
-            void* unk0C;    /*0x0C*/
-            u8 unk10[400];  /*0x10*/
+            // shares this structure with op07
+            s32                       NumChildren; /*0x00*/
+            struct ModelRoData_Child *Children;    /*0x04*/
+            struct Vertex            *Vertices;    /*0x08*/
+            struct sImageTableEntry  *Images;      /*0x0C*/
+            u8                        Data[400];   /*0x10*/
 
             u32 unk1A0;     /*0x1A0*/
             void* BaseAddr; /*0x1A4*/
@@ -932,13 +970,12 @@ typedef union
             struct ModelNode* unk00;     /*0x00*/
             struct ModelNode* unk04;     /*0x04*/
 
-            // convert_obj_microcode_offset_to_rdram_addr indicates:
-            // unk0C <---> unk14 overlap in some way
-            s32   unk08;     /*0x08*/
-            void* unk0C;     /*0x0C*/
-            void* unk10;     /*0x10*/
-            void* unk14;     /*0x14*/
-            u8 unk18[400];   /*0x18*/
+            // shares this structure with op05
+            s32                       NumChildren; /*0x08*/
+            struct ModelRoData_Child *Children;    /*0x0C*/
+            struct Vertex            *Vertices;    /*0x10*/
+            struct sImageTableEntry  *Images;      /*0x14*/
+            u8                        Data[400];   /*0x18*/
 
             u16 unk1A8;      /*0x1A8*/
             u16 RwDataIndex; /*0x1AA*/
