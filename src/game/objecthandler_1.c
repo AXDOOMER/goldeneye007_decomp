@@ -3001,7 +3001,7 @@ void process_07_unknown(Model *model, ModelNode *node)
 
     index3 = index2 + D_800360C4[index1].unk00;
 
-    rwdata->Op07.visible = rodata->Op07.unk18[index3];
+    rwdata->Op07.index = rodata->Op07.unk18[index3];
 }
 
 
@@ -10770,7 +10770,7 @@ void convert_obj_microcode_offset_to_rdram_addr(ModelNode *node, u32 vma, u32 fi
         case MODELNODE_OPCODE_UNUSED_05:
             rodata = node->Data;
 
-            // v similar to OP06RECORD (same issues) v
+            // v similar to OP07RECORD (same issues) v
             PROMOTE(rodata->Op05.unk04);
             PROMOTE(rodata->Op05.unk08);
             PROMOTE(rodata->Op05.unk0C);
@@ -10778,7 +10778,7 @@ void convert_obj_microcode_offset_to_rdram_addr(ModelNode *node, u32 vma, u32 fi
                 // this loop iterates by 8 bytes, and starts from unk04
                 //PROMOTE(rodata->Op05.unk04[i].unk04);
             }
-            // ^ similar to OP06RECORD (same issues) ^
+            // ^ similar to OP07RECORD (same issues) ^
 
             rodata->Op05.BaseAddr = (void *)fileramaddr;
             break;
@@ -11505,7 +11505,7 @@ void modelInitRwData(Model *model, ModelNode *startnode)
                 if (1)
                 {
                     ModelRwData_Op07Record* rwdata = &modelGetNodeRwData(model, node)->Op07;
-                    rwdata->visible = FALSE;
+                    rwdata->index = 0;
                     break;
                 }
 

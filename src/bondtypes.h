@@ -897,10 +897,9 @@ typedef union
          */
         typedef struct ModelRoData_Op05Record
         {
-            s32 unk00;      /*0x00*/
-
             // convert_obj_microcode_offset_to_rdram_addr indicates:
             // unk04 <---> unk10 overlap in some way
+            s32 unk00;      /*0x00*/
             void* unk04;    /*0x04*/
             void* unk08;    /*0x08*/
             void* unk0C;    /*0x0C*/
@@ -930,12 +929,12 @@ typedef union
          */
         typedef struct ModelRoData_Op07Record
         {
-            void* unk00;     /*0x00*/
-            void* unk04;     /*0x04*/
-            s32   unk08;     /*0x08*/
+            struct ModelNode* unk00;     /*0x00*/
+            struct ModelNode* unk04;     /*0x04*/
 
             // convert_obj_microcode_offset_to_rdram_addr indicates:
             // unk0C <---> unk14 overlap in some way
+            s32   unk08;     /*0x08*/
             void* unk0C;     /*0x0C*/
             void* unk10;     /*0x10*/
             void* unk14;     /*0x14*/
@@ -948,7 +947,7 @@ typedef union
 
         typedef struct ModelRwData_Op07Record
         {
-            bool visible;
+            s32 index;
         } ModelRwData_Op07Record;
 
         /**
