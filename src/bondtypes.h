@@ -538,7 +538,10 @@ typedef union
         s32 unk00;
         u16 unk04;
         u16 unk06;
-
+        u16 unk08;
+        u16 unk0A;
+        u16 unk0C;
+        u16 unk0E;
         // ...
     } ModelAnimation;
 

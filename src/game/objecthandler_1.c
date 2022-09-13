@@ -16,7 +16,7 @@
 
 void sub_GAME_7F06D490(struct Model *arg0, struct ModelNode *arg1);
 void sub_GAME_7F0755B0(void);
-s32 sub_GAME_7F0754BC(struct ModelAnimation *, s16, struct ModelSkeleton*);
+s32 sub_GAME_7F0754BC(struct ModelAnimation *, s32, struct ModelSkeleton*);
 
 // end forward declarations
 
@@ -9619,126 +9619,39 @@ glabel sub_GAME_7F07549C
 #endif
 
 
+s32 sub_GAME_7F0754BC(ModelAnimation* arg0, s32 arg1, ModelSkeleton* arg2)
+{
+    s32 ret;
+    s32 var_a1;
+    s32 shiftede;
+    u32 tmp;
+    u32 temp_a2_2;
 
+    ret = 0;
+    shiftede = arg0->unk0E >> 3;
 
-
-#ifdef NONMATCHING
-s32 sub_GAME_7F0754BC(void *arg0, s32 arg1, ? arg2) {
-    s32 temp_t6;
-    s32 temp_t2;
-    s32 temp_a1;
-    s32 phi_a1;
-    s32 phi_v1;
-    s32 phi_a3;
-    s32 phi_a3_2;
-
-    // Node 0
-    temp_t6 = ((s32) arg0->unkE >> 3);
-    if ((*arg0 << 0) < 0)
+    if (arg0->unk00 & 0x80000000)
     {
-        // Node 1
-        phi_a3_2 = (*arg0 + (arg1 * temp_t6));
+        ret = arg0->unk00 + (arg1 * shiftede);
     }
-    else
+    else if (D_80036414 != NULL)
     {
-        // Node 2
-        phi_a3_2 = 0;
-        if (D_80036414 != 0)
+        tmp = ((u32) (D_80036414->unk08 + 0xF) >> 4) * 0x10;
+        ret = tmp;
+        var_a1 = arg0->unk00 + (arg1 * shiftede);
+        if (var_a1 & 1)
         {
-            // Node 3
-            temp_t2 = (((u32) (D_80036414->unk8 + 0xf) >> 4) * 0x10);
-            temp_a1 = (*arg0 + (arg1 * temp_t6));
-            phi_a1 = temp_a1;
-            phi_v1 = temp_t6;
-            phi_a3 = temp_t2;
-            if ((temp_a1 & 1) != 0)
-            {
-                // Node 4
-                phi_a1 = (temp_a1 + -1);
-                phi_v1 = (temp_t6 + 1);
-                phi_a3 = (temp_t2 + 1);
-            }
-            // Node 5
-            romCopy(temp_t2, phi_a1, (((u32) (phi_v1 + 0xf) >> 4) * 0x10), phi_a3);
-            *D_80036414 = (s32) (*D_80036414 + 1);
-            D_80036414->unk8 = (s32) (sp20 + sp18);
-            phi_a3_2 = sp2C;
+            var_a1--;
+            shiftede++;
+            ret++;
         }
-        // Node 6
+        temp_a2_2 = ((u32) (shiftede + 0xF) >> 4) * 0x10;
+        romCopy((void* ) tmp, (void* ) var_a1, temp_a2_2);
+        D_80036414->unk00 += 1;
+        D_80036414->unk08 = tmp + temp_a2_2;
     }
-    // Node 7
-    return phi_a3_2;
+    return ret;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0754BC
-/* 0A9FEC 7F0754BC 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0A9FF0 7F0754C0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A9FF4 7F0754C4 AFA50034 */  sw    $a1, 0x34($sp)
-/* 0A9FF8 7F0754C8 AFA60038 */  sw    $a2, 0x38($sp)
-/* 0A9FFC 7F0754CC 9483000E */  lhu   $v1, 0xe($a0)
-/* 0AA000 7F0754D0 8C860000 */  lw    $a2, ($a0)
-/* 0AA004 7F0754D4 00003825 */  move  $a3, $zero
-/* 0AA008 7F0754D8 000370C3 */  sra   $t6, $v1, 3
-/* 0AA00C 7F0754DC 00067800 */  sll   $t7, $a2, 0
-/* 0AA010 7F0754E0 05E10006 */  bgez  $t7, .L7F0754FC
-/* 0AA014 7F0754E4 01C01825 */   move  $v1, $t6
-/* 0AA018 7F0754E8 00AE0019 */  multu $a1, $t6
-/* 0AA01C 7F0754EC 0000C812 */  mflo  $t9
-/* 0AA020 7F0754F0 00D93821 */  addu  $a3, $a2, $t9
-/* 0AA024 7F0754F4 1000002A */  b     .L7F0755A0
-/* 0AA028 7F0754F8 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0754FC:
-/* 0AA02C 7F0754FC 3C088003 */  lui   $t0, %hi(D_80036414) 
-/* 0AA030 7F075500 25086414 */  addiu $t0, %lo(D_80036414) # addiu $t0, $t0, 0x6414
-/* 0AA034 7F075504 8D020000 */  lw    $v0, ($t0)
-/* 0AA038 7F075508 8FAB0034 */  lw    $t3, 0x34($sp)
-/* 0AA03C 7F07550C 50400024 */  beql  $v0, $zero, .L7F0755A0
-/* 0AA040 7F075510 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0AA044 7F075514 01630019 */  multu $t3, $v1
-/* 0AA048 7F075518 8C440008 */  lw    $a0, 8($v0)
-/* 0AA04C 7F07551C 2484000F */  addiu $a0, $a0, 0xf
-/* 0AA050 7F075520 00044902 */  srl   $t1, $a0, 4
-/* 0AA054 7F075524 00095100 */  sll   $t2, $t1, 4
-/* 0AA058 7F075528 01402025 */  move  $a0, $t2
-/* 0AA05C 7F07552C 01403825 */  move  $a3, $t2
-/* 0AA060 7F075530 00006012 */  mflo  $t4
-/* 0AA064 7F075534 00CC2821 */  addu  $a1, $a2, $t4
-/* 0AA068 7F075538 30AD0001 */  andi  $t5, $a1, 1
-/* 0AA06C 7F07553C 51A00005 */  beql  $t5, $zero, .L7F075554
-/* 0AA070 7F075540 2466000F */   addiu $a2, $v1, 0xf
-/* 0AA074 7F075544 24A5FFFF */  addiu $a1, $a1, -1
-/* 0AA078 7F075548 24630001 */  addiu $v1, $v1, 1
-/* 0AA07C 7F07554C 25470001 */  addiu $a3, $t2, 1
-/* 0AA080 7F075550 2466000F */  addiu $a2, $v1, 0xf
-.L7F075554:
-/* 0AA084 7F075554 00067102 */  srl   $t6, $a2, 4
-/* 0AA088 7F075558 000E3100 */  sll   $a2, $t6, 4
-/* 0AA08C 7F07555C AFA60018 */  sw    $a2, 0x18($sp)
-/* 0AA090 7F075560 AFA40020 */  sw    $a0, 0x20($sp)
-/* 0AA094 7F075564 0C001707 */  jal   romCopy
-/* 0AA098 7F075568 AFA7002C */   sw    $a3, 0x2c($sp)
-/* 0AA09C 7F07556C 3C088003 */  lui   $t0, %hi(D_80036414) 
-/* 0AA0A0 7F075570 25086414 */  addiu $t0, %lo(D_80036414) # addiu $t0, $t0, 0x6414
-/* 0AA0A4 7F075574 8D020000 */  lw    $v0, ($t0)
-/* 0AA0A8 7F075578 8FA40020 */  lw    $a0, 0x20($sp)
-/* 0AA0AC 7F07557C 8FA60018 */  lw    $a2, 0x18($sp)
-/* 0AA0B0 7F075580 8C580000 */  lw    $t8, ($v0)
-/* 0AA0B4 7F075584 8FA7002C */  lw    $a3, 0x2c($sp)
-/* 0AA0B8 7F075588 00864821 */  addu  $t1, $a0, $a2
-/* 0AA0BC 7F07558C 27190001 */  addiu $t9, $t8, 1
-/* 0AA0C0 7F075590 AC590000 */  sw    $t9, ($v0)
-/* 0AA0C4 7F075594 8D0A0000 */  lw    $t2, ($t0)
-/* 0AA0C8 7F075598 AD490008 */  sw    $t1, 8($t2)
-/* 0AA0CC 7F07559C 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0755A0:
-/* 0AA0D0 7F0755A0 27BD0030 */  addiu $sp, $sp, 0x30
-/* 0AA0D4 7F0755A4 00E01025 */  move  $v0, $a3
-/* 0AA0D8 7F0755A8 03E00008 */  jr    $ra
-/* 0AA0DC 7F0755AC 00000000 */   nop   
-)
-#endif
 
 
 void sub_GAME_7F0755B0(void)
