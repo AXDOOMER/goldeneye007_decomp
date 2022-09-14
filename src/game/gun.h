@@ -235,12 +235,24 @@ typedef struct CartridgeModelFileRecord {
     char * text;
 } CartridgeModelFileRecord;
 
-struct RicochetSounds {
-    u16 arr[36];
+struct RicochetSoundsSmall {
+    u16 arr[20];
+};
+
+struct PunchSounds {
+    u16 arr[3];
+};
+
+struct BulletFleshSounds {
+    u16 arr[2];
 };
 
 struct LaserRichochetSounds {
     u16 arr[2];
+};
+
+struct RicochetSoundsLarge {
+    u16 arr[36];
 };
 
 struct EarWhistleSounds {
@@ -288,7 +300,7 @@ f32 bondwalkItemGetDestructionAmount(ITEM_IDS item);
 u16 bondwalkItemGetSound(ITEM_IDS item);
 u8 bondwalkItemGetSoundTriggerRate(ITEM_IDS item);
 
-void recall_joy2_hits_edit_detail_edit_flag(s32 arg0, u8 *arg1, s32 arg2);
+void recall_joy2_hits_edit_detail_edit_flag(enum ITEM_IDS item, PropRecord* prop, s32 texture_index);
 void recall_joy2_hits_edit_flag(enum ITEM_IDS item, coord3d* arg1, s32 texture_index);
 void sub_GAME_7F05EB0C(ObjectRecord *arg0, coord3d *arg1,  StandTile *arg2, Mtxf *arg3, coord3d *arg4, Mtxf *arg5,  PropRecord *arg6);
 void sub_GAME_7F061948(struct ChrRecord_f180 *arg0, ITEM_IDS item, coord3d *arg2, coord3d *arg3);
