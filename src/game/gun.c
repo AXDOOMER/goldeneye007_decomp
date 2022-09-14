@@ -505,7 +505,13 @@ u16 D_80035E3C[] = {
 };
 
 //D:80035E84
-u16 D_80035E84[] = {0xA4, 0xA5, 0xA6, 0xA7, 0xA8, 0};
+struct EarWhistleSounds ear_whistle_sounds = {
+    RICO_EAR_WHISTLE1_SFX,
+    RICO_EAR_WHISTLE2_SFX,
+    RICO_EAR_WHISTLE3_SFX,
+    RICO_EAR_WHISTLE4_SFX,
+    RICO_EAR_WHISTLE5_SFX
+};
 //D:80035E90
 u16 D_80035E90[] = {0x5C, 0x5D};
 //D:80035E94
@@ -14414,93 +14420,19 @@ glabel recall_joy2_hits_edit_flag
 #endif
 
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F064934(void) {
-
-}
-#else
-
-#ifdef BUGFIX_R0
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F064934
-/* 099464 7F064934 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 099468 7F064938 24010016 */  li    $at, 22
-/* 09946C 7F06493C 10810017 */  beq   $a0, $at, .L7F06499C
-/* 099470 7F064940 AFBF0014 */   sw    $ra, 0x14($sp)
-/* 099474 7F064944 24010017 */  li    $at, 23
-/* 099478 7F064948 10810014 */  beq   $a0, $at, .L7F06499C
-/* 09947C 7F06494C 3C0F8003 */   lui   $t7, %hi(D_80035E84)
-/* 099480 7F064950 25EF5E84 */  addiu $t7, %lo(D_80035E84) # addiu $t7, $t7, 0x5e84
-/* 099484 7F064954 8DE10000 */  lw    $at, ($t7)
-/* 099488 7F064958 27AE001C */  addiu $t6, $sp, 0x1c
-/* 09948C 7F06495C 8DF90004 */  lw    $t9, 4($t7)
-/* 099490 7F064960 ADC10000 */  sw    $at, ($t6)
-/* 099494 7F064964 95E10008 */  lhu   $at, 8($t7)
-/* 099498 7F064968 ADD90004 */  sw    $t9, 4($t6)
-/* 09949C 7F06496C 0C002914 */  jal   randomGetNext
-/* 0994A0 7F064970 A5C10008 */   sh    $at, 8($t6)
-/* 0994A4 7F064974 24010005 */  li    $at, 5
-/* 0994A8 7F064978 0041001B */  divu  $zero, $v0, $at
-/* 0994AC 7F06497C 00004010 */  mfhi  $t0
-/* 0994B0 7F064980 00084840 */  sll   $t1, $t0, 1
-/* 0994B4 7F064984 03A92821 */  addu  $a1, $sp, $t1
-/* 0994B8 7F064988 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 0994BC 7F06498C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 0994C0 7F064990 84A5001C */  lh    $a1, 0x1c($a1)
-/* 0994C4 7F064994 0C002382 */  jal   sndPlaySfx
-/* 0994C8 7F064998 00003025 */   move  $a2, $zero
-.L7F06499C:
-/* 0994CC 7F06499C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0994D0 7F0649A0 27BD0028 */  addiu $sp, $sp, 0x28
-/* 0994D4 7F0649A4 03E00008 */  jr    $ra
-/* 0994D8 7F0649A8 00000000 */   nop
-)
-#endif
+void sub_GAME_7F064934(ITEM_IDS item)
+{
+    struct EarWhistleSounds copied;
 
 #ifdef BUGFIX_R1
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F064934
-/* 0999FC 7F064E8C 3C0E8005 */  lui   $t6, %hi(g_ClockTimer) # $t6, 0x8005
-/* 099A00 7F064E90 8DCE83A4 */  lw    $t6, %lo(g_ClockTimer)($t6)
-/* 099A04 7F064E94 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 099A08 7F064E98 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 099A0C 7F064E9C 19C00018 */  blez  $t6, .L7F064F00
-/* 099A10 7F064EA0 24010016 */   li    $at, 22
-/* 099A14 7F064EA4 10810016 */  beq   $a0, $at, .L7F064F00
-/* 099A18 7F064EA8 24010017 */   li    $at, 23
-/* 099A1C 7F064EAC 10810014 */  beq   $a0, $at, .L7F064F00
-/* 099A20 7F064EB0 3C188003 */   lui   $t8, %hi(D_80035E84) # $t8, 0x8003
-/* 099A24 7F064EB4 27185EC4 */  addiu $t8, %lo(D_80035E84) # addiu $t8, $t8, 0x5ec4
-/* 099A28 7F064EB8 8F010000 */  lw    $at, ($t8)
-/* 099A2C 7F064EBC 27AF001C */  addiu $t7, $sp, 0x1c
-/* 099A30 7F064EC0 8F080004 */  lw    $t0, 4($t8)
-/* 099A34 7F064EC4 ADE10000 */  sw    $at, ($t7)
-/* 099A38 7F064EC8 97010008 */  lhu   $at, 8($t8)
-/* 099A3C 7F064ECC ADE80004 */  sw    $t0, 4($t7)
-/* 099A40 7F064ED0 0C002918 */  jal   randomGetNext
-/* 099A44 7F064ED4 A5E10008 */   sh    $at, 8($t7)
-/* 099A48 7F064ED8 24010005 */  li    $at, 5
-/* 099A4C 7F064EDC 0041001B */  divu  $zero, $v0, $at
-/* 099A50 7F064EE0 00004810 */  mfhi  $t1
-/* 099A54 7F064EE4 00095040 */  sll   $t2, $t1, 1
-/* 099A58 7F064EE8 03AA2821 */  addu  $a1, $sp, $t2
-/* 099A5C 7F064EEC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
-/* 099A60 7F064EF0 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 099A64 7F064EF4 84A5001C */  lh    $a1, 0x1c($a1)
-/* 099A68 7F064EF8 0C002386 */  jal   sndPlaySfx
-/* 099A6C 7F064EFC 00003025 */   move  $a2, $zero
-.L7F064F00:
-/* 099A70 7F064F00 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 099A74 7F064F04 27BD0028 */  addiu $sp, $sp, 0x28
-/* 099A78 7F064F08 03E00008 */  jr    $ra
-/* 099A7C 7F064F0C 00000000 */   nop
-)
+    if (g_ClockTimer <= 0) { return; }
 #endif
-
-#endif
+    if ((item != ITEM_LASER) && (item != ITEM_WATCHLASER))
+    {
+        copied = ear_whistle_sounds;
+        sndPlaySfx((struct ALBankAlt_s*) g_musicSfxBufferPtr, copied.arr[randomGetNext() % 5], 0);
+    }
+}
 
 
 f32 sub_GAME_7F0649AC(s32 param_1)

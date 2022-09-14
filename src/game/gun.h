@@ -235,6 +235,10 @@ typedef struct CartridgeModelFileRecord {
     char * text;
 } CartridgeModelFileRecord;
 
+struct EarWhistleSounds {
+    s16 arr[5];
+};
+
 #if defined(VERSION_EU)
 extern char dword_CODE_bss_80075DC8[20][104];
 #else
