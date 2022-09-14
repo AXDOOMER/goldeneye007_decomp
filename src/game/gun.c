@@ -21,6 +21,9 @@
 #include "math_asinfacosf.h"
 #include "loadobjectmodel.h"
 #include "objecthandler.h"
+#include "image.h"
+#include "unk_0CC4C0.h"
+#include "debugmenu_handler.h"
 
 // bss
 s32 dword_CODE_bss_80075DB0;
@@ -483,25 +486,21 @@ u16 D_80035E2C[] = {0x2F, 0x30, 0x31, 0};
 //D:80035E34
 u16 D_80035E34[] = {0x45, 0x45};
 
-/**
- * List of ricochet(?) sound effects, used by recall_joy2_hits_edit_flag.
- * Address 0x80035E38.
-*/
-u16 D_80035E38[] = {0x5C, 0x5D};
+struct LaserRichochetSounds laser_ricochet_sounds = {
+    RICO_LASER2_SFX,
+    RICO_LASER3_SFX
+};
 
-/**
- * List of ricochet(?) sound effects, used by recall_joy2_hits_edit_flag.
- * Address 0x80035E3C.
-*/
-u16 D_80035E3C[] = {
-	0x13, 0x14, 0x15, 0x16, 
-    0x17, 0x18, 0x19, 0x1A, 
-    0x17, 0x18, 0x19, 0x1A, 
-    0x17, 0x18, 0x19, 0x1A, 
-    0x1F, 0x20, 0x20, 0x21, 
-    0x1F, 0x20, 0x20, 0x21, 
-    0x1F, 0x20, 0x20, 0x21, 
-    0x23, 0x24, 0x25, 0x26, 0x27, 0x28, 0x29, 0x2A
+struct RicochetSounds ricochet_sounds = {
+	RICO_12_GBU_A_SFX, RICO_12_GBU_B_SFX, RICO_12_GBU_C_SFX, RICO_12_GBU_D_SFX,
+    RICO_6_TAJ_A_SFX,  RICO_6_TAJ_B_SFX,  RICO_6_TAJ_C_SFX,  RICO_6_TAJ_D_SFX,
+    RICO_6_TAJ_A_SFX,  RICO_6_TAJ_B_SFX,  RICO_6_TAJ_C_SFX,  RICO_6_TAJ_D_SFX,
+    RICO_6_TAJ_A_SFX,  RICO_6_TAJ_B_SFX,  RICO_6_TAJ_C_SFX,  RICO_6_TAJ_D_SFX,
+    RICO_4_A_SFX,      RICO_4_B_SFX,      RICO_4_B_SFX,      RICO_4_C_SFX,
+    RICO_4_A_SFX,      RICO_4_B_SFX,      RICO_4_B_SFX,      RICO_4_C_SFX,
+    RICO_4_A_SFX,      RICO_4_B_SFX,      RICO_4_B_SFX,      RICO_4_C_SFX,
+    RICO_5_A_SFX,      RICO_5_B_SFX,      RICO_5_C_SFX,      RICO_5_D_SFX,
+    RICO_6_HBBA_A_SFX, RICO_6_HBBA_B_SFX, RICO_6_HBBA_C_SFX, RICO_6_HBBA_D_SFX
 };
 
 //D:80035E84
@@ -14144,280 +14143,68 @@ void sub_GAME_7F064720(coord3d* pos)
 }
 
 
-#ifdef NONMATCHING
-/**
- * arg0: enum ITEM_IDS, will play sound effect for this item
- * arg1: 
- * arg2: index into g_Textures, used to play related sound effect (via D_8004E86C)
- * 
- * Address 0x7F064774.
-*/
-void recall_joy2_hits_edit_flag(s32 arg0, coord3d *arg1, s32 arg2)
+void recall_joy2_hits_edit_flag(enum ITEM_IDS item, coord3d* arg1, s32 texture_index)
 {
+    ALSoundState *sound_state;
+    u32 rnd1;
+    u32 rnd2;
+    struct LaserRichochetSounds laser_copied;
+    struct RicochetSounds rico_copied;
+    u32 sfx_index;
+    struct image_sound *img_sound;
 
-}
-#else
+    rnd1 = randomGetNext();
+    rnd2 = randomGetNext();
 
-#ifdef BUGFIX_R0
-GLOBAL_ASM(
-.text
-glabel recall_joy2_hits_edit_flag
-/* 0992A4 7F064774 27BDFF80 */  addiu $sp, $sp, -0x80
-/* 0992A8 7F064778 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0992AC 7F06477C AFA40080 */  sw    $a0, 0x80($sp)
-/* 0992B0 7F064780 AFA50084 */  sw    $a1, 0x84($sp)
-/* 0992B4 7F064784 0C002914 */  jal   randomGetNext
-/* 0992B8 7F064788 AFA60088 */   sw    $a2, 0x88($sp)
-/* 0992BC 7F06478C 0C002914 */  jal   randomGetNext
-/* 0992C0 7F064790 AFA20078 */   sw    $v0, 0x78($sp)
-/* 0992C4 7F064794 8FAE0088 */  lw    $t6, 0x88($sp)
-/* 0992C8 7F064798 3C018005 */  lui   $at, %hi(D_800483C4)
-/* 0992CC 7F06479C AFA20074 */  sw    $v0, 0x74($sp)
-/* 0992D0 7F0647A0 0FC243EB */  jal   get_debug_joy2hitsedit_flag
-/* 0992D4 7F0647A4 AC2E83C4 */   sw    $t6, %lo(D_800483C4)($at)
-/* 0992D8 7F0647A8 0FC190E8 */  jal   sub_GAME_7F0643A0
-/* 0992DC 7F0647AC 00000000 */   nop
-/* 0992E0 7F0647B0 10400035 */  beqz  $v0, .L7F064888
-/* 0992E4 7F0647B4 00403025 */   move  $a2, $v0
-/* 0992E8 7F0647B8 8FA20080 */  lw    $v0, 0x80($sp)
-/* 0992EC 7F0647BC 24010017 */  li    $at, 23
-/* 0992F0 7F0647C0 1041002C */  beq   $v0, $at, .L7F064874
-/* 0992F4 7F0647C4 24010016 */   li    $at, 22
-/* 0992F8 7F0647C8 14410011 */  bne   $v0, $at, .L7F064810
-/* 0992FC 7F0647CC 3C0C8003 */   lui   $t4, %hi(D_80035E3C)
-/* 099300 7F0647D0 3C0F8003 */  lui   $t7, %hi(D_80035E38)
-/* 099304 7F0647D4 25EF5E38 */  addiu $t7, %lo(D_80035E38) # addiu $t7, $t7, 0x5e38
-/* 099308 7F0647D8 8DE10000 */  lw    $at, ($t7)
-/* 09930C 7F0647DC 27A20070 */  addiu $v0, $sp, 0x70
-/* 099310 7F0647E0 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 099314 7F0647E4 AC410000 */  sw    $at, ($v0)
-/* 099318 7F0647E8 8FA80078 */  lw    $t0, 0x78($sp)
-/* 09931C 7F0647EC 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 099320 7F0647F0 31090001 */  andi  $t1, $t0, 1
-/* 099324 7F0647F4 00095040 */  sll   $t2, $t1, 1
-/* 099328 7F0647F8 004A5821 */  addu  $t3, $v0, $t2
-/* 09932C 7F0647FC 85650000 */  lh    $a1, ($t3)
-/* 099330 7F064800 0C002382 */  jal   sndPlaySfx
-/* 099334 7F064804 AFA6007C */   sw    $a2, 0x7c($sp)
-/* 099338 7F064808 1000001A */  b     .L7F064874
-/* 09933C 7F06480C 8FA6007C */   lw    $a2, 0x7c($sp)
-.L7F064810:
-/* 099340 7F064810 27A20028 */  addiu $v0, $sp, 0x28
-/* 099344 7F064814 258C5E3C */  addiu $t4, %lo(D_80035E3C) # addiu $t4, $t4, 0x5e3c
-/* 099348 7F064818 25980048 */  addiu $t8, $t4, 0x48
-/* 09934C 7F06481C 00407825 */  move  $t7, $v0
-.L7F064820:
-/* 099350 7F064820 8D810000 */  lw    $at, ($t4)
-/* 099354 7F064824 258C000C */  addiu $t4, $t4, 0xc
-/* 099358 7F064828 25EF000C */  addiu $t7, $t7, 0xc
-/* 09935C 7F06482C ADE1FFF4 */  sw    $at, -0xc($t7)
-/* 099360 7F064830 8D81FFF8 */  lw    $at, -8($t4)
-/* 099364 7F064834 ADE1FFF8 */  sw    $at, -8($t7)
-/* 099368 7F064838 8D81FFFC */  lw    $at, -4($t4)
-/* 09936C 7F06483C 1598FFF8 */  bne   $t4, $t8, .L7F064820
-/* 099370 7F064840 ADE1FFFC */   sw    $at, -4($t7)
-/* 099374 7F064844 8FB90078 */  lw    $t9, 0x78($sp)
-/* 099378 7F064848 24010024 */  li    $at, 36
-/* 09937C 7F06484C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 099380 7F064850 0321001B */  divu  $zero, $t9, $at
-/* 099384 7F064854 00004010 */  mfhi  $t0
-/* 099388 7F064858 00084840 */  sll   $t1, $t0, 1
-/* 09938C 7F06485C 00495021 */  addu  $t2, $v0, $t1
-/* 099390 7F064860 85450000 */  lh    $a1, ($t2)
-/* 099394 7F064864 AFA6007C */  sw    $a2, 0x7c($sp)
-/* 099398 7F064868 0C002382 */  jal   sndPlaySfx
-/* 09939C 7F06486C 8C843720 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 0993A0 7F064870 8FA6007C */  lw    $a2, 0x7c($sp)
-.L7F064874:
-/* 0993A4 7F064874 8CC40000 */  lw    $a0, ($a2)
-/* 0993A8 7F064878 10800003 */  beqz  $a0, .L7F064888
-/* 0993AC 7F06487C 00000000 */   nop
-/* 0993B0 7F064880 0FC14E84 */  jal   sub_GAME_7F053A10
-/* 0993B4 7F064884 8FA50084 */   lw    $a1, 0x84($sp)
-.L7F064888:
-/* 0993B8 7F064888 0FC190E8 */  jal   sub_GAME_7F0643A0
-/* 0993BC 7F06488C 00000000 */   nop
-/* 0993C0 7F064890 10400024 */  beqz  $v0, .L7F064924
-/* 0993C4 7F064894 00403025 */   move  $a2, $v0
-/* 0993C8 7F064898 8FAB0088 */  lw    $t3, 0x88($sp)
-/* 0993CC 7F06489C 3C0D8005 */  lui   $t5, %hi(g_Textures)
-/* 0993D0 7F0648A0 05600020 */  bltz  $t3, .L7F064924
-/* 0993D4 7F0648A4 000B70C0 */   sll   $t6, $t3, 3
-/* 0993D8 7F0648A8 01AE6821 */  addu  $t5, $t5, $t6
-/* 0993DC 7F0648AC 8DAD9300 */  lw    $t5, %lo(g_Textures)($t5)
-/* 0993E0 7F0648B0 3C028005 */  lui   $v0, %hi(D_8004E86C)
-/* 0993E4 7F0648B4 000DC702 */  srl   $t8, $t5, 0x1c
-/* 0993E8 7F0648B8 00186080 */  sll   $t4, $t8, 2
-/* 0993EC 7F0648BC 004C1021 */  addu  $v0, $v0, $t4
-/* 0993F0 7F0648C0 8C42E86C */  lw    $v0, %lo(D_8004E86C)($v0)
-/* 0993F4 7F0648C4 84470008 */  lh    $a3, 8($v0)
-/* 0993F8 7F0648C8 58E00017 */  blezl $a3, .L7F064928
-/* 0993FC 7F0648CC 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 099400 7F0648D0 1040000F */  beqz  $v0, .L7F064910
-/* 099404 7F0648D4 8FAF0074 */   lw    $t7, 0x74($sp)
-/* 099408 7F0648D8 01E7001B */  divu  $zero, $t7, $a3
-/* 09940C 7F0648DC 8C590000 */  lw    $t9, ($v0)
-/* 099410 7F0648E0 00001810 */  mfhi  $v1
-/* 099414 7F0648E4 00034040 */  sll   $t0, $v1, 1
-/* 099418 7F0648E8 03284821 */  addu  $t1, $t9, $t0
-/* 09941C 7F0648EC 14E00002 */  bnez  $a3, .L7F0648F8
-/* 099420 7F0648F0 00000000 */   nop
-/* 099424 7F0648F4 0007000D */  break 7
-.L7F0648F8:
-/* 099428 7F0648F8 85250000 */  lh    $a1, ($t1)
-/* 09942C 7F0648FC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 099430 7F064900 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 099434 7F064904 0C002382 */  jal   sndPlaySfx
-/* 099438 7F064908 AFA6007C */   sw    $a2, 0x7c($sp)
-/* 09943C 7F06490C 8FA6007C */  lw    $a2, 0x7c($sp)
-.L7F064910:
-/* 099440 7F064910 8CC40000 */  lw    $a0, ($a2)
-/* 099444 7F064914 50800004 */  beql  $a0, $zero, .L7F064928
-/* 099448 7F064918 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 09944C 7F06491C 0FC14E84 */  jal   sub_GAME_7F053A10
-/* 099450 7F064920 8FA50084 */   lw    $a1, 0x84($sp)
-.L7F064924:
-/* 099454 7F064924 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F064928:
-/* 099458 7F064928 27BD0080 */  addiu $sp, $sp, 0x80
-/* 09945C 7F06492C 03E00008 */  jr    $ra
-/* 099460 7F064930 00000000 */   nop
-)
-#endif
+    D_800483C4 = texture_index;
+    get_debug_joy2hitsedit_flag();
 
 #ifdef BUGFIX_R1
-GLOBAL_ASM(
-.text
-glabel recall_joy2_hits_edit_flag
-/* 09982C 7F064CBC 27BDFF80 */  addiu $sp, $sp, -0x80
-/* 099830 7F064CC0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 099834 7F064CC4 AFA40080 */  sw    $a0, 0x80($sp)
-/* 099838 7F064CC8 AFA50084 */  sw    $a1, 0x84($sp)
-/* 09983C 7F064CCC 0C002918 */  jal   randomGetNext
-/* 099840 7F064CD0 AFA60088 */   sw    $a2, 0x88($sp)
-/* 099844 7F064CD4 0C002918 */  jal   randomGetNext
-/* 099848 7F064CD8 AFA20078 */   sw    $v0, 0x78($sp)
-/* 09984C 7F064CDC 8FAE0088 */  lw    $t6, 0x88($sp)
-/* 099850 7F064CE0 3C018005 */  lui   $at, %hi(D_800483C4) # $at, 0x8005
-/* 099854 7F064CE4 AFA20074 */  sw    $v0, 0x74($sp)
-/* 099858 7F064CE8 0FC246A3 */  jal   get_debug_joy2hitsedit_flag
-/* 09985C 7F064CEC AC2E83F8 */   sw    $t6, %lo(D_800483C4)($at)
-/* 099860 7F064CF0 3C0F8005 */  lui   $t7, %hi(g_ClockTimer) # $t7, 0x8005
-/* 099864 7F064CF4 8DEF83A4 */  lw    $t7, %lo(g_ClockTimer)($t7)
-/* 099868 7F064CF8 59E00061 */  blezl $t7, .L7F064E80
-/* 09986C 7F064CFC 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 099870 7F064D00 0FC19233 */  jal   sub_GAME_7F0643A0
-/* 099874 7F064D04 00000000 */   nop
-/* 099878 7F064D08 10400035 */  beqz  $v0, .L7F064DE0
-/* 09987C 7F064D0C 00403025 */   move  $a2, $v0
-/* 099880 7F064D10 8FA20080 */  lw    $v0, 0x80($sp)
-/* 099884 7F064D14 24010017 */  li    $at, 23
-/* 099888 7F064D18 1041002C */  beq   $v0, $at, .L7F064DCC
-/* 09988C 7F064D1C 24010016 */   li    $at, 22
-/* 099890 7F064D20 14410011 */  bne   $v0, $at, .L7F064D68
-/* 099894 7F064D24 3C0D8003 */   lui   $t5, %hi(D_80035E3C) # $t5, 0x8003
-/* 099898 7F064D28 3C188003 */  lui   $t8, %hi(D_80035E38) # $t8, 0x8003
-/* 09989C 7F064D2C 27185E78 */  addiu $t8, %lo(D_80035E38) # addiu $t8, $t8, 0x5e78
-/* 0998A0 7F064D30 8F010000 */  lw    $at, ($t8)
-/* 0998A4 7F064D34 27A20070 */  addiu $v0, $sp, 0x70
-/* 0998A8 7F064D38 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
-/* 0998AC 7F064D3C AC410000 */  sw    $at, ($v0)
-/* 0998B0 7F064D40 8FA90078 */  lw    $t1, 0x78($sp)
-/* 0998B4 7F064D44 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 0998B8 7F064D48 312A0001 */  andi  $t2, $t1, 1
-/* 0998BC 7F064D4C 000A5840 */  sll   $t3, $t2, 1
-/* 0998C0 7F064D50 004B6021 */  addu  $t4, $v0, $t3
-/* 0998C4 7F064D54 85850000 */  lh    $a1, ($t4)
-/* 0998C8 7F064D58 0C002386 */  jal   sndPlaySfx
-/* 0998CC 7F064D5C AFA6007C */   sw    $a2, 0x7c($sp)
-/* 0998D0 7F064D60 1000001A */  b     .L7F064DCC
-/* 0998D4 7F064D64 8FA6007C */   lw    $a2, 0x7c($sp)
-.L7F064D68:
-/* 0998D8 7F064D68 27A20028 */  addiu $v0, $sp, 0x28
-/* 0998DC 7F064D6C 25AD5E7C */  addiu $t5, %lo(D_80035E3C) # addiu $t5, $t5, 0x5e7c
-/* 0998E0 7F064D70 25B90048 */  addiu $t9, $t5, 0x48
-/* 0998E4 7F064D74 0040C025 */  move  $t8, $v0
-.L7F064D78:
-/* 0998E8 7F064D78 8DA10000 */  lw    $at, ($t5)
-/* 0998EC 7F064D7C 25AD000C */  addiu $t5, $t5, 0xc
-/* 0998F0 7F064D80 2718000C */  addiu $t8, $t8, 0xc
-/* 0998F4 7F064D84 AF01FFF4 */  sw    $at, -0xc($t8)
-/* 0998F8 7F064D88 8DA1FFF8 */  lw    $at, -8($t5)
-/* 0998FC 7F064D8C AF01FFF8 */  sw    $at, -8($t8)
-/* 099900 7F064D90 8DA1FFFC */  lw    $at, -4($t5)
-/* 099904 7F064D94 15B9FFF8 */  bne   $t5, $t9, .L7F064D78
-/* 099908 7F064D98 AF01FFFC */   sw    $at, -4($t8)
-/* 09990C 7F064D9C 8FA80078 */  lw    $t0, 0x78($sp)
-/* 099910 7F064DA0 24010024 */  li    $at, 36
-/* 099914 7F064DA4 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
-/* 099918 7F064DA8 0101001B */  divu  $zero, $t0, $at
-/* 09991C 7F064DAC 00004810 */  mfhi  $t1
-/* 099920 7F064DB0 00095040 */  sll   $t2, $t1, 1
-/* 099924 7F064DB4 004A5821 */  addu  $t3, $v0, $t2
-/* 099928 7F064DB8 85650000 */  lh    $a1, ($t3)
-/* 09992C 7F064DBC AFA6007C */  sw    $a2, 0x7c($sp)
-/* 099930 7F064DC0 0C002386 */  jal   sndPlaySfx
-/* 099934 7F064DC4 8C843760 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 099938 7F064DC8 8FA6007C */  lw    $a2, 0x7c($sp)
-.L7F064DCC:
-/* 09993C 7F064DCC 8CC40000 */  lw    $a0, ($a2)
-/* 099940 7F064DD0 10800003 */  beqz  $a0, .L7F064DE0
-/* 099944 7F064DD4 00000000 */   nop
-/* 099948 7F064DD8 0FC14FC3 */  jal   sub_GAME_7F053A10
-/* 09994C 7F064DDC 8FA50084 */   lw    $a1, 0x84($sp)
-.L7F064DE0:
-/* 099950 7F064DE0 0FC19233 */  jal   sub_GAME_7F0643A0
-/* 099954 7F064DE4 00000000 */   nop
-/* 099958 7F064DE8 10400024 */  beqz  $v0, .L7F064E7C
-/* 09995C 7F064DEC 00403025 */   move  $a2, $v0
-/* 099960 7F064DF0 8FAC0088 */  lw    $t4, 0x88($sp)
-/* 099964 7F064DF4 3C0E8005 */  lui   $t6, %hi(g_Textures)
-/* 099968 7F064DF8 05800020 */  bltz  $t4, .L7F064E7C
-/* 09996C 7F064DFC 000C78C0 */   sll   $t7, $t4, 3
-/* 099970 7F064E00 01CF7021 */  addu  $t6, $t6, $t7
-/* 099974 7F064E04 8DCE9330 */  lw    $t6, %lo(g_Textures)($t6)
-/* 099978 7F064E08 3C028005 */  lui   $v0, %hi(D_8004E86C)
-/* 09997C 7F064E0C 000ECF02 */  srl   $t9, $t6, 0x1c
-/* 099980 7F064E10 00196880 */  sll   $t5, $t9, 2
-/* 099984 7F064E14 004D1021 */  addu  $v0, $v0, $t5
-/* 099988 7F064E18 8C42E89C */  lw    $v0, %lo(D_8004E86C)($v0)
-/* 09998C 7F064E1C 84470008 */  lh    $a3, 8($v0)
-/* 099990 7F064E20 58E00017 */  blezl $a3, .L7F064E80
-/* 099994 7F064E24 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 099998 7F064E28 1040000F */  beqz  $v0, .L7F064E68
-/* 09999C 7F064E2C 8FB80074 */   lw    $t8, 0x74($sp)
-/* 0999A0 7F064E30 0307001B */  divu  $zero, $t8, $a3
-/* 0999A4 7F064E34 8C480000 */  lw    $t0, ($v0)
-/* 0999A8 7F064E38 00001810 */  mfhi  $v1
-/* 0999AC 7F064E3C 00034840 */  sll   $t1, $v1, 1
-/* 0999B0 7F064E40 01095021 */  addu  $t2, $t0, $t1
-/* 0999B4 7F064E44 14E00002 */  bnez  $a3, .L7F064E50
-/* 0999B8 7F064E48 00000000 */   nop
-/* 0999BC 7F064E4C 0007000D */  break 7
-.L7F064E50:
-/* 0999C0 7F064E50 85450000 */  lh    $a1, ($t2)
-/* 0999C4 7F064E54 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
-/* 0999C8 7F064E58 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 0999CC 7F064E5C 0C002386 */  jal   sndPlaySfx
-/* 0999D0 7F064E60 AFA6007C */   sw    $a2, 0x7c($sp)
-/* 0999D4 7F064E64 8FA6007C */  lw    $a2, 0x7c($sp)
-.L7F064E68:
-/* 0999D8 7F064E68 8CC40000 */  lw    $a0, ($a2)
-/* 0999DC 7F064E6C 50800004 */  beql  $a0, $zero, .L7F064E80
-/* 0999E0 7F064E70 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0999E4 7F064E74 0FC14FC3 */  jal   sub_GAME_7F053A10
-/* 0999E8 7F064E78 8FA50084 */   lw    $a1, 0x84($sp)
-.L7F064E7C:
-/* 0999EC 7F064E7C 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F064E80:
-/* 0999F0 7F064E80 27BD0080 */  addiu $sp, $sp, 0x80
-/* 0999F4 7F064E84 03E00008 */  jr    $ra
-/* 0999F8 7F064E88 00000000 */   nop
-)
+    if (g_ClockTimer <= 0) { return; }
 #endif
 
+    sound_state = sub_GAME_7F0643A0();
+    if (sound_state != NULL)
+    {
+        if (item != ITEM_WATCHLASER)
+        {
+            if (item == ITEM_LASER)
+            {
+                laser_copied = laser_ricochet_sounds;
+                sndPlaySfx((struct ALBankAlt_s* ) g_musicSfxBufferPtr, laser_copied.arr[rnd1 % 2], sound_state);
+            }
+            else
+            {
+                rico_copied = ricochet_sounds;
+                sndPlaySfx((struct ALBankAlt_s* ) g_musicSfxBufferPtr, rico_copied.arr[rnd1 % 36], sound_state);
+            }
+        }
 
-#endif
+        if (sound_state->link.next != NULL)
+        {
+            sub_GAME_7F053A10((ALSoundState* ) sound_state->link.next, arg1);
+        }
+    }
+
+    sound_state = sub_GAME_7F0643A0();
+    if ((sound_state != NULL) && (texture_index >= 0))
+    {
+        img_sound = D_8004E86C[g_Textures[texture_index].hitSound];
+        if (img_sound->sfx_len > 0)
+        {
+            if (img_sound != NULL)
+            {
+                sfx_index = rnd2 % img_sound->sfx_len;
+                sndPlaySfx((struct ALBankAlt_s* ) g_musicSfxBufferPtr, img_sound->sfx[sfx_index], sound_state);
+            }
+
+            if (sound_state->link.next != NULL)
+            {
+                sub_GAME_7F053A10((ALSoundState* ) sound_state->link.next, arg1);
+            }
+        }
+    }
+}
 
 
 void sub_GAME_7F064934(ITEM_IDS item)

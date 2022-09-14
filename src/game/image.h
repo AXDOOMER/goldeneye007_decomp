@@ -53,7 +53,7 @@ struct tex {
 
 struct image_entry
 {
-    HIT_TYPE hitSound   : 4;  // HitType-Sound
+    u8 hitSound         : 4;  // HitType-Sound (should be enum HIT_TYPE, but it needs to be unsigned)
     HIT_TYPE hitTexture : 4;  // HitType-Texture
     u32  dataoffset     : 24; // this is u32 Size:24 - 24bit size/address
     u32 flag3 : 4; // Detailflag1 used once with value 0x38D2 (S/T offset of detail)
