@@ -6,6 +6,7 @@
 #include "chr.h"
 #include "matrixmath.h"
 #include "watch.h"
+#include "image.h"
 
 typedef struct invitem_weap
 {
@@ -887,35 +888,16 @@ struct player
    */
   s16 viewtop;
   
-  s32 hand_invisible[2];
-  ITEM_IDS hand_item[2];
-  u8 *ptr_hand_weapon_buffer[2];
+  s32 hand_invisible[2]; /* 0x7f8*/
+  ITEM_IDS hand_item[2]; /* 0x800 */
+  u8 *ptr_hand_weapon_buffer[2]; /* 0x808 */
   
   /**
    * Offset 0x810.
    */
   ModelFileHeader copy_of_body_obj_header[2];
   
-  s32 field_850;
-  s32 field_854;
-  s32 field_858;
-  s32 field_85C;
-  s32 field_860;
-
-  /**
-   * Offset 0x864.
-   */
-  s32 right_item_related1;
-
-  /**
-   * Offset 0x868.
-   */
-  s32 right_item_related2;
-
-  /**
-   * Offset 0x86c.
-   */
-  s32 right_item_related3;
+  struct texpool item_related[2]; /* 0x850 */
 
   /**
    * Offset 0x870.
