@@ -2200,7 +2200,7 @@ typedef union
     typedef struct ChrRecord_f180
     {
         /***/
-        char    unk00;
+        s8      unk00;
         s8      item_id; // type ITEM_IDS
         char    unk02;
         char    unk03;
