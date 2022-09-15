@@ -629,8 +629,8 @@ void sub_GAME_7F000980(void) {
 #endif
 
 void sub_GAME_7F0009A0(void) {
-    u32 *end = &dword_CODE_bss_80075DC8[20];
-    u32 *ptr = &dword_CODE_bss_80075DC8[0];
+    u32 *end = &g_Casings[20];
+    u32 *ptr = &g_Casings[0];
     while(end > ptr) {
         ptr[POS] = 0;
         ptr += POS+1;
