@@ -24849,84 +24849,20 @@ glabel sub_GAME_7F068EC4
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F06908C(void) {
-
+void sub_GAME_7F06908C(Gfx** arg0)
+{
+    CasingRecord* end = g_Casings + ARRAYCOUNT(g_Casings);
+    CasingRecord* entry = g_Casings;
+    while (entry < end)
+    {
+        if (entry->header)
+        {
+            sub_GAME_7F068EC4(entry, arg0);
+        }
+        entry++;
+    }
 }
-#else
-#if defined(VERSION_US) || defined(VERSION_JP)
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06908C
-/* 09DBBC 7F06908C 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 09DBC0 7F069090 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 09DBC4 7F069094 AFB00018 */  sw    $s0, 0x18($sp)
-/* 09DBC8 7F069098 AFB20020 */  sw    $s2, 0x20($sp)
-/* 09DBCC 7F06909C 3C118007 */  lui   $s1, %hi(dword_CODE_bss_80076A48)
-/* 09DBD0 7F0690A0 3C108007 */  lui   $s0, %hi(g_Casings)
-/* 09DBD4 7F0690A4 00809025 */  move  $s2, $a0
-/* 09DBD8 7F0690A8 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 09DBDC 7F0690AC 26316A48 */  addiu $s1, %lo(dword_CODE_bss_80076A48) # addiu $s1, $s1, 0x6a48
-/* 09DBE0 7F0690B0 26105DC8 */  addiu $s0, %lo(g_Casings) # addiu $s0, $s0, 0x5dc8
-/* 09DBE4 7F0690B4 8E0E009C */  lw    $t6, 0x9c($s0)
-.L7F0690B8:
-/* 09DBE8 7F0690B8 02002025 */  move  $a0, $s0
-/* 09DBEC 7F0690BC 51C00004 */  beql  $t6, $zero, .L7F0690D0
-/* 09DBF0 7F0690C0 261000A0 */   addiu $s0, $s0, 0xa0
-/* 09DBF4 7F0690C4 0FC1A3B1 */  jal   sub_GAME_7F068EC4
-/* 09DBF8 7F0690C8 02402825 */   move  $a1, $s2
-/* 09DBFC 7F0690CC 261000A0 */  addiu $s0, $s0, 0xa0
-.L7F0690D0:
-/* 09DC00 7F0690D0 0211082B */  sltu  $at, $s0, $s1
-/* 09DC04 7F0690D4 5420FFF8 */  bnezl $at, .L7F0690B8
-/* 09DC08 7F0690D8 8E0E009C */   lw    $t6, 0x9c($s0)
-/* 09DC0C 7F0690DC 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 09DC10 7F0690E0 8FB00018 */  lw    $s0, 0x18($sp)
-/* 09DC14 7F0690E4 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 09DC18 7F0690E8 8FB20020 */  lw    $s2, 0x20($sp)
-/* 09DC1C 7F0690EC 03E00008 */  jr    $ra
-/* 09DC20 7F0690F0 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
 
-#if defined(VERSION_EU)
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06908C
-/* 09C210 7F069820 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 09C214 7F069824 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 09C218 7F069828 AFB00018 */  sw    $s0, 0x18($sp)
-/* 09C21C 7F06982C AFB20020 */  sw    $s2, 0x20($sp)
-/* 09C220 7F069830 3C118006 */  lui   $s1, %hi(dword_CODE_bss_80076A48) # $s1, 0x8006
-/* 09C224 7F069834 3C108006 */  lui   $s0, %hi(g_Casings) # $s0, 0x8006
-/* 09C228 7F069838 00809025 */  move  $s2, $a0
-/* 09C22C 7F06983C AFBF0024 */  sw    $ra, 0x24($sp)
-/* 09C230 7F069840 26315528 */  addiu $s1, %lo(dword_CODE_bss_80076A48) # addiu $s1, $s1, 0x5528
-/* 09C234 7F069844 26104D08 */  addiu $s0, %lo(g_Casings) # addiu $s0, $s0, 0x4d08
-/* 09C238 7F069848 8E0E0064 */  lw    $t6, 0x64($s0)
-.L7F06984C:
-/* 09C23C 7F06984C 02002025 */  move  $a0, $s0
-/* 09C240 7F069850 51C00004 */  beql  $t6, $zero, .L7F069864
-/* 09C244 7F069854 26100068 */   addiu $s0, $s0, 0x68
-/* 09C248 7F069858 0FC1A596 */  jal   sub_GAME_7F068EC4
-/* 09C24C 7F06985C 02402825 */   move  $a1, $s2
-/* 09C250 7F069860 26100068 */  addiu $s0, $s0, 0x68
-.L7F069864:
-/* 09C254 7F069864 0211082B */  sltu  $at, $s0, $s1
-/* 09C258 7F069868 5420FFF8 */  bnezl $at, .L7F06984C
-/* 09C25C 7F06986C 8E0E0064 */   lw    $t6, 0x64($s0)
-/* 09C260 7F069870 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 09C264 7F069874 8FB00018 */  lw    $s0, 0x18($sp)
-/* 09C268 7F069878 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 09C26C 7F06987C 8FB20020 */  lw    $s2, 0x20($sp)
-/* 09C270 7F069880 03E00008 */  jr    $ra
-/* 09C274 7F069884 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
-#endif
 
 void set_unset_ammo_on_screen_setting(s32 flags, bool unset) {
 
