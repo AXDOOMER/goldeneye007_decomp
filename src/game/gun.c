@@ -32,6 +32,8 @@ s32 dword_CODE_bss_80075DB4;
 ALSoundState* dword_CODE_bss_80075DB8[4];
 
 CasingRecord g_Casings[20];
+s32 dword_CODE_bss_80076A48;
+
 
 #ifdef REFRESH_PAL
     /* PAL */
@@ -46,8 +48,6 @@ CasingRecord g_Casings[20];
     #define THROWN_ITEM_TIMER_MULTI                    180
     #define THROWN_ITEM_TIMER_DEFAULT                  240
 #endif
-
-s32 dword_CODE_bss_80076A48;
 
 
 // data
@@ -24830,77 +24830,19 @@ glabel sub_GAME_7F068D20
 #endif
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F068E6C(void) {
-
+void sub_GAME_7F068E6C(void)
+{
+    CasingRecord* end = g_Casings + ARRAYCOUNT(g_Casings);
+    CasingRecord* entry = g_Casings;
+    while (entry < end)
+    {
+        if (entry->header)
+        {
+            sub_GAME_7F068D20(entry);
+        }
+        entry++;
+    }
 }
-#else
-
-#if defined(VERSION_US) || defined(VERSION_JP)
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F068E6C
-/* 09D99C 7F068E6C 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 09D9A0 7F068E70 AFB10018 */  sw    $s1, 0x18($sp)
-/* 09D9A4 7F068E74 AFB00014 */  sw    $s0, 0x14($sp)
-/* 09D9A8 7F068E78 3C118007 */  lui   $s1, %hi(dword_CODE_bss_80076A48)
-/* 09D9AC 7F068E7C 3C108007 */  lui   $s0, %hi(g_Casings)
-/* 09D9B0 7F068E80 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 09D9B4 7F068E84 26316A48 */  addiu $s1, %lo(dword_CODE_bss_80076A48) # addiu $s1, $s1, 0x6a48
-/* 09D9B8 7F068E88 26105DC8 */  addiu $s0, %lo(g_Casings) # addiu $s0, $s0, 0x5dc8
-/* 09D9BC 7F068E8C 8E0E009C */  lw    $t6, 0x9c($s0)
-.L7F068E90:
-/* 09D9C0 7F068E90 51C00004 */  beql  $t6, $zero, .L7F068EA4
-/* 09D9C4 7F068E94 261000A0 */   addiu $s0, $s0, 0xa0
-/* 09D9C8 7F068E98 0FC1A348 */  jal   sub_GAME_7F068D20
-/* 09D9CC 7F068E9C 02002025 */   move  $a0, $s0
-/* 09D9D0 7F068EA0 261000A0 */  addiu $s0, $s0, 0xa0
-.L7F068EA4:
-/* 09D9D4 7F068EA4 0211082B */  sltu  $at, $s0, $s1
-/* 09D9D8 7F068EA8 5420FFF9 */  bnezl $at, .L7F068E90
-/* 09D9DC 7F068EAC 8E0E009C */   lw    $t6, 0x9c($s0)
-/* 09D9E0 7F068EB0 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 09D9E4 7F068EB4 8FB00014 */  lw    $s0, 0x14($sp)
-/* 09D9E8 7F068EB8 8FB10018 */  lw    $s1, 0x18($sp)
-/* 09D9EC 7F068EBC 03E00008 */  jr    $ra
-/* 09D9F0 7F068EC0 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
-
-#if defined(VERSION_EU)
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F068E6C
-/* 09BFF0 7F069600 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 09BFF4 7F069604 AFB10018 */  sw    $s1, 0x18($sp)
-/* 09BFF8 7F069608 AFB00014 */  sw    $s0, 0x14($sp)
-/* 09BFFC 7F06960C 3C118006 */  lui   $s1, %hi(dword_CODE_bss_80076A48) # $s1, 0x8006
-/* 09C000 7F069610 3C108006 */  lui   $s0, %hi(g_Casings) # $s0, 0x8006
-/* 09C004 7F069614 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 09C008 7F069618 26315528 */  addiu $s1, %lo(dword_CODE_bss_80076A48) # addiu $s1, $s1, 0x5528
-/* 09C00C 7F06961C 26104D08 */  addiu $s0, %lo(g_Casings) # addiu $s0, $s0, 0x4d08
-/* 09C010 7F069620 8E0E0064 */  lw    $t6, 0x64($s0)
-.L7F069624:
-/* 09C014 7F069624 51C00004 */  beql  $t6, $zero, .L7F069638
-/* 09C018 7F069628 26100068 */   addiu $s0, $s0, 0x68
-/* 09C01C 7F06962C 0FC1A528 */  jal   sub_GAME_7F068D20
-/* 09C020 7F069630 02002025 */   move  $a0, $s0
-/* 09C024 7F069634 26100068 */  addiu $s0, $s0, 0x68
-.L7F069638:
-/* 09C028 7F069638 0211082B */  sltu  $at, $s0, $s1
-/* 09C02C 7F06963C 5420FFF9 */  bnezl $at, .L7F069624
-/* 09C030 7F069640 8E0E0064 */   lw    $t6, 0x64($s0)
-/* 09C034 7F069644 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 09C038 7F069648 8FB00014 */  lw    $s0, 0x14($sp)
-/* 09C03C 7F06964C 8FB10018 */  lw    $s1, 0x18($sp)
-/* 09C040 7F069650 03E00008 */  jr    $ra
-/* 09C044 7F069654 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
