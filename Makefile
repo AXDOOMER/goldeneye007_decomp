@@ -744,8 +744,8 @@ testPB:
 	$(call IncrementProgressBarFromAtRate,0,0.125)
 
 textures:
-	for file in assets/images/split/*.bin; do ../../tools/mktex/build/tex2png $file .assets/images/out; done
-
+	$(foreach x,$(IMAGE_BINS),tools/mktex/build/tex2png $(x) assets/images/out ${\n})
+	
 colour:
 	@echo "\033[3A"
   ifeq ($(VERBOSE),0)

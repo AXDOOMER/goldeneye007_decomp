@@ -200,10 +200,10 @@ void indyrescmdSizeNextCmd(s32 readsize,s32 writesize)
 
     cmd.entry.resourceID = 0x9abf1623;
     cmd.entry.type = INDY_SIZE;
-    cmd.entry.size = 0x14;
+    cmd.entry.size = sizeof(cmd);
     cmd.entry.readsize = readsize;
     cmd.entry.writesize = writesize;
-    indycmdSendCommand(&cmd,0x14);
+    indycmdSendCommand(&cmd,sizeof(cmd));
 }
 
 
@@ -213,10 +213,10 @@ void indyrescmdSendCmdEnd(s32 readsize,s32 writesize)
 
     cmd.entry.resourceID = 0x9abf1623;
     cmd.entry.type = INDY_END;
-    cmd.entry.size = 0x14;
+    cmd.entry.size = sizeof(cmd);
     cmd.entry.readsize = readsize;
     cmd.entry.writesize = writesize;
-    indycmdSendCommand(&cmd,0x14);
+    indycmdSendCommand(&cmd,sizeof(cmd));
 }
 
 
@@ -225,10 +225,10 @@ void indyrescmdInit(s32 readsize,s32 writesize)
     indy_resource_entry_type0 cmd;
     cmd.entry.resourceID = 0x9abf1623;
     cmd.entry.type = INDY_INIT;
-    cmd.entry.size = 0x14;
+    cmd.entry.size = sizeof(indy_resource_entry_type0);
     cmd.entry.readsize = readsize;
     cmd.entry.writesize = writesize;
-    indycmdSendCommand(&cmd,0x14);
+    indycmdSendCommand(&cmd,sizeof(indy_resource_entry_type0));
 }
 
 void post_type3_indyrescmd(s32 rsize,s32 wsize,char *strptr)
@@ -237,12 +237,12 @@ void post_type3_indyrescmd(s32 rsize,s32 wsize,char *strptr)
 
     cmd.entry.resourceID = 0x9abf1623;
     cmd.entry.type = INDY_RESCMD;
-    cmd.entry.size = 0x114;
+    cmd.entry.size = sizeof(cmd);
     cmd.entry.readsize = rsize;
     cmd.entry.writesize = wsize;
-    strncpy(cmd.strbuffer,strptr, 256);
+    strncpy(cmd.strbuffer,strptr, sizeof(cmd.strbuffer));
     cmd.strbuffer[255] = 0;
-    indycmdSendCommand(&cmd.entry,0x114);
+    indycmdSendCommand(&cmd.entry,sizeof(cmd));
 }
 
 
@@ -252,11 +252,11 @@ void post_type4_indyrescmd_data_recieved(s32 readsize,s32 writesize,s32 data)
     
     cmd.entry.resourceID = 0x9abf1623;
     cmd.entry.type = INDY_RESCMDDATARCVD;
-    cmd.entry.size = 0x18;
+    cmd.entry.size = sizeof(cmd);
     cmd.entry.readsize = readsize;
     cmd.entry.writesize = writesize;
     cmd.data = data;
-    indycmdSendCommand(&cmd.entry,0x18);
+    indycmdSendCommand(&cmd.entry,sizeof(cmd));
 }
 
 
@@ -266,12 +266,12 @@ void indyrescmdCheckFileExists(s32 rsize,s32 wsize,char *name)
   
   cmd.entry.resourceID = 0x9abf1623;
   cmd.entry.type = INDY_SENDCHECKFILEEXISTS;
-  cmd.entry.size = 0x114;
+  cmd.entry.size = sizeof(cmd);
   cmd.entry.readsize = rsize;
   cmd.entry.writesize = wsize;
-  strncpy(cmd.strbuffer,name,0x100);
+  strncpy(cmd.strbuffer,name,sizeof(cmd.strbuffer));
   cmd.strbuffer[255] = '\0';
-  indycmdSendCommand(&cmd,0x114);
+  indycmdSendCommand(&cmd,sizeof(cmd));
 }
 
 
@@ -281,12 +281,12 @@ void post_type6_indyrescmd_printfrecieved(s32 readsize,s32 writesize,u32 data1,u
 
     cmd.entry.resourceID = 0x9abf1623;
     cmd.entry.type = INDY_RECVCHECKFILEEXISTS;
-    cmd.entry.size = 0x1c;
+    cmd.entry.size = sizeof(cmd);
     cmd.entry.readsize = readsize;
     cmd.entry.writesize = writesize;
     cmd.data1 = data1;
     cmd.data2 = data2;
-    indycmdSendCommand(&cmd.entry,0x1c);
+    indycmdSendCommand(&cmd.entry,sizeof(cmd));
 }
 
 
@@ -296,13 +296,13 @@ void indyrescmdSendFileLoad(u32 rsize,u32 wsize,u8 *filename,u32 size)
 
     cmd.entry.resourceID = 0x9abf1623;
     cmd.entry.type = INDY_SENDFILELOAD;
-    cmd.entry.size = 0x118;
+    cmd.entry.size = sizeof(cmd);
     cmd.entry.readsize = rsize;
     cmd.entry.writesize = wsize;
-    strncpy(cmd.strbuffer,filename,0x100);
+    strncpy(cmd.strbuffer,filename,sizeof(cmd.strbuffer));
     cmd.strbuffer[255] = '\0';
     cmd.size = size;
-    indycmdSendCommand(&cmd,0x118);
+    indycmdSendCommand(&cmd,sizeof(cmd));
 }
 
 
@@ -335,7 +335,7 @@ void indyrescmdSendDump(s32 rsize,s32 wsize,char *strptr,u32 size2,struct indy_r
   cmd.entry.readsize = rsize;
   cmd.entry.writesize = wsize;
 
-  strncpy(cmd.strbuffer,strptr,0x100);
+  strncpy(cmd.strbuffer,strptr,sizeof(cmd.strbuffer));
   cmd.strbuffer[255] = '\0';
   send2indyresourcecommands(&cmd,0x114,cmd2,size2);
   
@@ -348,11 +348,11 @@ void post_typeA_indyrescmd_app_command_recieved(s32 readsize,s32 writesize,u32 d
   
   cmd.entry.resourceID = 0x9abf1623;
   cmd.entry.type = INDY_APPCMDRECVD;
-  cmd.entry.size = 0x18;
+  cmd.entry.size = sizeof(cmd);
   cmd.entry.readsize = readsize;
   cmd.entry.writesize = writesize;
   cmd.data = data;
-  indycmdSendCommand(&cmd.entry,0x18);
+  indycmdSendCommand(&cmd.entry,sizeof(cmd));
 }
 
 
@@ -362,15 +362,15 @@ void indyrescmdRamRomLoad(u32 rsize,u32 wsize,char *name,u32 filesize,u32 ptarge
   
   cmd.entry.resourceID = 0x9abf1623;
   cmd.entry.type = INDY_RAMROMLOAD;
-  cmd.entry.size = 0x11c;
+  cmd.entry.size = sizeof(cmd);
   cmd.entry.readsize = rsize;
   cmd.entry.writesize = wsize;
-  strncpy(cmd.strbuffer,name,0x100);
+  strncpy(cmd.strbuffer,name,sizeof(cmd.strbuffer));
   cmd.strbuffer[255] = '\0';
   cmd.size = filesize;
   cmd.hwaddress = ptarget;
   
-  indycmdSendCommand(&cmd,0x11c);
+  indycmdSendCommand(&cmd,sizeof(cmd));
 
 }
 
@@ -381,13 +381,13 @@ void post_type10_indyrescmd_fault_ack_by_host(s32 rsize,s32 wsize,u32 data1,u32 
 
     cmd.entry.resourceID = 0x9abf1623;
     cmd.entry.type = INDY_FAULTACKHOST;
-    cmd.entry.size = 0x20;
+    cmd.entry.size = sizeof(cmd);
     cmd.entry.readsize = rsize;
     cmd.entry.writesize = wsize;
     cmd.data1 = data1;
     cmd.data2 = data2;
     cmd.data3 = data3;
-    indycmdSendCommand(&cmd,0x20);
+    indycmdSendCommand(&cmd,sizeof(cmd));
 }
 
 
@@ -397,14 +397,14 @@ void indyrescmdSendExportFile(u32 rsize,u32 wsize,u8 *ptrstr,u32 size,u8 *hwaddr
     
     cmd.entry.resourceID = 0x9abf1623;
     cmd.entry.type = INDY_EXPORTFILE;
-    cmd.entry.size = 0x11c;
+    cmd.entry.size = sizeof(cmd);
     cmd.entry.readsize = rsize;
     cmd.entry.writesize = wsize;
-    strncpy(cmd.strbuffer,ptrstr,0x100);
+    strncpy(cmd.strbuffer,ptrstr,sizeof(cmd.strbuffer));
     cmd.strbuffer[255] = '\0';
     cmd.size = size;
     cmd.hwaddress = hwaddress;
-    indycmdSendCommand(&cmd,0x11c);
+    indycmdSendCommand(&cmd,sizeof(cmd));
 }
 
 
@@ -414,26 +414,26 @@ void post_typeE_indyrescmd_prof_recv(s32 readsize,s32 writesize,u32 data)
 
     cmd.entry.resourceID = 0x9abf1623;
     cmd.entry.type = INDY_PROFILE_RECV;
-    cmd.entry.size = 0x18;
+    cmd.entry.size = sizeof(cmd);
     cmd.entry.readsize = readsize;
     cmd.entry.writesize = writesize;
     cmd.data = data;
-    indycmdSendCommand(&cmd.entry,0x18);
+    indycmdSendCommand(&cmd.entry,sizeof(cmd));
 }
 
 
 void indyrescmdSendHostCmd(s32 rsize,s32 wsize,char *strptr)
 {
-    indy_resource_entry_typeB res;
+    indy_resource_entry_typeB cmd;
     
-    res.entry.resourceID = 0x9abf1623;
-    res.entry.type = INDY_SENDHOSTCMD;
-    res.entry.size = 0x414;
-    res.entry.readsize = rsize;
-    res.entry.writesize = wsize;
-    strncpy(res.strbuffer,strptr,0x400);
-    res.strbuffer[1023] = '\0';
-    indycmdSendCommand(&res,0x414);
+    cmd.entry.resourceID = 0x9abf1623;
+    cmd.entry.type = INDY_SENDHOSTCMD;
+    cmd.entry.size = sizeof(cmd);
+    cmd.entry.readsize = rsize;
+    cmd.entry.writesize = wsize;
+    strncpy(cmd.strbuffer,strptr,sizeof(cmd.strbuffer));
+    cmd.strbuffer[1023] = '\0';
+    indycmdSendCommand(&cmd,sizeof(cmd));
 }
 
 
@@ -443,11 +443,11 @@ void post_typeC_indyrescmd_prof_send(s32 readsize,s32 writesize,u32 data)
 
     cmd.entry.resourceID = 0x9abf1623;
     cmd.entry.type = INDY_PROFILE_SEND;
-    cmd.entry.size = 0x18;
+    cmd.entry.size = sizeof(cmd);
     cmd.entry.readsize = readsize;
     cmd.entry.writesize = writesize;
     cmd.data = data;
-    indycmdSendCommand(&cmd.entry,0x18);
+    indycmdSendCommand(&cmd.entry,sizeof(cmd));
 }
 
 
@@ -457,11 +457,11 @@ void post_typeA_indyrescmd_app_data_recieved(s32 readsize,s32 writesize,u32 data
 
     cmd.entry.resourceID = 0x9abf1623;
     cmd.entry.type = INDY_APPCMDRECVD;
-    cmd.entry.size = 0x18;
+    cmd.entry.size = sizeof(cmd);
     cmd.entry.readsize = readsize;
     cmd.entry.writesize = writesize;
     cmd.data = data;
-    indycmdSendCommand(&cmd.entry,0x18);
+    indycmdSendCommand(&cmd.entry,sizeof(cmd));
 }
 
 

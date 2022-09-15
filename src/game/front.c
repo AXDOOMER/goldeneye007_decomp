@@ -511,7 +511,7 @@ struct mp_stage_setup multi_stage_setups[] = {
 
 u32 num_chars_selectable_mp = 8;
 
-#ifdef VERSION_US
+#ifdef BUGFIX_R0
 struct MP_selectable_chars mp_chr_setup[] = {
     {TEXT(LTITLE, 0xB8), MALE,     0, BODY_Tuxedo,                   HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
     {TEXT(LTITLE, 0xBF), FEMALE,   9, BODY_Natalya_Skirt,            HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 0.96609998},
