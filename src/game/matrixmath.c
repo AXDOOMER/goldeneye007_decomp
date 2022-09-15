@@ -57,7 +57,7 @@ glabel matrix_4x4_copy_homogeneous_eu
 
 #ifdef VERSION_EU
 #ifdef NONMATCHING
-void matrix_4x4_multiply_homogeneous_in_place_eu (Mtxf * src, Mtxf * dst)
+void matrix_4x4_multiply_homogeneous_in_place_eu (f32 src[3][3], f32 dst[3][3])
 {
 
 }

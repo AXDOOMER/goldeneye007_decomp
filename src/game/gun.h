@@ -231,17 +231,15 @@ typedef struct GunModelFileRecord
 } GunModelFileRecord;
 
 typedef struct CasingRecord {
-    u32 unk00;
+    f32 unk00;
     coord3d pos;
-    u32 unk10;
-    u32 unk14;
-    u32 unk18;
+    coord3d vel;
 #if VERSION_EU
     f32 unk1C[3][3];
-    u32 unk40[9];
+    f32 unk40[3][3];
 #else
     Mtxf unk1C;
-    u32 unk5C[16];
+    Mtxf unk5C;
 #endif
     ModelFileHeader *header;
 } CasingRecord;
