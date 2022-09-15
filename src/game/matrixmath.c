@@ -173,11 +173,12 @@ glabel matrix_4x4_copy_eu
 
 #ifdef VERSION_EU
 #ifdef NONMATCHING
-void matrix_7f05842c_eu (Mtxf * src, Mtxf * dst)
+void matrix_7f05842c_eu (Mtxf * src, f32 dst[3][3])
 {
     
 }
 #else
+void matrix_7f05842c_eu (Mtxf * src, f32 dst[3][3]);
 GLOBAL_ASM(
 .text
 glabel matrix_7f05842c_eu

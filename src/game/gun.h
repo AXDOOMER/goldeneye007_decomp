@@ -230,6 +230,22 @@ typedef struct GunModelFileRecord
   f32 equip_watch_z;
 } GunModelFileRecord;
 
+typedef struct CasingRecord {
+    u32 unk00;
+    coord3d pos;
+    u32 unk10;
+    u32 unk14;
+    u32 unk18;
+#if VERSION_EU
+    f32 unk1C[3][3];
+    u32 unk40[9];
+#else
+    Mtxf unk1C;
+    u32 unk5C[16];
+#endif
+    ModelFileHeader *header;
+} CasingRecord;
+
 typedef struct CartridgeModelFileRecord {
     ModelFileHeader* header;
     char * text;
@@ -259,11 +275,7 @@ struct EarWhistleSounds {
     s16 arr[5];
 };
 
-#if defined(VERSION_EU)
-extern char dword_CODE_bss_80075DC8[20][104];
-#else
-extern char dword_CODE_bss_80075DC8[20][160];
-#endif
+extern CasingRecord g_Casings[20];
 
 f32 bondwalkItemGetForceOfImpact(ITEM_IDS item);
 
