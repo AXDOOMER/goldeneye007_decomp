@@ -9670,7 +9670,7 @@ glabel object_interaction
 .L7F04671C:
 /* 07B24C 7F04671C 50600004 */  beql  $v1, $zero, .L7F046730
 /* 07B250 7F046720 960D009A */   lhu   $t5, 0x9a($s0)
-/* 07B254 7F046724 0FC15229 */  jal   sub_GAME_7F0548A4
+/* 07B254 7F046724 0FC15229 */  jal   doorSetOpenState
 /* 07B258 7F046728 24050001 */   li    $a1, 1
 /* 07B25C 7F04672C 960D009A */  lhu   $t5, 0x9a($s0)
 .L7F046730:
@@ -14776,7 +14776,7 @@ glabel object_interaction
 .Ljp7F046B20:
 /* 07B690 7F046B20 50600004 */  beql  $v1, $zero, .Ljp7F046B34
 /* 07B694 7F046B24 960B009A */   lhu   $t3, 0x9a($s0)
-/* 07B698 7F046B28 0FC15368 */  jal   sub_GAME_7F0548A4
+/* 07B698 7F046B28 0FC15368 */  jal   doorSetOpenState
 /* 07B69C 7F046B2C 24050001 */   li    $a1, 1
 /* 07B6A0 7F046B30 960B009A */  lhu   $t3, 0x9a($s0)
 .Ljp7F046B34:
@@ -19889,7 +19889,7 @@ glabel object_interaction
 .L7F0468F8:
 /* 0792E8 7F0468F8 50600004 */  beql  $v1, $zero, .L7F04690C
 /* 0792EC 7F0468FC 9609009A */   lhu   $t1, 0x9a($s0)
-/* 0792F0 7F046900 0FC152E1 */  jal   sub_GAME_7F0548A4
+/* 0792F0 7F046900 0FC152E1 */  jal   doorSetOpenState
 /* 0792F4 7F046904 24050001 */   li    $a1, 1
 /* 0792F8 7F046908 9609009A */  lhu   $t1, 0x9a($s0)
 .L7F04690C:
@@ -43591,13 +43591,13 @@ void play_door_closing_soundeffect_1(DoorRecord *door)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F05474C(void) {
+void doorStartOpen(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F05474C
+glabel doorStartOpen
 /* 08927C 7F05474C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 089280 7F054750 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 089284 7F054754 8C8E0008 */  lw    $t6, 8($a0)
@@ -43643,7 +43643,7 @@ glabel sub_GAME_7F05474C
 
 
 
-void sub_GAME_7F0547DC(DoorRecord *door) {
+void doorStartClose(DoorRecord *door) {
     door->flags &= 0x7FFFFFFF;
     play_door_opening_soundeffect_1(door);
 }
@@ -43702,88 +43702,43 @@ void sub_GAME_7F05487C(s32 arg0) {
 }
 
 
+/**
+ * Apply the given state to an individual door (not its siblings).
+ *
+ * Handles playing door open/close sounds and activating the portal if opening.
+ */
+void doorSetOpenState(DoorRecord *door, s32 newstate)
+{
+    if (newstate == DOORSTATE_OPENING)
+    {
+        if (door->openstate == DOORSTATE_STATIONARY || door->openstate == DOORSTATE_WAITING)
+        {
+            doorStartOpen(door);
+        }
 
+        door->openstate = newstate;
+    }
+    else if (newstate == DOORSTATE_CLOSING)
+    {
+        if (door->openstate == DOORSTATE_STATIONARY && door->openPosition > 0)
+        {
+            doorStartClose(door);
+        }
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F0548A4(void) {
-
+        if ((door->openstate != DOORSTATE_STATIONARY && door->openstate != DOORSTATE_WAITING) || door->openPosition > 0)
+        {
+            door->openstate = newstate;
+        }
+        else if (door->openstate == DOORSTATE_WAITING)
+        {
+            door->openstate = DOORSTATE_STATIONARY;
+        }
+    }
+    else
+    {
+        door->openstate = newstate;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0548A4
-/* 0893D4 7F0548A4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0893D8 7F0548A8 24010001 */  li    $at, 1
-/* 0893DC 7F0548AC 14A1000E */  bne   $a1, $at, .L7F0548E8
-/* 0893E0 7F0548B0 AFBF0014 */   sw    $ra, 0x14($sp)
-/* 0893E4 7F0548B4 808200BC */  lb    $v0, 0xbc($a0)
-/* 0893E8 7F0548B8 24010003 */  li    $at, 3
-/* 0893EC 7F0548BC 50400004 */  beql  $v0, $zero, .L7F0548D0
-/* 0893F0 7F0548C0 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0893F4 7F0548C4 14410006 */  bne   $v0, $at, .L7F0548E0
-/* 0893F8 7F0548C8 00000000 */   nop   
-/* 0893FC 7F0548CC AFA40018 */  sw    $a0, 0x18($sp)
-.L7F0548D0:
-/* 089400 7F0548D0 0FC151D3 */  jal   sub_GAME_7F05474C
-/* 089404 7F0548D4 AFA5001C */   sw    $a1, 0x1c($sp)
-/* 089408 7F0548D8 8FA40018 */  lw    $a0, 0x18($sp)
-/* 08940C 7F0548DC 8FA5001C */  lw    $a1, 0x1c($sp)
-.L7F0548E0:
-/* 089410 7F0548E0 10000025 */  b     .L7F054978
-/* 089414 7F0548E4 A08500BC */   sb    $a1, 0xbc($a0)
-.L7F0548E8:
-/* 089418 7F0548E8 24010002 */  li    $at, 2
-/* 08941C 7F0548EC 54A10022 */  bnel  $a1, $at, .L7F054978
-/* 089420 7F0548F0 A08500BC */   sb    $a1, 0xbc($a0)
-/* 089424 7F0548F4 808200BC */  lb    $v0, 0xbc($a0)
-/* 089428 7F0548F8 1440000D */  bnez  $v0, .L7F054930
-/* 08942C 7F0548FC 00000000 */   nop   
-/* 089430 7F054900 44802000 */  mtc1  $zero, $f4
-/* 089434 7F054904 C48600B4 */  lwc1  $f6, 0xb4($a0)
-/* 089438 7F054908 4606203C */  c.lt.s $f4, $f6
-/* 08943C 7F05490C 00000000 */  nop   
-/* 089440 7F054910 45000007 */  bc1f  .L7F054930
-/* 089444 7F054914 00000000 */   nop   
-/* 089448 7F054918 AFA40018 */  sw    $a0, 0x18($sp)
-/* 08944C 7F05491C 0FC151F7 */  jal   sub_GAME_7F0547DC
-/* 089450 7F054920 AFA5001C */   sw    $a1, 0x1c($sp)
-/* 089454 7F054924 8FA40018 */  lw    $a0, 0x18($sp)
-/* 089458 7F054928 8FA5001C */  lw    $a1, 0x1c($sp)
-/* 08945C 7F05492C 808200BC */  lb    $v0, 0xbc($a0)
-.L7F054930:
-/* 089460 7F054930 10400003 */  beqz  $v0, .L7F054940
-/* 089464 7F054934 24010003 */   li    $at, 3
-/* 089468 7F054938 14410008 */  bne   $v0, $at, .L7F05495C
-/* 08946C 7F05493C 00000000 */   nop   
-.L7F054940:
-/* 089470 7F054940 44804000 */  mtc1  $zero, $f8
-/* 089474 7F054944 C48A00B4 */  lwc1  $f10, 0xb4($a0)
-/* 089478 7F054948 24010003 */  li    $at, 3
-/* 08947C 7F05494C 460A403C */  c.lt.s $f8, $f10
-/* 089480 7F054950 00000000 */  nop   
-/* 089484 7F054954 45000003 */  bc1f  .L7F054964
-/* 089488 7F054958 00000000 */   nop   
-.L7F05495C:
-/* 08948C 7F05495C 10000006 */  b     .L7F054978
-/* 089490 7F054960 A08500BC */   sb    $a1, 0xbc($a0)
-.L7F054964:
-/* 089494 7F054964 54410005 */  bnel  $v0, $at, .L7F05497C
-/* 089498 7F054968 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 08949C 7F05496C 10000002 */  b     .L7F054978
-/* 0894A0 7F054970 A08000BC */   sb    $zero, 0xbc($a0)
-/* 0894A4 7F054974 A08500BC */  sb    $a1, 0xbc($a0)
-.L7F054978:
-/* 0894A8 7F054978 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F05497C:
-/* 0894AC 7F05497C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0894B0 7F054980 03E00008 */  jr    $ra
-/* 0894B4 7F054984 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 void doorActivate(DoorRecord *door, DOORSTATE State) //#MATCH
@@ -43803,13 +43758,13 @@ void doorActivate(DoorRecord *door, DOORSTATE State) //#MATCH
         }
     }
 
-    sub_GAME_7F0548A4(door, State);
+    doorSetOpenState(door, State);
 
     linkeddoor = door->linkedDoor;
 
     while (linkeddoor && linkeddoor != door)
     {
-        sub_GAME_7F0548A4(linkeddoor, LinkedState);
+        doorSetOpenState(linkeddoor, LinkedState);
         linkeddoor = linkeddoor->linkedDoor;
     };
 }
