@@ -7149,9 +7149,9 @@ void chrlvFireWeaponRelated(ChrRecord *self, s32 hand)
                                 
                                 if (sp208->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)
                                 {
-                                    sp208->unk6C->id |= 0x80;
+                                    sp208->unk6C->flags |= 0x80;
                                     sp208->timer = -1;
-                                    sp208->unk6C->id |= 0x20;
+                                    sp208->unk6C->flags |= 0x20;
 
                                     sp208->unk6C->unkb0 = sp208->runtime_pos.y;
                                     sp208->unk6C->unkb4 = sp208->unk6C->pos.f[1];

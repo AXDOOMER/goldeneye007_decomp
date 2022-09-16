@@ -43620,51 +43620,24 @@ void doorStartClose(DoorRecord *door)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F05480C(void) {
+void doorFinishOpen(DoorRecord *door)
+{
+    play_door_closing_soundeffect_0(door);
 
+    if (door->doorType == 8)
+    {
+        sub_GAME_7F03FDA8(door->prop);
+
+        if (door->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)
+        {
+            door->unk6C->flags |= 1;
+            matrix_4x4_set_identity(&door->unk6C->m);
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05480C
-/* 08933C 7F05480C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 089340 7F054810 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 089344 7F054814 0FC150B1 */  jal   play_door_closing_soundeffect_0
-/* 089348 7F054818 AFA40018 */   sw    $a0, 0x18($sp)
-/* 08934C 7F05481C 8FA50018 */  lw    $a1, 0x18($sp)
-/* 089350 7F054820 24010008 */  li    $at, 8
-/* 089354 7F054824 94AE009A */  lhu   $t6, 0x9a($a1)
-/* 089358 7F054828 55C10011 */  bnel  $t6, $at, .L7F054870
-/* 08935C 7F05482C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 089360 7F054830 8CA40010 */  lw    $a0, 0x10($a1)
-/* 089364 7F054834 0FC0FF6A */  jal   sub_GAME_7F03FDA8
-/* 089368 7F054838 AFA50018 */   sw    $a1, 0x18($sp)
-/* 08936C 7F05483C 8FA50018 */  lw    $a1, 0x18($sp)
-/* 089370 7F054840 8CAF0064 */  lw    $t7, 0x64($a1)
-/* 089374 7F054844 31F80080 */  andi  $t8, $t7, 0x80
-/* 089378 7F054848 53000009 */  beql  $t8, $zero, .L7F054870
-/* 08937C 7F05484C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 089380 7F054850 8CA2006C */  lw    $v0, 0x6c($a1)
-/* 089384 7F054854 8C590000 */  lw    $t9, ($v0)
-/* 089388 7F054858 37280001 */  ori   $t0, $t9, 1
-/* 08938C 7F05485C AC480000 */  sw    $t0, ($v0)
-/* 089390 7F054860 8CA4006C */  lw    $a0, 0x6c($a1)
-/* 089394 7F054864 0FC15FF4 */  jal   matrix_4x4_set_identity
-/* 089398 7F054868 24840020 */   addiu $a0, $a0, 0x20
-/* 08939C 7F05486C 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F054870:
-/* 0893A0 7F054870 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0893A4 7F054874 03E00008 */  jr    $ra
-/* 0893A8 7F054878 00000000 */   nop   
-)
-#endif
 
 
-
-
-
-void sub_GAME_7F05487C(s32 arg0) {
+void doorFinishClose(s32 arg0) {
     play_door_closing_soundeffect_1(arg0);
     sub_GAME_7F0535C4(arg0);
 }
@@ -44285,7 +44258,7 @@ glabel sub_GAME_7F054FB4
 /* 089BF4 7F0550C4 E63400B8 */  swc1  $f20, 0xb8($s1)
 /* 089BF8 7F0550C8 8E6E0000 */  lw    $t6, ($s3)
 /* 089BFC 7F0550CC 02202025 */  move  $a0, $s1
-/* 089C00 7F0550D0 0FC15203 */  jal   sub_GAME_7F05480C
+/* 089C00 7F0550D0 0FC15203 */  jal   doorFinishOpen
 /* 089C04 7F0550D4 AE2E00EC */   sw    $t6, 0xec($s1)
 /* 089C08 7F0550D8 1000000F */  b     .L7F055118
 /* 089C0C 7F0550DC 8E240010 */   lw    $a0, 0x10($s1)
@@ -44301,7 +44274,7 @@ glabel sub_GAME_7F054FB4
 /* 089C30 7F055100 8E240010 */   lw    $a0, 0x10($s1)
 /* 089C34 7F055104 A22000BC */  sb    $zero, 0xbc($s1)
 /* 089C38 7F055108 E63400B8 */  swc1  $f20, 0xb8($s1)
-/* 089C3C 7F05510C 0FC1521F */  jal   sub_GAME_7F05487C
+/* 089C3C 7F05510C 0FC1521F */  jal   doorFinishClose
 /* 089C40 7F055110 AE2000EC */   sw    $zero, 0xec($s1)
 /* 089C44 7F055114 8E240010 */  lw    $a0, 0x10($s1)
 .L7F055118:

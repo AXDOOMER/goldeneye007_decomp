@@ -1810,7 +1810,7 @@ void sub_GAME_7F05EB0C(ObjectRecord *arg0, coord3d *arg1, StandTile *arg2, Mtxf 
         if (arg0->runtime_bitflags & 0x80)
         {
             temp_v0 = arg0->unk6C;
-            temp_v0->id |= 0x41;
+            temp_v0->flags |= 0x41;
             arg0->unk6C->prop = arg6;
             sub_GAME_7F03FE14(temp_s1);
             matrix_4x4_copy(arg5, &arg0->unk6C->m);
@@ -2138,7 +2138,7 @@ void generate_player_thrown_grenade(s32 hand)
 
         if ((wor->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT) != 0)
         {
-            wor->unk6C->id = (s32) (wor->unk6C->id | 2);
+            wor->unk6C->flags = (s32) (wor->unk6C->flags | 2);
             
             wor->unk6C->unk8c = 0.3f;
             wor->unk6C->unk94 = 0.13333333f;
@@ -2223,7 +2223,7 @@ void generate_player_thrown_knife(s32 hand)
 
         if ((wor->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT) != 0)
         {
-            wor->unk6C->id = (s32) (wor->unk6C->id | 2);
+            wor->unk6C->flags = (s32) (wor->unk6C->flags | 2);
             
             wor->unk6C->unk8c = 0.1f;
             wor->unk6C->refreshrate = THROWN_ITEM_REFRESH_RATE;
@@ -2418,7 +2418,7 @@ void generate_player_thrown_object(s32 hand)
 
         if ((wor->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT) != 0)
         {
-            wor->unk6C->id = (s32) (wor->unk6C->id | 2);
+            wor->unk6C->flags = (s32) (wor->unk6C->flags | 2);
             
             wor->unk6C->unk8c = 0.1f;
             wor->unk6C->refreshrate = THROWN_ITEM_REFRESH_RATE;

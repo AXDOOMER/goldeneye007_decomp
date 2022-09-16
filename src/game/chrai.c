@@ -4549,7 +4549,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
 
                         if (obj->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)
                         {
-                            obj->unk6C->id |= 0x601;
+                            obj->unk6C->flags |= 0x601;
                             sub_GAME_7F03FE14(obj->prop);
                             matrix_4x4_set_identity(&obj->unk6C->m);
                             obj->unk6C->pos.x = 0;

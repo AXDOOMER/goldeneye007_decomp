@@ -334,7 +334,7 @@ typedef enum DOORFLAG
 {
     DOORFLAG_100                         = 0x00000100,
     DOORFLAG_CANNOT_ACTIVATE             = 0x02000000,
-    DOORFLAG_KEEPOPEN                    = 0x80000000,
+    DOORFLAG_KEEPOPEN                    = 0x80000000
 }DOORFLAG;
 
 /* door lock flags*/
