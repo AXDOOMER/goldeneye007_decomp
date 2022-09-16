@@ -9677,7 +9677,7 @@ glabel object_interaction
 /* 07B260 7F046730 24010008 */  li    $at, 8
 /* 07B264 7F046734 15A1000B */  bne   $t5, $at, .L7F046764
 /* 07B268 7F046738 00000000 */   nop   
-/* 07B26C 7F04673C 0FC15288 */  jal   sub_GAME_7F054A20
+/* 07B26C 7F04673C 0FC15288 */  jal   doorIsClosed
 /* 07B270 7F046740 02002025 */   move  $a0, $s0
 /* 07B274 7F046744 10400007 */  beqz  $v0, .L7F046764
 /* 07B278 7F046748 00000000 */   nop   
@@ -14783,7 +14783,7 @@ glabel object_interaction
 /* 07B6A4 7F046B34 24010008 */  li    $at, 8
 /* 07B6A8 7F046B38 1561000B */  bne   $t3, $at, .Ljp7F046B68
 /* 07B6AC 7F046B3C 00000000 */   nop   
-/* 07B6B0 7F046B40 0FC153C7 */  jal   sub_GAME_7F054A20
+/* 07B6B0 7F046B40 0FC153C7 */  jal   doorIsClosed
 /* 07B6B4 7F046B44 02002025 */   move  $a0, $s0
 /* 07B6B8 7F046B48 10400007 */  beqz  $v0, .Ljp7F046B68
 /* 07B6BC 7F046B4C 00000000 */   nop   
@@ -19896,7 +19896,7 @@ glabel object_interaction
 /* 0792FC 7F04690C 24010008 */  li    $at, 8
 /* 079300 7F046910 1521000B */  bne   $t1, $at, .L7F046940
 /* 079304 7F046914 00000000 */   nop   
-/* 079308 7F046918 0FC15340 */  jal   sub_GAME_7F054A20
+/* 079308 7F046918 0FC15340 */  jal   doorIsClosed
 /* 07930C 7F04691C 02002025 */   move  $a0, $s0
 /* 079310 7F046920 10400007 */  beqz  $v0, .L7F046940
 /* 079314 7F046924 00000000 */   nop   
@@ -43815,45 +43815,10 @@ void doorActivate(DoorRecord *door, DOORSTATE State) //#MATCH
 }
 
 
-
-
-
-#ifdef NONMATCHING
-s32 sub_GAME_7F054A20(DoorRecord *door)
+bool doorIsClosed(DoorRecord *door)
 {
-    return (door->openstate == DOORSTATE_WAITING) || ((door->openstate == DOORSTATE_STATIONARY) && (door->openPosition <= 0.0f));
+    return ((door->openstate == DOORSTATE_STATIONARY) || (door->openstate == DOORSTATE_WAITING)) && (door->openPosition <= 0.0f);
 }
-#else
-
-s32 sub_GAME_7F054A20(DoorRecord *door);
-
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F054A20
-/* 089550 7F054A20 808300BC */  lb    $v1, 0xbc($a0)
-/* 089554 7F054A24 2C620001 */  sltiu $v0, $v1, 1
-/* 089558 7F054A28 14400004 */  bnez  $v0, .L7F054A3C
-/* 08955C 7F054A2C 38620003 */   xori  $v0, $v1, 3
-/* 089560 7F054A30 2C420001 */  sltiu $v0, $v0, 1
-/* 089564 7F054A34 10400009 */  beqz  $v0, .L7F054A5C
-/* 089568 7F054A38 00000000 */   nop   
-.L7F054A3C:
-/* 08956C 7F054A3C 44802000 */  mtc1  $zero, $f4
-/* 089570 7F054A40 C48600B4 */  lwc1  $f6, 0xb4($a0)
-/* 089574 7F054A44 00001025 */  move  $v0, $zero
-/* 089578 7F054A48 4604303E */  c.le.s $f6, $f4
-/* 08957C 7F054A4C 00000000 */  nop   
-/* 089580 7F054A50 45000002 */  bc1f  .L7F054A5C
-/* 089584 7F054A54 00000000 */   nop   
-/* 089588 7F054A58 24020001 */  li    $v0, 1
-.L7F054A5C:
-/* 08958C 7F054A5C 03E00008 */  jr    $ra
-/* 089590 7F054A60 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
