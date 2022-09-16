@@ -2855,7 +2855,7 @@ typedef union
         u32                unkd8;
         u32                unkdc;
         u32                unke0;
-        u32                unke4;
+        u32                hidden; /*0xe4*/
         u32                unke8;
 
         /**

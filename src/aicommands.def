@@ -10673,7 +10673,7 @@ _AI_CMD(
             door->openedTime = g_GlobalTimer;
             door->openstate = DOORSTATE_STATIONARY;
             sub_GAME_7F052B00(door);
-            sub_GAME_7F053598(door);
+            doorActivatePortal(door);
             sub_GAME_7F053B10(door);
         }
         Offset += CAT(CAT(AI_, CMDNAME), _LENGTH);

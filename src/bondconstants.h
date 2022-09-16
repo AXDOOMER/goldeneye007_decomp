@@ -330,6 +330,12 @@ typedef enum PROPFLAG2
     PROPFLAG2_80000000                   = 0x80000000  // unknown
 }PROPFLAG2;
 
+typedef enum DOORFLAG
+{
+    DOORFLAG_100                         = 0x00000100,
+    DOORFLAG_CANNOT_ACTIVATE             = 0x02000000,
+    DOORFLAG_KEEPOPEN                    = 0x80000000,
+}DOORFLAG;
 
 /* door lock flags*/
 BITFLAG(DOOR_LOCK,

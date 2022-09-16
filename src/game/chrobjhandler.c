@@ -11626,7 +11626,7 @@ glabel object_interaction
 /* 07CEC4 7F048394 10000004 */  b     .L7F0483A8
 /* 07CEC8 7F048398 922F0003 */   lbu   $t7, 3($s1)
 .L7F04839C:
-/* 07CECC 7F04839C 0FC14D66 */  jal   sub_GAME_7F053598
+/* 07CECC 7F04839C 0FC14D66 */  jal   doorActivatePortal
 /* 07CED0 7F0483A0 02002025 */   move  $a0, $s0
 .L7F0483A4:
 /* 07CED4 7F0483A4 922F0003 */  lbu   $t7, 3($s1)
@@ -16732,7 +16732,7 @@ glabel object_interaction
 /* 07D308 7F048798 10000004 */  b     .Ljp7F0487AC
 /* 07D30C 7F04879C 922C0003 */   lbu   $t4, 3($s1)
 .Ljp7F0487A0:
-/* 07D310 7F0487A0 0FC14EA5 */  jal   sub_GAME_7F053598
+/* 07D310 7F0487A0 0FC14EA5 */  jal   doorActivatePortal
 /* 07D314 7F0487A4 02002025 */   move  $a0, $s0
 .Ljp7F0487A8:
 /* 07D318 7F0487A8 922C0003 */  lbu   $t4, 3($s1)
@@ -21846,7 +21846,7 @@ glabel object_interaction
 /* 07AF64 7F048574 10000004 */  b     .L7F048588
 /* 07AF68 7F048578 92290003 */   lbu   $t1, 3($s1)
 .L7F04857C:
-/* 07AF6C 7F04857C 0FC14E1E */  jal   sub_GAME_7F053598
+/* 07AF6C 7F04857C 0FC14E1E */  jal   doorActivatePortal
 /* 07AF70 7F048580 02002025 */   move  $a0, $s0
 .L7F048584:
 /* 07AF74 7F048584 92290003 */  lbu   $t1, 3($s1)
@@ -42739,7 +42739,7 @@ glabel sub_GAME_7F052D8C
  * Toggles (Open/Closed) the portal linked with door
  * @param door: Door to toggle portal on
  */
-void sub_GAME_7F053598(DoorRecord *door)
+void doorActivatePortal(DoorRecord *door)
 {
     if (door->portalNumber >= 0)
     {
@@ -43587,69 +43587,37 @@ void play_door_closing_soundeffect_1(DoorRecord *door)
 }
 
 
+/**
+ * Play the door open sound and activate the door's portal,
+ */
+void doorStartOpen(DoorRecord *door)
+{
+    door->flags &= ~DOORFLAG_KEEPOPEN;
+    door->runtime_bitflags |= RUNTIMEBITFLAG_BEENOPENED;
 
+    play_door_opening_soundeffect_0(door);
+    doorActivatePortal(door);
 
+    if (door->doorType == 8)
+    {
+        struct collision_data *col = door->ptr_allocated_collisiondata_block;
+        door->flags |= DOORFLAG_CANNOT_ACTIVATE;
+        door->perimFrac = 0;
 
-#ifdef NONMATCHING
-void doorStartOpen(void) {
-
+        if (col) { col->unk00 = 0; }
+        door->flags &= ~DOORFLAG_100;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel doorStartOpen
-/* 08927C 7F05474C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 089280 7F054750 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 089284 7F054754 8C8E0008 */  lw    $t6, 8($a0)
-/* 089288 7F054758 8C980064 */  lw    $t8, 0x64($a0)
-/* 08928C 7F05475C 3C017FFF */  lui   $at, (0x7FFFFFFF >> 16) # lui $at, 0x7fff
-/* 089290 7F054760 3421FFFF */  ori   $at, (0x7FFFFFFF & 0xFFFF) # ori $at, $at, 0xffff
-/* 089294 7F054764 01C17824 */  and   $t7, $t6, $at
-/* 089298 7F054768 37190200 */  ori   $t9, $t8, 0x200
-/* 08929C 7F05476C AC8F0008 */  sw    $t7, 8($a0)
-/* 0892A0 7F054770 AC990064 */  sw    $t9, 0x64($a0)
-/* 0892A4 7F054774 0FC14EDE */  jal   play_door_opening_soundeffect_0
-/* 0892A8 7F054778 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0892AC 7F05477C 0FC14D66 */  jal   sub_GAME_7F053598
-/* 0892B0 7F054780 8FA40018 */   lw    $a0, 0x18($sp)
-/* 0892B4 7F054784 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0892B8 7F054788 24010008 */  li    $at, 8
-/* 0892BC 7F05478C 9488009A */  lhu   $t0, 0x9a($a0)
-/* 0892C0 7F054790 5501000F */  bnel  $t0, $at, .L7F0547D0
-/* 0892C4 7F054794 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0892C8 7F054798 8C890008 */  lw    $t1, 8($a0)
-/* 0892CC 7F05479C 8C820068 */  lw    $v0, 0x68($a0)
-/* 0892D0 7F0547A0 44802000 */  mtc1  $zero, $f4
-/* 0892D4 7F0547A4 3C010200 */  lui   $at, 0x200
-/* 0892D8 7F0547A8 01215025 */  or    $t2, $t1, $at
-/* 0892DC 7F0547AC AC8A0008 */  sw    $t2, 8($a0)
-/* 0892E0 7F0547B0 10400002 */  beqz  $v0, .L7F0547BC
-/* 0892E4 7F0547B4 E4840088 */   swc1  $f4, 0x88($a0)
-/* 0892E8 7F0547B8 AC400000 */  sw    $zero, ($v0)
-.L7F0547BC:
-/* 0892EC 7F0547BC 8C8B0008 */  lw    $t3, 8($a0)
-/* 0892F0 7F0547C0 2401FEFF */  li    $at, -257
-/* 0892F4 7F0547C4 01616024 */  and   $t4, $t3, $at
-/* 0892F8 7F0547C8 AC8C0008 */  sw    $t4, 8($a0)
-/* 0892FC 7F0547CC 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0547D0:
-/* 089300 7F0547D0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 089304 7F0547D4 03E00008 */  jr    $ra
-/* 089308 7F0547D8 00000000 */   nop   
-)
-#endif
 
 
-
-
-
-void doorStartClose(DoorRecord *door) {
-    door->flags &= 0x7FFFFFFF;
+/**
+ * Play the door close sound
+ */
+void doorStartClose(DoorRecord *door)
+{
+    door->flags &= ~DOORFLAG_KEEPOPEN;
     play_door_opening_soundeffect_1(door);
 }
-
-
-
 
 
 #ifdef NONMATCHING
