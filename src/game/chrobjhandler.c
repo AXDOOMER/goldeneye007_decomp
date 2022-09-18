@@ -1645,43 +1645,16 @@ glabel set_color_shading_from_tile
 #endif
 
 
+void sub_GAME_7F0402B4(PropRecord *prop, rgba_u8 *color)
+{
+    struct DoorRecord *door = prop->door;
+    if (door->flags & 0x400 ){ return; }
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0402B4(void) {
-
+    set_color_shading_from_tile(prop, color);
+    color->r >>= 1;
+    color->g >>= 1;
+    color->b >>= 1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0402B4
-/* 074DE4 7F0402B4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 074DE8 7F0402B8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 074DEC 7F0402BC 8C820004 */  lw    $v0, 4($a0)
-/* 074DF0 7F0402C0 8C4E0008 */  lw    $t6, 8($v0)
-/* 074DF4 7F0402C4 31CF0400 */  andi  $t7, $t6, 0x400
-/* 074DF8 7F0402C8 55E0000E */  bnezl $t7, .L7F040304
-/* 074DFC 7F0402CC 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 074E00 7F0402D0 0FC10027 */  jal   set_color_shading_from_tile
-/* 074E04 7F0402D4 AFA5001C */   sw    $a1, 0x1c($sp)
-/* 074E08 7F0402D8 8FA5001C */  lw    $a1, 0x1c($sp)
-/* 074E0C 7F0402DC 90B80000 */  lbu   $t8, ($a1)
-/* 074E10 7F0402E0 90A80001 */  lbu   $t0, 1($a1)
-/* 074E14 7F0402E4 90AA0002 */  lbu   $t2, 2($a1)
-/* 074E18 7F0402E8 0018C842 */  srl   $t9, $t8, 1
-/* 074E1C 7F0402EC 00084842 */  srl   $t1, $t0, 1
-/* 074E20 7F0402F0 000A5842 */  srl   $t3, $t2, 1
-/* 074E24 7F0402F4 A0B90000 */  sb    $t9, ($a1)
-/* 074E28 7F0402F8 A0A90001 */  sb    $t1, 1($a1)
-/* 074E2C 7F0402FC A0AB0002 */  sb    $t3, 2($a1)
-/* 074E30 7F040300 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F040304:
-/* 074E34 7F040304 27BD0018 */  addiu $sp, $sp, 0x18
-/* 074E38 7F040308 03E00008 */  jr    $ra
-/* 074E3C 7F04030C 00000000 */   nop   
-)
-#endif
 
 
 void update_color_shading(rgba_u8 *dest, rgba_u8 *src)
@@ -11621,7 +11594,7 @@ glabel object_interaction
 .L7F048384:
 /* 07CEB4 7F048384 12400005 */  beqz  $s2, .L7F04839C
 /* 07CEB8 7F048388 00000000 */   nop   
-/* 07CEBC 7F04838C 0FC14D71 */  jal   sub_GAME_7F0535C4
+/* 07CEBC 7F04838C 0FC14D71 */  jal   doorDeactivatePortal
 /* 07CEC0 7F048390 02002025 */   move  $a0, $s0
 /* 07CEC4 7F048394 10000004 */  b     .L7F0483A8
 /* 07CEC8 7F048398 922F0003 */   lbu   $t7, 3($s1)
@@ -16727,7 +16700,7 @@ glabel object_interaction
 .Ljp7F048788:
 /* 07D2F8 7F048788 12400005 */  beqz  $s2, .Ljp7F0487A0
 /* 07D2FC 7F04878C 00000000 */   nop   
-/* 07D300 7F048790 0FC14EB0 */  jal   sub_GAME_7F0535C4
+/* 07D300 7F048790 0FC14EB0 */  jal   doorDeactivatePortal
 /* 07D304 7F048794 02002025 */   move  $a0, $s0
 /* 07D308 7F048798 10000004 */  b     .Ljp7F0487AC
 /* 07D30C 7F04879C 922C0003 */   lbu   $t4, 3($s1)
@@ -21841,7 +21814,7 @@ glabel object_interaction
 .L7F048564:
 /* 07AF54 7F048564 12400005 */  beqz  $s2, .L7F04857C
 /* 07AF58 7F048568 00000000 */   nop   
-/* 07AF5C 7F04856C 0FC14E29 */  jal   sub_GAME_7F0535C4
+/* 07AF5C 7F04856C 0FC14E29 */  jal   doorDeactivatePortal
 /* 07AF60 7F048570 02002025 */   move  $a0, $s0
 /* 07AF64 7F048574 10000004 */  b     .L7F048588
 /* 07AF68 7F048578 92290003 */   lbu   $t1, 3($s1)
@@ -42732,8 +42705,6 @@ glabel sub_GAME_7F052D8C
 #endif
 
 
-
-
 /**
  * objToggleDoorPortal / doorActivatePortal
  * Toggles (Open/Closed) the portal linked with door
@@ -42748,21 +42719,17 @@ void doorActivatePortal(DoorRecord *door)
 }
 
 
-
 /**
  * objToggleDoorPortal / doorDeactivatePortal
  * Toggles (Open/Closed) the portal linked with door
  * @param door: Door to toggle portal on
  */
-void sub_GAME_7F0535C4(DoorRecord *door) {
+void doorDeactivatePortal(DoorRecord *door) {
     if (door->portalNumber >= 0)
     {
         bgToggleDataPortalsContrlBytes1Bit1(door->portalNumber, FALSE);
     }
 }
-
-
-
 
 
 #ifdef NONMATCHING
@@ -43639,7 +43606,7 @@ void doorFinishOpen(DoorRecord *door)
 
 void doorFinishClose(s32 arg0) {
     play_door_closing_soundeffect_1(arg0);
-    sub_GAME_7F0535C4(arg0);
+    doorDeactivatePortal(arg0);
 }
 
 
