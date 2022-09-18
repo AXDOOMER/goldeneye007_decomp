@@ -43717,97 +43717,56 @@ bool doorIsClosed(DoorRecord *door)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F054A64(void) {
+s32 sub_GAME_7F054A64(PropRecord *prop, bbox2d *bbox)
+{
+    s32 room_ids[8];
+    s32 *rooms;
+    bool result = FALSE;
+    s32 room_id;
+    bbox2d bbox2;
 
+    chraiGetPropRoomIds(prop, room_ids);
+    rooms = room_ids;
+    room_id = *rooms;
+
+    while (room_id >= 0)
+    {
+        if (bgGet2dBboxByRoomId(room_id, &bbox2))
+        {
+            if (result)
+            {
+                if (bbox->min.x > bbox2.min.x)
+                {
+                    bbox->min.x = bbox2.min.x;
+                }
+                if (bbox->min.y > bbox2.min.y)
+                {
+                    bbox->min.y = bbox2.min.y;
+                }
+                if (bbox->max.x < bbox2.max.x)
+                {
+                    bbox->max.x = bbox2.max.x;
+                }
+                if (bbox->max.y < bbox2.max.y)
+                {
+                    bbox->max.y = bbox2.max.y;
+                }
+            }
+            else
+            {
+                bbox->min.x = bbox2.min.x;
+                bbox->min.y = bbox2.min.y;
+                bbox->max.x = bbox2.max.x;
+                bbox->max.y = bbox2.max.y;
+            }
+            result = TRUE;
+        }
+        rooms++;
+        room_id = *rooms;
+    }
+
+    return result;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F054A64
-/* 089594 7F054A64 27BDFF98 */  addiu $sp, $sp, -0x68
-/* 089598 7F054A68 AFB30020 */  sw    $s3, 0x20($sp)
-/* 08959C 7F054A6C AFB00014 */  sw    $s0, 0x14($sp)
-/* 0895A0 7F054A70 00A08025 */  move  $s0, $a1
-/* 0895A4 7F054A74 27B30048 */  addiu $s3, $sp, 0x48
-/* 0895A8 7F054A78 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0895AC 7F054A7C AFB2001C */  sw    $s2, 0x1c($sp)
-/* 0895B0 7F054A80 AFB10018 */  sw    $s1, 0x18($sp)
-/* 0895B4 7F054A84 00009025 */  move  $s2, $zero
-/* 0895B8 7F054A88 0FC0F2E3 */  jal   chraiGetPropRoomIds
-/* 0895BC 7F054A8C 02602825 */   move  $a1, $s3
-/* 0895C0 7F054A90 8FA40048 */  lw    $a0, 0x48($sp)
-/* 0895C4 7F054A94 02608825 */  move  $s1, $s3
-/* 0895C8 7F054A98 27B3002C */  addiu $s3, $sp, 0x2c
-/* 0895CC 7F054A9C 04820031 */  bltzl $a0, .L7F054B64
-/* 0895D0 7F054AA0 8FBF0024 */   lw    $ra, 0x24($sp)
-.L7F054AA4:
-/* 0895D4 7F054AA4 0FC2CF03 */  jal   bgGet2dBboxByRoomId
-/* 0895D8 7F054AA8 02602825 */   move  $a1, $s3
-/* 0895DC 7F054AAC 10400028 */  beqz  $v0, .L7F054B50
-/* 0895E0 7F054AB0 0012102B */   sltu  $v0, $zero, $s2
-/* 0895E4 7F054AB4 1040001E */  beqz  $v0, .L7F054B30
-/* 0895E8 7F054AB8 24120001 */   li    $s2, 1
-/* 0895EC 7F054ABC C7A4002C */  lwc1  $f4, 0x2c($sp)
-/* 0895F0 7F054AC0 C6060000 */  lwc1  $f6, ($s0)
-/* 0895F4 7F054AC4 4606203C */  c.lt.s $f4, $f6
-/* 0895F8 7F054AC8 00000000 */  nop   
-/* 0895FC 7F054ACC 45020003 */  bc1fl .L7F054ADC
-/* 089600 7F054AD0 C7A80030 */   lwc1  $f8, 0x30($sp)
-/* 089604 7F054AD4 E6040000 */  swc1  $f4, ($s0)
-/* 089608 7F054AD8 C7A80030 */  lwc1  $f8, 0x30($sp)
-.L7F054ADC:
-/* 08960C 7F054ADC C60A0004 */  lwc1  $f10, 4($s0)
-/* 089610 7F054AE0 460A403C */  c.lt.s $f8, $f10
-/* 089614 7F054AE4 00000000 */  nop   
-/* 089618 7F054AE8 45020003 */  bc1fl .L7F054AF8
-/* 08961C 7F054AEC C6100008 */   lwc1  $f16, 8($s0)
-/* 089620 7F054AF0 E6080004 */  swc1  $f8, 4($s0)
-/* 089624 7F054AF4 C6100008 */  lwc1  $f16, 8($s0)
-.L7F054AF8:
-/* 089628 7F054AF8 C7B20034 */  lwc1  $f18, 0x34($sp)
-/* 08962C 7F054AFC 4612803C */  c.lt.s $f16, $f18
-/* 089630 7F054B00 00000000 */  nop   
-/* 089634 7F054B04 45020003 */  bc1fl .L7F054B14
-/* 089638 7F054B08 C606000C */   lwc1  $f6, 0xc($s0)
-/* 08963C 7F054B0C E6120008 */  swc1  $f18, 8($s0)
-/* 089640 7F054B10 C606000C */  lwc1  $f6, 0xc($s0)
-.L7F054B14:
-/* 089644 7F054B14 C7A40038 */  lwc1  $f4, 0x38($sp)
-/* 089648 7F054B18 4604303C */  c.lt.s $f6, $f4
-/* 08964C 7F054B1C 00000000 */  nop   
-/* 089650 7F054B20 4502000C */  bc1fl .L7F054B54
-/* 089654 7F054B24 8E240004 */   lw    $a0, 4($s1)
-/* 089658 7F054B28 10000009 */  b     .L7F054B50
-/* 08965C 7F054B2C E604000C */   swc1  $f4, 0xc($s0)
-.L7F054B30:
-/* 089660 7F054B30 C7AA002C */  lwc1  $f10, 0x2c($sp)
-/* 089664 7F054B34 E60A0000 */  swc1  $f10, ($s0)
-/* 089668 7F054B38 C7A80030 */  lwc1  $f8, 0x30($sp)
-/* 08966C 7F054B3C E6080004 */  swc1  $f8, 4($s0)
-/* 089670 7F054B40 C7B00034 */  lwc1  $f16, 0x34($sp)
-/* 089674 7F054B44 E6100008 */  swc1  $f16, 8($s0)
-/* 089678 7F054B48 C7B20038 */  lwc1  $f18, 0x38($sp)
-/* 08967C 7F054B4C E612000C */  swc1  $f18, 0xc($s0)
-.L7F054B50:
-/* 089680 7F054B50 8E240004 */  lw    $a0, 4($s1)
-.L7F054B54:
-/* 089684 7F054B54 26310004 */  addiu $s1, $s1, 4
-/* 089688 7F054B58 0481FFD2 */  bgez  $a0, .L7F054AA4
-/* 08968C 7F054B5C 00000000 */   nop   
-/* 089690 7F054B60 8FBF0024 */  lw    $ra, 0x24($sp)
-.L7F054B64:
-/* 089694 7F054B64 02401025 */  move  $v0, $s2
-/* 089698 7F054B68 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 08969C 7F054B6C 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0896A0 7F054B70 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0896A4 7F054B74 8FB30020 */  lw    $s3, 0x20($sp)
-/* 0896A8 7F054B78 03E00008 */  jr    $ra
-/* 0896AC 7F054B7C 27BD0068 */   addiu $sp, $sp, 0x68
-)
-#endif
-
-
 
 
 #if defined(LEFTOVERDEBUG)

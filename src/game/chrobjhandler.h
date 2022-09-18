@@ -72,7 +72,7 @@ void                 sub_GAME_7F055B78(PropRecord *arg0, DoorRecord *arg1);
 Gfx                 *chrobjRenderProp(PropRecord *arg0, Gfx *arg1, s32 arg2);
 
 f32                  chrobjFogVisRangeRelated(PropRecord *prop, f32 size);
-s32                  sub_GAME_7F054A64(PropRecord *, struct view4s32 *);
+s32                  sub_GAME_7F054A64(PropRecord *prop, bbox2d *bbox);
 
 // note: rgba to rgb
 void                 sub_GAME_7F040384(rgba_s32 *arg0, s32 arg1, rgba_f32 *arg2);
