@@ -2220,7 +2220,7 @@ typedef union
 
     typedef struct ObjectRecord_f6c
     {
-        u32                  id;
+        u32                  flags;
         coord3d              pos;
 
         /**

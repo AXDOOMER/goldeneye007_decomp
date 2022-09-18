@@ -1645,43 +1645,16 @@ glabel set_color_shading_from_tile
 #endif
 
 
+void sub_GAME_7F0402B4(PropRecord *prop, rgba_u8 *color)
+{
+    struct DoorRecord *door = prop->door;
+    if (door->flags & 0x400 ){ return; }
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0402B4(void) {
-
+    set_color_shading_from_tile(prop, color);
+    color->r >>= 1;
+    color->g >>= 1;
+    color->b >>= 1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0402B4
-/* 074DE4 7F0402B4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 074DE8 7F0402B8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 074DEC 7F0402BC 8C820004 */  lw    $v0, 4($a0)
-/* 074DF0 7F0402C0 8C4E0008 */  lw    $t6, 8($v0)
-/* 074DF4 7F0402C4 31CF0400 */  andi  $t7, $t6, 0x400
-/* 074DF8 7F0402C8 55E0000E */  bnezl $t7, .L7F040304
-/* 074DFC 7F0402CC 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 074E00 7F0402D0 0FC10027 */  jal   set_color_shading_from_tile
-/* 074E04 7F0402D4 AFA5001C */   sw    $a1, 0x1c($sp)
-/* 074E08 7F0402D8 8FA5001C */  lw    $a1, 0x1c($sp)
-/* 074E0C 7F0402DC 90B80000 */  lbu   $t8, ($a1)
-/* 074E10 7F0402E0 90A80001 */  lbu   $t0, 1($a1)
-/* 074E14 7F0402E4 90AA0002 */  lbu   $t2, 2($a1)
-/* 074E18 7F0402E8 0018C842 */  srl   $t9, $t8, 1
-/* 074E1C 7F0402EC 00084842 */  srl   $t1, $t0, 1
-/* 074E20 7F0402F0 000A5842 */  srl   $t3, $t2, 1
-/* 074E24 7F0402F4 A0B90000 */  sb    $t9, ($a1)
-/* 074E28 7F0402F8 A0A90001 */  sb    $t1, 1($a1)
-/* 074E2C 7F0402FC A0AB0002 */  sb    $t3, 2($a1)
-/* 074E30 7F040300 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F040304:
-/* 074E34 7F040304 27BD0018 */  addiu $sp, $sp, 0x18
-/* 074E38 7F040308 03E00008 */  jr    $ra
-/* 074E3C 7F04030C 00000000 */   nop   
-)
-#endif
 
 
 void update_color_shading(rgba_u8 *dest, rgba_u8 *src)
@@ -9670,14 +9643,14 @@ glabel object_interaction
 .L7F04671C:
 /* 07B24C 7F04671C 50600004 */  beql  $v1, $zero, .L7F046730
 /* 07B250 7F046720 960D009A */   lhu   $t5, 0x9a($s0)
-/* 07B254 7F046724 0FC15229 */  jal   sub_GAME_7F0548A4
+/* 07B254 7F046724 0FC15229 */  jal   doorSetOpenState
 /* 07B258 7F046728 24050001 */   li    $a1, 1
 /* 07B25C 7F04672C 960D009A */  lhu   $t5, 0x9a($s0)
 .L7F046730:
 /* 07B260 7F046730 24010008 */  li    $at, 8
 /* 07B264 7F046734 15A1000B */  bne   $t5, $at, .L7F046764
 /* 07B268 7F046738 00000000 */   nop   
-/* 07B26C 7F04673C 0FC15288 */  jal   sub_GAME_7F054A20
+/* 07B26C 7F04673C 0FC15288 */  jal   doorIsClosed
 /* 07B270 7F046740 02002025 */   move  $a0, $s0
 /* 07B274 7F046744 10400007 */  beqz  $v0, .L7F046764
 /* 07B278 7F046748 00000000 */   nop   
@@ -11621,12 +11594,12 @@ glabel object_interaction
 .L7F048384:
 /* 07CEB4 7F048384 12400005 */  beqz  $s2, .L7F04839C
 /* 07CEB8 7F048388 00000000 */   nop   
-/* 07CEBC 7F04838C 0FC14D71 */  jal   sub_GAME_7F0535C4
+/* 07CEBC 7F04838C 0FC14D71 */  jal   doorDeactivatePortal
 /* 07CEC0 7F048390 02002025 */   move  $a0, $s0
 /* 07CEC4 7F048394 10000004 */  b     .L7F0483A8
 /* 07CEC8 7F048398 922F0003 */   lbu   $t7, 3($s1)
 .L7F04839C:
-/* 07CECC 7F04839C 0FC14D66 */  jal   sub_GAME_7F053598
+/* 07CECC 7F04839C 0FC14D66 */  jal   doorActivatePortal
 /* 07CED0 7F0483A0 02002025 */   move  $a0, $s0
 .L7F0483A4:
 /* 07CED4 7F0483A4 922F0003 */  lbu   $t7, 3($s1)
@@ -14776,14 +14749,14 @@ glabel object_interaction
 .Ljp7F046B20:
 /* 07B690 7F046B20 50600004 */  beql  $v1, $zero, .Ljp7F046B34
 /* 07B694 7F046B24 960B009A */   lhu   $t3, 0x9a($s0)
-/* 07B698 7F046B28 0FC15368 */  jal   sub_GAME_7F0548A4
+/* 07B698 7F046B28 0FC15368 */  jal   doorSetOpenState
 /* 07B69C 7F046B2C 24050001 */   li    $a1, 1
 /* 07B6A0 7F046B30 960B009A */  lhu   $t3, 0x9a($s0)
 .Ljp7F046B34:
 /* 07B6A4 7F046B34 24010008 */  li    $at, 8
 /* 07B6A8 7F046B38 1561000B */  bne   $t3, $at, .Ljp7F046B68
 /* 07B6AC 7F046B3C 00000000 */   nop   
-/* 07B6B0 7F046B40 0FC153C7 */  jal   sub_GAME_7F054A20
+/* 07B6B0 7F046B40 0FC153C7 */  jal   doorIsClosed
 /* 07B6B4 7F046B44 02002025 */   move  $a0, $s0
 /* 07B6B8 7F046B48 10400007 */  beqz  $v0, .Ljp7F046B68
 /* 07B6BC 7F046B4C 00000000 */   nop   
@@ -16727,12 +16700,12 @@ glabel object_interaction
 .Ljp7F048788:
 /* 07D2F8 7F048788 12400005 */  beqz  $s2, .Ljp7F0487A0
 /* 07D2FC 7F04878C 00000000 */   nop   
-/* 07D300 7F048790 0FC14EB0 */  jal   sub_GAME_7F0535C4
+/* 07D300 7F048790 0FC14EB0 */  jal   doorDeactivatePortal
 /* 07D304 7F048794 02002025 */   move  $a0, $s0
 /* 07D308 7F048798 10000004 */  b     .Ljp7F0487AC
 /* 07D30C 7F04879C 922C0003 */   lbu   $t4, 3($s1)
 .Ljp7F0487A0:
-/* 07D310 7F0487A0 0FC14EA5 */  jal   sub_GAME_7F053598
+/* 07D310 7F0487A0 0FC14EA5 */  jal   doorActivatePortal
 /* 07D314 7F0487A4 02002025 */   move  $a0, $s0
 .Ljp7F0487A8:
 /* 07D318 7F0487A8 922C0003 */  lbu   $t4, 3($s1)
@@ -19889,14 +19862,14 @@ glabel object_interaction
 .L7F0468F8:
 /* 0792E8 7F0468F8 50600004 */  beql  $v1, $zero, .L7F04690C
 /* 0792EC 7F0468FC 9609009A */   lhu   $t1, 0x9a($s0)
-/* 0792F0 7F046900 0FC152E1 */  jal   sub_GAME_7F0548A4
+/* 0792F0 7F046900 0FC152E1 */  jal   doorSetOpenState
 /* 0792F4 7F046904 24050001 */   li    $a1, 1
 /* 0792F8 7F046908 9609009A */  lhu   $t1, 0x9a($s0)
 .L7F04690C:
 /* 0792FC 7F04690C 24010008 */  li    $at, 8
 /* 079300 7F046910 1521000B */  bne   $t1, $at, .L7F046940
 /* 079304 7F046914 00000000 */   nop   
-/* 079308 7F046918 0FC15340 */  jal   sub_GAME_7F054A20
+/* 079308 7F046918 0FC15340 */  jal   doorIsClosed
 /* 07930C 7F04691C 02002025 */   move  $a0, $s0
 /* 079310 7F046920 10400007 */  beqz  $v0, .L7F046940
 /* 079314 7F046924 00000000 */   nop   
@@ -21841,12 +21814,12 @@ glabel object_interaction
 .L7F048564:
 /* 07AF54 7F048564 12400005 */  beqz  $s2, .L7F04857C
 /* 07AF58 7F048568 00000000 */   nop   
-/* 07AF5C 7F04856C 0FC14E29 */  jal   sub_GAME_7F0535C4
+/* 07AF5C 7F04856C 0FC14E29 */  jal   doorDeactivatePortal
 /* 07AF60 7F048570 02002025 */   move  $a0, $s0
 /* 07AF64 7F048574 10000004 */  b     .L7F048588
 /* 07AF68 7F048578 92290003 */   lbu   $t1, 3($s1)
 .L7F04857C:
-/* 07AF6C 7F04857C 0FC14E1E */  jal   sub_GAME_7F053598
+/* 07AF6C 7F04857C 0FC14E1E */  jal   doorActivatePortal
 /* 07AF70 7F048580 02002025 */   move  $a0, $s0
 .L7F048584:
 /* 07AF74 7F048584 92290003 */  lbu   $t1, 3($s1)
@@ -42732,14 +42705,12 @@ glabel sub_GAME_7F052D8C
 #endif
 
 
-
-
 /**
  * objToggleDoorPortal / doorActivatePortal
  * Toggles (Open/Closed) the portal linked with door
  * @param door: Door to toggle portal on
  */
-void sub_GAME_7F053598(DoorRecord *door)
+void doorActivatePortal(DoorRecord *door)
 {
     if (door->portalNumber >= 0)
     {
@@ -42748,21 +42719,17 @@ void sub_GAME_7F053598(DoorRecord *door)
 }
 
 
-
 /**
  * objToggleDoorPortal / doorDeactivatePortal
  * Toggles (Open/Closed) the portal linked with door
  * @param door: Door to toggle portal on
  */
-void sub_GAME_7F0535C4(DoorRecord *door) {
+void doorDeactivatePortal(DoorRecord *door) {
     if (door->portalNumber >= 0)
     {
         bgToggleDataPortalsContrlBytes1Bit1(door->portalNumber, FALSE);
     }
 }
-
-
-
 
 
 #ifdef NONMATCHING
@@ -43587,203 +43554,99 @@ void play_door_closing_soundeffect_1(DoorRecord *door)
 }
 
 
+/**
+ * Play the door open sound and activate the door's portal,
+ */
+void doorStartOpen(DoorRecord *door)
+{
+    door->flags &= ~DOORFLAG_KEEPOPEN;
+    door->runtime_bitflags |= RUNTIMEBITFLAG_BEENOPENED;
 
+    play_door_opening_soundeffect_0(door);
+    doorActivatePortal(door);
 
+    if (door->doorType == 8)
+    {
+        struct collision_data *col = door->ptr_allocated_collisiondata_block;
+        door->flags |= DOORFLAG_CANNOT_ACTIVATE;
+        door->perimFrac = 0;
 
-#ifdef NONMATCHING
-void sub_GAME_7F05474C(void) {
-
+        if (col) { col->unk00 = 0; }
+        door->flags &= ~DOORFLAG_100;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05474C
-/* 08927C 7F05474C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 089280 7F054750 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 089284 7F054754 8C8E0008 */  lw    $t6, 8($a0)
-/* 089288 7F054758 8C980064 */  lw    $t8, 0x64($a0)
-/* 08928C 7F05475C 3C017FFF */  lui   $at, (0x7FFFFFFF >> 16) # lui $at, 0x7fff
-/* 089290 7F054760 3421FFFF */  ori   $at, (0x7FFFFFFF & 0xFFFF) # ori $at, $at, 0xffff
-/* 089294 7F054764 01C17824 */  and   $t7, $t6, $at
-/* 089298 7F054768 37190200 */  ori   $t9, $t8, 0x200
-/* 08929C 7F05476C AC8F0008 */  sw    $t7, 8($a0)
-/* 0892A0 7F054770 AC990064 */  sw    $t9, 0x64($a0)
-/* 0892A4 7F054774 0FC14EDE */  jal   play_door_opening_soundeffect_0
-/* 0892A8 7F054778 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0892AC 7F05477C 0FC14D66 */  jal   sub_GAME_7F053598
-/* 0892B0 7F054780 8FA40018 */   lw    $a0, 0x18($sp)
-/* 0892B4 7F054784 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0892B8 7F054788 24010008 */  li    $at, 8
-/* 0892BC 7F05478C 9488009A */  lhu   $t0, 0x9a($a0)
-/* 0892C0 7F054790 5501000F */  bnel  $t0, $at, .L7F0547D0
-/* 0892C4 7F054794 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0892C8 7F054798 8C890008 */  lw    $t1, 8($a0)
-/* 0892CC 7F05479C 8C820068 */  lw    $v0, 0x68($a0)
-/* 0892D0 7F0547A0 44802000 */  mtc1  $zero, $f4
-/* 0892D4 7F0547A4 3C010200 */  lui   $at, 0x200
-/* 0892D8 7F0547A8 01215025 */  or    $t2, $t1, $at
-/* 0892DC 7F0547AC AC8A0008 */  sw    $t2, 8($a0)
-/* 0892E0 7F0547B0 10400002 */  beqz  $v0, .L7F0547BC
-/* 0892E4 7F0547B4 E4840088 */   swc1  $f4, 0x88($a0)
-/* 0892E8 7F0547B8 AC400000 */  sw    $zero, ($v0)
-.L7F0547BC:
-/* 0892EC 7F0547BC 8C8B0008 */  lw    $t3, 8($a0)
-/* 0892F0 7F0547C0 2401FEFF */  li    $at, -257
-/* 0892F4 7F0547C4 01616024 */  and   $t4, $t3, $at
-/* 0892F8 7F0547C8 AC8C0008 */  sw    $t4, 8($a0)
-/* 0892FC 7F0547CC 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0547D0:
-/* 089300 7F0547D0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 089304 7F0547D4 03E00008 */  jr    $ra
-/* 089308 7F0547D8 00000000 */   nop   
-)
-#endif
 
 
-
-
-
-void sub_GAME_7F0547DC(DoorRecord *door) {
-    door->flags &= 0x7FFFFFFF;
+/**
+ * Play the door close sound
+ */
+void doorStartClose(DoorRecord *door)
+{
+    door->flags &= ~DOORFLAG_KEEPOPEN;
     play_door_opening_soundeffect_1(door);
 }
 
 
+void doorFinishOpen(DoorRecord *door)
+{
+    play_door_closing_soundeffect_0(door);
 
+    if (door->doorType == 8)
+    {
+        sub_GAME_7F03FDA8(door->prop);
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F05480C(void) {
-
+        if (door->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)
+        {
+            door->unk6C->flags |= 1;
+            matrix_4x4_set_identity(&door->unk6C->m);
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05480C
-/* 08933C 7F05480C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 089340 7F054810 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 089344 7F054814 0FC150B1 */  jal   play_door_closing_soundeffect_0
-/* 089348 7F054818 AFA40018 */   sw    $a0, 0x18($sp)
-/* 08934C 7F05481C 8FA50018 */  lw    $a1, 0x18($sp)
-/* 089350 7F054820 24010008 */  li    $at, 8
-/* 089354 7F054824 94AE009A */  lhu   $t6, 0x9a($a1)
-/* 089358 7F054828 55C10011 */  bnel  $t6, $at, .L7F054870
-/* 08935C 7F05482C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 089360 7F054830 8CA40010 */  lw    $a0, 0x10($a1)
-/* 089364 7F054834 0FC0FF6A */  jal   sub_GAME_7F03FDA8
-/* 089368 7F054838 AFA50018 */   sw    $a1, 0x18($sp)
-/* 08936C 7F05483C 8FA50018 */  lw    $a1, 0x18($sp)
-/* 089370 7F054840 8CAF0064 */  lw    $t7, 0x64($a1)
-/* 089374 7F054844 31F80080 */  andi  $t8, $t7, 0x80
-/* 089378 7F054848 53000009 */  beql  $t8, $zero, .L7F054870
-/* 08937C 7F05484C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 089380 7F054850 8CA2006C */  lw    $v0, 0x6c($a1)
-/* 089384 7F054854 8C590000 */  lw    $t9, ($v0)
-/* 089388 7F054858 37280001 */  ori   $t0, $t9, 1
-/* 08938C 7F05485C AC480000 */  sw    $t0, ($v0)
-/* 089390 7F054860 8CA4006C */  lw    $a0, 0x6c($a1)
-/* 089394 7F054864 0FC15FF4 */  jal   matrix_4x4_set_identity
-/* 089398 7F054868 24840020 */   addiu $a0, $a0, 0x20
-/* 08939C 7F05486C 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F054870:
-/* 0893A0 7F054870 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0893A4 7F054874 03E00008 */  jr    $ra
-/* 0893A8 7F054878 00000000 */   nop   
-)
-#endif
 
 
-
-
-
-void sub_GAME_7F05487C(s32 arg0) {
+void doorFinishClose(s32 arg0) {
     play_door_closing_soundeffect_1(arg0);
-    sub_GAME_7F0535C4(arg0);
+    doorDeactivatePortal(arg0);
 }
 
 
+/**
+ * Apply the given state to an individual door (not its siblings).
+ *
+ * Handles playing door open/close sounds and activating the portal if opening.
+ */
+void doorSetOpenState(DoorRecord *door, s32 newstate)
+{
+    if (newstate == DOORSTATE_OPENING)
+    {
+        if (door->openstate == DOORSTATE_STATIONARY || door->openstate == DOORSTATE_WAITING)
+        {
+            doorStartOpen(door);
+        }
 
+        door->openstate = newstate;
+    }
+    else if (newstate == DOORSTATE_CLOSING)
+    {
+        if (door->openstate == DOORSTATE_STATIONARY && door->openPosition > 0)
+        {
+            doorStartClose(door);
+        }
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F0548A4(void) {
-
+        if ((door->openstate != DOORSTATE_STATIONARY && door->openstate != DOORSTATE_WAITING) || door->openPosition > 0)
+        {
+            door->openstate = newstate;
+        }
+        else if (door->openstate == DOORSTATE_WAITING)
+        {
+            door->openstate = DOORSTATE_STATIONARY;
+        }
+    }
+    else
+    {
+        door->openstate = newstate;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0548A4
-/* 0893D4 7F0548A4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0893D8 7F0548A8 24010001 */  li    $at, 1
-/* 0893DC 7F0548AC 14A1000E */  bne   $a1, $at, .L7F0548E8
-/* 0893E0 7F0548B0 AFBF0014 */   sw    $ra, 0x14($sp)
-/* 0893E4 7F0548B4 808200BC */  lb    $v0, 0xbc($a0)
-/* 0893E8 7F0548B8 24010003 */  li    $at, 3
-/* 0893EC 7F0548BC 50400004 */  beql  $v0, $zero, .L7F0548D0
-/* 0893F0 7F0548C0 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0893F4 7F0548C4 14410006 */  bne   $v0, $at, .L7F0548E0
-/* 0893F8 7F0548C8 00000000 */   nop   
-/* 0893FC 7F0548CC AFA40018 */  sw    $a0, 0x18($sp)
-.L7F0548D0:
-/* 089400 7F0548D0 0FC151D3 */  jal   sub_GAME_7F05474C
-/* 089404 7F0548D4 AFA5001C */   sw    $a1, 0x1c($sp)
-/* 089408 7F0548D8 8FA40018 */  lw    $a0, 0x18($sp)
-/* 08940C 7F0548DC 8FA5001C */  lw    $a1, 0x1c($sp)
-.L7F0548E0:
-/* 089410 7F0548E0 10000025 */  b     .L7F054978
-/* 089414 7F0548E4 A08500BC */   sb    $a1, 0xbc($a0)
-.L7F0548E8:
-/* 089418 7F0548E8 24010002 */  li    $at, 2
-/* 08941C 7F0548EC 54A10022 */  bnel  $a1, $at, .L7F054978
-/* 089420 7F0548F0 A08500BC */   sb    $a1, 0xbc($a0)
-/* 089424 7F0548F4 808200BC */  lb    $v0, 0xbc($a0)
-/* 089428 7F0548F8 1440000D */  bnez  $v0, .L7F054930
-/* 08942C 7F0548FC 00000000 */   nop   
-/* 089430 7F054900 44802000 */  mtc1  $zero, $f4
-/* 089434 7F054904 C48600B4 */  lwc1  $f6, 0xb4($a0)
-/* 089438 7F054908 4606203C */  c.lt.s $f4, $f6
-/* 08943C 7F05490C 00000000 */  nop   
-/* 089440 7F054910 45000007 */  bc1f  .L7F054930
-/* 089444 7F054914 00000000 */   nop   
-/* 089448 7F054918 AFA40018 */  sw    $a0, 0x18($sp)
-/* 08944C 7F05491C 0FC151F7 */  jal   sub_GAME_7F0547DC
-/* 089450 7F054920 AFA5001C */   sw    $a1, 0x1c($sp)
-/* 089454 7F054924 8FA40018 */  lw    $a0, 0x18($sp)
-/* 089458 7F054928 8FA5001C */  lw    $a1, 0x1c($sp)
-/* 08945C 7F05492C 808200BC */  lb    $v0, 0xbc($a0)
-.L7F054930:
-/* 089460 7F054930 10400003 */  beqz  $v0, .L7F054940
-/* 089464 7F054934 24010003 */   li    $at, 3
-/* 089468 7F054938 14410008 */  bne   $v0, $at, .L7F05495C
-/* 08946C 7F05493C 00000000 */   nop   
-.L7F054940:
-/* 089470 7F054940 44804000 */  mtc1  $zero, $f8
-/* 089474 7F054944 C48A00B4 */  lwc1  $f10, 0xb4($a0)
-/* 089478 7F054948 24010003 */  li    $at, 3
-/* 08947C 7F05494C 460A403C */  c.lt.s $f8, $f10
-/* 089480 7F054950 00000000 */  nop   
-/* 089484 7F054954 45000003 */  bc1f  .L7F054964
-/* 089488 7F054958 00000000 */   nop   
-.L7F05495C:
-/* 08948C 7F05495C 10000006 */  b     .L7F054978
-/* 089490 7F054960 A08500BC */   sb    $a1, 0xbc($a0)
-.L7F054964:
-/* 089494 7F054964 54410005 */  bnel  $v0, $at, .L7F05497C
-/* 089498 7F054968 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 08949C 7F05496C 10000002 */  b     .L7F054978
-/* 0894A0 7F054970 A08000BC */   sb    $zero, 0xbc($a0)
-/* 0894A4 7F054974 A08500BC */  sb    $a1, 0xbc($a0)
-.L7F054978:
-/* 0894A8 7F054978 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F05497C:
-/* 0894AC 7F05497C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0894B0 7F054980 03E00008 */  jr    $ra
-/* 0894B4 7F054984 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 void doorActivate(DoorRecord *door, DOORSTATE State) //#MATCH
@@ -43803,150 +43666,74 @@ void doorActivate(DoorRecord *door, DOORSTATE State) //#MATCH
         }
     }
 
-    sub_GAME_7F0548A4(door, State);
+    doorSetOpenState(door, State);
 
     linkeddoor = door->linkedDoor;
 
     while (linkeddoor && linkeddoor != door)
     {
-        sub_GAME_7F0548A4(linkeddoor, LinkedState);
+        doorSetOpenState(linkeddoor, LinkedState);
         linkeddoor = linkeddoor->linkedDoor;
     };
 }
 
 
-
-
-
-#ifdef NONMATCHING
-s32 sub_GAME_7F054A20(DoorRecord *door)
+bool doorIsClosed(DoorRecord *door)
 {
-    return (door->openstate == DOORSTATE_WAITING) || ((door->openstate == DOORSTATE_STATIONARY) && (door->openPosition <= 0.0f));
+    return ((door->openstate == DOORSTATE_STATIONARY) || (door->openstate == DOORSTATE_WAITING)) && (door->openPosition <= 0.0f);
 }
-#else
-
-s32 sub_GAME_7F054A20(DoorRecord *door);
-
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F054A20
-/* 089550 7F054A20 808300BC */  lb    $v1, 0xbc($a0)
-/* 089554 7F054A24 2C620001 */  sltiu $v0, $v1, 1
-/* 089558 7F054A28 14400004 */  bnez  $v0, .L7F054A3C
-/* 08955C 7F054A2C 38620003 */   xori  $v0, $v1, 3
-/* 089560 7F054A30 2C420001 */  sltiu $v0, $v0, 1
-/* 089564 7F054A34 10400009 */  beqz  $v0, .L7F054A5C
-/* 089568 7F054A38 00000000 */   nop   
-.L7F054A3C:
-/* 08956C 7F054A3C 44802000 */  mtc1  $zero, $f4
-/* 089570 7F054A40 C48600B4 */  lwc1  $f6, 0xb4($a0)
-/* 089574 7F054A44 00001025 */  move  $v0, $zero
-/* 089578 7F054A48 4604303E */  c.le.s $f6, $f4
-/* 08957C 7F054A4C 00000000 */  nop   
-/* 089580 7F054A50 45000002 */  bc1f  .L7F054A5C
-/* 089584 7F054A54 00000000 */   nop   
-/* 089588 7F054A58 24020001 */  li    $v0, 1
-.L7F054A5C:
-/* 08958C 7F054A5C 03E00008 */  jr    $ra
-/* 089590 7F054A60 00000000 */   nop   
-)
-#endif
 
 
+s32 sub_GAME_7F054A64(PropRecord *prop, bbox2d *bbox)
+{
+    s32 room_ids[8];
+    s32 *rooms;
+    bool result = FALSE;
+    s32 room_id;
+    bbox2d bbox2;
 
+    chraiGetPropRoomIds(prop, room_ids);
+    rooms = room_ids;
+    room_id = *rooms;
 
+    while (room_id >= 0)
+    {
+        if (bgGet2dBboxByRoomId(room_id, &bbox2))
+        {
+            if (result)
+            {
+                if (bbox->min.x > bbox2.min.x)
+                {
+                    bbox->min.x = bbox2.min.x;
+                }
+                if (bbox->min.y > bbox2.min.y)
+                {
+                    bbox->min.y = bbox2.min.y;
+                }
+                if (bbox->max.x < bbox2.max.x)
+                {
+                    bbox->max.x = bbox2.max.x;
+                }
+                if (bbox->max.y < bbox2.max.y)
+                {
+                    bbox->max.y = bbox2.max.y;
+                }
+            }
+            else
+            {
+                bbox->min.x = bbox2.min.x;
+                bbox->min.y = bbox2.min.y;
+                bbox->max.x = bbox2.max.x;
+                bbox->max.y = bbox2.max.y;
+            }
+            result = TRUE;
+        }
+        rooms++;
+        room_id = *rooms;
+    }
 
-#ifdef NONMATCHING
-void sub_GAME_7F054A64(void) {
-
+    return result;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F054A64
-/* 089594 7F054A64 27BDFF98 */  addiu $sp, $sp, -0x68
-/* 089598 7F054A68 AFB30020 */  sw    $s3, 0x20($sp)
-/* 08959C 7F054A6C AFB00014 */  sw    $s0, 0x14($sp)
-/* 0895A0 7F054A70 00A08025 */  move  $s0, $a1
-/* 0895A4 7F054A74 27B30048 */  addiu $s3, $sp, 0x48
-/* 0895A8 7F054A78 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0895AC 7F054A7C AFB2001C */  sw    $s2, 0x1c($sp)
-/* 0895B0 7F054A80 AFB10018 */  sw    $s1, 0x18($sp)
-/* 0895B4 7F054A84 00009025 */  move  $s2, $zero
-/* 0895B8 7F054A88 0FC0F2E3 */  jal   chraiGetPropRoomIds
-/* 0895BC 7F054A8C 02602825 */   move  $a1, $s3
-/* 0895C0 7F054A90 8FA40048 */  lw    $a0, 0x48($sp)
-/* 0895C4 7F054A94 02608825 */  move  $s1, $s3
-/* 0895C8 7F054A98 27B3002C */  addiu $s3, $sp, 0x2c
-/* 0895CC 7F054A9C 04820031 */  bltzl $a0, .L7F054B64
-/* 0895D0 7F054AA0 8FBF0024 */   lw    $ra, 0x24($sp)
-.L7F054AA4:
-/* 0895D4 7F054AA4 0FC2CF03 */  jal   bgGet2dBboxByRoomId
-/* 0895D8 7F054AA8 02602825 */   move  $a1, $s3
-/* 0895DC 7F054AAC 10400028 */  beqz  $v0, .L7F054B50
-/* 0895E0 7F054AB0 0012102B */   sltu  $v0, $zero, $s2
-/* 0895E4 7F054AB4 1040001E */  beqz  $v0, .L7F054B30
-/* 0895E8 7F054AB8 24120001 */   li    $s2, 1
-/* 0895EC 7F054ABC C7A4002C */  lwc1  $f4, 0x2c($sp)
-/* 0895F0 7F054AC0 C6060000 */  lwc1  $f6, ($s0)
-/* 0895F4 7F054AC4 4606203C */  c.lt.s $f4, $f6
-/* 0895F8 7F054AC8 00000000 */  nop   
-/* 0895FC 7F054ACC 45020003 */  bc1fl .L7F054ADC
-/* 089600 7F054AD0 C7A80030 */   lwc1  $f8, 0x30($sp)
-/* 089604 7F054AD4 E6040000 */  swc1  $f4, ($s0)
-/* 089608 7F054AD8 C7A80030 */  lwc1  $f8, 0x30($sp)
-.L7F054ADC:
-/* 08960C 7F054ADC C60A0004 */  lwc1  $f10, 4($s0)
-/* 089610 7F054AE0 460A403C */  c.lt.s $f8, $f10
-/* 089614 7F054AE4 00000000 */  nop   
-/* 089618 7F054AE8 45020003 */  bc1fl .L7F054AF8
-/* 08961C 7F054AEC C6100008 */   lwc1  $f16, 8($s0)
-/* 089620 7F054AF0 E6080004 */  swc1  $f8, 4($s0)
-/* 089624 7F054AF4 C6100008 */  lwc1  $f16, 8($s0)
-.L7F054AF8:
-/* 089628 7F054AF8 C7B20034 */  lwc1  $f18, 0x34($sp)
-/* 08962C 7F054AFC 4612803C */  c.lt.s $f16, $f18
-/* 089630 7F054B00 00000000 */  nop   
-/* 089634 7F054B04 45020003 */  bc1fl .L7F054B14
-/* 089638 7F054B08 C606000C */   lwc1  $f6, 0xc($s0)
-/* 08963C 7F054B0C E6120008 */  swc1  $f18, 8($s0)
-/* 089640 7F054B10 C606000C */  lwc1  $f6, 0xc($s0)
-.L7F054B14:
-/* 089644 7F054B14 C7A40038 */  lwc1  $f4, 0x38($sp)
-/* 089648 7F054B18 4604303C */  c.lt.s $f6, $f4
-/* 08964C 7F054B1C 00000000 */  nop   
-/* 089650 7F054B20 4502000C */  bc1fl .L7F054B54
-/* 089654 7F054B24 8E240004 */   lw    $a0, 4($s1)
-/* 089658 7F054B28 10000009 */  b     .L7F054B50
-/* 08965C 7F054B2C E604000C */   swc1  $f4, 0xc($s0)
-.L7F054B30:
-/* 089660 7F054B30 C7AA002C */  lwc1  $f10, 0x2c($sp)
-/* 089664 7F054B34 E60A0000 */  swc1  $f10, ($s0)
-/* 089668 7F054B38 C7A80030 */  lwc1  $f8, 0x30($sp)
-/* 08966C 7F054B3C E6080004 */  swc1  $f8, 4($s0)
-/* 089670 7F054B40 C7B00034 */  lwc1  $f16, 0x34($sp)
-/* 089674 7F054B44 E6100008 */  swc1  $f16, 8($s0)
-/* 089678 7F054B48 C7B20038 */  lwc1  $f18, 0x38($sp)
-/* 08967C 7F054B4C E612000C */  swc1  $f18, 0xc($s0)
-.L7F054B50:
-/* 089680 7F054B50 8E240004 */  lw    $a0, 4($s1)
-.L7F054B54:
-/* 089684 7F054B54 26310004 */  addiu $s1, $s1, 4
-/* 089688 7F054B58 0481FFD2 */  bgez  $a0, .L7F054AA4
-/* 08968C 7F054B5C 00000000 */   nop   
-/* 089690 7F054B60 8FBF0024 */  lw    $ra, 0x24($sp)
-.L7F054B64:
-/* 089694 7F054B64 02401025 */  move  $v0, $s2
-/* 089698 7F054B68 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 08969C 7F054B6C 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0896A0 7F054B70 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0896A4 7F054B74 8FB30020 */  lw    $s3, 0x20($sp)
-/* 0896A8 7F054B78 03E00008 */  jr    $ra
-/* 0896AC 7F054B7C 27BD0068 */   addiu $sp, $sp, 0x68
-)
-#endif
-
-
 
 
 #if defined(LEFTOVERDEBUG)
@@ -44397,7 +44184,7 @@ glabel sub_GAME_7F054FB4
 /* 089BF4 7F0550C4 E63400B8 */  swc1  $f20, 0xb8($s1)
 /* 089BF8 7F0550C8 8E6E0000 */  lw    $t6, ($s3)
 /* 089BFC 7F0550CC 02202025 */  move  $a0, $s1
-/* 089C00 7F0550D0 0FC15203 */  jal   sub_GAME_7F05480C
+/* 089C00 7F0550D0 0FC15203 */  jal   doorFinishOpen
 /* 089C04 7F0550D4 AE2E00EC */   sw    $t6, 0xec($s1)
 /* 089C08 7F0550D8 1000000F */  b     .L7F055118
 /* 089C0C 7F0550DC 8E240010 */   lw    $a0, 0x10($s1)
@@ -44413,7 +44200,7 @@ glabel sub_GAME_7F054FB4
 /* 089C30 7F055100 8E240010 */   lw    $a0, 0x10($s1)
 /* 089C34 7F055104 A22000BC */  sb    $zero, 0xbc($s1)
 /* 089C38 7F055108 E63400B8 */  swc1  $f20, 0xb8($s1)
-/* 089C3C 7F05510C 0FC1521F */  jal   sub_GAME_7F05487C
+/* 089C3C 7F05510C 0FC1521F */  jal   doorFinishClose
 /* 089C40 7F055110 AE2000EC */   sw    $zero, 0xec($s1)
 /* 089C44 7F055114 8E240010 */  lw    $a0, 0x10($s1)
 .L7F055118:
