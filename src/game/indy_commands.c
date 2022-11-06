@@ -194,12 +194,12 @@ s32 send2indyresourcecommands(indy_resource_entry_header * entry1, u32 size1, in
 }
 
 
-void indyrescmdSizeNextCmd(s32 readsize,s32 writesize)
+void indyrescmdStartCmdSeq(s32 readsize,s32 writesize)
 {
     indy_resource_entry_type1 cmd;
 
-    cmd.entry.resourceID = 0x9abf1623;
-    cmd.entry.type = INDY_SIZE;
+    cmd.entry.resourceID = INDYMAGIC;
+    cmd.entry.type = INDY_STARTCMDSEQ;
     cmd.entry.size = sizeof(cmd);
     cmd.entry.readsize = readsize;
     cmd.entry.writesize = writesize;
@@ -207,12 +207,12 @@ void indyrescmdSizeNextCmd(s32 readsize,s32 writesize)
 }
 
 
-void indyrescmdSendCmdEnd(s32 readsize,s32 writesize)
+void indyrescmdEndCmdSeq(s32 readsize,s32 writesize)
 {
-    indy_resource_entry_type2 cmd;
+    s_indyResCmd02End cmd;
 
-    cmd.entry.resourceID = 0x9abf1623;
-    cmd.entry.type = INDY_END;
+    cmd.entry.resourceID = INDYMAGIC;
+    cmd.entry.type = INDY_ENDCMDSEQ;
     cmd.entry.size = sizeof(cmd);
     cmd.entry.readsize = readsize;
     cmd.entry.writesize = writesize;
@@ -223,7 +223,7 @@ void indyrescmdSendCmdEnd(s32 readsize,s32 writesize)
 void indyrescmdInit(s32 readsize,s32 writesize)
 {
     indy_resource_entry_type0 cmd;
-    cmd.entry.resourceID = 0x9abf1623;
+    cmd.entry.resourceID = INDYMAGIC;
     cmd.entry.type = INDY_INIT;
     cmd.entry.size = sizeof(indy_resource_entry_type0);
     cmd.entry.readsize = readsize;
@@ -235,7 +235,7 @@ void post_type3_indyrescmd(s32 rsize,s32 wsize,char *strptr)
 {
     struct indy_resource_entry_type3 cmd;
 
-    cmd.entry.resourceID = 0x9abf1623;
+    cmd.entry.resourceID = INDYMAGIC;
     cmd.entry.type = INDY_RESCMD;
     cmd.entry.size = sizeof(cmd);
     cmd.entry.readsize = rsize;
@@ -250,7 +250,7 @@ void post_type4_indyrescmd_data_recieved(s32 readsize,s32 writesize,s32 data)
 {
     indy_resource_entry_type4 cmd;
     
-    cmd.entry.resourceID = 0x9abf1623;
+    cmd.entry.resourceID = INDYMAGIC;
     cmd.entry.type = INDY_RESCMDDATARCVD;
     cmd.entry.size = sizeof(cmd);
     cmd.entry.readsize = readsize;
@@ -264,7 +264,7 @@ void indyrescmdCheckFileExists(s32 rsize,s32 wsize,char *name)
 {
   indy_resource_entry_type5 cmd;
   
-  cmd.entry.resourceID = 0x9abf1623;
+  cmd.entry.resourceID = INDYMAGIC;
   cmd.entry.type = INDY_SENDCHECKFILEEXISTS;
   cmd.entry.size = sizeof(cmd);
   cmd.entry.readsize = rsize;
@@ -277,9 +277,9 @@ void indyrescmdCheckFileExists(s32 rsize,s32 wsize,char *name)
 
 void post_type6_indyrescmd_printfrecieved(s32 readsize,s32 writesize,u32 data1,u32 data2)
 {
-    struct indy_resource_entry_type6 cmd;
+    indy_resource_entry_type6 cmd;
 
-    cmd.entry.resourceID = 0x9abf1623;
+    cmd.entry.resourceID = INDYMAGIC;
     cmd.entry.type = INDY_RECVCHECKFILEEXISTS;
     cmd.entry.size = sizeof(cmd);
     cmd.entry.readsize = readsize;
@@ -292,9 +292,9 @@ void post_type6_indyrescmd_printfrecieved(s32 readsize,s32 writesize,u32 data1,u
 
 void indyrescmdSendFileLoad(u32 rsize,u32 wsize,u8 *filename,u32 size)
 {
-    struct indy_resource_entry_type7 cmd;
+    indy_resource_entry_type7 cmd;
 
-    cmd.entry.resourceID = 0x9abf1623;
+    cmd.entry.resourceID = INDYMAGIC;
     cmd.entry.type = INDY_SENDFILELOAD;
     cmd.entry.size = sizeof(cmd);
     cmd.entry.readsize = rsize;
@@ -308,19 +308,19 @@ void indyrescmdSendFileLoad(u32 rsize,u32 wsize,u8 *filename,u32 size)
 
 void post_type8_indyrescmd_log_recieved(s32 rsize,s32 wsize,u32 data1,u32 data2,u32 cmd2size,struct indy_resource_entry_type8 *cmd2)
 {
-   struct indy_resource_entry_type8 cmd;
+   indy_resource_entry_type8 cmd;
   
-   cmd.entry.resourceID = 0x9abf1623;
+   cmd.entry.resourceID = INDYMAGIC;
    cmd.entry.type = INDY_LOGRECVD;
   
-   cmd.entry.size = (cmd2size +3 & ~3)+ 0x20;
+   cmd.entry.size = (cmd2size +3 & ~3)+ sizeof(indy_resource_entry_type8);
    cmd.entry.readsize = rsize;
    cmd.entry.writesize = wsize;
   
    cmd.data1 = data1;
    cmd.size = cmd2size;
    cmd.data2 = data2;
-   send2indyresourcecommands(&cmd,0x20,cmd2,cmd2size);
+   send2indyresourcecommands(&cmd,sizeof(indy_resource_entry_type8),cmd2,cmd2size);
 }
 
 
@@ -328,16 +328,16 @@ void indyrescmdSendDump(s32 rsize,s32 wsize,char *strptr,u32 size2,struct indy_r
 {
   indy_resource_entry_type9 cmd;
 
-  cmd.entry.resourceID = 0x9abf1623;
+  cmd.entry.resourceID = INDYMAGIC;
   cmd.entry.type = INDY_SENDDUMP;
 
-  cmd.entry.size = (size2 + 3 & 0xfffffffc) + 0x114;
+  cmd.entry.size = (size2 + 3 & 0xfffffffc) + sizeof(indy_resource_entry_type9);
   cmd.entry.readsize = rsize;
   cmd.entry.writesize = wsize;
 
   strncpy(cmd.strbuffer,strptr,sizeof(cmd.strbuffer));
   cmd.strbuffer[255] = '\0';
-  send2indyresourcecommands(&cmd,0x114,cmd2,size2);
+  send2indyresourcecommands(&cmd,sizeof(indy_resource_entry_type9),cmd2,size2);
   
 }
 
@@ -346,7 +346,7 @@ void post_typeA_indyrescmd_app_command_recieved(s32 readsize,s32 writesize,u32 d
 {
   indy_resource_entry_typeA cmd;
   
-  cmd.entry.resourceID = 0x9abf1623;
+  cmd.entry.resourceID = INDYMAGIC;
   cmd.entry.type = INDY_APPCMDRECVD;
   cmd.entry.size = sizeof(cmd);
   cmd.entry.readsize = readsize;
@@ -360,7 +360,7 @@ void indyrescmdRamRomLoad(u32 rsize,u32 wsize,char *name,u32 filesize,u32 ptarge
 {
   indy_resource_entry_typeF cmd;
   
-  cmd.entry.resourceID = 0x9abf1623;
+  cmd.entry.resourceID = INDYMAGIC;
   cmd.entry.type = INDY_RAMROMLOAD;
   cmd.entry.size = sizeof(cmd);
   cmd.entry.readsize = rsize;
@@ -377,9 +377,9 @@ void indyrescmdRamRomLoad(u32 rsize,u32 wsize,char *name,u32 filesize,u32 ptarge
 
 void post_type10_indyrescmd_fault_ack_by_host(s32 rsize,s32 wsize,u32 data1,u32 data2,u32 data3)
 {
-    struct indy_resource_entry_type10 cmd;
+    indy_resource_entry_type10 cmd;
 
-    cmd.entry.resourceID = 0x9abf1623;
+    cmd.entry.resourceID = INDYMAGIC;
     cmd.entry.type = INDY_FAULTACKHOST;
     cmd.entry.size = sizeof(cmd);
     cmd.entry.readsize = rsize;
@@ -395,7 +395,7 @@ void indyrescmdSendExportFile(u32 rsize,u32 wsize,u8 *ptrstr,u32 size,u8 *hwaddr
 {
     indy_resource_entry_typeD cmd;
     
-    cmd.entry.resourceID = 0x9abf1623;
+    cmd.entry.resourceID = INDYMAGIC;
     cmd.entry.type = INDY_EXPORTFILE;
     cmd.entry.size = sizeof(cmd);
     cmd.entry.readsize = rsize;
@@ -412,7 +412,7 @@ void post_typeE_indyrescmd_prof_recv(s32 readsize,s32 writesize,u32 data)
 {
     indy_resource_entry_typeE cmd;
 
-    cmd.entry.resourceID = 0x9abf1623;
+    cmd.entry.resourceID = INDYMAGIC;
     cmd.entry.type = INDY_PROFILE_RECV;
     cmd.entry.size = sizeof(cmd);
     cmd.entry.readsize = readsize;
@@ -426,7 +426,7 @@ void indyrescmdSendHostCmd(s32 rsize,s32 wsize,char *strptr)
 {
     indy_resource_entry_typeB cmd;
     
-    cmd.entry.resourceID = 0x9abf1623;
+    cmd.entry.resourceID = INDYMAGIC;
     cmd.entry.type = INDY_SENDHOSTCMD;
     cmd.entry.size = sizeof(cmd);
     cmd.entry.readsize = rsize;
@@ -441,7 +441,7 @@ void post_typeC_indyrescmd_prof_send(s32 readsize,s32 writesize,u32 data)
 {
     indy_resource_entry_typeC cmd;
 
-    cmd.entry.resourceID = 0x9abf1623;
+    cmd.entry.resourceID = INDYMAGIC;
     cmd.entry.type = INDY_PROFILE_SEND;
     cmd.entry.size = sizeof(cmd);
     cmd.entry.readsize = readsize;
@@ -455,7 +455,7 @@ void post_typeA_indyrescmd_app_data_recieved(s32 readsize,s32 writesize,u32 data
 {
     indy_resource_entry_typeA cmd;
 
-    cmd.entry.resourceID = 0x9abf1623;
+    cmd.entry.resourceID = INDYMAGIC;
     cmd.entry.type = INDY_APPCMDRECVD;
     cmd.entry.size = sizeof(cmd);
     cmd.entry.readsize = readsize;
@@ -467,144 +467,144 @@ void post_typeA_indyrescmd_app_data_recieved(s32 readsize,s32 writesize,u32 data
 
 s32 indycmdSendInitPacket(void)
 {
-    indyrescmdSizeNextCmd(0x14,0x14);
-    indyrescmdInit(0x14,0x14);
-    indyrescmdSendCmdEnd(0,0);
+    indyrescmdStartCmdSeq(sizeof(indy_resource_entry_type0),sizeof(indy_resource_entry_type0));
+    indyrescmdInit(sizeof(s_indyResCmd02End),sizeof(s_indyResCmd02End));
+    indyrescmdEndCmdSeq(0,0);
     return TRUE;
 }
 
 
 s32 post_indyrescmd_game_data_send(char *strptr)
 {
-    indyrescmdSizeNextCmd(0x114,0x114);
-    post_type3_indyrescmd(0x14,0x14,strptr);
-    indyrescmdSendCmdEnd(0,0);
+    indyrescmdStartCmdSeq(sizeof(indy_resource_entry_type3),sizeof(indy_resource_entry_type3));
+    post_type3_indyrescmd(sizeof(s_indyResCmd02End),sizeof(s_indyResCmd02End),strptr);
+    indyrescmdEndCmdSeq(0,0);
     return TRUE;
 }
 
 
 s32 post_indyrescmd_debug_data_recv(u32 data)
 {
-    indyrescmdSizeNextCmd(0x18,0x18);
-    post_type4_indyrescmd_data_recieved(0x14,0x14,data);
-    indyrescmdSendCmdEnd(0,0);
+    indyrescmdStartCmdSeq(sizeof(indy_resource_entry_type4),sizeof(indy_resource_entry_type4));
+    post_type4_indyrescmd_data_recieved(sizeof(s_indyResCmd02End),sizeof(s_indyResCmd02End),data);
+    indyrescmdEndCmdSeq(0,0);
     return TRUE;
 }
 
 
 s32 indycmdSendHostCheckFileExists(char *strptr)
 {
-    indyrescmdSizeNextCmd(0x114,0x114);
-    indyrescmdCheckFileExists(0x14,0x14,strptr);
-    indyrescmdSendCmdEnd(0,0);
+    indyrescmdStartCmdSeq(sizeof(indy_resource_entry_type5),sizeof(indy_resource_entry_type5));
+    indyrescmdCheckFileExists(sizeof(s_indyResCmd02End),sizeof(s_indyResCmd02End),strptr);
+    indyrescmdEndCmdSeq(0,0);
     return TRUE;
 }
 
 
 s32 post_indyrescmd_debug_printf_recv(u32 data1,u32 data2)
 {
-    indyrescmdSizeNextCmd(0x1c,0x1c);
-    post_type6_indyrescmd_printfrecieved(0x14,0x14,data1,data2);
-    indyrescmdSendCmdEnd(0,0);
+    indyrescmdStartCmdSeq(sizeof(indy_resource_entry_type6),sizeof(indy_resource_entry_type6));
+    post_type6_indyrescmd_printfrecieved(sizeof(s_indyResCmd02End),sizeof(s_indyResCmd02End),data1,data2);
+    indyrescmdEndCmdSeq(0,0);
     return TRUE;
 }
 
 
 s32 indycmdSendLoadFile(u8 *filename,u32 size)
 {
-    indyrescmdSizeNextCmd(0x118,0x118);
-    indyrescmdSendFileLoad(0x14,0x14,filename,size);
-    indyrescmdSendCmdEnd(0,0);
+    indyrescmdStartCmdSeq(sizeof(indy_resource_entry_type7),sizeof(indy_resource_entry_type7));
+    indyrescmdSendFileLoad(sizeof(s_indyResCmd02End),sizeof(s_indyResCmd02End),filename,size);
+    indyrescmdEndCmdSeq(0,0);
     return TRUE;
 }
 
 
 s32 post_indyrescmd_1_8_2(u32 data1,u32 data2,u32 size2,struct indy_resource_entry_header *cmd2)
 {
-    indyrescmdSizeNextCmd((size2 + 3 & 0xfffffffc) + 0x20,0x20);
-    post_type8_indyrescmd_log_recieved(0x14,0x14,data1,data2,size2,cmd2);
-    indyrescmdSendCmdEnd(0,0);
+    indyrescmdStartCmdSeq((size2 + 3 & 0xfffffffc) + sizeof(indy_resource_entry_type8),sizeof(indy_resource_entry_type8));
+    post_type8_indyrescmd_log_recieved(sizeof(s_indyResCmd02End),sizeof(s_indyResCmd02End),data1,data2,size2,cmd2);
+    indyrescmdEndCmdSeq(0,0);
     return TRUE;
 }
 
 
 s32 indycmdSendDump(char *string, u32 size, struct indy_resource_entry_header *data)
 {
-    indyrescmdSizeNextCmd((size + 3 & 0xfffffffc) + 0x114,0x114);
-    indyrescmdSendDump(0x14,0x14,string,size,data);
-    indyrescmdSendCmdEnd(0,0);
+    indyrescmdStartCmdSeq((size + 3 & 0xfffffffc) + sizeof(indy_resource_entry_type9),sizeof(indy_resource_entry_type9));
+    indyrescmdSendDump(sizeof(s_indyResCmd02End),sizeof(s_indyResCmd02End),string,size,data);
+    indyrescmdEndCmdSeq(0,0);
     return TRUE;
 }
 
 
 s32 post_indyrescmd_recv_capture_data_success(u32 data)
 {
-    indyrescmdSizeNextCmd(0x18,0x18);
-    post_typeA_indyrescmd_app_command_recieved(0x14,0x14,data);
-    indyrescmdSendCmdEnd(0,0);
+    indyrescmdStartCmdSeq(sizeof(indy_resource_entry_typeA),sizeof(indy_resource_entry_typeA));
+    post_typeA_indyrescmd_app_command_recieved(sizeof(s_indyResCmd02End),sizeof(s_indyResCmd02End),data);
+    indyrescmdEndCmdSeq(0,0);
     return TRUE;
 }
 
 
 s32 indycmdSendRamRomLoad(char *strptr,u32 ptarget,u32 filesize)
 {
-    indyrescmdSizeNextCmd(0x11c,0x11c);
-    indyrescmdRamRomLoad(0x14,0x14,strptr,filesize,ptarget);
-    indyrescmdSendCmdEnd(0,0);
+    indyrescmdStartCmdSeq(sizeof(indy_resource_entry_typeF),sizeof(indy_resource_entry_typeF));
+    indyrescmdRamRomLoad(sizeof(s_indyResCmd02End),sizeof(s_indyResCmd02End),strptr,filesize,ptarget);
+    indyrescmdEndCmdSeq(0,0);
     return TRUE;
 }
 
 
 s32 post_indyrescmd_1_10_2(u32 param_1,u32 param_2,u32 param_3)
 {
-    indyrescmdSizeNextCmd(0x20,0x20);
-    post_type10_indyrescmd_fault_ack_by_host(0x14,0x14,param_1,param_2,param_3);
-    indyrescmdSendCmdEnd(0,0);
+    indyrescmdStartCmdSeq(sizeof(indy_resource_entry_type10),sizeof(indy_resource_entry_type10));
+    post_type10_indyrescmd_fault_ack_by_host(sizeof(s_indyResCmd02End),sizeof(s_indyResCmd02End),param_1,param_2,param_3);
+    indyrescmdEndCmdSeq(0,0);
     return TRUE;
 }
 
 
 s32 indycmdSendHostExportFile(char *strptr,u8 *phwaddr,u32 size)
 {
-    indyrescmdSizeNextCmd(0x11c,0x11c);
-    indyrescmdSendExportFile(0x14,0x14,strptr,size,phwaddr);
-    indyrescmdSendCmdEnd(0,0);
+    indyrescmdStartCmdSeq(sizeof(indy_resource_entry_typeD),sizeof(indy_resource_entry_typeD));
+    indyrescmdSendExportFile(sizeof(s_indyResCmd02End),sizeof(s_indyResCmd02End),strptr,size,phwaddr);
+    indyrescmdEndCmdSeq(0,0);
     return TRUE;
 }
 
 
 s32 post_indyrescmd_host_prof_recv(u32 data)
 {
-    indyrescmdSizeNextCmd(0x18,0x18);
-    post_typeE_indyrescmd_prof_recv(0x14,0x14,data);
-    indyrescmdSendCmdEnd(0,0);
+    indyrescmdStartCmdSeq(sizeof(indy_resource_entry_typeE),sizeof(indy_resource_entry_typeE));
+    post_typeE_indyrescmd_prof_recv(sizeof(s_indyResCmd02End),sizeof(s_indyResCmd02End),data);
+    indyrescmdEndCmdSeq(0,0);
     return TRUE;
 }
 
 
 s32 indycmdSendHostCmdPacket(char *strptr)
 {
-    indyrescmdSizeNextCmd(0x414,0x414);
-    indyrescmdSendHostCmd(0x14,0x14,strptr);
-    indyrescmdSendCmdEnd(0,0);
+    indyrescmdStartCmdSeq(sizeof(indy_resource_entry_typeB),sizeof(indy_resource_entry_typeB));
+    indyrescmdSendHostCmd(sizeof(s_indyResCmd02End),sizeof(s_indyResCmd02End),strptr);
+    indyrescmdEndCmdSeq(0,0);
     return TRUE;
 }
 
 
 s32 post_indyrescmd_1_C_2(u32 data)
 {
-    indyrescmdSizeNextCmd(0x18,0x18);
-    post_typeC_indyrescmd_prof_send(0x14,0x14,data);
-    indyrescmdSendCmdEnd(0,0);
+    indyrescmdStartCmdSeq(sizeof(indy_resource_entry_typeC),sizeof(indy_resource_entry_typeC));
+    post_typeC_indyrescmd_prof_send(sizeof(s_indyResCmd02End),sizeof(s_indyResCmd02End),data);
+    indyrescmdEndCmdSeq(0,0);
     return TRUE;
 }
 
 
 s32 post_indyrescmd_1_A_2(u32 data)
 {
-    indyrescmdSizeNextCmd(0x18,0x18);
-    post_typeA_indyrescmd_app_data_recieved(0x14,0x14,data);
-    indyrescmdSendCmdEnd(0,0);
+    indyrescmdStartCmdSeq(sizeof(indy_resource_entry_typeA),sizeof(indy_resource_entry_typeA));
+    post_typeA_indyrescmd_app_data_recieved(sizeof(s_indyResCmd02End),sizeof(s_indyResCmd02End),data);
+    indyrescmdEndCmdSeq(0,0);
     return TRUE;
 }
 
@@ -800,10 +800,9 @@ s32 post_indyrescmd_read_2commands(u8 *buffer1,u32 size1,u8 *buffer2,u32 size2)
 s32 indyrescmdResponseSize(s32 readsize, s32 writesize)
 {
     struct indy_resource_entry_header cmd;
-    u32 ret;
 
     indycmdRecieveCommand(&cmd, 0x14);
-    if (cmd.resourceID != 0x9ABF1623)
+    if (cmd.resourceID != INDYMAGIC)
     {
         return FALSE;
     }
@@ -832,7 +831,7 @@ s32 indyrescmdResponseEnd(s32 readsize, s32 writesize)
     struct indy_resource_entry_header cmd;
 
     indycmdRecieveCommand(&cmd, 0x14);
-    if (cmd.resourceID != 0x9ABF1623)
+    if (cmd.resourceID != INDYMAGIC)
     {
         return FALSE;
     }
@@ -862,7 +861,7 @@ s32 post_indyrescmd_istype4_correctvalue(s32 readsize, s32 writesize, u32 *respo
     struct indy_resource_entry_type4 cmd;
 
     indycmdRecieveCommand(&cmd, 0x18);
-    if (cmd.entry.resourceID != 0x9ABF1623)
+    if (cmd.entry.resourceID != INDYMAGIC)
     {
         return FALSE;
     }
@@ -892,7 +891,7 @@ s32 indyrescmdResponseFileExists(s32 readsize, s32 writesize, u32 *response1, u3
     struct indy_resource_entry_type6 cmd;
 
     indycmdRecieveCommand(&cmd, 0x1C);
-    if (cmd.entry.resourceID != 0x9ABF1623)
+    if (cmd.entry.resourceID != INDYMAGIC)
     {
         return FALSE;
     }
@@ -923,7 +922,7 @@ s32 indyrescmdResponseRecieveFile(s32 readsize, s32 writesize, u32 *response1, u
     struct indy_resource_entry_type8 cmd;
 
     indycmdRecieveCommand(&cmd, 0x20);
-    if (cmd.entry.resourceID != 0x9ABF1623)
+    if (cmd.entry.resourceID != INDYMAGIC)
     {
         return FALSE;
     }
@@ -956,7 +955,7 @@ s32 indyrescmdResponseSendDump(s32 readsize, s32 writesize, u32 *response)
     struct indy_resource_entry_typeA cmd;
 
     indycmdRecieveCommand(&cmd, 0x18);
-    if (cmd.entry.resourceID != 0x9ABF1623)
+    if (cmd.entry.resourceID != INDYMAGIC)
     {
         return FALSE;
     }
@@ -986,7 +985,7 @@ s32 indyrescmdResponseRecieveRamRom(s32 readsize, s32 writesize, u32 *data1, u32
     struct indy_resource_entry_type10 cmd;
 
     indycmdRecieveCommand(&cmd, 0x20);
-    if (cmd.entry.resourceID != 0x9ABF1623)
+    if (cmd.entry.resourceID != INDYMAGIC)
     {
         return FALSE;
     }
@@ -1018,7 +1017,7 @@ s32 indyrescmdResponseHostExportFile(s32 readsize, s32 writesize, u32 *response)
     indy_resource_entry_typeE cmd;
 
     indycmdRecieveCommand(&cmd, 0x18);
-    if (cmd.entry.resourceID != 0x9ABF1623)
+    if (cmd.entry.resourceID != INDYMAGIC)
     {
         return FALSE;
     }
@@ -1048,7 +1047,7 @@ s32 indyrescmdResponseHostCmdPacket(s32 readsize, s32 writesize, u32 *response)
     indy_resource_entry_typeC cmd;
 
     indycmdRecieveCommand(&cmd, 0x18);
-    if (cmd.entry.resourceID != 0x9ABF1623)
+    if (cmd.entry.resourceID != INDYMAGIC)
     {
         return FALSE;
     }
@@ -1141,7 +1140,7 @@ s32 response_indyrescmd_curr_matches_expected(s32 readsize, s32 writesize)
     struct indy_resource_entry_header cmd;
 
     indycmdRecieveCommand(&cmd, 0x14);
-    if (cmd.resourceID != 0x9ABF1623)
+    if (cmd.resourceID != INDYMAGIC)
     {
         return FALSE;
     }

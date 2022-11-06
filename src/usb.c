@@ -13,8 +13,6 @@ https://github.com/buu342/N64-UNFLoader
 #include <PR/os.h>
 
 
-s32 everdrive_status;
-
 /*********************************
            Data macros
 *********************************/
@@ -81,7 +79,7 @@ s32 everdrive_status;
 #define D64_DISABLE_ROMWR 0xF1
 #define D64_COMMAND_WRITE 0x08
 
-// Cartridge Interface return values
+// Cartridge Interface return values UDEV
 #define D64_MAGIC    0x55444556
 
 #define D64_USB_IDLE        0x00
@@ -156,7 +154,7 @@ s32 everdrive_status;
 #define SC64_MEM_USB_FIFO_LEN       (4 * 1024)
 
 #define SC64_SCR_SDRAM_WRITE_EN     (1 << 0)
-
+//S64a
 #define SC64_VERSION_A              0x53363461
 
 #define SC64_USB_STATUS_BUSY        (1 << 0)
