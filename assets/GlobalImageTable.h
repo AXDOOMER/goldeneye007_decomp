@@ -56,6 +56,14 @@ enum MONIMGIDS {
     IMGKEYBOARDKEY
 };
 
+enum MAINFOLDERIMGIDS {
+    IMG_COPY,
+    IMG_DEL,
+    IMG_SEL,
+    IMG_X,
+    IMG_CHECK,
+    IMG_DOT
+};
 
 
 extern Gfx globalDL_0x000;

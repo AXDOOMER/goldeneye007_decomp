@@ -952,7 +952,7 @@ void replay_recorded_ramrom_at_address(ramromfilestructure *demofile)
     g_ramromPlayBackFlag = 1;
     set_solo_and_ptr_briefing(ptr_active_demofile->stagenum);
     set_selected_difficulty(ptr_active_demofile->difficulty);
-    set_menu_to_mode(MENU_RUN_STAGE,1);
+    frontChangeMenu(MENU_RUN_STAGE,1);
 }
 
 void replay_recorded_ramrom_from_indy(void)
