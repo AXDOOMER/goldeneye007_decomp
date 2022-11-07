@@ -287,10 +287,10 @@ typedef enum LTITLE_STRINGS
     TITLE_STR_284,
     TITLE_STR_285,
     TITLE_STR_286,
- #ifdef LANG_US 
+ #ifdef BUGFIX_R0
     TITLE_STR_287
  #endif
- #ifdef LANG_JP
+ #ifdef BUGFIX_R1
     TITLE_STR_287,
     TITLE_STR_288,
     TITLE_STR_289,

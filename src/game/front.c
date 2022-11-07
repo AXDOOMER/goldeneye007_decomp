@@ -1763,7 +1763,7 @@ loop_1:
     temp_ret->unk0 = 0xbc000002;
     temp_ret->unk4 = 0x80000040;
     temp_ret->unk8 = 0x3860010;
-    temp_ret->unkC = &D_8002A990;
+    temp_ret->unkC = &ninlogolight+0x8;
     arg0 = (s32) (temp_ret + 0x18);
     temp_ret->unk10 = 0x3880010;
     temp_ret->unk14 = &ninlogolight;
@@ -2062,8 +2062,8 @@ glabel constructor_menu01_nintendo
 /* 03F924 7F00ADF4 3C09BC00 */  lui   $t1, (0xBC000002 >> 16) # lui $t1, 0xbc00
 /* 03F928 7F00ADF8 3C0A8000 */  lui   $t2, (0x80000040 >> 16) # lui $t2, 0x8000
 /* 03F92C 7F00ADFC 3C0B0386 */  lui   $t3, (0x03860010 >> 16) # lui $t3, 0x386
-/* 03F930 7F00AE00 3C0C8003 */  lui   $t4, %hi(D_8002A990)
-/* 03F934 7F00AE04 258CA990 */  addiu $t4, %lo(D_8002A990) # addiu $t4, $t4, -0x5670
+/* 03F930 7F00AE00 3C0C8003 */  lui   $t4, %hi(ninlogolight+0x8)
+/* 03F934 7F00AE04 258CA990 */  addiu $t4, %lo(ninlogolight+0x8) # addiu $t4, $t4, -0x5670
 /* 03F938 7F00AE08 356B0010 */  ori   $t3, (0x03860010 & 0xFFFF) # ori $t3, $t3, 0x10
 /* 03F93C 7F00AE0C 354A0040 */  ori   $t2, (0x80000040 & 0xFFFF) # ori $t2, $t2, 0x40
 /* 03F940 7F00AE10 35290002 */  ori   $t1, (0xBC000002 & 0xFFFF) # ori $t1, $t1, 2
