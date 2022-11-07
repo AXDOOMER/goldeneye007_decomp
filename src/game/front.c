@@ -461,24 +461,24 @@ struct mp_stage_playercount mp_player_counts[] = {
 
 struct mp_stage_setup multi_stage_setups[] = {
     /* unlocked by default */
-    {TEXT(LTITLE, TITLE_STR_154), TEXT(LTITLE, TITLE_STR_155), 16, LEVELID_NONE, -1, 1, 4},
-    {TEXT(LTITLE, TITLE_STR_156), TEXT(LTITLE, TITLE_STR_157), 12, LEVELID_TEMPLE, -1, 1, 4},
-    {TEXT(LTITLE, TITLE_STR_158), TEXT(LTITLE, TITLE_STR_159), 14, LEVELID_COMPLEX, -1, 1, 4},
-    {TEXT(LTITLE, TITLE_STR_162), TEXT(LTITLE, TITLE_STR_163), 15, LEVELID_CAVES, -1, 1, 4},
-    {TEXT(LTITLE, TITLE_STR_160), TEXT(LTITLE, TITLE_STR_161), 13, LEVELID_LIBRARY, -1, 1, 4},
-    {TEXT(LTITLE, TITLE_STR_269), TEXT(LTITLE, TITLE_STR_270), 13, LEVELID_BASEMENT, -1, 1, 4},
-    {TEXT(LTITLE, TITLE_STR_271), TEXT(LTITLE, TITLE_STR_272), 13, LEVELID_STACK, -1, 1, 4},
+    {TEXT(LTITLE, TITLE_STR_154), TEXT(LTITLE, TITLE_STR_155), IMG_MP_RANDOM, LEVELID_NONE, -1, 1, 4},
+    {TEXT(LTITLE, TITLE_STR_156), TEXT(LTITLE, TITLE_STR_157), IMG_MP_TEMPLE, LEVELID_TEMPLE, -1, 1, 4},
+    {TEXT(LTITLE, TITLE_STR_158), TEXT(LTITLE, TITLE_STR_159), IMG_MP_COMPLEX, LEVELID_COMPLEX, -1, 1, 4},
+    {TEXT(LTITLE, TITLE_STR_162), TEXT(LTITLE, TITLE_STR_163), IMG_MP_CAVES, LEVELID_CAVES, -1, 1, 4},
+    {TEXT(LTITLE, TITLE_STR_160), TEXT(LTITLE, TITLE_STR_161), IMG_MP_BASEMENT, LEVELID_LIBRARY, -1, 1, 4},
+    {TEXT(LTITLE, TITLE_STR_269), TEXT(LTITLE, TITLE_STR_270), IMG_MP_BASEMENT, LEVELID_BASEMENT, -1, 1, 4},
+    {TEXT(LTITLE, TITLE_STR_271), TEXT(LTITLE, TITLE_STR_272), IMG_MP_BASEMENT, LEVELID_STACK, -1, 1, 4},
     /* unlocked on level progression */
-    {TEXT(LTITLE, TITLE_STR_164), TEXT(LTITLE, TITLE_STR_165), 04, LEVELID_FACILITY, SP_LEVEL_FACILITY, 1, 4},
-    {TEXT(LTITLE, TITLE_STR_166), TEXT(LTITLE, TITLE_STR_167), 00, LEVELID_BUNKER2, SP_LEVEL_BUNKER2, 1, 3},
-    {TEXT(LTITLE, TITLE_STR_168), TEXT(LTITLE, TITLE_STR_169), 02, LEVELID_ARCHIVES, SP_LEVEL_ARCHIVES, 1, 3},
-    {TEXT(LTITLE, TITLE_STR_170), TEXT(LTITLE, TITLE_STR_171), 01, LEVELID_CAVERNS, SP_LEVEL_CAVERNS, 1, 3},
-    {TEXT(LTITLE, TITLE_STR_172), TEXT(LTITLE, TITLE_STR_173), 10, LEVELID_EGYPT, SP_LEVEL_EGYPT, 1, 2}
-  //{TEXT(LTITLE, TITLE_STR_174), TEXT(LTITLE, TITLE_STR_175), 00, LEVELID_CITADEL, -1, 1, 4}, //Citadel
-  //{TEXT(LTITLE, TITLE_STR_176), TEXT(LTITLE, TITLE_STR_177), 00, LEVELID_FRIGATE, -1, 1, 4}, //dest
-  //{TEXT(LTITLE, TITLE_STR_178), TEXT(LTITLE, TITLE_STR_179), 00, LEVELID_STATUE, -1, 1, 4}, //stat
-  //{TEXT(LTITLE, TITLE_STR_180), TEXT(LTITLE, TITLE_STR_181), 00, LEVELID_CRADLE, -1, 1, 4}, //crad
-  //{TEXT(LTITLE, TITLE_STR_182), TEXT(LTITLE, TITLE_STR_183), 00, LEVELID_AZTEC, -1, 1, 4}, //azt
+    {TEXT(LTITLE, TITLE_STR_164), TEXT(LTITLE, TITLE_STR_165), IMG_MP_FACILITY, LEVELID_FACILITY, SP_LEVEL_FACILITY, 1, 4},
+    {TEXT(LTITLE, TITLE_STR_166), TEXT(LTITLE, TITLE_STR_167), IMG_MP_BUNKER2, LEVELID_BUNKER2, SP_LEVEL_BUNKER2, 1, 3},
+    {TEXT(LTITLE, TITLE_STR_168), TEXT(LTITLE, TITLE_STR_169), IMG_MP_ARCHIVES, LEVELID_ARCHIVES, SP_LEVEL_ARCHIVES, 1, 3},
+    {TEXT(LTITLE, TITLE_STR_170), TEXT(LTITLE, TITLE_STR_171), IMG_MP_CAVERNS, LEVELID_CAVERNS, SP_LEVEL_CAVERNS, 1, 3},
+    {TEXT(LTITLE, TITLE_STR_172), TEXT(LTITLE, TITLE_STR_173), IMG_MP_EGYPT, LEVELID_EGYPT, SP_LEVEL_EGYPT, 1, 2}
+  //{TEXT(LTITLE, TITLE_STR_174), TEXT(LTITLE, TITLE_STR_175), IMG_MP_RANDOM, LEVELID_CITADEL, -1, 1, 4}, //Citadel
+  //{TEXT(LTITLE, TITLE_STR_176), TEXT(LTITLE, TITLE_STR_177), IMG_MP_FRIGATE, LEVELID_FRIGATE, -1, 1, 4}, //dest
+  //{TEXT(LTITLE, TITLE_STR_178), TEXT(LTITLE, TITLE_STR_179), IMG_MP_STATUE, LEVELID_STATUE, -1, 1, 4}, //stat
+  //{TEXT(LTITLE, TITLE_STR_180), TEXT(LTITLE, TITLE_STR_181), IMG_MP_CRADLE, LEVELID_CRADLE, -1, 1, 4}, //crad
+  //{TEXT(LTITLE, TITLE_STR_182), TEXT(LTITLE, TITLE_STR_183), IMG_MP_AZTEC, LEVELID_AZTEC, -1, 1, 4}, //azt
   
 };
 
@@ -486,138 +486,138 @@ u32 num_chars_selectable_mp = 8;
 
 #ifdef BUGFIX_R0
 struct MP_selectable_chars mp_chr_setup[] = {
-    {TEXT(LTITLE, TITLE_STR_184), MALE,     0, BODY_Tuxedo,                   HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
-    {TEXT(LTITLE, TITLE_STR_191), FEMALE,   9, BODY_Natalya_Skirt,            HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 0.96609998},
-    {TEXT(LTITLE, TITLE_STR_188), MALE,     6, BODY_Trevelyan_Janus,          HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
-    {TEXT(LTITLE, TITLE_STR_190), FEMALE,   8, BODY_Xenia,                    HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
-    {TEXT(LTITLE, TITLE_STR_187), MALE,     5, BODY_Ourumov,                  HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0778},
-    {TEXT(LTITLE, TITLE_STR_186), MALE,     4, BODY_Boris,                    HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 0.9702},
-    {TEXT(LTITLE, TITLE_STR_189), MALE,     7, BODY_Valentin_,                HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 0.93239999},
-    {TEXT(LTITLE, TITLE_STR_185), MALE,   0xF, BODY_Siberian_Guard_1_Mishkin, HEAD_Male_Mishkin, 1.0},
-    {TEXT(LTITLE, TITLE_STR_194), FEMALE, 0xC, BODY_Mayday,                   HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
-    {TEXT(LTITLE, TITLE_STR_193), MALE,   0xB, BODY_Jaws,                     HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.199},
-    {TEXT(LTITLE, TITLE_STR_195), MALE,   0xD, BODY_Oddjob,                   HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT,0.78780001},
-    {TEXT(LTITLE, TITLE_STR_192), MALE,   0xA, BODY_Baron_Samedi,             HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
-    {TEXT(LTITLE, TITLE_STR_253), MALE,   0xE, BODY_Russian_Soldier,          HEAD_Male_Mark, 1.0},
-    {TEXT(LTITLE, TITLE_STR_252), MALE,   0xE, BODY_Russian_Infantry,         HEAD_Male_Karl, 1.0},
-    {TEXT(LTITLE, TITLE_STR_263), MALE,   0xE, BODY_Scientist_1_Male,         HEAD_Male_Dave_Dr_Doak, 1.0},
-    {TEXT(LTITLE, TITLE_STR_263), FEMALE, 0xE, BODY_Scientist_2_Female,       HEAD_Female_Sally, 1.0},
-    {TEXT(LTITLE, TITLE_STR_256), MALE,   0xE, BODY_Russian_Commandant,       HEAD_Male_Martin, 1.0},
-    {TEXT(LTITLE, TITLE_STR_254), MALE,   0xE, BODY_Janus_Marine,             HEAD_Male_Steve_Ellis, 1.0},
-    {TEXT(LTITLE, TITLE_STR_257), MALE,   0xE, BODY_Naval_Officer,            HEAD_Male_Duncan, 1.0},
-    {TEXT(LTITLE, TITLE_STR_262), MALE,   0xE, BODY_Helicopter_Pilot,         HEAD_Male_Pete, 1.0},
-    {TEXT(LTITLE, TITLE_STR_251), MALE,   0xE, BODY_St_Petersburg_Guard,      HEAD_Male_Ken, 1.0},
-    {TEXT(LTITLE, TITLE_STR_264), FEMALE, 0xE, BODY_Civilian_1_Female,        HEAD_Female_Marion_Rosika, 1.0},
-    {TEXT(LTITLE, TITLE_STR_264), MALE,   0xE, BODY_Civilian_2,               HEAD_Male_Graeme, 1.0},
-    {TEXT(LTITLE, TITLE_STR_264), MALE,   0xE, BODY_Civilian_3,               HEAD_Male_Grant, 1.0},
-    {TEXT(LTITLE, TITLE_STR_264), MALE,   0xE, BODY_Civilian_4,               HEAD_Male_Dwayne, 1.0},
-    {TEXT(LTITLE, TITLE_STR_258), MALE,   0xE, BODY_Siberian_Guard_1_Mishkin, HEAD_Male_Lee, 1.0},
-    {TEXT(LTITLE, TITLE_STR_259), MALE,   0xE, BODY_Arctic_Commando,          HEAD_Male_Chris, 1.0},
-    {TEXT(LTITLE, TITLE_STR_258), MALE,   0xE, BODY_Siberian_Guard_2,         HEAD_Male_Scott, 1.0},
-    {TEXT(LTITLE, TITLE_STR_260), MALE,   0xE, BODY_Siberian_Special_Forces,  HEAD_Male_Alan, 1.0},
-    {TEXT(LTITLE, TITLE_STR_250), MALE,   0xE, BODY_Jungle_Commando,          HEAD_Male_Joel, 1.0},
-    {TEXT(LTITLE, TITLE_STR_255), MALE,   0xE, BODY_Janus_Special_Forces,     HEAD_Male_B, 1.0},
-    {TEXT(LTITLE, TITLE_STR_261), MALE,   0xE, BODY_Moonraker_Elite_1_Male,   HEAD_Male_Neil, 1.0},
-    {TEXT(LTITLE, TITLE_STR_261), FEMALE, 0xE, BODY_Moonraker_Elite_2_Female, HEAD_Female_Vivien, 1.0},
-    {TEXT(LTITLE, TITLE_STR_196), FEMALE, 0xE, BODY_Rosika,                   HEAD_Female_Marion_Rosika, 0.88529998},
-    {TEXT(LTITLE, TITLE_STR_197), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Karl, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_198), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Martin, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_199), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Mark, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_200), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Dave_Dr_Doak, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_201), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Duncan, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_202), FEMALE, 0xE, BODY_Tuxedo,                   HEAD_Male_B, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_203), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Steve_Ellis, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_204), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Grant, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_205), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Graeme, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_206), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Ken, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_207), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Alan, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_208), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Pete, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_209), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Shaun, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_210), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Dwayne, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_211), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Des, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_212), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Chris, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_213), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Lee, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_214), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Neil, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_215), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Jim, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_216), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Robin, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_217), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Steve_H, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_218), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Terrorist, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_219), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Biker, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_220), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Joel, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_221), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Scott, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_222), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Joe, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_223), FEMALE, 0xE, BODY_Tuxedo,                   HEAD_Female_Sally, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_224), FEMALE, 0xE, BODY_Tuxedo,                   HEAD_Female_Marion_Rosika, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_225), FEMALE, 0xE, BODY_Tuxedo,                   HEAD_Female_Mandy, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_226), FEMALE, 0xE, BODY_Tuxedo,                   HEAD_Female_Vivien, 1.0446}
+    {TEXT(LTITLE, TITLE_STR_184), MALE,   IMG_MPC_BROSNAN, BODY_Tuxedo,                   HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
+    {TEXT(LTITLE, TITLE_STR_191), FEMALE, IMG_MPC_NATALYA, BODY_Natalya_Skirt,            HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 0.96609998},
+    {TEXT(LTITLE, TITLE_STR_188), MALE,   IMG_MPC_TREVELYAN, BODY_Trevelyan_Janus,          HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
+    {TEXT(LTITLE, TITLE_STR_190), FEMALE, IMG_MPC_XENIA, BODY_Xenia,                    HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
+    {TEXT(LTITLE, TITLE_STR_187), MALE,   IMG_MPC_OURUMOV, BODY_Ourumov,                  HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0778},
+    {TEXT(LTITLE, TITLE_STR_186), MALE,   IMG_MPC_BORIS, BODY_Boris,                    HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 0.9702},
+    {TEXT(LTITLE, TITLE_STR_189), MALE,   IMG_MPC_VALENTIN, BODY_Valentin_,                HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 0.93239999},
+    {TEXT(LTITLE, TITLE_STR_185), MALE,   IMG_MPC_MISHKIN, BODY_Siberian_Guard_1_Mishkin, HEAD_Male_Mishkin, 1.0},
+    {TEXT(LTITLE, TITLE_STR_194), FEMALE, IMG_MPC_MAYDAY, BODY_Mayday,                   HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
+    {TEXT(LTITLE, TITLE_STR_193), MALE,   IMG_MPC_JAWS, BODY_Jaws,                     HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.199},
+    {TEXT(LTITLE, TITLE_STR_195), MALE,   IMG_MPC_ODDJOB, BODY_Oddjob,                   HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT,0.78780001},
+    {TEXT(LTITLE, TITLE_STR_192), MALE,   IMG_MPC_BARON, BODY_Baron_Samedi,             HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
+    {TEXT(LTITLE, TITLE_STR_253), MALE,   IMG_MPC_RANDOM, BODY_Russian_Soldier,          HEAD_Male_Mark, 1.0},
+    {TEXT(LTITLE, TITLE_STR_252), MALE,   IMG_MPC_RANDOM, BODY_Russian_Infantry,         HEAD_Male_Karl, 1.0},
+    {TEXT(LTITLE, TITLE_STR_263), MALE,   IMG_MPC_RANDOM, BODY_Scientist_1_Male,         HEAD_Male_Dave_Dr_Doak, 1.0},
+    {TEXT(LTITLE, TITLE_STR_263), FEMALE, IMG_MPC_RANDOM, BODY_Scientist_2_Female,       HEAD_Female_Sally, 1.0},
+    {TEXT(LTITLE, TITLE_STR_256), MALE,   IMG_MPC_RANDOM, BODY_Russian_Commandant,       HEAD_Male_Martin, 1.0},
+    {TEXT(LTITLE, TITLE_STR_254), MALE,   IMG_MPC_RANDOM, BODY_Janus_Marine,             HEAD_Male_Steve_Ellis, 1.0},
+    {TEXT(LTITLE, TITLE_STR_257), MALE,   IMG_MPC_RANDOM, BODY_Naval_Officer,            HEAD_Male_Duncan, 1.0},
+    {TEXT(LTITLE, TITLE_STR_262), MALE,   IMG_MPC_RANDOM, BODY_Helicopter_Pilot,         HEAD_Male_Pete, 1.0},
+    {TEXT(LTITLE, TITLE_STR_251), MALE,   IMG_MPC_RANDOM, BODY_St_Petersburg_Guard,      HEAD_Male_Ken, 1.0},
+    {TEXT(LTITLE, TITLE_STR_264), FEMALE, IMG_MPC_RANDOM, BODY_Civilian_1_Female,        HEAD_Female_Marion_Rosika, 1.0},
+    {TEXT(LTITLE, TITLE_STR_264), MALE,   IMG_MPC_RANDOM, BODY_Civilian_2,               HEAD_Male_Graeme, 1.0},
+    {TEXT(LTITLE, TITLE_STR_264), MALE,   IMG_MPC_RANDOM, BODY_Civilian_3,               HEAD_Male_Grant, 1.0},
+    {TEXT(LTITLE, TITLE_STR_264), MALE,   IMG_MPC_RANDOM, BODY_Civilian_4,               HEAD_Male_Dwayne, 1.0},
+    {TEXT(LTITLE, TITLE_STR_258), MALE,   IMG_MPC_RANDOM, BODY_Siberian_Guard_1_Mishkin, HEAD_Male_Lee, 1.0},
+    {TEXT(LTITLE, TITLE_STR_259), MALE,   IMG_MPC_RANDOM, BODY_Arctic_Commando,          HEAD_Male_Chris, 1.0},
+    {TEXT(LTITLE, TITLE_STR_258), MALE,   IMG_MPC_RANDOM, BODY_Siberian_Guard_2,         HEAD_Male_Scott, 1.0},
+    {TEXT(LTITLE, TITLE_STR_260), MALE,   IMG_MPC_RANDOM, BODY_Siberian_Special_Forces,  HEAD_Male_Alan, 1.0},
+    {TEXT(LTITLE, TITLE_STR_250), MALE,   IMG_MPC_RANDOM, BODY_Jungle_Commando,          HEAD_Male_Joel, 1.0},
+    {TEXT(LTITLE, TITLE_STR_255), MALE,   IMG_MPC_RANDOM, BODY_Janus_Special_Forces,     HEAD_Male_B, 1.0},
+    {TEXT(LTITLE, TITLE_STR_261), MALE,   IMG_MPC_RANDOM, BODY_Moonraker_Elite_1_Male,   HEAD_Male_Neil, 1.0},
+    {TEXT(LTITLE, TITLE_STR_261), FEMALE, IMG_MPC_RANDOM, BODY_Moonraker_Elite_2_Female, HEAD_Female_Vivien, 1.0},
+    {TEXT(LTITLE, TITLE_STR_196), FEMALE, IMG_MPC_RANDOM, BODY_Rosika,                   HEAD_Female_Marion_Rosika, 0.88529998},
+    {TEXT(LTITLE, TITLE_STR_197), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Karl, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_198), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Martin, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_199), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Mark, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_200), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Dave_Dr_Doak, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_201), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Duncan, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_202), FEMALE, IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_B, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_203), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Steve_Ellis, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_204), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Grant, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_205), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Graeme, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_206), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Ken, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_207), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Alan, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_208), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Pete, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_209), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Shaun, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_210), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Dwayne, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_211), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Des, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_212), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Chris, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_213), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Lee, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_214), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Neil, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_215), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Jim, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_216), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Robin, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_217), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Steve_H, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_218), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Terrorist, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_219), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Biker, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_220), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Joel, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_221), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Scott, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_222), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Joe, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_223), FEMALE, IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Female_Sally, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_224), FEMALE, IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Female_Marion_Rosika, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_225), FEMALE, IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Female_Mandy, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_226), FEMALE, IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Female_Vivien, 1.0446}
 };
 #endif
 #if defined(BUGFIX_R1)
 struct MP_selectable_chars mp_chr_setup[] = {
-    {TEXT(LTITLE, TITLE_STR_184), MALE,     0, BODY_Tuxedo,                   HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
-    {TEXT(LTITLE, TITLE_STR_191), FEMALE,   9, BODY_Natalya_Skirt,            HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 0.96609998},
-    {TEXT(LTITLE, TITLE_STR_188), MALE,     6, BODY_Trevelyan_Janus,          HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
-    {TEXT(LTITLE, TITLE_STR_190), FEMALE,   8, BODY_Xenia,                    HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
-    {TEXT(LTITLE, TITLE_STR_187), MALE,     5, BODY_Ourumov,                  HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0778},
-    {TEXT(LTITLE, TITLE_STR_186), MALE,     4, BODY_Boris,                    HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 0.9702},
-    {TEXT(LTITLE, TITLE_STR_189), MALE,     7, BODY_Valentin_,                HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 0.93239999},
-    {TEXT(LTITLE, TITLE_STR_185), MALE,   0xF, BODY_Siberian_Guard_1_Mishkin, HEAD_Male_Mishkin, 1.0},
-    {TEXT(LTITLE, TITLE_STR_194), FEMALE, 0xC, BODY_Mayday,                   HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
-    {TEXT(LTITLE, TITLE_STR_193), MALE,   0xB, BODY_Jaws,                     HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.199},
-    {TEXT(LTITLE, TITLE_STR_195), MALE,   0xD, BODY_Oddjob,                   HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT,0.78780001},
-    {TEXT(LTITLE, TITLE_STR_192), MALE,   0xA, BODY_Baron_Samedi,             HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
-    {TEXT(LTITLE, TITLE_STR_287), MALE,   0xE, BODY_Russian_Soldier,          HEAD_Male_Mark, 1.0},
-    {TEXT(LTITLE, TITLE_STR_288), MALE,   0xE, BODY_Russian_Infantry,         HEAD_Male_Karl, 1.0},
-    {TEXT(LTITLE, TITLE_STR_289), MALE,   0xE, BODY_Scientist_1_Male,         HEAD_Male_Dave_Dr_Doak, 1.0},
-    {TEXT(LTITLE, TITLE_STR_289), FEMALE, 0xE, BODY_Scientist_2_Female,       HEAD_Female_Sally, 1.0},
-    {TEXT(LTITLE, TITLE_STR_290), MALE,   0xE, BODY_Russian_Commandant,       HEAD_Male_Martin, 1.0},
-    {TEXT(LTITLE, TITLE_STR_291), MALE,   0xE, BODY_Janus_Marine,             HEAD_Male_Steve_Ellis, 1.0},
-    {TEXT(LTITLE, TITLE_STR_292), MALE,   0xE, BODY_Naval_Officer,            HEAD_Male_Duncan, 1.0},
-    {TEXT(LTITLE, TITLE_STR_293), MALE,   0xE, BODY_Helicopter_Pilot,         HEAD_Male_Pete, 1.0},
-    {TEXT(LTITLE, TITLE_STR_294), MALE,   0xE, BODY_St_Petersburg_Guard,      HEAD_Male_Ken, 1.0},
-    {TEXT(LTITLE, TITLE_STR_295), FEMALE, 0xE, BODY_Civilian_1_Female,        HEAD_Female_Marion_Rosika, 1.0},
-    {TEXT(LTITLE, TITLE_STR_295), MALE,   0xE, BODY_Civilian_2,               HEAD_Male_Graeme, 1.0},
-    {TEXT(LTITLE, TITLE_STR_295), MALE,   0xE, BODY_Civilian_3,               HEAD_Male_Grant, 1.0},
-    {TEXT(LTITLE, TITLE_STR_295), MALE,   0xE, BODY_Civilian_4,               HEAD_Male_Dwayne, 1.0},
-    {TEXT(LTITLE, TITLE_STR_296), MALE,   0xE, BODY_Siberian_Guard_1_Mishkin, HEAD_Male_Lee, 1.0},
-    {TEXT(LTITLE, TITLE_STR_297), MALE,   0xE, BODY_Arctic_Commando,          HEAD_Male_Chris, 1.0},
-    {TEXT(LTITLE, TITLE_STR_296), MALE,   0xE, BODY_Siberian_Guard_2,         HEAD_Male_Scott, 1.0},
-    {TEXT(LTITLE, TITLE_STR_298), MALE,   0xE, BODY_Siberian_Special_Forces,  HEAD_Male_Alan, 1.0},
-    {TEXT(LTITLE, TITLE_STR_299), MALE,   0xE, BODY_Jungle_Commando,          HEAD_Male_Joel, 1.0},
-    {TEXT(LTITLE, TITLE_STR_300), MALE,   0xE, BODY_Janus_Special_Forces,     HEAD_Male_B, 1.0},
-    {TEXT(LTITLE, TITLE_STR_301), MALE,   0xE, BODY_Moonraker_Elite_1_Male,   HEAD_Male_Neil, 1.0},
-    {TEXT(LTITLE, TITLE_STR_301), FEMALE, 0xE, BODY_Moonraker_Elite_2_Female, HEAD_Female_Vivien, 1.0},
-    {TEXT(LTITLE, TITLE_STR_196), FEMALE, 0xE, BODY_Rosika,                   HEAD_Female_Marion_Rosika, 0.88529998},
-    {TEXT(LTITLE, TITLE_STR_197), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Karl, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_198), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Martin, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_199), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Mark, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_200), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Dave_Dr_Doak, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_201), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Duncan, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_202), FEMALE, 0xE, BODY_Tuxedo,                   HEAD_Male_B, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_203), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Steve_Ellis, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_204), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Grant, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_205), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Graeme, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_206), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Ken, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_207), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Alan, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_208), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Pete, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_209), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Shaun, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_210), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Dwayne, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_211), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Des, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_212), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Chris, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_213), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Lee, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_214), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Neil, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_215), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Jim, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_216), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Robin, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_217), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Steve_H, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_218), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Terrorist, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_219), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Biker, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_220), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Joel, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_221), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Scott, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_222), MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Joe, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_223), FEMALE, 0xE, BODY_Tuxedo,                   HEAD_Female_Sally, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_224), FEMALE, 0xE, BODY_Tuxedo,                   HEAD_Female_Marion_Rosika, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_225), FEMALE, 0xE, BODY_Tuxedo,                   HEAD_Female_Mandy, 1.0446},
-    {TEXT(LTITLE, TITLE_STR_226), FEMALE, 0xE, BODY_Tuxedo,                   HEAD_Female_Vivien, 1.0446}
+    {TEXT(LTITLE, TITLE_STR_184), MALE,   IMG_MPC_BROSNAN, BODY_Tuxedo,                   HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
+    {TEXT(LTITLE, TITLE_STR_191), FEMALE, IMG_MPC_NATALYA, BODY_Natalya_Skirt,            HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 0.96609998},
+    {TEXT(LTITLE, TITLE_STR_188), MALE,   IMG_MPC_TREVELYAN, BODY_Trevelyan_Janus,          HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
+    {TEXT(LTITLE, TITLE_STR_190), FEMALE, IMG_MPC_XENIA, BODY_Xenia,                    HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
+    {TEXT(LTITLE, TITLE_STR_187), MALE,   IMG_MPC_OURUMOV, BODY_Ourumov,                  HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0778},
+    {TEXT(LTITLE, TITLE_STR_186), MALE,   IMG_MPC_BORIS, BODY_Boris,                    HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 0.9702},
+    {TEXT(LTITLE, TITLE_STR_189), MALE,   IMG_MPC_VALENTIN, BODY_Valentin_,                HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 0.93239999},
+    {TEXT(LTITLE, TITLE_STR_185), MALE,   IMG_MPC_MISHKIN, BODY_Siberian_Guard_1_Mishkin, HEAD_Male_Mishkin, 1.0},
+    {TEXT(LTITLE, TITLE_STR_194), FEMALE, IMG_MPC_MAYDAY, BODY_Mayday,                   HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
+    {TEXT(LTITLE, TITLE_STR_193), MALE,   IMG_MPC_JAWS, BODY_Jaws,                     HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.199},
+    {TEXT(LTITLE, TITLE_STR_195), MALE,   IMG_MPC_ODDJOB, BODY_Oddjob,                   HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT,0.78780001},
+    {TEXT(LTITLE, TITLE_STR_192), MALE,   IMG_MPC_BARON, BODY_Baron_Samedi,             HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
+    {TEXT(LTITLE, TITLE_STR_287), MALE,   IMG_MPC_RANDOM, BODY_Russian_Soldier,          HEAD_Male_Mark, 1.0},
+    {TEXT(LTITLE, TITLE_STR_288), MALE,   IMG_MPC_RANDOM, BODY_Russian_Infantry,         HEAD_Male_Karl, 1.0},
+    {TEXT(LTITLE, TITLE_STR_289), MALE,   IMG_MPC_RANDOM, BODY_Scientist_1_Male,         HEAD_Male_Dave_Dr_Doak, 1.0},
+    {TEXT(LTITLE, TITLE_STR_289), FEMALE, IMG_MPC_RANDOM, BODY_Scientist_2_Female,       HEAD_Female_Sally, 1.0},
+    {TEXT(LTITLE, TITLE_STR_290), MALE,   IMG_MPC_RANDOM, BODY_Russian_Commandant,       HEAD_Male_Martin, 1.0},
+    {TEXT(LTITLE, TITLE_STR_291), MALE,   IMG_MPC_RANDOM, BODY_Janus_Marine,             HEAD_Male_Steve_Ellis, 1.0},
+    {TEXT(LTITLE, TITLE_STR_292), MALE,   IMG_MPC_RANDOM, BODY_Naval_Officer,            HEAD_Male_Duncan, 1.0},
+    {TEXT(LTITLE, TITLE_STR_293), MALE,   IMG_MPC_RANDOM, BODY_Helicopter_Pilot,         HEAD_Male_Pete, 1.0},
+    {TEXT(LTITLE, TITLE_STR_294), MALE,   IMG_MPC_RANDOM, BODY_St_Petersburg_Guard,      HEAD_Male_Ken, 1.0},
+    {TEXT(LTITLE, TITLE_STR_295), FEMALE, IMG_MPC_RANDOM, BODY_Civilian_1_Female,        HEAD_Female_Marion_Rosika, 1.0},
+    {TEXT(LTITLE, TITLE_STR_295), MALE,   IMG_MPC_RANDOM, BODY_Civilian_2,               HEAD_Male_Graeme, 1.0},
+    {TEXT(LTITLE, TITLE_STR_295), MALE,   IMG_MPC_RANDOM, BODY_Civilian_3,               HEAD_Male_Grant, 1.0},
+    {TEXT(LTITLE, TITLE_STR_295), MALE,   IMG_MPC_RANDOM, BODY_Civilian_4,               HEAD_Male_Dwayne, 1.0},
+    {TEXT(LTITLE, TITLE_STR_296), MALE,   IMG_MPC_RANDOM, BODY_Siberian_Guard_1_Mishkin, HEAD_Male_Lee, 1.0},
+    {TEXT(LTITLE, TITLE_STR_297), MALE,   IMG_MPC_RANDOM, BODY_Arctic_Commando,          HEAD_Male_Chris, 1.0},
+    {TEXT(LTITLE, TITLE_STR_296), MALE,   IMG_MPC_RANDOM, BODY_Siberian_Guard_2,         HEAD_Male_Scott, 1.0},
+    {TEXT(LTITLE, TITLE_STR_298), MALE,   IMG_MPC_RANDOM, BODY_Siberian_Special_Forces,  HEAD_Male_Alan, 1.0},
+    {TEXT(LTITLE, TITLE_STR_299), MALE,   IMG_MPC_RANDOM, BODY_Jungle_Commando,          HEAD_Male_Joel, 1.0},
+    {TEXT(LTITLE, TITLE_STR_300), MALE,   IMG_MPC_RANDOM, BODY_Janus_Special_Forces,     HEAD_Male_B, 1.0},
+    {TEXT(LTITLE, TITLE_STR_301), MALE,   IMG_MPC_RANDOM, BODY_Moonraker_Elite_1_Male,   HEAD_Male_Neil, 1.0},
+    {TEXT(LTITLE, TITLE_STR_301), FEMALE, IMG_MPC_RANDOM, BODY_Moonraker_Elite_2_Female, HEAD_Female_Vivien, 1.0},
+    {TEXT(LTITLE, TITLE_STR_196), FEMALE, IMG_MPC_RANDOM, BODY_Rosika,                   HEAD_Female_Marion_Rosika, 0.88529998},
+    {TEXT(LTITLE, TITLE_STR_197), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Karl, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_198), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Martin, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_199), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Mark, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_200), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Dave_Dr_Doak, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_201), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Duncan, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_202), FEMALE, IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_B, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_203), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Steve_Ellis, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_204), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Grant, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_205), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Graeme, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_206), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Ken, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_207), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Alan, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_208), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Pete, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_209), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Shaun, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_210), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Dwayne, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_211), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Des, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_212), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Chris, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_213), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Lee, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_214), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Neil, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_215), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Jim, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_216), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Robin, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_217), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Steve_H, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_218), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Terrorist, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_219), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Biker, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_220), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Joel, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_221), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Scott, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_222), MALE,   IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Male_Joe, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_223), FEMALE, IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Female_Sally, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_224), FEMALE, IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Female_Marion_Rosika, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_225), FEMALE, IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Female_Mandy, 1.0446},
+    {TEXT(LTITLE, TITLE_STR_226), FEMALE, IMG_MPC_RANDOM, BODY_Tuxedo,                   HEAD_Female_Vivien, 1.0446}
 };
 #endif
 
@@ -657,7 +657,7 @@ struct MP_sight_aim_settings mp_sight_adjust_table[] = {
 s32 selected_num_players = 0;
 s32 player_char[MAX_PLAYER_COUNT] = { -1, -1, -1, -1 };
 s32 MP_stage_selected = MP_STAGE_TEMPLE;
-s32 game_length = 2; //10minutes
+s32 game_length = LEN_10MIN; //10minutes
 s32 aim_sight_adjustment = 3; //"Sight ON, Auto Aim ON"
 s32 scenario = SCENARIO_NORMAL;
 
@@ -2340,7 +2340,7 @@ void init_menu04_goldeneyelogo(void)
 
 
 void update_menu04_goldeneye(void) {
-    is_first_time_on_main_menu = 0;
+    is_first_time_on_main_menu = FALSE;
     clear_model_obj(logoinst);
 }
 
@@ -2764,14 +2764,14 @@ void set_item_visibility_in_objinstance(Model* objinstance, s32 item, s32 mode)
 
 void select_load_bond_picture(Model *objinstance, u32 bondID)
 {
-    set_item_visibility_in_objinstance(objinstance,8,1); //brosnan picture
-    set_item_visibility_in_objinstance(objinstance,9,0);
-    set_item_visibility_in_objinstance(objinstance,10,0);
-    set_item_visibility_in_objinstance(objinstance,0xb,0);
-    set_item_visibility_in_objinstance(objinstance,0xf,1); //bigger brosnan picture
-    set_item_visibility_in_objinstance(objinstance,0x10,0);
-    set_item_visibility_in_objinstance(objinstance,0x11,0);
-    set_item_visibility_in_objinstance(objinstance,0x12,0);
+    set_item_visibility_in_objinstance(objinstance,SW_BROSNAN,1); //brosnan picture
+    set_item_visibility_in_objinstance(objinstance,SW_CONNERY,0);
+    set_item_visibility_in_objinstance(objinstance,SW_DALTON,0);
+    set_item_visibility_in_objinstance(objinstance,SW_MOORE,0);
+    set_item_visibility_in_objinstance(objinstance,SW_BROSNANCOVER,1); //bigger brosnan picture
+    set_item_visibility_in_objinstance(objinstance,SW_CONNERYCOVER,0);
+    set_item_visibility_in_objinstance(objinstance,SW_DALTONCOVER,0);
+    set_item_visibility_in_objinstance(objinstance,SW_MOORECOVER,0);
 }
 
 
@@ -2788,22 +2788,22 @@ void load_walletbond(void)
 
     if (walletinst[0] == 0)
     {
-        load_object_fill_header(PitemZ_entries.unkD08, PitemZ_entries.unkD0C, ptr_logo_and_walletbond_DL, 0xa000, 0);
-        modelCalculateRwDataLen(PitemZ_entries.unkD08);
-        phi_s0 = &walletinst[0];
+        load_object_fill_header(PitemZ_entries[WALLETBOND].header, PitemZ_entries[WALLETBOND].filename, ptr_logo_and_walletbond_DL, 0xa000, NULL);
+        modelCalculateRwDataLen(PitemZ_entries[WALLETBOND].header);
+        phi_s0 = &walletinst;
 loop_2:
-        temp_ret = get_aircraft_obj_instance_controller(PitemZ_entries.unkD08);
+        temp_ret = get_aircraft_obj_instance_controller(PitemZ_entries[WALLETBOND].header);
         *phi_s0 = temp_ret;
-        modelSetScale(temp_ret, 0x3f800000);
+        modelSetScale(temp_ret, 1.0f);
         temp_s0 = phi_s0 + 4;
         phi_s0 = temp_s0;
         if (temp_s0 != &D_8002A96C)
         {
             goto loop_2;
         }
-        if (PitemZ_entries.unkD08->unk8->unk54 != 0)
+        if (PitemZ_entries[WALLETBOND].header->unk8->unk54 != 0)
         {
-            bgLoadFromDynamicCCRMLUT(PitemZ_entries.unkD08->unk8->unk54->unk4->unk1C + (PitemZ_entries.unkD08->unk8->unk54->unk4->unk0 & 0xffffff), 0, 8);
+            bgLoadFromDynamicCCRMLUT(PitemZ_entries[WALLETBOND].header->unk8->unk54->unk4->unk1C + (PitemZ_entries[WALLETBOND].header->unk8->unk54->unk4->unk0 & 0xffffff), 0, 8);
         }
     }
 }
@@ -2892,16 +2892,15 @@ void sub_GAME_7F00B990(void)
 //********************************************************************************************************
 //FILE SELECT
 //********************************************************************************************************
-#ifdef NONMATCHING
 void init_menu05_fileselect(void)
 {
-    s32 sp24;
-    Gfx* sp20;
+    s32 sp24 = 0x6e000;
+    Gfx* sp20 = (s32)(ptr_logo_and_walletbond_DL) + (s32)(4096*10);
     int i;
 
     prev_keypresses = 0;
-    sp24 = 0x6e000;
-    sp20 = ptr_logo_and_walletbond_DL + 0xa000;
+    
+    
     if (selected_folder_num < 0)
     {
         selected_folder_num = 0;
@@ -2922,80 +2921,7 @@ void init_menu05_fileselect(void)
     }
     g_AppendCheatSinglePlayer = FALSE;
     g_AppendCheatMultiPlayer = FALSE;
-    //return temp_v0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel init_menu05_fileselect
-/* 040518 7F00B9E8 3C0F8003 */  lui   $t7, %hi(ptr_logo_and_walletbond_DL)
-/* 04051C 7F00B9EC 8DEFA950 */  lw    $t7, %lo(ptr_logo_and_walletbond_DL)($t7)
-/* 040520 7F00B9F0 3401A000 */  li    $at, 40960
-/* 040524 7F00B9F4 3C028003 */  lui   $v0, %hi(selected_folder_num)
-/* 040528 7F00B9F8 01E1C021 */  addu  $t8, $t7, $at
-/* 04052C 7F00B9FC 3C018003 */  lui   $at, %hi(prev_keypresses)
-/* 040530 7F00BA00 2442A8E8 */  addiu $v0, %lo(selected_folder_num) # addiu $v0, $v0, -0x5718
-/* 040534 7F00BA04 AC20A934 */  sw    $zero, %lo(prev_keypresses)($at)
-/* 040538 7F00BA08 8C590000 */  lw    $t9, ($v0)
-/* 04053C 7F00BA0C 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 040540 7F00BA10 3C0E0006 */  lui   $t6, (0x0006E000 >> 16) # lui $t6, 6
-/* 040544 7F00BA14 35CEE000 */  ori   $t6, (0x0006E000 & 0xFFFF) # ori $t6, $t6, 0xe000
-/* 040548 7F00BA18 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 04054C 7F00BA1C AFAE0024 */  sw    $t6, 0x24($sp)
-/* 040550 7F00BA20 07210002 */  bgez  $t9, .L7F00BA2C
-/* 040554 7F00BA24 AFB80020 */   sw    $t8, 0x20($sp)
-/* 040558 7F00BA28 AC400000 */  sw    $zero, ($v0)
-.L7F00BA2C:
-/* 04055C 7F00BA2C 3C018003 */  lui   $at, %hi(tab_next_selected)
-/* 040560 7F00BA30 AC20A8D4 */  sw    $zero, %lo(tab_next_selected)($at)
-/* 040564 7F00BA34 3C018003 */  lui   $at, %hi(tab_prev_selected)
-/* 040568 7F00BA38 AC20A8D8 */  sw    $zero, %lo(tab_prev_selected)($at)
-/* 04056C 7F00BA3C 3C018003 */  lui   $at, %hi(folder_selected_for_deletion)
-/* 040570 7F00BA40 2408FFFF */  li    $t0, -1
-/* 040574 7F00BA44 AC28A91C */  sw    $t0, %lo(folder_selected_for_deletion)($at)
-/* 040578 7F00BA48 3C018003 */  lui   $at, %hi(folder_selected_for_deletion_choice)
-/* 04057C 7F00BA4C 24090001 */  li    $t1, 1
-/* 040580 7F00BA50 AC29A920 */  sw    $t1, %lo(folder_selected_for_deletion_choice)($at)
-/* 040584 7F00BA54 27A40020 */  addiu $a0, $sp, 0x20
-/* 040588 7F00BA58 0FC02379 */  jal   sub_GAME_7F008DE4
-/* 04058C 7F00BA5C 27A50024 */   addiu $a1, $sp, 0x24
-/* 040590 7F00BA60 0FC02E2B */  jal   load_walletbond
-/* 040594 7F00BA64 00000000 */   nop
-/* 040598 7F00BA68 3C0A8003 */  lui   $t2, %hi(maybe_is_in_menu)
-/* 04059C 7F00BA6C 8D4AA93C */  lw    $t2, %lo(maybe_is_in_menu)($t2)
-/* 0405A0 7F00BA70 11400005 */  beqz  $t2, .L7F00BA88
-/* 0405A4 7F00BA74 00000000 */   nop
-/* 0405A8 7F00BA78 0C001B9F */  jal   musicTrack1Play
-/* 0405AC 7F00BA7C 24040017 */   li    $a0, 23
-/* 0405B0 7F00BA80 3C018003 */  lui   $at, %hi(maybe_is_in_menu)
-/* 0405B4 7F00BA84 AC20A93C */  sw    $zero, %lo(maybe_is_in_menu)($at)
-.L7F00BA88:
-/* 0405B8 7F00BA88 3C018003 */  lui   $at, %hi(g_MenuTimer)
-/* 0405BC 7F00BA8C AC20A8CC */  sw    $zero, %lo(g_MenuTimer)($at)
-/* 0405C0 7F00BA90 3C018007 */  lui   $at, %hi(g_CheatActivated + 1)
-/* 0405C4 7F00BA94 3C028007 */  lui   $v0, %hi(g_CheatActivated + 3)
-/* 0405C8 7F00BA98 3C038007 */  lui   $v1, %hi(g_CheatActivated + 75)
-/* 0405CC 7F00BA9C 246396EB */  addiu $v1, %lo(g_CheatActivated + 75) # addiu $v1, $v1, -0x6915
-/* 0405D0 7F00BAA0 244296A3 */  addiu $v0, %lo(g_CheatActivated + 3) # addiu $v0, $v0, -0x695d
-/* 0405D4 7F00BAA4 A02096A1 */  sb    $zero, %lo(g_CheatActivated + 1)($at)
-/* 0405D8 7F00BAA8 A02096A2 */  sb    $zero, %lo(g_CheatActivated + 2)($at)
-.L7F00BAAC:
-/* 0405DC 7F00BAAC 24420004 */  addiu $v0, $v0, 4
-/* 0405E0 7F00BAB0 A040FFFD */  sb    $zero, -3($v0)
-/* 0405E4 7F00BAB4 A040FFFE */  sb    $zero, -2($v0)
-/* 0405E8 7F00BAB8 A040FFFF */  sb    $zero, -1($v0)
-/* 0405EC 7F00BABC 1443FFFB */  bne   $v0, $v1, .L7F00BAAC
-/* 0405F0 7F00BAC0 A040FFFC */   sb    $zero, -4($v0)
-/* 0405F4 7F00BAC4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0405F8 7F00BAC8 3C018003 */  lui   $at, %hi(g_AppendCheatSinglePlayer)
-/* 0405FC 7F00BACC AC20A900 */  sw    $zero, %lo(g_AppendCheatSinglePlayer)($at)
-/* 040600 7F00BAD0 3C018003 */  lui   $at, %hi(g_AppendCheatMultiPlayer)
-/* 040604 7F00BAD4 AC20A904 */  sw    $zero, %lo(g_AppendCheatMultiPlayer)($at)
-/* 040608 7F00BAD8 03E00008 */  jr    $ra
-/* 04060C 7F00BADC 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
-
 
 
 
@@ -3094,8 +3020,8 @@ loop_8:
     phi_s1->unk8 = (f32) temp_a0->unkC->unk38;
     disable_all_switches(temp_a0);
     select_load_bond_picture(*phi_s0, fileGetBondForFolder(phi_s2));
-    set_item_visibility_in_objinstance(*phi_s0, 0xe, 1);
-    set_item_visibility_in_objinstance(*phi_s0, 0xd, 1);
+    set_item_visibility_in_objinstance(*phi_s0, SW_PHOTOCOVER, 1);
+    set_item_visibility_in_objinstance(*phi_s0, SW_COVER, 1);
     temp_s2 = phi_s2 + 1;
     sp54 = (void *) (sp54 + 0xc);
     phi_s0 = phi_s0 + 4;
@@ -5757,11 +5683,11 @@ void interface_menu06_modesel(void)
 
     disable_all_switches(walletinst[0]);
     select_load_bond_picture(walletinst[0], fileGetBondForFolder(selected_folder_num));
-    set_item_visibility_in_objinstance(walletinst[0], 0, TRUE);
-    set_item_visibility_in_objinstance(walletinst[0], 1, TRUE);
-    set_item_visibility_in_objinstance(walletinst[0], 3, TRUE);
-    set_item_visibility_in_objinstance(walletinst[0], 7, TRUE);
-    set_item_visibility_in_objinstance(walletinst[0], 2, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], SW_TABS, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_PAPER, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_OHMSS, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_PHOTOBOND, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_EYESONLY, 1);
     tab_prev_highlight = FALSE;
     mission_difficulty_highlighted = DIFFICULTY_MULTI;
     if (isontab3())
@@ -6273,9 +6199,9 @@ void interface_menu07_missionsel(void)
     viSetZRange(0x42c80000, D_80051A48);
     viSetUseZBuf(0);
     disable_all_switches(walletinst[0]);
-    set_item_visibility_in_objinstance(walletinst[0], 0, 1);
-    set_item_visibility_in_objinstance(walletinst[0], 0x13, 1);
-    set_item_visibility_in_objinstance(walletinst[0], 0x14, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_TABS, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_SLIDES, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_PICS, 1);
     tab_prev_highlight = 0;
     mission_difficulty_highlighted = -1;
     if (isontab3() != 0)
@@ -7976,10 +7902,10 @@ void interface_menu08_difficulty(void)
     viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(FALSE);
     disable_all_switches(walletinst[0]);
-    set_item_visibility_in_objinstance(walletinst[0], 0, TRUE);
-    set_item_visibility_in_objinstance(walletinst[0], 1, TRUE);
-    set_item_visibility_in_objinstance(walletinst[0], 3, TRUE);
-    set_item_visibility_in_objinstance(walletinst[0], 4, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], SW_TABS, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_PAPER, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_OHMSS, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_CONFIDENTIAL, 1);
     tab_prev_highlight = FALSE;
     mission_difficulty_highlighted = DIFFICULTY_MULTI;
     
@@ -8407,10 +8333,10 @@ void interface_menu09_007options(void)
         }
     }
     disable_all_switches(walletinst[0]);
-    set_item_visibility_in_objinstance(walletinst[0], 0, TRUE);
-    set_item_visibility_in_objinstance(walletinst[0], 1, TRUE);
-    set_item_visibility_in_objinstance(walletinst[0], 3, TRUE);
-    set_item_visibility_in_objinstance(walletinst[0], 6, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], SW_TABS, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_PAPER, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_OHMSS, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_CLASSIFIED, 1);
     menu_control_stick_tracking();
     if (tab_start_selected)
     {
@@ -10305,10 +10231,10 @@ void interface_menu0E_mpoptions(void)
         sndPlaySfx(g_musicSfxBufferPtr, 0xC7, 0);
     }
     disable_all_switches(walletinst[0]);
-    set_item_visibility_in_objinstance(walletinst[0], 0, TRUE);
-    set_item_visibility_in_objinstance(walletinst[0], 1, TRUE);
-    set_item_visibility_in_objinstance(walletinst[0], 3, TRUE);
-    set_item_visibility_in_objinstance(walletinst[0], 5, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], SW_TABS, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_PAPER, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_OHMSS, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_CONFIDENTIAL2, 1);
     menu_control_stick_tracking();
     if (tab_prev_selected)
     {
@@ -11584,8 +11510,8 @@ LAB_7f012164:
     } while (iVar13 != iVar4);
   }
   disable_all_switches((int)walletinst[0]);
-  set_item_visibility_in_objinstance((int)walletinst[0],0,1);
-  set_item_visibility_in_objinstance((int)walletinst[0],0x2a,1);
+  set_item_visibility_in_objinstance((int)walletinst[0],SW_TABS,1);
+  set_item_visibility_in_objinstance((int)walletinst[0],SW_BLANK,1);
   menu_control_stick_tracking();
   if (iStack12 == iVar4) {
     frontChangeMenu(MENU_MP_OPTIONS,FALSE);
@@ -13169,8 +13095,8 @@ block_15:
         }
     }
     disable_all_switches(walletinst[0]);
-    set_item_visibility_in_objinstance(walletinst[0], 0, 1);
-    set_item_visibility_in_objinstance(walletinst[0], 0x2a, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_TABS, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_BLANK, 1);
     menu_control_stick_tracking();
     if (phi_fp == sp44)
     {
@@ -13960,8 +13886,8 @@ block_31:
         }
     }
     disable_all_switches(walletinst[0]);
-    set_item_visibility_in_objinstance(walletinst[0], 0, 1);
-    set_item_visibility_in_objinstance(walletinst[0], 0x2a, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_TABS, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_BLANK, 1);
     menu_control_stick_tracking();
     if (sp44 == temp_s6)
     {
@@ -15291,9 +15217,9 @@ void interface_menu12_mpstage(void)
         sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
     }
     disable_all_switches(walletinst[0]);
-    set_item_visibility_in_objinstance(walletinst[0], 0x0,  TRUE);
-    set_item_visibility_in_objinstance(walletinst[0], 0x2A, TRUE);
-    set_item_visibility_in_objinstance(walletinst[0], 0x3,  TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], SW_TABS,  1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_BLANK, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_OHMSS,  1);
     menu_control_stick_tracking();
     if (tab_next_selected)
     {
@@ -16099,10 +16025,10 @@ void interface_menu13_mpscenario(void)
         sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
     }
     disable_all_switches(walletinst[0]);
-    set_item_visibility_in_objinstance(walletinst[0], 0, TRUE);
-    set_item_visibility_in_objinstance(walletinst[0], 1, TRUE);
-    set_item_visibility_in_objinstance(walletinst[0], 3, TRUE);
-    set_item_visibility_in_objinstance(walletinst[0], 6, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], SW_TABS, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_PAPER, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_OHMSS, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_CLASSIFIED, 1);
     menu_control_stick_tracking();
     if (isTeam)
     {
@@ -16816,8 +16742,8 @@ void interface_menu14_mpteams(void)
         }
     }
     disable_all_switches(walletinst[0]);
-    set_item_visibility_in_objinstance(walletinst[0], 0, 1);
-    set_item_visibility_in_objinstance(walletinst[0], 0x2a, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_TABS, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_BLANK, 1);
     menu_control_stick_tracking();
     phi_s0 = 0;
     if (joyGetButtonsPressedThisFrame(PLAYER_1, 0xb000) != 0)
@@ -17735,12 +17661,12 @@ void interface_menu0A_briefing(void)
         sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
     }
     disable_all_switches(walletinst[0]);
-    set_item_visibility_in_objinstance(walletinst[0], 0xC, current_menu_briefing_page == BRIEFING_TITLE);
+    set_item_visibility_in_objinstance(walletinst[0], SW_PHOTOBRIEF, current_menu_briefing_page == BRIEFING_TITLE);
     set_item_visibility_in_objinstance(walletinst[0], mission_folder_setup_entries[briefingpage].mission_num + 0x16, current_menu_briefing_page == 0);
-    set_item_visibility_in_objinstance(walletinst[0], 0, TRUE);
-    set_item_visibility_in_objinstance(walletinst[0], 1, TRUE);
-    set_item_visibility_in_objinstance(walletinst[0], 3, TRUE);
-    set_item_visibility_in_objinstance(walletinst[0], 6, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], SW_TABS, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_PAPER, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_OHMSS, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_CLASSIFIED, 1);
     menu_control_stick_tracking();
     if (tab_next_selected)
     {
@@ -18698,10 +18624,10 @@ void interface_menu0C_missionfailed(void)
         }
     }
     disable_all_switches(walletinst[0]);
-    set_item_visibility_in_objinstance(walletinst[0], 0, TRUE);
-    set_item_visibility_in_objinstance(walletinst[0], 1, TRUE);
-    set_item_visibility_in_objinstance(walletinst[0], 3, TRUE);
-    set_item_visibility_in_objinstance(walletinst[0], 6, TRUE);
+    set_item_visibility_in_objinstance(walletinst[0], SW_TABS, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_PAPER, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_OHMSS, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_CLASSIFIED, 1);
     menu_control_stick_tracking();
     if (tab_next_selected)
     {
@@ -18885,22 +18811,22 @@ void interface_menu0D_missioncomplete()
     }
 
     disable_all_switches(walletinst[0]);
-    set_item_visibility_in_objinstance(walletinst[0], 0, 1);
-    set_item_visibility_in_objinstance(walletinst[0], 1, 1);
-    set_item_visibility_in_objinstance(walletinst[0], 3, 1);
-    set_item_visibility_in_objinstance(walletinst[0], 6, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_TABS, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_PAPER, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_OHMSS, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_CLASSIFIED, 1);
     menu_control_stick_tracking();
 
     if (tab_next_selected)
     {
-        if (frontCompleteAllObjectivesAliveSuccess() && (g_AppendCheatSinglePlayer == 0))
+        if (frontCompleteAllObjectivesAliveSuccess() && (!g_AppendCheatSinglePlayer))
         {
-            if (mission_folder_setup_entries[briefingpage].mission_num == 0x11)
+            if (mission_folder_setup_entries[briefingpage].mission_num == SP_LEVEL_CRADLE)
             {
                 frontChangeMenu(MENU_RUN_STAGE, TRUE);
                 selected_stage = LEVELID_CUBA;
             }
-            else if (mission_folder_setup_entries[briefingpage].mission_num >= 0x12)
+            else if (mission_folder_setup_entries[briefingpage].mission_num >= SP_LEVEL_AZTEC)
             {
                 frontChangeMenu(MENU_MISSION_SELECT, FALSE);
                 set_cursor_to_stage_solo((s32)mission_folder_setup_entries[briefingpage].mission_num);
@@ -18908,7 +18834,7 @@ void interface_menu0D_missioncomplete()
             else
             {
                 entry = briefingpage + 1;
-                while (mission_folder_setup_entries[entry].folder_text_preset != 0)
+                while (mission_folder_setup_entries[entry].folder_text_preset)
                 {
                     if (mission_folder_setup_entries[entry].stage_id >= 0)
                     {
@@ -18932,7 +18858,7 @@ void interface_menu0D_missioncomplete()
             frontChangeMenu(MENU_BRIEFING, FALSE);
         }
     }
-    else if (tab_prev_selected != FALSE)
+    else if (tab_prev_selected)
     {
         frontChangeMenu(MENU_MISSION_SELECT, FALSE);
         set_cursor_to_stage_solo((s32)mission_folder_setup_entries[briefingpage].mission_num);
@@ -19303,9 +19229,9 @@ void interface_menu15_cheat(u32 param_1,u32 param_2)
     sndPlaySfx((s32)(int)g_musicSfxBufferPtr,DOOR_METAL_CLOSE2_SFX,NULL);
   }
   disable_all_switches((int)walletinst[0]);
-  set_item_visibility_in_objinstance((int)walletinst[0],0,1);
-  set_item_visibility_in_objinstance((int)walletinst[0],0x2a,1);
-  set_item_visibility_in_objinstance((int)walletinst[0],6,1);
+  set_item_visibility_in_objinstance((int)walletinst[0], SW_TABS, 1);
+  set_item_visibility_in_objinstance((int)walletinst[0], SW_BLANK, 1);
+  set_item_visibility_in_objinstance((int)walletinst[0], SW_CLASSIFIED, 1);
   menu_control_stick_tracking();
   if (tab_prev_selected == FALSE) {
     if (MP_menu_selected_option != 0) {

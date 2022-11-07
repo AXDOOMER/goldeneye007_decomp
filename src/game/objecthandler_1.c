@@ -285,7 +285,7 @@ glabel get_aircraft_obj_instance_controller
 
 
 
-void sub_GAME_7F06C3B4(Model *model, s32 node,  ModelFileHeader *header)
+void sub_GAME_7F06C3B4(Model *model, ModelNode *node,  ModelFileHeader *header)
 {
     sub_GAME_7F076030(model,model->obj,node,header);
     modelInitRwData(model,header->RootNode);

@@ -64,7 +64,7 @@ void fileLoad(ModelFileHeader *header,char *name);
 void load_object_into_memory_unused_maybe(ModelFileHeader *header,int *recallstring,int *targetloc,int sizeleft);
 void modelCalculateRwDataLen(ModelFileHeader *objheader);
 Model *get_aircraft_obj_instance_controller(ModelFileHeader *);
-void sub_GAME_7F06C3B4(Model *, s32,  ModelFileHeader *);
+void sub_GAME_7F06C3B4(Model *, ModelNode*,  ModelFileHeader *);
 Mtxf *getsubmatrix(Model *objinst);
 
 // tentative signature
