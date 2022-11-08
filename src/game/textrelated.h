@@ -11,8 +11,22 @@ extern s32 ptrSecondFontTableLarge;
 void textrelatedInit_REMOVED(void);
 void load_font_tables(void);
 
+struct fontchar {
+    u32 index;
+    s32 baseline;
+    u32 height;
+    u32 width;
+    s32 kerningindex;
+    u8 *pixeldata;
+};
+
+struct font {
+	s32 kerning[13 * 13];
+	struct fontchar chars[94]; // can be 135 in PAL
+};
+
 Gfx * microcode_constructor_related_to_menus(Gfx *, s32, s32, s32, s32, s32);
-void sub_GAME_7F0AE98C(s32 *y2, s32 *x2, u8 *text, s32 ptrSecondFontTableLarge, s32 ptrFirstFontTableLarge, s32 unk5);
+void textMeasure(s32 *textheight, s32 *textwidth, char *text, struct fontchar *font1, struct font *font2, s32 lineheight);
 
 Gfx *microcode_constructor(Gfx *gdl);
 Gfx *textRender(Gfx *gdl, s32 *x, s32 *y, char *text, s32 second_font_table, s32 first_font_table, s32 arg6,           s16 view_x, s16 view_y, s32 arg9, s32 arga);

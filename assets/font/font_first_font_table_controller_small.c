@@ -1,5 +1,5 @@
 #include <ultra64.h>
-
+//bank gothic
 u32 font_first_font_table_controller_small[] = 
 {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0xFFFFFFFF,

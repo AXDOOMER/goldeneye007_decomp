@@ -45577,10 +45577,10 @@ Gfx * sub_GAME_7F056210(Gfx *DL)
     DL = microcode_constructor(DL);
     DL =     gunDrawHudInteger(DL, (hours % 100) / 10, 0x82, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
     DL =     gunDrawHudInteger(DL, hours % 10, 0x8a, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
-    DL = some_kind_of_display_routine(DL, ":\n", 0x93, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
+    DL = gunDrawHudString(DL, ":\n", 0x93, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
     DL =     gunDrawHudInteger(DL, (iVar4 % 0x3c) / 10, 0x9c, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
     DL =     gunDrawHudInteger(DL, iVar4 % 10, 0xa4, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
-    DL = some_kind_of_display_routine(DL, ":\n", 0xad, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
+    DL = gunDrawHudString(DL, ":\n", 0xad, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
     DL =     gunDrawHudInteger(DL, (iVar3 % 100) / 10, 0xb6, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
     DL =     gunDrawHudInteger(DL, iVar3 % 10, 0xbe, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
     DL = combiner_bayer_lod_perspective(DL);
@@ -45724,7 +45724,7 @@ glabel sub_GAME_7F056210
 /* 08AF34 7F056404 AFAF0010 */  sw    $t7, 0x10($sp)
 /* 08AF38 7F056408 02202025 */  move  $a0, $s1
 /* 08AF3C 7F05640C 24060093 */  li    $a2, 147
-/* 08AF40 7F056410 0FC1A694 */  jal   some_kind_of_display_routine
+/* 08AF40 7F056410 0FC1A694 */  jal   gunDrawHudString
 /* 08AF44 7F056414 24070002 */   li    $a3, 2
 /* 08AF48 7F056418 0C001149 */  jal   viGetViewTop
 /* 08AF4C 7F05641C 00408825 */   move  $s1, $v0
@@ -45788,7 +45788,7 @@ glabel sub_GAME_7F056210
 /* 08B034 7F056504 AFAE0010 */  sw    $t6, 0x10($sp)
 /* 08B038 7F056508 02202025 */  move  $a0, $s1
 /* 08B03C 7F05650C 240600AD */  li    $a2, 173
-/* 08B040 7F056510 0FC1A694 */  jal   some_kind_of_display_routine
+/* 08B040 7F056510 0FC1A694 */  jal   gunDrawHudString
 /* 08B044 7F056514 24070002 */   li    $a3, 2
 /* 08B048 7F056518 0C001149 */  jal   viGetViewTop
 /* 08B04C 7F05651C 00408825 */   move  $s1, $v0
@@ -45981,7 +45981,7 @@ glabel sub_GAME_7F056210
 /* 0890D4 7F0566E4 AFAF0010 */  sw    $t7, 0x10($sp)
 /* 0890D8 7F0566E8 02202025 */  move  $a0, $s1
 /* 0890DC 7F0566EC 24060093 */  li    $a2, 147
-/* 0890E0 7F0566F0 0FC1A879 */  jal   some_kind_of_display_routine
+/* 0890E0 7F0566F0 0FC1A879 */  jal   gunDrawHudString
 /* 0890E4 7F0566F4 24070002 */   li    $a3, 2
 /* 0890E8 7F0566F8 0C000FDD */  jal   viGetViewTop
 /* 0890EC 7F0566FC 00408825 */   move  $s1, $v0
@@ -46045,7 +46045,7 @@ glabel sub_GAME_7F056210
 /* 0891D4 7F0567E4 AFAE0010 */  sw    $t6, 0x10($sp)
 /* 0891D8 7F0567E8 02202025 */  move  $a0, $s1
 /* 0891DC 7F0567EC 240600AD */  li    $a2, 173
-/* 0891E0 7F0567F0 0FC1A879 */  jal   some_kind_of_display_routine
+/* 0891E0 7F0567F0 0FC1A879 */  jal   gunDrawHudString
 /* 0891E4 7F0567F4 24070002 */   li    $a3, 2
 /* 0891E8 7F0567F8 0C000FDD */  jal   viGetViewTop
 /* 0891EC 7F0567FC 00408825 */   move  $s1, $v0

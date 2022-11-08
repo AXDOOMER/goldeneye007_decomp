@@ -34,7 +34,7 @@
 #include "objecthandler.h"
 #include "dyn.h"
 #include "assets/obseg/text/LtitleE.h"
-
+#include "textrelated.h"
 
 struct BriefingDataSomething
 {
@@ -1181,7 +1181,7 @@ Gfx* add_tab1_start(Gfx* DL)
     setTextSpacingInverted(TRUE);
     x2 = 0;
     y2 = 0;
-    sub_GAME_7F0AE98C(&y2, &x2, g_textPtrTAB1, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0);
+    textMeasure(&y2, &x2, g_textPtrTAB1, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0);
     x = 0x33;
     y = 0x19B - (y2 / 2);
 
@@ -1223,7 +1223,7 @@ Gfx* add_tab3_previous(Gfx* DL)
     setTextSpacingInverted(TRUE);
     sp48 = 0;
     y2 = 0;
-    sub_GAME_7F0AE98C(&y2, &sp48, g_textPtrTAB3, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0);
+    textMeasure(&y2, &sp48, g_textPtrTAB3, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0);
     x = 0xEC;
     y = 0x19B - (y2 / 2);
 
@@ -1274,7 +1274,7 @@ Gfx* add_tab2_next(Gfx* DL)
     setTextSpacingInverted(TRUE);
     sp48 = 0;
     sp4C = 0;
-    sub_GAME_7F0AE98C(&sp4C, &sp48, g_textPtrTAB2, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0);
+    textMeasure(&sp4C, &sp48, g_textPtrTAB2, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0);
     x = 0x90;
     y = 0x19B - (sp4C / 2);
 
@@ -1395,7 +1395,7 @@ Gfx *display_aligned_white_text_to_screen(Gfx *dl, s32 arg1, s32 arg2, s32 arg3,
 
     sp48 = 0;
     sp4C = 0;
-    sub_GAME_7F0AE98C(&sp4C, &sp48, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
+    textMeasure(&sp4C, &sp48, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
     x = arg1 - ((s32) (arg3 * sp48) / 2);
     y = arg2 - ((s32) (arg4 * sp4C) / 2);
     return textRender(dl, &x, &y, text, arg6, arg7, -1, viGetX(), viGetY(), 0, 0);
@@ -4485,7 +4485,7 @@ loop_7:
         {
             spF4 = 0;
             spF8 = 0;
-            sub_GAME_7F0AE98C(temp_a0, temp_a1, temp_s1_2, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
+            textMeasure(temp_a0, temp_a1, temp_s1_2, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
             arg0 = microcode_constructor_related_to_menus(arg0, sp100 + -1, spFC + -1, (sp100 + spF4) + 3, (s32) (spFC + spF8), 0x32);
             viGetX();
             arg0 = textRender(arg0, &sp100, &spFC, temp_s1_2, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, -1, viGetY(), 0, 0);
@@ -4513,7 +4513,7 @@ loop_7:
         {
             spF4 = 0;
             spF8 = 0;
-            sub_GAME_7F0AE98C(temp_a0_2, temp_a1_2, temp_s1_3, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
+            textMeasure(temp_a0_2, temp_a1_2, temp_s1_3, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
             arg0 = microcode_constructor_related_to_menus(arg0, sp100 + -1, spFC + -1, (sp100 + spF4) + 3, (s32) (spFC + spF8), 0x32);
             viGetX();
             arg0 = textRender(arg0, &sp100, &spFC, temp_s1_3, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, -1, viGetY(), 0, 0);
@@ -4533,7 +4533,7 @@ loop_7:
                     strcat(&spD0, &asc_D_8004F488);
                     spF4 = 0;
                     spF8 = 0;
-                    sub_GAME_7F0AE98C(&spF8, &spF4, &spD0, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
+                    textMeasure(&spF8, &spF4, &spD0, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
                     floorFloat(spE4);
                     if (spF4 < 0)
                     {
@@ -4580,7 +4580,7 @@ loop_24:
                     strcat(&spBC, &asc_D_8004F490);
                     spF4 = 0;
                     spF8 = 0;
-                    sub_GAME_7F0AE98C(&spF8, &spF4, &spBC, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
+                    textMeasure(&spF8, &spF4, &spBC, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
                     floorFloat(spE4);
                     if (spF4 < 0)
                     {
@@ -4604,7 +4604,7 @@ loop_24:
     temp_ret_4 = langGet(TEXT(LTITLE, TITLE_STR_27));
     spF4 = 0;
     spF8 = 0;
-    sub_GAME_7F0AE98C(&spF8, &spF4, temp_ret_4, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
+    textMeasure(&spF8, &spF4, temp_ret_4, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
     if (spF8 < 0)
     {
 
@@ -4615,7 +4615,7 @@ loop_24:
     temp_ret_5 = langGet(TEXT(LTITLE, TITLE_STR_28));
     spF4 = 0;
     spF8 = 0;
-    sub_GAME_7F0AE98C(&spF8, &spF4, temp_ret_5, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
+    textMeasure(&spF8, &spF4, temp_ret_5, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
     if (spF8 < 0)
     {
 
@@ -4952,7 +4952,7 @@ glabel constructor_menu05_fileselect
 /* 041318 7F00C7E8 AFA000F8 */  sw    $zero, 0xf8($sp)
 /* 04131C 7F00C7EC 8E670000 */  lw    $a3, ($s3)
 /* 041320 7F00C7F0 AFA00014 */  sw    $zero, 0x14($sp)
-/* 041324 7F00C7F4 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 041324 7F00C7F4 0FC2BA63 */  jal   textMeasure
 /* 041328 7F00C7F8 AFAF0010 */   sw    $t7, 0x10($sp)
 /* 04132C 7F00C7FC 8FB000FC */  lw    $s0, 0xfc($sp)
 /* 041330 7F00C800 8FB20100 */  lw    $s2, 0x100($sp)
@@ -5072,7 +5072,7 @@ glabel constructor_menu05_fileselect
 /* 0414E8 7F00C9B8 AFA000F8 */  sw    $zero, 0xf8($sp)
 /* 0414EC 7F00C9BC 8E670000 */  lw    $a3, ($s3)
 /* 0414F0 7F00C9C0 AFA00014 */  sw    $zero, 0x14($sp)
-/* 0414F4 7F00C9C4 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 0414F4 7F00C9C4 0FC2BA63 */  jal   textMeasure
 /* 0414F8 7F00C9C8 AFAF0010 */   sw    $t7, 0x10($sp)
 /* 0414FC 7F00C9CC 8FB000FC */  lw    $s0, 0xfc($sp)
 /* 041500 7F00C9D0 8FB20100 */  lw    $s2, 0x100($sp)
@@ -5138,7 +5138,7 @@ glabel constructor_menu05_fileselect
 /* 0415EC 7F00CABC 27A600D0 */  addiu $a2, $sp, 0xd0
 /* 0415F0 7F00CAC0 8E670000 */  lw    $a3, ($s3)
 /* 0415F4 7F00CAC4 AFA00014 */  sw    $zero, 0x14($sp)
-/* 0415F8 7F00CAC8 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 0415F8 7F00CAC8 0FC2BA63 */  jal   textMeasure
 /* 0415FC 7F00CACC AFB80010 */   sw    $t8, 0x10($sp)
 /* 041600 7F00CAD0 0FC170D8 */  jal   floorFloat
 /* 041604 7F00CAD4 C7AC00E4 */   lwc1  $f12, 0xe4($sp)
@@ -5246,7 +5246,7 @@ glabel constructor_menu05_fileselect
 /* 041784 7F00CC54 02A03025 */  move  $a2, $s5
 /* 041788 7F00CC58 8E670000 */  lw    $a3, ($s3)
 /* 04178C 7F00CC5C AFA00014 */  sw    $zero, 0x14($sp)
-/* 041790 7F00CC60 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 041790 7F00CC60 0FC2BA63 */  jal   textMeasure
 /* 041794 7F00CC64 AFA80010 */   sw    $t0, 0x10($sp)
 /* 041798 7F00CC68 0FC170D8 */  jal   floorFloat
 /* 04179C 7F00CC6C C7AC00E4 */   lwc1  $f12, 0xe4($sp)
@@ -5311,7 +5311,7 @@ glabel constructor_menu05_fileselect
 /* 04187C 7F00CD4C 00403025 */  move  $a2, $v0
 /* 041880 7F00CD50 8E670000 */  lw    $a3, ($s3)
 /* 041884 7F00CD54 AFA00014 */  sw    $zero, 0x14($sp)
-/* 041888 7F00CD58 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 041888 7F00CD58 0FC2BA63 */  jal   textMeasure
 /* 04188C 7F00CD5C AFAC0010 */   sw    $t4, 0x10($sp)
 /* 041890 7F00CD60 8FB800F8 */  lw    $t8, 0xf8($sp)
 /* 041894 7F00CD64 241E011D */  li    $fp, 285
@@ -5364,7 +5364,7 @@ glabel constructor_menu05_fileselect
 /* 04194C 7F00CE1C 00403025 */  move  $a2, $v0
 /* 041950 7F00CE20 8E670000 */  lw    $a3, ($s3)
 /* 041954 7F00CE24 AFA00014 */  sw    $zero, 0x14($sp)
-/* 041958 7F00CE28 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 041958 7F00CE28 0FC2BA63 */  jal   textMeasure
 /* 04195C 7F00CE2C AFA80010 */   sw    $t0, 0x10($sp)
 /* 041960 7F00CE30 8FAC00F8 */  lw    $t4, 0xf8($sp)
 /* 041964 7F00CE34 24120165 */  li    $s2, 357
@@ -6006,7 +6006,7 @@ Gfx* constructor_menu06_modesel(Gfx* DL)
 
     textstring = langGet((g_AppendCheatSinglePlayer != 0) ? TEXT(LTITLE, TITLE_STR_117) : TEXT(LTITLE, TITLE_STR_29));
 
-    sub_GAME_7F0AE98C(&x2, &y2, textstring, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
+    textMeasure(&x2, &y2, textstring, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
 
     x = 0xAA;
     y = 0xdc;
@@ -6031,7 +6031,7 @@ Gfx* constructor_menu06_modesel(Gfx* DL)
 
     textstring = langGet((g_AppendCheatMultiPlayer != 0) ? TEXT(LTITLE, TITLE_STR_276) : TEXT(LTITLE, TITLE_STR_30));
 
-    sub_GAME_7F0AE98C(&x2, &y2, textstring, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
+    textMeasure(&x2, &y2, textstring, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
 
     x = 0xAA;
     y = 0xFC;
@@ -6048,7 +6048,7 @@ Gfx* constructor_menu06_modesel(Gfx* DL)
         DL = write_text_at_abs_coord(DL, &x, &y, "3.\n", ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
         textstring = langGet(TEXT(LTITLE, TITLE_STR_31));
 
-        sub_GAME_7F0AE98C(&x2, &y2, textstring, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
+        textMeasure(&x2, &y2, textstring, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
 
         x = 0xAA;
         y = 0x11C;
@@ -7632,7 +7632,7 @@ loop_10:
         spC4 = 0;
         temp_a0 = &spC8;
         spC8 = 0;
-        sub_GAME_7F0AE98C(temp_a0, &spC4, &sp90, ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, 0);
+        textMeasure(temp_a0, &spC4, &sp90, ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, 0);
         temp_a2 = (subroutine_arg0 - spC8) + 0x1d;
         temp_a1 = *temp_s7 + -0x1f;
         viGetX();
@@ -7774,7 +7774,7 @@ glabel constructor_menu07_missionsel
 /* 043120 7F00E5F0 02403025 */  move  $a2, $s2
 /* 043124 7F00E5F4 AFA00014 */  sw    $zero, 0x14($sp)
 /* 043128 7F00E5F8 AFA000C8 */  sw    $zero, 0xc8($sp)
-/* 04312C 7F00E5FC 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 04312C 7F00E5FC 0FC2BA63 */  jal   textMeasure
 /* 043130 7F00E600 AFB90010 */   sw    $t9, 0x10($sp)
 /* 043134 7F00E604 8FA300C8 */  lw    $v1, 0xc8($sp)
 /* 043138 7F00E608 8FC80000 */  lw    $t0, ($fp)
@@ -8143,7 +8143,7 @@ Gfx *constructor_menu08_difficulty(Gfx *DL)
                 text_sp160 = &stagename_struct;
             }
 
-            sub_GAME_7F0AE98C(&sp98, &sp9C, text_sp160, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
+            textMeasure(&sp98, &sp9C, text_sp160, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
 
             x = 0x82 - (j_text_trigger ? (sp9C - 0xA) : 0);
             y = (i * 0x1E) + 0xB4;
@@ -8423,7 +8423,7 @@ loop_1:
     sprintf(&sp54, &aD, (s32) (slider_007_mode_health * 100.0f));
     sp4C = 0;
     sp50 = 0;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, &sp54, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
+    textMeasure(&sp50, &sp4C, &sp54, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
     spC10 = (s32) (0x11d - sp4C);
     spC0C = 0xa4;
     sp44 = viGetX();
@@ -8442,7 +8442,7 @@ loop_1:
     sprintf(&sp54, &aD_0, (s32) (slider_007_mode_accuracy * 100.0f));
     sp4C = 0;
     sp50 = 0;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, &sp54, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
+    textMeasure(&sp50, &sp4C, &sp54, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
     spC10 = (s32) (0x11d - sp4C);
     spC0C = 0xc5;
     sp44 = viGetX();
@@ -8461,7 +8461,7 @@ loop_1:
     sprintf(&sp54, &aD_1, (s32) (slider_007_mode_damage * 10.0f));
     sp4C = 0;
     sp50 = 0;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, &sp54, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
+    textMeasure(&sp50, &sp4C, &sp54, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
     spC10 = (s32) (0x11d - sp4C);
     spC0C = 0xe6;
     sp44 = viGetX();
@@ -8480,7 +8480,7 @@ loop_1:
     sprintf(&sp54, &aD_2, (s32) (slider_007_mode_reaction * 100.0f));
     sp4C = 0;
     sp50 = 0;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, &sp54, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
+    textMeasure(&sp50, &sp4C, &sp54, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
     spC10 = (s32) (0x11d - sp4C);
     spC0C = 0x107;
     sp44 = viGetX();
@@ -8656,7 +8656,7 @@ glabel constructor_menu09_007options
 /* 044534 7F00FA04 27A5004C */  addiu $a1, $sp, 0x4c
 /* 044538 7F00FA08 27A60054 */  addiu $a2, $sp, 0x54
 /* 04453C 7F00FA0C AFA00014 */  sw    $zero, 0x14($sp)
-/* 044540 7F00FA10 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 044540 7F00FA10 0FC2BA63 */  jal   textMeasure
 /* 044544 7F00FA14 AFAE0010 */   sw    $t6, 0x10($sp)
 /* 044548 7F00FA18 8FA9004C */  lw    $t1, 0x4c($sp)
 /* 04454C 7F00FA1C 240A011D */  li    $t2, 285
@@ -8786,7 +8786,7 @@ glabel constructor_menu09_007options
 /* 044738 7F00FC08 27A5004C */  addiu $a1, $sp, 0x4c
 /* 04473C 7F00FC0C 27A60054 */  addiu $a2, $sp, 0x54
 /* 044740 7F00FC10 AFA00014 */  sw    $zero, 0x14($sp)
-/* 044744 7F00FC14 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 044744 7F00FC14 0FC2BA63 */  jal   textMeasure
 /* 044748 7F00FC18 AFA90010 */   sw    $t1, 0x10($sp)
 /* 04474C 7F00FC1C 8FAB004C */  lw    $t3, 0x4c($sp)
 /* 044750 7F00FC20 240C011D */  li    $t4, 285
@@ -8916,7 +8916,7 @@ glabel constructor_menu09_007options
 /* 04493C 7F00FE0C 27A5004C */  addiu $a1, $sp, 0x4c
 /* 044940 7F00FE10 27A60054 */  addiu $a2, $sp, 0x54
 /* 044944 7F00FE14 AFA00014 */  sw    $zero, 0x14($sp)
-/* 044948 7F00FE18 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 044948 7F00FE18 0FC2BA63 */  jal   textMeasure
 /* 04494C 7F00FE1C AFAB0010 */   sw    $t3, 0x10($sp)
 /* 044950 7F00FE20 8FAD004C */  lw    $t5, 0x4c($sp)
 /* 044954 7F00FE24 2419011D */  li    $t9, 285
@@ -9044,7 +9044,7 @@ glabel constructor_menu09_007options
 /* 044B38 7F010008 27A5004C */  addiu $a1, $sp, 0x4c
 /* 044B3C 7F01000C 27A60054 */  addiu $a2, $sp, 0x54
 /* 044B40 7F010010 AFA00014 */  sw    $zero, 0x14($sp)
-/* 044B44 7F010014 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 044B44 7F010014 0FC2BA63 */  jal   textMeasure
 /* 044B48 7F010018 AFAD0010 */   sw    $t5, 0x10($sp)
 /* 044B4C 7F01001C 8FB8004C */  lw    $t8, 0x4c($sp)
 /* 044B50 7F010020 2408011D */  li    $t0, 285
@@ -9247,7 +9247,7 @@ glabel constructor_menu09_007options
 /* 0422E4 7F00F8F4 27A5004C */  addiu $a1, $sp, 0x4c
 /* 0422E8 7F00F8F8 27A60054 */  addiu $a2, $sp, 0x54
 /* 0422EC 7F00F8FC AFA00014 */  sw    $zero, 0x14($sp)
-/* 0422F0 7F00F900 0FC2B713 */  jal   sub_GAME_7F0AE98C
+/* 0422F0 7F00F900 0FC2B713 */  jal   textMeasure
 /* 0422F4 7F00F904 AFAD0010 */   sw    $t5, 0x10($sp)
 /* 0422F8 7F00F908 8FAE004C */  lw    $t6, 0x4c($sp)
 /* 0422FC 7F00F90C 240F011D */  li    $t7, 285
@@ -9377,7 +9377,7 @@ glabel constructor_menu09_007options
 /* 0424E8 7F00FAF8 27A5004C */  addiu $a1, $sp, 0x4c
 /* 0424EC 7F00FAFC 27A60054 */  addiu $a2, $sp, 0x54
 /* 0424F0 7F00FB00 AFA00014 */  sw    $zero, 0x14($sp)
-/* 0424F4 7F00FB04 0FC2B713 */  jal   sub_GAME_7F0AE98C
+/* 0424F4 7F00FB04 0FC2B713 */  jal   textMeasure
 /* 0424F8 7F00FB08 AFAE0010 */   sw    $t6, 0x10($sp)
 /* 0424FC 7F00FB0C 8FB8004C */  lw    $t8, 0x4c($sp)
 /* 042500 7F00FB10 2419011D */  li    $t9, 285
@@ -9507,7 +9507,7 @@ glabel constructor_menu09_007options
 /* 0426EC 7F00FCFC 27A5004C */  addiu $a1, $sp, 0x4c
 /* 0426F0 7F00FD00 27A60054 */  addiu $a2, $sp, 0x54
 /* 0426F4 7F00FD04 AFA00014 */  sw    $zero, 0x14($sp)
-/* 0426F8 7F00FD08 0FC2B713 */  jal   sub_GAME_7F0AE98C
+/* 0426F8 7F00FD08 0FC2B713 */  jal   textMeasure
 /* 0426FC 7F00FD0C AFB80010 */   sw    $t8, 0x10($sp)
 /* 042700 7F00FD10 8FA8004C */  lw    $t0, 0x4c($sp)
 /* 042704 7F00FD14 2409011D */  li    $t1, 285
@@ -9635,7 +9635,7 @@ glabel constructor_menu09_007options
 /* 0428E8 7F00FEF8 27A5004C */  addiu $a1, $sp, 0x4c
 /* 0428EC 7F00FEFC 27A60054 */  addiu $a2, $sp, 0x54
 /* 0428F0 7F00FF00 AFA00014 */  sw    $zero, 0x14($sp)
-/* 0428F4 7F00FF04 0FC2B713 */  jal   sub_GAME_7F0AE98C
+/* 0428F4 7F00FF04 0FC2B713 */  jal   textMeasure
 /* 0428F8 7F00FF08 AFA80010 */   sw    $t0, 0x10($sp)
 /* 0428FC 7F00FF0C 8FAA004C */  lw    $t2, 0x4c($sp)
 /* 042900 7F00FF10 240B011D */  li    $t3, 285
@@ -10857,7 +10857,7 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xff, viGetX(), viGetY(), 0, 0);
 
   text = langGet(TEXT(LTITLE, TITLE_STR_77));
-  sub_GAME_7F0AE98C(&iStack24,&iStack28,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0);
+  textMeasure(&iStack24,&iStack28,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0);
   x = 0x39;
   y = 0x79;
   if (highlight_players) {
@@ -10866,7 +10866,7 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   DL = write_text_at_abs_coord(DL,&x,&y,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0xff,viGetX(),viGetY(),0,0);
 
   text = langGet(TEXT(LTITLE, TITLE_STR_78));
-  sub_GAME_7F0AE98C(&iStack24,&iStack28,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0);
+  textMeasure(&iStack24,&iStack28,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0);
   x = 0x39;
   y = 0x8d;
   if (highlight_scenario) {
@@ -10875,7 +10875,7 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   DL = write_text_at_abs_coord(DL,&x,&y,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0xff,viGetX(),viGetY(),0,0);
 
   text = langGet(TEXT(LTITLE, TITLE_STR_79));
-  sub_GAME_7F0AE98C(&iStack24,&iStack28,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0);
+  textMeasure(&iStack24,&iStack28,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0);
   x = 0x39;
   y = 0xa1;
   if (highlight_gameselect) {
@@ -10890,7 +10890,7 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   DL = write_text_at_abs_coord(DL,&x,&y,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,entry,viGetX(),viGetY(),0,0);
 
   text = langGet(TEXT(LTITLE, TITLE_STR_80));
-  sub_GAME_7F0AE98C(&iStack24,&iStack28,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0);
+  textMeasure(&iStack24,&iStack28,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0);
   x = 0x39;
   y = 0xb5;
   if (highlight_gamelength) {
@@ -10905,7 +10905,7 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   DL = write_text_at_abs_coord(DL,&x,&y,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,entry,viGetX(),viGetY(),0,0);
 
   text = langGet(TEXT(LTITLE, TITLE_STR_81));
-  sub_GAME_7F0AE98C(&iStack24,&iStack28,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0);
+  textMeasure(&iStack24,&iStack28,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0);
   x = 0x39;
   y = 0xc9;
   if (highlight_weaponselect) {
@@ -10920,7 +10920,7 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   DL = write_text_at_abs_coord(DL,&x,&y,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,entry,viGetX(),viGetY(),0,0);
 
   text = langGet(TEXT(LTITLE, TITLE_STR_82));
-  sub_GAME_7F0AE98C(&iStack24,&iStack28,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0);
+  textMeasure(&iStack24,&iStack28,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0);
   x = 0x39;
   y = 0xdd;
   if (highlight_character) {
@@ -10935,7 +10935,7 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   DL = write_text_at_abs_coord(DL,&x,&y,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,entry,viGetX(),viGetY(),0,0);
 
   text = langGet(TEXT(LTITLE, TITLE_STR_83));
-  sub_GAME_7F0AE98C(&iStack24,&iStack28,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0);
+  textMeasure(&iStack24,&iStack28,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0);
   x = 0x39;
   y = 0xf1;
   if (highlight_health) {
@@ -10950,7 +10950,7 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   DL = write_text_at_abs_coord(DL,&x,&y,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,entry,viGetX(),viGetY(),0,0);
 
   text = langGet(0x9d1e);
-  sub_GAME_7F0AE98C(&iStack24,&iStack28,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0);
+  textMeasure(&iStack24,&iStack28,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0);
   x = 0x39;
   y = 0x105;
   if (highlight_controlstyle) {
@@ -10965,7 +10965,7 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   DL = write_text_at_abs_coord(DL,&x,&y,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,entry,viGetX(),viGetY(),0,0);
 
   text = langGet(TEXT(LTITLE, TITLE_STR_84));
-  sub_GAME_7F0AE98C(&iStack24,&iStack28,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0);
+  textMeasure(&iStack24,&iStack28,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0);
   x = 0x39;
   y = 0x119;
   if (highlight_aimadjustment) {
@@ -12408,7 +12408,7 @@ loop_4:
             if (subroutine_arg0 == 0)
             {
                 temp_ret_3 = langGet(TEXT(LTITLE, TITLE_STR_85));
-                sub_GAME_7F0AE98C(&spBC, &spB8, temp_ret_3, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
+                textMeasure(&spBC, &spB8, temp_ret_3, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
                 spB4 = (s32) ((((s32) phi_s4 >> 1) + phi_s2) - (spB8 >> 1));
                 viGetX();
                 phi_s1 = write_text_at_abs_coord(microcode_constructor(temp_s1_2), &spB4, &spB0, temp_ret_3, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, viGetY(), 0, 0);
@@ -12416,7 +12416,7 @@ loop_4:
         }
         temp_s6 = ((s32) phi_s4 >> 1) + phi_s2;
         temp_ret_4 = langGet((0x80030000 + (*sp80 * 0xc))->unk-4E68);
-        sub_GAME_7F0AE98C(&spA8, &spA4, temp_ret_4, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
+        textMeasure(&spA8, &spA4, temp_ret_4, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
         sp9C = (s32) (phi_s7 + 0x78);
         spA0 = (s32) (temp_s6 - (spA4 >> 1));
         viGetX();
@@ -12675,7 +12675,7 @@ glabel constructor_menu0F_mpcharsel
 /* 047524 7F0129F4 27A500B8 */  addiu $a1, $sp, 0xb8
 /* 047528 7F0129F8 00403025 */  move  $a2, $v0
 /* 04752C 7F0129FC AFA00014 */  sw    $zero, 0x14($sp)
-/* 047530 7F012A00 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 047530 7F012A00 0FC2BA63 */  jal   textMeasure
 /* 047534 7F012A04 AFAD0010 */   sw    $t5, 0x10($sp)
 /* 047538 7F012A08 8FAA00B8 */  lw    $t2, 0xb8($sp)
 /* 04753C 7F012A0C 00147043 */  sra   $t6, $s4, 1
@@ -12731,7 +12731,7 @@ glabel constructor_menu0F_mpcharsel
 /* 047600 7F012AD0 27A500A4 */  addiu $a1, $sp, 0xa4
 /* 047604 7F012AD4 00403025 */  move  $a2, $v0
 /* 047608 7F012AD8 AFA00014 */  sw    $zero, 0x14($sp)
-/* 04760C 7F012ADC 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 04760C 7F012ADC 0FC2BA63 */  jal   textMeasure
 /* 047610 7F012AE0 AFB90010 */   sw    $t9, 0x10($sp)
 /* 047614 7F012AE4 8FA900A4 */  lw    $t1, 0xa4($sp)
 /* 047618 7F012AE8 26ED0078 */  addiu $t5, $s7, 0x78
@@ -13398,14 +13398,14 @@ loop_4:
         if (*sp74 == 0)
         {
             temp_ret_3 = langGet(TEXT(LTITLE, TITLE_STR_86));
-            sub_GAME_7F0AE98C(&spA4, &spA0, temp_ret_3, ptrSecondFontTableLarge, (s32) subroutine_arg0, 0);
+            textMeasure(&spA4, &spA0, temp_ret_3, ptrSecondFontTableLarge, (s32) subroutine_arg0, 0);
             sp9C = (s32) ((((s32) phi_s5 >> 1) + phi_s3) - (spA0 >> 1));
             sp98 = (s32) ((phi_s2 - (spA4 >> 1)) + 0x37);
             viGetX();
             phi_s1 = write_text_at_abs_coord(microcode_constructor(temp_s1_2), &sp9C, &sp98, temp_ret_3, (s32) ptrSecondFontTableLarge, (s32) subroutine_arg0, 0xff, viGetY(), 0, 0);
         }
         temp_ret_4 = langGet((0x80030000 + (*sp70 * 8))->unk-4B68);
-        sub_GAME_7F0AE98C(&sp90, &sp8C, temp_ret_4, ptrSecondFontTableLarge, (s32) subroutine_arg0, 0);
+        textMeasure(&sp90, &sp8C, temp_ret_4, ptrSecondFontTableLarge, (s32) subroutine_arg0, 0);
         sp88 = (s32) ((((s32) phi_s5 >> 1) + phi_s3) - (sp8C >> 1));
         sp84 = (s32) (((phi_s2 + 0x46) - (sp90 >> 1)) + 0xf);
         viGetX();
@@ -13577,7 +13577,7 @@ glabel constructor_menu10_mphandicap
 /* 047ED4 7F0133A4 00403025 */  move  $a2, $v0
 /* 047ED8 7F0133A8 8EE70000 */  lw    $a3, ($s7)
 /* 047EDC 7F0133AC AFA00014 */  sw    $zero, 0x14($sp)
-/* 047EE0 7F0133B0 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 047EE0 7F0133B0 0FC2BA63 */  jal   textMeasure
 /* 047EE4 7F0133B4 AFAA0010 */   sw    $t2, 0x10($sp)
 /* 047EE8 7F0133B8 8FAF00A4 */  lw    $t7, 0xa4($sp)
 /* 047EEC 7F0133BC 8FAD00A0 */  lw    $t5, 0xa0($sp)
@@ -13632,7 +13632,7 @@ glabel constructor_menu10_mphandicap
 /* 047FAC 7F01347C 00403025 */  move  $a2, $v0
 /* 047FB0 7F013480 8EE70000 */  lw    $a3, ($s7)
 /* 047FB4 7F013484 AFA00014 */  sw    $zero, 0x14($sp)
-/* 047FB8 7F013488 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 047FB8 7F013488 0FC2BA63 */  jal   textMeasure
 /* 047FBC 7F01348C AFAA0010 */   sw    $t2, 0x10($sp)
 /* 047FC0 7F013490 8FAB0090 */  lw    $t3, 0x90($sp)
 /* 047FC4 7F013494 8FB9008C */  lw    $t9, 0x8c($sp)
@@ -14820,14 +14820,14 @@ loop_4:
         if (*sp74 == 0)
         {
             temp_ret_3 = langGet(TEXT(LTITLE, TITLE_STR_285));
-            sub_GAME_7F0AE98C(&spA4, &spA0, temp_ret_3, ptrSecondFontTableLarge, (s32) subroutine_arg0, 0);
+            textMeasure(&spA4, &spA0, temp_ret_3, ptrSecondFontTableLarge, (s32) subroutine_arg0, 0);
             sp9C = (s32) ((((s32) phi_s5 >> 1) + phi_s3) - (spA0 >> 1));
             sp98 = (s32) ((phi_s2 - (spA4 >> 1)) + 0x37);
             viGetX();
             phi_s1 = write_text_at_abs_coord(microcode_constructor(temp_s1_2), &sp9C, &sp98, temp_ret_3, (s32) ptrSecondFontTableLarge, (s32) subroutine_arg0, 0xff, viGetY(), 0, 0);
         }
         temp_ret_4 = langGet((0x80030000 + (*sp70 * 4))->unk-4B10);
-        sub_GAME_7F0AE98C(&sp90, &sp8C, temp_ret_4, ptrSecondFontTableLarge, (s32) subroutine_arg0, 0);
+        textMeasure(&sp90, &sp8C, temp_ret_4, ptrSecondFontTableLarge, (s32) subroutine_arg0, 0);
         sp88 = (s32) ((((s32) phi_s5 >> 1) + phi_s3) - (sp8C >> 1));
         sp84 = (s32) (((phi_s2 + 0x46) - (sp90 >> 1)) + 0xf);
         viGetX();
@@ -14999,7 +14999,7 @@ glabel constructor_menu11_mpcontrol
 /* 0486D8 7F013BA8 00403025 */  move  $a2, $v0
 /* 0486DC 7F013BAC 8EE70000 */  lw    $a3, ($s7)
 /* 0486E0 7F013BB0 AFA00014 */  sw    $zero, 0x14($sp)
-/* 0486E4 7F013BB4 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 0486E4 7F013BB4 0FC2BA63 */  jal   textMeasure
 /* 0486E8 7F013BB8 AFAA0010 */   sw    $t2, 0x10($sp)
 /* 0486EC 7F013BBC 8FAF00A4 */  lw    $t7, 0xa4($sp)
 /* 0486F0 7F013BC0 8FAD00A0 */  lw    $t5, 0xa0($sp)
@@ -15054,7 +15054,7 @@ glabel constructor_menu11_mpcontrol
 /* 0487B0 7F013C80 00403025 */  move  $a2, $v0
 /* 0487B4 7F013C84 8EE70000 */  lw    $a3, ($s7)
 /* 0487B8 7F013C88 AFA00014 */  sw    $zero, 0x14($sp)
-/* 0487BC 7F013C8C 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 0487BC 7F013C8C 0FC2BA63 */  jal   textMeasure
 /* 0487C0 7F013C90 AFAA0010 */   sw    $t2, 0x10($sp)
 /* 0487C4 7F013C94 8FAB0090 */  lw    $t3, 0x90($sp)
 /* 0487C8 7F013C98 8FB9008C */  lw    $t9, 0x8c($sp)
@@ -15419,7 +15419,7 @@ loop_17:
             {
                 phi_s2_2 = -0x100;
             }
-            sub_GAME_7F0AE98C(&sp128, &sp124, langGet(temp_s3_2->unk2), subroutine_arg0, (s32) ptrFirstFontTableSmall, 0);
+            textMeasure(&sp128, &sp124, langGet(temp_s3_2->unk2), subroutine_arg0, (s32) ptrFirstFontTableSmall, 0);
             temp_s4_3 = phi_s6 + -0x1f;
             temp_a2 = sp90 - sp128;
             arg0 = microcode_constructor_related_to_menus(arg0, temp_s4_3, temp_a2, temp_s4_3 + sp124, (s32) (temp_a2 + sp128), 0);
@@ -15811,7 +15811,7 @@ glabel constructor_menu12_mpstage
 /* 0490D0 7F0145A0 00403025 */  move  $a2, $v0
 /* 0490D4 7F0145A4 8FC70000 */  lw    $a3, ($fp)
 /* 0490D8 7F0145A8 AFA00014 */  sw    $zero, 0x14($sp)
-/* 0490DC 7F0145AC 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 0490DC 7F0145AC 0FC2BA63 */  jal   textMeasure
 /* 0490E0 7F0145B0 AFAB0010 */   sw    $t3, 0x10($sp)
 /* 0490E4 7F0145B4 8FA30128 */  lw    $v1, 0x128($sp)
 /* 0490E8 7F0145B8 8FAC0090 */  lw    $t4, 0x90($sp)
@@ -16266,7 +16266,7 @@ void constructor_menu13_mpscenario(Gfx *DL)
         }
         text = langGet(mp_player_counts[i].stage);
 
-        sub_GAME_7F0AE98C(&sp7C, &sp78, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
+        textMeasure(&sp7C, &sp78, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
 
         x = 0x39;
         if ((i + 1) == dword_CODE_bss_80069780)
@@ -16367,7 +16367,7 @@ glabel constructor_menu13_mpscenario
 /* 0496AC 7F014B7C 00403025 */  move  $a2, $v0
 /* 0496B0 7F014B80 8EE70000 */  lw    $a3, ($s7)
 /* 0496B4 7F014B84 AFA00014 */  sw    $zero, 0x14($sp)
-/* 0496B8 7F014B88 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 0496B8 7F014B88 0FC2BA63 */  jal   textMeasure
 /* 0496BC 7F014B8C AFAB0010 */   sw    $t3, 0x10($sp)
 /* 0496C0 7F014B90 3C0E8007 */  lui   $t6, %hi(dword_CODE_bss_80069780)
 /* 0496C4 7F014B94 8DCE9780 */  lw    $t6, %lo(dword_CODE_bss_80069780)($t6)
@@ -16524,7 +16524,7 @@ glabel constructor_menu13_mpscenario
 /* 0474EC 7F014AFC 00403025 */  move  $a2, $v0
 /* 0474F0 7F014B00 8EE70000 */  lw    $a3, ($s7)
 /* 0474F4 7F014B04 AFA00014 */  sw    $zero, 0x14($sp)
-/* 0474F8 7F014B08 0FC2B713 */  jal   sub_GAME_7F0AE98C
+/* 0474F8 7F014B08 0FC2B713 */  jal   textMeasure
 /* 0474FC 7F014B0C AFAB0010 */   sw    $t3, 0x10($sp)
 /* 047500 7F014B10 3C0E8006 */  lui   $t6, %hi(dword_CODE_bss_80069780) # $t6, 0x8006
 /* 047504 7F014B14 8DCE86C0 */  lw    $t6, %lo(dword_CODE_bss_80069780)($t6)
@@ -17137,7 +17137,7 @@ loop_4:
         if (temp_s2 != 0)
         {
             temp_ret_2 = langGet(TEXT(LTITLE, TITLE_STR_88));
-            sub_GAME_7F0AE98C(&spA4, &spA0, temp_ret_2, ptrSecondFontTableLarge, (s32) subroutine_arg0, 0);
+            textMeasure(&spA4, &spA0, temp_ret_2, ptrSecondFontTableLarge, (s32) subroutine_arg0, 0);
             sp9C = (s32) ((phi_v0 + 0x7d) - (spA0 >> 1));
             viGetX();
             phi_s5_2 = write_text_at_abs_coord(temp_s5, &sp9C, &sp98, temp_ret_2, (s32) ptrSecondFontTableLarge, (s32) subroutine_arg0, 0xff, viGetY(), 0, 0);
@@ -17171,7 +17171,7 @@ loop_4:
         {
 
         }
-        sub_GAME_7F0AE98C(&sp90, &sp8C, phi_s1, ptrSecondFontTableLarge, (s32) subroutine_arg0, 0);
+        textMeasure(&sp90, &sp8C, phi_s1, ptrSecondFontTableLarge, (s32) subroutine_arg0, 0);
         sp88 = (s32) (spB4 - (sp8C >> 1));
         sp84 = (s32) ((temp_s6 - (sp90 >> 1)) + 0x46);
         if ((phi_s4 == teamsize) && (phi_s4 == teamsize))
@@ -17329,7 +17329,7 @@ glabel constructor_menu14_mpteams
 /* 049E3C 7F01530C 00403025 */  move  $a2, $v0
 /* 049E40 7F015310 8EE70000 */  lw    $a3, ($s7)
 /* 049E44 7F015314 AFA00014 */  sw    $zero, 0x14($sp)
-/* 049E48 7F015318 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 049E48 7F015318 0FC2BA63 */  jal   textMeasure
 /* 049E4C 7F01531C AFAB0010 */   sw    $t3, 0x10($sp)
 /* 049E50 7F015320 8FAC00A0 */  lw    $t4, 0xa0($sp)
 /* 049E54 7F015324 AFB00098 */  sw    $s0, 0x98($sp)
@@ -17402,7 +17402,7 @@ glabel constructor_menu14_mpteams
 /* 049F40 7F015410 02203025 */  move  $a2, $s1
 /* 049F44 7F015414 8EE70000 */  lw    $a3, ($s7)
 /* 049F48 7F015418 AFA00014 */  sw    $zero, 0x14($sp)
-/* 049F4C 7F01541C 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 049F4C 7F01541C 0FC2BA63 */  jal   textMeasure
 /* 049F50 7F015420 AFAC0010 */   sw    $t4, 0x10($sp)
 /* 049F54 7F015424 8FB80090 */  lw    $t8, 0x90($sp)
 /* 049F58 7F015428 8FAE008C */  lw    $t6, 0x8c($sp)
@@ -17839,7 +17839,7 @@ glabel print_objectives_and_status_to_menu
 /* 04A610 7F015AE0 AFA00014 */  sw    $zero, 0x14($sp)
 /* 04A614 7F015AE4 8E870000 */  lw    $a3, ($s4)
 /* 04A618 7F015AE8 02603025 */  move  $a2, $s3
-/* 04A61C 7F015AEC 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 04A61C 7F015AEC 0FC2BA63 */  jal   textMeasure
 /* 04A620 7F015AF0 AFAC0010 */   sw    $t4, 0x10($sp)
 /* 04A624 7F015AF4 8FAE0094 */  lw    $t6, 0x94($sp)
 /* 04A628 7F015AF8 8FB800A4 */  lw    $t8, 0xa4($sp)
@@ -18702,7 +18702,7 @@ Gfx * constructor_menu0C_missionfailed(Gfx *DL)
     text = langGet(TEXT(LTITLE, TITLE_STR_99)); //Mission status:*
     x2 = 0;
     y2 = 0;
-    sub_GAME_7F0AE98C(&y2, &x2, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
+    textMeasure(&y2, &x2, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
     x = 0x37;
     y = 0xA7;
     DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
@@ -18925,7 +18925,7 @@ Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
 
     x2 = 0;
     y2 = 0;
-    sub_GAME_7F0AE98C(&y2, &x2, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
+    textMeasure(&y2, &x2, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
 
     text = langGet(TEXT(LTITLE, TITLE_STR_105)); //Time:*
     x = 0x37;
@@ -19518,7 +19518,7 @@ glabel constructor_menu15_cheat
 /* 04CB50 7F018020 00403025 */  move  $a2, $v0
 /* 04CB54 7F018024 8EC70000 */  lw    $a3, ($s6)
 /* 04CB58 7F018028 AFA00014 */  sw    $zero, 0x14($sp)
-/* 04CB5C 7F01802C 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 04CB5C 7F01802C 0FC2BA63 */  jal   textMeasure
 /* 04CB60 7F018030 AFB80010 */   sw    $t8, 0x10($sp)
 /* 04CB64 7F018034 3C198003 */  lui   $t9, %hi(D_8002B5E0)
 /* 04CB68 7F018038 8F39B5E0 */  lw    $t9, %lo(D_8002B5E0)($t9)
@@ -19585,7 +19585,7 @@ glabel constructor_menu15_cheat
 /* 04CC54 7F018124 00403025 */  move  $a2, $v0
 /* 04CC58 7F018128 8EC70000 */  lw    $a3, ($s6)
 /* 04CC5C 7F01812C AFA00014 */  sw    $zero, 0x14($sp)
-/* 04CC60 7F018130 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 04CC60 7F018130 0FC2BA63 */  jal   textMeasure
 /* 04CC64 7F018134 AFB90010 */   sw    $t9, 0x10($sp)
 /* 04CC68 7F018138 8E680000 */  lw    $t0, ($s3)
 /* 04CC6C 7F01813C 3C098007 */  lui   $t1, %hi(g_CheatActivated)
@@ -19659,7 +19659,7 @@ glabel constructor_menu15_cheat
 /* 04CD68 7F018238 00403025 */  move  $a2, $v0
 /* 04CD6C 7F01823C 8EC70000 */  lw    $a3, ($s6)
 /* 04CD70 7F018240 AFA00014 */  sw    $zero, 0x14($sp)
-/* 04CD74 7F018244 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 04CD74 7F018244 0FC2BA63 */  jal   textMeasure
 /* 04CD78 7F018248 AFAE0010 */   sw    $t6, 0x10($sp)
 /* 04CD7C 7F01824C 3C188003 */  lui   $t8, %hi(D_8002B5E0)
 /* 04CD80 7F018250 8F18B5E0 */  lw    $t8, %lo(D_8002B5E0)($t8)
@@ -19727,7 +19727,7 @@ glabel constructor_menu15_cheat
 /* 04CE70 7F018340 00403025 */  move  $a2, $v0
 /* 04CE74 7F018344 8EC70000 */  lw    $a3, ($s6)
 /* 04CE78 7F018348 AFA00014 */  sw    $zero, 0x14($sp)
-/* 04CE7C 7F01834C 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 04CE7C 7F01834C 0FC2BA63 */  jal   textMeasure
 /* 04CE80 7F018350 AFB80010 */   sw    $t8, 0x10($sp)
 /* 04CE84 7F018354 8E790030 */  lw    $t9, 0x30($s3)
 /* 04CE88 7F018358 3C088007 */  lui   $t0, %hi(g_CheatActivated)
@@ -19854,7 +19854,7 @@ glabel constructor_menu15_cheat
 /* 04A984 7F017F94 00403025 */  move  $a2, $v0
 /* 04A988 7F017F98 8EC70000 */  lw    $a3, ($s6)
 /* 04A98C 7F017F9C AFA00014 */  sw    $zero, 0x14($sp)
-/* 04A990 7F017FA0 0FC2B713 */  jal   sub_GAME_7F0AE98C
+/* 04A990 7F017FA0 0FC2B713 */  jal   textMeasure
 /* 04A994 7F017FA4 AFB80010 */   sw    $t8, 0x10($sp)
 /* 04A998 7F017FA8 3C198002 */  lui   $t9, %hi(D_8002B5E0) # $t9, 0x8002
 /* 04A99C 7F017FAC 8F396B30 */  lw    $t9, %lo(D_8002B5E0)($t9)
@@ -19921,7 +19921,7 @@ glabel constructor_menu15_cheat
 /* 04AA88 7F018098 00403025 */  move  $a2, $v0
 /* 04AA8C 7F01809C 8EC70000 */  lw    $a3, ($s6)
 /* 04AA90 7F0180A0 AFA00014 */  sw    $zero, 0x14($sp)
-/* 04AA94 7F0180A4 0FC2B713 */  jal   sub_GAME_7F0AE98C
+/* 04AA94 7F0180A4 0FC2B713 */  jal   textMeasure
 /* 04AA98 7F0180A8 AFB90010 */   sw    $t9, 0x10($sp)
 /* 04AA9C 7F0180AC 8E680000 */  lw    $t0, ($s3)
 /* 04AAA0 7F0180B0 3C098006 */  lui   $t1, 0x8006
@@ -19995,7 +19995,7 @@ glabel constructor_menu15_cheat
 /* 04AB9C 7F0181AC 00403025 */  move  $a2, $v0
 /* 04ABA0 7F0181B0 8EC70000 */  lw    $a3, ($s6)
 /* 04ABA4 7F0181B4 AFA00014 */  sw    $zero, 0x14($sp)
-/* 04ABA8 7F0181B8 0FC2B713 */  jal   sub_GAME_7F0AE98C
+/* 04ABA8 7F0181B8 0FC2B713 */  jal   textMeasure
 /* 04ABAC 7F0181BC AFAE0010 */   sw    $t6, 0x10($sp)
 /* 04ABB0 7F0181C0 3C188002 */  lui   $t8, %hi(D_8002B5E0) # $t8, 0x8002
 /* 04ABB4 7F0181C4 8F186B30 */  lw    $t8, %lo(D_8002B5E0)($t8)
@@ -20063,7 +20063,7 @@ glabel constructor_menu15_cheat
 /* 04ACA4 7F0182B4 00403025 */  move  $a2, $v0
 /* 04ACA8 7F0182B8 8EC70000 */  lw    $a3, ($s6)
 /* 04ACAC 7F0182BC AFA00014 */  sw    $zero, 0x14($sp)
-/* 04ACB0 7F0182C0 0FC2B713 */  jal   sub_GAME_7F0AE98C
+/* 04ACB0 7F0182C0 0FC2B713 */  jal   textMeasure
 /* 04ACB4 7F0182C4 AFB80010 */   sw    $t8, 0x10($sp)
 /* 04ACB8 7F0182C8 8E790030 */  lw    $t9, 0x30($s3)
 /* 04ACBC 7F0182CC 3C088006 */  lui   $t0, 0x8006
@@ -20175,7 +20175,7 @@ Gfx *constructor_menu16_nocontrollers(Gfx *DL)
     if ((numContCon == 0) || (numContCon == 1) || (numContCon == 2) || (numContCon == 3)) {
         text = langGet(TEXT(LTITLE, TITLE_STR_118)); //NO CONTROLLER IN CONTROLLER SOCKET 1
     }
-    sub_GAME_7F0AE98C(&y2, &x2, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
+    textMeasure(&y2, &x2, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
     x = 0xDC - (x2 >> 1);
     y = 0x99 - (y2 >> 1);
 #ifdef BUGFIX_R1
@@ -20193,7 +20193,7 @@ Gfx *constructor_menu16_nocontrollers(Gfx *DL)
     if ((numContCon == 0) || (numContCon == 1) || (numContCon == 2) || (numContCon == 3)) {
         text = langGet(TEXT(LTITLE, TITLE_STR_119)); //PLEASE POWER OFF AND ATTACH A CONTROLLER
     }
-    sub_GAME_7F0AE98C(&y2, &x2, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
+    textMeasure(&y2, &x2, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
     x = 0xDC - (x2 >> 1);
     y = 0xB1 - (y2 >> 1);
 #ifdef BUGFIX_R1
@@ -23158,7 +23158,7 @@ glabel constructor_menu18_displaycast
 /* 04EB04 7F019FD4 27A50154 */  addiu $a1, $sp, 0x154
 /* 04EB08 7F019FD8 00403025 */  move  $a2, $v0
 /* 04EB0C 7F019FDC AFA00014 */  sw    $zero, 0x14($sp)
-/* 04EB10 7F019FE0 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 04EB10 7F019FE0 0FC2BA63 */  jal   textMeasure
 /* 04EB14 7F019FE4 AFAE0010 */   sw    $t6, 0x10($sp)
 /* 04EB18 7F019FE8 8FA20154 */  lw    $v0, 0x154($sp)
 /* 04EB1C 7F019FEC 8FB80150 */  lw    $t8, 0x150($sp)
@@ -23295,7 +23295,7 @@ glabel constructor_menu18_displaycast
 /* 04ED08 7F01A1D8 00403025 */  move  $a2, $v0
 /* 04ED0C 7F01A1DC 8E870000 */  lw    $a3, ($s4)
 /* 04ED10 7F01A1E0 AFA00014 */  sw    $zero, 0x14($sp)
-/* 04ED14 7F01A1E4 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 04ED14 7F01A1E4 0FC2BA63 */  jal   textMeasure
 /* 04ED18 7F01A1E8 AFAF0010 */   sw    $t7, 0x10($sp)
 /* 04ED1C 7F01A1EC 8FA20154 */  lw    $v0, 0x154($sp)
 /* 04ED20 7F01A1F0 8FAB0150 */  lw    $t3, 0x150($sp)
@@ -23356,7 +23356,7 @@ glabel constructor_menu18_displaycast
 /* 04EDF8 7F01A2C8 00403025 */  move  $a2, $v0
 /* 04EDFC 7F01A2CC 8E870000 */  lw    $a3, ($s4)
 /* 04EE00 7F01A2D0 AFA00014 */  sw    $zero, 0x14($sp)
-/* 04EE04 7F01A2D4 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 04EE04 7F01A2D4 0FC2BA63 */  jal   textMeasure
 /* 04EE08 7F01A2D8 AFAB0010 */   sw    $t3, 0x10($sp)
 /* 04EE0C 7F01A2DC 8FA20154 */  lw    $v0, 0x154($sp)
 /* 04EE10 7F01A2E0 8FB80150 */  lw    $t8, 0x150($sp)
@@ -24282,7 +24282,7 @@ glabel constructor_menu18_displaycast
 /* 04CA40 7F01A050 27A50154 */  addiu $a1, $sp, 0x154
 /* 04CA44 7F01A054 00403025 */  move  $a2, $v0
 /* 04CA48 7F01A058 AFA00014 */  sw    $zero, 0x14($sp)
-/* 04CA4C 7F01A05C 0FC2B713 */  jal   sub_GAME_7F0AE98C
+/* 04CA4C 7F01A05C 0FC2B713 */  jal   textMeasure
 /* 04CA50 7F01A060 AFAE0010 */   sw    $t6, 0x10($sp)
 /* 04CA54 7F01A064 8FA20154 */  lw    $v0, 0x154($sp)
 /* 04CA58 7F01A068 8FB80150 */  lw    $t8, 0x150($sp)
@@ -24419,7 +24419,7 @@ glabel constructor_menu18_displaycast
 /* 04CC44 7F01A254 00403025 */  move  $a2, $v0
 /* 04CC48 7F01A258 8E870000 */  lw    $a3, ($s4)
 /* 04CC4C 7F01A25C AFA00014 */  sw    $zero, 0x14($sp)
-/* 04CC50 7F01A260 0FC2B713 */  jal   sub_GAME_7F0AE98C
+/* 04CC50 7F01A260 0FC2B713 */  jal   textMeasure
 /* 04CC54 7F01A264 AFAF0010 */   sw    $t7, 0x10($sp)
 /* 04CC58 7F01A268 8FA20154 */  lw    $v0, 0x154($sp)
 /* 04CC5C 7F01A26C 8FAB0150 */  lw    $t3, 0x150($sp)
@@ -24480,7 +24480,7 @@ glabel constructor_menu18_displaycast
 /* 04CD34 7F01A344 00403025 */  move  $a2, $v0
 /* 04CD38 7F01A348 8E870000 */  lw    $a3, ($s4)
 /* 04CD3C 7F01A34C AFA00014 */  sw    $zero, 0x14($sp)
-/* 04CD40 7F01A350 0FC2B713 */  jal   sub_GAME_7F0AE98C
+/* 04CD40 7F01A350 0FC2B713 */  jal   textMeasure
 /* 04CD44 7F01A354 AFAB0010 */   sw    $t3, 0x10($sp)
 /* 04CD48 7F01A358 8FA20154 */  lw    $v0, 0x154($sp)
 /* 04CD4C 7F01A35C 8FB80150 */  lw    $t8, 0x150($sp)

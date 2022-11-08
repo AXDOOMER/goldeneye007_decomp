@@ -2,6 +2,7 @@
 #include <memp.h>
 #include "textrelated.h"
 #include "bondtypes.h"
+#include "game/lvl_text.h"
 
 // data
 s32 D_80040E80 = 0;
@@ -2962,13 +2963,87 @@ glabel textRenderGlow
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0AE98C(void) {
+void textMeasure(s32 *textheight, s32 *textwidth, char *text, struct fontchar *font1, struct font *font2, s32 lineheight)
+{
+	unsigned char prevchar;
+	unsigned char thischar;
+	s32 longest;
+	s32 tmp;
 
+	prevchar = 'H';
+	thischar = '\0';
+	longest = 0;
+	*textheight = 0;
+	*textwidth = 0;
+
+
+    if (lineheight == 0)
+    {
+		lineheight = font1['['].baseline + font1['['].height;
+    }
+    if ((j_text_trigger) && (lineheight < 14))
+    {
+        lineheight = 14;
+    }
+
+	if (text)
+    {
+		while (*text != '\0')
+        {
+			if (*text == ' ')
+            {
+				// Space
+				if (text[1] != '\n') {
+					*textwidth += 5;
+				}
+
+				prevchar = 'H';
+				text++;
+			} else if (*text == '\n') {
+				// Line break
+
+				if (*textwidth > longest) {
+					longest = *textwidth;
+				}
+
+				*textwidth = 0;
+				*textheight += lineheight;
+				text++;
+			} else if (*text < 0x80)
+            {
+					// Normal single-byte character
+					thischar = *text;
+					tmp = font2->kerning[font1[prevchar - 0x21].kerningindex * 13 + font1[thischar - 0x21].kerningindex] + text_spacing - 1;
+					*textwidth = font1[thischar - 0x21].width + *textwidth - tmp;
+
+					prevchar = *text;
+					text++;
+            }
+            else if ((s32) text < 0xC0)
+            {
+					// Multi-byte character
+					tmp = font2->kerning[0] + text_spacing - 1;
+					*textwidth = *textwidth - tmp + 11;
+					text += 2;
+            }
+            else
+            {
+					// Multi-byte character
+					tmp = font2->kerning[0] + text_spacing - 1;
+					*textwidth = *textwidth - tmp + 15;
+					text += 2;
+            }
+        };
+    }
+    if (*textwidth < longest)
+    {
+        *textwidth = longest;
+    }
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0AE98C
+glabel textMeasure
 /* 0E34BC 7F0AE98C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0E34C0 7F0AE990 AFB00008 */  sw    $s0, 8($sp)
 /* 0E34C4 7F0AE994 8FB0002C */  lw    $s0, 0x2c($sp)
@@ -3180,7 +3255,7 @@ glabel sub_GAME_7F0AEB64
 /* 0E377C 7F0AEC4C 27A4007C */  addiu $a0, $sp, 0x7c
 /* 0E3780 7F0AEC50 02803025 */  move  $a2, $s4
 /* 0E3784 7F0AEC54 02603825 */  move  $a3, $s3
-/* 0E3788 7F0AEC58 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 0E3788 7F0AEC58 0FC2BA63 */  jal   textMeasure
 /* 0E378C 7F0AEC5C AFB90010 */   sw    $t9, 0x10($sp)
 /* 0E3790 7F0AEC60 8FAB008C */  lw    $t3, 0x8c($sp)
 /* 0E3794 7F0AEC64 8FAE0080 */  lw    $t6, 0x80($sp)

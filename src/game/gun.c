@@ -25555,7 +25555,7 @@ glabel set_rgba_redirect_generate_microcode
 
 
 #ifdef NONMATCHING
-s32 some_kind_of_display_routine(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) {
+s32 gunDrawHudString(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) {
     s16 sp44;
     s32 sp48;
     s32 sp4C;
@@ -25577,7 +25577,7 @@ s32 some_kind_of_display_routine(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
     sp50 = 0;
     sp48 = 0;
     sp4C = 0;
-    sub_GAME_7F0AE98C(&sp4C, &sp48, arg1, ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0);
+    textMeasure(&sp4C, &sp48, arg1, ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0);
     if (arg3 == 1)
     {
         // Node 1
@@ -25667,7 +25667,7 @@ s32 some_kind_of_display_routine(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 #else
 GLOBAL_ASM(
 .text
-glabel some_kind_of_display_routine
+glabel gunDrawHudString
 /* 09E580 7F069A50 27BDFFA0 */  addiu $sp, $sp, -0x60
 /* 09E584 7F069A54 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableSmall)
 /* 09E588 7F069A58 8DCE0EAC */  lw    $t6, %lo(ptrFirstFontTableSmall)($t6)
@@ -25689,7 +25689,7 @@ glabel some_kind_of_display_routine
 /* 09E5C8 7F069A98 AFA00050 */  sw    $zero, 0x50($sp)
 /* 09E5CC 7F069A9C AFA00048 */  sw    $zero, 0x48($sp)
 /* 09E5D0 7F069AA0 AFA0004C */  sw    $zero, 0x4c($sp)
-/* 09E5D4 7F069AA4 0FC2BA63 */  jal   sub_GAME_7F0AE98C
+/* 09E5D4 7F069AA4 0FC2BA63 */  jal   textMeasure
 /* 09E5D8 7F069AA8 AFAE0010 */   sw    $t6, 0x10($sp)
 /* 09E5DC 7F069AAC 8FA3006C */  lw    $v1, 0x6c($sp)
 /* 09E5E0 7F069AB0 24040001 */  li    $a0, 1
@@ -25831,7 +25831,7 @@ Gfx *gunDrawHudInteger(Gfx *gdl, s32 value, s32 x, s32 halign, s32 y, s32 valign
 {
     char buffer[12];
     sprintf(buffer, "%d\n", value);
-    return some_kind_of_display_routine(gdl, buffer, x, halign, y, valign, colour);
+    return gunDrawHudString(gdl, buffer, x, halign, y, valign, colour);
 }
 
 
