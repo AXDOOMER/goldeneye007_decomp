@@ -4065,8 +4065,8 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 case AI_BondDisableControl:
                 {
                     AIRecord1 *ai = AiListp + Offset;
-                    set_unset_bitflags(4, FALSE);
-                    set_unset_ammo_on_screen_setting(2, FALSE);
+                    gunSetSightVisible(GUNSIGHTREASON_NOCONTROL, FALSE);
+                    gunSetGunAmmoVisible(GUNAMMOREASON_NOCONTROL, FALSE);
                     if (!(PLAYERFLAG_NOCONTROL & ai->val))
                     {
                         hudmsgsSetOff(PLAYERFLAG_NOCONTROL);
@@ -4088,8 +4088,8 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
 #ifdef ENABLE_LOG
                     osSyncPrintf("AI_BONDENABLECONTROL\n");
 #endif
-                    set_unset_bitflags(4, TRUE);
-                    set_unset_ammo_on_screen_setting(2, TRUE);
+                    gunSetSightVisible(GUNSIGHTREASON_NOCONTROL, TRUE);
+                    gunSetGunAmmoVisible(GUNAMMOREASON_NOCONTROL, TRUE);
                     hudmsgsSetOn(PLAYERFLAG_NOCONTROL);
                     sub_GAME_7F08A928(2);
                     countdownTimerSetVisible(16, TRUE);

@@ -176,8 +176,8 @@ struct hand
   f32 field_A84;
   f32 field_A88;
   s32 field_A8C;
-  ObjectRecord* field_A90;
-  s32 field_A94;
+  ObjectRecord* rocket;
+  s32 firedrocket;
   s32 field_A98;
   s32 field_A9C;
   s32 field_AA0;
@@ -942,7 +942,7 @@ struct player
   Mtxf field_101C;
   s32 last_z_trigger_timer;
   s32 copiedgoldeneye;
-  s32 ammodispflags;
+  s32 gunammooff;
   s32 field_1068;
   f32 gunsync;
   f32 syncchange;

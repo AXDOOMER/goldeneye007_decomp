@@ -38,15 +38,15 @@
 
 struct BriefingDataSomething
 {
-    u16 difficulty_related;
-    u16 selected_difficulty;
+    u16 textid;
+    u16 enabled_difficulty;
 };
+
 
 struct BriefingData
 {
-    s32 unk00;
-    s32 unk04;
-    struct BriefingDataSomething datas[10];
+    u16 brief[4];
+    struct BriefingDataSomething objective[OBJECTIVES_MAX];
 };
 
 
@@ -880,7 +880,7 @@ Gfx *write_text_at_abs_coord(Gfx *gdl, s32 *x, s32 *y, s8 *text, s32 second_font
 {
     if (j_text_trigger != 0)
     {
-        gdl = jp_text_write_stuff(
+        gdl = textRenderGlow(
             gdl,
             x,
             y,
@@ -896,7 +896,7 @@ Gfx *write_text_at_abs_coord(Gfx *gdl, s32 *x, s32 *y, s8 *text, s32 second_font
     }
     else
     {
-        gdl = en_text_write_stuff(
+        gdl = textRender(
             gdl, 
             x, 
             y, 
@@ -1193,7 +1193,7 @@ Gfx* add_tab1_start(Gfx* DL)
     setTextOrientation(1);
 
     x = 0x54 - (x2 / 2);
-    DL = en_text_write_stuff(DL, &x, &y, g_textPtrTAB1, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xFF, viGetY(), viGetX(), 0, 0);
+    DL = textRender(DL, &x, &y, g_textPtrTAB1, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xFF, viGetY(), viGetX(), 0, 0);
     setTextOrientation(0);
     setTextSpacingInverted(FALSE);
     return DL;
@@ -1235,7 +1235,7 @@ Gfx* add_tab3_previous(Gfx* DL)
     setTextOrientation(1);
 
     x = 0x10D - (sp48 / 2);
-    DL = en_text_write_stuff(DL, &x, &y, g_textPtrTAB3, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xFF, viGetY(), viGetX(), 0, 0);
+    DL = textRender(DL, &x, &y, g_textPtrTAB3, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xFF, viGetY(), viGetX(), 0, 0);
     setTextOrientation(0);
     setTextSpacingInverted(FALSE);
 
@@ -1286,7 +1286,7 @@ Gfx* add_tab2_next(Gfx* DL)
     setTextOrientation(1);
 
     x = 0xB1 - (sp48 / 2);
-    DL = en_text_write_stuff(DL, &x, &y, g_textPtrTAB2, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xFF, viGetY(), viGetX(), 0, 0);
+    DL = textRender(DL, &x, &y, g_textPtrTAB2, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xFF, viGetY(), viGetX(), 0, 0);
     setTextOrientation(0);
     setTextSpacingInverted(FALSE);
     return DL;
@@ -1398,7 +1398,7 @@ Gfx *display_aligned_white_text_to_screen(Gfx *dl, s32 arg1, s32 arg2, s32 arg3,
     sub_GAME_7F0AE98C(&sp4C, &sp48, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
     x = arg1 - ((s32) (arg3 * sp48) / 2);
     y = arg2 - ((s32) (arg4 * sp4C) / 2);
-    return en_text_write_stuff(dl, &x, &y, text, arg6, arg7, -1, viGetX(), viGetY(), 0, 0);
+    return textRender(dl, &x, &y, text, arg6, arg7, -1, viGetX(), viGetY(), 0, 0);
 }
 
 
@@ -4475,7 +4475,7 @@ loop_7:
         floorFloat(spE4);
         floorFloat(spE8);
         viGetX();
-        arg0 = en_text_write_stuff(arg0, &sp100, &spFC, langGet(TEXT(LTITLE, TITLE_STR_23)), (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, viGetY(), 0, 0);
+        arg0 = textRender(arg0, &sp100, &spFC, langGet(TEXT(LTITLE, TITLE_STR_23)), (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, viGetY(), 0, 0);
         temp_s1_2 = langGet(TEXT(LTITLE, TITLE_STR_24));
         floorFloat(spE4);
         floorFloat(spE8);
@@ -4488,12 +4488,12 @@ loop_7:
             sub_GAME_7F0AE98C(temp_a0, temp_a1, temp_s1_2, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
             arg0 = microcode_constructor_related_to_menus(arg0, sp100 + -1, spFC + -1, (sp100 + spF4) + 3, (s32) (spFC + spF8), 0x32);
             viGetX();
-            arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_s1_2, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, -1, viGetY(), 0, 0);
+            arg0 = textRender(arg0, &sp100, &spFC, temp_s1_2, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, -1, viGetY(), 0, 0);
         }
         else
         {
             viGetX(temp_a0, temp_a1, temp_s1_2);
-            arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_s1_2, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, viGetY(), 0, 0);
+            arg0 = textRender(arg0, &sp100, &spFC, temp_s1_2, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, viGetY(), 0, 0);
         }
         temp_s1_3 = langGet(TEXT(LTITLE, TITLE_STR_25));
         floorFloat(spE4);
@@ -4507,7 +4507,7 @@ loop_7:
         if (folder_selected_for_deletion_choice != 0)
         {
             viGetX(temp_a0_2, temp_a1_2, temp_s1_3);
-            arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_s1_3, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, viGetY(), 0, 0);
+            arg0 = textRender(arg0, &sp100, &spFC, temp_s1_3, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, viGetY(), 0, 0);
         }
         else
         {
@@ -4516,7 +4516,7 @@ loop_7:
             sub_GAME_7F0AE98C(temp_a0_2, temp_a1_2, temp_s1_3, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
             arg0 = microcode_constructor_related_to_menus(arg0, sp100 + -1, spFC + -1, (sp100 + spF4) + 3, (s32) (spFC + spF8), 0x32);
             viGetX();
-            arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_s1_3, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, -1, viGetY(), 0, 0);
+            arg0 = textRender(arg0, &sp100, &spFC, temp_s1_3, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, -1, viGetY(), 0, 0);
         }
     }
     else
@@ -4541,7 +4541,7 @@ loop_7:
                     }
                     floorFloat(spE8);
                     viGetX();
-                    arg0 = en_text_write_stuff(arg0, &sp100, &spFC, &spD0, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, viGetY(), 0, 0);
+                    arg0 = textRender(arg0, &sp100, &spFC, &spD0, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, viGetY(), 0, 0);
                 }
                 if (spEC != 3)
                 {
@@ -4588,7 +4588,7 @@ loop_24:
                     }
                     floorFloat(spE8);
                     viGetX();
-                    arg0 = en_text_write_stuff(arg0, &sp100, &spFC, &spBC, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, viGetY(), 0, 0);
+                    arg0 = textRender(arg0, &sp100, &spFC, &spBC, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, viGetY(), 0, 0);
                 }
             }
         }
@@ -4610,7 +4610,7 @@ loop_24:
 
     }
     viGetX();
-    arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_ret_4, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, -1, viGetY(), 0, 0);
+    arg0 = textRender(arg0, &sp100, &spFC, temp_ret_4, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, -1, viGetY(), 0, 0);
     folder_option_COPY_left_bound.unk8 = (f32) (sp100 + spF4);
     temp_ret_5 = langGet(TEXT(LTITLE, TITLE_STR_28));
     spF4 = 0;
@@ -4622,7 +4622,7 @@ loop_24:
     }
     viGetX();
     folder_option_ERASE_left_bound.unk8 = (f32) (sp100 + spF4);
-    arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_ret_5, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, -1, viGetY(), 0, 0);
+    arg0 = textRender(arg0, &sp100, &spFC, temp_ret_5, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, -1, viGetY(), 0, 0);
     spAC = 225.0f;
     spB0 = (f32) D_80051A28;
     temp_f10 = (f32) (u32) mainfolderimages->unk4 * 0.5f;
@@ -4922,7 +4922,7 @@ glabel constructor_menu05_fileselect
 /* 0412A0 7F00C770 AFA00024 */  sw    $zero, 0x24($sp)
 /* 0412A4 7F00C774 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0412A8 7F00C778 AFA80010 */  sw    $t0, 0x10($sp)
-/* 0412AC 7F00C77C 0FC2B6AF */  jal   en_text_write_stuff
+/* 0412AC 7F00C77C 0FC2B6AF */  jal   textRender
 /* 0412B0 7F00C780 AFAB0014 */   sw    $t3, 0x14($sp)
 /* 0412B4 7F00C784 AFA201B8 */  sw    $v0, 0x1b8($sp)
 /* 0412B8 7F00C788 0FC30776 */  jal   langGet
@@ -4987,7 +4987,7 @@ glabel constructor_menu05_fileselect
 /* 0413A4 7F00C874 AFA00024 */  sw    $zero, 0x24($sp)
 /* 0413A8 7F00C878 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0413AC 7F00C87C AFAB0010 */  sw    $t3, 0x10($sp)
-/* 0413B0 7F00C880 0FC2B6AF */  jal   en_text_write_stuff
+/* 0413B0 7F00C880 0FC2B6AF */  jal   textRender
 /* 0413B4 7F00C884 AFAC0014 */   sw    $t4, 0x14($sp)
 /* 0413B8 7F00C888 10000016 */  b     .L7F00C8E4
 /* 0413BC 7F00C88C AFA201B8 */   sw    $v0, 0x1b8($sp)
@@ -5010,7 +5010,7 @@ glabel constructor_menu05_fileselect
 /* 0413FC 7F00C8CC AFA00024 */  sw    $zero, 0x24($sp)
 /* 041400 7F00C8D0 AFA00028 */  sw    $zero, 0x28($sp)
 /* 041404 7F00C8D4 AFAF0010 */  sw    $t7, 0x10($sp)
-/* 041408 7F00C8D8 0FC2B6AF */  jal   en_text_write_stuff
+/* 041408 7F00C8D8 0FC2B6AF */  jal   textRender
 /* 04140C 7F00C8DC AFAE0014 */   sw    $t6, 0x14($sp)
 /* 041410 7F00C8E0 AFA201B8 */  sw    $v0, 0x1b8($sp)
 .L7F00C8E4:
@@ -5062,7 +5062,7 @@ glabel constructor_menu05_fileselect
 /* 0414C4 7F00C994 AFA00024 */  sw    $zero, 0x24($sp)
 /* 0414C8 7F00C998 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0414CC 7F00C99C AFAD0010 */  sw    $t5, 0x10($sp)
-/* 0414D0 7F00C9A0 0FC2B6AF */  jal   en_text_write_stuff
+/* 0414D0 7F00C9A0 0FC2B6AF */  jal   textRender
 /* 0414D4 7F00C9A4 AFB80014 */   sw    $t8, 0x14($sp)
 /* 0414D8 7F00C9A8 100000D6 */  b     .L7F00CD04
 /* 0414DC 7F00C9AC AFA201B8 */   sw    $v0, 0x1b8($sp)
@@ -5107,7 +5107,7 @@ glabel constructor_menu05_fileselect
 /* 041574 7F00CA44 AFA00024 */  sw    $zero, 0x24($sp)
 /* 041578 7F00CA48 AFA00028 */  sw    $zero, 0x28($sp)
 /* 04157C 7F00CA4C AFAB0010 */  sw    $t3, 0x10($sp)
-/* 041580 7F00CA50 0FC2B6AF */  jal   en_text_write_stuff
+/* 041580 7F00CA50 0FC2B6AF */  jal   textRender
 /* 041584 7F00CA54 AFAC0014 */   sw    $t4, 0x14($sp)
 /* 041588 7F00CA58 100000AA */  b     .L7F00CD04
 /* 04158C 7F00CA5C AFA201B8 */   sw    $v0, 0x1b8($sp)
@@ -5177,7 +5177,7 @@ glabel constructor_menu05_fileselect
 /* 041684 7F00CB54 AFA00024 */  sw    $zero, 0x24($sp)
 /* 041688 7F00CB58 AFA00028 */  sw    $zero, 0x28($sp)
 /* 04168C 7F00CB5C AFAB0010 */  sw    $t3, 0x10($sp)
-/* 041690 7F00CB60 0FC2B6AF */  jal   en_text_write_stuff
+/* 041690 7F00CB60 0FC2B6AF */  jal   textRender
 /* 041694 7F00CB64 AFAC0014 */   sw    $t4, 0x14($sp)
 /* 041698 7F00CB68 AFA201B8 */  sw    $v0, 0x1b8($sp)
 .L7F00CB6C:
@@ -5285,7 +5285,7 @@ glabel constructor_menu05_fileselect
 /* 04181C 7F00CCEC AFA00024 */  sw    $zero, 0x24($sp)
 /* 041820 7F00CCF0 AFA00028 */  sw    $zero, 0x28($sp)
 /* 041824 7F00CCF4 AFAA0010 */  sw    $t2, 0x10($sp)
-/* 041828 7F00CCF8 0FC2B6AF */  jal   en_text_write_stuff
+/* 041828 7F00CCF8 0FC2B6AF */  jal   textRender
 /* 04182C 7F00CCFC AFAE0014 */   sw    $t6, 0x14($sp)
 /* 041830 7F00CD00 AFA201B8 */  sw    $v0, 0x1b8($sp)
 .L7F00CD04:
@@ -5342,7 +5342,7 @@ glabel constructor_menu05_fileselect
 /* 0418F4 7F00CDC4 AFA00024 */  sw    $zero, 0x24($sp)
 /* 0418F8 7F00CDC8 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0418FC 7F00CDCC AFAA0010 */  sw    $t2, 0x10($sp)
-/* 041900 7F00CDD0 0FC2B6AF */  jal   en_text_write_stuff
+/* 041900 7F00CDD0 0FC2B6AF */  jal   textRender
 /* 041904 7F00CDD4 AFAE0014 */   sw    $t6, 0x14($sp)
 /* 041908 7F00CDD8 8FB20100 */  lw    $s2, 0x100($sp)
 /* 04190C 7F00CDDC 8FAB00F4 */  lw    $t3, 0xf4($sp)
@@ -5394,7 +5394,7 @@ glabel constructor_menu05_fileselect
 /* 0419C0 7F00CE90 AFA00024 */  sw    $zero, 0x24($sp)
 /* 0419C4 7F00CE94 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0419C8 7F00CE98 AFB90010 */  sw    $t9, 0x10($sp)
-/* 0419CC 7F00CE9C 0FC2B6AF */  jal   en_text_write_stuff
+/* 0419CC 7F00CE9C 0FC2B6AF */  jal   textRender
 /* 0419D0 7F00CEA0 AFAA0014 */   sw    $t2, 0x14($sp)
 /* 0419D4 7F00CEA4 8FA90100 */  lw    $t1, 0x100($sp)
 /* 0419D8 7F00CEA8 8FAB00F4 */  lw    $t3, 0xf4($sp)
@@ -7637,7 +7637,7 @@ loop_10:
         temp_a1 = *temp_s7 + -0x1f;
         viGetX();
         viGetX(*temp_s7 + -0x1f, (subroutine_arg0 - spC8) + 0x1d);
-        phi_s4_2 = en_text_write_stuff(en_text_write_stuff(microcode_constructor_related_to_menus(phi_s4, temp_a1, temp_a2, temp_a1 + spC4, (s32) (temp_a2 + spC8), 0), &sp8C, &sp88, &sp90, (s32) ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, (s32) (phi_s5 | 0xff), viGetY(), 0, 0), &sp8C, &sp88, &sp90, (s32) ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, (s32) (phi_s5 | 0x64), viGetY(), 0, 0);
+        phi_s4_2 = textRender(textRender(microcode_constructor_related_to_menus(phi_s4, temp_a1, temp_a2, temp_a1 + spC4, (s32) (temp_a2 + spC8), 0), &sp8C, &sp88, &sp90, (s32) ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, (s32) (phi_s5 | 0xff), viGetY(), 0, 0), &sp8C, &sp88, &sp90, (s32) ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, (s32) (phi_s5 | 0x64), viGetY(), 0, 0);
     }
     temp_s6 = phi_s6 + 1;
     phi_s3 = phi_s3 + 5;
@@ -7812,7 +7812,7 @@ glabel constructor_menu07_missionsel
 /* 0431B8 7F00E688 AFA00024 */  sw    $zero, 0x24($sp)
 /* 0431BC 7F00E68C AFA00028 */  sw    $zero, 0x28($sp)
 /* 0431C0 7F00E690 AFAD0014 */  sw    $t5, 0x14($sp)
-/* 0431C4 7F00E694 0FC2B6AF */  jal   en_text_write_stuff
+/* 0431C4 7F00E694 0FC2B6AF */  jal   textRender
 /* 0431C8 7F00E698 AFAC0010 */   sw    $t4, 0x10($sp)
 /* 0431CC 7F00E69C 8FA300C8 */  lw    $v1, 0xc8($sp)
 /* 0431D0 7F00E6A0 8FCF0000 */  lw    $t7, ($fp)
@@ -7843,7 +7843,7 @@ glabel constructor_menu07_missionsel
 /* 043234 7F00E704 AFA00024 */  sw    $zero, 0x24($sp)
 /* 043238 7F00E708 AFA00028 */  sw    $zero, 0x28($sp)
 /* 04323C 7F00E70C AFA80014 */  sw    $t0, 0x14($sp)
-/* 043240 7F00E710 0FC2B6AF */  jal   en_text_write_stuff
+/* 043240 7F00E710 0FC2B6AF */  jal   textRender
 /* 043244 7F00E714 AFB90010 */   sw    $t9, 0x10($sp)
 /* 043248 7F00E718 0040A025 */  move  $s4, $v0
 .L7F00E71C:
@@ -15424,9 +15424,9 @@ loop_17:
             temp_a2 = sp90 - sp128;
             arg0 = microcode_constructor_related_to_menus(arg0, temp_s4_3, temp_a2, temp_s4_3 + sp124, (s32) (temp_a2 + sp128), 0);
             viGetX();
-            arg0 = en_text_write_stuff(arg0, &sp130, &sp12C, langGet(temp_s3_2->unk2), (s32) subroutine_arg0, (s32) ptrFirstFontTableSmall, (s32) (phi_s2_2 | 0xff), viGetY(), 0, 0);
+            arg0 = textRender(arg0, &sp130, &sp12C, langGet(temp_s3_2->unk2), (s32) subroutine_arg0, (s32) ptrFirstFontTableSmall, (s32) (phi_s2_2 | 0xff), viGetY(), 0, 0);
             viGetX();
-            arg0 = en_text_write_stuff(arg0, &sp130, &sp12C, langGet(temp_s3_2->unk2, sp90 - sp128), (s32) subroutine_arg0, (s32) ptrFirstFontTableSmall, (s32) (phi_s2_2 | 0x64), viGetY(), 0, 0);
+            arg0 = textRender(arg0, &sp130, &sp12C, langGet(temp_s3_2->unk2, sp90 - sp128), (s32) subroutine_arg0, (s32) ptrFirstFontTableSmall, (s32) (phi_s2_2 | 0x64), viGetY(), 0, 0);
         }
     }
     temp_s7 = phi_s7 + 1;
@@ -15850,7 +15850,7 @@ glabel constructor_menu12_mpstage
 /* 04916C 7F01463C AFA00024 */  sw    $zero, 0x24($sp)
 /* 049170 7F014640 AFA00028 */  sw    $zero, 0x28($sp)
 /* 049174 7F014644 AFB90014 */  sw    $t9, 0x14($sp)
-/* 049178 7F014648 0FC2B6AF */  jal   en_text_write_stuff
+/* 049178 7F014648 0FC2B6AF */  jal   textRender
 /* 04917C 7F01464C AFB80010 */   sw    $t8, 0x10($sp)
 /* 049180 7F014650 8FA30128 */  lw    $v1, 0x128($sp)
 /* 049184 7F014654 8FAA0090 */  lw    $t2, 0x90($sp)
@@ -15880,7 +15880,7 @@ glabel constructor_menu12_mpstage
 /* 0491E4 7F0146B4 AFA00024 */  sw    $zero, 0x24($sp)
 /* 0491E8 7F0146B8 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0491EC 7F0146BC AFAD0014 */  sw    $t5, 0x14($sp)
-/* 0491F0 7F0146C0 0FC2B6AF */  jal   en_text_write_stuff
+/* 0491F0 7F0146C0 0FC2B6AF */  jal   textRender
 /* 0491F4 7F0146C4 AFAC0010 */   sw    $t4, 0x10($sp)
 /* 0491F8 7F0146C8 AFA20138 */  sw    $v0, 0x138($sp)
 .L7F0146CC:
@@ -17487,19 +17487,20 @@ void set_briefing_page(WATCH_BRIEFING_PAGE page)
 
 #ifdef NONMATCHING
 s32 load_briefing_text_for_stage(void) {
+    s32 sp20 = 0x6DE00;
     //s32 sp20;
-    Gfx *temp_s0;
+    Gfx *temp_s0 = (s32)ptr_logo_and_walletbond_DL + (s32)0xA000;
     s32 i;
     struct BriefingData *pbriefdata;
 
-    temp_s0 = ptr_logo_and_walletbond_DL + 0xA000;
+    //temp_s0 = (s32)ptr_logo_and_walletbond_DL + (s32)0xA000;
     ptrbriefingdata = _load_resource_named_to_buffer(mission_folder_setup_entries[briefingpage].briefing_name_ptr, 1, temp_s0, 0x200);
     //sp20 = 0x6DE00;
-    load_briefing_text_bank(get_textbank_number_for_stagenum(mission_folder_setup_entries[briefingpage].stage_id, temp_s0 + 0x200, 0x6DE00));
+    load_briefing_text_bank(get_textbank_number_for_stagenum(mission_folder_setup_entries[briefingpage].stage_id, temp_s0 + 0x200, sp20));
     pbriefdata = ptrbriefingdata;
     for(i = 0; i!= 0x28;i++)
     {
-        if (pbriefdata[i].datas[0] != 0) {
+        if (pbriefdata->objective[i].textid != 0) {
         break;
         }
     }
@@ -17662,7 +17663,7 @@ void interface_menu0A_briefing(void)
     }
     disable_all_switches(walletinst[0]);
     set_item_visibility_in_objinstance(walletinst[0], SW_PHOTOBRIEF, current_menu_briefing_page == BRIEFING_TITLE);
-    set_item_visibility_in_objinstance(walletinst[0], mission_folder_setup_entries[briefingpage].mission_num + 0x16, current_menu_briefing_page == 0);
+    set_item_visibility_in_objinstance(walletinst[0], mission_folder_setup_entries[briefingpage].mission_num + 0x16, current_menu_briefing_page == BRIEFING_TITLE);
     set_item_visibility_in_objinstance(walletinst[0], SW_TABS, 1);
     set_item_visibility_in_objinstance(walletinst[0], SW_PAPER, 1);
     set_item_visibility_in_objinstance(walletinst[0], SW_OHMSS, 1);
@@ -18658,8 +18659,8 @@ s32 frontCompleteAllObjectivesAliveSuccess(void)
 
     for (i=0; i<10; i++)
     {
-        if (ptrbriefingdata->datas[i].difficulty_related != 0
-            && lvlGetSelectedDifficulty() >= ptrbriefingdata->datas[i].selected_difficulty
+        if (ptrbriefingdata->objective[i].textid != 0
+            && lvlGetSelectedDifficulty() >= ptrbriefingdata->objective[i].enabled_difficulty
             && get_status_of_objective(i) != OBJECTIVESTATUS_COMPLETE)
             {
                 return 0;
@@ -20179,11 +20180,11 @@ Gfx *constructor_menu16_nocontrollers(Gfx *DL)
     y = 0x99 - (y2 >> 1);
 #ifdef BUGFIX_R1
     if (j_text_trigger) {
-        DL = jp_text_write_stuff(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, -1, 0x8000FF, viGetX(), viGetY(), 0, 0);
+        DL = textRenderGlow(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, -1, 0x8000FF, viGetX(), viGetY(), 0, 0);
     }
     else {
 #endif
-        DL = en_text_write_stuff(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, -1, viGetX(), viGetY(), 0, 0);
+        DL = textRender(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, -1, viGetX(), viGetY(), 0, 0);
 #ifdef BUGFIX_R1
     }
 #endif
@@ -20197,11 +20198,11 @@ Gfx *constructor_menu16_nocontrollers(Gfx *DL)
     y = 0xB1 - (y2 >> 1);
 #ifdef BUGFIX_R1
     if (j_text_trigger) {
-        DL = jp_text_write_stuff(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, -1, 0x8000FF, viGetX(), viGetY(), 0, 0);
+        DL = textRenderGlow(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, -1, 0x8000FF, viGetX(), viGetY(), 0, 0);
     }
     else {
 #endif
-        DL = en_text_write_stuff(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, -1, viGetX(), viGetY(), 0, 0);
+        DL = textRender(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, -1, viGetX(), viGetY(), 0, 0);
 #ifdef BUGFIX_R1
     }
 #endif
@@ -23234,7 +23235,7 @@ glabel constructor_menu18_displaycast
 /* 04EC28 7F01A0F8 AFB0001C */  sw    $s0, 0x1c($sp)
 /* 04EC2C 7F01A0FC AFA20020 */  sw    $v0, 0x20($sp)
 /* 04EC30 7F01A100 AFA00024 */  sw    $zero, 0x24($sp)
-/* 04EC34 7F01A104 0FC2B6AF */  jal   en_text_write_stuff
+/* 04EC34 7F01A104 0FC2B6AF */  jal   textRender
 /* 04EC38 7F01A108 AFA00028 */   sw    $zero, 0x28($sp)
 /* 04EC3C 7F01A10C 00409825 */  move  $s3, $v0
 .L7F01A110:
@@ -23335,7 +23336,7 @@ glabel constructor_menu18_displaycast
 /* 04EDA8 7F01A278 AFA00024 */  sw    $zero, 0x24($sp)
 /* 04EDAC 7F01A27C AFA00028 */  sw    $zero, 0x28($sp)
 /* 04EDB0 7F01A280 AFB80014 */  sw    $t8, 0x14($sp)
-/* 04EDB4 7F01A284 0FC2B6AF */  jal   en_text_write_stuff
+/* 04EDB4 7F01A284 0FC2B6AF */  jal   textRender
 /* 04EDB8 7F01A288 AFAF0010 */   sw    $t7, 0x10($sp)
 /* 04EDBC 7F01A28C 3C0C8003 */  lui   $t4, %hi(intro_character_index)
 /* 04EDC0 7F01A290 8D8CB5E8 */  lw    $t4, %lo(intro_character_index)($t4)
@@ -23396,7 +23397,7 @@ glabel constructor_menu18_displaycast
 /* 04EE98 7F01A368 AFA00024 */  sw    $zero, 0x24($sp)
 /* 04EE9C 7F01A36C AFA00028 */  sw    $zero, 0x28($sp)
 /* 04EEA0 7F01A370 AFAD0014 */  sw    $t5, 0x14($sp)
-/* 04EEA4 7F01A374 0FC2B6AF */  jal   en_text_write_stuff
+/* 04EEA4 7F01A374 0FC2B6AF */  jal   textRender
 /* 04EEA8 7F01A378 AFAB0010 */   sw    $t3, 0x10($sp)
 /* 04EEAC 7F01A37C 8FBF004C */  lw    $ra, 0x4c($sp)
 /* 04EEB0 7F01A380 8FB00038 */  lw    $s0, 0x38($sp)
@@ -24358,7 +24359,7 @@ glabel constructor_menu18_displaycast
 /* 04CB64 7F01A174 AFB0001C */  sw    $s0, 0x1c($sp)
 /* 04CB68 7F01A178 AFA20020 */  sw    $v0, 0x20($sp)
 /* 04CB6C 7F01A17C AFA00024 */  sw    $zero, 0x24($sp)
-/* 04CB70 7F01A180 0FC2B35F */  jal   en_text_write_stuff
+/* 04CB70 7F01A180 0FC2B35F */  jal   textRender
 /* 04CB74 7F01A184 AFA00028 */   sw    $zero, 0x28($sp)
 /* 04CB78 7F01A188 00409825 */  move  $s3, $v0
 .L7F01A18C:
@@ -24459,7 +24460,7 @@ glabel constructor_menu18_displaycast
 /* 04CCE4 7F01A2F4 AFA00024 */  sw    $zero, 0x24($sp)
 /* 04CCE8 7F01A2F8 AFA00028 */  sw    $zero, 0x28($sp)
 /* 04CCEC 7F01A2FC AFB80014 */  sw    $t8, 0x14($sp)
-/* 04CCF0 7F01A300 0FC2B35F */  jal   en_text_write_stuff
+/* 04CCF0 7F01A300 0FC2B35F */  jal   textRender
 /* 04CCF4 7F01A304 AFAF0010 */   sw    $t7, 0x10($sp)
 /* 04CCF8 7F01A308 3C0C8002 */  lui   $t4, %hi(intro_character_index) # $t4, 0x8002
 /* 04CCFC 7F01A30C 8D8C6B38 */  lw    $t4, %lo(intro_character_index)($t4)
@@ -24520,7 +24521,7 @@ glabel constructor_menu18_displaycast
 /* 04CDD4 7F01A3E4 AFA00024 */  sw    $zero, 0x24($sp)
 /* 04CDD8 7F01A3E8 AFA00028 */  sw    $zero, 0x28($sp)
 /* 04CDDC 7F01A3EC AFAD0014 */  sw    $t5, 0x14($sp)
-/* 04CDE0 7F01A3F0 0FC2B35F */  jal   en_text_write_stuff
+/* 04CDE0 7F01A3F0 0FC2B35F */  jal   textRender
 /* 04CDE4 7F01A3F4 AFAB0010 */   sw    $t3, 0x10($sp)
 /* 04CDE8 7F01A3F8 8FBF004C */  lw    $ra, 0x4c($sp)
 /* 04CDEC 7F01A3FC 8FB00038 */  lw    $s0, 0x38($sp)

@@ -289,7 +289,7 @@ u16 *get_ptr_short_watch_text_for_item(ITEM_IDS item);
 
 s32 bondwalkItemHasAmmo(ITEM_IDS item);
 
-void display_in_game_crosshair(s32 *gdl);
+void gunDrawSight(s32 *gdl);
 
 WeaponStats *get_ptr_item_statistics(ITEM_IDS item);
 
@@ -298,8 +298,8 @@ s32 currentPlayerEquipWeaponWrapper(GUNHAND hand, s32 next_weapon);
 void sub_GAME_7F068E6C(void);
 void attempt_reload_item_in_hand(GUNHAND hand);
 void set_max_ammo_for_cur_player(void);
-void set_unset_ammo_on_screen_setting(s32 flags, s32 isset);
-void set_unset_bitflags(s32 bitflags, s32 flag);
+void gunSetGunAmmoVisible(s32 reason, s32 enable);
+void gunSetSightVisible(s32 reason, s32 visible);
 
 s32 get_max_ammo_for_type(s32);
 void give_cur_player_ammo(s32, s32);

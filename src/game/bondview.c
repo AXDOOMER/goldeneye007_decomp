@@ -12548,10 +12548,10 @@ glabel sub_GAME_7F07EC54
 /* 0B3944 7F07EE14 8C6E01C0 */  lw    $t6, 0x1c0($v1)
 /* 0B3948 7F07EE18 55C10026 */  bnel  $t6, $at, .L7F07EEB4
 /* 0B394C 7F07EE1C C4640214 */   lwc1  $f4, 0x214($v1)
-/* 0B3950 7F07EE20 0FC1A96A */  jal   set_unset_bitflags
+/* 0B3950 7F07EE20 0FC1A96A */  jal   gunSetSightVisible
 /* 0B3954 7F07EE24 00002825 */   move  $a1, $zero
 /* 0B3958 7F07EE28 24040004 */  li    $a0, 4
-/* 0B395C 7F07EE2C 0FC1A43D */  jal   set_unset_ammo_on_screen_setting
+/* 0B395C 7F07EE2C 0FC1A43D */  jal   gunSetGunAmmoVisible
 /* 0B3960 7F07EE30 00002825 */   move  $a1, $zero
 /* 0B3964 7F07EE34 0FC228E7 */  jal   hudmsgsSetOff
 /* 0B3968 7F07EE38 24040001 */   li    $a0, 1
@@ -13023,10 +13023,10 @@ glabel sub_GAME_7F07EC54
 /* 0B401C 7F07F4EC 00002025 */   move  $a0, $zero
 /* 0B4020 7F07F4F0 24040008 */  li    $a0, 8
 .L7F07F4F4:
-/* 0B4024 7F07F4F4 0FC1A96A */  jal   set_unset_bitflags
+/* 0B4024 7F07F4F4 0FC1A96A */  jal   gunSetSightVisible
 /* 0B4028 7F07F4F8 24050001 */   li    $a1, 1
 /* 0B402C 7F07F4FC 24040004 */  li    $a0, 4
-/* 0B4030 7F07F500 0FC1A43D */  jal   set_unset_ammo_on_screen_setting
+/* 0B4030 7F07F500 0FC1A43D */  jal   gunSetGunAmmoVisible
 /* 0B4034 7F07F504 24050001 */   li    $a1, 1
 /* 0B4038 7F07F508 0FC228E0 */  jal   hudmsgsSetOn
 /* 0B403C 7F07F50C 24040001 */   li    $a0, 1
@@ -13385,10 +13385,10 @@ glabel sub_GAME_7F07EC54
 /* 0B3F94 7F07F424 8C7801C0 */  lw    $t8, 0x1c0($v1)
 /* 0B3F98 7F07F428 57010026 */  bnel  $t8, $at, .Ljp7F07F4C4
 /* 0B3F9C 7F07F42C C4640214 */   lwc1  $f4, 0x214($v1)
-/* 0B3FA0 7F07F430 0FC1AAE5 */  jal   set_unset_bitflags
+/* 0B3FA0 7F07F430 0FC1AAE5 */  jal   gunSetSightVisible
 /* 0B3FA4 7F07F434 00002825 */   move  $a1, $zero
 /* 0B3FA8 7F07F438 24040004 */  li    $a0, 4
-/* 0B3FAC 7F07F43C 0FC1A5B8 */  jal   set_unset_ammo_on_screen_setting
+/* 0B3FAC 7F07F43C 0FC1A5B8 */  jal   gunSetGunAmmoVisible
 /* 0B3FB0 7F07F440 00002825 */   move  $a1, $zero
 /* 0B3FB4 7F07F444 0FC22AAD */  jal   hudmsgsSetOff
 /* 0B3FB8 7F07F448 24040001 */   li    $a0, 1
@@ -13860,10 +13860,10 @@ glabel sub_GAME_7F07EC54
 /* 0B466C 7F07FAFC 00002025 */   move  $a0, $zero
 /* 0B4670 7F07FB00 24040008 */  li    $a0, 8
 .Ljp7F07FB04:
-/* 0B4674 7F07FB04 0FC1AAE5 */  jal   set_unset_bitflags
+/* 0B4674 7F07FB04 0FC1AAE5 */  jal   gunSetSightVisible
 /* 0B4678 7F07FB08 24050001 */   li    $a1, 1
 /* 0B467C 7F07FB0C 24040004 */  li    $a0, 4
-/* 0B4680 7F07FB10 0FC1A5B8 */  jal   set_unset_ammo_on_screen_setting
+/* 0B4680 7F07FB10 0FC1A5B8 */  jal   gunSetGunAmmoVisible
 /* 0B4684 7F07FB14 24050001 */   li    $a1, 1
 /* 0B4688 7F07FB18 0FC22AA6 */  jal   hudmsgsSetOn
 /* 0B468C 7F07FB1C 24040001 */   li    $a0, 1
@@ -14222,10 +14222,10 @@ glabel sub_GAME_7F07EC54
 /* 0B18A8 7F07EEB8 8C7801C0 */  lw    $t8, 0x1c0($v1)
 /* 0B18AC 7F07EEBC 57010026 */  bnel  $t8, $at, .L7F07EF58
 /* 0B18B0 7F07EEC0 C4640214 */   lwc1  $f4, 0x214($v1)
-/* 0B18B4 7F07EEC4 0FC1AB4F */  jal   set_unset_bitflags
+/* 0B18B4 7F07EEC4 0FC1AB4F */  jal   gunSetSightVisible
 /* 0B18B8 7F07EEC8 00002825 */   move  $a1, $zero
 /* 0B18BC 7F07EECC 24040004 */  li    $a0, 4
-/* 0B18C0 7F07EED0 0FC1A622 */  jal   set_unset_ammo_on_screen_setting
+/* 0B18C0 7F07EED0 0FC1A622 */  jal   gunSetGunAmmoVisible
 /* 0B18C4 7F07EED4 00002825 */   move  $a1, $zero
 /* 0B18C8 7F07EED8 0FC22952 */  jal   hudmsgsSetOff
 /* 0B18CC 7F07EEDC 24040001 */   li    $a0, 1
@@ -14697,10 +14697,10 @@ glabel sub_GAME_7F07EC54
 /* 0B1F80 7F07F590 00002025 */   move  $a0, $zero
 /* 0B1F84 7F07F594 24040008 */  li    $a0, 8
 .L7F07F598:
-/* 0B1F88 7F07F598 0FC1AB4F */  jal   set_unset_bitflags
+/* 0B1F88 7F07F598 0FC1AB4F */  jal   gunSetSightVisible
 /* 0B1F8C 7F07F59C 24050001 */   li    $a1, 1
 /* 0B1F90 7F07F5A0 24040004 */  li    $a0, 4
-/* 0B1F94 7F07F5A4 0FC1A622 */  jal   set_unset_ammo_on_screen_setting
+/* 0B1F94 7F07F5A4 0FC1A622 */  jal   gunSetGunAmmoVisible
 /* 0B1F98 7F07F5A8 24050001 */   li    $a1, 1
 /* 0B1F9C 7F07F5AC 0FC2294B */  jal   hudmsgsSetOn
 /* 0B1FA0 7F07F5B0 24040001 */   li    $a0, 1
@@ -18937,7 +18937,7 @@ glabel controller_gameplay_interaction
 /* 0B7864 7F082D34 C7AC00E4 */   lwc1  $f12, 0xe4($sp)
 /* 0B7868 7F082D38 24040002 */  li    $a0, 2
 .L7F082D3C:
-/* 0B786C 7F082D3C 0FC1A96A */  jal   set_unset_bitflags
+/* 0B786C 7F082D3C 0FC1A96A */  jal   gunSetSightVisible
 /* 0B7870 7F082D40 8FA5016C */   lw    $a1, 0x16c($sp)
 /* 0B7874 7F082D44 C7B20164 */  lwc1  $f18, 0x164($sp)
 /* 0B7878 7F082D48 4612A03C */  c.lt.s $f20, $f18
@@ -21673,7 +21673,7 @@ glabel controller_gameplay_interaction
 /* 0B57C8 7F082DD8 C7AC00E4 */   lwc1  $f12, 0xe4($sp)
 /* 0B57CC 7F082DDC 24040002 */  li    $a0, 2
 .L7F082DE0:
-/* 0B57D0 7F082DE0 0FC1AB4F */  jal   set_unset_bitflags
+/* 0B57D0 7F082DE0 0FC1AB4F */  jal   gunSetSightVisible
 /* 0B57D4 7F082DE4 8FA5016C */   lw    $a1, 0x16c($sp)
 /* 0B57D8 7F082DE8 C7B20164 */  lwc1  $f18, 0x164($sp)
 /* 0B57DC 7F082DEC 4612A03C */  c.lt.s $f20, $f18
@@ -23004,8 +23004,8 @@ void sub_GAME_7F083FC8(void)
     {
         if (g_CurrentPlayer->damageshowtime == 0)
         {
-            set_unset_ammo_on_screen_setting(8, 0);
-            set_unset_bitflags(0x10, 0);
+            gunSetGunAmmoVisible(GUNAMMOREASON_DAMAGE, FALSE);
+            gunSetSightVisible(GUNSIGHTREASON_DAMAGE, FALSE);
             hudmsgsSetOff(4);
             sub_GAME_7F08A944(PLAYERFLAG_NOTIMER);
             countdownTimerSetVisible(8, 0);
@@ -23064,8 +23064,8 @@ void sub_GAME_7F083FC8(void)
             currentPlayerSetFadeColour(0xFF, 0xFF, 0xFF, 0.0f);
             if (!g_CurrentPlayer->bonddead)
             {
-                set_unset_ammo_on_screen_setting(8, 1);
-                set_unset_bitflags(0x10, 1);
+                gunSetGunAmmoVisible(GUNAMMOREASON_DAMAGE, TRUE);
+                gunSetSightVisible(GUNSIGHTREASON_DAMAGE, TRUE);
                 hudmsgsSetOn(4);
                 sub_GAME_7F08A928(4);
                 countdownTimerSetVisible(8, 1);
@@ -23132,10 +23132,10 @@ glabel sub_GAME_7F083FC8
 /* 0B917C 7F08460C 00000000 */  nop
 /* 0B9180 7F084610 45020027 */  bc1fl .Ljp7F0846B0
 /* 0B9184 7F084614 8C4800D8 */   lw    $t0, 0xd8($v0)
-/* 0B9188 7F084618 0FC1A5B8 */  jal   set_unset_ammo_on_screen_setting
+/* 0B9188 7F084618 0FC1A5B8 */  jal   gunSetGunAmmoVisible
 /* 0B918C 7F08461C 00002825 */   move  $a1, $zero
 /* 0B9190 7F084620 24040010 */  li    $a0, 16
-/* 0B9194 7F084624 0FC1AAE5 */  jal   set_unset_bitflags
+/* 0B9194 7F084624 0FC1AAE5 */  jal   gunSetSightVisible
 /* 0B9198 7F084628 00002825 */   move  $a1, $zero
 /* 0B919C 7F08462C 0FC22AAD */  jal   hudmsgsSetOff
 /* 0B91A0 7F084630 24040004 */   li    $a0, 4
@@ -23264,10 +23264,10 @@ glabel sub_GAME_7F083FC8
 /* 0B9364 7F0847F4 8C4D00D8 */  lw    $t5, 0xd8($v0)
 /* 0B9368 7F0847F8 55A00010 */  bnezl $t5, .Ljp7F08483C
 /* 0B936C 7F0847FC C44000F8 */   lwc1  $f0, 0xf8($v0)
-/* 0B9370 7F084800 0FC1A5B8 */  jal   set_unset_ammo_on_screen_setting
+/* 0B9370 7F084800 0FC1A5B8 */  jal   gunSetGunAmmoVisible
 /* 0B9374 7F084804 24050001 */   li    $a1, 1
 /* 0B9378 7F084808 24040010 */  li    $a0, 16
-/* 0B937C 7F08480C 0FC1AAE5 */  jal   set_unset_bitflags
+/* 0B937C 7F08480C 0FC1AAE5 */  jal   gunSetSightVisible
 /* 0B9380 7F084810 24050001 */   li    $a1, 1
 /* 0B9384 7F084814 0FC22AA6 */  jal   hudmsgsSetOn
 /* 0B9388 7F084818 24040004 */   li    $a0, 4
@@ -23428,8 +23428,8 @@ void sub_GAME_7F083FC8(void)
     {
         if (g_CurrentPlayer->damageshowtime == 0)
         {
-            set_unset_ammo_on_screen_setting(8, 0);
-            set_unset_bitflags(0x10, 0);
+            gunSetGunAmmoVisible(GUNAMMOREASON_DAMAGE, FALSE);
+            gunSetSightVisible(GUNSIGHTREASON_DAMAGE, FALSE);
             hudmsgsSetOff(4);
             sub_GAME_7F08A944(PLAYERFLAG_NOTIMER);
             countdownTimerSetVisible(8, 0);
@@ -23488,8 +23488,8 @@ void sub_GAME_7F083FC8(void)
             currentPlayerSetFadeColour(0xFF, 0xFF, 0xFF, 0.0f);
             if (!g_CurrentPlayer->bonddead)
             {
-                set_unset_ammo_on_screen_setting(8, 1);
-                set_unset_bitflags(0x10, 1);
+                gunSetGunAmmoVisible(GUNAMMOREASON_DAMAGE, TRUE);
+                gunSetSightVisible(GUNSIGHTREASON_DAMAGE, TRUE);
                 hudmsgsSetOn(4);
                 sub_GAME_7F08A928(4);
                 countdownTimerSetVisible(8, 1);
@@ -23558,10 +23558,10 @@ glabel sub_GAME_7F083FC8
 /* 0B6A90 7F0840A0 00000000 */  nop
 /* 0B6A94 7F0840A4 45020027 */  bc1fl .L7F084144
 /* 0B6A98 7F0840A8 8C4800D8 */   lw    $t0, 0xd8($v0)
-/* 0B6A9C 7F0840AC 0FC1A622 */  jal   set_unset_ammo_on_screen_setting
+/* 0B6A9C 7F0840AC 0FC1A622 */  jal   gunSetGunAmmoVisible
 /* 0B6AA0 7F0840B0 00002825 */   move  $a1, $zero
 /* 0B6AA4 7F0840B4 24040010 */  li    $a0, 16
-/* 0B6AA8 7F0840B8 0FC1AB4F */  jal   set_unset_bitflags
+/* 0B6AA8 7F0840B8 0FC1AB4F */  jal   gunSetSightVisible
 /* 0B6AAC 7F0840BC 00002825 */   move  $a1, $zero
 /* 0B6AB0 7F0840C0 0FC22952 */  jal   hudmsgsSetOff
 /* 0B6AB4 7F0840C4 24040004 */   li    $a0, 4
@@ -23690,10 +23690,10 @@ glabel sub_GAME_7F083FC8
 /* 0B6C78 7F084288 8C4D00D8 */  lw    $t5, 0xd8($v0)
 /* 0B6C7C 7F08428C 55A00010 */  bnezl $t5, .L7F0842D0
 /* 0B6C80 7F084290 C44000F8 */   lwc1  $f0, 0xf8($v0)
-/* 0B6C84 7F084294 0FC1A622 */  jal   set_unset_ammo_on_screen_setting
+/* 0B6C84 7F084294 0FC1A622 */  jal   gunSetGunAmmoVisible
 /* 0B6C88 7F084298 24050001 */   li    $a1, 1
 /* 0B6C8C 7F08429C 24040010 */  li    $a0, 16
-/* 0B6C90 7F0842A0 0FC1AB4F */  jal   set_unset_bitflags
+/* 0B6C90 7F0842A0 0FC1AB4F */  jal   gunSetSightVisible
 /* 0B6C94 7F0842A4 24050001 */   li    $a1, 1
 /* 0B6C98 7F0842A8 0FC2294B */  jal   hudmsgsSetOn
 /* 0B6C9C 7F0842AC 24040004 */   li    $a0, 4
@@ -33768,12 +33768,12 @@ void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2)
     set_BONDdata_autoaim_y(cur_player_get_autoaim());
     set_BONDdata_autoaim_x(cur_player_get_autoaim());
     set_BONDdata_lookahead_setting(cur_player_get_lookahead());
-    set_unset_ammo_on_screen_setting(1, cur_player_get_ammo_onscreen_setting());
+    gunSetGunAmmoVisible(GUNAMMOREASON_OPTION, cur_player_get_ammo_onscreen_setting());
 
-    set_unset_bitflags(
-        1,
-        (getPlayerCount() == 1 && cur_player_get_sight_onscreen_control() != 0)
-            || (getPlayerCount() >= 2 && g_playerPerm->sight != 0)
+    gunSetSightVisible(
+        GUNSIGHTREASON_1,
+        (getPlayerCount() == 1 && cur_player_get_sight_onscreen_control())
+            || (getPlayerCount() >= 2 && g_playerPerm->sight)
     );
 
     if ((g_CameraMode == CAMERAMODE_NONE) || ((g_CameraMode == CAMERAMODE_FP) && (D_800364B0 != 0)) || (g_CameraMode == CAMERAMODE_UNK10))
@@ -34062,7 +34062,7 @@ glabel bondviewMovePlayerUpdateViewport
 /* 0B9D84 7F087394 0FC29074 */  jal   cur_player_get_ammo_onscreen_setting
 /* 0B9D88 7F087398 00000000 */   nop
 /* 0B9D8C 7F08739C 24040001 */  li    $a0, 1
-/* 0B9D90 7F0873A0 0FC1A622 */  jal   set_unset_ammo_on_screen_setting
+/* 0B9D90 7F0873A0 0FC1A622 */  jal   gunSetGunAmmoVisible
 /* 0B9D94 7F0873A4 00402825 */   move  $a1, $v0
 /* 0B9D98 7F0873A8 0FC26669 */  jal   getPlayerCount
 /* 0B9D9C 7F0873AC 00000000 */   nop
@@ -34086,7 +34086,7 @@ glabel bondviewMovePlayerUpdateViewport
 /* 0B9DE0 7F0873F0 0005602B */  sltu  $t4, $zero, $a1
 /* 0B9DE4 7F0873F4 01802825 */  move  $a1, $t4
 .L7F0873F8:
-/* 0B9DE8 7F0873F8 0FC1AB4F */  jal   set_unset_bitflags
+/* 0B9DE8 7F0873F8 0FC1AB4F */  jal   gunSetSightVisible
 /* 0B9DEC 7F0873FC 24040001 */   li    $a0, 1
 /* 0B9DF0 7F087400 3C028003 */  lui   $v0, %hi(g_CameraMode) # $v0, 0x8003
 /* 0B9DF4 7F087404 8C4219E4 */  lw    $v0, %lo(g_CameraMode)($v0)
@@ -38259,7 +38259,7 @@ glabel sub_GAME_7F088CD8
 /* 0BDB28 7F088FF8 AFA00024 */  sw    $zero, 0x24($sp)
 /* 0BDB2C 7F088FFC AFA00028 */  sw    $zero, 0x28($sp)
 /* 0BDB30 7F089000 AFB90014 */  sw    $t9, 0x14($sp)
-/* 0BDB34 7F089004 0FC2B6AF */  jal   en_text_write_stuff
+/* 0BDB34 7F089004 0FC2B6AF */  jal   textRender
 /* 0BDB38 7F089008 AFB80010 */   sw    $t8, 0x10($sp)
 /* 0BDB3C 7F08900C 3C0B8003 */  lui   $t3, %hi(D_80036440)
 /* 0BDB40 7F089010 8D6B6440 */  lw    $t3, %lo(D_80036440)($t3)
@@ -38361,7 +38361,7 @@ glabel sub_GAME_7F088CD8
 /* 0BDCA8 7F089178 AFA00024 */  sw    $zero, 0x24($sp)
 /* 0BDCAC 7F08917C AFA00028 */  sw    $zero, 0x28($sp)
 /* 0BDCB0 7F089180 AFB90014 */  sw    $t9, 0x14($sp)
-/* 0BDCB4 7F089184 0FC2B6AF */  jal   en_text_write_stuff
+/* 0BDCB4 7F089184 0FC2B6AF */  jal   textRender
 /* 0BDCB8 7F089188 AFB80010 */   sw    $t8, 0x10($sp)
 /* 0BDCBC 7F08918C 0040A825 */  move  $s5, $v0
 .L7F089190:
@@ -38719,7 +38719,7 @@ glabel maybe_mp_interface
 /* 0BE1A0 7F089670 0FC22ABA */  jal   sub_GAME_7F08AAE8
 /* 0BE1A4 7F089674 8FA40058 */   lw    $a0, 0x58($sp)
 /* 0BE1A8 7F089678 AFA20058 */  sw    $v0, 0x58($sp)
-/* 0BE1AC 7F08967C 0FC1A979 */  jal   display_in_game_crosshair
+/* 0BE1AC 7F08967C 0FC1A979 */  jal   gunDrawSight
 /* 0BE1B0 7F089680 27A40058 */   addiu $a0, $sp, 0x58
 /* 0BE1B4 7F089684 0FC1A73D */  jal   generate_ammo_total_microcode
 /* 0BE1B8 7F089688 8FA40058 */   lw    $a0, 0x58($sp)
@@ -39049,7 +39049,7 @@ glabel maybe_mp_interface
 /* 0BC1C8 7F0897D8 0FC22B4C */  jal   sub_GAME_7F08AAE8
 /* 0BC1CC 7F0897DC 8FA40058 */   lw    $a0, 0x58($sp)
 /* 0BC1D0 7F0897E0 AFA20058 */  sw    $v0, 0x58($sp)
-/* 0BC1D4 7F0897E4 0FC1AB5E */  jal   display_in_game_crosshair
+/* 0BC1D4 7F0897E4 0FC1AB5E */  jal   gunDrawSight
 /* 0BC1D8 7F0897E8 27A40058 */   addiu $a0, $sp, 0x58
 /* 0BC1DC 7F0897EC 0FC1A922 */  jal   generate_ammo_total_microcode
 /* 0BC1E0 7F0897F0 8FA40058 */   lw    $a0, 0x58($sp)
@@ -40862,7 +40862,7 @@ Gfx* sub_GAME_7F08A5FC(Gfx* arg0)
 
             view_vert = view_top - view_top_offset;
             arg0 = draw_blackbox_to_screen(arg0, (s32) &view_left, (s32) &view_vert, (s32) &view_horiz, (s32) &view_top);
-            arg0 = combiner_bayer_lod_perspective(jp_text_write_stuff(arg0, &view_left, &view_vert, stringbuffer_lowerleft[status_bar_text_buffer_index], BONDVIEW_2ND_FONTTABLE(status_bar_text_buffer_index), BONDVIEW_1ST_FONTTABLE(status_bar_text_buffer_index), -1, 0x646464FFU, (s16) (s32) viGetX(), (s16) viGetY(), 0, 0));
+            arg0 = combiner_bayer_lod_perspective(textRenderGlow(arg0, &view_left, &view_vert, stringbuffer_lowerleft[status_bar_text_buffer_index], BONDVIEW_2ND_FONTTABLE(status_bar_text_buffer_index), BONDVIEW_1ST_FONTTABLE(status_bar_text_buffer_index), -1, 0x646464FFU, (s16) (s32) viGetX(), (s16) viGetY(), 0, 0));
         }
     }
 
@@ -41105,7 +41105,7 @@ glabel sub_GAME_7F08AAE8
 /* 0BF828 7F08ACF8 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0BF82C 7F08ACFC AFB80014 */  sw    $t8, 0x14($sp)
 /* 0BF830 7F08AD00 AFAF0010 */  sw    $t7, 0x10($sp)
-/* 0BF834 7F08AD04 0FC2B6AF */  jal   en_text_write_stuff
+/* 0BF834 7F08AD04 0FC2B6AF */  jal   textRender
 /* 0BF838 7F08AD08 AFA8001C */   sw    $t0, 0x1c($sp)
 /* 0BF83C 7F08AD0C 0FC2B3BC */  jal   combiner_bayer_lod_perspective
 /* 0BF840 7F08AD10 00402025 */   move  $a0, $v0
@@ -41247,7 +41247,7 @@ glabel sub_GAME_7F08AAE8
 /* 0BFA5C 7F08AF2C AFA00028 */  sw    $zero, 0x28($sp)
 /* 0BFA60 7F08AF30 AFAE0014 */  sw    $t6, 0x14($sp)
 /* 0BFA64 7F08AF34 AFAA0010 */  sw    $t2, 0x10($sp)
-/* 0BFA68 7F08AF38 0FC2B6AF */  jal   en_text_write_stuff
+/* 0BFA68 7F08AF38 0FC2B6AF */  jal   textRender
 /* 0BFA6C 7F08AF3C AFAB001C */   sw    $t3, 0x1c($sp)
 /* 0BFA70 7F08AF40 0C001145 */  jal   viGetViewLeft
 /* 0BFA74 7F08AF44 00408025 */   move  $s0, $v0
@@ -41272,7 +41272,7 @@ glabel sub_GAME_7F08AAE8
 /* 0BFAC0 7F08AF90 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0BFAC4 7F08AF94 AFB80014 */  sw    $t8, 0x14($sp)
 /* 0BFAC8 7F08AF98 AFAF0010 */  sw    $t7, 0x10($sp)
-/* 0BFACC 7F08AF9C 0FC2B6AF */  jal   en_text_write_stuff
+/* 0BFACC 7F08AF9C 0FC2B6AF */  jal   textRender
 /* 0BFAD0 7F08AFA0 AFA8001C */   sw    $t0, 0x1c($sp)
 /* 0BFAD4 7F08AFA4 0C001145 */  jal   viGetViewLeft
 /* 0BFAD8 7F08AFA8 00408025 */   move  $s0, $v0
@@ -41297,7 +41297,7 @@ glabel sub_GAME_7F08AAE8
 /* 0BFB24 7F08AFF4 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0BFB28 7F08AFF8 AFAE0014 */  sw    $t6, 0x14($sp)
 /* 0BFB2C 7F08AFFC AFAA0010 */  sw    $t2, 0x10($sp)
-/* 0BFB30 7F08B000 0FC2B6AF */  jal   en_text_write_stuff
+/* 0BFB30 7F08B000 0FC2B6AF */  jal   textRender
 /* 0BFB34 7F08B004 AFAB001C */   sw    $t3, 0x1c($sp)
 /* 0BFB38 7F08B008 0C001145 */  jal   viGetViewLeft
 /* 0BFB3C 7F08B00C 00408025 */   move  $s0, $v0
@@ -41322,7 +41322,7 @@ glabel sub_GAME_7F08AAE8
 /* 0BFB88 7F08B058 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0BFB8C 7F08B05C AFB80014 */  sw    $t8, 0x14($sp)
 /* 0BFB90 7F08B060 AFAF0010 */  sw    $t7, 0x10($sp)
-/* 0BFB94 7F08B064 0FC2B6AF */  jal   en_text_write_stuff
+/* 0BFB94 7F08B064 0FC2B6AF */  jal   textRender
 /* 0BFB98 7F08B068 AFA8001C */   sw    $t0, 0x1c($sp)
 /* 0BFB9C 7F08B06C 0C001145 */  jal   viGetViewLeft
 /* 0BFBA0 7F08B070 00408025 */   move  $s0, $v0
@@ -41347,7 +41347,7 @@ glabel sub_GAME_7F08AAE8
 /* 0BFBEC 7F08B0BC AFA00028 */  sw    $zero, 0x28($sp)
 /* 0BFBF0 7F08B0C0 AFAE0014 */  sw    $t6, 0x14($sp)
 /* 0BFBF4 7F08B0C4 AFAA0010 */  sw    $t2, 0x10($sp)
-/* 0BFBF8 7F08B0C8 0FC2B6AF */  jal   en_text_write_stuff
+/* 0BFBF8 7F08B0C8 0FC2B6AF */  jal   textRender
 /* 0BFBFC 7F08B0CC AFAB001C */   sw    $t3, 0x1c($sp)
 /* 0BFC00 7F08B0D0 0FC2B3BC */  jal   combiner_bayer_lod_perspective
 /* 0BFC04 7F08B0D4 00402025 */   move  $a0, $v0
@@ -41515,7 +41515,7 @@ glabel sub_GAME_7F08AAE8
 /* 0C0064 7F08B4F4 AFA0002C */  sw    $zero, 0x2c($sp)
 /* 0C0068 7F08B4F8 AFB90014 */  sw    $t9, 0x14($sp)
 /* 0C006C 7F08B4FC AFB80010 */  sw    $t8, 0x10($sp)
-/* 0C0070 7F08B500 0FC2BCA7 */  jal   jp_text_write_stuff
+/* 0C0070 7F08B500 0FC2BCA7 */  jal   textRenderGlow
 /* 0C0074 7F08B504 AFAA0020 */   sw    $t2, 0x20($sp)
 /* 0C0078 7F08B508 10000022 */  b     .Ljp7F08B594
 /* 0C007C 7F08B50C 00408025 */   move  $s0, $v0
@@ -41550,7 +41550,7 @@ glabel sub_GAME_7F08AAE8
 /* 0C00EC 7F08B57C AFA00028 */  sw    $zero, 0x28($sp)
 /* 0C00F0 7F08B580 AFAF0014 */  sw    $t7, 0x14($sp)
 /* 0C00F4 7F08B584 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 0C00F8 7F08B588 0FC2B99B */  jal   en_text_write_stuff
+/* 0C00F8 7F08B588 0FC2B99B */  jal   textRender
 /* 0C00FC 7F08B58C AFB9001C */   sw    $t9, 0x1c($sp)
 /* 0C0100 7F08B590 00408025 */  move  $s0, $v0
 .Ljp7F08B594:
@@ -41694,7 +41694,7 @@ glabel sub_GAME_7F08AAE8
 /* 0C0324 7F08B7B4 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0C0328 7F08B7B8 AFAD0014 */  sw    $t5, 0x14($sp)
 /* 0C032C 7F08B7BC AFA90010 */  sw    $t1, 0x10($sp)
-/* 0C0330 7F08B7C0 0FC2B99B */  jal   en_text_write_stuff
+/* 0C0330 7F08B7C0 0FC2B99B */  jal   textRender
 /* 0C0334 7F08B7C4 AFAA001C */   sw    $t2, 0x1c($sp)
 /* 0C0338 7F08B7C8 0C001145 */  jal   viGetViewLeft
 /* 0C033C 7F08B7CC 00408025 */   move  $s0, $v0
@@ -41719,7 +41719,7 @@ glabel sub_GAME_7F08AAE8
 /* 0C0388 7F08B818 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0C038C 7F08B81C AFAF0014 */  sw    $t7, 0x14($sp)
 /* 0C0390 7F08B820 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 0C0394 7F08B824 0FC2B99B */  jal   en_text_write_stuff
+/* 0C0394 7F08B824 0FC2B99B */  jal   textRender
 /* 0C0398 7F08B828 AFB9001C */   sw    $t9, 0x1c($sp)
 /* 0C039C 7F08B82C 0C001145 */  jal   viGetViewLeft
 /* 0C03A0 7F08B830 00408025 */   move  $s0, $v0
@@ -41744,7 +41744,7 @@ glabel sub_GAME_7F08AAE8
 /* 0C03EC 7F08B87C AFA00028 */  sw    $zero, 0x28($sp)
 /* 0C03F0 7F08B880 AFAD0014 */  sw    $t5, 0x14($sp)
 /* 0C03F4 7F08B884 AFA90010 */  sw    $t1, 0x10($sp)
-/* 0C03F8 7F08B888 0FC2B99B */  jal   en_text_write_stuff
+/* 0C03F8 7F08B888 0FC2B99B */  jal   textRender
 /* 0C03FC 7F08B88C AFAA001C */   sw    $t2, 0x1c($sp)
 /* 0C0400 7F08B890 0C001145 */  jal   viGetViewLeft
 /* 0C0404 7F08B894 00408025 */   move  $s0, $v0
@@ -41769,7 +41769,7 @@ glabel sub_GAME_7F08AAE8
 /* 0C0450 7F08B8E0 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0C0454 7F08B8E4 AFAF0014 */  sw    $t7, 0x14($sp)
 /* 0C0458 7F08B8E8 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 0C045C 7F08B8EC 0FC2B99B */  jal   en_text_write_stuff
+/* 0C045C 7F08B8EC 0FC2B99B */  jal   textRender
 /* 0C0460 7F08B8F0 AFB9001C */   sw    $t9, 0x1c($sp)
 /* 0C0464 7F08B8F4 0C001145 */  jal   viGetViewLeft
 /* 0C0468 7F08B8F8 00408025 */   move  $s0, $v0
@@ -41794,7 +41794,7 @@ glabel sub_GAME_7F08AAE8
 /* 0C04B4 7F08B944 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0C04B8 7F08B948 AFAD0014 */  sw    $t5, 0x14($sp)
 /* 0C04BC 7F08B94C AFA90010 */  sw    $t1, 0x10($sp)
-/* 0C04C0 7F08B950 0FC2B99B */  jal   en_text_write_stuff
+/* 0C04C0 7F08B950 0FC2B99B */  jal   textRender
 /* 0C04C4 7F08B954 AFAA001C */   sw    $t2, 0x1c($sp)
 /* 0C04C8 7F08B958 0FC2B6A8 */  jal   combiner_bayer_lod_perspective
 /* 0C04CC 7F08B95C 00402025 */   move  $a0, $v0
@@ -41963,7 +41963,7 @@ glabel sub_GAME_7F08AAE8
 /* 0BD950 7F08AF60 AFA0002C */  sw    $zero, 0x2c($sp)
 /* 0BD954 7F08AF64 AFB90014 */  sw    $t9, 0x14($sp)
 /* 0BD958 7F08AF68 AFB80010 */  sw    $t8, 0x10($sp)
-/* 0BD95C 7F08AF6C 0FC2B66B */  jal   jp_text_write_stuff
+/* 0BD95C 7F08AF6C 0FC2B66B */  jal   textRenderGlow
 /* 0BD960 7F08AF70 AFAA0020 */   sw    $t2, 0x20($sp)
 /* 0BD964 7F08AF74 10000022 */  b     .L7F08B000
 /* 0BD968 7F08AF78 00408025 */   move  $s0, $v0
@@ -41998,7 +41998,7 @@ glabel sub_GAME_7F08AAE8
 /* 0BD9D8 7F08AFE8 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0BD9DC 7F08AFEC AFAF0014 */  sw    $t7, 0x14($sp)
 /* 0BD9E0 7F08AFF0 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 0BD9E4 7F08AFF4 0FC2B35F */  jal   en_text_write_stuff
+/* 0BD9E4 7F08AFF4 0FC2B35F */  jal   textRender
 /* 0BD9E8 7F08AFF8 AFB9001C */   sw    $t9, 0x1c($sp)
 /* 0BD9EC 7F08AFFC 00408025 */  move  $s0, $v0
 .L7F08B000:
@@ -42142,7 +42142,7 @@ glabel sub_GAME_7F08AAE8
 /* 0BDC10 7F08B220 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0BDC14 7F08B224 AFAD0014 */  sw    $t5, 0x14($sp)
 /* 0BDC18 7F08B228 AFA90010 */  sw    $t1, 0x10($sp)
-/* 0BDC1C 7F08B22C 0FC2B35F */  jal   en_text_write_stuff
+/* 0BDC1C 7F08B22C 0FC2B35F */  jal   textRender
 /* 0BDC20 7F08B230 AFAA001C */   sw    $t2, 0x1c($sp)
 /* 0BDC24 7F08B234 0C000FD9 */  jal   viGetViewLeft
 /* 0BDC28 7F08B238 00408025 */   move  $s0, $v0
@@ -42167,7 +42167,7 @@ glabel sub_GAME_7F08AAE8
 /* 0BDC74 7F08B284 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0BDC78 7F08B288 AFAF0014 */  sw    $t7, 0x14($sp)
 /* 0BDC7C 7F08B28C AFAE0010 */  sw    $t6, 0x10($sp)
-/* 0BDC80 7F08B290 0FC2B35F */  jal   en_text_write_stuff
+/* 0BDC80 7F08B290 0FC2B35F */  jal   textRender
 /* 0BDC84 7F08B294 AFB9001C */   sw    $t9, 0x1c($sp)
 /* 0BDC88 7F08B298 0C000FD9 */  jal   viGetViewLeft
 /* 0BDC8C 7F08B29C 00408025 */   move  $s0, $v0
@@ -42192,7 +42192,7 @@ glabel sub_GAME_7F08AAE8
 /* 0BDCD8 7F08B2E8 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0BDCDC 7F08B2EC AFAD0014 */  sw    $t5, 0x14($sp)
 /* 0BDCE0 7F08B2F0 AFA90010 */  sw    $t1, 0x10($sp)
-/* 0BDCE4 7F08B2F4 0FC2B35F */  jal   en_text_write_stuff
+/* 0BDCE4 7F08B2F4 0FC2B35F */  jal   textRender
 /* 0BDCE8 7F08B2F8 AFAA001C */   sw    $t2, 0x1c($sp)
 /* 0BDCEC 7F08B2FC 0C000FD9 */  jal   viGetViewLeft
 /* 0BDCF0 7F08B300 00408025 */   move  $s0, $v0
@@ -42217,7 +42217,7 @@ glabel sub_GAME_7F08AAE8
 /* 0BDD3C 7F08B34C AFA00028 */  sw    $zero, 0x28($sp)
 /* 0BDD40 7F08B350 AFAF0014 */  sw    $t7, 0x14($sp)
 /* 0BDD44 7F08B354 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 0BDD48 7F08B358 0FC2B35F */  jal   en_text_write_stuff
+/* 0BDD48 7F08B358 0FC2B35F */  jal   textRender
 /* 0BDD4C 7F08B35C AFB9001C */   sw    $t9, 0x1c($sp)
 /* 0BDD50 7F08B360 0C000FD9 */  jal   viGetViewLeft
 /* 0BDD54 7F08B364 00408025 */   move  $s0, $v0
@@ -42242,7 +42242,7 @@ glabel sub_GAME_7F08AAE8
 /* 0BDDA0 7F08B3B0 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0BDDA4 7F08B3B4 AFAD0014 */  sw    $t5, 0x14($sp)
 /* 0BDDA8 7F08B3B8 AFA90010 */  sw    $t1, 0x10($sp)
-/* 0BDDAC 7F08B3BC 0FC2B35F */  jal   en_text_write_stuff
+/* 0BDDAC 7F08B3BC 0FC2B35F */  jal   textRender
 /* 0BDDB0 7F08B3C0 AFAA001C */   sw    $t2, 0x1c($sp)
 /* 0BDDB4 7F08B3C4 0FC2B06C */  jal   combiner_bayer_lod_perspective
 /* 0BDDB8 7F08B3C8 00402025 */   move  $a0, $v0

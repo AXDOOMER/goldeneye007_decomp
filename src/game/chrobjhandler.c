@@ -45575,14 +45575,14 @@ Gfx * sub_GAME_7F056210(Gfx *DL)
     time = floorFloat((time * 100.0) / 60.0);
     iVar3 = time + hours * -6000 + iVar4 * -100;
     DL = microcode_constructor(DL);
-    DL =     display_ammo_total_in_a1(DL, (hours % 100) / 10, 0x82, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
-    DL =     display_ammo_total_in_a1(DL, hours % 10, 0x8a, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
+    DL =     gunDrawHudInteger(DL, (hours % 100) / 10, 0x82, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
+    DL =     gunDrawHudInteger(DL, hours % 10, 0x8a, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
     DL = some_kind_of_display_routine(DL, ":\n", 0x93, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
-    DL =     display_ammo_total_in_a1(DL, (iVar4 % 0x3c) / 10, 0x9c, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
-    DL =     display_ammo_total_in_a1(DL, iVar4 % 10, 0xa4, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
+    DL =     gunDrawHudInteger(DL, (iVar4 % 0x3c) / 10, 0x9c, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
+    DL =     gunDrawHudInteger(DL, iVar4 % 10, 0xa4, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
     DL = some_kind_of_display_routine(DL, ":\n", 0xad, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
-    DL =     display_ammo_total_in_a1(DL, (iVar3 % 100) / 10, 0xb6, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
-    DL =     display_ammo_total_in_a1(DL, iVar3 % 10, 0xbe, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
+    DL =     gunDrawHudInteger(DL, (iVar3 % 100) / 10, 0xb6, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
+    DL =     gunDrawHudInteger(DL, iVar3 % 10, 0xbe, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
     DL = combiner_bayer_lod_perspective(DL);
   }
   return DL;
@@ -45684,7 +45684,7 @@ glabel sub_GAME_7F056210
 /* 08AE94 7F056364 AFAD0010 */  sw    $t5, 0x10($sp)
 /* 08AE98 7F056368 02202025 */  move  $a0, $s1
 /* 08AE9C 7F05636C 24060082 */  li    $a2, 130
-/* 08AEA0 7F056370 0FC1A723 */  jal   display_ammo_total_in_a1
+/* 08AEA0 7F056370 0FC1A723 */  jal   gunDrawHudInteger
 /* 08AEA4 7F056374 24070002 */   li    $a3, 2
 /* 08AEA8 7F056378 0C001149 */  jal   viGetViewTop
 /* 08AEAC 7F05637C 00408825 */   move  $s1, $v0
@@ -45705,7 +45705,7 @@ glabel sub_GAME_7F056210
 /* 08AEE8 7F0563B8 AFAA0010 */  sw    $t2, 0x10($sp)
 /* 08AEEC 7F0563BC 02202025 */  move  $a0, $s1
 /* 08AEF0 7F0563C0 2406008A */  li    $a2, 138
-/* 08AEF4 7F0563C4 0FC1A723 */  jal   display_ammo_total_in_a1
+/* 08AEF4 7F0563C4 0FC1A723 */  jal   gunDrawHudInteger
 /* 08AEF8 7F0563C8 24070002 */   li    $a3, 2
 /* 08AEFC 7F0563CC 0C001149 */  jal   viGetViewTop
 /* 08AF00 7F0563D0 00408825 */   move  $s1, $v0
@@ -45748,7 +45748,7 @@ glabel sub_GAME_7F056210
 /* 08AF94 7F056464 AFAC0010 */  sw    $t4, 0x10($sp)
 /* 08AF98 7F056468 02202025 */  move  $a0, $s1
 /* 08AF9C 7F05646C 2406009C */  li    $a2, 156
-/* 08AFA0 7F056470 0FC1A723 */  jal   display_ammo_total_in_a1
+/* 08AFA0 7F056470 0FC1A723 */  jal   gunDrawHudInteger
 /* 08AFA4 7F056474 24070002 */   li    $a3, 2
 /* 08AFA8 7F056478 0C001149 */  jal   viGetViewTop
 /* 08AFAC 7F05647C 00408825 */   move  $s1, $v0
@@ -45769,7 +45769,7 @@ glabel sub_GAME_7F056210
 /* 08AFE8 7F0564B8 AFA90010 */  sw    $t1, 0x10($sp)
 /* 08AFEC 7F0564BC 02202025 */  move  $a0, $s1
 /* 08AFF0 7F0564C0 240600A4 */  li    $a2, 164
-/* 08AFF4 7F0564C4 0FC1A723 */  jal   display_ammo_total_in_a1
+/* 08AFF4 7F0564C4 0FC1A723 */  jal   gunDrawHudInteger
 /* 08AFF8 7F0564C8 24070002 */   li    $a3, 2
 /* 08AFFC 7F0564CC 0C001149 */  jal   viGetViewTop
 /* 08B000 7F0564D0 00408825 */   move  $s1, $v0
@@ -45812,7 +45812,7 @@ glabel sub_GAME_7F056210
 /* 08B094 7F056564 AFAA0010 */  sw    $t2, 0x10($sp)
 /* 08B098 7F056568 02202025 */  move  $a0, $s1
 /* 08B09C 7F05656C 240600B6 */  li    $a2, 182
-/* 08B0A0 7F056570 0FC1A723 */  jal   display_ammo_total_in_a1
+/* 08B0A0 7F056570 0FC1A723 */  jal   gunDrawHudInteger
 /* 08B0A4 7F056574 24070002 */   li    $a3, 2
 /* 08B0A8 7F056578 0C001149 */  jal   viGetViewTop
 /* 08B0AC 7F05657C 00408825 */   move  $s1, $v0
@@ -45833,7 +45833,7 @@ glabel sub_GAME_7F056210
 /* 08B0E8 7F0565B8 AFB90010 */  sw    $t9, 0x10($sp)
 /* 08B0EC 7F0565BC 02202025 */  move  $a0, $s1
 /* 08B0F0 7F0565C0 240600BE */  li    $a2, 190
-/* 08B0F4 7F0565C4 0FC1A723 */  jal   display_ammo_total_in_a1
+/* 08B0F4 7F0565C4 0FC1A723 */  jal   gunDrawHudInteger
 /* 08B0F8 7F0565C8 24070002 */   li    $a3, 2
 /* 08B0FC 7F0565CC 0FC2B3BC */  jal   combiner_bayer_lod_perspective
 /* 08B100 7F0565D0 00402025 */   move  $a0, $v0
@@ -45941,7 +45941,7 @@ glabel sub_GAME_7F056210
 /* 089034 7F056644 AFAD0010 */  sw    $t5, 0x10($sp)
 /* 089038 7F056648 02202025 */  move  $a0, $s1
 /* 08903C 7F05664C 24060082 */  li    $a2, 130
-/* 089040 7F056650 0FC1A908 */  jal   display_ammo_total_in_a1
+/* 089040 7F056650 0FC1A908 */  jal   gunDrawHudInteger
 /* 089044 7F056654 24070002 */   li    $a3, 2
 /* 089048 7F056658 0C000FDD */  jal   viGetViewTop
 /* 08904C 7F05665C 00408825 */   move  $s1, $v0
@@ -45962,7 +45962,7 @@ glabel sub_GAME_7F056210
 /* 089088 7F056698 AFAA0010 */  sw    $t2, 0x10($sp)
 /* 08908C 7F05669C 02202025 */  move  $a0, $s1
 /* 089090 7F0566A0 2406008A */  li    $a2, 138
-/* 089094 7F0566A4 0FC1A908 */  jal   display_ammo_total_in_a1
+/* 089094 7F0566A4 0FC1A908 */  jal   gunDrawHudInteger
 /* 089098 7F0566A8 24070002 */   li    $a3, 2
 /* 08909C 7F0566AC 0C000FDD */  jal   viGetViewTop
 /* 0890A0 7F0566B0 00408825 */   move  $s1, $v0
@@ -46005,7 +46005,7 @@ glabel sub_GAME_7F056210
 /* 089134 7F056744 AFAC0010 */  sw    $t4, 0x10($sp)
 /* 089138 7F056748 02202025 */  move  $a0, $s1
 /* 08913C 7F05674C 2406009C */  li    $a2, 156
-/* 089140 7F056750 0FC1A908 */  jal   display_ammo_total_in_a1
+/* 089140 7F056750 0FC1A908 */  jal   gunDrawHudInteger
 /* 089144 7F056754 24070002 */   li    $a3, 2
 /* 089148 7F056758 0C000FDD */  jal   viGetViewTop
 /* 08914C 7F05675C 00408825 */   move  $s1, $v0
@@ -46026,7 +46026,7 @@ glabel sub_GAME_7F056210
 /* 089188 7F056798 AFA90010 */  sw    $t1, 0x10($sp)
 /* 08918C 7F05679C 02202025 */  move  $a0, $s1
 /* 089190 7F0567A0 240600A4 */  li    $a2, 164
-/* 089194 7F0567A4 0FC1A908 */  jal   display_ammo_total_in_a1
+/* 089194 7F0567A4 0FC1A908 */  jal   gunDrawHudInteger
 /* 089198 7F0567A8 24070002 */   li    $a3, 2
 /* 08919C 7F0567AC 0C000FDD */  jal   viGetViewTop
 /* 0891A0 7F0567B0 00408825 */   move  $s1, $v0
@@ -46069,7 +46069,7 @@ glabel sub_GAME_7F056210
 /* 089234 7F056844 AFAA0010 */  sw    $t2, 0x10($sp)
 /* 089238 7F056848 02202025 */  move  $a0, $s1
 /* 08923C 7F05684C 240600B6 */  li    $a2, 182
-/* 089240 7F056850 0FC1A908 */  jal   display_ammo_total_in_a1
+/* 089240 7F056850 0FC1A908 */  jal   gunDrawHudInteger
 /* 089244 7F056854 24070002 */   li    $a3, 2
 /* 089248 7F056858 0C000FDD */  jal   viGetViewTop
 /* 08924C 7F05685C 00408825 */   move  $s1, $v0
@@ -46090,7 +46090,7 @@ glabel sub_GAME_7F056210
 /* 089288 7F056898 AFB90010 */  sw    $t9, 0x10($sp)
 /* 08928C 7F05689C 02202025 */  move  $a0, $s1
 /* 089290 7F0568A0 240600BE */  li    $a2, 190
-/* 089294 7F0568A4 0FC1A908 */  jal   display_ammo_total_in_a1
+/* 089294 7F0568A4 0FC1A908 */  jal   gunDrawHudInteger
 /* 089298 7F0568A8 24070002 */   li    $a3, 2
 /* 08929C 7F0568AC 0FC2B06C */  jal   combiner_bayer_lod_perspective
 /* 0892A0 7F0568B0 00402025 */   move  $a0, $v0

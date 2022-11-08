@@ -1118,14 +1118,14 @@ glabel construct_fontchar_microcode
 
 
 #ifdef NONMATCHING
-void en_text_write_stuff(void) {
+void textRender(void) {
 
 }
 #else
 #ifdef VERSION_US
 GLOBAL_ASM(
 .text
-glabel en_text_write_stuff
+glabel textRender
 /* 0E25EC 7F0ADABC 27BDFF58 */  addiu $sp, $sp, -0xa8
 /* 0E25F0 7F0ADAC0 240E0001 */  li    $t6, 1
 /* 0E25F4 7F0ADAC4 3C018004 */  lui   $at, %hi(D_80040EA8)
@@ -1332,7 +1332,7 @@ glabel en_text_write_stuff
 #ifdef VERSION_JP
 GLOBAL_ASM(
 .text
-glabel en_text_write_stuff
+glabel textRender
 /* 0E25EC 7F0ADABC 27BDFF58 */  addiu $sp, $sp, -0xa8
 /* 0E25F0 7F0ADAC0 240E0001 */  li    $t6, 1
 /* 0E25F4 7F0ADAC4 3C018004 */  lui   $at, %hi(D_80040EA8)
@@ -1540,7 +1540,7 @@ glabel en_text_write_stuff
 #ifdef VERSION_EU
 GLOBAL_ASM(
 .text
-glabel en_text_write_stuff
+glabel textRender
 /* 0DF76C 7F0ACD7C 27BDFF58 */  addiu $sp, $sp, -0xa8
 /* 0DF770 7F0ACD80 240E0001 */  li    $t6, 1
 /* 0DF774 7F0ACD84 3C018004 */  lui   $at, %hi(D_80040EA8) # $at, 0x8004
@@ -2398,14 +2398,14 @@ glabel sub_GAME_7F0AE45C
 
 
 #ifdef NONMATCHING
-void jp_text_write_stuff(void) {
+void textRenderGlow(void) {
 
 }
 #else
 #ifdef VERSION_US
 GLOBAL_ASM(
 .text
-glabel jp_text_write_stuff
+glabel textRenderGlow
 /* 0E321C 7F0AE6EC 27BDFF68 */  addiu $sp, $sp, -0x98
 /* 0E3220 7F0AE6F0 240E0001 */  li    $t6, 1
 /* 0E3224 7F0AE6F4 3C018004 */  lui   $at, %hi(D_80040EA8)
@@ -2589,7 +2589,7 @@ glabel jp_text_write_stuff
 #ifdef VERSION_JP
 GLOBAL_ASM(
 .text
-glabel jp_text_write_stuff
+glabel textRenderGlow
 /* 0E321C 7F0AE6EC 27BDFF68 */  addiu $sp, $sp, -0x98
 /* 0E3220 7F0AE6F0 240E0001 */  li    $t6, 1
 /* 0E3224 7F0AE6F4 3C018004 */  lui   $at, %hi(D_80040EA8)
@@ -2774,7 +2774,7 @@ glabel jp_text_write_stuff
 #ifdef VERSION_EU
 GLOBAL_ASM(
 .text
-glabel jp_text_write_stuff
+glabel textRenderGlow
 /* 0E039C 7F0AD9AC 27BDFF68 */  addiu $sp, $sp, -0x98
 /* 0E03A0 7F0AD9B0 240E0001 */  li    $t6, 1
 /* 0E03A4 7F0AD9B4 3C018004 */  lui   $at, %hi(D_80040EA8) # $at, 0x8004
