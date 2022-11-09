@@ -465,12 +465,12 @@ void lvlStageLoad(s32 stage)
             // g_playerPlayerData s4 variable
             player_data->time_other_players_on_screen = 0;
             player_data->damage_to_backside = 0;
-            player_data->min_time_between_kills = 0x7FFFFFFF;
+            player_data->min_time_between_kills = S32_MAX;
             player_data->max_time_between_kills = 0;
             player_data->most_killed_one_life = 0;
             player_data->most_killed_one_time = 0;
             player_data->longest_inning = 0;
-            player_data->shortest_inning = 0x7FFFFFFF;
+            player_data->shortest_inning = S32_MAX;
             player_data->order_out_in_yolt = 0;
             player_data->flag_counter = 0;
             player_data->distance_traveled = 0.0f; // one kind of float zero
@@ -493,7 +493,7 @@ void lvlStageLoad(s32 stage)
     reinit_between_menus();
     init_sound_effects_registers();
     init_guards();
-    set_new_rand_head_bodies(stage);
+    bodiesReset(stage);
     proplvreset2(stage);
     alloc_explosion_smoke_casing_scorch_impact_buffers();
     alloc_shattered_window_pieces();
@@ -754,7 +754,7 @@ glabel lvlStageLoad
 /* 0F2904 7F0BDDD4 00000000 */   nop
 /* 0F2908 7F0BDDD8 0FC00390 */  jal   init_guards
 /* 0F290C 7F0BDDDC 00000000 */   nop
-/* 0F2910 7F0BDDE0 0FC003D4 */  jal   set_new_rand_head_bodies
+/* 0F2910 7F0BDDE0 0FC003D4 */  jal   bodiesReset
 /* 0F2914 7F0BDDE4 8FA40038 */   lw    $a0, 0x38($sp)
 /* 0F2918 7F0BDDE8 0FC00EFC */  jal   proplvreset2
 /* 0F291C 7F0BDDEC 8FA40038 */   lw    $a0, 0x38($sp)
@@ -1059,7 +1059,7 @@ glabel lvlStageLoad
 /* 0F3504 7F0BE994 00000000 */   nop
 /* 0F3508 7F0BE998 0FC00390 */  jal   init_guards
 /* 0F350C 7F0BE99C 00000000 */   nop
-/* 0F3510 7F0BE9A0 0FC003D4 */  jal   set_new_rand_head_bodies
+/* 0F3510 7F0BE9A0 0FC003D4 */  jal   bodiesReset
 /* 0F3514 7F0BE9A4 8FA40038 */   lw    $a0, 0x38($sp)
 /* 0F3518 7F0BE9A8 0FC00EFC */  jal   proplvreset2
 /* 0F351C 7F0BE9AC 8FA40038 */   lw    $a0, 0x38($sp)
@@ -1381,7 +1381,7 @@ glabel lvlStageLoad
 /* 0EFB84 7F0BD194 00000000 */   nop   
 /* 0EFB88 7F0BD198 0FC00390 */  jal   init_guards
 /* 0EFB8C 7F0BD19C 00000000 */   nop   
-/* 0EFB90 7F0BD1A0 0FC003D4 */  jal   set_new_rand_head_bodies
+/* 0EFB90 7F0BD1A0 0FC003D4 */  jal   bodiesReset
 /* 0EFB94 7F0BD1A4 8FA40038 */   lw    $a0, 0x38($sp)
 /* 0EFB98 7F0BD1A8 0FC00EDF */  jal   proplvreset2
 /* 0EFB9C 7F0BD1AC 8FA40038 */   lw    $a0, 0x38($sp)

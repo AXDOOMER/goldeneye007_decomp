@@ -332,9 +332,9 @@ rgba_u8 D_8002A9BC = { 0x8C, 0x00, 0x00, 0x00 };
 struct coord3d legalpage_pos = {0.0f, 0.0f, 0.0f};
 
 struct legal_screen_text legalpage_text_array[] = {
-    {220,  30, 1, 1, TEXT(LTITLE, TITLE_STR_7), 0}, //"TWYCROSS BOARD OF GAME CLASSIFICATION\n"
-    { 34,  83, 0, 1, TEXT(LTITLE, TITLE_STR_8), 0}, //"This is to certify\n" 
-    {226,  84, 0, 1, TEXT(LTITLE, TITLE_STR_9), 0}, //"(c) 1997 Nintendo/Rare\n"
+    {220,  30, 1, 1, TEXT(LTITLE, TITLE_STR_07), 0}, //"TWYCROSS BOARD OF GAME CLASSIFICATION\n"
+    { 34,  83, 0, 1, TEXT(LTITLE, TITLE_STR_08), 0}, //"This is to certify\n" 
+    {226,  84, 0, 1, TEXT(LTITLE, TITLE_STR_09), 0}, //"(c) 1997 Nintendo/Rare\n"
     {226,  97, 0, 1, TEXT(LTITLE, TITLE_STR_10), 0}, //"(c) 1962, 1995 Danjaq, LLC. &\n"
     {226, 110, 0, 1, TEXT(LTITLE, TITLE_STR_11), 0}, //"U.A.C. All Rights Reserved\n"
     {226, 122, 0, 1, TEXT(LTITLE, TITLE_STR_12), 0}, //"(c) 1997 Eon Productions\n"
@@ -1177,11 +1177,11 @@ Gfx* add_tab1_start(Gfx* DL)
     s32 y2;
     s32 x2;
 
-    g_textPtrTAB1 = langGet(TEXT(LTITLE, TITLE_STR_4));
+    g_textPtrTAB1 = langGet(TEXT(LTITLE, TITLE_STR_04));
     setTextSpacingInverted(TRUE);
     x2 = 0;
     y2 = 0;
-    textMeasure(&y2, &x2, g_textPtrTAB1, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0);
+    textMeasure(&y2, &x2, g_textPtrTAB1, ptrFontBankGothicChars, ptrFontBankGothic, 0);
     x = 0x33;
     y = 0x19B - (y2 / 2);
 
@@ -1193,7 +1193,7 @@ Gfx* add_tab1_start(Gfx* DL)
     setTextOrientation(1);
 
     x = 0x54 - (x2 / 2);
-    DL = textRender(DL, &x, &y, g_textPtrTAB1, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xFF, viGetY(), viGetX(), 0, 0);
+    DL = textRender(DL, &x, &y, g_textPtrTAB1, ptrFontBankGothicChars, ptrFontBankGothic, 0xFF, viGetY(), viGetX(), 0, 0);
     setTextOrientation(0);
     setTextSpacingInverted(FALSE);
     return DL;
@@ -1219,11 +1219,11 @@ Gfx* add_tab3_previous(Gfx* DL)
     s32 y2;
     s32 sp48;
 
-    g_textPtrTAB3 = langGet(TEXT(LTITLE, TITLE_STR_6));
+    g_textPtrTAB3 = langGet(TEXT(LTITLE, TITLE_STR_06));
     setTextSpacingInverted(TRUE);
     sp48 = 0;
     y2 = 0;
-    textMeasure(&y2, &sp48, g_textPtrTAB3, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0);
+    textMeasure(&y2, &sp48, g_textPtrTAB3, ptrFontBankGothicChars, ptrFontBankGothic, 0);
     x = 0xEC;
     y = 0x19B - (y2 / 2);
 
@@ -1235,7 +1235,7 @@ Gfx* add_tab3_previous(Gfx* DL)
     setTextOrientation(1);
 
     x = 0x10D - (sp48 / 2);
-    DL = textRender(DL, &x, &y, g_textPtrTAB3, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xFF, viGetY(), viGetX(), 0, 0);
+    DL = textRender(DL, &x, &y, g_textPtrTAB3, ptrFontBankGothicChars, ptrFontBankGothic, 0xFF, viGetY(), viGetX(), 0, 0);
     setTextOrientation(0);
     setTextSpacingInverted(FALSE);
 
@@ -1270,11 +1270,11 @@ Gfx* add_tab2_next(Gfx* DL)
     s32 sp4C;
     s32 sp48;
 
-    g_textPtrTAB2 = langGet(TEXT(LTITLE, TITLE_STR_5)); //"NEXT\n"
+    g_textPtrTAB2 = langGet(TEXT(LTITLE, TITLE_STR_05)); //"NEXT\n"
     setTextSpacingInverted(TRUE);
     sp48 = 0;
     sp4C = 0;
-    textMeasure(&sp4C, &sp48, g_textPtrTAB2, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0);
+    textMeasure(&sp4C, &sp48, g_textPtrTAB2, ptrFontBankGothicChars, ptrFontBankGothic, 0);
     x = 0x90;
     y = 0x19B - (sp4C / 2);
 
@@ -1286,7 +1286,7 @@ Gfx* add_tab2_next(Gfx* DL)
     setTextOrientation(1);
 
     x = 0xB1 - (sp48 / 2);
-    DL = textRender(DL, &x, &y, g_textPtrTAB2, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xFF, viGetY(), viGetX(), 0, 0);
+    DL = textRender(DL, &x, &y, g_textPtrTAB2, ptrFontBankGothicChars, ptrFontBankGothic, 0xFF, viGetY(), viGetX(), 0, 0);
     setTextOrientation(0);
     setTextSpacingInverted(FALSE);
     return DL;
@@ -1395,7 +1395,7 @@ Gfx *display_aligned_white_text_to_screen(Gfx *dl, s32 arg1, s32 arg2, s32 arg3,
 
     sp48 = 0;
     sp4C = 0;
-    textMeasure(&sp4C, &sp48, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
+    textMeasure(&sp4C, &sp48, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0);
     x = arg1 - ((s32) (arg3 * sp48) / 2);
     y = arg2 - ((s32) (arg4 * sp4C) / 2);
     return textRender(dl, &x, &y, text, arg6, arg7, -1, viGetX(), viGetY(), 0, 0);
@@ -1461,8 +1461,8 @@ Gfx *constructor_menu00_legalscreen(Gfx *DL)
             legal_text_ptr->flag,
             legal_text_ptr->flag2,
             txt,
-            ptrSecondFontTableLarge,
-            ptrFirstFontTableLarge);
+            ptrFontZurichBoldChars,
+            ptrFontZurichBold);
 
     }
 
@@ -1573,13 +1573,13 @@ glabel constructor_menu00_legalscreen
 /* 03F58C 7F00AA5C 02802025 */   move  $a0, $s4
 /* 03F590 7F00AA60 3C108003 */  lui   $s0, %hi(legalpage_text_array)
 /* 03F594 7F00AA64 3C118003 */  lui   $s1, %hi(D_8002AABC)
-/* 03F598 7F00AA68 3C138004 */  lui   $s3, %hi(ptrFirstFontTableLarge)
-/* 03F59C 7F00AA6C 3C128004 */  lui   $s2, %hi(ptrSecondFontTableLarge)
+/* 03F598 7F00AA68 3C138004 */  lui   $s3, %hi(ptrFontZurichBold)
+/* 03F59C 7F00AA6C 3C128004 */  lui   $s2, %hi(ptrFontZurichBoldChars)
 /* 03F5A0 7F00AA70 0040A025 */  move  $s4, $v0
 /* 03F5A4 7F00AA74 2610A9CC */  addiu $s0, %lo(legalpage_text_array) # addiu $s0, $s0, -0x5634
 /* 03F5A8 7F00AA78 2631AABC */  addiu $s1, %lo(D_8002AABC) # addiu $s1, $s1, -0x5544
-/* 03F5AC 7F00AA7C 26520EB8 */  addiu $s2, %lo(ptrSecondFontTableLarge) # addiu $s2, $s2, 0xeb8
-/* 03F5B0 7F00AA80 26730EB4 */  addiu $s3, %lo(ptrFirstFontTableLarge) # addiu $s3, $s3, 0xeb4
+/* 03F5AC 7F00AA7C 26520EB8 */  addiu $s2, %lo(ptrFontZurichBoldChars) # addiu $s2, $s2, 0xeb8
+/* 03F5B0 7F00AA80 26730EB4 */  addiu $s3, %lo(ptrFontZurichBold) # addiu $s3, $s3, 0xeb4
 .L7F00AA84:
 /* 03F5B4 7F00AA84 0FC30776 */  jal   langGet
 /* 03F5B8 7F00AA88 96040010 */   lhu   $a0, 0x10($s0)
@@ -4475,7 +4475,7 @@ loop_7:
         floorFloat(spE4);
         floorFloat(spE8);
         viGetX();
-        arg0 = textRender(arg0, &sp100, &spFC, langGet(TEXT(LTITLE, TITLE_STR_23)), (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, viGetY(), 0, 0);
+        arg0 = textRender(arg0, &sp100, &spFC, langGet(TEXT(LTITLE, TITLE_STR_23)), (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, viGetY(), 0, 0);
         temp_s1_2 = langGet(TEXT(LTITLE, TITLE_STR_24));
         floorFloat(spE4);
         floorFloat(spE8);
@@ -4485,15 +4485,15 @@ loop_7:
         {
             spF4 = 0;
             spF8 = 0;
-            textMeasure(temp_a0, temp_a1, temp_s1_2, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
+            textMeasure(temp_a0, temp_a1, temp_s1_2, ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0);
             arg0 = microcode_constructor_related_to_menus(arg0, sp100 + -1, spFC + -1, (sp100 + spF4) + 3, (s32) (spFC + spF8), 0x32);
             viGetX();
-            arg0 = textRender(arg0, &sp100, &spFC, temp_s1_2, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, -1, viGetY(), 0, 0);
+            arg0 = textRender(arg0, &sp100, &spFC, temp_s1_2, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, -1, viGetY(), 0, 0);
         }
         else
         {
             viGetX(temp_a0, temp_a1, temp_s1_2);
-            arg0 = textRender(arg0, &sp100, &spFC, temp_s1_2, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, viGetY(), 0, 0);
+            arg0 = textRender(arg0, &sp100, &spFC, temp_s1_2, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, viGetY(), 0, 0);
         }
         temp_s1_3 = langGet(TEXT(LTITLE, TITLE_STR_25));
         floorFloat(spE4);
@@ -4507,16 +4507,16 @@ loop_7:
         if (folder_selected_for_deletion_choice != 0)
         {
             viGetX(temp_a0_2, temp_a1_2, temp_s1_3);
-            arg0 = textRender(arg0, &sp100, &spFC, temp_s1_3, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, viGetY(), 0, 0);
+            arg0 = textRender(arg0, &sp100, &spFC, temp_s1_3, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, viGetY(), 0, 0);
         }
         else
         {
             spF4 = 0;
             spF8 = 0;
-            textMeasure(temp_a0_2, temp_a1_2, temp_s1_3, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
+            textMeasure(temp_a0_2, temp_a1_2, temp_s1_3, ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0);
             arg0 = microcode_constructor_related_to_menus(arg0, sp100 + -1, spFC + -1, (sp100 + spF4) + 3, (s32) (spFC + spF8), 0x32);
             viGetX();
-            arg0 = textRender(arg0, &sp100, &spFC, temp_s1_3, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, -1, viGetY(), 0, 0);
+            arg0 = textRender(arg0, &sp100, &spFC, temp_s1_3, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, -1, viGetY(), 0, 0);
         }
     }
     else
@@ -4533,7 +4533,7 @@ loop_7:
                     strcat(&spD0, &asc_D_8004F488);
                     spF4 = 0;
                     spF8 = 0;
-                    textMeasure(&spF8, &spF4, &spD0, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
+                    textMeasure(&spF8, &spF4, &spD0, ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0);
                     floorFloat(spE4);
                     if (spF4 < 0)
                     {
@@ -4541,7 +4541,7 @@ loop_7:
                     }
                     floorFloat(spE8);
                     viGetX();
-                    arg0 = textRender(arg0, &sp100, &spFC, &spD0, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, viGetY(), 0, 0);
+                    arg0 = textRender(arg0, &sp100, &spFC, &spD0, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, viGetY(), 0, 0);
                 }
                 if (spEC != 3)
                 {
@@ -4580,7 +4580,7 @@ loop_24:
                     strcat(&spBC, &asc_D_8004F490);
                     spF4 = 0;
                     spF8 = 0;
-                    textMeasure(&spF8, &spF4, &spBC, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
+                    textMeasure(&spF8, &spF4, &spBC, ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0);
                     floorFloat(spE4);
                     if (spF4 < 0)
                     {
@@ -4588,7 +4588,7 @@ loop_24:
                     }
                     floorFloat(spE8);
                     viGetX();
-                    arg0 = textRender(arg0, &sp100, &spFC, &spBC, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, viGetY(), 0, 0);
+                    arg0 = textRender(arg0, &sp100, &spFC, &spBC, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, viGetY(), 0, 0);
                 }
             }
         }
@@ -4604,25 +4604,25 @@ loop_24:
     temp_ret_4 = langGet(TEXT(LTITLE, TITLE_STR_27));
     spF4 = 0;
     spF8 = 0;
-    textMeasure(&spF8, &spF4, temp_ret_4, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
+    textMeasure(&spF8, &spF4, temp_ret_4, ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0);
     if (spF8 < 0)
     {
 
     }
     viGetX();
-    arg0 = textRender(arg0, &sp100, &spFC, temp_ret_4, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, -1, viGetY(), 0, 0);
+    arg0 = textRender(arg0, &sp100, &spFC, temp_ret_4, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, -1, viGetY(), 0, 0);
     folder_option_COPY_left_bound.unk8 = (f32) (sp100 + spF4);
     temp_ret_5 = langGet(TEXT(LTITLE, TITLE_STR_28));
     spF4 = 0;
     spF8 = 0;
-    textMeasure(&spF8, &spF4, temp_ret_5, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
+    textMeasure(&spF8, &spF4, temp_ret_5, ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0);
     if (spF8 < 0)
     {
 
     }
     viGetX();
     folder_option_ERASE_left_bound.unk8 = (f32) (sp100 + spF4);
-    arg0 = textRender(arg0, &sp100, &spFC, temp_ret_5, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, -1, viGetY(), 0, 0);
+    arg0 = textRender(arg0, &sp100, &spFC, temp_ret_5, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, -1, viGetY(), 0, 0);
     spAC = 225.0f;
     spB0 = (f32) D_80051A28;
     temp_f10 = (f32) (u32) mainfolderimages->unk4 * 0.5f;
@@ -4846,10 +4846,10 @@ glabel constructor_menu05_fileselect
 /* 041174 7F00C644 3C0B8007 */  lui   $t3, %hi(dword_CODE_bss_80069620)
 /* 041178 7F00C648 256B9620 */  addiu $t3, %lo(dword_CODE_bss_80069620) # addiu $t3, $t3, -0x69e0
 /* 04117C 7F00C64C 3C1EEBD8 */  lui   $fp, (0xEBD879FF >> 16) # lui $fp, 0xebd8
-/* 041180 7F00C650 3C148004 */  lui   $s4, %hi(ptrFirstFontTableLarge)
-/* 041184 7F00C654 3C138004 */  lui   $s3, %hi(ptrSecondFontTableLarge)
-/* 041188 7F00C658 26730EB8 */  addiu $s3, %lo(ptrSecondFontTableLarge) # addiu $s3, $s3, 0xeb8
-/* 04118C 7F00C65C 26940EB4 */  addiu $s4, %lo(ptrFirstFontTableLarge) # addiu $s4, $s4, 0xeb4
+/* 041180 7F00C650 3C148004 */  lui   $s4, %hi(ptrFontZurichBold)
+/* 041184 7F00C654 3C138004 */  lui   $s3, %hi(ptrFontZurichBoldChars)
+/* 041188 7F00C658 26730EB8 */  addiu $s3, %lo(ptrFontZurichBoldChars) # addiu $s3, $s3, 0xeb8
+/* 04118C 7F00C65C 26940EB4 */  addiu $s4, %lo(ptrFontZurichBold) # addiu $s4, $s4, 0xeb4
 /* 041190 7F00C660 37DE79FF */  ori   $fp, (0xEBD879FF & 0xFFFF) # ori $fp, $fp, 0x79ff
 /* 041194 7F00C664 AFAB0074 */  sw    $t3, 0x74($sp)
 /* 041198 7F00C668 AFA001B4 */  sw    $zero, 0x1b4($sp)
@@ -6002,11 +6002,11 @@ Gfx* constructor_menu06_modesel(Gfx* DL)
 
     x = 0x96;
     y = 0xdc;
-    DL = write_text_at_abs_coord(DL, &x, &y, "1.\n", ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, "1.\n", ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
     textstring = langGet((g_AppendCheatSinglePlayer != 0) ? TEXT(LTITLE, TITLE_STR_117) : TEXT(LTITLE, TITLE_STR_29));
 
-    textMeasure(&x2, &y2, textstring, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
+    textMeasure(&x2, &y2, textstring, ptrFontZurichBoldChars, ptrFontZurichBold, 0);
 
     x = 0xAA;
     y = 0xdc;
@@ -6015,7 +6015,7 @@ Gfx* constructor_menu06_modesel(Gfx* DL)
         DL = microcode_constructor_related_to_menus(DL, 0x94, 0xDA, y2 + 0xAF, 0xEA, 0x32);
     }
 
-    DL = write_text_at_abs_coord(DL, &x, &y, textstring, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, textstring, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
     x = 0x96;
     y = 0xFC;
@@ -6027,11 +6027,11 @@ Gfx* constructor_menu06_modesel(Gfx* DL)
     {
         text_color = 0x70;
     }
-    DL = write_text_at_abs_coord(DL, &x, &y, "2.\n", ptrSecondFontTableLarge, ptrFirstFontTableLarge, text_color, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, "2.\n", ptrFontZurichBoldChars, ptrFontZurichBold, text_color, viGetX(), viGetY(), 0, 0);
 
     textstring = langGet((g_AppendCheatMultiPlayer != 0) ? TEXT(LTITLE, TITLE_STR_276) : TEXT(LTITLE, TITLE_STR_30));
 
-    textMeasure(&x2, &y2, textstring, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
+    textMeasure(&x2, &y2, textstring, ptrFontZurichBoldChars, ptrFontZurichBold, 0);
 
     x = 0xAA;
     y = 0xFC;
@@ -6039,16 +6039,16 @@ Gfx* constructor_menu06_modesel(Gfx* DL)
     {
         DL = microcode_constructor_related_to_menus(DL, 0x94, 0xFA, y2 + 0xAF, 0x10A, 0x32);
     }
-    DL = write_text_at_abs_coord(DL, &x, &y, textstring, ptrSecondFontTableLarge, ptrFirstFontTableLarge, text_color, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, textstring, ptrFontZurichBoldChars, ptrFontZurichBold, text_color, viGetX(), viGetY(), 0, 0);
 
     if (is_cheat_menu_available != 0)
     {
         x = 0x96;
         y = 0x11C;
-        DL = write_text_at_abs_coord(DL, &x, &y, "3.\n", ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+        DL = write_text_at_abs_coord(DL, &x, &y, "3.\n", ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
         textstring = langGet(TEXT(LTITLE, TITLE_STR_31));
 
-        textMeasure(&x2, &y2, textstring, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
+        textMeasure(&x2, &y2, textstring, ptrFontZurichBoldChars, ptrFontZurichBold, 0);
 
         x = 0xAA;
         y = 0x11C;
@@ -6056,7 +6056,7 @@ Gfx* constructor_menu06_modesel(Gfx* DL)
         {
             DL = microcode_constructor_related_to_menus(DL, 0x94, 0x11A, y2 + 0xAF, 0x12A, 0x32);
         }
-        DL = write_text_at_abs_coord(DL, &x, &y, textstring, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+        DL = write_text_at_abs_coord(DL, &x, &y, textstring, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
     }
     
     DL = add_tab3_previous(DL);
@@ -7632,12 +7632,12 @@ loop_10:
         spC4 = 0;
         temp_a0 = &spC8;
         spC8 = 0;
-        textMeasure(temp_a0, &spC4, &sp90, ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, 0);
+        textMeasure(temp_a0, &spC4, &sp90, ptrFontBankGothicChars, (s32) ptrFontBankGothic, 0);
         temp_a2 = (subroutine_arg0 - spC8) + 0x1d;
         temp_a1 = *temp_s7 + -0x1f;
         viGetX();
         viGetX(*temp_s7 + -0x1f, (subroutine_arg0 - spC8) + 0x1d);
-        phi_s4_2 = textRender(textRender(microcode_constructor_related_to_menus(phi_s4, temp_a1, temp_a2, temp_a1 + spC4, (s32) (temp_a2 + spC8), 0), &sp8C, &sp88, &sp90, (s32) ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, (s32) (phi_s5 | 0xff), viGetY(), 0, 0), &sp8C, &sp88, &sp90, (s32) ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, (s32) (phi_s5 | 0x64), viGetY(), 0, 0);
+        phi_s4_2 = textRender(textRender(microcode_constructor_related_to_menus(phi_s4, temp_a1, temp_a2, temp_a1 + spC4, (s32) (temp_a2 + spC8), 0), &sp8C, &sp88, &sp90, (s32) ptrFontBankGothicChars, (s32) ptrFontBankGothic, (s32) (phi_s5 | 0xff), viGetY(), 0, 0), &sp8C, &sp88, &sp90, (s32) ptrFontBankGothicChars, (s32) ptrFontBankGothic, (s32) (phi_s5 | 0x64), viGetY(), 0, 0);
     }
     temp_s6 = phi_s6 + 1;
     phi_s3 = phi_s3 + 5;
@@ -7764,11 +7764,11 @@ glabel constructor_menu07_missionsel
 /* 0430F8 7F00E5C8 24A5F4A0 */  addiu $a1, %lo(asc_D_8004F4A0) # addiu $a1, $a1, -0xb60
 /* 0430FC 7F00E5CC 0C0029FF */  jal   strcat
 /* 043100 7F00E5D0 02402025 */   move  $a0, $s2
-/* 043104 7F00E5D4 3C198004 */  lui   $t9, %hi(ptrFirstFontTableSmall)
-/* 043108 7F00E5D8 8F390EAC */  lw    $t9, %lo(ptrFirstFontTableSmall)($t9)
-/* 04310C 7F00E5DC 3C078004 */  lui   $a3, %hi(ptrSecondFontTableSmall)
+/* 043104 7F00E5D4 3C198004 */  lui   $t9, %hi(ptrFontBankGothic)
+/* 043108 7F00E5D8 8F390EAC */  lw    $t9, %lo(ptrFontBankGothic)($t9)
+/* 04310C 7F00E5DC 3C078004 */  lui   $a3, %hi(ptrFontBankGothicChars)
 /* 043110 7F00E5E0 AFA000C4 */  sw    $zero, 0xc4($sp)
-/* 043114 7F00E5E4 8CE70EB0 */  lw    $a3, %lo(ptrSecondFontTableSmall)($a3)
+/* 043114 7F00E5E4 8CE70EB0 */  lw    $a3, %lo(ptrFontBankGothicChars)($a3)
 /* 043118 7F00E5E8 27A400C8 */  addiu $a0, $sp, 0xc8
 /* 04311C 7F00E5EC 27A500C4 */  addiu $a1, $sp, 0xc4
 /* 043120 7F00E5F0 02403025 */  move  $a2, $s2
@@ -7797,10 +7797,10 @@ glabel constructor_menu07_missionsel
 /* 04317C 7F00E64C 00105C03 */  sra   $t3, $s0, 0x10
 /* 043180 7F00E650 0C00110B */  jal   viGetY
 /* 043184 7F00E654 01608025 */   move  $s0, $t3
-/* 043188 7F00E658 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTableSmall)
-/* 04318C 7F00E65C 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableSmall)
-/* 043190 7F00E660 8DAD0EAC */  lw    $t5, %lo(ptrFirstFontTableSmall)($t5)
-/* 043194 7F00E664 8D8C0EB0 */  lw    $t4, %lo(ptrSecondFontTableSmall)($t4)
+/* 043188 7F00E658 3C0C8004 */  lui   $t4, %hi(ptrFontBankGothicChars)
+/* 04318C 7F00E65C 3C0D8004 */  lui   $t5, %hi(ptrFontBankGothic)
+/* 043190 7F00E660 8DAD0EAC */  lw    $t5, %lo(ptrFontBankGothic)($t5)
+/* 043194 7F00E664 8D8C0EB0 */  lw    $t4, %lo(ptrFontBankGothicChars)($t4)
 /* 043198 7F00E668 36AE00FF */  ori   $t6, $s5, 0xff
 /* 04319C 7F00E66C AFAE0018 */  sw    $t6, 0x18($sp)
 /* 0431A0 7F00E670 02802025 */  move  $a0, $s4
@@ -7828,10 +7828,10 @@ glabel constructor_menu07_missionsel
 /* 0431F8 7F00E6C8 0010C403 */  sra   $t8, $s0, 0x10
 /* 0431FC 7F00E6CC 0C00110B */  jal   viGetY
 /* 043200 7F00E6D0 03008025 */   move  $s0, $t8
-/* 043204 7F00E6D4 3C198004 */  lui   $t9, %hi(ptrSecondFontTableSmall)
-/* 043208 7F00E6D8 3C088004 */  lui   $t0, %hi(ptrFirstFontTableSmall)
-/* 04320C 7F00E6DC 8D080EAC */  lw    $t0, %lo(ptrFirstFontTableSmall)($t0)
-/* 043210 7F00E6E0 8F390EB0 */  lw    $t9, %lo(ptrSecondFontTableSmall)($t9)
+/* 043204 7F00E6D4 3C198004 */  lui   $t9, %hi(ptrFontBankGothicChars)
+/* 043208 7F00E6D8 3C088004 */  lui   $t0, %hi(ptrFontBankGothic)
+/* 04320C 7F00E6DC 8D080EAC */  lw    $t0, %lo(ptrFontBankGothic)($t0)
+/* 043210 7F00E6E0 8F390EB0 */  lw    $t9, %lo(ptrFontBankGothicChars)($t9)
 /* 043214 7F00E6E4 36A90064 */  ori   $t1, $s5, 0x64
 /* 043218 7F00E6E8 AFA90018 */  sw    $t1, 0x18($sp)
 /* 04321C 7F00E6EC 02802025 */  move  $a0, $s4
@@ -7993,7 +7993,7 @@ Gfx * print_current_solo_briefing_stage_name(Gfx *DL, char *text)
         strcat(text, langGet(TEXT(LTITLE, TITLE_STR_32)));
         x = 0x37;
         y = 0x57;
-        DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xff, viGetX(), viGetY(), 0, 0);
+        DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xff, viGetX(), viGetY(), 0, 0);
     }
 
     chapter = get_chapter_briefing_entry(briefingpage);
@@ -8006,7 +8006,7 @@ Gfx * print_current_solo_briefing_stage_name(Gfx *DL, char *text)
         strcat(text, "\n");
         x = 0x37;
         y = 0x67;
-        DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xff, viGetX(), viGetY(), 0, 0);
+        DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xff, viGetX(), viGetY(), 0, 0);
     }
 
     strcpy(text, langGet(TEXT(LTITLE, TITLE_STR_34)));
@@ -8016,7 +8016,7 @@ Gfx * print_current_solo_briefing_stage_name(Gfx *DL, char *text)
     strcat(text, "\n");
     x = 0x37;
     y = 0x77;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xff, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xff, viGetX(), viGetY(), 0, 0);
     return DL;
 }
 
@@ -8098,7 +8098,7 @@ Gfx *constructor_menu08_difficulty(Gfx *DL)
     text_sp3180 = langGet(TEXT(LTITLE, TITLE_STR_35));
     x = 0x37;
     y = 0x8F;
-    DL = write_text_at_abs_coord(DL, &x, &y, text_sp3180, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, text_sp3180, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
     
     if (mission_difficulty_highlighted >= 0)
     {
@@ -8143,11 +8143,11 @@ Gfx *constructor_menu08_difficulty(Gfx *DL)
                 text_sp160 = &stagename_struct;
             }
 
-            textMeasure(&sp98, &sp9C, text_sp160, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
+            textMeasure(&sp98, &sp9C, text_sp160, ptrFontZurichBoldChars, ptrFontZurichBold, 0);
 
             x = 0x82 - (j_text_trigger ? (sp9C - 0xA) : 0);
             y = (i * 0x1E) + 0xB4;
-            DL = write_text_at_abs_coord(DL, &x, &y, text_sp160, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+            DL = write_text_at_abs_coord(DL, &x, &y, text_sp160, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
             
             switch (i)
             {
@@ -8167,7 +8167,7 @@ Gfx *constructor_menu08_difficulty(Gfx *DL)
 
             x = 0x96;
             y = (i * 0x1E) + 0xB4;
-            DL = write_text_at_abs_coord(DL, &x, &y, text_sp160, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+            DL = write_text_at_abs_coord(DL, &x, &y, text_sp160, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
         }
     }
 
@@ -8408,7 +8408,7 @@ loop_1:
     spC10 = 0x37;
     spC0C = 0x8f;
     sp44 = viGetX();
-    temp_s0 = write_text_at_abs_coord(print_current_solo_briefing_stage_name(microcode_constructor(sub_GAME_7F00D5E8(viFillScreen(viSetFillColor(0, 0, 0)))), &sp54), &spC10, &spC0C, spC14, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, viGetY(), 0, 0);
+    temp_s0 = write_text_at_abs_coord(print_current_solo_briefing_stage_name(microcode_constructor(sub_GAME_7F00D5E8(viFillScreen(viSetFillColor(0, 0, 0)))), &sp54), &spC10, &spC0C, spC14, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0xff, sp44, viGetY(), 0, 0);
     spC14 = langGet(TEXT(LTITLE, TITLE_STR_42));
     spC10 = 0x39;
     spC0C = 0xa4;
@@ -8419,15 +8419,15 @@ loop_1:
         phi_s0 = microcode_constructor_related_to_menus(temp_ret, 0x37, spC0C + -1, 0xc7, (s32) (spC0C + 0xe), 0x32);
     }
     sp44 = viGetX();
-    temp_s0_2 = write_text_at_abs_coord(phi_s0, &spC10, &spC0C, spC14, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, viGetY(), 0, 0);
+    temp_s0_2 = write_text_at_abs_coord(phi_s0, &spC10, &spC0C, spC14, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0xff, sp44, viGetY(), 0, 0);
     sprintf(&sp54, &aD, (s32) (slider_007_mode_health * 100.0f));
     sp4C = 0;
     sp50 = 0;
-    textMeasure(&sp50, &sp4C, &sp54, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
+    textMeasure(&sp50, &sp4C, &sp54, ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0);
     spC10 = (s32) (0x11d - sp4C);
     spC0C = 0xa4;
     sp44 = viGetX();
-    temp_s0_3 = write_text_at_abs_coord(temp_s0_2, &spC10, &spC0C, &sp54, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, viGetY(), 0, 0);
+    temp_s0_3 = write_text_at_abs_coord(temp_s0_2, &spC10, &spC0C, &sp54, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0xff, sp44, viGetY(), 0, 0);
     spC14 = langGet(TEXT(LTITLE, TITLE_STR_43));
     spC10 = 0x39;
     spC0C = 0xc5;
@@ -8438,15 +8438,15 @@ loop_1:
         phi_s0_2 = microcode_constructor_related_to_menus(temp_ret_2, 0x37, spC0C + -1, 0xc7, (s32) (spC0C + 0xe), 0x32);
     }
     sp44 = viGetX();
-    temp_s0_4 = write_text_at_abs_coord(phi_s0_2, &spC10, &spC0C, spC14, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, viGetY(), 0, 0);
+    temp_s0_4 = write_text_at_abs_coord(phi_s0_2, &spC10, &spC0C, spC14, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0xff, sp44, viGetY(), 0, 0);
     sprintf(&sp54, &aD_0, (s32) (slider_007_mode_accuracy * 100.0f));
     sp4C = 0;
     sp50 = 0;
-    textMeasure(&sp50, &sp4C, &sp54, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
+    textMeasure(&sp50, &sp4C, &sp54, ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0);
     spC10 = (s32) (0x11d - sp4C);
     spC0C = 0xc5;
     sp44 = viGetX();
-    temp_s0_5 = write_text_at_abs_coord(temp_s0_4, &spC10, &spC0C, &sp54, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, viGetY(), 0, 0);
+    temp_s0_5 = write_text_at_abs_coord(temp_s0_4, &spC10, &spC0C, &sp54, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0xff, sp44, viGetY(), 0, 0);
     spC14 = langGet(TEXT(LTITLE, TITLE_STR_44));
     spC10 = 0x39;
     spC0C = 0xe6;
@@ -8457,15 +8457,15 @@ loop_1:
         phi_s0_3 = microcode_constructor_related_to_menus(temp_ret_3, 0x37, spC0C + -1, 0xc7, (s32) (spC0C + 0xe), 0x32);
     }
     sp44 = viGetX();
-    temp_s0_6 = write_text_at_abs_coord(phi_s0_3, &spC10, &spC0C, spC14, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, viGetY(), 0, 0);
+    temp_s0_6 = write_text_at_abs_coord(phi_s0_3, &spC10, &spC0C, spC14, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0xff, sp44, viGetY(), 0, 0);
     sprintf(&sp54, &aD_1, (s32) (slider_007_mode_damage * 10.0f));
     sp4C = 0;
     sp50 = 0;
-    textMeasure(&sp50, &sp4C, &sp54, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
+    textMeasure(&sp50, &sp4C, &sp54, ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0);
     spC10 = (s32) (0x11d - sp4C);
     spC0C = 0xe6;
     sp44 = viGetX();
-    temp_s0_7 = write_text_at_abs_coord(temp_s0_6, &spC10, &spC0C, &sp54, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, viGetY(), 0, 0);
+    temp_s0_7 = write_text_at_abs_coord(temp_s0_6, &spC10, &spC0C, &sp54, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0xff, sp44, viGetY(), 0, 0);
     spC14 = langGet(TEXT(LTITLE, TITLE_STR_41));
     spC10 = 0x39;
     spC0C = 0x107;
@@ -8476,15 +8476,15 @@ loop_1:
         phi_s0_4 = microcode_constructor_related_to_menus(temp_ret_4, 0x37, spC0C + -1, 0xc7, (s32) (spC0C + 0xe), 0x32);
     }
     sp44 = viGetX();
-    temp_s0_8 = write_text_at_abs_coord(phi_s0_4, &spC10, &spC0C, spC14, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, viGetY(), 0, 0);
+    temp_s0_8 = write_text_at_abs_coord(phi_s0_4, &spC10, &spC0C, spC14, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0xff, sp44, viGetY(), 0, 0);
     sprintf(&sp54, &aD_2, (s32) (slider_007_mode_reaction * 100.0f));
     sp4C = 0;
     sp50 = 0;
-    textMeasure(&sp50, &sp4C, &sp54, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
+    textMeasure(&sp50, &sp4C, &sp54, ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0);
     spC10 = (s32) (0x11d - sp4C);
     spC0C = 0x107;
     sp44 = viGetX();
-    load_draw_selected_icon_folder_select(add_tab2_next(add_tab3_previous(add_tab1_start(write_text_at_abs_coord(temp_s0_8, &spC10, &spC0C, &sp54, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, viGetY(), 0, 0)))));
+    load_draw_selected_icon_folder_select(add_tab2_next(add_tab3_previous(add_tab1_start(write_text_at_abs_coord(temp_s0_8, &spC10, &spC0C, &sp54, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0xff, sp44, viGetY(), 0, 0)))));
 }
 #else
 #ifndef VERSION_EU
@@ -8537,10 +8537,10 @@ glabel constructor_menu09_007options
 /* 04435C 7F00F82C AFA30C0C */   sw    $v1, 0xc0c($sp)
 /* 044360 7F00F830 0C00110B */  jal   viGetY
 /* 044364 7F00F834 A7A20044 */   sh    $v0, 0x44($sp)
-/* 044368 7F00F838 3C0A8004 */  lui   $t2, %hi(ptrSecondFontTableLarge)
-/* 04436C 7F00F83C 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTableLarge)
-/* 044370 7F00F840 8D6B0EB4 */  lw    $t3, %lo(ptrFirstFontTableLarge)($t3)
-/* 044374 7F00F844 8D4A0EB8 */  lw    $t2, %lo(ptrSecondFontTableLarge)($t2)
+/* 044368 7F00F838 3C0A8004 */  lui   $t2, %hi(ptrFontZurichBoldChars)
+/* 04436C 7F00F83C 3C0B8004 */  lui   $t3, %hi(ptrFontZurichBold)
+/* 044370 7F00F840 8D6B0EB4 */  lw    $t3, %lo(ptrFontZurichBold)($t3)
+/* 044374 7F00F844 8D4A0EB8 */  lw    $t2, %lo(ptrFontZurichBoldChars)($t2)
 /* 044378 7F00F848 87AD0044 */  lh    $t5, 0x44($sp)
 /* 04437C 7F00F84C 240C00FF */  li    $t4, 255
 /* 044380 7F00F850 AFAC0018 */  sw    $t4, 0x18($sp)
@@ -8615,10 +8615,10 @@ glabel constructor_menu09_007options
 /* 044490 7F00F960 00000000 */   nop
 /* 044494 7F00F964 0C00110B */  jal   viGetY
 /* 044498 7F00F968 A7A20044 */   sh    $v0, 0x44($sp)
-/* 04449C 7F00F96C 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTableLarge)
-/* 0444A0 7F00F970 3C198004 */  lui   $t9, %hi(ptrFirstFontTableLarge)
-/* 0444A4 7F00F974 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTableLarge)($t9)
-/* 0444A8 7F00F978 8DAD0EB8 */  lw    $t5, %lo(ptrSecondFontTableLarge)($t5)
+/* 04449C 7F00F96C 3C0D8004 */  lui   $t5, %hi(ptrFontZurichBoldChars)
+/* 0444A0 7F00F970 3C198004 */  lui   $t9, %hi(ptrFontZurichBold)
+/* 0444A4 7F00F974 8F390EB4 */  lw    $t9, %lo(ptrFontZurichBold)($t9)
+/* 0444A8 7F00F978 8DAD0EB8 */  lw    $t5, %lo(ptrFontZurichBoldChars)($t5)
 /* 0444AC 7F00F97C 87A80044 */  lh    $t0, 0x44($sp)
 /* 0444B0 7F00F980 241800FF */  li    $t8, 255
 /* 0444B4 7F00F984 AFB80018 */  sw    $t8, 0x18($sp)
@@ -8646,12 +8646,12 @@ glabel constructor_menu09_007options
 /* 04450C 7F00F9DC 44064000 */  mfc1  $a2, $f8
 /* 044510 7F00F9E0 0C002B25 */  jal   sprintf
 /* 044514 7F00F9E4 00000000 */   nop
-/* 044518 7F00F9E8 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableLarge)
-/* 04451C 7F00F9EC 8DCE0EB4 */  lw    $t6, %lo(ptrFirstFontTableLarge)($t6)
-/* 044520 7F00F9F0 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
+/* 044518 7F00F9E8 3C0E8004 */  lui   $t6, %hi(ptrFontZurichBold)
+/* 04451C 7F00F9EC 8DCE0EB4 */  lw    $t6, %lo(ptrFontZurichBold)($t6)
+/* 044520 7F00F9F0 3C078004 */  lui   $a3, %hi(ptrFontZurichBoldChars)
 /* 044524 7F00F9F4 AFA0004C */  sw    $zero, 0x4c($sp)
 /* 044528 7F00F9F8 AFA00050 */  sw    $zero, 0x50($sp)
-/* 04452C 7F00F9FC 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
+/* 04452C 7F00F9FC 8CE70EB8 */  lw    $a3, %lo(ptrFontZurichBoldChars)($a3)
 /* 044530 7F00FA00 27A40050 */  addiu $a0, $sp, 0x50
 /* 044534 7F00FA04 27A5004C */  addiu $a1, $sp, 0x4c
 /* 044538 7F00FA08 27A60054 */  addiu $a2, $sp, 0x54
@@ -8667,10 +8667,10 @@ glabel constructor_menu09_007options
 /* 044560 7F00FA30 AFA30C0C */   sw    $v1, 0xc0c($sp)
 /* 044564 7F00FA34 0C00110B */  jal   viGetY
 /* 044568 7F00FA38 A7A20044 */   sh    $v0, 0x44($sp)
-/* 04456C 7F00FA3C 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTableLarge)
-/* 044570 7F00FA40 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableLarge)
-/* 044574 7F00FA44 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTableLarge)($t5)
-/* 044578 7F00FA48 8D8C0EB8 */  lw    $t4, %lo(ptrSecondFontTableLarge)($t4)
+/* 04456C 7F00FA3C 3C0C8004 */  lui   $t4, %hi(ptrFontZurichBoldChars)
+/* 044570 7F00FA40 3C0D8004 */  lui   $t5, %hi(ptrFontZurichBold)
+/* 044574 7F00FA44 8DAD0EB4 */  lw    $t5, %lo(ptrFontZurichBold)($t5)
+/* 044578 7F00FA48 8D8C0EB8 */  lw    $t4, %lo(ptrFontZurichBoldChars)($t4)
 /* 04457C 7F00FA4C 87B80044 */  lh    $t8, 0x44($sp)
 /* 044580 7F00FA50 241900FF */  li    $t9, 255
 /* 044584 7F00FA54 AFB90018 */  sw    $t9, 0x18($sp)
@@ -8745,10 +8745,10 @@ glabel constructor_menu09_007options
 /* 044694 7F00FB64 00000000 */   nop
 /* 044698 7F00FB68 0C00110B */  jal   viGetY
 /* 04469C 7F00FB6C A7A20044 */   sh    $v0, 0x44($sp)
-/* 0446A0 7F00FB70 3C188004 */  lui   $t8, %hi(ptrSecondFontTableLarge)
-/* 0446A4 7F00FB74 3C088004 */  lui   $t0, %hi(ptrFirstFontTableLarge)
-/* 0446A8 7F00FB78 8D080EB4 */  lw    $t0, %lo(ptrFirstFontTableLarge)($t0)
-/* 0446AC 7F00FB7C 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTableLarge)($t8)
+/* 0446A0 7F00FB70 3C188004 */  lui   $t8, %hi(ptrFontZurichBoldChars)
+/* 0446A4 7F00FB74 3C088004 */  lui   $t0, %hi(ptrFontZurichBold)
+/* 0446A8 7F00FB78 8D080EB4 */  lw    $t0, %lo(ptrFontZurichBold)($t0)
+/* 0446AC 7F00FB7C 8F180EB8 */  lw    $t8, %lo(ptrFontZurichBoldChars)($t8)
 /* 0446B0 7F00FB80 87AE0044 */  lh    $t6, 0x44($sp)
 /* 0446B4 7F00FB84 240F00FF */  li    $t7, 255
 /* 0446B8 7F00FB88 AFAF0018 */  sw    $t7, 0x18($sp)
@@ -8776,12 +8776,12 @@ glabel constructor_menu09_007options
 /* 044710 7F00FBE0 44069000 */  mfc1  $a2, $f18
 /* 044714 7F00FBE4 0C002B25 */  jal   sprintf
 /* 044718 7F00FBE8 00000000 */   nop
-/* 04471C 7F00FBEC 3C098004 */  lui   $t1, %hi(ptrFirstFontTableLarge)
-/* 044720 7F00FBF0 8D290EB4 */  lw    $t1, %lo(ptrFirstFontTableLarge)($t1)
-/* 044724 7F00FBF4 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
+/* 04471C 7F00FBEC 3C098004 */  lui   $t1, %hi(ptrFontZurichBold)
+/* 044720 7F00FBF0 8D290EB4 */  lw    $t1, %lo(ptrFontZurichBold)($t1)
+/* 044724 7F00FBF4 3C078004 */  lui   $a3, %hi(ptrFontZurichBoldChars)
 /* 044728 7F00FBF8 AFA0004C */  sw    $zero, 0x4c($sp)
 /* 04472C 7F00FBFC AFA00050 */  sw    $zero, 0x50($sp)
-/* 044730 7F00FC00 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
+/* 044730 7F00FC00 8CE70EB8 */  lw    $a3, %lo(ptrFontZurichBoldChars)($a3)
 /* 044734 7F00FC04 27A40050 */  addiu $a0, $sp, 0x50
 /* 044738 7F00FC08 27A5004C */  addiu $a1, $sp, 0x4c
 /* 04473C 7F00FC0C 27A60054 */  addiu $a2, $sp, 0x54
@@ -8797,10 +8797,10 @@ glabel constructor_menu09_007options
 /* 044764 7F00FC34 AFA30C0C */   sw    $v1, 0xc0c($sp)
 /* 044768 7F00FC38 0C00110B */  jal   viGetY
 /* 04476C 7F00FC3C A7A20044 */   sh    $v0, 0x44($sp)
-/* 044770 7F00FC40 3C198004 */  lui   $t9, %hi(ptrSecondFontTableLarge)
-/* 044774 7F00FC44 3C188004 */  lui   $t8, %hi(ptrFirstFontTableLarge)
-/* 044778 7F00FC48 8F180EB4 */  lw    $t8, %lo(ptrFirstFontTableLarge)($t8)
-/* 04477C 7F00FC4C 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTableLarge)($t9)
+/* 044770 7F00FC40 3C198004 */  lui   $t9, %hi(ptrFontZurichBoldChars)
+/* 044774 7F00FC44 3C188004 */  lui   $t8, %hi(ptrFontZurichBold)
+/* 044778 7F00FC48 8F180EB4 */  lw    $t8, %lo(ptrFontZurichBold)($t8)
+/* 04477C 7F00FC4C 8F390EB8 */  lw    $t9, %lo(ptrFontZurichBoldChars)($t9)
 /* 044780 7F00FC50 87AF0044 */  lh    $t7, 0x44($sp)
 /* 044784 7F00FC54 240800FF */  li    $t0, 255
 /* 044788 7F00FC58 AFA80018 */  sw    $t0, 0x18($sp)
@@ -8875,10 +8875,10 @@ glabel constructor_menu09_007options
 /* 044898 7F00FD68 00000000 */   nop
 /* 04489C 7F00FD6C 0C00110B */  jal   viGetY
 /* 0448A0 7F00FD70 A7A20044 */   sh    $v0, 0x44($sp)
-/* 0448A4 7F00FD74 3C0F8004 */  lui   $t7, %hi(ptrSecondFontTableLarge)
-/* 0448A8 7F00FD78 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableLarge)
-/* 0448AC 7F00FD7C 8DCE0EB4 */  lw    $t6, %lo(ptrFirstFontTableLarge)($t6)
-/* 0448B0 7F00FD80 8DEF0EB8 */  lw    $t7, %lo(ptrSecondFontTableLarge)($t7)
+/* 0448A4 7F00FD74 3C0F8004 */  lui   $t7, %hi(ptrFontZurichBoldChars)
+/* 0448A8 7F00FD78 3C0E8004 */  lui   $t6, %hi(ptrFontZurichBold)
+/* 0448AC 7F00FD7C 8DCE0EB4 */  lw    $t6, %lo(ptrFontZurichBold)($t6)
+/* 0448B0 7F00FD80 8DEF0EB8 */  lw    $t7, %lo(ptrFontZurichBoldChars)($t7)
 /* 0448B4 7F00FD84 87A90044 */  lh    $t1, 0x44($sp)
 /* 0448B8 7F00FD88 240A00FF */  li    $t2, 255
 /* 0448BC 7F00FD8C AFAA0018 */  sw    $t2, 0x18($sp)
@@ -8906,12 +8906,12 @@ glabel constructor_menu09_007options
 /* 044914 7F00FDE4 44064000 */  mfc1  $a2, $f8
 /* 044918 7F00FDE8 0C002B25 */  jal   sprintf
 /* 04491C 7F00FDEC 00000000 */   nop
-/* 044920 7F00FDF0 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTableLarge)
-/* 044924 7F00FDF4 8D6B0EB4 */  lw    $t3, %lo(ptrFirstFontTableLarge)($t3)
-/* 044928 7F00FDF8 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
+/* 044920 7F00FDF0 3C0B8004 */  lui   $t3, %hi(ptrFontZurichBold)
+/* 044924 7F00FDF4 8D6B0EB4 */  lw    $t3, %lo(ptrFontZurichBold)($t3)
+/* 044928 7F00FDF8 3C078004 */  lui   $a3, %hi(ptrFontZurichBoldChars)
 /* 04492C 7F00FDFC AFA0004C */  sw    $zero, 0x4c($sp)
 /* 044930 7F00FE00 AFA00050 */  sw    $zero, 0x50($sp)
-/* 044934 7F00FE04 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
+/* 044934 7F00FE04 8CE70EB8 */  lw    $a3, %lo(ptrFontZurichBoldChars)($a3)
 /* 044938 7F00FE08 27A40050 */  addiu $a0, $sp, 0x50
 /* 04493C 7F00FE0C 27A5004C */  addiu $a1, $sp, 0x4c
 /* 044940 7F00FE10 27A60054 */  addiu $a2, $sp, 0x54
@@ -8927,10 +8927,10 @@ glabel constructor_menu09_007options
 /* 044968 7F00FE38 AFA30C0C */   sw    $v1, 0xc0c($sp)
 /* 04496C 7F00FE3C 0C00110B */  jal   viGetY
 /* 044970 7F00FE40 A7A20044 */   sh    $v0, 0x44($sp)
-/* 044974 7F00FE44 3C088004 */  lui   $t0, %hi(ptrSecondFontTableLarge)
-/* 044978 7F00FE48 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTableLarge)
-/* 04497C 7F00FE4C 8DEF0EB4 */  lw    $t7, %lo(ptrFirstFontTableLarge)($t7)
-/* 044980 7F00FE50 8D080EB8 */  lw    $t0, %lo(ptrSecondFontTableLarge)($t0)
+/* 044974 7F00FE44 3C088004 */  lui   $t0, %hi(ptrFontZurichBoldChars)
+/* 044978 7F00FE48 3C0F8004 */  lui   $t7, %hi(ptrFontZurichBold)
+/* 04497C 7F00FE4C 8DEF0EB4 */  lw    $t7, %lo(ptrFontZurichBold)($t7)
+/* 044980 7F00FE50 8D080EB8 */  lw    $t0, %lo(ptrFontZurichBoldChars)($t0)
 /* 044984 7F00FE54 87AA0044 */  lh    $t2, 0x44($sp)
 /* 044988 7F00FE58 240E00FF */  li    $t6, 255
 /* 04498C 7F00FE5C AFAE0018 */  sw    $t6, 0x18($sp)
@@ -9003,10 +9003,10 @@ glabel constructor_menu09_007options
 /* 044A94 7F00FF64 00000000 */   nop
 /* 044A98 7F00FF68 0C00110B */  jal   viGetY
 /* 044A9C 7F00FF6C A7A20044 */   sh    $v0, 0x44($sp)
-/* 044AA0 7F00FF70 3C0A8004 */  lui   $t2, %hi(ptrSecondFontTableLarge)
-/* 044AA4 7F00FF74 3C098004 */  lui   $t1, %hi(ptrFirstFontTableLarge)
-/* 044AA8 7F00FF78 8D290EB4 */  lw    $t1, %lo(ptrFirstFontTableLarge)($t1)
-/* 044AAC 7F00FF7C 8D4A0EB8 */  lw    $t2, %lo(ptrSecondFontTableLarge)($t2)
+/* 044AA0 7F00FF70 3C0A8004 */  lui   $t2, %hi(ptrFontZurichBoldChars)
+/* 044AA4 7F00FF74 3C098004 */  lui   $t1, %hi(ptrFontZurichBold)
+/* 044AA8 7F00FF78 8D290EB4 */  lw    $t1, %lo(ptrFontZurichBold)($t1)
+/* 044AAC 7F00FF7C 8D4A0EB8 */  lw    $t2, %lo(ptrFontZurichBoldChars)($t2)
 /* 044AB0 7F00FF80 87AB0044 */  lh    $t3, 0x44($sp)
 /* 044AB4 7F00FF84 240C00FF */  li    $t4, 255
 /* 044AB8 7F00FF88 AFAC0018 */  sw    $t4, 0x18($sp)
@@ -9034,12 +9034,12 @@ glabel constructor_menu09_007options
 /* 044B10 7F00FFE0 44062000 */  mfc1  $a2, $f4
 /* 044B14 7F00FFE4 0C002B25 */  jal   sprintf
 /* 044B18 7F00FFE8 00000000 */   nop
-/* 044B1C 7F00FFEC 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableLarge)
-/* 044B20 7F00FFF0 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTableLarge)($t5)
-/* 044B24 7F00FFF4 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
+/* 044B1C 7F00FFEC 3C0D8004 */  lui   $t5, %hi(ptrFontZurichBold)
+/* 044B20 7F00FFF0 8DAD0EB4 */  lw    $t5, %lo(ptrFontZurichBold)($t5)
+/* 044B24 7F00FFF4 3C078004 */  lui   $a3, %hi(ptrFontZurichBoldChars)
 /* 044B28 7F00FFF8 AFA0004C */  sw    $zero, 0x4c($sp)
 /* 044B2C 7F00FFFC AFA00050 */  sw    $zero, 0x50($sp)
-/* 044B30 7F010000 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
+/* 044B30 7F010000 8CE70EB8 */  lw    $a3, %lo(ptrFontZurichBoldChars)($a3)
 /* 044B34 7F010004 27A40050 */  addiu $a0, $sp, 0x50
 /* 044B38 7F010008 27A5004C */  addiu $a1, $sp, 0x4c
 /* 044B3C 7F01000C 27A60054 */  addiu $a2, $sp, 0x54
@@ -9055,10 +9055,10 @@ glabel constructor_menu09_007options
 /* 044B64 7F010034 AFA30C0C */   sw    $v1, 0xc0c($sp)
 /* 044B68 7F010038 0C00110B */  jal   viGetY
 /* 044B6C 7F01003C A7A20044 */   sh    $v0, 0x44($sp)
-/* 044B70 7F010040 3C0E8004 */  lui   $t6, %hi(ptrSecondFontTableLarge)
-/* 044B74 7F010044 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTableLarge)
-/* 044B78 7F010048 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTableLarge)($t2)
-/* 044B7C 7F01004C 8DCE0EB8 */  lw    $t6, %lo(ptrSecondFontTableLarge)($t6)
+/* 044B70 7F010040 3C0E8004 */  lui   $t6, %hi(ptrFontZurichBoldChars)
+/* 044B74 7F010044 3C0A8004 */  lui   $t2, %hi(ptrFontZurichBold)
+/* 044B78 7F010048 8D4A0EB4 */  lw    $t2, %lo(ptrFontZurichBold)($t2)
+/* 044B7C 7F01004C 8DCE0EB8 */  lw    $t6, %lo(ptrFontZurichBoldChars)($t6)
 /* 044B80 7F010050 87AC0044 */  lh    $t4, 0x44($sp)
 /* 044B84 7F010054 240900FF */  li    $t1, 255
 /* 044B88 7F010058 AFA90018 */  sw    $t1, 0x18($sp)
@@ -9128,10 +9128,10 @@ glabel constructor_menu09_007options
 /* 04210C 7F00F71C AFA30C0C */   sw    $v1, 0xc0c($sp)
 /* 042110 7F00F720 0C000F9F */  jal   viGetY
 /* 042114 7F00F724 A7A20044 */   sh    $v0, 0x44($sp)
-/* 042118 7F00F728 3C0F8004 */  lui   $t7, %hi(ptrSecondFontTableLarge) # $t7, 0x8004
-/* 04211C 7F00F72C 3C188004 */  lui   $t8, %hi(ptrFirstFontTableLarge) # $t8, 0x8004
-/* 042120 7F00F730 8F18AB04 */  lw    $t8, %lo(ptrFirstFontTableLarge)($t8)
-/* 042124 7F00F734 8DEFAB08 */  lw    $t7, %lo(ptrSecondFontTableLarge)($t7)
+/* 042118 7F00F728 3C0F8004 */  lui   $t7, %hi(ptrFontZurichBoldChars) # $t7, 0x8004
+/* 04211C 7F00F72C 3C188004 */  lui   $t8, %hi(ptrFontZurichBold) # $t8, 0x8004
+/* 042120 7F00F730 8F18AB04 */  lw    $t8, %lo(ptrFontZurichBold)($t8)
+/* 042124 7F00F734 8DEFAB08 */  lw    $t7, %lo(ptrFontZurichBoldChars)($t7)
 /* 042128 7F00F738 87A80044 */  lh    $t0, 0x44($sp)
 /* 04212C 7F00F73C 241900FF */  li    $t9, 255
 /* 042130 7F00F740 AFB90018 */  sw    $t9, 0x18($sp)
@@ -9206,10 +9206,10 @@ glabel constructor_menu09_007options
 /* 042240 7F00F850 00000000 */   nop
 /* 042244 7F00F854 0C000F9F */  jal   viGetY
 /* 042248 7F00F858 A7A20044 */   sh    $v0, 0x44($sp)
-/* 04224C 7F00F85C 3C088004 */  lui   $t0, %hi(ptrSecondFontTableLarge) # $t0, 0x8004
-/* 042250 7F00F860 3C098004 */  lui   $t1, %hi(ptrFirstFontTableLarge) # $t1, 0x8004
-/* 042254 7F00F864 8D29AB04 */  lw    $t1, %lo(ptrFirstFontTableLarge)($t1)
-/* 042258 7F00F868 8D08AB08 */  lw    $t0, %lo(ptrSecondFontTableLarge)($t0)
+/* 04224C 7F00F85C 3C088004 */  lui   $t0, %hi(ptrFontZurichBoldChars) # $t0, 0x8004
+/* 042250 7F00F860 3C098004 */  lui   $t1, %hi(ptrFontZurichBold) # $t1, 0x8004
+/* 042254 7F00F864 8D29AB04 */  lw    $t1, %lo(ptrFontZurichBold)($t1)
+/* 042258 7F00F868 8D08AB08 */  lw    $t0, %lo(ptrFontZurichBoldChars)($t0)
 /* 04225C 7F00F86C 87AB0044 */  lh    $t3, 0x44($sp)
 /* 042260 7F00F870 240A00FF */  li    $t2, 255
 /* 042264 7F00F874 AFAA0018 */  sw    $t2, 0x18($sp)
@@ -9237,12 +9237,12 @@ glabel constructor_menu09_007options
 /* 0422BC 7F00F8CC 44064000 */  mfc1  $a2, $f8
 /* 0422C0 7F00F8D0 0C00283D */  jal   sprintf
 /* 0422C4 7F00F8D4 00000000 */   nop
-/* 0422C8 7F00F8D8 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableLarge) # $t5, 0x8004
-/* 0422CC 7F00F8DC 8DADAB04 */  lw    $t5, %lo(ptrFirstFontTableLarge)($t5)
-/* 0422D0 7F00F8E0 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge) # $a3, 0x8004
+/* 0422C8 7F00F8D8 3C0D8004 */  lui   $t5, %hi(ptrFontZurichBold) # $t5, 0x8004
+/* 0422CC 7F00F8DC 8DADAB04 */  lw    $t5, %lo(ptrFontZurichBold)($t5)
+/* 0422D0 7F00F8E0 3C078004 */  lui   $a3, %hi(ptrFontZurichBoldChars) # $a3, 0x8004
 /* 0422D4 7F00F8E4 AFA0004C */  sw    $zero, 0x4c($sp)
 /* 0422D8 7F00F8E8 AFA00050 */  sw    $zero, 0x50($sp)
-/* 0422DC 7F00F8EC 8CE7AB08 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
+/* 0422DC 7F00F8EC 8CE7AB08 */  lw    $a3, %lo(ptrFontZurichBoldChars)($a3)
 /* 0422E0 7F00F8F0 27A40050 */  addiu $a0, $sp, 0x50
 /* 0422E4 7F00F8F4 27A5004C */  addiu $a1, $sp, 0x4c
 /* 0422E8 7F00F8F8 27A60054 */  addiu $a2, $sp, 0x54
@@ -9258,10 +9258,10 @@ glabel constructor_menu09_007options
 /* 042310 7F00F920 AFA30C0C */   sw    $v1, 0xc0c($sp)
 /* 042314 7F00F924 0C000F9F */  jal   viGetY
 /* 042318 7F00F928 A7A20044 */   sh    $v0, 0x44($sp)
-/* 04231C 7F00F92C 3C198004 */  lui   $t9, %hi(ptrSecondFontTableLarge) # $t9, 0x8004
-/* 042320 7F00F930 3C088004 */  lui   $t0, %hi(ptrFirstFontTableLarge) # $t0, 0x8004
-/* 042324 7F00F934 8D08AB04 */  lw    $t0, %lo(ptrFirstFontTableLarge)($t0)
-/* 042328 7F00F938 8F39AB08 */  lw    $t9, %lo(ptrSecondFontTableLarge)($t9)
+/* 04231C 7F00F92C 3C198004 */  lui   $t9, %hi(ptrFontZurichBoldChars) # $t9, 0x8004
+/* 042320 7F00F930 3C088004 */  lui   $t0, %hi(ptrFontZurichBold) # $t0, 0x8004
+/* 042324 7F00F934 8D08AB04 */  lw    $t0, %lo(ptrFontZurichBold)($t0)
+/* 042328 7F00F938 8F39AB08 */  lw    $t9, %lo(ptrFontZurichBoldChars)($t9)
 /* 04232C 7F00F93C 87AA0044 */  lh    $t2, 0x44($sp)
 /* 042330 7F00F940 240900FF */  li    $t1, 255
 /* 042334 7F00F944 AFA90018 */  sw    $t1, 0x18($sp)
@@ -9336,10 +9336,10 @@ glabel constructor_menu09_007options
 /* 042444 7F00FA54 00000000 */   nop
 /* 042448 7F00FA58 0C000F9F */  jal   viGetY
 /* 04244C 7F00FA5C A7A20044 */   sh    $v0, 0x44($sp)
-/* 042450 7F00FA60 3C0A8004 */  lui   $t2, %hi(ptrSecondFontTableLarge) # $t2, 0x8004
-/* 042454 7F00FA64 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTableLarge) # $t3, 0x8004
-/* 042458 7F00FA68 8D6BAB04 */  lw    $t3, %lo(ptrFirstFontTableLarge)($t3)
-/* 04245C 7F00FA6C 8D4AAB08 */  lw    $t2, %lo(ptrSecondFontTableLarge)($t2)
+/* 042450 7F00FA60 3C0A8004 */  lui   $t2, %hi(ptrFontZurichBoldChars) # $t2, 0x8004
+/* 042454 7F00FA64 3C0B8004 */  lui   $t3, %hi(ptrFontZurichBold) # $t3, 0x8004
+/* 042458 7F00FA68 8D6BAB04 */  lw    $t3, %lo(ptrFontZurichBold)($t3)
+/* 04245C 7F00FA6C 8D4AAB08 */  lw    $t2, %lo(ptrFontZurichBoldChars)($t2)
 /* 042460 7F00FA70 87AD0044 */  lh    $t5, 0x44($sp)
 /* 042464 7F00FA74 240C00FF */  li    $t4, 255
 /* 042468 7F00FA78 AFAC0018 */  sw    $t4, 0x18($sp)
@@ -9367,12 +9367,12 @@ glabel constructor_menu09_007options
 /* 0424C0 7F00FAD0 44069000 */  mfc1  $a2, $f18
 /* 0424C4 7F00FAD4 0C00283D */  jal   sprintf
 /* 0424C8 7F00FAD8 00000000 */   nop
-/* 0424CC 7F00FADC 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableLarge) # $t6, 0x8004
-/* 0424D0 7F00FAE0 8DCEAB04 */  lw    $t6, %lo(ptrFirstFontTableLarge)($t6)
-/* 0424D4 7F00FAE4 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge) # $a3, 0x8004
+/* 0424CC 7F00FADC 3C0E8004 */  lui   $t6, %hi(ptrFontZurichBold) # $t6, 0x8004
+/* 0424D0 7F00FAE0 8DCEAB04 */  lw    $t6, %lo(ptrFontZurichBold)($t6)
+/* 0424D4 7F00FAE4 3C078004 */  lui   $a3, %hi(ptrFontZurichBoldChars) # $a3, 0x8004
 /* 0424D8 7F00FAE8 AFA0004C */  sw    $zero, 0x4c($sp)
 /* 0424DC 7F00FAEC AFA00050 */  sw    $zero, 0x50($sp)
-/* 0424E0 7F00FAF0 8CE7AB08 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
+/* 0424E0 7F00FAF0 8CE7AB08 */  lw    $a3, %lo(ptrFontZurichBoldChars)($a3)
 /* 0424E4 7F00FAF4 27A40050 */  addiu $a0, $sp, 0x50
 /* 0424E8 7F00FAF8 27A5004C */  addiu $a1, $sp, 0x4c
 /* 0424EC 7F00FAFC 27A60054 */  addiu $a2, $sp, 0x54
@@ -9388,10 +9388,10 @@ glabel constructor_menu09_007options
 /* 042514 7F00FB24 AFA30C0C */   sw    $v1, 0xc0c($sp)
 /* 042518 7F00FB28 0C000F9F */  jal   viGetY
 /* 04251C 7F00FB2C A7A20044 */   sh    $v0, 0x44($sp)
-/* 042520 7F00FB30 3C098004 */  lui   $t1, %hi(ptrSecondFontTableLarge) # $t1, 0x8004
-/* 042524 7F00FB34 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTableLarge) # $t2, 0x8004
-/* 042528 7F00FB38 8D4AAB04 */  lw    $t2, %lo(ptrFirstFontTableLarge)($t2)
-/* 04252C 7F00FB3C 8D29AB08 */  lw    $t1, %lo(ptrSecondFontTableLarge)($t1)
+/* 042520 7F00FB30 3C098004 */  lui   $t1, %hi(ptrFontZurichBoldChars) # $t1, 0x8004
+/* 042524 7F00FB34 3C0A8004 */  lui   $t2, %hi(ptrFontZurichBold) # $t2, 0x8004
+/* 042528 7F00FB38 8D4AAB04 */  lw    $t2, %lo(ptrFontZurichBold)($t2)
+/* 04252C 7F00FB3C 8D29AB08 */  lw    $t1, %lo(ptrFontZurichBoldChars)($t1)
 /* 042530 7F00FB40 87AC0044 */  lh    $t4, 0x44($sp)
 /* 042534 7F00FB44 240B00FF */  li    $t3, 255
 /* 042538 7F00FB48 AFAB0018 */  sw    $t3, 0x18($sp)
@@ -9466,10 +9466,10 @@ glabel constructor_menu09_007options
 /* 042648 7F00FC58 00000000 */   nop
 /* 04264C 7F00FC5C 0C000F9F */  jal   viGetY
 /* 042650 7F00FC60 A7A20044 */   sh    $v0, 0x44($sp)
-/* 042654 7F00FC64 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTableLarge) # $t4, 0x8004
-/* 042658 7F00FC68 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableLarge) # $t5, 0x8004
-/* 04265C 7F00FC6C 8DADAB04 */  lw    $t5, %lo(ptrFirstFontTableLarge)($t5)
-/* 042660 7F00FC70 8D8CAB08 */  lw    $t4, %lo(ptrSecondFontTableLarge)($t4)
+/* 042654 7F00FC64 3C0C8004 */  lui   $t4, %hi(ptrFontZurichBoldChars) # $t4, 0x8004
+/* 042658 7F00FC68 3C0D8004 */  lui   $t5, %hi(ptrFontZurichBold) # $t5, 0x8004
+/* 04265C 7F00FC6C 8DADAB04 */  lw    $t5, %lo(ptrFontZurichBold)($t5)
+/* 042660 7F00FC70 8D8CAB08 */  lw    $t4, %lo(ptrFontZurichBoldChars)($t4)
 /* 042664 7F00FC74 87AE0044 */  lh    $t6, 0x44($sp)
 /* 042668 7F00FC78 240F00FF */  li    $t7, 255
 /* 04266C 7F00FC7C AFAF0018 */  sw    $t7, 0x18($sp)
@@ -9497,12 +9497,12 @@ glabel constructor_menu09_007options
 /* 0426C4 7F00FCD4 44064000 */  mfc1  $a2, $f8
 /* 0426C8 7F00FCD8 0C00283D */  jal   sprintf
 /* 0426CC 7F00FCDC 00000000 */   nop
-/* 0426D0 7F00FCE0 3C188004 */  lui   $t8, %hi(ptrFirstFontTableLarge) # $t8, 0x8004
-/* 0426D4 7F00FCE4 8F18AB04 */  lw    $t8, %lo(ptrFirstFontTableLarge)($t8)
-/* 0426D8 7F00FCE8 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge) # $a3, 0x8004
+/* 0426D0 7F00FCE0 3C188004 */  lui   $t8, %hi(ptrFontZurichBold) # $t8, 0x8004
+/* 0426D4 7F00FCE4 8F18AB04 */  lw    $t8, %lo(ptrFontZurichBold)($t8)
+/* 0426D8 7F00FCE8 3C078004 */  lui   $a3, %hi(ptrFontZurichBoldChars) # $a3, 0x8004
 /* 0426DC 7F00FCEC AFA0004C */  sw    $zero, 0x4c($sp)
 /* 0426E0 7F00FCF0 AFA00050 */  sw    $zero, 0x50($sp)
-/* 0426E4 7F00FCF4 8CE7AB08 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
+/* 0426E4 7F00FCF4 8CE7AB08 */  lw    $a3, %lo(ptrFontZurichBoldChars)($a3)
 /* 0426E8 7F00FCF8 27A40050 */  addiu $a0, $sp, 0x50
 /* 0426EC 7F00FCFC 27A5004C */  addiu $a1, $sp, 0x4c
 /* 0426F0 7F00FD00 27A60054 */  addiu $a2, $sp, 0x54
@@ -9518,10 +9518,10 @@ glabel constructor_menu09_007options
 /* 042718 7F00FD28 AFA30C0C */   sw    $v1, 0xc0c($sp)
 /* 04271C 7F00FD2C 0C000F9F */  jal   viGetY
 /* 042720 7F00FD30 A7A20044 */   sh    $v0, 0x44($sp)
-/* 042724 7F00FD34 3C0B8004 */  lui   $t3, %hi(ptrSecondFontTableLarge) # $t3, 0x8004
-/* 042728 7F00FD38 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTableLarge) # $t4, 0x8004
-/* 04272C 7F00FD3C 8D8CAB04 */  lw    $t4, %lo(ptrFirstFontTableLarge)($t4)
-/* 042730 7F00FD40 8D6BAB08 */  lw    $t3, %lo(ptrSecondFontTableLarge)($t3)
+/* 042724 7F00FD34 3C0B8004 */  lui   $t3, %hi(ptrFontZurichBoldChars) # $t3, 0x8004
+/* 042728 7F00FD38 3C0C8004 */  lui   $t4, %hi(ptrFontZurichBold) # $t4, 0x8004
+/* 04272C 7F00FD3C 8D8CAB04 */  lw    $t4, %lo(ptrFontZurichBold)($t4)
+/* 042730 7F00FD40 8D6BAB08 */  lw    $t3, %lo(ptrFontZurichBoldChars)($t3)
 /* 042734 7F00FD44 87AF0044 */  lh    $t7, 0x44($sp)
 /* 042738 7F00FD48 240D00FF */  li    $t5, 255
 /* 04273C 7F00FD4C AFAD0018 */  sw    $t5, 0x18($sp)
@@ -9594,10 +9594,10 @@ glabel constructor_menu09_007options
 /* 042844 7F00FE54 00000000 */   nop
 /* 042848 7F00FE58 0C000F9F */  jal   viGetY
 /* 04284C 7F00FE5C A7A20044 */   sh    $v0, 0x44($sp)
-/* 042850 7F00FE60 3C0F8004 */  lui   $t7, %hi(ptrSecondFontTableLarge) # $t7, 0x8004
-/* 042854 7F00FE64 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableLarge) # $t6, 0x8004
-/* 042858 7F00FE68 8DCEAB04 */  lw    $t6, %lo(ptrFirstFontTableLarge)($t6)
-/* 04285C 7F00FE6C 8DEFAB08 */  lw    $t7, %lo(ptrSecondFontTableLarge)($t7)
+/* 042850 7F00FE60 3C0F8004 */  lui   $t7, %hi(ptrFontZurichBoldChars) # $t7, 0x8004
+/* 042854 7F00FE64 3C0E8004 */  lui   $t6, %hi(ptrFontZurichBold) # $t6, 0x8004
+/* 042858 7F00FE68 8DCEAB04 */  lw    $t6, %lo(ptrFontZurichBold)($t6)
+/* 04285C 7F00FE6C 8DEFAB08 */  lw    $t7, %lo(ptrFontZurichBoldChars)($t7)
 /* 042860 7F00FE70 87B80044 */  lh    $t8, 0x44($sp)
 /* 042864 7F00FE74 241900FF */  li    $t9, 255
 /* 042868 7F00FE78 AFB90018 */  sw    $t9, 0x18($sp)
@@ -9625,12 +9625,12 @@ glabel constructor_menu09_007options
 /* 0428C0 7F00FED0 44062000 */  mfc1  $a2, $f4
 /* 0428C4 7F00FED4 0C00283D */  jal   sprintf
 /* 0428C8 7F00FED8 00000000 */   nop
-/* 0428CC 7F00FEDC 3C088004 */  lui   $t0, %hi(ptrFirstFontTableLarge) # $t0, 0x8004
-/* 0428D0 7F00FEE0 8D08AB04 */  lw    $t0, %lo(ptrFirstFontTableLarge)($t0)
-/* 0428D4 7F00FEE4 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge) # $a3, 0x8004
+/* 0428CC 7F00FEDC 3C088004 */  lui   $t0, %hi(ptrFontZurichBold) # $t0, 0x8004
+/* 0428D0 7F00FEE0 8D08AB04 */  lw    $t0, %lo(ptrFontZurichBold)($t0)
+/* 0428D4 7F00FEE4 3C078004 */  lui   $a3, %hi(ptrFontZurichBoldChars) # $a3, 0x8004
 /* 0428D8 7F00FEE8 AFA0004C */  sw    $zero, 0x4c($sp)
 /* 0428DC 7F00FEEC AFA00050 */  sw    $zero, 0x50($sp)
-/* 0428E0 7F00FEF0 8CE7AB08 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
+/* 0428E0 7F00FEF0 8CE7AB08 */  lw    $a3, %lo(ptrFontZurichBoldChars)($a3)
 /* 0428E4 7F00FEF4 27A40050 */  addiu $a0, $sp, 0x50
 /* 0428E8 7F00FEF8 27A5004C */  addiu $a1, $sp, 0x4c
 /* 0428EC 7F00FEFC 27A60054 */  addiu $a2, $sp, 0x54
@@ -9646,10 +9646,10 @@ glabel constructor_menu09_007options
 /* 042914 7F00FF24 AFA30C0C */   sw    $v1, 0xc0c($sp)
 /* 042918 7F00FF28 0C000F9F */  jal   viGetY
 /* 04291C 7F00FF2C A7A20044 */   sh    $v0, 0x44($sp)
-/* 042920 7F00FF30 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTableLarge) # $t5, 0x8004
-/* 042924 7F00FF34 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTableLarge) # $t7, 0x8004
-/* 042928 7F00FF38 8DEFAB04 */  lw    $t7, %lo(ptrFirstFontTableLarge)($t7)
-/* 04292C 7F00FF3C 8DADAB08 */  lw    $t5, %lo(ptrSecondFontTableLarge)($t5)
+/* 042920 7F00FF30 3C0D8004 */  lui   $t5, %hi(ptrFontZurichBoldChars) # $t5, 0x8004
+/* 042924 7F00FF34 3C0F8004 */  lui   $t7, %hi(ptrFontZurichBold) # $t7, 0x8004
+/* 042928 7F00FF38 8DEFAB04 */  lw    $t7, %lo(ptrFontZurichBold)($t7)
+/* 04292C 7F00FF3C 8DADAB08 */  lw    $t5, %lo(ptrFontZurichBoldChars)($t5)
 /* 042930 7F00FF40 87B90044 */  lh    $t9, 0x44($sp)
 /* 042934 7F00FF44 240E00FF */  li    $t6, 255
 /* 042938 7F00FF48 AFAE0018 */  sw    $t6, 0x18($sp)
@@ -10854,28 +10854,28 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   text = langGet(TEXT(LTITLE, TITLE_STR_76));
   x = 0x37;
   y = 0x5f;
-  DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xff, viGetX(), viGetY(), 0, 0);
+  DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xff, viGetX(), viGetY(), 0, 0);
 
   text = langGet(TEXT(LTITLE, TITLE_STR_77));
-  textMeasure(&iStack24,&iStack28,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0);
+  textMeasure(&iStack24,&iStack28,text,ptrFontZurichBoldChars,ptrFontZurichBold,0);
   x = 0x39;
   y = 0x79;
   if (highlight_players) {
     DL = microcode_constructor_related_to_menus(DL,0x37,0x78,iStack28 + 0x3c,0x87,0x32);
   }
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0xff,viGetX(),viGetY(),0,0);
+  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,0xff,viGetX(),viGetY(),0,0);
 
   text = langGet(TEXT(LTITLE, TITLE_STR_78));
-  textMeasure(&iStack24,&iStack28,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0);
+  textMeasure(&iStack24,&iStack28,text,ptrFontZurichBoldChars,ptrFontZurichBold,0);
   x = 0x39;
   y = 0x8d;
   if (highlight_scenario) {
     DL = microcode_constructor_related_to_menus(DL,0x37,0x8c,iStack28 + 0x3c,0x9b,0x32);
   }
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0xff,viGetX(),viGetY(),0,0);
+  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,0xff,viGetX(),viGetY(),0,0);
 
   text = langGet(TEXT(LTITLE, TITLE_STR_79));
-  textMeasure(&iStack24,&iStack28,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0);
+  textMeasure(&iStack24,&iStack28,text,ptrFontZurichBoldChars,ptrFontZurichBold,0);
   x = 0x39;
   y = 0xa1;
   if (highlight_gameselect) {
@@ -10887,10 +10887,10 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   else {
     entry = 0x70;
   }
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,entry,viGetX(),viGetY(),0,0);
+  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
 
   text = langGet(TEXT(LTITLE, TITLE_STR_80));
-  textMeasure(&iStack24,&iStack28,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0);
+  textMeasure(&iStack24,&iStack28,text,ptrFontZurichBoldChars,ptrFontZurichBold,0);
   x = 0x39;
   y = 0xb5;
   if (highlight_gamelength) {
@@ -10902,10 +10902,10 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   else {
     entry = 0x70;
   }
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,entry,viGetX(),viGetY(),0,0);
+  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
 
   text = langGet(TEXT(LTITLE, TITLE_STR_81));
-  textMeasure(&iStack24,&iStack28,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0);
+  textMeasure(&iStack24,&iStack28,text,ptrFontZurichBoldChars,ptrFontZurichBold,0);
   x = 0x39;
   y = 0xc9;
   if (highlight_weaponselect) {
@@ -10917,10 +10917,10 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   else {
     entry = 0x70;
   }
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,entry,viGetX(),viGetY(),0,0);
+  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
 
   text = langGet(TEXT(LTITLE, TITLE_STR_82));
-  textMeasure(&iStack24,&iStack28,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0);
+  textMeasure(&iStack24,&iStack28,text,ptrFontZurichBoldChars,ptrFontZurichBold,0);
   x = 0x39;
   y = 0xdd;
   if (highlight_character) {
@@ -10932,10 +10932,10 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   else {
     entry = 0x70;
   }
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,entry,viGetX(),viGetY(),0,0);
+  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
 
   text = langGet(TEXT(LTITLE, TITLE_STR_83));
-  textMeasure(&iStack24,&iStack28,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0);
+  textMeasure(&iStack24,&iStack28,text,ptrFontZurichBoldChars,ptrFontZurichBold,0);
   x = 0x39;
   y = 0xf1;
   if (highlight_health) {
@@ -10947,10 +10947,10 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   else {
     entry = 0x70;
   }
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,entry,viGetX(),viGetY(),0,0);
+  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
 
   text = langGet(0x9d1e);
-  textMeasure(&iStack24,&iStack28,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0);
+  textMeasure(&iStack24,&iStack28,text,ptrFontZurichBoldChars,ptrFontZurichBold,0);
   x = 0x39;
   y = 0x105;
   if (highlight_controlstyle) {
@@ -10962,10 +10962,10 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   else {
     entry = 0x70;
   }
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,entry,viGetX(),viGetY(),0,0);
+  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
 
   text = langGet(TEXT(LTITLE, TITLE_STR_84));
-  textMeasure(&iStack24,&iStack28,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0);
+  textMeasure(&iStack24,&iStack28,text,ptrFontZurichBoldChars,ptrFontZurichBold,0);
   x = 0x39;
   y = 0x119;
   if (highlight_aimadjustment) {
@@ -10977,17 +10977,17 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   else {
     entry = 0x70;
   }
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,entry,viGetX(),viGetY(),0,0);
+  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
 
   sprintf(acStack12,"%d",selected_num_players);
   x = 0xa0;
   y = 0x79;
-  DL = write_text_at_abs_coord(DL, &x, &y, acStack12, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xff, viGetX(), viGetY(), 0, 0);
+  DL = write_text_at_abs_coord(DL, &x, &y, acStack12, ptrFontZurichBoldChars, ptrFontZurichBold, 0xff, viGetX(), viGetY(), 0, 0);
 
   text = langGet(mp_player_counts[scenario].stage);
   x = 0xa0;
   y = 0x8d;
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,0xff,viGetX(),viGetY(),0,0);
+  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,0xff,viGetX(),viGetY(),0,0);
 
   text = langGet(multi_stage_setups[MP_stage_selected].folder_text_preset);
   x = 0xa0;
@@ -10998,7 +10998,7 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   else {
     entry = 0x70;
   }
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,entry,viGetX(),viGetY(),0,0);
+  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
 
   text = langGet(multi_game_lengths[game_length].text_preset);
   x = 0xa0;
@@ -11009,7 +11009,7 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   else {
     entry = 0x70;
   }
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,entry,viGetX(),viGetY(),0,0);
+  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
 
 
   text = langGet(*(getPtrMPWeaponSetTextID()));
@@ -11021,7 +11021,7 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   else {
     entry = 0x70;
   }
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,entry,viGetX(),viGetY(),0,0);
+  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
 
   text = langGet(mp_sight_adjust_table[aim_sight_adjustment].anonymous_0);
   x = 0xa0;
@@ -11032,7 +11032,7 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   else {
     entry = 0x70;
   }
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrSecondFontTableLarge,ptrFirstFontTableLarge,entry,viGetX(),viGetY(),0,0);
+  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
   DL = add_tab3_previous(DL);
   DL = add_tab1_start(DL);
   DL = load_draw_selected_icon_folder_select(DL);
@@ -12408,21 +12408,21 @@ loop_4:
             if (subroutine_arg0 == 0)
             {
                 temp_ret_3 = langGet(TEXT(LTITLE, TITLE_STR_85));
-                textMeasure(&spBC, &spB8, temp_ret_3, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
+                textMeasure(&spBC, &spB8, temp_ret_3, ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0);
                 spB4 = (s32) ((((s32) phi_s4 >> 1) + phi_s2) - (spB8 >> 1));
                 viGetX();
-                phi_s1 = write_text_at_abs_coord(microcode_constructor(temp_s1_2), &spB4, &spB0, temp_ret_3, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, viGetY(), 0, 0);
+                phi_s1 = write_text_at_abs_coord(microcode_constructor(temp_s1_2), &spB4, &spB0, temp_ret_3, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0xff, viGetY(), 0, 0);
             }
         }
         temp_s6 = ((s32) phi_s4 >> 1) + phi_s2;
         temp_ret_4 = langGet((0x80030000 + (*sp80 * 0xc))->unk-4E68);
-        textMeasure(&spA8, &spA4, temp_ret_4, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
+        textMeasure(&spA8, &spA4, temp_ret_4, ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0);
         sp9C = (s32) (phi_s7 + 0x78);
         spA0 = (s32) (temp_s6 - (spA4 >> 1));
         viGetX();
         temp_s3 = phi_s2 + 0xd;
         temp_s4 = sp8C + -0xe;
-        temp_ret_5 = sub_GAME_7F01231C(write_text_at_abs_coord(microcode_constructor(phi_s1), &spA0, &sp9C, temp_ret_4, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, viGetY(), 0, 0), temp_s3, temp_s4, temp_s6 - *sp74, (s32) *sp70, (s32) subroutine_arg0);
+        temp_ret_5 = sub_GAME_7F01231C(write_text_at_abs_coord(microcode_constructor(phi_s1), &spA0, &sp9C, temp_ret_4, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0xff, viGetY(), 0, 0), temp_s3, temp_s4, temp_s6 - *sp74, (s32) *sp70, (s32) subroutine_arg0);
         temp_s1_3 = temp_ret_5;
         if ((*sp88 != 0) || (subroutine_arg0 != 0))
         {
@@ -12666,11 +12666,11 @@ glabel constructor_menu0F_mpcharsel
 /* 047500 7F0129D0 8FAE0080 */   lw    $t6, 0x80($sp)
 /* 047504 7F0129D4 0FC30776 */  jal   langGet
 /* 047508 7F0129D8 34049C55 */   li    $a0, 40021
-/* 04750C 7F0129DC 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableLarge)
-/* 047510 7F0129E0 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTableLarge)($t5)
-/* 047514 7F0129E4 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
+/* 04750C 7F0129DC 3C0D8004 */  lui   $t5, %hi(ptrFontZurichBold)
+/* 047510 7F0129E0 8DAD0EB4 */  lw    $t5, %lo(ptrFontZurichBold)($t5)
+/* 047514 7F0129E4 3C078004 */  lui   $a3, %hi(ptrFontZurichBoldChars)
 /* 047518 7F0129E8 00409825 */  move  $s3, $v0
-/* 04751C 7F0129EC 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
+/* 04751C 7F0129EC 8CE70EB8 */  lw    $a3, %lo(ptrFontZurichBoldChars)($a3)
 /* 047520 7F0129F0 27A400BC */  addiu $a0, $sp, 0xbc
 /* 047524 7F0129F4 27A500B8 */  addiu $a1, $sp, 0xb8
 /* 047528 7F0129F8 00403025 */  move  $a2, $v0
@@ -12692,10 +12692,10 @@ glabel constructor_menu0F_mpcharsel
 /* 047568 7F012A38 00104C03 */  sra   $t1, $s0, 0x10
 /* 04756C 7F012A3C 0C00110B */  jal   viGetY
 /* 047570 7F012A40 01208025 */   move  $s0, $t1
-/* 047574 7F012A44 3C0B8004 */  lui   $t3, %hi(ptrSecondFontTableLarge)
-/* 047578 7F012A48 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTableLarge)
-/* 04757C 7F012A4C 8D8C0EB4 */  lw    $t4, %lo(ptrFirstFontTableLarge)($t4)
-/* 047580 7F012A50 8D6B0EB8 */  lw    $t3, %lo(ptrSecondFontTableLarge)($t3)
+/* 047574 7F012A44 3C0B8004 */  lui   $t3, %hi(ptrFontZurichBoldChars)
+/* 047578 7F012A48 3C0C8004 */  lui   $t4, %hi(ptrFontZurichBold)
+/* 04757C 7F012A4C 8D8C0EB4 */  lw    $t4, %lo(ptrFontZurichBold)($t4)
+/* 047580 7F012A50 8D6B0EB8 */  lw    $t3, %lo(ptrFontZurichBoldChars)($t3)
 /* 047584 7F012A54 240D00FF */  li    $t5, 255
 /* 047588 7F012A58 AFAD0018 */  sw    $t5, 0x18($sp)
 /* 04758C 7F012A5C 02202025 */  move  $a0, $s1
@@ -12722,11 +12722,11 @@ glabel constructor_menu0F_mpcharsel
 /* 0475DC 7F012AAC 008F2021 */  addu  $a0, $a0, $t7
 /* 0475E0 7F012AB0 0FC30776 */  jal   langGet
 /* 0475E4 7F012AB4 9484B198 */   lhu   $a0, %lo(mp_chr_setup)($a0)
-/* 0475E8 7F012AB8 3C198004 */  lui   $t9, %hi(ptrFirstFontTableLarge)
-/* 0475EC 7F012ABC 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTableLarge)($t9)
-/* 0475F0 7F012AC0 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
+/* 0475E8 7F012AB8 3C198004 */  lui   $t9, %hi(ptrFontZurichBold)
+/* 0475EC 7F012ABC 8F390EB4 */  lw    $t9, %lo(ptrFontZurichBold)($t9)
+/* 0475F0 7F012AC0 3C078004 */  lui   $a3, %hi(ptrFontZurichBoldChars)
 /* 0475F4 7F012AC4 00409825 */  move  $s3, $v0
-/* 0475F8 7F012AC8 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
+/* 0475F8 7F012AC8 8CE70EB8 */  lw    $a3, %lo(ptrFontZurichBoldChars)($a3)
 /* 0475FC 7F012ACC 27A400A8 */  addiu $a0, $sp, 0xa8
 /* 047600 7F012AD0 27A500A4 */  addiu $a1, $sp, 0xa4
 /* 047604 7F012AD4 00403025 */  move  $a2, $v0
@@ -12747,10 +12747,10 @@ glabel constructor_menu0F_mpcharsel
 /* 047640 7F012B10 00107403 */  sra   $t6, $s0, 0x10
 /* 047644 7F012B14 0C00110B */  jal   viGetY
 /* 047648 7F012B18 01C08025 */   move  $s0, $t6
-/* 04764C 7F012B1C 3C0A8004 */  lui   $t2, %hi(ptrSecondFontTableLarge)
-/* 047650 7F012B20 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTableLarge)
-/* 047654 7F012B24 8DEF0EB4 */  lw    $t7, %lo(ptrFirstFontTableLarge)($t7)
-/* 047658 7F012B28 8D4A0EB8 */  lw    $t2, %lo(ptrSecondFontTableLarge)($t2)
+/* 04764C 7F012B1C 3C0A8004 */  lui   $t2, %hi(ptrFontZurichBoldChars)
+/* 047650 7F012B20 3C0F8004 */  lui   $t7, %hi(ptrFontZurichBold)
+/* 047654 7F012B24 8DEF0EB4 */  lw    $t7, %lo(ptrFontZurichBold)($t7)
+/* 047658 7F012B28 8D4A0EB8 */  lw    $t2, %lo(ptrFontZurichBoldChars)($t2)
 /* 04765C 7F012B2C 241800FF */  li    $t8, 255
 /* 047660 7F012B30 AFB80018 */  sw    $t8, 0x18($sp)
 /* 047664 7F012B34 02202025 */  move  $a0, $s1
@@ -13398,20 +13398,20 @@ loop_4:
         if (*sp74 == 0)
         {
             temp_ret_3 = langGet(TEXT(LTITLE, TITLE_STR_86));
-            textMeasure(&spA4, &spA0, temp_ret_3, ptrSecondFontTableLarge, (s32) subroutine_arg0, 0);
+            textMeasure(&spA4, &spA0, temp_ret_3, ptrFontZurichBoldChars, (s32) subroutine_arg0, 0);
             sp9C = (s32) ((((s32) phi_s5 >> 1) + phi_s3) - (spA0 >> 1));
             sp98 = (s32) ((phi_s2 - (spA4 >> 1)) + 0x37);
             viGetX();
-            phi_s1 = write_text_at_abs_coord(microcode_constructor(temp_s1_2), &sp9C, &sp98, temp_ret_3, (s32) ptrSecondFontTableLarge, (s32) subroutine_arg0, 0xff, viGetY(), 0, 0);
+            phi_s1 = write_text_at_abs_coord(microcode_constructor(temp_s1_2), &sp9C, &sp98, temp_ret_3, (s32) ptrFontZurichBoldChars, (s32) subroutine_arg0, 0xff, viGetY(), 0, 0);
         }
         temp_ret_4 = langGet((0x80030000 + (*sp70 * 8))->unk-4B68);
-        textMeasure(&sp90, &sp8C, temp_ret_4, ptrSecondFontTableLarge, (s32) subroutine_arg0, 0);
+        textMeasure(&sp90, &sp8C, temp_ret_4, ptrFontZurichBoldChars, (s32) subroutine_arg0, 0);
         sp88 = (s32) ((((s32) phi_s5 >> 1) + phi_s3) - (sp8C >> 1));
         sp84 = (s32) (((phi_s2 + 0x46) - (sp90 >> 1)) + 0xf);
         viGetX();
         temp_s6 = phi_s6 + 1;
         sp70 = (void *) (sp70 + 4);
-        temp_v0 = write_text_at_abs_coord(microcode_constructor(phi_s1), &sp88, &sp84, temp_ret_4, (s32) ptrSecondFontTableLarge, (s32) subroutine_arg0, 0xff, viGetY(), 0, 0);
+        temp_v0 = write_text_at_abs_coord(microcode_constructor(phi_s1), &sp88, &sp84, temp_ret_4, (s32) ptrFontZurichBoldChars, (s32) subroutine_arg0, 0xff, viGetY(), 0, 0);
         sp74 = (void *) (sp74 + 4);
         phi_s6 = temp_s6;
         phi_v0 = temp_v0;
@@ -13485,11 +13485,11 @@ glabel constructor_menu10_mphandicap
 /* 047D84 7F013254 3C014080 */  li    $at, 0x40800000 # 4.000000
 /* 047D88 7F013258 254A97A8 */  addiu $t2, %lo(player_handicap) # addiu $t2, $t2, -0x6858
 /* 047D8C 7F01325C 25299740 */  addiu $t1, %lo(player_has_selected_char) # addiu $t1, $t1, -0x68c0
-/* 047D90 7F013260 3C1E8004 */  lui   $fp, %hi(ptrFirstFontTableLarge)
-/* 047D94 7F013264 3C178004 */  lui   $s7, %hi(ptrSecondFontTableLarge)
+/* 047D90 7F013260 3C1E8004 */  lui   $fp, %hi(ptrFontZurichBold)
+/* 047D94 7F013264 3C178004 */  lui   $s7, %hi(ptrFontZurichBoldChars)
 /* 047D98 7F013268 4481A000 */  mtc1  $at, $f20
-/* 047D9C 7F01326C 26F70EB8 */  addiu $s7, %lo(ptrSecondFontTableLarge) # addiu $s7, $s7, 0xeb8
-/* 047DA0 7F013270 27DE0EB4 */  addiu $fp, %lo(ptrFirstFontTableLarge) # addiu $fp, $fp, 0xeb4
+/* 047D9C 7F01326C 26F70EB8 */  addiu $s7, %lo(ptrFontZurichBoldChars) # addiu $s7, $s7, 0xeb8
+/* 047DA0 7F013270 27DE0EB4 */  addiu $fp, %lo(ptrFontZurichBold) # addiu $fp, $fp, 0xeb4
 /* 047DA4 7F013274 AFA90074 */  sw    $t1, 0x74($sp)
 /* 047DA8 7F013278 AFAA0070 */  sw    $t2, 0x70($sp)
 .L7F01327C:
@@ -14820,20 +14820,20 @@ loop_4:
         if (*sp74 == 0)
         {
             temp_ret_3 = langGet(TEXT(LTITLE, TITLE_STR_285));
-            textMeasure(&spA4, &spA0, temp_ret_3, ptrSecondFontTableLarge, (s32) subroutine_arg0, 0);
+            textMeasure(&spA4, &spA0, temp_ret_3, ptrFontZurichBoldChars, (s32) subroutine_arg0, 0);
             sp9C = (s32) ((((s32) phi_s5 >> 1) + phi_s3) - (spA0 >> 1));
             sp98 = (s32) ((phi_s2 - (spA4 >> 1)) + 0x37);
             viGetX();
-            phi_s1 = write_text_at_abs_coord(microcode_constructor(temp_s1_2), &sp9C, &sp98, temp_ret_3, (s32) ptrSecondFontTableLarge, (s32) subroutine_arg0, 0xff, viGetY(), 0, 0);
+            phi_s1 = write_text_at_abs_coord(microcode_constructor(temp_s1_2), &sp9C, &sp98, temp_ret_3, (s32) ptrFontZurichBoldChars, (s32) subroutine_arg0, 0xff, viGetY(), 0, 0);
         }
         temp_ret_4 = langGet((0x80030000 + (*sp70 * 4))->unk-4B10);
-        textMeasure(&sp90, &sp8C, temp_ret_4, ptrSecondFontTableLarge, (s32) subroutine_arg0, 0);
+        textMeasure(&sp90, &sp8C, temp_ret_4, ptrFontZurichBoldChars, (s32) subroutine_arg0, 0);
         sp88 = (s32) ((((s32) phi_s5 >> 1) + phi_s3) - (sp8C >> 1));
         sp84 = (s32) (((phi_s2 + 0x46) - (sp90 >> 1)) + 0xf);
         viGetX();
         temp_s6 = phi_s6 + 1;
         sp70 = (void *) (sp70 + 4);
-        temp_v0 = write_text_at_abs_coord(microcode_constructor(phi_s1), &sp88, &sp84, temp_ret_4, (s32) ptrSecondFontTableLarge, (s32) subroutine_arg0, 0xff, viGetY(), 0, 0);
+        temp_v0 = write_text_at_abs_coord(microcode_constructor(phi_s1), &sp88, &sp84, temp_ret_4, (s32) ptrFontZurichBoldChars, (s32) subroutine_arg0, 0xff, viGetY(), 0, 0);
         sp74 = (void *) (sp74 + 4);
         phi_s6 = temp_s6;
         phi_v0 = temp_v0;
@@ -14907,11 +14907,11 @@ glabel constructor_menu11_mpcontrol
 /* 048588 7F013A58 3C014080 */  li    $at, 0x40800000 # 4.000000
 /* 04858C 7F013A5C 254A97B8 */  addiu $t2, %lo(controlstyle_player) # addiu $t2, $t2, -0x6848
 /* 048590 7F013A60 25299740 */  addiu $t1, %lo(player_has_selected_char) # addiu $t1, $t1, -0x68c0
-/* 048594 7F013A64 3C1E8004 */  lui   $fp, %hi(ptrFirstFontTableLarge)
-/* 048598 7F013A68 3C178004 */  lui   $s7, %hi(ptrSecondFontTableLarge)
+/* 048594 7F013A64 3C1E8004 */  lui   $fp, %hi(ptrFontZurichBold)
+/* 048598 7F013A68 3C178004 */  lui   $s7, %hi(ptrFontZurichBoldChars)
 /* 04859C 7F013A6C 4481A000 */  mtc1  $at, $f20
-/* 0485A0 7F013A70 26F70EB8 */  addiu $s7, %lo(ptrSecondFontTableLarge) # addiu $s7, $s7, 0xeb8
-/* 0485A4 7F013A74 27DE0EB4 */  addiu $fp, %lo(ptrFirstFontTableLarge) # addiu $fp, $fp, 0xeb4
+/* 0485A0 7F013A70 26F70EB8 */  addiu $s7, %lo(ptrFontZurichBoldChars) # addiu $s7, $s7, 0xeb8
+/* 0485A4 7F013A74 27DE0EB4 */  addiu $fp, %lo(ptrFontZurichBold) # addiu $fp, $fp, 0xeb4
 /* 0485A8 7F013A78 AFA90074 */  sw    $t1, 0x74($sp)
 /* 0485AC 7F013A7C AFAA0070 */  sw    $t2, 0x70($sp)
 .L7F013A80:
@@ -15419,14 +15419,14 @@ loop_17:
             {
                 phi_s2_2 = -0x100;
             }
-            textMeasure(&sp128, &sp124, langGet(temp_s3_2->unk2), subroutine_arg0, (s32) ptrFirstFontTableSmall, 0);
+            textMeasure(&sp128, &sp124, langGet(temp_s3_2->unk2), subroutine_arg0, (s32) ptrFontBankGothic, 0);
             temp_s4_3 = phi_s6 + -0x1f;
             temp_a2 = sp90 - sp128;
             arg0 = microcode_constructor_related_to_menus(arg0, temp_s4_3, temp_a2, temp_s4_3 + sp124, (s32) (temp_a2 + sp128), 0);
             viGetX();
-            arg0 = textRender(arg0, &sp130, &sp12C, langGet(temp_s3_2->unk2), (s32) subroutine_arg0, (s32) ptrFirstFontTableSmall, (s32) (phi_s2_2 | 0xff), viGetY(), 0, 0);
+            arg0 = textRender(arg0, &sp130, &sp12C, langGet(temp_s3_2->unk2), (s32) subroutine_arg0, (s32) ptrFontBankGothic, (s32) (phi_s2_2 | 0xff), viGetY(), 0, 0);
             viGetX();
-            arg0 = textRender(arg0, &sp130, &sp12C, langGet(temp_s3_2->unk2, sp90 - sp128), (s32) subroutine_arg0, (s32) ptrFirstFontTableSmall, (s32) (phi_s2_2 | 0x64), viGetY(), 0, 0);
+            arg0 = textRender(arg0, &sp130, &sp12C, langGet(temp_s3_2->unk2, sp90 - sp128), (s32) subroutine_arg0, (s32) ptrFontBankGothic, (s32) (phi_s2_2 | 0x64), viGetY(), 0, 0);
         }
     }
     temp_s7 = phi_s7 + 1;
@@ -15773,11 +15773,11 @@ glabel constructor_menu12_mpstage
 /* 049044 7F014514 0FC2B366 */  jal   microcode_constructor
 /* 049048 7F014518 8FA40138 */   lw    $a0, 0x138($sp)
 /* 04904C 7F01451C 24180097 */  li    $t8, 151
-/* 049050 7F014520 3C1E8004 */  lui   $fp, %hi(ptrSecondFontTableSmall)
+/* 049050 7F014520 3C1E8004 */  lui   $fp, %hi(ptrFontBankGothicChars)
 /* 049054 7F014524 AFA20138 */  sw    $v0, 0x138($sp)
 /* 049058 7F014528 0000A825 */  move  $s5, $zero
 /* 04905C 7F01452C AFB80090 */  sw    $t8, 0x90($sp)
-/* 049060 7F014530 27DE0EB0 */  addiu $fp, %lo(ptrSecondFontTableSmall) # addiu $fp, $fp, 0xeb0
+/* 049060 7F014530 27DE0EB0 */  addiu $fp, %lo(ptrFontBankGothicChars) # addiu $fp, $fp, 0xeb0
 /* 049064 7F014534 AFA0009C */  sw    $zero, 0x9c($sp)
 .L7F014538:
 /* 049068 7F014538 24160056 */  li    $s6, 86
@@ -15804,8 +15804,8 @@ glabel constructor_menu12_mpstage
 .L7F014588:
 /* 0490B8 7F014588 0FC30776 */  jal   langGet
 /* 0490BC 7F01458C 96640002 */   lhu   $a0, 2($s3)
-/* 0490C0 7F014590 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTableSmall)
-/* 0490C4 7F014594 8D6B0EAC */  lw    $t3, %lo(ptrFirstFontTableSmall)($t3)
+/* 0490C0 7F014590 3C0B8004 */  lui   $t3, %hi(ptrFontBankGothic)
+/* 0490C4 7F014594 8D6B0EAC */  lw    $t3, %lo(ptrFontBankGothic)($t3)
 /* 0490C8 7F014598 27A40128 */  addiu $a0, $sp, 0x128
 /* 0490CC 7F01459C 27A50124 */  addiu $a1, $sp, 0x124
 /* 0490D0 7F0145A0 00403025 */  move  $a2, $v0
@@ -15836,8 +15836,8 @@ glabel constructor_menu12_mpstage
 /* 049134 7F014604 00107C03 */  sra   $t7, $s0, 0x10
 /* 049138 7F014608 0C00110B */  jal   viGetY
 /* 04913C 7F01460C 01E08025 */   move  $s0, $t7
-/* 049140 7F014610 3C198004 */  lui   $t9, %hi(ptrFirstFontTableSmall)
-/* 049144 7F014614 8F390EAC */  lw    $t9, %lo(ptrFirstFontTableSmall)($t9)
+/* 049140 7F014610 3C198004 */  lui   $t9, %hi(ptrFontBankGothic)
+/* 049144 7F014614 8F390EAC */  lw    $t9, %lo(ptrFontBankGothic)($t9)
 /* 049148 7F014618 8FD80000 */  lw    $t8, ($fp)
 /* 04914C 7F01461C 364900FF */  ori   $t1, $s2, 0xff
 /* 049150 7F014620 AFA90018 */  sw    $t1, 0x18($sp)
@@ -15866,8 +15866,8 @@ glabel constructor_menu12_mpstage
 /* 0491AC 7F01467C 00105C03 */  sra   $t3, $s0, 0x10
 /* 0491B0 7F014680 0C00110B */  jal   viGetY
 /* 0491B4 7F014684 01608025 */   move  $s0, $t3
-/* 0491B8 7F014688 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableSmall)
-/* 0491BC 7F01468C 8DAD0EAC */  lw    $t5, %lo(ptrFirstFontTableSmall)($t5)
+/* 0491B8 7F014688 3C0D8004 */  lui   $t5, %hi(ptrFontBankGothic)
+/* 0491BC 7F01468C 8DAD0EAC */  lw    $t5, %lo(ptrFontBankGothic)($t5)
 /* 0491C0 7F014690 8FCC0000 */  lw    $t4, ($fp)
 /* 0491C4 7F014694 364E0064 */  ori   $t6, $s2, 0x64
 /* 0491C8 7F014698 AFAE0018 */  sw    $t6, 0x18($sp)
@@ -16255,7 +16255,7 @@ void constructor_menu13_mpscenario(Gfx *DL)
     text = langGet(0x9C57);
     x = 0x37;
     y = 0x66;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
 
     for (i = 0, y = 0x83; i != 8; i++, y+=0x16)
@@ -16266,7 +16266,7 @@ void constructor_menu13_mpscenario(Gfx *DL)
         }
         text = langGet(mp_player_counts[i].stage);
 
-        textMeasure(&sp7C, &sp78, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
+        textMeasure(&sp7C, &sp78, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0);
 
         x = 0x39;
         if ((i + 1) == dword_CODE_bss_80069780)
@@ -16274,7 +16274,7 @@ void constructor_menu13_mpscenario(Gfx *DL)
             DL = microcode_constructor_related_to_menus(DL, 0x37, y - 1, sp78 + 0x3C, y + 0xE, 0x32);
         }
 
-        DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, tBL1entry, viGetX(), viGetY(), 0, 0);
+        DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, tBL1entry, viGetX(), viGetY(), 0, 0);
     }
 
     DL = add_tab3_previous(DL);
@@ -16319,10 +16319,10 @@ glabel constructor_menu13_mpscenario
 /* 0495F4 7F014AC4 00107C03 */  sra   $t7, $s0, 0x10
 /* 0495F8 7F014AC8 0C00110B */  jal   viGetY
 /* 0495FC 7F014ACC 01E08025 */   move  $s0, $t7
-/* 049600 7F014AD0 3C178004 */  lui   $s7, %hi(ptrSecondFontTableLarge)
-/* 049604 7F014AD4 3C1E8004 */  lui   $fp, %hi(ptrFirstFontTableLarge)
-/* 049608 7F014AD8 27DE0EB4 */  addiu $fp, %lo(ptrFirstFontTableLarge) # addiu $fp, $fp, 0xeb4
-/* 04960C 7F014ADC 26F70EB8 */  addiu $s7, %lo(ptrSecondFontTableLarge) # addiu $s7, $s7, 0xeb8
+/* 049600 7F014AD0 3C178004 */  lui   $s7, %hi(ptrFontZurichBoldChars)
+/* 049604 7F014AD4 3C1E8004 */  lui   $fp, %hi(ptrFontZurichBold)
+/* 049608 7F014AD8 27DE0EB4 */  addiu $fp, %lo(ptrFontZurichBold) # addiu $fp, $fp, 0xeb4
+/* 04960C 7F014ADC 26F70EB8 */  addiu $s7, %lo(ptrFontZurichBoldChars) # addiu $s7, $s7, 0xeb8
 /* 049610 7F014AE0 8EF80000 */  lw    $t8, ($s7)
 /* 049614 7F014AE4 8FD90000 */  lw    $t9, ($fp)
 /* 049618 7F014AE8 240800FF */  li    $t0, 255
@@ -16476,10 +16476,10 @@ glabel constructor_menu13_mpscenario
 /* 047434 7F014A44 00107C03 */  sra   $t7, $s0, 0x10
 /* 047438 7F014A48 0C000F9F */  jal   viGetY
 /* 04743C 7F014A4C 01E08025 */   move  $s0, $t7
-/* 047440 7F014A50 3C178004 */  lui   $s7, %hi(ptrSecondFontTableLarge) # $s7, 0x8004
-/* 047444 7F014A54 3C1E8004 */  lui   $fp, %hi(ptrFirstFontTableLarge) # $fp, 0x8004
-/* 047448 7F014A58 27DEAB04 */  addiu $fp, %lo(ptrFirstFontTableLarge) # addiu $fp, $fp, -0x54fc
-/* 04744C 7F014A5C 26F7AB08 */  addiu $s7, %lo(ptrSecondFontTableLarge) # addiu $s7, $s7, -0x54f8
+/* 047440 7F014A50 3C178004 */  lui   $s7, %hi(ptrFontZurichBoldChars) # $s7, 0x8004
+/* 047444 7F014A54 3C1E8004 */  lui   $fp, %hi(ptrFontZurichBold) # $fp, 0x8004
+/* 047448 7F014A58 27DEAB04 */  addiu $fp, %lo(ptrFontZurichBold) # addiu $fp, $fp, -0x54fc
+/* 04744C 7F014A5C 26F7AB08 */  addiu $s7, %lo(ptrFontZurichBoldChars) # addiu $s7, $s7, -0x54f8
 /* 047450 7F014A60 8EF80000 */  lw    $t8, ($s7)
 /* 047454 7F014A64 8FD90000 */  lw    $t9, ($fp)
 /* 047458 7F014A68 240800FF */  li    $t0, 255
@@ -17137,10 +17137,10 @@ loop_4:
         if (temp_s2 != 0)
         {
             temp_ret_2 = langGet(TEXT(LTITLE, TITLE_STR_88));
-            textMeasure(&spA4, &spA0, temp_ret_2, ptrSecondFontTableLarge, (s32) subroutine_arg0, 0);
+            textMeasure(&spA4, &spA0, temp_ret_2, ptrFontZurichBoldChars, (s32) subroutine_arg0, 0);
             sp9C = (s32) ((phi_v0 + 0x7d) - (spA0 >> 1));
             viGetX();
-            phi_s5_2 = write_text_at_abs_coord(temp_s5, &sp9C, &sp98, temp_ret_2, (s32) ptrSecondFontTableLarge, (s32) subroutine_arg0, 0xff, viGetY(), 0, 0);
+            phi_s5_2 = write_text_at_abs_coord(temp_s5, &sp9C, &sp98, temp_ret_2, (s32) ptrFontZurichBoldChars, (s32) subroutine_arg0, 0xff, viGetY(), 0, 0);
         }
         if (scenario == 5)
         {
@@ -17171,7 +17171,7 @@ loop_4:
         {
 
         }
-        textMeasure(&sp90, &sp8C, phi_s1, ptrSecondFontTableLarge, (s32) subroutine_arg0, 0);
+        textMeasure(&sp90, &sp8C, phi_s1, ptrFontZurichBoldChars, (s32) subroutine_arg0, 0);
         sp88 = (s32) (spB4 - (sp8C >> 1));
         sp84 = (s32) ((temp_s6 - (sp90 >> 1)) + 0x46);
         if ((phi_s4 == teamsize) && (phi_s4 == teamsize))
@@ -17181,7 +17181,7 @@ loop_4:
             {
 block_26:
                 viGetX();
-                phi_s5_4 = write_text_at_abs_coord(phi_s5_2, &sp88, &sp84, phi_s1, (s32) ptrSecondFontTableLarge, (s32) subroutine_arg0, viGetY(), 0, 0);
+                phi_s5_4 = write_text_at_abs_coord(phi_s5_2, &sp88, &sp84, phi_s1, (s32) ptrFontZurichBoldChars, (s32) subroutine_arg0, viGetY(), 0, 0);
             }
         }
         else
@@ -17257,11 +17257,11 @@ glabel constructor_menu14_mpteams
 /* 049D30 7F015200 0000A025 */  move  $s4, $zero
 /* 049D34 7F015204 3C014080 */  li    $at, 0x40800000 # 4.000000
 /* 049D38 7F015208 192000B2 */  blez  $t1, .L7F0154D4
-/* 049D3C 7F01520C 3C178004 */   lui   $s7, %hi(ptrSecondFontTableLarge)
-/* 049D40 7F015210 3C1E8004 */  lui   $fp, %hi(ptrFirstFontTableLarge)
+/* 049D3C 7F01520C 3C178004 */   lui   $s7, %hi(ptrFontZurichBoldChars)
+/* 049D40 7F015210 3C1E8004 */  lui   $fp, %hi(ptrFontZurichBold)
 /* 049D44 7F015214 4481A000 */  mtc1  $at, $f20
-/* 049D48 7F015218 27DE0EB4 */  addiu $fp, %lo(ptrFirstFontTableLarge) # addiu $fp, $fp, 0xeb4
-/* 049D4C 7F01521C 26F70EB8 */  addiu $s7, %lo(ptrSecondFontTableLarge) # addiu $s7, $s7, 0xeb8
+/* 049D48 7F015218 27DE0EB4 */  addiu $fp, %lo(ptrFontZurichBold) # addiu $fp, $fp, 0xeb4
+/* 049D4C 7F01521C 26F70EB8 */  addiu $s7, %lo(ptrFontZurichBoldChars) # addiu $s7, $s7, 0xeb8
 /* 049D50 7F015220 2A810002 */  slti  $at, $s4, 2
 .L7F015224:
 /* 049D54 7F015224 14200003 */  bnez  $at, .L7F015234
@@ -17724,30 +17724,30 @@ u32 * print_objectives_and_status_to_menu(u32 *param_1,int param_2,u8 *param_3,i
         *param_3 = *param_3 + (char)iStack8;
         iStack12 = 0;
         iStack16 = 0;
-        proc_7F0AE98C(&iStack12,&iStack16,param_3,(int)ptrSecondFontTableLarge,(int *)ptrFirstFontTableLarge,0
+        proc_7F0AE98C(&iStack12,&iStack16,param_3,(int)ptrFontZurichBoldChars,(int *)ptrFontZurichBold,0
                      );
         uStack20 = 0x37;
         uStack24 = iStack12 * iVar9 + param_2;
         sVar5 = viGetX();
         sVar6 = viGetY();
         puVar3 = write_text_at_abs_coord
-                           (param_1,&uStack20,&uStack24,param_3,(int)ptrSecondFontTableLarge,
-                            (int)ptrFirstFontTableLarge,0xff,(int)sVar5,(int)sVar6,0,0);
+                           (param_1,&uStack20,&uStack24,param_3,(int)ptrFontZurichBoldChars,
+                            (int)ptrFontZurichBold,0xff,(int)sVar5,(int)sVar6,0,0);
         uStack20 = 0x4b;
         uStack24 = iStack12 * iVar9 + param_2;
         if (param_4 == 0) {
-          proc_7F0AEB64(0x140,pbVar2,param_3,(int)ptrSecondFontTableLarge,(int *)ptrFirstFontTableLarge);
+          proc_7F0AEB64(0x140,pbVar2,param_3,(int)ptrFontZurichBoldChars,(int *)ptrFontZurichBold);
         }
         else {
           proc_7F0ACB94(2);
-          proc_7F0AEB64(0xdc,pbVar2,param_3,(int)ptrSecondFontTableLarge,(int *)ptrFirstFontTableLarge);
+          proc_7F0AEB64(0xdc,pbVar2,param_3,(int)ptrFontZurichBoldChars,(int *)ptrFontZurichBold);
           proc_7F0ACB94(0);
         }
         sVar5 = viGetX();
         sVar6 = viGetY();
         param_1 = write_text_at_abs_coord
-                            (puVar3,&uStack20,&uStack24,param_3,(int)ptrSecondFontTableLarge,
-                             (int)ptrFirstFontTableLarge,0xff,(int)sVar5,(int)sVar6,0,0);
+                            (puVar3,&uStack20,&uStack24,param_3,(int)ptrFontZurichBoldChars,
+                             (int)ptrFontZurichBold,0xff,(int)sVar5,(int)sVar6,0,0);
         if (param_4 != 0) {
           iVar4 = get_status_of_objective((s32)iStack4);
           if ((iVar4 == 0) || (iVar4 != 1)) {
@@ -17763,8 +17763,8 @@ u32 * print_objectives_and_status_to_menu(u32 *param_1,int param_2,u8 *param_3,i
           sVar5 = viGetX();
           sVar6 = viGetY();
           param_1 = write_text_at_abs_coord
-                              (param_1,&uStack20,&uStack24,pbVar2,(int)ptrSecondFontTableLarge,
-                               (int)ptrFirstFontTableLarge,uVar8,(int)sVar5,(int)sVar6,0,0);
+                              (param_1,&uStack20,&uStack24,pbVar2,(int)ptrFontZurichBoldChars,
+                               (int)ptrFontZurichBold,uVar8,(int)sVar5,(int)sVar6,0,0);
         }
         iVar4 = proc_7F0AC0E8((char *)param_3);
         iVar9 += iVar4;
@@ -17787,8 +17787,8 @@ glabel print_objectives_and_status_to_menu
 /* 04A544 7F015A14 AFBE0058 */  sw    $fp, 0x58($sp)
 /* 04A548 7F015A18 AFB60050 */  sw    $s6, 0x50($sp)
 /* 04A54C 7F015A1C AFB30044 */  sw    $s3, 0x44($sp)
-/* 04A550 7F015A20 3C148004 */  lui   $s4, %hi(ptrSecondFontTableLarge)
-/* 04A554 7F015A24 3C158004 */  lui   $s5, %hi(ptrFirstFontTableLarge)
+/* 04A550 7F015A20 3C148004 */  lui   $s4, %hi(ptrFontZurichBoldChars)
+/* 04A554 7F015A24 3C158004 */  lui   $s5, %hi(ptrFontZurichBold)
 /* 04A558 7F015A28 00C09825 */  move  $s3, $a2
 /* 04A55C 7F015A2C 0080B025 */  move  $s6, $a0
 /* 04A560 7F015A30 AFBF005C */  sw    $ra, 0x5c($sp)
@@ -17800,8 +17800,8 @@ glabel print_objectives_and_status_to_menu
 /* 04A578 7F015A48 AFA700AC */  sw    $a3, 0xac($sp)
 /* 04A57C 7F015A4C AFA00098 */  sw    $zero, 0x98($sp)
 /* 04A580 7F015A50 0000F025 */  move  $fp, $zero
-/* 04A584 7F015A54 26B50EB4 */  addiu $s5, %lo(ptrFirstFontTableLarge) # addiu $s5, $s5, 0xeb4
-/* 04A588 7F015A58 26940EB8 */  addiu $s4, %lo(ptrSecondFontTableLarge) # addiu $s4, $s4, 0xeb8
+/* 04A584 7F015A54 26B50EB4 */  addiu $s5, %lo(ptrFontZurichBold) # addiu $s5, $s5, 0xeb4
+/* 04A588 7F015A58 26940EB8 */  addiu $s4, %lo(ptrFontZurichBoldChars) # addiu $s4, $s4, 0xeb8
 /* 04A58C 7F015A5C 00004025 */  move  $t0, $zero
 /* 04A590 7F015A60 00004825 */  move  $t1, $zero
 .L7F015A64:
@@ -18066,8 +18066,8 @@ s32 constructor_menu0A_briefing(s32 *param_1)
   sVar4 = viGetX();
   sVar5 = viGetY();
   puVar2 = write_text_at_abs_coord
-                     (puVar2,&uStack8,&uStack12,pbStack4,(int)ptrSecondFontTableLarge,
-                      (int)ptrFirstFontTableLarge,0xff,(int)sVar4,(int)sVar5,0,0);
+                     (puVar2,&uStack8,&uStack12,pbStack4,(int)ptrFontZurichBoldChars,
+                      (int)ptrFontZurichBold,0xff,(int)sVar4,(int)sVar5,0,0);
   if (current_menu_briefing_page == BRIEFING_TITLE) {
     puVar2 = print_objectives_and_status_to_menu(puVar2,0xa7,(u8 *)auStack3012,0);
   }
@@ -18092,14 +18092,14 @@ s32 constructor_menu0A_briefing(s32 *param_1)
     }
     uStack8 = 0x37;
     uStack12 = 0xa7;
-    proc_7F0AEB64(0x140,pbStack4,(u8 *)auStack3012,(int)ptrSecondFontTableLarge,
-                  (int *)ptrFirstFontTableLarge);
+    proc_7F0AEB64(0x140,pbStack4,(u8 *)auStack3012,(int)ptrFontZurichBoldChars,
+                  (int *)ptrFontZurichBold);
     proc_7F0ACBA0(8);
     sVar4 = viGetX();
     sVar5 = viGetY();
     puVar2 = write_text_at_abs_coord
-                       (puVar2,&uStack8,&uStack12,(u8 *)auStack3012,(int)ptrSecondFontTableLarge,
-                        (int)ptrFirstFontTableLarge,0xff,(int)sVar4,(int)sVar5,0,0);
+                       (puVar2,&uStack8,&uStack12,(u8 *)auStack3012,(int)ptrFontZurichBoldChars,
+                        (int)ptrFontZurichBold,0xff,(int)sVar4,(int)sVar5,0,0);
     proc_7F0ACBA0(0xffffffff);
   }
   puVar2 = add_tab1_start(puVar2);
@@ -18200,10 +18200,10 @@ def_7F015E0C:
 /* 04A9A0 7F015E70 AFAB0C04 */   sw    $t3, 0xc04($sp)
 /* 04A9A4 7F015E74 0C00110B */  jal   viGetY
 /* 04A9A8 7F015E78 A7A20048 */   sh    $v0, 0x48($sp)
-/* 04A9AC 7F015E7C 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTableLarge)
-/* 04A9B0 7F015E80 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableLarge)
-/* 04A9B4 7F015E84 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTableLarge)($t5)
-/* 04A9B8 7F015E88 8D8C0EB8 */  lw    $t4, %lo(ptrSecondFontTableLarge)($t4)
+/* 04A9AC 7F015E7C 3C0C8004 */  lui   $t4, %hi(ptrFontZurichBoldChars)
+/* 04A9B0 7F015E80 3C0D8004 */  lui   $t5, %hi(ptrFontZurichBold)
+/* 04A9B4 7F015E84 8DAD0EB4 */  lw    $t5, %lo(ptrFontZurichBold)($t5)
+/* 04A9B8 7F015E88 8D8C0EB8 */  lw    $t4, %lo(ptrFontZurichBoldChars)($t4)
 /* 04A9BC 7F015E8C 87B80048 */  lh    $t8, 0x48($sp)
 /* 04A9C0 7F015E90 241900FF */  li    $t9, 255
 /* 04A9C4 7F015E94 AFB90018 */  sw    $t9, 0x18($sp)
@@ -18268,14 +18268,14 @@ def_7F015E0C:
 /* 04AA9C 7F015F6C 95240006 */   lhu   $a0, 6($t1)
 /* 04AAA0 7F015F70 AFA20C0C */  sw    $v0, 0xc0c($sp)
 .L7F015F74:
-/* 04AAA4 7F015F74 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTableLarge)
-/* 04AAA8 7F015F78 8D8C0EB4 */  lw    $t4, %lo(ptrFirstFontTableLarge)($t4)
+/* 04AAA4 7F015F74 3C0C8004 */  lui   $t4, %hi(ptrFontZurichBold)
+/* 04AAA8 7F015F78 8D8C0EB4 */  lw    $t4, %lo(ptrFontZurichBold)($t4)
 /* 04AAAC 7F015F7C 240A0037 */  li    $t2, 55
 /* 04AAB0 7F015F80 240B00A7 */  li    $t3, 167
-/* 04AAB4 7F015F84 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
+/* 04AAB4 7F015F84 3C078004 */  lui   $a3, %hi(ptrFontZurichBoldChars)
 /* 04AAB8 7F015F88 AFAA0C08 */  sw    $t2, 0xc08($sp)
 /* 04AABC 7F015F8C AFAB0C04 */  sw    $t3, 0xc04($sp)
-/* 04AAC0 7F015F90 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
+/* 04AAC0 7F015F90 8CE70EB8 */  lw    $a3, %lo(ptrFontZurichBoldChars)($a3)
 /* 04AAC4 7F015F94 24040140 */  li    $a0, 320
 /* 04AAC8 7F015F98 8FA50C0C */  lw    $a1, 0xc0c($sp)
 /* 04AACC 7F015F9C 27A6004C */  addiu $a2, $sp, 0x4c
@@ -18287,10 +18287,10 @@ def_7F015E0C:
 /* 04AAE4 7F015FB4 00000000 */   nop
 /* 04AAE8 7F015FB8 0C00110B */  jal   viGetY
 /* 04AAEC 7F015FBC A7A20048 */   sh    $v0, 0x48($sp)
-/* 04AAF0 7F015FC0 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTableLarge)
-/* 04AAF4 7F015FC4 3C198004 */  lui   $t9, %hi(ptrFirstFontTableLarge)
-/* 04AAF8 7F015FC8 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTableLarge)($t9)
-/* 04AAFC 7F015FCC 8DAD0EB8 */  lw    $t5, %lo(ptrSecondFontTableLarge)($t5)
+/* 04AAF0 7F015FC0 3C0D8004 */  lui   $t5, %hi(ptrFontZurichBoldChars)
+/* 04AAF4 7F015FC4 3C198004 */  lui   $t9, %hi(ptrFontZurichBold)
+/* 04AAF8 7F015FC8 8F390EB4 */  lw    $t9, %lo(ptrFontZurichBold)($t9)
+/* 04AAFC 7F015FCC 8DAD0EB8 */  lw    $t5, %lo(ptrFontZurichBoldChars)($t5)
 /* 04AB00 7F015FD0 87A80048 */  lh    $t0, 0x48($sp)
 /* 04AB04 7F015FD4 241800FF */  li    $t8, 255
 /* 04AB08 7F015FD8 AFB80018 */  sw    $t8, 0x18($sp)
@@ -18409,10 +18409,10 @@ glabel constructor_menu0A_briefing
 /* 0487B8 7F015DC8 AFB80BFC */   sw    $t8, 0xbfc($sp)
 /* 0487BC 7F015DCC 0C000F9F */  jal   viGetY
 /* 0487C0 7F015DD0 A7A20040 */   sh    $v0, 0x40($sp)
-/* 0487C4 7F015DD4 3C198004 */  lui   $t9, %hi(ptrSecondFontTableLarge) # $t9, 0x8004
-/* 0487C8 7F015DD8 3C088004 */  lui   $t0, %hi(ptrFirstFontTableLarge) # $t0, 0x8004
-/* 0487CC 7F015DDC 8D08AB04 */  lw    $t0, %lo(ptrFirstFontTableLarge)($t0)
-/* 0487D0 7F015DE0 8F39AB08 */  lw    $t9, %lo(ptrSecondFontTableLarge)($t9)
+/* 0487C4 7F015DD4 3C198004 */  lui   $t9, %hi(ptrFontZurichBoldChars) # $t9, 0x8004
+/* 0487C8 7F015DD8 3C088004 */  lui   $t0, %hi(ptrFontZurichBold) # $t0, 0x8004
+/* 0487CC 7F015DDC 8D08AB04 */  lw    $t0, %lo(ptrFontZurichBold)($t0)
+/* 0487D0 7F015DE0 8F39AB08 */  lw    $t9, %lo(ptrFontZurichBoldChars)($t9)
 /* 0487D4 7F015DE4 87AA0040 */  lh    $t2, 0x40($sp)
 /* 0487D8 7F015DE8 240900FF */  li    $t1, 255
 /* 0487DC 7F015DEC AFA90018 */  sw    $t1, 0x18($sp)
@@ -18477,14 +18477,14 @@ glabel constructor_menu0A_briefing
 /* 0488B4 7F015EC4 95C40006 */   lhu   $a0, 6($t6)
 /* 0488B8 7F015EC8 AFA20C04 */  sw    $v0, 0xc04($sp)
 .L7F015ECC:
-/* 0488BC 7F015ECC 3C198004 */  lui   $t9, %hi(ptrFirstFontTableLarge) # $t9, 0x8004
-/* 0488C0 7F015ED0 8F39AB04 */  lw    $t9, %lo(ptrFirstFontTableLarge)($t9)
+/* 0488BC 7F015ECC 3C198004 */  lui   $t9, %hi(ptrFontZurichBold) # $t9, 0x8004
+/* 0488C0 7F015ED0 8F39AB04 */  lw    $t9, %lo(ptrFontZurichBold)($t9)
 /* 0488C4 7F015ED4 240F0037 */  li    $t7, 55
 /* 0488C8 7F015ED8 241800A7 */  li    $t8, 167
-/* 0488CC 7F015EDC 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge) # $a3, 0x8004
+/* 0488CC 7F015EDC 3C078004 */  lui   $a3, %hi(ptrFontZurichBoldChars) # $a3, 0x8004
 /* 0488D0 7F015EE0 AFAF0C00 */  sw    $t7, 0xc00($sp)
 /* 0488D4 7F015EE4 AFB80BFC */  sw    $t8, 0xbfc($sp)
-/* 0488D8 7F015EE8 8CE7AB08 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
+/* 0488D8 7F015EE8 8CE7AB08 */  lw    $a3, %lo(ptrFontZurichBoldChars)($a3)
 /* 0488DC 7F015EEC 24040140 */  li    $a0, 320
 /* 0488E0 7F015EF0 8FA50C04 */  lw    $a1, 0xc04($sp)
 /* 0488E4 7F015EF4 27A60044 */  addiu $a2, $sp, 0x44
@@ -18496,10 +18496,10 @@ glabel constructor_menu0A_briefing
 /* 0488FC 7F015F0C 00000000 */   nop
 /* 048900 7F015F10 0C000F9F */  jal   viGetY
 /* 048904 7F015F14 A7A20040 */   sh    $v0, 0x40($sp)
-/* 048908 7F015F18 3C088004 */  lui   $t0, %hi(ptrSecondFontTableLarge) # $t0, 0x8004
-/* 04890C 7F015F1C 3C098004 */  lui   $t1, %hi(ptrFirstFontTableLarge) # $t1, 0x8004
-/* 048910 7F015F20 8D29AB04 */  lw    $t1, %lo(ptrFirstFontTableLarge)($t1)
-/* 048914 7F015F24 8D08AB08 */  lw    $t0, %lo(ptrSecondFontTableLarge)($t0)
+/* 048908 7F015F18 3C088004 */  lui   $t0, %hi(ptrFontZurichBoldChars) # $t0, 0x8004
+/* 04890C 7F015F1C 3C098004 */  lui   $t1, %hi(ptrFontZurichBold) # $t1, 0x8004
+/* 048910 7F015F20 8D29AB04 */  lw    $t1, %lo(ptrFontZurichBold)($t1)
+/* 048914 7F015F24 8D08AB08 */  lw    $t0, %lo(ptrFontZurichBoldChars)($t0)
 /* 048918 7F015F28 87AB0040 */  lh    $t3, 0x40($sp)
 /* 04891C 7F015F2C 240A00FF */  li    $t2, 255
 /* 048920 7F015F30 AFAA0018 */  sw    $t2, 0x18($sp)
@@ -18697,15 +18697,15 @@ Gfx * constructor_menu0C_missionfailed(Gfx *DL)
     text = langGet(TEXT(LTITLE, TITLE_STR_98)); //REPORT:*
     x = 0x37;
     y = 0x8F;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
     text = langGet(TEXT(LTITLE, TITLE_STR_99)); //Mission status:*
     x2 = 0;
     y2 = 0;
-    textMeasure(&y2, &x2, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
+    textMeasure(&y2, &x2, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0);
     x = 0x37;
     y = 0xA7;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
     if (g_isBondKIA)
     {
@@ -18731,7 +18731,7 @@ Gfx * constructor_menu0C_missionfailed(Gfx *DL)
 
     x = x2 + 0x37;
     y = 0xA7;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, phi_v1, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, phi_v1, viGetX(), viGetY(), 0, 0);
 
     DL = print_objectives_and_status_to_menu(DL, 0xBF, &stagename, 1);
     DL = add_tab2_next(DL);
@@ -18921,16 +18921,16 @@ Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
     text = langGet(TEXT(LTITLE, TITLE_STR_104)); //STATISTICS:*
     x = 0x37;
     y = 0x8F;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
     x2 = 0;
     y2 = 0;
-    textMeasure(&y2, &x2, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
+    textMeasure(&y2, &x2, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0);
 
     text = langGet(TEXT(LTITLE, TITLE_STR_105)); //Time:*
     x = 0x37;
     y = 0xA7;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
     besttime = fileGetSaveStageDifficultyTime( fileGetSaveForFoldernum(selected_folder_num), mission_folder_setup_entries[briefingpage].mission_num, selected_difficulty);
     if ((besttime == 0) || (!(besttime < 0x3FF))) {
@@ -18948,12 +18948,12 @@ Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
     sprintf(stagename, "%02d:%02d", missiontime / 60, missiontime % 60);
     x = 0x82;
     y = 0xA7;
-    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
     if (g_NewCheatUnlocked) {
         stagename[0] = '\0';
         sprintf(stagename, "     [%s]", langGet(TEXT(LTITLE, TITLE_STR_275))); //New Cheat Available
-        DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xA00000FF, viGetX(), viGetY(), 0, 0);
+        DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xA00000FF, viGetX(), viGetY(), 0, 0);
     }
 
 
@@ -18961,12 +18961,12 @@ Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
         text = langGet(TEXT(LTITLE, TITLE_STR_274)); //Target:
         x = 0x37;
         y = y2 + 0xA9;
-        DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+        DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
         stagename[0] = '\0';
         sprintf(stagename, "%02d:%02d", targettime / 60, targettime % 60);
         x = 0x82;
         y = y2 + 0xA9;
-        DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+        DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
         if (besttime >= 0) {
             if (besttime < 0x3FF) {
                 stagename[0] = '\0';
@@ -18976,7 +18976,7 @@ Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
                 else {
                     sprintf(stagename, "");
                 }
-                DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+                DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
             }
         }
     }
@@ -18986,12 +18986,12 @@ Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
                 text = langGet(TEXT(LTITLE, TITLE_STR_273)); //Best Time:
                 x = 0x37;
                 y = y2 + 0xA9;
-                DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+                DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
                 stagename[0] = '\0';
                 sprintf(stagename, "%02d:%02d", besttime / 60, besttime % 60);
                 x = 0x82;
                 y = y2 + 0xA9;
-                DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+                DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
             }
         }
     }
@@ -19000,7 +19000,7 @@ Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
     text = langGet(TEXT(LTITLE, TITLE_STR_106)); //Accuracy:*
     x = 0x37;
     y = 0xCC;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
     if (shotsfired > 0) {
         hitPct = (hitshots * 100.0f) / shotsfired;
     }
@@ -19010,13 +19010,13 @@ Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
     sprintf(stagename, "%.1f%%",  hitPct);
     x = 0x82;
     y = 0xCC;
-    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
 
     text = langGet(TEXT(LTITLE, TITLE_STR_107)); //Weapon of choice:*
     x = 0x37;
     y = 0xDC;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
     strcpy(stagename, getplayerfavoredweapon(0, 0));
     if ((array_favweapon[0][0] > 0) && (array_favweapon[0][1] == array_favweapon[0][0]))
     {
@@ -19025,68 +19025,68 @@ Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
     }
     x = 0xBE;
     y = 0xDC;
-    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
 
     text = langGet(TEXT(LTITLE, TITLE_STR_108)); //Shot total:*
     x = 0x37;
     y = 0xF4;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
     sprintf(stagename, "%d", shotsfired);
     x = 0x82;
     y = 0xF4;
-    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
 
     text = langGet(TEXT(LTITLE, TITLE_STR_109)); //Head hits:*
     x = 0xB4;
     y = 0xF4;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
     sprintf(stagename, "%d (%d%%)", headshots, (s32)(floorFloat(((headshots * 100.0f) / allhits) + 0.5f)));
     x = 0x12C;
     y = 0xF4;
-    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
 
     text = langGet(TEXT(LTITLE, TITLE_STR_110)); //Body hits:*
     x = 0xB4;
     y = y2 + 0xF4;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
     sprintf(stagename, "%d (%d%%)", bodyshots, (s32)floorFloat(((bodyshots * 100.0f) / allhits) + 0.5f));
     x = 0x12C;
     y = y2 + 0xF4;
-    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
 
     text = langGet(TEXT(LTITLE, TITLE_STR_111)); //Limb hits:*
     x = 0xB4;
     y = (y2 * 2) + 0xF4;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
     sprintf(stagename, "%d (%d%%)", limbshots, (s32)floorFloat(((limbshots * 100.0f) / allhits) + 0.5f));
     x = 0x12C;
     y = (y2 * 2) + 0xF4;
-    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
 
     text = langGet(TEXT(LTITLE, TITLE_STR_112)); //Others:*
     x = 0xB4;
     y = (y2 * 3) + 0xF4;
     temp = reg5 + reg4;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
     sprintf(stagename, "%d (%d%%)", temp, (s32)floorFloat(((temp * 100.0f) / allhits) + 0.5f));
     x = 0x12C;
     y = (y2 * 3) + 0xF4;
-    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
 
     text = langGet(TEXT(LTITLE, TITLE_STR_113)); //Kill total:*
     x = 0x37;
     y = y2 + 0xF4;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
     sprintf(stagename, "%d", killcount);
     x = 0x82;
     y = y2 + 0xF4;
-    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
 
     DL = add_tab2_next(DL);
@@ -19502,10 +19502,10 @@ glabel constructor_menu15_cheat
 /* 04CB14 7F017FE4 3C0F8007 */  lui   $t7, %hi(arrayUnlockedCheats)
 /* 04CB18 7F017FE8 25EF97F0 */  addiu $t7, %lo(arrayUnlockedCheats) # addiu $t7, $t7, -0x6810
 /* 04CB1C 7F017FEC 0015A880 */  sll   $s5, $s5, 2
-/* 04CB20 7F017FF0 3C178004 */  lui   $s7, %hi(ptrFirstFontTableLarge)
-/* 04CB24 7F017FF4 3C168004 */  lui   $s6, %hi(ptrSecondFontTableLarge)
-/* 04CB28 7F017FF8 26D60EB8 */  addiu $s6, %lo(ptrSecondFontTableLarge) # addiu $s6, $s6, 0xeb8
-/* 04CB2C 7F017FFC 26F70EB4 */  addiu $s7, %lo(ptrFirstFontTableLarge) # addiu $s7, $s7, 0xeb4
+/* 04CB20 7F017FF0 3C178004 */  lui   $s7, %hi(ptrFontZurichBold)
+/* 04CB24 7F017FF4 3C168004 */  lui   $s6, %hi(ptrFontZurichBoldChars)
+/* 04CB28 7F017FF8 26D60EB8 */  addiu $s6, %lo(ptrFontZurichBoldChars) # addiu $s6, $s6, 0xeb8
+/* 04CB2C 7F017FFC 26F70EB4 */  addiu $s7, %lo(ptrFontZurichBold) # addiu $s7, $s7, 0xeb4
 /* 04CB30 7F018000 26B50035 */  addiu $s5, $s5, 0x35
 /* 04CB34 7F018004 01CF9821 */  addu  $s3, $t6, $t7
 .L7F018008:
@@ -19637,12 +19637,12 @@ glabel constructor_menu15_cheat
 /* 04CD18 7F0181E8 1420FF87 */  bnez  $at, .L7F018008
 /* 04CD1C 7F0181EC 00000000 */   nop
 .L7F0181F0:
-/* 04CD20 7F0181F0 3C168004 */  lui   $s6, %hi(ptrSecondFontTableLarge)
-/* 04CD24 7F0181F4 3C178004 */  lui   $s7, %hi(ptrFirstFontTableLarge)
+/* 04CD20 7F0181F0 3C168004 */  lui   $s6, %hi(ptrFontZurichBoldChars)
+/* 04CD24 7F0181F4 3C178004 */  lui   $s7, %hi(ptrFontZurichBold)
 /* 04CD28 7F0181F8 2861000D */  slti  $at, $v1, 0xd
-/* 04CD2C 7F0181FC 26F70EB4 */  addiu $s7, %lo(ptrFirstFontTableLarge) # addiu $s7, $s7, 0xeb4
+/* 04CD2C 7F0181FC 26F70EB4 */  addiu $s7, %lo(ptrFontZurichBold) # addiu $s7, $s7, 0xeb4
 /* 04CD30 7F018200 1420007D */  bnez  $at, .L7F0183F8
-/* 04CD34 7F018204 26D60EB8 */   addiu $s6, %lo(ptrSecondFontTableLarge) # addiu $s6, $s6, 0xeb8
+/* 04CD34 7F018204 26D60EB8 */   addiu $s6, %lo(ptrFontZurichBoldChars) # addiu $s6, $s6, 0xeb8
 /* 04CD38 7F018208 246DFFF4 */  addiu $t5, $v1, -0xc
 /* 04CD3C 7F01820C 19A0007A */  blez  $t5, .L7F0183F8
 /* 04CD40 7F018210 0000F025 */   move  $fp, $zero
@@ -19838,10 +19838,10 @@ glabel constructor_menu15_cheat
 /* 04A948 7F017F58 3C0F8006 */  lui   $t7, %hi(arrayUnlockedCheats) # $t7, 0x8006
 /* 04A94C 7F017F5C 25EF8730 */  addiu $t7, %lo(arrayUnlockedCheats) # addiu $t7, $t7, -0x78d0
 /* 04A950 7F017F60 0015A880 */  sll   $s5, $s5, 2
-/* 04A954 7F017F64 3C178004 */  lui   $s7, %hi(ptrFirstFontTableLarge) # $s7, 0x8004
-/* 04A958 7F017F68 3C168004 */  lui   $s6, %hi(ptrSecondFontTableLarge) # $s6, 0x8004
-/* 04A95C 7F017F6C 26D6AB08 */  addiu $s6, %lo(ptrSecondFontTableLarge) # addiu $s6, $s6, -0x54f8
-/* 04A960 7F017F70 26F7AB04 */  addiu $s7, %lo(ptrFirstFontTableLarge) # addiu $s7, $s7, -0x54fc
+/* 04A954 7F017F64 3C178004 */  lui   $s7, %hi(ptrFontZurichBold) # $s7, 0x8004
+/* 04A958 7F017F68 3C168004 */  lui   $s6, %hi(ptrFontZurichBoldChars) # $s6, 0x8004
+/* 04A95C 7F017F6C 26D6AB08 */  addiu $s6, %lo(ptrFontZurichBoldChars) # addiu $s6, $s6, -0x54f8
+/* 04A960 7F017F70 26F7AB04 */  addiu $s7, %lo(ptrFontZurichBold) # addiu $s7, $s7, -0x54fc
 /* 04A964 7F017F74 26B50035 */  addiu $s5, $s5, 0x35
 /* 04A968 7F017F78 01CF9821 */  addu  $s3, $t6, $t7
 .L7F017F7C:
@@ -19973,12 +19973,12 @@ glabel constructor_menu15_cheat
 /* 04AB4C 7F01815C 1420FF87 */  bnez  $at, .L7F017F7C
 /* 04AB50 7F018160 00000000 */   nop
 .L7F018164:
-/* 04AB54 7F018164 3C168004 */  lui   $s6, %hi(ptrSecondFontTableLarge) # $s6, 0x8004
-/* 04AB58 7F018168 3C178004 */  lui   $s7, %hi(ptrFirstFontTableLarge) # $s7, 0x8004
+/* 04AB54 7F018164 3C168004 */  lui   $s6, %hi(ptrFontZurichBoldChars) # $s6, 0x8004
+/* 04AB58 7F018168 3C178004 */  lui   $s7, %hi(ptrFontZurichBold) # $s7, 0x8004
 /* 04AB5C 7F01816C 2861000D */  slti  $at, $v1, 0xd
-/* 04AB60 7F018170 26F7AB04 */  addiu $s7, %lo(ptrFirstFontTableLarge) # addiu $s7, $s7, -0x54fc
+/* 04AB60 7F018170 26F7AB04 */  addiu $s7, %lo(ptrFontZurichBold) # addiu $s7, $s7, -0x54fc
 /* 04AB64 7F018174 1420007D */  bnez  $at, .L7F01836C
-/* 04AB68 7F018178 26D6AB08 */   addiu $s6, %lo(ptrSecondFontTableLarge) # addiu $s6, $s6, -0x54f8
+/* 04AB68 7F018178 26D6AB08 */   addiu $s6, %lo(ptrFontZurichBoldChars) # addiu $s6, $s6, -0x54f8
 /* 04AB6C 7F01817C 246DFFF4 */  addiu $t5, $v1, -0xc
 /* 04AB70 7F018180 19A0007A */  blez  $t5, .L7F01836C
 /* 04AB74 7F018184 0000F025 */   move  $fp, $zero
@@ -20175,16 +20175,16 @@ Gfx *constructor_menu16_nocontrollers(Gfx *DL)
     if ((numContCon == 0) || (numContCon == 1) || (numContCon == 2) || (numContCon == 3)) {
         text = langGet(TEXT(LTITLE, TITLE_STR_118)); //NO CONTROLLER IN CONTROLLER SOCKET 1
     }
-    textMeasure(&y2, &x2, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
+    textMeasure(&y2, &x2, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0);
     x = 0xDC - (x2 >> 1);
     y = 0x99 - (y2 >> 1);
 #ifdef BUGFIX_R1
     if (j_text_trigger) {
-        DL = textRenderGlow(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, -1, 0x8000FF, viGetX(), viGetY(), 0, 0);
+        DL = textRenderGlow(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, -1, 0x8000FF, viGetX(), viGetY(), 0, 0);
     }
     else {
 #endif
-        DL = textRender(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, -1, viGetX(), viGetY(), 0, 0);
+        DL = textRender(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, -1, viGetX(), viGetY(), 0, 0);
 #ifdef BUGFIX_R1
     }
 #endif
@@ -20193,16 +20193,16 @@ Gfx *constructor_menu16_nocontrollers(Gfx *DL)
     if ((numContCon == 0) || (numContCon == 1) || (numContCon == 2) || (numContCon == 3)) {
         text = langGet(TEXT(LTITLE, TITLE_STR_119)); //PLEASE POWER OFF AND ATTACH A CONTROLLER
     }
-    textMeasure(&y2, &x2, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
+    textMeasure(&y2, &x2, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0);
     x = 0xDC - (x2 >> 1);
     y = 0xB1 - (y2 >> 1);
 #ifdef BUGFIX_R1
     if (j_text_trigger) {
-        DL = textRenderGlow(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, -1, 0x8000FF, viGetX(), viGetY(), 0, 0);
+        DL = textRenderGlow(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, -1, 0x8000FF, viGetX(), viGetY(), 0, 0);
     }
     else {
 #endif
-        DL = textRender(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, -1, viGetX(), viGetY(), 0, 0);
+        DL = textRender(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, -1, viGetX(), viGetY(), 0, 0);
 #ifdef BUGFIX_R1
     }
 #endif
@@ -23148,10 +23148,10 @@ glabel constructor_menu18_displaycast
 /* 04EADC 7F019FAC 008B2021 */  addu  $a0, $a0, $t3
 /* 04EAE0 7F019FB0 0FC30776 */  jal   langGet
 /* 04EAE4 7F019FB4 9484B608 */   lhu   $a0, %lo(intro_char_table+8)($a0)
-/* 04EAE8 7F019FB8 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableLarge)
-/* 04EAEC 7F019FBC 8DCE0EB4 */  lw    $t6, %lo(ptrFirstFontTableLarge)($t6)
-/* 04EAF0 7F019FC0 3C148004 */  lui   $s4, %hi(ptrSecondFontTableLarge)
-/* 04EAF4 7F019FC4 26940EB8 */  addiu $s4, %lo(ptrSecondFontTableLarge) # addiu $s4, $s4, 0xeb8
+/* 04EAE8 7F019FB8 3C0E8004 */  lui   $t6, %hi(ptrFontZurichBold)
+/* 04EAEC 7F019FBC 8DCE0EB4 */  lw    $t6, %lo(ptrFontZurichBold)($t6)
+/* 04EAF0 7F019FC0 3C148004 */  lui   $s4, %hi(ptrFontZurichBoldChars)
+/* 04EAF4 7F019FC4 26940EB8 */  addiu $s4, %lo(ptrFontZurichBoldChars) # addiu $s4, $s4, 0xeb8
 /* 04EAF8 7F019FC8 00408825 */  move  $s1, $v0
 /* 04EAFC 7F019FCC 8E870000 */  lw    $a3, ($s4)
 /* 04EB00 7F019FD0 27A40150 */  addiu $a0, $sp, 0x150
@@ -23190,8 +23190,8 @@ glabel constructor_menu18_displaycast
 /* 04EB80 7F01A050 240C0001 */  li    $t4, 1
 /* 04EB84 7F01A054 44CCF800 */  ctc1  $t4, $31
 /* 04EB88 7F01A058 C7A40070 */  lwc1  $f4, 0x70($sp)
-/* 04EB8C 7F01A05C 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableLarge)
-/* 04EB90 7F01A060 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTableLarge)($t5)
+/* 04EB8C 7F01A05C 3C0D8004 */  lui   $t5, %hi(ptrFontZurichBold)
+/* 04EB90 7F01A060 8DAD0EB4 */  lw    $t5, %lo(ptrFontZurichBold)($t5)
 /* 04EB94 7F01A064 460021A4 */  cvt.w.s $f6, $f4
 /* 04EB98 7F01A068 8E8E0000 */  lw    $t6, ($s4)
 /* 04EB9C 7F01A06C 02602025 */  move  $a0, $s3
@@ -23251,10 +23251,10 @@ glabel constructor_menu18_displaycast
 /* 04EC64 7F01A134 01795821 */  addu  $t3, $t3, $t9
 /* 04EC68 7F01A138 4452F800 */  cfc1  $s2, $31
 /* 04EC6C 7F01A13C 000B5880 */  sll   $t3, $t3, 2
-/* 04EC70 7F01A140 3C148004 */  lui   $s4, %hi(ptrSecondFontTableLarge)
+/* 04EC70 7F01A140 3C148004 */  lui   $s4, %hi(ptrFontZurichBoldChars)
 /* 04EC74 7F01A144 008B2021 */  addu  $a0, $a0, $t3
 /* 04EC78 7F01A148 32520078 */  andi  $s2, $s2, 0x78
-/* 04EC7C 7F01A14C 26940EB8 */  addiu $s4, %lo(ptrSecondFontTableLarge) # addiu $s4, $s4, 0xeb8
+/* 04EC7C 7F01A14C 26940EB8 */  addiu $s4, %lo(ptrFontZurichBoldChars) # addiu $s4, $s4, 0xeb8
 /* 04EC80 7F01A150 12400013 */  beqz  $s2, .L7F01A1A0
 /* 04EC84 7F01A154 9484B60A */   lhu   $a0, %lo(intro_char_table+10)($a0)
 /* 04EC88 7F01A158 3C014F00 */  li    $at, 0x4F000000 # 2147483648.000000
@@ -23287,8 +23287,8 @@ glabel constructor_menu18_displaycast
 /* 04ECE8 7F01A1B8 44CEF800 */  ctc1  $t6, $31
 /* 04ECEC 7F01A1BC 0FC30776 */  jal   langGet
 /* 04ECF0 7F01A1C0 01A09025 */   move  $s2, $t5
-/* 04ECF4 7F01A1C4 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTableLarge)
-/* 04ECF8 7F01A1C8 8DEF0EB4 */  lw    $t7, %lo(ptrFirstFontTableLarge)($t7)
+/* 04ECF4 7F01A1C4 3C0F8004 */  lui   $t7, %hi(ptrFontZurichBold)
+/* 04ECF8 7F01A1C8 8DEF0EB4 */  lw    $t7, %lo(ptrFontZurichBold)($t7)
 /* 04ECFC 7F01A1CC 00408825 */  move  $s1, $v0
 /* 04ED00 7F01A1D0 27A40150 */  addiu $a0, $sp, 0x150
 /* 04ED04 7F01A1D4 27A50154 */  addiu $a1, $sp, 0x154
@@ -23323,8 +23323,8 @@ glabel constructor_menu18_displaycast
 /* 04ED74 7F01A244 00106C03 */  sra   $t5, $s0, 0x10
 /* 04ED78 7F01A248 0C00110B */  jal   viGetY
 /* 04ED7C 7F01A24C 01A08025 */   move  $s0, $t5
-/* 04ED80 7F01A250 3C188004 */  lui   $t8, %hi(ptrFirstFontTableLarge)
-/* 04ED84 7F01A254 8F180EB4 */  lw    $t8, %lo(ptrFirstFontTableLarge)($t8)
+/* 04ED80 7F01A250 3C188004 */  lui   $t8, %hi(ptrFontZurichBold)
+/* 04ED84 7F01A254 8F180EB4 */  lw    $t8, %lo(ptrFontZurichBold)($t8)
 /* 04ED88 7F01A258 8E8F0000 */  lw    $t7, ($s4)
 /* 04ED8C 7F01A25C 02602025 */  move  $a0, $s3
 /* 04ED90 7F01A260 27A5015C */  addiu $a1, $sp, 0x15c
@@ -23348,8 +23348,8 @@ glabel constructor_menu18_displaycast
 /* 04EDD8 7F01A2A8 00992021 */  addu  $a0, $a0, $t9
 /* 04EDDC 7F01A2AC 0FC30776 */  jal   langGet
 /* 04EDE0 7F01A2B0 9484B60C */   lhu   $a0, %lo(intro_char_table+12)($a0)
-/* 04EDE4 7F01A2B4 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTableLarge)
-/* 04EDE8 7F01A2B8 8D6B0EB4 */  lw    $t3, %lo(ptrFirstFontTableLarge)($t3)
+/* 04EDE4 7F01A2B4 3C0B8004 */  lui   $t3, %hi(ptrFontZurichBold)
+/* 04EDE8 7F01A2B8 8D6B0EB4 */  lw    $t3, %lo(ptrFontZurichBold)($t3)
 /* 04EDEC 7F01A2BC 00408825 */  move  $s1, $v0
 /* 04EDF0 7F01A2C0 27A40150 */  addiu $a0, $sp, 0x150
 /* 04EDF4 7F01A2C4 27A50154 */  addiu $a1, $sp, 0x154
@@ -23384,8 +23384,8 @@ glabel constructor_menu18_displaycast
 /* 04EE64 7F01A334 0010CC03 */  sra   $t9, $s0, 0x10
 /* 04EE68 7F01A338 0C00110B */  jal   viGetY
 /* 04EE6C 7F01A33C 03208025 */   move  $s0, $t9
-/* 04EE70 7F01A340 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableLarge)
-/* 04EE74 7F01A344 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTableLarge)($t5)
+/* 04EE70 7F01A340 3C0D8004 */  lui   $t5, %hi(ptrFontZurichBold)
+/* 04EE74 7F01A344 8DAD0EB4 */  lw    $t5, %lo(ptrFontZurichBold)($t5)
 /* 04EE78 7F01A348 8E8B0000 */  lw    $t3, ($s4)
 /* 04EE7C 7F01A34C 02602025 */  move  $a0, $s3
 /* 04EE80 7F01A350 27A5015C */  addiu $a1, $sp, 0x15c
@@ -24272,10 +24272,10 @@ glabel constructor_menu18_displaycast
 /* 04CA18 7F01A028 008B2021 */  addu  $a0, $a0, $t3
 /* 04CA1C 7F01A02C 0FC304AE */  jal   langGet
 /* 04CA20 7F01A030 94846B58 */   lhu   $a0, %lo(intro_char_table+8)($a0)
-/* 04CA24 7F01A034 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableLarge) # $t6, 0x8004
-/* 04CA28 7F01A038 8DCEAB04 */  lw    $t6, %lo(ptrFirstFontTableLarge)($t6)
-/* 04CA2C 7F01A03C 3C148004 */  lui   $s4, %hi(ptrSecondFontTableLarge) # $s4, 0x8004
-/* 04CA30 7F01A040 2694AB08 */  addiu $s4, %lo(ptrSecondFontTableLarge) # addiu $s4, $s4, -0x54f8
+/* 04CA24 7F01A034 3C0E8004 */  lui   $t6, %hi(ptrFontZurichBold) # $t6, 0x8004
+/* 04CA28 7F01A038 8DCEAB04 */  lw    $t6, %lo(ptrFontZurichBold)($t6)
+/* 04CA2C 7F01A03C 3C148004 */  lui   $s4, %hi(ptrFontZurichBoldChars) # $s4, 0x8004
+/* 04CA30 7F01A040 2694AB08 */  addiu $s4, %lo(ptrFontZurichBoldChars) # addiu $s4, $s4, -0x54f8
 /* 04CA34 7F01A044 00408825 */  move  $s1, $v0
 /* 04CA38 7F01A048 8E870000 */  lw    $a3, ($s4)
 /* 04CA3C 7F01A04C 27A40150 */  addiu $a0, $sp, 0x150
@@ -24314,8 +24314,8 @@ glabel constructor_menu18_displaycast
 /* 04CABC 7F01A0CC 240C0001 */  li    $t4, 1
 /* 04CAC0 7F01A0D0 44CCF800 */  ctc1  $t4, $31
 /* 04CAC4 7F01A0D4 C7A40070 */  lwc1  $f4, 0x70($sp)
-/* 04CAC8 7F01A0D8 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableLarge) # $t5, 0x8004
-/* 04CACC 7F01A0DC 8DADAB04 */  lw    $t5, %lo(ptrFirstFontTableLarge)($t5)
+/* 04CAC8 7F01A0D8 3C0D8004 */  lui   $t5, %hi(ptrFontZurichBold) # $t5, 0x8004
+/* 04CACC 7F01A0DC 8DADAB04 */  lw    $t5, %lo(ptrFontZurichBold)($t5)
 /* 04CAD0 7F01A0E0 460021A4 */  cvt.w.s $f6, $f4
 /* 04CAD4 7F01A0E4 8E8E0000 */  lw    $t6, ($s4)
 /* 04CAD8 7F01A0E8 02602025 */  move  $a0, $s3
@@ -24375,10 +24375,10 @@ glabel constructor_menu18_displaycast
 /* 04CBA0 7F01A1B0 01795821 */  addu  $t3, $t3, $t9
 /* 04CBA4 7F01A1B4 4452F800 */  cfc1  $s2, $31
 /* 04CBA8 7F01A1B8 000B5880 */  sll   $t3, $t3, 2
-/* 04CBAC 7F01A1BC 3C148004 */  lui   $s4, %hi(ptrSecondFontTableLarge) # $s4, 0x8004
+/* 04CBAC 7F01A1BC 3C148004 */  lui   $s4, %hi(ptrFontZurichBoldChars) # $s4, 0x8004
 /* 04CBB0 7F01A1C0 008B2021 */  addu  $a0, $a0, $t3
 /* 04CBB4 7F01A1C4 32520078 */  andi  $s2, $s2, 0x78
-/* 04CBB8 7F01A1C8 2694AB08 */  addiu $s4, %lo(ptrSecondFontTableLarge) # addiu $s4, $s4, -0x54f8
+/* 04CBB8 7F01A1C8 2694AB08 */  addiu $s4, %lo(ptrFontZurichBoldChars) # addiu $s4, $s4, -0x54f8
 /* 04CBBC 7F01A1CC 12400013 */  beqz  $s2, .L7F01A21C
 /* 04CBC0 7F01A1D0 94846B5A */   lhu   $a0, %lo(intro_char_table+10)($a0)
 /* 04CBC4 7F01A1D4 3C014F00 */  li    $at, 0x4F000000 # 2147483648.000000
@@ -24411,8 +24411,8 @@ glabel constructor_menu18_displaycast
 /* 04CC24 7F01A234 44CEF800 */  ctc1  $t6, $31
 /* 04CC28 7F01A238 0FC304AE */  jal   langGet
 /* 04CC2C 7F01A23C 01A09025 */   move  $s2, $t5
-/* 04CC30 7F01A240 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTableLarge) # $t7, 0x8004
-/* 04CC34 7F01A244 8DEFAB04 */  lw    $t7, %lo(ptrFirstFontTableLarge)($t7)
+/* 04CC30 7F01A240 3C0F8004 */  lui   $t7, %hi(ptrFontZurichBold) # $t7, 0x8004
+/* 04CC34 7F01A244 8DEFAB04 */  lw    $t7, %lo(ptrFontZurichBold)($t7)
 /* 04CC38 7F01A248 00408825 */  move  $s1, $v0
 /* 04CC3C 7F01A24C 27A40150 */  addiu $a0, $sp, 0x150
 /* 04CC40 7F01A250 27A50154 */  addiu $a1, $sp, 0x154
@@ -24447,8 +24447,8 @@ glabel constructor_menu18_displaycast
 /* 04CCB0 7F01A2C0 00106C03 */  sra   $t5, $s0, 0x10
 /* 04CCB4 7F01A2C4 0C000F9F */  jal   viGetY
 /* 04CCB8 7F01A2C8 01A08025 */   move  $s0, $t5
-/* 04CCBC 7F01A2CC 3C188004 */  lui   $t8, %hi(ptrFirstFontTableLarge) # $t8, 0x8004
-/* 04CCC0 7F01A2D0 8F18AB04 */  lw    $t8, %lo(ptrFirstFontTableLarge)($t8)
+/* 04CCBC 7F01A2CC 3C188004 */  lui   $t8, %hi(ptrFontZurichBold) # $t8, 0x8004
+/* 04CCC0 7F01A2D0 8F18AB04 */  lw    $t8, %lo(ptrFontZurichBold)($t8)
 /* 04CCC4 7F01A2D4 8E8F0000 */  lw    $t7, ($s4)
 /* 04CCC8 7F01A2D8 02602025 */  move  $a0, $s3
 /* 04CCCC 7F01A2DC 27A5015C */  addiu $a1, $sp, 0x15c
@@ -24472,8 +24472,8 @@ glabel constructor_menu18_displaycast
 /* 04CD14 7F01A324 00992021 */  addu  $a0, $a0, $t9
 /* 04CD18 7F01A328 0FC304AE */  jal   langGet
 /* 04CD1C 7F01A32C 94846B5C */   lhu   $a0, %lo(intro_char_table+12)($a0)
-/* 04CD20 7F01A330 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTableLarge) # $t3, 0x8004
-/* 04CD24 7F01A334 8D6BAB04 */  lw    $t3, %lo(ptrFirstFontTableLarge)($t3)
+/* 04CD20 7F01A330 3C0B8004 */  lui   $t3, %hi(ptrFontZurichBold) # $t3, 0x8004
+/* 04CD24 7F01A334 8D6BAB04 */  lw    $t3, %lo(ptrFontZurichBold)($t3)
 /* 04CD28 7F01A338 00408825 */  move  $s1, $v0
 /* 04CD2C 7F01A33C 27A40150 */  addiu $a0, $sp, 0x150
 /* 04CD30 7F01A340 27A50154 */  addiu $a1, $sp, 0x154
@@ -24508,8 +24508,8 @@ glabel constructor_menu18_displaycast
 /* 04CDA0 7F01A3B0 0010CC03 */  sra   $t9, $s0, 0x10
 /* 04CDA4 7F01A3B4 0C000F9F */  jal   viGetY
 /* 04CDA8 7F01A3B8 03208025 */   move  $s0, $t9
-/* 04CDAC 7F01A3BC 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableLarge) # $t5, 0x8004
-/* 04CDB0 7F01A3C0 8DADAB04 */  lw    $t5, %lo(ptrFirstFontTableLarge)($t5)
+/* 04CDAC 7F01A3BC 3C0D8004 */  lui   $t5, %hi(ptrFontZurichBold) # $t5, 0x8004
+/* 04CDB0 7F01A3C0 8DADAB04 */  lw    $t5, %lo(ptrFontZurichBold)($t5)
 /* 04CDB4 7F01A3C4 8E8B0000 */  lw    $t3, ($s4)
 /* 04CDB8 7F01A3C8 02602025 */  move  $a0, $s3
 /* 04CDBC 7F01A3CC 27A5015C */  addiu $a1, $sp, 0x15c

@@ -3,10 +3,10 @@
 #include <ultra64.h>
 #include "bondtypes.h"
 
-extern s32 ptrFirstFontTableSmall;
-extern s32 ptrSecondFontTableSmall;
-extern s32 ptrFirstFontTableLarge;
-extern s32 ptrSecondFontTableLarge;
+extern s32 ptrFontBankGothic;
+extern s32 ptrFontBankGothicChars;
+extern s32 ptrFontZurichBold;
+extern s32 ptrFontZurichBoldChars;
 
 void textrelatedInit_REMOVED(void);
 void load_font_tables(void);

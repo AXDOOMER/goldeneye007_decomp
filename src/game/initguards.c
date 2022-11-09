@@ -38,7 +38,7 @@ void alloc_init_GUARDdata_entries(s32 count)
 
 
 
-void set_new_rand_head_bodies(u32 stagenum)
+void bodiesReset(u32 stagenum)
 {
     s32 i;
   

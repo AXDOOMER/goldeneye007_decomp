@@ -977,6 +977,7 @@ typedef enum DEBUG_OPTIONS
     DEB_FOG
 } DEBUG_MODES;
 
+
 typedef enum DIFFICULTY
 {
     DIFFICULTY_MULTI = -1,
@@ -3132,6 +3133,8 @@ typedef enum SPSEGMENT
 
 #pragma endregion
 
+#define S32_MAX  2147483647
+#define U32_MAX  4294967295
 #pragma region Inline Macro Functions
 #ifndef _MATH_EXT_H_
     #define M_TAU_F               6.2831855f

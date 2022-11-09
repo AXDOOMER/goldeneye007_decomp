@@ -3,12 +3,12 @@ char *LtitleE[] = {
  "minute", //TITLE_STR_1
  "second", //TITLE_STR_2
  "s", //TITLE_STR_3
- "START\n", //TITLE_STR_4
- "NEXT\n", //TITLE_STR_5
- "PREVIOUS\n", //TITLE_STR_6
- "TWYCROSS BOARD OF GAME CLASSIFICATION\n", //TITLE_STR_7
- "This is to certify\n", //TITLE_STR_8
- "(c) 1997 Nintendo/Rare\n", //TITLE_STR_9
+ "START\n", //TITLE_STR_04
+ "NEXT\n", //TITLE_STR_05
+ "PREVIOUS\n", //TITLE_STR_06
+ "TWYCROSS BOARD OF GAME CLASSIFICATION\n", //TITLE_STR_07
+ "This is to certify\n", //TITLE_STR_08
+ "(c) 1997 Nintendo/Rare\n", //TITLE_STR_09
  "(c) 1962, 1995 Danjaq, LLC. &\n", //TITLE_STR_10
  "U.A.C. All Rights Reserved\n", //TITLE_STR_11
  "(c) 1997 Eon Productions\n", //TITLE_STR_12

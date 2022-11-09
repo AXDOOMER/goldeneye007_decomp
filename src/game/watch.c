@@ -16,7 +16,7 @@
 #include "textrelated.h"
 #include "unk_0A1DA0.h"
 #include "unk_0C0A70.h"
-
+#include "assets/obseg/text/LoptionE.h"
 
 #define WATCH_BACKGROUND_VERTEX_COUNT 30
 
@@ -64,25 +64,25 @@ f32 D_800409D4 = 0.0f;
 s32 D_800409D8 = 8;
 //D:800409DC
 u16 D_800409DC[] = {
-    /*1.1 honey*/    TEXT(LOPTIONS,0x9), /*weapon*/TEXT(LOPTIONS,0x3), /*action*/TEXT(LOPTIONS,0x2), /*fire*/TEXT(LOPTIONS,0x0),    /*aim*/TEXT(LOPTIONS,0x1),    /*aim*/TEXT(LOPTIONS,0x1), /*look*/TEXT(LOPTIONS,0x6), /*look*/TEXT(LOPTIONS,0x6), /*pause*/TEXT(LOPTIONS,0x4), /*move*/TEXT(LOPTIONS,0x5),
-    /*1.2 solitaire*/TEXT(LOPTIONS,0xA), /*weapon*/TEXT(LOPTIONS,0x3), /*action*/TEXT(LOPTIONS,0x2), /*fire*/TEXT(LOPTIONS,0x0),    /*aim*/TEXT(LOPTIONS,0x1),    /*aim*/TEXT(LOPTIONS,0x1), /*move*/TEXT(LOPTIONS,0x5), /*move*/TEXT(LOPTIONS,0x5), /*pause*/TEXT(LOPTIONS,0x4), /*look*/TEXT(LOPTIONS,0x6),
-    /*1.3 kissy*/    TEXT(LOPTIONS,0xB),   /*fire*/TEXT(LOPTIONS,0x0), /*action*/TEXT(LOPTIONS,0x2),  /*aim*/TEXT(LOPTIONS,0x1), /*weapon*/TEXT(LOPTIONS,0x3), /*weapon*/TEXT(LOPTIONS,0x3), /*look*/TEXT(LOPTIONS,0x6), /*look*/TEXT(LOPTIONS,0x6), /*pause*/TEXT(LOPTIONS,0x4), /*move*/TEXT(LOPTIONS,0x5),
-    /*1.4 goodnight*/TEXT(LOPTIONS,0xC),   /*fire*/TEXT(LOPTIONS,0x0), /*action*/TEXT(LOPTIONS,0x2),  /*aim*/TEXT(LOPTIONS,0x1), /*weapon*/TEXT(LOPTIONS,0x3), /*weapon*/TEXT(LOPTIONS,0x3), /*move*/TEXT(LOPTIONS,0x5), /*move*/TEXT(LOPTIONS,0x5), /*pause*/TEXT(LOPTIONS,0x4), /*look*/TEXT(LOPTIONS,0x6),
-    /*2.1 plenty*/   TEXT(LOPTIONS,0xD),      /*?*/TEXT(LOPTIONS,0x7),      /*?*/TEXT(LOPTIONS,0x7),    /*?*/TEXT(LOPTIONS,0x7),      /*?*/TEXT(LOPTIONS,0x7),      /*?*/TEXT(LOPTIONS,0x7),    /*?*/TEXT(LOPTIONS,0x7),    /*?*/TEXT(LOPTIONS,0x7),     /*?*/TEXT(LOPTIONS,0x7),    /*?*/TEXT(LOPTIONS,0x7),
-    /*2.2 galore*/   TEXT(LOPTIONS,0xE),      /*?*/TEXT(LOPTIONS,0x7),      /*?*/TEXT(LOPTIONS,0x7),    /*?*/TEXT(LOPTIONS,0x7),      /*?*/TEXT(LOPTIONS,0x7),      /*?*/TEXT(LOPTIONS,0x7),    /*?*/TEXT(LOPTIONS,0x7),    /*?*/TEXT(LOPTIONS,0x7),     /*?*/TEXT(LOPTIONS,0x7),    /*?*/TEXT(LOPTIONS,0x7),
-    /*2.3 domino*/   TEXT(LOPTIONS,0xF),      /*?*/TEXT(LOPTIONS,0x7),      /*?*/TEXT(LOPTIONS,0x7),    /*?*/TEXT(LOPTIONS,0x7),      /*?*/TEXT(LOPTIONS,0x7),      /*?*/TEXT(LOPTIONS,0x7),    /*?*/TEXT(LOPTIONS,0x7),    /*?*/TEXT(LOPTIONS,0x7),     /*?*/TEXT(LOPTIONS,0x7),    /*?*/TEXT(LOPTIONS,0x7),
-    /*2.4 goodhead*/ TEXT(LOPTIONS,0x10),     /*?*/TEXT(LOPTIONS,0x7),      /*?*/TEXT(LOPTIONS,0x7),    /*?*/TEXT(LOPTIONS,0x7),      /*?*/TEXT(LOPTIONS,0x7),      /*?*/TEXT(LOPTIONS,0x7),    /*?*/TEXT(LOPTIONS,0x7),    /*?*/TEXT(LOPTIONS,0x7),     /*?*/TEXT(LOPTIONS,0x7),    /*?*/TEXT(LOPTIONS,0x7)
+    /*1.1 honey*/    TEXT(LOPTIONS, OPTION_STR_09), /*weapon*/TEXT(LOPTIONS, OPTION_STR_03), /*action*/TEXT(LOPTIONS, OPTION_STR_02), /*fire*/TEXT(LOPTIONS, OPTION_STR_00),    /*aim*/TEXT(LOPTIONS, OPTION_STR_01),    /*aim*/TEXT(LOPTIONS, OPTION_STR_01), /*look*/TEXT(LOPTIONS, OPTION_STR_06), /*look*/TEXT(LOPTIONS, OPTION_STR_06), /*pause*/TEXT(LOPTIONS, OPTION_STR_04), /*move*/TEXT(LOPTIONS, OPTION_STR_05),
+    /*1.2 solitaire*/TEXT(LOPTIONS, OPTION_STR_0A), /*weapon*/TEXT(LOPTIONS, OPTION_STR_03), /*action*/TEXT(LOPTIONS, OPTION_STR_02), /*fire*/TEXT(LOPTIONS, OPTION_STR_00),    /*aim*/TEXT(LOPTIONS, OPTION_STR_01),    /*aim*/TEXT(LOPTIONS, OPTION_STR_01), /*move*/TEXT(LOPTIONS, OPTION_STR_05), /*move*/TEXT(LOPTIONS, OPTION_STR_05), /*pause*/TEXT(LOPTIONS, OPTION_STR_04), /*look*/TEXT(LOPTIONS, OPTION_STR_06),
+    /*1.3 kissy*/    TEXT(LOPTIONS, OPTION_STR_0B),   /*fire*/TEXT(LOPTIONS, OPTION_STR_00), /*action*/TEXT(LOPTIONS, OPTION_STR_02),  /*aim*/TEXT(LOPTIONS, OPTION_STR_01), /*weapon*/TEXT(LOPTIONS, OPTION_STR_03), /*weapon*/TEXT(LOPTIONS, OPTION_STR_03), /*look*/TEXT(LOPTIONS, OPTION_STR_06), /*look*/TEXT(LOPTIONS, OPTION_STR_06), /*pause*/TEXT(LOPTIONS, OPTION_STR_04), /*move*/TEXT(LOPTIONS, OPTION_STR_05),
+    /*1.4 goodnight*/TEXT(LOPTIONS, OPTION_STR_0C),   /*fire*/TEXT(LOPTIONS, OPTION_STR_00), /*action*/TEXT(LOPTIONS, OPTION_STR_02),  /*aim*/TEXT(LOPTIONS, OPTION_STR_01), /*weapon*/TEXT(LOPTIONS, OPTION_STR_03), /*weapon*/TEXT(LOPTIONS, OPTION_STR_03), /*move*/TEXT(LOPTIONS, OPTION_STR_05), /*move*/TEXT(LOPTIONS, OPTION_STR_05), /*pause*/TEXT(LOPTIONS, OPTION_STR_04), /*look*/TEXT(LOPTIONS, OPTION_STR_06),
+    /*2.1 plenty*/   TEXT(LOPTIONS, OPTION_STR_0D),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),     /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),
+    /*2.2 galore*/   TEXT(LOPTIONS, OPTION_STR_0E),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),     /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),
+    /*2.3 domino*/   TEXT(LOPTIONS, OPTION_STR_0F),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),     /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),
+    /*2.4 goodhead*/ TEXT(LOPTIONS, OPTION_STR_10),     /*?*/TEXT(LOPTIONS, OPTION_STR_07),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),     /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07)
 };
 
 struct game_options game_options_entries[] = {
-    { {TEXT(LOPTIONS,0x11), TEXT(LOPTIONS,0x1C), TEXT(LOPTIONS,0x1B), 0}, 0}, //look up/down, reverse, upright
-    { {TEXT(LOPTIONS,0x12), TEXT(LOPTIONS,0x1A), TEXT(LOPTIONS,0x19), 0}, 1}, //autoaim, off, on
-    { {TEXT(LOPTIONS,0x14), TEXT(LOPTIONS,0x1E), TEXT(LOPTIONS,0x1D), 0}, 0}, //aim control, hold, toggle
-    { {TEXT(LOPTIONS,0x15), TEXT(LOPTIONS,0x1A), TEXT(LOPTIONS,0x19), 0}, 1}, //sight on screen, off, on
-    { {TEXT(LOPTIONS,0x13), TEXT(LOPTIONS,0x1A), TEXT(LOPTIONS,0x19), 0}, 1}, //look ahead, off, on
-    { {TEXT(LOPTIONS,0x16), TEXT(LOPTIONS,0x1A), TEXT(LOPTIONS,0x19), 0}, 1}, //ammo on screen, off, on
-    { {TEXT(LOPTIONS,0x17), TEXT(LOPTIONS,0x1F), TEXT(LOPTIONS,0x20), TEXT(LOPTIONS,0x21)}, 0}, //screen, full, wide, cinema
-    { {TEXT(LOPTIONS,0x18), TEXT(LOPTIONS,0x22), TEXT(LOPTIONS,0x23), 0}, 0} //ratio, normal, 16:9
+    { {TEXT(LOPTIONS, OPTION_STR_11), TEXT(LOPTIONS, OPTION_STR_1C), TEXT(LOPTIONS, OPTION_STR_1B), 0}, 0}, //look up/down, reverse, upright
+    { {TEXT(LOPTIONS, OPTION_STR_12), TEXT(LOPTIONS, OPTION_STR_1A), TEXT(LOPTIONS, OPTION_STR_19), 0}, 1}, //autoaim, off, on
+    { {TEXT(LOPTIONS, OPTION_STR_14), TEXT(LOPTIONS, OPTION_STR_1E), TEXT(LOPTIONS, OPTION_STR_1D), 0}, 0}, //aim control, hold, toggle
+    { {TEXT(LOPTIONS, OPTION_STR_15), TEXT(LOPTIONS, OPTION_STR_1A), TEXT(LOPTIONS, OPTION_STR_19), 0}, 1}, //sight on screen, off, on
+    { {TEXT(LOPTIONS, OPTION_STR_13), TEXT(LOPTIONS, OPTION_STR_1A), TEXT(LOPTIONS, OPTION_STR_19), 0}, 1}, //look ahead, off, on
+    { {TEXT(LOPTIONS, OPTION_STR_16), TEXT(LOPTIONS, OPTION_STR_1A), TEXT(LOPTIONS, OPTION_STR_19), 0}, 1}, //ammo on screen, off, on
+    { {TEXT(LOPTIONS, OPTION_STR_17), TEXT(LOPTIONS, OPTION_STR_1F), TEXT(LOPTIONS, OPTION_STR_20), TEXT(LOPTIONS, OPTION_STR_21)}, 0}, //screen, full, wide, cinema
+    { {TEXT(LOPTIONS, OPTION_STR_18), TEXT(LOPTIONS, OPTION_STR_22), TEXT(LOPTIONS, OPTION_STR_23), 0}, 0} //ratio, normal, 16:9
 };
 
 //D:80040ADC
@@ -362,8 +362,8 @@ void controller_deadzone_related(void)
 Gfx * sub_GAME_7F0A4B40(Gfx *DL)
 {
     u8 buffer [0x16];
-    int *fontTBL1;
-    int *fontTBL2;
+    int *pFontFile;
+    int *pFontChars;
     
     u32 y;
     u32 x;
@@ -388,14 +388,14 @@ Gfx * sub_GAME_7F0A4B40(Gfx *DL)
     gDPSetPrimColor(DL++, 0, 0, 0xFF, 0x00, 0x00, 0xFF);
     gDPFillRectangle(DL++, D_80040B48, D_80040B4C, D_80040B48+1, D_80040B4C+1);
 
-    fontTBL1 = ptrFirstFontTableSmall;
-    fontTBL2 = ptrSecondFontTableSmall;
+    pFontFile = ptrFontBankGothic;
+    pFontChars = ptrFontBankGothicChars;
     sprintf(buffer,"%d, %d\n",D_80040B48,D_80040B4C);
 
     DL = microcode_constructor(DL++);
-    textMeasure(x,y,buffer,fontTBL2,fontTBL1,0);
-    DL = textRender(DL,&D_80040B48,&D_80040B4C,buffer,fontTBL2,fontTBL1, 0xff0000ff,y,x,0,0);
-    D_80040B4C = (D_80040B4C - fontTBL2[0x224]) + 1;
+    textMeasure(x,y,buffer,pFontChars,pFontFile,0);
+    DL = textRender(DL,&D_80040B48,&D_80040B4C,buffer,pFontChars,pFontFile, 0xff0000ff,y,x,0,0);
+    D_80040B4C = (D_80040B4C - pFontChars[0x224]) + 1;
     return DL;
 }
 #else
@@ -491,16 +491,16 @@ glabel sub_GAME_7F0A4B40
 /* 0D97A8 7F0A4C78 AD2D0000 */  sw    $t5, ($t1)
 /* 0D97AC 7F0A4C7C 8E2A0000 */  lw    $t2, ($s1)
 /* 0D97B0 7F0A4C80 8E4E0000 */  lw    $t6, ($s2)
-/* 0D97B4 7F0A4C84 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableSmall)
+/* 0D97B4 7F0A4C84 3C0D8004 */  lui   $t5, %hi(ptrFontBankGothic)
 /* 0D97B8 7F0A4C88 314B03FF */  andi  $t3, $t2, 0x3ff
 /* 0D97BC 7F0A4C8C 31CF03FF */  andi  $t7, $t6, 0x3ff
 /* 0D97C0 7F0A4C90 000FCB80 */  sll   $t9, $t7, 0xe
 /* 0D97C4 7F0A4C94 000BC080 */  sll   $t8, $t3, 2
 /* 0D97C8 7F0A4C98 03386025 */  or    $t4, $t9, $t8
 /* 0D97CC 7F0A4C9C AD2C0004 */  sw    $t4, 4($t1)
-/* 0D97D0 7F0A4CA0 3C0E8004 */  lui   $t6, %hi(ptrSecondFontTableSmall)
-/* 0D97D4 7F0A4CA4 8DAD0EAC */  lw    $t5, %lo(ptrFirstFontTableSmall)($t5)
-/* 0D97D8 7F0A4CA8 8DCE0EB0 */  lw    $t6, %lo(ptrSecondFontTableSmall)($t6)
+/* 0D97D0 7F0A4CA0 3C0E8004 */  lui   $t6, %hi(ptrFontBankGothicChars)
+/* 0D97D4 7F0A4CA4 8DAD0EAC */  lw    $t5, %lo(ptrFontBankGothic)($t5)
+/* 0D97D8 7F0A4CA8 8DCE0EB0 */  lw    $t6, %lo(ptrFontBankGothicChars)($t6)
 /* 0D97DC 7F0A4CAC 3C058005 */  lui   $a1, %hi(aDD)
 /* 0D97E0 7F0A4CB0 26100008 */  addiu $s0, $s0, 8
 /* 0D97E4 7F0A4CB4 24A57760 */  addiu $a1, %lo(aDD) # addiu $a1, $a1, 0x7760
@@ -2192,13 +2192,13 @@ void sub_GAME_7F0A69A8(void)
  * Address 0x7F0A6A2C. (VERSION_US, VERSION_JP)
  * Address 0x7F0A5D78. (VERSION_EU)
 */
-f32 sub_GAME_7F0A6A2C(f32 arg0)
+f32 watchWrapAroundPI(f32 arg0)
 {
-    if (arg0 > 3.1415927f)
+    if (arg0 > M_PI_F)
     {
         arg0 = arg0 - M_TAU_F;
     }
-    else if (arg0 < -3.1415927f)
+    else if (arg0 < M_MINUS_PI_F)
     {
         arg0 = arg0 + M_TAU_F;
     }
@@ -2282,7 +2282,7 @@ void sub_GAME_7F0A6A80(void)
     D_80040B14 += ((D_80040B1C * jpD_800484D0 * M_TAU_F) / 360.0f);
     #endif
 
-    D_80040B14 = sub_GAME_7F0A6A2C(D_80040B14);
+    D_80040B14 = watchWrapAroundPI(D_80040B14);
 
     temp_1 = D_80040B0C << 0x10;
     if (temp_1 < randomGetNext())
@@ -2664,17 +2664,17 @@ Gfx *draw_abort_cancel_confirm(Gfx *gdl)
     s32 sp64;
     s32 sp60;
 
-    s32 pFirstFontTable;
-    s32 pSecondFontTable;
+    s32 pFontFile;
+    s32 pFontChars;
     s32 sp54;
     s32 sp50;
     s32 sp4C;
 
-    pFirstFontTable = ptrFirstFontTableSmall;
-    pSecondFontTable = ptrSecondFontTableSmall;
-    sp54 = langGet(TEXT(LOPTIONS, 0x24)); //abort:
-    sp50 = langGet(TEXT(LOPTIONS, 0x25)); //confirm
-    sp4C = langGet(TEXT(LOPTIONS, 0x26)); //cancel
+    pFontFile = ptrFontBankGothic;
+    pFontChars = ptrFontBankGothicChars;
+    sp54 = langGet(TEXT(LOPTIONS, OPTION_STR_24)); //abort:
+    sp50 = langGet(TEXT(LOPTIONS, OPTION_STR_25)); //confirm
+    sp4C = langGet(TEXT(LOPTIONS, OPTION_STR_26)); //cancel
     sp7C = 0x51;
 
     sp78 = (j_text_trigger ? 0xF : 0) + 0xBD;
@@ -2706,30 +2706,30 @@ Gfx *draw_abort_cancel_confirm(Gfx *gdl)
 
     if (watch_item_is_actively_selected != 0)
     {
-        textMeasure(&sp60, &sp64, sp54, pSecondFontTable, pFirstFontTable, 0);
+        textMeasure(&sp60, &sp64, sp54, pFontChars, pFontFile, 0);
 
-        gdl = textRender(gdl, &sp7C, &sp70, sp54, pSecondFontTable, pFirstFontTable, 0xA0FFA0F0, sp64, sp60, 0, 0);
+        gdl = textRender(gdl, &sp7C, &sp70, sp54, pFontChars, pFontFile, 0xA0FFA0F0, sp64, sp60, 0, 0);
 
         if (D_800409A4 != 0)
         {
-            gdl = textRenderGlow(gdl, &sp78, &sp6C, sp50, pSecondFontTable, pFirstFontTable, -1, 0x7000A0, viGetX(), viGetY(), 0, 0);
-            gdl = textRender(gdl, &sp74, &sp68, sp4C, pSecondFontTable, pFirstFontTable, 0xFF00B0, viGetX(), viGetY(), 0, 0);
+            gdl = textRenderGlow(gdl, &sp78, &sp6C, sp50, pFontChars, pFontFile, -1, 0x7000A0, viGetX(), viGetY(), 0, 0);
+            gdl = textRender(gdl, &sp74, &sp68, sp4C, pFontChars, pFontFile, 0xFF00B0, viGetX(), viGetY(), 0, 0);
         }
         else
         {
             if (D_800409A4 == 0)
             {
-                gdl = textRender(gdl, &sp78, &sp6C, sp50, pSecondFontTable, pFirstFontTable, 0xFF00B0, viGetX(), viGetY(), 0, 0);
-                gdl = textRenderGlow(gdl, &sp74, &sp68, sp4C, pSecondFontTable, pFirstFontTable, -1, 0x7000A0, viGetX(), viGetY(), 0, 0);
+                gdl = textRender(gdl, &sp78, &sp6C, sp50, pFontChars, pFontFile, 0xFF00B0, viGetX(), viGetY(), 0, 0);
+                gdl = textRenderGlow(gdl, &sp74, &sp68, sp4C, pFontChars, pFontFile, -1, 0x7000A0, viGetX(), viGetY(), 0, 0);
             }
         }
     }
     else
     {
-        textMeasure(&sp60, &sp64, sp54, pSecondFontTable, pFirstFontTable, 0);
-        gdl = textRender(gdl, &sp7C, &sp70, sp54, pSecondFontTable, pFirstFontTable, 0x800080, sp64, sp60, 0, 0);
-        gdl = textRender(gdl, &sp78, &sp6C, sp50, pSecondFontTable, pFirstFontTable, 0x800080, viGetX(), viGetY(), 0, 0);
-        gdl = textRender(gdl, &sp74, &sp68, sp4C, pSecondFontTable, pFirstFontTable, 0x800080, viGetX(), viGetY(), 0, 0);
+        textMeasure(&sp60, &sp64, sp54, pFontChars, pFontFile, 0);
+        gdl = textRender(gdl, &sp7C, &sp70, sp54, pFontChars, pFontFile, 0x800080, sp64, sp60, 0, 0);
+        gdl = textRender(gdl, &sp78, &sp6C, sp50, pFontChars, pFontFile, 0x800080, viGetX(), viGetY(), 0, 0);
+        gdl = textRender(gdl, &sp74, &sp68, sp4C, pFontChars, pFontFile, 0x800080, viGetX(), viGetY(), 0, 0);
     }
 
     return gdl;
@@ -2744,31 +2744,31 @@ Gfx *draw_text_mission_status(Gfx *gdl)
     s32 sp60;
     s32 sp5C;
     s32 sp58;
-    s32 ptr_first_font;
-    s32 ptr_second_font;
+    s32 pFontFile;
+    s32 pFontChars;
     s32 sp4C;
     s32 joffset;
 
-    txtptr_1 = langGet(TEXT(LOPTIONS, 0x27)); //mission status:
-    ptr_first_font = ptrFirstFontTableSmall;
-    ptr_second_font = ptrSecondFontTableSmall;
+    txtptr_1 = langGet(TEXT(LOPTIONS, OPTION_STR_27)); //mission status:
+    pFontFile = ptrFontBankGothic;
+    pFontChars = ptrFontBankGothicChars;
 
     if (objectiveIsAllComplete())
     {
         sp4C = 0xFF00B0;
-        txtptr_2 = langGet(TEXT(LOPTIONS, 0x28)); //complete
+        txtptr_2 = langGet(TEXT(LOPTIONS, OPTION_STR_28)); //complete
     }
     else
     {
         sp4C = D_80040AF4;
-        txtptr_2 = langGet(TEXT(LOPTIONS, 0x29)); //incomplete
+        txtptr_2 = langGet(TEXT(LOPTIONS, OPTION_STR_29)); //incomplete
     }
 
     gdl = microcode_constructor(gdl);
-    textMeasure(&sp5C, &sp58, txtptr_1, ptr_second_font, ptr_first_font, 0);
+    textMeasure(&sp5C, &sp58, txtptr_1, pFontChars, pFontFile, 0);
     sp64 = 0x51;
     sp60 = YOFFSET_MISSIONSTATUS;
-    gdl = textRender(gdl, &sp64, &sp60, txtptr_1, ptr_second_font, ptr_first_font, 0xFF00B0, sp58, sp5C, 0, 0);
+    gdl = textRender(gdl, &sp64, &sp60, txtptr_1, pFontChars, pFontFile, 0xFF00B0, sp58, sp5C, 0, 0);
 
     if (j_text_trigger)
     {
@@ -2781,8 +2781,8 @@ Gfx *draw_text_mission_status(Gfx *gdl)
 
     sp64 = sp64 + sp58 + joffset + 4;
     sp60 = sp60 - sp5C;
-    textMeasure(&sp5C, &sp58, txtptr_2, ptr_second_font, ptr_first_font, 0);
-    gdl = textRender(gdl, &sp64, &sp60, txtptr_2, ptr_second_font, ptr_first_font, sp4C, sp58, sp5C, 0, 0);
+    textMeasure(&sp5C, &sp58, txtptr_2, pFontChars, pFontFile, 0);
+    gdl = textRender(gdl, &sp64, &sp60, txtptr_2, pFontChars, pFontFile, sp4C, sp58, sp5C, 0, 0);
     gdl = draw_abort_cancel_confirm(gdl);
 
     return gdl;
@@ -2801,11 +2801,11 @@ Gfx *draw_text_q_watch_v201_beta(Gfx *gdl)
     s32 sp4C;
     s32 sp48;
     s32 sp44;
-    s32 pFirstFontTable;
-    s32 pSecondFontTable;
+    s32 pFontFile;
+    s32 pFontChars;
     s32 joffset;
 
-    txtptr = langGet(TEXT(LOPTIONS, 0x2B)); //q watch v2.01 beta
+    txtptr = langGet(TEXT(LOPTIONS, OPTION_STR_2B)); //q watch v2.01 beta
 
     if (j_text_trigger)
     {
@@ -2819,11 +2819,11 @@ Gfx *draw_text_q_watch_v201_beta(Gfx *gdl)
     sp4C = YOFFSET_7;
     sp48 = 0;
     sp44 = 0;
-    pFirstFontTable = ptrFirstFontTableSmall;
-    pSecondFontTable = ptrSecondFontTableSmall;
+    pFontFile = ptrFontBankGothic;
+    pFontChars = ptrFontBankGothicChars;
     gdl = microcode_constructor(gdl);
-    textMeasure(&sp48, &sp44, txtptr, pSecondFontTable, pFirstFontTable, 0);
-    gdl = textRender(gdl, &sp50, &sp4C, txtptr, pSecondFontTable, pFirstFontTable, 0xFF00B0, sp44, sp48, 0, 0);
+    textMeasure(&sp48, &sp44, txtptr, pFontChars, pFontFile, 0);
+    gdl = textRender(gdl, &sp50, &sp4C, txtptr, pFontChars, pFontFile, 0xFF00B0, sp44, sp48, 0, 0);
     return gdl;
 }
 
@@ -2865,10 +2865,10 @@ glabel draw_current_hand_item_and_ammo
 /* 0DC9E0 7F0A7EB0 AFB00038 */  sw    $s0, 0x38($sp)
 /* 0DC9E4 7F0A7EB4 0FC2F5B8 */  jal   dynAllocateMatrix
 /* 0DC9E8 7F0A7EB8 00808025 */   move  $s0, $a0
-/* 0DC9EC 7F0A7EBC 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableSmall)
-/* 0DC9F0 7F0A7EC0 3C0F8004 */  lui   $t7, %hi(ptrSecondFontTableSmall)
-/* 0DC9F4 7F0A7EC4 8DCE0EAC */  lw    $t6, %lo(ptrFirstFontTableSmall)($t6)
-/* 0DC9F8 7F0A7EC8 8DEF0EB0 */  lw    $t7, %lo(ptrSecondFontTableSmall)($t7)
+/* 0DC9EC 7F0A7EBC 3C0E8004 */  lui   $t6, %hi(ptrFontBankGothic)
+/* 0DC9F0 7F0A7EC0 3C0F8004 */  lui   $t7, %hi(ptrFontBankGothicChars)
+/* 0DC9F4 7F0A7EC4 8DCE0EAC */  lw    $t6, %lo(ptrFontBankGothic)($t6)
+/* 0DC9F8 7F0A7EC8 8DEF0EB0 */  lw    $t7, %lo(ptrFontBankGothicChars)($t7)
 /* 0DC9FC 7F0A7ECC AFA20114 */  sw    $v0, 0x114($sp)
 /* 0DCA00 7F0A7ED0 AFA00084 */  sw    $zero, 0x84($sp)
 /* 0DCA04 7F0A7ED4 AFA00080 */  sw    $zero, 0x80($sp)
@@ -3183,10 +3183,10 @@ glabel draw_current_hand_item_and_ammo
 /* 0D9BB8 7F0A71C8 AFB00038 */  sw    $s0, 0x38($sp)
 /* 0D9BBC 7F0A71CC 0FC2F2A4 */  jal   dynAllocateMatrix
 /* 0D9BC0 7F0A71D0 00808025 */   move  $s0, $a0
-/* 0D9BC4 7F0A71D4 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableSmall) # $t6, 0x8004
-/* 0D9BC8 7F0A71D8 3C0F8004 */  lui   $t7, %hi(ptrSecondFontTableSmall) # $t7, 0x8004
-/* 0D9BCC 7F0A71DC 8DCEAAFC */  lw    $t6, %lo(ptrFirstFontTableSmall)($t6)
-/* 0D9BD0 7F0A71E0 8DEFAB00 */  lw    $t7, %lo(ptrSecondFontTableSmall)($t7)
+/* 0D9BC4 7F0A71D4 3C0E8004 */  lui   $t6, %hi(ptrFontBankGothic) # $t6, 0x8004
+/* 0D9BC8 7F0A71D8 3C0F8004 */  lui   $t7, %hi(ptrFontBankGothicChars) # $t7, 0x8004
+/* 0D9BCC 7F0A71DC 8DCEAAFC */  lw    $t6, %lo(ptrFontBankGothic)($t6)
+/* 0D9BD0 7F0A71E0 8DEFAB00 */  lw    $t7, %lo(ptrFontBankGothicChars)($t7)
 /* 0D9BD4 7F0A71E4 AFA20114 */  sw    $v0, 0x114($sp)
 /* 0D9BD8 7F0A71E8 AFA00084 */  sw    $zero, 0x84($sp)
 /* 0D9BDC 7F0A71EC AFA00080 */  sw    $zero, 0x80($sp)
@@ -3728,10 +3728,10 @@ glabel draw_watch_inventory_page
 /* 0DD254 7F0A8724 27A608E0 */  addiu $a2, $sp, 0x8e0
 /* 0DD258 7F0A8728 0FC18C01 */  jal   set_enviro_fog_for_items_in_solo_watch_menu
 /* 0DD25C 7F0A872C 24070040 */   li    $a3, 64
-/* 0DD260 7F0A8730 3C098004 */  lui   $t1, %hi(ptrFirstFontTableSmall)
-/* 0DD264 7F0A8734 3C0A8004 */  lui   $t2, %hi(ptrSecondFontTableSmall)
-/* 0DD268 7F0A8738 8D290EAC */  lw    $t1, %lo(ptrFirstFontTableSmall)($t1)
-/* 0DD26C 7F0A873C 8D4A0EB0 */  lw    $t2, %lo(ptrSecondFontTableSmall)($t2)
+/* 0DD260 7F0A8730 3C098004 */  lui   $t1, %hi(ptrFontBankGothic)
+/* 0DD264 7F0A8734 3C0A8004 */  lui   $t2, %hi(ptrFontBankGothicChars)
+/* 0DD268 7F0A8738 8D290EAC */  lw    $t1, %lo(ptrFontBankGothic)($t1)
+/* 0DD26C 7F0A873C 8D4A0EB0 */  lw    $t2, %lo(ptrFontBankGothicChars)($t2)
 /* 0DD270 7F0A8740 AFA20928 */  sw    $v0, 0x928($sp)
 /* 0DD274 7F0A8744 AFA00860 */  sw    $zero, 0x860($sp)
 /* 0DD278 7F0A8748 AFA0085C */  sw    $zero, 0x85c($sp)
@@ -3871,12 +3871,12 @@ glabel draw_watch_inventory_page
 /* 0DD454 7F0A8924 AFAC0014 */  sw    $t4, 0x14($sp)
 /* 0DD458 7F0A8928 0FC2B405 */  jal   microcode_constructor_related_to_menus
 /* 0DD45C 7F0A892C 24E70052 */   addiu $a3, $a3, 0x52
-/* 0DD460 7F0A8930 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTableSmall)
-/* 0DD464 7F0A8934 8DAD0EB0 */  lw    $t5, %lo(ptrSecondFontTableSmall)($t5)
-/* 0DD468 7F0A8938 3C108004 */  lui   $s0, %hi(ptrFirstFontTableSmall)
+/* 0DD460 7F0A8930 3C0D8004 */  lui   $t5, %hi(ptrFontBankGothicChars)
+/* 0DD464 7F0A8934 8DAD0EB0 */  lw    $t5, %lo(ptrFontBankGothicChars)($t5)
+/* 0DD468 7F0A8938 3C108004 */  lui   $s0, %hi(ptrFontBankGothic)
 /* 0DD46C 7F0A893C 3C048004 */  lui   $a0, %hi(g_curWatchItemIndex)
 /* 0DD470 7F0A8940 AFA20928 */  sw    $v0, 0x928($sp)
-/* 0DD474 7F0A8944 8E100EAC */  lw    $s0, %lo(ptrFirstFontTableSmall)($s0)
+/* 0DD474 7F0A8944 8E100EAC */  lw    $s0, %lo(ptrFontBankGothic)($s0)
 /* 0DD478 7F0A8948 8C8409B8 */  lw    $a0, %lo(g_curWatchItemIndex)($a0)
 /* 0DD47C 7F0A894C 0FC234D0 */  jal   bondinvGetNameByIndex
 /* 0DD480 7F0A8950 AFAD0058 */   sw    $t5, 0x58($sp)
@@ -4213,10 +4213,10 @@ glabel draw_watch_inventory_page
 /* 0DDE34 7F0A92C4 24070040 */   li    $a3, 64
 /* 0DDE38 7F0A92C8 3C0B8005 */  lui   $t3, %hi(j_text_trigger) # $t3, 0x8005
 /* 0DDE3C 7F0A92CC 8D6B8500 */  lw    $t3, %lo(j_text_trigger)($t3)
-/* 0DDE40 7F0A92D0 3C098004 */  lui   $t1, %hi(ptrFirstFontTableSmall) # $t1, 0x8004
-/* 0DDE44 7F0A92D4 3C0A8004 */  lui   $t2, %hi(ptrSecondFontTableSmall) # $t2, 0x8004
-/* 0DDE48 7F0A92D8 8D290EDC */  lw    $t1, %lo(ptrFirstFontTableSmall)($t1)
-/* 0DDE4C 7F0A92DC 8D4A0EE0 */  lw    $t2, %lo(ptrSecondFontTableSmall)($t2)
+/* 0DDE40 7F0A92D0 3C098004 */  lui   $t1, %hi(ptrFontBankGothic) # $t1, 0x8004
+/* 0DDE44 7F0A92D4 3C0A8004 */  lui   $t2, %hi(ptrFontBankGothicChars) # $t2, 0x8004
+/* 0DDE48 7F0A92D8 8D290EDC */  lw    $t1, %lo(ptrFontBankGothic)($t1)
+/* 0DDE4C 7F0A92DC 8D4A0EE0 */  lw    $t2, %lo(ptrFontBankGothicChars)($t2)
 /* 0DDE50 7F0A92E0 AFA20930 */  sw    $v0, 0x930($sp)
 /* 0DDE54 7F0A92E4 AFA00868 */  sw    $zero, 0x868($sp)
 /* 0DDE58 7F0A92E8 AFA00864 */  sw    $zero, 0x864($sp)
@@ -4365,12 +4365,12 @@ glabel draw_watch_inventory_page
 /* 0DE050 7F0A94E0 AFAF0014 */  sw    $t7, 0x14($sp)
 /* 0DE054 7F0A94E4 0FC2B6F1 */  jal   microcode_constructor_related_to_menus
 /* 0DE058 7F0A94E8 24E70052 */   addiu $a3, $a3, 0x52
-/* 0DE05C 7F0A94EC 3C188004 */  lui   $t8, %hi(ptrSecondFontTableSmall) # $t8, 0x8004
-/* 0DE060 7F0A94F0 8F180EE0 */  lw    $t8, %lo(ptrSecondFontTableSmall)($t8)
-/* 0DE064 7F0A94F4 3C108004 */  lui   $s0, %hi(ptrFirstFontTableSmall) # $s0, 0x8004
+/* 0DE05C 7F0A94EC 3C188004 */  lui   $t8, %hi(ptrFontBankGothicChars) # $t8, 0x8004
+/* 0DE060 7F0A94F0 8F180EE0 */  lw    $t8, %lo(ptrFontBankGothicChars)($t8)
+/* 0DE064 7F0A94F4 3C108004 */  lui   $s0, %hi(ptrFontBankGothic) # $s0, 0x8004
 /* 0DE068 7F0A94F8 3C048004 */  lui   $a0, %hi(g_curWatchItemIndex) # $a0, 0x8004
 /* 0DE06C 7F0A94FC AFA20930 */  sw    $v0, 0x930($sp)
-/* 0DE070 7F0A9500 8E100EDC */  lw    $s0, %lo(ptrFirstFontTableSmall)($s0)
+/* 0DE070 7F0A9500 8E100EDC */  lw    $s0, %lo(ptrFontBankGothic)($s0)
 /* 0DE074 7F0A9504 8C8409E8 */  lw    $a0, %lo(g_curWatchItemIndex)($a0)
 /* 0DE078 7F0A9508 0FC2374A */  jal   bondinvGetNameByIndex
 /* 0DE07C 7F0A950C AFB8005C */   sw    $t8, 0x5c($sp)
@@ -4708,10 +4708,10 @@ glabel draw_watch_inventory_page
 /* 0DA434 7F0A7A44 24070040 */   li    $a3, 64
 /* 0DA438 7F0A7A48 3C0B8004 */  lui   $t3, %hi(j_text_trigger) # $t3, 0x8004
 /* 0DA43C 7F0A7A4C 8D6B1150 */  lw    $t3, %lo(j_text_trigger)($t3)
-/* 0DA440 7F0A7A50 3C098004 */  lui   $t1, %hi(ptrFirstFontTableSmall) # $t1, 0x8004
-/* 0DA444 7F0A7A54 3C0A8004 */  lui   $t2, %hi(ptrSecondFontTableSmall) # $t2, 0x8004
-/* 0DA448 7F0A7A58 8D29AAFC */  lw    $t1, %lo(ptrFirstFontTableSmall)($t1)
-/* 0DA44C 7F0A7A5C 8D4AAB00 */  lw    $t2, %lo(ptrSecondFontTableSmall)($t2)
+/* 0DA440 7F0A7A50 3C098004 */  lui   $t1, %hi(ptrFontBankGothic) # $t1, 0x8004
+/* 0DA444 7F0A7A54 3C0A8004 */  lui   $t2, %hi(ptrFontBankGothicChars) # $t2, 0x8004
+/* 0DA448 7F0A7A58 8D29AAFC */  lw    $t1, %lo(ptrFontBankGothic)($t1)
+/* 0DA44C 7F0A7A5C 8D4AAB00 */  lw    $t2, %lo(ptrFontBankGothicChars)($t2)
 /* 0DA450 7F0A7A60 AFA20930 */  sw    $v0, 0x930($sp)
 /* 0DA454 7F0A7A64 AFA00868 */  sw    $zero, 0x868($sp)
 /* 0DA458 7F0A7A68 AFA00864 */  sw    $zero, 0x864($sp)
@@ -4860,12 +4860,12 @@ glabel draw_watch_inventory_page
 /* 0DA650 7F0A7C60 AFAF0014 */  sw    $t7, 0x14($sp)
 /* 0DA654 7F0A7C64 0FC2B0B5 */  jal   microcode_constructor_related_to_menus
 /* 0DA658 7F0A7C68 24E70052 */   addiu $a3, $a3, 0x52
-/* 0DA65C 7F0A7C6C 3C188004 */  lui   $t8, %hi(ptrSecondFontTableSmall) # $t8, 0x8004
-/* 0DA660 7F0A7C70 8F18AB00 */  lw    $t8, %lo(ptrSecondFontTableSmall)($t8)
-/* 0DA664 7F0A7C74 3C108004 */  lui   $s0, %hi(ptrFirstFontTableSmall) # $s0, 0x8004
+/* 0DA65C 7F0A7C6C 3C188004 */  lui   $t8, %hi(ptrFontBankGothicChars) # $t8, 0x8004
+/* 0DA660 7F0A7C70 8F18AB00 */  lw    $t8, %lo(ptrFontBankGothicChars)($t8)
+/* 0DA664 7F0A7C74 3C108004 */  lui   $s0, %hi(ptrFontBankGothic) # $s0, 0x8004
 /* 0DA668 7F0A7C78 3C048004 */  lui   $a0, %hi(g_curWatchItemIndex) # $a0, 0x8004
 /* 0DA66C 7F0A7C7C AFA20930 */  sw    $v0, 0x930($sp)
-/* 0DA670 7F0A7C80 8E10AAFC */  lw    $s0, %lo(ptrFirstFontTableSmall)($s0)
+/* 0DA670 7F0A7C80 8E10AAFC */  lw    $s0, %lo(ptrFontBankGothic)($s0)
 /* 0DA674 7F0A7C84 8C84A608 */  lw    $a0, %lo(g_curWatchItemIndex)($a0)
 /* 0DA678 7F0A7C88 0FC235EA */  jal   bondinvGetNameByIndex
 /* 0DA67C 7F0A7C8C AFB8005C */   sw    $t8, 0x5c($sp)
@@ -5008,8 +5008,8 @@ Gfx *unused_draw_watch_inventory_page(Gfx *gdl, Mtx *param_2) {
     s32 sp5C;    
     s32 sp58;
     s32 sp54;
-    s32 ptr_first_font;
-    s32 ptr_second_font;
+    s32 pFontFile;
+    s32 pFontChars;
 
     u16 *long_name;
     s32 temp_2;
@@ -5017,8 +5017,8 @@ Gfx *unused_draw_watch_inventory_page(Gfx *gdl, Mtx *param_2) {
     sp58 = 0;
     sp54 = 0;
 
-    ptr_first_font = ptrFirstFontTableSmall;
-    ptr_second_font = ptrSecondFontTableSmall;
+    pFontFile = ptrFontBankGothic;
+    pFontChars = ptrFontBankGothicChars;
 
     long_name = bondinvGetLongNameByIndex(g_curWatchItemIndex);
     gdl = draw_background_health_and_armor(gdl, param_2, 0);
@@ -5034,7 +5034,7 @@ Gfx *unused_draw_watch_inventory_page(Gfx *gdl, Mtx *param_2) {
         sub_GAME_7F0A5B80();
         gdl = microcode_constructor(gdl);
 
-        textMeasure(&sp58, &sp54, long_name, ptr_second_font, ptr_first_font, 0);
+        textMeasure(&sp58, &sp54, long_name, pFontChars, pFontFile, 0);
 
         sp70 = ((s32) (0xAA - sp54) / 2) + 0x4B;
         temp_2 = sp70;
@@ -5047,16 +5047,16 @@ Gfx *unused_draw_watch_inventory_page(Gfx *gdl, Mtx *param_2) {
             sub_GAME_7F0A8378();
             if (D_800409C4 == 0)
             {
-                gdl = textRender(gdl, &sp70, &sp6C, long_name, ptr_second_font, ptr_first_font, 0xA0FFA0F0, sp54, 0x64, 0, 0);
+                gdl = textRender(gdl, &sp70, &sp6C, long_name, pFontChars, pFontFile, 0xA0FFA0F0, sp54, 0x64, 0, 0);
             }
             else
             {
-                gdl = textRenderGlow(gdl, &sp70, &sp6C, long_name, ptr_second_font, ptr_first_font, -1, 0x7000A0, sp54 + 1, 0x64, 0, 0);
+                gdl = textRenderGlow(gdl, &sp70, &sp6C, long_name, pFontChars, pFontFile, -1, 0x7000A0, sp54 + 1, 0x64, 0, 0);
             }
         }
         else
         {
-            gdl = textRender(gdl, &sp70, &sp6C, long_name, ptr_second_font, ptr_first_font, 0xAA00B0, sp54, 0x64, 0, 0);
+            gdl = textRender(gdl, &sp70, &sp6C, long_name, pFontChars, pFontFile, 0xAA00B0, sp54, 0x64, 0, 0);
         }
 
     }
@@ -5489,10 +5489,10 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0A9398
 /* 0DDEC8 7F0A9398 27BDFF98 */  addiu $sp, $sp, -0x68
 /* 0DDECC 7F0A939C AFA70074 */  sw    $a3, 0x74($sp)
-/* 0DDED0 7F0A93A0 3C028004 */  lui   $v0, %hi(ptrFirstFontTableSmall)
-/* 0DDED4 7F0A93A4 8C420EAC */  lw    $v0, %lo(ptrFirstFontTableSmall)($v0)
-/* 0DDED8 7F0A93A8 3C078004 */  lui   $a3, %hi(ptrSecondFontTableSmall)
-/* 0DDEDC 7F0A93AC 8CE70EB0 */  lw    $a3, %lo(ptrSecondFontTableSmall)($a3)
+/* 0DDED0 7F0A93A0 3C028004 */  lui   $v0, %hi(ptrFontBankGothic)
+/* 0DDED4 7F0A93A4 8C420EAC */  lw    $v0, %lo(ptrFontBankGothic)($v0)
+/* 0DDED8 7F0A93A8 3C078004 */  lui   $a3, %hi(ptrFontBankGothicChars)
+/* 0DDEDC 7F0A93AC 8CE70EB0 */  lw    $a3, %lo(ptrFontBankGothicChars)($a3)
 /* 0DDEE0 7F0A93B0 AFB00038 */  sw    $s0, 0x38($sp)
 /* 0DDEE4 7F0A93B4 00808025 */  move  $s0, $a0
 /* 0DDEE8 7F0A93B8 AFBF003C */  sw    $ra, 0x3c($sp)
@@ -5787,10 +5787,10 @@ glabel sub_GAME_7F0A97D0
 /* 0DE300 7F0A97D0 27BDF7B0 */  addiu $sp, $sp, -0x850
 /* 0DE304 7F0A97D4 3C068004 */  lui   $a2, %hi(D_800409D8)
 /* 0DE308 7F0A97D8 8CC609D8 */  lw    $a2, %lo(D_800409D8)($a2)
-/* 0DE30C 7F0A97DC 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableSmall)
-/* 0DE310 7F0A97E0 3C0F8004 */  lui   $t7, %hi(ptrSecondFontTableSmall)
-/* 0DE314 7F0A97E4 8DCE0EAC */  lw    $t6, %lo(ptrFirstFontTableSmall)($t6)
-/* 0DE318 7F0A97E8 8DEF0EB0 */  lw    $t7, %lo(ptrSecondFontTableSmall)($t7)
+/* 0DE30C 7F0A97DC 3C0E8004 */  lui   $t6, %hi(ptrFontBankGothic)
+/* 0DE310 7F0A97E0 3C0F8004 */  lui   $t7, %hi(ptrFontBankGothicChars)
+/* 0DE314 7F0A97E4 8DCE0EAC */  lw    $t6, %lo(ptrFontBankGothic)($t6)
+/* 0DE318 7F0A97E8 8DEF0EB0 */  lw    $t7, %lo(ptrFontBankGothicChars)($t7)
 /* 0DE31C 7F0A97EC AFB00034 */  sw    $s0, 0x34($sp)
 /* 0DE320 7F0A97F0 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 0DE324 7F0A97F4 AFB10038 */  sw    $s1, 0x38($sp)
@@ -5996,10 +5996,10 @@ glabel sub_GAME_7F0A97D0
 /* 0DB500 7F0A8B10 27BDF7B0 */  addiu $sp, $sp, -0x850
 /* 0DB504 7F0A8B14 3C068004 */  lui   $a2, %hi(D_800409D8) # $a2, 0x8004
 /* 0DB508 7F0A8B18 8CC6A628 */  lw    $a2, %lo(D_800409D8)($a2)
-/* 0DB50C 7F0A8B1C 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableSmall) # $t6, 0x8004
-/* 0DB510 7F0A8B20 3C0F8004 */  lui   $t7, %hi(ptrSecondFontTableSmall) # $t7, 0x8004
-/* 0DB514 7F0A8B24 8DCEAAFC */  lw    $t6, %lo(ptrFirstFontTableSmall)($t6)
-/* 0DB518 7F0A8B28 8DEFAB00 */  lw    $t7, %lo(ptrSecondFontTableSmall)($t7)
+/* 0DB50C 7F0A8B1C 3C0E8004 */  lui   $t6, %hi(ptrFontBankGothic) # $t6, 0x8004
+/* 0DB510 7F0A8B20 3C0F8004 */  lui   $t7, %hi(ptrFontBankGothicChars) # $t7, 0x8004
+/* 0DB514 7F0A8B24 8DCEAAFC */  lw    $t6, %lo(ptrFontBankGothic)($t6)
+/* 0DB518 7F0A8B28 8DEFAB00 */  lw    $t7, %lo(ptrFontBankGothicChars)($t7)
 /* 0DB51C 7F0A8B2C AFB00034 */  sw    $s0, 0x34($sp)
 /* 0DB520 7F0A8B30 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 0DB524 7F0A8B34 AFB10038 */  sw    $s1, 0x38($sp)
@@ -7999,29 +7999,29 @@ Gfx *display_text_buttons_dual_control(Gfx *gdl)
 
     if (joyGetButtons(PLAYER_1, A_BUTTON))
     {
-        gdl = sub_GAME_7F0A9398(gdl, 0x5A, YOFFSET_WEAPTEXT, langGet(TEXT(LOPTIONS, 0x03)), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0); //weapon
+        gdl = sub_GAME_7F0A9398(gdl, 0x5A, YOFFSET_WEAPTEXT, langGet(TEXT(LOPTIONS, OPTION_STR_03)), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0); //weapon
     }
     else
     {
-        gdl = sub_GAME_7F0A9398(gdl, 0x5A, YOFFSET_WEAPTEXT, langGet(TEXT(LOPTIONS, 0x03)), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0); //weapon
+        gdl = sub_GAME_7F0A9398(gdl, 0x5A, YOFFSET_WEAPTEXT, langGet(TEXT(LOPTIONS, OPTION_STR_03)), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0); //weapon
     }
 
     if (joyGetButtons(PLAYER_1, B_BUTTON))
     {
-        gdl = sub_GAME_7F0A9398(gdl, 0x5A, YOFFSET_ACTIONTEXT, langGet(TEXT(LOPTIONS, 0x02)), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0); //action
+        gdl = sub_GAME_7F0A9398(gdl, 0x5A, YOFFSET_ACTIONTEXT, langGet(TEXT(LOPTIONS, OPTION_STR_02)), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0); //action
     }
     else
     {
-        gdl = sub_GAME_7F0A9398(gdl, 0x5A, YOFFSET_ACTIONTEXT, langGet(TEXT(LOPTIONS, 0x02)), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0); //action
+        gdl = sub_GAME_7F0A9398(gdl, 0x5A, YOFFSET_ACTIONTEXT, langGet(TEXT(LOPTIONS, OPTION_STR_02)), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0); //action
     }
 
     if ((g_CurrentPlayer->cur_player_control_type_0 == 4) || (g_CurrentPlayer->cur_player_control_type_0 == 5))
     {
-        textptr_aux = langGet(TEXT(LOPTIONS, 0x00)); //fire
+        textptr_aux = langGet(TEXT(LOPTIONS, OPTION_STR_00)); //fire
     }
     else
     {
-        textptr_aux = langGet(TEXT(LOPTIONS, 0x01)); //aim
+        textptr_aux = langGet(TEXT(LOPTIONS, OPTION_STR_01)); //aim
     }
 
     if (joyGetButtons(PLAYER_1, Z_TRIG))
@@ -8035,40 +8035,40 @@ Gfx *display_text_buttons_dual_control(Gfx *gdl)
 
     if ((g_CurrentPlayer->cur_player_control_type_0 == 4) || (g_CurrentPlayer->cur_player_control_type_0 == 6))
     {
-        textptr_aux = langGet(TEXT(LOPTIONS, 0x05)); //move
+        textptr_aux = langGet(TEXT(LOPTIONS, OPTION_STR_05)); //move
     }
     else
     {
-        textptr_aux = langGet(TEXT(LOPTIONS, 0x06)); //look
+        textptr_aux = langGet(TEXT(LOPTIONS, OPTION_STR_06)); //look
     }
 
     gdl = sub_GAME_7F0A9398(gdl, 0x5A, YOFFSET_4, textptr_aux, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0);
 
     if (joyGetButtons(1, A_BUTTON))
     {
-        gdl = sub_GAME_7F0A9398(gdl, 0xE6, YOFFSET_WEAPTEXT, langGet(TEXT(LOPTIONS, 0x03)), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 1); //weapon
+        gdl = sub_GAME_7F0A9398(gdl, 0xE6, YOFFSET_WEAPTEXT, langGet(TEXT(LOPTIONS, OPTION_STR_03)), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 1); //weapon
     }
     else
     {
-        gdl = sub_GAME_7F0A9398(gdl, 0xE6, YOFFSET_WEAPTEXT, langGet(TEXT(LOPTIONS, 0x03)), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1); //weapon
+        gdl = sub_GAME_7F0A9398(gdl, 0xE6, YOFFSET_WEAPTEXT, langGet(TEXT(LOPTIONS, OPTION_STR_03)), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1); //weapon
     }
 
     if (joyGetButtons(1, B_BUTTON))
     {
-        gdl = sub_GAME_7F0A9398(gdl, 0xE6, YOFFSET_ACTIONTEXT, langGet(TEXT(LOPTIONS, 0x02)), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 1); //action
+        gdl = sub_GAME_7F0A9398(gdl, 0xE6, YOFFSET_ACTIONTEXT, langGet(TEXT(LOPTIONS, OPTION_STR_02)), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 1); //action
     }
     else
     {
-        gdl = sub_GAME_7F0A9398(gdl, 0xE6, YOFFSET_ACTIONTEXT, langGet(TEXT(LOPTIONS, 0x02)), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1); //action
+        gdl = sub_GAME_7F0A9398(gdl, 0xE6, YOFFSET_ACTIONTEXT, langGet(TEXT(LOPTIONS, OPTION_STR_02)), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1); //action
     }
 
     if ((g_CurrentPlayer->cur_player_control_type_0 == 4) || (g_CurrentPlayer->cur_player_control_type_0 == 5))
     {
-        textptr_aux = langGet(TEXT(LOPTIONS, 0x01)); //aim
+        textptr_aux = langGet(TEXT(LOPTIONS, OPTION_STR_01)); //aim
     }
     else
     {
-        textptr_aux = langGet(TEXT(LOPTIONS, 0x00)); //fire
+        textptr_aux = langGet(TEXT(LOPTIONS, OPTION_STR_00)); //fire
     }
 
     if (joyGetButtons(1, Z_TRIG))
@@ -8082,11 +8082,11 @@ Gfx *display_text_buttons_dual_control(Gfx *gdl)
 
     if ((g_CurrentPlayer->cur_player_control_type_0 == 4) || (g_CurrentPlayer->cur_player_control_type_0 == 6))
     {
-        textptr_aux = langGet(TEXT(LOPTIONS, 0x06)); //look
+        textptr_aux = langGet(TEXT(LOPTIONS, OPTION_STR_06)); //look
     }
     else
     {
-        textptr_aux = langGet(TEXT(LOPTIONS, 0x05)); //move
+        textptr_aux = langGet(TEXT(LOPTIONS, OPTION_STR_05)); //move
     }
 
     gdl = sub_GAME_7F0A9398(gdl, 0xE6, YOFFSET_4, textptr_aux, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1);
@@ -8214,7 +8214,7 @@ glabel sub_GAME_7F0AADC0
 /* 0DFA48 7F0AAF18 46105482 */  mul.s $f18, $f10, $f16
 /* 0DFA4C 7F0AAF1C 46123100 */  add.s $f4, $f6, $f18
 /* 0DFA50 7F0AAF20 E4440000 */  swc1  $f4, ($v0)
-/* 0DFA54 7F0AAF24 0FC29A8B */  jal   sub_GAME_7F0A6A2C
+/* 0DFA54 7F0AAF24 0FC29A8B */  jal   watchWrapAroundPI
 /* 0DFA58 7F0AAF28 C44C0000 */   lwc1  $f12, ($v0)
 /* 0DFA5C 7F0AAF2C 3C018004 */  lui   $at, %hi(D_80040B24)
 /* 0DFA60 7F0AAF30 E4200B24 */  swc1  $f0, %lo(D_80040B24)($at)
@@ -8414,7 +8414,7 @@ glabel sub_GAME_7F0AADC0
 /* 0DFD50 7F0AB220 46105182 */  mul.s $f6, $f10, $f16
 /* 0DFD54 7F0AB224 46062480 */  add.s $f18, $f4, $f6
 /* 0DFD58 7F0AB228 E4520000 */  swc1  $f18, ($v0)
-/* 0DFD5C 7F0AB22C 0FC29A8B */  jal   sub_GAME_7F0A6A2C
+/* 0DFD5C 7F0AB22C 0FC29A8B */  jal   watchWrapAroundPI
 /* 0DFD60 7F0AB230 C44C0000 */   lwc1  $f12, ($v0)
 /* 0DFD64 7F0AB234 3C018004 */  lui   $at, %hi(D_80040B34)
 /* 0DFD68 7F0AB238 E4200B34 */  swc1  $f0, %lo(D_80040B34)($at)
@@ -8685,7 +8685,7 @@ glabel sub_GAME_7F0AADC0
 /* 0E063C 7F0ABACC 460A4402 */  mul.s $f16, $f8, $f10
 /* 0E0640 7F0ABAD0 46109100 */  add.s $f4, $f18, $f16
 /* 0E0644 7F0ABAD4 E4440000 */  swc1  $f4, ($v0)
-/* 0E0648 7F0ABAD8 0FC29D73 */  jal   sub_GAME_7F0A6A2C
+/* 0E0648 7F0ABAD8 0FC29D73 */  jal   watchWrapAroundPI
 /* 0E064C 7F0ABADC C44C0000 */   lwc1  $f12, ($v0)
 /* 0E0650 7F0ABAE0 3C018004 */  lui   $at, %hi(D_80040B24) # $at, 0x8004
 /* 0E0654 7F0ABAE4 E4200B54 */  swc1  $f0, %lo(D_80040B24)($at)
@@ -8882,7 +8882,7 @@ glabel sub_GAME_7F0AADC0
 /* 0E0938 7F0ABDC8 46083282 */  mul.s $f10, $f6, $f8
 /* 0E093C 7F0ABDCC 460A9400 */  add.s $f16, $f18, $f10
 /* 0E0940 7F0ABDD0 E4500000 */  swc1  $f16, ($v0)
-/* 0E0944 7F0ABDD4 0FC29D73 */  jal   sub_GAME_7F0A6A2C
+/* 0E0944 7F0ABDD4 0FC29D73 */  jal   watchWrapAroundPI
 /* 0E0948 7F0ABDD8 C44C0000 */   lwc1  $f12, ($v0)
 /* 0E094C 7F0ABDDC 3C018004 */  lui   $at, %hi(D_80040B34) # $at, 0x8004
 /* 0E0950 7F0ABDE0 E4200B64 */  swc1  $f0, %lo(D_80040B34)($at)
@@ -9153,7 +9153,7 @@ glabel sub_GAME_7F0AADC0
 /* 0DCC3C 7F0AA24C 460A4402 */  mul.s $f16, $f8, $f10
 /* 0DCC40 7F0AA250 46109100 */  add.s $f4, $f18, $f16
 /* 0DCC44 7F0AA254 E4440000 */  swc1  $f4, ($v0)
-/* 0DCC48 7F0AA258 0FC29753 */  jal   sub_GAME_7F0A6A2C
+/* 0DCC48 7F0AA258 0FC29753 */  jal   watchWrapAroundPI
 /* 0DCC4C 7F0AA25C C44C0000 */   lwc1  $f12, ($v0)
 /* 0DCC50 7F0AA260 3C018004 */  lui   $at, %hi(D_80040B24) # $at, 0x8004
 /* 0DCC54 7F0AA264 E420A774 */  swc1  $f0, %lo(D_80040B24)($at)
@@ -9350,7 +9350,7 @@ glabel sub_GAME_7F0AADC0
 /* 0DCF38 7F0AA548 46083282 */  mul.s $f10, $f6, $f8
 /* 0DCF3C 7F0AA54C 460A9400 */  add.s $f16, $f18, $f10
 /* 0DCF40 7F0AA550 E4500000 */  swc1  $f16, ($v0)
-/* 0DCF44 7F0AA554 0FC29753 */  jal   sub_GAME_7F0A6A2C
+/* 0DCF44 7F0AA554 0FC29753 */  jal   watchWrapAroundPI
 /* 0DCF48 7F0AA558 C44C0000 */   lwc1  $f12, ($v0)
 /* 0DCF4C 7F0AA55C 3C018004 */  lui   $at, %hi(D_80040B34) # $at, 0x8004
 /* 0DCF50 7F0AA560 E420A784 */  swc1  $f0, %lo(D_80040B34)($at)
@@ -9544,19 +9544,19 @@ Gfx *draw_watch_control_options_page(Gfx *gdl, Mtx *param_2) {
     s32 sp58;
     s32 sp54;
     s32 sp50;
-    s32 ptr_first_font;
-    s32 ptr_second_font;
+    s32 pFontFile;
+    s32 pFontChars;
 
     gdl = draw_background_health_and_armor(gdl, param_2, 0);
     
     if (check_watch_page_transistion_running() != 1) {
         
         gdl = sub_GAME_7F0AADC0(gdl);
-        ptr_first_font = ptrFirstFontTableSmall;
-        ptr_second_font = ptrSecondFontTableSmall;
+        pFontFile = ptrFontBankGothic;
+        pFontChars = ptrFontBankGothicChars;
         
         gdl = microcode_constructor(gdl);
-        textptr = langGet(TEXT(LOPTIONS, 0x32)); //control style
+        textptr = langGet(TEXT(LOPTIONS, OPTION_STR_32)); //control style
     
         sp5C = XOFFSET_1;
         sp58 = 0x1A;
@@ -9570,24 +9570,24 @@ Gfx *draw_watch_control_options_page(Gfx *gdl, Mtx *param_2) {
             }
         }
         
-        textMeasure(&sp50, &sp54, textptr, ptr_second_font, ptr_first_font, 0);
+        textMeasure(&sp50, &sp54, textptr, pFontChars, pFontFile, 0);
         
         if ((watch_item_is_actively_selected != 0) && (controller_options_index == 0))
         {
-            gdl = textRenderGlow(gdl, &sp5C, &sp58, textptr, ptr_second_font, ptr_first_font, phi_s1, 0x7000A0, sp54 + 1, sp50, 0, 0);
+            gdl = textRenderGlow(gdl, &sp5C, &sp58, textptr, pFontChars, pFontFile, phi_s1, 0x7000A0, sp54 + 1, sp50, 0, 0);
         } else
         {
-            gdl = textRender(gdl, &sp5C, &sp58, textptr, ptr_second_font, ptr_first_font, phi_s1, sp54, sp50, 0, 0);
+            gdl = textRender(gdl, &sp5C, &sp58, textptr, pFontChars, pFontFile, phi_s1, sp54, sp50, 0, 0);
         }
         
         gdl = sub_GAME_7F0A97D0(gdl);
-        textptr = langGet(TEXT(LOPTIONS, 0x33)); //controller;
+        textptr = langGet(TEXT(LOPTIONS, OPTION_STR_33)); //controller;
         
         phi_s1 = 0xFF00B0;
         
         if (controllerCheckDualControllerTypesAllowed())
         {
-            textptr = langGet(TEXT(LOPTIONS, 0x34)); //controllers;
+            textptr = langGet(TEXT(LOPTIONS, OPTION_STR_34)); //controllers;
         }
         sp5C = XOFFSET_1;
         sp58 = 0x2B;
@@ -9601,14 +9601,14 @@ Gfx *draw_watch_control_options_page(Gfx *gdl, Mtx *param_2) {
             }
         }
         
-        textMeasure(&sp50, &sp54, textptr, ptr_second_font, ptr_first_font, 0);
+        textMeasure(&sp50, &sp54, textptr, pFontChars, pFontFile, 0);
 
         if ((watch_item_is_actively_selected != 0) && (controller_options_index == 1))
         {
-            gdl = textRenderGlow(gdl, &sp5C, &sp58, textptr, ptr_second_font, ptr_first_font, phi_s1, 0x7000A0, sp54 + 1, sp50, 0, 0);
+            gdl = textRenderGlow(gdl, &sp5C, &sp58, textptr, pFontChars, pFontFile, phi_s1, 0x7000A0, sp54 + 1, sp50, 0, 0);
         } else
         {
-            gdl = textRender(gdl, &sp5C, &sp58, textptr, ptr_second_font, ptr_first_font, phi_s1, sp54, sp50, 0, 0);
+            gdl = textRender(gdl, &sp5C, &sp58, textptr, pFontChars, pFontFile, phi_s1, sp54, sp50, 0, 0);
         }
         
     }
@@ -10072,8 +10072,8 @@ Gfx *draw_watch_game_options_page(Gfx *gdl, Mtx *param_2) {
     s32 sp4C;
     s32 sp48;
 
-    s32 ptr_first_font;
-    s32 ptr_second_font;
+    s32 pFontFile;
+    s32 pFontChars;
     
     gdl = draw_background_health_and_armor(gdl, param_2, 0);
 
@@ -10081,11 +10081,11 @@ Gfx *draw_watch_game_options_page(Gfx *gdl, Mtx *param_2) {
     {
         gdl = sub_GAME_7F0A91C8(gdl);
         gdl = sub_GAME_7F0A8FEC(gdl);
-        ptr_first_font = ptrFirstFontTableSmall;
-        ptr_second_font = ptrSecondFontTableSmall;
+        pFontFile = ptrFontBankGothic;
+        pFontChars = ptrFontBankGothicChars;
         gdl = microcode_constructor(gdl);
 
-        textptr = langGet(TEXT(LOPTIONS, 0x35)); //music
+        textptr = langGet(TEXT(LOPTIONS, OPTION_STR_35)); //music
 
         sp54 = XOFFSET_1;
         sp50 = YOFFSET_8;
@@ -10101,19 +10101,19 @@ Gfx *draw_watch_game_options_page(Gfx *gdl, Mtx *param_2) {
             }
         }
 
-        textMeasure(&sp48, &sp4C, textptr, ptr_second_font, ptr_first_font, 0);
+        textMeasure(&sp48, &sp4C, textptr, pFontChars, pFontFile, 0);
 
         if ((watch_item_is_actively_selected != 0) && (game_options_index == 0))
         {
-            gdl = textRenderGlow(gdl, &sp54, &sp50, textptr, ptr_second_font, ptr_first_font, sp5C, 0x7000A0, sp4C + 1, sp48, 0, 0);
+            gdl = textRenderGlow(gdl, &sp54, &sp50, textptr, pFontChars, pFontFile, sp5C, 0x7000A0, sp4C + 1, sp48, 0, 0);
         }
         else
         {
-            gdl = textRender(gdl, &sp54, &sp50, textptr, ptr_second_font, ptr_first_font, sp5C, sp4C, sp48, 0, 0);
+            gdl = textRender(gdl, &sp54, &sp50, textptr, pFontChars, pFontFile, sp5C, sp4C, sp48, 0, 0);
         }
 
         sp5C = 0xFF00B0;
-        textptr = langGet(TEXT(LOPTIONS, 0x36)); //fx
+        textptr = langGet(TEXT(LOPTIONS, OPTION_STR_36)); //fx
 
         sp54 = XOFFSET_1;
         sp50 = YOFFSET_9;
@@ -10128,15 +10128,15 @@ Gfx *draw_watch_game_options_page(Gfx *gdl, Mtx *param_2) {
             }
         }
 
-        textMeasure(&sp48, &sp4C, textptr, ptr_second_font, ptr_first_font, 0);
+        textMeasure(&sp48, &sp4C, textptr, pFontChars, pFontFile, 0);
 
         if ((watch_item_is_actively_selected != 0) && (game_options_index == 1))
         {
-            gdl = textRenderGlow(gdl, &sp54, &sp50, textptr, ptr_second_font, ptr_first_font, sp5C, 0x7000A0, sp4C + 1, sp48, 0, 0);
+            gdl = textRenderGlow(gdl, &sp54, &sp50, textptr, pFontChars, pFontFile, sp5C, 0x7000A0, sp4C + 1, sp48, 0, 0);
         }
         else
         {
-            gdl = textRender(gdl, &sp54, &sp50, textptr, ptr_second_font, ptr_first_font, sp5C, sp4C, sp48, 0, 0);
+            gdl = textRender(gdl, &sp54, &sp50, textptr, pFontChars, pFontFile, sp5C, sp4C, sp48, 0, 0);
         }
 
         gdl = draw_toggle_options(gdl);
@@ -10352,10 +10352,10 @@ glabel draw_watch_mission_briefing_page
 /* 0E0D54 7F0AC224 8DA1FFFC */  lw    $at, -4($t5)
 /* 0E0D58 7F0AC228 15B9FFF8 */  bne   $t5, $t9, .L7F0AC20C
 /* 0E0D5C 7F0AC22C AD81FFFC */   sw    $at, -4($t4)
-/* 0E0D60 7F0AC230 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTableSmall)
-/* 0E0D64 7F0AC234 3C0E8004 */  lui   $t6, %hi(ptrSecondFontTableSmall)
-/* 0E0D68 7F0AC238 8DEF0EAC */  lw    $t7, %lo(ptrFirstFontTableSmall)($t7)
-/* 0E0D6C 7F0AC23C 8DCE0EB0 */  lw    $t6, %lo(ptrSecondFontTableSmall)($t6)
+/* 0E0D60 7F0AC230 3C0F8004 */  lui   $t7, %hi(ptrFontBankGothic)
+/* 0E0D64 7F0AC234 3C0E8004 */  lui   $t6, %hi(ptrFontBankGothicChars)
+/* 0E0D68 7F0AC238 8DEF0EAC */  lw    $t7, %lo(ptrFontBankGothic)($t7)
+/* 0E0D6C 7F0AC23C 8DCE0EB0 */  lw    $t6, %lo(ptrFontBankGothicChars)($t6)
 /* 0E0D70 7F0AC240 3C088005 */  lui   $t0, %hi(D_800577C0)
 /* 0E0D74 7F0AC244 250877C0 */  addiu $t0, %lo(D_800577C0) # addiu $t0, $t0, 0x77c0
 /* 0E0D78 7F0AC248 AFA00D54 */  sw    $zero, 0xd54($sp)
@@ -10968,10 +10968,10 @@ glabel draw_watch_mission_briefing_page
 /* 0DDF40 7F0AB550 8DA1FFFC */  lw    $at, -4($t5)
 /* 0DDF44 7F0AB554 15B9FFF8 */  bne   $t5, $t9, .L7F0AB538
 /* 0DDF48 7F0AB558 AD81FFFC */   sw    $at, -4($t4)
-/* 0DDF4C 7F0AB55C 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTableSmall) # $t7, 0x8004
-/* 0DDF50 7F0AB560 3C0E8004 */  lui   $t6, %hi(ptrSecondFontTableSmall) # $t6, 0x8004
-/* 0DDF54 7F0AB564 8DEFAAFC */  lw    $t7, %lo(ptrFirstFontTableSmall)($t7)
-/* 0DDF58 7F0AB568 8DCEAB00 */  lw    $t6, %lo(ptrSecondFontTableSmall)($t6)
+/* 0DDF4C 7F0AB55C 3C0F8004 */  lui   $t7, %hi(ptrFontBankGothic) # $t7, 0x8004
+/* 0DDF50 7F0AB560 3C0E8004 */  lui   $t6, %hi(ptrFontBankGothicChars) # $t6, 0x8004
+/* 0DDF54 7F0AB564 8DEFAAFC */  lw    $t7, %lo(ptrFontBankGothic)($t7)
+/* 0DDF58 7F0AB568 8DCEAB00 */  lw    $t6, %lo(ptrFontBankGothicChars)($t6)
 /* 0DDF5C 7F0AB56C AFA00D54 */  sw    $zero, 0xd54($sp)
 /* 0DDF60 7F0AB570 AFA00D50 */  sw    $zero, 0xd50($sp)
 /* 0DDF64 7F0AB574 3404AC28 */  li    $a0, 44072

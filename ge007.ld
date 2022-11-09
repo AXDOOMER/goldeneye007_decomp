@@ -144,21 +144,21 @@ SECTIONS
    END_SEG(ramromfiles)
 
 
-   BEGIN_SEG(fonttablectlsmall1, _ramromfilesSegmentRomEnd, _fonttablectlsmall1SegmentRomStart)
+   BEGIN_SEG(fontbankgothic, _ramromfilesSegmentRomEnd, 0)
    {
-      build/OUTCODE/assets/font/font_first_font_table_controller_small.o (.data);
+      build/OUTCODE/assets/font/fontBankGothic.o (.data);
    }
-   END_SEG(fonttablectlsmall1)
+   END_SEG(fontbankgothic)
 
-   BEGIN_SEG(fonttablectllarge1, _fonttablectlsmall1SegmentRomEnd, _fonttablectllarge1SegmentRomStart)
+   BEGIN_SEG(fontzurichbold, _fontbankgothicSegmentRomEnd, 0)
    {
-      build/OUTCODE/assets/font/font_first_font_table_controller_large.o (.data);
+      build/OUTCODE/assets/font/fontZurichBold.o (.data);
    }
-   END_SEG(fonttablectllarge1)
+   END_SEG(fontzurichbold)
 
 
 
-   BEGIN_SEG(musicfiles, _fonttablectllarge1SegmentRomEnd, _musicfilesSegmentRomStart)
+   BEGIN_SEG(musicfiles, _fontzurichboldSegmentRomEnd, _musicfilesSegmentRomStart)
    {
       build/OUTCODE/assets/music/sfx.ctl.o (.data);
       build/OUTCODE/assets/music/sfx.tbl.o (.data);
