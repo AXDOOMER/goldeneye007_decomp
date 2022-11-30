@@ -4202,9 +4202,9 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     s32 num;
                     for (num = get_numguards() - 1; num >= 0; num--)
                     {
-                        if (ptr_guard_data[num].model != NULL)
+                        if (g_ChrSlots[num].model != NULL)
                         {
-                            ptr_guard_data[num].chrflags |= CHRFLAG_HIDDEN;
+                            g_ChrSlots[num].chrflags |= CHRFLAG_HIDDEN;
                         }
                     }
                     Offset += AI_HideAllChrs_LENGTH;
@@ -4215,7 +4215,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     s32 num;
                     for (num = get_numguards() - 1; num >= 0; num--)
                     {
-                        ptr_guard_data[num].chrflags &= ~CHRFLAG_HIDDEN;
+                        g_ChrSlots[num].chrflags &= ~CHRFLAG_HIDDEN;
                     }
 
                     Offset += AI_ShowAllChrs_LENGTH;

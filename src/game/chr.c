@@ -23,7 +23,7 @@
 
 // forward declarations
 
-void chrAimGlobalTimerTickRelated( ChrRecord *arg0);
+void chrUpdateAimProperties( ChrRecord *arg0);
 void chrPositionRelated7F020E40( ChrRecord *chr, s32 arg1);
 
 // end forward declarations
@@ -68,8 +68,8 @@ struct animation_something D_8002C914[] = {
 s32 D_8002CC58 = 0;
 s32 show_patrols_flag = FALSE;
 s32 player1_guardID = 5000;
- ChrRecord *ptr_guard_data = 0;
-s32 num_guards = 0;
+ ChrRecord *g_ChrSlots = 0;
+s32 g_NumChrSlots = 0;
 struct unk_joint_list D_8002CC6C = {NULL, 1, 3, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
 s32 D_8002CCAC = 0;
 s32 D_8002CCB0 = 0;
@@ -1139,7 +1139,7 @@ coord3d D_80030A44 = {0,0,0};
 
 s32 get_numguards(void)
 {
-  return num_guards;
+  return g_NumChrSlots;
 }
 
 void get_ptr_allocated_block_for_vertices(int param_1)
@@ -2527,9 +2527,9 @@ s32 chrGetNumFree(void)
     s32 count = 0;
     s32 i;
 
-    for (i = 0; i < num_guards; i++)
+    for (i = 0; i < g_NumChrSlots; i++)
     {
-        if (ptr_guard_data[i].model == 0)
+        if (g_ChrSlots[i].model == 0)
         {
             count++;
         }
@@ -2577,8 +2577,8 @@ glabel init_GUARDdata_with_set_values
 /* 054BEC 7F0200BC 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 054BF0 7F0200C0 F7B40010 */  sdc1  $f20, 0x10($sp)
 /* 054BF4 7F0200C4 4487A000 */  mtc1  $a3, $f20
-/* 054BF8 7F0200C8 3C078003 */  lui   $a3, %hi(num_guards)
-/* 054BFC 7F0200CC 8CE7CC68 */  lw    $a3, %lo(num_guards)($a3)
+/* 054BF8 7F0200C8 3C078003 */  lui   $a3, %hi(g_NumChrSlots)
+/* 054BFC 7F0200CC 8CE7CC68 */  lw    $a3, %lo(g_NumChrSlots)($a3)
 /* 054C00 7F0200D0 AFB30028 */  sw    $s3, 0x28($sp)
 /* 054C04 7F0200D4 AFB20024 */  sw    $s2, 0x24($sp)
 /* 054C08 7F0200D8 AFB10020 */  sw    $s1, 0x20($sp)
@@ -2590,8 +2590,8 @@ glabel init_GUARDdata_with_set_values
 /* 054C20 7F0200F0 00008025 */  move  $s0, $zero
 /* 054C24 7F0200F4 18E0000E */  blez  $a3, .L7F020130
 /* 054C28 7F0200F8 00001025 */   move  $v0, $zero
-/* 054C2C 7F0200FC 3C058003 */  lui   $a1, %hi(ptr_guard_data)
-/* 054C30 7F020100 8CA5CC64 */  lw    $a1, %lo(ptr_guard_data)($a1)
+/* 054C2C 7F0200FC 3C058003 */  lui   $a1, %hi(g_ChrSlots)
+/* 054C30 7F020100 8CA5CC64 */  lw    $a1, %lo(g_ChrSlots)($a1)
 /* 054C34 7F020104 00002025 */  move  $a0, $zero
 /* 054C38 7F020108 00A01825 */  move  $v1, $a1
 .L7F02010C:
@@ -2634,7 +2634,7 @@ glabel init_GUARDdata_with_set_values
 /* 054CC4 7F020194 3C058003 */  lui   $a1, %hi(animation_rate)
 /* 054CC8 7F020198 8CA5C900 */  lw    $a1, %lo(animation_rate)($a1)
 /* 054CCC 7F02019C 4406A000 */  mfc1  $a2, $f20
-/* 054CD0 7F0201A0 0FC1BFC6 */  jal   modelSetAnimRateForDuration
+/* 054CD0 7F0201A0 0FC1BFC6 */  jal   modelSetAnimPlaySpeed
 /* 054CD4 7F0201A4 02402025 */   move  $a0, $s2
 /* 054CD8 7F0201A8 3C028003 */  lui   $v0, %hi(player1_guardID)
 /* 054CDC 7F0201AC 2442CC60 */  addiu $v0, %lo(player1_guardID) # addiu $v0, $v0, -0x33a0
@@ -2781,8 +2781,8 @@ glabel init_GUARDdata_with_set_values
 /* 05290C 7F01FF1C 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 052910 7F01FF20 F7B40010 */  sdc1  $f20, 0x10($sp)
 /* 052914 7F01FF24 4487A000 */  mtc1  $a3, $f20
-/* 052918 7F01FF28 3C078003 */  lui   $a3, %hi(num_guards) # $a3, 0x8003
-/* 05291C 7F01FF2C 8CE781B8 */  lw    $a3, %lo(num_guards)($a3)
+/* 052918 7F01FF28 3C078003 */  lui   $a3, %hi(g_NumChrSlots) # $a3, 0x8003
+/* 05291C 7F01FF2C 8CE781B8 */  lw    $a3, %lo(g_NumChrSlots)($a3)
 /* 052920 7F01FF30 AFB30028 */  sw    $s3, 0x28($sp)
 /* 052924 7F01FF34 AFB20024 */  sw    $s2, 0x24($sp)
 /* 052928 7F01FF38 AFB10020 */  sw    $s1, 0x20($sp)
@@ -2794,8 +2794,8 @@ glabel init_GUARDdata_with_set_values
 /* 052940 7F01FF50 00008025 */  move  $s0, $zero
 /* 052944 7F01FF54 18E0000E */  blez  $a3, .L7F01FF90
 /* 052948 7F01FF58 00001025 */   move  $v0, $zero
-/* 05294C 7F01FF5C 3C058003 */  lui   $a1, %hi(ptr_guard_data) # $a1, 0x8003
-/* 052950 7F01FF60 8CA581B4 */  lw    $a1, %lo(ptr_guard_data)($a1)
+/* 05294C 7F01FF5C 3C058003 */  lui   $a1, %hi(g_ChrSlots) # $a1, 0x8003
+/* 052950 7F01FF60 8CA581B4 */  lw    $a1, %lo(g_ChrSlots)($a1)
 /* 052954 7F01FF64 00002025 */  move  $a0, $zero
 /* 052958 7F01FF68 00A01825 */  move  $v1, $a1
 .L7F01FF6C:
@@ -2843,7 +2843,7 @@ glabel init_GUARDdata_with_set_values
 /* 0529F8 7F020008 46105482 */  mul.s $f18, $f10, $f16
 /* 0529FC 7F02000C 4406A000 */  mfc1  $a2, $f20
 /* 052A00 7F020010 44059000 */  mfc1  $a1, $f18
-/* 052A04 7F020014 0FC1C02E */  jal   modelSetAnimRateForDuration
+/* 052A04 7F020014 0FC1C02E */  jal   modelSetAnimPlaySpeed
 /* 052A08 7F020018 00000000 */   nop   
 /* 052A0C 7F02001C 3C028003 */  lui   $v0, %hi(player1_guardID) # $v0, 0x8003
 /* 052A10 7F020020 244281B0 */  addiu $v0, %lo(player1_guardID) # addiu $v0, $v0, -0x7e50
@@ -2986,12 +2986,12 @@ glabel init_GUARDdata_with_set_values
 /**
  * Address 0x7F0203B8.
  */
-PropRecord * replace_GUARDdata_with_actual_values( Model * arg0, coord3d * arg1, f32 arg2,  StandTile * arg3, s32 arg4)
+PropRecord * chrAllocate( Model * arg0, coord3d * arg1, f32 arg2,  StandTile * arg3, s32 arg4)
 {
     PropRecord * ret;
     s32 phi_a0;
 
-    ret = chrpropAllocate();
+    ret = propAllocate();
 
     if (ret != 0)
     {
@@ -3166,15 +3166,15 @@ void setAnimationRate(f32 arg0)
 
     animation_rate = arg0;
 
-    for (i=0; i<num_guards; i++)
+    for (i=0; i<g_NumChrSlots; i++)
     {
-        if (ptr_guard_data[i].model != NULL)
+        if (g_ChrSlots[i].model != NULL)
         {
 #if defined(REFRESH_PAL)
 /* should reference D_80047E4C (1.2f) */
-            modelSetAnimRateForDuration(ptr_guard_data[i].model, animation_rate * 1.2f, 600.0f);
+            modelSetAnimPlaySpeed(g_ChrSlots[i].model, animation_rate * 1.2f, 600.0f);
 #else
-            modelSetAnimRateForDuration(ptr_guard_data[i].model, animation_rate, 600.0f);
+            modelSetAnimPlaySpeed(g_ChrSlots[i].model, animation_rate, 600.0f);
 #endif
         }
     }
@@ -3193,27 +3193,27 @@ f32 getAnimationRate(void)
 /**
  * Address 0x7F0205F0 (all versions).
  */
-void chrAimGlobalTimerTickRelated( ChrRecord *self)
+void chrUpdateAimProperties( ChrRecord *self)
 {
-    f32 temp_f0;
+    f32 mult;
 
     if (self->aimendcount >= 2)
     {
 #if defined(BUGFIX_R1)
-        temp_f0 = g_JP_GlobalTimerDelta / (f32) self->aimendcount;
+        mult = g_JP_GlobalTimerDelta / (f32) self->aimendcount;
 #else
-        temp_f0 = g_GlobalTimerDelta / (f32) self->aimendcount;
+        mult = g_GlobalTimerDelta / (f32) self->aimendcount;
 #endif
         
-        if (temp_f0 > 1.0f)
+        if (mult > 1.0f)
         {
-            temp_f0 = 1.0f;
+            mult = 1.0f;
         }
 
-        self->aimuplshoulder += ((self->aimendlshoulder - self->aimuplshoulder) * temp_f0);
-        self->aimuprshoulder += ((self->aimendrshoulder - self->aimuprshoulder) * temp_f0);
-        self->aimupback += ((self->aimendback - self->aimupback) * temp_f0);
-        self->aimsideback += ((self->aimendsideback - self->aimsideback) * temp_f0);
+        self->aimuplshoulder += ((self->aimendlshoulder - self->aimuplshoulder) * mult);
+        self->aimuprshoulder += ((self->aimendrshoulder - self->aimuprshoulder) * mult);
+        self->aimupback += ((self->aimendback - self->aimupback) * mult);
+        self->aimsideback += ((self->aimendsideback - self->aimsideback) * mult);
         self->aimendcount -= g_ClockTimer;
 
         return;
@@ -3249,11 +3249,11 @@ void chrSetHiddenToRandom(ChrRecord *self)
         
         if (rand == 0)
         {
-            self->hidden |= 0x1000;
+            self->hidden |= CHRHIDDEN_1000;
         }
         else if (rand == 1)
         {
-            self->hidden |= 0x2000;
+            self->hidden |= CHRHIDDEN_2000;
         }
 
         // roll for bits 14,15.
@@ -3265,11 +3265,11 @@ void chrSetHiddenToRandom(ChrRecord *self)
         
         if (rand == 0)
         {
-            self->hidden |= 0x4000;
+            self->hidden |= CHRHIDDEN_4000;
         }
         else if (rand == 1)
         {
-            self->hidden |= 0x8000;
+            self->hidden |= CHRHIDDEN_8000;
         }
     }
 }
@@ -3421,8 +3421,25 @@ s32 not_in_us_7F0209EC(s32 bodynum, s32 headnum)
         return 1;
     }
 
-    if ((bodynum != 6) && (bodynum != 7) && (bodynum != 8) && (bodynum != 9) && (bodynum != 0xA) && (bodynum != 0xB) && (bodynum != 0xC) && (bodynum != 0xD) && (bodynum != 0xE) && (bodynum != 0xF) && (bodynum != 0x10) && (bodynum != 0x4F) 
-        && (headnum != 0x4A) && (headnum != 0x4B) && (headnum != 0x4C) && (headnum != 0x4D) && (headnum != 0x4E) && (headnum != 0x45))
+    if ((bodynum != BODY_Boris) && 
+        (bodynum != BODY_Ourumov) && 
+        (bodynum != BODY_Trevelyan_Janus) && 
+        (bodynum != BODY_Trevelyan_006) && 
+        (bodynum != BODY_Valentin_) && 
+        (bodynum != BODY_Xenia) && 
+        (bodynum != BODY_Baron_Samedi) && 
+        (bodynum != BODY_Jaws) && 
+        (bodynum != BODY_Mayday) && 
+        (bodynum != BODY_Oddjob) && 
+        (bodynum != BODY_Natalya_Skirt) && 
+        (bodynum != BODY_Natalya_Jungle_Fatigues) && 
+        
+        (headnum != BODY_Male_Pierce_Bond_1) && 
+        (headnum != BODY_Male_Pierce_Bond_2) && 
+        (headnum != BODY_Male_Pierce_Bond_3) && 
+        (headnum != BODY_Male_Pierce_Bond_Parka) && 
+        (headnum != BODY_Male_Pierce_Bond_Tuxedo) && 
+        (headnum != BODY_Male_Mishkin))
     {
         return 1;
     }
@@ -3810,7 +3827,7 @@ glabel sub_GAME_7F02083C
 /* 055894 7F020D64 C7A80078 */  lwc1  $f8, 0x78($sp)
 /* 055898 7F020D68 E5080034 */  swc1  $f8, 0x34($t0)
 /* 05589C 7F020D6C C7A4007C */  lwc1  $f4, 0x7c($sp)
-/* 0558A0 7F020D70 0FC1E0F1 */  jal   currentPlayerGetMatrix10CC
+/* 0558A0 7F020D70 0FC1E0F1 */  jal   camGetWorldToScreenMtxf
 /* 0558A4 7F020D74 E5040038 */   swc1  $f4, 0x38($t0)
 /* 0558A8 7F020D78 00402025 */  move  $a0, $v0
 /* 0558AC 7F020D7C 0FC16026 */  jal   matrix_4x4_multiply_homogeneous_in_place
@@ -4204,7 +4221,7 @@ glabel sub_GAME_7F02083C
 /* 055B6C 7F020FFC C7A80078 */  lwc1  $f8, 0x78($sp)
 /* 055B70 7F021000 E5280034 */  swc1  $f8, 0x34($t1)
 /* 055B74 7F021004 C7A4007C */  lwc1  $f4, 0x7c($sp)
-/* 055B78 7F021008 0FC1E26D */  jal   currentPlayerGetMatrix10CC
+/* 055B78 7F021008 0FC1E26D */  jal   camGetWorldToScreenMtxf
 /* 055B7C 7F02100C E5240038 */   swc1  $f4, 0x38($t1)
 /* 055B80 7F021010 00402025 */  move  $a0, $v0
 /* 055B84 7F021014 0FC1616E */  jal   matrix_4x4_multiply_homogeneous_in_place
@@ -4256,10 +4273,10 @@ void chrPositionRelated7F020E40(ChrRecord *chr, s32 arg1)
     model = chr->model;
     prop = chr->prop;
 
-    if ((chr->hidden & 0x800) == 0)
+    if (!(chr->hidden & CHRHIDDEN_FREEZE))
     {
         getsuboffset(model, &chr->prevpos);
-        sub_GAME_7F070AEC(model, arg1, 1);
+        modelTickAnimQuarterSpeed(model, arg1, 1);
         subcalcpos(model);
         set_color_shading_from_tile(prop, &chr->nextcol);
         getsuboffset(model, &prop->pos);
@@ -4449,7 +4466,7 @@ glabel sub_GAME_7F020EF0
 /* 055C7C 7F02114C 00003025 */  move  $a2, $zero
 /* 055C80 7F021150 11600005 */  beqz  $t3, .L7F021168
 /* 055C84 7F021154 00000000 */   nop   
-/* 055C88 7F021158 0FC1C2BB */  jal   sub_GAME_7F070AEC
+/* 055C88 7F021158 0FC1C2BB */  jal   modelTickAnimQuarterSpeed
 /* 055C8C 7F02115C 8FA40110 */   lw    $a0, 0x110($sp)
 /* 055C90 7F021160 10000003 */  b     .L7F021170
 /* 055C94 7F021164 00000000 */   nop   
@@ -4564,7 +4581,7 @@ glabel sub_GAME_7F020EF0
 /* 055E1C 7F0212EC 8FA40110 */  lw    $a0, 0x110($sp)
 .L7F0212F0:
 /* 055E20 7F0212F0 8FA50104 */  lw    $a1, 0x104($sp)
-/* 055E24 7F0212F4 0FC1C2BB */  jal   sub_GAME_7F070AEC
+/* 055E24 7F0212F4 0FC1C2BB */  jal   modelTickAnimQuarterSpeed
 /* 055E28 7F0212F8 00003025 */   move  $a2, $zero
 .L7F0212FC:
 /* 055E2C 7F0212FC 10000032 */  b     .L7F0213C8
@@ -4598,7 +4615,7 @@ glabel sub_GAME_7F020EF0
 /* 055E90 7F021360 8FA50104 */  lw    $a1, 0x104($sp)
 /* 055E94 7F021364 13000003 */  beqz  $t8, .L7F021374
 /* 055E98 7F021368 00000000 */   nop   
-/* 055E9C 7F02136C 0FC1C2BB */  jal   sub_GAME_7F070AEC
+/* 055E9C 7F02136C 0FC1C2BB */  jal   modelTickAnimQuarterSpeed
 /* 055EA0 7F021370 00003025 */   move  $a2, $zero
 .L7F021374:
 /* 055EA4 7F021374 10000014 */  b     .L7F0213C8
@@ -4608,7 +4625,7 @@ glabel sub_GAME_7F020EF0
 /* 055EB0 7F021380 02002025 */   move  $a0, $s0
 /* 055EB4 7F021384 8FA40110 */  lw    $a0, 0x110($sp)
 /* 055EB8 7F021388 8FA50104 */  lw    $a1, 0x104($sp)
-/* 055EBC 7F02138C 0FC1C2BB */  jal   sub_GAME_7F070AEC
+/* 055EBC 7F02138C 0FC1C2BB */  jal   modelTickAnimQuarterSpeed
 /* 055EC0 7F021390 00003025 */   move  $a2, $zero
 /* 055EC4 7F021394 10000003 */  b     .L7F0213A4
 /* 055EC8 7F021398 00000000 */   nop   
@@ -4643,7 +4660,7 @@ glabel sub_GAME_7F020EF0
 /* 055F28 7F0213F8 35AC0200 */  ori   $t4, $t5, 0x200
 /* 055F2C 7F0213FC A60C0012 */  sh    $t4, 0x12($s0)
 .L7F021400:
-/* 055F30 7F021400 0FC0817C */  jal   chrAimGlobalTimerTickRelated
+/* 055F30 7F021400 0FC0817C */  jal   chrUpdateAimProperties
 /* 055F34 7F021404 02002025 */   move  $a0, $s0
 /* 055F38 7F021408 8E040020 */  lw    $a0, 0x20($s0)
 /* 055F3C 7F02140C 50800005 */  beql  $a0, $zero, .L7F021424
@@ -4678,7 +4695,7 @@ glabel sub_GAME_7F020EF0
 /* 055FA8 7F021478 3C018003 */  lui   $at, %hi(D_80036090)
 /* 055FAC 7F02147C AC2A6090 */  sw    $t2, %lo(D_80036090)($at)
 /* 055FB0 7F021480 3C018007 */  lui   $at, %hi(dword_CODE_bss_80069B60)
-/* 055FB4 7F021484 0FC1E0F1 */  jal   currentPlayerGetMatrix10CC
+/* 055FB4 7F021484 0FC1E0F1 */  jal   camGetWorldToScreenMtxf
 /* 055FB8 7F021488 AC309B60 */   sw    $s0, %lo(dword_CODE_bss_80069B60)($at)
 /* 055FBC 7F02148C 8FAB0110 */  lw    $t3, 0x110($sp)
 /* 055FC0 7F021490 AFA20118 */  sw    $v0, 0x118($sp)
@@ -4747,7 +4764,7 @@ glabel sub_GAME_7F020EF0
 /* 0560B4 7F021584 8C65001C */  lw    $a1, 0x1c($v1)
 /* 0560B8 7F021588 8FA40110 */  lw    $a0, 0x110($sp)
 /* 0560BC 7F02158C AFA70100 */  sw    $a3, 0x100($sp)
-/* 0560C0 7F021590 0FC1B198 */  jal   sub_GAME_7F06C660
+/* 0560C0 7F021590 0FC1B198 */  jal   modelFindNodeMtx
 /* 0560C4 7F021594 AFA300FC */   sw    $v1, 0xfc($sp)
 /* 0560C8 7F021598 8FAB00FC */  lw    $t3, 0xfc($sp)
 /* 0560CC 7F02159C AFA20118 */  sw    $v0, 0x118($sp)
@@ -5301,7 +5318,7 @@ glabel sub_GAME_7F020EF0
 /* 055F54 7F0213E4 00003025 */  move  $a2, $zero
 /* 055F58 7F0213E8 11600005 */  beqz  $t3, .Ljp7F021400
 /* 055F5C 7F0213EC 00000000 */   nop   
-/* 055F60 7F0213F0 0FC1C437 */  jal   sub_GAME_7F070AEC
+/* 055F60 7F0213F0 0FC1C437 */  jal   modelTickAnimQuarterSpeed
 /* 055F64 7F0213F4 8FA40110 */   lw    $a0, 0x110($sp)
 /* 055F68 7F0213F8 10000003 */  b     .Ljp7F021408
 /* 055F6C 7F0213FC 00000000 */   nop   
@@ -5416,7 +5433,7 @@ glabel sub_GAME_7F020EF0
 /* 0560F4 7F021584 8FA40110 */  lw    $a0, 0x110($sp)
 .Ljp7F021588:
 /* 0560F8 7F021588 8FA50104 */  lw    $a1, 0x104($sp)
-/* 0560FC 7F02158C 0FC1C437 */  jal   sub_GAME_7F070AEC
+/* 0560FC 7F02158C 0FC1C437 */  jal   modelTickAnimQuarterSpeed
 /* 056100 7F021590 00003025 */   move  $a2, $zero
 .Ljp7F021594:
 /* 056104 7F021594 10000032 */  b     .Ljp7F021660
@@ -5450,7 +5467,7 @@ glabel sub_GAME_7F020EF0
 /* 056168 7F0215F8 8FA50104 */  lw    $a1, 0x104($sp)
 /* 05616C 7F0215FC 13000003 */  beqz  $t8, .Ljp7F02160C
 /* 056170 7F021600 00000000 */   nop   
-/* 056174 7F021604 0FC1C437 */  jal   sub_GAME_7F070AEC
+/* 056174 7F021604 0FC1C437 */  jal   modelTickAnimQuarterSpeed
 /* 056178 7F021608 00003025 */   move  $a2, $zero
 .Ljp7F02160C:
 /* 05617C 7F02160C 10000014 */  b     .Ljp7F021660
@@ -5460,7 +5477,7 @@ glabel sub_GAME_7F020EF0
 /* 056188 7F021618 02002025 */   move  $a0, $s0
 /* 05618C 7F02161C 8FA40110 */  lw    $a0, 0x110($sp)
 /* 056190 7F021620 8FA50104 */  lw    $a1, 0x104($sp)
-/* 056194 7F021624 0FC1C437 */  jal   sub_GAME_7F070AEC
+/* 056194 7F021624 0FC1C437 */  jal   modelTickAnimQuarterSpeed
 /* 056198 7F021628 00003025 */   move  $a2, $zero
 /* 05619C 7F02162C 10000003 */  b     .Ljp7F02163C
 /* 0561A0 7F021630 00000000 */   nop   
@@ -5495,7 +5512,7 @@ glabel sub_GAME_7F020EF0
 /* 056200 7F021690 35AC0200 */  ori   $t4, $t5, 0x200
 /* 056204 7F021694 A60C0012 */  sh    $t4, 0x12($s0)
 .Ljp7F021698:
-/* 056208 7F021698 0FC081E8 */  jal   chrAimGlobalTimerTickRelated
+/* 056208 7F021698 0FC081E8 */  jal   chrUpdateAimProperties
 /* 05620C 7F02169C 02002025 */   move  $a0, $s0
 /* 056210 7F0216A0 8E040020 */  lw    $a0, 0x20($s0)
 /* 056214 7F0216A4 50800005 */  beql  $a0, $zero, .Ljp7F0216BC
@@ -5550,7 +5567,7 @@ glabel sub_GAME_7F020EF0
 /* 0562D0 7F021760 3C018003 */  lui   $at, %hi(D_80036090) # $at, 0x8003
 /* 0562D4 7F021764 AC2D60D0 */  sw    $t5, %lo(D_80036090)($at)
 /* 0562D8 7F021768 3C018007 */  lui   $at, %hi(dword_CODE_bss_80069B60) # $at, 0x8007
-/* 0562DC 7F02176C 0FC1E26D */  jal   currentPlayerGetMatrix10CC
+/* 0562DC 7F02176C 0FC1E26D */  jal   camGetWorldToScreenMtxf
 /* 0562E0 7F021770 AC309BA0 */   sw    $s0, %lo(dword_CODE_bss_80069B60)($at)
 /* 0562E4 7F021774 8FAC0110 */  lw    $t4, 0x110($sp)
 /* 0562E8 7F021778 AFA20118 */  sw    $v0, 0x118($sp)
@@ -5619,7 +5636,7 @@ glabel sub_GAME_7F020EF0
 /* 0563DC 7F02186C 8C65001C */  lw    $a1, 0x1c($v1)
 /* 0563E0 7F021870 8FA40110 */  lw    $a0, 0x110($sp)
 /* 0563E4 7F021874 AFA70100 */  sw    $a3, 0x100($sp)
-/* 0563E8 7F021878 0FC1B314 */  jal   sub_GAME_7F06C660
+/* 0563E8 7F021878 0FC1B314 */  jal   modelFindNodeMtx
 /* 0563EC 7F02187C AFA300FC */   sw    $v1, 0xfc($sp)
 /* 0563F0 7F021880 8FAC00FC */  lw    $t4, 0xfc($sp)
 /* 0563F4 7F021884 AFA20118 */  sw    $v0, 0x118($sp)
@@ -6227,7 +6244,7 @@ glabel sub_GAME_7F020EF0
 /* 053AB4 7F0210C4 00003025 */  move  $a2, $zero
 /* 053AB8 7F0210C8 11600005 */  beqz  $t3, .L7F0210E0
 /* 053ABC 7F0210CC 00000000 */   nop   
-/* 053AC0 7F0210D0 0FC1C323 */  jal   sub_GAME_7F070AEC
+/* 053AC0 7F0210D0 0FC1C323 */  jal   modelTickAnimQuarterSpeed
 /* 053AC4 7F0210D4 8FA40110 */   lw    $a0, 0x110($sp)
 /* 053AC8 7F0210D8 10000003 */  b     .L7F0210E8
 /* 053ACC 7F0210DC 00000000 */   nop   
@@ -6342,7 +6359,7 @@ glabel sub_GAME_7F020EF0
 /* 053C54 7F021264 8FA40110 */  lw    $a0, 0x110($sp)
 .L7F021268:
 /* 053C58 7F021268 8FA50104 */  lw    $a1, 0x104($sp)
-/* 053C5C 7F02126C 0FC1C323 */  jal   sub_GAME_7F070AEC
+/* 053C5C 7F02126C 0FC1C323 */  jal   modelTickAnimQuarterSpeed
 /* 053C60 7F021270 00003025 */   move  $a2, $zero
 .L7F021274:
 /* 053C64 7F021274 10000032 */  b     .L7F021340
@@ -6376,7 +6393,7 @@ glabel sub_GAME_7F020EF0
 /* 053CC8 7F0212D8 8FA50104 */  lw    $a1, 0x104($sp)
 /* 053CCC 7F0212DC 13000003 */  beqz  $t8, .L7F0212EC
 /* 053CD0 7F0212E0 00000000 */   nop   
-/* 053CD4 7F0212E4 0FC1C323 */  jal   sub_GAME_7F070AEC
+/* 053CD4 7F0212E4 0FC1C323 */  jal   modelTickAnimQuarterSpeed
 /* 053CD8 7F0212E8 00003025 */   move  $a2, $zero
 .L7F0212EC:
 /* 053CDC 7F0212EC 10000014 */  b     .L7F021340
@@ -6386,7 +6403,7 @@ glabel sub_GAME_7F020EF0
 /* 053CE8 7F0212F8 02002025 */   move  $a0, $s0
 /* 053CEC 7F0212FC 8FA40110 */  lw    $a0, 0x110($sp)
 /* 053CF0 7F021300 8FA50104 */  lw    $a1, 0x104($sp)
-/* 053CF4 7F021304 0FC1C323 */  jal   sub_GAME_7F070AEC
+/* 053CF4 7F021304 0FC1C323 */  jal   modelTickAnimQuarterSpeed
 /* 053CF8 7F021308 00003025 */   move  $a2, $zero
 /* 053CFC 7F02130C 10000003 */  b     .L7F02131C
 /* 053D00 7F021310 00000000 */   nop   
@@ -6421,7 +6438,7 @@ glabel sub_GAME_7F020EF0
 /* 053D60 7F021370 35AC0200 */  ori   $t4, $t5, 0x200
 /* 053D64 7F021374 A60C0012 */  sh    $t4, 0x12($s0)
 .L7F021378:
-/* 053D68 7F021378 0FC08120 */  jal   chrAimGlobalTimerTickRelated
+/* 053D68 7F021378 0FC08120 */  jal   chrUpdateAimProperties
 /* 053D6C 7F02137C 02002025 */   move  $a0, $s0
 /* 053D70 7F021380 8E040020 */  lw    $a0, 0x20($s0)
 /* 053D74 7F021384 50800005 */  beql  $a0, $zero, .L7F02139C
@@ -6476,7 +6493,7 @@ glabel sub_GAME_7F020EF0
 /* 053E30 7F021440 3C018003 */  lui   $at, %hi(D_80036090) # $at, 0x8003
 /* 053E34 7F021444 AC2D15E0 */  sw    $t5, %lo(D_80036090)($at)
 /* 053E38 7F021448 3C018006 */  lui   $at, %hi(dword_CODE_bss_80069B60) # $at, 0x8006
-/* 053E3C 7F02144C 0FC1E111 */  jal   currentPlayerGetMatrix10CC
+/* 053E3C 7F02144C 0FC1E111 */  jal   camGetWorldToScreenMtxf
 /* 053E40 7F021450 AC308AA0 */   sw    $s0, %lo(dword_CODE_bss_80069B60)($at)
 /* 053E44 7F021454 8FAC0110 */  lw    $t4, 0x110($sp)
 /* 053E48 7F021458 AFA20118 */  sw    $v0, 0x118($sp)
@@ -6545,7 +6562,7 @@ glabel sub_GAME_7F020EF0
 /* 053F3C 7F02154C 8C65001C */  lw    $a1, 0x1c($v1)
 /* 053F40 7F021550 8FA40110 */  lw    $a0, 0x110($sp)
 /* 053F44 7F021554 AFA70100 */  sw    $a3, 0x100($sp)
-/* 053F48 7F021558 0FC1B366 */  jal   sub_GAME_7F06C660
+/* 053F48 7F021558 0FC1B366 */  jal   modelFindNodeMtx
 /* 053F4C 7F02155C AFA300FC */   sw    $v1, 0xfc($sp)
 /* 053F50 7F021560 8FAC00FC */  lw    $t4, 0xfc($sp)
 /* 053F54 7F021564 AFA20118 */  sw    $v0, 0x118($sp)
@@ -7258,7 +7275,7 @@ glabel sub_GAME_7F022078
 /* 056CA4 7F022174 0FC1E111 */  jal   currentPlayerGetMatrix10D4
 /* 056CA8 7F022178 E7A40044 */   swc1  $f4, 0x44($sp)
 /* 056CAC 7F02217C 00402025 */  move  $a0, $v0
-/* 056CB0 7F022180 0FC1611D */  jal   matrix_4x4_transform_vector_in_place
+/* 056CB0 7F022180 0FC1611D */  jal   mtx4TransformVecInPlace
 /* 056CB4 7F022184 27A5003C */   addiu $a1, $sp, 0x3c
 /* 056CB8 7F022188 8FAD0050 */  lw    $t5, 0x50($sp)
 /* 056CBC 7F02218C 27A4003C */  addiu $a0, $sp, 0x3c
@@ -7390,12 +7407,12 @@ glabel sub_GAME_7F0221DC
 /* 056E64 7F022334 10000008 */  b     .L7F022358
 /* 056E68 7F022338 8E090014 */   lw    $t1, 0x14($s0)
 .L7F02233C:
-/* 056E6C 7F02233C 0FC1BA6F */  jal   process_12_handle_switch
+/* 056E6C 7F02233C 0FC1BA6F */  jal   modelApplyToggleRelations
 /* 056E70 7F022340 02002825 */   move  $a1, $s0
 /* 056E74 7F022344 10000004 */  b     .L7F022358
 /* 056E78 7F022348 8E090014 */   lw    $t1, 0x14($s0)
 .L7F02234C:
-/* 056E7C 7F02234C 0FC1BA82 */  jal   process_17_pointer_to_head
+/* 056E7C 7F02234C 0FC1BA82 */  jal   modelApplyHeadRelations
 /* 056E80 7F022350 02002825 */   move  $a1, $s0
 /* 056E84 7F022354 8E090014 */  lw    $t1, 0x14($s0)
 .L7F022358:
@@ -7754,11 +7771,11 @@ glabel sub_GAME_7F022648
 /* 05736C 7F02283C 0FC1E111 */  jal   currentPlayerGetMatrix10D4
 /* 057370 7F022840 E7A4007C */   swc1  $f4, 0x7c($sp)
 /* 057374 7F022844 00402025 */  move  $a0, $v0
-/* 057378 7F022848 0FC160F6 */  jal   matrix_4x4_rotate_vector_in_place
+/* 057378 7F022848 0FC160F6 */  jal   mtx4RotateVecInPlace
 /* 05737C 7F02284C 27A50074 */   addiu $a1, $sp, 0x74
 /* 057380 7F022850 8FA400DC */  lw    $a0, 0xdc($sp)
 /* 057384 7F022854 8FA500D8 */  lw    $a1, 0xd8($sp)
-/* 057388 7F022858 0FC1B198 */  jal   sub_GAME_7F06C660
+/* 057388 7F022858 0FC1B198 */  jal   modelFindNodeMtx
 /* 05738C 7F02285C 00003025 */   move  $a2, $zero
 /* 057390 7F022860 C4460030 */  lwc1  $f6, 0x30($v0)
 /* 057394 7F022864 C6480000 */  lwc1  $f8, ($s2)
@@ -7910,7 +7927,7 @@ glabel sub_GAME_7F022980
 /* 0575A0 7F022A70 E7A800B0 */   swc1  $f8, 0xb0($sp)
 /* 0575A4 7F022A74 27B000A8 */  addiu $s0, $sp, 0xa8
 /* 0575A8 7F022A78 02002825 */  move  $a1, $s0
-/* 0575AC 7F022A7C 0FC1611D */  jal   matrix_4x4_transform_vector_in_place
+/* 0575AC 7F022A7C 0FC1611D */  jal   mtx4TransformVecInPlace
 /* 0575B0 7F022A80 00402025 */   move  $a0, $v0
 /* 0575B4 7F022A84 0FC19ED3 */  jal   sub_GAME_7F067B4C
 /* 0575B8 7F022A88 02002025 */   move  $a0, $s0
@@ -8077,7 +8094,7 @@ glabel sub_GAME_7F022980
 /* 057810 7F022CE0 8FBF004C */   lw    $ra, 0x4c($sp)
 .L7F022CE4:
 /* 057814 7F022CE4 8E240048 */  lw    $a0, 0x48($s1)
-/* 057818 7F022CE8 0FC1B198 */  jal   sub_GAME_7F06C660
+/* 057818 7F022CE8 0FC1B198 */  jal   modelFindNodeMtx
 /* 05781C 7F022CEC 8E25000C */   lw    $a1, 0xc($s1)
 /* 057820 7F022CF0 C7B20098 */  lwc1  $f18, 0x98($sp)
 /* 057824 7F022CF4 C7A4009C */  lwc1  $f4, 0x9c($sp)
@@ -8136,7 +8153,7 @@ glabel sub_GAME_7F022980
 /* 0578F8 7F022DC8 E7A60078 */   swc1  $f6, 0x78($sp)
 /* 0578FC 7F022DCC 27B00070 */  addiu $s0, $sp, 0x70
 /* 057900 7F022DD0 02002825 */  move  $a1, $s0
-/* 057904 7F022DD4 0FC1611D */  jal   matrix_4x4_transform_vector_in_place
+/* 057904 7F022DD4 0FC1611D */  jal   mtx4TransformVecInPlace
 /* 057908 7F022DD8 02402025 */   move  $a0, $s2
 /* 05790C 7F022DDC 8E240048 */  lw    $a0, 0x48($s1)
 /* 057910 7F022DE0 8E250008 */  lw    $a1, 8($s1)
@@ -8254,13 +8271,13 @@ void chrCheckGuardsHeardSound(f32 noise)
 {
     s32 i;
 
-    for (i=0; i<num_guards; i++)
+    for (i=0; i<g_NumChrSlots; i++)
     {
-        if (ptr_guard_data[i].model != NULL)
+        if (g_ChrSlots[i].model != NULL)
         {
-            if (chrGetDistanceToBond(&ptr_guard_data[i]) < ptr_guard_data[i].hearingscale * (noise * 100.0f))
+            if (chrGetDistanceToBond(&g_ChrSlots[i]) < g_ChrSlots[i].hearingscale * (noise * 100.0f))
             {
-                chrlvAlertGuardToPlayerPosition(&ptr_guard_data[i]);
+                chrlvAlertGuardToPlayerPosition(&g_ChrSlots[i]);
             }
         }
     }
@@ -8269,7 +8286,7 @@ void chrCheckGuardsHeardSound(f32 noise)
 
 
 /**
- * Iterates ptr_guard_data. Returns the first object that (1) model
+ * Iterates g_ChrSlots. Returns the first object that (1) model
  * is not null and (2) chrnum matches index.
  * 
  * Address 0x7F022FC8.
@@ -8279,11 +8296,11 @@ ChrRecord* chrFindByLiteralId(s32 index)
 {
     s32 i;
 
-    for (i=0; i<num_guards; i++)
+    for (i=0; i<g_NumChrSlots; i++)
     {
-        if (ptr_guard_data[i].model != NULL && ptr_guard_data[i].chrnum == index)
+        if (g_ChrSlots[i].model != NULL && g_ChrSlots[i].chrnum == index)
         {
-            return &ptr_guard_data[i];
+            return &g_ChrSlots[i];
         }
     }
 

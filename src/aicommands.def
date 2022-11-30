@@ -10588,9 +10588,9 @@ _AI_CMD(
         s32 num;
         for (num = get_numguards() - 1; num >= 0; num--)
         {
-            if (ptr_guard_data[num].model != NULL)
+            if (g_ChrSlots[num].model != NULL)
             {
-                ptr_guard_data[num].chrflags |= CHRFLAG_HIDDEN;
+                g_ChrSlots[num].chrflags |= CHRFLAG_HIDDEN;
             }
         }
         Offset += CAT(CAT(AI_, CMDNAME), _LENGTH);
@@ -10625,7 +10625,7 @@ _AI_CMD(
         s32 num;
         for (num = get_numguards() - 1; num >= 0; num--)
         {
-            ptr_guard_data[num].chrflags &= ~CHRFLAG_HIDDEN;
+            g_ChrSlots[num].chrflags &= ~CHRFLAG_HIDDEN;
         }
         Offset += CAT(CAT(AI_, CMDNAME), _LENGTH);
         break;

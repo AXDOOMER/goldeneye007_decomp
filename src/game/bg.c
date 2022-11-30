@@ -4007,11 +4007,11 @@ s32 sub_GAME_7F0B5488(coord3d* arg0, coord3d* arg1)
     Mtxf* temp_a0;
     s32 var_v0;
 
-    temp_a0 = currentPlayerGetMatrix10CC();
+    temp_a0 = camGetWorldToScreenMtxf();
     arg1->x = arg0->x * room_data_float2;
     arg1->y = arg0->y * room_data_float2;
     arg1->z = arg0->z * room_data_float2;
-    matrix_4x4_transform_vector_in_place(temp_a0, arg1->f);
+    mtx4TransformVecInPlace(temp_a0, arg1->f);
 
     sub_GAME_7F078060(arg1, arg1);
 
@@ -4053,7 +4053,7 @@ glabel sub_GAME_7F0B5528
 /* 0EA08C 7F0B555C AFB00030 */  sw    $s0, 0x30($sp)
 /* 0EA090 7F0B5560 F7B80028 */  sdc1  $f24, 0x28($sp)
 /* 0EA094 7F0B5564 F7B60020 */  sdc1  $f22, 0x20($sp)
-/* 0EA098 7F0B5568 0FC1E0F1 */  jal   currentPlayerGetMatrix10CC
+/* 0EA098 7F0B5568 0FC1E0F1 */  jal   camGetWorldToScreenMtxf
 /* 0EA09C 7F0B556C AFA400B0 */   sw    $a0, 0xb0($sp)
 /* 0EA0A0 7F0B5570 AFA200AC */  sw    $v0, 0xac($sp)
 /* 0EA0A4 7F0B5574 241E0001 */  li    $fp, 1
@@ -4134,7 +4134,7 @@ glabel sub_GAME_7F0B5528
 /* 0EA1C8 7F0B5698 C6920000 */  lwc1  $f18, ($s4)
 /* 0EA1CC 7F0B569C 46124102 */  mul.s $f4, $f8, $f18
 /* 0EA1D0 7F0B56A0 E6040008 */  swc1  $f4, 8($s0)
-/* 0EA1D4 7F0B56A4 0FC1611D */  jal   matrix_4x4_transform_vector_in_place
+/* 0EA1D4 7F0B56A4 0FC1611D */  jal   mtx4TransformVecInPlace
 /* 0EA1D8 7F0B56A8 8FA400AC */   lw    $a0, 0xac($sp)
 /* 0EA1DC 7F0B56AC C7A6009C */  lwc1  $f6, 0x9c($sp)
 /* 0EA1E0 7F0B56B0 C6120008 */  lwc1  $f18, 8($s0)

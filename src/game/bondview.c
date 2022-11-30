@@ -858,7 +858,7 @@ void *currentPlayerSetMatrix10CC(Mtxf *matrix) {
     g_CurrentPlayer->field_10CC = matrix;
 }
 
-Mtxf *currentPlayerGetMatrix10CC(void) {
+Mtxf *camGetWorldToScreenMtxf(void) {
     return g_CurrentPlayer->field_10CC;
 }
 
@@ -2424,7 +2424,7 @@ variable_body_head:
 /* 0AECC4 7F07A194 346B003F */  ori   $t3, $v1, 0x3f
 /* 0AECC8 7F07A198 3979003F */  xori  $t9, $t3, 0x3f
 /* 0AECCC 7F07A19C AFB900E8 */  sw    $t9, 0xe8($sp)
-/* 0AECD0 7F07A1A0 0FC1D7EB */  jal   sub_GAME_7F075FAC
+/* 0AECD0 7F07A1A0 0FC1D7EB */  jal   animInit
 /* 0AECD4 7F07A1A4 AFA20030 */   sw    $v0, 0x30($sp)
 /* 0AECD8 7F07A1A8 8FA20030 */  lw    $v0, 0x30($sp)
 /* 0AECDC 7F07A1AC 8FAE0038 */  lw    $t6, 0x38($sp)
@@ -3016,7 +3016,7 @@ variable_body_head:
 /* 0AF2F4 7F07A784 346B003F */  ori   $t3, $v1, 0x3f
 /* 0AF2F8 7F07A788 3979003F */  xori  $t9, $t3, 0x3f
 /* 0AF2FC 7F07A78C AFB900E8 */  sw    $t9, 0xe8($sp)
-/* 0AF300 7F07A790 0FC1D967 */  jal   sub_GAME_7F075FAC
+/* 0AF300 7F07A790 0FC1D967 */  jal   animInit
 /* 0AF304 7F07A794 AFA20030 */   sw    $v0, 0x30($sp)
 /* 0AF308 7F07A798 8FA20030 */  lw    $v0, 0x30($sp)
 /* 0AF30C 7F07A79C 8FAE0038 */  lw    $t6, 0x38($sp)
@@ -3619,7 +3619,7 @@ variable_body_head:
 /* 0ACBF4 7F07A204 346B003F */  ori   $t3, $v1, 0x3f
 /* 0ACBF8 7F07A208 3979003F */  xori  $t9, $t3, 0x3f
 /* 0ACBFC 7F07A20C AFB900E8 */  sw    $t9, 0xe8($sp)
-/* 0ACC00 7F07A210 0FC1D80A */  jal   sub_GAME_7F075FAC
+/* 0ACC00 7F07A210 0FC1D80A */  jal   animInit
 /* 0ACC04 7F07A214 AFA20030 */   sw    $v0, 0x30($sp)
 /* 0ACC08 7F07A218 8FA20030 */  lw    $v0, 0x30($sp)
 /* 0ACC0C 7F07A21C 8FAE0038 */  lw    $t6, 0x38($sp)
@@ -8792,7 +8792,7 @@ void sub_GAME_7F07C7B4(void) {
         flt_CODE_bss_800799A8 = (f32) *sp68;
         flt_CODE_bss_800799A8.unk4 = (f32) sp68->unk4;
         flt_CODE_bss_800799A8.unk8 = (f32) sp68->unk8;
-        matrix_4x4_rotate_vector_in_place(&sp24, &flt_CODE_bss_800799A8, sp68);
+        mtx4RotateVecInPlace(&sp24, &flt_CODE_bss_800799A8, sp68);
         flt_CODE_bss_800799A8 = (f32) (flt_CODE_bss_800799A8 + *sp64);
         flt_CODE_bss_800799A8.unk4 = (f32) (flt_CODE_bss_800799A8.unk4 + sp64->unk4);
         flt_CODE_bss_800799A8.unk8 = (f32) (flt_CODE_bss_800799A8.unk8 + sp64->unk8);
@@ -8839,7 +8839,7 @@ glabel sub_GAME_7F07C7B4
 /* 0B1358 7F07C828 C4CA0004 */  lwc1  $f10, 4($a2)
 /* 0B135C 7F07C82C E4AA0004 */  swc1  $f10, 4($a1)
 /* 0B1360 7F07C830 C4D00008 */  lwc1  $f16, 8($a2)
-/* 0B1364 7F07C834 0FC160F6 */  jal   matrix_4x4_rotate_vector_in_place
+/* 0B1364 7F07C834 0FC160F6 */  jal   mtx4RotateVecInPlace
 /* 0B1368 7F07C838 E4B00008 */   swc1  $f16, 8($a1)
 /* 0B136C 7F07C83C 8FA70064 */  lw    $a3, 0x64($sp)
 /* 0B1370 7F07C840 3C058008 */  lui   $a1, %hi(flt_CODE_bss_800799A8)
@@ -9009,7 +9009,7 @@ s32 bondviewTankCollisionStatus(struct coord3d *arg0, StandTile *arg1, f32 arg2,
             }
 
             matrix_4x4_set_rotation_around_y(M_TAU_F - temp_f0, &sp34);
-            matrix_4x4_rotate_vector_in_place(&sp34, (f32*)&sp74);
+            mtx4RotateVecInPlace(&sp34, (f32*)&sp74);
 
             sp74.f[0] *= sp8C->scale;
             sp74.f[2] *= sp8C->scale;
@@ -9181,7 +9181,7 @@ glabel bondviewTankCollisionStatus
 /* 0B1814 7F07CCE4 0FC1617F */  jal   matrix_4x4_set_rotation_around_y
 /* 0B1818 7F07CCE8 AFA8008C */   sw    $t0, 0x8c($sp)
 /* 0B181C 7F07CCEC 27A40034 */  addiu $a0, $sp, 0x34
-/* 0B1820 7F07CCF0 0FC160F6 */  jal   matrix_4x4_rotate_vector_in_place
+/* 0B1820 7F07CCF0 0FC160F6 */  jal   mtx4RotateVecInPlace
 /* 0B1824 7F07CCF4 27A50074 */   addiu $a1, $sp, 0x74
 /* 0B1828 7F07CCF8 8FA8008C */  lw    $t0, 0x8c($sp)
 /* 0B182C 7F07CCFC C7B20074 */  lwc1  $f18, 0x74($sp)
@@ -11978,7 +11978,7 @@ glabel sub_GAME_7F07E7CC
 /* 0B3338 7F07E808 8C42A0B0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
 /* 0B333C 7F07E80C 8FA50024 */  lw    $a1, 0x24($sp)
 /* 0B3340 7F07E810 24440230 */  addiu $a0, $v0, 0x230
-/* 0B3344 7F07E814 0FC1D7EB */  jal   sub_GAME_7F075FAC
+/* 0B3344 7F07E814 0FC1D7EB */  jal   animInit
 /* 0B3348 7F07E818 244602EC */   addiu $a2, $v0, 0x2ec
 /* 0B334C 7F07E81C 3C018004 */  lui   $at, %hi(c_item_entries+0x33C)
 /* 0B3350 7F07E820 C424E14C */  lwc1  $f4, %lo(c_item_entries+0x33C)($at)
@@ -12037,7 +12037,7 @@ glabel sub_GAME_7F07E7CC
 /* 0B1298 7F07E8A8 8C428BC0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
 /* 0B129C 7F07E8AC 8FA50024 */  lw    $a1, 0x24($sp)
 /* 0B12A0 7F07E8B0 24440230 */  addiu $a0, $v0, 0x230
-/* 0B12A4 7F07E8B4 0FC1D80A */  jal   sub_GAME_7F075FAC
+/* 0B12A4 7F07E8B4 0FC1D80A */  jal   animInit
 /* 0B12A8 7F07E8B8 244602EC */   addiu $a2, $v0, 0x2ec
 /* 0B12AC 7F07E8BC 3C018003 */  lui   $at, %hi(c_item_entries+0x33C) # $at, 0x8003
 /* 0B12B0 7F07E8C0 C4247D9C */  lwc1  $f4, %lo(c_item_entries+0x33C)($at)
@@ -12155,7 +12155,7 @@ void bondviewStepWatchAnimation(void)
             }
         }
 
-        sub_GAME_7F070090((void*)&g_CurrentPlayer->something_with_watch_object_instance, g_CurrentPlayer->pause_animation_counter, 0.0f);
+        modelSetAnimFrame2((void*)&g_CurrentPlayer->something_with_watch_object_instance, g_CurrentPlayer->pause_animation_counter, 0.0f);
     }
 }
 
@@ -24728,7 +24728,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
             sp2F4.f[2] = flt_CODE_bss_800799A8.f[2];
 
             matrix_4x4_set_rotation_around_y(sp358, &sp2B4);
-            matrix_4x4_rotate_vector_in_place(&sp2B4, &sp2F4);
+            mtx4RotateVecInPlace(&sp2B4, &sp2F4);
             sub_GAME_7F07C7B4();
 
             sp2F4.f[1] = 0.0f;
@@ -24737,7 +24737,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
 
             matrix_4x4_set_rotation_around_y(M_TAU_F - g_TankOrientationAngle, &sp2B4);
             matrix_scalar_multiply(temp_tank->model->scale, &sp2B4);
-            matrix_4x4_rotate_vector_in_place(&sp2B4, &sp2F4);
+            mtx4RotateVecInPlace(&sp2B4, &sp2F4);
             bondviewCalcUpdatePlayerCollision(&sp2F4, 1);
         }
         
@@ -24823,7 +24823,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
                 sp25C.f[0] = flt_CODE_bss_800799A8.f[0];
                 sp25C.f[1] = flt_CODE_bss_800799A8.f[1];
                 sp25C.f[2] = flt_CODE_bss_800799A8.f[2];
-                matrix_4x4_rotate_vector_in_place(&sp268, (f32*)&sp25C);
+                mtx4RotateVecInPlace(&sp268, (f32*)&sp25C);
                 
                 sp25C.f[0] += tank_obj->runtime_pos.f[0];
                 sp25C.f[1] += tank_obj->runtime_pos.f[1];
@@ -25361,7 +25361,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3)
         spE4.f[1] = -flt_CODE_bss_800799A8.f[1];
         spE4.f[2] = -flt_CODE_bss_800799A8.f[2];
 
-        matrix_4x4_rotate_vector_in_place(&spF0, &spE4);
+        mtx4RotateVecInPlace(&spF0, &spE4);
 
         spE4.f[0] += g_CurrentPlayer->field_488.collision_position.f[0];
         spE4.f[2] += g_CurrentPlayer->field_488.collision_position.f[2];
@@ -26252,7 +26252,7 @@ glabel MoveBond
 /* 0B9B04 7F084FD4 0FC1617F */  jal   matrix_4x4_set_rotation_around_y
 /* 0B9B08 7F084FD8 E7AA02FC */   swc1  $f10, 0x2fc($sp)
 /* 0B9B0C 7F084FDC 02002025 */  move  $a0, $s0
-/* 0B9B10 7F084FE0 0FC160F6 */  jal   matrix_4x4_rotate_vector_in_place
+/* 0B9B10 7F084FE0 0FC160F6 */  jal   mtx4RotateVecInPlace
 /* 0B9B14 7F084FE4 27A502F4 */   addiu $a1, $sp, 0x2f4
 /* 0B9B18 7F084FE8 0FC1F1ED */  jal   sub_GAME_7F07C7B4
 /* 0B9B1C 7F084FEC 00000000 */   nop
@@ -26280,7 +26280,7 @@ glabel MoveBond
 /* 0B9B74 7F085044 0FC1629F */  jal   matrix_scalar_multiply
 /* 0B9B78 7F085048 C70C0014 */   lwc1  $f12, 0x14($t8)
 /* 0B9B7C 7F08504C 02002025 */  move  $a0, $s0
-/* 0B9B80 7F085050 0FC160F6 */  jal   matrix_4x4_rotate_vector_in_place
+/* 0B9B80 7F085050 0FC160F6 */  jal   mtx4RotateVecInPlace
 /* 0B9B84 7F085054 27A502F4 */   addiu $a1, $sp, 0x2f4
 /* 0B9B88 7F085058 27A402F4 */  addiu $a0, $sp, 0x2f4
 /* 0B9B8C 7F08505C 0FC1F658 */  jal   bondviewCalcUpdatePlayerCollision
@@ -26510,7 +26510,7 @@ glabel MoveBond
 /* 0B9EC0 7F085390 27A5025C */  addiu $a1, $sp, 0x25c
 /* 0B9EC4 7F085394 E7A8025C */  swc1  $f8, 0x25c($sp)
 /* 0B9EC8 7F085398 E7A60260 */  swc1  $f6, 0x260($sp)
-/* 0B9ECC 7F08539C 0FC160F6 */  jal   matrix_4x4_rotate_vector_in_place
+/* 0B9ECC 7F08539C 0FC160F6 */  jal   mtx4RotateVecInPlace
 /* 0B9ED0 7F0853A0 E7A40264 */   swc1  $f4, 0x264($sp)
 /* 0B9ED4 7F0853A4 C7AA025C */  lwc1  $f10, 0x25c($sp)
 /* 0B9ED8 7F0853A8 C6080058 */  lwc1  $f8, 0x58($s0)
@@ -27731,7 +27731,7 @@ glabel MoveBond
 /* 0BB098 7F086568 E7A800E8 */  swc1  $f8, 0xe8($sp)
 /* 0BB09C 7F08656C E7A600EC */  swc1  $f6, 0xec($sp)
 /* 0BB0A0 7F086570 27A400F0 */  addiu $a0, $sp, 0xf0
-/* 0BB0A4 7F086574 0FC160F6 */  jal   matrix_4x4_rotate_vector_in_place
+/* 0BB0A4 7F086574 0FC160F6 */  jal   mtx4RotateVecInPlace
 /* 0BB0A8 7F086578 27A500E4 */   addiu $a1, $sp, 0xe4
 /* 0BB0AC 7F08657C 8E280000 */  lw    $t0, ($s1)
 /* 0BB0B0 7F086580 C7A400E4 */  lwc1  $f4, 0xe4($sp)
@@ -28792,7 +28792,7 @@ glabel MoveBond
 /* 0BA1F4 7F085684 0FC162C7 */  jal   matrix_4x4_set_rotation_around_y
 /* 0BA1F8 7F085688 E7AA02FC */   swc1  $f10, 0x2fc($sp)
 /* 0BA1FC 7F08568C 02002025 */  move  $a0, $s0
-/* 0BA200 7F085690 0FC1623E */  jal   matrix_4x4_rotate_vector_in_place
+/* 0BA200 7F085690 0FC1623E */  jal   mtx4RotateVecInPlace
 /* 0BA204 7F085694 27A502F4 */   addiu $a1, $sp, 0x2f4
 /* 0BA208 7F085698 0FC1F376 */  jal   sub_GAME_7F07C7B4
 /* 0BA20C 7F08569C 00000000 */   nop
@@ -28820,7 +28820,7 @@ glabel MoveBond
 /* 0BA264 7F0856F4 0FC163E7 */  jal   matrix_scalar_multiply
 /* 0BA268 7F0856F8 C5AC0014 */   lwc1  $f12, 0x14($t5)
 /* 0BA26C 7F0856FC 02002025 */  move  $a0, $s0
-/* 0BA270 7F085700 0FC1623E */  jal   matrix_4x4_rotate_vector_in_place
+/* 0BA270 7F085700 0FC1623E */  jal   mtx4RotateVecInPlace
 /* 0BA274 7F085704 27A502F4 */   addiu $a1, $sp, 0x2f4
 /* 0BA278 7F085708 27A402F4 */  addiu $a0, $sp, 0x2f4
 /* 0BA27C 7F08570C 0FC1F7E1 */  jal   bondviewCalcUpdatePlayerCollision
@@ -29050,7 +29050,7 @@ glabel MoveBond
 /* 0BA5B0 7F085A40 27A5025C */  addiu $a1, $sp, 0x25c
 /* 0BA5B4 7F085A44 E7A8025C */  swc1  $f8, 0x25c($sp)
 /* 0BA5B8 7F085A48 E7A60260 */  swc1  $f6, 0x260($sp)
-/* 0BA5BC 7F085A4C 0FC1623E */  jal   matrix_4x4_rotate_vector_in_place
+/* 0BA5BC 7F085A4C 0FC1623E */  jal   mtx4RotateVecInPlace
 /* 0BA5C0 7F085A50 E7A40264 */   swc1  $f4, 0x264($sp)
 /* 0BA5C4 7F085A54 C7AA025C */  lwc1  $f10, 0x25c($sp)
 /* 0BA5C8 7F085A58 C6080058 */  lwc1  $f8, 0x58($s0)
@@ -30272,7 +30272,7 @@ glabel MoveBond
 /* 0BB78C 7F086C1C E7A800E8 */  swc1  $f8, 0xe8($sp)
 /* 0BB790 7F086C20 E7A600EC */  swc1  $f6, 0xec($sp)
 /* 0BB794 7F086C24 27A400F0 */  addiu $a0, $sp, 0xf0
-/* 0BB798 7F086C28 0FC1623E */  jal   matrix_4x4_rotate_vector_in_place
+/* 0BB798 7F086C28 0FC1623E */  jal   mtx4RotateVecInPlace
 /* 0BB79C 7F086C2C 27A500E4 */   addiu $a1, $sp, 0xe4
 /* 0BB7A0 7F086C30 8E280000 */  lw    $t0, ($s1)
 /* 0BB7A4 7F086C34 C7A400E4 */  lwc1  $f4, 0xe4($sp)
@@ -31323,7 +31323,7 @@ glabel MoveBond
 /* 0B7ACC 7F0850DC 0FC162A9 */  jal   matrix_4x4_set_rotation_around_y
 /* 0B7AD0 7F0850E0 E7A802FC */   swc1  $f8, 0x2fc($sp)
 /* 0B7AD4 7F0850E4 02002025 */  move  $a0, $s0
-/* 0B7AD8 7F0850E8 0FC16220 */  jal   matrix_4x4_rotate_vector_in_place
+/* 0B7AD8 7F0850E8 0FC16220 */  jal   mtx4RotateVecInPlace
 /* 0B7ADC 7F0850EC 27A502F4 */   addiu $a1, $sp, 0x2f4
 /* 0B7AE0 7F0850F0 0FC1F222 */  jal   sub_GAME_7F07C7B4
 /* 0B7AE4 7F0850F4 00000000 */   nop
@@ -31351,7 +31351,7 @@ glabel MoveBond
 /* 0B7B3C 7F08514C 0FC163C9 */  jal   matrix_scalar_multiply
 /* 0B7B40 7F085150 C70C0014 */   lwc1  $f12, 0x14($t8)
 /* 0B7B44 7F085154 02002025 */  move  $a0, $s0
-/* 0B7B48 7F085158 0FC16220 */  jal   matrix_4x4_rotate_vector_in_place
+/* 0B7B48 7F085158 0FC16220 */  jal   mtx4RotateVecInPlace
 /* 0B7B4C 7F08515C 27A502F4 */   addiu $a1, $sp, 0x2f4
 /* 0B7B50 7F085160 27A402F4 */  addiu $a0, $sp, 0x2f4
 /* 0B7B54 7F085164 0FC1F68D */  jal   bondviewCalcUpdatePlayerCollision
@@ -31581,7 +31581,7 @@ glabel MoveBond
 /* 0B7E88 7F085498 27A5025C */  addiu $a1, $sp, 0x25c
 /* 0B7E8C 7F08549C E7A4025C */  swc1  $f4, 0x25c($sp)
 /* 0B7E90 7F0854A0 E7A60260 */  swc1  $f6, 0x260($sp)
-/* 0B7E94 7F0854A4 0FC16220 */  jal   matrix_4x4_rotate_vector_in_place
+/* 0B7E94 7F0854A4 0FC16220 */  jal   mtx4RotateVecInPlace
 /* 0B7E98 7F0854A8 E7AA0264 */   swc1  $f10, 0x264($sp)
 /* 0B7E9C 7F0854AC C7A8025C */  lwc1  $f8, 0x25c($sp)
 /* 0B7EA0 7F0854B0 C6040058 */  lwc1  $f4, 0x58($s0)
@@ -32802,7 +32802,7 @@ glabel MoveBond
 /* 0B9060 7F086670 E7A600E8 */  swc1  $f6, 0xe8($sp)
 /* 0B9064 7F086674 E7AA00EC */  swc1  $f10, 0xec($sp)
 /* 0B9068 7F086678 27A400F0 */  addiu $a0, $sp, 0xf0
-/* 0B906C 7F08667C 0FC16220 */  jal   matrix_4x4_rotate_vector_in_place
+/* 0B906C 7F08667C 0FC16220 */  jal   mtx4RotateVecInPlace
 /* 0B9070 7F086680 27A500E4 */   addiu $a1, $sp, 0xe4
 /* 0B9074 7F086684 8E280000 */  lw    $t0, ($s1)
 /* 0B9078 7F086688 C7A400E4 */  lwc1  $f4, 0xe4($sp)
@@ -34293,7 +34293,7 @@ void store_BONDdata_curpos_to_previous(void) {
     g_CurrentPlayer->previous_model_pos.f[0] = g_CurrentPlayer->current_model_pos.f[0];
     g_CurrentPlayer->previous_model_pos.f[1] = g_CurrentPlayer->current_model_pos.f[1];
     g_CurrentPlayer->previous_model_pos.f[2] = g_CurrentPlayer->current_model_pos.f[2];
-    matrix_4x4_rotate_vector_in_place(currentPlayerGetMatrix10CC(), &g_CurrentPlayer->previous_model_pos);
+    mtx4RotateVecInPlace(camGetWorldToScreenMtxf(), &g_CurrentPlayer->previous_model_pos);
 }
 
 #ifdef NONMATCHING
@@ -35538,7 +35538,7 @@ glabel sub_GAME_7F087E74
 /* 0BCB94 7F088064 44054000 */  mfc1  $a1, $f8
 /* 0BCB98 7F088068 0FC16134 */  jal   matrix_4x4_set_position_and_rotation_around_y
 /* 0BCB9C 7F08806C 00000000 */   nop
-/* 0BCBA0 7F088070 0FC1E0F1 */  jal   currentPlayerGetMatrix10CC
+/* 0BCBA0 7F088070 0FC1E0F1 */  jal   camGetWorldToScreenMtxf
 /* 0BCBA4 7F088074 00000000 */   nop
 /* 0BCBA8 7F088078 00402025 */  move  $a0, $v0
 /* 0BCBAC 7F08807C 0FC16026 */  jal   matrix_4x4_multiply_homogeneous_in_place
@@ -36059,7 +36059,7 @@ glabel sub_GAME_7F087E74
 /* 0BD2A0 7F088730 44054000 */  mfc1  $a1, $f8
 /* 0BD2A4 7F088734 0FC1627C */  jal   matrix_4x4_set_position_and_rotation_around_y
 /* 0BD2A8 7F088738 00000000 */   nop
-/* 0BD2AC 7F08873C 0FC1E26D */  jal   currentPlayerGetMatrix10CC
+/* 0BD2AC 7F08873C 0FC1E26D */  jal   camGetWorldToScreenMtxf
 /* 0BD2B0 7F088740 00000000 */   nop
 /* 0BD2B4 7F088744 00402025 */  move  $a0, $v0
 /* 0BD2B8 7F088748 0FC1616E */  jal   matrix_4x4_multiply_homogeneous_in_place
@@ -36582,7 +36582,7 @@ glabel sub_GAME_7F087E74
 /* 0BABB4 7F0881C4 44054000 */  mfc1  $a1, $f8
 /* 0BABB8 7F0881C8 0FC1625E */  jal   matrix_4x4_set_position_and_rotation_around_y
 /* 0BABBC 7F0881CC 00000000 */   nop   
-/* 0BABC0 7F0881D0 0FC1E111 */  jal   currentPlayerGetMatrix10CC
+/* 0BABC0 7F0881D0 0FC1E111 */  jal   camGetWorldToScreenMtxf
 /* 0BABC4 7F0881D4 00000000 */   nop   
 /* 0BABC8 7F0881D8 00402025 */  move  $a0, $v0
 /* 0BABCC 7F0881DC 0FC16150 */  jal   matrix_4x4_multiply_homogeneous_in_place

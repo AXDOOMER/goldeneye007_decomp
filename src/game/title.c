@@ -261,7 +261,7 @@ glabel sub_GAME_7F007F30
 .L7F008030:
 /* 03CB60 7F008030 8E640000 */  lw    $a0, ($s3)
 /* 03CB64 7F008034 24050001 */  li    $a1, 1
-/* 03CB68 7F008038 0FC1C2BB */  jal   sub_GAME_7F070AEC
+/* 03CB68 7F008038 0FC1C2BB */  jal   modelTickAnimQuarterSpeed
 /* 03CB6C 7F00803C 24060001 */   li    $a2, 1
 /* 03CB70 7F008040 8E0C0000 */  lw    $t4, ($s0)
 /* 03CB74 7F008044 240100E6 */  li    $at, 230
@@ -324,7 +324,7 @@ glabel sub_GAME_7F007F30
 /* 03CC48 7F008118 8E8A0000 */  lw    $t2, ($s4)
 /* 03CC4C 7F00811C 8E640000 */  lw    $a0, ($s3)
 /* 03CC50 7F008120 00003025 */  move  $a2, $zero
-/* 03CC54 7F008124 0FC1B198 */  jal   sub_GAME_7F06C660
+/* 03CC54 7F008124 0FC1B198 */  jal   modelFindNodeMtx
 /* 03CC58 7F008128 8D45001C */   lw    $a1, 0x1c($t2)
 /* 03CC5C 7F00812C 8E8B0000 */  lw    $t3, ($s4)
 /* 03CC60 7F008130 AFA200DC */  sw    $v0, 0xdc($sp)
@@ -513,7 +513,7 @@ glabel sub_GAME_7F007F30
 .L7F007FB0:
 /* 03A9A0 7F007FB0 8E640000 */  lw    $a0, ($s3)
 /* 03A9A4 7F007FB4 24050001 */  li    $a1, 1
-/* 03A9A8 7F007FB8 0FC1C323 */  jal   sub_GAME_7F070AEC
+/* 03A9A8 7F007FB8 0FC1C323 */  jal   modelTickAnimQuarterSpeed
 /* 03A9AC 7F007FBC 24060001 */   li    $a2, 1
 /* 03A9B0 7F007FC0 8E0C0000 */  lw    $t4, ($s0)
 /* 03A9B4 7F007FC4 240100BF */  li    $at, 191
@@ -576,7 +576,7 @@ glabel sub_GAME_7F007F30
 /* 03AA88 7F008098 8E8A0000 */  lw    $t2, ($s4)
 /* 03AA8C 7F00809C 8E640000 */  lw    $a0, ($s3)
 /* 03AA90 7F0080A0 00003025 */  move  $a2, $zero
-/* 03AA94 7F0080A4 0FC1B366 */  jal   sub_GAME_7F06C660
+/* 03AA94 7F0080A4 0FC1B366 */  jal   modelFindNodeMtx
 /* 03AA98 7F0080A8 8D45001C */   lw    $a1, 0x1c($t2)
 /* 03AA9C 7F0080AC 8E8B0000 */  lw    $t3, ($s4)
 /* 03AAA0 7F0080B0 AFA200DC */  sw    $v0, 0xdc($sp)
@@ -1051,7 +1051,7 @@ glabel sub_GAME_7F008E80
 /* 03DC0C 7F0090DC 24050000 */   li    $a1, 0
 /* 03DC10 7F0090E0 8E240000 */  lw    $a0, ($s1)
 /* 03DC14 7F0090E4 3C053F00 */  lui   $a1, 0x3f00
-/* 03DC18 7F0090E8 0FC1BFC6 */  jal   modelSetAnimRateForDuration
+/* 03DC18 7F0090E8 0FC1BFC6 */  jal   modelSetAnimPlaySpeed
 /* 03DC1C 7F0090EC 24060000 */   li    $a2, 0
 /* 03DC20 7F0090F0 3C0F8007 */  lui   $t7, %hi(ptr_animation_table) 
 /* 03DC24 7F0090F4 8DEF9538 */  lw    $t7, %lo(ptr_animation_table)($t7)
@@ -1290,7 +1290,7 @@ glabel sub_GAME_7F008E80
 /* 03BA50 7F009060 3C053F19 */  lui   $a1, (0x3F19999A >> 16) # lui $a1, 0x3f19
 /* 03BA54 7F009064 34A5999A */  ori   $a1, (0x3F19999A & 0xFFFF) # ori $a1, $a1, 0x999a
 /* 03BA58 7F009068 8E240000 */  lw    $a0, ($s1)
-/* 03BA5C 7F00906C 0FC1C02E */  jal   modelSetAnimRateForDuration
+/* 03BA5C 7F00906C 0FC1C02E */  jal   modelSetAnimPlaySpeed
 /* 03BA60 7F009070 24060000 */   li    $a2, 0
 /* 03BA64 7F009074 3C0F8006 */  lui   $t7, %hi(ptr_animation_table) # $t7, 0x8006
 /* 03BA68 7F009078 8DEF8478 */  lw    $t7, %lo(ptr_animation_table)($t7)

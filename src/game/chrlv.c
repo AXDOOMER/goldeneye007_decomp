@@ -143,7 +143,7 @@ s32 chrResolveId                              (ChrRecord *self, s32 id);
 s32 sub_GAME_7F033780                         (waypoint *arg0, coord3d *arg1, f32 angle);
 s32 chrlvFindPathNeighborRelated              (coord3d *bondpos, StandTile *stan, f32 rot, u8 quadrant);
 s32 sub_GAME_7F033EAC                         (coord3d *arg0, StandTile *arg1);
-PropRecord *actionblock_guard_constructor_BDBE(s32 bodynum, s32 headnum, coord3d *pos, StandTile *stan, f32 yrot, AIListRecord *ailist, s32 arg5);
+PropRecord *chrSpawnAtCoord(s32 bodynum, s32 headnum, coord3d *pos, StandTile *stan, f32 angle, AIListRecord *ailist, s32 spawnflags);
 void chrlvInitActAttack                       (ChrRecord *self, struct anim_group_info ** arg1, s32 arg2, point2d *arg3, s32 attack_type, s32 arg5, s32 arg6);
 s32 chrlvPatrolCalculateStep                  (ChrRecord *self, bool *forward, s32 numsteps);
 s32 sub_GAME_7F028510                         (coord3d *arg0, StandTile *arg1);
@@ -218,7 +218,7 @@ s32 get_current_random_body(void)
  * @param id: Integer Index of body
  * @return an integer ID of a head to use
  */
-s32 select_psuedorandom_heads(s32 id)
+s32 bodyChooseHead(s32 id)
 {
     s32 ret;
 
@@ -281,7 +281,7 @@ void expand_09_characters(s32 stageid, GuardRecord *arg1, s32 arg2)
         {
             headid = (arg1->HeadID >= 0)
                 ? arg1->HeadID
-                : select_psuedorandom_heads(bodyid);
+                : bodyChooseHead(bodyid);
         }
 
         sp38 = retrieve_header_for_body_and_head(bodyid, headid, (u32) arg1->bitflags);
@@ -289,7 +289,7 @@ void expand_09_characters(s32 stageid, GuardRecord *arg1, s32 arg2)
         if (sp38 != 0)
         {
             sp3C = atan2f(pad->look.f[0], pad->look.f[2]);
-            temp_v0_4 = replace_GUARDdata_with_actual_values(sp38, (PadRecord *)&sp48, sp3C, sp54, ailistFindById(arg1->AIListID));
+            temp_v0_4 = chrAllocate(sp38, (PadRecord *)&sp48, sp3C, sp54, ailistFindById(arg1->AIListID));
             
             if (temp_v0_4 != 0)
             {
@@ -403,12 +403,12 @@ void chrlvIdleAnimationRelated7F023A94(ChrRecord *self, f32 arg1)
 
     f2 = arg1;
 
-    if (self->model->unka4 != RATE)
+    if (self->model->playspeed != RATE)
     {
 #if defined(BUGFIX_R1)
-        f2 *= (RATE / self->model->unka4);
+        f2 *= (RATE / self->model->playspeed);
 #else
-        f2 = arg1 / self->model->unka4;
+        f2 = arg1 / self->model->playspeed;
 #endif
     }
 
@@ -5596,7 +5596,7 @@ void chrlvIterateGuardSeeShotDie(ChrRecord *self, s32 flag)
 
     for (; i < numguards && alert_count < 4; i++)
     {
-        guard = &ptr_guard_data[i];
+        guard = &g_ChrSlots[i];
 
         if (guard->model != NULL)
         {
@@ -6173,9 +6173,9 @@ s32 chrlvSetSubroty(ChrRecord *self, s32 arg1, f32 arg2, f32 arg3, f32 arg4)
         roty = getsubroty(model);
 
 #if defined(BUGFIX_R1)
-        temp_f14 = 0.06283186f * arg3 * g_JP_GlobalTimerDelta * model->unka4;
+        temp_f14 = 0.06283186f * arg3 * g_JP_GlobalTimerDelta * model->playspeed;
 #else /* VERSION_US */
-        temp_f14 = 0.06283186f * arg3 * g_GlobalTimerDelta * model->unka4;
+        temp_f14 = 0.06283186f * arg3 * g_GlobalTimerDelta * model->playspeed;
 #endif
 
         if (self->actiontype == ACT_ATTACK)
@@ -6434,7 +6434,7 @@ s32 chrlvUpdateAimendsideback(ChrRecord *self, struct weapon_firing_animation_ta
                 
                 if (weapon_prop_model->obj->Switches[0])
                 {
-                    temp_a0 = sub_GAME_7F06C660(weapon_prop_model, weapon_prop_model->obj->Switches[0], 0);
+                    temp_a0 = modelFindNodeMtx(weapon_prop_model, weapon_prop_model->obj->Switches[0], 0);
                     spB8 = weapon_prop_model->obj->Switches[0]->Data;
                     sub_GAME_7F058E78(temp_a0, &spBC);
 
@@ -6444,7 +6444,7 @@ s32 chrlvUpdateAimendsideback(ChrRecord *self, struct weapon_firing_animation_ta
                     spAC.f[1] = spB8[1];
                     spAC.f[2] = spB8[2];
 
-                    matrix_4x4_transform_vector_in_place(&spBC, &spAC);
+                    mtx4TransformVecInPlace(&spBC, &spAC);
 
                     sp104.f[0] = spAC.f[0];
                     sp104.f[1] = spAC.f[1];
@@ -6454,7 +6454,7 @@ s32 chrlvUpdateAimendsideback(ChrRecord *self, struct weapon_firing_animation_ta
                 }
                 else if (weapon_prop_model->obj->Switches[1])
                 {
-                    temp_a0 = sub_GAME_7F06C660(weapon_prop_model, weapon_prop_model->obj->Switches[1], 0);
+                    temp_a0 = modelFindNodeMtx(weapon_prop_model, weapon_prop_model->obj->Switches[1], 0);
                     sub_GAME_7F058E78(temp_a0, &sp68);
                     matrix_4x4_multiply_homogeneous_in_place(currentPlayerGetMatrix10EC(), &sp68);
                     sp104.f[0] = sp68.m[3][0];
@@ -6505,7 +6505,7 @@ s32 chrlvUpdateAimendsideback(ChrRecord *self, struct weapon_firing_animation_ta
 
             if ((attack_type & 1) && ((attack_type & 0x60) == 0))
             {
-                t1 = (((f32) ((s32) ((s32) ((f32) g_GlobalTimer * self->model->unka4) + self->chrnum) % 60) * M_TAU_F) / 60.0f);
+                t1 = (((f32) ((s32) ((s32) ((f32) g_GlobalTimer * self->model->playspeed) + self->chrnum) % 60) * M_TAU_F) / 60.0f);
                 t1 = sinf(t1) * (chrlvGetAimLimitAngle(dxdydz_square) * 0.5f);
                 calc_aimendsideback += t1;
 
@@ -6927,7 +6927,7 @@ s32 sub_GAME_7F02D630(ChrRecord *self, GUNHAND hand, coord3d *arg2)
         {
             if (weapon_prop_model->obj->Switches[0])
             {
-                temp_a0 = sub_GAME_7F06C660(weapon_prop_model, weapon_prop_model->obj->Switches[0], 0);
+                temp_a0 = modelFindNodeMtx(weapon_prop_model, weapon_prop_model->obj->Switches[0], 0);
                 spB8 = weapon_prop_model->obj->Switches[0]->Data;
 
                 arg2->f[0] = spB8[0];
@@ -6935,13 +6935,13 @@ s32 sub_GAME_7F02D630(ChrRecord *self, GUNHAND hand, coord3d *arg2)
                 arg2->f[2] = spB8[2];
 
                 matrix_4x4_multiply_homogeneous(currentPlayerGetMatrix10D4(), temp_a0, &sp74);
-                matrix_4x4_transform_vector_in_place(&sp74, arg2);
+                mtx4TransformVecInPlace(&sp74, arg2);
 
                 ret = 1;
             }
             else if (weapon_prop_model->obj->Switches[1])
             {
-                temp_a0_2 = sub_GAME_7F06C660(weapon_prop_model, weapon_prop_model->obj->Switches[1], 0);
+                temp_a0_2 = modelFindNodeMtx(weapon_prop_model, weapon_prop_model->obj->Switches[1], 0);
                 matrix_4x4_multiply_homogeneous(currentPlayerGetMatrix10D4(), temp_a0_2, &sp68);
 
                 arg2->f[0] = sp68.m[3][0];
@@ -8754,8 +8754,8 @@ s32 chrlvApplySpeed(ChrRecord *self, coord3d *arg1, s32 arg2, f32 *speedPtr)
         accel = ACCEL_C;
     }
 
-    maxSpeed *= self_model->unka4;
-    accel *= self_model->unka4;
+    maxSpeed *= self_model->playspeed;
+    accel *= self_model->playspeed;
 
     // void chrobjCallsApplySpeed(f32 *openPosition, f32 maxFrac, f32 *speedPtr, f32 accel, f32 decel, f32 maxSpeed)
     chrobjCallsApplySpeed(
@@ -10480,7 +10480,7 @@ void chrlvAllChrTick(void)
 
     for (i=0; i<max; i++)
     {
-        guard = &ptr_guard_data[i];
+        guard = &g_ChrSlots[i];
 
         if (guard->model != NULL)
         {
@@ -11038,7 +11038,7 @@ bool sub_GAME_7F0333F8(ChrRecord *self)
         scale   = getinstsize(mymodel) * 0.8f;
         sub_GAME_7F068190(&zeropos, &pos);
         getsuboffset(mymodel, &vec);
-        matrix_4x4_transform_vector_in_place(currentPlayerGetMatrix10CC(), &vec);
+        mtx4TransformVecInPlace(camGetWorldToScreenMtxf(), &vec);
 
         if (sub_GAME_7F041074(&zeropos, &pos, &vec, scale))
         {
@@ -11502,7 +11502,7 @@ bool sub_GAME_7F033B38(ChrRecord *self, f32 distance)
 
     for (i = 0; i < numguards; i++)
     {
-        chr = &ptr_guard_data[i];
+        chr = &g_ChrSlots[i];
 
         if ((chr != self) && chr->model && !chrIsDead(chr))
         {
@@ -11699,7 +11699,7 @@ bool sub_GAME_7F033F48(coord3d *pos, StandTile **arg1, f32 facing, bool b)
 /**
  * Address 0x7F03415C.
 */
-PropRecord *actionblock_guard_constructor_BDBE(s32 bodynum, s32 headnum, coord3d *pos, StandTile *stan, f32 yrot, AIListRecord *ailist, s32 arg5)
+PropRecord *chrSpawnAtCoord(s32 bodynum, s32 headnum, coord3d *pos, StandTile *stan, f32 angle, AIListRecord *ailist, s32 spawnflags)
 {
     PropRecord *chrprop;
     coord3d newpos; //struct copy here would have been more efficient
@@ -11711,7 +11711,7 @@ PropRecord *actionblock_guard_constructor_BDBE(s32 bodynum, s32 headnum, coord3d
     {
         if (headnum < 0)
         {
-            headnum = select_psuedorandom_heads(bodynum);
+            headnum = bodyChooseHead(bodynum);
         }
 
         newpos.x = pos->x;
@@ -11719,13 +11719,13 @@ PropRecord *actionblock_guard_constructor_BDBE(s32 bodynum, s32 headnum, coord3d
         newpos.z = pos->z;
         stancopy = stan;
 
-        if (sub_GAME_7F033F48(&newpos, &stancopy, yrot, ((arg5 & 0x10) != 0)))
+        if (sub_GAME_7F033F48(&newpos, &stancopy, angle, ((spawnflags & 0x10) != 0)))
         {
-            chrHeader = retrieve_header_for_body_and_head(bodynum, headnum, arg5);
+            chrHeader = retrieve_header_for_body_and_head(bodynum, headnum, spawnflags);
 
             if (chrHeader != NULL)
             {
-                chrprop = replace_GUARDdata_with_actual_values(chrHeader, &newpos, yrot, stancopy, ailist);
+                chrprop = chrAllocate(chrHeader, &newpos, angle, stancopy, ailist);
 
                 if (chrprop != NULL)
                 {
@@ -11765,7 +11765,7 @@ PropRecord *chrSpawnAtPad(ChrRecord *self, s32 bodynum, s32 headnum, s32 padid, 
     #ifdef ENABLE_LOG
     osSyncPrintf("%s%s new char x = %f, y = %f, z = %f \n", "", "", pad->pos.x, pad->pos.y, pad->pos.z);
     #endif
-    return actionblock_guard_constructor_BDBE(bodynum, headnum, &pad->pos, pad->stan, atan2f(pad->look.f[0], pad->look.f[2]), ailist, flags);
+    return chrSpawnAtCoord(bodynum, headnum, &pad->pos, pad->stan, atan2f(pad->look.f[0], pad->look.f[2]), ailist, flags);
 }
 
 
@@ -11783,7 +11783,7 @@ PropRecord *chrSpawnAtChr(ChrRecord *self, s32 bodynum, s32 headnum, s32 chrnum,
         f32 chrRadHeading   = getsubroty(chr->model);
         PropRecord *chrprop = chr->prop;
 
-        return actionblock_guard_constructor_BDBE(bodynum, headnum, &chrprop->pos, chrprop->stan, chrRadHeading, ailist, flags);
+        return chrSpawnAtCoord(bodynum, headnum, &chrprop->pos, chrprop->stan, chrRadHeading, ailist, flags);
     }
 
     return NULL;

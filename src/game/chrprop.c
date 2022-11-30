@@ -283,7 +283,7 @@ PropRecord *get_ptr_obj_pos_list_current_entry(void)
 
 
 
-PropRecord* chrpropAllocate(void)
+PropRecord* propAllocate(void)
 {
     PropRecord* prop;
 
@@ -1488,7 +1488,7 @@ glabel chraiDefaultWeaponFireHandler
 /* 06FD60 7F03B230 0FC1E111 */  jal   currentPlayerGetMatrix10D4
 /* 06FD64 7F03B234 E7AA01B8 */   swc1  $f10, 0x1b8($sp)
 /* 06FD68 7F03B238 00402025 */  move  $a0, $v0
-/* 06FD6C 7F03B23C 0FC1611D */  jal   matrix_4x4_transform_vector_in_place
+/* 06FD6C 7F03B23C 0FC1611D */  jal   mtx4TransformVecInPlace
 /* 06FD70 7F03B240 27A501B0 */   addiu $a1, $sp, 0x1b0
 /* 06FD74 7F03B244 C7B001A0 */  lwc1  $f16, 0x1a0($sp)
 /* 06FD78 7F03B248 C7B201A4 */  lwc1  $f18, 0x1a4($sp)
@@ -1498,7 +1498,7 @@ glabel chraiDefaultWeaponFireHandler
 /* 06FD88 7F03B258 0FC1E111 */  jal   currentPlayerGetMatrix10D4
 /* 06FD8C 7F03B25C E7A401C4 */   swc1  $f4, 0x1c4($sp)
 /* 06FD90 7F03B260 00402025 */  move  $a0, $v0
-/* 06FD94 7F03B264 0FC160F6 */  jal   matrix_4x4_rotate_vector_in_place
+/* 06FD94 7F03B264 0FC160F6 */  jal   mtx4RotateVecInPlace
 /* 06FD98 7F03B268 27A501BC */   addiu $a1, $sp, 0x1bc
 /* 06FD9C 7F03B26C 3C014780 */  li    $at, 0x47800000 # 65536.000000
 /* 06FDA0 7F03B270 44810000 */  mtc1  $at, $f0
@@ -1710,10 +1710,10 @@ glabel chraiDefaultWeaponFireHandler
 /* 0700B0 7F03B580 5300000B */  beql  $t8, $zero, .L7F03B5B0
 /* 0700B4 7F03B584 8FB901AC */   lw    $t9, 0x1ac($sp)
 .L7F03B588:
-/* 0700B8 7F03B588 0FC1E0F1 */  jal   currentPlayerGetMatrix10CC
+/* 0700B8 7F03B588 0FC1E0F1 */  jal   camGetWorldToScreenMtxf
 /* 0700BC 7F03B58C 00000000 */   nop   
 /* 0700C0 7F03B590 00402025 */  move  $a0, $v0
-/* 0700C4 7F03B594 0FC1611D */  jal   matrix_4x4_transform_vector_in_place
+/* 0700C4 7F03B594 0FC1611D */  jal   mtx4TransformVecInPlace
 /* 0700C8 7F03B598 27A50500 */   addiu $a1, $sp, 0x500
 /* 0700CC 7F03B59C C7A40508 */  lwc1  $f4, 0x508($sp)
 /* 0700D0 7F03B5A0 46002207 */  neg.s $f8, $f4
@@ -2486,7 +2486,7 @@ glabel chraiFistAttackHandler
 /* 070B60 7F03C030 0FC1E111 */  jal   currentPlayerGetMatrix10D4
 /* 070B64 7F03C034 00000000 */   nop   
 /* 070B68 7F03C038 00402025 */  move  $a0, $v0
-/* 070B6C 7F03C03C 0FC160F6 */  jal   matrix_4x4_rotate_vector_in_place
+/* 070B6C 7F03C03C 0FC160F6 */  jal   mtx4RotateVecInPlace
 /* 070B70 7F03C040 02A02825 */   move  $a1, $s5
 /* 070B74 7F03C044 240A0001 */  li    $t2, 1
 /* 070B78 7F03C048 AFAA0010 */  sw    $t2, 0x10($sp)
@@ -6650,7 +6650,7 @@ glabel sub_GAME_7F03F748
 /* 0742DC 7F03F7AC 305800FF */  andi  $t8, $v0, 0xff
 /* 0742E0 7F03F7B0 17170038 */  bne   $t8, $s7, .L7F03F894
 /* 0742E4 7F03F7B4 00003025 */   move  $a2, $zero
-/* 0742E8 7F03F7B8 0FC1B198 */  jal   sub_GAME_7F06C660
+/* 0742E8 7F03F7B8 0FC1B198 */  jal   modelFindNodeMtx
 /* 0742EC 7F03F7BC 8E120004 */   lw    $s2, 4($s0)
 /* 0742F0 7F03F7C0 1680000C */  bnez  $s4, .L7F03F7F4
 /* 0742F4 7F03F7C4 00408825 */   move  $s1, $v0

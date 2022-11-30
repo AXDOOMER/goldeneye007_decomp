@@ -1422,7 +1422,7 @@ typedef union
         typedef struct Model
         {
             u8                unk00; /*0x00*/   // init_standard_object() indicates that unk00 is a s16...
-            s16                Type;  /*0x01*/  // but sub_GAME_7F075F68() indicates that Type is a s16...
+            s16                Type;  /*0x01*/  // but modelInit() indicates that Type is a s16...
                                                 // not sure which is correct.
 
             struct ChrRecord  *chr;   /*0x04*/
@@ -1508,7 +1508,7 @@ typedef union
             s32               unk9c;
             // 0xa0
             s32               unka0;
-            f32               unka4; // used by ACT_STAND in chrlv
+            f32               playspeed; // used by ACT_STAND in chrlv
             f32               animrate;
             f32               unkac;
             // 0xb0

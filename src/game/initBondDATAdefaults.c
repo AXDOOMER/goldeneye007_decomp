@@ -76,11 +76,11 @@ void sets_a_bunch_of_BONDdata_values_to_default(void)
     }
 #endif
 
-    sub_GAME_7F075FAC(&g_CurrentPlayer->model, &player_gait_object_header, &g_CurrentPlayer->field_654);
+    animInit(&g_CurrentPlayer->model, &player_gait_object_header, &g_CurrentPlayer->field_654);
     modelSetScale(&g_CurrentPlayer->model, IDO_POINT_ONE);
 
 #if defined (BUGFIX_R1)
-    modelSetAnimRateForDuration(&g_CurrentPlayer->model, ANIMRATE, 0.0f);
+    modelSetAnimPlaySpeed(&g_CurrentPlayer->model, ANIMRATE, 0.0f);
 #endif
 
     g_CurrentPlayer->headanim = 0;

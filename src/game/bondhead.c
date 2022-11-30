@@ -220,13 +220,13 @@ void bheadUpdate(f32 arg0, f32 arg1)
 
     sp34 = D_80036B64;
 
-    sp30 = sub_GAME_7F0701E0();
+    sp30 = modelIsAnimMergingEnabled();
 
     g_CurrentPlayer->resetheadtick = 0;
 
-    sub_GAME_7F0701D4(0);
-    sub_GAME_7F070AEC(&g_CurrentPlayer->model, g_ClockTimer, 1);
-    sub_GAME_7F0701D4((s32) sp30);
+    modelSetAnimMergingEnabled(0);
+    modelTickAnimQuarterSpeed(&g_CurrentPlayer->model, g_ClockTimer, 1);
+    modelSetAnimMergingEnabled((s32) sp30);
 
     subcalcpos(&g_CurrentPlayer->model);
     matrix_4x4_set_identity(&sp40);

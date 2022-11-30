@@ -20895,7 +20895,7 @@ glabel init_menu18_displaycast
 /* 04D7B4 7F018C84 3C048003 */  lui   $a0, %hi(objinstance)
 /* 04D7B8 7F018C88 8C84B5F4 */  lw    $a0, %lo(objinstance)($a0)
 /* 04D7BC 7F018C8C 3C053F00 */  lui   $a1, 0x3f00
-/* 04D7C0 7F018C90 0FC1BFC6 */  jal   modelSetAnimRateForDuration
+/* 04D7C0 7F018C90 0FC1BFC6 */  jal   modelSetAnimPlaySpeed
 /* 04D7C4 7F018C94 24060000 */   li    $a2, 0
 /* 04D7C8 7F018C98 3C198003 */  lui   $t9, %hi(randomly_selected_intro_animation)
 /* 04D7CC 7F018C9C 8F39B5EC */  lw    $t9, %lo(randomly_selected_intro_animation)($t9)
@@ -21492,7 +21492,7 @@ glabel init_menu18_displaycast
 /* 04B6F0 7F018D00 3C053F19 */  lui   $a1, (0x3F19999A >> 16) # lui $a1, 0x3f19
 /* 04B6F4 7F018D04 34A5999A */  ori   $a1, (0x3F19999A & 0xFFFF) # ori $a1, $a1, 0x999a
 /* 04B6F8 7F018D08 8C846B44 */  lw    $a0, %lo(objinstance)($a0)
-/* 04B6FC 7F018D0C 0FC1C02E */  jal   modelSetAnimRateForDuration
+/* 04B6FC 7F018D0C 0FC1C02E */  jal   modelSetAnimPlaySpeed
 /* 04B700 7F018D10 24060000 */   li    $a2, 0
 /* 04B704 7F018D14 3C198002 */  lui   $t9, %hi(randomly_selected_intro_animation) # $t9, 0x8002
 /* 04B708 7F018D18 8F396B3C */  lw    $t9, %lo(randomly_selected_intro_animation)($t9)
@@ -22586,7 +22586,7 @@ glabel constructor_menu18_displaycast
 /* 04E25C 7F01972C 26730008 */  addiu $s3, $s3, 8
 /* 04E260 7F019730 8CA58374 */  lw    $a1, %lo(g_ClockTimer)($a1)
 /* 04E264 7F019734 8E840000 */  lw    $a0, ($s4)
-/* 04E268 7F019738 0FC1C2BB */  jal   sub_GAME_7F070AEC
+/* 04E268 7F019738 0FC1C2BB */  jal   modelTickAnimQuarterSpeed
 /* 04E26C 7F01973C 24060001 */   li    $a2, 1
 /* 04E270 7F019740 0FC1B100 */  jal   set_80036084
 /* 04E274 7F019744 24040001 */   li    $a0, 1
@@ -22759,7 +22759,7 @@ glabel constructor_menu18_displaycast
 /* 04E4F4 7F0199C4 E6060004 */  swc1  $f6, 4($s0)
 /* 04E4F8 7F0199C8 46044180 */  add.s $f6, $f8, $f4
 /* 04E4FC 7F0199CC E6060008 */  swc1  $f6, 8($s0)
-/* 04E500 7F0199D0 0FC1611D */  jal   matrix_4x4_transform_vector_in_place
+/* 04E500 7F0199D0 0FC1611D */  jal   mtx4TransformVecInPlace
 /* 04E504 7F0199D4 8D84000C */   lw    $a0, 0xc($t4)
 /* 04E508 7F0199D8 C60A0004 */  lwc1  $f10, 4($s0)
 /* 04E50C 7F0199DC C6040008 */  lwc1  $f4, 8($s0)
@@ -22917,7 +22917,7 @@ glabel constructor_menu18_displaycast
 /* 04E75C 7F019C2C 24180007 */   li    $t8, 7
 /* 04E760 7F019C30 8E840000 */  lw    $a0, ($s4)
 /* 04E764 7F019C34 8CE5001C */  lw    $a1, 0x1c($a3)
-/* 04E768 7F019C38 0FC1B198 */  jal   sub_GAME_7F06C660
+/* 04E768 7F019C38 0FC1B198 */  jal   modelFindNodeMtx
 /* 04E76C 7F019C3C 00003025 */   move  $a2, $zero
 /* 04E770 7F019C40 8E980000 */  lw    $t8, ($s4)
 /* 04E774 7F019C44 AFA201A8 */  sw    $v0, 0x1a8($sp)
@@ -23710,7 +23710,7 @@ glabel constructor_menu18_displaycast
 /* 04C198 7F0197A8 26730008 */  addiu $s3, $s3, 8
 /* 04C19C 7F0197AC 8CA50FF4 */  lw    $a1, %lo(g_ClockTimer)($a1)
 /* 04C1A0 7F0197B0 8E840000 */  lw    $a0, ($s4)
-/* 04C1A4 7F0197B4 0FC1C323 */  jal   sub_GAME_7F070AEC
+/* 04C1A4 7F0197B4 0FC1C323 */  jal   modelTickAnimQuarterSpeed
 /* 04C1A8 7F0197B8 24060001 */   li    $a2, 1
 /* 04C1AC 7F0197BC 0FC1B2D0 */  jal   set_80036084
 /* 04C1B0 7F0197C0 24040001 */   li    $a0, 1
@@ -23883,7 +23883,7 @@ glabel constructor_menu18_displaycast
 /* 04C430 7F019A40 E6060004 */  swc1  $f6, 4($s0)
 /* 04C434 7F019A44 46044180 */  add.s $f6, $f8, $f4
 /* 04C438 7F019A48 E6060008 */  swc1  $f6, 8($s0)
-/* 04C43C 7F019A4C 0FC16247 */  jal   matrix_4x4_transform_vector_in_place
+/* 04C43C 7F019A4C 0FC16247 */  jal   mtx4TransformVecInPlace
 /* 04C440 7F019A50 8D84000C */   lw    $a0, 0xc($t4)
 /* 04C444 7F019A54 C60A0004 */  lwc1  $f10, 4($s0)
 /* 04C448 7F019A58 C6040008 */  lwc1  $f4, 8($s0)
@@ -24041,7 +24041,7 @@ glabel constructor_menu18_displaycast
 /* 04C698 7F019CA8 24180007 */   li    $t8, 7
 /* 04C69C 7F019CAC 8E840000 */  lw    $a0, ($s4)
 /* 04C6A0 7F019CB0 8CE5001C */  lw    $a1, 0x1c($a3)
-/* 04C6A4 7F019CB4 0FC1B366 */  jal   sub_GAME_7F06C660
+/* 04C6A4 7F019CB4 0FC1B366 */  jal   modelFindNodeMtx
 /* 04C6A8 7F019CB8 00003025 */   move  $a2, $zero
 /* 04C6AC 7F019CBC 8E980000 */  lw    $t8, ($s4)
 /* 04C6B0 7F019CC0 AFA201A8 */  sw    $v0, 0x1a8($sp)

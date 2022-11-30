@@ -320,7 +320,7 @@ void matrix_4x4_rotate_vector(Mtxf *matrix, vec3 vector, vec3 result)
     }
 }
 
-void matrix_4x4_rotate_vector_in_place(Mtxf *matrix, vec3 vector)
+void mtx4RotateVecInPlace(Mtxf *matrix, vec3 vector)
 {
     vec3 result;
     matrix_4x4_rotate_vector(matrix, vector, result);
@@ -337,9 +337,9 @@ void matrix_4x4_transform_vector(Mtxf *matrix, vec3 vector, vec3 result)
     result[2] += matrix->m[3][2];
 }
 
-void matrix_4x4_transform_vector_in_place(Mtxf *matrix, vec3 vector)
+void mtx4TransformVecInPlace(Mtxf *matrix, vec3 vector)
 {
-    matrix_4x4_rotate_vector_in_place(matrix, vector);
+    mtx4RotateVecInPlace(matrix, vector);
     vector[0] += matrix->m[3][0];
     vector[1] += matrix->m[3][1];
     vector[2] += matrix->m[3][2];

@@ -4,7 +4,7 @@
 #include <ultra64.h>
 #include <bondtypes.h>
 
-void matrix_4x4_rotate_vector_in_place(Mtxf *matrix, vec3 vector);
+void mtx4RotateVecInPlace(Mtxf *matrix, vec3 vector);
 void matrix_4x4_7F059694(Mtxf *arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9);
 
 void matrix_4x4_multiply(Mtxf *lhs, Mtxf *rhs, Mtxf *result);
@@ -23,7 +23,7 @@ void matrix_4x4_multiply_homogeneous(Mtxf *lhs, Mtxf *rhs, Mtxf *result);
 
 void matrix_4x4_f32_to_s32(Mtxf *a, Mtxf *b);
 void matrix_4x4_multiply_homogeneous_in_place(Mtxf *lhs, Mtxf *rhs);
-void matrix_4x4_transform_vector_in_place(Mtxf *matrix, vec3 vector);
+void mtx4TransformVecInPlace(Mtxf *matrix, vec3 vector);
 void matrix_4x4_set_identity(Mtxf *matrix);
 void matrix_4x4_set_rotation_around_x(f32 angle, Mtxf *matrix);
 void matrix_4x4_set_rotation_around_y(f32 angle, Mtxf *matrix);

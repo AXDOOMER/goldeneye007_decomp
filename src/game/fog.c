@@ -1302,7 +1302,7 @@ s32 fogPositionIsVisibleThroughFog(coord3d *pos, f32 range)
     }
 
     player_pos = bondviewGetCurrentPlayersPosition();
-    player_mtx = currentPlayerGetMatrix10CC();
+    player_mtx = camGetWorldToScreenMtxf();
 
     sp24.f[0] = pos->f[0] - player_pos->f[0];
     sp24.f[1] = pos->f[1] - player_pos->f[1];

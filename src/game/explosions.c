@@ -284,7 +284,7 @@ glabel explosionCreate
 /* 0D0E1C 7F09C2EC 51000129 */  beql  $t0, $zero, .L7F09C794
 /* 0D0E20 7F09C2F0 8FBF002C */   lw    $ra, 0x2c($sp)
 /* 0D0E24 7F09C2F4 A7A70056 */  sh    $a3, 0x56($sp)
-/* 0D0E28 7F09C2F8 0FC0E90C */  jal   chrpropAllocate
+/* 0D0E28 7F09C2F8 0FC0E90C */  jal   propAllocate
 /* 0D0E2C 7F09C2FC AFA80040 */   sw    $t0, 0x40($sp)
 /* 0D0E30 7F09C300 92230039 */  lbu   $v1, 0x39($s1)
 /* 0D0E34 7F09C304 8FA80040 */  lw    $t0, 0x40($sp)
@@ -651,7 +651,7 @@ glabel explosionCreate
 .Ljp7F09CE6C:
 /* 0D19DC 7F09CE6C 52800124 */  beql  $s4, $zero, .Ljp7F09D300
 /* 0D19E0 7F09CE70 8FBF0034 */   lw    $ra, 0x34($sp)
-/* 0D19E4 7F09CE74 0FC0E9CC */  jal   chrpropAllocate
+/* 0D19E4 7F09CE74 0FC0E9CC */  jal   propAllocate
 /* 0D19E8 7F09CE78 00000000 */   nop   
 /* 0D19EC 7F09CE7C 87AE005E */  lh    $t6, 0x5e($sp)
 /* 0D19F0 7F09CE80 24010010 */  li    $at, 16
@@ -1851,7 +1851,7 @@ u8 sub_GAME_7F09D4EC(PropRecord* prop)
 {
     Mtxf* player_matrix;
 
-    player_matrix = currentPlayerGetMatrix10CC();
+    player_matrix = camGetWorldToScreenMtxf();
     prop->Unk18 = -((((player_matrix->m[0][2] * prop->pos.x) + (player_matrix->m[1][2] * prop->pos.y)) + (player_matrix->m[2][2] * prop->pos.z)) + player_matrix->m[3][2]);
 
     if (prop->Unk18 < 100.0f)
@@ -3094,7 +3094,7 @@ void sub_GAME_7F09E700(coord3d *pos, StandTile *stan, s16 arg2, u8 *rooms, s32 a
 
     if (smoke == NULL) { return; }
 
-    prop = chrpropAllocate();
+    prop = propAllocate();
     if (prop == NULL) { return; }
 
     prop->type = 8;
@@ -3631,7 +3631,7 @@ u8 sub_GAME_7F09EF9C(PropRecord* prop)
 {
     Mtxf* player_matrix;
 
-    player_matrix = currentPlayerGetMatrix10CC();
+    player_matrix = camGetWorldToScreenMtxf();
     prop->Unk18 = -((((player_matrix->m[0][2] * prop->pos.x) + (player_matrix->m[1][2] * prop->pos.y)) + (player_matrix->m[2][2] * prop->pos.z)) + player_matrix->m[3][2]);
 
     if (prop->Unk18 < 100.0f)
@@ -4055,7 +4055,7 @@ glabel sub_GAME_7F0A0034
 /* 0D4C64 7F0A0134 00000000 */   nop   
 /* 0D4C68 7F0A0138 0FC1624B */  jal   matrix_4x4_set_position_and_rotation_around_xyz
 /* 0D4C6C 7F0A013C 02803025 */   move  $a2, $s4
-/* 0D4C70 7F0A0140 0FC1E0F1 */  jal   currentPlayerGetMatrix10CC
+/* 0D4C70 7F0A0140 0FC1E0F1 */  jal   camGetWorldToScreenMtxf
 /* 0D4C74 7F0A0144 00000000 */   nop   
 /* 0D4C78 7F0A0148 00402025 */  move  $a0, $v0
 /* 0D4C7C 7F0A014C 0FC16026 */  jal   matrix_4x4_multiply_homogeneous_in_place
@@ -4943,10 +4943,10 @@ glabel sub_GAME_7F0A108C
 /* 0D5D9C 7F0A126C E7A60080 */  swc1  $f6, 0x80($sp)
 /* 0D5DA0 7F0A1270 E7A4006C */  swc1  $f4, 0x6c($sp)
 /* 0D5DA4 7F0A1274 E7A80070 */  swc1  $f8, 0x70($sp)
-/* 0D5DA8 7F0A1278 0FC160F6 */  jal   matrix_4x4_rotate_vector_in_place
+/* 0D5DA8 7F0A1278 0FC160F6 */  jal   mtx4RotateVecInPlace
 /* 0D5DAC 7F0A127C E7AA0074 */   swc1  $f10, 0x74($sp)
 /* 0D5DB0 7F0A1280 02202025 */  move  $a0, $s1
-/* 0D5DB4 7F0A1284 0FC160F6 */  jal   matrix_4x4_rotate_vector_in_place
+/* 0D5DB4 7F0A1284 0FC160F6 */  jal   mtx4RotateVecInPlace
 /* 0D5DB8 7F0A1288 27A5006C */   addiu $a1, $sp, 0x6c
 /* 0D5DBC 7F0A128C C7A00078 */  lwc1  $f0, 0x78($sp)
 /* 0D5DC0 7F0A1290 C7A2007C */  lwc1  $f2, 0x7c($sp)
