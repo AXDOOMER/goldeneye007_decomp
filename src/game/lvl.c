@@ -5920,7 +5920,7 @@ void lvlUnloadStageTextData(void)
 
     if (g_CurrentStageToLoad != LEVELID_TITLE)
     {
-        blank_text_bank(get_textbank_number_for_stagenum(g_CurrentStageToLoad));
+        langClearBank(get_textbank_number_for_stagenum(g_CurrentStageToLoad));
         sub_GAME_7F007770();
     }
 

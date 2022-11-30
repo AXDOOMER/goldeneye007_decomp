@@ -5,7 +5,7 @@
 
 // bss
 //CODE.bss:8008C640
-s32 ptr_text[45];
+s32 g_LangBanks[45];
 
 //CODE.bss:8008C6F4
 s32 ptr_char_data_buf;
@@ -247,8 +247,8 @@ void init_LnameX(void)
         } while (iVar3 != 0xf8);
     }
 
-    ptr_text = 0;
-    ppuVar2 = (u8 **)ptr_text;
+    g_LangBanks = 0;
+    ppuVar2 = (u8 **)g_LangBanks;
     do {
         ppuVar2 = ppuVar2 + 4;
         ppuVar2[1] = NULL;
@@ -257,13 +257,13 @@ void init_LnameX(void)
         *ppuVar2 = NULL;
         ppuVar2 = ppuVar2;
     } while (ppuVar2 != &ptr_char_data_buf);
-    ptr_text[37] = _fileNameLoadToBank((&ptr_LgunX)[j_text_trigger],1,0x100,6);
-    ptr_text[38] = _fileNameLoadToBank((&ptr_LtitleX)[j_text_trigger],1,0x100,6);
-    ptr_text[39] = _fileNameLoadToBank((&ptr_LmpmenuX)[j_text_trigger],1,0x100,6);
-    ptr_text[40] = _fileNameLoadToBank((&ptr_LpropobjX)[j_text_trigger],1,0x100,6);
-    ptr_text[41] =  _fileNameLoadToBank((&ptr_LmpweaponsX)[j_text_trigger],1,0x100,6);
-    ptr_text[42] = _fileNameLoadToBank((&ptr_LoptionsX)[j_text_trigger],1,0x100,6);
-    ptr_text[43] = _fileNameLoadToBank((&ptr_LmiscX)[j_text_trigger],1,0x100,6);
+    g_LangBanks[37] = _fileNameLoadToBank((&ptr_LgunX)[j_text_trigger],1,0x100,6);
+    g_LangBanks[38] = _fileNameLoadToBank((&ptr_LtitleX)[j_text_trigger],1,0x100,6);
+    g_LangBanks[39] = _fileNameLoadToBank((&ptr_LmpmenuX)[j_text_trigger],1,0x100,6);
+    g_LangBanks[40] = _fileNameLoadToBank((&ptr_LpropobjX)[j_text_trigger],1,0x100,6);
+    g_LangBanks[41] =  _fileNameLoadToBank((&ptr_LmpweaponsX)[j_text_trigger],1,0x100,6);
+    g_LangBanks[42] = _fileNameLoadToBank((&ptr_LoptionsX)[j_text_trigger],1,0x100,6);
+    g_LangBanks[43] = _fileNameLoadToBank((&ptr_LmiscX)[j_text_trigger],1,0x100,6);
     return;
 }
 #else
@@ -337,12 +337,12 @@ glabel init_LnameX
 /* 0F6318 7F0C17E8 A44E0006 */   sh    $t6, 6($v0)
 /* 0F631C 7F0C17EC 8E480000 */  lw    $t0, ($s2)
 .L7F0C17F0:
-/* 0F6320 7F0C17F0 3C018009 */  lui   $at, %hi(ptr_text)
-/* 0F6324 7F0C17F4 3C028009 */  lui   $v0, %hi(ptr_text+0x4)
+/* 0F6320 7F0C17F0 3C018009 */  lui   $at, %hi(g_LangBanks)
+/* 0F6324 7F0C17F4 3C028009 */  lui   $v0, %hi(g_LangBanks+0x4)
 /* 0F6328 7F0C17F8 3C038009 */  lui   $v1, %hi(ptr_char_data_buf)
 /* 0F632C 7F0C17FC 2463C6F4 */  addiu $v1, %lo(ptr_char_data_buf) # addiu $v1, $v1, -0x390c
-/* 0F6330 7F0C1800 2442C644 */  addiu $v0, %lo(ptr_text+0x4) # addiu $v0, $v0, -0x39bc
-/* 0F6334 7F0C1804 AC20C640 */  sw    $zero, %lo(ptr_text)($at)
+/* 0F6330 7F0C1800 2442C644 */  addiu $v0, %lo(g_LangBanks+0x4) # addiu $v0, $v0, -0x39bc
+/* 0F6334 7F0C1804 AC20C640 */  sw    $zero, %lo(g_LangBanks)($at)
 .L7F0C1808:
 /* 0F6338 7F0C1808 24420010 */  addiu $v0, $v0, 0x10
 /* 0F633C 7F0C180C AC40FFF4 */  sw    $zero, -0xc($v0)
@@ -360,8 +360,8 @@ glabel init_LnameX
 /* 0F636C 7F0C183C 0FC2F341 */  jal   _fileNameLoadToBank
 /* 0F6370 7F0C1840 24070006 */   li    $a3, 6
 /* 0F6374 7F0C1844 8E590000 */  lw    $t9, ($s2)
-/* 0F6378 7F0C1848 3C118009 */  lui   $s1, %hi(ptr_text)
-/* 0F637C 7F0C184C 2631C640 */  addiu $s1, %lo(ptr_text) # addiu $s1, $s1, -0x39c0
+/* 0F6378 7F0C1848 3C118009 */  lui   $s1, %hi(g_LangBanks)
+/* 0F637C 7F0C184C 2631C640 */  addiu $s1, %lo(g_LangBanks) # addiu $s1, $s1, -0x39c0
 /* 0F6380 7F0C1850 00194880 */  sll   $t1, $t9, 2
 /* 0F6384 7F0C1854 02095021 */  addu  $t2, $s0, $t1
 /* 0F6388 7F0C1858 AE220098 */  sw    $v0, 0x98($s1)
@@ -840,24 +840,24 @@ glabel something_with_LnameX
 
 void briefingLoadToBank(u32 id)
 {
-    ptr_text[id] = _fileNameLoadToBank(LnameX_lookuptable[id][j_text_trigger],1,0x100,4);
+    g_LangBanks[id] = _fileNameLoadToBank(LnameX_lookuptable[id][j_text_trigger],1,0x100,4);
 }
 
 
 void briefingLoadToAddr(int id,u8 *target,int size)
 {
-    ptr_text[id] = _fileNameLoadToAddr(LnameX_lookuptable[id][j_text_trigger],1,target,size);
+    g_LangBanks[id] = _fileNameLoadToAddr(LnameX_lookuptable[id][j_text_trigger],1,target,size);
 }
 
 
-void blank_text_bank(s32 textBank) {
-    ptr_text[textBank] = 0;
+void langClearBank(s32 textBank) {
+    g_LangBanks[textBank] = 0;
 }
 
 
 u8 * langGet(s32 slotID)
 {
-    u32 * textbank_ptr = ptr_text[slotID >> 10]; /* get the text file bank ID index the text ptr table */
+    u32 * textbank_ptr = g_LangBanks[slotID >> 10]; /* get the text file bank ID index the text ptr table */
     u32 textslot_offset = textbank_ptr[slotID & 0x03FF]; /* load the textbank ptr table then get the slot's offset */
 
     u32 output_slot = textslot_offset; /* add the text slot offset to the base ptr to get the ptr to text file's slot */

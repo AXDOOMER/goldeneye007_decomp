@@ -17585,7 +17585,7 @@ void init_menu0A_briefing(void)
 
 void update_menu0A_briefing(void)
 {
-  blank_text_bank(get_textbank_number_for_stagenum(mission_folder_setup_entries[briefingpage].stage_id));
+  langClearBank(get_textbank_number_for_stagenum(mission_folder_setup_entries[briefingpage].stage_id));
   if (-1 < menu_update) {
     sub_GAME_7F00B990();
   }
