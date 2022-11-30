@@ -1,7 +1,7 @@
 #include <ultra64.h>
 #include <bondconstants.h>
 #include "mp_weapon.h"
-
+#include "assets/obseg/text/LmpweaponsE.h"
 // data
 //D:80048670
 struct s_mp_weapon_set mp_weapon_set_slaps[] = 
@@ -199,20 +199,20 @@ struct s_mp_weapon_set mp_weapon_set_golden[] =
 //D:800490F0
 struct s_mp_weapon_set_text mp_weapon_set_text_table[] = 
 {
-    {TEXT(LMPWEAPONS, 0x0), mp_weapon_set_slaps},
-    {TEXT(LMPWEAPONS, 0x1), mp_weapon_set_pistols},
-    {TEXT(LMPWEAPONS, 0xD), mp_weapon_set_knife},
-    {TEXT(LMPWEAPONS, 0x2), mp_weapon_set_auto},
-    {TEXT(LMPWEAPONS, 0x3), mp_weapon_set_power},
-    {TEXT(LMPWEAPONS, 0x4), mp_weapon_set_sniper},
-    {TEXT(LMPWEAPONS, 0x5), mp_weapon_set_grenade},
-    {TEXT(LMPWEAPONS, 0x6), mp_weapon_set_remote_m},
-    {TEXT(LMPWEAPONS, 0x7), mp_weapon_set_glaunch},
-    {TEXT(LMPWEAPONS, 0x8), mp_weapon_set_timed_m},
-    {TEXT(LMPWEAPONS, 0x9), mp_weapon_set_prox_m},
-    {TEXT(LMPWEAPONS, 0xA), mp_weapon_set_rockets},
-    {TEXT(LMPWEAPONS, 0xB), mp_weapon_set_lasers},
-    {TEXT(LMPWEAPONS, 0xC), mp_weapon_set_golden}
+    {TEXT(LMPWEAPONS, MPWEAPON_STR_00), mp_weapon_set_slaps},
+    {TEXT(LMPWEAPONS, MPWEAPON_STR_01), mp_weapon_set_pistols},
+    {TEXT(LMPWEAPONS, MPWEAPON_STR_0D), mp_weapon_set_knife},
+    {TEXT(LMPWEAPONS, MPWEAPON_STR_02), mp_weapon_set_auto},
+    {TEXT(LMPWEAPONS, MPWEAPON_STR_03), mp_weapon_set_power},
+    {TEXT(LMPWEAPONS, MPWEAPON_STR_04), mp_weapon_set_sniper},
+    {TEXT(LMPWEAPONS, MPWEAPON_STR_05), mp_weapon_set_grenade},
+    {TEXT(LMPWEAPONS, MPWEAPON_STR_06), mp_weapon_set_remote_m},
+    {TEXT(LMPWEAPONS, MPWEAPON_STR_07), mp_weapon_set_glaunch},
+    {TEXT(LMPWEAPONS, MPWEAPON_STR_08), mp_weapon_set_timed_m},
+    {TEXT(LMPWEAPONS, MPWEAPON_STR_09), mp_weapon_set_prox_m},
+    {TEXT(LMPWEAPONS, MPWEAPON_STR_0A), mp_weapon_set_rockets},
+    {TEXT(LMPWEAPONS, MPWEAPON_STR_0B), mp_weapon_set_lasers},
+    {TEXT(LMPWEAPONS, MPWEAPON_STR_0C), mp_weapon_set_golden}
 };
 
 s32 mp_weapon_set = 0xB;

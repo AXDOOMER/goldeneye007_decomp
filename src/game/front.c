@@ -17494,9 +17494,9 @@ s32 load_briefing_text_for_stage(void) {
     struct BriefingData *pbriefdata;
 
     //temp_s0 = (s32)ptr_logo_and_walletbond_DL + (s32)0xA000;
-    ptrbriefingdata = _load_resource_named_to_buffer(mission_folder_setup_entries[briefingpage].briefing_name_ptr, 1, temp_s0, 0x200);
+    ptrbriefingdata = _fileNameLoadToAddr(mission_folder_setup_entries[briefingpage].briefing_name_ptr, 1, temp_s0, 0x200);
     //sp20 = 0x6DE00;
-    load_briefing_text_bank(get_textbank_number_for_stagenum(mission_folder_setup_entries[briefingpage].stage_id, temp_s0 + 0x200, sp20));
+    briefingLoadToAddr(get_textbank_number_for_stagenum(mission_folder_setup_entries[briefingpage].stage_id, temp_s0 + 0x200, sp20));
     pbriefdata = ptrbriefingdata;
     for(i = 0; i!= 0x28;i++)
     {
@@ -17527,7 +17527,7 @@ glabel load_briefing_text_for_stage
 /* 04A088 7F015558 02003025 */  move  $a2, $s0
 /* 04A08C 7F01555C 8C84ABFC */  lw    $a0, %lo(mission_folder_setup_entries+24)($a0)
 /* 04A090 7F015560 24050001 */  li    $a1, 1
-/* 04A094 7F015564 0FC2F350 */  jal   _load_resource_named_to_buffer
+/* 04A094 7F015564 0FC2F350 */  jal   _fileNameLoadToAddr
 /* 04A098 7F015568 24070200 */   li    $a3, 512
 /* 04A09C 7F01556C 3C198003 */  lui   $t9, %hi(briefingpage)
 /* 04A0A0 7F015570 8F39A8F8 */  lw    $t9, %lo(briefingpage)($t9)
@@ -17546,7 +17546,7 @@ glabel load_briefing_text_for_stage
 /* 04A0D4 7F0155A4 8C84ABEC */   lw    $a0, %lo(mission_folder_setup_entries+8)($a0)
 /* 04A0D8 7F0155A8 00402025 */  move  $a0, $v0
 /* 04A0DC 7F0155AC 02002825 */  move  $a1, $s0
-/* 04A0E0 7F0155B0 0FC30759 */  jal   load_briefing_text_bank
+/* 04A0E0 7F0155B0 0FC30759 */  jal   briefingLoadToAddr
 /* 04A0E4 7F0155B4 8FA60020 */   lw    $a2, 0x20($sp)
 /* 04A0E8 7F0155B8 3C038007 */  lui   $v1, %hi(ptrbriefingdata)
 /* 04A0EC 7F0155BC 8C63978C */  lw    $v1, %lo(ptrbriefingdata)($v1)

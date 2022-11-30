@@ -29,8 +29,8 @@ typedef enum FILELOADMETHOD
 
 void  load_resource(u8 *ptrdata, s32 bytes,  fileentry *srcfile,  resource_lookup_data_entry *lookupdata);
 void  resource_load_from_indy(u8 *ptrdata, s32 bytes,  fileentry *srcfile,  resource_lookup_data_entry *lookupdata);
-void *load_rom_resource_index_to_membank(s32 index, FILELOADMETHOD loadMethod, s32 size, u8 bank);
-void *load_resource_index_to_buffer(s32 index, FILELOADMETHOD loadMethod, void *ptrdata, s32 bytes);
+void *fileIndexLoadToBank(s32 index, FILELOADMETHOD loadMethod, s32 size, u8 bank);
+void *fileIndexLoadToAddr(s32 index, FILELOADMETHOD loadMethod, void *ptrdata, s32 bytes);
 void  obBlankResourcesLoadedInBank(u8 i);
 void  obBlankResourcesInBank5(void);
 

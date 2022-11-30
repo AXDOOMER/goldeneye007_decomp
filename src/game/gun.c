@@ -25,6 +25,7 @@
 #include "unk_0CC4C0.h"
 #include "debugmenu_handler.h"
 #include "fr.h"
+#include "assets/obseg/text/LgunE.h"
 
 // bss
 s32 dword_CODE_bss_80075DB0;
@@ -21918,7 +21919,7 @@ void analyzeGEKey(void)
 {
     if (bondinvHasGEKey())
     {
-   	    HUDMESSAGEBOTTOM(langGet(TEXT(LGUN, 0xD8))); //Analyzing the GoldenEye key...
+   	    HUDMESSAGEBOTTOM(langGet(TEXT(LGUN, GUN_STR_D8))); //Analyzing the GoldenEye key...
     	g_CurrentPlayer->copiedgoldeneye = 1;
     	sndPlaySfx(g_musicSfxBufferPtr, 0xf5, 0x0);
     	currentPlayerEquipWeaponWrapper(GUNRIGHT, ITEM_GOLDENEYEKEY);
@@ -21926,7 +21927,7 @@ void analyzeGEKey(void)
   	}
   	else
   	{
-	    HUDMESSAGEBOTTOM(langGet(TEXT(LGUN, 0xD9))); //You do not have the GoldenEye key.
+	    HUDMESSAGEBOTTOM(langGet(TEXT(LGUN, GUN_STR_D9))); //You do not have the GoldenEye key.
 	    sub_GAME_7F05D690();
   	}
   	return;
@@ -27612,11 +27613,11 @@ void increment_num_deaths(void)
     {
         if (g_CurrentPlayer->deathcount == 1)
         {
-            sprintf(acStack256, langGet(TEXT(LGUN, 0xDB))); //died once
+            sprintf(acStack256, langGet(TEXT(LGUN, GUN_STR_DB))); //died once
         }
         else
         {
-            sprintf(acStack256, "%s %d %s\n", langGet(TEXT(LGUN, 0xDC)), g_CurrentPlayer->deathcount, langGet(TEXT(LGUN, 0xDD))); //died times
+            sprintf(acStack256, "%s %d %s\n", langGet(TEXT(LGUN, GUN_STR_DC)), g_CurrentPlayer->deathcount, langGet(TEXT(LGUN, GUN_STR_DD))); //died times
         }
 #if defined(VERSION_JP) || defined(VERSION_EU)
 		jp_hudmsgBottomShow(acStack256);
@@ -27652,7 +27653,7 @@ void *increment_num_suicides_display_MP(void) {
     {
         // Node 1
         sp34 = getMissiontimer();
-        sprintf(&sp40, &aSD_0, langGet(TEXT(LGUN, 0xDE)), g_CurrentPlayer->num_suicides); //suicide count
+        sprintf(&sp40, &aSD_0, langGet(TEXT(LGUN, GUN_STR_DE)), g_CurrentPlayer->num_suicides); //suicide count
         hudmsgBottomShow(&sp40);
         if (g_playerPerm->killcount >= 2)
         {

@@ -2,7 +2,7 @@
 #include <bondconstants.h>
 #include <bondtypes.h>
 #include "objective_status.h"
-
+#include "assets/obseg/text/LmiscE.h"
 //Public variables - move to header
 // bss
 //CODE.bss:80075D30
@@ -98,15 +98,15 @@ u8 * get_ptr_text_for_watch_breifing_page(WATCH_BRIEFING_PAGE page)
     {
         if (page == 0)
         {
-            textptr = langGet(TEXT(LMISC, 0x29)); //"E R R O R\n"
+            textptr = langGet(TEXT(LMISC, MISC_STR_29)); //"E R R O R\n"
         }
         else if (page == 1)
         {
-            textptr = langGet(TEXT(LMISC, 0x2a)); //"no briefing for this mission\n"
+            textptr = langGet(TEXT(LMISC, MISC_STR_2A)); //"no briefing for this mission\n"
         }
         else
         {
-            textptr = langGet(TEXT(LMISC, 0x2b)); //"\n"
+            textptr = langGet(TEXT(LMISC, MISC_STR_2B)); //"\n"
         }
     }
 

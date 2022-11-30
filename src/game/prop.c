@@ -4046,7 +4046,7 @@ glabel proplvreset2
 /* 038888 7F003D58 02202025 */  move  $a0, $s1
 /* 03888C 7F003D5C 24050001 */  li    $a1, 1
 /* 038890 7F003D60 24060100 */  li    $a2, 256
-/* 038894 7F003D64 0FC2F341 */  jal   _load_resource_named_to_membank
+/* 038894 7F003D64 0FC2F341 */  jal   _fileNameLoadToBank
 /* 038898 7F003D68 24070004 */   li    $a3, 4
 /* 03889C 7F003D6C 3C038007 */  lui   $v1, %hi(g_ptrStageSetupFile)
 /* 0388A0 7F003D70 24635D28 */  addiu $v1, %lo(g_ptrStageSetupFile) # addiu $v1, $v1, 0x5d28
@@ -4054,7 +4054,7 @@ glabel proplvreset2
 /* 0388A8 7F003D78 00408825 */  move  $s1, $v0
 /* 0388AC 7F003D7C 0FC30578 */  jal   get_textbank_number_for_stagenum
 /* 0388B0 7F003D80 02A02025 */   move  $a0, $s5
-/* 0388B4 7F003D84 0FC30742 */  jal   load_mission_text_bank
+/* 0388B4 7F003D84 0FC30742 */  jal   briefingLoadToBank
 /* 0388B8 7F003D88 00402025 */   move  $a0, $v0
 /* 0388BC 7F003D8C 8E2C0000 */  lw    $t4, ($s1)
 /* 0388C0 7F003D90 3C078007 */  lui   $a3, %hi(g_CurrentSetup+0)
@@ -5439,7 +5439,7 @@ glabel jpt_8004F02C
 /* 0388C8 7F003D58 02202025 */  move  $a0, $s1
 /* 0388CC 7F003D5C 24050001 */  li    $a1, 1
 /* 0388D0 7F003D60 24060100 */  li    $a2, 256
-/* 0388D4 7F003D64 0FC2F62D */  jal   _load_resource_named_to_membank
+/* 0388D4 7F003D64 0FC2F62D */  jal   _fileNameLoadToBank
 /* 0388D8 7F003D68 24070004 */   li    $a3, 4
 /* 0388DC 7F003D6C 3C038007 */  lui   $v1, %hi(g_ptrStageSetupFile) # $v1, 0x8007
 /* 0388E0 7F003D70 24635D68 */  addiu $v1, %lo(g_ptrStageSetupFile) # addiu $v1, $v1, 0x5d68
@@ -5447,7 +5447,7 @@ glabel jpt_8004F02C
 /* 0388E8 7F003D78 00408825 */  move  $s1, $v0
 /* 0388EC 7F003D7C 0FC308A4 */  jal   get_textbank_number_for_stagenum
 /* 0388F0 7F003D80 02A02025 */   move  $a0, $s5
-/* 0388F4 7F003D84 0FC30A6E */  jal   load_mission_text_bank
+/* 0388F4 7F003D84 0FC30A6E */  jal   briefingLoadToBank
 /* 0388F8 7F003D88 00402025 */   move  $a0, $v0
 /* 0388FC 7F003D8C 8E2C0000 */  lw    $t4, ($s1)
 /* 038900 7F003D90 3C078007 */  lui   $a3, %hi(g_CurrentSetup+0) # $a3, 0x8007
@@ -6837,7 +6837,7 @@ glabel proplvreset2
 /* 0366D4 7F003CE4 02202025 */  move  $a0, $s1
 /* 0366D8 7F003CE8 24050001 */  li    $a1, 1
 /* 0366DC 7F003CEC 24060100 */  li    $a2, 256
-/* 0366E0 7F003CF0 0FC2F053 */  jal   _load_resource_named_to_membank
+/* 0366E0 7F003CF0 0FC2F053 */  jal   _fileNameLoadToBank
 /* 0366E4 7F003CF4 24070004 */   li    $a3, 4
 /* 0366E8 7F003CF8 3C038006 */  lui   $v1, %hi(g_ptrStageSetupFile) # $v1, 0x8006
 /* 0366EC 7F003CFC 24634C68 */  addiu $v1, %lo(g_ptrStageSetupFile) # addiu $v1, $v1, 0x4c68
@@ -6845,7 +6845,7 @@ glabel proplvreset2
 /* 0366F4 7F003D04 00408825 */  move  $s1, $v0
 /* 0366F8 7F003D08 0FC302B0 */  jal   get_textbank_number_for_stagenum
 /* 0366FC 7F003D0C 02A02025 */   move  $a0, $s5
-/* 036700 7F003D10 0FC3047A */  jal   load_mission_text_bank
+/* 036700 7F003D10 0FC3047A */  jal   briefingLoadToBank
 /* 036704 7F003D14 00402025 */   move  $a0, $v0
 /* 036708 7F003D18 8E2C0000 */  lw    $t4, ($s1)
 /* 03670C 7F003D1C 3C078006 */  lui   $a3, %hi(g_CurrentSetup+0) # $a3, 0x8006

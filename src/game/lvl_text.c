@@ -257,13 +257,13 @@ void init_LnameX(void)
         *ppuVar2 = NULL;
         ppuVar2 = ppuVar2;
     } while (ppuVar2 != &ptr_char_data_buf);
-    ptr_text[37] = _load_resource_named_to_membank((&ptr_LgunX)[j_text_trigger],1,0x100,6);
-    ptr_text[38] = _load_resource_named_to_membank((&ptr_LtitleX)[j_text_trigger],1,0x100,6);
-    ptr_text[39] = _load_resource_named_to_membank((&ptr_LmpmenuX)[j_text_trigger],1,0x100,6);
-    ptr_text[40] = _load_resource_named_to_membank((&ptr_LpropobjX)[j_text_trigger],1,0x100,6);
-    ptr_text[41] =  _load_resource_named_to_membank((&ptr_LmpweaponsX)[j_text_trigger],1,0x100,6);
-    ptr_text[42] = _load_resource_named_to_membank((&ptr_LoptionsX)[j_text_trigger],1,0x100,6);
-    ptr_text[43] = _load_resource_named_to_membank((&ptr_LmiscX)[j_text_trigger],1,0x100,6);
+    ptr_text[37] = _fileNameLoadToBank((&ptr_LgunX)[j_text_trigger],1,0x100,6);
+    ptr_text[38] = _fileNameLoadToBank((&ptr_LtitleX)[j_text_trigger],1,0x100,6);
+    ptr_text[39] = _fileNameLoadToBank((&ptr_LmpmenuX)[j_text_trigger],1,0x100,6);
+    ptr_text[40] = _fileNameLoadToBank((&ptr_LpropobjX)[j_text_trigger],1,0x100,6);
+    ptr_text[41] =  _fileNameLoadToBank((&ptr_LmpweaponsX)[j_text_trigger],1,0x100,6);
+    ptr_text[42] = _fileNameLoadToBank((&ptr_LoptionsX)[j_text_trigger],1,0x100,6);
+    ptr_text[43] = _fileNameLoadToBank((&ptr_LmiscX)[j_text_trigger],1,0x100,6);
     return;
 }
 #else
@@ -357,7 +357,7 @@ glabel init_LnameX
 /* 0F6360 7F0C1830 8F040130 */  lw    $a0, 0x130($t8)
 /* 0F6364 7F0C1834 24050001 */  li    $a1, 1
 /* 0F6368 7F0C1838 24060100 */  li    $a2, 256
-/* 0F636C 7F0C183C 0FC2F341 */  jal   _load_resource_named_to_membank
+/* 0F636C 7F0C183C 0FC2F341 */  jal   _fileNameLoadToBank
 /* 0F6370 7F0C1840 24070006 */   li    $a3, 6
 /* 0F6374 7F0C1844 8E590000 */  lw    $t9, ($s2)
 /* 0F6378 7F0C1848 3C118009 */  lui   $s1, %hi(ptr_text)
@@ -368,7 +368,7 @@ glabel init_LnameX
 /* 0F638C 7F0C185C 8D440138 */  lw    $a0, 0x138($t2)
 /* 0F6390 7F0C1860 24050001 */  li    $a1, 1
 /* 0F6394 7F0C1864 24060100 */  li    $a2, 256
-/* 0F6398 7F0C1868 0FC2F341 */  jal   _load_resource_named_to_membank
+/* 0F6398 7F0C1868 0FC2F341 */  jal   _fileNameLoadToBank
 /* 0F639C 7F0C186C 24070006 */   li    $a3, 6
 /* 0F63A0 7F0C1870 8E4B0000 */  lw    $t3, ($s2)
 /* 0F63A4 7F0C1874 AE22009C */  sw    $v0, 0x9c($s1)
@@ -377,7 +377,7 @@ glabel init_LnameX
 /* 0F63B0 7F0C1880 020C6821 */  addu  $t5, $s0, $t4
 /* 0F63B4 7F0C1884 8DA40140 */  lw    $a0, 0x140($t5)
 /* 0F63B8 7F0C1888 24060100 */  li    $a2, 256
-/* 0F63BC 7F0C188C 0FC2F341 */  jal   _load_resource_named_to_membank
+/* 0F63BC 7F0C188C 0FC2F341 */  jal   _fileNameLoadToBank
 /* 0F63C0 7F0C1890 24070006 */   li    $a3, 6
 /* 0F63C4 7F0C1894 8E4E0000 */  lw    $t6, ($s2)
 /* 0F63C8 7F0C1898 AE2200A0 */  sw    $v0, 0xa0($s1)
@@ -386,7 +386,7 @@ glabel init_LnameX
 /* 0F63D4 7F0C18A4 020FC021 */  addu  $t8, $s0, $t7
 /* 0F63D8 7F0C18A8 8F040148 */  lw    $a0, 0x148($t8)
 /* 0F63DC 7F0C18AC 24060100 */  li    $a2, 256
-/* 0F63E0 7F0C18B0 0FC2F341 */  jal   _load_resource_named_to_membank
+/* 0F63E0 7F0C18B0 0FC2F341 */  jal   _fileNameLoadToBank
 /* 0F63E4 7F0C18B4 24070006 */   li    $a3, 6
 /* 0F63E8 7F0C18B8 8E590000 */  lw    $t9, ($s2)
 /* 0F63EC 7F0C18BC AE2200A4 */  sw    $v0, 0xa4($s1)
@@ -395,7 +395,7 @@ glabel init_LnameX
 /* 0F63F8 7F0C18C8 02095021 */  addu  $t2, $s0, $t1
 /* 0F63FC 7F0C18CC 8D440150 */  lw    $a0, 0x150($t2)
 /* 0F6400 7F0C18D0 24060100 */  li    $a2, 256
-/* 0F6404 7F0C18D4 0FC2F341 */  jal   _load_resource_named_to_membank
+/* 0F6404 7F0C18D4 0FC2F341 */  jal   _fileNameLoadToBank
 /* 0F6408 7F0C18D8 24070006 */   li    $a3, 6
 /* 0F640C 7F0C18DC 8E4B0000 */  lw    $t3, ($s2)
 /* 0F6410 7F0C18E0 AE2200A8 */  sw    $v0, 0xa8($s1)
@@ -404,7 +404,7 @@ glabel init_LnameX
 /* 0F641C 7F0C18EC 020C6821 */  addu  $t5, $s0, $t4
 /* 0F6420 7F0C18F0 8DA40158 */  lw    $a0, 0x158($t5)
 /* 0F6424 7F0C18F4 24060100 */  li    $a2, 256
-/* 0F6428 7F0C18F8 0FC2F341 */  jal   _load_resource_named_to_membank
+/* 0F6428 7F0C18F8 0FC2F341 */  jal   _fileNameLoadToBank
 /* 0F642C 7F0C18FC 24070006 */   li    $a3, 6
 /* 0F6430 7F0C1900 8E4E0000 */  lw    $t6, ($s2)
 /* 0F6434 7F0C1904 AE2200AC */  sw    $v0, 0xac($s1)
@@ -413,7 +413,7 @@ glabel init_LnameX
 /* 0F6440 7F0C1910 020FC021 */  addu  $t8, $s0, $t7
 /* 0F6444 7F0C1914 8F040160 */  lw    $a0, 0x160($t8)
 /* 0F6448 7F0C1918 24060100 */  li    $a2, 256
-/* 0F644C 7F0C191C 0FC2F341 */  jal   _load_resource_named_to_membank
+/* 0F644C 7F0C191C 0FC2F341 */  jal   _fileNameLoadToBank
 /* 0F6450 7F0C1920 24070006 */   li    $a3, 6
 /* 0F6454 7F0C1924 8FBF0024 */  lw    $ra, 0x24($sp)
 /* 0F6458 7F0C1928 AE2200B0 */  sw    $v0, 0xb0($s1)
@@ -838,15 +838,15 @@ glabel something_with_LnameX
 #endif
 
 
-void load_mission_text_bank(u32 id)
+void briefingLoadToBank(u32 id)
 {
-    ptr_text[id] = _load_resource_named_to_membank(LnameX_lookuptable[id][j_text_trigger],1,0x100,4);
+    ptr_text[id] = _fileNameLoadToBank(LnameX_lookuptable[id][j_text_trigger],1,0x100,4);
 }
 
 
-void load_briefing_text_bank(int lnameID,u8 *target,int size)
+void briefingLoadToAddr(int id,u8 *target,int size)
 {
-   ptr_text[lnameID] = _load_resource_named_to_buffer(LnameX_lookuptable[lnameID][j_text_trigger],1,target,size);
+    ptr_text[id] = _fileNameLoadToAddr(LnameX_lookuptable[id][j_text_trigger],1,target,size);
 }
 
 

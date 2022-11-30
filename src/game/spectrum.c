@@ -836,7 +836,7 @@ glabel init_spectrum_game
 /* 107BE8 7F0D30B8 2484C114 */  addiu $a0, %lo(aEmDataSpec_rom_seg_rz) # addiu $a0, $a0, -0x3eec
 /* 107BEC 7F0D30BC 24050001 */  li    $a1, 1
 /* 107BF0 7F0D30C0 24060100 */  li    $a2, 256
-/* 107BF4 7F0D30C4 0FC2F341 */  jal   _load_resource_named_to_membank
+/* 107BF4 7F0D30C4 0FC2F341 */  jal   _fileNameLoadToBank
 /* 107BF8 7F0D30C8 24070004 */   li    $a3, 4
 /* 107BFC 7F0D30CC 3C038009 */  lui   $v1, %hi(ptr_sectrum_monitor_data_temp_buf)
 /* 107C00 7F0D30D0 2463E320 */  addiu $v1, %lo(ptr_sectrum_monitor_data_temp_buf) # addiu $v1, $v1, -0x1ce0
@@ -870,7 +870,7 @@ glabel init_spectrum_game
 /* 107C68 7F0D3138 8C84ED2C */  lw    $a0, %lo(romnames)($a0)
 /* 107C6C 7F0D313C 24050001 */  li    $a1, 1
 /* 107C70 7F0D3140 24060100 */  li    $a2, 256
-/* 107C74 7F0D3144 0FC2F341 */  jal   _load_resource_named_to_membank
+/* 107C74 7F0D3144 0FC2F341 */  jal   _fileNameLoadToBank
 /* 107C78 7F0D3148 24070004 */   li    $a3, 4
 /* 107C7C 7F0D314C 3C038009 */  lui   $v1, %hi(ptr_sectrum_game_data_temp_buf)
 /* 107C80 7F0D3150 2463E324 */  addiu $v1, %lo(ptr_sectrum_game_data_temp_buf) # addiu $v1, $v1, -0x1cdc

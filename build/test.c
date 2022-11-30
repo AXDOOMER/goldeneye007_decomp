@@ -3752,7 +3752,7 @@ void crashSetBuffers2(u16 *buffer1, u16 *buffer2)
 }
 
 
-extern stagesetup *_load_resource_named_to_membank();
+extern stagesetup *_fileNameLoadToBank();
 f32                g_scale_1_0_item_related = 1.0f;
 char              *setup_text_pointers[]    = {
     NULL,
@@ -4020,9 +4020,9 @@ void                 proplvreset2(s32 stageID)
             strcat(ptrsp174, "mp_");
         }
         strcat(ptrsp174, *textptr + 1);
-        resource                = _load_resource_named_to_membank(ptrsp174, 1, 0x100, 4);
+        resource                = _fileNameLoadToBank(ptrsp174, 1, 0x100, 4);
         g_ptrStageSetupFile = resource;
-        load_mission_text_bank(get_textbank_number_for_stagenum(stageID));
+        briefingLoadToBank(get_textbank_number_for_stagenum(stageID));
         g_CurrentSetup.pathwaypoints  = resource->pathwaypoints;
         g_CurrentSetup.waypointgroups = resource->waypointgroups;
         g_CurrentSetup.intro          = resource->intro;

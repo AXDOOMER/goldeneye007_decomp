@@ -2116,7 +2116,7 @@ glabel load_bg_file
 /* 0E8DA8 7F0B4278 24070004 */  li    $a3, 4
 /* 0E8DAC 7F0B427C 00005012 */  mflo  $t2
 /* 0E8DB0 7F0B4280 022A5821 */  addu  $t3, $s1, $t2
-/* 0E8DB4 7F0B4284 0FC2F341 */  jal   _load_resource_named_to_membank
+/* 0E8DB4 7F0B4284 0FC2F341 */  jal   _fileNameLoadToBank
 /* 0E8DB8 7F0B4288 8D640008 */   lw    $a0, 8($t3)
 /* 0E8DBC 7F0B428C 3C108008 */  lui   $s0, %hi(gptr_stan)
 /* 0E8DC0 7F0B4290 2610BF94 */  addiu $s0, %lo(gptr_stan) # addiu $s0, $s0, -0x406c
@@ -2587,7 +2587,7 @@ glabel load_bg_file
 /* 0E5FA4 7F0B35B4 24070004 */  li    $a3, 4
 /* 0E5FA8 7F0B35B8 00005012 */  mflo  $t2
 /* 0E5FAC 7F0B35BC 022A5821 */  addu  $t3, $s1, $t2
-/* 0E5FB0 7F0B35C0 0FC2F053 */  jal   _load_resource_named_to_membank
+/* 0E5FB0 7F0B35C0 0FC2F053 */  jal   _fileNameLoadToBank
 /* 0E5FB4 7F0B35C4 8D640008 */   lw    $a0, 8($t3)
 /* 0E5FB8 7F0B35C8 3C108007 */  lui   $s0, %hi(gptr_stan) # $s0, 0x8007
 /* 0E5FBC 7F0B35CC 26109EE4 */  addiu $s0, %lo(gptr_stan) # addiu $s0, $s0, -0x611c

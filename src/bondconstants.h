@@ -866,7 +866,7 @@ typedef enum GAMELENGTH
     LEN_10PT,
     LEN_20PT,
     LEN_LAST
-};
+} GAMELENGTH;
 
 typedef enum CUFF_TYPES
 {
