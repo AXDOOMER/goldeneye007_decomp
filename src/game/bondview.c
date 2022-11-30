@@ -40506,7 +40506,7 @@ void bondviewUpdateGuardTankFlagsRelated(PropRecord *arg0, s32 flags)
 
     if (arg0->chr != NULL)
     {
-        set_or_unset_GUARDdata_flag(arg0->chr, flags);
+        chrSetMoving(arg0->chr, flags);
     }
 
     if (ptr_playerstank != NULL)

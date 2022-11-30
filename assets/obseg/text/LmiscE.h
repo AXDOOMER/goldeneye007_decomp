@@ -70,6 +70,6 @@ enum LMISCE_STRINGS
     MISC_STR_43, // "No Radar [Multi]"
     
 #ifdef VERSION_JP
-    ,MISC_STR_44//,"One minute left"
+    MISC_STR_44//,"One minute left"
 #endif
 };

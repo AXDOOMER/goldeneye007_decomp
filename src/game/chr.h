@@ -285,7 +285,7 @@ void        sub_GAME_7F022EE0(s32 param_1);
 void        setanimationdebugflag(s32 param_1);
 void        disable_sounds_attached_to_player_then_something(PropRecord* prop);
 void        chrPositionRelated7F020D94(ChrRecord *);
-void        set_or_unset_GUARDdata_flag(ChrRecord *guard,s32 param_2);
+void        chrSetMoving(ChrRecord *guard,s32 param_2);
 f32         getAnimationRate(void);
 void        setAnimationRate(f32);
 PropRecord *init_GUARDdata_with_set_values(PropRecord *, Model *, coord3d *, f32 arg2, StandTile * arg3, s32 arg4);

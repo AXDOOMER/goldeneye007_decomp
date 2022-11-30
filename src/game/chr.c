@@ -1182,15 +1182,15 @@ f32 chrUnusedYPositionRelated(PropRecord *arg0)
 
 
 
-void set_or_unset_GUARDdata_flag(ChrRecord *self, bool unset)
+void chrSetMoving(ChrRecord *self, bool unset)
 {
     if (unset)
     {
-        self->hidden &= ~0x100;
+        self->hidden &= ~CHRHIDDEN_MOVING;
     }
     else
     {
-        self->hidden |= 0x100;
+        self->hidden |= CHRHIDDEN_MOVING;
     }
     return;
 }
@@ -1220,7 +1220,7 @@ glabel sub_GAME_7F01F614
 /* 054178 7F01F648 0FC08C58 */  jal   chrGetChrWidthHeight
 /* 05417C 7F01F64C 27A6008C */   addiu $a2, $sp, 0x8c
 /* 054180 7F01F650 8FA40098 */  lw    $a0, 0x98($sp)
-/* 054184 7F01F654 0FC07D7A */  jal   set_or_unset_GUARDdata_flag
+/* 054184 7F01F654 0FC07D7A */  jal   chrSetMoving
 /* 054188 7F01F658 00002825 */   move  $a1, $zero
 /* 05418C 7F01F65C 0FC2C731 */  jal   sub_GAME_7F0B1CC4
 /* 054190 7F01F660 00000000 */   nop   
@@ -1584,7 +1584,7 @@ glabel sub_GAME_7F01F614
 .L7F01FBD8:
 /* 054708 7F01FBD8 8FA40098 */  lw    $a0, 0x98($sp)
 .L7F01FBDC:
-/* 05470C 7F01FBDC 0FC07D7A */  jal   set_or_unset_GUARDdata_flag
+/* 05470C 7F01FBDC 0FC07D7A */  jal   chrSetMoving
 /* 054710 7F01FBE0 24050001 */   li    $a1, 1
 /* 054714 7F01FBE4 8FAC0094 */  lw    $t4, 0x94($sp)
 /* 054718 7F01FBE8 8FAE0098 */  lw    $t6, 0x98($sp)

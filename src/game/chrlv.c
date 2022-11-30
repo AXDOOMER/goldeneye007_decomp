@@ -1991,7 +1991,7 @@ f32 chrlvPathingCollisionRelated(PropRecord *arg0, f32 arg1, f32 arg2, s32 objFl
     dest_x = arg0->pos.f[0] + (sp5C.f[0] * arg2);
     dest_z = arg0->pos.f[2] + (sp5C.f[2] * arg2);
 
-    set_or_unset_GUARDdata_flag(chr, 0);
+    chrSetMoving(chr, 0);
     sub_GAME_7F0B1CC4();
 
     if (sub_GAME_7F0B0E24(&stan, arg0->pos.f[0], arg0->pos.f[2], dest_x, dest_z, objFlags, unkHeight, unkA, 0.0f, 1.0f) != 0)
@@ -2006,7 +2006,7 @@ f32 chrlvPathingCollisionRelated(PropRecord *arg0, f32 arg1, f32 arg2, s32 objFl
         ret = sqrtf((dest_x * dest_x) + (dest_z * dest_z));
     }
 
-    set_or_unset_GUARDdata_flag(chr, 1);
+    chrSetMoving(chr, 1);
 
     return ret;
 }
@@ -3619,7 +3619,7 @@ void chrlvTravelTickMagic(ChrRecord *self, struct waydata *arg1, f32 arg2, coord
     
     if (arg1->segdisttotal <= arg1->segdistdone)
     {
-        set_or_unset_GUARDdata_flag(self, 0);
+        chrSetMoving(self, 0);
         
         if (
             (sub_GAME_7F0B18B8(&arg4, arg3->f[0], arg3->f[2], self->chrwidth, 0x1F, 0.0f, 1.0f) < 0)
@@ -3683,7 +3683,7 @@ void chrlvTravelTickMagic(ChrRecord *self, struct waydata *arg1, f32 arg2, coord
             }
         }
 
-        set_or_unset_GUARDdata_flag(self, 1);
+        chrSetMoving(self, 1);
     }
 }
 
@@ -4210,7 +4210,7 @@ s32 chrlvAttackRelated7F0292A8(ChrRecord *self, coord3d *arg1, StandTile *arg2)
     {
         stan = arg2;
         sp3C = chrlvGetChrOrPresetLocation(self, flags, self->act_attack.entityid, &sp40);
-        set_or_unset_GUARDdata_flag(self, 0);
+        chrSetMoving(self, 0);
 
         if ((flags & 1) != 0)
         {
@@ -4242,7 +4242,7 @@ s32 chrlvAttackRelated7F0292A8(ChrRecord *self, coord3d *arg1, StandTile *arg2)
             }
         }
 
-        set_or_unset_GUARDdata_flag(self, 1);
+        chrSetMoving(self, 1);
     }
 
     return ret;
@@ -4268,7 +4268,7 @@ bool chrCanSeeBond(ChrRecord *self)
         bondprop = get_curplayer_positiondata();
         myheight = self->chrheight - 20.0f;
 
-        set_or_unset_GUARDdata_flag(self, FALSE);
+        chrSetMoving(self, FALSE);
         bondviewUpdateGuardTankFlagsRelated(g_CurrentPlayer->prop, 0);
 
         mystan = myprop->stan;
@@ -4279,7 +4279,7 @@ bool chrCanSeeBond(ChrRecord *self)
             pass = TRUE;
         }
 
-        set_or_unset_GUARDdata_flag(self, TRUE);
+        chrSetMoving(self, TRUE);
         bondviewUpdateGuardTankFlagsRelated(g_CurrentPlayer->prop, 1);
     }
 
@@ -4299,7 +4299,7 @@ bool check_if_position_in_same_room(ChrRecord *self, coord3d *pos, StandTile *st
     f32         myheight = self->chrheight - 20.0f;
     bool        pass     = FALSE;
 
-    set_or_unset_GUARDdata_flag(self, 0);
+    chrSetMoving(self, 0);
 
     propstan = myprop->stan;
 
@@ -4308,7 +4308,7 @@ bool check_if_position_in_same_room(ChrRecord *self, coord3d *pos, StandTile *st
         pass = TRUE;
     }
 
-    set_or_unset_GUARDdata_flag(self, 1);
+    chrSetMoving(self, 1);
 
     return pass;
 }
@@ -4410,7 +4410,7 @@ s32 chrlvCall7F0B0E24WithChrWidthHeight(PropRecord *arg0, coord3d *arg1, coord3d
     ret = 0;
 
     chrGetChrWidthHeight(arg0, &sp50, &sp58, &sp54);
-    set_or_unset_GUARDdata_flag(sp7C, 0);
+    chrSetMoving(sp7C, 0);
 
     sp78 = arg0->pos.f[0] + chrz;
     sp74 = arg0->pos.f[2] - chrx;
@@ -4441,7 +4441,7 @@ s32 chrlvCall7F0B0E24WithChrWidthHeight(PropRecord *arg0, coord3d *arg1, coord3d
         }
     }
 
-    set_or_unset_GUARDdata_flag(sp7C, 1);
+    chrSetMoving(sp7C, 1);
 
     return ret;
 }
@@ -7104,7 +7104,7 @@ void chrlvFireWeaponRelated(ChrRecord *self, s32 hand)
                     sp258.f[1] = sp240.f[1] + (sp220.f[1] * M_U16_MAX_VALUE_F);
                     sp258.f[2] = sp240.f[2] + (sp220.f[2] * M_U16_MAX_VALUE_F);
                     
-                    set_or_unset_GUARDdata_flag(self, 0);
+                    chrSetMoving(self, 0);
                     sub_GAME_7F0B1CC4();
                     self_stan = sp238;
 
@@ -7117,7 +7117,7 @@ void chrlvFireWeaponRelated(ChrRecord *self, s32 hand)
                         sp258.f[2] -= 26.0f * sp220.f[2];
                     }
 
-                    set_or_unset_GUARDdata_flag(self, 1);
+                    chrSetMoving(self, 1);
 
                     dx = sp258.f[0] - sp240.f[0];
                     dy = sp258.f[1] - sp240.f[1];
@@ -9085,7 +9085,7 @@ s32 sub_GAME_7F030128(ChrRecord *self, coord3d *point, StandTile *arg2, coord3d 
     
     chrGetChrWidthHeight(self->prop, &sp34, &sp3C, &sp38);
     
-    set_or_unset_GUARDdata_flag(self, 0);
+    chrSetMoving(self, 0);
     
     if (
         sub_GAME_7F0B0E24(&sp44, point->f[0], point->f[2], dest->f[0], dest->f[2], objflags, sp3C, sp38, 0.0f, 1.0f) 
@@ -9094,7 +9094,7 @@ s32 sub_GAME_7F030128(ChrRecord *self, coord3d *point, StandTile *arg2, coord3d 
         sp40 = 1;
     }
 
-    set_or_unset_GUARDdata_flag(self, 1);
+    chrSetMoving(self, 1);
 
     return sp40;
 }
@@ -9139,7 +9139,7 @@ s32 sub_GAME_7F0301FC(ChrRecord *self, coord3d *point, StandTile *arg2, coord3d 
         temp_f20 = arg4 * dd.f[0];
         temp_f22 = arg4 * dd.f[2];
 
-        set_or_unset_GUARDdata_flag(self, 0);
+        chrSetMoving(self, 0);
 
         pstan = arg2;
 
@@ -9155,7 +9155,7 @@ s32 sub_GAME_7F0301FC(ChrRecord *self, coord3d *point, StandTile *arg2, coord3d 
             }
         }
 
-        set_or_unset_GUARDdata_flag(self, 1);
+        chrSetMoving(self, 1);
     }
 
     return ret;
@@ -9179,7 +9179,7 @@ s32 sub_GAME_7F0304AC(ChrRecord *self, coord3d *mypos, StandTile *mystan, coord3
     pass = FALSE;
 
     chrGetChrWidthHeight(self->prop, &sp34, &sp3C, &sp38);
-    set_or_unset_GUARDdata_flag(self, 0);
+    chrSetMoving(self, 0);
 
     if (sub_GAME_7F0B0E24(&sp44, mypos->x, mypos->z, arg3->x, arg3->z, arg6, sp3C, sp38, 0.0f, 1.0f))
     {
@@ -9192,7 +9192,7 @@ s32 sub_GAME_7F0304AC(ChrRecord *self, coord3d *mypos, StandTile *mystan, coord3
         }
     }
 
-    set_or_unset_GUARDdata_flag(self, 1);
+    chrSetMoving(self, 1);
 
     return pass;
 }
@@ -9217,7 +9217,7 @@ s32 sub_GAME_7F0305E0(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
     sp48 = 0;
 
     chrGetChrWidthHeight(self->prop, &sp3C, &sp44, &sp40);
-    set_or_unset_GUARDdata_flag(self, 0);
+    chrSetMoving(self, 0);
 
     if (sub_GAME_7F0B0E24(&sp4C, arg1->x, arg1->f[2], arg3->x, arg3->f[2], arg6, sp44, sp40, 0.0f, 1.0f))
     {
@@ -9231,7 +9231,7 @@ s32 sub_GAME_7F0305E0(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
         }
     }
 
-    set_or_unset_GUARDdata_flag(self, 1);
+    chrSetMoving(self, 1);
 
     return sp48;
 }
@@ -9325,7 +9325,7 @@ s32 sub_GAME_7F03081C(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
     sp94 = 1.2f * (arg7 * spA0.f[0]);
     sp90 = 1.2f * (arg7 * spA0.f[2]);
 
-    set_or_unset_GUARDdata_flag(self, 0);
+    chrSetMoving(self, 0);
     sub_GAME_7F0B1CC4();
 
     spAC = arg2;
@@ -9439,7 +9439,7 @@ s32 sub_GAME_7F03081C(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
         }
     }
 
-    set_or_unset_GUARDdata_flag(self, 1);
+    chrSetMoving(self, 1);
 
     return sp50;
 }
@@ -9499,7 +9499,7 @@ s32 sub_GAME_7F030D70(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
     sp94 = 1.2f * (arg7 * spA0.f[0]);
     sp90 = 1.2f * (arg7 * spA0.f[2]);
 
-    set_or_unset_GUARDdata_flag(self, 0);
+    chrSetMoving(self, 0);
     sub_GAME_7F0B1CC4();
 
     spAC = arg2;
@@ -9627,7 +9627,7 @@ s32 sub_GAME_7F030D70(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
         }
     }
 
-    set_or_unset_GUARDdata_flag(self, 1);
+    chrSetMoving(self, 1);
 
     return sp50;
 }

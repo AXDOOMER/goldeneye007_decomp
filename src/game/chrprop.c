@@ -3785,7 +3785,7 @@ void sub_GAME_7F03D058(PropRecord *prop, bool unset) //#MATCH
 {
     if (prop->type == PROP_TYPE_CHR)
     {
-        set_or_unset_GUARDdata_flag(prop->chr, unset);
+        chrSetMoving(prop->chr, unset);
     }
     else if (prop->type == PROP_TYPE_VIEWER)
     {
