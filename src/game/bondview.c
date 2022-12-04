@@ -40502,7 +40502,7 @@ void bondviewUpdateGuardTankFlagsRelated(PropRecord *arg0, s32 flags)
 {
     s32 sp1C;
 
-    sp1C = sub_GAME_7F09B15C(arg0);
+    sp1C = getPlayerPointerIndex(arg0);
 
     if (arg0->chr != NULL)
     {
@@ -40528,7 +40528,7 @@ void bondviewGetPropHeightRelatedValues(PropRecord *arg0, struct rect4f **field_
 {
     s32 temp_v0;
 
-    temp_v0 = sub_GAME_7F09B15C(arg0);
+    temp_v0 = getPlayerPointerIndex(arg0);
     if (g_playerPointers[temp_v0]->field_AC != 0)
     {
         if (getPlayerCount() == 1 || g_playerPointers[temp_v0]->bonddead == 0)
@@ -40590,7 +40590,7 @@ void bondviewCollisionRadiusRelated(PropRecord* arg0, f32 *collision_radius, f32
 {
     struct player **temp_v1;
 
-    temp_v1 = &g_playerPointers[sub_GAME_7F09B15C(arg0)];
+    temp_v1 = &g_playerPointers[getPlayerPointerIndex(arg0)];
     *collision_radius = (*temp_v1)->field_488.collision_radius;
     *height = (bondviewGetPlayerDuckingHeightRelated(*temp_v1) + 10.0f) - 30.0f;
     *always_30 = 30.0f;
@@ -42287,7 +42287,7 @@ glabel sub_GAME_7F08B0F0
 /* 0BFC24 7F08B0F4 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 0BFC28 7F08B0F8 AFB10020 */  sw    $s1, 0x20($sp)
 /* 0BFC2C 7F08B0FC AFB0001C */  sw    $s0, 0x1c($sp)
-/* 0BFC30 7F08B100 0FC26C57 */  jal   sub_GAME_7F09B15C
+/* 0BFC30 7F08B100 0FC26C57 */  jal   getPlayerPointerIndex
 /* 0BFC34 7F08B104 AFA400F8 */   sw    $a0, 0xf8($sp)
 /* 0BFC38 7F08B108 8FAE00F8 */  lw    $t6, 0xf8($sp)
 /* 0BFC3C 7F08B10C AFA200F4 */  sw    $v0, 0xf4($sp)
@@ -43125,7 +43125,7 @@ glabel sub_GAME_7F08B0F0
 /* 0BDDD8 7F08B3E8 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 0BDDDC 7F08B3EC AFB10020 */  sw    $s1, 0x20($sp)
 /* 0BDDE0 7F08B3F0 AFB0001C */  sw    $s0, 0x1c($sp)
-/* 0BDDE4 7F08B3F4 0FC269A7 */  jal   sub_GAME_7F09B15C
+/* 0BDDE4 7F08B3F4 0FC269A7 */  jal   getPlayerPointerIndex
 /* 0BDDE8 7F08B3F8 AFA400F8 */   sw    $a0, 0xf8($sp)
 /* 0BDDEC 7F08B3FC 8FAE00F8 */  lw    $t6, 0xf8($sp)
 /* 0BDDF0 7F08B400 AFA200F4 */  sw    $v0, 0xf4($sp)

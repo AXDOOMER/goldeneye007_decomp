@@ -2395,7 +2395,7 @@ void play_sound_for_shot_actor(ChrRecord *self)
     static s32 male_guard_yelp_counter = 0;
     static s32 female_guard_yelp_counter = 0;
 
-    if ((self->prop->type != PROP_TYPE_VIEWER) || (g_playerPointers[sub_GAME_7F09B15C(self->prop)]->bonddead == 0))
+    if ((self->prop->type != PROP_TYPE_VIEWER) || (g_playerPointers[getPlayerPointerIndex(self->prop)]->bonddead == 0))
     {
         /*
         * decomp issue: mystery section.
@@ -2413,7 +2413,7 @@ void play_sound_for_shot_actor(ChrRecord *self)
             }
             else
             {
-                if (get_player_mp_char_gender(sub_GAME_7F09B15C(self->prop)) != 0)
+                if (get_player_mp_char_gender(getPlayerPointerIndex(self->prop)) != 0)
                 {
                     male = 1;
                 }
@@ -2474,7 +2474,7 @@ glabel play_sound_for_shot_actor
 /* 05BBAC 7F02707C 00A02025 */  move  $a0, $a1
 /* 05BBB0 7F027080 55E1000C */  bnel  $t7, $at, .L7F0270B4
 /* 05BBB4 7F027084 8FA90068 */   lw    $t1, 0x68($sp)
-/* 05BBB8 7F027088 0FC26C57 */  jal   sub_GAME_7F09B15C
+/* 05BBB8 7F027088 0FC26C57 */  jal   getPlayerPointerIndex
 /* 05BBBC 7F02708C AFA00060 */   sw    $zero, 0x60($sp)
 /* 05BBC0 7F027090 0002C080 */  sll   $t8, $v0, 2
 /* 05BBC4 7F027094 3C198008 */  lui   $t9, %hi(g_playerPointers)
@@ -2512,7 +2512,7 @@ glabel play_sound_for_shot_actor
 .L7F027110:
 /* 05BC40 7F027110 8FB80068 */  lw    $t8, 0x68($sp)
 /* 05BC44 7F027114 8F040018 */  lw    $a0, 0x18($t8)
-/* 05BC48 7F027118 0FC26C57 */  jal   sub_GAME_7F09B15C
+/* 05BC48 7F027118 0FC26C57 */  jal   getPlayerPointerIndex
 /* 05BC4C 7F02711C AFA30060 */   sw    $v1, 0x60($sp)
 /* 05BC50 7F027120 0FC040C3 */  jal   get_player_mp_char_gender
 /* 05BC54 7F027124 00402025 */   move  $a0, $v0
@@ -2766,7 +2766,7 @@ bool handles_shot_actors(ChrRecord *self, s32 hitpart, coord3d *vector, s32 weap
         if (self->prop->type == PROP_TYPE_VIEWER)
         {
             playerNum = get_cur_playernum();
-            set_cur_player(sub_GAME_7F09B15C(self->prop));
+            set_cur_player(getPlayerPointerIndex(self->prop));
             record_damage_kills(damageToCause * 0.125f, vector->x, vector->z, playerNum, 1);
             set_cur_player(playerNum);
         }

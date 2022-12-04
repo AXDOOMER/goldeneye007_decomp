@@ -473,8 +473,8 @@ s32 get_cur_playernum(void) {
     return player_num;
 }
 
-
-s32 sub_GAME_7F09B15C( PropRecord* prop)
+// TODO: RENAME (in PD) <<---- Only to find easily using Ctrl-F
+s32 getPlayerPointerIndex(PropRecord* prop)
 {
     s32 i;
 

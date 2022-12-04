@@ -3752,7 +3752,7 @@ glabel sub_GAME_7F041E0C
 /* 076BDC 7F0420AC 24010006 */   li    $at, 6
 /* 076BE0 7F0420B0 1441000F */  bne   $v0, $at, .L7F0420F0
 /* 076BE4 7F0420B4 8E110004 */   lw    $s1, 4($s0)
-/* 076BE8 7F0420B8 0FC26C57 */  jal   sub_GAME_7F09B15C
+/* 076BE8 7F0420B8 0FC26C57 */  jal   getPlayerPointerIndex
 /* 076BEC 7F0420BC 02002025 */   move  $a0, $s0
 /* 076BF0 7F0420C0 00025880 */  sll   $t3, $v0, 2
 /* 076BF4 7F0420C4 3C0C8008 */  lui   $t4, %hi(g_playerPointers)
@@ -3799,7 +3799,7 @@ glabel sub_GAME_7F041E0C
 .L7F04215C:
 /* 076C8C 7F04215C 54410016 */  bnel  $v0, $at, .L7F0421B8
 /* 076C90 7F042160 86620002 */   lh    $v0, 2($s3)
-/* 076C94 7F042164 0FC26C57 */  jal   sub_GAME_7F09B15C
+/* 076C94 7F042164 0FC26C57 */  jal   getPlayerPointerIndex
 /* 076C98 7F042168 02002025 */   move  $a0, $s0
 /* 076C9C 7F04216C 00025880 */  sll   $t3, $v0, 2
 /* 076CA0 7F042170 3C0C8008 */  lui   $t4, %hi(g_playerPointers)
@@ -8741,7 +8741,7 @@ glabel object_interaction
 /* 07A52C 7F0459FC 8E4D0004 */  lw    $t5, 4($s2)
 /* 07A530 7F045A00 51A000D9 */  beql  $t5, $zero, .L7F045D68
 /* 07A534 7F045A04 8FAC0604 */   lw    $t4, 0x604($sp)
-/* 07A538 7F045A08 0FC26C57 */  jal   sub_GAME_7F09B15C
+/* 07A538 7F045A08 0FC26C57 */  jal   getPlayerPointerIndex
 /* 07A53C 7F045A0C 02402025 */   move  $a0, $s2
 /* 07A540 7F045A10 0FC26C54 */  jal   get_cur_playernum
 /* 07A544 7F045A14 00409025 */   move  $s2, $v0
@@ -13416,7 +13416,7 @@ glabel object_interaction
 /* 07A318 7F0457A8 8E040088 */  lw    $a0, 0x88($s0)
 /* 07A31C 7F0457AC 5080000C */  beql  $a0, $zero, .Ljp7F0457E0
 /* 07A320 7F0457B0 8FAA0680 */   lw    $t2, 0x680($sp)
-/* 07A324 7F0457B4 0FC26F3F */  jal   sub_GAME_7F09B15C
+/* 07A324 7F0457B4 0FC26F3F */  jal   getPlayerPointerIndex
 /* 07A328 7F0457B8 00000000 */   nop   
 /* 07A32C 7F0457BC 04400007 */  bltz  $v0, .Ljp7F0457DC
 /* 07A330 7F0457C0 3C098008 */   lui   $t1, %hi(g_CurrentPlayer) # $t1, 0x8008
@@ -13838,7 +13838,7 @@ glabel object_interaction
 /* 07A950 7F045DE0 8E480004 */  lw    $t0, 4($s2)
 /* 07A954 7F045DE4 510000D9 */  beql  $t0, $zero, .Ljp7F04614C
 /* 07A958 7F045DE8 8FB9060C */   lw    $t9, 0x60c($sp)
-/* 07A95C 7F045DEC 0FC26F3F */  jal   sub_GAME_7F09B15C
+/* 07A95C 7F045DEC 0FC26F3F */  jal   getPlayerPointerIndex
 /* 07A960 7F045DF0 02402025 */   move  $a0, $s2
 /* 07A964 7F045DF4 0FC26F3C */  jal   get_cur_playernum
 /* 07A968 7F045DF8 00409025 */   move  $s2, $v0
@@ -18522,7 +18522,7 @@ glabel object_interaction
 /* 077F58 7F045568 8E040088 */  lw    $a0, 0x88($s0)
 /* 077F5C 7F04556C 5080000C */  beql  $a0, $zero, .L7F0455A0
 /* 077F60 7F045570 8FA80680 */   lw    $t0, 0x680($sp)
-/* 077F64 7F045574 0FC269A7 */  jal   sub_GAME_7F09B15C
+/* 077F64 7F045574 0FC269A7 */  jal   getPlayerPointerIndex
 /* 077F68 7F045578 00000000 */   nop   
 /* 077F6C 7F04557C 04400007 */  bltz  $v0, .L7F04559C
 /* 077F70 7F045580 3C0F8007 */   lui   $t7, %hi(g_CurrentPlayer) # $t7, 0x8007
@@ -18944,7 +18944,7 @@ glabel object_interaction
 /* 078590 7F045BA0 8E580004 */  lw    $t8, 4($s2)
 /* 078594 7F045BA4 530000D9 */  beql  $t8, $zero, .L7F045F0C
 /* 078598 7F045BA8 8FAE060C */   lw    $t6, 0x60c($sp)
-/* 07859C 7F045BAC 0FC269A7 */  jal   sub_GAME_7F09B15C
+/* 07859C 7F045BAC 0FC269A7 */  jal   getPlayerPointerIndex
 /* 0785A0 7F045BB0 02402025 */   move  $a0, $s2
 /* 0785A4 7F045BB4 0FC269A4 */  jal   get_cur_playernum
 /* 0785A8 7F045BB8 00409025 */   move  $s2, $v0
@@ -23493,7 +23493,7 @@ glabel sub_GAME_7F049B58
 /* 07E73C 7F049C0C 8E0F0004 */  lw    $t7, 4($s0)
 /* 07E740 7F049C10 51E00011 */  beql  $t7, $zero, .L7F049C58
 /* 07E744 7F049C14 8E100024 */   lw    $s0, 0x24($s0)
-/* 07E748 7F049C18 0FC26C57 */  jal   sub_GAME_7F09B15C
+/* 07E748 7F049C18 0FC26C57 */  jal   getPlayerPointerIndex
 /* 07E74C 7F049C1C 02002025 */   move  $a0, $s0
 /* 07E750 7F049C20 0FC26C54 */  jal   get_cur_playernum
 /* 07E754 7F049C24 00408825 */   move  $s1, $v0

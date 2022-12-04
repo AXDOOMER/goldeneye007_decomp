@@ -1756,7 +1756,7 @@ glabel chraiDefaultWeaponFireHandler
 /* 070158 7F03B628 8E090004 */  lw    $t1, 4($s0)
 /* 07015C 7F03B62C 5120000D */  beql  $t1, $zero, .L7F03B664
 /* 070160 7F03B630 92020000 */   lbu   $v0, ($s0)
-/* 070164 7F03B634 0FC26C57 */  jal   sub_GAME_7F09B15C
+/* 070164 7F03B634 0FC26C57 */  jal   getPlayerPointerIndex
 /* 070168 7F03B638 02002025 */   move  $a0, $s0
 /* 07016C 7F03B63C 0FC26C54 */  jal   get_cur_playernum
 /* 070170 7F03B640 AFA2004C */   sw    $v0, 0x4c($sp)
@@ -2383,7 +2383,7 @@ glabel chraiFistAttackHandler
 /* 0709D8 7F03BEA8 8E0F0004 */  lw    $t7, 4($s0)
 /* 0709DC 7F03BEAC 11E00073 */  beqz  $t7, .L7F03C07C
 /* 0709E0 7F03BEB0 00000000 */   nop   
-/* 0709E4 7F03BEB4 0FC26C57 */  jal   sub_GAME_7F09B15C
+/* 0709E4 7F03BEB4 0FC26C57 */  jal   getPlayerPointerIndex
 /* 0709E8 7F03BEB8 02002025 */   move  $a0, $s0
 /* 0709EC 7F03BEBC 0FC26C54 */  jal   get_cur_playernum
 /* 0709F0 7F03BEC0 00408825 */   move  $s1, $v0
@@ -3081,7 +3081,7 @@ glabel handle_mp_respawn_and_some_things
 .L7F03C944:
 /* 071474 7F03C944 5441001F */  bnel  $v0, $at, .L7F03C9C4
 /* 071478 7F03C948 24010005 */   li    $at, 5
-/* 07147C 7F03C94C 0FC26C57 */  jal   sub_GAME_7F09B15C
+/* 07147C 7F03C94C 0FC26C57 */  jal   getPlayerPointerIndex
 /* 071480 7F03C950 02202025 */   move  $a0, $s1
 /* 071484 7F03C954 00024080 */  sll   $t0, $v0, 2
 /* 071488 7F03C958 3C048008 */  lui   $a0, %hi(g_playerPointers)
@@ -3089,7 +3089,7 @@ glabel handle_mp_respawn_and_some_things
 /* 071490 7F03C960 8C849EE0 */  lw    $a0, %lo(g_playerPointers)($a0)
 /* 071494 7F03C964 0FC18AC0 */  jal   sub_GAME_7F062B00
 /* 071498 7F03C968 24840A54 */   addiu $a0, $a0, 0xa54
-/* 07149C 7F03C96C 0FC26C57 */  jal   sub_GAME_7F09B15C
+/* 07149C 7F03C96C 0FC26C57 */  jal   getPlayerPointerIndex
 /* 0714A0 7F03C970 02202025 */   move  $a0, $s1
 /* 0714A4 7F03C974 00024880 */  sll   $t1, $v0, 2
 /* 0714A8 7F03C978 3C048008 */  lui   $a0, %hi(g_playerPointers)
@@ -3364,7 +3364,7 @@ glabel handle_mp_respawn_and_some_things
 .L7F03CA04:
 /* 06F3F4 7F03CA04 5441001F */  bnel  $v0, $at, .L7F03CA84
 /* 06F3F8 7F03CA08 24010005 */   li    $at, 5
-/* 06F3FC 7F03CA0C 0FC269A7 */  jal   sub_GAME_7F09B15C
+/* 06F3FC 7F03CA0C 0FC269A7 */  jal   getPlayerPointerIndex
 /* 06F400 7F03CA10 02202025 */   move  $a0, $s1
 /* 06F404 7F03CA14 00024080 */  sll   $t0, $v0, 2
 /* 06F408 7F03CA18 3C048007 */  lui   $a0, %hi(g_playerPointers)
@@ -3372,7 +3372,7 @@ glabel handle_mp_respawn_and_some_things
 /* 06F410 7F03CA20 8C8489F0 */  lw    $a0, %lo(g_playerPointers)($a0)
 /* 06F414 7F03CA24 0FC18BF1 */  jal   sub_GAME_7F062B00
 /* 06F418 7F03CA28 24840A4C */   addiu $a0, $a0, 0xa4c
-/* 06F41C 7F03CA2C 0FC269A7 */  jal   sub_GAME_7F09B15C
+/* 06F41C 7F03CA2C 0FC269A7 */  jal   getPlayerPointerIndex
 /* 06F420 7F03CA30 02202025 */   move  $a0, $s1
 /* 06F424 7F03CA34 00024880 */  sll   $t1, $v0, 2
 /* 06F428 7F03CA38 3C048007 */  lui   $a0, %hi(g_playerPointers)
@@ -3770,7 +3770,7 @@ f32 sub_GAME_7F03CFE8(PropRecord *arg0)
 
     if (arg0->type == PROP_TYPE_VIEWER)
     {
-        return bondviewGetPlayerStanHeight(g_playerPointers[sub_GAME_7F09B15C(arg0)]);
+        return bondviewGetPlayerStanHeight(g_playerPointers[getPlayerPointerIndex(arg0)]);
     }
 
     return 0.0f;
@@ -4072,7 +4072,7 @@ glabel sub_GAME_7F03D78C
 /* 07236C 7F03D83C 8E0A0004 */  lw    $t2, 4($s0)
 /* 072370 7F03D840 11400028 */  beqz  $t2, .L7F03D8E4
 /* 072374 7F03D844 00000000 */   nop   
-/* 072378 7F03D848 0FC26C57 */  jal   sub_GAME_7F09B15C
+/* 072378 7F03D848 0FC26C57 */  jal   getPlayerPointerIndex
 /* 07237C 7F03D84C 02002025 */   move  $a0, $s0
 /* 072380 7F03D850 0FC26C54 */  jal   get_cur_playernum
 /* 072384 7F03D854 00408825 */   move  $s1, $v0

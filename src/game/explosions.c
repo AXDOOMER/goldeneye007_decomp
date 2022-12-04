@@ -1358,7 +1358,7 @@ glabel sub_GAME_7F09C9D8
 /* 0D194C 7F09CE1C 0FC26C54 */  jal   get_cur_playernum
 /* 0D1950 7F09CE20 00000000 */   nop   
 /* 0D1954 7F09CE24 AFA20090 */  sw    $v0, 0x90($sp)
-/* 0D1958 7F09CE28 0FC26C57 */  jal   sub_GAME_7F09B15C
+/* 0D1958 7F09CE28 0FC26C57 */  jal   getPlayerPointerIndex
 /* 0D195C 7F09CE2C 02002025 */   move  $a0, $s0
 /* 0D1960 7F09CE30 0FC26C43 */  jal   set_cur_player
 /* 0D1964 7F09CE34 00402025 */   move  $a0, $v0

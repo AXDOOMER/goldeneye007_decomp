@@ -4436,7 +4436,7 @@ glabel sub_GAME_7F020EF0
 /* 055C0C 7F0210DC 24010006 */  li    $at, 6
 /* 055C10 7F0210E0 55A1000D */  bnel  $t5, $at, .L7F021118
 /* 055C14 7F0210E4 00027A00 */   sll   $t7, $v0, 8
-/* 055C18 7F0210E8 0FC26C57 */  jal   sub_GAME_7F09B15C
+/* 055C18 7F0210E8 0FC26C57 */  jal   getPlayerPointerIndex
 /* 055C1C 7F0210EC 01802025 */   move  $a0, $t4
 /* 055C20 7F0210F0 0002C880 */  sll   $t9, $v0, 2
 /* 055C24 7F0210F4 3C188008 */  lui   $t8, %hi(g_playerPointers)
@@ -5288,7 +5288,7 @@ glabel sub_GAME_7F020EF0
 /* 055EE4 7F021374 24010006 */  li    $at, 6
 /* 055EE8 7F021378 55A1000D */  bnel  $t5, $at, .Ljp7F0213B0
 /* 055EEC 7F02137C 00027A00 */   sll   $t7, $v0, 8
-/* 055EF0 7F021380 0FC26F3F */  jal   sub_GAME_7F09B15C
+/* 055EF0 7F021380 0FC26F3F */  jal   getPlayerPointerIndex
 /* 055EF4 7F021384 01802025 */   move  $a0, $t4
 /* 055EF8 7F021388 0002C880 */  sll   $t9, $v0, 2
 /* 055EFC 7F02138C 3C188008 */  lui   $t8, %hi(g_playerPointers)
@@ -6214,7 +6214,7 @@ glabel sub_GAME_7F020EF0
 /* 053A44 7F021054 24010006 */  li    $at, 6
 /* 053A48 7F021058 55A1000D */  bnel  $t5, $at, .L7F021090
 /* 053A4C 7F02105C 00027A00 */   sll   $t7, $v0, 8
-/* 053A50 7F021060 0FC269A7 */  jal   sub_GAME_7F09B15C
+/* 053A50 7F021060 0FC269A7 */  jal   getPlayerPointerIndex
 /* 053A54 7F021064 01802025 */   move  $a0, $t4
 /* 053A58 7F021068 0002C880 */  sll   $t9, $v0, 2
 /* 053A5C 7F02106C 3C188007 */  lui   $t8, %hi(g_playerPointers)
