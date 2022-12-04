@@ -3837,6 +3837,7 @@ bool sub_GAME_7F0B17E4(f32 x1, f32 z1, f32 x2, f32 z2, f32 x3, f32 z3)
 
 
 #ifdef NONMATCHING
+/* PD: cdTestVolume (from context) */
 void sub_GAME_7F0B18B8(void) {
 
 }

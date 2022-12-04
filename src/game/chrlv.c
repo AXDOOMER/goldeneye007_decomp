@@ -6715,6 +6715,7 @@ s32 sub_GAME_7F02D148(ChrRecord *self, s32 hand)
 
 /**
  * Address 0x7F02D184.
+ * PD: chrStopFiring
 */
 void sub_GAME_7F02D184(ChrRecord *self)
 {
