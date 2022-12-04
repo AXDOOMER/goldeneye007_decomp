@@ -123,25 +123,25 @@ s32 objectiveGetCount(void)
 
 
 
-u8 * get_text_for_objective(int objective)
+u8 * get_text_for_objective(int objectiveIndex)
 {
     u8 *textptr;
     
-    if ((objective < 10) && (objective_ptrs[objective] != 0)) {
-        return langGet(objective_ptrs[objective]->text);
+    if ((objectiveIndex < 10) && (objective_ptrs[objectiveIndex] != 0)) {
+        return langGet(objective_ptrs[objectiveIndex]->text);
     }
     return 0;
 }
 
 
 
-s8 get_difficulty_for_objective(s32 objective)
+s8 get_difficulty_for_objective(s32 objectiveIndex)
 {
     struct objective_entry * entry;
 
-    if (objective < OBJECTIVES_MAX)
+    if (objectiveIndex < OBJECTIVES_MAX)
     {
-        entry = objective_ptrs[objective];
+        entry = objective_ptrs[objectiveIndex];
         if (entry != NULL)
         {
             return entry->difficulty;

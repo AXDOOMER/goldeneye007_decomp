@@ -476,6 +476,7 @@ f32 chrlvGetGuard007ArghRating(ChrRecord *self, f32 min, f32 max)
 
 /**
  * Address 0x7F023CB8.
+ * PD: chrStand
  */
 void chrlvKneelingAnimationRelated(ChrRecord *self)
 {
@@ -515,6 +516,7 @@ void chrlvKneelingAnimationRelated(ChrRecord *self)
 
 /**
  * Address 0x7F023E14.
+ * PD: func0f02ed28
  */
 void chrlvIdleAnimationRelated7F023E14(ChrRecord *self, f32 arg1)
 {
@@ -527,6 +529,7 @@ void chrlvIdleAnimationRelated7F023E14(ChrRecord *self, f32 arg1)
 
 /**
  * Address 0x7F023E48.
+ * PD: chrStop
  */
 void chrlvKneelingAnimationRelated7F023E48(ChrRecord *self)
 {
@@ -540,6 +543,7 @@ void chrlvKneelingAnimationRelated7F023E48(ChrRecord *self)
 
 /**
  * Address 0x7F023E74.
+ * PD: chrKneelChooseAnimation
  */
 void chrlvActorKneel(ChrRecord *self)
 {
@@ -623,6 +627,7 @@ void chrlvPerformAnimationForActor(ChrRecord *self, s32 arg1, s32 arg2, s32 arg3
  * Extend left hand = ACT_STARTALARM.
  * 
  * Address 0x7F024150.
+ * PD: chrStartAlarmChooseAnimation
  */
 void chrlvExtendLeftHandAnimationRelated(ChrRecord *self)
 {
@@ -656,6 +661,7 @@ void chrlvExtendLeftHandAnimationRelated(ChrRecord *self)
 
 /**
  * Address 0x7F024238.
+ * PD: chrThrowGrenade
  */
 void chrlvThrowGrenadeAnimationRelated(ChrRecord *self, PropRecord *arg1, s32 arg2, s32 arg3)
 {
@@ -753,6 +759,7 @@ void chrlvSurrenderAnimationRelated(ChrRecord *self)
 
 /**
  * Address 0x7F024548.
+ * PD: chrSurprisedChooseAnimation
  */
 void chrlvActorLookFlustered(ChrRecord *self)
 {
@@ -785,6 +792,7 @@ void chrlvActorLookFlustered(ChrRecord *self)
 
 /**
  * Address 0x7F024648.
+ * PD: chrSurrenderChooseAnimation
  */
 void chrlvActorThrowWeaponSurrender(ChrRecord *self)
 {
@@ -851,6 +859,7 @@ void chrlvActorFadeAway(ChrRecord *self)
 /**
  * chrStepToSide
  * Address 0x7F024800.
+ * PD: chrSidestepChooseAnimation (Somewhat similar)
  */
 void chrlvSideStepAnimationRelated(ChrRecord *self, GUNHAND side)
 {
@@ -920,6 +929,7 @@ void chrlvSideStepAnimationRelated(ChrRecord *self, GUNHAND side)
 /**
  * chrHopToSide
  * Address 0x7F024A84.
+ * PD: chrSidestepChooseAnimation (somewhat similar)
  */
 void chrlvFireJumpToSideAnimationRelated(ChrRecord *self, GUNHAND side)
 {
@@ -987,6 +997,7 @@ void chrlvFireJumpToSideAnimationRelated(ChrRecord *self, GUNHAND side)
  *  // run to coord
  * Address 0x7F024CF8 (not EU).
  * Address 0x7F024CE0 (VERSION_EU).
+ * PD: chrJumpOutChooseAnimation (has a few things in common)
  */
 void sub_GAME_7F024CF8(ChrRecord *self, coord3d *arg1)
 {
@@ -3138,6 +3149,7 @@ s32 chrlvStanRoomRelatedPad(ChrRecord *self, PadRecord *arg1)
 
 /**
  * Address 0x7F027E90.
+ * PD: chrGoPosInitMagic
 */
 void chrlvSetGoposSegDistTotal(ChrRecord *self, struct waydata *arg1, coord3d *arg2)
 {
@@ -3166,23 +3178,24 @@ void chrlvSetGoposSegDistTotal(ChrRecord *self, struct waydata *arg1, coord3d *a
  * @param target_stan: out parameter, will contain pointer to target stan
  * 
  * Address 0x7F027F20.
+ * PD: chrGoPosGetCurWaypointInfoWithFlags (somewhat similar)
 */
 void chrlvActGoposRelated(ChrRecord *self, coord3d *target_point, StandTile **target_stan)
 {
-    waypoint *temp_v0;
-    PadRecord *temp_v1;
+    waypoint *waypoint;
+    PadRecord *pad;
 
-    temp_v0 = self->act_gopos.waypoints[self->act_gopos.curindex];
+    waypoint = self->act_gopos.waypoints[self->act_gopos.curindex];
 
-    if (temp_v0 != 0)
+    if (waypoint != 0)
     {
-        temp_v1 = &g_CurrentSetup.pads[temp_v0->padID];
+        pad = &g_CurrentSetup.pads[waypoint->padID];
 
-        target_point->f[0] = temp_v1->pos.f[0];
-        target_point->f[1] = temp_v1->pos.f[1];
-        target_point->f[2] = temp_v1->pos.f[2];
+        target_point->f[0] = pad->pos.f[0];
+        target_point->f[1] = pad->pos.f[1];
+        target_point->f[2] = pad->pos.f[2];
 
-        *target_stan = temp_v1->stan;
+        *target_stan = pad->stan;
     }
     else
     {
@@ -3198,6 +3211,7 @@ void chrlvActGoposRelated(ChrRecord *self, coord3d *target_point, StandTile **ta
 
 /**
  * Address 0x7F027FA8.
+ * PD: func0f0370a8 (but GE has much more cases)
 */
 f32 chrlvModelScaleAnimationRelated(ChrRecord *self)
 {
@@ -3247,6 +3261,7 @@ f32 chrlvModelScaleAnimationRelated(ChrRecord *self)
 
 /**
  * Address 0x7F028144.
+ * PD: chrGoPosCalculateBaseTtl
 */
 s32 chrlvMovementTargetRelated(ChrRecord *self)
 {
@@ -3280,6 +3295,7 @@ s32 chrlvMovementTargetRelated(ChrRecord *self)
 
 /**
  * Address 0x7F0281F4.
+ * PD: chrGoPosClearRestartTtl
 */
 void sub_GAME_7F0281F4(ChrRecord *self)
 {
@@ -3290,6 +3306,7 @@ void sub_GAME_7F0281F4(ChrRecord *self)
 /**
  * Address 0x7F0281FC (US,JP)
  * Address 0x7F028214 (VERSION_EU)
+ * PD: chrGoPosConsiderRestart
 */
 void chrlvPlotCourseRelated(ChrRecord *self)
 {
@@ -3336,6 +3353,7 @@ void chrlvPlotCourseRelated(ChrRecord *self)
 
 /**
  * Address 0x7F02828C.
+ * PD: chrGoPosInitExpensive
 */
 void chrlvActGoposSetTargetPosRelated(ChrRecord *self)
 {
@@ -3359,6 +3377,7 @@ void chrlvActGoposSetTargetPosRelated(ChrRecord *self)
 
 /**
  * Address 0x7F0282E0.
+ * PD: chrGoPosAdvanceWaypoint
 */
 void chrlvActGoposIncCurIndex(ChrRecord *self)
 {
@@ -3459,6 +3478,7 @@ s32 chrlvPatrolCalculateStep(ChrRecord *self, bool *forward, s32 numsteps)
 
 /**
  * Address 0x7F0283FC.
+ * PD: chrPatrolCalculatePadNum (had some nice finds when searching for "patrol" in "chraction.c" in PD)
 */
 // notes: 99.33% match, only failing regalloc on a single line
 PadRecord *chrlvGetPatrolStepPad(ChrRecord *self, s32 numsteps)
@@ -6657,6 +6677,7 @@ void chrlvResetAimend(ChrRecord *self)
 
 /**
  * Address 0x7F02D118.
+ * PD: chrSetFiring
 */
 void sub_GAME_7F02D118(ChrRecord *self, s32 hand, s32 arg2)
 {
@@ -11620,36 +11641,38 @@ s32 chrIsTargetNearlyInSight(ChrRecord *self)
 
 /**
  * Address 0x7F033EAC.
+ * PD: chrIsPosOffScreen
 */
 s32 sub_GAME_7F033EAC(coord3d *arg0, StandTile *arg1)
 {
-    bool pass;
+    bool offscreen;
     bbox2d sp1C;
 
-    pass = TRUE;
+    offscreen = TRUE;
 
     if (getROOMID_Bitflags(getTileRoom(arg1)) && fogPositionIsVisibleThroughFog(arg0, 0.0f))
     {
         if (bgGet2dBboxByRoomId(getTileRoom(arg1), &sp1C))
         {
-            pass = camIsPosInScreenBox(arg0, 200.0f, &sp1C) == 0;
+            offscreen = camIsPosInScreenBox(arg0, 200.0f, &sp1C) == 0;
         }
         else
         {
-            pass = sub_GAME_7F078A58(arg0, 200.0f) == 0;
+            offscreen = sub_GAME_7F078A58(arg0, 200.0f) == 0;
         }
     }
 
-    return pass;
+    return offscreen;
 }
 
 
 /**
  * Address 0x7F033F48.
+ * PD: chrAdjustPosForSpawn
 */
-bool sub_GAME_7F033F48(coord3d *pos, StandTile **arg1, f32 facing, bool b)
+bool sub_GAME_7F033F48(coord3d *pos, StandTile **arg1, f32 facing, bool allowonscreen)
 {
-    coord3d angle;
+    coord3d testpos;
     StandTile *s;
     s32 i;
     StandTile **spp;
@@ -11658,27 +11681,27 @@ bool sub_GAME_7F033F48(coord3d *pos, StandTile **arg1, f32 facing, bool b)
     spp = &s;
 
     if ((sub_GAME_7F0B18B8(spp, pos->f[0], pos->z, 20.0f, 0x1F, 0.0f, 1.0f) < 0) &&
-        (b || sub_GAME_7F033EAC(pos, *arg1)))
+        (allowonscreen || sub_GAME_7F033EAC(pos, *arg1)))
     {
         return TRUE;
     }
 
     for (i = 0; i < 8; i++)
     {
-        angle.f[0] = pos->f[0] + (sinf(facing) * 60.0f);
-        angle.f[1] = pos->f[1];
-        angle.f[2] = pos->f[2] + (cosf(facing) * 60.0f);
+        testpos.f[0] = pos->f[0] + (sinf(facing) * 60.0f);
+        testpos.f[1] = pos->f[1];
+        testpos.f[2] = pos->f[2] + (cosf(facing) * 60.0f);
 
         s = *arg1;
 
-        if (sub_GAME_7F0B0E24(spp, pos->f[0], pos->f[2], angle.f[0], angle.f[2], 0x13, 0.0f, 1.0f, 0.0f, 1.0f)
-            && (sub_GAME_7F0B18B8(spp, angle.f[0], angle.f[2], 20.0f, 0x1F, 0.0f, 1.0f) < 0)
-            && (b || sub_GAME_7F033EAC(&angle, s)))
+        if (sub_GAME_7F0B0E24(spp, pos->f[0], pos->f[2], testpos.f[0], testpos.f[2], 0x13, 0.0f, 1.0f, 0.0f, 1.0f)
+            && (sub_GAME_7F0B18B8(spp, testpos.f[0], testpos.f[2], 20.0f, 0x1F, 0.0f, 1.0f) < 0)
+            && (allowonscreen || sub_GAME_7F033EAC(&testpos, s)))
         {
             *arg1 = s;
 
-            pos->f[0] = angle.f[0]; //send back upstream
-            pos->f[2] = angle.f[2];
+            pos->f[0] = testpos.f[0]; //send back upstream
+            pos->f[2] = testpos.f[2];
 
             return TRUE;
         }
@@ -11698,6 +11721,7 @@ bool sub_GAME_7F033F48(coord3d *pos, StandTile **arg1, f32 facing, bool b)
 
 /**
  * Address 0x7F03415C.
+ * PD: chrSpawnAtCoord
 */
 PropRecord *chrSpawnAtCoord(s32 bodynum, s32 headnum, coord3d *pos, StandTile *stan, f32 angle, AIListRecord *ailist, s32 spawnflags)
 {

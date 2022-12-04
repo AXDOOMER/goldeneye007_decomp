@@ -952,6 +952,7 @@ s32 sub_GAME_7F044414(struct rect4f *arg0, s32 arg1, struct rect4f *arg2, s32 ar
 
 
 #ifdef NONMATCHING
+/* PD: alarmStopAudio (similar but not the same structure) */
 void sub_GAME_7F03FB70(void* arg0) {
     s32 temp_a0;
     s32 temp_a0_2;
@@ -1018,6 +1019,7 @@ glabel sub_GAME_7F03FB70
 
 #ifdef NONMATCHING
 /* matches according to decomp.me, I believe it doesn't build yet because the asm references label 'D_80052A48', which is defined elsewhere */
+/* PD: projectileReset (for projectile initialization) */
 void sub_GAME_7F03FBFC(struct bss_80073DC0 *arg0)
 {
     arg0->unk00 = 0;
@@ -1344,7 +1346,7 @@ glabel sub_GAME_7F03FE14
 
 
 
-
+// PD: embedmentFree
 void sub_GAME_7F03FE88(u32 *param_1)
 {
   *param_1 = *param_1 | 1;
@@ -1352,6 +1354,7 @@ void sub_GAME_7F03FE88(u32 *param_1)
 }
 
 
+// PD: embedmentAllocate
 struct bss_80075030 *monitorthingGetNew(void)
 {
     s32 i;
@@ -1370,6 +1373,7 @@ struct bss_80075030 *monitorthingGetNew(void)
 }
 
 
+// PD: objGetShotsTaken
 s32 sub_GAME_7F03FF60(ObjectRecord *arg0)
 {
     if (!(arg0->state & PROPSTATE_DESTROYED))
@@ -1383,6 +1387,7 @@ s32 sub_GAME_7F03FF60(ObjectRecord *arg0)
 
 /*
  * maxdamage / 4 + 1
+ * PD: objGetDestroyedLevel
  */
 s32 do_something_if_object_destroyed(ObjectRecord *obj)
 {
@@ -29235,7 +29240,8 @@ glabel propobjSetDropped
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F04C044( PropRecord *prop)
+/* PD: objDetach */
+void sub_GAME_7F04C044(PropRecord *prop)
 {
     PropRecord   *sp24;
     ObjectRecord *sp20;
@@ -41315,6 +41321,7 @@ void redirect_object_collectability_routines(void) {
 
 
 #ifdef NONMATCHING
+/* PD: weaponSetGunfireVisible */
 void sub_GAME_7F052574(void) {
 
 }
@@ -41368,6 +41375,7 @@ glabel sub_GAME_7F052574
 
 
 #ifdef NONMATCHING
+/* PD: weaponIsGunfireVisible */
 void sub_GAME_7F052604(void) {
 
 }

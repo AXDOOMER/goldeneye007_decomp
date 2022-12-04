@@ -302,6 +302,7 @@ void set_80036084(s32 param_1) {
   g_ModelDistanceDisabled = param_1;
 }
 
+// PD: modelSetDistanceScale
 void set_float_80036088(f32 param_1) {
   g_ModelDistanceScale = param_1;
 }
@@ -392,6 +393,7 @@ void sub_GAME_7F06C550(Model* model, coord3d* coord)
 }
 
 
+// PD: model0001a524
 s32 sub_GAME_7F06C570(ModelNode *node, s32 arg1)
 {
     s32 index;
@@ -429,6 +431,7 @@ s32 sub_GAME_7F06C570(ModelNode *node, s32 arg1)
 }
 
 
+// PD: model0001a5cc
 Mtxf *modelFindNodeMtx(struct Model *model, struct ModelNode *node, s32 arg2) {
     s32 index = sub_GAME_7F06C570(node, arg2);
 
@@ -441,6 +444,7 @@ Mtxf *modelFindNodeMtx(struct Model *model, struct ModelNode *node, s32 arg2) {
 
 
 //rejoined per EU
+// PD: model0001a60c
 Mtxf *getsubmatrix(Model *objinst)
 {
     #if defined(LEFTOVERDEBUG)
@@ -922,6 +926,7 @@ f32 getjointsize(Model *model, ModelNode *node)
 
 /**
  * Address 0x7F06D00C.
+ * PD: model0001af80
 */
 f32 getinstsize(Model *arg0)
 {
@@ -944,15 +949,17 @@ f32 getinstsize(Model *arg0)
 
 
 
-void interpolate3dVectors(vec3d *v, vec3d *w, float k)
+// PD: model0001af98
+void interpolate3dVectors(vec3d *v, vec3d *w, float frac)
 {
-    v->x += (w->x - v->x) * k;
-    v->y += (w->y - v->y) * k;
-    v->z += (w->z - v->z) * k;
+    v->x += (w->x - v->x) * frac;
+    v->y += (w->y - v->y) * frac;
+    v->z += (w->z - v->z) * frac;
   return;
 }
 
 
+// PD: model0001afe8
 f32 sub_GAME_7F06D0CC(f32 arg0, f32 angle, f32 mult)
 {
     f32 value = angle - arg0;
@@ -985,6 +992,7 @@ f32 sub_GAME_7F06D0CC(f32 arg0, f32 angle, f32 mult)
 }
 
 
+// PD: model0001b07c
 void sub_GAME_7F06D160(coord3d *arg0, coord3d *arg1, f32 mult)
 {
     arg0->x = sub_GAME_7F06D0CC(arg0->x, arg1->x, mult);
@@ -6692,6 +6700,7 @@ void sub_GAME_7F0737FC(s32 param_1,struct Model *param_2,struct ModelNode *param
 }
 
 
+// PD: modelRenderNodeChrGunfire
 void dogfnegx(ModelRenderData *renderdata, Model *model, ModelNode *node)
 {
     u32 unused[3];
@@ -9386,6 +9395,7 @@ void modelInit(struct Model *objinst, struct ModelFileHeader *header, u32 *data)
 }
 
 
+// PD: animInit
 void animInit(struct Model *objinst, struct ModelFileHeader *header, u32 *data)
 {    
     modelInit(objinst, header, data);
@@ -9411,6 +9421,7 @@ void animInit(struct Model *objinst, struct ModelFileHeader *header, u32 *data)
 }
 
 
+// PD: model00023108
 void modelAttachHead(Model *pmodel, ModelFileHeader *pmodeldef, ModelNode *pnode, ModelFileHeader *cmodeldef)
 {
     ModelRwData_HeadPlaceholderRecord *rwdata = modelGetNodeRwData(pmodel, pnode);

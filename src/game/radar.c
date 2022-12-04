@@ -51,14 +51,9 @@ Gfx *display_red_blue_on_radar(Gfx *DL)
         return DL;
     }
     g_CurrentPlayer = g_CurrentPlayer;
-    if (g_CurrentPlayer->mpmenuon != 0)
+    if (g_CurrentPlayer->mpmenuon || g_CurrentPlayer->bonddead)
     {
-block_4:
         return DL;
-    }
-    if (g_CurrentPlayer->bonddead != 0)
-    {
-        goto block_4;
     }
     if (cheatIsActive(CHEAT_NORADAR) != 0)
     {
@@ -73,6 +68,7 @@ block_4:
         phi_s5 = temp_s5;
         if ((curplayernum & 1) == 0)
         {
+            // phi_s5 and temp_s5 are the same
             phi_s5 = temp_s5 + 0xF;
         }
     }
@@ -118,6 +114,7 @@ block_4:
     if (playerCount_2 > 0)
     {
         phi_s3 = 0;
+        // should be a for loop
 loop_22:
         if (phi_s3 != curplayernum)
         {
