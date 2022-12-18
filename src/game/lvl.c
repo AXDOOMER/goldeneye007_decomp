@@ -5921,7 +5921,7 @@ void lvlUnloadStageTextData(void)
     if (g_CurrentStageToLoad != LEVELID_TITLE)
     {
         langClearBank(get_textbank_number_for_stagenum(g_CurrentStageToLoad));
-        sub_GAME_7F007770();
+        set_favorite_weapon_for_every_player();
     }
 
     cheatDisableAllCheats();
@@ -5935,8 +5935,8 @@ void lvlUnloadStageTextData(void)
     cleanupObjectives();
     cleanupSFXRelated();
     cleanupplayersoundrelated();
-    sub_GAME_7F0C1268();
-    sub_GAME_7F0B47E0();
+    set_missionstate_zero();
+    cleanup_rooms();
 }
 
 

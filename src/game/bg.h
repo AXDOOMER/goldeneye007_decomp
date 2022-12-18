@@ -116,7 +116,7 @@ s32 sub_GAME_7F0B8FD0(s32 roomA, u8 roomB);
 
 //f32 sub_GAME_7F0B4F9C(s32 room); // u8 not s32 for sub_GAME_7F0B2FE0
 u32 bgDecompress(u8* source, u8 *target);
-void sub_GAME_7F0B65C4(s32 roomID);
+void delete_room_data(s32 roomID);
 void load_bg_file(LEVEL_INDEX stagenum);
 
 s32 bgDebugRemoved7F0B9DE4(s32 arg0, s32 arg1, s32 arg2);

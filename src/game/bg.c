@@ -2970,7 +2970,7 @@ glabel load_bg_file
 
 
 
-void sub_GAME_7F0B47E0(void) {
+void cleanup_rooms(void) {
     unload_rooms();
     matrix_4x4_7F058C4C(1.0);
 }
@@ -6254,7 +6254,7 @@ glabel sub_GAME_7F0B6368
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B65C4(s32 roomID)
+void delete_room_data(s32 roomID)
 {
 
     if (array_room_info[roomID].ptr_unique_collision_points)
@@ -6283,7 +6283,7 @@ void sub_GAME_7F0B65C4(s32 roomID)
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0B65C4
+glabel delete_room_data
 /* 0EB0F4 7F0B65C4 00047080 */  sll   $t6, $a0, 2
 /* 0EB0F8 7F0B65C8 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0EB0FC 7F0B65CC 01C47021 */  addu  $t6, $t6, $a0
@@ -6350,7 +6350,7 @@ void unload_rooms(void)
     {
         if (array_room_info[i].model_bin_loaded)
         {
-            sub_GAME_7F0B65C4(i);
+            delete_room_data(i);
         }
     }
 }
@@ -6367,7 +6367,7 @@ void sub_GAME_7F0B66E8(void)
         {
             if (array_room_info[i].model_bin_loaded == 4)
             {
-                sub_GAME_7F0B65C4(i);
+                delete_room_data(i);
             }
             else if (array_room_info[i].model_bin_loaded != 0)
             {
@@ -11870,7 +11870,7 @@ glabel sub_GAME_7F0B9338
 /* 0EE0E0 7F0B95B0 46105480 */  add.s $f18, $f10, $f16
 /* 0EE0E4 7F0B95B4 15400003 */  bnez  $t2, .L7F0B95C4
 /* 0EE0E8 7F0B95B8 E512004C */   swc1  $f18, 0x4c($t0)
-/* 0EE0EC 7F0B95BC 0FC2D971 */  jal   sub_GAME_7F0B65C4
+/* 0EE0EC 7F0B95BC 0FC2D971 */  jal   delete_room_data
 /* 0EE0F0 7F0B95C0 02002025 */   move  $a0, $s0
 .L7F0B95C4:
 /* 0EE0F4 7F0B95C4 8FBF001C */  lw    $ra, 0x1c($sp)
