@@ -24562,7 +24562,7 @@ void sub_GAME_7F068D20(CasingRecord* casing)
 }
 
 
-void sub_GAME_7F068E6C(void)
+void update_bullet_casings(void)
 {
     CasingRecord* end = g_Casings + ARRAYCOUNT(g_Casings);
     CasingRecord* entry = g_Casings;
