@@ -1449,7 +1449,7 @@ glabel chraiDefaultWeaponFireHandler
 /* 06FCC8 7F03B198 02402025 */  move  $a0, $s2
 /* 06FCCC 7F03B19C 27A501A0 */  addiu $a1, $sp, 0x1a0
 /* 06FCD0 7F03B1A0 02003025 */  move  $a2, $s0
-/* 06FCD4 7F03B1A4 0FC1A073 */  jal   sub_GAME_7F0681CC
+/* 06FCD4 7F03B1A4 0FC1A073 */  jal   bullet_path_from_screen_center
 /* 06FCD8 7F03B1A8 AFAE04F8 */   sw    $t6, 0x4f8($sp)
 /* 06FCDC 7F03B1AC 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 06FCE0 7F03B1B0 02002025 */   move  $a0, $s0
@@ -2481,7 +2481,7 @@ glabel chraiFistAttackHandler
 /* 070B50 7F03C020 27A40084 */  addiu $a0, $sp, 0x84
 .L7F03C024:
 /* 070B54 7F03C024 02A02825 */  move  $a1, $s5
-/* 070B58 7F03C028 0FC1A073 */  jal   sub_GAME_7F0681CC
+/* 070B58 7F03C028 0FC1A073 */  jal   bullet_path_from_screen_center
 /* 070B5C 7F03C02C 8FA600C8 */   lw    $a2, 0xc8($sp)
 /* 070B60 7F03C030 0FC1E111 */  jal   currentPlayerGetMatrix10D4
 /* 070B64 7F03C034 00000000 */   nop   

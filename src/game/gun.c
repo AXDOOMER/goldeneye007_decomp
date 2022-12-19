@@ -587,7 +587,7 @@ u32 D_80036060 = 0;
 
 // forward declarations
 
-void sub_GAME_7F0681CC(coord3d* arg0, coord3d* arg1, enum GUNHAND arg2);
+void bullet_path_from_screen_center(coord3d* arg0, coord3d* arg1, enum GUNHAND arg2);
 void sub_GAME_7F05EC1C(struct WeaponObjectRecord *arg0, struct coord3d *arg1, Mtxf *arg2, struct coord3d *arg3, s32 *arg4);
 
 // end forward declarations
@@ -2097,7 +2097,7 @@ void generate_player_thrown_grenade(s32 hand)
     current_weapon = getCurrentPlayerWeaponId(hand);
 
     sub_GAME_7F057C14(&throw_speed_vec, &spFC);
-    sub_GAME_7F0681CC(&sp94, &base_speed_vec, hand);
+    bullet_path_from_screen_center(&sp94, &base_speed_vec, hand);
     mtx4RotateVecInPlace(currentPlayerGetMatrix10D4(), (f32*)&base_speed_vec);
 
     throw_speed_vec.f[0] = (base_speed_vec.f[0] * base_velocity);
@@ -2184,7 +2184,7 @@ void generate_player_thrown_knife(s32 hand)
     bondprevpos = get_BONDdata_field408();
 
     sub_GAME_7F057C14(&throw_speed_vec, &spFC);
-    sub_GAME_7F0681CC(&sp94, &base_speed_vec, hand);
+    bullet_path_from_screen_center(&sp94, &base_speed_vec, hand);
     mtx4RotateVecInPlace(currentPlayerGetMatrix10D4(), (f32*)&base_speed_vec);
 
     throw_speed_vec.f[0] = (base_speed_vec.f[0] * base_velocity);
@@ -2283,7 +2283,7 @@ void generate_player_thrown_object(s32 hand)
     }
 
     sub_GAME_7F057C14(&throw_speed_vec, &unk_mtxf);
-    sub_GAME_7F0681CC(&sp94, &base_speed_vec, hand);
+    bullet_path_from_screen_center(&sp94, &base_speed_vec, hand);
     mtx4RotateVecInPlace(currentPlayerGetMatrix10D4(), (f32*)&base_speed_vec);
 
     throw_speed_vec.f[0] = (base_speed_vec.f[0] * base_velocity);
@@ -2479,7 +2479,7 @@ glabel sub_GAME_7F05F73C
 /* 0942C0 7F05F790 27A400A0 */   addiu $a0, $sp, 0xa0
 /* 0942C4 7F05F794 27A40044 */  addiu $a0, $sp, 0x44
 /* 0942C8 7F05F798 27A50038 */  addiu $a1, $sp, 0x38
-/* 0942CC 7F05F79C 0FC1A073 */  jal   sub_GAME_7F0681CC
+/* 0942CC 7F05F79C 0FC1A073 */  jal   bullet_path_from_screen_center
 /* 0942D0 7F05F7A0 8FA600E8 */   lw    $a2, 0xe8($sp)
 /* 0942D4 7F05F7A4 0FC1E111 */  jal   currentPlayerGetMatrix10D4
 /* 0942D8 7F05F7A8 00000000 */   nop
@@ -2619,7 +2619,7 @@ glabel sub_GAME_7F05F73C
 /* 092638 7F05FC48 27A400A0 */   addiu $a0, $sp, 0xa0
 /* 09263C 7F05FC4C 27A40044 */  addiu $a0, $sp, 0x44
 /* 092640 7F05FC50 27A50038 */  addiu $a1, $sp, 0x38
-/* 092644 7F05FC54 0FC1A25D */  jal   sub_GAME_7F0681CC
+/* 092644 7F05FC54 0FC1A25D */  jal   bullet_path_from_screen_center
 /* 092648 7F05FC58 8FA600E8 */   lw    $a2, 0xe8($sp)
 /* 09264C 7F05FC5C 0FC1E131 */  jal   currentPlayerGetMatrix10D4
 /* 092650 7F05FC60 00000000 */   nop   
@@ -3108,7 +3108,7 @@ glabel gunFireTankShell
 /* 094878 7F05FD48 1000003A */  b     .L7F05FE34
 /* 09487C 7F05FD4C 00000000 */   nop
 .L7F05FD50:
-/* 094880 7F05FD50 0FC1A073 */  jal   sub_GAME_7F0681CC
+/* 094880 7F05FD50 0FC1A073 */  jal   bullet_path_from_screen_center
 /* 094884 7F05FD54 8FA60108 */   lw    $a2, 0x108($sp)
 /* 094888 7F05FD58 0FC1E111 */  jal   currentPlayerGetMatrix10D4
 /* 09488C 7F05FD5C 00000000 */   nop
@@ -3414,7 +3414,7 @@ glabel gunFireTankShell
 /* 092BF0 7F060200 1000003A */  b     .L7F0602EC
 /* 092BF4 7F060204 00000000 */   nop   
 .L7F060208:
-/* 092BF8 7F060208 0FC1A25D */  jal   sub_GAME_7F0681CC
+/* 092BF8 7F060208 0FC1A25D */  jal   bullet_path_from_screen_center
 /* 092BFC 7F06020C 8FA60108 */   lw    $a2, 0x108($sp)
 /* 092C00 7F060210 0FC1E131 */  jal   currentPlayerGetMatrix10D4
 /* 092C04 7F060214 00000000 */   nop   
@@ -23250,7 +23250,7 @@ void sub_GAME_7F068190(coord3d *zeropos, coord3d *vec)
 }
 
 
-void sub_GAME_7F0681CC(coord3d* arg0, coord3d* arg1, enum GUNHAND arg2)
+void bullet_path_from_screen_center(coord3d* arg0, coord3d* result, enum GUNHAND arg2)
 {
     coord2d crosspos;
     s32 unused;
@@ -23259,8 +23259,9 @@ void sub_GAME_7F0681CC(coord3d* arg0, coord3d* arg1, enum GUNHAND arg2)
     f32 randfactor;
 
     inaccuracy = get_ptr_item_statistics(getCurrentPlayerWeaponId(arg2))->Inaccuracy;
-    if ((bondwalkItemCheckBitflags(get_item_in_hand_or_watch_menu(arg2), 0x1000U) != 0) && (g_CurrentPlayer->hands[arg2].field_C08 == 1))
+    if ((bondwalkItemCheckBitflags(get_item_in_hand_or_watch_menu(arg2), 0x1000U) != 0) && (g_CurrentPlayer->hands[arg2].volley == 1))
     {
+        // Single shots are four times more accurate
         inaccuracy *= 0.25f;
     }
 
@@ -23278,7 +23279,9 @@ void sub_GAME_7F0681CC(coord3d* arg0, coord3d* arg1, enum GUNHAND arg2)
     arg0->y = 0.0f;
     arg0->z = 0.0f;
 
-    sub_GAME_7F077EEC(&crosspos, arg1, 1.0f);
+    // Result is a normalized vector describing the path the bullet will follow
+    // Can be used to compute x,y,z displacement off the center of the screen if done for a projectile
+    sub_GAME_7F077EEC(&crosspos, result, 1.0f);
 }
 
 

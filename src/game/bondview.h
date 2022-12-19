@@ -256,7 +256,7 @@ struct hand
   s32 field_BFC;
   s32 field_C00;
   s32 field_C04;
-  s32 field_C08;  
+  s32 volley;  // Number of bullets discharged in a row. For pistols, it's always 1 even if the fire button is held.
   coord3d item_related;
 };
 
