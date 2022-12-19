@@ -24518,7 +24518,7 @@ glabel sub_GAME_7F068508
 #endif
 
 
-void sub_GAME_7F068D20(CasingRecord* casing)
+void update_bullet_casing(CasingRecord* casing)
 {
     f32 new_val_y;
     f32 delta;
@@ -24540,9 +24540,12 @@ void sub_GAME_7F068D20(CasingRecord* casing)
         {
             if ((g_CurrentPlayer->hands[0].when_detonating_mines_is_0 != 2) && (g_CurrentPlayer->hands[1].when_detonating_mines_is_0 != 2))
             {
+                // Play bullet casing rolling of floor sound
                 sndPlaySfx((struct ALBankAlt_s* ) g_musicSfxBufferPtr, 0x7A, (ALSoundState* ) &dword_CODE_bss_80075DB0);
             }
         }
+
+        // This casing is removed and not updated anymore
         casing->header = NULL;
         return;
     }
@@ -24570,7 +24573,7 @@ void update_bullet_casings(void)
     {
         if (entry->header)
         {
-            sub_GAME_7F068D20(entry);
+            update_bullet_casing(entry);
         }
         entry++;
     }
