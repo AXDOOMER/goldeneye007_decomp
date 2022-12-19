@@ -20,110 +20,42 @@ f32 D_80032310[2] = {M_U16_MAX_VALUE_F, M_U16_MAX_VALUE_F};
 //#ifdef VERSION_EU
 
 #ifdef VERSION_EU
-#ifdef NONMATCHING
-void matrix_4x4_copy_homogeneous_eu(Mtxf *src,Mtxf *dst)
+void matrix_4x4_copy_homogeneous_eu(f32 src[3][3], f32 dst[3][3])
 {
-
+    s32 i, j;
+    for (i = 0; i < 3; i++)
+    {
+        for (j = 0; j < 3; j++)
+        {
+            dst[i][j] = src[i][j];
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel matrix_4x4_copy_homogeneous_eu
-/* 08ACC0 7F0582D0 00001025 */  move  $v0, $zero
-/* 08ACC4 7F0582D4 00A03025 */  move  $a2, $a1
-/* 08ACC8 7F0582D8 00803825 */  move  $a3, $a0
-/* 08ACCC 7F0582DC 24080003 */  li    $t0, 3
-.L7F0582E0:
-/* 08ACD0 7F0582E0 00001825 */  move  $v1, $zero
-/* 08ACD4 7F0582E4 00C02025 */  move  $a0, $a2
-/* 08ACD8 7F0582E8 00E02825 */  move  $a1, $a3
-.L7F0582EC:
-/* 08ACDC 7F0582EC C4A40000 */  lwc1  $f4, ($a1)
-/* 08ACE0 7F0582F0 24630001 */  addiu $v1, $v1, 1
-/* 08ACE4 7F0582F4 24840004 */  addiu $a0, $a0, 4
-/* 08ACE8 7F0582F8 24A50004 */  addiu $a1, $a1, 4
-/* 08ACEC 7F0582FC 1468FFFB */  bne   $v1, $t0, .L7F0582EC
-/* 08ACF0 7F058300 E484FFFC */   swc1  $f4, -4($a0)
-/* 08ACF4 7F058304 24420001 */  addiu $v0, $v0, 1
-/* 08ACF8 7F058308 24C6000C */  addiu $a2, $a2, 0xc
-/* 08ACFC 7F05830C 1448FFF4 */  bne   $v0, $t0, .L7F0582E0
-/* 08AD00 7F058310 24E7000C */   addiu $a3, $a3, 0xc
-/* 08AD04 7F058314 03E00008 */  jr    $ra
-/* 08AD08 7F058318 00000000 */   nop   
-)
-#endif
 #endif
 
 
 #ifdef VERSION_EU
-#ifdef NONMATCHING
-void matrix_4x4_multiply_homogeneous_in_place_eu (f32 src[3][3], f32 dst[3][3])
+void matrix_4x4_multiply_homogeneous_in_place_eu (f32 lhs[3][3], f32 rhs[3][3])
 {
-
+    f32 result[3][3];
+    matrix_4x4_multiply_homogeneous_eu(lhs, rhs, &result);
+    matrix_4x4_copy_homogeneous_eu(&result, rhs);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel matrix_4x4_multiply_homogeneous_in_place_eu
-/* 08AD0C 7F05831C 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 08AD10 7F058320 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 08AD14 7F058324 AFA50044 */  sw    $a1, 0x44($sp)
-/* 08AD18 7F058328 0FC160D3 */  jal   matrix_4x4_multiply_homogeneous_eu
-/* 08AD1C 7F05832C 27A6001C */   addiu $a2, $sp, 0x1c
-/* 08AD20 7F058330 27A4001C */  addiu $a0, $sp, 0x1c
-/* 08AD24 7F058334 0FC160B4 */  jal   matrix_4x4_copy_homogeneous_eu
-/* 08AD28 7F058338 8FA50044 */   lw    $a1, 0x44($sp)
-/* 08AD2C 7F05833C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 08AD30 7F058340 27BD0040 */  addiu $sp, $sp, 0x40
-/* 08AD34 7F058344 03E00008 */  jr    $ra
-/* 08AD38 7F058348 00000000 */   nop   
-)
-#endif
 #endif
 
 
 #ifdef VERSION_EU
-#ifdef NONMATCHING
-void matrix_4x4_multiply_homogeneous_eu (Mtxf * lhs, Mtxf * rhs, Mtxf * result)
+void matrix_4x4_multiply_homogeneous_eu(f32 lhs[3][3], f32 rhs[3][3], f32 result[3][3])
 {
-
+    s32 i, j;
+    for (i = 0; i < 3; i++)
+    {
+        for (j = 0; j < 3; j++)
+        {
+            result[j][i] = (lhs[0][i] * rhs[j][0]) + (lhs[1][i] * rhs[j][1]) + (lhs[2][i] * rhs[j][2]);
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel matrix_4x4_multiply_homogeneous_eu
-/* 08AD3C 7F05834C 00001825 */  move  $v1, $zero
-/* 08AD40 7F058350 00804025 */  move  $t0, $a0
-/* 08AD44 7F058354 240A000C */  li    $t2, 12
-/* 08AD48 7F058358 24090003 */  li    $t1, 3
-.L7F05835C:
-/* 08AD4C 7F05835C 00001025 */  move  $v0, $zero
-/* 08AD50 7F058360 00C32021 */  addu  $a0, $a2, $v1
-/* 08AD54 7F058364 00A03825 */  move  $a3, $a1
-.L7F058368:
-/* 08AD58 7F058368 C5120000 */  lwc1  $f18, ($t0)
-/* 08AD5C 7F05836C C4F00000 */  lwc1  $f16, ($a3)
-/* 08AD60 7F058370 C50E000C */  lwc1  $f14, 0xc($t0)
-/* 08AD64 7F058374 C4EC0004 */  lwc1  $f12, 4($a3)
-/* 08AD68 7F058378 46109402 */  mul.s $f16, $f18, $f16
-/* 08AD6C 7F05837C C4F20008 */  lwc1  $f18, 8($a3)
-/* 08AD70 7F058380 C50A0018 */  lwc1  $f10, 0x18($t0)
-/* 08AD74 7F058384 460C7302 */  mul.s $f12, $f14, $f12
-/* 08AD78 7F058388 24420001 */  addiu $v0, $v0, 1
-/* 08AD7C 7F05838C 2484000C */  addiu $a0, $a0, 0xc
-/* 08AD80 7F058390 460A9282 */  mul.s $f10, $f18, $f10
-/* 08AD84 7F058394 24E7000C */  addiu $a3, $a3, 0xc
-/* 08AD88 7F058398 460C8300 */  add.s $f12, $f16, $f12
-/* 08AD8C 7F05839C 460C5300 */  add.s $f12, $f10, $f12
-/* 08AD90 7F0583A0 1449FFF1 */  bne   $v0, $t1, .L7F058368
-/* 08AD94 7F0583A4 E48CFFF4 */   swc1  $f12, -0xc($a0)
-/* 08AD98 7F0583A8 24630004 */  addiu $v1, $v1, 4
-/* 08AD9C 7F0583AC 146AFFEB */  bne   $v1, $t2, .L7F05835C
-/* 08ADA0 7F0583B0 25080004 */   addiu $t0, $t0, 4
-/* 08ADA4 7F0583B4 03E00008 */  jr    $ra
-/* 08ADA8 7F0583B8 00000000 */   nop   
-)
-#endif
 #endif
 
 
