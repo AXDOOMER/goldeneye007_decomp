@@ -39,8 +39,8 @@ void matrix_4x4_set_rotation_around_xyz(vec3 angles, Mtxf *matrix);
 
 // tenative guess
 void sub_GAME_7F058E78(Mtxf *arg0, Mtxf *arg1);
-void matrix_7f05842c_eu (Mtxf * src, f32 dst[3][3]);
-void matrix_4x4_multiply_homogeneous_in_place_eu (f32 src[3][3], f32 dst[3][3]);
+void matrix_7f05842c_eu(f32 src[][4], f32 dst[3][3]);
+void matrix_4x4_multiply_homogeneous_in_place_eu(f32 src[3][3], f32 dst[3][3]);
 void matrix_4x4_multiply_homogeneous_eu(f32 lhs[3][3], f32 rhs[3][3], f32 result[3][3]);
 
 /* matrixmath_misc.h */
