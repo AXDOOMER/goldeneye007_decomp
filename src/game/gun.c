@@ -24530,7 +24530,7 @@ void update_bullet_casing(CasingRecord* casing)
 
     casing->pos.y += delta * 0.5f * (casing->vel.y + new_val_y);
 
-    if (casing->pos.y < casing->unk00)
+    if (casing->pos.y < casing->floor_y_pos)
     {
 #if defined(BUGFIX_R1)
         if (dword_CODE_bss_80075DB0 == 0 && (g_ClockTimer > 0))

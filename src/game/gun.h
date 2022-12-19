@@ -231,7 +231,7 @@ typedef struct GunModelFileRecord
 } GunModelFileRecord;
 
 typedef struct CasingRecord {
-    f32 unk00;
+    f32 floor_y_pos;
     coord3d pos;
     coord3d vel;
 #if VERSION_EU
