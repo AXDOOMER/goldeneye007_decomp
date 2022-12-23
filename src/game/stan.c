@@ -5989,11 +5989,10 @@ glabel sub_GAME_7F0B3138
 
 
 
-
 #ifdef NONMATCHING
-void sub_GAME_7F0B31A4(s32 arg0, s32 arg1, ? arg2, ? arg3, ? arg4, ?32 arg5, f32 arg6, f32 arg7) {
-    // Node 0
-    return sub_GAME_7F0B18B8(arg2, arg3, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+void sub_GAME_7F0B31A4(StandTile ** arg1, f32 arg0, f32 arg2, f32 arg3, f32 arg4, s32 arg5, f32 arg6, f32 arg7) {
+    // almost a match. missing sw a0,0x28(sp) and move a0,a1 instructions
+    sub_GAME_7F0B18B8(arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 }
 #else
 GLOBAL_ASM(
