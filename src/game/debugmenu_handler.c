@@ -1668,7 +1668,7 @@ s32 get_debug_explosioninfo_flag(void) {
 #endif
 }
 
-s32 get_debug_prroomloads_flag(void) {
+s32 debugIsRoomStateDebugEnabled(void) {
 #if defined(LEFTOVERDEBUG)
     return debug_prroomloads_flag;
 #else

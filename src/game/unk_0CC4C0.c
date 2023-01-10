@@ -6,7 +6,7 @@
 
 // bss
 //8008D140
-s32 dword_CODE_bss_8008D140;
+s32 g_TexLutMode;
 //8008D144
 s32 dword_CODE_bss_8008D144;
 //8008D148
@@ -158,7 +158,7 @@ void sub_GAME_7F0CC4C8(void)
         dword_CODE_bss_8008D148[i].unk_0 = 0;
         dword_CODE_bss_8008D2A8[i].unk_0 = 0;
     }
-    dword_CODE_bss_8008D140 = -1;
+    g_TexLutMode = -1;
 }
 
 
@@ -183,10 +183,10 @@ s32 unused_copy_byte_array(u8* src, s32 count, u8* dst)
 
 
 u32 texSetLutMode(s32 arg0) {
-    if (arg0 == dword_CODE_bss_8008D140) {
+    if (arg0 == g_TexLutMode) {
         return 0;
     }
-    dword_CODE_bss_8008D140 = arg0;
+    g_TexLutMode = arg0;
     return 1;
 }
 

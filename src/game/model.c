@@ -582,7 +582,7 @@ void getpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#MATCH - 
     #endif
     switch (part->Opcode & 0xFF)
     {
-        case 1:
+        case MODELNODE_OPCODE_HEADERRECORD:
         {
             struct modeldata_root *root = modelGetNodeRwData(objinst, part);
             offset->x                   = root->pos.x;
@@ -590,7 +590,7 @@ void getpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#MATCH - 
             offset->z                   = root->pos.z;
             break;
         }
-        case 2:
+        case MODELNODE_OPCODE_GROUPRECORD:
         {
             ModelRoData_GroupRecord *prt = &part->Data->Group;
             offset->x                  = prt->Origin.x;
@@ -598,7 +598,7 @@ void getpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#MATCH - 
             offset->z                  = prt->Origin.z;
             break;
         }
-        case 3:
+        case MODELNODE_OPCODE_UNUSED_03:
         {
             ModelRoData_GroupSimpleRecord *prt = &part->Data->GroupSimple; //UNUSED at this time
             offset->x                        = prt->Origin.x;
@@ -606,7 +606,7 @@ void getpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#MATCH - 
             offset->z                        = prt->Origin.z;
             break;
         }
-        case 21:
+        case MODELNODE_OPCODE_GROUPSIMPLERECORD:
         {
             ModelRoData_GroupSimpleRecord *prt = &part->Data->GroupSimple;
             offset->x                        = prt->Origin.x;
