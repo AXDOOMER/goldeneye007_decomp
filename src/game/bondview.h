@@ -2596,12 +2596,12 @@ struct struct_4 {
 };
 
 #ifdef BUGFIX_R0
-typedef struct HealthDamageType
+typedef struct DamageType
 {
-    u32 field_0x0; // health
-    u32 field_0x4; // health
-    s32 field_0x8; // health
-    f32 field_0xC; // damage
+    u32 field_0x0;
+    u32 field_0x4;
+    s32 field_0x8;
+    f32 field_0xC;
     s32 flashStartFrame;
     u32 flashFullFrame;
     s32 flashEndFrame;
@@ -2609,9 +2609,9 @@ typedef struct HealthDamageType
     u32 red;
     u32 green;
     u32 blue;
-} HealthDamageType;
+} DamageType;
 #else
-typedef struct HealthDamageType
+typedef struct DamageType
 {
     f32 field_0x0;
     f32 field_0x4;
@@ -2624,14 +2624,14 @@ typedef struct HealthDamageType
     u32 red;
     u32 green;
     u32 blue;
-} HealthDamageType;
+} DamageType;
 #endif
 
-typedef struct bondstruct_unk_80036794 { // time related idk
-    s32 unk0;
-    s32 unk4;
-    s32 unk8;
-} bondstruct_unk_80036794;
+typedef struct HealthDamageType { // time related idk
+    s32 updateStartFrame;
+    s32 updateEndFrame;
+    s32 otherEndFrame;
+} HealthDamageType;
 
 typedef struct bondstruct_unk_80035904 {
     u32 unk00;
@@ -2784,7 +2784,7 @@ D:80036624                     .word 0xFFFFFF00, 0xFFFFFF00, 0x4FFFFFF
 //D:80036630
 extern u32 D_80036630;
 //D:80036634
-extern struct HealthDamageType g_DamageTypes[];
+extern struct DamageType g_DamageTypes[];
 /*
 D:80036638                     .byte 0
 D:80036639                     .byte 0, 0, 0xA
@@ -2826,7 +2826,7 @@ D:8003676C                     .byte 0
 D:8003676D                     .byte 0, 0, 0xA
 D:80036770                     .word 0x1E, 0x3F19999A, 0
 D:8003677C                     .word 5, 0xF, 0x3ECCCCCD, 0xFF, 0xFF, 0xFF
-D:80036794     D_80036794:.word 0
+D:80036794     g_HealthDamageTypes:.word 0
 D:80036798                     .byte 0
 D:80036799                     .byte 0, 0, 0x28
 D:8003679C                     .word 0x64, 0

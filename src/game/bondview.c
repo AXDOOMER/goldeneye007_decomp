@@ -474,7 +474,7 @@ u32 D_80036630 = 0;
 
 
 //D:80036634
-struct HealthDamageType g_DamageTypes[] = {
+struct DamageType g_DamageTypes[] = {
         {   0x0,    10.0,    60.0,    0.600000023842, 0x0,    5.0,    40.0,    1.0,            0xFF,       0xFF,       0xFF},
         {   0x0,    10.0,    60.0,    0.600000023842, 0x0,    5.0,    40.0,    1.0,            0xFF,       0xFF,       0xFF},
         {   0x0,    10.0,    50.0,    0.600000023842, 0x0,    5.0,    30.0,    0.800000011921, 0xFF,       0xFF,       0xFF},
@@ -487,7 +487,7 @@ struct HealthDamageType g_DamageTypes[] = {
 
 
 //D:80036794
-bondstruct_unk_80036794 D_80036794[8] = {
+struct HealthDamageType g_HealthDamageTypes[8] = {
     { 0x00000000, 0x00000028, 0x00000064 },
     { 0x00000000, 0x0000001E, 0x00000050 },
     { 0x00000000, 0x00000014, 0x0000003C },
@@ -23114,8 +23114,8 @@ void sub_GAME_7F083FC8(void)
 
         if (!g_CurrentPlayer->bonddead)
         {
-            if ((g_CurrentPlayer->healthshowtime >= D_80036794[g_CurrentPlayer->healthDamageType].unk0) 
-                && (D_80036794[g_CurrentPlayer->healthDamageType].unk4 >= g_CurrentPlayer->healthshowtime))
+            if ((g_CurrentPlayer->healthshowtime >= g_HealthDamageTypes[g_CurrentPlayer->healthDamageType].updateStartFrame) 
+                && (g_HealthDamageTypes[g_CurrentPlayer->healthDamageType].updateEndFrame >= g_CurrentPlayer->healthshowtime))
             {
                 g_CurrentPlayer->apparenthealth = g_CurrentPlayer->oldhealth;
                 g_CurrentPlayer->apparentarmour = g_CurrentPlayer->oldarmour;
@@ -23125,8 +23125,8 @@ void sub_GAME_7F083FC8(void)
                 g_CurrentPlayer->healthshowtime += g_GlobalTimerDelta;
 #endif
             }
-            else if ((g_CurrentPlayer->healthshowtime >= D_80036794[g_CurrentPlayer->healthDamageType].unk0)
-                && (D_80036794[g_CurrentPlayer->healthDamageType].unk8 >= g_CurrentPlayer->healthshowtime))
+            else if ((g_CurrentPlayer->healthshowtime >= g_HealthDamageTypes[g_CurrentPlayer->healthDamageType].updateStartFrame)
+                && (g_HealthDamageTypes[g_CurrentPlayer->healthDamageType].otherEndFrame >= g_CurrentPlayer->healthshowtime))
             {
                 g_CurrentPlayer->apparenthealth = g_CurrentPlayer->bondhealth;
                 g_CurrentPlayer->apparentarmour = g_CurrentPlayer->bondarmour;
