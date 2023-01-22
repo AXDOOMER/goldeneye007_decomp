@@ -2641,6 +2641,12 @@ typedef struct bondstruct_unk_80035904 {
     f32 unk20;
 } bondstruct_unk_80035904;
 
+// placeholder while matching
+struct move_bond_temp_struct {
+    s32 unk00;
+    s32 unk04;
+};
+
 //D:80036424
 extern s32 g_bondviewForceDisarm;
 //D:80036428
