@@ -475,27 +475,27 @@ u32 D_80036630 = 0;
 
 //D:80036634
 struct DamageType g_DamageTypes[] = {
-        {   0x0,    10.0,    60.0,    0.600000023842, 0x0,    5.0,    40.0,    1.0,            0xFF,       0xFF,       0xFF},
-        {   0x0,    10.0,    60.0,    0.600000023842, 0x0,    5.0,    40.0,    1.0,            0xFF,       0xFF,       0xFF},
-        {   0x0,    10.0,    50.0,    0.600000023842, 0x0,    5.0,    30.0,    0.800000011921, 0xFF,       0xFF,       0xFF},
-        {   0x0,    10.0,    40.0,    0.600000023842, 0x0,    5.0,    25.0,    0.600000023842, 0xFF,       0xFF,       0xFF},
-        {   0x0,    10.0,    35.0,    0.600000023842, 0x0,    5.0,    22.0,    0.550000011921, 0xFF,       0xFF,       0xFF},
-        {   0x0,    10.0,    30.0,    0.600000023842, 0x0,    5.0,    19.0,    0.5,            0xFF,       0xFF,       0xFF},
-        {   0x0,    10.0,    30.0,    0.600000023842, 0x0,    5.0,    17.0,    0.449999988079, 0xFF,       0xFF,       0xFF},
-        {   0x0,    10.0,    30.0,    0.600000023842, 0x0,    5.0,    15.0,    0.40000000596,  0xFF,       0xFF,       0xFF}
+        {   0,    10.0,    60.0,    0.6,    0,    5.0,    40.0,    1.0,            0xFF,       0xFF,       0xFF},
+        {   0,    10.0,    60.0,    0.6,    0,    5.0,    40.0,    1.0,            0xFF,       0xFF,       0xFF},
+        {   0,    10.0,    50.0,    0.6,    0,    5.0,    30.0,    0.800000011921, 0xFF,       0xFF,       0xFF},
+        {   0,    10.0,    40.0,    0.6,    0,    5.0,    25.0,    0.600000023842, 0xFF,       0xFF,       0xFF},
+        {   0,    10.0,    35.0,    0.6,    0,    5.0,    22.0,    0.550000011921, 0xFF,       0xFF,       0xFF},
+        {   0,    10.0,    30.0,    0.6,    0,    5.0,    19.0,    0.5,            0xFF,       0xFF,       0xFF},
+        {   0,    10.0,    30.0,    0.6,    0,    5.0,    17.0,    0.449999988079, 0xFF,       0xFF,       0xFF},
+        {   0,    10.0,    30.0,    0.6,    0,    5.0,    15.0,    0.40000000596,  0xFF,       0xFF,       0xFF}
 };
 
 
 //D:80036794
 struct HealthDamageType g_HealthDamageTypes[8] = {
-    { 0x00000000, 0x00000028, 0x00000064 },
-    { 0x00000000, 0x0000001E, 0x00000050 },
-    { 0x00000000, 0x00000014, 0x0000003C },
-    { 0x00000000, 0x00000014, 0x0000003C },
-    { 0x00000000, 0x00000014, 0x0000003C },
-    { 0x00000000, 0x00000014, 0x00000032 },
-    { 0x00000000, 0x00000014, 0x00000032 },
-    { 0x00000000, 0x00000014, 0x00000032 }
+    { 0, 40, 100 },
+    { 0, 30, 80 },
+    { 0, 20, 60 },
+    { 0, 20, 60 },
+    { 0, 20, 60 },
+    { 0, 20, 50 },
+    { 0, 20, 50 },
+    { 0, 20, 50 }
 };
 
 // //D:800367F4
@@ -646,7 +646,7 @@ void bondviewUpperTextWindowTimerTick(void);
 void sub_GAME_7F07DEFC(void);
 void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3);
 void controller_gameplay_interaction(s8 arg0, s8 arg1, u16 arg2, u16 arg3);
-void sub_GAME_7F083FC8(void);
+void bondviewPlayerTickDamageAndHealth(void);
 void sub_GAME_7F084360(void);
 void sub_GAME_7F07EAF0(void);
 void sub_GAME_7F07EC54(void);
@@ -22979,7 +22979,7 @@ glabel controller_gameplay_interaction
  * NTSC-J address 7F0845D8.
  * EU address 7F08406C.
 */
-void sub_GAME_7F083FC8(void)
+void bondviewPlayerTickDamageAndHealth(void)
 {
     // update damage showtime
     if (g_CurrentPlayer->damageshowtime >= 0)
@@ -23645,7 +23645,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
     }
 
     currentPlayerSetField00(0);
-    sub_GAME_7F083FC8();
+    bondviewPlayerTickDamageAndHealth();
     sub_GAME_7F084360();
     controller_gameplay_interaction(stick_x, stick_y, *(u16*)&arg2, *(u16*)&arg3);
 
@@ -24896,7 +24896,7 @@ void sub_GAME_7F086990(s32 arg0, s32 arg1, ? arg2, ? arg_unalignedA, ? arg3, ? a
     sp40 = (?32) D_80036824;
     sp40.unk4 = (?32) D_80036824.unk4;
     sp40.unk8 = (?32) D_80036824.unk8;
-    sub_GAME_7F083FC8();
+    bondviewPlayerTickDamageAndHealth();
     sub_GAME_7F084360();
     controller_gameplay_interaction(0, 0, 0, 0);
     bondviewApplyVertaTheta();
@@ -24983,7 +24983,7 @@ glabel sub_GAME_7F086990
 /* 0BB558 7F086A28 AD810000 */  sw    $at, ($t4)
 /* 0BB55C 7F086A2C 8D610008 */  lw    $at, 8($t3)
 /* 0BB560 7F086A30 AD8D0004 */  sw    $t5, 4($t4)
-/* 0BB564 7F086A34 0FC20FF2 */  jal   sub_GAME_7F083FC8
+/* 0BB564 7F086A34 0FC20FF2 */  jal   bondviewPlayerTickDamageAndHealth
 /* 0BB568 7F086A38 AD810008 */   sw    $at, 8($t4)
 /* 0BB56C 7F086A3C 0FC210D8 */  jal   sub_GAME_7F084360
 /* 0BB570 7F086A40 00000000 */   nop
@@ -25149,7 +25149,7 @@ glabel sub_GAME_7F086990
 /* 0B9538 7F086B48 AD810000 */  sw    $at, ($t4)
 /* 0B953C 7F086B4C 8D610008 */  lw    $at, 8($t3)
 /* 0B9540 7F086B50 AD8D0004 */  sw    $t5, 4($t4)
-/* 0B9544 7F086B54 0FC2101B */  jal   sub_GAME_7F083FC8
+/* 0B9544 7F086B54 0FC2101B */  jal   bondviewPlayerTickDamageAndHealth
 /* 0B9548 7F086B58 AD810008 */   sw    $at, 8($t4)
 /* 0B954C 7F086B5C 0FC21129 */  jal   sub_GAME_7F084360
 /* 0B9550 7F086B60 00000000 */   nop   
