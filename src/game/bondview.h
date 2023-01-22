@@ -2509,7 +2509,7 @@ struct player
   s32 field_29B4;
 
   // Alt field_29C0 ?? Used in EU.
-  s32 field_29B8;
+  s32 healthDamageType;
 
   /**
    * Related to player perspective.
@@ -2598,17 +2598,17 @@ struct struct_4 {
 #ifdef BUGFIX_R0
 typedef struct bondstruct_unk_80036634
 {
-    u32 field_0x0;
-    u32 field_0x4;
-    s32 field_0x8;
-    f32 field_0xC;
-    s32 field_0x10;
-    u32 field_0x14;
-    s32 field_0x18;
-    f32 field_0x1c;
-    u32 field_0x20;
-    u32 field_0x24;
-    u32 field_0x28;
+    u32 field_0x0; // health
+    u32 field_0x4; // health
+    s32 field_0x8; // health
+    f32 field_0xC; // damage
+    s32 flashStartFrame;
+    u32 flashFullFrame;
+    s32 flashEndFrame;
+    f32 maxAlpha;
+    u32 red;
+    u32 green;
+    u32 blue;
 } bondstruct_unk_80036634;
 #else
 typedef struct bondstruct_unk_80036634
@@ -2617,13 +2617,13 @@ typedef struct bondstruct_unk_80036634
     f32 field_0x4;
     f32 field_0x8;
     f32 field_0xC;
-    f32 field_0x10;
-    f32 field_0x14;
-    f32 field_0x18;
-    f32 field_0x1c;
-    u32 field_0x20;
-    u32 field_0x24;
-    u32 field_0x28;
+    f32 flashStartFrame;
+    f32 flashFullFrame;
+    f32 flashEndFrame;
+    f32 maxAlpha;
+    u32 red;
+    u32 green;
+    u32 blue;
 } bondstruct_unk_80036634;
 #endif
 

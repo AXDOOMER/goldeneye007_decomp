@@ -475,30 +475,14 @@ u32 D_80036630 = 0;
 
 //D:80036634
 bondstruct_unk_80036634 D_80036634[] = {
-        {   0x0,    10.0,    60.0,    0.600000023842,
-           0x0,    5.0,    40.0,    1.0,
-          0xFF,          0xFF,          0xFF},
-        {   0x0,    10.0,    60.0,    0.600000023842,
-           0x0,    5.0,    40.0,    1.0,
-          0xFF,          0xFF,          0xFF},
-        {   0x0,    10.0,    50.0,    0.600000023842,
-           0x0,    5.0,    30.0,    0.800000011921,
-          0xFF,          0xFF,          0xFF},
-        {   0x0,    10.0,    40.0,    0.600000023842,
-           0x0,    5.0,    25.0,    0.600000023842,
-          0xFF,          0xFF,          0xFF},
-        {   0x0,    10.0,    35.0,    0.600000023842,
-           0x0,    5.0,    22.0,    0.550000011921,
-          0xFF,          0xFF,          0xFF},
-        {   0x0,    10.0,    30.0,    0.600000023842,
-           0x0,    5.0,    19.0,    0.5,
-          0xFF,          0xFF,          0xFF},
-        {   0x0,    10.0,    30.0,    0.600000023842,
-           0x0,    5.0,    17.0,    0.449999988079,
-          0xFF,          0xFF,          0xFF},
-        {   0x0,    10.0,    30.0,    0.600000023842,
-           0x0,    5.0,    15.0,    0.40000000596,
-          0xFF,          0xFF,          0xFF}
+        {   0x0,    10.0,    60.0,    0.600000023842, 0x0,    5.0,    40.0,    1.0,            0xFF,       0xFF,       0xFF},
+        {   0x0,    10.0,    60.0,    0.600000023842, 0x0,    5.0,    40.0,    1.0,            0xFF,       0xFF,       0xFF},
+        {   0x0,    10.0,    50.0,    0.600000023842, 0x0,    5.0,    30.0,    0.800000011921, 0xFF,       0xFF,       0xFF},
+        {   0x0,    10.0,    40.0,    0.600000023842, 0x0,    5.0,    25.0,    0.600000023842, 0xFF,       0xFF,       0xFF},
+        {   0x0,    10.0,    35.0,    0.600000023842, 0x0,    5.0,    22.0,    0.550000011921, 0xFF,       0xFF,       0xFF},
+        {   0x0,    10.0,    30.0,    0.600000023842, 0x0,    5.0,    19.0,    0.5,            0xFF,       0xFF,       0xFF},
+        {   0x0,    10.0,    30.0,    0.600000023842, 0x0,    5.0,    17.0,    0.449999988079, 0xFF,       0xFF,       0xFF},
+        {   0x0,    10.0,    30.0,    0.600000023842, 0x0,    5.0,    15.0,    0.40000000596,  0xFF,       0xFF,       0xFF}
 };
 
 
@@ -23000,6 +22984,7 @@ void sub_GAME_7F083FC8(void)
     // update damage showtime
     if (g_CurrentPlayer->damageshowtime >= 0)
     {
+        // 0: This is the first frame of damage
         if (g_CurrentPlayer->damageshowtime == 0)
         {
             gunSetGunAmmoVisible(GUNAMMOREASON_DAMAGE, FALSE);
@@ -23026,7 +23011,7 @@ void sub_GAME_7F083FC8(void)
 #ifdef VERSION_US
         if (
             (D_80036634[g_CurrentPlayer->damagetype].field_0x8 >= g_CurrentPlayer->damageshowtime) 
-            || (D_80036634[g_CurrentPlayer->damagetype].field_0x18 >= g_CurrentPlayer->damageshowtime))
+            || (D_80036634[g_CurrentPlayer->damagetype].flashEndFrame >= g_CurrentPlayer->damageshowtime))
         {
             if (!g_CurrentPlayer->bonddead)
             {
@@ -23034,11 +23019,11 @@ void sub_GAME_7F083FC8(void)
         if (!g_CurrentPlayer->bonddead
             && (
                 (D_80036634[g_CurrentPlayer->damagetype].field_0x8 >= g_CurrentPlayer->damageshowtime) 
-                || (D_80036634[g_CurrentPlayer->damagetype].field_0x18 >= g_CurrentPlayer->damageshowtime)))
+                || (D_80036634[g_CurrentPlayer->damagetype].flashEndFrame >= g_CurrentPlayer->damageshowtime)))
         {
 #endif
-            if (g_CurrentPlayer->damageshowtime >= D_80036634[g_CurrentPlayer->damagetype].field_0x10
-                && g_CurrentPlayer->damageshowtime <= D_80036634[g_CurrentPlayer->damagetype].field_0x18)
+            if (g_CurrentPlayer->damageshowtime >= D_80036634[g_CurrentPlayer->damagetype].flashStartFrame
+                && g_CurrentPlayer->damageshowtime <= D_80036634[g_CurrentPlayer->damagetype].flashEndFrame)
             {
                 f32 frac;
 #ifdef VERSION_US
@@ -23051,23 +23036,23 @@ void sub_GAME_7F083FC8(void)
                 f32 flashfullframe;
 #endif
                 
-                flashdoneframes = g_CurrentPlayer->damageshowtime - D_80036634[g_CurrentPlayer->damagetype].field_0x10;
-                flashfullframe = D_80036634[g_CurrentPlayer->damagetype].field_0x14;
-                totalframes = D_80036634[g_CurrentPlayer->damagetype].field_0x18 - D_80036634[g_CurrentPlayer->damagetype].field_0x10;
+                flashdoneframes = g_CurrentPlayer->damageshowtime - D_80036634[g_CurrentPlayer->damagetype].flashStartFrame;
+                flashfullframe = D_80036634[g_CurrentPlayer->damagetype].flashFullFrame;
+                totalframes = D_80036634[g_CurrentPlayer->damagetype].flashEndFrame - D_80036634[g_CurrentPlayer->damagetype].flashStartFrame;
 
                 if (flashdoneframes < flashfullframe)
                 {
-                    frac = (D_80036634[g_CurrentPlayer->damagetype].field_0x1c * (f32)flashdoneframes) / (f32)flashfullframe;
+                    frac = (D_80036634[g_CurrentPlayer->damagetype].maxAlpha * (f32)flashdoneframes) / (f32)flashfullframe;
                 }
                 else
                 {
-                    frac = (D_80036634[g_CurrentPlayer->damagetype].field_0x1c * (f32)(totalframes - flashdoneframes)) / (f32)(totalframes - flashfullframe);
+                    frac = (D_80036634[g_CurrentPlayer->damagetype].maxAlpha * (f32)(totalframes - flashdoneframes)) / (f32)(totalframes - flashfullframe);
                 }
 
                 currentPlayerSetFadeColour(
-                    D_80036634[g_CurrentPlayer->damagetype].field_0x20,
-                    D_80036634[g_CurrentPlayer->damagetype].field_0x24,
-                    D_80036634[g_CurrentPlayer->damagetype].field_0x28,
+                    D_80036634[g_CurrentPlayer->damagetype].red,
+                    D_80036634[g_CurrentPlayer->damagetype].green,
+                    D_80036634[g_CurrentPlayer->damagetype].blue,
                     frac);
             }
 #ifdef VERSION_US
@@ -23109,27 +23094,28 @@ void sub_GAME_7F083FC8(void)
     // update health showtime
     if (g_CurrentPlayer->healthshowtime >= 0)
     {
+        // 0: This is the first frame of damage
         if (g_CurrentPlayer->healthshowtime == 0)
         {
-            g_CurrentPlayer->field_29B8 = (s32)(bondviewGetCurrentPlayerHealth() * 8.0f);
+            g_CurrentPlayer->healthDamageType = (s32)(bondviewGetCurrentPlayerHealth() * 8.0f);
             
-            if (g_CurrentPlayer->field_29B8 >= 8)
+            if (g_CurrentPlayer->healthDamageType >= 8)
             {
-                g_CurrentPlayer->field_29B8 = 7;
+                g_CurrentPlayer->healthDamageType = 7;
             }
 
 #if defined(VERSION_EU) || defined(VERSION_JP)
-            if (g_CurrentPlayer->field_29B8 < 0)
+            if (g_CurrentPlayer->healthDamageType < 0)
             {
-                g_CurrentPlayer->field_29B8 = 0;
+                g_CurrentPlayer->healthDamageType = 0;
             }
 #endif
         }
 
         if (!g_CurrentPlayer->bonddead)
         {
-            if ((g_CurrentPlayer->healthshowtime >= D_80036794[g_CurrentPlayer->field_29B8].unk0) 
-                && (D_80036794[g_CurrentPlayer->field_29B8].unk4 >= g_CurrentPlayer->healthshowtime))
+            if ((g_CurrentPlayer->healthshowtime >= D_80036794[g_CurrentPlayer->healthDamageType].unk0) 
+                && (D_80036794[g_CurrentPlayer->healthDamageType].unk4 >= g_CurrentPlayer->healthshowtime))
             {
                 g_CurrentPlayer->apparenthealth = g_CurrentPlayer->oldhealth;
                 g_CurrentPlayer->apparentarmour = g_CurrentPlayer->oldarmour;
@@ -23139,8 +23125,8 @@ void sub_GAME_7F083FC8(void)
                 g_CurrentPlayer->healthshowtime += g_GlobalTimerDelta;
 #endif
             }
-            else if ((g_CurrentPlayer->healthshowtime >= D_80036794[g_CurrentPlayer->field_29B8].unk0)
-                && (D_80036794[g_CurrentPlayer->field_29B8].unk8 >= g_CurrentPlayer->healthshowtime))
+            else if ((g_CurrentPlayer->healthshowtime >= D_80036794[g_CurrentPlayer->healthDamageType].unk0)
+                && (D_80036794[g_CurrentPlayer->healthDamageType].unk8 >= g_CurrentPlayer->healthshowtime))
             {
                 g_CurrentPlayer->apparenthealth = g_CurrentPlayer->bondhealth;
                 g_CurrentPlayer->apparentarmour = g_CurrentPlayer->bondarmour;
