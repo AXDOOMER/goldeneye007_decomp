@@ -2784,7 +2784,7 @@ D:80036624                     .word 0xFFFFFF00, 0xFFFFFF00, 0x4FFFFFF
 //D:80036630
 extern u32 D_80036630;
 //D:80036634
-extern struct HealthDamageType g_HealthDamageTypes[];
+extern struct HealthDamageType g_DamageTypes[];
 /*
 D:80036638                     .byte 0
 D:80036639                     .byte 0, 0, 0xA
