@@ -474,7 +474,7 @@ u32 D_80036630 = 0;
 
 
 //D:80036634
-bondstruct_unk_80036634 g_HealthDamageTypes[] = {
+struct HealthDamageType g_HealthDamageTypes[] = {
         {   0x0,    10.0,    60.0,    0.600000023842, 0x0,    5.0,    40.0,    1.0,            0xFF,       0xFF,       0xFF},
         {   0x0,    10.0,    60.0,    0.600000023842, 0x0,    5.0,    40.0,    1.0,            0xFF,       0xFF,       0xFF},
         {   0x0,    10.0,    50.0,    0.600000023842, 0x0,    5.0,    30.0,    0.800000011921, 0xFF,       0xFF,       0xFF},

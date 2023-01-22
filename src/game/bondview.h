@@ -2596,7 +2596,7 @@ struct struct_4 {
 };
 
 #ifdef BUGFIX_R0
-typedef struct bondstruct_unk_80036634
+typedef struct HealthDamageType
 {
     u32 field_0x0; // health
     u32 field_0x4; // health
@@ -2609,9 +2609,9 @@ typedef struct bondstruct_unk_80036634
     u32 red;
     u32 green;
     u32 blue;
-} bondstruct_unk_80036634;
+} HealthDamageType;
 #else
-typedef struct bondstruct_unk_80036634
+typedef struct HealthDamageType
 {
     f32 field_0x0;
     f32 field_0x4;
@@ -2624,7 +2624,7 @@ typedef struct bondstruct_unk_80036634
     u32 red;
     u32 green;
     u32 blue;
-} bondstruct_unk_80036634;
+} HealthDamageType;
 #endif
 
 typedef struct bondstruct_unk_80036794 { // time related idk
@@ -2784,7 +2784,7 @@ D:80036624                     .word 0xFFFFFF00, 0xFFFFFF00, 0x4FFFFFF
 //D:80036630
 extern u32 D_80036630;
 //D:80036634
-extern bondstruct_unk_80036634 g_HealthDamageTypes[];
+extern struct HealthDamageType g_HealthDamageTypes[];
 /*
 D:80036638                     .byte 0
 D:80036639                     .byte 0, 0, 0xA
