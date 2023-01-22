@@ -68,6 +68,8 @@
 #define RAD2BYTE(RAD)         (char)(256.0f / M_TAU_F * (RAD))
 /* Converts an angle from Degrees to Radians */
 #define DegToRad(DEG)         (float)((DEG) * M_TAU_F / 360.0f)
+/* Converts an angle from Degrees to Radians with only one multiply*/
+#define DegToRad1Fact(DEG)         (float)((DEG) * (float)(M_TAU / 360.0))
 /* Converts and halves an angle from Degrees to Radians */
 #define mDegToHalfRad(x)      ((x * M_PI_F) / 360.0f)
 /* Converts an angle from Radians to Degrees */
