@@ -25067,12 +25067,12 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
         f32 stack_padding_3;
         f32 stack_padding_111;
         f32 ftemp_26;
-        f32 sp328;
+        f32 nd; // canonical name
         f32 ftemp_7;
         f32 sp240;
         struct move_bond_temp_struct curLocus;
         struct move_bond_collision bondCollision;
-        f32 sp180;
+        f32 shorten; // canonical name
         f32 headpos_x;
         f32 headpos_z;
         struct StandTile *sp174;
@@ -25271,10 +25271,10 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                 sp168 = bondCollision.bondCollision.f[0] - bondCollision.sp190.f[0];
                 sp16C = bondCollision.sp190.f[2] - bondCollision.bondCollision.f[2];
 
-                sp328 = sqrtf((sp16C * sp16C) + (sp168 * sp168));
+                nd = sqrtf((sp16C * sp16C) + (sp168 * sp168));
                 
-                sp168 = sp168 / sp328;
-                sp16C = sp16C / sp328;
+                sp168 = sp168 / nd;
+                sp16C = sp16C / nd;
 
                 sp164 =
                     ((start_collision_pos_x - bondCollision.bondCollision.f[0]) * sp16C) +
@@ -25286,7 +25286,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                 
                 if ((sp164 * sp2B0) <= 0.0f)
                 {
-                    sp180 = 0.0f;
+                    shorten = 0.0f;
                 }
                 else
                 {
@@ -25298,19 +25298,19 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
 
                     if (sp164 <= sp2B0)
                     {
-                        sp180 = 0.0f;
+                        shorten = 0.0f;
                     }
                     else if (g_CurrentPlayer->field_488.collision_radius < sp2B0)
                     {
-                        sp180 = 0.0f;
+                        shorten = 0.0f;
                     }
                     else if (sp164 < g_CurrentPlayer->field_488.collision_radius)
                     {
-                        sp180 = 0.0f;
+                        shorten = 0.0f;
                     }
                     else
                     {
-                        sp180 = (sp164 - g_CurrentPlayer->field_488.collision_radius) / (sp164 - sp2B0);
+                        shorten = (sp164 - g_CurrentPlayer->field_488.collision_radius) / (sp164 - sp2B0);
                     }
                 }
 
@@ -25319,14 +25319,14 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                 {
                     f32 sp318;
                     
-                    sp318 = (1.0f - sp180) * sp2A8;
+                    sp318 = (1.0f - shorten) * sp2A8;
                     sp390 = sp318 * 0.25f;
 
                     if (bondCollision.sp19C.f[1] <= (g_CurrentPlayer->stanHeight + sp390))
                     {
                         sp390 = (bondCollision.sp19C.f[1] - g_CurrentPlayer->stanHeight);
                         sp318 -= (sp390 / 0.25f);
-                        sp180 += (sp318 / sp2A8);
+                        shorten += (sp318 / sp2A8);
                     }
                 }
 
@@ -25341,8 +25341,8 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                     sp310 = sp24C;
                 }
 
-                sp3AC.f[0] = (sp3AC.f[0] * sp180) + (sp314 * (sp390 / (bondCollision.sp19C.f[1] - bondCollision.bondCollision.f[1])));
-                sp3AC.f[2] = (sp3AC.f[2] * sp180) + (sp310 * (sp390 / (bondCollision.sp19C.f[1] - bondCollision.bondCollision.f[1])));
+                sp3AC.f[0] = (sp3AC.f[0] * shorten) + (sp314 * (sp390 / (bondCollision.sp19C.f[1] - bondCollision.bondCollision.f[1])));
+                sp3AC.f[2] = (sp3AC.f[2] * shorten) + (sp310 * (sp390 / (bondCollision.sp19C.f[1] - bondCollision.bondCollision.f[1])));
 
                 g_CurrentPlayer->field_488.collision_position.f[0] = start_collision_pos_x;
                 g_CurrentPlayer->field_488.collision_position.f[2] = start_collision_pos_z;
