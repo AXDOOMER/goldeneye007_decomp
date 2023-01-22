@@ -24310,32 +24310,12 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
         #define MAX_SPEED_FACTOR 0.8f
         #define D_80036490_FACTOR 90
     #endif
-    
-    #define FLOAT_ZERO  0.0f
-    #define FLOAT_3_5   3.5f
-    #define FLOAT_4_0   4.0f
-
-    #define CLOCK_TIMER_1_PRE    
-    #define CLOCK_TIMER_1_i      i_1
-    #define CLOCK_TIMER_1_POST   
-
-    #define CLOCK_TIMER_2_PRE     if (g_ClockTimer > 0) {
-    #define CLOCK_TIMER_2_i       i
-    #define CLOCK_TIMER_2_POST    }
-
-    #define CLOCK_TIMER_3_PRE     
-    #define CLOCK_TIMER_3_i       i_3
-    #define CLOCK_TIMER_3_POST    
-
-    #define CLOCK_TIMER_4_PRE     
-    #define CLOCK_TIMER_4_i       i_4
-    #define CLOCK_TIMER_4_POST    
 
     sp3AC = D_800367F4;
 
     sp394 = 0;
-    maxspeed = FLOAT_ZERO;
-    sp390 = FLOAT_ZERO;
+    maxspeed = 0.0f;
+    sp390 = 0.0f;
 
     #if defined(VERSION_US) || defined(VERSION_JP)
     if (stick_x >= 100 || stick_x <= -100) return_null(); // __LINE__ __FILE__ (#6414 bondview.c) "joystick x has value %d!\n"
@@ -24378,7 +24358,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
             g_CurrentPlayer->speedsideways *= 0.5f;
         }
 
-        if ((g_CurrentPlayer->bondshotspeed.f[0] != FLOAT_ZERO) || (g_CurrentPlayer->bondshotspeed.f[2] != FLOAT_ZERO))
+        if ((g_CurrentPlayer->bondshotspeed.f[0] != 0.0f) || (g_CurrentPlayer->bondshotspeed.f[2] != 0.0f))
         {
             // boost forwards
             f32 shotboost_forward; // sp38C
@@ -24403,26 +24383,26 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
             // 3: x,y,z components of bondshotspeed
             for (i=0; i<3; i++)
             {
-                if (g_CurrentPlayer->bondshotspeed.f[i] != FLOAT_ZERO)
+                if (g_CurrentPlayer->bondshotspeed.f[i] != 0.0f)
                 {
-                    if (g_CurrentPlayer->bondshotspeed.f[i] > FLOAT_ZERO)
+                    if (g_CurrentPlayer->bondshotspeed.f[i] > 0.0f)
                     {
                         g_CurrentPlayer->bondshotspeed.f[i] -=
                             ((0.06666667f * g_GlobalTimerDelta * g_CurrentPlayer->bondshotspeed.f[i]) / shotboost_norm);
                         
-                        if (g_CurrentPlayer->bondshotspeed.f[i] < FLOAT_ZERO)
+                        if (g_CurrentPlayer->bondshotspeed.f[i] < 0.0f)
                         {
-                            g_CurrentPlayer->bondshotspeed.f[i] = FLOAT_ZERO;
+                            g_CurrentPlayer->bondshotspeed.f[i] = 0.0f;
                         }
                     }
-                    else if (g_CurrentPlayer->bondshotspeed.f[i] < FLOAT_ZERO)
+                    else if (g_CurrentPlayer->bondshotspeed.f[i] < 0.0f)
                     {
                         g_CurrentPlayer->bondshotspeed.f[i] -=
                             ((0.06666667f * g_GlobalTimerDelta * g_CurrentPlayer->bondshotspeed.f[i]) / shotboost_norm);
                         
-                        if (g_CurrentPlayer->bondshotspeed.f[i] > FLOAT_ZERO)
+                        if (g_CurrentPlayer->bondshotspeed.f[i] > 0.0f)
                         {
-                            g_CurrentPlayer->bondshotspeed.f[i] = FLOAT_ZERO;
+                            g_CurrentPlayer->bondshotspeed.f[i] = 0.0f;
                         }
                     }
                 }
@@ -24445,7 +24425,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
         f32 tank_collision_dx; // lines 313-536
         f32 tank_collision_dz; // lines 314-357
         
-        tankChangeInAngle = DegToRad1Fact(g_CurrentPlayer->speedtheta * g_GlobalTimerDelta) * FLOAT_3_5;
+        tankChangeInAngle = DegToRad1Fact(g_CurrentPlayer->speedtheta * g_GlobalTimerDelta) * 3.5f;
         curTankAngleRad = g_TankOrientationAngle + tankChangeInAngle;
         
         if (curTankAngleRad >= M_TAU_F)
@@ -24453,7 +24433,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
             curTankAngleRad -= M_TAU_F;
         }
         
-        if (curTankAngleRad < FLOAT_ZERO)
+        if (curTankAngleRad < 0.0f)
         {
             curTankAngleRad += M_TAU_F;
         }
@@ -24504,7 +24484,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                 ((g_CurrentPlayer->field_488.collision_position.f[0] - check_collision_p2.f[0]) * sp324) +
                 ((g_CurrentPlayer->field_488.collision_position.f[2] - check_collision_p2.f[2]) * sp320);
             
-            if (sp210 < FLOAT_ZERO)
+            if (sp210 < 0.0f)
             {
                 sp210 = -sp210;
                 sp324 = -sp324;
@@ -24538,7 +24518,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                 ((g_CurrentPlayer->field_488.collision_position.f[0] - check_collision_p2.f[0]) * sp30C) +
                 ((g_CurrentPlayer->field_488.collision_position.f[2] - check_collision_p2.f[2]) * sp308);
 
-            if (sp210 < FLOAT_ZERO)
+            if (sp210 < 0.0f)
             {
                 sp210 = -sp210;
                 sp30C = -sp30C;
@@ -24564,22 +24544,22 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                 sp304 = sp210 - sp1FC;
             }
      
-            if ((sp304 >= FLOAT_ZERO) && ((sp304 < sp31C) || (sp31C < FLOAT_ZERO)))
+            if ((sp304 >= 0.0f) && ((sp304 < sp31C) || (sp31C < 0.0f)))
             {
                 sp324 = sp30C;
                 sp320 = sp308;
                 sp31C = sp304;
             }
             
-            if (sp31C >= FLOAT_ZERO)
+            if (sp31C >= 0.0f)
             {
                 sp3AC.f[0] = sp31C * sp324 * 1.01f;
                 sp3AC.f[2] = sp31C * sp320 * 1.01f;
                 
                 bondviewCalcUpdatePlayerCollision(&sp3AC, 1);
                 
-                sp3AC.f[0] = FLOAT_ZERO;
-                sp3AC.f[2] = FLOAT_ZERO;
+                sp3AC.f[0] = 0.0f;
+                sp3AC.f[2] = 0.0f;
 
                 if (bondviewTankCollisionStatus(
                     &g_CurrentPlayer->field_488.collision_position,
@@ -24592,12 +24572,12 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                 }
                 else
                 {
-                    tankChangeInAngle = FLOAT_ZERO;
+                    tankChangeInAngle = 0.0f;
                 }
             }
             else
             {
-                tankChangeInAngle = FLOAT_ZERO;
+                tankChangeInAngle = 0.0f;
             }
         }
 
@@ -24608,14 +24588,14 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
             g_TankTurretAngle -= M_TAU_F;
         }
 
-        if (g_TankTurretAngle < FLOAT_ZERO)
+        if (g_TankTurretAngle < 0.0f)
         {
             g_TankTurretAngle += M_TAU_F;
         }
 
-        ftemp = (DegToRad1Fact(g_CurrentPlayer->speedtheta * FLOAT_3_5) * FLOAT_4_0) + g_TankTurretAngle;
+        ftemp = (DegToRad1Fact(g_CurrentPlayer->speedtheta * 3.5f) * 4.0f) + g_TankTurretAngle;
        
-        if (ftemp < FLOAT_ZERO)
+        if (ftemp < 0.0f)
         {
             ftemp += M_TAU_F;
         }
@@ -24634,12 +24614,10 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
             ftemp += M_TAU_F;
         }
 
-        CLOCK_TIMER_1_PRE
-        for (CLOCK_TIMER_1_i=0; CLOCK_TIMER_1_i<g_ClockTimer; CLOCK_TIMER_1_i++)
+        for (i_1=0; i_1<g_ClockTimer; i_1++)
         {
             D_80036478 = ((TANKUPDATEROTATION_SCALE) * D_80036478) + ftemp;
         }
-        CLOCK_TIMER_1_POST
 
         g_TankTurretOrientationAngleRad = D_80036478 * (1.0f - TANKUPDATEROTATION_SCALE);
 
@@ -24649,7 +24627,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
             D_80036478 = g_TankTurretOrientationAngleRad / (1.0f - TANKUPDATEROTATION_SCALE);
         }
         
-        if (g_TankTurretOrientationAngleRad < FLOAT_ZERO)
+        if (g_TankTurretOrientationAngleRad < 0.0f)
         {
             g_TankTurretOrientationAngleRad += M_TAU_F;
             D_80036478 = g_TankTurretOrientationAngleRad / (1.0f - TANKUPDATEROTATION_SCALE);
@@ -24675,7 +24653,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
             
             temp_tank = (struct TankRecord *)ptr_playerstank->obj;
             
-            sp2F4.f[1] = FLOAT_ZERO;
+            sp2F4.f[1] = 0.0f;
             sp2F4.f[0] = flt_CODE_bss_800799A8.f[0];
             sp2F4.f[2] = flt_CODE_bss_800799A8.f[2];
 
@@ -24685,7 +24663,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
             
             if (0) { }
             
-            sp2F4.f[1] = FLOAT_ZERO;
+            sp2F4.f[1] = 0.0f;
             sp2F4.f[0] = flt_CODE_bss_800799A8.f[0] - sp2F4.f[0];
             sp2F4.f[2] = flt_CODE_bss_800799A8.f[2] - sp2F4.f[2];
 
@@ -24695,23 +24673,23 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
             bondviewCalcUpdatePlayerCollision(&sp2F4, 1);
         }
 
-        CLOCK_TIMER_2_PRE
-            for (CLOCK_TIMER_2_i=0; CLOCK_TIMER_2_i<g_ClockTimer; CLOCK_TIMER_2_i++)
+        if (g_ClockTimer > 0) {
+            for (i=0; i<g_ClockTimer; i++)
             {
                 D_8003647C = (TANKUPDATEROTATION_SCALE * D_8003647C) + (g_TankTurretTurn / g_GlobalTimerDelta);
             }
-        CLOCK_TIMER_2_POST
+        }
 
         ftemp = D_8003647C * (1.0f - TANKUPDATEROTATION_SCALE);
 
         g_CurrentPlayer->vv_theta = (
             g_TankOrientationAngle +
             g_TankTurretOrientationAngleRad +
-            ((DegToRad1Fact(g_CurrentPlayer->speedtheta * FLOAT_3_5)) * (4.0f)) +
+            ((DegToRad1Fact(g_CurrentPlayer->speedtheta * 3.5f)) * (4.0f)) +
             (ftemp * 4.0f)
             ) * 360.0f / M_TAU_F;
 
-        while (g_CurrentPlayer->vv_theta < FLOAT_ZERO)
+        while (g_CurrentPlayer->vv_theta < 0.0f)
         {
             g_CurrentPlayer->vv_theta += 360.0f;
         }
@@ -24722,9 +24700,9 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
     }
     else
     {
-        stack_padding_9 = g_CurrentPlayer->vv_theta + (g_CurrentPlayer->speedtheta * g_GlobalTimerDelta * FLOAT_3_5) ;
+        stack_padding_9 = g_CurrentPlayer->vv_theta + (g_CurrentPlayer->speedtheta * g_GlobalTimerDelta * 3.5f) ;
 
-        while (stack_padding_9 < FLOAT_ZERO)
+        while (stack_padding_9 < 0.0f)
         {
             stack_padding_9 += 360.0f;
         }
@@ -24743,7 +24721,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
         f32 sp2AC;
         f32 stack_padding_15;
         
-        sp2AC = FLOAT_ZERO;
+        sp2AC = 0.0f;
         if (currentPlayerGetCrouchPos() == CROUCH_SQUAT)
         {
             sp2AC = -100.0f;
@@ -24771,7 +24749,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
     
         if (sp2AC == g_CurrentPlayer->ducking_height_offset)
         {
-            g_CurrentPlayer->field_A4 = FLOAT_ZERO;
+            g_CurrentPlayer->field_A4 = 0.0f;
         }
     }
 
@@ -24845,7 +24823,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                     g_CurrentPlayer->vv_theta -= 360.0f;
                 }
 
-                if (g_CurrentPlayer->vv_theta < FLOAT_ZERO)
+                if (g_CurrentPlayer->vv_theta < 0.0f)
                 {
                     g_CurrentPlayer->vv_theta += 360.0f;
                 }
@@ -24856,7 +24834,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                     ) - 
                     g_CurrentPlayer->field_488.collision_position.f[0];
 
-                sp3AC.f[1] = FLOAT_ZERO;
+                sp3AC.f[1] = 0.0f;
 
                 sp3AC.f[2] = (
                     (g_TankEnteringSitHeightRemain * g_EnterTankCoord.f[2]) +
@@ -24910,11 +24888,11 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                 tank_waudio_speedforwards = g_CurrentPlayer->speedforwards / 15.0f;
                 tank_waudio_speedtheta = g_CurrentPlayer->speedtheta / 0.3f;
                 
-                if (tank_waudio_speedforwards < FLOAT_ZERO)
+                if (tank_waudio_speedforwards < 0.0f)
                 {
                     tank_waudio_speedforwards = -tank_waudio_speedforwards;
                 }
-                if (tank_waudio_speedtheta < FLOAT_ZERO)
+                if (tank_waudio_speedtheta < 0.0f)
                 {
                     tank_waudio_speedtheta = -tank_waudio_speedtheta;
                 }
@@ -24925,7 +24903,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                     sp244_tank_engine_utilization = tank_waudio_speedtheta;
                 }
 
-                if (sp244_tank_engine_utilization > FLOAT_ZERO)
+                if (sp244_tank_engine_utilization > 0.0f)
                 {
                     if (sp244_tank_engine_utilization > 1.0f)
                     {
@@ -25008,12 +24986,10 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                     tank_waudio_vertical_angle = -0.087266468f;
                 }
 
-                CLOCK_TIMER_3_PRE
-                for (CLOCK_TIMER_3_i=0; CLOCK_TIMER_3_i<g_ClockTimer; CLOCK_TIMER_3_i++)
+                for (i_3=0; i_3<g_ClockTimer; i_3++)
                 {
                     g_TankTurretVerticalAngleRelated = (TANKTURRETVERTICALANGLERELATED_SCALE * g_TankTurretVerticalAngleRelated) + tank_waudio_vertical_angle;
                 }
-                CLOCK_TIMER_3_POST
 
                 g_TankTurretVerticalAngle = g_TankTurretVerticalAngleRelated * (1.0f - TANKTURRETVERTICALANGLERELATED_SCALE);
             }
@@ -25025,12 +25001,12 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
         //g_CurrentPlayer->bondbreathing -= (0.750f * g_GlobalTimerDelta) / 2700.0f;
         g_CurrentPlayer->bondbreathing -= (0.750f * g_GlobalTimerDelta) / 2700.0f;
 
-        if (g_CurrentPlayer->bondbreathing < FLOAT_ZERO)
+        if (g_CurrentPlayer->bondbreathing < 0.0f)
         {
-            g_CurrentPlayer->bondbreathing = FLOAT_ZERO;
+            g_CurrentPlayer->bondbreathing = 0.0f;
         }
         
-        bondviewMoveAnimationTick(FLOAT_ZERO, FLOAT_ZERO, FLOAT_ZERO);
+        bondviewMoveAnimationTick(0.0f, 0.0f, 0.0f);
 
         sp3AC.f[0] += g_CurrentPlayer->speedforwards * sinf(M_TAU_F - g_TankOrientationAngle) * g_GlobalTimerDelta;
         sp3AC.f[2] += g_CurrentPlayer->speedforwards * cosf(M_TAU_F - g_TankOrientationAngle) * g_GlobalTimerDelta;
@@ -25058,7 +25034,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
             tank_audio2_z = (g_CurrentPlayer->field_488.collision_position.f[2] - g_CurrentPlayer->bondprevpos.f[2]) / g_GlobalTimerDelta;
             tank_audio2_speedforwards = sqrtf((tank_audio2_x * tank_audio2_x) + (tank_audio2_z * tank_audio2_z));
             
-            if (g_CurrentPlayer->speedforwards < FLOAT_ZERO)
+            if (g_CurrentPlayer->speedforwards < 0.0f)
             {
                 tank_audio2_speedforwards = -tank_audio2_speedforwards;
             }
@@ -25150,15 +25126,15 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
         speedforwards = g_CurrentPlayer->speedforwards;
         speedtheta = g_CurrentPlayer->speedtheta * MAX_SPEED_FACTOR;
 
-        if (speedsideways < FLOAT_ZERO)
+        if (speedsideways < 0.0f)
         {
             speedsideways = -speedsideways;
         }
-        if (speedforwards < FLOAT_ZERO)
+        if (speedforwards < 0.0f)
         {
             speedforwards = -speedforwards;
         }
-        if (speedtheta < FLOAT_ZERO)
+        if (speedtheta < 0.0f)
         {
             speedtheta = -speedtheta;
         }
@@ -25192,9 +25168,9 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
             g_CurrentPlayer->bondbreathing -= (0.750f - maxspeed) * g_GlobalTimerDelta / 2700.0f;
         }
         
-        if (g_CurrentPlayer->bondbreathing < FLOAT_ZERO)
+        if (g_CurrentPlayer->bondbreathing < 0.0f)
         {
-            g_CurrentPlayer->bondbreathing = FLOAT_ZERO;
+            g_CurrentPlayer->bondbreathing = 0.0f;
         }
         else if (g_CurrentPlayer->bondbreathing > 1.0f)
         {
@@ -25241,7 +25217,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                 ) * g_GlobalTimerDelta * 10.0f;
         }
         
-        bondviewCalcUpdatePlayerCollision(&sp3AC, (g_CurrentPlayer->swaytarget == FLOAT_ZERO));
+        bondviewCalcUpdatePlayerCollision(&sp3AC, (g_CurrentPlayer->swaytarget == 0.0f));
 
         stanTileDistanceRelated(
             &sp200,
@@ -25308,13 +25284,13 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                     (((start_collision_pos_x + sp3AC.f[0]) - bondCollision.bondCollision.f[0]) * sp16C) +
                     (((start_collision_pos_z + sp3AC.f[2]) - bondCollision.bondCollision.f[2]) * sp168);
                 
-                if ((sp164 * sp2B0) <= FLOAT_ZERO)
+                if ((sp164 * sp2B0) <= 0.0f)
                 {
-                    sp180 = FLOAT_ZERO;
+                    sp180 = 0.0f;
                 }
                 else
                 {
-                    if (sp2B0 < FLOAT_ZERO)
+                    if (sp2B0 < 0.0f)
                     {
                         sp164 = -sp164;
                         sp2B0 = -sp2B0;
@@ -25322,15 +25298,15 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
 
                     if (sp164 <= sp2B0)
                     {
-                        sp180 = FLOAT_ZERO;
+                        sp180 = 0.0f;
                     }
                     else if (g_CurrentPlayer->field_488.collision_radius < sp2B0)
                     {
-                        sp180 = FLOAT_ZERO;
+                        sp180 = 0.0f;
                     }
                     else if (sp164 < g_CurrentPlayer->field_488.collision_radius)
                     {
-                        sp180 = FLOAT_ZERO;
+                        sp180 = 0.0f;
                     }
                     else
                     {
@@ -25339,7 +25315,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                 }
 
                 sp2A8 = sqrtf((sp3AC.f[0] * sp3AC.f[0]) + (sp3AC.f[2] * sp3AC.f[2]));
-                if (sp2A8 > FLOAT_ZERO)
+                if (sp2A8 > 0.0f)
                 {
                     f32 sp318;
                     
@@ -25477,17 +25453,15 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
 
         sp140_tank_as_TankRecord->stan_y = stanGetPositionYValue(sp138_tank_as_ObjectRecord->prop->stan, spE4.f[0], spE4.f[2]);
 
-        CLOCK_TIMER_4_PRE
-        for (CLOCK_TIMER_4_i=0; CLOCK_TIMER_4_i<g_ClockTimer; CLOCK_TIMER_4_i++)
+        for (i_4=0; i_4<g_ClockTimer; i_4++)
         {
             sp140_tank_as_TankRecord->unkD0 = (sp140_tank_as_TankRecord->unkD0 * TANK_UNKD0_SCALE) + sp140_tank_as_TankRecord->stan_y;
         }
-        CLOCK_TIMER_4_POST
         
         ftemp_12 = (sp140_tank_as_TankRecord->unkD0 * (1.0f - TANK_UNKD0_SCALE));
         spE4.f[1] = ftemp_12
             - (chrpropBBOXGetYmin(sp130) * sp138_tank_as_ObjectRecord->model->scale)
-            + FLOAT_4_0;
+            + 4.0f;
 
         matrix_4x4_copy(&spF0,  &sp138_tank_as_ObjectRecord->mtx);
         
