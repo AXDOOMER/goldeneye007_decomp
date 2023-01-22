@@ -20,7 +20,7 @@
 #define STAN_TAIL_E(tile) ((tile->tail.half >> 0x0C) & 0xF)
 
 struct move_bond_collision {
-    struct coord3d sp184;
+    struct coord3d bondCollision;
     struct coord3d sp190;
     struct coord3d sp19C;
     struct coord3d sp1A8;
