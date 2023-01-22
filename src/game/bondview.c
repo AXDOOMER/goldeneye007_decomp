@@ -474,7 +474,7 @@ u32 D_80036630 = 0;
 
 
 //D:80036634
-bondstruct_unk_80036634 D_80036634[] = {
+bondstruct_unk_80036634 g_HealthDamageTypes[] = {
         {   0x0,    10.0,    60.0,    0.600000023842, 0x0,    5.0,    40.0,    1.0,            0xFF,       0xFF,       0xFF},
         {   0x0,    10.0,    60.0,    0.600000023842, 0x0,    5.0,    40.0,    1.0,            0xFF,       0xFF,       0xFF},
         {   0x0,    10.0,    50.0,    0.600000023842, 0x0,    5.0,    30.0,    0.800000011921, 0xFF,       0xFF,       0xFF},
@@ -23010,20 +23010,20 @@ void sub_GAME_7F083FC8(void)
 
 #ifdef VERSION_US
         if (
-            (D_80036634[g_CurrentPlayer->damagetype].field_0x8 >= g_CurrentPlayer->damageshowtime) 
-            || (D_80036634[g_CurrentPlayer->damagetype].flashEndFrame >= g_CurrentPlayer->damageshowtime))
+            (g_HealthDamageTypes[g_CurrentPlayer->damagetype].field_0x8 >= g_CurrentPlayer->damageshowtime) 
+            || (g_HealthDamageTypes[g_CurrentPlayer->damagetype].flashEndFrame >= g_CurrentPlayer->damageshowtime))
         {
             if (!g_CurrentPlayer->bonddead)
             {
 #else
         if (!g_CurrentPlayer->bonddead
             && (
-                (D_80036634[g_CurrentPlayer->damagetype].field_0x8 >= g_CurrentPlayer->damageshowtime) 
-                || (D_80036634[g_CurrentPlayer->damagetype].flashEndFrame >= g_CurrentPlayer->damageshowtime)))
+                (g_HealthDamageTypes[g_CurrentPlayer->damagetype].field_0x8 >= g_CurrentPlayer->damageshowtime) 
+                || (g_HealthDamageTypes[g_CurrentPlayer->damagetype].flashEndFrame >= g_CurrentPlayer->damageshowtime)))
         {
 #endif
-            if (g_CurrentPlayer->damageshowtime >= D_80036634[g_CurrentPlayer->damagetype].flashStartFrame
-                && g_CurrentPlayer->damageshowtime <= D_80036634[g_CurrentPlayer->damagetype].flashEndFrame)
+            if (g_CurrentPlayer->damageshowtime >= g_HealthDamageTypes[g_CurrentPlayer->damagetype].flashStartFrame
+                && g_CurrentPlayer->damageshowtime <= g_HealthDamageTypes[g_CurrentPlayer->damagetype].flashEndFrame)
             {
                 f32 frac;
 #ifdef VERSION_US
@@ -23036,23 +23036,23 @@ void sub_GAME_7F083FC8(void)
                 f32 flashfullframe;
 #endif
                 
-                flashdoneframes = g_CurrentPlayer->damageshowtime - D_80036634[g_CurrentPlayer->damagetype].flashStartFrame;
-                flashfullframe = D_80036634[g_CurrentPlayer->damagetype].flashFullFrame;
-                totalframes = D_80036634[g_CurrentPlayer->damagetype].flashEndFrame - D_80036634[g_CurrentPlayer->damagetype].flashStartFrame;
+                flashdoneframes = g_CurrentPlayer->damageshowtime - g_HealthDamageTypes[g_CurrentPlayer->damagetype].flashStartFrame;
+                flashfullframe = g_HealthDamageTypes[g_CurrentPlayer->damagetype].flashFullFrame;
+                totalframes = g_HealthDamageTypes[g_CurrentPlayer->damagetype].flashEndFrame - g_HealthDamageTypes[g_CurrentPlayer->damagetype].flashStartFrame;
 
                 if (flashdoneframes < flashfullframe)
                 {
-                    frac = (D_80036634[g_CurrentPlayer->damagetype].maxAlpha * (f32)flashdoneframes) / (f32)flashfullframe;
+                    frac = (g_HealthDamageTypes[g_CurrentPlayer->damagetype].maxAlpha * (f32)flashdoneframes) / (f32)flashfullframe;
                 }
                 else
                 {
-                    frac = (D_80036634[g_CurrentPlayer->damagetype].maxAlpha * (f32)(totalframes - flashdoneframes)) / (f32)(totalframes - flashfullframe);
+                    frac = (g_HealthDamageTypes[g_CurrentPlayer->damagetype].maxAlpha * (f32)(totalframes - flashdoneframes)) / (f32)(totalframes - flashfullframe);
                 }
 
                 currentPlayerSetFadeColour(
-                    D_80036634[g_CurrentPlayer->damagetype].red,
-                    D_80036634[g_CurrentPlayer->damagetype].green,
-                    D_80036634[g_CurrentPlayer->damagetype].blue,
+                    g_HealthDamageTypes[g_CurrentPlayer->damagetype].red,
+                    g_HealthDamageTypes[g_CurrentPlayer->damagetype].green,
+                    g_HealthDamageTypes[g_CurrentPlayer->damagetype].blue,
                     frac);
             }
 #ifdef VERSION_US
