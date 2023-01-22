@@ -1088,8 +1088,8 @@ struct player
   gunheld gunheldarr[10];
   s32 magnetattracttime;
   f32 swaytarget;
-  f32 field_1278;
-  f32 field_127C;
+  f32 swayoffset0;
+  f32 swayoffset2;
   f32 field_1280;
   s32 players_cur_animation;
   f32 field_1288;

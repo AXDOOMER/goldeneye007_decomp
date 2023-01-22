@@ -1795,8 +1795,8 @@ void init_player_BONDdata(void)
     g_CurrentPlayer->field_94 = 0;
     g_CurrentPlayer->field_98 = 0.0f;
     g_CurrentPlayer->swaytarget = 0.0f;
-    g_CurrentPlayer->field_1278 = 0.0f;
-    g_CurrentPlayer->field_127C = 0.0f;
+    g_CurrentPlayer->swayoffset0 = 0.0f;
+    g_CurrentPlayer->swayoffset2 = 0.0f;
     g_CurrentPlayer->crouchpos = CROUCH_STAND;
     g_CurrentPlayer->autocrouchpos = CROUCH_STAND;
     g_CurrentPlayer->ducking_height_offset = 0.0f;
@@ -17463,6 +17463,8 @@ void bondviewUpdatePlayerCollisionPositionFields(void)
  * Fixes vv_verta within -90 and +90.
  * Updates vv_costheta, vv_sintheta, vv_verta360, vv_cosverta, vv_sinverta, field_488.field_10.
  * Address 0x7F081790.
+ * 
+ * Perfect Dark function bmoveUpdateVerta.
 */
 void bondviewApplyVertaTheta(void)
 {
@@ -25105,14 +25107,19 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
             sndDeactivate(SFX_80036458[1]);
         }
 
+
         ftemp_7 = (g_BondMoveAnimationSetup[1].unk0C * 0.5f  * g_GlobalTimerDelta);
         sp3A0  = g_CurrentPlayer->speedsideways * ftemp_7;
+
+        /*
+            The following is similar to a block of Perfect Dark bwalk0f0c69b8.
+        */
         
         ftemp_26 = -g_CurrentPlayer->swaytarget * g_CurrentPlayer->field_488.field_10.f[2];
         ftemp_11 = g_CurrentPlayer->swaytarget * g_CurrentPlayer->field_488.field_10.f[0];
         
-        sp220 = (ftemp_26) - g_CurrentPlayer->field_1278;
-        sp21C = (ftemp_11) - g_CurrentPlayer->field_127C;
+        sp220 = (ftemp_26) - g_CurrentPlayer->swayoffset0;
+        sp21C = (ftemp_11) - g_CurrentPlayer->swayoffset2;
         
         dist = (sp220 * sp220) + (sp21C * sp21C);
 
@@ -25177,6 +25184,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
             g_CurrentPlayer->bondbreathing = 1.0f;
         }
         
+        // perfect dark call: bmove0f0cc654
         bondviewMoveAnimationTick(maxspeed, g_CurrentPlayer->speedforwards, sp3A0);
 
         headpos_x = g_CurrentPlayer->headpos[0];
@@ -25360,8 +25368,8 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
             sp240 = ((ftemp_col_x * ftemp_col_x) + (ftemp_col_z * ftemp_col_z)) / sp240;
         }
         sp240 = sqrtf(sp240);
-        g_CurrentPlayer->field_1278 += sp240 * sp220;
-        g_CurrentPlayer->field_127C += sp240 * sp21C;
+        g_CurrentPlayer->swayoffset0 += sp240 * sp220;
+        g_CurrentPlayer->swayoffset2 += sp240 * sp21C;
     }
 
     // add basic block
