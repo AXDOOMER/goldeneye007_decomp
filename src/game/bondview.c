@@ -22998,16 +22998,6 @@ glabel controller_gameplay_interaction
 */
 void sub_GAME_7F083FC8(void)
 {
-    f32 frac;
-    s32 unk_field10;
-    s32 unk_field14;
-    s32 unk_field14_2;
-    s32 dmg_time_diff;
-    s32 unk_field18;
-    s32 unk_field_diff;
-    bondstruct_unk_80036794 * timerelated;
-    bondstruct_unk_80036634 * unknown;
-
     // update damage showtime
     if (g_CurrentPlayer->damageshowtime >= 0)
     {
@@ -23020,57 +23010,63 @@ void sub_GAME_7F083FC8(void)
             countdownTimerSetVisible(8, 0);
 
             g_CurrentPlayer->damagetype = (s32)(bondviewGetCurrentPlayerHealth() * 8.0f);
+            
             if (g_CurrentPlayer->damagetype >= 8)
             {
                 g_CurrentPlayer->damagetype = 7;
             }
         }
 
-        unknown = &D_80036634[g_CurrentPlayer->damagetype];
-        if ((unknown->field_0x8 >= g_CurrentPlayer->damageshowtime) || (unknown->field_0x18 >= g_CurrentPlayer->damageshowtime))
+        if (
+             (
+                (D_80036634[g_CurrentPlayer->damagetype].field_0x8 >= g_CurrentPlayer->damageshowtime) 
+                || (D_80036634[g_CurrentPlayer->damagetype].field_0x18 >= g_CurrentPlayer->damageshowtime))
+            )
         {
             if (!g_CurrentPlayer->bonddead)
             {
-                unk_field10 = unknown->field_0x10;
-                if (g_CurrentPlayer->damageshowtime >= unk_field10)
+            if (g_CurrentPlayer->damageshowtime >= D_80036634[g_CurrentPlayer->damagetype].field_0x10
+                && g_CurrentPlayer->damageshowtime <= D_80036634[g_CurrentPlayer->damagetype].field_0x18)
+            {
+                f32 frac;
+                s32 flashdoneframes;
+                s32 totalframes;
+                s32 flashfullframe;
+                
+                flashdoneframes = g_CurrentPlayer->damageshowtime - D_80036634[g_CurrentPlayer->damagetype].field_0x10;
+                flashfullframe = D_80036634[g_CurrentPlayer->damagetype].field_0x14;
+                totalframes = D_80036634[g_CurrentPlayer->damagetype].field_0x18 - D_80036634[g_CurrentPlayer->damagetype].field_0x10;
+
+                if (flashdoneframes < flashfullframe)
                 {
-                    unk_field18 = unknown->field_0x18;
-                    if (unk_field18 >= g_CurrentPlayer->damageshowtime)
-                    {
-                        unk_field14 = unknown->field_0x14;
-                        dmg_time_diff = g_CurrentPlayer->damageshowtime;
-                        dmg_time_diff = dmg_time_diff - unk_field10;
-                        unk_field_diff = unk_field18 - unk_field10;
-                        unk_field18 = dmg_time_diff;
-
-                        if (unk_field18 < unk_field14)
-                        {
-                            frac = (unknown->field_0x1c * ((f32) dmg_time_diff)) / ((f32) unk_field14);
-                        }
-                        else
-                        {
-                            frac = (unknown->field_0x1c * ((f32)(unk_field_diff - unk_field18))) / ((f32)(unk_field_diff - unk_field14));
-                        }
-
-                        currentPlayerSetFadeColour(unknown->field_0x20, unknown->field_0x24, unknown->field_0x28, frac);
-                    }
+                    frac = (D_80036634[g_CurrentPlayer->damagetype].field_0x1c * (f32)flashdoneframes) / (f32)flashfullframe;
                 }
+                else
+                {
+                    frac = (D_80036634[g_CurrentPlayer->damagetype].field_0x1c * (f32)(totalframes - flashdoneframes)) / (f32)(totalframes - flashfullframe);
+                }
+
+                currentPlayerSetFadeColour(
+                    D_80036634[g_CurrentPlayer->damagetype].field_0x20,
+                    D_80036634[g_CurrentPlayer->damagetype].field_0x24,
+                    D_80036634[g_CurrentPlayer->damagetype].field_0x28,
+                    frac);
+            }
             }
 
             if (g_CurrentPlayer->watch_animation_state == 0)
             {
-                g_CurrentPlayer->damageshowtime += g_ClockTimer;
+                g_CurrentPlayer->damageshowtime += g_ClockTimer; // ***
             }
             else
             {
-                g_CurrentPlayer->damageshowtime += speedgraphframes;
+                g_CurrentPlayer->damageshowtime += speedgraphframes; // ***
             }
-
         }
         else /* (damage showtime is over) */
         {
             g_CurrentPlayer->damageshowtime = -1;
-            currentPlayerSetFadeColour(0xFF, 0xFF, 0xFF, 0.0f);
+            currentPlayerSetFadeColour(0xFF, 0xFF, 0xFF, 0);
             if (!g_CurrentPlayer->bonddead)
             {
                 gunSetGunAmmoVisible(GUNAMMOREASON_DAMAGE, TRUE);
@@ -23088,6 +23084,7 @@ void sub_GAME_7F083FC8(void)
         if (g_CurrentPlayer->healthshowtime == 0)
         {
             g_CurrentPlayer->field_29B8 = (s32)(bondviewGetCurrentPlayerHealth() * 8.0f);
+            
             if (g_CurrentPlayer->field_29B8 >= 8)
             {
                 g_CurrentPlayer->field_29B8 = 7;
@@ -23096,26 +23093,29 @@ void sub_GAME_7F083FC8(void)
 
         if (!g_CurrentPlayer->bonddead)
         {
-            timerelated = &D_80036794[g_CurrentPlayer->field_29B8];
-            unk_field14_2 = timerelated->unk0;
-            if ((g_CurrentPlayer->healthshowtime >= unk_field14_2) && (timerelated->unk4 >= g_CurrentPlayer->healthshowtime))
+            if ((g_CurrentPlayer->healthshowtime >= D_80036794[g_CurrentPlayer->field_29B8].unk0) 
+                && (D_80036794[g_CurrentPlayer->field_29B8].unk4 >= g_CurrentPlayer->healthshowtime))
             {
                 g_CurrentPlayer->apparenthealth = g_CurrentPlayer->oldhealth;
                 g_CurrentPlayer->apparentarmour = g_CurrentPlayer->oldarmour;
-                g_CurrentPlayer->healthshowtime += g_ClockTimer;
-                return;
+                g_CurrentPlayer->healthshowtime += g_ClockTimer; // ***
             }
-            if ((g_CurrentPlayer->healthshowtime >= unk_field14_2) && (timerelated->unk8 >= g_CurrentPlayer->healthshowtime))
+            else if ((g_CurrentPlayer->healthshowtime >= D_80036794[g_CurrentPlayer->field_29B8].unk0)
+                && (D_80036794[g_CurrentPlayer->field_29B8].unk8 >= g_CurrentPlayer->healthshowtime))
             {
                 g_CurrentPlayer->apparenthealth = g_CurrentPlayer->bondhealth;
                 g_CurrentPlayer->apparentarmour = g_CurrentPlayer->bondarmour;
-                g_CurrentPlayer->healthshowtime += g_ClockTimer;
-                return;
+                g_CurrentPlayer->healthshowtime += g_ClockTimer; // ***
             }
-            g_CurrentPlayer->healthshowtime = -1;
-            return;
+            else
+            {
+                g_CurrentPlayer->healthshowtime = -1;                
+            }
         }
-        g_CurrentPlayer->healthshowtime = -1;
+        else
+        {
+            g_CurrentPlayer->healthshowtime = -1;
+        }
     }
 }
 #endif

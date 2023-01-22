@@ -2602,7 +2602,7 @@ typedef struct bondstruct_unk_80036634
     u32 field_0x4;
     s32 field_0x8;
     f32 field_0xC;
-    u32 field_0x10;
+    s32 field_0x10;
     u32 field_0x14;
     s32 field_0x18;
     f32 field_0x1c;
