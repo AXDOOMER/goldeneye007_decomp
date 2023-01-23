@@ -148,8 +148,8 @@ void initBONDdataforPlayer(s32 player_num)
     g_playerPointers[player_num]->field_94 = 0;
     g_playerPointers[player_num]->field_98 = 0.0f;
     g_playerPointers[player_num]->swaytarget = 0.0f;
-    g_playerPointers[player_num]->field_1278 = 0.0f;
-    g_playerPointers[player_num]->field_127C = 0.0f;
+    g_playerPointers[player_num]->swayoffset0 = 0.0f;
+    g_playerPointers[player_num]->swayoffset2 = 0.0f;
     g_playerPointers[player_num]->crouchpos = 2;
     g_playerPointers[player_num]->autocrouchpos = 2;
     g_playerPointers[player_num]->ducking_height_offset = 0.0f;
@@ -431,7 +431,7 @@ void initBONDdataforPlayer(s32 player_num)
     g_playerPointers[player_num]->players_cur_animation = 0;
     g_playerPointers[player_num]->field_1288 = 0.0f;
     g_playerPointers[player_num]->bondinvincible = 0;
-    g_playerPointers[player_num]->field_29B8 = 7;
+    g_playerPointers[player_num]->healthDamageType = 7;
     g_playerPointers[player_num]->field_29BC = 1.0f;
     g_playerPointers[player_num]->field_29C0 = 0.0f;
     g_playerPointers[player_num]->mpmenuon = 0;

@@ -1088,8 +1088,8 @@ struct player
   gunheld gunheldarr[10];
   s32 magnetattracttime;
   f32 swaytarget;
-  f32 field_1278;
-  f32 field_127C;
+  f32 swayoffset0;
+  f32 swayoffset2;
   f32 field_1280;
   s32 players_cur_animation;
   f32 field_1288;
@@ -2509,7 +2509,7 @@ struct player
   s32 field_29B4;
 
   // Alt field_29C0 ?? Used in EU.
-  s32 field_29B8;
+  s32 healthDamageType;
 
   /**
    * Related to player perspective.
@@ -2596,42 +2596,42 @@ struct struct_4 {
 };
 
 #ifdef BUGFIX_R0
-typedef struct bondstruct_unk_80036634
+typedef struct DamageType
 {
     u32 field_0x0;
     u32 field_0x4;
     s32 field_0x8;
     f32 field_0xC;
-    u32 field_0x10;
-    u32 field_0x14;
-    s32 field_0x18;
-    f32 field_0x1c;
-    u32 field_0x20;
-    u32 field_0x24;
-    u32 field_0x28;
-} bondstruct_unk_80036634;
+    s32 flashStartFrame;
+    u32 flashFullFrame;
+    s32 flashEndFrame;
+    f32 maxAlpha;
+    u32 red;
+    u32 green;
+    u32 blue;
+} DamageType;
 #else
-typedef struct bondstruct_unk_80036634
+typedef struct DamageType
 {
     f32 field_0x0;
     f32 field_0x4;
     f32 field_0x8;
     f32 field_0xC;
-    f32 field_0x10;
-    f32 field_0x14;
-    f32 field_0x18;
-    f32 field_0x1c;
-    u32 field_0x20;
-    u32 field_0x24;
-    u32 field_0x28;
-} bondstruct_unk_80036634;
+    f32 flashStartFrame;
+    f32 flashFullFrame;
+    f32 flashEndFrame;
+    f32 maxAlpha;
+    u32 red;
+    u32 green;
+    u32 blue;
+} DamageType;
 #endif
 
-typedef struct bondstruct_unk_80036794 { // time related idk
-    s32 unk0;
-    s32 unk4;
-    s32 unk8;
-} bondstruct_unk_80036794;
+typedef struct HealthDamageType { // time related idk
+    s32 updateStartFrame;
+    s32 updateEndFrame;
+    s32 otherEndFrame;
+} HealthDamageType;
 
 typedef struct bondstruct_unk_80035904 {
     u32 unk00;
@@ -2784,7 +2784,7 @@ D:80036624                     .word 0xFFFFFF00, 0xFFFFFF00, 0x4FFFFFF
 //D:80036630
 extern u32 D_80036630;
 //D:80036634
-extern bondstruct_unk_80036634 D_80036634[];
+extern struct DamageType g_DamageTypes[];
 /*
 D:80036638                     .byte 0
 D:80036639                     .byte 0, 0, 0xA
@@ -2826,7 +2826,7 @@ D:8003676C                     .byte 0
 D:8003676D                     .byte 0, 0, 0xA
 D:80036770                     .word 0x1E, 0x3F19999A, 0
 D:8003677C                     .word 5, 0xF, 0x3ECCCCCD, 0xFF, 0xFF, 0xFF
-D:80036794     D_80036794:.word 0
+D:80036794     g_HealthDamageTypes:.word 0
 D:80036798                     .byte 0
 D:80036799                     .byte 0, 0, 0x28
 D:8003679C                     .word 0x64, 0
