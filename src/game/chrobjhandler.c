@@ -30,6 +30,7 @@
 #include <limits.h>
 #include "stan.h"
 #include "assets/obseg/text/LpropobjE.h"
+#include "explosions.h"
 
 #ifdef VERSION_EU
 

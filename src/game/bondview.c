@@ -38,6 +38,7 @@
 #include "unk_0C0A70.h"
 #include "unk_0BC530.h"
 #include "unk_0A1DA0.h"
+#include "explosions.h"
 
 #ifdef VERSION_EU
 
@@ -23148,12 +23149,38 @@ void bondviewPlayerTickDamageAndHealth(void)
     }
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F084360(void) {
+#if defined(LEFTOVERDEBUG)
+void sub_GAME_7F084360(void)
+{
+    dword_CODE_bss_800799A0++;
 
+    if (D_80036444
+        && g_PlayerInvincible == 0
+        && dword_CODE_bss_8007999C < g_GlobalTimer)
+    {
+        struct coord3d pos;
+
+        pos.f[0] = g_CurrentPlayer->prop->pos.f[0];
+        pos.f[1] = g_CurrentPlayer->prop->pos.f[1];
+        pos.f[2] = g_CurrentPlayer->prop->pos.f[2];
+
+        switch (dword_CODE_bss_800799A0 % 4)
+        {
+            case 0: pos.x += 250.0f + 150.0f * RANDOMGETNEXT_F32(); break;
+    		case 1: pos.x -= 250.0f + 150.0f * RANDOMGETNEXT_F32(); break;
+    		case 2: pos.z += 250.0f + 150.0f * RANDOMGETNEXT_F32(); break;
+    		case 3: pos.z -= 250.0f + 150.0f * RANDOMGETNEXT_F32(); break;
+        }
+
+        pos.y += 200.0f * RANDOMGETNEXT_F32() - 100.0f;
+
+        explosionCreate(0, &pos, g_CurrentPlayer->prop->stan, 0x12, 0, 0, g_CurrentPlayer->prop->rooms, 0);
+
+        dword_CODE_bss_8007999C = (randomGetNext() % 15U) + g_GlobalTimer + 0xF;
+    }
 }
 #else
-#if defined(LEFTOVERDEBUG)
+#if 0
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F084360

@@ -37,6 +37,7 @@
 #include "file.h"
 #include "fog.h"
 #include "stan.h"
+#include "explosions.h"
 
 // bss
 
