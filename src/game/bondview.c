@@ -648,7 +648,7 @@ void sub_GAME_7F07DEFC(void);
 void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3);
 void controller_gameplay_interaction(s8 arg0, s8 arg1, u16 arg2, u16 arg3);
 void bondviewPlayerTickDamageAndHealth(void);
-void sub_GAME_7F084360(void);
+void bondviewPlayerTickExplode(void);
 void sub_GAME_7F07EAF0(void);
 void sub_GAME_7F07EC54(void);
 void bondviewUpdatePlayerCollisionPositionFields(void);
@@ -23154,7 +23154,7 @@ void bondviewPlayerTickDamageAndHealth(void)
  * NTSC address 7F084360.
  * EU address 7F0844A4.
 */
-void sub_GAME_7F084360(void)
+void bondviewPlayerTickExplode(void)
 {
 #if defined(VERSION_EU)
   #define TICKEXPLODE_FACTOR 12
@@ -23273,7 +23273,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
 
     currentPlayerSetField00(0);
     bondviewPlayerTickDamageAndHealth();
-    sub_GAME_7F084360();
+    bondviewPlayerTickExplode();
     controller_gameplay_interaction(stick_x, stick_y, *(u16*)&arg2, *(u16*)&arg3);
 
     if (lvlGetControlsLockedFlag())
@@ -24524,7 +24524,7 @@ void sub_GAME_7F086990(s32 arg0, s32 arg1, ? arg2, ? arg_unalignedA, ? arg3, ? a
     sp40.unk4 = (?32) D_80036824.unk4;
     sp40.unk8 = (?32) D_80036824.unk8;
     bondviewPlayerTickDamageAndHealth();
-    sub_GAME_7F084360();
+    bondviewPlayerTickExplode();
     controller_gameplay_interaction(0, 0, 0, 0);
     bondviewApplyVertaTheta();
     bondviewMoveAnimationTick(0, 0, 0);
@@ -24612,7 +24612,7 @@ glabel sub_GAME_7F086990
 /* 0BB560 7F086A30 AD8D0004 */  sw    $t5, 4($t4)
 /* 0BB564 7F086A34 0FC20FF2 */  jal   bondviewPlayerTickDamageAndHealth
 /* 0BB568 7F086A38 AD810008 */   sw    $at, 8($t4)
-/* 0BB56C 7F086A3C 0FC210D8 */  jal   sub_GAME_7F084360
+/* 0BB56C 7F086A3C 0FC210D8 */  jal   bondviewPlayerTickExplode
 /* 0BB570 7F086A40 00000000 */   nop
 /* 0BB574 7F086A44 00002025 */  move  $a0, $zero
 /* 0BB578 7F086A48 00002825 */  move  $a1, $zero
@@ -24778,7 +24778,7 @@ glabel sub_GAME_7F086990
 /* 0B9540 7F086B50 AD8D0004 */  sw    $t5, 4($t4)
 /* 0B9544 7F086B54 0FC2101B */  jal   bondviewPlayerTickDamageAndHealth
 /* 0B9548 7F086B58 AD810008 */   sw    $at, 8($t4)
-/* 0B954C 7F086B5C 0FC21129 */  jal   sub_GAME_7F084360
+/* 0B954C 7F086B5C 0FC21129 */  jal   bondviewPlayerTickExplode
 /* 0B9550 7F086B60 00000000 */   nop   
 /* 0B9554 7F086B64 00002025 */  move  $a0, $zero
 /* 0B9558 7F086B68 00002825 */  move  $a1, $zero
