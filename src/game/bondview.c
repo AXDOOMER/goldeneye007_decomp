@@ -649,7 +649,7 @@ void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3);
 void controller_gameplay_interaction(s8 arg0, s8 arg1, u16 arg2, u16 arg3);
 void bondviewPlayerTickDamageAndHealth(void);
 void bondviewPlayerTickExplode(void);
-void sub_GAME_7F07EAF0(void);
+void bondviewPlayerStopAudioForPause(void);
 void sub_GAME_7F07EC54(void);
 void bondviewUpdatePlayerCollisionPositionFields(void);
 void sub_GAME_7F07C7B4(void);
@@ -12184,7 +12184,7 @@ s32 get_BONDdata_outside_watch_menu_flag(void) {
 
 
 
-void sub_GAME_7F07EAF0(void)
+void bondviewPlayerStopAudioForPause(void)
 {
     struct hand *hand;
 	s32 i;
@@ -23119,7 +23119,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
 
     if (lvlGetControlsLockedFlag())
     {
-        sub_GAME_7F07EAF0();
+        bondviewPlayerStopAudioForPause();
     }
 
     if (g_CurrentPlayer->watch_animation_state)
