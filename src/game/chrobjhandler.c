@@ -32778,7 +32778,7 @@ glabel sub_GAME_7F04DE18
 /**
  * Address 0x7F04DEFC.
 */
-void sub_GAME_7F04DEFC(PropRecord *prop, f32 damage, struct coord3d *pos, s32 arg3, s32 owner)
+void maybe_detonate_object_and_its_children(PropRecord *prop, f32 damage, struct coord3d *pos, s32 arg3, s32 owner)
 {
     PropRecord *node;
     ObjectRecord *prop_obj;
@@ -32795,7 +32795,7 @@ void sub_GAME_7F04DEFC(PropRecord *prop, f32 damage, struct coord3d *pos, s32 ar
         {
             PropRecord *iter_next = node->prev;
             // recursive call:
-            sub_GAME_7F04DEFC(node, damage, pos, arg3, owner);
+            maybe_detonate_object_and_its_children(node, damage, pos, arg3, owner);
             node = iter_next;
         }
 

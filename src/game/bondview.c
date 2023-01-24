@@ -24315,7 +24315,8 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                     chraiGetCollisionBoundsWithoutY(prop, &sp64, &sp60);
                     if ((sp60 > 0) && sub_GAME_7F0446B8(sp64, sp60, &spB4_tank_collision_bounds, 4))
                     {
-                        sub_GAME_7F04DEFC(prop, 10000.0f, &prop->obj->runtime_pos, 0x20, get_cur_playernum());
+                        // Explode destroyable props when the tank touches them
+                        maybe_detonate_object_and_its_children(prop, 10000.0f, &prop->obj->runtime_pos, 0x20, get_cur_playernum());
                         D_80036490 = D_80036490_FACTOR;
                     }
                 }
