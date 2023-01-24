@@ -1606,10 +1606,10 @@ glabel chraiDefaultWeaponFireHandler
 /* 06FF24 7F03B3F4 03B14021 */  addu  $t0, $sp, $s1
 /* 06FF28 7F03B3F8 A119008C */  sb    $t9, 0x8c($t0)
 /* 06FF2C 7F03B3FC 8FA90544 */  lw    $t1, 0x544($sp)
-/* 06FF30 7F03B400 3C0A8008 */  lui   $t2, %hi(ptr_bgdata_portals) 
+/* 06FF30 7F03B400 3C0A8008 */  lui   $t2, %hi(g_BgPortals) 
 /* 06FF34 7F03B404 5D200027 */  bgtzl $t1, .L7F03B4A4
 /* 06FF38 7F03B408 8FA80544 */   lw    $t0, 0x544($sp)
-/* 06FF3C 7F03B40C 8D4AFF80 */  lw    $t2, %lo(ptr_bgdata_portals)($t2)
+/* 06FF3C 7F03B40C 8D4AFF80 */  lw    $t2, %lo(g_BgPortals)($t2)
 /* 06FF40 7F03B410 8D4B0000 */  lw    $t3, ($t2)
 /* 06FF44 7F03B414 11600012 */  beqz  $t3, .L7F03B460
 /* 06FF48 7F03B418 00000000 */   nop   

@@ -23160,7 +23160,6 @@ void bondviewPlayerTickExplode(void)
   #define TICKEXPLODE_FACTOR 12
 #else
   #define TICKEXPLODE_FACTOR 15
-#endif
 
     dword_CODE_bss_800799A0++;
 
@@ -23190,8 +23189,6 @@ void bondviewPlayerTickExplode(void)
     }
 #undef TICKEXPLODE_FACTOR
 }
-
-
 
 
 /**
