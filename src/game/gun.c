@@ -8973,8 +8973,17 @@ void bondwalkFireBothHands(void)
  * @param arg3:
  * 
  * Address 0x7F061948.
+ * 
+ * This function adjusts the length of the bullet beam that's rendered on screen.
+ * This function is used for both player and guard beams.
+ * 
+ * The watch laser has a very short beam, in accordance with its range.
+ * The laser also has a shortened one, but it appears this is to avoid graphical glitches.
+ * Other weapons have their bullet beam capped at 10000 max length, otherwise if the player
+ * fires into the void, there may be graphical glitches with the beam.
+ * 
 */
-void sub_GAME_7F061948(struct ChrRecord_f180 *arg0, ITEM_IDS item, coord3d *arg2, coord3d *arg3)
+void CapBeamLengthAndDecideIfRendered(struct ChrRecord_f180 *arg0, ITEM_IDS item, coord3d *arg2, coord3d *arg3)
 {
     f32 phi_f12_2;
 
@@ -9041,6 +9050,7 @@ void sub_GAME_7F061948(struct ChrRecord_f180 *arg0, ITEM_IDS item, coord3d *arg2
             arg0->unk24 = 3000.0f;
         }
 
+        // Laser beams are rendered more often than other normal weapons
         arg0->unk28 = (-0.1f - ((f32) (u32)randomGetNext() * (1.0f / UINT_MAX) * 0.3f)) * phi_f12_2;
     }
     else if (item == ITEM_WATCHLASER)
@@ -9053,6 +9063,7 @@ void sub_GAME_7F061948(struct ChrRecord_f180 *arg0, ITEM_IDS item, coord3d *arg2
             arg0->unk24 = 3000.0f;
         }
 
+        // Always render the beam for the watch laser
         arg0->unk28 = 0.0f;
     }
     else
@@ -9065,11 +9076,13 @@ void sub_GAME_7F061948(struct ChrRecord_f180 *arg0, ITEM_IDS item, coord3d *arg2
             arg0->unk24 = 3000.0f;
         }
 
+        // Decide if a beam should be rendered for normal weapon bullets
         arg0->unk28 = ((2.0f * ((f32) (u32)randomGetNext() * (1.0f / UINT_MAX))) - 1.0f) * arg0->unk20;
     }
 
     if (arg0->unk1c <= arg0->unk28)
     {
+        // No beam will be rendered
         arg0->unk00 = -1;
     }
 }
@@ -9096,7 +9109,7 @@ void sub_GAME_7F061BF4(enum GUNHAND hand) {
     if (val < hand_ptr->field_B64) { return; }
 
     field_A54 = &hand_ptr->field_A54;
-    sub_GAME_7F061948(
+    CapBeamLengthAndDecideIfRendered(
         field_A54,
         getCurrentPlayerWeaponId(hand),
         &hand_ptr->field_B58,
@@ -9122,7 +9135,7 @@ void sub_GAME_7F061BF4(enum GUNHAND hand) {
         + (diff1_y * diff2_y)));
     if (val > 0.08726647f) { return; }
 
-    sub_GAME_7F061948(
+    CapBeamLengthAndDecideIfRendered(
         &chr->unk180[hand],
         getCurrentPlayerWeaponId(hand),
         &g_CurrentPlayer->field_2A18[hand],

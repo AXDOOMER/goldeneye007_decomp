@@ -2454,7 +2454,7 @@ typedef union
 
         /* 0x0180 */
         /**
-         * Method chrlvFireWeaponRelated calls sub_GAME_7F061948, and passes an address
+         * Method chrlvFireWeaponRelated calls CapBeamLengthAndDecideIfRendered, and passes an address
          * which makes it look like this is an array at ChrRecord offset 180.
         */
         ChrRecord_f180 unk180[2];

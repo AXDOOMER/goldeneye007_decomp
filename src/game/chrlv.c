@@ -7347,7 +7347,7 @@ void chrlvFireWeaponRelated(ChrRecord *self, s32 hand)
 
                         if (sp264 != 0)
                         {
-                            sub_GAME_7F061948(&self->unk180[hand], prop_selfchr->act_attack.attack_item, &sp240, &sp258);
+                            CapBeamLengthAndDecideIfRendered(&self->unk180[hand], prop_selfchr->act_attack.attack_item, &sp240, &sp258);
                         }
                     }
                 }
