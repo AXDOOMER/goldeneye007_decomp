@@ -32778,28 +32778,28 @@ glabel sub_GAME_7F04DE18
 /**
  * Address 0x7F04DEFC.
 */
-void sub_GAME_7F04DEFC(PropRecord *arg0, f32 arg1, struct coord3d *arg2, s32 arg3, s32 owner)
+void sub_GAME_7F04DEFC(PropRecord *prop, f32 damage, struct coord3d *pos, s32 arg3, s32 owner)
 {
     PropRecord *node;
     ObjectRecord *prop_obj;
 
-    prop_obj = arg0->obj;
+    prop_obj = prop->obj;
 
     prop_obj->runtime_bitflags &= ~(RUNTIMEBITFLAG_OWNER);
     prop_obj->runtime_bitflags |= (owner << RUNTIMEBITSHIFT_OWNER);
 
     if ((s32)(prop_obj->runtime_bitflags << 0xc) >= 0)
     {
-        node = arg0->child;
+        node = prop->child;
         while (node != NULL)
         {
             PropRecord *iter_next = node->prev;
             // recursive call:
-            sub_GAME_7F04DEFC(node, arg1, arg2, arg3, owner);
+            sub_GAME_7F04DEFC(node, damage, pos, arg3, owner);
             node = iter_next;
         }
 
-        maybe_detonate_object(arg0->obj, arg1, arg2, arg3, owner);
+        maybe_detonate_object(prop->obj, damage, pos, arg3, owner);
     }
 }
 
@@ -32932,11 +32932,11 @@ glabel check_if_destroyable_not_invincible
 /**
  * Address 0x7F04E0CC.
 */
-void chrobjMaybeDetonateObjectIfFlags(ObjectRecord *arg0, f32 arg1, coord3d *arg2, ITEM_IDS item, s32 arg4)
+void chrobjMaybeDetonateObjectIfFlags(ObjectRecord *obj, f32 damage, coord3d *pos, ITEM_IDS item, s32 owner)
 {
-    if ((arg0->flags2 & 0x4000) == 0)
+    if ((obj->flags2 & 0x4000) == 0)
     {
-        maybe_detonate_object(arg0, arg1, arg2, item, arg4);
+        maybe_detonate_object(obj, damage, pos, item, owner);
     }
 }
 

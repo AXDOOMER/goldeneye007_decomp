@@ -58,7 +58,7 @@ void                 sub_GAME_7F052574(PropRecord *, s32);
 s32                  sub_GAME_7F052604(PropRecord *);
 s32                  sub_GAME_7F0539E4(coord3d *pos); //getVolume?
 ObjectRecord        *create_new_item_instance_of_model(PROP propid, s32 arg1);
-void                 maybe_detonate_object(ObjectRecord *arg0, f32 arg1, coord3d *arg2, ITEM_IDS item, s32 arg4);
+void                 maybe_detonate_object(ObjectRecord *obj, f32 damage, coord3d *pos, ITEM_IDS item, s32 owner);
 void                 chrobjMaybeDetonateObjectIfFlags(ObjectRecord *arg0, f32 arg1, coord3d *arg2, ITEM_IDS item, s32 arg4);
 void                 sub_GAME_7F03FDA8(PropRecord *);
 void                 sub_GAME_7F03FE14(PropRecord *);
