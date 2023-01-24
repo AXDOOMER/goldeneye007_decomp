@@ -12231,14 +12231,7 @@ void bondviewPlayerStopAudioForPause(void)
                 }
             }
             
-            switch (obj->type)
-            {
-#if defined(DEBUG)
-                // removed
-#endif
-                default:
-                break;
-            }
+            if(1);
         }
     }
 }
