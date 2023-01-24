@@ -13,9 +13,9 @@ void cleanupplayersoundrelated(void)
     {
         for(;j<2;j++)
         {
-            if((&g_playerPointers[i]->hands[j])->field_A44 && sndGetPlayingState((&g_playerPointers[i]->hands[j])->field_A44))
+            if((&g_playerPointers[i]->hands[j])->audioHandle && sndGetPlayingState((&g_playerPointers[i]->hands[j])->audioHandle))
             {
-                sndDeactivate((&g_playerPointers[i]->hands[j])->field_A44);
+                sndDeactivate((&g_playerPointers[i]->hands[j])->audioHandle);
             }
         }
     }

@@ -167,7 +167,7 @@ struct hand
   f32 field_A38;
   f32 field_A3C;
   f32 field_A40;
-  s32 field_A44;
+  ALSoundState * audioHandle;
   s32 field_A48;
   s32 field_A4C;
   s32 field_A50;

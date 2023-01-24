@@ -110,4 +110,5 @@ s32 sub_GAME_7F0446B8(struct rect4f *arg0, s32 arg1, struct rect4f *arg2, s32 ar
 s32 chrobjTestPointPolygonCollision(struct coord3d *arg0, f32 arg1, struct rect4f *arg2, s32 arg3);
 void sub_GAME_7F04DEFC(PropRecord *arg0, f32 arg1, struct coord3d *arg2, s32 arg3, s32 owner);
 struct modeldata_unk_pos * sub_GAME_7F040078(ObjectRecord *arg0);
+void deactivate_alarm_sound_effect(void);
 #endif
