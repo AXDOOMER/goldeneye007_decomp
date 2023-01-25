@@ -333,4 +333,8 @@ void gunSetOffsetRelated(f32 param_1);
 s32 get_curplayer_shot_register(SHOT_REGISTER shot_register);
 void get_bullet_angle(f32* horizontal_angle, f32* vertical_angle);
 
+ITEM_IDS get_item_in_hand_or_watch_menu(GUNHAND hand);
+void draw_item_in_hand(GUNHAND hand, s32 next_weapon);
+void sub_GAME_7F05DAE4(GUNHAND hand);
+
 #endif
