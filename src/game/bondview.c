@@ -650,7 +650,7 @@ void controller_gameplay_interaction(s8 arg0, s8 arg1, u16 arg2, u16 arg3);
 void bondviewPlayerTickDamageAndHealth(void);
 void bondviewPlayerTickExplode(void);
 void bondviewPlayerStopAudioForPause(void);
-void sub_GAME_7F07EC54(void);
+void bondviewWatchAnimationTick(void);
 void bondviewUpdatePlayerCollisionPositionFields(void);
 void sub_GAME_7F07C7B4(void);
 s32 bondviewTankCollisionStatus(struct coord3d *arg0, struct StandTile *arg1, f32 arg2, struct coord3d *arg3, struct coord3d *arg4);
@@ -12249,7 +12249,7 @@ void bondviewPlayerStopAudioForPause(void)
  * JP address 7F07F260.
  * EU address 7F07ECF4.
 */
-void sub_GAME_7F07EC54(void)
+void bondviewWatchAnimationTick(void)
 {
 #if defined(VERSION_EU)
     #define WATCH_VAR_LOWER 14
@@ -21025,7 +21025,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
 
     if (g_CurrentPlayer->watch_animation_state)
     {
-        sub_GAME_7F07EC54();
+        bondviewWatchAnimationTick();
     }
 
     if (in_tank_flag == 0)
