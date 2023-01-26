@@ -652,7 +652,7 @@ void bondviewPlayerTickExplode(void);
 void bondviewPlayerStopAudioForPause(void);
 void bondviewWatchAnimationTick(void);
 void bondviewUpdatePlayerCollisionPositionFields(void);
-void sub_GAME_7F07C7B4(void);
+void bondviewTankModelRotationRelated(void);
 s32 bondviewTankCollisionStatus(struct coord3d *arg0, struct StandTile *arg1, f32 arg2, struct coord3d *arg3, struct coord3d *arg4);
 s32 bondviewCallTankCollisionStatus(struct coord3d *arg0, struct StandTile *arg1, f32 arg2);
 s32 sub_GAME_7F07CDD4(struct coord3d *arg0, f32 arg1, struct StandTile **arg2);
@@ -8783,7 +8783,10 @@ struct UnkModelStructA
     struct UnkModelStructB *unk8;
 };
 
-void sub_GAME_7F07C7B4(void) {
+/**
+ * US address 7F07C7B4.
+*/
+void bondviewTankModelRotationRelated(void) {
     struct ObjectRecord *obj;
     struct coord3d *sp68;
     struct coord3d *sp64;
@@ -16538,7 +16541,7 @@ glabel controller_gameplay_interaction
 /* 0B7734 7F082C04 E4440004 */  swc1  $f4, 4($v0)
 /* 0B7738 7F082C08 C5060494 */  lwc1  $f6, 0x494($t0)
 /* 0B773C 7F082C0C E4460008 */  swc1  $f6, 8($v0)
-/* 0B7740 7F082C10 0FC1F1ED */  jal   sub_GAME_7F07C7B4
+/* 0B7740 7F082C10 0FC1F1ED */  jal   bondviewTankModelRotationRelated
 /* 0B7744 7F082C14 AC206490 */   sw    $zero, %lo(D_80036490)($at)
 /* 0B7748 7F082C18 10000005 */  b     .L7F082C30
 /* 0B774C 7F082C1C 8FAC0144 */   lw    $t4, 0x144($sp)
@@ -19274,7 +19277,7 @@ glabel controller_gameplay_interaction
 /* 0B5698 7F082CA8 E4440004 */  swc1  $f4, 4($v0)
 /* 0B569C 7F082CAC C5060494 */  lwc1  $f6, 0x494($t0)
 /* 0B56A0 7F082CB0 E4460008 */  swc1  $f6, 8($v0)
-/* 0B56A4 7F082CB4 0FC1F222 */  jal   sub_GAME_7F07C7B4
+/* 0B56A4 7F082CB4 0FC1F222 */  jal   bondviewTankModelRotationRelated
 /* 0B56A8 7F082CB8 AC2019E0 */   sw    $zero, %lo(D_80036490)($at)
 /* 0B56AC 7F082CBC 10000005 */  b     .L7F082CD4
 /* 0B56B0 7F082CC0 8FAC0144 */   lw    $t4, 0x144($sp)
@@ -21291,7 +21294,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
 
             matrix_4x4_set_rotation_around_y(tankChangeInAngle, &sp2B4);
             mtx4RotateVecInPlace(&sp2B4, &sp2F4);
-            sub_GAME_7F07C7B4();
+            bondviewTankModelRotationRelated();
             
             if (0) { }
             
