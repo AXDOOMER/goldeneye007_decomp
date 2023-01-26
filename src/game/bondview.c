@@ -8771,18 +8771,6 @@ void change_player_pos_to_target(struct collision434 *col, coord3d *pos, StandTi
 }
 
 
-struct UnkModelStructB
-{
-    s32 unk0;
-    void *unk4;
-};
-struct UnkModelStructA
-{
-    s32 unk0;
-    struct UnkModelStructB *unk4;
-    struct UnkModelStructB *unk8;
-};
-
 /**
  * US address 7F07C7B4.
 */
@@ -8791,16 +8779,16 @@ void bondviewTankModelRotationRelated(void) {
     struct coord3d *sp68;
     struct coord3d *sp64;
     Mtxf sp24;
-    struct UnkModelStructA *temp_v0;
+    ModelNode **temp_v0;
 
     if (ptr_playerstank != NULL)
     {
         obj = ptr_playerstank->obj;
         
-        /// TODO: Fix Model struct references here.
-        temp_v0 = (struct UnkModelStructA *)obj->model->obj->Switches;
-        sp68 = temp_v0->unk8->unk4;
-        sp64 = temp_v0->unk4->unk4;
+        /// TODO: Fix Model struct Data type.
+        temp_v0 = obj->model->obj->Switches;
+        sp68 = (struct coord3d *)temp_v0[2]->Data;
+        sp64 = (struct coord3d *)temp_v0[1]->Data;
         matrix_4x4_set_rotation_around_y(6.2831855f - g_TankTurretOrientationAngleRad, &sp24);
         flt_CODE_bss_800799A8.f[0] = sp68->f[0];
         flt_CODE_bss_800799A8.f[1] = sp68->f[1];
