@@ -8771,91 +8771,43 @@ void change_player_pos_to_target(struct collision434 *col, coord3d *pos, StandTi
 }
 
 
-#ifdef NONMATCHING
+struct UnkModelStructB
+{
+    s32 unk0;
+    void *unk4;
+};
+struct UnkModelStructA
+{
+    s32 unk0;
+    struct UnkModelStructB *unk4;
+    struct UnkModelStructB *unk8;
+};
+
 void sub_GAME_7F07C7B4(void) {
-    ? sp24;
+    struct ObjectRecord *obj;
+    struct coord3d *sp68;
+    struct coord3d *sp64;
+    Mtxf sp24;
+    struct UnkModelStructA *temp_v0;
 
-    // Node 0
-    if (ptr_playerstank != 0)
+    if (ptr_playerstank != NULL)
     {
-        // Node 1
-        matrix_4x4_set_rotation_around_y((D_80055060 - g_TankTurretOrientationAngleRad), ptr_playerstank, &sp24, ptr_playerstank->unk4->unk14->unk8->unk8->unk8->unk4, ptr_playerstank->unk4->unk14->unk8->unk8->unk4->unk4);
-        flt_CODE_bss_800799A8 = (f32) *sp68;
-        flt_CODE_bss_800799A8.unk4 = (f32) sp68->unk4;
-        flt_CODE_bss_800799A8.unk8 = (f32) sp68->unk8;
-        mtx4RotateVecInPlace(&sp24, &flt_CODE_bss_800799A8, sp68);
-        flt_CODE_bss_800799A8 = (f32) (flt_CODE_bss_800799A8 + *sp64);
-        flt_CODE_bss_800799A8.unk4 = (f32) (flt_CODE_bss_800799A8.unk4 + sp64->unk4);
-        flt_CODE_bss_800799A8.unk8 = (f32) (flt_CODE_bss_800799A8.unk8 + sp64->unk8);
+        obj = ptr_playerstank->obj;
+        
+        /// TODO: Fix Model struct references here.
+        temp_v0 = (struct UnkModelStructA *)obj->model->obj->Switches;
+        sp68 = temp_v0->unk8->unk4;
+        sp64 = temp_v0->unk4->unk4;
+        matrix_4x4_set_rotation_around_y(6.2831855f - g_TankTurretOrientationAngleRad, &sp24);
+        flt_CODE_bss_800799A8.f[0] = sp68->f[0];
+        flt_CODE_bss_800799A8.f[1] = sp68->f[1];
+        flt_CODE_bss_800799A8.f[2] = sp68->f[2];
+        mtx4RotateVecInPlace(&sp24, flt_CODE_bss_800799A8.f);
+        flt_CODE_bss_800799A8.f[0] += sp64->f[0];
+        flt_CODE_bss_800799A8.f[1] += sp64->f[1];
+        flt_CODE_bss_800799A8.f[2] += sp64->f[2];
     }
-    // Node 2
-    return;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80055060
-.word 0x40c90fdb /*6.2831855*/
-.text
-glabel sub_GAME_7F07C7B4
-/* 0B12E4 7F07C7B4 3C048003 */  lui   $a0, %hi(ptr_playerstank)
-/* 0B12E8 7F07C7B8 8C846450 */  lw    $a0, %lo(ptr_playerstank)($a0)
-/* 0B12EC 7F07C7BC 27BDFF90 */  addiu $sp, $sp, -0x70
-/* 0B12F0 7F07C7C0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0B12F4 7F07C7C4 5080002D */  beql  $a0, $zero, .L7F07C87C
-/* 0B12F8 7F07C7C8 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0B12FC 7F07C7CC 8C830004 */  lw    $v1, 4($a0)
-/* 0B1300 7F07C7D0 3C018005 */  lui   $at, %hi(D_80055060)
-/* 0B1304 7F07C7D4 C4245060 */  lwc1  $f4, %lo(D_80055060)($at)
-/* 0B1308 7F07C7D8 8C6E0014 */  lw    $t6, 0x14($v1)
-/* 0B130C 7F07C7DC 3C018003 */  lui   $at, %hi(g_TankTurretOrientationAngleRad)
-/* 0B1310 7F07C7E0 C4266474 */  lwc1  $f6, %lo(g_TankTurretOrientationAngleRad)($at)
-/* 0B1314 7F07C7E4 8DCF0008 */  lw    $t7, 8($t6)
-/* 0B1318 7F07C7E8 27A50024 */  addiu $a1, $sp, 0x24
-/* 0B131C 7F07C7EC 46062301 */  sub.s $f12, $f4, $f6
-/* 0B1320 7F07C7F0 8DE20008 */  lw    $v0, 8($t7)
-/* 0B1324 7F07C7F4 8C580008 */  lw    $t8, 8($v0)
-/* 0B1328 7F07C7F8 8C590004 */  lw    $t9, 4($v0)
-/* 0B132C 7F07C7FC 8F060004 */  lw    $a2, 4($t8)
-/* 0B1330 7F07C800 8F270004 */  lw    $a3, 4($t9)
-/* 0B1334 7F07C804 AFA60068 */  sw    $a2, 0x68($sp)
-/* 0B1338 7F07C808 0FC1617F */  jal   matrix_4x4_set_rotation_around_y
-/* 0B133C 7F07C80C AFA70064 */   sw    $a3, 0x64($sp)
-/* 0B1340 7F07C810 8FA60068 */  lw    $a2, 0x68($sp)
-/* 0B1344 7F07C814 3C058008 */  lui   $a1, %hi(flt_CODE_bss_800799A8)
-/* 0B1348 7F07C818 24A599A8 */  addiu $a1, %lo(flt_CODE_bss_800799A8) # addiu $a1, $a1, -0x6658
-/* 0B134C 7F07C81C C4C80000 */  lwc1  $f8, ($a2)
-/* 0B1350 7F07C820 27A40024 */  addiu $a0, $sp, 0x24
-/* 0B1354 7F07C824 E4A80000 */  swc1  $f8, ($a1)
-/* 0B1358 7F07C828 C4CA0004 */  lwc1  $f10, 4($a2)
-/* 0B135C 7F07C82C E4AA0004 */  swc1  $f10, 4($a1)
-/* 0B1360 7F07C830 C4D00008 */  lwc1  $f16, 8($a2)
-/* 0B1364 7F07C834 0FC160F6 */  jal   mtx4RotateVecInPlace
-/* 0B1368 7F07C838 E4B00008 */   swc1  $f16, 8($a1)
-/* 0B136C 7F07C83C 8FA70064 */  lw    $a3, 0x64($sp)
-/* 0B1370 7F07C840 3C058008 */  lui   $a1, %hi(flt_CODE_bss_800799A8)
-/* 0B1374 7F07C844 24A599A8 */  addiu $a1, %lo(flt_CODE_bss_800799A8) # addiu $a1, $a1, -0x6658
-/* 0B1378 7F07C848 C4B20000 */  lwc1  $f18, ($a1)
-/* 0B137C 7F07C84C C4E40000 */  lwc1  $f4, ($a3)
-/* 0B1380 7F07C850 C4A80004 */  lwc1  $f8, 4($a1)
-/* 0B1384 7F07C854 46049180 */  add.s $f6, $f18, $f4
-/* 0B1388 7F07C858 C4B20008 */  lwc1  $f18, 8($a1)
-/* 0B138C 7F07C85C E4A60000 */  swc1  $f6, ($a1)
-/* 0B1390 7F07C860 C4EA0004 */  lwc1  $f10, 4($a3)
-/* 0B1394 7F07C864 460A4400 */  add.s $f16, $f8, $f10
-/* 0B1398 7F07C868 E4B00004 */  swc1  $f16, 4($a1)
-/* 0B139C 7F07C86C C4E40008 */  lwc1  $f4, 8($a3)
-/* 0B13A0 7F07C870 46049180 */  add.s $f6, $f18, $f4
-/* 0B13A4 7F07C874 E4A60008 */  swc1  $f6, 8($a1)
-/* 0B13A8 7F07C878 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F07C87C:
-/* 0B13AC 7F07C87C 27BD0070 */  addiu $sp, $sp, 0x70
-/* 0B13B0 7F07C880 03E00008 */  jr    $ra
-/* 0B13B4 7F07C884 00000000 */   nop
-)
-#endif
-
-
 
 
 
