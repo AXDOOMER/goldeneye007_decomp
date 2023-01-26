@@ -12270,7 +12270,7 @@ void sub_GAME_7F07EC54(void)
 
     if (g_CurrentPlayer->watch_animation_state)
     {
-        sp34 = getCurrentPlayerWeaponId(0) == ITEM_TRIGGER || getCurrentPlayerWeaponId(0) == ITEM_WATCHLASER;
+        sp34 = getCurrentPlayerWeaponId(GUNRIGHT) == ITEM_TRIGGER || getCurrentPlayerWeaponId(GUNRIGHT) == ITEM_WATCHLASER;
         sp3c = sp34;
 
 #if defined (VERSION_US)
@@ -12294,25 +12294,25 @@ void sub_GAME_7F07EC54(void)
             
             if (g_CurrentPlayer->watch_pause_time == 1)
             {
-                draw_item_in_hand(1, 0x54);
+                draw_item_in_hand(GUNLEFT, ITEM_SUIT_LF_HAND);
             }
             else if (g_CurrentPlayer->watch_pause_time == 2)
             {
-                if (sp34 != 0)
+                if (sp34)
                 {
-                    draw_item_in_hand(0, 0);
+                    draw_item_in_hand(GUNRIGHT, ITEM_UNARMED);
                 }
             }
             else
             {
                 if (
-                    (get_item_in_hand_or_watch_menu(1) == 0x54)
-                    && (Gun_hand_without_item(1) != 0)
+                    (get_item_in_hand_or_watch_menu(1) == ITEM_SUIT_LF_HAND)
+                    && (Gun_hand_without_item(GUNLEFT) != ITEM_UNARMED)
                     && (
                         (sp34 == 0)
                         || (
-                            (get_item_in_hand_or_watch_menu(0) == 0)
-                            && (Gun_hand_without_item(0) != 0)))
+                            (get_item_in_hand_or_watch_menu(0) == ITEM_UNARMED)
+                            && (Gun_hand_without_item(GUNRIGHT) != ITEM_UNARMED)))
                     && (g_CurrentPlayer->field_1C4 >= sp38))
                 {
                     g_CurrentPlayer->watch_animation_state = 2;
@@ -12328,10 +12328,10 @@ void sub_GAME_7F07EC54(void)
             
             if (g_CurrentPlayer->watch_pause_time == 1)
             {
-                gunSetSightVisible(8, 0);
-                gunSetGunAmmoVisible(4, 0);
-                hudmsgsSetOff(1);
-                sub_GAME_7F08A944(1);
+                gunSetSightVisible(GUNAMMOREASON_DAMAGE, FALSE);
+                gunSetGunAmmoVisible(GUNSIGHTREASON_NOCONTROL, FALSE);
+                hudmsgsSetOff(PLAYERFLAG_LOCKCONTROLS);
+                sub_GAME_7F08A944(PLAYERFLAG_LOCKCONTROLS);
                 countdownTimerSetVisible(4, 0);
                 
                 if ((g_CurrentPlayer->field_218 == 0) || (g_CurrentPlayer->field_218 == 2) || (g_CurrentPlayer->field_218 == 3))
@@ -12458,16 +12458,16 @@ void sub_GAME_7F07EC54(void)
             if (g_CurrentPlayer->watch_pause_time == 1)
             {
                 bondviewZoomFromWatchOnExit();
-                if (sp34 != 0)
+                if (sp34)
                 {
-                    draw_item_in_hand(0, 0);
+                    draw_item_in_hand(GUNRIGHT, ITEM_UNARMED);
                 }
                 else
                 {
                     sub_GAME_7F05DAE4(0);
                 }
             }
-            if (check_watch_page_transistion_running() != 0)
+            if (check_watch_page_transistion_running())
             {
                 g_CurrentPlayer->pausing_flag = 1;
             }
@@ -12522,37 +12522,37 @@ void sub_GAME_7F07EC54(void)
             if (g_CurrentPlayer->watch_pause_time == 1)
             {
                 
-                if ((get_item_in_hand_or_watch_menu(1) != getCurrentPlayerWeaponId(1)) && (Gun_hand_without_item(1) != 0))
+                if ((get_item_in_hand_or_watch_menu(GUNLEFT) != getCurrentPlayerWeaponId(GUNLEFT)) && (Gun_hand_without_item(GUNLEFT) != ITEM_UNARMED))
                 {
-                    draw_item_in_hand(1, getCurrentPlayerWeaponId(1));
+                    draw_item_in_hand(GUNLEFT, getCurrentPlayerWeaponId(GUNLEFT));
                 }
                 
-                if (sp3c != 0)
+                if (sp3c)
                 {
-                    if ((get_item_in_hand_or_watch_menu(0) != getCurrentPlayerWeaponId(0)) && (Gun_hand_without_item(0) != 0))
+                    if ((get_item_in_hand_or_watch_menu(GUNRIGHT) != getCurrentPlayerWeaponId(GUNRIGHT)) && (Gun_hand_without_item(GUNRIGHT) != ITEM_UNARMED))
                     {
-                        draw_item_in_hand(0, getCurrentPlayerWeaponId(0));
+                        draw_item_in_hand(GUNRIGHT, getCurrentPlayerWeaponId(GUNRIGHT));
                     }
                 }
             }
             else if (sub_GAME_7F07E068() == 0)
             {
                 if (
-                    (get_item_in_hand_or_watch_menu(1) == getCurrentPlayerWeaponId(1)) 
-                    && (Gun_hand_without_item(1) != 0) 
+                    (get_item_in_hand_or_watch_menu(GUNLEFT) == getCurrentPlayerWeaponId(GUNLEFT)) 
+                    && (Gun_hand_without_item(GUNLEFT) != ITEM_UNARMED) 
                     && (
                         (sp3c == 0) 
-                        || (((get_item_in_hand_or_watch_menu(0) == getCurrentPlayerWeaponId(0))) && (Gun_hand_without_item(0) != 0))))
+                        || (((get_item_in_hand_or_watch_menu(GUNRIGHT) == getCurrentPlayerWeaponId(GUNRIGHT))) && (Gun_hand_without_item(GUNRIGHT) != ITEM_UNARMED))))
                 {
                     sub_GAME_7F05DAE4(1);
                     
-                    if (sp3c != 0)
+                    if (sp3c)
                     {
                         sub_GAME_7F05DAE4(0);
                     }
                     
-                    gunSetSightVisible(8, 1);
-                    gunSetGunAmmoVisible(4, 1);
+                    gunSetSightVisible(GUNAMMOREASON_DAMAGE, TRUE);
+                    gunSetGunAmmoVisible(GUNSIGHTREASON_NOCONTROL, TRUE);
                     hudmsgsSetOn(1);
                     sub_GAME_7F08A928(1);
                     countdownTimerSetVisible(4, 1);
@@ -12569,11 +12569,11 @@ void sub_GAME_7F07EC54(void)
             g_CurrentPlayer->pausing_flag = 0;
             
             if (
-                (getCurrentPlayerWeaponId(1) != get_item_in_hand_or_watch_menu(1))
-                && (Gun_hand_without_item(1) != 0)
+                (getCurrentPlayerWeaponId(GUNLEFT) != get_item_in_hand_or_watch_menu(GUNLEFT))
+                && (Gun_hand_without_item(GUNLEFT) != ITEM_UNARMED)
                 && (
                     (sp3c == 0)
-                    || (((getCurrentPlayerWeaponId(0) != get_item_in_hand_or_watch_menu(0))) && (Gun_hand_without_item(0) != 0))))
+                    || (((getCurrentPlayerWeaponId(GUNRIGHT) != get_item_in_hand_or_watch_menu(GUNRIGHT))) && (Gun_hand_without_item(GUNRIGHT) != ITEM_UNARMED))))
             {
                 g_CurrentPlayer->watch_animation_state = 8;
                 g_CurrentPlayer->watch_pause_time = 0;
@@ -12591,11 +12591,11 @@ void sub_GAME_7F07EC54(void)
             }
             
             if (
-                (getCurrentPlayerWeaponId(1) != get_item_in_hand_or_watch_menu(1)) 
-                && (Gun_hand_without_item(1) != 0) 
+                (getCurrentPlayerWeaponId(GUNLEFT) != get_item_in_hand_or_watch_menu(GUNLEFT)) 
+                && (Gun_hand_without_item(GUNLEFT) != ITEM_UNARMED) 
                 && (
                     (sp3c == 0)
-                    || (((getCurrentPlayerWeaponId(0) != get_item_in_hand_or_watch_menu(0))) && (Gun_hand_without_item(0) != 0))))
+                    || (((getCurrentPlayerWeaponId(GUNRIGHT) != get_item_in_hand_or_watch_menu(GUNRIGHT))) && (Gun_hand_without_item(GUNRIGHT) != ITEM_UNARMED))))
             {
                 g_CurrentPlayer->watch_animation_state = 8;
                 g_CurrentPlayer->watch_pause_time = 0;
@@ -12608,13 +12608,13 @@ void sub_GAME_7F07EC54(void)
             g_CurrentPlayer->pausing_flag = 0;
 
             if (
-                (getCurrentPlayerWeaponId(1) == get_item_in_hand_or_watch_menu(1)) 
-                && (Gun_hand_without_item(1) != 0) 
+                (getCurrentPlayerWeaponId(GUNLEFT) == get_item_in_hand_or_watch_menu(GUNLEFT)) 
+                && (Gun_hand_without_item(GUNLEFT) != ITEM_UNARMED) 
                 && (
                     (sp3c == 0) 
                     || (
-                        ( (getCurrentPlayerWeaponId(0) == get_item_in_hand_or_watch_menu(0))) 
-                        && (Gun_hand_without_item(0) != 0))))
+                        ( (getCurrentPlayerWeaponId(GUNRIGHT) == get_item_in_hand_or_watch_menu(GUNRIGHT))) 
+                        && (Gun_hand_without_item(GUNRIGHT) != ITEM_UNARMED))))
             {
                 g_CurrentPlayer->watch_animation_state = 1;
                 g_CurrentPlayer->watch_pause_time = 0;
@@ -12626,8 +12626,8 @@ void sub_GAME_7F07EC54(void)
         {
             g_CurrentPlayer->pausing_flag = 0;
             
-            if (Gun_hand_without_item(1)
-                && Gun_hand_without_item(0))
+            if (Gun_hand_without_item(GUNLEFT)
+                && Gun_hand_without_item(GUNRIGHT))
             {
                 if ((g_CurrentPlayer->hands[1].when_detonating_mines_is_0 != 5)
                     && (g_CurrentPlayer->hands[1].when_detonating_mines_is_0 != 6)
@@ -12648,16 +12648,16 @@ void sub_GAME_7F07EC54(void)
 
     if (g_CurrentPlayer->watch_animation_state == 5)
     {
-        lvlSetControlsLockedFlag(1);
+        lvlSetControlsLockedFlag(TRUE);
         sub_GAME_7F0A6A80();
     }
     else if (g_CurrentPlayer->watch_animation_state == 12)
     {
-        lvlSetControlsLockedFlag(1);
+        lvlSetControlsLockedFlag(TRUE);
     }
     else
     {
-        lvlSetControlsLockedFlag(0);
+        lvlSetControlsLockedFlag(FALSE);
     }
 
 #undef WATCH_VAR_LOWER
@@ -12706,8 +12706,8 @@ void trigger_solo_watch_menu(s32 arg0)
                 watch_transition_time = 1.7f;
             }
 
-            if ((Gun_hand_without_item(1) != 0)
-                && (Gun_hand_without_item(0) != 0)
+            if ((Gun_hand_without_item(GUNLEFT) != ITEM_UNARMED)
+                && (Gun_hand_without_item(GUNRIGHT) != ITEM_UNARMED)
                 && (g_CurrentPlayer->hands[1].when_detonating_mines_is_0 != 5)
                 && (g_CurrentPlayer->hands[1].when_detonating_mines_is_0 != 6)
                 && (g_CurrentPlayer->hands[1].when_detonating_mines_is_0 != 7)
