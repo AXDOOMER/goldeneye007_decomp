@@ -313,7 +313,7 @@ u8 bondwalkItemGetSoundTriggerRate(ITEM_IDS item);
 void recall_joy2_hits_edit_detail_edit_flag(enum ITEM_IDS item, PropRecord* prop, s32 texture_index);
 void recall_joy2_hits_edit_flag(enum ITEM_IDS item, coord3d* arg1, s32 texture_index);
 void sub_GAME_7F05EB0C(ObjectRecord *arg0, coord3d *arg1,  StandTile *arg2, Mtxf *arg3, coord3d *arg4, Mtxf *arg5,  PropRecord *arg6);
-void sub_GAME_7F061948(struct ChrRecord_f180 *arg0, ITEM_IDS item, coord3d *arg2, coord3d *arg3);
+void CapBeamLengthAndDecideIfRendered(struct ChrRecord_f180 *arg0, ITEM_IDS item, coord3d *arg2, coord3d *arg3);
 void sub_GAME_7F068190(coord3d *arg0, coord3d *arg1);
 
 void inc_curplayer_hitcount_with_weapon(ITEM_IDS item, SHOT_REGISTER shot_register);

@@ -15591,7 +15591,7 @@ glabel controller_gameplay_interaction
 /* 0B690C 7F081DDC 00000000 */   nop
 /* 0B6910 7F081DE0 5440011F */  bnezl $v0, .L7F082260
 /* 0B6914 7F081DE4 8FA2010C */   lw    $v0, 0x10c($sp)
-/* 0B6918 7F081DE8 0FC3092F */  jal   sub_GAME_7F0C24BC
+/* 0B6918 7F081DE8 0FC3092F */  jal   disablePlayerActionsWhenPausedOrInMpMenu
 /* 0B691C 7F081DEC 00000000 */   nop
 /* 0B6920 7F081DF0 5040011B */  beql  $v0, $zero, .L7F082260
 /* 0B6924 7F081DF4 8FA2010C */   lw    $v0, 0x10c($sp)
@@ -15961,7 +15961,7 @@ glabel controller_gameplay_interaction
 /* 0B6E3C 7F08230C A7A300FC */   sh    $v1, 0xfc($sp)
 /* 0B6E40 7F082310 14400193 */  bnez  $v0, .L7F082960
 /* 0B6E44 7F082314 97A300FC */   lhu   $v1, 0xfc($sp)
-/* 0B6E48 7F082318 0FC3092F */  jal   sub_GAME_7F0C24BC
+/* 0B6E48 7F082318 0FC3092F */  jal   disablePlayerActionsWhenPausedOrInMpMenu
 /* 0B6E4C 7F08231C A7A300FC */   sh    $v1, 0xfc($sp)
 /* 0B6E50 7F082320 1040018F */  beqz  $v0, .L7F082960
 /* 0B6E54 7F082324 97A300FC */   lhu   $v1, 0xfc($sp)
@@ -18327,7 +18327,7 @@ glabel controller_gameplay_interaction
 /* 0B4870 7F081E80 00000000 */   nop   
 /* 0B4874 7F081E84 5440011F */  bnezl $v0, .L7F082304
 /* 0B4878 7F081E88 8FA2010C */   lw    $v0, 0x10c($sp)
-/* 0B487C 7F081E8C 0FC30667 */  jal   sub_GAME_7F0C24BC
+/* 0B487C 7F081E8C 0FC30667 */  jal   disablePlayerActionsWhenPausedOrInMpMenu
 /* 0B4880 7F081E90 00000000 */   nop   
 /* 0B4884 7F081E94 5040011B */  beql  $v0, $zero, .L7F082304
 /* 0B4888 7F081E98 8FA2010C */   lw    $v0, 0x10c($sp)
@@ -18697,7 +18697,7 @@ glabel controller_gameplay_interaction
 /* 0B4DA0 7F0823B0 A7A300FC */   sh    $v1, 0xfc($sp)
 /* 0B4DA4 7F0823B4 14400193 */  bnez  $v0, .L7F082A04
 /* 0B4DA8 7F0823B8 97A300FC */   lhu   $v1, 0xfc($sp)
-/* 0B4DAC 7F0823BC 0FC30667 */  jal   sub_GAME_7F0C24BC
+/* 0B4DAC 7F0823BC 0FC30667 */  jal   disablePlayerActionsWhenPausedOrInMpMenu
 /* 0B4DB0 7F0823C0 A7A300FC */   sh    $v1, 0xfc($sp)
 /* 0B4DB4 7F0823C4 1040018F */  beqz  $v0, .L7F082A04
 /* 0B4DB8 7F0823C8 97A300FC */   lhu   $v1, 0xfc($sp)
@@ -22216,7 +22216,8 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                     chraiGetCollisionBoundsWithoutY(prop, &sp64, &sp60);
                     if ((sp60 > 0) && sub_GAME_7F0446B8(sp64, sp60, &spB4_tank_collision_bounds, 4))
                     {
-                        sub_GAME_7F04DEFC(prop, 10000.0f, &prop->obj->runtime_pos, 0x20, get_cur_playernum());
+                        // Explode destroyable props when the tank touches them
+                        maybe_detonate_object_and_its_children(prop, 10000.0f, &prop->obj->runtime_pos, 0x20, get_cur_playernum());
                         D_80036490 = D_80036490_FACTOR;
                     }
                 }

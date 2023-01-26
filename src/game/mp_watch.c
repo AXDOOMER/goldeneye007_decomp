@@ -272,7 +272,7 @@ void pauseAndLockControls(void) {
 }
 
 
-s32 sub_GAME_7F0C24BC(void)
+s32 disablePlayerActionsWhenPausedOrInMpMenu(void)
 {
     if (getPlayerCount() == 1)
     {

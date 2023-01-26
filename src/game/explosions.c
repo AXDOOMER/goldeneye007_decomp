@@ -1236,7 +1236,7 @@ glabel sub_GAME_7F09C9D8
 /* 0D1790 7F09CC60 46163200 */  add.s $f8, $f6, $f22
 /* 0D1794 7F09CC64 46144102 */  mul.s $f4, $f8, $f20
 /* 0D1798 7F09CC68 44052000 */  mfc1  $a1, $f4
-/* 0D179C 7F09CC6C 0FC137BF */  jal   sub_GAME_7F04DEFC
+/* 0D179C 7F09CC6C 0FC137BF */  jal   maybe_detonate_object_and_its_children
 /* 0D17A0 7F09CC70 00000000 */   nop   
 .L7F09CC74:
 /* 0D17A4 7F09CC74 10000084 */  b     .L7F09CE88

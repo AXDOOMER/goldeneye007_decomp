@@ -2297,7 +2297,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                             osSyncPrintf("ai_destroyobj 3 : adddamageobj\n");
 #endif
 
-                            maybe_detonate_object(obj, damage, &obj->runtime_pos, 29, -1);
+                            maybe_detonate_object(obj, damage, &obj->runtime_pos, 0x1D, -1);
                         }
                     }
                     Offset += AI_DestroyObject_LENGTH;
