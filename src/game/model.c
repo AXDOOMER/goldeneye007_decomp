@@ -1422,122 +1422,61 @@ void subcalcpos(Model *arg0)
     }
 }
 
+void process_01_group_heading(ModelRenderData* renderdata, Model* model, ModelNode* node)
+{
+    union ModelRoData* rodata;
+    union ModelRwData* rwdata;
+    f32 scale;
+    f32* pos;
+    f32 unk14;
+    Mtxf* var_a3;
+    s32 modeltype;
+    RenderPosView* renderpos;
+    Mtxf sp20;
 
+    rodata = node->Data;
+    rwdata = modelGetNodeRwData(model, node);
 
-#ifdef NONMATCHING
-void process_01_group_heading(ModelRenderData *arg0, Model *model, ModelNode *node) {
+    scale = model->scale;
+    pos = &rwdata->Header.pos.x;
+    unk14 = rwdata->Header.unk14;
+    modeltype = (s16)rodata->Header.ModelType;
+    renderpos = &model->render_pos[modeltype];
 
+    if (node->Parent != NULL)
+    {
+        var_a3 = modelFindNodeMtx(model, node->Parent, 0);
+    }
+    else
+    {
+        var_a3 = renderdata->unk00;
+    }
+
+    if (rwdata->Header.unk18 != 0.0f)
+    {
+        unk14 = sub_GAME_7F06D0CC(unk14, rwdata->Header.unk1c, rwdata->Header.unk18);
+    }
+
+    if (var_a3 != NULL)
+    {
+        matrix_4x4_set_position_and_rotation_around_y(pos, unk14, &sp20);
+
+        if (scale != 1.0f)
+        {
+            matrix_scalar_multiply_2(scale, sp20.m[0]);
+        }
+
+        matrix_4x4_multiply_homogeneous(var_a3, &sp20, &renderpos->pos);
+        return;
+    }
+
+    matrix_4x4_set_position_and_rotation_around_y(pos, unk14, &renderpos->pos);
+
+    if (scale != 1.0f)
+    {
+        matrix_scalar_multiply_2(scale, renderpos->pos.m[0]);
+    }
 }
-#else
-void process_01_group_heading(ModelRenderData *arg0, Model *model, ModelNode *node);
-GLOBAL_ASM(
-.text
-glabel process_01_group_heading
-/* 0A2268 7F06D738 27BDFF80 */  addiu $sp, $sp, -0x80
-/* 0A226C 7F06D73C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A2270 7F06D740 AFA40080 */  sw    $a0, 0x80($sp)
-/* 0A2274 7F06D744 8CCE0004 */  lw    $t6, 4($a2)
-/* 0A2278 7F06D748 00A03825 */  move  $a3, $a1
-/* 0A227C 7F06D74C 00A02025 */  move  $a0, $a1
-/* 0A2280 7F06D750 00C02825 */  move  $a1, $a2
-/* 0A2284 7F06D754 AFA70084 */  sw    $a3, 0x84($sp)
-/* 0A2288 7F06D758 AFA60088 */  sw    $a2, 0x88($sp)
-/* 0A228C 7F06D75C 0FC1B1E7 */  jal   modelGetNodeRwData
-/* 0A2290 7F06D760 AFAE007C */   sw    $t6, 0x7c($sp)
-/* 0A2294 7F06D764 8FA70084 */  lw    $a3, 0x84($sp)
-/* 0A2298 7F06D768 8FB8007C */  lw    $t8, 0x7c($sp)
-/* 0A229C 7F06D76C 244F0008 */  addiu $t7, $v0, 8
-/* 0A22A0 7F06D770 C4E40014 */  lwc1  $f4, 0x14($a3)
-/* 0A22A4 7F06D774 AFAF0070 */  sw    $t7, 0x70($sp)
-/* 0A22A8 7F06D778 8FA60088 */  lw    $a2, 0x88($sp)
-/* 0A22AC 7F06D77C E7A40074 */  swc1  $f4, 0x74($sp)
-/* 0A22B0 7F06D780 87030002 */  lh    $v1, 2($t8)
-/* 0A22B4 7F06D784 8CF9000C */  lw    $t9, 0xc($a3)
-/* 0A22B8 7F06D788 C44C0014 */  lwc1  $f12, 0x14($v0)
-/* 0A22BC 7F06D78C 00034980 */  sll   $t1, $v1, 6
-/* 0A22C0 7F06D790 03295021 */  addu  $t2, $t9, $t1
-/* 0A22C4 7F06D794 AFAA0060 */  sw    $t2, 0x60($sp)
-/* 0A22C8 7F06D798 8CC50008 */  lw    $a1, 8($a2)
-/* 0A22CC 7F06D79C 00404025 */  move  $t0, $v0
-/* 0A22D0 7F06D7A0 8FAB0080 */  lw    $t3, 0x80($sp)
-/* 0A22D4 7F06D7A4 10A00009 */  beqz  $a1, .L7F06D7CC
-/* 0A22D8 7F06D7A8 00E02025 */   move  $a0, $a3
-/* 0A22DC 7F06D7AC 00003025 */  move  $a2, $zero
-/* 0A22E0 7F06D7B0 AFA20078 */  sw    $v0, 0x78($sp)
-/* 0A22E4 7F06D7B4 0FC1B198 */  jal   modelFindNodeMtx
-/* 0A22E8 7F06D7B8 E7AC006C */   swc1  $f12, 0x6c($sp)
-/* 0A22EC 7F06D7BC 8FA80078 */  lw    $t0, 0x78($sp)
-/* 0A22F0 7F06D7C0 C7AC006C */  lwc1  $f12, 0x6c($sp)
-/* 0A22F4 7F06D7C4 10000002 */  b     .L7F06D7D0
-/* 0A22F8 7F06D7C8 00403825 */   move  $a3, $v0
-.L7F06D7CC:
-/* 0A22FC 7F06D7CC 8D670000 */  lw    $a3, ($t3)
-.L7F06D7D0:
-/* 0A2300 7F06D7D0 C5000018 */  lwc1  $f0, 0x18($t0)
-/* 0A2304 7F06D7D4 44803000 */  mtc1  $zero, $f6
-/* 0A2308 7F06D7D8 00000000 */  nop   
-/* 0A230C 7F06D7DC 46003032 */  c.eq.s $f6, $f0
-/* 0A2310 7F06D7E0 00000000 */  nop   
-/* 0A2314 7F06D7E4 45010007 */  bc1t  .L7F06D804
-/* 0A2318 7F06D7E8 00000000 */   nop   
-/* 0A231C 7F06D7EC C50E001C */  lwc1  $f14, 0x1c($t0)
-/* 0A2320 7F06D7F0 44060000 */  mfc1  $a2, $f0
-/* 0A2324 7F06D7F4 0FC1B433 */  jal   sub_GAME_7F06D0CC
-/* 0A2328 7F06D7F8 AFA70068 */   sw    $a3, 0x68($sp)
-/* 0A232C 7F06D7FC 8FA70068 */  lw    $a3, 0x68($sp)
-/* 0A2330 7F06D800 46000306 */  mov.s $f12, $f0
-.L7F06D804:
-/* 0A2334 7F06D804 10E00019 */  beqz  $a3, .L7F06D86C
-/* 0A2338 7F06D808 8FA40070 */   lw    $a0, 0x70($sp)
-/* 0A233C 7F06D80C 44056000 */  mfc1  $a1, $f12
-/* 0A2340 7F06D810 8FA40070 */  lw    $a0, 0x70($sp)
-/* 0A2344 7F06D814 27A60020 */  addiu $a2, $sp, 0x20
-/* 0A2348 7F06D818 0FC16134 */  jal   matrix_4x4_set_position_and_rotation_around_y
-/* 0A234C 7F06D81C AFA70068 */   sw    $a3, 0x68($sp)
-/* 0A2350 7F06D820 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0A2354 7F06D824 44815000 */  mtc1  $at, $f10
-/* 0A2358 7F06D828 C7A80074 */  lwc1  $f8, 0x74($sp)
-/* 0A235C 7F06D82C 8FA70068 */  lw    $a3, 0x68($sp)
-/* 0A2360 7F06D830 27A50020 */  addiu $a1, $sp, 0x20
-/* 0A2364 7F06D834 460A4032 */  c.eq.s $f8, $f10
-/* 0A2368 7F06D838 00000000 */  nop   
-/* 0A236C 7F06D83C 45030006 */  bc1tl .L7F06D858
-/* 0A2370 7F06D840 00E02025 */   move  $a0, $a3
-/* 0A2374 7F06D844 46004306 */  mov.s $f12, $f8
-/* 0A2378 7F06D848 0FC162C4 */  jal   matrix_scalar_multiply_2
-/* 0A237C 7F06D84C AFA70068 */   sw    $a3, 0x68($sp)
-/* 0A2380 7F06D850 8FA70068 */  lw    $a3, 0x68($sp)
-/* 0A2384 7F06D854 00E02025 */  move  $a0, $a3
-.L7F06D858:
-/* 0A2388 7F06D858 27A50020 */  addiu $a1, $sp, 0x20
-/* 0A238C 7F06D85C 0FC16063 */  jal   matrix_4x4_multiply_homogeneous
-/* 0A2390 7F06D860 8FA60060 */   lw    $a2, 0x60($sp)
-/* 0A2394 7F06D864 1000000F */  b     .L7F06D8A4
-/* 0A2398 7F06D868 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F06D86C:
-/* 0A239C 7F06D86C 44056000 */  mfc1  $a1, $f12
-/* 0A23A0 7F06D870 0FC16134 */  jal   matrix_4x4_set_position_and_rotation_around_y
-/* 0A23A4 7F06D874 8FA60060 */   lw    $a2, 0x60($sp)
-/* 0A23A8 7F06D878 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0A23AC 7F06D87C 44819000 */  mtc1  $at, $f18
-/* 0A23B0 7F06D880 C7B00074 */  lwc1  $f16, 0x74($sp)
-/* 0A23B4 7F06D884 8FA50060 */  lw    $a1, 0x60($sp)
-/* 0A23B8 7F06D888 46128032 */  c.eq.s $f16, $f18
-/* 0A23BC 7F06D88C 00000000 */  nop   
-/* 0A23C0 7F06D890 45030004 */  bc1tl .L7F06D8A4
-/* 0A23C4 7F06D894 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0A23C8 7F06D898 0FC162C4 */  jal   matrix_scalar_multiply_2
-/* 0A23CC 7F06D89C 46008306 */   mov.s $f12, $f16
-/* 0A23D0 7F06D8A0 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F06D8A4:
-/* 0A23D4 7F06D8A4 27BD0080 */  addiu $sp, $sp, 0x80
-/* 0A23D8 7F06D8A8 03E00008 */  jr    $ra
-/* 0A23DC 7F06D8AC 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
