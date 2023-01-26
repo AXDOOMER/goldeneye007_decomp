@@ -8683,54 +8683,26 @@ void sub_GAME_7F0B7D94(void) {
 }
 
 
+u8 sub_GAME_7F0B7DA8(s32 arg0)
+{
+    s_room_info* room_info;
+    u8 tmp_flags;
+    u8 bitflags;
+    u8 out;
 
+    room_info = &array_room_info[arg0];
+    bitflags = room_info->bitflags2;
+    out = bitflags;
 
-
-
-#ifdef NONMATCHING
-s8 sub_GAME_7F0B7DA8(s32 arg0) {
-    void *temp_v0;
-    s8 temp_t8;
-    s8 phi_a1;
-
-    // Node 0
-    temp_v0 = ((arg0 * 0x50) + &array_room_info);
-    phi_a1 = temp_v0->unk3;
-    if (temp_v0->unk3 < 0xff)
+    if ((s32) bitflags < 0xFF)
     {
-        // Node 1
-        temp_t8 = (temp_v0->unk3 + 1);
-        temp_v0->unk3 = temp_t8;
-        phi_a1 = (temp_t8 & 0xff);
+        tmp_flags = bitflags + 1;
+        room_info->bitflags2 = tmp_flags;
+        out = tmp_flags & 0xFF;
     }
-    // Node 2
-    return phi_a1;
+
+    return out;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B7DA8
-/* 0EC8D8 7F0B7DA8 00047080 */  sll   $t6, $a0, 2
-/* 0EC8DC 7F0B7DAC 01C47021 */  addu  $t6, $t6, $a0
-/* 0EC8E0 7F0B7DB0 3C0F8004 */  lui   $t7, %hi(array_room_info) 
-/* 0EC8E4 7F0B7DB4 25EF1414 */  addiu $t7, %lo(array_room_info) # addiu $t7, $t7, 0x1414
-/* 0EC8E8 7F0B7DB8 000E7100 */  sll   $t6, $t6, 4
-/* 0EC8EC 7F0B7DBC 01CF1021 */  addu  $v0, $t6, $t7
-/* 0EC8F0 7F0B7DC0 90430003 */  lbu   $v1, 3($v0)
-/* 0EC8F4 7F0B7DC4 286100FF */  slti  $at, $v1, 0xff
-/* 0EC8F8 7F0B7DC8 10200004 */  beqz  $at, .L7F0B7DDC
-/* 0EC8FC 7F0B7DCC 00602825 */   move  $a1, $v1
-/* 0EC900 7F0B7DD0 24780001 */  addiu $t8, $v1, 1
-/* 0EC904 7F0B7DD4 A0580003 */  sb    $t8, 3($v0)
-/* 0EC908 7F0B7DD8 330500FF */  andi  $a1, $t8, 0xff
-.L7F0B7DDC:
-/* 0EC90C 7F0B7DDC 03E00008 */  jr    $ra
-/* 0EC910 7F0B7DE0 00A01025 */   move  $v0, $a1
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
