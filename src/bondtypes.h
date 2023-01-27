@@ -3430,6 +3430,9 @@ typedef union
     typedef struct LockDoorRecord
     {
         inherits PropDefHeaderRecord;
+        struct DoorRecord*     door;
+        struct ObjectRecord*   lock;
+        struct LockDoorRecord* next;
         //u16 TagID;
     } LockDoorRecord;
     #define New_RenameObjectRecord(TagID)          \

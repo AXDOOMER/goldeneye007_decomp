@@ -61,7 +61,7 @@ s32 D_80030AF4 = 0;
 s32 D_80030AF8 = 0; // numbers between 0 and 30
 s32 D_80030AFC = 0;
 ObjectRecord *g_LevelLoadPropSwitch = NULL;
-ObjectRecord *g_LevelLoadPropLockDoor = NULL;
+LockDoorRecord *g_LevelLoadPropLockDoor = NULL;
 ObjectRecord *g_LevelLoadPropSafeItem = NULL;
 s32 D_80030B0C = 0;
 s32 bodypartshot = 0xFFFFFFFF;
@@ -9661,7 +9661,7 @@ glabel object_interaction
 /* 07B270 7F046740 02002025 */   move  $a0, $s0
 /* 07B274 7F046744 10400007 */  beqz  $v0, .L7F046764
 /* 07B278 7F046748 00000000 */   nop   
-/* 07B27C 7F04674C 0FC0F9C6 */  jal   sub_GAME_7F03E718
+/* 07B27C 7F04674C 0FC0F9C6 */  jal   doorIsPadlockFree
 /* 07B280 7F046750 02002025 */   move  $a0, $s0
 /* 07B284 7F046754 10400003 */  beqz  $v0, .L7F046764
 /* 07B288 7F046758 00000000 */   nop   
@@ -14767,7 +14767,7 @@ glabel object_interaction
 /* 07B6B4 7F046B44 02002025 */   move  $a0, $s0
 /* 07B6B8 7F046B48 10400007 */  beqz  $v0, .Ljp7F046B68
 /* 07B6BC 7F046B4C 00000000 */   nop   
-/* 07B6C0 7F046B50 0FC0FA86 */  jal   sub_GAME_7F03E718
+/* 07B6C0 7F046B50 0FC0FA86 */  jal   doorIsPadlockFree
 /* 07B6C4 7F046B54 02002025 */   move  $a0, $s0
 /* 07B6C8 7F046B58 10400003 */  beqz  $v0, .Ljp7F046B68
 /* 07B6CC 7F046B5C 00000000 */   nop   
@@ -19880,7 +19880,7 @@ glabel object_interaction
 /* 07930C 7F04691C 02002025 */   move  $a0, $s0
 /* 079310 7F046920 10400007 */  beqz  $v0, .L7F046940
 /* 079314 7F046924 00000000 */   nop   
-/* 079318 7F046928 0FC0F9F6 */  jal   sub_GAME_7F03E718
+/* 079318 7F046928 0FC0F9F6 */  jal   doorIsPadlockFree
 /* 07931C 7F04692C 02002025 */   move  $a0, $s0
 /* 079320 7F046930 10400003 */  beqz  $v0, .L7F046940
 /* 079324 7F046934 00000000 */   nop   
@@ -45027,7 +45027,7 @@ glabel sub_GAME_7F055C40
 .L7F055CE4:
 /* 08A814 7F055CE4 02002025 */  move  $a0, $s0
 .L7F055CE8:
-/* 08A818 7F055CE8 0FC0F9C6 */  jal   sub_GAME_7F03E718
+/* 08A818 7F055CE8 0FC0F9C6 */  jal   doorIsPadlockFree
 /* 08A81C 7F055CEC AFA30028 */   sw    $v1, 0x28($sp)
 /* 08A820 7F055CF0 14400002 */  bnez  $v0, .L7F055CFC
 /* 08A824 7F055CF4 8FA30028 */   lw    $v1, 0x28($sp)
@@ -45142,7 +45142,7 @@ glabel sub_GAME_7F055C40
 .L7F055CE4:
 /* 08A814 7F055CE4 02002025 */  move  $a0, $s0
 .L7F055CE8:
-/* 08A818 7F055CE8 0FC0F9C6 */  jal   sub_GAME_7F03E718
+/* 08A818 7F055CE8 0FC0F9C6 */  jal   doorIsPadlockFree
 /* 08A81C 7F055CEC AFA30028 */   sw    $v1, 0x28($sp)
 /* 08A820 7F055CF0 14400002 */  bnez  $v0, .L7F055CFC
 /* 08A824 7F055CF4 8FA30028 */   lw    $v1, 0x28($sp)
@@ -45258,7 +45258,7 @@ glabel sub_GAME_7F055C40
 .L7F055CE4:
 /* 08A814 7F055CE4 02002025 */  move  $a0, $s0
 .L7F055CE8:
-/* 08A818 7F055CE8 0FC0F9C6 */  jal   sub_GAME_7F03E718
+/* 08A818 7F055CE8 0FC0F9C6 */  jal   doorIsPadlockFree
 /* 08A81C 7F055CEC AFA30028 */   sw    $v1, 0x28($sp)
 /* 08A820 7F055CF0 14400002 */  bnez  $v0, .L7F055CFC
 /* 08A824 7F055CF4 8FA30028 */   lw    $v1, 0x28($sp)

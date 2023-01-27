@@ -28,7 +28,7 @@ extern s32 D_80030AF4;
 extern s32 D_80030AF8;
 extern s32 D_80030AFC;
 extern ObjectRecord *g_LevelLoadPropSwitch;
-extern ObjectRecord *g_LevelLoadPropLockDoor;
+extern LockDoorRecord *g_LevelLoadPropLockDoor;
 extern ObjectRecord *g_LevelLoadPropSafeItem;
 extern s32 D_80030B0C;
 extern s32 bodypartshot;

@@ -381,7 +381,7 @@ BITFLAG(RUNTIMEBITFLAG,
         DESTROYED, /* only set with disabled or destroyed doors                   */
         00000800,
         00001000,
-        00002000,
+        PADLOCKEDDOOR,
         ACTIVATED, /* activated                                                   */
         00008000,
         00010000,

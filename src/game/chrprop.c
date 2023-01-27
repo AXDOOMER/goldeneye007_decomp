@@ -5392,62 +5392,27 @@ glabel sub_GAME_7F03E6A0
 #endif
 
 
+bool doorIsPadlockFree(DoorRecord* door)
+{
+    if (door->runtime_bitflags & RUNTIMEBITFLAG_PADLOCKEDDOOR)
+    {
+        LockDoorRecord *padlockeddoor = g_LevelLoadPropLockDoor;
 
+        while (padlockeddoor)
+        {
+            if (door == padlockeddoor->door
+                    && padlockeddoor->lock
+                    && padlockeddoor->lock->prop
+                    && objIsHealthy(padlockeddoor->lock)) {
+                return FALSE;
+            }
 
+            padlockeddoor = padlockeddoor->next;
+        }
+    }
 
-#ifdef NONMATCHING
-void sub_GAME_7F03E718(void) {
-
+    return TRUE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03E718
-/* 073248 7F03E718 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 07324C 7F03E71C AFBF001C */  sw    $ra, 0x1c($sp)
-/* 073250 7F03E720 AFB10018 */  sw    $s1, 0x18($sp)
-/* 073254 7F03E724 AFB00014 */  sw    $s0, 0x14($sp)
-/* 073258 7F03E728 8C8E0064 */  lw    $t6, 0x64($a0)
-/* 07325C 7F03E72C 00808825 */  move  $s1, $a0
-/* 073260 7F03E730 3C108003 */  lui   $s0, %hi(g_LevelLoadPropLockDoor)
-/* 073264 7F03E734 31CF2000 */  andi  $t7, $t6, 0x2000
-/* 073268 7F03E738 51E00017 */  beql  $t7, $zero, .L7F03E798
-/* 07326C 7F03E73C 24020001 */   li    $v0, 1
-/* 073270 7F03E740 8E100B04 */  lw    $s0, %lo(g_LevelLoadPropLockDoor)($s0)
-/* 073274 7F03E744 52000014 */  beql  $s0, $zero, .L7F03E798
-/* 073278 7F03E748 24020001 */   li    $v0, 1
-/* 07327C 7F03E74C 8E180004 */  lw    $t8, 4($s0)
-.L7F03E750:
-/* 073280 7F03E750 5638000E */  bnel  $s1, $t8, .L7F03E78C
-/* 073284 7F03E754 8E10000C */   lw    $s0, 0xc($s0)
-/* 073288 7F03E758 8E040008 */  lw    $a0, 8($s0)
-/* 07328C 7F03E75C 5080000B */  beql  $a0, $zero, .L7F03E78C
-/* 073290 7F03E760 8E10000C */   lw    $s0, 0xc($s0)
-/* 073294 7F03E764 8C990010 */  lw    $t9, 0x10($a0)
-/* 073298 7F03E768 53200008 */  beql  $t9, $zero, .L7F03E78C
-/* 07329C 7F03E76C 8E10000C */   lw    $s0, 0xc($s0)
-/* 0732A0 7F03E770 0FC13BCD */  jal   objIsHealthy
-/* 0732A4 7F03E774 00000000 */   nop   
-/* 0732A8 7F03E778 50400004 */  beql  $v0, $zero, .L7F03E78C
-/* 0732AC 7F03E77C 8E10000C */   lw    $s0, 0xc($s0)
-/* 0732B0 7F03E780 10000005 */  b     .L7F03E798
-/* 0732B4 7F03E784 00001025 */   move  $v0, $zero
-/* 0732B8 7F03E788 8E10000C */  lw    $s0, 0xc($s0)
-.L7F03E78C:
-/* 0732BC 7F03E78C 5600FFF0 */  bnezl $s0, .L7F03E750
-/* 0732C0 7F03E790 8E180004 */   lw    $t8, 4($s0)
-/* 0732C4 7F03E794 24020001 */  li    $v0, 1
-.L7F03E798:
-/* 0732C8 7F03E798 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0732CC 7F03E79C 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0732D0 7F03E7A0 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0732D4 7F03E7A4 03E00008 */  jr    $ra
-/* 0732D8 7F03E7A8 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
