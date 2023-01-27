@@ -32834,7 +32834,7 @@ bool check_if_destroyable_object_type(PropDefHeaderRecord *obj)//#MATCH
 }
 
 
-bool check_if_collectable_object(PropDefHeaderRecord *obj)//#MATCH
+bool objIsCollectable(PropDefHeaderRecord *obj)
 {
     switch (obj->type)
     {
@@ -32851,82 +32851,25 @@ bool check_if_collectable_object(PropDefHeaderRecord *obj)//#MATCH
 }
 
 
-
-
-
-
-#ifdef NONMATCHING
-bool check_if_destroyable_not_invincible(ObjectRecord *obj) {
+bool objIsMortal(ObjectRecord* obj)
+{
     if (obj->type == PROPDEF_DOOR)
     {
         return FALSE;
     }
-
-    if (check_if_collectable_object(obj) && obj->type != 21)
+    if ((objIsCollectable((PropDefHeaderRecord* ) obj) != 0) && (obj->type != PROPDEF_ARMOUR))
     {
-        // Can't get this one right
-        // 82bc0:    bltzl   t9,0x82bec  | 82bc0:    beqzl   t9,0x82bec
-        if ((obj->flags << 0xf) != 0)
+        if (!(obj->flags & PROPFLAG_FORCEMORTAL))
         {
             return FALSE;
         }
     }
-    // Can't get this one right
-    // 82bd8:    bgezl   t1,0x82bec      | 82bd8:    bnezl   t1,0x82bec
-    else if ((obj->flags << 0xe) == 0) 
+    else if (obj->flags & PROPFLAG_INVINCIBLE)
     {
         return FALSE;
     }
-
     return TRUE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_destroyable_not_invincible
-/* 082B78 7F04E048 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 082B7C 7F04E04C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 082B80 7F04E050 908E0003 */  lbu   $t6, 3($a0)
-/* 082B84 7F04E054 24010001 */  li    $at, 1
-/* 082B88 7F04E058 15C10003 */  bne   $t6, $at, .L7F04E068
-/* 082B8C 7F04E05C 00000000 */   nop   
-/* 082B90 7F04E060 10000016 */  b     .L7F04E0BC
-/* 082B94 7F04E064 00001025 */   move  $v0, $zero
-.L7F04E068:
-/* 082B98 7F04E068 0FC13803 */  jal   check_if_collectable_object
-/* 082B9C 7F04E06C AFA40018 */   sw    $a0, 0x18($sp)
-/* 082BA0 7F04E070 1040000B */  beqz  $v0, .L7F04E0A0
-/* 082BA4 7F04E074 8FA40018 */   lw    $a0, 0x18($sp)
-/* 082BA8 7F04E078 908F0003 */  lbu   $t7, 3($a0)
-/* 082BAC 7F04E07C 24010015 */  li    $at, 21
-/* 082BB0 7F04E080 51E10008 */  beql  $t7, $at, .L7F04E0A4
-/* 082BB4 7F04E084 8C880008 */   lw    $t0, 8($a0)
-/* 082BB8 7F04E088 8C980008 */  lw    $t8, 8($a0)
-/* 082BBC 7F04E08C 0018CBC0 */  sll   $t9, $t8, 0xf
-/* 082BC0 7F04E090 0722000A */  bltzl $t9, .L7F04E0BC
-/* 082BC4 7F04E094 24020001 */   li    $v0, 1
-/* 082BC8 7F04E098 10000008 */  b     .L7F04E0BC
-/* 082BCC 7F04E09C 00001025 */   move  $v0, $zero
-.L7F04E0A0:
-/* 082BD0 7F04E0A0 8C880008 */  lw    $t0, 8($a0)
-.L7F04E0A4:
-/* 082BD4 7F04E0A4 00084B80 */  sll   $t1, $t0, 0xe
-/* 082BD8 7F04E0A8 05230004 */  bgezl $t1, .L7F04E0BC
-/* 082BDC 7F04E0AC 24020001 */   li    $v0, 1
-/* 082BE0 7F04E0B0 10000002 */  b     .L7F04E0BC
-/* 082BE4 7F04E0B4 00001025 */   move  $v0, $zero
-/* 082BE8 7F04E0B8 24020001 */  li    $v0, 1
-.L7F04E0BC:
-/* 082BEC 7F04E0BC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 082BF0 7F04E0C0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 082BF4 7F04E0C4 03E00008 */  jr    $ra
-/* 082BF8 7F04E0C8 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 
 /**
@@ -33030,7 +32973,7 @@ void maybe_detonate_object(ObjectRecord* self, f32 damage,  coord3d* pos, bool f
     {
         if (!flag)
         {
-            if (check_if_collectable_object(self))
+            if (objIsCollectable(self))
             {
                 if (self->flags << 8 >= 0)
                 {
@@ -33087,7 +33030,7 @@ void maybe_detonate_object(ObjectRecord* self, f32 damage,  coord3d* pos, bool f
                     return;
                 }
             }
-            if (!check_if_destroyable_not_invincible(damage, self, 8) )
+            if (!objIsMortal(damage, self, 8) )
             {
                 return;
             }
@@ -33276,7 +33219,7 @@ glabel maybe_detonate_object
 /* 082C9C 7F04E16C 02002025 */  move  $a0, $s0
 /* 082CA0 7F04E170 55800012 */  bnezl $t4, .L7F04E1BC
 /* 082CA4 7F04E174 8E030008 */   lw    $v1, 8($s0)
-/* 082CA8 7F04E178 0FC13803 */  jal   check_if_collectable_object
+/* 082CA8 7F04E178 0FC13803 */  jal   objIsCollectable
 /* 082CAC 7F04E17C E7AC00E4 */   swc1  $f12, 0xe4($sp)
 /* 082CB0 7F04E180 10400007 */  beqz  $v0, .L7F04E1A0
 /* 082CB4 7F04E184 C7AC00E4 */   lwc1  $f12, 0xe4($sp)
@@ -33354,7 +33297,7 @@ glabel maybe_detonate_object
 /* 082DBC 7F04E28C AE090008 */   sw    $t1, 8($s0)
 /* 082DC0 7F04E290 02002025 */  move  $a0, $s0
 .L7F04E294:
-/* 082DC4 7F04E294 0FC13812 */  jal   check_if_destroyable_not_invincible
+/* 082DC4 7F04E294 0FC13812 */  jal   objIsMortal
 /* 082DC8 7F04E298 E7AC00E4 */   swc1  $f12, 0xe4($sp)
 /* 082DCC 7F04E29C 1040011B */  beqz  $v0, .L7F04E70C
 /* 082DD0 7F04E2A0 C7AC00E4 */   lwc1  $f12, 0xe4($sp)
@@ -34023,7 +33966,7 @@ glabel sub_GAME_7F04EA68
 /* 0836B8 7F04EB88 02202025 */   move  $a0, $s1
 /* 0836BC 7F04EB8C 5040000D */  beql  $v0, $zero, .L7F04EBC4
 /* 0836C0 7F04EB90 8E0B004C */   lw    $t3, 0x4c($s0)
-/* 0836C4 7F04EB94 0FC13812 */  jal   check_if_destroyable_not_invincible
+/* 0836C4 7F04EB94 0FC13812 */  jal   objIsMortal
 /* 0836C8 7F04EB98 02202025 */   move  $a0, $s1
 /* 0836CC 7F04EB9C 50400009 */  beql  $v0, $zero, .L7F04EBC4
 /* 0836D0 7F04EBA0 8E0B004C */   lw    $t3, 0x4c($s0)
@@ -34232,7 +34175,7 @@ glabel sub_GAME_7F04EA68
 /* 0839BC 7F04EE8C 0FC11080 */  jal   sub_GAME_7F044200
 /* 0839C0 7F04EE90 8E040004 */   lw    $a0, 4($s0)
 /* 0839C4 7F04EE94 00008025 */  move  $s0, $zero
-/* 0839C8 7F04EE98 0FC13803 */  jal   check_if_collectable_object
+/* 0839C8 7F04EE98 0FC13803 */  jal   objIsCollectable
 /* 0839CC 7F04EE9C 02202025 */   move  $a0, $s1
 /* 0839D0 7F04EEA0 50400008 */  beql  $v0, $zero, .L7F04EEC4
 /* 0839D4 7F04EEA4 8E2B0008 */   lw    $t3, 8($s1)
@@ -37579,7 +37522,7 @@ s32 object_collectability_routines(PropRecord *arg0)
     temp_a0 = arg0->chr;
     sp84    = temp_a0;
     phi_a0  = temp_a0;
-    if ((check_if_collectable_object(temp_a0) != 0) && (temp_a0->Head.type != 0x11))
+    if ((objIsCollectable(temp_a0) != 0) && (temp_a0->Head.type != 0x11))
     {
         temp_v0 = temp_a0->flags;
         phi_v0  = temp_v0;
@@ -37842,7 +37785,7 @@ glabel object_collectability_routines
 /* 085210 7F0506E0 AFBF002C */  sw    $ra, 0x2c($sp)
 /* 085214 7F0506E4 AFA40088 */  sw    $a0, 0x88($sp)
 /* 085218 7F0506E8 8C840004 */  lw    $a0, 4($a0)
-/* 08521C 7F0506EC 0FC13803 */  jal   check_if_collectable_object
+/* 08521C 7F0506EC 0FC13803 */  jal   objIsCollectable
 /* 085220 7F0506F0 AFA40084 */   sw    $a0, 0x84($sp)
 /* 085224 7F0506F4 1040000B */  beqz  $v0, .L7F050724
 /* 085228 7F0506F8 8FA40084 */   lw    $a0, 0x84($sp)
@@ -38306,7 +38249,7 @@ glabel object_collectability_routines
 /* 085658 7F050AE8 AFB00030 */  sw    $s0, 0x30($sp)
 /* 08565C 7F050AEC AFA40090 */  sw    $a0, 0x90($sp)
 /* 085660 7F050AF0 8C840004 */  lw    $a0, 4($a0)
-/* 085664 7F050AF4 0FC13904 */  jal   check_if_collectable_object
+/* 085664 7F050AF4 0FC13904 */  jal   objIsCollectable
 /* 085668 7F050AF8 AFA4008C */   sw    $a0, 0x8c($sp)
 /* 08566C 7F050AFC 1040000B */  beqz  $v0, .Ljp7F050B2C
 /* 085670 7F050B00 8FA4008C */   lw    $a0, 0x8c($sp)
@@ -38842,7 +38785,7 @@ glabel object_collectability_routines
 /* 085658 7F050AE8 AFB00030 */  sw    $s0, 0x30($sp)
 /* 08565C 7F050AEC AFA40090 */  sw    $a0, 0x90($sp)
 /* 085660 7F050AF0 8C840004 */  lw    $a0, 4($a0)
-/* 085664 7F050AF4 0FC13904 */  jal   check_if_collectable_object
+/* 085664 7F050AF4 0FC13904 */  jal   objIsCollectable
 /* 085668 7F050AF8 AFA4008C */   sw    $a0, 0x8c($sp)
 /* 08566C 7F050AFC 1040000B */  beqz  $v0, .Ljp7F050B2C
 /* 085670 7F050B00 8FA4008C */   lw    $a0, 0x8c($sp)

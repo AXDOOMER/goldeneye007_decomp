@@ -276,8 +276,8 @@ typedef enum PROPFLAG
     PROPFLAG_AIUNDROPPABLE               = 0x00002000, /* Item Not Droppedz*/
     PROPFLAG_ASSIGNEDTOCHR               = 0x00004000, // unknown
     PROPFLAG_00008000                    = 0x00008000, // unknown
-    PROPFLAG_00010000                    = 0x00010000, // unknown
-    PROPFLAG_00020000                    = 0x00020000, // unknown
+    PROPFLAG_FORCEMORTAL                 = 0x00010000, // unknown
+    PROPFLAG_INVINCIBLE                  = 0x00020000, // unknown
     PROPFLAG_00040000                    = 0x00040000, // unknown
     PROPFLAG_00080000                    = 0x00080000, // unknown
     PROPFLAG_UNCOLLECTABLE               = 0x00100000, /* Item Not Collectable*/
