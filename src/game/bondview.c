@@ -23186,104 +23186,90 @@ void store_BONDdata_curpos_to_previous(void) {
 }
 
 #ifdef NONMATCHING
-void sub_GAME_7F0876C4(void *arg0, void *arg1, void *arg2) {
-    ? sp60;
-    ? spA0;
-    f32 spAC;
-    f32 spB0;
-    f32 spB4;
-    f32 spB8;
-    f32 spBC;
-    f32 spC0;
-    ? spC4;
-    s32 sp104;
-    ? sp108;
-    f32 temp_f10;
-    f32 temp_f6;
-    f32 temp_f4;
-    f32 temp_f16;
-    s32 temp_s0;
-    f32 temp_f0;
-    s32 temp_v1;
-    void *temp_a1;
-    void *phi_v0;
-    s32 phi_v1;
-    void *phi_a1;
 
-    // Node 0
+// VERY close - 99.80% - the stack is slightly too big
+void sub_GAME_7F0876C4(coord3d* cam_pos, coord3d* cam_look, coord3d* cam_up) {
+    Mtxf *projmtx;
+    s32 j;
+    Mtx sp108;
+    LookAt *lookat;
+    Mtxf spC4;
+    coord3d clpos;
+    coord3d scaledpos;
+    s32 i;
+    Mtx *temp_s0;
+    f32 scale;
+    Mtxf sp60;
+
     bondviewUpdateCurrentRoomPosition(bondviewGetCurrentPlayersRoom());
+
     g_CurrentPlayer->field_5C = dynAllocateMatrix();
     g_CurrentPlayer->field_60 = dynAllocateMatrix();
     g_CurrentPlayer->field_64 = dynAllocateMatrix();
     g_CurrentPlayer->field_68 = dynAllocateMatrix();
-    sp104 = dynAllocate7F0BD6F8(2);
-    temp_f10 = ((*arg0 - g_CurrentPlayer->current_model_xpos) * D_800364CC);
-    spAC = temp_f10;
-    temp_f6 = ((arg0->unk4 - g_CurrentPlayer->current_model_ypos) * D_800364CC);
-    spB0 = temp_f6;
-    temp_f4 = ((arg0->unk8 - g_CurrentPlayer->current_model_zpos) * D_800364CC);
-    spB4 = temp_f4;
-    temp_f16 = (*arg1 + temp_f10);
-    spB8 = temp_f16;
-    spBC = (f32) (arg1->unk4 + temp_f6);
-    spC0 = (f32) (arg1->unk8 + temp_f4);
-    matrix_4x4_7F059424(&spC4, temp_f10, temp_f6, temp_f4, (f32) *arg1, (f32) arg1->unk4, (f32) arg1->unk8, (f32) *arg2, (f32) arg2->unk4, (f32) arg2->unk8);
-    guLookAtReflect(&sp108, sp104, spAC, spB0, spB4, temp_f16, spBC, spC0, (f32) *arg2, (f32) arg2->unk4, (f32) arg2->unk8);
-    matrix_4x4_7F059424(g_CurrentPlayer->field_64, *arg0, arg0->unk4, arg0->unk8, (f32) *arg1, (f32) arg1->unk4, (f32) arg1->unk8, (f32) *arg2, (f32) arg2->unk4, (f32) arg2->unk8);
-    matrix_4x4_7F059708(g_CurrentPlayer->field_68, *arg0, arg0->unk4, arg0->unk8, (f32) *arg1, (f32) arg1->unk4, (f32) arg1->unk8, (f32) *arg2, (f32) arg2->unk4, (f32) arg2->unk8);
+
+    lookat = dynAllocate7F0BD6F8(2);
+
+    scale = D_800364CC;
+
+    scaledpos.x = (cam_pos->x - g_CurrentPlayer->current_model_pos.x) * scale;
+    scaledpos.y = (cam_pos->y - g_CurrentPlayer->current_model_pos.y) * scale;
+    scaledpos.z = (cam_pos->z - g_CurrentPlayer->current_model_pos.z) * scale;
+
+    clpos.f[0] = scaledpos.f[0] + cam_look->f[0];
+    clpos.f[1] = scaledpos.f[1] + cam_look->f[1];
+    clpos.f[2] = scaledpos.f[2] + cam_look->f[2];
+
+    matrix_4x4_7F059424(&spC4,
+        scaledpos.x, scaledpos.y, scaledpos.z,
+        cam_look->x, cam_look->y, cam_look->z,
+        cam_up->x, cam_up->y, cam_up->z);
+
+    guLookAtReflect(&sp108, lookat,
+        scaledpos.x, scaledpos.y, scaledpos.z,
+        clpos.x, clpos.y, clpos.z,
+        cam_up->x, cam_up->y, cam_up->z);
+
+    matrix_4x4_7F059424((Mtxf*) g_CurrentPlayer->field_64,
+        cam_pos->x, cam_pos->y, cam_pos->z,
+        cam_look->x, cam_look->y, cam_look->z,
+        cam_up->x, cam_up->y, cam_up->z);
+
+    matrix_4x4_7F059708((Mtxf*) g_CurrentPlayer->field_68,
+        cam_pos->x, cam_pos->y, cam_pos->z,
+        cam_look->x, cam_look->y, cam_look->z,
+        cam_up->x, cam_up->y, cam_up->z);
+
     temp_s0 = dynAllocateMatrix();
-    matrix_4x4_multiply(currentPlayerGetProjectionMatrixF(), &spC4, &sp60);
-    phi_a1 = &sp60;
-loop_1:
-    // Node 1
-    phi_v0 = phi_a1;
-    phi_v1 = 0;
-loop_2:
-    // Node 2
-    temp_f0 = *phi_v0;
-    temp_v1 = (phi_v1 + 4);
-    if (32000.0f < temp_f0)
-    {
-        // Node 3
-        *phi_v0 = 32000.0f;
-    }
-    else
-    {
-        // Node 4
-        if (temp_f0 < -32000.0f)
-        {
-            // Node 5
-            *phi_v0 = -32000.0f;
-        }
-    }
-    // Node 6
-    phi_v0 = (phi_v0 + 4);
-    phi_v1 = temp_v1;
-    if (temp_v1 != 0x10)
-    {
-        goto loop_2;
-    }
-    // Node 7
-    temp_a1 = (phi_a1 + 0x10);
-    phi_a1 = temp_a1;
-    if (temp_a1 != &spA0)
-    {
-        goto loop_1;
-    }
-    // Node 8
-    guMtxF2L(-32000.0f, &sp60, temp_s0, &spA0);
-    set_BONDdata_field_10E0(temp_s0);
-    matrix_scalar_multiply(bgGetLevelVisibilityScale(), &spC4);
-    guMtxF2L(&spC4, g_CurrentPlayer->field_5C);
-    sub_GAME_7F059334(g_CurrentPlayer->field_5C, g_CurrentPlayer->field_60);
-    currentPlayerSetMatrix10C8(g_CurrentPlayer->field_5C);
-    currentPlayerSetMatrix10C4(g_CurrentPlayer->field_60);
-    currentPlayerSetMatrix10CC(g_CurrentPlayer->field_64);
-    currentPlayerSetMatrix10D4(g_CurrentPlayer->field_68);
-    sub_GAME_7F078464(sp104);
+
+    projmtx = currentPlayerGetProjectionMatrixF();
+    matrix_4x4_multiply(projmtx, &spC4, &sp60);
+
+	for (i = 0; i < 4; i++) {
+		for (j = 0; j < 4; j++) {
+			if (sp60.m[i][j] > 32000.0f) {
+				sp60.m[i][j] = 32000.0f;
+			} else if (sp60.m[i][j] < -32000.0f) {
+				sp60.m[i][j] = -32000.0f;
+			}
+		}
+	}
+
+    guMtxF2L((f32 (*)[4]) &sp60, temp_s0);
+    set_BONDdata_field_10E0((s32) temp_s0);
+    matrix_scalar_multiply(bgGetLevelVisibilityScale(), spC4.m[0]);
+    guMtxF2L((f32 (*)[4]) &spC4, (Mtx* ) g_CurrentPlayer->field_5C);
+    sub_GAME_7F059334((s32* ) g_CurrentPlayer->field_5C, (s32* ) g_CurrentPlayer->field_60);
+    currentPlayerSetMatrix10C8((Mtx* ) g_CurrentPlayer->field_5C);
+    currentPlayerSetMatrix10C4((Mtx* ) g_CurrentPlayer->field_60);
+    currentPlayerSetMatrix10CC((Mtxf* ) g_CurrentPlayer->field_64);
+    currentPlayerSetMatrix10D4((Mtxf* ) g_CurrentPlayer->field_68);
+    sub_GAME_7F078464((s32) lookat);
     sub_GAME_7F0785DC();
-    return store_BONDdata_curpos_to_previous();
+    store_BONDdata_curpos_to_previous();
 }
+
+
 #else
 GLOBAL_ASM(
 .text
