@@ -4,27 +4,25 @@
 
 // bss
 //CODE.bss:8007A0D0
-s32 dword_CODE_bss_8007A0D0;
+s32 dword_CODE_bss_8007A0D0; // item count for dword_CODE_bss_8007A0E0
 //CODE.bss:8007A0D4
-s32 dword_CODE_bss_8007A0D4;
+s32 dword_CODE_bss_8007A0D4; // item count for dword_CODE_bss_8007A0E8
 //CODE.bss:8007A0D8
-s32 dword_CODE_bss_8007A0D8;
+s32 dword_CODE_bss_8007A0D8; // item count for dword_CODE_bss_8007A0E4
 //CODE.bss:8007A0DC
-s32 dword_CODE_bss_8007A0DC;
+s32 dword_CODE_bss_8007A0DC; // item count for dword_CODE_bss_8007A0EC
 //CODE.bss:8007A0E0
-s32 dword_CODE_bss_8007A0E0;
+s32 dword_CODE_bss_8007A0E0; // array ( uses dword_CODE_bss_8007A0D0 as alloc count, item size 0x10 )
 //CODE.bss:8007A0E4
-s32 dword_CODE_bss_8007A0E4;
+s32 dword_CODE_bss_8007A0E4; // array ( uses dword_CODE_bss_8007A0D8 as alloc count, item size 0x10 )
 //CODE.bss:8007A0E8
-s32 dword_CODE_bss_8007A0E8;
+s32 dword_CODE_bss_8007A0E8; // array ( uses dword_CODE_bss_8007A0D4 as alloc count, item size 0x14 )
 //CODE.bss:8007A0EC
-s32 dword_CODE_bss_8007A0EC;
+s32 dword_CODE_bss_8007A0EC; // array ( uses dword_CODE_bss_8007A0DC as alloc count, item size 0x14 )
 //CODE.bss:8007A0F0
 s16 word_CODE_bss_8007A0F0;
 //CODE.bss:8007A0F2
 s16 word_CODE_bss_8007A0F2;
-
-
 
 void null_init_main_1(void) {
     return;
