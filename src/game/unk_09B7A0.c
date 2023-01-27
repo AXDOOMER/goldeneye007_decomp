@@ -2,6 +2,25 @@
 #include <memp.h>
 #include "unk_09B7A0.h"
 
+// unsure if these structs are defined as something else, elsewhere
+struct unk_09B7A0_struct_child {
+    s32 unk00;
+    s32 unk04;
+    s32 unk08;
+    s32 unk0C;
+};
+
+// unsure if these structs are defined as something else, elsewhere
+struct unk_09B7A0_struct_parent {
+    struct unk_09B7A0_struct_child* unk00;
+    s32 unk04;
+    s32 unk08;
+    s16 unk0C;
+    s16 unk0E;
+    s16 unk10;
+    s16 unk12;
+};
+
 // bss
 //CODE.bss:8007A0D0
 s32 dword_CODE_bss_8007A0D0; // item count for dword_CODE_bss_8007A0E0
@@ -12,203 +31,96 @@ s32 dword_CODE_bss_8007A0D8; // item count for dword_CODE_bss_8007A0E4
 //CODE.bss:8007A0DC
 s32 dword_CODE_bss_8007A0DC; // item count for dword_CODE_bss_8007A0EC
 //CODE.bss:8007A0E0
-s32 dword_CODE_bss_8007A0E0; // array ( uses dword_CODE_bss_8007A0D0 as alloc count, item size 0x10 )
+struct unk_09B7A0_struct_parent* dword_CODE_bss_8007A0E0; // array ( uses dword_CODE_bss_8007A0D0 as alloc count, item size 0x10 )
 //CODE.bss:8007A0E4
-s32 dword_CODE_bss_8007A0E4; // array ( uses dword_CODE_bss_8007A0D8 as alloc count, item size 0x10 )
+struct unk_09B7A0_struct_parent* dword_CODE_bss_8007A0E4; // array ( uses dword_CODE_bss_8007A0D8 as alloc count, item size 0x10 )
 //CODE.bss:8007A0E8
-s32 dword_CODE_bss_8007A0E8; // array ( uses dword_CODE_bss_8007A0D4 as alloc count, item size 0x14 )
+struct unk_09B7A0_struct_parent* dword_CODE_bss_8007A0E8; // array ( uses dword_CODE_bss_8007A0D4 as alloc count, item size 0x14 )
 //CODE.bss:8007A0EC
-s32 dword_CODE_bss_8007A0EC; // array ( uses dword_CODE_bss_8007A0DC as alloc count, item size 0x14 )
+struct unk_09B7A0_struct_parent* dword_CODE_bss_8007A0EC; // array ( uses dword_CODE_bss_8007A0DC as alloc count, item size 0x14 )
 //CODE.bss:8007A0F0
 s16 word_CODE_bss_8007A0F0;
 //CODE.bss:8007A0F2
 s16 word_CODE_bss_8007A0F2;
 
-void null_init_main_1(void) {
+void null_init_main_1(void)
+{
     return;
 }
 
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F09B7A8(void) {
-    //extern s32 dword_CODE_bss_8007A0D4;
-    //extern s32 dword_CODE_bss_8007A0E8;
-
-    s32 temp_v0;
-    s32 temp_v1;
-    s32 phi_v0;
-
-    temp_v1 = dword_CODE_bss_8007A0D4;
-    phi_v0 = 0;
-    if (temp_v1 > 0) {
-        do {
-            temp_v0 = phi_v0 + 0x14;
-            phi_v0 = temp_v0;
-        } while (temp_v0 < (temp_v1 * 0x14));
+void sub_GAME_7F09B7A8(void)
+{
+    s32 i;
+    for (i = 0; i < dword_CODE_bss_8007A0D4; i++)
+    {
+        if (dword_CODE_bss_8007A0E8[i].unk00);
     }
-
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F09B7A8
-/* 0D02D8 7F09B7A8 3C038008 */  lui   $v1, %hi(dword_CODE_bss_8007A0D4)
-/* 0D02DC 7F09B7AC 8C63A0D4 */  lw    $v1, %lo(dword_CODE_bss_8007A0D4)($v1)
-/* 0D02E0 7F09B7B0 00001025 */  move  $v0, $zero
-/* 0D02E4 7F09B7B4 3C048008 */  lui   $a0, %hi(dword_CODE_bss_8007A0E8)
-/* 0D02E8 7F09B7B8 18600008 */  blez  $v1, .L7F09B7DC
-/* 0D02EC 7F09B7BC 00032880 */   sll   $a1, $v1, 2
-/* 0D02F0 7F09B7C0 00A32821 */  addu  $a1, $a1, $v1
-/* 0D02F4 7F09B7C4 00052880 */  sll   $a1, $a1, 2
-/* 0D02F8 7F09B7C8 8C84A0E8 */  lw    $a0, %lo(dword_CODE_bss_8007A0E8)($a0)
-.L7F09B7CC:
-/* 0D02FC 7F09B7CC 24420014 */  addiu $v0, $v0, 0x14
-/* 0D0300 7F09B7D0 0045082A */  slt   $at, $v0, $a1
-/* 0D0304 7F09B7D4 1420FFFD */  bnez  $at, .L7F09B7CC
-/* 0D0308 7F09B7D8 24840014 */   addiu $a0, $a0, 0x14
-.L7F09B7DC:
-/* 0D030C 7F09B7DC 03E00008 */  jr    $ra
-/* 0D0310 7F09B7E0 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F09B7E4(void) {
-    //extern s32 dword_CODE_bss_8007A0DC;
-    //extern s32 dword_CODE_bss_8007A0EC;
-
-    s32 temp_v0;
-    s32 temp_v1;
-    s32 phi_v0;
-
-    temp_v1 = dword_CODE_bss_8007A0DC;
-    phi_v0 = 0;
-    if (temp_v1 > 0) {
-        do {
-            temp_v0 = phi_v0 + 0x14;
-            phi_v0 = temp_v0;
-        } while (temp_v0 < (temp_v1 * 0x14));
+void sub_GAME_7F09B7E4(void)
+{
+    s32 i;
+    for (i = 0; i < dword_CODE_bss_8007A0DC; i++)
+    {
+        if (dword_CODE_bss_8007A0EC[i].unk00);
     }
-
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F09B7E4
-/* 0D0314 7F09B7E4 3C038008 */  lui   $v1, %hi(dword_CODE_bss_8007A0DC)
-/* 0D0318 7F09B7E8 8C63A0DC */  lw    $v1, %lo(dword_CODE_bss_8007A0DC)($v1)
-/* 0D031C 7F09B7EC 00001025 */  move  $v0, $zero
-/* 0D0320 7F09B7F0 3C048008 */  lui   $a0, %hi(dword_CODE_bss_8007A0EC)
-/* 0D0324 7F09B7F4 18600008 */  blez  $v1, .L7F09B818
-/* 0D0328 7F09B7F8 00032880 */   sll   $a1, $v1, 2
-/* 0D032C 7F09B7FC 00A32821 */  addu  $a1, $a1, $v1
-/* 0D0330 7F09B800 00052880 */  sll   $a1, $a1, 2
-/* 0D0334 7F09B804 8C84A0EC */  lw    $a0, %lo(dword_CODE_bss_8007A0EC)($a0)
-.L7F09B808:
-/* 0D0338 7F09B808 24420014 */  addiu $v0, $v0, 0x14
-/* 0D033C 7F09B80C 0045082A */  slt   $at, $v0, $a1
-/* 0D0340 7F09B810 1420FFFD */  bnez  $at, .L7F09B808
-/* 0D0344 7F09B814 24840014 */   addiu $a0, $a0, 0x14
-.L7F09B818:
-/* 0D0348 7F09B818 03E00008 */  jr    $ra
-/* 0D034C 7F09B81C 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
+// mostly regalloc issues
 void sub_GAME_7F09B820(void) {
-    //s32 getPlayerCount();                               /* extern */
-    //s32 lvlGetCurrentStageToLoad();                     /* extern */
-    //void *mempAllocBytesInBank(s32, ?, void **);        /* extern */
-    //extern s32 dword_CODE_bss_8007A0D0;
-    //extern s32 dword_CODE_bss_8007A0D4;
-    //extern s32 dword_CODE_bss_8007A0D8;
-    //extern s32 dword_CODE_bss_8007A0DC;
-    //extern void *dword_CODE_bss_8007A0E0;
-    //extern void *dword_CODE_bss_8007A0E4;
-    //extern void *dword_CODE_bss_8007A0E8;
-    //extern void *dword_CODE_bss_8007A0EC;
-    //extern s16 word_CODE_bss_8007A0F0;
-    //extern s16 word_CODE_bss_8007A0F2;
-
-    s32 temp_v0;
-    s32 temp_v1;
-    s32 temp_v1_2;
-    s32 *phi_t0;
-    s32 phi_v0;
-    s32 phi_v1;
-    s32 phi_v0_2;
-    s32 phi_v1_2;
+    s32 stage;
+    s32 i;
 
     if (getPlayerCount() >= 2) {
         dword_CODE_bss_8007A0D0 = 0xBB8;
         dword_CODE_bss_8007A0D4 = 0x50;
         dword_CODE_bss_8007A0D8 = 0x1F4;
-        goto block_6;
-    }
-    temp_v0 = lvlGetCurrentStageToLoad();
-    if ((temp_v0 != 0x1E) && (temp_v0 != 0x1D)) {
-        dword_CODE_bss_8007A0D0 = 0x1F4;
-        dword_CODE_bss_8007A0D4 = 0x14;
-        dword_CODE_bss_8007A0D8 = 0x5DC;
-        dword_CODE_bss_8007A0DC = 0x28;
-        phi_t0 = &dword_CODE_bss_8007A0D4;
-    } else {
-        dword_CODE_bss_8007A0D0 = 0x1F4;
-        dword_CODE_bss_8007A0D4 = 0x14;
-        dword_CODE_bss_8007A0D8 = 0x1F4;
-block_6:
         dword_CODE_bss_8007A0DC = 0x14;
-        phi_t0 = &dword_CODE_bss_8007A0D4;
-    }
-    dword_CODE_bss_8007A0E8 = mempAllocBytesInBank(*phi_t0 * 0x14, 4);
-    dword_CODE_bss_8007A0E0 = mempAllocBytesInBank(dword_CODE_bss_8007A0D0 * 0x10, 4, &dword_CODE_bss_8007A0E8);
-    dword_CODE_bss_8007A0EC = mempAllocBytesInBank(dword_CODE_bss_8007A0DC * 0x14, 4);
-    dword_CODE_bss_8007A0E4 = mempAllocBytesInBank(dword_CODE_bss_8007A0D8 * 0x10, 4);
-    word_CODE_bss_8007A0F0 = (s16) dword_CODE_bss_8007A0D0;
-    dword_CODE_bss_8007A0E8->unk0 = (void *) dword_CODE_bss_8007A0E0;
-    dword_CODE_bss_8007A0E8->unkC = (s16) dword_CODE_bss_8007A0D0;
-    dword_CODE_bss_8007A0E8->unkE = 0;
-    dword_CODE_bss_8007A0E8->unk10 = -1;
-    dword_CODE_bss_8007A0E8->unk12 = -1;
-    phi_v0 = 0x14;
-    phi_v1 = 1;
-    phi_v0_2 = 0x14;
-    if (dword_CODE_bss_8007A0D4 >= 2) {
-        do {
-            temp_v1 = phi_v1 + 1;
-            (dword_CODE_bss_8007A0E8 + phi_v0)->unkE = -1;
-            phi_v0 += 0x14;
-            phi_v1 = temp_v1;
-        } while (temp_v1 < dword_CODE_bss_8007A0D4);
-    }
-    word_CODE_bss_8007A0F2 = (s16) dword_CODE_bss_8007A0D8;
-    dword_CODE_bss_8007A0EC->unk0 = (void *) dword_CODE_bss_8007A0E4;
-    dword_CODE_bss_8007A0EC->unkC = (s16) dword_CODE_bss_8007A0D8;
-    dword_CODE_bss_8007A0EC->unkE = 0;
-    dword_CODE_bss_8007A0EC->unk10 = -1;
-    dword_CODE_bss_8007A0EC->unk12 = -1;
-    phi_v1_2 = 1;
-    if (dword_CODE_bss_8007A0DC >= 2) {
-        do {
-            temp_v1_2 = phi_v1_2 + 1;
-            (dword_CODE_bss_8007A0EC + phi_v0_2)->unkE = -1;
-            phi_v0_2 += 0x14;
-            phi_v1_2 = temp_v1_2;
-        } while (temp_v1_2 < dword_CODE_bss_8007A0DC);
+    } else {
+        stage = lvlGetCurrentStageToLoad();
+        if ((stage != 0x1E) && (stage != 0x1D)) {
+            dword_CODE_bss_8007A0D0 = 0x1F4;
+            dword_CODE_bss_8007A0D4 = 0x14;
+            dword_CODE_bss_8007A0D8 = 0x5DC;
+            dword_CODE_bss_8007A0DC = 0x28;
+        } else {
+            dword_CODE_bss_8007A0D0 = 0x1F4;
+            dword_CODE_bss_8007A0D4 = 0x14;
+            dword_CODE_bss_8007A0D8 = 0x1F4;
+            dword_CODE_bss_8007A0DC = 0x14;
+        }
     }
 
+    dword_CODE_bss_8007A0E8 = mempAllocBytesInBank(dword_CODE_bss_8007A0D4 * 0x14, 4U);
+    dword_CODE_bss_8007A0E0 = mempAllocBytesInBank(dword_CODE_bss_8007A0D0 * 0x10, 4U);
+    dword_CODE_bss_8007A0EC = mempAllocBytesInBank(dword_CODE_bss_8007A0DC * 0x14, 4U);
+    dword_CODE_bss_8007A0E4 = mempAllocBytesInBank(dword_CODE_bss_8007A0D8 * 0x10, 4U);
+
+    word_CODE_bss_8007A0F0 = (s16) dword_CODE_bss_8007A0D0;
+    dword_CODE_bss_8007A0E8->unk00 = (struct unk_09B7A0_struct_child* ) dword_CODE_bss_8007A0E0;
+    dword_CODE_bss_8007A0E8->unk0C = (s16) dword_CODE_bss_8007A0D0;
+    dword_CODE_bss_8007A0E8->unk0E = 0;
+    dword_CODE_bss_8007A0E8->unk10 = -1;
+    dword_CODE_bss_8007A0E8->unk12 = -1;
+
+    for (i = 1; i < dword_CODE_bss_8007A0D4; i++) {
+        dword_CODE_bss_8007A0E8[i].unk0E = -1;
+    }
+
+    word_CODE_bss_8007A0F2 = (s16) dword_CODE_bss_8007A0D8;
+    dword_CODE_bss_8007A0EC->unk00 = (struct unk_09B7A0_struct_child* ) dword_CODE_bss_8007A0E4;
+    dword_CODE_bss_8007A0EC->unk0C = (s16) dword_CODE_bss_8007A0D8;
+    dword_CODE_bss_8007A0EC->unk0E = 0;
+    dword_CODE_bss_8007A0EC->unk10 = -1;
+    dword_CODE_bss_8007A0EC->unk12 = -1;
+
+    for (i = 1; i < dword_CODE_bss_8007A0DC; i++) {
+        dword_CODE_bss_8007A0EC[i].unk0E = -1;
+    }
 }
+
 #else
 GLOBAL_ASM(
 .text
