@@ -542,7 +542,7 @@ f32 get_cur_player_fovy(void) {
 #ifdef NONMATCHING
 
 /* looks vaguely like this, couldn't quite get there */
-PROP sub_GAME_7F09B244(ITEM_IDS arg0)
+PROP getPropForHeldItem(ITEM_IDS arg0)
 {
     PROP ret = -1;
     switch (arg0)
@@ -624,7 +624,7 @@ glabel jpt_weapon_multi
 /*.word weapon_multi_none*/
 
 .text
-glabel sub_GAME_7F09B244
+glabel getPropForHeldItem
 /* 0CFD74 7F09B244 28810020 */  slti  $at, $a0, 0x20
 /* 0CFD78 7F09B248 14200006 */  bnez  $at, .L7F09B264
 /* 0CFD7C 7F09B24C 2403FFFF */   li    $v1, -1
@@ -778,7 +778,7 @@ void sub_GAME_7F09B398(GUNHAND hand) {
     temp_v0 = g_CurrentPlayer->prop->chr;
     if (!temp_v0->handle_positiondata[hand]) {
         weaponNum = getCurrentPlayerWeaponId(hand);
-        weaponIdMaybe = sub_GAME_7F09B244(weaponNum);
+        weaponIdMaybe = getPropForHeldItem(weaponNum);
         if (weaponIdMaybe >= 0) {
             something_with_generating_object(temp_v0, weaponIdMaybe, weaponNum, hand == GUNRIGHT ? 0 : 0x10000000, 0, 0);
         }
@@ -815,7 +815,7 @@ glabel sub_GAME_7F09B398
 /* 0CFEF8 7F09B3C8 0FC17674 */  jal   getCurrentPlayerWeaponId
 /* 0CFEFC 7F09B3CC AFA30024 */   sw    $v1, 0x24($sp)
 /* 0CFF00 7F09B3D0 AFA20030 */  sw    $v0, 0x30($sp)
-/* 0CFF04 7F09B3D4 0FC26C91 */  jal   sub_GAME_7F09B244
+/* 0CFF04 7F09B3D4 0FC26C91 */  jal   getPropForHeldItem
 /* 0CFF08 7F09B3D8 00402025 */   move  $a0, $v0
 /* 0CFF0C 7F09B3DC 8FA30024 */  lw    $v1, 0x24($sp)
 /* 0CFF10 7F09B3E0 0440000A */  bltz  $v0, .L7F09B40C

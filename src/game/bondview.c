@@ -2505,7 +2505,7 @@ variable_body_head:
 /* 0AEE2C 7F07A2FC 8FA50114 */  lw    $a1, 0x114($sp)
 /* 0AEE30 7F07A300 0FC1B34F */  jal   setsubroty
 /* 0AEE34 7F07A304 8D6400D4 */   lw    $a0, 0xd4($t3)
-/* 0AEE38 7F07A308 0FC26C91 */  jal   sub_GAME_7F09B244
+/* 0AEE38 7F07A308 0FC26C91 */  jal   getPropForHeldItem
 /* 0AEE3C 7F07A30C 8FA40048 */   lw    $a0, 0x48($sp)
 /* 0AEE40 7F07A310 04400045 */  bltz  $v0, .L7F07A428
 /* 0AEE44 7F07A314 AFA2004C */   sw    $v0, 0x4c($sp)
@@ -3110,7 +3110,7 @@ variable_body_head:
 /* 0AF48C 7F07A91C A0580006 */  sb    $t8, 6($v0)
 /* 0AF490 7F07A920 8FAF0044 */  lw    $t7, 0x44($sp)
 /* 0AF494 7F07A924 A04F000F */  sb    $t7, 0xf($v0)
-/* 0AF498 7F07A928 0FC26F79 */  jal   sub_GAME_7F09B244
+/* 0AF498 7F07A928 0FC26F79 */  jal   getPropForHeldItem
 /* 0AF49C 7F07A92C 8FA40048 */   lw    $a0, 0x48($sp)
 /* 0AF4A0 7F07A930 04400045 */  bltz  $v0, .Ljp7F07AA48
 /* 0AF4A4 7F07A934 AFA2004C */   sw    $v0, 0x4c($sp)
@@ -3713,7 +3713,7 @@ variable_body_head:
 /* 0ACD8C 7F07A39C A0580006 */  sb    $t8, 6($v0)
 /* 0ACD90 7F07A3A0 8FAF0044 */  lw    $t7, 0x44($sp)
 /* 0ACD94 7F07A3A4 A04F000F */  sb    $t7, 0xf($v0)
-/* 0ACD98 7F07A3A8 0FC269E1 */  jal   sub_GAME_7F09B244
+/* 0ACD98 7F07A3A8 0FC269E1 */  jal   getPropForHeldItem
 /* 0ACD9C 7F07A3AC 8FA40048 */   lw    $a0, 0x48($sp)
 /* 0ACDA0 7F07A3B0 04400043 */  bltz  $v0, .L7F07A4C0
 /* 0ACDA4 7F07A3B4 AFA2004C */   sw    $v0, 0x4c($sp)
