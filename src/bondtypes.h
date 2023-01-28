@@ -3522,14 +3522,14 @@ typedef union
     {
         inherits ObjectRecord;
         s32 unk80;
-        struct rect4f  *rect;       /*0x84*/
-        s32 unk88;
-        s32 unk8C;
-        s32 unk90;
-        s32 unk94;
-        s32 unk98;
-        s32 unk9C;
-        s32 unkA0;
+        struct rect4f  rect;       /*0x84*/
+        //s32 unk88;
+        //s32 unk8C;
+        //s32 unk90;
+        //s32 unk94;
+        //s32 unk98;
+        //s32 unk9C;
+        //s32 unkA0;
         s32 unkA4;
         s32 unkA8;
         s32 unkAC;
