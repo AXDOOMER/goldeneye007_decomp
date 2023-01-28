@@ -1450,7 +1450,9 @@ Gfx *sub_GAME_7F009254(Gfx *gdl) {
         break;
 
     case 2:
-        gdl = insert_bond_eye_intro(insert_sight_backdrop_eye_intro(insert_sniper_sight_eye_intro(gdl)));
+        gdl = insert_sniper_sight_eye_intro(gdl);
+        gdl = insert_sight_backdrop_eye_intro(gdl);
+        gdl = insert_bond_eye_intro(gdl);
         intro_eye_counter--;
         if (intro_eye_counter < 0) {
             gunbarrel_mode++;
