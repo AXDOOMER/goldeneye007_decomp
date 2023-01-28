@@ -311,7 +311,7 @@ typedef enum PROPFLAG2
     PROPFLAG2_00001000                   = 0x00001000, // unknown
     PROPFLAG2_00002000                   = 0x00002000, // unknown
     PROPFLAG2_00004000                   = 0x00004000, // unknown
-    PROPFLAG2_00008000                   = 0x00008000, // unknown
+    PROPFLAG2_SHOOTTHROUGH               = 0x00008000, // unknown
     PROPFLAG2_00010000                   = 0x00010000, // unknown
     PROPFLAG2_00020000                   = 0x00020000, // unknown
     PROPFLAG2_00040000                   = 0x00040000, // unknown

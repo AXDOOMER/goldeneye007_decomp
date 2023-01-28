@@ -6,6 +6,22 @@
 #include <bondtypes.h>
 #include <snd.h>
 
+struct ShotData {
+    // temporary definition for GE:
+    /*0x00*/ s32 unk00[13];
+    /*0x34*/ f32 unk34;
+
+    // the following is from PD, it seems to line up:
+        /*0x00*/ //struct coord unk00;
+        /*0x0c*/ //struct coord unk0c;
+        /*0x18*/ //struct gset gset;
+        /*0x1c*/ //struct coord gunpos;
+        /*0x28*/ //struct coord dir;
+        /*0x34*/ //f32 unk34;
+        /*0x38*/ //s32 penetration;
+        /*0x3c*/ //struct hit hits[10];
+};
+
 extern f32 F_80030B14;
 extern f32 F_80030B18;
 extern f32 F_80030B1C;
