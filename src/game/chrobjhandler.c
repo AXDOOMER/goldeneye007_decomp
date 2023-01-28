@@ -948,7 +948,7 @@ s32 updateDoorDisplacement(DoorRecord* door);
 s32 sub_GAME_7F03FF60(ObjectRecord *);
 void sub_GAME_7F04AC20(PropRecord *prop, struct unk_joint_list *, s32 arg2);
 s32 sub_GAME_7F044414(struct rect4f *arg0, s32 arg1, struct rect4f *arg2, s32 arg3);
-void sub_GAME_7F05396C(ALSoundState *state, coord3d *pos, f32 low, f32 high);
+void chrobjSndCreatePostEvent(ALSoundState *state, coord3d *pos, f32 low, f32 high);
 //rodata 
 
 
@@ -42970,14 +42970,14 @@ glabel sub_GAME_7F053894
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F05396C(ALSoundState *state, coord3d *pos, f32 low, f32 high) {
+void chrobjSndCreatePostEvent(ALSoundState *state, coord3d *pos, f32 low, f32 high) {
 
     sndCreatePostEvent(state, 8, sub_GAME_7F053894(pos, low, high));
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F05396C
+glabel chrobjSndCreatePostEvent
 /* 08849C 7F05396C 44866000 */  mtc1  $a2, $f12
 /* 0884A0 7F053970 44877000 */  mtc1  $a3, $f14
 /* 0884A4 7F053974 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -43043,7 +43043,7 @@ s32 sub_GAME_7F0539E4(coord3d *pos)
 
 void sub_GAME_7F053A10(ALSoundState *state, coord3d *pos)
 {
-    sub_GAME_7F05396C(state, pos, 5000.0f,  6000.0f);
+    chrobjSndCreatePostEvent(state, pos, 5000.0f,  6000.0f);
 }
 
 
