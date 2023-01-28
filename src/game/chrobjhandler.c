@@ -5345,7 +5345,7 @@ glabel sub_GAME_7F043650
 /* 0782BC 7F04378C 8E050010 */  lw    $a1, 0x10($s0)
 /* 0782C0 7F043790 01275021 */  addu  $t2, $t1, $a3
 /* 0782C4 7F043794 8D440098 */  lw    $a0, 0x98($t2)
-/* 0782C8 7F043798 0FC14E84 */  jal   sub_GAME_7F053A10
+/* 0782C8 7F043798 0FC14E84 */  jal   chrobjSndCreatePostEventDefault
 /* 0782CC 7F04379C 24A50008 */   addiu $a1, $a1, 8
 /* 0782D0 7F0437A0 3C0C8005 */  lui   $t4, %hi(g_GlobalTimer) 
 /* 0782D4 7F0437A4 8D8C837C */  lw    $t4, %lo(g_GlobalTimer)($t4)
@@ -5481,7 +5481,7 @@ glabel sub_GAME_7F043650
 /* 07623C 7F04384C 8E050010 */  lw    $a1, 0x10($s0)
 /* 076240 7F043850 01275021 */  addu  $t2, $t1, $a3
 /* 076244 7F043854 8D440098 */  lw    $a0, 0x98($t2)
-/* 076248 7F043858 0FC14F3C */  jal   sub_GAME_7F053A10
+/* 076248 7F043858 0FC14F3C */  jal   chrobjSndCreatePostEventDefault
 /* 07624C 7F04385C 24A50008 */   addiu $a1, $a1, 8
 /* 076250 7F043860 3C0C8004 */  lui   $t4, %hi(g_GlobalTimer) # $t4, 0x8004
 /* 076254 7F043864 8D8C0FFC */  lw    $t4, %lo(g_GlobalTimer)($t4)
@@ -8695,7 +8695,7 @@ glabel object_interaction
 /* 07A464 7F045934 0C002382 */  jal   sndPlaySfx
 /* 07A468 7F045938 8C843720 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07A46C 7F04593C 00402025 */  move  $a0, $v0
-/* 07A470 7F045940 0FC14E84 */  jal   sub_GAME_7F053A10
+/* 07A470 7F045940 0FC14E84 */  jal   chrobjSndCreatePostEventDefault
 /* 07A474 7F045944 26650008 */   addiu $a1, $s3, 8
 /* 07A478 7F045948 8E6B0014 */  lw    $t3, 0x14($s3)
 /* 07A47C 7F04594C 82240080 */  lb    $a0, 0x80($s1)
@@ -9263,7 +9263,7 @@ glabel object_interaction
 /* 07ACAC 7F04617C 00003025 */   move  $a2, $zero
 /* 07ACB0 7F046180 00402025 */  move  $a0, $v0
 .L7F046184:
-/* 07ACB4 7F046184 0FC14E84 */  jal   sub_GAME_7F053A10
+/* 07ACB4 7F046184 0FC14E84 */  jal   chrobjSndCreatePostEventDefault
 /* 07ACB8 7F046188 8FA50070 */   lw    $a1, 0x70($sp)
 /* 07ACBC 7F04618C 8E420000 */  lw    $v0, ($s2)
 /* 07ACC0 7F046190 AE0200AC */  sw    $v0, 0xac($s0)
@@ -11764,7 +11764,7 @@ glabel object_interaction
 /* 07D11C 7F0485EC 0C002382 */  jal   sndPlaySfx
 /* 07D120 7F0485F0 E7AE0380 */   swc1  $f14, 0x380($sp)
 /* 07D124 7F0485F4 00402025 */  move  $a0, $v0
-/* 07D128 7F0485F8 0FC14E84 */  jal   sub_GAME_7F053A10
+/* 07D128 7F0485F8 0FC14E84 */  jal   chrobjSndCreatePostEventDefault
 /* 07D12C 7F0485FC 8FA50070 */   lw    $a1, 0x70($sp)
 .L7F048600:
 /* 07D130 7F048600 10000016 */  b     .L7F04865C
@@ -11788,7 +11788,7 @@ glabel object_interaction
 /* 07D174 7F048644 0C002382 */  jal   sndPlaySfx
 /* 07D178 7F048648 E7AE0380 */   swc1  $f14, 0x380($sp)
 /* 07D17C 7F04864C 00402025 */  move  $a0, $v0
-/* 07D180 7F048650 0FC14E84 */  jal   sub_GAME_7F053A10
+/* 07D180 7F048650 0FC14E84 */  jal   chrobjSndCreatePostEventDefault
 /* 07D184 7F048654 8FA50070 */   lw    $a1, 0x70($sp)
 /* 07D188 7F048658 AFA0038C */  sw    $zero, 0x38c($sp)
 .L7F04865C:
@@ -12720,7 +12720,7 @@ glabel object_interaction
 /* 07DF34 7F049404 0C002382 */  jal   sndPlaySfx
 /* 07DF38 7F049408 8C843720 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07DF3C 7F04940C 8E0400C4 */  lw    $a0, 0xc4($s0)
-/* 07DF40 7F049410 0FC14E84 */  jal   sub_GAME_7F053A10
+/* 07DF40 7F049410 0FC14E84 */  jal   chrobjSndCreatePostEventDefault
 /* 07DF44 7F049414 8FA50070 */   lw    $a1, 0x70($sp)
 /* 07DF48 7F049418 1000000D */  b     .L7F049450
 /* 07DF4C 7F04941C 00000000 */   nop   
@@ -12735,7 +12735,7 @@ glabel object_interaction
 /* 07DF6C 7F04943C 0C002382 */  jal   sndPlaySfx
 /* 07DF70 7F049440 8C843720 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07DF74 7F049444 8E0400C8 */  lw    $a0, 0xc8($s0)
-/* 07DF78 7F049448 0FC14E84 */  jal   sub_GAME_7F053A10
+/* 07DF78 7F049448 0FC14E84 */  jal   chrobjSndCreatePostEventDefault
 /* 07DF7C 7F04944C 8FA50070 */   lw    $a1, 0x70($sp)
 .L7F049450:
 /* 07DF80 7F049450 3C088005 */  lui   $t0, %hi(g_GlobalTimer) 
@@ -13792,7 +13792,7 @@ glabel object_interaction
 /* 07A888 7F045D18 0C002386 */  jal   sndPlaySfx
 /* 07A88C 7F045D1C 8C843760 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07A890 7F045D20 00402025 */  move  $a0, $v0
-/* 07A894 7F045D24 0FC14FC3 */  jal   sub_GAME_7F053A10
+/* 07A894 7F045D24 0FC14FC3 */  jal   chrobjSndCreatePostEventDefault
 /* 07A898 7F045D28 26650008 */   addiu $a1, $s3, 8
 /* 07A89C 7F045D2C 8E6A0014 */  lw    $t2, 0x14($s3)
 /* 07A8A0 7F045D30 82240080 */  lb    $a0, 0x80($s1)
@@ -14360,7 +14360,7 @@ glabel object_interaction
 /* 07B0D0 7F046560 00003025 */   move  $a2, $zero
 /* 07B0D4 7F046564 00402025 */  move  $a0, $v0
 .Ljp7F046568:
-/* 07B0D8 7F046568 0FC14FC3 */  jal   sub_GAME_7F053A10
+/* 07B0D8 7F046568 0FC14FC3 */  jal   chrobjSndCreatePostEventDefault
 /* 07B0DC 7F04656C 8FA50074 */   lw    $a1, 0x74($sp)
 /* 07B0E0 7F046570 8E420000 */  lw    $v0, ($s2)
 /* 07B0E4 7F046574 AE0200AC */  sw    $v0, 0xac($s0)
@@ -16870,7 +16870,7 @@ glabel object_interaction
 /* 07D560 7F0489F0 0C002386 */  jal   sndPlaySfx
 /* 07D564 7F0489F4 E7AE0384 */   swc1  $f14, 0x384($sp)
 /* 07D568 7F0489F8 00402025 */  move  $a0, $v0
-/* 07D56C 7F0489FC 0FC14FC3 */  jal   sub_GAME_7F053A10
+/* 07D56C 7F0489FC 0FC14FC3 */  jal   chrobjSndCreatePostEventDefault
 /* 07D570 7F048A00 8FA50074 */   lw    $a1, 0x74($sp)
 .Ljp7F048A04:
 /* 07D574 7F048A04 10000016 */  b     .Ljp7F048A60
@@ -16894,7 +16894,7 @@ glabel object_interaction
 /* 07D5B8 7F048A48 0C002386 */  jal   sndPlaySfx
 /* 07D5BC 7F048A4C E7AE0384 */   swc1  $f14, 0x384($sp)
 /* 07D5C0 7F048A50 00402025 */  move  $a0, $v0
-/* 07D5C4 7F048A54 0FC14FC3 */  jal   sub_GAME_7F053A10
+/* 07D5C4 7F048A54 0FC14FC3 */  jal   chrobjSndCreatePostEventDefault
 /* 07D5C8 7F048A58 8FA50074 */   lw    $a1, 0x74($sp)
 /* 07D5CC 7F048A5C AFA00390 */  sw    $zero, 0x390($sp)
 .Ljp7F048A60:
@@ -17826,7 +17826,7 @@ glabel object_interaction
 /* 07E378 7F049808 0C002386 */  jal   sndPlaySfx
 /* 07E37C 7F04980C 8C843760 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07E380 7F049810 8E0400C4 */  lw    $a0, 0xc4($s0)
-/* 07E384 7F049814 0FC14FC3 */  jal   sub_GAME_7F053A10
+/* 07E384 7F049814 0FC14FC3 */  jal   chrobjSndCreatePostEventDefault
 /* 07E388 7F049818 8FA50074 */   lw    $a1, 0x74($sp)
 /* 07E38C 7F04981C 1000000D */  b     .Ljp7F049854
 /* 07E390 7F049820 00000000 */   nop   
@@ -17841,7 +17841,7 @@ glabel object_interaction
 /* 07E3B0 7F049840 0C002386 */  jal   sndPlaySfx
 /* 07E3B4 7F049844 8C843760 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07E3B8 7F049848 8E0400C8 */  lw    $a0, 0xc8($s0)
-/* 07E3BC 7F04984C 0FC14FC3 */  jal   sub_GAME_7F053A10
+/* 07E3BC 7F04984C 0FC14FC3 */  jal   chrobjSndCreatePostEventDefault
 /* 07E3C0 7F049850 8FA50074 */   lw    $a1, 0x74($sp)
 .Ljp7F049854:
 /* 07E3C4 7F049854 3C0A8005 */  lui   $t2, %hi(g_GlobalTimer) # $t2, 0x8005
@@ -18898,7 +18898,7 @@ glabel object_interaction
 /* 0784C8 7F045AD8 0C00209A */  jal   sndPlaySfx
 /* 0784CC 7F045ADC 8C846900 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0784D0 7F045AE0 00402025 */  move  $a0, $v0
-/* 0784D4 7F045AE4 0FC14F3C */  jal   sub_GAME_7F053A10
+/* 0784D4 7F045AE4 0FC14F3C */  jal   chrobjSndCreatePostEventDefault
 /* 0784D8 7F045AE8 26650008 */   addiu $a1, $s3, 8
 /* 0784DC 7F045AEC 8E680014 */  lw    $t0, 0x14($s3)
 /* 0784E0 7F045AF0 82240080 */  lb    $a0, 0x80($s1)
@@ -19466,7 +19466,7 @@ glabel object_interaction
 /* 078D10 7F046320 00003025 */   move  $a2, $zero
 /* 078D14 7F046324 00402025 */  move  $a0, $v0
 .L7F046328:
-/* 078D18 7F046328 0FC14F3C */  jal   sub_GAME_7F053A10
+/* 078D18 7F046328 0FC14F3C */  jal   chrobjSndCreatePostEventDefault
 /* 078D1C 7F04632C 8FA50074 */   lw    $a1, 0x74($sp)
 /* 078D20 7F046330 8E420000 */  lw    $v0, ($s2)
 /* 078D24 7F046334 AE0200AC */  sw    $v0, 0xac($s0)
@@ -21983,7 +21983,7 @@ glabel object_interaction
 /* 07B1B8 7F0487C8 0C00209A */  jal   sndPlaySfx
 /* 07B1BC 7F0487CC E7AE0384 */   swc1  $f14, 0x384($sp)
 /* 07B1C0 7F0487D0 00402025 */  move  $a0, $v0
-/* 07B1C4 7F0487D4 0FC14F3C */  jal   sub_GAME_7F053A10
+/* 07B1C4 7F0487D4 0FC14F3C */  jal   chrobjSndCreatePostEventDefault
 /* 07B1C8 7F0487D8 8FA50074 */   lw    $a1, 0x74($sp)
 .L7F0487DC:
 /* 07B1CC 7F0487DC 10000016 */  b     .L7F048838
@@ -22007,7 +22007,7 @@ glabel object_interaction
 /* 07B210 7F048820 0C00209A */  jal   sndPlaySfx
 /* 07B214 7F048824 E7AE0384 */   swc1  $f14, 0x384($sp)
 /* 07B218 7F048828 00402025 */  move  $a0, $v0
-/* 07B21C 7F04882C 0FC14F3C */  jal   sub_GAME_7F053A10
+/* 07B21C 7F04882C 0FC14F3C */  jal   chrobjSndCreatePostEventDefault
 /* 07B220 7F048830 8FA50074 */   lw    $a1, 0x74($sp)
 /* 07B224 7F048834 AFA00390 */  sw    $zero, 0x390($sp)
 .L7F048838:
@@ -22939,7 +22939,7 @@ glabel object_interaction
 /* 07BFD0 7F0495E0 0C00209A */  jal   sndPlaySfx
 /* 07BFD4 7F0495E4 8C846900 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07BFD8 7F0495E8 8E0400C4 */  lw    $a0, 0xc4($s0)
-/* 07BFDC 7F0495EC 0FC14F3C */  jal   sub_GAME_7F053A10
+/* 07BFDC 7F0495EC 0FC14F3C */  jal   chrobjSndCreatePostEventDefault
 /* 07BFE0 7F0495F0 8FA50074 */   lw    $a1, 0x74($sp)
 /* 07BFE4 7F0495F4 1000000D */  b     .L7F04962C
 /* 07BFE8 7F0495F8 00000000 */   nop   
@@ -22954,7 +22954,7 @@ glabel object_interaction
 /* 07C008 7F049618 0C00209A */  jal   sndPlaySfx
 /* 07C00C 7F04961C 8C846900 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07C010 7F049620 8E0400C8 */  lw    $a0, 0xc8($s0)
-/* 07C014 7F049624 0FC14F3C */  jal   sub_GAME_7F053A10
+/* 07C014 7F049624 0FC14F3C */  jal   chrobjSndCreatePostEventDefault
 /* 07C018 7F049628 8FA50074 */   lw    $a1, 0x74($sp)
 .L7F04962C:
 /* 07C01C 7F04962C 3C198004 */  lui   $t9, %hi(g_GlobalTimer) # $t9, 0x8004
@@ -43041,7 +43041,7 @@ s32 sub_GAME_7F0539E4(coord3d *pos)
 
 
 
-void sub_GAME_7F053A10(ALSoundState *state, coord3d *pos)
+void chrobjSndCreatePostEventDefault(ALSoundState *state, coord3d *pos)
 {
     chrobjSndCreatePostEvent(state, pos, 5000.0f,  6000.0f);
 }
@@ -43201,7 +43201,7 @@ void play_door_opening_soundeffect_0(DoorRecord *door) {
         soundState = sndPlaySfx(g_musicSfxBufferPtr, 0x07, NULL);
         if (soundState != NULL)
         {
-            sub_GAME_7F053A10(soundState, &door->prop->pos);
+            chrobjSndCreatePostEventDefault(soundState, &door->prop->pos);
         }
         soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xCA, NULL);
         if (pendingState != NULL)
@@ -43213,7 +43213,7 @@ void play_door_opening_soundeffect_0(DoorRecord *door) {
 
     if (soundState != NULL)
     {
-        sub_GAME_7F053A10(soundState, &door->prop->pos);
+        chrobjSndCreatePostEventDefault(soundState, &door->prop->pos);
     }
 
     sub_GAME_7F053A3C(door);
@@ -43315,7 +43315,7 @@ void play_door_opening_soundeffect_1(DoorRecord *door) {
         soundState = sndPlaySfx(g_musicSfxBufferPtr, 0x07, NULL);
         if (soundState != NULL)
         {
-            sub_GAME_7F053A10(soundState, &door->prop->pos);
+            chrobjSndCreatePostEventDefault(soundState, &door->prop->pos);
         }
         soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xCA, NULL);
         if (pendingState != NULL)
@@ -43327,7 +43327,7 @@ void play_door_opening_soundeffect_1(DoorRecord *door) {
 
     if (soundState != NULL)
     {
-        sub_GAME_7F053A10(soundState, &door->prop->pos);
+        chrobjSndCreatePostEventDefault(soundState, &door->prop->pos);
     }
 
     sub_GAME_7F053A3C(door);
@@ -43386,7 +43386,7 @@ void play_door_closing_soundeffect_0(DoorRecord *door) {
 
     if (soundState != NULL)
     {
-        sub_GAME_7F053A10(soundState, &door->prop->pos);
+        chrobjSndCreatePostEventDefault(soundState, &door->prop->pos);
     }
 
     sub_GAME_7F053A3C(door);
@@ -43460,7 +43460,7 @@ void play_door_closing_soundeffect_1(DoorRecord *door)
     if (door); // Fix for recomp not matching
 
     if (soundState != NULL) {
-        sub_GAME_7F053A10(soundState, &door->prop->pos);
+        chrobjSndCreatePostEventDefault(soundState, &door->prop->pos);
     }
 
     sub_GAME_7F053A3C(door);
@@ -45404,7 +45404,7 @@ void handle_gas_damage(void)
             }
             if (ptr_gas_sound != NULL)
             {
-                sub_GAME_7F053A10(ptr_gas_sound, &D_80030AD0);
+                chrobjSndCreatePostEventDefault(ptr_gas_sound, &D_80030AD0);
             }
         }
         else

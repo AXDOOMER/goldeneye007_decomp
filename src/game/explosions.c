@@ -300,7 +300,7 @@ glabel explosionCreate
 /* 0D0E5C 7F09C32C 0C002382 */  jal   sndPlaySfx
 /* 0D0E60 7F09C330 AFA80040 */   sw    $t0, 0x40($sp)
 /* 0D0E64 7F09C334 00402025 */  move  $a0, $v0
-/* 0D0E68 7F09C338 0FC14E84 */  jal   sub_GAME_7F053A10
+/* 0D0E68 7F09C338 0FC14E84 */  jal   chrobjSndCreatePostEventDefault
 /* 0D0E6C 7F09C33C 02602825 */   move  $a1, $s3
 /* 0D0E70 7F09C340 8FA70030 */  lw    $a3, 0x30($sp)
 /* 0D0E74 7F09C344 8FA80040 */  lw    $t0, 0x40($sp)
@@ -674,7 +674,7 @@ glabel explosionCreate
 /* 0D1A30 7F09CEC0 0C002386 */  jal   sndPlaySfx
 /* 0D1A34 7F09CEC4 AFA70038 */   sw    $a3, 0x38($sp)
 /* 0D1A38 7F09CEC8 00402025 */  move  $a0, $v0
-/* 0D1A3C 7F09CECC 0FC14FC3 */  jal   sub_GAME_7F053A10
+/* 0D1A3C 7F09CECC 0FC14FC3 */  jal   chrobjSndCreatePostEventDefault
 /* 0D1A40 7F09CED0 02602825 */   move  $a1, $s3
 /* 0D1A44 7F09CED4 8FA70038 */  lw    $a3, 0x38($sp)
 .Ljp7F09CED8:

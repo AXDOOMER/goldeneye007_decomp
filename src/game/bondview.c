@@ -20703,11 +20703,11 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                                 sp6C->chrflags |= CHRFLAG_01000000;
                                 if ((D_80048380 % 3) < 2)
                                 {
-                                    sub_GAME_7F053A10(sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, CRUSHED_YELL_SFX, NULL), &prop->pos);
+                                    chrobjSndCreatePostEventDefault(sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, CRUSHED_YELL_SFX, NULL), &prop->pos);
                                 }
                                 if ((D_80048380 % 3) > 0)
                                 {
-                                    sub_GAME_7F053A10(sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, TANK_CRUSH_MAN_SFX, NULL), &prop->pos);
+                                    chrobjSndCreatePostEventDefault(sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, TANK_CRUSH_MAN_SFX, NULL), &prop->pos);
                                 }
                             }
                         }

@@ -3049,7 +3049,7 @@ glabel handle_mp_respawn_and_some_things
 /* 071400 7F03C8D0 0C002382 */  jal   sndPlaySfx
 /* 071404 7F03C8D4 8C843720 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 071408 7F03C8D8 00402025 */  move  $a0, $v0
-/* 07140C 7F03C8DC 0FC14E84 */  jal   sub_GAME_7F053A10
+/* 07140C 7F03C8DC 0FC14E84 */  jal   chrobjSndCreatePostEventDefault
 /* 071410 7F03C8E0 26250008 */   addiu $a1, $s1, 8
 .L7F03C8E4:
 /* 071414 7F03C8E4 92190003 */  lbu   $t9, 3($s0)
@@ -3332,7 +3332,7 @@ glabel handle_mp_respawn_and_some_things
 /* 06F380 7F03C990 0C00209A */  jal   sndPlaySfx
 /* 06F384 7F03C994 8C846900 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 06F388 7F03C998 00402025 */  move  $a0, $v0
-/* 06F38C 7F03C99C 0FC14F3C */  jal   sub_GAME_7F053A10
+/* 06F38C 7F03C99C 0FC14F3C */  jal   chrobjSndCreatePostEventDefault
 /* 06F390 7F03C9A0 26250008 */   addiu $a1, $s1, 8
 .L7F03C9A4:
 /* 06F394 7F03C9A4 92190003 */  lbu   $t9, 3($s0)

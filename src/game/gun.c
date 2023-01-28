@@ -2079,7 +2079,7 @@ void generate_player_thrown_grenade(s32 hand)
 
             if (sfx_state != NULL)
             {
-                sub_GAME_7F053A10(sfx_state, (struct coord3d *) &wor->runtime_pos);
+                chrobjSndCreatePostEventDefault(sfx_state, (struct coord3d *) &wor->runtime_pos);
             }
         }
     }
@@ -2358,7 +2358,7 @@ void generate_player_thrown_object(s32 hand)
 
             if (sfx_state != NULL)
             {
-                sub_GAME_7F053A10(sfx_state, (struct coord3d *) &wor->runtime_pos);
+                chrobjSndCreatePostEventDefault(sfx_state, (struct coord3d *) &wor->runtime_pos);
             }
         }
     }
@@ -12971,7 +12971,7 @@ void recall_joy2_hits_edit_detail_edit_flag(enum ITEM_IDS item, PropRecord* prop
 
             if (sound_state->link.next != NULL)
             {
-                sub_GAME_7F053A10((ALSoundState* ) sound_state->link.next, &prop->pos);
+                chrobjSndCreatePostEventDefault((ALSoundState* ) sound_state->link.next, &prop->pos);
             }
         }
     }
@@ -12996,7 +12996,7 @@ void sub_GAME_7F064720(coord3d* pos)
         link = sound->link.next;
         if (link != NULL)
         {
-            sub_GAME_7F053A10((ALSoundState* ) link, pos);
+            chrobjSndCreatePostEventDefault((ALSoundState* ) link, pos);
         }
     }
 }
@@ -13041,7 +13041,7 @@ void recall_joy2_hits_edit_flag(enum ITEM_IDS item, coord3d* arg1, s32 texture_i
 
         if (sound_state->link.next != NULL)
         {
-            sub_GAME_7F053A10((ALSoundState* ) sound_state->link.next, arg1);
+            chrobjSndCreatePostEventDefault((ALSoundState* ) sound_state->link.next, arg1);
         }
     }
 
@@ -13059,7 +13059,7 @@ void recall_joy2_hits_edit_flag(enum ITEM_IDS item, coord3d* arg1, s32 texture_i
 
             if (sound_state->link.next != NULL)
             {
-                sub_GAME_7F053A10((ALSoundState* ) sound_state->link.next, arg1);
+                chrobjSndCreatePostEventDefault((ALSoundState* ) sound_state->link.next, arg1);
             }
         }
     }

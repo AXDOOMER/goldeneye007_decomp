@@ -2468,7 +2468,7 @@ void play_sound_for_shot_actor(ChrRecord *self)
             }
         }
 
-        sub_GAME_7F053A10(sndstate, &self->prop->pos);
+        chrobjSndCreatePostEventDefault(sndstate, &self->prop->pos);
     }
 }
 #else
@@ -2611,7 +2611,7 @@ glabel play_sound_for_shot_actor
 .L7F02725C:
 /* 05BD8C 7F02725C 8FAF0068 */  lw    $t7, 0x68($sp)
 /* 05BD90 7F027260 8DE50018 */  lw    $a1, 0x18($t7)
-/* 05BD94 7F027264 0FC14E84 */  jal   sub_GAME_7F053A10
+/* 05BD94 7F027264 0FC14E84 */  jal   chrobjSndCreatePostEventDefault
 /* 05BD98 7F027268 24A50008 */   addiu $a1, $a1, 8
 /* 05BD9C 7F02726C 8FBF0014 */  lw    $ra, 0x14($sp)
 .L7F027270:
@@ -2650,7 +2650,7 @@ bool handles_shot_actors(ChrRecord *self, s32 hitpart, coord3d *vector, s32 weap
         {
             s16 mrs[3] = metal_ricochet_SFX;
             ALSoundState * p = sndPlaySfx((struct ALBankAlt_s *)g_musicSfxBufferPtr, mrs[randomGetNext() % 3U], NULL);
-            sub_GAME_7F053A10(p, &self->prop->pos);
+            chrobjSndCreatePostEventDefault(p, &self->prop->pos);
         }
     }
 
@@ -5508,7 +5508,7 @@ void chrlvTickAnim(ChrRecord *self)
     {
         if (((D_80048380 & 1) == 0) && (chrGetDistanceToBond(self) < 800.0f))
         {
-            sub_GAME_7F053A10(sndPlaySfx((struct ALBankAlt_s *)g_musicSfxBufferPtr, 0x101, 0), &self->prop->pos);
+            chrobjSndCreatePostEventDefault(sndPlaySfx((struct ALBankAlt_s *)g_musicSfxBufferPtr, 0x101, 0), &self->prop->pos);
         }
 
         self->chrflags |= 0x2000000;
@@ -5676,7 +5676,7 @@ void chrlvTickDie(ChrRecord *self)
     {
         p = sndPlaySfx((struct ALBankAlt_s *)g_musicSfxBufferPtr, body_hit_SFX[thud_index], NULL);
 
-        sub_GAME_7F053A10(p, &self->prop->pos);
+        chrobjSndCreatePostEventDefault(p, &self->prop->pos);
 
         thud_index++;
         if (thud_index >= 0xB)
@@ -5691,7 +5691,7 @@ void chrlvTickDie(ChrRecord *self)
     {
         p = sndPlaySfx((struct ALBankAlt_s *)g_musicSfxBufferPtr, body_hit_SFX[thud_index], NULL);
 
-        sub_GAME_7F053A10(p, &self->prop->pos);
+        chrobjSndCreatePostEventDefault(p, &self->prop->pos);
 
         thud_index++;
         if (thud_index >= 0xB)
@@ -5967,7 +5967,7 @@ void sub_GAME_7F02BFE4(ChrRecord *self, s32 arg1, s32 arg2)
         //     if (phi_a2 != NULL)
         //     {
         //         sndPlaySfx(g_musicSfxBufferPtr, (s16) sp30, phi_a2);
-        //         sub_GAME_7F053A10(phi_a2, &self->prop->pos);
+        //         chrobjSndCreatePostEventDefault(phi_a2, &self->prop->pos);
 
         //         self->field_178[arg1] = g_GlobalTimer + sp33;
         //         self->hidden |= 0x80;
@@ -6079,7 +6079,7 @@ glabel sub_GAME_7F02BFE4
 /* 060C74 7F02C144 8FA6002C */  lw    $a2, 0x2c($sp)
 /* 060C78 7F02C148 8E050018 */  lw    $a1, 0x18($s0)
 /* 060C7C 7F02C14C 8CC40000 */  lw    $a0, ($a2)
-/* 060C80 7F02C150 0FC14E84 */  jal   sub_GAME_7F053A10
+/* 060C80 7F02C150 0FC14E84 */  jal   chrobjSndCreatePostEventDefault
 /* 060C84 7F02C154 24A50008 */   addiu $a1, $a1, 8
 /* 060C88 7F02C158 3C0C8005 */  lui   $t4, %hi(g_GlobalTimer) 
 /* 060C8C 7F02C15C 8D8C837C */  lw    $t4, %lo(g_GlobalTimer)($t4)
