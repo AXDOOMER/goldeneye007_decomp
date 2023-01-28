@@ -948,7 +948,7 @@ s32 updateDoorDisplacement(DoorRecord* door);
 s32 sub_GAME_7F03FF60(ObjectRecord *);
 void sub_GAME_7F04AC20(PropRecord *prop, struct unk_joint_list *, s32 arg2);
 s32 sub_GAME_7F044414(struct rect4f *arg0, s32 arg1, struct rect4f *arg2, s32 arg3);
-
+void sub_GAME_7F05396C(ALSoundState *state, coord3d *pos, f32 low, f32 high);
 //rodata 
 
 
@@ -43043,8 +43043,7 @@ s32 sub_GAME_7F0539E4(coord3d *pos)
 
 void sub_GAME_7F053A10(ALSoundState *state, coord3d *pos)
 {
-    //sub_GAME_7F05396C(state, pos, 5000.0f,  6000.0f);
-    sub_GAME_7F05396C(state, pos, 0x459C4000, 0x45BB8000);
+    sub_GAME_7F05396C(state, pos, 5000.0f,  6000.0f);
 }
 
 
