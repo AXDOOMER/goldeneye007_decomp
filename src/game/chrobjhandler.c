@@ -8816,7 +8816,7 @@ glabel object_interaction
 /* 07A638 7F045B08 318E0200 */  andi  $t6, $t4, 0x200
 /* 07A63C 7F045B0C 55C00004 */  bnezl $t6, .L7F045B20
 /* 07A640 7F045B10 8E0D0090 */   lw    $t5, 0x90($s0)
-/* 07A644 7F045B14 0FC15EB0 */  jal   sub_GAME_7F057AC0
+/* 07A644 7F045B14 0FC15EB0 */  jal   mtxLoadRandomRotation
 /* 07A648 7F045B18 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 07A64C 7F045B1C 8E0D0090 */  lw    $t5, 0x90($s0)
 .L7F045B20:
@@ -9062,7 +9062,7 @@ glabel object_interaction
 /* 07A9E4 7F045EB4 332A0200 */  andi  $t2, $t9, 0x200
 /* 07A9E8 7F045EB8 55400004 */  bnezl $t2, .L7F045ECC
 /* 07A9EC 7F045EBC 8E0C0090 */   lw    $t4, 0x90($s0)
-/* 07A9F0 7F045EC0 0FC15EB0 */  jal   sub_GAME_7F057AC0
+/* 07A9F0 7F045EC0 0FC15EB0 */  jal   mtxLoadRandomRotation
 /* 07A9F4 7F045EC4 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 07A9F8 7F045EC8 8E0C0090 */  lw    $t4, 0x90($s0)
 .L7F045ECC:
@@ -13913,7 +13913,7 @@ glabel object_interaction
 /* 07AA5C 7F045EEC 33380200 */  andi  $t8, $t9, 0x200
 /* 07AA60 7F045EF0 57000004 */  bnezl $t8, .Ljp7F045F04
 /* 07AA64 7F045EF4 8E080090 */   lw    $t0, 0x90($s0)
-/* 07AA68 7F045EF8 0FC15FF8 */  jal   sub_GAME_7F057AC0
+/* 07AA68 7F045EF8 0FC15FF8 */  jal   mtxLoadRandomRotation
 /* 07AA6C 7F045EFC 8FA40070 */   lw    $a0, 0x70($sp)
 /* 07AA70 7F045F00 8E080090 */  lw    $t0, 0x90($s0)
 .Ljp7F045F04:
@@ -14159,7 +14159,7 @@ glabel object_interaction
 /* 07AE08 7F046298 31AF0200 */  andi  $t7, $t5, 0x200
 /* 07AE0C 7F04629C 55E00004 */  bnezl $t7, .Ljp7F0462B0
 /* 07AE10 7F0462A0 8E190090 */   lw    $t9, 0x90($s0)
-/* 07AE14 7F0462A4 0FC15FF8 */  jal   sub_GAME_7F057AC0
+/* 07AE14 7F0462A4 0FC15FF8 */  jal   mtxLoadRandomRotation
 /* 07AE18 7F0462A8 8FA40070 */   lw    $a0, 0x70($sp)
 /* 07AE1C 7F0462AC 8E190090 */  lw    $t9, 0x90($s0)
 .Ljp7F0462B0:
@@ -19019,7 +19019,7 @@ glabel object_interaction
 /* 07869C 7F045CAC 31CD0200 */  andi  $t5, $t6, 0x200
 /* 0786A0 7F045CB0 55A00004 */  bnezl $t5, .L7F045CC4
 /* 0786A4 7F045CB4 8E180090 */   lw    $t8, 0x90($s0)
-/* 0786A8 7F045CB8 0FC15F70 */  jal   sub_GAME_7F057AC0
+/* 0786A8 7F045CB8 0FC15F70 */  jal   mtxLoadRandomRotation
 /* 0786AC 7F045CBC 8FA40070 */   lw    $a0, 0x70($sp)
 /* 0786B0 7F045CC0 8E180090 */  lw    $t8, 0x90($s0)
 .L7F045CC4:
@@ -19265,7 +19265,7 @@ glabel object_interaction
 /* 078A48 7F046058 318B0200 */  andi  $t3, $t4, 0x200
 /* 078A4C 7F04605C 55600004 */  bnezl $t3, .L7F046070
 /* 078A50 7F046060 8E0E0090 */   lw    $t6, 0x90($s0)
-/* 078A54 7F046064 0FC15F70 */  jal   sub_GAME_7F057AC0
+/* 078A54 7F046064 0FC15F70 */  jal   mtxLoadRandomRotation
 /* 078A58 7F046068 8FA40070 */   lw    $a0, 0x70($sp)
 /* 078A5C 7F04606C 8E0E0090 */  lw    $t6, 0x90($s0)
 .L7F046070:

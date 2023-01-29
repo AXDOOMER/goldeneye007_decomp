@@ -1,27 +1,27 @@
 #include <ultra64.h>
+#include "math.h"
+#include "bondconstants.h"
+#include "bondtypes.h"
 
 //D:80032300
-u32 D_80032300 = 0;
-//D:80032304
-u32 D_80032304 = 0;
-//D:80032308
-u32 D_80032308 = 0;
+coord3d ZeroCoord = { 0, 0, 0 };
 
 #ifdef NONMATCHING
-void sub_GAME_7F057AC0(float *param_1)
+// matches on decomp.me
+void mtxLoadRandomRotation(Mtxf *mtx)
 {
-    float firstrandfinal;
-    float secondrandfinal;
-    float thirdrandfinal;
-    
-    firstrandfinal = D_80032300;
-    secondrandfinal = D_80032304;
-    thirdrandfinal = D_80032308;
-    firstrandfinal = randomGetNext() * 0.00000000 * 6.28318548 * 0.03125000 - 0.09817477;
-    secondrandfinal = randomGetNext() * 0.00000000 * 6.28318548 * 0.03125000 - 0.09817477;
-    thirdrandfinal = randomGetNext() * 0.00000000 * 6.28318548 * 0.03125000 - 0.09817477;
-    matrix_4x4_set_rotation_around_xyz(&firstrandfinal,param_1);
-    return;
+	coord3d coord;
+    coord = ZeroCoord;
+#if defined(LEFTOVERDEBUG)
+	coord.x = RANDOMFRAC() * M_TAU_F * 0.03125f - 0.09817477f;
+	coord.y = RANDOMFRAC() * M_TAU_F * 0.03125f - 0.09817477f;
+	coord.z = RANDOMFRAC() * M_TAU_F * 0.03125f - 0.09817477f;
+#else
+	coord.x = RANDOMFRAC() * M_TAU_F * 0.03125f - 0.11780973f;
+	coord.y = RANDOMFRAC() * M_TAU_F * 0.03125f - 0.11780973f;
+	coord.z = RANDOMFRAC() * M_TAU_F * 0.03125f - 0.11780973f;
+#endif
+	matrix_4x4_set_rotation_around_xyz(&coord, mtx);
 }
 #else
 
@@ -42,12 +42,12 @@ glabel D_800536A0
 glabel D_800536A4
 .word 0x3dc90fdb /*0.098174773*/
 .text
-glabel sub_GAME_7F057AC0
+glabel mtxLoadRandomRotation
 /* 08C5F0 7F057AC0 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 08C5F4 7F057AC4 3C0F8003 */  lui   $t7, %hi(D_80032300) 
+/* 08C5F4 7F057AC4 3C0F8003 */  lui   $t7, %hi(ZeroCoord) 
 /* 08C5F8 7F057AC8 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 08C5FC 7F057ACC AFA40028 */  sw    $a0, 0x28($sp)
-/* 08C600 7F057AD0 25EF2300 */  addiu $t7, %lo(D_80032300) # addiu $t7, $t7, 0x2300
+/* 08C600 7F057AD0 25EF2300 */  addiu $t7, %lo(ZeroCoord) # addiu $t7, $t7, 0x2300
 /* 08C604 7F057AD4 8DE10000 */  lw    $at, ($t7)
 /* 08C608 7F057AD8 27AE001C */  addiu $t6, $sp, 0x1c
 /* 08C60C 7F057ADC 8DE80004 */  lw    $t0, 4($t7)
@@ -153,12 +153,12 @@ glabel D_800536A0
 glabel D_800536A4
 .word 0x3df1463a /* 0.117809727788 */
 .text
-glabel sub_GAME_7F057AC0
+glabel mtxLoadRandomRotation
 /* 08C5F0 7F057AC0 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 08C5F4 7F057AC4 3C0F8003 */  lui   $t7, %hi(D_80032300) 
+/* 08C5F4 7F057AC4 3C0F8003 */  lui   $t7, %hi(ZeroCoord) 
 /* 08C5F8 7F057AC8 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 08C5FC 7F057ACC AFA40028 */  sw    $a0, 0x28($sp)
-/* 08C600 7F057AD0 25EF2300 */  addiu $t7, %lo(D_80032300) # addiu $t7, $t7, 0x2300
+/* 08C600 7F057AD0 25EF2300 */  addiu $t7, %lo(ZeroCoord) # addiu $t7, $t7, 0x2300
 /* 08C604 7F057AD4 8DE10000 */  lw    $at, ($t7)
 /* 08C608 7F057AD8 27AE001C */  addiu $t6, $sp, 0x1c
 /* 08C60C 7F057ADC 8DE80004 */  lw    $t0, 4($t7)
@@ -252,8 +252,14 @@ glabel sub_GAME_7F057AC0
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F057C14(void) {
+// matches on decomp.me
+void sub_GAME_7F057C14(coord3d *coord, Mtxf *mtx)
+{
+	coord->x = RANDOMFRAC() * 1.6666666f * 4.0f - 3.3333333f;
+	coord->y = RANDOMFRAC() * 1.6666666f * 4.0f;
+	coord->z = RANDOMFRAC() * 1.6666666f * 4.0f - 3.3333333f;
 
+	mtxLoadRandomRotation(mtx);
 }
 #else
 GLOBAL_ASM(
@@ -343,7 +349,7 @@ glabel sub_GAME_7F057C14
 /* 08C850 7F057D20 46103282 */  mul.s $f10, $f6, $f16
 /* 08C854 7F057D24 46125201 */  sub.s $f8, $f10, $f18
 /* 08C858 7F057D28 E7080008 */  swc1  $f8, 8($t8)
-/* 08C85C 7F057D2C 0FC15EB0 */  jal   sub_GAME_7F057AC0
+/* 08C85C 7F057D2C 0FC15EB0 */  jal   mtxLoadRandomRotation
 /* 08C860 7F057D30 8FA4001C */   lw    $a0, 0x1c($sp)
 /* 08C864 7F057D34 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 08C868 7F057D38 27BD0018 */  addiu $sp, $sp, 0x18
