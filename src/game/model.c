@@ -394,7 +394,7 @@ void sub_GAME_7F06C550(Model* model, coord3d* coord)
 
 
 // PD: model0001a524
-s32 sub_GAME_7F06C570(ModelNode *node, s32 arg1)
+s32 modelFindNodeMtxIndex(ModelNode *node, s32 arg1)
 {
     s32 index;
     union ModelRoData *rodata1;
@@ -433,7 +433,7 @@ s32 sub_GAME_7F06C570(ModelNode *node, s32 arg1)
 
 // PD: model0001a5cc
 Mtxf *modelFindNodeMtx(struct Model *model, struct ModelNode *node, s32 arg2) {
-    s32 index = sub_GAME_7F06C570(node, arg2);
+    s32 index = modelFindNodeMtxIndex(node, arg2);
 
     if (index >= 0) {
         return &model->render_pos[index].pos;
@@ -2738,7 +2738,7 @@ void modelUpdateDistanceRelations(Model* model, ModelNode* node)
 }
 
 
-void sub_GAME_7F06E970(Model* model, ModelNode* node)
+void modelApplyDistanceRelations(Model* model, ModelNode* node)
 {
     ModelRoData_LODRecord *rodata = &node->Data->LOD;
     ModelRwData_LODRecord *rwdata = modelGetNodeRwData(model, node);
@@ -6416,7 +6416,7 @@ void dotube(ModelRenderData* renderdata, Model* model, ModelNode* node)
 
     if (renderdata->flags & 1)
     {
-        renderpos_index2 = sub_GAME_7F06C570(node, 0);
+        renderpos_index2 = modelFindNodeMtxIndex(node, 0);
         render_pos2 = &model->render_pos[renderpos_index2];
         rw_index = rwdata->index;
         rw_index2 = rwdata2->index;
@@ -6426,13 +6426,13 @@ void dotube(ModelRenderData* renderdata, Model* model, ModelNode* node)
         {
             rw_index_sel = rw_index2;
             rw_index_sel2 = rw_index;
-            renderpos_index = sub_GAME_7F06C570(node, 0x200);
+            renderpos_index = modelFindNodeMtxIndex(node, 0x200);
         }
         else
         {
             rw_index_sel = rw_index;
             rw_index_sel2 = rw_index2;
-            renderpos_index = sub_GAME_7F06C570(rodata->unk04, 0x200);
+            renderpos_index = modelFindNodeMtxIndex(rodata->unk04, 0x200);
         }
 
         render_pos = &model->render_pos[renderpos_index];
@@ -6672,7 +6672,7 @@ void dogfnegx(ModelRenderData *renderdata, Model *model, ModelNode *node)
 
     if ((renderdata->flags & 2) && rwdata->Gunfire.visible)
     {
-        s32 index = sub_GAME_7F06C570(node, 0);
+        s32 index = modelFindNodeMtxIndex(node, 0);
         mtx = &model->render_pos[index].pos;
 
         spe0.x = -(rodata->Offset.f[0] * mtx->m[0][0] + rodata->Offset.f[1] * mtx->m[1][0] + rodata->Offset.f[2] * mtx->m[2][0] + mtx->m[3][0]);
@@ -6887,7 +6887,7 @@ glabel doshadow
 /* 0A8C00 7F0740D0 AFA7007C */  sw    $a3, 0x7c($sp)
 /* 0A8C04 7F0740D4 E7A20040 */  swc1  $f2, 0x40($sp)
 /* 0A8C08 7F0740D8 E7AC0048 */  swc1  $f12, 0x48($sp)
-/* 0A8C0C 7F0740DC 0FC1B15C */  jal   sub_GAME_7F06C570
+/* 0A8C0C 7F0740DC 0FC1B15C */  jal   modelFindNodeMtxIndex
 /* 0A8C10 7F0740E0 E7AE0044 */   swc1  $f14, 0x44($sp)
 /* 0A8C14 7F0740E4 8FA7007C */  lw    $a3, 0x7c($sp)
 /* 0A8C18 7F0740E8 00024980 */  sll   $t1, $v0, 6
@@ -7241,7 +7241,7 @@ glabel doshadow
 /* 0A6BD4 7F0741E4 AFA7007C */  sw    $a3, 0x7c($sp)
 /* 0A6BD8 7F0741E8 E7A20048 */  swc1  $f2, 0x48($sp)
 /* 0A6BDC 7F0741EC E7AC0044 */  swc1  $f12, 0x44($sp)
-/* 0A6BE0 7F0741F0 0FC1B32A */  jal   sub_GAME_7F06C570
+/* 0A6BE0 7F0741F0 0FC1B32A */  jal   modelFindNodeMtxIndex
 /* 0A6BE4 7F0741F4 E7AE0040 */   swc1  $f14, 0x40($sp)
 /* 0A6BE8 7F0741F8 8FA7007C */  lw    $a3, 0x7c($sp)
 /* 0A6BEC 7F0741FC 00025980 */  sll   $t3, $v0, 6
@@ -7533,7 +7533,7 @@ void sub_GAME_7F074534(ModelRenderData* data, Model* model, ModelNode* node) {
     u32 id = node->Opcode & 0xFF;
     switch (id) {
     case MODELNODE_OPCODE_LODRECORD:
-        sub_GAME_7F06E970(model, node);
+        modelApplyDistanceRelations(model, node);
         return;
     case MODELNODE_OPCODE_SWITCHRECORD:
         modelApplyToggleRelations(model, node);
@@ -8680,7 +8680,7 @@ glabel sub_GAME_7F0752FC
 /* 0A9F68 7F075438 00008825 */   move  $s1, $zero
 .L7F07543C:
 /* 0A9F6C 7F07543C 02402025 */  move  $a0, $s2
-/* 0A9F70 7F075440 0FC1BA5C */  jal   sub_GAME_7F06E970
+/* 0A9F70 7F075440 0FC1BA5C */  jal   modelApplyDistanceRelations
 /* 0A9F74 7F075444 02002825 */   move  $a1, $s0
 /* 0A9F78 7F075448 10000009 */  b     .L7F075470
 /* 0A9F7C 7F07544C 00000000 */   nop   

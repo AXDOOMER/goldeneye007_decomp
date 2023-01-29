@@ -5026,7 +5026,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 096054 7F061524 8FAD01A0 */   lw    $t5, 0x1a0($sp)
 /* 096058 7F061528 8C990004 */  lw    $t9, 4($a0)
 /* 09605C 7F06152C 00002825 */  move  $a1, $zero
-/* 096060 7F061530 0FC1B15C */  jal   sub_GAME_7F06C570
+/* 096060 7F061530 0FC1B15C */  jal   modelFindNodeMtxIndex
 /* 096064 7F061534 AFB90070 */   sw    $t9, 0x70($sp)
 /* 096068 7F061538 AFA2006C */  sw    $v0, 0x6c($sp)
 /* 09606C 7F06153C 8E050010 */  lw    $a1, 0x10($s0)
@@ -5109,7 +5109,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 096190 7F061660 8FB901A0 */   lw    $t9, 0x1a0($sp)
 /* 096194 7F061664 8C8E0004 */  lw    $t6, 4($a0)
 /* 096198 7F061668 00002825 */  move  $a1, $zero
-/* 09619C 7F06166C 0FC1B15C */  jal   sub_GAME_7F06C570
+/* 09619C 7F06166C 0FC1B15C */  jal   modelFindNodeMtxIndex
 /* 0961A0 7F061670 AFAE0064 */   sw    $t6, 0x64($sp)
 /* 0961A4 7F061674 AFA20060 */  sw    $v0, 0x60($sp)
 /* 0961A8 7F061678 0FC17A0F */  jal   sub_GAME_7F05E83C
@@ -6810,7 +6810,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 0965B4 7F061A44 8FAD01A0 */   lw    $t5, 0x1a0($sp)
 /* 0965B8 7F061A48 8C990004 */  lw    $t9, 4($a0)
 /* 0965BC 7F061A4C 00002825 */  move  $a1, $zero
-/* 0965C0 7F061A50 0FC1B2D8 */  jal   sub_GAME_7F06C570
+/* 0965C0 7F061A50 0FC1B2D8 */  jal   modelFindNodeMtxIndex
 /* 0965C4 7F061A54 AFB90070 */   sw    $t9, 0x70($sp)
 /* 0965C8 7F061A58 AFA2006C */  sw    $v0, 0x6c($sp)
 /* 0965CC 7F061A5C 8E050010 */  lw    $a1, 0x10($s0)
@@ -6893,7 +6893,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 0966F0 7F061B80 8FB901A0 */   lw    $t9, 0x1a0($sp)
 /* 0966F4 7F061B84 8C8E0004 */  lw    $t6, 4($a0)
 /* 0966F8 7F061B88 00002825 */  move  $a1, $zero
-/* 0966FC 7F061B8C 0FC1B2D8 */  jal   sub_GAME_7F06C570
+/* 0966FC 7F061B8C 0FC1B2D8 */  jal   modelFindNodeMtxIndex
 /* 096700 7F061B90 AFAE0064 */   sw    $t6, 0x64($sp)
 /* 096704 7F061B94 AFA20060 */  sw    $v0, 0x60($sp)
 /* 096708 7F061B98 0FC17B57 */  jal   sub_GAME_7F05E83C
@@ -8597,7 +8597,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 0943CC 7F0619DC 8FAD01A0 */   lw    $t5, 0x1a0($sp)
 /* 0943D0 7F0619E0 8C990004 */  lw    $t9, 4($a0)
 /* 0943D4 7F0619E4 00002825 */  move  $a1, $zero
-/* 0943D8 7F0619E8 0FC1B32A */  jal   sub_GAME_7F06C570
+/* 0943D8 7F0619E8 0FC1B32A */  jal   modelFindNodeMtxIndex
 /* 0943DC 7F0619EC AFB90070 */   sw    $t9, 0x70($sp)
 /* 0943E0 7F0619F0 AFA2006C */  sw    $v0, 0x6c($sp)
 /* 0943E4 7F0619F4 8E050010 */  lw    $a1, 0x10($s0)
@@ -8680,7 +8680,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 094508 7F061B18 8FB901A0 */   lw    $t9, 0x1a0($sp)
 /* 09450C 7F061B1C 8C8E0004 */  lw    $t6, 4($a0)
 /* 094510 7F061B20 00002825 */  move  $a1, $zero
-/* 094514 7F061B24 0FC1B32A */  jal   sub_GAME_7F06C570
+/* 094514 7F061B24 0FC1B32A */  jal   modelFindNodeMtxIndex
 /* 094518 7F061B28 AFAE0064 */   sw    $t6, 0x64($sp)
 /* 09451C 7F061B2C AFA20060 */  sw    $v0, 0x60($sp)
 /* 094520 7F061B30 0FC17B3D */  jal   sub_GAME_7F05E83C
@@ -11588,7 +11588,7 @@ glabel set_enviro_fog_for_items_in_solo_watch_menu
 /* 097D2C 7F0631FC 8C44001C */   lw    $a0, 0x1c($v0)
 /* 097D30 7F063200 8C880004 */  lw    $t0, 4($a0)
 /* 097D34 7F063204 00002825 */  move  $a1, $zero
-/* 097D38 7F063208 0FC1B15C */  jal   sub_GAME_7F06C570
+/* 097D38 7F063208 0FC1B15C */  jal   modelFindNodeMtxIndex
 /* 097D3C 7F06320C AFA8005C */   sw    $t0, 0x5c($sp)
 /* 097D40 7F063210 AFA20058 */  sw    $v0, 0x58($sp)
 /* 097D44 7F063214 8FA4005C */  lw    $a0, 0x5c($sp)
@@ -11607,7 +11607,7 @@ glabel set_enviro_fog_for_items_in_solo_watch_menu
 /* 097D74 7F063244 864C000C */   lh    $t4, 0xc($s2)
 /* 097D78 7F063248 8C890004 */  lw    $t1, 4($a0)
 /* 097D7C 7F06324C 00002825 */  move  $a1, $zero
-/* 097D80 7F063250 0FC1B15C */  jal   sub_GAME_7F06C570
+/* 097D80 7F063250 0FC1B15C */  jal   modelFindNodeMtxIndex
 /* 097D84 7F063254 AFA90054 */   sw    $t1, 0x54($sp)
 /* 097D88 7F063258 AFA20050 */  sw    $v0, 0x50($sp)
 /* 097D8C 7F06325C 8FA40054 */  lw    $a0, 0x54($sp)

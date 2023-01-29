@@ -22,6 +22,20 @@ struct ShotData {
         /*0x3c*/ //struct hit hits[10];
 };
 
+struct HitThing {
+    // the following is taken from PD
+    // may need adjustments
+    coord3d unk00;
+    coord3d unk0c;
+    Vertex *unk18;
+    Vertex *unk1c;
+    Vertex *unk20;
+    Gfx *tricmd;
+    s16 unk28;
+    s16 texturenum;
+    s16 unk2c;
+};
+
 extern f32 F_80030B14;
 extern f32 F_80030B18;
 extern f32 F_80030B1C;
