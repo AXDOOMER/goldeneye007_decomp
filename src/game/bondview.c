@@ -28,6 +28,7 @@
 #include "math_atan2f.h"
 #include "matrixmath.h"
 #include "mp_music.h"
+#include "mp_watch.h"
 #include "objecthandler.h"
 #include "player.h"
 #include "player_2.h"
@@ -671,6 +672,9 @@ f32 bondviewPauseAngleRelated(s32 arg0);
 void sub_GAME_7F07E010(f32 arg0);
 void sub_GAME_7F07E03C(f32 arg0);
 s32 sub_GAME_7F07E068(void);
+f32 sub_GAME_7F080228(f32 arg0);
+void currentPlayerSetSwayTarget(s32 value);
+void currentPlayerAdjustCrouchPos(s32 value);
 
 // end forward declarations
 
@@ -13755,8 +13759,15 @@ void bondviewApplyVertaTheta(void)
 
 
 #ifdef NONMATCHING
-void controller_gameplay_interaction(void) {
 
+#define MAX_AIMLOCK_SPEED_DEFAULT 0.86f
+
+void sub_GAME_7F07FCC4(s32 arg0);
+void sub_GAME_7F07FE1C(s32 arg0);
+
+void controller_gameplay_interaction(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
+{
+    
 }
 #else
 
