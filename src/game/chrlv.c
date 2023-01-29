@@ -333,7 +333,7 @@ u32 check_if_item_held_like_pistol(PropRecord *arg0)
     {
         ChrRecord *v = (ChrRecord*)arg0->voidp;
 
-        return bondwalkItemCheckBitflags(v->act_bytes.padding[84], 0x100U);
+        return bondwalkItemCheckBitflags(v->act_bytes.padding[84], WEAPONSTATBITFLAG_ONLY_1_HANDED);
     }
 
     return 0U;

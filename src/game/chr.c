@@ -8330,7 +8330,7 @@ PropRecord *chrGetEquippedWeaponPropWithCheck(ChrRecord *self, GUNHAND hand)
     {
         WeaponObjRecord *wep = gunprop->weapon;
 
-        if (bondwalkItemCheckBitflags(wep->weaponnum, 0x200) == 0)
+        if (bondwalkItemCheckBitflags(wep->weaponnum, WEAPONSTATBITFLAG_HOLD_AS_GUN) == 0)
         {
             gunprop = NULL;
         }

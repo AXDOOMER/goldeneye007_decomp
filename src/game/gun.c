@@ -1428,7 +1428,7 @@ u8 bondwalkItemGetObjectsShootThrough(ITEM_IDS item)
 
 s32 bondwalkItemHasAmmo(ITEM_IDS item)
 {
-    if (bondwalkItemCheckBitflags(item, 0x40000) != 0)
+    if (bondwalkItemCheckBitflags(item, WEAPONSTATBITFLAG_HAS_AMMO) != 0)
     {
         if ((get_ammo_type_for_weapon(item) == 0) || (get_ammo_count_for_weapon(item) > 0))
         {
@@ -13115,7 +13115,7 @@ void sub_GAME_7F0649D8(enum GUNHAND hand)
         ? item_stats->MagSize
         : ammo_total;
 
-    g_CurrentPlayer->ammoheldarr[item_stats->AmmoType] = (bondwalkItemCheckBitflags(item_id, 0x200000U) != 0)
+    g_CurrentPlayer->ammoheldarr[item_stats->AmmoType] = (bondwalkItemCheckBitflags(item_id, WEAPONSTATBITFLAG_AMMO_CLIP_LIMIT) != 0)
         ? 0
         : (g_CurrentPlayer->ammoheldarr[item_stats->AmmoType] - hand_ptr->weapon_ammo_in_magazine) + ammo_in_magazine;
 
@@ -23201,7 +23201,7 @@ void bullet_path_from_screen_center(coord3d* arg0, coord3d* result, enum GUNHAND
     f32 randfactor;
 
     inaccuracy = get_ptr_item_statistics(getCurrentPlayerWeaponId(arg2))->Inaccuracy;
-    if ((bondwalkItemCheckBitflags(get_item_in_hand_or_watch_menu(arg2), 0x1000U) != 0) && (g_CurrentPlayer->hands[arg2].volley == 1))
+    if ((bondwalkItemCheckBitflags(get_item_in_hand_or_watch_menu(arg2), WEAPONSTATBITFLAG_FIRST_SHOT_ACCURACY) != 0) && (g_CurrentPlayer->hands[arg2].volley == 1))
     {
         // Single shots are four times more accurate
         inaccuracy *= 0.25f;
@@ -24832,7 +24832,7 @@ void give_cur_player_ammo(s32 ammo_type, s32 ammo_amount) {
     s32 max_ammo;
 
     weapon_id = getCurrentPlayerWeaponId(GUNRIGHT);
-    if ((get_ammo_type_for_weapon(weapon_id) == ammo_type) && (bondwalkItemCheckBitflags(weapon_id, 0x200000U) != 0))
+    if ((get_ammo_type_for_weapon(weapon_id) == ammo_type) && (bondwalkItemCheckBitflags(weapon_id, WEAPONSTATBITFLAG_AMMO_CLIP_LIMIT) != 0))
     {
         g_CurrentPlayer->hands[0].weapon_ammo_in_magazine += ammo_amount;
         if (get_ptr_item_statistics(weapon_id)->MagSize < g_CurrentPlayer->hands[0].weapon_ammo_in_magazine)
@@ -27450,7 +27450,7 @@ void gunDrawSight(s32 *gdl) {
 
 void inc_curplayer_hitcount_with_weapon(ITEM_IDS item, SHOT_REGISTER shot_register) {
 
-    if (bondwalkItemCheckBitflags(item, 0x10000)) {
+    if (bondwalkItemCheckBitflags(item, WEAPONSTATBITFLAG_PLAYER_STAT_HIT)) {
         g_playerPerm->shot_count[shot_register] = g_playerPerm->shot_count[shot_register]+1;
     }
 }

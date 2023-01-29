@@ -3543,7 +3543,7 @@ typedef union
         f32 turret_orientation_angle;
         f32 unkD0;
         f32 stan_y;
-        f32 unkD8;
+        s32 unkD8; // ammo related
         f32 tank_orientation_angle;
     } TankRecord;
     #define New_TankRecord(pad)                     \
