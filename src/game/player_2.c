@@ -580,73 +580,28 @@ void sub_GAME_7F09B368(enum GUNHAND hand)
     chrSetWeaponFlag4(g_CurrentPlayer->prop->chr, hand);
 }
 
+void sub_GAME_7F09B398(enum GUNHAND hand)
+{
+    ChrRecord *chr;
+    enum ITEM_IDS wepid;
+    enum PROP prop;
+    s32 flags;
 
-#ifdef NONMATCHING
-// NOTE: i think the return value from
-// something_with_generating_object is supposed
-// to be returned here?
-void sub_GAME_7F09B398(GUNHAND hand) {
-    struct ChrRecord* temp_v0;
-    ITEM_IDS weaponNum;
-    s32 weaponIdMaybe;
+    chr = g_CurrentPlayer->prop->chr;
 
-    temp_v0 = g_CurrentPlayer->prop->chr;
-    if (!temp_v0->handle_positiondata[hand]) {
-        weaponNum = getCurrentPlayerWeaponId(hand);
-        weaponIdMaybe = sub_GAME_7F09B244(weaponNum);
-        if (weaponIdMaybe >= 0) {
-            something_with_generating_object(temp_v0, weaponIdMaybe, weaponNum, hand == GUNRIGHT ? 0 : 0x10000000, 0, 0);
+    if (chr->weapons_held[hand] == NULL)
+    {
+        wepid = getCurrentPlayerWeaponId(hand);
+        prop = sub_GAME_7F09B244(wepid);
+        if (prop >= 0)
+        {
+            flags = ((hand * 4) == 0)
+                  ? 0
+                  : PROPFLAG_WEAPON_LEFTHANDED;
+            something_with_generating_object(chr, prop, wepid, flags, NULL, NULL);
         }
     }
 }
-#else
-GLOBAL_ASM(
-
-.text
-glabel sub_GAME_7F09B398
-/* 0CFEC8 7F09B398 3C0E8008 */  lui   $t6, %hi(g_CurrentPlayer)
-/* 0CFECC 7F09B39C 8DCEA0B0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
-/* 0CFED0 7F09B3A0 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 0CFED4 7F09B3A4 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0CFED8 7F09B3A8 8DCF00A8 */  lw    $t7, 0xa8($t6)
-/* 0CFEDC 7F09B3AC 00041880 */  sll   $v1, $a0, 2
-/* 0CFEE0 7F09B3B0 8DE20004 */  lw    $v0, 4($t7)
-/* 0CFEE4 7F09B3B4 0043C021 */  addu  $t8, $v0, $v1
-/* 0CFEE8 7F09B3B8 8F190160 */  lw    $t9, 0x160($t8)
-/* 0CFEEC 7F09B3BC 57200014 */  bnezl $t9, .L7F09B410
-/* 0CFEF0 7F09B3C0 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 0CFEF4 7F09B3C4 AFA20034 */  sw    $v0, 0x34($sp)
-/* 0CFEF8 7F09B3C8 0FC17674 */  jal   getCurrentPlayerWeaponId
-/* 0CFEFC 7F09B3CC AFA30024 */   sw    $v1, 0x24($sp)
-/* 0CFF00 7F09B3D0 AFA20030 */  sw    $v0, 0x30($sp)
-/* 0CFF04 7F09B3D4 0FC26C91 */  jal   sub_GAME_7F09B244
-/* 0CFF08 7F09B3D8 00402025 */   move  $a0, $v0
-/* 0CFF0C 7F09B3DC 8FA30024 */  lw    $v1, 0x24($sp)
-/* 0CFF10 7F09B3E0 0440000A */  bltz  $v0, .L7F09B40C
-/* 0CFF14 7F09B3E4 00402825 */   move  $a1, $v0
-/* 0CFF18 7F09B3E8 14600003 */  bnez  $v1, .L7F09B3F8
-/* 0CFF1C 7F09B3EC 8FA40034 */   lw    $a0, 0x34($sp)
-/* 0CFF20 7F09B3F0 10000002 */  b     .L7F09B3FC
-/* 0CFF24 7F09B3F4 00003825 */   move  $a3, $zero
-.L7F09B3F8:
-/* 0CFF28 7F09B3F8 3C071000 */  lui   $a3, 0x1000
-.L7F09B3FC:
-/* 0CFF2C 7F09B3FC 8FA60030 */  lw    $a2, 0x30($sp)
-/* 0CFF30 7F09B400 AFA00010 */  sw    $zero, 0x10($sp)
-/* 0CFF34 7F09B404 0FC14885 */  jal   something_with_generating_object
-/* 0CFF38 7F09B408 AFA00014 */   sw    $zero, 0x14($sp)
-.L7F09B40C:
-/* 0CFF3C 7F09B40C 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F09B410:
-/* 0CFF40 7F09B410 27BD0038 */  addiu $sp, $sp, 0x38
-/* 0CFF44 7F09B414 03E00008 */  jr    $ra
-/* 0CFF48 7F09B418 00000000 */   nop
-)
-#endif
-
-
-
-
 
 void shuffle_player_ids(void) {
     s32 i;
@@ -664,10 +619,6 @@ void shuffle_player_ids(void) {
         array_PLAYER_IDs[i + random % (4 - i)] = temp;
     }
 }
-
-
-
-
 
 s32 sub_GAME_7F09B4D8(s32 current_player_num) {
     s32 i;
@@ -690,11 +641,6 @@ s32 sub_GAME_7F09B4D8(s32 current_player_num) {
     return position;
 }
 
-
-
-
-
-
 s32 get_nth_player_from_shuffled(PLAYER_ID id)
 {
     s32 i;
@@ -710,4 +656,3 @@ s32 get_nth_player_from_shuffled(PLAYER_ID id)
 
     return 0;
 }
-
