@@ -343,6 +343,7 @@ s32 get_ammo_in_hands_magazine(GUNHAND hand);
 void autoadvance_on_deplete_all_ammo(void);
 f32 getCurrentPlayerNoise(GUNHAND hand);
 void camera_sniper_zoom_in(f32 zoom);
+void camera_sniper_zoom_out(f32 zoom);
 f32 get_item_in_hand_zoom(void);
 void advance_through_inventory(void);
 void backstep_through_inventory(void);
