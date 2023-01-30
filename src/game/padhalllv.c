@@ -196,80 +196,35 @@ bool sub_GAME_7F08EF1C(waygroup *from, waygroup *to, waygroup *groups)
 }
 
 
-#ifdef NONMATCHING
-// unused and similar to waypointFindRoute
-void sub_GAME_7F08EFA0(void) {
+s32 sub_GAME_7F08EFA0(waygroup* from, waygroup* to, waygroup** arr, s32 arrlen)
+{
+    waygroup **arrptr = arr;
+    waygroup *curfrom;
+    s32 i;
 
+    if (arrlen >= 2 && g_CurrentSetup.waypointgroups && sub_GAME_7F08EF1C(from, to, g_CurrentSetup.waypointgroups) != 0)
+    {
+        *arr = from;
+        arrptr++;
+
+        curfrom = from;
+        arrlen += 9999;
+        i = 10001;
+
+        while (i <= to->dist && i < arrlen)
+        {
+            curfrom = sub_GAME_7F08ED60(curfrom->neighbours, i);
+            *arrptr = curfrom;
+            arrptr++;
+            i++;
+        }
+    }
+
+    *arrptr = NULL;
+    arrptr++;
+
+    return arrptr - arr;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08EFA0
-/* 0C3AD0 7F08EFA0 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0C3AD4 7F08EFA4 AFB40028 */  sw    $s4, 0x28($sp)
-/* 0C3AD8 7F08EFA8 AFB30024 */  sw    $s3, 0x24($sp)
-/* 0C3ADC 7F08EFAC AFB1001C */  sw    $s1, 0x1c($sp)
-/* 0C3AE0 7F08EFB0 28E10002 */  slti  $at, $a3, 2
-/* 0C3AE4 7F08EFB4 00E09825 */  move  $s3, $a3
-/* 0C3AE8 7F08EFB8 00A0A025 */  move  $s4, $a1
-/* 0C3AEC 7F08EFBC AFBF002C */  sw    $ra, 0x2c($sp)
-/* 0C3AF0 7F08EFC0 AFB20020 */  sw    $s2, 0x20($sp)
-/* 0C3AF4 7F08EFC4 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0C3AF8 7F08EFC8 AFA60038 */  sw    $a2, 0x38($sp)
-/* 0C3AFC 7F08EFCC 14200022 */  bnez  $at, .L7F08F058
-/* 0C3B00 7F08EFD0 00C08825 */   move  $s1, $a2
-/* 0C3B04 7F08EFD4 3C068007 */  lui   $a2, %hi(g_CurrentSetup+4)
-/* 0C3B08 7F08EFD8 8CC65D04 */  lw    $a2, %lo(g_CurrentSetup+4)($a2)
-/* 0C3B0C 7F08EFDC 50C0001F */  beql  $a2, $zero, .L7F08F05C
-/* 0C3B10 7F08EFE0 AE200000 */   sw    $zero, ($s1)
-/* 0C3B14 7F08EFE4 0FC23BC7 */  jal   sub_GAME_7F08EF1C
-/* 0C3B18 7F08EFE8 AFA40030 */   sw    $a0, 0x30($sp)
-/* 0C3B1C 7F08EFEC 1040001A */  beqz  $v0, .L7F08F058
-/* 0C3B20 7F08EFF0 8FA40030 */   lw    $a0, 0x30($sp)
-/* 0C3B24 7F08EFF4 8FA20038 */  lw    $v0, 0x38($sp)
-/* 0C3B28 7F08EFF8 00809025 */  move  $s2, $a0
-/* 0C3B2C 7F08EFFC 2673270F */  addiu $s3, $s3, 0x270f
-/* 0C3B30 7F08F000 AC440000 */  sw    $a0, ($v0)
-/* 0C3B34 7F08F004 8E8E0008 */  lw    $t6, 8($s4)
-/* 0C3B38 7F08F008 24102711 */  li    $s0, 10001
-/* 0C3B3C 7F08F00C 24510004 */  addiu $s1, $v0, 4
-/* 0C3B40 7F08F010 29C12711 */  slti  $at, $t6, 0x2711
-/* 0C3B44 7F08F014 14200010 */  bnez  $at, .L7F08F058
-/* 0C3B48 7F08F018 2A612712 */   slti  $at, $s3, 0x2712
-/* 0C3B4C 7F08F01C 5420000F */  bnezl $at, .L7F08F05C
-/* 0C3B50 7F08F020 AE200000 */   sw    $zero, ($s1)
-/* 0C3B54 7F08F024 8E440000 */  lw    $a0, ($s2)
-.L7F08F028:
-/* 0C3B58 7F08F028 0FC23B58 */  jal   sub_GAME_7F08ED60
-/* 0C3B5C 7F08F02C 02002825 */   move  $a1, $s0
-/* 0C3B60 7F08F030 AE220000 */  sw    $v0, ($s1)
-/* 0C3B64 7F08F034 8E8F0008 */  lw    $t7, 8($s4)
-/* 0C3B68 7F08F038 26100001 */  addiu $s0, $s0, 1
-/* 0C3B6C 7F08F03C 00409025 */  move  $s2, $v0
-/* 0C3B70 7F08F040 01F0082A */  slt   $at, $t7, $s0
-/* 0C3B74 7F08F044 14200004 */  bnez  $at, .L7F08F058
-/* 0C3B78 7F08F048 26310004 */   addiu $s1, $s1, 4
-/* 0C3B7C 7F08F04C 0213082A */  slt   $at, $s0, $s3
-/* 0C3B80 7F08F050 5420FFF5 */  bnezl $at, .L7F08F028
-/* 0C3B84 7F08F054 8E440000 */   lw    $a0, ($s2)
-.L7F08F058:
-/* 0C3B88 7F08F058 AE200000 */  sw    $zero, ($s1)
-.L7F08F05C:
-/* 0C3B8C 7F08F05C 8FB80038 */  lw    $t8, 0x38($sp)
-/* 0C3B90 7F08F060 26310004 */  addiu $s1, $s1, 4
-/* 0C3B94 7F08F064 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 0C3B98 7F08F068 02381023 */  subu  $v0, $s1, $t8
-/* 0C3B9C 7F08F06C 0002C883 */  sra   $t9, $v0, 2
-/* 0C3BA0 7F08F070 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 0C3BA4 7F08F074 8FB40028 */  lw    $s4, 0x28($sp)
-/* 0C3BA8 7F08F078 8FB30024 */  lw    $s3, 0x24($sp)
-/* 0C3BAC 7F08F07C 8FB20020 */  lw    $s2, 0x20($sp)
-/* 0C3BB0 7F08F080 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0C3BB4 7F08F084 27BD0030 */  addiu $sp, $sp, 0x30
-/* 0C3BB8 7F08F088 03E00008 */  jr    $ra
-/* 0C3BBC 7F08F08C 03201025 */   move  $v0, $t9
-)
-#endif
 
 
 waypoint *findPadWithDistAndSet(s32 *pointnums, s32 arg1, s32 groupnum)
