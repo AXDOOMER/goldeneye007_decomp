@@ -890,7 +890,7 @@ struct player
   
   s32 hand_invisible[2]; /* 0x7f8*/
   ITEM_IDS hand_item[2]; /* 0x800 */
-  u8 *ptr_hand_weapon_buffer[2]; /* 0x808 */
+  ModelFileHeader *ptr_hand_weapon_buffer[2]; /* 0x808 */
   
   /**
    * Offset 0x810.

@@ -871,14 +871,14 @@ typedef enum GAMELENGTH
 typedef enum CUFF_TYPES
 {
     CUFF_BLUE,
-    CUFF_TUX,
+    CUFF_BROSNAN,
     CUFF_JUNGLE,
     CUFF_BOILER,
     CUFF_SNOW,
-    CUFF_WHITE,
-    CUFF_TUX6,
-    CUFF_TUX7,
-    CUFF_TUX8
+    CUFF_CONNERY,
+    CUFF_DALTON,
+    CUFF_MOORE,
+    CUFF_FOLDER
 } CUFF_TYPES;
 
 typedef enum CREDITS_ALIGNMENT
@@ -2172,7 +2172,12 @@ typedef enum SPSEGMENT
         BODY_Russian_Soldier,
         BODY_Russian_Infantry,
         BODY_Janus_Special_Forces,
-        BODY_Tuxedo,
+        BODY_Brosnan_Tuxedo,
+        /*
+        BODY_Connery_Tuxedo,
+        BODY_Dalton_Tuxedo,
+        BODY_Moore_Tuxedo,
+        */
         BODY_Boris,
         BODY_Ourumov,
         BODY_Trevelyan_Janus,
@@ -2292,11 +2297,16 @@ typedef enum SPSEGMENT
         HEAD_Female_Mandy,
         HEAD_Female_Vivien,
         HEAD_BOND_START,
-        HEAD_Male_Pierce_Bond_1 = HEAD_BOND_START,
-        HEAD_Male_Pierce_Bond_2,
-        HEAD_Male_Pierce_Bond_3,
-        HEAD_Male_Pierce_Bond_Parka,
-        HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT,
+        HEAD_Male_Brosnan_Boiler = HEAD_BOND_START,
+        HEAD_Male_Brosnan_Default,
+        HEAD_Male_Brosnan_Jungle,
+        HEAD_Male_Brosnan_Parka,
+        HEAD_Male_Brosnan_Tuxedo,
+        /*
+        HEAD_Male_Connery_Tuxedo,
+        HEAD_Male_Dalton_Tuxedo,
+        HEAD_Male_Moore_Tuxedo,
+        */
         HEAD_Natalya_Jungle_Fatigues,
         HEAD_END,
         /*The following are some maybe helpfull counts (maybe GE doesnt need them, but thought Id ad while here)*/
