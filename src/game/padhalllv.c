@@ -8,70 +8,40 @@
 //all ge versions align properly 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F08EBD0(void) {
+waypoint *sub_GAME_7F08EBD0(coord3d *pos, s32 arg1)
+{
+    waypoint *head;
+    PadRecord *pad;
+    f32 sqrdist;
+    f32 compare;
+    waypoint *node;
+    waypoint *ret;
 
+    head = g_CurrentSetup.pathwaypoints;
+    ret = NULL;
+
+    if (head)
+    {
+        node = head;
+        compare = -1.0f;
+        while (node->padID >= 0)
+        {
+            pad = &g_CurrentSetup.pads[node->padID];
+            sqrdist = ((pos->z - pad->pos.z) * (pos->z - pad->pos.z))
+                    + ((pos->x - pad->pos.x) * (pos->x - pad->pos.x));
+
+            if ((compare < 0.0f) || (sqrdist < compare))
+            {
+                compare = sqrdist;
+                ret = node;
+            }
+
+            node++;
+        }
+    }
+
+    return ret;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08EBD0
-/* 0C3700 7F08EBD0 3C028007 */  lui   $v0, %hi(g_CurrentSetup+0)
-/* 0C3704 7F08EBD4 8C425D00 */  lw    $v0, %lo(g_CurrentSetup+0)($v0)
-/* 0C3708 7F08EBD8 27BDFFF0 */  addiu $sp, $sp, -0x10
-/* 0C370C 7F08EBDC F7B40008 */  sdc1  $f20, 8($sp)
-/* 0C3710 7F08EBE0 AFA50014 */  sw    $a1, 0x14($sp)
-/* 0C3714 7F08EBE4 00803825 */  move  $a3, $a0
-/* 0C3718 7F08EBE8 10400024 */  beqz  $v0, .L7F08EC7C
-/* 0C371C 7F08EBEC 00001825 */   move  $v1, $zero
-/* 0C3720 7F08EBF0 8C4E0000 */  lw    $t6, ($v0)
-/* 0C3724 7F08EBF4 3C01BF80 */  li    $at, 0xBF800000 # -1.000000
-/* 0C3728 7F08EBF8 44810000 */  mtc1  $at, $f0
-/* 0C372C 7F08EBFC 05C0001F */  bltz  $t6, .L7F08EC7C
-/* 0C3730 7F08EC00 00402025 */   move  $a0, $v0
-/* 0C3734 7F08EC04 3C068007 */  lui   $a2, %hi(g_CurrentSetup+0x18)
-/* 0C3738 7F08EC08 C4EC0008 */  lwc1  $f12, 8($a3)
-/* 0C373C 7F08EC0C C4F00000 */  lwc1  $f16, ($a3)
-/* 0C3740 7F08EC10 4480A000 */  mtc1  $zero, $f20
-/* 0C3744 7F08EC14 2407002C */  li    $a3, 44
-/* 0C3748 7F08EC18 8CC65D18 */  lw    $a2, %lo(g_CurrentSetup+0x18)($a2)
-/* 0C374C 7F08EC1C 8C450000 */  lw    $a1, ($v0)
-.L7F08EC20:
-/* 0C3750 7F08EC20 00A70019 */  multu $a1, $a3
-/* 0C3754 7F08EC24 4614003C */  c.lt.s $f0, $f20
-/* 0C3758 7F08EC28 00007812 */  mflo  $t7
-/* 0C375C 7F08EC2C 01E61021 */  addu  $v0, $t7, $a2
-/* 0C3760 7F08EC30 C4440008 */  lwc1  $f4, 8($v0)
-/* 0C3764 7F08EC34 C4460000 */  lwc1  $f6, ($v0)
-/* 0C3768 7F08EC38 46046381 */  sub.s $f14, $f12, $f4
-/* 0C376C 7F08EC3C 46068481 */  sub.s $f18, $f16, $f6
-/* 0C3770 7F08EC40 460E7202 */  mul.s $f8, $f14, $f14
-/* 0C3774 7F08EC44 00000000 */  nop   
-/* 0C3778 7F08EC48 46129282 */  mul.s $f10, $f18, $f18
-/* 0C377C 7F08EC4C 45010005 */  bc1t  .L7F08EC64
-/* 0C3780 7F08EC50 460A4080 */   add.s $f2, $f8, $f10
-/* 0C3784 7F08EC54 4600103C */  c.lt.s $f2, $f0
-/* 0C3788 7F08EC58 00000000 */  nop   
-/* 0C378C 7F08EC5C 45020004 */  bc1fl .L7F08EC70
-/* 0C3790 7F08EC60 8C850010 */   lw    $a1, 0x10($a0)
-.L7F08EC64:
-/* 0C3794 7F08EC64 46001006 */  mov.s $f0, $f2
-/* 0C3798 7F08EC68 00801825 */  move  $v1, $a0
-/* 0C379C 7F08EC6C 8C850010 */  lw    $a1, 0x10($a0)
-.L7F08EC70:
-/* 0C37A0 7F08EC70 24840010 */  addiu $a0, $a0, 0x10
-/* 0C37A4 7F08EC74 04A1FFEA */  bgez  $a1, .L7F08EC20
-/* 0C37A8 7F08EC78 00000000 */   nop   
-.L7F08EC7C:
-/* 0C37AC 7F08EC7C D7B40008 */  ldc1  $f20, 8($sp)
-/* 0C37B0 7F08EC80 27BD0010 */  addiu $sp, $sp, 0x10
-/* 0C37B4 7F08EC84 03E00008 */  jr    $ra
-/* 0C37B8 7F08EC88 00601025 */   move  $v0, $v1
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
