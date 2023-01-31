@@ -34940,9 +34940,15 @@ glabel prepare_ammo_type_collection_text
 
 
 #ifdef NONMATCHING
-void display_text_when_ammo_collected(void) {
 
+// This matches, but rodata needs to be re-arranged
+void display_text_when_ammo_collected(s32 ammotype, s32 quantity)
+{
+    char buffer[100] = "";
+    prepare_ammo_type_collection_text(buffer, ammotype, quantity);
+    hudmsgBottomShow(buffer);
 }
+
 #else
 #ifdef VERSION_US
 GLOBAL_ASM(
