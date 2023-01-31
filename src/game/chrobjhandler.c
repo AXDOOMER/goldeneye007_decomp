@@ -44676,14 +44676,15 @@ void doorsChooseSwingDirection(PropRecord *chrprop, DoorRecord *door)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F055C40(void) {
+bool propdoorInteract(PropRecord *doorprop) {
 
 }
 #else
+bool propdoorInteract(PropRecord *doorprop);
 #ifdef VERSION_US
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F055C40
+glabel propdoorInteract
 /* 08A770 7F055C40 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 08A774 7F055C44 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 08A778 7F055C48 AFB00018 */  sw    $s0, 0x18($sp)
@@ -44798,7 +44799,7 @@ glabel sub_GAME_7F055C40
 #ifdef VERSION_JP
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F055C40
+glabel propdoorInteract
 /* 08A770 7F055C40 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 08A774 7F055C44 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 08A778 7F055C48 AFB00018 */  sw    $s0, 0x18($sp)
@@ -44914,7 +44915,7 @@ glabel sub_GAME_7F055C40
 #ifdef VERSION_EU
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F055C40
+glabel propdoorInteract
 /* 08A770 7F055C40 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 08A774 7F055C44 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 08A778 7F055C48 AFB00018 */  sw    $s0, 0x18($sp)

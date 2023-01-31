@@ -2354,7 +2354,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     if (obj && obj->prop)
                     {
                         INV_ITEM_TYPE iType = collect_or_interact_object(obj->prop, FALSE);
-                        sub_GAME_7F03C2BC(obj->prop, iType);
+                        propExecuteTickOperation(obj->prop, iType);
                     }
                     Offset += AI_BondCollectObject_LENGTH;
                     break;

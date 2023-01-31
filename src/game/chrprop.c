@@ -191,7 +191,7 @@ Gfx *chrpropRender(Gfx *arg0, PropRecord *arg1, s32 withalpha);
 void chraiCheckUseHeldItem(s32 hand);
 void chraiDefaultWeaponFireHandler(s32);
 void chraiFistAttackHandler(s32, s32);
-void sub_GAME_7F03C2BC(PropRecord *prop, INV_ITEM_TYPE type) ;
+void propExecuteTickOperation(PropRecord *prop, INV_ITEM_TYPE op);
 
 // end forward declarations
 
@@ -2629,7 +2629,7 @@ void chraiCheckUseHeldItems(void)
 
 
 
-void sub_GAME_7F03C2BC(PropRecord *prop, INV_ITEM_TYPE type) //#MATCH
+void propExecuteTickOperation(PropRecord *prop, INV_ITEM_TYPE type) //#MATCH
 {
     ObjectRecord *propobj;
 
@@ -2682,13 +2682,14 @@ void sub_GAME_7F03C2BC(PropRecord *prop, INV_ITEM_TYPE type) //#MATCH
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03C3FC(void) {
+PropRecord *propFindForInteract(void) {
 
 }
 #else
+PropRecord *propFindForInteract(void);
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F03C3FC
+glabel propFindForInteract
 /* 070F2C 7F03C3FC 27BDFFC8 */  addiu $sp, $sp, -0x38
 /* 070F30 7F03C400 AFB00014 */  sw    $s0, 0x14($sp)
 /* 070F34 7F03C404 3C108007 */  lui   $s0, %hi(g_LastOnScreenProp)
@@ -2760,71 +2761,39 @@ glabel sub_GAME_7F03C3FC
 #endif
 
 
+bool bond_interact_object(void)
+{
+    PropRecord *prop;
+    bool op;
 
+    prop = propFindForInteract();
+    op = INV_ITEM_NONE;
 
+    if (prop)
+    {
+        switch (prop->type)
+        {
+            case PROP_TYPE_OBJ:
+            case PROP_TYPE_WEAPON:
+                op = propobjInteract(prop);
+                break;
+            case PROP_TYPE_DOOR:
+                op = propdoorInteract(prop);
+                break;
+            case PROP_TYPE_CHR:
+            case PROP_TYPE_PLAYER:
+            case PROP_TYPE_EXPLOSION:
+            case PROP_TYPE_SMOKE:
+                break;
+        }
 
-#ifdef NONMATCHING
-void bond_interact_object(void) {
+        propExecuteTickOperation(prop, op);
 
+        return FALSE;
+    }
+
+    return TRUE;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-/*D:80052980*/
-glabel jpt_80052980
-.word loc_CODE_7F03C534
-.word loc_CODE_7F03C544
-.word def_7F03C52C
-.word loc_CODE_7F03C534
-.word def_7F03C52C
-.word def_7F03C52C
-.word def_7F03C52C
-.word def_7F03C52C
-
-.text
-glabel bond_interact_object
-/* 071020 7F03C4F0 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 071024 7F03C4F4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 071028 7F03C4F8 0FC0F0FF */  jal   sub_GAME_7F03C3FC
-/* 07102C 7F03C4FC 00000000 */   nop   
-/* 071030 7F03C500 AFA2001C */  sw    $v0, 0x1c($sp)
-/* 071034 7F03C504 10400016 */  beqz  $v0, .L7F03C560
-/* 071038 7F03C508 00002825 */   move  $a1, $zero
-/* 07103C 7F03C50C 904E0000 */  lbu   $t6, ($v0)
-/* 071040 7F03C510 25CFFFFF */  addiu $t7, $t6, -1
-/* 071044 7F03C514 2DE10008 */  sltiu $at, $t7, 8
-/* 071048 7F03C518 1020000D */  beqz  $at, .L7F03C550
-/* 07104C 7F03C51C 000F7880 */   sll   $t7, $t7, 2
-/* 071050 7F03C520 3C018005 */  lui   $at, %hi(jpt_80052980)
-/* 071054 7F03C524 002F0821 */  addu  $at, $at, $t7
-/* 071058 7F03C528 8C2F2980 */  lw    $t7, %lo(jpt_80052980)($at)
-/* 07105C 7F03C52C 01E00008 */  jr    $t7
-/* 071060 7F03C530 00000000 */   nop   
-loc_CODE_7F03C534:
-/* 071064 7F03C534 0FC13C5C */  jal   propobjInteract
-/* 071068 7F03C538 8FA4001C */   lw    $a0, 0x1c($sp)
-/* 07106C 7F03C53C 10000004 */  b     .L7F03C550
-/* 071070 7F03C540 00402825 */   move  $a1, $v0
-loc_CODE_7F03C544:
-/* 071074 7F03C544 0FC15710 */  jal   sub_GAME_7F055C40
-/* 071078 7F03C548 8FA4001C */   lw    $a0, 0x1c($sp)
-/* 07107C 7F03C54C 00402825 */  move  $a1, $v0
-def_7F03C52C:
-.L7F03C550:
-/* 071080 7F03C550 0FC0F0AF */  jal   sub_GAME_7F03C2BC
-/* 071084 7F03C554 8FA4001C */   lw    $a0, 0x1c($sp)
-/* 071088 7F03C558 10000002 */  b     .L7F03C564
-/* 07108C 7F03C55C 00001025 */   move  $v0, $zero
-.L7F03C560:
-/* 071090 7F03C560 24020001 */  li    $v0, 1
-.L7F03C564:
-/* 071094 7F03C564 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 071098 7F03C568 27BD0020 */  addiu $sp, $sp, 0x20
-/* 07109C 7F03C56C 03E00008 */  jr    $ra
-/* 0710A0 7F03C570 00000000 */   nop   
-)
-#endif
-
 
 
 /* Not quite sure what to name this, it returns true when the given prop isn't within 400 units of any player prop */
@@ -3132,7 +3101,7 @@ glabel handle_mp_respawn_and_some_things
 /* 07152C 7F03C9FC 02208025 */   move  $s0, $s1
 .L7F03CA00:
 /* 071530 7F03CA00 02202025 */  move  $a0, $s1
-/* 071534 7F03CA04 0FC0F0AF */  jal   sub_GAME_7F03C2BC
+/* 071534 7F03CA04 0FC0F0AF */  jal   propExecuteTickOperation
 /* 071538 7F03CA08 02402825 */   move  $a1, $s2
 .L7F03CA0C:
 /* 07153C 7F03CA0C 1600FF19 */  bnez  $s0, .L7F03C674
@@ -3415,7 +3384,7 @@ glabel handle_mp_respawn_and_some_things
 /* 06F4AC 7F03CABC 02208025 */   move  $s0, $s1
 .L7F03CAC0:
 /* 06F4B0 7F03CAC0 02202025 */  move  $a0, $s1
-/* 06F4B4 7F03CAC4 0FC0F0DF */  jal   sub_GAME_7F03C2BC
+/* 06F4B4 7F03CAC4 0FC0F0DF */  jal   propExecuteTickOperation
 /* 06F4B8 7F03CAC8 02402825 */   move  $a1, $s2
 .L7F03CACC:
 /* 06F4BC 7F03CACC 1600FF19 */  bnez  $s0, .L7F03C734
@@ -3518,7 +3487,7 @@ glabel determing_type_of_object_and_detection
 /* 071658 7F03CB28 10000003 */  b     .L7F03CB38
 /* 07165C 7F03CB2C 02008825 */   move  $s1, $s0
 .L7F03CB30:
-/* 071660 7F03CB30 0FC0F0AF */  jal   sub_GAME_7F03C2BC
+/* 071660 7F03CB30 0FC0F0AF */  jal   propExecuteTickOperation
 /* 071664 7F03CB34 02002025 */   move  $a0, $s0
 .L7F03CB38:
 /* 071668 7F03CB38 1620FFC7 */  bnez  $s1, .L7F03CA58
@@ -3863,7 +3832,7 @@ def_7F03D13C:
 .L7F03D160:
 /* 071C90 7F03D160 8E300024 */  lw    $s0, 0x24($s1)
 .L7F03D164:
-/* 071C94 7F03D164 0FC0F0AF */  jal   sub_GAME_7F03C2BC
+/* 071C94 7F03D164 0FC0F0AF */  jal   propExecuteTickOperation
 /* 071C98 7F03D168 02202025 */   move  $a0, $s1
 /* 071C9C 7F03D16C 1600FFE7 */  bnez  $s0, .L7F03D10C
 /* 071CA0 7F03D170 02008825 */   move  $s1, $s0

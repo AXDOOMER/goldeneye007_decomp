@@ -489,7 +489,7 @@ void          determing_type_of_object_and_detection(void);
 void          chraiUpdateOnscreenPropCount(void);
 void          sub_GAME_7F03D78C(void);
 void          chraiCheckUseHeldItems(void);
-s32           bond_interact_object(void);
+bool          bond_interact_object(void);
 void          sub_GAME_7F03D0D4(void);
 void          chrpropRegisterRoom(PropRecord *, s16);
 PropRecord*           propAllocate();
