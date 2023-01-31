@@ -31504,99 +31504,22 @@ void sub_GAME_7F08BDC4(Mtxf *arg0)
 }
 
 
-
-#ifdef NONMATCHING
-/**
- * Unreferenced.
- * 
- * Address 0x7F08BE2C.
- *
- * decomp status:
- * - compiles: yes
- * - stack resize: ok
- * - identical instructions: two swapped instructions that don't affect each other
- * - identical registers: ok
- *
- */
-void sub_GAME_7F08BE2C(Mtxf * arg0, s32 arg1)
+void sub_GAME_7F08BE2C(Mtxf *matrices, s32 count)
 {
-    Mtxf sp38;
-    s32 var_s0;
-    Mtxf* var_s1;
+    Mtxf copy;
+    s32 i;
 
-    var_s0 = 0;
-
-    if (arg1 <= 0) { return; }
-
-    var_s1 = arg0;
-    do
+    for (i = 0; i < count; i++)
     {
-        matrix_4x4_copy(var_s1, &sp38);
-        sp38.m[3][0] -= g_CurrentPlayer->previous_model_pos.f[0];
-        sp38.m[3][1] -= g_CurrentPlayer->previous_model_pos.f[1];
-        sp38.m[3][2] -= g_CurrentPlayer->previous_model_pos.f[2];
-        matrix_4x4_f32_to_s32(&sp38, &arg0[var_s0]);
-        var_s0++;
-        var_s1++;
-    } while (var_s0 != arg1);
-}
+        matrix_4x4_copy((Mtxf *)((uintptr_t)matrices + i * sizeof(Mtxf)), &copy);
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08BE2C
-/* 0C095C 7F08BE2C 27BDFF88 */  addiu $sp, $sp, -0x78
-/* 0C0960 7F08BE30 AFB40024 */  sw    $s4, 0x24($sp)
-/* 0C0964 7F08BE34 AFB30020 */  sw    $s3, 0x20($sp)
-/* 0C0968 7F08BE38 AFB00014 */  sw    $s0, 0x14($sp)
-/* 0C096C 7F08BE3C 00A09825 */  move  $s3, $a1
-/* 0C0970 7F08BE40 0080A025 */  move  $s4, $a0
-/* 0C0974 7F08BE44 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 0C0978 7F08BE48 AFB50028 */  sw    $s5, 0x28($sp)
-/* 0C097C 7F08BE4C AFB2001C */  sw    $s2, 0x1c($sp)
-/* 0C0980 7F08BE50 AFB10018 */  sw    $s1, 0x18($sp)
-/* 0C0984 7F08BE54 18A0001C */  blez  $a1, .L7F08BEC8
-/* 0C0988 7F08BE58 00008025 */   move  $s0, $zero
-/* 0C098C 7F08BE5C 3C158008 */  lui   $s5, %hi(g_CurrentPlayer)
-/* 0C0990 7F08BE60 26B5A0B0 */  addiu $s5, %lo(g_CurrentPlayer) # addiu $s5, $s5, -0x5f50
-/* 0C0994 7F08BE64 00808825 */  move  $s1, $a0
-/* 0C0998 7F08BE68 27B20038 */  addiu $s2, $sp, 0x38
-.L7F08BE6C:
-/* 0C099C 7F08BE6C 02202025 */  move  $a0, $s1
-/* 0C09A0 7F08BE70 0FC16008 */  jal   matrix_4x4_copy
-/* 0C09A4 7F08BE74 02402825 */   move  $a1, $s2
-/* 0C09A8 7F08BE78 8EA20000 */  lw    $v0, ($s5)
-/* 0C09AC 7F08BE7C C7A40068 */  lwc1  $f4, 0x68($sp)
-/* 0C09B0 7F08BE80 C7AA006C */  lwc1  $f10, 0x6c($sp)
-/* 0C09B4 7F08BE84 C4460044 */  lwc1  $f6, 0x44($v0)
-/* 0C09B8 7F08BE88 00107180 */  sll   $t6, $s0, 6
-/* 0C09BC 7F08BE8C 01D42821 */  addu  $a1, $t6, $s4
-/* 0C09C0 7F08BE90 46062201 */  sub.s $f8, $f4, $f6
-/* 0C09C4 7F08BE94 C7A40070 */  lwc1  $f4, 0x70($sp)
-/* 0C09C8 7F08BE98 02402025 */  move  $a0, $s2
-/* 0C09CC 7F08BE9C E7A80068 */  swc1  $f8, 0x68($sp)
-/* 0C09D0 7F08BEA0 C4500048 */  lwc1  $f16, 0x48($v0)
-/* 0C09D4 7F08BEA4 46105481 */  sub.s $f18, $f10, $f16
-/* 0C09D8 7F08BEA8 E7B2006C */  swc1  $f18, 0x6c($sp)
-/* 0C09DC 7F08BEAC C446004C */  lwc1  $f6, 0x4c($v0)
-/* 0C09E0 7F08BEB0 46062201 */  sub.s $f8, $f4, $f6
-/* 0C09E4 7F08BEB4 0FC16327 */  jal   matrix_4x4_f32_to_s32
-/* 0C09E8 7F08BEB8 E7A80070 */   swc1  $f8, 0x70($sp)
-/* 0C09EC 7F08BEBC 26100001 */  addiu $s0, $s0, 1
-/* 0C09F0 7F08BEC0 1613FFEA */  bne   $s0, $s3, .L7F08BE6C
-/* 0C09F4 7F08BEC4 26310040 */   addiu $s1, $s1, 0x40
-.L7F08BEC8:
-/* 0C09F8 7F08BEC8 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 0C09FC 7F08BECC 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0C0A00 7F08BED0 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0C0A04 7F08BED4 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 0C0A08 7F08BED8 8FB30020 */  lw    $s3, 0x20($sp)
-/* 0C0A0C 7F08BEDC 8FB40024 */  lw    $s4, 0x24($sp)
-/* 0C0A10 7F08BEE0 8FB50028 */  lw    $s5, 0x28($sp)
-/* 0C0A14 7F08BEE4 03E00008 */  jr    $ra
-/* 0C0A18 7F08BEE8 27BD0078 */   addiu $sp, $sp, 0x78
-)
-#endif
+        copy.m[3][0] -= g_CurrentPlayer->previous_model_pos.x;
+        copy.m[3][1] -= g_CurrentPlayer->previous_model_pos.y;
+        copy.m[3][2] -= g_CurrentPlayer->previous_model_pos.z;
+
+        matrix_4x4_f32_to_s32(&copy, matrices + i);
+    }
+}
 
 
 void sub_GAME_7F08BEEC(Mtxf *matrices, s32 count)
