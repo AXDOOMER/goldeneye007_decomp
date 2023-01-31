@@ -336,5 +336,18 @@ void get_bullet_angle(f32* horizontal_angle, f32* vertical_angle);
 ITEM_IDS get_item_in_hand_or_watch_menu(GUNHAND hand);
 void draw_item_in_hand(GUNHAND hand, s32 next_weapon);
 void sub_GAME_7F05DAE4(GUNHAND hand);
+void sub_GAME_7F067F58(f32 turn_x, f32 turn_y, f32 max_aim_lock_speed);
+s32 get_ammo_count_for_weapon(ITEM_IDS weapon);
+void add_ammo_to_weapon(ITEM_IDS weapon, s32 ammo);
+s32 get_ammo_in_hands_magazine(GUNHAND hand);
+void autoadvance_on_deplete_all_ammo(void);
+f32 getCurrentPlayerNoise(GUNHAND hand);
+void camera_sniper_zoom_in(f32 zoom);
+void camera_sniper_zoom_out(f32 zoom);
+f32 get_item_in_hand_zoom(void);
+void advance_through_inventory(void);
+void backstep_through_inventory(void);
+void sub_GAME_7F067AA4(s32 param_1);
+void sub_GAME_7F067FBC(f32 turn_x, f32 turn_y);
 
 #endif

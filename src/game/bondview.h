@@ -3086,6 +3086,7 @@ void sub_GAME_7F089718(f32);
 void sub_GAME_7F08A900(void);
 Mtxf *currentPlayerGetProjectionMatrixF(void);
 int redirect_get_BONDdata_autoaim_x(void);
+int redirect_get_BONDdata_autoaim_y(void);
 void sub_GAME_7F077FF4(coord3d *in, coord3d *out);
 
 #endif
