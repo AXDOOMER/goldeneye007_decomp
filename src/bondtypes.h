@@ -1468,7 +1468,7 @@ typedef union
 
             ModelAnimation   *anim2;
 
-            s32               unk58;
+            f32               unk58;
             f32               unk5c;
 
             /**
@@ -1487,7 +1487,7 @@ typedef union
             s32               unk68;
             f32               unk6c;
             // 0x70
-            f32               unk70;
+            f32               speed2;
             s32               unk74;
             s32               unk78;
             f32               unk7c;

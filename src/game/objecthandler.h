@@ -28,7 +28,7 @@ extern struct bondstruct_unk_op07_related D_800360C4[];
 extern Vertex D_800363E0;
 
 // arg0 unknown pointer
-void modelSetAnimFrame2(void *arg0, f32 arg1, f32 arg2);
+void modelSetAnimFrame2(Model* model, f32 frame1, f32 frame2);
 void modelSetAnimPlaySpeed(Model *, f32, f32);
 void sub_GAME_7F06FF5C(Model *model, s32 arg1);
 void modelSetScale(Model*, f32);
