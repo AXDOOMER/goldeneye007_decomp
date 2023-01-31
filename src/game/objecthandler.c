@@ -286,15 +286,7 @@ s32 D_80036418 =  0;
 s32 D_8003641C =  0;
 
 
-#if defined(LEFTOVERDEBUG)
-// rodata
-//D:80054420
-const char aDrawjointlistNoGfxlist[] = "drawjointlist: no gfxlist!\n";
-//D:8005443C
-const char aDrawjointlistNoObject0xX[] = "drawjointlist: no object! (0x%X)\n";
-//D:80054460
-const char aDrawjointlistObjectNotInitialised0[] = "drawjointlist: object not initialised! (0x%X)\n";
-#endif
+
 
 /*
 */
@@ -1173,6 +1165,15 @@ glabel sub_GAME_7F06BB28
 
 
 
+#if defined(LEFTOVERDEBUG)
+// rodata
+//D:80054420
+const char aDrawjointlistNoGfxlist[] = "drawjointlist: no gfxlist!\n";
+//D:8005443C
+const char aDrawjointlistNoObject0xX[] = "drawjointlist: no object! (0x%X)\n";
+//D:80054460
+const char aDrawjointlistObjectNotInitialised0[] = "drawjointlist: object not initialised! (0x%X)\n";
+#endif
 
 #ifdef NONMATCHING
 void drawjointlist(void) {

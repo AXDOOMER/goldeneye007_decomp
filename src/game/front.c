@@ -1073,12 +1073,12 @@ void menu_control_stick_tracking(void) {
         stickx = 0;
     }
 
-    if (stickx >= 0x47) {
-        stickx = 0x46;
+    if (stickx >= 71) {
+        stickx = 70;
     }
     else {
-        if (stickx < -0x46) {
-            stickx = -0x46;
+        if (stickx < -70) {
+            stickx = -70;
         }
     }
 
@@ -1092,12 +1092,12 @@ void menu_control_stick_tracking(void) {
         sticky = 0;
     }
 
-    if (sticky >= 0x47) {
-        sticky = 0x46;
+    if (sticky >= 71) {
+        sticky = 70;
     }
     else {
-        if (sticky < -0x46) {
-            sticky = -0x46;
+        if (sticky < -70) {
+            sticky = -70;
         }
     }
 
@@ -1182,17 +1182,17 @@ Gfx* add_tab1_start(Gfx* DL)
     x2 = 0;
     y2 = 0;
     textMeasure(&y2, &x2, g_textPtrTAB1, ptrFontBankGothicChars, ptrFontBankGothic, 0);
-    x = 0x33;
-    y = 0x19B - (y2 / 2);
+    x = 51;
+    y = 411 - (y2 / 2);
 
     if (tab_start_highlight)
     {
-        DL = microcode_constructor_related_to_menus(DL, (y - y2) + 1, 0x33, y, 0x75, 0x32);
+        DL = microcode_constructor_related_to_menus(DL, (y - y2) + 1, 51, y, 117, 50);
     }
 
     setTextOrientation(1);
 
-    x = 0x54 - (x2 / 2);
+    x = 84 - (x2 / 2);
     DL = textRender(DL, &x, &y, g_textPtrTAB1, ptrFontBankGothicChars, ptrFontBankGothic, 0xFF, viGetY(), viGetX(), 0, 0);
     setTextOrientation(0);
     setTextSpacingInverted(FALSE);
@@ -1224,17 +1224,17 @@ Gfx* add_tab3_previous(Gfx* DL)
     sp48 = 0;
     y2 = 0;
     textMeasure(&y2, &sp48, g_textPtrTAB3, ptrFontBankGothicChars, ptrFontBankGothic, 0);
-    x = 0xEC;
-    y = 0x19B - (y2 / 2);
+    x = 236;
+    y = 411 - (y2 / 2);
 
     if (tab_prev_highlight != 0)
     {
-        DL = microcode_constructor_related_to_menus(DL, (y - y2) + 1, 0xEC, y, 0x12E, 0x32);
+        DL = microcode_constructor_related_to_menus(DL, (y - y2) + 1, 236, y, 302, 50);
     }
 
     setTextOrientation(1);
 
-    x = 0x10D - (sp48 / 2);
+    x = 269 - (sp48 / 2);
     DL = textRender(DL, &x, &y, g_textPtrTAB3, ptrFontBankGothicChars, ptrFontBankGothic, 0xFF, viGetY(), viGetX(), 0, 0);
     setTextOrientation(0);
     setTextSpacingInverted(FALSE);
@@ -1275,17 +1275,17 @@ Gfx* add_tab2_next(Gfx* DL)
     sp48 = 0;
     sp4C = 0;
     textMeasure(&sp4C, &sp48, g_textPtrTAB2, ptrFontBankGothicChars, ptrFontBankGothic, 0);
-    x = 0x90;
-    y = 0x19B - (sp4C / 2);
+    x = 144;
+    y = 411 - (sp4C / 2);
 
     if (tab_next_highlight != 0)
     {
-        DL = microcode_constructor_related_to_menus(DL, (y - sp4C) + 1, 0x90, y, 0xD2, 0x32);
+        DL = microcode_constructor_related_to_menus(DL, (y - sp4C) + 1, 144, y, 210, 50);
     }
 
     setTextOrientation(1);
 
-    x = 0xB1 - (sp48 / 2);
+    x = 177 - (sp48 / 2);
     DL = textRender(DL, &x, &y, g_textPtrTAB2, ptrFontBankGothicChars, ptrFontBankGothic, 0xFF, viGetY(), viGetX(), 0, 0);
     setTextOrientation(0);
     setTextSpacingInverted(FALSE);
@@ -2780,30 +2780,24 @@ void select_load_bond_picture(Model *objinstance, u32 bondID)
 
 
 #ifdef NONMATCHING
+#define WALLETBOND 278
 void load_walletbond(void)
 {
-    s32 temp_ret;
-    void *temp_s0;
-    void *phi_s0;
+    void *temp_v0_2;
+    void *temp_v1;
 
-    if (walletinst[0] == 0)
+    if (walletinst == NULL)
     {
-        load_object_fill_header(PitemZ_entries[WALLETBOND].header, PitemZ_entries[WALLETBOND].filename, ptr_logo_and_walletbond_DL, 0xa000, NULL);
+        load_object_fill_header(PitemZ_entries[WALLETBOND].header, PitemZ_entries[WALLETBOND].filename, ptr_logo_and_walletbond_DL, 0xA000, 0);
         modelCalculateRwDataLen(PitemZ_entries[WALLETBOND].header);
-        phi_s0 = &walletinst;
-loop_2:
-        temp_ret = get_aircraft_obj_instance_controller(PitemZ_entries[WALLETBOND].header);
-        *phi_s0 = temp_ret;
-        modelSetScale(temp_ret, 1.0f);
-        temp_s0 = phi_s0 + 4;
-        phi_s0 = temp_s0;
-        if (temp_s0 != &D_8002A96C)
+            walletinst  = get_aircraft_obj_instance_controller(PitemZ_entries[WALLETBOND].header);
+            modelSetScale(walletinst, 1.0f);
+
+        temp_v1 = PitemZ_entries[WALLETBOND].header->Switches->unk54;
+        if (temp_v1 != NULL)
         {
-            goto loop_2;
-        }
-        if (PitemZ_entries[WALLETBOND].header->unk8->unk54 != 0)
-        {
-            bgLoadFromDynamicCCRMLUT(PitemZ_entries[WALLETBOND].header->unk8->unk54->unk4->unk1C + (PitemZ_entries[WALLETBOND].header->unk8->unk54->unk4->unk0 & 0xffffff), 0, 8);
+            temp_v0_2 = temp_v1->unk4;
+            bgLoadFromDynamicCCRMLUT(temp_v0_2->unk1C + (temp_v0_2->unk0 & 0xFFFFFF), NULL, 8U);
         }
     }
 }

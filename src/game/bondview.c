@@ -2018,8 +2018,251 @@ void bondviewUpdateCurrentPlayerPosition(coord3d *pos, coord3d *pos2, coord3d *o
                           );
             }
 //*/
-void solo_char_load(void) {
+#define ALIGN64_V3(val) (((val) | 0x3f) ^ 0x3f)
+void solo_char_load(void)
+{
+    f32 hRot;
+    ModelFileHeader *pBody;
+    ModelFileHeader *pHead;
+    ModelFileHeader *p_leftHeader;
+    ModelFileHeader *bodyBuffer;
+    ModelFileHeader *headBuffer;
+    s32 totalsize;
+    s32 bodyBufSize;
+    s32 headBufSize;
+    WeaponObjRecord *p_rightHeader;
+    //? sp54;
+    s32 rhandweapID;
+    s32 body;
+    s32 head;
+    Model *model;
+    s32 numRecords;
+    ChrModelFileRecord *p_modelEntry;                       /* compiler-managed */
+    ChrModelFileRecord *p_bodyEntry;
+    ChrModelFileRecord *p_headEntry;
+    ChrRecord *curChr;
+    ModelFileHeader *p_headHeader;
+    ModelFileHeader *p_headEntryHeader;
+    ModelFileHeader *p_rhandItemHeader;
+    ModelFileHeader *p_bodyEntryHeader;
+    ModelFileHeader *p_bodyHeader;
+    ModelFileHeader *p_lhandItemHeader;
+    s32 rhandPropID;
+    s32 bodyalignedSizeRemainPlus0x5F;
+    s32 bufferSizeRemain;
+    s32 folderBond;
+    //s32 numRecords;
+    s32 cuffId;
+    hRot = get_curplay_horizontal_rotation_in_degrees();
+    curChr = g_CurrentPlayer->prop->chr;
+    if (curChr == NULL)
+    {
+        bodyBuffer = getPlayerWeaponBufferForHand(GUNRIGHT);
+        headBuffer = getPlayerWeaponBufferForHand(GUNLEFT);
+        totalsize = 0;
+        bodyBufSize = getSizeBufferWeaponInHand(GUNRIGHT);
+        headBufSize = getSizeBufferWeaponInHand(GUNLEFT);
+        //M2C_MEMCPY_ALIGNED(&sp54, &dummy_08_pp7_obj, 0x84);
+        //*(&sp54 + 0x84) = *(&dummy_08_pp7_obj + 0x84);
+        rhandweapID = get_item_in_hand_or_watch_menu(GUNRIGHT);
+        body = BODY_Formal_Wear;
+        head = HEAD_Male_Brosnan_Default;
+        model = NULL;
+        sub_GAME_7F07DE64(g_CurrentPlayer);
+        if (getPlayerCount() == 1)
+        {
+            folderBond = getSelectedFolderBond();
+            cuffId = g_CurrentPlayer->bondtype;
+            switch (cuffId)                        /* switch 1 */
+            {
+            case CUFF_BOILER:                                 /* switch 1 */
+                body = BODY_Special_Operations_Uniform; break;
+            case CUFF_JUNGLE:                                 /* switch 1 */
+                body = BODY_Jungle_Fatigues; break;
+            case CUFF_SNOW:                                 /* switch 1 */
+                body = BODY_Parka; break;
+            case CUFF_BROSNAN:                                 /* switch 1 */
+                body = BODY_Brosnan_Tuxedo; break;
+            case CUFF_CONNERY:                                 /* switch 1 */
+                body = BODY_Brosnan_Tuxedo; break;
+            case CUFF_DALTON:                                 /* switch 1 */
+                body = BODY_Brosnan_Tuxedo; break;
+            case CUFF_MOORE:                                 /* switch 1 */
+                body = BODY_Brosnan_Tuxedo; break;
+            case CUFF_FOLDER:                                 /* switch 1 */
+                switch (folderBond)                  /* switch 3; irregular */
+                {
+                case 0:                             /* switch 3 */
+                    body = BODY_Brosnan_Tuxedo; break;
+                case 1:                             /* switch 3 */
+                    body = BODY_Brosnan_Tuxedo; break;
+                case 2:                             /* switch 3 */
+                    body = BODY_Brosnan_Tuxedo; break;
+                case 3:
+                    body = BODY_Brosnan_Tuxedo; break;
+                }
+                break;
+            }
+            switch (folderBond)                      /* switch 4; irregular */
+            {
+            case 0:                                 /* switch 4 */
+                switch (cuffId)                    /* switch 2 */
+                {
+                case CUFF_BOILER:                             /* switch 2 */
+                    head = HEAD_Male_Brosnan_Boiler; break;
+                case CUFF_JUNGLE:                             /* switch 2 */
+                    head = HEAD_Male_Brosnan_Jungle; break;
+                case CUFF_BROSNAN:                             /* switch 2 */
+                    head = HEAD_Male_Brosnan_Tuxedo; break;
+                case CUFF_CONNERY:                             /* switch 2 */
+                    head = HEAD_Male_Brosnan_Tuxedo; break;
+                case CUFF_DALTON:                             /* switch 2 */
+                    head = HEAD_Male_Brosnan_Tuxedo; break;
+                case CUFF_MOORE:                             /* switch 2 */
+                    head = HEAD_Male_Brosnan_Tuxedo; break;
+                case CUFF_FOLDER:                             /* switch 2 */
+                    head = HEAD_Male_Brosnan_Tuxedo; break;
+                }
+                break;
+            case 1:                                 /* switch 4 */
+                head = HEAD_Male_Brosnan_Tuxedo; break;
+            case 2:                                 /* switch 4 */
+                head = HEAD_Male_Brosnan_Tuxedo; break;
+            case 3:                                 /* switch 4 */
+                head = HEAD_Male_Brosnan_Tuxedo; break;
+            }
+        }
+        else
+        {
+            head = get_player_mp_char_head(get_cur_playernum());
+            body = get_player_mp_char_body(get_cur_playernum());
+        }
+        if (g_CameraMode == CAMERAMODE_SWIRL)
+        {
+            rhandweapID = starting_right_weapon;
+        }
+        if (getPlayerCount() == 1)
+        {
+            remove_item_in_hand(GUNLEFT);
+            remove_item_in_hand(GUNRIGHT);
+            texInitPool(&texPool, headBuffer, headBufSize);
+            p_bodyHeader = get_ptr_itemheader_in_hand(GUNRIGHT);
 
+            p_bodyEntry = &c_item_entries[body];
+            p_bodyEntryHeader = p_bodyEntry->header;
+
+            pBody = p_bodyHeader;
+            
+            p_bodyHeader->RootNode = p_bodyEntryHeader->RootNode;
+            p_bodyHeader->Skeleton = p_bodyEntryHeader->Skeleton;
+            p_bodyHeader->Switches = p_bodyEntryHeader->Switches;
+            p_bodyHeader->unkC = p_bodyEntryHeader->unkC;
+            p_bodyHeader->BoundingVolumeRadius = p_bodyEntryHeader->BoundingVolumeRadius;
+            p_bodyHeader->unk14 = p_bodyEntryHeader->unk14;
+            p_bodyHeader->Textures = p_bodyEntryHeader->Textures;
+            p_bodyHeader->isLoaded = p_bodyEntryHeader->isLoaded;
+            
+            p_modelEntry = p_bodyEntry;
+            load_object_fill_header(p_bodyHeader, p_bodyEntry->filename, bodyBuffer, bodyBufSize, &texPool);
+
+            p_headEntry = &c_item_entries[head];
+            p_headEntryHeader = p_headEntry->header;
+
+            bufferSizeRemain = ALIGN64_V3(get_pc_buffer_remaining_value(p_modelEntry->filename) + 0x3F);
+            p_headHeader = bodyBuffer + bufferSizeRemain;
+            bodyalignedSizeRemainPlus0x5F = ALIGN64_V3(bufferSizeRemain + 0x5F);
+
+            p_headHeader->RootNode = p_headEntryHeader->RootNode;
+            p_headHeader->Skeleton = p_headEntryHeader->Skeleton;
+            p_headHeader->Switches = p_headEntryHeader->Switches;
+            p_headHeader->unkC = p_headEntryHeader->unkC;
+            p_headHeader->BoundingVolumeRadius = p_headEntryHeader->BoundingVolumeRadius;
+            p_headHeader->unk14 = p_headEntryHeader->unk14;
+            p_headHeader->Textures = p_headEntryHeader->Textures;
+            p_headHeader->isLoaded = p_headEntryHeader->isLoaded;
+            
+            totalsize = bodyalignedSizeRemainPlus0x5F;
+            pHead = p_headHeader;
+            p_modelEntry = p_headEntry;
+            load_object_fill_header(p_headHeader, p_headEntry->filename, bodyBuffer + bodyalignedSizeRemainPlus0x5F, bodyBufSize - bodyalignedSizeRemainPlus0x5F, &texPool);
+
+            bufferSizeRemain = ALIGN64_V3(get_pc_buffer_remaining_value(p_modelEntry->filename) + totalsize + 0x3F);
+            model = bodyBuffer + bufferSizeRemain;
+            totalsize = ALIGN64_V3(bufferSizeRemain + 0xFB);
+
+            modelCalculateRwDataLen(pBody);
+            modelCalculateRwDataLen(pHead);
+            numRecords = pBody->numRecords + pHead->numRecords + 0xA;
+            
+            totalsize = ALIGN64_V3((numRecords * 4) + totalsize + 0x3F);
+            
+            animInit(model, pBody, bodyBuffer + totalsize);
+            model->Type = numRecords; //???
+            //goto block_46;
+            //&c_item_entries[head]->header = pHead;
+        }
+
+        pBody = &c_item_entries[body]->header;
+        if (&c_item_entries[body]->header->RootNode == NULL)
+        {
+            fileLoad(&c_item_entries[body]->header, &c_item_entries[body]->filename);
+        }
+
+        if (&c_item_entries[head]->header->RootNode == NULL)
+        {
+            pHead = &c_item_entries[head]->header;
+            fileLoad(&c_item_entries[head]->header, &c_item_entries[head]->filename);
+//block_46:
+//            &c_item_entries[head]->header = pHead;
+        }
+        g_CurrentPlayer->ptr_char_objectinstance = makeonebody(body, head, pBody, &c_item_entries[head]->header/*pHead maybe?*/, 0, model);
+        
+        modelSetScale((Model *) g_CurrentPlayer->ptr_char_objectinstance, g_CurrentPlayer->ptr_char_objectinstance->unk14 * 0.97f);
+        init_GUARDdata_with_set_values(g_CurrentPlayer->prop, g_CurrentPlayer->ptr_char_objectinstance, &g_CurrentPlayer->prop->pos, hRot, g_CurrentPlayer->prop->stan, 0);
+        g_CurrentPlayer->prop->type = VIEWER;
+        g_CurrentPlayer->prop->chr->chrflags |= CHRFLAG_INIT;
+        setsuboffset(g_CurrentPlayer->ptr_char_objectinstance, &g_CurrentPlayer->prop->pos);
+        setsubroty(g_CurrentPlayer->ptr_char_objectinstance, hRot);
+        rhandPropID = getPropForHeldItem(rhandweapID);
+        if (rhandPropID >= 0)
+        {
+            if (getPlayerCount() == 1)
+            {
+                p_rightHeader = bodyBuffer + totalsize;
+                totalsize = ALIGN64_V3(totalsize + 0xC7);
+                p_lhandItemHeader = get_ptr_itemheader_in_hand(GUNLEFT);
+                p_rhandItemHeader = &PitemZ_entries[rhandPropID]->header;
+                p_leftHeader = p_lhandItemHeader;
+                p_lhandItemHeader->RootNode = p_rhandItemHeader->RootNode;
+                p_lhandItemHeader->Skeleton = p_rhandItemHeader->Skeleton;
+                p_lhandItemHeader->Switches = p_rhandItemHeader->Switches;
+                p_lhandItemHeader->unkC = p_rhandItemHeader->unkC;
+                p_lhandItemHeader->BoundingVolumeRadius = p_rhandItemHeader->BoundingVolumeRadius;
+                p_lhandItemHeader->unk14 = p_rhandItemHeader->unk14;
+                p_lhandItemHeader->Textures = p_rhandItemHeader->Textures;
+                p_lhandItemHeader->isLoaded = p_rhandItemHeader->isLoaded;
+                p_modelEntry = &PitemZ_entries[rhandPropID];
+                load_object_fill_header(p_lhandItemHeader, &PitemZ_entries[rhandPropID]->filename, bodyBuffer + totalsize, bodyBufSize - totalsize, &texPool);
+                get_pc_buffer_remaining_value(p_modelEntry->filename);
+                modelCalculateRwDataLen(p_leftHeader);
+            }
+            else
+            {
+                p_rightHeader = NULL;
+                p_leftHeader = NULL;
+            }
+            something_with_generating_object(g_CurrentPlayer->prop->chr, rhandPropID, rhandweapID, 0, p_rightHeader, p_leftHeader);
+        }
+        chrlvIdleAnimationRelated7F023A94(g_CurrentPlayer->prop->chr, 0.0f);
+        return;
+    }
+    if (curChr->model->anim == NULL)
+    {
+        curChr->chrflags |= 1;
+        chrlvIdleAnimationRelated7F023A94(curChr, 0.0f);
+        setsuboffset(g_CurrentPlayer->ptr_char_objectinstance, &g_CurrentPlayer->prop->pos);
+        setsubroty(g_CurrentPlayer->ptr_char_objectinstance, hRot);
+    }
 }
 #else
 

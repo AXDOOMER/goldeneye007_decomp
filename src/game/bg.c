@@ -406,14 +406,14 @@ Gfx *bgScissorCurrentPlayerView(Gfx *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 #define TLRGB_ATile1        TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, 0, TEXEL1, 0 
 #endif
 //D:80044928
-Gfx D_80044928[] = {
+Gfx DL_LUT_UNKNOWN[] = {
     gsDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATEIA2),
     gsDPSetCombineLERP(TEXEL1, 0, SCALE, 0,  TEXEL1, 0, PRIM_LOD_FRAC, 0,  0, 0, 0, COMBINED,  0, 0, 0, COMBINED),
     0,0
 };
 
 //D:80044940 - Primary
-Gfx FogDL_primary_80044940[] = {
+Gfx DL_LUT_PRIMARY_ADDFOG[] = {
     //Add FOG to all rendermodes 
     //Standard HiQuality Surface to Standard Fogable HiQuality Surface
     gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_OPA_SURF2),
@@ -444,7 +444,7 @@ Gfx FogDL_primary_80044940[] = {
 };
 
 //D:800449C8 - Secondary
-Gfx FogDL_secondary_800449C8[] = {
+Gfx DL_LUT_SECONDARY_ADDFOG[] = {
     //Add FOG to Rendermodes
     //Transparent DECAL to  FOG Transparent DECAL
     gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_DECAL2),
@@ -488,7 +488,7 @@ Gfx FogDL_secondary_800449C8[] = {
 //D:80044AB0
 // Loaded once on first time entering level, only once ever
 // Swap all refrences to Shade in Alpha to Environment
-Gfx D_80044AB0[] = {
+Gfx DL_LUT_PRIMARY[] = {
     gsDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATEIA2),
     gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  COMBINED, 0, SHADE, 0,  COMBINED, 0, ENVIRONMENT, 0),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0),
@@ -515,7 +515,7 @@ Gfx D_80044AB0[] = {
 //D:80044B58
 // Loaded once on first time entering level, only once ever
 // Swap all refrences to Shade in Alpha to Environment
-Gfx D_80044B58[] = {
+Gfx DL_LUT_SECONDARY[] = {
     gsDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATEIA2),
     gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  COMBINED, 0, SHADE, 0,  COMBINED, 0, ENVIRONMENT, 0),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0),
@@ -540,7 +540,7 @@ Gfx D_80044B58[] = {
 };
 
 //D:80044C00
-Gfx BillboardDL_80044C00[] = {
+Gfx DL_LUT_BILLBOARD[] = {
     //Transparent 1Cycle to  BillBoard 1Cycle
     gsDPSetRenderMode(G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2), gsDPSetRenderMode(G_RM_AA_ZB_TEX_EDGE, G_RM_AA_ZB_TEX_EDGE2),
     //Transparent Surface to Billboard 
@@ -550,7 +550,7 @@ Gfx BillboardDL_80044C00[] = {
 
 //D:80044C28
 //water
-Gfx ParticleDL_80044C28[] = {
+Gfx DL_LUT_WATER[] = {
     0xB900031D, 0x00552078, 0xB900031D, 0x00502078, 
     0xB900031D, 0x0C192078, 0xB900031D, 0x0C182078,
     /*
@@ -563,7 +563,7 @@ Gfx ParticleDL_80044C28[] = {
 };
 
 //D:80044C50
-Gfx transparent2cloudDL_80044C50[] = {
+Gfx DL_LUT_CLOUD[] = {
     //Transparent to Cloud (Saves AA - Stops Jaggies from appearing behind BillBoard)
     gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_SURF2), gsDPSetRenderMode(G_RM_PASS, G_RM_ZB_CLD_SURF2),
     0,0
@@ -571,7 +571,7 @@ Gfx transparent2cloudDL_80044C50[] = {
 
 //D:80044C68
 //(Wallet Bond - Main Menu)
-Gfx WalletBondDL_80044C68[] = {
+Gfx DL_LUT_WALLETBOND[] = {
     gsDPSetCycleType(G_CYC_1CYCLE),
     gsDPSetCycleType(G_CYC_2CYCLE), //1Cycle --> 2Cycle
     0xB900031D, 0x00502048,
@@ -588,7 +588,7 @@ Gfx WalletBondDL_80044C68[] = {
 };
 
 //D:80044CA0
-Gfx D_80044CA0[] = {
+Gfx DL_LUT_FIXFOGALPHA3[] = {
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE,  TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE),
     gsDPSetCombineLERP(TEXEL0, 0, SCALE, 0,  0, 0, 0, ENVIRONMENT,  TEXEL0, 0, SCALE, 0,  0, 0, 0, ENVIRONMENT),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0),
@@ -622,8 +622,8 @@ Gfx D_80044CA0[] = {
 
 //D:80044D88
 s32 *ptrDynamic_CC_RM_LUT[] = {
-    &D_80044928, &FogDL_primary_80044940, &BillboardDL_80044C00, &ParticleDL_80044C28, &transparent2cloudDL_80044C50,
-    &FogDL_secondary_800449C8, &D_80044AB0, &D_80044B58, &WalletBondDL_80044C68, &D_80044CA0
+    &DL_LUT_UNKNOWN, &DL_LUT_PRIMARY_ADDFOG, &DL_LUT_BILLBOARD, &DL_LUT_WATER, &DL_LUT_CLOUD,
+    &DL_LUT_SECONDARY_ADDFOG, &DL_LUT_PRIMARY, &DL_LUT_SECONDARY, &DL_LUT_WALLETBOND, &DL_LUT_FIXFOGALPHA3
 };
 enum CCRMLUT
 {
