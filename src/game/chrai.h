@@ -475,7 +475,7 @@ extern struct bss_80073DC0                dword_CODE_bss_80073DC0[];
 extern struct bss_80075030                dword_CODE_bss_80075030[];
 
 
-extern struct object_animation_controller g_MonitorAnimController;
+extern MonitorRecord g_MonitorAnimController;
 extern struct object_animation_controller g_UnknownAnimController;
 extern struct object_animation_controller g_TaserAnimController;
 

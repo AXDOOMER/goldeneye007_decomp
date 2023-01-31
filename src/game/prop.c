@@ -2524,115 +2524,22 @@ glabel setupSingleMonitor
 #endif
 
 
-#ifdef NONMATCHING
-void setupMultiMonitor(void) {
+void setupMultiMonitor(s32 stageID, MultiMonitorObjRecord* monitor, s32 cmdindex)
+{
+    monitor->Monitor[0] = g_MonitorAnimController;
+    monitorSetImageByNum(&monitor->Monitor[0], monitor->ImageNums[0]);
 
+    monitor->Monitor[1] = g_MonitorAnimController;
+    monitorSetImageByNum(&monitor->Monitor[1], monitor->ImageNums[1]);
+
+    monitor->Monitor[2] = g_MonitorAnimController;
+    monitorSetImageByNum(&monitor->Monitor[2], monitor->ImageNums[2]);
+
+    monitor->Monitor[3] = g_MonitorAnimController;
+    monitorSetImageByNum(&monitor->Monitor[3], monitor->ImageNums[3]);
+
+    domakedefaultobj(stageID, monitor, cmdindex);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel setupMultiMonitor
-/* 037C00 7F0030D0 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 037C04 7F0030D4 AFA40020 */  sw    $a0, 0x20($sp)
-/* 037C08 7F0030D8 3C0E8007 */  lui   $t6, %hi(g_MonitorAnimController) 
-/* 037C0C 7F0030DC AFB00018 */  sw    $s0, 0x18($sp)
-/* 037C10 7F0030E0 25CE5B98 */  addiu $t6, %lo(g_MonitorAnimController) # addiu $t6, $t6, 0x5b98
-/* 037C14 7F0030E4 24A40080 */  addiu $a0, $a1, 0x80
-/* 037C18 7F0030E8 00A08025 */  move  $s0, $a1
-/* 037C1C 7F0030EC AFBF001C */  sw    $ra, 0x1c($sp)
-/* 037C20 7F0030F0 AFA60028 */  sw    $a2, 0x28($sp)
-/* 037C24 7F0030F4 00804025 */  move  $t0, $a0
-/* 037C28 7F0030F8 25D9006C */  addiu $t9, $t6, 0x6c
-.L7F0030FC:
-/* 037C2C 7F0030FC 8DC10000 */  lw    $at, ($t6)
-/* 037C30 7F003100 25CE000C */  addiu $t6, $t6, 0xc
-/* 037C34 7F003104 2508000C */  addiu $t0, $t0, 0xc
-/* 037C38 7F003108 AD01FFF4 */  sw    $at, -0xc($t0)
-/* 037C3C 7F00310C 8DC1FFF8 */  lw    $at, -8($t6)
-/* 037C40 7F003110 AD01FFF8 */  sw    $at, -8($t0)
-/* 037C44 7F003114 8DC1FFFC */  lw    $at, -4($t6)
-/* 037C48 7F003118 15D9FFF8 */  bne   $t6, $t9, .L7F0030FC
-/* 037C4C 7F00311C AD01FFFC */   sw    $at, -4($t0)
-/* 037C50 7F003120 8DC10000 */  lw    $at, ($t6)
-/* 037C54 7F003124 AD010000 */  sw    $at, ($t0)
-/* 037C58 7F003128 8DD90004 */  lw    $t9, 4($t6)
-/* 037C5C 7F00312C AD190004 */  sw    $t9, 4($t0)
-/* 037C60 7F003130 0FC12726 */  jal   monitorSetImageByNum
-/* 037C64 7F003134 92050250 */   lbu   $a1, 0x250($s0)
-/* 037C68 7F003138 3C098007 */  lui   $t1, %hi(g_MonitorAnimController) 
-/* 037C6C 7F00313C 25295B98 */  addiu $t1, %lo(g_MonitorAnimController) # addiu $t1, $t1, 0x5b98
-/* 037C70 7F003140 260400F4 */  addiu $a0, $s0, 0xf4
-/* 037C74 7F003144 00806825 */  move  $t5, $a0
-/* 037C78 7F003148 252C006C */  addiu $t4, $t1, 0x6c
-.L7F00314C:
-/* 037C7C 7F00314C 8D210000 */  lw    $at, ($t1)
-/* 037C80 7F003150 2529000C */  addiu $t1, $t1, 0xc
-/* 037C84 7F003154 25AD000C */  addiu $t5, $t5, 0xc
-/* 037C88 7F003158 ADA1FFF4 */  sw    $at, -0xc($t5)
-/* 037C8C 7F00315C 8D21FFF8 */  lw    $at, -8($t1)
-/* 037C90 7F003160 ADA1FFF8 */  sw    $at, -8($t5)
-/* 037C94 7F003164 8D21FFFC */  lw    $at, -4($t1)
-/* 037C98 7F003168 152CFFF8 */  bne   $t1, $t4, .L7F00314C
-/* 037C9C 7F00316C ADA1FFFC */   sw    $at, -4($t5)
-/* 037CA0 7F003170 8D210000 */  lw    $at, ($t1)
-/* 037CA4 7F003174 ADA10000 */  sw    $at, ($t5)
-/* 037CA8 7F003178 8D2C0004 */  lw    $t4, 4($t1)
-/* 037CAC 7F00317C ADAC0004 */  sw    $t4, 4($t5)
-/* 037CB0 7F003180 0FC12726 */  jal   monitorSetImageByNum
-/* 037CB4 7F003184 92050251 */   lbu   $a1, 0x251($s0)
-/* 037CB8 7F003188 3C188007 */  lui   $t8, %hi(g_MonitorAnimController) 
-/* 037CBC 7F00318C 27185B98 */  addiu $t8, %lo(g_MonitorAnimController) # addiu $t8, $t8, 0x5b98
-/* 037CC0 7F003190 26040168 */  addiu $a0, $s0, 0x168
-/* 037CC4 7F003194 00804025 */  move  $t0, $a0
-/* 037CC8 7F003198 270E006C */  addiu $t6, $t8, 0x6c
-.L7F00319C:
-/* 037CCC 7F00319C 8F010000 */  lw    $at, ($t8)
-/* 037CD0 7F0031A0 2718000C */  addiu $t8, $t8, 0xc
-/* 037CD4 7F0031A4 2508000C */  addiu $t0, $t0, 0xc
-/* 037CD8 7F0031A8 AD01FFF4 */  sw    $at, -0xc($t0)
-/* 037CDC 7F0031AC 8F01FFF8 */  lw    $at, -8($t8)
-/* 037CE0 7F0031B0 AD01FFF8 */  sw    $at, -8($t0)
-/* 037CE4 7F0031B4 8F01FFFC */  lw    $at, -4($t8)
-/* 037CE8 7F0031B8 170EFFF8 */  bne   $t8, $t6, .L7F00319C
-/* 037CEC 7F0031BC AD01FFFC */   sw    $at, -4($t0)
-/* 037CF0 7F0031C0 8F010000 */  lw    $at, ($t8)
-/* 037CF4 7F0031C4 AD010000 */  sw    $at, ($t0)
-/* 037CF8 7F0031C8 8F0E0004 */  lw    $t6, 4($t8)
-/* 037CFC 7F0031CC AD0E0004 */  sw    $t6, 4($t0)
-/* 037D00 7F0031D0 0FC12726 */  jal   monitorSetImageByNum
-/* 037D04 7F0031D4 92050252 */   lbu   $a1, 0x252($s0)
-/* 037D08 7F0031D8 3C0B8007 */  lui   $t3, %hi(g_MonitorAnimController) 
-/* 037D0C 7F0031DC 256B5B98 */  addiu $t3, %lo(g_MonitorAnimController) # addiu $t3, $t3, 0x5b98
-/* 037D10 7F0031E0 260401DC */  addiu $a0, $s0, 0x1dc
-/* 037D14 7F0031E4 00806825 */  move  $t5, $a0
-/* 037D18 7F0031E8 2569006C */  addiu $t1, $t3, 0x6c
-.L7F0031EC:
-/* 037D1C 7F0031EC 8D610000 */  lw    $at, ($t3)
-/* 037D20 7F0031F0 256B000C */  addiu $t3, $t3, 0xc
-/* 037D24 7F0031F4 25AD000C */  addiu $t5, $t5, 0xc
-/* 037D28 7F0031F8 ADA1FFF4 */  sw    $at, -0xc($t5)
-/* 037D2C 7F0031FC 8D61FFF8 */  lw    $at, -8($t3)
-/* 037D30 7F003200 ADA1FFF8 */  sw    $at, -8($t5)
-/* 037D34 7F003204 8D61FFFC */  lw    $at, -4($t3)
-/* 037D38 7F003208 1569FFF8 */  bne   $t3, $t1, .L7F0031EC
-/* 037D3C 7F00320C ADA1FFFC */   sw    $at, -4($t5)
-/* 037D40 7F003210 8D610000 */  lw    $at, ($t3)
-/* 037D44 7F003214 ADA10000 */  sw    $at, ($t5)
-/* 037D48 7F003218 8D690004 */  lw    $t1, 4($t3)
-/* 037D4C 7F00321C ADA90004 */  sw    $t1, 4($t5)
-/* 037D50 7F003220 0FC12726 */  jal   monitorSetImageByNum
-/* 037D54 7F003224 92050253 */   lbu   $a1, 0x253($s0)
-/* 037D58 7F003228 8FA40020 */  lw    $a0, 0x20($sp)
-/* 037D5C 7F00322C 02002825 */  move  $a1, $s0
-/* 037D60 7F003230 0FC00767 */  jal   domakedefaultobj
-/* 037D64 7F003234 8FA60028 */   lw    $a2, 0x28($sp)
-/* 037D68 7F003238 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 037D6C 7F00323C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 037D70 7F003240 27BD0020 */  addiu $sp, $sp, 0x20
-/* 037D74 7F003244 03E00008 */  jr    $ra
-/* 037D78 7F003248 00000000 */   nop   
-)
-#endif
 
 
 #ifdef NONMATCHING

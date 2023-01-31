@@ -9959,7 +9959,7 @@ _AI_CMD(
                 u8 slot = ai->val[1];
                 if (slot < 4)
                 {
-                    multimonitorobj *mm = (multimonitorobj *) obj;
+                    MultiMonitorObjRecord *mm = (MultiMonitorObjRecord *) obj;
                     monitorSetImageByNum(&mm->Monitor[slot].image, ai->val[2]);
                 }
             }

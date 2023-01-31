@@ -3960,7 +3960,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                             u8 slot = ai->val[1];
                             if (slot < 4)
                             {
-                                multimonitorobj *mm = (multimonitorobj *)obj; //need new size here 0x74 (116) + 0x80 (so monitor is obj + 74)
+                                MultiMonitorObjRecord *mm = (MultiMonitorObjRecord *)obj; //need new size here 0x74 (116) + 0x80 (so monitor is obj + 74)
                                 monitorSetImageByNum(&mm->Monitor[slot].image, ai->val[2]);
                             }
                         }

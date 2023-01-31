@@ -3166,16 +3166,13 @@ typedef union
         }
 
     // PROPDEF_MULTI_MONITOR (11)
-    typedef struct multimonitorobj
+    typedef struct MultiMonitorObjRecord
     {
         inherits      ObjectRecord;
         MonitorRecord Monitor[4];
-        /* Some stuff here then 0x101414 at 0x250*/
-        u32           nextstep;  // 0xF4	4	backward monitor link
-        u32           forwards;  // 0xF8	4	forward monitor link
-        u32           turnspeed; // 0xFC	4	animation#
-    } multimonitorobj;
-    #define New_multimonitorobj(pad)                \
+        u8            ImageNums[4];
+    } MultiMonitorObjRecord;
+    #define New_MultiMonitorObjRecord(pad)                \
         {                                           \
             New_PropDefHeaderRecord(11), 0, pad + 0 \
         }
