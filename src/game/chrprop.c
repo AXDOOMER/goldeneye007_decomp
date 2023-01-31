@@ -5415,53 +5415,31 @@ bool doorIsPadlockFree(DoorRecord* door)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03E7AC(void) {
+bool objCanPickupFromSafe(ObjectRecord *obj)
+{
+    if (obj->flags2 & PROPFLAG2_LINKEDTOSAFE)
+    {
+        SafeObjectRecord *link = g_LevelLoadPropSafeItem;
 
+        while (link)
+        {
+            ObjectRecord *loopobj = link->item;
+
+            if (obj == link->item && link->door && link->door->prop)
+            {
+                if (link->door->openPosition <= 0.5f)
+                {
+                    return FALSE;
+                }
+            }
+
+            link = link->next;
+        }
+    }
+
+    return TRUE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03E7AC
-/* 0732DC 7F03E7AC 8C8E000C */  lw    $t6, 0xc($a0)
-/* 0732E0 7F03E7B0 3C028003 */  lui   $v0, %hi(g_LevelLoadPropSafeItem)
-/* 0732E4 7F03E7B4 31CF0400 */  andi  $t7, $t6, 0x400
-/* 0732E8 7F03E7B8 51E0001B */  beql  $t7, $zero, .L7F03E828
-/* 0732EC 7F03E7BC 24020001 */   li    $v0, 1
-/* 0732F0 7F03E7C0 8C420B08 */  lw    $v0, %lo(g_LevelLoadPropSafeItem)($v0)
-/* 0732F4 7F03E7C4 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 0732F8 7F03E7C8 50400017 */  beql  $v0, $zero, .L7F03E828
-/* 0732FC 7F03E7CC 24020001 */   li    $v0, 1
-/* 073300 7F03E7D0 44810000 */  mtc1  $at, $f0
-/* 073304 7F03E7D4 00000000 */  nop   
-/* 073308 7F03E7D8 8C580004 */  lw    $t8, 4($v0)
-.L7F03E7DC:
-/* 07330C 7F03E7DC 5498000F */  bnel  $a0, $t8, .L7F03E81C
-/* 073310 7F03E7E0 8C420010 */   lw    $v0, 0x10($v0)
-/* 073314 7F03E7E4 8C43000C */  lw    $v1, 0xc($v0)
-/* 073318 7F03E7E8 5060000C */  beql  $v1, $zero, .L7F03E81C
-/* 07331C 7F03E7EC 8C420010 */   lw    $v0, 0x10($v0)
-/* 073320 7F03E7F0 8C790010 */  lw    $t9, 0x10($v1)
-/* 073324 7F03E7F4 53200009 */  beql  $t9, $zero, .L7F03E81C
-/* 073328 7F03E7F8 8C420010 */   lw    $v0, 0x10($v0)
-/* 07332C 7F03E7FC C46400B4 */  lwc1  $f4, 0xb4($v1)
-/* 073330 7F03E800 4600203E */  c.le.s $f4, $f0
-/* 073334 7F03E804 00000000 */  nop   
-/* 073338 7F03E808 45020004 */  bc1fl .L7F03E81C
-/* 07333C 7F03E80C 8C420010 */   lw    $v0, 0x10($v0)
-/* 073340 7F03E810 03E00008 */  jr    $ra
-/* 073344 7F03E814 00001025 */   move  $v0, $zero
 
-/* 073348 7F03E818 8C420010 */  lw    $v0, 0x10($v0)
-.L7F03E81C:
-/* 07334C 7F03E81C 5440FFEF */  bnezl $v0, .L7F03E7DC
-/* 073350 7F03E820 8C580004 */   lw    $t8, 4($v0)
-/* 073354 7F03E824 24020001 */  li    $v0, 1
-.L7F03E828:
-/* 073358 7F03E828 03E00008 */  jr    $ra
-/* 07335C 7F03E82C 00000000 */   nop   
-)
-#endif
 
 void sub_GAME_7F03E830(ObjectRecord* arg0)
 {

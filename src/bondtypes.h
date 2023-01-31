@@ -3512,8 +3512,11 @@ typedef union
     //PROPDEF_SAFE_ITEM (42)
     typedef struct SafeObjectRecord
     {
-        inherits ObjectRecord;
-        coord3d  normal;
+        u32 unk00;
+        struct ObjectRecord *item;
+        struct SafeRecord *safe;
+        struct DoorRecord *door;
+        struct SafeObjectRecord *next;
     } SafeObjectRecord;
 
     // PROPDEF_TANK (45)
