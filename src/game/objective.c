@@ -7,8 +7,8 @@
 #ifdef NONMATCHING
 
 //CODE.bss:80075D30
-extern struct objective_entry *objective_ptrs[10];
-extern OBJECTIVESTATUS         dword_CODE_bss_80075D58[10]; //This is an array of 10 OBJECTIVESTATUS,
+extern struct objective_entry *objective_ptrs[OBJECTIVES_MAX];
+extern OBJECTIVESTATUS         dword_CODE_bss_80075D58[OBJECTIVES_MAX]; //This is an array of 10 OBJECTIVESTATUS,
 
 //CODE.bss:80075D80
 extern u32                    *ptr_last_tag_entry_type16;
@@ -292,42 +292,15 @@ glabel setup_briefing_text_entry_parent
 #endif
 
 
-#ifdef NONMATCHING
-s32 add_ptr_to_objective(void *arg0) {
-    // Node 0
-    (0x80070000 + (arg0->unk4 * 4))->unk5D30 = arg0;
-    if (objective_count < arg0->unk4)
-    {
-        // Node 1
-        objective_count = (s32) arg0->unk4;
-        return;
-        // (possible return value: arg0->unk4)
-    }
-    // (possible return value: arg0->unk4)
-}
+void add_ptr_to_objective(struct objective_entry* objective)
+{
+    objective_ptrs[objective->menu] = objective;
 
-#else
-GLOBAL_ASM(
-.text
-glabel add_ptr_to_objective
-/* 039AE8 7F004FB8 8C8E0004 */  lw    $t6, 4($a0)
-/* 039AEC 7F004FBC 3C018007 */  lui   $at, %hi(objective_ptrs)
-/* 039AF0 7F004FC0 3C038003 */  lui   $v1, %hi(objective_count)
-/* 039AF4 7F004FC4 000E7880 */  sll   $t7, $t6, 2
-/* 039AF8 7F004FC8 002F0821 */  addu  $at, $at, $t7
-/* 039AFC 7F004FCC AC245D30 */  sw    $a0, %lo(objective_ptrs)($at)
-/* 039B00 7F004FD0 246322F0 */  addiu $v1, %lo(objective_count) # addiu $v1, $v1, 0x22f0
-/* 039B04 7F004FD4 8C780000 */  lw    $t8, ($v1)
-/* 039B08 7F004FD8 8C820004 */  lw    $v0, 4($a0)
-/* 039B0C 7F004FDC 0302082A */  slt   $at, $t8, $v0
-/* 039B10 7F004FE0 10200002 */  beqz  $at, .L7F004FEC
-/* 039B14 7F004FE4 00000000 */   nop   
-/* 039B18 7F004FE8 AC620000 */  sw    $v0, ($v1)
-.L7F004FEC:
-/* 039B1C 7F004FEC 03E00008 */  jr    $ra
-/* 039B20 7F004FF0 00000000 */   nop   
-)
-#endif
+    if (objective_count < objective->menu)
+    {
+        objective_count = objective->menu;
+    }
+}
 
 
 #ifdef NONMATCHING
