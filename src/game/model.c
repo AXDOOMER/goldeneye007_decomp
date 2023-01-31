@@ -3312,7 +3312,7 @@ f32 sub_GAME_7F06F5C4(Model *model)
     f32 unk3c;
     ModelAnimation *modelAnimation;
 
-    unk3c = model->unk3c;
+    unk3c = model->endframe;
     if (unk3c >= 0.0f)
     {
         return unk3c;
@@ -3361,7 +3361,7 @@ f32 modelGetEffectiveAnimSpeed(Model *model) {
 
 
 #ifdef NONMATCHING
-s32 modelConstrainOrWrapAnimFrame(s32 frame, s16 animnum, f32 endframe)
+s32 modelConstrainOrWrapAnimFrame(s32 frame, ModelAnimation *anim, f32 endframe)
 {
     //s32 frame;
     //u16 animnum->unk4;
@@ -3402,6 +3402,7 @@ s32 modelConstrainOrWrapAnimFrame(s32 frame, s16 animnum, f32 endframe)
     return frame;
 }
 #else
+s32 modelConstrainOrWrapAnimFrame(s32 frame, ModelAnimation *anim, f32 endframe);
 GLOBAL_ASM(
 .text
 glabel modelConstrainOrWrapAnimFrame
@@ -3516,7 +3517,7 @@ void modelCopyAnimForMerge(Model *model, f32 arg1)
         model->unk78 = model->oldspeed;
         model->unk7C = model->timespeed;
         model->unk80 = model->elapsespeed;
-        model->unk6C = model->unk3C;
+        model->unk6C = model->endframe;
         if ((temp_a1->Opcode & 0xFF) == 1)
         {
             temp_v0_2                   = modelGetNodeRwData(model, temp_a1);
@@ -3664,7 +3665,7 @@ void modelSetAnimation2(Model *model, void *anim, s32 arg2, f32 startframe, f32 
     }
     model->anim  = anim;
     model->unk24 = arg2;
-    model->unk3C = -1.0f;
+    model->endframe = -1.0f;
     model->speed = half;
     model->timespeed = 0.0f;
     modelSetAnimFrame(startframe, model, startframe, anim);
@@ -4119,9 +4120,9 @@ void modelSetAnimEndFrame(Model *model, f32 endframe) {
     ModelAnimation *modelAnimation = model->anim;
     
     if ((modelAnimation != NULL) && (endframe < (modelAnimation->unk04 - 1))) {
-        model->unk3c = endframe;
+        model->endframe = endframe;
     } else {
-        model->unk3c = -1.0f;
+        model->endframe = -1.0f;
     }
 }
 
@@ -4196,99 +4197,39 @@ void sub_GAME_7F06FF5C(Model *model, s32 arg1) {
     model->unka0 = arg1;
 }
 
-#ifdef NONMATCHING
-void modelSetAnimFrame(void) {
 
+void modelSetAnimFrame(Model* model, f32 frame)
+{
+    s32 framea;
+    s32 frameb;
+    bool forwards;
+
+    framea = floorFloatToInt(frame);
+
+    forwards = (model->speed >= 0);
+    frameb = (forwards ? framea + 1 : framea - 1);
+
+    model->framea = modelConstrainOrWrapAnimFrame(framea, model->anim, model->endframe);
+    model->frameb = modelConstrainOrWrapAnimFrame(frameb, model->anim, model->endframe);
+
+    if (model->framea == model->frameb)
+    {
+        model->unk2c = 0.0f;
+        model->unk28 = model->framea;
+    }
+    else if (forwards)
+    {
+        f32 tmp = frame - framea;
+        model->unk2c = tmp;
+        model->unk28 = model->framea + tmp;
+    }
+    else
+    {
+        f32 tmp = 1.0f - (frame - (f32) frameb);
+        model->unk2c = tmp;
+        model->unk28 = model->frameb + (1.0f - tmp);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel modelSetAnimFrame
-/* 0A4A94 7F06FF64 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0A4A98 7F06FF68 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0A4A9C 7F06FF6C AFB00018 */  sw    $s0, 0x18($sp)
-/* 0A4AA0 7F06FF70 AFA50034 */  sw    $a1, 0x34($sp)
-/* 0A4AA4 7F06FF74 00808025 */  move  $s0, $a0
-/* 0A4AA8 7F06FF78 0FC170F6 */  jal   floorFloatToInt
-/* 0A4AAC 7F06FF7C C7AC0034 */   lwc1  $f12, 0x34($sp)
-/* 0A4AB0 7F06FF80 C6040040 */  lwc1  $f4, 0x40($s0)
-/* 0A4AB4 7F06FF84 44803000 */  mtc1  $zero, $f6
-/* 0A4AB8 7F06FF88 00402025 */  move  $a0, $v0
-/* 0A4ABC 7F06FF8C 00004025 */  move  $t0, $zero
-/* 0A4AC0 7F06FF90 4604303E */  c.le.s $f6, $f4
-/* 0A4AC4 7F06FF94 2447FFFF */  addiu $a3, $v0, -1
-/* 0A4AC8 7F06FF98 45000002 */  bc1f  .L7F06FFA4
-/* 0A4ACC 7F06FF9C 00000000 */   nop   
-/* 0A4AD0 7F06FFA0 24080001 */  li    $t0, 1
-.L7F06FFA4:
-/* 0A4AD4 7F06FFA4 11000003 */  beqz  $t0, .L7F06FFB4
-/* 0A4AD8 7F06FFA8 00000000 */   nop   
-/* 0A4ADC 7F06FFAC 10000001 */  b     .L7F06FFB4
-/* 0A4AE0 7F06FFB0 24470001 */   addiu $a3, $v0, 1
-.L7F06FFB4:
-/* 0A4AE4 7F06FFB4 8E050020 */  lw    $a1, 0x20($s0)
-/* 0A4AE8 7F06FFB8 8E06003C */  lw    $a2, 0x3c($s0)
-/* 0A4AEC 7F06FFBC AFA80024 */  sw    $t0, 0x24($sp)
-/* 0A4AF0 7F06FFC0 AFA70028 */  sw    $a3, 0x28($sp)
-/* 0A4AF4 7F06FFC4 0FC1BD9B */  jal   modelConstrainOrWrapAnimFrame
-/* 0A4AF8 7F06FFC8 AFA4002C */   sw    $a0, 0x2c($sp)
-/* 0A4AFC 7F06FFCC 8FA40028 */  lw    $a0, 0x28($sp)
-/* 0A4B00 7F06FFD0 A6020030 */  sh    $v0, 0x30($s0)
-/* 0A4B04 7F06FFD4 8E050020 */  lw    $a1, 0x20($s0)
-/* 0A4B08 7F06FFD8 0FC1BD9B */  jal   modelConstrainOrWrapAnimFrame
-/* 0A4B0C 7F06FFDC 8E06003C */   lw    $a2, 0x3c($s0)
-/* 0A4B10 7F06FFE0 8FA70028 */  lw    $a3, 0x28($sp)
-/* 0A4B14 7F06FFE4 8FA80024 */  lw    $t0, 0x24($sp)
-/* 0A4B18 7F06FFE8 A6020032 */  sh    $v0, 0x32($s0)
-/* 0A4B1C 7F06FFEC 86040032 */  lh    $a0, 0x32($s0)
-/* 0A4B20 7F06FFF0 86030030 */  lh    $v1, 0x30($s0)
-/* 0A4B24 7F06FFF4 14830007 */  bne   $a0, $v1, .L7F070014
-/* 0A4B28 7F06FFF8 00000000 */   nop   
-/* 0A4B2C 7F06FFFC 44835000 */  mtc1  $v1, $f10
-/* 0A4B30 7F070000 44804000 */  mtc1  $zero, $f8
-/* 0A4B34 7F070004 46805420 */  cvt.s.w $f16, $f10
-/* 0A4B38 7F070008 E608002C */  swc1  $f8, 0x2c($s0)
-/* 0A4B3C 7F07000C 1000001B */  b     .L7F07007C
-/* 0A4B40 7F070010 E6100028 */   swc1  $f16, 0x28($s0)
-.L7F070014:
-/* 0A4B44 7F070014 1100000B */  beqz  $t0, .L7F070044
-/* 0A4B48 7F070018 8FAE002C */   lw    $t6, 0x2c($sp)
-/* 0A4B4C 7F07001C 448E2000 */  mtc1  $t6, $f4
-/* 0A4B50 7F070020 44834000 */  mtc1  $v1, $f8
-/* 0A4B54 7F070024 C7B20034 */  lwc1  $f18, 0x34($sp)
-/* 0A4B58 7F070028 468021A0 */  cvt.s.w $f6, $f4
-/* 0A4B5C 7F07002C 468042A0 */  cvt.s.w $f10, $f8
-/* 0A4B60 7F070030 46069001 */  sub.s $f0, $f18, $f6
-/* 0A4B64 7F070034 46005400 */  add.s $f16, $f10, $f0
-/* 0A4B68 7F070038 E600002C */  swc1  $f0, 0x2c($s0)
-/* 0A4B6C 7F07003C 1000000F */  b     .L7F07007C
-/* 0A4B70 7F070040 E6100028 */   swc1  $f16, 0x28($s0)
-.L7F070044:
-/* 0A4B74 7F070044 44879000 */  mtc1  $a3, $f18
-/* 0A4B78 7F070048 C7A40034 */  lwc1  $f4, 0x34($sp)
-/* 0A4B7C 7F07004C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0A4B80 7F070050 468091A0 */  cvt.s.w $f6, $f18
-/* 0A4B84 7F070054 44811000 */  mtc1  $at, $f2
-/* 0A4B88 7F070058 44845000 */  mtc1  $a0, $f10
-/* 0A4B8C 7F07005C 00000000 */  nop   
-/* 0A4B90 7F070060 46805420 */  cvt.s.w $f16, $f10
-/* 0A4B94 7F070064 46062201 */  sub.s $f8, $f4, $f6
-/* 0A4B98 7F070068 46081001 */  sub.s $f0, $f2, $f8
-/* 0A4B9C 7F07006C 46001481 */  sub.s $f18, $f2, $f0
-/* 0A4BA0 7F070070 E600002C */  swc1  $f0, 0x2c($s0)
-/* 0A4BA4 7F070074 46128100 */  add.s $f4, $f16, $f18
-/* 0A4BA8 7F070078 E6040028 */  swc1  $f4, 0x28($s0)
-.L7F07007C:
-/* 0A4BAC 7F07007C 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0A4BB0 7F070080 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0A4BB4 7F070084 27BD0030 */  addiu $sp, $sp, 0x30
-/* 0A4BB8 7F070088 03E00008 */  jr    $ra
-/* 0A4BBC 7F07008C 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
@@ -9355,7 +9296,7 @@ void animInit(struct Model *objinst, struct ModelFileHeader *header, u32 *data)
     objinst->unk70 = 1.0f;
     objinst->playspeed = 1.0f;
     objinst->unkb8 = 1.0f;
-    objinst->unk3c = -1.0f;
+    objinst->endframe = -1.0f;
     objinst->unk6c = -1.0f;
 }
 

@@ -1458,7 +1458,7 @@ typedef union
             s16               frameb;
             s32               unk34;
             s32               unk38;
-            f32               unk3c;
+            f32               endframe;
 
             f32               speed; /*0x40*/
             f32               newspeed; /*0x44*/
