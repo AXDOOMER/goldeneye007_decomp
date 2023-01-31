@@ -41296,7 +41296,7 @@ void sub_GAME_7F0526EC(DoorRecord *door, Mtxf *rhs)
             sp54.y = sp54.y + (sp38.y * temp_v0_2->bbox.xmax);
             sp54.z = sp54.z + (sp38.z * temp_v0_2->bbox.xmax);
         }
-        else if (door->flags & PROPFLAG_NO_AI_INTERACTION)
+        else if (door->flags & PROPFLAG_DOOR_OPENTOFRONT)
         {
             sp54.x += sp38.x * temp_v0_2->bbox.xmax;
             sp54.y += sp38.y * temp_v0_2->bbox.xmax;
@@ -41319,7 +41319,7 @@ void sub_GAME_7F0526EC(DoorRecord *door, Mtxf *rhs)
 
         if (door->doorType == 9)
         {
-            if (door->flags & PROPFLAG_NO_AI_INTERACTION)
+            if (door->flags & PROPFLAG_DOOR_OPENTOFRONT)
             {
                 matrix_4x4_set_rotation_around_z(M_TAU_F - ((door->openPosition * M_TAU_F) / 360.0f), &lhs);
             }
@@ -41328,7 +41328,7 @@ void sub_GAME_7F0526EC(DoorRecord *door, Mtxf *rhs)
                 matrix_4x4_set_rotation_around_z((door->openPosition * M_TAU_F) / 360.0f, &lhs);
             }
         }
-        else if (door->flags & PROPFLAG_NO_AI_INTERACTION)
+        else if (door->flags & PROPFLAG_DOOR_OPENTOFRONT)
         {
             matrix_4x4_set_rotation_around_y(M_TAU_F - ((door->openPosition * M_TAU_F) / 360.0f), &lhs);
         }
@@ -44604,13 +44604,48 @@ void doorActivateWrapper(PropRecord *prop) //#MATCH
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F055A70(void) {
+// this is what it does, but can't get it to match
+s32 posIsInFrontOfDoor(PropRecord* prop, DoorRecord* door)
+{
+    BoundPadRecord* pad;
+    f32 value;
+    f32 normalx;
+    f32 normaly;
+    f32 normalz;
 
+    pad = &g_CurrentSetup.boundpads[door->pad];
+
+    normalx = (pad->up.f[1] * pad->look.f[2]) - (pad->look.f[1] * pad->up.f[2]);
+    normaly = (pad->up.f[2] * pad->look.f[0]) - (pad->look.f[2] * pad->up.f[0]);
+    normalz = (pad->up.f[0] * pad->look.f[1]) - (pad->look.f[0] * pad->up.f[1]);
+
+    value = (normalx * (prop->pos.x - pad->pos.x))
+          + (normaly * (prop->pos.y - pad->pos.y))
+          + (normalz * (prop->pos.z - pad->pos.z));
+
+    if (door->doorFlags & 8)
+    {
+        value = -value;
+    }
+
+    if (value < 0)
+    {
+        return 0;
+    }
+
+    if (value > 0)
+    {
+        return 1;
+    }
+
+    return 1;
 }
+
 #else
+s32 posIsInFrontOfDoor(PropRecord* prop, DoorRecord* door);
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F055A70
+glabel posIsInFrontOfDoor
 /* 08A5A0 7F055A70 84AE0006 */  lh    $t6, 6($a1)
 /* 08A5A4 7F055A74 3C188007 */  lui   $t8, %hi(g_CurrentSetup+0x1C) 
 /* 08A5A8 7F055A78 8F185D1C */  lw    $t8, %lo(g_CurrentSetup+0x1C)($t8)
@@ -44684,77 +44719,42 @@ glabel sub_GAME_7F055A70
 #endif
 
 
+void doorsChooseSwingDirection(PropRecord *chrprop, DoorRecord *door)
+{
+    if ((door->flags & PROPFLAG_DOOR_TWOWAY) && door->openstate == PROPSTATE_NONE && door->openPosition == 0.0f)
+    {
+        bool infront = posIsInFrontOfDoor(chrprop, door);
+        u32 wantflag = 0;
 
+        if ((door->doorFlags & 8) == 0)
+        {
+            if (!infront)
+            {
+                wantflag = PROPFLAG_DOOR_OPENTOFRONT;
+            }
+        }
+        else
+        {
+            if (infront)
+            {
+                wantflag = PROPFLAG_DOOR_OPENTOFRONT;
+            }
+        }
 
+        // If flags are different
+        if ((s32)((door->flags ^ wantflag) << 2) < 0)
+        {
+            // Toggle direction on door and siblings
+            DoorRecord *sibling = door;
 
-#ifdef NONMATCHING
-void sub_GAME_7F055B78(void) {
-
+            do
+            {
+                sibling->flags ^= PROPFLAG_DOOR_OPENTOFRONT;
+                sibling = sibling->linkedDoor;
+            } while (sibling && sibling != door);
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F055B78
-/* 08A6A8 7F055B78 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 08A6AC 7F055B7C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 08A6B0 7F055B80 8CAE0008 */  lw    $t6, 8($a1)
-/* 08A6B4 7F055B84 000E7900 */  sll   $t7, $t6, 4
-/* 08A6B8 7F055B88 05E3002A */  bgezl $t7, .L7F055C34
-/* 08A6BC 7F055B8C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 08A6C0 7F055B90 80B800BC */  lb    $t8, 0xbc($a1)
-/* 08A6C4 7F055B94 57000027 */  bnezl $t8, .L7F055C34
-/* 08A6C8 7F055B98 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 08A6CC 7F055B9C 44802000 */  mtc1  $zero, $f4
-/* 08A6D0 7F055BA0 C4A600B4 */  lwc1  $f6, 0xb4($a1)
-/* 08A6D4 7F055BA4 46062032 */  c.eq.s $f4, $f6
-/* 08A6D8 7F055BA8 00000000 */  nop   
-/* 08A6DC 7F055BAC 45020021 */  bc1fl .L7F055C34
-/* 08A6E0 7F055BB0 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 08A6E4 7F055BB4 0FC1569C */  jal   sub_GAME_7F055A70
-/* 08A6E8 7F055BB8 AFA5001C */   sw    $a1, 0x1c($sp)
-/* 08A6EC 7F055BBC 8FA5001C */  lw    $a1, 0x1c($sp)
-/* 08A6F0 7F055BC0 00002025 */  move  $a0, $zero
-/* 08A6F4 7F055BC4 94B90098 */  lhu   $t9, 0x98($a1)
-/* 08A6F8 7F055BC8 33280008 */  andi  $t0, $t9, 8
-/* 08A6FC 7F055BCC 15000006 */  bnez  $t0, .L7F055BE8
-/* 08A700 7F055BD0 00000000 */   nop   
-/* 08A704 7F055BD4 14400002 */  bnez  $v0, .L7F055BE0
-/* 08A708 7F055BD8 00000000 */   nop   
-/* 08A70C 7F055BDC 3C042000 */  lui   $a0, 0x2000
-.L7F055BE0:
-/* 08A710 7F055BE0 10000005 */  b     .L7F055BF8
-/* 08A714 7F055BE4 8CA90008 */   lw    $t1, 8($a1)
-.L7F055BE8:
-/* 08A718 7F055BE8 50400003 */  beql  $v0, $zero, .L7F055BF8
-/* 08A71C 7F055BEC 8CA90008 */   lw    $t1, 8($a1)
-/* 08A720 7F055BF0 3C042000 */  lui   $a0, 0x2000
-/* 08A724 7F055BF4 8CA90008 */  lw    $t1, 8($a1)
-.L7F055BF8:
-/* 08A728 7F055BF8 3C032000 */  lui   $v1, 0x2000
-/* 08A72C 7F055BFC 00A01025 */  move  $v0, $a1
-/* 08A730 7F055C00 01245026 */  xor   $t2, $t1, $a0
-/* 08A734 7F055C04 000A5880 */  sll   $t3, $t2, 2
-/* 08A738 7F055C08 0563000A */  bgezl $t3, .L7F055C34
-/* 08A73C 7F055C0C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 08A740 7F055C10 8C4C0008 */  lw    $t4, 8($v0)
-.L7F055C14:
-/* 08A744 7F055C14 01836826 */  xor   $t5, $t4, $v1
-/* 08A748 7F055C18 AC4D0008 */  sw    $t5, 8($v0)
-/* 08A74C 7F055C1C 8C4200C8 */  lw    $v0, 0xc8($v0)
-/* 08A750 7F055C20 50400004 */  beql  $v0, $zero, .L7F055C34
-/* 08A754 7F055C24 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 08A758 7F055C28 5445FFFA */  bnel  $v0, $a1, .L7F055C14
-/* 08A75C 7F055C2C 8C4C0008 */   lw    $t4, 8($v0)
-/* 08A760 7F055C30 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F055C34:
-/* 08A764 7F055C34 27BD0018 */  addiu $sp, $sp, 0x18
-/* 08A768 7F055C38 03E00008 */  jr    $ra
-/* 08A76C 7F055C3C 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
@@ -44790,7 +44790,7 @@ glabel sub_GAME_7F055C40
 .L7F055C90:
 /* 08A7C0 7F055C90 8FA40024 */  lw    $a0, 0x24($sp)
 /* 08A7C4 7F055C94 02002825 */  move  $a1, $s0
-/* 08A7C8 7F055C98 0FC1569C */  jal   sub_GAME_7F055A70
+/* 08A7C8 7F055C98 0FC1569C */  jal   posIsInFrontOfDoor
 /* 08A7CC 7F055C9C AFA30028 */   sw    $v1, 0x28($sp)
 /* 08A7D0 7F055CA0 10400009 */  beqz  $v0, .L7F055CC8
 /* 08A7D4 7F055CA4 8FA30028 */   lw    $v1, 0x28($sp)
@@ -44821,7 +44821,7 @@ glabel sub_GAME_7F055C40
 .L7F055CFC:
 /* 08A82C 7F055CFC 10600007 */  beqz  $v1, .L7F055D1C
 /* 08A830 7F055D00 8FA40024 */   lw    $a0, 0x24($sp)
-/* 08A834 7F055D04 0FC156DE */  jal   sub_GAME_7F055B78
+/* 08A834 7F055D04 0FC156DE */  jal   doorsChooseSwingDirection
 /* 08A838 7F055D08 02002825 */   move  $a1, $s0
 /* 08A83C 7F055D0C 0FC15667 */  jal   doorActivateWrapper
 /* 08A840 7F055D10 8FA40030 */   lw    $a0, 0x30($sp)
@@ -44905,7 +44905,7 @@ glabel sub_GAME_7F055C40
 .L7F055C90:
 /* 08A7C0 7F055C90 8FA40024 */  lw    $a0, 0x24($sp)
 /* 08A7C4 7F055C94 02002825 */  move  $a1, $s0
-/* 08A7C8 7F055C98 0FC1569C */  jal   sub_GAME_7F055A70
+/* 08A7C8 7F055C98 0FC1569C */  jal   posIsInFrontOfDoor
 /* 08A7CC 7F055C9C AFA30028 */   sw    $v1, 0x28($sp)
 /* 08A7D0 7F055CA0 10400009 */  beqz  $v0, .L7F055CC8
 /* 08A7D4 7F055CA4 8FA30028 */   lw    $v1, 0x28($sp)
@@ -44936,7 +44936,7 @@ glabel sub_GAME_7F055C40
 .L7F055CFC:
 /* 08A82C 7F055CFC 10600007 */  beqz  $v1, .L7F055D1C
 /* 08A830 7F055D00 8FA40024 */   lw    $a0, 0x24($sp)
-/* 08A834 7F055D04 0FC156DE */  jal   sub_GAME_7F055B78
+/* 08A834 7F055D04 0FC156DE */  jal   doorsChooseSwingDirection
 /* 08A838 7F055D08 02002825 */   move  $a1, $s0
 /* 08A83C 7F055D0C 0FC15667 */  jal   doorActivateWrapper
 /* 08A840 7F055D10 8FA40030 */   lw    $a0, 0x30($sp)
@@ -45021,7 +45021,7 @@ glabel sub_GAME_7F055C40
 .L7F055C90:
 /* 08A7C0 7F055C90 8FA40024 */  lw    $a0, 0x24($sp)
 /* 08A7C4 7F055C94 02002825 */  move  $a1, $s0
-/* 08A7C8 7F055C98 0FC1569C */  jal   sub_GAME_7F055A70
+/* 08A7C8 7F055C98 0FC1569C */  jal   posIsInFrontOfDoor
 /* 08A7CC 7F055C9C AFA30028 */   sw    $v1, 0x28($sp)
 /* 08A7D0 7F055CA0 10400009 */  beqz  $v0, .L7F055CC8
 /* 08A7D4 7F055CA4 8FA30028 */   lw    $v1, 0x28($sp)
@@ -45052,7 +45052,7 @@ glabel sub_GAME_7F055C40
 .L7F055CFC:
 /* 08A82C 7F055CFC 10600007 */  beqz  $v1, .L7F055D1C
 /* 08A830 7F055D00 8FA40024 */   lw    $a0, 0x24($sp)
-/* 08A834 7F055D04 0FC156DE */  jal   sub_GAME_7F055B78
+/* 08A834 7F055D04 0FC156DE */  jal   doorsChooseSwingDirection
 /* 08A838 7F055D08 02002825 */   move  $a1, $s0
 /* 08A83C 7F055D0C 0FC15667 */  jal   doorActivateWrapper
 /* 08A840 7F055D10 8FA40030 */   lw    $a0, 0x30($sp)

@@ -9524,7 +9524,7 @@ void chrlvTravelTick(ChrRecord *self, coord3d *arg1, StandTile *arg2, struct way
         if (phi_s3 != NULL)
         {
             obj = phi_s3->obj;
-            if (!(obj->flags2 & PROPFLAG_NO_AI_INTERACTION))
+            if (!(obj->flags2 & PROPFLAG_DOOR_OPENTOFRONT))
             {
                 dx = phi_s3->pos.f[0] - self_prop->pos.f[0];
                 dy = phi_s3->pos.f[1] - self_prop->pos.f[1];
@@ -9533,7 +9533,7 @@ void chrlvTravelTick(ChrRecord *self, coord3d *arg1, StandTile *arg2, struct way
                 if (((dx * dx) + (dy * dy) + (dz  * dz )) < 40000.0f)
                 {
                     sub_GAME_7F0281F4(self);
-                    sub_GAME_7F055B78(self_prop, phi_s3->door);
+                    doorsChooseSwingDirection(self_prop, phi_s3->door);
                     doorActivate(phi_s3->door, 1);
 
                     if (((self->hidden & CHRHIDDEN_OFFSCREEN_PATROL) == 0)

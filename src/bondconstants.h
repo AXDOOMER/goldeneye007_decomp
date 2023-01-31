@@ -287,9 +287,9 @@ typedef enum PROPFLAG
     PROPFLAG_01000000                    = 0x01000000, // unknown
     PROPFLAG_02000000                    = 0x02000000, // unknown
     PROPFLAG_04000000                    = 0x04000000, // unknown
-    PROPFLAG_08000000                    = 0x08000000, // unknown
+    PROPFLAG_DOOR_TWOWAY                 = 0x08000000, // unknown
     PROPFLAG_WEAPON_LEFTHANDED           = 0x10000000, /* Left Handed*/
-    PROPFLAG_NO_AI_INTERACTION           = 0x20000000, /* Concealed*/
+    PROPFLAG_DOOR_OPENTOFRONT            = 0x20000000, /* Concealed*/
     PROPFLAG_40000000                    = 0x40000000, /* No Ammo on pickup*/
     PROPFLAG_80000000                    = 0x80000000 // unknown
 }PROPFLAG;
