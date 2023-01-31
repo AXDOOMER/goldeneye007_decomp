@@ -2,10 +2,14 @@
 #include <memp.h>
 #include "chrai.h"
 #include "chrlv.h"
-#include "math_atan2f.h"
-#include "prop.h"
+#include "chrobjhandler.h"
 #include "game/mp_weapon.h"
 #include "game/player_2.h"
+#include "loadobjectmodel.h"
+#include "math_atan2f.h"
+#include "matrixmath.h"
+#include "objecthandler.h"
+#include "prop.h"
 
 /**
  * EU .bss 0x80068480
@@ -227,7 +231,7 @@ glabel sub_GAME_7F001BD4
 
 #ifdef NONMATCHING
 // maybe domakedefaultobj
-void domakedefaultobj(s32 arg0, ObjectRecord *arg1, ? cmdindex)
+void domakedefaultobj(s32 arg0, ObjectRecord *arg1, s32 cmdindex)
 {
     s32 spF0;
     ? spE0;
@@ -622,6 +626,7 @@ block_72:
 }
 
 #else
+void domakedefaultobj(s32 arg0, ObjectRecord *arg1, s32 cmdindex);
 GLOBAL_ASM(
 .late_rodata
 glabel D_8004EEB4
@@ -2286,242 +2291,75 @@ void setupHangingMonitors(s32 arg0, ObjectRecord* rack, s32 cmdindex)
 }
 
 
-#ifdef NONMATCHING
-void setupSingleMonitor(s32 arg0, void* monitor, s32 cmdindex)
+void setupSingleMonitor(s32 stageID, MonitorObjRecord *monitor, s32 cmdindex)
 {
-    monitor->screen = g_MonitorAnimController;
-    monitorSetImageByNum(monitor->screen, monitor->imagenum);
-    if (((s32) monitor->pad < 0) && ((monitor->flags & 0x8000) == 0)) {
-        modelnum = (s32) monitor->modelnum;
-        void* owner = setupGetPtrToCommandByIndex(monitor->owneroffset + cmdindex, monitor);
-        Mtxf sp64;
+    MonitorRecord *record;
+    s32 unused;
+    s32 modelnum;
+    ObjectRecord *owner;
+    PropRecord *prop;
+    f32 scale;
+
+    monitor->Monitor = g_MonitorAnimController;
+    record = &monitor->Monitor;
+    monitorSetImageByNum(&monitor->Monitor, monitor->ImageNum);
+
+    if (monitor->pad < 0 && (monitor->flags & 0x00008000) == 0)
+    {
+        modelnum = monitor->obj;
+        owner = (struct ObjectRecord *)setupGetPtrToCommandByIndex(cmdindex + monitor->OwnerOffset);
+
         modelLoad(modelnum);
 
-        scale =  monitor->extrascale * (1.0f / 256.0f);
-        monitor->unk74 = (bitwise s32) ((f32) monitor->unk74 / M_U16_MAX_VALUE_F);
+        scale = monitor->extrascale * (1.0f / 256.0f);
+        monitor->damage = *(s32*)&monitor->damage / M_U16_MAX_VALUE_F;
 
-        if (getPlayerCount() >= 2) {
-            monitor->hidden2 |=  4;
+        if (getPlayerCount() >= 2)
+        {
+            monitor->state |= 0x04;
         }
-        prop = objInitWithAutoModel(monitor);
-        monitor->monitorthing = monitorthingGetNew();
 
-        if (prop && monitor->monitorthing) {
-            monitor->hidden |= 0x40;
+        prop = objInitWithAutoModel((ObjectRecord*)monitor);
+        monitor->unk6C = (ObjectRecord_f6c*)monitorthingGetNew();
+
+        if (prop && monitor->unk6C)
+        {
+            monitor->runtime_bitflags |= 0x00000040;
             modelSetScale(monitor->model, monitor->model->scale * scale);
-            monitor->model->attachedtomodel = owner->model;
-            
-            if (monitor->ownerpart == 0) {
-                monitor->model->attachedtonode = owner->model->filedata->unk8->unk0;
-            } else if (monitor->ownerpart == 1) {
-                    monitor->model->attachedtonode = owner->model->filedata->unk8->unk4;
-            } else if (monitor->ownerpart == 2) {
-                    monitor->model->attachedtonode = owner->model->filedata->unk8->unk8;
-            } else {
-                    monitor->model->attachedtonode = owner->model->filedata->unk8->unkC;
+            monitor->model->attachedto = owner->model;
+
+            if (monitor->OwnerPart == 0)
+            {
+                monitor->model->attachedto_objinst = owner->model->obj->Switches[0];
             }
+            else if (monitor->OwnerPart == 1)
+            {
+                monitor->model->attachedto_objinst = owner->model->obj->Switches[1];
+            }
+            else if (monitor->OwnerPart == 2)
+            {
+                monitor->model->attachedto_objinst = owner->model->obj->Switches[2];
+            }
+            else
+            {
+                monitor->model->attachedto_objinst = owner->model->obj->Switches[3];;
+            }
+
             chrpropReparent(prop, owner->prop);
-            matrix_4x4_set_rotation_around_x(0.36651915f, &sp64);
-            matrix_scalar_multiply(monitor->model->scale / owner->model->scale, &sp64);
+            matrix_4x4_set_rotation_around_x(0.36651915f, (Mtxf*)&monitor->unk6C->pos);
+            matrix_scalar_multiply(monitor->model->scale / owner->model->scale, (f32*)&monitor->unk6C->pos);
         }
-    } else {
-        domakedefaultobj(arg0, monitor, cmdindex);
     }
-    if (monitor->prop && (monitor->flags & 0x40000000))
+    else
     {
-        monitor->prop->flags |= 1;
+        domakedefaultobj(stageID, (ObjectRecord*)monitor, cmdindex);
+    }
+
+    if ((monitor->flags & 0x40000000) && monitor->prop)
+    {
+        monitor->prop->flags |= 0x01;
     }
 }
-
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_8004EF58
-.word 0x3ebba866
-glabel D_8004EF5C
-.word 0x3fc90fdb
-glabel D_8004EF60
-.word 0x3fc90fdb
-
-.text
-glabel setupSingleMonitor
-/* 03796C 7F002E3C 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 037970 7F002E40 AFA40038 */  sw    $a0, 0x38($sp)
-/* 037974 7F002E44 3C0E8007 */  lui   $t6, %hi(g_MonitorAnimController) 
-/* 037978 7F002E48 AFB10018 */  sw    $s1, 0x18($sp)
-/* 03797C 7F002E4C AFB00014 */  sw    $s0, 0x14($sp)
-/* 037980 7F002E50 25CE5B98 */  addiu $t6, %lo(g_MonitorAnimController) # addiu $t6, $t6, 0x5b98
-/* 037984 7F002E54 24A40080 */  addiu $a0, $a1, 0x80
-/* 037988 7F002E58 00A08025 */  move  $s0, $a1
-/* 03798C 7F002E5C 00C08825 */  move  $s1, $a2
-/* 037990 7F002E60 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 037994 7F002E64 00804025 */  move  $t0, $a0
-/* 037998 7F002E68 25D9006C */  addiu $t9, $t6, 0x6c
-.L7F002E6C:
-/* 03799C 7F002E6C 8DC10000 */  lw    $at, ($t6)
-/* 0379A0 7F002E70 25CE000C */  addiu $t6, $t6, 0xc
-/* 0379A4 7F002E74 2508000C */  addiu $t0, $t0, 0xc
-/* 0379A8 7F002E78 AD01FFF4 */  sw    $at, -0xc($t0)
-/* 0379AC 7F002E7C 8DC1FFF8 */  lw    $at, -8($t6)
-/* 0379B0 7F002E80 AD01FFF8 */  sw    $at, -8($t0)
-/* 0379B4 7F002E84 8DC1FFFC */  lw    $at, -4($t6)
-/* 0379B8 7F002E88 15D9FFF8 */  bne   $t6, $t9, .L7F002E6C
-/* 0379BC 7F002E8C AD01FFFC */   sw    $at, -4($t0)
-/* 0379C0 7F002E90 8DC10000 */  lw    $at, ($t6)
-/* 0379C4 7F002E94 AD010000 */  sw    $at, ($t0)
-/* 0379C8 7F002E98 8DD90004 */  lw    $t9, 4($t6)
-/* 0379CC 7F002E9C AD190004 */  sw    $t9, 4($t0)
-/* 0379D0 7F002EA0 0FC12726 */  jal   monitorSetImageByNum
-/* 0379D4 7F002EA4 8E0500FC */   lw    $a1, 0xfc($s0)
-/* 0379D8 7F002EA8 86090006 */  lh    $t1, 6($s0)
-/* 0379DC 7F002EAC 8FA40038 */  lw    $a0, 0x38($sp)
-/* 0379E0 7F002EB0 02002825 */  move  $a1, $s0
-/* 0379E4 7F002EB4 05210075 */  bgez  $t1, .L7F00308C
-/* 0379E8 7F002EB8 00000000 */   nop   
-/* 0379EC 7F002EBC 8E0A0008 */  lw    $t2, 8($s0)
-/* 0379F0 7F002EC0 314B8000 */  andi  $t3, $t2, 0x8000
-/* 0379F4 7F002EC4 15600071 */  bnez  $t3, .L7F00308C
-/* 0379F8 7F002EC8 00000000 */   nop   
-/* 0379FC 7F002ECC 860C0004 */  lh    $t4, 4($s0)
-/* 037A00 7F002ED0 AFAC002C */  sw    $t4, 0x2c($sp)
-/* 037A04 7F002ED4 8E0D00F4 */  lw    $t5, 0xf4($s0)
-/* 037A08 7F002ED8 0FC15AA2 */  jal   setupGetPtrToCommandByIndex
-/* 037A0C 7F002EDC 01B12021 */   addu  $a0, $t5, $s1
-/* 037A10 7F002EE0 00408825 */  move  $s1, $v0
-/* 037A14 7F002EE4 0FC15B0E */  jal   modelLoad
-/* 037A18 7F002EE8 8FA4002C */   lw    $a0, 0x2c($sp)
-/* 037A1C 7F002EEC 96180000 */  lhu   $t8, ($s0)
-/* 037A20 7F002EF0 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
-/* 037A24 7F002EF4 44982000 */  mtc1  $t8, $f4
-/* 037A28 7F002EF8 07010004 */  bgez  $t8, .L7F002F0C
-/* 037A2C 7F002EFC 468021A0 */   cvt.s.w $f6, $f4
-/* 037A30 7F002F00 44814000 */  mtc1  $at, $f8
-/* 037A34 7F002F04 00000000 */  nop   
-/* 037A38 7F002F08 46083180 */  add.s $f6, $f6, $f8
-.L7F002F0C:
-/* 037A3C 7F002F0C 3C013B80 */  li    $at, 0x3B800000 # 0.003906
-/* 037A40 7F002F10 44815000 */  mtc1  $at, $f10
-/* 037A44 7F002F14 3C014780 */  li    $at, 0x47800000 # 65536.000000
-/* 037A48 7F002F18 44814000 */  mtc1  $at, $f8
-/* 037A4C 7F002F1C 460A3402 */  mul.s $f16, $f6, $f10
-/* 037A50 7F002F20 E7B00020 */  swc1  $f16, 0x20($sp)
-/* 037A54 7F002F24 8E0F0074 */  lw    $t7, 0x74($s0)
-/* 037A58 7F002F28 448F9000 */  mtc1  $t7, $f18
-/* 037A5C 7F002F2C 00000000 */  nop   
-/* 037A60 7F002F30 46809120 */  cvt.s.w $f4, $f18
-/* 037A64 7F002F34 46082183 */  div.s $f6, $f4, $f8
-/* 037A68 7F002F38 0FC26919 */  jal   getPlayerCount
-/* 037A6C 7F002F3C E6060074 */   swc1  $f6, 0x74($s0)
-/* 037A70 7F002F40 28410002 */  slti  $at, $v0, 2
-/* 037A74 7F002F44 14200004 */  bnez  $at, .L7F002F58
-/* 037A78 7F002F48 00000000 */   nop   
-/* 037A7C 7F002F4C 92190002 */  lbu   $t9, 2($s0)
-/* 037A80 7F002F50 372E0004 */  ori   $t6, $t9, 4
-/* 037A84 7F002F54 A20E0002 */  sb    $t6, 2($s0)
-.L7F002F58:
-/* 037A88 7F002F58 0FC101C7 */  jal   objInitWithAutoModel
-/* 037A8C 7F002F5C 02002025 */   move  $a0, $s0
-/* 037A90 7F002F60 0FC0FFA6 */  jal   monitorthingGetNew
-/* 037A94 7F002F64 AFA20024 */   sw    $v0, 0x24($sp)
-/* 037A98 7F002F68 AE02006C */  sw    $v0, 0x6c($s0)
-/* 037A9C 7F002F6C 8FA80024 */  lw    $t0, 0x24($sp)
-/* 037AA0 7F002F70 51000049 */  beql  $t0, $zero, .L7F003098
-/* 037AA4 7F002F74 8E190008 */   lw    $t9, 8($s0)
-/* 037AA8 7F002F78 50400047 */  beql  $v0, $zero, .L7F003098
-/* 037AAC 7F002F7C 8E190008 */   lw    $t9, 8($s0)
-/* 037AB0 7F002F80 8E0A0064 */  lw    $t2, 0x64($s0)
-/* 037AB4 7F002F84 8E040014 */  lw    $a0, 0x14($s0)
-/* 037AB8 7F002F88 354B0040 */  ori   $t3, $t2, 0x40
-/* 037ABC 7F002F8C AE0B0064 */  sw    $t3, 0x64($s0)
-/* 037AC0 7F002F90 C7B00020 */  lwc1  $f16, 0x20($sp)
-/* 037AC4 7F002F94 C48A0014 */  lwc1  $f10, 0x14($a0)
-/* 037AC8 7F002F98 46105482 */  mul.s $f18, $f10, $f16
-/* 037ACC 7F002F9C 44059000 */  mfc1  $a1, $f18
-/* 037AD0 7F002FA0 0FC1B39E */  jal   modelSetScale
-/* 037AD4 7F002FA4 00000000 */   nop   
-/* 037AD8 7F002FA8 8E2C0014 */  lw    $t4, 0x14($s1)
-/* 037ADC 7F002FAC 8E0D0014 */  lw    $t5, 0x14($s0)
-/* 037AE0 7F002FB0 24010001 */  li    $at, 1
-/* 037AE4 7F002FB4 ADAC0018 */  sw    $t4, 0x18($t5)
-/* 037AE8 7F002FB8 8E0200F8 */  lw    $v0, 0xf8($s0)
-/* 037AEC 7F002FBC 14400008 */  bnez  $v0, .L7F002FE0
-/* 037AF0 7F002FC0 00000000 */   nop   
-/* 037AF4 7F002FC4 8E380014 */  lw    $t8, 0x14($s1)
-/* 037AF8 7F002FC8 8E080014 */  lw    $t0, 0x14($s0)
-/* 037AFC 7F002FCC 8F0F0008 */  lw    $t7, 8($t8)
-/* 037B00 7F002FD0 8DF90008 */  lw    $t9, 8($t7)
-/* 037B04 7F002FD4 8F2E0000 */  lw    $t6, ($t9)
-/* 037B08 7F002FD8 1000001A */  b     .L7F003044
-/* 037B0C 7F002FDC AD0E001C */   sw    $t6, 0x1c($t0)
-.L7F002FE0:
-/* 037B10 7F002FE0 54410009 */  bnel  $v0, $at, .L7F003008
-/* 037B14 7F002FE4 24010002 */   li    $at, 2
-/* 037B18 7F002FE8 8E290014 */  lw    $t1, 0x14($s1)
-/* 037B1C 7F002FEC 8E0D0014 */  lw    $t5, 0x14($s0)
-/* 037B20 7F002FF0 8D2A0008 */  lw    $t2, 8($t1)
-/* 037B24 7F002FF4 8D4B0008 */  lw    $t3, 8($t2)
-/* 037B28 7F002FF8 8D6C0004 */  lw    $t4, 4($t3)
-/* 037B2C 7F002FFC 10000011 */  b     .L7F003044
-/* 037B30 7F003000 ADAC001C */   sw    $t4, 0x1c($t5)
-/* 037B34 7F003004 24010002 */  li    $at, 2
-.L7F003008:
-/* 037B38 7F003008 54410009 */  bnel  $v0, $at, .L7F003030
-/* 037B3C 7F00300C 8E290014 */   lw    $t1, 0x14($s1)
-/* 037B40 7F003010 8E380014 */  lw    $t8, 0x14($s1)
-/* 037B44 7F003014 8E080014 */  lw    $t0, 0x14($s0)
-/* 037B48 7F003018 8F0F0008 */  lw    $t7, 8($t8)
-/* 037B4C 7F00301C 8DF90008 */  lw    $t9, 8($t7)
-/* 037B50 7F003020 8F2E0008 */  lw    $t6, 8($t9)
-/* 037B54 7F003024 10000007 */  b     .L7F003044
-/* 037B58 7F003028 AD0E001C */   sw    $t6, 0x1c($t0)
-/* 037B5C 7F00302C 8E290014 */  lw    $t1, 0x14($s1)
-.L7F003030:
-/* 037B60 7F003030 8E0D0014 */  lw    $t5, 0x14($s0)
-/* 037B64 7F003034 8D2A0008 */  lw    $t2, 8($t1)
-/* 037B68 7F003038 8D4B0008 */  lw    $t3, 8($t2)
-/* 037B6C 7F00303C 8D6C000C */  lw    $t4, 0xc($t3)
-/* 037B70 7F003040 ADAC001C */  sw    $t4, 0x1c($t5)
-.L7F003044:
-/* 037B74 7F003044 8FA40024 */  lw    $a0, 0x24($sp)
-/* 037B78 7F003048 0FC0E969 */  jal   chrpropReparent
-/* 037B7C 7F00304C 8E250010 */   lw    $a1, 0x10($s1)
-/* 037B80 7F003050 8E05006C */  lw    $a1, 0x6c($s0)
-/* 037B84 7F003054 3C018005 */  lui   $at, %hi(D_8004EF58)
-/* 037B88 7F003058 C42CEF58 */  lwc1  $f12, %lo(D_8004EF58)($at)
-/* 037B8C 7F00305C 0FC1615C */  jal   matrix_4x4_set_rotation_around_x
-/* 037B90 7F003060 24A50004 */   addiu $a1, $a1, 4
-/* 037B94 7F003064 8E180014 */  lw    $t8, 0x14($s0)
-/* 037B98 7F003068 8E2F0014 */  lw    $t7, 0x14($s1)
-/* 037B9C 7F00306C 8E05006C */  lw    $a1, 0x6c($s0)
-/* 037BA0 7F003070 C7040014 */  lwc1  $f4, 0x14($t8)
-/* 037BA4 7F003074 C5E80014 */  lwc1  $f8, 0x14($t7)
-/* 037BA8 7F003078 24A50004 */  addiu $a1, $a1, 4
-/* 037BAC 7F00307C 0FC1629F */  jal   matrix_scalar_multiply
-/* 037BB0 7F003080 46082303 */   div.s $f12, $f4, $f8
-/* 037BB4 7F003084 10000004 */  b     .L7F003098
-/* 037BB8 7F003088 8E190008 */   lw    $t9, 8($s0)
-.L7F00308C:
-/* 037BBC 7F00308C 0FC00767 */  jal   domakedefaultobj
-/* 037BC0 7F003090 02203025 */   move  $a2, $s1
-/* 037BC4 7F003094 8E190008 */  lw    $t9, 8($s0)
-.L7F003098:
-/* 037BC8 7F003098 00197040 */  sll   $t6, $t9, 1
-/* 037BCC 7F00309C 05C30008 */  bgezl $t6, .L7F0030C0
-/* 037BD0 7F0030A0 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 037BD4 7F0030A4 8E020010 */  lw    $v0, 0x10($s0)
-/* 037BD8 7F0030A8 50400005 */  beql  $v0, $zero, .L7F0030C0
-/* 037BDC 7F0030AC 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 037BE0 7F0030B0 90480001 */  lbu   $t0, 1($v0)
-/* 037BE4 7F0030B4 35090001 */  ori   $t1, $t0, 1
-/* 037BE8 7F0030B8 A0490001 */  sb    $t1, 1($v0)
-/* 037BEC 7F0030BC 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F0030C0:
-/* 037BF0 7F0030C0 8FB00014 */  lw    $s0, 0x14($sp)
-/* 037BF4 7F0030C4 8FB10018 */  lw    $s1, 0x18($sp)
-/* 037BF8 7F0030C8 03E00008 */  jr    $ra
-/* 037BFC 7F0030CC 27BD0038 */   addiu $sp, $sp, 0x38
-)
-#endif
 
 
 void setupMultiMonitor(s32 stageID, MultiMonitorObjRecord* monitor, s32 cmdindex)
@@ -2548,6 +2386,12 @@ void sub_GAME_7F00324C(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_8004EF5C
+.word 0x3fc90fdb
+glabel D_8004EF60
+.word 0x3fc90fdb
+
 .text
 glabel sub_GAME_7F00324C
 /* 037D7C 7F00324C 27BDFFB0 */  addiu $sp, $sp, -0x50

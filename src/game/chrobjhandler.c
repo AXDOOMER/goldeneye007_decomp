@@ -1810,9 +1810,9 @@ PropRecord* sub_GAME_7F0406F8(ObjectRecord* object, ModelFileHeader* header)
 }
 
 
-void objInitWithAutoModel(ObjectRecord* obj)
+PropRecord* objInitWithAutoModel(ObjectRecord* obj)
 {
-    sub_GAME_7F0406F8(obj, PitemZ_entries[obj->obj].header);
+    return sub_GAME_7F0406F8(obj, PitemZ_entries[obj->obj].header);
 }
 
 
@@ -34941,7 +34941,7 @@ glabel prepare_ammo_type_collection_text
 
 #ifdef NONMATCHING
 
-// This matches, but rodata needs to be re-arranged
+// This matches for VERSION_US, but rodata needs to be re-arranged
 void display_text_when_ammo_collected(s32 ammotype, s32 quantity)
 {
     char buffer[100] = "";

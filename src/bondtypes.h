@@ -3156,9 +3156,9 @@ typedef union
     {
         inherits      ObjectRecord;
         MonitorRecord Monitor;
-        u32           nextstep;  // 0xF4	4	backward monitor link
-        u32           forwards;  // 0xF8	4	forward monitor link
-        u32           turnspeed; // 0xFC	4	animation#
+        s32           OwnerOffset;
+        s32           OwnerPart;
+        s32           ImageNum;
     } MonitorObjRecord;
     #define New_MonitorObjRecord(pad)               \
         {                                           \
