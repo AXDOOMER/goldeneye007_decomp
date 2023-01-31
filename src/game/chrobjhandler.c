@@ -40500,45 +40500,14 @@ glabel sub_GAME_7F051F30
 #endif
 
 
+void sub_GAME_7F051FD4(WeaponObjRecord *weapon, ChrRecord *chr)
+{
+	u32 stack;
+	s32 modelnum = weapon->obj;
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F051FD4(void) {
-
+	modelLoad(modelnum);
+	sub_GAME_7F051F30(weapon, chr, PitemZ_entries[modelnum].header, 0, 0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F051FD4
-/* 086B04 7F051FD4 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 086B08 7F051FD8 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 086B0C 7F051FDC AFA40028 */  sw    $a0, 0x28($sp)
-/* 086B10 7F051FE0 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 086B14 7F051FE4 84840004 */  lh    $a0, 4($a0)
-/* 086B18 7F051FE8 0FC15B0E */  jal   modelLoad
-/* 086B1C 7F051FEC AFA40020 */   sw    $a0, 0x20($sp)
-/* 086B20 7F051FF0 8FAF0020 */  lw    $t7, 0x20($sp)
-/* 086B24 7F051FF4 3C068004 */  lui   $a2, %hi(PitemZ_entries)
-/* 086B28 7F051FF8 8FA40028 */  lw    $a0, 0x28($sp)
-/* 086B2C 7F051FFC 000FC080 */  sll   $t8, $t7, 2
-/* 086B30 7F052000 030FC023 */  subu  $t8, $t8, $t7
-/* 086B34 7F052004 0018C080 */  sll   $t8, $t8, 2
-/* 086B38 7F052008 00D83021 */  addu  $a2, $a2, $t8
-/* 086B3C 7F05200C 8CC6A228 */  lw    $a2, %lo(PitemZ_entries)($a2)
-/* 086B40 7F052010 8FA5002C */  lw    $a1, 0x2c($sp)
-/* 086B44 7F052014 00003825 */  move  $a3, $zero
-/* 086B48 7F052018 0FC147CC */  jal   sub_GAME_7F051F30
-/* 086B4C 7F05201C AFA00010 */   sw    $zero, 0x10($sp)
-/* 086B50 7F052020 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 086B54 7F052024 27BD0028 */  addiu $sp, $sp, 0x28
-/* 086B58 7F052028 03E00008 */  jr    $ra
-/* 086B5C 7F05202C 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
