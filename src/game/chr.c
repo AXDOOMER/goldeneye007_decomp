@@ -7402,7 +7402,7 @@ glabel sub_GAME_7F0221DC
 /* 056E54 7F022324 1000000C */  b     .L7F022358
 /* 056E58 7F022328 00000000 */   nop   
 .L7F02232C:
-/* 056E5C 7F02232C 0FC1BA5C */  jal   sub_GAME_7F06E970
+/* 056E5C 7F02232C 0FC1BA5C */  jal   modelApplyDistanceRelations
 /* 056E60 7F022330 02002825 */   move  $a1, $s0
 /* 056E64 7F022334 10000008 */  b     .L7F022358
 /* 056E68 7F022338 8E090014 */   lw    $t1, 0x14($s0)
@@ -8330,7 +8330,7 @@ PropRecord *chrGetEquippedWeaponPropWithCheck(ChrRecord *self, GUNHAND hand)
     {
         WeaponObjRecord *wep = gunprop->weapon;
 
-        if (bondwalkItemCheckBitflags(wep->weaponnum, 0x200) == 0)
+        if (bondwalkItemCheckBitflags(wep->weaponnum, WEAPONSTATBITFLAG_HOLD_AS_GUN) == 0)
         {
             gunprop = NULL;
         }

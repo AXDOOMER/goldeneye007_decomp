@@ -1671,7 +1671,7 @@ glabel probably_damage_detail_blood_effect_related
 /* 0A0AC0 7F06BF90 00008825 */   move  $s1, $zero
 .L7F06BF94:
 /* 0A0AC4 7F06BF94 8E640000 */  lw    $a0, ($s3)
-/* 0A0AC8 7F06BF98 0FC1BA5C */  jal   sub_GAME_7F06E970
+/* 0A0AC8 7F06BF98 0FC1BA5C */  jal   modelApplyDistanceRelations
 /* 0A0ACC 7F06BF9C 02002825 */   move  $a1, $s0
 /* 0A0AD0 7F06BFA0 10000009 */  b     .L7F06BFC8
 /* 0A0AD4 7F06BFA4 00000000 */   nop   

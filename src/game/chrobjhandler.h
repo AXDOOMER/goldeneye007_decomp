@@ -6,6 +6,36 @@
 #include <bondtypes.h>
 #include <snd.h>
 
+struct ShotData {
+    // temporary definition for GE:
+    /*0x00*/ s32 unk00[13];
+    /*0x34*/ f32 unk34;
+
+    // the following is from PD, it seems to line up:
+        /*0x00*/ //struct coord unk00;
+        /*0x0c*/ //struct coord unk0c;
+        /*0x18*/ //struct gset gset;
+        /*0x1c*/ //struct coord gunpos;
+        /*0x28*/ //struct coord dir;
+        /*0x34*/ //f32 unk34;
+        /*0x38*/ //s32 penetration;
+        /*0x3c*/ //struct hit hits[10];
+};
+
+struct HitThing {
+    // the following is taken from PD
+    // may need adjustments
+    coord3d unk00;
+    coord3d unk0c;
+    Vertex *unk18;
+    Vertex *unk1c;
+    Vertex *unk20;
+    Gfx *tricmd;
+    s16 unk28;
+    s16 texturenum;
+    s16 unk2c;
+};
+
 extern f32 F_80030B14;
 extern f32 F_80030B18;
 extern f32 F_80030B1C;
@@ -28,7 +58,7 @@ extern s32 D_80030AF4;
 extern s32 D_80030AF8;
 extern s32 D_80030AFC;
 extern ObjectRecord *g_LevelLoadPropSwitch;
-extern ObjectRecord *g_LevelLoadPropLockDoor;
+extern LockDoorRecord *g_LevelLoadPropLockDoor;
 extern ObjectRecord *g_LevelLoadPropSafeItem;
 extern s32 D_80030B0C;
 extern s32 bodypartshot;
@@ -52,7 +82,7 @@ void                 chrobjCallsApplySpeed(f32 *openPosition, f32 maxFrac, f32 *
 Gfx                 *sub_GAME_7F049B58(Gfx *arg0);
 void                 set_color_shading_from_tile(PropRecord *, rgba_u8 *);
 void                 propobjSetDropped(PropRecord *, s32);
-void                 sub_GAME_7F053A10(ALSoundState *, coord3d *);
+void                 chrobjSndCreatePostEventDefault(ALSoundState *, coord3d *);
 void                 alarmActivate(void);
 void                 sub_GAME_7F052574(PropRecord *, s32);
 s32                  sub_GAME_7F052604(PropRecord *);
@@ -67,8 +97,8 @@ void                 sub_GAME_7F040754(ObjectRecord *, coord3d *, Mtxf *, StandT
 s32                  sub_GAME_7F041074(coord3d *arg0, coord3d *arg1, coord3d *arg2, f32 arg3);
 void                 sub_GAME_7F04F244(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *arg3, f32 *arg4);
 void                 doorActivate(DoorRecord *door, DOORSTATE State);
-s32                  sub_GAME_7F055A70(PropRecord *arg0, DoorRecord *arg1);
-void                 sub_GAME_7F055B78(PropRecord *arg0, DoorRecord *arg1);
+s32                  posIsInFrontOfDoor(PropRecord *arg0, DoorRecord *arg1);
+void                 doorsChooseSwingDirection(PropRecord *arg0, DoorRecord *arg1);
 Gfx                 *chrobjRenderProp(PropRecord *arg0, Gfx *arg1, s32 arg2);
 
 f32                  chrobjFogVisRangeRelated(PropRecord *prop, f32 size);

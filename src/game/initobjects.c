@@ -70,23 +70,23 @@ void alloc_lookup_buffers(void)
     s32 i;
 
     ptr_list_object_lookup_indices = (s16*)mempAllocBytesInBank(PTR_LIST_OBJECT_LOOKUP_INDICES_LEN * sizeof(s16), 4);
-    ptr_room_lookup_buffer_maybe = (s16*)mempAllocBytesInBank((((MaxNumRooms * 4) + 0xF) | 0xF) ^ 0xF, 4);
-    dword_CODE_bss_8007161C = (s16*)mempAllocBytesInBank(BSS_8007161C_LEN * sizeof(struct unk_8007161c), 4);
+    RoomPropListChunkIndexes = (s16*)mempAllocBytesInBank((((MaxNumRooms * 4) + 0xF) | 0xF) ^ 0xF, 4);
+    RoomPropListChunks = (s16*)mempAllocBytesInBank(BSS_8007161C_LEN * sizeof(struct roomproplistchunk), 4);
 
     ptr_list_object_lookup_indices[0] = -1;
 
     for (i=0; i<MaxNumRooms; i++)
     {
-        ptr_room_lookup_buffer_maybe[i] = -1;
+        RoomPropListChunkIndexes[i] = -1;
     }
 
     for (i=0; i<BSS_8007161C_LEN; i++)
     {
-        dword_CODE_bss_8007161C[i].data[0] = -2;
+        RoomPropListChunks[i].propnums[0] = -2;
 
         for (j=1; j<BSS_8007161C_DATA_LEN; j++)
         {
-            dword_CODE_bss_8007161C[i].data[j] = -1;
+            RoomPropListChunks[i].propnums[j] = -1;
         }
     }
 }

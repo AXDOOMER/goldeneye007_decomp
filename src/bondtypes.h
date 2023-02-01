@@ -1458,7 +1458,7 @@ typedef union
             s16               frameb;
             s32               unk34;
             s32               unk38;
-            f32               unk3c;
+            f32               endframe;
 
             f32               speed; /*0x40*/
             f32               newspeed; /*0x44*/
@@ -1468,7 +1468,7 @@ typedef union
 
             ModelAnimation   *anim2;
 
-            s32               unk58;
+            f32               unk58;
             f32               unk5c;
 
             /**
@@ -1487,7 +1487,7 @@ typedef union
             s32               unk68;
             f32               unk6c;
             // 0x70
-            f32               unk70;
+            f32               speed2;
             s32               unk74;
             s32               unk78;
             f32               unk7c;
@@ -3430,6 +3430,9 @@ typedef union
     typedef struct LockDoorRecord
     {
         inherits PropDefHeaderRecord;
+        struct DoorRecord*     door;
+        struct ObjectRecord*   lock;
+        struct LockDoorRecord* next;
         //u16 TagID;
     } LockDoorRecord;
     #define New_RenameObjectRecord(TagID)          \
@@ -3509,8 +3512,11 @@ typedef union
     //PROPDEF_SAFE_ITEM (42)
     typedef struct SafeObjectRecord
     {
-        inherits ObjectRecord;
-        coord3d  normal;
+        u32 unk00;
+        struct ObjectRecord *item;
+        struct SafeRecord *safe;
+        struct DoorRecord *door;
+        struct SafeObjectRecord *next;
     } SafeObjectRecord;
 
     // PROPDEF_TANK (45)
@@ -3519,14 +3525,14 @@ typedef union
     {
         inherits ObjectRecord;
         s32 unk80;
-        struct rect4f  *rect;       /*0x84*/
-        s32 unk88;
-        s32 unk8C;
-        s32 unk90;
-        s32 unk94;
-        s32 unk98;
-        s32 unk9C;
-        s32 unkA0;
+        struct rect4f  rect;       /*0x84*/
+        //s32 unk88;
+        //s32 unk8C;
+        //s32 unk90;
+        //s32 unk94;
+        //s32 unk98;
+        //s32 unk9C;
+        //s32 unkA0;
         s32 unkA4;
         s32 unkA8;
         s32 unkAC;
@@ -3540,7 +3546,7 @@ typedef union
         f32 turret_orientation_angle;
         f32 unkD0;
         f32 stan_y;
-        f32 unkD8;
+        s32 unkD8; // ammo related
         f32 tank_orientation_angle;
     } TankRecord;
     #define New_TankRecord(pad)                     \

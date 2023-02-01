@@ -5049,7 +5049,7 @@ _AI_CMD(
         if (obj && obj->prop)
         {
             bool a = collect_or_interact_object(obj->prop, 0);
-            sub_GAME_7F03C2BC(obj->prop, a);
+            propExecuteTickOperation(obj->prop, a);
         }
         Offset += CAT(CAT(AI_, CMDNAME), _LENGTH);
         break;

@@ -276,8 +276,8 @@ typedef enum PROPFLAG
     PROPFLAG_AIUNDROPPABLE               = 0x00002000, /* Item Not Droppedz*/
     PROPFLAG_ASSIGNEDTOCHR               = 0x00004000, // unknown
     PROPFLAG_00008000                    = 0x00008000, // unknown
-    PROPFLAG_00010000                    = 0x00010000, // unknown
-    PROPFLAG_00020000                    = 0x00020000, // unknown
+    PROPFLAG_FORCEMORTAL                 = 0x00010000, // unknown
+    PROPFLAG_INVINCIBLE                  = 0x00020000, // unknown
     PROPFLAG_00040000                    = 0x00040000, // unknown
     PROPFLAG_00080000                    = 0x00080000, // unknown
     PROPFLAG_UNCOLLECTABLE               = 0x00100000, /* Item Not Collectable*/
@@ -287,9 +287,9 @@ typedef enum PROPFLAG
     PROPFLAG_01000000                    = 0x01000000, // unknown
     PROPFLAG_02000000                    = 0x02000000, // unknown
     PROPFLAG_04000000                    = 0x04000000, // unknown
-    PROPFLAG_08000000                    = 0x08000000, // unknown
+    PROPFLAG_DOOR_TWOWAY                 = 0x08000000, // unknown
     PROPFLAG_WEAPON_LEFTHANDED           = 0x10000000, /* Left Handed*/
-    PROPFLAG_NO_AI_INTERACTION           = 0x20000000, /* Concealed*/
+    PROPFLAG_DOOR_OPENTOFRONT            = 0x20000000, /* Concealed*/
     PROPFLAG_40000000                    = 0x40000000, /* No Ammo on pickup*/
     PROPFLAG_80000000                    = 0x80000000 // unknown
 }PROPFLAG;
@@ -306,12 +306,12 @@ typedef enum PROPFLAG2
     PROPFLAG2_00000080                   = 0x00000080, // unknown
     PROPFLAG2_00000100                   = 0x00000100, // unknown
     PROPFLAG2_00000200                   = 0x00000200, // unknown
-    PROPFLAG2_00000400                   = 0x00000400, // unknown
+    PROPFLAG2_LINKEDTOSAFE               = 0x00000400, // unknown
     PROPFLAG2_00000800                   = 0x00000800, // unknown
     PROPFLAG2_00001000                   = 0x00001000, // unknown
     PROPFLAG2_00002000                   = 0x00002000, // unknown
     PROPFLAG2_00004000                   = 0x00004000, // unknown
-    PROPFLAG2_00008000                   = 0x00008000, // unknown
+    PROPFLAG2_SHOOTTHROUGH               = 0x00008000, // unknown
     PROPFLAG2_00010000                   = 0x00010000, // unknown
     PROPFLAG2_00020000                   = 0x00020000, // unknown
     PROPFLAG2_00040000                   = 0x00040000, // unknown
@@ -381,7 +381,7 @@ BITFLAG(RUNTIMEBITFLAG,
         DESTROYED, /* only set with disabled or destroyed doors                   */
         00000800,
         00001000,
-        00002000,
+        PADLOCKEDDOOR,
         ACTIVATED, /* activated                                                   */
         00008000,
         00010000,
@@ -404,6 +404,42 @@ BITFLAG(RUNTIMEBITFLAG,
 
 #define RUNTIMEBITFLAG_OWNER    0x60000
 #define RUNTIMEBITSHIFT_OWNER   0x11
+
+BITFLAG(WEAPONSTATBITFLAG,
+        00000001,
+        SINGLE_USE_RELOAD, /* skip from fire to reload animation; item "disappears" after use, redrawn from off-screen like knives" */
+        BURST_FIRE, /* fire three round burst*/
+        HAS_AUTO_AIM, /* auto aim capable*/
+        CLICKY, /* if holding trigger, click if empty */
+        00000020,
+        00000040,
+        00000080,
+        ONLY_1_HANDED, /* requires HOLD_AS_GUN as well */
+        HOLD_AS_GUN, /* default 2 handed*/
+        MIRROR_DUAL, /* mirror double weapon, not copy */
+        SHOW_FIRST_PERSON, /* display 1st person model */
+        FIRST_SHOT_ACCURACY, /* for a single first shot, inaccuracy multiplied by 0.25 */
+        HIDE_FIRST_PERSON_HAND, /* hide first person model in hand */
+        HIDE_FIRST_PERSON_MENU, /* hide first person model in menu */
+        DISABLE_CROUCH, /* can not crouch */
+        PLAYER_STAT_HIT, /* count hits in player statistics */
+        USE_HOLD_TIME, /* increment hold time when used, to consider as weapon of choice */
+        HAS_AMMO,
+        HIDE_AMMO_DISPLAY, /* do not display ammo on screen */
+        CAN_DUAL_WIELD, /* capable of doubles */
+        AMMO_CLIP_LIMIT, /* limit ammo to assigned value on clip */
+        NO_CLIP_RELOADS, /* no ammo clip/reloads - draw straight from ammo supply (right of icon) */
+        00800000,
+        01000000,
+        02000000,
+        04000000,
+        08000000,
+        10000000,
+        20000000,
+        40000000,
+        80000000
+)
+
 
 #define OBJECTTYPE_00 0x00
 #define OBJECTTYPE_01 0x01
@@ -3355,6 +3391,7 @@ typedef enum SPSEGMENT
 #define ARRAYCOUNT(a) (s32)(sizeof(a) / sizeof(a[0]))
 #define ALIGN8(val)         (((val) + 0x7 | 0x7) ^ 0x7)
 #define RANDOMFRAC() ((f32) randomGetNext() * 2.3283064e-10f)
+#define MAXFLOAT ((float)3.40282346638528860e+38)
 
 #pragma endregion
 
