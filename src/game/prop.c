@@ -1962,326 +1962,77 @@ glabel setupCctv
 )
 #endif
 
-
-#ifdef NONMATCHING
-void setupAutogun(undefined8 param_1,ObjectRecord.conflict *param_2)
-
+void setupAutogun(s32 stageID, AutogunRecord *autogun, s32 cmdindex)
 {
-    int iVar1;
-    PropRecord *pPVar2;
-    u8 *puVar3;
-    OSScMsg *pOVar4;
-    f32 fVar5;
-    undefined *puVar6;
-    float fVar7;
-    float fVar8;
-    float fVar9;
-    float vector2;
-    
-    domakedefaultobj(param_1._4_4_,param_2);
-    param_2[1].field_0x2c = NULL;
-    param_2[1].field_0x38 = 0xffffffff;
-    param_2[1].field_0x3c = 0xffffffff;
-    param_2[1].field_0x40 = 0xffffffff;
-    param_2[1].field_0x44 = NULL;
-    param_2[1].field_0x48 = NULL;
-    param_2[1].Prop = NULL;
-    param_2[1].model = NULL;
-    *&param_2[1].obj = 0;
-    param_2[1].field_0x1c = NULL;
-    param_2[1].field_0x20 = NULL;
-    param_2[1].field_0x18 = NULL;
-    param_2[1].field_0x30 = NULL;
-    param_2[1].field_0x34 = NULL;
-    param_2[1].field_0x24 = (param_2[1].field_0x24 * 6.283185) / 65536.0;
-    param_2[1].field_0x28 = (param_2[1].field_0x28 * 100.0) / 65536.0;
-    param_2[1].flags = (param_2[1].flags * 6.283185) / 65536.0;
-    param_2[1].flags2 = (param_2[1].flags2 * 6.283185) / 65536.0;
-    puVar3 = mempAllocBytesInBank(0x30,'\x04');
-    param_2[1].field_0x4c = puVar3;
-    *puVar3 = 0xff;
-    iVar1 = *(param_2 + 1);
-    param_2[1].field_0x50 = NULL;
-    param_2[1].field_0x54 = NULL;
-    if (-1 < iVar1) {
-        if (iVar1 < 10000) {
-            pOVar4 = &g_CurrentSetup.pads->pos + iVar1 * 0x2c;
-        }
-        else {
-            pOVar4 = g_CurrentSetup.boundpads + iVar1 * 0x44 + -680000;
-        }
-        pPVar2 = param_2->Prop;
-        fVar7 = *(&pOVar4->type + 2);
-        fVar8 = (pPVar2->pos).y;
-        fVar9 = *&pOVar4->type - (pPVar2->pos).x;
-        vector2 = *(&pOVar4->type + 4) - (pPVar2->pos).z;
-        fVar5 = atan2f(fVar9,vector2);
-        *&param_2[1].obj = fVar5;
-        fVar9 = sqrtf(fVar9 * fVar9 + vector2 * vector2);
-        puVar6 = atan2f(fVar7 - fVar8,fVar9);
-        param_2[1].field_0x18 = puVar6;
-    }
-    return;
-}
-#else
-#ifndef VERSION_EU
-GLOBAL_ASM(
-.late_rodata
-glabel D_8004EF54
-.word 0x40c90fdb #6.2831855
+    s8 *beam;
 
-.text
-glabel setupAutogun
-/* 037788 7F002C58 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 03778C 7F002C5C AFBF001C */  sw    $ra, 0x1c($sp)
-/* 037790 7F002C60 AFB00018 */  sw    $s0, 0x18($sp)
-/* 037794 7F002C64 0FC00767 */  jal   domakedefaultobj
-/* 037798 7F002C68 00A08025 */   move  $s0, $a1
-/* 03779C 7F002C6C 8E0E00A4 */  lw    $t6, 0xa4($s0)
-/* 0377A0 7F002C70 8E0F00A8 */  lw    $t7, 0xa8($s0)
-/* 0377A4 7F002C74 3C014780 */  li    $at, 0x47800000 # 65536.000000
-/* 0377A8 7F002C78 448E2000 */  mtc1  $t6, $f4
-/* 0377AC 7F002C7C 44811000 */  mtc1  $at, $f2
-/* 0377B0 7F002C80 3C018005 */  lui   $at, %hi(D_8004EF54)
-/* 0377B4 7F002C84 468021A0 */  cvt.s.w $f6, $f4
-/* 0377B8 7F002C88 C42CEF54 */  lwc1  $f12, %lo(D_8004EF54)($at)
-/* 0377BC 7F002C8C 448F8000 */  mtc1  $t7, $f16
-/* 0377C0 7F002C90 3C0142C8 */  li    $at, 0x42C80000 # 100.000000
-/* 0377C4 7F002C94 44812000 */  mtc1  $at, $f4
-/* 0377C8 7F002C98 468084A0 */  cvt.s.w $f18, $f16
-/* 0377CC 7F002C9C 460C3202 */  mul.s $f8, $f6, $f12
-/* 0377D0 7F002CA0 8E180088 */  lw    $t8, 0x88($s0)
-/* 0377D4 7F002CA4 8E19008C */  lw    $t9, 0x8c($s0)
-/* 0377D8 7F002CA8 44800000 */  mtc1  $zero, $f0
-/* 0377DC 7F002CAC 2403FFFF */  li    $v1, -1
-/* 0377E0 7F002CB0 46049182 */  mul.s $f6, $f18, $f4
-/* 0377E4 7F002CB4 AE0000AC */  sw    $zero, 0xac($s0)
-/* 0377E8 7F002CB8 AE0300B8 */  sw    $v1, 0xb8($s0)
-/* 0377EC 7F002CBC AE0300BC */  sw    $v1, 0xbc($s0)
-/* 0377F0 7F002CC0 AE0300C0 */  sw    $v1, 0xc0($s0)
-/* 0377F4 7F002CC4 AE0000C4 */  sw    $zero, 0xc4($s0)
-/* 0377F8 7F002CC8 46024283 */  div.s $f10, $f8, $f2
-/* 0377FC 7F002CCC AE0000C8 */  sw    $zero, 0xc8($s0)
-/* 037800 7F002CD0 24040030 */  li    $a0, 48
-/* 037804 7F002CD4 24050004 */  li    $a1, 4
-/* 037808 7F002CD8 E6000090 */  swc1  $f0, 0x90($s0)
-/* 03780C 7F002CDC E6000094 */  swc1  $f0, 0x94($s0)
-/* 037810 7F002CE0 E6000084 */  swc1  $f0, 0x84($s0)
-/* 037814 7F002CE4 E600009C */  swc1  $f0, 0x9c($s0)
-/* 037818 7F002CE8 E60000A0 */  swc1  $f0, 0xa0($s0)
-/* 03781C 7F002CEC E6000098 */  swc1  $f0, 0x98($s0)
-/* 037820 7F002CF0 E60000B0 */  swc1  $f0, 0xb0($s0)
-/* 037824 7F002CF4 E60000B4 */  swc1  $f0, 0xb4($s0)
-/* 037828 7F002CF8 46023203 */  div.s $f8, $f6, $f2
-/* 03782C 7F002CFC E60A00A4 */  swc1  $f10, 0xa4($s0)
-/* 037830 7F002D00 44985000 */  mtc1  $t8, $f10
-/* 037834 7F002D04 44993000 */  mtc1  $t9, $f6
-/* 037838 7F002D08 46805420 */  cvt.s.w $f16, $f10
-/* 03783C 7F002D0C 460C8482 */  mul.s $f18, $f16, $f12
-/* 037840 7F002D10 E60800A8 */  swc1  $f8, 0xa8($s0)
-/* 037844 7F002D14 46803220 */  cvt.s.w $f8, $f6
-/* 037848 7F002D18 46029103 */  div.s $f4, $f18, $f2
-/* 03784C 7F002D1C 460C4282 */  mul.s $f10, $f8, $f12
-/* 037850 7F002D20 46025403 */  div.s $f16, $f10, $f2
-/* 037854 7F002D24 E6040088 */  swc1  $f4, 0x88($s0)
-/* 037858 7F002D28 0C0025C8 */  jal   mempAllocBytesInBank
-/* 03785C 7F002D2C E610008C */   swc1  $f16, 0x8c($s0)
-/* 037860 7F002D30 2403FFFF */  li    $v1, -1
-/* 037864 7F002D34 AE0200CC */  sw    $v0, 0xcc($s0)
-/* 037868 7F002D38 A0430000 */  sb    $v1, ($v0)
-/* 03786C 7F002D3C 8E040080 */  lw    $a0, 0x80($s0)
-/* 037870 7F002D40 44800000 */  mtc1  $zero, $f0
-/* 037874 7F002D44 AE0000D0 */  sw    $zero, 0xd0($s0)
-/* 037878 7F002D48 0480002F */  bltz  $a0, .L7F002E08
-/* 03787C 7F002D4C E60000D4 */   swc1  $f0, 0xd4($s0)
-/* 037880 7F002D50 28812710 */  slti  $at, $a0, 0x2710
-/* 037884 7F002D54 1020000A */  beqz  $at, .L7F002D80
-/* 037888 7F002D58 00045100 */   sll   $t2, $a0, 4
-/* 03788C 7F002D5C 00044080 */  sll   $t0, $a0, 2
-/* 037890 7F002D60 01044023 */  subu  $t0, $t0, $a0
-/* 037894 7F002D64 00084080 */  sll   $t0, $t0, 2
-/* 037898 7F002D68 3C098007 */  lui   $t1, %hi(g_CurrentSetup+0x18) 
-/* 03789C 7F002D6C 8D295D18 */  lw    $t1, %lo(g_CurrentSetup+0x18)($t1)
-/* 0378A0 7F002D70 01044023 */  subu  $t0, $t0, $a0
-/* 0378A4 7F002D74 00084080 */  sll   $t0, $t0, 2
-/* 0378A8 7F002D78 10000009 */  b     .L7F002DA0
-/* 0378AC 7F002D7C 01091821 */   addu  $v1, $t0, $t1
-.L7F002D80:
-/* 0378B0 7F002D80 3C0B8007 */  lui   $t3, %hi(g_CurrentSetup+0x1C) 
-/* 0378B4 7F002D84 8D6B5D1C */  lw    $t3, %lo(g_CurrentSetup+0x1C)($t3)
-/* 0378B8 7F002D88 01445021 */  addu  $t2, $t2, $a0
-/* 0378BC 7F002D8C 000A5080 */  sll   $t2, $t2, 2
-/* 0378C0 7F002D90 3C01FFF5 */  lui   $at, (0xFFF59FC0 >> 16) # lui $at, 0xfff5
-/* 0378C4 7F002D94 34219FC0 */  ori   $at, (0xFFF59FC0 & 0xFFFF) # ori $at, $at, 0x9fc0
-/* 0378C8 7F002D98 014B1821 */  addu  $v1, $t2, $t3
-/* 0378CC 7F002D9C 00611821 */  addu  $v1, $v1, $at
-.L7F002DA0:
-/* 0378D0 7F002DA0 8E020010 */  lw    $v0, 0x10($s0)
-/* 0378D4 7F002DA4 C4660004 */  lwc1  $f6, 4($v1)
-/* 0378D8 7F002DA8 C4720000 */  lwc1  $f18, ($v1)
-/* 0378DC 7F002DAC C448000C */  lwc1  $f8, 0xc($v0)
-/* 0378E0 7F002DB0 C4440008 */  lwc1  $f4, 8($v0)
-/* 0378E4 7F002DB4 46083281 */  sub.s $f10, $f6, $f8
-/* 0378E8 7F002DB8 46049301 */  sub.s $f12, $f18, $f4
-/* 0378EC 7F002DBC E7AA0028 */  swc1  $f10, 0x28($sp)
-/* 0378F0 7F002DC0 C4700008 */  lwc1  $f16, 8($v1)
-/* 0378F4 7F002DC4 C4520010 */  lwc1  $f18, 0x10($v0)
-/* 0378F8 7F002DC8 E7AC002C */  swc1  $f12, 0x2c($sp)
-/* 0378FC 7F002DCC 46128381 */  sub.s $f14, $f16, $f18
-/* 037900 7F002DD0 0FC16A8C */  jal   atan2f
-/* 037904 7F002DD4 E7AE0024 */   swc1  $f14, 0x24($sp)
-/* 037908 7F002DD8 C7A2002C */  lwc1  $f2, 0x2c($sp)
-/* 03790C 7F002DDC C7AE0024 */  lwc1  $f14, 0x24($sp)
-/* 037910 7F002DE0 E6000084 */  swc1  $f0, 0x84($s0)
-/* 037914 7F002DE4 46021102 */  mul.s $f4, $f2, $f2
-/* 037918 7F002DE8 00000000 */  nop   
-/* 03791C 7F002DEC 460E7182 */  mul.s $f6, $f14, $f14
-/* 037920 7F002DF0 0C007DF8 */  jal   sqrtf
-/* 037924 7F002DF4 46062300 */   add.s $f12, $f4, $f6
-/* 037928 7F002DF8 C7AC0028 */  lwc1  $f12, 0x28($sp)
-/* 03792C 7F002DFC 0FC16A8C */  jal   atan2f
-/* 037930 7F002E00 46000386 */   mov.s $f14, $f0
-/* 037934 7F002E04 E6000098 */  swc1  $f0, 0x98($s0)
-.L7F002E08:
-/* 037938 7F002E08 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 03793C 7F002E0C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 037940 7F002E10 27BD0038 */  addiu $sp, $sp, 0x38
-/* 037944 7F002E14 03E00008 */  jr    $ra
-/* 037948 7F002E18 00000000 */   nop   
-)
-#endif
+    domakedefaultobj(stageID, (ObjectRecord *) autogun, cmdindex);
+
 #ifdef VERSION_EU
-GLOBAL_ASM(
-.late_rodata
-glabel D_80047394
-.word 0x40c90fdb #6.2831855
-glabel D_80047398
-.word 0x40f1463a #7.53982257843
-
-
-.text
-glabel setupAutogun
-/* 0355B0 7F002BC0 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 0355B4 7F002BC4 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0355B8 7F002BC8 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0355BC 7F002BCC 0FC00767 */  jal   domakedefaultobj
-/* 0355C0 7F002BD0 00A08025 */   move  $s0, $a1
-/* 0355C4 7F002BD4 8E0E00A4 */  lw    $t6, 0xa4($s0)
-/* 0355C8 7F002BD8 3C014780 */  li    $at, 0x47800000 # 65536.000000
-/* 0355CC 7F002BDC 44811000 */  mtc1  $at, $f2
-/* 0355D0 7F002BE0 448E2000 */  mtc1  $t6, $f4
-/* 0355D4 7F002BE4 8E0F00A8 */  lw    $t7, 0xa8($s0)
-/* 0355D8 7F002BE8 3C018004 */  lui   $at, %hi(D_80047394) # $at, 0x8004
-/* 0355DC 7F002BEC 468021A0 */  cvt.s.w $f6, $f4
-/* 0355E0 7F002BF0 C42C7394 */  lwc1  $f12, %lo(D_80047394)($at)
-/* 0355E4 7F002BF4 3C018004 */  lui   $at, %hi(D_80047398) # $at, 0x8004
-/* 0355E8 7F002BF8 C4287398 */  lwc1  $f8, %lo(D_80047398)($at)
-/* 0355EC 7F002BFC 448F9000 */  mtc1  $t7, $f18
-/* 0355F0 7F002C00 3C0142C8 */  li    $at, 0x42C80000 # 100.000000
-/* 0355F4 7F002C04 46083282 */  mul.s $f10, $f6, $f8
-/* 0355F8 7F002C08 44813000 */  mtc1  $at, $f6
-/* 0355FC 7F002C0C 8E180088 */  lw    $t8, 0x88($s0)
-/* 035600 7F002C10 8E19008C */  lw    $t9, 0x8c($s0)
-/* 035604 7F002C14 44800000 */  mtc1  $zero, $f0
-/* 035608 7F002C18 2403FFFF */  li    $v1, -1
-/* 03560C 7F002C1C 46809120 */  cvt.s.w $f4, $f18
-/* 035610 7F002C20 AE0000AC */  sw    $zero, 0xac($s0)
-/* 035614 7F002C24 AE0300B8 */  sw    $v1, 0xb8($s0)
-/* 035618 7F002C28 AE0300BC */  sw    $v1, 0xbc($s0)
-/* 03561C 7F002C2C AE0300C0 */  sw    $v1, 0xc0($s0)
-/* 035620 7F002C30 46025403 */  div.s $f16, $f10, $f2
-/* 035624 7F002C34 AE0000C4 */  sw    $zero, 0xc4($s0)
-/* 035628 7F002C38 AE0000C8 */  sw    $zero, 0xc8($s0)
-/* 03562C 7F002C3C 24040030 */  li    $a0, 48
-/* 035630 7F002C40 46062202 */  mul.s $f8, $f4, $f6
-/* 035634 7F002C44 24050004 */  li    $a1, 4
-/* 035638 7F002C48 E6000090 */  swc1  $f0, 0x90($s0)
-/* 03563C 7F002C4C E6000094 */  swc1  $f0, 0x94($s0)
-/* 035640 7F002C50 E6000084 */  swc1  $f0, 0x84($s0)
-/* 035644 7F002C54 E600009C */  swc1  $f0, 0x9c($s0)
-/* 035648 7F002C58 E60000A0 */  swc1  $f0, 0xa0($s0)
-/* 03564C 7F002C5C E6000098 */  swc1  $f0, 0x98($s0)
-/* 035650 7F002C60 E60000B0 */  swc1  $f0, 0xb0($s0)
-/* 035654 7F002C64 E60000B4 */  swc1  $f0, 0xb4($s0)
-/* 035658 7F002C68 46024283 */  div.s $f10, $f8, $f2
-/* 03565C 7F002C6C E61000A4 */  swc1  $f16, 0xa4($s0)
-/* 035660 7F002C70 44988000 */  mtc1  $t8, $f16
-/* 035664 7F002C74 44994000 */  mtc1  $t9, $f8
-/* 035668 7F002C78 468084A0 */  cvt.s.w $f18, $f16
-/* 03566C 7F002C7C 460C9102 */  mul.s $f4, $f18, $f12
-/* 035670 7F002C80 E60A00A8 */  swc1  $f10, 0xa8($s0)
-/* 035674 7F002C84 468042A0 */  cvt.s.w $f10, $f8
-/* 035678 7F002C88 46022183 */  div.s $f6, $f4, $f2
-/* 03567C 7F002C8C 460C5402 */  mul.s $f16, $f10, $f12
-/* 035680 7F002C90 46028483 */  div.s $f18, $f16, $f2
-/* 035684 7F002C94 E6060088 */  swc1  $f6, 0x88($s0)
-/* 035688 7F002C98 0C0022E0 */  jal   mempAllocBytesInBank
-/* 03568C 7F002C9C E612008C */   swc1  $f18, 0x8c($s0)
-/* 035690 7F002CA0 2403FFFF */  li    $v1, -1
-/* 035694 7F002CA4 AE0200CC */  sw    $v0, 0xcc($s0)
-/* 035698 7F002CA8 A0430000 */  sb    $v1, ($v0)
-/* 03569C 7F002CAC 8E040080 */  lw    $a0, 0x80($s0)
-/* 0356A0 7F002CB0 44800000 */  mtc1  $zero, $f0
-/* 0356A4 7F002CB4 AE0000D0 */  sw    $zero, 0xd0($s0)
-/* 0356A8 7F002CB8 0480002F */  bltz  $a0, .L7F002D78
-/* 0356AC 7F002CBC E60000D4 */   swc1  $f0, 0xd4($s0)
-/* 0356B0 7F002CC0 28812710 */  slti  $at, $a0, 0x2710
-/* 0356B4 7F002CC4 1020000A */  beqz  $at, .L7F002CF0
-/* 0356B8 7F002CC8 00045100 */   sll   $t2, $a0, 4
-/* 0356BC 7F002CCC 00044080 */  sll   $t0, $a0, 2
-/* 0356C0 7F002CD0 01044023 */  subu  $t0, $t0, $a0
-/* 0356C4 7F002CD4 00084080 */  sll   $t0, $t0, 2
-/* 0356C8 7F002CD8 3C098006 */  lui   $t1, %hi(g_CurrentSetup+0x18) # $t1, 0x8006
-/* 0356CC 7F002CDC 8D294C58 */  lw    $t1, %lo(g_CurrentSetup+0x18)($t1)
-/* 0356D0 7F002CE0 01044023 */  subu  $t0, $t0, $a0
-/* 0356D4 7F002CE4 00084080 */  sll   $t0, $t0, 2
-/* 0356D8 7F002CE8 10000009 */  b     .L7F002D10
-/* 0356DC 7F002CEC 01091821 */   addu  $v1, $t0, $t1
-.L7F002CF0:
-/* 0356E0 7F002CF0 3C0B8006 */  lui   $t3, %hi(g_CurrentSetup+0x1C) # $t3, 0x8006
-/* 0356E4 7F002CF4 8D6B4C5C */  lw    $t3, %lo(g_CurrentSetup+0x1C)($t3)
-/* 0356E8 7F002CF8 01445021 */  addu  $t2, $t2, $a0
-/* 0356EC 7F002CFC 000A5080 */  sll   $t2, $t2, 2
-/* 0356F0 7F002D00 3C01FFF5 */  lui   $at, (0xFFF59FC0 >> 16) # lui $at, 0xfff5
-/* 0356F4 7F002D04 34219FC0 */  ori   $at, (0xFFF59FC0 & 0xFFFF) # ori $at, $at, 0x9fc0
-/* 0356F8 7F002D08 014B1821 */  addu  $v1, $t2, $t3
-/* 0356FC 7F002D0C 00611821 */  addu  $v1, $v1, $at
-.L7F002D10:
-/* 035700 7F002D10 8E020010 */  lw    $v0, 0x10($s0)
-/* 035704 7F002D14 C4680004 */  lwc1  $f8, 4($v1)
-/* 035708 7F002D18 C4640000 */  lwc1  $f4, ($v1)
-/* 03570C 7F002D1C C44A000C */  lwc1  $f10, 0xc($v0)
-/* 035710 7F002D20 C4460008 */  lwc1  $f6, 8($v0)
-/* 035714 7F002D24 460A4401 */  sub.s $f16, $f8, $f10
-/* 035718 7F002D28 46062301 */  sub.s $f12, $f4, $f6
-/* 03571C 7F002D2C E7B00028 */  swc1  $f16, 0x28($sp)
-/* 035720 7F002D30 C4720008 */  lwc1  $f18, 8($v1)
-/* 035724 7F002D34 C4440010 */  lwc1  $f4, 0x10($v0)
-/* 035728 7F002D38 E7AC002C */  swc1  $f12, 0x2c($sp)
-/* 03572C 7F002D3C 46049381 */  sub.s $f14, $f18, $f4
-/* 035730 7F002D40 0FC16BB8 */  jal   atan2f
-/* 035734 7F002D44 E7AE0024 */   swc1  $f14, 0x24($sp)
-/* 035738 7F002D48 C7A2002C */  lwc1  $f2, 0x2c($sp)
-/* 03573C 7F002D4C C7AE0024 */  lwc1  $f14, 0x24($sp)
-/* 035740 7F002D50 E6000084 */  swc1  $f0, 0x84($s0)
-/* 035744 7F002D54 46021182 */  mul.s $f6, $f2, $f2
-/* 035748 7F002D58 00000000 */  nop   
-/* 03574C 7F002D5C 460E7202 */  mul.s $f8, $f14, $f14
-/* 035750 7F002D60 0C007614 */  jal   sqrtf
-/* 035754 7F002D64 46083300 */   add.s $f12, $f6, $f8
-/* 035758 7F002D68 C7AC0028 */  lwc1  $f12, 0x28($sp)
-/* 03575C 7F002D6C 0FC16BB8 */  jal   atan2f
-/* 035760 7F002D70 46000386 */   mov.s $f14, $f0
-/* 035764 7F002D74 E6000098 */  swc1  $f0, 0x98($s0)
-.L7F002D78:
-/* 035768 7F002D78 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 03576C 7F002D7C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 035770 7F002D80 27BD0038 */  addiu $sp, $sp, 0x38
-/* 035774 7F002D84 03E00008 */  jr    $ra
-/* 035778 7F002D88 00000000 */   nop   
-)
+    autogun->speed = ((*((s32 *) (&autogun->speed))) * 7.5398226f) / 65536.0f;
+    autogun->aimdist = ((*((s32 *) (&autogun->aimdist))) * 100.0f) / 65536.0f;
+    autogun->unk88 = ((*((s32 *) (&autogun->unk88))) * 6.2831855f) / 65536.0f;
+    autogun->unk8C = ((*((s32 *) (&autogun->unk8C))) * 6.2831855f) / 65536.0f;
 #endif
+
+    autogun->unkAC = 0;
+    autogun->unkB8 = -1;
+    autogun->unkBC = -1;
+    autogun->unkC0 = -1;
+    autogun->unkC4 = 0;
+    autogun->unkC8 = 0;
+    autogun->unk90 = 0.0f;
+    autogun->unk94 = 0.0f;
+    autogun->rot_related = 0.0f;
+    autogun->unk9C = 0.0f;
+    autogun->unkA0 = 0.0f;
+    autogun->unk98 = 0.0f;
+    autogun->unkB0 = 0.0f;
+    autogun->unkB4 = 0.0f;
+
+#ifndef VERSION_EU
+    autogun->speed = ((*((s32 *) (&autogun->speed))) * 6.2831855f) / 65536.0f;
+    autogun->aimdist = ((*((s32 *) (&autogun->aimdist))) * 100.0f) / 65536.0f;
+    autogun->unk88 = ((*((s32 *) (&autogun->unk88))) * 6.2831855f) / 65536.0f;
+    autogun->unk8C = ((*((s32 *) (&autogun->unk8C))) * 6.2831855f) / 65536.0f;
 #endif
+
+    beam = mempAllocBytesInBank(0x30U, 4U);
+    autogun->unkCC = beam;
+    *beam = -1;
+
+    autogun->is_active = FALSE;
+    autogun->unkD4 = 0.0f;
+
+    if (autogun->padID >= 0)
+    {
+        s32 stack1;
+        f32 xdiff;
+        f32 ydiff;
+        f32 zdiff;
+        PadRecord *pad;
+        PropRecord *prop;
+
+        if (autogun->padID < 0x2710)
+        {
+            if (1);
+            pad = &g_CurrentSetup.pads[autogun->padID];
+        }
+        else
+        {
+            pad = &g_CurrentSetup.boundpads[getBoundPadNum(autogun->padID)];
+        }
+
+        prop = autogun->prop;
+
+        xdiff = pad->pos.x - prop->pos.x;
+        ydiff = pad->pos.y - prop->pos.y;
+        zdiff = pad->pos.z - prop->pos.z;
+
+        autogun->rot_related = atan2f(xdiff, zdiff);
+        autogun->unk98 = atan2f(ydiff, sqrtf((xdiff * xdiff) + (zdiff * zdiff)));
+    }
+}
 
 
 //i should be object rack

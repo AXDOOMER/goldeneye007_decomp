@@ -2940,11 +2940,10 @@ typedef union
     typedef struct AutogunRecord
     {
         inherits ObjectRecord;
-        s16 unk80;   /*0x80*/
-        u16 lookpad; /*0x82*/
+        s32 padID; // 0x80
 
         // Units seem to be radians.
-        f32 rot_related;
+        f32 rot_related; // 0x84
 
         // Units seem to be radians.
         f32 unk88;
@@ -2958,6 +2957,7 @@ typedef union
         // changes when active/firing
         f32 unk94;
         f32 unk98;
+
         // changes when active/firing
         f32 unk9C;
 
@@ -2965,36 +2965,36 @@ typedef union
         f32 unkA0;
 
         // How fast the gun turns. Runway default is around 0.01f.
-        f32 speed;
+        f32 speed; // 0xA4
 
         /**
          * Distance before deactivating.
          * Default (on Runway at least): 7500.0f
          * Offset 0xa0.
         */
-        f32 aimdist;
-        u32 unkAC;
+        f32 aimdist; // 0xA8
+        s32 unkAC;
 
         // changes when active/firing
-        s32 unkB0;
+        f32 unkB0;
+
         // changes when active/firing
         f32 unkB4;
-        f32 unkB8;
+        s32 unkB8;
         s32 unkBC;
-
         s32  unkC0;
         void *unkC4;
         void *unkC8;
-        void *unkCC;
+        void *unkCC; // beam struct in PD
 
         /**
          * Offset 0xd0.
          * Used in object_interaction, setting to zero won't disable.
         */
-        f32 is_active;
+        s32 is_active; // 0xD0
 
         // changes when active/firing
-        u32 unkD8;
+        f32 unkD4;
 
         //////////////////////////////////////////////////////
         // Previously:
@@ -3184,7 +3184,6 @@ typedef union
         }
 
     // PROPDEF_AUTOGUN (13)
-
     #define New_AutogunRecord(pad)                  \
         {                                           \
             New_PropDefHeaderRecord(13), 0, pad + 0 \
