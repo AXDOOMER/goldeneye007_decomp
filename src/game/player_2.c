@@ -535,7 +535,7 @@ f32 get_cur_player_fovy(void) {
 }
 
 
-PROP sub_GAME_7F09B244(ITEM_IDS arg0)
+PROP getPropForHeldItem(ITEM_IDS arg0)
 {
     PROP ret = -1;
     switch (arg0)
@@ -592,7 +592,7 @@ void sub_GAME_7F09B398(enum GUNHAND hand)
     if (chr->weapons_held[hand] == NULL)
     {
         wepid = getCurrentPlayerWeaponId(hand);
-        prop = sub_GAME_7F09B244(wepid);
+        prop = getPropForHeldItem(wepid);
         if (prop >= 0)
         {
             flags = ((hand * 4) == 0)
