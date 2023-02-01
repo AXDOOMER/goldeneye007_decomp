@@ -3953,7 +3953,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                         if (obj->type == PROPDEF_MONITOR)
                         {
                             MonitorObjRecord *sm = (MonitorObjRecord *)obj;
-                            monitorSetImageByNum(&sm->Monitor.image, ai->val[2]);
+                            monitorSetImageByNum(&sm->Monitor.cmdlist, ai->val[2]);
                         }
                         else if (obj->type == PROPDEF_MULTI_MONITOR)
                         {
@@ -3961,7 +3961,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                             if (slot < 4)
                             {
                                 MultiMonitorObjRecord *mm = (MultiMonitorObjRecord *)obj; //need new size here 0x74 (116) + 0x80 (so monitor is obj + 74)
-                                monitorSetImageByNum(&mm->Monitor[slot].image, ai->val[2]);
+                                monitorSetImageByNum(&mm->Monitor[slot].cmdlist, ai->val[2]);
                             }
                         }
                     }

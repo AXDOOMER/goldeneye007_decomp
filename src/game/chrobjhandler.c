@@ -8,6 +8,7 @@
 #include <music.h>
 #include <memp.h>
 #include <snd.h>
+#include <gbi_extension.h>
 #include "bg.h"
 #include "bondview.h"
 #include "bondinv.h"
@@ -31,6 +32,7 @@
 #include "stan.h"
 #include "assets/obseg/text/LpropobjE.h"
 #include "explosions.h"
+#include "image_bank.h"
 
 #ifdef VERSION_EU
 
@@ -23540,7 +23542,7 @@ glabel sub_GAME_7F049B58
 
 void save_ptr_monitor_ani_code_to_obj_ani_slot(MonitorRecord *mon, void *image)
 {
-    mon->image  = image;
+    mon->cmdlist  = image;
     mon->offset = 0;
 }
 
@@ -23716,12 +23718,336 @@ void monitorSetImageByNum(MonitorRecord *mon, s32 monAnimID)
 
 void save_img_index_to_obj_ani_slot(MonitorRecord *mon, void *unk88)
 {
-    mon->unk88 = unk88;
+    mon->tconfig = unk88;
 }
 
 
 
 #ifdef NONMATCHING
+
+struct tvcmd {
+    u32 type;
+    s32 arg1;
+    u32 arg2;
+};
+
+// Almost matching - only regalloc issues left (for VERSION_US)
+// Called tvscreenRender in PD
+
+Gfx *process_monitor_animation_microcode(Model *model, ModelNode *node, MonitorRecord *screen, Gfx *gdl, s32 arg4, s32 arg5)
+{
+    if (node && (node->Opcode & 0xff) == MODELNODE_OPCODE_DISPLAYLIST_COLLISIONRECORD) {
+        Vertex *vertices = dynAllocate7F0BD6C4(4);
+        Gfx *savedgdl = gdl++;
+        union ModelRoData *rodata = node->Data;
+        union ModelRwData *rwdata = modelGetNodeRwData(model, node);
+        sImageTableEntry *tconfig;
+        bool yielding = FALSE;
+
+        while (!yielding) {
+            struct tvcmd *cmd = (struct tvcmd *) &screen->cmdlist[screen->offset];
+
+            switch (cmd->type) {
+            case TVCMD_STOPSCROLL:
+                screen->xmidinc = 0.0f;
+                screen->ymidinc = 0.0f;
+                screen->offset++;
+                break;
+            case TVCMD_SCROLLRELX:
+                screen->xmidfrac = 0.0f;
+                screen->xmidinc = 1.0f / cmd->arg2;
+                screen->xmidold = screen->xmid;
+                screen->xmidnew = screen->xmid + cmd->arg1 * (1.0f / 1024.0f);
+                screen->offset += 3;
+                break;
+            case TVCMD_SCROLLRELY:
+                screen->ymidfrac = 0.0f;
+                screen->ymidinc = 1.0f / cmd->arg2;
+                screen->ymidold = screen->ymid;
+                screen->ymidnew = screen->ymid + cmd->arg1 * (1.0f / 1024.0f);
+                screen->offset += 3;
+                break;
+            case TVCMD_SCROLLABSX:
+                screen->xmidfrac = 0.0f;
+                screen->xmidinc = 1.0f / cmd->arg2;
+                screen->xmidold = screen->xmid;
+                screen->xmidnew = cmd->arg1 * (1.0f / 1024.0f);
+                screen->offset += 3;
+                break;
+            case TVCMD_SCROLLABSY:
+                screen->ymidfrac = 0.0f;
+                screen->ymidinc = 1.0f / cmd->arg2;
+                screen->ymidold = screen->ymid;
+                screen->ymidnew = cmd->arg1 * (1.0f / 1024.0f);
+                screen->offset += 3;
+                break;
+            case TVCMD_SCALEABSX:
+                screen->xscalefrac = 0.0f;
+                screen->xscaleinc = 1.0f / cmd->arg2;
+                screen->xscaleold = screen->xscale;
+                screen->xscalenew = cmd->arg1 * (1.0f / 1024.0f);
+                screen->offset += 3;
+                break;
+            case TVCMD_SCALEABSY:
+                screen->yscalefrac = 0.0f;
+                screen->yscaleinc = 1.0f / cmd->arg2;
+                screen->yscaleold = screen->yscale;
+                screen->yscalenew = cmd->arg1 * (1.0f / 1024.0f);
+                screen->offset += 3;
+                break;
+            case TVCMD_SETTEXTURE:
+                save_img_index_to_obj_ani_slot(screen, cmd->arg1);
+                screen->offset += 2;
+                break;
+            case TVCMD_PAUSE:
+                if (screen->pause60 >= 0) {
+                    screen->pause60 -= g_ClockTimer;
+
+                    if (screen->pause60 >= 0) {
+                        yielding = TRUE;
+                    } else {
+                        screen->offset += 2;
+                    }
+                } else {
+                    yielding = TRUE;
+                    screen->pause60 = cmd->arg1;
+                }
+                break;
+            case TVCMD_SETCMDLIST:
+                save_ptr_monitor_ani_code_to_obj_ani_slot(screen, (u32 *) cmd->arg1);
+                break;
+            case TVCMD_RANDSETCMDLIST:
+                if ((randomGetNext() >> 16) < cmd->arg2) {
+                    save_ptr_monitor_ani_code_to_obj_ani_slot(screen, (u32 *) cmd->arg1);
+                } else {
+                    screen->offset += 3;
+                }
+                break;
+            case TVCMD_RESTART:
+                screen->offset = 0;
+                break;
+            case TVCMD_YIELD:
+                yielding = TRUE;
+                break;
+            case TVCMD_SETCOLOUR:
+                screen->colfrac = 0.0f;
+                screen->colinc = 1.0f / cmd->arg2;
+
+                screen->redold = screen->red;
+                screen->rednew = ((u32)cmd->arg1 >> 24) & 0xff;
+
+                screen->greenold = screen->green;
+                screen->greennew = ((u32)cmd->arg1 >> 16) & 0xff;
+
+                screen->blueold = screen->blue;
+                screen->bluenew = ((u32)cmd->arg1 >> 8) & 0xff;
+
+                screen->alphaold = screen->alpha;
+                screen->alphanew = cmd->arg1 & 0xff;
+
+                screen->offset += 3;
+                break;
+            case TVCMD_ROTATEABS:
+                screen->rot = cmd->arg1 * M_TAU_F / 65536.0f;
+                screen->offset += 2;
+                break;
+            case TVCMD_ROTATEREL:
+                screen->rot += g_GlobalTimerDelta * cmd->arg1 * M_TAU_F / 65536.0f;
+
+                if (screen->rot >= M_TAU_F) {
+                    screen->rot -= M_TAU_F;
+                }
+
+                if (screen->rot < 0.0f) {
+                    screen->rot += M_TAU_F;
+                }
+
+                screen->offset += 2;
+                break;
+            }
+        }
+
+        // Increment X scale
+        if (screen->xscaleinc > 0.0f) {
+            screen->xscalefrac += screen->xscaleinc * g_GlobalTimerDelta;
+
+            if (screen->xscalefrac < 1.0f) {
+                screen->xscale = screen->xscaleold + (screen->xscalenew - screen->xscaleold) * screen->xscalefrac;
+            } else {
+                screen->xscalefrac = 1.0f;
+                screen->xscaleinc = 0.0f;
+                screen->xscale = screen->xscalenew;
+            }
+        }
+
+        // Increment Y scale
+        if (screen->yscaleinc > 0.0f) {
+            screen->yscalefrac += screen->yscaleinc * g_GlobalTimerDelta;
+
+            if (screen->yscalefrac < 1.0f) {
+                screen->yscale = screen->yscaleold + (screen->yscalenew - screen->yscaleold) * screen->yscalefrac;
+            } else {
+                screen->yscalefrac = 1.0f;
+                screen->yscaleinc = 0.0f;
+                screen->yscale = screen->yscalenew;
+            }
+        }
+
+        // Increment X scroll
+        if (screen->xmidinc > 0.0f) {
+            screen->xmidfrac += screen->xmidinc * g_GlobalTimerDelta;
+
+            if (screen->xmidfrac < 1.0f) {
+                screen->xmid = screen->xmidold + (screen->xmidnew - screen->xmidold) * screen->xmidfrac;
+            } else {
+                screen->xmidfrac = 1.0f;
+                screen->xmidinc = 0.0f;
+                screen->xmid = screen->xmidnew;
+            }
+        }
+
+        // Increment Y scroll
+        if (screen->ymidinc > 0.0f) {
+            screen->ymidfrac += screen->ymidinc * g_GlobalTimerDelta;
+
+            if (screen->ymidfrac < 1.0f) {
+                screen->ymid = screen->ymidold + (screen->ymidnew - screen->ymidold) * screen->ymidfrac;
+            } else {
+                screen->ymidfrac = 1.0f;
+                screen->ymidinc = 0.0f;
+                screen->ymid = screen->ymidnew;
+            }
+        }
+
+        // Increment colour change
+        if (screen->colinc > 0.0f) {
+            screen->colfrac += screen->colinc * g_GlobalTimerDelta;
+
+            if (screen->colfrac < 1.0f) {
+                screen->red = screen->redold + (s32) ((screen->rednew - screen->redold) * screen->colfrac);
+                screen->green = screen->greenold + (s32) ((screen->greennew - screen->greenold) * screen->colfrac);
+                screen->blue = screen->blueold + (s32) ((screen->bluenew - screen->blueold) * screen->colfrac);
+                screen->alpha = screen->alphaold + (s32) ((screen->alphanew - screen->alphaold) * screen->colfrac);
+            } else {
+                screen->colfrac = 1.0f;
+                screen->colinc = 0.0f;
+                screen->red = screen->rednew;
+                screen->green = screen->greennew;
+                screen->blue = screen->bluenew;
+                screen->alpha = screen->alphanew;
+            }
+        }
+
+        // Set up everything for rendering
+        rwdata->DisplayListCollisions.gdl = gdl;
+        rwdata->DisplayListCollisions.Vertices = vertices;
+
+        vertices[0] = rodata->DisplayListCollisions.Vertices[0];
+        vertices[1] = rodata->DisplayListCollisions.Vertices[1];
+        vertices[2] = rodata->DisplayListCollisions.Vertices[2];
+        vertices[3] = rodata->DisplayListCollisions.Vertices[3];
+
+        if ((u32)screen->tconfig < 100) {
+            tconfig = &monitorimages[(s32)screen->tconfig];
+        } else {
+            tconfig = screen->tconfig;
+        }
+
+        if (tconfig != NULL) {
+            u32 stack[13];
+            f32 f22; // sp54
+            f32 f24; // sp50
+            f32 f14;
+            f32 f16;
+
+            f22 = screen->xscale / 2.0f;
+            f24 = screen->yscale / 2.0f;
+            f14 = f22;
+            f16 = f24;
+
+            if (1);
+            if (1);
+            if (1);
+            if (1);
+            if (1);
+
+            if (screen->rot != 0.0f) {
+                f32 f20;
+                f32 f2_6;
+
+                f20 = cosf(screen->rot) * 1.4142f;
+                f2_6 = sinf(screen->rot) * 1.4142f;
+
+                f22 *= f20;
+                f24 *= f2_6;
+                f14 *= f2_6;
+                f16 *= f20;
+            }
+
+            vertices[0].s = tconfig->width  * (screen->xmid + f22) * 32.0f;
+            vertices[0].t = tconfig->height * (screen->ymid + f24) * 32.0f;
+
+            vertices[1].s = tconfig->width  * (screen->xmid - f14) * 32.0f;
+            vertices[1].t = tconfig->height * (screen->ymid + f16) * 32.0f;
+
+            vertices[2].s = tconfig->width  * (screen->xmid - f22) * 32.0f;
+            vertices[2].t = tconfig->height * (screen->ymid - f24) * 32.0f;
+
+            vertices[3].s = tconfig->width  * (screen->xmid + f14) * 32.0f;
+            vertices[3].t = tconfig->height * (screen->ymid - f16) * 32.0f;
+        }
+
+        if (1) {
+            u8 tmpc;
+            u8 tmpc2;
+            tmpc = screen->red;
+            vertices[3].r = tmpc;
+            vertices[2].r = tmpc;
+            vertices[1].r = tmpc;
+            vertices[0].r = tmpc;
+
+            tmpc = screen->green;
+            vertices[3].g = tmpc;
+            vertices[2].g = tmpc;
+            vertices[1].g = tmpc;
+            vertices[0].g = tmpc;
+
+            tmpc2 = screen->blue;
+            vertices[3].b = tmpc2;
+            vertices[2].b = tmpc2;
+            vertices[1].b = tmpc2;
+            vertices[0].b = tmpc2;
+
+            tmpc = screen->alpha;
+            vertices[3].a = tmpc;
+            vertices[2].a = tmpc;
+            vertices[1].a = tmpc;
+            vertices[0].a = tmpc;
+        }
+
+        if (screen->alpha < 255) {
+            arg5 = 2;
+        }
+
+        // Render the image
+        gSPSetGeometryMode(gdl++, G_CULL_BACK);
+
+        likely_generate_DL_for_image_declaration(&gdl, tconfig, arg5, arg4, 2);
+
+        gSPMatrix(gdl++, osVirtualToPhysical(model->render_pos), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+        gSPSegment(gdl++, SPSEGMENT_MODEL_VTX, osVirtualToPhysical(vertices));
+        gSPVertex(gdl++, 0x04000000, 4, 0);
+        gDPTri2(gdl++, 0, 1, 2, 0, 2, 3);
+        gSPEndDisplayList(gdl++);
+
+        gSPBranchList(savedgdl++, gdl);
+    }
+
+    return gdl;
+}
+
+// keeping old decompilation around for comparison's sake until a match is found:
+#if 0
 void *process_monitor_animation_microcode(Model *arg0, ModelNode *arg1, MonitorRecord *arg2, void *arg3, s32 arg4, s32 arg5)
 {
     void           *spA8;
@@ -24285,6 +24611,7 @@ void *process_monitor_animation_microcode(Model *arg0, ModelNode *arg1, MonitorR
     }
     return arg3;
 }
+#endif
 
 #else
 #ifdef VERSION_US

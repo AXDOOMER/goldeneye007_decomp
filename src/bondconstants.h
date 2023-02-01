@@ -2200,6 +2200,26 @@ typedef enum SPSEGMENT
     SPSEGMENT_BG_DL      = 15
 } SPSEGMENT;
 
+typedef enum TVCMD
+{
+    TVCMD_STOPSCROLL     = 0x00,
+    TVCMD_SCROLLRELX     = 0x01,
+    TVCMD_SCROLLRELY     = 0x02,
+    TVCMD_SCROLLABSX     = 0x03,
+    TVCMD_SCROLLABSY     = 0x04,
+    TVCMD_SCALEABSX      = 0x05,
+    TVCMD_SCALEABSY      = 0x06,
+    TVCMD_SETTEXTURE     = 0x07,
+    TVCMD_PAUSE          = 0x08,
+    TVCMD_SETCMDLIST     = 0x09,
+    TVCMD_RANDSETCMDLIST = 0x0a,
+    TVCMD_RESTART        = 0x0b,
+    TVCMD_YIELD          = 0x0c,
+    TVCMD_SETCOLOUR      = 0x0d,
+    TVCMD_ROTATEABS      = 0x0e,
+    TVCMD_ROTATEREL      = 0x0f
+} TVCMD;
+
 #pragma region Object Instance Stuff
     typedef enum BODIES
     {
