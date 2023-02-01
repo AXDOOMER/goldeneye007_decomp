@@ -260,7 +260,7 @@ BITFLAG(PS_FLAGS2,
 // prop definition flags
 typedef enum PROPFLAG
 {
-    PROPFLAG_00000001                    = 0x00000001, // unknown
+    PROPFLAG_RENDERPOSTBG                = 0x00000001, // unknown
     PROPFLAG_ONSCREEN                    = 0x00000002, // onscreen
     PROPFLAG_ENABLED                     = 0x00000004, // unknown
     PROPFLAG_00000008                    = 0x00000008, // unknown
@@ -275,7 +275,7 @@ typedef enum PROPFLAG
     PROPFLAG_00001000                    = 0x00001000, // unknown
     PROPFLAG_AIUNDROPPABLE               = 0x00002000, /* Item Not Droppedz*/
     PROPFLAG_ASSIGNEDTOCHR               = 0x00004000, // unknown
-    PROPFLAG_00008000                    = 0x00008000, // unknown
+    PROPFLAG_INSIDEANOTHEROBJ            = 0x00008000, // unknown
     PROPFLAG_FORCEMORTAL                 = 0x00010000, // unknown
     PROPFLAG_INVINCIBLE                  = 0x00020000, // unknown
     PROPFLAG_00040000                    = 0x00040000, // unknown
@@ -290,7 +290,7 @@ typedef enum PROPFLAG
     PROPFLAG_DOOR_TWOWAY                 = 0x08000000, // unknown
     PROPFLAG_WEAPON_LEFTHANDED           = 0x10000000, /* Left Handed*/
     PROPFLAG_DOOR_OPENTOFRONT            = 0x20000000, /* Concealed*/
-    PROPFLAG_40000000                    = 0x40000000, /* No Ammo on pickup*/
+    PROPFLAG_MONITOR_RENDERPOSTBG        = 0x40000000, /* No Ammo on pickup*/
     PROPFLAG_80000000                    = 0x80000000 // unknown
 }PROPFLAG;
 // prop definition flags 
@@ -374,7 +374,7 @@ BITFLAG(RUNTIMEBITFLAG,
         00000008,
         00000010,
         THROWING_KNIFE_RELATED,
-        00000040,
+        EMBEDDED,
         DEPOSIT, /* depositted (thrown/launching)                               */
         00000100,
         BEENOPENED,

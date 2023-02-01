@@ -2304,7 +2304,7 @@ void setupSingleMonitor(s32 stageID, MonitorObjRecord *monitor, s32 cmdindex)
     record = &monitor->Monitor;
     monitorSetImageByNum(&monitor->Monitor, monitor->ImageNum);
 
-    if (monitor->pad < 0 && (monitor->flags & 0x00008000) == 0)
+    if (monitor->pad < 0 && (monitor->flags & PROPFLAG_INSIDEANOTHEROBJ) == 0)
     {
         modelnum = monitor->obj;
         owner = (struct ObjectRecord *)setupGetPtrToCommandByIndex(cmdindex + monitor->OwnerOffset);
@@ -2316,7 +2316,7 @@ void setupSingleMonitor(s32 stageID, MonitorObjRecord *monitor, s32 cmdindex)
 
         if (getPlayerCount() >= 2)
         {
-            monitor->state |= 0x04;
+            monitor->state |= PROPSTATE_RESPAWN;
         }
 
         prop = objInitWithAutoModel((ObjectRecord*)monitor);
@@ -2324,7 +2324,7 @@ void setupSingleMonitor(s32 stageID, MonitorObjRecord *monitor, s32 cmdindex)
 
         if (prop && monitor->unk6C)
         {
-            monitor->runtime_bitflags |= 0x00000040;
+            monitor->runtime_bitflags |= RUNTIMEBITFLAG_EMBEDDED;
             modelSetScale(monitor->model, monitor->model->scale * scale);
             monitor->model->attachedto = owner->model;
 
@@ -2355,9 +2355,9 @@ void setupSingleMonitor(s32 stageID, MonitorObjRecord *monitor, s32 cmdindex)
         domakedefaultobj(stageID, (ObjectRecord*)monitor, cmdindex);
     }
 
-    if ((monitor->flags & 0x40000000) && monitor->prop)
+    if ((monitor->flags & PROPFLAG_MONITOR_RENDERPOSTBG) && monitor->prop)
     {
-        monitor->prop->flags |= 0x01;
+        monitor->prop->flags |= PROPFLAG_RENDERPOSTBG;
     }
 }
 
