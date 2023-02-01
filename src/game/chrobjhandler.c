@@ -1810,9 +1810,9 @@ PropRecord* sub_GAME_7F0406F8(ObjectRecord* object, ModelFileHeader* header)
 }
 
 
-void objInitWithAutoModel(ObjectRecord* obj)
+PropRecord* objInitWithAutoModel(ObjectRecord* obj)
 {
-    sub_GAME_7F0406F8(obj, PitemZ_entries[obj->obj].header);
+    return sub_GAME_7F0406F8(obj, PitemZ_entries[obj->obj].header);
 }
 
 
@@ -27560,102 +27560,51 @@ Gfx *chrobjRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
 }
 
 
+ModelNode* sub_GAME_7F04B478(ObjectRecord* obj)
+{
+    ModelFileHeader* header = obj->model->obj;
+    ModelNode *node = header->RootNode;
 
+    while (node)
+    {
+        u32 type = node->Opcode & 0xff;
 
-#ifdef NONMATCHING
-void sub_GAME_7F04B478(void) {
+        switch (type)
+        {
+            case MODELNODE_OPCODE_DISPLAYLIST_COLLISIONRECORD:
+                return node;
+            case MODELNODE_OPCODE_LODRECORD:
+                modelApplyDistanceRelations(obj->model, node);
+                break;
+            case MODELNODE_OPCODE_SWITCHRECORD:
+                modelApplyToggleRelations(obj->model, node);
+                break;
+            case MODELNODE_OPCODE_HEADPLACEHOLDERRECORD:
+                modelApplyHeadRelations(obj->model, node);
+                break;
+        }
 
+        if (node->Child)
+        {
+            node = node->Child;
+        }
+        else
+        {
+            while (node)
+            {
+                if (node->Next)
+                {
+                    node = node->Next;
+                    break;
+                }
+
+                node = node->Parent;
+            }
+        }
+    }
+
+    return NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F04B478
-/* 07FFA8 7F04B478 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 07FFAC 7F04B47C AFBF002C */  sw    $ra, 0x2c($sp)
-/* 07FFB0 7F04B480 AFB50028 */  sw    $s5, 0x28($sp)
-/* 07FFB4 7F04B484 AFB40024 */  sw    $s4, 0x24($sp)
-/* 07FFB8 7F04B488 AFB30020 */  sw    $s3, 0x20($sp)
-/* 07FFBC 7F04B48C AFB2001C */  sw    $s2, 0x1c($sp)
-/* 07FFC0 7F04B490 AFB10018 */  sw    $s1, 0x18($sp)
-/* 07FFC4 7F04B494 AFB00014 */  sw    $s0, 0x14($sp)
-/* 07FFC8 7F04B498 8C8E0014 */  lw    $t6, 0x14($a0)
-/* 07FFCC 7F04B49C 00808825 */  move  $s1, $a0
-/* 07FFD0 7F04B4A0 24120008 */  li    $s2, 8
-/* 07FFD4 7F04B4A4 8DC20008 */  lw    $v0, 8($t6)
-/* 07FFD8 7F04B4A8 24130012 */  li    $s3, 18
-/* 07FFDC 7F04B4AC 24140017 */  li    $s4, 23
-/* 07FFE0 7F04B4B0 8C500000 */  lw    $s0, ($v0)
-/* 07FFE4 7F04B4B4 24150018 */  li    $s5, 24
-/* 07FFE8 7F04B4B8 5200002C */  beql  $s0, $zero, .L7F04B56C
-/* 07FFEC 7F04B4BC 00001025 */   move  $v0, $zero
-/* 07FFF0 7F04B4C0 96020000 */  lhu   $v0, ($s0)
-.L7F04B4C4:
-/* 07FFF4 7F04B4C4 02002825 */  move  $a1, $s0
-/* 07FFF8 7F04B4C8 304F00FF */  andi  $t7, $v0, 0xff
-/* 07FFFC 7F04B4CC 11F2000B */  beq   $t7, $s2, .L7F04B4FC
-/* 080000 7F04B4D0 00000000 */   nop   
-/* 080004 7F04B4D4 11F3000D */  beq   $t7, $s3, .L7F04B50C
-/* 080008 7F04B4D8 02002825 */   move  $a1, $s0
-/* 08000C 7F04B4DC 11F4000F */  beq   $t7, $s4, .L7F04B51C
-/* 080010 7F04B4E0 02002825 */   move  $a1, $s0
-/* 080014 7F04B4E4 11F50003 */  beq   $t7, $s5, .L7F04B4F4
-/* 080018 7F04B4E8 00000000 */   nop   
-/* 08001C 7F04B4EC 1000000E */  b     .L7F04B528
-/* 080020 7F04B4F0 8E020014 */   lw    $v0, 0x14($s0)
-.L7F04B4F4:
-/* 080024 7F04B4F4 1000001D */  b     .L7F04B56C
-/* 080028 7F04B4F8 02001025 */   move  $v0, $s0
-.L7F04B4FC:
-/* 08002C 7F04B4FC 0FC1BA5C */  jal   modelApplyDistanceRelations
-/* 080030 7F04B500 8E240014 */   lw    $a0, 0x14($s1)
-/* 080034 7F04B504 10000008 */  b     .L7F04B528
-/* 080038 7F04B508 8E020014 */   lw    $v0, 0x14($s0)
-.L7F04B50C:
-/* 08003C 7F04B50C 0FC1BA6F */  jal   modelApplyToggleRelations
-/* 080040 7F04B510 8E240014 */   lw    $a0, 0x14($s1)
-/* 080044 7F04B514 10000004 */  b     .L7F04B528
-/* 080048 7F04B518 8E020014 */   lw    $v0, 0x14($s0)
-.L7F04B51C:
-/* 08004C 7F04B51C 0FC1BA82 */  jal   modelApplyHeadRelations
-/* 080050 7F04B520 8E240014 */   lw    $a0, 0x14($s1)
-/* 080054 7F04B524 8E020014 */  lw    $v0, 0x14($s0)
-.L7F04B528:
-/* 080058 7F04B528 10400003 */  beqz  $v0, .L7F04B538
-/* 08005C 7F04B52C 00000000 */   nop   
-/* 080060 7F04B530 1000000B */  b     .L7F04B560
-/* 080064 7F04B534 00408025 */   move  $s0, $v0
-.L7F04B538:
-/* 080068 7F04B538 12000009 */  beqz  $s0, .L7F04B560
-/* 08006C 7F04B53C 00000000 */   nop   
-/* 080070 7F04B540 8E02000C */  lw    $v0, 0xc($s0)
-.L7F04B544:
-/* 080074 7F04B544 50400004 */  beql  $v0, $zero, .L7F04B558
-/* 080078 7F04B548 8E100008 */   lw    $s0, 8($s0)
-/* 08007C 7F04B54C 10000004 */  b     .L7F04B560
-/* 080080 7F04B550 00408025 */   move  $s0, $v0
-/* 080084 7F04B554 8E100008 */  lw    $s0, 8($s0)
-.L7F04B558:
-/* 080088 7F04B558 5600FFFA */  bnezl $s0, .L7F04B544
-/* 08008C 7F04B55C 8E02000C */   lw    $v0, 0xc($s0)
-.L7F04B560:
-/* 080090 7F04B560 5600FFD8 */  bnezl $s0, .L7F04B4C4
-/* 080094 7F04B564 96020000 */   lhu   $v0, ($s0)
-/* 080098 7F04B568 00001025 */  move  $v0, $zero
-.L7F04B56C:
-/* 08009C 7F04B56C 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 0800A0 7F04B570 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0800A4 7F04B574 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0800A8 7F04B578 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 0800AC 7F04B57C 8FB30020 */  lw    $s3, 0x20($sp)
-/* 0800B0 7F04B580 8FB40024 */  lw    $s4, 0x24($sp)
-/* 0800B4 7F04B584 8FB50028 */  lw    $s5, 0x28($sp)
-/* 0800B8 7F04B588 03E00008 */  jr    $ra
-/* 0800BC 7F04B58C 27BD0030 */   addiu $sp, $sp, 0x30
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
@@ -34991,9 +34940,15 @@ glabel prepare_ammo_type_collection_text
 
 
 #ifdef NONMATCHING
-void display_text_when_ammo_collected(void) {
 
+// This matches for VERSION_US, but rodata needs to be re-arranged
+void display_text_when_ammo_collected(s32 ammotype, s32 quantity)
+{
+    char buffer[100] = "";
+    prepare_ammo_type_collection_text(buffer, ammotype, quantity);
+    hudmsgBottomShow(buffer);
 }
+
 #else
 #ifdef VERSION_US
 GLOBAL_ASM(

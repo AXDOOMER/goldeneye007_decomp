@@ -139,7 +139,7 @@ f32 flt_CODE_bss_80075B94;
 /**
  * Address 0x80075B98.
 */
-struct object_animation_controller g_MonitorAnimController;
+MonitorRecord g_MonitorAnimController;
 
 /**
  * Unused / unreferenced (from padding / align?)
