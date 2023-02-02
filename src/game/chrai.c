@@ -2368,7 +2368,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     {
                         if (obj->prop->parent)
                         {
-                            sub_GAME_7F04C044(obj->prop);
+                            objDetach(obj->prop);
                         }
                         else
                         {

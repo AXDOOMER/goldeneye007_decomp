@@ -2244,7 +2244,7 @@ void generate_player_thrown_object(s32 hand)
 
         if (wor != NULL)
         {
-            sub_GAME_7F04C044(wor->prop);
+            objDetach(wor->prop);
         }
 
         sub_GAME_7F05D690();

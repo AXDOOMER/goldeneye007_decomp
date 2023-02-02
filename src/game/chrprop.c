@@ -2670,7 +2670,7 @@ void propExecuteTickOperation(PropRecord *prop, INV_ITEM_TYPE type) //#MATCH
         chrpropDeregisterRooms(prop);
         chrpropDelist(prop);
         chrpropDisable(prop);
-        sub_GAME_7F04C044(prop);
+        objDetach(prop);
         sub_GAME_7F040CF0(prop);
         chrpropReparent(prop, get_curplayer_positiondata());
     }

@@ -387,7 +387,7 @@ BITFLAG(RUNTIMEBITFLAG,
         00010000,
         00020000, /* owner 2bit (0-3) used to                                    */
         00040000, /* attribute kills to players                                  */
-        00080000,
+        HASOWNER,
         00100000,
         00200000,
         00400000,

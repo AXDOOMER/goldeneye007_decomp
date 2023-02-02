@@ -108,7 +108,7 @@ s32                  sub_GAME_7F054A64(PropRecord *prop, bbox2d *bbox);
 void                 sub_GAME_7F040384(rgba_s32 *arg0, s32 arg1, rgba_f32 *arg2);
 void                 trigger_remote_mine_detonation(void);
 
-void                 sub_GAME_7F04C044(PropRecord *prop);
+void                 objDetach(PropRecord *prop);
 void                 sub_GAME_7F040CF0(PropRecord *);
 bool                 alarmIsActive();
 void                 init_trigger_toxic_gas_effect(coord3d *source);
@@ -136,7 +136,7 @@ bool                 check_if_toxic_gas_activated();
 PropRecord          *chrTryEquipHat(ChrRecord *self, s32 index, s32 flags);
 PropRecord*          objInitWithAutoModel(ObjectRecord* obj);
 struct bss_80075030 *monitorthingGetNew(void);
-void sub_GAME_7F04C044(PropRecord *prop);
+void objDetach(PropRecord *prop);
 void sub_GAME_7F043650(struct WeaponObjRecord *arg0);
 s32 sub_GAME_7F0446B8(struct rect4f *arg0, s32 arg1, struct rect4f *arg2, s32 arg3);
 s32 chrobjTestPointPolygonCollision(struct coord3d *arg0, f32 arg1, struct rect4f *arg2, s32 arg3);

@@ -2539,7 +2539,7 @@ glabel objFree
 /* 075A88 7F040F58 8E2E001C */  lw    $t6, 0x1c($s1)
 /* 075A8C 7F040F5C 11C00004 */  beqz  $t6, .L7F040F70
 /* 075A90 7F040F60 00000000 */   nop   
-/* 075A94 7F040F64 0FC13011 */  jal   sub_GAME_7F04C044
+/* 075A94 7F040F64 0FC13011 */  jal   objDetach
 /* 075A98 7F040F68 02202025 */   move  $a0, $s1
 /* 075A9C 7F040F6C 8E510010 */  lw    $s1, 0x10($s2)
 .L7F040F70:
@@ -29513,123 +29513,45 @@ glabel propobjSetDropped
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-/* PD: objDetach */
-void sub_GAME_7F04C044(PropRecord *prop)
+void objDetach(PropRecord *prop)
 {
-    PropRecord   *sp24;
-    ObjectRecord *sp20;
-    void         *sp1C;
-    ObjectRecord *sp18;
-    ObjectRecord *temp_a0;
-    ObjectRecord *temp_v0;
-    PropRecord   *temp_a1;
-    PropRecord   *temp_a2;
-    u8            temp_v1;
-    void         *temp_t6;
+    PropRecord *parent = prop->parent;
 
-    temp_a2 = prop->parent;
-    temp_a1 = prop;
-    if ((temp_a2 != 0) && ((temp_v0 = prop->obj, temp_t6 = temp_v0->model, sp24 = temp_a2, prop = temp_a1, sp20 = temp_v0, sp1C = temp_t6, chrpropDetach(temp_a1, temp_a2), sp1C->unk1C = 0, temp_v0->runtime_bitflags &= 0xFFF7FFFF, temp_v1 = temp_a2->type, (temp_v1 == 3)) || (temp_v1 == 6)) && (temp_a0 = temp_a2->obj, (temp_a0 != 0)))
+    if (parent)
     {
-        if (prop == temp_a0->unk1D8)
+        ObjectRecord *obj = prop->obj;
+        Model *model = obj->model;
+
+        chrpropDetach(prop);
+
+        model->attachedto_objinst = NULL;
+
+        obj->runtime_bitflags &= ~RUNTIMEBITFLAG_HASOWNER;
+
+        if (parent->type == PROP_TYPE_CHR || parent->type == PROP_TYPE_VIEWER)
         {
-            temp_a0->unk1D8 = 0;
-            return;
+            ChrRecord *chr = parent->chr;
+
+            if (chr)
+            {
+                if (prop == chr->handle_positiondata_hat)
+                {
+                    chr->handle_positiondata_hat = NULL;
+                }
+                else if (prop == chr->weapons_held[GUNRIGHT])
+                {
+                    sub_GAME_7F02D118(chr, GUNRIGHT, FALSE);
+                    chr->weapons_held[GUNRIGHT] = NULL;
+                }
+                else if (prop == chr->weapons_held[GUNLEFT])
+                {
+                    sub_GAME_7F02D118(chr, GUNLEFT, FALSE);
+                    chr->weapons_held[GUNLEFT] = NULL;
+                }
+            }
         }
-        if (prop == temp_a0->unk160)
-        {
-            sp18 = temp_a0;
-            sub_GAME_7F02D118(temp_a0, 0, 0);
-            temp_a0->unk160 = 0;
-            return;
-        }
-        if (prop == temp_a0->unk164)
-        {
-            sp18 = temp_a0;
-            sub_GAME_7F02D118(temp_a0, 1, 0);
-            temp_a0->unk164 = 0;
-        }
-        // Duplicate return node #10. Try simplifying control flow for better match
     }
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F04C044
-/* 080B74 7F04C044 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 080B78 7F04C048 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 080B7C 7F04C04C 8C86001C */  lw    $a2, 0x1c($a0)
-/* 080B80 7F04C050 00802825 */  move  $a1, $a0
-/* 080B84 7F04C054 50C00033 */  beql  $a2, $zero, .L7F04C124
-/* 080B88 7F04C058 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 080B8C 7F04C05C 8C820004 */  lw    $v0, 4($a0)
-/* 080B90 7F04C060 8C4E0014 */  lw    $t6, 0x14($v0)
-/* 080B94 7F04C064 AFA60024 */  sw    $a2, 0x24($sp)
-/* 080B98 7F04C068 AFA50028 */  sw    $a1, 0x28($sp)
-/* 080B9C 7F04C06C AFA20020 */  sw    $v0, 0x20($sp)
-/* 080BA0 7F04C070 0FC0E974 */  jal   chrpropDetach
-/* 080BA4 7F04C074 AFAE001C */   sw    $t6, 0x1c($sp)
-/* 080BA8 7F04C078 8FAF001C */  lw    $t7, 0x1c($sp)
-/* 080BAC 7F04C07C 8FA20020 */  lw    $v0, 0x20($sp)
-/* 080BB0 7F04C080 8FA60024 */  lw    $a2, 0x24($sp)
-/* 080BB4 7F04C084 8FA50028 */  lw    $a1, 0x28($sp)
-/* 080BB8 7F04C088 ADE0001C */  sw    $zero, 0x1c($t7)
-/* 080BBC 7F04C08C 8C580064 */  lw    $t8, 0x64($v0)
-/* 080BC0 7F04C090 3C01FFF7 */  lui   $at, (0xFFF7FFFF >> 16) # lui $at, 0xfff7
-/* 080BC4 7F04C094 3421FFFF */  ori   $at, (0xFFF7FFFF & 0xFFFF) # ori $at, $at, 0xffff
-/* 080BC8 7F04C098 0301C824 */  and   $t9, $t8, $at
-/* 080BCC 7F04C09C AC590064 */  sw    $t9, 0x64($v0)
-/* 080BD0 7F04C0A0 90C30000 */  lbu   $v1, ($a2)
-/* 080BD4 7F04C0A4 24010003 */  li    $at, 3
-/* 080BD8 7F04C0A8 10610003 */  beq   $v1, $at, .L7F04C0B8
-/* 080BDC 7F04C0AC 24010006 */   li    $at, 6
-/* 080BE0 7F04C0B0 5461001C */  bnel  $v1, $at, .L7F04C124
-/* 080BE4 7F04C0B4 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F04C0B8:
-/* 080BE8 7F04C0B8 8CC40004 */  lw    $a0, 4($a2)
-/* 080BEC 7F04C0BC 50800019 */  beql  $a0, $zero, .L7F04C124
-/* 080BF0 7F04C0C0 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 080BF4 7F04C0C4 8C8801D8 */  lw    $t0, 0x1d8($a0)
-/* 080BF8 7F04C0C8 54A80004 */  bnel  $a1, $t0, .L7F04C0DC
-/* 080BFC 7F04C0CC 8C890160 */   lw    $t1, 0x160($a0)
-/* 080C00 7F04C0D0 10000013 */  b     .L7F04C120
-/* 080C04 7F04C0D4 AC8001D8 */   sw    $zero, 0x1d8($a0)
-/* 080C08 7F04C0D8 8C890160 */  lw    $t1, 0x160($a0)
-.L7F04C0DC:
-/* 080C0C 7F04C0DC 00003025 */  move  $a2, $zero
-/* 080C10 7F04C0E0 54A90008 */  bnel  $a1, $t1, .L7F04C104
-/* 080C14 7F04C0E4 8C8A0164 */   lw    $t2, 0x164($a0)
-/* 080C18 7F04C0E8 00002825 */  move  $a1, $zero
-/* 080C1C 7F04C0EC 0FC0B446 */  jal   sub_GAME_7F02D118
-/* 080C20 7F04C0F0 AFA40018 */   sw    $a0, 0x18($sp)
-/* 080C24 7F04C0F4 8FA40018 */  lw    $a0, 0x18($sp)
-/* 080C28 7F04C0F8 10000009 */  b     .L7F04C120
-/* 080C2C 7F04C0FC AC800160 */   sw    $zero, 0x160($a0)
-/* 080C30 7F04C100 8C8A0164 */  lw    $t2, 0x164($a0)
-.L7F04C104:
-/* 080C34 7F04C104 00003025 */  move  $a2, $zero
-/* 080C38 7F04C108 14AA0005 */  bne   $a1, $t2, .L7F04C120
-/* 080C3C 7F04C10C 24050001 */   li    $a1, 1
-/* 080C40 7F04C110 0FC0B446 */  jal   sub_GAME_7F02D118
-/* 080C44 7F04C114 AFA40018 */   sw    $a0, 0x18($sp)
-/* 080C48 7F04C118 8FA40018 */  lw    $a0, 0x18($sp)
-/* 080C4C 7F04C11C AC800164 */  sw    $zero, 0x164($a0)
-.L7F04C120:
-/* 080C50 7F04C120 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F04C124:
-/* 080C54 7F04C124 27BD0028 */  addiu $sp, $sp, 0x28
-/* 080C58 7F04C128 03E00008 */  jr    $ra
-/* 080C5C 7F04C12C 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
@@ -30261,7 +30183,7 @@ glabel sub_GAME_7F04C130
 /* 0814AC 7F04C97C 0FC16266 */  jal   matrix_4x4_set_position
 /* 0814B0 7F04C980 27A500B8 */   addiu $a1, $sp, 0xb8
 .L7F04C984:
-/* 0814B4 7F04C984 0FC13011 */  jal   sub_GAME_7F04C044
+/* 0814B4 7F04C984 0FC13011 */  jal   objDetach
 /* 0814B8 7F04C988 8FA40108 */   lw    $a0, 0x108($sp)
 /* 0814BC 7F04C98C 0FC0E929 */  jal   chrpropActivate
 /* 0814C0 7F04C990 8FA40108 */   lw    $a0, 0x108($sp)
@@ -30939,7 +30861,7 @@ glabel sub_GAME_7F04C130
 /* 0814AC 7F04C97C 0FC16266 */  jal   matrix_4x4_set_position
 /* 0814B0 7F04C980 27A500B8 */   addiu $a1, $sp, 0xb8
 .L7F04C984:
-/* 0814B4 7F04C984 0FC13011 */  jal   sub_GAME_7F04C044
+/* 0814B4 7F04C984 0FC13011 */  jal   objDetach
 /* 0814B8 7F04C988 8FA40108 */   lw    $a0, 0x108($sp)
 /* 0814BC 7F04C98C 0FC0E929 */  jal   chrpropActivate
 /* 0814C0 7F04C990 8FA40108 */   lw    $a0, 0x108($sp)

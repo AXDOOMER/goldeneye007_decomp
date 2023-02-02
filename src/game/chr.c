@@ -3051,7 +3051,7 @@ void disable_sounds_attached_to_player_then_something(PropRecord *prop)
     p = prop->child;
     while (p != NULL)
     {
-        sub_GAME_7F04C044(p);
+        objDetach(p);
         objFreePermanently(p->chr, 1);
         p = p->nextSibling;
     }
@@ -3127,7 +3127,7 @@ glabel disable_sounds_attached_to_player_then_something
 /* 055010 7F0204E0 00000000 */   nop   
 .L7F0204E4:
 /* 055014 7F0204E4 8C910004 */  lw    $s1, 4($a0)
-/* 055018 7F0204E8 0FC13011 */  jal   sub_GAME_7F04C044
+/* 055018 7F0204E8 0FC13011 */  jal   objDetach
 /* 05501C 7F0204EC 8C900024 */   lw    $s0, 0x24($a0)
 /* 055020 7F0204F0 02202025 */  move  $a0, $s1
 /* 055024 7F0204F4 0FC10409 */  jal   objFreePermanently
