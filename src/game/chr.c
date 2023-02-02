@@ -90,15 +90,15 @@ u32 num_female_heads = 0;
 
 s32 list_of_bodies[] = {
     BODY_Jungle_Commando,BODY_St_Petersburg_Guard,BODY_Russian_Soldier,BODY_Russian_Infantry,
-    BODY_Janus_Special_Forces,BODY_Tuxedo,BODY_Boris,BODY_Ourumov,
+    BODY_Janus_Special_Forces,BODY_Brosnan_Tuxedo,BODY_Boris,BODY_Ourumov,
     BODY_Trevelyan_Janus,BODY_Valentin_,BODY_Xenia,BODY_Baron_Samedi,
     BODY_Jaws,BODY_Mayday,BODY_Oddjob,BODY_Natalya_Skirt,
     BODY_Janus_Marine,BODY_Russian_Commandant,BODY_Siberian_Guard_1_Mishkin,BODY_Naval_Officer,
     BODY_Siberian_Special_Forces,BODY_Special_Operations_Uniform,BODY_Formal_Wear,BODY_Jungle_Fatigues,
     BODY_Unused_Female,BODY_Rosika,BODY_Scientist_2_Female,BODY_Civilian_1_Female,
     BODY_Unused_Male_1,BODY_Unused_Male_2,BODY_Civilian_4,BODY_Civilian_2,
-    BODY_Civilian_3,BODY_Scientist_1_Male,BODY_Tuxedo,BODY_Tuxedo,
-    BODY_Tuxedo,BODY_Helicopter_Pilot,BODY_Siberian_Guard_2,BODY_Arctic_Commando,
+    BODY_Civilian_3,BODY_Scientist_1_Male,BODY_Brosnan_Tuxedo,BODY_Brosnan_Tuxedo,
+    BODY_Brosnan_Tuxedo,BODY_Helicopter_Pilot,BODY_Siberian_Guard_2,BODY_Arctic_Commando,
     BODY_Moonraker_Elite_1_Male,BODY_Moonraker_Elite_2_Female,-1,
 };
 

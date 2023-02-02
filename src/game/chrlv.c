@@ -35,7 +35,7 @@
 
 // forward declarations
 
-u32 check_if_item_held_like_pistol            (PropRecord *arg0);
+u32 weaponIsOneHanded            (PropRecord *arg0);
 void chrlvIdleAnimationRelated                (ChrRecord *self, f32 arg1);
 f32 chrlvGetGuard007SpeedRating               (ChrRecord *self, f32 min, f32 max);
 s32 chrlvGetGuard007SpeedRatingInt            (ChrRecord *self, s32 arg1);
@@ -43,9 +43,9 @@ f32 chrlvGetGuard007ArghRating                (ChrRecord *self, f32 min, f32 max
 void chrlvKneelingAnimationRelated            (ChrRecord *self);
 void chrlvIdleAnimationRelated7F023E14        (ChrRecord *self, f32 arg1);
 void chrlvKneelingAnimationRelated7F023E48    (ChrRecord *self);
-void chrlvActorKneel                          (ChrRecord *self);
+void chrKneelChooseAnimation                          (ChrRecord *self);
 void chrlvPerformAnimationForActor            (ChrRecord *self, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s32 arg5);
-void chrlvExtendLeftHandAnimationRelated      (ChrRecord *self);
+void chrStartAlarmChooseAnimation      (ChrRecord *self);
 void chrlvThrowGrenadeAnimationRelated        (ChrRecord *self, PropRecord *arg1, s32 arg2, s32 arg3);
 void chrlvSpotBondAnimationRelated            (ChrRecord *self, f32 arg1);
 void chrlvActorShuffleFeet                    (ChrRecord *self);
@@ -73,7 +73,7 @@ s32 chrlvStanRoomRelatedPad                   (ChrRecord *self, PadRecord *arg1)
 void play_sound_for_shot_actor                (ChrRecord *);
 void sub_GAME_7F025560                        (ChrRecord *self, s32 attack_type, s32 arg2);
 coord3d *chrlvGetChrOrPresetLocation          (ChrRecord *self, s32 flags, s32 lookup_id, StandTile **stan);
-void sub_GAME_7F02D184                        (ChrRecord *self);
+void chrStopFiring                        (ChrRecord *self);
 void sub_GAME_7F0281F4                        (ChrRecord *self);
 s32 plot_course_for_actor                     (ChrRecord *self, coord3d *arg1, StandTile *stan, SPEED speed);
 void chrlvPlotCourseRelated                   (ChrRecord *self);
@@ -327,7 +327,7 @@ void expand_09_characters(s32 stageid, GuardRecord *arg1, s32 arg2)
  * Address 0x7F023910.
  * dont think this is right, shouldnt it check for gun flags not chr?
  */
-u32 check_if_item_held_like_pistol(PropRecord *arg0)
+u32 weaponIsOneHanded(PropRecord *arg0)
 {
     if (arg0 != NULL)
     {
@@ -355,8 +355,8 @@ void chrlvIdleAnimationRelated(ChrRecord *self, f32 duration)
     if (
         ((left != NULL) && (right != NULL))
         || ((left == NULL) && (right == NULL))
-        || (check_if_item_held_like_pistol(left) != 0)
-        || (check_if_item_held_like_pistol(right) != 0))
+        || (weaponIsOneHanded(left) != 0)
+        || (weaponIsOneHanded(right) != 0))
     {
         modelSetAnimation(self->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_idle_unarmed], randomGetNext() & 1, 0, 0.25f, duration);
         modelSetAnimLooping(self->model, 0, 16.0f);
@@ -384,41 +384,41 @@ void chrlvIdleAnimationRelated(ChrRecord *self, f32 duration)
 #define RATE 1.0f
 #endif
 
-void chrlvIdleAnimationRelated7F023A94(ChrRecord *self, f32 arg1)
+void chrlvIdleAnimationRelated7F023A94(ChrRecord *self, f32 mergetime)
 {
-    f32 f2;
+    f32 fsleep;
 
-    sub_GAME_7F02D184(self);
+    chrStopFiring(self);
     self->actiontype = ACT_STAND;
 
-    self->act_stand.unk02c = 0;
+    self->act_stand.prestand = 0;
     self->act_stand.face_entitytype = 0;
     self->act_stand.face_entityid = 0;
-    self->act_stand.unk038 = 0;
-    self->act_stand.unk03c = 2;
-    self->act_stand.unk040 = 0;
+    self->act_stand.reaim = 0;
+    self->act_stand.turning = 2;
+    self->act_stand.checkfacingwall = 0;
     //eu bug, doesnt use pal version of CHRLV_SEEN_RECENT_CHECK) + CHRLV_DEFAULT_TIMER;
     //so temp hardcoded to 120) + 180;
-    self->act_stand.unk044 = (randomGetNext() % (u32) 120) + 180;
+    self->act_stand.wallcount = (randomGetNext() % (u32) 120) + 180;
 
-    f2 = arg1;
+    fsleep = mergetime;
 
     if (self->model->playspeed != RATE)
     {
 #if defined(BUGFIX_R1)
-        f2 *= (RATE / self->model->playspeed);
+        fsleep *= (RATE / self->model->playspeed);
 #else
-        f2 = arg1 / self->model->playspeed;
+        fsleep = mergetime / self->model->playspeed;
 #endif
     }
 
-    if (f2 > 127.0f)
+    if (fsleep > 127.0f)
     {
-        f2 = 127.0f;
+        fsleep = 127.0f;
     }
 
-    self->sleep = (s8) (s32) f2;
-    chrlvIdleAnimationRelated(self, arg1);
+    self->sleep = (s8) (s32) fsleep;
+    chrlvIdleAnimationRelated(self, mergetime);
 }
 
 
@@ -482,17 +482,17 @@ void chrlvKneelingAnimationRelated(ChrRecord *self)
 {
     if (self->actiontype == ACT_KNEEL)
     {
-        sub_GAME_7F02D184(self);
+        chrStopFiring(self);
 
         self->actiontype = ACT_STAND;
-        self->act_stand.unk02c = 1;
+        self->act_stand.prestand = 1;
         self->act_stand.face_entitytype = 0;
         self->act_stand.face_entityid = 0;
-        self->act_stand.unk038 = 0;
-        self->act_stand.unk03c = 2;
-        self->act_stand.unk040 = 0;       
+        self->act_stand.reaim = 0;
+        self->act_stand.turning = 2;
+        self->act_stand.checkfacingwall = 0;       
         // bug/typo??: this is the only code like this not adjusted for VERSION_EU
-        self->act_stand.unk044 = (randomGetNext() % 120) + 180;
+        self->act_stand.wallcount = (randomGetNext() % 120) + 180;
         self->sleep = 0;
 
         if ((s32)objecthandlerGetModelAnim(self->model) == (s32)&ANIM_DATA_fire_kneel_forward_one_handed_weapon_slow + (s32)&ptr_animation_table->data)
@@ -521,7 +521,7 @@ void chrlvKneelingAnimationRelated(ChrRecord *self)
 void chrlvIdleAnimationRelated7F023E14(ChrRecord *self, f32 arg1)
 {
     chrlvIdleAnimationRelated7F023A94(self, arg1);
-    self->act_stand.unk040 = 1;
+    self->act_stand.checkfacingwall = 1;
 }
 
 
@@ -534,7 +534,7 @@ void chrlvIdleAnimationRelated7F023E14(ChrRecord *self, f32 arg1)
 void chrlvKneelingAnimationRelated7F023E48(ChrRecord *self)
 {
     chrlvKneelingAnimationRelated(self);
-    self->act_stand.unk040 = 1;
+    self->act_stand.checkfacingwall = 1;
 }
 
 
@@ -545,25 +545,25 @@ void chrlvKneelingAnimationRelated7F023E48(ChrRecord *self)
  * Address 0x7F023E74.
  * PD: chrKneelChooseAnimation
  */
-void chrlvActorKneel(ChrRecord *self)
+void chrKneelChooseAnimation(ChrRecord *self)
 {
     PropRecord *left;
     PropRecord *right;
 
     left = chrGetEquippedWeaponProp(self, GUNLEFT);
     right = chrGetEquippedWeaponProp(self, GUNRIGHT);
-    sub_GAME_7F02D184(self);
+    chrStopFiring(self);
     
-    if (((left != NULL) && (right != NULL))
-        || ((left == NULL) && (right == NULL))
-        || (check_if_item_held_like_pistol(left) != 0)
-        || (check_if_item_held_like_pistol(right) != 0))
+    if ((left && right)
+        || (!left && !right)
+        || weaponIsOneHanded(left)
+        || weaponIsOneHanded(right))
     {
         s32 r = randomGetNext() & 1;
         modelSetAnimation(self->model, (struct ModelAnimation*)&ptr_animation_table->data[(s32)&ANIM_DATA_fire_kneel_forward_one_handed_weapon_slow], r, 0.0f, chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f), 16.0f);
         modelSetAnimEndFrame(self->model, 28.0f);
     }
-    else if ((right != NULL) || (left != NULL))
+    else if (right || left)
     {
         modelSetAnimation(self->model, (struct ModelAnimation*)&ptr_animation_table->data[(s32)&ANIM_DATA_fire_kneel_left_leg], left != NULL, 0.0f, chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f), 16.0f);
         modelSetAnimEndFrame(self->model, 27.0f);
@@ -589,7 +589,7 @@ void chrlvPerformAnimationForActor(ChrRecord *self, s32 arg1, s32 arg2, s32 arg3
         phi_f0 = -0.5f;
     }
 
-    sub_GAME_7F02D184(self);
+    chrStopFiring(self);
     modelSetAnimation(self->model, (void *) animation_table_ptrs1[arg1], (arg4 & 1) != 0, farg2, phi_f0, (f32)arg5);
 
     if (arg3 >= 0)
@@ -629,31 +629,27 @@ void chrlvPerformAnimationForActor(ChrRecord *self, s32 arg1, s32 arg2, s32 arg3
  * Address 0x7F024150.
  * PD: chrStartAlarmChooseAnimation
  */
-void chrlvExtendLeftHandAnimationRelated(ChrRecord *self)
+void chrStartAlarmChooseAnimation(ChrRecord *self)
 {
-    PropRecord *left;
-    PropRecord *right;
-    s32 phi_a2;
+    PropRecord *left = chrGetEquippedWeaponProp(self, GUNLEFT);
+    PropRecord *right = chrGetEquippedWeaponProp(self, GUNRIGHT);
+    bool flip = FALSE;
 
-    left = chrGetEquippedWeaponProp(self, GUNLEFT);
-    right = chrGetEquippedWeaponProp(self, GUNRIGHT);
-
-    phi_a2 = 0;
-    if ((left != NULL) && (right == NULL))
+    if (left && !right)
     {
-        phi_a2 = 1;
+        flip = TRUE;
     }
-    else if (((left != NULL) && (right != NULL)) || ((left == NULL) && (right == NULL)))
+    else if ((left && right) || (!left && !right))
     {
-        phi_a2 = randomGetNext() & 1;
+        flip = randomGetNext() & 1;
     }
 
-    sub_GAME_7F02D184(self);
+    chrStopFiring(self);
 
     self->actiontype = ACT_STARTALARM;
     self->sleep = 0;
 
-    modelSetAnimation(self->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_extending_left_hand], phi_a2, 40.0f, 1.0f, 16.0f);
+    modelSetAnimation(self->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_extending_left_hand], flip, 40.0f, 1.0f, 16.0f);
     modelSetAnimEndFrame(self->model, 82.0f);
 }
 
@@ -665,7 +661,7 @@ void chrlvExtendLeftHandAnimationRelated(ChrRecord *self)
  */
 void chrlvThrowGrenadeAnimationRelated(ChrRecord *self, PropRecord *arg1, s32 arg2, s32 arg3)
 {
-    sub_GAME_7F02D184(self);
+    chrStopFiring(self);
 
     self->actiontype = ACT_THROWGRENADE;
     self->sleep = 0;
@@ -728,7 +724,7 @@ void chrlvActorShuffleFeet(ChrRecord *self)
     if ((temp_f0 < 0.17453294f) || (temp_f0 > 6.1086526f))
     {
         chrlvSpotBondAnimationRelated(self, 16.0f);
-        sub_GAME_7F02D184(self);
+        chrStopFiring(self);
         self->actiontype = ACT_SURPRISED;
         self->sleep = 0;
 
@@ -748,7 +744,7 @@ void chrlvActorShuffleFeet(ChrRecord *self)
  */
 void chrlvSurrenderAnimationRelated(ChrRecord *self)
 {
-    sub_GAME_7F02D184(self);
+    chrStopFiring(self);
     self->actiontype = ACT_SURPRISED;
     self->sleep = 0;
     modelSetAnimation(self->model, (struct ModelAnimation*)&ptr_animation_table->data[(s32)&ANIM_DATA_surrendering_armed], randomGetNext() & 1, 0.0f, chrlvGetGuard007SpeedRating(self, 0.35f, 0.56f), 16.0f);
@@ -767,7 +763,7 @@ void chrlvActorLookFlustered(ChrRecord *self)
 
     sp2C = randomGetNext() % 3U;
 
-    sub_GAME_7F02D184(self);
+    chrStopFiring(self);
 
     self->actiontype = ACT_SURPRISED;
     self->sleep = 0;
@@ -804,7 +800,7 @@ void chrlvActorThrowWeaponSurrender(ChrRecord *self)
         left = chrGetEquippedWeaponProp(self, GUNLEFT);
         right = chrGetEquippedWeaponProp(self, GUNRIGHT);
 
-        sub_GAME_7F02D184(self);
+        chrStopFiring(self);
 
         self->actiontype = ACT_SURRENDER;
 
@@ -847,7 +843,7 @@ void chrlvActorFadeAway(ChrRecord *self)
 {
     if (self->actiontype != ACT_DEAD)
     {
-        sub_GAME_7F02D184(self);
+        chrStopFiring(self);
         self->actiontype = ACT_DEAD;
         self->act_dead.allowfade = -1;
         self->sleep = 0;
@@ -878,16 +874,16 @@ void chrlvSideStepAnimationRelated(ChrRecord *self, GUNHAND side)
         sp2C = randomGetNext() & 1;
         phi_v1 = randomGetNext() & 1;
     }
-    else if (check_if_item_held_like_pistol(left) == 0)
+    else if (weaponIsOneHanded(left) == 0)
     {
-        if ((check_if_item_held_like_pistol(right) == 0) && ((left != NULL) || (right != NULL)))
+        if ((weaponIsOneHanded(right) == 0) && ((left != NULL) || (right != NULL)))
         {
             sp2C = left != 0;
             phi_v1 = randomGetNext() & 1;
         }
     }
 
-    sub_GAME_7F02D184(self);
+    chrStopFiring(self);
 
     self->actiontype = ACT_SIDESTEP;
     self->sleep = 0;
@@ -949,13 +945,13 @@ void chrlvFireJumpToSideAnimationRelated(ChrRecord *self, GUNHAND side)
     else if (
         ((left != NULL) && (right != NULL))
         || ((left == NULL) && (right == NULL))
-        || (check_if_item_held_like_pistol(left) != 0)
-        || (check_if_item_held_like_pistol(right) != 0))
+        || (weaponIsOneHanded(left) != 0)
+        || (weaponIsOneHanded(right) != 0))
     {
         side2 = randomGetNext() & 1;
     }
 
-    sub_GAME_7F02D184(self);
+    chrStopFiring(self);
 
     self->actiontype = ACT_JUMPOUT;
     self->sleep = 0;
@@ -1026,7 +1022,7 @@ void sub_GAME_7F024CF8(ChrRecord *self, coord3d *arg1)
     }
     else
     {
-        if ((check_if_item_held_like_pistol(left)) || (check_if_item_held_like_pistol(right)))
+        if ((weaponIsOneHanded(left)) || (weaponIsOneHanded(right)))
         {
             sp2C = 0;
             phi_a2 = left != 0;
@@ -1037,7 +1033,7 @@ void sub_GAME_7F024CF8(ChrRecord *self, coord3d *arg1)
         }
     }
 
-    sub_GAME_7F02D184(self);
+    chrStopFiring(self);
 
     self->actiontype = ACT_RUNPOS;
     self->act_runpos.pos.f[0] = arg1->f[0];
@@ -1071,7 +1067,7 @@ void sub_GAME_7F024CF8(ChrRecord *self, coord3d *arg1)
 
 void chrlvDeathStaggerAnimationRelated(ChrRecord *self)
 {
-    sub_GAME_7F02D184(self);
+    chrStopFiring(self);
     self->actiontype = ACT_TEST;
     self->sleep = 0;
     modelSetAnimation(self->model, (struct ModelAnimation*)&ptr_animation_table->data[(s32)&ANIM_DATA_death_stagger_back_to_wall], 0, 10.0f, 0.5f, 16.0f);
@@ -1382,7 +1378,7 @@ void sub_GAME_7F025560(ChrRecord *self, s32 attack_type, s32 arg2)
     }
     else
     {
-        if ((check_if_item_held_like_pistol(left) != 0) || (check_if_item_held_like_pistol(right) != 0))
+        if ((weaponIsOneHanded(left) != 0) || (weaponIsOneHanded(right) != 0))
         {
             last_arg2 = left != 0;
             animation_pointer = (struct anim_group_info **)ptr_pistol_firing_animation_groups;
@@ -1454,7 +1450,7 @@ void sub_GAME_7F0256F0(ChrRecord *self, s32 attack_type, s32 arg2)
     }
     else
     {
-        if ((check_if_item_held_like_pistol(left) != 0) || (check_if_item_held_like_pistol(right) != 0))
+        if ((weaponIsOneHanded(left) != 0) || (weaponIsOneHanded(right) != 0))
         {
             last_arg2 = left != 0;
             animation_pointer = (struct anim_group_info **)ptr_crouched_pistol_firing_animation_groups;
@@ -1568,7 +1564,7 @@ void chrlvInitActAttackWalk(ChrRecord *chr, s32 arg1)
             sp70.p[0] = 1;
         }
     }
-    else if (check_if_item_held_like_pistol(left) || check_if_item_held_like_pistol(right))
+    else if (weaponIsOneHanded(left) || weaponIsOneHanded(right))
     {
         sp78 = (s32)left != 0;
 
@@ -1717,7 +1713,7 @@ void chrlvInitActAttackRoll(ChrRecord *chr, GUNHAND side)
             sp64.p[0] = sp7C == 0;
         }
     }
-    else if (check_if_item_held_like_pistol(left) || check_if_item_held_like_pistol(right))
+    else if (weaponIsOneHanded(left) || weaponIsOneHanded(right))
     {
         sp7C = (s32)left != 0;
         sp78 = 1;
@@ -2120,7 +2116,7 @@ void triggered_on_shot_hit(ChrRecord *self, coord3d *arg1, f32 arg2, s32 req_ani
                     {
                         struck_ani = &D_8002DEBC[randomGetNext() & 1];
 
-                        sub_GAME_7F02D184(self);
+                        chrStopFiring(self);
                         self->actiontype = ACT_DIE;
                         self->act_die.notifychrindex = 0;
                         self->act_die.thudframe1 = struck_ani->sfx1_timer_60;
@@ -2159,7 +2155,7 @@ void triggered_on_shot_hit(ChrRecord *self, coord3d *arg1, f32 arg2, s32 req_ani
 
                     tr = (randomGetNext() % (u32)D_8002C914[animation_something_index].field_20);
                     struck_anib = &D_8002C914[animation_something_index].field_1C[tr];
-                    sub_GAME_7F02D184(self);
+                    chrStopFiring(self);
 
                     self->actiontype = ACT_DIE;
                     self->act_die.notifychrindex = 0;
@@ -2210,7 +2206,7 @@ void triggered_on_shot_hit(ChrRecord *self, coord3d *arg1, f32 arg2, s32 req_ani
             if ((req_animation_id == 7) && (arg2 > 2.3561945f) && (arg2 < 3.926991f) && ((u32) (randomGetNext() % (u32)5) < 2U))
             {
                 u32 sp54 = randomGetNext() % (u32)5;
-                sub_GAME_7F02D184(self);
+                chrStopFiring(self);
                 self->actiontype = ACT_ARGH;
                 self->act_argh.notifychrindex = 0;
                 self->act_argh.unk30 = g_GlobalTimer;
@@ -2282,7 +2278,7 @@ void triggered_on_shot_hit(ChrRecord *self, coord3d *arg1, f32 arg2, s32 req_ani
                     tr = (randomGetNext() % (u32) something_ani->field_28);
                     struck_ani = &something_ani->field_24[tr];
 
-                    sub_GAME_7F02D184(self);
+                    chrStopFiring(self);
                     
                     self->actiontype = ACT_ARGH;
                     self->act_argh.notifychrindex = 0;
@@ -2915,7 +2911,7 @@ s32 chrlvExplosionDamage(ChrRecord *self, coord3d *arg1, f32 damage, s32 arg3)
             explosion_animation_table[sp40].table[t]
             ];
         
-        sub_GAME_7F02D184(self);
+        chrStopFiring(self);
         
         self->actiontype = ACT_DIE;
         self->act_die.notifychrindex = 0;
@@ -3803,7 +3799,7 @@ void get_sound_at_range(ChrRecord *self, s32 arg1, s32 arg2)
     else
     {
         s32 t;
-        if (check_if_item_held_like_pistol(left) || check_if_item_held_like_pistol(right))
+        if (weaponIsOneHanded(left) || weaponIsOneHanded(right))
         {
             t = 0;
             flag = t;
@@ -3908,7 +3904,7 @@ s32 plot_course_for_actor(ChrRecord *self, coord3d *arg1, StandTile *stan, SPEED
         && !(waypointFindRoute(prop_waypoint, target_waypoint, (waypoint **)&sp44, MAX_CHRWAYPOINTS) < 2)
     )
     {
-        sub_GAME_7F02D184(self);
+        chrStopFiring(self);
 
         self->actiontype = ACT_GOPOS;
 
@@ -3974,7 +3970,7 @@ void chrlvWalkingAnimationRelated(ChrRecord *self)
     else
     {
         s32 t;
-        if (check_if_item_held_like_pistol(left) || check_if_item_held_like_pistol(right))
+        if (weaponIsOneHanded(left) || weaponIsOneHanded(right))
         {
             t = 0;
             flag = t;
@@ -4046,7 +4042,7 @@ void set_actor_on_path(ChrRecord *self, struct patrol_path *path)
         next_step = 0;
     }
 
-    sub_GAME_7F02D184(self);
+    chrStopFiring(self);
     self->actiontype = ACT_PATROL;
     self->act_patrol.path = path;
 
@@ -4142,7 +4138,7 @@ glabel set_actor_on_path
 /* 05DD08 7F0291D8 02002025 */   move  $a0, $s0
 /* 05DD0C 7F0291DC 00006025 */  move  $t4, $zero
 .L7F0291E0:
-/* 05DD10 7F0291E0 0FC0B461 */  jal   sub_GAME_7F02D184
+/* 05DD10 7F0291E0 0FC0B461 */  jal   chrStopFiring
 /* 05DD14 7F0291E4 AFAC0020 */   sw    $t4, 0x20($sp)
 /* 05DD18 7F0291E8 8FAC0020 */  lw    $t4, 0x20($sp)
 /* 05DD1C 7F0291EC 240F000E */  li    $t7, 14
@@ -4559,7 +4555,7 @@ void chrlvAlertGuardToPlayerPosition(ChrRecord *self)
 */
 bool chrHasStoppedOrPatroling(ChrRecord *self) //chrHasStoppedOrPatroling
 {
-    if ((self->actiontype == ACT_STAND) && !self->act_stand.unk02c && !self->act_stand.unk038)
+    if ((self->actiontype == ACT_STAND) && !self->act_stand.prestand && !self->act_stand.reaim)
     {
         return TRUE;
     }
@@ -5176,8 +5172,8 @@ bool check_set_actor_standing_still(ChrRecord *self, s32 faceentitytype, s32 fac
 
         self->act_stand.face_entitytype = faceentitytype;
         self->act_stand.face_entityid   = faceentityid;
-        self->act_stand.unk038          = 0;
-        self->act_stand.unk040          = 0;
+        self->act_stand.reaim          = 0;
+        self->act_stand.checkfacingwall          = 0;
 
         return TRUE;
     }
@@ -5281,13 +5277,13 @@ void chrlvTickStand(ChrRecord *self)
         return;
     }
 
-    if (self->act_stand.unk02c != 0)
+    if (self->act_stand.prestand != 0)
     {
         // needs to save $f0 into sp(0x3c)
         if (objecthandlerGetModelField28(self->model) >= sub_GAME_7F06F5C4(self->model))
         {
             chrlvIdleAnimationRelated(self, 8.0f);
-            self->act_stand.unk02c = 0;
+            self->act_stand.prestand = 0;
         }
 
         self->sleep = 0;
@@ -5297,15 +5293,15 @@ void chrlvTickStand(ChrRecord *self)
 
     if (self->act_stand.face_entitytype > 0)
     {
-        if (self->act_stand.unk038)
+        if (self->act_stand.reaim)
         {
             subrotyarg2 = objecthandlerGetModelAnim(self->model)->unk04 - 1;
-            self->act_stand.unk03c = chrlvSetSubroty(self, self->act_stand.unk03c, subrotyarg2, 1.0f, 0.0f);
+            self->act_stand.turning = chrlvSetSubroty(self, self->act_stand.turning, subrotyarg2, 1.0f, 0.0f);
 
-            if (self->act_stand.unk03c != 1)
+            if (self->act_stand.turning != 1)
             {
                 chrlvIdleAnimationRelated(self, 8.0f);
-                self->act_stand.unk038 = 0;
+                self->act_stand.reaim = 0;
 
                 if (self->act_stand.face_entitytype & 0x10)
                 {
@@ -5321,13 +5317,13 @@ void chrlvTickStand(ChrRecord *self)
                 left = chrGetEquippedWeaponProp(self, 1);
                 right = chrGetEquippedWeaponProp(self, 0);
 
-                self->act_stand.unk038 = 1;
-                self->act_stand.unk03c = 1;
+                self->act_stand.reaim = 1;
+                self->act_stand.turning = 1;
                 
                 if (((left != NULL) && (right != NULL))
                     || ((left == NULL) && (right == NULL))
-                    || check_if_item_held_like_pistol(left)
-                    || check_if_item_held_like_pistol(right))
+                    || weaponIsOneHanded(left)
+                    || weaponIsOneHanded(right))
                 {
                     // required to fix stack above
                     // looks like it doesn't matter which `s32` is used.
@@ -5374,16 +5370,16 @@ void chrlvTickStand(ChrRecord *self)
 
     self->sleep = ((u32)randomGetNext() % 5U) + 0xE;
 
-    if (self->act_stand.unk040)
+    if (self->act_stand.checkfacingwall)
     {
         if (self->chrflags & 0x80)
         {
-            self->act_stand.unk040 = 0;
+            self->act_stand.checkfacingwall = 0;
             return;
         }
 
-        self->act_stand.unk044 -= self->sleep;
-        if (self->act_stand.unk044 < 0)
+        self->act_stand.wallcount -= self->sleep;
+        if (self->act_stand.wallcount < 0)
         {
             subroty = getsubroty(self->model);
 
@@ -5470,7 +5466,7 @@ void chrlvTickStand(ChrRecord *self)
             }
             else
             {
-                self->act_stand.unk040 = 0;
+                self->act_stand.checkfacingwall = 0;
             }
         }
     }
@@ -6717,7 +6713,7 @@ s32 sub_GAME_7F02D148(ChrRecord *self, s32 hand)
  * Address 0x7F02D184.
  * PD: chrStopFiring
 */
-void sub_GAME_7F02D184(ChrRecord *self)
+void chrStopFiring(ChrRecord *self)
 {
     sub_GAME_7F02D118(self, GUNRIGHT, 0);
     sub_GAME_7F02D118(self, GUNLEFT, 0);
@@ -10727,7 +10723,7 @@ bool check_if_able_to_then_kneel(ChrRecord *self)
 {
     if (chrIsNotDeadOrShot(self))
     {
-        chrlvActorKneel(self);
+        chrKneelChooseAnimation(self);
 
         return TRUE;
     }
@@ -11385,7 +11381,7 @@ bool chrTryStartAlarm(ChrRecord *self, s32 PadId)
 
         if (objinst && objIsHealthy(objinst))
         {
-            chrlvExtendLeftHandAnimationRelated(self);
+            chrStartAlarmChooseAnimation(self);
 
             return TRUE;
         }
