@@ -39516,17 +39516,17 @@ glabel sub_GAME_7F050DE8
 #endif
 
 
-PropRecord *hatApplyToChr(WeaponObjRecord *weapon, ChrRecord *chr, ModelFileHeader *filedata, PropRecord *prop, Model *model)
+PropRecord *hatApplyToChr(HatRecord *hat, ChrRecord *chr, ModelFileHeader *filedata, PropRecord *prop, Model *model)
 {
-    prop = init_standard_object((ObjectRecord*)weapon, filedata, prop, model);
+    prop = init_standard_object((ObjectRecord*)hat, filedata, prop, model);
 
-    if (prop && weapon->model)
+    if (prop && hat->model)
     {
-        f32 scale = weapon->extrascale * (1.0f / 256.0f);
+        f32 scale = hat->extrascale * (1.0f / 256.0f);
 
-        modelSetScale(weapon->model, weapon->model->scale * scale);
-        weapon->model->attachedto = chr->model;
-        weapon->model->attachedto_objinst = chr->model->obj->Switches[6];
+        modelSetScale(hat->model, hat->model->scale * scale);
+        hat->model->attachedto = chr->model;
+        hat->model->attachedto_objinst = chr->model->obj->Switches[6];
 
         chrpropReparent(prop, chr->prop);
         chr->handle_positiondata_hat = prop;
@@ -39536,20 +39536,20 @@ PropRecord *hatApplyToChr(WeaponObjRecord *weapon, ChrRecord *chr, ModelFileHead
 }
 
 
-void sub_GAME_7F051028(ObjectRecord *arg0, PropRecord *arg1)
+void hatLoadAndApplyToChr(HatRecord *hat, PropRecord *arg1)
 {
     s32 unused;
     s32 obj_idx;
-    obj_idx = (u32) arg0->obj;
+    obj_idx = (u32) hat->obj;
     modelLoad(obj_idx);
-    hatApplyToChr(arg0, arg1, PitemZ_entries[obj_idx].header, NULL, 0);
+    hatApplyToChr(hat, arg1, PitemZ_entries[obj_idx].header, NULL, 0);
 }
 
 
-void hatAssignToChr(ObjectRecord* hat, ChrRecord* chr)
+void hatAssignToChr(HatRecord* hat, ChrRecord* chr)
 {
     hat->damage = (*(s32*)&hat->damage / M_U16_MAX_VALUE_F);
-    sub_GAME_7F051028(hat, chr);
+    hatLoadAndApplyToChr(hat, chr);
 }
 
 
@@ -39558,14 +39558,14 @@ PropRecord *hatCreateForChr(ChrRecord *chr, s32 modelnum, u32 flags)
     ModelFileHeader *modeldef;
     PropRecord *prop;
     Model *model;
-    HatRecord *obj;
+    HatRecord *hat;
 
     modeldef = PitemZ_entries[modelnum].header;
 
     modelLoad(modelnum);
     prop = propAllocate();
     model = get_obj_instance_controller_for_header(modeldef);
-    obj = hatCreate(prop == NULL, model == NULL, modeldef);
+    hat = hatCreate(prop == NULL, model == NULL, modeldef);
 
     if (prop == NULL)
     {
@@ -39577,17 +39577,17 @@ PropRecord *hatCreateForChr(ChrRecord *chr, s32 modelnum, u32 flags)
         model = get_obj_instance_controller_for_header(modeldef);
     }
 
-    if (obj && prop && model)
+    if (hat && prop && model)
     {
         HatRecord tmp = BlankHatRecord;
 
-        *obj = tmp;
+        *hat = tmp;
 
-        obj->obj = modelnum;
-        obj->flags = flags | PROPFLAG_ASSIGNEDTOCHR;
-        obj->pad = chr->chrnum;
+        hat->obj = modelnum;
+        hat->flags = flags | PROPFLAG_ASSIGNEDTOCHR;
+        hat->pad = chr->chrnum;
 
-        prop = hatApplyToChr((WeaponObjRecord*)obj, chr, modeldef, prop, model);
+        prop = hatApplyToChr(hat, chr, modeldef, prop, model);
     }
     else
     {
