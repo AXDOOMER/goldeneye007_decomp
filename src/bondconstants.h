@@ -357,6 +357,9 @@ typedef enum PROJECTILEFLAG
     PROJECTILEFLAG_FREE        = 0x80000000
 } PROJECTILE_FLAG;
 
+// Might be the same flags as PROJECTILEFLAG
+#define EMBEDMENTFLAG_FREE 0x00000001
+
 /* door lock flags*/
 BITFLAG(DOOR_LOCK,
         0,

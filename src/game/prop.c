@@ -2071,9 +2071,9 @@ void setupSingleMonitor(s32 stageID, MonitorObjRecord *monitor, s32 cmdindex)
         }
 
         prop = objInitWithAutoModel((ObjectRecord*)monitor);
-        monitor->unk6C = (ObjectRecord_f6c*)monitorthingGetNew();
+        monitor->embedment = embedmentAllocate();
 
-        if (prop && monitor->unk6C)
+        if (prop && monitor->embedment)
         {
             monitor->runtime_bitflags |= RUNTIMEBITFLAG_EMBEDDED;
             modelSetScale(monitor->model, monitor->model->scale * scale);
@@ -2097,8 +2097,8 @@ void setupSingleMonitor(s32 stageID, MonitorObjRecord *monitor, s32 cmdindex)
             }
 
             chrpropReparent(prop, owner->prop);
-            matrix_4x4_set_rotation_around_x(0.36651915f, (Mtxf*)&monitor->unk6C->pos);
-            matrix_scalar_multiply(monitor->model->scale / owner->model->scale, (f32*)&monitor->unk6C->pos);
+            matrix_4x4_set_rotation_around_x(0.36651915f, (Mtxf*)&monitor->embedment->matrix);
+            matrix_scalar_multiply(monitor->model->scale / owner->model->scale, (f32*)&monitor->embedment->matrix);
         }
     }
     else

@@ -113,7 +113,7 @@ Projectile g_Projectiles[PROJECTILES_ARR_MAX];
 /**
  * Address 0x80075030.
 */
-struct bss_80075030 dword_CODE_bss_80075030[BSS_80075030_DATA_LEN];
+Embedment g_Embedments[EMBEDMENT_ARR_MAX];
 
 //CODE.bss:80075B70
 u32 objinst;

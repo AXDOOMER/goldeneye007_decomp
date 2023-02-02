@@ -2561,7 +2561,7 @@ typedef union
     } Projectile;
 
     typedef struct Embedment {
-        /*0x000*/ u32 flags;
+        /*0x000*/ s32 flags;
         /*0x004*/ Mtxf matrix;
         /*0x044*/ struct Projectile *projectile;
     } Embedment;

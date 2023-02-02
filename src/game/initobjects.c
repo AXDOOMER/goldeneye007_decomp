@@ -143,9 +143,9 @@ void reinit_between_menus(void)
         g_Projectiles[i].unk9C = 0;
     }
 
-    for (i=0; i<BSS_80075030_DATA_LEN; i++)
+    for (i = 0; i < EMBEDMENT_ARR_MAX; i++)
     {
-        dword_CODE_bss_80075030[i].unk00 = 1;
+        g_Embedments[i].flags = 1;
     }
 
     g_LevelLoadPropSwitch = NULL;

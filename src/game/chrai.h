@@ -169,7 +169,7 @@ Rotate Image:
 #define BSS_80072E70_DATA_LEN 10
 #define BSS_80073370_DATA_LEN 20
 #define PROJECTILES_ARR_MAX 20
-#define BSS_80075030_DATA_LEN 40
+#define EMBEDMENT_ARR_MAX 40
 #define ONSCREEN_PROP_LIST_LEN 500
 
 
@@ -314,31 +314,6 @@ struct bss_80073370 {
     u32 unk80;
 };
 
-struct bss_80075030 {
-    s32 unk00;
-    u32 unk04;
-    u32 unk08;
-    u32 unk0C;
-
-    u32 unk10;
-    u32 unk14;
-    u32 unk18;
-    u32 unk1C;
-
-    u32 unk20;
-    u32 unk24;
-    u32 unk28;
-    u32 unk2C;
-
-    u32 unk30;
-    u32 unk34;
-    u32 unk38;
-    u32 unk3C;
-
-    u32 unk40;
-    u32 unk44;
-};
-
 extern struct SetupPtrs g_SetupPtrs;
 
 extern u32 monAnimRadarSub1[];
@@ -395,7 +370,7 @@ extern struct projectile_data             ProjectileData_start_address[];
 extern struct bss_80072E70                dword_CODE_bss_80072E70[];
 extern struct bss_80073370                dword_CODE_bss_80073370[];
 extern struct Projectile                  g_Projectiles[];
-extern struct bss_80075030                dword_CODE_bss_80075030[];
+extern struct Embedment                   g_Embedments[];
 
 
 extern MonitorRecord g_MonitorAnimController;
