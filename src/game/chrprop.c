@@ -108,7 +108,7 @@ struct bss_80073370 dword_CODE_bss_80073370[BSS_80073370_DATA_LEN];
 /**
  * Address 0x80073DC0.
 */
-struct projectile g_Projectiles[PROJECTILES_ARR_MAX];
+Projectile g_Projectiles[PROJECTILES_ARR_MAX];
 
 /**
  * Address 0x80075030.

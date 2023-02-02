@@ -2218,7 +2218,7 @@ typedef union
         f32     unk28;
     } ChrRecord_f180;
 
-    typedef struct ObjectRecord_f6c
+    typedef struct ObjectRecord_f6c // I think this is replaced by union with Projectile and Embedment
     {
         u32                  flags;
         coord3d              pos;
@@ -2486,6 +2486,86 @@ typedef union
         f32 unk48;
     };
 
+    typedef struct Projectile {
+        u32 flags;
+        coord3d speed;
+
+        f32 unk10;
+        f32 unk14;
+        f32 unk18;
+        f32 unk1C;
+
+        u32 unk20;
+        u32 unk24;
+        u32 unk28;
+        u32 unk2C;
+
+        u32 unk30;
+        u32 unk34;
+        u32 unk38;
+        u32 unk3C;
+
+        u32 unk40;
+        u32 unk44;
+        u32 unk48;
+        u32 unk4C;
+
+        u32 unk50;
+        u32 unk54;
+        u32 unk58;
+        u32 unk5C;
+
+        f32 unk60;
+        u32 unk64;
+        u32 unk68;
+        u32 unk6C;
+
+        u32 unk70;
+        u32 unk74;
+        u32 unk78;
+        u32 unk7C;
+
+        u32 unk80;
+        u32 unk84;
+        u32 unk88;
+        f32 unk8C; 
+
+        u32 unk90;
+        f32 unk94;
+        u32 unk98;
+        u32 unk9C;
+
+        u32 unkA0;
+        u32 unkA4;
+        u32 unkA8;
+        u32 unkAC;
+
+        u32 unkB0;
+        u32 unkB4;
+        u32 unkB8;
+        u32 unkBC;
+
+        f32 unkC0;
+        f32 unkC4;
+        f32 unkC8;
+        u32 unkCC;
+
+        u32 unkD0;
+        u32 unkD4;
+        u32 unkD8;
+        u32 unkDC;
+
+        u32 unkE0;
+        struct ObjectRecord* obj; // 0xE4;
+        s32 unkE8;
+    } Projectile;
+
+    typedef struct Embedment {
+        /*0x000*/ u32 flags;
+        /*0x004*/ Mtxf matrix;
+        /*0x044*/ struct Projectile *projectile;
+    } Embedment;
+
     /**
      * Object (Prop Definition) Record holds common data such as pad and health.
      */
@@ -2668,7 +2748,13 @@ typedef union
         };
         struct collision_data *ptr_allocated_collisiondata_block;
 
-        ObjectRecord_f6c *unk6C; //pointer somewhere at least 0x44 long and the pointer at 0 and 0x44 is also at least 0xb8 long
+        union {
+            struct Projectile *projectile;
+            struct Embedment *embedment;
+
+            // I think this is replaced by union with Projectile and Embedment
+            ObjectRecord_f6c *unk6C; //pointer somewhere at least 0x44 long and the pointer at 0 and 0x44 is also at least 0xb8 long
+        };
 
         f32             maxdamage;
         f32               damage;

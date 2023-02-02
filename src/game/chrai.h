@@ -314,81 +314,6 @@ struct bss_80073370 {
     u32 unk80;
 };
 
-struct projectile {
-    u32 flags;
-    coord3d speed;
-
-    f32 unk10;
-    f32 unk14;
-    f32 unk18;
-    f32 unk1C;
-
-    u32 unk20;
-    u32 unk24;
-    u32 unk28;
-    u32 unk2C;
-
-    u32 unk30;
-    u32 unk34;
-    u32 unk38;
-    u32 unk3C;
-
-    u32 unk40;
-    u32 unk44;
-    u32 unk48;
-    u32 unk4C;
-
-    u32 unk50;
-    u32 unk54;
-    u32 unk58;
-    u32 unk5C;
-
-    f32 unk60;
-    u32 unk64;
-    u32 unk68;
-    u32 unk6C;
-
-    u32 unk70;
-    u32 unk74;
-    u32 unk78;
-    u32 unk7C;
-
-    u32 unk80;
-    u32 unk84;
-    u32 unk88;
-    f32 unk8C; 
-
-    u32 unk90;
-    f32 unk94;
-    u32 unk98;
-    u32 unk9C;
-
-    u32 unkA0;
-    u32 unkA4;
-    u32 unkA8;
-    u32 unkAC;
-
-    u32 unkB0;
-    u32 unkB4;
-    u32 unkB8;
-    u32 unkBC;
-
-    f32 unkC0;
-    f32 unkC4;
-    f32 unkC8;
-    u32 unkCC;
-
-    u32 unkD0;
-    u32 unkD4;
-    u32 unkD8;
-    u32 unkDC;
-
-    u32 unkE0;
-    ObjectRecord* obj; // 0xE4;
-    s32 unkE8;
-};
-
-
 struct bss_80075030 {
     s32 unk00;
     u32 unk04;
@@ -469,7 +394,7 @@ extern sfxRecord                          sfx_related[];
 extern struct projectile_data             ProjectileData_start_address[];
 extern struct bss_80072E70                dword_CODE_bss_80072E70[];
 extern struct bss_80073370                dword_CODE_bss_80073370[];
-extern struct projectile                  g_Projectiles[];
+extern struct Projectile                  g_Projectiles[];
 extern struct bss_80075030                dword_CODE_bss_80075030[];
 
 

@@ -1043,7 +1043,7 @@ glabel sub_GAME_7F03FB70
 #endif
 
 
-void projectileReset(struct projectile *projectile)
+void projectileReset(Projectile *projectile)
 {
     projectile->flags = 0;
 
@@ -1079,7 +1079,7 @@ void projectileReset(struct projectile *projectile)
 #ifdef NONMATCHING
 
 // Somewhat close, 88%
-struct projectile *projectileAllocate(void)
+Projectile *projectileAllocate(void)
 {
     s32 bestindex = -1;
     s32 i;
@@ -1117,7 +1117,7 @@ struct projectile *projectileAllocate(void)
 }
 
 #else
-struct projectile *projectileAllocate(void);
+Projectile *projectileAllocate(void);
 GLOBAL_ASM(
 .text
 glabel projectileAllocate
@@ -2340,69 +2340,29 @@ glabel sub_GAME_7F040BA0
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-void objFreeEmbedmentOrProjectile(PropRecord*)
+void objFreeEmbedmentOrProjectile(PropRecord *prop)
 {
+    ObjectRecord *obj = prop->obj;
+    if (obj->runtime_bitflags & RUNTIMEBITFLAG_EMBEDDED)
+    {
+        if (obj->unk6C)
+        {
+            if (obj->embedment->projectile)
+            {
+                sub_GAME_7F03FB70(obj->embedment->projectile);
+            }
+            sub_GAME_7F03FE88(obj->embedment);
+        }
+        obj->embedment = NULL;
+        obj->runtime_bitflags &= ~RUNTIMEBITFLAG_EMBEDDED;
+    }
+    else if (obj->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)
+    {
+        sub_GAME_7F03FB70(obj->unk6C);
+        obj->projectile = NULL;
+        obj->runtime_bitflags &= ~RUNTIMEBITFLAG_DEPOSIT;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel objFreeEmbedmentOrProjectile
-/* 075820 7F040CF0 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 075824 7F040CF4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 075828 7F040CF8 8C820004 */  lw    $v0, 4($a0)
-/* 07582C 7F040CFC 8C430064 */  lw    $v1, 0x64($v0)
-/* 075830 7F040D00 306E0040 */  andi  $t6, $v1, 0x40
-/* 075834 7F040D04 11C00015 */  beqz  $t6, .L7F040D5C
-/* 075838 7F040D08 30780080 */   andi  $t8, $v1, 0x80
-/* 07583C 7F040D0C 8C44006C */  lw    $a0, 0x6c($v0)
-/* 075840 7F040D10 5080000E */  beql  $a0, $zero, .L7F040D4C
-/* 075844 7F040D14 2401FFBF */   li    $at, -65
-/* 075848 7F040D18 8C850044 */  lw    $a1, 0x44($a0)
-/* 07584C 7F040D1C 10A00006 */  beqz  $a1, .L7F040D38
-/* 075850 7F040D20 00000000 */   nop   
-/* 075854 7F040D24 00A02025 */  move  $a0, $a1
-/* 075858 7F040D28 0FC0FEDC */  jal   sub_GAME_7F03FB70
-/* 07585C 7F040D2C AFA2001C */   sw    $v0, 0x1c($sp)
-/* 075860 7F040D30 8FA2001C */  lw    $v0, 0x1c($sp)
-/* 075864 7F040D34 8C44006C */  lw    $a0, 0x6c($v0)
-.L7F040D38:
-/* 075868 7F040D38 0FC0FFA2 */  jal   sub_GAME_7F03FE88
-/* 07586C 7F040D3C AFA2001C */   sw    $v0, 0x1c($sp)
-/* 075870 7F040D40 8FA2001C */  lw    $v0, 0x1c($sp)
-/* 075874 7F040D44 8C430064 */  lw    $v1, 0x64($v0)
-/* 075878 7F040D48 2401FFBF */  li    $at, -65
-.L7F040D4C:
-/* 07587C 7F040D4C 00617824 */  and   $t7, $v1, $at
-/* 075880 7F040D50 AC40006C */  sw    $zero, 0x6c($v0)
-/* 075884 7F040D54 1000000C */  b     .L7F040D88
-/* 075888 7F040D58 AC4F0064 */   sw    $t7, 0x64($v0)
-.L7F040D5C:
-/* 07588C 7F040D5C 5300000B */  beql  $t8, $zero, .L7F040D8C
-/* 075890 7F040D60 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 075894 7F040D64 8C44006C */  lw    $a0, 0x6c($v0)
-/* 075898 7F040D68 0FC0FEDC */  jal   sub_GAME_7F03FB70
-/* 07589C 7F040D6C AFA2001C */   sw    $v0, 0x1c($sp)
-/* 0758A0 7F040D70 8FA2001C */  lw    $v0, 0x1c($sp)
-/* 0758A4 7F040D74 2401FF7F */  li    $at, -129
-/* 0758A8 7F040D78 8C590064 */  lw    $t9, 0x64($v0)
-/* 0758AC 7F040D7C AC40006C */  sw    $zero, 0x6c($v0)
-/* 0758B0 7F040D80 03214024 */  and   $t0, $t9, $at
-/* 0758B4 7F040D84 AC480064 */  sw    $t0, 0x64($v0)
-.L7F040D88:
-/* 0758B8 7F040D88 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F040D8C:
-/* 0758BC 7F040D8C 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0758C0 7F040D90 03E00008 */  jr    $ra
-/* 0758C4 7F040D94 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
