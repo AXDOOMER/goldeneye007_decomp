@@ -8046,88 +8046,30 @@ glabel sub_GAME_7F044B38
 #endif
 
 
+s32 glassCalculateOpacity(coord3d *pos, f32 xludist, f32 opadist, f32 arg3)
+{
+    coord3d *campos = &get_curplayer_positiondata()->pos;
+    s32 opacity;
+    f32 xdiff = pos->x - campos->x;
+    f32 ydiff = pos->y - campos->y;
+    f32 zdiff = pos->z - campos->z;
 
+    f32 distance = sqrtf(xdiff * xdiff + ydiff * ydiff + zdiff * zdiff);
 
+    if (distance > opadist)
+    {
+        opacity = 255;
+    } else if (distance < xludist)
+    {
+        opacity = arg3 * 255;
+    }
+    else
+    {
+        opacity = (((distance - xludist) * (1.0f - arg3)) / (opadist - xludist) + arg3) * 255;
+    }
 
-#ifdef NONMATCHING
-void sub_GAME_7F0451DC(void) {
-
+    return opacity;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0451DC
-/* 079D0C 7F0451DC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 079D10 7F0451E0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 079D14 7F0451E4 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 079D18 7F0451E8 AFA60020 */  sw    $a2, 0x20($sp)
-/* 079D1C 7F0451EC AFA70024 */  sw    $a3, 0x24($sp)
-/* 079D20 7F0451F0 0FC225E6 */  jal   get_curplayer_positiondata
-/* 079D24 7F0451F4 AFA40018 */   sw    $a0, 0x18($sp)
-/* 079D28 7F0451F8 8FA40018 */  lw    $a0, 0x18($sp)
-/* 079D2C 7F0451FC C4460008 */  lwc1  $f6, 8($v0)
-/* 079D30 7F045200 C44A000C */  lwc1  $f10, 0xc($v0)
-/* 079D34 7F045204 C4840000 */  lwc1  $f4, ($a0)
-/* 079D38 7F045208 C4880004 */  lwc1  $f8, 4($a0)
-/* 079D3C 7F04520C C4520010 */  lwc1  $f18, 0x10($v0)
-/* 079D40 7F045210 46062001 */  sub.s $f0, $f4, $f6
-/* 079D44 7F045214 C4900008 */  lwc1  $f16, 8($a0)
-/* 079D48 7F045218 460A4081 */  sub.s $f2, $f8, $f10
-/* 079D4C 7F04521C 46000102 */  mul.s $f4, $f0, $f0
-/* 079D50 7F045220 46128381 */  sub.s $f14, $f16, $f18
-/* 079D54 7F045224 46021182 */  mul.s $f6, $f2, $f2
-/* 079D58 7F045228 46062200 */  add.s $f8, $f4, $f6
-/* 079D5C 7F04522C 460E7282 */  mul.s $f10, $f14, $f14
-/* 079D60 7F045230 0C007DF8 */  jal   sqrtf
-/* 079D64 7F045234 460A4300 */   add.s $f12, $f8, $f10
-/* 079D68 7F045238 C7AC0020 */  lwc1  $f12, 0x20($sp)
-/* 079D6C 7F04523C C7A2001C */  lwc1  $f2, 0x1c($sp)
-/* 079D70 7F045240 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 079D74 7F045244 4600603C */  c.lt.s $f12, $f0
-/* 079D78 7F045248 00000000 */  nop   
-/* 079D7C 7F04524C 45020004 */  bc1fl .L7F045260
-/* 079D80 7F045250 4602003C */   c.lt.s $f0, $f2
-/* 079D84 7F045254 1000001C */  b     .L7F0452C8
-/* 079D88 7F045258 240300FF */   li    $v1, 255
-/* 079D8C 7F04525C 4602003C */  c.lt.s $f0, $f2
-.L7F045260:
-/* 079D90 7F045260 C7AE0024 */  lwc1  $f14, 0x24($sp)
-/* 079D94 7F045264 C7B00024 */  lwc1  $f16, 0x24($sp)
-/* 079D98 7F045268 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 079D9C 7F04526C 4502000A */  bc1fl .L7F045298
-/* 079DA0 7F045270 44815000 */   mtc1  $at, $f10
-/* 079DA4 7F045274 3C01437F */  li    $at, 0x437F0000 # 255.000000
-/* 079DA8 7F045278 44819000 */  mtc1  $at, $f18
-/* 079DAC 7F04527C 00000000 */  nop   
-/* 079DB0 7F045280 46128102 */  mul.s $f4, $f16, $f18
-/* 079DB4 7F045284 4600218D */  trunc.w.s $f6, $f4
-/* 079DB8 7F045288 44033000 */  mfc1  $v1, $f6
-/* 079DBC 7F04528C 1000000F */  b     .L7F0452CC
-/* 079DC0 7F045290 00601025 */   move  $v0, $v1
-/* 079DC4 7F045294 44815000 */  mtc1  $at, $f10
-.L7F045298:
-/* 079DC8 7F045298 46020201 */  sub.s $f8, $f0, $f2
-/* 079DCC 7F04529C 3C01437F */  li    $at, 0x437F0000 # 255.000000
-/* 079DD0 7F0452A0 460E5401 */  sub.s $f16, $f10, $f14
-/* 079DD4 7F0452A4 46026101 */  sub.s $f4, $f12, $f2
-/* 079DD8 7F0452A8 46104482 */  mul.s $f18, $f8, $f16
-/* 079DDC 7F0452AC 44814000 */  mtc1  $at, $f8
-/* 079DE0 7F0452B0 46049183 */  div.s $f6, $f18, $f4
-/* 079DE4 7F0452B4 460E3280 */  add.s $f10, $f6, $f14
-/* 079DE8 7F0452B8 46085402 */  mul.s $f16, $f10, $f8
-/* 079DEC 7F0452BC 4600848D */  trunc.w.s $f18, $f16
-/* 079DF0 7F0452C0 44039000 */  mfc1  $v1, $f18
-/* 079DF4 7F0452C4 00000000 */  nop   
-.L7F0452C8:
-/* 079DF8 7F0452C8 00601025 */  move  $v0, $v1
-.L7F0452CC:
-/* 079DFC 7F0452CC 03E00008 */  jr    $ra
-/* 079E00 7F0452D0 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
@@ -11536,7 +11478,7 @@ glabel object_interaction
 /* 07CD94 7F048264 468052A0 */  cvt.s.w $f10, $f10
 /* 07CD98 7F048268 44053000 */  mfc1  $a1, $f6
 /* 07CD9C 7F04826C 44065000 */  mfc1  $a2, $f10
-/* 07CDA0 7F048270 0FC11477 */  jal   sub_GAME_7F0451DC
+/* 07CDA0 7F048270 0FC11477 */  jal   glassCalculateOpacity
 /* 07CDA4 7F048274 00000000 */   nop   
 /* 07CDA8 7F048278 8E04008C */  lw    $a0, 0x8c($s0)
 /* 07CDAC 7F04827C AE020088 */  sw    $v0, 0x88($s0)
@@ -11577,7 +11519,7 @@ glabel object_interaction
 /* 07CE2C 7F0482FC 46802120 */  cvt.s.w $f4, $f4
 /* 07CE30 7F048300 44054000 */  mfc1  $a1, $f8
 /* 07CE34 7F048304 44062000 */  mfc1  $a2, $f4
-/* 07CE38 7F048308 0FC11477 */  jal   sub_GAME_7F0451DC
+/* 07CE38 7F048308 0FC11477 */  jal   glassCalculateOpacity
 /* 07CE3C 7F04830C 00000000 */   nop   
 /* 07CE40 7F048310 A60200BE */  sh    $v0, 0xbe($s0)
 /* 07CE44 7F048314 8FB90674 */  lw    $t9, 0x674($sp)
@@ -16642,7 +16584,7 @@ glabel object_interaction
 /* 07D1D8 7F048668 468052A0 */  cvt.s.w $f10, $f10
 /* 07D1DC 7F04866C 44053000 */  mfc1  $a1, $f6
 /* 07D1E0 7F048670 44065000 */  mfc1  $a2, $f10
-/* 07D1E4 7F048674 0FC1156C */  jal   sub_GAME_7F0451DC
+/* 07D1E4 7F048674 0FC1156C */  jal   glassCalculateOpacity
 /* 07D1E8 7F048678 00000000 */   nop   
 /* 07D1EC 7F04867C 8E04008C */  lw    $a0, 0x8c($s0)
 /* 07D1F0 7F048680 AE020088 */  sw    $v0, 0x88($s0)
@@ -16683,7 +16625,7 @@ glabel object_interaction
 /* 07D270 7F048700 46802120 */  cvt.s.w $f4, $f4
 /* 07D274 7F048704 44054000 */  mfc1  $a1, $f8
 /* 07D278 7F048708 44062000 */  mfc1  $a2, $f4
-/* 07D27C 7F04870C 0FC1156C */  jal   sub_GAME_7F0451DC
+/* 07D27C 7F04870C 0FC1156C */  jal   glassCalculateOpacity
 /* 07D280 7F048710 00000000 */   nop   
 /* 07D284 7F048714 A60200BE */  sh    $v0, 0xbe($s0)
 /* 07D288 7F048718 8FB9067C */  lw    $t9, 0x67c($sp)
@@ -21756,7 +21698,7 @@ glabel object_interaction
 /* 07AE34 7F048444 468052A0 */  cvt.s.w $f10, $f10
 /* 07AE38 7F048448 44053000 */  mfc1  $a1, $f6
 /* 07AE3C 7F04844C 44065000 */  mfc1  $a2, $f10
-/* 07AE40 7F048450 0FC114DC */  jal   sub_GAME_7F0451DC
+/* 07AE40 7F048450 0FC114DC */  jal   glassCalculateOpacity
 /* 07AE44 7F048454 00000000 */   nop   
 /* 07AE48 7F048458 8E04008C */  lw    $a0, 0x8c($s0)
 /* 07AE4C 7F04845C AE020088 */  sw    $v0, 0x88($s0)
@@ -21797,7 +21739,7 @@ glabel object_interaction
 /* 07AECC 7F0484DC 46802120 */  cvt.s.w $f4, $f4
 /* 07AED0 7F0484E0 44054000 */  mfc1  $a1, $f8
 /* 07AED4 7F0484E4 44062000 */  mfc1  $a2, $f4
-/* 07AED8 7F0484E8 0FC114DC */  jal   sub_GAME_7F0451DC
+/* 07AED8 7F0484E8 0FC114DC */  jal   glassCalculateOpacity
 /* 07AEDC 7F0484EC 00000000 */   nop   
 /* 07AEE0 7F0484F0 A60200BE */  sh    $v0, 0xbe($s0)
 /* 07AEE4 7F0484F4 8FAC067C */  lw    $t4, 0x67c($sp)
