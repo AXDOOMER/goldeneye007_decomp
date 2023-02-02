@@ -6903,41 +6903,18 @@ glabel handle_thrown_explosive_detonation
 #endif
 
 
+void objDropRecursively(PropRecord *prop)
+{
+	PropRecord *child = prop->child;
 
-#ifdef NONMATCHING
-void sub_GAME_7F044200(void) {
-
+	while (child)
+    {
+		PropRecord *prev = child->prev;
+		objDropRecursively(child);
+		objDrop(child);
+		child = prev;
+	}
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F044200
-/* 078D30 7F044200 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 078D34 7F044204 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 078D38 7F044208 AFB10018 */  sw    $s1, 0x18($sp)
-/* 078D3C 7F04420C AFB00014 */  sw    $s0, 0x14($sp)
-/* 078D40 7F044210 8C900020 */  lw    $s0, 0x20($a0)
-/* 078D44 7F044214 52000009 */  beql  $s0, $zero, .L7F04423C
-/* 078D48 7F044218 8FBF001C */   lw    $ra, 0x1c($sp)
-.L7F04421C:
-/* 078D4C 7F04421C 8E110024 */  lw    $s1, 0x24($s0)
-/* 078D50 7F044220 0FC11080 */  jal   sub_GAME_7F044200
-/* 078D54 7F044224 02002025 */   move  $a0, $s0
-/* 078D58 7F044228 0FC1304C */  jal   sub_GAME_7F04C130
-/* 078D5C 7F04422C 02002025 */   move  $a0, $s0
-/* 078D60 7F044230 1620FFFA */  bnez  $s1, .L7F04421C
-/* 078D64 7F044234 02208025 */   move  $s0, $s1
-/* 078D68 7F044238 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F04423C:
-/* 078D6C 7F04423C 8FB00014 */  lw    $s0, 0x14($sp)
-/* 078D70 7F044240 8FB10018 */  lw    $s1, 0x18($sp)
-/* 078D74 7F044244 03E00008 */  jr    $ra
-/* 078D78 7F044248 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
@@ -13148,7 +13125,7 @@ glabel object_interaction
 /* 07E638 7F049B08 8FAF0138 */  lw    $t7, 0x138($sp)
 /* 07E63C 7F049B0C A44F0000 */  sh    $t7, ($v0)
 .L7F049B10:
-/* 07E640 7F049B10 0FC11080 */  jal   sub_GAME_7F044200
+/* 07E640 7F049B10 0FC11080 */  jal   objDropRecursively
 /* 07E644 7F049B14 02602025 */   move  $a0, $s3
 /* 07E648 7F049B18 8FA90680 */  lw    $t1, 0x680($sp)
 .L7F049B1C:
@@ -18254,7 +18231,7 @@ glabel object_interaction
 /* 07EA7C 7F049F0C 8FAC013C */  lw    $t4, 0x13c($sp)
 /* 07EA80 7F049F10 A44C0000 */  sh    $t4, ($v0)
 .Ljp7F049F14:
-/* 07EA84 7F049F14 0FC1113A */  jal   sub_GAME_7F044200
+/* 07EA84 7F049F14 0FC1113A */  jal   objDropRecursively
 /* 07EA88 7F049F18 02602025 */   move  $a0, $s3
 /* 07EA8C 7F049F1C 8FAD0688 */  lw    $t5, 0x688($sp)
 .Ljp7F049F20:
@@ -23367,7 +23344,7 @@ glabel object_interaction
 /* 07C6D4 7F049CE4 8FAF013C */  lw    $t7, 0x13c($sp)
 /* 07C6D8 7F049CE8 A44F0000 */  sh    $t7, ($v0)
 .L7F049CEC:
-/* 07C6DC 7F049CEC 0FC110AA */  jal   sub_GAME_7F044200
+/* 07C6DC 7F049CEC 0FC110AA */  jal   objDropRecursively
 /* 07C6E0 7F049CF0 02602025 */   move  $a0, $s3
 /* 07C6E4 7F049CF4 8FA80688 */  lw    $t0, 0x688($sp)
 .L7F049CF8:
@@ -29507,7 +29484,7 @@ void objDetach(PropRecord *prop)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F04C130(void) {
+void objDrop(void) {
 
 }
 #else
@@ -29574,7 +29551,7 @@ glabel D_80052D64
 glabel D_80052D68
 .word 0x3dc90fdb /*0.098174773*/
 .text
-glabel sub_GAME_7F04C130
+glabel objDrop
 /* 080C60 7F04C130 27BDFEF8 */  addiu $sp, $sp, -0x108
 /* 080C64 7F04C134 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 080C68 7F04C138 AFB20038 */  sw    $s2, 0x38($sp)
@@ -30252,7 +30229,7 @@ glabel D_80052D64
 glabel D_80052D68
 .word 0x3df1463a /* 0.117809727788 */
 .text
-glabel sub_GAME_7F04C130
+glabel objDrop
 /* 080C60 7F04C130 27BDFEF8 */  addiu $sp, $sp, -0x108
 /* 080C64 7F04C134 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 080C68 7F04C138 AFB20038 */  sw    $s2, 0x38($sp)
@@ -34172,7 +34149,7 @@ glabel sub_GAME_7F04EA68
 /* 0839B4 7F04EE84 0FC1375A */  jal   sub_GAME_7F04DD68
 /* 0839B8 7F04EE88 02202025 */   move  $a0, $s1
 .L7F04EE8C:
-/* 0839BC 7F04EE8C 0FC11080 */  jal   sub_GAME_7F044200
+/* 0839BC 7F04EE8C 0FC11080 */  jal   objDropRecursively
 /* 0839C0 7F04EE90 8E040004 */   lw    $a0, 4($s0)
 /* 0839C4 7F04EE94 00008025 */  move  $s0, $zero
 /* 0839C8 7F04EE98 0FC13803 */  jal   objIsCollectable
@@ -45950,7 +45927,7 @@ glabel drop_inventory
 /* 08B33C 7F05680C 00402025 */  move  $a0, $v0
 /* 08B340 7F056810 0FC12FF4 */  jal   propobjSetDropped
 /* 08B344 7F056814 24050001 */   li    $a1, 1
-/* 08B348 7F056818 0FC1304C */  jal   sub_GAME_7F04C130
+/* 08B348 7F056818 0FC1304C */  jal   objDrop
 /* 08B34C 7F05681C 02202025 */   move  $a0, $s1
 .L7F056820:
 /* 08B350 7F056820 26100001 */  addiu $s0, $s0, 1
