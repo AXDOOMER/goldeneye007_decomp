@@ -109,7 +109,7 @@ void                 sub_GAME_7F040384(rgba_s32 *arg0, s32 arg1, rgba_f32 *arg2)
 void                 trigger_remote_mine_detonation(void);
 
 void                 objDetach(PropRecord *prop);
-void                 sub_GAME_7F040CF0(PropRecord *);
+void                 objFreeEmbedmentOrProjectile(PropRecord *);
 bool                 alarmIsActive();
 void                 init_trigger_toxic_gas_effect(coord3d *source);
 void                 chrSetWeaponFlag4(ChrRecord *chr, GUNHAND hand);

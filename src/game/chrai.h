@@ -384,8 +384,8 @@ struct projectile {
     u32 unkDC;
 
     u32 unkE0;
-    u32 unkE4;
-    u32 unkE8;
+    ObjectRecord* obj; // 0xE4;
+    s32 unkE8;
 };
 
 

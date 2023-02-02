@@ -2671,7 +2671,7 @@ void propExecuteTickOperation(PropRecord *prop, INV_ITEM_TYPE type) //#MATCH
         chrpropDelist(prop);
         chrpropDisable(prop);
         objDetach(prop);
-        sub_GAME_7F040CF0(prop);
+        objFreeEmbedmentOrProjectile(prop);
         chrpropReparent(prop, get_curplayer_positiondata());
     }
 }
