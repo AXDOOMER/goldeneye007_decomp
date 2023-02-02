@@ -5614,91 +5614,46 @@ glabel sub_GAME_7F0439B8
 #endif
 
 
+bool objEmbed(PropRecord *prop, PropRecord *parent, Model *model, ModelNode *node)
+{
+    if (parent->flags & PROPFLAG_ONSCREEN)
+    {
+        ObjectRecord *obj = prop->obj;
 
+        Mtxf mtx1;
+        Mtxf mtx2;
+        Mtxf mtx3;
+        Mtxf* nodemtx;
 
+        obj->embedment = embedmentAllocate();
 
-#ifdef NONMATCHING
-void sub_GAME_7F043A6C(void) {
+        if (obj->embedment)
+        {
+            nodemtx = modelFindNodeMtx(model, node, 0);
 
+            obj->runtime_bitflags |= RUNTIMEBITFLAG_EMBEDDED;
+
+            chrpropDeregisterRooms(prop);
+            chrpropDelist(prop);
+            chrpropDisable(prop);
+
+            obj->model->attachedto = model;
+            obj->model->attachedto_objinst = node;
+
+            chrpropReparent(prop, parent);
+
+            matrix_4x4_copy(&obj->mtx, &mtx1);
+            matrix_4x4_set_position((f32*)&obj->runtime_pos, &mtx1);
+            matrix_4x4_multiply_homogeneous(currentPlayerGetMatrix10D4(), nodemtx, &mtx2);
+            sub_GAME_7F059FB8((f32 (*)[4]) &mtx2.m, (f32 (*)[4]) &mtx3.m);
+            matrix_4x4_multiply_homogeneous((Mtxf* ) &mtx3.m, &mtx1, &obj->embedment->matrix);
+
+            return TRUE;
+        }
+    }
+
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F043A6C
-/* 07859C 7F043A6C 27BDFF10 */  addiu $sp, $sp, -0xf0
-/* 0785A0 7F043A70 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0785A4 7F043A74 AFB10018 */  sw    $s1, 0x18($sp)
-/* 0785A8 7F043A78 AFB00014 */  sw    $s0, 0x14($sp)
-/* 0785AC 7F043A7C AFA500F4 */  sw    $a1, 0xf4($sp)
-/* 0785B0 7F043A80 AFA600F8 */  sw    $a2, 0xf8($sp)
-/* 0785B4 7F043A84 AFA700FC */  sw    $a3, 0xfc($sp)
-/* 0785B8 7F043A88 90AF0001 */  lbu   $t7, 1($a1)
-/* 0785BC 7F043A8C 00808825 */  move  $s1, $a0
-/* 0785C0 7F043A90 31F80002 */  andi  $t8, $t7, 2
-/* 0785C4 7F043A94 53000034 */  beql  $t8, $zero, .L7F043B68
-/* 0785C8 7F043A98 00001025 */   move  $v0, $zero
-/* 0785CC 7F043A9C 0FC0FFA6 */  jal   embedmentAllocate
-/* 0785D0 7F043AA0 8C900004 */   lw    $s0, 4($a0)
-/* 0785D4 7F043AA4 1040002F */  beqz  $v0, .L7F043B64
-/* 0785D8 7F043AA8 AE02006C */   sw    $v0, 0x6c($s0)
-/* 0785DC 7F043AAC 8FA400F8 */  lw    $a0, 0xf8($sp)
-/* 0785E0 7F043AB0 8FA500FC */  lw    $a1, 0xfc($sp)
-/* 0785E4 7F043AB4 0FC1B198 */  jal   modelFindNodeMtx
-/* 0785E8 7F043AB8 00003025 */   move  $a2, $zero
-/* 0785EC 7F043ABC AFA20028 */  sw    $v0, 0x28($sp)
-/* 0785F0 7F043AC0 8E190064 */  lw    $t9, 0x64($s0)
-/* 0785F4 7F043AC4 02202025 */  move  $a0, $s1
-/* 0785F8 7F043AC8 37280040 */  ori   $t0, $t9, 0x40
-/* 0785FC 7F043ACC 0FC0F863 */  jal   chrpropDeregisterRooms
-/* 078600 7F043AD0 AE080064 */   sw    $t0, 0x64($s0)
-/* 078604 7F043AD4 0FC0E94E */  jal   chrpropDelist
-/* 078608 7F043AD8 02202025 */   move  $a0, $s1
-/* 07860C 7F043ADC 0FC0E905 */  jal   chrpropDisable
-/* 078610 7F043AE0 02202025 */   move  $a0, $s1
-/* 078614 7F043AE4 8FA900F8 */  lw    $t1, 0xf8($sp)
-/* 078618 7F043AE8 8E0A0014 */  lw    $t2, 0x14($s0)
-/* 07861C 7F043AEC 02202025 */  move  $a0, $s1
-/* 078620 7F043AF0 AD490018 */  sw    $t1, 0x18($t2)
-/* 078624 7F043AF4 8E0C0014 */  lw    $t4, 0x14($s0)
-/* 078628 7F043AF8 8FAB00FC */  lw    $t3, 0xfc($sp)
-/* 07862C 7F043AFC AD8B001C */  sw    $t3, 0x1c($t4)
-/* 078630 7F043B00 0FC0E969 */  jal   chrpropReparent
-/* 078634 7F043B04 8FA500F4 */   lw    $a1, 0xf4($sp)
-/* 078638 7F043B08 27B100AC */  addiu $s1, $sp, 0xac
-/* 07863C 7F043B0C 02202825 */  move  $a1, $s1
-/* 078640 7F043B10 0FC16008 */  jal   matrix_4x4_copy
-/* 078644 7F043B14 26040018 */   addiu $a0, $s0, 0x18
-/* 078648 7F043B18 26040058 */  addiu $a0, $s0, 0x58
-/* 07864C 7F043B1C 0FC16266 */  jal   matrix_4x4_set_position
-/* 078650 7F043B20 02202825 */   move  $a1, $s1
-/* 078654 7F043B24 0FC1E111 */  jal   currentPlayerGetMatrix10D4
-/* 078658 7F043B28 00000000 */   nop   
-/* 07865C 7F043B2C 00402025 */  move  $a0, $v0
-/* 078660 7F043B30 8FA50028 */  lw    $a1, 0x28($sp)
-/* 078664 7F043B34 0FC16063 */  jal   matrix_4x4_multiply_homogeneous
-/* 078668 7F043B38 27A6006C */   addiu $a2, $sp, 0x6c
-/* 07866C 7F043B3C 27A4006C */  addiu $a0, $sp, 0x6c
-/* 078670 7F043B40 0FC167EE */  jal   sub_GAME_7F059FB8
-/* 078674 7F043B44 27A5002C */   addiu $a1, $sp, 0x2c
-/* 078678 7F043B48 8E06006C */  lw    $a2, 0x6c($s0)
-/* 07867C 7F043B4C 27A4002C */  addiu $a0, $sp, 0x2c
-/* 078680 7F043B50 02202825 */  move  $a1, $s1
-/* 078684 7F043B54 0FC16063 */  jal   matrix_4x4_multiply_homogeneous
-/* 078688 7F043B58 24C60004 */   addiu $a2, $a2, 4
-/* 07868C 7F043B5C 10000002 */  b     .L7F043B68
-/* 078690 7F043B60 24020001 */   li    $v0, 1
-.L7F043B64:
-/* 078694 7F043B64 00001025 */  move  $v0, $zero
-.L7F043B68:
-/* 078698 7F043B68 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 07869C 7F043B6C 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0786A0 7F043B70 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0786A4 7F043B74 03E00008 */  jr    $ra
-/* 0786A8 7F043B78 27BD00F0 */   addiu $sp, $sp, 0xf0
-)
-#endif
-
-
 
 
 /**
@@ -8592,7 +8547,7 @@ glabel object_interaction
 /* 07A4B0 7F045980 3C078007 */   lui   $a3, %hi(dword_CODE_bss_80075B74)
 /* 07A4B4 7F045984 8E720014 */  lw    $s2, 0x14($s3)
 /* 07A4B8 7F045988 8CC65B70 */  lw    $a2, %lo(objinst)($a2)
-/* 07A4BC 7F04598C 0FC10E9B */  jal   sub_GAME_7F043A6C
+/* 07A4BC 7F04598C 0FC10E9B */  jal   objEmbed
 /* 07A4C0 7F045990 8CE75B74 */   lw    $a3, %lo(dword_CODE_bss_80075B74)($a3)
 /* 07A4C4 7F045994 10400005 */  beqz  $v0, .L7F0459AC
 /* 07A4C8 7F045998 24190005 */   li    $t9, 5
@@ -13689,7 +13644,7 @@ glabel object_interaction
 /* 07A8D4 7F045D64 3C078007 */   lui   $a3, %hi(dword_CODE_bss_80075B74) # $a3, 0x8007
 /* 07A8D8 7F045D68 8E720014 */  lw    $s2, 0x14($s3)
 /* 07A8DC 7F045D6C 8CC65BB0 */  lw    $a2, %lo(objinst)($a2)
-/* 07A8E0 7F045D70 0FC10F5B */  jal   sub_GAME_7F043A6C
+/* 07A8E0 7F045D70 0FC10F5B */  jal   objEmbed
 /* 07A8E4 7F045D74 8CE75BB4 */   lw    $a3, %lo(dword_CODE_bss_80075B74)($a3)
 /* 07A8E8 7F045D78 10400005 */  beqz  $v0, .Ljp7F045D90
 /* 07A8EC 7F045D7C 240D0005 */   li    $t5, 5
@@ -18795,7 +18750,7 @@ glabel object_interaction
 /* 078514 7F045B24 3C078006 */   lui   $a3, %hi(dword_CODE_bss_80075B74) # $a3, 0x8006
 /* 078518 7F045B28 8E720014 */  lw    $s2, 0x14($s3)
 /* 07851C 7F045B2C 8CC64AB0 */  lw    $a2, %lo(objinst)($a2)
-/* 078520 7F045B30 0FC10ECB */  jal   sub_GAME_7F043A6C
+/* 078520 7F045B30 0FC10ECB */  jal   objEmbed
 /* 078524 7F045B34 8CE74AB4 */   lw    $a3, %lo(dword_CODE_bss_80075B74)($a3)
 /* 078528 7F045B38 10400005 */  beqz  $v0, .L7F045B50
 /* 07852C 7F045B3C 240C0005 */   li    $t4, 5
