@@ -168,7 +168,7 @@ Rotate Image:
 #define PROJECTILEDATA_START_ADDRESS_LEN 30
 #define BSS_80072E70_DATA_LEN 10
 #define BSS_80073370_DATA_LEN 20
-#define BSS_80073DC0_DATA_LEN 20
+#define PROJECTILES_ARR_MAX 20
 #define BSS_80075030_DATA_LEN 40
 #define ONSCREEN_PROP_LIST_LEN 500
 
@@ -314,11 +314,9 @@ struct bss_80073370 {
     u32 unk80;
 };
 
-struct bss_80073DC0 {
-    u32 unk00;
-    f32 unk04;
-    f32 unk08;
-    f32 unk0C;
+struct projectile {
+    u32 flags;
+    coord3d speed;
 
     f32 unk10;
     f32 unk14;
@@ -471,7 +469,7 @@ extern sfxRecord                          sfx_related[];
 extern struct projectile_data             ProjectileData_start_address[];
 extern struct bss_80072E70                dword_CODE_bss_80072E70[];
 extern struct bss_80073370                dword_CODE_bss_80073370[];
-extern struct bss_80073DC0                dword_CODE_bss_80073DC0[];
+extern struct projectile                  g_Projectiles[];
 extern struct bss_80075030                dword_CODE_bss_80075030[];
 
 

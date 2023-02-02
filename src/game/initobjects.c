@@ -136,11 +136,11 @@ void reinit_between_menus(void)
         dword_CODE_bss_80073370[i].unk10 = 0;
     }
 
-    for (i=0; i<BSS_80073DC0_DATA_LEN; i++)
+    for (i = 0; i < PROJECTILES_ARR_MAX; i++)
     {
-        dword_CODE_bss_80073DC0[i].unk00 = 0x80000000;
-        dword_CODE_bss_80073DC0[i].unk98 = 0;
-        dword_CODE_bss_80073DC0[i].unk9C = 0;
+        g_Projectiles[i].flags = 0x80000000;
+        g_Projectiles[i].unk98 = 0;
+        g_Projectiles[i].unk9C = 0;
     }
 
     for (i=0; i<BSS_80075030_DATA_LEN; i++)

@@ -984,6 +984,22 @@ void sub_GAME_7F03FB70(void* arg0) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_800529D0
+.word 0xA000000 /*"\n"*/
+glabel D_800529D4
+.word 0x2E0A0000 /*".\n"*/
+glabel D_800529D8
+.word 0, 0, 0, 0, 0, 0, 0, 0
+.word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+glabel D_80052A38
+.word 0
+glabel D_80052A3C
+.word 0
+glabel D_80052A40
+.word 0xA000000 /*"\n"*/
+glabel D_80052A44
+.word 0x3A0A0000 /*":\n"*/
 .text
 glabel sub_GAME_7F03FB70
 /* 0746A0 7F03FB70 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -1027,84 +1043,37 @@ glabel sub_GAME_7F03FB70
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-/* matches according to decomp.me, I believe it doesn't build yet because the asm references label 'D_80052A48', which is defined elsewhere */
-/* PD: projectileReset (for projectile initialization) */
-void sub_GAME_7F03FBFC(struct bss_80073DC0 *arg0)
+void projectileReset(struct projectile *projectile)
 {
-    arg0->unk00 = 0;
-    arg0->unk04 = 0.0f;
-    arg0->unk08 = 0.0f;
-    arg0->unk0C = 0.0f;
-    arg0->unk10 = 0.0f;
-    arg0->unk14 = 0.0f;
-    arg0->unk18 = 0.0f;
-    arg0->unk1C = 0.0f;
-    arg0->unk60 = 1.0f;
-    arg0->unk88 = 0;
-    arg0->unk8C = 0.05f;
-    arg0->unk90 = 0;
-    arg0->unk94 = 0.0f;
-    arg0->unkA0 = -1;
-    arg0->unkA4 = 0;
-    arg0->unkA8 = 0;
-    arg0->unkAC = -1;
-    arg0->unkB8 = 1;
-    arg0->unkBC = 0;
-    arg0->unkC0 = 1.0f;
-    arg0->unkC4 = 1.0f;
-    arg0->unkC8 = 1.0f;
-    arg0->unkE0 = 0;
-    arg0->unkE4 = 0;
-    arg0->unkE8 = 0;
+    projectile->flags = 0;
+
+    projectile->speed.x = 0.0f;
+    projectile->speed.y = 0.0f;
+    projectile->speed.z = 0.0f;
+
+    projectile->unk10 = 0.0f;
+    projectile->unk14 = 0.0f;
+    projectile->unk18 = 0.0f;
+    projectile->unk1C = 0.0f;
+
+    projectile->unk60 = 1.0f;
+    projectile->unk88 = 0;
+    projectile->unk8C = 0.05f;
+    projectile->unk90 = 0;
+    projectile->unk94 = 0.0f;
+    projectile->unkA0 = -1;
+    projectile->unkA4 = 0;
+    projectile->unkA8 = 0;
+    projectile->unkAC = -1;
+    projectile->unkB8 = 1;
+    projectile->unkBC = 0;
+    projectile->unkC0 = 1.0f;
+    projectile->unkC4 = 1.0f;
+    projectile->unkC8 = 1.0f;
+    projectile->unkE0 = 0;
+    projectile->unkE4 = 0;
+    projectile->unkE8 = 0;
 }
-
-#else
-GLOBAL_ASM(
-
-.text
-glabel sub_GAME_7F03FBFC
-/* 07472C 7F03FBFC 44800000 */  mtc1  $zero, $f0
-/* 074730 7F03FC00 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 074734 7F03FC04 44811000 */  mtc1  $at, $f2
-/* 074738 7F03FC08 AC800000 */  sw    $zero, ($a0)
-/* 07473C 7F03FC0C AC800088 */  sw    $zero, 0x88($a0)
-/* 074740 7F03FC10 3C018005 */  lui   $at, %hi(D_80052A48)
-/* 074744 7F03FC14 E4800004 */  swc1  $f0, 4($a0)
-/* 074748 7F03FC18 E4800008 */  swc1  $f0, 8($a0)
-/* 07474C 7F03FC1C E480000C */  swc1  $f0, 0xc($a0)
-/* 074750 7F03FC20 E4800010 */  swc1  $f0, 0x10($a0)
-/* 074754 7F03FC24 E4800014 */  swc1  $f0, 0x14($a0)
-/* 074758 7F03FC28 E4800018 */  swc1  $f0, 0x18($a0)
-/* 07475C 7F03FC2C E480001C */  swc1  $f0, 0x1c($a0)
-/* 074760 7F03FC30 E4820060 */  swc1  $f2, 0x60($a0)
-/* 074764 7F03FC34 C4242A48 */  lwc1  $f4, %lo(D_80052A48)($at)
-/* 074768 7F03FC38 2402FFFF */  li    $v0, -1
-/* 07476C 7F03FC3C 240E0001 */  li    $t6, 1
-/* 074770 7F03FC40 AC800090 */  sw    $zero, 0x90($a0)
-/* 074774 7F03FC44 AC8200A0 */  sw    $v0, 0xa0($a0)
-/* 074778 7F03FC48 AC8000A4 */  sw    $zero, 0xa4($a0)
-/* 07477C 7F03FC4C AC8000A8 */  sw    $zero, 0xa8($a0)
-/* 074780 7F03FC50 AC8200AC */  sw    $v0, 0xac($a0)
-/* 074784 7F03FC54 AC8E00B8 */  sw    $t6, 0xb8($a0)
-/* 074788 7F03FC58 AC8000BC */  sw    $zero, 0xbc($a0)
-/* 07478C 7F03FC5C AC8000E0 */  sw    $zero, 0xe0($a0)
-/* 074790 7F03FC60 AC8000E4 */  sw    $zero, 0xe4($a0)
-/* 074794 7F03FC64 AC8000E8 */  sw    $zero, 0xe8($a0)
-/* 074798 7F03FC68 E4800094 */  swc1  $f0, 0x94($a0)
-/* 07479C 7F03FC6C E48200C0 */  swc1  $f2, 0xc0($a0)
-/* 0747A0 7F03FC70 E48200C4 */  swc1  $f2, 0xc4($a0)
-/* 0747A4 7F03FC74 E48200C8 */  swc1  $f2, 0xc8($a0)
-/* 0747A8 7F03FC78 03E00008 */  jr    $ra
-/* 0747AC 7F03FC7C E484008C */   swc1  $f4, 0x8c($a0)
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
@@ -1116,12 +1085,12 @@ GLOBAL_ASM(
 .text
 glabel sub_GAME_7F03FC80
 /* 0747B0 7F03FC80 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0747B4 7F03FC84 3C028007 */  lui   $v0, %hi(dword_CODE_bss_80073DC0)
+/* 0747B4 7F03FC84 3C028007 */  lui   $v0, %hi(g_Projectiles)
 /* 0747B8 7F03FC88 3C048007 */  lui   $a0, %hi(dword_CODE_bss_80075030)
 /* 0747BC 7F03FC8C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0747C0 7F03FC90 2406FFFF */  li    $a2, -1
 /* 0747C4 7F03FC94 24845030 */  addiu $a0, %lo(dword_CODE_bss_80075030) # addiu $a0, $a0, 0x5030
-/* 0747C8 7F03FC98 24423DC0 */  addiu $v0, %lo(dword_CODE_bss_80073DC0) # addiu $v0, $v0, 0x3dc0
+/* 0747C8 7F03FC98 24423DC0 */  addiu $v0, %lo(g_Projectiles) # addiu $v0, $v0, 0x3dc0
 /* 0747CC 7F03FC9C 00002825 */  move  $a1, $zero
 /* 0747D0 7F03FCA0 3C038000 */  lui   $v1, 0x8000
 .L7F03FCA4:
@@ -1130,20 +1099,20 @@ glabel sub_GAME_7F03FC80
 /* 0747DC 7F03FCAC 0044082B */  sltu  $at, $v0, $a0
 /* 0747E0 7F03FCB0 01C37824 */  and   $t7, $t6, $v1
 /* 0747E4 7F03FCB4 11E00007 */  beqz  $t7, .L7F03FCD4
-/* 0747E8 7F03FCB8 3C078007 */   lui   $a3, %hi(dword_CODE_bss_80073DC0)
-/* 0747EC 7F03FCBC 24E73DC0 */  addiu $a3, %lo(dword_CODE_bss_80073DC0) # addiu $a3, $a3, 0x3dc0
+/* 0747E8 7F03FCB8 3C078007 */   lui   $a3, %hi(g_Projectiles)
+/* 0747EC 7F03FCBC 24E73DC0 */  addiu $a3, %lo(g_Projectiles) # addiu $a3, $a3, 0x3dc0
 /* 0747F0 7F03FCC0 00E52021 */  addu  $a0, $a3, $a1
-/* 0747F4 7F03FCC4 0FC0FEFF */  jal   sub_GAME_7F03FBFC
+/* 0747F4 7F03FCC4 0FC0FEFF */  jal   projectileReset
 /* 0747F8 7F03FCC8 AFA40020 */   sw    $a0, 0x20($sp)
 /* 0747FC 7F03FCCC 10000032 */  b     .L7F03FD98
 /* 074800 7F03FCD0 8FA20020 */   lw    $v0, 0x20($sp)
 .L7F03FCD4:
 /* 074804 7F03FCD4 1420FFF3 */  bnez  $at, .L7F03FCA4
 /* 074808 7F03FCD8 24A500EC */   addiu $a1, $a1, 0xec
-/* 07480C 7F03FCDC 3C028007 */  lui   $v0, %hi(dword_CODE_bss_80073DC0)
-/* 074810 7F03FCE0 3C078007 */  lui   $a3, %hi(dword_CODE_bss_80073DC0)
-/* 074814 7F03FCE4 24E73DC0 */  addiu $a3, %lo(dword_CODE_bss_80073DC0) # addiu $a3, $a3, 0x3dc0
-/* 074818 7F03FCE8 24423DC0 */  addiu $v0, %lo(dword_CODE_bss_80073DC0) # addiu $v0, $v0, 0x3dc0
+/* 07480C 7F03FCDC 3C028007 */  lui   $v0, %hi(g_Projectiles)
+/* 074810 7F03FCE0 3C078007 */  lui   $a3, %hi(g_Projectiles)
+/* 074814 7F03FCE4 24E73DC0 */  addiu $a3, %lo(g_Projectiles) # addiu $a3, $a3, 0x3dc0
+/* 074818 7F03FCE8 24423DC0 */  addiu $v0, %lo(g_Projectiles) # addiu $v0, $v0, 0x3dc0
 /* 07481C 7F03FCEC 00001825 */  move  $v1, $zero
 /* 074820 7F03FCF0 240500EC */  li    $a1, 236
 /* 074824 7F03FCF4 24040014 */  li    $a0, 20
@@ -1179,14 +1148,14 @@ glabel sub_GAME_7F03FC80
 /* 074890 7F03FD60 AFA30024 */   sw    $v1, 0x24($sp)
 /* 074894 7F03FD64 8FA80020 */  lw    $t0, 0x20($sp)
 /* 074898 7F03FD68 8FA30024 */  lw    $v1, 0x24($sp)
-/* 07489C 7F03FD6C 3C078007 */  lui   $a3, %hi(dword_CODE_bss_80073DC0)
+/* 07489C 7F03FD6C 3C078007 */  lui   $a3, %hi(g_Projectiles)
 /* 0748A0 7F03FD70 8D0200E4 */  lw    $v0, 0xe4($t0)
-/* 0748A4 7F03FD74 24E73DC0 */  addiu $a3, %lo(dword_CODE_bss_80073DC0) # addiu $a3, $a3, 0x3dc0
+/* 0748A4 7F03FD74 24E73DC0 */  addiu $a3, %lo(g_Projectiles) # addiu $a3, $a3, 0x3dc0
 /* 0748A8 7F03FD78 00E32021 */  addu  $a0, $a3, $v1
 /* 0748AC 7F03FD7C 8C4D0064 */  lw    $t5, 0x64($v0)
 /* 0748B0 7F03FD80 35AE0004 */  ori   $t6, $t5, 4
 /* 0748B4 7F03FD84 AC4E0064 */  sw    $t6, 0x64($v0)
-/* 0748B8 7F03FD88 0FC0FEFF */  jal   sub_GAME_7F03FBFC
+/* 0748B8 7F03FD88 0FC0FEFF */  jal   projectileReset
 /* 0748BC 7F03FD8C AFA4001C */   sw    $a0, 0x1c($sp)
 /* 0748C0 7F03FD90 10000001 */  b     .L7F03FD98
 /* 0748C4 7F03FD94 8FA2001C */   lw    $v0, 0x1c($sp)
@@ -2013,24 +1982,6 @@ void sub_GAME_7F04088C(ObjectRecord *baseobj, PadRecord *pad, Mtxf *matrix, Stan
 }
 #else
 GLOBAL_ASM(
-.late_rodata
-glabel D_800529D0
-.word 0xA000000 /*"\n"*/
-glabel D_800529D4
-.word 0x2E0A0000 /*".\n"*/
-glabel D_800529D8
-.word 0, 0, 0, 0, 0, 0, 0, 0
-.word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-glabel D_80052A38
-.word 0
-glabel D_80052A3C
-.word 0
-glabel D_80052A40
-.word 0xA000000 /*"\n"*/
-glabel D_80052A44
-.word 0x3A0A0000 /*":\n"*/
-glabel D_80052A48
-.word 0x3d4ccccd /*0.050000001*/
 .late_rodata
 glabel D_80052A4C
 .word 0x40490fdb /*3.1415927*/
@@ -40034,9 +39985,9 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0518D0
 /* 086400 7F0518D0 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 086404 7F0518D4 3C048007 */  lui   $a0, %hi(dword_CODE_bss_80073370)
-/* 086408 7F0518D8 3C028007 */  lui   $v0, %hi(dword_CODE_bss_80073DC0)
+/* 086408 7F0518D8 3C028007 */  lui   $v0, %hi(g_Projectiles)
 /* 08640C 7F0518DC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 086410 7F0518E0 24423DC0 */  addiu $v0, %lo(dword_CODE_bss_80073DC0) # addiu $v0, $v0, 0x3dc0
+/* 086410 7F0518E0 24423DC0 */  addiu $v0, %lo(g_Projectiles) # addiu $v0, $v0, 0x3dc0
 /* 086414 7F0518E4 24843370 */  addiu $a0, %lo(dword_CODE_bss_80073370) # addiu $a0, $a0, 0x3370
 /* 086418 7F0518E8 00001825 */  move  $v1, $zero
 .L7F0518EC:
@@ -40052,8 +40003,8 @@ glabel sub_GAME_7F0518D0
 /* 08643C 7F05190C 1420FFF7 */  bnez  $at, .L7F0518EC
 /* 086440 7F051910 24630084 */   addiu $v1, $v1, 0x84
 /* 086444 7F051914 3C048007 */  lui   $a0, %hi(dword_CODE_bss_80073370)
-/* 086448 7F051918 3C058007 */  lui   $a1, %hi(dword_CODE_bss_80073DC0)
-/* 08644C 7F05191C 24A53DC0 */  addiu $a1, %lo(dword_CODE_bss_80073DC0) # addiu $a1, $a1, 0x3dc0
+/* 086448 7F051918 3C058007 */  lui   $a1, %hi(g_Projectiles)
+/* 08644C 7F05191C 24A53DC0 */  addiu $a1, %lo(g_Projectiles) # addiu $a1, $a1, 0x3dc0
 /* 086450 7F051920 24843370 */  addiu $a0, %lo(dword_CODE_bss_80073370) # addiu $a0, $a0, 0x3370
 /* 086454 7F051924 00001825 */  move  $v1, $zero
 .L7F051928:
@@ -40087,8 +40038,8 @@ glabel sub_GAME_7F0518D0
 /* 0864C0 7F051990 1420FFE5 */  bnez  $at, .L7F051928
 /* 0864C4 7F051994 24630084 */   addiu $v1, $v1, 0x84
 /* 0864C8 7F051998 3C048007 */  lui   $a0, %hi(dword_CODE_bss_80073370)
-/* 0864CC 7F05199C 3C028007 */  lui   $v0, %hi(dword_CODE_bss_80073DC0)
-/* 0864D0 7F0519A0 24423DC0 */  addiu $v0, %lo(dword_CODE_bss_80073DC0) # addiu $v0, $v0, 0x3dc0
+/* 0864CC 7F05199C 3C028007 */  lui   $v0, %hi(g_Projectiles)
+/* 0864D0 7F0519A0 24423DC0 */  addiu $v0, %lo(g_Projectiles) # addiu $v0, $v0, 0x3dc0
 /* 0864D4 7F0519A4 24843370 */  addiu $a0, %lo(dword_CODE_bss_80073370) # addiu $a0, $a0, 0x3370
 /* 0864D8 7F0519A8 00001825 */  move  $v1, $zero
 .L7F0519AC:
