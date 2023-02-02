@@ -866,25 +866,35 @@ object_standard blank_07_object[] = {
      0xFFFFFF00
 };
 
-object_standard blank_11_object[] = {
-    0x0100,0x0, 0x11,
-     0,   0,
-    0x00004000,
-     0,
-     0,
-     0,
-     1.0f, 0.0f, 0.0f, 0.0f,
-     0.0f, 1.0f, 0.0f, 0.0f,
-     0.0f, 0.0f, 1.0f, 0.0f,
-     0.0f, 0.0f, 0.0f, 1.0f,
-     0.0, 0.0, 0.0,
-    0x00000000,
-     0,
-     0,
-     0.0,
-     0x447A,0x0000,
-     0xFFFFFF00,
-     0xFFFFFF00
+HatRecord BlankHatRecord = {
+    0x0100, // extrascale
+    0x0,    // state
+    0x11,   // type
+    0,      // obj
+    0,      // pad
+    0x00004000, // flags
+    0,      // flags2
+    NULL,   // prop
+    NULL,   // model
+
+    { 1.0f, 0.0f, 0.0f, 0.0f,
+      0.0f, 1.0f, 0.0f, 0.0f,
+      0.0f, 0.0f, 1.0f, 0.0f,
+      0.0f, 0.0f, 0.0f, 1.0f
+    }, // mtx
+
+    { 0.0f, 0.0f, 0.0f }, // runtime_pos
+
+    { 0x00000000 }, // runtime_bitflags
+    NULL, // ptr_allocated_collisiondata_block
+    NULL, // unk6C
+    0.0f, // maxdamage
+    1000.0f, // damage
+    { 0xFF, 0xFF, 0xFF, 0x00 }, // field_78
+    0xFF, // field_7c
+    0xFF, // field_7d
+    0xFF, // field_7e
+    0x00, // field_7f
 };
 
 object_weapon blank_08_object_preset_1[] = {
@@ -39506,7 +39516,7 @@ glabel sub_GAME_7F050DE8
 #endif
 
 
-PropRecord *sub_GAME_7F050F50(WeaponObjRecord *weapon, ChrRecord *chr, ModelFileHeader *filedata, PropRecord *prop, Model *model)
+PropRecord *hatApplyToChr(WeaponObjRecord *weapon, ChrRecord *chr, ModelFileHeader *filedata, PropRecord *prop, Model *model)
 {
     prop = init_standard_object((ObjectRecord*)weapon, filedata, prop, model);
 
@@ -39532,7 +39542,7 @@ void sub_GAME_7F051028(ObjectRecord *arg0, PropRecord *arg1)
     s32 obj_idx;
     obj_idx = (u32) arg0->obj;
     modelLoad(obj_idx);
-    sub_GAME_7F050F50(arg0, arg1, PitemZ_entries[obj_idx].header, NULL, 0);
+    hatApplyToChr(arg0, arg1, PitemZ_entries[obj_idx].header, NULL, 0);
 }
 
 
@@ -39543,188 +39553,58 @@ void hatAssignToChr(ObjectRecord* hat, ChrRecord* chr)
 }
 
 
-#ifdef NONMATCHING
-//chrTryEquipHat
-PropRecord *chrTryEquipHat(ChrRecord *self, s32 index, s32 flags)
+PropRecord *hatCreateForChr(ChrRecord *chr, s32 modelnum, u32 flags)
 {
-    ItemModelFileRecord *model;
-    s32                  sp30;
-    PropRecord          *lastprop;
-    PropRecord          *prop;
-    s32                 *temp_t1;
-    s32                 *temp_t4;
-    s32                 *temp_t8;
-    ObjectRecord        *obj;
-    void                *temp_t5;
-    s32                 *phi_t8;
-    s32                 *phi_t1;
-    s32                 *phi_t4;
-    void                *phi_t5;
+    ModelFileHeader *modeldef;
+    PropRecord *prop;
+    Model *model;
+    HatRecord *obj;
 
-    model = &PitemZ_entries[index];
-    modelLoad(index);
-    lastprop = propAllocate();
-    prop     = get_obj_instance_controller_for_header(model);
-    prop     = prop;
-    obj      = hatCreate(lastprop == 0, prop == 0, model);
-    lastprop = lastprop;
-    if (lastprop == 0)
-    {
-        lastprop = propAllocate();
-    }
-    prop     = prop;
-    lastprop = lastprop;
-    if (prop == 0)
-    {
-        prop = get_obj_instance_controller_for_header(model);
-    }
-    if ((obj != 0) && (lastprop != 0) && (prop != 0))
-    {
-        *obj = blank_11_object;
+    modeldef = PitemZ_entries[modelnum].header;
 
-        obj->obj   = index;
-        obj->flags = flags | 0x4000;
-        obj->pad   = self->chrnum;
-        lastprop   = sub_GAME_7F050F50(obj, self, model, lastprop, prop);
+    modelLoad(modelnum);
+    prop = propAllocate();
+    model = get_obj_instance_controller_for_header(modeldef);
+    obj = hatCreate(prop == NULL, model == NULL, modeldef);
+
+    if (prop == NULL)
+    {
+        prop = propAllocate();
+    }
+
+    if (model == NULL)
+    {
+        model = get_obj_instance_controller_for_header(modeldef);
+    }
+
+    if (obj && prop && model)
+    {
+        HatRecord tmp = BlankHatRecord;
+
+        *obj = tmp;
+
+        obj->obj = modelnum;
+        obj->flags = flags | PROPFLAG_ASSIGNEDTOCHR;
+        obj->pad = chr->chrnum;
+
+        prop = hatApplyToChr((WeaponObjRecord*)obj, chr, modeldef, prop, model);
     }
     else
     {
-        if (prop != 0)
+        if (model)
         {
-            clear_model_obj(prop);
+            clear_model_obj(model);
         }
-        if (lastprop != 0)
+
+        if (prop)
         {
-            chrpropFree(lastprop);
-            lastprop = NULL;
+            chrpropFree(prop);
+            prop = NULL;
         }
     }
-    return lastprop;
+
+    return prop;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel chrTryEquipHat
-/* 085BF0 7F0510C0 27BDFF40 */  addiu $sp, $sp, -0xc0
-/* 085BF4 7F0510C4 00057080 */  sll   $t6, $a1, 2
-/* 085BF8 7F0510C8 01C57023 */  subu  $t6, $t6, $a1
-/* 085BFC 7F0510CC 000E7080 */  sll   $t6, $t6, 2
-/* 085C00 7F0510D0 3C0F8004 */  lui   $t7, %hi(PitemZ_entries)
-/* 085C04 7F0510D4 01EE7821 */  addu  $t7, $t7, $t6
-/* 085C08 7F0510D8 8DEFA228 */  lw    $t7, %lo(PitemZ_entries)($t7)
-/* 085C0C 7F0510DC AFBF002C */  sw    $ra, 0x2c($sp)
-/* 085C10 7F0510E0 AFA400C0 */  sw    $a0, 0xc0($sp)
-/* 085C14 7F0510E4 AFB20028 */  sw    $s2, 0x28($sp)
-/* 085C18 7F0510E8 AFB10024 */  sw    $s1, 0x24($sp)
-/* 085C1C 7F0510EC AFB00020 */  sw    $s0, 0x20($sp)
-/* 085C20 7F0510F0 AFA600C8 */  sw    $a2, 0xc8($sp)
-/* 085C24 7F0510F4 00A02025 */  move  $a0, $a1
-/* 085C28 7F0510F8 AFA500C4 */  sw    $a1, 0xc4($sp)
-/* 085C2C 7F0510FC 0FC15B0E */  jal   modelLoad
-/* 085C30 7F051100 AFAF00BC */   sw    $t7, 0xbc($sp)
-/* 085C34 7F051104 0FC0E90C */  jal   propAllocate
-/* 085C38 7F051108 00000000 */   nop   
-/* 085C3C 7F05110C 00408025 */  move  $s0, $v0
-/* 085C40 7F051110 0FC1B025 */  jal   get_obj_instance_controller_for_header
-/* 085C44 7F051114 8FA400BC */   lw    $a0, 0xbc($sp)
-/* 085C48 7F051118 00408825 */  move  $s1, $v0
-/* 085C4C 7F05111C 2E040001 */  sltiu $a0, $s0, 1
-/* 085C50 7F051120 2C450001 */  sltiu $a1, $v0, 1
-/* 085C54 7F051124 0FC1456C */  jal   hatCreate
-/* 085C58 7F051128 8FA600BC */   lw    $a2, 0xbc($sp)
-/* 085C5C 7F05112C 16000004 */  bnez  $s0, .L7F051140
-/* 085C60 7F051130 00409025 */   move  $s2, $v0
-/* 085C64 7F051134 0FC0E90C */  jal   propAllocate
-/* 085C68 7F051138 00000000 */   nop   
-/* 085C6C 7F05113C 00408025 */  move  $s0, $v0
-.L7F051140:
-/* 085C70 7F051140 16200004 */  bnez  $s1, .L7F051154
-/* 085C74 7F051144 00000000 */   nop   
-/* 085C78 7F051148 0FC1B025 */  jal   get_obj_instance_controller_for_header
-/* 085C7C 7F05114C 8FA400BC */   lw    $a0, 0xbc($sp)
-/* 085C80 7F051150 00408825 */  move  $s1, $v0
-.L7F051154:
-/* 085C84 7F051154 12400035 */  beqz  $s2, .L7F05122C
-/* 085C88 7F051158 00000000 */   nop   
-/* 085C8C 7F05115C 12000033 */  beqz  $s0, .L7F05122C
-/* 085C90 7F051160 00000000 */   nop   
-/* 085C94 7F051164 12200031 */  beqz  $s1, .L7F05122C
-/* 085C98 7F051168 27A20030 */   addiu $v0, $sp, 0x30
-/* 085C9C 7F05116C 3C188003 */  lui   $t8, %hi(blank_11_object) 
-/* 085CA0 7F051170 27182114 */  addiu $t8, %lo(blank_11_object) # addiu $t8, $t8, 0x2114
-/* 085CA4 7F051174 8FA500C0 */  lw    $a1, 0xc0($sp)
-/* 085CA8 7F051178 27080078 */  addiu $t0, $t8, 0x78
-/* 085CAC 7F05117C 00404825 */  move  $t1, $v0
-.L7F051180:
-/* 085CB0 7F051180 8F010000 */  lw    $at, ($t8)
-/* 085CB4 7F051184 2718000C */  addiu $t8, $t8, 0xc
-/* 085CB8 7F051188 2529000C */  addiu $t1, $t1, 0xc
-/* 085CBC 7F05118C AD21FFF4 */  sw    $at, -0xc($t1)
-/* 085CC0 7F051190 8F01FFF8 */  lw    $at, -8($t8)
-/* 085CC4 7F051194 AD21FFF8 */  sw    $at, -8($t1)
-/* 085CC8 7F051198 8F01FFFC */  lw    $at, -4($t8)
-/* 085CCC 7F05119C 1708FFF8 */  bne   $t8, $t0, .L7F051180
-/* 085CD0 7F0511A0 AD21FFFC */   sw    $at, -4($t1)
-/* 085CD4 7F0511A4 8F010000 */  lw    $at, ($t8)
-/* 085CD8 7F0511A8 00406025 */  move  $t4, $v0
-/* 085CDC 7F0511AC 02406825 */  move  $t5, $s2
-/* 085CE0 7F0511B0 AD210000 */  sw    $at, ($t1)
-/* 085CE4 7F0511B4 8F080004 */  lw    $t0, 4($t8)
-/* 085CE8 7F0511B8 244B0078 */  addiu $t3, $v0, 0x78
-/* 085CEC 7F0511BC AD280004 */  sw    $t0, 4($t1)
-.L7F0511C0:
-/* 085CF0 7F0511C0 8D810000 */  lw    $at, ($t4)
-/* 085CF4 7F0511C4 258C000C */  addiu $t4, $t4, 0xc
-/* 085CF8 7F0511C8 25AD000C */  addiu $t5, $t5, 0xc
-/* 085CFC 7F0511CC ADA1FFF4 */  sw    $at, -0xc($t5)
-/* 085D00 7F0511D0 8D81FFF8 */  lw    $at, -8($t4)
-/* 085D04 7F0511D4 ADA1FFF8 */  sw    $at, -8($t5)
-/* 085D08 7F0511D8 8D81FFFC */  lw    $at, -4($t4)
-/* 085D0C 7F0511DC 158BFFF8 */  bne   $t4, $t3, .L7F0511C0
-/* 085D10 7F0511E0 ADA1FFFC */   sw    $at, -4($t5)
-/* 085D14 7F0511E4 8D810000 */  lw    $at, ($t4)
-/* 085D18 7F0511E8 02402025 */  move  $a0, $s2
-/* 085D1C 7F0511EC 02003825 */  move  $a3, $s0
-/* 085D20 7F0511F0 ADA10000 */  sw    $at, ($t5)
-/* 085D24 7F0511F4 8D8B0004 */  lw    $t3, 4($t4)
-/* 085D28 7F0511F8 ADAB0004 */  sw    $t3, 4($t5)
-/* 085D2C 7F0511FC 8FAE00C4 */  lw    $t6, 0xc4($sp)
-/* 085D30 7F051200 A64E0004 */  sh    $t6, 4($s2)
-/* 085D34 7F051204 8FAF00C8 */  lw    $t7, 0xc8($sp)
-/* 085D38 7F051208 35F94000 */  ori   $t9, $t7, 0x4000
-/* 085D3C 7F05120C AE590008 */  sw    $t9, 8($s2)
-/* 085D40 7F051210 84A80000 */  lh    $t0, ($a1)
-/* 085D44 7F051214 A6480006 */  sh    $t0, 6($s2)
-/* 085D48 7F051218 AFB10010 */  sw    $s1, 0x10($sp)
-/* 085D4C 7F05121C 0FC143D4 */  jal   sub_GAME_7F050F50
-/* 085D50 7F051220 8FA600BC */   lw    $a2, 0xbc($sp)
-/* 085D54 7F051224 1000000A */  b     .L7F051250
-/* 085D58 7F051228 00408025 */   move  $s0, $v0
-.L7F05122C:
-/* 085D5C 7F05122C 12200003 */  beqz  $s1, .L7F05123C
-/* 085D60 7F051230 00000000 */   nop   
-/* 085D64 7F051234 0FC1B08D */  jal   clear_model_obj
-/* 085D68 7F051238 02202025 */   move  $a0, $s1
-.L7F05123C:
-/* 085D6C 7F05123C 52000005 */  beql  $s0, $zero, .L7F051254
-/* 085D70 7F051240 8FBF002C */   lw    $ra, 0x2c($sp)
-/* 085D74 7F051244 0FC0E921 */  jal   chrpropFree
-/* 085D78 7F051248 02002025 */   move  $a0, $s0
-/* 085D7C 7F05124C 00008025 */  move  $s0, $zero
-.L7F051250:
-/* 085D80 7F051250 8FBF002C */  lw    $ra, 0x2c($sp)
-.L7F051254:
-/* 085D84 7F051254 02001025 */  move  $v0, $s0
-/* 085D88 7F051258 8FB00020 */  lw    $s0, 0x20($sp)
-/* 085D8C 7F05125C 8FB10024 */  lw    $s1, 0x24($sp)
-/* 085D90 7F051260 8FB20028 */  lw    $s2, 0x28($sp)
-/* 085D94 7F051264 03E00008 */  jr    $ra
-/* 085D98 7F051268 27BD00C0 */   addiu $sp, $sp, 0xc0
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING

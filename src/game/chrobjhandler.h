@@ -133,7 +133,7 @@ void                 doorActivateWrapper(PropRecord *prop);
 bool                 objIsHealthy(ObjectRecord *self);
 ObjectRecord        *weaponFindThrown(s32 ID);
 bool                 check_if_toxic_gas_activated();
-PropRecord          *chrTryEquipHat(ChrRecord *self, s32 index, s32 flags);
+PropRecord          *hatCreateForChr(ChrRecord *chr, s32 modelnum, u32 flags);
 PropRecord*          objInitWithAutoModel(ObjectRecord* obj);
 struct bss_80075030 *monitorthingGetNew(void);
 void objDetach(PropRecord *prop);

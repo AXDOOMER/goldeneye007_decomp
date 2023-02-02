@@ -3586,7 +3586,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     bool      ok       = FALSE;
                     if (ChrEntityp && ChrEntityp->prop && ChrEntityp->model)
                     {
-                        ok = chrTryEquipHat(ChrEntityp, modelnum, flags);
+                        ok = hatCreateForChr(ChrEntityp, modelnum, flags);
                     }
                     if (ok)
                     {
@@ -3665,7 +3665,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                                 {
                                     hatobj = hatprop->obj;
 
-                                    chrTryEquipHat(clone, hatobj->obj, 0);
+                                    hatCreateForChr(clone, hatobj->obj, 0);
                                 }
                             }
                             /* PD extras */

@@ -3204,6 +3204,10 @@ typedef union
     //Types 15,16 missing?
 
     // PROPDEF_HAT (17)
+    typedef struct HatRecord
+    {
+        inherits ObjectRecord;
+    } HatRecord;
 
     // PROPDEF_GUARD_ATTRIBUTE (18)
     typedef struct GuardAttributeRecord
