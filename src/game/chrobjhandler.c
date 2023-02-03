@@ -31996,7 +31996,7 @@ void chrobjMaybeDetonateObjectIfFlags(ObjectRecord *obj, f32 damage, coord3d *po
 
 #ifdef NONMATCHING
 //https://decomp.me/scratch/UWQzo 44%
-ObjectRecord blank_07_object[] = {
+ObjectRecord blank_07_object = {
     0x0100, //extrascale
     0x0, //state
     0x07, //type
@@ -32323,7 +32323,7 @@ void maybe_detonate_object(ObjectRecord* self, f32 damage,  coord3d* pos, bool f
 }
 
 #else
-ObjectRecord blank_07_object[] = {
+ObjectRecord blank_07_object = {
     0x0100, //extrascale
     0x0, //state
     0x07, //type
@@ -40017,7 +40017,7 @@ void chrSetWeaponFlag4(ChrRecord *chr, GUNHAND hand) //#MATCH
 
 
 #ifdef NONMATCHING
-WeaponObjRecord blank_08_object_preset_4001[] = {
+WeaponObjRecord blank_08_object_preset_4001 = {
     0x0100, //extrascale
     0x0, //state
     0x08, //type
@@ -40103,7 +40103,7 @@ PropRecord *something_with_generating_object(ChrRecord *self, s32 PropID, ITEM_I
 }
 
 #else
-WeaponObjRecord blank_08_object_preset_4001[] = {
+WeaponObjRecord blank_08_object_preset_4001 = {
     0x0100, //extrascale
     0x0, //state
     0x08, //type
