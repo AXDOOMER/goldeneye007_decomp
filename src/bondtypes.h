@@ -2532,8 +2532,8 @@ typedef union
 
         u32 unk90;
         f32 unk94;
-        u32 unk98;
-        u32 unk9C;
+        ALSoundState* sound1; // 0x98
+        ALSoundState* sound2; // 0x9C
 
         u32 unkA0;
         u32 unkA4;

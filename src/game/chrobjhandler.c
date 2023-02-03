@@ -965,23 +965,31 @@ void chrobjSndCreatePostEvent(ALSoundState *state, coord3d *pos, f32 low, f32 hi
 
 
 #ifdef NONMATCHING
-/* PD: projectileFree (similar but not the same structure) */
-void projectileFree(Projectile *projectile) {
-    s32 temp_a0;
-    s32 temp_a0_2;
 
-    if ((arg0->unk0 & 0x80) != 0) {
-        temp_a0 = arg0->unk98;
-        if ((temp_a0 != 0) && (sndGetPlayingState(temp_a0) != 0)) {
-            sndDeactivate(arg0->unk98);
+/* PD: projectileFree (similar but not the same structure) */
+/* Matches, but rodata needs to be moved */
+void projectileFree(Projectile* projectile)
+{
+    ALSoundState* sound1;
+    ALSoundState* sound2;
+
+    if (projectile->flags & PROJECTILEFLAG_LAUNCHING)
+    {
+        sound1 = projectile->sound1;
+        if ((sound1 != 0) && (sndGetPlayingState((ALSoundState* ) sound1) != 0))
+        {
+            sndDeactivate((ALSoundState* ) projectile->sound1);
         }
-        temp_a0_2 = arg0->unk9C;
-        if ((temp_a0_2 != 0) && (sndGetPlayingState(temp_a0_2) != 0)) {
-            sndDeactivate(arg0->unk9C);
+
+        sound2 = projectile->sound2;
+        if ((sound2 != 0) && (sndGetPlayingState((ALSoundState* ) sound2) != 0))
+        {
+            sndDeactivate((ALSoundState* ) projectile->sound2);
         }
     }
-    arg0->unk0 = (s32) (arg0->unk0 | 0x80000000);
+    projectile->flags |= PROJECTILEFLAG_FREE;
 }
+
 #else
 void projectileFree(Projectile *projectile);
 GLOBAL_ASM(
