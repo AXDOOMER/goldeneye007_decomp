@@ -31996,25 +31996,33 @@ void chrobjMaybeDetonateObjectIfFlags(ObjectRecord *obj, f32 damage, coord3d *po
 
 #ifdef NONMATCHING
 //https://decomp.me/scratch/UWQzo 44%
-object_standard blank_07_object[] = {
-    0x0100, 00, 07,
-    0x0000,0xFFFF,
-     1,
-     0,
-     0,
-     0,
-     1.0f, 0.0f, 0.0f, 0.0f,
-     0.0f, 1.0f, 0.0f, 0.0f,
-     0.0f, 0.0f, 1.0f, 0.0f,
-     0.0f, 0.0f, 0.0f, 1.0f,
-     0.0, 0.0, 0.0,
-    0x00000000,
-     0,
-     0,
-     0,
-     0x447A,0x0000,
-     0xFFFFFF00, 
-     0xFFFFFF00
+ObjectRecord blank_07_object[] = {
+    0x0100, //extrascale
+    0x0, //state
+    0x07, //type
+    0, //obj
+    0xFFFF, //pad
+    0x00000001, //flags
+    0, //flags2
+    NULL, //prop
+    NULL, //model
+    {
+       1.0f, 0.0f, 0.0f, 0.0f,
+       0.0f, 1.0f, 0.0f, 0.0f,
+       0.0f, 0.0f, 1.0f, 0.0f,
+       0.0f, 0.0f, 0.0f, 1.0f
+    }, //mtx
+    {0.0, 0.0, 0.0},//runtime_pos
+    {0x00000000}, //runtime_bitflags
+    NULL, //ptr_allocated_collisiondata_block
+    NULL, //unk6C
+    0.0f, //maxdamage
+    1000.0f, //damage
+    {0xFF, 0xFF, 0xFF, 0x00}, //field_78
+    0xFF, //field_7c
+    0xFF, //field_7d
+    0xFF, //field_7e
+    0x00, //field_7f
 };
 void maybe_detonate_object(ObjectRecord* self, f32 damage,  coord3d* pos, bool flag, bool flag2)
 {
@@ -32315,25 +32323,33 @@ void maybe_detonate_object(ObjectRecord* self, f32 damage,  coord3d* pos, bool f
 }
 
 #else
-object_standard blank_07_object[] = {
-    0x0100, 00, 07,
-    0x0000,0xFFFF,
-     1,
-     0,
-     0,
-     0,
-     1.0f, 0.0f, 0.0f, 0.0f,
-     0.0f, 1.0f, 0.0f, 0.0f,
-     0.0f, 0.0f, 1.0f, 0.0f,
-     0.0f, 0.0f, 0.0f, 1.0f,
-     0.0, 0.0, 0.0,
-    0x00000000,
-     0,
-     0,
-     0,
-     0x447A,0x0000,
-     0xFFFFFF00, 
-     0xFFFFFF00
+ObjectRecord blank_07_object[] = {
+    0x0100, //extrascale
+    0x0, //state
+    0x07, //type
+    0, //obj
+    0xFFFF, //pad
+    0x00000001, //flags
+    0, //flags2
+    NULL, //prop
+    NULL, //model
+    {
+       1.0f, 0.0f, 0.0f, 0.0f,
+       0.0f, 1.0f, 0.0f, 0.0f,
+       0.0f, 0.0f, 1.0f, 0.0f,
+       0.0f, 0.0f, 0.0f, 1.0f
+    }, //mtx
+    {0.0, 0.0, 0.0},//runtime_pos
+    {0x00000000}, //runtime_bitflags
+    NULL, //ptr_allocated_collisiondata_block
+    NULL, //unk6C
+    0.0f, //maxdamage
+    1000.0f, //damage
+    {0xFF, 0xFF, 0xFF, 0x00}, //field_78
+    0xFF, //field_7c
+    0xFF, //field_7d
+    0xFF, //field_7e
+    0x00, //field_7f
 };
 GLOBAL_ASM(
 .text
@@ -39717,29 +39733,37 @@ glabel sub_GAME_7F052030
  * 
  * Address 0x7F05206C.
 */
-object_weapon blank_08_object_preset_1[] = {
-    0x0100,0x0,0x08,
-    0,  1,
-    0x00000000,
-    0,
-    0,
-    0,
-    1.0f, 0.0f, 0.0f, 0.0f,
-    0.0f, 1.0f, 0.0f, 0.0f,
-    0.0f, 0.0f, 1.0f, 0.0f,
-    0.0f, 0.0f, 0.0f, 1.0f,
-    0.0, 0.0, 0.0,
-    0x00000000,
-    0,
-    0,
-    0.0,
-    0x447A,0x0000,
-    0xFFFFFF00,
-    0xFFFFFF00,
-    0x0,
-    0xFF,
-    0xFFFF,
-    00000000
+WeaponObjRecord blank_08_object_preset_1 = {
+    0x0100, //extrascale
+    0x0, //state
+    0x08, //type
+    0, //obj
+    1, //pad
+    0x00000000, //flags
+    0, //flags2
+    NULL, // prop
+    NULL, // model
+    {
+        1.0f, 0.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f, 0.0f,
+        0.0f, 0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 0.0f, 1.0f
+    }, //mtx
+    { 0.0, 0.0, 0.0 }, //runtime_pos
+    {0x00000000 }, //runtime_bitflags
+    NULL, //ptr_allocated_collisiondata_block
+    NULL, //unk6C
+    0.0f, //maxdamage
+    1000.0f,//damage
+    { 0xFF, 0xFF, 0xFF, 0x00},//field_78
+    0xFF, //field_7c
+    0xFF, //field_7d
+    0xFF, //field_7e
+    0x00, //field_7f
+    ITEM_UNARMED, //weaponnum
+    -1, //LinkedWeaponType
+    -1, //timer
+    NULL //dualweapon
 };
 WeaponObjRecord *create_new_item_instance_of_model(s32 modelnum, ITEM_IDS weaponid)
 {
@@ -39836,29 +39860,37 @@ WeaponObjRecord *create_new_item_instance_of_model(s32 modelnum, ITEM_IDS weapon
 
 }
 #else
-object_weapon blank_08_object_preset_1[] = {
-    0x0100,0x0,0x08,
-    0,  1,
-    0x00000000,
-    0,
-    0,
-    0,
-    1.0f, 0.0f, 0.0f, 0.0f,
-    0.0f, 1.0f, 0.0f, 0.0f,
-    0.0f, 0.0f, 1.0f, 0.0f,
-    0.0f, 0.0f, 0.0f, 1.0f,
-    0.0, 0.0, 0.0,
-    0x00000000,
-    0,
-    0,
-    0.0,
-    0x447A,0x0000,
-    0xFFFFFF00,
-    0xFFFFFF00,
-    0x0,
-    0xFF,
-    0xFFFF,
-    00000000
+WeaponObjRecord blank_08_object_preset_1 = {
+    0x0100, //extrascale
+    0x0, //state
+    0x08, //type
+    0, //obj
+    1, //pad
+    0x00000000, //flags
+    0, //flags2
+    NULL, // prop
+    NULL, // model
+    {
+        1.0f, 0.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f, 0.0f,
+        0.0f, 0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 0.0f, 1.0f
+    }, //mtx
+    { 0.0, 0.0, 0.0 }, //runtime_pos
+    {0x00000000 }, //runtime_bitflags
+    NULL, //ptr_allocated_collisiondata_block
+    NULL, //unk6C
+    0.0f, //maxdamage
+    1000.0f,//damage
+    { 0xFF, 0xFF, 0xFF, 0x00},//field_78
+    0xFF, //field_7c
+    0xFF, //field_7d
+    0xFF, //field_7e
+    0x00, //field_7f
+    ITEM_UNARMED, //weaponnum
+    -1, //LinkedWeaponType
+    -1, //timer
+    NULL //dualweapon
 };
 GLOBAL_ASM(
 .text
@@ -39985,29 +40017,37 @@ void chrSetWeaponFlag4(ChrRecord *chr, GUNHAND hand) //#MATCH
 
 
 #ifdef NONMATCHING
-object_weapon blank_08_object_preset_4001[] = {
-    0x0100,0x0,0x08,
-     0,  0x4001,
-    0x00000000,
-     0,
-     0,
-     0,
-     1.0f, 0.0f, 0.0f, 0.0f,
-     0.0f, 1.0f, 0.0f, 0.0f,
-     0.0f, 0.0f, 1.0f, 0.0f,
-     0.0f, 0.0f, 0.0f, 1.0f,
-     0.0, 0.0, 0.0,
-    0x00000000,
-     0,
-     0,
-     0.0,
-     0x447A,0x0000,
-     0xFFFFFF00,
-     0xFFFFFF00,
-    0x0,
-     0xFF,
-     0xFFFF,
-     00000000
+WeaponObjRecord blank_08_object_preset_4001[] = {
+    0x0100, //extrascale
+    0x0, //state
+    0x08, //type
+    0, //obj
+    0x4001, //pad
+    0x00000000, //flags
+    0, //flags2
+    NULL, //prop
+    NULL, //model
+    {
+       1.0f, 0.0f, 0.0f, 0.0f,
+       0.0f, 1.0f, 0.0f, 0.0f,
+       0.0f, 0.0f, 1.0f, 0.0f,
+       0.0f, 0.0f, 0.0f, 1.0f
+    }, //mtx
+    {0.0, 0.0, 0.0},//runtime_pos
+    {0x00000000}, //runtime_bitflags
+    NULL, //ptr_allocated_collisiondata_block
+    NULL, //unk6C
+    0.0f, //maxdamage
+    1000.0f, //damage
+    {0xFF, 0xFF, 0xFF, 0x00}, //field_78
+    0xFF, //field_7c
+    0xFF, //field_7d
+    0xFF, //field_7e
+    0x00, //field_7f
+    ITEM_UNARMED, //weaponnu
+    -1, //LinkedWeaponType
+    -1, //timer
+    NULL //dualweapon
 };
 //https://decomp.me/scratch/pEmVO
 PropRecord *something_with_generating_object(ChrRecord *self, s32 PropID, ITEM_IDS ItemID, s32 flags, WeaponObjRecord *Weapon, ItemModelFileRecord *PropItem) //#90.8%
@@ -40063,29 +40103,37 @@ PropRecord *something_with_generating_object(ChrRecord *self, s32 PropID, ITEM_I
 }
 
 #else
-object_weapon blank_08_object_preset_4001[] = {
-    0x0100,0x0,0x08,
-     0,  0x4001,
-    0x00000000,
-     0,
-     0,
-     0,
-     1.0f, 0.0f, 0.0f, 0.0f,
-     0.0f, 1.0f, 0.0f, 0.0f,
-     0.0f, 0.0f, 1.0f, 0.0f,
-     0.0f, 0.0f, 0.0f, 1.0f,
-     0.0, 0.0, 0.0,
-    0x00000000,
-     0,
-     0,
-     0.0,
-     0x447A,0x0000,
-     0xFFFFFF00,
-     0xFFFFFF00,
-    0x0,
-     0xFF,
-     0xFFFF,
-     00000000
+WeaponObjRecord blank_08_object_preset_4001[] = {
+    0x0100, //extrascale
+    0x0, //state
+    0x08, //type
+    0, //obj
+    0x4001, //pad
+    0x00000000, //flags
+    0, //flags2
+    NULL, //prop
+    NULL, //model
+    {
+       1.0f, 0.0f, 0.0f, 0.0f,
+       0.0f, 1.0f, 0.0f, 0.0f,
+       0.0f, 0.0f, 1.0f, 0.0f,
+       0.0f, 0.0f, 0.0f, 1.0f
+    }, //mtx
+    {0.0, 0.0, 0.0},//runtime_pos
+    {0x00000000}, //runtime_bitflags
+    NULL, //ptr_allocated_collisiondata_block
+    NULL, //unk6C
+    0.0f, //maxdamage
+    1000.0f, //damage
+    {0xFF, 0xFF, 0xFF, 0x00}, //field_78
+    0xFF, //field_7c
+    0xFF, //field_7d
+    0xFF, //field_7e
+    0x00, //field_7f
+    ITEM_UNARMED, //weaponnu
+    -1, //LinkedWeaponType
+    -1, //timer
+    NULL //dualweapon
 };
 GLOBAL_ASM(
 .text
