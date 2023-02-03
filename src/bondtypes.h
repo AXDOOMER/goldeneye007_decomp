@@ -2542,7 +2542,7 @@ typedef union
 
         u32 unkB0;
         u32 unkB4;
-        u32 unkB8;
+        u32 droptype; // 0xB8
         u32 unkBC;
 
         f32 unkC0;

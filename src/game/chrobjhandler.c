@@ -1066,7 +1066,7 @@ void projectileReset(Projectile *projectile)
     projectile->unkA4 = 0;
     projectile->unkA8 = 0;
     projectile->unkAC = -1;
-    projectile->unkB8 = 1;
+    projectile->droptype = 1;
     projectile->unkBC = 0;
     projectile->unkC0 = 1.0f;
     projectile->unkC4 = 1.0f;
@@ -29279,69 +29279,26 @@ glabel sub_GAME_7F04BCDC
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-void propobjSetDropped(PropRecord *prop, s32 a)
+void propobjSetDropped(PropRecord *prop, u32 droptype)
 {
-    WeaponObjRecord *item;
+    PropRecord *parent = prop->parent;
 
-    if (prop->parent)
+    if (parent)
     {
-        item = prop->weapon;
-        sub_GAME_7F03FDA8();
-        if (item->runtime_bitflags & RUNTIMEBITFLAG_DEPOSITED)
+        ObjectRecord *obj = prop->obj;
+
+        sub_GAME_7F03FDA8(prop);
+
+        if ((obj->runtime_bitflags & RUNTIMEBITFLAG_EMBEDDED) && obj->embedment->projectile)
         {
-            if (item->unk6C->unk44)
-            {
-                item->unk6C->unk44->unkB8 = a;
-            }
+            obj->embedment->projectile->droptype = droptype;
         }
-        else if (item->runtime_bitflags & RUNTIMEBITFLAG_LAUNCHING)
+        else if (obj->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)
         {
-            item->unk6C->unkB8 = a;
+            obj->projectile->droptype = droptype;
         }
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel propobjSetDropped
-/* 080B00 7F04BFD0 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 080B04 7F04BFD4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 080B08 7F04BFD8 8C82001C */  lw    $v0, 0x1c($a0)
-/* 080B0C 7F04BFDC 50400016 */  beql  $v0, $zero, .L7F04C038
-/* 080B10 7F04BFE0 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 080B14 7F04BFE4 8C820004 */  lw    $v0, 4($a0)
-/* 080B18 7F04BFE8 AFA50024 */  sw    $a1, 0x24($sp)
-/* 080B1C 7F04BFEC 0FC0FF6A */  jal   sub_GAME_7F03FDA8
-/* 080B20 7F04BFF0 AFA20018 */   sw    $v0, 0x18($sp)
-/* 080B24 7F04BFF4 8FA20018 */  lw    $v0, 0x18($sp)
-/* 080B28 7F04BFF8 8FA50024 */  lw    $a1, 0x24($sp)
-/* 080B2C 7F04BFFC 8C430064 */  lw    $v1, 0x64($v0)
-/* 080B30 7F04C000 306E0040 */  andi  $t6, $v1, 0x40
-/* 080B34 7F04C004 11C00007 */  beqz  $t6, .L7F04C024
-/* 080B38 7F04C008 30780080 */   andi  $t8, $v1, 0x80
-/* 080B3C 7F04C00C 8C4F006C */  lw    $t7, 0x6c($v0)
-/* 080B40 7F04C010 8DE40044 */  lw    $a0, 0x44($t7)
-/* 080B44 7F04C014 10800003 */  beqz  $a0, .L7F04C024
-/* 080B48 7F04C018 00000000 */   nop   
-/* 080B4C 7F04C01C 10000005 */  b     .L7F04C034
-/* 080B50 7F04C020 AC8500B8 */   sw    $a1, 0xb8($a0)
-.L7F04C024:
-/* 080B54 7F04C024 53000004 */  beql  $t8, $zero, .L7F04C038
-/* 080B58 7F04C028 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 080B5C 7F04C02C 8C59006C */  lw    $t9, 0x6c($v0)
-/* 080B60 7F04C030 AF2500B8 */  sw    $a1, 0xb8($t9)
-.L7F04C034:
-/* 080B64 7F04C034 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F04C038:
-/* 080B68 7F04C038 27BD0020 */  addiu $sp, $sp, 0x20
-/* 080B6C 7F04C03C 03E00008 */  jr    $ra
-/* 080B70 7F04C040 00000000 */   nop   
-)
-#endif
 
 
 void objDetach(PropRecord *prop)
