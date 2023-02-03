@@ -28545,8 +28545,12 @@ void objDetach(PropRecord *prop)
     }
 }
 
-// Uh oh... massive rodata blob that has to be distributed correctly
 
+#ifdef NONMATCHING
+void objDrop(void) {
+
+}
+#else
 u32 D_8003201C = 0;
 u32 D_80032020 = 0;
 u32 D_80032024 = 0;
@@ -28556,150 +28560,6 @@ u32 D_80032030 = 0;
 u32 D_80032034 = 0;
 u32 D_80032038 = 0;
 u32 D_8003203C = 0;
-u32 D_80032040 = 0;
-u32 D_80032044 = 0;
-u32 D_80032048 = 0;
-
-u32 D_8003204C = 0x7FFF;
-u32 D_80032050 = 0x7FFF;
-u32 D_80032054 = 0x7FFF;
-u32 D_80032058 = 0xFFFF8000;
-u32 D_8003205C = 0xFFFF8000;
-u32 D_80032060 = 0xFFFF8000;
-u32 D_80032064 = 0;
-u32 D_80032068 = 0;
-u32 D_8003206C = 0;
-u32 D_80032070 = 0x7FFF;
-u32 D_80032074 = 0x7FFF;
-u32 D_80032078 = 0x7FFF;
-u32 D_8003207C = 0xFFFF8000;
-u32 D_80032080 = 0xFFFF8000;
-u32 D_80032084 = 0xFFFF8000;
-u32 D_80032088 = 0;
-u32 D_8003208C = 0;
-u32 D_80032090 = 0;
-
-object_standard blank_07_object[] = {
-    0x0100, 00, 07,
-    0x0000,0xFFFF,
-     1,
-     0,
-     0,
-     0,
-     1.0f, 0.0f, 0.0f, 0.0f,
-     0.0f, 1.0f, 0.0f, 0.0f,
-     0.0f, 0.0f, 1.0f, 0.0f,
-     0.0f, 0.0f, 0.0f, 1.0f,
-     0.0, 0.0, 0.0,
-    0x00000000,
-     0,
-     0,
-     0,
-     0x447A,0x0000,
-     0xFFFFFF00, 
-     0xFFFFFF00
-};
-
-HatRecord BlankHatRecord = {
-    0x0100, // extrascale
-    0x0,    // state
-    0x11,   // type
-    0,      // obj
-    0,      // pad
-    0x00004000, // flags
-    0,      // flags2
-    NULL,   // prop
-    NULL,   // model
-
-    { 1.0f, 0.0f, 0.0f, 0.0f,
-      0.0f, 1.0f, 0.0f, 0.0f,
-      0.0f, 0.0f, 1.0f, 0.0f,
-      0.0f, 0.0f, 0.0f, 1.0f
-    }, // mtx
-
-    { 0.0f, 0.0f, 0.0f }, // runtime_pos
-
-    { 0x00000000 }, // runtime_bitflags
-    NULL, // ptr_allocated_collisiondata_block
-    NULL, // unk6C
-    0.0f, // maxdamage
-    1000.0f, // damage
-    { 0xFF, 0xFF, 0xFF, 0x00 }, // field_78
-    0xFF, // field_7c
-    0xFF, // field_7d
-    0xFF, // field_7e
-    0x00, // field_7f
-};
-
-object_weapon blank_08_object_preset_1[] = {
-    0x0100,0x0,0x08,
-    0,  1,
-    0x00000000,
-    0,
-    0,
-    0,
-    1.0f, 0.0f, 0.0f, 0.0f,
-    0.0f, 1.0f, 0.0f, 0.0f,
-    0.0f, 0.0f, 1.0f, 0.0f,
-    0.0f, 0.0f, 0.0f, 1.0f,
-    0.0, 0.0, 0.0,
-    0x00000000,
-    0,
-    0,
-    0.0,
-    0x447A,0x0000,
-    0xFFFFFF00,
-    0xFFFFFF00,
-    0x0,
-    0xFF,
-    0xFFFF,
-    00000000
-};
-
-object_weapon blank_08_object_preset_4001[] = {
-    0x0100,0x0,0x08,
-     0,  0x4001,
-    0x00000000,
-     0,
-     0,
-     0,
-     1.0f, 0.0f, 0.0f, 0.0f,
-     0.0f, 1.0f, 0.0f, 0.0f,
-     0.0f, 0.0f, 1.0f, 0.0f,
-     0.0f, 0.0f, 0.0f, 1.0f,
-     0.0, 0.0, 0.0,
-    0x00000000,
-     0,
-     0,
-     0.0,
-     0x447A,0x0000,
-     0xFFFFFF00,
-     0xFFFFFF00,
-    0x0,
-     0xFF,
-     0xFFFF,
-     00000000
-};
-
-
-u32 D_800322A4 = 0;
-
-u32 D_800322A8[] = {1, 3};
-u32 D_800322B0[] = {0, 0, 0, 0};
-u32 D_800322C0[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-
-const char D_800529D0[] = "\n";
-const char D_800529D4[] = ".\n";
-const char D_800529D8[100] = "";
-const char D_80052A3C[] = "";
-const char D_80052A40[] = "\n";
-const char D_80052A44[] = ":\n";
-
-#ifdef NONMATCHING
-void objDrop(void) {
-
-}
-#else
 
 #if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
@@ -30065,7 +29925,9 @@ void sub_GAME_7F04CA44(void) {
 
 }
 #else
-
+u32 D_80032040 = 0;
+u32 D_80032044 = 0;
+u32 D_80032048 = 0;
 #if defined(LEFTOVERDEBUG)
 GLOBAL_ASM(
 .late_rodata
@@ -31084,6 +30946,24 @@ bool bgTestHitOnObj(coord3d *arg0, coord3d *arg1, coord3d *arg2, Gfx *gdl, Gfx *
 }
 #else
 bool bgTestHitOnObj(coord3d *arg0, coord3d *arg1, coord3d *arg2, Gfx *gdl, Gfx *gdl2, Vertex *vertices, struct HitThing *hitthing);
+u32 D_8003204C = 0x7FFF;
+u32 D_80032050 = 0x7FFF;
+u32 D_80032054 = 0x7FFF;
+u32 D_80032058 = 0xFFFF8000;
+u32 D_8003205C = 0xFFFF8000;
+u32 D_80032060 = 0xFFFF8000;
+u32 D_80032064 = 0;
+u32 D_80032068 = 0;
+u32 D_8003206C = 0;
+u32 D_80032070 = 0x7FFF;
+u32 D_80032074 = 0x7FFF;
+u32 D_80032078 = 0x7FFF;
+u32 D_8003207C = 0xFFFF8000;
+u32 D_80032080 = 0xFFFF8000;
+u32 D_80032084 = 0xFFFF8000;
+u32 D_80032088 = 0;
+u32 D_8003208C = 0;
+u32 D_80032090 = 0;
 GLOBAL_ASM(
 .text
 glabel bgTestHitOnObj
@@ -32116,6 +31996,26 @@ void chrobjMaybeDetonateObjectIfFlags(ObjectRecord *obj, f32 damage, coord3d *po
 
 #ifdef NONMATCHING
 //https://decomp.me/scratch/UWQzo 44%
+object_standard blank_07_object[] = {
+    0x0100, 00, 07,
+    0x0000,0xFFFF,
+     1,
+     0,
+     0,
+     0,
+     1.0f, 0.0f, 0.0f, 0.0f,
+     0.0f, 1.0f, 0.0f, 0.0f,
+     0.0f, 0.0f, 1.0f, 0.0f,
+     0.0f, 0.0f, 0.0f, 1.0f,
+     0.0, 0.0, 0.0,
+    0x00000000,
+     0,
+     0,
+     0,
+     0x447A,0x0000,
+     0xFFFFFF00, 
+     0xFFFFFF00
+};
 void maybe_detonate_object(ObjectRecord* self, f32 damage,  coord3d* pos, bool flag, bool flag2)
 {
     u32 spC8;
@@ -32415,6 +32315,26 @@ void maybe_detonate_object(ObjectRecord* self, f32 damage,  coord3d* pos, bool f
 }
 
 #else
+object_standard blank_07_object[] = {
+    0x0100, 00, 07,
+    0x0000,0xFFFF,
+     1,
+     0,
+     0,
+     0,
+     1.0f, 0.0f, 0.0f, 0.0f,
+     0.0f, 1.0f, 0.0f, 0.0f,
+     0.0f, 0.0f, 1.0f, 0.0f,
+     0.0f, 0.0f, 0.0f, 1.0f,
+     0.0, 0.0, 0.0,
+    0x00000000,
+     0,
+     0,
+     0,
+     0x447A,0x0000,
+     0xFFFFFF00, 
+     0xFFFFFF00
+};
 GLOBAL_ASM(
 .text
 glabel maybe_detonate_object
@@ -34259,6 +34179,12 @@ void prepare_ammo_type_collection_text(u8 *finaltext, AMMOTYPE ammotype, u32 qua
     strcat(finaltext, (char *)D_800529D4);
 }
 #else
+const char D_800529D0[] = "\n";
+const char D_800529D4[] = ".\n";
+const char D_800529D8[100] = "";
+const char D_80052A3C[] = "";
+const char D_80052A40[] = "\n";
+const char D_80052A44[] = ":\n";
 GLOBAL_ASM(
 .late_rodata
 
@@ -38684,6 +38610,37 @@ void hatAssignToChr(HatRecord* hat, ChrRecord* chr)
 }
 
 
+HatRecord BlankHatRecord = {
+    0x0100, // extrascale
+    0x0,    // state
+    0x11,   // type
+    0,      // obj
+    0,      // pad
+    0x00004000, // flags
+    0,      // flags2
+    NULL,   // prop
+    NULL,   // model
+
+    { 1.0f, 0.0f, 0.0f, 0.0f,
+      0.0f, 1.0f, 0.0f, 0.0f,
+      0.0f, 0.0f, 1.0f, 0.0f,
+      0.0f, 0.0f, 0.0f, 1.0f
+    }, // mtx
+
+    { 0.0f, 0.0f, 0.0f }, // runtime_pos
+
+    { 0x00000000 }, // runtime_bitflags
+    NULL, // ptr_allocated_collisiondata_block
+    NULL, // unk6C
+    0.0f, // maxdamage
+    1000.0f, // damage
+    { 0xFF, 0xFF, 0xFF, 0x00 }, // field_78
+    0xFF, // field_7c
+    0xFF, // field_7d
+    0xFF, // field_7e
+    0x00, // field_7f
+};
+
 PropRecord *hatCreateForChr(ChrRecord *chr, s32 modelnum, u32 flags)
 {
     ModelFileHeader *modeldef;
@@ -39762,6 +39719,30 @@ glabel sub_GAME_7F052030
  * 
  * Address 0x7F05206C.
 */
+object_weapon blank_08_object_preset_1[] = {
+    0x0100,0x0,0x08,
+    0,  1,
+    0x00000000,
+    0,
+    0,
+    0,
+    1.0f, 0.0f, 0.0f, 0.0f,
+    0.0f, 1.0f, 0.0f, 0.0f,
+    0.0f, 0.0f, 1.0f, 0.0f,
+    0.0f, 0.0f, 0.0f, 1.0f,
+    0.0, 0.0, 0.0,
+    0x00000000,
+    0,
+    0,
+    0.0,
+    0x447A,0x0000,
+    0xFFFFFF00,
+    0xFFFFFF00,
+    0x0,
+    0xFF,
+    0xFFFF,
+    00000000
+};
 WeaponObjRecord *create_new_item_instance_of_model(s32 modelnum, ITEM_IDS weaponid)
 {
     WeaponObjRecord *itemModel;
@@ -39857,6 +39838,30 @@ WeaponObjRecord *create_new_item_instance_of_model(s32 modelnum, ITEM_IDS weapon
 
 }
 #else
+object_weapon blank_08_object_preset_1[] = {
+    0x0100,0x0,0x08,
+    0,  1,
+    0x00000000,
+    0,
+    0,
+    0,
+    1.0f, 0.0f, 0.0f, 0.0f,
+    0.0f, 1.0f, 0.0f, 0.0f,
+    0.0f, 0.0f, 1.0f, 0.0f,
+    0.0f, 0.0f, 0.0f, 1.0f,
+    0.0, 0.0, 0.0,
+    0x00000000,
+    0,
+    0,
+    0.0,
+    0x447A,0x0000,
+    0xFFFFFF00,
+    0xFFFFFF00,
+    0x0,
+    0xFF,
+    0xFFFF,
+    00000000
+};
 GLOBAL_ASM(
 .text
 glabel create_new_item_instance_of_model
@@ -39982,6 +39987,30 @@ void chrSetWeaponFlag4(ChrRecord *chr, GUNHAND hand) //#MATCH
 
 
 #ifdef NONMATCHING
+object_weapon blank_08_object_preset_4001[] = {
+    0x0100,0x0,0x08,
+     0,  0x4001,
+    0x00000000,
+     0,
+     0,
+     0,
+     1.0f, 0.0f, 0.0f, 0.0f,
+     0.0f, 1.0f, 0.0f, 0.0f,
+     0.0f, 0.0f, 1.0f, 0.0f,
+     0.0f, 0.0f, 0.0f, 1.0f,
+     0.0, 0.0, 0.0,
+    0x00000000,
+     0,
+     0,
+     0.0,
+     0x447A,0x0000,
+     0xFFFFFF00,
+     0xFFFFFF00,
+    0x0,
+     0xFF,
+     0xFFFF,
+     00000000
+};
 //https://decomp.me/scratch/pEmVO
 PropRecord *something_with_generating_object(ChrRecord *self, s32 PropID, ITEM_IDS ItemID, s32 flags, WeaponObjRecord *Weapon, ItemModelFileRecord *PropItem) //#90.8%
 {
@@ -40036,6 +40065,30 @@ PropRecord *something_with_generating_object(ChrRecord *self, s32 PropID, ITEM_I
 }
 
 #else
+object_weapon blank_08_object_preset_4001[] = {
+    0x0100,0x0,0x08,
+     0,  0x4001,
+    0x00000000,
+     0,
+     0,
+     0,
+     1.0f, 0.0f, 0.0f, 0.0f,
+     0.0f, 1.0f, 0.0f, 0.0f,
+     0.0f, 0.0f, 1.0f, 0.0f,
+     0.0f, 0.0f, 0.0f, 1.0f,
+     0.0, 0.0, 0.0,
+    0x00000000,
+     0,
+     0,
+     0.0,
+     0x447A,0x0000,
+     0xFFFFFF00,
+     0xFFFFFF00,
+    0x0,
+     0xFF,
+     0xFFFF,
+     00000000
+};
 GLOBAL_ASM(
 .text
 glabel something_with_generating_object
@@ -40184,6 +40237,10 @@ void sub_GAME_7F0523F8(void) {
 
 }
 #else
+u32 D_800322A4 = 0;
+u32 D_800322A8[] = {1, 3};
+u32 D_800322B0[] = {0, 0, 0, 0};
+u32 D_800322C0[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 GLOBAL_ASM(
 .late_rodata
 glabel D_800532F0
