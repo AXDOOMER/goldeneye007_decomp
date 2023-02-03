@@ -139,8 +139,8 @@ void reinit_between_menus(void)
     for (i = 0; i < PROJECTILES_ARR_MAX; i++)
     {
         g_Projectiles[i].flags = 0x80000000;
-        g_Projectiles[i].unk98 = 0;
-        g_Projectiles[i].unk9C = 0;
+        g_Projectiles[i].sound1 = NULL;
+        g_Projectiles[i].sound2 = NULL;
     }
 
     for (i = 0; i < EMBEDMENT_ARR_MAX; i++)
