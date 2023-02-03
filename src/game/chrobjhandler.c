@@ -38610,37 +38610,6 @@ void hatAssignToChr(HatRecord* hat, ChrRecord* chr)
 }
 
 
-HatRecord BlankHatRecord = {
-    0x0100, // extrascale
-    0x0,    // state
-    0x11,   // type
-    0,      // obj
-    0,      // pad
-    0x00004000, // flags
-    0,      // flags2
-    NULL,   // prop
-    NULL,   // model
-
-    { 1.0f, 0.0f, 0.0f, 0.0f,
-      0.0f, 1.0f, 0.0f, 0.0f,
-      0.0f, 0.0f, 1.0f, 0.0f,
-      0.0f, 0.0f, 0.0f, 1.0f
-    }, // mtx
-
-    { 0.0f, 0.0f, 0.0f }, // runtime_pos
-
-    { 0x00000000 }, // runtime_bitflags
-    NULL, // ptr_allocated_collisiondata_block
-    NULL, // unk6C
-    0.0f, // maxdamage
-    1000.0f, // damage
-    { 0xFF, 0xFF, 0xFF, 0x00 }, // field_78
-    0xFF, // field_7c
-    0xFF, // field_7d
-    0xFF, // field_7e
-    0x00, // field_7f
-};
-
 PropRecord *hatCreateForChr(ChrRecord *chr, s32 modelnum, u32 flags)
 {
     ModelFileHeader *modeldef;
@@ -38667,7 +38636,36 @@ PropRecord *hatCreateForChr(ChrRecord *chr, s32 modelnum, u32 flags)
 
     if (hat && prop && model)
     {
-        HatRecord tmp = BlankHatRecord;
+        HatRecord tmp = {
+            0x0100, // extrascale
+            0x0,    // state
+            0x11,   // type
+            0,      // obj
+            0,      // pad
+            0x00004000, // flags
+            0,      // flags2
+            NULL,   // prop
+            NULL,   // model
+
+            { 1.0f, 0.0f, 0.0f, 0.0f,
+              0.0f, 1.0f, 0.0f, 0.0f,
+              0.0f, 0.0f, 1.0f, 0.0f,
+              0.0f, 0.0f, 0.0f, 1.0f
+            }, // mtx
+
+            { 0.0f, 0.0f, 0.0f }, // runtime_pos
+
+            { 0x00000000 }, // runtime_bitflags
+            NULL, // ptr_allocated_collisiondata_block
+            NULL, // unk6C
+            0.0f, // maxdamage
+            1000.0f, // damage
+            { 0xFF, 0xFF, 0xFF, 0x00 }, // field_78
+            0xFF, // field_7c
+            0xFF, // field_7d
+            0xFF, // field_7e
+            0x00, // field_7f
+        };
 
         *hat = tmp;
 
