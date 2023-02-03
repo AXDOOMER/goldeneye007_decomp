@@ -963,11 +963,39 @@ s32 sub_GAME_7F044414(struct rect4f *arg0, s32 arg1, struct rect4f *arg2, s32 ar
 void chrobjSndCreatePostEvent(ALSoundState *state, coord3d *pos, f32 low, f32 high);
 //rodata 
 
+const char D_800529D0[] = "\n";
+const char D_800529D4[] = ".\n";
+const char D_800529D8[] = "";
+const char D_800529DC[] = "";
+const char D_800529E0[] = "";
+const char D_800529E4[] = "";
+const char D_800529E8[] = "";
+const char D_800529EC[] = "";
+const char D_800529F0[] = "";
+const char D_800529F4[] = "";
+const char D_800529F8[] = "";
+const char D_800529FC[] = "";
+const char D_80052A00[] = "";
+const char D_80052A04[] = "";
+const char D_80052A08[] = "";
+const char D_80052A0C[] = "";
+const char D_80052A10[] = "";
+const char D_80052A14[] = "";
+const char D_80052A18[] = "";
+const char D_80052A1C[] = "";
+const char D_80052A20[] = "";
+const char D_80052A24[] = "";
+const char D_80052A28[] = "";
+const char D_80052A2C[] = "";
+const char D_80052A30[] = "";
+const char D_80052A34[] = "";
+const char D_80052A38[] = "";
+const char D_80052A3C[] = "";
+const char D_80052A40[] = "\n";
+const char D_80052A44[] = ":\n";
 
-#ifdef NONMATCHING
 
 /* PD: projectileFree (similar but not the same structure) */
-/* Matches, but rodata needs to be moved */
 void projectileFree(Projectile* projectile)
 {
     ALSoundState* sound1;
@@ -989,67 +1017,6 @@ void projectileFree(Projectile* projectile)
     }
     projectile->flags |= PROJECTILEFLAG_FREE;
 }
-
-#else
-void projectileFree(Projectile *projectile);
-GLOBAL_ASM(
-.late_rodata
-glabel D_800529D0
-.word 0xA000000 /*"\n"*/
-glabel D_800529D4
-.word 0x2E0A0000 /*".\n"*/
-glabel D_800529D8
-.word 0, 0, 0, 0, 0, 0, 0, 0
-.word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-glabel D_80052A38
-.word 0
-glabel D_80052A3C
-.word 0
-glabel D_80052A40
-.word 0xA000000 /*"\n"*/
-glabel D_80052A44
-.word 0x3A0A0000 /*":\n"*/
-.text
-glabel projectileFree
-/* 0746A0 7F03FB70 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0746A4 7F03FB74 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0746A8 7F03FB78 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0746AC 7F03FB7C 8C8E0000 */  lw    $t6, ($a0)
-/* 0746B0 7F03FB80 00808025 */  move  $s0, $a0
-/* 0746B4 7F03FB84 31CF0080 */  andi  $t7, $t6, 0x80
-/* 0746B8 7F03FB88 51E00014 */  beql  $t7, $zero, .L7F03FBDC
-/* 0746BC 7F03FB8C 8E180000 */   lw    $t8, ($s0)
-/* 0746C0 7F03FB90 8C840098 */  lw    $a0, 0x98($a0)
-/* 0746C4 7F03FB94 50800008 */  beql  $a0, $zero, .L7F03FBB8
-/* 0746C8 7F03FB98 8E04009C */   lw    $a0, 0x9c($s0)
-/* 0746CC 7F03FB9C 0C00237C */  jal   sndGetPlayingState
-/* 0746D0 7F03FBA0 00000000 */   nop   
-/* 0746D4 7F03FBA4 50400004 */  beql  $v0, $zero, .L7F03FBB8
-/* 0746D8 7F03FBA8 8E04009C */   lw    $a0, 0x9c($s0)
-/* 0746DC 7F03FBAC 0C002408 */  jal   sndDeactivate
-/* 0746E0 7F03FBB0 8E040098 */   lw    $a0, 0x98($s0)
-/* 0746E4 7F03FBB4 8E04009C */  lw    $a0, 0x9c($s0)
-.L7F03FBB8:
-/* 0746E8 7F03FBB8 50800008 */  beql  $a0, $zero, .L7F03FBDC
-/* 0746EC 7F03FBBC 8E180000 */   lw    $t8, ($s0)
-/* 0746F0 7F03FBC0 0C00237C */  jal   sndGetPlayingState
-/* 0746F4 7F03FBC4 00000000 */   nop   
-/* 0746F8 7F03FBC8 50400004 */  beql  $v0, $zero, .L7F03FBDC
-/* 0746FC 7F03FBCC 8E180000 */   lw    $t8, ($s0)
-/* 074700 7F03FBD0 0C002408 */  jal   sndDeactivate
-/* 074704 7F03FBD4 8E04009C */   lw    $a0, 0x9c($s0)
-/* 074708 7F03FBD8 8E180000 */  lw    $t8, ($s0)
-.L7F03FBDC:
-/* 07470C 7F03FBDC 3C018000 */  lui   $at, 0x8000
-/* 074710 7F03FBE0 0301C825 */  or    $t9, $t8, $at
-/* 074714 7F03FBE4 AE190000 */  sw    $t9, ($s0)
-/* 074718 7F03FBE8 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 07471C 7F03FBEC 8FB00018 */  lw    $s0, 0x18($sp)
-/* 074720 7F03FBF0 27BD0020 */  addiu $sp, $sp, 0x20
-/* 074724 7F03FBF4 03E00008 */  jr    $ra
-/* 074728 7F03FBF8 00000000 */   nop   
-)
-#endif
 
 
 void projectileReset(Projectile *projectile)
@@ -1314,10 +1281,6 @@ s32 do_something_if_object_destroyed(ObjectRecord *obj)
 }
 
 
-
-
-
-#ifndef NONMATCHING
 ModelRoData_BoundingBoxRecord *sub_GAME_7F03FFF8(ModelFileHeader *obj)
 {
     ModelNode *mdlnext;
@@ -1348,57 +1311,6 @@ ModelRoData_BoundingBoxRecord *sub_GAME_7F03FFF8(ModelFileHeader *obj)
     }
     return NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03FFF8
-/* 074B28 7F03FFF8 8C8E0000 */  lw    $t6, ($a0)
-/* 074B2C 7F03FFFC 8DC20014 */  lw    $v0, 0x14($t6)
-/* 074B30 7F040000 5040001B */  beql  $v0, $zero, .L7F040070
-/* 074B34 7F040004 00001025 */   move  $v0, $zero
-/* 074B38 7F040008 1040000A */  beqz  $v0, .L7F040034
-/* 074B3C 7F04000C 00401825 */   move  $v1, $v0
-/* 074B40 7F040010 2405000A */  li    $a1, 10
-/* 074B44 7F040014 946F0000 */  lhu   $t7, ($v1)
-.L7F040018:
-/* 074B48 7F040018 54AF0004 */  bnel  $a1, $t7, .L7F04002C
-/* 074B4C 7F04001C 8C63000C */   lw    $v1, 0xc($v1)
-/* 074B50 7F040020 03E00008 */  jr    $ra
-/* 074B54 7F040024 8C620004 */   lw    $v0, 4($v1)
-
-/* 074B58 7F040028 8C63000C */  lw    $v1, 0xc($v1)
-.L7F04002C:
-/* 074B5C 7F04002C 5460FFFA */  bnezl $v1, .L7F040018
-/* 074B60 7F040030 946F0000 */   lhu   $t7, ($v1)
-.L7F040034:
-/* 074B64 7F040034 8C440014 */  lw    $a0, 0x14($v0)
-/* 074B68 7F040038 2405000A */  li    $a1, 10
-/* 074B6C 7F04003C 5080000C */  beql  $a0, $zero, .L7F040070
-/* 074B70 7F040040 00001025 */   move  $v0, $zero
-/* 074B74 7F040044 10800009 */  beqz  $a0, .L7F04006C
-/* 074B78 7F040048 00801825 */   move  $v1, $a0
-/* 074B7C 7F04004C 94780000 */  lhu   $t8, ($v1)
-.L7F040050:
-/* 074B80 7F040050 54B80004 */  bnel  $a1, $t8, .L7F040064
-/* 074B84 7F040054 8C63000C */   lw    $v1, 0xc($v1)
-/* 074B88 7F040058 03E00008 */  jr    $ra
-/* 074B8C 7F04005C 8C620004 */   lw    $v0, 4($v1)
-
-/* 074B90 7F040060 8C63000C */  lw    $v1, 0xc($v1)
-.L7F040064:
-/* 074B94 7F040064 5460FFFA */  bnezl $v1, .L7F040050
-/* 074B98 7F040068 94780000 */   lhu   $t8, ($v1)
-.L7F04006C:
-/* 074B9C 7F04006C 00001025 */  move  $v0, $zero
-.L7F040070:
-/* 074BA0 7F040070 03E00008 */  jr    $ra
-/* 074BA4 7F040074 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 
 struct modeldata_unk_pos * sub_GAME_7F040078(ObjectRecord *arg0)
