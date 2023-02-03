@@ -3056,7 +3056,7 @@ void disable_sounds_attached_to_player_then_something(PropRecord *prop)
         p = p->nextSibling;
     }
 
-    set_aircraft_obj_inst_scale_to_zero(model);
+    clear_aircraft_model_obj(model);
 
     chr->model = NULL;
     chr->chrnum = -1;
@@ -3135,7 +3135,7 @@ glabel disable_sounds_attached_to_player_then_something
 /* 05502C 7F0204FC 1600FFF9 */  bnez  $s0, .L7F0204E4
 /* 055030 7F020500 02002025 */   move  $a0, $s0
 .L7F020504:
-/* 055034 7F020504 0FC1B0FE */  jal   set_aircraft_obj_inst_scale_to_zero
+/* 055034 7F020504 0FC1B0FE */  jal   clear_aircraft_model_obj
 /* 055038 7F020508 8FA40028 */   lw    $a0, 0x28($sp)
 /* 05503C 7F02050C 8E440020 */  lw    $a0, 0x20($s2)
 /* 055040 7F020510 240FFFFF */  li    $t7, -1
@@ -4687,7 +4687,7 @@ glabel sub_GAME_7F020EF0
 /* 055F8C 7F02145C 10400004 */  beqz  $v0, .L7F021470
 /* 055F90 7F021460 3C013EA0 */   li    $at, 0x3EA00000 # 0.312500
 /* 055F94 7F021464 44816000 */  mtc1  $at, $f12
-/* 055F98 7F021468 0FC1B103 */  jal   set_float_80036088
+/* 055F98 7F021468 0FC1B103 */  jal   modelSetDistanceScale
 /* 055F9C 7F02146C 00000000 */   nop   
 .L7F021470:
 /* 055FA0 7F021470 3C0A7F02 */  lui   $t2, %hi(sub_GAME_7F02083C) # $t2, 0x7f02
@@ -4730,7 +4730,7 @@ glabel sub_GAME_7F020EF0
 /* 05602C 7F0214FC AC206090 */  sw    $zero, %lo(D_80036090)($at)
 /* 056030 7F021500 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 056034 7F021504 44816000 */  mtc1  $at, $f12
-/* 056038 7F021508 0FC1B103 */  jal   set_float_80036088
+/* 056038 7F021508 0FC1B103 */  jal   modelSetDistanceScale
 /* 05603C 7F02150C 00000000 */   nop   
 /* 056040 7F021510 260400F4 */  addiu $a0, $s0, 0xf4
 /* 056044 7F021514 0FC100C4 */  jal   update_color_shading
@@ -5544,7 +5544,7 @@ glabel sub_GAME_7F020EF0
 /* 056278 7F021708 10400013 */  beqz  $v0, .Ljp7F021758
 /* 05627C 7F02170C 3C013EA0 */   li    $at, 0x3EA00000 # 0.312500
 /* 056280 7F021710 44816000 */  mtc1  $at, $f12
-/* 056284 7F021714 0FC1B27F */  jal   set_float_80036088
+/* 056284 7F021714 0FC1B27F */  jal   modelSetDistanceScale
 /* 056288 7F021718 00000000 */   nop   
 /* 05628C 7F02171C 8E020014 */  lw    $v0, 0x14($s0)
 /* 056290 7F021720 3C01EFFF */  lui   $at, (0xEFFFFFFF >> 16) # lui $at, 0xefff
@@ -5602,7 +5602,7 @@ glabel sub_GAME_7F020EF0
 /* 056354 7F0217E4 AC2060D0 */  sw    $zero, %lo(D_80036090)($at)
 /* 056358 7F0217E8 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 05635C 7F0217EC 44816000 */  mtc1  $at, $f12
-/* 056360 7F0217F0 0FC1B27F */  jal   set_float_80036088
+/* 056360 7F0217F0 0FC1B27F */  jal   modelSetDistanceScale
 /* 056364 7F0217F4 00000000 */   nop   
 /* 056368 7F0217F8 260400F4 */  addiu $a0, $s0, 0xf4
 /* 05636C 7F0217FC 0FC10184 */  jal   update_color_shading
@@ -6470,7 +6470,7 @@ glabel sub_GAME_7F020EF0
 /* 053DD8 7F0213E8 10400013 */  beqz  $v0, .L7F021438
 /* 053DDC 7F0213EC 3C013EA0 */   li    $at, 0x3EA00000 # 0.312500
 /* 053DE0 7F0213F0 44816000 */  mtc1  $at, $f12
-/* 053DE4 7F0213F4 0FC1B2D3 */  jal   set_float_80036088
+/* 053DE4 7F0213F4 0FC1B2D3 */  jal   modelSetDistanceScale
 /* 053DE8 7F0213F8 00000000 */   nop   
 /* 053DEC 7F0213FC 8E020014 */  lw    $v0, 0x14($s0)
 /* 053DF0 7F021400 3C01EFFF */  lui   $at, (0xEFFFFFFF >> 16) # lui $at, 0xefff
@@ -6528,7 +6528,7 @@ glabel sub_GAME_7F020EF0
 /* 053EB4 7F0214C4 AC2015E0 */  sw    $zero, %lo(D_80036090)($at)
 /* 053EB8 7F0214C8 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 053EBC 7F0214CC 44816000 */  mtc1  $at, $f12
-/* 053EC0 7F0214D0 0FC1B2D3 */  jal   set_float_80036088
+/* 053EC0 7F0214D0 0FC1B2D3 */  jal   modelSetDistanceScale
 /* 053EC4 7F0214D4 00000000 */   nop   
 /* 053EC8 7F0214D8 260400F4 */  addiu $a0, $s0, 0xf4
 /* 053ECC 7F0214DC 0FC100F4 */  jal   update_color_shading

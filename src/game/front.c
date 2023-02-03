@@ -2876,7 +2876,7 @@ void sub_GAME_7F00B990(void)
 
     for (i = 0; i < 4; i++) {
         if (walletinst[i] == NULL) { continue; }
-        set_aircraft_obj_inst_scale_to_zero(walletinst[i]);
+        clear_aircraft_model_obj(walletinst[i]);
         walletinst[i] = NULL;
     }
 }
@@ -21662,7 +21662,7 @@ glabel init_menu18_displaycast
 
 void update_menu18_displaycast(void) {
     if (objinstance != 0) {
-        set_aircraft_obj_inst_scale_to_zero(objinstance);
+        clear_aircraft_model_obj(objinstance);
     }
     if (ptrobjinstance != 0) {
         clear_model_obj(ptrobjinstance);
@@ -22582,7 +22582,7 @@ glabel constructor_menu18_displaycast
 /* 04E264 7F019734 8E840000 */  lw    $a0, ($s4)
 /* 04E268 7F019738 0FC1C2BB */  jal   modelTickAnimQuarterSpeed
 /* 04E26C 7F01973C 24060001 */   li    $a2, 1
-/* 04E270 7F019740 0FC1B100 */  jal   set_80036084
+/* 04E270 7F019740 0FC1B100 */  jal   modelSetDistanceDisabled
 /* 04E274 7F019744 24040001 */   li    $a0, 1
 /* 04E278 7F019748 0FC1CFF2 */  jal   sub_GAME_7F073FC8
 /* 04E27C 7F01974C 00002025 */   move  $a0, $zero
@@ -22965,7 +22965,7 @@ glabel constructor_menu18_displaycast
 /* 04E82C 7F019CFC 00E02825 */   move  $a1, $a3
 .L7F019D00:
 /* 04E830 7F019D00 8FB301B4 */  lw    $s3, 0x1b4($sp)
-/* 04E834 7F019D04 0FC1B100 */  jal   set_80036084
+/* 04E834 7F019D04 0FC1B100 */  jal   modelSetDistanceDisabled
 /* 04E838 7F019D08 00002025 */   move  $a0, $zero
 /* 04E83C 7F019D0C 8E820000 */  lw    $v0, ($s4)
 /* 04E840 7F019D10 8C4B0008 */  lw    $t3, 8($v0)
@@ -23706,7 +23706,7 @@ glabel constructor_menu18_displaycast
 /* 04C1A0 7F0197B0 8E840000 */  lw    $a0, ($s4)
 /* 04C1A4 7F0197B4 0FC1C323 */  jal   modelTickAnimQuarterSpeed
 /* 04C1A8 7F0197B8 24060001 */   li    $a2, 1
-/* 04C1AC 7F0197BC 0FC1B2D0 */  jal   set_80036084
+/* 04C1AC 7F0197BC 0FC1B2D0 */  jal   modelSetDistanceDisabled
 /* 04C1B0 7F0197C0 24040001 */   li    $a0, 1
 /* 04C1B4 7F0197C4 0FC1D037 */  jal   sub_GAME_7F073FC8
 /* 04C1B8 7F0197C8 00002025 */   move  $a0, $zero
@@ -24089,7 +24089,7 @@ glabel constructor_menu18_displaycast
 /* 04C768 7F019D78 00E02825 */   move  $a1, $a3
 .L7F019D7C:
 /* 04C76C 7F019D7C 8FB301B4 */  lw    $s3, 0x1b4($sp)
-/* 04C770 7F019D80 0FC1B2D0 */  jal   set_80036084
+/* 04C770 7F019D80 0FC1B2D0 */  jal   modelSetDistanceDisabled
 /* 04C774 7F019D84 00002025 */   move  $a0, $zero
 /* 04C778 7F019D88 8E820000 */  lw    $v0, ($s4)
 /* 04C77C 7F019D8C 8C4B0008 */  lw    $t3, 8($v0)

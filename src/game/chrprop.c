@@ -6461,7 +6461,7 @@ void sub_GAME_7F03F748(Model* model, f32* max, f32* min, s32 axis)
     {
         u32 type = node->Opcode & 0xFF;
 
-        if (type == MODELNODE_OPCODE_BOUNDINGBOXRECORD)
+        if (type == MODELNODE_OPCODE_BBOX)
         {
             struct ModelRoData_BoundingBoxRecord *bbox = &node->Data->BoundingBox;
             Mtxf *mtx = modelFindNodeMtx(model, node, 0);

@@ -1413,7 +1413,7 @@ ModelRoData_BoundingBoxRecord *sub_GAME_7F03FFF8(ModelFileHeader *obj)
         //for each next node, check for BBox
         for (mdlnext = obj->RootNode->Child; mdlnext; mdlnext = mdlnext->Next)
         {
-            if (mdlnext->Opcode == MODELNODE_OPCODE_BOUNDINGBOXRECORD)
+            if (mdlnext->Opcode == MODELNODE_OPCODE_BBOX)
             {
                 return mdlnext->Data;
             }
@@ -1425,7 +1425,7 @@ ModelRoData_BoundingBoxRecord *sub_GAME_7F03FFF8(ModelFileHeader *obj)
             //for each next node, check for BBox
             for (mdlnext = obj->RootNode->Child->Child; mdlnext; mdlnext = mdlnext->Next)
             {
-                if (mdlnext->Opcode == MODELNODE_OPCODE_BOUNDINGBOXRECORD)
+                if (mdlnext->Opcode == MODELNODE_OPCODE_BBOX)
                 {
                     return mdlnext->Data;
                 }
@@ -1785,7 +1785,7 @@ PropRecord* init_standard_object(ObjectRecord* obj, ModelFileHeader* model_heade
         {
             if (obj->type == 0x28)
             {
-                set_aircraft_obj_inst_scale_to_zero(model);
+                clear_aircraft_model_obj(model);
             }
             else
             {
@@ -2567,7 +2567,7 @@ glabel objFree
 /* 075AF0 7F040FC0 24010028 */  li    $at, 40
 /* 075AF4 7F040FC4 17010005 */  bne   $t8, $at, .L7F040FDC
 /* 075AF8 7F040FC8 00000000 */   nop   
-/* 075AFC 7F040FCC 0FC1B0FE */  jal   set_aircraft_obj_inst_scale_to_zero
+/* 075AFC 7F040FCC 0FC1B0FE */  jal   clear_aircraft_model_obj
 /* 075B00 7F040FD0 8E440014 */   lw    $a0, 0x14($s2)
 /* 075B04 7F040FD4 10000004 */  b     .L7F040FE8
 /* 075B08 7F040FD8 8FB9002C */   lw    $t9, 0x2c($sp)
@@ -23831,7 +23831,7 @@ void *process_monitor_animation_microcode(Model *arg0, ModelNode *arg1, MonitorR
     f32             phi_f4_2;
     f32             phi_f10_2;
 
-    if ((arg1 != 0) && ((arg1->Opcode & 0xFF) == MODELNODE_OPCODE_DISPLAYLIST_COLLISIONRECORD))
+    if ((arg1 != 0) && ((arg1->Opcode & 0xFF) == MODELNODE_OPCODE_DLCOLLISION))
     {
         temp_t8 = arg3;
         temp_s2 = dynAllocate7F0BD6C4(4);
@@ -27571,15 +27571,15 @@ ModelNode* sub_GAME_7F04B478(ObjectRecord* obj)
 
         switch (type)
         {
-            case MODELNODE_OPCODE_DISPLAYLIST_COLLISIONRECORD:
+            case MODELNODE_OPCODE_DLCOLLISION:
                 return node;
-            case MODELNODE_OPCODE_LODRECORD:
+            case MODELNODE_OPCODE_LOD:
                 modelApplyDistanceRelations(obj->model, node);
                 break;
-            case MODELNODE_OPCODE_SWITCHRECORD:
+            case MODELNODE_OPCODE_SWITCH:
                 modelApplyToggleRelations(obj->model, node);
                 break;
-            case MODELNODE_OPCODE_HEADPLACEHOLDERRECORD:
+            case MODELNODE_OPCODE_HEAD:
                 modelApplyHeadRelations(obj->model, node);
                 break;
         }
@@ -32294,7 +32294,7 @@ bool sub_GAME_7F04D9B0(Model *model, ModelNode *nodearg, coord3d *arg2, coord3d 
 
         switch (type)
         {
-            case MODELNODE_OPCODE_DISPLAYLIST_COLLISIONRECORD:
+            case MODELNODE_OPCODE_DLCOLLISION:
                 {
                     ModelRoData_DisplayList_CollisionRecord *rodata = &node->Data->DisplayListCollisions;
                     ModelRwData_DisplayList_CollisionRecord *rwdata = modelGetNodeRwData(model, node);
@@ -32320,7 +32320,7 @@ bool sub_GAME_7F04D9B0(Model *model, ModelNode *nodearg, coord3d *arg2, coord3d 
                 }
                 break;
 
-            case MODELNODE_OPCODE_DISPLAYLISTRECORD:
+            case MODELNODE_OPCODE_DL:
                 {
                     ModelRoData_DisplayListRecord *rodata = &node->Data->DisplayList;
 
@@ -32338,15 +32338,15 @@ bool sub_GAME_7F04D9B0(Model *model, ModelNode *nodearg, coord3d *arg2, coord3d 
                 }
                 break;
 
-            case MODELNODE_OPCODE_LODRECORD:
+            case MODELNODE_OPCODE_LOD:
                 modelApplyDistanceRelations(model, node);
                 break;
 
-            case MODELNODE_OPCODE_SWITCHRECORD:
+            case MODELNODE_OPCODE_SWITCH:
                 modelApplyToggleRelations(model, node);
                 break;
 
-            case MODELNODE_OPCODE_HEADPLACEHOLDERRECORD:
+            case MODELNODE_OPCODE_HEAD:
                 modelApplyHeadRelations(model, node);
                 break;
         }
