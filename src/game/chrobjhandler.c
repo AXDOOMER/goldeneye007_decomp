@@ -1214,82 +1214,24 @@ glabel projectileAllocate
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F03FDA8(PropRecord *prop)
 {
-    ObjectRecord *sp1C;
-    s32           temp_v0;
-    struct
-    {
-        u32            id;
-        coord3d pos;
-        vec3d vec;
-        u32            padding;
-        float          m[4][4];
-    } * temp_v0_2;
-    ObjectRecord *temp_v1;
+    ObjectRecord *obj = prop->obj;
 
-    temp_v1 = prop->obj;
-    temp_v0 = temp_v1->runtime_bitflags;
-    if ((temp_v0 & 0x40) != 0)
+    if (obj->runtime_bitflags & RUNTIMEBITFLAG_EMBEDDED)
     {
-        sp1C                    = temp_v1;
-        temp_v1->unk6C->m[2][1] = (bitwise f32)projectileAllocate();
-        return;
+        obj->embedment->projectile = projectileAllocate();
     }
-    if ((temp_v0 & 0x80) == 0)
+    else if ((obj->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT) == 0)
     {
-        sp1C           = temp_v1;
-        temp_v0_2      = projectileAllocate();
-        temp_v1->unk6C = temp_v0_2;
-        if (temp_v0_2 != 0)
+        obj->projectile = projectileAllocate();
+
+        if (obj->projectile)
         {
-            temp_v1->runtime_bitflags |= 0x80;
+            obj->runtime_bitflags |= RUNTIMEBITFLAG_DEPOSIT;
         }
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03FDA8
-/* 0748D8 7F03FDA8 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0748DC 7F03FDAC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0748E0 7F03FDB0 8C830004 */  lw    $v1, 4($a0)
-/* 0748E4 7F03FDB4 8C620064 */  lw    $v0, 0x64($v1)
-/* 0748E8 7F03FDB8 304E0040 */  andi  $t6, $v0, 0x40
-/* 0748EC 7F03FDBC 11C00007 */  beqz  $t6, .L7F03FDDC
-/* 0748F0 7F03FDC0 30580080 */   andi  $t8, $v0, 0x80
-/* 0748F4 7F03FDC4 0FC0FF20 */  jal   projectileAllocate
-/* 0748F8 7F03FDC8 AFA3001C */   sw    $v1, 0x1c($sp)
-/* 0748FC 7F03FDCC 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 074900 7F03FDD0 8C6F006C */  lw    $t7, 0x6c($v1)
-/* 074904 7F03FDD4 1000000B */  b     .L7F03FE04
-/* 074908 7F03FDD8 ADE20044 */   sw    $v0, 0x44($t7)
-.L7F03FDDC:
-/* 07490C 7F03FDDC 5700000A */  bnezl $t8, .L7F03FE08
-/* 074910 7F03FDE0 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 074914 7F03FDE4 0FC0FF20 */  jal   projectileAllocate
-/* 074918 7F03FDE8 AFA3001C */   sw    $v1, 0x1c($sp)
-/* 07491C 7F03FDEC 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 074920 7F03FDF0 10400004 */  beqz  $v0, .L7F03FE04
-/* 074924 7F03FDF4 AC62006C */   sw    $v0, 0x6c($v1)
-/* 074928 7F03FDF8 8C790064 */  lw    $t9, 0x64($v1)
-/* 07492C 7F03FDFC 37280080 */  ori   $t0, $t9, 0x80
-/* 074930 7F03FE00 AC680064 */  sw    $t0, 0x64($v1)
-.L7F03FE04:
-/* 074934 7F03FE04 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F03FE08:
-/* 074938 7F03FE08 27BD0020 */  addiu $sp, $sp, 0x20
-/* 07493C 7F03FE0C 03E00008 */  jr    $ra
-/* 074940 7F03FE10 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
