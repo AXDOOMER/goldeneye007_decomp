@@ -287,7 +287,7 @@ glabel get_aircraft_obj_instance_controller
 
 void modelAttachHead(Model *model, ModelNode *node,  ModelFileHeader *head)
 {
-    modelAttachHead(model,model->obj,node,head);
+    modelAttachPart(model,model->obj,node,head);
     modelInitRwData(model,head->RootNode);
 }
 
@@ -9240,7 +9240,7 @@ void animInit(struct Model *objinst, struct ModelFileHeader *header, u32 *data)
 
 
 // PD: model00023108
-void modelAttachHead(Model *pmodel, ModelFileHeader *pmodeldef, ModelNode *pnode, ModelFileHeader *cmodeldef)
+void modelAttachPart(Model *pmodel, ModelFileHeader *pmodeldef, ModelNode *pnode, ModelFileHeader *cmodeldef)
 {
     ModelRwData_HeadPlaceholderRecord *rwdata = modelGetNodeRwData(pmodel, pnode);
     ModelNode *node;
