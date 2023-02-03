@@ -33,6 +33,7 @@
 #include "assets/obseg/text/LpropobjE.h"
 #include "explosions.h"
 #include "image_bank.h"
+#include "random.h"
 
 #ifdef VERSION_EU
 
@@ -28613,9 +28614,48 @@ glabel sub_GAME_7F04B610
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F04BCDC(void) {
 
+// Matches on decomp.me, probably something wrong with the constants, or rodata
+void objBounce(ObjectRecord *obj, coord3d *arg1)
+{
+    coord3d dir;
+    coord3d rot = {0, 0, 0};
+    Projectile *projectile = NULL;
+
+    sub_GAME_7F03FDA8(obj->prop);
+
+    if (obj->runtime_bitflags & RUNTIMEBITFLAG_EMBEDDED) {
+        projectile = obj->embedment->projectile;
+    } else if (obj->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT) {
+        projectile = obj->projectile;
+    }
+
+    if (projectile) {
+        projectile->speed.x = (RANDOMFRAC() * 1.6666666f * 4.0f) - 3.3333333f;
+        projectile->speed.y = (RANDOMFRAC() * 1.6666666f * 2.0f) + 3.3333333f;
+        projectile->speed.z = (RANDOMFRAC() * 1.6666666f * 4.0f) - 3.3333333f;
+
+        rot.x = (RANDOMFRAC() * 6.2831855f * 0.015625f) - 0.049087387f;
+        rot.y = (RANDOMFRAC() * 6.2831855f * 0.015625f) - 0.049087387f;
+        rot.z = (RANDOMFRAC() * 6.2831855f * 0.015625f) - 0.049087387f;
+
+        matrix_4x4_set_rotation_around_xyz((f32*)&rot, &projectile->mtx);
+
+        projectile->flags |= PROJECTILEFLAG_AIRBORNE;
+
+        dir.x = arg1->x;
+        dir.y = arg1->y;
+        dir.z = arg1->z;
+
+        mtx4RotateVecInPlace(currentPlayerGetMatrix10D4(), (f32*)&dir);
+
+        projectile->speed.x += 3.3333333f * dir.x;
+        projectile->speed.z += 3.3333333f * dir.z;
+        projectile->unk88 = get_curplayer_positiondata();
+        projectile->unk90 = 1;
+    }
 }
+
 #else
 
 #if defined(LEFTOVERDEBUG)
@@ -28648,7 +28688,7 @@ glabel D_80052CF0
 glabel D_80052CF4
 .word 0x40555555 /*3.3333333*/
 .text
-glabel sub_GAME_7F04BCDC
+glabel objBounce
 /* 08080C 7F04BCDC 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 080810 7F04BCE0 3C0F8003 */  lui   $t7, %hi(D_80032010) 
 /* 080814 7F04BCE4 AFBF0024 */  sw    $ra, 0x24($sp)
@@ -28883,7 +28923,7 @@ glabel D_80052CF0
 glabel D_80052CF4
 .word 0x40555555 /*3.3333333*/
 .text
-glabel sub_GAME_7F04BCDC
+glabel objBounce
 /* 08080C 7F04BCDC 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 080810 7F04BCE0 3C0F8003 */  lui   $t7, %hi(D_80032010) 
 /* 080814 7F04BCE4 AFBF0024 */  sw    $ra, 0x24($sp)
@@ -33857,7 +33897,7 @@ glabel sub_GAME_7F04EA68
 .L7F04EF10:
 /* 083A40 7F04EF10 52000004 */  beql  $s0, $zero, .L7F04EF24
 /* 083A44 7F04EF14 8FBF002C */   lw    $ra, 0x2c($sp)
-/* 083A48 7F04EF18 0FC12F37 */  jal   sub_GAME_7F04BCDC
+/* 083A48 7F04EF18 0FC12F37 */  jal   objBounce
 /* 083A4C 7F04EF1C 02202025 */   move  $a0, $s1
 /* 083A50 7F04EF20 8FBF002C */  lw    $ra, 0x2c($sp)
 .L7F04EF24:

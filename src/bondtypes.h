@@ -2494,26 +2494,7 @@ typedef union
         f32 unk14;
         f32 unk18;
         f32 unk1C;
-
-        u32 unk20;
-        u32 unk24;
-        u32 unk28;
-        u32 unk2C;
-
-        u32 unk30;
-        u32 unk34;
-        u32 unk38;
-        u32 unk3C;
-
-        u32 unk40;
-        u32 unk44;
-        u32 unk48;
-        u32 unk4C;
-
-        u32 unk50;
-        u32 unk54;
-        u32 unk58;
-        u32 unk5C;
+        Mtxf mtx; // 0x20-0x5c
 
         f32 unk60;
         u32 unk64;
