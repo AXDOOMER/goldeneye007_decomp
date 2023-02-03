@@ -3051,7 +3051,7 @@ void disable_sounds_attached_to_player_then_something(PropRecord *prop)
     p = prop->child;
     while (p != NULL)
     {
-        sub_GAME_7F04C044(p);
+        objDetach(p);
         objFreePermanently(p->chr, 1);
         p = p->nextSibling;
     }
@@ -3127,7 +3127,7 @@ glabel disable_sounds_attached_to_player_then_something
 /* 055010 7F0204E0 00000000 */   nop   
 .L7F0204E4:
 /* 055014 7F0204E4 8C910004 */  lw    $s1, 4($a0)
-/* 055018 7F0204E8 0FC13011 */  jal   sub_GAME_7F04C044
+/* 055018 7F0204E8 0FC13011 */  jal   objDetach
 /* 05501C 7F0204EC 8C900024 */   lw    $s0, 0x24($a0)
 /* 055020 7F0204F0 02202025 */  move  $a0, $s1
 /* 055024 7F0204F4 0FC10409 */  jal   objFreePermanently
@@ -5127,7 +5127,7 @@ glabel sub_GAME_7F020EF0
 /* 056608 7F021AD8 3058FFFE */   andi  $t8, $v0, 0xfffe
 /* 05660C 7F021ADC 8C830024 */  lw    $v1, 0x24($a0)
 .L7F021AE0:
-/* 056610 7F021AE0 0FC1304C */  jal   sub_GAME_7F04C130
+/* 056610 7F021AE0 0FC1304C */  jal   objDrop
 /* 056614 7F021AE4 AFA3003C */   sw    $v1, 0x3c($sp)
 /* 056618 7F021AE8 8FA4003C */  lw    $a0, 0x3c($sp)
 /* 05661C 7F021AEC 5480FFFC */  bnezl $a0, .L7F021AE0
@@ -5999,7 +5999,7 @@ glabel sub_GAME_7F020EF0
 /* 056930 7F021DC0 3048FFFE */   andi  $t0, $v0, 0xfffe
 /* 056934 7F021DC4 8C830024 */  lw    $v1, 0x24($a0)
 .Ljp7F021DC8:
-/* 056938 7F021DC8 0FC1314D */  jal   sub_GAME_7F04C130
+/* 056938 7F021DC8 0FC1314D */  jal   objDrop
 /* 05693C 7F021DCC AFA3003C */   sw    $v1, 0x3c($sp)
 /* 056940 7F021DD0 8FA4003C */  lw    $a0, 0x3c($sp)
 /* 056944 7F021DD4 5480FFFC */  bnezl $a0, .Ljp7F021DC8
@@ -6925,7 +6925,7 @@ glabel sub_GAME_7F020EF0
 /* 054490 7F021AA0 3048FFFE */   andi  $t0, $v0, 0xfffe
 /* 054494 7F021AA4 8C830024 */  lw    $v1, 0x24($a0)
 .L7F021AA8:
-/* 054498 7F021AA8 0FC130C9 */  jal   sub_GAME_7F04C130
+/* 054498 7F021AA8 0FC130C9 */  jal   objDrop
 /* 05449C 7F021AAC AFA3003C */   sw    $v1, 0x3c($sp)
 /* 0544A0 7F021AB0 8FA4003C */  lw    $a0, 0x3c($sp)
 /* 0544A4 7F021AB4 5480FFFC */  bnezl $a0, .L7F021AA8

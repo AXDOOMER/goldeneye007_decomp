@@ -108,12 +108,12 @@ struct bss_80073370 dword_CODE_bss_80073370[BSS_80073370_DATA_LEN];
 /**
  * Address 0x80073DC0.
 */
-struct bss_80073DC0 dword_CODE_bss_80073DC0[BSS_80073DC0_DATA_LEN];
+Projectile g_Projectiles[PROJECTILES_ARR_MAX];
 
 /**
  * Address 0x80075030.
 */
-struct bss_80075030 dword_CODE_bss_80075030[BSS_80075030_DATA_LEN];
+Embedment g_Embedments[EMBEDMENT_ARR_MAX];
 
 //CODE.bss:80075B70
 u32 objinst;
@@ -2670,8 +2670,8 @@ void propExecuteTickOperation(PropRecord *prop, INV_ITEM_TYPE type) //#MATCH
         chrpropDeregisterRooms(prop);
         chrpropDelist(prop);
         chrpropDisable(prop);
-        sub_GAME_7F04C044(prop);
-        sub_GAME_7F040CF0(prop);
+        objDetach(prop);
+        objFreeEmbedmentOrProjectile(prop);
         chrpropReparent(prop, get_curplayer_positiondata());
     }
 }

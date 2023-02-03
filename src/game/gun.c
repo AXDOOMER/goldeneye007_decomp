@@ -1743,7 +1743,7 @@ void sub_GAME_7F05EB0C(ObjectRecord *arg0, coord3d *arg1, StandTile *arg2, Mtxf 
             temp_v0 = arg0->unk6C;
             temp_v0->flags |= 0x41;
             arg0->unk6C->prop = arg6;
-            sub_GAME_7F03FE14(temp_s1);
+            projectileSetSticky(temp_s1);
             matrix_4x4_copy(arg5, &arg0->unk6C->m);
             arg0->unk6C->pos.f[0] = arg4->f[0];
             arg0->unk6C->pos.f[1] = arg4->f[1];
@@ -2244,7 +2244,7 @@ void generate_player_thrown_object(s32 hand)
 
         if (wor != NULL)
         {
-            sub_GAME_7F04C044(wor->prop);
+            objDetach(wor->prop);
         }
 
         sub_GAME_7F05D690();

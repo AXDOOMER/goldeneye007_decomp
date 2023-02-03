@@ -2218,7 +2218,7 @@ typedef union
         f32     unk28;
     } ChrRecord_f180;
 
-    typedef struct ObjectRecord_f6c
+    typedef struct ObjectRecord_f6c // I think this is replaced by union with Projectile and Embedment
     {
         u32                  flags;
         coord3d              pos;
@@ -2486,6 +2486,71 @@ typedef union
         f32 unk48;
     };
 
+    typedef struct Projectile {
+        u32 flags;
+        coord3d speed;
+
+        f32 unk10;
+        f32 unk14;
+        f32 unk18;
+        f32 unk1C;
+        Mtxf mtx; // 0x20-0x5c
+
+        f32 unk60;
+        u32 unk64;
+        u32 unk68;
+        u32 unk6C;
+
+        u32 unk70;
+        u32 unk74;
+        u32 unk78;
+        u32 unk7C;
+
+        u32 unk80;
+        u32 unk84;
+        u32 unk88;
+        f32 unk8C; 
+
+        u32 unk90;
+        f32 unk94;
+        ALSoundState* sound1; // 0x98
+        ALSoundState* sound2; // 0x9C
+
+        u32 unkA0;
+        u32 unkA4;
+        u32 unkA8;
+        u32 unkAC;
+
+        u32 unkB0;
+        u32 unkB4;
+        u32 droptype; // 0xB8
+        u32 unkBC;
+
+        f32 unkC0;
+        f32 unkC4;
+        f32 unkC8;
+
+        u8 unkCC;
+        u8 unkCD;
+        u8 unkCE;
+        u8 unkCF;
+
+        u32 unkD0;
+        u32 unkD4;
+        u32 unkD8;
+        u32 unkDC;
+
+        u32 unkE0;
+        struct ObjectRecord* obj; // 0xE4;
+        s32 unkE8;
+    } Projectile;
+
+    typedef struct Embedment {
+        /*0x000*/ s32 flags;
+        /*0x004*/ Mtxf matrix;
+        /*0x044*/ struct Projectile *projectile;
+    } Embedment;
+
     /**
      * Object (Prop Definition) Record holds common data such as pad and health.
      */
@@ -2668,7 +2733,13 @@ typedef union
         };
         struct collision_data *ptr_allocated_collisiondata_block;
 
-        ObjectRecord_f6c *unk6C; //pointer somewhere at least 0x44 long and the pointer at 0 and 0x44 is also at least 0xb8 long
+        union {
+            struct Projectile *projectile;
+            struct Embedment *embedment;
+
+            // I think this is replaced by union with Projectile and Embedment
+            ObjectRecord_f6c *unk6C; //pointer somewhere at least 0x44 long and the pointer at 0 and 0x44 is also at least 0xb8 long
+        };
 
         f32             maxdamage;
         f32               damage;
@@ -3110,10 +3181,10 @@ typedef union
     //[This struct uses original names]
     typedef struct MonitorRecord
     {
-        s32 image;      // 0x80	4	image pointer for this monitor
+        u32 *cmdlist;   // 0x80	4	image pointer for this monitor
         u16 offset;     // 0x84	2	[runtime] cur. #commands from start of routine
-        u16 pause60;    // 0x86	2	[runtime] loop counter
-        void *unk88;      //0x88	4	[runtime] monitor image# or p->image header
+        s16 pause60;    // 0x86	2	[runtime] loop counter
+        struct sImageTableEntry *tconfig;      //0x88	4	[runtime] monitor image# or p->image header
         f32 rot;        // 0x8C 4 [runtime][float] rotation
         f32 xscale;     // 0x90	4	[runtime] [float] cur. horizontal zoom
         f32 xscalefrac; // 0x94	4	[runtime] [float] cur. h.zoom time
@@ -3204,6 +3275,10 @@ typedef union
     //Types 15,16 missing?
 
     // PROPDEF_HAT (17)
+    typedef struct HatRecord
+    {
+        inherits ObjectRecord;
+    } HatRecord;
 
     // PROPDEF_GUARD_ATTRIBUTE (18)
     typedef struct GuardAttributeRecord
