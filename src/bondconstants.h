@@ -337,6 +337,14 @@ typedef enum DOORFLAG
     DOORFLAG_KEEPOPEN                    = 0x80000000
 } DOORFLAG;
 
+typedef enum DROPTYPE
+{
+    DROPTYPE_DEFAULT      = 1,
+    DROPTYPE_SURRENDER    = 2,
+    DROPTYPE_THROWGRENADE = 3,
+    DROPTYPE_HAT          = 4
+} DROPTYPE;
+
 typedef enum PROJECTILEFLAG
 {
     PROJECTILEFLAG_AIRBORNE    = 0x00000001,

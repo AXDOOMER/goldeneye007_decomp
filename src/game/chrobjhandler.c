@@ -865,7 +865,7 @@ void projectileReset(Projectile *projectile)
     projectile->unkA4 = 0;
     projectile->unkA8 = 0;
     projectile->unkAC = -1;
-    projectile->droptype = 1;
+    projectile->droptype = DROPTYPE_DEFAULT;
     projectile->unkBC = 0;
     projectile->unkC0 = 1.0f;
     projectile->unkC4 = 1.0f;
@@ -1407,14 +1407,17 @@ PropRecord* init_standard_object(ObjectRecord* obj, ModelFileHeader* model_heade
 
         obj->prop = prop;
         obj->unk6C = 0;
+
         obj->field_78.r = 0;
         obj->field_78.g = 0;
         obj->field_78.b = 0;
         obj->field_78.a = 0;
-        obj->field_7C = 0;
-        obj->field_7D = 0;
-        obj->field_7E = 0;
-        obj->field_7F = 0;
+
+        obj->field_7C.r = 0;
+        obj->field_7C.g = 0;
+        obj->field_7C.b = 0;
+        obj->field_7C.a = 0;
+
         obj->maxdamage = 0.0f;
         *((s16*)&obj->model->unk00) = -1;
         obj->model->chr = NULL;
@@ -28483,7 +28486,7 @@ void objBounce(ObjectRecord *obj, coord3d *arg1)
 }
 
 
-void propobjSetDropped(PropRecord *prop, u32 droptype)
+void propobjSetDropped(PropRecord *prop, DROPTYPE droptype)
 {
     PropRecord *parent = prop->parent;
 
@@ -28547,9 +28550,162 @@ void objDetach(PropRecord *prop)
 
 
 #ifdef NONMATCHING
-void objDrop(void) {
 
+// Very close 99.98%, one incorrect register is used.
+// If you define Projectile *projectile = obj->embedment->projectile in the first block the register is fixed
+// But the stack gets too big
+
+s32 objDrop(PropRecord *prop)
+{
+    PropRecord *parent = prop->parent;
+    Projectile *projectile;
+    ObjectRecord *obj = prop->obj;
+    Model *model;
+    Mtxf spB8;
+    PropRecord *root;
+    StandTile* rootstan;
+    s32 droptype;
+
+    if ((obj->runtime_bitflags & RUNTIMEBITFLAG_EMBEDDED) && obj->embedment->projectile) {
+            projectile = obj->embedment->projectile;
+            embedmentFree(obj->embedment);
+
+            obj->projectile = projectile;
+            obj->runtime_bitflags &= ~RUNTIMEBITFLAG_EMBEDDED;
+            obj->runtime_bitflags |= RUNTIMEBITFLAG_DEPOSIT;
+        }
+    }
+
+    if (parent && (obj->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)) {
+        model = obj->model;
+        projectile = obj->projectile;
+        droptype = projectile->droptype;
+        root = parent;
+        projectile->flags |= PROJECTILEFLAG_AIRBORNE;
+        projectile->unk88 = parent;
+
+        if (droptype == DROPTYPE_SURRENDER && parent->type == PROP_TYPE_CHR) {
+            ChrRecord* chr = parent->chr;
+            Model *chrmodel = chr->model;
+            coord3d rot = { 0.0f, 0.0f, 0.0f };
+            f32 angle = getsubroty(chrmodel);
+
+            projectile->speed.x = sinf(angle) * 1.6666666f;
+            projectile->speed.y = -RANDOMFRAC() * 1.6666666f * 0.5f;
+            projectile->speed.z = cosf(angle) *  1.6666666f;
+
+            rot.x = (RANDOMFRAC() * 6.2831855f * 0.0078125f) - 0.024543693f;
+            rot.y = (RANDOMFRAC() * 6.2831855f * 0.0078125f) - 0.024543693f;
+            rot.z = (RANDOMFRAC() * 6.2831855f * 0.0078125f) - 0.024543693f;
+
+            matrix_4x4_set_rotation_around_xyz(rot.f, &projectile->mtx);
+        } else if ((droptype^0) == DROPTYPE_THROWGRENADE && parent->type == PROP_TYPE_CHR) {
+            ChrRecord* chr = parent->chr;
+            Model *chrmodel = chr->model;
+            coord3d rot = { 0.0f, 0.0f, 0.0f };
+            f32 angle = getsubroty(chrmodel);
+
+            projectile->speed.x = sinf(angle) * 13.333333f;
+            projectile->speed.y = 6.6666665f;
+            projectile->speed.z = cosf(angle) * 13.333333f;
+
+            rot.x = (RANDOMFRAC() * 6.2831855f * 0.0078125f) - 0.024543693f;
+            rot.y = (RANDOMFRAC() * 6.2831855f * 0.0078125f) - 0.024543693f;
+            rot.z = (RANDOMFRAC() * 6.2831855f * 0.0078125f) - 0.024543693f;
+
+            matrix_4x4_set_rotation_around_xyz(rot.f, &projectile->mtx);
+            projectile->flags |= 0x40;
+
+        } else if (droptype == DROPTYPE_HAT) {
+            coord3d rot = { 0.0f, 0.0f, 0.0f };
+            PropRecord *playerprop = get_curplayer_positiondata();
+            f32 x = parent->pos.x - playerprop->pos.x;
+            f32 z = parent->pos.z - playerprop->pos.z;
+            f32 angle = atan2f(x, z);
+
+            projectile->speed.x = ((2.0f * (RANDOMFRAC() * 1.6666666f)) + 3.3333333f) * sinf(angle);
+            projectile->speed.y = 2.0f * (RANDOMFRAC() * 1.6666666f);
+            projectile->speed.z = ((2.0f * (RANDOMFRAC() * 1.6666666f)) + 3.3333333f) * cosf(angle);
+
+            rot.x = (RANDOMFRAC() * 6.2831855f * 0.03125f) - 0.09817477f;
+            rot.y = (RANDOMFRAC() * 6.2831855f * 0.03125f) - 0.09817477f;
+            rot.z = (RANDOMFRAC() * 6.2831855f * 0.03125f) - 0.09817477f;
+
+            matrix_4x4_set_rotation_around_xyz(rot.f, &projectile->mtx);
+        } else {
+            // DROPTYPE_OWNERREAP ?
+            sub_GAME_7F057C14(&projectile->speed, &projectile->mtx);
+        }
+
+        while (root->parent != NULL) {
+            root = root->parent;
+        }
+
+        rootstan = root->stan;
+
+        if (prop->flags & PROPFLAG_ONSCREEN) {
+            // Do collision checks
+            f32 objwidth = objGetWidth(obj);
+            Mtxf *sp58 = getsubmatrix(model);
+            s32 sp54 = 0x1F;
+
+            matrix_4x4_multiply_homogeneous(currentPlayerGetMatrix10D4(), sp58, &spB8);
+
+            if (projectile->flags & 0x40) {
+                sp54 = 0x1D;
+            }
+
+            sub_GAME_7F03D058(root, FALSE);
+
+            if ((sub_GAME_7F0B0E24(&rootstan, root->pos.f[0], root->pos.f[2], spB8.m[3][0], spB8.m[3][2], sp54, 0.0f, 1.0f, 0.0f, 1.0f) != 0)
+                && (sub_GAME_7F0B18B8(&rootstan, spB8.m[3][0], spB8.m[3][2], objwidth, sp54, 0.0f, 1.0f) < 0)) {
+                prop->stan = rootstan;
+
+            } else {
+                prop->stan = root->stan;
+                spB8.m[3][0] = root->pos.x;
+                spB8.m[3][2] = root->pos.z;
+            }
+
+            sub_GAME_7F03D058(root, TRUE);
+            prop->Unk18 = -sp58->m[3][2];
+
+        } else {
+            // No collision checks
+            prop->stan = root->stan;
+            matrix_4x4_set_identity(&spB8);
+            matrix_scalar_multiply(model->scale, spB8.m[0]);
+            matrix_4x4_set_position(root->pos.f, &spB8);
+        }
+
+        objDetach(prop);
+        chrpropActivate(prop);
+        chrpropEnable(prop);
+
+        obj->runtime_pos.x = prop->pos.x = spB8.m[3][0];
+        obj->runtime_pos.y = prop->pos.y = spB8.m[3][1];
+        obj->runtime_pos.z = prop->pos.z = spB8.m[3][2];
+
+        spB8.m[3][0] = 0.0f;
+        spB8.m[3][1] = 0.0f;
+        spB8.m[3][2] = 0.0f;
+
+        matrix_4x4_copy(&spB8, &obj->mtx);
+        sub_GAME_7F0402B4(obj->prop, &obj->field_7C);
+
+        obj->field_78.r = obj->field_7C.r;
+        obj->field_78.g = obj->field_7C.g;
+        obj->field_78.b = obj->field_7C.b;
+        obj->field_78.a = obj->field_7C.a;
+
+        setupUpdateObjectRoomPosition(obj);
+
+        return TRUE;
+    }
+
+    return FALSE;
 }
+
 #else
 u32 D_8003201C = 0;
 u32 D_80032020 = 0;

@@ -2523,7 +2523,7 @@ typedef union
 
         u32 unkB0;
         u32 unkB4;
-        u32 droptype; // 0xB8
+        DROPTYPE droptype; // 0xB8
         u32 unkBC;
 
         f32 unkC0;
@@ -2742,12 +2742,9 @@ typedef union
         };
 
         f32             maxdamage;
-        f32               damage;
-        rgba_u8           field_78;
-        char              field_7C;
-        char              field_7D;
-        char              field_7E;
-        char              field_7F;
+        f32             damage;
+        rgba_u8         field_78;
+        rgba_u8         field_7C;
     } ObjectRecord;
     #define New_ObjectRecord(pad)                                                       \
         {                                                                               \
