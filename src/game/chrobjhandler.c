@@ -1234,85 +1234,32 @@ void sub_GAME_7F03FDA8(PropRecord *prop)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03FE14( PropRecord *prop)
+void projectileSetSticky(PropRecord *prop)
 {
-    s32           temp_a1;
-    s8           *temp_v0_2;
-    ObjectRecord *temp_v0;
-    struct
-    {
-        u32            id;
-        struct coord3d pos;
-        struct coord3d vec;
-        u32            padding;
-        float          m[4][4];
-    } * phi_v1;
+    ObjectRecord *obj = prop->obj;
+    Projectile *projectile = NULL;
 
-    temp_v0 = prop->obj;
-    temp_a1 = temp_v0->runtime_bitflags;
-    phi_v1  = NULL;
-    if ((temp_a1 & RUNTIMEBITFLAG_DEPOSIT) != 0)
+    if (obj->runtime_bitflags & RUNTIMEBITFLAG_EMBEDDED)
     {
-        phi_v1 = temp_v0->unk6C->m[2][1];
+        projectile = obj->embedment->projectile;
     }
-    else if ((temp_a1 & RUNTIMEBITFLAG_LAUNCHING) != 0)
+    else if (obj->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)
     {
-        phi_v1 = temp_v0->unk6C;
+        projectile = obj->projectile;
     }
-    if (phi_v1 != 0)
+
+    if (projectile)
     {
-        phi_v1->id |= 4;
-        temp_v0_2 = prop->stanid;
-        if (temp_v0_2 != 0)
+        projectile->flags |= PROJECTILEFLAG_STICKY;
+        if (prop->stan)
         {
-            phi_v1->unkCD = 0xFF;
-            phi_v1->unkCC = temp_v0_2->unk3;
+            projectile->unkCC = prop->stan->room;
+            projectile->unkCD = 0xFF;
             return;
         }
-        phi_v1->unkCC = 0xFF;
-        // Duplicate return node #8. Try simplifying control flow for better match
+        projectile->unkCC = 0xFFU;
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03FE14
-/* 074944 7F03FE14 8C820004 */  lw    $v0, 4($a0)
-/* 074948 7F03FE18 00001825 */  move  $v1, $zero
-/* 07494C 7F03FE1C 8C450064 */  lw    $a1, 0x64($v0)
-/* 074950 7F03FE20 30AE0040 */  andi  $t6, $a1, 0x40
-/* 074954 7F03FE24 11C00004 */  beqz  $t6, .L7F03FE38
-/* 074958 7F03FE28 30B80080 */   andi  $t8, $a1, 0x80
-/* 07495C 7F03FE2C 8C4F006C */  lw    $t7, 0x6c($v0)
-/* 074960 7F03FE30 10000004 */  b     .L7F03FE44
-/* 074964 7F03FE34 8DE30044 */   lw    $v1, 0x44($t7)
-.L7F03FE38:
-/* 074968 7F03FE38 13000002 */  beqz  $t8, .L7F03FE44
-/* 07496C 7F03FE3C 00000000 */   nop   
-/* 074970 7F03FE40 8C43006C */  lw    $v1, 0x6c($v0)
-.L7F03FE44:
-/* 074974 7F03FE44 1060000E */  beqz  $v1, .L7F03FE80
-/* 074978 7F03FE48 00000000 */   nop   
-/* 07497C 7F03FE4C 8C790000 */  lw    $t9, ($v1)
-/* 074980 7F03FE50 240A00FF */  li    $t2, 255
-/* 074984 7F03FE54 240B00FF */  li    $t3, 255
-/* 074988 7F03FE58 37280004 */  ori   $t0, $t9, 4
-/* 07498C 7F03FE5C AC680000 */  sw    $t0, ($v1)
-/* 074990 7F03FE60 8C820014 */  lw    $v0, 0x14($a0)
-/* 074994 7F03FE64 50400006 */  beql  $v0, $zero, .L7F03FE80
-/* 074998 7F03FE68 A06B00CC */   sb    $t3, 0xcc($v1)
-/* 07499C 7F03FE6C 90490003 */  lbu   $t1, 3($v0)
-/* 0749A0 7F03FE70 A06A00CD */  sb    $t2, 0xcd($v1)
-/* 0749A4 7F03FE74 03E00008 */  jr    $ra
-/* 0749A8 7F03FE78 A06900CC */   sb    $t1, 0xcc($v1)
-
-/* 0749AC 7F03FE7C A06B00CC */  sb    $t3, 0xcc($v1)
-.L7F03FE80:
-/* 0749B0 7F03FE80 03E00008 */  jr    $ra
-/* 0749B4 7F03FE84 00000000 */   nop   
-)
-#endif
 
 
 // PD: embedmentFree

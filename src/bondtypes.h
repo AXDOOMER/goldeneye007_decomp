@@ -2548,7 +2548,11 @@ typedef union
         f32 unkC0;
         f32 unkC4;
         f32 unkC8;
-        u32 unkCC;
+
+        u8 unkCC;
+        u8 unkCD;
+        u8 unkCE;
+        u8 unkCF;
 
         u32 unkD0;
         u32 unkD4;

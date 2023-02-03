@@ -91,7 +91,7 @@ ObjectRecord        *create_new_item_instance_of_model(PROP propid, s32 arg1);
 void                 maybe_detonate_object(ObjectRecord *obj, f32 damage, coord3d *pos, ITEM_IDS item, s32 owner);
 void                 chrobjMaybeDetonateObjectIfFlags(ObjectRecord *arg0, f32 arg1, coord3d *arg2, ITEM_IDS item, s32 arg4);
 void                 sub_GAME_7F03FDA8(PropRecord *);
-void                 sub_GAME_7F03FE14(PropRecord *);
+void                 projectileSetSticky(PropRecord *);
 void                 chrobjCollisionRelated(ObjectRecord *);
 void                 sub_GAME_7F040754(ObjectRecord *, coord3d *, Mtxf *, StandTile *);
 s32                  sub_GAME_7F041074(coord3d *arg0, coord3d *arg1, coord3d *arg2, f32 arg3);
