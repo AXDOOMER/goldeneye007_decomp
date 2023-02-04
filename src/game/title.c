@@ -281,7 +281,7 @@ glabel sub_GAME_7F007F30
 .L7F008078:
 /* 03CBA8 7F008078 3C138003 */  lui   $s3, %hi(D_8002A7F4)
 /* 03CBAC 7F00807C 2673A7F4 */  addiu $s3, %lo(D_8002A7F4) # addiu $s3, $s3, -0x580c
-/* 03CBB0 7F008080 0FC1B100 */  jal   set_80036084
+/* 03CBB0 7F008080 0FC1B100 */  jal   modelSetDistanceDisabled
 /* 03CBB4 7F008084 24040001 */   li    $a0, 1
 /* 03CBB8 7F008088 0FC1CFF2 */  jal   sub_GAME_7F073FC8
 /* 03CBBC 7F00808C 24040050 */   li    $a0, 80
@@ -364,7 +364,7 @@ glabel sub_GAME_7F007F30
 /* 03CCE8 7F0081B8 27A400DC */  addiu $a0, $sp, 0xdc
 /* 03CCEC 7F0081BC 0FC1AF03 */  jal   drawjointlist
 /* 03CCF0 7F0081C0 02002825 */   move  $a1, $s0
-/* 03CCF4 7F0081C4 0FC1B100 */  jal   set_80036084
+/* 03CCF4 7F0081C4 0FC1B100 */  jal   modelSetDistanceDisabled
 /* 03CCF8 7F0081C8 00002025 */   move  $a0, $zero
 /* 03CCFC 7F0081CC 0FC1AC92 */  jal   sub_GAME_7F06B248
 /* 03CD00 7F0081D0 02002025 */   move  $a0, $s0
@@ -533,7 +533,7 @@ glabel sub_GAME_7F007F30
 .L7F007FF8:
 /* 03A9E8 7F007FF8 3C138002 */  lui   $s3, %hi(D_8002A7F4) # $s3, 0x8002
 /* 03A9EC 7F007FFC 26735D44 */  addiu $s3, %lo(D_8002A7F4) # addiu $s3, $s3, 0x5d44
-/* 03A9F0 7F008000 0FC1B2D0 */  jal   set_80036084
+/* 03A9F0 7F008000 0FC1B2D0 */  jal   modelSetDistanceDisabled
 /* 03A9F4 7F008004 24040001 */   li    $a0, 1
 /* 03A9F8 7F008008 0FC1D037 */  jal   sub_GAME_7F073FC8
 /* 03A9FC 7F00800C 24040050 */   li    $a0, 80
@@ -616,7 +616,7 @@ glabel sub_GAME_7F007F30
 /* 03AB28 7F008138 27A400DC */  addiu $a0, $sp, 0xdc
 /* 03AB2C 7F00813C 0FC1B0EF */  jal   drawjointlist
 /* 03AB30 7F008140 02002825 */   move  $a1, $s0
-/* 03AB34 7F008144 0FC1B2D0 */  jal   set_80036084
+/* 03AB34 7F008144 0FC1B2D0 */  jal   modelSetDistanceDisabled
 /* 03AB38 7F008148 00002025 */   move  $a0, $zero
 /* 03AB3C 7F00814C 0FC1AE7E */  jal   sub_GAME_7F06B248
 /* 03AB40 7F008150 02002025 */   move  $a0, $s0
@@ -1374,7 +1374,7 @@ void sub_GAME_7F00920C(void)
 {
     if (D_8002A7F4)
     {
-        set_aircraft_obj_inst_scale_to_zero(D_8002A7F4);
+        clear_aircraft_model_obj(D_8002A7F4);
     }
 
     if (D_8002A7F8)
@@ -1450,7 +1450,9 @@ Gfx *sub_GAME_7F009254(Gfx *gdl) {
         break;
 
     case 2:
-        gdl = insert_bond_eye_intro(insert_sight_backdrop_eye_intro(insert_sniper_sight_eye_intro(gdl)));
+        gdl = insert_sniper_sight_eye_intro(gdl);
+        gdl = insert_sight_backdrop_eye_intro(gdl);
+        gdl = insert_bond_eye_intro(gdl);
         intro_eye_counter--;
         if (intro_eye_counter < 0) {
             gunbarrel_mode++;

@@ -1458,7 +1458,7 @@ typedef union
             s16               frameb;
             s32               unk34;
             s32               unk38;
-            f32               unk3c;
+            f32               endframe;
 
             f32               speed; /*0x40*/
             f32               newspeed; /*0x44*/
@@ -1468,7 +1468,7 @@ typedef union
 
             ModelAnimation   *anim2;
 
-            s32               unk58;
+            f32               unk58;
             f32               unk5c;
 
             /**
@@ -1487,7 +1487,7 @@ typedef union
             s32               unk68;
             f32               unk6c;
             // 0x70
-            f32               unk70;
+            f32               speed2;
             s32               unk74;
             s32               unk78;
             f32               unk7c;
@@ -1698,14 +1698,14 @@ typedef union
 
     struct act_stand
     {
-        s32 unk02c;          /*0x2c*/
+        s32 prestand;          /*0x2c*/
         s32 face_entitytype; /*0x30*/
         s32 face_entityid;   /*0x34*/
-        s32 unk038;          /*0x38*/
-        s32 unk03c;          /*0x3c*/
-        u32 unk040;          /*0x40*/
-        s32 unk044;          /*0x44*/
-        f32 unk048;          /*0x48*/
+        s32 reaim;          /*0x38*/
+        s32 turning;          /*0x3c*/
+        u32 checkfacingwall;          /*0x40*/
+        s32 wallcount;          /*0x44*/
+        f32 mergetime;          /*0x48*/
         s8  face_target;     /*0x4c*/
     };
 
@@ -2218,7 +2218,7 @@ typedef union
         f32     unk28;
     } ChrRecord_f180;
 
-    typedef struct ObjectRecord_f6c
+    typedef struct ObjectRecord_f6c // I think this is replaced by union with Projectile and Embedment
     {
         u32                  flags;
         coord3d              pos;
@@ -2486,6 +2486,71 @@ typedef union
         f32 unk48;
     };
 
+    typedef struct Projectile {
+        u32 flags;
+        coord3d speed;
+
+        f32 unk10;
+        f32 unk14;
+        f32 unk18;
+        f32 unk1C;
+        Mtxf mtx; // 0x20-0x5c
+
+        f32 unk60;
+        u32 unk64;
+        u32 unk68;
+        u32 unk6C;
+
+        u32 unk70;
+        u32 unk74;
+        u32 unk78;
+        u32 unk7C;
+
+        u32 unk80;
+        u32 unk84;
+        u32 unk88;
+        f32 unk8C; 
+
+        u32 unk90;
+        f32 unk94;
+        ALSoundState* sound1; // 0x98
+        ALSoundState* sound2; // 0x9C
+
+        u32 unkA0;
+        u32 unkA4;
+        u32 unkA8;
+        u32 unkAC;
+
+        u32 unkB0;
+        u32 unkB4;
+        u32 droptype; // 0xB8
+        u32 unkBC;
+
+        f32 unkC0;
+        f32 unkC4;
+        f32 unkC8;
+
+        u8 unkCC;
+        u8 unkCD;
+        u8 unkCE;
+        u8 unkCF;
+
+        u32 unkD0;
+        u32 unkD4;
+        u32 unkD8;
+        u32 unkDC;
+
+        u32 unkE0;
+        struct ObjectRecord* obj; // 0xE4;
+        s32 unkE8;
+    } Projectile;
+
+    typedef struct Embedment {
+        /*0x000*/ s32 flags;
+        /*0x004*/ Mtxf matrix;
+        /*0x044*/ struct Projectile *projectile;
+    } Embedment;
+
     /**
      * Object (Prop Definition) Record holds common data such as pad and health.
      */
@@ -2668,7 +2733,13 @@ typedef union
         };
         struct collision_data *ptr_allocated_collisiondata_block;
 
-        ObjectRecord_f6c *unk6C; //pointer somewhere at least 0x44 long and the pointer at 0 and 0x44 is also at least 0xb8 long
+        union {
+            struct Projectile *projectile;
+            struct Embedment *embedment;
+
+            // I think this is replaced by union with Projectile and Embedment
+            ObjectRecord_f6c *unk6C; //pointer somewhere at least 0x44 long and the pointer at 0 and 0x44 is also at least 0xb8 long
+        };
 
         f32             maxdamage;
         f32               damage;
@@ -2940,11 +3011,10 @@ typedef union
     typedef struct AutogunRecord
     {
         inherits ObjectRecord;
-        s16 unk80;   /*0x80*/
-        u16 lookpad; /*0x82*/
+        s32 padID; // 0x80
 
         // Units seem to be radians.
-        f32 rot_related;
+        f32 rot_related; // 0x84
 
         // Units seem to be radians.
         f32 unk88;
@@ -2958,6 +3028,7 @@ typedef union
         // changes when active/firing
         f32 unk94;
         f32 unk98;
+
         // changes when active/firing
         f32 unk9C;
 
@@ -2965,36 +3036,36 @@ typedef union
         f32 unkA0;
 
         // How fast the gun turns. Runway default is around 0.01f.
-        f32 speed;
+        f32 speed; // 0xA4
 
         /**
          * Distance before deactivating.
          * Default (on Runway at least): 7500.0f
          * Offset 0xa0.
         */
-        f32 aimdist;
-        u32 unkAC;
+        f32 aimdist; // 0xA8
+        s32 unkAC;
 
         // changes when active/firing
-        s32 unkB0;
+        f32 unkB0;
+
         // changes when active/firing
         f32 unkB4;
-        f32 unkB8;
+        s32 unkB8;
         s32 unkBC;
-
         s32  unkC0;
         void *unkC4;
         void *unkC8;
-        void *unkCC;
+        void *unkCC; // beam struct in PD
 
         /**
          * Offset 0xd0.
          * Used in object_interaction, setting to zero won't disable.
         */
-        f32 is_active;
+        s32 is_active; // 0xD0
 
         // changes when active/firing
-        u32 unkD8;
+        f32 unkD4;
 
         //////////////////////////////////////////////////////
         // Previously:
@@ -3110,10 +3181,10 @@ typedef union
     //[This struct uses original names]
     typedef struct MonitorRecord
     {
-        s32 image;      // 0x80	4	image pointer for this monitor
+        u32 *cmdlist;   // 0x80	4	image pointer for this monitor
         u16 offset;     // 0x84	2	[runtime] cur. #commands from start of routine
-        u16 pause60;    // 0x86	2	[runtime] loop counter
-        void *unk88;      //0x88	4	[runtime] monitor image# or p->image header
+        s16 pause60;    // 0x86	2	[runtime] loop counter
+        struct sImageTableEntry *tconfig;      //0x88	4	[runtime] monitor image# or p->image header
         f32 rot;        // 0x8C 4 [runtime][float] rotation
         f32 xscale;     // 0x90	4	[runtime] [float] cur. horizontal zoom
         f32 xscalefrac; // 0x94	4	[runtime] [float] cur. h.zoom time
@@ -3156,9 +3227,9 @@ typedef union
     {
         inherits      ObjectRecord;
         MonitorRecord Monitor;
-        u32           nextstep;  // 0xF4	4	backward monitor link
-        u32           forwards;  // 0xF8	4	forward monitor link
-        u32           turnspeed; // 0xFC	4	animation#
+        s32           OwnerOffset;
+        s32           OwnerPart;
+        s32           ImageNum;
     } MonitorObjRecord;
     #define New_MonitorObjRecord(pad)               \
         {                                           \
@@ -3166,16 +3237,13 @@ typedef union
         }
 
     // PROPDEF_MULTI_MONITOR (11)
-    typedef struct multimonitorobj
+    typedef struct MultiMonitorObjRecord
     {
         inherits      ObjectRecord;
         MonitorRecord Monitor[4];
-        /* Some stuff here then 0x101414 at 0x250*/
-        u32           nextstep;  // 0xF4	4	backward monitor link
-        u32           forwards;  // 0xF8	4	forward monitor link
-        u32           turnspeed; // 0xFC	4	animation#
-    } multimonitorobj;
-    #define New_multimonitorobj(pad)                \
+        u8            ImageNums[4];
+    } MultiMonitorObjRecord;
+    #define New_MultiMonitorObjRecord(pad)                \
         {                                           \
             New_PropDefHeaderRecord(11), 0, pad + 0 \
         }
@@ -3187,7 +3255,6 @@ typedef union
         }
 
     // PROPDEF_AUTOGUN (13)
-
     #define New_AutogunRecord(pad)                  \
         {                                           \
             New_PropDefHeaderRecord(13), 0, pad + 0 \
@@ -3208,6 +3275,10 @@ typedef union
     //Types 15,16 missing?
 
     // PROPDEF_HAT (17)
+    typedef struct HatRecord
+    {
+        inherits ObjectRecord;
+    } HatRecord;
 
     // PROPDEF_GUARD_ATTRIBUTE (18)
     typedef struct GuardAttributeRecord
@@ -3512,8 +3583,11 @@ typedef union
     //PROPDEF_SAFE_ITEM (42)
     typedef struct SafeObjectRecord
     {
-        inherits ObjectRecord;
-        coord3d  normal;
+        u32 unk00;
+        struct ObjectRecord *item;
+        struct SafeRecord *safe;
+        struct DoorRecord *door;
+        struct SafeObjectRecord *next;
     } SafeObjectRecord;
 
     // PROPDEF_TANK (45)

@@ -95,7 +95,7 @@ struct Model *makeonebody(s32 body, s32 head, struct ModelFileHeader *bodyHeader
         if ((headHeader != 0) && (c_item_entries[body].hasHead == 0))
         {
             bodyHeader->numRecords -= headHeader->numRecords;
-            sub_GAME_7F06C3B4(model, opcode, headHeader);
+            modelAttachHead(model, opcode, headHeader);
 
             if ((sunglasses == 0) && ((s32) headHeader->numSwitches > 0))
             {

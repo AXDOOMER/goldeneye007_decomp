@@ -1611,8 +1611,251 @@ void bondviewUpdateCurrentPlayerPosition(coord3d *pos, coord3d *pos2, coord3d *o
                           );
             }
 //*/
-void solo_char_load(void) {
+#define ALIGN64_V3(val) (((val) | 0x3f) ^ 0x3f)
+void solo_char_load(void)
+{
+    f32 hRot;
+    ModelFileHeader *pBody;
+    ModelFileHeader *pHead;
+    ModelFileHeader *p_leftHeader;
+    ModelFileHeader *bodyBuffer;
+    ModelFileHeader *headBuffer;
+    s32 totalsize;
+    s32 bodyBufSize;
+    s32 headBufSize;
+    WeaponObjRecord *p_rightHeader;
+    //? sp54;
+    s32 rhandweapID;
+    s32 body;
+    s32 head;
+    Model *model;
+    s32 numRecords;
+    ChrModelFileRecord *p_modelEntry;                       /* compiler-managed */
+    ChrModelFileRecord *p_bodyEntry;
+    ChrModelFileRecord *p_headEntry;
+    ChrRecord *curChr;
+    ModelFileHeader *p_headHeader;
+    ModelFileHeader *p_headEntryHeader;
+    ModelFileHeader *p_rhandItemHeader;
+    ModelFileHeader *p_bodyEntryHeader;
+    ModelFileHeader *p_bodyHeader;
+    ModelFileHeader *p_lhandItemHeader;
+    s32 rhandPropID;
+    s32 bodyalignedSizeRemainPlus0x5F;
+    s32 bufferSizeRemain;
+    s32 folderBond;
+    //s32 numRecords;
+    s32 cuffId;
+    hRot = get_curplay_horizontal_rotation_in_degrees();
+    curChr = g_CurrentPlayer->prop->chr;
+    if (curChr == NULL)
+    {
+        bodyBuffer = getPlayerWeaponBufferForHand(GUNRIGHT);
+        headBuffer = getPlayerWeaponBufferForHand(GUNLEFT);
+        totalsize = 0;
+        bodyBufSize = getSizeBufferWeaponInHand(GUNRIGHT);
+        headBufSize = getSizeBufferWeaponInHand(GUNLEFT);
+        //M2C_MEMCPY_ALIGNED(&sp54, &dummy_08_pp7_obj, 0x84);
+        //*(&sp54 + 0x84) = *(&dummy_08_pp7_obj + 0x84);
+        rhandweapID = get_item_in_hand_or_watch_menu(GUNRIGHT);
+        body = BODY_Formal_Wear;
+        head = HEAD_Male_Brosnan_Default;
+        model = NULL;
+        sub_GAME_7F07DE64(g_CurrentPlayer);
+        if (getPlayerCount() == 1)
+        {
+            folderBond = getSelectedFolderBond();
+            cuffId = g_CurrentPlayer->bondtype;
+            switch (cuffId)                        /* switch 1 */
+            {
+            case CUFF_BOILER:                                 /* switch 1 */
+                body = BODY_Special_Operations_Uniform; break;
+            case CUFF_JUNGLE:                                 /* switch 1 */
+                body = BODY_Jungle_Fatigues; break;
+            case CUFF_SNOW:                                 /* switch 1 */
+                body = BODY_Parka; break;
+            case CUFF_BROSNAN:                                 /* switch 1 */
+                body = BODY_Brosnan_Tuxedo; break;
+            case CUFF_CONNERY:                                 /* switch 1 */
+                body = BODY_Brosnan_Tuxedo; break;
+            case CUFF_DALTON:                                 /* switch 1 */
+                body = BODY_Brosnan_Tuxedo; break;
+            case CUFF_MOORE:                                 /* switch 1 */
+                body = BODY_Brosnan_Tuxedo; break;
+            case CUFF_FOLDER:                                 /* switch 1 */
+                switch (folderBond)                  /* switch 3; irregular */
+                {
+                case 0:                             /* switch 3 */
+                    body = BODY_Brosnan_Tuxedo; break;
+                case 1:                             /* switch 3 */
+                    body = BODY_Brosnan_Tuxedo; break;
+                case 2:                             /* switch 3 */
+                    body = BODY_Brosnan_Tuxedo; break;
+                case 3:
+                    body = BODY_Brosnan_Tuxedo; break;
+                }
+                break;
+            }
+            switch (folderBond)                      /* switch 4; irregular */
+            {
+            case 0:                                 /* switch 4 */
+                switch (cuffId)                    /* switch 2 */
+                {
+                case CUFF_BOILER:                             /* switch 2 */
+                    head = HEAD_Male_Brosnan_Boiler; break;
+                case CUFF_JUNGLE:                             /* switch 2 */
+                    head = HEAD_Male_Brosnan_Jungle; break;
+                case CUFF_BROSNAN:                             /* switch 2 */
+                    head = HEAD_Male_Brosnan_Tuxedo; break;
+                case CUFF_CONNERY:                             /* switch 2 */
+                    head = HEAD_Male_Brosnan_Tuxedo; break;
+                case CUFF_DALTON:                             /* switch 2 */
+                    head = HEAD_Male_Brosnan_Tuxedo; break;
+                case CUFF_MOORE:                             /* switch 2 */
+                    head = HEAD_Male_Brosnan_Tuxedo; break;
+                case CUFF_FOLDER:                             /* switch 2 */
+                    head = HEAD_Male_Brosnan_Tuxedo; break;
+                }
+                break;
+            case 1:                                 /* switch 4 */
+                head = HEAD_Male_Brosnan_Tuxedo; break;
+            case 2:                                 /* switch 4 */
+                head = HEAD_Male_Brosnan_Tuxedo; break;
+            case 3:                                 /* switch 4 */
+                head = HEAD_Male_Brosnan_Tuxedo; break;
+            }
+        }
+        else
+        {
+            head = get_player_mp_char_head(get_cur_playernum());
+            body = get_player_mp_char_body(get_cur_playernum());
+        }
+        if (g_CameraMode == CAMERAMODE_SWIRL)
+        {
+            rhandweapID = starting_right_weapon;
+        }
+        if (getPlayerCount() == 1)
+        {
+            remove_item_in_hand(GUNLEFT);
+            remove_item_in_hand(GUNRIGHT);
+            texInitPool(&texPool, headBuffer, headBufSize);
+            p_bodyHeader = get_ptr_itemheader_in_hand(GUNRIGHT);
 
+            p_bodyEntry = &c_item_entries[body];
+            p_bodyEntryHeader = p_bodyEntry->header;
+
+            pBody = p_bodyHeader;
+            
+            p_bodyHeader->RootNode = p_bodyEntryHeader->RootNode;
+            p_bodyHeader->Skeleton = p_bodyEntryHeader->Skeleton;
+            p_bodyHeader->Switches = p_bodyEntryHeader->Switches;
+            p_bodyHeader->unkC = p_bodyEntryHeader->unkC;
+            p_bodyHeader->BoundingVolumeRadius = p_bodyEntryHeader->BoundingVolumeRadius;
+            p_bodyHeader->unk14 = p_bodyEntryHeader->unk14;
+            p_bodyHeader->Textures = p_bodyEntryHeader->Textures;
+            p_bodyHeader->isLoaded = p_bodyEntryHeader->isLoaded;
+            
+            p_modelEntry = p_bodyEntry;
+            load_object_fill_header(p_bodyHeader, p_bodyEntry->filename, bodyBuffer, bodyBufSize, &texPool);
+
+            p_headEntry = &c_item_entries[head];
+            p_headEntryHeader = p_headEntry->header;
+
+            bufferSizeRemain = ALIGN64_V3(get_pc_buffer_remaining_value(p_modelEntry->filename) + 0x3F);
+            p_headHeader = bodyBuffer + bufferSizeRemain;
+            bodyalignedSizeRemainPlus0x5F = ALIGN64_V3(bufferSizeRemain + 0x5F);
+
+            p_headHeader->RootNode = p_headEntryHeader->RootNode;
+            p_headHeader->Skeleton = p_headEntryHeader->Skeleton;
+            p_headHeader->Switches = p_headEntryHeader->Switches;
+            p_headHeader->unkC = p_headEntryHeader->unkC;
+            p_headHeader->BoundingVolumeRadius = p_headEntryHeader->BoundingVolumeRadius;
+            p_headHeader->unk14 = p_headEntryHeader->unk14;
+            p_headHeader->Textures = p_headEntryHeader->Textures;
+            p_headHeader->isLoaded = p_headEntryHeader->isLoaded;
+            
+            totalsize = bodyalignedSizeRemainPlus0x5F;
+            pHead = p_headHeader;
+            p_modelEntry = p_headEntry;
+            load_object_fill_header(p_headHeader, p_headEntry->filename, bodyBuffer + bodyalignedSizeRemainPlus0x5F, bodyBufSize - bodyalignedSizeRemainPlus0x5F, &texPool);
+
+            bufferSizeRemain = ALIGN64_V3(get_pc_buffer_remaining_value(p_modelEntry->filename) + totalsize + 0x3F);
+            model = bodyBuffer + bufferSizeRemain;
+            totalsize = ALIGN64_V3(bufferSizeRemain + 0xFB);
+
+            modelCalculateRwDataLen(pBody);
+            modelCalculateRwDataLen(pHead);
+            numRecords = pBody->numRecords + pHead->numRecords + 0xA;
+            
+            totalsize = ALIGN64_V3((numRecords * 4) + totalsize + 0x3F);
+            
+            animInit(model, pBody, bodyBuffer + totalsize);
+            model->Type = numRecords; //???
+            //goto block_46;
+            //&c_item_entries[head]->header = pHead;
+        }
+
+        pBody = &c_item_entries[body]->header;
+        if (&c_item_entries[body]->header->RootNode == NULL)
+        {
+            fileLoad(&c_item_entries[body]->header, &c_item_entries[body]->filename);
+        }
+
+        if (&c_item_entries[head]->header->RootNode == NULL)
+        {
+            pHead = &c_item_entries[head]->header;
+            fileLoad(&c_item_entries[head]->header, &c_item_entries[head]->filename);
+//block_46:
+//            &c_item_entries[head]->header = pHead;
+        }
+        g_CurrentPlayer->ptr_char_objectinstance = makeonebody(body, head, pBody, &c_item_entries[head]->header/*pHead maybe?*/, 0, model);
+        
+        modelSetScale((Model *) g_CurrentPlayer->ptr_char_objectinstance, g_CurrentPlayer->ptr_char_objectinstance->unk14 * 0.97f);
+        init_GUARDdata_with_set_values(g_CurrentPlayer->prop, g_CurrentPlayer->ptr_char_objectinstance, &g_CurrentPlayer->prop->pos, hRot, g_CurrentPlayer->prop->stan, 0);
+        g_CurrentPlayer->prop->type = VIEWER;
+        g_CurrentPlayer->prop->chr->chrflags |= CHRFLAG_INIT;
+        setsuboffset(g_CurrentPlayer->ptr_char_objectinstance, &g_CurrentPlayer->prop->pos);
+        setsubroty(g_CurrentPlayer->ptr_char_objectinstance, hRot);
+        rhandPropID = getPropForHeldItem(rhandweapID);
+        if (rhandPropID >= 0)
+        {
+            if (getPlayerCount() == 1)
+            {
+                p_rightHeader = bodyBuffer + totalsize;
+                totalsize = ALIGN64_V3(totalsize + 0xC7);
+                p_lhandItemHeader = get_ptr_itemheader_in_hand(GUNLEFT);
+                p_rhandItemHeader = &PitemZ_entries[rhandPropID]->header;
+                p_leftHeader = p_lhandItemHeader;
+                p_lhandItemHeader->RootNode = p_rhandItemHeader->RootNode;
+                p_lhandItemHeader->Skeleton = p_rhandItemHeader->Skeleton;
+                p_lhandItemHeader->Switches = p_rhandItemHeader->Switches;
+                p_lhandItemHeader->unkC = p_rhandItemHeader->unkC;
+                p_lhandItemHeader->BoundingVolumeRadius = p_rhandItemHeader->BoundingVolumeRadius;
+                p_lhandItemHeader->unk14 = p_rhandItemHeader->unk14;
+                p_lhandItemHeader->Textures = p_rhandItemHeader->Textures;
+                p_lhandItemHeader->isLoaded = p_rhandItemHeader->isLoaded;
+                p_modelEntry = &PitemZ_entries[rhandPropID];
+                load_object_fill_header(p_lhandItemHeader, &PitemZ_entries[rhandPropID]->filename, bodyBuffer + totalsize, bodyBufSize - totalsize, &texPool);
+                get_pc_buffer_remaining_value(p_modelEntry->filename);
+                modelCalculateRwDataLen(p_leftHeader);
+            }
+            else
+            {
+                p_rightHeader = NULL;
+                p_leftHeader = NULL;
+            }
+            something_with_generating_object(g_CurrentPlayer->prop->chr, rhandPropID, rhandweapID, 0, p_rightHeader, p_leftHeader);
+        }
+        chrlvIdleAnimationRelated7F023A94(g_CurrentPlayer->prop->chr, 0.0f);
+        return;
+    }
+    if (curChr->model->anim == NULL)
+    {
+        curChr->chrflags |= 1;
+        chrlvIdleAnimationRelated7F023A94(curChr, 0.0f);
+        setsuboffset(g_CurrentPlayer->ptr_char_objectinstance, &g_CurrentPlayer->prop->pos);
+        setsubroty(g_CurrentPlayer->ptr_char_objectinstance, hRot);
+    }
 }
 #else
 
@@ -2098,7 +2341,7 @@ variable_body_head:
 /* 0AEE2C 7F07A2FC 8FA50114 */  lw    $a1, 0x114($sp)
 /* 0AEE30 7F07A300 0FC1B34F */  jal   setsubroty
 /* 0AEE34 7F07A304 8D6400D4 */   lw    $a0, 0xd4($t3)
-/* 0AEE38 7F07A308 0FC26C91 */  jal   sub_GAME_7F09B244
+/* 0AEE38 7F07A308 0FC26C91 */  jal   getPropForHeldItem
 /* 0AEE3C 7F07A30C 8FA40048 */   lw    $a0, 0x48($sp)
 /* 0AEE40 7F07A310 04400045 */  bltz  $v0, .L7F07A428
 /* 0AEE44 7F07A314 AFA2004C */   sw    $v0, 0x4c($sp)
@@ -2703,7 +2946,7 @@ variable_body_head:
 /* 0AF48C 7F07A91C A0580006 */  sb    $t8, 6($v0)
 /* 0AF490 7F07A920 8FAF0044 */  lw    $t7, 0x44($sp)
 /* 0AF494 7F07A924 A04F000F */  sb    $t7, 0xf($v0)
-/* 0AF498 7F07A928 0FC26F79 */  jal   sub_GAME_7F09B244
+/* 0AF498 7F07A928 0FC26F79 */  jal   getPropForHeldItem
 /* 0AF49C 7F07A92C 8FA40048 */   lw    $a0, 0x48($sp)
 /* 0AF4A0 7F07A930 04400045 */  bltz  $v0, .Ljp7F07AA48
 /* 0AF4A4 7F07A934 AFA2004C */   sw    $v0, 0x4c($sp)
@@ -3306,7 +3549,7 @@ variable_body_head:
 /* 0ACD8C 7F07A39C A0580006 */  sb    $t8, 6($v0)
 /* 0ACD90 7F07A3A0 8FAF0044 */  lw    $t7, 0x44($sp)
 /* 0ACD94 7F07A3A4 A04F000F */  sb    $t7, 0xf($v0)
-/* 0ACD98 7F07A3A8 0FC269E1 */  jal   sub_GAME_7F09B244
+/* 0ACD98 7F07A3A8 0FC269E1 */  jal   getPropForHeldItem
 /* 0ACD9C 7F07A3AC 8FA40048 */   lw    $a0, 0x48($sp)
 /* 0ACDA0 7F07A3B0 04400043 */  bltz  $v0, .L7F07A4C0
 /* 0ACDA4 7F07A3B4 AFA2004C */   sw    $v0, 0x4c($sp)
@@ -27424,99 +27667,22 @@ void sub_GAME_7F08BDC4(Mtxf *arg0)
 }
 
 
-
-#ifdef NONMATCHING
-/**
- * Unreferenced.
- * 
- * Address 0x7F08BE2C.
- *
- * decomp status:
- * - compiles: yes
- * - stack resize: ok
- * - identical instructions: two swapped instructions that don't affect each other
- * - identical registers: ok
- *
- */
-void sub_GAME_7F08BE2C(Mtxf * arg0, s32 arg1)
+void sub_GAME_7F08BE2C(Mtxf *matrices, s32 count)
 {
-    Mtxf sp38;
-    s32 var_s0;
-    Mtxf* var_s1;
+    Mtxf copy;
+    s32 i;
 
-    var_s0 = 0;
-
-    if (arg1 <= 0) { return; }
-
-    var_s1 = arg0;
-    do
+    for (i = 0; i < count; i++)
     {
-        matrix_4x4_copy(var_s1, &sp38);
-        sp38.m[3][0] -= g_CurrentPlayer->previous_model_pos.f[0];
-        sp38.m[3][1] -= g_CurrentPlayer->previous_model_pos.f[1];
-        sp38.m[3][2] -= g_CurrentPlayer->previous_model_pos.f[2];
-        matrix_4x4_f32_to_s32(&sp38, &arg0[var_s0]);
-        var_s0++;
-        var_s1++;
-    } while (var_s0 != arg1);
-}
+        matrix_4x4_copy((Mtxf *)((uintptr_t)matrices + i * sizeof(Mtxf)), &copy);
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08BE2C
-/* 0C095C 7F08BE2C 27BDFF88 */  addiu $sp, $sp, -0x78
-/* 0C0960 7F08BE30 AFB40024 */  sw    $s4, 0x24($sp)
-/* 0C0964 7F08BE34 AFB30020 */  sw    $s3, 0x20($sp)
-/* 0C0968 7F08BE38 AFB00014 */  sw    $s0, 0x14($sp)
-/* 0C096C 7F08BE3C 00A09825 */  move  $s3, $a1
-/* 0C0970 7F08BE40 0080A025 */  move  $s4, $a0
-/* 0C0974 7F08BE44 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 0C0978 7F08BE48 AFB50028 */  sw    $s5, 0x28($sp)
-/* 0C097C 7F08BE4C AFB2001C */  sw    $s2, 0x1c($sp)
-/* 0C0980 7F08BE50 AFB10018 */  sw    $s1, 0x18($sp)
-/* 0C0984 7F08BE54 18A0001C */  blez  $a1, .L7F08BEC8
-/* 0C0988 7F08BE58 00008025 */   move  $s0, $zero
-/* 0C098C 7F08BE5C 3C158008 */  lui   $s5, %hi(g_CurrentPlayer)
-/* 0C0990 7F08BE60 26B5A0B0 */  addiu $s5, %lo(g_CurrentPlayer) # addiu $s5, $s5, -0x5f50
-/* 0C0994 7F08BE64 00808825 */  move  $s1, $a0
-/* 0C0998 7F08BE68 27B20038 */  addiu $s2, $sp, 0x38
-.L7F08BE6C:
-/* 0C099C 7F08BE6C 02202025 */  move  $a0, $s1
-/* 0C09A0 7F08BE70 0FC16008 */  jal   matrix_4x4_copy
-/* 0C09A4 7F08BE74 02402825 */   move  $a1, $s2
-/* 0C09A8 7F08BE78 8EA20000 */  lw    $v0, ($s5)
-/* 0C09AC 7F08BE7C C7A40068 */  lwc1  $f4, 0x68($sp)
-/* 0C09B0 7F08BE80 C7AA006C */  lwc1  $f10, 0x6c($sp)
-/* 0C09B4 7F08BE84 C4460044 */  lwc1  $f6, 0x44($v0)
-/* 0C09B8 7F08BE88 00107180 */  sll   $t6, $s0, 6
-/* 0C09BC 7F08BE8C 01D42821 */  addu  $a1, $t6, $s4
-/* 0C09C0 7F08BE90 46062201 */  sub.s $f8, $f4, $f6
-/* 0C09C4 7F08BE94 C7A40070 */  lwc1  $f4, 0x70($sp)
-/* 0C09C8 7F08BE98 02402025 */  move  $a0, $s2
-/* 0C09CC 7F08BE9C E7A80068 */  swc1  $f8, 0x68($sp)
-/* 0C09D0 7F08BEA0 C4500048 */  lwc1  $f16, 0x48($v0)
-/* 0C09D4 7F08BEA4 46105481 */  sub.s $f18, $f10, $f16
-/* 0C09D8 7F08BEA8 E7B2006C */  swc1  $f18, 0x6c($sp)
-/* 0C09DC 7F08BEAC C446004C */  lwc1  $f6, 0x4c($v0)
-/* 0C09E0 7F08BEB0 46062201 */  sub.s $f8, $f4, $f6
-/* 0C09E4 7F08BEB4 0FC16327 */  jal   matrix_4x4_f32_to_s32
-/* 0C09E8 7F08BEB8 E7A80070 */   swc1  $f8, 0x70($sp)
-/* 0C09EC 7F08BEBC 26100001 */  addiu $s0, $s0, 1
-/* 0C09F0 7F08BEC0 1613FFEA */  bne   $s0, $s3, .L7F08BE6C
-/* 0C09F4 7F08BEC4 26310040 */   addiu $s1, $s1, 0x40
-.L7F08BEC8:
-/* 0C09F8 7F08BEC8 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 0C09FC 7F08BECC 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0C0A00 7F08BED0 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0C0A04 7F08BED4 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 0C0A08 7F08BED8 8FB30020 */  lw    $s3, 0x20($sp)
-/* 0C0A0C 7F08BEDC 8FB40024 */  lw    $s4, 0x24($sp)
-/* 0C0A10 7F08BEE0 8FB50028 */  lw    $s5, 0x28($sp)
-/* 0C0A14 7F08BEE4 03E00008 */  jr    $ra
-/* 0C0A18 7F08BEE8 27BD0078 */   addiu $sp, $sp, 0x78
-)
-#endif
+        copy.m[3][0] -= g_CurrentPlayer->previous_model_pos.x;
+        copy.m[3][1] -= g_CurrentPlayer->previous_model_pos.y;
+        copy.m[3][2] -= g_CurrentPlayer->previous_model_pos.z;
+
+        matrix_4x4_f32_to_s32(&copy, matrices + i);
+    }
+}
 
 
 void sub_GAME_7F08BEEC(Mtxf *matrices, s32 count)

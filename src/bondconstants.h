@@ -260,7 +260,7 @@ BITFLAG(PS_FLAGS2,
 // prop definition flags
 typedef enum PROPFLAG
 {
-    PROPFLAG_00000001                    = 0x00000001, // unknown
+    PROPFLAG_RENDERPOSTBG                = 0x00000001, // unknown
     PROPFLAG_ONSCREEN                    = 0x00000002, // onscreen
     PROPFLAG_ENABLED                     = 0x00000004, // unknown
     PROPFLAG_00000008                    = 0x00000008, // unknown
@@ -275,7 +275,7 @@ typedef enum PROPFLAG
     PROPFLAG_00001000                    = 0x00001000, // unknown
     PROPFLAG_AIUNDROPPABLE               = 0x00002000, /* Item Not Droppedz*/
     PROPFLAG_ASSIGNEDTOCHR               = 0x00004000, // unknown
-    PROPFLAG_00008000                    = 0x00008000, // unknown
+    PROPFLAG_INSIDEANOTHEROBJ            = 0x00008000, // unknown
     PROPFLAG_FORCEMORTAL                 = 0x00010000, // unknown
     PROPFLAG_INVINCIBLE                  = 0x00020000, // unknown
     PROPFLAG_00040000                    = 0x00040000, // unknown
@@ -287,10 +287,10 @@ typedef enum PROPFLAG
     PROPFLAG_01000000                    = 0x01000000, // unknown
     PROPFLAG_02000000                    = 0x02000000, // unknown
     PROPFLAG_04000000                    = 0x04000000, // unknown
-    PROPFLAG_08000000                    = 0x08000000, // unknown
+    PROPFLAG_DOOR_TWOWAY                 = 0x08000000, // unknown
     PROPFLAG_WEAPON_LEFTHANDED           = 0x10000000, /* Left Handed*/
-    PROPFLAG_NO_AI_INTERACTION           = 0x20000000, /* Concealed*/
-    PROPFLAG_40000000                    = 0x40000000, /* No Ammo on pickup*/
+    PROPFLAG_DOOR_OPENTOFRONT            = 0x20000000, /* Concealed*/
+    PROPFLAG_MONITOR_RENDERPOSTBG        = 0x40000000, /* No Ammo on pickup*/
     PROPFLAG_80000000                    = 0x80000000 // unknown
 }PROPFLAG;
 // prop definition flags 
@@ -306,7 +306,7 @@ typedef enum PROPFLAG2
     PROPFLAG2_00000080                   = 0x00000080, // unknown
     PROPFLAG2_00000100                   = 0x00000100, // unknown
     PROPFLAG2_00000200                   = 0x00000200, // unknown
-    PROPFLAG2_00000400                   = 0x00000400, // unknown
+    PROPFLAG2_LINKEDTOSAFE               = 0x00000400, // unknown
     PROPFLAG2_00000800                   = 0x00000800, // unknown
     PROPFLAG2_00001000                   = 0x00001000, // unknown
     PROPFLAG2_00002000                   = 0x00002000, // unknown
@@ -335,7 +335,30 @@ typedef enum DOORFLAG
     DOORFLAG_100                         = 0x00000100,
     DOORFLAG_CANNOT_ACTIVATE             = 0x02000000,
     DOORFLAG_KEEPOPEN                    = 0x80000000
-}DOORFLAG;
+} DOORFLAG;
+
+typedef enum PROJECTILEFLAG
+{
+    PROJECTILEFLAG_AIRBORNE    = 0x00000001,
+    PROJECTILEFLAG_00000002    = 0x00000002,
+    PROJECTILEFLAG_STICKY      = 0x00000004,
+    PROJECTILEFLAG_POWERED     = 0x00000010,
+    PROJECTILEFLAG_00000020    = 0x00000020,
+    PROJECTILEFLAG_LAUNCHING   = 0x00000080,
+    PROJECTILEFLAG_00000100    = 0x00000100,
+    PROJECTILEFLAG_FALLING     = 0x00000400,
+    PROJECTILEFLAG_SLIDING     = 0x00000800,
+    PROJECTILEFLAG_00001000    = 0x00001000,
+    PROJECTILEFLAG_00002000    = 0x00002000,
+    PROJECTILEFLAG_NOTIMELIMIT = 0x00004000,
+    PROJECTILEFLAG_INROOM      = 0x00008000,
+    PROJECTILEFLAG_00010000    = 0x00010000,
+    PROJECTILEFLAG_LIGHTWEIGHT = 0x40000000,
+    PROJECTILEFLAG_FREE        = 0x80000000
+} PROJECTILE_FLAG;
+
+// Might be the same flags as PROJECTILEFLAG
+#define EMBEDMENTFLAG_FREE 0x00000001
 
 /* door lock flags*/
 BITFLAG(DOOR_LOCK,
@@ -374,7 +397,7 @@ BITFLAG(RUNTIMEBITFLAG,
         00000008,
         00000010,
         THROWING_KNIFE_RELATED,
-        00000040,
+        EMBEDDED,
         DEPOSIT, /* depositted (thrown/launching)                               */
         00000100,
         BEENOPENED,
@@ -387,7 +410,7 @@ BITFLAG(RUNTIMEBITFLAG,
         00010000,
         00020000, /* owner 2bit (0-3) used to                                    */
         00040000, /* attribute kills to players                                  */
-        00080000,
+        HASOWNER,
         00100000,
         00200000,
         00400000,
@@ -923,14 +946,14 @@ typedef enum GAMELENGTH
 typedef enum CUFF_TYPES
 {
     CUFF_BLUE,
-    CUFF_TUX,
+    CUFF_BROSNAN,
     CUFF_JUNGLE,
     CUFF_BOILER,
     CUFF_SNOW,
-    CUFF_WHITE,
-    CUFF_TUX6,
-    CUFF_TUX7,
-    CUFF_TUX8
+    CUFF_CONNERY,
+    CUFF_DALTON,
+    CUFF_MOORE,
+    CUFF_FOLDER
 } CUFF_TYPES;
 
 typedef enum CREDITS_ALIGNMENT
@@ -1296,30 +1319,30 @@ typedef enum MISSION_BRIEFING
 typedef enum MODELNODE_OPCODE
 {
     MODELNODE_OPCODE_NULL,
-    MODELNODE_OPCODE_HEADERRECORD,
-    MODELNODE_OPCODE_GROUPRECORD,
-    MODELNODE_OPCODE_UNUSED_03,
-    MODELNODE_OPCODE_DISPLAYLISTRECORD,
-    MODELNODE_OPCODE_UNUSED_05,
-    MODELNODE_OPCODE_UNUSED_06,
-    MODELNODE_OPCODE_OP07RECORD,
-    MODELNODE_OPCODE_LODRECORD,
-    MODELNODE_OPCODE_BSPRECORD,
-    MODELNODE_OPCODE_BOUNDINGBOXRECORD,
-    MODELNODE_OPCODE_OP11RECORD,
-    MODELNODE_OPCODE_GUNFIRERECORD,
-    MODELNODE_OPCODE_SHADOWRECORD,
-    MODELNODE_OPCODE_OP14RECORD,
-    MODELNODE_OPCODE_INTERLINKAGERECORD,
-    MODELNODE_OPCODE_OP16RECORD,
-    MODELNODE_OPCODE_UNUSED_17,
-    MODELNODE_OPCODE_SWITCHRECORD,
-    MODELNODE_OPCODE_UNUSED_19,
-    MODELNODE_OPCODE_UNUSED_20,
-    MODELNODE_OPCODE_GROUPSIMPLERECORD,
-    MODELNODE_OPCODE_DISPLAYLISTPRIMARYRECORD,
-    MODELNODE_OPCODE_HEADPLACEHOLDERRECORD,
-    MODELNODE_OPCODE_DISPLAYLIST_COLLISIONRECORD,
+    MODELNODE_OPCODE_HEADER,
+    MODELNODE_OPCODE_GROUP,
+    MODELNODE_OPCODE_OP03,
+    MODELNODE_OPCODE_DL,
+    MODELNODE_OPCODE_OP05,
+    MODELNODE_OPCODE_OP06,
+    MODELNODE_OPCODE_OP07,
+    MODELNODE_OPCODE_LOD,
+    MODELNODE_OPCODE_BSP,
+    MODELNODE_OPCODE_BBOX,
+    MODELNODE_OPCODE_OP11,
+    MODELNODE_OPCODE_GUNFIRE,
+    MODELNODE_OPCODE_SHADOW,
+    MODELNODE_OPCODE_OP14,
+    MODELNODE_OPCODE_INTERLINK,
+    MODELNODE_OPCODE_OP16,
+    MODELNODE_OPCODE_OP17,
+    MODELNODE_OPCODE_SWITCH,
+    MODELNODE_OPCODE_OP19,
+    MODELNODE_OPCODE_OP20,
+    MODELNODE_OPCODE_GROUPSIMPLE,
+    MODELNODE_OPCODE_DLPRIMARY,
+    MODELNODE_OPCODE_HEAD,
+    MODELNODE_OPCODE_DLCOLLISION,
     MODELNODE_OPCODE_MAX
 } MODELNODE_OPCODE;
 
@@ -2216,6 +2239,26 @@ typedef enum SPSEGMENT
     SPSEGMENT_BG_DL      = 15
 } SPSEGMENT;
 
+typedef enum TVCMD
+{
+    TVCMD_STOPSCROLL     = 0x00,
+    TVCMD_SCROLLRELX     = 0x01,
+    TVCMD_SCROLLRELY     = 0x02,
+    TVCMD_SCROLLABSX     = 0x03,
+    TVCMD_SCROLLABSY     = 0x04,
+    TVCMD_SCALEABSX      = 0x05,
+    TVCMD_SCALEABSY      = 0x06,
+    TVCMD_SETTEXTURE     = 0x07,
+    TVCMD_PAUSE          = 0x08,
+    TVCMD_SETCMDLIST     = 0x09,
+    TVCMD_RANDSETCMDLIST = 0x0a,
+    TVCMD_RESTART        = 0x0b,
+    TVCMD_YIELD          = 0x0c,
+    TVCMD_SETCOLOUR      = 0x0d,
+    TVCMD_ROTATEABS      = 0x0e,
+    TVCMD_ROTATEREL      = 0x0f
+} TVCMD;
+
 #pragma region Object Instance Stuff
     typedef enum BODIES
     {
@@ -2224,7 +2267,12 @@ typedef enum SPSEGMENT
         BODY_Russian_Soldier,
         BODY_Russian_Infantry,
         BODY_Janus_Special_Forces,
-        BODY_Tuxedo,
+        BODY_Brosnan_Tuxedo,
+        /*
+        BODY_Connery_Tuxedo,
+        BODY_Dalton_Tuxedo,
+        BODY_Moore_Tuxedo,
+        */
         BODY_Boris,
         BODY_Ourumov,
         BODY_Trevelyan_Janus,
@@ -2344,11 +2392,16 @@ typedef enum SPSEGMENT
         HEAD_Female_Mandy,
         HEAD_Female_Vivien,
         HEAD_BOND_START,
-        HEAD_Male_Pierce_Bond_1 = HEAD_BOND_START,
-        HEAD_Male_Pierce_Bond_2,
-        HEAD_Male_Pierce_Bond_3,
-        HEAD_Male_Pierce_Bond_Parka,
-        HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT,
+        HEAD_Male_Brosnan_Boiler = HEAD_BOND_START,
+        HEAD_Male_Brosnan_Default,
+        HEAD_Male_Brosnan_Jungle,
+        HEAD_Male_Brosnan_Parka,
+        HEAD_Male_Brosnan_Tuxedo,
+        /*
+        HEAD_Male_Connery_Tuxedo,
+        HEAD_Male_Dalton_Tuxedo,
+        HEAD_Male_Moore_Tuxedo,
+        */
         HEAD_Natalya_Jungle_Fatigues,
         HEAD_END,
         /*The following are some maybe helpfull counts (maybe GE doesnt need them, but thought Id ad while here)*/
@@ -3397,6 +3450,7 @@ typedef enum SPSEGMENT
 #define ARRAYCOUNT(a) (s32)(sizeof(a) / sizeof(a[0]))
 #define ALIGN8(val)         (((val) + 0x7 | 0x7) ^ 0x7)
 #define RANDOMFRAC() ((f32) randomGetNext() * 2.3283064e-10f)
+#define MAXFLOAT ((float)3.40282346638528860e+38)
 
 #pragma endregion
 

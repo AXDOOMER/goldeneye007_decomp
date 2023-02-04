@@ -870,50 +870,11 @@ void bgunCalculateBlend(enum GUNHAND handnum)
 }
 
 
-#if defined(VERSION_US) || defined(VERSION_JP)
 s32 Gun_hand_without_item(enum GUNHAND arg0)
 {
     return g_CurrentPlayer->hand_invisible[arg0] > 0
         || (g_CurrentPlayer->hand_item[arg0] == 0 && g_CurrentPlayer->field_2A44[arg0] < 0);
 }
-#endif
-
-#if defined(VERSION_EU)
-
-#ifdef NONMATCHING
-s32 Gun_hand_without_item(enum GUNHAND arg0)
-{
-    return g_CurrentPlayer->hand_invisible[arg0] > 0
-        || (g_CurrentPlayer->hand_item[arg0] == 0 && g_CurrentPlayer->field_2A3C[arg0] < 0);
-}
-#else
-GLOBAL_ASM(
-.text
-glabel Gun_hand_without_item
-/* 08FD5C 7F05D36C 3C0E8007 */  lui   $t6, %hi(g_CurrentPlayer) # $t6, 0x8007
-/* 08FD60 7F05D370 8DCE8BC0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
-/* 08FD64 7F05D374 00047880 */  sll   $t7, $a0, 2
-/* 08FD68 7F05D378 01CF1821 */  addu  $v1, $t6, $t7
-/* 08FD6C 7F05D37C 8C6207F8 */  lw    $v0, 0x7f8($v1)
-/* 08FD70 7F05D380 0002C02A */  slt   $t8, $zero, $v0
-/* 08FD74 7F05D384 17000008 */  bnez  $t8, .L7F05D3A8
-/* 08FD78 7F05D388 03001025 */   move  $v0, $t8
-/* 08FD7C 7F05D38C 8C620800 */  lw    $v0, 0x800($v1)
-/* 08FD80 7F05D390 2C590001 */  sltiu $t9, $v0, 1
-/* 08FD84 7F05D394 13200004 */  beqz  $t9, .L7F05D3A8
-/* 08FD88 7F05D398 03201025 */   move  $v0, $t9
-/* 08FD8C 7F05D39C 8C622A3C */  lw    $v0, 0x2a3c($v1)
-/* 08FD90 7F05D3A0 28480000 */  slti  $t0, $v0, 0
-/* 08FD94 7F05D3A4 01001025 */  move  $v0, $t0
-.L7F05D3A8:
-/* 08FD98 7F05D3A8 03E00008 */  jr    $ra
-/* 08FD9C 7F05D3AC 00000000 */   nop   
-)
-#endif
-
-#endif
-
-
 
 s32 get_itemtype_in_hand(GUNHAND hand)
 {
@@ -1743,7 +1704,7 @@ void sub_GAME_7F05EB0C(ObjectRecord *arg0, coord3d *arg1, StandTile *arg2, Mtxf 
             temp_v0 = arg0->unk6C;
             temp_v0->flags |= 0x41;
             arg0->unk6C->prop = arg6;
-            sub_GAME_7F03FE14(temp_s1);
+            projectileSetSticky(temp_s1);
             matrix_4x4_copy(arg5, &arg0->unk6C->m);
             arg0->unk6C->pos.f[0] = arg4->f[0];
             arg0->unk6C->pos.f[1] = arg4->f[1];
@@ -2244,7 +2205,7 @@ void generate_player_thrown_object(s32 hand)
 
         if (wor != NULL)
         {
-            sub_GAME_7F04C044(wor->prop);
+            objDetach(wor->prop);
         }
 
         sub_GAME_7F05D690();
@@ -15922,7 +15883,7 @@ weapon_reload_none_sfx:
 /* 09B8C8 7F066D98 8E0E001C */  lw    $t6, 0x1c($s0)
 /* 09B8CC 7F066D9C 15C00009 */  bnez  $t6, .L7F066DC4
 /* 09B8D0 7F066DA0 00000000 */   nop
-/* 09B8D4 7F066DA4 0FC0F0FF */  jal   sub_GAME_7F03C3FC
+/* 09B8D4 7F066DA4 0FC0F0FF */  jal   propFindForInteract
 /* 09B8D8 7F066DA8 00000000 */   nop
 /* 09B8DC 7F066DAC 10400005 */  beqz  $v0, .L7F066DC4
 /* 09B8E0 7F066DB0 00000000 */   nop
@@ -18780,7 +18741,7 @@ weapon_reload_none_sfx:
 /* 09BEE0 7F067370 8E0E001C */  lw    $t6, 0x1c($s0)
 /* 09BEE4 7F067374 15C00009 */  bnez  $t6, .Ljp7F06739C
 /* 09BEE8 7F067378 00000000 */   nop
-/* 09BEEC 7F06737C 0FC0F1BF */  jal   sub_GAME_7F03C3FC
+/* 09BEEC 7F06737C 0FC0F1BF */  jal   propFindForInteract
 /* 09BEF0 7F067380 00000000 */   nop
 /* 09BEF4 7F067384 10400005 */  beqz  $v0, .Ljp7F06739C
 /* 09BEF8 7F067388 00000000 */   nop
@@ -21797,7 +21758,7 @@ weapon_reload_none_sfx:
 /* 099F30 7F067540 8E0E001C */  lw    $t6, 0x1c($s0)
 /* 099F34 7F067544 15C00009 */  bnez  $t6, .L7F06756C
 /* 099F38 7F067548 00000000 */   nop
-/* 099F3C 7F06754C 0FC0F12F */  jal   sub_GAME_7F03C3FC
+/* 099F3C 7F06754C 0FC0F12F */  jal   propFindForInteract
 /* 099F40 7F067550 00000000 */   nop
 /* 099F44 7F067554 10400005 */  beqz  $v0, .L7F06756C
 /* 099F48 7F067558 00000000 */   nop

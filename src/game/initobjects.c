@@ -6,7 +6,7 @@
 #include "chrobjhandler.h"
 //this file may very well be a few different sub files
 
-struct object_animation_controller g_InitialMonitorAnimController = {&monAnim00Bond, 0, 0xFFFF, 0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.5, 0.0, 0.0, 0.5, 0.5, 0.5, 0.0, 0.0, 0.5, 0.5, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 1.0, 0.0};
+MonitorRecord g_InitialMonitorAnimController = {&monAnim00Bond, 0, 0xFFFF, 0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.5, 0.0, 0.0, 0.5, 0.5, 0.5, 0.0, 0.0, 0.5, 0.5, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 1.0, 0.0};
 struct object_animation_controller g_InitialUnknownAnimController = {&monAnim34, 0, 0xFFFF, 0, 0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.5, 0.0, 0.0, 0.5, 0.5, 0.5, 0.0, 0.0, 0.5, 0.5, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 1.0};
 struct object_animation_controller g_InitialTaserAnimController = {&monAnim35Taser, 0, 0xFFFF, 0, 0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.5, 0.0, 0.0, 0.5, 0.5, 0.5, 0.0, 0.0, 0.5, 0.5, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 1.0};
 
@@ -136,16 +136,16 @@ void reinit_between_menus(void)
         dword_CODE_bss_80073370[i].unk10 = 0;
     }
 
-    for (i=0; i<BSS_80073DC0_DATA_LEN; i++)
+    for (i = 0; i < PROJECTILES_ARR_MAX; i++)
     {
-        dword_CODE_bss_80073DC0[i].unk00 = 0x80000000;
-        dword_CODE_bss_80073DC0[i].unk98 = 0;
-        dword_CODE_bss_80073DC0[i].unk9C = 0;
+        g_Projectiles[i].flags = 0x80000000;
+        g_Projectiles[i].sound1 = NULL;
+        g_Projectiles[i].sound2 = NULL;
     }
 
-    for (i=0; i<BSS_80075030_DATA_LEN; i++)
+    for (i = 0; i < EMBEDMENT_ARR_MAX; i++)
     {
-        dword_CODE_bss_80075030[i].unk00 = 1;
+        g_Embedments[i].flags = 1;
     }
 
     g_LevelLoadPropSwitch = NULL;
@@ -199,7 +199,7 @@ void initSetLevelLoadPropSafeItem(struct ObjectRecord *arg0)
 */
 void write_monitor_ani_control_blocks(void)
 {
-    struct object_animation_controller spEC;
+    MonitorRecord spEC;
     struct object_animation_controller sp78;
     struct object_animation_controller sp4;
 

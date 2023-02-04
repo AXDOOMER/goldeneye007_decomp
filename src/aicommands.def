@@ -5049,7 +5049,7 @@ _AI_CMD(
         if (obj && obj->prop)
         {
             bool a = collect_or_interact_object(obj->prop, 0);
-            sub_GAME_7F03C2BC(obj->prop, a);
+            propExecuteTickOperation(obj->prop, a);
         }
         Offset += CAT(CAT(AI_, CMDNAME), _LENGTH);
         break;
@@ -5094,7 +5094,7 @@ _AI_CMD(
         {
             if (obj->prop->parent)
             {
-                sub_GAME_7F04C044(obj->prop);
+                objDetach(obj->prop);
             }
             else
             {
@@ -9122,7 +9122,7 @@ _AI_CMD(
         bool      ok = FALSE;
         if (ChrEntityp && ChrEntityp->prop && ChrEntityp->model)
         {
-            ok = chrTryEquipHat(ChrEntityp, modelnum, flags);
+            ok = hatCreateForChr(ChrEntityp, modelnum, flags);
         }
         if (ok)
         {
@@ -9223,7 +9223,7 @@ _AI_CMD(
                     if (hatprop)
                     {
                         hatobj = hatprop->obj;
-                        chrTryEquipHat(clone, hatobj->obj, 0);
+                        hatCreateForChr(clone, hatobj->obj, 0);
                     }
                 }
                 /*PD extras
@@ -9952,15 +9952,15 @@ _AI_CMD(
             if (obj->type == PROPDEF_MONITOR)
             {
                 MonitorObjRecord *sm = (MonitorObjRecord *) obj;
-                monitorSetImageByNum(&sm->Monitor.image, ai->val[2]);
+                monitorSetImageByNum(&sm->Monitor.cmdlist, ai->val[2]);
             }
             else if (obj->type == PROPDEF_MULTI_MONITOR)
             {
                 u8 slot = ai->val[1];
                 if (slot < 4)
                 {
-                    multimonitorobj *mm = (multimonitorobj *) obj;
-                    monitorSetImageByNum(&mm->Monitor[slot].image, ai->val[2]);
+                    MultiMonitorObjRecord *mm = (MultiMonitorObjRecord *) obj;
+                    monitorSetImageByNum(&mm->Monitor[slot].cmdlist, ai->val[2]);
                 }
             }
         }
@@ -11839,7 +11839,7 @@ _AI_CMD(
             if (obj->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)
             {
                 obj->unk6C->flags |= 0x601;
-                sub_GAME_7F03FE14(obj->prop);
+                projectileSetSticky(obj->prop);
                 matrix_4x4_set_identity(&obj->unk6C->m);
                 obj->unk6C->pos.x = 0;
                 obj->unk6C->pos.y = 1.0f / CHRLV_FRAMERATE_F;

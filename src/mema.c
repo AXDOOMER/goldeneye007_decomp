@@ -320,22 +320,33 @@ glabel memaFree
 #ifdef NONMATCHING
 // Find the allocation of the given address and reduce its size by the given 
 // amount. If successful, return the same address, otherwise 0.
-s32 memaShrink(s32 addr, u32 amount) {
+
+// Only regalloc problems left. Called memaGrow in PD
+s32 memaShrink(s32 addr, u32 amount)
+{
     allocation *curr = &g_MemoryAllocations[2];
-    while (curr->addr != -1) {
-        if ((curr->addr == addr) && (curr->size >= amount)) {
-            break;
-        }        
-        curr++;
-        if (curr->addr == -1) {
-            return 0;
+
+    while (curr->addr != -1)
+    {    
+        if (curr->addr == addr && curr->size >= amount)
+        {
+            goto found;
         }
+
+        curr++;
     }
+
+    return 0;
+
+found:
     curr->addr += amount;
     curr->size -= amount;
-    if (curr->size == 0) {
+
+    if (curr->size == 0)
+    {
         curr->addr = 0;
     }
+
     return addr;
 }
 #else

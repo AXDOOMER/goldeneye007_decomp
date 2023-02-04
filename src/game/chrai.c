@@ -2354,7 +2354,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     if (obj && obj->prop)
                     {
                         INV_ITEM_TYPE iType = collect_or_interact_object(obj->prop, FALSE);
-                        sub_GAME_7F03C2BC(obj->prop, iType);
+                        propExecuteTickOperation(obj->prop, iType);
                     }
                     Offset += AI_BondCollectObject_LENGTH;
                     break;
@@ -2368,7 +2368,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     {
                         if (obj->prop->parent)
                         {
-                            sub_GAME_7F04C044(obj->prop);
+                            objDetach(obj->prop);
                         }
                         else
                         {
@@ -3586,7 +3586,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     bool      ok       = FALSE;
                     if (ChrEntityp && ChrEntityp->prop && ChrEntityp->model)
                     {
-                        ok = chrTryEquipHat(ChrEntityp, modelnum, flags);
+                        ok = hatCreateForChr(ChrEntityp, modelnum, flags);
                     }
                     if (ok)
                     {
@@ -3665,7 +3665,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                                 {
                                     hatobj = hatprop->obj;
 
-                                    chrTryEquipHat(clone, hatobj->obj, 0);
+                                    hatCreateForChr(clone, hatobj->obj, 0);
                                 }
                             }
                             /* PD extras */
@@ -3953,15 +3953,15 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                         if (obj->type == PROPDEF_MONITOR)
                         {
                             MonitorObjRecord *sm = (MonitorObjRecord *)obj;
-                            monitorSetImageByNum(&sm->Monitor.image, ai->val[2]);
+                            monitorSetImageByNum(&sm->Monitor.cmdlist, ai->val[2]);
                         }
                         else if (obj->type == PROPDEF_MULTI_MONITOR)
                         {
                             u8 slot = ai->val[1];
                             if (slot < 4)
                             {
-                                multimonitorobj *mm = (multimonitorobj *)obj; //need new size here 0x74 (116) + 0x80 (so monitor is obj + 74)
-                                monitorSetImageByNum(&mm->Monitor[slot].image, ai->val[2]);
+                                MultiMonitorObjRecord *mm = (MultiMonitorObjRecord *)obj; //need new size here 0x74 (116) + 0x80 (so monitor is obj + 74)
+                                monitorSetImageByNum(&mm->Monitor[slot].cmdlist, ai->val[2]);
                             }
                         }
                     }
@@ -4550,7 +4550,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                         if (obj->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)
                         {
                             obj->unk6C->flags |= 0x601;
-                            sub_GAME_7F03FE14(obj->prop);
+                            projectileSetSticky(obj->prop);
                             matrix_4x4_set_identity(&obj->unk6C->m);
                             obj->unk6C->pos.x = 0;
                             obj->unk6C->pos.y = 0.016666666f; //step height?

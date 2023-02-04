@@ -108,12 +108,12 @@ struct bss_80073370 dword_CODE_bss_80073370[BSS_80073370_DATA_LEN];
 /**
  * Address 0x80073DC0.
 */
-struct bss_80073DC0 dword_CODE_bss_80073DC0[BSS_80073DC0_DATA_LEN];
+Projectile g_Projectiles[PROJECTILES_ARR_MAX];
 
 /**
  * Address 0x80075030.
 */
-struct bss_80075030 dword_CODE_bss_80075030[BSS_80075030_DATA_LEN];
+Embedment g_Embedments[EMBEDMENT_ARR_MAX];
 
 //CODE.bss:80075B70
 u32 objinst;
@@ -139,7 +139,7 @@ f32 flt_CODE_bss_80075B94;
 /**
  * Address 0x80075B98.
 */
-struct object_animation_controller g_MonitorAnimController;
+MonitorRecord g_MonitorAnimController;
 
 /**
  * Unused / unreferenced (from padding / align?)
@@ -191,7 +191,7 @@ Gfx *chrpropRender(Gfx *arg0, PropRecord *arg1, s32 withalpha);
 void chraiCheckUseHeldItem(s32 hand);
 void chraiDefaultWeaponFireHandler(s32);
 void chraiFistAttackHandler(s32, s32);
-void sub_GAME_7F03C2BC(PropRecord *prop, INV_ITEM_TYPE type) ;
+void propExecuteTickOperation(PropRecord *prop, INV_ITEM_TYPE op);
 
 // end forward declarations
 
@@ -2629,7 +2629,7 @@ void chraiCheckUseHeldItems(void)
 
 
 
-void sub_GAME_7F03C2BC(PropRecord *prop, INV_ITEM_TYPE type) //#MATCH
+void propExecuteTickOperation(PropRecord *prop, INV_ITEM_TYPE type) //#MATCH
 {
     ObjectRecord *propobj;
 
@@ -2670,8 +2670,8 @@ void sub_GAME_7F03C2BC(PropRecord *prop, INV_ITEM_TYPE type) //#MATCH
         chrpropDeregisterRooms(prop);
         chrpropDelist(prop);
         chrpropDisable(prop);
-        sub_GAME_7F04C044(prop);
-        sub_GAME_7F040CF0(prop);
+        objDetach(prop);
+        objFreeEmbedmentOrProjectile(prop);
         chrpropReparent(prop, get_curplayer_positiondata());
     }
 }
@@ -2682,13 +2682,14 @@ void sub_GAME_7F03C2BC(PropRecord *prop, INV_ITEM_TYPE type) //#MATCH
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03C3FC(void) {
+PropRecord *propFindForInteract(void) {
 
 }
 #else
+PropRecord *propFindForInteract(void);
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F03C3FC
+glabel propFindForInteract
 /* 070F2C 7F03C3FC 27BDFFC8 */  addiu $sp, $sp, -0x38
 /* 070F30 7F03C400 AFB00014 */  sw    $s0, 0x14($sp)
 /* 070F34 7F03C404 3C108007 */  lui   $s0, %hi(g_LastOnScreenProp)
@@ -2760,71 +2761,39 @@ glabel sub_GAME_7F03C3FC
 #endif
 
 
+bool bond_interact_object(void)
+{
+    PropRecord *prop;
+    bool op;
 
+    prop = propFindForInteract();
+    op = INV_ITEM_NONE;
 
+    if (prop)
+    {
+        switch (prop->type)
+        {
+            case PROP_TYPE_OBJ:
+            case PROP_TYPE_WEAPON:
+                op = propobjInteract(prop);
+                break;
+            case PROP_TYPE_DOOR:
+                op = propdoorInteract(prop);
+                break;
+            case PROP_TYPE_CHR:
+            case PROP_TYPE_PLAYER:
+            case PROP_TYPE_EXPLOSION:
+            case PROP_TYPE_SMOKE:
+                break;
+        }
 
-#ifdef NONMATCHING
-void bond_interact_object(void) {
+        propExecuteTickOperation(prop, op);
 
+        return FALSE;
+    }
+
+    return TRUE;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-/*D:80052980*/
-glabel jpt_80052980
-.word loc_CODE_7F03C534
-.word loc_CODE_7F03C544
-.word def_7F03C52C
-.word loc_CODE_7F03C534
-.word def_7F03C52C
-.word def_7F03C52C
-.word def_7F03C52C
-.word def_7F03C52C
-
-.text
-glabel bond_interact_object
-/* 071020 7F03C4F0 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 071024 7F03C4F4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 071028 7F03C4F8 0FC0F0FF */  jal   sub_GAME_7F03C3FC
-/* 07102C 7F03C4FC 00000000 */   nop   
-/* 071030 7F03C500 AFA2001C */  sw    $v0, 0x1c($sp)
-/* 071034 7F03C504 10400016 */  beqz  $v0, .L7F03C560
-/* 071038 7F03C508 00002825 */   move  $a1, $zero
-/* 07103C 7F03C50C 904E0000 */  lbu   $t6, ($v0)
-/* 071040 7F03C510 25CFFFFF */  addiu $t7, $t6, -1
-/* 071044 7F03C514 2DE10008 */  sltiu $at, $t7, 8
-/* 071048 7F03C518 1020000D */  beqz  $at, .L7F03C550
-/* 07104C 7F03C51C 000F7880 */   sll   $t7, $t7, 2
-/* 071050 7F03C520 3C018005 */  lui   $at, %hi(jpt_80052980)
-/* 071054 7F03C524 002F0821 */  addu  $at, $at, $t7
-/* 071058 7F03C528 8C2F2980 */  lw    $t7, %lo(jpt_80052980)($at)
-/* 07105C 7F03C52C 01E00008 */  jr    $t7
-/* 071060 7F03C530 00000000 */   nop   
-loc_CODE_7F03C534:
-/* 071064 7F03C534 0FC13C5C */  jal   propobjInteract
-/* 071068 7F03C538 8FA4001C */   lw    $a0, 0x1c($sp)
-/* 07106C 7F03C53C 10000004 */  b     .L7F03C550
-/* 071070 7F03C540 00402825 */   move  $a1, $v0
-loc_CODE_7F03C544:
-/* 071074 7F03C544 0FC15710 */  jal   sub_GAME_7F055C40
-/* 071078 7F03C548 8FA4001C */   lw    $a0, 0x1c($sp)
-/* 07107C 7F03C54C 00402825 */  move  $a1, $v0
-def_7F03C52C:
-.L7F03C550:
-/* 071080 7F03C550 0FC0F0AF */  jal   sub_GAME_7F03C2BC
-/* 071084 7F03C554 8FA4001C */   lw    $a0, 0x1c($sp)
-/* 071088 7F03C558 10000002 */  b     .L7F03C564
-/* 07108C 7F03C55C 00001025 */   move  $v0, $zero
-.L7F03C560:
-/* 071090 7F03C560 24020001 */  li    $v0, 1
-.L7F03C564:
-/* 071094 7F03C564 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 071098 7F03C568 27BD0020 */  addiu $sp, $sp, 0x20
-/* 07109C 7F03C56C 03E00008 */  jr    $ra
-/* 0710A0 7F03C570 00000000 */   nop   
-)
-#endif
-
 
 
 /* Not quite sure what to name this, it returns true when the given prop isn't within 400 units of any player prop */
@@ -3132,7 +3101,7 @@ glabel handle_mp_respawn_and_some_things
 /* 07152C 7F03C9FC 02208025 */   move  $s0, $s1
 .L7F03CA00:
 /* 071530 7F03CA00 02202025 */  move  $a0, $s1
-/* 071534 7F03CA04 0FC0F0AF */  jal   sub_GAME_7F03C2BC
+/* 071534 7F03CA04 0FC0F0AF */  jal   propExecuteTickOperation
 /* 071538 7F03CA08 02402825 */   move  $a1, $s2
 .L7F03CA0C:
 /* 07153C 7F03CA0C 1600FF19 */  bnez  $s0, .L7F03C674
@@ -3415,7 +3384,7 @@ glabel handle_mp_respawn_and_some_things
 /* 06F4AC 7F03CABC 02208025 */   move  $s0, $s1
 .L7F03CAC0:
 /* 06F4B0 7F03CAC0 02202025 */  move  $a0, $s1
-/* 06F4B4 7F03CAC4 0FC0F0DF */  jal   sub_GAME_7F03C2BC
+/* 06F4B4 7F03CAC4 0FC0F0DF */  jal   propExecuteTickOperation
 /* 06F4B8 7F03CAC8 02402825 */   move  $a1, $s2
 .L7F03CACC:
 /* 06F4BC 7F03CACC 1600FF19 */  bnez  $s0, .L7F03C734
@@ -3518,7 +3487,7 @@ glabel determing_type_of_object_and_detection
 /* 071658 7F03CB28 10000003 */  b     .L7F03CB38
 /* 07165C 7F03CB2C 02008825 */   move  $s1, $s0
 .L7F03CB30:
-/* 071660 7F03CB30 0FC0F0AF */  jal   sub_GAME_7F03C2BC
+/* 071660 7F03CB30 0FC0F0AF */  jal   propExecuteTickOperation
 /* 071664 7F03CB34 02002025 */   move  $a0, $s0
 .L7F03CB38:
 /* 071668 7F03CB38 1620FFC7 */  bnez  $s1, .L7F03CA58
@@ -3863,7 +3832,7 @@ def_7F03D13C:
 .L7F03D160:
 /* 071C90 7F03D160 8E300024 */  lw    $s0, 0x24($s1)
 .L7F03D164:
-/* 071C94 7F03D164 0FC0F0AF */  jal   sub_GAME_7F03C2BC
+/* 071C94 7F03D164 0FC0F0AF */  jal   propExecuteTickOperation
 /* 071C98 7F03D168 02202025 */   move  $a0, $s1
 /* 071C9C 7F03D16C 1600FFE7 */  bnez  $s0, .L7F03D10C
 /* 071CA0 7F03D170 02008825 */   move  $s1, $s0
@@ -5415,53 +5384,31 @@ bool doorIsPadlockFree(DoorRecord* door)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03E7AC(void) {
+bool objCanPickupFromSafe(ObjectRecord *obj)
+{
+    if (obj->flags2 & PROPFLAG2_LINKEDTOSAFE)
+    {
+        SafeObjectRecord *link = g_LevelLoadPropSafeItem;
 
+        while (link)
+        {
+            ObjectRecord *loopobj = link->item;
+
+            if (obj == link->item && link->door && link->door->prop)
+            {
+                if (link->door->openPosition <= 0.5f)
+                {
+                    return FALSE;
+                }
+            }
+
+            link = link->next;
+        }
+    }
+
+    return TRUE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03E7AC
-/* 0732DC 7F03E7AC 8C8E000C */  lw    $t6, 0xc($a0)
-/* 0732E0 7F03E7B0 3C028003 */  lui   $v0, %hi(g_LevelLoadPropSafeItem)
-/* 0732E4 7F03E7B4 31CF0400 */  andi  $t7, $t6, 0x400
-/* 0732E8 7F03E7B8 51E0001B */  beql  $t7, $zero, .L7F03E828
-/* 0732EC 7F03E7BC 24020001 */   li    $v0, 1
-/* 0732F0 7F03E7C0 8C420B08 */  lw    $v0, %lo(g_LevelLoadPropSafeItem)($v0)
-/* 0732F4 7F03E7C4 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 0732F8 7F03E7C8 50400017 */  beql  $v0, $zero, .L7F03E828
-/* 0732FC 7F03E7CC 24020001 */   li    $v0, 1
-/* 073300 7F03E7D0 44810000 */  mtc1  $at, $f0
-/* 073304 7F03E7D4 00000000 */  nop   
-/* 073308 7F03E7D8 8C580004 */  lw    $t8, 4($v0)
-.L7F03E7DC:
-/* 07330C 7F03E7DC 5498000F */  bnel  $a0, $t8, .L7F03E81C
-/* 073310 7F03E7E0 8C420010 */   lw    $v0, 0x10($v0)
-/* 073314 7F03E7E4 8C43000C */  lw    $v1, 0xc($v0)
-/* 073318 7F03E7E8 5060000C */  beql  $v1, $zero, .L7F03E81C
-/* 07331C 7F03E7EC 8C420010 */   lw    $v0, 0x10($v0)
-/* 073320 7F03E7F0 8C790010 */  lw    $t9, 0x10($v1)
-/* 073324 7F03E7F4 53200009 */  beql  $t9, $zero, .L7F03E81C
-/* 073328 7F03E7F8 8C420010 */   lw    $v0, 0x10($v0)
-/* 07332C 7F03E7FC C46400B4 */  lwc1  $f4, 0xb4($v1)
-/* 073330 7F03E800 4600203E */  c.le.s $f4, $f0
-/* 073334 7F03E804 00000000 */  nop   
-/* 073338 7F03E808 45020004 */  bc1fl .L7F03E81C
-/* 07333C 7F03E80C 8C420010 */   lw    $v0, 0x10($v0)
-/* 073340 7F03E810 03E00008 */  jr    $ra
-/* 073344 7F03E814 00001025 */   move  $v0, $zero
 
-/* 073348 7F03E818 8C420010 */  lw    $v0, 0x10($v0)
-.L7F03E81C:
-/* 07334C 7F03E81C 5440FFEF */  bnezl $v0, .L7F03E7DC
-/* 073350 7F03E820 8C580004 */   lw    $t8, 4($v0)
-/* 073354 7F03E824 24020001 */  li    $v0, 1
-.L7F03E828:
-/* 073358 7F03E828 03E00008 */  jr    $ra
-/* 07335C 7F03E82C 00000000 */   nop   
-)
-#endif
 
 void sub_GAME_7F03E830(ObjectRecord* arg0)
 {
@@ -6514,7 +6461,7 @@ void sub_GAME_7F03F748(Model* model, f32* max, f32* min, s32 axis)
     {
         u32 type = node->Opcode & 0xFF;
 
-        if (type == MODELNODE_OPCODE_BOUNDINGBOXRECORD)
+        if (type == MODELNODE_OPCODE_BBOX)
         {
             struct ModelRoData_BoundingBoxRecord *bbox = &node->Data->BoundingBox;
             Mtxf *mtx = modelFindNodeMtx(model, node, 0);

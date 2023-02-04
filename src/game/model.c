@@ -285,25 +285,25 @@ glabel get_aircraft_obj_instance_controller
 
 
 
-void sub_GAME_7F06C3B4(Model *model, ModelNode *node,  ModelFileHeader *header)
+void modelAttachHead(Model *model, ModelNode *node,  ModelFileHeader *head)
 {
-    modelAttachHead(model,model->obj,node,header);
-    modelInitRwData(model,header->RootNode);
+    modelAttachPart(model,model->obj,node,head);
+    modelInitRwData(model,head->RootNode);
 }
 
-void set_aircraft_obj_inst_scale_to_zero(Model *objinstance)
+void clear_aircraft_model_obj(Model *objinstance)
 
 {
     objinstance->obj = NULL;
     return;
 }
 
-void set_80036084(s32 param_1) {
+void modelSetDistanceDisabled(s32 param_1) {
   g_ModelDistanceDisabled = param_1;
 }
 
 // PD: modelSetDistanceScale
-void set_float_80036088(f32 param_1) {
+void modelSetDistanceScale(f32 param_1) {
   g_ModelDistanceScale = param_1;
 }
 
@@ -351,6 +351,7 @@ void set_vtxallocator(s32 param_1) {
 
 
 #if defined(LEFTOVERDEBUG)
+//called after a debug print during failed model operation
 void return_null(void) {
   return;
 }
@@ -406,19 +407,19 @@ s32 modelFindNodeMtxIndex(ModelNode *node, s32 arg1)
     {
         switch (node->Opcode & 0xff)
         {
-            case MODELNODE_OPCODE_HEADERRECORD:
+            case MODELNODE_OPCODE_HEADER:
                 rodata1 = node->Data;
                 return (s16)rodata1->Header.ModelType;
 
-            case MODELNODE_OPCODE_GROUPRECORD:
+            case MODELNODE_OPCODE_GROUP:
                 rodata2 = node->Data;
                 return rodata2->Group.MatrixIDs[arg1 == 0x200 ? 2 : (arg1 == 0x100 ? 1 : 0)];
 
-            case MODELNODE_OPCODE_UNUSED_03:
+            case MODELNODE_OPCODE_OP03:
                 rodata3 = node->Data;
                 return rodata3->Group.MatrixIDs[arg1 == 0x200 ? 2 : (arg1 == 0x100 ? 1 : 0)];
 
-            case MODELNODE_OPCODE_GROUPSIMPLERECORD:
+            case MODELNODE_OPCODE_GROUPSIMPLE:
                 rodata4 = node->Data;
                 return rodata4->GroupSimple.Group1;
                 break;
@@ -503,47 +504,47 @@ union ModelRwData* modelGetNodeRwData(Model *Objinst, ModelNode *root)
 
     switch (root->Opcode & 0xff)
     {
-        case MODELNODE_OPCODE_HEADERRECORD:
+        case MODELNODE_OPCODE_HEADER:
         {
             index = root->Data->Header.RwDataIndex;
             break;
         }
-        case MODELNODE_OPCODE_DISPLAYLIST_COLLISIONRECORD:
+        case MODELNODE_OPCODE_DLCOLLISION:
         {
             index = root->Data->DisplayListCollisions.RwDataIndex;
             break;
         }
-        case MODELNODE_OPCODE_OP07RECORD:
+        case MODELNODE_OPCODE_OP07:
         {
             index = root->Data->Op07.RwDataIndex;
             break;
         }
-        case MODELNODE_OPCODE_LODRECORD:
+        case MODELNODE_OPCODE_LOD:
         {
             index = root->Data->LOD.RwDataIndex;
             break;
         }
-        case MODELNODE_OPCODE_SWITCHRECORD:
+        case MODELNODE_OPCODE_SWITCH:
         {
             index = root->Data->Switch.RwDataIndex;
             break;
         }
-        case MODELNODE_OPCODE_BSPRECORD:
+        case MODELNODE_OPCODE_BSP:
         {
             index = root->Data->BSP.RwDataIndex;
             break;
         }
-        case MODELNODE_OPCODE_OP11RECORD:
+        case MODELNODE_OPCODE_OP11:
         {
             index = root->Data->Op11.RwDataIndex;
             break;
         }
-        case MODELNODE_OPCODE_GUNFIRERECORD:
+        case MODELNODE_OPCODE_GUNFIRE:
         {
             index = root->Data->Gunfire.RwDataIndex;
             break;
         }
-        case MODELNODE_OPCODE_HEADPLACEHOLDERRECORD:
+        case MODELNODE_OPCODE_HEAD:
         {
             index = root->Data->HeadPlaceholder.RwDataIndex;
             break;
@@ -553,7 +554,7 @@ union ModelRwData* modelGetNodeRwData(Model *Objinst, ModelNode *root)
     while (root->Parent)
     {
         root = root->Parent;
-        if ((root->Opcode & 0xFF) == MODELNODE_OPCODE_HEADPLACEHOLDERRECORD)
+        if ((root->Opcode & 0xFF) == MODELNODE_OPCODE_HEAD)
         {
 			ModelRwData_HeadPlaceholderRecord *tmp = modelGetNodeRwData(Objinst, root);
             data = tmp->RwDatas;
@@ -582,7 +583,7 @@ void getpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#MATCH - 
     #endif
     switch (part->Opcode & 0xFF)
     {
-        case MODELNODE_OPCODE_HEADERRECORD:
+        case MODELNODE_OPCODE_HEADER:
         {
             struct modeldata_root *root = modelGetNodeRwData(objinst, part);
             offset->x                   = root->pos.x;
@@ -590,7 +591,7 @@ void getpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#MATCH - 
             offset->z                   = root->pos.z;
             break;
         }
-        case MODELNODE_OPCODE_GROUPRECORD:
+        case MODELNODE_OPCODE_GROUP:
         {
             ModelRoData_GroupRecord *prt = &part->Data->Group;
             offset->x                  = prt->Origin.x;
@@ -598,7 +599,7 @@ void getpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#MATCH - 
             offset->z                  = prt->Origin.z;
             break;
         }
-        case MODELNODE_OPCODE_UNUSED_03:
+        case MODELNODE_OPCODE_OP03:
         {
             ModelRoData_GroupSimpleRecord *prt = &part->Data->GroupSimple; //UNUSED at this time
             offset->x                        = prt->Origin.x;
@@ -606,7 +607,7 @@ void getpartoffset(Model *objinst, ModelNode *part, coord3d *offset) //#MATCH - 
             offset->z                        = prt->Origin.z;
             break;
         }
-        case MODELNODE_OPCODE_GROUPSIMPLERECORD:
+        case MODELNODE_OPCODE_GROUPSIMPLE:
         {
             ModelRoData_GroupSimpleRecord *prt = &part->Data->GroupSimple;
             offset->x                        = prt->Origin.x;
@@ -644,7 +645,7 @@ void setpartoffset(Model *model, ModelNode *node, coord3d *pos)
 #endif
     switch (node->Opcode & 0xff)
     {
-        case MODELNODE_OPCODE_HEADERRECORD:
+        case MODELNODE_OPCODE_HEADER:
             {
                 ModelRwData_HeaderRecord *rwdata = modelGetNodeRwData(model, node);
                 coord3d diff[1];
@@ -662,7 +663,7 @@ void setpartoffset(Model *model, ModelNode *node, coord3d *pos)
                 rwdata->unk4c.x += diff[0].x; rwdata->unk4c.z += diff[0].z;
             }
             break;
-        case MODELNODE_OPCODE_GROUPRECORD:
+        case MODELNODE_OPCODE_GROUP:
             {
                 ModelRoData_GroupRecord *rodata = &node->Data->Group;
                 rodata->Origin.x = pos->x;
@@ -670,7 +671,7 @@ void setpartoffset(Model *model, ModelNode *node, coord3d *pos)
                 rodata->Origin.z = pos->z;
             }
             break;
-        case MODELNODE_OPCODE_UNUSED_03:
+        case MODELNODE_OPCODE_OP03:
             {
                 ModelRoData_GroupRecord *rodata = &node->Data->Group;
                 rodata->Origin.x = pos->x;
@@ -678,7 +679,7 @@ void setpartoffset(Model *model, ModelNode *node, coord3d *pos)
                 rodata->Origin.z = pos->z;
             }
             break;
-        case MODELNODE_OPCODE_GROUPSIMPLERECORD:
+        case MODELNODE_OPCODE_GROUPSIMPLE:
             {
                 ModelRoData_GroupSimpleRecord *rodata = &node->Data->GroupSimple;
                 rodata->Origin.x = pos->x;
@@ -812,7 +813,7 @@ void setsubroty(Model *model, f32 angle)
     }
 #endif
     node = model->obj->RootNode;
-    if ((node->Opcode & 0xff) == MODELNODE_OPCODE_HEADERRECORD)
+    if ((node->Opcode & 0xff) == MODELNODE_OPCODE_HEADER)
     {
         ModelRwData_HeaderRecord *rwdata = modelGetNodeRwData(model, node);
         f32 diff = angle - rwdata->unk14;
@@ -864,52 +865,52 @@ f32 getjointsize(Model *model, ModelNode *node)
         {
             switch (node->Opcode & 0xFF)
             {
-                case MODELNODE_OPCODE_HEADERRECORD:
+                case MODELNODE_OPCODE_HEADER:
                 {
                     ModelRoData_HeaderRecord *rodata = &node->Data->Header;
                     return rodata->GroupsAsF32 * model->scale;
                 }
-                case MODELNODE_OPCODE_GROUPRECORD:
+                case MODELNODE_OPCODE_GROUP:
                 {
                     ModelRoData_GroupRecord *rodata = &node->Data->Group;
                     return rodata->BoundingVolumeRadius * model->scale;
                 }
-                case MODELNODE_OPCODE_UNUSED_03:
+                case MODELNODE_OPCODE_OP03:
                 {
                     ModelRoData_GroupRecord *rodata = &node->Data->Group;
                     return rodata->BoundingVolumeRadius * model->scale;
                 }
-                case MODELNODE_OPCODE_GROUPSIMPLERECORD:
+                case MODELNODE_OPCODE_GROUPSIMPLE:
                 {
                     ModelRoData_GroupSimpleRecord *rodata = &node->Data->GroupSimple;
                     return rodata->BoundingVolumeRadius * model->scale;
                 }
-                case MODELNODE_OPCODE_OP11RECORD:
+                case MODELNODE_OPCODE_OP11:
                 {
                     ModelRoData_Op11Record *rodata = &node->Data->Op11;
                     return rodata->BoundingVolumeRadius * model->scale;
                 }
-                case MODELNODE_OPCODE_GUNFIRERECORD:
+                case MODELNODE_OPCODE_GUNFIRE:
                 {
                     ModelRoData_GunfireRecord *rodata = &node->Data->Gunfire;
                     return rodata->Scale * model->scale;
                 }
-                case MODELNODE_OPCODE_SHADOWRECORD:
+                case MODELNODE_OPCODE_SHADOW:
                 {
                     ModelRoData_ShadowRecord *rodata = &node->Data->Shadow;
                     return rodata->Scale * model->scale;
                 }
-                case MODELNODE_OPCODE_OP14RECORD:
+                case MODELNODE_OPCODE_OP14:
                 {
                     ModelRoData_Op14Record *rodata = &node->Data->Op14;
                     return rodata->Scale * model->scale;
                 }
-                case MODELNODE_OPCODE_INTERLINKAGERECORD:
+                case MODELNODE_OPCODE_INTERLINK:
                 {
                     ModelRoData_InterlinkageRecord *rodata = &node->Data->Interlinkage;
                     return rodata->Scale * model->scale;
                 }
-                case MODELNODE_OPCODE_OP16RECORD:
+                case MODELNODE_OPCODE_OP16:
                 {
                     ModelNode_Op16Record *rodata = &node->Data->Op16;
                     return rodata->Scale * model->scale;
@@ -2965,31 +2966,31 @@ void modelUpdateRelationsQuick(Model *model, ModelNode *parent)
 
         switch (type)
         {
-            case MODELNODE_OPCODE_HEADERRECORD:
-            case MODELNODE_OPCODE_GROUPRECORD:
-            case MODELNODE_OPCODE_UNUSED_03:
-            case MODELNODE_OPCODE_OP11RECORD:
-            case MODELNODE_OPCODE_GUNFIRERECORD:
-            case MODELNODE_OPCODE_SHADOWRECORD:
-            case MODELNODE_OPCODE_OP14RECORD:
-            case MODELNODE_OPCODE_INTERLINKAGERECORD:
-            case MODELNODE_OPCODE_OP16RECORD:
-            case MODELNODE_OPCODE_GROUPSIMPLERECORD:
+            case MODELNODE_OPCODE_HEADER:
+            case MODELNODE_OPCODE_GROUP:
+            case MODELNODE_OPCODE_OP03:
+            case MODELNODE_OPCODE_OP11:
+            case MODELNODE_OPCODE_GUNFIRE:
+            case MODELNODE_OPCODE_SHADOW:
+            case MODELNODE_OPCODE_OP14:
+            case MODELNODE_OPCODE_INTERLINK:
+            case MODELNODE_OPCODE_OP16:
+            case MODELNODE_OPCODE_GROUPSIMPLE:
                 dochildren = FALSE;
                 break;
-            case MODELNODE_OPCODE_LODRECORD:
+            case MODELNODE_OPCODE_LOD:
                 modelUpdateDistanceRelations(model, node);
                 break;
-            case MODELNODE_OPCODE_BSPRECORD:
+            case MODELNODE_OPCODE_BSP:
                 modelUpdateReorderRelations(model, node);
                 break;
-            case MODELNODE_OPCODE_OP07RECORD:
+            case MODELNODE_OPCODE_OP07:
                 process_07_unknown(model, node);
                 break;
-            case MODELNODE_OPCODE_HEADPLACEHOLDERRECORD:
+            case MODELNODE_OPCODE_HEAD:
                 modelApplyHeadRelations(model, node);
                 break;
-            case MODELNODE_OPCODE_DISPLAYLIST_COLLISIONRECORD:
+            case MODELNODE_OPCODE_DLCOLLISION:
                 break;
         }
 
@@ -3031,28 +3032,28 @@ void sub_GAME_7F06EFC4(Model *model)
 
         switch (type)
         {
-            case MODELNODE_OPCODE_LODRECORD:
+            case MODELNODE_OPCODE_LOD:
                 modelUpdateDistanceRelations(model, node);
                 break;
 
-            case MODELNODE_OPCODE_BSPRECORD:
+            case MODELNODE_OPCODE_BSP:
                 modelUpdateReorderRelations(model, node);
                 break;
 
-            case MODELNODE_OPCODE_OP07RECORD:
+            case MODELNODE_OPCODE_OP07:
                 process_07_unknown(model, node);
                 break;
 
-            case MODELNODE_OPCODE_SWITCHRECORD:
+            case MODELNODE_OPCODE_SWITCH:
                 modelApplyToggleRelations(model, node);
                 break;
 
-            case MODELNODE_OPCODE_HEADPLACEHOLDERRECORD:
+            case MODELNODE_OPCODE_HEAD:
                 modelApplyHeadRelations(model, node);
                 break;
 
-            case MODELNODE_OPCODE_HEADERRECORD:
-            case MODELNODE_OPCODE_DISPLAYLIST_COLLISIONRECORD:
+            case MODELNODE_OPCODE_HEADER:
+            case MODELNODE_OPCODE_DLCOLLISION:
             default:
                 break;
         }
@@ -3088,43 +3089,43 @@ void modelUpdateMatrices(ModelRenderData *arg0, Model *model)
 
         switch (type)
         {
-            case MODELNODE_OPCODE_HEADERRECORD:
+            case MODELNODE_OPCODE_HEADER:
                 process_01_group_heading(arg0, model, node);
                 break;
 
-            case MODELNODE_OPCODE_GROUPRECORD:
+            case MODELNODE_OPCODE_GROUP:
                 process_02_position(arg0, model, node);
                 break;
 
-            case MODELNODE_OPCODE_UNUSED_03:
+            case MODELNODE_OPCODE_OP03:
                 process_03_unknown(arg0, model, node);
                 break;
 
-            case MODELNODE_OPCODE_GROUPSIMPLERECORD:
+            case MODELNODE_OPCODE_GROUPSIMPLE:
                 process_15_subposition(arg0, model, node);
                 break;
 
-            case MODELNODE_OPCODE_LODRECORD:
+            case MODELNODE_OPCODE_LOD:
                 modelUpdateDistanceRelations(model, node);
                 break;
 
-            case MODELNODE_OPCODE_BSPRECORD:
+            case MODELNODE_OPCODE_BSP:
                 modelUpdateReorderRelations(model, node);
                 break;
 
-            case MODELNODE_OPCODE_OP07RECORD:
+            case MODELNODE_OPCODE_OP07:
                 process_07_unknown(model, node);
                 break;
 
-            case MODELNODE_OPCODE_SWITCHRECORD:
+            case MODELNODE_OPCODE_SWITCH:
                 modelApplyToggleRelations(model, node);
                 break;
 
-            case MODELNODE_OPCODE_HEADPLACEHOLDERRECORD:
+            case MODELNODE_OPCODE_HEAD:
                 modelApplyHeadRelations(model, node);
                 break;
 
-            case MODELNODE_OPCODE_DISPLAYLIST_COLLISIONRECORD:
+            case MODELNODE_OPCODE_DLCOLLISION:
             default:
                 break;
         }
@@ -3312,7 +3313,7 @@ f32 sub_GAME_7F06F5C4(Model *model)
     f32 unk3c;
     ModelAnimation *modelAnimation;
 
-    unk3c = model->unk3c;
+    unk3c = model->endframe;
     if (unk3c >= 0.0f)
     {
         return unk3c;
@@ -3361,7 +3362,7 @@ f32 modelGetEffectiveAnimSpeed(Model *model) {
 
 
 #ifdef NONMATCHING
-s32 modelConstrainOrWrapAnimFrame(s32 frame, s16 animnum, f32 endframe)
+s32 modelConstrainOrWrapAnimFrame(s32 frame, ModelAnimation *anim, f32 endframe)
 {
     //s32 frame;
     //u16 animnum->unk4;
@@ -3402,6 +3403,7 @@ s32 modelConstrainOrWrapAnimFrame(s32 frame, s16 animnum, f32 endframe)
     return frame;
 }
 #else
+s32 modelConstrainOrWrapAnimFrame(s32 frame, ModelAnimation *anim, f32 endframe);
 GLOBAL_ASM(
 .text
 glabel modelConstrainOrWrapAnimFrame
@@ -3516,7 +3518,7 @@ void modelCopyAnimForMerge(Model *model, f32 arg1)
         model->unk78 = model->oldspeed;
         model->unk7C = model->timespeed;
         model->unk80 = model->elapsespeed;
-        model->unk6C = model->unk3C;
+        model->unk6C = model->endframe;
         if ((temp_a1->Opcode & 0xFF) == 1)
         {
             temp_v0_2                   = modelGetNodeRwData(model, temp_a1);
@@ -3664,7 +3666,7 @@ void modelSetAnimation2(Model *model, void *anim, s32 arg2, f32 startframe, f32 
     }
     model->anim  = anim;
     model->unk24 = arg2;
-    model->unk3C = -1.0f;
+    model->endframe = -1.0f;
     model->speed = half;
     model->timespeed = 0.0f;
     modelSetAnimFrame(startframe, model, startframe, anim);
@@ -4119,9 +4121,9 @@ void modelSetAnimEndFrame(Model *model, f32 endframe) {
     ModelAnimation *modelAnimation = model->anim;
     
     if ((modelAnimation != NULL) && (endframe < (modelAnimation->unk04 - 1))) {
-        model->unk3c = endframe;
+        model->endframe = endframe;
     } else {
-        model->unk3c = -1.0f;
+        model->endframe = -1.0f;
     }
 }
 
@@ -4196,201 +4198,78 @@ void sub_GAME_7F06FF5C(Model *model, s32 arg1) {
     model->unka0 = arg1;
 }
 
-#ifdef NONMATCHING
-void modelSetAnimFrame(void) {
 
+void modelSetAnimFrame(Model* model, f32 frame)
+{
+    s32 framea;
+    s32 frameb;
+    bool forwards;
+
+    framea = floorFloatToInt(frame);
+
+    forwards = (model->speed >= 0);
+    frameb = (forwards ? framea + 1 : framea - 1);
+
+    model->framea = modelConstrainOrWrapAnimFrame(framea, model->anim, model->endframe);
+    model->frameb = modelConstrainOrWrapAnimFrame(frameb, model->anim, model->endframe);
+
+    if (model->framea == model->frameb)
+    {
+        model->unk2c = 0.0f;
+        model->unk28 = model->framea;
+    }
+    else if (forwards)
+    {
+        f32 tmp = frame - framea;
+        model->unk2c = tmp;
+        model->unk28 = model->framea + tmp;
+    }
+    else
+    {
+        f32 tmp = 1.0f - (frame - (f32) frameb);
+        model->unk2c = tmp;
+        model->unk28 = model->frameb + (1.0f - tmp);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel modelSetAnimFrame
-/* 0A4A94 7F06FF64 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0A4A98 7F06FF68 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0A4A9C 7F06FF6C AFB00018 */  sw    $s0, 0x18($sp)
-/* 0A4AA0 7F06FF70 AFA50034 */  sw    $a1, 0x34($sp)
-/* 0A4AA4 7F06FF74 00808025 */  move  $s0, $a0
-/* 0A4AA8 7F06FF78 0FC170F6 */  jal   floorFloatToInt
-/* 0A4AAC 7F06FF7C C7AC0034 */   lwc1  $f12, 0x34($sp)
-/* 0A4AB0 7F06FF80 C6040040 */  lwc1  $f4, 0x40($s0)
-/* 0A4AB4 7F06FF84 44803000 */  mtc1  $zero, $f6
-/* 0A4AB8 7F06FF88 00402025 */  move  $a0, $v0
-/* 0A4ABC 7F06FF8C 00004025 */  move  $t0, $zero
-/* 0A4AC0 7F06FF90 4604303E */  c.le.s $f6, $f4
-/* 0A4AC4 7F06FF94 2447FFFF */  addiu $a3, $v0, -1
-/* 0A4AC8 7F06FF98 45000002 */  bc1f  .L7F06FFA4
-/* 0A4ACC 7F06FF9C 00000000 */   nop   
-/* 0A4AD0 7F06FFA0 24080001 */  li    $t0, 1
-.L7F06FFA4:
-/* 0A4AD4 7F06FFA4 11000003 */  beqz  $t0, .L7F06FFB4
-/* 0A4AD8 7F06FFA8 00000000 */   nop   
-/* 0A4ADC 7F06FFAC 10000001 */  b     .L7F06FFB4
-/* 0A4AE0 7F06FFB0 24470001 */   addiu $a3, $v0, 1
-.L7F06FFB4:
-/* 0A4AE4 7F06FFB4 8E050020 */  lw    $a1, 0x20($s0)
-/* 0A4AE8 7F06FFB8 8E06003C */  lw    $a2, 0x3c($s0)
-/* 0A4AEC 7F06FFBC AFA80024 */  sw    $t0, 0x24($sp)
-/* 0A4AF0 7F06FFC0 AFA70028 */  sw    $a3, 0x28($sp)
-/* 0A4AF4 7F06FFC4 0FC1BD9B */  jal   modelConstrainOrWrapAnimFrame
-/* 0A4AF8 7F06FFC8 AFA4002C */   sw    $a0, 0x2c($sp)
-/* 0A4AFC 7F06FFCC 8FA40028 */  lw    $a0, 0x28($sp)
-/* 0A4B00 7F06FFD0 A6020030 */  sh    $v0, 0x30($s0)
-/* 0A4B04 7F06FFD4 8E050020 */  lw    $a1, 0x20($s0)
-/* 0A4B08 7F06FFD8 0FC1BD9B */  jal   modelConstrainOrWrapAnimFrame
-/* 0A4B0C 7F06FFDC 8E06003C */   lw    $a2, 0x3c($s0)
-/* 0A4B10 7F06FFE0 8FA70028 */  lw    $a3, 0x28($sp)
-/* 0A4B14 7F06FFE4 8FA80024 */  lw    $t0, 0x24($sp)
-/* 0A4B18 7F06FFE8 A6020032 */  sh    $v0, 0x32($s0)
-/* 0A4B1C 7F06FFEC 86040032 */  lh    $a0, 0x32($s0)
-/* 0A4B20 7F06FFF0 86030030 */  lh    $v1, 0x30($s0)
-/* 0A4B24 7F06FFF4 14830007 */  bne   $a0, $v1, .L7F070014
-/* 0A4B28 7F06FFF8 00000000 */   nop   
-/* 0A4B2C 7F06FFFC 44835000 */  mtc1  $v1, $f10
-/* 0A4B30 7F070000 44804000 */  mtc1  $zero, $f8
-/* 0A4B34 7F070004 46805420 */  cvt.s.w $f16, $f10
-/* 0A4B38 7F070008 E608002C */  swc1  $f8, 0x2c($s0)
-/* 0A4B3C 7F07000C 1000001B */  b     .L7F07007C
-/* 0A4B40 7F070010 E6100028 */   swc1  $f16, 0x28($s0)
-.L7F070014:
-/* 0A4B44 7F070014 1100000B */  beqz  $t0, .L7F070044
-/* 0A4B48 7F070018 8FAE002C */   lw    $t6, 0x2c($sp)
-/* 0A4B4C 7F07001C 448E2000 */  mtc1  $t6, $f4
-/* 0A4B50 7F070020 44834000 */  mtc1  $v1, $f8
-/* 0A4B54 7F070024 C7B20034 */  lwc1  $f18, 0x34($sp)
-/* 0A4B58 7F070028 468021A0 */  cvt.s.w $f6, $f4
-/* 0A4B5C 7F07002C 468042A0 */  cvt.s.w $f10, $f8
-/* 0A4B60 7F070030 46069001 */  sub.s $f0, $f18, $f6
-/* 0A4B64 7F070034 46005400 */  add.s $f16, $f10, $f0
-/* 0A4B68 7F070038 E600002C */  swc1  $f0, 0x2c($s0)
-/* 0A4B6C 7F07003C 1000000F */  b     .L7F07007C
-/* 0A4B70 7F070040 E6100028 */   swc1  $f16, 0x28($s0)
-.L7F070044:
-/* 0A4B74 7F070044 44879000 */  mtc1  $a3, $f18
-/* 0A4B78 7F070048 C7A40034 */  lwc1  $f4, 0x34($sp)
-/* 0A4B7C 7F07004C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0A4B80 7F070050 468091A0 */  cvt.s.w $f6, $f18
-/* 0A4B84 7F070054 44811000 */  mtc1  $at, $f2
-/* 0A4B88 7F070058 44845000 */  mtc1  $a0, $f10
-/* 0A4B8C 7F07005C 00000000 */  nop   
-/* 0A4B90 7F070060 46805420 */  cvt.s.w $f16, $f10
-/* 0A4B94 7F070064 46062201 */  sub.s $f8, $f4, $f6
-/* 0A4B98 7F070068 46081001 */  sub.s $f0, $f2, $f8
-/* 0A4B9C 7F07006C 46001481 */  sub.s $f18, $f2, $f0
-/* 0A4BA0 7F070070 E600002C */  swc1  $f0, 0x2c($s0)
-/* 0A4BA4 7F070074 46128100 */  add.s $f4, $f16, $f18
-/* 0A4BA8 7F070078 E6040028 */  swc1  $f4, 0x28($s0)
-.L7F07007C:
-/* 0A4BAC 7F07007C 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0A4BB0 7F070080 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0A4BB4 7F070084 27BD0030 */  addiu $sp, $sp, 0x30
-/* 0A4BB8 7F070088 03E00008 */  jr    $ra
-/* 0A4BBC 7F07008C 00000000 */   nop   
-)
-#endif
 
 
+void modelSetAnimFrame2(Model* model, f32 frame1, f32 frame2)
+{
+    s32 framea;
+    s32 frameb;
+    bool forwards;
 
+    modelSetAnimFrame(model, frame1);
 
+    if (model->anim2 != NULL)
+    {
+        framea = floorFloatToInt(frame2);
 
-#ifdef NONMATCHING
-void modelSetAnimFrame2(void) {
+        forwards = (model->speed2 >= 0.0f);
+        frameb = forwards ? (framea + 1) : (framea - 1);
 
+        model->frame2a = modelConstrainOrWrapAnimFrame(framea, model->anim2, model->unk6c);
+        model->frame2b = modelConstrainOrWrapAnimFrame(frameb, model->anim2, model->unk6c);
+
+        if (model->frame2a == model->frame2b)
+        {
+            model->unk5c = 0.0f;
+            model->unk58 = model->frame2a;
+        }
+        else if (forwards != 0)
+        {
+            f32 tmp = frame2 - framea;
+            model->unk5c = tmp;
+            model->unk58 = model->frame2a + tmp;
+        }
+        else
+        {
+            f32 tmp = 1.0f - (frame2 - (f32) frameb);
+            model->unk5c = tmp;
+            model->unk58 = model->frame2b + (1.0f - tmp);
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel modelSetAnimFrame2
-/* 0A4BC0 7F070090 44856000 */  mtc1  $a1, $f12
-/* 0A4BC4 7F070094 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0A4BC8 7F070098 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0A4BCC 7F07009C AFB00018 */  sw    $s0, 0x18($sp)
-/* 0A4BD0 7F0700A0 44056000 */  mfc1  $a1, $f12
-/* 0A4BD4 7F0700A4 00808025 */  move  $s0, $a0
-/* 0A4BD8 7F0700A8 0FC1BFD9 */  jal   modelSetAnimFrame
-/* 0A4BDC 7F0700AC AFA60038 */   sw    $a2, 0x38($sp)
-/* 0A4BE0 7F0700B0 8E0E0054 */  lw    $t6, 0x54($s0)
-/* 0A4BE4 7F0700B4 51C00043 */  beql  $t6, $zero, .L7F0701C4
-/* 0A4BE8 7F0700B8 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 0A4BEC 7F0700BC 0FC170F6 */  jal   floorFloatToInt
-/* 0A4BF0 7F0700C0 C7AC0038 */   lwc1  $f12, 0x38($sp)
-/* 0A4BF4 7F0700C4 C6040070 */  lwc1  $f4, 0x70($s0)
-/* 0A4BF8 7F0700C8 44803000 */  mtc1  $zero, $f6
-/* 0A4BFC 7F0700CC 00402025 */  move  $a0, $v0
-/* 0A4C00 7F0700D0 00004025 */  move  $t0, $zero
-/* 0A4C04 7F0700D4 4604303E */  c.le.s $f6, $f4
-/* 0A4C08 7F0700D8 2447FFFF */  addiu $a3, $v0, -1
-/* 0A4C0C 7F0700DC 45000002 */  bc1f  .L7F0700E8
-/* 0A4C10 7F0700E0 00000000 */   nop   
-/* 0A4C14 7F0700E4 24080001 */  li    $t0, 1
-.L7F0700E8:
-/* 0A4C18 7F0700E8 11000003 */  beqz  $t0, .L7F0700F8
-/* 0A4C1C 7F0700EC 00000000 */   nop   
-/* 0A4C20 7F0700F0 10000001 */  b     .L7F0700F8
-/* 0A4C24 7F0700F4 24470001 */   addiu $a3, $v0, 1
-.L7F0700F8:
-/* 0A4C28 7F0700F8 8E050054 */  lw    $a1, 0x54($s0)
-/* 0A4C2C 7F0700FC 8E06006C */  lw    $a2, 0x6c($s0)
-/* 0A4C30 7F070100 AFA80024 */  sw    $t0, 0x24($sp)
-/* 0A4C34 7F070104 AFA70028 */  sw    $a3, 0x28($sp)
-/* 0A4C38 7F070108 0FC1BD9B */  jal   modelConstrainOrWrapAnimFrame
-/* 0A4C3C 7F07010C AFA4002C */   sw    $a0, 0x2c($sp)
-/* 0A4C40 7F070110 8FA40028 */  lw    $a0, 0x28($sp)
-/* 0A4C44 7F070114 A6020060 */  sh    $v0, 0x60($s0)
-/* 0A4C48 7F070118 8E050054 */  lw    $a1, 0x54($s0)
-/* 0A4C4C 7F07011C 0FC1BD9B */  jal   modelConstrainOrWrapAnimFrame
-/* 0A4C50 7F070120 8E06006C */   lw    $a2, 0x6c($s0)
-/* 0A4C54 7F070124 8FA70028 */  lw    $a3, 0x28($sp)
-/* 0A4C58 7F070128 8FA80024 */  lw    $t0, 0x24($sp)
-/* 0A4C5C 7F07012C A6020062 */  sh    $v0, 0x62($s0)
-/* 0A4C60 7F070130 86040062 */  lh    $a0, 0x62($s0)
-/* 0A4C64 7F070134 86030060 */  lh    $v1, 0x60($s0)
-/* 0A4C68 7F070138 14830007 */  bne   $a0, $v1, .L7F070158
-/* 0A4C6C 7F07013C 00000000 */   nop   
-/* 0A4C70 7F070140 44835000 */  mtc1  $v1, $f10
-/* 0A4C74 7F070144 44804000 */  mtc1  $zero, $f8
-/* 0A4C78 7F070148 46805420 */  cvt.s.w $f16, $f10
-/* 0A4C7C 7F07014C E608005C */  swc1  $f8, 0x5c($s0)
-/* 0A4C80 7F070150 1000001B */  b     .L7F0701C0
-/* 0A4C84 7F070154 E6100058 */   swc1  $f16, 0x58($s0)
-.L7F070158:
-/* 0A4C88 7F070158 1100000B */  beqz  $t0, .L7F070188
-/* 0A4C8C 7F07015C 8FAF002C */   lw    $t7, 0x2c($sp)
-/* 0A4C90 7F070160 448F2000 */  mtc1  $t7, $f4
-/* 0A4C94 7F070164 44834000 */  mtc1  $v1, $f8
-/* 0A4C98 7F070168 C7B20038 */  lwc1  $f18, 0x38($sp)
-/* 0A4C9C 7F07016C 468021A0 */  cvt.s.w $f6, $f4
-/* 0A4CA0 7F070170 468042A0 */  cvt.s.w $f10, $f8
-/* 0A4CA4 7F070174 46069001 */  sub.s $f0, $f18, $f6
-/* 0A4CA8 7F070178 46005400 */  add.s $f16, $f10, $f0
-/* 0A4CAC 7F07017C E600005C */  swc1  $f0, 0x5c($s0)
-/* 0A4CB0 7F070180 1000000F */  b     .L7F0701C0
-/* 0A4CB4 7F070184 E6100058 */   swc1  $f16, 0x58($s0)
-.L7F070188:
-/* 0A4CB8 7F070188 44879000 */  mtc1  $a3, $f18
-/* 0A4CBC 7F07018C C7A40038 */  lwc1  $f4, 0x38($sp)
-/* 0A4CC0 7F070190 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0A4CC4 7F070194 468091A0 */  cvt.s.w $f6, $f18
-/* 0A4CC8 7F070198 44811000 */  mtc1  $at, $f2
-/* 0A4CCC 7F07019C 44845000 */  mtc1  $a0, $f10
-/* 0A4CD0 7F0701A0 00000000 */  nop   
-/* 0A4CD4 7F0701A4 46805420 */  cvt.s.w $f16, $f10
-/* 0A4CD8 7F0701A8 46062201 */  sub.s $f8, $f4, $f6
-/* 0A4CDC 7F0701AC 46081001 */  sub.s $f0, $f2, $f8
-/* 0A4CE0 7F0701B0 46001481 */  sub.s $f18, $f2, $f0
-/* 0A4CE4 7F0701B4 E600005C */  swc1  $f0, 0x5c($s0)
-/* 0A4CE8 7F0701B8 46128100 */  add.s $f4, $f16, $f18
-/* 0A4CEC 7F0701BC E6040058 */  swc1  $f4, 0x58($s0)
-.L7F0701C0:
-/* 0A4CF0 7F0701C0 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F0701C4:
-/* 0A4CF4 7F0701C4 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0A4CF8 7F0701C8 27BD0030 */  addiu $sp, $sp, 0x30
-/* 0A4CFC 7F0701CC 03E00008 */  jr    $ra
-/* 0A4D00 7F0701D0 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 /**
@@ -7532,60 +7411,60 @@ void sub_GAME_7F074524(Gfx *param_1,struct Model *param_2, struct ModelNode *par
 void sub_GAME_7F074534(ModelRenderData* data, Model* model, ModelNode* node) {
     u32 id = node->Opcode & 0xFF;
     switch (id) {
-    case MODELNODE_OPCODE_LODRECORD:
+    case MODELNODE_OPCODE_LOD:
         modelApplyDistanceRelations(model, node);
         return;
-    case MODELNODE_OPCODE_SWITCHRECORD:
+    case MODELNODE_OPCODE_SWITCH:
         modelApplyToggleRelations(model, node);
         return;
-    case MODELNODE_OPCODE_HEADPLACEHOLDERRECORD:
+    case MODELNODE_OPCODE_HEAD:
         modelApplyHeadRelations(model, node);
         return;
-    case MODELNODE_OPCODE_BSPRECORD:
+    case MODELNODE_OPCODE_BSP:
         modelApplyReorderRelations(model, node);
         return;
-    case MODELNODE_OPCODE_OP11RECORD:
+    case MODELNODE_OPCODE_OP11:
         sub_GAME_7F0737FC(data, model, node);
         return;
-    case MODELNODE_OPCODE_GUNFIRERECORD:
+    case MODELNODE_OPCODE_GUNFIRE:
         dogfnegx(data, model, node);
         return;
-    case MODELNODE_OPCODE_SHADOWRECORD:
+    case MODELNODE_OPCODE_SHADOW:
         doshadow(data, model, node);
         return;
-    case MODELNODE_OPCODE_BOUNDINGBOXRECORD:
+    case MODELNODE_OPCODE_BBOX:
         sub_GAME_7F074514(data, model, node);
         return;
-    case MODELNODE_OPCODE_UNUSED_17:
+    case MODELNODE_OPCODE_OP17:
         sub_GAME_7F074524(data, model, node);
         return;
-    case MODELNODE_OPCODE_DISPLAYLISTRECORD:
+    case MODELNODE_OPCODE_DL:
         modelRenderNodeGundl(data, node);
         return;
-    case MODELNODE_OPCODE_DISPLAYLIST_COLLISIONRECORD:
+    case MODELNODE_OPCODE_DLCOLLISION:
         modelRenderNodeDl(data, model, node);
         return;
-    case MODELNODE_OPCODE_UNUSED_20:
+    case MODELNODE_OPCODE_OP20:
         sub_GAME_7F072C10(data, model, node);
         return;
-    case MODELNODE_OPCODE_DISPLAYLISTPRIMARYRECORD:
+    case MODELNODE_OPCODE_DLPRIMARY:
         dorottex(data, node);
         return;
-    case MODELNODE_OPCODE_UNUSED_05:
+    case MODELNODE_OPCODE_OP05:
         sub_GAME_7F07306C(data, model, node);
         return;
-    case MODELNODE_OPCODE_OP07RECORD:
+    case MODELNODE_OPCODE_OP07:
         dotube(data, model, node);
         return;
-    case MODELNODE_OPCODE_UNUSED_06:
+    case MODELNODE_OPCODE_OP06:
         sub_GAME_7F0737EC(data,model,node);
         return;
-    case MODELNODE_OPCODE_HEADERRECORD:
-    case MODELNODE_OPCODE_GROUPRECORD:
-    case MODELNODE_OPCODE_UNUSED_03:
-    case MODELNODE_OPCODE_OP14RECORD:
-    case MODELNODE_OPCODE_INTERLINKAGERECORD:
-    case MODELNODE_OPCODE_OP16RECORD:
+    case MODELNODE_OPCODE_HEADER:
+    case MODELNODE_OPCODE_GROUP:
+    case MODELNODE_OPCODE_OP03:
+    case MODELNODE_OPCODE_OP14:
+    case MODELNODE_OPCODE_INTERLINK:
+    case MODELNODE_OPCODE_OP16:
     default:
         return;
     }
@@ -8804,28 +8683,28 @@ void modelPromoteNodeOffsetsToPointers(ModelNode *node, u32 vma, u32 fileramaddr
 
         switch (type)
         {
-            case MODELNODE_OPCODE_HEADERRECORD:
+            case MODELNODE_OPCODE_HEADER:
                 {
                     ModelRoData_HeaderRecord* rodata = &node->Data->Header;
                     PROMOTE(rodata->FirstGroup);
                     break;
                 }
 
-            case MODELNODE_OPCODE_GROUPRECORD:
+            case MODELNODE_OPCODE_GROUP:
                 {
                     ModelRoData_GroupRecord* rodata = &node->Data->Group;
                     PROMOTE(rodata->ChildGroup);
                     break;
                 }
 
-            case MODELNODE_OPCODE_UNUSED_03:
+            case MODELNODE_OPCODE_OP03:
                 {
                     ModelRoData_GroupRecord* rodata = &node->Data->Group;
                     PROMOTE(rodata->ChildGroup);
                     break;
                 }
 
-            case MODELNODE_OPCODE_DISPLAYLISTRECORD:
+            case MODELNODE_OPCODE_DL:
                 {
                     ModelRoData_DisplayListRecord* rodata = &node->Data->DisplayList;
                     PROMOTE(rodata->Vertices);
@@ -8833,7 +8712,7 @@ void modelPromoteNodeOffsetsToPointers(ModelNode *node, u32 vma, u32 fileramaddr
                     break;
                 }
 
-            case MODELNODE_OPCODE_DISPLAYLIST_COLLISIONRECORD:
+            case MODELNODE_OPCODE_DLCOLLISION:
                 {
                     ModelRoData_DisplayList_CollisionRecord* rodata = &node->Data->DisplayListCollisions;
                     PROMOTE(rodata->Vertices);
@@ -8847,14 +8726,14 @@ void modelPromoteNodeOffsetsToPointers(ModelNode *node, u32 vma, u32 fileramaddr
                     break;
                 }
 
-            case MODELNODE_OPCODE_UNUSED_20:
+            case MODELNODE_OPCODE_OP20:
                 {
                     ModelRoData_HeaderRecord* rodata = &node->Data->Header;
                     PROMOTE(rodata->FirstGroup);
                     break;
                 }
 
-            case MODELNODE_OPCODE_UNUSED_05:
+            case MODELNODE_OPCODE_OP05:
                 {
                     ModelRoData_Op05Record* rodata = &node->Data->Op05;
 
@@ -8871,7 +8750,7 @@ void modelPromoteNodeOffsetsToPointers(ModelNode *node, u32 vma, u32 fileramaddr
                     break;
                 }
 
-            case MODELNODE_OPCODE_OP07RECORD:
+            case MODELNODE_OPCODE_OP07:
                 {
                     ModelRoData_Op07Record* rodata = &node->Data->Op07;
                     PROMOTE(rodata->unk00);
@@ -8890,14 +8769,14 @@ void modelPromoteNodeOffsetsToPointers(ModelNode *node, u32 vma, u32 fileramaddr
                     break;
                 }
 
-            case MODELNODE_OPCODE_UNUSED_06:
+            case MODELNODE_OPCODE_OP06:
                 {
                     ModelRoData_Op06Record* rodata = &node->Data->Op06;
                     rodata->BaseAddr = (void *)fileramaddr;
                     break;
                 }
 
-            case MODELNODE_OPCODE_LODRECORD:
+            case MODELNODE_OPCODE_LOD:
                 {
                     ModelRoData_LODRecord* rodata = &node->Data->LOD;
                     PROMOTE(rodata->Affects);
@@ -8905,14 +8784,14 @@ void modelPromoteNodeOffsetsToPointers(ModelNode *node, u32 vma, u32 fileramaddr
                     break;
                 }
 
-            case MODELNODE_OPCODE_SWITCHRECORD:
+            case MODELNODE_OPCODE_SWITCH:
                 {
                     ModelRoData_SwitchRecord* rodata = &node->Data->Switch;
                     PROMOTE(rodata->Controls);
                     break;
                 }
 
-            case MODELNODE_OPCODE_BSPRECORD:
+            case MODELNODE_OPCODE_BSP:
                 {
                     ModelRoData_BSPRecord* rodata = &node->Data->BSP;
                     PROMOTE(rodata->leftChild);
@@ -8920,14 +8799,14 @@ void modelPromoteNodeOffsetsToPointers(ModelNode *node, u32 vma, u32 fileramaddr
                     break;
                 }
 
-            case MODELNODE_OPCODE_UNUSED_17:
+            case MODELNODE_OPCODE_OP17:
                 {
                     ModelRoData_GroupRecord* rodata = &node->Data->Group;
                     PROMOTE(rodata->ChildGroup);
                     break;
                 }
 
-            case MODELNODE_OPCODE_OP11RECORD:
+            case MODELNODE_OPCODE_OP11:
                 {
                     ModelRoData_Op11Record* rodata = &node->Data->Op11;
                     PROMOTE(rodata->unk0c[15]);
@@ -8935,7 +8814,7 @@ void modelPromoteNodeOffsetsToPointers(ModelNode *node, u32 vma, u32 fileramaddr
                     break;
                 }
 
-            case MODELNODE_OPCODE_GUNFIRERECORD:
+            case MODELNODE_OPCODE_GUNFIRE:
                 {
                     ModelRoData_GunfireRecord* rodata = &node->Data->Gunfire;
                     PROMOTE(rodata->Image);
@@ -8943,7 +8822,7 @@ void modelPromoteNodeOffsetsToPointers(ModelNode *node, u32 vma, u32 fileramaddr
                     break;
                 }
 
-            case MODELNODE_OPCODE_SHADOWRECORD:
+            case MODELNODE_OPCODE_SHADOW:
                 {
                     ModelRoData_ShadowRecord* rodata = &node->Data->Shadow;
                     PROMOTE(rodata->image);
@@ -8952,7 +8831,7 @@ void modelPromoteNodeOffsetsToPointers(ModelNode *node, u32 vma, u32 fileramaddr
                     break;
                 }
 
-            case MODELNODE_OPCODE_DISPLAYLISTPRIMARYRECORD:
+            case MODELNODE_OPCODE_DLPRIMARY:
                 {
                     ModelRoData_DisplayListPrimaryRecord* rodata = &node->Data->DisplayListPrimary;
                     PROMOTE(rodata->Vertices);
@@ -9055,7 +8934,7 @@ s32 modelCalculateRwDataIndexes(ModelNode *basenode)
 
         switch (type)
         {
-            case MODELNODE_OPCODE_HEADERRECORD:
+            case MODELNODE_OPCODE_HEADER:
                 if (1)
                 {
                     ModelRoData_HeaderRecord *rodata = &node->Data->Header;
@@ -9063,7 +8942,7 @@ s32 modelCalculateRwDataIndexes(ModelNode *basenode)
                     len += sizeof(struct ModelRwData_HeaderRecord) / 4;
                     break;
                 }
-            case MODELNODE_OPCODE_OP07RECORD:
+            case MODELNODE_OPCODE_OP07:
                 if (1)
                 {
                     ModelRoData_Op07Record *rodata = &node->Data->Op07;
@@ -9071,7 +8950,7 @@ s32 modelCalculateRwDataIndexes(ModelNode *basenode)
                     len += sizeof(struct ModelRwData_Op07Record) / 4;
                     break;
                 }
-            case MODELNODE_OPCODE_LODRECORD:
+            case MODELNODE_OPCODE_LOD:
                 if (1)
                 {
                     ModelRoData_LODRecord *rodata = &node->Data->LOD;
@@ -9080,7 +8959,7 @@ s32 modelCalculateRwDataIndexes(ModelNode *basenode)
                     node->Child = rodata->Affects;
                     break;
                 }
-            case MODELNODE_OPCODE_SWITCHRECORD:
+            case MODELNODE_OPCODE_SWITCH:
                 if (1)
                 {
                     ModelRoData_SwitchRecord *rodata = &node->Data->Switch;
@@ -9089,7 +8968,7 @@ s32 modelCalculateRwDataIndexes(ModelNode *basenode)
                     node->Child = rodata->Controls;
                     break;
                 }
-            case MODELNODE_OPCODE_HEADPLACEHOLDERRECORD:
+            case MODELNODE_OPCODE_HEAD:
                 if (1)
                 {
                     ModelRoData_HeadPlaceholderRecord *rodata = &node->Data->HeadPlaceholder;
@@ -9098,7 +8977,7 @@ s32 modelCalculateRwDataIndexes(ModelNode *basenode)
                     node->Child = NULL;
                     break;
                 }
-            case MODELNODE_OPCODE_BSPRECORD:
+            case MODELNODE_OPCODE_BSP:
                 if (1)
                 {
                     ModelRoData_BSPRecord *rodata = &node->Data->BSP;
@@ -9107,7 +8986,7 @@ s32 modelCalculateRwDataIndexes(ModelNode *basenode)
                     modelApplyReorderRelationsByArg(node, FALSE);
                     break;
                 }
-            case MODELNODE_OPCODE_OP11RECORD:
+            case MODELNODE_OPCODE_OP11:
                 if (1)
                 {
                     ModelRoData_Op11Record *rodata = &node->Data->Op11;
@@ -9115,7 +8994,7 @@ s32 modelCalculateRwDataIndexes(ModelNode *basenode)
                     len += sizeof(struct ModelRwData_Op11Record) / 4;
                     break;
                 }
-            case MODELNODE_OPCODE_GUNFIRERECORD:
+            case MODELNODE_OPCODE_GUNFIRE:
                 if (1)
                 {
                     ModelRoData_GunfireRecord *rodata = &node->Data->Gunfire;
@@ -9123,7 +9002,7 @@ s32 modelCalculateRwDataIndexes(ModelNode *basenode)
                     len += sizeof(struct ModelRwData_GunfireRecord) / 4;
                     break;
                 }
-            case MODELNODE_OPCODE_DISPLAYLIST_COLLISIONRECORD:
+            case MODELNODE_OPCODE_DLCOLLISION:
                 if (1)
                 {
                     ModelRoData_DisplayList_CollisionRecord *rodata = &node->Data->DisplayListCollisions;
@@ -9183,7 +9062,7 @@ void modelInitRwData(Model *model, ModelNode *startnode)
 
         switch (type)
         {
-            case MODELNODE_OPCODE_HEADERRECORD:
+            case MODELNODE_OPCODE_HEADER:
                 if (1)
                 {
                     ModelRwData_HeaderRecord* rwdata = &modelGetNodeRwData(model, node)->Header;
@@ -9218,7 +9097,7 @@ void modelInitRwData(Model *model, ModelNode *startnode)
                     break;
                 }
 
-            case MODELNODE_OPCODE_OP07RECORD:
+            case MODELNODE_OPCODE_OP07:
                 if (1)
                 {
                     ModelRwData_Op07Record* rwdata = &modelGetNodeRwData(model, node)->Op07;
@@ -9227,7 +9106,7 @@ void modelInitRwData(Model *model, ModelNode *startnode)
                 }
 
 
-            case MODELNODE_OPCODE_LODRECORD:
+            case MODELNODE_OPCODE_LOD:
                 if (1)
                 {
                     ModelRoData_LODRecord* rodata = &node->Data->LOD;
@@ -9237,7 +9116,7 @@ void modelInitRwData(Model *model, ModelNode *startnode)
                     break;
                 }
 
-            case MODELNODE_OPCODE_SWITCHRECORD:
+            case MODELNODE_OPCODE_SWITCH:
                 if (1)
                 {
                     ModelRoData_SwitchRecord* rodata = &node->Data->Switch;
@@ -9247,7 +9126,7 @@ void modelInitRwData(Model *model, ModelNode *startnode)
                     break;
                 }
 
-            case MODELNODE_OPCODE_HEADPLACEHOLDERRECORD:
+            case MODELNODE_OPCODE_HEAD:
                 if (1)
                 {
                     ModelRwData_HeadPlaceholderRecord* rwdata = &modelGetNodeRwData(model, node)->HeadPlaceholder;
@@ -9256,7 +9135,7 @@ void modelInitRwData(Model *model, ModelNode *startnode)
                     break;
                 }
 
-            case MODELNODE_OPCODE_BSPRECORD:
+            case MODELNODE_OPCODE_BSP:
                 if (1)
                 {
                     ModelRwData_BSPRecord* rwdata = &modelGetNodeRwData(model, node)->BSP;
@@ -9265,7 +9144,7 @@ void modelInitRwData(Model *model, ModelNode *startnode)
                     break;
                 }
 
-            case MODELNODE_OPCODE_OP11RECORD:
+            case MODELNODE_OPCODE_OP11:
                 if (1)
                 {
                     ModelRwData_Op11Record* rwdata = &modelGetNodeRwData(model, node)->Op11;
@@ -9273,7 +9152,7 @@ void modelInitRwData(Model *model, ModelNode *startnode)
                     break;
                 }
 
-            case MODELNODE_OPCODE_GUNFIRERECORD:
+            case MODELNODE_OPCODE_GUNFIRE:
                 if (1)
                 {
                     ModelRwData_GunfireRecord* rwdata = &modelGetNodeRwData(model, node)->Gunfire;
@@ -9281,7 +9160,7 @@ void modelInitRwData(Model *model, ModelNode *startnode)
                     break;
                 }
 
-            case MODELNODE_OPCODE_DISPLAYLIST_COLLISIONRECORD:
+            case MODELNODE_OPCODE_DLCOLLISION:
                 if (1)
                 {
                     ModelRoData_DisplayList_CollisionRecord* rodata = &node->Data->DisplayListCollisions;
@@ -9352,16 +9231,16 @@ void animInit(struct Model *objinst, struct ModelFileHeader *header, u32 *data)
     objinst->unk88 = 0.0f;
     objinst->unkb0 = 0.0f;
     objinst->speed = 1.0f;
-    objinst->unk70 = 1.0f;
+    objinst->speed2 = 1.0f;
     objinst->playspeed = 1.0f;
     objinst->unkb8 = 1.0f;
-    objinst->unk3c = -1.0f;
+    objinst->endframe = -1.0f;
     objinst->unk6c = -1.0f;
 }
 
 
 // PD: model00023108
-void modelAttachHead(Model *pmodel, ModelFileHeader *pmodeldef, ModelNode *pnode, ModelFileHeader *cmodeldef)
+void modelAttachPart(Model *pmodel, ModelFileHeader *pmodeldef, ModelNode *pnode, ModelFileHeader *cmodeldef)
 {
     ModelRwData_HeadPlaceholderRecord *rwdata = modelGetNodeRwData(pmodel, pnode);
     ModelNode *node;
@@ -9412,7 +9291,7 @@ void modelIterateDisplayLists(ModelFileHeader *fileheader, ModelNode **nodeptr, 
 
         switch (type)
         {
-            case MODELNODE_OPCODE_DISPLAYLISTRECORD:
+            case MODELNODE_OPCODE_DL:
                 rodata = node->Data;
 
                 if (node != *nodeptr)
@@ -9425,7 +9304,7 @@ void modelIterateDisplayLists(ModelFileHeader *fileheader, ModelNode **nodeptr, 
                 }
                 break;
 
-            case MODELNODE_OPCODE_DISPLAYLIST_COLLISIONRECORD:
+            case MODELNODE_OPCODE_DLCOLLISION:
                 rodata = node->Data;
 
                 if (node != *nodeptr)
@@ -9438,7 +9317,7 @@ void modelIterateDisplayLists(ModelFileHeader *fileheader, ModelNode **nodeptr, 
                 }
                 break;
 
-            case MODELNODE_OPCODE_DISPLAYLISTPRIMARYRECORD:
+            case MODELNODE_OPCODE_DLPRIMARY:
                 rodata = node->Data;
 
                 if (node != *nodeptr)
@@ -9447,17 +9326,17 @@ void modelIterateDisplayLists(ModelFileHeader *fileheader, ModelNode **nodeptr, 
                 }
                 break;
 
-            case MODELNODE_OPCODE_LODRECORD:
+            case MODELNODE_OPCODE_LOD:
                 rodata = node->Data;
                 node->Child = rodata->LOD.Affects;
                 break;
 
-            case MODELNODE_OPCODE_SWITCHRECORD:
+            case MODELNODE_OPCODE_SWITCH:
                 rodata = node->Data;
                 node->Child = rodata->Switch.Controls;
                 break;
 
-            case MODELNODE_OPCODE_BSPRECORD:
+            case MODELNODE_OPCODE_BSP:
                 modelApplyReorderRelationsByArg(node, TRUE);
                 break;
         }
@@ -9494,7 +9373,7 @@ void modelNodeReplaceGdl(u32 arg0, ModelNode *node, Gfx *find, Gfx *replacement)
     u32 type = node->Opcode & 0xff;
 
     switch (type) {
-        case MODELNODE_OPCODE_DISPLAYLISTRECORD:
+        case MODELNODE_OPCODE_DL:
             rodata = node->Data;
 
             if (rodata->DisplayList.Primary == find)
@@ -9510,7 +9389,7 @@ void modelNodeReplaceGdl(u32 arg0, ModelNode *node, Gfx *find, Gfx *replacement)
             }
             break;
 
-        case MODELNODE_OPCODE_DISPLAYLIST_COLLISIONRECORD:
+        case MODELNODE_OPCODE_DLCOLLISION:
             rodata = node->Data;
 
             if (rodata->DisplayListCollisions.Primary == find)
@@ -9526,7 +9405,7 @@ void modelNodeReplaceGdl(u32 arg0, ModelNode *node, Gfx *find, Gfx *replacement)
             }
             break;
 
-        case MODELNODE_OPCODE_DISPLAYLISTPRIMARYRECORD:
+        case MODELNODE_OPCODE_DLPRIMARY:
             rodata = node->Data;
 
             if (rodata->DisplayListPrimary.Primary == find)

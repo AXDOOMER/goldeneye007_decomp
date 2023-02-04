@@ -119,7 +119,7 @@ glabel sub_GAME_7F0762E0
 /* 0AAF90 7F076460 2CEE0001 */  sltiu $t6, $a3, 1
 /* 0AAF94 7F076464 01C03825 */  move  $a3, $t6
 /* 0AAF98 7F076468 01A03025 */  move  $a2, $t5
-/* 0AAF9C 7F07646C 0FC2F44E */  jal   sub_GAME_7F0BD138
+/* 0AAF9C 7F07646C 0FC2F44E */  jal   fileSetSize
 /* 0AAFA0 7F076470 8FA40050 */   lw    $a0, 0x50($sp)
 .L7F076474:
 /* 0AAFA4 7F076474 8FBF003C */  lw    $ra, 0x3c($sp)

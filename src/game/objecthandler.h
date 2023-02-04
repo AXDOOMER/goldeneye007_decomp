@@ -28,7 +28,7 @@ extern struct bondstruct_unk_op07_related D_800360C4[];
 extern Vertex D_800363E0;
 
 // arg0 unknown pointer
-void modelSetAnimFrame2(void *arg0, f32 arg1, f32 arg2);
+void modelSetAnimFrame2(Model* model, f32 frame1, f32 frame2);
 void modelSetAnimPlaySpeed(Model *, f32, f32);
 void sub_GAME_7F06FF5C(Model *model, s32 arg1);
 void modelSetScale(Model*, f32);
@@ -64,7 +64,7 @@ void fileLoad(ModelFileHeader *header,char *name);
 void load_object_into_memory_unused_maybe(ModelFileHeader *header,int *recallstring,int *targetloc,int sizeleft);
 void modelCalculateRwDataLen(ModelFileHeader *objheader);
 Model *get_aircraft_obj_instance_controller(ModelFileHeader *);
-void sub_GAME_7F06C3B4(Model *, ModelNode*,  ModelFileHeader *);
+void modelAttachHead(Model *, ModelNode*,  ModelFileHeader *);
 Mtxf *getsubmatrix(Model *objinst);
 
 // tentative signature
@@ -98,7 +98,7 @@ void load_object_fill_header(struct ModelFileHeader *objheader, u8 *name, void *
 void* get_obj_instance_controller_for_header(struct ModelFileHeader* arg0);
 void subdraw(s32 arg0, struct Model *);
 void sub_GAME_7F06EFC4(struct Model *);
-void modelAttachHead(Model *pmodel, ModelFileHeader *pmodeldef, ModelNode *pnode, ModelFileHeader *cmodeldef);
+void modelAttachPart(Model *pmodel, ModelFileHeader *pmodeldef, ModelNode *pnode, ModelFileHeader *cmodeldef);
 void modelInitRwData(Model *model, ModelNode *startnode);
 
 #ifndef VERSION_EU
