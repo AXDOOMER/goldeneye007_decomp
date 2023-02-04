@@ -1523,55 +1523,18 @@ glabel sub_GAME_7F040754
 
 
 
+// Unreferenced function (unused)
+void sub_GAME_7F0407F4(ObjectRecord* arg0, coord3d* arg1, Mtxf* arg2, StandTile* arg3)
+{
+    u32 a; // Adds 4 bytes to the stack so it matches. Could be anything 4 bytes long.
+    struct ModelRoData_BoundingBoxRecord *modelunk = sub_GAME_7F03FFF8(arg0->model->obj);
 
-#ifdef NONMATCHING
-void sub_GAME_7F0407F4(void) {
+    arg1->y = stanGetPositionYValue(arg3, arg1->x, arg1->z) + 4.0f;
+    arg1->y = arg1->y - chrpropSumMatrixPosY(modelunk, arg2);
 
+    sub_GAME_7F040754(arg0, arg1, arg2, arg3);
+    chrobjCollisionRelated(arg0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0407F4
-/* 075324 7F0407F4 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 075328 7F0407F8 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 07532C 7F0407FC AFB00018 */  sw    $s0, 0x18($sp)
-/* 075330 7F040800 AFA40028 */  sw    $a0, 0x28($sp)
-/* 075334 7F040804 AFA60030 */  sw    $a2, 0x30($sp)
-/* 075338 7F040808 AFA70034 */  sw    $a3, 0x34($sp)
-/* 07533C 7F04080C 8C8F0014 */  lw    $t7, 0x14($a0)
-/* 075340 7F040810 00A08025 */  move  $s0, $a1
-/* 075344 7F040814 0FC0FFFE */  jal   sub_GAME_7F03FFF8
-/* 075348 7F040818 8DE40008 */   lw    $a0, 8($t7)
-/* 07534C 7F04081C AFA20020 */  sw    $v0, 0x20($sp)
-/* 075350 7F040820 8E060008 */  lw    $a2, 8($s0)
-/* 075354 7F040824 8E050000 */  lw    $a1, ($s0)
-/* 075358 7F040828 0FC2CA5C */  jal   stanGetPositionYValue
-/* 07535C 7F04082C 8FA40034 */   lw    $a0, 0x34($sp)
-/* 075360 7F040830 3C014080 */  li    $at, 0x40800000 # 4.000000
-/* 075364 7F040834 44812000 */  mtc1  $at, $f4
-/* 075368 7F040838 00000000 */  nop   
-/* 07536C 7F04083C 46040180 */  add.s $f6, $f0, $f4
-/* 075370 7F040840 E6060004 */  swc1  $f6, 4($s0)
-/* 075374 7F040844 8FA50030 */  lw    $a1, 0x30($sp)
-/* 075378 7F040848 0FC0FA6F */  jal   chrpropSumMatrixPosY
-/* 07537C 7F04084C 8FA40020 */   lw    $a0, 0x20($sp)
-/* 075380 7F040850 C6080004 */  lwc1  $f8, 4($s0)
-/* 075384 7F040854 02002825 */  move  $a1, $s0
-/* 075388 7F040858 46004281 */  sub.s $f10, $f8, $f0
-/* 07538C 7F04085C E60A0004 */  swc1  $f10, 4($s0)
-/* 075390 7F040860 8FA70034 */  lw    $a3, 0x34($sp)
-/* 075394 7F040864 8FA60030 */  lw    $a2, 0x30($sp)
-/* 075398 7F040868 0FC101D5 */  jal   sub_GAME_7F040754
-/* 07539C 7F04086C 8FA40028 */   lw    $a0, 0x28($sp)
-/* 0753A0 7F040870 0FC10121 */  jal   chrobjCollisionRelated
-/* 0753A4 7F040874 8FA40028 */   lw    $a0, 0x28($sp)
-/* 0753A8 7F040878 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0753AC 7F04087C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0753B0 7F040880 27BD0028 */  addiu $sp, $sp, 0x28
-/* 0753B4 7F040884 03E00008 */  jr    $ra
-/* 0753B8 7F040888 00000000 */   nop   
-)
-#endif
 
 
 
