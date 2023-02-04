@@ -689,7 +689,7 @@ void bondviewIntroCameraTextTick(void);
 void bondviewUpperTextWindowTimerTick(void);
 void sub_GAME_7F07DEFC(void);
 void MoveBond(s8 arg0, s8 arg1, u16 arg2, u16 arg3);
-void controller_gameplay_interaction(s8 arg0, s8 arg1, u16 arg2, u16 arg3);
+void bondviewProcessInput(s8 arg0, s8 arg1, u16 arg2, u16 arg3);
 void bondviewPlayerTickDamageAndHealth(void);
 void bondviewPlayerTickExplode(void);
 void bondviewPlayerStopAudioForPause(void);
@@ -14053,7 +14053,7 @@ void bondviewApplyVertaTheta(void)
  * EU address 7F081A18.
  * Perfect Dark method bmoveProcessInput.
 */
-void controller_gameplay_interaction(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
+void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
 {
     struct MoveData moveData; // sp120
     
@@ -15709,7 +15709,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
     currentPlayerSetField00(0);
     bondviewPlayerTickDamageAndHealth();
     bondviewPlayerTickExplode();
-    controller_gameplay_interaction(stick_x, stick_y, *(u16*)&arg2, *(u16*)&arg3);
+    bondviewProcessInput(stick_x, stick_y, *(u16*)&arg2, *(u16*)&arg3);
 
     if (lvlGetControlsLockedFlag())
     {
@@ -16961,7 +16961,7 @@ void sub_GAME_7F086990(s32 arg0, s32 arg1, ? arg2, ? arg_unalignedA, ? arg3, ? a
     sp40.unk8 = (?32) D_80036824.unk8;
     bondviewPlayerTickDamageAndHealth();
     bondviewPlayerTickExplode();
-    controller_gameplay_interaction(0, 0, 0, 0);
+    bondviewProcessInput(0, 0, 0, 0);
     bondviewApplyVertaTheta();
     bondviewMoveAnimationTick(0, 0, 0);
     if ((0.0f != flt_CODE_bss_80079990) || (0.0f != flt_CODE_bss_80079990.unk8))
@@ -17053,7 +17053,7 @@ glabel sub_GAME_7F086990
 /* 0BB574 7F086A44 00002025 */  move  $a0, $zero
 /* 0BB578 7F086A48 00002825 */  move  $a1, $zero
 /* 0BB57C 7F086A4C 00003025 */  move  $a2, $zero
-/* 0BB580 7F086A50 0FC2065D */  jal   controller_gameplay_interaction
+/* 0BB580 7F086A50 0FC2065D */  jal   bondviewProcessInput
 /* 0BB584 7F086A54 00003825 */   move  $a3, $zero
 /* 0BB588 7F086A58 0FC205E4 */  jal   bondviewApplyVertaTheta
 /* 0BB58C 7F086A5C 00000000 */   nop
@@ -17219,7 +17219,7 @@ glabel sub_GAME_7F086990
 /* 0B9554 7F086B64 00002025 */  move  $a0, $zero
 /* 0B9558 7F086B68 00002825 */  move  $a1, $zero
 /* 0B955C 7F086B6C 00003025 */  move  $a2, $zero
-/* 0B9560 7F086B70 0FC20686 */  jal   controller_gameplay_interaction
+/* 0B9560 7F086B70 0FC20686 */  jal   bondviewProcessInput
 /* 0B9564 7F086B74 00003825 */   move  $a3, $zero
 /* 0B9568 7F086B78 0FC2060D */  jal   bondviewApplyVertaTheta
 /* 0B956C 7F086B7C 00000000 */   nop   
