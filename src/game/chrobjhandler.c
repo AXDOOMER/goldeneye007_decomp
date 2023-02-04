@@ -40127,7 +40127,8 @@ glabel sub_GAME_7F0523F8
 
 
 
-void redirect_object_collectability_routines(void) {
+void redirect_object_collectability_routines(void)
+{
     object_collectability_routines();
 }
 
@@ -40135,63 +40136,35 @@ void redirect_object_collectability_routines(void) {
 
 
 
-#ifdef NONMATCHING
 /* PD: weaponSetGunfireVisible */
-void sub_GAME_7F052574(void) {
-
-}
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F052574
-/* 0870A4 7F052574 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0870A8 7F052578 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0870AC 7F05257C AFA50024 */  sw    $a1, 0x24($sp)
-/* 0870B0 7F052580 8C820004 */  lw    $v0, 4($a0)
-/* 0870B4 7F052584 8C460014 */  lw    $a2, 0x14($v0)
-/* 0870B8 7F052588 50C0001B */  beql  $a2, $zero, .L7F0525F8
-/* 0870BC 7F05258C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0870C0 7F052590 8CC20008 */  lw    $v0, 8($a2)
-/* 0870C4 7F052594 3C0E8004 */  lui   $t6, %hi(skeleton_prop_weapon) 
-/* 0870C8 7F052598 25CEC4FC */  addiu $t6, %lo(skeleton_prop_weapon) # addiu $t6, $t6, -0x3b04
-/* 0870CC 7F05259C 8C4F0004 */  lw    $t7, 4($v0)
-/* 0870D0 7F0525A0 55CF0015 */  bnel  $t6, $t7, .L7F0525F8
-/* 0870D4 7F0525A4 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0870D8 7F0525A8 8C430008 */  lw    $v1, 8($v0)
-/* 0870DC 7F0525AC 00C02025 */  move  $a0, $a2
-/* 0870E0 7F0525B0 8C650000 */  lw    $a1, ($v1)
-/* 0870E4 7F0525B4 50A00009 */  beql  $a1, $zero, .L7F0525DC
-/* 0870E8 7F0525B8 8C650008 */   lw    $a1, 8($v1)
-/* 0870EC 7F0525BC 0FC1B1E7 */  jal   modelGetNodeRwData
-/* 0870F0 7F0525C0 AFA60018 */   sw    $a2, 0x18($sp)
-/* 0870F4 7F0525C4 8FB80024 */  lw    $t8, 0x24($sp)
-/* 0870F8 7F0525C8 8FA60018 */  lw    $a2, 0x18($sp)
-/* 0870FC 7F0525CC A4580000 */  sh    $t8, ($v0)
-/* 087100 7F0525D0 8CD90008 */  lw    $t9, 8($a2)
-/* 087104 7F0525D4 8F230008 */  lw    $v1, 8($t9)
-/* 087108 7F0525D8 8C650008 */  lw    $a1, 8($v1)
-.L7F0525DC:
-/* 08710C 7F0525DC 50A00006 */  beql  $a1, $zero, .L7F0525F8
-/* 087110 7F0525E0 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 087114 7F0525E4 0FC1B1E7 */  jal   modelGetNodeRwData
-/* 087118 7F0525E8 00C02025 */   move  $a0, $a2
-/* 08711C 7F0525EC 8FA80024 */  lw    $t0, 0x24($sp)
-/* 087120 7F0525F0 AC480000 */  sw    $t0, ($v0)
-/* 087124 7F0525F4 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0525F8:
-/* 087128 7F0525F8 27BD0020 */  addiu $sp, $sp, 0x20
-/* 08712C 7F0525FC 03E00008 */  jr    $ra
-/* 087130 7F052600 00000000 */   nop   
-)
-#endif
-
-
-
-s32 weaponIsGunfireVisible(PropRecord *prop) {
-
+void sub_GAME_7F052574(PropRecord *prop, s32 firing)
+{
     ObjectRecord *obj = prop->obj;
-	Model *model = obj->model;
-	ModelNode *node;
+    Model *model = obj->model;
+    ModelNode *node;
+
+    if (model && model->obj->Skeleton == &skeleton_prop_weapon) {
+        node = model->obj->Switches[0];
+        if (node) {
+            struct ModelRwData_GunfireRecord *rwdata = modelGetNodeRwData(model, node);
+            rwdata->visible = firing;
+        }
+
+        node = model->obj->Switches[2];
+        if (node) {
+            struct ModelRwData_BSPRecord *rwdata = modelGetNodeRwData(model, node);
+            rwdata->visible = firing;
+        }
+    }
+}
+
+
+
+s32 weaponIsGunfireVisible(PropRecord *prop)
+{
+    ObjectRecord *obj = prop->obj;
+    Model *model = obj->model;
+    ModelNode *node;
 
     if (model && model->obj->Skeleton == &skeleton_prop_weapon) {
         node = model->obj->Switches[0];
@@ -40199,14 +40172,14 @@ s32 weaponIsGunfireVisible(PropRecord *prop) {
             struct ModelRwData_GunfireRecord *rwdata = modelGetNodeRwData(model, node);
             return rwdata->visible;
         }
-        
+
         node = model->obj->Switches[2];
         if (node) {
             struct ModelRwData_BSPRecord *rwdata = modelGetNodeRwData(model, node);
             return rwdata->visible;
         }
     }
-    
+
     return FALSE;
 }
 
