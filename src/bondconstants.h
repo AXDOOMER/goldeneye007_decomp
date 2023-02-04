@@ -304,8 +304,8 @@ typedef enum PROPFLAG2
     PROPFLAG2_00000020                   = 0x00000020, // unknown
     PROPFLAG2_00000040                   = 0x00000040, // unknown
     PROPFLAG2_00000080                   = 0x00000080, // unknown
-    PROPFLAG2_00000100                   = 0x00000100, // unknown
-    PROPFLAG2_00000200                   = 0x00000200, // unknown
+    PROPFLAG2_NOFALL                     = 0x00000100, // unknown
+    PROPFLAG2_FALLWITHOUTROTATION        = 0x00000200, // unknown
     PROPFLAG2_LINKEDTOSAFE               = 0x00000400, // unknown
     PROPFLAG2_00000800                   = 0x00000800, // unknown
     PROPFLAG2_00001000                   = 0x00001000, // unknown
