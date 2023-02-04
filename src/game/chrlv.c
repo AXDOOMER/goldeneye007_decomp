@@ -6675,15 +6675,15 @@ void chrlvResetAimend(ChrRecord *self)
  * Address 0x7F02D118.
  * PD: chrSetFiring
 */
-void sub_GAME_7F02D118(ChrRecord *self, s32 hand, s32 arg2)
+void chrSetFiring(ChrRecord *self, s32 hand, s32 firing)
 {
-    PropRecord *temp_v0;
+    PropRecord *prop;
 
-    temp_v0 = chrGetEquippedWeaponProp(self, hand);
+    prop = chrGetEquippedWeaponProp(self, hand);
 
-    if (temp_v0 != NULL)
+    if (prop != NULL)
     {
-        sub_GAME_7F052574(temp_v0, arg2);
+        weaponSetGunfireVisible(prop, firing);
     }
 }
 
@@ -6696,13 +6696,13 @@ void sub_GAME_7F02D118(ChrRecord *self, s32 hand, s32 arg2)
 */
 s32 sub_GAME_7F02D148(ChrRecord *self, s32 hand)
 {
-    PropRecord *temp_v0;
+    PropRecord *prop;
 
-    temp_v0 = chrGetEquippedWeaponProp(self, hand);
+    prop = chrGetEquippedWeaponProp(self, hand);
 
-    if (temp_v0 != NULL)
+    if (prop != NULL)
     {
-        return sub_GAME_7F052604(temp_v0);
+        return weaponIsGunfireVisible(prop);
     }
 
     return 0;
@@ -6715,8 +6715,8 @@ s32 sub_GAME_7F02D148(ChrRecord *self, s32 hand)
 */
 void chrStopFiring(ChrRecord *self)
 {
-    sub_GAME_7F02D118(self, GUNRIGHT, 0);
-    sub_GAME_7F02D118(self, GUNLEFT, 0);
+    chrSetFiring(self, GUNRIGHT, FALSE);
+    chrSetFiring(self, GUNLEFT, FALSE);
     chrlvResetAimend(self);
 }
 
@@ -6748,7 +6748,7 @@ void chrlvToggleHiddenRelated(ChrRecord *self, s32 hand, s32 arg2)
 
     if (arg2 == 0)
     {
-        sub_GAME_7F02D118(self, hand, 0);
+        chrSetFiring(self, hand, FALSE);
     }
 }
 
@@ -7354,7 +7354,7 @@ void chrlvFireWeaponRelated(ChrRecord *self, s32 hand)
             sub_GAME_7F02BFE4(self, hand, phi_a2);
         }
 
-        sub_GAME_7F02D118(self, hand, sp27C);
+        chrSetFiring(self, hand, sp27C);
     }
 }
 

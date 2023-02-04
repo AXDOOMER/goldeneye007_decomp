@@ -346,7 +346,7 @@ block_8:
         }
         else
         {
-            sub_GAME_7F0406F8(arg1, PitemZ_entries[spF0].Header);
+            objInitWithModelDef(arg1, PitemZ_entries[spF0].Header);
         }
         monitor->model = arg1->model;
         modelSetScale(monitor->model, monitor->model->scale * sp78);
@@ -364,7 +364,7 @@ block_8:
             }
             else
             {
-                phi_v0 = sub_GAME_7F0406F8(arg1, PitemZ_entries[spF0].Header);
+                phi_v0 = objInitWithModelDef(arg1, PitemZ_entries[spF0].Header);
             }
             temp_a0_3 = arg1->model;
             modelSetScale(temp_a0_3, temp_a0_3->scale * sp78);
@@ -725,7 +725,7 @@ glabel domakedefaultobj
 /* 036A18 7F001EE8 3C058004 */  lui   $a1, %hi(PitemZ_entries)
 /* 036A1C 7F001EEC 00AF2821 */  addu  $a1, $a1, $t7
 /* 036A20 7F001EF0 8CA5A228 */  lw    $a1, %lo(PitemZ_entries)($a1)
-/* 036A24 7F001EF4 0FC101BE */  jal   sub_GAME_7F0406F8
+/* 036A24 7F001EF4 0FC101BE */  jal   objInitWithModelDef
 /* 036A28 7F001EF8 02202025 */   move  $a0, $s1
 /* 036A2C 7F001EFC 8E240014 */  lw    $a0, 0x14($s1)
 .L7F001F00:
@@ -772,7 +772,7 @@ glabel domakedefaultobj
 /* 036AC8 7F001F98 3C058004 */  lui   $a1, %hi(PitemZ_entries)
 /* 036ACC 7F001F9C 00AD2821 */  addu  $a1, $a1, $t5
 /* 036AD0 7F001FA0 8CA5A228 */  lw    $a1, %lo(PitemZ_entries)($a1)
-/* 036AD4 7F001FA4 0FC101BE */  jal   sub_GAME_7F0406F8
+/* 036AD4 7F001FA4 0FC101BE */  jal   objInitWithModelDef
 /* 036AD8 7F001FA8 02202025 */   move  $a0, $s1
 /* 036ADC 7F001FAC 00408025 */  move  $s0, $v0
 .L7F001FB0:

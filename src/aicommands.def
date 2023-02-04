@@ -4862,7 +4862,7 @@ _AI_CMD(
         ObjectRecord *obj = objFindByTagId(ai->val[0]);
         if (obj && obj->prop)
         {
-            if (!do_something_if_object_destroyed(obj))
+            if (!objGetDestroyedLevel(obj))
             {
                 f32 damage = ((obj->damage - obj->maxdamage) + 1) / 250.0f;
                 maybe_detonate_object(obj, damage, &obj->runtime_pos, 29, -1);

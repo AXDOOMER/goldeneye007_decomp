@@ -2290,7 +2290,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
 #endif
                     if (obj && obj->prop)
                     {
-                        if (!do_something_if_object_destroyed(obj))
+                        if (!objGetDestroyedLevel(obj))
                         {
                             f32 damage = ((obj->damage - obj->maxdamage) + 1) / 250.0f;
 #ifdef ENABLE_LOG
