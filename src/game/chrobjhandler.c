@@ -40453,53 +40453,28 @@ glabel sub_GAME_7F052574
 
 
 
+s32 weaponIsGunfireVisible(PropRecord *prop) {
 
+    ObjectRecord *obj = prop->obj;
+	Model *model = obj->model;
+	ModelNode *node;
 
-#ifdef NONMATCHING
-/* PD: weaponIsGunfireVisible */
-void sub_GAME_7F052604(void) {
-
+    if (model && model->obj->Skeleton == &skeleton_prop_weapon) {
+        node = model->obj->Switches[0];
+        if (node) {
+            struct ModelRwData_GunfireRecord *rwdata = modelGetNodeRwData(model, node);
+            return rwdata->visible;
+        }
+        
+        node = model->obj->Switches[2];
+        if (node) {
+            struct ModelRwData_BSPRecord *rwdata = modelGetNodeRwData(model, node);
+            return rwdata->visible;
+        }
+    }
+    
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F052604
-/* 087134 7F052604 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 087138 7F052608 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 08713C 7F05260C 8C820004 */  lw    $v0, 4($a0)
-/* 087140 7F052610 8C460014 */  lw    $a2, 0x14($v0)
-/* 087144 7F052614 50C00017 */  beql  $a2, $zero, .L7F052674
-/* 087148 7F052618 00001025 */   move  $v0, $zero
-/* 08714C 7F05261C 8CC20008 */  lw    $v0, 8($a2)
-/* 087150 7F052620 3C0E8004 */  lui   $t6, %hi(skeleton_prop_weapon) 
-/* 087154 7F052624 25CEC4FC */  addiu $t6, %lo(skeleton_prop_weapon) # addiu $t6, $t6, -0x3b04
-/* 087158 7F052628 8C4F0004 */  lw    $t7, 4($v0)
-/* 08715C 7F05262C 55CF0011 */  bnel  $t6, $t7, .L7F052674
-/* 087160 7F052630 00001025 */   move  $v0, $zero
-/* 087164 7F052634 8C430008 */  lw    $v1, 8($v0)
-/* 087168 7F052638 8C650000 */  lw    $a1, ($v1)
-/* 08716C 7F05263C 50A00006 */  beql  $a1, $zero, .L7F052658
-/* 087170 7F052640 8C650008 */   lw    $a1, 8($v1)
-/* 087174 7F052644 0FC1B1E7 */  jal   modelGetNodeRwData
-/* 087178 7F052648 00C02025 */   move  $a0, $a2
-/* 08717C 7F05264C 10000009 */  b     .L7F052674
-/* 087180 7F052650 84420000 */   lh    $v0, ($v0)
-/* 087184 7F052654 8C650008 */  lw    $a1, 8($v1)
-.L7F052658:
-/* 087188 7F052658 50A00006 */  beql  $a1, $zero, .L7F052674
-/* 08718C 7F05265C 00001025 */   move  $v0, $zero
-/* 087190 7F052660 0FC1B1E7 */  jal   modelGetNodeRwData
-/* 087194 7F052664 00C02025 */   move  $a0, $a2
-/* 087198 7F052668 10000002 */  b     .L7F052674
-/* 08719C 7F05266C 8C420000 */   lw    $v0, ($v0)
-/* 0871A0 7F052670 00001025 */  move  $v0, $zero
-.L7F052674:
-/* 0871A4 7F052674 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0871A8 7F052678 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0871AC 7F05267C 03E00008 */  jr    $ra
-/* 0871B0 7F052680 00000000 */   nop   
-)
-#endif
 
 
 

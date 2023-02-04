@@ -6702,7 +6702,7 @@ s32 sub_GAME_7F02D148(ChrRecord *self, s32 hand)
 
     if (temp_v0 != NULL)
     {
-        return sub_GAME_7F052604(temp_v0);
+        return weaponIsGunfireVisible(temp_v0);
     }
 
     return 0;
