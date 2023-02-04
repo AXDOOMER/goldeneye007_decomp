@@ -2508,7 +2508,7 @@ typedef union
 
         u32 unk80;
         u32 unk84;
-        u32 unk88;
+        PropRecord* ownerprop; // 0x88
         f32 unk8C; 
 
         u32 unk90;
@@ -2743,8 +2743,8 @@ typedef union
 
         f32             maxdamage;
         f32             damage;
-        rgba_u8         field_78;
-        rgba_u8         field_7C;
+        rgba_u8         shadecol; // 0x78
+        rgba_u8         nextcol; // 0x7C
     } ObjectRecord;
     #define New_ObjectRecord(pad)                                                       \
         {                                                                               \

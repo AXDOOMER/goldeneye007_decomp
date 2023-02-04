@@ -857,7 +857,7 @@ void projectileReset(Projectile *projectile)
     projectile->unk1C = 0.0f;
 
     projectile->unk60 = 1.0f;
-    projectile->unk88 = 0;
+    projectile->ownerprop = NULL;
     projectile->unk8C = 0.05f;
     projectile->unk90 = 0;
     projectile->unk94 = 0.0f;
@@ -1408,15 +1408,15 @@ PropRecord* init_standard_object(ObjectRecord* obj, ModelFileHeader* model_heade
         obj->prop = prop;
         obj->unk6C = 0;
 
-        obj->field_78.r = 0;
-        obj->field_78.g = 0;
-        obj->field_78.b = 0;
-        obj->field_78.a = 0;
+        obj->shadecol.r = 0;
+        obj->shadecol.g = 0;
+        obj->shadecol.b = 0;
+        obj->shadecol.a = 0;
 
-        obj->field_7C.r = 0;
-        obj->field_7C.g = 0;
-        obj->field_7C.b = 0;
-        obj->field_7C.a = 0;
+        obj->nextcol.r = 0;
+        obj->nextcol.g = 0;
+        obj->nextcol.b = 0;
+        obj->nextcol.a = 0;
 
         obj->maxdamage = 0.0f;
         *((s16*)&obj->model->unk00) = -1;
@@ -27335,10 +27335,10 @@ Gfx *chrobjRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
         phi_a0 = 0;
     }
 
-    sp48.r = (s32) (obj->field_78.rgba[0] * phi_a0) >> 8;
-    sp48.g = (s32) (obj->field_78.rgba[1] * phi_a0) >> 8;
-    sp48.b = (s32) (obj->field_78.rgba[2] * phi_a0) >> 8;
-    sp48.a = obj->field_78.rgba[3] + temp_v0_4 * 0xF;
+    sp48.r = (s32) (obj->shadecol.rgba[0] * phi_a0) >> 8;
+    sp48.g = (s32) (obj->shadecol.rgba[1] * phi_a0) >> 8;
+    sp48.b = (s32) (obj->shadecol.rgba[2] * phi_a0) >> 8;
+    sp48.a = obj->shadecol.rgba[3] + temp_v0_4 * 0xF;
     
     if (sp48.a >= 0x100)
     {
@@ -28480,7 +28480,7 @@ void objBounce(ObjectRecord *obj, coord3d *arg1)
 
         projectile->speed.x += 3.3333333f * dir.x;
         projectile->speed.z += 3.3333333f * dir.z;
-        projectile->unk88 = get_curplayer_positiondata();
+        projectile->ownerprop = get_curplayer_positiondata();
         projectile->unk90 = 1;
     }
 }
@@ -28582,7 +28582,7 @@ s32 objDrop(PropRecord *prop)
         droptype = projectile->droptype;
         root = parent;
         projectile->flags |= PROJECTILEFLAG_AIRBORNE;
-        projectile->unk88 = parent;
+        projectile->ownerprop = parent;
 
         if (droptype == DROPTYPE_SURRENDER && parent->type == PROP_TYPE_CHR) {
             ChrRecord* chr = parent->chr;
@@ -28691,12 +28691,12 @@ s32 objDrop(PropRecord *prop)
         spB8.m[3][2] = 0.0f;
 
         matrix_4x4_copy(&spB8, &obj->mtx);
-        sub_GAME_7F0402B4(obj->prop, &obj->field_7C);
+        sub_GAME_7F0402B4(obj->prop, &obj->nextcol);
 
-        obj->field_78.r = obj->field_7C.r;
-        obj->field_78.g = obj->field_7C.g;
-        obj->field_78.b = obj->field_7C.b;
-        obj->field_78.a = obj->field_7C.a;
+        obj->shadecol.r = obj->nextcol.r;
+        obj->shadecol.g = obj->nextcol.g;
+        obj->shadecol.b = obj->nextcol.b;
+        obj->shadecol.a = obj->nextcol.a;
 
         setupUpdateObjectRoomPosition(obj);
 
@@ -32174,11 +32174,8 @@ ObjectRecord blank_07_object = {
     NULL, //unk6C
     0.0f, //maxdamage
     1000.0f, //damage
-    {0xFF, 0xFF, 0xFF, 0x00}, //field_78
-    0xFF, //field_7c
-    0xFF, //field_7d
-    0xFF, //field_7e
-    0x00, //field_7f
+    {0xFF, 0xFF, 0xFF, 0x00}, //shadecol
+    {0xFF, 0xFF, 0xFF, 0x00}, //nextcol
 };
 void maybe_detonate_object(ObjectRecord* self, f32 damage,  coord3d* pos, bool flag, bool flag2)
 {
@@ -32501,11 +32498,8 @@ ObjectRecord blank_07_object = {
     NULL, //unk6C
     0.0f, //maxdamage
     1000.0f, //damage
-    {0xFF, 0xFF, 0xFF, 0x00}, //field_78
-    0xFF, //field_7c
-    0xFF, //field_7d
-    0xFF, //field_7e
-    0x00, //field_7f
+    {0xFF, 0xFF, 0xFF, 0x00}, //shadecol
+    {0xFF, 0xFF, 0xFF, 0x00}, //nextcol
 };
 GLOBAL_ASM(
 .text
@@ -38832,11 +38826,8 @@ PropRecord *hatCreateForChr(ChrRecord *chr, s32 modelnum, u32 flags)
             NULL, // unk6C
             0.0f, // maxdamage
             1000.0f, // damage
-            { 0xFF, 0xFF, 0xFF, 0x00 }, // field_78
-            0xFF, // field_7c
-            0xFF, // field_7d
-            0xFF, // field_7e
-            0x00, // field_7f
+            { 0xFF, 0xFF, 0xFF, 0x00 }, // shadecol
+            { 0xFF, 0xFF, 0xFF, 0x00 }, // nextcol
         };
 
         *hat = tmp;
@@ -39911,11 +39902,8 @@ WeaponObjRecord blank_08_object_preset_1 = {
     NULL, //unk6C
     0.0f, //maxdamage
     1000.0f,//damage
-    { 0xFF, 0xFF, 0xFF, 0x00},//field_78
-    0xFF, //field_7c
-    0xFF, //field_7d
-    0xFF, //field_7e
-    0x00, //field_7f
+    { 0xFF, 0xFF, 0xFF, 0x00 }, // shadecol
+    { 0xFF, 0xFF, 0xFF, 0x00 }, // nextcol
     ITEM_UNARMED, //weaponnum
     -1, //LinkedWeaponType
     -1, //timer
@@ -40038,11 +40026,8 @@ WeaponObjRecord blank_08_object_preset_1 = {
     NULL, //unk6C
     0.0f, //maxdamage
     1000.0f,//damage
-    { 0xFF, 0xFF, 0xFF, 0x00},//field_78
-    0xFF, //field_7c
-    0xFF, //field_7d
-    0xFF, //field_7e
-    0x00, //field_7f
+    { 0xFF, 0xFF, 0xFF, 0x00 }, // shadecol
+    { 0xFF, 0xFF, 0xFF, 0x00 }, // nextcol
     ITEM_UNARMED, //weaponnum
     -1, //LinkedWeaponType
     -1, //timer
@@ -40195,11 +40180,8 @@ WeaponObjRecord blank_08_object_preset_4001 = {
     NULL, //unk6C
     0.0f, //maxdamage
     1000.0f, //damage
-    {0xFF, 0xFF, 0xFF, 0x00}, //field_78
-    0xFF, //field_7c
-    0xFF, //field_7d
-    0xFF, //field_7e
-    0x00, //field_7f
+    { 0xFF, 0xFF, 0xFF, 0x00 }, // shadecol
+    { 0xFF, 0xFF, 0xFF, 0x00 }, // nextcol
     ITEM_UNARMED, //weaponnu
     -1, //LinkedWeaponType
     -1, //timer
@@ -40281,11 +40263,8 @@ WeaponObjRecord blank_08_object_preset_4001 = {
     NULL, //unk6C
     0.0f, //maxdamage
     1000.0f, //damage
-    {0xFF, 0xFF, 0xFF, 0x00}, //field_78
-    0xFF, //field_7c
-    0xFF, //field_7d
-    0xFF, //field_7e
-    0x00, //field_7f
+    { 0xFF, 0xFF, 0xFF, 0x00 }, // shadecol
+    { 0xFF, 0xFF, 0xFF, 0x00 }, // nextcol
     ITEM_UNARMED, //weaponnu
     -1, //LinkedWeaponType
     -1, //timer
