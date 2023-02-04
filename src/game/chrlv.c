@@ -6683,7 +6683,7 @@ void chrSetFiring(ChrRecord *self, s32 hand, s32 firing)
 
     if (prop != NULL)
     {
-        sub_GAME_7F052574(prop, firing);
+        weaponSetGunfireVisible(prop, firing);
     }
 }
 

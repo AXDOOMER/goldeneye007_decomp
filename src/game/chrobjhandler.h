@@ -84,7 +84,7 @@ void                 set_color_shading_from_tile(PropRecord *, rgba_u8 *);
 void                 propobjSetDropped(PropRecord *prop, DROPTYPE droptype);
 void                 chrobjSndCreatePostEventDefault(ALSoundState *, coord3d *);
 void                 alarmActivate(void);
-void                 sub_GAME_7F052574(PropRecord *, s32);
+void                 weaponSetGunfireVisible(PropRecord *prop, s32 firing);
 s32                  weaponIsGunfireVisible(PropRecord *);
 s32                  sub_GAME_7F0539E4(coord3d *pos); //getVolume?
 ObjectRecord        *create_new_item_instance_of_model(PROP propid, s32 arg1);

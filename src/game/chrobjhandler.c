@@ -39218,7 +39218,7 @@ PropRecord* complete_object_data_block_return_position_entry(ObjectRecord* obj, 
     if (prop != NULL)
     {
         prop->type = 4;
-        sub_GAME_7F052574(prop, 0);
+        weaponSetGunfireVisible(prop, 0);
     }
 
     return prop;
@@ -39233,7 +39233,7 @@ PropRecord* sub_GAME_7F051DD8(s32* arg0, ModelFileHeader* arg1)
     if (prop != NULL)
     {
         prop->type = PROP_TYPE_WEAPON;
-        sub_GAME_7F052574(prop, 0);
+        weaponSetGunfireVisible(prop, 0);
     }
     return prop;
 }
@@ -40136,8 +40136,7 @@ void redirect_object_collectability_routines(void)
 
 
 
-/* PD: weaponSetGunfireVisible */
-void sub_GAME_7F052574(PropRecord *prop, s32 firing)
+void weaponSetGunfireVisible(PropRecord *prop, s32 firing)
 {
     ObjectRecord *obj = prop->obj;
     Model *model = obj->model;
