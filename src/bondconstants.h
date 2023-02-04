@@ -304,8 +304,8 @@ typedef enum PROPFLAG2
     PROPFLAG2_00000020                   = 0x00000020, // unknown
     PROPFLAG2_00000040                   = 0x00000040, // unknown
     PROPFLAG2_00000080                   = 0x00000080, // unknown
-    PROPFLAG2_00000100                   = 0x00000100, // unknown
-    PROPFLAG2_00000200                   = 0x00000200, // unknown
+    PROPFLAG2_NOFALL                     = 0x00000100, // unknown
+    PROPFLAG2_FALLWITHOUTROTATION        = 0x00000200, // unknown
     PROPFLAG2_LINKEDTOSAFE               = 0x00000400, // unknown
     PROPFLAG2_00000800                   = 0x00000800, // unknown
     PROPFLAG2_00001000                   = 0x00001000, // unknown
@@ -336,6 +336,14 @@ typedef enum DOORFLAG
     DOORFLAG_CANNOT_ACTIVATE             = 0x02000000,
     DOORFLAG_KEEPOPEN                    = 0x80000000
 } DOORFLAG;
+
+typedef enum DROPTYPE
+{
+    DROPTYPE_DEFAULT      = 1,
+    DROPTYPE_SURRENDER    = 2,
+    DROPTYPE_THROWGRENADE = 3,
+    DROPTYPE_HAT          = 4
+} DROPTYPE;
 
 typedef enum PROJECTILEFLAG
 {
@@ -857,14 +865,30 @@ typedef enum CHEAT_IDS
 
 typedef enum CONTROLLER_CONFIG
 {
+    /* 1.1 */
     CONTROLLER_CONFIG_HONEY,
+
+    /* 1.2 */
     CONTROLLER_CONFIG_SOLITARE,
+
+    /* 1.3 */
     CONTROLLER_CONFIG_KISSY,
+
+    /* 1.4 */
     CONTROLLER_CONFIG_GOODNIGHT,
+
+    /* 2.1 */
     CONTROLLER_CONFIG_PLENTY,
+
+    /* 2.2 */
     CONTROLLER_CONFIG_GALORE,
+
+    /* 2.3 */
     CONTROLLER_CONFIG_DOMINO,
+
+    /* 2.4 */
     CONTROLLER_CONFIG_GOODHEAD,
+    
     CONTROLLER_CONFIG_CINEMA
 } CONTROLLER_CONFIG;
 

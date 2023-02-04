@@ -2508,7 +2508,7 @@ typedef union
 
         u32 unk80;
         u32 unk84;
-        u32 unk88;
+        PropRecord* ownerprop; // 0x88
         f32 unk8C; 
 
         u32 unk90;
@@ -2523,7 +2523,7 @@ typedef union
 
         u32 unkB0;
         u32 unkB4;
-        u32 droptype; // 0xB8
+        DROPTYPE droptype; // 0xB8
         u32 unkBC;
 
         f32 unkC0;
@@ -2742,12 +2742,9 @@ typedef union
         };
 
         f32             maxdamage;
-        f32               damage;
-        rgba_u8           field_78;
-        char              field_7C;
-        char              field_7D;
-        char              field_7E;
-        char              field_7F;
+        f32             damage;
+        rgba_u8         shadecol; // 0x78
+        rgba_u8         nextcol; // 0x7C
     } ObjectRecord;
     #define New_ObjectRecord(pad)                                                       \
         {                                                                               \
@@ -3970,7 +3967,48 @@ typedef struct object_weapon {
 } object_weapon;
 
 
-
+struct MoveData {
+    s32 controlStickYRaw;  // sp120 ?
+    s32 controlStickXRaw;  // sp124 ?
+    s32 controlStickYSafe; // sp128 ?
+    s32 controlStickXSafe; // sp12C ?
+    s32 sp130;
+    s32 sp134;
+    s32 sp138; // temp variable at start
+    s32 sp13C; // temp variable at start
+    s32 sp140;
+    s32 sp144;
+    s32 sp148;
+    s32 sp14C;
+    s32 sp150;
+    s32 sp154;
+    s32 sp158;
+    s32 sp15C;
+    f32 sp160;
+    f32 sp164;
+    s32 sp168;
+    s32 sp16C;
+    s32 sp170;
+    s32 sp174;
+    f32 sp178;
+    f32 sp17C;
+    f32 sp180;
+    f32 sp184;
+    f32 sp188;
+    f32 sp18C;
+    s32 sp190;
+    s32 sp194;
+    s32 sp198;
+    s32 sp19C;
+    s32 sp1A0;
+    s32 sp1A4;
+    s32 sp1A8;
+    s32 sp1AC;
+    s32 sp1B0;
+    s32 sp1B4;
+    s32 sp1B8;
+    s32 sp1BC;
+};
 
 
 

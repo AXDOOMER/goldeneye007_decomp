@@ -81,7 +81,7 @@ void                 chrobjApplySpeed(f32 *openPosition, f32 maxFrac, f32 *speed
 void                 chrobjCallsApplySpeed(f32 *openPosition, f32 maxFrac, f32 *speedPtr, f32 accel, f32 decel, f32 maxSpeed);
 Gfx                 *sub_GAME_7F049B58(Gfx *arg0);
 void                 set_color_shading_from_tile(PropRecord *, rgba_u8 *);
-void                 propobjSetDropped(PropRecord *prop, u32 droptype);
+void                 propobjSetDropped(PropRecord *prop, DROPTYPE droptype);
 void                 chrobjSndCreatePostEventDefault(ALSoundState *, coord3d *);
 void                 alarmActivate(void);
 void                 sub_GAME_7F052574(PropRecord *, s32);

@@ -13,5 +13,5 @@ TagObjectRecord *sub_GAME_7F057080(s32 TagID);
 s32              objectiveGetCount(void);
 ObjectRecord *   objFindByTagId(s32 TagID);
 OBJECTIVESTATUS  get_status_of_objective(s32 objectiveNum);
-void sub_GAME_7F057C14(struct coord3d *arg0, s32 *arg1);
+void             sub_GAME_7F057C14(coord3d *coord, Mtxf *mtx);
 #endif
