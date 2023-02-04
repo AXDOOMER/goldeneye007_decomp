@@ -128,7 +128,7 @@ void                 sub_GAME_7F04088C(ObjectRecord *baseobj, PadRecord *pad, Mt
 bool                 sub_GAME_7F051E1C(WeaponObjRecord *wep, ChrRecord *chr);
 INV_ITEM_TYPE        collect_or_interact_object(PropRecord *prop, bool showstring);
 INV_ITEM_TYPE        propobjInteract(PropRecord *prop);
-s32                  do_something_if_object_destroyed(ObjectRecord *obj);
+s32                  objGetDestroyedLevel(ObjectRecord *obj);
 void                 doorActivateWrapper(PropRecord *prop);
 bool                 objIsHealthy(ObjectRecord *self);
 ObjectRecord        *weaponFindThrown(s32 ID);

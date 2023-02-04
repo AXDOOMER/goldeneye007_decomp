@@ -813,7 +813,7 @@ struct unk_joint_list D_80031FD0 = {NULL, 1, 3, NULL, NULL, 0, 0, 0, 0, 0, 0, 0,
 // Forward declarations.
 
 s32 updateDoorDisplacement(DoorRecord* door);
-s32 sub_GAME_7F03FF60(ObjectRecord *);
+s32 objGetShotsTaken(ObjectRecord *);
 void sub_GAME_7F04AC20(PropRecord *prop, struct unk_joint_list *, s32 arg2);
 s32 sub_GAME_7F044414(struct rect4f *arg0, s32 arg1, struct rect4f *arg2, s32 arg3);
 void chrobjSndCreatePostEvent(ALSoundState *state, coord3d *pos, f32 low, f32 high);
@@ -1053,14 +1053,12 @@ void projectileSetSticky(PropRecord *prop)
 }
 
 
-// PD: embedmentFree
 void embedmentFree(Embedment *embedment)
 {
     embedment->flags |= EMBEDMENTFLAG_FREE;
 }
 
 
-// PD: embedmentAllocate
 Embedment *embedmentAllocate(void)
 {
     s32 i;
@@ -1079,23 +1077,46 @@ Embedment *embedmentAllocate(void)
 }
 
 
-// PD: objGetShotsTaken
-s32 sub_GAME_7F03FF60(ObjectRecord *arg0)
+/**
+ * This doesn't exactly return the number of shots taken but it's the best way
+ * to describe the behaviour of the function without writing a novel into the
+ * function's name.
+ *
+ * The number returned is 0 when at full health and only ever increments as the
+ * object takes damage. While healthy, the number scales from 0 to 4 based on
+ * how close it is to being destroyed, where 4 is destroyed. After being
+ * destroyed, the number increments at 1 per shot up to a max of 12.
+ */
+
+s32 objGetShotsTaken(ObjectRecord *obj)
 {
-    if (!(arg0->state & PROPSTATE_DESTROYED))
+    if (!(obj->state & PROPSTATE_DESTROYED))
     {
-        return (arg0->maxdamage * 3.0f) / arg0->damage;
+        return (obj->maxdamage * 3.0f) / obj->damage;
     }
 
-    return arg0->maxdamage + 4.0f;
+    return obj->maxdamage + 4.0f;
 }
 
 
-/*
- * maxdamage / 4 + 1
- * PD: objGetDestroyedLevel
+/**
+ * Return 0 if not destroyed
+ * Return 1 if at destroyed level 1
+ * Return 2 if at destroyed level 2
+ * Return 3 if at destroyed level 3
+ *
+ * Each destroyed level is a new phase of visual brokenness. Typically the
+ * object is destroyed and it looks broken (level 1), then after a couple of
+ * shots it enters level 2, and a few shots later level 3.
+ *
+ * While healthy, damage goes from 0 to maxdamage (eg. 1000) but this function
+ * returns 0 due to the if statement.
+ *
+ * When destroyed, damage is reset to 0 then incremented at one unit per shot,
+ * so four shots causes it to enter a new destroyed level.
  */
-s32 do_something_if_object_destroyed(ObjectRecord *obj)
+
+s32 objGetDestroyedLevel(ObjectRecord *obj)
 {
     if (!(obj->state & PROPSTATE_DESTROYED))
     {
@@ -1348,30 +1369,30 @@ void sub_GAME_7F040384(rgba_s32* arg0, s32 arg1, rgba_f32* arg2)
 /**
  * Address 0x7F040484.
 */
-void chrobjCollisionRelated(ObjectRecord *arg0)
+void chrobjCollisionRelated(ObjectRecord *obj)
 {
     struct modeldata_unk_pos *sp64;
     Mtxf sp24;
 
-    if (arg0->ptr_allocated_collisiondata_block != NULL)
+    if (obj->ptr_allocated_collisiondata_block != NULL)
     {
-        sp64 = sub_GAME_7F040078(arg0);
-        matrix_4x4_copy(&arg0->mtx, &sp24);
-        matrix_4x4_set_position(arg0->runtime_pos.f, &sp24);
-        sub_GAME_7F03F540(sp64, &sp24, &arg0->ptr_allocated_collisiondata_block->unk04, arg0->ptr_allocated_collisiondata_block);
+        sp64 = sub_GAME_7F040078(obj);
+        matrix_4x4_copy(&obj->mtx, &sp24);
+        matrix_4x4_set_position(obj->runtime_pos.f, &sp24);
+        sub_GAME_7F03F540(sp64, &sp24, &obj->ptr_allocated_collisiondata_block->unk04, obj->ptr_allocated_collisiondata_block);
         
-        arg0->ptr_allocated_collisiondata_block->unk48 = arg0->runtime_pos.f[1] + chrpropSumMatrixPosY(sp64, &sp24);
-        arg0->ptr_allocated_collisiondata_block->unk44 = arg0->runtime_pos.f[1] + chrpropSumMatrixNegY(sp64, &sp24);
+        obj->ptr_allocated_collisiondata_block->unk48 = obj->runtime_pos.f[1] + chrpropSumMatrixPosY(sp64, &sp24);
+        obj->ptr_allocated_collisiondata_block->unk44 = obj->runtime_pos.f[1] + chrpropSumMatrixNegY(sp64, &sp24);
         
-        if (arg0->type == PROPDEF_AIRCRAFT)
+        if (obj->type == PROPDEF_AIRCRAFT)
         {
-            arg0->ptr_allocated_collisiondata_block->unk48 -= 200.0f;
+            obj->ptr_allocated_collisiondata_block->unk48 -= 200.0f;
         }
     }
 }
 
 
-PropRecord* init_standard_object(ObjectRecord* obj, ModelFileHeader* model_header, PropRecord* prop, Model* model)
+PropRecord* objInit(ObjectRecord* obj, ModelFileHeader* model_header, PropRecord* prop, Model* model)
 {
     if (prop == NULL)
     {
@@ -1459,7 +1480,7 @@ PropRecord* init_standard_object(ObjectRecord* obj, ModelFileHeader* model_heade
 
 PropRecord* objInitWithModelDef(ObjectRecord* object, ModelFileHeader* header)
 {
-  return init_standard_object(object, header, 0, 0);
+  return objInit(object, header, 0, 0);
 }
 
 
@@ -1469,40 +1490,40 @@ PropRecord* objInitWithAutoModel(ObjectRecord* obj)
 }
 
 
-void sub_GAME_7F040754(ObjectRecord* arg0, coord3d* arg1, Mtxf* arg2, StandTile* arg3) {
+void sub_GAME_7F040754(ObjectRecord* obj, coord3d* pos, Mtxf* matrix, StandTile* stan) {
 
-    PropRecord *prop = arg0->prop;
+    PropRecord *prop = obj->prop;
 
-    matrix_4x4_copy(arg2, &arg0->mtx);
+    matrix_4x4_copy(matrix, &obj->mtx);
 
-    arg0->runtime_pos.x = prop->pos.x = arg1->x;
-    arg0->runtime_pos.y = prop->pos.y = arg1->y;
-    arg0->runtime_pos.z = prop->pos.z = arg1->z;
+    obj->runtime_pos.x = prop->pos.x = pos->x;
+    obj->runtime_pos.y = prop->pos.y = pos->y;
+    obj->runtime_pos.z = prop->pos.z = pos->z;
 
-    prop->stan = arg3;
+    prop->stan = stan;
 
-    sub_GAME_7F0402B4(arg0->prop, &arg0->nextcol);
+    sub_GAME_7F0402B4(obj->prop, &obj->nextcol);
 
-    arg0->shadecol.r = arg0->nextcol.r;
-    arg0->shadecol.g = arg0->nextcol.g;
-    arg0->shadecol.b = arg0->nextcol.b;
-    arg0->shadecol.a = arg0->nextcol.a;
+    obj->shadecol.r = obj->nextcol.r;
+    obj->shadecol.g = obj->nextcol.g;
+    obj->shadecol.b = obj->nextcol.b;
+    obj->shadecol.a = obj->nextcol.a;
 }
 
 
 
 
 // Unreferenced function (unused)
-void sub_GAME_7F0407F4(ObjectRecord* arg0, coord3d* arg1, Mtxf* arg2, StandTile* arg3)
+void sub_GAME_7F0407F4(ObjectRecord* obj, coord3d* pos, Mtxf* matrix, StandTile* stan)
 {
     u32 a; // Adds 4 bytes to the stack so it matches. Could be anything 4 bytes long.
-    struct ModelRoData_BoundingBoxRecord *modelunk = sub_GAME_7F03FFF8(arg0->model->obj);
+    struct ModelRoData_BoundingBoxRecord *modelunk = sub_GAME_7F03FFF8(obj->model->obj);
 
-    arg1->y = stanGetPositionYValue(arg3, arg1->x, arg1->z) + 4.0f;
-    arg1->y = arg1->y - chrpropSumMatrixPosY(modelunk, arg2);
+    pos->y = stanGetPositionYValue(stan, pos->x, pos->z) + 4.0f;
+    pos->y = pos->y - chrpropSumMatrixPosY(modelunk, matrix);
 
-    sub_GAME_7F040754(arg0, arg1, arg2, arg3);
-    chrobjCollisionRelated(arg0);
+    sub_GAME_7F040754(obj, pos, matrix, stan);
+    chrobjCollisionRelated(obj);
 }
 
 
@@ -27003,7 +27024,7 @@ glabel sub_GAME_7F04AC20
 /* 07FA60 7F04AF30 8FA40074 */  lw    $a0, 0x74($sp)
 .L7F04AF34:
 /* 07FA64 7F04AF34 AFA50040 */  sw    $a1, 0x40($sp)
-/* 07FA68 7F04AF38 0FC0FFF0 */  jal   do_something_if_object_destroyed
+/* 07FA68 7F04AF38 0FC0FFF0 */  jal   objGetDestroyedLevel
 /* 07FA6C 7F04AF3C AFA70064 */   sw    $a3, 0x64($sp)
 /* 07FA70 7F04AF40 8FA50040 */  lw    $a1, 0x40($sp)
 /* 07FA74 7F04AF44 10400003 */  beqz  $v0, .L7F04AF54
@@ -27022,7 +27043,7 @@ glabel sub_GAME_7F04AC20
 /* 07FAA4 7F04AF74 1000001F */  b     .L7F04AFF4
 /* 07FAA8 7F04AF78 AE090034 */   sw    $t1, 0x34($s0)
 .L7F04AF7C:
-/* 07FAAC 7F04AF7C 0FC0FFF0 */  jal   do_something_if_object_destroyed
+/* 07FAAC 7F04AF7C 0FC0FFF0 */  jal   objGetDestroyedLevel
 /* 07FAB0 7F04AF80 AFA70064 */   sw    $a3, 0x64($sp)
 /* 07FAB4 7F04AF84 8E0C0030 */  lw    $t4, 0x30($s0)
 /* 07FAB8 7F04AF88 8FA70064 */  lw    $a3, 0x64($sp)
@@ -27259,7 +27280,7 @@ Gfx *chrobjRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
         }
     }
 
-    temp_v0_4 = sub_GAME_7F03FF60(obj);
+    temp_v0_4 = objGetShotsTaken(obj);
     phi_a0 = 0xFF - (temp_v0_4 * 0x15);
 
     if (phi_a0 < 0)
@@ -27484,7 +27505,7 @@ glabel sub_GAME_7F04B610
 /* 080288 7F04B758 10000001 */  b     .L7F04B760
 /* 08028C 7F04B75C 0000B825 */   move  $s7, $zero
 .L7F04B760:
-/* 080290 7F04B760 0FC0FFF0 */  jal   do_something_if_object_destroyed
+/* 080290 7F04B760 0FC0FFF0 */  jal   objGetDestroyedLevel
 /* 080294 7F04B764 03C02025 */   move  $a0, $fp
 /* 080298 7F04B768 86A4000C */  lh    $a0, 0xc($s5)
 /* 08029C 7F04B76C 24050B0B */  li    $a1, 2827
@@ -27976,7 +27997,7 @@ glabel sub_GAME_7F04B610
 /* 07E33C 7F04B94C 10000001 */  b     .L7F04B954
 /* 07E340 7F04B950 0000B825 */   move  $s7, $zero
 .L7F04B954:
-/* 07E344 7F04B954 0FC10020 */  jal   do_something_if_object_destroyed
+/* 07E344 7F04B954 0FC10020 */  jal   objGetDestroyedLevel
 /* 07E348 7F04B958 03C02025 */   move  $a0, $fp
 /* 07E34C 7F04B95C 86A4000C */  lh    $a0, 0xc($s5)
 /* 07E350 7F04B960 24050B0B */  li    $a1, 2827
@@ -30165,7 +30186,7 @@ glabel object_explosion_related
 /* 081964 7F04CE34 00000000 */  nop   
 /* 081968 7F04CE38 45030006 */  bc1tl .L7F04CE54
 /* 08196C 7F04CE3C 862E0004 */   lh    $t6, 4($s1)
-/* 081970 7F04CE40 0FC0FFF0 */  jal   do_something_if_object_destroyed
+/* 081970 7F04CE40 0FC0FFF0 */  jal   objGetDestroyedLevel
 /* 081974 7F04CE44 00000000 */   nop   
 /* 081978 7F04CE48 504000C4 */  beql  $v0, $zero, .L7F04D15C
 /* 08197C 7F04CE4C 8FBF002C */   lw    $ra, 0x2c($sp)
@@ -30193,7 +30214,7 @@ glabel object_explosion_related
 /* 0819CC 7F04CE9C 8E080014 */  lw    $t0, 0x14($s0)
 .L7F04CEA0:
 /* 0819D0 7F04CEA0 AFA30044 */  sw    $v1, 0x44($sp)
-/* 0819D4 7F04CEA4 0FC0FFF0 */  jal   do_something_if_object_destroyed
+/* 0819D4 7F04CEA4 0FC0FFF0 */  jal   objGetDestroyedLevel
 /* 0819D8 7F04CEA8 AFA80038 */   sw    $t0, 0x38($sp)
 /* 0819DC 7F04CEAC 14400056 */  bnez  $v0, .L7F04D008
 /* 0819E0 7F04CEB0 00000000 */   nop   
@@ -30288,7 +30309,7 @@ glabel object_explosion_related
 /* 081B30 7F04D000 10000056 */  b     .L7F04D15C
 /* 081B34 7F04D004 8FBF002C */   lw    $ra, 0x2c($sp)
 .L7F04D008:
-/* 081B38 7F04D008 0FC0FFD8 */  jal   sub_GAME_7F03FF60
+/* 081B38 7F04D008 0FC0FFD8 */  jal   objGetShotsTaken
 /* 081B3C 7F04D00C 02202025 */   move  $a0, $s1
 /* 081B40 7F04D010 30490003 */  andi  $t1, $v0, 3
 /* 081B44 7F04D014 15200031 */  bnez  $t1, .L7F04D0DC
@@ -30344,7 +30365,7 @@ glabel object_explosion_related
 /* 081C04 7F04D0D4 0FC27094 */  jal   explosionCreate
 /* 081C08 7F04D0D8 AFA90014 */   sw    $t1, 0x14($sp)
 .L7F04D0DC:
-/* 081C0C 7F04D0DC 0FC0FFF0 */  jal   do_something_if_object_destroyed
+/* 081C0C 7F04D0DC 0FC0FFF0 */  jal   objGetDestroyedLevel
 /* 081C10 7F04D0E0 02202025 */   move  $a0, $s1
 /* 081C14 7F04D0E4 58400012 */  blezl $v0, .L7F04D130
 /* 081C18 7F04D0E8 8FA90034 */   lw    $t1, 0x34($sp)
@@ -30404,7 +30425,7 @@ glabel object_explosion_related
 /* 07FA18 7F04D028 00000000 */  nop   
 /* 07FA1C 7F04D02C 45030006 */  bc1tl .L7F04D048
 /* 07FA20 7F04D030 862E0004 */   lh    $t6, 4($s1)
-/* 07FA24 7F04D034 0FC10020 */  jal   do_something_if_object_destroyed
+/* 07FA24 7F04D034 0FC10020 */  jal   objGetDestroyedLevel
 /* 07FA28 7F04D038 00000000 */   nop   
 /* 07FA2C 7F04D03C 504000C1 */  beql  $v0, $zero, .L7F04D344
 /* 07FA30 7F04D040 8FBF002C */   lw    $ra, 0x2c($sp)
@@ -30429,7 +30450,7 @@ glabel object_explosion_related
 /* 07FA74 7F04D084 8E190014 */  lw    $t9, 0x14($s0)
 .L7F04D088:
 /* 07FA78 7F04D088 AFA30044 */  sw    $v1, 0x44($sp)
-/* 07FA7C 7F04D08C 0FC10020 */  jal   do_something_if_object_destroyed
+/* 07FA7C 7F04D08C 0FC10020 */  jal   objGetDestroyedLevel
 /* 07FA80 7F04D090 AFB90038 */   sw    $t9, 0x38($sp)
 /* 07FA84 7F04D094 14400056 */  bnez  $v0, .L7F04D1F0
 /* 07FA88 7F04D098 00000000 */   nop   
@@ -30524,7 +30545,7 @@ glabel object_explosion_related
 /* 07FBD8 7F04D1E8 10000056 */  b     .L7F04D344
 /* 07FBDC 7F04D1EC 8FBF002C */   lw    $ra, 0x2c($sp)
 .L7F04D1F0:
-/* 07FBE0 7F04D1F0 0FC10008 */  jal   sub_GAME_7F03FF60
+/* 07FBE0 7F04D1F0 0FC10008 */  jal   objGetShotsTaken
 /* 07FBE4 7F04D1F4 02202025 */   move  $a0, $s1
 /* 07FBE8 7F04D1F8 30480003 */  andi  $t0, $v0, 3
 /* 07FBEC 7F04D1FC 15000031 */  bnez  $t0, .L7F04D2C4eu
@@ -30580,7 +30601,7 @@ glabel object_explosion_related
 /* 07FCAC 7F04D2BC 0FC26DE4 */  jal   explosionCreate
 /* 07FCB0 7F04D2C0 AFA80014 */   sw    $t0, 0x14($sp)
 .L7F04D2C4eu:
-/* 07FCB4 7F04D2C4 0FC10020 */  jal   do_something_if_object_destroyed
+/* 07FCB4 7F04D2C4 0FC10020 */  jal   objGetDestroyedLevel
 /* 07FCB8 7F04D2C8 02202025 */   move  $a0, $s1
 /* 07FCBC 7F04D2CC 58400012 */  blezl $v0, .L7F04D318
 /* 07FCC0 7F04D2D0 8FA80034 */   lw    $t0, 0x34($sp)
@@ -31789,7 +31810,7 @@ void maybe_detonate_object(ObjectRecord* self, f32 damage,  coord3d* pos, bool f
     self->runtime_bitflags = temp_t7 | (flag2 << 0x11);
 
 
-    if ((self->Head.type != PROPDEF_GAS_RELEASING) ||  (do_something_if_object_destroyed(self) != OBJECT_UNTOUCHED))
+    if ((self->Head.type != PROPDEF_GAS_RELEASING) ||  (objGetDestroyedLevel(self) != OBJECT_UNTOUCHED))
     {
         if (!flag)
         {
@@ -31857,13 +31878,13 @@ void maybe_detonate_object(ObjectRecord* self, f32 damage,  coord3d* pos, bool f
 
         } // if flag
 
-        if (do_something_if_object_destroyed(self) == OBJECT_DESTROYED)
+        if (objGetDestroyedLevel(self) == OBJECT_DESTROYED)
         {
             self->maxdamage += damage * 250.0f;
         }
         else
         {
-            temp_f0 = 4 - (sub_GAME_7F03FF60(damage, self) % 4);
+            temp_f0 = 4 - (objGetShotsTaken(damage, self) % 4);
             phi_f0 = temp_f0;
             if (temp_f0 < damage)
             {
@@ -31890,7 +31911,7 @@ void maybe_detonate_object(ObjectRecord* self, f32 damage,  coord3d* pos, bool f
             propobjSetDropped(self->prop, 1);
             object_explosion_related(self, pos, flag2);
         }
-        if ((self->Head.type == PROPDEF_AMMO) && (do_something_if_object_destroyed(self) == OBJECT_UNTOUCHED))
+        if ((self->Head.type == PROPDEF_AMMO) && (objGetDestroyedLevel(self) == OBJECT_UNTOUCHED))
         {
             randAmmoType = randomGetNext() % 0xD;
             do
@@ -31939,28 +31960,28 @@ void maybe_detonate_object(ObjectRecord* self, f32 damage,  coord3d* pos, bool f
             case 13:
             {
                 self->flags |= 0x40000000;
-                if (do_something_if_object_destroyed(self) == OBJECT_UNTOUCHED)
+                if (objGetDestroyedLevel(self) == OBJECT_UNTOUCHED)
                 {
                     self->flags |= 0x10000000;
                 }
             }
             case 6:
             {
-                if (do_something_if_object_destroyed(self) == OBJECT_UNTOUCHED)
+                if (objGetDestroyedLevel(self) == OBJECT_UNTOUCHED)
                 {
                     self->flags |= 0x10000000;
                 }
             }
             case 10:
             {
-                if (do_something_if_object_destroyed(self) == OBJECT_UNTOUCHED)
+                if (objGetDestroyedLevel(self) == OBJECT_UNTOUCHED)
                 {
                     //save_ptr_monitor_ani_code_to_obj_ani_slot(self + 0x80, &D_80031EE8);
                 }
             }
             case 11:
             {
-                if (do_something_if_object_destroyed(self) == OBJECT_UNTOUCHED)
+                if (objGetDestroyedLevel(self) == OBJECT_UNTOUCHED)
                 {
                     //save_ptr_monitor_ani_code_to_obj_ani_slot(self + 0x80, &D_80031EE8);
                     // save_ptr_monitor_ani_code_to_obj_ani_slot(self + 0xF4, &D_80031EE8);
@@ -31970,14 +31991,14 @@ void maybe_detonate_object(ObjectRecord* self, f32 damage,  coord3d* pos, bool f
             }
             case 36:
             {
-                if (do_something_if_object_destroyed(self) == OBJECT_UNTOUCHED)
+                if (objGetDestroyedLevel(self) == OBJECT_UNTOUCHED)
                 {
                     //init_trigger_toxic_gas_effect(&self->Pos);
                 }
             }
             case 21:
             {
-                if (do_something_if_object_destroyed(self) == OBJECT_DESTROYED)
+                if (objGetDestroyedLevel(self) == OBJECT_DESTROYED)
                 {
                     temp_f0_2 = self->damage;
                     //self->unk84 = ((bitwise f32) self->unk80 * (temp_f0_2 - self->maxdamage)) / temp_f0_2;
@@ -31988,7 +32009,7 @@ void maybe_detonate_object(ObjectRecord* self, f32 damage,  coord3d* pos, bool f
                 }
             }
         }
-        if (do_something_if_object_destroyed(self) == OBJECT_UNTOUCHED)
+        if (objGetDestroyedLevel(self) == OBJECT_UNTOUCHED)
         {
             PropRecord *temp_a0_2 = self->prop->child;
             
@@ -32054,7 +32075,7 @@ glabel maybe_detonate_object
 /* 082C78 7F04E148 00808025 */  move  $s0, $a0
 /* 082C7C 7F04E14C 15610006 */  bne   $t3, $at, .L7F04E168
 /* 082C80 7F04E150 AC8A0064 */   sw    $t2, 0x64($a0)
-/* 082C84 7F04E154 0FC0FFF0 */  jal   do_something_if_object_destroyed
+/* 082C84 7F04E154 0FC0FFF0 */  jal   objGetDestroyedLevel
 /* 082C88 7F04E158 E7AC00E4 */   swc1  $f12, 0xe4($sp)
 /* 082C8C 7F04E15C 24010001 */  li    $at, 1
 /* 082C90 7F04E160 1041016A */  beq   $v0, $at, .L7F04E70C
@@ -32148,7 +32169,7 @@ glabel maybe_detonate_object
 /* 082DD0 7F04E2A0 C7AC00E4 */   lwc1  $f12, 0xe4($sp)
 /* 082DD4 7F04E2A4 02002025 */  move  $a0, $s0
 .L7F04E2A8:
-/* 082DD8 7F04E2A8 0FC0FFF0 */  jal   do_something_if_object_destroyed
+/* 082DD8 7F04E2A8 0FC0FFF0 */  jal   objGetDestroyedLevel
 /* 082DDC 7F04E2AC E7AC00E4 */   swc1  $f12, 0xe4($sp)
 /* 082DE0 7F04E2B0 14400008 */  bnez  $v0, .L7F04E2D4
 /* 082DE4 7F04E2B4 C7AC00E4 */   lwc1  $f12, 0xe4($sp)
@@ -32161,7 +32182,7 @@ glabel maybe_detonate_object
 /* 082E00 7F04E2D0 E60A0070 */   swc1  $f10, 0x70($s0)
 .L7F04E2D4:
 /* 082E04 7F04E2D4 02002025 */  move  $a0, $s0
-/* 082E08 7F04E2D8 0FC0FFD8 */  jal   sub_GAME_7F03FF60
+/* 082E08 7F04E2D8 0FC0FFD8 */  jal   objGetShotsTaken
 /* 082E0C 7F04E2DC E7AC00E4 */   swc1  $f12, 0xe4($sp)
 /* 082E10 7F04E2E0 240B0004 */  li    $t3, 4
 /* 082E14 7F04E2E4 C7AC00E4 */  lwc1  $f12, 0xe4($sp)
@@ -32225,7 +32246,7 @@ glabel maybe_detonate_object
 .L7F04E3AC:
 /* 082EDC 7F04E3AC 54410065 */  bnel  $v0, $at, .L7F04E544
 /* 082EE0 7F04E3B0 92020003 */   lbu   $v0, 3($s0)
-/* 082EE4 7F04E3B4 0FC0FFF0 */  jal   do_something_if_object_destroyed
+/* 082EE4 7F04E3B4 0FC0FFF0 */  jal   objGetDestroyedLevel
 /* 082EE8 7F04E3B8 02002025 */   move  $a0, $s0
 /* 082EEC 7F04E3BC 24010001 */  li    $at, 1
 /* 082EF0 7F04E3C0 54410060 */  bnel  $v0, $at, .L7F04E544
@@ -32340,7 +32361,7 @@ glabel maybe_detonate_object
 /* 083084 7F04E554 3C014000 */  lui   $at, 0x4000
 /* 083088 7F04E558 02002025 */  move  $a0, $s0
 /* 08308C 7F04E55C 03215825 */  or    $t3, $t9, $at
-/* 083090 7F04E560 0FC0FFF0 */  jal   do_something_if_object_destroyed
+/* 083090 7F04E560 0FC0FFF0 */  jal   objGetDestroyedLevel
 /* 083094 7F04E564 AE0B0008 */   sw    $t3, 8($s0)
 /* 083098 7F04E568 24010001 */  li    $at, 1
 /* 08309C 7F04E56C 14410057 */  bne   $v0, $at, .L7F04E6CC
@@ -32354,7 +32375,7 @@ glabel maybe_detonate_object
 .L7F04E58C:
 /* 0830BC 7F04E58C 5441000C */  bnel  $v0, $at, .L7F04E5C0
 /* 0830C0 7F04E590 2401000A */   li    $at, 10
-/* 0830C4 7F04E594 0FC0FFF0 */  jal   do_something_if_object_destroyed
+/* 0830C4 7F04E594 0FC0FFF0 */  jal   objGetDestroyedLevel
 /* 0830C8 7F04E598 02002025 */   move  $a0, $s0
 /* 0830CC 7F04E59C 24010001 */  li    $at, 1
 /* 0830D0 7F04E5A0 1441004A */  bne   $v0, $at, .L7F04E6CC
@@ -32368,7 +32389,7 @@ glabel maybe_detonate_object
 .L7F04E5C0:
 /* 0830F0 7F04E5C0 5441000C */  bnel  $v0, $at, .L7F04E5F4
 /* 0830F4 7F04E5C4 2401000B */   li    $at, 11
-/* 0830F8 7F04E5C8 0FC0FFF0 */  jal   do_something_if_object_destroyed
+/* 0830F8 7F04E5C8 0FC0FFF0 */  jal   objGetDestroyedLevel
 /* 0830FC 7F04E5CC 02002025 */   move  $a0, $s0
 /* 083100 7F04E5D0 24010001 */  li    $at, 1
 /* 083104 7F04E5D4 1441003D */  bne   $v0, $at, .L7F04E6CC
@@ -32382,7 +32403,7 @@ glabel maybe_detonate_object
 .L7F04E5F4:
 /* 083124 7F04E5F4 54410018 */  bnel  $v0, $at, .L7F04E658
 /* 083128 7F04E5F8 24010024 */   li    $at, 36
-/* 08312C 7F04E5FC 0FC0FFF0 */  jal   do_something_if_object_destroyed
+/* 08312C 7F04E5FC 0FC0FFF0 */  jal   objGetDestroyedLevel
 /* 083130 7F04E600 02002025 */   move  $a0, $s0
 /* 083134 7F04E604 24010001 */  li    $at, 1
 /* 083138 7F04E608 14410030 */  bne   $v0, $at, .L7F04E6CC
@@ -32408,7 +32429,7 @@ glabel maybe_detonate_object
 .L7F04E658:
 /* 083188 7F04E658 5441000B */  bnel  $v0, $at, .L7F04E688
 /* 08318C 7F04E65C 24010015 */   li    $at, 21
-/* 083190 7F04E660 0FC0FFF0 */  jal   do_something_if_object_destroyed
+/* 083190 7F04E660 0FC0FFF0 */  jal   objGetDestroyedLevel
 /* 083194 7F04E664 02002025 */   move  $a0, $s0
 /* 083198 7F04E668 24010001 */  li    $at, 1
 /* 08319C 7F04E66C 14410017 */  bne   $v0, $at, .L7F04E6CC
@@ -32421,7 +32442,7 @@ glabel maybe_detonate_object
 .L7F04E688:
 /* 0831B8 7F04E688 14410010 */  bne   $v0, $at, .L7F04E6CC
 /* 0831BC 7F04E68C 00000000 */   nop   
-/* 0831C0 7F04E690 0FC0FFF0 */  jal   do_something_if_object_destroyed
+/* 0831C0 7F04E690 0FC0FFF0 */  jal   objGetDestroyedLevel
 /* 0831C4 7F04E694 02002025 */   move  $a0, $s0
 /* 0831C8 7F04E698 5440000A */  bnezl $v0, .L7F04E6C4
 /* 0831CC 7F04E69C 44804000 */   mtc1  $zero, $f8
@@ -32438,7 +32459,7 @@ glabel maybe_detonate_object
 /* 0831F4 7F04E6C4 00000000 */  nop   
 /* 0831F8 7F04E6C8 E6080084 */  swc1  $f8, 0x84($s0)
 .L7F04E6CC:
-/* 0831FC 7F04E6CC 0FC0FFF0 */  jal   do_something_if_object_destroyed
+/* 0831FC 7F04E6CC 0FC0FFF0 */  jal   objGetDestroyedLevel
 /* 083200 7F04E6D0 02002025 */   move  $a0, $s0
 /* 083204 7F04E6D4 24010001 */  li    $at, 1
 /* 083208 7F04E6D8 5441000D */  bnel  $v0, $at, .L7F04E710
@@ -33035,7 +33056,7 @@ glabel sub_GAME_7F04EA68
 
 bool objIsHealthy(ObjectRecord *self) //#MATCH
 {
-    return do_something_if_object_destroyed(self) == 0;
+    return objGetDestroyedLevel(self) == 0;
 }
 
 
@@ -36450,7 +36471,7 @@ block_6:
         sp6C   = 1;
         sp70   = arg0->chr;
         phi_v1 = sp70;
-        if (do_something_if_object_destroyed(sp84) != 0)
+        if (objGetDestroyedLevel(sp84) != 0)
         {
             return 0;
         }
@@ -36795,7 +36816,7 @@ glabel object_collectability_routines
 /* 0854C0 7F050990 240B0001 */  li    $t3, 1
 /* 0854C4 7F050994 AFAB006C */  sw    $t3, 0x6c($sp)
 /* 0854C8 7F050998 00A02025 */  move  $a0, $a1
-/* 0854CC 7F05099C 0FC0FFF0 */  jal   do_something_if_object_destroyed
+/* 0854CC 7F05099C 0FC0FFF0 */  jal   objGetDestroyedLevel
 /* 0854D0 7F0509A0 AFAA0070 */   sw    $t2, 0x70($sp)
 /* 0854D4 7F0509A4 10400003 */  beqz  $v0, .L7F0509B4
 /* 0854D8 7F0509A8 8FA30070 */   lw    $v1, 0x70($sp)
@@ -37297,7 +37318,7 @@ glabel object_collectability_routines
 /* 08598C 7F050E1C 8D300004 */  lw    $s0, 4($t1)
 /* 085990 7F050E20 240A0001 */  li    $t2, 1
 /* 085994 7F050E24 AFAA0074 */  sw    $t2, 0x74($sp)
-/* 085998 7F050E28 0FC100B0 */  jal   do_something_if_object_destroyed
+/* 085998 7F050E28 0FC100B0 */  jal   objGetDestroyedLevel
 /* 08599C 7F050E2C 00A02025 */   move  $a0, $a1
 /* 0859A0 7F050E30 10400003 */  beqz  $v0, .Ljp7F050E40
 /* 0859A4 7F050E34 02001825 */   move  $v1, $s0
@@ -37833,7 +37854,7 @@ glabel object_collectability_routines
 /* 08598C 7F050E1C 8D300004 */  lw    $s0, 4($t1)
 /* 085990 7F050E20 240A0001 */  li    $t2, 1
 /* 085994 7F050E24 AFAA0074 */  sw    $t2, 0x74($sp)
-/* 085998 7F050E28 0FC100B0 */  jal   do_something_if_object_destroyed
+/* 085998 7F050E28 0FC100B0 */  jal   objGetDestroyedLevel
 /* 08599C 7F050E2C 00A02025 */   move  $a0, $a1
 /* 0859A0 7F050E30 10400003 */  beqz  $v0, .Ljp7F050E40
 /* 0859A4 7F050E34 02001825 */   move  $v1, $s0
@@ -38272,7 +38293,7 @@ glabel sub_GAME_7F050DE8
 
 PropRecord *hatApplyToChr(HatRecord *hat, ChrRecord *chr, ModelFileHeader *filedata, PropRecord *prop, Model *model)
 {
-    prop = init_standard_object((ObjectRecord*)hat, filedata, prop, model);
+    prop = objInit((ObjectRecord*)hat, filedata, prop, model);
 
     if (prop && hat->model)
     {
@@ -39146,7 +39167,7 @@ void propweaponSetDual(WeaponObjRecord *leftweapon, WeaponObjRecord *rightweapon
 
 PropRecord* complete_object_data_block_return_position_entry(ObjectRecord* obj, ModelFileHeader* model_header, PropRecord* prop, Model* model)
 {
-    prop = init_standard_object(obj, model_header, prop, model);
+    prop = objInit(obj, model_header, prop, model);
     if (prop != NULL)
     {
         prop->type = 4;
