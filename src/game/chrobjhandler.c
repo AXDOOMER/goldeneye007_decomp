@@ -1469,56 +1469,25 @@ PropRecord* objInitWithAutoModel(ObjectRecord* obj)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F040754(void) {
+void sub_GAME_7F040754(ObjectRecord* arg0, coord3d* arg1, Mtxf* arg2, StandTile* arg3) {
 
+    PropRecord *prop = arg0->prop;
+
+    matrix_4x4_copy(arg2, &arg0->mtx);
+
+    arg0->runtime_pos.x = prop->pos.x = arg1->x;
+    arg0->runtime_pos.y = prop->pos.y = arg1->y;
+    arg0->runtime_pos.z = prop->pos.z = arg1->z;
+
+    prop->stan = arg3;
+
+    sub_GAME_7F0402B4(arg0->prop, &arg0->nextcol);
+
+    arg0->shadecol.r = arg0->nextcol.r;
+    arg0->shadecol.g = arg0->nextcol.g;
+    arg0->shadecol.b = arg0->nextcol.b;
+    arg0->shadecol.a = arg0->nextcol.a;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F040754
-/* 075284 7F040754 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 075288 7F040758 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 07528C 7F04075C AFB00018 */  sw    $s0, 0x18($sp)
-/* 075290 7F040760 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 075294 7F040764 AFA70034 */  sw    $a3, 0x34($sp)
-/* 075298 7F040768 8C820010 */  lw    $v0, 0x10($a0)
-/* 07529C 7F04076C 00808025 */  move  $s0, $a0
-/* 0752A0 7F040770 26050018 */  addiu $a1, $s0, 0x18
-/* 0752A4 7F040774 00C02025 */  move  $a0, $a2
-/* 0752A8 7F040778 0FC16008 */  jal   matrix_4x4_copy
-/* 0752AC 7F04077C AFA20024 */   sw    $v0, 0x24($sp)
-/* 0752B0 7F040780 8FA3002C */  lw    $v1, 0x2c($sp)
-/* 0752B4 7F040784 8FA20024 */  lw    $v0, 0x24($sp)
-/* 0752B8 7F040788 2605007C */  addiu $a1, $s0, 0x7c
-/* 0752BC 7F04078C C4600000 */  lwc1  $f0, ($v1)
-/* 0752C0 7F040790 E4400008 */  swc1  $f0, 8($v0)
-/* 0752C4 7F040794 E6000058 */  swc1  $f0, 0x58($s0)
-/* 0752C8 7F040798 C4600004 */  lwc1  $f0, 4($v1)
-/* 0752CC 7F04079C E440000C */  swc1  $f0, 0xc($v0)
-/* 0752D0 7F0407A0 E600005C */  swc1  $f0, 0x5c($s0)
-/* 0752D4 7F0407A4 C4600008 */  lwc1  $f0, 8($v1)
-/* 0752D8 7F0407A8 E4400010 */  swc1  $f0, 0x10($v0)
-/* 0752DC 7F0407AC E6000060 */  swc1  $f0, 0x60($s0)
-/* 0752E0 7F0407B0 8FAE0034 */  lw    $t6, 0x34($sp)
-/* 0752E4 7F0407B4 AC4E0014 */  sw    $t6, 0x14($v0)
-/* 0752E8 7F0407B8 0FC100AD */  jal   sub_GAME_7F0402B4
-/* 0752EC 7F0407BC 8E040010 */   lw    $a0, 0x10($s0)
-/* 0752F0 7F0407C0 920F007C */  lbu   $t7, 0x7c($s0)
-/* 0752F4 7F0407C4 9218007D */  lbu   $t8, 0x7d($s0)
-/* 0752F8 7F0407C8 9219007E */  lbu   $t9, 0x7e($s0)
-/* 0752FC 7F0407CC 9208007F */  lbu   $t0, 0x7f($s0)
-/* 075300 7F0407D0 A20F0078 */  sb    $t7, 0x78($s0)
-/* 075304 7F0407D4 A2180079 */  sb    $t8, 0x79($s0)
-/* 075308 7F0407D8 A219007A */  sb    $t9, 0x7a($s0)
-/* 07530C 7F0407DC A208007B */  sb    $t0, 0x7b($s0)
-/* 075310 7F0407E0 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 075314 7F0407E4 8FB00018 */  lw    $s0, 0x18($sp)
-/* 075318 7F0407E8 27BD0028 */  addiu $sp, $sp, 0x28
-/* 07531C 7F0407EC 03E00008 */  jr    $ra
-/* 075320 7F0407F0 00000000 */   nop   
-)
-#endif
 
 
 
