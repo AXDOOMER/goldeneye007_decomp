@@ -30073,6 +30073,10 @@ glabel objDrop
 #endif
 
 
+/**
+ * Make an object fall. Eg. due to it sitting on a table which is now destroyed,
+ * or because it was a chopper that is now destroyed.
+ */
 void objFall(ObjectRecord *obj, s32 playernum)
 {
     obj->runtime_bitflags &= 0xFFF9FFFF;
@@ -30124,91 +30128,45 @@ void objFall(ObjectRecord *obj, s32 playernum)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F04CD04(void) {
+/**
+ * Destroy the objects that the given prop is supporting.
+ *
+ * For example, destroying a table will also destroy all the props that are
+ * sitting on that table.
+ */
+void objDestroySupportedObjects(PropRecord* tableprop, s32 playernum)
+{
+    ObjectRecord* obj;
+    ObjectRecord* tableobj;
+    PropRecord* prop;
+    rect4f* rect;
+    s32 sp44;
+    u8 room;
 
+    tableobj = tableprop->obj;
+    room = tableprop->stan->room;
+
+    chraiGetCollisionBoundsWithoutY(tableprop, &rect, &sp44);
+
+    if (sp44 > 0)
+    {
+        prop = get_ptr_obj_pos_list_current_entry();
+        while (prop)
+        {
+            if (((prop->type == PROP_TYPE_OBJ) || (prop->type == PROP_TYPE_WEAPON)) && (prop->stan->room == room))
+            {
+                obj = prop->obj;
+                if ((tableobj->runtime_pos.y < obj->runtime_pos.y)
+                        && ((s32) obj->runtime_bitflags & RUNTIMEBITFLAG_00008000)
+                        && (chrpropTestPointInPolygon(&obj->runtime_pos, rect, sp44) != 0))
+                {
+                    objFall(obj, playernum);
+                }
+            }
+            prop = prop->prev;
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F04CD04
-/* 081834 7F04CD04 27BDFFA8 */  addiu $sp, $sp, -0x58
-/* 081838 7F04CD08 AFBF0034 */  sw    $ra, 0x34($sp)
-/* 08183C 7F04CD0C AFB60030 */  sw    $s6, 0x30($sp)
-/* 081840 7F04CD10 AFB5002C */  sw    $s5, 0x2c($sp)
-/* 081844 7F04CD14 AFB40028 */  sw    $s4, 0x28($sp)
-/* 081848 7F04CD18 AFB30024 */  sw    $s3, 0x24($sp)
-/* 08184C 7F04CD1C AFB20020 */  sw    $s2, 0x20($sp)
-/* 081850 7F04CD20 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 081854 7F04CD24 AFB00018 */  sw    $s0, 0x18($sp)
-/* 081858 7F04CD28 8C8E0014 */  lw    $t6, 0x14($a0)
-/* 08185C 7F04CD2C 00A0B025 */  move  $s6, $a1
-/* 081860 7F04CD30 8C940004 */  lw    $s4, 4($a0)
-/* 081864 7F04CD34 27A50048 */  addiu $a1, $sp, 0x48
-/* 081868 7F04CD38 27A60044 */  addiu $a2, $sp, 0x44
-/* 08186C 7F04CD3C 0FC0F32C */  jal   chraiGetCollisionBoundsWithoutY
-/* 081870 7F04CD40 91D50003 */   lbu   $s5, 3($t6)
-/* 081874 7F04CD44 8FAF0044 */  lw    $t7, 0x44($sp)
-/* 081878 7F04CD48 59E00027 */  blezl $t7, .L7F04CDE8
-/* 08187C 7F04CD4C 8FBF0034 */   lw    $ra, 0x34($sp)
-/* 081880 7F04CD50 0FC0E909 */  jal   get_ptr_obj_pos_list_current_entry
-/* 081884 7F04CD54 00000000 */   nop   
-/* 081888 7F04CD58 10400022 */  beqz  $v0, .L7F04CDE4
-/* 08188C 7F04CD5C 00408825 */   move  $s1, $v0
-/* 081890 7F04CD60 24130004 */  li    $s3, 4
-/* 081894 7F04CD64 24120001 */  li    $s2, 1
-/* 081898 7F04CD68 92220000 */  lbu   $v0, ($s1)
-.L7F04CD6C:
-/* 08189C 7F04CD6C 52420004 */  beql  $s2, $v0, .L7F04CD80
-/* 0818A0 7F04CD70 8E380014 */   lw    $t8, 0x14($s1)
-/* 0818A4 7F04CD74 56620019 */  bnel  $s3, $v0, .L7F04CDDC
-/* 0818A8 7F04CD78 8E310024 */   lw    $s1, 0x24($s1)
-/* 0818AC 7F04CD7C 8E380014 */  lw    $t8, 0x14($s1)
-.L7F04CD80:
-/* 0818B0 7F04CD80 93190003 */  lbu   $t9, 3($t8)
-/* 0818B4 7F04CD84 56B90015 */  bnel  $s5, $t9, .L7F04CDDC
-/* 0818B8 7F04CD88 8E310024 */   lw    $s1, 0x24($s1)
-/* 0818BC 7F04CD8C 8E300004 */  lw    $s0, 4($s1)
-/* 0818C0 7F04CD90 C684005C */  lwc1  $f4, 0x5c($s4)
-/* 0818C4 7F04CD94 C606005C */  lwc1  $f6, 0x5c($s0)
-/* 0818C8 7F04CD98 4606203C */  c.lt.s $f4, $f6
-/* 0818CC 7F04CD9C 00000000 */  nop   
-/* 0818D0 7F04CDA0 4502000E */  bc1fl .L7F04CDDC
-/* 0818D4 7F04CDA4 8E310024 */   lw    $s1, 0x24($s1)
-/* 0818D8 7F04CDA8 8E080064 */  lw    $t0, 0x64($s0)
-/* 0818DC 7F04CDAC 26040058 */  addiu $a0, $s0, 0x58
-/* 0818E0 7F04CDB0 8FA50048 */  lw    $a1, 0x48($sp)
-/* 0818E4 7F04CDB4 31098000 */  andi  $t1, $t0, 0x8000
-/* 0818E8 7F04CDB8 51200008 */  beql  $t1, $zero, .L7F04CDDC
-/* 0818EC 7F04CDBC 8E310024 */   lw    $s1, 0x24($s1)
-/* 0818F0 7F04CDC0 0FC0F336 */  jal   chrpropTestPointInPolygon
-/* 0818F4 7F04CDC4 8FA60044 */   lw    $a2, 0x44($sp)
-/* 0818F8 7F04CDC8 10400003 */  beqz  $v0, .L7F04CDD8
-/* 0818FC 7F04CDCC 02002025 */   move  $a0, $s0
-/* 081900 7F04CDD0 0FC13291 */  jal   objFall
-/* 081904 7F04CDD4 02C02825 */   move  $a1, $s6
-.L7F04CDD8:
-/* 081908 7F04CDD8 8E310024 */  lw    $s1, 0x24($s1)
-.L7F04CDDC:
-/* 08190C 7F04CDDC 5620FFE3 */  bnezl $s1, .L7F04CD6C
-/* 081910 7F04CDE0 92220000 */   lbu   $v0, ($s1)
-.L7F04CDE4:
-/* 081914 7F04CDE4 8FBF0034 */  lw    $ra, 0x34($sp)
-.L7F04CDE8:
-/* 081918 7F04CDE8 8FB00018 */  lw    $s0, 0x18($sp)
-/* 08191C 7F04CDEC 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 081920 7F04CDF0 8FB20020 */  lw    $s2, 0x20($sp)
-/* 081924 7F04CDF4 8FB30024 */  lw    $s3, 0x24($sp)
-/* 081928 7F04CDF8 8FB40028 */  lw    $s4, 0x28($sp)
-/* 08192C 7F04CDFC 8FB5002C */  lw    $s5, 0x2c($sp)
-/* 081930 7F04CE00 8FB60030 */  lw    $s6, 0x30($sp)
-/* 081934 7F04CE04 03E00008 */  jr    $ra
-/* 081938 7F04CE08 27BD0058 */   addiu $sp, $sp, 0x58
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
@@ -30332,7 +30290,7 @@ glabel object_explosion_related
 /* 081AD4 7F04CFA4 8FA40044 */  lw    $a0, 0x44($sp)
 /* 081AD8 7F04CFA8 5604006C */  bnel  $s0, $a0, .L7F04D15C
 /* 081ADC 7F04CFAC 8FBF002C */   lw    $ra, 0x2c($sp)
-/* 081AE0 7F04CFB0 0FC13341 */  jal   sub_GAME_7F04CD04
+/* 081AE0 7F04CFB0 0FC13341 */  jal   objDestroySupportedObjects
 /* 081AE4 7F04CFB4 8FA50050 */   lw    $a1, 0x50($sp)
 /* 081AE8 7F04CFB8 8E220064 */  lw    $v0, 0x64($s1)
 /* 081AEC 7F04CFBC 30588000 */  andi  $t8, $v0, 0x8000
@@ -30568,7 +30526,7 @@ glabel object_explosion_related
 /* 07FB7C 7F04D18C 8FA40044 */  lw    $a0, 0x44($sp)
 /* 07FB80 7F04D190 5604006C */  bnel  $s0, $a0, .L7F04D344
 /* 07FB84 7F04D194 8FBF002C */   lw    $ra, 0x2c($sp)
-/* 07FB88 7F04D198 0FC133BE */  jal   sub_GAME_7F04CD04
+/* 07FB88 7F04D198 0FC133BE */  jal   objDestroySupportedObjects
 /* 07FB8C 7F04D19C 8FA50050 */   lw    $a1, 0x50($sp)
 /* 07FB90 7F04D1A0 8E220064 */  lw    $v0, 0x64($s1)
 /* 07FB94 7F04D1A4 304F8000 */  andi  $t7, $v0, 0x8000
