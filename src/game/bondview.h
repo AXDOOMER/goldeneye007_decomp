@@ -689,7 +689,7 @@ struct player
    * Address 0x800C6B17
   */
   u16 buttons_pressed;
-  s16 field_3B6;
+  u16 prev_buttons_pressed;
 
   struct coord3d field_3B8;
 
