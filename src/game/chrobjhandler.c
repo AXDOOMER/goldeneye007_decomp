@@ -28532,12 +28532,12 @@ void objDetach(PropRecord *prop)
                 }
                 else if (prop == chr->weapons_held[GUNRIGHT])
                 {
-                    sub_GAME_7F02D118(chr, GUNRIGHT, FALSE);
+                    chrSetFiring(chr, GUNRIGHT, FALSE);
                     chr->weapons_held[GUNRIGHT] = NULL;
                 }
                 else if (prop == chr->weapons_held[GUNLEFT])
                 {
-                    sub_GAME_7F02D118(chr, GUNLEFT, FALSE);
+                    chrSetFiring(chr, GUNLEFT, FALSE);
                     chr->weapons_held[GUNLEFT] = NULL;
                 }
             }
