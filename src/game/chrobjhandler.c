@@ -1457,7 +1457,7 @@ PropRecord* init_standard_object(ObjectRecord* obj, ModelFileHeader* model_heade
 }
 
 
-PropRecord* sub_GAME_7F0406F8(ObjectRecord* object, ModelFileHeader* header)
+PropRecord* objInitWithModelDef(ObjectRecord* object, ModelFileHeader* header)
 {
   return init_standard_object(object, header, 0, 0);
 }
@@ -1465,7 +1465,7 @@ PropRecord* sub_GAME_7F0406F8(ObjectRecord* object, ModelFileHeader* header)
 
 PropRecord* objInitWithAutoModel(ObjectRecord* obj)
 {
-    return sub_GAME_7F0406F8(obj, PitemZ_entries[obj->obj].header);
+    return objInitWithModelDef(obj, PitemZ_entries[obj->obj].header);
 }
 
 
@@ -31913,7 +31913,7 @@ void maybe_detonate_object(ObjectRecord* self, f32 damage,  coord3d* pos, bool f
                         {
                             //temp_v0_5->unk80 = 1;
                         }
-                        if (sub_GAME_7F0406F8(&temp_a2, *(PitemZ_entries + (temp_a3 * 0xC)), &temp_a2, temp_a3) != 0)
+                        if (objInitWithModelDef(&temp_a2, *(PitemZ_entries + (temp_a3 * 0xC)), &temp_a2, temp_a3) != 0)
                         {
                             //temp_a0 = temp_a2->unk14;
                             
@@ -32308,7 +32308,7 @@ glabel maybe_detonate_object
 /* 083014 7F04E4E4 3C058004 */  lui   $a1, %hi(PitemZ_entries)
 /* 083018 7F04E4E8 00B82821 */  addu  $a1, $a1, $t8
 /* 08301C 7F04E4EC 8CA5A228 */  lw    $a1, %lo(PitemZ_entries)($a1)
-/* 083020 7F04E4F0 0FC101BE */  jal   sub_GAME_7F0406F8
+/* 083020 7F04E4F0 0FC101BE */  jal   objInitWithModelDef
 /* 083024 7F04E4F4 AFA600C0 */   sw    $a2, 0xc0($sp)
 /* 083028 7F04E4F8 10400011 */  beqz  $v0, .L7F04E540
 /* 08302C 7F04E4FC 8FA600C0 */   lw    $a2, 0xc0($sp)
@@ -39161,7 +39161,7 @@ PropRecord* sub_GAME_7F051DD8(s32* arg0, ModelFileHeader* arg1)
 {
     PropRecord* prop;
 
-    prop = sub_GAME_7F0406F8(arg0, arg1);
+    prop = objInitWithModelDef(arg0, arg1);
     if (prop != NULL)
     {
         prop->type = PROP_TYPE_WEAPON;
