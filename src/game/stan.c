@@ -5733,32 +5733,9 @@ glabel stanMatchTileName
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0B2F00(void *arg0) {
-    ? temp_ret;
-
-    // Node 0
-    temp_ret = stanMatchTileName(*arg0);
-    *arg0 = temp_ret;
-    return temp_ret;
+void sub_GAME_7F0B2F00(StandTilePoint** arg0) {
+    *arg0 = stanMatchTileName(*arg0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B2F00
-/* 0E7A30 7F0B2F00 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0E7A34 7F0B2F04 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0E7A38 7F0B2F08 AFA40018 */  sw    $a0, 0x18($sp)
-/* 0E7A3C 7F0B2F0C 0FC2CB96 */  jal   stanMatchTileName
-/* 0E7A40 7F0B2F10 8C840000 */   lw    $a0, ($a0)
-/* 0E7A44 7F0B2F14 8FAF0018 */  lw    $t7, 0x18($sp)
-/* 0E7A48 7F0B2F18 ADE20000 */  sw    $v0, ($t7)
-/* 0E7A4C 7F0B2F1C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0E7A50 7F0B2F20 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0E7A54 7F0B2F24 03E00008 */  jr    $ra
-/* 0E7A58 7F0B2F28 00000000 */   nop   
-)
-#endif
 
 
 
