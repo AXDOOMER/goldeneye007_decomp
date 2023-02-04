@@ -232,7 +232,7 @@ void initBONDdataforPlayer(s32 player_num)
     g_playerPointers[player_num]->step_in_view_watch_animation = 0;
     g_playerPointers[player_num]->pause_animation_counter = 0.0f;
     g_playerPointers[player_num]->buttons_pressed = 0;
-    g_playerPointers[player_num]->field_3B6 = 0;
+    g_playerPointers[player_num]->prev_buttons_pressed = 0;
     g_playerPointers[player_num]->field_3B8.x = 0.0f;
     g_playerPointers[player_num]->field_3B8.y = 0.0f;
     g_playerPointers[player_num]->field_3B8.z = DEFAULT_FIELD_3B8_Z;

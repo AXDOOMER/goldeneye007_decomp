@@ -349,5 +349,6 @@ void advance_through_inventory(void);
 void backstep_through_inventory(void);
 void sub_GAME_7F067AA4(s32 param_1);
 void sub_GAME_7F067FBC(f32 turn_x, f32 turn_y);
+void sub_GAME_7F067420(s32 arg0);
 
 #endif
