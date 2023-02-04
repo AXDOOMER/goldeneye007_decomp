@@ -296,39 +296,39 @@ typedef enum PROPFLAG
 // prop definition flags 
 typedef enum PROPFLAG2
 {
-    PROPFLAG2_00000001                   = 0x00000001, // unknown
-    PROPFLAG2_00000002                   = 0x00000002, // unknown
-    PROPFLAG2_00000004                   = 0x00000004, // unknown
-    PROPFLAG2_00000008                   = 0x00000008, // unknown
-    PROPFLAG2_00000010                   = 0x00000010, // unknown
-    PROPFLAG2_00000020                   = 0x00000020, // unknown
-    PROPFLAG2_00000040                   = 0x00000040, // unknown
-    PROPFLAG2_00000080                   = 0x00000080, // unknown
-    PROPFLAG2_NOFALL                     = 0x00000100, // unknown
-    PROPFLAG2_FALLWITHOUTROTATION        = 0x00000200, // unknown
-    PROPFLAG2_LINKEDTOSAFE               = 0x00000400, // unknown
-    PROPFLAG2_00000800                   = 0x00000800, // unknown
-    PROPFLAG2_00001000                   = 0x00001000, // unknown
-    PROPFLAG2_00002000                   = 0x00002000, // unknown
-    PROPFLAG2_00004000                   = 0x00004000, // unknown
-    PROPFLAG2_SHOOTTHROUGH               = 0x00008000, // unknown
-    PROPFLAG2_00010000                   = 0x00010000, // unknown
-    PROPFLAG2_00020000                   = 0x00020000, // unknown
-    PROPFLAG2_00040000                   = 0x00040000, // unknown
-    PROPFLAG2_00080000                   = 0x00080000, // unknown
-    PROPFLAG2_00100000                   = 0x00100000, // unknown
-    PROPFLAG2_00200000                   = 0x00200000, // unknown
-    PROPFLAG2_00400000                   = 0x00400000, // unknown
-    PROPFLAG2_00800000                   = 0x00800000, // unknown
-    PROPFLAG2_01000000                   = 0x01000000, // unknown
-    PROPFLAG2_02000000                   = 0x02000000, // unknown
-    PROPFLAG2_04000000                   = 0x04000000, // unknown
-    PROPFLAG2_08000000                   = 0x08000000, // unknown
-    PROPFLAG2_10000000                   = 0x10000000, // unknown
-    PROPFLAG2_20000000                   = 0x20000000, // unknown
-    PROPFLAG2_40000000                   = 0x40000000, // unknown
-    PROPFLAG2_80000000                   = 0x80000000  // unknown
-}PROPFLAG2;
+    PROPFLAG2_00000001            = 0x00000001, // Activate Drone Gun
+    PROPFLAG2_00000002            = 0x00000002, // lightweight (move when shot)
+    PROPFLAG2_00000004            = 0x00000004, // Interaction Text Not Shown for Doors
+    PROPFLAG2_00000008            = 0x00000008, // Don't Load in Multiplayer
+    PROPFLAG2_00000010            = 0x00000010, // Don't Load on Agent Mode
+    PROPFLAG2_00000020            = 0x00000020, // Don't Load on Secret Agent Mode
+    PROPFLAG2_00000040            = 0x00000040, // Don't Load on 00 Agent Mode
+    PROPFLAG2_00000080            = 0x00000080, // Don't Load on 007 Mode
+    PROPFLAG2_NOFALL              = 0x00000100, // immobile
+    PROPFLAG2_FALLWITHOUTROTATION = 0x00000200, // used with mines
+    PROPFLAG2_LINKEDTOSAFE        = 0x00000400, // unknown
+    PROPFLAG2_00000800            = 0x00000800, // Don't activate if stan gap Bond/Object
+    PROPFLAG2_00001000            = 0x00001000, // Watch Magnet Attract through Walls/Objects
+    PROPFLAG2_00002000            = 0x00002000, // Remove When Destroyed
+    PROPFLAG2_00004000            = 0x00004000, // Immune to Gunfire
+    PROPFLAG2_SHOOTTHROUGH        = 0x00008000, // Can Shoot Through Object
+    PROPFLAG2_00010000            = 0x00010000, // Always Visible (in front)
+    PROPFLAG2_00020000            = 0x00020000, // unknown
+    PROPFLAG2_00040000            = 0x00040000, // Hide inventory item (for tagged armor/ammo/magazine)
+    PROPFLAG2_00080000            = 0x00080000, // Invincible Except to Explosions
+    PROPFLAG2_00100000            = 0x00100000, // Bulletproof Glass    
+    PROPFLAG2_00200000            = 0x00200000, // Immune to Explosions
+    PROPFLAG2_00400000            = 0x00400000, // Don't load on 2P
+    PROPFLAG2_00800000            = 0x00800000, // Don't load on 3P
+    PROPFLAG2_01000000            = 0x01000000, // Don't load on 4P
+    PROPFLAG2_02000000            = 0x02000000, // Rockets/Mines/Grenades Pass Through
+    PROPFLAG2_04000000            = 0x04000000, // unknown
+    PROPFLAG2_08000000            = 0x08000000, // One-Way Lock (Front)
+    PROPFLAG2_10000000            = 0x10000000, // One-Way Lock (Back)
+    PROPFLAG2_20000000            = 0x20000000, // Character AI Cannot Operate
+    PROPFLAG2_40000000            = 0x40000000, // Deactivate Special Feature
+    PROPFLAG2_80000000            = 0x80000000  // Massive Explosion (08 Type)/Rotating Disabled Drone Gun (0D Type)
+} PROPFLAG2;
 
 typedef enum DOORFLAG
 {
