@@ -5740,11 +5740,11 @@ void sub_GAME_7F0B6368(s32 rooms) {
             {
                 // Node 5
                 sp1C = temp_v1;
-                sp2C = memaGetLargestAllocSize(0);
+                sp2C = memaGetLongestFree(0);
             }
             // Node 6
             sp1C = (void *) temp_v1;
-            temp_ret = memaFree(sp2C, sp28);
+            temp_ret = memaAlloc(sp2C, sp28);
             temp_v1_2 = temp_v1;
             sp20 = temp_ret;
             if (temp_ret != 0)
@@ -5819,7 +5819,7 @@ void sub_GAME_7F0B6368(s32 rooms) {
                 {
                     // Node 19
                     sp1C = (void *) phi_v1_2;
-                    memaResize(sp20, sp2C, temp_t1, phi_a3_2);
+                    memaRealloc(sp20, sp2C, temp_t1, phi_a3_2);
                     phi_v1_3 = phi_v1_2;
                 }
                 // Node 20
@@ -5896,7 +5896,7 @@ glabel sub_GAME_7F0B6368
 /* 0EAF10 7F0B63E0 AFAB002C */   sw    $t3, 0x2c($sp)
 /* 0EAF14 7F0B63E4 AFA3001C */  sw    $v1, 0x1c($sp)
 .L7F0B63E8:
-/* 0EAF18 7F0B63E8 0C0028DC */  jal   memaGetLargestAllocSize
+/* 0EAF18 7F0B63E8 0C0028DC */  jal   memaGetLongestFree
 /* 0EAF1C 7F0B63EC AFA70028 */   sw    $a3, 0x28($sp)
 /* 0EAF20 7F0B63F0 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0EAF24 7F0B63F4 8FA70028 */  lw    $a3, 0x28($sp)
@@ -5904,7 +5904,7 @@ glabel sub_GAME_7F0B6368
 .L7F0B63FC:
 /* 0EAF2C 7F0B63FC 8FA4002C */  lw    $a0, 0x2c($sp)
 /* 0EAF30 7F0B6400 AFA3001C */  sw    $v1, 0x1c($sp)
-/* 0EAF34 7F0B6404 0C00278D */  jal   memaFree
+/* 0EAF34 7F0B6404 0C00278D */  jal   memaAlloc
 /* 0EAF38 7F0B6408 AFA70028 */   sw    $a3, 0x28($sp)
 /* 0EAF3C 7F0B640C 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0EAF40 7F0B6410 8FA70028 */  lw    $a3, 0x28($sp)
@@ -5976,7 +5976,7 @@ glabel sub_GAME_7F0B6368
 /* 0EB034 7F0B6504 8FA40020 */  lw    $a0, 0x20($sp)
 /* 0EB038 7F0B6508 01602825 */  move  $a1, $t3
 /* 0EB03C 7F0B650C 01203025 */  move  $a2, $t1
-/* 0EB040 7F0B6510 0C0028F7 */  jal   memaResize
+/* 0EB040 7F0B6510 0C0028F7 */  jal   memaRealloc
 /* 0EB044 7F0B6514 AFA3001C */   sw    $v1, 0x1c($sp)
 /* 0EB048 7F0B6518 8FA3001C */  lw    $v1, 0x1c($sp)
 .L7F0B651C:
@@ -6066,7 +6066,7 @@ glabel sub_GAME_7F0B6368
 /* 0E810C 7F0B571C AFAB002C */   sw    $t3, 0x2c($sp)
 /* 0E8110 7F0B5720 AFA3001C */  sw    $v1, 0x1c($sp)
 .L7F0B5724:
-/* 0E8114 7F0B5724 0C0025F4 */  jal   memaGetLargestAllocSize
+/* 0E8114 7F0B5724 0C0025F4 */  jal   memaGetLongestFree
 /* 0E8118 7F0B5728 AFA70028 */   sw    $a3, 0x28($sp)
 /* 0E811C 7F0B572C 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0E8120 7F0B5730 8FA70028 */  lw    $a3, 0x28($sp)
@@ -6074,7 +6074,7 @@ glabel sub_GAME_7F0B6368
 .L7F0B5738:
 /* 0E8128 7F0B5738 8FA4002C */  lw    $a0, 0x2c($sp)
 /* 0E812C 7F0B573C AFA3001C */  sw    $v1, 0x1c($sp)
-/* 0E8130 7F0B5740 0C0024A5 */  jal   memaFree
+/* 0E8130 7F0B5740 0C0024A5 */  jal   memaAlloc
 /* 0E8134 7F0B5744 AFA70028 */   sw    $a3, 0x28($sp)
 /* 0E8138 7F0B5748 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0E813C 7F0B574C 8FA70028 */  lw    $a3, 0x28($sp)
@@ -6146,7 +6146,7 @@ glabel sub_GAME_7F0B6368
 /* 0E8230 7F0B5840 8FA40020 */  lw    $a0, 0x20($sp)
 /* 0E8234 7F0B5844 01602825 */  move  $a1, $t3
 /* 0E8238 7F0B5848 01203025 */  move  $a2, $t1
-/* 0E823C 7F0B584C 0C00260F */  jal   memaResize
+/* 0E823C 7F0B584C 0C00260F */  jal   memaRealloc
 /* 0E8240 7F0B5850 AFA3001C */   sw    $v1, 0x1c($sp)
 /* 0E8244 7F0B5854 8FA3001C */  lw    $v1, 0x1c($sp)
 .L7F0B5858:
@@ -6208,7 +6208,7 @@ void delete_room_data(s32 roomID)
 
     if (array_room_info[roomID].ptr_unique_collision_points)
     {
-        memaRegister(array_room_info[roomID].ptr_unique_collision_points, (((s16)array_room_info[roomID].bitflags3 * 0x1C) + 0xF) & ~0xF);
+        memaFree(array_room_info[roomID].ptr_unique_collision_points, (((s16)array_room_info[roomID].bitflags3 * 0x1C) + 0xF) & ~0xF);
         array_room_info[roomID].ptr_unique_collision_points = 0;
     }
 
@@ -6216,11 +6216,11 @@ void delete_room_data(s32 roomID)
     {
         if (array_room_info[roomID].ptr_point_index)
         {
-            memaRegister(array_room_info[roomID].ptr_point_index, array_room_info[roomID].cur_room_totalsize);
+            memaFree(array_room_info[roomID].ptr_point_index, array_room_info[roomID].cur_room_totalsize);
         }
         else
         {
-            memaRegister(array_room_info[roomID].ptr_expanded_mapping_info, array_room_info[roomID].cur_room_totalsize);
+            memaFree(array_room_info[roomID].ptr_expanded_mapping_info, array_room_info[roomID].cur_room_totalsize);
         }
         array_room_info[roomID].ptr_point_index = 0;
         array_room_info[roomID].ptr_expanded_mapping_info = 0;
@@ -6253,7 +6253,7 @@ glabel delete_room_data
 /* 0EB138 7F0B6608 0018C080 */  sll   $t8, $t8, 2
 /* 0EB13C 7F0B660C 2705000F */  addiu $a1, $t8, 0xf
 /* 0EB140 7F0B6610 00A1C824 */  and   $t9, $a1, $at
-/* 0EB144 7F0B6614 0C002808 */  jal   memaRegister
+/* 0EB144 7F0B6614 0C002808 */  jal   memaFree
 /* 0EB148 7F0B6618 03202825 */   move  $a1, $t9
 /* 0EB14C 7F0B661C AE00002C */  sw    $zero, 0x2c($s0)
 /* 0EB150 7F0B6620 8E020028 */  lw    $v0, 0x28($s0)
@@ -6264,12 +6264,12 @@ glabel delete_room_data
 /* 0EB160 7F0B6630 00402825 */  move  $a1, $v0
 /* 0EB164 7F0B6634 10800005 */  beqz  $a0, .L7F0B664C
 /* 0EB168 7F0B6638 00000000 */   nop   
-/* 0EB16C 7F0B663C 0C002808 */  jal   memaRegister
+/* 0EB16C 7F0B663C 0C002808 */  jal   memaFree
 /* 0EB170 7F0B6640 00402825 */   move  $a1, $v0
 /* 0EB174 7F0B6644 10000004 */  b     .L7F0B6658
 /* 0EB178 7F0B6648 AE000004 */   sw    $zero, 4($s0)
 .L7F0B664C:
-/* 0EB17C 7F0B664C 0C002808 */  jal   memaRegister
+/* 0EB17C 7F0B664C 0C002808 */  jal   memaFree
 /* 0EB180 7F0B6650 8E040008 */   lw    $a0, 8($s0)
 /* 0EB184 7F0B6654 AE000004 */  sw    $zero, 4($s0)
 .L7F0B6658:
@@ -6479,7 +6479,7 @@ loop_3:
         temp_t8 = (((((phi_t5 * 8) - phi_t5) * 4) + 0xf) & -0x10);
         sp24 = temp_t8;
         sp3C = (s32) phi_t5;
-        temp_ret = memaFree(temp_t8, temp_a1, temp_a1->unk8);
+        temp_ret = memaAlloc(temp_t8, temp_a1, temp_a1->unk8);
         if (temp_ret != 0)
         {
             // Node 7
@@ -6664,7 +6664,7 @@ glabel sub_GAME_7F0B6994
 /* 0EB55C 7F0B6A2C AFB80024 */  sw    $t8, 0x24($sp)
 /* 0EB560 7F0B6A30 AFA50028 */  sw    $a1, 0x28($sp)
 /* 0EB564 7F0B6A34 AFA60048 */  sw    $a2, 0x48($sp)
-/* 0EB568 7F0B6A38 0C00278D */  jal   memaFree
+/* 0EB568 7F0B6A38 0C00278D */  jal   memaAlloc
 /* 0EB56C 7F0B6A3C AFAD003C */   sw    $t5, 0x3c($sp)
 /* 0EB570 7F0B6A40 8FA50028 */  lw    $a1, 0x28($sp)
 /* 0EB574 7F0B6A44 8FA60048 */  lw    $a2, 0x48($sp)

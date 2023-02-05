@@ -2,6 +2,32 @@
 #include "mema.h"
 #include "deb.h"
 
+/**
+ * mema - memory (ad hoc) allocation system.
+ *
+ * Mema's heap is 300KB and is itself allocated out of memp's stage pool.
+ * Memp resets its stage pool each time a new stage is loaded, which means mema
+ * is also reset each time a stage is loaded.
+ *
+ * Unlike memp, mema supports freeing of individual allocations. This makes it
+ * a good system to use when the allocation is somewhat temporary and should be
+ * freed without having to load a new stage. It's used by the (inaccessible)
+ * Perfect Head editor, file listings and room code.
+ *
+ * Mema tracks what has been allocated by storing references to free spaces in
+ * its spaces array. The allocations themselves are not referenced. When
+ * initialising the spaces array, the first element is set to the entire heap
+ * and the remaining elements are set to 0.
+ *
+ * This creates a bit of a terminology problem. Just remember that a memaspace
+ * is not an allocation; it's a free space that is available for allocation.
+ *
+ * Due to the ability to free individual allocations, both the heap and the
+ * spaces array can become fragmented. Mema supports defragmenting the spaces
+ * array: entries are ordered by address, and back to back entries are merged.
+ * The data in the heap itself is never moved, as that would require updating
+ * pointers throughout the game code which mema cannot do.
+ */
 
 #if defined(VERSION_EU)
 #define ALLOCATIONS_LENGTH 125
@@ -9,13 +35,34 @@
 #define ALLOCATIONS_LENGTH 509
 #endif
 
-s32 g_MemoryAllocationBuffer;
-s32 g_MemoryAllocationBufferSize;
-allocation g_MemoryAllocations[ALLOCATIONS_LENGTH+3];
+typedef struct memaspace {
+    s32 addr;
+    u32 size;
+} memaspace;
+
+/**
+ * This structure contains dummy entries before and after the spaces array.
+ * These are used as start and end markers, but could have been avoided by
+ * using loop counters (eg. a typical i < numspaces loop).
+ */
+struct memaheap {
+	u32 unk000;
+    u32 unk004;
+	struct memaspace start;
+    //u32 unk010;
+    //u32 unk014;
+	struct memaspace spaces[ALLOCATIONS_LENGTH - 1];
+	struct memaspace end1;
+	struct memaspace end2;
+};
+
+s32 g_MemaHeapStart;
+s32 g_MemaHeapSize;
+struct memaheap g_MemoryAllocations;
 void *g_MemoryAllocationDebugData = NULL;
 
 // Swap two allocations.
-void memaSwap(allocation *a, allocation *b) {
+void memaSwap(memaspace *a, memaspace *b) {
     u32 tempaddr = a->addr;
     u32 tempsize = a->size;
     a->addr = b->addr;
@@ -25,7 +72,7 @@ void memaSwap(allocation *a, allocation *b) {
 }
 
 // Merge two allocations.
-void memaMerge(allocation *a, allocation *b) {
+void memaMerge(memaspace *a, memaspace *b) {
     a->size = (a->size + b->size);
     b->addr = 0;
     b->size = 0;
@@ -34,12 +81,11 @@ void memaMerge(allocation *a, allocation *b) {
 // Do a single iteration over the allocations and attempt to
 // merge adjacent ones. Return value indicates if there were
 // any merges.
-s32 memaIterateAndMergeInternal(allocation *allocations) {
+s32 memaDefragPass(struct memaheap *heap) {
     s32 any = FALSE;
-    allocation *prev = &allocations[1];
-    allocation *curr = &allocations[2];
-
-    allocation *last = &allocations[ALLOCATIONS_LENGTH];
+	struct memaspace *prev = &heap->start;
+	struct memaspace *curr = &heap->spaces[0];
+	struct memaspace *last = &heap->spaces[ALLOCATIONS_LENGTH - 2];
 
     u32 addr = 0;
     while (curr <= last) {
@@ -62,110 +108,152 @@ s32 memaIterateAndMergeInternal(allocation *allocations) {
 
 // Do multiple merge iterations until there are no
 // mergable pairs left.
-void memaMergeAll(void) {
-    while (memaIterateAndMergeInternal(&g_MemoryAllocations));
+void memaDefrag(void)
+{
+    while (memaDefragPass(&g_MemoryAllocations));
 }
 
-// Loop through all allocations and attempt to find a free one. Alternatively,
-// if two can be merged, then do that and use the leftover one. If none is found,
-// then use the smallest allocation in the buffer.
-allocation *memaSearch(allocation *allocations) {
-    allocation *curr = &allocations[2];
-    allocation *best;
+/**
+ * Defrag the spaces list in an attempt to free up any slot.
+ *
+ * If none can be found, return the smallest run of free space so it can be
+ * overwritten by the caller.
+ */
+memaspace *memaSearch(struct memaheap *heap)
+{
+    struct memaspace *curr = &heap->spaces[0];
+	struct memaspace *best;
+
     u32 min;
     s32 i;
-    for (i = 0; i < (ALLOCATIONS_LENGTH-1); i++) {
-        while (curr <= &allocations[ALLOCATIONS_LENGTH]) {
+
+    // Do 124 passes over the list. This ensures the list is in order by the
+	// end. Though in most cases it's roughly in order anyway, and the excessive
+	// looping is just wasting CPU cycles. In reality this situation probably
+	// never occurs.
+    for (i = 0; i < (ALLOCATIONS_LENGTH - 1); i++) {
+        while (curr <= &heap->spaces[ALLOCATIONS_LENGTH - 2]) {
             if (curr->size == 0) {
                 return curr;
             }
+
             if ((u32)curr[1].addr < (u32)curr[0].addr) {
                 memaSwap(&curr[0], &curr[1]);
             }
+
             if (curr[1].addr == (curr[0].size + curr[0].addr)) {
+                // Found two that can be merged
                 curr[0].size += curr[1].size;
                 curr[1].addr = 0;
                 curr[1].size = 0;
                 return &curr[1];
             }
+
             curr++;
         }
-        curr = &allocations[2];
+
+        curr = &heap->spaces[0];
     }
+
+    // If this code is reached then the spaces list is so badly and unrepairably
+	// fragmented that we can't find any slot to record the free space in.
+	// Find the smallest run of free space and use that instead.
+	// The caller will overwrite it with its own free allocation, causing the
+	// original run of free space to be unusable until the mema heap is reset.
     min = 0xFFFFFFFF;
     best = curr;
-    while (curr <= &allocations[ALLOCATIONS_LENGTH]) {
+    while (curr <= &heap->spaces[ALLOCATIONS_LENGTH - 2]) {
         if (curr->size < min) {            
             best = curr;
             min = curr->size;
         }
+
         curr++;
     }
+
     return best;
 }
 
-// Register a new allocation. Start by calculating a suitable index to start search from 
-// based on the relative address in the buffer. Then look forward and backwards
-// for a free allocation. If none is found, then use the more advanced memaSearch method.
-void memaRegisterInternal(s32 addr, s32 size) {
-    s32 index = ((addr - g_MemoryAllocationBuffer) * (ALLOCATIONS_LENGTH-1)) / g_MemoryAllocationBufferSize;
-    allocation *curr = &g_MemoryAllocations[index + 2];
+void _memaFree(s32 addr, s32 size)
+{
+    // Choose an index in the spaces array which we'll mark a space as free,
+	// based on how far into the heap the allocation is. This is a rough
+	// estimate and doesn't need to be any particular index, but the defrag
+	// function tries to order the spaces by address so the closer we get to it
+	// the less work the defrag function will have to do should it be called.
+    s32 index = ((addr - g_MemaHeapStart) * (ALLOCATIONS_LENGTH-1)) / g_MemaHeapSize;
+    struct memaspace *curr = &g_MemoryAllocations.spaces[index];
+
+    // If the entry is taken, keep moving forward until a zero is found.
     while (curr->size != 0) {
         curr++;
     }
+
+    // If we reached the end of the spaces list, go backwards instead
     if (curr->addr == -1) {
-        curr = &g_MemoryAllocations[index + 2];
+        curr = &g_MemoryAllocations.spaces[index];
+
         while (curr->size != 0) {
             curr--;
         }
+
         if (curr->addr == 0) {
-            curr = memaSearch(g_MemoryAllocations);
+            curr = memaSearch(&g_MemoryAllocations);
         }
     }
+
+    // Mark this space as free
     curr->addr = addr;
     curr->size = size;
 }
 
 // Initialize the (removed) debug features.
-void memaInit(void) {
+void memaInit(void)
+{
     debTryAdd(&g_MemoryAllocationDebugData, "mema_c_debug");
 }
 
-// Initialize g_MemoryAllocations given a new buffer. The first
-// and last two allocations serve as sentinels.
-void memaSetBuffer(s32 buffer, s32 size) {
-    allocation *curr;
-    g_MemoryAllocations[0].addr = 0;
-    g_MemoryAllocations[0].size = 0;
-    g_MemoryAllocations[1].addr = 0;
-    g_MemoryAllocations[1].size = 0;
-    g_MemoryAllocations[ALLOCATIONS_LENGTH+1].addr = -1;
-    g_MemoryAllocations[ALLOCATIONS_LENGTH+1].size = 0;
-    g_MemoryAllocations[ALLOCATIONS_LENGTH+2].addr = -1;
-    g_MemoryAllocations[ALLOCATIONS_LENGTH+2].size = 0xFFFFFFFF;
-    for (curr = &g_MemoryAllocations[2]; curr <= &g_MemoryAllocations[ALLOCATIONS_LENGTH]; curr++) {
-        curr->addr = 0;
-        curr->size = 0;
-    }
-    g_MemoryAllocations[2].addr = g_MemoryAllocationBuffer = buffer;
-    g_MemoryAllocations[2].size = g_MemoryAllocationBufferSize = size;
+void memaReset(void *heapaddr, u32 heapsize)
+{
+   struct memaspace *space;
+
+    g_MemoryAllocations.unk000 = 0;
+    g_MemoryAllocations.unk004 = 0;
+
+	g_MemoryAllocations.start.addr = 0;
+	g_MemoryAllocations.start.size = 0;
+
+	g_MemoryAllocations.end1.addr = 0xffffffff;
+	g_MemoryAllocations.end1.size = 0;
+	g_MemoryAllocations.end2.addr = 0xffffffff;
+	g_MemoryAllocations.end2.size = 0xffffffff;
+
+	for (space = &g_MemoryAllocations.spaces[0]; space <= &g_MemoryAllocations.spaces[ALLOCATIONS_LENGTH - 2]; space++) {
+		space->addr = 0;
+		space->size = 0;
+	}
+
+	g_MemoryAllocations.spaces[0].addr = g_MemaHeapStart = (uintptr_t) heapaddr;
+	g_MemoryAllocations.spaces[0].size = g_MemaHeapSize = heapsize;
 }
 
-void memaIterateAndMerge(void) {
-    memaIterateAndMergeInternal(&g_MemoryAllocations);
+void memaSingleDefragPass(void)
+{
+    memaDefragPass(&g_MemoryAllocations);
 }
+
 
 #ifdef NONMATCHING
 // Attempt to free up some memory. Start by looking through the first 16 allocations
 // for a suitable one. If none is found, then look through the rest for any that are
 // large enough. If this also fails, then do 8 merge iterations and then look through
 // entire buffer again. If successful, return the address to the freed memory, otherwise 0.
-s32 memaFree(u32 amount) {
+s32 memaAlloc(u32 amount) {
     s32 addr;
     u32 diff;
     s32 i;
-    allocation *curr = &g_MemoryAllocations[2];
-    allocation *best = NULL;
+    memaspace *curr = &g_MemoryAllocations[2];
+    memaspace *best = NULL;
     for (i = 0; i < 16; i++, curr++) {
         if (curr->size >= amount) {
             if (curr->addr == -1) {
@@ -186,7 +274,7 @@ s32 memaFree(u32 amount) {
         }
         if (curr->addr == -1) {
             for (i = 0; i < 8; i++) {
-                memaIterateAndMergeInternal(g_MemoryAllocations);
+                memaDefragPass(g_MemoryAllocations);
             }
             curr = &g_MemoryAllocations[2];
             while (curr->size < amount) {
@@ -208,7 +296,7 @@ s32 memaFree(u32 amount) {
 #else
 GLOBAL_ASM(
 .text
-glabel memaFree
+glabel memaAlloc
 /* 00AA34 70009E34 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 00AA38 70009E38 AFB2001C */  sw    $s2, 0x1c($sp)
 /* 00AA3C 70009E3C AFB10018 */  sw    $s1, 0x18($sp)
@@ -270,7 +358,7 @@ glabel memaFree
 /* 00AB08 70009F08 3C118006 */  lui   $s1, %hi(g_MemoryAllocations + 0x10)
 /* 00AB0C 70009F0C 26313C38 */  addiu $s1, %lo(g_MemoryAllocations + 0x10) # addiu $s1, $s1, 0x3c38
 .L70009F10:
-/* 00AB10 70009F10 0C002694 */  jal   memaIterateAndMergeInternal
+/* 00AB10 70009F10 0C002694 */  jal   memaDefragPass
 /* 00AB14 70009F14 02602025 */   move  $a0, $s3
 /* 00AB18 70009F18 26100001 */  addiu $s0, $s0, 1
 /* 00AB1C 70009F1C 1614FFFC */  bne   $s0, $s4, .L70009F10
@@ -317,14 +405,15 @@ glabel memaFree
 )
 #endif
 
+
 #ifdef NONMATCHING
-// Find the allocation of the given address and reduce its size by the given 
+// Find the memaspace of the given address and reduce its size by the given 
 // amount. If successful, return the same address, otherwise 0.
 
 // Only regalloc problems left. Called memaGrow in PD
-s32 memaShrink(s32 addr, u32 amount)
+s32 memaGrow(s32 addr, u32 amount)
 {
-    allocation *curr = &g_MemoryAllocations[2];
+    memaspace *curr = &g_MemoryAllocations[2];
 
     while (curr->addr != -1)
     {    
@@ -352,7 +441,7 @@ found:
 #else
 GLOBAL_ASM(
 .text
-glabel memaShrink
+glabel memaGrow
 /* 00ABA8 70009FA8 3C198006 */  lui   $t9, %hi(g_MemoryAllocations + 0x10) 
 /* 00ABAC 70009FAC 8F393C38 */  lw    $t9, %lo(g_MemoryAllocations + 0x10)($t9)
 /* 00ABB0 70009FB0 3C188006 */  lui   $t8, %hi(g_MemoryAllocations + 0x10) 
@@ -392,8 +481,9 @@ glabel memaShrink
 )
 #endif
 
-void memaRegister(u32 addr, u32 size) {
-    memaRegisterInternal(addr, size);
+void memaFree(void *addr, s32 size)
+{
+	_memaFree((uintptr_t) addr, size);
 }
 
 #ifdef NONMATCHING
@@ -446,7 +536,7 @@ glabel mema7000A040
 f32 memaCalculateNonLargestToTotalRatio(void) {
     u32 tot = 0;
     u32 max = 0;
-    allocation *curr = &g_MemoryAllocations[2];
+    memaspace *curr = &g_MemoryAllocations.spaces[0];
     while (curr->addr != -1) {
         tot += curr->size;
         if (max < curr->size) {
@@ -469,7 +559,7 @@ void memaDump(void) {
     s32 count = 0;
     u32 tot = 0;
     s32 lim = (1 << 31);
-    allocation *curr = &g_MemoryAllocations[2];
+    memaspace *curr = &g_MemoryAllocations[2];
     while (curr->addr != -1) {
         tot += curr->size;
         curr++;
@@ -639,44 +729,56 @@ void memaDumpPrePostMerge(void) {
     s32 i;    
     memaDump();
     for (i = 0; i < (ALLOCATIONS_LENGTH-1); i++) {
-        memaIterateAndMergeInternal(&g_MemoryAllocations);
+        memaDefragPass(&g_MemoryAllocations);
     }
     memaDump();
 }
 
-void mema7000A2F8(void (*func)(u32, allocation*)) {
-    allocation *curr = &g_MemoryAllocations[2];
+void mema7000A2F8(void (*func)(u32, memaspace*)) {
+    memaspace *curr = &g_MemoryAllocations.spaces[0];
     while (curr->addr != -1) {
         func((curr->addr + curr->size), curr);
         curr++;
     }
 }
 
-// Return the size of the largest allocation, after
-// a full merge pass.
-u32 memaGetLargestAllocSize(void) {
-    allocation *curr;
-    u32 max = 0;
-    memaMergeAll();
-    curr = &g_MemoryAllocations[2];
-    while (curr->addr != -1) {
-        if (max < curr->size) {
-            max = curr->size;
-        }
-        curr++;
-    }
-    if (max != 0) {
-        return max;
-    }
-    return 0;
+/**
+ * Find and return the largest amount of contiguous free space in the pool.
+ * ie. the biggest allocation that mema can currently make.
+ */
+s32 memaGetLongestFree(void)
+{
+	struct memaspace *curr;
+	s32 biggest = 0;
+
+	memaDefrag();
+
+	curr = &g_MemoryAllocations.spaces[0];
+
+	while (curr->addr != -1) {
+		if (curr->size > biggest) {
+			biggest = curr->size;
+		}
+
+		curr++;
+	}
+
+	if (biggest) {
+		return biggest;
+	}
+
+	return 0;
 }
 
+// memaRealloc -> memaRealloc
 #ifdef NONMATCHING
-// Resize an existing allocation. Either by shrinking the old one, or
-// by registering a new allocation containing the remaining bytes.
-s32 memaResize(s32 addr, u32 newsize, u32 oldsize) {
+// Resize an existing memaspace. Either by shrinking the old one, or
+// by registering a new memaspace containing the remaining bytes.
+//
+// https://decomp.me/scratch/RoPAF 99.62%
+s32 memaRealloc(s32 addr, u32 newsize, u32 oldsize) {
     if (newsize < oldsize) {
-        if (memaShrink((addr + newsize), (oldsize - newsize)) == 0) {
+        if (memaGrow((addr + newsize), (oldsize - newsize)) == 0) {
             return 0;
         } else {
             return 1;
@@ -684,7 +786,7 @@ s32 memaResize(s32 addr, u32 newsize, u32 oldsize) {
     }
     else {
         if (newsize > oldsize) {
-            memaRegister((addr + oldsize), (newsize - oldsize));
+            memaFree((addr + oldsize), (newsize - oldsize));
         }
         return 1;
     }
@@ -692,7 +794,7 @@ s32 memaResize(s32 addr, u32 newsize, u32 oldsize) {
 #else
 GLOBAL_ASM(
 .text
-glabel memaResize
+glabel memaRealloc
 /* 00AFDC 7000A3DC 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00AFE0 7000A3E0 00A6082B */  sltu  $at, $a1, $a2
 /* 00AFE4 7000A3E4 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -700,7 +802,7 @@ glabel memaResize
 /* 00AFEC 7000A3EC 1020000A */  beqz  $at, .L7000A418
 /* 00AFF0 7000A3F0 00A03825 */   move  $a3, $a1
 /* 00AFF4 7000A3F4 00852021 */  addu  $a0, $a0, $a1
-/* 00AFF8 7000A3F8 0C0027EA */  jal   memaShrink
+/* 00AFF8 7000A3F8 0C0027EA */  jal   memaGrow
 /* 00AFFC 7000A3FC 00C52823 */   subu  $a1, $a2, $a1
 /* 00B000 7000A400 14400003 */  bnez  $v0, .L7000A410
 /* 00B004 7000A404 00000000 */   nop   
@@ -714,7 +816,7 @@ glabel memaResize
 /* 00B01C 7000A41C 10200004 */  beqz  $at, .L7000A430
 /* 00B020 7000A420 8FA90018 */   lw    $t1, 0x18($sp)
 /* 00B024 7000A424 01262021 */  addu  $a0, $t1, $a2
-/* 00B028 7000A428 0C002808 */  jal   memaRegister
+/* 00B028 7000A428 0C002808 */  jal   memaFree
 /* 00B02C 7000A42C 00E62823 */   subu  $a1, $a3, $a2
 .L7000A430:
 /* 00B030 7000A430 24020001 */  li    $v0, 1

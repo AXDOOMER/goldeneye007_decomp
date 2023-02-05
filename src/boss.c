@@ -406,7 +406,7 @@ void bossMainloop(void)
             g_CurentMaMallocValue = (s32) (strtol(tokenFind(1, "-ma"), NULL, 0) * 1024);
         }
 
-        memaSetBuffer(mempAllocBytesInBank(g_CurentMaMallocValue, 4), g_CurentMaMallocValue);
+        memaReset(mempAllocBytesInBank(g_CurentMaMallocValue, 4), g_CurentMaMallocValue);
         reset_play_data_ptrs();
 
         localSelectedNumPlayers = 0;
@@ -610,7 +610,7 @@ void bossMainloop(void)
                             rspGfxTaskStart(firstGdl, gdl, 0, (s32*)rspReplyMsg);
 
                             pendingGfx++;
-                            memaIterateAndMerge();
+                            memaSingleDefragPass();
 #ifdef VERSION_EU
                             eu_sub_7f0c00a4();
 #endif
@@ -887,7 +887,7 @@ glabel bossMainloop
 /* 006368 70005768 24050004 */   li    $a1, 4
 /* 00636C 7000576C 3C058002 */  lui   $a1, %hi(g_CurentMaMallocValue) # $a1, 0x8002
 /* 006370 70005770 8CA52040 */  lw    $a1, %lo(g_CurentMaMallocValue)($a1)
-/* 006374 70005774 0C00247E */  jal   memaSetBuffer
+/* 006374 70005774 0C00247E */  jal   memaReset
 /* 006378 70005778 00402025 */   move  $a0, $v0
 /* 00637C 7000577C 0FC2661B */  jal   reset_play_data_ptrs
 /* 006380 70005780 00000000 */   nop   
@@ -1239,7 +1239,7 @@ glabel bossMainloop
 /* 00689C 70005C9C 00003025 */  move  $a2, $zero
 /* 0068A0 70005CA0 0FC33CCE */  jal   rspGfxTaskStart
 /* 0068A4 70005CA4 8FA70048 */   lw    $a3, 0x48($sp)
-/* 0068A8 70005CA8 0C00249C */  jal   memaIterateAndMerge
+/* 0068A8 70005CA8 0C00249C */  jal   memaSingleDefragPass
 /* 0068AC 70005CAC 27DE0001 */   addiu $fp, $fp, 1
 /* 0068B0 70005CB0 0FC30029 */  jal   eu_sub_7f0c00a4
 /* 0068B4 70005CB4 00000000 */   nop   
