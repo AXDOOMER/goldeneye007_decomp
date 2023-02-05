@@ -79,7 +79,7 @@ PropRecord **g_LastOnScreenProp;
 s32 g_OnScreenPropCount;
 
 //CODE.bss:80071DF8
-u32 dword_CODE_bss_80071DF8;
+PropRecord *g_InteractProp;
 //CODE.bss:80071DFC
 u32 dword_CODE_bss_80071DFC;
 //CODE.bss:80071E00
@@ -2669,88 +2669,51 @@ void propExecuteTickOperation(PropRecord *prop, INV_ITEM_TYPE type) //#MATCH
 }
 
 
+PropRecord *propFindForInteract(void)
+{
+    PropRecord **ptr;
+    s32 i;
+    bool checkmore = TRUE;
 
+    g_InteractProp = NULL;
 
+    // Iterate onscreen list near to far
+    for (ptr = g_LastOnScreenProp - 1; ptr >= g_OnScreenPropList; ptr--)
+    {
+        PropRecord *prop = *ptr;
 
+        if (prop)
+        {
+            if (prop->type == PROP_TYPE_CHR)
+            {
+                // empty
+            }
+            else if (prop->type == PROP_TYPE_OBJ || prop->type == PROP_TYPE_WEAPON)
+            {
+                checkmore = objTestForInteract(prop);
+            }
+            else if (prop->type == PROP_TYPE_DOOR)
+            {
+                checkmore = doorTestForInteract(prop);
+            }
+            else if (prop->type == PROP_TYPE_EXPLOSION)
+            {
+                // empty
+            }
+            else if (prop->type == PROP_TYPE_SMOKE)
+            {
+                // empty
+            }
 
-#ifdef NONMATCHING
-PropRecord *propFindForInteract(void) {
+            if (!checkmore)
+            {
+                break;
+            }
+        }
+    }
 
+    return g_InteractProp;
 }
-#else
-PropRecord *propFindForInteract(void);
-GLOBAL_ASM(
-.text
-glabel propFindForInteract
-/* 070F2C 7F03C3FC 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 070F30 7F03C400 AFB00014 */  sw    $s0, 0x14($sp)
-/* 070F34 7F03C404 3C108007 */  lui   $s0, %hi(g_LastOnScreenProp)
-/* 070F38 7F03C408 8E101DF0 */  lw    $s0, %lo(g_LastOnScreenProp)($s0)
-/* 070F3C 7F03C40C AFB70030 */  sw    $s7, 0x30($sp)
-/* 070F40 7F03C410 3C178007 */  lui   $s7, %hi(g_OnScreenPropList) 
-/* 070F44 7F03C414 3C018007 */  lui   $at, %hi(dword_CODE_bss_80071DF8)
-/* 070F48 7F03C418 26F71620 */  addiu $s7, %lo(g_OnScreenPropList) # addiu $s7, $s7, 0x1620
-/* 070F4C 7F03C41C AC201DF8 */  sw    $zero, %lo(dword_CODE_bss_80071DF8)($at)
-/* 070F50 7F03C420 2610FFFC */  addiu $s0, $s0, -4
-/* 070F54 7F03C424 0217082B */  sltu  $at, $s0, $s7
-/* 070F58 7F03C428 AFBF0034 */  sw    $ra, 0x34($sp)
-/* 070F5C 7F03C42C AFB6002C */  sw    $s6, 0x2c($sp)
-/* 070F60 7F03C430 AFB50028 */  sw    $s5, 0x28($sp)
-/* 070F64 7F03C434 AFB40024 */  sw    $s4, 0x24($sp)
-/* 070F68 7F03C438 AFB30020 */  sw    $s3, 0x20($sp)
-/* 070F6C 7F03C43C AFB2001C */  sw    $s2, 0x1c($sp)
-/* 070F70 7F03C440 AFB10018 */  sw    $s1, 0x18($sp)
-/* 070F74 7F03C444 1420001D */  bnez  $at, .L7F03C4BC
-/* 070F78 7F03C448 24030001 */   li    $v1, 1
-/* 070F7C 7F03C44C 24140002 */  li    $s4, 2
-/* 070F80 7F03C450 24130004 */  li    $s3, 4
-/* 070F84 7F03C454 24120001 */  li    $s2, 1
-/* 070F88 7F03C458 24110003 */  li    $s1, 3
-/* 070F8C 7F03C45C 8E040000 */  lw    $a0, ($s0)
-.L7F03C460:
-/* 070F90 7F03C460 50800013 */  beql  $a0, $zero, .L7F03C4B0
-/* 070F94 7F03C464 2610FFFC */   addiu $s0, $s0, -4
-/* 070F98 7F03C468 90820000 */  lbu   $v0, ($a0)
-/* 070F9C 7F03C46C 1222000E */  beq   $s1, $v0, .L7F03C4A8
-/* 070FA0 7F03C470 00000000 */   nop   
-/* 070FA4 7F03C474 12420003 */  beq   $s2, $v0, .L7F03C484
-/* 070FA8 7F03C478 00000000 */   nop   
-/* 070FAC 7F03C47C 16620005 */  bne   $s3, $v0, .L7F03C494
-/* 070FB0 7F03C480 00000000 */   nop   
-.L7F03C484:
-/* 070FB4 7F03C484 0FC13BD6 */  jal   sub_GAME_7F04EF58
-/* 070FB8 7F03C488 00000000 */   nop   
-/* 070FBC 7F03C48C 10000006 */  b     .L7F03C4A8
-/* 070FC0 7F03C490 00401825 */   move  $v1, $v0
-.L7F03C494:
-/* 070FC4 7F03C494 16820004 */  bne   $s4, $v0, .L7F03C4A8
-/* 070FC8 7F03C498 00000000 */   nop   
-/* 070FCC 7F03C49C 0FC15601 */  jal   sub_GAME_7F055804
-/* 070FD0 7F03C4A0 00000000 */   nop   
-/* 070FD4 7F03C4A4 00401825 */  move  $v1, $v0
-.L7F03C4A8:
-/* 070FD8 7F03C4A8 10600004 */  beqz  $v1, .L7F03C4BC
-/* 070FDC 7F03C4AC 2610FFFC */   addiu $s0, $s0, -4
-.L7F03C4B0:
-/* 070FE0 7F03C4B0 0217082B */  sltu  $at, $s0, $s7
-/* 070FE4 7F03C4B4 5020FFEA */  beql  $at, $zero, .L7F03C460
-/* 070FE8 7F03C4B8 8E040000 */   lw    $a0, ($s0)
-.L7F03C4BC:
-/* 070FEC 7F03C4BC 8FBF0034 */  lw    $ra, 0x34($sp)
-/* 070FF0 7F03C4C0 3C028007 */  lui   $v0, %hi(dword_CODE_bss_80071DF8)
-/* 070FF4 7F03C4C4 8C421DF8 */  lw    $v0, %lo(dword_CODE_bss_80071DF8)($v0)
-/* 070FF8 7F03C4C8 8FB00014 */  lw    $s0, 0x14($sp)
-/* 070FFC 7F03C4CC 8FB10018 */  lw    $s1, 0x18($sp)
-/* 071000 7F03C4D0 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 071004 7F03C4D4 8FB30020 */  lw    $s3, 0x20($sp)
-/* 071008 7F03C4D8 8FB40024 */  lw    $s4, 0x24($sp)
-/* 07100C 7F03C4DC 8FB50028 */  lw    $s5, 0x28($sp)
-/* 071010 7F03C4E0 8FB6002C */  lw    $s6, 0x2c($sp)
-/* 071014 7F03C4E4 8FB70030 */  lw    $s7, 0x30($sp)
-/* 071018 7F03C4E8 03E00008 */  jr    $ra
-/* 07101C 7F03C4EC 27BD0038 */   addiu $sp, $sp, 0x38
-)
-#endif
 
 
 bool bond_interact_object(void)

@@ -32729,7 +32729,7 @@ bool objIsHealthy(ObjectRecord *self) //#MATCH
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F04EF58(void) {
+void objTestForInteract(void) {
 
 }
 #else
@@ -32750,7 +32750,7 @@ glabel D_80052F08
 glabel D_80052F0C
 .word 0x40c90fdb /*6.2831855*/
 .text
-glabel sub_GAME_7F04EF58
+glabel objTestForInteract
 /* 083A88 7F04EF58 27BDFFA8 */  addiu $sp, $sp, -0x58
 /* 083A8C 7F04EF5C AFBF001C */  sw    $ra, 0x1c($sp)
 /* 083A90 7F04EF60 8C850004 */  lw    $a1, 4($a0)
@@ -32884,8 +32884,8 @@ glabel sub_GAME_7F04EF58
 /* 083C7C 7F04F14C 8FBF001C */   lw    $ra, 0x1c($sp)
 /* 083C80 7F04F150 8FA90058 */  lw    $t1, 0x58($sp)
 .L7F04F154:
-/* 083C84 7F04F154 3C018007 */  lui   $at, %hi(dword_CODE_bss_80071DF8)
-/* 083C88 7F04F158 AC291DF8 */  sw    $t1, %lo(dword_CODE_bss_80071DF8)($at)
+/* 083C84 7F04F154 3C018007 */  lui   $at, %hi(g_InteractProp)
+/* 083C88 7F04F158 AC291DF8 */  sw    $t1, %lo(g_InteractProp)($at)
 .L7F04F15C:
 /* 083C8C 7F04F15C 8FBF001C */  lw    $ra, 0x1c($sp)
 .L7F04F160:
@@ -42842,8 +42842,8 @@ GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0555F8
 /* 08A128 7F0555F8 27BDFFA8 */  addiu $sp, $sp, -0x58
-/* 08A12C 7F0555FC 3C0F8007 */  lui   $t7, %hi(dword_CODE_bss_80071DF8) 
-/* 08A130 7F055600 8DEF1DF8 */  lw    $t7, %lo(dword_CODE_bss_80071DF8)($t7)
+/* 08A12C 7F0555FC 3C0F8007 */  lui   $t7, %hi(g_InteractProp) 
+/* 08A130 7F055600 8DEF1DF8 */  lw    $t7, %lo(g_InteractProp)($t7)
 /* 08A134 7F055604 AFB40030 */  sw    $s4, 0x30($sp)
 /* 08A138 7F055608 AFB3002C */  sw    $s3, 0x2c($sp)
 /* 08A13C 7F05560C 240E0001 */  li    $t6, 1
@@ -42877,13 +42877,13 @@ glabel sub_GAME_7F0555F8
 /* 08A1AC 7F05567C 4502000A */  bc1fl .L7F0556A8
 /* 08A1B0 7F055680 8E7000C8 */   lw    $s0, 0xc8($s3)
 /* 08A1B4 7F055684 4602303E */  c.le.s $f6, $f2
-/* 08A1B8 7F055688 3C018007 */  lui   $at, %hi(dword_CODE_bss_80071DF8)
+/* 08A1B8 7F055688 3C018007 */  lui   $at, %hi(g_InteractProp)
 /* 08A1BC 7F05568C 45020006 */  bc1fl .L7F0556A8
 /* 08A1C0 7F055690 8E7000C8 */   lw    $s0, 0xc8($s3)
 /* 08A1C4 7F055694 8E780010 */  lw    $t8, 0x10($s3)
 /* 08A1C8 7F055698 AFA00054 */  sw    $zero, 0x54($sp)
 /* 08A1CC 7F05569C 1000004F */  b     .L7F0557DC
-/* 08A1D0 7F0556A0 AC381DF8 */   sw    $t8, %lo(dword_CODE_bss_80071DF8)($at)
+/* 08A1D0 7F0556A0 AC381DF8 */   sw    $t8, %lo(g_InteractProp)($at)
 /* 08A1D4 7F0556A4 8E7000C8 */  lw    $s0, 0xc8($s3)
 .L7F0556A8:
 /* 08A1D8 7F0556A8 52000037 */  beql  $s0, $zero, .L7F055788
@@ -42965,9 +42965,9 @@ glabel sub_GAME_7F0555F8
 /* 08A2F4 7F0557C4 45020006 */  bc1fl .L7F0557E0
 /* 08A2F8 7F0557C8 8FBF0034 */   lw    $ra, 0x34($sp)
 /* 08A2FC 7F0557CC 8E790010 */  lw    $t9, 0x10($s3)
-/* 08A300 7F0557D0 3C018007 */  lui   $at, %hi(dword_CODE_bss_80071DF8)
+/* 08A300 7F0557D0 3C018007 */  lui   $at, %hi(g_InteractProp)
 /* 08A304 7F0557D4 AFA00054 */  sw    $zero, 0x54($sp)
-/* 08A308 7F0557D8 AC391DF8 */  sw    $t9, %lo(dword_CODE_bss_80071DF8)($at)
+/* 08A308 7F0557D8 AC391DF8 */  sw    $t9, %lo(g_InteractProp)($at)
 .L7F0557DC:
 /* 08A30C 7F0557DC 8FBF0034 */  lw    $ra, 0x34($sp)
 .L7F0557E0:
@@ -42988,13 +42988,13 @@ glabel sub_GAME_7F0555F8
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F055804(void) {
+void doorTestForInteract(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F055804
+glabel doorTestForInteract
 /* 08A334 7F055804 27BDFF78 */  addiu $sp, $sp, -0x88
 /* 08A338 7F055808 240E0001 */  li    $t6, 1
 /* 08A33C 7F05580C AFBF001C */  sw    $ra, 0x1c($sp)
