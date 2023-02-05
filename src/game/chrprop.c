@@ -6253,10 +6253,11 @@ void sub_GAME_7F03F540(struct modeldata_unk_pos* arg0, Mtxf* arg1, s32* arg2, st
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03F598(void) {
+s32 sub_GAME_7F03F598(coord3d* pos, f32 arg1, BoundPadRecord *boundpads) {
 
 }
 #else
+s32 sub_GAME_7F03F598(coord3d* pos, f32 arg1, BoundPadRecord *boundpads);
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F03F598

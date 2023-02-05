@@ -306,7 +306,7 @@ typedef enum PROPFLAG
     PROPFLAG_00400000                    = 0x00400000, // unknown
     PROPFLAG_00800000                    = 0x00800000, // unknown
     PROPFLAG_01000000                    = 0x01000000, // Embedded Object
-    PROPFLAG_02000000                    = 0x02000000, // Cannot Activate Door/Object
+    PROPFLAG_CANNOT_ACTIVATE             = 0x02000000, // Cannot Activate Door/Object
     PROPFLAG_04000000                    = 0x04000000, // AI Sees Through Door/Object
     PROPFLAG_DOOR_TWOWAY                 = 0x08000000, // Open Away From Player
     PROPFLAG_WEAPON_LEFTHANDED           = 0x10000000, /* Area Behind Door Invisible/Monitor Fixed/Left-Handed weapon/Disable security camera/drone gun*/
@@ -337,7 +337,7 @@ typedef enum PROPFLAG2
     PROPFLAG2_NOFALL              = 0x00000100, // immobile
     PROPFLAG2_FALLWITHOUTROTATION = 0x00000200, // used with mines
     PROPFLAG2_LINKEDTOSAFE        = 0x00000400, // unknown
-    PROPFLAG2_00000800            = 0x00000800, // Don't activate if stan gap Bond/Object
+    PROPFLAG2_INTERACTCHECKLOS    = 0x00000800, // Don't activate if stan gap Bond/Object
     PROPFLAG2_00001000            = 0x00001000, // Watch Magnet Attract through Walls/Objects
     PROPFLAG2_00002000            = 0x00002000, // Remove When Destroyed
     PROPFLAG2_00004000            = 0x00004000, // Immune to Gunfire
@@ -357,14 +357,16 @@ typedef enum PROPFLAG2
     PROPFLAG2_10000000            = 0x10000000, // One-Way Lock (Back)
     PROPFLAG2_20000000            = 0x20000000, // Character AI Cannot Operate
     PROPFLAG2_40000000            = 0x40000000, // Deactivate Special Feature
-    PROPFLAG2_80000000            = 0x80000000  // Massive Explosion (08 Type)/Rotating Disabled Drone Gun (0D Type)
+    PROPFLAG2_DOOR_ALTCOORDSYSTEM = 0x80000000  // Massive Explosion (08 Type)/Rotating Disabled Drone Gun (0D Type)
 } PROPFLAG2;
 
 typedef enum DOORFLAG
 {
-    DOORFLAG_100                         = 0x00000100,
-    DOORFLAG_CANNOT_ACTIVATE             = 0x02000000,
-    DOORFLAG_KEEPOPEN                    = 0x80000000
+    DOORFLAG_080             = 0x00000080,
+    DOORFLAG_100             = 0x00000100,
+    DOORFLAG_CANNOT_ACTIVATE = 0x02000000,
+    DOORFLAG_KEEPOPEN        = 0x80000000
+
 } DOORFLAG;
 
 typedef enum DROPTYPE
