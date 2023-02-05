@@ -29740,8 +29740,8 @@ glabel objDrop
  */
 void objFall(ObjectRecord *obj, s32 playernum)
 {
-    obj->runtime_bitflags &= 0xFFF9FFFF;
-    obj->runtime_bitflags |= (playernum << 0x11);
+    obj->runtime_bitflags &= ~(RUNTIMEBITFLAG_OWNER);
+    obj->runtime_bitflags |= (playernum << RUNTIMEBITSHIFT_OWNER);
 
     if ((obj->flags2 & PROPFLAG2_NOFALL) == 0
             && (obj->flags & PROPFLAG_RENDERPOSTBG)
@@ -31471,9 +31471,9 @@ void maybe_detonate_object(ObjectRecord* self, f32 damage,  coord3d* pos, bool f
     #define OBJECT_DESTROYED 0
 
 
-    temp_t7 = self->runtime_bitflags & 0xFFF9FFFF;
+    temp_t7 = self->runtime_bitflags & ~(RUNTIMEBITFLAG_OWNER);
     self->runtime_bitflags = temp_t7;
-    self->runtime_bitflags = temp_t7 | (flag2 << 0x11);
+    self->runtime_bitflags = temp_t7 | (flag2 << RUNTIMEBITSHIFT_OWNER);
 
 
     if ((self->Head.type != PROPDEF_GAS_RELEASING) ||  (objGetDestroyedLevel(self) != OBJECT_UNTOUCHED))
