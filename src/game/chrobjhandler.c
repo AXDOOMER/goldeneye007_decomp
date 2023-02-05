@@ -32726,177 +32726,85 @@ bool objIsHealthy(ObjectRecord *self) //#MATCH
 }
 
 
+bool objTestForInteract(PropRecord* prop)
+{
+    f32 xdiff;
+    ObjectRecord *obj;
+    PropRecord *player;
+    f32 var_f2;
+    f32 ydiff;
+    f32 zdiff;
+    f32 var_f0;
+    f32 anglediff;
+    f32 playerangle;
+    f32 sp30;
+    StandTile *stan;
+    f32 xzdiff;
+    f32 angle;
 
+    obj = prop->obj;
 
-#ifdef NONMATCHING
-void objTestForInteract(void) {
+    if (((obj->type == PROP_TYPE_PLAYER)
+            || (obj->flags & PROPFLAG_00080000)
+            || (obj->runtime_bitflags & (RUNTIMEBITFLAG_00000001 | RUNTIMEBITFLAG_00000002 | RUNTIMEBITFLAG_00000010))))
+    {
+        if ((prop->flags & PROPFLAG_ONSCREEN)
+                && (objIsHealthy(obj) != 0)
+                && !(obj->flags & PROPFLAG_02000000))
+        {
 
+            player = get_curplayer_positiondata();
+
+            xdiff = obj->runtime_pos.x - player->pos.x;
+            ydiff = obj->runtime_pos.y - player->pos.y;
+            zdiff = obj->runtime_pos.z - player->pos.z;
+
+            stan = player->stan;
+
+            if ((obj->type == 0x28) && (obj->flags & PROPFLAG_DOOR_OPENTOFRONT))
+            {
+                var_f0 = 400.0f;
+                var_f2 = 160000.0f;
+                sp30 = 2.0943952f;
+            }
+            else
+            {
+                var_f0 = 200.0f;
+                var_f2 = 40000.0f;
+                sp30 = 0.3926991f;
+            }
+
+            xzdiff = ((xdiff * xdiff) + (zdiff * zdiff));
+
+            if ((xzdiff < var_f2) && (ydiff < var_f0) && (-var_f0 < ydiff))
+            {
+
+                angle = atan2f(xdiff, zdiff);
+                playerangle = get_curplay_horizontal_rotation_in_degrees();
+                anglediff = angle - playerangle;
+
+                if (angle < playerangle)
+                {
+                    anglediff += 6.2831855f;
+                }
+
+                if (anglediff > 3.1415927f)
+                {
+                    anglediff = 6.2831855f - anglediff;
+                }
+
+                if (anglediff <= sp30)
+                {
+                    if (!(obj->flags2 & PROPFLAG2_00000800) || (walkTilesBetweenPoints_NoCallback(&stan, player->pos.x, player->pos.z, prop->pos.x, prop->pos.z) != 0))
+                    {
+                        g_InteractProp = prop;
+                    }
+                }
+            }
+        }
+    }
+    return TRUE;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80052EF4
-.word 0x481c4000 /*160000.0*/
-glabel D_80052EF8
-.word 0x40060a92 /*2.0943952*/
-glabel D_80052EFC
-.word 0x471c4000 /*40000.0*/
-glabel D_80052F00
-.word 0x3ec90fdb /*0.39269909*/
-glabel D_80052F04
-.word 0x40c90fdb /*6.2831855*/
-glabel D_80052F08
-.word 0x40490fdb /*3.1415927*/
-glabel D_80052F0C
-.word 0x40c90fdb /*6.2831855*/
-.text
-glabel objTestForInteract
-/* 083A88 7F04EF58 27BDFFA8 */  addiu $sp, $sp, -0x58
-/* 083A8C 7F04EF5C AFBF001C */  sw    $ra, 0x1c($sp)
-/* 083A90 7F04EF60 8C850004 */  lw    $a1, 4($a0)
-/* 083A94 7F04EF64 24010005 */  li    $at, 5
-/* 083A98 7F04EF68 00803025 */  move  $a2, $a0
-/* 083A9C 7F04EF6C 90AE0003 */  lbu   $t6, 3($a1)
-/* 083AA0 7F04EF70 51C1000A */  beql  $t6, $at, .L7F04EF9C
-/* 083AA4 7F04EF74 90C90001 */   lbu   $t1, 1($a2)
-/* 083AA8 7F04EF78 8CAF0008 */  lw    $t7, 8($a1)
-/* 083AAC 7F04EF7C 000FC300 */  sll   $t8, $t7, 0xc
-/* 083AB0 7F04EF80 07020006 */  bltzl $t8, .L7F04EF9C
-/* 083AB4 7F04EF84 90C90001 */   lbu   $t1, 1($a2)
-/* 083AB8 7F04EF88 8CB90064 */  lw    $t9, 0x64($a1)
-/* 083ABC 7F04EF8C 33280013 */  andi  $t0, $t9, 0x13
-/* 083AC0 7F04EF90 51000073 */  beql  $t0, $zero, .L7F04F160
-/* 083AC4 7F04EF94 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 083AC8 7F04EF98 90C90001 */  lbu   $t1, 1($a2)
-.L7F04EF9C:
-/* 083ACC 7F04EF9C 00A02025 */  move  $a0, $a1
-/* 083AD0 7F04EFA0 312A0002 */  andi  $t2, $t1, 2
-/* 083AD4 7F04EFA4 5140006E */  beql  $t2, $zero, .L7F04F160
-/* 083AD8 7F04EFA8 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 083ADC 7F04EFAC AFA50050 */  sw    $a1, 0x50($sp)
-/* 083AE0 7F04EFB0 0FC13BCD */  jal   objIsHealthy
-/* 083AE4 7F04EFB4 AFA60058 */   sw    $a2, 0x58($sp)
-/* 083AE8 7F04EFB8 10400068 */  beqz  $v0, .L7F04F15C
-/* 083AEC 7F04EFBC 8FA50050 */   lw    $a1, 0x50($sp)
-/* 083AF0 7F04EFC0 8CAB0008 */  lw    $t3, 8($a1)
-/* 083AF4 7F04EFC4 000B6180 */  sll   $t4, $t3, 6
-/* 083AF8 7F04EFC8 05820065 */  bltzl $t4, .L7F04F160
-/* 083AFC 7F04EFCC 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 083B00 7F04EFD0 0FC225E6 */  jal   get_curplayer_positiondata
-/* 083B04 7F04EFD4 AFA50050 */   sw    $a1, 0x50($sp)
-/* 083B08 7F04EFD8 8FA50050 */  lw    $a1, 0x50($sp)
-/* 083B0C 7F04EFDC C4460008 */  lwc1  $f6, 8($v0)
-/* 083B10 7F04EFE0 C44A000C */  lwc1  $f10, 0xc($v0)
-/* 083B14 7F04EFE4 C4A40058 */  lwc1  $f4, 0x58($a1)
-/* 083B18 7F04EFE8 C4A8005C */  lwc1  $f8, 0x5c($a1)
-/* 083B1C 7F04EFEC 8C4D0014 */  lw    $t5, 0x14($v0)
-/* 083B20 7F04EFF0 46062301 */  sub.s $f12, $f4, $f6
-/* 083B24 7F04EFF4 C4460010 */  lwc1  $f6, 0x10($v0)
-/* 083B28 7F04EFF8 C4A40060 */  lwc1  $f4, 0x60($a1)
-/* 083B2C 7F04EFFC 460A4401 */  sub.s $f16, $f8, $f10
-/* 083B30 7F04F000 460C6202 */  mul.s $f8, $f12, $f12
-/* 083B34 7F04F004 AFAD002C */  sw    $t5, 0x2c($sp)
-/* 083B38 7F04F008 46062381 */  sub.s $f14, $f4, $f6
-/* 083B3C 7F04F00C 90AE0003 */  lbu   $t6, 3($a1)
-/* 083B40 7F04F010 24010028 */  li    $at, 40
-/* 083B44 7F04F014 00401825 */  move  $v1, $v0
-/* 083B48 7F04F018 460E7282 */  mul.s $f10, $f14, $f14
-/* 083B4C 7F04F01C 55C1000D */  bnel  $t6, $at, .L7F04F054
-/* 083B50 7F04F020 3C014348 */   lui   $at, 0x4348
-/* 083B54 7F04F024 8CAF0008 */  lw    $t7, 8($a1)
-/* 083B58 7F04F028 3C0143C8 */  lui   $at, 0x43c8
-/* 083B5C 7F04F02C 000FC080 */  sll   $t8, $t7, 2
-/* 083B60 7F04F030 07030008 */  bgezl $t8, .L7F04F054
-/* 083B64 7F04F034 3C014348 */   li    $at, 0x43480000 # 200.000000
-/* 083B68 7F04F038 44810000 */  mtc1  $at, $f0
-/* 083B6C 7F04F03C 3C018005 */  lui   $at, %hi(D_80052EF4)
-/* 083B70 7F04F040 C4222EF4 */  lwc1  $f2, %lo(D_80052EF4)($at)
-/* 083B74 7F04F044 3C018005 */  lui   $at, %hi(D_80052EF8)
-/* 083B78 7F04F048 10000007 */  b     .L7F04F068
-/* 083B7C 7F04F04C C4322EF8 */   lwc1  $f18, %lo(D_80052EF8)($at)
-/* 083B80 7F04F050 3C014348 */  li    $at, 0x43480000 # 200.000000
-.L7F04F054:
-/* 083B84 7F04F054 44810000 */  mtc1  $at, $f0
-/* 083B88 7F04F058 3C018005 */  lui   $at, %hi(D_80052EFC)
-/* 083B8C 7F04F05C C4222EFC */  lwc1  $f2, %lo(D_80052EFC)($at)
-/* 083B90 7F04F060 3C018005 */  lui   $at, %hi(D_80052F00)
-/* 083B94 7F04F064 C4322F00 */  lwc1  $f18, %lo(D_80052F00)($at)
-.L7F04F068:
-/* 083B98 7F04F068 460A4100 */  add.s $f4, $f8, $f10
-/* 083B9C 7F04F06C 4602203C */  c.lt.s $f4, $f2
-/* 083BA0 7F04F070 00000000 */  nop   
-/* 083BA4 7F04F074 4502003A */  bc1fl .L7F04F160
-/* 083BA8 7F04F078 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 083BAC 7F04F07C 4600803C */  c.lt.s $f16, $f0
-/* 083BB0 7F04F080 00000000 */  nop   
-/* 083BB4 7F04F084 45020036 */  bc1fl .L7F04F160
-/* 083BB8 7F04F088 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 083BBC 7F04F08C 46000187 */  neg.s $f6, $f0
-/* 083BC0 7F04F090 4610303C */  c.lt.s $f6, $f16
-/* 083BC4 7F04F094 00000000 */  nop   
-/* 083BC8 7F04F098 45020031 */  bc1fl .L7F04F160
-/* 083BCC 7F04F09C 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 083BD0 7F04F0A0 AFA3004C */  sw    $v1, 0x4c($sp)
-/* 083BD4 7F04F0A4 AFA50050 */  sw    $a1, 0x50($sp)
-/* 083BD8 7F04F0A8 0FC16A8C */  jal   atan2f
-/* 083BDC 7F04F0AC E7B20030 */   swc1  $f18, 0x30($sp)
-/* 083BE0 7F04F0B0 0FC227B9 */  jal   get_curplay_horizontal_rotation_in_degrees
-/* 083BE4 7F04F0B4 E7A00024 */   swc1  $f0, 0x24($sp)
-/* 083BE8 7F04F0B8 C7AC0024 */  lwc1  $f12, 0x24($sp)
-/* 083BEC 7F04F0BC 8FA3004C */  lw    $v1, 0x4c($sp)
-/* 083BF0 7F04F0C0 8FA50050 */  lw    $a1, 0x50($sp)
-/* 083BF4 7F04F0C4 4600603C */  c.lt.s $f12, $f0
-/* 083BF8 7F04F0C8 C7B20030 */  lwc1  $f18, 0x30($sp)
-/* 083BFC 7F04F0CC 46006381 */  sub.s $f14, $f12, $f0
-/* 083C00 7F04F0D0 3C018005 */  lui   $at, %hi(D_80052F04)
-/* 083C04 7F04F0D4 45000003 */  bc1f  .L7F04F0E4
-/* 083C08 7F04F0D8 46007086 */   mov.s $f2, $f14
-/* 083C0C 7F04F0DC C4282F04 */  lwc1  $f8, %lo(D_80052F04)($at)
-/* 083C10 7F04F0E0 46087080 */  add.s $f2, $f14, $f8
-.L7F04F0E4:
-/* 083C14 7F04F0E4 3C018005 */  lui   $at, %hi(D_80052F08)
-/* 083C18 7F04F0E8 C42A2F08 */  lwc1  $f10, %lo(D_80052F08)($at)
-/* 083C1C 7F04F0EC 3C018005 */  lui   $at, %hi(D_80052F0C)
-/* 083C20 7F04F0F0 4602503C */  c.lt.s $f10, $f2
-/* 083C24 7F04F0F4 00000000 */  nop   
-/* 083C28 7F04F0F8 45020004 */  bc1fl .L7F04F10C
-/* 083C2C 7F04F0FC 4612103E */   c.le.s $f2, $f18
-/* 083C30 7F04F100 C4242F0C */  lwc1  $f4, %lo(D_80052F0C)($at)
-/* 083C34 7F04F104 46022081 */  sub.s $f2, $f4, $f2
-/* 083C38 7F04F108 4612103E */  c.le.s $f2, $f18
-.L7F04F10C:
-/* 083C3C 7F04F10C 00000000 */  nop   
-/* 083C40 7F04F110 45020013 */  bc1fl .L7F04F160
-/* 083C44 7F04F114 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 083C48 7F04F118 8CB9000C */  lw    $t9, 0xc($a1)
-/* 083C4C 7F04F11C 8FA20058 */  lw    $v0, 0x58($sp)
-/* 083C50 7F04F120 27A4002C */  addiu $a0, $sp, 0x2c
-/* 083C54 7F04F124 33280800 */  andi  $t0, $t9, 0x800
-/* 083C58 7F04F128 5100000A */  beql  $t0, $zero, .L7F04F154
-/* 083C5C 7F04F12C 8FA90058 */   lw    $t1, 0x58($sp)
-/* 083C60 7F04F130 C4460010 */  lwc1  $f6, 0x10($v0)
-/* 083C64 7F04F134 8C650008 */  lw    $a1, 8($v1)
-/* 083C68 7F04F138 8C660010 */  lw    $a2, 0x10($v1)
-/* 083C6C 7F04F13C 8C470008 */  lw    $a3, 8($v0)
-/* 083C70 7F04F140 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
-/* 083C74 7F04F144 E7A60010 */   swc1  $f6, 0x10($sp)
-/* 083C78 7F04F148 50400005 */  beql  $v0, $zero, .L7F04F160
-/* 083C7C 7F04F14C 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 083C80 7F04F150 8FA90058 */  lw    $t1, 0x58($sp)
-.L7F04F154:
-/* 083C84 7F04F154 3C018007 */  lui   $at, %hi(g_InteractProp)
-/* 083C88 7F04F158 AC291DF8 */  sw    $t1, %lo(g_InteractProp)($at)
-.L7F04F15C:
-/* 083C8C 7F04F15C 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F04F160:
-/* 083C90 7F04F160 27BD0058 */  addiu $sp, $sp, 0x58
-/* 083C94 7F04F164 24020001 */  li    $v0, 1
-/* 083C98 7F04F168 03E00008 */  jr    $ra
-/* 083C9C 7F04F16C 00000000 */   nop   
-)
-#endif
-
-
 
 
 /*

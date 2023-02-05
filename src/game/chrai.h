@@ -363,6 +363,7 @@ extern PropRecord *ptr_obj_pos_list_final_entry;
 extern s32                                g_OnScreenPropCount;
 extern PropRecord **                      g_LastOnScreenProp;
 extern PropRecord *                       g_OnScreenPropList[];
+extern PropRecord *                       g_InteractProp;
 extern s16 *                              RoomPropListChunkIndexes;
 extern struct roomproplistchunk *         RoomPropListChunks;
 extern sfxRecord                          sfx_related[];
