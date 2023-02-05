@@ -5140,95 +5140,65 @@ glabel sub_GAME_7F03E27C
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
 /**
- * Iterate ptr_list_object_lookup_indices based on arg0 and update num_obj_position_data_entries.
- * Address 0x7F03E3FC.
- * @param arg0: (probably) array of s16
+ * Given a list of rooms (terminated by -1), populate the propnums
+ * list based on which props are in any of those rooms.
  * PD: roomGetProps
-*/
-void roomGetProps(s16 *arg0)
+ */
+void roomGetProps(s32 *rooms)
 {
+    s16 *writeptr = ptr_list_object_lookup_indices;
+    s32 room;
+    s32 i;
+    s32 j;
 
+    room = *rooms;
+
+    // Iterate rooms
+    while (room >= 0)
+    {
+        // Find the chunk to start at
+        s32 chunkindex = RoomPropListChunkIndexes[room];
+
+        // Iterate the chunks
+        while (chunkindex >= 0)
+        {
+            // Iterate the propnums within each chunk
+            for (i = 0; i < 15; i++)
+            {
+                s32 propnum = RoomPropListChunks[chunkindex].propnums[i];
+
+                if (propnum >= 0)
+                {
+                    // Check if it's in the list already
+                    s16 *ptr = ptr_list_object_lookup_indices;
+
+                    while (ptr < writeptr)
+                    {
+                        if (*ptr == propnum) { break; }
+                        ptr++;
+                    }
+
+                    if (ptr == writeptr)
+                    {
+                        // Prop is not in the list, so insert it
+                        *writeptr = propnum;
+                        writeptr++;
+                    }
+                }
+            }
+
+            chunkindex = RoomPropListChunks[chunkindex].propnums[15];
+        }
+
+        rooms++;
+        room = *rooms;
+    }
+
+    *writeptr = -1;
+    writeptr++;
+    num_obj_position_data_entries = writeptr - ptr_list_object_lookup_indices;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel roomGetProps
-/* 072F2C 7F03E3FC 8C830000 */  lw    $v1, ($a0)
-/* 072F30 7F03E400 3C098007 */  lui   $t1, %hi(ptr_list_object_lookup_indices) 
-/* 072F34 7F03E404 25299C30 */  addiu $t1, %lo(ptr_list_object_lookup_indices) # addiu $t1, $t1, -0x63d0
-/* 072F38 7F03E408 04600030 */  bltz  $v1, .L7F03E4CC
-/* 072F3C 7F03E40C 8D220000 */   lw    $v0, ($t1)
-/* 072F40 7F03E410 3C0A8007 */  lui   $t2, %hi(RoomPropListChunkIndexes) 
-/* 072F44 7F03E414 254A1618 */  addiu $t2, %lo(RoomPropListChunkIndexes) # addiu $t2, $t2, 0x1618
-/* 072F48 7F03E418 240B001E */  li    $t3, 30
-/* 072F4C 7F03E41C 8D4E0000 */  lw    $t6, ($t2)
-.L7F03E420:
-/* 072F50 7F03E420 00037840 */  sll   $t7, $v1, 1
-/* 072F54 7F03E424 3C068007 */  lui   $a2, %hi(RoomPropListChunks)
-/* 072F58 7F03E428 01CFC021 */  addu  $t8, $t6, $t7
-/* 072F5C 7F03E42C 87050000 */  lh    $a1, ($t8)
-/* 072F60 7F03E430 04A20023 */  bltzl $a1, .L7F03E4C0
-/* 072F64 7F03E434 8C830004 */   lw    $v1, 4($a0)
-/* 072F68 7F03E438 8CC6161C */  lw    $a2, %lo(RoomPropListChunks)($a2)
-/* 072F6C 7F03E43C 00003825 */  move  $a3, $zero
-.L7F03E440:
-/* 072F70 7F03E440 0005C940 */  sll   $t9, $a1, 5
-.L7F03E444:
-/* 072F74 7F03E444 00D96021 */  addu  $t4, $a2, $t9
-/* 072F78 7F03E448 01876821 */  addu  $t5, $t4, $a3
-/* 072F7C 7F03E44C 85A30000 */  lh    $v1, ($t5)
-/* 072F80 7F03E450 24E70002 */  addiu $a3, $a3, 2
-/* 072F84 7F03E454 04600012 */  bltz  $v1, .L7F03E4A0
-/* 072F88 7F03E458 00000000 */   nop   
-/* 072F8C 7F03E45C 8D280000 */  lw    $t0, ($t1)
-/* 072F90 7F03E460 0102082B */  sltu  $at, $t0, $v0
-/* 072F94 7F03E464 10200008 */  beqz  $at, .L7F03E488
-/* 072F98 7F03E468 00000000 */   nop   
-/* 072F9C 7F03E46C 850E0000 */  lh    $t6, ($t0)
-.L7F03E470:
-/* 072FA0 7F03E470 106E0005 */  beq   $v1, $t6, .L7F03E488
-/* 072FA4 7F03E474 00000000 */   nop   
-/* 072FA8 7F03E478 25080002 */  addiu $t0, $t0, 2
-/* 072FAC 7F03E47C 0102082B */  sltu  $at, $t0, $v0
-/* 072FB0 7F03E480 5420FFFB */  bnezl $at, .L7F03E470
-/* 072FB4 7F03E484 850E0000 */   lh    $t6, ($t0)
-.L7F03E488:
-/* 072FB8 7F03E488 15020005 */  bne   $t0, $v0, .L7F03E4A0
-/* 072FBC 7F03E48C 00000000 */   nop   
-/* 072FC0 7F03E490 A4430000 */  sh    $v1, ($v0)
-/* 072FC4 7F03E494 3C068007 */  lui   $a2, %hi(RoomPropListChunks)
-/* 072FC8 7F03E498 8CC6161C */  lw    $a2, %lo(RoomPropListChunks)($a2)
-/* 072FCC 7F03E49C 24420002 */  addiu $v0, $v0, 2
-.L7F03E4A0:
-/* 072FD0 7F03E4A0 54EBFFE8 */  bnel  $a3, $t3, .L7F03E444
-/* 072FD4 7F03E4A4 0005C940 */   sll   $t9, $a1, 5
-/* 072FD8 7F03E4A8 00057940 */  sll   $t7, $a1, 5
-/* 072FDC 7F03E4AC 00CFC021 */  addu  $t8, $a2, $t7
-/* 072FE0 7F03E4B0 8705001E */  lh    $a1, 0x1e($t8)
-/* 072FE4 7F03E4B4 04A3FFE2 */  bgezl $a1, .L7F03E440
-/* 072FE8 7F03E4B8 00003825 */   move  $a3, $zero
-/* 072FEC 7F03E4BC 8C830004 */  lw    $v1, 4($a0)
-.L7F03E4C0:
-/* 072FF0 7F03E4C0 24840004 */  addiu $a0, $a0, 4
-/* 072FF4 7F03E4C4 0463FFD6 */  bgezl $v1, .L7F03E420
-/* 072FF8 7F03E4C8 8D4E0000 */   lw    $t6, ($t2)
-.L7F03E4CC:
-/* 072FFC 7F03E4CC 2419FFFF */  li    $t9, -1
-/* 073000 7F03E4D0 A4590000 */  sh    $t9, ($v0)
-/* 073004 7F03E4D4 8D2C0000 */  lw    $t4, ($t1)
-/* 073008 7F03E4D8 24420002 */  addiu $v0, $v0, 2
-/* 07300C 7F03E4DC 3C018007 */  lui   $at, %hi(num_obj_position_data_entries)
-/* 073010 7F03E4E0 004C6823 */  subu  $t5, $v0, $t4
-/* 073014 7F03E4E4 000D7043 */  sra   $t6, $t5, 1
-/* 073018 7F03E4E8 03E00008 */  jr    $ra
-/* 07301C 7F03E4EC AC2E9C34 */   sw    $t6, %lo(num_obj_position_data_entries)($at)
-)
-#endif
 
 
 void propsDefragRoomProps(void)
