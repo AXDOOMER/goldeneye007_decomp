@@ -120,19 +120,11 @@ u32 objinst;
 //CODE.bss:80075B74
 u32 dword_CODE_bss_80075B74;
 //CODE.bss:80075B78
-f32 flt_CODE_bss_80075B78;
-//CODE.bss:80075B7C
-f32 flt_CODE_bss_80075B7C;
-//CODE.bss:80075B80
-f32 flt_CODE_bss_80075B80;
+coord3d flt_CODE_bss_80075B78;
 //CODE.bss:80075B84
 f32 flt_CODE_bss_80075B84;
 //CODE.bss:80075B88
-f32 flt_CODE_bss_80075B88;
-//CODE.bss:80075B8C
-f32 flt_CODE_bss_80075B8C;
-//CODE.bss:80075B90
-f32 flt_CODE_bss_80075B90;
+coord3d flt_CODE_bss_80075B88;
 //CODE.bss:80075B94
 f32 flt_CODE_bss_80075B94;
 
@@ -4157,24 +4149,24 @@ glabel sub_GAME_7F03D78C
 #endif
 
 
-s32 sub_GAME_7F03D9EC(PropRecord* arg0)
+s32 propDoorGetCdTypes(PropRecord* arg0)
 {
     s32 var_v1;
 
     if (arg0->door->openPosition <= 0.0f)
     {
-        var_v1 = 0x1000;
+        var_v1 = CDTYPE_CLOSEDDOORS;
     }
     else
     {
         var_v1 = (arg0->door->maxFrac <= arg0->door->openPosition)
-            ? 0x2000
-            : 0x4000;
+            ? CDTYPE_OPENDOORS
+            : CDTYPE_AJARDOORS;
     }
 
     if (((s32)arg0->door->flags2 * 4) < 0)
     {
-        var_v1 |= 0x8000;
+        var_v1 |= CDTYPE_DOORSLOCKEDTOAI;
     }
 
     return var_v1;
@@ -4208,7 +4200,7 @@ glabel sub_GAME_7F03DA50
 /* 0725BC 7F03DA8C 57200034 */  bnezl $t9, .L7F03DB60
 /* 0725C0 7F03DA90 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0725C4 7F03DA94 AFA50024 */  sw    $a1, 0x24($sp)
-/* 0725C8 7F03DA98 0FC0F67B */  jal   sub_GAME_7F03D9EC
+/* 0725C8 7F03DA98 0FC0F67B */  jal   propDoorGetCdTypes
 /* 0725CC 7F03DA9C AFA6001C */   sw    $a2, 0x1c($sp)
 /* 0725D0 7F03DAA0 8FA50024 */  lw    $a1, 0x24($sp)
 /* 0725D4 7F03DAA4 8FA6001C */  lw    $a2, 0x1c($sp)
@@ -5156,15 +5148,16 @@ glabel sub_GAME_7F03E27C
  * Iterate ptr_list_object_lookup_indices based on arg0 and update num_obj_position_data_entries.
  * Address 0x7F03E3FC.
  * @param arg0: (probably) array of s16
+ * PD: roomGetProps
 */
-void sub_GAME_7F03E3FC(s16 *arg0)
+void roomGetProps(s16 *arg0)
 {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F03E3FC
+glabel roomGetProps
 /* 072F2C 7F03E3FC 8C830000 */  lw    $v1, ($a0)
 /* 072F30 7F03E400 3C098007 */  lui   $t1, %hi(ptr_list_object_lookup_indices) 
 /* 072F34 7F03E404 25299C30 */  addiu $t1, %lo(ptr_list_object_lookup_indices) # addiu $t1, $t1, -0x63d0

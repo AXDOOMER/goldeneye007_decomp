@@ -3583,7 +3583,7 @@ s32 sub_GAME_7F028510(coord3d *arg0, StandTile *arg1)
     
     roomids[0] = arg1->room;
     roomids[1] = -1;
-    sub_GAME_7F03E3FC((s32*)&roomids);
+    roomGetProps((s32*)&roomids);
     
     for (temp_s0 = ptr_list_object_lookup_indices; *temp_s0 >= 0; temp_s0++)
     {

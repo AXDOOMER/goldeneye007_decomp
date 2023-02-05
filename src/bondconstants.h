@@ -224,6 +224,27 @@ typedef enum CHRFLAG
     CHRFLAG_80000000                     = 0x80000000   // unknown
 }CHRFLAG;
 
+// collision detection types
+typedef enum CDTYPE
+{
+    CDTYPE_OBJS                   = 0x0001,
+    CDTYPE_DOORS                  = 0x0002,
+    CDTYPE_PLAYERS                = 0x0004,
+    CDTYPE_CHRS                   = 0x0008,
+    CDTYPE_PATHBLOCKER            = 0x0010, // glass and scenery with OBJFLAG_PATHBLOCKER
+    CDTYPE_BG                     = 0x0020,
+    CDTYPE_OBJSIMMUNETOGUNFIRE    = 0x0080,
+    CDTYPE_AIOPAQUE               = 0x0100, // exclude objects with OBJFLAG_AISEETHROUGH
+    CDTYPE_OBJSIMMUNETOEXPLOSIONS = 0x0200,
+    CDTYPE_OBJSNOTSAFEORHELI      = 0x0400,
+    CDTYPE_DOORSWITHOUTFLAG       = 0x0800,
+    CDTYPE_CLOSEDDOORS            = 0x1000,
+    CDTYPE_OPENDOORS              = 0x2000,
+    CDTYPE_AJARDOORS              = 0x4000,
+    CDTYPE_DOORSLOCKEDTOAI        = 0x8000,
+    CDTYPE_ALL                    = 0x003f
+} CDTYPE;
+
 typedef enum GUARD_SETUP_FLAG // u16
 {
     GUARD_SETUP_FLAG_NONE                = 0,
@@ -321,7 +342,7 @@ typedef enum PROPFLAG2
     PROPFLAG2_00400000            = 0x00400000, // Don't load on 2P
     PROPFLAG2_00800000            = 0x00800000, // Don't load on 3P
     PROPFLAG2_01000000            = 0x01000000, // Don't load on 4P
-    PROPFLAG2_02000000            = 0x02000000, // Rockets/Mines/Grenades Pass Through
+    PROPFLAG2_THROWTHROUGH        = 0x02000000, // Rockets/Mines/Grenades Pass Through
     PROPFLAG2_04000000            = 0x04000000, // unknown
     PROPFLAG2_08000000            = 0x08000000, // One-Way Lock (Front)
     PROPFLAG2_10000000            = 0x10000000, // One-Way Lock (Back)
@@ -402,7 +423,7 @@ BITFLAG(RUNTIMEBITFLAG,
         00000001,
         00000002,
         REMOVE, /* removes object when set                                     */
-        00000008,
+        ISRETICK,
         00000010,
         THROWING_KNIFE_RELATED,
         EMBEDDED,

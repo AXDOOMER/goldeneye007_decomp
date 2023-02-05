@@ -1093,7 +1093,7 @@ glabel sub_GAME_7F09C9D8
 /* 0D1578 7F09CA48 27B000E0 */  addiu $s0, $sp, 0xe0
 /* 0D157C 7F09CA4C 0FC0F2E3 */  jal   chraiGetPropRoomIds
 /* 0D1580 7F09CA50 02002825 */   move  $a1, $s0
-/* 0D1584 7F09CA54 0FC0F8FF */  jal   sub_GAME_7F03E3FC
+/* 0D1584 7F09CA54 0FC0F8FF */  jal   roomGetProps
 /* 0D1588 7F09CA58 02002025 */   move  $a0, $s0
 /* 0D158C 7F09CA5C 3C138007 */  lui   $s3, %hi(ptr_list_object_lookup_indices)
 /* 0D1590 7F09CA60 8E739C30 */  lw    $s3, %lo(ptr_list_object_lookup_indices)($s3)

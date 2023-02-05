@@ -3324,7 +3324,7 @@ glabel sub_GAME_7F0B0E24
 /* 0E5B60 7F0B1030 02002025 */  move  $a0, $s0
 /* 0E5B64 7F0B1034 000D7880 */  sll   $t7, $t5, 2
 /* 0E5B68 7F0B1038 020FC021 */  addu  $t8, $s0, $t7
-/* 0E5B6C 7F0B103C 0FC0F8FF */  jal   sub_GAME_7F03E3FC
+/* 0E5B6C 7F0B103C 0FC0F8FF */  jal   roomGetProps
 /* 0E5B70 7F0B1040 AF0C0000 */   sw    $t4, ($t8)
 /* 0E5B74 7F0B1044 3C038007 */  lui   $v1, %hi(ptr_list_object_lookup_indices)
 /* 0E5B78 7F0B1048 8C639C30 */  lw    $v1, %lo(ptr_list_object_lookup_indices)($v1)
@@ -3653,7 +3653,7 @@ glabel sub_GAME_7F0B1410
 /* 0E6008 7F0B14D8 00034080 */  sll   $t0, $v1, 2
 /* 0E600C 7F0B14DC 02284821 */  addu  $t1, $s1, $t0
 /* 0E6010 7F0B14E0 AD390000 */  sw    $t9, ($t1)
-/* 0E6014 7F0B14E4 0FC0F8FF */  jal   sub_GAME_7F03E3FC
+/* 0E6014 7F0B14E4 0FC0F8FF */  jal   roomGetProps
 /* 0E6018 7F0B14E8 AFA300EC */   sw    $v1, 0xec($sp)
 /* 0E601C 7F0B14EC 3C038007 */  lui   $v1, %hi(ptr_list_object_lookup_indices)
 /* 0E6020 7F0B14F0 8C639C30 */  lw    $v1, %lo(ptr_list_object_lookup_indices)($v1)
@@ -3919,7 +3919,7 @@ glabel sub_GAME_7F0B18B8
 /* 0E64F4 7F0B19C4 02402025 */  move  $a0, $s2
 /* 0E64F8 7F0B19C8 000A5880 */  sll   $t3, $t2, 2
 /* 0E64FC 7F0B19CC 024B6021 */  addu  $t4, $s2, $t3
-/* 0E6500 7F0B19D0 0FC0F8FF */  jal   sub_GAME_7F03E3FC
+/* 0E6500 7F0B19D0 0FC0F8FF */  jal   roomGetProps
 /* 0E6504 7F0B19D4 AD890000 */   sw    $t1, ($t4)
 /* 0E6508 7F0B19D8 3C038007 */  lui   $v1, %hi(ptr_list_object_lookup_indices)
 /* 0E650C 7F0B19DC 8C639C30 */  lw    $v1, %lo(ptr_list_object_lookup_indices)($v1)

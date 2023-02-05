@@ -371,6 +371,8 @@ extern struct bss_80072E70                dword_CODE_bss_80072E70[];
 extern struct bss_80073370                dword_CODE_bss_80073370[];
 extern struct Projectile                  g_Projectiles[];
 extern struct Embedment                   g_Embedments[];
+extern struct coord3d                     flt_CODE_bss_80075B78;
+extern struct coord3d                     flt_CODE_bss_80075B88;
 
 
 extern MonitorRecord g_MonitorAnimController;
@@ -404,7 +406,7 @@ void          chraiGetCollisionBounds(PropRecord *arg0, struct rect4f **arg1, s3
 void          sub_GAME_7F03D058(PropRecord *prop, bool unset);
 void          chraiGetCollisionBoundsWithoutY(PropRecord *arg0, struct rect4f **arg1, s32 *arg2);
 s32 chrpropTestPointInPolygon(coord3d *point, struct rect4f *polygon, s32 edges);
-void          sub_GAME_7F03E3FC(s32 *roomids);
+void          roomGetProps(s32 *roomids);
 ObjectRecord *scan_position_data_table_for_normal_object_at_preset(s32 arg0);
 Gfx          *chrpropsRenderPass(Gfx *arg0, s32 roomid, s32 arg2);
 PropRecord   *get_ptr_obj_pos_list_current_entry(void);

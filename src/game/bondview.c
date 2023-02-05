@@ -16840,7 +16840,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
         chraiGetPropRoomIds(sp138_tank_as_ObjectRecord->prop, &sp94);
         
         // update num_obj_position_data_entries
-        sub_GAME_7F03E3FC(&sp94);
+        roomGetProps(&sp94);
 
         for (lookup_index=ptr_list_object_lookup_indices; *lookup_index>=0; lookup_index++)
         {
