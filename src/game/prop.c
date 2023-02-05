@@ -1971,8 +1971,8 @@ void setupAutogun(s32 stageID, AutogunRecord *autogun, s32 cmdindex)
 #ifdef VERSION_EU
     autogun->speed = ((*((s32 *) (&autogun->speed))) * 7.5398226f) / 65536.0f;
     autogun->aimdist = ((*((s32 *) (&autogun->aimdist))) * 100.0f) / 65536.0f;
-    autogun->unk88 = ((*((s32 *) (&autogun->unk88))) * 6.2831855f) / 65536.0f;
-    autogun->unk8C = ((*((s32 *) (&autogun->unk8C))) * 6.2831855f) / 65536.0f;
+    autogun->unk88 = ((*((s32 *) (&autogun->unk88))) * M_TAU_F) / 65536.0f;
+    autogun->unk8C = ((*((s32 *) (&autogun->unk8C))) * M_TAU_F) / 65536.0f;
 #endif
 
     autogun->unkAC = 0;
@@ -1991,10 +1991,10 @@ void setupAutogun(s32 stageID, AutogunRecord *autogun, s32 cmdindex)
     autogun->unkB4 = 0.0f;
 
 #ifndef VERSION_EU
-    autogun->speed = ((*((s32 *) (&autogun->speed))) * 6.2831855f) / 65536.0f;
+    autogun->speed = ((*((s32 *) (&autogun->speed))) * M_TAU_F) / 65536.0f;
     autogun->aimdist = ((*((s32 *) (&autogun->aimdist))) * 100.0f) / 65536.0f;
-    autogun->unk88 = ((*((s32 *) (&autogun->unk88))) * 6.2831855f) / 65536.0f;
-    autogun->unk8C = ((*((s32 *) (&autogun->unk8C))) * 6.2831855f) / 65536.0f;
+    autogun->unk88 = ((*((s32 *) (&autogun->unk88))) * M_TAU_F) / 65536.0f;
+    autogun->unk8C = ((*((s32 *) (&autogun->unk8C))) * M_TAU_F) / 65536.0f;
 #endif
 
     beam = mempAllocBytesInBank(0x30U, 4U);

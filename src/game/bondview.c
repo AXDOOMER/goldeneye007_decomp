@@ -8621,7 +8621,7 @@ void bondviewTankModelRotationRelated(void) {
         temp_v0 = obj->model->obj->Switches;
         sp68 = (struct coord3d *)temp_v0[2]->Data;
         sp64 = (struct coord3d *)temp_v0[1]->Data;
-        matrix_4x4_set_rotation_around_y(6.2831855f - g_TankTurretOrientationAngleRad, &sp24);
+        matrix_4x4_set_rotation_around_y(M_TAU_F - g_TankTurretOrientationAngleRad, &sp24);
         flt_CODE_bss_800799A8.f[0] = sp68->f[0];
         flt_CODE_bss_800799A8.f[1] = sp68->f[1];
         flt_CODE_bss_800799A8.f[2] = sp68->f[2];
@@ -8755,17 +8755,17 @@ s32 bondviewTankCollisionStatus(struct coord3d *arg0, StandTile *arg1, f32 arg2,
 
             temp_f0 = arg2 + g_TankTurretOrientationAngleRad;
 
-            if (temp_f0 >= 6.2831855f)
+            if (temp_f0 >= M_TAU_F)
             {
-                temp_f0 -= 6.2831855f;
+                temp_f0 -= M_TAU_F;
             }
 
             if (temp_f0 < 0.0f)
             {
-                temp_f0 += 6.2831855f;
+                temp_f0 += M_TAU_F;
             }
 
-            matrix_4x4_set_rotation_around_y(6.2831855f - temp_f0, &sp34);
+            matrix_4x4_set_rotation_around_y(M_TAU_F - temp_f0, &sp34);
             mtx4RotateVecInPlace(&sp34, (f32*)&sp74);
 
             sp74.f[0] *= sp8C->scale;

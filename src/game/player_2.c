@@ -361,7 +361,7 @@ void initBONDdataforPlayer(s32 player_num)
     g_playerPointers[player_num]->gun_azimuth_turning = 0.0f;
     g_playerPointers[player_num]->gunaimdamp = 0.9f;
     g_playerPointers[player_num]->field_1010.x = 0.0f;
-    g_playerPointers[player_num]->field_1010.y = -3.1415927f;
+    g_playerPointers[player_num]->field_1010.y = -M_PI_F;
     g_playerPointers[player_num]->field_1010.z = 0.0f;
     g_playerPointers[player_num]->last_z_trigger_timer = 0;
     g_playerPointers[player_num]->copiedgoldeneye = 0;
