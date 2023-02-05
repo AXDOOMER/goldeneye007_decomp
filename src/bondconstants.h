@@ -260,38 +260,47 @@ BITFLAG(PS_FLAGS2,
 // prop definition flags
 typedef enum PROPFLAG
 {
-    PROPFLAG_RENDERPOSTBG                = 0x00000001, // unknown
-    PROPFLAG_ONSCREEN                    = 0x00000002, // onscreen
-    PROPFLAG_ENABLED                     = 0x00000004, // unknown
-    PROPFLAG_00000008                    = 0x00000008, // unknown
-    PROPFLAG_00000010                    = 0x00000010, // unknown
-    PROPFLAG_00000020                    = 0x00000020, // unknown
-    PROPFLAG_00000040                    = 0x00000040, // unknown
-    PROPFLAG_00000080                    = 0x00000080, // unknown
-    PROPFLAG_00000100                    = 0x00000100, // unknown
-    PROPFLAG_00000200                    = 0x00000200, // unknown
+    PROPFLAG_RENDERPOSTBG                = 0x00000001, // Fall to Ground
+    PROPFLAG_ONSCREEN                    = 0x00000002, //  In Air Rotated 90 Deg Upside-Down
+    PROPFLAG_ENABLED                     = 0x00000004, // In Air Upside-Down
+    PROPFLAG_00000008                    = 0x00000008, // In Air
+    PROPFLAG_00000010                    = 0x00000010, // Scale to Pad Bounds
+    PROPFLAG_00000020                    = 0x00000020, // Scale X to Pad Bounds
+    PROPFLAG_00000040                    = 0x00000040, // Scale Y to Pad Bounds
+    PROPFLAG_00000080                    = 0x00000080, // Scale Z to Pad Bounds
+    PROPFLAG_00000100                    = 0x00000100, // Force Collisions
+    PROPFLAG_00000200                    = 0x00000200, // Glass Env Mapping Style
     PROPFLAG_ILLUMINATED                 = 0x00000400, /* ignore Stan Colour?*/
-    PROPFLAG_00000800                    = 0x00000800, // unknown
-    PROPFLAG_00001000                    = 0x00001000, // unknown
+    PROPFLAG_00000800                    = 0x00000800, // Free Standing Glass
+    PROPFLAG_00001000                    = 0x00001000, // Absolute Position
     PROPFLAG_AIUNDROPPABLE               = 0x00002000, /* Item Not Droppedz*/
-    PROPFLAG_ASSIGNEDTOCHR               = 0x00004000, // unknown
-    PROPFLAG_INSIDEANOTHEROBJ            = 0x00008000, // unknown
+    PROPFLAG_ASSIGNEDTOCHR               = 0x00004000, // Assigned to Actor
+    PROPFLAG_INSIDEANOTHEROBJ            = 0x00008000, // Embedded Object
     PROPFLAG_FORCEMORTAL                 = 0x00010000, // unknown
-    PROPFLAG_INVINCIBLE                  = 0x00020000, // unknown
-    PROPFLAG_00040000                    = 0x00040000, // unknown
-    PROPFLAG_00080000                    = 0x00080000, // unknown
+    PROPFLAG_INVINCIBLE                  = 0x00020000, // Invincible
+    PROPFLAG_00040000                    = 0x00040000, // Allow Pickup (chr_type)
+    PROPFLAG_00080000                    = 0x00080000, // Collect Object by Interaction Button Only
     PROPFLAG_UNCOLLECTABLE               = 0x00100000, /* Item Not Collectable*/
-    PROPFLAG_00200000                    = 0x00200000, // unknown
+    PROPFLAG_00200000                    = 0x00200000, // Bounce and Destroy If Shot
     PROPFLAG_00400000                    = 0x00400000, // unknown
     PROPFLAG_00800000                    = 0x00800000, // unknown
-    PROPFLAG_01000000                    = 0x01000000, // unknown
-    PROPFLAG_02000000                    = 0x02000000, // unknown
-    PROPFLAG_04000000                    = 0x04000000, // unknown
-    PROPFLAG_DOOR_TWOWAY                 = 0x08000000, // unknown
-    PROPFLAG_WEAPON_LEFTHANDED           = 0x10000000, /* Left Handed*/
-    PROPFLAG_DOOR_OPENTOFRONT            = 0x20000000, /* Concealed*/
-    PROPFLAG_MONITOR_RENDERPOSTBG        = 0x40000000, /* No Ammo on pickup*/
-    PROPFLAG_80000000                    = 0x80000000 // unknown
+    PROPFLAG_01000000                    = 0x01000000, // Embedded Object
+    PROPFLAG_02000000                    = 0x02000000, // Cannot Activate Door/Object
+    PROPFLAG_04000000                    = 0x04000000, // AI Sees Through Door/Object
+    PROPFLAG_DOOR_TWOWAY                 = 0x08000000, // Open Away From Player
+    PROPFLAG_WEAPON_LEFTHANDED           = 0x10000000, /* Area Behind Door Invisible/Monitor Fixed/Left-Handed weapon/Disable security camera/drone gun*/
+    PROPFLAG_CULL_BEHIND_DOOR            = 0x10000000,
+    PROPFLAG_FIXED_MONITOR               = 0x10000000,
+    PROPFLAG_CCTV_DISABLED               = 0x10000000,
+    PROPFLAG_IS_DRONE_GUN                = 0x10000000,
+    PROPFLAG_DOOR_OPENTOFRONT            = 0x20000000, /* Open Backwards/Special Function/Conceal Weapon*/
+    PROPFLAG_SPECIAL_FUNC                = 0x20000000,
+    PROPFLAG_CONCEAL_GUN                 = 0x20000000,
+    PROPFLAG_MONITOR_RENDERPOSTBG        = 0x40000000, /* No Ammo on pickup / Area Behind Door Visible*/
+    PROPFLAG_NO_PORTAL_CLOSE             = 0x40000000,
+    PROPFLAG_NO_AMMO                     = 0x40000000, 
+    PROPFLAG_80000000                    = 0x80000000, // Open By Default/Weapon Paired for Player
+    PROPFLAG_IS_DOUBLE                   = 0x80000000
 }PROPFLAG;
 // prop definition flags 
 typedef enum PROPFLAG2
