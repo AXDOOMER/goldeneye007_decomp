@@ -14053,7 +14053,7 @@ void bondviewApplyVertaTheta(void)
  * EU address 7F081A18.
  * Perfect Dark method bmoveProcessInput.
 */
-void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
+void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 {
     struct MoveData moveData; // sp120
     
@@ -14164,7 +14164,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
         && g_bondviewForceDisarm <= 0
         && (
             (g_CurrentPlayer->watch_animation_state != 5 
-                && ((arg2 & ~arg3) & START_BUTTON)
+                && ((buttons & ~oldbuttons) & START_BUTTON)
             ) 
             ||
             (g_CurrentPlayer->watch_animation_state == 5
@@ -14246,13 +14246,13 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
             {
                 sp104 = (player_joyGetButtons & Z_TRIG) != 0;
                 sp100 = ((player_joyGetButtons & ~copy_prev_buttons_pressed) & Z_TRIG) != 0;
-                sp10C = (arg2 & Z_TRIG) != 0;
-                sp108 = ((arg2 & ~arg3) & Z_TRIG) != 0;
+                sp10C = (buttons & Z_TRIG) != 0;
+                sp108 = ((buttons & ~oldbuttons) & Z_TRIG) != 0;
             }
             else
             {
-                sp104 = (arg2 & Z_TRIG) != 0;
-                sp100 = ((arg2 & ~arg3) & Z_TRIG) != 0;
+                sp104 = (buttons & Z_TRIG) != 0;
+                sp100 = ((buttons & ~oldbuttons) & Z_TRIG) != 0;
                 sp10C = (player_joyGetButtons & Z_TRIG) != 0;
                 sp108 = ((player_joyGetButtons & ~copy_prev_buttons_pressed) & Z_TRIG) != 0;
             }
@@ -14274,7 +14274,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                 moveData.sp1B8 = g_CurrentPlayer->insightaimmode;
 
                 moveData.sp1B0 = (
-                    (((arg2 & ~arg3) & B_BUTTON) != 0)
+                    (((buttons & ~oldbuttons) & B_BUTTON) != 0)
                     ||
                     ((((player_joyGetButtons & ~copy_prev_buttons_pressed) & B_BUTTON)) != 0)
                     );
@@ -14338,7 +14338,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                 }
                 
                 moveData.sp174 = (
-                        ((arg2 & A_BUTTON) != 0)
+                        ((buttons & A_BUTTON) != 0)
                         ||
                         ((player_joyGetButtons & A_BUTTON) != 0)
                     )
@@ -14346,7 +14346,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                 
                moveData.sp170 = (
                     (
-                       (((arg2 & ~arg3) & A_BUTTON) != 0)
+                       (((buttons & ~oldbuttons) & A_BUTTON) != 0)
                        ||
                        (((player_joyGetButtons & ~copy_prev_buttons_pressed) & A_BUTTON) != 0)
                     ))
@@ -14390,8 +14390,8 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                     && (player_joyGetStickY > 30);
 
                 if ((
-                           (((arg2 & A_BUTTON) != 0) && (((arg2 & ~arg3) & B_BUTTON) != 0))
-                        || (((arg2 & B_BUTTON) != 0) && (((arg2 & ~arg3) & A_BUTTON) != 0))
+                           (((buttons & A_BUTTON) != 0) && (((buttons & ~oldbuttons) & B_BUTTON) != 0))
+                        || (((buttons & B_BUTTON) != 0) && (((buttons & ~oldbuttons) & A_BUTTON) != 0))
                         || ((player_joyGetButtons & A_BUTTON) && ((player_joyGetButtons & ~copy_prev_buttons_pressed) & B_BUTTON))
                         || ((player_joyGetButtons & B_BUTTON) && ((player_joyGetButtons & ~copy_prev_buttons_pressed) & A_BUTTON)))
                     && (getCurrentPlayerWeaponId(GUNRIGHT) == ITEM_REMOTEMINE))
@@ -14441,7 +14441,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
 
             moveData.sp1B4 = (sp10C)
                 && (g_CurrentPlayer->watch_animation_state == 0)
-                && ((arg2 & A_BUTTON) == 0)
+                && ((buttons & A_BUTTON) == 0)
                 && ((player_joyGetButtons & A_BUTTON) == 0);
 
             moveData.sp140 = 1;
@@ -14470,23 +14470,23 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                 {
                     if (cur_player_get_aim_control() == 0)
                     {
-                        g_CurrentPlayer->insightaimmode = (arg2 & aimButtons) != 0;
+                        g_CurrentPlayer->insightaimmode = (buttons & aimButtons) != 0;
                     }
-                    else if ((arg2 & ~arg3) & aimButtons)
+                    else if ((buttons & ~oldbuttons) & aimButtons)
                     {
                         g_CurrentPlayer->insightaimmode = !g_CurrentPlayer->insightaimmode;
                     }
 
                     moveData.sp1BC = !g_CurrentPlayer->insightaimmode;
                     moveData.sp148 = !g_CurrentPlayer->insightaimmode;
-                    moveData.sp1B0 = ((arg2 & ~arg3) & B_BUTTON) != 0;
+                    moveData.sp1B0 = ((buttons & ~oldbuttons) & B_BUTTON) != 0;
                     moveData.sp1B8 = g_CurrentPlayer->insightaimmode;
 
                     /* 1.2 and 1.4 */
                     if (cur_player_get_control_type() == CONTROLLER_CONFIG_SOLITARE
                         || cur_player_get_control_type() == CONTROLLER_CONFIG_GOODNIGHT)
                     {
-                        if ((arg2 & (L_JPAD | L_CBUTTONS)) != 0)
+                        if ((buttons & (L_JPAD | L_CBUTTONS)) != 0)
                         {
                             if (!g_CurrentPlayer->insightaimmode)
                             {
@@ -14505,7 +14505,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                             }
                         }
                         
-                        if ((arg2 & (R_JPAD | R_CBUTTONS)) != 0)
+                        if ((buttons & (R_JPAD | R_CBUTTONS)) != 0)
                         {
                             if (!g_CurrentPlayer->insightaimmode)
                             {
@@ -14525,10 +14525,10 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                         }
 
                         moveData.sp19C = (!g_CurrentPlayer->insightaimmode)
-                            && ((arg2 & (U_JPAD | U_CBUTTONS)) );
+                            && ((buttons & (U_JPAD | U_CBUTTONS)) );
                         
                         moveData.sp198 = (!g_CurrentPlayer->insightaimmode)
-                            && ((arg2 & (D_JPAD | D_CBUTTONS)));
+                            && ((buttons & (D_JPAD | D_CBUTTONS)));
 
                         moveData.sp1A0 = !g_CurrentPlayer->insightaimmode;
                         
@@ -14543,7 +14543,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                     }
                     else
                     {
-                        if ((arg2 & (s32)(L_JPAD | L_CBUTTONS)) != 0)
+                        if ((buttons & (s32)(L_JPAD | L_CBUTTONS)) != 0)
                         {
                             moveData.sp18C = 1.0f;
                         }
@@ -14553,7 +14553,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                             moveData.sp18C = 0;
                         }
                         
-                        if ((arg2 & (s32)(R_JPAD | R_CBUTTONS)) != 0)
+                        if ((buttons & (s32)(R_JPAD | R_CBUTTONS)) != 0)
                         {
                             moveData.sp188 = 1.0f;
                         }
@@ -14564,19 +14564,19 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                         }
                         
                         moveData.sp194 = (!g_CurrentPlayer->insightaimmode)
-                            && ((arg2 & (s32)(L_JPAD | L_CBUTTONS)) );
+                            && ((buttons & (s32)(L_JPAD | L_CBUTTONS)) );
                         
                         moveData.sp190 = (!g_CurrentPlayer->insightaimmode)
-                            && ((arg2 & (s32)(R_JPAD | R_CBUTTONS)));
+                            && ((buttons & (s32)(R_JPAD | R_CBUTTONS)));
                         
                         moveData.sp1AC = !g_CurrentPlayer->insightaimmode;
 
-                        if ((!g_CurrentPlayer->insightaimmode) && (arg2 & (U_JPAD | U_CBUTTONS)) )
+                        if ((!g_CurrentPlayer->insightaimmode) && (buttons & (U_JPAD | U_CBUTTONS)) )
                         {
                             moveData.sp184 = 1.0f;
                         }
                         
-                        if ((!g_CurrentPlayer->insightaimmode) && (arg2 & (D_JPAD | D_CBUTTONS)))
+                        if ((!g_CurrentPlayer->insightaimmode) && (buttons & (D_JPAD | D_CBUTTONS)))
                         {
                             moveData.sp180 = 1.0f;
                         }
@@ -14620,15 +14620,15 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                     }
 
                     moveData.sp174 =
-                        ((arg2 & invButtons) != 0)
+                        ((buttons & invButtons) != 0)
                         &&
-                        (((arg2 & ~arg3) & shootButtons) != 0)
+                        (((buttons & ~oldbuttons) & shootButtons) != 0)
                         ;
                     
                     moveData.sp170 = 
-                        (((arg2 & ~arg3) & invButtons) != 0)
+                        (((buttons & ~oldbuttons) & invButtons) != 0)
                         &&
-                        ((arg2 & shootButtons) == 0)
+                        ((buttons & shootButtons) == 0)
                         ;
                     
                     moveData.sp16C = g_CurrentPlayer->insightaimmode;
@@ -14639,12 +14639,12 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                         )
                     {
                         /* down = 0x404 */
-                        if ((arg2 & (D_JPAD | D_CBUTTONS)) != 0)
+                        if ((buttons & (D_JPAD | D_CBUTTONS)) != 0)
                         {
                             moveData.sp164 = 1.0f;
                         }
                         
-                        if ((arg2 & (U_JPAD | U_CBUTTONS)) != 0)
+                        if ((buttons & (U_JPAD | U_CBUTTONS)) != 0)
                         {
                             moveData.sp160 = 1.0f;
                         }
@@ -14652,21 +14652,21 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                     
                     moveData.sp15C = (bondwalkItemCheckBitflags(getCurrentPlayerWeaponId(GUNRIGHT), WEAPONSTATBITFLAG_DISABLE_CROUCH) == 0)
                         && (g_CurrentPlayer->insightaimmode)
-                        && ((arg2 & (D_JPAD | D_CBUTTONS)));
+                        && ((buttons & (D_JPAD | D_CBUTTONS)));
                         
                     moveData.sp158 = (bondwalkItemCheckBitflags(getCurrentPlayerWeaponId(GUNRIGHT), WEAPONSTATBITFLAG_DISABLE_CROUCH) == 0)
                         && (g_CurrentPlayer->insightaimmode)
-                        && ((~arg2 & (U_JPAD | U_CBUTTONS)));
+                        && ((~buttons & (U_JPAD | U_CBUTTONS)));
 
                     moveData.sp154 = (g_CurrentPlayer->insightaimmode)
-                        && ((arg2 & (L_JPAD | L_CBUTTONS)));
+                        && ((buttons & (L_JPAD | L_CBUTTONS)));
 
                     moveData.sp150 = (g_CurrentPlayer->insightaimmode)
-                        && ((arg2 & (R_JPAD | R_CBUTTONS)));
+                        && ((buttons & (R_JPAD | R_CBUTTONS)));
 
                     if (
-                        ((((arg2 & invButtons) != 0) && (((arg2 & ~arg3) & B_BUTTON) != 0)) 
-                            || ((arg2 & B_BUTTON) && (((arg2 & ~arg3) & invButtons) != 0)))
+                        ((((buttons & invButtons) != 0) && (((buttons & ~oldbuttons) & B_BUTTON) != 0)) 
+                            || ((buttons & B_BUTTON) && (((buttons & ~oldbuttons) & invButtons) != 0)))
                         && (getCurrentPlayerWeaponId(GUNRIGHT) == ITEM_REMOTEMINE))
                     {
                         moveData.sp14C = 1;
@@ -14701,9 +14701,9 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
                 }
             }
 
-            moveData.sp1B4 = ((arg2 & shootButtons)  != 0)
+            moveData.sp1B4 = ((buttons & shootButtons)  != 0)
                 && (g_CurrentPlayer->watch_animation_state == 0)
-                && ((arg2 & invButtons) == 0);
+                && ((buttons & invButtons) == 0);
 
             /* 1.2 and 1.4 */
             if (cur_player_get_control_type() == CONTROLLER_CONFIG_SOLITARE || cur_player_get_control_type() == CONTROLLER_CONFIG_GOODNIGHT)
@@ -15671,7 +15671,7 @@ void bondviewPlayerTickExplode(void)
  * Thanks Trevor.
  * - Ben Burns
  */
-void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
+void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 {
     struct coord3d sp3AC;
     f32 ftemp;
@@ -15709,7 +15709,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
     currentPlayerSetField00(0);
     bondviewPlayerTickDamageAndHealth();
     bondviewPlayerTickExplode();
-    bondviewProcessInput(stick_x, stick_y, *(u16*)&arg2, *(u16*)&arg3);
+    bondviewProcessInput(stick_x, stick_y, buttons, oldbuttons);
 
     if (lvlGetControlsLockedFlag())
     {
@@ -15785,18 +15785,18 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 arg2, u16 arg3)
 
     if (in_tank_flag == 1)
     {
-        f32 ftemp2; // lines: 531-538
-        struct coord3d check_collision_p1; // sp374 ; lines 288-413
-        struct coord3d check_collision_p2; // sp368 ; lines 289-414
-        f32 stack_padding_1; // lines 441-465
-        s32 i_1; // lines 463
-        f32 curTankAngleRad; // lines 272-416
-        f32 tankChangeInAngle; // lines 271-507
-        f32 sp354; // lines 429-490
-        struct coord3d tank_collision_pt1; // lines 311-377
-        struct coord3d tank_collision_pt2; // lines 311-380
-        f32 tank_collision_dx; // lines 313-536
-        f32 tank_collision_dz; // lines 314-357
+        f32 ftemp2;
+        struct coord3d check_collision_p1;
+        struct coord3d check_collision_p2;
+        f32 stack_padding_1;
+        s32 i_1;
+        f32 curTankAngleRad;
+        f32 tankChangeInAngle;
+        f32 sp354;
+        struct coord3d tank_collision_pt1;
+        struct coord3d tank_collision_pt2;
+        f32 tank_collision_dx;
+        f32 tank_collision_dz;
         
         tankChangeInAngle = DegToRad1Fact(g_CurrentPlayer->speedtheta * g_GlobalTimerDelta) * 3.5f;
         curTankAngleRad = g_TankOrientationAngle + tankChangeInAngle;
