@@ -486,50 +486,23 @@ void memaFree(void *addr, s32 size)
 	_memaFree((uintptr_t) addr, size);
 }
 
-#ifdef NONMATCHING
-// ac54:    bnel    v1,v0,0xac54 ~>                  r ac54:    bnel    v0,v1,0xac54 ~>
-void mema7000A040(void) {
+
+void mema7000A040(void)
+{
     s32 i;
-    for (i = 0; &g_MemoryAllocations[i] != &g_MemoryAllocations[ALLOCATIONS_LENGTH-1]; i += 4) {
-        // Removed
+    struct memaspace *curr;
+
+    for (i=0; i<ALLOCATIONS_LENGTH - 1; i++)
+    {
+        curr = &g_MemoryAllocations.spaces[i];
+
+        if (curr->addr)
+        {
+            // removed
+        }
     }
 }
-#else
 
-#if defined(LEFTOVERDEBUG)
-GLOBAL_ASM(
-.text
-glabel mema7000A040
-/* 00AC40 7000A040 3C038006 */  lui   $v1, %hi(g_MemoryAllocations)
-/* 00AC44 7000A044 3C028006 */  lui   $v0, %hi(g_MemoryAllocations + 0xFE0)
-/* 00AC48 7000A048 24424C08 */  addiu $v0, %lo(g_MemoryAllocations + 0xFE0) # addiu $v0, $v0, 0x4c08
-/* 00AC4C 7000A04C 24633C28 */  addiu $v1, %lo(g_MemoryAllocations) # addiu $v1, $v1, 0x3c28
-/* 00AC50 7000A050 24630020 */  addiu $v1, $v1, 0x20
-.L7000A054:
-/* 00AC54 7000A054 5462FFFF */  bnel  $v1, $v0, .L7000A054
-/* 00AC58 7000A058 24630020 */   addiu $v1, $v1, 0x20
-/* 00AC5C 7000A05C 03E00008 */  jr    $ra
-/* 00AC60 7000A060 00000000 */   nop   
-)
-#endif
-
-#if !defined(LEFTOVERDEBUG)
-GLOBAL_ASM(
-.text
-glabel mema7000A040
-/* 00A0A0 700094A0 3C038005 */  lui   $v1, %hi(g_MemoryAllocations) # $v1, 0x8005
-/* 00A0A4 700094A4 3C028005 */  lui   $v0, %hi(g_MemoryAllocations + 0x3E0) # $v0, 0x8005
-/* 00A0A8 700094A8 244271E8 */  addiu $v0, %lo(g_MemoryAllocations + 0x3E0) # addiu $v0, $v0, 0x71e8
-/* 00A0AC 700094AC 24636E08 */  addiu $v1, %lo(g_MemoryAllocations) # addiu $v1, $v1, 0x6e08
-/* 00A0B0 700094B0 24630020 */  addiu $v1, $v1, 0x20
-.L700094B4:
-/* 00A0B4 700094B4 5462FFFF */  bnel  $v1, $v0, .L700094B4
-/* 00A0B8 700094B8 24630020 */   addiu $v1, $v1, 0x20
-/* 00A0BC 700094BC 03E00008 */  jr    $ra
-/* 00A0C0 700094C0 00000000 */   nop 
-)
-#endif
-#endif
 
 // Calculate the ratio between the sum of all allocations minus
 // the largest one, and the sum of all allocations.
