@@ -126,7 +126,7 @@ loop_22:
                 temp_f20 = temp_v0_4->position.x - temp_v1->position.x;
                 temp_f22 = temp_v0_4->position.z - temp_v1->position.z;
                 temp_f24 = (f32) 0x10;
-                temp_f28 = ((atan2f(temp_f20, temp_f22, temp_a0_2) * 180.0f) / 3.1415927f) + g_CurrentPlayer->vv_theta + 180.0f;
+                temp_f28 = ((atan2f(temp_f20, temp_f22, temp_a0_2) * 180.0f) / M_PI_F) + g_CurrentPlayer->vv_theta + 180.0f;
                 temp_f2 = sqrtf((temp_f20 * temp_f20) + (temp_f22 * temp_f22)) * (16.0f / 4000.0f);
                 if ((scenario == 5) || (scenario == 6) || (scenario == 7) || (scenario == 2) || (scenario == 3))
                 {

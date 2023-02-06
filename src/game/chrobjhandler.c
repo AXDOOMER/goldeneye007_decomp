@@ -28124,9 +28124,9 @@ void objBounce(ObjectRecord *obj, coord3d *arg1)
         rot.y = (RANDOMFRAC() * 7.53982257843f * 0.015625f) - 0.058904863894f;
         rot.z = (RANDOMFRAC() * 7.53982257843f * 0.015625f) - 0.058904863894f;
 #else
-        rot.x = (RANDOMFRAC() * 6.2831855f * 0.015625f) - 0.049087387f;
-        rot.y = (RANDOMFRAC() * 6.2831855f * 0.015625f) - 0.049087387f;
-        rot.z = (RANDOMFRAC() * 6.2831855f * 0.015625f) - 0.049087387f;
+        rot.x = (RANDOMFRAC() * M_TAU_F * 0.015625f) - 0.049087387f;
+        rot.y = (RANDOMFRAC() * M_TAU_F * 0.015625f) - 0.049087387f;
+        rot.z = (RANDOMFRAC() * M_TAU_F * 0.015625f) - 0.049087387f;
 #endif
 
         matrix_4x4_set_rotation_around_xyz((f32*)&rot, &projectile->mtx);
@@ -28255,9 +28255,9 @@ s32 objDrop(PropRecord *prop)
             projectile->speed.y = -RANDOMFRAC() * 1.6666666f * 0.5f;
             projectile->speed.z = cosf(angle) *  1.6666666f;
 
-            rot.x = (RANDOMFRAC() * 6.2831855f * 0.0078125f) - 0.024543693f;
-            rot.y = (RANDOMFRAC() * 6.2831855f * 0.0078125f) - 0.024543693f;
-            rot.z = (RANDOMFRAC() * 6.2831855f * 0.0078125f) - 0.024543693f;
+            rot.x = (RANDOMFRAC() * M_TAU_F * 0.0078125f) - 0.024543693f;
+            rot.y = (RANDOMFRAC() * M_TAU_F * 0.0078125f) - 0.024543693f;
+            rot.z = (RANDOMFRAC() * M_TAU_F * 0.0078125f) - 0.024543693f;
 
             matrix_4x4_set_rotation_around_xyz(rot.f, &projectile->mtx);
         } else if ((droptype^0) == DROPTYPE_THROWGRENADE && parent->type == PROP_TYPE_CHR) {
@@ -28270,9 +28270,9 @@ s32 objDrop(PropRecord *prop)
             projectile->speed.y = 6.6666665f;
             projectile->speed.z = cosf(angle) * 13.333333f;
 
-            rot.x = (RANDOMFRAC() * 6.2831855f * 0.0078125f) - 0.024543693f;
-            rot.y = (RANDOMFRAC() * 6.2831855f * 0.0078125f) - 0.024543693f;
-            rot.z = (RANDOMFRAC() * 6.2831855f * 0.0078125f) - 0.024543693f;
+            rot.x = (RANDOMFRAC() * M_TAU_F * 0.0078125f) - 0.024543693f;
+            rot.y = (RANDOMFRAC() * M_TAU_F * 0.0078125f) - 0.024543693f;
+            rot.z = (RANDOMFRAC() * M_TAU_F * 0.0078125f) - 0.024543693f;
 
             matrix_4x4_set_rotation_around_xyz(rot.f, &projectile->mtx);
             projectile->flags |= 0x40;
@@ -28288,9 +28288,9 @@ s32 objDrop(PropRecord *prop)
             projectile->speed.y = 2.0f * (RANDOMFRAC() * 1.6666666f);
             projectile->speed.z = ((2.0f * (RANDOMFRAC() * 1.6666666f)) + 3.3333333f) * cosf(angle);
 
-            rot.x = (RANDOMFRAC() * 6.2831855f * 0.03125f) - 0.09817477f;
-            rot.y = (RANDOMFRAC() * 6.2831855f * 0.03125f) - 0.09817477f;
-            rot.z = (RANDOMFRAC() * 6.2831855f * 0.03125f) - 0.09817477f;
+            rot.x = (RANDOMFRAC() * M_TAU_F * 0.03125f) - 0.09817477f;
+            rot.y = (RANDOMFRAC() * M_TAU_F * 0.03125f) - 0.09817477f;
+            rot.z = (RANDOMFRAC() * M_TAU_F * 0.03125f) - 0.09817477f;
 
             matrix_4x4_set_rotation_around_xyz(rot.f, &projectile->mtx);
         } else {
@@ -29772,9 +29772,9 @@ void objFall(ObjectRecord *obj, s32 playernum)
                 rot.y = ((RANDOMFRAC() * 7.5398226f) / 320.0f) - 0.011780973f;
                 rot.z = ((RANDOMFRAC() * 7.5398226f) / 320.0f) - 0.011780973f;
 #else
-                rot.x = ((RANDOMFRAC() * 6.2831855f) / 320.0f) - 0.009817477f;
-                rot.y = ((RANDOMFRAC() * 6.2831855f) / 320.0f) - 0.009817477f;
-                rot.z = ((RANDOMFRAC() * 6.2831855f) / 320.0f) - 0.009817477f;
+                rot.x = ((RANDOMFRAC() * M_TAU_F) / 320.0f) - 0.009817477f;
+                rot.y = ((RANDOMFRAC() * M_TAU_F) / 320.0f) - 0.009817477f;
+                rot.z = ((RANDOMFRAC() * M_TAU_F) / 320.0f) - 0.009817477f;
 #endif
             }
 
@@ -32785,12 +32785,12 @@ bool objTestForInteract(PropRecord* prop)
 
                 if (angle < playerangle)
                 {
-                    anglediff += 6.2831855f;
+                    anglediff += M_TAU_F;
                 }
 
-                if (anglediff > 3.1415927f)
+                if (anglediff > M_PI_F)
                 {
-                    anglediff = 6.2831855f - anglediff;
+                    anglediff = M_TAU_F - anglediff;
                 }
 
                 if (anglediff <= sp30)
@@ -42114,24 +42114,6 @@ GLOBAL_ASM(
 .late_rodata
 glabel D_8005345C
 .word 0x4e742400 /*1.024e9*/
-glabel D_80053460
-.word 0x40c90fdb /*6.2831855*/
-glabel D_80053464
-.word 0x40c90fdb /*6.2831855*/
-glabel D_80053468
-.word 0x40490fdb /*3.1415927*/
-glabel D_8005346C
-.word 0x40c90fdb /*6.2831855*/
-glabel D_80053470
-.word 0x40490fdb /*3.1415927*/
-glabel D_80053474
-.word 0x40c90fdb /*6.2831855*/
-glabel D_80053478
-.word 0x40c90fdb /*6.2831855*/
-glabel D_8005347C
-.word 0x40490fdb /*3.1415927*/
-glabel D_80053480
-.word 0x40c90fdb /*6.2831855*/
 .text
 glabel sub_GAME_7F054D6C
 /* 08989C 7F054D6C 27BDFF90 */  addiu $sp, $sp, -0x70
@@ -42473,6 +42455,25 @@ void sub_GAME_7F05522C(DoorRecord *door, f32 *arg1, f32 *arg2, bool altcoordsyst
 #else
 void sub_GAME_7F05522C(DoorRecord *door, f32 *arg1, f32 *arg2, bool altcoordsystem);
 GLOBAL_ASM(
+.late_rodata
+glabel D_80053460
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80053464
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80053468
+.word 0x40490fdb /*3.1415927*/
+glabel D_8005346C
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80053470
+.word 0x40490fdb /*3.1415927*/
+glabel D_80053474
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80053478
+.word 0x40c90fdb /*6.2831855*/
+glabel D_8005347C
+.word 0x40490fdb /*3.1415927*/
+glabel D_80053480
+.word 0x40c90fdb /*6.2831855*/
 .text
 glabel sub_GAME_7F05522C
 /* 089D5C 7F05522C 27BDFF98 */  addiu $sp, $sp, -0x68

@@ -2093,7 +2093,7 @@ void generate_player_thrown_knife(s32 hand)
     spE0.f[2] = g_CurrentPlayer->hands[hand].throw_item_pos_related.m[3][2];
 
     matrix_4x4_set_rotation_around_z(4.712389f, &spA0_a);
-    matrix_4x4_set_rotation_around_x(3.1415927f, &sp40_f);
+    matrix_4x4_set_rotation_around_x(M_PI_F, &sp40_f);
     matrix_4x4_multiply_in_place(&sp40_f, &spA0_a);
     matrix_4x4_copy(&g_CurrentPlayer->hands[hand].throw_item_pos_related, &sp40_f);
 

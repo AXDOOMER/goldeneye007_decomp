@@ -135,7 +135,7 @@ void init_player_BONDdata_stats(void) {
     g_CurrentPlayer->gun_azimuth_turning = 0.0f;
     g_CurrentPlayer->gunaimdamp = 0.9f;
     g_CurrentPlayer->field_1010 = 0.0f;
-    g_CurrentPlayer->holds_neg_pi = -3.1415927f;
+    g_CurrentPlayer->holds_neg_pi = -M_PI_F;
     g_CurrentPlayer->unk1018 = 0.0f;
     g_CurrentPlayer->copiedgoldeneye = FALSE;
     g_CurrentPlayer->magnetattracttime = -1;
