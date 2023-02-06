@@ -14811,14 +14811,14 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         
         spE4 = 0;
         
-        if (get_hands_firing_status(GUNRIGHT) && getCurrentPlayerNoise(0) > 0)
+        if (get_hands_firing_status(GUNRIGHT) && getCurrentPlayerNoise(GUNRIGHT) > 0)
         {
-            spE4 = getCurrentPlayerNoise(0);
+            spE4 = getCurrentPlayerNoise(GUNRIGHT);
         }
         
-        if (get_hands_firing_status(GUNLEFT) && spE4 < getCurrentPlayerNoise(1))
+        if (get_hands_firing_status(GUNLEFT) && spE4 < getCurrentPlayerNoise(GUNLEFT))
         {
-            spE4 = getCurrentPlayerNoise(1);
+            spE4 = getCurrentPlayerNoise(GUNLEFT);
         }
         
         chrCheckGuardsHeardSound(spE4);
