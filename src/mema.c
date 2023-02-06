@@ -486,50 +486,23 @@ void memaFree(void *addr, s32 size)
 	_memaFree((uintptr_t) addr, size);
 }
 
-#ifdef NONMATCHING
-// ac54:    bnel    v1,v0,0xac54 ~>                  r ac54:    bnel    v0,v1,0xac54 ~>
-void mema7000A040(void) {
+
+void mema7000A040(void)
+{
     s32 i;
-    for (i = 0; &g_MemoryAllocations[i] != &g_MemoryAllocations[ALLOCATIONS_LENGTH-1]; i += 4) {
-        // Removed
+    struct memaspace *curr;
+
+    for (i=0; i<ALLOCATIONS_LENGTH - 1; i++)
+    {
+        curr = &g_MemoryAllocations.spaces[i];
+
+        if (curr->addr)
+        {
+            // removed
+        }
     }
 }
-#else
 
-#if defined(LEFTOVERDEBUG)
-GLOBAL_ASM(
-.text
-glabel mema7000A040
-/* 00AC40 7000A040 3C038006 */  lui   $v1, %hi(g_MemoryAllocations)
-/* 00AC44 7000A044 3C028006 */  lui   $v0, %hi(g_MemoryAllocations + 0xFE0)
-/* 00AC48 7000A048 24424C08 */  addiu $v0, %lo(g_MemoryAllocations + 0xFE0) # addiu $v0, $v0, 0x4c08
-/* 00AC4C 7000A04C 24633C28 */  addiu $v1, %lo(g_MemoryAllocations) # addiu $v1, $v1, 0x3c28
-/* 00AC50 7000A050 24630020 */  addiu $v1, $v1, 0x20
-.L7000A054:
-/* 00AC54 7000A054 5462FFFF */  bnel  $v1, $v0, .L7000A054
-/* 00AC58 7000A058 24630020 */   addiu $v1, $v1, 0x20
-/* 00AC5C 7000A05C 03E00008 */  jr    $ra
-/* 00AC60 7000A060 00000000 */   nop   
-)
-#endif
-
-#if !defined(LEFTOVERDEBUG)
-GLOBAL_ASM(
-.text
-glabel mema7000A040
-/* 00A0A0 700094A0 3C038005 */  lui   $v1, %hi(g_MemoryAllocations) # $v1, 0x8005
-/* 00A0A4 700094A4 3C028005 */  lui   $v0, %hi(g_MemoryAllocations + 0x3E0) # $v0, 0x8005
-/* 00A0A8 700094A8 244271E8 */  addiu $v0, %lo(g_MemoryAllocations + 0x3E0) # addiu $v0, $v0, 0x71e8
-/* 00A0AC 700094AC 24636E08 */  addiu $v1, %lo(g_MemoryAllocations) # addiu $v1, $v1, 0x6e08
-/* 00A0B0 700094B0 24630020 */  addiu $v1, $v1, 0x20
-.L700094B4:
-/* 00A0B4 700094B4 5462FFFF */  bnel  $v1, $v0, .L700094B4
-/* 00A0B8 700094B8 24630020 */   addiu $v1, $v1, 0x20
-/* 00A0BC 700094BC 03E00008 */  jr    $ra
-/* 00A0C0 700094C0 00000000 */   nop 
-)
-#endif
-#endif
 
 // Calculate the ratio between the sum of all allocations minus
 // the largest one, and the sum of all allocations.
@@ -550,178 +523,70 @@ f32 memaCalculateNonLargestToTotalRatio(void) {
     return ((f32)(tot - max) / tot);
 }
 
-#ifdef NONMATCHING
 // Print a list of allocations, in descending size order. Sizes are specified in
 // kilobytes, rounded to nearest integer. Up to 200 allocations can be listed.
-void memaDump(void) {
-    const char buffer[4096];
-    const char *pos;
-    s32 count = 0;
+void memaDump(void)
+{
+    char *pos;
     u32 tot = 0;
     s32 lim = (1 << 31);
-    memaspace *curr = &g_MemoryAllocations[2];
-    while (curr->addr != -1) {
+    s32 count;
+    memaspace *curr;
+    char buffer[4096];
+    u32 max;
+    u32 acc;
+
+    count = 0;
+
+    for (curr = &g_MemoryAllocations.spaces[0], tot = 0; curr->addr != -1; curr++)
+    {
         tot += curr->size;
-        curr++;
     }
+
     pos = buffer;
-    while (TRUE) {
-        u32 max = 0;
-        u32 acc = 0;
-        curr = &g_MemoryAllocations[2];
-        while (curr->addr != -1) {
-            if ((curr->size < lim) && (curr->size > max)) {
+
+    for (max = 0, acc = 0; 1; lim = max, max = 0)
+    {
+        for (curr = &g_MemoryAllocations.spaces[0]; curr->addr != -1; curr++)
+        {
+            if ((curr->size < lim) && (curr->size > max))
+            {
                 max = curr->size;
                 acc++;
             }
-            curr++;
         }
-        if (acc == 0) {
+        
+        if (acc == 0)
+        {
             break;
         }
-        curr = &g_MemoryAllocations[2];
-        while (curr->addr != -1) {
-            if (curr->size == max) {
-                if (count < 200) {
+
+        
+        lim = max;
+        
+        for (curr = &g_MemoryAllocations.spaces[0],acc=0; curr->addr != -1; curr++)
+        {
+            if (curr->size == lim)
+            {
+                if (count < 200)
+                {
                     pos += sprintf(pos, "%d ", ((curr->size + 512) / 1024));
-                } else if (count == 200) {
+                }
+                else if (count == 200)
+                {
                     pos += sprintf(pos, "...");
                 }
+                
                 count++;
             }
-            curr++;
         }
     }
-    if (count > 200) {
+    
+    if (count > 200)
+    {
         sprintf(pos, "[%d]", count);
     }
 }
-#else
-const char aD_3[] = "%d ";
-const char a___[] = "...";
-const char aD_5[] = "[%d]";
-GLOBAL_ASM(
-.text
-glabel memaDump
-/* 00AD00 7000A100 27BDEF98 */  addiu $sp, $sp, -0x1068
-/* 00AD04 7000A104 3C048006 */  lui   $a0, %hi(g_MemoryAllocations + 0x10)
-/* 00AD08 7000A108 8C843C38 */  lw    $a0, %lo(g_MemoryAllocations + 0x10)($a0)
-/* 00AD0C 7000A10C AFB5002C */  sw    $s5, 0x2c($sp)
-/* 00AD10 7000A110 AFB00018 */  sw    $s0, 0x18($sp)
-/* 00AD14 7000A114 2415FFFF */  li    $s5, -1
-/* 00AD18 7000A118 AFB20020 */  sw    $s2, 0x20($sp)
-/* 00AD1C 7000A11C 3C108006 */  lui   $s0, %hi(g_MemoryAllocations + 0x10)
-/* 00AD20 7000A120 AFBF003C */  sw    $ra, 0x3c($sp)
-/* 00AD24 7000A124 AFBE0038 */  sw    $fp, 0x38($sp)
-/* 00AD28 7000A128 AFB70034 */  sw    $s7, 0x34($sp)
-/* 00AD2C 7000A12C AFB60030 */  sw    $s6, 0x30($sp)
-/* 00AD30 7000A130 AFB40028 */  sw    $s4, 0x28($sp)
-/* 00AD34 7000A134 AFB30024 */  sw    $s3, 0x24($sp)
-/* 00AD38 7000A138 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 00AD3C 7000A13C 3C038000 */  lui   $v1, 0x8000
-/* 00AD40 7000A140 00009025 */  move  $s2, $zero
-/* 00AD44 7000A144 26103C38 */  addiu $s0, %lo(g_MemoryAllocations + 0x10) # addiu $s0, $s0, 0x3c38
-/* 00AD48 7000A148 12A40008 */  beq   $s5, $a0, .L7000A16C
-/* 00AD4C 7000A14C 00001025 */   move  $v0, $zero
-.L7000A150:
-/* 00AD50 7000A150 8E0F0008 */  lw    $t7, 8($s0)
-/* 00AD54 7000A154 8E0E0004 */  lw    $t6, 4($s0)
-/* 00AD58 7000A158 26100008 */  addiu $s0, $s0, 8
-/* 00AD5C 7000A15C 16AFFFFC */  bne   $s5, $t7, .L7000A150
-/* 00AD60 7000A160 004E1021 */   addu  $v0, $v0, $t6
-/* 00AD64 7000A164 3C108006 */  lui   $s0, %hi(g_MemoryAllocations + 0x10)
-/* 00AD68 7000A168 26103C38 */  addiu $s0, %lo(g_MemoryAllocations + 0x10) # addiu $s0, $s0, 0x3c38
-.L7000A16C:
-/* 00AD6C 7000A16C 3C1E8003 */  lui   $fp, %hi(a___) 
-/* 00AD70 7000A170 3C168003 */  lui   $s6, %hi(aD_3)
-/* 00AD74 7000A174 27B10054 */  addiu $s1, $sp, 0x54
-/* 00AD78 7000A178 26D691E0 */  addiu $s6, %lo(aD_3) # addiu $s6, $s6, -0x6e20
-/* 00AD7C 7000A17C 27DE91E4 */  addiu $fp, %lo(a___) # addiu $fp, $fp, -0x6e1c
-/* 00AD80 7000A180 00009825 */  move  $s3, $zero
-/* 00AD84 7000A184 0000A025 */  move  $s4, $zero
-/* 00AD88 7000A188 241700C8 */  li    $s7, 200
-.L7000A18C:
-/* 00AD8C 7000A18C 12A4000D */  beq   $s5, $a0, .L7000A1C4
-/* 00AD90 7000A190 00000000 */   nop   
-/* 00AD94 7000A194 8E020004 */  lw    $v0, 4($s0)
-.L7000A198:
-/* 00AD98 7000A198 0043082B */  sltu  $at, $v0, $v1
-/* 00AD9C 7000A19C 10200005 */  beqz  $at, .L7000A1B4
-/* 00ADA0 7000A1A0 0262082B */   sltu  $at, $s3, $v0
-/* 00ADA4 7000A1A4 50200004 */  beql  $at, $zero, .L7000A1B8
-/* 00ADA8 7000A1A8 8E180008 */   lw    $t8, 8($s0)
-/* 00ADAC 7000A1AC 00409825 */  move  $s3, $v0
-/* 00ADB0 7000A1B0 26940001 */  addiu $s4, $s4, 1
-.L7000A1B4:
-/* 00ADB4 7000A1B4 8E180008 */  lw    $t8, 8($s0)
-.L7000A1B8:
-/* 00ADB8 7000A1B8 26100008 */  addiu $s0, $s0, 8
-/* 00ADBC 7000A1BC 56B8FFF6 */  bnel  $s5, $t8, .L7000A198
-/* 00ADC0 7000A1C0 8E020004 */   lw    $v0, 4($s0)
-.L7000A1C4:
-/* 00ADC4 7000A1C4 12800022 */  beqz  $s4, .L7000A250
-/* 00ADC8 7000A1C8 3C108006 */   lui   $s0, %hi(g_MemoryAllocations + 0x10)
-/* 00ADCC 7000A1CC 26103C38 */  addiu $s0, %lo(g_MemoryAllocations + 0x10) # addiu $s0, $s0, 0x3c38
-/* 00ADD0 7000A1D0 12A4001C */  beq   $s5, $a0, .L7000A244
-/* 00ADD4 7000A1D4 0000A025 */   move  $s4, $zero
-/* 00ADD8 7000A1D8 8E020004 */  lw    $v0, 4($s0)
-.L7000A1DC:
-/* 00ADDC 7000A1DC 2A4100C8 */  slti  $at, $s2, 0xc8
-/* 00ADE0 7000A1E0 56620011 */  bnel  $s3, $v0, .L7000A228
-/* 00ADE4 7000A1E4 8E080008 */   lw    $t0, 8($s0)
-/* 00ADE8 7000A1E8 10200008 */  beqz  $at, .L7000A20C
-/* 00ADEC 7000A1EC 02202025 */   move  $a0, $s1
-/* 00ADF0 7000A1F0 24460200 */  addiu $a2, $v0, 0x200
-/* 00ADF4 7000A1F4 0006CA82 */  srl   $t9, $a2, 0xa
-/* 00ADF8 7000A1F8 03203025 */  move  $a2, $t9
-/* 00ADFC 7000A1FC 0C002B25 */  jal   sprintf
-/* 00AE00 7000A200 02C02825 */   move  $a1, $s6
-/* 00AE04 7000A204 10000006 */  b     .L7000A220
-/* 00AE08 7000A208 02228821 */   addu  $s1, $s1, $v0
-.L7000A20C:
-/* 00AE0C 7000A20C 16570004 */  bne   $s2, $s7, .L7000A220
-/* 00AE10 7000A210 02202025 */   move  $a0, $s1
-/* 00AE14 7000A214 0C002B25 */  jal   sprintf
-/* 00AE18 7000A218 03C02825 */   move  $a1, $fp
-/* 00AE1C 7000A21C 02228821 */  addu  $s1, $s1, $v0
-.L7000A220:
-/* 00AE20 7000A220 26520001 */  addiu $s2, $s2, 1
-/* 00AE24 7000A224 8E080008 */  lw    $t0, 8($s0)
-.L7000A228:
-/* 00AE28 7000A228 26100008 */  addiu $s0, $s0, 8
-/* 00AE2C 7000A22C 56A8FFEB */  bnel  $s5, $t0, .L7000A1DC
-/* 00AE30 7000A230 8E020004 */   lw    $v0, 4($s0)
-/* 00AE34 7000A234 3C108006 */  lui   $s0, %hi(g_MemoryAllocations + 0x10)
-/* 00AE38 7000A238 3C048006 */  lui   $a0, %hi(g_MemoryAllocations + 0x10)
-/* 00AE3C 7000A23C 8C843C38 */  lw    $a0, %lo(g_MemoryAllocations + 0x10)($a0)
-/* 00AE40 7000A240 26103C38 */  addiu $s0, %lo(g_MemoryAllocations + 0x10) # addiu $s0, $s0, 0x3c38
-.L7000A244:
-/* 00AE44 7000A244 02601825 */  move  $v1, $s3
-/* 00AE48 7000A248 1000FFD0 */  b     .L7000A18C
-/* 00AE4C 7000A24C 00009825 */   move  $s3, $zero
-.L7000A250:
-/* 00AE50 7000A250 2A4100C9 */  slti  $at, $s2, 0xc9
-/* 00AE54 7000A254 14200005 */  bnez  $at, .L7000A26C
-/* 00AE58 7000A258 02202025 */   move  $a0, $s1
-/* 00AE5C 7000A25C 3C058003 */  lui   $a1, %hi(aD_5)
-/* 00AE60 7000A260 24A591E8 */  addiu $a1, %lo(aD_5) # addiu $a1, $a1, -0x6e18
-/* 00AE64 7000A264 0C002B25 */  jal   sprintf
-/* 00AE68 7000A268 02403025 */   move  $a2, $s2
-.L7000A26C:
-/* 00AE6C 7000A26C 8FBF003C */  lw    $ra, 0x3c($sp)
-/* 00AE70 7000A270 8FB00018 */  lw    $s0, 0x18($sp)
-/* 00AE74 7000A274 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 00AE78 7000A278 8FB20020 */  lw    $s2, 0x20($sp)
-/* 00AE7C 7000A27C 8FB30024 */  lw    $s3, 0x24($sp)
-/* 00AE80 7000A280 8FB40028 */  lw    $s4, 0x28($sp)
-/* 00AE84 7000A284 8FB5002C */  lw    $s5, 0x2c($sp)
-/* 00AE88 7000A288 8FB60030 */  lw    $s6, 0x30($sp)
-/* 00AE8C 7000A28C 8FB70034 */  lw    $s7, 0x34($sp)
-/* 00AE90 7000A290 8FBE0038 */  lw    $fp, 0x38($sp)
-/* 00AE94 7000A294 03E00008 */  jr    $ra
-/* 00AE98 7000A298 27BD1068 */   addiu $sp, $sp, 0x1068
-)
-#endif
 
 // Dump a list of allocations before and after a full
 // merge pass.
