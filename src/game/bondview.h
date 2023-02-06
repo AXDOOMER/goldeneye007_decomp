@@ -924,7 +924,7 @@ struct player
   u8 field_FDE;
   u8 field_FDF;
   s32 resetshadecol;
-  s32 field_FE4;
+  s32 unused_autoaim_flag;
 
   /**
    * Crosshair or bullet angle related.

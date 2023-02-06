@@ -15390,7 +15390,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
     if (g_CurrentPlayer->controldef == 0)
     {
-        sub_GAME_7F067AA4(0);
+        gunSetUnusedAutoaimFlag(0);
         
         if (moveData.sp148
             && redirect_get_BONDdata_autoaim_x()
@@ -15420,7 +15420,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     }
     else if (g_CurrentPlayer->controldef == 2)
     {
-        sub_GAME_7F067AA4(0);
+        gunSetUnusedAutoaimFlag(0);
         sub_GAME_7F067FBC(((f32) moveData.sp134 * 0.65f) / 80.0f, ((f32) moveData.sp130 * 0.65f) / 80.0f);
     }
 }

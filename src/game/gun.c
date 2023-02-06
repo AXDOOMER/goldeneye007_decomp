@@ -22949,9 +22949,9 @@ glabel sub_GAME_7F067420
 
 
 
-void sub_GAME_7F067AA4(s32 param_1)
+void gunSetUnusedAutoaimFlag(s32 param_1)
 {
-  g_CurrentPlayer->field_FE4 = param_1;
+  g_CurrentPlayer->unused_autoaim_flag = param_1;
 }
 
 

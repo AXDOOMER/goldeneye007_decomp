@@ -349,7 +349,7 @@ void initBONDdataforPlayer(s32 player_num)
     g_playerPointers[player_num]->field_FDE = 0xFF;
     g_playerPointers[player_num]->field_FDF = 0;
     g_playerPointers[player_num]->resetshadecol = 1;
-    g_playerPointers[player_num]->field_FE4 = 0;
+    g_playerPointers[player_num]->unused_autoaim_flag = 0;
     g_playerPointers[player_num]->crosshair_angle.x = 0.0f;
     g_playerPointers[player_num]->crosshair_angle.y = 0.0f;
     g_playerPointers[player_num]->crosshair_x_pos = 0.0f;

@@ -123,7 +123,7 @@ void init_player_BONDdata_stats(void) {
     g_CurrentPlayer->field_FDE = 0xFF;
     g_CurrentPlayer->field_FDF = 0;
     g_CurrentPlayer->resetshadecol = 1;
-    g_CurrentPlayer->field_FE4 = 0;
+    g_CurrentPlayer->unused_autoaim_flag = 0;
     g_CurrentPlayer->crosshair_angle[] = 0.0f;
     g_CurrentPlayer->crosshair_angle[] = 0.0f;
     g_CurrentPlayer->crosshair_x_pos = 0.0f;
