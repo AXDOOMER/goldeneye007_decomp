@@ -14811,7 +14811,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         
         spE4 = 0;
         
-        if (get_hands_firing_status(GUNRIGHT) && getCurrentPlayerNoise(GUNRIGHT) > 0)
+        if (get_hands_firing_status(GUNRIGHT) && getCurrentPlayerNoise(GUNRIGHT) > spE4)
         {
             spE4 = getCurrentPlayerNoise(GUNRIGHT);
         }
