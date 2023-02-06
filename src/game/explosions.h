@@ -159,7 +159,7 @@ struct BulletImpact {
     u16 unk44;
     s8 unk46;
     s8 unk47;
-    u32 unk48;
+    PropRecord* unk48;
     s8 unk4C;
     s8 unk4D;
     s16 unk4E;

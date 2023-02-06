@@ -4761,7 +4761,7 @@ s32 sub_GAME_7F0A0C74(f32 arg0)
 
 
 
-void sub_GAME_7F0A0CCC(s32 arg0, s8 arg1)
+void sub_GAME_7F0A0CCC(PropRecord* arg0, s8 arg1)
 {
     s32 i;
     for (i = 0; i < BULLET_IMPACT_BUFFER_LEN; i++)
@@ -4775,7 +4775,7 @@ void sub_GAME_7F0A0CCC(s32 arg0, s8 arg1)
 
 
 
-void sub_GAME_7F0A0D90(s32 arg0)
+void sub_GAME_7F0A0D90(PropRecord* arg0)
 {
     s32 i;
     for (i = 0; i < BULLET_IMPACT_BUFFER_LEN; i++)

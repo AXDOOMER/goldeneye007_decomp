@@ -72,10 +72,11 @@ u32 D_80040980 = 0;
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0A1DA0(void) {
+void sub_GAME_7F0A1DA0(f32*, f32*, f32*, f32*, f32, f32, f32, f32, f32, f32) {
 
 }
 #else
+void sub_GAME_7F0A1DA0(f32*, f32*, f32*, f32*, f32, f32, f32, f32, f32, f32);
 GLOBAL_ASM(
 .late_rodata
 glabel D_80057710
