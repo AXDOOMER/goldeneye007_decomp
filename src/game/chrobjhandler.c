@@ -42449,7 +42449,116 @@ glabel sub_GAME_7F054FB4
 
 #ifdef NONMATCHING
 // PD: door0f08f604
-void sub_GAME_7F05522C(DoorRecord *door, f32 *arg1, f32 *arg2, bool altcoordsystem) {
+// Fairly close: 90.63%
+void sub_GAME_7F05522C(DoorRecord* door, f32* arg1, f32* arg2, s32 altcoordsystem) {
+    f32 anglediff; // xp64
+    PropRecord* playerprop;
+    BoundPadRecord* pad; // xp5C
+    coord3d field_10;
+    coord3d normal; // xp4C, xp48, xp44
+    f32 xmin; // xp40
+    f32 xmax; // xp3C
+    coord3d playerpos; // xp38, xp34, xp30
+    f32 angle2; // xp2C
+    f32 cosine; // xp28
+    f32 sine;
+    f32 angle; // xp20
+    f32 y1;
+    f32 x1; // xp18
+    f32 playerangle; // xemp_f0
+    f32 anglediff2;
+    f32 scale;
+    f32 xbound;
+
+    pad = &g_CurrentSetup.boundpads[door->pad];
+    playerprop = get_curplayer_positiondata();
+
+    if (1) { scale = 1.0f; }
+
+    playerpos.f[0] = (g_CurrentPlayer->field_488.field_10.x * 30.0f * scale * 0.75f) + playerprop->pos.x;
+    playerpos.f[1] = playerprop->pos.y;
+    playerpos.f[2] = (g_CurrentPlayer->field_488.field_10.z * 30.0f * scale * 0.75f) + playerprop->pos.z;
+
+    if (altcoordsystem != 0) {
+        xmin = pad->bbox.xmin;
+        xmax = pad->bbox.xmax;
+        normal.f[0] = (pad->up.y * pad->look.z) - (pad->look.y * pad->up.z);
+        normal.f[1] = (pad->up.z * pad->look.x) - (pad->look.z * pad->up.x);
+        normal.f[2] = (pad->up.x * pad->look.y) - (pad->look.x * pad->up.y);
+    } else {
+        xmin = pad->bbox.ymin;
+        xmax = pad->bbox.ymax;
+        normal.f[0] = pad->up.x;
+        normal.f[1] = pad->up.y;
+        normal.f[2] = pad->up.z;
+    }
+
+    x1 = pad->pos.x + (normal.x * xmax) - playerpos.x;
+    y1 = pad->pos.z + (normal.z * xmax) - playerpos.z;
+
+    angle = atan2f(x1, y1);
+    playerangle = get_curplay_horizontal_rotation_in_degrees();
+    anglediff = angle - playerangle;
+
+    if (angle < playerangle) {
+        anglediff = playerangle + M_TAU_F;
+    }
+
+    if (anglediff > M_PI_F) {
+        anglediff -= M_TAU_F;
+    }
+
+    if (door->doorType == 5) {
+        angle2 = (door->openPosition * M_TAU_F) / 360.0f;
+        if (door->flags & 0x20000000) {
+            angle2 = M_TAU_F - angle2;
+        }
+
+        cosine = cosf(angle2);
+        sine = sinf(angle2);
+
+        xbound = xmax - xmin;
+        x1 = pad->pos.x + (normal.x * xmin) + (xbound) * ( normal.x  * cosine + normal.z * sine  ) - playerpos.x;
+        y1 = pad->pos.z + (normal.z * xmin) + (xbound) * (-normal.x  * sine   + normal.z * cosine) - playerpos.z;
+
+        angle = atan2f(x1, y1);
+
+        playerangle = get_curplay_horizontal_rotation_in_degrees();
+
+        anglediff2 = angle - playerangle;
+
+        if (angle < playerangle) {
+            anglediff2 += M_TAU_F;
+        }
+
+        if (anglediff2 > M_PI_F) {
+            anglediff2 -= M_TAU_F;
+        }
+    } else {
+        x1 = pad->pos.x + (normal.x * xmax) - playerpos.x;
+        y1 = pad->pos.z + (normal.z * xmax) - playerpos.z;
+
+        angle = atan2f(x1, y1);
+        playerangle = get_curplay_horizontal_rotation_in_degrees();
+
+        anglediff2 = angle - playerangle;
+
+        if (angle < playerangle) {
+            anglediff2 += M_TAU_F;
+        }
+
+        if (anglediff2 > M_PI_F) {
+            anglediff2 -= M_TAU_F;
+        }
+    }
+
+    if (anglediff < anglediff2) {
+        *arg1 = anglediff;
+        *arg2 = anglediff2;
+    } else {
+        *arg1 = anglediff2;
+        *arg2 = anglediff;
+    }
 
 }
 #else
