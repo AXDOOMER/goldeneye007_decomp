@@ -503,10 +503,10 @@ f32 watch_transition_time = 0.90909088;
 
 //D:800365AC
 WeaponObjRecord dummy_08_pp7_obj[] = {
-    0x0100
+    0x0100,
     0x00,
     0x08,
-    PROP_CHRWPPK
+    PROP_CHRWPPK,
     0x4000, 
     0x00000000, 
     0x00000000,
@@ -530,9 +530,8 @@ WeaponObjRecord dummy_08_pp7_obj[] = {
     0xff,
     0x00,
     ITEM_WPPK,
-    0xff,
-    0xff,
-    0xff,
+    -1,
+    -1,
     NULL
 };
 
