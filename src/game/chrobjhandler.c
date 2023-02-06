@@ -22938,11 +22938,11 @@ Gfx *process_monitor_animation_microcode(Model *model, ModelNode *node, MonitorR
                 screen->offset += 3;
                 break;
             case TVCMD_ROTATEABS:
-                screen->rot = cmd->arg1 * M_TAU_F / 65536.0f;
+                screen->rot = cmd->arg1 * M_TAU_F / M_U16_MAX_VALUE_F;
                 screen->offset += 2;
                 break;
             case TVCMD_ROTATEREL:
-                screen->rot += g_GlobalTimerDelta * cmd->arg1 * M_TAU_F / 65536.0f;
+                screen->rot += g_GlobalTimerDelta * cmd->arg1 * M_TAU_F / M_U16_MAX_VALUE_F;
 
                 if (screen->rot >= M_TAU_F) {
                     screen->rot -= M_TAU_F;
@@ -38870,34 +38870,11 @@ void sub_GAME_7F051FD4(WeaponObjRecord *weapon, ChrRecord *chr)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F052030(WeaponObjRecord *weapon, ChrRecord *chr)
+void sub_GAME_7F052030(WeaponObjRecord* arg0, ChrRecord* arg1)
 {
+    arg0->damage = (*(s32*)&arg0->damage) / M_U16_MAX_VALUE_F;
+    sub_GAME_7F051FD4(arg0, arg1);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F052030
-/* 086B60 7F052030 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 086B64 7F052034 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 086B68 7F052038 8C8E0074 */  lw    $t6, 0x74($a0)
-/* 086B6C 7F05203C 3C014780 */  li    $at, 0x47800000 # 65536.000000
-/* 086B70 7F052040 44814000 */  mtc1  $at, $f8
-/* 086B74 7F052044 448E2000 */  mtc1  $t6, $f4
-/* 086B78 7F052048 00000000 */  nop   
-/* 086B7C 7F05204C 468021A0 */  cvt.s.w $f6, $f4
-/* 086B80 7F052050 46083283 */  div.s $f10, $f6, $f8
-/* 086B84 7F052054 0FC147F5 */  jal   sub_GAME_7F051FD4
-/* 086B88 7F052058 E48A0074 */   swc1  $f10, 0x74($a0)
-/* 086B8C 7F05205C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 086B90 7F052060 27BD0018 */  addiu $sp, $sp, 0x18
-/* 086B94 7F052064 03E00008 */  jr    $ra
-/* 086B98 7F052068 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
@@ -39757,6 +39734,7 @@ void sub_GAME_7F0526EC(DoorRecord *door, Mtxf *rhs)
     }
 }
 #else
+void sub_GAME_7F0526EC(DoorRecord *door, Mtxf *rhs);
 GLOBAL_ASM(
 .late_rodata
 glabel D_80053324
