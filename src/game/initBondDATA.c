@@ -118,10 +118,10 @@ void init_player_BONDdata_stats(void) {
     g_CurrentPlayer->field_FD0 = 0;
     g_CurrentPlayer->z_trigger_timer = 0;
     g_CurrentPlayer->field_FD8 = 0;
-    g_CurrentPlayer->field_FDC = 0xFF;
-    g_CurrentPlayer->field_FDD = 0xFF;
-    g_CurrentPlayer->field_FDE = 0xFF;
-    g_CurrentPlayer->field_FDF = 0;
+    g_CurrentPlayer->tileColor.rgba[0] = 0xFF;
+    g_CurrentPlayer->tileColor.rgba[1] = 0xFF;
+    g_CurrentPlayer->tileColor.rgba[2] = 0xFF;
+    g_CurrentPlayer->tileColor.rgba[3] = 0;
     g_CurrentPlayer->resetshadecol = 1;
     g_CurrentPlayer->unused_autoaim_flag = 0;
     g_CurrentPlayer->crosshair_angle[] = 0.0f;

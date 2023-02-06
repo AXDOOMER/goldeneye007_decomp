@@ -14105,7 +14105,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
     moveData.sp1BC = 0;
     moveData.sp1B8 = 0;
-    moveData.sp1B4 = 0;
+    moveData.triggerOn = 0;
     moveData.sp1B0 = 0;
     moveData.sp1AC = 0;
     moveData.sp1A8 = 0;
@@ -14117,8 +14117,8 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     moveData.sp190 = 0;
     moveData.sp18C = 0;
     moveData.sp188 = 0;
-    moveData.sp184 = 0;
-    moveData.sp180 = 0;
+    moveData.speedVertaDown = 0;
+    moveData.speedVertaUp = 0;
     moveData.sp17C = 0;
     moveData.sp178 = 0;    
     moveData.sp174 = 0;
@@ -14133,8 +14133,8 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     moveData.sp150 = 0;
     moveData.sp14C = 0;
     moveData.sp148 = 0;
-    moveData.sp144 = get_cur_player_look_vertical_inverted() == 0;
-    moveData.sp140 = 0;
+    moveData.invertPitch = get_cur_player_look_vertical_inverted() == 0;
+    moveData.disableLookAhead = 0;
 
     if (stick_x < -5) {
 		moveData.sp13C = stick_x + 5;
@@ -14152,8 +14152,8 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 		moveData.sp138 = 0;
 	}
 
-    moveData.sp134 = (s32)stick_x;
-    moveData.sp130 = (s32)stick_y;
+    moveData.analogTurn = (s32)stick_x;
+    moveData.analogPitch = (s32)stick_y;
     
     moveData.controlStickXSafe = moveData.sp13C;    
     moveData.controlStickYSafe = moveData.sp138;
@@ -14286,28 +14286,28 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
                 if (g_CurrentPlayer->insightaimmode && (stick_y > 60))
                 {
-                    moveData.sp184 = (f32) (stick_y - 60) / FLOAT_TEN_B;
-                    if (moveData.sp184 > 1.0f)
+                    moveData.speedVertaDown = (f32) (stick_y - 60) / FLOAT_TEN_B;
+                    if (moveData.speedVertaDown > 1.0f)
                     {
-                        moveData.sp184 = 1.0f;
+                        moveData.speedVertaDown = 1.0f;
                     }
                 }
                 else
                 {
-                    //moveData.sp184 = 0;
+                    //moveData.speedVertaDown = 0;
                 }
 
                 if (g_CurrentPlayer->insightaimmode && (stick_y < -60))
                 {
-                    moveData.sp180 = (f32) (-60 - stick_y) / FLOAT_TEN_B;
-                    if (moveData.sp180 > 1.0f)
+                    moveData.speedVertaUp = (f32) (-60 - stick_y) / FLOAT_TEN_B;
+                    if (moveData.speedVertaUp > 1.0f)
                     {
-                        moveData.sp180 = 1.0f;
+                        moveData.speedVertaUp = 1.0f;
                     }
                 }
                 else
                 {
-                    //moveData.sp180 = 0;
+                    //moveData.speedVertaUp = 0;
                 }
 
                 
@@ -14406,7 +14406,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 {
                     if (getCurrentPlayerWeaponId(GUNRIGHT) == ITEM_TANKSHELLS)
                     {
-                        moveData.sp134 = 0;
+                        moveData.analogTurn = 0;
                         
                         if (moveData.controlStickXRaw == 0)
                         {
@@ -14439,12 +14439,12 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 }
             }
 
-            moveData.sp1B4 = (sp10C)
+            moveData.triggerOn = (sp10C)
                 && (g_CurrentPlayer->watch_animation_state == 0)
                 && ((buttons & A_BUTTON) == 0)
                 && ((player_joyGetButtons & A_BUTTON) == 0);
 
-            moveData.sp140 = 1;
+            moveData.disableLookAhead = 1;
             g_CurrentPlayer->prev_buttons_pressed = player_joyGetButtons;
         }
         else
@@ -14573,12 +14573,12 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
                         if ((!g_CurrentPlayer->insightaimmode) && (buttons & (U_JPAD | U_CBUTTONS)) )
                         {
-                            moveData.sp184 = 1.0f;
+                            moveData.speedVertaDown = 1.0f;
                         }
                         
                         if ((!g_CurrentPlayer->insightaimmode) && (buttons & (D_JPAD | D_CBUTTONS)))
                         {
-                            moveData.sp180 = 1.0f;
+                            moveData.speedVertaUp = 1.0f;
                         }
                         
                         moveData.sp1A4 = !g_CurrentPlayer->insightaimmode;
@@ -14586,18 +14586,18 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                     
                     if ((g_CurrentPlayer->insightaimmode) && (stick_y > 60))
                     {
-                        moveData.sp184 = (f32) (stick_y - 60) / FLOAT_TEN_B;
-                        if (moveData.sp184 > 1.0f)
+                        moveData.speedVertaDown = (f32) (stick_y - 60) / FLOAT_TEN_B;
+                        if (moveData.speedVertaDown > 1.0f)
                         {
-                            moveData.sp184 = 1.0f;
+                            moveData.speedVertaDown = 1.0f;
                         }
                     }
                     else if ((g_CurrentPlayer->insightaimmode) && (stick_y < -60))
                     {
-                        moveData.sp180 = (f32) (-60 - stick_y) / FLOAT_TEN_B;
-                        if (moveData.sp180 > 1.0f)
+                        moveData.speedVertaUp = (f32) (-60 - stick_y) / FLOAT_TEN_B;
+                        if (moveData.speedVertaUp > 1.0f)
                         {
-                            moveData.sp180 = 1.0f;
+                            moveData.speedVertaUp = 1.0f;
                         }
                     }
                     
@@ -14679,7 +14679,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                     {
                         if (getCurrentPlayerWeaponId(GUNRIGHT) == ITEM_TANKSHELLS)
                         {
-                            moveData.sp134 = 0;
+                            moveData.analogTurn = 0;
                             moveData.sp1A8 = 1;
                         }
                         else if ((moveData.sp18C == 0) && (moveData.sp188 == 0))
@@ -14701,14 +14701,14 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 }
             }
 
-            moveData.sp1B4 = ((buttons & shootButtons)  != 0)
+            moveData.triggerOn = ((buttons & shootButtons)  != 0)
                 && (g_CurrentPlayer->watch_animation_state == 0)
                 && ((buttons & invButtons) == 0);
 
             /* 1.2 and 1.4 */
             if (cur_player_get_control_type() == CONTROLLER_CONFIG_SOLITARE || cur_player_get_control_type() == CONTROLLER_CONFIG_GOODNIGHT)
             {
-                moveData.sp140 = 1;
+                moveData.disableLookAhead = 1;
             }
         }
     }
@@ -14786,23 +14786,23 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         }
     }
 
-    if (moveData.sp144 == 0)
+    if (moveData.invertPitch == 0)
     {
         f32 ftemp_nostack_spE8;
         
-        moveData.sp130 = (s32) -stick_y;
+        moveData.analogPitch = (s32) -stick_y;
         moveData.controlStickYSafe = -moveData.controlStickYSafe;
-        ftemp_nostack_spE8 = moveData.sp184;
-        moveData.sp184 = moveData.sp180;
-        moveData.sp180 = ftemp_nostack_spE8;
+        ftemp_nostack_spE8 = moveData.speedVertaDown;
+        moveData.speedVertaDown = moveData.speedVertaUp;
+        moveData.speedVertaUp = ftemp_nostack_spE8;
     }
 
     if (bondviewGetIfCurrentPlayerDamageShowTime() && getPlayerCount() == 1)
     {
-        moveData.sp1B4 = 0;
+        moveData.triggerOn = 0;
     }
 
-    sub_GAME_7F067420(moveData.sp1B4);
+    sub_GAME_7F067420(moveData.triggerOn);
 
     if (bondviewGetVisibleToGuardsFlag()
         && (get_hands_firing_status(GUNRIGHT)
@@ -15137,7 +15137,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
         if (in_tank_flag == 0)
         {
-            if ((moveData.sp184 > 0) || (moveData.sp180 > 0))
+            if ((moveData.speedVertaDown > 0) || (moveData.speedVertaUp > 0))
             {
                 g_CurrentPlayer->field_104 = 0;
                 g_CurrentPlayer->field_10C = 1;
@@ -15145,7 +15145,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             }
             else
             {
-                if (moveData.sp140)
+                if (moveData.disableLookAhead)
                 {
                     g_CurrentPlayer->automovecentre = 0;
                 }
@@ -15249,18 +15249,18 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 
                 g_CurrentPlayer->speedverta = -ftemp_nostack_sp94 * ftemp_nostack_sp98;
             }
-            else if (moveData.sp184 > 0)
+            else if (moveData.speedVertaDown > 0)
             {
-                bondviewCurrentPlayerUpdateSpeedVerta(moveData.sp184);
+                bondviewCurrentPlayerUpdateSpeedVerta(moveData.speedVertaDown);
                 
                 if ((moveData.sp1AC) && ((moveData.controlStickYRaw > 60) || (moveData.controlStickYRaw < 60)))
                 {
                     g_CurrentPlayer->movecentrerelease = 1;
                 }
             }
-            else if (moveData.sp180 > 0)
+            else if (moveData.speedVertaUp > 0)
             {
-                bondviewCurrentPlayerUpdateSpeedVerta(-moveData.sp180);
+                bondviewCurrentPlayerUpdateSpeedVerta(-moveData.speedVertaUp);
                 
                 if ((moveData.sp1AC) && ((moveData.controlStickYRaw > 60) || (moveData.controlStickYRaw < 60)))
                 {
@@ -15421,7 +15421,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     else if (g_CurrentPlayer->controldef == 2)
     {
         gunSetUnusedAutoaimFlag(0);
-        sub_GAME_7F067FBC(((f32) moveData.sp134 * 0.65f) / 80.0f, ((f32) moveData.sp130 * 0.65f) / 80.0f);
+        sub_GAME_7F067FBC(((f32) moveData.analogTurn * 0.65f) / 80.0f, ((f32) moveData.analogPitch * 0.65f) / 80.0f);
     }
 }
 
