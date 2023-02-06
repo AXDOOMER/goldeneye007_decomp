@@ -22033,7 +22033,11 @@ s32 sub_GAME_7F0673B4(enum GUNHAND hand)
 
 
 
-void sub_GAME_7F067420(s32 triggerOn)
+/**
+ * US address 7F067420.
+ * Perfect Dark method bgunTickGameplay.
+*/
+void gunTickGameplay(s32 triggerOn)
 {
     struct unkown_gun_struct sp48z;
     enum ITEM_IDS sp44;

@@ -14802,7 +14802,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         moveData.triggerOn = 0;
     }
 
-    sub_GAME_7F067420(moveData.triggerOn);
+    gunTickGameplay(moveData.triggerOn);
 
     if (bondviewGetVisibleToGuardsFlag()
         && (get_hands_firing_status(GUNRIGHT)
