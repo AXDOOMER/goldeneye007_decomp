@@ -4016,6 +4016,17 @@ struct MoveData {
 };
 
 
-
+struct unkown_gun_struct
+{
+    union
+    {
+        u32 arr[2];
+        struct
+        {
+            s32 unk00;
+            s32 unk04;        
+        };
+    };
+};
 
 #endif
