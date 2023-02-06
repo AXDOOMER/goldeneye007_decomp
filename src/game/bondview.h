@@ -919,12 +919,9 @@ struct player
 
   s32 z_trigger_timer;
   s32 field_FD8;
-  u8 field_FDC;
-  u8 field_FDD;
-  u8 field_FDE;
-  u8 field_FDF;
+  struct rgba_u8 tileColor;
   s32 resetshadecol;
-  s32 field_FE4;
+  s32 unused_autoaim_flag;
 
   /**
    * Crosshair or bullet angle related.

@@ -3972,12 +3972,17 @@ struct MoveData {
     s32 controlStickXRaw;  // sp124 ?
     s32 controlStickYSafe; // sp128 ?
     s32 controlStickXSafe; // sp12C ?
-    s32 sp130;
-    s32 sp134;
+    
+    // stick y value, adjusted for whether or not controls are inverted.
+    s32 analogPitch;
+
+    // stick x value, adjusted for whether or not controls are inverted (i.e., unchanged).
+    s32 analogTurn;
+    
     s32 sp138; // temp variable at start
     s32 sp13C; // temp variable at start
-    s32 sp140;
-    s32 sp144;
+    s32 disableLookAhead;
+    s32 invertPitch;
     s32 sp148;
     s32 sp14C;
     s32 sp150;
@@ -3992,8 +3997,8 @@ struct MoveData {
     s32 sp174;
     f32 sp178;
     f32 sp17C;
-    f32 sp180;
-    f32 sp184;
+    f32 speedVertaUp;
+    f32 speedVertaDown;
     f32 sp188;
     f32 sp18C;
     s32 sp190;
@@ -4005,12 +4010,23 @@ struct MoveData {
     s32 sp1A8;
     s32 sp1AC;
     s32 sp1B0;
-    s32 sp1B4;
+    s32 triggerOn;
     s32 sp1B8;
     s32 sp1BC;
 };
 
 
-
+struct unkown_gun_struct
+{
+    union
+    {
+        u32 arr[2];
+        struct
+        {
+            s32 unk00;
+            s32 unk04;        
+        };
+    };
+};
 
 #endif
