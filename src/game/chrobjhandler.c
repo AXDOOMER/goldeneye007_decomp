@@ -33395,10 +33395,6 @@ void prepare_ammo_type_collection_text(u8 *finaltext, AMMOTYPE ammotype, u32 qua
 #else
 const char D_800529D0[] = "\n";
 const char D_800529D4[] = ".\n";
-const char D_800529D8[100] = "";
-const char D_80052A3C[] = "";
-const char D_80052A40[] = "\n";
-const char D_80052A44[] = ":\n";
 GLOBAL_ASM(
 .late_rodata
 
@@ -33466,141 +33462,16 @@ glabel prepare_ammo_type_collection_text
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-
-// This matches for VERSION_US, but rodata needs to be re-arranged
 void display_text_when_ammo_collected(s32 ammotype, s32 quantity)
 {
     char buffer[100] = "";
     prepare_ammo_type_collection_text(buffer, ammotype, quantity);
-    hudmsgBottomShow(buffer);
-}
-
-#else
 #ifdef VERSION_US
-GLOBAL_ASM(
-.late_rodata
-
-
-.text
-glabel display_text_when_ammo_collected
-/* 084528 7F04F9F8 27BDFF80 */  addiu $sp, $sp, -0x80
-/* 08452C 7F04F9FC AFA40080 */  sw    $a0, 0x80($sp)
-/* 084530 7F04FA00 3C0E8005 */  lui   $t6, %hi(D_800529D8) 
-/* 084534 7F04FA04 27A4001C */  addiu $a0, $sp, 0x1c
-/* 084538 7F04FA08 00A03025 */  move  $a2, $a1
-/* 08453C 7F04FA0C 25CE29D8 */  addiu $t6, %lo(D_800529D8) # addiu $t6, $t6, 0x29d8
-/* 084540 7F04FA10 8FA50080 */  lw    $a1, 0x80($sp)
-/* 084544 7F04FA14 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 084548 7F04FA18 25D90060 */  addiu $t9, $t6, 0x60
-/* 08454C 7F04FA1C 00804025 */  move  $t0, $a0
-.L7F04FA20:
-/* 084550 7F04FA20 8DC10000 */  lw    $at, ($t6)
-/* 084554 7F04FA24 25CE000C */  addiu $t6, $t6, 0xc
-/* 084558 7F04FA28 2508000C */  addiu $t0, $t0, 0xc
-/* 08455C 7F04FA2C AD01FFF4 */  sw    $at, -0xc($t0)
-/* 084560 7F04FA30 8DC1FFF8 */  lw    $at, -8($t6)
-/* 084564 7F04FA34 AD01FFF8 */  sw    $at, -8($t0)
-/* 084568 7F04FA38 8DC1FFFC */  lw    $at, -4($t6)
-/* 08456C 7F04FA3C 15D9FFF8 */  bne   $t6, $t9, .L7F04FA20
-/* 084570 7F04FA40 AD01FFFC */   sw    $at, -4($t0)
-/* 084574 7F04FA44 8DC10000 */  lw    $at, ($t6)
-/* 084578 7F04FA48 0FC13E48 */  jal   prepare_ammo_type_collection_text
-/* 08457C 7F04FA4C AD010000 */   sw    $at, ($t0)
-/* 084580 7F04FA50 0FC228F2 */  jal   hudmsgBottomShow
-/* 084584 7F04FA54 27A4001C */   addiu $a0, $sp, 0x1c
-/* 084588 7F04FA58 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 08458C 7F04FA5C 27BD0080 */  addiu $sp, $sp, 0x80
-/* 084590 7F04FA60 03E00008 */  jr    $ra
-/* 084594 7F04FA64 00000000 */   nop   
-)
+    hudmsgBottomShow(buffer);
+#else
+    jp_hudmsgBottomShow(buffer);
 #endif
-#ifdef VERSION_JP
-GLOBAL_ASM(
-.late_rodata
-
-
-.text
-glabel display_text_when_ammo_collected
-/* 084528 7F04F9F8 27BDFF80 */  addiu $sp, $sp, -0x80
-/* 08452C 7F04F9FC AFA40080 */  sw    $a0, 0x80($sp)
-/* 084530 7F04FA00 3C0E8005 */  lui   $t6, %hi(D_800529D8) 
-/* 084534 7F04FA04 27A4001C */  addiu $a0, $sp, 0x1c
-/* 084538 7F04FA08 00A03025 */  move  $a2, $a1
-/* 08453C 7F04FA0C 25CE29D8 */  addiu $t6, %lo(D_800529D8) # addiu $t6, $t6, 0x29d8
-/* 084540 7F04FA10 8FA50080 */  lw    $a1, 0x80($sp)
-/* 084544 7F04FA14 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 084548 7F04FA18 25D90060 */  addiu $t9, $t6, 0x60
-/* 08454C 7F04FA1C 00804025 */  move  $t0, $a0
-.L7F04FA20:
-/* 084550 7F04FA20 8DC10000 */  lw    $at, ($t6)
-/* 084554 7F04FA24 25CE000C */  addiu $t6, $t6, 0xc
-/* 084558 7F04FA28 2508000C */  addiu $t0, $t0, 0xc
-/* 08455C 7F04FA2C AD01FFF4 */  sw    $at, -0xc($t0)
-/* 084560 7F04FA30 8DC1FFF8 */  lw    $at, -8($t6)
-/* 084564 7F04FA34 AD01FFF8 */  sw    $at, -8($t0)
-/* 084568 7F04FA38 8DC1FFFC */  lw    $at, -4($t6)
-/* 08456C 7F04FA3C 15D9FFF8 */  bne   $t6, $t9, .L7F04FA20
-/* 084570 7F04FA40 AD01FFFC */   sw    $at, -4($t0)
-/* 084574 7F04FA44 8DC10000 */  lw    $at, ($t6)
-/* 084578 7F04FA48 0FC13E48 */  jal   prepare_ammo_type_collection_text
-/* 08457C 7F04FA4C AD010000 */   sw    $at, ($t0)
-/* 084580 7F04FA50 0FC228F2 */  jal   jp_hudmsgBottomShow
-/* 084584 7F04FA54 27A4001C */   addiu $a0, $sp, 0x1c
-/* 084588 7F04FA58 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 08458C 7F04FA5C 27BD0080 */  addiu $sp, $sp, 0x80
-/* 084590 7F04FA60 03E00008 */  jr    $ra
-/* 084594 7F04FA64 00000000 */   nop   
-)
-#endif
-
-#ifdef VERSION_EU
-GLOBAL_ASM(
-.late_rodata
-
-
-.text
-glabel display_text_when_ammo_collected
-/* 084528 7F04F9F8 27BDFF80 */  addiu $sp, $sp, -0x80
-/* 08452C 7F04F9FC AFA40080 */  sw    $a0, 0x80($sp)
-/* 084530 7F04FA00 3C0E8005 */  lui   $t6, %hi(D_800529D8) 
-/* 084534 7F04FA04 27A4001C */  addiu $a0, $sp, 0x1c
-/* 084538 7F04FA08 00A03025 */  move  $a2, $a1
-/* 08453C 7F04FA0C 25CE29D8 */  addiu $t6, %lo(D_800529D8) # addiu $t6, $t6, 0x29d8
-/* 084540 7F04FA10 8FA50080 */  lw    $a1, 0x80($sp)
-/* 084544 7F04FA14 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 084548 7F04FA18 25D90060 */  addiu $t9, $t6, 0x60
-/* 08454C 7F04FA1C 00804025 */  move  $t0, $a0
-.L7F04FA20:
-/* 084550 7F04FA20 8DC10000 */  lw    $at, ($t6)
-/* 084554 7F04FA24 25CE000C */  addiu $t6, $t6, 0xc
-/* 084558 7F04FA28 2508000C */  addiu $t0, $t0, 0xc
-/* 08455C 7F04FA2C AD01FFF4 */  sw    $at, -0xc($t0)
-/* 084560 7F04FA30 8DC1FFF8 */  lw    $at, -8($t6)
-/* 084564 7F04FA34 AD01FFF8 */  sw    $at, -8($t0)
-/* 084568 7F04FA38 8DC1FFFC */  lw    $at, -4($t6)
-/* 08456C 7F04FA3C 15D9FFF8 */  bne   $t6, $t9, .L7F04FA20
-/* 084570 7F04FA40 AD01FFFC */   sw    $at, -4($t0)
-/* 084574 7F04FA44 8DC10000 */  lw    $at, ($t6)
-/* 084578 7F04FA48 0FC13E48 */  jal   prepare_ammo_type_collection_text
-/* 08457C 7F04FA4C AD010000 */   sw    $at, ($t0)
-/* 084580 7F04FA50 0FC228F2 */  jal   jp_hudmsgBottomShow
-/* 084584 7F04FA54 27A4001C */   addiu $a0, $sp, 0x1c
-/* 084588 7F04FA58 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 08458C 7F04FA5C 27BD0080 */  addiu $sp, $sp, 0x80
-/* 084590 7F04FA60 03E00008 */  jr    $ra
-/* 084594 7F04FA64 00000000 */   nop   
-)
-#endif
-
-
-#endif
-
-
-
+}
 
 void add_ammo_to_inventory(AMMOTYPE ammotype,int amount,int doplaysound,int dodisplaytext)
 {
@@ -34040,6 +33911,8 @@ void generate_language_specific_text_for_weapon(char *finalstring,ITEM_IDS itemt
     return;
 }
 #else
+const char D_80052A3C[] = "";
+const char D_80052A40[] = "\n";
 GLOBAL_ASM(
 .late_rodata
 /*D:800530D0*/
@@ -41780,9 +41653,10 @@ void doorFinishOpen(DoorRecord *door)
 }
 
 
-void doorFinishClose(s32 arg0) {
-    play_door_closing_soundeffect_1(arg0);
-    doorDeactivatePortal(arg0);
+void doorFinishClose(DoorRecord* door)
+{
+    play_door_closing_soundeffect_1(door);
+    doorDeactivatePortal(door);
 }
 
 
@@ -43328,6 +43202,7 @@ Gfx * sub_GAME_7F056210(Gfx *DL)
 
 
 #else
+const char D_80052A44[] = ":\n";
 
 #if defined(VERSION_US) || defined(VERSION_JP)
 GLOBAL_ASM(
