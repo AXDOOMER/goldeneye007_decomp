@@ -37945,10 +37945,12 @@ PropRecord *hatCreateForChr(ChrRecord *chr, s32 modelnum, u32 flags)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F05126C(void) {
+// PD: weaponCreate?
+WeaponObjRecord* sub_GAME_7F05126C(bool, bool, WeaponObjRecord *) {
 
 }
 #else
+WeaponObjRecord* sub_GAME_7F05126C(bool, bool, WeaponObjRecord *);
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F05126C
@@ -38176,32 +38178,9 @@ glabel sub_GAME_7F05126C
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F051588(void) {
-
+    sub_GAME_7F05126C(FALSE, FALSE, NULL);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F051588
-/* 0860B8 7F051588 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0860BC 7F05158C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0860C0 7F051590 00002025 */  move  $a0, $zero
-/* 0860C4 7F051594 00002825 */  move  $a1, $zero
-/* 0860C8 7F051598 0FC1449B */  jal   sub_GAME_7F05126C
-/* 0860CC 7F05159C 00003025 */   move  $a2, $zero
-/* 0860D0 7F0515A0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0860D4 7F0515A4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0860D8 7F0515A8 03E00008 */  jr    $ra
-/* 0860DC 7F0515AC 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
