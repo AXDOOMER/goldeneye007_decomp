@@ -4988,61 +4988,23 @@ void sub_GAME_7F043838(coord3d *arg0, Mtxf *arg1)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0439B8(void) {
+void sub_GAME_7F0439B8(ObjectRecord* arg0, coord3d* arg1, StandTile* arg2, coord3d* arg3)
+{
+    Mtxf sp28;
+    f32 temp_f0;
 
+    sub_GAME_7F043838(arg3, &sp28);
+    matrix_scalar_multiply(arg0->model->scale, sp28.m[0]);
+    sub_GAME_7F040754(arg0, arg1, &sp28, arg2);
+
+    temp_f0 = chrpropBBOXGetYmin(sub_GAME_7F03FFF8(arg0->model->obj));
+
+    arg0->runtime_pos.f[0] -= temp_f0 * arg0->mtx.m[1][0];
+    arg0->runtime_pos.f[1] -= temp_f0 * arg0->mtx.m[1][1];
+    arg0->runtime_pos.f[2] -= temp_f0 * arg0->mtx.m[1][2];
+
+    chrobjCollisionRelated(arg0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0439B8
-/* 0784E8 7F0439B8 27BDFF98 */  addiu $sp, $sp, -0x68
-/* 0784EC 7F0439BC AFB00018 */  sw    $s0, 0x18($sp)
-/* 0784F0 7F0439C0 00808025 */  move  $s0, $a0
-/* 0784F4 7F0439C4 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0784F8 7F0439C8 AFA5006C */  sw    $a1, 0x6c($sp)
-/* 0784FC 7F0439CC AFA60070 */  sw    $a2, 0x70($sp)
-/* 078500 7F0439D0 27A50028 */  addiu $a1, $sp, 0x28
-/* 078504 7F0439D4 0FC10E0E */  jal   sub_GAME_7F043838
-/* 078508 7F0439D8 00E02025 */   move  $a0, $a3
-/* 07850C 7F0439DC 8E0E0014 */  lw    $t6, 0x14($s0)
-/* 078510 7F0439E0 27A50028 */  addiu $a1, $sp, 0x28
-/* 078514 7F0439E4 0FC1629F */  jal   matrix_scalar_multiply
-/* 078518 7F0439E8 C5CC0014 */   lwc1  $f12, 0x14($t6)
-/* 07851C 7F0439EC 02002025 */  move  $a0, $s0
-/* 078520 7F0439F0 8FA5006C */  lw    $a1, 0x6c($sp)
-/* 078524 7F0439F4 27A60028 */  addiu $a2, $sp, 0x28
-/* 078528 7F0439F8 0FC101D5 */  jal   sub_GAME_7F040754
-/* 07852C 7F0439FC 8FA70070 */   lw    $a3, 0x70($sp)
-/* 078530 7F043A00 8E0F0014 */  lw    $t7, 0x14($s0)
-/* 078534 7F043A04 0FC0FFFE */  jal   sub_GAME_7F03FFF8
-/* 078538 7F043A08 8DE40008 */   lw    $a0, 8($t7)
-/* 07853C 7F043A0C 0FC0FA19 */  jal   chrpropBBOXGetYmin
-/* 078540 7F043A10 00402025 */   move  $a0, $v0
-/* 078544 7F043A14 C6060028 */  lwc1  $f6, 0x28($s0)
-/* 078548 7F043A18 C6040058 */  lwc1  $f4, 0x58($s0)
-/* 07854C 7F043A1C C612002C */  lwc1  $f18, 0x2c($s0)
-/* 078550 7F043A20 46060202 */  mul.s $f8, $f0, $f6
-/* 078554 7F043A24 C610005C */  lwc1  $f16, 0x5c($s0)
-/* 078558 7F043A28 02002025 */  move  $a0, $s0
-/* 07855C 7F043A2C 46120182 */  mul.s $f6, $f0, $f18
-/* 078560 7F043A30 46082281 */  sub.s $f10, $f4, $f8
-/* 078564 7F043A34 C6080060 */  lwc1  $f8, 0x60($s0)
-/* 078568 7F043A38 46068101 */  sub.s $f4, $f16, $f6
-/* 07856C 7F043A3C E60A0058 */  swc1  $f10, 0x58($s0)
-/* 078570 7F043A40 C60A0030 */  lwc1  $f10, 0x30($s0)
-/* 078574 7F043A44 E604005C */  swc1  $f4, 0x5c($s0)
-/* 078578 7F043A48 460A0482 */  mul.s $f18, $f0, $f10
-/* 07857C 7F043A4C 46124401 */  sub.s $f16, $f8, $f18
-/* 078580 7F043A50 0FC10121 */  jal   chrobjCollisionRelated
-/* 078584 7F043A54 E6100060 */   swc1  $f16, 0x60($s0)
-/* 078588 7F043A58 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 07858C 7F043A5C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 078590 7F043A60 27BD0068 */  addiu $sp, $sp, 0x68
-/* 078594 7F043A64 03E00008 */  jr    $ra
-/* 078598 7F043A68 00000000 */   nop   
-)
-#endif
 
 
 bool objEmbed(PropRecord *prop, PropRecord *parent, Model *model, ModelNode *node)
