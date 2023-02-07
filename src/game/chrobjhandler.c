@@ -33365,12 +33365,7 @@ void set_sound_effect_for_weapontype_collection(ITEM_IDS weapontype)
 }
 
 
-
 //!FIXME, i need to be properly split from chrai.c
-#ifdef NONMATCHING
-extern char * D_800529D0;
-extern char * D_800529D4;
-
 void prepare_ammo_type_collection_text(u8 *finaltext, AMMOTYPE ammotype, u32 quantity)
 {
     *finaltext = 0;
@@ -33381,7 +33376,7 @@ void prepare_ammo_type_collection_text(u8 *finaltext, AMMOTYPE ammotype, u32 qua
         {
             append_text_picked_up(finaltext, ammotype, quantity);
         }
-        strcat(finaltext, (char *)D_800529D0);
+        strcat(finaltext, "\n");
         return;
     }
     if (getPlayerCount() < 3)
@@ -33390,76 +33385,8 @@ void prepare_ammo_type_collection_text(u8 *finaltext, AMMOTYPE ammotype, u32 qua
         append_text_ammo_amount_word(finaltext, ammotype, quantity);
     }
     apped_text_ammotype(finaltext, ammotype, quantity);
-    strcat(finaltext, (char *)D_800529D4);
+    strcat(finaltext, ".\n");
 }
-#else
-const char D_800529D0[] = "\n";
-const char D_800529D4[] = ".\n";
-GLOBAL_ASM(
-.late_rodata
-
-.text
-glabel prepare_ammo_type_collection_text
-/* 084450 7F04F920 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 084454 7F04F924 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 084458 7F04F928 AFB20020 */  sw    $s2, 0x20($sp)
-/* 08445C 7F04F92C AFB1001C */  sw    $s1, 0x1c($sp)
-/* 084460 7F04F930 AFB00018 */  sw    $s0, 0x18($sp)
-/* 084464 7F04F934 A0800000 */  sb    $zero, ($a0)
-/* 084468 7F04F938 3C0E8005 */  lui   $t6, %hi(j_text_trigger) 
-/* 08446C 7F04F93C 8DCE84D0 */  lw    $t6, %lo(j_text_trigger)($t6)
-/* 084470 7F04F940 00808025 */  move  $s0, $a0
-/* 084474 7F04F944 00A08825 */  move  $s1, $a1
-/* 084478 7F04F948 11C00011 */  beqz  $t6, .L7F04F990
-/* 08447C 7F04F94C 00C09025 */   move  $s2, $a2
-/* 084480 7F04F950 0FC13D03 */  jal   apped_text_ammotype
-/* 084484 7F04F954 00000000 */   nop   
-/* 084488 7F04F958 0FC26919 */  jal   getPlayerCount
-/* 08448C 7F04F95C 00000000 */   nop   
-/* 084490 7F04F960 28410003 */  slti  $at, $v0, 3
-/* 084494 7F04F964 10200004 */  beqz  $at, .L7F04F978
-/* 084498 7F04F968 02002025 */   move  $a0, $s0
-/* 08449C 7F04F96C 02202825 */  move  $a1, $s1
-/* 0844A0 7F04F970 0FC13CAD */  jal   append_text_picked_up
-/* 0844A4 7F04F974 02403025 */   move  $a2, $s2
-.L7F04F978:
-/* 0844A8 7F04F978 3C058005 */  lui   $a1, %hi(D_800529D0)
-/* 0844AC 7F04F97C 24A529D0 */  addiu $a1, %lo(D_800529D0) # addiu $a1, $a1, 0x29d0
-/* 0844B0 7F04F980 0C0029FF */  jal   strcat
-/* 0844B4 7F04F984 02002025 */   move  $a0, $s0
-/* 0844B8 7F04F988 10000016 */  b     .L7F04F9E4
-/* 0844BC 7F04F98C 8FBF0024 */   lw    $ra, 0x24($sp)
-.L7F04F990:
-/* 0844C0 7F04F990 0FC26919 */  jal   getPlayerCount
-/* 0844C4 7F04F994 00000000 */   nop   
-/* 0844C8 7F04F998 28410003 */  slti  $at, $v0, 3
-/* 0844CC 7F04F99C 10200008 */  beqz  $at, .L7F04F9C0
-/* 0844D0 7F04F9A0 02002025 */   move  $a0, $s0
-/* 0844D4 7F04F9A4 02202825 */  move  $a1, $s1
-/* 0844D8 7F04F9A8 0FC13CAD */  jal   append_text_picked_up
-/* 0844DC 7F04F9AC 02403025 */   move  $a2, $s2
-/* 0844E0 7F04F9B0 02002025 */  move  $a0, $s0
-/* 0844E4 7F04F9B4 02202825 */  move  $a1, $s1
-/* 0844E8 7F04F9B8 0FC13CBB */  jal   append_text_ammo_amount_word
-/* 0844EC 7F04F9BC 02403025 */   move  $a2, $s2
-.L7F04F9C0:
-/* 0844F0 7F04F9C0 02002025 */  move  $a0, $s0
-/* 0844F4 7F04F9C4 02202825 */  move  $a1, $s1
-/* 0844F8 7F04F9C8 0FC13D03 */  jal   apped_text_ammotype
-/* 0844FC 7F04F9CC 02403025 */   move  $a2, $s2
-/* 084500 7F04F9D0 3C058005 */  lui   $a1, %hi(D_800529D4)
-/* 084504 7F04F9D4 24A529D4 */  addiu $a1, %lo(D_800529D4) # addiu $a1, $a1, 0x29d4
-/* 084508 7F04F9D8 0C0029FF */  jal   strcat
-/* 08450C 7F04F9DC 02002025 */   move  $a0, $s0
-/* 084510 7F04F9E0 8FBF0024 */  lw    $ra, 0x24($sp)
-.L7F04F9E4:
-/* 084514 7F04F9E4 8FB00018 */  lw    $s0, 0x18($sp)
-/* 084518 7F04F9E8 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 08451C 7F04F9EC 8FB20020 */  lw    $s2, 0x20($sp)
-/* 084520 7F04F9F0 03E00008 */  jr    $ra
-/* 084524 7F04F9F4 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
 
 
 void display_text_when_ammo_collected(s32 ammotype, s32 quantity)
