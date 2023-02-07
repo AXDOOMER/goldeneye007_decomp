@@ -3968,23 +3968,21 @@ typedef struct object_weapon {
 
 
 struct MoveData {
-    s32 controlStickYRaw;  // sp120 ?
-    s32 controlStickXRaw;  // sp124 ?
-    s32 controlStickYSafe; // sp128 ?
-    s32 controlStickXSafe; // sp12C ?
-    
-    // stick y value, adjusted for whether or not controls are inverted.
-    s32 analogPitch;
+    // 0x0, bondviewProcessInput sp120
+    s32 analogWalk;  // sp120 ?
+    s32 analogStrafe;  // sp124 ?
+    s32 analogPitch; // sp128 ?
+    s32 analogTurn; // sp12C ?
 
-    // stick x value, adjusted for whether or not controls are inverted (i.e., unchanged).
-    s32 analogTurn;
-    
-    s32 sp138; // temp variable at start
-    s32 sp13C; // temp variable at start
+    // 0x10
+    s32 controlStickYRaw;
+    s32 controlStickXRaw;
+    s32 controlStickYSafe;
+    s32 controlStickXSafe;
     s32 disableLookAhead;
     s32 invertPitch;
-    s32 sp148;
-    s32 sp14C;
+    s32 canAutoAim;
+    s32 detonating;
     s32 sp150;
     s32 sp154;
     s32 sp158;
@@ -3993,8 +3991,8 @@ struct MoveData {
     f32 sp164;
     s32 sp168;
     s32 sp16C;
-    s32 sp170;
-    s32 sp174;
+    s32 weaponForwardOffset;
+    s32 weaponBackOffset;
     f32 sp178;
     f32 sp17C;
     f32 speedVertaUp;

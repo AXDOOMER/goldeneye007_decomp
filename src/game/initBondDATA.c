@@ -123,7 +123,7 @@ void init_player_BONDdata_stats(void) {
     g_CurrentPlayer->tileColor.rgba[2] = 0xFF;
     g_CurrentPlayer->tileColor.rgba[3] = 0;
     g_CurrentPlayer->resetshadecol = 1;
-    g_CurrentPlayer->unused_autoaim_flag = 0;
+    g_CurrentPlayer->aimtype = 0;
     g_CurrentPlayer->crosshair_angle[] = 0.0f;
     g_CurrentPlayer->crosshair_angle[] = 0.0f;
     g_CurrentPlayer->crosshair_x_pos = 0.0f;

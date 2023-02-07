@@ -14099,7 +14099,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     f32 ftemp_nostack_sp80;
     s32 i_1;
     f32 ftemp_nostack_sp78;
-    s32 sp74;
+    s32 canCycleWeapons; // sp74
     f32 sp70;
 
 
@@ -14121,8 +14121,8 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     moveData.speedVertaUp = 0;
     moveData.sp17C = 0;
     moveData.sp178 = 0;    
-    moveData.sp174 = 0;
-    moveData.sp170 = 0;
+    moveData.weaponBackOffset = 0;
+    moveData.weaponForwardOffset = 0;
     moveData.sp16C = 0;
     moveData.sp168 = 0;
     moveData.sp164 = 0;
@@ -14131,34 +14131,34 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     moveData.sp158 = 0;
     moveData.sp154 = 0;
     moveData.sp150 = 0;
-    moveData.sp14C = 0;
-    moveData.sp148 = 0;
+    moveData.detonating = 0;
+    moveData.canAutoAim = 0;
     moveData.invertPitch = get_cur_player_look_vertical_inverted() == 0;
     moveData.disableLookAhead = 0;
 
     if (stick_x < -5) {
-		moveData.sp13C = stick_x + 5;
+		moveData.controlStickXSafe = stick_x + 5;
 	} else if (stick_x > 5) {
-		moveData.sp13C = stick_x - 5;
+		moveData.controlStickXSafe = stick_x - 5;
 	} else {
-		moveData.sp13C = 0;
+		moveData.controlStickXSafe = 0;
 	}
 
 	if (stick_y < -5) {
-		moveData.sp138 = stick_y + 5;
+		moveData.controlStickYSafe = stick_y + 5;
 	} else if (stick_y > 5) {
-		moveData.sp138 = stick_y - 5;
+		moveData.controlStickYSafe = stick_y - 5;
 	} else {
-		moveData.sp138 = 0;
+		moveData.controlStickYSafe = 0;
 	}
 
-    moveData.analogTurn = (s32)stick_x;
-    moveData.analogPitch = (s32)stick_y;
+    moveData.controlStickXRaw = (s32)stick_x;
+    moveData.controlStickYRaw = (s32)stick_y;
     
-    moveData.controlStickXSafe = moveData.sp13C;    
-    moveData.controlStickYSafe = moveData.sp138;
-    moveData.controlStickXRaw = moveData.sp13C;
-    moveData.controlStickYRaw = moveData.sp138;
+    moveData.analogTurn = moveData.controlStickXSafe;    
+    moveData.analogPitch = moveData.controlStickYSafe;
+    moveData.analogStrafe = moveData.controlStickXSafe;
+    moveData.analogWalk = moveData.controlStickYSafe;
 
     if (g_CurrentPlayer->bonddead == 0
         && g_bondviewForceDisarm <= 0
@@ -14224,21 +14224,21 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             /* 2.1 and 2.3 */
             if (cur_player_get_control_type() == CONTROLLER_CONFIG_PLENTY || (cur_player_get_control_type() == CONTROLLER_CONFIG_DOMINO))
             {
-                moveData.controlStickXRaw = tmpc2stickx;
-                moveData.controlStickYSafe = tmpc2sticky;
+                moveData.analogStrafe = tmpc2stickx;
+                moveData.analogPitch = tmpc2sticky;
             }
             else
             {
                 if (in_tank_flag == 1 && !g_CurrentPlayer->insightaimmode)
                 {
-                    moveData.controlStickXSafe = tmpc2stickx;
+                    moveData.analogTurn = tmpc2stickx;
                 }
                 else
                 {
-                    moveData.controlStickXRaw = tmpc2stickx;
+                    moveData.analogStrafe = tmpc2stickx;
                 }
                 
-                moveData.controlStickYRaw = tmpc2sticky;
+                moveData.analogWalk = tmpc2sticky;
             }
 
             /* 2.1 and 2.2 */
@@ -14269,7 +14269,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 }
 
                 moveData.sp1BC = !g_CurrentPlayer->insightaimmode;
-                moveData.sp148 = !g_CurrentPlayer->insightaimmode;
+                moveData.canAutoAim = !g_CurrentPlayer->insightaimmode;
                 
                 moveData.sp1B8 = g_CurrentPlayer->insightaimmode;
 
@@ -14337,14 +14337,14 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                     //moveData.sp178 = 0;
                 }
                 
-                moveData.sp174 = (
+                moveData.weaponBackOffset = (
                         ((buttons & A_BUTTON) != 0)
                         ||
                         ((player_joyGetButtons & A_BUTTON) != 0)
                     )
                     && (sp108);
                 
-               moveData.sp170 = (
+               moveData.weaponForwardOffset = (
                     (
                        (((buttons & ~oldbuttons) & A_BUTTON) != 0)
                        ||
@@ -14396,9 +14396,9 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                         || ((player_joyGetButtons & B_BUTTON) && ((player_joyGetButtons & ~copy_prev_buttons_pressed) & A_BUTTON)))
                     && (getCurrentPlayerWeaponId(GUNRIGHT) == ITEM_REMOTEMINE))
                 {
-                    moveData.sp14C = 1;
-                    moveData.sp174 = 0;
-                    moveData.sp170 = 0;
+                    moveData.detonating = 1;
+                    moveData.weaponBackOffset = 0;
+                    moveData.weaponForwardOffset = 0;
                     moveData.sp1B0 = 0;
                 }
                 
@@ -14406,14 +14406,14 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 {
                     if (getCurrentPlayerWeaponId(GUNRIGHT) == ITEM_TANKSHELLS)
                     {
-                        moveData.analogTurn = 0;
+                        moveData.controlStickXRaw = 0;
                         
-                        if (moveData.controlStickXRaw == 0)
+                        if (moveData.analogStrafe == 0)
                         {
-                            moveData.controlStickXRaw = moveData.controlStickXSafe;
+                            moveData.analogStrafe = moveData.analogTurn;
                         }
                     }
-                    else if (moveData.controlStickXRaw == 0)
+                    else if (moveData.analogStrafe == 0)
                     {
                         if (moveData.sp17C > 0)
                         {
@@ -14478,7 +14478,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                     }
 
                     moveData.sp1BC = !g_CurrentPlayer->insightaimmode;
-                    moveData.sp148 = !g_CurrentPlayer->insightaimmode;
+                    moveData.canAutoAim = !g_CurrentPlayer->insightaimmode;
                     moveData.sp1B0 = ((buttons & ~oldbuttons) & B_BUTTON) != 0;
                     moveData.sp1B8 = g_CurrentPlayer->insightaimmode;
 
@@ -14619,13 +14619,13 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                         }
                     }
 
-                    moveData.sp174 =
+                    moveData.weaponBackOffset =
                         ((buttons & invButtons) != 0)
                         &&
                         (((buttons & ~oldbuttons) & shootButtons) != 0)
                         ;
                     
-                    moveData.sp170 = 
+                    moveData.weaponForwardOffset = 
                         (((buttons & ~oldbuttons) & invButtons) != 0)
                         &&
                         ((buttons & shootButtons) == 0)
@@ -14669,9 +14669,9 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                             || ((buttons & B_BUTTON) && (((buttons & ~oldbuttons) & invButtons) != 0)))
                         && (getCurrentPlayerWeaponId(GUNRIGHT) == ITEM_REMOTEMINE))
                     {
-                        moveData.sp14C = 1;
-                        moveData.sp174 = 0;
-                        moveData.sp170 = 0;
+                        moveData.detonating = 1;
+                        moveData.weaponBackOffset = 0;
+                        moveData.weaponForwardOffset = 0;
                         moveData.sp1B0 = 0;
                     }
 
@@ -14679,7 +14679,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                     {
                         if (getCurrentPlayerWeaponId(GUNRIGHT) == ITEM_TANKSHELLS)
                         {
-                            moveData.analogTurn = 0;
+                            moveData.controlStickXRaw = 0;
                             moveData.sp1A8 = 1;
                         }
                         else if ((moveData.sp18C == 0) && (moveData.sp188 == 0))
@@ -14790,8 +14790,8 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     {
         f32 ftemp_nostack_spE8;
         
-        moveData.analogPitch = (s32) -stick_y;
-        moveData.controlStickYSafe = -moveData.controlStickYSafe;
+        moveData.controlStickYRaw = (s32) -stick_y;
+        moveData.analogPitch = -moveData.analogPitch;
         ftemp_nostack_spE8 = moveData.speedVertaDown;
         moveData.speedVertaDown = moveData.speedVertaUp;
         moveData.speedVertaUp = ftemp_nostack_spE8;
@@ -14871,7 +14871,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             }
             else if (moveData.sp1A8)
             {
-                ftemp_nostack_spDC = (f32) moveData.controlStickXRaw / 70.0f;
+                ftemp_nostack_spDC = (f32) moveData.analogStrafe / 70.0f;
                 
                 if (ftemp_nostack_spDC > 1.0f)
                 {
@@ -14894,7 +14894,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 
                 if (moveData.sp1AC)
                 {
-                    ftemp_nostack_spD8 = (f32) moveData.controlStickYRaw / 70.0f;
+                    ftemp_nostack_spD8 = (f32) moveData.analogWalk / 70.0f;
                 }
                 else if (moveData.sp19C)
                 {
@@ -14971,7 +14971,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         
         if (moveData.sp1A8)
         {
-            g_CurrentPlayer->speedsideways = (f32) moveData.controlStickXRaw / 70.0f;
+            g_CurrentPlayer->speedsideways = (f32) moveData.analogStrafe / 70.0f;
         }
         
         if (moveData.sp19C)
@@ -14990,9 +14990,9 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         
         if (moveData.sp1AC)
         {
-            g_CurrentPlayer->speedforwards = (f32) moveData.controlStickYRaw / 70.0f;
+            g_CurrentPlayer->speedforwards = (f32) moveData.analogWalk / 70.0f;
             
-            if (moveData.controlStickYRaw > 60)
+            if (moveData.analogWalk > 60)
             {
                 g_CurrentPlayer->speedmaxtime60 += g_ClockTimer;
             }
@@ -15130,7 +15130,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             }
         }
 
-        if ((g_CurrentPlayer->movecentrerelease) && (moveData.controlStickYRaw < 40) && (moveData.controlStickYRaw > -40))
+        if ((g_CurrentPlayer->movecentrerelease) && (moveData.analogWalk < 40) && (moveData.analogWalk > -40))
         {
             g_CurrentPlayer->movecentrerelease = 0;
         }
@@ -15151,7 +15151,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 }
                 else if (g_CurrentPlayer->automovecentreenabled)
                 {
-                    if ((moveData.sp1AC) && ((moveData.controlStickYRaw > 60) || (moveData.controlStickYRaw < -60)))
+                    if ((moveData.sp1AC) && ((moveData.analogWalk > 60) || (moveData.analogWalk < -60)))
                     {
                         g_CurrentPlayer->automovecentre = 1;
                     }
@@ -15168,8 +15168,8 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                     (g_CurrentPlayer->fastmovecentreenabled)
                     && (moveData.sp1AC)
                     && (
-                        (moveData.controlStickYRaw > 60)
-                        || (moveData.controlStickYRaw < -60)
+                        (moveData.analogWalk > 60)
+                        || (moveData.analogWalk < -60)
                     ) && (
                         ( ((spC4 + 5.0f) < g_CurrentPlayer->vv_verta)) || (g_CurrentPlayer->vv_verta < (spC4 + -FLOAT_TEN_A))
                     ) && (g_CurrentPlayer->movecentrerelease == 0))
@@ -15227,7 +15227,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             if (moveData.sp1A0)
             {
                 ftemp_nostack_sp98 = viGetFovY() / 60.0f;
-                ftemp_nostack_sp94 = (f32) moveData.controlStickYSafe / 70.0f;
+                ftemp_nostack_sp94 = (f32) moveData.analogPitch / 70.0f;
                 
                 if (ftemp_nostack_sp94 > 1)
                 {
@@ -15253,7 +15253,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             {
                 bondviewCurrentPlayerUpdateSpeedVerta(moveData.speedVertaDown);
                 
-                if ((moveData.sp1AC) && ((moveData.controlStickYRaw > 60) || (moveData.controlStickYRaw < 60)))
+                if ((moveData.sp1AC) && ((moveData.analogWalk > 60) || (moveData.analogWalk < 60)))
                 {
                     g_CurrentPlayer->movecentrerelease = 1;
                 }
@@ -15262,7 +15262,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             {
                 bondviewCurrentPlayerUpdateSpeedVerta(-moveData.speedVertaUp);
                 
-                if ((moveData.sp1AC) && ((moveData.controlStickYRaw > 60) || (moveData.controlStickYRaw < 60)))
+                if ((moveData.sp1AC) && ((moveData.analogWalk > 60) || (moveData.analogWalk < 60)))
                 {
                     g_CurrentPlayer->movecentrerelease = 1;
                 }
@@ -15284,7 +15284,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     if (moveData.sp1A4)
     {
         ftemp_nostack_sp8C = viGetFovY();
-        ftemp_nostack_sp84 = (f32) moveData.controlStickXSafe / 70.0f;
+        ftemp_nostack_sp84 = (f32) moveData.analogTurn / 70.0f;
         
         if (ftemp_nostack_sp84 > 1)
         {
@@ -15352,28 +15352,28 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         }
     }
 
-    if (moveData.sp14C)
+    if (moveData.detonating)
     {
         g_CurrentPlayer->hands[GUNRIGHT].when_detonating_mines_is_0 = 0;
         g_CurrentPlayer->hands[GUNRIGHT].weapon_current_animation = 0;
         trigger_remote_mine_detonation();
     }
 
-    sp74 = 1;
+    canCycleWeapons = 1;
     
     if ((getPlayerCount() >= 2) && (get_scenario() == 2) && (bondinvIsAliveWithFlag()))
     {
-        sp74 = 0;
+        canCycleWeapons = 0;
     }
 
-    if (sp74)
+    if (canCycleWeapons)
     {
-        if (moveData.sp174)
+        if (moveData.weaponBackOffset)
         {
             backstep_through_inventory();
         }
 
-        if (moveData.sp170)
+        if (moveData.weaponForwardOffset)
         {
             advance_through_inventory();
         }
@@ -15390,9 +15390,9 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
     if (g_CurrentPlayer->controldef == 0)
     {
-        gunSetUnusedAutoaimFlag(0);
+        gunSetAimType(0);
         
-        if (moveData.sp148
+        if (moveData.canAutoAim
             && redirect_get_BONDdata_autoaim_x()
             && g_CurrentPlayer->autoxaimtime
             && bondwalkItemCheckBitflags(getCurrentPlayerWeaponId(GUNRIGHT), WEAPONSTATBITFLAG_HAS_AUTO_AIM))
@@ -15404,7 +15404,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             sp70 = g_CurrentPlayer->speedtheta * 0.3f;
         }
 
-        if (moveData.sp148
+        if (moveData.canAutoAim
             && redirect_get_BONDdata_autoaim_y()
             && g_CurrentPlayer->autoyaimtime
             && bondwalkItemCheckBitflags(getCurrentPlayerWeaponId(GUNRIGHT), WEAPONSTATBITFLAG_HAS_AUTO_AIM))
@@ -15420,8 +15420,8 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     }
     else if (g_CurrentPlayer->controldef == 2)
     {
-        gunSetUnusedAutoaimFlag(0);
-        sub_GAME_7F067FBC(((f32) moveData.analogTurn * 0.65f) / 80.0f, ((f32) moveData.analogPitch * 0.65f) / 80.0f);
+        gunSetAimType(0);
+        sub_GAME_7F067FBC(((f32) moveData.controlStickXRaw * 0.65f) / 80.0f, ((f32) moveData.controlStickYRaw * 0.65f) / 80.0f);
     }
 }
 

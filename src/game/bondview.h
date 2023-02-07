@@ -921,7 +921,9 @@ struct player
   s32 field_FD8;
   struct rgba_u8 tileColor;
   s32 resetshadecol;
-  s32 unused_autoaim_flag;
+
+  // unused. Name comes from XBLA debug.
+  s32 aimtype;
 
   /**
    * Crosshair or bullet angle related.

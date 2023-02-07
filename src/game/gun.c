@@ -22222,9 +22222,9 @@ void gunTickGameplay(s32 triggerOn)
 
 
 
-void gunSetUnusedAutoaimFlag(s32 param_1)
+void gunSetAimType(s32 param_1)
 {
-  g_CurrentPlayer->unused_autoaim_flag = param_1;
+  g_CurrentPlayer->aimtype = param_1;
 }
 
 
