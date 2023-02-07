@@ -100,6 +100,9 @@ void subdraw(s32 arg0, struct Model *);
 void sub_GAME_7F06EFC4(struct Model *);
 void modelAttachPart(Model *pmodel, ModelFileHeader *pmodeldef, ModelNode *pnode, ModelFileHeader *cmodeldef);
 void modelInitRwData(Model *model, ModelNode *startnode);
+void modelApplyDistanceRelations(Model* model, ModelNode* node);
+void modelApplyHeadRelations(Model* model, ModelNode* bodynode);
+void modelApplyToggleRelations(Model* model, ModelNode* node);
 
 #ifndef VERSION_EU
 void return_null(void);

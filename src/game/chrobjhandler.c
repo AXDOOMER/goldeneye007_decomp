@@ -27026,10 +27026,11 @@ ModelNode* sub_GAME_7F04B478(ObjectRecord* obj)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F04B590(void) {
+s32 sub_GAME_7F04B590(ModelFileHeader* arg0, ModelNode* arg1) {
 
 }
 #else
+s32 sub_GAME_7F04B590(ModelFileHeader*, ModelNode*);
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F04B590
@@ -37473,118 +37474,60 @@ bool sub_GAME_7F050D30(PropRecord *prop, coord3d *arg1, f32 *arg2, f32 *arg3)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F050DE8(void) {
+void sub_GAME_7F050DE8(Model* model)
+{
+    ModelNode* node;
+    ModelFileHeader* header;
+    union ModelRoData* rodata;
+    union ModelRwData* rwdata;
 
+    header = model->obj;
+    node = header->RootNode;
+
+    while (node != NULL)
+    {
+        switch (node->Opcode & 0xFF)
+        {
+            case MODELNODE_OPCODE_DLCOLLISION:
+                rodata = node->Data;
+                rwdata = modelGetNodeRwData(model, node);
+
+                if ((rwdata->DisplayListCollisions.Vertices != rodata->DisplayListCollisions.Vertices) && (sub_GAME_7F04B590(header, node) != 0))
+                {
+                    sub_GAME_7F09C044(rwdata->DisplayListCollisions.Vertices);
+                    rwdata->DisplayListCollisions.Vertices = rodata->DisplayListCollisions.Vertices;
+                }
+                break;
+            case MODELNODE_OPCODE_LOD:
+                modelApplyDistanceRelations(model, node);
+                break;
+            case MODELNODE_OPCODE_SWITCH:
+                modelApplyToggleRelations(model, node);
+                break;
+            case MODELNODE_OPCODE_HEAD:
+                modelApplyHeadRelations(model, node);
+                break;
+        }
+
+        if (node->Child)
+        {
+            node = node->Child;
+        }
+        else
+        {
+            while (node)
+            {
+                if (node->Next)
+                {
+                    node = node->Next;
+                    break;
+                }
+
+                node = node->Parent;
+            }
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F050DE8
-/* 085918 7F050DE8 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 08591C 7F050DEC AFBF003C */  sw    $ra, 0x3c($sp)
-/* 085920 7F050DF0 AFBE0038 */  sw    $fp, 0x38($sp)
-/* 085924 7F050DF4 AFB70034 */  sw    $s7, 0x34($sp)
-/* 085928 7F050DF8 AFB60030 */  sw    $s6, 0x30($sp)
-/* 08592C 7F050DFC AFB5002C */  sw    $s5, 0x2c($sp)
-/* 085930 7F050E00 AFB40028 */  sw    $s4, 0x28($sp)
-/* 085934 7F050E04 AFB30024 */  sw    $s3, 0x24($sp)
-/* 085938 7F050E08 AFB20020 */  sw    $s2, 0x20($sp)
-/* 08593C 7F050E0C AFB1001C */  sw    $s1, 0x1c($sp)
-/* 085940 7F050E10 AFB00018 */  sw    $s0, 0x18($sp)
-/* 085944 7F050E14 8C940008 */  lw    $s4, 8($a0)
-/* 085948 7F050E18 00809825 */  move  $s3, $a0
-/* 08594C 7F050E1C 24150008 */  li    $s5, 8
-/* 085950 7F050E20 8E900000 */  lw    $s0, ($s4)
-/* 085954 7F050E24 24160012 */  li    $s6, 18
-/* 085958 7F050E28 24170017 */  li    $s7, 23
-/* 08595C 7F050E2C 1200003C */  beqz  $s0, .L7F050F20
-/* 085960 7F050E30 241E0018 */   li    $fp, 24
-/* 085964 7F050E34 96020000 */  lhu   $v0, ($s0)
-.L7F050E38:
-/* 085968 7F050E38 02602025 */  move  $a0, $s3
-/* 08596C 7F050E3C 304E00FF */  andi  $t6, $v0, 0xff
-/* 085970 7F050E40 11D5001C */  beq   $t6, $s5, .L7F050EB4
-/* 085974 7F050E44 00000000 */   nop   
-/* 085978 7F050E48 11D6001E */  beq   $t6, $s6, .L7F050EC4
-/* 08597C 7F050E4C 02602025 */   move  $a0, $s3
-/* 085980 7F050E50 11D70020 */  beq   $t6, $s7, .L7F050ED4
-/* 085984 7F050E54 02602025 */   move  $a0, $s3
-/* 085988 7F050E58 11DE0003 */  beq   $t6, $fp, .L7F050E68
-/* 08598C 7F050E5C 02602025 */   move  $a0, $s3
-/* 085990 7F050E60 1000001F */  b     .L7F050EE0
-/* 085994 7F050E64 8E020014 */   lw    $v0, 0x14($s0)
-.L7F050E68:
-/* 085998 7F050E68 8E120004 */  lw    $s2, 4($s0)
-/* 08599C 7F050E6C 0FC1B1E7 */  jal   modelGetNodeRwData
-/* 0859A0 7F050E70 02002825 */   move  $a1, $s0
-/* 0859A4 7F050E74 8E4F0008 */  lw    $t7, 8($s2)
-/* 0859A8 7F050E78 8C580000 */  lw    $t8, ($v0)
-/* 0859AC 7F050E7C 00408825 */  move  $s1, $v0
-/* 0859B0 7F050E80 02802025 */  move  $a0, $s4
-/* 0859B4 7F050E84 11F80009 */  beq   $t7, $t8, .L7F050EAC
-/* 0859B8 7F050E88 00000000 */   nop   
-/* 0859BC 7F050E8C 0FC12D64 */  jal   sub_GAME_7F04B590
-/* 0859C0 7F050E90 02002825 */   move  $a1, $s0
-/* 0859C4 7F050E94 10400005 */  beqz  $v0, .L7F050EAC
-/* 0859C8 7F050E98 00000000 */   nop   
-/* 0859CC 7F050E9C 0FC27011 */  jal   sub_GAME_7F09C044
-/* 0859D0 7F050EA0 8E240000 */   lw    $a0, ($s1)
-/* 0859D4 7F050EA4 8E590008 */  lw    $t9, 8($s2)
-/* 0859D8 7F050EA8 AE390000 */  sw    $t9, ($s1)
-.L7F050EAC:
-/* 0859DC 7F050EAC 1000000C */  b     .L7F050EE0
-/* 0859E0 7F050EB0 8E020014 */   lw    $v0, 0x14($s0)
-.L7F050EB4:
-/* 0859E4 7F050EB4 0FC1BA5C */  jal   modelApplyDistanceRelations
-/* 0859E8 7F050EB8 02002825 */   move  $a1, $s0
-/* 0859EC 7F050EBC 10000008 */  b     .L7F050EE0
-/* 0859F0 7F050EC0 8E020014 */   lw    $v0, 0x14($s0)
-.L7F050EC4:
-/* 0859F4 7F050EC4 0FC1BA6F */  jal   modelApplyToggleRelations
-/* 0859F8 7F050EC8 02002825 */   move  $a1, $s0
-/* 0859FC 7F050ECC 10000004 */  b     .L7F050EE0
-/* 085A00 7F050ED0 8E020014 */   lw    $v0, 0x14($s0)
-.L7F050ED4:
-/* 085A04 7F050ED4 0FC1BA82 */  jal   modelApplyHeadRelations
-/* 085A08 7F050ED8 02002825 */   move  $a1, $s0
-/* 085A0C 7F050EDC 8E020014 */  lw    $v0, 0x14($s0)
-.L7F050EE0:
-/* 085A10 7F050EE0 10400003 */  beqz  $v0, .L7F050EF0
-/* 085A14 7F050EE4 00000000 */   nop   
-/* 085A18 7F050EE8 1000000B */  b     .L7F050F18
-/* 085A1C 7F050EEC 00408025 */   move  $s0, $v0
-.L7F050EF0:
-/* 085A20 7F050EF0 12000009 */  beqz  $s0, .L7F050F18
-/* 085A24 7F050EF4 00000000 */   nop   
-/* 085A28 7F050EF8 8E02000C */  lw    $v0, 0xc($s0)
-.L7F050EFC:
-/* 085A2C 7F050EFC 50400004 */  beql  $v0, $zero, .L7F050F10
-/* 085A30 7F050F00 8E100008 */   lw    $s0, 8($s0)
-/* 085A34 7F050F04 10000004 */  b     .L7F050F18
-/* 085A38 7F050F08 00408025 */   move  $s0, $v0
-/* 085A3C 7F050F0C 8E100008 */  lw    $s0, 8($s0)
-.L7F050F10:
-/* 085A40 7F050F10 5600FFFA */  bnezl $s0, .L7F050EFC
-/* 085A44 7F050F14 8E02000C */   lw    $v0, 0xc($s0)
-.L7F050F18:
-/* 085A48 7F050F18 5600FFC7 */  bnezl $s0, .L7F050E38
-/* 085A4C 7F050F1C 96020000 */   lhu   $v0, ($s0)
-.L7F050F20:
-/* 085A50 7F050F20 8FBF003C */  lw    $ra, 0x3c($sp)
-/* 085A54 7F050F24 8FB00018 */  lw    $s0, 0x18($sp)
-/* 085A58 7F050F28 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 085A5C 7F050F2C 8FB20020 */  lw    $s2, 0x20($sp)
-/* 085A60 7F050F30 8FB30024 */  lw    $s3, 0x24($sp)
-/* 085A64 7F050F34 8FB40028 */  lw    $s4, 0x28($sp)
-/* 085A68 7F050F38 8FB5002C */  lw    $s5, 0x2c($sp)
-/* 085A6C 7F050F3C 8FB60030 */  lw    $s6, 0x30($sp)
-/* 085A70 7F050F40 8FB70034 */  lw    $s7, 0x34($sp)
-/* 085A74 7F050F44 8FBE0038 */  lw    $fp, 0x38($sp)
-/* 085A78 7F050F48 03E00008 */  jr    $ra
-/* 085A7C 7F050F4C 27BD0040 */   addiu $sp, $sp, 0x40
-)
-#endif
 
 
 PropRecord *hatApplyToChr(HatRecord *hat, ChrRecord *chr, ModelFileHeader *filedata, PropRecord *prop, Model *model)
@@ -38170,15 +38113,10 @@ glabel hatCreate
 #endif
 
 
-
-
-// Returns struct hatobj* in PD
-void* sub_GAME_7F0518A8(void) {
+HatRecord* sub_GAME_7F0518A8(void)
+{
     return hatCreate(0, 0, NULL);
 }
-
-
-
 
 
 #ifdef NONMATCHING
