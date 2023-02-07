@@ -737,7 +737,7 @@ f32 sub_GAME_7F080228(f32 arg0);
 void currentPlayerSetSwayTarget(s32 value);
 void currentPlayerAdjustCrouchPos(s32 value);
 void bondviewUpdateSpeedSideways(s32 arg0);
-void sub_GAME_7F07FE1C(s32 arg0);
+void bondviewUpdateSpeedForwards(s32 arg0);
 
 // end forward declarations
 
@@ -12354,7 +12354,11 @@ void bondviewUpdateSpeedSideways(s32 arg0) {
     g_CurrentPlayer->speedsideways = g_CurrentPlayer->speedstrafe;
 }
 
-void sub_GAME_7F07FE1C(s32 arg0) {
+/**
+ * US address 7F07FE1C.
+ * Perfect Dark bwalkUpdateSpeedForwards.
+*/
+void bondviewUpdateSpeedForwards(s32 arg0) {
     if (arg0 == 1) {
         g_CurrentPlayer->field_2A4C = (g_CurrentPlayer->field_2A4C + g_GlobalTimerDelta);
         if (1.0f < g_CurrentPlayer->field_2A4C) {
@@ -14999,16 +15003,16 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         
         if (moveData.sp19C)
         {
-            sub_GAME_7F07FE1C(1);
+            bondviewUpdateSpeedForwards(1);
             g_CurrentPlayer->speedmaxtime60 += g_ClockTimer;
         }
         else if (moveData.sp198)
         {
-            sub_GAME_7F07FE1C(-1);
+            bondviewUpdateSpeedForwards(-1);
         }
         else
         {
-            sub_GAME_7F07FE1C(0);
+            bondviewUpdateSpeedForwards(0);
         }
         
         if (moveData.sp1AC)
