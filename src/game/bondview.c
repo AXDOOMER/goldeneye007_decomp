@@ -14144,12 +14144,12 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     moveData.weaponForwardOffset = 0;
     moveData.sp16C = 0;
     moveData.sp168 = 0;
-    moveData.sp164 = 0;
-    moveData.sp160 = 0;
-    moveData.sp15C = 0;
-    moveData.sp158 = 0;
-    moveData.sp154 = 0;
-    moveData.sp150 = 0;
+    moveData.zoomOutFovPersec = 0;
+    moveData.zoomInFovPersec = 0;
+    moveData.crouchDown = 0;
+    moveData.crouchUp = 0;
+    moveData.rLeanLeft = 0;
+    moveData.rLeanRight = 0;
     moveData.detonating = 0;
     moveData.canAutoAim = 0;
     moveData.invertPitch = get_cur_player_look_vertical_inverted() == 0;
@@ -14379,32 +14379,32 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 {
                     if (tmpc2sticky < 0)
                     {
-                        moveData.sp164 = (f32) -tmpc2sticky / 70.0f;
-                        if (moveData.sp164 > 1.0f)
+                        moveData.zoomOutFovPersec = (f32) -tmpc2sticky / 70.0f;
+                        if (moveData.zoomOutFovPersec > 1.0f)
                         {
-                            moveData.sp164 = 1.0f;
+                            moveData.zoomOutFovPersec = 1.0f;
                         }
                         
-                        moveData.sp164 *= 2.0f;
+                        moveData.zoomOutFovPersec *= 2.0f;
                     }
                     
                     if (tmpc2sticky > 0)
                     {
-                        moveData.sp160 = (f32) tmpc2sticky / 70.0f;
-                        if (moveData.sp160 > 1.0f)
+                        moveData.zoomInFovPersec = (f32) tmpc2sticky / 70.0f;
+                        if (moveData.zoomInFovPersec > 1.0f)
                         {
-                            moveData.sp160 = 1.0f;
+                            moveData.zoomInFovPersec = 1.0f;
                         }
                         
-                        moveData.sp160 *= 2.0f;
+                        moveData.zoomInFovPersec *= 2.0f;
                     }
                 }
                 
-                moveData.sp15C = (bondwalkItemCheckBitflags(getCurrentPlayerWeaponId(GUNRIGHT), WEAPONSTATBITFLAG_DISABLE_CROUCH) == 0)
+                moveData.crouchDown = (bondwalkItemCheckBitflags(getCurrentPlayerWeaponId(GUNRIGHT), WEAPONSTATBITFLAG_DISABLE_CROUCH) == 0)
                     && (g_CurrentPlayer->insightaimmode)
                     && (player_joyGetStickY < -30);
 
-                moveData.sp158 = (bondwalkItemCheckBitflags(getCurrentPlayerWeaponId(GUNRIGHT), WEAPONSTATBITFLAG_DISABLE_CROUCH) == 0)
+                moveData.crouchUp = (bondwalkItemCheckBitflags(getCurrentPlayerWeaponId(GUNRIGHT), WEAPONSTATBITFLAG_DISABLE_CROUCH) == 0)
                     && (g_CurrentPlayer->insightaimmode)
                     && (player_joyGetStickY > 30);
 
@@ -14660,27 +14660,27 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                         /* down = 0x404 */
                         if ((buttons & (D_JPAD | D_CBUTTONS)) != 0)
                         {
-                            moveData.sp164 = 1.0f;
+                            moveData.zoomOutFovPersec = 1.0f;
                         }
                         
                         if ((buttons & (U_JPAD | U_CBUTTONS)) != 0)
                         {
-                            moveData.sp160 = 1.0f;
+                            moveData.zoomInFovPersec = 1.0f;
                         }
                     }
                     
-                    moveData.sp15C = (bondwalkItemCheckBitflags(getCurrentPlayerWeaponId(GUNRIGHT), WEAPONSTATBITFLAG_DISABLE_CROUCH) == 0)
+                    moveData.crouchDown = (bondwalkItemCheckBitflags(getCurrentPlayerWeaponId(GUNRIGHT), WEAPONSTATBITFLAG_DISABLE_CROUCH) == 0)
                         && (g_CurrentPlayer->insightaimmode)
                         && ((buttons & (D_JPAD | D_CBUTTONS)));
                         
-                    moveData.sp158 = (bondwalkItemCheckBitflags(getCurrentPlayerWeaponId(GUNRIGHT), WEAPONSTATBITFLAG_DISABLE_CROUCH) == 0)
+                    moveData.crouchUp = (bondwalkItemCheckBitflags(getCurrentPlayerWeaponId(GUNRIGHT), WEAPONSTATBITFLAG_DISABLE_CROUCH) == 0)
                         && (g_CurrentPlayer->insightaimmode)
                         && ((~buttons & (U_JPAD | U_CBUTTONS)));
 
-                    moveData.sp154 = (g_CurrentPlayer->insightaimmode)
+                    moveData.rLeanLeft = (g_CurrentPlayer->insightaimmode)
                         && ((buttons & (L_JPAD | L_CBUTTONS)));
 
-                    moveData.sp150 = (g_CurrentPlayer->insightaimmode)
+                    moveData.rLeanRight = (g_CurrentPlayer->insightaimmode)
                         && ((buttons & (R_JPAD | R_CBUTTONS)));
 
                     if (
@@ -14845,14 +14845,14 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
     gunSetSightVisible(2, moveData.sp16C);
     
-    if (moveData.sp164 > 0)
+    if (moveData.zoomOutFovPersec > 0)
     {
-        camera_sniper_zoom_in(moveData.sp164);
+        camera_sniper_zoom_in(moveData.zoomOutFovPersec);
     }
     
-    if (moveData.sp160 > 0)
+    if (moveData.zoomInFovPersec > 0)
     {
-        camera_sniper_zoom_out(moveData.sp160);
+        camera_sniper_zoom_out(moveData.zoomInFovPersec);
     }
 
     if (g_CurrentPlayer->watch_animation_state == 0)
@@ -15049,11 +15049,11 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             g_CurrentPlayer->speedmaxtime60 = 0;
         }
         
-        if (moveData.sp154)
+        if (moveData.rLeanLeft)
         {
             currentPlayerSetSwayTarget(-1);
         }
-        else if (moveData.sp150)
+        else if (moveData.rLeanRight)
         {
             currentPlayerSetSwayTarget(1);
         }
@@ -15062,11 +15062,11 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             currentPlayerSetSwayTarget(0);
         }
         
-        if (moveData.sp15C)
+        if (moveData.crouchDown)
         {
             currentPlayerAdjustCrouchPos(-2);
         }
-        else if (moveData.sp158)
+        else if (moveData.crouchUp)
         {
             currentPlayerAdjustCrouchPos(2);
         }

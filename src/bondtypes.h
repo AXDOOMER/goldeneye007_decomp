@@ -3979,18 +3979,26 @@ struct MoveData {
     s32 controlStickXRaw;
     s32 controlStickYSafe;
     s32 controlStickXSafe;
+
+    // 0x20
     s32 disableLookAhead;
     s32 invertPitch;
     s32 canAutoAim;
     s32 detonating;
-    s32 sp150;
-    s32 sp154;
-    s32 sp158;
-    s32 sp15C;
-    f32 sp160;
-    f32 sp164;
+
+    // 0x30
+    s32 rLeanRight;
+    s32 rLeanLeft;
+    s32 crouchUp;
+    s32 crouchDown;
+
+    // 0x40, bondviewProcessInput sp160
+    f32 zoomInFovPersec;
+    // sp164
+    f32 zoomOutFovPersec;
     s32 sp168;
     s32 sp16C;
+    
     s32 weaponForwardOffset;
     s32 weaponBackOffset;
     f32 sp178;
