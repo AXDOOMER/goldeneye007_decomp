@@ -1222,7 +1222,7 @@ typedef union
             Gfx     *Primary;              /*0x0*/
             Gfx     *Secondary;            /*0x4*/    // optional
             Vertex  *Vertices;             /*0x8*/
-            u16      numVertices;          /*0xC*/
+            s16      numVertices;          /*0xC*/
             s16      numCollisionVertices; /*0xE*/
             Vertex  *CollisionVertices;    /*0x10 Table of vertices with unique point in space (UV's and Colour are disregarded). */
             s16     *PointUsage;           /*0x14*/
@@ -2912,9 +2912,7 @@ typedef union
         */
         struct DoorRecord *linkedDoor;
 
-        u8                 laserFade; /*0xcc*/
-        u8                 unkcd;
-        s16                unkce;
+        Vertex*            unkcc; /*0xcc*/
 
         // maybe struct modeldata_unk_pos *
         u32 unkd0;
@@ -3051,8 +3049,8 @@ typedef union
         s32 unkB8;
         s32 unkBC;
         s32  unkC0;
-        void *unkC4;
-        void *unkC8;
+        ALSoundState *unkC4;
+        ALSoundState *unkC8;
         void *unkCC; // beam struct in PD
 
         /**
@@ -3526,7 +3524,7 @@ typedef union
         u32         roty;         /*0xa0*/
         PathRecord *path;         /*0xa4*/
         s32         nextstep;     /*0xa8*/
-        void *      Sound;        /*0xac*/
+        ALSoundState *Sound;      /*0xac*/
     } VehichleRecord;
     // VehichleRecord *pVehichleData;//not Global, local to Object or function
     // VehichleRecord *pAircraftData;//not Global, local to Object or function
@@ -3540,21 +3538,21 @@ typedef union
     // [This struct uses original names]
     typedef struct AircraftRecord
     {
-        inherits    ObjectRecord;
-        AIRecord *  ailist;          /*0x80*/
-        u16         aioffset;        /*0x84*/
-        s16         aireturnlist;    /*0x86*/
-        u32         rotoryrot;       /*0x88 changes when onscreen even after destruction*/
-        f32         rotaryspeed;     /*0x8c*/
-        f32         rotaryspeedaim;  /*0x90 CONFIRMED*/
-        f32         rotaryspeedtime; /*0x94 CONFIRMED*/
-        f32         speed;           /*0x98*/
-        f32         speedaim;        /*0x9c*/
-        f32         speedtime60;     /*0xa0*/
-        u32         yrot;            /*0xa4*/
-        u32         nextstep;        /*0xa8*/
-        PathRecord *path;            /*0xac*/
-        void *      Sound;           /*0xb0 CONFIRMED*/
+        inherits      ObjectRecord;
+        AIRecord *    ailist;          /*0x80*/
+        u16           aioffset;        /*0x84*/
+        s16           aireturnlist;    /*0x86*/
+        u32           rotoryrot;       /*0x88 changes when onscreen even after destruction*/
+        f32           rotaryspeed;     /*0x8c*/
+        f32           rotaryspeedaim;  /*0x90 CONFIRMED*/
+        f32           rotaryspeedtime; /*0x94 CONFIRMED*/
+        f32           speed;           /*0x98*/
+        f32           speedaim;        /*0x9c*/
+        f32           speedtime60;     /*0xa0*/
+        u32           yrot;            /*0xa4*/
+        u32           nextstep;        /*0xa8*/
+        PathRecord   *path;            /*0xac*/
+        ALSoundState *Sound;           /*0xb0*/
     } AircraftRecord;
     #define New_AircraftRecord(pad)                 \
         {                                           \
