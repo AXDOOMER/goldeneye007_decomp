@@ -41459,106 +41459,60 @@ bool sub_GAME_7F054C58(coord3d *coord, f32 arg1)
     return result;
 }
 
+// PD: func0f08e8ac
+bool sub_GAME_7F054D6C(PropRecord *prop, coord3d *pos, f32 arg2, bool arg3)
+{
+    s32 room_ids[8];
+    s32 *rooms;
+    s32 roomnum;
+    bool result;
+    bbox2d bbox;
 
-#ifdef NONMATCHING
-void sub_GAME_7F054D6C(void) {
+    result = FALSE;
+    chraiGetPropRoomIds(prop, room_ids);
+    rooms = room_ids;
+    roomnum = *rooms;
 
+    while (roomnum >= 0)
+    {
+        if (getROOMID_Bitflags(roomnum) != 0)
+        {
+            if (fogPositionIsVisibleThroughFog(pos, arg2) && (!arg3 || sub_GAME_7F054C58(pos, arg2)))
+            {
+                if (sub_GAME_7F054A64(prop, &bbox) != 0)
+                {
+                    result = camIsPosInScreenBox(pos, arg2, &bbox);
+                }
+                else
+                {
+                    result = sub_GAME_7F078A58(pos, arg2);
+                }
+
+                if (result)
+                {
+                    coord3d *campos = bondviewGetCurrentPlayersPosition();
+                    f32 xdiff = pos->x - campos->x;
+                    f32 ydiff = pos->y - campos->y;
+                    f32 zdiff = pos->z - campos->z;
+
+                    if (xdiff * xdiff + ydiff * ydiff + zdiff * zdiff > 32000 * 32000)
+                    {
+                        result = FALSE;
+                    }
+                }
+            }
+
+            break;
+        }
+
+        rooms++;
+        roomnum = *rooms;
+        result = FALSE;
+    }
+
+    return result;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_8005345C
-.word 0x4e742400 /*1.024e9*/
-.text
-glabel sub_GAME_7F054D6C
-/* 08989C 7F054D6C 27BDFF90 */  addiu $sp, $sp, -0x70
-/* 0898A0 7F054D70 AFB10018 */  sw    $s1, 0x18($sp)
-/* 0898A4 7F054D74 00A08825 */  move  $s1, $a1
-/* 0898A8 7F054D78 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0898AC 7F054D7C AFB00014 */  sw    $s0, 0x14($sp)
-/* 0898B0 7F054D80 AFA40070 */  sw    $a0, 0x70($sp)
-/* 0898B4 7F054D84 AFA60078 */  sw    $a2, 0x78($sp)
-/* 0898B8 7F054D88 AFA7007C */  sw    $a3, 0x7c($sp)
-/* 0898BC 7F054D8C AFA00044 */  sw    $zero, 0x44($sp)
-/* 0898C0 7F054D90 0FC0F2E3 */  jal   chraiGetPropRoomIds
-/* 0898C4 7F054D94 27A50050 */   addiu $a1, $sp, 0x50
-/* 0898C8 7F054D98 8FA40050 */  lw    $a0, 0x50($sp)
-/* 0898CC 7F054D9C 27B00050 */  addiu $s0, $sp, 0x50
-/* 0898D0 7F054DA0 0482003C */  bltzl $a0, .L7F054E94
-/* 0898D4 7F054DA4 8FBF001C */   lw    $ra, 0x1c($sp)
-.L7F054DA8:
-/* 0898D8 7F054DA8 0FC2D794 */  jal   getROOMID_Bitflags
-/* 0898DC 7F054DAC 00000000 */   nop   
-/* 0898E0 7F054DB0 10400033 */  beqz  $v0, .L7F054E80
-/* 0898E4 7F054DB4 02202025 */   move  $a0, $s1
-/* 0898E8 7F054DB8 0FC2ECB2 */  jal   fogPositionIsVisibleThroughFog
-/* 0898EC 7F054DBC 8FA50078 */   lw    $a1, 0x78($sp)
-/* 0898F0 7F054DC0 10400033 */  beqz  $v0, .L7F054E90
-/* 0898F4 7F054DC4 8FAE007C */   lw    $t6, 0x7c($sp)
-/* 0898F8 7F054DC8 11C00004 */  beqz  $t6, .L7F054DDC
-/* 0898FC 7F054DCC 02202025 */   move  $a0, $s1
-/* 089900 7F054DD0 0FC15316 */  jal   sub_GAME_7F054C58
-/* 089904 7F054DD4 8FA50078 */   lw    $a1, 0x78($sp)
-/* 089908 7F054DD8 1040002D */  beqz  $v0, .L7F054E90
-.L7F054DDC:
-/* 08990C 7F054DDC 27B00034 */   addiu $s0, $sp, 0x34
-/* 089910 7F054DE0 02002825 */  move  $a1, $s0
-/* 089914 7F054DE4 0FC15299 */  jal   sub_GAME_7F054A64
-/* 089918 7F054DE8 8FA40070 */   lw    $a0, 0x70($sp)
-/* 08991C 7F054DEC 10400007 */  beqz  $v0, .L7F054E0C
-/* 089920 7F054DF0 02202025 */   move  $a0, $s1
-/* 089924 7F054DF4 02202025 */  move  $a0, $s1
-/* 089928 7F054DF8 8FA50078 */  lw    $a1, 0x78($sp)
-/* 08992C 7F054DFC 0FC1E2FD */  jal   camIsPosInScreenBox
-/* 089930 7F054E00 02003025 */   move  $a2, $s0
-/* 089934 7F054E04 10000004 */  b     .L7F054E18
-/* 089938 7F054E08 AFA20044 */   sw    $v0, 0x44($sp)
-.L7F054E0C:
-/* 08993C 7F054E0C 0FC1E296 */  jal   sub_GAME_7F078A58
-/* 089940 7F054E10 8FA50078 */   lw    $a1, 0x78($sp)
-/* 089944 7F054E14 AFA20044 */  sw    $v0, 0x44($sp)
-.L7F054E18:
-/* 089948 7F054E18 5040001E */  beql  $v0, $zero, .L7F054E94
-/* 08994C 7F054E1C 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 089950 7F054E20 0FC227F5 */  jal   bondviewGetCurrentPlayersPosition
-/* 089954 7F054E24 00000000 */   nop   
-/* 089958 7F054E28 C6240000 */  lwc1  $f4, ($s1)
-/* 08995C 7F054E2C C4460000 */  lwc1  $f6, ($v0)
-/* 089960 7F054E30 C6280004 */  lwc1  $f8, 4($s1)
-/* 089964 7F054E34 C44A0004 */  lwc1  $f10, 4($v0)
-/* 089968 7F054E38 46062001 */  sub.s $f0, $f4, $f6
-/* 08996C 7F054E3C C6300008 */  lwc1  $f16, 8($s1)
-/* 089970 7F054E40 C4520008 */  lwc1  $f18, 8($v0)
-/* 089974 7F054E44 460A4081 */  sub.s $f2, $f8, $f10
-/* 089978 7F054E48 46000182 */  mul.s $f6, $f0, $f0
-/* 08997C 7F054E4C 3C018005 */  lui   $at, %hi(D_8005345C)
-/* 089980 7F054E50 46128301 */  sub.s $f12, $f16, $f18
-/* 089984 7F054E54 46021202 */  mul.s $f8, $f2, $f2
-/* 089988 7F054E58 C424345C */  lwc1  $f4, %lo(D_8005345C)($at)
-/* 08998C 7F054E5C 460C6402 */  mul.s $f16, $f12, $f12
-/* 089990 7F054E60 46083280 */  add.s $f10, $f6, $f8
-/* 089994 7F054E64 46105480 */  add.s $f18, $f10, $f16
-/* 089998 7F054E68 4612203C */  c.lt.s $f4, $f18
-/* 08999C 7F054E6C 00000000 */  nop   
-/* 0899A0 7F054E70 45020008 */  bc1fl .L7F054E94
-/* 0899A4 7F054E74 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 0899A8 7F054E78 10000005 */  b     .L7F054E90
-/* 0899AC 7F054E7C AFA00044 */   sw    $zero, 0x44($sp)
-.L7F054E80:
-/* 0899B0 7F054E80 8E040004 */  lw    $a0, 4($s0)
-/* 0899B4 7F054E84 26100004 */  addiu $s0, $s0, 4
-/* 0899B8 7F054E88 0481FFC7 */  bgez  $a0, .L7F054DA8
-/* 0899BC 7F054E8C 00000000 */   nop   
-.L7F054E90:
-/* 0899C0 7F054E90 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F054E94:
-/* 0899C4 7F054E94 8FA20044 */  lw    $v0, 0x44($sp)
-/* 0899C8 7F054E98 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0899CC 7F054E9C 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0899D0 7F054EA0 03E00008 */  jr    $ra
-/* 0899D4 7F054EA4 27BD0070 */   addiu $sp, $sp, 0x70
-)
-#endif
+
 
 /**
 * Loaded to 7F054EA8.
