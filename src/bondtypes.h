@@ -4012,22 +4012,23 @@ struct MoveData {
     f32 sp18C; // tank turn left ?
 
     // 0x70
-    s32 sp190;
-    s32 sp194;
-    s32 sp198;
-    s32 sp19C;
+    s32 digitalStepRight;
+    s32 digitalStepLeft;
+    s32 digitalStepBack;
+    s32 digitalStepForward;
 
     // 0x80
-    s32 sp1A0;
-    s32 sp1A4;
-    s32 sp1A8;
-    s32 sp1AC;
+    s32 canNaturalPitch;
+    s32 canNaturalTurn;
+    s32 sp1A8; // "can turn tank" related
+    s32 canLookAhead;
 
     // 0x90
-    s32 sp1B0;
+    s32 btap;
     s32 triggerOn;
-    s32 sp1B8;
-    s32 sp1BC;
+    s32 canManualAim;
+    // sp1BC
+    s32 canSwivelGun;
 };
 
 
