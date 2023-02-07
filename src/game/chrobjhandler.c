@@ -39483,12 +39483,6 @@ glabel D_8005332C
 .word 0x40c90fdb /*6.2831855*/
 glabel D_80053330
 .word 0x40c90fdb /*6.2831855*/
-glabel D_80053334
-.word 0x461c4000 /*10000.0*/
-glabel D_80053338
-.word 0x3ecccccd /*0.40000001*/
-glabel D_8005333C
-.word 0x3ecccccd /*0.40000001*/
 .text
 glabel sub_GAME_7F0526EC
 /* 08721C 7F0526EC 27BDFF60 */  addiu $sp, $sp, -0xa0
@@ -39858,6 +39852,13 @@ void sub_GAME_7F052B00(DoorRecord *door)
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80053334
+.word 0x461c4000 /*10000.0*/
+glabel D_80053338
+.word 0x3ecccccd /*0.40000001*/
+glabel D_8005333C
+.word 0x3ecccccd /*0.40000001*/
 .text
 glabel sub_GAME_7F052B00
 /* 087630 7F052B00 27BDFF90 */  addiu $sp, $sp, -0x70
@@ -40704,11 +40705,9 @@ PropRecord* doorInit(DoorRecord* door, coord3d* pos, Mtxf* mtx, StandTile* stan,
 }
 
 
-//todo: Code matches however, some data is tied to an earlier func
-#ifdef NONMATCHING
-s32 sub_GAME_7F0537B8(f32 distance, f32 min, f32 max) //#MATCH
+s32 sub_GAME_7F0537B8(f32 distance, f32 min, f32 max)
 {
-    s32 retval; //var is needed
+    s32 retval;
 
     if (distance <= 200.0f)
     {
@@ -40724,84 +40723,11 @@ s32 sub_GAME_7F0537B8(f32 distance, f32 min, f32 max) //#MATCH
     }
     else
     {
-        retval = SHRT_MAX - (s32)((sqrtf(distance - 200.0f) * SHRT_MAX) / sqrtf(min - 200.0f));
+        retval = SHRT_MAX - (s32)((sqrtf(distance - 200.0f) * 22767.0f) / sqrtf(min - 200.0f));
     }
+
     return retval;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80053340
-.word 0x461c4000 /*10000.0*/
-glabel D_80053344
-.word 0x46b1de00 /*22767.0*/
-.text
-glabel sub_GAME_7F0537B8
-/* 0882E8 7F0537B8 3C014348 */  li    $at, 0x43480000 # 200.000000
-/* 0882EC 7F0537BC 44810000 */  mtc1  $at, $f0
-/* 0882F0 7F0537C0 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0882F4 7F0537C4 F7B40010 */  sdc1  $f20, 0x10($sp)
-/* 0882F8 7F0537C8 4600603E */  c.le.s $f12, $f0
-/* 0882FC 7F0537CC AFA60028 */  sw    $a2, 0x28($sp)
-/* 088300 7F0537D0 46006506 */  mov.s $f20, $f12
-/* 088304 7F0537D4 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 088308 7F0537D8 45000003 */  bc1f  .L7F0537E8
-/* 08830C 7F0537DC C7A40028 */   lwc1  $f4, 0x28($sp)
-/* 088310 7F0537E0 10000027 */  b     .L7F053880
-/* 088314 7F0537E4 24037FFF */   li    $v1, 32767
-.L7F0537E8:
-/* 088318 7F0537E8 4614203E */  c.le.s $f4, $f20
-/* 08831C 7F0537EC 00000000 */  nop   
-/* 088320 7F0537F0 45020004 */  bc1fl .L7F053804
-/* 088324 7F0537F4 4614703E */   c.le.s $f14, $f20
-/* 088328 7F0537F8 10000021 */  b     .L7F053880
-/* 08832C 7F0537FC 00001825 */   move  $v1, $zero
-/* 088330 7F053800 4614703E */  c.le.s $f14, $f20
-.L7F053804:
-/* 088334 7F053804 C7A60028 */  lwc1  $f6, 0x28($sp)
-/* 088338 7F053808 3C018005 */  lui   $at, %hi(D_80053340)
-/* 08833C 7F05380C 4502000B */  bc1fl .L7F05383C
-/* 088340 7F053810 4600A301 */   sub.s $f12, $f20, $f0
-/* 088344 7F053814 46143201 */  sub.s $f8, $f6, $f20
-/* 088348 7F053818 C42A3340 */  lwc1  $f10, %lo(D_80053340)($at)
-/* 08834C 7F05381C 460E3481 */  sub.s $f18, $f6, $f14
-/* 088350 7F053820 460A4402 */  mul.s $f16, $f8, $f10
-/* 088354 7F053824 46128103 */  div.s $f4, $f16, $f18
-/* 088358 7F053828 4600220D */  trunc.w.s $f8, $f4
-/* 08835C 7F05382C 44034000 */  mfc1  $v1, $f8
-/* 088360 7F053830 10000014 */  b     .L7F053884
-/* 088364 7F053834 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 088368 7F053838 4600A301 */  sub.s $f12, $f20, $f0
-.L7F05383C:
-/* 08836C 7F05383C 0C007DF8 */  jal   sqrtf
-/* 088370 7F053840 E7AE0024 */   swc1  $f14, 0x24($sp)
-/* 088374 7F053844 3C014348 */  li    $at, 0x43480000 # 200.000000
-/* 088378 7F053848 44815000 */  mtc1  $at, $f10
-/* 08837C 7F05384C C7AE0024 */  lwc1  $f14, 0x24($sp)
-/* 088380 7F053850 46000506 */  mov.s $f20, $f0
-/* 088384 7F053854 0C007DF8 */  jal   sqrtf
-/* 088388 7F053858 460A7301 */   sub.s $f12, $f14, $f10
-/* 08838C 7F05385C 3C018005 */  lui   $at, %hi(D_80053344)
-/* 088390 7F053860 C4263344 */  lwc1  $f6, %lo(D_80053344)($at)
-/* 088394 7F053864 24197FFF */  li    $t9, 32767
-/* 088398 7F053868 4606A402 */  mul.s $f16, $f20, $f6
-/* 08839C 7F05386C 46008483 */  div.s $f18, $f16, $f0
-/* 0883A0 7F053870 4600910D */  trunc.w.s $f4, $f18
-/* 0883A4 7F053874 44182000 */  mfc1  $t8, $f4
-/* 0883A8 7F053878 00000000 */  nop   
-/* 0883AC 7F05387C 03381823 */  subu  $v1, $t9, $t8
-.L7F053880:
-/* 0883B0 7F053880 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F053884:
-/* 0883B4 7F053884 D7B40010 */  ldc1  $f20, 0x10($sp)
-/* 0883B8 7F053888 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0883BC 7F05388C 03E00008 */  jr    $ra
-/* 0883C0 7F053890 00601025 */   move  $v0, $v1
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
