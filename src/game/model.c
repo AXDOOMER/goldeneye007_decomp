@@ -8864,57 +8864,16 @@ void modelPromoteNodeOffsetsToPointers(ModelNode *node, u32 vma, u32 fileramaddr
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F075A90(ModelFileHeader *header, s32 arg1, ModelNode **node) {
+void sub_GAME_7F075A90(ModelFileHeader *header, s32 vma, u32 addr) {
+    s32 diff = addr - vma;
     s32 i;
+
     for(i = 0;i < header->numSwitches;i++)
     {
-        if (header->Switches[i] != 0) {
-            header->Switches[i] = header->Switches[i] + (node - arg1);
-        }
+        PROMOTE(header->Switches[i]);
     }
-    modelPromoteNodeOffsetsToPointers(header->RootNode, arg1, header->numSwitches);
+    modelPromoteNodeOffsetsToPointers(header->RootNode, vma, addr);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F075A90
-/* 0AA5C0 7F075A90 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0AA5C4 7F075A94 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0AA5C8 7F075A98 AFB10018 */  sw    $s1, 0x18($sp)
-/* 0AA5CC 7F075A9C AFB00014 */  sw    $s0, 0x14($sp)
-/* 0AA5D0 7F075AA0 8487000C */  lh    $a3, 0xc($a0)
-/* 0AA5D4 7F075AA4 00808025 */  move  $s0, $a0
-/* 0AA5D8 7F075AA8 00A08825 */  move  $s1, $a1
-/* 0AA5DC 7F075AAC 18E0000E */  blez  $a3, .L7F075AE8
-/* 0AA5E0 7F075AB0 00001025 */   move  $v0, $zero
-/* 0AA5E4 7F075AB4 00001825 */  move  $v1, $zero
-.L7F075AB8:
-/* 0AA5E8 7F075AB8 8E0E0008 */  lw    $t6, 8($s0)
-/* 0AA5EC 7F075ABC 00D17823 */  subu  $t7, $a2, $s1
-/* 0AA5F0 7F075AC0 24420001 */  addiu $v0, $v0, 1
-/* 0AA5F4 7F075AC4 01C32021 */  addu  $a0, $t6, $v1
-/* 0AA5F8 7F075AC8 8C850000 */  lw    $a1, ($a0)
-/* 0AA5FC 7F075ACC 10A00003 */  beqz  $a1, .L7F075ADC
-/* 0AA600 7F075AD0 00AFC021 */   addu  $t8, $a1, $t7
-/* 0AA604 7F075AD4 AC980000 */  sw    $t8, ($a0)
-/* 0AA608 7F075AD8 8607000C */  lh    $a3, 0xc($s0)
-.L7F075ADC:
-/* 0AA60C 7F075ADC 0047082A */  slt   $at, $v0, $a3
-/* 0AA610 7F075AE0 1420FFF5 */  bnez  $at, .L7F075AB8
-/* 0AA614 7F075AE4 24630004 */   addiu $v1, $v1, 4
-.L7F075AE8:
-/* 0AA618 7F075AE8 8E040000 */  lw    $a0, ($s0)
-/* 0AA61C 7F075AEC 0FC1D577 */  jal   modelPromoteNodeOffsetsToPointers
-/* 0AA620 7F075AF0 02202825 */   move  $a1, $s1
-/* 0AA624 7F075AF4 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0AA628 7F075AF8 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0AA62C 7F075AFC 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0AA630 7F075B00 03E00008 */  jr    $ra
-/* 0AA634 7F075B04 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
-
 
 void REMOVED_sub_GAME_7F075B08(s32 param_1,s32 param_2,s32 param_3,s32 param_4)
 {

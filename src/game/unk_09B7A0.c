@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include <memp.h>
+#include "bondtypes.h"
 #include "unk_09B7A0.h"
 
 // unsure if these structs are defined as something else, elsewhere
@@ -629,10 +630,12 @@ glabel sub_GAME_7F09BE4C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F09C044(void) {
+void sub_GAME_7F09C044(Vertex* arg0) {
 
 }
 #else
+void sub_GAME_7F09C044(Vertex* arg0);
+
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F09C044
