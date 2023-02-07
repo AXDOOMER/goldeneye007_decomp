@@ -2706,7 +2706,7 @@ extern f32 g_TankTurretTurn;
 //D:8003648C
 extern s32 D_8003648C;
 //D:80036490
-extern s32 D_80036490;
+extern s32 g_TankDamagePenaltyTicks;
 //D:80036494
 extern s32 g_CameraMode;
 //D:80036498

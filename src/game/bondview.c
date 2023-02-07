@@ -100,7 +100,7 @@
     #define CHR_OBJ_ACCEL_SPEED_FACTOR 0.6f
     #define CHR_OBJ_MAXSPEED 6.0f
     #define MAX_SPEED_FACTOR 0.8f
-    #define D_80036490_FACTOR 75
+    #define TANK_DAMAGE_PENTALTY_TICKS 75
 
     #define TANK_VERT_ANGLE_FACTOR 0.0716000199318f
     #define TANK_VERT_ANGLE_RAD_FACTOR 0.0952f
@@ -115,7 +115,7 @@
     #define CHR_OBJ_ACCEL_SPEED_FACTOR 0.5f
     #define CHR_OBJ_MAXSPEED 5.0f
     #define MAX_SPEED_FACTOR 0.8f
-    #define D_80036490_FACTOR 90
+    #define TANK_DAMAGE_PENTALTY_TICKS 90
 
     #define TANK_VERT_ANGLE_FACTOR 0.0600000023842f
     #define TANK_VERT_ANGLE_RAD_FACTOR 0.0799999833107f
@@ -127,6 +127,7 @@
 #define SPEED_REGULAR_MAX  1.0f
 #define SPEED_RUN_MAX      1.25f
 #define SPEED_TICK_ADJUST  0.01f
+#define TANK_MAX_SPEED     15.0f
 
 
 #define FLOAT_TEN_A 10.0f
@@ -412,7 +413,7 @@ f32 g_TankTurretTurn = 0;
 //D:8003648C
 s32 D_8003648C = 0;
 //D:80036490
-s32 D_80036490 = 0;
+s32 g_TankDamagePenaltyTicks = 0;
 //D:80036494
 s32 g_CameraMode = CAMERAMODE_NONE;
 //D:80036498
@@ -14135,15 +14136,15 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     moveData.triggerOn = 0;
     moveData.btap = 0;
     moveData.canLookAhead = 0;
-    moveData.sp1A8 = 0;
+    moveData.canTurnTank = 0;
     moveData.canNaturalTurn = 0;
     moveData.canNaturalPitch = 0;
     moveData.digitalStepForward = 0;
     moveData.digitalStepBack = 0;
     moveData.digitalStepLeft = 0;
     moveData.digitalStepRight = 0;
-    moveData.sp18C = 0;
-    moveData.sp188 = 0;
+    moveData.tankTurnLeftSpeed = 0;
+    moveData.tankTurnRightSpeed = 0;
     moveData.speedVertaDown = 0;
     moveData.speedVertaUp = 0;
     moveData.aimTurnLeftSpeed = 0;
@@ -14307,7 +14308,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                     );
                 
                 moveData.canLookAhead = !g_CurrentPlayer->insightaimmode;
-                moveData.sp1A8 = 1;
+                moveData.canTurnTank = 1;
                 moveData.canNaturalTurn = !g_CurrentPlayer->insightaimmode;
                 moveData.canNaturalPitch = !g_CurrentPlayer->insightaimmode;
 
@@ -14444,21 +14445,13 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                     {
                         if (moveData.aimTurnLeftSpeed > 0)
                         {
-                            moveData.sp18C = moveData.aimTurnLeftSpeed;
+                            moveData.tankTurnLeftSpeed = moveData.aimTurnLeftSpeed;
                         }
-                        //else
-                        //{
-                        //    moveData.sp18C = 0;
-                        //}
                         
                         if (moveData.aimTurnRightSpeed > 0)
                         {
-                            moveData.sp188 = moveData.aimTurnRightSpeed;
+                            moveData.tankTurnRightSpeed = moveData.aimTurnRightSpeed;
                         }
-                        //else
-                        //{
-                        //    moveData.sp188 = 0;
-                        //}
                     }
                     
                     moveData.aimTurnLeftSpeed = 0;
@@ -14528,7 +14521,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                             }
                             else
                             {
-                                moveData.sp18C = 1.0f;
+                                moveData.tankTurnLeftSpeed = 1.0f;
                             }
                         }
                         
@@ -14547,7 +14540,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                             }
                             else
                             {
-                                moveData.sp188 = 1.0f;
+                                moveData.tankTurnRightSpeed = 1.0f;
                             }
                         }
 
@@ -14561,7 +14554,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                         
                         if (in_tank_flag == 1)
                         {
-                            moveData.sp1A8 = !g_CurrentPlayer->insightaimmode;
+                            moveData.canTurnTank = !g_CurrentPlayer->insightaimmode;
                         }
                         else
                         {
@@ -14572,22 +14565,22 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                     {
                         if ((buttons & (s32)(L_JPAD | L_CBUTTONS)) != 0)
                         {
-                            moveData.sp18C = 1.0f;
+                            moveData.tankTurnLeftSpeed = 1.0f;
                         }
                         /* optional else statement, matches with or without. */
                         else
                         {
-                            moveData.sp18C = 0;
+                            moveData.tankTurnLeftSpeed = 0;
                         }
                         
                         if ((buttons & (s32)(R_JPAD | R_CBUTTONS)) != 0)
                         {
-                            moveData.sp188 = 1.0f;
+                            moveData.tankTurnRightSpeed = 1.0f;
                         }
                         /* optional else statement, matches with or without. */
                         else
                         {
-                            moveData.sp188 = 0;
+                            moveData.tankTurnRightSpeed = 0;
                         }
                         
                         moveData.digitalStepLeft = (!g_CurrentPlayer->insightaimmode)
@@ -14707,18 +14700,18 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                         if (getCurrentPlayerWeaponId(GUNRIGHT) == ITEM_TANKSHELLS)
                         {
                             moveData.controlStickXRaw = 0;
-                            moveData.sp1A8 = 1;
+                            moveData.canTurnTank = 1;
                         }
-                        else if ((moveData.sp18C == 0) && (moveData.sp188 == 0))
+                        else if ((moveData.tankTurnLeftSpeed == 0) && (moveData.tankTurnRightSpeed == 0))
                         {
                             if (moveData.aimTurnLeftSpeed > 0)
                             {
-                                moveData.sp18C = moveData.aimTurnLeftSpeed;
+                                moveData.tankTurnLeftSpeed = moveData.aimTurnLeftSpeed;
                             }
                             
                             if (moveData.aimTurnRightSpeed > 0)
                             {
-                                moveData.sp188 = moveData.aimTurnRightSpeed;
+                                moveData.tankTurnRightSpeed = moveData.aimTurnRightSpeed;
                             }
                         }
 
@@ -14744,6 +14737,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
     if (moveData.btap)
     {
+        /* If Bond is in the tank and pressed B, then exit. */
         if (in_tank_flag == 1)
         {
             spF4 = (struct TankRecord *)ptr_playerstank->obj;
@@ -14752,7 +14746,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             add_ammo_to_weapon(ITEM_TANKSHELLS, 0);
             bondinvRemoveItemByID(ITEM_TANKSHELLS);
             
-            if (getCurrentPlayerWeaponId(0) == ITEM_TANKSHELLS)
+            if (getCurrentPlayerWeaponId(GUNRIGHT) == ITEM_TANKSHELLS)
             {
                 spF4->unkD8 += get_ammo_in_hands_magazine(GUNRIGHT);
                 autoadvance_on_deplete_all_ammo();
@@ -14771,12 +14765,12 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             
             g_CurrentPlayer->crouchpos = 2;
         }
+        /* If Bond is standing on the tank and pressed B, enter the tank. */
         else if (ptr_playerstank != NULL
             && ptr_playerstank->type == 1
             && ptr_playerstank->obj->type == PROPDEF_TANK
             && g_BondCanEnterTank)
         {
-            
             spEC = (struct TankRecord *)ptr_playerstank->obj;
             
             bondinvAddInvItem(ITEM_TANKSHELLS);
@@ -14803,7 +14797,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             g_EnterTankCoord.f[0] = g_CurrentPlayer->field_488.collision_position.f[0];
             g_EnterTankCoord.f[1] = g_CurrentPlayer->field_488.collision_position.f[1];
             g_EnterTankCoord.f[2] = g_CurrentPlayer->field_488.collision_position.f[2];
-            D_80036490 = 0;
+            g_TankDamagePenaltyTicks = 0;
             
             bondviewTankModelRotationRelated();
         }
@@ -14835,7 +14829,6 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         && (get_hands_firing_status(GUNRIGHT)
             || get_hands_firing_status(GUNLEFT)))
     {
-        
         noiseRadius = 0;
         
         if (get_hands_firing_status(GUNRIGHT) && getCurrentPlayerNoise(GUNRIGHT) > noiseRadius)
@@ -14865,7 +14858,6 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
     if (g_CurrentPlayer->watch_animation_state == 0)
     {
-        
         ftemp_nostack_spE0 = 60.0f;
 
         if (moveData.zooming)
@@ -14888,15 +14880,15 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
         if (g_EnterTankAudioState == 2)
         {
-            if (moveData.sp188 > 0)
+            if (moveData.tankTurnRightSpeed > 0)
             {
-                g_TankTurretTurn += g_GlobalTimerDelta * moveData.sp188 * DegToRad1Fact(1);
+                g_TankTurretTurn += g_GlobalTimerDelta * moveData.tankTurnRightSpeed * DegToRad1Fact(1);
             }
-            else if (moveData.sp18C > 0)
+            else if (moveData.tankTurnLeftSpeed > 0)
             {
-                g_TankTurretTurn -= g_GlobalTimerDelta * moveData.sp18C * DegToRad1Fact(1);
+                g_TankTurretTurn -= g_GlobalTimerDelta * moveData.tankTurnLeftSpeed * DegToRad1Fact(1);
             }
-            else if (moveData.sp1A8)
+            else if (moveData.canTurnTank)
             {
                 ftemp_nostack_spDC = (f32) moveData.analogStrafe / 70.0f;
                 
@@ -14941,23 +14933,21 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                     ftemp_nostack_spD8 = -1.0f;
                 }
                 
-                ftemp_nostack_spD4 = ftemp_nostack_spD8 * 15.0f;
+                ftemp_nostack_spD4 = ftemp_nostack_spD8 * TANK_MAX_SPEED;
                 ftemp_nostack_spDC = ftemp_nostack_spD4;
 
-                if (D_80036490 > 0)
+                if (g_TankDamagePenaltyTicks > 0)
                 {
                     ftemp_nostack_spDC = ftemp_nostack_spD4 * 0.5f;
                     ftemp_nostack_spE8 = 4.0f;
-                    D_80036490 -= g_ClockTimer;
+                    g_TankDamagePenaltyTicks -= g_ClockTimer;
                 }
 
-                /* problem area, float reg alloc*/
-                
                 if (ftemp_nostack_spDC != g_CurrentPlayer->speedforwards)
                 {
                     if (g_CurrentPlayer->speedforwards < ftemp_nostack_spDC)
                     {
-                        ftemp_nostack_spD4 = ((((((ftemp_nostack_spDC - g_CurrentPlayer->speedforwards) / 4.0f) / 15.0f) + 0.5f) * ftemp_nostack_spE8 * FLOAT_TEN_A) / 60.0f);
+                        ftemp_nostack_spD4 = ((((((ftemp_nostack_spDC - g_CurrentPlayer->speedforwards) / 4.0f) / TANK_MAX_SPEED) + 0.5f) * ftemp_nostack_spE8 * FLOAT_TEN_A) / 60.0f);
 
                         g_CurrentPlayer->speedforwards += (ftemp_nostack_spD4) * g_GlobalTimerDelta;
                         
@@ -14968,7 +14958,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                     }
                     else if (ftemp_nostack_spDC < g_CurrentPlayer->speedforwards)
                     {
-                        ftemp_nostack_spD4 = ((((((g_CurrentPlayer->speedforwards - ftemp_nostack_spDC) / 4.0f) / 15.0f) + 0.5f) * ftemp_nostack_spE8 * -FLOAT_TEN_A) / 60.0f);
+                        ftemp_nostack_spD4 = ((((((g_CurrentPlayer->speedforwards - ftemp_nostack_spDC) / 4.0f) / TANK_MAX_SPEED) + 0.5f) * ftemp_nostack_spE8 * -FLOAT_TEN_A) / 60.0f);
 
                         g_CurrentPlayer->speedforwards += (ftemp_nostack_spD4) * g_GlobalTimerDelta;
                         
@@ -14996,7 +14986,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             bondviewUpdateSpeedSideways(0);
         }
         
-        if (moveData.sp1A8)
+        if (moveData.canTurnTank) // ?? not sure why this tank property is used here. Is the name wrong?
         {
             g_CurrentPlayer->speedsideways = (f32) moveData.analogStrafe / 70.0f;
         }
@@ -15107,7 +15097,6 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
     if (g_CurrentPlayer->watch_animation_state == 0)
     {
-        
         spC4 = -4.0f;
         
         if (g_CurrentPlayer->lookaheadcentreenabled)
@@ -16268,7 +16257,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 f32 tank_waudio_speedtheta;
                 f32 tank_waudio_vertical_angle;
                 
-                tank_waudio_speedforwards = g_CurrentPlayer->speedforwards / 15.0f;
+                tank_waudio_speedforwards = g_CurrentPlayer->speedforwards / TANK_MAX_SPEED;
                 tank_waudio_speedtheta = g_CurrentPlayer->speedtheta / 0.3f;
                 
                 if (tank_waudio_speedforwards < 0.0f)
@@ -16938,7 +16927,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                     {
                         // Explode destroyable props when the tank touches them
                         maybe_detonate_object_and_its_children(prop, 10000.0f, &prop->obj->runtime_pos, 0x20, get_cur_playernum());
-                        D_80036490 = D_80036490_FACTOR;
+                        g_TankDamagePenaltyTicks = TANK_DAMAGE_PENTALTY_TICKS;
                     }
                 }
             }
