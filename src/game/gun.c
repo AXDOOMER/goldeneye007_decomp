@@ -1323,7 +1323,7 @@ f32 get_item_in_hand_zoom(void) {
     return get_ptr_item_statistics(get_item_in_hand_or_watch_menu(GUNRIGHT))->Zoom;
 }
 
-void camera_sniper_zoom_in(f32 zoom)
+void camera_sniper_zoom_out(f32 zoom)
 {
 	if (get_item_in_hand_or_watch_menu(GUNRIGHT) == ITEM_SNIPERRIFLE) {
 		g_CurrentPlayer->sniper_zoom *= (1.0f + (zoom * 0.1f));
@@ -1342,7 +1342,7 @@ void camera_sniper_zoom_in(f32 zoom)
 	}
 }
 
-void camera_sniper_zoom_out(f32 zoom)
+void camera_sniper_zoom_in(f32 zoom)
 {
 	if (get_item_in_hand_or_watch_menu(GUNRIGHT) == ITEM_SNIPERRIFLE) {
 		g_CurrentPlayer->sniper_zoom /= (1.0f + (zoom * 0.1f));

@@ -14847,12 +14847,12 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     
     if (moveData.zoomOutFovPersec > 0)
     {
-        camera_sniper_zoom_in(moveData.zoomOutFovPersec);
+        camera_sniper_zoom_out(moveData.zoomOutFovPersec);
     }
     
     if (moveData.zoomInFovPersec > 0)
     {
-        camera_sniper_zoom_out(moveData.zoomInFovPersec);
+        camera_sniper_zoom_in(moveData.zoomInFovPersec);
     }
 
     if (g_CurrentPlayer->watch_animation_state == 0)
