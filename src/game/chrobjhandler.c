@@ -40763,49 +40763,20 @@ s32 sub_GAME_7F053894(coord3d *pos, f32 low, f32 high)
 
 void chrobjSndCreatePostEvent(ALSoundState *state, coord3d *pos, f32 low, f32 high)
 {
-
     sndCreatePostEvent(state, 8, sub_GAME_7F053894(pos, low, high));
 }
 
 
-//todo: code matches however variables refer to earlier funcs
-#ifdef NONMATCHING
-s32 sub_GAME_7F0539B8(f32 vol) //#MATCH
+s32 sub_GAME_7F0539B8(f32 vol)
 {
     return sub_GAME_7F0537B8(vol, 5000.0f, 6000.0f);
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80053348
-.word 0x459c4000 /*5000.0*/
-.text
-glabel sub_GAME_7F0539B8
-/* 0884E8 7F0539B8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0884EC 7F0539BC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0884F0 7F0539C0 3C018005 */  lui   $at, %hi(D_80053348)
-/* 0884F4 7F0539C4 3C0645BB */  lui   $a2, (0x45BB8000 >> 16) # lui $a2, 0x45bb
-/* 0884F8 7F0539C8 34C68000 */  ori   $a2, (0x45BB8000 & 0xFFFF) # ori $a2, $a2, 0x8000
-/* 0884FC 7F0539CC 0FC14DEE */  jal   sub_GAME_7F0537B8
-/* 088500 7F0539D0 C42E3348 */   lwc1  $f14, %lo(D_80053348)($at)
-/* 088504 7F0539D4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 088508 7F0539D8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 08850C 7F0539DC 03E00008 */  jr    $ra
-/* 088510 7F0539E0 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 s32 sub_GAME_7F0539E4(coord3d *pos)
 {
     return sub_GAME_7F053894(pos, 5000.0f, 6000.0f);
 }
-
-
-
 
 
 void chrobjSndCreatePostEventDefault(ALSoundState *state, coord3d *pos)
