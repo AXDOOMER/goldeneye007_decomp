@@ -1821,111 +1821,46 @@ glabel sub_GAME_7F04088C
 #endif
 
 
+void sub_GAME_7F040BA0(ObjectRecord *obj, coord3d *pos, Mtxf *arg2, StandTile *arg3, coord3d *pos2)
+{
+    Mtxf *sp6C_ptr;
+    f32 (*sp6Cm_ptr)[4];
+    f32 spBC;
+    coord3d posdiff;
+    StandTile *spAC;
+    Mtxf sp6C;
+    Mtxf sp2C;
 
+    spBC = chrpropBBOXGetZmin(sub_GAME_7F03FFF8(obj->model->obj));
+    spAC = arg3;
+    sp6C_ptr = &sp6C;
 
+    matrix_4x4_set_rotation_around_x(4.712389f, sp6C_ptr);
 
-#ifdef NONMATCHING
-void sub_GAME_7F040BA0(void) {
+    sp6Cm_ptr = sp6C.m;
 
+    matrix_4x4_set_rotation_around_y(M_PI_F, &sp2C);
+    matrix_4x4_multiply_in_place(&sp2C, sp6C_ptr);
+    matrix_4x4_multiply_in_place(arg2, &sp6C);
+
+    posdiff.x = pos2->x - (sp6Cm_ptr[2][0] * spBC);
+    posdiff.y = pos2->y - (sp6Cm_ptr[2][1] * spBC);
+    posdiff.z = pos2->z - (sp6Cm_ptr[2][2] * spBC);
+
+    if ((!(((s32) obj->flags2) & 1)) && (walkTilesBetweenPoints_NoCallback(&spAC, pos->x, pos->z, posdiff.x, posdiff.z) != 0))
+    {
+        sub_GAME_7F040754(obj, &posdiff, &sp6C, spAC);
+    }
+    else
+    {
+        sub_GAME_7F040754(obj, pos, &sp6C, arg3);
+        obj->runtime_pos.x = posdiff.x;
+        obj->runtime_pos.y = posdiff.y;
+        obj->runtime_pos.z = posdiff.z;
+    }
+
+    chrobjCollisionRelated(obj);
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80052A50
-.word 0x4096cbe4 /*4.712389*/
-glabel D_80052A54
-.word 0x40490fdb /*3.1415927*/
-.text
-glabel sub_GAME_7F040BA0
-/* 0756D0 7F040BA0 27BDFF38 */  addiu $sp, $sp, -0xc8
-/* 0756D4 7F040BA4 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0756D8 7F040BA8 AFB00020 */  sw    $s0, 0x20($sp)
-/* 0756DC 7F040BAC AFA500CC */  sw    $a1, 0xcc($sp)
-/* 0756E0 7F040BB0 AFA600D0 */  sw    $a2, 0xd0($sp)
-/* 0756E4 7F040BB4 AFA700D4 */  sw    $a3, 0xd4($sp)
-/* 0756E8 7F040BB8 8C8E0014 */  lw    $t6, 0x14($a0)
-/* 0756EC 7F040BBC 00808025 */  move  $s0, $a0
-/* 0756F0 7F040BC0 0FC0FFFE */  jal   sub_GAME_7F03FFF8
-/* 0756F4 7F040BC4 8DC40008 */   lw    $a0, 8($t6)
-/* 0756F8 7F040BC8 0FC0FA1D */  jal   chrpropBBOXGetZmin
-/* 0756FC 7F040BCC 00402025 */   move  $a0, $v0
-/* 075700 7F040BD0 8FAF00D4 */  lw    $t7, 0xd4($sp)
-/* 075704 7F040BD4 3C018005 */  lui   $at, %hi(D_80052A50)
-/* 075708 7F040BD8 E7A000BC */  swc1  $f0, 0xbc($sp)
-/* 07570C 7F040BDC C42C2A50 */  lwc1  $f12, %lo(D_80052A50)($at)
-/* 075710 7F040BE0 27A5006C */  addiu $a1, $sp, 0x6c
-/* 075714 7F040BE4 0FC1615C */  jal   matrix_4x4_set_rotation_around_x
-/* 075718 7F040BE8 AFAF00AC */   sw    $t7, 0xac($sp)
-/* 07571C 7F040BEC 3C018005 */  lui   $at, %hi(D_80052A54)
-/* 075720 7F040BF0 C42C2A54 */  lwc1  $f12, %lo(D_80052A54)($at)
-/* 075724 7F040BF4 0FC1617F */  jal   matrix_4x4_set_rotation_around_y
-/* 075728 7F040BF8 27A5002C */   addiu $a1, $sp, 0x2c
-/* 07572C 7F040BFC 27A4002C */  addiu $a0, $sp, 0x2c
-/* 075730 7F040C00 0FC1601A */  jal   matrix_4x4_multiply_in_place
-/* 075734 7F040C04 27A5006C */   addiu $a1, $sp, 0x6c
-/* 075738 7F040C08 8FA400D0 */  lw    $a0, 0xd0($sp)
-/* 07573C 7F040C0C 0FC1601A */  jal   matrix_4x4_multiply_in_place
-/* 075740 7F040C10 27A5006C */   addiu $a1, $sp, 0x6c
-/* 075744 7F040C14 C7A000BC */  lwc1  $f0, 0xbc($sp)
-/* 075748 7F040C18 C7A6008C */  lwc1  $f6, 0x8c($sp)
-/* 07574C 7F040C1C 8FA200D8 */  lw    $v0, 0xd8($sp)
-/* 075750 7F040C20 C7B20090 */  lwc1  $f18, 0x90($sp)
-/* 075754 7F040C24 46003202 */  mul.s $f8, $f6, $f0
-/* 075758 7F040C28 C4440000 */  lwc1  $f4, ($v0)
-/* 07575C 7F040C2C 27A400AC */  addiu $a0, $sp, 0xac
-/* 075760 7F040C30 46009182 */  mul.s $f6, $f18, $f0
-/* 075764 7F040C34 46082281 */  sub.s $f10, $f4, $f8
-/* 075768 7F040C38 E7AA00B0 */  swc1  $f10, 0xb0($sp)
-/* 07576C 7F040C3C C4500004 */  lwc1  $f16, 4($v0)
-/* 075770 7F040C40 C7AA0094 */  lwc1  $f10, 0x94($sp)
-/* 075774 7F040C44 8FA700B0 */  lw    $a3, 0xb0($sp)
-/* 075778 7F040C48 46068101 */  sub.s $f4, $f16, $f6
-/* 07577C 7F040C4C 46005482 */  mul.s $f18, $f10, $f0
-/* 075780 7F040C50 E7A400B4 */  swc1  $f4, 0xb4($sp)
-/* 075784 7F040C54 C4480008 */  lwc1  $f8, 8($v0)
-/* 075788 7F040C58 8FA200CC */  lw    $v0, 0xcc($sp)
-/* 07578C 7F040C5C 46124401 */  sub.s $f16, $f8, $f18
-/* 075790 7F040C60 E7B000B8 */  swc1  $f16, 0xb8($sp)
-/* 075794 7F040C64 8E18000C */  lw    $t8, 0xc($s0)
-/* 075798 7F040C68 C7A600B8 */  lwc1  $f6, 0xb8($sp)
-/* 07579C 7F040C6C 33190001 */  andi  $t9, $t8, 1
-/* 0757A0 7F040C70 5720000E */  bnezl $t9, .L7F040CAC
-/* 0757A4 7F040C74 02002025 */   move  $a0, $s0
-/* 0757A8 7F040C78 8C450000 */  lw    $a1, ($v0)
-/* 0757AC 7F040C7C 8C460008 */  lw    $a2, 8($v0)
-/* 0757B0 7F040C80 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
-/* 0757B4 7F040C84 E7A60010 */   swc1  $f6, 0x10($sp)
-/* 0757B8 7F040C88 10400007 */  beqz  $v0, .L7F040CA8
-/* 0757BC 7F040C8C 02002025 */   move  $a0, $s0
-/* 0757C0 7F040C90 27A500B0 */  addiu $a1, $sp, 0xb0
-/* 0757C4 7F040C94 27A6006C */  addiu $a2, $sp, 0x6c
-/* 0757C8 7F040C98 0FC101D5 */  jal   sub_GAME_7F040754
-/* 0757CC 7F040C9C 8FA700AC */   lw    $a3, 0xac($sp)
-/* 0757D0 7F040CA0 1000000C */  b     .L7F040CD4
-/* 0757D4 7F040CA4 00000000 */   nop   
-.L7F040CA8:
-/* 0757D8 7F040CA8 02002025 */  move  $a0, $s0
-.L7F040CAC:
-/* 0757DC 7F040CAC 8FA500CC */  lw    $a1, 0xcc($sp)
-/* 0757E0 7F040CB0 27A6006C */  addiu $a2, $sp, 0x6c
-/* 0757E4 7F040CB4 0FC101D5 */  jal   sub_GAME_7F040754
-/* 0757E8 7F040CB8 8FA700D4 */   lw    $a3, 0xd4($sp)
-/* 0757EC 7F040CBC C7A400B0 */  lwc1  $f4, 0xb0($sp)
-/* 0757F0 7F040CC0 E6040058 */  swc1  $f4, 0x58($s0)
-/* 0757F4 7F040CC4 C7AA00B4 */  lwc1  $f10, 0xb4($sp)
-/* 0757F8 7F040CC8 E60A005C */  swc1  $f10, 0x5c($s0)
-/* 0757FC 7F040CCC C7A800B8 */  lwc1  $f8, 0xb8($sp)
-/* 075800 7F040CD0 E6080060 */  swc1  $f8, 0x60($s0)
-.L7F040CD4:
-/* 075804 7F040CD4 0FC10121 */  jal   chrobjCollisionRelated
-/* 075808 7F040CD8 02002025 */   move  $a0, $s0
-/* 07580C 7F040CDC 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 075810 7F040CE0 8FB00020 */  lw    $s0, 0x20($sp)
-/* 075814 7F040CE4 27BD00C8 */  addiu $sp, $sp, 0xc8
-/* 075818 7F040CE8 03E00008 */  jr    $ra
-/* 07581C 7F040CEC 00000000 */   nop   
-)
-#endif
 
 
 void objFreeEmbedmentOrProjectile(PropRecord *prop)
