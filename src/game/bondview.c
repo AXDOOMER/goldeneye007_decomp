@@ -736,7 +736,7 @@ s32 sub_GAME_7F07E068(void);
 f32 sub_GAME_7F080228(f32 arg0);
 void currentPlayerSetSwayTarget(s32 value);
 void currentPlayerAdjustCrouchPos(s32 value);
-void sub_GAME_7F07FCC4(s32 arg0);
+void bondviewUpdateSpeedSideways(s32 arg0);
 void sub_GAME_7F07FE1C(s32 arg0);
 
 // end forward declarations
@@ -12324,7 +12324,7 @@ glabel trigger_solo_watch_menu
  * US address 7F07FCC4.
  * Perfect Dark bwalkUpdateSpeedSideways.
 */
-void sub_GAME_7F07FCC4(s32 arg0) {
+void bondviewUpdateSpeedSideways(s32 arg0) {
     if (arg0 == -1) {
         g_CurrentPlayer->speedstrafe = (g_CurrentPlayer->speedstrafe - g_GlobalTimerDelta);
         if (g_CurrentPlayer->speedstrafe < -1.0f) {
@@ -14981,15 +14981,15 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     {
         if (moveData.sp194)
         {
-            sub_GAME_7F07FCC4(-1);
+            bondviewUpdateSpeedSideways(-1);
         }
         else if (moveData.sp190)
         {
-            sub_GAME_7F07FCC4(1);
+            bondviewUpdateSpeedSideways(1);
         }
         else
         {
-            sub_GAME_7F07FCC4(0);
+            bondviewUpdateSpeedSideways(0);
         }
         
         if (moveData.sp1A8)
