@@ -2700,7 +2700,7 @@ glabel setupDoor
 /* 038590 7F003A60 E6280094 */  swc1  $f8, 0x94($s1)
 /* 038594 7F003A64 AFB90014 */  sw    $t9, 0x14($sp)
 /* 038598 7F003A68 AFB80010 */  sw    $t8, 0x10($sp)
-/* 03859C 7F003A6C 0FC14D7C */  jal   initialize_door
+/* 03859C 7F003A6C 0FC14D7C */  jal   doorInit
 /* 0385A0 7F003A70 8FA701C8 */   lw    $a3, 0x1c8($sp)
 /* 0385A4 7F003A74 8E2F0008 */  lw    $t7, 8($s1)
 /* 0385A8 7F003A78 00408025 */  move  $s0, $v0
@@ -3223,7 +3223,7 @@ glabel setupDoor
 /* 0363DC 7F0039EC E6240094 */  swc1  $f4, 0x94($s1)
 /* 0363E0 7F0039F0 AFB90014 */  sw    $t9, 0x14($sp)
 /* 0363E4 7F0039F4 AFB80010 */  sw    $t8, 0x10($sp)
-/* 0363E8 7F0039F8 0FC14E34 */  jal   initialize_door
+/* 0363E8 7F0039F8 0FC14E34 */  jal   doorInit
 /* 0363EC 7F0039FC 8FA701C8 */   lw    $a3, 0x1c8($sp)
 /* 0363F0 7F003A00 8E2F0008 */  lw    $t7, 8($s1)
 /* 0363F4 7F003A04 00408025 */  move  $s0, $v0

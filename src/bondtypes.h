@@ -1222,7 +1222,7 @@ typedef union
             Gfx     *Primary;              /*0x0*/
             Gfx     *Secondary;            /*0x4*/    // optional
             Vertex  *Vertices;             /*0x8*/
-            u16      numVertices;          /*0xC*/
+            s16      numVertices;          /*0xC*/
             s16      numCollisionVertices; /*0xE*/
             Vertex  *CollisionVertices;    /*0x10 Table of vertices with unique point in space (UV's and Colour are disregarded). */
             s16     *PointUsage;           /*0x14*/
@@ -2912,9 +2912,7 @@ typedef union
         */
         struct DoorRecord *linkedDoor;
 
-        u8                 laserFade; /*0xcc*/
-        u8                 unkcd;
-        s16                unkce;
+        Vertex*            unkcc; /*0xcc*/
 
         // maybe struct modeldata_unk_pos *
         u32 unkd0;
