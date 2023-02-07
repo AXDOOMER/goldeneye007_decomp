@@ -40761,38 +40761,11 @@ s32 sub_GAME_7F053894(coord3d *pos, f32 low, f32 high)
 }
 
 
-#ifdef NONMATCHING
-void chrobjSndCreatePostEvent(ALSoundState *state, coord3d *pos, f32 low, f32 high) {
+void chrobjSndCreatePostEvent(ALSoundState *state, coord3d *pos, f32 low, f32 high)
+{
 
     sndCreatePostEvent(state, 8, sub_GAME_7F053894(pos, low, high));
 }
-#else
-GLOBAL_ASM(
-.text
-glabel chrobjSndCreatePostEvent
-/* 08849C 7F05396C 44866000 */  mtc1  $a2, $f12
-/* 0884A0 7F053970 44877000 */  mtc1  $a3, $f14
-/* 0884A4 7F053974 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0884A8 7F053978 AFA40018 */  sw    $a0, 0x18($sp)
-/* 0884AC 7F05397C AFA5001C */  sw    $a1, 0x1c($sp)
-/* 0884B0 7F053980 00A02025 */  move  $a0, $a1
-/* 0884B4 7F053984 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0884B8 7F053988 44056000 */  mfc1  $a1, $f12
-/* 0884BC 7F05398C 44067000 */  mfc1  $a2, $f14
-/* 0884C0 7F053990 0FC14E25 */  jal   sub_GAME_7F053894
-/* 0884C4 7F053994 00000000 */   nop   
-/* 0884C8 7F053998 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0884CC 7F05399C 24050008 */  li    $a1, 8
-/* 0884D0 7F0539A0 0C002461 */  jal   sndCreatePostEvent
-/* 0884D4 7F0539A4 00403025 */   move  $a2, $v0
-/* 0884D8 7F0539A8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0884DC 7F0539AC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0884E0 7F0539B0 03E00008 */  jr    $ra
-/* 0884E4 7F0539B4 00000000 */   nop   
-)
-#endif
-
-
 
 
 //todo: code matches however variables refer to earlier funcs
