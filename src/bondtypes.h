@@ -3996,25 +3996,34 @@ struct MoveData {
     f32 zoomInFovPersec;
     // sp164
     f32 zoomOutFovPersec;
-    s32 sp168;
-    s32 sp16C;
+    s32 zooming;
+    s32 aiming;
     
+    // 0x50
     s32 weaponForwardOffset;
     s32 weaponBackOffset;
-    f32 sp178;
-    f32 sp17C;
+    f32 aimTurnRightSpeed;
+    f32 aimTurnLeftSpeed;
+
+    // 0x60
     f32 speedVertaUp;
     f32 speedVertaDown;
-    f32 sp188;
-    f32 sp18C;
+    f32 sp188; // tank turn right?
+    f32 sp18C; // tank turn left ?
+
+    // 0x70
     s32 sp190;
     s32 sp194;
     s32 sp198;
     s32 sp19C;
+
+    // 0x80
     s32 sp1A0;
     s32 sp1A4;
     s32 sp1A8;
     s32 sp1AC;
+
+    // 0x90
     s32 sp1B0;
     s32 triggerOn;
     s32 sp1B8;
