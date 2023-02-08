@@ -30329,7 +30329,7 @@ glabel bgTestHitOnObj
 /* 081F00 7F04D3D0 8C980000 */   lw    $t8, ($a0)
 /* 081F04 7F04D3D4 02E02025 */  move  $a0, $s7
 /* 081F08 7F04D3D8 27A600E8 */  addiu $a2, $sp, 0xe8
-/* 081F0C 7F04D3DC 0FC2DB3B */  jal   sub_GAME_7F0B6CEC
+/* 081F0C 7F04D3DC 0FC2DB3B */  jal   bgTestLineIntersectsBbox
 /* 081F10 7F04D3E0 27A700DC */   addiu $a3, $sp, 0xdc
 /* 081F14 7F04D3E4 10400162 */  beqz  $v0, .L7F04D970
 /* 081F18 7F04D3E8 3C0D8003 */   lui   $t5, %hi(D_80032064) 
@@ -30580,7 +30580,7 @@ glabel bgTestHitOnObj
 /* 0822A8 7F04D778 02E02025 */  move  $a0, $s7
 /* 0822AC 7F04D77C 03C02825 */  move  $a1, $fp
 /* 0822B0 7F04D780 27A60094 */  addiu $a2, $sp, 0x94
-/* 0822B4 7F04D784 0FC2DB3B */  jal   sub_GAME_7F0B6CEC
+/* 0822B4 7F04D784 0FC2DB3B */  jal   bgTestLineIntersectsBbox
 /* 0822B8 7F04D788 27A70088 */   addiu $a3, $sp, 0x88
 /* 0822BC 7F04D78C 10400074 */  beqz  $v0, .L7F04D960
 /* 0822C0 7F04D790 3C0D8003 */   lui   $t5, %hi(D_80032088) 

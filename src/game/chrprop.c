@@ -805,7 +805,7 @@ s32 sub_GAME_7F03A97C(s32 index, coord3d* arg1, coord3d* arg2) {
         sp2C = (s32) temp_v0->maxbounds.f[0];
         sp30 = (s32) temp_v0->maxbounds.f[1];
         sp34 = (s32) temp_v0->maxbounds.f[2];
-        if (sub_GAME_7F0B6CEC(arg1, arg2, &sp20, &sp2C) != 0) {
+        if (bgTestLineIntersectsBbox(arg1, arg2, &sp20, &sp2C) != 0) {
             return 1;
         }
     }
@@ -854,7 +854,7 @@ glabel sub_GAME_7F03A97C
 /* 06F53C 7F03AA0C AFAC0028 */  sw    $t4, 0x28($sp)
 /* 06F540 7F03AA10 AFAE002C */  sw    $t6, 0x2c($sp)
 /* 06F544 7F03AA14 AFB80030 */  sw    $t8, 0x30($sp)
-/* 06F548 7F03AA18 0FC2DB3B */  jal   sub_GAME_7F0B6CEC
+/* 06F548 7F03AA18 0FC2DB3B */  jal   bgTestLineIntersectsBbox
 /* 06F54C 7F03AA1C AFA80034 */   sw    $t0, 0x34($sp)
 /* 06F550 7F03AA20 50400004 */  beql  $v0, $zero, .L7F03AA34
 /* 06F554 7F03AA24 00001025 */   move  $v0, $zero
