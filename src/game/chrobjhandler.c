@@ -37941,13 +37941,12 @@ PropRecord* sub_GAME_7F051DD8(s32* arg0, ModelFileHeader* arg1)
 }
 
 
-#ifdef NONMATCHING
-//https://decomp.me/scratch/O9GXq
-bool sub_GAME_7F051E1C(WeaponObjRecord *wep, ChrRecord *chr) //#99% nop missing and t out by 1
+bool chrEquipWeapon(WeaponObjRecord *wep, ChrRecord *chr)
 {
-    GUNHAND hand = wep->flags & 0x10000000;
+    WeaponObjRecord *wep2;
+    GUNHAND hand = wep->flags & PROPFLAG_WEAPON_LEFTHANDED;
 
-    if (wep->flags & 0x10000000) //if bit 28 true
+    if (wep->flags & PROPFLAG_WEAPON_LEFTHANDED)
     {
         hand = GUNLEFT;
     }
@@ -37956,30 +37955,29 @@ bool sub_GAME_7F051E1C(WeaponObjRecord *wep, ChrRecord *chr) //#99% nop missing 
         hand = GUNRIGHT;
     }
 
-    if (wep->prop && wep->model)
+    wep2 = wep;
+    if (wep2->prop && wep2->model)
     {
-        if (!(wep->flags & 0x20000000)) //if bit 29 false
+        if (!(wep2->flags & PROPFLAG_CONCEAL_GUN))
         {
-            //need a NOP here
-            if (!chr->weapons_held[hand]) //if not has gun in hand already
+            if (!chr->weapons_held[hand])
             {
-                wep->model->attachedto = chr->model;
+                wep2->model->attachedto = chr->model;
 
-                if (hand == GUNRIGHT) //normal
+                if (hand == GUNRIGHT)
                 {
-                    wep->model->unk1c = chr->model->obj->Switches[3];
+                    wep2->model->attachedto_objinst = chr->model->obj->Switches[3];
                 }
                 else
                 {
-                    wep->model->unk1c = chr->model->obj->Switches[5];
+                    wep2->model->attachedto_objinst = chr->model->obj->Switches[5];
                 }
 
-                chr->weapons_held[hand] = wep->prop; //equip hand with prop.
+                chr->weapons_held[hand] = wep2->prop;
 
-                // check if duel wield
-                if (wep->flags & 0x80000000 && chr->weapons_held[1 - hand])
+                if (wep2->flags & PROPFLAG_IS_DOUBLE && chr->weapons_held[1 - hand])
                 {
-                    propweaponSetDual(wep, chr->weapons_held[1 - hand]->obj);
+                    propweaponSetDual(wep2, chr->weapons_held[1 - hand]->obj);
                 }
             }
             else
@@ -37987,95 +37985,10 @@ bool sub_GAME_7F051E1C(WeaponObjRecord *wep, ChrRecord *chr) //#99% nop missing 
                 return FALSE;
             }
         }
-        chrpropReparent(wep->prop, chr->prop);
+        chrpropReparent(wep2->prop, chr->prop);
     }
     return TRUE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F051E1C
-/* 08694C 7F051E1C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 086950 7F051E20 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 086954 7F051E24 8C820008 */  lw    $v0, 8($a0)
-/* 086958 7F051E28 00A03825 */  move  $a3, $a1
-/* 08695C 7F051E2C 00803025 */  move  $a2, $a0
-/* 086960 7F051E30 000270C0 */  sll   $t6, $v0, 3
-/* 086964 7F051E34 05C10003 */  bgez  $t6, .L7F051E44
-/* 086968 7F051E38 00002825 */   move  $a1, $zero
-/* 08696C 7F051E3C 10000001 */  b     .L7F051E44
-/* 086970 7F051E40 24050001 */   li    $a1, 1
-.L7F051E44:
-/* 086974 7F051E44 8CC40010 */  lw    $a0, 0x10($a2)
-/* 086978 7F051E48 50800035 */  beql  $a0, $zero, .L7F051F20
-/* 08697C 7F051E4C 24020001 */   li    $v0, 1
-/* 086980 7F051E50 8CC30014 */  lw    $v1, 0x14($a2)
-/* 086984 7F051E54 00027880 */  sll   $t7, $v0, 2
-/* 086988 7F051E58 50600031 */  beql  $v1, $zero, .L7F051F20
-/* 08698C 7F051E5C 24020001 */   li    $v0, 1
-/* 086990 7F051E60 05E0002C */  bltz  $t7, .L7F051F14
-/* 086994 7F051E64 00000000 */   nop   
-/* 086998 7F051E68 00052080 */  sll   $a0, $a1, 2
-/* 08699C 7F051E6C 00E41021 */  addu  $v0, $a3, $a0
-/* 0869A0 7F051E70 8C580160 */  lw    $t8, 0x160($v0)
-/* 0869A4 7F051E74 17000025 */  bnez  $t8, .L7F051F0C
-/* 0869A8 7F051E78 00000000 */   nop   
-/* 0869AC 7F051E7C 8CF9001C */  lw    $t9, 0x1c($a3)
-/* 0869B0 7F051E80 14800008 */  bnez  $a0, .L7F051EA4
-/* 0869B4 7F051E84 AC790018 */   sw    $t9, 0x18($v1)
-/* 0869B8 7F051E88 8CE8001C */  lw    $t0, 0x1c($a3)
-/* 0869BC 7F051E8C 8CCC0014 */  lw    $t4, 0x14($a2)
-/* 0869C0 7F051E90 8D090008 */  lw    $t1, 8($t0)
-/* 0869C4 7F051E94 8D2A0008 */  lw    $t2, 8($t1)
-/* 0869C8 7F051E98 8D4B000C */  lw    $t3, 0xc($t2)
-/* 0869CC 7F051E9C 10000007 */  b     .L7F051EBC
-/* 0869D0 7F051EA0 AD8B001C */   sw    $t3, 0x1c($t4)
-.L7F051EA4:
-/* 0869D4 7F051EA4 8CED001C */  lw    $t5, 0x1c($a3)
-/* 0869D8 7F051EA8 8CD90014 */  lw    $t9, 0x14($a2)
-/* 0869DC 7F051EAC 8DAE0008 */  lw    $t6, 8($t5)
-/* 0869E0 7F051EB0 8DCF0008 */  lw    $t7, 8($t6)
-/* 0869E4 7F051EB4 8DF80014 */  lw    $t8, 0x14($t7)
-/* 0869E8 7F051EB8 AF38001C */  sw    $t8, 0x1c($t9)
-.L7F051EBC:
-/* 0869EC 7F051EBC 8CC80010 */  lw    $t0, 0x10($a2)
-/* 0869F0 7F051EC0 00045823 */  negu  $t3, $a0
-/* 0869F4 7F051EC4 00EB6021 */  addu  $t4, $a3, $t3
-/* 0869F8 7F051EC8 AC480160 */  sw    $t0, 0x160($v0)
-/* 0869FC 7F051ECC 8CC90008 */  lw    $t1, 8($a2)
-/* 086A00 7F051ED0 00095000 */  sll   $t2, $t1, 0
-/* 086A04 7F051ED4 0541000B */  bgez  $t2, .L7F051F04
-/* 086A08 7F051ED8 00000000 */   nop   
-/* 086A0C 7F051EDC 8D820164 */  lw    $v0, 0x164($t4)
-/* 086A10 7F051EE0 00C02025 */  move  $a0, $a2
-/* 086A14 7F051EE4 10400007 */  beqz  $v0, .L7F051F04
-/* 086A18 7F051EE8 00000000 */   nop   
-/* 086A1C 7F051EEC 8C450004 */  lw    $a1, 4($v0)
-/* 086A20 7F051EF0 AFA7001C */  sw    $a3, 0x1c($sp)
-/* 086A24 7F051EF4 0FC1475D */  jal   propweaponSetDual
-/* 086A28 7F051EF8 AFA60018 */   sw    $a2, 0x18($sp)
-/* 086A2C 7F051EFC 8FA60018 */  lw    $a2, 0x18($sp)
-/* 086A30 7F051F00 8FA7001C */  lw    $a3, 0x1c($sp)
-.L7F051F04:
-/* 086A34 7F051F04 10000003 */  b     .L7F051F14
-/* 086A38 7F051F08 8CC40010 */   lw    $a0, 0x10($a2)
-.L7F051F0C:
-/* 086A3C 7F051F0C 10000004 */  b     .L7F051F20
-/* 086A40 7F051F10 00001025 */   move  $v0, $zero
-.L7F051F14:
-/* 086A44 7F051F14 0FC0E969 */  jal   chrpropReparent
-/* 086A48 7F051F18 8CE50018 */   lw    $a1, 0x18($a3)
-/* 086A4C 7F051F1C 24020001 */  li    $v0, 1
-.L7F051F20:
-/* 086A50 7F051F20 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 086A54 7F051F24 27BD0018 */  addiu $sp, $sp, 0x18
-/* 086A58 7F051F28 03E00008 */  jr    $ra
-/* 086A5C 7F051F2C 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
@@ -38121,7 +38034,7 @@ glabel sub_GAME_7F051F30
 /* 086ADC 7F051FAC 0FC1B39E */  jal   modelSetScale
 /* 086AE0 7F051FB0 00000000 */   nop   
 /* 086AE4 7F051FB4 02002025 */  move  $a0, $s0
-/* 086AE8 7F051FB8 0FC14787 */  jal   sub_GAME_7F051E1C
+/* 086AE8 7F051FB8 0FC14787 */  jal   chrEquipWeapon
 /* 086AEC 7F051FBC 8FA50024 */   lw    $a1, 0x24($sp)
 .L7F051FC0:
 /* 086AF0 7F051FC0 8FBF001C */  lw    $ra, 0x1c($sp)

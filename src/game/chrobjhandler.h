@@ -125,7 +125,7 @@ void                 countdownTimerSetRunning(bool enable);
 void                 countdownTimerSetValue(f32 time);
 void                 countdownTimerSetVisible(int clocklockbits, bool unset);
 void                 sub_GAME_7F04088C(ObjectRecord *baseobj, PadRecord *pad, Mtxf *matrix, StandTile *stan, PadRecord *pad2);
-bool                 sub_GAME_7F051E1C(WeaponObjRecord *wep, ChrRecord *chr);
+bool                 chrEquipWeapon(WeaponObjRecord *wep, ChrRecord *chr);
 INV_ITEM_TYPE        collect_or_interact_object(PropRecord *prop, bool showstring);
 INV_ITEM_TYPE        propobjInteract(PropRecord *prop);
 s32                  objGetDestroyedLevel(ObjectRecord *obj);
