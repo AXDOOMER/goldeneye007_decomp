@@ -41595,364 +41595,75 @@ void doorsChooseSwingDirection(PropRecord *chrprop, DoorRecord *door)
 }
 
 
-#ifdef NONMATCHING
-bool propdoorInteract(PropRecord *doorprop) {
+s32 propdoorInteract(PropRecord* doorprop)
+{
+    s32 unused;
+    s32 sp28;
+    PropRecord* playerprop;
+    DoorRecord* door;
+    textoverride* txt;
 
-}
-#else
-bool propdoorInteract(PropRecord *doorprop);
+    door = doorprop->door;
+    sp28 = 0;
+    playerprop = get_curplayer_positiondata();
+
+    if (door->keyflags == 0)
+    {
+        sp28 = 1;
+    }
+    else if (bondinvCheckHasKeyFlags(door->keyflags) != 0)
+    {
+        sp28 = 1;
+    }
+    else if (posIsInFrontOfDoor(playerprop, door) != 0)
+    {
+        if ((door->flags2 & PROPFLAG2_10000000) && !(door->flags2 & PROPFLAG2_08000000))
+        {
+            sp28 = 1;
+        }
+    }
+    else if (!(door->flags2 & PROPFLAG2_10000000) && (door->flags2 & PROPFLAG2_08000000))
+    {
+        sp28 = 1;
+    }
+
+    if (doorIsPadlockFree(door) == 0)
+    {
+        sp28 = 0;
+    }
+
+    if (sp28 != 0)
+    {
+        doorsChooseSwingDirection(playerprop, door);
+        doorActivateWrapper(doorprop);
+    }
+    else if ((door->openstate == DOORSTATE_STATIONARY) && (door->openPosition < 0.5f))
+    {
+        if (!(door->flags2 & PROPFLAG2_00000004))
+        {
+            txt = bondinvGetTextbyObj((ObjectRecord*)door);
+            if ((txt != NULL) && (txt->pickuptext != 0))
+            {
 #ifdef VERSION_US
-GLOBAL_ASM(
-.text
-glabel propdoorInteract
-/* 08A770 7F055C40 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 08A774 7F055C44 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 08A778 7F055C48 AFB00018 */  sw    $s0, 0x18($sp)
-/* 08A77C 7F055C4C AFA40030 */  sw    $a0, 0x30($sp)
-/* 08A780 7F055C50 8C900004 */  lw    $s0, 4($a0)
-/* 08A784 7F055C54 0FC225E6 */  jal   get_curplayer_positiondata
-/* 08A788 7F055C58 AFA00028 */   sw    $zero, 0x28($sp)
-/* 08A78C 7F055C5C AFA20024 */  sw    $v0, 0x24($sp)
-/* 08A790 7F055C60 8E04009C */  lw    $a0, 0x9c($s0)
-/* 08A794 7F055C64 8FA30028 */  lw    $v1, 0x28($sp)
-/* 08A798 7F055C68 14800003 */  bnez  $a0, .L7F055C78
-/* 08A79C 7F055C6C 00000000 */   nop   
-/* 08A7A0 7F055C70 1000001C */  b     .L7F055CE4
-/* 08A7A4 7F055C74 24030001 */   li    $v1, 1
-.L7F055C78:
-/* 08A7A8 7F055C78 0FC2339C */  jal   bondinvCheckHasKeyFlags
-/* 08A7AC 7F055C7C AFA30028 */   sw    $v1, 0x28($sp)
-/* 08A7B0 7F055C80 10400003 */  beqz  $v0, .L7F055C90
-/* 08A7B4 7F055C84 8FA30028 */   lw    $v1, 0x28($sp)
-/* 08A7B8 7F055C88 10000016 */  b     .L7F055CE4
-/* 08A7BC 7F055C8C 24030001 */   li    $v1, 1
-.L7F055C90:
-/* 08A7C0 7F055C90 8FA40024 */  lw    $a0, 0x24($sp)
-/* 08A7C4 7F055C94 02002825 */  move  $a1, $s0
-/* 08A7C8 7F055C98 0FC1569C */  jal   posIsInFrontOfDoor
-/* 08A7CC 7F055C9C AFA30028 */   sw    $v1, 0x28($sp)
-/* 08A7D0 7F055CA0 10400009 */  beqz  $v0, .L7F055CC8
-/* 08A7D4 7F055CA4 8FA30028 */   lw    $v1, 0x28($sp)
-/* 08A7D8 7F055CA8 8E02000C */  lw    $v0, 0xc($s0)
-/* 08A7DC 7F055CAC 000278C0 */  sll   $t7, $v0, 3
-/* 08A7E0 7F055CB0 05E1000C */  bgez  $t7, .L7F055CE4
-/* 08A7E4 7F055CB4 0002C100 */   sll   $t8, $v0, 4
-/* 08A7E8 7F055CB8 0702000B */  bltzl $t8, .L7F055CE8
-/* 08A7EC 7F055CBC 02002025 */   move  $a0, $s0
-/* 08A7F0 7F055CC0 10000008 */  b     .L7F055CE4
-/* 08A7F4 7F055CC4 24030001 */   li    $v1, 1
-.L7F055CC8:
-/* 08A7F8 7F055CC8 8E02000C */  lw    $v0, 0xc($s0)
-/* 08A7FC 7F055CCC 0002C8C0 */  sll   $t9, $v0, 3
-/* 08A800 7F055CD0 07200004 */  bltz  $t9, .L7F055CE4
-/* 08A804 7F055CD4 00024100 */   sll   $t0, $v0, 4
-/* 08A808 7F055CD8 05030003 */  bgezl $t0, .L7F055CE8
-/* 08A80C 7F055CDC 02002025 */   move  $a0, $s0
-/* 08A810 7F055CE0 24030001 */  li    $v1, 1
-.L7F055CE4:
-/* 08A814 7F055CE4 02002025 */  move  $a0, $s0
-.L7F055CE8:
-/* 08A818 7F055CE8 0FC0F9C6 */  jal   doorIsPadlockFree
-/* 08A81C 7F055CEC AFA30028 */   sw    $v1, 0x28($sp)
-/* 08A820 7F055CF0 14400002 */  bnez  $v0, .L7F055CFC
-/* 08A824 7F055CF4 8FA30028 */   lw    $v1, 0x28($sp)
-/* 08A828 7F055CF8 00001825 */  move  $v1, $zero
-.L7F055CFC:
-/* 08A82C 7F055CFC 10600007 */  beqz  $v1, .L7F055D1C
-/* 08A830 7F055D00 8FA40024 */   lw    $a0, 0x24($sp)
-/* 08A834 7F055D04 0FC156DE */  jal   doorsChooseSwingDirection
-/* 08A838 7F055D08 02002825 */   move  $a1, $s0
-/* 08A83C 7F055D0C 0FC15667 */  jal   doorActivateWrapper
-/* 08A840 7F055D10 8FA40030 */   lw    $a0, 0x30($sp)
-/* 08A844 7F055D14 10000028 */  b     .L7F055DB8
-/* 08A848 7F055D18 8FBF001C */   lw    $ra, 0x1c($sp)
-.L7F055D1C:
-/* 08A84C 7F055D1C 820900BC */  lb    $t1, 0xbc($s0)
-/* 08A850 7F055D20 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 08A854 7F055D24 55200024 */  bnezl $t1, .L7F055DB8
-/* 08A858 7F055D28 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 08A85C 7F055D2C C60400B4 */  lwc1  $f4, 0xb4($s0)
-/* 08A860 7F055D30 44813000 */  mtc1  $at, $f6
-/* 08A864 7F055D34 00000000 */  nop   
-/* 08A868 7F055D38 4606203C */  c.lt.s $f4, $f6
-/* 08A86C 7F055D3C 00000000 */  nop   
-/* 08A870 7F055D40 4502001D */  bc1fl .L7F055DB8
-/* 08A874 7F055D44 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 08A878 7F055D48 8E02000C */  lw    $v0, 0xc($s0)
-/* 08A87C 7F055D4C 304A0004 */  andi  $t2, $v0, 4
-/* 08A880 7F055D50 55400014 */  bnezl $t2, .L7F055DA4
-/* 08A884 7F055D54 8E0C0064 */   lw    $t4, 0x64($s0)
-/* 08A888 7F055D58 0FC23487 */  jal   bondinvGetTextbyObj
-/* 08A88C 7F055D5C 02002025 */   move  $a0, $s0
-/* 08A890 7F055D60 1040000A */  beqz  $v0, .L7F055D8C
-/* 08A894 7F055D64 00000000 */   nop   
-/* 08A898 7F055D68 8C4B001C */  lw    $t3, 0x1c($v0)
-/* 08A89C 7F055D6C 11600007 */  beqz  $t3, .L7F055D8C
-/* 08A8A0 7F055D70 00000000 */   nop   
-/* 08A8A4 7F055D74 0FC30776 */  jal   langGet
-/* 08A8A8 7F055D78 8C44001C */   lw    $a0, 0x1c($v0)
-/* 08A8AC 7F055D7C 0FC228F2 */  jal   hudmsgBottomShow
-/* 08A8B0 7F055D80 00402025 */   move  $a0, $v0
-/* 08A8B4 7F055D84 10000006 */  b     .L7F055DA0
-/* 08A8B8 7F055D88 8E02000C */   lw    $v0, 0xc($s0)
-.L7F055D8C:
-/* 08A8BC 7F055D8C 0FC30776 */  jal   langGet
-/* 08A8C0 7F055D90 3404A440 */   li    $a0, 42048
-/* 08A8C4 7F055D94 0FC228F2 */  jal   hudmsgBottomShow
-/* 08A8C8 7F055D98 00402025 */   move  $a0, $v0
-/* 08A8CC 7F055D9C 8E02000C */  lw    $v0, 0xc($s0)
-.L7F055DA0:
-/* 08A8D0 7F055DA0 8E0C0064 */  lw    $t4, 0x64($s0)
-.L7F055DA4:
-/* 08A8D4 7F055DA4 344E0008 */  ori   $t6, $v0, 8
-/* 08A8D8 7F055DA8 AE0E000C */  sw    $t6, 0xc($s0)
-/* 08A8DC 7F055DAC 358D4000 */  ori   $t5, $t4, 0x4000
-/* 08A8E0 7F055DB0 AE0D0064 */  sw    $t5, 0x64($s0)
-/* 08A8E4 7F055DB4 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F055DB8:
-/* 08A8E8 7F055DB8 8FB00018 */  lw    $s0, 0x18($sp)
-/* 08A8EC 7F055DBC 27BD0030 */  addiu $sp, $sp, 0x30
-/* 08A8F0 7F055DC0 03E00008 */  jr    $ra
-/* 08A8F4 7F055DC4 00001025 */   move  $v0, $zero
-)
+                hudmsgBottomShow(langGet((s32) txt->pickuptext));
+#else
+                jp_hudmsgBottomShow(langGet((s32) txt->pickuptext));
 #endif
-#ifdef VERSION_JP
-GLOBAL_ASM(
-.text
-glabel propdoorInteract
-/* 08A770 7F055C40 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 08A774 7F055C44 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 08A778 7F055C48 AFB00018 */  sw    $s0, 0x18($sp)
-/* 08A77C 7F055C4C AFA40030 */  sw    $a0, 0x30($sp)
-/* 08A780 7F055C50 8C900004 */  lw    $s0, 4($a0)
-/* 08A784 7F055C54 0FC225E6 */  jal   get_curplayer_positiondata
-/* 08A788 7F055C58 AFA00028 */   sw    $zero, 0x28($sp)
-/* 08A78C 7F055C5C AFA20024 */  sw    $v0, 0x24($sp)
-/* 08A790 7F055C60 8E04009C */  lw    $a0, 0x9c($s0)
-/* 08A794 7F055C64 8FA30028 */  lw    $v1, 0x28($sp)
-/* 08A798 7F055C68 14800003 */  bnez  $a0, .L7F055C78
-/* 08A79C 7F055C6C 00000000 */   nop   
-/* 08A7A0 7F055C70 1000001C */  b     .L7F055CE4
-/* 08A7A4 7F055C74 24030001 */   li    $v1, 1
-.L7F055C78:
-/* 08A7A8 7F055C78 0FC2339C */  jal   bondinvCheckHasKeyFlags
-/* 08A7AC 7F055C7C AFA30028 */   sw    $v1, 0x28($sp)
-/* 08A7B0 7F055C80 10400003 */  beqz  $v0, .L7F055C90
-/* 08A7B4 7F055C84 8FA30028 */   lw    $v1, 0x28($sp)
-/* 08A7B8 7F055C88 10000016 */  b     .L7F055CE4
-/* 08A7BC 7F055C8C 24030001 */   li    $v1, 1
-.L7F055C90:
-/* 08A7C0 7F055C90 8FA40024 */  lw    $a0, 0x24($sp)
-/* 08A7C4 7F055C94 02002825 */  move  $a1, $s0
-/* 08A7C8 7F055C98 0FC1569C */  jal   posIsInFrontOfDoor
-/* 08A7CC 7F055C9C AFA30028 */   sw    $v1, 0x28($sp)
-/* 08A7D0 7F055CA0 10400009 */  beqz  $v0, .L7F055CC8
-/* 08A7D4 7F055CA4 8FA30028 */   lw    $v1, 0x28($sp)
-/* 08A7D8 7F055CA8 8E02000C */  lw    $v0, 0xc($s0)
-/* 08A7DC 7F055CAC 000278C0 */  sll   $t7, $v0, 3
-/* 08A7E0 7F055CB0 05E1000C */  bgez  $t7, .L7F055CE4
-/* 08A7E4 7F055CB4 0002C100 */   sll   $t8, $v0, 4
-/* 08A7E8 7F055CB8 0702000B */  bltzl $t8, .L7F055CE8
-/* 08A7EC 7F055CBC 02002025 */   move  $a0, $s0
-/* 08A7F0 7F055CC0 10000008 */  b     .L7F055CE4
-/* 08A7F4 7F055CC4 24030001 */   li    $v1, 1
-.L7F055CC8:
-/* 08A7F8 7F055CC8 8E02000C */  lw    $v0, 0xc($s0)
-/* 08A7FC 7F055CCC 0002C8C0 */  sll   $t9, $v0, 3
-/* 08A800 7F055CD0 07200004 */  bltz  $t9, .L7F055CE4
-/* 08A804 7F055CD4 00024100 */   sll   $t0, $v0, 4
-/* 08A808 7F055CD8 05030003 */  bgezl $t0, .L7F055CE8
-/* 08A80C 7F055CDC 02002025 */   move  $a0, $s0
-/* 08A810 7F055CE0 24030001 */  li    $v1, 1
-.L7F055CE4:
-/* 08A814 7F055CE4 02002025 */  move  $a0, $s0
-.L7F055CE8:
-/* 08A818 7F055CE8 0FC0F9C6 */  jal   doorIsPadlockFree
-/* 08A81C 7F055CEC AFA30028 */   sw    $v1, 0x28($sp)
-/* 08A820 7F055CF0 14400002 */  bnez  $v0, .L7F055CFC
-/* 08A824 7F055CF4 8FA30028 */   lw    $v1, 0x28($sp)
-/* 08A828 7F055CF8 00001825 */  move  $v1, $zero
-.L7F055CFC:
-/* 08A82C 7F055CFC 10600007 */  beqz  $v1, .L7F055D1C
-/* 08A830 7F055D00 8FA40024 */   lw    $a0, 0x24($sp)
-/* 08A834 7F055D04 0FC156DE */  jal   doorsChooseSwingDirection
-/* 08A838 7F055D08 02002825 */   move  $a1, $s0
-/* 08A83C 7F055D0C 0FC15667 */  jal   doorActivateWrapper
-/* 08A840 7F055D10 8FA40030 */   lw    $a0, 0x30($sp)
-/* 08A844 7F055D14 10000028 */  b     .L7F055DB8
-/* 08A848 7F055D18 8FBF001C */   lw    $ra, 0x1c($sp)
-.L7F055D1C:
-/* 08A84C 7F055D1C 820900BC */  lb    $t1, 0xbc($s0)
-/* 08A850 7F055D20 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 08A854 7F055D24 55200024 */  bnezl $t1, .L7F055DB8
-/* 08A858 7F055D28 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 08A85C 7F055D2C C60400B4 */  lwc1  $f4, 0xb4($s0)
-/* 08A860 7F055D30 44813000 */  mtc1  $at, $f6
-/* 08A864 7F055D34 00000000 */  nop   
-/* 08A868 7F055D38 4606203C */  c.lt.s $f4, $f6
-/* 08A86C 7F055D3C 00000000 */  nop   
-/* 08A870 7F055D40 4502001D */  bc1fl .L7F055DB8
-/* 08A874 7F055D44 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 08A878 7F055D48 8E02000C */  lw    $v0, 0xc($s0)
-/* 08A87C 7F055D4C 304A0004 */  andi  $t2, $v0, 4
-/* 08A880 7F055D50 55400014 */  bnezl $t2, .L7F055DA4
-/* 08A884 7F055D54 8E0C0064 */   lw    $t4, 0x64($s0)
-/* 08A888 7F055D58 0FC23487 */  jal   bondinvGetTextbyObj
-/* 08A88C 7F055D5C 02002025 */   move  $a0, $s0
-/* 08A890 7F055D60 1040000A */  beqz  $v0, .L7F055D8C
-/* 08A894 7F055D64 00000000 */   nop   
-/* 08A898 7F055D68 8C4B001C */  lw    $t3, 0x1c($v0)
-/* 08A89C 7F055D6C 11600007 */  beqz  $t3, .L7F055D8C
-/* 08A8A0 7F055D70 00000000 */   nop   
-/* 08A8A4 7F055D74 0FC30776 */  jal   langGet
-/* 08A8A8 7F055D78 8C44001C */   lw    $a0, 0x1c($v0)
-/* 08A8AC 7F055D7C 0FC228F2 */  jal   jp_hudmsgBottomShow
-/* 08A8B0 7F055D80 00402025 */   move  $a0, $v0
-/* 08A8B4 7F055D84 10000006 */  b     .L7F055DA0
-/* 08A8B8 7F055D88 8E02000C */   lw    $v0, 0xc($s0)
-.L7F055D8C:
-/* 08A8BC 7F055D8C 0FC30776 */  jal   langGet
-/* 08A8C0 7F055D90 3404A440 */   li    $a0, 42048
-/* 08A8C4 7F055D94 0FC228F2 */  jal   jp_hudmsgBottomShow
-/* 08A8C8 7F055D98 00402025 */   move  $a0, $v0
-/* 08A8CC 7F055D9C 8E02000C */  lw    $v0, 0xc($s0)
-.L7F055DA0:
-/* 08A8D0 7F055DA0 8E0C0064 */  lw    $t4, 0x64($s0)
-.L7F055DA4:
-/* 08A8D4 7F055DA4 344E0008 */  ori   $t6, $v0, 8
-/* 08A8D8 7F055DA8 AE0E000C */  sw    $t6, 0xc($s0)
-/* 08A8DC 7F055DAC 358D4000 */  ori   $t5, $t4, 0x4000
-/* 08A8E0 7F055DB0 AE0D0064 */  sw    $t5, 0x64($s0)
-/* 08A8E4 7F055DB4 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F055DB8:
-/* 08A8E8 7F055DB8 8FB00018 */  lw    $s0, 0x18($sp)
-/* 08A8EC 7F055DBC 27BD0030 */  addiu $sp, $sp, 0x30
-/* 08A8F0 7F055DC0 03E00008 */  jr    $ra
-/* 08A8F4 7F055DC4 00001025 */   move  $v0, $zero
-)
+            }
+            else
+            {
+#ifdef VERSION_US
+                hudmsgBottomShow(langGet(0xA440));
+#else
+                jp_hudmsgBottomShow(langGet(0xA440));
 #endif
-
-#ifdef VERSION_EU
-GLOBAL_ASM(
-.text
-glabel propdoorInteract
-/* 08A770 7F055C40 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 08A774 7F055C44 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 08A778 7F055C48 AFB00018 */  sw    $s0, 0x18($sp)
-/* 08A77C 7F055C4C AFA40030 */  sw    $a0, 0x30($sp)
-/* 08A780 7F055C50 8C900004 */  lw    $s0, 4($a0)
-/* 08A784 7F055C54 0FC225E6 */  jal   get_curplayer_positiondata
-/* 08A788 7F055C58 AFA00028 */   sw    $zero, 0x28($sp)
-/* 08A78C 7F055C5C AFA20024 */  sw    $v0, 0x24($sp)
-/* 08A790 7F055C60 8E04009C */  lw    $a0, 0x9c($s0)
-/* 08A794 7F055C64 8FA30028 */  lw    $v1, 0x28($sp)
-/* 08A798 7F055C68 14800003 */  bnez  $a0, .L7F055C78
-/* 08A79C 7F055C6C 00000000 */   nop   
-/* 08A7A0 7F055C70 1000001C */  b     .L7F055CE4
-/* 08A7A4 7F055C74 24030001 */   li    $v1, 1
-.L7F055C78:
-/* 08A7A8 7F055C78 0FC2339C */  jal   bondinvCheckHasKeyFlags
-/* 08A7AC 7F055C7C AFA30028 */   sw    $v1, 0x28($sp)
-/* 08A7B0 7F055C80 10400003 */  beqz  $v0, .L7F055C90
-/* 08A7B4 7F055C84 8FA30028 */   lw    $v1, 0x28($sp)
-/* 08A7B8 7F055C88 10000016 */  b     .L7F055CE4
-/* 08A7BC 7F055C8C 24030001 */   li    $v1, 1
-.L7F055C90:
-/* 08A7C0 7F055C90 8FA40024 */  lw    $a0, 0x24($sp)
-/* 08A7C4 7F055C94 02002825 */  move  $a1, $s0
-/* 08A7C8 7F055C98 0FC1569C */  jal   posIsInFrontOfDoor
-/* 08A7CC 7F055C9C AFA30028 */   sw    $v1, 0x28($sp)
-/* 08A7D0 7F055CA0 10400009 */  beqz  $v0, .L7F055CC8
-/* 08A7D4 7F055CA4 8FA30028 */   lw    $v1, 0x28($sp)
-/* 08A7D8 7F055CA8 8E02000C */  lw    $v0, 0xc($s0)
-/* 08A7DC 7F055CAC 000278C0 */  sll   $t7, $v0, 3
-/* 08A7E0 7F055CB0 05E1000C */  bgez  $t7, .L7F055CE4
-/* 08A7E4 7F055CB4 0002C100 */   sll   $t8, $v0, 4
-/* 08A7E8 7F055CB8 0702000B */  bltzl $t8, .L7F055CE8
-/* 08A7EC 7F055CBC 02002025 */   move  $a0, $s0
-/* 08A7F0 7F055CC0 10000008 */  b     .L7F055CE4
-/* 08A7F4 7F055CC4 24030001 */   li    $v1, 1
-.L7F055CC8:
-/* 08A7F8 7F055CC8 8E02000C */  lw    $v0, 0xc($s0)
-/* 08A7FC 7F055CCC 0002C8C0 */  sll   $t9, $v0, 3
-/* 08A800 7F055CD0 07200004 */  bltz  $t9, .L7F055CE4
-/* 08A804 7F055CD4 00024100 */   sll   $t0, $v0, 4
-/* 08A808 7F055CD8 05030003 */  bgezl $t0, .L7F055CE8
-/* 08A80C 7F055CDC 02002025 */   move  $a0, $s0
-/* 08A810 7F055CE0 24030001 */  li    $v1, 1
-.L7F055CE4:
-/* 08A814 7F055CE4 02002025 */  move  $a0, $s0
-.L7F055CE8:
-/* 08A818 7F055CE8 0FC0F9C6 */  jal   doorIsPadlockFree
-/* 08A81C 7F055CEC AFA30028 */   sw    $v1, 0x28($sp)
-/* 08A820 7F055CF0 14400002 */  bnez  $v0, .L7F055CFC
-/* 08A824 7F055CF4 8FA30028 */   lw    $v1, 0x28($sp)
-/* 08A828 7F055CF8 00001825 */  move  $v1, $zero
-.L7F055CFC:
-/* 08A82C 7F055CFC 10600007 */  beqz  $v1, .L7F055D1C
-/* 08A830 7F055D00 8FA40024 */   lw    $a0, 0x24($sp)
-/* 08A834 7F055D04 0FC156DE */  jal   doorsChooseSwingDirection
-/* 08A838 7F055D08 02002825 */   move  $a1, $s0
-/* 08A83C 7F055D0C 0FC15667 */  jal   doorActivateWrapper
-/* 08A840 7F055D10 8FA40030 */   lw    $a0, 0x30($sp)
-/* 08A844 7F055D14 10000028 */  b     .L7F055DB8
-/* 08A848 7F055D18 8FBF001C */   lw    $ra, 0x1c($sp)
-.L7F055D1C:
-/* 08A84C 7F055D1C 820900BC */  lb    $t1, 0xbc($s0)
-/* 08A850 7F055D20 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 08A854 7F055D24 55200024 */  bnezl $t1, .L7F055DB8
-/* 08A858 7F055D28 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 08A85C 7F055D2C C60400B4 */  lwc1  $f4, 0xb4($s0)
-/* 08A860 7F055D30 44813000 */  mtc1  $at, $f6
-/* 08A864 7F055D34 00000000 */  nop   
-/* 08A868 7F055D38 4606203C */  c.lt.s $f4, $f6
-/* 08A86C 7F055D3C 00000000 */  nop   
-/* 08A870 7F055D40 4502001D */  bc1fl .L7F055DB8
-/* 08A874 7F055D44 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 08A878 7F055D48 8E02000C */  lw    $v0, 0xc($s0)
-/* 08A87C 7F055D4C 304A0004 */  andi  $t2, $v0, 4
-/* 08A880 7F055D50 55400014 */  bnezl $t2, .L7F055DA4
-/* 08A884 7F055D54 8E0C0064 */   lw    $t4, 0x64($s0)
-/* 08A888 7F055D58 0FC23487 */  jal   bondinvGetTextbyObj
-/* 08A88C 7F055D5C 02002025 */   move  $a0, $s0
-/* 08A890 7F055D60 1040000A */  beqz  $v0, .L7F055D8C
-/* 08A894 7F055D64 00000000 */   nop   
-/* 08A898 7F055D68 8C4B001C */  lw    $t3, 0x1c($v0)
-/* 08A89C 7F055D6C 11600007 */  beqz  $t3, .L7F055D8C
-/* 08A8A0 7F055D70 00000000 */   nop   
-/* 08A8A4 7F055D74 0FC30776 */  jal   langGet
-/* 08A8A8 7F055D78 8C44001C */   lw    $a0, 0x1c($v0)
-/* 08A8AC 7F055D7C 0FC228F2 */  jal   jp_hudmsgBottomShow
-/* 08A8B0 7F055D80 00402025 */   move  $a0, $v0
-/* 08A8B4 7F055D84 10000006 */  b     .L7F055DA0
-/* 08A8B8 7F055D88 8E02000C */   lw    $v0, 0xc($s0)
-.L7F055D8C:
-/* 08A8BC 7F055D8C 0FC30776 */  jal   langGet
-/* 08A8C0 7F055D90 3404A440 */   li    $a0, 42048
-/* 08A8C4 7F055D94 0FC228F2 */  jal   jp_hudmsgBottomShow
-/* 08A8C8 7F055D98 00402025 */   move  $a0, $v0
-/* 08A8CC 7F055D9C 8E02000C */  lw    $v0, 0xc($s0)
-.L7F055DA0:
-/* 08A8D0 7F055DA0 8E0C0064 */  lw    $t4, 0x64($s0)
-.L7F055DA4:
-/* 08A8D4 7F055DA4 344E0008 */  ori   $t6, $v0, 8
-/* 08A8D8 7F055DA8 AE0E000C */  sw    $t6, 0xc($s0)
-/* 08A8DC 7F055DAC 358D4000 */  ori   $t5, $t4, 0x4000
-/* 08A8E0 7F055DB0 AE0D0064 */  sw    $t5, 0x64($s0)
-/* 08A8E4 7F055DB4 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F055DB8:
-/* 08A8E8 7F055DB8 8FB00018 */  lw    $s0, 0x18($sp)
-/* 08A8EC 7F055DBC 27BD0030 */  addiu $sp, $sp, 0x30
-/* 08A8F0 7F055DC0 03E00008 */  jr    $ra
-/* 08A8F4 7F055DC4 00001025 */   move  $v0, $zero
-)
-#endif
-
-
-#endif
-
-
-
+            }
+        }
+        door->runtime_bitflags |= RUNTIMEBITFLAG_ACTIVATED;
+        door->flags2 |= PROPFLAG2_00000008;
+    }
+    return 0;
+}
 
 
 void alarmActivate(void)

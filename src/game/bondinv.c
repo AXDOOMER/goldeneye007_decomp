@@ -1389,9 +1389,9 @@ u8 *bondinvGetActivatedTextObject(ObjectRecord *obj)
 {
     textoverride *override = bondinvGetTextbyObj(obj);
 
-    if (override && override->unk8)
+    if (override && override->pickuptext)
     {
-        return langGet(override->unk8);
+        return langGet(override->pickuptext);
     }
 
     return NULL;
@@ -1401,9 +1401,9 @@ u8 *bondinvGetActivatedTextWeapon(ITEM_IDS weaponnum)
 {
     textoverride *override = bondinvGetTextbyWeaponID(weaponnum);
 
-    if (override && override->unk8)
+    if (override && override->pickuptext)
     {
-        return langGet(override->unk8);
+        return langGet(override->pickuptext);
     }
 
     return NULL;
