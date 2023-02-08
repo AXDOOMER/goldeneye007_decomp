@@ -390,7 +390,7 @@ struct ObjectRecord *setupCommandGetObject(s32 stageID, s32 index)
 
 #ifdef NONMATCHING
 
-PropRecord *setupFindObjForReuse(s32 stageID, PropRecord **arg1, PropRecord **arg2, s32 arg3, s32 arg4, s32 arg5)
+ObjectRecord *setupFindObjForReuse(s32 type, ObjectRecord **arg1, ObjectRecord **arg2, bool musthaveprop, bool musthavemodel, ModelFileHeader *modeldef)
 {
     PropRecord *temp_s0;
     PropRecord *temp_s0_2;
@@ -471,6 +471,7 @@ block_20:
 
 
 #else
+ObjectRecord *setupFindObjForReuse(s32 type, ObjectRecord **arg1, ObjectRecord **arg2, bool musthaveprop, bool musthavemodel, ModelFileHeader *modeldef);
 GLOBAL_ASM(
 .text
 glabel setupFindObjForReuse

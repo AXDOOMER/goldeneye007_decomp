@@ -165,7 +165,7 @@ Rotate Image:
 #define PTR_LIST_OBJECT_LOOKUP_INDICES_LEN 512
 #define BSS_8007161C_LEN 256
 #define BSS_8007161C_DATA_LEN 16
-#define PROJECTILEDATA_START_ADDRESS_LEN 30
+#define MAX_WEAPON_SLOTS 30
 #define BSS_80072E70_DATA_LEN 10
 #define BSS_80073370_DATA_LEN 20
 #define PROJECTILES_ARR_MAX 20
@@ -181,51 +181,6 @@ Rotate Image:
 struct roomproplistchunk
 {
     s16 propnums[16];
-};
-
-struct projectile_data {
-    u32 unk00;
-    u32 unk04;
-    u32 unk08;
-    u32 unk0C;
-
-    u32 unk10;
-    u32 unk14;
-    u32 unk18;
-    u32 unk1C;
-
-    u32 unk20;
-    u32 unk24;
-    u32 unk28;
-    u32 unk2C;
-
-    u32 unk30;
-    u32 unk34;
-    u32 unk38;
-    u32 unk3C;
-
-    u32 unk40;
-    u32 unk44;
-    u32 unk48;
-    u32 unk4C;
-
-    u32 unk50;
-    u32 unk54;
-    u32 unk58;
-    u32 unk5C;
-
-    u32 unk60;
-    u32 unk64;
-    u32 unk68;
-    u32 unk6C;
-
-    u32 unk70;
-    u32 unk74;
-    u32 unk78;
-    u32 unk7C;
-
-    u32 unk80;
-    u32 unk84;
 };
 
 struct bss_80072E70 {
@@ -367,7 +322,7 @@ extern PropRecord *                       g_InteractProp;
 extern s16 *                              RoomPropListChunkIndexes;
 extern struct roomproplistchunk *         RoomPropListChunks;
 extern sfxRecord                          sfx_related[];
-extern struct projectile_data             ProjectileData_start_address[];
+extern struct WeaponObjRecord             g_WeaponSlots[];
 extern struct bss_80072E70                dword_CODE_bss_80072E70[];
 extern struct bss_80073370                dword_CODE_bss_80073370[];
 extern struct Projectile                  g_Projectiles[];

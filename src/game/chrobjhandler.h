@@ -55,7 +55,7 @@ extern s32 clock_drawn_flag;
 extern s32 clock_enable;
 extern f32 clock_time;
 extern s32 D_80030AF4;
-extern s32 D_80030AF8;
+extern s32 g_NextWeaponSlot;
 extern s32 D_80030AFC;
 extern ObjectRecord *g_LevelLoadPropSwitch;
 extern LockDoorRecord *g_LevelLoadPropLockDoor;

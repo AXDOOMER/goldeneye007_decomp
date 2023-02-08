@@ -93,7 +93,7 @@ u32 gas_cutoff_flag;
 /**
  * Address 0x80071E80.
 */
-struct projectile_data ProjectileData_start_address[PROJECTILEDATA_START_ADDRESS_LEN];
+WeaponObjRecord g_WeaponSlots[MAX_WEAPON_SLOTS];
 
 /**
  * Address 0x80072E70.
