@@ -98,7 +98,7 @@ WeaponObjRecord g_WeaponSlots[MAX_WEAPON_SLOTS];
 /**
  * Address 0x80072E70.
 */
-struct bss_80072E70 dword_CODE_bss_80072E70[BSS_80072E70_DATA_LEN];
+HatRecord g_HatSlots[MAX_HAT_SLOTS];
 
 /**
  * Address 0x80073370.

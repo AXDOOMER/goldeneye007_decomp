@@ -124,12 +124,12 @@ void reinit_between_menus(void)
 
     g_NextWeaponSlot = 0;
 
-    for (i = 0; i < BSS_80072E70_DATA_LEN; i++)
+    for (i = 0; i < MAX_HAT_SLOTS; i++)
     {
-        dword_CODE_bss_80072E70[i].unk10 = 0;
+        g_HatSlots[i].prop = 0;
     }
     
-    D_80030AFC = 0;
+    g_NextHatSlot = 0;
 
     for (i=0; i < BSS_80073370_DATA_LEN; i++)
     {
