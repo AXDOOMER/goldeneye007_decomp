@@ -103,7 +103,7 @@ HatRecord g_HatSlots[MAX_HAT_SLOTS];
 /**
  * Address 0x80073370.
 */
-struct bss_80073370 dword_CODE_bss_80073370[BSS_80073370_DATA_LEN];
+AmmoCrateRecord g_AmmoCrates[MAX_AMMO_CRATES];
 
 /**
  * Address 0x80073DC0.

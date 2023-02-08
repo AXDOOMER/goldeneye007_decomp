@@ -126,14 +126,14 @@ void reinit_between_menus(void)
 
     for (i = 0; i < MAX_HAT_SLOTS; i++)
     {
-        g_HatSlots[i].prop = 0;
+        g_HatSlots[i].prop = NULL;
     }
     
     g_NextHatSlot = 0;
 
-    for (i=0; i < BSS_80073370_DATA_LEN; i++)
+    for (i=0; i < MAX_AMMO_CRATES; i++)
     {
-        dword_CODE_bss_80073370[i].unk10 = 0;
+        g_AmmoCrates[i].prop = NULL;
     }
 
     for (i = 0; i < PROJECTILES_ARR_MAX; i++)

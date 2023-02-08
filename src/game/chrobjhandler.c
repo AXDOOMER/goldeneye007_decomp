@@ -31363,7 +31363,7 @@ void maybe_detonate_object(ObjectRecord* self, f32 damage,  coord3d* pos, bool f
 
                 if (ammoAmmount > 0 && (ammoAmmount != -1) )
                 {
-                    temp_v0_5 = sub_GAME_7F0518D0(randAmmoType, randAmmoType);
+                    temp_v0_5 = ammocrateAllocate(randAmmoType, randAmmoType);
                     if (temp_v0_5)
                     {
                         //spawn magazine
@@ -31712,7 +31712,7 @@ glabel maybe_detonate_object
 /* 082F34 7F04E404 24840001 */   addiu $a0, $a0, 1
 /* 082F38 7F04E408 AFA30024 */  sw    $v1, 0x24($sp)
 /* 082F3C 7F04E40C AFA400C4 */  sw    $a0, 0xc4($sp)
-/* 082F40 7F04E410 0FC14634 */  jal   sub_GAME_7F0518D0
+/* 082F40 7F04E410 0FC14634 */  jal   ammocrateAllocate
 /* 082F44 7F04E414 AFA500C8 */   sw    $a1, 0xc8($sp)
 /* 082F48 7F04E418 8FA30024 */  lw    $v1, 0x24($sp)
 /* 082F4C 7F04E41C 8FA400C4 */  lw    $a0, 0xc4($sp)
@@ -37724,109 +37724,46 @@ HatRecord* sub_GAME_7F0518A8(void)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0518D0(void) {
+AmmoCrateRecord *ammocrateAllocate(void)
+{
+    s32 i;
 
+    // Try to find a free one
+    for (i = 0; i < MAX_AMMO_CRATES; i++)
+    {
+        if (g_AmmoCrates[i].prop == NULL)
+        {
+            return (g_AmmoCrates + i);
+        }
+    }
+
+    // Find one that can be freed off-screen
+    for (i = 0; i < MAX_AMMO_CRATES; i++)
+    {
+        if ((g_AmmoCrates[i].runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT) == 0
+                && (g_AmmoCrates[i].state & 0x04) == 0
+                && g_AmmoCrates[i].prop->parent == NULL
+                && (g_AmmoCrates[i].prop->flags & 0x02) == 0)
+        {
+            objFreePermanently(&g_AmmoCrates[i], TRUE);
+            return (g_AmmoCrates + i);
+        }
+    }
+
+    // Find one that can be freed on-screen
+    for (i = 0; i < MAX_AMMO_CRATES; i++)
+    {
+        if ((g_AmmoCrates[i].runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT) == 0
+                && (g_AmmoCrates[i].state & 0x04) == 0
+                && g_AmmoCrates[i].prop->parent == NULL)
+        {
+            objFreePermanently(&g_AmmoCrates[i], TRUE);
+            return (g_AmmoCrates + i);
+        }
+    }
+
+    return NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0518D0
-/* 086400 7F0518D0 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 086404 7F0518D4 3C048007 */  lui   $a0, %hi(dword_CODE_bss_80073370)
-/* 086408 7F0518D8 3C028007 */  lui   $v0, %hi(g_Projectiles)
-/* 08640C 7F0518DC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 086410 7F0518E0 24423DC0 */  addiu $v0, %lo(g_Projectiles) # addiu $v0, $v0, 0x3dc0
-/* 086414 7F0518E4 24843370 */  addiu $a0, %lo(dword_CODE_bss_80073370) # addiu $a0, $a0, 0x3370
-/* 086418 7F0518E8 00001825 */  move  $v1, $zero
-.L7F0518EC:
-/* 08641C 7F0518EC 8C8E0010 */  lw    $t6, 0x10($a0)
-/* 086420 7F0518F0 24840084 */  addiu $a0, $a0, 0x84
-/* 086424 7F0518F4 0082082B */  sltu  $at, $a0, $v0
-/* 086428 7F0518F8 15C00004 */  bnez  $t6, .L7F05190C
-/* 08642C 7F0518FC 3C0F8007 */   lui   $t7, %hi(dword_CODE_bss_80073370) 
-/* 086430 7F051900 25EF3370 */  addiu $t7, %lo(dword_CODE_bss_80073370) # addiu $t7, $t7, 0x3370
-/* 086434 7F051904 10000040 */  b     .L7F051A08
-/* 086438 7F051908 006F1021 */   addu  $v0, $v1, $t7
-.L7F05190C:
-/* 08643C 7F05190C 1420FFF7 */  bnez  $at, .L7F0518EC
-/* 086440 7F051910 24630084 */   addiu $v1, $v1, 0x84
-/* 086444 7F051914 3C048007 */  lui   $a0, %hi(dword_CODE_bss_80073370)
-/* 086448 7F051918 3C058007 */  lui   $a1, %hi(g_Projectiles)
-/* 08644C 7F05191C 24A53DC0 */  addiu $a1, %lo(g_Projectiles) # addiu $a1, $a1, 0x3dc0
-/* 086450 7F051920 24843370 */  addiu $a0, %lo(dword_CODE_bss_80073370) # addiu $a0, $a0, 0x3370
-/* 086454 7F051924 00001825 */  move  $v1, $zero
-.L7F051928:
-/* 086458 7F051928 8C980064 */  lw    $t8, 0x64($a0)
-/* 08645C 7F05192C 33190080 */  andi  $t9, $t8, 0x80
-/* 086460 7F051930 57200016 */  bnezl $t9, .L7F05198C
-/* 086464 7F051934 24840084 */   addiu $a0, $a0, 0x84
-/* 086468 7F051938 90880002 */  lbu   $t0, 2($a0)
-/* 08646C 7F05193C 31090004 */  andi  $t1, $t0, 4
-/* 086470 7F051940 55200012 */  bnezl $t1, .L7F05198C
-/* 086474 7F051944 24840084 */   addiu $a0, $a0, 0x84
-/* 086478 7F051948 8C820010 */  lw    $v0, 0x10($a0)
-/* 08647C 7F05194C 8C4A001C */  lw    $t2, 0x1c($v0)
-/* 086480 7F051950 5540000E */  bnezl $t2, .L7F05198C
-/* 086484 7F051954 24840084 */   addiu $a0, $a0, 0x84
-/* 086488 7F051958 904B0001 */  lbu   $t3, 1($v0)
-/* 08648C 7F05195C 316C0002 */  andi  $t4, $t3, 2
-/* 086490 7F051960 5580000A */  bnezl $t4, .L7F05198C
-/* 086494 7F051964 24840084 */   addiu $a0, $a0, 0x84
-/* 086498 7F051968 24050001 */  li    $a1, 1
-/* 08649C 7F05196C 0FC10409 */  jal   objFreePermanently
-/* 0864A0 7F051970 AFA30018 */   sw    $v1, 0x18($sp)
-/* 0864A4 7F051974 8FA30018 */  lw    $v1, 0x18($sp)
-/* 0864A8 7F051978 3C0D8007 */  lui   $t5, %hi(dword_CODE_bss_80073370) 
-/* 0864AC 7F05197C 25AD3370 */  addiu $t5, %lo(dword_CODE_bss_80073370) # addiu $t5, $t5, 0x3370
-/* 0864B0 7F051980 10000021 */  b     .L7F051A08
-/* 0864B4 7F051984 006D1021 */   addu  $v0, $v1, $t5
-/* 0864B8 7F051988 24840084 */  addiu $a0, $a0, 0x84
-.L7F05198C:
-/* 0864BC 7F05198C 0085082B */  sltu  $at, $a0, $a1
-/* 0864C0 7F051990 1420FFE5 */  bnez  $at, .L7F051928
-/* 0864C4 7F051994 24630084 */   addiu $v1, $v1, 0x84
-/* 0864C8 7F051998 3C048007 */  lui   $a0, %hi(dword_CODE_bss_80073370)
-/* 0864CC 7F05199C 3C028007 */  lui   $v0, %hi(g_Projectiles)
-/* 0864D0 7F0519A0 24423DC0 */  addiu $v0, %lo(g_Projectiles) # addiu $v0, $v0, 0x3dc0
-/* 0864D4 7F0519A4 24843370 */  addiu $a0, %lo(dword_CODE_bss_80073370) # addiu $a0, $a0, 0x3370
-/* 0864D8 7F0519A8 00001825 */  move  $v1, $zero
-.L7F0519AC:
-/* 0864DC 7F0519AC 8C8E0064 */  lw    $t6, 0x64($a0)
-/* 0864E0 7F0519B0 31CF0080 */  andi  $t7, $t6, 0x80
-/* 0864E4 7F0519B4 55E00011 */  bnezl $t7, .L7F0519FC
-/* 0864E8 7F0519B8 24840084 */   addiu $a0, $a0, 0x84
-/* 0864EC 7F0519BC 90980002 */  lbu   $t8, 2($a0)
-/* 0864F0 7F0519C0 33190004 */  andi  $t9, $t8, 4
-/* 0864F4 7F0519C4 5720000D */  bnezl $t9, .L7F0519FC
-/* 0864F8 7F0519C8 24840084 */   addiu $a0, $a0, 0x84
-/* 0864FC 7F0519CC 8C880010 */  lw    $t0, 0x10($a0)
-/* 086500 7F0519D0 8D09001C */  lw    $t1, 0x1c($t0)
-/* 086504 7F0519D4 15200008 */  bnez  $t1, .L7F0519F8
-/* 086508 7F0519D8 24050001 */   li    $a1, 1
-/* 08650C 7F0519DC 0FC10409 */  jal   objFreePermanently
-/* 086510 7F0519E0 AFA30018 */   sw    $v1, 0x18($sp)
-/* 086514 7F0519E4 8FA30018 */  lw    $v1, 0x18($sp)
-/* 086518 7F0519E8 3C0A8007 */  lui   $t2, %hi(dword_CODE_bss_80073370) 
-/* 08651C 7F0519EC 254A3370 */  addiu $t2, %lo(dword_CODE_bss_80073370) # addiu $t2, $t2, 0x3370
-/* 086520 7F0519F0 10000005 */  b     .L7F051A08
-/* 086524 7F0519F4 006A1021 */   addu  $v0, $v1, $t2
-.L7F0519F8:
-/* 086528 7F0519F8 24840084 */  addiu $a0, $a0, 0x84
-.L7F0519FC:
-/* 08652C 7F0519FC 1482FFEB */  bne   $a0, $v0, .L7F0519AC
-/* 086530 7F051A00 24630084 */   addiu $v1, $v1, 0x84
-/* 086534 7F051A04 00001025 */  move  $v0, $zero
-.L7F051A08:
-/* 086538 7F051A08 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 08653C 7F051A0C 27BD0020 */  addiu $sp, $sp, 0x20
-/* 086540 7F051A10 03E00008 */  jr    $ra
-/* 086544 7F051A14 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 void trigger_remote_mine_detonation(void)
@@ -37835,10 +37772,6 @@ void trigger_remote_mine_detonation(void)
     D_80030AF4 = uVar1 | D_80030AF4;
     sndPlaySfx(g_musicSfxBufferPtr, WATCH_DETONATE_MINE_SFX, NULL);
 }
-
-
-
-
 
 
 KeyRecord *check_if_entry_is_collectable(s32 ID, PropRecord *prop) //#MATCH
@@ -37867,10 +37800,7 @@ KeyRecord *check_if_entry_is_collectable(s32 ID, PropRecord *prop) //#MATCH
 }
 
 
-
-
-
-ObjectRecord *weaponFindThrown(s32 ID) //MATCH
+ObjectRecord *weaponFindThrown(s32 ID)
 {
     ObjectRecord *obj;
     PropRecord *  prop;
@@ -37888,43 +37818,44 @@ ObjectRecord *weaponFindThrown(s32 ID) //MATCH
 }
 
 
-
-
-
-void add_obj_to_temp_proxmine_table(WeaponObjRecord* proxy) {
+void add_obj_to_temp_proxmine_table(WeaponObjRecord* proxy)
+{
     s32 i = 0;
 
     while (1) {
-        if (temp_mine_table[i] == NULL) {
+        if (temp_mine_table[i] == NULL)
+        {
             temp_mine_table[i] = proxy;
             return;
         }
         i++;
-        if (i == 30) {
+        if (i == 30)
+        {
             return;
         }
     }
 }
 
 
-
-
-
-
-void remove_obj_from_temp_proxmine_table(WeaponObjRecord* proxy) {
+void remove_obj_from_temp_proxmine_table(WeaponObjRecord* proxy)
+{
     s32 i = 0;
 
-    while (1) {
-        if (temp_mine_table[i] == proxy) {
+    while (1)
+    {
+        if (temp_mine_table[i] == proxy)
+        {
             temp_mine_table[i] = NULL;
             return;
         }
         i++;
-        if (i == 30) {
+        if (i == 30)
+        {
             return;
         }
     }
 }
+
 
 void detonate_proxmine_In_range(coord3d* pos)
 {
