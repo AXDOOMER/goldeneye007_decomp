@@ -877,133 +877,47 @@ void projectileReset(Projectile *projectile)
 }
 
 
-#ifdef NONMATCHING
-
-// Somewhat close, 88%
 Projectile *projectileAllocate(void)
 {
-    s32 bestindex = -1;
+    s32 bestindex;
     s32 i;
-    s32 stack;
+
+    bestindex = -1;
 
     // Happy path - find one that is already free
-    for (i = 0; i < PROJECTILES_ARR_MAX; i++) {
-        if ((g_Projectiles + i)->flags & PROJECTILEFLAG_FREE) {
-            projectileReset(&g_Projectiles[i]);
-            return &g_Projectiles[i];
+    for (i = 0; i < PROJECTILES_ARR_MAX; i++)
+    {
+        if (g_Projectiles[i].flags & PROJECTILEFLAG_FREE)
+        {
+            projectileReset(g_Projectiles + i);
+            return (g_Projectiles + i);
         }
     }
 
     // Find one with the lowest unkE8 (some kind of age/timer?)
     // and some other conditions
-    for (i = 0; i < PROJECTILES_ARR_MAX; i++) {
-        if (g_Projectiles[i].obj
-                && (bestindex < 0 || g_Projectiles[i].unkE8 < g_Projectiles[bestindex].unkE8)) {
+    for (i = 0; i < PROJECTILES_ARR_MAX; i++)
+    {
+        if (g_Projectiles[i].obj && (bestindex < 0 || g_Projectiles[i].unkE8 < g_Projectiles[bestindex].unkE8))
+        {
             bestindex = i;
         }
     }
 
-    if (bestindex == -1);
-
-    if (bestindex >= 0) {
+    if (bestindex >= 0)
+    {
         // Reset and return it
         objFreeEmbedmentOrProjectile(g_Projectiles[bestindex].obj->prop);
-        (g_Projectiles + i)->obj->runtime_bitflags |= RUNTIMEBITFLAG_REMOVE;
+        g_Projectiles[bestindex].obj->runtime_bitflags |= RUNTIMEBITFLAG_REMOVE;
 
-        projectileReset(&g_Projectiles[bestindex]);
-        return &g_Projectiles[bestindex];
-    } else {
+        projectileReset(g_Projectiles + bestindex);
+        return (g_Projectiles + bestindex);
+    }
+    else
+    {
         return NULL;
     }
 }
-
-#else
-Projectile *projectileAllocate(void);
-GLOBAL_ASM(
-.text
-glabel projectileAllocate
-/* 0747B0 7F03FC80 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0747B4 7F03FC84 3C028007 */  lui   $v0, %hi(g_Projectiles)
-/* 0747B8 7F03FC88 3C048007 */  lui   $a0, %hi(g_Embedments)
-/* 0747BC 7F03FC8C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0747C0 7F03FC90 2406FFFF */  li    $a2, -1
-/* 0747C4 7F03FC94 24845030 */  addiu $a0, %lo(g_Embedments) # addiu $a0, $a0, 0x5030
-/* 0747C8 7F03FC98 24423DC0 */  addiu $v0, %lo(g_Projectiles) # addiu $v0, $v0, 0x3dc0
-/* 0747CC 7F03FC9C 00002825 */  move  $a1, $zero
-/* 0747D0 7F03FCA0 3C038000 */  lui   $v1, 0x8000
-.L7F03FCA4:
-/* 0747D4 7F03FCA4 8C4E0000 */  lw    $t6, ($v0)
-/* 0747D8 7F03FCA8 244200EC */  addiu $v0, $v0, 0xec
-/* 0747DC 7F03FCAC 0044082B */  sltu  $at, $v0, $a0
-/* 0747E0 7F03FCB0 01C37824 */  and   $t7, $t6, $v1
-/* 0747E4 7F03FCB4 11E00007 */  beqz  $t7, .L7F03FCD4
-/* 0747E8 7F03FCB8 3C078007 */   lui   $a3, %hi(g_Projectiles)
-/* 0747EC 7F03FCBC 24E73DC0 */  addiu $a3, %lo(g_Projectiles) # addiu $a3, $a3, 0x3dc0
-/* 0747F0 7F03FCC0 00E52021 */  addu  $a0, $a3, $a1
-/* 0747F4 7F03FCC4 0FC0FEFF */  jal   projectileReset
-/* 0747F8 7F03FCC8 AFA40020 */   sw    $a0, 0x20($sp)
-/* 0747FC 7F03FCCC 10000032 */  b     .L7F03FD98
-/* 074800 7F03FCD0 8FA20020 */   lw    $v0, 0x20($sp)
-.L7F03FCD4:
-/* 074804 7F03FCD4 1420FFF3 */  bnez  $at, .L7F03FCA4
-/* 074808 7F03FCD8 24A500EC */   addiu $a1, $a1, 0xec
-/* 07480C 7F03FCDC 3C028007 */  lui   $v0, %hi(g_Projectiles)
-/* 074810 7F03FCE0 3C078007 */  lui   $a3, %hi(g_Projectiles)
-/* 074814 7F03FCE4 24E73DC0 */  addiu $a3, %lo(g_Projectiles) # addiu $a3, $a3, 0x3dc0
-/* 074818 7F03FCE8 24423DC0 */  addiu $v0, %lo(g_Projectiles) # addiu $v0, $v0, 0x3dc0
-/* 07481C 7F03FCEC 00001825 */  move  $v1, $zero
-/* 074820 7F03FCF0 240500EC */  li    $a1, 236
-/* 074824 7F03FCF4 24040014 */  li    $a0, 20
-.L7F03FCF8:
-/* 074828 7F03FCF8 8C5800E4 */  lw    $t8, 0xe4($v0)
-/* 07482C 7F03FCFC 5300000D */  beql  $t8, $zero, .L7F03FD34
-/* 074830 7F03FD00 24630001 */   addiu $v1, $v1, 1
-/* 074834 7F03FD04 04C2000A */  bltzl $a2, .L7F03FD30
-/* 074838 7F03FD08 00603025 */   move  $a2, $v1
-/* 07483C 7F03FD0C 00C50019 */  multu $a2, $a1
-/* 074840 7F03FD10 8C5900E8 */  lw    $t9, 0xe8($v0)
-/* 074844 7F03FD14 00004812 */  mflo  $t1
-/* 074848 7F03FD18 00E95021 */  addu  $t2, $a3, $t1
-/* 07484C 7F03FD1C 8D4B00E8 */  lw    $t3, 0xe8($t2)
-/* 074850 7F03FD20 032B082A */  slt   $at, $t9, $t3
-/* 074854 7F03FD24 50200003 */  beql  $at, $zero, .L7F03FD34
-/* 074858 7F03FD28 24630001 */   addiu $v1, $v1, 1
-/* 07485C 7F03FD2C 00603025 */  move  $a2, $v1
-.L7F03FD30:
-/* 074860 7F03FD30 24630001 */  addiu $v1, $v1, 1
-.L7F03FD34:
-/* 074864 7F03FD34 1464FFF0 */  bne   $v1, $a0, .L7F03FCF8
-/* 074868 7F03FD38 244200EC */   addiu $v0, $v0, 0xec
-/* 07486C 7F03FD3C 04C00016 */  bltz  $a2, .L7F03FD98
-/* 074870 7F03FD40 00001025 */   move  $v0, $zero
-/* 074874 7F03FD44 00C50019 */  multu $a2, $a1
-/* 074878 7F03FD48 00001812 */  mflo  $v1
-/* 07487C 7F03FD4C 00E34021 */  addu  $t0, $a3, $v1
-/* 074880 7F03FD50 8D0C00E4 */  lw    $t4, 0xe4($t0)
-/* 074884 7F03FD54 8D840010 */  lw    $a0, 0x10($t4)
-/* 074888 7F03FD58 AFA80020 */  sw    $t0, 0x20($sp)
-/* 07488C 7F03FD5C 0FC1033C */  jal   objFreeEmbedmentOrProjectile
-/* 074890 7F03FD60 AFA30024 */   sw    $v1, 0x24($sp)
-/* 074894 7F03FD64 8FA80020 */  lw    $t0, 0x20($sp)
-/* 074898 7F03FD68 8FA30024 */  lw    $v1, 0x24($sp)
-/* 07489C 7F03FD6C 3C078007 */  lui   $a3, %hi(g_Projectiles)
-/* 0748A0 7F03FD70 8D0200E4 */  lw    $v0, 0xe4($t0)
-/* 0748A4 7F03FD74 24E73DC0 */  addiu $a3, %lo(g_Projectiles) # addiu $a3, $a3, 0x3dc0
-/* 0748A8 7F03FD78 00E32021 */  addu  $a0, $a3, $v1
-/* 0748AC 7F03FD7C 8C4D0064 */  lw    $t5, 0x64($v0)
-/* 0748B0 7F03FD80 35AE0004 */  ori   $t6, $t5, 4
-/* 0748B4 7F03FD84 AC4E0064 */  sw    $t6, 0x64($v0)
-/* 0748B8 7F03FD88 0FC0FEFF */  jal   projectileReset
-/* 0748BC 7F03FD8C AFA4001C */   sw    $a0, 0x1c($sp)
-/* 0748C0 7F03FD90 10000001 */  b     .L7F03FD98
-/* 0748C4 7F03FD94 8FA2001C */   lw    $v0, 0x1c($sp)
-.L7F03FD98:
-/* 0748C8 7F03FD98 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0748CC 7F03FD9C 27BD0030 */  addiu $sp, $sp, 0x30
-/* 0748D0 7F03FDA0 03E00008 */  jr    $ra
-/* 0748D4 7F03FDA4 00000000 */   nop   
-)
-#endif
 
 
 void sub_GAME_7F03FDA8(PropRecord *prop)
