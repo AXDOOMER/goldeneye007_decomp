@@ -5770,58 +5770,30 @@ void objDropRecursively(PropRecord *prop)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F04424C(void) {
+void sub_GAME_7F04424C(PropRecord* prop)
+{
+    ObjectRecord* obj;
+    PropRecord* next;
+    PropRecord* child;
 
+    obj = prop->obj;
+    if (obj->runtime_bitflags & RUNTIMEBITFLAG_REMOVE)
+    {
+        objFree(obj, 1, obj->state & PROPSTATE_RESPAWN);
+        return;
+    }
+
+    prop->flags &= ~(PROPFLAG_ONSCREEN);
+    handle_thrown_explosive_detonation(prop);
+
+    child = prop->child;
+    while (child != NULL)
+    {
+        next = child->prev;
+        sub_GAME_7F04424C(child);
+        child = next;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F04424C
-/* 078D7C 7F04424C 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 078D80 7F044250 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 078D84 7F044254 AFB10018 */  sw    $s1, 0x18($sp)
-/* 078D88 7F044258 AFB00014 */  sw    $s0, 0x14($sp)
-/* 078D8C 7F04425C 8C870004 */  lw    $a3, 4($a0)
-/* 078D90 7F044260 00808825 */  move  $s1, $a0
-/* 078D94 7F044264 8CEE0064 */  lw    $t6, 0x64($a3)
-/* 078D98 7F044268 31CF0004 */  andi  $t7, $t6, 4
-/* 078D9C 7F04426C 51E0000A */  beql  $t7, $zero, .L7F044298
-/* 078DA0 7F044270 92390001 */   lbu   $t9, 1($s1)
-/* 078DA4 7F044274 90E60002 */  lbu   $a2, 2($a3)
-/* 078DA8 7F044278 00E02025 */  move  $a0, $a3
-/* 078DAC 7F04427C 24050001 */  li    $a1, 1
-/* 078DB0 7F044280 30D80004 */  andi  $t8, $a2, 4
-/* 078DB4 7F044284 0FC10366 */  jal   objFree
-/* 078DB8 7F044288 03003025 */   move  $a2, $t8
-/* 078DBC 7F04428C 1000000F */  b     .L7F0442CC
-/* 078DC0 7F044290 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 078DC4 7F044294 92390001 */  lbu   $t9, 1($s1)
-.L7F044298:
-/* 078DC8 7F044298 02202025 */  move  $a0, $s1
-/* 078DCC 7F04429C 3328FFFD */  andi  $t0, $t9, 0xfffd
-/* 078DD0 7F0442A0 0FC10F5C */  jal   handle_thrown_explosive_detonation
-/* 078DD4 7F0442A4 A2280001 */   sb    $t0, 1($s1)
-/* 078DD8 7F0442A8 8E300020 */  lw    $s0, 0x20($s1)
-/* 078DDC 7F0442AC 52000007 */  beql  $s0, $zero, .L7F0442CC
-/* 078DE0 7F0442B0 8FBF001C */   lw    $ra, 0x1c($sp)
-.L7F0442B4:
-/* 078DE4 7F0442B4 8E110024 */  lw    $s1, 0x24($s0)
-/* 078DE8 7F0442B8 0FC11093 */  jal   sub_GAME_7F04424C
-/* 078DEC 7F0442BC 02002025 */   move  $a0, $s0
-/* 078DF0 7F0442C0 1620FFFC */  bnez  $s1, .L7F0442B4
-/* 078DF4 7F0442C4 02208025 */   move  $s0, $s1
-/* 078DF8 7F0442C8 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F0442CC:
-/* 078DFC 7F0442CC 8FB00014 */  lw    $s0, 0x14($sp)
-/* 078E00 7F0442D0 8FB10018 */  lw    $s1, 0x18($sp)
-/* 078E04 7F0442D4 03E00008 */  jr    $ra
-/* 078E08 7F0442D8 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
