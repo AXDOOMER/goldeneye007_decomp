@@ -719,7 +719,7 @@ void bondviewTankModelRotationRelated(void);
 s32 bondviewTankCollisionStatus(struct coord3d *arg0, struct StandTile *arg1, f32 arg2, struct coord3d *arg3, struct coord3d *arg4);
 s32 bondviewCallTankCollisionStatus(struct coord3d *arg0, struct StandTile *arg1, f32 arg2);
 s32 sub_GAME_7F07CDD4(struct coord3d *arg0, f32 arg1, struct StandTile **arg2);
-s32 cal_player_collision(struct coord3d *arg0, struct StandTile **stan);
+s32 bondviewUpdatePlayerCollision(struct coord3d *arg0, struct StandTile **stan);
 s32 bondviewTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z, s32 objFlags, struct coord3d *coord_p, struct coord3d *coord_dest);
 
 s32 sub_GAME_7F07D2B4(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *arg2, struct coord3d *arg3, struct coord3d *arg4);
@@ -8934,7 +8934,7 @@ f32 bondviewGet8003646CRad(void)
 /**
  * Address 0x7F07CF8C.
 */
-s32 cal_player_collision(struct coord3d *arg0, StandTile **stan)
+s32 bondviewUpdatePlayerCollision(struct coord3d *arg0, StandTile **stan)
 {
     s32 sp94;
     StandTile *sp90;
@@ -9053,7 +9053,7 @@ s32 bondviewUpdatePlayerCollision(coord3d *arg0, coord3d *arg1, coord3d *arg2)
     // resets stan global collision variables
     sub_GAME_7F0B1CC4();
 
-    if (cal_player_collision(arg0, &sp1C) != 0)
+    if (bondviewUpdatePlayerCollision(arg0, &sp1C) != 0)
     {
         g_CurrentPlayer->field_488.current_tile_ptr = sp1C;
         g_CurrentPlayer->field_488.collision_position.f[0] = arg0->f[0];
@@ -9145,7 +9145,7 @@ glabel sub_GAME_7F07D2B4
 /* 0B1EE4 7F07D3B4 E7A60068 */  swc1  $f6, 0x68($sp)
 /* 0B1EE8 7F07D3B8 C4520494 */  lwc1  $f18, 0x494($v0)
 /* 0B1EEC 7F07D3BC 46128100 */  add.s $f4, $f16, $f18
-/* 0B1EF0 7F07D3C0 0FC1F3E3 */  jal   cal_player_collision
+/* 0B1EF0 7F07D3C0 0FC1F3E3 */  jal   bondviewUpdatePlayerCollision
 /* 0B1EF4 7F07D3C4 E7A40070 */   swc1  $f4, 0x70($sp)
 /* 0B1EF8 7F07D3C8 1040000B */  beqz  $v0, .L7F07D3F8
 /* 0B1EFC 7F07D3CC 8FAF007C */   lw    $t7, 0x7c($sp)
@@ -9260,7 +9260,7 @@ void sub_GAME_7F07D4C0(void *arg0, void *arg1, void *arg2) {
     temp_f12 = ((temp_f6 * sp4C) + (sp44 * temp_f4));
     sp28 = (f32) ((temp_f4 * temp_f12) + g_CurrentPlayer->field_48C);
     sp30 = (f32) ((temp_f6 * temp_f12) + g_CurrentPlayer->field_494);
-    if (cal_player_collision(temp_f12, &sp28, &sp24) == 0)
+    if (bondviewUpdatePlayerCollision(temp_f12, &sp28, &sp24) == 0)
     {
         // Node 4
         phi_return = 0;
@@ -9343,7 +9343,7 @@ glabel sub_GAME_7F07D4C0
 /* 0B20E8 7F07D5B8 E7B00028 */  swc1  $f16, 0x28($sp)
 /* 0B20EC 7F07D5BC C4440494 */  lwc1  $f4, 0x494($v0)
 /* 0B20F0 7F07D5C0 46044280 */  add.s $f10, $f8, $f4
-/* 0B20F4 7F07D5C4 0FC1F3E3 */  jal   cal_player_collision
+/* 0B20F4 7F07D5C4 0FC1F3E3 */  jal   bondviewUpdatePlayerCollision
 /* 0B20F8 7F07D5C8 E7AA0030 */   swc1  $f10, 0x30($sp)
 /* 0B20FC 7F07D5CC 3C038008 */  lui   $v1, %hi(g_CurrentPlayer)
 /* 0B2100 7F07D5D0 1040000C */  beqz  $v0, .L7F07D604
@@ -9482,7 +9482,7 @@ glabel sub_GAME_7F07D61C
 /* 0B22CC 7F07D79C E7A40044 */  swc1  $f4, 0x44($sp)
 /* 0B22D0 7F07D7A0 C4460494 */  lwc1  $f6, 0x494($v0)
 /* 0B22D4 7F07D7A4 46068280 */  add.s $f10, $f16, $f6
-/* 0B22D8 7F07D7A8 0FC1F3E3 */  jal   cal_player_collision
+/* 0B22D8 7F07D7A8 0FC1F3E3 */  jal   bondviewUpdatePlayerCollision
 /* 0B22DC 7F07D7AC E7AA004C */   swc1  $f10, 0x4c($sp)
 /* 0B22E0 7F07D7B0 10400060 */  beqz  $v0, .L7F07D934
 /* 0B22E4 7F07D7B4 8FAF0034 */   lw    $t7, 0x34($sp)
@@ -9569,7 +9569,7 @@ glabel sub_GAME_7F07D61C
 /* 0B2420 7F07D8F0 E7A80044 */  swc1  $f8, 0x44($sp)
 /* 0B2424 7F07D8F4 C4440494 */  lwc1  $f4, 0x494($v0)
 /* 0B2428 7F07D8F8 46045180 */  add.s $f6, $f10, $f4
-/* 0B242C 7F07D8FC 0FC1F3E3 */  jal   cal_player_collision
+/* 0B242C 7F07D8FC 0FC1F3E3 */  jal   bondviewUpdatePlayerCollision
 /* 0B2430 7F07D900 E7A6004C */   swc1  $f6, 0x4c($sp)
 /* 0B2434 7F07D904 1040000B */  beqz  $v0, .L7F07D934
 /* 0B2438 7F07D908 8FA90034 */   lw    $t1, 0x34($sp)
