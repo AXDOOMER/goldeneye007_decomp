@@ -5796,100 +5796,55 @@ void sub_GAME_7F04424C(PropRecord* prop)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0442DC(void) {
+void sub_GAME_7F0442DC(PropRecord* prop)
+{
+    ObjectRecord* obj;
+    Model* model;
+    PropRecord* child;
+    PropRecord* prev;
+    Mtxf* mtx;
 
+    obj = prop->obj;
+    model = obj->model;
+
+    if (obj->runtime_bitflags & RUNTIMEBITFLAG_REMOVE)
+    {
+        objFree(obj, 1, (obj->state & PROPSTATE_RESPAWN));
+        return;
+    }
+
+    if ((model->attachedto_objinst != NULL) && (obj->runtime_bitflags & RUNTIMEBITFLAG_EMBEDDED))
+    {
+        mtx = modelFindNodeMtx(model->attachedto, model->attachedto_objinst, 0);
+        prop->flags |= PROPFLAG_ONSCREEN;
+        model->render_pos = (RenderPosView*)dynAllocate(model->obj->numMatrices << 6);
+
+        matrix_4x4_multiply_homogeneous(mtx, &obj->embedment->matrix, (Mtxf*)model->render_pos);
+        modelUpdateRelationsQuick(model, model->obj->RootNode);
+        handle_thrown_explosive_detonation(prop);
+
+        child = prop->child;
+        while (child != NULL)
+        {
+            prev = child->prev;
+            sub_GAME_7F0442DC(child);
+            child = prev;
+        }
+    }
+    else
+    {
+        prop->flags &= ~(PROPFLAG_ONSCREEN);
+        handle_thrown_explosive_detonation(prop);
+
+        child = prop->child;
+        while (child != NULL)
+        {
+            prev = child->prev;
+            sub_GAME_7F04424C(child);
+            child = prev;
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0442DC
-/* 078E0C 7F0442DC 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 078E10 7F0442E0 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 078E14 7F0442E4 AFB20020 */  sw    $s2, 0x20($sp)
-/* 078E18 7F0442E8 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 078E1C 7F0442EC AFB00018 */  sw    $s0, 0x18($sp)
-/* 078E20 7F0442F0 8C910004 */  lw    $s1, 4($a0)
-/* 078E24 7F0442F4 00809025 */  move  $s2, $a0
-/* 078E28 7F0442F8 8E220064 */  lw    $v0, 0x64($s1)
-/* 078E2C 7F0442FC 8E300014 */  lw    $s0, 0x14($s1)
-/* 078E30 7F044300 304E0004 */  andi  $t6, $v0, 4
-/* 078E34 7F044304 51C0000A */  beql  $t6, $zero, .L7F044330
-/* 078E38 7F044308 8E05001C */   lw    $a1, 0x1c($s0)
-/* 078E3C 7F04430C 92260002 */  lbu   $a2, 2($s1)
-/* 078E40 7F044310 02202025 */  move  $a0, $s1
-/* 078E44 7F044314 24050001 */  li    $a1, 1
-/* 078E48 7F044318 30CF0004 */  andi  $t7, $a2, 4
-/* 078E4C 7F04431C 0FC10366 */  jal   objFree
-/* 078E50 7F044320 01E03025 */   move  $a2, $t7
-/* 078E54 7F044324 10000036 */  b     .L7F044400
-/* 078E58 7F044328 8FBF0024 */   lw    $ra, 0x24($sp)
-/* 078E5C 7F04432C 8E05001C */  lw    $a1, 0x1c($s0)
-.L7F044330:
-/* 078E60 7F044330 30580040 */  andi  $t8, $v0, 0x40
-/* 078E64 7F044334 50A00025 */  beql  $a1, $zero, .L7F0443CC
-/* 078E68 7F044338 924C0001 */   lbu   $t4, 1($s2)
-/* 078E6C 7F04433C 13000022 */  beqz  $t8, .L7F0443C8
-/* 078E70 7F044340 00003025 */   move  $a2, $zero
-/* 078E74 7F044344 0FC1B198 */  jal   modelFindNodeMtx
-/* 078E78 7F044348 8E040018 */   lw    $a0, 0x18($s0)
-/* 078E7C 7F04434C AFA2002C */  sw    $v0, 0x2c($sp)
-/* 078E80 7F044350 92590001 */  lbu   $t9, 1($s2)
-/* 078E84 7F044354 37280002 */  ori   $t0, $t9, 2
-/* 078E88 7F044358 A2480001 */  sb    $t0, 1($s2)
-/* 078E8C 7F04435C 8E090008 */  lw    $t1, 8($s0)
-/* 078E90 7F044360 8524000E */  lh    $a0, 0xe($t1)
-/* 078E94 7F044364 00045180 */  sll   $t2, $a0, 6
-/* 078E98 7F044368 0FC2F5C5 */  jal   dynAllocate
-/* 078E9C 7F04436C 01402025 */   move  $a0, $t2
-/* 078EA0 7F044370 AE02000C */  sw    $v0, 0xc($s0)
-/* 078EA4 7F044374 8E25006C */  lw    $a1, 0x6c($s1)
-/* 078EA8 7F044378 8FA4002C */  lw    $a0, 0x2c($sp)
-/* 078EAC 7F04437C 00403025 */  move  $a2, $v0
-/* 078EB0 7F044380 0FC16063 */  jal   matrix_4x4_multiply_homogeneous
-/* 078EB4 7F044384 24A50004 */   addiu $a1, $a1, 4
-/* 078EB8 7F044388 8E0B0008 */  lw    $t3, 8($s0)
-/* 078EBC 7F04438C 02002025 */  move  $a0, $s0
-/* 078EC0 7F044390 0FC1BBA9 */  jal   modelUpdateRelationsQuick
-/* 078EC4 7F044394 8D650000 */   lw    $a1, ($t3)
-/* 078EC8 7F044398 0FC10F5C */  jal   handle_thrown_explosive_detonation
-/* 078ECC 7F04439C 02402025 */   move  $a0, $s2
-/* 078ED0 7F0443A0 8E510020 */  lw    $s1, 0x20($s2)
-/* 078ED4 7F0443A4 52200016 */  beql  $s1, $zero, .L7F044400
-/* 078ED8 7F0443A8 8FBF0024 */   lw    $ra, 0x24($sp)
-.L7F0443AC:
-/* 078EDC 7F0443AC 8E300024 */  lw    $s0, 0x24($s1)
-/* 078EE0 7F0443B0 0FC110B7 */  jal   sub_GAME_7F0442DC
-/* 078EE4 7F0443B4 02202025 */   move  $a0, $s1
-/* 078EE8 7F0443B8 1600FFFC */  bnez  $s0, .L7F0443AC
-/* 078EEC 7F0443BC 02008825 */   move  $s1, $s0
-/* 078EF0 7F0443C0 1000000F */  b     .L7F044400
-/* 078EF4 7F0443C4 8FBF0024 */   lw    $ra, 0x24($sp)
-.L7F0443C8:
-/* 078EF8 7F0443C8 924C0001 */  lbu   $t4, 1($s2)
-.L7F0443CC:
-/* 078EFC 7F0443CC 02402025 */  move  $a0, $s2
-/* 078F00 7F0443D0 318DFFFD */  andi  $t5, $t4, 0xfffd
-/* 078F04 7F0443D4 0FC10F5C */  jal   handle_thrown_explosive_detonation
-/* 078F08 7F0443D8 A24D0001 */   sb    $t5, 1($s2)
-/* 078F0C 7F0443DC 8E510020 */  lw    $s1, 0x20($s2)
-/* 078F10 7F0443E0 52200007 */  beql  $s1, $zero, .L7F044400
-/* 078F14 7F0443E4 8FBF0024 */   lw    $ra, 0x24($sp)
-.L7F0443E8:
-/* 078F18 7F0443E8 8E300024 */  lw    $s0, 0x24($s1)
-/* 078F1C 7F0443EC 0FC11093 */  jal   sub_GAME_7F04424C
-/* 078F20 7F0443F0 02202025 */   move  $a0, $s1
-/* 078F24 7F0443F4 1600FFFC */  bnez  $s0, .L7F0443E8
-/* 078F28 7F0443F8 02008825 */   move  $s1, $s0
-/* 078F2C 7F0443FC 8FBF0024 */  lw    $ra, 0x24($sp)
-.L7F044400:
-/* 078F30 7F044400 8FB00018 */  lw    $s0, 0x18($sp)
-/* 078F34 7F044404 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 078F38 7F044408 8FB20020 */  lw    $s2, 0x20($sp)
-/* 078F3C 7F04440C 03E00008 */  jr    $ra
-/* 078F40 7F044410 27BD0040 */   addiu $sp, $sp, 0x40
-)
-#endif
 
 
 /**
