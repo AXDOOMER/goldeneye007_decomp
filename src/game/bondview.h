@@ -284,7 +284,7 @@ typedef struct textoverride {
 	/*0x10*/ u32 unk5;
 	/*0x14*/ u32 unk6;
 	/*0x18*/ u32 unk7;
-	/*0x1c*/ u32 unk8;
+	/*0x1c*/ u32 pickuptext;
 	/*0x20*/ struct textoverride *next;
 	/*0x24*/ struct ObjectRecord *obj;
 } textoverride;

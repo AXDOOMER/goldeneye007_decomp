@@ -2376,7 +2376,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                             chrpropDelist(obj->prop);
                             chrpropDisable(obj->prop);
                         }
-                        if (obj->type != PROPDEF_COLLECTABLE || !sub_GAME_7F051E1C(obj, chr))
+                        if (obj->type != PROPDEF_COLLECTABLE || !chrEquipWeapon(obj, chr))
                         {
                             chrpropReparent(obj->prop, chr->prop);
                         }
