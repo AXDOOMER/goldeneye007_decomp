@@ -4006,8 +4006,8 @@ struct MoveData {
     // 0x60
     f32 speedVertaUp;
     f32 speedVertaDown;
-    f32 sp188; // tank turn right?
-    f32 sp18C; // tank turn left ?
+    f32 tankTurnRightSpeed;
+    f32 tankTurnLeftSpeed;
 
     // 0x70
     s32 digitalStepRight;
@@ -4018,7 +4018,7 @@ struct MoveData {
     // 0x80
     s32 canNaturalPitch;
     s32 canNaturalTurn;
-    s32 sp1A8; // "can turn tank" related
+    s32 canTurnTank;
     s32 canLookAhead;
 
     // 0x90

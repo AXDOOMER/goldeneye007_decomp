@@ -3201,6 +3201,13 @@ typedef enum TVCMD
         OBJECTIVESTATUS_FAILED
     } OBJECTIVESTATUS;
 
+    typedef enum TANK_RUN_STATE
+    {
+        TANK_RUN_STATE_NOT_RUNNING = 0,
+        TANK_RUN_STATE_STARTING,
+        TANK_RUN_STATE_RUNNING
+    } TANK_RUN_STATE;
+
 #pragma endregion
 
 #pragma region VI

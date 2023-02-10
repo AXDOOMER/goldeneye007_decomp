@@ -117,23 +117,23 @@ void reinit_between_menus(void)
     clock_time = 0.0f;
     D_80030AF4 = 0;
 
-    for (i=0; i<PROJECTILEDATA_START_ADDRESS_LEN; i++)
+    for (i = 0; i < MAX_WEAPON_SLOTS; i++)
     {
-        ProjectileData_start_address[i].unk10 = 0;
+        g_WeaponSlots[i].prop = NULL;
     }
 
-    D_80030AF8 = 0;
+    g_NextWeaponSlot = 0;
 
-    for (i=0; i<BSS_80072E70_DATA_LEN; i++)
+    for (i = 0; i < MAX_HAT_SLOTS; i++)
     {
-        dword_CODE_bss_80072E70[i].unk10 = 0;
+        g_HatSlots[i].prop = NULL;
     }
     
-    D_80030AFC = 0;
+    g_NextHatSlot = 0;
 
-    for (i=0; i<BSS_80073370_DATA_LEN; i++)
+    for (i=0; i < MAX_AMMO_CRATES; i++)
     {
-        dword_CODE_bss_80073370[i].unk10 = 0;
+        g_AmmoCrates[i].prop = NULL;
     }
 
     for (i = 0; i < PROJECTILES_ARR_MAX; i++)

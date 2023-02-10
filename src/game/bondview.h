@@ -284,7 +284,7 @@ typedef struct textoverride {
 	/*0x10*/ u32 unk5;
 	/*0x14*/ u32 unk6;
 	/*0x18*/ u32 unk7;
-	/*0x1c*/ u32 unk8;
+	/*0x1c*/ u32 pickuptext;
 	/*0x20*/ struct textoverride *next;
 	/*0x24*/ struct ObjectRecord *obj;
 } textoverride;
@@ -2706,7 +2706,7 @@ extern f32 g_TankTurretTurn;
 //D:8003648C
 extern s32 D_8003648C;
 //D:80036490
-extern s32 D_80036490;
+extern s32 g_TankDamagePenaltyTicks;
 //D:80036494
 extern s32 g_CameraMode;
 //D:80036498
