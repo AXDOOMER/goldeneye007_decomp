@@ -155,7 +155,7 @@ void bondviewLoadSetupIntroSection(void)
     D_800364B0 = 1;
     g_PlayerInvincible = 0;
     g_CameraMode = 0;
-    enable_move_after_cinema = 0;
+    g_CameraAfterCinema = 0;
     D_8003649C = 0;
     stop_time_flag = 0;
     D_800364A4 = FLOAT_INIT;
