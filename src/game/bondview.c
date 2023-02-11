@@ -160,7 +160,7 @@ vec3d flt_CODE_bss_80079990;
 // f32 flt_CODE_bss_80079998;
 
 //CODE.bss:8007999C
-s32 dword_CODE_bss_8007999C;
+s32 g_SurroundBondWithExplosionsTicks;
 //CODE.bss:800799A0
 s32 dword_CODE_bss_800799A0;
 //CODE.bss:800799A4
@@ -337,7 +337,7 @@ s32 D_8003643C = 0;
 //D:80036440
 CreditsEntry *D_80036440 = NULL;
 //D:80036444
-s32 D_80036444 = 0;
+s32 g_SurroundBondWithExplosionsFlag = 0;
 
 //D:80036448
 s32 in_tank_flag = 0;
@@ -9013,9 +9013,8 @@ s32 bondviewCalculatePlayerCollision(struct coord3d *arg0, StandTile **stan)
         }
         else
         {
-            /* I'm sorry, this is the only way I could make it match. */
-block_19:
 block_20:
+            /* I'm sorry, this is the only way I could make it match. */
             if (ptr_playerstank == NULL
                 && (stanSavedColl_posData != NULL)
                 && (stanSavedColl_posData->type == PROP_TYPE_OBJ))
@@ -15232,9 +15231,9 @@ void bondviewPlayerTickExplode(void)
 
     dword_CODE_bss_800799A0++;
 
-    if (D_80036444
+    if (g_SurroundBondWithExplosionsFlag
         && g_PlayerInvincible == 0
-        && dword_CODE_bss_8007999C < g_GlobalTimer)
+        && g_SurroundBondWithExplosionsTicks < g_GlobalTimer)
     {
         struct coord3d pos;
 
@@ -15254,7 +15253,7 @@ void bondviewPlayerTickExplode(void)
 
         explosionCreate(0, &pos, g_CurrentPlayer->prop->stan, 0x12, 0, 0, g_CurrentPlayer->prop->rooms, 0);
 
-        dword_CODE_bss_8007999C = (randomGetNext() % (u32)TICKEXPLODE_FACTOR) + g_GlobalTimer + TICKEXPLODE_FACTOR;
+        g_SurroundBondWithExplosionsTicks = (randomGetNext() % (u32)TICKEXPLODE_FACTOR) + g_GlobalTimer + TICKEXPLODE_FACTOR;
     }
 #undef TICKEXPLODE_FACTOR
 }
@@ -15334,7 +15333,11 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         bondviewWatchAnimationTick();
     }
 
-    /* Bond can't be boosted while in the tank. */
+    /*
+        Apply bondshotspeed vector to speedforwards scalar and speedsideways scalar.
+        Crouching applies a 50% base speed reduction before applying boost.
+        Bond can't be boosted while in the tank.
+    */
     if (in_tank_flag == 0)
     {
         // This `if` block is Perfect Dark bwalkApplyCrouchSpeed.
@@ -27329,8 +27332,8 @@ s32 getMissiontimer(void) {
 
 void SurroundWithExplosions(int delay)
 {
-    D_80036444              = 1;
-    dword_CODE_bss_8007999C = delay + g_GlobalTimer;
+    g_SurroundBondWithExplosionsFlag              = 1;
+    g_SurroundBondWithExplosionsTicks = delay + g_GlobalTimer;
     dword_CODE_bss_800799A0 = 0;
 }
 

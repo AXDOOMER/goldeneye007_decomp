@@ -115,7 +115,7 @@ void reinit_between_menus(void)
     clock_drawn_flag = 1;
     clock_enable = 0;
     clock_time = 0.0f;
-    D_80030AF4 = 0;
+    g_RemoteMineOwnerTriggerFlag = 0;
 
     for (i = 0; i < MAX_WEAPON_SLOTS; i++)
     {

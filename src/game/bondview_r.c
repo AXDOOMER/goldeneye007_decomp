@@ -132,7 +132,7 @@ void bondviewLoadSetupIntroSection(void)
     flt_CODE_bss_80079990.f[0] = FLOAT_INIT;
     flt_CODE_bss_80079990.f[1] = FLOAT_INIT;
     flt_CODE_bss_80079990.f[2] = FLOAT_INIT;
-    D_80036444 = 0;
+    g_SurroundBondWithExplosionsFlag = 0;
     startpadcount = 0;
     in_tank_flag = 0;
     D_8003644C = 0;

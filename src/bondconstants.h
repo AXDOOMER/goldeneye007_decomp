@@ -1137,6 +1137,37 @@ typedef enum E_EXPLOSIONTYPE
     E_EXPLOSIONTYPE_COUNT
 } E_EXPLOSIONTYPE;
 
+/* index into array_explosion_types.
+* Is this the same as E_EXPLOSIONTYPE ?
+* Some names are based on logic in handle_thrown_explosive_detonation method.
+*/
+typedef enum EXPLOSION_DEF
+{
+    EXPLOSION_DEF_00,
+    EXPLOSION_DEF_01,
+    EXPLOSION_DEF_02,
+    EXPLOSION_DEF_03,
+    EXPLOSION_DEF_04,
+    EXPLOSION_DEF_05,
+    EXPLOSION_DEF_06,
+    EXPLOSION_DEF_07,
+    EXPLOSION_DEF_08,
+    EXPLOSION_DEF_09,
+    EXPLOSION_DEF_10,
+    EXPLOSION_DEF_11,
+    EXPLOSION_DEF_DRONE,
+    // used with grenades and mines
+    EXPLOSION_DEF_STANDARD,
+    EXPLOSION_DEF_14,
+    EXPLOSION_DEF_15,
+    EXPLOSION_DEF_16,
+    EXPLOSION_DEF_MASSIVE,
+    EXPLOSION_DEF_18,
+    EXPLOSION_DEF_FACILITY_REMOTE,
+    EXPLOSION_DEF_20,
+    EXPLOSION_DEF_21
+} EXPLOSION_DEF;
+
 typedef enum GAMEMODE
 {
     GAMEMODE_INTRO = -1,
