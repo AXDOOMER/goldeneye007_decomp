@@ -54,7 +54,7 @@ extern ALSoundState *ptr_gas_sound;
 extern s32 clock_drawn_flag;
 extern s32 clock_enable;
 extern f32 clock_time;
-extern s32 D_80030AF4;
+extern s32 g_RemoteMineOwnerTriggerFlag;
 extern s32 g_NextWeaponSlot;
 extern s32 g_NextHatSlot;
 extern ObjectRecord *g_LevelLoadPropSwitch;

@@ -2663,7 +2663,7 @@ extern s32 D_8003643C;
 //D:80036440
 extern CreditsEntry *D_80036440;
 //D:80036444
-extern s32 D_80036444;
+extern s32 g_SurroundBondWithExplosionsFlag;
 //D:80036448
 extern s32 in_tank_flag;
 //D:8003644C

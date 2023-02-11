@@ -1137,6 +1137,37 @@ typedef enum E_EXPLOSIONTYPE
     E_EXPLOSIONTYPE_COUNT
 } E_EXPLOSIONTYPE;
 
+/* index into array_explosion_types.
+* Is this the same as E_EXPLOSIONTYPE ?
+* Some names are based on logic in chrobjWeaponTick method.
+*/
+typedef enum EXPLOSION_DEF
+{
+    EXPLOSION_DEF_00,
+    EXPLOSION_DEF_01,
+    EXPLOSION_DEF_02,
+    EXPLOSION_DEF_03,
+    EXPLOSION_DEF_04,
+    EXPLOSION_DEF_05,
+    EXPLOSION_DEF_06,
+    EXPLOSION_DEF_07,
+    EXPLOSION_DEF_08,
+    EXPLOSION_DEF_09,
+    EXPLOSION_DEF_10,
+    EXPLOSION_DEF_11,
+    EXPLOSION_DEF_DRONE,
+    // used with grenades and mines
+    EXPLOSION_DEF_STANDARD,
+    EXPLOSION_DEF_14,
+    EXPLOSION_DEF_15,
+    EXPLOSION_DEF_16,
+    EXPLOSION_DEF_MASSIVE,
+    EXPLOSION_DEF_18,
+    EXPLOSION_DEF_FACILITY_REMOTE,
+    EXPLOSION_DEF_20,
+    EXPLOSION_DEF_21
+} EXPLOSION_DEF;
+
 typedef enum GAMEMODE
 {
     GAMEMODE_INTRO = -1,
@@ -1152,29 +1183,25 @@ typedef enum GUNHAND //Canonical name
 } GUNHAND;
 
 
-#define HIT_TYPES(HIT) \
-    HIT DEFAULT        \
-    HIT STONE          \
-    HIT WOOD           \
-    HIT METAL          \
-    HIT GLASS          \
-    HIT WATER          \
-    HIT SNOW           \
-    HIT DIRT           \
-    HIT MUD            \
-    HIT TILE           \
-    HIT METALOBJ       \
-    HIT CHR            \
-    HIT GLASS_XLU
 /*Hit Type for triangle (Canonical name)*/
 typedef enum HIT_TYPE
 {
-    CREATE_TYPES(ENUM, HIT, HIT_TYPES)
+    HIT_DEFAULT,
+    HIT_STONE,
+    HIT_WOOD,
+    HIT_METAL,
+    HIT_GLASS,
+    HIT_WATER,
+    HIT_SNOW,
+    HIT_DIRT,
+    HIT_MUD,
+    HIT_TILE,
+    HIT_METALOBJ,
+    HIT_CHR,
+    HIT_GLASS_XLU,
     HIT_TYPE_COUNT
-}HIT_TYPE;
-#ifdef DEBUG
-    char *HIT_TYPE_ToString[] = { CREATE_TYPES(STRINGS, HIT, HIT_TYPES) };
-#endif
+} HIT_TYPE;
+
     
 #define IMAGE(NAME, SZ, HS, HT, F3, F4, F5, F6) IMAGE_ ## NAME,
 typedef enum IMAGEIDS
@@ -2815,26 +2842,19 @@ typedef enum TVCMD
     } PROJECTILES;
 
     /** For use in Prop Records (Not to be confused with Object (canonical - Prop Definition) Records  which use PROPDEF (canonical Name)) */
-    #define PROP_TYPES(TYPE)\
-        TYPE NUL            \
-        TYPE OBJ            \
-        TYPE DOOR           \
-        TYPE CHR            \
-        TYPE WEAPON         \
-        TYPE PLAYER         \
-        TYPE VIEWER         \
-        TYPE EXPLOSION      \
-        TYPE SMOKE
-
     typedef enum PROP_TYPE
     {
-        CREATE_TYPES(ENUM, PROP_TYPE, PROP_TYPES)
+        PROP_TYPE_NUL,
+        PROP_TYPE_OBJ,
+        PROP_TYPE_DOOR,
+        PROP_TYPE_CHR,
+        PROP_TYPE_WEAPON,
+        PROP_TYPE_PLAYER,
+        PROP_TYPE_VIEWER,
+        PROP_TYPE_EXPLOSION,
+        PROP_TYPE_SMOKE,
         PROP_TYPE_MAX
     } PROP_TYPE;
-
-    #ifdef DEBUG
-    char *PROP_TYPE_ToString[] = { CREATE_TYPES(STRINGS, PROP_TYPE, PROP_TYPES) };
-    #endif
 
 #pragma endregion
 
@@ -2842,79 +2862,75 @@ typedef enum TVCMD
     // used by characters
      
     /*Action Type to be performed by chr (canonical names)*/
-    #define ACT_STATUS(STATUS)  \
-        STATUS NONE             \
-        STATUS NORMAL           \
-        STATUS COVERWAIT        \
-        STATUS GRENADEWAIT      \
-        STATUS WAITING          \
-        STATUS COVERGOTO        \
-        STATUS COVERBREAK       \
-        STATUS COVERSEEN        \
-        STATUS FLANKLEFT        \
-        STATUS FLANKRIGHT       \
-        STATUS DODGE            \
-        STATUS GRENADE          \
-        STATUS WAITSEEN         \
-        STATUS WITHDRAW         \
-        STATUS SHOOTING         \
-        STATUS SYNCSHOOT        \
-        STATUS WAITTIMEOUT      \
-        STATUS COVERTIMEOUT     \
-        STATUS TRACKING         \
-        STATUS RETREAT          \
-        STATUS SURRENDER        \
-        STATUS TALKING          \
-        STATUS LISTENING        \
-        STATUS GOTOALARM        \
-        STATUS BOTFRIENDFOLLOW  \
-        STATUS BOTHIDE          \
-        STATUS BOTPATH          \
-        STATUS BOTINJURED       \
-        STATUS BOTNORMAL        \
-        STATUS BOTSHOOTING      \
-        STATUS DRUGGED          \
-        STATUS PANIC            \
-        STATUS RUNFROMGRENADE   \
-        STATUS UNARMEDATTACK
     typedef enum ACT_STATUS
     {
-        CREATE_TYPES(ENUM, , ACT_STATUS)
-            ACT_STATUS_MAX
+        ACT_STATUS_NONE,
+        ACT_STATUS_NORMAL,
+        ACT_STATUS_COVERWAIT,
+        ACT_STATUS_GRENADEWAIT,
+        ACT_STATUS_WAITING,
+        ACT_STATUS_COVERGOTO,
+        ACT_STATUS_COVERBREAK,
+        ACT_STATUS_COVERSEEN,
+        ACT_STATUS_FLANKLEFT,
+        ACT_STATUS_FLANKRIGHT,
+        ACT_STATUS_DODGE,
+        ACT_STATUS_GRENADE,
+        ACT_STATUS_WAITSEEN,
+        ACT_STATUS_WITHDRAW,
+        ACT_STATUS_SHOOTING,
+        ACT_STATUS_SYNCSHOOT,
+        ACT_STATUS_WAITTIMEOUT,
+        ACT_STATUS_COVERTIMEOUT,
+        ACT_STATUS_TRACKING,
+        ACT_STATUS_RETREAT,
+        ACT_STATUS_SURRENDER,
+        ACT_STATUS_TALKING,
+        ACT_STATUS_LISTENING,
+        ACT_STATUS_GOTOALARM,
+        ACT_STATUS_BOTFRIENDFOLLOW,
+        ACT_STATUS_BOTHIDE,
+        ACT_STATUS_BOTPATH,
+        ACT_STATUS_BOTINJURED,
+        ACT_STATUS_BOTNORMAL,
+        ACT_STATUS_BOTSHOOTING,
+        ACT_STATUS_DRUGGED,
+        ACT_STATUS_PANIC,
+        ACT_STATUS_RUNFROMGRENADE,
+        ACT_STATUS_UNARMEDATTACK,
+        ACT_STATUS_MAX
     } ACT_STATUS;
 
-    #ifdef DEBUG
-    char *ACT_STATUS_ToString[] = {CREATE_TYPES(STRINGS, , ACT_STATUS)};
-    #endif
-
-    #define ACT_TYPES(ACT)  \
-        ACT INIT            \
-        ACT STAND           \
-        ACT KNEEL           \
-        ACT ANIM            \
-        ACT DIE             \
-        ACT DEAD            \
-        ACT ARGH            \
-        ACT PREARGH         \
-        ACT ATTACK          \
-        ACT ATTACKWALK      \
-        ACT ATTACKROLL      \
-        ACT SIDESTEP        \
-        ACT JUMPOUT         \
-        ACT RUNPOS          \
-        ACT PATROL          \
-        ACT GOPOS           \
-        ACT SURRENDER       \
-        ACT LOOKATTARGET    \
-        ACT SURPRISED       \
-        ACT STARTALARM      \
-        ACT THROWGRENADE    \
-        ACT TURNDIR         \
-        ACT TEST            \
-        ACT BONDINTRO       \
-        ACT BONDDIE         \
-        ACT BONDMULTI       \
-    /*	PD ONLY
+    /*Action Type to be performed by chr (canonical names)*/
+    typedef enum ACT_TYPE
+    {
+        ACT_INIT,
+        ACT_STAND,
+        ACT_KNEEL,
+        ACT_ANIM,
+        ACT_DIE,
+        ACT_DEAD,
+        ACT_ARGH,
+        ACT_PREARGH,
+        ACT_ATTACK,
+        ACT_ATTACKWALK,
+        ACT_ATTACKROLL,
+        ACT_SIDESTEP,
+        ACT_JUMPOUT,
+        ACT_RUNPOS,
+        ACT_PATROL,
+        ACT_GOPOS,
+        ACT_SURRENDER,
+        ACT_LOOKATTARGET,
+        ACT_SURPRISED,
+        ACT_STARTALARM,
+        ACT_THROWGRENADE,
+        ACT_TURNDIR,
+        ACT_TEST,
+        ACT_BONDINTRO,
+        ACT_BONDDIE,
+        ACT_BONDMULTI,
+        /*	PD ONLY
         ACT_BOT_ATTACKSTAND
         ACT_BOT_ATTACKKNEEL
         ACT_BOT_ATTACKSTRAFE
@@ -2925,17 +2941,9 @@ typedef enum TVCMD
         ACT_ROBOTATTACK
         ACT_SKJUMP* 
         */
-    /*Action Type to be performed by chr (canonical names)*/
-    typedef enum ACT_TYPE
-    {
-        CREATE_TYPES(ENUM, ACT, ACT_TYPES)
         ACT_NULL,
         ACT_TYPE_MAX
     } ACT_TYPE;
-
-    #ifdef DEBUG
-    char *ACT_TYPE_ToString[] = {CREATE_TYPES(STRINGS, ACT, ACT_TYPES) "ACT_NULL"};
-    #endif
 
 
     typedef enum AMMOTYPE

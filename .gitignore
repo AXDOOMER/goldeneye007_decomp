@@ -93,3 +93,6 @@ uld_c.c
 umerge_c.c
 uopt_c.c
 usplit_c.c
+
+#exclude local user scripts in root folder
+/my_*.sh
