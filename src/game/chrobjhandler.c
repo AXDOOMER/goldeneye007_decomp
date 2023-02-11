@@ -30144,500 +30144,209 @@ void append_text_ammo_amount_word(u8 *buffer, AMMOTYPE ammotype,u32 amount)
 }
 
 
-
-
-
-
-
-#ifdef NONMATCHING//
-void apped_text_ammotype(u8 *buffer,AMMOTYPE ammotype,u32 amount)
+void apped_text_ammotype(u8 *buffer, AMMOTYPE ammotype, s32 amount)
 {
     u8 *textfiletext;
-    
-    if (((ammotype == AMMO_9MM) || (ammotype == AMMO_9MM_2)) || (ammotype == AMMO_RIFLE)) {
+    if (((ammotype == AMMO_9MM) || (ammotype == AMMO_9MM_2)) || (ammotype == AMMO_RIFLE))
+    {
         textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_05)); //ammo
         strcat(buffer,textfiletext);
     }
-    else {
-        if (ammotype == AMMO_KNIFE) {
+    else
+    {
+        if (ammotype == AMMO_KNIFE)
+        {
             textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_0F)); //throwing
             strcat(buffer,textfiletext);
-            if (amount == 1) {
+            if (amount == 1)
+            {
                 textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_10)); //knife
                 strcat(buffer,textfiletext);
             }
-            else {
+            else
+            {
                 textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_11)); //knives
                 strcat(buffer,textfiletext);
             }
         }
-        else {
-            if (ammotype == AMMO_DYNAMITE) {
-                if (amount == 1) {
+        else
+        {
+            if (ammotype == AMMO_DYNAMITE)
+            {
+                if (amount == 1)
+                {
                     textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_19)); //stick
                     strcat(buffer,textfiletext);
                 }
-                else {
+                else
+                {
                     textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_1A)); //sticks
                     strcat(buffer,textfiletext);
                 }
                 textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_18)); //of dynamite
                 strcat(buffer,textfiletext);
             }
-            else {
-                switch(ammotype) {
-                case AMMO_SHOTGUN:
-                    textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_06)); //shotgun cartridge
-                    strcat(buffer,textfiletext);
-                    break;
-                case AMMO_GRENADE:
-                    textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_09)); //hand grenade
-                    strcat(buffer,textfiletext);
-                    break;
-                case AMMO_ROCKETS:
-                    textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_0B)); //rocket
-                    strcat(buffer,textfiletext);
-                    break;
-                case AMMO_REMOTEMINE:
-                    textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_0C)); //remote mine
-                    strcat(buffer,textfiletext);
-                    break;
-                case AMMO_PROXMINE:
-                    textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_0D)); //proximity mine
-                    strcat(buffer,textfiletext);
-                    break;
-                case AMMO_TIMEDMINE:
-                    textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_0E)); //timed mine
-                    strcat(buffer,textfiletext);
-                    break;
-                case AMMO_GRENADEROUND:
-                    textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_0A)); //grenade round
-                    strcat(buffer,textfiletext);
-                    break;
-                case AMMO_MAGNUM:
-                    textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_07)); //magnum bullet
-                    strcat(buffer,textfiletext);
-                    break;
-                case AMMO_GGUN:
-                    textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_08)); //golden bullet
-                    strcat(buffer,textfiletext);
-                    break;
-                case AMMO_DARTS:
-                    textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_13)); //dart
-                    strcat(buffer,textfiletext);
-                    break;
-                case AMMO_EXPLOSIVEPEN:
-                    textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_14)); //explosive pen
-                    strcat(buffer,textfiletext);
-                    break;
-                case AMMO_BOMBCASE:
-                    textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_15)); //explosive case
-                    strcat(buffer,textfiletext);
-                    break;
-                case AMMO_FLARE:
-                    textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_16)); //flare
-                    strcat(buffer,textfiletext);
-                    break;
-                case AMMO_PITON:
-                    textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_17)); //piton
-                    strcat(buffer,textfiletext);
-                    break;
-                case AMMO_BUG:
-                    textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_1b)); //bug
-                    strcat(buffer,textfiletext);
-                    break;
-                case AMMO_MICRO_CAMERA:
-                    textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_1c)); //micro camera
-                    strcat(buffer,textfiletext);
-                    break;
-                case AMMO_GEKEY:
-                    textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_1d)); //GoldenEye key
-                    strcat(buffer,textfiletext);
-                    break;
-                case AMMO_PLASTIQUE:
-                    textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_1f)); //plastique
-                    strcat(buffer,textfiletext);
-                    break;
-                case AMMO_TOKEN:
-                    textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_1e)); //token
-                    strcat(buffer,textfiletext);
+            else
+            {
+                switch(ammotype)
+                {
+                    case AMMO_SHOTGUN:
+                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_06)); //shotgun cartridge
+                        strcat(buffer,textfiletext);
+                        break;
+                    case AMMO_MAGNUM:
+                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_07)); //magnum bullet
+                        strcat(buffer,textfiletext);
+                        break;
+                    case AMMO_GGUN:
+                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_08)); //golden bullet
+                        strcat(buffer,textfiletext);
+                        break;
+                    case AMMO_GRENADE:
+                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_09)); //hand grenade
+                        strcat(buffer,textfiletext);
+                        break;
+                    case AMMO_GRENADEROUND:
+                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_0A)); //grenade round
+                        strcat(buffer,textfiletext);
+                        break;
+                    case AMMO_ROCKETS:
+                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_0B)); //rocket
+                        strcat(buffer,textfiletext);
+                        break;
+                    case AMMO_REMOTEMINE:
+                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_0C)); //remote mine
+                        strcat(buffer,textfiletext);
+                        break;
+                    case AMMO_PROXMINE:
+                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_0D)); //proximity mine
+                        strcat(buffer,textfiletext);
+                        break;
+                    case AMMO_TIMEDMINE:
+                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_0E)); //timed mine
+                        strcat(buffer,textfiletext);
+                        break;
+                    case AMMO_DARTS:
+                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_13)); //dart
+                        strcat(buffer,textfiletext);
+                        break;
+                    case AMMO_EXPLOSIVEPEN:
+                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_14)); //explosive pen
+                        strcat(buffer,textfiletext);
+                        break;
+                    case AMMO_BOMBCASE:
+                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_15)); //explosive case
+                        strcat(buffer,textfiletext);
+                        break;
+                    case AMMO_FLARE:
+                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_16)); //flare
+                        strcat(buffer,textfiletext);
+                        break;
+                    case AMMO_PITON:
+                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_17)); //piton
+                        strcat(buffer,textfiletext);
+                        break;
+                    case AMMO_BUG:
+                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_1B)); //bug
+                        strcat(buffer,textfiletext);
+                        break;
+                    case AMMO_MICRO_CAMERA:
+                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_1C)); //micro camera
+                        strcat(buffer,textfiletext);
+                        break;
+                    case AMMO_GEKEY:
+                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_1D)); //GoldenEye key
+                        strcat(buffer,textfiletext);
+                        break;
+                    case AMMO_TOKEN:
+                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_1E)); //token
+                        strcat(buffer,textfiletext);
+                        break;
+                    case AMMO_PLASTIQUE:
+                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_1F)); //plastique
+                        strcat(buffer,textfiletext);
+                        break;
                 }
-                if (1 < (int)amount) {
+                if (1 < amount)
+                {
                     textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_12)); //s
                     strcat(buffer,textfiletext);
                 }
             }
         }
     }
-    return;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-/*D:80052F84*/
-glabel jpt_80052F84
-.word text_pickup_shotgun_cartridge
-.word text_pickup_hand_grenade
-.word text_pickup_rocket
-.word text_pickup_remote_mine
-.word text_pickup_proximity_mine
-.word text_pickup_timed_mine
-.word pluralize_multiples
-.word text_pickup_grenade_round
-.word text_pickup_magnum_bullet
-.word text_pickup_golden_bullet
-.word text_pickup_dart
-.word text_pickup_explosive_pen
-.word text_pickup_explosive_case
-.word text_pickup_flare
-.word text_pickup_piton
-.word pluralize_multiples
-.word text_pickup_bug
-.word text_pickup_micro_camera
-.word text_pickup_goldeneye_key
-.word text_pickup_plastique
-.word pluralize_multiples
-.word pluralize_multiples
-.word pluralize_multiples
-.word pluralize_multiples
-.word pluralize_multiples
-.word text_pickup_token
-
-
-
-.text
-glabel apped_text_ammotype
-/* 083F3C 7F04F40C 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 083F40 7F04F410 AFB00018 */  sw    $s0, 0x18($sp)
-/* 083F44 7F04F414 24020001 */  li    $v0, 1
-/* 083F48 7F04F418 00808025 */  move  $s0, $a0
-/* 083F4C 7F04F41C AFBF001C */  sw    $ra, 0x1c($sp)
-/* 083F50 7F04F420 10A20006 */  beq   $a1, $v0, .L7F04F43C
-/* 083F54 7F04F424 AFA60028 */   sw    $a2, 0x28($sp)
-/* 083F58 7F04F428 24010002 */  li    $at, 2
-/* 083F5C 7F04F42C 10A10003 */  beq   $a1, $at, .L7F04F43C
-/* 083F60 7F04F430 24010003 */   li    $at, 3
-/* 083F64 7F04F434 54A10009 */  bnel  $a1, $at, .L7F04F45C
-/* 083F68 7F04F438 2401000A */   li    $at, 10
-.L7F04F43C:
-/* 083F6C 7F04F43C 0FC30776 */  jal   langGet
-/* 083F70 7F04F440 3404A405 */   li    $a0, 41989
-/* 083F74 7F04F444 02002025 */  move  $a0, $s0
-/* 083F78 7F04F448 0C0029FF */  jal   strcat
-/* 083F7C 7F04F44C 00402825 */   move  $a1, $v0
-/* 083F80 7F04F450 100000C9 */  b     .L7F04F778
-/* 083F84 7F04F454 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 083F88 7F04F458 2401000A */  li    $at, 10
-.L7F04F45C:
-/* 083F8C 7F04F45C 54A10019 */  bnel  $a1, $at, .L7F04F4C4
-/* 083F90 7F04F460 24010013 */   li    $at, 19
-/* 083F94 7F04F464 0FC30776 */  jal   langGet
-/* 083F98 7F04F468 3404A40F */   li    $a0, 41999
-/* 083F9C 7F04F46C 02002025 */  move  $a0, $s0
-/* 083FA0 7F04F470 0C0029FF */  jal   strcat
-/* 083FA4 7F04F474 00402825 */   move  $a1, $v0
-/* 083FA8 7F04F478 8FAE0028 */  lw    $t6, 0x28($sp)
-/* 083FAC 7F04F47C 24010001 */  li    $at, 1
-/* 083FB0 7F04F480 15C10008 */  bne   $t6, $at, .L7F04F4A4
-/* 083FB4 7F04F484 00000000 */   nop   
-/* 083FB8 7F04F488 0FC30776 */  jal   langGet
-/* 083FBC 7F04F48C 3404A410 */   li    $a0, 42000
-/* 083FC0 7F04F490 02002025 */  move  $a0, $s0
-/* 083FC4 7F04F494 0C0029FF */  jal   strcat
-/* 083FC8 7F04F498 00402825 */   move  $a1, $v0
-/* 083FCC 7F04F49C 100000B6 */  b     .L7F04F778
-/* 083FD0 7F04F4A0 8FBF001C */   lw    $ra, 0x1c($sp)
-.L7F04F4A4:
-/* 083FD4 7F04F4A4 0FC30776 */  jal   langGet
-/* 083FD8 7F04F4A8 3404A411 */   li    $a0, 42001
-/* 083FDC 7F04F4AC 02002025 */  move  $a0, $s0
-/* 083FE0 7F04F4B0 0C0029FF */  jal   strcat
-/* 083FE4 7F04F4B4 00402825 */   move  $a1, $v0
-/* 083FE8 7F04F4B8 100000AF */  b     .L7F04F778
-/* 083FEC 7F04F4BC 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 083FF0 7F04F4C0 24010013 */  li    $at, 19
-.L7F04F4C4:
-/* 083FF4 7F04F4C4 14A10017 */  bne   $a1, $at, .L7F04F524
-/* 083FF8 7F04F4C8 24B8FFFC */   addiu $t8, $a1, -4
-/* 083FFC 7F04F4CC 8FAF0028 */  lw    $t7, 0x28($sp)
-/* 084000 7F04F4D0 15E20008 */  bne   $t7, $v0, .L7F04F4F4
-/* 084004 7F04F4D4 00000000 */   nop   
-/* 084008 7F04F4D8 0FC30776 */  jal   langGet
-/* 08400C 7F04F4DC 3404A419 */   li    $a0, 42009
-/* 084010 7F04F4E0 02002025 */  move  $a0, $s0
-/* 084014 7F04F4E4 0C0029FF */  jal   strcat
-/* 084018 7F04F4E8 00402825 */   move  $a1, $v0
-/* 08401C 7F04F4EC 10000006 */  b     .L7F04F508
-/* 084020 7F04F4F0 00000000 */   nop   
-.L7F04F4F4:
-/* 084024 7F04F4F4 0FC30776 */  jal   langGet
-/* 084028 7F04F4F8 3404A41A */   li    $a0, 42010
-/* 08402C 7F04F4FC 02002025 */  move  $a0, $s0
-/* 084030 7F04F500 0C0029FF */  jal   strcat
-/* 084034 7F04F504 00402825 */   move  $a1, $v0
-.L7F04F508:
-/* 084038 7F04F508 0FC30776 */  jal   langGet
-/* 08403C 7F04F50C 3404A418 */   li    $a0, 42008
-/* 084040 7F04F510 02002025 */  move  $a0, $s0
-/* 084044 7F04F514 0C0029FF */  jal   strcat
-/* 084048 7F04F518 00402825 */   move  $a1, $v0
-/* 08404C 7F04F51C 10000096 */  b     .L7F04F778
-/* 084050 7F04F520 8FBF001C */   lw    $ra, 0x1c($sp)
-.L7F04F524:
-/* 084054 7F04F524 2F01001A */  sltiu $at, $t8, 0x1a
-/* 084058 7F04F528 10200089 */  beqz  $at, .L7F04F750
-/* 08405C 7F04F52C 0018C080 */   sll   $t8, $t8, 2
-/* 084060 7F04F530 3C018005 */  lui   $at, %hi(jpt_80052F84)
-/* 084064 7F04F534 00380821 */  addu  $at, $at, $t8
-/* 084068 7F04F538 8C382F84 */  lw    $t8, %lo(jpt_80052F84)($at)
-/* 08406C 7F04F53C 03000008 */  jr    $t8
-/* 084070 7F04F540 00000000 */   nop   
-text_pickup_shotgun_cartridge:
-/* 084074 7F04F544 0FC30776 */  jal   langGet
-/* 084078 7F04F548 3404A406 */   li    $a0, 41990
-/* 08407C 7F04F54C 02002025 */  move  $a0, $s0
-/* 084080 7F04F550 0C0029FF */  jal   strcat
-/* 084084 7F04F554 00402825 */   move  $a1, $v0
-/* 084088 7F04F558 1000007E */  b     .L7F04F754
-/* 08408C 7F04F55C 8FB90028 */   lw    $t9, 0x28($sp)
-text_pickup_magnum_bullet:
-/* 084090 7F04F560 0FC30776 */  jal   langGet
-/* 084094 7F04F564 3404A407 */   li    $a0, 41991
-/* 084098 7F04F568 02002025 */  move  $a0, $s0
-/* 08409C 7F04F56C 0C0029FF */  jal   strcat
-/* 0840A0 7F04F570 00402825 */   move  $a1, $v0
-/* 0840A4 7F04F574 10000077 */  b     .L7F04F754
-/* 0840A8 7F04F578 8FB90028 */   lw    $t9, 0x28($sp)
-text_pickup_golden_bullet:
-/* 0840AC 7F04F57C 0FC30776 */  jal   langGet
-/* 0840B0 7F04F580 3404A408 */   li    $a0, 41992
-/* 0840B4 7F04F584 02002025 */  move  $a0, $s0
-/* 0840B8 7F04F588 0C0029FF */  jal   strcat
-/* 0840BC 7F04F58C 00402825 */   move  $a1, $v0
-/* 0840C0 7F04F590 10000070 */  b     .L7F04F754
-/* 0840C4 7F04F594 8FB90028 */   lw    $t9, 0x28($sp)
-text_pickup_hand_grenade:
-/* 0840C8 7F04F598 0FC30776 */  jal   langGet
-/* 0840CC 7F04F59C 3404A409 */   li    $a0, 41993
-/* 0840D0 7F04F5A0 02002025 */  move  $a0, $s0
-/* 0840D4 7F04F5A4 0C0029FF */  jal   strcat
-/* 0840D8 7F04F5A8 00402825 */   move  $a1, $v0
-/* 0840DC 7F04F5AC 10000069 */  b     .L7F04F754
-/* 0840E0 7F04F5B0 8FB90028 */   lw    $t9, 0x28($sp)
-text_pickup_grenade_round:
-/* 0840E4 7F04F5B4 0FC30776 */  jal   langGet
-/* 0840E8 7F04F5B8 3404A40A */   li    $a0, 41994
-/* 0840EC 7F04F5BC 02002025 */  move  $a0, $s0
-/* 0840F0 7F04F5C0 0C0029FF */  jal   strcat
-/* 0840F4 7F04F5C4 00402825 */   move  $a1, $v0
-/* 0840F8 7F04F5C8 10000062 */  b     .L7F04F754
-/* 0840FC 7F04F5CC 8FB90028 */   lw    $t9, 0x28($sp)
-text_pickup_rocket:
-/* 084100 7F04F5D0 0FC30776 */  jal   langGet
-/* 084104 7F04F5D4 3404A40B */   li    $a0, 41995
-/* 084108 7F04F5D8 02002025 */  move  $a0, $s0
-/* 08410C 7F04F5DC 0C0029FF */  jal   strcat
-/* 084110 7F04F5E0 00402825 */   move  $a1, $v0
-/* 084114 7F04F5E4 1000005B */  b     .L7F04F754
-/* 084118 7F04F5E8 8FB90028 */   lw    $t9, 0x28($sp)
-text_pickup_remote_mine:
-/* 08411C 7F04F5EC 0FC30776 */  jal   langGet
-/* 084120 7F04F5F0 3404A40C */   li    $a0, 41996
-/* 084124 7F04F5F4 02002025 */  move  $a0, $s0
-/* 084128 7F04F5F8 0C0029FF */  jal   strcat
-/* 08412C 7F04F5FC 00402825 */   move  $a1, $v0
-/* 084130 7F04F600 10000054 */  b     .L7F04F754
-/* 084134 7F04F604 8FB90028 */   lw    $t9, 0x28($sp)
-text_pickup_proximity_mine:
-/* 084138 7F04F608 0FC30776 */  jal   langGet
-/* 08413C 7F04F60C 3404A40D */   li    $a0, 41997
-/* 084140 7F04F610 02002025 */  move  $a0, $s0
-/* 084144 7F04F614 0C0029FF */  jal   strcat
-/* 084148 7F04F618 00402825 */   move  $a1, $v0
-/* 08414C 7F04F61C 1000004D */  b     .L7F04F754
-/* 084150 7F04F620 8FB90028 */   lw    $t9, 0x28($sp)
-text_pickup_timed_mine:
-/* 084154 7F04F624 0FC30776 */  jal   langGet
-/* 084158 7F04F628 3404A40E */   li    $a0, 41998
-/* 08415C 7F04F62C 02002025 */  move  $a0, $s0
-/* 084160 7F04F630 0C0029FF */  jal   strcat
-/* 084164 7F04F634 00402825 */   move  $a1, $v0
-/* 084168 7F04F638 10000046 */  b     .L7F04F754
-/* 08416C 7F04F63C 8FB90028 */   lw    $t9, 0x28($sp)
-text_pickup_dart:
-/* 084170 7F04F640 0FC30776 */  jal   langGet
-/* 084174 7F04F644 3404A413 */   li    $a0, 42003
-/* 084178 7F04F648 02002025 */  move  $a0, $s0
-/* 08417C 7F04F64C 0C0029FF */  jal   strcat
-/* 084180 7F04F650 00402825 */   move  $a1, $v0
-/* 084184 7F04F654 1000003F */  b     .L7F04F754
-/* 084188 7F04F658 8FB90028 */   lw    $t9, 0x28($sp)
-text_pickup_explosive_pen:
-/* 08418C 7F04F65C 0FC30776 */  jal   langGet
-/* 084190 7F04F660 3404A414 */   li    $a0, 42004
-/* 084194 7F04F664 02002025 */  move  $a0, $s0
-/* 084198 7F04F668 0C0029FF */  jal   strcat
-/* 08419C 7F04F66C 00402825 */   move  $a1, $v0
-/* 0841A0 7F04F670 10000038 */  b     .L7F04F754
-/* 0841A4 7F04F674 8FB90028 */   lw    $t9, 0x28($sp)
-text_pickup_explosive_case:
-/* 0841A8 7F04F678 0FC30776 */  jal   langGet
-/* 0841AC 7F04F67C 3404A415 */   li    $a0, 42005
-/* 0841B0 7F04F680 02002025 */  move  $a0, $s0
-/* 0841B4 7F04F684 0C0029FF */  jal   strcat
-/* 0841B8 7F04F688 00402825 */   move  $a1, $v0
-/* 0841BC 7F04F68C 10000031 */  b     .L7F04F754
-/* 0841C0 7F04F690 8FB90028 */   lw    $t9, 0x28($sp)
-text_pickup_flare:
-/* 0841C4 7F04F694 0FC30776 */  jal   langGet
-/* 0841C8 7F04F698 3404A416 */   li    $a0, 42006
-/* 0841CC 7F04F69C 02002025 */  move  $a0, $s0
-/* 0841D0 7F04F6A0 0C0029FF */  jal   strcat
-/* 0841D4 7F04F6A4 00402825 */   move  $a1, $v0
-/* 0841D8 7F04F6A8 1000002A */  b     .L7F04F754
-/* 0841DC 7F04F6AC 8FB90028 */   lw    $t9, 0x28($sp)
-text_pickup_piton:
-/* 0841E0 7F04F6B0 0FC30776 */  jal   langGet
-/* 0841E4 7F04F6B4 3404A417 */   li    $a0, 42007
-/* 0841E8 7F04F6B8 02002025 */  move  $a0, $s0
-/* 0841EC 7F04F6BC 0C0029FF */  jal   strcat
-/* 0841F0 7F04F6C0 00402825 */   move  $a1, $v0
-/* 0841F4 7F04F6C4 10000023 */  b     .L7F04F754
-/* 0841F8 7F04F6C8 8FB90028 */   lw    $t9, 0x28($sp)
-text_pickup_bug:
-/* 0841FC 7F04F6CC 0FC30776 */  jal   langGet
-/* 084200 7F04F6D0 3404A41B */   li    $a0, 42011
-/* 084204 7F04F6D4 02002025 */  move  $a0, $s0
-/* 084208 7F04F6D8 0C0029FF */  jal   strcat
-/* 08420C 7F04F6DC 00402825 */   move  $a1, $v0
-/* 084210 7F04F6E0 1000001C */  b     .L7F04F754
-/* 084214 7F04F6E4 8FB90028 */   lw    $t9, 0x28($sp)
-text_pickup_micro_camera:
-/* 084218 7F04F6E8 0FC30776 */  jal   langGet
-/* 08421C 7F04F6EC 3404A41C */   li    $a0, 42012
-/* 084220 7F04F6F0 02002025 */  move  $a0, $s0
-/* 084224 7F04F6F4 0C0029FF */  jal   strcat
-/* 084228 7F04F6F8 00402825 */   move  $a1, $v0
-/* 08422C 7F04F6FC 10000015 */  b     .L7F04F754
-/* 084230 7F04F700 8FB90028 */   lw    $t9, 0x28($sp)
-text_pickup_goldeneye_key:
-/* 084234 7F04F704 0FC30776 */  jal   langGet
-/* 084238 7F04F708 3404A41D */   li    $a0, 42013
-/* 08423C 7F04F70C 02002025 */  move  $a0, $s0
-/* 084240 7F04F710 0C0029FF */  jal   strcat
-/* 084244 7F04F714 00402825 */   move  $a1, $v0
-/* 084248 7F04F718 1000000E */  b     .L7F04F754
-/* 08424C 7F04F71C 8FB90028 */   lw    $t9, 0x28($sp)
-text_pickup_token:
-/* 084250 7F04F720 0FC30776 */  jal   langGet
-/* 084254 7F04F724 3404A41E */   li    $a0, 42014
-/* 084258 7F04F728 02002025 */  move  $a0, $s0
-/* 08425C 7F04F72C 0C0029FF */  jal   strcat
-/* 084260 7F04F730 00402825 */   move  $a1, $v0
-/* 084264 7F04F734 10000007 */  b     .L7F04F754
-/* 084268 7F04F738 8FB90028 */   lw    $t9, 0x28($sp)
-text_pickup_plastique:
-/* 08426C 7F04F73C 0FC30776 */  jal   langGet
-/* 084270 7F04F740 3404A41F */   li    $a0, 42015
-/* 084274 7F04F744 02002025 */  move  $a0, $s0
-/* 084278 7F04F748 0C0029FF */  jal   strcat
-/* 08427C 7F04F74C 00402825 */   move  $a1, $v0
-pluralize_multiples:
-.L7F04F750:
-/* 084280 7F04F750 8FB90028 */  lw    $t9, 0x28($sp)
-.L7F04F754:
-/* 084284 7F04F754 2B210002 */  slti  $at, $t9, 2
-/* 084288 7F04F758 54200007 */  bnezl $at, .L7F04F778
-/* 08428C 7F04F75C 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 084290 7F04F760 0FC30776 */  jal   langGet
-/* 084294 7F04F764 3404A412 */   li    $a0, 42002
-/* 084298 7F04F768 02002025 */  move  $a0, $s0
-/* 08429C 7F04F76C 0C0029FF */  jal   strcat
-/* 0842A0 7F04F770 00402825 */   move  $a1, $v0
-/* 0842A4 7F04F774 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F04F778:
-/* 0842A8 7F04F778 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0842AC 7F04F77C 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0842B0 7F04F780 03E00008 */  jr    $ra
-/* 0842B4 7F04F784 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 
 void set_sound_effect_for_ammo_collection(AMMOTYPE ammotype)
-
 {
     switch(ammotype) {
-    case AMMO_9MM:
-    case AMMO_9MM_2:
-    case AMMO_RIFLE:
-    case AMMO_SHOTGUN:
-    case AMMO_GRENADE:
-    case AMMO_ROCKETS:
-    case AMMO_GRENADEROUND:
-    case AMMO_MAGNUM:
-    case AMMO_GGUN:
-    case AMMO_DARTS:
-    case AMMO_EXPLOSIVEPEN:
-    case AMMO_FLARE:
-    case AMMO_PITON:
-    case AMMO_DYNAMITE:
-    case AMMO_GEKEY:
-    case AMMO_TOKEN:
-        sndPlaySfx(g_musicSfxBufferPtr,PICKUP_AMMO_SFX,0);
-        break;
-    case AMMO_REMOTEMINE:
-    case AMMO_PROXMINE:
-    case AMMO_TIMEDMINE:
-    case AMMO_BOMBCASE:
-    case AMMO_BUG:
-    case AMMO_MICRO_CAMERA:
-    case AMMO_PLASTIQUE:
-        sndPlaySfx(g_musicSfxBufferPtr,PICKUP_MINE_SFX,0);
-        break;
-    case AMMO_KNIFE:
-        sndPlaySfx(g_musicSfxBufferPtr,PICKUP_KNIFE_SFX,0);
+        case AMMO_9MM:
+        case AMMO_9MM_2:
+        case AMMO_RIFLE:
+        case AMMO_SHOTGUN:
+        case AMMO_GRENADE:
+        case AMMO_ROCKETS:
+        case AMMO_GRENADEROUND:
+        case AMMO_MAGNUM:
+        case AMMO_GGUN:
+        case AMMO_DARTS:
+        case AMMO_EXPLOSIVEPEN:
+        case AMMO_FLARE:
+        case AMMO_PITON:
+        case AMMO_DYNAMITE:
+        case AMMO_GEKEY:
+        case AMMO_TOKEN:
+            sndPlaySfx(g_musicSfxBufferPtr,PICKUP_AMMO_SFX,0);
+            break;
+        case AMMO_REMOTEMINE:
+        case AMMO_PROXMINE:
+        case AMMO_TIMEDMINE:
+        case AMMO_BOMBCASE:
+        case AMMO_BUG:
+        case AMMO_MICRO_CAMERA:
+        case AMMO_PLASTIQUE:
+            sndPlaySfx(g_musicSfxBufferPtr,PICKUP_MINE_SFX,0);
+            break;
+        case AMMO_KNIFE:
+            sndPlaySfx(g_musicSfxBufferPtr,PICKUP_KNIFE_SFX,0);
     }
-    return;
 }
-
-
-
-
 
 
 void set_sound_effect_for_weapontype_collection(ITEM_IDS weapontype)
 {
-    if ((weapontype == ITEM_KNIFE) || (weapontype == ITEM_THROWKNIFE)) {
+    if ((weapontype == ITEM_KNIFE) || (weapontype == ITEM_THROWKNIFE))
+    {
         sndPlaySfx(g_musicSfxBufferPtr,PICKUP_KNIFE_SFX,0);
     }
-    else {
-        if (((((weapontype == ITEM_REMOTEMINE) || (weapontype == ITEM_PROXIMITYMINE)) ||
-             (weapontype == ITEM_TIMEDMINE)) ||
-            ((weapontype == ITEM_BOMBCASE || (weapontype == ITEM_BUG)))) ||
-           ((weapontype == ITEM_MICROCAMERA || (weapontype == ITEM_PLASTIQUE)))) {
+    else
+    {
+        if ((weapontype == ITEM_REMOTEMINE) || (weapontype == ITEM_PROXIMITYMINE) || (weapontype == ITEM_TIMEDMINE) ||
+            (weapontype == ITEM_BOMBCASE) || (weapontype == ITEM_BUG) || (weapontype == ITEM_MICROCAMERA) ||
+            (weapontype == ITEM_PLASTIQUE))
+        {
             sndPlaySfx(g_musicSfxBufferPtr,PICKUP_MINE_SFX,0);
         }
-        else {
-            if (((weapontype == ITEM_GRENADE) || (weapontype == ITEM_NULL87)) || (weapontype == ITEM_NULL86)
-               ) {
+        else
+        {
+            if ((weapontype == ITEM_GRENADE) || (weapontype == ITEM_NULL87) || (weapontype == ITEM_NULL86))
+            {
                 sndPlaySfx(g_musicSfxBufferPtr,PICKUP_AMMO_SFX,0);
             }
-            else {
-                if (weapontype == ITEM_LASER) {
+            else
+            {
+                if (weapontype == ITEM_LASER)
+                {
                     sndPlaySfx(g_musicSfxBufferPtr,PICKUP_LASER_SFX,0);
                 }
-                else {
+                else
+                {
                     sndPlaySfx(g_musicSfxBufferPtr,PICKUP_GUN_SFX,0);
                 }
             }
         }
     }
-    return;
 }
 
 
