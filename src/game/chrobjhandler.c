@@ -4712,8 +4712,10 @@ void propExplode(PropRecord *prop, s32 /* enum EXPLOSION_DEF */ explosionType)
  * US address 7F043D70.
  * JP address 7F044074.
  * EU address 7F043E34.
+ * 
+ * Seems to be a subset of Perfect Dark weaponTick.
 */
-void handle_thrown_explosive_detonation(struct PropRecord* prop)
+void chrobjWeaponTick(struct PropRecord* prop)
 {
     struct ObjectRecord* obj;
     struct WeaponObjRecord *weapon;
@@ -4939,7 +4941,7 @@ void sub_GAME_7F04424C(PropRecord* prop)
     }
 
     prop->flags &= ~(PROPFLAG_ONSCREEN);
-    handle_thrown_explosive_detonation(prop);
+    chrobjWeaponTick(prop);
 
     child = prop->child;
     while (child != NULL)
@@ -4976,7 +4978,7 @@ void sub_GAME_7F0442DC(PropRecord* prop)
 
         matrix_4x4_multiply_homogeneous(mtx, &obj->embedment->matrix, (Mtxf*)model->render_pos);
         modelUpdateRelationsQuick(model, model->obj->RootNode);
-        handle_thrown_explosive_detonation(prop);
+        chrobjWeaponTick(prop);
 
         child = prop->child;
         while (child != NULL)
@@ -4989,7 +4991,7 @@ void sub_GAME_7F0442DC(PropRecord* prop)
     else
     {
         prop->flags &= ~(PROPFLAG_ONSCREEN);
-        handle_thrown_explosive_detonation(prop);
+        chrobjWeaponTick(prop);
 
         child = prop->child;
         while (child != NULL)
@@ -10303,7 +10305,7 @@ glabel object_interaction
 /* 07DD08 7F0491D8 02602025 */  move  $a0, $s3
 /* 07DD0C 7F0491DC C52A0038 */  lwc1  $f10, 0x38($t1)
 /* 07DD10 7F0491E0 46005207 */  neg.s $f8, $f10
-/* 07DD14 7F0491E4 0FC10F5C */  jal   handle_thrown_explosive_detonation
+/* 07DD14 7F0491E4 0FC10F5C */  jal   chrobjWeaponTick
 /* 07DD18 7F0491E8 E6680018 */   swc1  $f8, 0x18($s3)
 /* 07DD1C 7F0491EC 8E640020 */  lw    $a0, 0x20($s3)
 /* 07DD20 7F0491F0 50800018 */  beql  $a0, $zero, .L7F049254
@@ -10321,7 +10323,7 @@ glabel object_interaction
 /* 07DD48 7F049218 92790001 */  lbu   $t9, 1($s3)
 /* 07DD4C 7F04921C 02602025 */  move  $a0, $s3
 /* 07DD50 7F049220 332CFFFD */  andi  $t4, $t9, 0xfffd
-/* 07DD54 7F049224 0FC10F5C */  jal   handle_thrown_explosive_detonation
+/* 07DD54 7F049224 0FC10F5C */  jal   chrobjWeaponTick
 /* 07DD58 7F049228 A26C0001 */   sb    $t4, 1($s3)
 /* 07DD5C 7F04922C 8E640020 */  lw    $a0, 0x20($s3)
 /* 07DD60 7F049230 50800008 */  beql  $a0, $zero, .L7F049254
@@ -15409,7 +15411,7 @@ glabel object_interaction
 /* 07E14C 7F0495DC 02602025 */  move  $a0, $s3
 /* 07E150 7F0495E0 C5AA0038 */  lwc1  $f10, 0x38($t5)
 /* 07E154 7F0495E4 46005207 */  neg.s $f8, $f10
-/* 07E158 7F0495E8 0FC1101D */  jal   handle_thrown_explosive_detonation
+/* 07E158 7F0495E8 0FC1101D */  jal   chrobjWeaponTick
 /* 07E15C 7F0495EC E6680018 */   swc1  $f8, 0x18($s3)
 /* 07E160 7F0495F0 8E640020 */  lw    $a0, 0x20($s3)
 /* 07E164 7F0495F4 50800018 */  beql  $a0, $zero, .Ljp7F049658
@@ -15427,7 +15429,7 @@ glabel object_interaction
 /* 07E18C 7F04961C 92790001 */  lbu   $t9, 1($s3)
 /* 07E190 7F049620 02602025 */  move  $a0, $s3
 /* 07E194 7F049624 3328FFFD */  andi  $t0, $t9, 0xfffd
-/* 07E198 7F049628 0FC1101D */  jal   handle_thrown_explosive_detonation
+/* 07E198 7F049628 0FC1101D */  jal   chrobjWeaponTick
 /* 07E19C 7F04962C A2680001 */   sb    $t0, 1($s3)
 /* 07E1A0 7F049630 8E640020 */  lw    $a0, 0x20($s3)
 /* 07E1A4 7F049634 50800008 */  beql  $a0, $zero, .Ljp7F049658
@@ -20522,7 +20524,7 @@ glabel object_interaction
 /* 07BDA4 7F0493B4 02602025 */  move  $a0, $s3
 /* 07BDA8 7F0493B8 C50A0038 */  lwc1  $f10, 0x38($t0)
 /* 07BDAC 7F0493BC 46005207 */  neg.s $f8, $f10
-/* 07BDB0 7F0493C0 0FC10F8D */  jal   handle_thrown_explosive_detonation
+/* 07BDB0 7F0493C0 0FC10F8D */  jal   chrobjWeaponTick
 /* 07BDB4 7F0493C4 E6680018 */   swc1  $f8, 0x18($s3)
 /* 07BDB8 7F0493C8 8E640020 */  lw    $a0, 0x20($s3)
 /* 07BDBC 7F0493CC 50800018 */  beql  $a0, $zero, .L7F049430
@@ -20540,7 +20542,7 @@ glabel object_interaction
 /* 07BDE4 7F0493F4 926A0001 */  lbu   $t2, 1($s3)
 /* 07BDE8 7F0493F8 02602025 */  move  $a0, $s3
 /* 07BDEC 7F0493FC 314BFFFD */  andi  $t3, $t2, 0xfffd
-/* 07BDF0 7F049400 0FC10F8D */  jal   handle_thrown_explosive_detonation
+/* 07BDF0 7F049400 0FC10F8D */  jal   chrobjWeaponTick
 /* 07BDF4 7F049404 A26B0001 */   sb    $t3, 1($s3)
 /* 07BDF8 7F049408 8E640020 */  lw    $a0, 0x20($s3)
 /* 07BDFC 7F04940C 50800008 */  beql  $a0, $zero, .L7F049430

@@ -1139,7 +1139,7 @@ typedef enum E_EXPLOSIONTYPE
 
 /* index into array_explosion_types.
 * Is this the same as E_EXPLOSIONTYPE ?
-* Some names are based on logic in handle_thrown_explosive_detonation method.
+* Some names are based on logic in chrobjWeaponTick method.
 */
 typedef enum EXPLOSION_DEF
 {
