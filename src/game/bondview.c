@@ -689,7 +689,7 @@ s16 getHeight330or240(void);
 void sub_GAME_7F07B1A4(void);
 bool currentPlayerIsFadeComplete(void);
 s16 get_curplayer_viewport_ulx(void);
-void sub_GAME_7F086990(s8, s8, u16, u16);
+void bondviewFrozenMoveBond(s8, s8, u16, u16);
 void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2);
 void bondviewUpdateCurrentRoomPosition(s32 arg0);
 void trigger_solo_watch_menu(s32 arg0);
@@ -16547,7 +16547,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
  * US address 7F086990.
  * EU address 7F086AB0.
 */
-void sub_GAME_7F086990(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
+void bondviewFrozenMoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 {
     struct coord3d sp64;
     struct coord3d sp58;
@@ -16776,7 +16776,7 @@ s16 bondviewGetCurrentPlayerViewportUly(void)
 /**
  * Sets/updates viewport for player.
  * Refreshes autoaim setting.
- * Arguments are passed into MoveBond or sub_GAME_7F086990.
+ * Arguments are passed into MoveBond or bondviewFrozenMoveBond.
  * Checks if necessary to call bossReturnTitleStage.
  * Set player->buttons_pressed to arg2.
  * 
@@ -16892,7 +16892,7 @@ void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2)
     }
     else
     {
-        sub_GAME_7F086990(arg0, arg1, arg2, (u16) g_CurrentPlayer->buttons_pressed);
+        bondviewFrozenMoveBond(arg0, arg1, arg2, (u16) g_CurrentPlayer->buttons_pressed);
     }
     
 #if defined(BUGFIX_R1)
