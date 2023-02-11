@@ -2708,9 +2708,9 @@ extern s32 D_8003648C;
 //D:80036490
 extern s32 g_TankDamagePenaltyTicks;
 //D:80036494
-extern s32 g_CameraMode;
+extern enum CAMERAMODE g_CameraMode;
 //D:80036498
-extern s32 enable_move_after_cinema;
+extern enum CAMERAMODE g_CameraAfterCinema;
 //D:8003649C
 extern s32 D_8003649C;
 //D:800364A0
@@ -2850,30 +2850,11 @@ D:800367ED                     .byte 0, 0, 0x14
 D:800367F0                     .word 0x32
 */
 
-//D:80036800
-extern s32 D_80036800;
-//D:80036804
-extern s32 D_80036804;
-//D:80036808
-extern s32 D_80036808;
-//D:8003680C
-extern s32 D_8003680C;
-//D:80036810
-extern s32 D_80036810;
-//D:80036814
-extern s32 D_80036814;
-//D:80036818
-extern s32 D_80036818;
-//D:8003681C
-extern s32 D_8003681C;
-//D:80036820
-extern s32 D_80036820;
-//D:80036824
-extern s32 D_80036824;
-//D:80036828
-extern s32 D_80036828;
-//D:8003682C
-extern s32 D_8003682C;
+extern struct coord3d D_80036800;
+extern struct coord3d D_8003680C;
+extern struct coord3d D_80036818;
+extern struct coord3d D_80036824;
+
 //D:80036830
 extern s32 D_80036830;
 //D:80036834
