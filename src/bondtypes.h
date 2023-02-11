@@ -3091,7 +3091,7 @@ typedef union
         s16      RightMax;                 /*0xd2 how far camera can rotate from center. 0 = free
                      rotate*/
         u32      unkd4;                    /*0xd4*/
-        u32      unk98;                    /*0xd8*/
+        u32      unkd8;                    /*0xd8*/
         u16      unkdc;                    /*0xdc*/
         u16      Speed;                    /*0xde how fast the camera turns*/
         u32      unka0;                    /*0xe0*/
@@ -3111,7 +3111,7 @@ typedef union
     typedef struct AmmoCrateRecord
     {
         inherits ObjectRecord;
-        u32      type; //Use AMMOTYPE /*0x80*/
+        AMMOTYPE ammoType; /*0x80*/
     } AmmoCrateRecord;
 
     #define New_AmmoCrateRecord(pad)               \
