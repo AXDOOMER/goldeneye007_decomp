@@ -25667,57 +25667,29 @@ ModelNode* sub_GAME_7F04B478(ObjectRecord* obj)
 }
 
 
-#ifdef NONMATCHING
-s32 sub_GAME_7F04B590(ModelFileHeader* arg0, ModelNode* arg1) {
+bool sub_GAME_7F04B590(ModelFileHeader* arg0, ModelNode* arg1)
+{
+    ModelSkeleton* onescreen = &skeleton_console_one_screen;
+    ModelSkeleton* fourscreen = &skeleton_console_four_screen;
 
+    if ((onescreen == arg0->Skeleton))
+    {
+        if (arg1 == arg0->Switches[0])
+        {
+            return FALSE;
+        }
+    }
+
+    if (fourscreen == arg0->Skeleton)
+    {
+        if ((arg1 == arg0->Switches[0]) || (arg1 == arg0->Switches[1]) || (arg1 == arg0->Switches[2]) || (arg1 == arg0->Switches[3]))
+        {
+            return FALSE;
+        }
+    }
+
+    return TRUE;
 }
-#else
-s32 sub_GAME_7F04B590(ModelFileHeader*, ModelNode*);
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F04B590
-/* 0800C0 7F04B590 8C820004 */  lw    $v0, 4($a0)
-/* 0800C4 7F04B594 3C0E8004 */  lui   $t6, %hi(skeleton_console_one_screen) 
-/* 0800C8 7F04B598 25CEA070 */  addiu $t6, %lo(skeleton_console_one_screen) # addiu $t6, $t6, -0x5f90
-/* 0800CC 7F04B59C 15C20007 */  bne   $t6, $v0, .L7F04B5BC
-/* 0800D0 7F04B5A0 3C198004 */   lui   $t9, %hi(skeleton_console_four_screen)
-/* 0800D4 7F04B5A4 8C8F0008 */  lw    $t7, 8($a0)
-/* 0800D8 7F04B5A8 8DF80000 */  lw    $t8, ($t7)
-/* 0800DC 7F04B5AC 14B80003 */  bne   $a1, $t8, .L7F04B5BC
-/* 0800E0 7F04B5B0 00000000 */   nop   
-/* 0800E4 7F04B5B4 03E00008 */  jr    $ra
-/* 0800E8 7F04B5B8 00001025 */   move  $v0, $zero
-
-.L7F04B5BC:
-/* 0800EC 7F04B5BC 2739A084 */  addiu $t9, $t9, %lo(skeleton_console_four_screen)
-/* 0800F0 7F04B5C0 57220011 */  bnel  $t9, $v0, .L7F04B608
-/* 0800F4 7F04B5C4 24020001 */   li    $v0, 1
-/* 0800F8 7F04B5C8 8C820008 */  lw    $v0, 8($a0)
-/* 0800FC 7F04B5CC 8C480000 */  lw    $t0, ($v0)
-/* 080100 7F04B5D0 10A8000A */  beq   $a1, $t0, .L7F04B5FC
-/* 080104 7F04B5D4 00000000 */   nop   
-/* 080108 7F04B5D8 8C490004 */  lw    $t1, 4($v0)
-/* 08010C 7F04B5DC 10A90007 */  beq   $a1, $t1, .L7F04B5FC
-/* 080110 7F04B5E0 00000000 */   nop   
-/* 080114 7F04B5E4 8C4A0008 */  lw    $t2, 8($v0)
-/* 080118 7F04B5E8 10AA0004 */  beq   $a1, $t2, .L7F04B5FC
-/* 08011C 7F04B5EC 00000000 */   nop   
-/* 080120 7F04B5F0 8C4B000C */  lw    $t3, 0xc($v0)
-/* 080124 7F04B5F4 54AB0004 */  bnel  $a1, $t3, .L7F04B608
-/* 080128 7F04B5F8 24020001 */   li    $v0, 1
-.L7F04B5FC:
-/* 08012C 7F04B5FC 03E00008 */  jr    $ra
-/* 080130 7F04B600 00001025 */   move  $v0, $zero
-
-/* 080134 7F04B604 24020001 */  li    $v0, 1
-.L7F04B608:
-/* 080138 7F04B608 03E00008 */  jr    $ra
-/* 08013C 7F04B60C 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
