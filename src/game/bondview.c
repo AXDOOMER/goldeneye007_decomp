@@ -5366,74 +5366,74 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
             arg6->f[2] = g_CurrentPlayer->field_488.collision_position.f[2];
         }
     }
-    else if ((g_CameraMode == CAMERAMODE_UNK5) || (g_CameraMode == CAMERAMODE_UNK6))
+    else if ((g_CameraMode == CAMERAMODE_DEATH_CAM_FIRST) || (g_CameraMode == CAMERAMODE_DEATH_CAM_SECOND))
     {
-        if (g_CameraMode == CAMERAMODE_UNK5)
+        if (g_CameraMode == CAMERAMODE_DEATH_CAM_FIRST)
+        {
+            D_800364A4 += g_GlobalTimerDelta;
+            
+            if (g_CurrentPlayer->ptr_char_objectinstance != NULL)
             {
-                D_800364A4 += g_GlobalTimerDelta;
-                
-                if (g_CurrentPlayer->ptr_char_objectinstance != NULL)
-                {
-                    if (objecthandlerGetModelField28((Model *) g_CurrentPlayer->ptr_char_objectinstance)
-                        >= sub_GAME_7F06F5C4((Model *) g_CurrentPlayer->ptr_char_objectinstance))
-                    {
-                        g_CameraAfterCinema = CAMERAMODE_INTRO;
-                    }
-                }
-                else if (D_800364A4 >= 180.0f)
+                if (objecthandlerGetModelField28((Model *) g_CurrentPlayer->ptr_char_objectinstance)
+                    >= sub_GAME_7F06F5C4((Model *) g_CurrentPlayer->ptr_char_objectinstance))
                 {
                     g_CameraAfterCinema = CAMERAMODE_INTRO;
-                }
-                
-                if ((buttons & ~oldbuttons & (CONT_A | B_BUTTON | Z_TRIG | START_BUTTON))
-                    && (g_CurrentPlayer->bonddead != 0)
-                    && (g_CurrentPlayer->redbloodfinished != 0)
-                    && (g_CurrentPlayer->deathanimfinished != 0))
-                {
-                    g_CameraAfterCinema = CAMERAMODE_INTRO;
-                    D_80036510 = CAMERAMODE_FADESWIRL;
                 }
             }
-            else if (g_CameraMode == CAMERAMODE_UNK6)
+            else if (D_800364A4 >= 180.0f)
             {
-                D_800364A4 += g_GlobalTimerDelta;
-                
-                if (g_CurrentPlayer->colourfadetimemax60 < 0.0f)
-                {
-                    g_CameraAfterCinema = CAMERAMODE_INTRO;
-                }
-                
-                if ((buttons & ~oldbuttons & (CONT_A | B_BUTTON | Z_TRIG | START_BUTTON))
-                    && (g_CurrentPlayer->bonddead != 0)
-                    && (g_CurrentPlayer->redbloodfinished != 0)
-                    && (g_CurrentPlayer->deathanimfinished != 0))
-                {
-                    D_80036510 = CAMERAMODE_FADESWIRL;
-                }
+                g_CameraAfterCinema = CAMERAMODE_INTRO;
             }
+            
+            if ((buttons & ~oldbuttons & (CONT_A | B_BUTTON | Z_TRIG | START_BUTTON))
+                && (g_CurrentPlayer->bonddead != 0)
+                && (g_CurrentPlayer->redbloodfinished != 0)
+                && (g_CurrentPlayer->deathanimfinished != 0))
+            {
+                g_CameraAfterCinema = CAMERAMODE_INTRO;
+                D_80036510 = CAMERAMODE_FADESWIRL;
+            }
+        }
+        else if (g_CameraMode == CAMERAMODE_DEATH_CAM_SECOND)
+        {
+            D_800364A4 += g_GlobalTimerDelta;
+            
+            if (g_CurrentPlayer->colourfadetimemax60 < 0.0f)
+            {
+                g_CameraAfterCinema = CAMERAMODE_INTRO;
+            }
+            
+            if ((buttons & ~oldbuttons & (CONT_A | B_BUTTON | Z_TRIG | START_BUTTON))
+                && (g_CurrentPlayer->bonddead != 0)
+                && (g_CurrentPlayer->redbloodfinished != 0)
+                && (g_CurrentPlayer->deathanimfinished != 0))
+            {
+                D_80036510 = CAMERAMODE_FADESWIRL;
+            }
+        }
 
-            pos->f[0] = flt_CODE_bss_800799E8.f[0];
-            pos->f[1] = flt_CODE_bss_800799E8.f[1];
-            pos->f[2] = flt_CODE_bss_800799E8.f[2];
-        
-            if (dword_CODE_bss_800799F4 == g_CurrentPlayer->prop)
-            {
-                pos2->f[0] = g_CurrentPlayer->field_3C4;
-                pos2->f[1] = g_CurrentPlayer->field_3C8;
-                pos2->f[2] = g_CurrentPlayer->field_3CC;
-            }
-            else
-            {
-                pos2->f[0] = dword_CODE_bss_800799F4->pos.f[0];
-                pos2->f[1] = dword_CODE_bss_800799F4->pos.f[1];
-                pos2->f[2] = dword_CODE_bss_800799F4->pos.f[2];
-            }
-        
-            *stan = g_CurrentPlayer->field_488.current_tile_ptr;
-        
-            arg6->f[0] = g_CurrentPlayer->field_488.collision_position.f[0];
-            arg6->f[1] = g_CurrentPlayer->field_488.collision_position.f[1];
-            arg6->f[2] = g_CurrentPlayer->field_488.collision_position.f[2];
+        pos->f[0] = flt_CODE_bss_800799E8.f[0];
+        pos->f[1] = flt_CODE_bss_800799E8.f[1];
+        pos->f[2] = flt_CODE_bss_800799E8.f[2];
+    
+        if (dword_CODE_bss_800799F4 == g_CurrentPlayer->prop)
+        {
+            pos2->f[0] = g_CurrentPlayer->field_3C4;
+            pos2->f[1] = g_CurrentPlayer->field_3C8;
+            pos2->f[2] = g_CurrentPlayer->field_3CC;
+        }
+        else
+        {
+            pos2->f[0] = dword_CODE_bss_800799F4->pos.f[0];
+            pos2->f[1] = dword_CODE_bss_800799F4->pos.f[1];
+            pos2->f[2] = dword_CODE_bss_800799F4->pos.f[2];
+        }
+    
+        *stan = g_CurrentPlayer->field_488.current_tile_ptr;
+    
+        arg6->f[0] = g_CurrentPlayer->field_488.collision_position.f[0];
+        arg6->f[1] = g_CurrentPlayer->field_488.collision_position.f[1];
+        arg6->f[2] = g_CurrentPlayer->field_488.collision_position.f[2];
     }
     else if (g_CameraMode == CAMERAMODE_POSEND)
     {
@@ -5533,7 +5533,7 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
 
 
 
-//being bondmove.c per pd
+//begin bondmove.c per pd
 
 void sub_GAME_7F07C540(s32 arg0)
 {
@@ -10640,7 +10640,7 @@ void bondviewUpdatePlayerCollisionPositionFields(void)
 
     g_CurrentPlayer->field_488.collision_position.f[1] = g_CurrentPlayer->field_70 + phi_f0;
     
-    if (((g_CameraMode != CAMERAMODE_UNK5) && (g_CameraMode != CAMERAMODE_UNK6) && (g_CameraMode != CAMERAMODE_POSEND))
+    if (((g_CameraMode != CAMERAMODE_DEATH_CAM_FIRST) && (g_CameraMode != CAMERAMODE_DEATH_CAM_SECOND) && (g_CameraMode != CAMERAMODE_POSEND))
         || (g_CurrentPlayer->ptr_char_objectinstance == 0))
     {
         g_CurrentPlayer->field_488.pos.f[0] = g_CurrentPlayer->field_488.collision_position.f[0];
