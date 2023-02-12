@@ -2747,7 +2747,7 @@ extern s32 g_bondviewBondDeathAnimations[];
 //D:8003650C
 extern s32 g_bondviewBondDeathAnimationsCount;
 //D:80036510
-extern s32 D_80036510;
+extern enum CAMERAMODE D_80036510;
 //D:80036514
 extern s32 g_IntroAnimationIndex;
 /*

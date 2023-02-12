@@ -3161,6 +3161,12 @@ typedef enum TVCMD
 #pragma endregion
 
 #pragma region Setup 
+
+    /**
+     * enums were listed in a particular order, it appears the first few are associated with the start/intro
+     * of a level:
+     *     if (g_CurrentPlayer->redbloodfinished && g_CurrentPlayer->deathanimfinished && (D_80036510 >= CAMERAMODE_SWIRL))
+    */
    typedef enum CAMERAMODE
     {
         CAMERAMODE_NONE,

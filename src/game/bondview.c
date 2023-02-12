@@ -220,8 +220,10 @@ f32 flt_CODE_bss_800799E8;
 f32 flt_CODE_bss_800799EC;
 //CODE.bss:800799F0
 f32 flt_CODE_bss_800799F0;
+
 //CODE.bss:800799F4
 s32 dword_CODE_bss_800799F4;
+
 //CODE.bss:800799F8
 PadRecord * dword_CODE_bss_800799F8;
 //CODE.bss:800799FC
@@ -484,7 +486,7 @@ s32 g_bondviewBondDeathAnimations[] = {
 s32 g_bondviewBondDeathAnimationsCount = 0;
 
 //D:80036510
-s32 D_80036510 = 0;
+enum CAMERAMODE D_80036510 = CAMERAMODE_NONE;
 //D:80036514
 s32 g_IntroAnimationIndex = 0;
 
@@ -4237,7 +4239,7 @@ void set_camera_mode(s32 arg0)
         }
         if (sub_GAME_7F07A534(sp64, &sp58, phi_a2, &sp48, phi_v1, phi_f0) != 0)
         {
-            if (D_80036510 == 0)
+            if (D_80036510 == CAMERAMODE_NONE)
             {
                 musicTrack1Play(M_INTROSWOOSH);
                 sndSetScalerApplyVolumeAllSfxSlot(0x3F000000);
@@ -16948,7 +16950,7 @@ void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2)
             };
         }
 
-        if (g_CurrentPlayer->redbloodfinished && g_CurrentPlayer->deathanimfinished && (D_80036510 >= 3))
+        if (g_CurrentPlayer->redbloodfinished && g_CurrentPlayer->deathanimfinished && (D_80036510 >= CAMERAMODE_SWIRL))
         {
             bossRunTitleStage();
         }

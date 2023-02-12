@@ -466,5 +466,5 @@ void bondviewLoadSetupIntroSection(void)
     g_CurrentPlayer->startnewbonddie = 1;
     g_CurrentPlayer->redbloodfinished = 0;
     g_CurrentPlayer->deathanimfinished = 0;
-    D_80036510 = 0;
+    D_80036510 = CAMERAMODE_NONE;
 }
