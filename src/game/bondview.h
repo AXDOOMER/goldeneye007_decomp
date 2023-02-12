@@ -2992,6 +2992,7 @@ void jp_hudmsgBottomShow(char *string);
 // VERSION_US
 #define HUDMESSAGEBOTTOM hudmsgBottomShow
 void hudmsgBottomShow(char *string);
+void setFontTables(s32 arg0, s32 arg1);
 #endif
 
 Gfx * sub_GAME_7F087A08(Gfx *arg0);
