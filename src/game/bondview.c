@@ -728,7 +728,7 @@ void currentPlayerSetSwayTarget(s32 value);
 void currentPlayerAdjustCrouchPos(s32 value);
 void bondviewUpdateSpeedSideways(s32 arg0);
 void bondviewUpdateSpeedForwards(s32 arg0);
-void sub_GAME_7F07B56C(u16 buttons, u16 oldbuttons, struct coord3d *pos, struct coord3d *pos2, struct coord3d *offset, struct StandTile **stan, struct coord3d *arg6);
+void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, struct coord3d *pos2, struct coord3d *offset, struct StandTile **stan, struct coord3d *arg6);
 void sub_GAME_7F07B2A0(s32, f32, struct coord3d *, struct coord3d *);
 
 // end forward declarations
@@ -5132,7 +5132,7 @@ glabel sub_GAME_7F07B2A0
  * JP address 7F07BB8C.
  * EU address 7F07B604.
 */
-void sub_GAME_7F07B56C(u16 buttons, u16 oldbuttons, struct coord3d *pos, struct coord3d *pos2, struct coord3d *offset, StandTile **stan, struct coord3d *arg6)
+void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, struct coord3d *pos2, struct coord3d *offset, StandTile **stan, struct coord3d *arg6)
 {
     s32 i;
     f32 sp38;
@@ -13695,7 +13695,7 @@ void bondviewFrozenMoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         return;
     }
     
-    sub_GAME_7F07B56C(buttons, oldbuttons, &sp64, &sp58, &sp4C, &sp3C, &sp30);
+    bondviewFrozenCameraTick(buttons, oldbuttons, &sp64, &sp58, &sp4C, &sp3C, &sp30);
     currentPlayerSetField00(1);
     bondviewUpdateCurrentPlayerPosition(&sp64, &sp58, &sp4C, sp3C, &sp30);
 }
