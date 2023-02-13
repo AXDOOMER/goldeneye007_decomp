@@ -508,7 +508,7 @@ void set_cur_player_viewport_size(u32 ulx, u32 uly) {
 }
 
 void set_cur_player_fovy(f32 fovy) {
-            #ifdef XBLADEBUG
+    #ifdef XBLADEBUG
         if (g_CurrentPlayer == NULL) {
         assertPrint_8291E690(".\\ported\\player.cpp",0x26a,"Assertion failed: g_CurrentPlayer");
     }

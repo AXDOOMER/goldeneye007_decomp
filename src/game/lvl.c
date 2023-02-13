@@ -5342,14 +5342,17 @@ glabel lvlManageMpGame
 
 
 /**
- * Multiplayer related. Has some debug code which passes in controller input.
+ * Assumes a debug mode is present, and handles debug edit intro, debug stan edit, debug bond "view."
+ * By default, the DEB_BOND_VIEW path is chosen without debug info.
+ * This updates the player viewport(s), and handles player movement.
  * 
+ * Multiplayer:
  * Updates distance_traveled and possibly (depending on scenario) have_token_or_goldengun.
  * 
  * US Address 0x7F0BF800.
  * EU address 7F0BEC44.
  */
-void lvlUpdateMpPlayerData(void)
+void lvlViewMoveTick(void)
 {
     s8 local_player_number;
     s32 padding;

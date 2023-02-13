@@ -94,7 +94,6 @@
 #endif
 
 
-
 #if defined(VERSION_EU)
     #define TANKUPDATEROTATION_SCALE 0.904799997807f      
     #define TANKTURRETVERTICALANGLERELATED_SCALE 0.928399980068f
@@ -110,6 +109,7 @@
     #define MAX_AIMLOCK_SPEED_DEFAULT 0.8344f
 
     #define THREE_SECOND_TICKS 150
+    #define PLAYER_TICKEXPLODE_FACTOR 12
 #else
     #define TANKUPDATEROTATION_SCALE 0.92f
     #define TANKTURRETVERTICALANGLERELATED_SCALE 0.94f
@@ -124,6 +124,7 @@
     #define MAX_AIMLOCK_SPEED_DEFAULT 0.86f
 
     #define THREE_SECOND_TICKS 180
+    #define PLAYER_TICKEXPLODE_FACTOR 15
 #endif
 
 #define SPEED_REGULAR_MAX  1.0f
@@ -164,7 +165,7 @@ vec3d flt_CODE_bss_80079990;
 //CODE.bss:8007999C
 s32 g_SurroundBondWithExplosionsTicks;
 //CODE.bss:800799A0
-s32 dword_CODE_bss_800799A0;
+s32 g_PlayerTickExplodeCreatePosition;
 //CODE.bss:800799A4
 s32 dword_CODE_bss_800799A4;
 
@@ -626,7 +627,7 @@ s32 upper_text_buffer_index = 0;
 s32 display_upper_text_window = 0;
 //D:800368B0
 s32 upper_text_window_timer = 0xFFFFFFFF;
-s32 D_800368B4 = 0;
+s32 g_UpperTextDisplayFlag = 0;
 //D:800368B8
 u8 D_800368B8[10][3] = {"n", "ne", "e", "se", "s", "sw", "w", "nw", "n", "" };
 
@@ -5707,13 +5708,13 @@ void change_player_pos_to_target(struct collision434 *col, coord3d *pos, StandTi
     col->applied_view.z = 0.0f;
     col->applied_view2.x = 0.0f;
     col->applied_view2.z = store_x2 * 0.0f;
-    col->field_10.x = 0.0f;
-    col->field_10.y = 0.0f;
+    col->theta_transform.x = 0.0f;
+    col->theta_transform.y = 0.0f;
     col->pos.x = store_x;
     col->pos3.x = store_x;
     col->applied_view.x = 1.0f;
     col->applied_view2.y = 1.0f;
-    col->field_10.z = 1.0f;
+    col->theta_transform.z = 1.0f;
     col->pos.y = store_y;
     col->pos3.y = store_y;
     col->pos.z = store_z;
@@ -7856,7 +7857,7 @@ void bondviewWatchAnimationTick(void)
                 gunSetSightVisible(GUNAMMOREASON_DAMAGE, FALSE);
                 gunSetGunAmmoVisible(GUNSIGHTREASON_NOCONTROL, FALSE);
                 hudmsgsSetOff(PLAYERFLAG_LOCKCONTROLS);
-                sub_GAME_7F08A944(PLAYERFLAG_LOCKCONTROLS);
+                bondviewSetUpperTextDisplayFlag(PLAYERFLAG_LOCKCONTROLS);
                 countdownTimerSetVisible(4, 0);
                 
                 if ((g_CurrentPlayer->field_218 == 0) || (g_CurrentPlayer->field_218 == 2) || (g_CurrentPlayer->field_218 == 3))
@@ -8079,7 +8080,7 @@ void bondviewWatchAnimationTick(void)
                     gunSetSightVisible(GUNAMMOREASON_DAMAGE, TRUE);
                     gunSetGunAmmoVisible(GUNSIGHTREASON_NOCONTROL, TRUE);
                     hudmsgsSetOn(1);
-                    sub_GAME_7F08A928(1);
+                    bondviewClearUpperTextDisplayFlag(1);
                     countdownTimerSetVisible(4, 1);
                     
                     g_CurrentPlayer->watch_animation_state = 0;
@@ -10723,7 +10724,7 @@ void bondviewUpdatePlayerCollisionPositionFields(void)
 
 /**
  * Fixes vv_verta within -90 and +90.
- * Updates vv_costheta, vv_sintheta, vv_verta360, vv_cosverta, vv_sinverta, field_488.field_10.
+ * Updates vv_costheta, vv_sintheta, vv_verta360, vv_cosverta, vv_sinverta, field_488.theta_transform.
  * Address 0x7F081790.
  * 
  * Perfect Dark function bmoveUpdateVerta.
@@ -10761,9 +10762,9 @@ void bondviewApplyVertaTheta(void)
     g_CurrentPlayer->vv_cosverta = cosf(g_CurrentPlayer->vv_verta360 * DegToRad1Fact(1));
     g_CurrentPlayer->vv_sinverta = sinf(g_CurrentPlayer->vv_verta360 * DegToRad1Fact(1));
 
-    g_CurrentPlayer->field_488.field_10.f[0] = -g_CurrentPlayer->vv_sintheta;
-    g_CurrentPlayer->field_488.field_10.f[1] = 0;
-    g_CurrentPlayer->field_488.field_10.f[2] = g_CurrentPlayer->vv_costheta;
+    g_CurrentPlayer->field_488.theta_transform.f[0] = -g_CurrentPlayer->vv_sintheta;
+    g_CurrentPlayer->field_488.theta_transform.f[1] = 0;
+    g_CurrentPlayer->field_488.theta_transform.f[2] = g_CurrentPlayer->vv_costheta;
 }
 
 
@@ -11801,9 +11802,9 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             
             bondviewCollisionRadiusRelated(g_CurrentPlayer->prop, &spA0.f[0], &spA0.f[2], &spA0.f[1]);
             
-            spAC.f[0] = g_CurrentPlayer->field_488.collision_position.f[0] + (g_CurrentPlayer->field_488.field_10.f[0] * 300.0f);
+            spAC.f[0] = g_CurrentPlayer->field_488.collision_position.f[0] + (g_CurrentPlayer->field_488.theta_transform.f[0] * 300.0f);
             spAC.f[1] = g_CurrentPlayer->field_488.collision_position.f[1];
-            spAC.f[2] = g_CurrentPlayer->field_488.collision_position.f[2] + (g_CurrentPlayer->field_488.field_10.f[2] * 300.0f);
+            spAC.f[2] = g_CurrentPlayer->field_488.collision_position.f[2] + (g_CurrentPlayer->field_488.theta_transform.f[2] * 300.0f);
            
             sub_GAME_7F0B1CC4();
             
@@ -11813,7 +11814,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             }
             else
             {
-                chrlvStanPointPointIntersection(&g_CurrentPlayer->field_488.collision_position, &g_CurrentPlayer->field_488.field_10, (struct coord3d *) &spAC);
+                chrlvStanPointPointIntersection(&g_CurrentPlayer->field_488.collision_position, &g_CurrentPlayer->field_488.theta_transform, (struct coord3d *) &spAC);
                 ftemp_nostack_spD0 = spAC.f[0] - g_CurrentPlayer->field_488.collision_position.f[0];
                 ftemp_nostack_spCC = spAC.f[2] - g_CurrentPlayer->field_488.collision_position.f[2];
                 spBC = sqrtf((ftemp_nostack_spD0 * ftemp_nostack_spD0) + (ftemp_nostack_spCC * ftemp_nostack_spCC));
@@ -12157,7 +12158,7 @@ void bondviewPlayerTickDamageAndHealth(void)
             gunSetGunAmmoVisible(GUNAMMOREASON_DAMAGE, FALSE);
             gunSetSightVisible(GUNSIGHTREASON_DAMAGE, FALSE);
             hudmsgsSetOff(4);
-            sub_GAME_7F08A944(PLAYERFLAG_NOTIMER);
+            bondviewSetUpperTextDisplayFlag(PLAYERFLAG_NOTIMER);
             countdownTimerSetVisible(8, 0);
 
             g_CurrentPlayer->damagetype = (s32)(bondviewGetCurrentPlayerHealth() * 8.0f);
@@ -12247,12 +12248,13 @@ void bondviewPlayerTickDamageAndHealth(void)
         {
             g_CurrentPlayer->damageshowtime = -1;
             currentPlayerSetFadeColour(0xFF, 0xFF, 0xFF, 0);
+            
             if (!g_CurrentPlayer->bonddead)
             {
                 gunSetGunAmmoVisible(GUNAMMOREASON_DAMAGE, TRUE);
                 gunSetSightVisible(GUNSIGHTREASON_DAMAGE, TRUE);
                 hudmsgsSetOn(4);
-                sub_GAME_7F08A928(4);
+                bondviewClearUpperTextDisplayFlag(PLAYERFLAG_NOTIMER);
                 countdownTimerSetVisible(8, 1);
             }
         }
@@ -12316,19 +12318,15 @@ void bondviewPlayerTickDamageAndHealth(void)
 }
 
 /**
+ * If global flag g_SurroundBondWithExplosionsFlag is set then explosions
+ * will be randomly created around Bond.
  * Perfect Dark method playerTickExplode.
  * NTSC address 7F084360.
  * EU address 7F0844A4.
 */
 void bondviewPlayerTickExplode(void)
 {
-#if defined(VERSION_EU)
-  #define TICKEXPLODE_FACTOR 12
-#else
-  #define TICKEXPLODE_FACTOR 15
-#endif
-
-    dword_CODE_bss_800799A0++;
+    g_PlayerTickExplodeCreatePosition++;
 
     if (g_SurroundBondWithExplosionsFlag
         && g_PlayerInvincible == 0
@@ -12340,7 +12338,7 @@ void bondviewPlayerTickExplode(void)
         pos.f[1] = g_CurrentPlayer->prop->pos.f[1];
         pos.f[2] = g_CurrentPlayer->prop->pos.f[2];
 
-        switch (dword_CODE_bss_800799A0 % 4)
+        switch (g_PlayerTickExplodeCreatePosition % 4)
         {
             case 0: pos.x += 250.0f + 150.0f * RANDOMGETNEXT_F32(); break;
     		case 1: pos.x -= 250.0f + 150.0f * RANDOMGETNEXT_F32(); break;
@@ -12352,9 +12350,8 @@ void bondviewPlayerTickExplode(void)
 
         explosionCreate(0, &pos, g_CurrentPlayer->prop->stan, EXPLOSION_DEF_PLAYER, 0, 0, g_CurrentPlayer->prop->rooms, 0);
 
-        g_SurroundBondWithExplosionsTicks = (randomGetNext() % (u32)TICKEXPLODE_FACTOR) + g_GlobalTimer + TICKEXPLODE_FACTOR;
+        g_SurroundBondWithExplosionsTicks = (randomGetNext() % (u32)PLAYER_TICKEXPLODE_FACTOR) + g_GlobalTimer + PLAYER_TICKEXPLODE_FACTOR;
     }
-#undef TICKEXPLODE_FACTOR
 }
 
 
@@ -13182,8 +13179,8 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             The following is similar to a block of Perfect Dark bwalk0f0c69b8.
         */
         
-        ftemp_26 = -g_CurrentPlayer->swaytarget * g_CurrentPlayer->field_488.field_10.f[2];
-        ftemp_11 = g_CurrentPlayer->swaytarget * g_CurrentPlayer->field_488.field_10.f[0];
+        ftemp_26 = -g_CurrentPlayer->swaytarget * g_CurrentPlayer->field_488.theta_transform.f[2];
+        ftemp_11 = g_CurrentPlayer->swaytarget * g_CurrentPlayer->field_488.theta_transform.f[0];
         
         sp220 = (ftemp_26) - g_CurrentPlayer->swayoffset0;
         sp21C = (ftemp_11) - g_CurrentPlayer->swayoffset2;
@@ -13259,14 +13256,14 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
         sp3AC.f[0] += 
             (
-                (headpos_z * g_CurrentPlayer->field_488.field_10.f[0]) -
-                (headpos_x * g_CurrentPlayer->field_488.field_10.f[2])
+                (headpos_z * g_CurrentPlayer->field_488.theta_transform.f[0]) -
+                (headpos_x * g_CurrentPlayer->field_488.theta_transform.f[2])
             ) * g_GlobalTimerDelta;
 
         sp3AC.f[2] += 
             (
-                (headpos_z * g_CurrentPlayer->field_488.field_10.f[2]) +
-                (headpos_x * g_CurrentPlayer->field_488.field_10.f[0])
+                (headpos_z * g_CurrentPlayer->field_488.theta_transform.f[2]) +
+                (headpos_x * g_CurrentPlayer->field_488.theta_transform.f[0])
             ) * g_GlobalTimerDelta;
 
  
@@ -13281,14 +13278,14 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         {
             sp3AC.f[0] += 
                 (
-                    (g_CurrentPlayer->field_488.field_10.f[0] * g_CurrentPlayer->speedforwards) -
-                    (g_CurrentPlayer->field_488.field_10.f[2] * g_CurrentPlayer->speedsideways)
+                    (g_CurrentPlayer->field_488.theta_transform.f[0] * g_CurrentPlayer->speedforwards) -
+                    (g_CurrentPlayer->field_488.theta_transform.f[2] * g_CurrentPlayer->speedsideways)
                 ) * g_GlobalTimerDelta * 10.0f;
 
             sp3AC.f[2] += 
                 (
-                    (g_CurrentPlayer->field_488.field_10.f[2] * g_CurrentPlayer->speedforwards) +
-                    (g_CurrentPlayer->field_488.field_10.f[0] * g_CurrentPlayer->speedsideways)
+                    (g_CurrentPlayer->field_488.theta_transform.f[2] * g_CurrentPlayer->speedforwards) +
+                    (g_CurrentPlayer->field_488.theta_transform.f[0] * g_CurrentPlayer->speedsideways)
                 ) * g_GlobalTimerDelta * 10.0f;
         }
         
@@ -13682,8 +13679,8 @@ void bondviewFrozenMoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         sp40.f[2] += flt_CODE_bss_80079990.f[2] * g_GlobalTimerDelta;
     }
     
-    sp40.f[0] += ((g_CurrentPlayer->headpos[2] * g_CurrentPlayer->field_488.field_10.f[0]) - (g_CurrentPlayer->headpos[0] * g_CurrentPlayer->field_488.field_10.f[2])) * g_GlobalTimerDelta;
-    sp40.f[2] += ((g_CurrentPlayer->headpos[2] * g_CurrentPlayer->field_488.field_10.f[2]) + (g_CurrentPlayer->headpos[0] * g_CurrentPlayer->field_488.field_10.f[0])) * g_GlobalTimerDelta;
+    sp40.f[0] += ((g_CurrentPlayer->headpos[2] * g_CurrentPlayer->field_488.theta_transform.f[0]) - (g_CurrentPlayer->headpos[0] * g_CurrentPlayer->field_488.theta_transform.f[2])) * g_GlobalTimerDelta;
+    sp40.f[2] += ((g_CurrentPlayer->headpos[2] * g_CurrentPlayer->field_488.theta_transform.f[2]) + (g_CurrentPlayer->headpos[0] * g_CurrentPlayer->field_488.theta_transform.f[0])) * g_GlobalTimerDelta;
     
     bondviewCalcUpdatePlayerCollision(&sp40, 1);
     bondviewUpdatePlayerClipping(0, 0.0f);
@@ -13898,6 +13895,11 @@ void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2)
 #endif
 
     set_cur_player_fovy(60.0f);
+
+    // This call doesn't do anything, the call viSetFovY(g_CurrentPlayer->fovy); in lvlRender
+    // will actually change the field of view.
+    // The call above should set g_CurrentPlayer->fovy, but it doesn't seem to affect
+    // the fov....
     viSetFovY(60.0f);
 
     if (camera_80036430 != 0)
@@ -17052,7 +17054,7 @@ glabel mp_respawn_handler
 /* 0BD4B0 7F088980 8E280000 */  lw    $t0, ($s1)
 /* 0BD4B4 7F088984 0FC228E0 */  jal   hudmsgsSetOn
 /* 0BD4B8 7F088988 AD0F1128 */   sw    $t7, 0x1128($t0)
-/* 0BD4BC 7F08898C 0FC22A4A */  jal   sub_GAME_7F08A928
+/* 0BD4BC 7F08898C 0FC22A4A */  jal   bondviewClearUpperTextDisplayFlag
 /* 0BD4C0 7F088990 2404FFFF */   li    $a0, -1
 /* 0BD4C4 7F088994 0FC26919 */  jal   getPlayerCount
 /* 0BD4C8 7F088998 00000000 */   nop
@@ -17351,7 +17353,7 @@ glabel mp_respawn_handler
 /* 0BB4D8 7F088AE8 8E280000 */  lw    $t0, ($s1)
 /* 0BB4DC 7F088AEC 0FC2294B */  jal   hudmsgsSetOn
 /* 0BB4E0 7F088AF0 AD0F1120 */   sw    $t7, 0x1120($t0)
-/* 0BB4E4 7F088AF4 0FC22ADC */  jal   sub_GAME_7F08A928
+/* 0BB4E4 7F088AF4 0FC22ADC */  jal   bondviewClearUpperTextDisplayFlag
 /* 0BB4E8 7F088AF8 2404FFFF */   li    $a0, -1
 /* 0BB4EC 7F088AFC 0FC26669 */  jal   getPlayerCount
 /* 0BB4F0 7F088B00 00000000 */   nop   
@@ -20430,26 +20432,26 @@ Gfx* sub_GAME_7F08A5FC(Gfx* arg0)
 }
 
 
-void sub_GAME_7F08A900(void)
+void bondviewResetUpperTextDisplay(void)
 {
     upper_text_window_timer = -1;
     display_upper_text_window = 0;
     upper_text_buffer_index = 0;
-    D_800368B4 = 0;
+    g_UpperTextDisplayFlag = 0;
 }
 
 
-void sub_GAME_7F08A928(int param_1)
+void bondviewClearUpperTextDisplayFlag(int param_1)
 {
   int new_var;
   new_var = ~param_1;
-  D_800368B4 = D_800368B4 & new_var;
+  g_UpperTextDisplayFlag = g_UpperTextDisplayFlag & new_var;
 }
 
 
-void sub_GAME_7F08A944(PLAYERFLAG flag)
+void bondviewSetUpperTextDisplayFlag(PLAYERFLAG flag)
 {
-    D_800368B4 |= flag;
+    g_UpperTextDisplayFlag |= flag;
 }
 
 
@@ -20477,7 +20479,7 @@ void hudmsgTopShow(char* string)
  */
 void bondviewUpperTextWindowTimerTick(void)
 {
-    if ((D_800368B4 == 0) && (g_CurrentPlayer->mpmenuon == 0))
+    if ((g_UpperTextDisplayFlag == 0) && (g_CurrentPlayer->mpmenuon == 0))
     {
         if (upper_text_window_timer >= 0)
         {
@@ -20526,8 +20528,8 @@ glabel D_800552BC
 .word 0x40490fdb /*3.1415927*/
 .text
 glabel sub_GAME_7F08AAE8
-/* 0BF618 7F08AAE8 3C0E8003 */  lui   $t6, %hi(D_800368B4)
-/* 0BF61C 7F08AAEC 8DCE68B4 */  lw    $t6, %lo(D_800368B4)($t6)
+/* 0BF618 7F08AAE8 3C0E8003 */  lui   $t6, %hi(g_UpperTextDisplayFlag)
+/* 0BF61C 7F08AAEC 8DCE68B4 */  lw    $t6, %lo(g_UpperTextDisplayFlag)($t6)
 /* 0BF620 7F08AAF0 27BDFF18 */  addiu $sp, $sp, -0xe8
 /* 0BF624 7F08AAF4 AFB00038 */  sw    $s0, 0x38($sp)
 /* 0BF628 7F08AAF8 00808025 */  move  $s0, $a0
@@ -20928,8 +20930,8 @@ glabel D_800552BC
 .word 0x40490fdb /*3.1415927*/
 .text
 glabel sub_GAME_7F08AAE8
-/* 0BFE34 7F08B2C4 3C0E8003 */  lui   $t6, %hi(D_800368B4) # $t6, 0x8003
-/* 0BFE38 7F08B2C8 8DCE68EC */  lw    $t6, %lo(D_800368B4)($t6)
+/* 0BFE34 7F08B2C4 3C0E8003 */  lui   $t6, %hi(g_UpperTextDisplayFlag) # $t6, 0x8003
+/* 0BFE38 7F08B2C8 8DCE68EC */  lw    $t6, %lo(g_UpperTextDisplayFlag)($t6)
 /* 0BFE3C 7F08B2CC 27BDFF18 */  addiu $sp, $sp, -0xe8
 /* 0BFE40 7F08B2D0 AFB00038 */  sw    $s0, 0x38($sp)
 /* 0BFE44 7F08B2D4 00808025 */  move  $s0, $a0
@@ -21376,8 +21378,8 @@ glabel D_8004AE90
 
 .text
 glabel sub_GAME_7F08AAE8
-/* 0BD720 7F08AD30 3C0E8003 */  lui   $t6, %hi(D_800368B4) # $t6, 0x8003
-/* 0BD724 7F08AD34 8DCE1DFC */  lw    $t6, %lo(D_800368B4)($t6)
+/* 0BD720 7F08AD30 3C0E8003 */  lui   $t6, %hi(g_UpperTextDisplayFlag) # $t6, 0x8003
+/* 0BD724 7F08AD34 8DCE1DFC */  lw    $t6, %lo(g_UpperTextDisplayFlag)($t6)
 /* 0BD728 7F08AD38 27BDFF18 */  addiu $sp, $sp, -0xe8
 /* 0BD72C 7F08AD3C AFB00038 */  sw    $s0, 0x38($sp)
 /* 0BD730 7F08AD40 00808025 */  move  $s0, $a0
@@ -23664,9 +23666,9 @@ s32 getMissiontimer(void) {
 
 void SurroundWithExplosions(int delay)
 {
-    g_SurroundBondWithExplosionsFlag              = 1;
+    g_SurroundBondWithExplosionsFlag = 1;
     g_SurroundBondWithExplosionsTicks = delay + g_GlobalTimer;
-    dword_CODE_bss_800799A0 = 0;
+    g_PlayerTickExplodeCreatePosition = 0;
 }
 
 

@@ -412,9 +412,9 @@ void bondviewLoadSetupIntroSection(void)
     g_CurrentPlayer->stanHeight = stan_height;
     g_CurrentPlayer->field_6C = stan_height / FIELD_6C_FACTOR;
     change_player_pos_to_target(&g_CurrentPlayer->field_488, &start_pos, start_stan);
-    g_CurrentPlayer->field_488.field_10.f[0] = -sinf(start_look_angle);
-    g_CurrentPlayer->field_488.field_10.f[1] = FLOAT_INIT;
-    g_CurrentPlayer->field_488.field_10.f[2] = cosf(start_look_angle);
+    g_CurrentPlayer->field_488.theta_transform.f[0] = -sinf(start_look_angle);
+    g_CurrentPlayer->field_488.theta_transform.f[1] = FLOAT_INIT;
+    g_CurrentPlayer->field_488.theta_transform.f[2] = cosf(start_look_angle);
     sub_GAME_7F089718(D_800364D0);
     dword_CODE_bss_80079DA0 = 0;
     
@@ -426,7 +426,7 @@ void bondviewLoadSetupIntroSection(void)
     }
 
     bondviewResetIntroCameraMessageDialogs();
-    sub_GAME_7F08A900();
+    bondviewResetUpperTextDisplay();
     g_CurrentPlayer->prop = propAllocate();
     g_CurrentPlayer->prop->obj = NULL;
     g_CurrentPlayer->prop->type = PROP_TYPE_VIEWER;
