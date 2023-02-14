@@ -1690,7 +1690,7 @@ void sub_GAME_7F05EA94(Model* model, s32 val)
 void sub_GAME_7F05EB0C(ObjectRecord *arg0, coord3d *arg1, StandTile *arg2, Mtxf *arg3, coord3d *arg4, Mtxf *arg5, PropRecord *arg6)
 {
     PropRecord *temp_s1;
-    struct ObjectRecord_f6c *temp_v0;
+    Projectile *temp_v0;
 
     temp_s1 = arg0->prop;
 
@@ -1707,18 +1707,18 @@ void sub_GAME_7F05EB0C(ObjectRecord *arg0, coord3d *arg1, StandTile *arg2, Mtxf 
         chrobjCollisionRelated(arg0);
         sub_GAME_7F03FDA8(temp_s1);
 
-        if (arg0->runtime_bitflags & 0x80)
+        if (arg0->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)
         {
-            temp_v0 = arg0->unk6C;
+            temp_v0 = arg0->projectile;
             temp_v0->flags |= 0x41;
-            arg0->unk6C->prop = arg6;
+            arg0->projectile->ownerprop = arg6;
             projectileSetSticky(temp_s1);
-            matrix_4x4_copy(arg5, &arg0->unk6C->m);
-            arg0->unk6C->pos.f[0] = arg4->f[0];
-            arg0->unk6C->pos.f[1] = arg4->f[1];
-            arg0->unk6C->pos.f[2] = arg4->f[2];
-            arg0->unk6C->parent = arg0;
-            arg0->unk6C->unke8 = D_80048380;
+            matrix_4x4_copy(arg5, &arg0->projectile->mtx);
+            arg0->projectile->speed.f[0] = arg4->f[0];
+            arg0->projectile->speed.f[1] = arg4->f[1];
+            arg0->projectile->speed.f[2] = arg4->f[2];
+            arg0->projectile->obj = arg0;
+            arg0->projectile->unkE8 = D_80048380;
         }
     }
 }
@@ -2038,11 +2038,11 @@ void generate_player_thrown_grenade(s32 hand)
 
         if ((wor->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT) != 0)
         {
-            wor->unk6C->flags = (s32) (wor->unk6C->flags | 2);
+            wor->projectile->flags = (s32) (wor->projectile->flags | 2);
             
-            wor->unk6C->unk8c = 0.3f;
-            wor->unk6C->unk94 = 0.13333333f;
-            wor->unk6C->refreshrate = THROWN_ITEM_REFRESH_RATE;
+            wor->projectile->unk8C = 0.3f;
+            wor->projectile->unk94 = 0.13333333f;
+            wor->projectile->refreshrate = THROWN_ITEM_REFRESH_RATE;
 
             sfx_state = sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, 4, NULL);
 
@@ -2123,10 +2123,10 @@ void generate_player_thrown_knife(s32 hand)
 
         if ((wor->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT) != 0)
         {
-            wor->unk6C->flags = (s32) (wor->unk6C->flags | 2);
+            wor->projectile->flags = (s32) (wor->projectile->flags | 2);
             
-            wor->unk6C->unk8c = 0.1f;
-            wor->unk6C->refreshrate = THROWN_ITEM_REFRESH_RATE;
+            wor->projectile->unk8C = 0.1f;
+            wor->projectile->refreshrate = THROWN_ITEM_REFRESH_RATE;
             
             wor->runtime_bitflags |= RUNTIMEBITFLAG_THROWING_KNIFE_RELATED;
         }
@@ -2318,10 +2318,10 @@ void generate_player_thrown_object(s32 hand)
 
         if ((wor->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT) != 0)
         {
-            wor->unk6C->flags = (s32) (wor->unk6C->flags | 2);
+            wor->projectile->flags = (s32) (wor->projectile->flags | 2);
             
-            wor->unk6C->unk8c = 0.1f;
-            wor->unk6C->refreshrate = THROWN_ITEM_REFRESH_RATE;
+            wor->projectile->unk8C = 0.1f;
+            wor->projectile->refreshrate = THROWN_ITEM_REFRESH_RATE;
 
             sfx_state = sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, 4, NULL);
 

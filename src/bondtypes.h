@@ -2218,78 +2218,6 @@ typedef union
         f32     unk28;
     } ChrRecord_f180;
 
-    typedef struct ObjectRecord_f6c // I think this is replaced by union with Projectile and Embedment
-    {
-        u32                  flags;
-        coord3d              pos;
-
-        /**
-         * Offset 0x10
-        */
-        vec3d                 vec;
-        u32                  padding;
-
-        /*
-        {{1, 0, 0, 0},
-        {0, 1, 0, 0},
-        {0, 0, 1, 0},
-        {0, 0, 0, 1}};
-        This is probably not a matrix, only 8 vals are read
-        Offset 0x20.
-        */
-        Mtxf                 m;
-
-        u32                  unk60;
-        u32                  unk64;
-        u32                  unk68;
-        u32                  unk6c;
-
-        u32                  unk70;
-        u32                  unk74;
-        u32                  unk78;
-        u32                  unk7c;
-
-        u32                  unk80;
-        u32                  unk84;
-        // used by sub_GAME_7F05EB0C
-        PropRecord          *prop;
-        f32                  unk8c;
-
-        u32                  unk90;
-        f32                  unk94;
-        ALSoundState        *unk98[2];
-        //ALSoundState * unk9c;
-
-        u32                  unka0;
-        u32                  unka4;
-        u32                  animrate;
-        u32                  unkac;
-
-        f32                  unkb0; // runtime y position?
-        f32                  unkb4; // previous pos.y?
-        u32                  unkb8;
-        u32                  refreshrate;
-
-        u32                  unkc0;
-        u32                  unkc4;
-        u32                  unkc8;
-        u32                  unkcc;
-
-        u32                  unkd0;
-        f32 unkd4; // probably struct coord3d
-        u32                  unkd8;
-        u32                  unkdc;
-
-        u32                  unke0;
-        /**
-         * Offset 0xe4.
-         */
-        struct ObjectRecord *parent;
-        u32                  unke8;
-        u32                  unkec;
-    } ObjectRecord_f6c;
-
-
 
     typedef struct PropDefHeaderRecord
     {
@@ -2489,10 +2417,8 @@ typedef union
     typedef struct Projectile {
         u32 flags;
         coord3d speed;
+        coord3d unk10;
 
-        f32 unk10;
-        f32 unk14;
-        f32 unk18;
         f32 unk1C;
         Mtxf mtx; // 0x20-0x5c
 
@@ -2521,10 +2447,10 @@ typedef union
         u32 unkA8;
         u32 unkAC;
 
-        u32 unkB0;
-        u32 unkB4;
+        f32 unkB0;
+        f32 unkB4;
         DROPTYPE droptype; // 0xB8
-        u32 unkBC;
+        u32 refreshrate; // 0xBC;
 
         f32 unkC0;
         f32 unkC4;
@@ -2734,15 +2660,12 @@ typedef union
         struct collision_data *ptr_allocated_collisiondata_block;
 
         union {
-            struct Projectile *projectile;
-            struct Embedment *embedment;
-
-            // I think this is replaced by union with Projectile and Embedment
-            ObjectRecord_f6c *unk6C; //pointer somewhere at least 0x44 long and the pointer at 0 and 0x44 is also at least 0xb8 long
+            struct Projectile *projectile; // 0x6c
+            struct Embedment *embedment; // 0x6c
         };
 
-        f32             maxdamage;
-        f32             damage;
+        f32             maxdamage; // 0x70
+        f32             damage; // 0x74
         rgba_u8         shadecol; // 0x78
         rgba_u8         nextcol; // 0x7C
     } ObjectRecord;

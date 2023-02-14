@@ -4549,15 +4549,15 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
 
                         if (obj->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)
                         {
-                            obj->unk6C->flags |= 0x601;
+                            obj->projectile->flags |= 0x601;
                             projectileSetSticky(obj->prop);
-                            matrix_4x4_set_identity(&obj->unk6C->m);
-                            obj->unk6C->pos.x = 0;
-                            obj->unk6C->pos.y = 0.016666666f; //step height?
-                            obj->unk6C->pos.z = 0;
-                            obj->unk6C->vec.x = 0;
-                            obj->unk6C->vec.y = 0.29166666f; //direction to move?
-                            obj->unk6C->vec.z = 0;
+                            matrix_4x4_set_identity(&obj->projectile->mtx);
+                            obj->projectile->speed.x = 0;
+                            obj->projectile->speed.y = 0.016666666f; //step height?
+                            obj->projectile->speed.z = 0;
+                            obj->projectile->unk10.x = 0;
+                            obj->projectile->unk10.y = 0.29166666f; //direction to move?
+                            obj->projectile->unk10.z = 0;
                         }
                     }
                     Offset += AI_ObjectRocketLaunch_LENGTH;

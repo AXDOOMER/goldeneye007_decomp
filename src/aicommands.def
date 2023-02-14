@@ -11838,15 +11838,15 @@ _AI_CMD(
             sub_GAME_7F03FDA8(obj->prop);
             if (obj->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)
             {
-                obj->unk6C->flags |= 0x601;
+                obj->projectile->flags |= 0x601;
                 projectileSetSticky(obj->prop);
-                matrix_4x4_set_identity(&obj->unk6C->m);
-                obj->unk6C->pos.x = 0;
-                obj->unk6C->pos.y = 1.0f / CHRLV_FRAMERATE_F;
-                obj->unk6C->pos.z = 0;
-                obj->unk6C->vec.x = 0;
-                obj->unk6C->vec.y = 0.29166666f;
-                obj->unk6C->vec.z = 0;
+                matrix_4x4_set_identity(&obj->projectile->mtx);
+                obj->projectile->speed.x = 0;
+                obj->projectile->speed.y = 1.0f / CHRLV_FRAMERATE_F;
+                obj->projectile->speed.z = 0;
+                obj->projectile->unk10.x = 0;
+                obj->projectile->unk10.y = 0.29166666f;
+                obj->projectile->unk10.z = 0;
             }
         }
         Offset += CAT(CAT(AI_, CMDNAME), _LENGTH);

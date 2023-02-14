@@ -6994,13 +6994,13 @@ void chrlvFireWeaponRelated(ChrRecord *self, s32 hand)
     StandTile *sp254; // 596
     f32 subroty; // 592
     f32 sp24C; // 588
-     coord3d sp240; // 576
+    coord3d sp240; // 576
     StandTile *self_stan; // 572
     StandTile *sp238; // 568
     s32 sp234; // 564
     s32 sp230; // 560
     s32 sp22C; // 556
-     coord3d sp220;
+    coord3d sp220;
     s32 sp21C;
     f32 dy;
     f32 dz;
@@ -7008,18 +7008,18 @@ void chrlvFireWeaponRelated(ChrRecord *self, s32 hand)
     f32 sp20C; // 524
     struct WeaponObjRecord *sp208;
     Mtxf sp1C8;
-     coord3d sp1BC;  // 444
+    coord3d sp1BC;  // 444
     PropRecord *weapon_prop;
-     coord3d sp1AC; // 428
+    coord3d sp1AC; // 428
     Mtxf sp16C;
     Mtxf sp12C;
     struct WeaponObjRecord *sp128; // 296
     Mtxf spE8;
-     coord3d spDC; // 220
+    coord3d spDC; // 220
     Mtxf sp9C;
     Mtxf sp5C; // 92
     s32 sp44;
-    struct ObjectRecord_f6c * temp_v0_4;
+    s32 unused;
     f32 sp4C;
     
     self_prop = self->prop;
@@ -7167,27 +7167,27 @@ void chrlvFireWeaponRelated(ChrRecord *self, s32 hand)
                                 
                                 if (sp208->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)
                                 {
-                                    sp208->unk6C->flags |= 0x80;
+                                    sp208->projectile->flags |= 0x80;
                                     sp208->timer = -1;
-                                    sp208->unk6C->flags |= 0x20;
+                                    sp208->projectile->flags |= 0x20;
 
-                                    sp208->unk6C->unkb0 = sp208->runtime_pos.y;
-                                    sp208->unk6C->unkb4 = sp208->unk6C->pos.f[1];
+                                    sp208->projectile->unkB0 = sp208->runtime_pos.y;
+                                    sp208->projectile->unkB4 = sp208->projectile->speed.f[1];
 
-                                  /*  sp208->unk6C->vec.x = sp1AC.f[0];
-                                    sp208->unk6C->vec.y = sp1AC.f[1];
-                                    sp208->unk6C->vec.z = sp1AC.f[2];*/
-                                    sp208->unk6C->vec.x = sp1AC.f[0];
-                                    sp208->unk6C->vec.y = sp1AC.f[1];
-                                    sp208->unk6C->vec.z = sp1AC.f[2];
+                                  /*  sp208->projectile->unk10.x = sp1AC.f[0];
+                                    sp208->projectile->unk10.y = sp1AC.f[1];
+                                    sp208->projectile->unk10.z = sp1AC.f[2];*/
+                                    sp208->projectile->unk10.x = sp1AC.f[0];
+                                    sp208->projectile->unk10.y = sp1AC.f[1];
+                                    sp208->projectile->unk10.z = sp1AC.f[2];
                                     
-                                    if (sp208->unk6C->unk98[0] == NULL)
+                                    if (sp208->projectile->sound1 == NULL)
                                     {
-                                        sndPlaySfx((struct ALBankAlt_s *)g_musicSfxBufferPtr, 1, (ALSoundState *)&sp208->unk6C->unk98[0]);
+                                        sndPlaySfx((struct ALBankAlt_s *)g_musicSfxBufferPtr, 1, (ALSoundState *)&sp208->projectile->sound1);
                                     }
-                                    else if (sp208->unk6C->unk98[1] == NULL)
+                                    else if (sp208->projectile->sound2 == NULL)
                                     {
-                                        sndPlaySfx((struct ALBankAlt_s *)g_musicSfxBufferPtr, 1, (ALSoundState *)&sp208->unk6C->unk98[1]);
+                                        sndPlaySfx((struct ALBankAlt_s *)g_musicSfxBufferPtr, 1, (ALSoundState *)&sp208->projectile->sound2);
                                     }
                                 }
                             }
@@ -7216,12 +7216,12 @@ void chrlvFireWeaponRelated(ChrRecord *self, s32 hand)
                                 
                                 if (sp128->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)
                                 {
-                                    sp128->unk6C->unk8c = 0.3f;
-                                    sp128->unk6C->unk94 = 0.13333333f;
+                                    sp128->projectile->unk8C = 0.3f;
+                                    sp128->projectile->unk94 = 0.13333333f;
 #ifdef REFRESH_PAL
-                                    sp128->unk6C->refreshrate = 50;
+                                    sp128->projectile->refreshrate = 50;
 #else
-                                    sp128->unk6C->refreshrate = 60;
+                                    sp128->projectile->refreshrate = 60;
 #endif
                                 }
                             }

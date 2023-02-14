@@ -868,9 +868,10 @@ void projectileReset(Projectile *projectile)
     projectile->speed.y = 0.0f;
     projectile->speed.z = 0.0f;
 
-    projectile->unk10 = 0.0f;
-    projectile->unk14 = 0.0f;
-    projectile->unk18 = 0.0f;
+    projectile->unk10.x = 0.0f;
+    projectile->unk10.y = 0.0f;
+    projectile->unk10.z = 0.0f;
+
     projectile->unk1C = 0.0f;
 
     projectile->unk60 = 1.0f;
@@ -883,7 +884,7 @@ void projectileReset(Projectile *projectile)
     projectile->unkA8 = 0;
     projectile->unkAC = -1;
     projectile->droptype = DROPTYPE_DEFAULT;
-    projectile->unkBC = 0;
+    projectile->refreshrate = 0;
     projectile->unkC0 = 1.0f;
     projectile->unkC4 = 1.0f;
     projectile->unkC8 = 1.0f;
@@ -1358,7 +1359,7 @@ PropRecord* objInit(ObjectRecord* obj, ModelFileHeader* model_header, PropRecord
         }
 
         obj->prop = prop;
-        obj->unk6C = 0;
+        obj->projectile = NULL;
 
         obj->shadecol.r = 0;
         obj->shadecol.g = 0;
@@ -1590,7 +1591,7 @@ void objFreeEmbedmentOrProjectile(PropRecord *prop)
     ObjectRecord *obj = prop->obj;
     if (obj->runtime_bitflags & RUNTIMEBITFLAG_EMBEDDED)
     {
-        if (obj->unk6C)
+        if (obj->embedment)
         {
             if (obj->embedment->projectile)
             {
@@ -1603,7 +1604,7 @@ void objFreeEmbedmentOrProjectile(PropRecord *prop)
     }
     else if (obj->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)
     {
-        projectileFree(obj->unk6C);
+        projectileFree(obj->projectile);
         obj->projectile = NULL;
         obj->runtime_bitflags &= ~RUNTIMEBITFLAG_DEPOSIT;
     }
@@ -3720,7 +3721,7 @@ glabel sub_GAME_7F042A0C
 */
 s32 sub_GAME_7F042EB4(struct ObjectRecord *arg0, f32 *arg1, struct coord3d *arg2, struct coord3d *arg3, s32 arg4, s32 arg5)
 {
-    if ((arg0->runtime_bitflags & 0x80) && arg0->unk6C->flags & 4)
+    if ((arg0->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT) && arg0->projectile->flags & 4)
     {
         return handles_projectile_motion(arg0, arg1, arg2, arg3, arg4, arg5);
     }
@@ -28564,7 +28565,7 @@ ObjectRecord blank_07_object = {
     {0.0, 0.0, 0.0},//runtime_pos
     {0x00000000}, //runtime_bitflags
     NULL, //ptr_allocated_collisiondata_block
-    NULL, //unk6C
+    NULL, //projectile/embedment
     0.0f, //maxdamage
     1000.0f, //damage
     {0xFF, 0xFF, 0xFF, 0x00}, //shadecol
@@ -28888,7 +28889,7 @@ ObjectRecord blank_07_object = {
     {0.0, 0.0, 0.0},//runtime_pos
     {0x00000000}, //runtime_bitflags
     NULL, //ptr_allocated_collisiondata_block
-    NULL, //unk6C
+    NULL, //projectile/embedment
     0.0f, //maxdamage
     1000.0f, //damage
     {0xFF, 0xFF, 0xFF, 0x00}, //shadecol
@@ -34027,7 +34028,7 @@ PropRecord *hatCreateForChr(ChrRecord *chr, s32 modelnum, u32 flags)
 
             { 0x00000000 }, // runtime_bitflags
             NULL, // ptr_allocated_collisiondata_block
-            NULL, // unk6C
+            NULL, // projectile/embedment
             0.0f, // maxdamage
             1000.0f, // damage
             { 0xFF, 0xFF, 0xFF, 0x00 }, // shadecol
@@ -34610,7 +34611,7 @@ WeaponObjRecord blank_08_object_preset_1 = {
     { 0.0, 0.0, 0.0 }, //runtime_pos
     {0x00000000 }, //runtime_bitflags
     NULL, //ptr_allocated_collisiondata_block
-    NULL, //unk6C
+    NULL, //projectile/embedment
     0.0f, //maxdamage
     1000.0f,//damage
     { 0xFF, 0xFF, 0xFF, 0x00 }, // shadecol
@@ -34734,7 +34735,7 @@ WeaponObjRecord blank_08_object_preset_1 = {
     { 0.0, 0.0, 0.0 }, //runtime_pos
     {0x00000000 }, //runtime_bitflags
     NULL, //ptr_allocated_collisiondata_block
-    NULL, //unk6C
+    NULL, //projectile/embedment
     0.0f, //maxdamage
     1000.0f,//damage
     { 0xFF, 0xFF, 0xFF, 0x00 }, // shadecol
@@ -34888,7 +34889,7 @@ WeaponObjRecord blank_08_object_preset_4001 = {
     {0.0, 0.0, 0.0},//runtime_pos
     {0x00000000}, //runtime_bitflags
     NULL, //ptr_allocated_collisiondata_block
-    NULL, //unk6C
+    NULL, //projectile/embedment
     0.0f, //maxdamage
     1000.0f, //damage
     { 0xFF, 0xFF, 0xFF, 0x00 }, // shadecol
@@ -34971,7 +34972,7 @@ WeaponObjRecord blank_08_object_preset_4001 = {
     {0.0, 0.0, 0.0},//runtime_pos
     {0x00000000}, //runtime_bitflags
     NULL, //ptr_allocated_collisiondata_block
-    NULL, //unk6C
+    NULL, //projectile/embedment
     0.0f, //maxdamage
     1000.0f, //damage
     { 0xFF, 0xFF, 0xFF, 0x00 }, // shadecol
@@ -37217,8 +37218,8 @@ void doorFinishOpen(DoorRecord *door)
 
         if (door->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)
         {
-            door->unk6C->flags |= 1;
-            matrix_4x4_set_identity(&door->unk6C->m);
+            door->projectile->flags |= 1;
+            matrix_4x4_set_identity(&door->projectile->mtx);
         }
     }
 }
