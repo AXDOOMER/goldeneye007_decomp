@@ -135,8 +135,8 @@ void bondviewLoadSetupIntroSection(void)
     g_SurroundBondWithExplosionsFlag = 0;
     startpadcount = 0;
     in_tank_flag = 0;
-    D_8003644C = 0;
-    ptr_playerstank = NULL;
+    g_WorldTankProp = 0;
+    g_PlayerTankProp = NULL;
     g_PlayerTankYOffset = FLOAT_INIT;
     SFX_80036458[0] = NULL;
     SFX_80036458[1] = NULL;
@@ -151,7 +151,7 @@ void bondviewLoadSetupIntroSection(void)
     g_BondCanEnterTank = 0;
     g_TankTurretAngle = FLOAT_INIT;
     g_TankTurretTurn = FLOAT_INIT;
-    D_8003648C = 0;
+    g_ExplodeTankOnDeathFlag = 0;
     D_800364B0 = 1;
     g_PlayerInvincible = 0;
     g_CameraMode = 0;

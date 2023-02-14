@@ -2276,7 +2276,7 @@ typedef union
         u32                  unkcc;
 
         u32                  unkd0;
-        u32                  unkd4;
+        f32 unkd4; // probably struct coord3d
         u32                  unkd8;
         u32                  unkdc;
 

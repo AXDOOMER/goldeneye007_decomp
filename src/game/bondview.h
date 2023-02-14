@@ -2723,13 +2723,13 @@ extern s32 g_SurroundBondWithExplosionsFlag;
 //D:80036448
 extern s32 in_tank_flag;
 //D:8003644C
-extern struct PropRecord *D_8003644C;
+extern struct PropRecord *g_WorldTankProp;
 
 //D:80036450
-extern struct PropRecord *ptr_playerstank;
+extern struct PropRecord *g_PlayerTankProp;
 
 /**
- * Related to ptr_playerstank.
+ * Related to g_PlayerTankProp.
  * Address 0x80036454.
  */
 extern f32 g_PlayerTankYOffset;
@@ -2760,7 +2760,7 @@ extern f32 g_TankTurretAngle;
 //D:80036488
 extern f32 g_TankTurretTurn;
 //D:8003648C
-extern s32 D_8003648C;
+extern s32 g_ExplodeTankOnDeathFlag;
 //D:80036490
 extern s32 g_TankDamagePenaltyTicks;
 //D:80036494

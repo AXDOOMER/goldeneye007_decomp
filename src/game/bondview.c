@@ -345,13 +345,13 @@ s32 g_SurroundBondWithExplosionsFlag = 0;
 s32 in_tank_flag = 0;
 
 //D:8003644C
-struct PropRecord * D_8003644C = NULL;
+struct PropRecord *g_WorldTankProp = NULL;
 
 //D:80036450
-struct PropRecord *ptr_playerstank = NULL;
+struct PropRecord *g_PlayerTankProp = NULL;
 
 /**
- * Related to ptr_playerstank.
+ * Related to g_PlayerTankProp.
  * Address 0x80036454.
  */
 f32 g_PlayerTankYOffset = 0;
@@ -413,7 +413,7 @@ f32 g_TankTurretAngle = 0;
 f32 g_TankTurretTurn = 0;
 
 //D:8003648C
-s32 D_8003648C = 0;
+s32 g_ExplodeTankOnDeathFlag = 0;
 //D:80036490
 s32 g_TankDamagePenaltyTicks = 0;
 //D:80036494
@@ -4160,9 +4160,9 @@ void set_camera_mode(s32 arg0)
         D_800364A8 = 1;
         currentPlayerSetFadeColour(0, 0, 0, 0x3F800000);
         currentPlayerSetFadeFrac(0x42700000, 0);
-        temp_v0_4 = D_8003648C;
+        temp_v0_4 = g_ExplodeTankOnDeathFlag;
         phi_v0    = temp_v0_4;
-        if ((temp_v0_4 != 0) && (ptr_playerstank != 0))
+        if ((temp_v0_4 != 0) && (g_PlayerTankProp != 0))
         {
         }
         else
@@ -4207,9 +4207,9 @@ void set_camera_mode(s32 arg0)
             temp_v0_11     = pPlayer;
             setsuboffset(temp_v0_11->unkD4, temp_v0_11->unkA8 + 8);
             setsubroty(pPlayer->unkD4, get_curplay_horizontal_rotation_in_degrees());
-            phi_v0 = D_8003648C;
+            phi_v0 = g_ExplodeTankOnDeathFlag;
         }
-        if ((phi_v0 != 0) && (temp_a0 = ptr_playerstank, (temp_a0 != 0)))
+        if ((phi_v0 != 0) && (temp_a0 = g_PlayerTankProp, (temp_a0 != 0)))
         {
             sp64   = temp_a0;
             sp58   = temp_a0->unk8;
@@ -4243,9 +4243,9 @@ void set_camera_mode(s32 arg0)
                 musicTrack1Play(M_INTROSWOOSH);
                 sndSetScalerApplyVolumeAllSfxSlot(0x3F000000);
             }
-            if ((D_8003648C != 0) && (ptr_playerstank != 0))
+            if ((g_ExplodeTankOnDeathFlag != 0) && (g_PlayerTankProp != 0))
             {
-                temp_a0_2 = ptr_playerstank;
+                temp_a0_2 = g_PlayerTankProp;
                 explosionCreate(temp_a0_2, temp_a0_2 + 8, temp_a0_2->unk14, 0xD, 0, get_cur_playernum(), temp_a0_2 + 0x2C, 0);
                 return;
             }
@@ -4559,13 +4559,13 @@ glabel set_camera_mode
 /* 0AF8D0 7F07ADA0 44807000 */  mtc1  $zero, $f14
 /* 0AF8D4 7F07ADA4 0FC20216 */  jal   currentPlayerSetFadeFrac
 /* 0AF8D8 7F07ADA8 00000000 */   nop
-/* 0AF8DC 7F07ADAC 3C028003 */  lui   $v0, %hi(D_8003648C)
-/* 0AF8E0 7F07ADB0 8C42648C */  lw    $v0, %lo(D_8003648C)($v0)
+/* 0AF8DC 7F07ADAC 3C028003 */  lui   $v0, %hi(g_ExplodeTankOnDeathFlag)
+/* 0AF8E0 7F07ADB0 8C42648C */  lw    $v0, %lo(g_ExplodeTankOnDeathFlag)($v0)
 /* 0AF8E4 7F07ADB4 3C108008 */  lui   $s0, %hi(g_CurrentPlayer)
-/* 0AF8E8 7F07ADB8 3C0C8003 */  lui   $t4, %hi(ptr_playerstank)
+/* 0AF8E8 7F07ADB8 3C0C8003 */  lui   $t4, %hi(g_PlayerTankProp)
 /* 0AF8EC 7F07ADBC 10400007 */  beqz  $v0, .L7F07ADDC
 /* 0AF8F0 7F07ADC0 2610A0B0 */   addiu $s0, %lo(g_CurrentPlayer) # addiu $s0, $s0, -0x5f50
-/* 0AF8F4 7F07ADC4 8D8C6450 */  lw    $t4, %lo(ptr_playerstank)($t4)
+/* 0AF8F4 7F07ADC4 8D8C6450 */  lw    $t4, %lo(g_PlayerTankProp)($t4)
 /* 0AF8F8 7F07ADC8 11800004 */  beqz  $t4, .L7F07ADDC
 /* 0AF8FC 7F07ADCC 00000000 */   nop
 /* 0AF900 7F07ADD0 3C108008 */  lui   $s0, %hi(g_CurrentPlayer)
@@ -4662,13 +4662,13 @@ glabel set_camera_mode
 /* 0AFA64 7F07AF34 44050000 */  mfc1  $a1, $f0
 /* 0AFA68 7F07AF38 0FC1B34F */  jal   setsubroty
 /* 0AFA6C 7F07AF3C 8D2400D4 */   lw    $a0, 0xd4($t1)
-/* 0AFA70 7F07AF40 3C028003 */  lui   $v0, %hi(D_8003648C)
-/* 0AFA74 7F07AF44 8C42648C */  lw    $v0, %lo(D_8003648C)($v0)
+/* 0AFA70 7F07AF40 3C028003 */  lui   $v0, %hi(g_ExplodeTankOnDeathFlag)
+/* 0AFA74 7F07AF44 8C42648C */  lw    $v0, %lo(g_ExplodeTankOnDeathFlag)($v0)
 .L7F07AF48:
 /* 0AFA78 7F07AF48 10400017 */  beqz  $v0, .L7F07AFA8
 /* 0AFA7C 7F07AF4C 27A50058 */   addiu $a1, $sp, 0x58
-/* 0AFA80 7F07AF50 3C048003 */  lui   $a0, %hi(ptr_playerstank)
-/* 0AFA84 7F07AF54 8C846450 */  lw    $a0, %lo(ptr_playerstank)($a0)
+/* 0AFA80 7F07AF50 3C048003 */  lui   $a0, %hi(g_PlayerTankProp)
+/* 0AFA84 7F07AF54 8C846450 */  lw    $a0, %lo(g_PlayerTankProp)($a0)
 /* 0AFA88 7F07AF58 50800014 */  beql  $a0, $zero, .L7F07AFAC
 /* 0AFA8C 7F07AF5C 8E020000 */   lw    $v0, ($s0)
 /* 0AFA90 7F07AF60 AFA40064 */  sw    $a0, 0x64($sp)
@@ -4728,18 +4728,18 @@ glabel set_camera_mode
 /* 0AFB5C 7F07B02C 0C00248E */  jal   sndSetScalerApplyVolumeAllSfxSlot
 /* 0AFB60 7F07B030 00000000 */   nop
 .L7F07B034:
-/* 0AFB64 7F07B034 3C0C8003 */  lui   $t4, %hi(D_8003648C)
-/* 0AFB68 7F07B038 8D8C648C */  lw    $t4, %lo(D_8003648C)($t4)
-/* 0AFB6C 7F07B03C 3C0E8003 */  lui   $t6, %hi(ptr_playerstank)
+/* 0AFB64 7F07B034 3C0C8003 */  lui   $t4, %hi(g_ExplodeTankOnDeathFlag)
+/* 0AFB68 7F07B038 8D8C648C */  lw    $t4, %lo(g_ExplodeTankOnDeathFlag)($t4)
+/* 0AFB6C 7F07B03C 3C0E8003 */  lui   $t6, %hi(g_PlayerTankProp)
 /* 0AFB70 7F07B040 51800054 */  beql  $t4, $zero, .L7F07B194
 /* 0AFB74 7F07B044 8FBF002C */   lw    $ra, 0x2c($sp)
-/* 0AFB78 7F07B048 8DCE6450 */  lw    $t6, %lo(ptr_playerstank)($t6)
+/* 0AFB78 7F07B048 8DCE6450 */  lw    $t6, %lo(g_PlayerTankProp)($t6)
 /* 0AFB7C 7F07B04C 51C00051 */  beql  $t6, $zero, .L7F07B194
 /* 0AFB80 7F07B050 8FBF002C */   lw    $ra, 0x2c($sp)
 /* 0AFB84 7F07B054 0FC26C54 */  jal   get_cur_playernum
 /* 0AFB88 7F07B058 00000000 */   nop
-/* 0AFB8C 7F07B05C 3C048003 */  lui   $a0, %hi(ptr_playerstank)
-/* 0AFB90 7F07B060 8C846450 */  lw    $a0, %lo(ptr_playerstank)($a0)
+/* 0AFB8C 7F07B05C 3C048003 */  lui   $a0, %hi(g_PlayerTankProp)
+/* 0AFB90 7F07B060 8C846450 */  lw    $a0, %lo(g_PlayerTankProp)($a0)
 /* 0AFB94 7F07B064 2407000D */  li    $a3, 13
 /* 0AFB98 7F07B068 8C860014 */  lw    $a2, 0x14($a0)
 /* 0AFB9C 7F07B06C 248D002C */  addiu $t5, $a0, 0x2c
@@ -5733,9 +5733,9 @@ void bondviewTankModelRotationRelated(void) {
     Mtxf sp24;
     ModelNode **temp_v0;
 
-    if (ptr_playerstank != NULL)
+    if (g_PlayerTankProp != NULL)
     {
-        obj = ptr_playerstank->obj;
+        obj = g_PlayerTankProp->obj;
         
         /// TODO: Fix Model struct Data type.
         temp_v0 = obj->model->obj->Switches;
@@ -5768,7 +5768,7 @@ void bondviewTankCollisionRelated(struct rect4f *arg0, struct coord3d *arg1, f32
     f32 sp34;
     struct modeldata_unk_pos *temp_v0;
 
-    sp4C = ptr_playerstank->obj;
+    sp4C = g_PlayerTankProp->obj;
 
     temp_v0 = sub_GAME_7F040078(sp4C);
 
@@ -5846,9 +5846,9 @@ s32 bondviewTankCollisionStatus(struct coord3d *arg0, StandTile *arg1, f32 arg2,
 
     bondviewTankCollisionRelated(&sp98, arg0, arg2);
     
-    if (ptr_playerstank != NULL)
+    if (g_PlayerTankProp != NULL)
     {
-        sub_GAME_7F03D058(ptr_playerstank, 0);
+        sub_GAME_7F03D058(g_PlayerTankProp, 0);
     }
 
     if ((bondviewTestLineUnobstructed(&spBC, arg0->f[0], arg0->f[2], sp98.points[0].f[0], sp98.points[0].f[1], 0x213, arg3, arg4) != 0) 
@@ -5859,9 +5859,9 @@ s32 bondviewTankCollisionStatus(struct coord3d *arg0, StandTile *arg1, f32 arg2,
     {
         sp94 = 1;
 
-        if (ptr_playerstank != NULL)
+        if (g_PlayerTankProp != NULL)
         {
-            ObjectRecord *obj = ptr_playerstank->obj;
+            ObjectRecord *obj = g_PlayerTankProp->obj;
             sp8C = obj->model;
             switches = sp8C->obj->Switches;
 
@@ -5904,9 +5904,9 @@ s32 bondviewTankCollisionStatus(struct coord3d *arg0, StandTile *arg1, f32 arg2,
         }
     }
 
-    if (ptr_playerstank != NULL)
+    if (g_PlayerTankProp != NULL)
     {
-        sub_GAME_7F03D058(ptr_playerstank, 1);
+        sub_GAME_7F03D058(g_PlayerTankProp, 1);
     }
 
     return sp94;
@@ -5976,7 +5976,7 @@ struct PropRecord *get_ptr_for_players_tank(void)
 {
     if (in_tank_flag == 1)
     {
-        return ptr_playerstank;
+        return g_PlayerTankProp;
     }
 
     return 0;
@@ -6068,9 +6068,9 @@ s32 bondviewCalculatePlayerCollision(struct coord3d *arg0, StandTile **stan)
 
         bondviewCollisionRadiusRelated(g_CurrentPlayer->prop, &sp80, &sp88, &sp84);
 
-        if (D_8003644C != NULL)
+        if (g_WorldTankProp != NULL)
         {
-            sub_GAME_7F03D058(D_8003644C, 0);
+            sub_GAME_7F03D058(g_WorldTankProp, 0);
         }
 
         sub_GAME_7F03D058(g_CurrentPlayer->prop, 0);
@@ -6115,23 +6115,23 @@ s32 bondviewCalculatePlayerCollision(struct coord3d *arg0, StandTile **stan)
         {
 block_20:
             /* I'm sorry, this is the only way I could make it match. */
-            if (ptr_playerstank == NULL
+            if (g_PlayerTankProp == NULL
                 && (stanSavedColl_posData != NULL)
                 && (stanSavedColl_posData->type == PROP_TYPE_OBJ))
             {
                 tank = (struct TankRecord *)stanSavedColl_posData->obj;
                 if (tank->type == PROPDEF_TANK)
                 {
-                    D_8003644C = stanSavedColl_posData;
+                    g_WorldTankProp = stanSavedColl_posData;
                 }
             }
         }
 
         sub_GAME_7F03D058(g_CurrentPlayer->prop, 1);
 
-        if (D_8003644C != NULL)
+        if (g_WorldTankProp != NULL)
         {
-            sub_GAME_7F03D058(D_8003644C, 1);
+            sub_GAME_7F03D058(g_WorldTankProp, 1);
         }
     }
 
@@ -6757,22 +6757,22 @@ void bondviewCalcUpdatePlayerCollision(struct coord3d *arg0, s32 arg1)
 
     g_CurrentPlayer->autocrouchpos = CROUCH_STAND;
     
-    if (D_8003644C != NULL)
+    if (g_WorldTankProp != NULL)
     {
-        chraiGetCollisionBoundsWithoutY(D_8003644C, &sp98, &sp94);
+        chraiGetCollisionBoundsWithoutY(g_WorldTankProp, &sp98, &sp94);
 
         if ((in_tank_flag == 1)
             || (chrpropTestPointInPolygon(&g_CurrentPlayer->field_488.collision_position, sp98, sp94) != 0)
             || ((chrobjTestPointPolygonCollision(&g_CurrentPlayer->field_488.collision_position, g_CurrentPlayer->field_488.collision_radius, sp98, sp94) != 0)))
         {
             
-            obj = D_8003644C->obj;
-            tank_objrecord = (struct TankRecord *)D_8003644C->obj;
+            obj = g_WorldTankProp->obj;
+            tank_objrecord = (struct TankRecord *)g_WorldTankProp->obj;
             
             /// TODO: replace with ModelNode structs
             farr5 = (f32*)obj->model->obj->Switches[5]->Data;
             farr6 = (f32*)obj->model->obj->Switches[6]->Data;
-            ptr_playerstank = D_8003644C;
+            g_PlayerTankProp = g_WorldTankProp;
 
             temp_f2 = (farr5[4] - farr5[3]) * obj->model->scale;
 
@@ -6816,10 +6816,10 @@ void bondviewCalcUpdatePlayerCollision(struct coord3d *arg0, s32 arg1)
         }
         else
         {
-            if (ptr_playerstank != NULL)
+            if (g_PlayerTankProp != NULL)
             {
-                D_8003644C = NULL;
-                ptr_playerstank = NULL;
+                g_WorldTankProp = NULL;
+                g_PlayerTankProp = NULL;
                 g_PlayerTankYOffset = 0.0f;
             }
         }
@@ -9433,9 +9433,9 @@ f32 bondviewYPositionRelated(StandTile *arg0, f32 arg1, f32 arg2)
 {
     f32 ret;
 
-    if (ptr_playerstank != NULL)
+    if (g_PlayerTankProp != NULL)
     {
-        ObjectRecord * obj = ((PropRecord *)ptr_playerstank)->obj;
+        ObjectRecord * obj = ((PropRecord *)g_PlayerTankProp)->obj;
         PropRecord *p = obj->prop;
 
         ret = stanGetPositionYValue(p->stan, p->pos.x, p->pos.z);
@@ -11438,7 +11438,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         /* If Bond is in the tank and pressed B, then exit. */
         if (in_tank_flag == 1)
         {
-            spF4 = (struct TankRecord *)ptr_playerstank->obj;
+            spF4 = (struct TankRecord *)g_PlayerTankProp->obj;
             spF4->unkD8 = get_ammo_count_for_weapon(ITEM_TANKSHELLS);
             
             add_ammo_to_weapon(ITEM_TANKSHELLS, 0);
@@ -11464,12 +11464,12 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             g_CurrentPlayer->crouchpos = 2;
         }
         /* If Bond is standing on the tank and pressed B, enter the tank. */
-        else if (ptr_playerstank != NULL
-            && ptr_playerstank->type == PROP_TYPE_OBJ
-            && ptr_playerstank->obj->type == PROPDEF_TANK
+        else if (g_PlayerTankProp != NULL
+            && g_PlayerTankProp->type == PROP_TYPE_OBJ
+            && g_PlayerTankProp->obj->type == PROPDEF_TANK
             && g_BondCanEnterTank)
         {
-            spEC = (struct TankRecord *)ptr_playerstank->obj;
+            spEC = (struct TankRecord *)g_PlayerTankProp->obj;
             
             bondinvAddInvItem(ITEM_TANKSHELLS);
             add_ammo_to_weapon(ITEM_TANKSHELLS, spEC->unkD8);
@@ -12731,7 +12731,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             g_TankTurretAngle = sp354;
         }
 
-        if (ptr_playerstank != NULL)
+        if (g_PlayerTankProp != NULL)
         {
             // sp 0x300
             struct TankRecord *temp_tank;
@@ -12739,7 +12739,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             Mtxf sp2B4;
             f32 stack_padding_4;
             
-            temp_tank = (struct TankRecord *)ptr_playerstank->obj;
+            temp_tank = (struct TankRecord *)g_PlayerTankProp->obj;
             
             sp2F4.f[1] = 0.0f;
             sp2F4.f[0] = flt_CODE_bss_800799A8.f[0];
@@ -12855,9 +12855,9 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
         if (g_EnterTankAudioState == TANK_RUN_STATE_NOT_RUNNING)
         {
-            if (ptr_playerstank != NULL)
+            if (g_PlayerTankProp != NULL)
             {
-                tank_obj = ptr_playerstank->obj;
+                tank_obj = g_PlayerTankProp->obj;
                 matrix_4x4_set_rotation_around_y(M_TAU_F - g_TankOrientationAngle, &sp268);
                 matrix_scalar_multiply(tank_obj->model->scale, &sp268);
                 
@@ -13477,7 +13477,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
     // end perfect dark `void bwalk0f0c69b8(void)`
 
-    if ((ptr_playerstank != NULL) && (in_tank_flag == 1) && (g_EnterTankAudioState == TANK_RUN_STATE_RUNNING))
+    if ((g_PlayerTankProp != NULL) && (in_tank_flag == 1) && (g_EnterTankAudioState == TANK_RUN_STATE_RUNNING))
     {
         struct PropRecord *prop;
         struct TankRecord *sp140_tank_as_TankRecord;
@@ -13496,8 +13496,8 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         s32 stanlineret;
         s16 *lookup_index;
         
-        sp140_tank_as_TankRecord = ((struct TankRecord *)ptr_playerstank->obj);
-        sp138_tank_as_ObjectRecord = (struct  ObjectRecord*)ptr_playerstank->obj;
+        sp140_tank_as_TankRecord = ((struct TankRecord *)g_PlayerTankProp->obj);
+        sp138_tank_as_ObjectRecord = (struct  ObjectRecord*)g_PlayerTankProp->obj;
         sp130 = (struct ModelNode_BoundingBoxRecord *)((struct ModelNode *)sp138_tank_as_ObjectRecord->model->obj->Switches)->Child->Data;
         
         sp140_tank_as_TankRecord->is_firing_tank = (getCurrentPlayerWeaponId(GUNRIGHT) == ITEM_TANKSHELLS)
@@ -18735,9 +18735,9 @@ void bondviewKillCurrentPlayer(void)
         g_CurrentPlayer->thetadie = g_CurrentPlayer->vv_theta;
         g_CurrentPlayer->vertadie = g_CurrentPlayer->vv_verta;
 
-        if (ptr_playerstank != NULL)
+        if (g_PlayerTankProp != NULL)
         {
-            D_8003648C = 1;
+            g_ExplodeTankOnDeathFlag = 1;
         }
 
         currentPlayerEquipWeaponWrapper(GUNLEFT, 0);
@@ -20073,9 +20073,9 @@ void bondviewUpdateGuardTankFlagsRelated(PropRecord *arg0, s32 flags)
         chrSetMoving(arg0->chr, flags);
     }
 
-    if (ptr_playerstank != NULL)
+    if (g_PlayerTankProp != NULL)
     {
-        sub_GAME_7F04F218(ptr_playerstank, flags);
+        sub_GAME_7F04F218(g_PlayerTankProp, flags);
     }
 
     g_playerPointers[sp1C]->field_AC = flags;
