@@ -2447,8 +2447,8 @@ typedef union
         u32 unkA8;
         u32 unkAC;
 
-        f32 unkB0;
-        f32 unkB4;
+        f32 unkB0; // runtime y position?
+        f32 unkB4; // previous pos.y?
         DROPTYPE droptype; // 0xB8
         u32 refreshrate; // 0xBC;
 
@@ -2462,7 +2462,7 @@ typedef union
         u8 unkCF;
 
         u32 unkD0;
-        u32 unkD4;
+        f32 unkd4; // probably struct coord3d
         u32 unkD8;
         u32 unkDC;
 
