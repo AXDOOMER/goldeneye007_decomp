@@ -30463,109 +30463,38 @@ s32 get_ammo_in_magazine(AmmoCrateRecord *crate)
     return qty;
 }
 
+s32 ammo_collected_from_weapon(WeaponObjRecord *weapon)
+{
+    s32 ammotype;
+    s32 qty;
 
-#ifdef NONMATCHING
-void ammo_collected_from_weapon(void) {
+    ammotype = get_ammo_type_for_weapon(weapon->weaponnum);
+    qty = 1;
 
+    if (weapon->flags & PROPFLAG_NO_AMMO)
+    {
+        return 0;
+    }
+
+    switch (ammotype)
+    {
+        case AMMO_9MM:          qty = 10; break;
+        case AMMO_9MM_2:        qty = 10; break;
+        case AMMO_RIFLE:        qty = 10; break;
+        case AMMO_SHOTGUN:      qty =  5; break;
+        case AMMO_MAGNUM:       qty =  5; break;
+        case AMMO_GGUN:         qty =  3; break;
+        case AMMO_DARTS:        qty =  4; break;
+        case AMMO_GRENADEROUND: qty =  3; break;
+    }
+
+    if (qty > 1 && getPlayerCount() == 1)
+    {
+        qty *= g_SoloAmmoMultiplier;
+    }
+
+    return qty;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-/*D:80053098*/
-glabel ammo_in_weapon
-.word weapon_has_10_rounds_type1
-.word weapon_has_10_rounds_type2
-.word weapon_has_10_rounds_type3
-.word weapon_has_5_rounds_type4
-.word weapon_has_default_ammo
-.word weapon_has_default_ammo
-.word weapon_has_default_ammo
-.word weapon_has_default_ammo
-.word weapon_has_default_ammo
-.word weapon_has_default_ammo
-.word weapon_has_3_rounds_typeB
-.word weapon_has_5_rounds_typeC
-.word weapon_has_3_rounds_typeD
-.word weapon_has_4_rounds_typeE
-
-.text
-glabel ammo_collected_from_weapon
-/* 084828 7F04FCF8 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 08482C 7F04FCFC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 084830 7F04FD00 AFA40020 */  sw    $a0, 0x20($sp)
-/* 084834 7F04FD04 0FC1A50B */  jal   get_ammo_type_for_weapon
-/* 084838 7F04FD08 80840080 */   lb    $a0, 0x80($a0)
-/* 08483C 7F04FD0C 8FAF0020 */  lw    $t7, 0x20($sp)
-/* 084840 7F04FD10 2448FFFF */  addiu $t0, $v0, -1
-/* 084844 7F04FD14 24030001 */  li    $v1, 1
-/* 084848 7F04FD18 8DF80008 */  lw    $t8, 8($t7)
-/* 08484C 7F04FD1C 2D01000E */  sltiu $at, $t0, 0xe
-/* 084850 7F04FD20 0018C840 */  sll   $t9, $t8, 1
-/* 084854 7F04FD24 07210003 */  bgez  $t9, .L7F04FD34
-/* 084858 7F04FD28 00000000 */   nop   
-/* 08485C 7F04FD2C 10000028 */  b     .L7F04FDD0
-/* 084860 7F04FD30 00001025 */   move  $v0, $zero
-.L7F04FD34:
-/* 084864 7F04FD34 10200015 */  beqz  $at, .L7F04FD8C
-/* 084868 7F04FD38 00084080 */   sll   $t0, $t0, 2
-/* 08486C 7F04FD3C 3C018005 */  lui   $at, %hi(ammo_in_weapon)
-/* 084870 7F04FD40 00280821 */  addu  $at, $at, $t0
-/* 084874 7F04FD44 8C283098 */  lw    $t0, %lo(ammo_in_weapon)($at)
-/* 084878 7F04FD48 01000008 */  jr    $t0
-/* 08487C 7F04FD4C 00000000 */   nop   
-weapon_has_10_rounds_type1:
-/* 084880 7F04FD50 1000000E */  b     .L7F04FD8C
-/* 084884 7F04FD54 2403000A */   li    $v1, 10
-weapon_has_10_rounds_type2:
-/* 084888 7F04FD58 1000000C */  b     .L7F04FD8C
-/* 08488C 7F04FD5C 2403000A */   li    $v1, 10
-weapon_has_10_rounds_type3:
-/* 084890 7F04FD60 1000000A */  b     .L7F04FD8C
-/* 084894 7F04FD64 2403000A */   li    $v1, 10
-weapon_has_5_rounds_type4:
-/* 084898 7F04FD68 10000008 */  b     .L7F04FD8C
-/* 08489C 7F04FD6C 24030005 */   li    $v1, 5
-weapon_has_5_rounds_typeC:
-/* 0848A0 7F04FD70 10000006 */  b     .L7F04FD8C
-/* 0848A4 7F04FD74 24030005 */   li    $v1, 5
-weapon_has_3_rounds_typeD:
-/* 0848A8 7F04FD78 10000004 */  b     .L7F04FD8C
-/* 0848AC 7F04FD7C 24030003 */   li    $v1, 3
-weapon_has_4_rounds_typeE:
-/* 0848B0 7F04FD80 10000002 */  b     .L7F04FD8C
-/* 0848B4 7F04FD84 24030004 */   li    $v1, 4
-weapon_has_3_rounds_typeB:
-/* 0848B8 7F04FD88 24030003 */  li    $v1, 3
-weapon_has_default_ammo:
-.L7F04FD8C:
-/* 0848BC 7F04FD8C 28610002 */  slti  $at, $v1, 2
-/* 0848C0 7F04FD90 5420000F */  bnezl $at, .L7F04FDD0
-/* 0848C4 7F04FD94 00601025 */   move  $v0, $v1
-/* 0848C8 7F04FD98 0FC26919 */  jal   getPlayerCount
-/* 0848CC 7F04FD9C AFA30018 */   sw    $v1, 0x18($sp)
-/* 0848D0 7F04FDA0 24010001 */  li    $at, 1
-/* 0848D4 7F04FDA4 14410009 */  bne   $v0, $at, .L7F04FDCC
-/* 0848D8 7F04FDA8 8FA30018 */   lw    $v1, 0x18($sp)
-/* 0848DC 7F04FDAC 44832000 */  mtc1  $v1, $f4
-/* 0848E0 7F04FDB0 3C018003 */  lui   $at, %hi(g_SoloAmmoMultiplier)
-/* 0848E4 7F04FDB4 C4280B28 */  lwc1  $f8, %lo(g_SoloAmmoMultiplier)($at)
-/* 0848E8 7F04FDB8 468021A0 */  cvt.s.w $f6, $f4
-/* 0848EC 7F04FDBC 46083282 */  mul.s $f10, $f6, $f8
-/* 0848F0 7F04FDC0 4600540D */  trunc.w.s $f16, $f10
-/* 0848F4 7F04FDC4 44038000 */  mfc1  $v1, $f16
-/* 0848F8 7F04FDC8 00000000 */  nop   
-.L7F04FDCC:
-/* 0848FC 7F04FDCC 00601025 */  move  $v0, $v1
-.L7F04FDD0:
-/* 084900 7F04FDD0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 084904 7F04FDD4 27BD0020 */  addiu $sp, $sp, 0x20
-/* 084908 7F04FDD8 03E00008 */  jr    $ra
-/* 08490C 7F04FDDC 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
