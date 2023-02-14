@@ -30497,580 +30497,172 @@ s32 ammo_collected_from_weapon(WeaponObjRecord *weapon)
 }
 
 
-#ifdef NONMATCHING
-void generate_language_specific_text_for_weapon(char *finalstring,ITEM_IDS itemtype)
+void generate_language_specific_text_for_weapon(u8 *finalstring, ITEM_IDS itemtype)
 {
     u32 morethan2players;
-    //u32 numplayers;
-    //AMMOTYPE ammotype;
-    //char *textfiletext;
-    //size_t strlength;
-    
+
     morethan2players = FALSE;
-    if (j_text_trigger==0) {
+
+    if (j_text_trigger != 0)
+    {
           strcpy(finalstring,"");
-          if (2 < getPlayerCount()) {
+          if (2 < getPlayerCount())
+          {
               morethan2players = TRUE;
           }
     }
-    else {
-          if (getPlayerCount() < 3) {
+    else
+    {
+          if (getPlayerCount() < 3)
+          {
              //Picked up
-            strcpy(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_00))); 
+            strcpy(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_00)));
           }
     }
-    switch(itemtype) {
-    case ITEM_KNIFE:
-        //a hunting knife.
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_20)));  
-        break;
-    case ITEM_THROWKNIFE:
-    case ITEM_GRENADE:
-    case ITEM_TIMEDMINE:
-    case ITEM_PROXIMITYMINE:
-    case ITEM_REMOTEMINE:
-    case ITEM_BOMBCASE:
-    case ITEM_PLASTIQUE:
-    case ITEM_BUG:
-    case ITEM_MICROCAMERA:
-    case ITEM_GOLDENEYEKEY:
-    case ITEM_NULL86:
-    case ITEM_NULL87:
-    case ITEM_TOKEN:
-        prepare_ammo_type_collection_text(finalstring,get_ammo_type_for_weapon(itemtype),1);
-        return;
-    case ITEM_WPPK:
-        //a PP7.
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_21)));
-        break;
-    case ITEM_WPPKSIL:
-        //a silenced PP7.
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_22)));
-        break;
-    case ITEM_TT33:
-        //a DD44 Dostovei.
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_23)));
-        break;
-    case ITEM_SKORPION:
-        //a Klobb.
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_24)));
-        break;
-    case ITEM_AK47:
-        //a KF7 Soviet.
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_25)));
-        break;
-    case ITEM_UZI:
-        //a ZMG (9mm).
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_26)));
-        break;
-    case ITEM_MP5K:
-        //a D5K Deutsche.
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_27)));
-        break;
-    case ITEM_MP5KSIL:
-        //a silenced D5K.
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_28)));
-        break;
-    case ITEM_SPECTRE:
-        //a Phantom.
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_29)));
-        break;
-    case ITEM_M16:
-        //an AR33 assault rifle.
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_2a)));
-        break;
-    case ITEM_FNP90:
-        //an RC-P90.
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_2b)));
-        break;
-    case ITEM_SHOTGUN:
-        //a shotgun.
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_2c)));
-        break;
-    case ITEM_AUTOSHOT:
-        //an automatic shotgun.
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_2d)));
-        break;
-    case ITEM_SNIPERRIFLE:
-        //a sniper rifle.
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_2e)));
-        break;
-    case ITEM_RUGER:
-        //a Cougar Magnum.
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_31)));
-        break;
-    case ITEM_GOLDENGUN:
-        //the Golden Gun.
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_32)));
-        break;
-    case ITEM_SILVERWPPK:
-        //a silver PP7.
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_36)));
-        break;
-    case ITEM_GOLDWPPK:
-        //a gold PP7.
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_37)));
-        break;
-    case ITEM_LASER:
-        //a Moonraker laser.
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_33)));
-        break;
-    default:
-        //a new weapon.
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_3b)));
-        break;
-    case ITEM_GRENADELAUNCH:
-        //a grenade launcher.
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_2f)));
-        break;
-    case ITEM_ROCKETLAUNCH:
-        //a rocket launcher.
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_30)));
-        break;
-    case ITEM_FLAREPISTOL:
-        //a flare pistol.
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_34)));
-        break;
-    case ITEM_PITONGUN:
-        //a piton gun.
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_35)));
-        break;
-    case ITEM_KEYCARD:
-        //a keycard.
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_38)));
-        break;
-    case ITEM_KEYYALE:
-        //a yale key.
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_39)));
-        break;
-    case ITEM_KEYBOLT:
-        //a bolt key.
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_3a)));
+
+    switch(itemtype)
+    {
+        case ITEM_THROWKNIFE:
+        case ITEM_GRENADE:
+        case ITEM_TIMEDMINE:
+        case ITEM_PROXIMITYMINE:
+        case ITEM_REMOTEMINE:
+        case ITEM_BOMBCASE:
+        case ITEM_PLASTIQUE:
+        case ITEM_BUG:
+        case ITEM_MICROCAMERA:
+        case ITEM_GOLDENEYEKEY:
+        case ITEM_NULL86:
+        case ITEM_NULL87:
+        case ITEM_TOKEN:
+            prepare_ammo_type_collection_text(finalstring,get_ammo_type_for_weapon(itemtype),1);
+            return;
+        case ITEM_KNIFE:
+            //a hunting knife.
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_20)));
+            break;
+        case ITEM_WPPK:
+            //a PP7.
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_21)));
+            break;
+        case ITEM_WPPKSIL:
+            //a silenced PP7.
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_22)));
+            break;
+        case ITEM_TT33:
+            //a DD44 Dostovei.
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_23)));
+            break;
+        case ITEM_SKORPION:
+            //a Klobb.
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_24)));
+            break;
+        case ITEM_AK47:
+            //a KF7 Soviet.
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_25)));
+            break;
+        case ITEM_UZI:
+            //a ZMG (9mm).
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_26)));
+            break;
+        case ITEM_MP5K:
+            //a D5K Deutsche.
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_27)));
+            break;
+        case ITEM_MP5KSIL:
+            //a silenced D5K.
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_28)));
+            break;
+        case ITEM_SPECTRE:
+            //a Phantom.
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_29)));
+            break;
+        case ITEM_M16:
+            //an AR33 assault rifle.
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_2A)));
+            break;
+        case ITEM_FNP90:
+            //an RC-P90.
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_2B)));
+            break;
+        case ITEM_SHOTGUN:
+            //a shotgun.
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_2C)));
+            break;
+        case ITEM_AUTOSHOT:
+            //an automatic shotgun.
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_2D)));
+            break;
+        case ITEM_SNIPERRIFLE:
+            //a sniper rifle.
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_2E)));
+            break;
+        case ITEM_GRENADELAUNCH:
+            //a grenade launcher.
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_2F)));
+            break;
+        case ITEM_ROCKETLAUNCH:
+            //a rocket launcher.
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_30)));
+            break;
+        case ITEM_RUGER:
+            //a Cougar Magnum.
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_31)));
+            break;
+        case ITEM_GOLDENGUN:
+            //the Golden Gun.
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_32)));
+            break;
+        case ITEM_LASER:
+            //a Moonraker laser.
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_33)));
+            break;
+        case ITEM_FLAREPISTOL:
+            //a flare pistol.
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_34)));
+            break;
+        case ITEM_PITONGUN:
+            //a piton gun.
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_35)));
+            break;
+        case ITEM_SILVERWPPK:
+            //a silver PP7.
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_36)));
+            break;
+        case ITEM_GOLDWPPK:
+            //a gold PP7.
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_37)));
+            break;
+        case ITEM_KEYCARD:
+            //a keycard.
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_38)));
+            break;
+        case ITEM_KEYYALE:
+            //a yale key.
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_39)));
+            break;
+        case ITEM_KEYBOLT:
+            //a bolt key.
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_3A)));
+            break;
+        default:
+            //a new weapon.
+            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_3B)));
+            break;
     }
+
     if ((j_text_trigger != 0) && (!morethan2players))
     {
         if (finalstring[strlen(finalstring) - 1] == '\n')
         {
             finalstring[strlen(finalstring) - 1] = '\0';
         }
-        //Picked up 
+        //Picked up
         strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_00)));
         strcat(finalstring,"\n");
     }
-    return;
+
 }
-#else
-const char D_80052A3C[] = "";
-const char D_80052A40[] = "\n";
-GLOBAL_ASM(
-.late_rodata
-/*D:800530D0*/
-glabel jpt_800530D0
-.word weapon_collect_msg_a_hunting_knife
-.word weapon_collect_msg_BLANK
-.word weapon_collect_msg_a_pp7
-.word weapon_collect_msg_a_silenced_pp7
-.word weapon_collect_msg_a_dd44
-.word weapon_collect_msg_a_klobb
-.word weapon_collect_msg_a_kf7
-.word weapon_collect_msg_a_zmg
-.word weapon_collect_msg_a_d5k
-.word weapon_collect_msg_a_silenced_d5k
-.word weapon_collect_msg_a_phantom
-.word weapon_collect_msg_a_ar33
-.word weapon_collect_msg_a_rcp90
-.word weapon_collect_msg_a_shotgun
-.word weapon_collect_msg_an_auto_shotgun
-.word weapon_collect_msg_a_sniper
-.word weapon_collect_msg_a_cougar_magnum
-.word weapon_collect_msg_a_golden_gun
-.word weapon_collect_msg_a_silver_pp7
-.word weapon_collect_msg_a_gold_pp7
-.word weapon_collect_msg_a_moonraker_laser
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_grenade_launcher
-.word weapon_collect_msg_a_rocket_launcher
-.word weapon_collect_msg_BLANK
-.word weapon_collect_msg_BLANK
-.word weapon_collect_msg_BLANK
-.word weapon_collect_msg_BLANK
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_BLANK
-.word weapon_collect_msg_BLANK
-.word weapon_collect_msg_a_flare_pistol
-.word weapon_collect_msg_a_piton_gun
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_BLANK
-.word weapon_collect_msg_BLANK
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_BLANK
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_keycard
-.word weapon_collect_msg_a_yale_key
-.word weapon_collect_msg_a_bolt_key
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_a_new_weapon
-.word weapon_collect_msg_BLANK
-.word weapon_collect_msg_BLANK
-.word weapon_collect_msg_BLANK
-
-.text
-glabel generate_language_specific_text_for_weapon
-/* 084910 7F04FDE0 3C0E8005 */  lui   $t6, %hi(j_text_trigger) 
-/* 084914 7F04FDE4 8DCE84D0 */  lw    $t6, %lo(j_text_trigger)($t6)
-/* 084918 7F04FDE8 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 08491C 7F04FDEC AFB00018 */  sw    $s0, 0x18($sp)
-/* 084920 7F04FDF0 00808025 */  move  $s0, $a0
-/* 084924 7F04FDF4 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 084928 7F04FDF8 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 08492C 7F04FDFC 11C0000B */  beqz  $t6, .L7F04FE2C
-/* 084930 7F04FE00 AFA00024 */   sw    $zero, 0x24($sp)
-/* 084934 7F04FE04 3C058005 */  lui   $a1, %hi(D_80052A3C)
-/* 084938 7F04FE08 0C0029DC */  jal   strcpy
-/* 08493C 7F04FE0C 24A52A3C */   addiu $a1, %lo(D_80052A3C) # addiu $a1, $a1, 0x2a3c
-/* 084940 7F04FE10 0FC26919 */  jal   getPlayerCount
-/* 084944 7F04FE14 00000000 */   nop   
-/* 084948 7F04FE18 28410003 */  slti  $at, $v0, 3
-/* 08494C 7F04FE1C 1420000D */  bnez  $at, .L7F04FE54
-/* 084950 7F04FE20 240F0001 */   li    $t7, 1
-/* 084954 7F04FE24 1000000B */  b     .L7F04FE54
-/* 084958 7F04FE28 AFAF0024 */   sw    $t7, 0x24($sp)
-.L7F04FE2C:
-/* 08495C 7F04FE2C 0FC26919 */  jal   getPlayerCount
-/* 084960 7F04FE30 00000000 */   nop   
-/* 084964 7F04FE34 28410003 */  slti  $at, $v0, 3
-/* 084968 7F04FE38 50200007 */  beql  $at, $zero, .L7F04FE58
-/* 08496C 7F04FE3C 8FB8002C */   lw    $t8, 0x2c($sp)
-/* 084970 7F04FE40 0FC30776 */  jal   langGet
-/* 084974 7F04FE44 3404A400 */   li    $a0, 41984
-/* 084978 7F04FE48 02002025 */  move  $a0, $s0
-/* 08497C 7F04FE4C 0C0029DC */  jal   strcpy
-/* 084980 7F04FE50 00402825 */   move  $a1, $v0
-.L7F04FE54:
-/* 084984 7F04FE54 8FB8002C */  lw    $t8, 0x2c($sp)
-.L7F04FE58:
-/* 084988 7F04FE58 2719FFFE */  addiu $t9, $t8, -2
-/* 08498C 7F04FE5C 2F210057 */  sltiu $at, $t9, 0x57
-/* 084990 7F04FE60 102000CB */  beqz  $at, .L7F050190
-/* 084994 7F04FE64 0019C880 */   sll   $t9, $t9, 2
-/* 084998 7F04FE68 3C018005 */  lui   $at, %hi(jpt_800530D0)
-/* 08499C 7F04FE6C 00390821 */  addu  $at, $at, $t9
-/* 0849A0 7F04FE70 8C3930D0 */  lw    $t9, %lo(jpt_800530D0)($at)
-/* 0849A4 7F04FE74 03200008 */  jr    $t9
-/* 0849A8 7F04FE78 00000000 */   nop   
-weapon_collect_msg_BLANK:
-/* 0849AC 7F04FE7C 0FC1A50B */  jal   get_ammo_type_for_weapon
-/* 0849B0 7F04FE80 8FA4002C */   lw    $a0, 0x2c($sp)
-/* 0849B4 7F04FE84 02002025 */  move  $a0, $s0
-/* 0849B8 7F04FE88 00402825 */  move  $a1, $v0
-/* 0849BC 7F04FE8C 0FC13E48 */  jal   prepare_ammo_type_collection_text
-/* 0849C0 7F04FE90 24060001 */   li    $a2, 1
-/* 0849C4 7F04FE94 100000DF */  b     .L7F050214
-/* 0849C8 7F04FE98 8FBF001C */   lw    $ra, 0x1c($sp)
-weapon_collect_msg_a_hunting_knife:
-/* 0849CC 7F04FE9C 0FC30776 */  jal   langGet
-/* 0849D0 7F04FEA0 3404A420 */   li    $a0, 42016
-/* 0849D4 7F04FEA4 02002025 */  move  $a0, $s0
-/* 0849D8 7F04FEA8 0C0029FF */  jal   strcat
-/* 0849DC 7F04FEAC 00402825 */   move  $a1, $v0
-/* 0849E0 7F04FEB0 100000BC */  b     .L7F0501A4
-/* 0849E4 7F04FEB4 00000000 */   nop   
-weapon_collect_msg_a_pp7:
-/* 0849E8 7F04FEB8 0FC30776 */  jal   langGet
-/* 0849EC 7F04FEBC 3404A421 */   li    $a0, 42017
-/* 0849F0 7F04FEC0 02002025 */  move  $a0, $s0
-/* 0849F4 7F04FEC4 0C0029FF */  jal   strcat
-/* 0849F8 7F04FEC8 00402825 */   move  $a1, $v0
-/* 0849FC 7F04FECC 100000B5 */  b     .L7F0501A4
-/* 084A00 7F04FED0 00000000 */   nop   
-weapon_collect_msg_a_silenced_pp7:
-/* 084A04 7F04FED4 0FC30776 */  jal   langGet
-/* 084A08 7F04FED8 3404A422 */   li    $a0, 42018
-/* 084A0C 7F04FEDC 02002025 */  move  $a0, $s0
-/* 084A10 7F04FEE0 0C0029FF */  jal   strcat
-/* 084A14 7F04FEE4 00402825 */   move  $a1, $v0
-/* 084A18 7F04FEE8 100000AE */  b     .L7F0501A4
-/* 084A1C 7F04FEEC 00000000 */   nop   
-weapon_collect_msg_a_dd44:
-/* 084A20 7F04FEF0 0FC30776 */  jal   langGet
-/* 084A24 7F04FEF4 3404A423 */   li    $a0, 42019
-/* 084A28 7F04FEF8 02002025 */  move  $a0, $s0
-/* 084A2C 7F04FEFC 0C0029FF */  jal   strcat
-/* 084A30 7F04FF00 00402825 */   move  $a1, $v0
-/* 084A34 7F04FF04 100000A7 */  b     .L7F0501A4
-/* 084A38 7F04FF08 00000000 */   nop   
-weapon_collect_msg_a_klobb:
-/* 084A3C 7F04FF0C 0FC30776 */  jal   langGet
-/* 084A40 7F04FF10 3404A424 */   li    $a0, 42020
-/* 084A44 7F04FF14 02002025 */  move  $a0, $s0
-/* 084A48 7F04FF18 0C0029FF */  jal   strcat
-/* 084A4C 7F04FF1C 00402825 */   move  $a1, $v0
-/* 084A50 7F04FF20 100000A0 */  b     .L7F0501A4
-/* 084A54 7F04FF24 00000000 */   nop   
-weapon_collect_msg_a_kf7:
-/* 084A58 7F04FF28 0FC30776 */  jal   langGet
-/* 084A5C 7F04FF2C 3404A425 */   li    $a0, 42021
-/* 084A60 7F04FF30 02002025 */  move  $a0, $s0
-/* 084A64 7F04FF34 0C0029FF */  jal   strcat
-/* 084A68 7F04FF38 00402825 */   move  $a1, $v0
-/* 084A6C 7F04FF3C 10000099 */  b     .L7F0501A4
-/* 084A70 7F04FF40 00000000 */   nop   
-weapon_collect_msg_a_zmg:
-/* 084A74 7F04FF44 0FC30776 */  jal   langGet
-/* 084A78 7F04FF48 3404A426 */   li    $a0, 42022
-/* 084A7C 7F04FF4C 02002025 */  move  $a0, $s0
-/* 084A80 7F04FF50 0C0029FF */  jal   strcat
-/* 084A84 7F04FF54 00402825 */   move  $a1, $v0
-/* 084A88 7F04FF58 10000092 */  b     .L7F0501A4
-/* 084A8C 7F04FF5C 00000000 */   nop   
-weapon_collect_msg_a_d5k:
-/* 084A90 7F04FF60 0FC30776 */  jal   langGet
-/* 084A94 7F04FF64 3404A427 */   li    $a0, 42023
-/* 084A98 7F04FF68 02002025 */  move  $a0, $s0
-/* 084A9C 7F04FF6C 0C0029FF */  jal   strcat
-/* 084AA0 7F04FF70 00402825 */   move  $a1, $v0
-/* 084AA4 7F04FF74 1000008B */  b     .L7F0501A4
-/* 084AA8 7F04FF78 00000000 */   nop   
-weapon_collect_msg_a_silenced_d5k:
-/* 084AAC 7F04FF7C 0FC30776 */  jal   langGet
-/* 084AB0 7F04FF80 3404A428 */   li    $a0, 42024
-/* 084AB4 7F04FF84 02002025 */  move  $a0, $s0
-/* 084AB8 7F04FF88 0C0029FF */  jal   strcat
-/* 084ABC 7F04FF8C 00402825 */   move  $a1, $v0
-/* 084AC0 7F04FF90 10000084 */  b     .L7F0501A4
-/* 084AC4 7F04FF94 00000000 */   nop   
-weapon_collect_msg_a_phantom:
-/* 084AC8 7F04FF98 0FC30776 */  jal   langGet
-/* 084ACC 7F04FF9C 3404A429 */   li    $a0, 42025
-/* 084AD0 7F04FFA0 02002025 */  move  $a0, $s0
-/* 084AD4 7F04FFA4 0C0029FF */  jal   strcat
-/* 084AD8 7F04FFA8 00402825 */   move  $a1, $v0
-/* 084ADC 7F04FFAC 1000007D */  b     .L7F0501A4
-/* 084AE0 7F04FFB0 00000000 */   nop   
-weapon_collect_msg_a_ar33:
-/* 084AE4 7F04FFB4 0FC30776 */  jal   langGet
-/* 084AE8 7F04FFB8 3404A42A */   li    $a0, 42026
-/* 084AEC 7F04FFBC 02002025 */  move  $a0, $s0
-/* 084AF0 7F04FFC0 0C0029FF */  jal   strcat
-/* 084AF4 7F04FFC4 00402825 */   move  $a1, $v0
-/* 084AF8 7F04FFC8 10000076 */  b     .L7F0501A4
-/* 084AFC 7F04FFCC 00000000 */   nop   
-weapon_collect_msg_a_rcp90:
-/* 084B00 7F04FFD0 0FC30776 */  jal   langGet
-/* 084B04 7F04FFD4 3404A42B */   li    $a0, 42027
-/* 084B08 7F04FFD8 02002025 */  move  $a0, $s0
-/* 084B0C 7F04FFDC 0C0029FF */  jal   strcat
-/* 084B10 7F04FFE0 00402825 */   move  $a1, $v0
-/* 084B14 7F04FFE4 1000006F */  b     .L7F0501A4
-/* 084B18 7F04FFE8 00000000 */   nop   
-weapon_collect_msg_a_shotgun:
-/* 084B1C 7F04FFEC 0FC30776 */  jal   langGet
-/* 084B20 7F04FFF0 3404A42C */   li    $a0, 42028
-/* 084B24 7F04FFF4 02002025 */  move  $a0, $s0
-/* 084B28 7F04FFF8 0C0029FF */  jal   strcat
-/* 084B2C 7F04FFFC 00402825 */   move  $a1, $v0
-/* 084B30 7F050000 10000068 */  b     .L7F0501A4
-/* 084B34 7F050004 00000000 */   nop   
-weapon_collect_msg_an_auto_shotgun:
-/* 084B38 7F050008 0FC30776 */  jal   langGet
-/* 084B3C 7F05000C 3404A42D */   li    $a0, 42029
-/* 084B40 7F050010 02002025 */  move  $a0, $s0
-/* 084B44 7F050014 0C0029FF */  jal   strcat
-/* 084B48 7F050018 00402825 */   move  $a1, $v0
-/* 084B4C 7F05001C 10000061 */  b     .L7F0501A4
-/* 084B50 7F050020 00000000 */   nop   
-weapon_collect_msg_a_sniper:
-/* 084B54 7F050024 0FC30776 */  jal   langGet
-/* 084B58 7F050028 3404A42E */   li    $a0, 42030
-/* 084B5C 7F05002C 02002025 */  move  $a0, $s0
-/* 084B60 7F050030 0C0029FF */  jal   strcat
-/* 084B64 7F050034 00402825 */   move  $a1, $v0
-/* 084B68 7F050038 1000005A */  b     .L7F0501A4
-/* 084B6C 7F05003C 00000000 */   nop   
-weapon_collect_msg_a_grenade_launcher:
-/* 084B70 7F050040 0FC30776 */  jal   langGet
-/* 084B74 7F050044 3404A42F */   li    $a0, 42031
-/* 084B78 7F050048 02002025 */  move  $a0, $s0
-/* 084B7C 7F05004C 0C0029FF */  jal   strcat
-/* 084B80 7F050050 00402825 */   move  $a1, $v0
-/* 084B84 7F050054 10000053 */  b     .L7F0501A4
-/* 084B88 7F050058 00000000 */   nop   
-weapon_collect_msg_a_rocket_launcher:
-/* 084B8C 7F05005C 0FC30776 */  jal   langGet
-/* 084B90 7F050060 3404A430 */   li    $a0, 42032
-/* 084B94 7F050064 02002025 */  move  $a0, $s0
-/* 084B98 7F050068 0C0029FF */  jal   strcat
-/* 084B9C 7F05006C 00402825 */   move  $a1, $v0
-/* 084BA0 7F050070 1000004C */  b     .L7F0501A4
-/* 084BA4 7F050074 00000000 */   nop   
-weapon_collect_msg_a_cougar_magnum:
-/* 084BA8 7F050078 0FC30776 */  jal   langGet
-/* 084BAC 7F05007C 3404A431 */   li    $a0, 42033
-/* 084BB0 7F050080 02002025 */  move  $a0, $s0
-/* 084BB4 7F050084 0C0029FF */  jal   strcat
-/* 084BB8 7F050088 00402825 */   move  $a1, $v0
-/* 084BBC 7F05008C 10000045 */  b     .L7F0501A4
-/* 084BC0 7F050090 00000000 */   nop   
-weapon_collect_msg_a_golden_gun:
-/* 084BC4 7F050094 0FC30776 */  jal   langGet
-/* 084BC8 7F050098 3404A432 */   li    $a0, 42034
-/* 084BCC 7F05009C 02002025 */  move  $a0, $s0
-/* 084BD0 7F0500A0 0C0029FF */  jal   strcat
-/* 084BD4 7F0500A4 00402825 */   move  $a1, $v0
-/* 084BD8 7F0500A8 1000003E */  b     .L7F0501A4
-/* 084BDC 7F0500AC 00000000 */   nop   
-weapon_collect_msg_a_moonraker_laser:
-/* 084BE0 7F0500B0 0FC30776 */  jal   langGet
-/* 084BE4 7F0500B4 3404A433 */   li    $a0, 42035
-/* 084BE8 7F0500B8 02002025 */  move  $a0, $s0
-/* 084BEC 7F0500BC 0C0029FF */  jal   strcat
-/* 084BF0 7F0500C0 00402825 */   move  $a1, $v0
-/* 084BF4 7F0500C4 10000037 */  b     .L7F0501A4
-/* 084BF8 7F0500C8 00000000 */   nop   
-weapon_collect_msg_a_flare_pistol:
-/* 084BFC 7F0500CC 0FC30776 */  jal   langGet
-/* 084C00 7F0500D0 3404A434 */   li    $a0, 42036
-/* 084C04 7F0500D4 02002025 */  move  $a0, $s0
-/* 084C08 7F0500D8 0C0029FF */  jal   strcat
-/* 084C0C 7F0500DC 00402825 */   move  $a1, $v0
-/* 084C10 7F0500E0 10000030 */  b     .L7F0501A4
-/* 084C14 7F0500E4 00000000 */   nop   
-weapon_collect_msg_a_piton_gun:
-/* 084C18 7F0500E8 0FC30776 */  jal   langGet
-/* 084C1C 7F0500EC 3404A435 */   li    $a0, 42037
-/* 084C20 7F0500F0 02002025 */  move  $a0, $s0
-/* 084C24 7F0500F4 0C0029FF */  jal   strcat
-/* 084C28 7F0500F8 00402825 */   move  $a1, $v0
-/* 084C2C 7F0500FC 10000029 */  b     .L7F0501A4
-/* 084C30 7F050100 00000000 */   nop   
-weapon_collect_msg_a_silver_pp7:
-/* 084C34 7F050104 0FC30776 */  jal   langGet
-/* 084C38 7F050108 3404A436 */   li    $a0, 42038
-/* 084C3C 7F05010C 02002025 */  move  $a0, $s0
-/* 084C40 7F050110 0C0029FF */  jal   strcat
-/* 084C44 7F050114 00402825 */   move  $a1, $v0
-/* 084C48 7F050118 10000022 */  b     .L7F0501A4
-/* 084C4C 7F05011C 00000000 */   nop   
-weapon_collect_msg_a_gold_pp7:
-/* 084C50 7F050120 0FC30776 */  jal   langGet
-/* 084C54 7F050124 3404A437 */   li    $a0, 42039
-/* 084C58 7F050128 02002025 */  move  $a0, $s0
-/* 084C5C 7F05012C 0C0029FF */  jal   strcat
-/* 084C60 7F050130 00402825 */   move  $a1, $v0
-/* 084C64 7F050134 1000001B */  b     .L7F0501A4
-/* 084C68 7F050138 00000000 */   nop   
-weapon_collect_msg_a_keycard:
-/* 084C6C 7F05013C 0FC30776 */  jal   langGet
-/* 084C70 7F050140 3404A438 */   li    $a0, 42040
-/* 084C74 7F050144 02002025 */  move  $a0, $s0
-/* 084C78 7F050148 0C0029FF */  jal   strcat
-/* 084C7C 7F05014C 00402825 */   move  $a1, $v0
-/* 084C80 7F050150 10000014 */  b     .L7F0501A4
-/* 084C84 7F050154 00000000 */   nop   
-weapon_collect_msg_a_yale_key:
-/* 084C88 7F050158 0FC30776 */  jal   langGet
-/* 084C8C 7F05015C 3404A439 */   li    $a0, 42041
-/* 084C90 7F050160 02002025 */  move  $a0, $s0
-/* 084C94 7F050164 0C0029FF */  jal   strcat
-/* 084C98 7F050168 00402825 */   move  $a1, $v0
-/* 084C9C 7F05016C 1000000D */  b     .L7F0501A4
-/* 084CA0 7F050170 00000000 */   nop   
-weapon_collect_msg_a_bolt_key:
-/* 084CA4 7F050174 0FC30776 */  jal   langGet
-/* 084CA8 7F050178 3404A43A */   li    $a0, 42042
-/* 084CAC 7F05017C 02002025 */  move  $a0, $s0
-/* 084CB0 7F050180 0C0029FF */  jal   strcat
-/* 084CB4 7F050184 00402825 */   move  $a1, $v0
-/* 084CB8 7F050188 10000006 */  b     .L7F0501A4
-/* 084CBC 7F05018C 00000000 */   nop   
-weapon_collect_msg_a_new_weapon:
-.L7F050190:
-/* 084CC0 7F050190 0FC30776 */  jal   langGet
-/* 084CC4 7F050194 3404A43B */   li    $a0, 42043
-/* 084CC8 7F050198 02002025 */  move  $a0, $s0
-/* 084CCC 7F05019C 0C0029FF */  jal   strcat
-/* 084CD0 7F0501A0 00402825 */   move  $a1, $v0
-.L7F0501A4:
-/* 084CD4 7F0501A4 3C088005 */  lui   $t0, %hi(j_text_trigger) 
-/* 084CD8 7F0501A8 8D0884D0 */  lw    $t0, %lo(j_text_trigger)($t0)
-/* 084CDC 7F0501AC 8FA90024 */  lw    $t1, 0x24($sp)
-/* 084CE0 7F0501B0 51000018 */  beql  $t0, $zero, .L7F050214
-/* 084CE4 7F0501B4 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 084CE8 7F0501B8 55200016 */  bnezl $t1, .L7F050214
-/* 084CEC 7F0501BC 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 084CF0 7F0501C0 0C004E1F */  jal   strlen
-/* 084CF4 7F0501C4 02002025 */   move  $a0, $s0
-/* 084CF8 7F0501C8 00505021 */  addu  $t2, $v0, $s0
-/* 084CFC 7F0501CC 914BFFFF */  lbu   $t3, -1($t2)
-/* 084D00 7F0501D0 2401000A */  li    $at, 10
-/* 084D04 7F0501D4 15610005 */  bne   $t3, $at, .L7F0501EC
-/* 084D08 7F0501D8 00000000 */   nop   
-/* 084D0C 7F0501DC 0C004E1F */  jal   strlen
-/* 084D10 7F0501E0 02002025 */   move  $a0, $s0
-/* 084D14 7F0501E4 02026021 */  addu  $t4, $s0, $v0
-/* 084D18 7F0501E8 A180FFFF */  sb    $zero, -1($t4)
-.L7F0501EC:
-/* 084D1C 7F0501EC 0FC30776 */  jal   langGet
-/* 084D20 7F0501F0 3404A400 */   li    $a0, 41984
-/* 084D24 7F0501F4 02002025 */  move  $a0, $s0
-/* 084D28 7F0501F8 0C0029FF */  jal   strcat
-/* 084D2C 7F0501FC 00402825 */   move  $a1, $v0
-/* 084D30 7F050200 3C058005 */  lui   $a1, %hi(D_80052A40)
-/* 084D34 7F050204 24A52A40 */  addiu $a1, %lo(D_80052A40) # addiu $a1, $a1, 0x2a40
-/* 084D38 7F050208 0C0029FF */  jal   strcat
-/* 084D3C 7F05020C 02002025 */   move  $a0, $s0
-/* 084D40 7F050210 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F050214:
-/* 084D44 7F050214 8FB00018 */  lw    $s0, 0x18($sp)
-/* 084D48 7F050218 27BD0028 */  addiu $sp, $sp, 0x28
-/* 084D4C 7F05021C 03E00008 */  jr    $ra
-/* 084D50 7F050220 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 
 void display_text_for_weapon_in_lower_left_corner(ITEM_IDS weaponid)
