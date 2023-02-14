@@ -189,6 +189,9 @@ void initBONDdataforPlayer(s32 player_num)
     g_playerPointers[player_num]->vv_costheta = 1.0f;
     g_playerPointers[player_num]->vv_sintheta = 0.0f;
     g_playerPointers[player_num]->vv_verta = -4.0f;
+    // @bug
+    // -229.1831 degrees = -4 radians
+    // This doesn't matter, because bondviewApplyVertaTheta overwrites vv_verta360 with the value from vv_verta
     g_playerPointers[player_num]->vv_verta360 = -229.1831f;
     g_playerPointers[player_num]->speedverta = 0.0f;
     g_playerPointers[player_num]->vv_cosverta = 1.0f;

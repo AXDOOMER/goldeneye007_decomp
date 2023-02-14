@@ -43,6 +43,9 @@ struct collision434 {
     coord3d collision_position;
 
     /**
+     * This affects Bond's movement, but not the viewport.
+     * This does not affect boost direction.
+     * 
      * f[0]: forward component (sin theta) in radians 
      * f[1]: zero
      * f[2]: sideways component (cos theta) in radians.
@@ -495,13 +498,45 @@ struct player
   /* 0x0144 */ s32 autoxaimtime60;
   /* 0x0148 */ f32 vv_theta;
   /* 0x014c */ f32 speedtheta;
-  /* 0x0150 */ f32 vv_costheta;
-  /* 0x0154 */ f32 vv_sintheta;
-  /* 0x0158 */ f32 vv_verta;
-  /* 0x015c */ f32 vv_verta360;
+  
+  /**
+   * Computed value from vv_theta, used to calculate boost direction.
+   * 0x0150
+   **/
+  f32 vv_costheta;
+  
+  /**
+   * Computed value from vv_theta, used to calculate boost direction.
+   * 0x0154
+   **/
+  f32 vv_sintheta;
+  
+  /**
+   * Vertical look angle.
+   * 0x0158
+   **/
+  f32 vv_verta;
+  
+  /**
+   * Vertical look angle. Computed value from vv_verta, should always be between 0 and 360 degrees.
+   * 0x015c
+   **/
+  f32 vv_verta360;
+
   /* 0x0160 */ f32 speedverta;
-  /* 0x0164 */ f32 vv_cosverta;
-  /* 0x0168 */ f32 vv_sinverta;
+  
+  /**
+   * Computed value from vv_verta360, but otherwise unused?
+   * 0x0164
+   **/
+  f32 vv_cosverta;
+  
+  /**
+   * Computed value from vv_verta360, but otherwise unused?
+   * 0x0168
+   **/
+  f32 vv_sinverta;
+
   /* 0x016c */ f32 speedsideways;
   /* 0x0170 */ f32 speedstrafe;
   /* 0x0174 */ f32 speedforwards;

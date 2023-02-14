@@ -830,6 +830,9 @@ void chrobjSndCreatePostEvent(ALSoundState *state, coord3d *pos, f32 low, f32 hi
 void sub_GAME_7F050DE8(Model* model);
 void remove_obj_from_temp_proxmine_table(WeaponObjRecord* proxy);
 void add_obj_to_temp_proxmine_table(WeaponObjRecord* proxy);
+s32 sub_GAME_7F042EB4(struct ObjectRecord *arg0, f32 *arg1, struct coord3d *arg2, struct coord3d *arg3, s32 arg4, s32 arg5);
+s32 sub_GAME_7F042A0C(struct ObjectRecord *arg0, f32 *arg1, struct coord3d *arg2, struct coord3d *arg3, s32 arg4);
+s32 handles_projectile_motion(struct ObjectRecord *arg0, f32 *arg1, struct coord3d *arg2, struct coord3d *arg3, s32 arg4, s32 arg5);
 
 
 /* PD: projectileFree (similar but not the same structure) */
@@ -3711,45 +3714,18 @@ glabel sub_GAME_7F042A0C
 
 
 
+/**
+ * US address 7F042EB4.
+*/
+s32 sub_GAME_7F042EB4(struct ObjectRecord *arg0, f32 *arg1, struct coord3d *arg2, struct coord3d *arg3, s32 arg4, s32 arg5)
+{
+    if ((arg0->runtime_bitflags & 0x80) && arg0->unk6C->flags & 4)
+    {
+        return handles_projectile_motion(arg0, arg1, arg2, arg3, arg4, arg5);
+    }
 
-#ifdef NONMATCHING
-void sub_GAME_7F042EB4(void) {
-
+    return sub_GAME_7F042A0C(arg0, arg1, arg2, arg3, arg4);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F042EB4
-/* 0779E4 7F042EB4 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0779E8 7F042EB8 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0779EC 7F042EBC 8C8E0064 */  lw    $t6, 0x64($a0)
-/* 0779F0 7F042EC0 8FAB0030 */  lw    $t3, 0x30($sp)
-/* 0779F4 7F042EC4 31CF0080 */  andi  $t7, $t6, 0x80
-/* 0779F8 7F042EC8 11E0000D */  beqz  $t7, .L7F042F00
-/* 0779FC 7F042ECC 00000000 */   nop   
-/* 077A00 7F042ED0 8C98006C */  lw    $t8, 0x6c($a0)
-/* 077A04 7F042ED4 8FA90030 */  lw    $t1, 0x30($sp)
-/* 077A08 7F042ED8 8F190000 */  lw    $t9, ($t8)
-/* 077A0C 7F042EDC 33280004 */  andi  $t0, $t9, 4
-/* 077A10 7F042EE0 11000007 */  beqz  $t0, .L7F042F00
-/* 077A14 7F042EE4 00000000 */   nop   
-/* 077A18 7F042EE8 8FAA0034 */  lw    $t2, 0x34($sp)
-/* 077A1C 7F042EEC AFA90010 */  sw    $t1, 0x10($sp)
-/* 077A20 7F042EF0 0FC10893 */  jal   handles_projectile_motion
-/* 077A24 7F042EF4 AFAA0014 */   sw    $t2, 0x14($sp)
-/* 077A28 7F042EF8 10000004 */  b     .L7F042F0C
-/* 077A2C 7F042EFC 8FBF001C */   lw    $ra, 0x1c($sp)
-.L7F042F00:
-/* 077A30 7F042F00 0FC10A83 */  jal   sub_GAME_7F042A0C
-/* 077A34 7F042F04 AFAB0010 */   sw    $t3, 0x10($sp)
-/* 077A38 7F042F08 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F042F0C:
-/* 077A3C 7F042F0C 27BD0020 */  addiu $sp, $sp, 0x20
-/* 077A40 7F042F10 03E00008 */  jr    $ra
-/* 077A44 7F042F14 00000000 */   nop   
-)
-#endif
-
 
 
 

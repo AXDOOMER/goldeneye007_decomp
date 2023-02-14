@@ -718,7 +718,7 @@ s32 sub_GAME_7F07D61C(struct coord3d *arg0, struct coord3d *arg1, struct coord3d
 void bondviewApplyVertaTheta(void);
 
 f32 bheadGetBreathingValue(void);
-void bondviewMoveAnimationTick(f32 arg0, f32 arg1, f32 arg2);
+void bondviewMoveAnimationTick(f32 speed, f32 speedforwards, f32 speedsideways);
 void bondviewCalcUpdatePlayerCollision(struct coord3d *arg0, s32 arg1);
 f32 bondviewPauseAngleRelated(s32 arg0);
 void sub_GAME_7F07E010(f32 arg0);
@@ -9368,26 +9368,26 @@ void currentPlayerTickChrFade(void)
 /**
  * Will apply a move animation update. The pass through call to bheadUpdate is
  * what allows Bond to move. This will also trigger the death animation once
- * Bond dies.
+ * Bond dies. This chooses a random death animation from g_bondviewBondDeathAnimations.
  * Address 0x7F080B34.
 */
-void bondviewMoveAnimationTick(f32 arg0, f32 arg1, f32 arg2)
+void bondviewMoveAnimationTick(f32 speed, f32 speedforwards, f32 speedsideways)
 {
-    f32 spCC;
+    f32 percent_speed;
     Mtxf sp8C;
     Mtxf sp4C;
 
-    spCC = 0.0f;
+    percent_speed = 0.0f;
 
     if (g_CurrentPlayer->bonddead == 0)
     {
-        bheadAdjustAnimation(arg0);
+        bheadAdjustAnimation(speed);
 
-        if (arg0 != 0.0f)
+        if (speed != 0.0f)
         {
-            spCC = arg1 / arg0;
+            percent_speed = speedforwards / speed;
         }
-        else if (arg1 == 0.0f)
+        else if (speedforwards == 0.0f)
         {
             //
         }
@@ -9404,19 +9404,21 @@ void bondviewMoveAnimationTick(f32 arg0, f32 arg1, f32 arg2)
         }
 
         bheadSetSpeed(0.5f);
-        arg2 = 0.0f;
+        speedsideways = 0.0f;
     }
     
-    bheadUpdate(spCC, arg2);
+    bheadUpdate(percent_speed, speedsideways);
 
-    matrix_4x4_set_rotation_around_x((360.0f - g_CurrentPlayer->vv_verta360) * 0.017453292f, &sp8C);
+    matrix_4x4_set_rotation_around_x((360.0f - g_CurrentPlayer->vv_verta360) * DegToRad1Fact(1), &sp8C);
     matrix_4x4_7F059908(&sp4C, 0.0f, 0.0f, 0.0f, -g_CurrentPlayer->headlook[0], -g_CurrentPlayer->headlook[1], -g_CurrentPlayer->headlook[2], g_CurrentPlayer->headup[0], g_CurrentPlayer->headup[1], g_CurrentPlayer->headup[2]);
     matrix_4x4_multiply_in_place(&sp4C, &sp8C);
-    matrix_4x4_set_rotation_around_y((360.0f - g_CurrentPlayer->vv_theta) * 0.017453292f, &sp4C);
+    matrix_4x4_set_rotation_around_y((360.0f - g_CurrentPlayer->vv_theta) * DegToRad1Fact(1), &sp4C);
     matrix_4x4_multiply_in_place(&sp4C, &sp8C);
+
     g_CurrentPlayer->field_488.applied_view.f[0] = sp8C.m[2][0];
     g_CurrentPlayer->field_488.applied_view.f[1] = sp8C.m[2][1];
     g_CurrentPlayer->field_488.applied_view.f[2] = sp8C.m[2][2];
+    
     g_CurrentPlayer->field_488.applied_view2.f[0] = sp8C.m[1][0];
     g_CurrentPlayer->field_488.applied_view2.f[1] = sp8C.m[1][1];
     g_CurrentPlayer->field_488.applied_view2.f[2] = sp8C.m[1][2];

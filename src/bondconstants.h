@@ -3290,11 +3290,15 @@ typedef enum TVCMD
 #define NUMBER_SHOTGUN_BULLETS   5
 
 #ifdef VERSION_EU
-#define NTSC 0
-#define PAL 1
+    #define NTSC 0
+    #define PAL 1
+    #define TICKS_PER_SECOND 50
+    #define FRAMES_PER_SECOND 25
 #else
-#define NTSC 1
-#define PAL 0
+    #define NTSC 1
+    #define PAL 0
+    #define TICKS_PER_SECOND 60
+    #define FRAMES_PER_SECOND 30
 #endif
 
 #pragma endregion
