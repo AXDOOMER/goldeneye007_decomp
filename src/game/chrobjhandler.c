@@ -30440,97 +30440,28 @@ void add_ammo_to_inventory(AMMOTYPE ammotype,int amount,int doplaysound,int dodi
 }
 
 
+s32 get_ammo_in_magazine(AmmoCrateRecord *crate)
+{
+    s32 qty = 1;
 
+    switch (crate->ammoType)
+    {
+        case AMMO_9MM:     qty = 10; break;
+        case AMMO_9MM_2:   qty = 10; break;
+        case AMMO_RIFLE:   qty = 10; break;
+        case AMMO_SHOTGUN: qty =  5; break;
+        case AMMO_MAGNUM:  qty =  5; break;
+        case AMMO_GGUN:    qty =  3; break;
+        case AMMO_DARTS:   qty =  4; break;
+    }
 
-#ifdef NONMATCHING
-void get_ammo_in_magazine(void) {
+    if (qty > 1 && getPlayerCount() == 1)
+    {
+        qty *= g_SoloAmmoMultiplier;
+    }
 
+    return qty;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-/*D:80053060*/
-glabel ammo_collected_from_magazine
-.word magazine_has_10_rounds_type1
-.word magazine_has_10_rounds_type2
-.word magazine_has_10_rounds_type3
-.word magazine_has_5_rounds_type4
-.word magazine_has_default_ammo_rounds
-.word magazine_has_default_ammo_rounds
-.word magazine_has_default_ammo_rounds
-.word magazine_has_default_ammo_rounds
-.word magazine_has_default_ammo_rounds
-.word magazine_has_default_ammo_rounds
-.word magazine_has_default_ammo_rounds
-.word magazine_has_5_rounds_typeC
-.word magazine_has_3_rounds_typeD
-.word magazine_has_4_rounds_typeE
-
-.text
-glabel get_ammo_in_magazine
-/* 08476C 7F04FC3C 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 084770 7F04FC40 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 084774 7F04FC44 8C8E0080 */  lw    $t6, 0x80($a0)
-/* 084778 7F04FC48 24030001 */  li    $v1, 1
-/* 08477C 7F04FC4C 25CFFFFF */  addiu $t7, $t6, -1
-/* 084780 7F04FC50 2DE1000E */  sltiu $at, $t7, 0xe
-/* 084784 7F04FC54 10200013 */  beqz  $at, .L7F04FCA4
-/* 084788 7F04FC58 000F7880 */   sll   $t7, $t7, 2
-/* 08478C 7F04FC5C 3C018005 */  lui   $at, %hi(ammo_collected_from_magazine)
-/* 084790 7F04FC60 002F0821 */  addu  $at, $at, $t7
-/* 084794 7F04FC64 8C2F3060 */  lw    $t7, %lo(ammo_collected_from_magazine)($at)
-/* 084798 7F04FC68 01E00008 */  jr    $t7
-/* 08479C 7F04FC6C 00000000 */   nop   
-magazine_has_10_rounds_type1:
-/* 0847A0 7F04FC70 1000000C */  b     .L7F04FCA4
-/* 0847A4 7F04FC74 2403000A */   li    $v1, 10
-magazine_has_10_rounds_type2:
-/* 0847A8 7F04FC78 1000000A */  b     .L7F04FCA4
-/* 0847AC 7F04FC7C 2403000A */   li    $v1, 10
-magazine_has_10_rounds_type3:
-/* 0847B0 7F04FC80 10000008 */  b     .L7F04FCA4
-/* 0847B4 7F04FC84 2403000A */   li    $v1, 10
-magazine_has_5_rounds_type4:
-/* 0847B8 7F04FC88 10000006 */  b     .L7F04FCA4
-/* 0847BC 7F04FC8C 24030005 */   li    $v1, 5
-magazine_has_5_rounds_typeC:
-/* 0847C0 7F04FC90 10000004 */  b     .L7F04FCA4
-/* 0847C4 7F04FC94 24030005 */   li    $v1, 5
-magazine_has_3_rounds_typeD:
-/* 0847C8 7F04FC98 10000002 */  b     .L7F04FCA4
-/* 0847CC 7F04FC9C 24030003 */   li    $v1, 3
-magazine_has_4_rounds_typeE:
-/* 0847D0 7F04FCA0 24030004 */  li    $v1, 4
-magazine_has_default_ammo_rounds:
-.L7F04FCA4:
-/* 0847D4 7F04FCA4 28610002 */  slti  $at, $v1, 2
-/* 0847D8 7F04FCA8 5420000F */  bnezl $at, .L7F04FCE8
-/* 0847DC 7F04FCAC 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0847E0 7F04FCB0 0FC26919 */  jal   getPlayerCount
-/* 0847E4 7F04FCB4 AFA3001C */   sw    $v1, 0x1c($sp)
-/* 0847E8 7F04FCB8 24010001 */  li    $at, 1
-/* 0847EC 7F04FCBC 14410009 */  bne   $v0, $at, .L7F04FCE4
-/* 0847F0 7F04FCC0 8FA3001C */   lw    $v1, 0x1c($sp)
-/* 0847F4 7F04FCC4 44832000 */  mtc1  $v1, $f4
-/* 0847F8 7F04FCC8 3C018003 */  lui   $at, %hi(g_SoloAmmoMultiplier)
-/* 0847FC 7F04FCCC C4280B28 */  lwc1  $f8, %lo(g_SoloAmmoMultiplier)($at)
-/* 084800 7F04FCD0 468021A0 */  cvt.s.w $f6, $f4
-/* 084804 7F04FCD4 46083282 */  mul.s $f10, $f6, $f8
-/* 084808 7F04FCD8 4600540D */  trunc.w.s $f16, $f10
-/* 08480C 7F04FCDC 44038000 */  mfc1  $v1, $f16
-/* 084810 7F04FCE0 00000000 */  nop   
-.L7F04FCE4:
-/* 084814 7F04FCE4 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F04FCE8:
-/* 084818 7F04FCE8 27BD0020 */  addiu $sp, $sp, 0x20
-/* 08481C 7F04FCEC 00601025 */  move  $v0, $v1
-/* 084820 7F04FCF0 03E00008 */  jr    $ra
-/* 084824 7F04FCF4 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
