@@ -59,7 +59,7 @@ void lvInitDebugNoticeList(void);
 Gfx * lvlRender(Gfx *);
 void lvlSetSelectedDifficulty(DIFFICULTY arg0);
 void lvlManageMpGame(void);
-void lvlUpdateMpPlayerData(void);
+void lvlViewMoveTick(void);
 void lvlUnloadStageTextData(void);
 DIFFICULTY lvlGetSelectedDifficulty(void);
 void lvlStageLoad(s32 stage);

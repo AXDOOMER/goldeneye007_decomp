@@ -5341,34 +5341,28 @@ glabel lvlManageMpGame
 #endif
 
 
-#ifdef NONMATCHING
 /**
- * Multiplayer related. Has some debug code which passes in controller input.
+ * Assumes a debug mode is present, and handles debug edit intro, debug stan edit, debug bond "view."
+ * By default, the DEB_BOND_VIEW path is chosen without debug info.
+ * This updates the player viewport(s), and handles player movement.
  * 
+ * Multiplayer:
  * Updates distance_traveled and possibly (depending on scenario) have_token_or_goldengun.
  * 
- * Address 0x7F0BF800.
- * 
- * decomp status:
- * - compiles: yes
- * - stack resize: ok
- * - identical instructions: yes
- * - identical registers: fail
- * 
- * notes: only regalloc issues near the sqrtf call.
+ * US Address 0x7F0BF800.
+ * EU address 7F0BEC44.
  */
-void lvlUpdateMpPlayerData(void)
+void lvlViewMoveTick(void)
 {
     s8 local_player_number;
+    s32 padding;
     f32 temp_f0;
     f32 temp_f2;
-    s32 temp_v0;
 
     local_player_number = get_cur_playernum();
     cheat_buttons_mp_related();
-    temp_v0 = get_debug_freeze_processing();
 
-    switch (temp_v0)
+    switch (get_debug_freeze_processing())
     {
         case 0:
         {
@@ -5412,9 +5406,8 @@ void lvlUpdateMpPlayerData(void)
         break;
     }
 
-    // decomp issue: `g_CurrentPlayer->prop` and `g_CurrentPlayer` registers are swapped.
-    temp_f0 = g_CurrentPlayer->prop->position.x - g_CurrentPlayer->bondprevpos.x;
-    temp_f2 = g_CurrentPlayer->prop->position.z - g_CurrentPlayer->bondprevpos.z;
+    temp_f0 = g_CurrentPlayer->prop->pos.x - g_CurrentPlayer->bondprevpos.x;
+    temp_f2 = g_CurrentPlayer->prop->pos.z - g_CurrentPlayer->bondprevpos.z;
 
     g_playerPerm->distance_traveled += sqrtf((temp_f0 * temp_f0) + (temp_f2 * temp_f2));
 
@@ -5426,12 +5419,14 @@ void lvlUpdateMpPlayerData(void)
             {
                 currentPlayerEquipWeaponWrapper(GUNRIGHT, ITEM_TOKEN);
 
+                if(1);
+                
                 if (g_CurrentPlayer->hands[GUNRIGHT].when_detonating_mines_is_0 == 2)
                 {
                     g_CurrentPlayer->hands[GUNRIGHT].when_detonating_mines_is_0 = 5;
                 }
             }
-
+            
             g_playerPerm->flag_counter += g_ClockTimer;
             g_playerPerm->have_token_or_goldengun = 1;
         }
@@ -5457,452 +5452,6 @@ void lvlUpdateMpPlayerData(void)
         return;
     }
 }
-#else
-
-#if defined(LEFTOVERDEBUG)
-GLOBAL_ASM(
-.text
-glabel lvlUpdateMpPlayerData
-/* 0F4330 7F0BF800 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0F4334 7F0BF804 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F4338 7F0BF808 0FC26C54 */  jal   get_cur_playernum
-/* 0F433C 7F0BF80C 00000000 */   nop
-/* 0F4340 7F0BF810 0FC2464F */  jal   cheat_buttons_mp_related
-/* 0F4344 7F0BF814 A3A2002F */   sb    $v0, 0x2f($sp)
-/* 0F4348 7F0BF818 0FC243C2 */  jal   get_debug_freeze_processing
-/* 0F434C 7F0BF81C 00000000 */   nop
-/* 0F4350 7F0BF820 10400007 */  beqz  $v0, .L7F0BF840
-/* 0F4354 7F0BF824 24010001 */   li    $at, 1
-/* 0F4358 7F0BF828 1041002D */  beq   $v0, $at, .L7F0BF8E0
-/* 0F435C 7F0BF82C 24010002 */   li    $at, 2
-/* 0F4360 7F0BF830 1041004C */  beq   $v0, $at, .L7F0BF964
-/* 0F4364 7F0BF834 00000000 */   nop
-/* 0F4368 7F0BF838 1000006B */  b     .L7F0BF9E8
-/* 0F436C 7F0BF83C 00000000 */   nop
-.L7F0BF840:
-/* 0F4370 7F0BF840 0FC243C5 */  jal   getDebugMode
-/* 0F4374 7F0BF844 00000000 */   nop
-/* 0F4378 7F0BF848 10400009 */  beqz  $v0, .L7F0BF870
-/* 0F437C 7F0BF84C 00000000 */   nop
-/* 0F4380 7F0BF850 0FC243C5 */  jal   getDebugMode
-/* 0F4384 7F0BF854 00000000 */   nop
-/* 0F4388 7F0BF858 2401003B */  li    $at, 59
-/* 0F438C 7F0BF85C 14410013 */  bne   $v0, $at, .L7F0BF8AC
-/* 0F4390 7F0BF860 3C0E8003 */   lui   $t6, %hi(D_80036ABC)
-/* 0F4394 7F0BF864 8DCE6ABC */  lw    $t6, %lo(D_80036ABC)($t6)
-/* 0F4398 7F0BF868 05C10010 */  bgez  $t6, .L7F0BF8AC
-/* 0F439C 7F0BF86C 00000000 */   nop
-.L7F0BF870:
-/* 0F43A0 7F0BF870 0C00303B */  jal   joyGetStickX
-/* 0F43A4 7F0BF874 83A4002F */   lb    $a0, 0x2f($sp)
-/* 0F43A8 7F0BF878 A3A20018 */  sb    $v0, 0x18($sp)
-/* 0F43AC 7F0BF87C 0C00307F */  jal   joyGetStickY
-/* 0F43B0 7F0BF880 83A4002F */   lb    $a0, 0x2f($sp)
-/* 0F43B4 7F0BF884 A3A20019 */  sb    $v0, 0x19($sp)
-/* 0F43B8 7F0BF888 83A4002F */  lb    $a0, 0x2f($sp)
-/* 0F43BC 7F0BF88C 0C0030C3 */  jal   joyGetButtons
-/* 0F43C0 7F0BF890 3405FFFF */   li    $a1, 65535
-/* 0F43C4 7F0BF894 83A40018 */  lb    $a0, 0x18($sp)
-/* 0F43C8 7F0BF898 83A50019 */  lb    $a1, 0x19($sp)
-/* 0F43CC 7F0BF89C 0FC24420 */  jal   sub_GAME_7F091080
-/* 0F43D0 7F0BF8A0 3046FFFF */   andi  $a2, $v0, 0xffff
-/* 0F43D4 7F0BF8A4 10000050 */  b     .L7F0BF9E8
-/* 0F43D8 7F0BF8A8 00000000 */   nop
-.L7F0BF8AC:
-/* 0F43DC 7F0BF8AC 0C00303B */  jal   joyGetStickX
-/* 0F43E0 7F0BF8B0 83A4002F */   lb    $a0, 0x2f($sp)
-/* 0F43E4 7F0BF8B4 A3A20018 */  sb    $v0, 0x18($sp)
-/* 0F43E8 7F0BF8B8 0C00307F */  jal   joyGetStickY
-/* 0F43EC 7F0BF8BC 83A4002F */   lb    $a0, 0x2f($sp)
-/* 0F43F0 7F0BF8C0 00022E00 */  sll   $a1, $v0, 0x18
-/* 0F43F4 7F0BF8C4 00057E03 */  sra   $t7, $a1, 0x18
-/* 0F43F8 7F0BF8C8 01E02825 */  move  $a1, $t7
-/* 0F43FC 7F0BF8CC 83A40018 */  lb    $a0, 0x18($sp)
-/* 0F4400 7F0BF8D0 0FC24420 */  jal   sub_GAME_7F091080
-/* 0F4404 7F0BF8D4 00003025 */   move  $a2, $zero
-/* 0F4408 7F0BF8D8 10000043 */  b     .L7F0BF9E8
-/* 0F440C 7F0BF8DC 00000000 */   nop
-.L7F0BF8E0:
-/* 0F4410 7F0BF8E0 0FC243C5 */  jal   getDebugMode
-/* 0F4414 7F0BF8E4 00000000 */   nop
-/* 0F4418 7F0BF8E8 24010001 */  li    $at, 1
-/* 0F441C 7F0BF8EC 14410010 */  bne   $v0, $at, .L7F0BF930
-/* 0F4420 7F0BF8F0 00000000 */   nop
-/* 0F4424 7F0BF8F4 0C00303B */  jal   joyGetStickX
-/* 0F4428 7F0BF8F8 83A4002F */   lb    $a0, 0x2f($sp)
-/* 0F442C 7F0BF8FC A3A20018 */  sb    $v0, 0x18($sp)
-/* 0F4430 7F0BF900 0C00307F */  jal   joyGetStickY
-/* 0F4434 7F0BF904 83A4002F */   lb    $a0, 0x2f($sp)
-/* 0F4438 7F0BF908 A3A20019 */  sb    $v0, 0x19($sp)
-/* 0F443C 7F0BF90C 83A4002F */  lb    $a0, 0x2f($sp)
-/* 0F4440 7F0BF910 0C0030C3 */  jal   joyGetButtons
-/* 0F4444 7F0BF914 3405FFFF */   li    $a1, 65535
-/* 0F4448 7F0BF918 83A40018 */  lb    $a0, 0x18($sp)
-/* 0F444C 7F0BF91C 83A50019 */  lb    $a1, 0x19($sp)
-/* 0F4450 7F0BF920 0FC2CB4E */  jal   sub_GAME_7F0B2D38
-/* 0F4454 7F0BF924 3046FFFF */   andi  $a2, $v0, 0xffff
-/* 0F4458 7F0BF928 1000002F */  b     .L7F0BF9E8
-/* 0F445C 7F0BF92C 00000000 */   nop
-.L7F0BF930:
-/* 0F4460 7F0BF930 0C00303B */  jal   joyGetStickX
-/* 0F4464 7F0BF934 83A4002F */   lb    $a0, 0x2f($sp)
-/* 0F4468 7F0BF938 A3A20018 */  sb    $v0, 0x18($sp)
-/* 0F446C 7F0BF93C 0C00307F */  jal   joyGetStickY
-/* 0F4470 7F0BF940 83A4002F */   lb    $a0, 0x2f($sp)
-/* 0F4474 7F0BF944 00022E00 */  sll   $a1, $v0, 0x18
-/* 0F4478 7F0BF948 0005C603 */  sra   $t8, $a1, 0x18
-/* 0F447C 7F0BF94C 03002825 */  move  $a1, $t8
-/* 0F4480 7F0BF950 83A40018 */  lb    $a0, 0x18($sp)
-/* 0F4484 7F0BF954 0FC2CB4E */  jal   sub_GAME_7F0B2D38
-/* 0F4488 7F0BF958 00003025 */   move  $a2, $zero
-/* 0F448C 7F0BF95C 10000022 */  b     .L7F0BF9E8
-/* 0F4490 7F0BF960 00000000 */   nop
-.L7F0BF964:
-/* 0F4494 7F0BF964 0FC243C5 */  jal   getDebugMode
-/* 0F4498 7F0BF968 00000000 */   nop
-/* 0F449C 7F0BF96C 24010002 */  li    $at, 2
-/* 0F44A0 7F0BF970 14410010 */  bne   $v0, $at, .L7F0BF9B4
-/* 0F44A4 7F0BF974 00000000 */   nop
-/* 0F44A8 7F0BF978 0C00303B */  jal   joyGetStickX
-/* 0F44AC 7F0BF97C 83A4002F */   lb    $a0, 0x2f($sp)
-/* 0F44B0 7F0BF980 A3A20018 */  sb    $v0, 0x18($sp)
-/* 0F44B4 7F0BF984 0C00307F */  jal   joyGetStickY
-/* 0F44B8 7F0BF988 83A4002F */   lb    $a0, 0x2f($sp)
-/* 0F44BC 7F0BF98C A3A20019 */  sb    $v0, 0x19($sp)
-/* 0F44C0 7F0BF990 83A4002F */  lb    $a0, 0x2f($sp)
-/* 0F44C4 7F0BF994 0C0030C3 */  jal   joyGetButtons
-/* 0F44C8 7F0BF998 3405FFFF */   li    $a1, 65535
-/* 0F44CC 7F0BF99C 83A40018 */  lb    $a0, 0x18($sp)
-/* 0F44D0 7F0BF9A0 83A50019 */  lb    $a1, 0x19($sp)
-/* 0F44D4 7F0BF9A4 0FC21BE7 */  jal   bondviewMovePlayerUpdateViewport
-/* 0F44D8 7F0BF9A8 3046FFFF */   andi  $a2, $v0, 0xffff
-/* 0F44DC 7F0BF9AC 1000000C */  b     .L7F0BF9E0
-/* 0F44E0 7F0BF9B0 00000000 */   nop
-.L7F0BF9B4:
-/* 0F44E4 7F0BF9B4 0C00303B */  jal   joyGetStickX
-/* 0F44E8 7F0BF9B8 83A4002F */   lb    $a0, 0x2f($sp)
-/* 0F44EC 7F0BF9BC A3A20018 */  sb    $v0, 0x18($sp)
-/* 0F44F0 7F0BF9C0 0C00307F */  jal   joyGetStickY
-/* 0F44F4 7F0BF9C4 83A4002F */   lb    $a0, 0x2f($sp)
-/* 0F44F8 7F0BF9C8 00022E00 */  sll   $a1, $v0, 0x18
-/* 0F44FC 7F0BF9CC 0005CE03 */  sra   $t9, $a1, 0x18
-/* 0F4500 7F0BF9D0 03202825 */  move  $a1, $t9
-/* 0F4504 7F0BF9D4 83A40018 */  lb    $a0, 0x18($sp)
-/* 0F4508 7F0BF9D8 0FC21BE7 */  jal   bondviewMovePlayerUpdateViewport
-/* 0F450C 7F0BF9DC 00003025 */   move  $a2, $zero
-.L7F0BF9E0:
-/* 0F4510 7F0BF9E0 0FC30BA0 */  jal   sub_GAME_7F0C2E80
-/* 0F4514 7F0BF9E4 00000000 */   nop
-.L7F0BF9E8:
-/* 0F4518 7F0BF9E8 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
-/* 0F451C 7F0BF9EC 8C42A0B0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
-/* 0F4520 7F0BF9F0 8C4300A8 */  lw    $v1, 0xa8($v0)
-/* 0F4524 7F0BF9F4 C4460408 */  lwc1  $f6, 0x408($v0)
-/* 0F4528 7F0BF9F8 C44A0410 */  lwc1  $f10, 0x410($v0)
-/* 0F452C 7F0BF9FC C4640008 */  lwc1  $f4, 8($v1)
-/* 0F4530 7F0BFA00 C4680010 */  lwc1  $f8, 0x10($v1)
-/* 0F4534 7F0BFA04 46062001 */  sub.s $f0, $f4, $f6
-/* 0F4538 7F0BFA08 460A4081 */  sub.s $f2, $f8, $f10
-/* 0F453C 7F0BFA0C 46000402 */  mul.s $f16, $f0, $f0
-/* 0F4540 7F0BFA10 00000000 */  nop
-/* 0F4544 7F0BFA14 46021482 */  mul.s $f18, $f2, $f2
-/* 0F4548 7F0BFA18 0C007DF8 */  jal   sqrtf
-/* 0F454C 7F0BFA1C 46128300 */   add.s $f12, $f16, $f18
-/* 0F4550 7F0BFA20 3C028008 */  lui   $v0, %hi(g_playerPerm)
-/* 0F4554 7F0BFA24 8C42A0B4 */  lw    $v0, %lo(g_playerPerm)($v0)
-/* 0F4558 7F0BFA28 C4440038 */  lwc1  $f4, 0x38($v0)
-/* 0F455C 7F0BFA2C 46002180 */  add.s $f6, $f4, $f0
-/* 0F4560 7F0BFA30 0FC051D6 */  jal   get_scenario
-/* 0F4564 7F0BFA34 E4460038 */   swc1  $f6, 0x38($v0)
-/* 0F4568 7F0BFA38 24010002 */  li    $at, 2
-/* 0F456C 7F0BFA3C 14410024 */  bne   $v0, $at, .L7F0BFAD0
-/* 0F4570 7F0BFA40 00000000 */   nop
-/* 0F4574 7F0BFA44 0FC233E0 */  jal   bondinvIsAliveWithFlag
-/* 0F4578 7F0BFA48 00000000 */   nop
-/* 0F457C 7F0BFA4C 1040001C */  beqz  $v0, .L7F0BFAC0
-/* 0F4580 7F0BFA50 00000000 */   nop
-/* 0F4584 7F0BFA54 0FC17674 */  jal   getCurrentPlayerWeaponId
-/* 0F4588 7F0BFA58 00002025 */   move  $a0, $zero
-/* 0F458C 7F0BFA5C 24010058 */  li    $at, 88
-/* 0F4590 7F0BFA60 1041000B */  beq   $v0, $at, .L7F0BFA90
-/* 0F4594 7F0BFA64 00002025 */   move  $a0, $zero
-/* 0F4598 7F0BFA68 0FC17645 */  jal   currentPlayerEquipWeaponWrapper
-/* 0F459C 7F0BFA6C 24050058 */   li    $a1, 88
-/* 0F45A0 7F0BFA70 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
-/* 0F45A4 7F0BFA74 8C42A0B0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
-/* 0F45A8 7F0BFA78 24010002 */  li    $at, 2
-/* 0F45AC 7F0BFA7C 24090005 */  li    $t1, 5
-/* 0F45B0 7F0BFA80 8C480894 */  lw    $t0, 0x894($v0)
-/* 0F45B4 7F0BFA84 15010002 */  bne   $t0, $at, .L7F0BFA90
-/* 0F45B8 7F0BFA88 00000000 */   nop
-/* 0F45BC 7F0BFA8C AC490894 */  sw    $t1, 0x894($v0)
-.L7F0BFA90:
-/* 0F45C0 7F0BFA90 3C038008 */  lui   $v1, %hi(g_playerPerm)
-/* 0F45C4 7F0BFA94 2463A0B4 */  addiu $v1, %lo(g_playerPerm) # addiu $v1, $v1, -0x5f4c
-/* 0F45C8 7F0BFA98 8C620000 */  lw    $v0, ($v1)
-/* 0F45CC 7F0BFA9C 3C0B8005 */  lui   $t3, %hi(g_ClockTimer)
-/* 0F45D0 7F0BFAA0 8D6B8374 */  lw    $t3, %lo(g_ClockTimer)($t3)
-/* 0F45D4 7F0BFAA4 8C4A0060 */  lw    $t2, 0x60($v0)
-/* 0F45D8 7F0BFAA8 240D0001 */  li    $t5, 1
-/* 0F45DC 7F0BFAAC 014B6021 */  addu  $t4, $t2, $t3
-/* 0F45E0 7F0BFAB0 AC4C0060 */  sw    $t4, 0x60($v0)
-/* 0F45E4 7F0BFAB4 8C6E0000 */  lw    $t6, ($v1)
-/* 0F45E8 7F0BFAB8 10000015 */  b     .L7F0BFB10
-/* 0F45EC 7F0BFABC A1CD0069 */   sb    $t5, 0x69($t6)
-.L7F0BFAC0:
-/* 0F45F0 7F0BFAC0 3C0F8008 */  lui   $t7, %hi(g_playerPerm)
-/* 0F45F4 7F0BFAC4 8DEFA0B4 */  lw    $t7, %lo(g_playerPerm)($t7)
-/* 0F45F8 7F0BFAC8 10000011 */  b     .L7F0BFB10
-/* 0F45FC 7F0BFACC A1E00069 */   sb    $zero, 0x69($t7)
-.L7F0BFAD0:
-/* 0F4600 7F0BFAD0 0FC051D6 */  jal   get_scenario
-/* 0F4604 7F0BFAD4 00000000 */   nop
-/* 0F4608 7F0BFAD8 24010003 */  li    $at, 3
-/* 0F460C 7F0BFADC 5441000D */  bnel  $v0, $at, .L7F0BFB14
-/* 0F4610 7F0BFAE0 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F4614 7F0BFAE4 0FC233F0 */  jal   bondinvHasGoldenGun
-/* 0F4618 7F0BFAE8 00000000 */   nop
-/* 0F461C 7F0BFAEC 10400006 */  beqz  $v0, .L7F0BFB08
-/* 0F4620 7F0BFAF0 3C088008 */   lui   $t0, %hi(g_playerPerm)
-/* 0F4624 7F0BFAF4 3C198008 */  lui   $t9, %hi(g_playerPerm)
-/* 0F4628 7F0BFAF8 8F39A0B4 */  lw    $t9, %lo(g_playerPerm)($t9)
-/* 0F462C 7F0BFAFC 24180001 */  li    $t8, 1
-/* 0F4630 7F0BFB00 10000003 */  b     .L7F0BFB10
-/* 0F4634 7F0BFB04 A3380069 */   sb    $t8, 0x69($t9)
-.L7F0BFB08:
-/* 0F4638 7F0BFB08 8D08A0B4 */  lw    $t0, %lo(g_playerPerm)($t0)
-/* 0F463C 7F0BFB0C A1000069 */  sb    $zero, 0x69($t0)
-.L7F0BFB10:
-/* 0F4640 7F0BFB10 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0BFB14:
-/* 0F4644 7F0BFB14 27BD0030 */  addiu $sp, $sp, 0x30
-/* 0F4648 7F0BFB18 03E00008 */  jr    $ra
-/* 0F464C 7F0BFB1C 00000000 */   nop
-)
-#endif
-
-#if !defined(LEFTOVERDEBUG)
-GLOBAL_ASM(
-.text
-glabel lvlUpdateMpPlayerData
-/* 0F1634 7F0BEC44 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0F1638 7F0BEC48 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F163C 7F0BEC4C 0FC269A4 */  jal   get_cur_playernum
-/* 0F1640 7F0BEC50 00000000 */   nop   
-/* 0F1644 7F0BEC54 0FC2436F */  jal   cheat_buttons_mp_related
-/* 0F1648 7F0BEC58 A3A2002F */   sb    $v0, 0x2f($sp)
-/* 0F164C 7F0BEC5C 0FC240FA */  jal   get_debug_freeze_processing
-/* 0F1650 7F0BEC60 00000000 */   nop   
-/* 0F1654 7F0BEC64 10400007 */  beqz  $v0, .L7F0BEC84
-/* 0F1658 7F0BEC68 24010001 */   li    $at, 1
-/* 0F165C 7F0BEC6C 1041002D */  beq   $v0, $at, .L7F0BED24
-/* 0F1660 7F0BEC70 24010002 */   li    $at, 2
-/* 0F1664 7F0BEC74 1041004C */  beq   $v0, $at, .L7F0BEDA8
-/* 0F1668 7F0BEC78 00000000 */   nop   
-/* 0F166C 7F0BEC7C 1000006B */  b     .L7F0BEE2C
-/* 0F1670 7F0BEC80 00000000 */   nop   
-.L7F0BEC84:
-/* 0F1674 7F0BEC84 0FC240FC */  jal   getDebugMode
-/* 0F1678 7F0BEC88 00000000 */   nop   
-/* 0F167C 7F0BEC8C 10400009 */  beqz  $v0, .L7F0BECB4
-/* 0F1680 7F0BEC90 00000000 */   nop   
-/* 0F1684 7F0BEC94 0FC240FC */  jal   getDebugMode
-/* 0F1688 7F0BEC98 00000000 */   nop   
-/* 0F168C 7F0BEC9C 2401003B */  li    $at, 59
-/* 0F1690 7F0BECA0 14410013 */  bne   $v0, $at, .L7F0BECF0
-/* 0F1694 7F0BECA4 3C0E8003 */   lui   $t6, %hi(D_80036ABC) # $t6, 0x8003
-/* 0F1698 7F0BECA8 8DCE2004 */  lw    $t6, %lo(D_80036ABC)($t6)
-/* 0F169C 7F0BECAC 05C10010 */  bgez  $t6, .L7F0BECF0
-/* 0F16A0 7F0BECB0 00000000 */   nop   
-.L7F0BECB4:
-/* 0F16A4 7F0BECB4 0C002B98 */  jal   joyGetStickX
-/* 0F16A8 7F0BECB8 83A4002F */   lb    $a0, 0x2f($sp)
-/* 0F16AC 7F0BECBC A3A20018 */  sb    $v0, 0x18($sp)
-/* 0F16B0 7F0BECC0 0C002BDC */  jal   joyGetStickY
-/* 0F16B4 7F0BECC4 83A4002F */   lb    $a0, 0x2f($sp)
-/* 0F16B8 7F0BECC8 A3A20019 */  sb    $v0, 0x19($sp)
-/* 0F16BC 7F0BECCC 83A4002F */  lb    $a0, 0x2f($sp)
-/* 0F16C0 7F0BECD0 0C002C20 */  jal   joyGetButtons
-/* 0F16C4 7F0BECD4 3405FFFF */   li    $a1, 65535
-/* 0F16C8 7F0BECD8 83A40018 */  lb    $a0, 0x18($sp)
-/* 0F16CC 7F0BECDC 83A50019 */  lb    $a1, 0x19($sp)
-/* 0F16D0 7F0BECE0 0FC24140 */  jal   sub_GAME_7F091080
-/* 0F16D4 7F0BECE4 3046FFFF */   andi  $a2, $v0, 0xffff
-/* 0F16D8 7F0BECE8 10000050 */  b     .L7F0BEE2C
-/* 0F16DC 7F0BECEC 00000000 */   nop   
-.L7F0BECF0:
-/* 0F16E0 7F0BECF0 0C002B98 */  jal   joyGetStickX
-/* 0F16E4 7F0BECF4 83A4002F */   lb    $a0, 0x2f($sp)
-/* 0F16E8 7F0BECF8 A3A20018 */  sb    $v0, 0x18($sp)
-/* 0F16EC 7F0BECFC 0C002BDC */  jal   joyGetStickY
-/* 0F16F0 7F0BED00 83A4002F */   lb    $a0, 0x2f($sp)
-/* 0F16F4 7F0BED04 00022E00 */  sll   $a1, $v0, 0x18
-/* 0F16F8 7F0BED08 00057E03 */  sra   $t7, $a1, 0x18
-/* 0F16FC 7F0BED0C 01E02825 */  move  $a1, $t7
-/* 0F1700 7F0BED10 83A40018 */  lb    $a0, 0x18($sp)
-/* 0F1704 7F0BED14 0FC24140 */  jal   sub_GAME_7F091080
-/* 0F1708 7F0BED18 00003025 */   move  $a2, $zero
-/* 0F170C 7F0BED1C 10000043 */  b     .L7F0BEE2C
-/* 0F1710 7F0BED20 00000000 */   nop   
-.L7F0BED24:
-/* 0F1714 7F0BED24 0FC240FC */  jal   getDebugMode
-/* 0F1718 7F0BED28 00000000 */   nop   
-/* 0F171C 7F0BED2C 24010001 */  li    $at, 1
-/* 0F1720 7F0BED30 14410010 */  bne   $v0, $at, .L7F0BED74
-/* 0F1724 7F0BED34 00000000 */   nop   
-/* 0F1728 7F0BED38 0C002B98 */  jal   joyGetStickX
-/* 0F172C 7F0BED3C 83A4002F */   lb    $a0, 0x2f($sp)
-/* 0F1730 7F0BED40 A3A20018 */  sb    $v0, 0x18($sp)
-/* 0F1734 7F0BED44 0C002BDC */  jal   joyGetStickY
-/* 0F1738 7F0BED48 83A4002F */   lb    $a0, 0x2f($sp)
-/* 0F173C 7F0BED4C A3A20019 */  sb    $v0, 0x19($sp)
-/* 0F1740 7F0BED50 83A4002F */  lb    $a0, 0x2f($sp)
-/* 0F1744 7F0BED54 0C002C20 */  jal   joyGetButtons
-/* 0F1748 7F0BED58 3405FFFF */   li    $a1, 65535
-/* 0F174C 7F0BED5C 83A40018 */  lb    $a0, 0x18($sp)
-/* 0F1750 7F0BED60 83A50019 */  lb    $a1, 0x19($sp)
-/* 0F1754 7F0BED64 0FC2C7FE */  jal   sub_GAME_7F0B2D38
-/* 0F1758 7F0BED68 3046FFFF */   andi  $a2, $v0, 0xffff
-/* 0F175C 7F0BED6C 1000002F */  b     .L7F0BEE2C
-/* 0F1760 7F0BED70 00000000 */   nop   
-.L7F0BED74:
-/* 0F1764 7F0BED74 0C002B98 */  jal   joyGetStickX
-/* 0F1768 7F0BED78 83A4002F */   lb    $a0, 0x2f($sp)
-/* 0F176C 7F0BED7C A3A20018 */  sb    $v0, 0x18($sp)
-/* 0F1770 7F0BED80 0C002BDC */  jal   joyGetStickY
-/* 0F1774 7F0BED84 83A4002F */   lb    $a0, 0x2f($sp)
-/* 0F1778 7F0BED88 00022E00 */  sll   $a1, $v0, 0x18
-/* 0F177C 7F0BED8C 0005C603 */  sra   $t8, $a1, 0x18
-/* 0F1780 7F0BED90 03002825 */  move  $a1, $t8
-/* 0F1784 7F0BED94 83A40018 */  lb    $a0, 0x18($sp)
-/* 0F1788 7F0BED98 0FC2C7FE */  jal   sub_GAME_7F0B2D38
-/* 0F178C 7F0BED9C 00003025 */   move  $a2, $zero
-/* 0F1790 7F0BEDA0 10000022 */  b     .L7F0BEE2C
-/* 0F1794 7F0BEDA4 00000000 */   nop   
-.L7F0BEDA8:
-/* 0F1798 7F0BEDA8 0FC240FC */  jal   getDebugMode
-/* 0F179C 7F0BEDAC 00000000 */   nop   
-/* 0F17A0 7F0BEDB0 24010002 */  li    $at, 2
-/* 0F17A4 7F0BEDB4 14410010 */  bne   $v0, $at, .L7F0BEDF8
-/* 0F17A8 7F0BEDB8 00000000 */   nop   
-/* 0F17AC 7F0BEDBC 0C002B98 */  jal   joyGetStickX
-/* 0F17B0 7F0BEDC0 83A4002F */   lb    $a0, 0x2f($sp)
-/* 0F17B4 7F0BEDC4 A3A20018 */  sb    $v0, 0x18($sp)
-/* 0F17B8 7F0BEDC8 0C002BDC */  jal   joyGetStickY
-/* 0F17BC 7F0BEDCC 83A4002F */   lb    $a0, 0x2f($sp)
-/* 0F17C0 7F0BEDD0 A3A20019 */  sb    $v0, 0x19($sp)
-/* 0F17C4 7F0BEDD4 83A4002F */  lb    $a0, 0x2f($sp)
-/* 0F17C8 7F0BEDD8 0C002C20 */  jal   joyGetButtons
-/* 0F17CC 7F0BEDDC 3405FFFF */   li    $a1, 65535
-/* 0F17D0 7F0BEDE0 83A40018 */  lb    $a0, 0x18($sp)
-/* 0F17D4 7F0BEDE4 83A50019 */  lb    $a1, 0x19($sp)
-/* 0F17D8 7F0BEDE8 0FC21C2F */  jal   bondviewMovePlayerUpdateViewport
-/* 0F17DC 7F0BEDEC 3046FFFF */   andi  $a2, $v0, 0xffff
-/* 0F17E0 7F0BEDF0 1000000C */  b     .L7F0BEE24
-/* 0F17E4 7F0BEDF4 00000000 */   nop   
-.L7F0BEDF8:
-/* 0F17E8 7F0BEDF8 0C002B98 */  jal   joyGetStickX
-/* 0F17EC 7F0BEDFC 83A4002F */   lb    $a0, 0x2f($sp)
-/* 0F17F0 7F0BEE00 A3A20018 */  sb    $v0, 0x18($sp)
-/* 0F17F4 7F0BEE04 0C002BDC */  jal   joyGetStickY
-/* 0F17F8 7F0BEE08 83A4002F */   lb    $a0, 0x2f($sp)
-/* 0F17FC 7F0BEE0C 00022E00 */  sll   $a1, $v0, 0x18
-/* 0F1800 7F0BEE10 0005CE03 */  sra   $t9, $a1, 0x18
-/* 0F1804 7F0BEE14 03202825 */  move  $a1, $t9
-/* 0F1808 7F0BEE18 83A40018 */  lb    $a0, 0x18($sp)
-/* 0F180C 7F0BEE1C 0FC21C2F */  jal   bondviewMovePlayerUpdateViewport
-/* 0F1810 7F0BEE20 00003025 */   move  $a2, $zero
-.L7F0BEE24:
-/* 0F1814 7F0BEE24 0FC308D8 */  jal   sub_GAME_7F0C2E80
-/* 0F1818 7F0BEE28 00000000 */   nop   
-.L7F0BEE2C:
-/* 0F181C 7F0BEE2C 3C028007 */  lui   $v0, %hi(g_CurrentPlayer) # $v0, 0x8007
-/* 0F1820 7F0BEE30 8C428BC0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
-/* 0F1824 7F0BEE34 8C4300A8 */  lw    $v1, 0xa8($v0)
-/* 0F1828 7F0BEE38 C4460408 */  lwc1  $f6, 0x408($v0)
-/* 0F182C 7F0BEE3C C44A0410 */  lwc1  $f10, 0x410($v0)
-/* 0F1830 7F0BEE40 C4640008 */  lwc1  $f4, 8($v1)
-/* 0F1834 7F0BEE44 C4680010 */  lwc1  $f8, 0x10($v1)
-/* 0F1838 7F0BEE48 46062001 */  sub.s $f0, $f4, $f6
-/* 0F183C 7F0BEE4C 460A4081 */  sub.s $f2, $f8, $f10
-/* 0F1840 7F0BEE50 46000402 */  mul.s $f16, $f0, $f0
-/* 0F1844 7F0BEE54 00000000 */  nop   
-/* 0F1848 7F0BEE58 46021482 */  mul.s $f18, $f2, $f2
-/* 0F184C 7F0BEE5C 0C007614 */  jal   sqrtf
-/* 0F1850 7F0BEE60 46128300 */   add.s $f12, $f16, $f18
-/* 0F1854 7F0BEE64 3C028007 */  lui   $v0, %hi(g_playerPerm) # $v0, 0x8007
-/* 0F1858 7F0BEE68 8C428BC4 */  lw    $v0, %lo(g_playerPerm)($v0)
-/* 0F185C 7F0BEE6C C4440038 */  lwc1  $f4, 0x38($v0)
-/* 0F1860 7F0BEE70 46002180 */  add.s $f6, $f4, $f0
-/* 0F1864 7F0BEE74 0FC051B2 */  jal   get_scenario
-/* 0F1868 7F0BEE78 E4460038 */   swc1  $f6, 0x38($v0)
-/* 0F186C 7F0BEE7C 24010002 */  li    $at, 2
-/* 0F1870 7F0BEE80 14410024 */  bne   $v0, $at, .L7F0BEF14
-/* 0F1874 7F0BEE84 00000000 */   nop   
-/* 0F1878 7F0BEE88 0FC234D9 */  jal   bondinvIsAliveWithFlag
-/* 0F187C 7F0BEE8C 00000000 */   nop   
-/* 0F1880 7F0BEE90 1040001C */  beqz  $v0, .L7F0BEF04
-/* 0F1884 7F0BEE94 00000000 */   nop   
-/* 0F1888 7F0BEE98 0FC177A2 */  jal   getCurrentPlayerWeaponId
-/* 0F188C 7F0BEE9C 00002025 */   move  $a0, $zero
-/* 0F1890 7F0BEEA0 24010058 */  li    $at, 88
-/* 0F1894 7F0BEEA4 1041000B */  beq   $v0, $at, .L7F0BEED4
-/* 0F1898 7F0BEEA8 00002025 */   move  $a0, $zero
-/* 0F189C 7F0BEEAC 0FC17773 */  jal   currentPlayerEquipWeaponWrapper
-/* 0F18A0 7F0BEEB0 24050058 */   li    $a1, 88
-/* 0F18A4 7F0BEEB4 3C028007 */  lui   $v0, %hi(g_CurrentPlayer) # $v0, 0x8007
-/* 0F18A8 7F0BEEB8 8C428BC0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
-/* 0F18AC 7F0BEEBC 24010002 */  li    $at, 2
-/* 0F18B0 7F0BEEC0 24090005 */  li    $t1, 5
-/* 0F18B4 7F0BEEC4 8C48088C */  lw    $t0, 0x88c($v0)
-/* 0F18B8 7F0BEEC8 15010002 */  bne   $t0, $at, .L7F0BEED4
-/* 0F18BC 7F0BEECC 00000000 */   nop   
-/* 0F18C0 7F0BEED0 AC49088C */  sw    $t1, 0x88c($v0)
-.L7F0BEED4:
-/* 0F18C4 7F0BEED4 3C038007 */  lui   $v1, %hi(g_playerPerm) # $v1, 0x8007
-/* 0F18C8 7F0BEED8 24638BC4 */  addiu $v1, %lo(g_playerPerm) # addiu $v1, $v1, -0x743c
-/* 0F18CC 7F0BEEDC 8C620000 */  lw    $v0, ($v1)
-/* 0F18D0 7F0BEEE0 3C0B8004 */  lui   $t3, %hi(g_ClockTimer) # $t3, 0x8004
-/* 0F18D4 7F0BEEE4 8D6B0FF4 */  lw    $t3, %lo(g_ClockTimer)($t3)
-/* 0F18D8 7F0BEEE8 8C4A0060 */  lw    $t2, 0x60($v0)
-/* 0F18DC 7F0BEEEC 240D0001 */  li    $t5, 1
-/* 0F18E0 7F0BEEF0 014B6021 */  addu  $t4, $t2, $t3
-/* 0F18E4 7F0BEEF4 AC4C0060 */  sw    $t4, 0x60($v0)
-/* 0F18E8 7F0BEEF8 8C6E0000 */  lw    $t6, ($v1)
-/* 0F18EC 7F0BEEFC 10000015 */  b     .L7F0BEF54
-/* 0F18F0 7F0BEF00 A1CD0069 */   sb    $t5, 0x69($t6)
-.L7F0BEF04:
-/* 0F18F4 7F0BEF04 3C0F8007 */  lui   $t7, %hi(g_playerPerm) # $t7, 0x8007
-/* 0F18F8 7F0BEF08 8DEF8BC4 */  lw    $t7, %lo(g_playerPerm)($t7)
-/* 0F18FC 7F0BEF0C 10000011 */  b     .L7F0BEF54
-/* 0F1900 7F0BEF10 A1E00069 */   sb    $zero, 0x69($t7)
-.L7F0BEF14:
-/* 0F1904 7F0BEF14 0FC051B2 */  jal   get_scenario
-/* 0F1908 7F0BEF18 00000000 */   nop   
-/* 0F190C 7F0BEF1C 24010003 */  li    $at, 3
-/* 0F1910 7F0BEF20 5441000D */  bnel  $v0, $at, .L7F0BEF58
-/* 0F1914 7F0BEF24 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F1918 7F0BEF28 0FC234E9 */  jal   bondinvHasGoldenGun
-/* 0F191C 7F0BEF2C 00000000 */   nop   
-/* 0F1920 7F0BEF30 10400006 */  beqz  $v0, .L7F0BEF4C
-/* 0F1924 7F0BEF34 3C088007 */   lui   $t0, %hi(g_playerPerm) # $t0, 0x8007
-/* 0F1928 7F0BEF38 3C198007 */  lui   $t9, %hi(g_playerPerm) # $t9, 0x8007
-/* 0F192C 7F0BEF3C 8F398BC4 */  lw    $t9, %lo(g_playerPerm)($t9)
-/* 0F1930 7F0BEF40 24180001 */  li    $t8, 1
-/* 0F1934 7F0BEF44 10000003 */  b     .L7F0BEF54
-/* 0F1938 7F0BEF48 A3380069 */   sb    $t8, 0x69($t9)
-.L7F0BEF4C:
-/* 0F193C 7F0BEF4C 8D088BC4 */  lw    $t0, %lo(g_playerPerm)($t0)
-/* 0F1940 7F0BEF50 A1000069 */  sb    $zero, 0x69($t0)
-.L7F0BEF54:
-/* 0F1944 7F0BEF54 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0BEF58:
-/* 0F1948 7F0BEF58 27BD0030 */  addiu $sp, $sp, 0x30
-/* 0F194C 7F0BEF5C 03E00008 */  jr    $ra
-/* 0F1950 7F0BEF60 00000000 */   nop   
-)
-#endif
-#endif
 
 
 

@@ -1,4 +1,5 @@
 #include <ultra64.h>
+#include <PR/R4300.h>
 #include <PR/os.h>
 #include <PR/os_internal.h>
 #include <bondgame.h>
@@ -102,12 +103,12 @@ void init(void)
     osInitialize();
     set_hardwire_TLB_to_2();
 
-    codeAndDataSegRomSize = 0x80000000;
+    codeAndDataSegRomSize = UT_VEC;
     
     j=&resolve_TLBaddress_for_InvalidHit;
     i=codeAndDataSegRomSize;
     
-    while (i!=0x80000080)
+    while (i!=XUT_VEC)
     {
 	    *(__exceptionVector *)i = *(__exceptionVector *)j;
          i+=0x10; j+=0x10;
@@ -121,7 +122,7 @@ void init(void)
 		osUnmapTLB(i);
 	}
 
-    __osSetFpcCsr(__osGetFpcCsr() | 0xE80);
+    __osSetFpcCsr(__osGetFpcCsr() | FPCSR_EI | FPCSR_EO | FPCSR_EZ | FPCSR_EV );
     osCreateThread(&mainThread, MAIN_THREAD_ID, &mainproc, NULL, set_stack_entry(sp_main, 0x8000), MAIN_THREAD_PRIORITY);
     osStartThread(&mainThread);
 }

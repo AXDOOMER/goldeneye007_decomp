@@ -847,7 +847,7 @@ PathRecord *pathFindById(s32 ID)
 extern void chrpropDelist(PropRecord *prop);
 extern PadRecord * dword_CODE_bss_800799F8;
 extern CutsceneRecord *gBondViewCutscene;
-extern s32 dword_CODE_bss_80079A18;
+extern enum CAMERAMODE dword_CODE_bss_80079A18;
 extern s32 dword_CODE_bss_80079A1C;
 extern vec3d flt_CODE_bss_80079990;
 //CODE.bss:80079A00
@@ -4073,7 +4073,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     }
                     if (!(ai->val & PLAYERFLAG_LOCKCONTROLS))
                     {
-                        sub_GAME_7F08A944(PLAYERFLAG_NOCONTROL);
+                        bondviewSetUpperTextDisplayFlag(PLAYERFLAG_NOCONTROL);
                     }
                     if (!(ai->val & PLAYERFLAG_NOTIMER))
                     {
@@ -4091,7 +4091,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     gunSetSightVisible(GUNSIGHTREASON_NOCONTROL, TRUE);
                     gunSetGunAmmoVisible(GUNAMMOREASON_NOCONTROL, TRUE);
                     hudmsgsSetOn(PLAYERFLAG_NOCONTROL);
-                    sub_GAME_7F08A928(2);
+                    bondviewClearUpperTextDisplayFlag(2);
                     countdownTimerSetVisible(16, TRUE);
                     D_800364B0 = TRUE;
                     Offset += AI_BondEnableControl_LENGTH;

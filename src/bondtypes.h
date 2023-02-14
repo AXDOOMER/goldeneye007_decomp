@@ -2276,7 +2276,7 @@ typedef union
         u32                  unkcc;
 
         u32                  unkd0;
-        u32                  unkd4;
+        f32 unkd4; // probably struct coord3d
         u32                  unkd8;
         u32                  unkdc;
 
@@ -3624,12 +3624,10 @@ typedef union
     typedef struct CutsceneRecord
     {
         inherits PropDefHeaderRecord;
-        s32      x;     //4
-        s32      y;     //8
-        s32      z;     //c
-        s32      theta; //10
-        s32      verta; //14
-        u32      pad;   //18
+        struct coord3d pos;
+        f32      theta; //10
+        f32      verta; //14
+        s32      pad;   //18
     } CutsceneRecord;
     #define New_CutsceneRecord(pad)                             \
         {                                                       \

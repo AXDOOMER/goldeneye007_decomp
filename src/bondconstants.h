@@ -1162,7 +1162,7 @@ typedef enum EXPLOSION_DEF
     EXPLOSION_DEF_15,
     EXPLOSION_DEF_16,
     EXPLOSION_DEF_MASSIVE,
-    EXPLOSION_DEF_18,
+    EXPLOSION_DEF_PLAYER,
     EXPLOSION_DEF_FACILITY_REMOTE,
     EXPLOSION_DEF_20,
     EXPLOSION_DEF_21
@@ -3161,6 +3161,12 @@ typedef enum TVCMD
 #pragma endregion
 
 #pragma region Setup 
+
+    /**
+     * enums were listed in a particular order, it appears the first few are associated with the start/intro
+     * of a level:
+     *     if (g_CurrentPlayer->redbloodfinished && g_CurrentPlayer->deathanimfinished && (D_80036510 >= CAMERAMODE_SWIRL))
+    */
    typedef enum CAMERAMODE
     {
         CAMERAMODE_NONE,
@@ -3168,8 +3174,8 @@ typedef enum TVCMD
         CAMERAMODE_FADESWIRL,
         CAMERAMODE_SWIRL,
         CAMERAMODE_FP,
-        CAMERAMODE_UNK5,
-        CAMERAMODE_UNK6,
+        CAMERAMODE_DEATH_CAM_FIRST,
+        CAMERAMODE_DEATH_CAM_SECOND,
         CAMERAMODE_POSEND,
         CAMERAMODE_FP_NOINPUT,
         CAMERAMODE_MP,
@@ -3284,11 +3290,15 @@ typedef enum TVCMD
 #define NUMBER_SHOTGUN_BULLETS   5
 
 #ifdef VERSION_EU
-#define NTSC 0
-#define PAL 1
+    #define NTSC 0
+    #define PAL 1
+    #define TICKS_PER_SECOND 50
+    #define FRAMES_PER_SECOND 25
 #else
-#define NTSC 1
-#define PAL 0
+    #define NTSC 1
+    #define PAL 0
+    #define TICKS_PER_SECOND 60
+    #define FRAMES_PER_SECOND 30
 #endif
 
 #pragma endregion

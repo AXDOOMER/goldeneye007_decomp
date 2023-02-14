@@ -2,7 +2,7 @@
 #include "matrixmath.h"
 
 /**
- * x vector plus ((difference to y vector) * scaler).
+ * result = x vector plus ((y - x vector) * scaler).
  */
 void sub_GAME_7F05AE00(vec3d *x, vec3d *y, f32 scaler, vec3d *result)
 {
