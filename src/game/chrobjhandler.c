@@ -34,6 +34,7 @@
 #include "explosions.h"
 #include "image_bank.h"
 #include "random.h"
+#include "unk_0B3200.h"
 
 #ifdef VERSION_EU
 
