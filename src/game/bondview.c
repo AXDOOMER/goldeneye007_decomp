@@ -6585,7 +6585,7 @@ void bondviewCalcUpdatePlayerCollision(struct coord3d *arg0, s32 arg1)
 
     if (g_CurrentPlayer->field_488.current_tile_ptr != NULL)
     {
-        sub_GAME_7F057744(g_CurrentPlayer->field_488.current_tile_ptr->room);
+        objectivestatusCheckRoomEntered(g_CurrentPlayer->field_488.current_tile_ptr->room);
     }
 }
 

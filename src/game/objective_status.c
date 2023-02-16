@@ -19,7 +19,7 @@ u32 *ptr_last_tag_entry_type16;
 //CODE.bss:80075D84
 struct watchMenuObjectiveText *ptr_last_briefing_setup_entry_type23;
 //CODE.bss:80075D88
-u32 *ptr_last_enter_room_subobject_entry_type20;
+struct criteria_roomentered *ptr_last_enter_room_subobject_entry_type20;
 //CODE.bss:80075D8C
 u32 *ptr_last_deposit_in_room_subobject_entry_type21;
 //CODE.bss:80075D90
@@ -384,7 +384,7 @@ void display_objective_status_text_on_status_change(void) {
  * 
  * Perfect Dark method objectiveCheckRoomEntered.
 */
-void sub_GAME_7F057744(s32 roomid)
+void objectivestatusCheckRoomEntered(s32 roomid)
 {
     struct criteria_roomentered *var_v0;
     struct PadRecord* setupPad;

@@ -15,7 +15,7 @@ extern u32                    *ptr_last_tag_entry_type16;
 //CODE.bss:80075D84
 extern u32                    *ptr_last_briefing_setup_entry_type23;
 //CODE.bss:80075D88
-extern u32                    *ptr_last_enter_room_subobject_entry_type20;
+struct criteria_roomentered *ptr_last_enter_room_subobject_entry_type20;
 //CODE.bss:80075D8C
 extern u32                    *ptr_last_deposit_in_room_subobject_entry_type21;
 //CODE.bss:80075D90
