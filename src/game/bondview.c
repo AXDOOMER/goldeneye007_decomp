@@ -6040,9 +6040,9 @@ s32 bondviewCalculatePlayerCollision(struct coord3d *arg0, StandTile **stan)
     s32 sp94;
     StandTile *sp90;
     s32 sp8C;
-    f32 sp88;
-    f32 sp84;
-    f32 sp80;
+    f32 height;
+    f32 always_30;
+    f32 collision_radius;
     s32 sp7C;
     struct TankRecord *tank;
     s32 stack_padding[11];
@@ -6067,7 +6067,7 @@ s32 bondviewCalculatePlayerCollision(struct coord3d *arg0, StandTile **stan)
             sp8C = 0;
         }
 
-        bondviewCollisionRadiusRelated(g_CurrentPlayer->prop, &sp80, &sp88, &sp84);
+        bondviewGetCollisionRadius(g_CurrentPlayer->prop, &collision_radius, &height, &always_30);
 
         if (g_WorldTankProp != NULL)
         {
@@ -6075,7 +6075,7 @@ s32 bondviewCalculatePlayerCollision(struct coord3d *arg0, StandTile **stan)
         }
 
         sub_GAME_7F03D058(g_CurrentPlayer->prop, 0);
-        sp7C = stanTileDistanceRelated(&sp90, arg0->f[0], arg0->f[2], sp80, &sp3C);
+        sp7C = stanTileDistanceRelated(&sp90, arg0->f[0], arg0->f[2], collision_radius, &sp3C);
         
         if (stanGetLocusField0(&sp3C) != 0)
         {
@@ -6089,15 +6089,15 @@ s32 bondviewCalculatePlayerCollision(struct coord3d *arg0, StandTile **stan)
                 arg0->f[0],
                 arg0->f[2],
                 sp8C,
-                sp88,
-                sp84,
+                height,
+                always_30,
                 0.0f,
                 1.0f) != 0)
-            && sub_GAME_7F0B18B8(&sp90, arg0->f[0], arg0->f[2], sp80, sp8C, sp88, sp84) < 0)
+            && sub_GAME_7F0B18B8(&sp90, arg0->f[0], arg0->f[2], collision_radius, sp8C, height, always_30) < 0)
         {
             if (g_CurrentPlayer->ducking_height_offset == -100.0f || sp7C < 0)
             {
-                if (stanGetLocusCount(&sp3C) == 0 && sub_GAME_7F0B26B8(&sp90, arg0->f[0], arg0->f[2], sp80, g_CurrentPlayer->field_488.collision_position.f[1] + 175.0f) >= 0)
+                if (stanGetLocusCount(&sp3C) == 0 && sub_GAME_7F0B26B8(&sp90, arg0->f[0], arg0->f[2], collision_radius, g_CurrentPlayer->field_488.collision_position.f[1] + 175.0f) >= 0)
                 {
                     goto block_20;
                 }
@@ -6176,8 +6176,8 @@ s32 bondviewUpdatePlayerCollision(coord3d *arg0, coord3d *arg1, coord3d *arg2)
 s32 sub_GAME_7F07D2B4(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *arg2, struct coord3d *arg3, struct coord3d *arg4)
 {
     StandTile *sp7C;
-    f32 sp78;
-    f32 sp74;
+    f32 height;
+    f32 always_30;
     struct coord3d sp68;
     struct coord3d sp5C;
     struct coord3d sp50;
@@ -6185,14 +6185,14 @@ s32 sub_GAME_7F07D2B4(struct coord3d *arg0, struct coord3d *arg1, struct coord3d
     struct coord2d sp40;
     struct coord2d sp38;
     f32 temp_f0;
-    f32 sp30;
+    f32 collision_radius;
     
-    bondviewCollisionRadiusRelated(g_CurrentPlayer->prop, &sp30, &sp78, &sp74);
+    bondviewGetCollisionRadius(g_CurrentPlayer->prop, &collision_radius, &height, &always_30);
     
     sp5C.f[0] = arg0->f[0] - g_CurrentPlayer->field_488.collision_position.f[0];
     sp5C.f[2] = arg0->f[2] - g_CurrentPlayer->field_488.collision_position.f[2];
     
-    sp50.f[0] = sp30;
+    sp50.f[0] = collision_radius;
     sp50.f[1] = g_CurrentPlayer->field_488.collision_position.f[0];
     sp50.f[2] = g_CurrentPlayer->field_488.collision_position.f[2];
     
@@ -6290,20 +6290,20 @@ s32 sub_GAME_7F07D61C(struct coord3d *arg0, struct coord3d *arg1, struct coord3d
     struct coord3d sp5C;
     struct coord3d sp50;
     struct coord3d sp44;
-    f32 sp40;
-    f32 sp3C;
+    f32 height;
+    f32 always_30;
     f32 tempf;
     StandTile *sp34;
-    f32 sp30;
+    f32 collision_radius;
 
-    bondviewCollisionRadiusRelated(g_CurrentPlayer->prop, &sp30, &sp40, &sp3C);
+    bondviewGetCollisionRadius(g_CurrentPlayer->prop, &collision_radius, &height, &always_30);
     
     sp5C.f[0] = arg0->f[0] - g_CurrentPlayer->field_488.collision_position.f[0];
     sp5C.f[2] = arg0->f[2] - g_CurrentPlayer->field_488.collision_position.f[2];
     sp50.f[0] = arg1->f[0] - arg0->f[0];
     sp50.f[2] = arg1->f[2] - arg0->f[2];
 
-    if (((sp50.f[0] * sp50.f[0]) + (sp50.f[2] * sp50.f[2])) <= (sp30 * sp30))
+    if (((sp50.f[0] * sp50.f[0]) + (sp50.f[2] * sp50.f[2])) <= (collision_radius * collision_radius))
     {
         if (arg1->f[0] != g_CurrentPlayer->field_488.collision_position.f[0] || arg1->f[2] != g_CurrentPlayer->field_488.collision_position.f[2])
         {
@@ -6336,7 +6336,7 @@ s32 sub_GAME_7F07D61C(struct coord3d *arg0, struct coord3d *arg1, struct coord3d
         sp50.f[0] = arg2->f[0] - arg0->f[0];
         sp50.f[2] = arg2->f[2] - arg0->f[2];
     
-        if (((sp50.f[0] * sp50.f[0]) + (sp50.f[2] * sp50.f[2])) <= (sp30 * sp30))
+        if (((sp50.f[0] * sp50.f[0]) + (sp50.f[2] * sp50.f[2])) <= (collision_radius * collision_radius))
         {
             if (arg2->f[0] != g_CurrentPlayer->field_488.collision_position.f[0] || arg2->f[2] != g_CurrentPlayer->field_488.collision_position.f[2])
             {
@@ -9148,9 +9148,9 @@ void bondviewUpdatePlayerClipping(s32 use_stanHeight, f32 stanHeight_offset)
 {
     s32 i;
     f32 temp_f0;
-    f32 sp5C;
-    f32 sp58;
-    f32 sp54;
+    f32 collision_radius;
+    f32 height;
+    f32 always_30;
     f32 new_field_7c;
     f32 new_field_70;
     f32 sp40;
@@ -9196,7 +9196,7 @@ void bondviewUpdatePlayerClipping(s32 use_stanHeight, f32 stanHeight_offset)
         {
             StandTile *st = g_CurrentPlayer->field_488.current_tile_ptr;
 
-            bondviewCollisionRadiusRelated(g_CurrentPlayer->prop, &sp5C, &sp58, &sp54);
+            bondviewGetCollisionRadius(g_CurrentPlayer->prop, &collision_radius, &height, &always_30);
             
             sp64 = bondviewYPositionRelated(
                 g_CurrentPlayer->field_488.current_tile_ptr,
@@ -9207,7 +9207,7 @@ void bondviewUpdatePlayerClipping(s32 use_stanHeight, f32 stanHeight_offset)
                 &st,
                 g_CurrentPlayer->field_488.collision_position.f[0],
                 g_CurrentPlayer->field_488.collision_position.f[2],
-                sp5C,
+                collision_radius,
                 bondviewGetPlayerDuckingHeightRelated(g_CurrentPlayer) + sp64) >= 0)
             {
                 if (sp64 < g_CurrentPlayer->stanHeight)
@@ -9449,7 +9449,7 @@ glabel bondviewUpdatePlayerClipping
 /* 0B5A64 7F080F34 8E090488 */  lw    $t1, 0x488($s0)
 /* 0B5A68 7F080F38 27A70054 */  addiu $a3, $sp, 0x54
 /* 0B5A6C 7F080F3C AFA90060 */  sw    $t1, 0x60($sp)
-/* 0B5A70 7F080F40 0FC2289D */  jal   bondviewCollisionRadiusRelated
+/* 0B5A70 7F080F40 0FC2289D */  jal   bondviewGetCollisionRadius
 /* 0B5A74 7F080F44 8E0400A8 */   lw    $a0, 0xa8($s0)
 /* 0B5A78 7F080F48 3C088008 */  lui   $t0, %hi(g_CurrentPlayer)
 /* 0B5A7C 7F080F4C 2508A0B0 */  addiu $t0, %lo(g_CurrentPlayer) # addiu $t0, $t0, -0x5f50
@@ -9924,7 +9924,7 @@ glabel bondviewUpdatePlayerClipping
 /* 0B39C8 7F080FD8 8E090488 */  lw    $t1, 0x488($s0)
 /* 0B39CC 7F080FDC 27A70054 */  addiu $a3, $sp, 0x54
 /* 0B39D0 7F080FE0 AFA90060 */  sw    $t1, 0x60($sp)
-/* 0B39D4 7F080FE4 0FC22910 */  jal   bondviewCollisionRadiusRelated
+/* 0B39D4 7F080FE4 0FC22910 */  jal   bondviewGetCollisionRadius
 /* 0B39D8 7F080FE8 8E0400A8 */   lw    $a0, 0xa8($s0)
 /* 0B39DC 7F080FEC 3C088007 */  lui   $t0, %hi(g_CurrentPlayer) # $t0, 0x8007
 /* 0B39E0 7F080FF0 25088BC0 */  addiu $t0, %lo(g_CurrentPlayer) # addiu $t0, $t0, -0x7440
@@ -11474,7 +11474,8 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             spC0 = g_CurrentPlayer->field_488.current_tile_ptr;
             spBC = 300.0f;
             
-            bondviewCollisionRadiusRelated(g_CurrentPlayer->prop, &spA0.f[0], &spA0.f[2], &spA0.f[1]);
+            // prop, f32 *collision_radius, f32 *height, f32 *always_30
+            bondviewGetCollisionRadius(g_CurrentPlayer->prop, &spA0.f[0], &spA0.f[2], &spA0.f[1]);
             
             spAC.f[0] = g_CurrentPlayer->field_488.collision_position.f[0] + (g_CurrentPlayer->field_488.theta_transform.f[0] * 300.0f);
             spAC.f[1] = g_CurrentPlayer->field_488.collision_position.f[1];
@@ -19822,7 +19823,7 @@ void bondviewUpdatePlayerCollisionBounds(void)
  * 
  * Address 0x7F08A274.
  */
-void bondviewCollisionRadiusRelated(PropRecord* arg0, f32 *collision_radius, f32 *height, f32 *always_30)
+void bondviewGetCollisionRadius(PropRecord* arg0, f32 *collision_radius, f32 *height, f32 *always_30)
 {
     struct player **temp_v1;
 

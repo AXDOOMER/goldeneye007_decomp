@@ -3673,7 +3673,7 @@ void chrpropGetCollisionBounds(PropRecord *arg0, f32 *collision_radius, f32 *hei
 
     if (arg0->type == PROP_TYPE_VIEWER)
     {
-        bondviewCollisionRadiusRelated(arg0, collision_radius, height, arg3);
+        bondviewGetCollisionRadius(arg0, collision_radius, height, arg3);
         return;
     }
 
