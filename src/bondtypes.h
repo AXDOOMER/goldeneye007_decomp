@@ -3964,4 +3964,12 @@ struct unkown_gun_struct
     };
 };
 
+/* matches Perfect Dark */
+struct criteria_roomentered {
+    u32 unk00;
+    u32 pad;
+    u32 status;
+    struct criteria_roomentered *next;
+};
+
 #endif
