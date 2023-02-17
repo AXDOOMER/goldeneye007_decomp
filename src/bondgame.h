@@ -22,6 +22,8 @@ extern u32 *_gameSegmentVaddrEnd;
 extern u32 *_gameSegmentRomStart;
 extern u32 *_gameSegmentRomEnd;
 
+extern u32* _alt_startSegmentRomStart;
+extern u32* _alt_startSegmentStart;
 
 extern u8 sp_boot[];
 extern u8 sp_rmon[];
