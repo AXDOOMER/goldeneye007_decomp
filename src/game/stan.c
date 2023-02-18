@@ -2439,120 +2439,30 @@ int getRotationalDirectionBetween(f32 a_x,f32 a_z,f32 b_x,f32 b_z)
 
 
 
-#ifdef NONMATCHING
-s32 sub_GAME_7F0B0688(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7) {
-    f32 sp20;
+s32 sub_GAME_7F0B0688(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7)
+{
+    s32 unused1;
+    s32 unused2;
     f32 sp24;
-    s32 sp28;
-    s32 sp2C;
-    f32 temp_f0;
-    f32 temp_f2;
-    s32 temp_t7;
-    s32 phi_return;
+    f32 sp20;
+    f32 sp1C;
+    f32 sp18;
 
-    // Node 0
-    temp_f0 = (arg0 - arg4);
-    temp_f2 = (arg1 - arg5);
-    sp24 = temp_f0;
-    sp20 = temp_f2;
-    sp2C = getRotationalDirectionBetween((arg2 - arg0), (arg3 - arg1), -temp_f0, -temp_f2);
-    temp_t7 = ((getRotationalDirectionBetween(sp1C, sp18, (arg6 - arg0), (arg7 - arg1)) * sp2C) < 1);
-    phi_return = temp_t7;
-    if (temp_t7 != 0)
-    {
-        // Node 1
-        sp28 = getRotationalDirectionBetween((arg6 - arg4), (arg7 - arg5), sp24, sp20);
-        phi_return = ((getRotationalDirectionBetween(sp1C, sp18, (arg2 - arg4), (arg3 - arg5)) * sp28) < 1);
-    }
-    // Node 2
-    return phi_return;
+    sp24 = arg0 - arg4;
+    sp20 = arg1 - arg5;
+    sp1C = arg2 - arg0;
+    sp18 = arg3 - arg1;
+
+    return
+        (
+            (getRotationalDirectionBetween(sp1C, sp18, -sp24, -sp20) 
+            * getRotationalDirectionBetween(sp1C, sp18, arg6 - arg0, arg7 - arg1)) < 1)
+        &&
+        (
+            (getRotationalDirectionBetween(arg6 - arg4, arg7 - arg5, sp24, sp20)
+            * getRotationalDirectionBetween(arg6 - arg4, arg7 - arg5, arg2 - arg4, arg3 - arg5)) < 1)
+        ;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B0688
-/* 0E51B8 7F0B0688 27BDFFB8 */  addiu $sp, $sp, -0x48
-/* 0E51BC 7F0B068C C7B20058 */  lwc1  $f18, 0x58($sp)
-/* 0E51C0 7F0B0690 C7B0005C */  lwc1  $f16, 0x5c($sp)
-/* 0E51C4 7F0B0694 E7AC0048 */  swc1  $f12, 0x48($sp)
-/* 0E51C8 7F0B0698 C7AA0048 */  lwc1  $f10, 0x48($sp)
-/* 0E51CC 7F0B069C E7AE004C */  swc1  $f14, 0x4c($sp)
-/* 0E51D0 7F0B06A0 C7A8004C */  lwc1  $f8, 0x4c($sp)
-/* 0E51D4 7F0B06A4 46125001 */  sub.s $f0, $f10, $f18
-/* 0E51D8 7F0B06A8 AFA60050 */  sw    $a2, 0x50($sp)
-/* 0E51DC 7F0B06AC C7B20050 */  lwc1  $f18, 0x50($sp)
-/* 0E51E0 7F0B06B0 46104081 */  sub.s $f2, $f8, $f16
-/* 0E51E4 7F0B06B4 AFA70054 */  sw    $a3, 0x54($sp)
-/* 0E51E8 7F0B06B8 C7B00054 */  lwc1  $f16, 0x54($sp)
-/* 0E51EC 7F0B06BC 460A9301 */  sub.s $f12, $f18, $f10
-/* 0E51F0 7F0B06C0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0E51F4 7F0B06C4 E7A00024 */  swc1  $f0, 0x24($sp)
-/* 0E51F8 7F0B06C8 46088381 */  sub.s $f14, $f16, $f8
-/* 0E51FC 7F0B06CC E7A20020 */  swc1  $f2, 0x20($sp)
-/* 0E5200 7F0B06D0 E7AC001C */  swc1  $f12, 0x1c($sp)
-/* 0E5204 7F0B06D4 46000207 */  neg.s $f8, $f0
-/* 0E5208 7F0B06D8 46001407 */  neg.s $f16, $f2
-/* 0E520C 7F0B06DC 44064000 */  mfc1  $a2, $f8
-/* 0E5210 7F0B06E0 44078000 */  mfc1  $a3, $f16
-/* 0E5214 7F0B06E4 0FC2C170 */  jal   getRotationalDirectionBetween
-/* 0E5218 7F0B06E8 E7AE0018 */   swc1  $f14, 0x18($sp)
-/* 0E521C 7F0B06EC C7A60060 */  lwc1  $f6, 0x60($sp)
-/* 0E5220 7F0B06F0 C7B00048 */  lwc1  $f16, 0x48($sp)
-/* 0E5224 7F0B06F4 C7AA0064 */  lwc1  $f10, 0x64($sp)
-/* 0E5228 7F0B06F8 C7A4004C */  lwc1  $f4, 0x4c($sp)
-/* 0E522C 7F0B06FC 46103481 */  sub.s $f18, $f6, $f16
-/* 0E5230 7F0B0700 C7AC001C */  lwc1  $f12, 0x1c($sp)
-/* 0E5234 7F0B0704 C7AE0018 */  lwc1  $f14, 0x18($sp)
-/* 0E5238 7F0B0708 46045201 */  sub.s $f8, $f10, $f4
-/* 0E523C 7F0B070C 44069000 */  mfc1  $a2, $f18
-/* 0E5240 7F0B0710 AFA2002C */  sw    $v0, 0x2c($sp)
-/* 0E5244 7F0B0714 44074000 */  mfc1  $a3, $f8
-/* 0E5248 7F0B0718 0FC2C170 */  jal   getRotationalDirectionBetween
-/* 0E524C 7F0B071C 00000000 */   nop   
-/* 0E5250 7F0B0720 8FAE002C */  lw    $t6, 0x2c($sp)
-/* 0E5254 7F0B0724 C7A60060 */  lwc1  $f6, 0x60($sp)
-/* 0E5258 7F0B0728 C7B00058 */  lwc1  $f16, 0x58($sp)
-/* 0E525C 7F0B072C 004E0019 */  multu $v0, $t6
-/* 0E5260 7F0B0730 C7B20064 */  lwc1  $f18, 0x64($sp)
-/* 0E5264 7F0B0734 C7AA005C */  lwc1  $f10, 0x5c($sp)
-/* 0E5268 7F0B0738 00001012 */  mflo  $v0
-/* 0E526C 7F0B073C 284F0001 */  slti  $t7, $v0, 1
-/* 0E5270 7F0B0740 11E0001A */  beqz  $t7, .L7F0B07AC
-/* 0E5274 7F0B0744 01E01025 */   move  $v0, $t7
-/* 0E5278 7F0B0748 46103301 */  sub.s $f12, $f6, $f16
-/* 0E527C 7F0B074C 8FA60024 */  lw    $a2, 0x24($sp)
-/* 0E5280 7F0B0750 8FA70020 */  lw    $a3, 0x20($sp)
-/* 0E5284 7F0B0754 460A9381 */  sub.s $f14, $f18, $f10
-/* 0E5288 7F0B0758 E7AC001C */  swc1  $f12, 0x1c($sp)
-/* 0E528C 7F0B075C 0FC2C170 */  jal   getRotationalDirectionBetween
-/* 0E5290 7F0B0760 E7AE0018 */   swc1  $f14, 0x18($sp)
-/* 0E5294 7F0B0764 C7A40050 */  lwc1  $f4, 0x50($sp)
-/* 0E5298 7F0B0768 C7A80058 */  lwc1  $f8, 0x58($sp)
-/* 0E529C 7F0B076C C7B00054 */  lwc1  $f16, 0x54($sp)
-/* 0E52A0 7F0B0770 C7B2005C */  lwc1  $f18, 0x5c($sp)
-/* 0E52A4 7F0B0774 46082181 */  sub.s $f6, $f4, $f8
-/* 0E52A8 7F0B0778 C7AC001C */  lwc1  $f12, 0x1c($sp)
-/* 0E52AC 7F0B077C C7AE0018 */  lwc1  $f14, 0x18($sp)
-/* 0E52B0 7F0B0780 46128281 */  sub.s $f10, $f16, $f18
-/* 0E52B4 7F0B0784 44063000 */  mfc1  $a2, $f6
-/* 0E52B8 7F0B0788 AFA20028 */  sw    $v0, 0x28($sp)
-/* 0E52BC 7F0B078C 44075000 */  mfc1  $a3, $f10
-/* 0E52C0 7F0B0790 0FC2C170 */  jal   getRotationalDirectionBetween
-/* 0E52C4 7F0B0794 00000000 */   nop   
-/* 0E52C8 7F0B0798 8FB80028 */  lw    $t8, 0x28($sp)
-/* 0E52CC 7F0B079C 00580019 */  multu $v0, $t8
-/* 0E52D0 7F0B07A0 00001012 */  mflo  $v0
-/* 0E52D4 7F0B07A4 28590001 */  slti  $t9, $v0, 1
-/* 0E52D8 7F0B07A8 03201025 */  move  $v0, $t9
-.L7F0B07AC:
-/* 0E52DC 7F0B07AC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0E52E0 7F0B07B0 27BD0048 */  addiu $sp, $sp, 0x48
-/* 0E52E4 7F0B07B4 03E00008 */  jr    $ra
-/* 0E52E8 7F0B07B8 00000000 */   nop   
-)
-#endif
-
 
 
 
