@@ -446,7 +446,7 @@ block_8:
             sp60 = phi_v0_2;
             if (phi_s0 != 0)
             {
-                temp_v0_3 = sub_GAME_7F040078(arg1);
+                temp_v0_3 = chrobjGetBboxFromObjectRecord(arg1);
                 if (temp_v0_3 != 0)
                 {
                     sp58      = 1.0f;
@@ -1020,7 +1020,7 @@ glabel domakedefaultobj
 .L7F002354:
 /* 036E84 7F002354 520000D0 */  beql  $s0, $zero, .L7F002698
 /* 036E88 7F002358 8E240014 */   lw    $a0, 0x14($s1)
-/* 036E8C 7F00235C 0FC1001E */  jal   sub_GAME_7F040078
+/* 036E8C 7F00235C 0FC1001E */  jal   chrobjGetBboxFromObjectRecord
 /* 036E90 7F002360 02202025 */   move  $a0, $s1
 /* 036E94 7F002364 104000CB */  beqz  $v0, .L7F002694
 /* 036E98 7F002368 3C013F80 */   li    $at, 0x3F800000 # 1.000000

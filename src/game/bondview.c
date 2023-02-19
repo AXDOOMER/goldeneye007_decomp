@@ -181,7 +181,7 @@ s32 g_PlayerTickExplodeCreatePosition;
 s32 dword_CODE_bss_800799A4;
 
 //CODE.bss:800799A8
-struct coord3d flt_CODE_bss_800799A8;
+struct coord3d g_TankModelPositionOffset;
 
 //CODE.bss:800799B4
 s32 g_TankEngineSfxVolume;
@@ -712,7 +712,7 @@ void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2);
 void bondviewUpdateCurrentRoomPosition(s32 arg0);
 void trigger_solo_watch_menu(s32 arg0);
 void bondviewUpdatePlayerCollisionBounds(void);
-void bondviewTankCollisionRelated(struct rect4f *, coord3d *, f32);
+void bondviewGetTankCollisionBounds(struct rect4f *, coord3d *, f32);
 void bondviewIntroCameraTextTick(void);
 void bondviewUpperTextWindowTimerTick(void);
 void sub_GAME_7F07DEFC(void);
@@ -724,7 +724,7 @@ void bondviewPlayerStopAudioForPause(void);
 void bondviewWatchAnimationTick(void);
 void bondviewUpdatePlayerCollisionPositionFields(void);
 void bondviewTankModelRotationRelated(void);
-s32 bondviewTankCollisionStatus(struct coord3d *arg0, struct StandTile *arg1, f32 arg2, struct coord3d *arg3, struct coord3d *arg4);
+s32 bondviewTankCollisionStatus(struct coord3d *collision_position, StandTile *arg1, f32 tank_orientation_angle, struct coord3d *arg3, struct coord3d *arg4);
 s32 bondviewCallTankCollisionStatus(struct coord3d *arg0, struct StandTile *arg1, f32 arg2);
 s32 sub_GAME_7F07CDD4(struct coord3d *arg0, f32 arg1, struct StandTile **arg2);
 s32 bondviewTryMoveToStan(struct coord3d *arg0, struct StandTile **stan);
@@ -5762,13 +5762,13 @@ void bondviewTankModelRotationRelated(void) {
         sp68 = (struct coord3d *)temp_v0[2]->Data;
         sp64 = (struct coord3d *)temp_v0[1]->Data;
         matrix_4x4_set_rotation_around_y(M_TAU_F - g_TankTurretOrientationAngleRad, &sp24);
-        flt_CODE_bss_800799A8.f[0] = sp68->f[0];
-        flt_CODE_bss_800799A8.f[1] = sp68->f[1];
-        flt_CODE_bss_800799A8.f[2] = sp68->f[2];
-        mtx4RotateVecInPlace(&sp24, flt_CODE_bss_800799A8.f);
-        flt_CODE_bss_800799A8.f[0] += sp64->f[0];
-        flt_CODE_bss_800799A8.f[1] += sp64->f[1];
-        flt_CODE_bss_800799A8.f[2] += sp64->f[2];
+        g_TankModelPositionOffset.f[0] = sp68->f[0];
+        g_TankModelPositionOffset.f[1] = sp68->f[1];
+        g_TankModelPositionOffset.f[2] = sp68->f[2];
+        mtx4RotateVecInPlace(&sp24, g_TankModelPositionOffset.f);
+        g_TankModelPositionOffset.f[0] += sp64->f[0];
+        g_TankModelPositionOffset.f[1] += sp64->f[1];
+        g_TankModelPositionOffset.f[2] += sp64->f[2];
     }
 }
 
@@ -5777,7 +5777,7 @@ void bondviewTankModelRotationRelated(void) {
 /**
  * Address 0x7F07C888.
 */
-void bondviewTankCollisionRelated(struct rect4f *arg0, struct coord3d *arg1, f32 arg2)
+void bondviewGetTankCollisionBounds(struct rect4f *tank_collision_bounds, struct coord3d *collision_position, f32 tank_orientation_angle)
 {
     ObjectRecord *sp4C;
     f32 sp48;
@@ -5790,28 +5790,28 @@ void bondviewTankCollisionRelated(struct rect4f *arg0, struct coord3d *arg1, f32
 
     sp4C = g_PlayerTankProp->obj;
 
-    bbox = sub_GAME_7F040078(sp4C);
+    bbox = chrobjGetBboxFromObjectRecord(sp4C);
 
-    sp44 = bbox->Bounds.xmin - flt_CODE_bss_800799A8.f[0];
-    sp40 = bbox->Bounds.xmax - flt_CODE_bss_800799A8.f[0];
+    sp44 = bbox->Bounds.xmin - g_TankModelPositionOffset.f[0];
+    sp40 = bbox->Bounds.xmax - g_TankModelPositionOffset.f[0];
     
-    sp3C = bbox->Bounds.zmin - flt_CODE_bss_800799A8.f[2];
-    sp38 = bbox->Bounds.zmax - flt_CODE_bss_800799A8.f[2];
+    sp3C = bbox->Bounds.zmin - g_TankModelPositionOffset.f[2];
+    sp38 = bbox->Bounds.zmax - g_TankModelPositionOffset.f[2];
 
-    sp34 = sp4C->model->scale * cosf(arg2);
-    sp48 = sp4C->model->scale * sinf(arg2);
+    sp34 = sp4C->model->scale * cosf(tank_orientation_angle);
+    sp48 = sp4C->model->scale * sinf(tank_orientation_angle);
     
-    arg0->points[0].f[0] = arg1->f[0] + (-sp3C * sp48) + (sp44 * sp34);
-    arg0->points[0].f[1] = arg1->f[2] + (sp3C * sp34) + (sp44 * sp48);
+    tank_collision_bounds->points[0].f[0] = collision_position->f[0] + (-sp3C * sp48) + (sp44 * sp34);
+    tank_collision_bounds->points[0].f[1] = collision_position->f[2] + (sp3C * sp34) + (sp44 * sp48);
 
-    arg0->points[1].f[0] = arg1->f[0] + (-sp3C * sp48) + (sp40 * sp34);
-    arg0->points[1].f[1] = arg1->f[2] + (sp3C * sp34) + (sp40 * sp48);
+    tank_collision_bounds->points[1].f[0] = collision_position->f[0] + (-sp3C * sp48) + (sp40 * sp34);
+    tank_collision_bounds->points[1].f[1] = collision_position->f[2] + (sp3C * sp34) + (sp40 * sp48);
 
-    arg0->points[2].f[0] = arg1->f[0] + (-sp38 * sp48) + (sp40 * sp34);
-    arg0->points[2].f[1] = arg1->f[2] + (sp38 * sp34) + (sp40 * sp48);
+    tank_collision_bounds->points[2].f[0] = collision_position->f[0] + (-sp38 * sp48) + (sp40 * sp34);
+    tank_collision_bounds->points[2].f[1] = collision_position->f[2] + (sp38 * sp34) + (sp40 * sp48);
     
-    arg0->points[3].f[0] = arg1->f[0] + (-sp38 * sp48) + (sp44 * sp34);
-    arg0->points[3].f[1] = arg1->f[2] + (sp38 * sp34) + (sp44 * sp48);
+    tank_collision_bounds->points[3].f[0] = collision_position->f[0] + (-sp38 * sp48) + (sp44 * sp34);
+    tank_collision_bounds->points[3].f[1] = collision_position->f[2] + (sp38 * sp34) + (sp44 * sp48);
 }
 
 
@@ -5844,11 +5844,11 @@ s32 bondviewTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x
 /**
  * Address 0x7F07CAC8.
 */
-s32 bondviewTankCollisionStatus(struct coord3d *arg0, StandTile *arg1, f32 arg2, struct coord3d *arg3, struct coord3d *arg4)
+s32 bondviewTankCollisionStatus(struct coord3d *collision_position, StandTile *arg1, f32 tank_orientation_angle, struct coord3d *arg3, struct coord3d *arg4)
 {
     StandTile *spBC;
     s32 stack_padding;
-    struct rect4f sp98;
+    struct rect4f tank_collision_bounds;
     s32 sp94;
     f32 temp_f0;
     
@@ -5864,18 +5864,18 @@ s32 bondviewTankCollisionStatus(struct coord3d *arg0, StandTile *arg1, f32 arg2,
     spBC = arg1;
     sp94 = 0;
 
-    bondviewTankCollisionRelated(&sp98, arg0, arg2);
+    bondviewGetTankCollisionBounds(&tank_collision_bounds, collision_position, tank_orientation_angle);
     
     if (g_PlayerTankProp != NULL)
     {
         sub_GAME_7F03D058(g_PlayerTankProp, 0);
     }
 
-    if ((bondviewTestLineUnobstructed(&spBC, arg0->f[0], arg0->f[2], sp98.points[0].f[0], sp98.points[0].f[1], 0x213, arg3, arg4) != 0) 
-        && (bondviewTestLineUnobstructed(&spBC, sp98.points[0].f[0], sp98.points[0].f[1], sp98.points[1].f[0], sp98.points[1].f[1], 0x213, arg3, arg4) != 0) 
-        && (bondviewTestLineUnobstructed(&spBC, sp98.points[1].f[0], sp98.points[1].f[1], sp98.points[2].f[0], sp98.points[2].f[1], 0x213, arg3, arg4) != 0)
-        && (bondviewTestLineUnobstructed(&spBC, sp98.points[2].f[0], sp98.points[2].f[1], sp98.points[3].f[0], sp98.points[3].f[1], 0x213, arg3, arg4) != 0)
-        && (bondviewTestLineUnobstructed(&spBC, sp98.points[3].f[0], sp98.points[3].f[1], sp98.points[0].f[0], sp98.points[0].f[1], 0x213, arg3, arg4) != 0))
+    if ((bondviewTestLineUnobstructed(&spBC, collision_position->f[0], collision_position->f[2], tank_collision_bounds.points[0].f[0], tank_collision_bounds.points[0].f[1], 0x213, arg3, arg4) != 0) 
+        && (bondviewTestLineUnobstructed(&spBC, tank_collision_bounds.points[0].f[0], tank_collision_bounds.points[0].f[1], tank_collision_bounds.points[1].f[0], tank_collision_bounds.points[1].f[1], 0x213, arg3, arg4) != 0) 
+        && (bondviewTestLineUnobstructed(&spBC, tank_collision_bounds.points[1].f[0], tank_collision_bounds.points[1].f[1], tank_collision_bounds.points[2].f[0], tank_collision_bounds.points[2].f[1], 0x213, arg3, arg4) != 0)
+        && (bondviewTestLineUnobstructed(&spBC, tank_collision_bounds.points[2].f[0], tank_collision_bounds.points[2].f[1], tank_collision_bounds.points[3].f[0], tank_collision_bounds.points[3].f[1], 0x213, arg3, arg4) != 0)
+        && (bondviewTestLineUnobstructed(&spBC, tank_collision_bounds.points[3].f[0], tank_collision_bounds.points[3].f[1], tank_collision_bounds.points[0].f[0], tank_collision_bounds.points[0].f[1], 0x213, arg3, arg4) != 0))
     {
         sp94 = 1;
 
@@ -5893,7 +5893,7 @@ s32 bondviewTankCollisionStatus(struct coord3d *arg0, StandTile *arg1, f32 arg2,
             sp74.f[1] = 0.0f;
             sp74.f[2] = temp_a1->f[2] + temp_v1->f[2] - temp_a2->f[2];
 
-            temp_f0 = arg2 + g_TankTurretOrientationAngleRad;
+            temp_f0 = tank_orientation_angle + g_TankTurretOrientationAngleRad;
 
             if (temp_f0 >= M_TAU_F)
             {
@@ -5911,12 +5911,12 @@ s32 bondviewTankCollisionStatus(struct coord3d *arg0, StandTile *arg1, f32 arg2,
             sp74.f[0] *= sp8C->scale;
             sp74.f[2] *= sp8C->scale;
 
-            sp74.f[0] += arg0->f[0];
-            sp74.f[2] += arg0->f[2];
+            sp74.f[0] += collision_position->f[0];
+            sp74.f[2] += collision_position->f[2];
 
             spBC = arg1;
             
-            if (bondviewTestLineUnobstructed(&spBC, arg0->f[0], arg0->f[2], sp74.f[0], sp74.f[2], 0x213, arg3, arg4) == 0)
+            if (bondviewTestLineUnobstructed(&spBC, collision_position->f[0], collision_position->f[2], sp74.f[0], sp74.f[2], 0x213, arg3, arg4) == 0)
             {
                 sp94 = 0;
             }
@@ -5938,9 +5938,9 @@ s32 bondviewTankCollisionStatus(struct coord3d *arg0, StandTile *arg1, f32 arg2,
 /**
  * Address 0x7F07CDA8.
 */
-s32 bondviewCallTankCollisionStatus(struct coord3d *arg0, StandTile *arg1, f32 arg2)
+s32 bondviewCallTankCollisionStatus(struct coord3d *collision_position, StandTile *arg1, f32 tank_orientation_angle)
 {
-    return bondviewTankCollisionStatus(arg0, arg1, arg2, NULL, NULL);
+    return bondviewTankCollisionStatus(collision_position, arg1, tank_orientation_angle, NULL, NULL);
 }
 
 
@@ -11537,8 +11537,8 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             temp_tank = (struct TankRecord *)g_PlayerTankProp->obj;
             
             tank_move_offset.f[1] = 0.0f;
-            tank_move_offset.f[0] = flt_CODE_bss_800799A8.f[0];
-            tank_move_offset.f[2] = flt_CODE_bss_800799A8.f[2];
+            tank_move_offset.f[0] = g_TankModelPositionOffset.f[0];
+            tank_move_offset.f[2] = g_TankModelPositionOffset.f[2];
 
             matrix_4x4_set_rotation_around_y(tankChangeInAngle, &sp2B4);
             mtx4RotateVecInPlace(&sp2B4, &tank_move_offset);
@@ -11547,8 +11547,8 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             if (0) { }
             
             tank_move_offset.f[1] = 0.0f;
-            tank_move_offset.f[0] = flt_CODE_bss_800799A8.f[0] - tank_move_offset.f[0];
-            tank_move_offset.f[2] = flt_CODE_bss_800799A8.f[2] - tank_move_offset.f[2];
+            tank_move_offset.f[0] = g_TankModelPositionOffset.f[0] - tank_move_offset.f[0];
+            tank_move_offset.f[2] = g_TankModelPositionOffset.f[2] - tank_move_offset.f[2];
 
             matrix_4x4_set_rotation_around_y(M_TAU_F - g_TankOrientationAngle, &sp2B4);
             matrix_scalar_multiply(temp_tank->model->scale, &sp2B4);
@@ -11656,9 +11656,9 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 matrix_4x4_set_rotation_around_y(M_TAU_F - g_TankOrientationAngle, &sp268);
                 matrix_scalar_multiply(tank_obj->model->scale, &sp268);
                 
-                sp25C.f[0] = flt_CODE_bss_800799A8.f[0];
-                sp25C.f[1] = flt_CODE_bss_800799A8.f[1];
-                sp25C.f[2] = flt_CODE_bss_800799A8.f[2];
+                sp25C.f[0] = g_TankModelPositionOffset.f[0];
+                sp25C.f[1] = g_TankModelPositionOffset.f[1];
+                sp25C.f[2] = g_TankModelPositionOffset.f[2];
                 mtx4RotateVecInPlace(&sp268, (f32*)&sp25C);
                 
                 sp25C.f[0] += tank_obj->runtime_pos.f[0];
@@ -12305,9 +12305,9 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         matrix_4x4_set_rotation_around_y(M_TAU_F - g_TankOrientationAngle, &spF0);
         matrix_scalar_multiply(sp138_tank_as_ObjectRecord->model->scale, &spF0);
 
-        spE4.f[0] = -flt_CODE_bss_800799A8.f[0];
-        spE4.f[1] = -flt_CODE_bss_800799A8.f[1];
-        spE4.f[2] = -flt_CODE_bss_800799A8.f[2];
+        spE4.f[0] = -g_TankModelPositionOffset.f[0];
+        spE4.f[1] = -g_TankModelPositionOffset.f[1];
+        spE4.f[2] = -g_TankModelPositionOffset.f[2];
         
         mtx4RotateVecInPlace(&spF0, &spE4);
 
@@ -12346,7 +12346,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
         setupUpdateObjectRoomPosition(sp138_tank_as_ObjectRecord);
         chrobjCollisionRelated(sp138_tank_as_ObjectRecord);
-        bondviewTankCollisionRelated(&spB4_tank_collision_bounds, &g_CurrentPlayer->field_488.collision_position, g_TankOrientationAngle);
+        bondviewGetTankCollisionBounds(&spB4_tank_collision_bounds, &g_CurrentPlayer->field_488.collision_position, g_TankOrientationAngle);
         chraiGetPropRoomIds(sp138_tank_as_ObjectRecord->prop, &sp94);
         
         // update num_obj_position_data_entries
@@ -18918,7 +18918,7 @@ void bondviewUpdatePlayerCollisionBounds(void)
 
     if (in_tank_flag == 1)
     {
-        bondviewTankCollisionRelated(&g_CurrentPlayer->collision_bounds, &g_CurrentPlayer->field_488.collision_position, g_TankOrientationAngle);
+        bondviewGetTankCollisionBounds(&g_CurrentPlayer->collision_bounds, &g_CurrentPlayer->field_488.collision_position, g_TankOrientationAngle);
 
         return;
     }

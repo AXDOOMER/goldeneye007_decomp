@@ -263,7 +263,7 @@ void setupUpdateObjectRoomPosition(ObjectRecord *obj)
     }
     else
     {
-        sp30 = sub_GAME_7F040078(obj);
+        sp30 = chrobjGetBboxFromObjectRecord(obj);
 
         if (sp30 != NULL)
         {

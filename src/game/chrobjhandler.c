@@ -1090,7 +1090,7 @@ ModelRoData_BoundingBoxRecord *chrobjGetBboxFromObjFile(ModelFileHeader *obj)
 }
 
 
-struct ModelRoData_BoundingBoxRecord* sub_GAME_7F040078(ObjectRecord *arg0)
+struct ModelRoData_BoundingBoxRecord* chrobjGetBboxFromObjectRecord(ObjectRecord *arg0)
 {
     return (struct ModelRoData_BoundingBoxRecord *)chrobjGetBboxFromObjFile(arg0->model->obj);
 }
@@ -1308,7 +1308,7 @@ void chrobjCollisionRelated(ObjectRecord *obj)
 
     if (obj->ptr_allocated_collisiondata_block != NULL)
     {
-        bbox = sub_GAME_7F040078(obj);
+        bbox = chrobjGetBboxFromObjectRecord(obj);
         matrix_4x4_copy(&obj->mtx, &sp24);
         matrix_4x4_set_position(obj->runtime_pos.f, &sp24);
         sub_GAME_7F03F540(bbox, &sp24, &obj->ptr_allocated_collisiondata_block->unk04, obj->ptr_allocated_collisiondata_block);
@@ -6142,7 +6142,7 @@ glabel object_interaction
 /* 07A074 7F045544 31790001 */  andi  $t9, $t3, 1
 /* 07A078 7F045548 53200351 */  beql  $t9, $zero, .L7F046290
 /* 07A07C 7F04554C C6000060 */   lwc1  $f0, 0x60($s0)
-/* 07A080 7F045550 0FC1001E */  jal   sub_GAME_7F040078
+/* 07A080 7F045550 0FC1001E */  jal   chrobjGetBboxFromObjectRecord
 /* 07A084 7F045554 02202025 */   move  $a0, $s1
 /* 07A088 7F045558 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 07A08C 7F04555C 44814000 */  mtc1  $at, $f8
@@ -7132,7 +7132,7 @@ glabel object_interaction
 /* 07AEF4 7F0463C4 15E00082 */  bnez  $t7, .L7F0465D0
 /* 07AEF8 7F0463C8 00000000 */   nop   
 /* 07AEFC 7F0463CC AFB80070 */  sw    $t8, 0x70($sp)
-/* 07AF00 7F0463D0 0FC1001E */  jal   sub_GAME_7F040078
+/* 07AF00 7F0463D0 0FC1001E */  jal   chrobjGetBboxFromObjectRecord
 /* 07AF04 7F0463D4 00009025 */   move  $s2, $zero
 /* 07AF08 7F0463D8 3C038005 */  lui   $v1, %hi(g_ClockTimer)
 /* 07AF0C 7F0463DC 8C638374 */  lw    $v1, %lo(g_ClockTimer)($v1)
@@ -11239,7 +11239,7 @@ glabel object_interaction
 /* 07A498 7F045928 314D0001 */  andi  $t5, $t2, 1
 /* 07A49C 7F04592C 51A00351 */  beql  $t5, $zero, .Ljp7F046674
 /* 07A4A0 7F045930 C6000060 */   lwc1  $f0, 0x60($s0)
-/* 07A4A4 7F045934 0FC100DE */  jal   sub_GAME_7F040078
+/* 07A4A4 7F045934 0FC100DE */  jal   chrobjGetBboxFromObjectRecord
 /* 07A4A8 7F045938 02202025 */   move  $a0, $s1
 /* 07A4AC 7F04593C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 07A4B0 7F045940 44814000 */  mtc1  $at, $f8
@@ -12229,7 +12229,7 @@ glabel object_interaction
 /* 07B318 7F0467A8 15200082 */  bnez  $t1, .Ljp7F0469B4
 /* 07B31C 7F0467AC 00000000 */   nop   
 /* 07B320 7F0467B0 AFAB0074 */  sw    $t3, 0x74($sp)
-/* 07B324 7F0467B4 0FC100DE */  jal   sub_GAME_7F040078
+/* 07B324 7F0467B4 0FC100DE */  jal   chrobjGetBboxFromObjectRecord
 /* 07B328 7F0467B8 00009025 */   move  $s2, $zero
 /* 07B32C 7F0467BC 3C038005 */  lui   $v1, %hi(g_ClockTimer) # $v1, 0x8005
 /* 07B330 7F0467C0 8C6383A4 */  lw    $v1, %lo(g_ClockTimer)($v1)
@@ -16345,7 +16345,7 @@ glabel object_interaction
 /* 0780D8 7F0456E8 310C0001 */  andi  $t4, $t0, 1
 /* 0780DC 7F0456EC 51800351 */  beql  $t4, $zero, .L7F046434
 /* 0780E0 7F0456F0 C6000060 */   lwc1  $f0, 0x60($s0)
-/* 0780E4 7F0456F4 0FC1004E */  jal   sub_GAME_7F040078
+/* 0780E4 7F0456F4 0FC1004E */  jal   chrobjGetBboxFromObjectRecord
 /* 0780E8 7F0456F8 02202025 */   move  $a0, $s1
 /* 0780EC 7F0456FC 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0780F0 7F045700 44814000 */  mtc1  $at, $f8
@@ -17335,7 +17335,7 @@ glabel object_interaction
 /* 078F58 7F046568 15E00082 */  bnez  $t7, .L7F046774
 /* 078F5C 7F04656C 00000000 */   nop   
 /* 078F60 7F046570 AFB90074 */  sw    $t9, 0x74($sp)
-/* 078F64 7F046574 0FC1004E */  jal   sub_GAME_7F040078
+/* 078F64 7F046574 0FC1004E */  jal   chrobjGetBboxFromObjectRecord
 /* 078F68 7F046578 00009025 */   move  $s2, $zero
 /* 078F6C 7F04657C 3C038004 */  lui   $v1, %hi(g_ClockTimer) # $v1, 0x8004
 /* 078F70 7F046580 8C630FF4 */  lw    $v1, %lo(g_ClockTimer)($v1)
@@ -28286,7 +28286,7 @@ void sub_GAME_7F04DCB4(ObjectRecord* obj)
     struct ModelRoData_BoundingBoxRecord *bbox;
 
     prop = obj->prop;
-    bbox = sub_GAME_7F040078(obj);
+    bbox = chrobjGetBboxFromObjectRecord(obj);
     sub_GAME_7F0A0CCC(prop, FALSE);
     sub_GAME_7F0A0CCC(prop, TRUE);
 
@@ -29535,7 +29535,7 @@ void sub_GAME_7F04E9BC(PropRecord* prop, struct ShotData* shotdata)
 
     obj = prop->obj;
     model = obj->model;
-    bbox = sub_GAME_7F040078(obj);
+    bbox = chrobjGetBboxFromObjectRecord(obj);
 
     if ((prop->flags & PROPFLAG_ONSCREEN)
             && (obj->runtime_bitflags & RUNTIMEBITFLAG_00001000) == 0
