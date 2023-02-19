@@ -52,7 +52,7 @@ Gfx * sub_GAME_7F0B3034(Gfx *arg0);
 Gfx * sub_GAME_7F0B312C(Gfx *arg0, s32 arg1);
 Gfx * sub_GAME_7F0B3024(Gfx *ptrdl, StandTilePoint *tile_point, u32 RGBAColor);
 s32 walkTilesBetweenPoints_NoCallback(StandTile **tileStack, f32 start_x, f32 start_z, f32 dest_x, f32 dest_z);
-s32 sub_GAME_7F0B0518(StandTile *tile, f32 p_x, f32 p_z);
+s32 stanTestPointWithinTileBoundsMaybe(StandTile *tile, f32 p_x, f32 p_z);
 f32 stanGetPositionYValue(StandTile* tile, f32 p_x, f32 p_z);
 s32 getCollisionEdge_maybe(coord3d *pntA, coord3d *pntB);
 s32 sub_GAME_7F0B26B8(StandTile **tile, f32 target_x, f32 target_z, f32 b_z, f32 param_5);

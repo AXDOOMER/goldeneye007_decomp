@@ -1577,7 +1577,9 @@ void bondviewUpdateCurrentPlayerPosition(coord3d *pos, coord3d *pos2, coord3d *o
         sp34 = tile;
         if (walkTilesBetweenPoints_NoCallback((StandTile **) &sp34, arg4->f[0], arg4->f[2], pos->f[0], pos->f[2]))
         {
-            sub_GAME_7F0B0518(sp34, pos->f[0], pos->f[2]);
+            // @bug ...? This is either a bug or removed code, this function has no side effects.
+            // Return value should used to check if point is safe for stan.
+            stanTestPointWithinTileBoundsMaybe(sp34, pos->f[0], pos->f[2]);
             g_CurrentPlayer->room_pointer = sp34;
         }
         else
@@ -6590,7 +6592,11 @@ void bondviewCalcUpdatePlayerCollision(struct coord3d *offset, s32 allow_scoot)
         }
     }
 
-    if (sub_GAME_7F0B0518(
+    /**
+     * This block seems to be some error checking code, this will only occur when Bond
+     * goes out of bounds.
+    */
+    if (stanTestPointWithinTileBoundsMaybe(
             g_CurrentPlayer->field_488.current_tile_ptr,
             g_CurrentPlayer->field_488.collision_position.f[0],
             g_CurrentPlayer->field_488.collision_position.f[2]) == 0)
@@ -6634,7 +6640,7 @@ void bondviewCalcUpdatePlayerCollision(struct coord3d *offset, s32 allow_scoot)
             
             if(1);
 
-            if (sub_GAME_7F0B0518(
+            if (stanTestPointWithinTileBoundsMaybe(
                 stan,
                 g_CurrentPlayer->field_488.collision_position.f[0],
                 g_CurrentPlayer->field_488.collision_position.f[2]))

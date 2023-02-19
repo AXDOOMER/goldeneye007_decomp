@@ -2402,7 +2402,7 @@ glabel sub_GAME_7F0B0400
 
 
 
-s32 sub_GAME_7F0B0518(StandTile *tile, f32 p_x, f32 p_z)
+s32 stanTestPointWithinTileBoundsMaybe(StandTile *tile, f32 p_x, f32 p_z)
 {
     f32 unk;
     s32 i;
