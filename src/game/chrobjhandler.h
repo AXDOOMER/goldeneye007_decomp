@@ -141,7 +141,7 @@ void sub_GAME_7F043650(struct WeaponObjRecord *arg0);
 s32 sub_GAME_7F0446B8(struct rect4f *arg0, s32 arg1, struct rect4f *arg2, s32 arg3);
 s32 chrobjTestPointPolygonCollision(struct coord3d *arg0, f32 arg1, struct rect4f *arg2, s32 arg3);
 void maybe_detonate_object_and_its_children(PropRecord *arg0, f32 arg1, struct coord3d *arg2, s32 arg3, s32 owner);
-struct modeldata_unk_pos * sub_GAME_7F040078(ObjectRecord *arg0);
+struct ModelRoData_BoundingBoxRecord* sub_GAME_7F040078(ObjectRecord *arg0);
 void deactivate_alarm_sound_effect(void);
 s32 sub_GAME_7F03F598(coord3d* pos, f32 arg1, BoundPadRecord *boundpads);
 void sub_GAME_7F0A1DA0(f32*, f32*, f32*, f32*, f32, f32, f32, f32, f32, f32);

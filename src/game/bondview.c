@@ -575,15 +575,10 @@ struct HealthDamageType g_HealthDamageTypes[8] = {
     { 0, 20, 50 }
 };
 
-// //D:800367F4
-// s32 D_800367F4 = 0;
-// //D:800367F8
-// s32 D_800367F8 = 0;
-// //D:800367FC
-// s32 D_800367FC = 0;
-
-// Address 0x800367F4
-struct coord3d D_800367F4 = { 0 };
+/**
+ * US Address 0x800367F4.
+*/
+struct coord3d g_DefaultMoveBondOffset = { 0 };
 
 
 /**
@@ -5791,17 +5786,17 @@ void bondviewTankCollisionRelated(struct rect4f *arg0, struct coord3d *arg1, f32
     f32 sp3C;
     f32 sp38;
     f32 sp34;
-    struct modeldata_unk_pos *temp_v0;
+    struct ModelRoData_BoundingBoxRecord *bbox;
 
     sp4C = g_PlayerTankProp->obj;
 
-    temp_v0 = sub_GAME_7F040078(sp4C);
+    bbox = sub_GAME_7F040078(sp4C);
 
-    sp44 = temp_v0->p1[0] - flt_CODE_bss_800799A8.f[0];
-    sp40 = temp_v0->p1[1] - flt_CODE_bss_800799A8.f[0];
+    sp44 = bbox->Bounds.xmin - flt_CODE_bss_800799A8.f[0];
+    sp40 = bbox->Bounds.xmax - flt_CODE_bss_800799A8.f[0];
     
-    sp3C = temp_v0->p3[0] - flt_CODE_bss_800799A8.f[2];
-    sp38 = temp_v0->p3[1] - flt_CODE_bss_800799A8.f[2];
+    sp3C = bbox->Bounds.zmin - flt_CODE_bss_800799A8.f[2];
+    sp38 = bbox->Bounds.zmax - flt_CODE_bss_800799A8.f[2];
 
     sp34 = sp4C->model->scale * cosf(arg2);
     sp48 = sp4C->model->scale * sinf(arg2);
@@ -11183,7 +11178,7 @@ void bondviewPlayerTickExplode(void)
  */
 void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 {
-    struct coord3d sp3AC;
+    struct coord3d move_offset;
     f32 ftemp;
     f32 stack_padding_9;
     f32 sp3A0;
@@ -11192,7 +11187,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     s32 use_stanHeight;
     f32 sp390;
 
-    sp3AC = D_800367F4;
+    move_offset = g_DefaultMoveBondOffset;
 
     use_stanHeight = 0;
     maxspeed = 0.0f;
@@ -11441,13 +11436,13 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             
             if (sp31C >= 0.0f)
             {
-                sp3AC.f[0] = sp31C * sp324 * 1.01f;
-                sp3AC.f[2] = sp31C * sp320 * 1.01f;
+                move_offset.f[0] = sp31C * sp324 * 1.01f;
+                move_offset.f[2] = sp31C * sp320 * 1.01f;
                 
-                bondviewCalcUpdatePlayerCollision(&sp3AC, 1);
+                bondviewCalcUpdatePlayerCollision(&move_offset, 1);
                 
-                sp3AC.f[0] = 0.0f;
-                sp3AC.f[2] = 0.0f;
+                move_offset.f[0] = 0.0f;
+                move_offset.f[2] = 0.0f;
 
                 if (bondviewTankCollisionStatus(
                     &g_CurrentPlayer->field_488.collision_position,
@@ -11535,30 +11530,30 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         {
             // sp 0x300
             struct TankRecord *temp_tank;
-            struct coord3d sp2F4;
+            struct coord3d tank_move_offset;
             Mtxf sp2B4;
             f32 stack_padding_4;
             
             temp_tank = (struct TankRecord *)g_PlayerTankProp->obj;
             
-            sp2F4.f[1] = 0.0f;
-            sp2F4.f[0] = flt_CODE_bss_800799A8.f[0];
-            sp2F4.f[2] = flt_CODE_bss_800799A8.f[2];
+            tank_move_offset.f[1] = 0.0f;
+            tank_move_offset.f[0] = flt_CODE_bss_800799A8.f[0];
+            tank_move_offset.f[2] = flt_CODE_bss_800799A8.f[2];
 
             matrix_4x4_set_rotation_around_y(tankChangeInAngle, &sp2B4);
-            mtx4RotateVecInPlace(&sp2B4, &sp2F4);
+            mtx4RotateVecInPlace(&sp2B4, &tank_move_offset);
             bondviewTankModelRotationRelated();
             
             if (0) { }
             
-            sp2F4.f[1] = 0.0f;
-            sp2F4.f[0] = flt_CODE_bss_800799A8.f[0] - sp2F4.f[0];
-            sp2F4.f[2] = flt_CODE_bss_800799A8.f[2] - sp2F4.f[2];
+            tank_move_offset.f[1] = 0.0f;
+            tank_move_offset.f[0] = flt_CODE_bss_800799A8.f[0] - tank_move_offset.f[0];
+            tank_move_offset.f[2] = flt_CODE_bss_800799A8.f[2] - tank_move_offset.f[2];
 
             matrix_4x4_set_rotation_around_y(M_TAU_F - g_TankOrientationAngle, &sp2B4);
             matrix_scalar_multiply(temp_tank->model->scale, &sp2B4);
-            mtx4RotateVecInPlace(&sp2B4, &sp2F4);
-            bondviewCalcUpdatePlayerCollision(&sp2F4, 1);
+            mtx4RotateVecInPlace(&sp2B4, &tank_move_offset);
+            bondviewCalcUpdatePlayerCollision(&tank_move_offset, 1);
         }
 
         if (g_ClockTimer > 0) {
@@ -11714,15 +11709,15 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                     g_CurrentPlayer->vv_theta += 360.0f;
                 }
 
-                sp3AC.f[0] = (
+                move_offset.f[0] = (
                         (g_TankEnteringSitHeightRemain * g_EnterTankCoord.f[0]) + 
                         ((1.0f - g_TankEnteringSitHeightRemain) * sp25C.f[0])
                     ) - 
                     g_CurrentPlayer->field_488.collision_position.f[0];
 
-                sp3AC.f[1] = 0.0f;
+                move_offset.f[1] = 0.0f;
 
-                sp3AC.f[2] = (
+                move_offset.f[2] = (
                     (g_TankEnteringSitHeightRemain * g_EnterTankCoord.f[2]) +
                     ((1.0f - g_TankEnteringSitHeightRemain) * sp25C.f[2])
                     ) - 
@@ -11876,10 +11871,10 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         
         bondviewMoveAnimationTick(0.0f, 0.0f, 0.0f);
 
-        sp3AC.f[0] += g_CurrentPlayer->speedforwards * sinf(M_TAU_F - g_TankOrientationAngle) * g_GlobalTimerDelta;
-        sp3AC.f[2] += g_CurrentPlayer->speedforwards * cosf(M_TAU_F - g_TankOrientationAngle) * g_GlobalTimerDelta;
+        move_offset.f[0] += g_CurrentPlayer->speedforwards * sinf(M_TAU_F - g_TankOrientationAngle) * g_GlobalTimerDelta;
+        move_offset.f[2] += g_CurrentPlayer->speedforwards * cosf(M_TAU_F - g_TankOrientationAngle) * g_GlobalTimerDelta;
 
-        bondviewCalcUpdatePlayerCollision(&sp3AC, 1);
+        bondviewCalcUpdatePlayerCollision(&move_offset, 1);
         
         if ((g_EnterTankAudioState == TANK_RUN_STATE_RUNNING) && (g_ClockTimer > 0))
         {
@@ -12056,21 +12051,21 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         headpos_x = g_CurrentPlayer->headpos[0];
         headpos_z = g_CurrentPlayer->headpos[2];
 
-        sp3AC.f[0] += 
+        move_offset.f[0] += 
             (
                 (headpos_z * g_CurrentPlayer->field_488.theta_transform.f[0]) -
                 (headpos_x * g_CurrentPlayer->field_488.theta_transform.f[2])
             ) * g_GlobalTimerDelta;
 
-        sp3AC.f[2] += 
+        move_offset.f[2] += 
             (
                 (headpos_z * g_CurrentPlayer->field_488.theta_transform.f[2]) +
                 (headpos_x * g_CurrentPlayer->field_488.theta_transform.f[0])
             ) * g_GlobalTimerDelta;
 
  
-        sp3AC.f[0] += sp220;
-        sp3AC.f[2] += sp21C;
+        move_offset.f[0] += sp220;
+        move_offset.f[2] += sp21C;
 
         start_collision_pos_x = g_CurrentPlayer->field_488.collision_position.f[0];
         start_collision_pos_z = g_CurrentPlayer->field_488.collision_position.f[2];
@@ -12078,20 +12073,20 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         
         if (get_debug_fast_bond_flag())
         {
-            sp3AC.f[0] += 
+            move_offset.f[0] += 
                 (
                     (g_CurrentPlayer->field_488.theta_transform.f[0] * g_CurrentPlayer->speedforwards) -
                     (g_CurrentPlayer->field_488.theta_transform.f[2] * g_CurrentPlayer->speedsideways)
                 ) * g_GlobalTimerDelta * 10.0f;
 
-            sp3AC.f[2] += 
+            move_offset.f[2] += 
                 (
                     (g_CurrentPlayer->field_488.theta_transform.f[2] * g_CurrentPlayer->speedforwards) +
                     (g_CurrentPlayer->field_488.theta_transform.f[0] * g_CurrentPlayer->speedsideways)
                 ) * g_GlobalTimerDelta * 10.0f;
         }
         
-        bondviewCalcUpdatePlayerCollision(&sp3AC, (g_CurrentPlayer->swaytarget == 0.0f));
+        bondviewCalcUpdatePlayerCollision(&move_offset, (g_CurrentPlayer->swaytarget == 0.0f));
 
         stanTileDistanceRelated(
             &sp200,
@@ -12155,8 +12150,8 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                     ((start_collision_pos_z - bondCollision.bondCollision.f[2]) * sp168);
                 
                 sp2B0 = 
-                    (((start_collision_pos_x + sp3AC.f[0]) - bondCollision.bondCollision.f[0]) * sp16C) +
-                    (((start_collision_pos_z + sp3AC.f[2]) - bondCollision.bondCollision.f[2]) * sp168);
+                    (((start_collision_pos_x + move_offset.f[0]) - bondCollision.bondCollision.f[0]) * sp16C) +
+                    (((start_collision_pos_z + move_offset.f[2]) - bondCollision.bondCollision.f[2]) * sp168);
                 
                 if ((sp164 * sp2B0) <= 0.0f)
                 {
@@ -12188,7 +12183,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                     }
                 }
 
-                sp2A8 = sqrtf((sp3AC.f[0] * sp3AC.f[0]) + (sp3AC.f[2] * sp3AC.f[2]));
+                sp2A8 = sqrtf((move_offset.f[0] * move_offset.f[0]) + (move_offset.f[2] * move_offset.f[2]));
                 if (sp2A8 > 0.0f)
                 {
                     f32 sp318;
@@ -12215,20 +12210,20 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                     sp310 = sp24C;
                 }
 
-                sp3AC.f[0] = (sp3AC.f[0] * shorten) + (sp314 * (sp390 / (bondCollision.sp19C.f[1] - bondCollision.bondCollision.f[1])));
-                sp3AC.f[2] = (sp3AC.f[2] * shorten) + (sp310 * (sp390 / (bondCollision.sp19C.f[1] - bondCollision.bondCollision.f[1])));
+                move_offset.f[0] = (move_offset.f[0] * shorten) + (sp314 * (sp390 / (bondCollision.sp19C.f[1] - bondCollision.bondCollision.f[1])));
+                move_offset.f[2] = (move_offset.f[2] * shorten) + (sp310 * (sp390 / (bondCollision.sp19C.f[1] - bondCollision.bondCollision.f[1])));
 
                 g_CurrentPlayer->field_488.collision_position.f[0] = start_collision_pos_x;
                 g_CurrentPlayer->field_488.collision_position.f[2] = start_collision_pos_z;
                 g_CurrentPlayer->field_488.current_tile_ptr = sp200;
                 
-                bondviewCalcUpdatePlayerCollision(&sp3AC, (g_CurrentPlayer->swaytarget == 0.0f));
+                bondviewCalcUpdatePlayerCollision(&move_offset, (g_CurrentPlayer->swaytarget == 0.0f));
             }
         }
 
         ftemp_col_x = g_CurrentPlayer->field_488.collision_position.f[0] - start_collision_pos_x;
         ftemp_col_z = g_CurrentPlayer->field_488.collision_position.f[2] - start_collision_pos_z;
-        sp240 = (sp3AC.f[0] * sp3AC.f[0]) + (sp3AC.f[2] * sp3AC.f[2]);
+        sp240 = (move_offset.f[0] * move_offset.f[0]) + (move_offset.f[2] * move_offset.f[2]);
         if (sp240 != 0.0f)
         {
             sp240 = ((ftemp_col_x * ftemp_col_x) + (ftemp_col_z * ftemp_col_z)) / sp240;

@@ -5370,7 +5370,7 @@ f32 chrpropBBOXGetZmin(ModelRoData_BoundingBoxRecord *modelBoundingBox)
 /**
  * Address 0x7F03E87C.
 */
-f32 chrpropSumMatrixPosX(struct modeldata_unk_pos *arg0, Mtxf *arg1)
+f32 chrpropSumMatrixPosX(struct ModelRoData_BoundingBoxRecord *bbox, Mtxf *arg1)
 {
     f32 phi_f2;
 
@@ -5378,29 +5378,29 @@ f32 chrpropSumMatrixPosX(struct modeldata_unk_pos *arg0, Mtxf *arg1)
 
     if (arg1->m[0][0] >= 0.0f)
     {
-        phi_f2 += (arg0->p1[0] * arg1->m[0][0]);
+        phi_f2 += (bbox->Bounds.xmin * arg1->m[0][0]);
     }
     else
     {
-        phi_f2 += (arg0->p1[1] * arg1->m[0][0]);
+        phi_f2 += (bbox->Bounds.xmax * arg1->m[0][0]);
     }
 
     if (arg1->m[1][0] >= 0.0f)
     {
-        phi_f2 += (arg0->p2[0] * arg1->m[1][0]);
+        phi_f2 += (bbox->Bounds.ymin * arg1->m[1][0]);
     }
     else
     {
-        phi_f2 += (arg0->p2[1] * arg1->m[1][0]);
+        phi_f2 += (bbox->Bounds.ymax * arg1->m[1][0]);
     }
 
     if (arg1->m[2][0] >= 0.0f)
     {
-        phi_f2 += (arg0->p3[0] * arg1->m[2][0]);
+        phi_f2 += (bbox->Bounds.zmin * arg1->m[2][0]);
     }
     else
     {
-        phi_f2 += (arg0->p3[1] * arg1->m[2][0]);
+        phi_f2 += (bbox->Bounds.zmax * arg1->m[2][0]);
     }
 
     return phi_f2;
@@ -5412,7 +5412,7 @@ f32 chrpropSumMatrixPosX(struct modeldata_unk_pos *arg0, Mtxf *arg1)
 /**
  * Address 0x7F03E91C.
 */
-f32 chrpropSumMatrixNegX(struct modeldata_unk_pos *arg0, Mtxf *arg1)
+f32 chrpropSumMatrixNegX(struct ModelRoData_BoundingBoxRecord *bbox, Mtxf *arg1)
 {
     f32 phi_f2;
 
@@ -5420,29 +5420,29 @@ f32 chrpropSumMatrixNegX(struct modeldata_unk_pos *arg0, Mtxf *arg1)
 
     if (arg1->m[0][0] <= 0.0f)
     {
-        phi_f2 += (arg0->p1[0] * arg1->m[0][0]);
+        phi_f2 += (bbox->Bounds.xmin * arg1->m[0][0]);
     }
     else
     {
-        phi_f2 += (arg0->p1[1] * arg1->m[0][0]);
+        phi_f2 += (bbox->Bounds.xmax * arg1->m[0][0]);
     }
 
     if (arg1->m[1][0] <= 0.0f)
     {
-        phi_f2 += (arg0->p2[0] * arg1->m[1][0]);
+        phi_f2 += (bbox->Bounds.ymin * arg1->m[1][0]);
     }
     else
     {
-        phi_f2 += (arg0->p2[1] * arg1->m[1][0]);
+        phi_f2 += (bbox->Bounds.ymax * arg1->m[1][0]);
     }
 
     if (arg1->m[2][0] <= 0.0f)
     {
-        phi_f2 += (arg0->p3[0] * arg1->m[2][0]);
+        phi_f2 += (bbox->Bounds.zmin * arg1->m[2][0]);
     }
     else
     {
-        phi_f2 += (arg0->p3[1] * arg1->m[2][0]);
+        phi_f2 += (bbox->Bounds.zmax * arg1->m[2][0]);
     }
 
     return phi_f2;
@@ -5454,7 +5454,7 @@ f32 chrpropSumMatrixNegX(struct modeldata_unk_pos *arg0, Mtxf *arg1)
 /**
  * Address 0x7F03E9BC.
 */
-f32 chrpropSumMatrixPosY(struct modeldata_unk_pos *arg0, Mtxf *arg1)
+f32 chrpropSumMatrixPosY(struct ModelRoData_BoundingBoxRecord *bbox, Mtxf *arg1)
 {
     f32 phi_f2;
 
@@ -5462,29 +5462,29 @@ f32 chrpropSumMatrixPosY(struct modeldata_unk_pos *arg0, Mtxf *arg1)
 
     if (arg1->m[0][1] >= 0.0f)
     {
-        phi_f2 += (arg0->p1[0] * arg1->m[0][1]);
+        phi_f2 += (bbox->Bounds.xmin * arg1->m[0][1]);
     }
     else
     {
-        phi_f2 += (arg0->p1[1] * arg1->m[0][1]);
+        phi_f2 += (bbox->Bounds.xmax * arg1->m[0][1]);
     }
 
     if (arg1->m[1][1] >= 0.0f)
     {
-        phi_f2 += (arg0->p2[0] * arg1->m[1][1]);
+        phi_f2 += (bbox->Bounds.ymin * arg1->m[1][1]);
     }
     else
     {
-        phi_f2 += (arg0->p2[1] * arg1->m[1][1]);
+        phi_f2 += (bbox->Bounds.ymax * arg1->m[1][1]);
     }
 
     if (arg1->m[2][1] >= 0.0f)
     {
-        phi_f2 += (arg0->p3[0] * arg1->m[2][1]);
+        phi_f2 += (bbox->Bounds.zmin * arg1->m[2][1]);
     }
     else
     {
-        phi_f2 += (arg0->p3[1] * arg1->m[2][1]);
+        phi_f2 += (bbox->Bounds.zmax * arg1->m[2][1]);
     }
 
     return phi_f2;
@@ -5495,7 +5495,7 @@ f32 chrpropSumMatrixPosY(struct modeldata_unk_pos *arg0, Mtxf *arg1)
 /**
  * Address 0x7F03EA5C.
 */
-f32 chrpropSumMatrixNegY(struct modeldata_unk_pos *arg0, Mtxf *arg1)
+f32 chrpropSumMatrixNegY(struct ModelRoData_BoundingBoxRecord *bbox, Mtxf *arg1)
 {
     f32 phi_f2;
 
@@ -5503,29 +5503,29 @@ f32 chrpropSumMatrixNegY(struct modeldata_unk_pos *arg0, Mtxf *arg1)
 
     if (arg1->m[0][1] <= 0.0f)
     {
-        phi_f2 += (arg0->p1[0] * arg1->m[0][1]);
+        phi_f2 += (bbox->Bounds.xmin * arg1->m[0][1]);
     }
     else
     {
-        phi_f2 += (arg0->p1[1] * arg1->m[0][1]);
+        phi_f2 += (bbox->Bounds.xmax * arg1->m[0][1]);
     }
 
     if (arg1->m[1][1] <= 0.0f)
     {
-        phi_f2 += (arg0->p2[0] * arg1->m[1][1]);
+        phi_f2 += (bbox->Bounds.ymin * arg1->m[1][1]);
     }
     else
     {
-        phi_f2 += (arg0->p2[1] * arg1->m[1][1]);
+        phi_f2 += (bbox->Bounds.ymax * arg1->m[1][1]);
     }
 
     if (arg1->m[2][1] <= 0.0f)
     {
-        phi_f2 += (arg0->p3[0] * arg1->m[2][1]);
+        phi_f2 += (bbox->Bounds.zmin * arg1->m[2][1]);
     }
     else
     {
-        phi_f2 += (arg0->p3[1] * arg1->m[2][1]);
+        phi_f2 += (bbox->Bounds.zmax * arg1->m[2][1]);
     }
 
     return phi_f2;
@@ -5536,7 +5536,7 @@ f32 chrpropSumMatrixNegY(struct modeldata_unk_pos *arg0, Mtxf *arg1)
 /**
  * Address 0x7F03EAFC.
 */
-f32 chrpropSumMatrixPosZ(struct modeldata_unk_pos *arg0, Mtxf *arg1)
+f32 chrpropSumMatrixPosZ(struct ModelRoData_BoundingBoxRecord *bbox, Mtxf *arg1)
 {
     f32 phi_f2;
 
@@ -5544,29 +5544,29 @@ f32 chrpropSumMatrixPosZ(struct modeldata_unk_pos *arg0, Mtxf *arg1)
 
     if (arg1->m[0][2] >= 0.0f)
     {
-        phi_f2 += (arg0->p1[0] * arg1->m[0][2]);
+        phi_f2 += (bbox->Bounds.xmin * arg1->m[0][2]);
     }
     else
     {
-        phi_f2 += (arg0->p1[1] * arg1->m[0][2]);
+        phi_f2 += (bbox->Bounds.xmax * arg1->m[0][2]);
     }
 
     if (arg1->m[1][2] >= 0.0f)
     {
-        phi_f2 += (arg0->p2[0] * arg1->m[1][2]);
+        phi_f2 += (bbox->Bounds.ymin * arg1->m[1][2]);
     }
     else
     {
-        phi_f2 += (arg0->p2[1] * arg1->m[1][2]);
+        phi_f2 += (bbox->Bounds.ymax * arg1->m[1][2]);
     }
 
     if (arg1->m[2][2] >= 0.0f)
     {
-        phi_f2 += (arg0->p3[0] * arg1->m[2][2]);
+        phi_f2 += (bbox->Bounds.zmin * arg1->m[2][2]);
     }
     else
     {
-        phi_f2 += (arg0->p3[1] * arg1->m[2][2]);
+        phi_f2 += (bbox->Bounds.zmax * arg1->m[2][2]);
     }
 
     return phi_f2;
@@ -5577,7 +5577,7 @@ f32 chrpropSumMatrixPosZ(struct modeldata_unk_pos *arg0, Mtxf *arg1)
 /**
  * Address 0x7F03EB9C.
 */
-f32 chrpropSumMatrixNegZ(struct modeldata_unk_pos *arg0, Mtxf *arg1)
+f32 chrpropSumMatrixNegZ(struct ModelRoData_BoundingBoxRecord *bbox, Mtxf *arg1)
 {
     f32 phi_f2;
 
@@ -5585,29 +5585,29 @@ f32 chrpropSumMatrixNegZ(struct modeldata_unk_pos *arg0, Mtxf *arg1)
 
     if (arg1->m[0][2] <= 0.0f)
     {
-        phi_f2 += (arg0->p1[0] * arg1->m[0][2]);
+        phi_f2 += (bbox->Bounds.xmin * arg1->m[0][2]);
     }
     else
     {
-        phi_f2 += (arg0->p1[1] * arg1->m[0][2]);
+        phi_f2 += (bbox->Bounds.xmax * arg1->m[0][2]);
     }
 
     if (arg1->m[1][2] <= 0.0f)
     {
-        phi_f2 += (arg0->p2[0] * arg1->m[1][2]);
+        phi_f2 += (bbox->Bounds.ymin * arg1->m[1][2]);
     }
     else
     {
-        phi_f2 += (arg0->p2[1] * arg1->m[1][2]);
+        phi_f2 += (bbox->Bounds.ymax * arg1->m[1][2]);
     }
 
     if (arg1->m[2][2] <= 0.0f)
     {
-        phi_f2 += (arg0->p3[0] * arg1->m[2][2]);
+        phi_f2 += (bbox->Bounds.zmin * arg1->m[2][2]);
     }
     else
     {
-        phi_f2 += (arg0->p3[1] * arg1->m[2][2]);
+        phi_f2 += (bbox->Bounds.zmax * arg1->m[2][2]);
     }
 
     return phi_f2;
@@ -5620,33 +5620,33 @@ f32 chrpropSumMatrixNegZ(struct modeldata_unk_pos *arg0, Mtxf *arg1)
  * Unreferenced.
  * 0x7F03EC3C.
 */
-void sub_GAME_7F03EC3C(struct modeldata_unk_pos *arg0, Mtxf *arg1, struct coord3d *arg2)
+void sub_GAME_7F03EC3C(struct ModelRoData_BoundingBoxRecord *bbox, Mtxf *arg1, struct coord3d *arg2)
 {
     if (arg1->m[0][2] <= 0.0f)
     {
-        arg2->f[0] = arg0->p1[0];
+        arg2->f[0] = bbox->Bounds.xmin;
     }
     else
     {
-        arg2->f[0] = arg0->p1[1];
+        arg2->f[0] = bbox->Bounds.xmax;
     }
 
     if (arg1->m[1][2] <= 0.0f)
     {
-        arg2->f[1] = arg0->p2[0];
+        arg2->f[1] = bbox->Bounds.ymin;
     }
     else
     {
-        arg2->f[1] = arg0->p2[1];
+        arg2->f[1] = bbox->Bounds.ymax;
     }
 
     if (arg1->m[2][2] <= 0.0f)
     {
-        arg2->f[2] = arg0->p3[0];
+        arg2->f[2] = bbox->Bounds.zmin;
     }
     else
     {
-        arg2->f[2] = arg0->p3[1];
+        arg2->f[2] = bbox->Bounds.zmax;
     }
 }
 
@@ -6246,9 +6246,9 @@ glabel sub_GAME_7F03ECC0
 
 
 
-void sub_GAME_7F03F540(struct modeldata_unk_pos* arg0, Mtxf* arg1, s32* arg2, struct collision_data* arg3)
+void sub_GAME_7F03F540(struct ModelRoData_BoundingBoxRecord *bbox, Mtxf* arg1, s32* arg2, struct collision_data* arg3)
 {
-    sub_GAME_7F03ECC0(arg0->p1[0], arg0->p1[1], arg0->p2[0], arg0->p2[1], arg0->p3[0], arg0->p3[1], arg1, arg2, arg3);
+    sub_GAME_7F03ECC0(bbox->Bounds.xmin, bbox->Bounds.xmax, bbox->Bounds.ymin, bbox->Bounds.ymax, bbox->Bounds.zmin, bbox->Bounds.zmax, arg1, arg2, arg3);
 }
 
 

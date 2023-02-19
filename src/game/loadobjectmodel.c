@@ -242,7 +242,7 @@ void setupUpdateObjectRoomPosition(ObjectRecord *obj)
     PropRecord *temp_s1;
     struct coord3d sp40;
     struct coord3d sp34;
-    struct modeldata_unk_pos *sp30;
+    struct ModelRoData_BoundingBoxRecord *sp30;
     f32 phi_f20;
 
     temp_s1 = obj->prop;

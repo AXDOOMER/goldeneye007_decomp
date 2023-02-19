@@ -1408,13 +1408,6 @@ typedef union
             f32     unk5c;
         };
 
-        struct modeldata_unk_pos {
-            s32 unk00;
-            f32 p1[2];
-            f32 p2[2];
-            f32 p3[2];
-        };
-
         /**
          * I beleve that "datas" is actually " struct modeldata_root" and that 
          * unk1c is the model node data array
@@ -2837,7 +2830,7 @@ typedef union
 
         Vertex*            unkcc; /*0xcc*/
 
-        // maybe struct modeldata_unk_pos *
+        // maybe struct ModelRoData_BoundingBoxRecord *
         u32 unkd0;
 
         u32                unkd4;

@@ -1058,7 +1058,7 @@ s32 objGetDestroyedLevel(ObjectRecord *obj)
 }
 
 
-ModelRoData_BoundingBoxRecord *sub_GAME_7F03FFF8(ModelFileHeader *obj)
+ModelRoData_BoundingBoxRecord *chrobjGetBboxFromObjFile(ModelFileHeader *obj)
 {
     ModelNode *mdlnext;
 
@@ -1090,9 +1090,9 @@ ModelRoData_BoundingBoxRecord *sub_GAME_7F03FFF8(ModelFileHeader *obj)
 }
 
 
-struct modeldata_unk_pos * sub_GAME_7F040078(ObjectRecord *arg0)
+struct ModelRoData_BoundingBoxRecord* sub_GAME_7F040078(ObjectRecord *arg0)
 {
-    return (struct modeldata_unk_pos *)sub_GAME_7F03FFF8(arg0->model->obj);
+    return (struct ModelRoData_BoundingBoxRecord *)chrobjGetBboxFromObjFile(arg0->model->obj);
 }
 
 
@@ -1303,18 +1303,18 @@ void sub_GAME_7F040384(rgba_s32* arg0, s32 arg1, rgba_f32* arg2)
 */
 void chrobjCollisionRelated(ObjectRecord *obj)
 {
-    struct modeldata_unk_pos *sp64;
+    struct ModelRoData_BoundingBoxRecord *bbox;
     Mtxf sp24;
 
     if (obj->ptr_allocated_collisiondata_block != NULL)
     {
-        sp64 = sub_GAME_7F040078(obj);
+        bbox = sub_GAME_7F040078(obj);
         matrix_4x4_copy(&obj->mtx, &sp24);
         matrix_4x4_set_position(obj->runtime_pos.f, &sp24);
-        sub_GAME_7F03F540(sp64, &sp24, &obj->ptr_allocated_collisiondata_block->unk04, obj->ptr_allocated_collisiondata_block);
+        sub_GAME_7F03F540(bbox, &sp24, &obj->ptr_allocated_collisiondata_block->unk04, obj->ptr_allocated_collisiondata_block);
         
-        obj->ptr_allocated_collisiondata_block->unk48 = obj->runtime_pos.f[1] + chrpropSumMatrixPosY(sp64, &sp24);
-        obj->ptr_allocated_collisiondata_block->unk44 = obj->runtime_pos.f[1] + chrpropSumMatrixNegY(sp64, &sp24);
+        obj->ptr_allocated_collisiondata_block->unk48 = obj->runtime_pos.f[1] + chrpropSumMatrixPosY(bbox, &sp24);
+        obj->ptr_allocated_collisiondata_block->unk44 = obj->runtime_pos.f[1] + chrpropSumMatrixNegY(bbox, &sp24);
         
         if (obj->type == PROPDEF_AIRCRAFT)
         {
@@ -1447,7 +1447,7 @@ void sub_GAME_7F040754(ObjectRecord* obj, coord3d* pos, Mtxf* matrix, StandTile*
 void sub_GAME_7F0407F4(ObjectRecord* obj, coord3d* pos, Mtxf* matrix, StandTile* stan)
 {
     u32 a; // Adds 4 bytes to the stack so it matches. Could be anything 4 bytes long.
-    struct ModelRoData_BoundingBoxRecord *modelunk = sub_GAME_7F03FFF8(obj->model->obj);
+    struct ModelRoData_BoundingBoxRecord *modelunk = chrobjGetBboxFromObjFile(obj->model->obj);
 
     pos->y = stanGetPositionYValue(stan, pos->x, pos->z) + 4.0f;
     pos->y = pos->y - chrpropSumMatrixPosY(modelunk, matrix);
@@ -1468,7 +1468,7 @@ void sub_GAME_7F04088C(ObjectRecord *baseobj, PadRecord *pad, Mtxf *matrix, Stan
     StandTile *mStan;
     Mtxf mtxcopy;
 
-    modelBoundingBox = sub_GAME_7F03FFF8(baseobj->model->obj);
+    modelBoundingBox = chrobjGetBboxFromObjFile(baseobj->model->obj);
     xmax = chrpropBBOXGetYmin(modelBoundingBox);
     ymin = chrpropBBOXGetYmax(modelBoundingBox);
     mStan = stan;
@@ -1554,7 +1554,7 @@ void sub_GAME_7F040BA0(ObjectRecord *obj, coord3d *pos, Mtxf *arg2, StandTile *a
     Mtxf sp6C;
     Mtxf sp2C;
 
-    spBC = chrpropBBOXGetZmin(sub_GAME_7F03FFF8(obj->model->obj));
+    spBC = chrpropBBOXGetZmin(chrobjGetBboxFromObjFile(obj->model->obj));
     spAC = arg3;
     sp6C_ptr = &sp6C;
 
@@ -4545,7 +4545,7 @@ void sub_GAME_7F0439B8(ObjectRecord* arg0, coord3d* arg1, StandTile* arg2, coord
     matrix_scalar_multiply(arg0->model->scale, sp28.m[0]);
     sub_GAME_7F040754(arg0, arg1, &sp28, arg2);
 
-    temp_f0 = chrpropBBOXGetYmin(sub_GAME_7F03FFF8(arg0->model->obj));
+    temp_f0 = chrpropBBOXGetYmin(chrobjGetBboxFromObjFile(arg0->model->obj));
 
     arg0->runtime_pos.f[0] -= temp_f0 * arg0->mtx.m[1][0];
     arg0->runtime_pos.f[1] -= temp_f0 * arg0->mtx.m[1][1];
@@ -25869,7 +25869,7 @@ glabel sub_GAME_7F04B610
 /* 0803FC 7F04B8CC 8FC20014 */  lw    $v0, 0x14($fp)
 /* 080400 7F04B8D0 C4440014 */  lwc1  $f4, 0x14($v0)
 /* 080404 7F04B8D4 8C440008 */  lw    $a0, 8($v0)
-/* 080408 7F04B8D8 0FC0FFFE */  jal   sub_GAME_7F03FFF8
+/* 080408 7F04B8D8 0FC0FFFE */  jal   chrobjGetBboxFromObjFile
 /* 08040C 7F04B8DC E7A4005C */   swc1  $f4, 0x5c($sp)
 /* 080410 7F04B8E0 00408025 */  move  $s0, $v0
 /* 080414 7F04B8E4 0FC0FA19 */  jal   chrpropBBOXGetYmin
@@ -26361,7 +26361,7 @@ glabel sub_GAME_7F04B610
 /* 07E4B0 7F04BAC0 8FC20014 */  lw    $v0, 0x14($fp)
 /* 07E4B4 7F04BAC4 C4440014 */  lwc1  $f4, 0x14($v0)
 /* 07E4B8 7F04BAC8 8C440008 */  lw    $a0, 8($v0)
-/* 07E4BC 7F04BACC 0FC1002E */  jal   sub_GAME_7F03FFF8
+/* 07E4BC 7F04BACC 0FC1002E */  jal   chrobjGetBboxFromObjFile
 /* 07E4C0 7F04BAD0 E7A4005C */   swc1  $f4, 0x5c($sp)
 /* 07E4C4 7F04BAD4 00408025 */  move  $s0, $v0
 /* 07E4C8 7F04BAD8 0FC0FA49 */  jal   chrpropBBOXGetYmin
@@ -28283,18 +28283,18 @@ bool sub_GAME_7F04D9B0(Model *model, ModelNode *nodearg, coord3d *arg2, coord3d 
 void sub_GAME_7F04DCB4(ObjectRecord* obj)
 {
     PropRecord* prop;
-    struct modeldata_unk_pos* sp38;
+    struct ModelRoData_BoundingBoxRecord *bbox;
 
     prop = obj->prop;
-    sp38 = sub_GAME_7F040078(obj);
+    bbox = sub_GAME_7F040078(obj);
     sub_GAME_7F0A0CCC(prop, FALSE);
     sub_GAME_7F0A0CCC(prop, TRUE);
 
     sub_GAME_7F0A1DA0(&obj->runtime_pos.f[0],
         &obj->mtx.m[0][0], &obj->mtx.m[1][0], &obj->mtx.m[2][0],
-        sp38->p1[0], sp38->p1[1],
-        sp38->p2[0], sp38->p2[1],
-        sp38->p3[0], sp38->p3[1]);
+        bbox->Bounds.xmin, bbox->Bounds.xmax,
+        bbox->Bounds.ymin, bbox->Bounds.ymax,
+        bbox->Bounds.zmin, bbox->Bounds.zmax);
 
     obj->runtime_bitflags |= RUNTIMEBITFLAG_REMOVE;
     obj->state |= PROPSTATE_DESTROYED;
@@ -29531,7 +29531,7 @@ void sub_GAME_7F04E9BC(PropRecord* prop, struct ShotData* shotdata)
     ObjectRecord *obj;
     f32 tmp;
     Model *model;
-    struct modeldata_unk_pos *bbox;
+    struct ModelRoData_BoundingBoxRecord *bbox;
 
     obj = prop->obj;
     model = obj->model;
