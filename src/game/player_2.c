@@ -144,7 +144,7 @@ void initBONDdataforPlayer(s32 player_num)
     g_playerPointers[player_num]->field_84 = 0.0f;
     g_playerPointers[player_num]->field_88 = 0.0f;
     g_playerPointers[player_num]->field_8C = 0;
-    g_playerPointers[player_num]->field_90 = 0.0f;
+    g_playerPointers[player_num]->vertical_bounce_adjust = 0.0f;
     g_playerPointers[player_num]->field_94 = 0;
     g_playerPointers[player_num]->field_98 = 0.0f;
     g_playerPointers[player_num]->swaytarget = 0.0f;

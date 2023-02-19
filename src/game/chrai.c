@@ -849,7 +849,7 @@ extern PadRecord * dword_CODE_bss_800799F8;
 extern CutsceneRecord *gBondViewCutscene;
 extern enum CAMERAMODE dword_CODE_bss_80079A18;
 extern s32 dword_CODE_bss_80079A1C;
-extern vec3d flt_CODE_bss_80079990;
+extern vec3d g_ForceBondMoveOffset;
 //CODE.bss:80079A00
 extern f32 flt_CODE_bss_80079A00;
 //CODE.bss:80079A04
@@ -4305,9 +4305,9 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     g_Vars.currentplayer->bondforcespeed.z = (s8)ai->val[2];
                     */
                     AIRecord *ai            = AiListp + Offset;
-                    flt_CODE_bss_80079990.x = (s8)ai->val[0];
-                    flt_CODE_bss_80079990.y = 0;
-                    flt_CODE_bss_80079990.z = (s8)ai->val[1];
+                    g_ForceBondMoveOffset.x = (s8)ai->val[0];
+                    g_ForceBondMoveOffset.y = 0;
+                    g_ForceBondMoveOffset.z = (s8)ai->val[1];
                     Offset += AI_BondSetLockedVelocity_LENGTH;
                     break;
                 }

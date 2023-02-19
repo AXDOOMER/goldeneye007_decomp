@@ -10916,9 +10916,9 @@ _AI_CMD(
 _AI_CMD(
     {
         AIRecord * ai = AiListp + Offset;
-        flt_CODE_bss_80079990.x = (s8) ai->val[0];
-        flt_CODE_bss_80079990.y = 0;
-        flt_CODE_bss_80079990.z = (s8) ai->val[1];
+        g_ForceBondMoveOffset.x = (s8) ai->val[0];
+        g_ForceBondMoveOffset.y = 0;
+        g_ForceBondMoveOffset.z = (s8) ai->val[1];
         Offset += CAT(CAT(AI_, CMDNAME), _LENGTH);
         break;
     })

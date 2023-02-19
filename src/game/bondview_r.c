@@ -129,9 +129,9 @@ void bondviewLoadSetupIntroSection(void)
     camera_80036438 = 0;
     D_8003643C = 0;
     D_80036440 = NULL;
-    flt_CODE_bss_80079990.f[0] = FLOAT_INIT;
-    flt_CODE_bss_80079990.f[1] = FLOAT_INIT;
-    flt_CODE_bss_80079990.f[2] = FLOAT_INIT;
+    g_ForceBondMoveOffset.f[0] = FLOAT_INIT;
+    g_ForceBondMoveOffset.f[1] = FLOAT_INIT;
+    g_ForceBondMoveOffset.f[2] = FLOAT_INIT;
     g_SurroundBondWithExplosionsFlag = 0;
     startpadcount = 0;
     in_tank_flag = 0;

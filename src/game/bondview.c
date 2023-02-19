@@ -167,7 +167,7 @@ f32 flt_CODE_bss_80079988;
 f32 flt_CODE_bss_8007998C;
 
 //CODE.bss:80079990
-vec3d flt_CODE_bss_80079990;
+vec3d g_ForceBondMoveOffset;
 // //CODE.bss:80079994
 // f32 flt_CODE_bss_80079994;
 // //CODE.bss:80079998
@@ -586,17 +586,29 @@ struct HealthDamageType g_HealthDamageTypes[8] = {
 struct coord3d D_800367F4 = { 0 };
 
 
-//D:80036800
-struct coord3d D_80036800 = { 0 };
+/**
+ * struct player property `pos` .
+ * US address 80036800.
+ */
+struct coord3d g_DefaultFrozenPlayerPos = { 0 };
 
-//D:8003680C
-struct coord3d D_8003680C = { 0, 0, 1.0f };
+/**
+ * struct player property `pos2`.
+ * US address 8003680C.
+ */
+struct coord3d g_DefaultFrozenPlayerPos2 = { 0, 0, 1.0f };
 
-//D:80036818
-struct coord3d D_80036818 = { 0, 1.0f, 0 };
+/**
+ * struct player property `offset`.
+ * US address 80036818.
+ */
+struct coord3d g_DefaultFrozenPlayerOffset = { 0, 1.0f, 0 };
 
-//D:80036824
-struct coord3d D_80036824 = { 0 };
+/**
+ * struct player property `offset`.
+ * US address 80036824.
+ */
+struct coord3d g_DefaultFrozenMoveOffset = { 0 };
 
 //D:80036830
 s32 D_80036830 = 0;
@@ -1392,7 +1404,7 @@ void init_player_BONDdata(void)
     g_CurrentPlayer->field_84 = 0.0f;
     g_CurrentPlayer->field_88 = 0.0f;
     g_CurrentPlayer->field_8C = 0;
-    g_CurrentPlayer->field_90 = 0.0f;
+    g_CurrentPlayer->vertical_bounce_adjust = 0.0f;
     g_CurrentPlayer->field_94 = 0;
     g_CurrentPlayer->field_98 = 0.0f;
     g_CurrentPlayer->swaytarget = 0.0f;
@@ -1557,7 +1569,7 @@ void currentPlayerSetField00(s32 value) {
  * 
  * Address 0x7F079A60.
  */
-void bondviewUpdateCurrentPlayerPosition(coord3d *pos, coord3d *pos2, coord3d *offset, StandTile *tile, coord3d *arg4)
+void bondviewSetCurrentPlayerPosition(coord3d *pos, coord3d *pos2, coord3d *offset, StandTile *tile, coord3d *stan_walk_start)
 {
     StandTile *sp34;
     StandTile *sp30;
@@ -1575,7 +1587,7 @@ void bondviewUpdateCurrentPlayerPosition(coord3d *pos, coord3d *pos2, coord3d *o
         || (g_CurrentPlayer->room_pointer == NULL))
     {
         sp34 = tile;
-        if (walkTilesBetweenPoints_NoCallback((StandTile **) &sp34, arg4->f[0], arg4->f[2], pos->f[0], pos->f[2]))
+        if (walkTilesBetweenPoints_NoCallback((StandTile **) &sp34, stan_walk_start->f[0], stan_walk_start->f[2], pos->f[0], pos->f[2]))
         {
             // @bug ...? This is either a bug or removed code, this function has no side effects.
             // Return value should used to check if point is safe for stan.
@@ -6305,6 +6317,12 @@ s32 bondviewTryEdgeMovePlayerCollision(struct coord3d *prior_next_pos, struct co
         norm_collision_edge.f[0] *= tempf;
         norm_collision_edge.f[2] *= tempf;
 
+        /**
+         * Normalizing gives you the direction vector of the wall, so the dot product in the assignment to
+         * tempf gives you the distance moved along the direction of the wall.
+         * Then try_next_pos is simply the point of the collision with the wall, plus the
+         * length moved along the wall times the direction vector of the wall.
+         **/
         tempf = (delta_pos.f[0] * norm_collision_edge.f[0]) + (delta_pos.f[2] * norm_collision_edge.f[2]);
         try_next_pos.f[0] = g_CurrentPlayer->field_488.collision_position.f[0] + (tempf * norm_collision_edge.f[0]);
         try_next_pos.f[2] = g_CurrentPlayer->field_488.collision_position.f[2] + (tempf * norm_collision_edge.f[2]);
@@ -9205,7 +9223,7 @@ f32 bondviewYPositionRelated(StandTile *arg0, f32 arg1, f32 arg2)
  * US Address 0x7F080DF8.
  * EU Address 0x7F080E9C.
  */
-void bondviewUpdatePlayerClipping(s32 use_stanHeight, f32 stanHeight_offset)
+void bondviewUpdatePlayerY(s32 use_stanHeight, f32 stanHeight_offset)
 {
     s32 i; // sp6c
     f32 unused;
@@ -9265,7 +9283,7 @@ void bondviewUpdatePlayerClipping(s32 use_stanHeight, f32 stanHeight_offset)
                 g_CurrentPlayer->field_488.collision_position.f[0],
                 g_CurrentPlayer->field_488.collision_position.f[2]);
 
-            // test if y position+height is under stan height
+            // Another error checking block, it seems this condition is almost never triggered in the game.
             if (sub_GAME_7F0B26B8(
                 &stan,
                 g_CurrentPlayer->field_488.collision_position.f[0],
@@ -9309,7 +9327,7 @@ void bondviewUpdatePlayerClipping(s32 use_stanHeight, f32 stanHeight_offset)
             new_field_7c = g_CurrentPlayer->field_7C;
             new_field_70 = g_CurrentPlayer->field_70;
             
-            if ((get_debug_fast_bond_flag() != 0) && (flt_CODE_bss_80079990.f[0] == 0.0f) && (flt_CODE_bss_80079990.f[2] == 0.0f))
+            if ((get_debug_fast_bond_flag() != 0) && (g_ForceBondMoveOffset.f[0] == 0.0f) && (g_ForceBondMoveOffset.f[2] == 0.0f))
             {
                 sp40 = 1.388889f;
             }
@@ -9345,12 +9363,12 @@ void bondviewUpdatePlayerClipping(s32 use_stanHeight, f32 stanHeight_offset)
             if (g_CurrentPlayer->field_7C < -13.333333f)
             {
                 g_CurrentPlayer->field_8C = CLIPPING_FIELD8C_VALUE;
-                g_CurrentPlayer->field_90 = -90.0f;
+                g_CurrentPlayer->vertical_bounce_adjust = -90.0f;
             }
             else if (g_CurrentPlayer->field_7C < -5.0f)
             {
                 g_CurrentPlayer->field_8C = CLIPPING_FIELD8C_VALUE;
-                g_CurrentPlayer->field_90 = ((-5.0f - g_CurrentPlayer->field_7C) * -90.0f) / 8.333333f;
+                g_CurrentPlayer->vertical_bounce_adjust = ((-5.0f - g_CurrentPlayer->field_7C) * -90.0f) / 8.333333f;
             }
 
             g_CurrentPlayer->field_7C = 0.0f;
@@ -9375,22 +9393,22 @@ void bondviewUpdatePlayerClipping(s32 use_stanHeight, f32 stanHeight_offset)
     {
         if (g_CurrentPlayer->field_8C > 0)
         {
-            g_CurrentPlayer->field_84 = (g_CurrentPlayer->field_84 * CLIPPING_CLOCK_FACTOR) + g_CurrentPlayer->field_90;
+            g_CurrentPlayer->field_84 = (g_CurrentPlayer->field_84 * CLIPPING_CLOCK_FACTOR) + g_CurrentPlayer->vertical_bounce_adjust;
             g_CurrentPlayer->field_8C += -1;
         }
         else
         {
-            if (g_CurrentPlayer->field_90 < 0.0f)
+            if (g_CurrentPlayer->vertical_bounce_adjust < 0.0f)
             {
-                g_CurrentPlayer->field_90 -= CLIPPING_FIELD90_VALUE;
+                g_CurrentPlayer->vertical_bounce_adjust -= CLIPPING_FIELD90_VALUE;
                 
-                if (0.0f <= g_CurrentPlayer->field_90)
+                if (0.0f <= g_CurrentPlayer->vertical_bounce_adjust)
                 {
-                    g_CurrentPlayer->field_90 = 0.0f;
+                    g_CurrentPlayer->vertical_bounce_adjust = 0.0f;
                 }
             }
 
-            g_CurrentPlayer->field_84 = (g_CurrentPlayer->field_84 * CLIPPING_CLOCK_FACTOR) + g_CurrentPlayer->field_90;
+            g_CurrentPlayer->field_84 = (g_CurrentPlayer->field_84 * CLIPPING_CLOCK_FACTOR) + g_CurrentPlayer->vertical_bounce_adjust;
         }
     }
 
@@ -11171,12 +11189,12 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     f32 sp3A0;
     s32 i;
     f32 maxspeed;
-    s32 sp394;
+    s32 use_stanHeight;
     f32 sp390;
 
     sp3AC = D_800367F4;
 
-    sp394 = 0;
+    use_stanHeight = 0;
     maxspeed = 0.0f;
     sp390 = 0.0f;
 
@@ -12084,7 +12102,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         
         if (stanGetLocusCount(&curLocus) != 0)
         {
-            sp394 = 1;
+            use_stanHeight = 1;
         }
 
         stanTileDistanceRelated(
@@ -12096,7 +12114,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
         if (stanGetLocusCount(&curLocus) != 0)
         {
-            sp394 = 1;
+            use_stanHeight = 1;
         }
 
         stanTileDistanceRelated(
@@ -12113,7 +12131,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         
         if (stanGetLocusCount(&curLocus))
         {
-            sp394 = 1;
+            use_stanHeight = 1;
             stanGetMoveBondCollisionTiles(&sp174, &sp170, &bondCollision);
 
             if (g_CurrentPlayer->stanHeight <= bondCollision.sp19C.f[1])
@@ -12415,7 +12433,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         }
     }
 
-    bondviewUpdatePlayerClipping(sp394, sp390);
+    bondviewUpdatePlayerY(use_stanHeight, sp390);
     bondviewUpdatePlayerCollisionPositionFields();
     bondviewUpdatePlayerCollisionBounds();
     if (get_debug_man_pos_flag() != 0)
@@ -12439,17 +12457,17 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 */
 void bondviewFrozenMoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 {
-    struct coord3d sp64;
-    struct coord3d sp58;
-    struct coord3d sp4C;
-    struct coord3d sp40;
-    struct StandTile *sp3C;
-    struct coord3d sp30;
+    struct coord3d property_pos;
+    struct coord3d property_pos2;
+    struct coord3d property_offset;
+    struct coord3d offset;
+    struct StandTile *room_pointer_tile;
+    struct coord3d stan_walk_start;
 
-    sp64 = D_80036800;
-    sp58 = D_8003680C;
-    sp4C = D_80036818;
-    sp40 = D_80036824;
+    property_pos = g_DefaultFrozenPlayerPos;
+    property_pos2 = g_DefaultFrozenPlayerPos2;
+    property_offset = g_DefaultFrozenPlayerOffset;
+    offset = g_DefaultFrozenMoveOffset;
     
     bondviewPlayerTickDamageAndHealth();
     bondviewPlayerTickExplode();
@@ -12457,17 +12475,17 @@ void bondviewFrozenMoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     bondviewApplyVertaTheta();
     bondviewMoveAnimationTick(0, 0, 0);
     
-    if ((flt_CODE_bss_80079990.f[0] != 0.0f) || (flt_CODE_bss_80079990.f[2] != 0.0f))
+    if ((g_ForceBondMoveOffset.f[0] != 0.0f) || (g_ForceBondMoveOffset.f[2] != 0.0f))
     {
-        sp40.f[0] += flt_CODE_bss_80079990.f[0] * g_GlobalTimerDelta;
-        sp40.f[2] += flt_CODE_bss_80079990.f[2] * g_GlobalTimerDelta;
+        offset.f[0] += g_ForceBondMoveOffset.f[0] * g_GlobalTimerDelta;
+        offset.f[2] += g_ForceBondMoveOffset.f[2] * g_GlobalTimerDelta;
     }
     
-    sp40.f[0] += ((g_CurrentPlayer->headpos[2] * g_CurrentPlayer->field_488.theta_transform.f[0]) - (g_CurrentPlayer->headpos[0] * g_CurrentPlayer->field_488.theta_transform.f[2])) * g_GlobalTimerDelta;
-    sp40.f[2] += ((g_CurrentPlayer->headpos[2] * g_CurrentPlayer->field_488.theta_transform.f[2]) + (g_CurrentPlayer->headpos[0] * g_CurrentPlayer->field_488.theta_transform.f[0])) * g_GlobalTimerDelta;
+    offset.f[0] += ((g_CurrentPlayer->headpos[2] * g_CurrentPlayer->field_488.theta_transform.f[0]) - (g_CurrentPlayer->headpos[0] * g_CurrentPlayer->field_488.theta_transform.f[2])) * g_GlobalTimerDelta;
+    offset.f[2] += ((g_CurrentPlayer->headpos[2] * g_CurrentPlayer->field_488.theta_transform.f[2]) + (g_CurrentPlayer->headpos[0] * g_CurrentPlayer->field_488.theta_transform.f[0])) * g_GlobalTimerDelta;
     
-    bondviewCalcUpdatePlayerCollision(&sp40, 1);
-    bondviewUpdatePlayerClipping(0, 0.0f);
+    bondviewCalcUpdatePlayerCollision(&offset, 1);
+    bondviewUpdatePlayerY(0, 0.0f);
     bondviewUpdatePlayerCollisionPositionFields();
     
     if ((g_CameraMode == CAMERAMODE_FP_NOINPUT) || (g_CameraMode == CAMERAMODE_FP) || (g_CameraMode == CAMERAMODE_UNK10))
@@ -12476,9 +12494,9 @@ void bondviewFrozenMoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         return;
     }
     
-    bondviewFrozenCameraTick(buttons, oldbuttons, &sp64, &sp58, &sp4C, &sp3C, &sp30);
+    bondviewFrozenCameraTick(buttons, oldbuttons, &property_pos, &property_pos2, &property_offset, &room_pointer_tile, &stan_walk_start);
     currentPlayerSetField00(1);
-    bondviewUpdateCurrentPlayerPosition(&sp64, &sp58, &sp4C, sp3C, &sp30);
+    bondviewSetCurrentPlayerPosition(&property_pos, &property_pos2, &property_offset, room_pointer_tile, &stan_walk_start);
 }
 
 

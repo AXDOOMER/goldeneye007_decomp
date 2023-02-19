@@ -404,9 +404,12 @@ struct player
 
   /**
    * Collision / clipping related.
+   * When Bond falls off a ladder or similar, will "overshoot" vertical default.
+   * Current offset is stored in this field.
+   * 
    * Offset 0x0090.
    */
-  /* 0x0090 */ f32 field_90;
+  /* 0x0090 */ f32 vertical_bounce_adjust;
   /* 0x0094 */ s32 field_94;
   /* 0x0098 */ f32 field_98;
   
@@ -2906,10 +2909,10 @@ D:800367ED                     .byte 0, 0, 0x14
 D:800367F0                     .word 0x32
 */
 
-extern struct coord3d D_80036800;
-extern struct coord3d D_8003680C;
-extern struct coord3d D_80036818;
-extern struct coord3d D_80036824;
+extern struct coord3d g_DefaultFrozenPlayerPos;
+extern struct coord3d g_DefaultFrozenPlayerPos2;
+extern struct coord3d g_DefaultFrozenPlayerOffset;
+extern struct coord3d g_DefaultFrozenMoveOffset;
 
 //D:80036830
 extern s32 D_80036830;
@@ -2986,7 +2989,7 @@ extern f32 D_80036AC0;
 extern f32 D_80036AC4;
 
 extern s32 startpadcount;
-extern vec3d flt_CODE_bss_80079990;
+extern vec3d g_ForceBondMoveOffset;
 extern s32 mission_timer;
 
 #if defined(VERSION_JP) || defined(VERSION_EU)
@@ -3065,7 +3068,7 @@ void bondviewSet3dCoord7F07CEB0(coord3d *arg0);
 f32 bondviewYPositionRelated(struct StandTile *arg0, f32 arg1, f32 arg2);
 f32 bondviewGetPlayerDuckingHeightRelated(struct player *player);
 void bondviewGetCollisionRadius(PropRecord* arg0, f32 *collision_radius, f32 *height, f32 *always_30);
-void bondviewUpdatePlayerClipping(s32 use_stanHeight, f32 stanHeight_offset);
+void bondviewUpdatePlayerY(s32 use_stanHeight, f32 stanHeight_offset);
 void currentPlayerSetFadeColour(s32 r, s32 g, s32 b, f32 frac);
 void currentPlayerSetFadeFrac(f32 maxfadetime, f32 frac);
 void set_BONDdata_autoaim_x(s32 param_1);
