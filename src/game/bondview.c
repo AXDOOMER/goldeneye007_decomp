@@ -730,7 +730,7 @@ void bondviewApplyVertaTheta(void);
 
 f32 bheadGetBreathingValue(void);
 void bondviewMoveAnimationTick(f32 speed, f32 speedforwards, f32 speedsideways);
-void bondviewCalcUpdatePlayerCollision(struct coord3d *offset, s32 arg1);
+void bondviewCalcUpdatePlayerCollision(struct coord3d *offset, s32 allow_scoot);
 f32 bondviewPauseAngleRelated(s32 arg0);
 void sub_GAME_7F07E010(f32 arg0);
 void sub_GAME_7F07E03C(f32 arg0);

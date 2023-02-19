@@ -163,6 +163,7 @@ s32 sub_GAME_7F0B1DDC(
 s32 sub_GAME_7F0B2110(StandTile *tile, struct StandTileLocusCallbackRecord*);
 s32 stanGetLocusField0(struct StandTileLocusCallbackRecord *arg0);
 s32 stanGetLocusCount(struct StandTileLocusCallbackRecord *arg0);
+s32 sub_GAME_7F0B260C(StandTile *tile, s32 index, f32 p_x, f32 p_z, s32 arg4, struct StandTileLocusCallbackRecord *arg5);
 
 // end forward declarations
 
@@ -4024,7 +4025,7 @@ glabel sub_GAME_7F0B1DDC
 
 
 s32 sub_GAME_7F0B20D0(StandTile **tileStack, f32 target_x, f32 target_z, f32 unknown) {
-    return sub_GAME_7F0B1DDC(tileStack, target_x, target_z, unknown, 0, 0, 0, 0);
+    return sub_GAME_7F0B1DDC(tileStack, target_x, target_z, unknown, NULL, NULL, NULL, NULL);
 }
 
 
@@ -4122,7 +4123,7 @@ s32 sub_GAME_7F0B21B0(StandTile **tileStack, f32 target_x, f32 target_z, f32 unk
     data.nearEdgeCount = 0;
 
     rtn = sub_GAME_7F0B1DDC(tileStack, target_x, target_z, unknown,
-        sub_GAME_7F0B2110, 0x0, incrNearEdgeCount, &data
+        sub_GAME_7F0B2110, NULL, incrNearEdgeCount, &data
     );
 
     *count_rtn = data.count;
@@ -4505,7 +4506,8 @@ glabel stanGetMoveBondCollisionTiles
 
 #ifdef NONMATCHING
 // Tests do appear to be lts
-s32 sub_GAME_7F0B260C(StandTile *tile, s32 index, f32 p_x,f32 p_z, void, f32 *rtn)
+
+s32 sub_GAME_7F0B260C(StandTile *tile, s32 index, f32 p_x, f32 p_z, s32 arg4, struct StandTileLocusCallbackRecord *arg5)
 {
     s32 nextIndex;
 
@@ -4577,52 +4579,19 @@ glabel sub_GAME_7F0B260C
 
 
 
-
-#ifdef NONMATCHING
-// We'll wait to decomp sub_GAME_7F0B260C properly, the reference to the f32 seems to be misbehaving and pointless.
-void sub_GAME_7F0B26B8(StandTile **tile, f32 target_x, f32 target_z, f32 b_z, f32 param_5)
+/**
+ * US address 7F0B26B8.
+*/
+s32 sub_GAME_7F0B26B8(StandTile **tile, f32 target_x, f32 target_z, f32 b_z, f32 param_5)
 {
-    f32 unk_float;
+    f32 data;
+
+    data = param_5 * level_scale;
     
-    unk_float = param_5 * level_scale;
-    
-    return sub_GAME_7F0B1DDC(
-        tile, target_x, target_z, b_z,
-        0x0, sub_GAME_7F0B260C, 0x0, &unk_float
-    );
+    /// TODO: Why is this cast wrong?
+
+    return sub_GAME_7F0B1DDC(tile, target_x, target_z, b_z, NULL, sub_GAME_7F0B260C, NULL, (struct StandTileLocusCallbackRecord*)&data);
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B26B8
-/* 0E71E8 7F0B26B8 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0E71EC 7F0B26BC 3C018004 */  lui   $at, %hi(level_scale)
-/* 0E71F0 7F0B26C0 C4260F44 */  lwc1  $f6, %lo(level_scale)($at)
-/* 0E71F4 7F0B26C4 C7A40040 */  lwc1  $f4, 0x40($sp)
-/* 0E71F8 7F0B26C8 44856000 */  mtc1  $a1, $f12
-/* 0E71FC 7F0B26CC 44867000 */  mtc1  $a2, $f14
-/* 0E7200 7F0B26D0 46062202 */  mul.s $f8, $f4, $f6
-/* 0E7204 7F0B26D4 3C0E7F0B */  lui   $t6, %hi(sub_GAME_7F0B260C) # $t6, 0x7f0b
-/* 0E7208 7F0B26D8 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0E720C 7F0B26DC 25CE260C */  addiu $t6, %lo(sub_GAME_7F0B260C) # addiu $t6, $t6, 0x260c
-/* 0E7210 7F0B26E0 27AF002C */  addiu $t7, $sp, 0x2c
-/* 0E7214 7F0B26E4 44056000 */  mfc1  $a1, $f12
-/* 0E7218 7F0B26E8 44067000 */  mfc1  $a2, $f14
-/* 0E721C 7F0B26EC AFA7003C */  sw    $a3, 0x3c($sp)
-/* 0E7220 7F0B26F0 E7A8002C */  swc1  $f8, 0x2c($sp)
-/* 0E7224 7F0B26F4 AFAF001C */  sw    $t7, 0x1c($sp)
-/* 0E7228 7F0B26F8 AFAE0014 */  sw    $t6, 0x14($sp)
-/* 0E722C 7F0B26FC AFA00010 */  sw    $zero, 0x10($sp)
-/* 0E7230 7F0B2700 0FC2C777 */  jal   sub_GAME_7F0B1DDC
-/* 0E7234 7F0B2704 AFA00018 */   sw    $zero, 0x18($sp)
-/* 0E7238 7F0B2708 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 0E723C 7F0B270C 27BD0030 */  addiu $sp, $sp, 0x30
-/* 0E7240 7F0B2710 03E00008 */  jr    $ra
-/* 0E7244 7F0B2714 00000000 */   nop   
-)
-#endif
-
 
 
 #ifdef NONMATCHING
