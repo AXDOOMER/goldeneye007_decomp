@@ -1769,7 +1769,7 @@ void sub_GAME_7F05EC1C(void)
         spC4 = temp_s0->unk14;
         bondviewUpdateGuardTankFlagsRelated(temp_s0->unkC, phi_f14, temp_s0, 0);
         temp_f14 = phi_f14;
-        if (sub_GAME_7F0B0E24(temp_f14,
+        if (stanTestLineUnobstructed(temp_f14,
                               &spC4,
                               temp_s0->unk8,
                               temp_s0->unk10,
@@ -1877,7 +1877,7 @@ glabel sub_GAME_7F05EC1C
 /* 093814 7F05ECE4 E7AE0018 */  swc1  $f14, 0x18($sp)
 /* 093818 7F05ECE8 E7B0001C */  swc1  $f16, 0x1c($sp)
 /* 09381C 7F05ECEC E7A80024 */  swc1  $f8, 0x24($sp)
-/* 093820 7F05ECF0 0FC2C389 */  jal   sub_GAME_7F0B0E24
+/* 093820 7F05ECF0 0FC2C389 */  jal   stanTestLineUnobstructed
 /* 093824 7F05ECF4 E7A60020 */   swc1  $f6, 0x20($sp)
 /* 093828 7F05ECF8 10400008 */  beqz  $v0, .L7F05ED1C
 /* 09382C 7F05ECFC 02002025 */   move  $a0, $s0

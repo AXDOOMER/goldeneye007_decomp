@@ -2450,7 +2450,7 @@ glabel chraiFistAttackHandler
 /* 070AF8 7F03BFC8 E7B80018 */  swc1  $f24, 0x18($sp)
 /* 070AFC 7F03BFCC AFB90014 */  sw    $t9, 0x14($sp)
 /* 070B00 7F03BFD0 E7B00024 */  swc1  $f16, 0x24($sp)
-/* 070B04 7F03BFD4 0FC2C389 */  jal   sub_GAME_7F0B0E24
+/* 070B04 7F03BFD4 0FC2C389 */  jal   stanTestLineUnobstructed
 /* 070B08 7F03BFD8 E7AA0010 */   swc1  $f10, 0x10($sp)
 /* 070B0C 7F03BFDC 10400027 */  beqz  $v0, .L7F03C07C
 /* 070B10 7F03BFE0 8FA80090 */   lw    $t0, 0x90($sp)
@@ -3884,7 +3884,7 @@ f32 sub_GAME_7F03D188(PropRecord *prop, coord3d *arg1, f32 *arg2, f32 *arg3, f32
             ducking_height_related = bondviewGetPlayerDuckingHeightRelated(g_CurrentPlayer);
             bondviewUpdateGuardTankFlagsRelated(playerprop, FALSE);
 
-            if ((sub_GAME_7F0B0E24(&stan, playerprop->pos.f[0], playerprop->pos.f[2], prop->pos.f[0], prop->pos.f[2], 0x13, ducking_height_related, ducking_height_related, 0.0f, 1.0f) != 0))
+            if ((stanTestLineUnobstructed(&stan, playerprop->pos.f[0], playerprop->pos.f[2], prop->pos.f[0], prop->pos.f[2], 0x13, ducking_height_related, ducking_height_related, 0.0f, 1.0f) != 0))
             {
                 if (stan == prop->stan)
                 {

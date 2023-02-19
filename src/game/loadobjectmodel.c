@@ -22,7 +22,7 @@ s32 sub_GAME_7F056850(PadRecord *arg0, StandTile *arg1, f32 arg2, PadRecord *arg
         return 0;
     }
     
-    if ((arg2 > 0.0f) && (sub_GAME_7F0B18B8(arg4, arg3->pos.f[0], arg3->pos.f[2], arg2, 0x1F, 0.0f, 1.0f) >= 0))
+    if ((arg2 > 0.0f) && (stanTestVolume(arg4, arg3->pos.f[0], arg3->pos.f[2], arg2, 0x1F, 0.0f, 1.0f) >= 0))
     {
         return 0;
     }

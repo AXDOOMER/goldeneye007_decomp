@@ -2001,7 +2001,7 @@ f32 chrlvPathingCollisionRelated(PropRecord *arg0, f32 arg1, f32 arg2, s32 objFl
     chrSetMoving(chr, 0);
     sub_GAME_7F0B1CC4();
 
-    if (sub_GAME_7F0B0E24(&stan, arg0->pos.f[0], arg0->pos.f[2], dest_x, dest_z, objFlags, unkHeight, unkA, 0.0f, 1.0f) != 0)
+    if (stanTestLineUnobstructed(&stan, arg0->pos.f[0], arg0->pos.f[2], dest_x, dest_z, objFlags, unkHeight, unkA, 0.0f, 1.0f) != 0)
     {
         ret = arg2;
     }
@@ -3638,7 +3638,7 @@ void chrlvTravelTickMagic(ChrRecord *self, struct waydata *arg1, f32 arg2, coord
         chrSetMoving(self, 0);
         
         if (
-            (sub_GAME_7F0B18B8(&arg4, arg3->f[0], arg3->f[2], self->chrwidth, 0x1F, 0.0f, 1.0f) < 0)
+            (stanTestVolume(&arg4, arg3->f[0], arg3->f[2], self->chrwidth, 0x1F, 0.0f, 1.0f) < 0)
             && sub_GAME_7F028510(arg3, arg4))
         {
             self_prop = self->prop;
@@ -4234,7 +4234,7 @@ s32 chrlvAttackRelated7F0292A8(ChrRecord *self, coord3d *arg1, StandTile *arg2)
             
             if (bondviewGetVisibleToGuardsFlag() != 0)
             {
-                if ((sub_GAME_7F0B0E24(&stan, arg1->x, arg1->f[2], sp3C->x, sp3C->f[2], 0x11B, arg1->f[1], arg1->f[1], sp3C->f[1], sp3C->f[1]) != 0) && (stan == sp40))
+                if ((stanTestLineUnobstructed(&stan, arg1->x, arg1->f[2], sp3C->x, sp3C->f[2], 0x11B, arg1->f[1], arg1->f[1], sp3C->f[1], sp3C->f[1]) != 0) && (stan == sp40))
                 {
                     setSeenBondTimeToNow(self);
                     ret = 1;
@@ -4245,14 +4245,14 @@ s32 chrlvAttackRelated7F0292A8(ChrRecord *self, coord3d *arg1, StandTile *arg2)
         }
         else if ((flags & 4) != 0)
         {
-            if ((sub_GAME_7F0B0E24(&stan, arg1->x, arg1->f[2], sp3C->x, sp3C->f[2], 0x117, arg1->f[1], arg1->f[1], sp3C->f[1], sp3C->f[1]) != 0) && (stan == sp40))
+            if ((stanTestLineUnobstructed(&stan, arg1->x, arg1->f[2], sp3C->x, sp3C->f[2], 0x117, arg1->f[1], arg1->f[1], sp3C->f[1], sp3C->f[1]) != 0) && (stan == sp40))
             {
                 ret = 1;
             }
         }
         else if ((flags & 8) != 0)
         {
-            if ((sub_GAME_7F0B0E24(&stan, arg1->x, arg1->f[2], sp3C->x, sp3C->f[2], 0x11F, arg1->f[1], arg1->f[1], sp3C->f[1], sp3C->f[1]) != 0) && (stan == sp40))
+            if ((stanTestLineUnobstructed(&stan, arg1->x, arg1->f[2], sp3C->x, sp3C->f[2], 0x11F, arg1->f[1], arg1->f[1], sp3C->f[1], sp3C->f[1]) != 0) && (stan == sp40))
             {
                 ret = 1;
             }
@@ -4289,7 +4289,7 @@ bool chrCanSeeBond(ChrRecord *self)
 
         mystan = myprop->stan;
 
-        if (sub_GAME_7F0B0E24(&mystan, myprop->pos.x, myprop->pos.z, bondprop->pos.x, bondprop->pos.z, 0x11B, myheight, myheight, 0.0f, 1.0f) && (mystan == bondprop->stan))
+        if (stanTestLineUnobstructed(&mystan, myprop->pos.x, myprop->pos.z, bondprop->pos.x, bondprop->pos.z, 0x11B, myheight, myheight, 0.0f, 1.0f) && (mystan == bondprop->stan))
         {
             setSeenBondTimeToNow(self);
             pass = TRUE;
@@ -4319,7 +4319,7 @@ bool check_if_position_in_same_room(ChrRecord *self, coord3d *pos, StandTile *st
 
     propstan = myprop->stan;
 
-    if (sub_GAME_7F0B0E24(&propstan, myprop->pos.x, myprop->pos.z, pos->x, pos->z, 0x113, myheight, myheight, 0.0f, 1.0f) && (propstan == stan))
+    if (stanTestLineUnobstructed(&propstan, myprop->pos.x, myprop->pos.z, pos->x, pos->z, 0x113, myheight, myheight, 0.0f, 1.0f) && (propstan == stan))
     {
         pass = TRUE;
     }
@@ -4378,7 +4378,7 @@ s32 chrlvCurrentPlayerCall7F0B0E24(ChrRecord *self)
 
     bond_stan = bond_prop->stan;
     
-    if ((sub_GAME_7F0B0E24(
+    if ((stanTestLineUnobstructed(
             &bond_stan,
             bond_prop->pos.f[0],
             bond_prop->pos.f[2],
@@ -4436,8 +4436,8 @@ s32 chrlvCall7F0B0E24WithChrWidthHeight(PropRecord *arg0, coord3d *arg1, coord3d
     stan = arg0->stan;
 
     if (
-        (sub_GAME_7F0B0E24(&stan, arg0->pos.f[0], arg0->pos.f[2], sp78, sp74, 0x1F, sp58, sp54, 0.0f, 1.0f) != 0)
-        && (sub_GAME_7F0B0E24(&stan, sp78, sp74, sp70, sp6C, 0x1F, sp58, sp54, 0.0f, 1.0f) != 0)
+        (stanTestLineUnobstructed(&stan, arg0->pos.f[0], arg0->pos.f[2], sp78, sp74, 0x1F, sp58, sp54, 0.0f, 1.0f) != 0)
+        && (stanTestLineUnobstructed(&stan, sp78, sp74, sp70, sp6C, 0x1F, sp58, sp54, 0.0f, 1.0f) != 0)
         )
     {
         sp78 = arg0->pos.f[0] - chrz;
@@ -4449,8 +4449,8 @@ s32 chrlvCall7F0B0E24WithChrWidthHeight(PropRecord *arg0, coord3d *arg1, coord3d
         stan = arg0->stan;
 
         if (
-            (sub_GAME_7F0B0E24(&stan, arg0->pos.f[0], arg0->pos.f[2], sp78, sp74, 0x1F, sp58, sp54, 0.0f, 1.0f) != 0)
-            && (sub_GAME_7F0B0E24(&stan, sp78, sp74, sp70, sp6C, 0x1F, sp58, sp54, 0.0f, 1.0f) != 0)
+            (stanTestLineUnobstructed(&stan, arg0->pos.f[0], arg0->pos.f[2], sp78, sp74, 0x1F, sp58, sp54, 0.0f, 1.0f) != 0)
+            && (stanTestLineUnobstructed(&stan, sp78, sp74, sp70, sp6C, 0x1F, sp58, sp54, 0.0f, 1.0f) != 0)
             )
         {
             ret = 1;
@@ -7096,7 +7096,7 @@ void chrlvFireWeaponRelated(ChrRecord *self, s32 hand)
                     }
                 }
 
-                if (sub_GAME_7F0B0E24(&self_stan, self_prop->pos.x, self_prop->pos.f[2], sp240.f[0], sp240.f[2], 2, sp240.f[1] - self->ground, sp240.f[1] - self->ground, 0.0f, 1.0f) != 0)
+                if (stanTestLineUnobstructed(&self_stan, self_prop->pos.x, self_prop->pos.f[2], sp240.f[0], sp240.f[2], 2, sp240.f[1] - self->ground, sp240.f[1] - self->ground, 0.0f, 1.0f) != 0)
                 {
                     sp238 = self_stan;
                 }
@@ -7126,7 +7126,7 @@ void chrlvFireWeaponRelated(ChrRecord *self, s32 hand)
                     sub_GAME_7F0B1CC4();
                     self_stan = sp238;
 
-                    if (sub_GAME_7F0B0E24(&self_stan, sp240.f[0], sp240.f[2], sp258.f[0], sp258.f[2], 0x1B, sp240.f[1], sp240.f[1], sp258.f[1], sp258.f[1]) == 0)
+                    if (stanTestLineUnobstructed(&self_stan, sp240.f[0], sp240.f[2], sp258.f[0], sp258.f[2], 0x1B, sp240.f[1], sp240.f[1], sp258.f[1], sp258.f[1]) == 0)
                     {
                         chrlvStanLineDirIntersection(&sp240, &sp220, &sp258);
                         sp254 = self_stan;
@@ -8580,7 +8580,7 @@ s32 sub_GAME_7F030128(ChrRecord *self, coord3d *point, StandTile *arg2, coord3d 
     chrSetMoving(self, 0);
     
     if (
-        sub_GAME_7F0B0E24(&sp44, point->f[0], point->f[2], dest->f[0], dest->f[2], objflags, sp3C, sp38, 0.0f, 1.0f) 
+        stanTestLineUnobstructed(&sp44, point->f[0], point->f[2], dest->f[0], dest->f[2], objflags, sp3C, sp38, 0.0f, 1.0f) 
         && ((arg4 == NULL) || (sp44 == arg4)))
     {
         sp40 = 1;
@@ -8635,13 +8635,13 @@ s32 sub_GAME_7F0301FC(ChrRecord *self, coord3d *point, StandTile *arg2, coord3d 
 
         pstan = arg2;
 
-        if (sub_GAME_7F0B0E24(&pstan, point->f[0], point->f[2], point->f[0] + temp_f22, point->f[2] - temp_f20, arg5, sp64, sp60, 0.0f, 1.0f)
-            && sub_GAME_7F0B0E24(&pstan, point->f[0] + temp_f22, point->f[2] - temp_f20, dest->f[0] + temp_f22, dest->f[2] - temp_f20, arg5, sp64, sp60, 0.0f, 1.0f))
+        if (stanTestLineUnobstructed(&pstan, point->f[0], point->f[2], point->f[0] + temp_f22, point->f[2] - temp_f20, arg5, sp64, sp60, 0.0f, 1.0f)
+            && stanTestLineUnobstructed(&pstan, point->f[0] + temp_f22, point->f[2] - temp_f20, dest->f[0] + temp_f22, dest->f[2] - temp_f20, arg5, sp64, sp60, 0.0f, 1.0f))
         {
             pstan = arg2;
 
-            if (sub_GAME_7F0B0E24(&pstan, point->f[0], point->f[2], point->f[0] - temp_f22, point->f[2] + temp_f20, arg5, sp64, sp60, 0.0f, 1.0f)
-                && sub_GAME_7F0B0E24(&pstan, point->f[0] - temp_f22, point->f[2] + temp_f20, dest->f[0] - temp_f22, dest->f[2] + temp_f20, arg5, sp64, sp60, 0.0f, 1.0f))
+            if (stanTestLineUnobstructed(&pstan, point->f[0], point->f[2], point->f[0] - temp_f22, point->f[2] + temp_f20, arg5, sp64, sp60, 0.0f, 1.0f)
+                && stanTestLineUnobstructed(&pstan, point->f[0] - temp_f22, point->f[2] + temp_f20, dest->f[0] - temp_f22, dest->f[2] + temp_f20, arg5, sp64, sp60, 0.0f, 1.0f))
             {
                 ret = 1;
             }
@@ -8673,11 +8673,11 @@ s32 sub_GAME_7F0304AC(ChrRecord *self, coord3d *mypos, StandTile *mystan, coord3
     chrGetChrWidthHeight(self->prop, &sp34, &sp3C, &sp38);
     chrSetMoving(self, 0);
 
-    if (sub_GAME_7F0B0E24(&sp44, mypos->x, mypos->z, arg3->x, arg3->z, arg6, sp3C, sp38, 0.0f, 1.0f))
+    if (stanTestLineUnobstructed(&sp44, mypos->x, mypos->z, arg3->x, arg3->z, arg6, sp3C, sp38, 0.0f, 1.0f))
     {
         sp30 = sp44; // duplicate var? needed?
 
-        if (sub_GAME_7F0B0E24(&sp30, arg3->x, arg3->z, bondpos->x, bondpos->z, arg6, sp3C, sp38, 0.0f, 1.0f)
+        if (stanTestLineUnobstructed(&sp30, arg3->x, arg3->z, bondpos->x, bondpos->z, arg6, sp3C, sp38, 0.0f, 1.0f)
             && ((bondstan == NULL) || (sp30 == bondstan)))
         {
             pass = TRUE;
@@ -8711,11 +8711,11 @@ s32 sub_GAME_7F0305E0(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
     chrGetChrWidthHeight(self->prop, &sp3C, &sp44, &sp40);
     chrSetMoving(self, 0);
 
-    if (sub_GAME_7F0B0E24(&sp4C, arg1->x, arg1->f[2], arg3->x, arg3->f[2], arg6, sp44, sp40, 0.0f, 1.0f))
+    if (stanTestLineUnobstructed(&sp4C, arg1->x, arg1->f[2], arg3->x, arg3->f[2], arg6, sp44, sp40, 0.0f, 1.0f))
     {
         sp38 = sp4C;
 
-        if (sub_GAME_7F0B0E24(&sp38, arg3->x, arg3->f[2], arg4->x, arg4->f[2], arg6, sp44, sp40, 0.0f, 1.0f)
+        if (stanTestLineUnobstructed(&sp38, arg3->x, arg3->f[2], arg4->x, arg4->f[2], arg6, sp44, sp40, 0.0f, 1.0f)
             && sub_GAME_7F0301FC(self, arg1, arg2, arg3, arg5, arg6)
             && sub_GAME_7F0301FC(self, arg3, sp4C, arg4, arg5, arg6))
         {
@@ -8822,7 +8822,7 @@ s32 sub_GAME_7F03081C(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
 
     spAC = arg2;
 
-    if ((sub_GAME_7F0B0E24(
+    if ((stanTestLineUnobstructed(
         &spAC,
         arg1->f[0],
         arg1->f[2],
@@ -8833,7 +8833,7 @@ s32 sub_GAME_7F03081C(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
         sp48,
         0.0f,
         1.0f) == 0)
-        || (sub_GAME_7F0B0E24(
+        || (stanTestLineUnobstructed(
             &spAC,
             arg1->f[0] + sp98,
             arg1->f[2] - sp9C,
@@ -8853,7 +8853,7 @@ s32 sub_GAME_7F03081C(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
 
     spAC = arg2;
 
-    if ((sub_GAME_7F0B0E24(
+    if ((stanTestLineUnobstructed(
         &spAC,
         arg1->f[0],
         arg1->f[2],
@@ -8864,7 +8864,7 @@ s32 sub_GAME_7F03081C(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
         sp48,
         0.0f,
         1.0f) == 0)
-        || (sub_GAME_7F0B0E24(
+        || (stanTestLineUnobstructed(
             &spAC,
             arg1->f[0] - sp98,
             arg1->f[2] + sp9C,
@@ -8919,8 +8919,8 @@ s32 sub_GAME_7F03081C(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
     {
         spAC = arg2;
 
-        if (sub_GAME_7F0B0E24(&spAC, arg1->f[0], arg1->f[2], arg3->f[0], arg3->f[2], arg8, sp4C, sp48, 0.0f, 1.0f)
-            && sub_GAME_7F0B18B8(&spAC, arg3->f[0], arg3->f[2], arg7, arg8, sp4C, sp48) < 0)
+        if (stanTestLineUnobstructed(&spAC, arg1->f[0], arg1->f[2], arg3->f[0], arg3->f[2], arg8, sp4C, sp48, 0.0f, 1.0f)
+            && stanTestVolume(&spAC, arg3->f[0], arg3->f[2], arg7, arg8, sp4C, sp48) < 0)
         {
             sp50 = 1;
         }
@@ -8996,7 +8996,7 @@ s32 sub_GAME_7F030D70(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
 
     spAC = arg2;
 
-    if ((sub_GAME_7F0B0E24(
+    if ((stanTestLineUnobstructed(
         &spAC,
         arg1->f[0],
         arg1->f[2],
@@ -9007,7 +9007,7 @@ s32 sub_GAME_7F030D70(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
         sp48,
         0.0f,
         1.0f) == 0)
-        || (sub_GAME_7F0B0E24(
+        || (stanTestLineUnobstructed(
             &spAC,
             arg1->f[0] + sp98,
             arg1->f[2] - sp9C,
@@ -9029,7 +9029,7 @@ s32 sub_GAME_7F030D70(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
 
     spAC = arg2;
 
-    if ((sub_GAME_7F0B0E24(
+    if ((stanTestLineUnobstructed(
         &spAC,
         arg1->f[0],
         arg1->f[2],
@@ -9040,7 +9040,7 @@ s32 sub_GAME_7F030D70(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
         sp48,
         0.0f,
         1.0f) == 0)
-        || (sub_GAME_7F0B0E24(
+        || (stanTestLineUnobstructed(
             &spAC,
             arg1->f[0] - sp98,
             arg1->f[2] + sp9C,
@@ -9107,8 +9107,8 @@ s32 sub_GAME_7F030D70(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
     {
         spAC = arg2;
 
-        if (sub_GAME_7F0B0E24(&spAC, arg1->f[0], arg1->f[2], arg3->f[0], arg3->f[2], arg8, sp4C, sp48, 0.0f, 1.0f)
-            && sub_GAME_7F0B18B8(&spAC, arg3->f[0], arg3->f[2], arg7, arg8, sp4C, sp48) < 0)
+        if (stanTestLineUnobstructed(&spAC, arg1->f[0], arg1->f[2], arg3->f[0], arg3->f[2], arg8, sp4C, sp48, 0.0f, 1.0f)
+            && stanTestVolume(&spAC, arg3->f[0], arg3->f[2], arg7, arg8, sp4C, sp48) < 0)
         {
             sp50 = 1;
         }
@@ -11151,7 +11151,7 @@ bool sub_GAME_7F033F48(coord3d *pos, StandTile **arg1, f32 facing, bool allowons
     s = *arg1;
     spp = &s;
 
-    if ((sub_GAME_7F0B18B8(spp, pos->f[0], pos->z, 20.0f, 0x1F, 0.0f, 1.0f) < 0) &&
+    if ((stanTestVolume(spp, pos->f[0], pos->z, 20.0f, 0x1F, 0.0f, 1.0f) < 0) &&
         (allowonscreen || sub_GAME_7F033EAC(pos, *arg1)))
     {
         return TRUE;
@@ -11165,8 +11165,8 @@ bool sub_GAME_7F033F48(coord3d *pos, StandTile **arg1, f32 facing, bool allowons
 
         s = *arg1;
 
-        if (sub_GAME_7F0B0E24(spp, pos->f[0], pos->f[2], testpos.f[0], testpos.f[2], 0x13, 0.0f, 1.0f, 0.0f, 1.0f)
-            && (sub_GAME_7F0B18B8(spp, testpos.f[0], testpos.f[2], 20.0f, 0x1F, 0.0f, 1.0f) < 0)
+        if (stanTestLineUnobstructed(spp, pos->f[0], pos->f[2], testpos.f[0], testpos.f[2], 0x13, 0.0f, 1.0f, 0.0f, 1.0f)
+            && (stanTestVolume(spp, testpos.f[0], testpos.f[2], 20.0f, 0x1F, 0.0f, 1.0f) < 0)
             && (allowonscreen || sub_GAME_7F033EAC(&testpos, s)))
         {
             *arg1 = s;

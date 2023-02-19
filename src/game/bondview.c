@@ -720,17 +720,17 @@ void bondviewTankModelRotationRelated(void);
 s32 bondviewTankCollisionStatus(struct coord3d *arg0, struct StandTile *arg1, f32 arg2, struct coord3d *arg3, struct coord3d *arg4);
 s32 bondviewCallTankCollisionStatus(struct coord3d *arg0, struct StandTile *arg1, f32 arg2);
 s32 sub_GAME_7F07CDD4(struct coord3d *arg0, f32 arg1, struct StandTile **arg2);
-s32 bondviewCalculatePlayerCollision(struct coord3d *arg0, struct StandTile **stan);
+s32 bondviewTryMoveToStan(struct coord3d *arg0, struct StandTile **stan);
 s32 bondviewTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z, s32 objFlags, struct coord3d *coord_p, struct coord3d *coord_dest);
 
-s32 sub_GAME_7F07D2B4(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *arg2, struct coord3d *arg3, struct coord3d *arg4);
-s32 sub_GAME_7F07D4C0(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *arg2);
-s32 sub_GAME_7F07D61C(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *arg2);
+s32 bondviewTryFractionMovePlayerCollision(struct coord3d *next_pos, struct coord3d *collision1_pt0, struct coord3d *collision1_pt1, struct coord3d *collision2_pt0, struct coord3d *collision2_pt1);
+s32 bondviewTryEdgeMovePlayerCollision(struct coord3d *prior_next_pos, struct coord3d *collision_pt0, struct coord3d *collision_pt1);
+s32 bondviewTryEndHopPlayerCollision(struct coord3d *prior_next_pos, struct coord3d *collision_pt0, struct coord3d *collision_pt1);
 void bondviewApplyVertaTheta(void);
 
 f32 bheadGetBreathingValue(void);
 void bondviewMoveAnimationTick(f32 speed, f32 speedforwards, f32 speedsideways);
-void bondviewCalcUpdatePlayerCollision(struct coord3d *arg0, s32 arg1);
+void bondviewCalcUpdatePlayerCollision(struct coord3d *offset, s32 arg1);
 f32 bondviewPauseAngleRelated(s32 arg0);
 void sub_GAME_7F07E010(f32 arg0);
 void sub_GAME_7F07E03C(f32 arg0);
@@ -3839,7 +3839,7 @@ glabel sub_GAME_7F07A534
 /* 0AF1FC 7F07A6CC E7BA0018 */  swc1  $f26, 0x18($sp)
 /* 0AF200 7F07A6D0 02A02025 */  move  $a0, $s5
 /* 0AF204 7F07A6D4 8FA700B0 */  lw    $a3, 0xb0($sp)
-/* 0AF208 7F07A6D8 0FC2C389 */  jal   sub_GAME_7F0B0E24
+/* 0AF208 7F07A6D8 0FC2C389 */  jal   stanTestLineUnobstructed
 /* 0AF20C 7F07A6DC E7A60010 */   swc1  $f6, 0x10($sp)
 /* 0AF210 7F07A6E0 00408025 */  move  $s0, $v0
 /* 0AF214 7F07A6E4 02802025 */  move  $a0, $s4
@@ -3924,7 +3924,7 @@ glabel sub_GAME_7F07A534
 /* 0AF344 7F07A814 E7BA0018 */  swc1  $f26, 0x18($sp)
 /* 0AF348 7F07A818 02A02025 */  move  $a0, $s5
 /* 0AF34C 7F07A81C 8E270000 */  lw    $a3, ($s1)
-/* 0AF350 7F07A820 0FC2C389 */  jal   sub_GAME_7F0B0E24
+/* 0AF350 7F07A820 0FC2C389 */  jal   stanTestLineUnobstructed
 /* 0AF354 7F07A824 E7A40010 */   swc1  $f4, 0x10($sp)
 /* 0AF358 7F07A828 00408025 */  move  $s0, $v0
 /* 0AF35C 7F07A82C 02802025 */  move  $a0, $s4
@@ -3938,7 +3938,7 @@ glabel sub_GAME_7F07A534
 /* 0AF37C 7F07A84C 8E250000 */  lw    $a1, ($s1)
 /* 0AF380 7F07A850 8E260008 */  lw    $a2, 8($s1)
 /* 0AF384 7F07A854 E7BA0014 */  swc1  $f26, 0x14($sp)
-/* 0AF388 7F07A858 0FC2C62E */  jal   sub_GAME_7F0B18B8
+/* 0AF388 7F07A858 0FC2C62E */  jal   stanTestVolume
 /* 0AF38C 7F07A85C E7BE0018 */   swc1  $f30, 0x18($sp)
 /* 0AF390 7F07A860 04410029 */  bgez  $v0, .L7F07A908
 /* 0AF394 7F07A864 8FA400C8 */   lw    $a0, 0xc8($sp)
@@ -5814,7 +5814,7 @@ s32 bondviewTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x
 {
     s32 temp_v0;
 
-    temp_v0 = sub_GAME_7F0B0E24(pTile, p_x, p_z, dest_x, dest_z, objFlags, 0.0f, 1.0f, 0.0f, 1.0f);
+    temp_v0 = stanTestLineUnobstructed(pTile, p_x, p_z, dest_x, dest_z, objFlags, 0.0f, 1.0f, 0.0f, 1.0f);
     if ((temp_v0 == 0) && (coord_p != NULL))
     {
         coord_p->f[0] = p_x;
@@ -5949,7 +5949,7 @@ s32 sub_GAME_7F07CDD4(struct coord3d *arg0, f32 arg1, StandTile **arg2)
     sp3C = g_CurrentPlayer->field_488.current_tile_ptr;
 
     if ((
-        sub_GAME_7F0B0E24(
+        stanTestLineUnobstructed(
             &sp3C,
             g_CurrentPlayer->field_488.collision_position.f[0],
             g_CurrentPlayer->field_488.collision_position.f[2], 
@@ -6045,7 +6045,7 @@ f32 bondviewGet8003646CRad(void)
 /**
  * Address 0x7F07CF8C.
 */
-s32 bondviewCalculatePlayerCollision(struct coord3d *arg0, StandTile **stan)
+s32 bondviewTryMoveToStan(struct coord3d *arg0, StandTile **stan)
 {
     s32 sp94;
     StandTile *sp90;
@@ -6092,7 +6092,7 @@ s32 bondviewCalculatePlayerCollision(struct coord3d *arg0, StandTile **stan)
             g_CurrentPlayer->autocrouchpos = 0;
         }
 
-        if ((sub_GAME_7F0B0E24(
+        if ((stanTestLineUnobstructed(
                 &sp90,
                 g_CurrentPlayer->field_488.collision_position.f[0],
                 g_CurrentPlayer->field_488.collision_position.f[2],
@@ -6103,7 +6103,7 @@ s32 bondviewCalculatePlayerCollision(struct coord3d *arg0, StandTile **stan)
                 always_30,
                 0.0f,
                 1.0f) != 0)
-            && sub_GAME_7F0B18B8(&sp90, arg0->f[0], arg0->f[2], collision_radius, sp8C, height, always_30) < 0)
+            && stanTestVolume(&sp90, arg0->f[0], arg0->f[2], collision_radius, sp8C, height, always_30) < 0)
         {
             if (g_CurrentPlayer->ducking_height_offset == -100.0f || sp7C < 0)
             {
@@ -6154,42 +6154,64 @@ block_20:
 /**
  * Calculates collision with current player.
  * 
+ * @param next_pos: 3d coordinate to attempt to move to.
+ * @param collision_pt0: Out parameter. Will set {x,0,z} position of first point (from line edge) if Bond is in collision, otherwise {0}.
+ * @param collision_pt1: Out parameter. Will set {x,0,z} position of second point (from line edge) if Bond is in collision, otherwise ... Bond's look angle?
+ * 
+ * @return 1 if able to update stan and collision position, zero otherwise.
+ * 
  * Address 0x7F07D234.
  */
-s32 bondviewUpdatePlayerCollision(coord3d *arg0, coord3d *arg1, coord3d *arg2)
+s32 bondviewTrySimpleMovePlayerCollision(coord3d *next_pos, coord3d *collision_pt0, coord3d *collision_pt1)
 {
-    struct StandTile *sp1C;
+    struct StandTile *stan;
 
     // resets stan global collision variables
     sub_GAME_7F0B1CC4();
 
-    if (bondviewCalculatePlayerCollision(arg0, &sp1C) != 0)
+    if (bondviewTryMoveToStan(next_pos, &stan) != 0)
     {
-        g_CurrentPlayer->field_488.current_tile_ptr = sp1C;
-        g_CurrentPlayer->field_488.collision_position.f[0] = arg0->f[0];
-        g_CurrentPlayer->field_488.collision_position.f[2] = arg0->f[2];
+        g_CurrentPlayer->field_488.current_tile_ptr = stan;
+        g_CurrentPlayer->field_488.collision_position.f[0] = next_pos->f[0];
+        g_CurrentPlayer->field_488.collision_position.f[2] = next_pos->f[2];
 
         return 1;
     }
 
-    // unused?
-    getCollisionEdge_maybe(arg1, arg2);
+    getCollisionEdge_maybe(collision_pt0, collision_pt1);
 
     return 0;
 }
 
 
 /**
+ * This is a fallback method used when bondviewTrySimpleMovePlayerCollision fails.
+ * Instead of moving to the full coordinate specified by `next_pos`, it will
+ * scale the position using `unkGeometry7F0B33DC` and try to move to that position.
+ * 
+ * @param next_pos: 3d coordinate to attempt to move to.
+ * @param collision1_pt0: Prior collision point 0.
+ * @param collision1_pt1: Prior collision point 1.
+ * @param collision2_pt0: Out parameter. Will set {x,0,z} position of first point (from line edge) if Bond is in collision, otherwise {0}.
+ * @param collision2_pt1: Out parameter. Will set {x,0,z} position of second point (from line edge) if Bond is in collision, otherwise ... Bond's look angle?
+ * 
+ * @return 1 if able to update stan and collision position, zero if still unable to move by failing on the same collision edge, -1 otherwise (still unable to move).
+ * 
  * US address 7F07D2B4.
- * Perfect Dark, see bondbike.c bbike0f0d36d4.
+ * Perfect Dark, see bondwalk.c bwalk0f0c47d0, bondbike.c bbike0f0d36d4.
 */
-s32 sub_GAME_7F07D2B4(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *arg2, struct coord3d *arg3, struct coord3d *arg4)
+s32 bondviewTryFractionMovePlayerCollision(
+    struct coord3d *next_pos,
+    struct coord3d *collision1_pt0,
+    struct coord3d *collision1_pt1,
+    struct coord3d *collision2_pt0,
+    struct coord3d *collision2_pt1)
 {
-    StandTile *sp7C;
+    StandTile *stan;
     f32 height;
     f32 always_30;
-    struct coord3d sp68;
-    struct coord3d sp5C;
+    struct coord3d try_next_pos;
+    struct coord3d delta_pos;
     struct coord3d sp50;
     struct coord2d sp48;
     struct coord2d sp40;
@@ -6199,44 +6221,44 @@ s32 sub_GAME_7F07D2B4(struct coord3d *arg0, struct coord3d *arg1, struct coord3d
     
     bondviewGetCollisionRadius(g_CurrentPlayer->prop, &collision_radius, &height, &always_30);
     
-    sp5C.f[0] = arg0->f[0] - g_CurrentPlayer->field_488.collision_position.f[0];
-    sp5C.f[2] = arg0->f[2] - g_CurrentPlayer->field_488.collision_position.f[2];
+    delta_pos.f[0] = next_pos->f[0] - g_CurrentPlayer->field_488.collision_position.f[0];
+    delta_pos.f[2] = next_pos->f[2] - g_CurrentPlayer->field_488.collision_position.f[2];
     
     sp50.f[0] = collision_radius;
     sp50.f[1] = g_CurrentPlayer->field_488.collision_position.f[0];
     sp50.f[2] = g_CurrentPlayer->field_488.collision_position.f[2];
     
-    sp48.f[0] = arg1->f[0];
-    sp48.f[1] = arg1->f[2];
+    sp48.f[0] = collision1_pt0->f[0];
+    sp48.f[1] = collision1_pt0->f[2];
     
-    sp40.f[0] = arg2->f[0];
-    sp40.f[1] = arg2->f[2];
+    sp40.f[0] = collision1_pt1->f[0];
+    sp40.f[1] = collision1_pt1->f[2];
     
-    sp38.f[0] = sp5C.f[0];
-    sp38.f[1] = sp5C.f[2];
+    sp38.f[0] = delta_pos.f[0];
+    sp38.f[1] = delta_pos.f[2];
     
-    temp_f0 = sub_GAME_7F0B33DC(&sp50, &sp48, &sp40, &sp38);
+    temp_f0 = unkGeometry7F0B33DC(&sp50, &sp48, &sp40, &sp38);
     
-    sp68.f[0] = g_CurrentPlayer->field_488.collision_position.f[0] + (sp5C.f[0] * temp_f0 * 0.25f);
-    sp68.f[2] = g_CurrentPlayer->field_488.collision_position.f[2] + (sp5C.f[2] * temp_f0 * 0.25f);
+    try_next_pos.f[0] = g_CurrentPlayer->field_488.collision_position.f[0] + (delta_pos.f[0] * temp_f0 * 0.25f);
+    try_next_pos.f[2] = g_CurrentPlayer->field_488.collision_position.f[2] + (delta_pos.f[2] * temp_f0 * 0.25f);
     
-    if (bondviewCalculatePlayerCollision(&sp68, &sp7C) != 0)
+    if (bondviewTryMoveToStan(&try_next_pos, &stan) != 0)
     {
-        g_CurrentPlayer->field_488.current_tile_ptr = sp7C;
-        g_CurrentPlayer->field_488.collision_position.f[0] = sp68.f[0];
-        g_CurrentPlayer->field_488.collision_position.f[2] = sp68.f[2];
+        g_CurrentPlayer->field_488.current_tile_ptr = stan;
+        g_CurrentPlayer->field_488.collision_position.f[0] = try_next_pos.f[0];
+        g_CurrentPlayer->field_488.collision_position.f[2] = try_next_pos.f[2];
         
         return 1;
     }
     
-    getCollisionEdge_maybe(arg3, arg4);
+    getCollisionEdge_maybe(collision2_pt0, collision2_pt1);
     
-    if (arg3->f[0] != arg1->f[0]
-        || arg3->f[1] != arg1->f[1]
-        || arg3->f[2] != arg1->f[2]
-        || arg4->f[0] != arg2->f[0]
-        || arg4->f[1] != arg2->f[1]
-        || arg4->f[2] != arg2->f[2])
+    if (collision2_pt0->f[0] != collision1_pt0->f[0]
+        || collision2_pt0->f[1] != collision1_pt0->f[1]
+        || collision2_pt0->f[2] != collision1_pt0->f[2]
+        || collision2_pt1->f[0] != collision1_pt1->f[0]
+        || collision2_pt1->f[1] != collision1_pt1->f[1]
+        || collision2_pt1->f[2] != collision1_pt1->f[2])
     {
         return 0;
     }
@@ -6248,38 +6270,48 @@ s32 sub_GAME_7F07D2B4(struct coord3d *arg0, struct coord3d *arg1, struct coord3d
 
 
 /**
+ * This is a fallback method used when bondviewTrySimpleMovePlayerCollision fails.
+ * Instead of moving to the full coordinate specified by `next_pos`, it will
+ * attempt to move along the collision edge.
+ * 
+ * @param prior_next_pos: Prior 3d coordinate that Bond failed to move to.
+ * @param collision1_pt0: Prior collision point 0.
+ * @param collision1_pt1: Prior collision point 1.
+ * 
+ * @return -1 if either x or z coordinates are the same for the collision points, 1 if able to update stan and collision position, zero otherwise.
+ * 
  * US address 7F07D4C0.
-*/
-s32 sub_GAME_7F07D4C0(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *arg2)
+ */
+s32 bondviewTryEdgeMovePlayerCollision(struct coord3d *prior_next_pos, struct coord3d *collision_pt0, struct coord3d *collision_pt1)
 {
-    struct coord3d sp44;
+    struct coord3d delta_pos;
     f32 tempf;
-    struct coord3d sp34;
-    struct coord3d sp28;
-    StandTile *sp24;
+    struct coord3d norm_collision_edge;
+    struct coord3d try_next_pos;
+    StandTile *stan;
 
-    sp44.f[0] = arg0->f[0] - g_CurrentPlayer->field_488.collision_position.f[0];
-    sp44.f[2] = arg0->f[2] - g_CurrentPlayer->field_488.collision_position.f[2];
+    delta_pos.f[0] = prior_next_pos->f[0] - g_CurrentPlayer->field_488.collision_position.f[0];
+    delta_pos.f[2] = prior_next_pos->f[2] - g_CurrentPlayer->field_488.collision_position.f[2];
 
-    if (arg1->f[0] != arg2->f[0] || arg1->f[2] != arg2->f[2])
+    if (collision_pt0->f[0] != collision_pt1->f[0] || collision_pt0->f[2] != collision_pt1->f[2])
     {
-        sp34.f[0] = arg2->f[0] - arg1->f[0];
-        sp34.f[2] = arg2->f[2] - arg1->f[2];
+        norm_collision_edge.f[0] = collision_pt1->f[0] - collision_pt0->f[0];
+        norm_collision_edge.f[2] = collision_pt1->f[2] - collision_pt0->f[2];
 
-        tempf = (sp34.f[0] * sp34.f[0]) + (sp34.f[2] * sp34.f[2]);
+        tempf = (norm_collision_edge.f[0] * norm_collision_edge.f[0]) + (norm_collision_edge.f[2] * norm_collision_edge.f[2]);
         tempf =  1.0f / sqrtf(tempf);
-        sp34.f[0] *= tempf;
-        sp34.f[2] *= tempf;
+        norm_collision_edge.f[0] *= tempf;
+        norm_collision_edge.f[2] *= tempf;
 
-        tempf = (sp44.f[0] * sp34.f[0]) + (sp44.f[2] * sp34.f[2]);
-        sp28.f[0] = g_CurrentPlayer->field_488.collision_position.f[0] + (tempf * sp34.f[0]);
-        sp28.f[2] = g_CurrentPlayer->field_488.collision_position.f[2] + (tempf * sp34.f[2]);
+        tempf = (delta_pos.f[0] * norm_collision_edge.f[0]) + (delta_pos.f[2] * norm_collision_edge.f[2]);
+        try_next_pos.f[0] = g_CurrentPlayer->field_488.collision_position.f[0] + (tempf * norm_collision_edge.f[0]);
+        try_next_pos.f[2] = g_CurrentPlayer->field_488.collision_position.f[2] + (tempf * norm_collision_edge.f[2]);
 
-        if (bondviewCalculatePlayerCollision(&sp28, &sp24))
+        if (bondviewTryMoveToStan(&try_next_pos, &stan))
         {
-            g_CurrentPlayer->field_488.current_tile_ptr = sp24;
-            g_CurrentPlayer->field_488.collision_position.f[0] = sp28.f[0];
-            g_CurrentPlayer->field_488.collision_position.f[2] = sp28.f[2];
+            g_CurrentPlayer->field_488.current_tile_ptr = stan;
+            g_CurrentPlayer->field_488.collision_position.f[0] = try_next_pos.f[0];
+            g_CurrentPlayer->field_488.collision_position.f[2] = try_next_pos.f[2];
             
             return 1;
         }
@@ -6293,49 +6325,63 @@ s32 sub_GAME_7F07D4C0(struct coord3d *arg0, struct coord3d *arg1, struct coord3d
 
 
 /**
+ * This is a fallback method used when bondviewTrySimpleMovePlayerCollision fails.
+ * If Bond previously failed to move because of a collision, this will check
+ * if Bond is near the end point of the collision edge. If within the collision
+ * radius of Bond to the edge endpoint, then allow movement.
+ * 
+ * @param prior_next_pos: Prior 3d coordinate that Bond failed to move to.
+ * @param collision1_pt0: Prior collision point 0.
+ * @param collision1_pt1: Prior collision point 1.
+ * 
+ * @return 1 if able to update stan and collision position, zero otherwise.
+ * 
  * US address 7F07D61C.
+ * 
+ * Perfect Dark bwalk0f0c4a5c.
 */
-s32 sub_GAME_7F07D61C(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *arg2)
+s32 bondviewTryEndHopPlayerCollision(struct coord3d *prior_next_pos, struct coord3d *collision_pt0, struct coord3d *collision_pt1)
 {
-    struct coord3d sp5C;
+    struct coord3d delta_pos;
     struct coord3d sp50;
-    struct coord3d sp44;
+    struct coord3d try_next_pos;
     f32 height;
     f32 always_30;
     f32 tempf;
-    StandTile *sp34;
+    StandTile *stan;
     f32 collision_radius;
 
     bondviewGetCollisionRadius(g_CurrentPlayer->prop, &collision_radius, &height, &always_30);
     
-    sp5C.f[0] = arg0->f[0] - g_CurrentPlayer->field_488.collision_position.f[0];
-    sp5C.f[2] = arg0->f[2] - g_CurrentPlayer->field_488.collision_position.f[2];
-    sp50.f[0] = arg1->f[0] - arg0->f[0];
-    sp50.f[2] = arg1->f[2] - arg0->f[2];
+    delta_pos.f[0] = prior_next_pos->f[0] - g_CurrentPlayer->field_488.collision_position.f[0];
+    delta_pos.f[2] = prior_next_pos->f[2] - g_CurrentPlayer->field_488.collision_position.f[2];
+
+    sp50.f[0] = collision_pt0->f[0] - prior_next_pos->f[0];
+    sp50.f[2] = collision_pt0->f[2] - prior_next_pos->f[2];
 
     if (((sp50.f[0] * sp50.f[0]) + (sp50.f[2] * sp50.f[2])) <= (collision_radius * collision_radius))
     {
-        if (arg1->f[0] != g_CurrentPlayer->field_488.collision_position.f[0] || arg1->f[2] != g_CurrentPlayer->field_488.collision_position.f[2])
+        if (collision_pt0->f[0] != g_CurrentPlayer->field_488.collision_position.f[0] || collision_pt0->f[2] != g_CurrentPlayer->field_488.collision_position.f[2])
         {
-            sp50.f[0] = -(arg1->f[2] - g_CurrentPlayer->field_488.collision_position.f[2]);
-            sp50.f[2] = arg1->f[0] - g_CurrentPlayer->field_488.collision_position.f[0];
+            sp50.f[0] = -(collision_pt0->f[2] - g_CurrentPlayer->field_488.collision_position.f[2]);
+            sp50.f[2] = collision_pt0->f[0] - g_CurrentPlayer->field_488.collision_position.f[0];
     
             tempf = (sp50.f[0] * sp50.f[0]) + (sp50.f[2] * sp50.f[2]);
             tempf =  1.0f / sqrtf(tempf);
             sp50.f[0] *= tempf;
             sp50.f[2] *= tempf;
     
-            tempf = (sp5C.f[0] * sp50.f[0]) + (sp5C.f[2] * sp50.f[2]);
+            tempf = (delta_pos.f[0] * sp50.f[0]) + (delta_pos.f[2] * sp50.f[2]);
             sp50.f[0] *= tempf;
             sp50.f[2] *= tempf;
-            sp44.f[0] = g_CurrentPlayer->field_488.collision_position.f[0] + (sp50.f[0]);
-            sp44.f[2] = g_CurrentPlayer->field_488.collision_position.f[2] + (sp50.f[2]);
+            try_next_pos.f[0] = g_CurrentPlayer->field_488.collision_position.f[0] + (sp50.f[0]);
+            try_next_pos.f[2] = g_CurrentPlayer->field_488.collision_position.f[2] + (sp50.f[2]);
     
-            if (bondviewCalculatePlayerCollision(&sp44, &sp34))
+            if (bondviewTryMoveToStan(&try_next_pos, &stan))
             {
-                g_CurrentPlayer->field_488.current_tile_ptr = sp34;
-                g_CurrentPlayer->field_488.collision_position.f[0] = sp44.f[0];
-                g_CurrentPlayer->field_488.collision_position.f[2] = sp44.f[2];
+                g_CurrentPlayer->field_488.current_tile_ptr = stan;
+                g_CurrentPlayer->field_488.collision_position.f[0] = try_next_pos.f[0];
+                g_CurrentPlayer->field_488.collision_position.f[2] = try_next_pos.f[2];
                 
                 return 1;
             }
@@ -6343,32 +6389,32 @@ s32 sub_GAME_7F07D61C(struct coord3d *arg0, struct coord3d *arg1, struct coord3d
     }
     else
     {
-        sp50.f[0] = arg2->f[0] - arg0->f[0];
-        sp50.f[2] = arg2->f[2] - arg0->f[2];
+        sp50.f[0] = collision_pt1->f[0] - prior_next_pos->f[0];
+        sp50.f[2] = collision_pt1->f[2] - prior_next_pos->f[2];
     
         if (((sp50.f[0] * sp50.f[0]) + (sp50.f[2] * sp50.f[2])) <= (collision_radius * collision_radius))
         {
-            if (arg2->f[0] != g_CurrentPlayer->field_488.collision_position.f[0] || arg2->f[2] != g_CurrentPlayer->field_488.collision_position.f[2])
+            if (collision_pt1->f[0] != g_CurrentPlayer->field_488.collision_position.f[0] || collision_pt1->f[2] != g_CurrentPlayer->field_488.collision_position.f[2])
             {
-                sp50.f[0] = -(arg2->f[2] - g_CurrentPlayer->field_488.collision_position.f[2]);
-                sp50.f[2] = arg2->f[0] - g_CurrentPlayer->field_488.collision_position.f[0];
+                sp50.f[0] = -(collision_pt1->f[2] - g_CurrentPlayer->field_488.collision_position.f[2]);
+                sp50.f[2] = collision_pt1->f[0] - g_CurrentPlayer->field_488.collision_position.f[0];
         
                 tempf = (sp50.f[0] * sp50.f[0]) + (sp50.f[2] * sp50.f[2]);
                 tempf =  1.0f / sqrtf(tempf);
                 sp50.f[0] *= tempf;
                 sp50.f[2] *= tempf;
         
-                tempf = (sp5C.f[0] * sp50.f[0]) + (sp5C.f[2] * sp50.f[2]);
+                tempf = (delta_pos.f[0] * sp50.f[0]) + (delta_pos.f[2] * sp50.f[2]);
                 sp50.f[0] *= tempf;
                 sp50.f[2] *= tempf;
-                sp44.f[0] = g_CurrentPlayer->field_488.collision_position.f[0] + (sp50.f[0]);
-                sp44.f[2] = g_CurrentPlayer->field_488.collision_position.f[2] + (sp50.f[2]);
+                try_next_pos.f[0] = g_CurrentPlayer->field_488.collision_position.f[0] + (sp50.f[0]);
+                try_next_pos.f[2] = g_CurrentPlayer->field_488.collision_position.f[2] + (sp50.f[2]);
         
-                if (bondviewCalculatePlayerCollision(&sp44, &sp34))
+                if (bondviewTryMoveToStan(&try_next_pos, &stan))
                 {
-                    g_CurrentPlayer->field_488.current_tile_ptr = sp34;
-                    g_CurrentPlayer->field_488.collision_position.f[0] = sp44.f[0];
-                    g_CurrentPlayer->field_488.collision_position.f[2] = sp44.f[2];
+                    g_CurrentPlayer->field_488.current_tile_ptr = stan;
+                    g_CurrentPlayer->field_488.collision_position.f[0] = try_next_pos.f[0];
+                    g_CurrentPlayer->field_488.collision_position.f[2] = try_next_pos.f[2];
                     
                     return 1;
                 }
@@ -6401,14 +6447,19 @@ struct dummy_struct {
 };
 
 /**
-* US address 7F07D960.
-* JP address 7F07DA34 (maybe).
-*/
-void bondviewCalcUpdatePlayerCollision(struct coord3d *arg0, s32 arg1)
+ * Sets Bond bondprevpos, attempts to move by `offset`.
+ * 
+ * @param offset: Attempt to move Bond by {x,0,z} amount.
+ * @param allow_scoot: If movement causes collision, when set will allow Bond to scoot along the collision edge and to bump around corner edges. Otherwise, any collision will stop movement.
+ * 
+ * US address 7F07D960.
+ * JP address 7F07DA34 (maybe).
+ */
+void bondviewCalcUpdatePlayerCollision(struct coord3d *offset, s32 allow_scoot)
 {
-    struct coord3d spB4; // spb4
-    struct coord3d spA8; // spa8
-    struct coord3d sp9C; // sp9c
+    struct coord3d next_pos; // spb4
+    struct coord3d collision1_pt0; // spa8
+    struct coord3d collision1_pt1; // sp9c
     struct rect4f *sp98; // sp98
     s32 sp94; // sp94
     struct TankRecord *tank_objrecord; // no stack
@@ -6416,11 +6467,11 @@ void bondviewCalcUpdatePlayerCollision(struct coord3d *arg0, s32 arg1)
     f32 *farr5;
     f32 *farr6;
     f32 temp_f2; // sp80
-    struct coord3d sp74;  // sp74
-    struct coord3d sp68; // sp68
+    struct coord3d collision2_pt0;  // sp74
+    struct coord3d collision2_pt1; // sp68
     StandTile *stan; // no stack
-    struct coord3d sp58; // sp58
-    struct coord3d sp4C; // sp4c
+    struct coord3d collision3_pt0; // sp58
+    struct coord3d collision3_pt1; // sp4c
     s32 tile_count; // sp48
     s32 i; // sp44
     s32 temp_a3; // no stack
@@ -6432,8 +6483,8 @@ void bondviewCalcUpdatePlayerCollision(struct coord3d *arg0, s32 arg1)
     g_CurrentPlayer->bondprevpos.f[1] = g_CurrentPlayer->field_488.collision_position.f[1];
     g_CurrentPlayer->bondprevpos.f[2] = g_CurrentPlayer->field_488.collision_position.f[2];
 
-    spB4.f[0] = g_CurrentPlayer->field_488.collision_position.f[0] + arg0->f[0];
-    spB4.f[2] = g_CurrentPlayer->field_488.collision_position.f[2] + arg0->f[2];
+    next_pos.f[0] = g_CurrentPlayer->field_488.collision_position.f[0] + offset->f[0];
+    next_pos.f[2] = g_CurrentPlayer->field_488.collision_position.f[2] + offset->f[2];
 
     g_BondCanEnterTank = 0;
 
@@ -6508,30 +6559,33 @@ void bondviewCalcUpdatePlayerCollision(struct coord3d *arg0, s32 arg1)
     }
 
     // This `if` block looks like Perfect Dark bbike0f0d3c60
-    if (bondviewUpdatePlayerCollision(&spB4, &spA8, &sp9C) == 0)
+    if (bondviewTrySimpleMovePlayerCollision(&next_pos, &collision1_pt0, &collision1_pt1) == 0)
     {
-        // sub_GAME_7F07D2B4 ~ Perfect Dark bbike0f0d36d4
-        temp_v0_7 = sub_GAME_7F07D2B4(&spB4, &spA8, &sp9C, &sp74, &sp68);
+        // return values are:
+        //   1 if able to update stan and collision position
+        //   zero if still unable to move by failing on the same collision edge
+        //   -1 otherwise (still unable to move).
+        temp_v0_7 = bondviewTryFractionMovePlayerCollision(&next_pos, &collision1_pt0, &collision1_pt1, &collision2_pt0, &collision2_pt1);
         
         if ((temp_v0_7 > 0) || (temp_v0_7 < 0))
         {
-            if ((arg1 != 0)
-                && (sub_GAME_7F07D4C0(&spB4, &spA8, &sp9C) <= 0)
-                && (sub_GAME_7F07D61C(&spB4, &spA8, &sp9C) == 0))
+            if ((allow_scoot != 0)
+                && (bondviewTryEdgeMovePlayerCollision(&next_pos, &collision1_pt0, &collision1_pt1) <= 0)
+                && (bondviewTryEndHopPlayerCollision(&next_pos, &collision1_pt0, &collision1_pt1) == 0))
             {
                 // empty
             }
         }
         else if (temp_v0_7 == 0)
         {
-            sub_GAME_7F07D2B4(&spB4, &sp74, &sp68, &sp58, &sp4C);
+            bondviewTryFractionMovePlayerCollision(&next_pos, &collision2_pt0, &collision2_pt1, &collision3_pt0, &collision3_pt1);
             
-            if ((arg1 != 0)
-                && (sub_GAME_7F07D4C0(&spB4, &sp74, &sp68) <= 0)
-                && (sub_GAME_7F07D4C0(&spB4, &spA8, &sp9C) <= 0)
-                && (sub_GAME_7F07D61C(&spB4, &sp74, &sp68) == 0))
+            if ((allow_scoot != 0)
+                && (bondviewTryEdgeMovePlayerCollision(&next_pos, &collision2_pt0, &collision2_pt1) <= 0)
+                && (bondviewTryEdgeMovePlayerCollision(&next_pos, &collision1_pt0, &collision1_pt1) <= 0)
+                && (bondviewTryEndHopPlayerCollision(&next_pos, &collision2_pt0, &collision2_pt1) == 0))
             {
-                sub_GAME_7F07D61C(&spB4, &spA8, &sp9C);
+                bondviewTryEndHopPlayerCollision(&next_pos, &collision1_pt0, &collision1_pt1);
             }
         }
     }
@@ -10531,7 +10585,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
            
             sub_GAME_7F0B1CC4();
             
-            if (sub_GAME_7F0B0E24(&spC0, g_CurrentPlayer->field_488.collision_position.f[0], g_CurrentPlayer->field_488.collision_position.f[2], spAC.f[0], spAC.f[2], 0x1000, spA0.f[2], spA0.f[1], 0, 1.0f))
+            if (stanTestLineUnobstructed(&spC0, g_CurrentPlayer->field_488.collision_position.f[0], g_CurrentPlayer->field_488.collision_position.f[2], spAC.f[0], spAC.f[2], 0x1000, spA0.f[2], spA0.f[1], 0, 1.0f))
             {
                 spAC.f[1] = bondviewYPositionRelated(spC0, spAC.f[0], spAC.f[2]);
             }

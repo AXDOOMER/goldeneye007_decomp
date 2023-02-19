@@ -2264,46 +2264,58 @@ s32 isPointInsideTriStandTileUnscaled_Maybe(StandTile *tile, f32 p_x, f32 p_z)
 f32 sub_GAME_7F0B0400(StandTile *tile, s32 start3index, f32 p_x,f32 p_z);
 
 #ifdef NONMATCHING
-// Similar to a prev func, but simplier.
-f32 sub_GAME_7F0B0400(void *arg0, s32 arg1, f32 arg2, f32 arg3) {
-    f32 sp38;
-    s32 temp_a1;
-    s32 temp_a0;
-    void *temp_a2;
-    void *temp_v1;
+struct stan_7F0B0E24 {
+    /***/
+    s32 unk00;
+    s32 unk04;
+    s16 unk08;
+    s16 unk0A;
+    s16 unk0C;
+    s16 unk0E;
+};
+
+// decomp.me 98.89% https://decomp.me/scratch/tj1r4
+f32 sub_GAME_7F0B0400(StandTile *tile, s32 start3index, f32 p_x, f32 p_z)
+{
+    f32 temp_f0;
     f32 temp_f2;
     f32 temp_f14;
-    ? temp_ret;
-    s32 phi_a0;
-
-    // Node 0
-    if (arg1 != 2)
+    s32 var_a0;
+    s32 padding3;
+    s32 padding4;
+    //s32 padding;
+    f32 tempf;
+    struct stan_7F0B0E24 *temp_a2;
+    struct stan_7F0B0E24 *temp_v1;
+    
+    if (start3index != 2)
     {
-        // Node 1
-        phi_a0 = (arg1 + 1);
+        var_a0 = start3index + 1;
     }
     else
     {
-        // Node 2
-        phi_a0 = 0;
+        var_a0 = 0;
     }
-    // Node 3
-    temp_a1 = ((s32) arg0->unk6 >> (8 - (arg1 * 4)));
-    temp_a0 = ((s32) arg0->unk6 >> (8 - (phi_a0 * 4)));
-    temp_a2 = (arg0 + ((temp_a1 & 0xf) * 8));
-    temp_v1 = (arg0 + ((temp_a0 & 0xf) * 8));
-    temp_f2 = (f32) (temp_v1->unk8 - temp_a2->unk8);
-    temp_f14 = (f32) (temp_v1->unkC - temp_a2->unkC);
-    sp38 = temp_f2;
-    temp_ret = sqrtf(((temp_f2 * temp_f2) + (temp_f14 * temp_f14)), temp_f14, temp_a0, temp_a1, temp_a2, arg0);
-    if (temp_ret != 0.0f)
+
+    var_a0 = tile->tail.half >> (8 - (var_a0 * 4)); 
+    temp_v1 = ((struct stan_7F0B0E24 *)((struct StandTilePoint *)tile + (( var_a0) & 0xF)));
+    
+    start3index = tile->tail.half >> (8 - (start3index * 4));
+    temp_a2 = ((struct stan_7F0B0E24 *)((struct StandTilePoint *)tile + (( start3index) & 0xF)));
+    
+    
+    temp_f2 = (f32) (temp_v1->unk08 - temp_a2->unk08);
+    temp_f14 = (f32) (temp_v1->unk0C - temp_a2->unk0C);
+
+    temp_f0 = sqrtf((temp_f2 * temp_f2) + (temp_f14 * temp_f14));
+
+    if (temp_f0 == 0.0f)
     {
-        // Node 5
-        // Node 6
-        return ((((arg3 - (f32) sp1C->unkC) * -temp_f2) + (sp34 * (arg2 - (f32) sp1C->unk8))) / temp_ret);
+        return 0.0f;
     }
-    // Node 4
-    return ((((arg3 - (f32) sp1C->unkC) * -temp_f2) + (sp34 * (arg2 - (f32) sp1C->unk8))) / temp_ret);
+
+    tempf = (((p_z - (f32) temp_a2->unk0C) * -temp_f2) + (temp_f14 * (p_x - (f32) temp_a2->unk08)));
+    return tempf / temp_f0;
 }
 #else
 GLOBAL_ASM(
@@ -2400,8 +2412,10 @@ s32 sub_GAME_7F0B0518(StandTile *tile, f32 p_x, f32 p_z)
 
     for (i = 0; i != 3; i++)
     {
-        unk = sub_GAME_7F0B0400(tile,i,p_x,p_z);
-        if (unk < -2) {
+        unk = sub_GAME_7F0B0400(tile, i, p_x, p_z);
+
+        if (unk < -2)
+        {
             return 0;
         }
     }
@@ -3097,10 +3111,20 @@ struct stan_7F0B0E24 {
     s16 unk0E;
 };
 /**
+ * Can change global variables:
+ * 
+ * - D_800413BC
+ * - stanSavedColl_pntA
+ * - stanSavedColl_pntB
+ * - stanSavedColl_tile
+ * - stanSavedColl_pointI
+ * - stanSavedColl_posData
+ * 
  * US address 7F0B0E24.
+ * 
  * 'testLineUnobstructed'
 */
-s32 sub_GAME_7F0B0E24(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z, s32 objFlags, f32 unkHeight, f32 unkA, f32 unkB, f32 unkC)
+s32 stanTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z, s32 objFlags, f32 unkHeight, f32 unkA, f32 unkB, f32 unkC)
 {
     struct PropRecord *temp_s6;
     s32 retval; // sp158
@@ -3166,7 +3190,7 @@ s32 sub_GAME_7F0B0E24(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_
         stanSavedColl_pntB.f[0] = (f32) ((struct stan_7F0B0E24 *)((struct StandTilePoint *)stanSavedColl_tile + point_index))->unk08 * inv_level_scale;
         stanSavedColl_pntB.f[1] = (f32) ((struct stan_7F0B0E24 *)((struct StandTilePoint *)stanSavedColl_tile + point_index))->unk0C * inv_level_scale;
         
-        sp140 = sub_GAME_7F0B3200(&sp14C, &sp144, &stanSavedColl_pntA, &stanSavedColl_pntB);
+        sp140 = unkGeometry7F0B3200(&sp14C, &sp144, &stanSavedColl_pntA, &stanSavedColl_pntB);
     }
     else
     {
@@ -3201,7 +3225,7 @@ s32 sub_GAME_7F0B0E24(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_
                             sp12C.f[0] = spB4->points[next].f[0];
                             sp12C.f[1] = spB4->points[next].f[1];
                             
-                            temp_f0 = sub_GAME_7F0B3200(&sp14C, &sp144, &sp134, &sp12C);
+                            temp_f0 = unkGeometry7F0B3200(&sp14C, &sp144, &sp134, &sp12C);
 
                             if (temp_f0 < sp140)
                             {
@@ -3438,7 +3462,7 @@ glabel sub_GAME_7F0B1410
 /* 0E6150 7F0B1620 C4440000 */  lwc1  $f4, ($v0)
 /* 0E6154 7F0B1624 E7A400F8 */  swc1  $f4, 0xf8($sp)
 /* 0E6158 7F0B1628 C4460004 */  lwc1  $f6, 4($v0)
-/* 0E615C 7F0B162C 0FC2CC80 */  jal   sub_GAME_7F0B3200
+/* 0E615C 7F0B162C 0FC2CC80 */  jal   unkGeometry7F0B3200
 /* 0E6160 7F0B1630 E7A600FC */   swc1  $f6, 0xfc($sp)
 /* 0E6164 7F0B1634 4614003C */  c.lt.s $f0, $f20
 /* 0E6168 7F0B1638 00000000 */  nop   
@@ -3536,10 +3560,18 @@ bool sub_GAME_7F0B17E4(f32 x1, f32 z1, f32 x2, f32 z2, f32 x3, f32 z3)
 
 
 /**
+ * Can change global variables
+ * - D_800413BC
+ * - stanSavedColl_pntA
+ * - stanSavedColl_pntB
+ * - stanSavedColl_tile
+ * - stanSavedColl_pointI
+ * - stanSavedColl_posData
+ * 
  * US address 7F0B18B8.
  * Perfect Dark cdTestVolume (from context)
 */
-s32 sub_GAME_7F0B18B8(StandTile **arg0, f32 arg1, f32 arg2, f32 arg3, s32 arg4, f32 arg5, f32 arg6)
+s32 stanTestVolume(StandTile **arg0, f32 arg1, f32 arg2, f32 arg3, s32 arg4, f32 arg5, f32 arg6)
 {
     s32 i; // stack ??
     f32 var_f20; // stack ??
@@ -5461,7 +5493,7 @@ Gfx * sub_GAME_7F0B312C(Gfx *arg0, s32 arg1) {
 int sub_GAME_7F0B3138(void* unused, StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z,
         int objFlags, f32 unkHeight, f32 unkA) {
 
-    return sub_GAME_7F0B0E24(pTile, p_x, p_z, dest_x, dest_z, objFlags, unkHeight, unkA, 0, 1);
+    return stanTestLineUnobstructed(pTile, p_x, p_z, dest_x, dest_z, objFlags, unkHeight, unkA, 0, 1);
 }
 #else
 GLOBAL_ASM(
@@ -5488,7 +5520,7 @@ glabel sub_GAME_7F0B3138
 /* 0E7CB0 7F0B3180 AFAE0014 */  sw    $t6, 0x14($sp)
 /* 0E7CB4 7F0B3184 E7A60018 */  swc1  $f6, 0x18($sp)
 /* 0E7CB8 7F0B3188 E7A8001C */  swc1  $f8, 0x1c($sp)
-/* 0E7CBC 7F0B318C 0FC2C389 */  jal   sub_GAME_7F0B0E24
+/* 0E7CBC 7F0B318C 0FC2C389 */  jal   stanTestLineUnobstructed
 /* 0E7CC0 7F0B3190 E7AA0020 */   swc1  $f10, 0x20($sp)
 /* 0E7CC4 7F0B3194 8FBF002C */  lw    $ra, 0x2c($sp)
 /* 0E7CC8 7F0B3198 27BD0030 */  addiu $sp, $sp, 0x30
@@ -5503,7 +5535,7 @@ glabel sub_GAME_7F0B3138
 #ifdef NONMATCHING
 void sub_GAME_7F0B31A4(StandTile ** arg1, f32 arg0, f32 arg2, f32 arg3, f32 arg4, s32 arg5, f32 arg6, f32 arg7) {
     // almost a match. missing sw a0,0x28(sp) and move a0,a1 instructions
-    sub_GAME_7F0B18B8(arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+    stanTestVolume(arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 }
 #else
 GLOBAL_ASM(
@@ -5524,7 +5556,7 @@ glabel sub_GAME_7F0B31A4
 /* 0E7D04 7F0B31D4 8FA70038 */  lw    $a3, 0x38($sp)
 /* 0E7D08 7F0B31D8 AFAE0010 */  sw    $t6, 0x10($sp)
 /* 0E7D0C 7F0B31DC E7A40014 */  swc1  $f4, 0x14($sp)
-/* 0E7D10 7F0B31E0 0FC2C62E */  jal   sub_GAME_7F0B18B8
+/* 0E7D10 7F0B31E0 0FC2C62E */  jal   stanTestVolume
 /* 0E7D14 7F0B31E4 E7A60018 */   swc1  $f6, 0x18($sp)
 /* 0E7D18 7F0B31E8 8FBF0024 */  lw    $ra, 0x24($sp)
 /* 0E7D1C 7F0B31EC 27BD0028 */  addiu $sp, $sp, 0x28
