@@ -4505,21 +4505,19 @@ glabel stanGetMoveBondCollisionTiles
 
 
 #ifdef NONMATCHING
-// Tests do appear to be lts
-
+/**
+ * arg5 type is wrong, first offset needs to be a float
+*/
 s32 sub_GAME_7F0B260C(StandTile *tile, s32 index, f32 p_x, f32 p_z, s32 arg4, struct StandTileLocusCallbackRecord *arg5)
 {
-    s32 nextIndex;
+    if (arg5->unk00 < (f32)tile->points[index].y 
+        && arg5->unk00 < (f32)tile->points[(index + 1) % STAN_TAIL_E(tile)].y)
+    {
+        return 1;
+    }
+    
+    return 0;
 
-    if (*rtn < (f32)tile->points[index].y) {
-        if (*rtn < (f32)tile->points[(index + 1) % STAN_POINT_COUNT(tile)].y)
-        {
-            return 1;
-        }
-    }
-    else {
-        return 0;
-    }
 }
 
 #else

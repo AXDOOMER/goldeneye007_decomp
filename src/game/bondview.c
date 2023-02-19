@@ -9265,6 +9265,7 @@ void bondviewUpdatePlayerClipping(s32 use_stanHeight, f32 stanHeight_offset)
                 g_CurrentPlayer->field_488.collision_position.f[0],
                 g_CurrentPlayer->field_488.collision_position.f[2]);
 
+            // test if y position+height is under stan height
             if (sub_GAME_7F0B26B8(
                 &stan,
                 g_CurrentPlayer->field_488.collision_position.f[0],
