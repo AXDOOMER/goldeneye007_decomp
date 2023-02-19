@@ -11293,6 +11293,10 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         }
     }
 
+    /**
+     * This section updates the tank turret horizontal position (turning left and right),
+     * as well as turning the tank left and right.
+    */
     if (in_tank_flag == 1)
     {
         f32 ftemp2;
