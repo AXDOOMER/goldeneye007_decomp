@@ -2,6 +2,7 @@
 #include <PR/R4300.h>
 #include <PR/os.h>
 #include <PR/os_internal.h>
+#include <PR/rcp.h>
 #include <bondgame.h>
 #include "boot.h"
 #include "sched.h"
@@ -32,9 +33,9 @@
 
 u32 unknown_val_80023040 = 0;
 /*D:80023044*/
-u32 unknown_init_val = 2;
+u32 unknown_init_val = PI_CLR_INTR;
 
-u32 cart_hw_address = 0x10000000;
+u32 cart_hw_address = PI_DOM1_ADDR2;
 
 struct debug_handler_entry debug_handler_table[] = 
 {
@@ -157,8 +158,8 @@ void *set_stack_entry(u8 *stack, u32 size)
  */
 void set_hw_address_and_unknown(void) 
 {
-    unknown_init_val = 1;
-    cart_hw_address = 0x10000000;
+    unknown_init_val = PI_SET_RESET;
+    cart_hw_address = PI_DOM1_ADDR2;
 }
 
 /**
