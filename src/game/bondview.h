@@ -2738,7 +2738,7 @@ extern struct PropRecord *g_PlayerTankProp;
 extern f32 g_PlayerTankYOffset;
 
 //D:80036458
-extern ALSoundState * SFX_80036458[2];
+extern ALSoundState * g_TankSfxState[2];
 
 //D:80036460
 extern f32 g_TankTurnSpeed;

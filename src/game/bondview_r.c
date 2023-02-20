@@ -138,8 +138,8 @@ void bondviewLoadSetupIntroSection(void)
     g_WorldTankProp = 0;
     g_PlayerTankProp = NULL;
     g_PlayerTankYOffset = FLOAT_INIT;
-    SFX_80036458[0] = NULL;
-    SFX_80036458[1] = NULL;
+    g_TankSfxState[0] = NULL;
+    g_TankSfxState[1] = NULL;
     g_TankTurnSpeed = FLOAT_INIT;
     g_TankOrientationAngle = FLOAT_INIT;
     D_80036468 = FLOAT_INIT;

@@ -138,6 +138,8 @@
     #define CLIPPING_FIELD90_VALUE -4.5f
 #endif
 
+#define FULL_CROUCH_OFFSET -100.0f
+
 #define SPEED_REGULAR_MAX  1.0f
 #define SPEED_RUN_MAX      1.25f
 #define SPEED_TICK_ADJUST  0.01f
@@ -367,8 +369,10 @@ struct PropRecord *g_PlayerTankProp = NULL;
  */
 f32 g_PlayerTankYOffset = 0;
 
-//D:80036458
-ALSoundState * SFX_80036458[2] = { NULL, NULL };
+/**
+ * US address 80036458.
+*/
+ALSoundState * g_TankSfxState[2] = { NULL, NULL };
 
 /**
  * min -3.749999, max +3.749999
@@ -6114,7 +6118,7 @@ s32 bondviewTryMoveToStan(struct coord3d *arg0, StandTile **stan)
                 1.0f) != 0)
             && stanTestVolume(&sp90, arg0->f[0], arg0->f[2], collision_radius, sp8C, height, always_30) < 0)
         {
-            if (g_CurrentPlayer->ducking_height_offset == -100.0f || sp7C < 0)
+            if (g_CurrentPlayer->ducking_height_offset == FULL_CROUCH_OFFSET || sp7C < 0)
             {
                 if (stanGetLocusCount(&sp3C) == 0 && sub_GAME_7F0B26B8(&sp90, arg0->f[0], arg0->f[2], collision_radius, g_CurrentPlayer->field_488.collision_position.f[1] + 175.0f) >= 0)
                 {
@@ -7490,8 +7494,8 @@ void bondviewPlayerStopAudioForPause(void)
 
     for (i = 0; i < 2; i++)
     {
-        if (SFX_80036458[i] && sndGetPlayingState(SFX_80036458[i]) != AL_STOPPED) {
-			sndDeactivate(SFX_80036458[i]);
+        if (g_TankSfxState[i] && sndGetPlayingState(g_TankSfxState[i]) != AL_STOPPED) {
+			sndDeactivate(g_TankSfxState[i]);
 		}
     }
 
@@ -11603,7 +11607,8 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
     bondviewApplyVertaTheta();
 
-    // add basic block
+    // Handle crouching, and animation between standing and crouching.
+    // Add basic block to declare local variables at the correct stack position.
     {
         f32 sp2AC;
         f32 stack_padding_15;
@@ -11611,7 +11616,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         sp2AC = 0.0f;
         if (currentPlayerGetCrouchPos() == CROUCH_SQUAT)
         {
-            sp2AC = -100.0f;
+            sp2AC = FULL_CROUCH_OFFSET;
         }
         else if (currentPlayerGetCrouchPos() == CROUCH_HALF)
         {
@@ -11640,8 +11645,15 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         }
     }
 
+    /**
+     * Update forwards/backwards movement.
+    */
     if (in_tank_flag == 1)
     {
+        /**
+         * This section handles the forward/backwards movement of the tank.
+        */
+
         Mtxf sp268;
         struct coord3d sp25C;
         f32 sp258;
@@ -11649,9 +11661,14 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         s32 stack_padding_14;
         s32 i_3;
         f32 ftemp_5;
-        f32 sp244_tank_engine_utilization;
+        f32 tank_engine_utilization_percent;
         struct TankRecord *tank_obj;
 
+        /**
+         * Check to see if Bond is just now entering the tank.
+         * If so, initialize the tank prop.
+         * This also handles spinning Bond around (if required) to face the same direction as the turret.
+        */
         if (g_EnterTankAudioState == TANK_RUN_STATE_NOT_RUNNING)
         {
             if (g_PlayerTankProp != NULL)
@@ -11688,7 +11705,6 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                     (g_TankEnteringSitHeightRemain * g_TankEnterBondVertAngleDeg) 
                     + ((1.0f - g_TankEnteringSitHeightRemain) * sp254); 
 
-                // ftemp_5: extremely shorted lived variable
                 ftemp_5 = sp258 - g_TankEnterBondHorizAngleDeg;
                 if (ftemp_5 > 180.0f)
                 {
@@ -11736,129 +11752,140 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 g_EnterTankAudioState = TANK_RUN_STATE_STARTING;
             }
         }
+        /**
+         * Else, Bond has already entered the tank.
+        */
         else
         {
+            /**
+             * There's an initial "starting" step.
+            */
             if (g_EnterTankAudioState == TANK_RUN_STATE_STARTING)
             {
                 g_EnterTankAudioState = TANK_RUN_STATE_RUNNING;
-                if ((SFX_80036458[0] == NULL) && (lvlGetControlsLockedFlag() == 0))
+                if ((g_TankSfxState[0] == NULL) && (lvlGetControlsLockedFlag() == 0))
                 {
-                    sndPlaySfx(g_musicSfxBufferPtr, TRUCK_START_SFX, &SFX_80036458[0]);
+                    sndPlaySfx(g_musicSfxBufferPtr, TRUCK_START_SFX, &g_TankSfxState[0]);
                 }
                 
-                sndCreatePostEvent(SFX_80036458[0], 8, 0x61A8);
+                sndCreatePostEvent(g_TankSfxState[0], 8, 0x61A8);
                 g_TankEngineSfxVolume = 0x61A8;
             }
+            /**
+             * Else Bond has fully entered the tank, and the engine is running.
+             * Update turret vertical angle.
+             * Update engine sound effect volume based on current tank speed.
+            */
             else
             {
-                f32 tank_waudio_speedforwards;
-                f32 tank_waudio_speedtheta;
-                f32 tank_waudio_vertical_angle;
+                f32 tank_scaled_speedforwards;
+                f32 tank_scaled_speedtheta;
+                f32 tank_vertical_angle;
                 
-                tank_waudio_speedforwards = g_CurrentPlayer->speedforwards / TANK_MAX_SPEED;
-                tank_waudio_speedtheta = g_CurrentPlayer->speedtheta / 0.3f;
+                tank_scaled_speedforwards = g_CurrentPlayer->speedforwards / TANK_MAX_SPEED;
+                tank_scaled_speedtheta = g_CurrentPlayer->speedtheta / 0.3f;
                 
-                if (tank_waudio_speedforwards < 0.0f)
+                if (tank_scaled_speedforwards < 0.0f)
                 {
-                    tank_waudio_speedforwards = -tank_waudio_speedforwards;
+                    tank_scaled_speedforwards = -tank_scaled_speedforwards;
                 }
-                if (tank_waudio_speedtheta < 0.0f)
+                if (tank_scaled_speedtheta < 0.0f)
                 {
-                    tank_waudio_speedtheta = -tank_waudio_speedtheta;
+                    tank_scaled_speedtheta = -tank_scaled_speedtheta;
                 }
 
-                sp244_tank_engine_utilization = tank_waudio_speedforwards;
-                if (tank_waudio_speedforwards < tank_waudio_speedtheta)
+                tank_engine_utilization_percent = tank_scaled_speedforwards;
+                if (tank_scaled_speedforwards < tank_scaled_speedtheta)
                 {
-                    sp244_tank_engine_utilization = tank_waudio_speedtheta;
+                    tank_engine_utilization_percent = tank_scaled_speedtheta;
                 }
 
-                if (sp244_tank_engine_utilization > 0.0f)
+                if (tank_engine_utilization_percent > 0.0f)
                 {
-                    if (sp244_tank_engine_utilization > 1.0f)
+                    if (tank_engine_utilization_percent > 1.0f)
                     {
-                        sp244_tank_engine_utilization = 1.0f;
+                        tank_engine_utilization_percent = 1.0f;
                     }
                     
-                    if (SFX_80036458[1] == NULL)
+                    if (g_TankSfxState[1] == NULL)
                     {
                         if (lvlGetControlsLockedFlag() == 0)
                         {
-                            sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, TANK_SFX, &SFX_80036458[1]);
+                            sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, TANK_SFX, &g_TankSfxState[1]);
                         }
                     }
 
-                    if (SFX_80036458[1] != NULL)
+                    if (g_TankSfxState[1] != NULL)
                     {
                         s32 phi_a2;
 
                         phi_a2 = 0x7FFF;
-                        if (sp244_tank_engine_utilization < 0.15f)
+                        if (tank_engine_utilization_percent < 0.15f)
                         {
-                            phi_a2 = (s32) ((sp244_tank_engine_utilization * 20000.0f) / 0.15f);
+                            phi_a2 = (s32) ((tank_engine_utilization_percent * 20000.0f) / 0.15f);
                         }
-                        else if (sp244_tank_engine_utilization < 0.9f)
+                        else if (tank_engine_utilization_percent < 0.9f)
                         {
-                            phi_a2 = (s32) ((((sp244_tank_engine_utilization - 0.15f) * 12767.0f) / 0.75f) + 20000.0f);
+                            phi_a2 = (s32) ((((tank_engine_utilization_percent - 0.15f) * 12767.0f) / 0.75f) + 20000.0f);
                         }
                         
-                        sndCreatePostEvent(SFX_80036458[1], 8, phi_a2);
+                        sndCreatePostEvent(g_TankSfxState[1], 8, phi_a2);
                     }
                 }
                 else
                 {
-                    if (SFX_80036458[1] != NULL)
+                    if (g_TankSfxState[1] != NULL)
                     {
-                        if (sndGetPlayingState(SFX_80036458[1]) != 0)
+                        if (sndGetPlayingState(g_TankSfxState[1]) != 0)
                         {
-                            sndDeactivate(SFX_80036458[1]);
+                            sndDeactivate(g_TankSfxState[1]);
                         }
                     }
                 }
 
-                if (SFX_80036458[0] == NULL)
+                if (g_TankSfxState[0] == NULL)
                 {
                     if (lvlGetControlsLockedFlag() == 0)
                     {
-                        sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, TRUCK_RUN_SFX, &SFX_80036458[0]);
+                        sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, TRUCK_RUN_SFX, &g_TankSfxState[0]);
                     }
                 }
 
-                if (SFX_80036458[0] != NULL)
+                if (g_TankSfxState[0] != NULL)
                 {
                     g_TankEngineSfxVolume = 0x7FFF;
-                    if (sp244_tank_engine_utilization < 0.9f)
+                    if (tank_engine_utilization_percent < 0.9f)
                     {
-                        g_TankEngineSfxVolume = (s32) (((sp244_tank_engine_utilization * 7767.0f) / 0.9f) + 25000.0f);
+                        g_TankEngineSfxVolume = (s32) (((tank_engine_utilization_percent * 7767.0f) / 0.9f) + 25000.0f);
                     }
 
-                    sndCreatePostEvent(SFX_80036458[0], 8, g_TankEngineSfxVolume);
+                    sndCreatePostEvent(g_TankSfxState[0], 8, g_TankEngineSfxVolume);
                 }
 
                 if (getCurrentPlayerWeaponId(GUNRIGHT) == ITEM_TANKSHELLS)
                 {
-                    tank_waudio_vertical_angle = g_CurrentPlayer->field_2A08;
-                    tank_waudio_vertical_angle += 0.17453294f; /* should be DegToRad1Fact(10), but that yields 0.17453293f */
+                    tank_vertical_angle = g_CurrentPlayer->field_2A08;
+                    tank_vertical_angle += 0.17453294f; /* should be DegToRad1Fact(10), but that yields 0.17453293f */
                 }
                 else
                 {
-                    tank_waudio_vertical_angle = g_TankTurretVerticalAngle;
+                    tank_vertical_angle = g_TankTurretVerticalAngle;
                 }
 
-                if (tank_waudio_vertical_angle > DegToRad1Fact(25))
+                if (tank_vertical_angle > DegToRad1Fact(25))
                 {
-                    tank_waudio_vertical_angle = DegToRad1Fact(25);
+                    tank_vertical_angle = DegToRad1Fact(25);
                 }
 
                 /* -0.087266468f should be DegToRad1Fact(-5), but that yields -0.0872664600611 */
-                if (tank_waudio_vertical_angle < -0.087266468f)
+                if (tank_vertical_angle < -0.087266468f)
                 {
-                    tank_waudio_vertical_angle = -0.087266468f;
+                    tank_vertical_angle = -0.087266468f;
                 }
 
                 for (i_3=0; i_3<g_ClockTimer; i_3++)
                 {
-                    g_TankTurretVerticalAngleRelated = (TANKTURRETVERTICALANGLERELATED_SCALE * g_TankTurretVerticalAngleRelated) + tank_waudio_vertical_angle;
+                    g_TankTurretVerticalAngleRelated = (TANKTURRETVERTICALANGLERELATED_SCALE * g_TankTurretVerticalAngleRelated) + tank_vertical_angle;
                 }
 
                 g_TankTurretVerticalAngle = g_TankTurretVerticalAngleRelated * (1.0f - TANKTURRETVERTICALANGLERELATED_SCALE);
@@ -11882,9 +11909,9 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         
         if ((g_EnterTankAudioState == TANK_RUN_STATE_RUNNING) && (g_ClockTimer > 0))
         {
-            f32 tank_audio2_x;
-            f32 tank_audio2_z;
-            f32 tank_audio2_speedforwards;
+            f32 calc_x;
+            f32 calc_z;
+            f32 calc_speedforwards;
 
 #if defined(VERSION_EU)
             // Divide by zero check.
@@ -11897,16 +11924,16 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             }
 #endif
             
-            tank_audio2_x = (g_CurrentPlayer->field_488.collision_position.f[0] - g_CurrentPlayer->bondprevpos.f[0]) / g_GlobalTimerDelta;
-            tank_audio2_z = (g_CurrentPlayer->field_488.collision_position.f[2] - g_CurrentPlayer->bondprevpos.f[2]) / g_GlobalTimerDelta;
-            tank_audio2_speedforwards = sqrtf((tank_audio2_x * tank_audio2_x) + (tank_audio2_z * tank_audio2_z));
+            calc_x = (g_CurrentPlayer->field_488.collision_position.f[0] - g_CurrentPlayer->bondprevpos.f[0]) / g_GlobalTimerDelta;
+            calc_z = (g_CurrentPlayer->field_488.collision_position.f[2] - g_CurrentPlayer->bondprevpos.f[2]) / g_GlobalTimerDelta;
+            calc_speedforwards = sqrtf((calc_x * calc_x) + (calc_z * calc_z));
             
             if (g_CurrentPlayer->speedforwards < 0.0f)
             {
-                tank_audio2_speedforwards = -tank_audio2_speedforwards;
+                calc_speedforwards = -calc_speedforwards;
             }
             
-            g_CurrentPlayer->speedforwards = tank_audio2_speedforwards;
+            g_CurrentPlayer->speedforwards = calc_speedforwards;
         }
     }
     else // not in tank: in_tank_flag != 1
@@ -11947,7 +11974,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         f32 sp16C;
         f32 sp168;
 
-        if ((SFX_80036458[0] != NULL) && (sndGetPlayingState(SFX_80036458[0]) != 0))
+        if ((g_TankSfxState[0] != NULL) && (sndGetPlayingState(g_TankSfxState[0]) != 0))
         {
             #if defined(VERSION_US)
             g_TankEngineSfxVolume -= (g_ClockTimer * 1000);
@@ -11959,17 +11986,17 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
             if (g_TankEngineSfxVolume > 0)
             {
-                sndCreatePostEvent(SFX_80036458[0], 8, g_TankEngineSfxVolume);
+                sndCreatePostEvent(g_TankSfxState[0], 8, g_TankEngineSfxVolume);
             }
             else
             {
-                sndDeactivate(SFX_80036458[0]);
+                sndDeactivate(g_TankSfxState[0]);
             }
         }
 
-        if ((SFX_80036458[1] != NULL) && (sndGetPlayingState(SFX_80036458[1]) != 0))
+        if ((g_TankSfxState[1] != NULL) && (sndGetPlayingState(g_TankSfxState[1]) != 0))
         {
-            sndDeactivate(SFX_80036458[1]);
+            sndDeactivate(g_TankSfxState[1]);
         }
 
 
@@ -12099,6 +12126,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             g_CurrentPlayer->field_488.collision_radius * 1.16f,
             &curLocus);
         
+        /* almost never true */
         if (stanGetLocusCount(&curLocus) != 0)
         {
             use_stanHeight = 1;
@@ -12111,6 +12139,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             g_CurrentPlayer->field_488.collision_radius * 1.01f,
             &curLocus);
 
+        /* almost never true */
         if (stanGetLocusCount(&curLocus) != 0)
         {
             use_stanHeight = 1;
@@ -12123,11 +12152,18 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             g_CurrentPlayer->field_488.collision_radius,
             &curLocus);
         
+        /* almost always true */
         if (stanGetLocusCount(&curLocus) == 0)
         {
-            stanTileDistanceRelated(&sp200, start_collision_pos_x, start_collision_pos_z, g_CurrentPlayer->field_488.collision_radius * 0.990099f, &curLocus);
+            stanTileDistanceRelated(
+                &sp200,
+                start_collision_pos_x,
+                start_collision_pos_z,
+                g_CurrentPlayer->field_488.collision_radius * 0.990099f,
+                &curLocus);
         }
         
+        /* almost never true */
         if (stanGetLocusCount(&curLocus))
         {
             use_stanHeight = 1;
@@ -12276,6 +12312,11 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
     // end perfect dark `void bwalk0f0c69b8(void)`
 
+    /**
+     * The following section updates the TankRecord fields, and handles prop collision detection
+     * with the tank. If colliding with character, play the "arrrhghhg" sound effect, or if
+     * colliding with prop then set tank movement penalty and create an explosion.
+    */
     if ((g_PlayerTankProp != NULL) && (in_tank_flag == 1) && (g_EnterTankAudioState == TANK_RUN_STATE_RUNNING))
     {
         struct PropRecord *prop;
@@ -12435,6 +12476,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     bondviewUpdatePlayerY(use_stanHeight, sp390);
     bondviewUpdatePlayerCollisionPositionFields();
     bondviewUpdatePlayerCollisionBounds();
+
     if (get_debug_man_pos_flag() != 0)
     {
         f32 sp5C_out_unused;
