@@ -16796,7 +16796,7 @@ glabel maybe_mp_interface
 /* 0BDD74 7F089244 0FC22ABA */  jal   sub_GAME_7F08AAE8
 /* 0BDD78 7F089248 8FA40058 */   lw    $a0, 0x58($sp)
 /* 0BDD7C 7F08924C AFA20058 */  sw    $v0, 0x58($sp)
-/* 0BDD80 7F089250 0FC15884 */  jal   sub_GAME_7F056210
+/* 0BDD80 7F089250 0FC15884 */  jal   countdownTimerRender
 /* 0BDD84 7F089254 00402025 */   move  $a0, $v0
 /* 0BDD88 7F089258 AFA20058 */  sw    $v0, 0x58($sp)
 /* 0BDD8C 7F08925C 0FC20138 */  jal   currentPlayerDrawFade
@@ -17088,7 +17088,7 @@ glabel maybe_mp_interface
 /* 0BE1B4 7F089684 0FC1A73D */  jal   generate_ammo_total_microcode
 /* 0BE1B8 7F089688 8FA40058 */   lw    $a0, 0x58($sp)
 /* 0BE1BC 7F08968C AFA20058 */  sw    $v0, 0x58($sp)
-/* 0BE1C0 7F089690 0FC15884 */  jal   sub_GAME_7F056210
+/* 0BE1C0 7F089690 0FC15884 */  jal   countdownTimerRender
 /* 0BE1C4 7F089694 00402025 */   move  $a0, $v0
 /* 0BE1C8 7F089698 AFA20058 */  sw    $v0, 0x58($sp)
 /* 0BE1CC 7F08969C 0FC31824 */  jal   display_red_blue_on_radar
@@ -17126,7 +17126,7 @@ glabel maybe_mp_interface
 /* 0BBD9C 7F0893AC 0FC22B4C */  jal   sub_GAME_7F08AAE8
 /* 0BBDA0 7F0893B0 8FA40058 */   lw    $a0, 0x58($sp)
 /* 0BBDA4 7F0893B4 AFA20058 */  sw    $v0, 0x58($sp)
-/* 0BBDA8 7F0893B8 0FC1593C */  jal   sub_GAME_7F056210
+/* 0BBDA8 7F0893B8 0FC1593C */  jal   countdownTimerRender
 /* 0BBDAC 7F0893BC 00402025 */   move  $a0, $v0
 /* 0BBDB0 7F0893C0 AFA20058 */  sw    $v0, 0x58($sp)
 /* 0BBDB4 7F0893C4 0FC20161 */  jal   currentPlayerDrawFade
@@ -17418,7 +17418,7 @@ glabel maybe_mp_interface
 /* 0BC1DC 7F0897EC 0FC1A922 */  jal   generate_ammo_total_microcode
 /* 0BC1E0 7F0897F0 8FA40058 */   lw    $a0, 0x58($sp)
 /* 0BC1E4 7F0897F4 AFA20058 */  sw    $v0, 0x58($sp)
-/* 0BC1E8 7F0897F8 0FC1593C */  jal   sub_GAME_7F056210
+/* 0BC1E8 7F0897F8 0FC1593C */  jal   countdownTimerRender
 /* 0BC1EC 7F0897FC 00402025 */   move  $a0, $v0
 /* 0BC1F0 7F089800 AFA20058 */  sw    $v0, 0x58($sp)
 /* 0BC1F4 7F089804 0FC31568 */  jal   display_red_blue_on_radar
