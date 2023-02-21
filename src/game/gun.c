@@ -24735,7 +24735,8 @@ glabel set_rgba_redirect_generate_microcode
 #endif
 
 
-Gfx *gunDrawHudString(Gfx *gdl, s8 *text, s32 x, s32 halign, s32 y, s32 valign, bool glow) {
+Gfx *gunDrawHudString(Gfx *gdl, s8 *text, s32 x, s32 halign, s32 y, s32 valign, bool glow)
+{
     s32 x1;
     s32 y1;
     s32 x2;
@@ -24781,21 +24782,17 @@ Gfx *gunDrawHudString(Gfx *gdl, s8 *text, s32 x, s32 halign, s32 y, s32 valign, 
     } else {
         gdl = textRender(gdl, &x1, &y1, text, ptrFontBankGothicChars, ptrFontBankGothic, 0xFF00B0, (s32) viGetX(), viGetY(), 0, 0);
     }
+
     return gdl;
 }
 
 
-Gfx *gunDrawHudInteger(Gfx *gdl, s32 value, s32 x, s32 halign, s32 y, s32 valign, s32 colour)
+Gfx *gunDrawHudInteger(Gfx *gdl, s32 value, s32 x, s32 halign, s32 y, s32 valign, bool glow)
 {
     char buffer[12];
     sprintf(buffer, "%d\n", value);
-    return gunDrawHudString(gdl, buffer, x, halign, y, valign, colour);
+    return gunDrawHudString(gdl, buffer, x, halign, y, valign, glow);
 }
-
-
-
-
-
 
 #ifdef NONMATCHING
 s32 generate_ammo_total_microcode(s32 arg0) {

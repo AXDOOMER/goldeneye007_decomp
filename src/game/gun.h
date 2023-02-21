@@ -351,4 +351,7 @@ void gunSetAimType(s32 param_1);
 void sub_GAME_7F067FBC(f32 turn_x, f32 turn_y);
 void gunTickGameplay(s32 arg0);
 
+Gfx *gunDrawHudString(Gfx *gdl, s8 *text, s32 x, s32 halign, s32 y, s32 valign, bool glow);
+Gfx *gunDrawHudInteger(Gfx *gdl, s32 value, s32 x, s32 halign, s32 y, s32 valign, bool glow);
+
 #endif
