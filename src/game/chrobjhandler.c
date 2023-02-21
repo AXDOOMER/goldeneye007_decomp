@@ -2212,8 +2212,8 @@ glabel sub_GAME_7F041400
 /* 0762B4 7F041784 AC2C0B0C */  sw    $t4, %lo(D_80030B0C)($at)
 /* 0762B8 7F041788 3C018003 */  lui   $at, %hi(bodypartshot)
 /* 0762BC 7F04178C AC200B10 */  sw    $zero, %lo(bodypartshot)($at)
-/* 0762C0 7F041790 3C018007 */  lui   $at, %hi(objinst)
-/* 0762C4 7F041794 AC205B70 */  sw    $zero, %lo(objinst)($at)
+/* 0762C0 7F041790 3C018007 */  lui   $at, %hi(g_CurrentProjectileModel)
+/* 0762C4 7F041794 AC205B70 */  sw    $zero, %lo(g_CurrentProjectileModel)($at)
 /* 0762C8 7F041798 3C018007 */  lui   $at, %hi(dword_CODE_bss_80075B74)
 /* 0762CC 7F04179C 10000002 */  b     .L7F0417A8
 /* 0762D0 7F0417A0 AC205B74 */   sw    $zero, %lo(dword_CODE_bss_80075B74)($at)
@@ -2468,8 +2468,8 @@ glabel sub_GAME_7F0419E4
 /* 07661C 7F041AEC AC2A0B0C */  sw    $t2, %lo(D_80030B0C)($at)
 /* 076620 7F041AF0 3C018003 */  lui   $at, %hi(bodypartshot)
 /* 076624 7F041AF4 AC2B0B10 */  sw    $t3, %lo(bodypartshot)($at)
-/* 076628 7F041AF8 3C018007 */  lui   $at, %hi(objinst)
-/* 07662C 7F041AFC AC2C5B70 */  sw    $t4, %lo(objinst)($at)
+/* 076628 7F041AF8 3C018007 */  lui   $at, %hi(g_CurrentProjectileModel)
+/* 07662C 7F041AFC AC2C5B70 */  sw    $t4, %lo(g_CurrentProjectileModel)($at)
 /* 076630 7F041B00 3C018007 */  lui   $at, %hi(dword_CODE_bss_80075B74)
 /* 076634 7F041B04 AC2D5B74 */  sw    $t5, %lo(dword_CODE_bss_80075B74)($at)
 .L7F041B08:
@@ -2677,9 +2677,9 @@ glabel sub_GAME_7F041BB8
 /* 0768F8 7F041DC8 8FAA0040 */  lw    $t2, 0x40($sp)
 /* 0768FC 7F041DCC 3C018003 */  lui   $at, %hi(bodypartshot)
 /* 076900 7F041DD0 AC290B10 */  sw    $t1, %lo(bodypartshot)($at)
-/* 076904 7F041DD4 3C018007 */  lui   $at, %hi(objinst)
+/* 076904 7F041DD4 3C018007 */  lui   $at, %hi(g_CurrentProjectileModel)
 /* 076908 7F041DD8 8FAB003C */  lw    $t3, 0x3c($sp)
-/* 07690C 7F041DDC AC2A5B70 */  sw    $t2, %lo(objinst)($at)
+/* 07690C 7F041DDC AC2A5B70 */  sw    $t2, %lo(g_CurrentProjectileModel)($at)
 /* 076910 7F041DE0 3C018007 */  lui   $at, %hi(dword_CODE_bss_80075B74)
 /* 076914 7F041DE4 24020001 */  li    $v0, 1
 /* 076918 7F041DE8 10000002 */  b     .L7F041DF4
@@ -6421,11 +6421,11 @@ glabel object_interaction
 /* 07A49C 7F04596C 3C058003 */  lui   $a1, %hi(D_80030B0C)
 /* 07A4A0 7F045970 8CA50B0C */  lw    $a1, %lo(D_80030B0C)($a1)
 /* 07A4A4 7F045974 02602025 */  move  $a0, $s3
-/* 07A4A8 7F045978 3C068007 */  lui   $a2, %hi(objinst)
+/* 07A4A8 7F045978 3C068007 */  lui   $a2, %hi(g_CurrentProjectileModel)
 /* 07A4AC 7F04597C 10A0000B */  beqz  $a1, .L7F0459AC
 /* 07A4B0 7F045980 3C078007 */   lui   $a3, %hi(dword_CODE_bss_80075B74)
 /* 07A4B4 7F045984 8E720014 */  lw    $s2, 0x14($s3)
-/* 07A4B8 7F045988 8CC65B70 */  lw    $a2, %lo(objinst)($a2)
+/* 07A4B8 7F045988 8CC65B70 */  lw    $a2, %lo(g_CurrentProjectileModel)($a2)
 /* 07A4BC 7F04598C 0FC10E9B */  jal   objEmbed
 /* 07A4C0 7F045990 8CE75B74 */   lw    $a3, %lo(dword_CODE_bss_80075B74)($a3)
 /* 07A4C4 7F045994 10400005 */  beqz  $v0, .L7F0459AC
@@ -6551,10 +6551,10 @@ glabel object_interaction
 /* 07A690 7F045B60 10410080 */  beq   $v0, $at, .L7F045D64
 /* 07A694 7F045B64 2401006E */   li    $at, 110
 /* 07A698 7F045B68 1041007E */  beq   $v0, $at, .L7F045D64
-/* 07A69C 7F045B6C 3C048007 */   lui   $a0, %hi(objinst)
+/* 07A69C 7F045B6C 3C048007 */   lui   $a0, %hi(g_CurrentProjectileModel)
 /* 07A6A0 7F045B70 3C058007 */  lui   $a1, %hi(dword_CODE_bss_80075B74)
 /* 07A6A4 7F045B74 8CA55B74 */  lw    $a1, %lo(dword_CODE_bss_80075B74)($a1)
-/* 07A6A8 7F045B78 8C845B70 */  lw    $a0, %lo(objinst)($a0)
+/* 07A6A8 7F045B78 8C845B70 */  lw    $a0, %lo(g_CurrentProjectileModel)($a0)
 /* 07A6AC 7F045B7C 0FC1B198 */  jal   modelFindNodeMtx
 /* 07A6B0 7F045B80 00003025 */   move  $a2, $zero
 /* 07A6B4 7F045B84 C7A60614 */  lwc1  $f6, 0x614($sp)
@@ -6573,12 +6573,12 @@ glabel object_interaction
 /* 07A6E8 7F045BB8 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 07A6EC 7F045BBC 44810000 */  mtc1  $at, $f0
 /* 07A6F0 7F045BC0 46065201 */  sub.s $f8, $f10, $f6
-/* 07A6F4 7F045BC4 3C048007 */  lui   $a0, %hi(objinst)
+/* 07A6F4 7F045BC4 3C048007 */  lui   $a0, %hi(g_CurrentProjectileModel)
 /* 07A6F8 7F045BC8 3C058007 */  lui   $a1, %hi(dword_CODE_bss_80075B74)
 /* 07A6FC 7F045BCC 8CA55B74 */  lw    $a1, %lo(dword_CODE_bss_80075B74)($a1)
 /* 07A700 7F045BD0 46004102 */  mul.s $f4, $f8, $f0
 /* 07A704 7F045BD4 C7A805D0 */  lwc1  $f8, 0x5d0($sp)
-/* 07A708 7F045BD8 8C845B70 */  lw    $a0, %lo(objinst)($a0)
+/* 07A708 7F045BD8 8C845B70 */  lw    $a0, %lo(g_CurrentProjectileModel)($a0)
 /* 07A70C 7F045BDC 46045180 */  add.s $f6, $f10, $f4
 /* 07A710 7F045BE0 E7A605CC */  swc1  $f6, 0x5cc($sp)
 /* 07A714 7F045BE4 C64A0034 */  lwc1  $f10, 0x34($s2)
@@ -6599,10 +6599,10 @@ glabel object_interaction
 /* 07A750 7F045C20 C42A5B88 */  lwc1  $f10, %lo(flt_CODE_bss_80075B88)($at)
 /* 07A754 7F045C24 46060102 */  mul.s $f4, $f0, $f6
 /* 07A758 7F045C28 C7A605CC */  lwc1  $f6, 0x5cc($sp)
-/* 07A75C 7F045C2C 3C048007 */  lui   $a0, %hi(objinst)
+/* 07A75C 7F045C2C 3C048007 */  lui   $a0, %hi(g_CurrentProjectileModel)
 /* 07A760 7F045C30 3C058007 */  lui   $a1, %hi(dword_CODE_bss_80075B74)
 /* 07A764 7F045C34 8CA55B74 */  lw    $a1, %lo(dword_CODE_bss_80075B74)($a1)
-/* 07A768 7F045C38 8C845B70 */  lw    $a0, %lo(objinst)($a0)
+/* 07A768 7F045C38 8C845B70 */  lw    $a0, %lo(g_CurrentProjectileModel)($a0)
 /* 07A76C 7F045C3C 460A2202 */  mul.s $f8, $f4, $f10
 /* 07A770 7F045C40 46083101 */  sub.s $f4, $f6, $f8
 /* 07A774 7F045C44 0FC1B3A4 */  jal   getjointsize
@@ -6613,10 +6613,10 @@ glabel object_interaction
 /* 07A788 7F045C58 C4285B8C */  lwc1  $f8, %lo(flt_CODE_bss_80075B78+0x14)($at)
 /* 07A78C 7F045C5C 460A0182 */  mul.s $f6, $f0, $f10
 /* 07A790 7F045C60 C7AA05D0 */  lwc1  $f10, 0x5d0($sp)
-/* 07A794 7F045C64 3C048007 */  lui   $a0, %hi(objinst)
+/* 07A794 7F045C64 3C048007 */  lui   $a0, %hi(g_CurrentProjectileModel)
 /* 07A798 7F045C68 3C058007 */  lui   $a1, %hi(dword_CODE_bss_80075B74)
 /* 07A79C 7F045C6C 8CA55B74 */  lw    $a1, %lo(dword_CODE_bss_80075B74)($a1)
-/* 07A7A0 7F045C70 8C845B70 */  lw    $a0, %lo(objinst)($a0)
+/* 07A7A0 7F045C70 8C845B70 */  lw    $a0, %lo(g_CurrentProjectileModel)($a0)
 /* 07A7A4 7F045C74 46083102 */  mul.s $f4, $f6, $f8
 /* 07A7A8 7F045C78 46045181 */  sub.s $f6, $f10, $f4
 /* 07A7AC 7F045C7C 0FC1B3A4 */  jal   getjointsize
@@ -6636,12 +6636,12 @@ glabel object_interaction
 /* 07A7E4 7F045CB4 27A4058C */  addiu $a0, $sp, 0x58c
 /* 07A7E8 7F045CB8 0FC1611D */  jal   mtx4TransformVecInPlace
 /* 07A7EC 7F045CBC 27A505CC */   addiu $a1, $sp, 0x5cc
-/* 07A7F0 7F045CC0 3C048007 */  lui   $a0, %hi(objinst)
+/* 07A7F0 7F045CC0 3C048007 */  lui   $a0, %hi(g_CurrentProjectileModel)
 /* 07A7F4 7F045CC4 3C058003 */  lui   $a1, %hi(bodypartshot)
 /* 07A7F8 7F045CC8 3C068007 */  lui   $a2, %hi(dword_CODE_bss_80075B74)
 /* 07A7FC 7F045CCC 8CC65B74 */  lw    $a2, %lo(dword_CODE_bss_80075B74)($a2)
 /* 07A800 7F045CD0 8CA50B10 */  lw    $a1, %lo(bodypartshot)($a1)
-/* 07A804 7F045CD4 8C845B70 */  lw    $a0, %lo(objinst)($a0)
+/* 07A804 7F045CD4 8C845B70 */  lw    $a0, %lo(g_CurrentProjectileModel)($a0)
 /* 07A808 7F045CD8 0FC08877 */  jal   sub_GAME_7F0221DC
 /* 07A80C 7F045CDC 27A705CC */   addiu $a3, $sp, 0x5cc
 /* 07A810 7F045CE0 10000021 */  b     .L7F045D68
@@ -11518,11 +11518,11 @@ glabel object_interaction
 /* 07A8C0 7F045D50 3C058003 */  lui   $a1, %hi(D_80030B0C) # $a1, 0x8003
 /* 07A8C4 7F045D54 8CA50B4C */  lw    $a1, %lo(D_80030B0C)($a1)
 /* 07A8C8 7F045D58 02602025 */  move  $a0, $s3
-/* 07A8CC 7F045D5C 3C068007 */  lui   $a2, %hi(objinst) # $a2, 0x8007
+/* 07A8CC 7F045D5C 3C068007 */  lui   $a2, %hi(g_CurrentProjectileModel) # $a2, 0x8007
 /* 07A8D0 7F045D60 10A0000B */  beqz  $a1, .Ljp7F045D90
 /* 07A8D4 7F045D64 3C078007 */   lui   $a3, %hi(dword_CODE_bss_80075B74) # $a3, 0x8007
 /* 07A8D8 7F045D68 8E720014 */  lw    $s2, 0x14($s3)
-/* 07A8DC 7F045D6C 8CC65BB0 */  lw    $a2, %lo(objinst)($a2)
+/* 07A8DC 7F045D6C 8CC65BB0 */  lw    $a2, %lo(g_CurrentProjectileModel)($a2)
 /* 07A8E0 7F045D70 0FC10F5B */  jal   objEmbed
 /* 07A8E4 7F045D74 8CE75BB4 */   lw    $a3, %lo(dword_CODE_bss_80075B74)($a3)
 /* 07A8E8 7F045D78 10400005 */  beqz  $v0, .Ljp7F045D90
@@ -11648,10 +11648,10 @@ glabel object_interaction
 /* 07AAB4 7F045F44 10410080 */  beq   $v0, $at, .Ljp7F046148
 /* 07AAB8 7F045F48 2401006E */   li    $at, 110
 /* 07AABC 7F045F4C 1041007E */  beq   $v0, $at, .Ljp7F046148
-/* 07AAC0 7F045F50 3C048007 */   lui   $a0, %hi(objinst) # $a0, 0x8007
+/* 07AAC0 7F045F50 3C048007 */   lui   $a0, %hi(g_CurrentProjectileModel) # $a0, 0x8007
 /* 07AAC4 7F045F54 3C058007 */  lui   $a1, %hi(dword_CODE_bss_80075B74) # $a1, 0x8007
 /* 07AAC8 7F045F58 8CA55BB4 */  lw    $a1, %lo(dword_CODE_bss_80075B74)($a1)
-/* 07AACC 7F045F5C 8C845BB0 */  lw    $a0, %lo(objinst)($a0)
+/* 07AACC 7F045F5C 8C845BB0 */  lw    $a0, %lo(g_CurrentProjectileModel)($a0)
 /* 07AAD0 7F045F60 0FC1B314 */  jal   modelFindNodeMtx
 /* 07AAD4 7F045F64 00003025 */   move  $a2, $zero
 /* 07AAD8 7F045F68 C7A6061C */  lwc1  $f6, 0x61c($sp)
@@ -11670,12 +11670,12 @@ glabel object_interaction
 /* 07AB0C 7F045F9C 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 07AB10 7F045FA0 44810000 */  mtc1  $at, $f0
 /* 07AB14 7F045FA4 46065201 */  sub.s $f8, $f10, $f6
-/* 07AB18 7F045FA8 3C048007 */  lui   $a0, %hi(objinst) # $a0, 0x8007
+/* 07AB18 7F045FA8 3C048007 */  lui   $a0, %hi(g_CurrentProjectileModel) # $a0, 0x8007
 /* 07AB1C 7F045FAC 3C058007 */  lui   $a1, %hi(dword_CODE_bss_80075B74) # $a1, 0x8007
 /* 07AB20 7F045FB0 8CA55BB4 */  lw    $a1, %lo(dword_CODE_bss_80075B74)($a1)
 /* 07AB24 7F045FB4 46004102 */  mul.s $f4, $f8, $f0
 /* 07AB28 7F045FB8 C7A805D8 */  lwc1  $f8, 0x5d8($sp)
-/* 07AB2C 7F045FBC 8C845BB0 */  lw    $a0, %lo(objinst)($a0)
+/* 07AB2C 7F045FBC 8C845BB0 */  lw    $a0, %lo(g_CurrentProjectileModel)($a0)
 /* 07AB30 7F045FC0 46045180 */  add.s $f6, $f10, $f4
 /* 07AB34 7F045FC4 E7A605D4 */  swc1  $f6, 0x5d4($sp)
 /* 07AB38 7F045FC8 C64A0034 */  lwc1  $f10, 0x34($s2)
@@ -11696,10 +11696,10 @@ glabel object_interaction
 /* 07AB74 7F046004 C42A5BC8 */  lwc1  $f10, %lo(flt_CODE_bss_80075B88)($at)
 /* 07AB78 7F046008 46060102 */  mul.s $f4, $f0, $f6
 /* 07AB7C 7F04600C C7A605D4 */  lwc1  $f6, 0x5d4($sp)
-/* 07AB80 7F046010 3C048007 */  lui   $a0, %hi(objinst) # $a0, 0x8007
+/* 07AB80 7F046010 3C048007 */  lui   $a0, %hi(g_CurrentProjectileModel) # $a0, 0x8007
 /* 07AB84 7F046014 3C058007 */  lui   $a1, %hi(dword_CODE_bss_80075B74) # $a1, 0x8007
 /* 07AB88 7F046018 8CA55BB4 */  lw    $a1, %lo(dword_CODE_bss_80075B74)($a1)
-/* 07AB8C 7F04601C 8C845BB0 */  lw    $a0, %lo(objinst)($a0)
+/* 07AB8C 7F04601C 8C845BB0 */  lw    $a0, %lo(g_CurrentProjectileModel)($a0)
 /* 07AB90 7F046020 460A2202 */  mul.s $f8, $f4, $f10
 /* 07AB94 7F046024 46083101 */  sub.s $f4, $f6, $f8
 /* 07AB98 7F046028 0FC1B520 */  jal   getjointsize
@@ -11710,10 +11710,10 @@ glabel object_interaction
 /* 07ABAC 7F04603C C4285BCC */  lwc1  $f8, %lo(flt_CODE_bss_80075B78+0x14)($at)
 /* 07ABB0 7F046040 460A0182 */  mul.s $f6, $f0, $f10
 /* 07ABB4 7F046044 C7AA05D8 */  lwc1  $f10, 0x5d8($sp)
-/* 07ABB8 7F046048 3C048007 */  lui   $a0, %hi(objinst) # $a0, 0x8007
+/* 07ABB8 7F046048 3C048007 */  lui   $a0, %hi(g_CurrentProjectileModel) # $a0, 0x8007
 /* 07ABBC 7F04604C 3C058007 */  lui   $a1, %hi(dword_CODE_bss_80075B74) # $a1, 0x8007
 /* 07ABC0 7F046050 8CA55BB4 */  lw    $a1, %lo(dword_CODE_bss_80075B74)($a1)
-/* 07ABC4 7F046054 8C845BB0 */  lw    $a0, %lo(objinst)($a0)
+/* 07ABC4 7F046054 8C845BB0 */  lw    $a0, %lo(g_CurrentProjectileModel)($a0)
 /* 07ABC8 7F046058 46083102 */  mul.s $f4, $f6, $f8
 /* 07ABCC 7F04605C 46045181 */  sub.s $f6, $f10, $f4
 /* 07ABD0 7F046060 0FC1B520 */  jal   getjointsize
@@ -11733,12 +11733,12 @@ glabel object_interaction
 /* 07AC08 7F046098 27A40594 */  addiu $a0, $sp, 0x594
 /* 07AC0C 7F04609C 0FC16265 */  jal   mtx4TransformVecInPlace
 /* 07AC10 7F0460A0 27A505D4 */   addiu $a1, $sp, 0x5d4
-/* 07AC14 7F0460A4 3C048007 */  lui   $a0, %hi(objinst) # $a0, 0x8007
+/* 07AC14 7F0460A4 3C048007 */  lui   $a0, %hi(g_CurrentProjectileModel) # $a0, 0x8007
 /* 07AC18 7F0460A8 3C058003 */  lui   $a1, %hi(bodypartshot) # $a1, 0x8003
 /* 07AC1C 7F0460AC 3C068007 */  lui   $a2, %hi(dword_CODE_bss_80075B74) # $a2, 0x8007
 /* 07AC20 7F0460B0 8CC65BB4 */  lw    $a2, %lo(dword_CODE_bss_80075B74)($a2)
 /* 07AC24 7F0460B4 8CA50B50 */  lw    $a1, %lo(bodypartshot)($a1)
-/* 07AC28 7F0460B8 8C845BB0 */  lw    $a0, %lo(objinst)($a0)
+/* 07AC28 7F0460B8 8C845BB0 */  lw    $a0, %lo(g_CurrentProjectileModel)($a0)
 /* 07AC2C 7F0460BC 0FC08931 */  jal   sub_GAME_7F0221DC
 /* 07AC30 7F0460C0 27A705D4 */   addiu $a3, $sp, 0x5d4
 /* 07AC34 7F0460C4 10000021 */  b     .Ljp7F04614C
@@ -16624,11 +16624,11 @@ glabel object_interaction
 /* 078500 7F045B10 3C058003 */  lui   $a1, %hi(D_80030B0C) # $a1, 0x8003
 /* 078504 7F045B14 8CA5C05C */  lw    $a1, %lo(D_80030B0C)($a1)
 /* 078508 7F045B18 02602025 */  move  $a0, $s3
-/* 07850C 7F045B1C 3C068006 */  lui   $a2, %hi(objinst) # $a2, 0x8006
+/* 07850C 7F045B1C 3C068006 */  lui   $a2, %hi(g_CurrentProjectileModel) # $a2, 0x8006
 /* 078510 7F045B20 10A0000B */  beqz  $a1, .L7F045B50
 /* 078514 7F045B24 3C078006 */   lui   $a3, %hi(dword_CODE_bss_80075B74) # $a3, 0x8006
 /* 078518 7F045B28 8E720014 */  lw    $s2, 0x14($s3)
-/* 07851C 7F045B2C 8CC64AB0 */  lw    $a2, %lo(objinst)($a2)
+/* 07851C 7F045B2C 8CC64AB0 */  lw    $a2, %lo(g_CurrentProjectileModel)($a2)
 /* 078520 7F045B30 0FC10ECB */  jal   objEmbed
 /* 078524 7F045B34 8CE74AB4 */   lw    $a3, %lo(dword_CODE_bss_80075B74)($a3)
 /* 078528 7F045B38 10400005 */  beqz  $v0, .L7F045B50
@@ -16754,10 +16754,10 @@ glabel object_interaction
 /* 0786F4 7F045D04 10410080 */  beq   $v0, $at, .L7F045F08
 /* 0786F8 7F045D08 2401006E */   li    $at, 110
 /* 0786FC 7F045D0C 1041007E */  beq   $v0, $at, .L7F045F08
-/* 078700 7F045D10 3C048006 */   lui   $a0, %hi(objinst) # $a0, 0x8006
+/* 078700 7F045D10 3C048006 */   lui   $a0, %hi(g_CurrentProjectileModel) # $a0, 0x8006
 /* 078704 7F045D14 3C058006 */  lui   $a1, %hi(dword_CODE_bss_80075B74) # $a1, 0x8006
 /* 078708 7F045D18 8CA54AB4 */  lw    $a1, %lo(dword_CODE_bss_80075B74)($a1)
-/* 07870C 7F045D1C 8C844AB0 */  lw    $a0, %lo(objinst)($a0)
+/* 07870C 7F045D1C 8C844AB0 */  lw    $a0, %lo(g_CurrentProjectileModel)($a0)
 /* 078710 7F045D20 0FC1B366 */  jal   modelFindNodeMtx
 /* 078714 7F045D24 00003025 */   move  $a2, $zero
 /* 078718 7F045D28 C7A6061C */  lwc1  $f6, 0x61c($sp)
@@ -16776,12 +16776,12 @@ glabel object_interaction
 /* 07874C 7F045D5C 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 078750 7F045D60 44810000 */  mtc1  $at, $f0
 /* 078754 7F045D64 46065201 */  sub.s $f8, $f10, $f6
-/* 078758 7F045D68 3C048006 */  lui   $a0, %hi(objinst) # $a0, 0x8006
+/* 078758 7F045D68 3C048006 */  lui   $a0, %hi(g_CurrentProjectileModel) # $a0, 0x8006
 /* 07875C 7F045D6C 3C058006 */  lui   $a1, %hi(dword_CODE_bss_80075B74) # $a1, 0x8006
 /* 078760 7F045D70 8CA54AB4 */  lw    $a1, %lo(dword_CODE_bss_80075B74)($a1)
 /* 078764 7F045D74 46004102 */  mul.s $f4, $f8, $f0
 /* 078768 7F045D78 C7A805D8 */  lwc1  $f8, 0x5d8($sp)
-/* 07876C 7F045D7C 8C844AB0 */  lw    $a0, %lo(objinst)($a0)
+/* 07876C 7F045D7C 8C844AB0 */  lw    $a0, %lo(g_CurrentProjectileModel)($a0)
 /* 078770 7F045D80 46045180 */  add.s $f6, $f10, $f4
 /* 078774 7F045D84 E7A605D4 */  swc1  $f6, 0x5d4($sp)
 /* 078778 7F045D88 C64A0034 */  lwc1  $f10, 0x34($s2)
@@ -16802,10 +16802,10 @@ glabel object_interaction
 /* 0787B4 7F045DC4 C42A4AC8 */  lwc1  $f10, %lo(flt_CODE_bss_80075B88)($at)
 /* 0787B8 7F045DC8 46060102 */  mul.s $f4, $f0, $f6
 /* 0787BC 7F045DCC C7A605D4 */  lwc1  $f6, 0x5d4($sp)
-/* 0787C0 7F045DD0 3C048006 */  lui   $a0, %hi(objinst) # $a0, 0x8006
+/* 0787C0 7F045DD0 3C048006 */  lui   $a0, %hi(g_CurrentProjectileModel) # $a0, 0x8006
 /* 0787C4 7F045DD4 3C058006 */  lui   $a1, %hi(dword_CODE_bss_80075B74) # $a1, 0x8006
 /* 0787C8 7F045DD8 8CA54AB4 */  lw    $a1, %lo(dword_CODE_bss_80075B74)($a1)
-/* 0787CC 7F045DDC 8C844AB0 */  lw    $a0, %lo(objinst)($a0)
+/* 0787CC 7F045DDC 8C844AB0 */  lw    $a0, %lo(g_CurrentProjectileModel)($a0)
 /* 0787D0 7F045DE0 460A2202 */  mul.s $f8, $f4, $f10
 /* 0787D4 7F045DE4 46083101 */  sub.s $f4, $f6, $f8
 /* 0787D8 7F045DE8 0FC1B4D5 */  jal   getjointsize
@@ -16816,10 +16816,10 @@ glabel object_interaction
 /* 0787EC 7F045DFC C4284ACC */  lwc1  $f8, %lo(flt_CODE_bss_80075B78+0x14)($at)
 /* 0787F0 7F045E00 460A0182 */  mul.s $f6, $f0, $f10
 /* 0787F4 7F045E04 C7AA05D8 */  lwc1  $f10, 0x5d8($sp)
-/* 0787F8 7F045E08 3C048006 */  lui   $a0, %hi(objinst) # $a0, 0x8006
+/* 0787F8 7F045E08 3C048006 */  lui   $a0, %hi(g_CurrentProjectileModel) # $a0, 0x8006
 /* 0787FC 7F045E0C 3C058006 */  lui   $a1, %hi(dword_CODE_bss_80075B74) # $a1, 0x8006
 /* 078800 7F045E10 8CA54AB4 */  lw    $a1, %lo(dword_CODE_bss_80075B74)($a1)
-/* 078804 7F045E14 8C844AB0 */  lw    $a0, %lo(objinst)($a0)
+/* 078804 7F045E14 8C844AB0 */  lw    $a0, %lo(g_CurrentProjectileModel)($a0)
 /* 078808 7F045E18 46083102 */  mul.s $f4, $f6, $f8
 /* 07880C 7F045E1C 46045181 */  sub.s $f6, $f10, $f4
 /* 078810 7F045E20 0FC1B4D5 */  jal   getjointsize
@@ -16839,12 +16839,12 @@ glabel object_interaction
 /* 078848 7F045E58 27A40594 */  addiu $a0, $sp, 0x594
 /* 07884C 7F045E5C 0FC16247 */  jal   mtx4TransformVecInPlace
 /* 078850 7F045E60 27A505D4 */   addiu $a1, $sp, 0x5d4
-/* 078854 7F045E64 3C048006 */  lui   $a0, %hi(objinst) # $a0, 0x8006
+/* 078854 7F045E64 3C048006 */  lui   $a0, %hi(g_CurrentProjectileModel) # $a0, 0x8006
 /* 078858 7F045E68 3C058003 */  lui   $a1, %hi(bodypartshot) # $a1, 0x8003
 /* 07885C 7F045E6C 3C068006 */  lui   $a2, %hi(dword_CODE_bss_80075B74) # $a2, 0x8006
 /* 078860 7F045E70 8CC64AB4 */  lw    $a2, %lo(dword_CODE_bss_80075B74)($a2)
 /* 078864 7F045E74 8CA5C060 */  lw    $a1, %lo(bodypartshot)($a1)
-/* 078868 7F045E78 8C844AB0 */  lw    $a0, %lo(objinst)($a0)
+/* 078868 7F045E78 8C844AB0 */  lw    $a0, %lo(g_CurrentProjectileModel)($a0)
 /* 07886C 7F045E7C 0FC08869 */  jal   sub_GAME_7F0221DC
 /* 078870 7F045E80 27A705D4 */   addiu $a3, $sp, 0x5d4
 /* 078874 7F045E84 10000021 */  b     .L7F045F0C

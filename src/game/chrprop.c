@@ -116,7 +116,7 @@ Projectile g_Projectiles[PROJECTILES_ARR_MAX];
 Embedment g_Embedments[EMBEDMENT_ARR_MAX];
 
 //CODE.bss:80075B70
-u32 objinst;
+struct Model *g_CurrentProjectileModel;
 //CODE.bss:80075B74
 u32 dword_CODE_bss_80075B74;
 //CODE.bss:80075B78
