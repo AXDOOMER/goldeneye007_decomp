@@ -35,6 +35,10 @@
 #include "image_bank.h"
 #include "random.h"
 #include "unk_0B3200.h"
+#include "textrelated.h"
+#include "gun.h"
+#include "fr.h"
+
 
 #ifdef VERSION_EU
 
@@ -38396,569 +38400,68 @@ void if_enabled_reset_clock(void)
     }
 }
 
-
-#ifdef NONMATCHING
-
-/* DISPLAY WARNING: Type casts are NOT being printed */
-
-Gfx * sub_GAME_7F056210(Gfx *DL)
-{
-  Gfx *DL;
-  short viGetViewTop();
-  short viGetViewHeight();
-  int iVar3;
-  int iVar4;
-  //float timedivtemp;
-  int hours;
-  float time;
-  
-  if (clock_drawn_flag == 0) {
-    time = clock_time;
-    if (clock_time < 0.0) {
-      time = -clock_time;
-    }
-    //timedivtemp = floorFloat(time / 3600.0);
-    hours = floorFloat(time / 3600.0);
-    //timedivtemp = floorFloat(time / 60.0);
-    iVar4 = floorFloat(time / 60.0) + hours * -0x3c;
-    time = floorFloat((time * 100.0) / 60.0);
-    iVar3 = time + hours * -6000 + iVar4 * -100;
-    DL = microcode_constructor(DL);
-    DL =     gunDrawHudInteger(DL, (hours % 100) / 10, 0x82, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
-    DL =     gunDrawHudInteger(DL, hours % 10, 0x8a, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
-    DL = gunDrawHudString(DL, ":\n", 0x93, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
-    DL =     gunDrawHudInteger(DL, (iVar4 % 0x3c) / 10, 0x9c, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
-    DL =     gunDrawHudInteger(DL, iVar4 % 10, 0xa4, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
-    DL = gunDrawHudString(DL, ":\n", 0xad, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
-    DL =     gunDrawHudInteger(DL, (iVar3 % 100) / 10, 0xb6, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
-    DL =     gunDrawHudInteger(DL, iVar3 % 10, 0xbe, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
-    DL = combiner_bayer_lod_perspective(DL);
-  }
-  return DL;
-}
-
-
-#else
 const char D_80052A44[] = ":\n";
 
-#if defined(VERSION_US) || defined(VERSION_JP)
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F056210
-/* 08AD40 7F056210 3C0E8003 */  lui   $t6, %hi(clock_drawn_flag) 
-/* 08AD44 7F056214 8DCE0AE8 */  lw    $t6, %lo(clock_drawn_flag)($t6)
-/* 08AD48 7F056218 27BDFFB8 */  addiu $sp, $sp, -0x48
-/* 08AD4C 7F05621C AFB10028 */  sw    $s1, 0x28($sp)
-/* 08AD50 7F056220 00808825 */  move  $s1, $a0
-/* 08AD54 7F056224 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 08AD58 7F056228 15C000EB */  bnez  $t6, .L7F0565D8
-/* 08AD5C 7F05622C AFB00024 */   sw    $s0, 0x24($sp)
-/* 08AD60 7F056230 3C018003 */  lui   $at, %hi(clock_time)
-/* 08AD64 7F056234 C4220AF0 */  lwc1  $f2, %lo(clock_time)($at)
-/* 08AD68 7F056238 44802000 */  mtc1  $zero, $f4
-/* 08AD6C 7F05623C 3C014561 */  li    $at, 0x45610000 # 3600.000000
-/* 08AD70 7F056240 44813000 */  mtc1  $at, $f6
-/* 08AD74 7F056244 4604103C */  c.lt.s $f2, $f4
-/* 08AD78 7F056248 00000000 */  nop   
-/* 08AD7C 7F05624C 45020003 */  bc1fl .L7F05625C
-/* 08AD80 7F056250 46061303 */   div.s $f12, $f2, $f6
-/* 08AD84 7F056254 46001087 */  neg.s $f2, $f2
-/* 08AD88 7F056258 46061303 */  div.s $f12, $f2, $f6
-.L7F05625C:
-/* 08AD8C 7F05625C 0FC170D8 */  jal   floorFloat
-/* 08AD90 7F056260 E7A20030 */   swc1  $f2, 0x30($sp)
-/* 08AD94 7F056264 4600020D */  trunc.w.s $f8, $f0
-/* 08AD98 7F056268 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 08AD9C 7F05626C C7A20030 */  lwc1  $f2, 0x30($sp)
-/* 08ADA0 7F056270 44815000 */  mtc1  $at, $f10
-/* 08ADA4 7F056274 44184000 */  mfc1  $t8, $f8
-/* 08ADA8 7F056278 460A1303 */  div.s $f12, $f2, $f10
-/* 08ADAC 7F05627C 0FC170D8 */  jal   floorFloat
-/* 08ADB0 7F056280 AFB80044 */   sw    $t8, 0x44($sp)
-/* 08ADB4 7F056284 3C0142C8 */  li    $at, 0x42C80000 # 100.000000
-/* 08ADB8 7F056288 C7A20030 */  lwc1  $f2, 0x30($sp)
-/* 08ADBC 7F05628C 44819000 */  mtc1  $at, $f18
-/* 08ADC0 7F056290 4600040D */  trunc.w.s $f16, $f0
-/* 08ADC4 7F056294 8FA90044 */  lw    $t1, 0x44($sp)
-/* 08ADC8 7F056298 46121102 */  mul.s $f4, $f2, $f18
-/* 08ADCC 7F05629C 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 08ADD0 7F0562A0 44088000 */  mfc1  $t0, $f16
-/* 08ADD4 7F0562A4 00095100 */  sll   $t2, $t1, 4
-/* 08ADD8 7F0562A8 01495023 */  subu  $t2, $t2, $t1
-/* 08ADDC 7F0562AC 44813000 */  mtc1  $at, $f6
-/* 08ADE0 7F0562B0 000A5080 */  sll   $t2, $t2, 2
-/* 08ADE4 7F0562B4 010A5823 */  subu  $t3, $t0, $t2
-/* 08ADE8 7F0562B8 AFAB0040 */  sw    $t3, 0x40($sp)
-/* 08ADEC 7F0562BC 0FC170D8 */  jal   floorFloat
-/* 08ADF0 7F0562C0 46062303 */   div.s $f12, $f4, $f6
-/* 08ADF4 7F0562C4 8FAE0044 */  lw    $t6, 0x44($sp)
-/* 08ADF8 7F0562C8 4600020D */  trunc.w.s $f8, $f0
-/* 08ADFC 7F0562CC 8FB90040 */  lw    $t9, 0x40($sp)
-/* 08AE00 7F0562D0 000E7880 */  sll   $t7, $t6, 2
-/* 08AE04 7F0562D4 01EE7823 */  subu  $t7, $t7, $t6
-/* 08AE08 7F0562D8 000F7900 */  sll   $t7, $t7, 4
-/* 08AE0C 7F0562DC 01EE7823 */  subu  $t7, $t7, $t6
-/* 08AE10 7F0562E0 00194880 */  sll   $t1, $t9, 2
-/* 08AE14 7F0562E4 440D4000 */  mfc1  $t5, $f8
-/* 08AE18 7F0562E8 000F78C0 */  sll   $t7, $t7, 3
-/* 08AE1C 7F0562EC 01394823 */  subu  $t1, $t1, $t9
-/* 08AE20 7F0562F0 000948C0 */  sll   $t1, $t1, 3
-/* 08AE24 7F0562F4 01EE7823 */  subu  $t7, $t7, $t6
-/* 08AE28 7F0562F8 000F7900 */  sll   $t7, $t7, 4
-/* 08AE2C 7F0562FC 01394821 */  addu  $t1, $t1, $t9
-/* 08AE30 7F056300 00094880 */  sll   $t1, $t1, 2
-/* 08AE34 7F056304 01AFC023 */  subu  $t8, $t5, $t7
-/* 08AE38 7F056308 03094023 */  subu  $t0, $t8, $t1
-/* 08AE3C 7F05630C AFA8003C */  sw    $t0, 0x3c($sp)
-/* 08AE40 7F056310 0FC2B366 */  jal   microcode_constructor
-/* 08AE44 7F056314 02202025 */   move  $a0, $s1
-/* 08AE48 7F056318 0C001149 */  jal   viGetViewTop
-/* 08AE4C 7F05631C 00408825 */   move  $s1, $v0
-/* 08AE50 7F056320 00028400 */  sll   $s0, $v0, 0x10
-/* 08AE54 7F056324 00105403 */  sra   $t2, $s0, 0x10
-/* 08AE58 7F056328 0C00112B */  jal   viGetViewHeight
-/* 08AE5C 7F05632C 01408025 */   move  $s0, $t2
-/* 08AE60 7F056330 8FA50044 */  lw    $a1, 0x44($sp)
-/* 08AE64 7F056334 24010064 */  li    $at, 100
-/* 08AE68 7F056338 00507021 */  addu  $t6, $v0, $s0
-/* 08AE6C 7F05633C 00A1001A */  div   $zero, $a1, $at
-/* 08AE70 7F056340 00005810 */  mfhi  $t3
-/* 08AE74 7F056344 2401000A */  li    $at, 10
-/* 08AE78 7F056348 25CDFFEE */  addiu $t5, $t6, -0x12
-/* 08AE7C 7F05634C 0161001A */  div   $zero, $t3, $at
-/* 08AE80 7F056350 00002812 */  mflo  $a1
-/* 08AE84 7F056354 240F0002 */  li    $t7, 2
-/* 08AE88 7F056358 24190001 */  li    $t9, 1
-/* 08AE8C 7F05635C AFB90018 */  sw    $t9, 0x18($sp)
-/* 08AE90 7F056360 AFAF0014 */  sw    $t7, 0x14($sp)
-/* 08AE94 7F056364 AFAD0010 */  sw    $t5, 0x10($sp)
-/* 08AE98 7F056368 02202025 */  move  $a0, $s1
-/* 08AE9C 7F05636C 24060082 */  li    $a2, 130
-/* 08AEA0 7F056370 0FC1A723 */  jal   gunDrawHudInteger
-/* 08AEA4 7F056374 24070002 */   li    $a3, 2
-/* 08AEA8 7F056378 0C001149 */  jal   viGetViewTop
-/* 08AEAC 7F05637C 00408825 */   move  $s1, $v0
-/* 08AEB0 7F056380 00028400 */  sll   $s0, $v0, 0x10
-/* 08AEB4 7F056384 0010C403 */  sra   $t8, $s0, 0x10
-/* 08AEB8 7F056388 0C00112B */  jal   viGetViewHeight
-/* 08AEBC 7F05638C 03008025 */   move  $s0, $t8
-/* 08AEC0 7F056390 8FA50044 */  lw    $a1, 0x44($sp)
-/* 08AEC4 7F056394 2401000A */  li    $at, 10
-/* 08AEC8 7F056398 00504021 */  addu  $t0, $v0, $s0
-/* 08AECC 7F05639C 00A1001A */  div   $zero, $a1, $at
-/* 08AED0 7F0563A0 00002810 */  mfhi  $a1
-/* 08AED4 7F0563A4 250AFFEE */  addiu $t2, $t0, -0x12
-/* 08AED8 7F0563A8 240B0002 */  li    $t3, 2
-/* 08AEDC 7F0563AC 240C0001 */  li    $t4, 1
-/* 08AEE0 7F0563B0 AFAC0018 */  sw    $t4, 0x18($sp)
-/* 08AEE4 7F0563B4 AFAB0014 */  sw    $t3, 0x14($sp)
-/* 08AEE8 7F0563B8 AFAA0010 */  sw    $t2, 0x10($sp)
-/* 08AEEC 7F0563BC 02202025 */  move  $a0, $s1
-/* 08AEF0 7F0563C0 2406008A */  li    $a2, 138
-/* 08AEF4 7F0563C4 0FC1A723 */  jal   gunDrawHudInteger
-/* 08AEF8 7F0563C8 24070002 */   li    $a3, 2
-/* 08AEFC 7F0563CC 0C001149 */  jal   viGetViewTop
-/* 08AF00 7F0563D0 00408825 */   move  $s1, $v0
-/* 08AF04 7F0563D4 00028400 */  sll   $s0, $v0, 0x10
-/* 08AF08 7F0563D8 00107403 */  sra   $t6, $s0, 0x10
-/* 08AF0C 7F0563DC 0C00112B */  jal   viGetViewHeight
-/* 08AF10 7F0563E0 01C08025 */   move  $s0, $t6
-/* 08AF14 7F0563E4 00506821 */  addu  $t5, $v0, $s0
-/* 08AF18 7F0563E8 25AFFFEE */  addiu $t7, $t5, -0x12
-/* 08AF1C 7F0563EC 3C058005 */  lui   $a1, %hi(D_80052A44)
-/* 08AF20 7F0563F0 24190002 */  li    $t9, 2
-/* 08AF24 7F0563F4 24180001 */  li    $t8, 1
-/* 08AF28 7F0563F8 AFB80018 */  sw    $t8, 0x18($sp)
-/* 08AF2C 7F0563FC AFB90014 */  sw    $t9, 0x14($sp)
-/* 08AF30 7F056400 24A52A44 */  addiu $a1, %lo(D_80052A44) # addiu $a1, $a1, 0x2a44
-/* 08AF34 7F056404 AFAF0010 */  sw    $t7, 0x10($sp)
-/* 08AF38 7F056408 02202025 */  move  $a0, $s1
-/* 08AF3C 7F05640C 24060093 */  li    $a2, 147
-/* 08AF40 7F056410 0FC1A694 */  jal   gunDrawHudString
-/* 08AF44 7F056414 24070002 */   li    $a3, 2
-/* 08AF48 7F056418 0C001149 */  jal   viGetViewTop
-/* 08AF4C 7F05641C 00408825 */   move  $s1, $v0
-/* 08AF50 7F056420 00028400 */  sll   $s0, $v0, 0x10
-/* 08AF54 7F056424 00104C03 */  sra   $t1, $s0, 0x10
-/* 08AF58 7F056428 0C00112B */  jal   viGetViewHeight
-/* 08AF5C 7F05642C 01208025 */   move  $s0, $t1
-/* 08AF60 7F056430 8FA50040 */  lw    $a1, 0x40($sp)
-/* 08AF64 7F056434 2401003C */  li    $at, 60
-/* 08AF68 7F056438 00505821 */  addu  $t3, $v0, $s0
-/* 08AF6C 7F05643C 00A1001A */  div   $zero, $a1, $at
-/* 08AF70 7F056440 00004010 */  mfhi  $t0
-/* 08AF74 7F056444 2401000A */  li    $at, 10
-/* 08AF78 7F056448 256CFFEE */  addiu $t4, $t3, -0x12
-/* 08AF7C 7F05644C 0101001A */  div   $zero, $t0, $at
-/* 08AF80 7F056450 00002812 */  mflo  $a1
-/* 08AF84 7F056454 240E0002 */  li    $t6, 2
-/* 08AF88 7F056458 240D0001 */  li    $t5, 1
-/* 08AF8C 7F05645C AFAD0018 */  sw    $t5, 0x18($sp)
-/* 08AF90 7F056460 AFAE0014 */  sw    $t6, 0x14($sp)
-/* 08AF94 7F056464 AFAC0010 */  sw    $t4, 0x10($sp)
-/* 08AF98 7F056468 02202025 */  move  $a0, $s1
-/* 08AF9C 7F05646C 2406009C */  li    $a2, 156
-/* 08AFA0 7F056470 0FC1A723 */  jal   gunDrawHudInteger
-/* 08AFA4 7F056474 24070002 */   li    $a3, 2
-/* 08AFA8 7F056478 0C001149 */  jal   viGetViewTop
-/* 08AFAC 7F05647C 00408825 */   move  $s1, $v0
-/* 08AFB0 7F056480 00028400 */  sll   $s0, $v0, 0x10
-/* 08AFB4 7F056484 00107C03 */  sra   $t7, $s0, 0x10
-/* 08AFB8 7F056488 0C00112B */  jal   viGetViewHeight
-/* 08AFBC 7F05648C 01E08025 */   move  $s0, $t7
-/* 08AFC0 7F056490 8FA50040 */  lw    $a1, 0x40($sp)
-/* 08AFC4 7F056494 2401000A */  li    $at, 10
-/* 08AFC8 7F056498 0050C021 */  addu  $t8, $v0, $s0
-/* 08AFCC 7F05649C 00A1001A */  div   $zero, $a1, $at
-/* 08AFD0 7F0564A0 00002810 */  mfhi  $a1
-/* 08AFD4 7F0564A4 2709FFEE */  addiu $t1, $t8, -0x12
-/* 08AFD8 7F0564A8 24080002 */  li    $t0, 2
-/* 08AFDC 7F0564AC 240A0001 */  li    $t2, 1
-/* 08AFE0 7F0564B0 AFAA0018 */  sw    $t2, 0x18($sp)
-/* 08AFE4 7F0564B4 AFA80014 */  sw    $t0, 0x14($sp)
-/* 08AFE8 7F0564B8 AFA90010 */  sw    $t1, 0x10($sp)
-/* 08AFEC 7F0564BC 02202025 */  move  $a0, $s1
-/* 08AFF0 7F0564C0 240600A4 */  li    $a2, 164
-/* 08AFF4 7F0564C4 0FC1A723 */  jal   gunDrawHudInteger
-/* 08AFF8 7F0564C8 24070002 */   li    $a3, 2
-/* 08AFFC 7F0564CC 0C001149 */  jal   viGetViewTop
-/* 08B000 7F0564D0 00408825 */   move  $s1, $v0
-/* 08B004 7F0564D4 00028400 */  sll   $s0, $v0, 0x10
-/* 08B008 7F0564D8 00105C03 */  sra   $t3, $s0, 0x10
-/* 08B00C 7F0564DC 0C00112B */  jal   viGetViewHeight
-/* 08B010 7F0564E0 01608025 */   move  $s0, $t3
-/* 08B014 7F0564E4 00506021 */  addu  $t4, $v0, $s0
-/* 08B018 7F0564E8 258EFFEE */  addiu $t6, $t4, -0x12
-/* 08B01C 7F0564EC 3C058005 */  lui   $a1, %hi(D_80052A44)
-/* 08B020 7F0564F0 240D0002 */  li    $t5, 2
-/* 08B024 7F0564F4 240F0001 */  li    $t7, 1
-/* 08B028 7F0564F8 AFAF0018 */  sw    $t7, 0x18($sp)
-/* 08B02C 7F0564FC AFAD0014 */  sw    $t5, 0x14($sp)
-/* 08B030 7F056500 24A52A44 */  addiu $a1, %lo(D_80052A44) # addiu $a1, $a1, 0x2a44
-/* 08B034 7F056504 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 08B038 7F056508 02202025 */  move  $a0, $s1
-/* 08B03C 7F05650C 240600AD */  li    $a2, 173
-/* 08B040 7F056510 0FC1A694 */  jal   gunDrawHudString
-/* 08B044 7F056514 24070002 */   li    $a3, 2
-/* 08B048 7F056518 0C001149 */  jal   viGetViewTop
-/* 08B04C 7F05651C 00408825 */   move  $s1, $v0
-/* 08B050 7F056520 00028400 */  sll   $s0, $v0, 0x10
-/* 08B054 7F056524 0010CC03 */  sra   $t9, $s0, 0x10
-/* 08B058 7F056528 0C00112B */  jal   viGetViewHeight
-/* 08B05C 7F05652C 03208025 */   move  $s0, $t9
-/* 08B060 7F056530 8FA5003C */  lw    $a1, 0x3c($sp)
-/* 08B064 7F056534 24010064 */  li    $at, 100
-/* 08B068 7F056538 00504021 */  addu  $t0, $v0, $s0
-/* 08B06C 7F05653C 00A1001A */  div   $zero, $a1, $at
-/* 08B070 7F056540 0000C010 */  mfhi  $t8
-/* 08B074 7F056544 2401000A */  li    $at, 10
-/* 08B078 7F056548 250AFFEE */  addiu $t2, $t0, -0x12
-/* 08B07C 7F05654C 0301001A */  div   $zero, $t8, $at
-/* 08B080 7F056550 00002812 */  mflo  $a1
-/* 08B084 7F056554 240B0002 */  li    $t3, 2
-/* 08B088 7F056558 240C0001 */  li    $t4, 1
-/* 08B08C 7F05655C AFAC0018 */  sw    $t4, 0x18($sp)
-/* 08B090 7F056560 AFAB0014 */  sw    $t3, 0x14($sp)
-/* 08B094 7F056564 AFAA0010 */  sw    $t2, 0x10($sp)
-/* 08B098 7F056568 02202025 */  move  $a0, $s1
-/* 08B09C 7F05656C 240600B6 */  li    $a2, 182
-/* 08B0A0 7F056570 0FC1A723 */  jal   gunDrawHudInteger
-/* 08B0A4 7F056574 24070002 */   li    $a3, 2
-/* 08B0A8 7F056578 0C001149 */  jal   viGetViewTop
-/* 08B0AC 7F05657C 00408825 */   move  $s1, $v0
-/* 08B0B0 7F056580 00028400 */  sll   $s0, $v0, 0x10
-/* 08B0B4 7F056584 00107403 */  sra   $t6, $s0, 0x10
-/* 08B0B8 7F056588 0C00112B */  jal   viGetViewHeight
-/* 08B0BC 7F05658C 01C08025 */   move  $s0, $t6
-/* 08B0C0 7F056590 8FA5003C */  lw    $a1, 0x3c($sp)
-/* 08B0C4 7F056594 2401000A */  li    $at, 10
-/* 08B0C8 7F056598 00507821 */  addu  $t7, $v0, $s0
-/* 08B0CC 7F05659C 00A1001A */  div   $zero, $a1, $at
-/* 08B0D0 7F0565A0 00002810 */  mfhi  $a1
-/* 08B0D4 7F0565A4 25F9FFEE */  addiu $t9, $t7, -0x12
-/* 08B0D8 7F0565A8 24180002 */  li    $t8, 2
-/* 08B0DC 7F0565AC 24090001 */  li    $t1, 1
-/* 08B0E0 7F0565B0 AFA90018 */  sw    $t1, 0x18($sp)
-/* 08B0E4 7F0565B4 AFB80014 */  sw    $t8, 0x14($sp)
-/* 08B0E8 7F0565B8 AFB90010 */  sw    $t9, 0x10($sp)
-/* 08B0EC 7F0565BC 02202025 */  move  $a0, $s1
-/* 08B0F0 7F0565C0 240600BE */  li    $a2, 190
-/* 08B0F4 7F0565C4 0FC1A723 */  jal   gunDrawHudInteger
-/* 08B0F8 7F0565C8 24070002 */   li    $a3, 2
-/* 08B0FC 7F0565CC 0FC2B3BC */  jal   combiner_bayer_lod_perspective
-/* 08B100 7F0565D0 00402025 */   move  $a0, $v0
-/* 08B104 7F0565D4 00408825 */  move  $s1, $v0
-.L7F0565D8:
-/* 08B108 7F0565D8 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 08B10C 7F0565DC 02201025 */  move  $v0, $s1
-/* 08B110 7F0565E0 8FB10028 */  lw    $s1, 0x28($sp)
-/* 08B114 7F0565E4 8FB00024 */  lw    $s0, 0x24($sp)
-/* 08B118 7F0565E8 03E00008 */  jr    $ra
-/* 08B11C 7F0565EC 27BD0048 */   addiu $sp, $sp, 0x48
-)
-#endif
+/*
+    Renders the on-screen countdown timer
+    using minutes, seconds and milliseconds
+    in the following format
+    
+    00 : 00 : 00
 
-#if defined(VERSION_EU)
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F056210
-/* 088EE0 7F0564F0 3C0E8003 */  lui   $t6, %hi(clock_drawn_flag) # $t6, 0x8003
-/* 088EE4 7F0564F4 8DCEC038 */  lw    $t6, %lo(clock_drawn_flag)($t6)
-/* 088EE8 7F0564F8 27BDFFB8 */  addiu $sp, $sp, -0x48
-/* 088EEC 7F0564FC AFB10028 */  sw    $s1, 0x28($sp)
-/* 088EF0 7F056500 00808825 */  move  $s1, $a0
-/* 088EF4 7F056504 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 088EF8 7F056508 15C000EB */  bnez  $t6, .L7F0568B8
-/* 088EFC 7F05650C AFB00024 */   sw    $s0, 0x24($sp)
-/* 088F00 7F056510 3C018003 */  lui   $at, %hi(clock_time) # $at, 0x8003
-/* 088F04 7F056514 C422C040 */  lwc1  $f2, %lo(clock_time)($at)
-/* 088F08 7F056518 44802000 */  mtc1  $zero, $f4
-/* 088F0C 7F05651C 3C014561 */  li    $at, 0x45610000 # 3600.000000
-/* 088F10 7F056520 44813000 */  mtc1  $at, $f6
-/* 088F14 7F056524 4604103C */  c.lt.s $f2, $f4
-/* 088F18 7F056528 00000000 */  nop   
-/* 088F1C 7F05652C 45020003 */  bc1fl .L7F05653C
-/* 088F20 7F056530 46061303 */   div.s $f12, $f2, $f6
-/* 088F24 7F056534 46001087 */  neg.s $f2, $f2
-/* 088F28 7F056538 46061303 */  div.s $f12, $f2, $f6
-.L7F05653C:
-/* 088F2C 7F05653C 0FC17204 */  jal   floorFloat
-/* 088F30 7F056540 E7A20030 */   swc1  $f2, 0x30($sp)
-/* 088F34 7F056544 4600020D */  trunc.w.s $f8, $f0
-/* 088F38 7F056548 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 088F3C 7F05654C C7A20030 */  lwc1  $f2, 0x30($sp)
-/* 088F40 7F056550 44815000 */  mtc1  $at, $f10
-/* 088F44 7F056554 44184000 */  mfc1  $t8, $f8
-/* 088F48 7F056558 460A1303 */  div.s $f12, $f2, $f10
-/* 088F4C 7F05655C 0FC17204 */  jal   floorFloat
-/* 088F50 7F056560 AFB80044 */   sw    $t8, 0x44($sp)
-/* 088F54 7F056564 3C0142C8 */  li    $at, 0x42C80000 # 100.000000
-/* 088F58 7F056568 C7A20030 */  lwc1  $f2, 0x30($sp)
-/* 088F5C 7F05656C 44819000 */  mtc1  $at, $f18
-/* 088F60 7F056570 4600040D */  trunc.w.s $f16, $f0
-/* 088F64 7F056574 8FA90044 */  lw    $t1, 0x44($sp)
-/* 088F68 7F056578 46121102 */  mul.s $f4, $f2, $f18
-/* 088F6C 7F05657C 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 088F70 7F056580 44088000 */  mfc1  $t0, $f16
-/* 088F74 7F056584 00095100 */  sll   $t2, $t1, 4
-/* 088F78 7F056588 01495023 */  subu  $t2, $t2, $t1
-/* 088F7C 7F05658C 44813000 */  mtc1  $at, $f6
-/* 088F80 7F056590 000A5080 */  sll   $t2, $t2, 2
-/* 088F84 7F056594 010A5823 */  subu  $t3, $t0, $t2
-/* 088F88 7F056598 AFAB0040 */  sw    $t3, 0x40($sp)
-/* 088F8C 7F05659C 0FC17204 */  jal   floorFloat
-/* 088F90 7F0565A0 46062303 */   div.s $f12, $f4, $f6
-/* 088F94 7F0565A4 8FAE0044 */  lw    $t6, 0x44($sp)
-/* 088F98 7F0565A8 4600020D */  trunc.w.s $f8, $f0
-/* 088F9C 7F0565AC 8FB90040 */  lw    $t9, 0x40($sp)
-/* 088FA0 7F0565B0 000E7880 */  sll   $t7, $t6, 2
-/* 088FA4 7F0565B4 01EE7823 */  subu  $t7, $t7, $t6
-/* 088FA8 7F0565B8 000F7900 */  sll   $t7, $t7, 4
-/* 088FAC 7F0565BC 01EE7823 */  subu  $t7, $t7, $t6
-/* 088FB0 7F0565C0 00194880 */  sll   $t1, $t9, 2
-/* 088FB4 7F0565C4 440D4000 */  mfc1  $t5, $f8
-/* 088FB8 7F0565C8 000F78C0 */  sll   $t7, $t7, 3
-/* 088FBC 7F0565CC 01394823 */  subu  $t1, $t1, $t9
-/* 088FC0 7F0565D0 000948C0 */  sll   $t1, $t1, 3
-/* 088FC4 7F0565D4 01EE7823 */  subu  $t7, $t7, $t6
-/* 088FC8 7F0565D8 000F7900 */  sll   $t7, $t7, 4
-/* 088FCC 7F0565DC 01394821 */  addu  $t1, $t1, $t9
-/* 088FD0 7F0565E0 00094880 */  sll   $t1, $t1, 2
-/* 088FD4 7F0565E4 01AFC023 */  subu  $t8, $t5, $t7
-/* 088FD8 7F0565E8 03094023 */  subu  $t0, $t8, $t1
-/* 088FDC 7F0565EC AFA8003C */  sw    $t0, 0x3c($sp)
-/* 088FE0 7F0565F0 0FC2B016 */  jal   microcode_constructor
-/* 088FE4 7F0565F4 02202025 */   move  $a0, $s1
-/* 088FE8 7F0565F8 0C000FDD */  jal   viGetViewTop
-/* 088FEC 7F0565FC 00408825 */   move  $s1, $v0
-/* 088FF0 7F056600 00028400 */  sll   $s0, $v0, 0x10
-/* 088FF4 7F056604 00105403 */  sra   $t2, $s0, 0x10
-/* 088FF8 7F056608 0C000FBF */  jal   viGetViewHeight
-/* 088FFC 7F05660C 01408025 */   move  $s0, $t2
-/* 089000 7F056610 8FA50044 */  lw    $a1, 0x44($sp)
-/* 089004 7F056614 24010064 */  li    $at, 100
-/* 089008 7F056618 00507021 */  addu  $t6, $v0, $s0
-/* 08900C 7F05661C 00A1001A */  div   $zero, $a1, $at
-/* 089010 7F056620 00005810 */  mfhi  $t3
-/* 089014 7F056624 2401000A */  li    $at, 10
-/* 089018 7F056628 25CDFFE4 */  addiu $t5, $t6, -0x1c
-/* 08901C 7F05662C 0161001A */  div   $zero, $t3, $at
-/* 089020 7F056630 00002812 */  mflo  $a1
-/* 089024 7F056634 240F0002 */  li    $t7, 2
-/* 089028 7F056638 24190001 */  li    $t9, 1
-/* 08902C 7F05663C AFB90018 */  sw    $t9, 0x18($sp)
-/* 089030 7F056640 AFAF0014 */  sw    $t7, 0x14($sp)
-/* 089034 7F056644 AFAD0010 */  sw    $t5, 0x10($sp)
-/* 089038 7F056648 02202025 */  move  $a0, $s1
-/* 08903C 7F05664C 24060082 */  li    $a2, 130
-/* 089040 7F056650 0FC1A908 */  jal   gunDrawHudInteger
-/* 089044 7F056654 24070002 */   li    $a3, 2
-/* 089048 7F056658 0C000FDD */  jal   viGetViewTop
-/* 08904C 7F05665C 00408825 */   move  $s1, $v0
-/* 089050 7F056660 00028400 */  sll   $s0, $v0, 0x10
-/* 089054 7F056664 0010C403 */  sra   $t8, $s0, 0x10
-/* 089058 7F056668 0C000FBF */  jal   viGetViewHeight
-/* 08905C 7F05666C 03008025 */   move  $s0, $t8
-/* 089060 7F056670 8FA50044 */  lw    $a1, 0x44($sp)
-/* 089064 7F056674 2401000A */  li    $at, 10
-/* 089068 7F056678 00504021 */  addu  $t0, $v0, $s0
-/* 08906C 7F05667C 00A1001A */  div   $zero, $a1, $at
-/* 089070 7F056680 00002810 */  mfhi  $a1
-/* 089074 7F056684 250AFFE4 */  addiu $t2, $t0, -0x1c
-/* 089078 7F056688 240B0002 */  li    $t3, 2
-/* 08907C 7F05668C 240C0001 */  li    $t4, 1
-/* 089080 7F056690 AFAC0018 */  sw    $t4, 0x18($sp)
-/* 089084 7F056694 AFAB0014 */  sw    $t3, 0x14($sp)
-/* 089088 7F056698 AFAA0010 */  sw    $t2, 0x10($sp)
-/* 08908C 7F05669C 02202025 */  move  $a0, $s1
-/* 089090 7F0566A0 2406008A */  li    $a2, 138
-/* 089094 7F0566A4 0FC1A908 */  jal   gunDrawHudInteger
-/* 089098 7F0566A8 24070002 */   li    $a3, 2
-/* 08909C 7F0566AC 0C000FDD */  jal   viGetViewTop
-/* 0890A0 7F0566B0 00408825 */   move  $s1, $v0
-/* 0890A4 7F0566B4 00028400 */  sll   $s0, $v0, 0x10
-/* 0890A8 7F0566B8 00107403 */  sra   $t6, $s0, 0x10
-/* 0890AC 7F0566BC 0C000FBF */  jal   viGetViewHeight
-/* 0890B0 7F0566C0 01C08025 */   move  $s0, $t6
-/* 0890B4 7F0566C4 00506821 */  addu  $t5, $v0, $s0
-/* 0890B8 7F0566C8 25AFFFE4 */  addiu $t7, $t5, -0x1c
-/* 0890BC 7F0566CC 3C058005 */  lui   $a1, %hi(D_80052A44) # $a1, 0x8005
-/* 0890C0 7F0566D0 24190002 */  li    $t9, 2
-/* 0890C4 7F0566D4 24180001 */  li    $t8, 1
-/* 0890C8 7F0566D8 AFB80018 */  sw    $t8, 0x18($sp)
-/* 0890CC 7F0566DC AFB90014 */  sw    $t9, 0x14($sp)
-/* 0890D0 7F0566E0 24A58B84 */  addiu $a1, %lo(D_80052A44) # addiu $a1, $a1, -0x747c
-/* 0890D4 7F0566E4 AFAF0010 */  sw    $t7, 0x10($sp)
-/* 0890D8 7F0566E8 02202025 */  move  $a0, $s1
-/* 0890DC 7F0566EC 24060093 */  li    $a2, 147
-/* 0890E0 7F0566F0 0FC1A879 */  jal   gunDrawHudString
-/* 0890E4 7F0566F4 24070002 */   li    $a3, 2
-/* 0890E8 7F0566F8 0C000FDD */  jal   viGetViewTop
-/* 0890EC 7F0566FC 00408825 */   move  $s1, $v0
-/* 0890F0 7F056700 00028400 */  sll   $s0, $v0, 0x10
-/* 0890F4 7F056704 00104C03 */  sra   $t1, $s0, 0x10
-/* 0890F8 7F056708 0C000FBF */  jal   viGetViewHeight
-/* 0890FC 7F05670C 01208025 */   move  $s0, $t1
-/* 089100 7F056710 8FA50040 */  lw    $a1, 0x40($sp)
-/* 089104 7F056714 2401003C */  li    $at, 60
-/* 089108 7F056718 00505821 */  addu  $t3, $v0, $s0
-/* 08910C 7F05671C 00A1001A */  div   $zero, $a1, $at
-/* 089110 7F056720 00004010 */  mfhi  $t0
-/* 089114 7F056724 2401000A */  li    $at, 10
-/* 089118 7F056728 256CFFE4 */  addiu $t4, $t3, -0x1c
-/* 08911C 7F05672C 0101001A */  div   $zero, $t0, $at
-/* 089120 7F056730 00002812 */  mflo  $a1
-/* 089124 7F056734 240E0002 */  li    $t6, 2
-/* 089128 7F056738 240D0001 */  li    $t5, 1
-/* 08912C 7F05673C AFAD0018 */  sw    $t5, 0x18($sp)
-/* 089130 7F056740 AFAE0014 */  sw    $t6, 0x14($sp)
-/* 089134 7F056744 AFAC0010 */  sw    $t4, 0x10($sp)
-/* 089138 7F056748 02202025 */  move  $a0, $s1
-/* 08913C 7F05674C 2406009C */  li    $a2, 156
-/* 089140 7F056750 0FC1A908 */  jal   gunDrawHudInteger
-/* 089144 7F056754 24070002 */   li    $a3, 2
-/* 089148 7F056758 0C000FDD */  jal   viGetViewTop
-/* 08914C 7F05675C 00408825 */   move  $s1, $v0
-/* 089150 7F056760 00028400 */  sll   $s0, $v0, 0x10
-/* 089154 7F056764 00107C03 */  sra   $t7, $s0, 0x10
-/* 089158 7F056768 0C000FBF */  jal   viGetViewHeight
-/* 08915C 7F05676C 01E08025 */   move  $s0, $t7
-/* 089160 7F056770 8FA50040 */  lw    $a1, 0x40($sp)
-/* 089164 7F056774 2401000A */  li    $at, 10
-/* 089168 7F056778 0050C021 */  addu  $t8, $v0, $s0
-/* 08916C 7F05677C 00A1001A */  div   $zero, $a1, $at
-/* 089170 7F056780 00002810 */  mfhi  $a1
-/* 089174 7F056784 2709FFE4 */  addiu $t1, $t8, -0x1c
-/* 089178 7F056788 24080002 */  li    $t0, 2
-/* 08917C 7F05678C 240A0001 */  li    $t2, 1
-/* 089180 7F056790 AFAA0018 */  sw    $t2, 0x18($sp)
-/* 089184 7F056794 AFA80014 */  sw    $t0, 0x14($sp)
-/* 089188 7F056798 AFA90010 */  sw    $t1, 0x10($sp)
-/* 08918C 7F05679C 02202025 */  move  $a0, $s1
-/* 089190 7F0567A0 240600A4 */  li    $a2, 164
-/* 089194 7F0567A4 0FC1A908 */  jal   gunDrawHudInteger
-/* 089198 7F0567A8 24070002 */   li    $a3, 2
-/* 08919C 7F0567AC 0C000FDD */  jal   viGetViewTop
-/* 0891A0 7F0567B0 00408825 */   move  $s1, $v0
-/* 0891A4 7F0567B4 00028400 */  sll   $s0, $v0, 0x10
-/* 0891A8 7F0567B8 00105C03 */  sra   $t3, $s0, 0x10
-/* 0891AC 7F0567BC 0C000FBF */  jal   viGetViewHeight
-/* 0891B0 7F0567C0 01608025 */   move  $s0, $t3
-/* 0891B4 7F0567C4 00506021 */  addu  $t4, $v0, $s0
-/* 0891B8 7F0567C8 258EFFE4 */  addiu $t6, $t4, -0x1c
-/* 0891BC 7F0567CC 3C058005 */  lui   $a1, %hi(D_80052A44) # $a1, 0x8005
-/* 0891C0 7F0567D0 240D0002 */  li    $t5, 2
-/* 0891C4 7F0567D4 240F0001 */  li    $t7, 1
-/* 0891C8 7F0567D8 AFAF0018 */  sw    $t7, 0x18($sp)
-/* 0891CC 7F0567DC AFAD0014 */  sw    $t5, 0x14($sp)
-/* 0891D0 7F0567E0 24A58B84 */  addiu $a1, %lo(D_80052A44) # addiu $a1, $a1, -0x747c
-/* 0891D4 7F0567E4 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 0891D8 7F0567E8 02202025 */  move  $a0, $s1
-/* 0891DC 7F0567EC 240600AD */  li    $a2, 173
-/* 0891E0 7F0567F0 0FC1A879 */  jal   gunDrawHudString
-/* 0891E4 7F0567F4 24070002 */   li    $a3, 2
-/* 0891E8 7F0567F8 0C000FDD */  jal   viGetViewTop
-/* 0891EC 7F0567FC 00408825 */   move  $s1, $v0
-/* 0891F0 7F056800 00028400 */  sll   $s0, $v0, 0x10
-/* 0891F4 7F056804 0010CC03 */  sra   $t9, $s0, 0x10
-/* 0891F8 7F056808 0C000FBF */  jal   viGetViewHeight
-/* 0891FC 7F05680C 03208025 */   move  $s0, $t9
-/* 089200 7F056810 8FA5003C */  lw    $a1, 0x3c($sp)
-/* 089204 7F056814 24010064 */  li    $at, 100
-/* 089208 7F056818 00504021 */  addu  $t0, $v0, $s0
-/* 08920C 7F05681C 00A1001A */  div   $zero, $a1, $at
-/* 089210 7F056820 0000C010 */  mfhi  $t8
-/* 089214 7F056824 2401000A */  li    $at, 10
-/* 089218 7F056828 250AFFE4 */  addiu $t2, $t0, -0x1c
-/* 08921C 7F05682C 0301001A */  div   $zero, $t8, $at
-/* 089220 7F056830 00002812 */  mflo  $a1
-/* 089224 7F056834 240B0002 */  li    $t3, 2
-/* 089228 7F056838 240C0001 */  li    $t4, 1
-/* 08922C 7F05683C AFAC0018 */  sw    $t4, 0x18($sp)
-/* 089230 7F056840 AFAB0014 */  sw    $t3, 0x14($sp)
-/* 089234 7F056844 AFAA0010 */  sw    $t2, 0x10($sp)
-/* 089238 7F056848 02202025 */  move  $a0, $s1
-/* 08923C 7F05684C 240600B6 */  li    $a2, 182
-/* 089240 7F056850 0FC1A908 */  jal   gunDrawHudInteger
-/* 089244 7F056854 24070002 */   li    $a3, 2
-/* 089248 7F056858 0C000FDD */  jal   viGetViewTop
-/* 08924C 7F05685C 00408825 */   move  $s1, $v0
-/* 089250 7F056860 00028400 */  sll   $s0, $v0, 0x10
-/* 089254 7F056864 00107403 */  sra   $t6, $s0, 0x10
-/* 089258 7F056868 0C000FBF */  jal   viGetViewHeight
-/* 08925C 7F05686C 01C08025 */   move  $s0, $t6
-/* 089260 7F056870 8FA5003C */  lw    $a1, 0x3c($sp)
-/* 089264 7F056874 2401000A */  li    $at, 10
-/* 089268 7F056878 00507821 */  addu  $t7, $v0, $s0
-/* 08926C 7F05687C 00A1001A */  div   $zero, $a1, $at
-/* 089270 7F056880 00002810 */  mfhi  $a1
-/* 089274 7F056884 25F9FFE4 */  addiu $t9, $t7, -0x1c
-/* 089278 7F056888 24180002 */  li    $t8, 2
-/* 08927C 7F05688C 24090001 */  li    $t1, 1
-/* 089280 7F056890 AFA90018 */  sw    $t1, 0x18($sp)
-/* 089284 7F056894 AFB80014 */  sw    $t8, 0x14($sp)
-/* 089288 7F056898 AFB90010 */  sw    $t9, 0x10($sp)
-/* 08928C 7F05689C 02202025 */  move  $a0, $s1
-/* 089290 7F0568A0 240600BE */  li    $a2, 190
-/* 089294 7F0568A4 0FC1A908 */  jal   gunDrawHudInteger
-/* 089298 7F0568A8 24070002 */   li    $a3, 2
-/* 08929C 7F0568AC 0FC2B06C */  jal   combiner_bayer_lod_perspective
-/* 0892A0 7F0568B0 00402025 */   move  $a0, $v0
-/* 0892A4 7F0568B4 00408825 */  move  $s1, $v0
-.L7F0568B8:
-/* 0892A8 7F0568B8 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 0892AC 7F0568BC 02201025 */  move  $v0, $s1
-/* 0892B0 7F0568C0 8FB10028 */  lw    $s1, 0x28($sp)
-/* 0892B4 7F0568C4 8FB00024 */  lw    $s0, 0x24($sp)
-/* 0892B8 7F0568C8 03E00008 */  jr    $ra
-/* 0892BC 7F0568CC 27BD0048 */   addiu $sp, $sp, 0x48
-)
-#endif
-#endif
+    Timer value is set using countdownTimerSetValue()
+*/
+Gfx *countdownTimerRender(Gfx *DL) {
+    
+    s32 mins;
+    s32 secs;
+    s32 ms;
+    s32 valign_offset;
+    s32 unused;
+    f32 time;
 
+    if (clock_drawn_flag == 0) {
+        
+        time = clock_time;
+        if (time < 0.0f) {
+            time = -time;
+        }
+        
+        mins = (s32) floorFloat(time / 3600.0f);
+        secs = (s32) floorFloat(time / 60.0f) - (mins * 60);
+        ms = ((s32) floorFloat((time * 100.0f) / 60.0f) - (mins * 6000)) - (secs * 100);
+        
+        DL = microcode_constructor(DL);
 
+        #if defined(VERSION_US) || defined(VERSION_JP)
+            valign_offset = 18;
+        #else
+            valign_offset = 28;
+        #endif
+       
+        // Minutes
+        DL = gunDrawHudInteger(DL, (mins % 100) / 10, 0x82, HUDHALIGN_MIDDLE, ( viGetViewTop() + viGetViewHeight()) - valign_offset, HUDVALIGN_MIDDLE, 1);
+        DL = gunDrawHudInteger(DL, mins % 10, 0x8A, HUDHALIGN_MIDDLE, ( viGetViewTop() + viGetViewHeight()) - valign_offset, HUDVALIGN_MIDDLE, 1);
+     
+        // : 
+        DL = gunDrawHudString(DL, &D_80052A44, 0x93, HUDHALIGN_MIDDLE, (viGetViewTop() + viGetViewHeight()) - valign_offset, HUDVALIGN_MIDDLE, 1);
+       
+        // Seconds
+        DL = gunDrawHudInteger(DL, (secs % 60) / 10, 0x9C, HUDHALIGN_MIDDLE, (viGetViewTop() + viGetViewHeight()) - valign_offset, HUDVALIGN_MIDDLE, 1);
+        DL = gunDrawHudInteger(DL, secs % 10, 0xA4, HUDHALIGN_MIDDLE, (viGetViewTop() + viGetViewHeight()) - valign_offset, HUDVALIGN_MIDDLE, 1);
+        
+        // :
+        DL = gunDrawHudString(DL, &D_80052A44, 0xAD, HUDHALIGN_MIDDLE, (viGetViewTop() + viGetViewHeight()) - valign_offset, HUDVALIGN_MIDDLE, 1);
+        
+        // Milliseconds
+        DL = gunDrawHudInteger(DL, (ms % 100) / 10, 0xB6, HUDHALIGN_MIDDLE, (viGetViewTop() + viGetViewHeight()) - valign_offset, HUDVALIGN_MIDDLE, 1);
+        DL = gunDrawHudInteger(DL, ms % 10, 0xBE, HUDHALIGN_MIDDLE, (viGetViewTop() + viGetViewHeight()) - valign_offset, HUDVALIGN_MIDDLE, 1);
 
-
+        DL = combiner_bayer_lod_perspective(DL);
+    }
+    
+    return DL;
+}
 
 void handle_alarm_gas_timer_calldamage(void)
 {

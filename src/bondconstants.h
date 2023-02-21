@@ -3517,6 +3517,14 @@ typedef enum TVCMD
 #define RANDOMFRAC() ((f32) randomGetNext() * 2.3283064e-10f)
 #define MAXFLOAT ((float)3.40282346638528860e+38)
 
+#define HUDHALIGN_RIGHT  0
+#define HUDHALIGN_LEFT   1
+#define HUDHALIGN_MIDDLE 2
+
+#define HUDVALIGN_BOTTOM 0
+#define HUDVALIGN_TOP    1
+#define HUDVALIGN_MIDDLE 2
+
 #pragma endregion
 
 #endif
