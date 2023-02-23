@@ -118,7 +118,7 @@ Embedment g_Embedments[EMBEDMENT_ARR_MAX];
 //CODE.bss:80075B70
 struct Model *g_CurrentProjectileModel;
 //CODE.bss:80075B74
-u32 dword_CODE_bss_80075B74;
+struct ModelNode * dword_CODE_bss_80075B74;
 //CODE.bss:80075B78
 coord3d flt_CODE_bss_80075B78;
 //CODE.bss:80075B84

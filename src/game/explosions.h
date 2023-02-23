@@ -237,6 +237,8 @@ Gfx *unk09c250RenderPropSmoke(PropRecord *arg0, Gfx *arg1);
 
 Gfx *explosionRenderBulletImpactOnProp(Gfx *arg0, PropRecord *arg1, s32 arg2);
 
+void sub_GAME_7F09E700(coord3d *pos, StandTile *stan, s16 arg2, u8 *rooms, s32 arg4);
+
 #if defined(VERSION_JP) || defined(VERSION_EU)
 s32  explosionCreate(void *, struct coord3d *pos, struct StandTile *stan, s16 /* enum EXPLOSION_DEF */ explosionType, s32 flag, s32 playernum, u8 *rooms, s32 flag2);
 #else
