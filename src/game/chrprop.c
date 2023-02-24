@@ -173,7 +173,7 @@ PropRecord *ptr_obj_pos_list_current_entry = 0;
 PropRecord *ptr_obj_pos_list_first_entry = 0;
 PropRecord *ptr_obj_pos_list_final_entry = 0;
 f32 difficulty = 1.0;
-struct point2d g_DefaultAutoAimCoord = { 0 };
+struct coord2d g_DefaultAutoAimCoord = { 0 };
 
 
 
@@ -3941,175 +3941,96 @@ f32 sub_GAME_7F03D188(PropRecord *prop, coord3d *arg1, f32 *arg2, f32 *arg3, f32
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03D78C(void) {
+/**
+ * Iterates one screen props to find autoaim target.
+ * 
+ * US address 7F03D78C.
+*/
+void sub_GAME_7F03D78C(void)
+{
+    f32 var_f20;
+    struct coord2d sp9C;
+    f32 var_f0;
+    struct PropRecord **pprop_iter;
+    struct coord3d sp88;
+    struct coord2d sp80;
+    struct coord2d sp78;
+    struct PropRecord *prop;
+    struct coord2d sp6C;
+    struct PropRecord *winning_prop;
+    struct ChrRecord *chr;
 
+    winning_prop = NULL;
+    sp9C = g_DefaultAutoAimCoord;
+
+    if (redirect_get_BONDdata_autoaim_y() != 0)
+    {
+        var_f20 = -1.0f;
+
+        for (pprop_iter = g_LastOnScreenProp - 1; pprop_iter >= &g_OnScreenPropList[0]; pprop_iter--)
+        {
+            prop = *pprop_iter;
+
+            if (prop == NULL)
+            {
+                continue;                
+            }
+
+            if ((prop->type != 3)
+                    && ((prop->type != 6)
+                        || (prop->obj == NULL)
+                        || (getPlayerPointerIndex(prop) == get_cur_playernum())))
+            {
+                continue;
+            }
+
+            chr = prop->chr;
+            
+            if (((chrGetEquippedWeaponProp(chr, GUNRIGHT) == 0) && (chrGetEquippedWeaponProp(chr, GUNLEFT) == 0)))
+            {
+                continue;
+            }
+
+            if ((sub_GAME_7F023194(prop, &sp88, &sp80, &sp78) == 0))
+            {
+                continue;
+            }
+
+            var_f0 = sub_GAME_7F03D188(prop, &sp88, &sp80.x, &sp78.x, &sp6C.x);
+
+            if (var_f20 < var_f0)
+            {
+                var_f20 = var_f0;
+            
+                winning_prop = prop;
+                sp9C.x = sp6C.x;
+                sp9C.y = sp6C.y;
+
+                if (1.0f <= var_f0)
+                {
+                    break;
+                }
+            }
+        }
+    }
+
+    if (winning_prop != NULL)
+    {
+        if (sp9C.x > 1.0f);
+
+        bondviewUpdateYAutoAimTime((s32) winning_prop, ((sp9C.y - getPlayer_c_screentop()) / (getPlayer_c_screenheight() * 0.5f)) - 1.0f);
+        
+        if (redirect_get_BONDdata_autoaim_x() != 0)
+        {
+            bondviewUpdateXAutoAimTime((s32) winning_prop, ((sp9C.x - getPlayer_c_screenleft()) / (getPlayer_c_screenwidth() * 0.5f)) - 1.0f);
+        }
+    }
+    else
+    {
+        bondviewUpdateYAutoAimTime(0, 0.0f);
+        bondviewUpdateXAutoAimTime(0, 0.0f);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03D78C
-/* 0722BC 7F03D78C 27BDFF58 */  addiu $sp, $sp, -0xa8
-/* 0722C0 7F03D790 3C0F8003 */  lui   $t7, %hi(g_DefaultAutoAimCoord) 
-/* 0722C4 7F03D794 AFBF004C */  sw    $ra, 0x4c($sp)
-/* 0722C8 7F03D798 AFB60048 */  sw    $s6, 0x48($sp)
-/* 0722CC 7F03D79C AFB50044 */  sw    $s5, 0x44($sp)
-/* 0722D0 7F03D7A0 AFB40040 */  sw    $s4, 0x40($sp)
-/* 0722D4 7F03D7A4 AFB3003C */  sw    $s3, 0x3c($sp)
-/* 0722D8 7F03D7A8 AFB20038 */  sw    $s2, 0x38($sp)
-/* 0722DC 7F03D7AC AFB10034 */  sw    $s1, 0x34($sp)
-/* 0722E0 7F03D7B0 AFB00030 */  sw    $s0, 0x30($sp)
-/* 0722E4 7F03D7B4 F7B60028 */  sdc1  $f22, 0x28($sp)
-/* 0722E8 7F03D7B8 F7B40020 */  sdc1  $f20, 0x20($sp)
-/* 0722EC 7F03D7BC 25EF0AB0 */  addiu $t7, %lo(g_DefaultAutoAimCoord) # addiu $t7, $t7, 0xab0
-/* 0722F0 7F03D7C0 8DE10000 */  lw    $at, ($t7)
-/* 0722F4 7F03D7C4 8DE80004 */  lw    $t0, 4($t7)
-/* 0722F8 7F03D7C8 27AE009C */  addiu $t6, $sp, 0x9c
-/* 0722FC 7F03D7CC 0000B025 */  move  $s6, $zero
-/* 072300 7F03D7D0 ADC10000 */  sw    $at, ($t6)
-/* 072304 7F03D7D4 0FC1F170 */  jal   redirect_get_BONDdata_autoaim_y
-/* 072308 7F03D7D8 ADC80004 */   sw    $t0, 4($t6)
-/* 07230C 7F03D7DC 10400047 */  beqz  $v0, .L7F03D8FC
-/* 072310 7F03D7E0 3C01BF80 */   li    $at, 0xBF800000 # -1.000000
-/* 072314 7F03D7E4 3C128007 */  lui   $s2, %hi(g_LastOnScreenProp)
-/* 072318 7F03D7E8 8E521DF0 */  lw    $s2, %lo(g_LastOnScreenProp)($s2)
-/* 07231C 7F03D7EC 3C098007 */  lui   $t1, %hi(g_OnScreenPropList) 
-/* 072320 7F03D7F0 4481A000 */  mtc1  $at, $f20
-/* 072324 7F03D7F4 25291620 */  addiu $t1, %lo(g_OnScreenPropList) # addiu $t1, $t1, 0x1620
-/* 072328 7F03D7F8 2652FFFC */  addiu $s2, $s2, -4
-/* 07232C 7F03D7FC 0249082B */  sltu  $at, $s2, $t1
-/* 072330 7F03D800 1420003E */  bnez  $at, .L7F03D8FC
-/* 072334 7F03D804 27B50078 */   addiu $s5, $sp, 0x78
-/* 072338 7F03D808 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 07233C 7F03D80C 4481B000 */  mtc1  $at, $f22
-/* 072340 7F03D810 27B40080 */  addiu $s4, $sp, 0x80
-/* 072344 7F03D814 27B30088 */  addiu $s3, $sp, 0x88
-/* 072348 7F03D818 8E500000 */  lw    $s0, ($s2)
-.L7F03D81C:
-/* 07234C 7F03D81C 12000031 */  beqz  $s0, .L7F03D8E4
-/* 072350 7F03D820 00000000 */   nop   
-/* 072354 7F03D824 92020000 */  lbu   $v0, ($s0)
-/* 072358 7F03D828 24010003 */  li    $at, 3
-/* 07235C 7F03D82C 1041000C */  beq   $v0, $at, .L7F03D860
-/* 072360 7F03D830 24010006 */   li    $at, 6
-/* 072364 7F03D834 1441002B */  bne   $v0, $at, .L7F03D8E4
-/* 072368 7F03D838 00000000 */   nop   
-/* 07236C 7F03D83C 8E0A0004 */  lw    $t2, 4($s0)
-/* 072370 7F03D840 11400028 */  beqz  $t2, .L7F03D8E4
-/* 072374 7F03D844 00000000 */   nop   
-/* 072378 7F03D848 0FC26C57 */  jal   getPlayerPointerIndex
-/* 07237C 7F03D84C 02002025 */   move  $a0, $s0
-/* 072380 7F03D850 0FC26C54 */  jal   get_cur_playernum
-/* 072384 7F03D854 00408825 */   move  $s1, $v0
-/* 072388 7F03D858 10510022 */  beq   $v0, $s1, .L7F03D8E4
-/* 07238C 7F03D85C 00000000 */   nop   
-.L7F03D860:
-/* 072390 7F03D860 8E110004 */  lw    $s1, 4($s0)
-/* 072394 7F03D864 00002825 */  move  $a1, $zero
-/* 072398 7F03D868 0FC08C0B */  jal   chrGetEquippedWeaponProp
-/* 07239C 7F03D86C 02202025 */   move  $a0, $s1
-/* 0723A0 7F03D870 14400004 */  bnez  $v0, .L7F03D884
-/* 0723A4 7F03D874 02202025 */   move  $a0, $s1
-/* 0723A8 7F03D878 0FC08C0B */  jal   chrGetEquippedWeaponProp
-/* 0723AC 7F03D87C 24050001 */   li    $a1, 1
-/* 0723B0 7F03D880 10400018 */  beqz  $v0, .L7F03D8E4
-.L7F03D884:
-/* 0723B4 7F03D884 02002025 */   move  $a0, $s0
-/* 0723B8 7F03D888 02602825 */  move  $a1, $s3
-/* 0723BC 7F03D88C 02803025 */  move  $a2, $s4
-/* 0723C0 7F03D890 0FC08C65 */  jal   sub_GAME_7F023194
-/* 0723C4 7F03D894 02A03825 */   move  $a3, $s5
-/* 0723C8 7F03D898 10400012 */  beqz  $v0, .L7F03D8E4
-/* 0723CC 7F03D89C 02002025 */   move  $a0, $s0
-/* 0723D0 7F03D8A0 27AB006C */  addiu $t3, $sp, 0x6c
-/* 0723D4 7F03D8A4 AFAB0010 */  sw    $t3, 0x10($sp)
-/* 0723D8 7F03D8A8 02602825 */  move  $a1, $s3
-/* 0723DC 7F03D8AC 02803025 */  move  $a2, $s4
-/* 0723E0 7F03D8B0 0FC0F462 */  jal   sub_GAME_7F03D188
-/* 0723E4 7F03D8B4 02A03825 */   move  $a3, $s5
-/* 0723E8 7F03D8B8 4600A03C */  c.lt.s $f20, $f0
-/* 0723EC 7F03D8BC C7A4006C */  lwc1  $f4, 0x6c($sp)
-/* 0723F0 7F03D8C0 45000008 */  bc1f  .L7F03D8E4
-/* 0723F4 7F03D8C4 00000000 */   nop   
-/* 0723F8 7F03D8C8 4600B03E */  c.le.s $f22, $f0
-/* 0723FC 7F03D8CC C7A60070 */  lwc1  $f6, 0x70($sp)
-/* 072400 7F03D8D0 46000506 */  mov.s $f20, $f0
-/* 072404 7F03D8D4 0200B025 */  move  $s6, $s0
-/* 072408 7F03D8D8 E7A4009C */  swc1  $f4, 0x9c($sp)
-/* 07240C 7F03D8DC 45010007 */  bc1t  .L7F03D8FC
-/* 072410 7F03D8E0 E7A600A0 */   swc1  $f6, 0xa0($sp)
-.L7F03D8E4:
-/* 072414 7F03D8E4 3C0C8007 */  lui   $t4, %hi(g_OnScreenPropList) 
-/* 072418 7F03D8E8 258C1620 */  addiu $t4, %lo(g_OnScreenPropList) # addiu $t4, $t4, 0x1620
-/* 07241C 7F03D8EC 2652FFFC */  addiu $s2, $s2, -4
-/* 072420 7F03D8F0 024C082B */  sltu  $at, $s2, $t4
-/* 072424 7F03D8F4 5020FFC9 */  beql  $at, $zero, .L7F03D81C
-/* 072428 7F03D8F8 8E500000 */   lw    $s0, ($s2)
-.L7F03D8FC:
-/* 07242C 7F03D8FC 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 072430 7F03D900 4481B000 */  mtc1  $at, $f22
-/* 072434 7F03D904 52C00026 */  beql  $s6, $zero, .L7F03D9A0
-/* 072438 7F03D908 4480A000 */   mtc1  $zero, $f20
-/* 07243C 7F03D90C 0FC1E135 */  jal   getPlayer_c_screentop
-/* 072440 7F03D910 00000000 */   nop   
-/* 072444 7F03D914 0FC1E12D */  jal   getPlayer_c_screenheight
-/* 072448 7F03D918 46000506 */   mov.s $f20, $f0
-/* 07244C 7F03D91C 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 072450 7F03D920 44818000 */  mtc1  $at, $f16
-/* 072454 7F03D924 C7A800A0 */  lwc1  $f8, 0xa0($sp)
-/* 072458 7F03D928 02C02025 */  move  $a0, $s6
-/* 07245C 7F03D92C 46100482 */  mul.s $f18, $f0, $f16
-/* 072460 7F03D930 46144281 */  sub.s $f10, $f8, $f20
-/* 072464 7F03D934 46125103 */  div.s $f4, $f10, $f18
-/* 072468 7F03D938 46162181 */  sub.s $f6, $f4, $f22
-/* 07246C 7F03D93C 44053000 */  mfc1  $a1, $f6
-/* 072470 7F03D940 0FC1F17C */  jal   bondviewUpdateYAutoAimTime
-/* 072474 7F03D944 00000000 */   nop   
-/* 072478 7F03D948 0FC1F1AA */  jal   redirect_get_BONDdata_autoaim_x
-/* 07247C 7F03D94C 00000000 */   nop   
-/* 072480 7F03D950 5040001B */  beql  $v0, $zero, .L7F03D9C0
-/* 072484 7F03D954 8FBF004C */   lw    $ra, 0x4c($sp)
-/* 072488 7F03D958 0FC1E131 */  jal   getPlayer_c_screenleft
-/* 07248C 7F03D95C 00000000 */   nop   
-/* 072490 7F03D960 0FC1E129 */  jal   getPlayer_c_screenwidth
-/* 072494 7F03D964 46000506 */   mov.s $f20, $f0
-/* 072498 7F03D968 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 07249C 7F03D96C 44815000 */  mtc1  $at, $f10
-/* 0724A0 7F03D970 C7A8009C */  lwc1  $f8, 0x9c($sp)
-/* 0724A4 7F03D974 02C02025 */  move  $a0, $s6
-/* 0724A8 7F03D978 460A0482 */  mul.s $f18, $f0, $f10
-/* 0724AC 7F03D97C 46144401 */  sub.s $f16, $f8, $f20
-/* 0724B0 7F03D980 46128103 */  div.s $f4, $f16, $f18
-/* 0724B4 7F03D984 46162181 */  sub.s $f6, $f4, $f22
-/* 0724B8 7F03D988 44053000 */  mfc1  $a1, $f6
-/* 0724BC 7F03D98C 0FC1F1B2 */  jal   bondviewUpdateXAutoAimTime
-/* 0724C0 7F03D990 00000000 */   nop   
-/* 0724C4 7F03D994 1000000A */  b     .L7F03D9C0
-/* 0724C8 7F03D998 8FBF004C */   lw    $ra, 0x4c($sp)
-/* 0724CC 7F03D99C 4480A000 */  mtc1  $zero, $f20
-.L7F03D9A0:
-/* 0724D0 7F03D9A0 00002025 */  move  $a0, $zero
-/* 0724D4 7F03D9A4 4405A000 */  mfc1  $a1, $f20
-/* 0724D8 7F03D9A8 0FC1F17C */  jal   bondviewUpdateYAutoAimTime
-/* 0724DC 7F03D9AC 00000000 */   nop   
-/* 0724E0 7F03D9B0 4405A000 */  mfc1  $a1, $f20
-/* 0724E4 7F03D9B4 0FC1F1B2 */  jal   bondviewUpdateXAutoAimTime
-/* 0724E8 7F03D9B8 00002025 */   move  $a0, $zero
-/* 0724EC 7F03D9BC 8FBF004C */  lw    $ra, 0x4c($sp)
-.L7F03D9C0:
-/* 0724F0 7F03D9C0 D7B40020 */  ldc1  $f20, 0x20($sp)
-/* 0724F4 7F03D9C4 D7B60028 */  ldc1  $f22, 0x28($sp)
-/* 0724F8 7F03D9C8 8FB00030 */  lw    $s0, 0x30($sp)
-/* 0724FC 7F03D9CC 8FB10034 */  lw    $s1, 0x34($sp)
-/* 072500 7F03D9D0 8FB20038 */  lw    $s2, 0x38($sp)
-/* 072504 7F03D9D4 8FB3003C */  lw    $s3, 0x3c($sp)
-/* 072508 7F03D9D8 8FB40040 */  lw    $s4, 0x40($sp)
-/* 07250C 7F03D9DC 8FB50044 */  lw    $s5, 0x44($sp)
-/* 072510 7F03D9E0 8FB60048 */  lw    $s6, 0x48($sp)
-/* 072514 7F03D9E4 03E00008 */  jr    $ra
-/* 072518 7F03D9E8 27BD00A8 */   addiu $sp, $sp, 0xa8
-)
-#endif
 
 
 s32 propDoorGetCdTypes(PropRecord* arg0)
