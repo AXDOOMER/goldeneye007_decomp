@@ -1420,6 +1420,10 @@ typedef union
 
             struct ChrRecord  *chr;   /*0x04*/
             ModelFileHeader   *obj;   /*0x08 GE Name confirmed*/
+
+            /**
+             * List of length model->obj->numMatrices dynamically allocated.
+            */
             RenderPosView     *render_pos; /*0x0c*/
             union ModelRwData **datas; // array of pointers to modeldata structs /*0x10*/
 

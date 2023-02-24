@@ -173,7 +173,7 @@ PropRecord *ptr_obj_pos_list_current_entry = 0;
 PropRecord *ptr_obj_pos_list_first_entry = 0;
 PropRecord *ptr_obj_pos_list_final_entry = 0;
 f32 difficulty = 1.0;
-s32 D_80030AB0 = 0;
+struct point2d g_DefaultAutoAimCoord = { 0 };
 
 
 
@@ -3950,7 +3950,7 @@ GLOBAL_ASM(
 .text
 glabel sub_GAME_7F03D78C
 /* 0722BC 7F03D78C 27BDFF58 */  addiu $sp, $sp, -0xa8
-/* 0722C0 7F03D790 3C0F8003 */  lui   $t7, %hi(D_80030AB0) 
+/* 0722C0 7F03D790 3C0F8003 */  lui   $t7, %hi(g_DefaultAutoAimCoord) 
 /* 0722C4 7F03D794 AFBF004C */  sw    $ra, 0x4c($sp)
 /* 0722C8 7F03D798 AFB60048 */  sw    $s6, 0x48($sp)
 /* 0722CC 7F03D79C AFB50044 */  sw    $s5, 0x44($sp)
@@ -3961,7 +3961,7 @@ glabel sub_GAME_7F03D78C
 /* 0722E0 7F03D7B0 AFB00030 */  sw    $s0, 0x30($sp)
 /* 0722E4 7F03D7B4 F7B60028 */  sdc1  $f22, 0x28($sp)
 /* 0722E8 7F03D7B8 F7B40020 */  sdc1  $f20, 0x20($sp)
-/* 0722EC 7F03D7BC 25EF0AB0 */  addiu $t7, %lo(D_80030AB0) # addiu $t7, $t7, 0xab0
+/* 0722EC 7F03D7BC 25EF0AB0 */  addiu $t7, %lo(g_DefaultAutoAimCoord) # addiu $t7, $t7, 0xab0
 /* 0722F0 7F03D7C0 8DE10000 */  lw    $at, ($t7)
 /* 0722F4 7F03D7C4 8DE80004 */  lw    $t0, 4($t7)
 /* 0722F8 7F03D7C8 27AE009C */  addiu $t6, $sp, 0x9c
