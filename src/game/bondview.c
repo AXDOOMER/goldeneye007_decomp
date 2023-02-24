@@ -8211,13 +8211,17 @@ void bondviewUpdateSpeedForwards(s32 arg0) {
     g_CurrentPlayer->speedforwards = g_CurrentPlayer->field_2A4C;
 }
 
+/**
+ * US address 7F07FF74.
+ * Duplicate of sub_GAME_7F080228.
+*/
 f32 sub_GAME_7F07FF74(f32 value) {
     if (value > 0) {
-        return (viGetFovY() * value * -0.7f) / 60.0f;
+        return (viGetFovY() * value * -0.7f) / FOV_Y_F;
     }
 
     if (value < 0) {
-        return (viGetFovY() * -value * 0.7f) / 60.0f;
+        return (viGetFovY() * -value * 0.7f) / FOV_Y_F;
     }
 
     return 0;
@@ -8229,7 +8233,7 @@ f32 sub_GAME_7F07FF74(f32 value) {
  */
 void bondviewCurrentPlayerUpdateSpeedVerta(f32 value)
 {
-    f32 mult = viGetFovY() / 60.0f;
+    f32 mult = viGetFovY() / FOV_Y_F;
     f32 limit = sub_GAME_7F07FF74(value);
     
     if (value > 0.0f)
@@ -8289,12 +8293,15 @@ void bondviewCurrentPlayerUpdateSpeedVerta(f32 value)
 
 
 
-
+/**
+ * US address 7F080228.
+ * Duplicate of sub_GAME_7F07FF74.
+*/
 f32 sub_GAME_7F080228(f32 arg0) {
     if (0.0f < arg0) {
-        return (viGetFovY() * arg0 * -0.7f) / 60.0f;
+        return (viGetFovY() * arg0 * -0.7f) / FOV_Y_F;
     } else if (arg0 < 0.0f) {
-        return (viGetFovY() * -arg0 * 0.7f) / 60.0f;
+        return (viGetFovY() * -arg0 * 0.7f) / FOV_Y_F;
     } else {
         return 0.0f;
     }
@@ -8305,7 +8312,7 @@ f32 sub_GAME_7F080228(f32 arg0) {
  */
 void bondviewCurrentPlayerUpdateSpeedTheta(f32 value)
 {
-    f32 mult = viGetFovY() / 60.0f;
+    f32 mult = viGetFovY() / FOV_Y_F;
     f32 limit = sub_GAME_7F080228(value);
     
     if (value > 0.0f)
@@ -10185,7 +10192,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             ftemp_nostack_sp84 *= -ftemp_nostack_sp84;
         }
 
-        ftemp_nostack_sp88 = (ftemp_nostack_sp8C / 60.0f);
+        ftemp_nostack_sp88 = (ftemp_nostack_sp8C / FOV_Y_F);
         g_CurrentPlayer->speedtheta = ftemp_nostack_sp84 * ftemp_nostack_sp88;
     }
     else if (moveData.aimTurnLeftSpeed > 0)
@@ -12105,13 +12112,13 @@ void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2)
     f32 faspect;
 #endif
 
-    set_cur_player_fovy(60.0f);
+    set_cur_player_fovy(FOV_Y_F);
 
     // This call doesn't do anything, the call viSetFovY(g_CurrentPlayer->fovy); in lvlRender
     // will actually change the field of view.
     // The call above should set g_CurrentPlayer->fovy, but it doesn't seem to affect
     // the fov....
-    viSetFovY(60.0f);
+    viSetFovY(FOV_Y_F);
 
     if (camera_80036430 != 0)
     {

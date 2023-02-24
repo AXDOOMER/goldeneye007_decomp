@@ -1346,8 +1346,8 @@ void interface_menu00_legalscreen(void)
 #define MENU_LEGALSCREEN_MENU_TIMER_MAX (60*4+1)
 #endif
 
-    viSetFovY(60.0f);
-    viSetAspect(1.3333334f);
+    viSetFovY(FOV_Y_F);
+    viSetAspect(ASPECT_RATIO_SD);
     viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(0);
 #if defined(ISGOLDFINGER) || defined(USEEXPANSION)
@@ -1628,8 +1628,8 @@ void dummy7F00AAF8(void) {
 //********************************************************************************************************
 void interface_menu17_switchscreens(void)
 {
-    viSetFovY(60.0f);
-    viSetAspect(1.3333334f);
+    viSetFovY(FOV_Y_F);
+    viSetAspect(ASPECT_RATIO_SD);
     viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(0);
 
@@ -1692,8 +1692,8 @@ void interface_menu01_nintendo(void)
 #define NINTENDO_TIMER_MAX 501
 #endif
 
-    viSetFovY(60.0f);
-    viSetAspect(1.3333334f);
+    viSetFovY(FOV_Y_F);
+    viSetAspect(ASPECT_RATIO_SD);
     viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(0);
 
@@ -2354,8 +2354,8 @@ void interface_menu04_goldeneyelogo(void)
 #define GOLDENEYELOGO_TIMER_2 (60/2)*3
 #endif
 
-    viSetFovY(60.0f);
-    viSetAspect(1.3333334f);
+    viSetFovY(FOV_Y_F);
+    viSetAspect(ASPECT_RATIO_SD);
     viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(0);
     g_MenuTimer += g_ClockTimer;
@@ -5670,8 +5670,8 @@ void interface_menu06_modesel(void)
             cheat_available[i] = FALSE;
         }
     }
-    viSetFovY(60.f);
-    viSetAspect(1.3333334f);
+    viSetFovY(FOV_Y_F);
+    viSetAspect(ASPECT_RATIO_SD);
     viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(FALSE);
 
@@ -7891,8 +7891,8 @@ void interface_menu08_difficulty(void)
     s32 unlockedDifficulty;
 
     unlockedDifficulty = get_highest_unlocked_difficulty_for_level(mission_folder_setup_entries[briefingpage].mission_num);
-    viSetFovY(60.0f);
-    viSetAspect(1.3333334f);
+    viSetFovY(FOV_Y_F);
+    viSetAspect(ASPECT_RATIO_SD);
     viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(FALSE);
     disable_all_switches(walletinst[0]);
@@ -8221,8 +8221,8 @@ void interface_menu09_007options(void)
     f32 temp_x;
     s32 temp_y;
 
-    viSetFovY(60.0f);
-    viSetAspect(1.3333334f);
+    viSetFovY(FOV_Y_F);
+    viSetAspect(ASPECT_RATIO_SD);
     viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(FALSE);
     if (joyGetButtons(PLAYER_1, Z_TRIG|A_BUTTON) == 0)
@@ -10090,8 +10090,8 @@ void interface_menu0E_mpoptions(void)
     handicap_selected = 0;
     controlstyle_selected = 0;
     aimadjustment_selected = 0;
-    viSetFovY(60.0f);
-    viSetAspect(1.3333334f);
+    viSetFovY(FOV_Y_F);
+    viSetAspect(ASPECT_RATIO_SD);
     viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(FALSE);
     if (joyGetControllerCount() < 2)
@@ -15138,8 +15138,8 @@ void interface_menu12_mpstage(void)
     s32 row;
     s32 column;
 
-    viSetFovY(60.0f);
-    viSetAspect(1.3333334f);
+    viSetFovY(FOV_Y_F);
+    viSetAspect(ASPECT_RATIO_SD);
     viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(FALSE);
     if (joyGetButtons(PLAYER_1, START_BUTTON|Z_TRIG|A_BUTTON) == 0)
@@ -15959,8 +15959,8 @@ void interface_menu13_mpscenario(void)
 
 
     isTeam = FALSE;
-    viSetFovY(60.0f);
-    viSetAspect(1.3333334f);
+    viSetFovY(FOV_Y_F);
+    viSetAspect(ASPECT_RATIO_SD);
     viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(FALSE);
 
@@ -17588,8 +17588,8 @@ void update_menu0A_briefing(void)
 
 void interface_menu0A_briefing(void)
 {
-    viSetFovY(60.0f);
-    viSetAspect(1.3333334f);
+    viSetFovY(FOV_Y_F);
+    viSetAspect(ASPECT_RATIO_SD);
     viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(FALSE);
     tab_prev_highlight = FALSE;
@@ -18573,8 +18573,8 @@ void update_menu0C_missionfailed(void) {
 
 void interface_menu0C_missionfailed(void)
 {
-    viSetFovY(60.0f);
-    viSetAspect(1.3333334f);
+    viSetFovY(FOV_Y_F);
+    viSetAspect(ASPECT_RATIO_SD);
     viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(FALSE);
     tab_next_highlight = FALSE;
@@ -18763,8 +18763,8 @@ void interface_menu0D_missioncomplete()
 {
     int entry;
 
-    viSetFovY(60.0f);
-    viSetAspect(1.3333334f);
+    viSetFovY(FOV_Y_F);
+    viSetAspect(ASPECT_RATIO_SD);
     viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(0);
     tab_prev_highlight = FALSE;
@@ -19154,7 +19154,7 @@ void interface_menu15_cheat(u32 param_1,u32 param_2)
   int iVar4;
   int iVar5;
 
-  viSetFovY(60.00000000);
+  viSetFovY(FOV_Y_F);
   viSetAspect(menu15_aspect);
   viSetZRange(100.00000000, menu15_pageheight);
   viSetUseZBuf(0);
@@ -21683,7 +21683,7 @@ void interface_menu18_displaycast(void)
     viSetFovY(46.0f);
     viSetZRange(10.0f, 2000.0f);
     viSetUseZBuf(TRUE);
-    viSetAspect(1.3333334f);
+    viSetAspect(ASPECT_RATIO_SD);
     set_cur_player_screen_size(440, 330);
     viSetViewSize(440, 330);
     set_cur_player_viewport_size(0, 0);
@@ -24587,8 +24587,8 @@ void update_menu19_spectrum(void) {
 void interface_menu19_spectrum(void)
 {
     #if defined(LEFTOVERSPECTRUM)
-    viSetFovY(60.0f);
-    viSetAspect(1.3333334f);
+    viSetFovY(FOV_Y_F);
+    viSetAspect(ASPECT_RATIO_SD);
     viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(0);
     run_spectrum_game();

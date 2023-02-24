@@ -57,8 +57,8 @@ struct VideoSettings_s g_ViDataArray[NUM_VIDEO_SETTINGS] =
 #else
 struct VideoSettings_s g_ViDataArray[NUM_VIDEO_SETTINGS] = 
 {
-    {0, 0, 0, 0, 320, 240, 60.0f, 1.3333334f, 30.0f, 10000.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 320, 240, 0, 0, 1, NULL},
-    {0, 0, 0, 0, 320, 240, 60.0f, 1.3333334f, 30.0f, 10000.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 320, 240, 0, 0, 1, NULL}
+    {0, 0, 0, 0, 320, 240, 60.0f, ASPECT_RATIO_SD, 30.0f, 10000.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 320, 240, 0, 0, 1, NULL},
+    {0, 0, 0, 0, 320, 240, 60.0f, ASPECT_RATIO_SD, 30.0f, 10000.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 320, 240, 0, 0, 1, NULL}
 };
 #endif
 

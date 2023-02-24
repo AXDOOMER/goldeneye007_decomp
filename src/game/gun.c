@@ -22445,12 +22445,12 @@ void bullet_path_from_screen_center(coord3d* arg0, coord3d* result, enum GUNHAND
     scaledspread = (120.0f * inaccuracy) / viGetFovY();
 
     randfactor = (RANDOMFRAC() - 0.5f) * RANDOMFRAC();
-    crosspos.x = g_CurrentPlayer->crosshair_angle.f[0] + randfactor * scaledspread * getPlayer_c_screenwidth() * (PAL ? 1.1764706f : 1.3333334f)
+    crosspos.x = g_CurrentPlayer->crosshair_angle.f[0] + randfactor * scaledspread * getPlayer_c_screenwidth() * (PAL ? ASPECT_RATIO_PAL : ASPECT_RATIO_SD)
         / (getPlayer_c_perspaspect() * 320.0f);
 
     randfactor = (RANDOMFRAC() - 0.5f) * RANDOMFRAC();
     crosspos.y =  g_CurrentPlayer->crosshair_angle.f[1] + randfactor * scaledspread * getPlayer_c_screenheight()
-        / (PAL ? 272.0f : 240.0f);
+        / (PAL ? (f32)(SCREEN_HEIGHT_272) : (f32)(SCREEN_HEIGHT_240));
 
     arg0->x = 0.0f;
     arg0->y = 0.0f;
