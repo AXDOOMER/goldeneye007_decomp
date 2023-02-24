@@ -178,11 +178,11 @@ void initBONDdataforPlayer(s32 player_num)
     g_playerPointers[player_num]->insightaimmode = 0;
     g_playerPointers[player_num]->autoyaimenabled = 1;
     g_playerPointers[player_num]->autoaimy = 0.0f;
-    g_playerPointers[player_num]->autoyaimtime = 0;
+    g_playerPointers[player_num]->autoaim_target_y = NULL;
     g_playerPointers[player_num]->autoyaimtime60 = -1;
     g_playerPointers[player_num]->autoxaimenabled = 1;
     g_playerPointers[player_num]->autoaimx = 0.0f;
-    g_playerPointers[player_num]->autoxaimtime = 0;
+    g_playerPointers[player_num]->autoaim_target_x = NULL;
     g_playerPointers[player_num]->autoxaimtime60 = -1;
     g_playerPointers[player_num]->vv_theta = 0.0f;
     g_playerPointers[player_num]->speedtheta = 0.0f;

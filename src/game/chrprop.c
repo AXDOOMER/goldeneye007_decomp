@@ -3976,8 +3976,8 @@ void sub_GAME_7F03D78C(void)
                 continue;                
             }
 
-            if ((prop->type != 3)
-                    && ((prop->type != 6)
+            if ((prop->type != PROP_TYPE_CHR)
+                    && ((prop->type != PROP_TYPE_VIEWER)
                         || (prop->obj == NULL)
                         || (getPlayerPointerIndex(prop) == get_cur_playernum())))
             {
@@ -4018,17 +4018,17 @@ void sub_GAME_7F03D78C(void)
     {
         if (sp9C.x > 1.0f);
 
-        bondviewUpdateYAutoAimTime((s32) winning_prop, ((sp9C.y - getPlayer_c_screentop()) / (getPlayer_c_screenheight() * 0.5f)) - 1.0f);
+        bondviewUpdateYAutoAimTime(winning_prop, ((sp9C.y - getPlayer_c_screentop()) / (getPlayer_c_screenheight() * 0.5f)) - 1.0f);
         
         if (redirect_get_BONDdata_autoaim_x() != 0)
         {
-            bondviewUpdateXAutoAimTime((s32) winning_prop, ((sp9C.x - getPlayer_c_screenleft()) / (getPlayer_c_screenwidth() * 0.5f)) - 1.0f);
+            bondviewUpdateXAutoAimTime(winning_prop, ((sp9C.x - getPlayer_c_screenleft()) / (getPlayer_c_screenwidth() * 0.5f)) - 1.0f);
         }
     }
     else
     {
-        bondviewUpdateYAutoAimTime(0, 0.0f);
-        bondviewUpdateXAutoAimTime(0, 0.0f);
+        bondviewUpdateYAutoAimTime(NULL, 0.0f);
+        bondviewUpdateXAutoAimTime(NULL, 0.0f);
     }
 }
 

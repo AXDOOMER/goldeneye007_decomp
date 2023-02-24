@@ -1463,11 +1463,11 @@ void init_player_BONDdata(void)
     g_CurrentPlayer->insightaimmode = 0;
     g_CurrentPlayer->autoyaimenabled = 1;
     g_CurrentPlayer->autoaimy = 0.0f;
-    g_CurrentPlayer->autoyaimtime = 0;
+    g_CurrentPlayer->autoaim_target_y = NULL;
     g_CurrentPlayer->autoyaimtime60 = -1;
     g_CurrentPlayer->autoxaimenabled = 1;
     g_CurrentPlayer->autoaimx = 0.0f;
-    g_CurrentPlayer->autoxaimtime = 0;
+    g_CurrentPlayer->autoaim_target_x = NULL;
     g_CurrentPlayer->autoxaimtime60 = -1;
     g_CurrentPlayer->colourscreenred = 0xff;
     g_CurrentPlayer->colourscreengreen = 0xff;
@@ -5616,23 +5616,23 @@ s32 get_BONDdata_is_aiming(void) {
 
 /**
  * Updates autoyaimtime60 by g_ClockTimer.
- * Will update player->autoaimy if new autoyaimtime60 < 0 or auto_aim_time != g_CurrentPlayer->autoyaimtime.
+ * Will update player->autoaimy if new autoyaimtime60 < 0 or autoaim_target != g_CurrentPlayer->autoaim_target_y.
  * 
  * Address 0x7F07C5F0.
  */
-void bondviewUpdateYAutoAimTime(s32 auto_aim_time, f32 auto_aim_y)
+void bondviewUpdateYAutoAimTime(struct PropRecord *autoaim_target, f32 auto_aim_y)
 {
     if (g_CurrentPlayer->autoyaimtime60 >= 0)
     {
         g_CurrentPlayer->autoyaimtime60 = g_CurrentPlayer->autoyaimtime60 - g_ClockTimer;
     }
 
-    if (auto_aim_time != g_CurrentPlayer->autoyaimtime)
+    if (autoaim_target != g_CurrentPlayer->autoaim_target_y)
     {
         if (g_CurrentPlayer->autoyaimtime60 < 0)
         {
             g_CurrentPlayer->autoyaimtime60 = BONDVIEW_AUTOAIM_TIME;
-            g_CurrentPlayer->autoyaimtime = auto_aim_time;
+            g_CurrentPlayer->autoaim_target_y = autoaim_target;
         }
         else
         {
@@ -5684,23 +5684,23 @@ int redirect_get_BONDdata_autoaim_x(void) {
 
 /**
  * Updates autoxaimtime60 by g_ClockTimer.
- * Will update player->autoaimx if new autoxaimtime60 < 0 or auto_aim_time != g_CurrentPlayer->autoxaimtime.
+ * Will update player->autoaimx if new autoxaimtime60 < 0 or autoaim_target_x != g_CurrentPlayer->autoaim_target_x.
  * 
  * Address 0x7F07C6C8.
  */
-void bondviewUpdateXAutoAimTime(s32 auto_aim_time, f32 auto_aim_x)
+void bondviewUpdateXAutoAimTime(struct PropRecord *autoaim_target, f32 auto_aim_x)
 {
     if (g_CurrentPlayer->autoxaimtime60 >= 0)
     {
         g_CurrentPlayer->autoxaimtime60 = g_CurrentPlayer->autoxaimtime60 - g_ClockTimer;
     }
 
-    if (auto_aim_time != g_CurrentPlayer->autoxaimtime)
+    if (autoaim_target != g_CurrentPlayer->autoaim_target_x)
     {
         if (g_CurrentPlayer->autoxaimtime60 < 0)
         {
             g_CurrentPlayer->autoxaimtime60 = BONDVIEW_AUTOAIM_TIME;
-            g_CurrentPlayer->autoxaimtime = auto_aim_time;
+            g_CurrentPlayer->autoaim_target_x = autoaim_target;
         }
         else
         {
@@ -10282,7 +10282,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         
         if (moveData.canAutoAim
             && redirect_get_BONDdata_autoaim_x()
-            && g_CurrentPlayer->autoxaimtime
+            && g_CurrentPlayer->autoaim_target_x
             && bondwalkItemCheckBitflags(getCurrentPlayerWeaponId(GUNRIGHT), WEAPONSTATBITFLAG_HAS_AUTO_AIM))
         {
             sp70 = g_CurrentPlayer->autoaimx;
@@ -10294,7 +10294,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
         if (moveData.canAutoAim
             && redirect_get_BONDdata_autoaim_y()
-            && g_CurrentPlayer->autoyaimtime
+            && g_CurrentPlayer->autoaim_target_y
             && bondwalkItemCheckBitflags(getCurrentPlayerWeaponId(GUNRIGHT), WEAPONSTATBITFLAG_HAS_AUTO_AIM))
         {
             ftemp_nostack_sp78 = g_CurrentPlayer->autoaimy;
