@@ -257,7 +257,7 @@ void          check_deactivate_gas_sound(void);
 void          handle_mp_respawn_and_some_things(void);
 void          determing_type_of_object_and_detection(void);
 void          chraiUpdateOnscreenPropCount(void);
-void          sub_GAME_7F03D78C(void);
+void          chrpropUpdateAutoaimTarget(void);
 void          chraiCheckUseHeldItems(void);
 bool          bond_interact_object(void);
 void          sub_GAME_7F03D0D4(void);

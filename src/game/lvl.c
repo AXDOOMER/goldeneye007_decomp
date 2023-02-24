@@ -1961,7 +1961,7 @@ Gfx* lvlRender(Gfx* DL)
             sub_GAME_7F0B4884();
             determing_type_of_object_and_detection();
             chraiUpdateOnscreenPropCount();
-            sub_GAME_7F03D78C();
+            chrpropUpdateAutoaimTarget();
             chraiCheckUseHeldItems();
 
             if (bond_pressed_reload_activate() && bond_interact_object())

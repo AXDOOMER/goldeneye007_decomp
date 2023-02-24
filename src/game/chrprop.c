@@ -3942,11 +3942,11 @@ f32 sub_GAME_7F03D188(PropRecord *prop, coord3d *arg1, f32 *arg2, f32 *arg3, f32
 
 
 /**
- * Iterates one screen props to find autoaim target.
+ * Iterates on screen props to find autoaim target.
  * 
  * US address 7F03D78C.
 */
-void sub_GAME_7F03D78C(void)
+void chrpropUpdateAutoaimTarget(void)
 {
     f32 var_f20;
     struct coord2d sp9C;
