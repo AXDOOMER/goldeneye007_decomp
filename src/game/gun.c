@@ -26480,11 +26480,9 @@ s32 get_civilian_casualties(void)
 //D:80053BF8
 const char aSD[] = "%s: %d\n";
 
-
-
 void increment_num_kills_display_text_in_MP(void)
 {
-    s8 buffer[0x100];
+    s8 buffer[256];
     s32 time_since_kill;
     s32 recent_kill_count;
     s32 mission_time;
@@ -26496,7 +26494,7 @@ void increment_num_kills_display_text_in_MP(void)
     if (getPlayerCount() < 2) { return; }
 
     mission_time = getMissiontimer();
-    sprintf(&buffer, aSD, langGet(0x98DA), g_playerPerm->kill_count);
+    sprintf(&buffer, aSD, langGet(TEXT(LGUN, GUN_STR_DA)), g_playerPerm->kill_count); // "kill count"
 
 #if defined(VERSION_US)
     hudmsgBottomShow(&buffer);
@@ -26561,22 +26559,22 @@ s32 get_times_killed_mwtgx(void) {
 
 void increment_num_deaths(void)
 {
-	char acStack256 [256];
+	char buffer[256];
     g_CurrentPlayer->deathcount = (s32) (g_CurrentPlayer->deathcount + 1);
     if (getPlayerCount() >= 2)
     {
         if (g_CurrentPlayer->deathcount == 1)
         {
-            sprintf(acStack256, langGet(TEXT(LGUN, GUN_STR_DB))); //died once
+            sprintf(buffer, langGet(TEXT(LGUN, GUN_STR_DB))); //died once
         }
         else
         {
-            sprintf(acStack256, "%s %d %s\n", langGet(TEXT(LGUN, GUN_STR_DC)), g_CurrentPlayer->deathcount, langGet(TEXT(LGUN, GUN_STR_DD))); //died times
+            sprintf(buffer, "%s %d %s\n", langGet(TEXT(LGUN, GUN_STR_DC)), g_CurrentPlayer->deathcount, langGet(TEXT(LGUN, GUN_STR_DD))); //died times
         }
 #if defined(VERSION_JP) || defined(VERSION_EU)
-		jp_hudmsgBottomShow(acStack256);
+		jp_hudmsgBottomShow(buffer);
 #else
-		hudmsgBottomShow(acStack256);
+		hudmsgBottomShow(buffer);
 #endif
     }
 }
@@ -26600,13 +26598,13 @@ void increment_num_suicides_display_MP(void) {
         
         currentTime = getMissiontimer();
         
-        sprintf(&buffer, &aSD_0, langGet(0x98DE), g_CurrentPlayer->num_suicides);
+        sprintf(&buffer, &aSD_0, langGet(TEXT(LGUN, GUN_STR_DE)), g_CurrentPlayer->num_suicides); // "suicide count"
 
-        #if defined(VERSION_JP) || defined(VERSION_EU)
-            jp_hudmsgBottomShow(&buffer);
-        #else
-            hudmsgBottomShow(&buffer);
-        #endif
+#if defined(VERSION_JP) || defined(VERSION_EU)
+		jp_hudmsgBottomShow(&buffer);
+#else
+		hudmsgBottomShow(&buffer);
+#endif
         
         if (g_playerPerm->kill_count >= 2) {
             time_diff = currentTime - g_CurrentPlayer->last_kill_time[0];
