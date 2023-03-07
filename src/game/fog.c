@@ -63,6 +63,11 @@ EnvironmentRecord * g_EnvironmentAltp;
 */
 s32 D_800825F4;
 
+#if defined(VERSION_EU)
+EnvironmentRecord dword_CODE_bss_800825F8;
+s32 bss_800825F8_padding[2];
+#endif
+
 /**
  * Unreferenced.
  * 
@@ -733,17 +738,27 @@ void fogLoadLevelEnvironment(s32 level_id, s32 arg1)
  */
 void fogSwitchToSolosky2(f32 arg0)
 {
+#if defined(VERSION_US) || defined(VERSION_JP)
     static EnvironmentRecord dword_CODE_bss_800825F8;
+#endif
 
     dword_CODE_bss_800825F8 = *g_EnvironmentMainp;
 
     dword_CODE_bss_800825F8.Visibility.BlendMultiplier = 
         g_EnvironmentMainp->Visibility.BlendMultiplier
+#if defined(VERSION_EU)
+        + (arg0 * ((f32)g_EnvironmentAltp->Visibility.BlendMultiplier - (f32)g_EnvironmentMainp->Visibility.BlendMultiplier));
+#else
         + (arg0 * (g_EnvironmentAltp->Visibility.BlendMultiplier - g_EnvironmentMainp->Visibility.BlendMultiplier));
+#endif
 
     dword_CODE_bss_800825F8.Visibility.FarFog = 
         g_EnvironmentMainp->Visibility.FarFog
+#if defined(VERSION_EU)
+        + (arg0 * ((f32)g_EnvironmentAltp->Visibility.FarFog - (f32)g_EnvironmentMainp->Visibility.FarFog));
+#else
         + (arg0 * (g_EnvironmentAltp->Visibility.FarFog - g_EnvironmentMainp->Visibility.FarFog));
+#endif
 
     dword_CODE_bss_800825F8.Fog.DifferenceFromFarIntensity = 
         (f32)g_EnvironmentMainp->Fog.DifferenceFromFarIntensity
@@ -771,9 +786,18 @@ void fogSwitchToSolosky2(f32 arg0)
 
     fogLoadCurrentEnvironment(&dword_CODE_bss_800825F8);
 }
-#endif
-#if defined(VERSION_EU)
 
+#else
+
+/**
+ * 
+ * .bss
+glabel dword_CODE_bss_800825F8
+.word 0,0,0,0
+.word 0,0,0,0
+.word 0,0,0,0
+ * 
+*/
 /**
  * hack:
  * variables referenced in the following asm are wrong, just used
@@ -782,11 +806,7 @@ void fogSwitchToSolosky2(f32 arg0)
 GLOBAL_ASM(
 
 
-.bss
-glabel dword_CODE_bss_800825F8
-.word 0,0,0,0
-.word 0,0,0,0
-.word 0,0,0,0
+
 
 .text
 glabel fogSwitchToSolosky2
