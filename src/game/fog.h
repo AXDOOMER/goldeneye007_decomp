@@ -144,7 +144,7 @@ typedef struct EnvironmentRecord
      * ID = StageID + Token eg, Bunker Cinema is 9 + 900 = 909
     */
 #if defined(VERSION_EU)
-    u16 Id;
+    s16 Id;
 #else
     u32 Id;
 #endif
