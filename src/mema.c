@@ -411,6 +411,8 @@ glabel memaAlloc
 // amount. If successful, return the same address, otherwise 0.
 
 // Only regalloc problems left. Called memaGrow in PD
+
+// https://decomp.me/scratch/tGfms 93.83%
 s32 memaGrow(s32 addr, u32 amount)
 {
     memaspace *curr = &g_MemoryAllocations[2];
