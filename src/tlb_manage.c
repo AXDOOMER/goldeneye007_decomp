@@ -9,6 +9,7 @@
  * This file contains tlb management code. 
  */
 
+#define PAGE_SIZE 0x2000
 
 /**
  * N64 (MIPS 4300) has 32 TLB entries.
@@ -41,11 +42,6 @@
 
 #define TLB_RANDOM_MOD MAPPING_TABLE_COUNT
 
-#ifndef VERSION_EU
-#define TLB_ALLOCATED_BLOCK_ADDRESS (u32)(0xFFF4C000)
-#else
-#define TLB_ALLOCATED_BLOCK_ADDRESS (u32)(0xFFF46000)
-#endif
 
 struct TlbManageTableEntry
 {
@@ -87,7 +83,7 @@ void tlbmanageEstablishManagementTable(void)
         g_tlbmanageMappingTable[i].entry0 = 1;
     }
 
-    g_tlbmanageTlbAllocatedBlock = (u8(*)[TLB_ALLOCATION_BLOCK_SIZE]) (((u32)&sp_boot & ~0x1FFF) + TLB_ALLOCATED_BLOCK_ADDRESS);
+    g_tlbmanageTlbAllocatedBlock = (u8(*)[TLB_ALLOCATION_BLOCK_SIZE]) (((u32)&sp_boot & ~(PAGE_SIZE - 1)) - (MAPPING_TABLE_COUNT * PAGE_SIZE));
     g_tlbmanageMappingTableEnd = ((u32)&g_tlbmanageMangementTable) + 0xFFC08000;
 }
 
