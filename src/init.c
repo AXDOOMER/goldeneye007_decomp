@@ -37,15 +37,26 @@ u32 unknown_init_val = PI_CLR_INTR;
 
 u32 cart_hw_address = PI_DOM1_ADDR2;
 
-struct debug_handler_entry debug_handler_table[] = 
+union debug_handler_container
 {
-    {sp_boot, "boot"},
-    {sp_rmon, "rmon"},
-    {sp_idle, "idle"},
-    {sp_shed, "shed"},
-    {sp_main, "main"},
-    {sp_audi, "audi"},
-    {0, 0},
+    /* There is a bulk memory copy of debug_handler_table,
+    * it seems to require a container with a known size,
+    * which doesn't seem correct ....
+    */
+    struct debug_handler_entry rows[7];
+    s32 data[14];
+};
+
+union debug_handler_container debug_handler_table = {
+    {
+        {sp_boot, "boot"},
+        {sp_rmon, "rmon"},
+        {sp_idle, "idle"},
+        {sp_shed, "shed"},
+        {sp_main, "main"},
+        {sp_audi, "audi"},
+        {0, 0}
+    }
 };
 
 OSThread rmonThread;
@@ -250,79 +261,17 @@ void mainproc(void *args)
  * 1508	70000908	V0= p->last entry in copy of debug handler code/name table; fries AT,V1,T0,T1,T6,T9
  *	copies table from 8002304C-80023084 to stack
  */
-#ifdef NONMATCHING
 void setuplastentryofdebughandler(void)
-
 {
-  //debug_handler_entry *new;
-  //debug_handler_entry *old;
-  debug_handler_entry local_38 [7];
-  s32 i;
-  
-  //debug_handler_entry *nextnewname;
-  //debug_handler_entry *nextoldname;
-  /*
-  nextoldname = debug_handler_table;
-  nextnewname = local_38;
-  do {
-    new = nextnewname;
-    old = nextoldname;
-    new->address = old->address;
-    new->ptr_name = old->ptr_name;
-    new[1].address = old[1].address;
-    nextoldname = &old[1].ptr_name;
-    nextnewname = &new[1].ptr_name;
-  } while (&old[1].ptr_name != debug_handler_table + 6);
-  (&new[1].ptr_name)->address = debug_handler_table[6].address;
-  new[2].address = old[2].address;
-  nextnewname = local_38;
-  while (local_38[1].address != 0x0) {
-    local_38[1].address = nextnewname[2].address;
-    nextnewname = nextnewname + 1;
-  }
-  return;
-  */
- for (i=0;i<8;i++)
- {
-     *(debug_handler_entry*)&local_38[i]=*(debug_handler_entry*)&debug_handler_table[i];
- }
- for (i=1;local_38[i].address; i++)
- {
-     local_38[i].address = local_38[i+1].address;
- }
+    union debug_handler_container dhe;
+    struct debug_handler_entry *p;
+
+    dhe = debug_handler_table;
+
+    p = &dhe.rows[0];
+    
+    do
+    {
+        p++;
+    } while (p->address != NULL);
 }
-//#ifdef NONMATCHING
-#else
-GLOBAL_ASM(
-.section .text
-glabel setuplastentryofdebughandler
-/* 001508 70000908 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 00150C 7000090C 3C0E8002 */  lui   $t6, %hi(debug_handler_table) 
-/* 001510 70000910 27A30008 */  addiu $v1, $sp, 8
-/* 001514 70000914 25CE304C */  addiu $t6, %lo(debug_handler_table) # addiu $t6, $t6, 0x304c
-/* 001518 70000918 25D90030 */  addiu $t9, $t6, 0x30
-/* 00151C 7000091C 00604025 */  move  $t0, $v1
-.L70000920:
-/* 001520 70000920 8DC10000 */  lw    $at, ($t6)
-/* 001524 70000924 25CE000C */  addiu $t6, $t6, 0xc
-/* 001528 70000928 2508000C */  addiu $t0, $t0, 0xc
-/* 00152C 7000092C AD01FFF4 */  sw    $at, -0xc($t0)
-/* 001530 70000930 8DC1FFF8 */  lw    $at, -8($t6)
-/* 001534 70000934 AD01FFF8 */  sw    $at, -8($t0)
-/* 001538 70000938 8DC1FFFC */  lw    $at, -4($t6)
-/* 00153C 7000093C 15D9FFF8 */  bne   $t6, $t9, .L70000920
-/* 001540 70000940 AD01FFFC */   sw    $at, -4($t0)
-/* 001544 70000944 8DC10000 */  lw    $at, ($t6)
-/* 001548 70000948 00601025 */  move  $v0, $v1
-/* 00154C 7000094C AD010000 */  sw    $at, ($t0)
-/* 001550 70000950 8DD90004 */  lw    $t9, 4($t6)
-/* 001554 70000954 AD190004 */  sw    $t9, 4($t0)
-/* 001558 70000958 8C490008 */  lw    $t1, 8($v0)
-.L7000095C:
-/* 00155C 7000095C 24420008 */  addiu $v0, $v0, 8
-/* 001560 70000960 5520FFFE */  bnezl $t1, .L7000095C
-/* 001564 70000964 8C490008 */   lw    $t1, 8($v0)
-/* 001568 70000968 03E00008 */  jr    $ra
-/* 00156C 7000096C 27BD0040 */   addiu $sp, $sp, 0x40
-)
-#endif
