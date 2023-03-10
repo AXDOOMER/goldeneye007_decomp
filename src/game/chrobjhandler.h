@@ -146,5 +146,6 @@ void deactivate_alarm_sound_effect(void);
 s32 sub_GAME_7F03F598(coord3d* pos, f32 arg1, BoundPadRecord *boundpads);
 void sub_GAME_7F0A1DA0(f32*, f32*, f32*, f32*, f32, f32, f32, f32, f32, f32);
 void sub_GAME_7F03F90C(Model *model, f32 *arg1, f32 *arg2, f32 *arg3, f32 *arg4);
+s32 sub_GAME_7F0448A8(struct PropRecord *arg0);
 
 #endif

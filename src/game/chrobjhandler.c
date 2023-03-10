@@ -839,7 +839,8 @@ void add_obj_to_temp_proxmine_table(WeaponObjRecord* proxy);
 s32 sub_GAME_7F042EB4(struct ObjectRecord *arg0, f32 *arg1, struct coord3d *arg2, struct coord3d *arg3, s32 arg4, s32 arg5);
 s32 sub_GAME_7F042A0C(struct ObjectRecord *arg0, f32 *arg1, struct coord3d *arg2, struct coord3d *arg3, s32 arg4);
 s32 handles_projectile_motion(struct ObjectRecord *arg0, f32 *arg1, struct coord3d *arg2, struct coord3d *arg3, s32 arg4, s32 arg5);
-
+void sub_GAME_7F0431E4(struct ObjectRecord *arg0, struct coord3d *arg1);
+void sub_GAME_7F054FB4(struct DoorRecord *arg0);
 
 /* PD: projectileFree (similar but not the same structure) */
 void projectileFree(Projectile* projectile)
