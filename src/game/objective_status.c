@@ -423,7 +423,7 @@ void objectivestatusCheckRoomEntered(s32 roomid)
 /**
  * US address 7F0577E8.
 */
-void sub_GAME_7F0577E8(s32 arg0, s32 arg1)
+void objectivestatusCheckDeposit(s32 weaponnum, s32 roomid)
 {
     struct criteria_deposit *dep;
     s32 padid;
@@ -431,7 +431,7 @@ void sub_GAME_7F0577E8(s32 arg0, s32 arg1)
 
     for (dep = ptr_last_deposit_in_room_subobject_entry_type21; dep != NULL; dep = dep->next)
     {
-        if (dep->flag == 0 && arg0 == dep->weaponnum)
+        if (dep->flag == 0 && weaponnum == dep->weaponnum)
         {
             padid = dep->padid;
 
@@ -444,7 +444,7 @@ void sub_GAME_7F0577E8(s32 arg0, s32 arg1)
                 pad = (PadRecord *)&g_CurrentSetup.boundpads[getBoundPadNum(padid)];
             }
 
-            if (pad->stan != NULL && arg1 == pad->stan->room)
+            if (pad->stan != NULL && roomid == pad->stan->room)
             {
                 dep->flag = 1;
             }

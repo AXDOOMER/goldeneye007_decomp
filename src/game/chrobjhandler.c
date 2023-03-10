@@ -38,6 +38,7 @@
 #include "textrelated.h"
 #include "gun.h"
 #include "fr.h"
+#include "objective_status.h"
 
 
 #ifdef VERSION_EU
@@ -6415,7 +6416,7 @@ glabel object_interaction
 /* 07A474 7F045944 26650008 */   addiu $a1, $s3, 8
 /* 07A478 7F045948 8E6B0014 */  lw    $t3, 0x14($s3)
 /* 07A47C 7F04594C 82240080 */  lb    $a0, 0x80($s1)
-/* 07A480 7F045950 0FC15DFA */  jal   sub_GAME_7F0577E8
+/* 07A480 7F045950 0FC15DFA */  jal   objectivestatusCheckDeposit
 /* 07A484 7F045954 91650003 */   lbu   $a1, 3($t3)
 /* 07A488 7F045958 02202025 */  move  $a0, $s1
 /* 07A48C 7F04595C 27A50614 */  addiu $a1, $sp, 0x614
@@ -11512,7 +11513,7 @@ glabel object_interaction
 /* 07A898 7F045D28 26650008 */   addiu $a1, $s3, 8
 /* 07A89C 7F045D2C 8E6A0014 */  lw    $t2, 0x14($s3)
 /* 07A8A0 7F045D30 82240080 */  lb    $a0, 0x80($s1)
-/* 07A8A4 7F045D34 0FC15F41 */  jal   sub_GAME_7F0577E8
+/* 07A8A4 7F045D34 0FC15F41 */  jal   objectivestatusCheckDeposit
 /* 07A8A8 7F045D38 91450003 */   lbu   $a1, 3($t2)
 /* 07A8AC 7F045D3C 02202025 */  move  $a0, $s1
 /* 07A8B0 7F045D40 27A5061C */  addiu $a1, $sp, 0x61c
@@ -12395,7 +12396,7 @@ glabel object_interaction
 /* 07B578 7F046A08 8FAB0698 */   lw    $t3, 0x698($sp)
 /* 07B57C 7F046A0C 8E690014 */  lw    $t1, 0x14($s3)
 /* 07B580 7F046A10 82240080 */  lb    $a0, 0x80($s1)
-/* 07B584 7F046A14 0FC15F41 */  jal   sub_GAME_7F0577E8
+/* 07B584 7F046A14 0FC15F41 */  jal   objectivestatusCheckDeposit
 /* 07B588 7F046A18 91250003 */   lbu   $a1, 3($t1)
 .Ljp7F046A1C:
 /* 07B58C 7F046A1C 8FAB0698 */  lw    $t3, 0x698($sp)
@@ -16618,7 +16619,7 @@ glabel object_interaction
 /* 0784D8 7F045AE8 26650008 */   addiu $a1, $s3, 8
 /* 0784DC 7F045AEC 8E680014 */  lw    $t0, 0x14($s3)
 /* 0784E0 7F045AF0 82240080 */  lb    $a0, 0x80($s1)
-/* 0784E4 7F045AF4 0FC15EB9 */  jal   sub_GAME_7F0577E8
+/* 0784E4 7F045AF4 0FC15EB9 */  jal   objectivestatusCheckDeposit
 /* 0784E8 7F045AF8 91050003 */   lbu   $a1, 3($t0)
 /* 0784EC 7F045AFC 02202025 */  move  $a0, $s1
 /* 0784F0 7F045B00 27A5061C */  addiu $a1, $sp, 0x61c
@@ -17501,7 +17502,7 @@ glabel object_interaction
 /* 0791B8 7F0467C8 8FB90698 */   lw    $t9, 0x698($sp)
 /* 0791BC 7F0467CC 8E6F0014 */  lw    $t7, 0x14($s3)
 /* 0791C0 7F0467D0 82240080 */  lb    $a0, 0x80($s1)
-/* 0791C4 7F0467D4 0FC15EB9 */  jal   sub_GAME_7F0577E8
+/* 0791C4 7F0467D4 0FC15EB9 */  jal   objectivestatusCheckDeposit
 /* 0791C8 7F0467D8 91E50003 */   lbu   $a1, 3($t7)
 .L7F0467DC:
 /* 0791CC 7F0467DC 8FB90698 */  lw    $t9, 0x698($sp)
