@@ -3969,4 +3969,13 @@ struct criteria_roomentered {
     struct criteria_roomentered *next;
 };
 
+/* completely made up */
+struct criteria_deposit {
+    s32 unk00;
+    s32 weaponnum;
+    s32 padid;
+    s32 flag;
+    struct criteria_deposit *next;
+};
+
 #endif
