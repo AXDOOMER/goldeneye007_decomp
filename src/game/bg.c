@@ -4010,7 +4010,7 @@ s32 sub_GAME_7F0B5488(coord3d* arg0, coord3d* arg1)
     arg1->x = arg0->x * room_data_float2;
     arg1->y = arg0->y * room_data_float2;
     arg1->z = arg0->z * room_data_float2;
-    mtx4TransformVecInPlace(temp_a0, arg1->f);
+    mtx4TransformVecInPlace(temp_a0, arg1);
 
     sub_GAME_7F078060(arg1, arg1);
 

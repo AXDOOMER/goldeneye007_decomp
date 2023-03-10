@@ -2742,7 +2742,7 @@ bool projectileFindCollidingProp(PropRecord *prop, coord3d *pos1, coord3d *pos2,
     sp88.y = pos1->y;
     sp88.z = pos1->z;
 
-    mtx4TransformVecInPlace(camGetWorldToScreenMtxf(), sp88.f);
+    mtx4TransformVecInPlace(camGetWorldToScreenMtxf(), &sp88);
 
     sp7c.x = sp98.x;
     sp7c.y = sp98.y;

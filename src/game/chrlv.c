@@ -10521,7 +10521,7 @@ bool sub_GAME_7F0333F8(ChrRecord *self)
     Model  *mymodel;
     coord3d zeropos;
     coord3d pos;
-    vec3    vec;
+    struct coord3d vec;
     f32     scale;
 
     if (chrlvCurrentPlayerCall7F0B0E24(self))

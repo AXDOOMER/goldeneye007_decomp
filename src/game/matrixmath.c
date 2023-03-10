@@ -225,12 +225,12 @@ void matrix_4x4_transform_vector(Mtxf *matrix, vec3 vector, vec3 result)
     result[2] += matrix->m[3][2];
 }
 
-void mtx4TransformVecInPlace(Mtxf *matrix, vec3 vector)
+void mtx4TransformVecInPlace(Mtxf *matrix, struct coord3d *vector)
 {
     mtx4RotateVecInPlace(matrix, vector);
-    vector[0] += matrix->m[3][0];
-    vector[1] += matrix->m[3][1];
-    vector[2] += matrix->m[3][2];
+    vector->f[0] += matrix->m[3][0];
+    vector->f[1] += matrix->m[3][1];
+    vector->f[2] += matrix->m[3][2];
 }
 
 void matrix_4x4_set_position_and_rotation_around_y(f32 *position, f32 angle, Mtxf *matrix)
