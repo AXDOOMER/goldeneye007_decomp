@@ -155,8 +155,8 @@ void reinit_between_menus(void)
     bodypartshot = -1;
     F_80030B14 = 1.0f;
     F_80030B18 = 1.0f;
-    F_80030B1C = 1.0f;
-    F_80030B20 = 1.0f;
+    g_AutogunPendingDamageTick = 1.0f;
+    g_AutogunDamageScalar = 1.0f;
     F_80030B24 = 1.0f;
     g_SoloAmmoMultiplier = 1.0f;
 }

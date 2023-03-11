@@ -38,8 +38,8 @@ struct HitThing {
 
 extern f32 F_80030B14;
 extern f32 F_80030B18;
-extern f32 F_80030B1C;
-extern f32 F_80030B20;
+extern f32 g_AutogunPendingDamageTick;
+extern f32 g_AutogunDamageScalar;
 extern f32 F_80030B24;
 extern f32 g_SoloAmmoMultiplier;
 
@@ -64,8 +64,8 @@ extern struct PropRecord *D_80030B0C;
 extern s32 bodypartshot;
 extern f32 F_80030B14;
 extern f32 F_80030B18;
-extern f32 F_80030B1C;
-extern f32 F_80030B20;
+extern f32 g_AutogunPendingDamageTick;
+extern f32 g_AutogunDamageScalar;
 extern f32 F_80030B24;
 extern f32 g_SoloAmmoMultiplier;
 

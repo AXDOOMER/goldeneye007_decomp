@@ -2095,8 +2095,8 @@ void lvlSetMultipliersForDifficulty(void)
 
         F_80030B14 = 2.0f;
         F_80030B18 = 2.0f;
-        F_80030B1C = (0.5f * damageMultiplier);
-        F_80030B20 = (0.5f * damageMultiplier);
+        g_AutogunPendingDamageTick = (0.5f * damageMultiplier);
+        g_AutogunDamageScalar = (0.5f * damageMultiplier);
         F_80030B24 = 2.0f;
         g_AiAccuracyModifier = DEFAULT_AGENT_AI_ACCURACY_MODIFIER;
         g_AiDamageModifier = (DEFAULT_AGENT_AI_DAMAGE_MODIFIER * damageMultiplier);
@@ -2110,8 +2110,8 @@ void lvlSetMultipliersForDifficulty(void)
     {
         F_80030B14 = 1.0f;
         F_80030B18 = 1.0f;
-        F_80030B1C = 0.75f;
-        F_80030B20 = 0.75f;
+        g_AutogunPendingDamageTick = 0.75f;
+        g_AutogunDamageScalar = 0.75f;
         F_80030B24 = 1.0f;
         g_AiAccuracyModifier = DEFAULT_SECRET_AGENT_AI_ACCURACY_MODIFIER;
         g_AiDamageModifier = DEFAULT_SECRET_AGENT_AI_DAMAGE_MODIFIER;
@@ -2139,8 +2139,8 @@ void lvlSetMultipliersForDifficulty(void)
     {
         F_80030B14 = 1.0f;
         F_80030B18 = 1.0f;
-        F_80030B1C = 1.0f;
-        F_80030B20 = 1.0f;
+        g_AutogunPendingDamageTick = 1.0f;
+        g_AutogunDamageScalar = 1.0f;
         F_80030B24 = 1.0f;
         g_AiAccuracyModifier = DEFAULT_00_AGENT_AI_ACCURACY_MODIFIER;
         g_AiDamageModifier = DEFAULT_00_AGENT_AI_DAMAGE_MODIFIER;
@@ -2168,8 +2168,8 @@ void lvlSetMultipliersForDifficulty(void)
     {
         F_80030B14 = 1.0f;
         F_80030B18 = 1.0f;
-        F_80030B1C = 1.0f;
-        F_80030B20 = 1.0f;
+        g_AutogunPendingDamageTick = 1.0f;
+        g_AutogunDamageScalar = 1.0f;
         F_80030B24 = 1.0f;
         g_AiAccuracyModifier = DEFAULT_007_AI_ACCURACY_MODIFIER;
         g_AiDamageModifier = DEFAULT_007_AI_DAMAGE_MODIFIER;

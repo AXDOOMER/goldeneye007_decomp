@@ -86,8 +86,8 @@ struct PropRecord * D_80030B0C = NULL;
 s32 bodypartshot = 0xFFFFFFFF;
 f32 F_80030B14 = 1.0;
 f32 F_80030B18 = 1.0;
-f32 F_80030B1C = 1.0;
-f32 F_80030B20 = 1.0;
+f32 g_AutogunPendingDamageTick = 1.0;
+f32 g_AutogunDamageScalar = 1.0;
 f32 F_80030B24 = 1.0;
 
 /*
@@ -10673,10 +10673,10 @@ glabel object_interaction
 /* 07E2C8 7F049798 C4282B74 */  lwc1  $f8, %lo(D_80052B74)($at)
 /* 07E2CC 7F04979C 3C018005 */  lui   $at, %hi(g_GlobalTimerDelta)
 /* 07E2D0 7F0497A0 C42A8378 */  lwc1  $f10, %lo(g_GlobalTimerDelta)($at)
-/* 07E2D4 7F0497A4 3C018003 */  lui   $at, %hi(F_80030B1C)
+/* 07E2D4 7F0497A4 3C018003 */  lui   $at, %hi(g_AutogunPendingDamageTick)
 /* 07E2D8 7F0497A8 4600603C */  c.lt.s $f12, $f0
 /* 07E2DC 7F0497AC 460A4182 */  mul.s $f6, $f8, $f10
-/* 07E2E0 7F0497B0 C4240B1C */  lwc1  $f4, %lo(F_80030B1C)($at)
+/* 07E2E0 7F0497B0 C4240B1C */  lwc1  $f4, %lo(g_AutogunPendingDamageTick)($at)
 /* 07E2E4 7F0497B4 46043082 */  mul.s $f2, $f6, $f4
 /* 07E2E8 7F0497B8 45020005 */  bc1fl .L7F0497D0
 /* 07E2EC 7F0497BC C60A00D4 */   lwc1  $f10, 0xd4($s0)
@@ -10698,8 +10698,8 @@ glabel object_interaction
 /* 07E328 7F0497F8 2404000E */   li    $a0, 14
 /* 07E32C 7F0497FC 3C013E00 */  li    $at, 0x3E000000 # 0.125000
 /* 07E330 7F049800 44815000 */  mtc1  $at, $f10
-/* 07E334 7F049804 3C018003 */  lui   $at, %hi(F_80030B20)
-/* 07E338 7F049808 C4240B20 */  lwc1  $f4, %lo(F_80030B20)($at)
+/* 07E334 7F049804 3C018003 */  lui   $at, %hi(g_AutogunDamageScalar)
+/* 07E338 7F049808 C4240B20 */  lwc1  $f4, %lo(g_AutogunDamageScalar)($at)
 /* 07E33C 7F04980C 460A0182 */  mul.s $f6, $f0, $f10
 /* 07E340 7F049810 C60E0090 */  lwc1  $f14, 0x90($s0)
 /* 07E344 7F049814 2406FFFF */  li    $a2, -1
@@ -15779,10 +15779,10 @@ glabel object_interaction
 /* 07E70C 7F049B9C C4282BA4 */  lwc1  $f8, %lo(D_80052B74)($at)
 /* 07E710 7F049BA0 3C018005 */  lui   $at, %hi(g_JP_GlobalTimerDelta) # $at, 0x8005
 /* 07E714 7F049BA4 C42A83A8 */  lwc1  $f10, %lo(g_JP_GlobalTimerDelta)($at)
-/* 07E718 7F049BA8 3C018003 */  lui   $at, %hi(F_80030B1C) # $at, 0x8003
+/* 07E718 7F049BA8 3C018003 */  lui   $at, %hi(g_AutogunPendingDamageTick) # $at, 0x8003
 /* 07E71C 7F049BAC 4600603C */  c.lt.s $f12, $f0
 /* 07E720 7F049BB0 460A4182 */  mul.s $f6, $f8, $f10
-/* 07E724 7F049BB4 C4240B5C */  lwc1  $f4, %lo(F_80030B1C)($at)
+/* 07E724 7F049BB4 C4240B5C */  lwc1  $f4, %lo(g_AutogunPendingDamageTick)($at)
 /* 07E728 7F049BB8 46043082 */  mul.s $f2, $f6, $f4
 /* 07E72C 7F049BBC 45020005 */  bc1fl .Ljp7F049BD4
 /* 07E730 7F049BC0 C60A00D4 */   lwc1  $f10, 0xd4($s0)
@@ -15804,8 +15804,8 @@ glabel object_interaction
 /* 07E76C 7F049BFC 2404000E */   li    $a0, 14
 /* 07E770 7F049C00 3C013E00 */  li    $at, 0x3E000000 # 0.125000
 /* 07E774 7F049C04 44815000 */  mtc1  $at, $f10
-/* 07E778 7F049C08 3C018003 */  lui   $at, %hi(F_80030B20) # $at, 0x8003
-/* 07E77C 7F049C0C C4240B60 */  lwc1  $f4, %lo(F_80030B20)($at)
+/* 07E778 7F049C08 3C018003 */  lui   $at, %hi(g_AutogunDamageScalar) # $at, 0x8003
+/* 07E77C 7F049C0C C4240B60 */  lwc1  $f4, %lo(g_AutogunDamageScalar)($at)
 /* 07E780 7F049C10 460A0182 */  mul.s $f6, $f0, $f10
 /* 07E784 7F049C14 C60E0090 */  lwc1  $f14, 0x90($s0)
 /* 07E788 7F049C18 2406FFFF */  li    $a2, -1
@@ -20892,10 +20892,10 @@ glabel object_interaction
 /* 07C364 7F049974 C4288CB4 */  lwc1  $f8, %lo(D_80052B74)($at)
 /* 07C368 7F049978 3C018004 */  lui   $at, %hi(g_GlobalTimerDelta) # $at, 0x8004
 /* 07C36C 7F04997C C42A1004 */  lwc1  $f10, %lo(g_GlobalTimerDelta)($at)
-/* 07C370 7F049980 3C018003 */  lui   $at, %hi(F_80030B1C) # $at, 0x8003
+/* 07C370 7F049980 3C018003 */  lui   $at, %hi(g_AutogunPendingDamageTick) # $at, 0x8003
 /* 07C374 7F049984 4600603C */  c.lt.s $f12, $f0
 /* 07C378 7F049988 460A4182 */  mul.s $f6, $f8, $f10
-/* 07C37C 7F04998C C424C06C */  lwc1  $f4, %lo(F_80030B1C)($at)
+/* 07C37C 7F04998C C424C06C */  lwc1  $f4, %lo(g_AutogunPendingDamageTick)($at)
 /* 07C380 7F049990 46043082 */  mul.s $f2, $f6, $f4
 /* 07C384 7F049994 45020005 */  bc1fl .L7F0499AC
 /* 07C388 7F049998 C60A00D4 */   lwc1  $f10, 0xd4($s0)
@@ -20917,8 +20917,8 @@ glabel object_interaction
 /* 07C3C4 7F0499D4 2404000E */   li    $a0, 14
 /* 07C3C8 7F0499D8 3C013E00 */  li    $at, 0x3E000000 # 0.125000
 /* 07C3CC 7F0499DC 44815000 */  mtc1  $at, $f10
-/* 07C3D0 7F0499E0 3C018003 */  lui   $at, %hi(F_80030B20) # $at, 0x8003
-/* 07C3D4 7F0499E4 C424C070 */  lwc1  $f4, %lo(F_80030B20)($at)
+/* 07C3D0 7F0499E0 3C018003 */  lui   $at, %hi(g_AutogunDamageScalar) # $at, 0x8003
+/* 07C3D4 7F0499E4 C424C070 */  lwc1  $f4, %lo(g_AutogunDamageScalar)($at)
 /* 07C3D8 7F0499E8 460A0182 */  mul.s $f6, $f0, $f10
 /* 07C3DC 7F0499EC C60E0090 */  lwc1  $f14, 0x90($s0)
 /* 07C3E0 7F0499F0 2406FFFF */  li    $a2, -1
