@@ -151,7 +151,7 @@ void reinit_between_menus(void)
     g_LevelLoadPropSwitch = NULL;
     g_LevelLoadPropLockDoor = NULL;
     g_LevelLoadPropSafeItem = NULL;
-    D_80030B0C = 0;
+    D_80030B0C = NULL;
     bodypartshot = -1;
     F_80030B14 = 1.0f;
     F_80030B18 = 1.0f;

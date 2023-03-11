@@ -35,6 +35,6 @@ extern s32 animation_table_ptrs1[];
  * The index of each value corresponds to `enum AIRCRAFT_ANIMATION`.
  * The value corresponds to (e.g. index=0) PTR_ANIM_helicopter_cradle (same as ANIM_DATA_helicopter_cradle)
 */
-extern s32 animation_table_ptrs2[];
+extern struct ModelAnimation * animation_table_ptrs2[];
 
 #endif

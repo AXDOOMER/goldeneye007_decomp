@@ -60,7 +60,7 @@ extern s32 g_NextHatSlot;
 extern ObjectRecord *g_LevelLoadPropSwitch;
 extern LockDoorRecord *g_LevelLoadPropLockDoor;
 extern ObjectRecord *g_LevelLoadPropSafeItem;
-extern s32 D_80030B0C;
+extern struct PropRecord *D_80030B0C;
 extern s32 bodypartshot;
 extern f32 F_80030B14;
 extern f32 F_80030B18;

@@ -82,7 +82,7 @@ s32 g_NextHatSlot = 0;
 ObjectRecord *g_LevelLoadPropSwitch = NULL;
 LockDoorRecord *g_LevelLoadPropLockDoor = NULL;
 ObjectRecord *g_LevelLoadPropSafeItem = NULL;
-s32 D_80030B0C = 0;
+struct PropRecord * D_80030B0C = NULL;
 s32 bodypartshot = 0xFFFFFFFF;
 f32 F_80030B14 = 1.0;
 f32 F_80030B18 = 1.0;
@@ -97,10 +97,7 @@ f32 g_SoloAmmoMultiplier = 1.0;
 
 s16 Throwing_knife_SFX[] = {0x5F, 0x60, 0x61};
 
-u32 D_80030B34[] = {
-     0,     1,     3,     0,      0,    0,     0,     0,
-     0,     0,     0,     0,     0,     0,     0,     0    
-};
+struct unk_joint_list D_80030B34 = {NULL, 1, 3, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
 
 
 
