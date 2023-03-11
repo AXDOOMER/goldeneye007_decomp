@@ -8905,15 +8905,15 @@ void CapBeamLengthAndDecideIfRendered(struct ChrRecord_f180 *arg0, ITEM_IDS item
     arg0->pos.f[1] = arg2->f[1];
     arg0->pos.f[2] = arg2->f[2];
 
-    arg0->delta[0] = arg3->x - arg2->x;
-    arg0->delta[1] = arg3->f[1] - arg2->f[1];
-    arg0->delta[2] = arg3->f[2] - arg2->f[2];
+    arg0->delta.f[0] = arg3->x - arg2->x;
+    arg0->delta.f[1] = arg3->f[1] - arg2->f[1];
+    arg0->delta.f[2] = arg3->f[2] - arg2->f[2];
 
-    phi_f12_2 = sqrtf((arg0->delta[0] * arg0->delta[0]) + (arg0->delta[1] * arg0->delta[1]) + (arg0->delta[2] * arg0->delta[2]));
+    phi_f12_2 = sqrtf((arg0->delta.f[0] * arg0->delta.f[0]) + (arg0->delta.f[1] * arg0->delta.f[1]) + (arg0->delta.f[2] * arg0->delta.f[2]));
 
-    arg0->delta[0] *= 1.0f / phi_f12_2;
-    arg0->delta[1] *= 1.0f / phi_f12_2;
-    arg0->delta[2] *= 1.0f / phi_f12_2;
+    arg0->delta.f[0] *= 1.0f / phi_f12_2;
+    arg0->delta.f[1] *= 1.0f / phi_f12_2;
+    arg0->delta.f[2] *= 1.0f / phi_f12_2;
 
     if (item == ITEM_WATCHLASER)
     {
@@ -11807,7 +11807,7 @@ glabel sub_GAME_7F0634FC
 
 
 
-void sub_GAME_7F06351C(f32* arg0, Mtxf* arg1, Mtxf* arg2, Mtxf* arg3, f32* arg4, Mtxf* arg5, Mtxf* arg6)
+void sub_GAME_7F06351C(struct coord3d* arg0, Mtxf* arg1, Mtxf* arg2, Mtxf* arg3, struct coord3d* arg4, Mtxf* arg5, Mtxf* arg6)
 {
     Mtxf sp20;
 

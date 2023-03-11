@@ -1316,7 +1316,7 @@ void chrobjCollisionRelated(ObjectRecord *obj)
     {
         bbox = chrobjGetBboxFromObjectRecord(obj);
         matrix_4x4_copy(&obj->mtx, &sp24);
-        matrix_4x4_set_position(obj->runtime_pos.f, &sp24);
+        matrix_4x4_set_position(&obj->runtime_pos, &sp24);
         sub_GAME_7F03F540(bbox, &sp24, &obj->ptr_allocated_collisiondata_block->unk04, obj->ptr_allocated_collisiondata_block);
         
         obj->ptr_allocated_collisiondata_block->unk48 = obj->runtime_pos.f[1] + chrpropSumMatrixPosY(bbox, &sp24);
@@ -4590,7 +4590,7 @@ bool objEmbed(PropRecord *prop, PropRecord *parent, Model *model, ModelNode *nod
             chrpropReparent(prop, parent);
 
             matrix_4x4_copy(&obj->mtx, &mtx1);
-            matrix_4x4_set_position((f32*)&obj->runtime_pos, &mtx1);
+            matrix_4x4_set_position(&obj->runtime_pos, &mtx1);
             matrix_4x4_multiply_homogeneous(currentPlayerGetMatrix10D4(), nodemtx, &mtx2);
             sub_GAME_7F059FB8((f32 (*)[4]) &mtx2.m, (f32 (*)[4]) &mtx3.m);
             matrix_4x4_multiply_homogeneous((Mtxf* ) &mtx3.m, &mtx1, &obj->embedment->matrix);
@@ -26924,7 +26924,7 @@ s32 objDrop(PropRecord *prop)
             prop->stan = root->stan;
             matrix_4x4_set_identity(&spB8);
             matrix_scalar_multiply(model->scale, spB8.m[0]);
-            matrix_4x4_set_position(root->pos.f, &spB8);
+            matrix_4x4_set_position(&root->pos, &spB8);
         }
 
         objDetach(prop);

@@ -8544,7 +8544,7 @@ void bondviewMoveAnimationTick(f32 speed, f32 speedforwards, f32 speedsideways)
     bheadUpdate(percent_speed, speedsideways);
 
     matrix_4x4_set_rotation_around_x((360.0f - g_CurrentPlayer->vv_verta360) * DegToRad1Fact(1), &sp8C);
-    matrix_4x4_7F059908(&sp4C, 0.0f, 0.0f, 0.0f, -g_CurrentPlayer->headlook[0], -g_CurrentPlayer->headlook[1], -g_CurrentPlayer->headlook[2], g_CurrentPlayer->headup[0], g_CurrentPlayer->headup[1], g_CurrentPlayer->headup[2]);
+    matrix_4x4_7F059908(&sp4C, 0.0f, 0.0f, 0.0f, -g_CurrentPlayer->headlook.f[0], -g_CurrentPlayer->headlook.f[1], -g_CurrentPlayer->headlook.f[2], g_CurrentPlayer->headup.f[0], g_CurrentPlayer->headup.f[1], g_CurrentPlayer->headup.f[2]);
     matrix_4x4_multiply_in_place(&sp4C, &sp8C);
     matrix_4x4_set_rotation_around_y((360.0f - g_CurrentPlayer->vv_theta) * DegToRad1Fact(1), &sp4C);
     matrix_4x4_multiply_in_place(&sp4C, &sp8C);
@@ -8804,7 +8804,7 @@ void bondviewUpdatePlayerCollisionPositionFields(void)
     StandTile *sp2C;
     s32 sp28;
 
-    g_CurrentPlayer->field_29BC = (g_CurrentPlayer->headpos[1] * g_playerPerm->player_perspective_height) + 7.0f;
+    g_CurrentPlayer->field_29BC = (g_CurrentPlayer->headpos.f[1] * g_playerPerm->player_perspective_height) + 7.0f;
 
     phi_f0 = g_CurrentPlayer->field_29BC + 
         ((g_CurrentPlayer->field_88 + g_CurrentPlayer->ducking_height_offset) * g_playerPerm->player_perspective_height);
@@ -11454,8 +11454,8 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         // perfect dark call: bmove0f0cc654
         bondviewMoveAnimationTick(maxspeed, g_CurrentPlayer->speedforwards, sp3A0);
 
-        headpos_x = g_CurrentPlayer->headpos[0];
-        headpos_z = g_CurrentPlayer->headpos[2];
+        headpos_x = g_CurrentPlayer->headpos.f[0];
+        headpos_z = g_CurrentPlayer->headpos.f[2];
 
         move_offset.f[0] += 
             (
@@ -11897,8 +11897,8 @@ void bondviewFrozenMoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         offset.f[2] += g_ForceBondMoveOffset.f[2] * g_GlobalTimerDelta;
     }
     
-    offset.f[0] += ((g_CurrentPlayer->headpos[2] * g_CurrentPlayer->field_488.theta_transform.f[0]) - (g_CurrentPlayer->headpos[0] * g_CurrentPlayer->field_488.theta_transform.f[2])) * g_GlobalTimerDelta;
-    offset.f[2] += ((g_CurrentPlayer->headpos[2] * g_CurrentPlayer->field_488.theta_transform.f[2]) + (g_CurrentPlayer->headpos[0] * g_CurrentPlayer->field_488.theta_transform.f[0])) * g_GlobalTimerDelta;
+    offset.f[0] += ((g_CurrentPlayer->headpos.f[2] * g_CurrentPlayer->field_488.theta_transform.f[0]) - (g_CurrentPlayer->headpos.f[0] * g_CurrentPlayer->field_488.theta_transform.f[2])) * g_GlobalTimerDelta;
+    offset.f[2] += ((g_CurrentPlayer->headpos.f[2] * g_CurrentPlayer->field_488.theta_transform.f[2]) + (g_CurrentPlayer->headpos.f[0] * g_CurrentPlayer->field_488.theta_transform.f[0])) * g_GlobalTimerDelta;
     
     bondviewCalcUpdatePlayerCollision(&offset, 1);
     bondviewUpdatePlayerY(0, 0.0f);

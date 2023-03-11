@@ -199,30 +199,30 @@ void matrix_4x4_7F058274(Mtxf *arg0, Mtxf *arg1, Mtxf *arg2)
     arg2->m[3][3] = (arg0->m[2][3] * arg1->m[3][2]);
 }
 
-void matrix_4x4_rotate_vector(Mtxf *matrix, vec3 vector, vec3 result)
+void matrix_4x4_rotate_vector(Mtxf *matrix, struct coord3d *vector, struct coord3d *result)
 {
     s32 i;
     for (i = 0; i < 3; i++)
     {
-        result[i] = matrix->m[0][i] * vector[0] + matrix->m[1][i] * vector[1] + matrix->m[2][i] * vector[2];
+        result->f[i] = matrix->m[0][i] * vector->f[0] + matrix->m[1][i] * vector->f[1] + matrix->m[2][i] * vector->f[2];
     }
 }
 
-void mtx4RotateVecInPlace(Mtxf *matrix, vec3 vector)
+void mtx4RotateVecInPlace(Mtxf *matrix, struct coord3d *vector)
 {
-    vec3 result;
-    matrix_4x4_rotate_vector(matrix, vector, result);
-    vector[0] = result[0];
-    vector[1] = result[1];
-    vector[2] = result[2];
+    struct coord3d result;
+    matrix_4x4_rotate_vector(matrix, vector, &result);
+    vector->f[0] = result.f[0];
+    vector->f[1] = result.f[1];
+    vector->f[2] = result.f[2];
 }
 
-void matrix_4x4_transform_vector(Mtxf *matrix, vec3 vector, vec3 result)
+void matrix_4x4_transform_vector(Mtxf *matrix, struct coord3d *vector, struct coord3d *result)
 {
     matrix_4x4_rotate_vector(matrix, vector, result);
-    result[0] += matrix->m[3][0];
-    result[1] += matrix->m[3][1];
-    result[2] += matrix->m[3][2];
+    result->f[0] += matrix->m[3][0];
+    result->f[1] += matrix->m[3][1];
+    result->f[2] += matrix->m[3][2];
 }
 
 void mtx4TransformVecInPlace(Mtxf *matrix, struct coord3d *vector)
@@ -321,14 +321,14 @@ void matrix_4x4_set_rotation_around_z(f32 angle, Mtxf *matrix)
     matrix->m[3][3] = 1.0f;
 }
 
-void matrix_4x4_set_rotation_around_xyz(vec3 angles, Mtxf *matrix)
+void matrix_4x4_set_rotation_around_xyz(struct coord3d *angles, Mtxf *matrix)
 {
-    f32 cos_x       = cosf(angles[0]);
-    f32 sin_x       = sinf(angles[0]);
-    f32 cos_y       = cosf(angles[1]);
-    f32 sin_y       = sinf(angles[1]);
-    f32 cos_z       = cosf(angles[2]);
-    f32 sin_z       = sinf(angles[2]);
+    f32 cos_x       = cosf(angles->f[0]);
+    f32 sin_x       = sinf(angles->f[0]);
+    f32 cos_y       = cosf(angles->f[1]);
+    f32 sin_y       = sinf(angles->f[1]);
+    f32 cos_z       = cosf(angles->f[2]);
+    f32 sin_z       = sinf(angles->f[2]);
     f32 sin_x_sin_z = sin_x * sin_z;
     f32 cos_x_sin_z = cos_x * sin_z;
     f32 sin_x_cos_z = sin_x * cos_z;
@@ -352,7 +352,7 @@ void matrix_4x4_set_rotation_around_xyz(vec3 angles, Mtxf *matrix)
 }
 
 // https://stackoverflow.com/a/15029416
-void matrix_4x4_get_rotation_around_xyz(Mtxf *matrix, vec3 angles)
+void matrix_4x4_get_rotation_around_xyz(Mtxf *matrix, struct coord3d *angles)
 {
     f32 norm;
     f32 sin_x_cos_y = matrix->m[1][2];
@@ -360,35 +360,35 @@ void matrix_4x4_get_rotation_around_xyz(Mtxf *matrix, vec3 angles)
     norm            = sqrtf(SQR(sin_x_cos_y) + SQR(cos_x_cos_y));
     if (EPSILON < norm)
     {
-        angles[0] = atan2f(matrix->m[1][2], matrix->m[2][2]);
-        angles[1] = atan2f(-matrix->m[0][2], norm);
-        angles[2] = atan2f(matrix->m[0][1], matrix->m[0][0]);
+        angles->f[0] = atan2f(matrix->m[1][2], matrix->m[2][2]);
+        angles->f[1] = atan2f(-matrix->m[0][2], norm);
+        angles->f[2] = atan2f(matrix->m[0][1], matrix->m[0][0]);
     }
     else
     {
-        angles[0] = 0.0f;
-        angles[1] = atan2f(-matrix->m[0][2], norm);
-        angles[2] = atan2f(-matrix->m[1][0], matrix->m[1][1]);
+        angles->f[0] = 0.0f;
+        angles->f[1] = atan2f(-matrix->m[0][2], norm);
+        angles->f[2] = atan2f(-matrix->m[1][0], matrix->m[1][1]);
     }
 }
 
-void matrix_4x4_set_position_and_rotation_around_xyz(vec3 position, vec3 rotation, Mtxf *matrix)
+void matrix_4x4_set_position_and_rotation_around_xyz(struct coord3d *position, struct coord3d * rotation, Mtxf *matrix)
 {
     matrix_4x4_set_rotation_around_xyz(rotation, matrix);
     matrix_4x4_set_position(position, matrix);
 }
 
-void matrix_4x4_set_identity_and_position(vec3 position, Mtxf *matrix)
+void matrix_4x4_set_identity_and_position(struct coord3d * position, Mtxf *matrix)
 {
     matrix_4x4_set_identity(matrix);
     matrix_4x4_set_position(position, matrix);
 }
 
-void matrix_4x4_set_position(vec3 position, Mtxf *matrix)
+void matrix_4x4_set_position(struct coord3d *position, Mtxf *matrix)
 {
-    matrix->m[3][0] = position[0];
-    matrix->m[3][1] = position[1];
-    matrix->m[3][2] = position[2];
+    matrix->m[3][0] = position->f[0];
+    matrix->m[3][1] = position->f[1];
+    matrix->m[3][2] = position->f[2];
 }
 
 void matrix_column_1_scalar_multiply(f32 scalar, f32 *matrix)

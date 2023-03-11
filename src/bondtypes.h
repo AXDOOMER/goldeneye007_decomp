@@ -255,7 +255,6 @@ typedef union
         IF_ELSE(IS_EMPTY(y))(0)(y),\
         IF_ELSE(IS_EMPTY(z))(0)(z) \
     }
-    typedef f32 vec3[3];   //!depreciated
 
     /**
      16bit Co-Ordinate used for Integer co-ordinates eg, pumping straight to RSP.
@@ -2207,7 +2206,7 @@ typedef union
         /**
      * Offset 0x10
     */
-        vec3    delta;
+        struct coord3d delta;
         f32     unk1c;
 
         f32     unk20;

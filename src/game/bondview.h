@@ -813,18 +813,18 @@ struct player
   s32 headwalkingtime60; //0x4f0
   f32 headamplitude; //0x4f4
   f32 sideamplitude; //0x4f8
-  vec3 headpos;
-  vec3 headlook;
+  struct coord3d headpos;
+  struct coord3d headlook;
 
-  vec3 headup;
-  vec3 headpossum;
+  struct coord3d headup;
+  struct coord3d headpossum;
 
   // headlooksum[2] has NTSC->PAL conversion rate (5/6)
-  vec3 headlooksum;
+  struct coord3d headlooksum;
 
   // headupsum[1] has NTSC->PAL conversion rate (5/6)
-  vec3 headupsum;
-  vec3 headbodyoffset; //0x544
+  struct coord3d headupsum;
+  struct coord3d headbodyoffset; //0x544
   f32 standheight; // old name stationary_ground_offset
 
   // f32[4] ?? or 2 x f32[2] ??
@@ -832,10 +832,10 @@ struct player
   f32 standfrac; //0x560
 
   // offset 0x564
-  vec3 standlook[2];
+  struct coord3d standlook[2];
 
   // offset 0x57C
-  vec3 standup[2];
+  struct coord3d standup[2];
 
   // offset 0x594
   s32 standcnt;
