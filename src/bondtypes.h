@@ -2419,24 +2419,18 @@ typedef union
         Mtxf mtx; // 0x20-0x5c
 
         f32 unk60;
-        u32 unk64;
-        u32 unk68;
-        u32 unk6C;
+        f32 unk64;
 
-        u32 unk70;
-        u32 unk74;
-        u32 unk78;
-        u32 unk7C;
+        f32 unk68[4];
+        f32 unk78[4];
 
-        u32 unk80;
-        u32 unk84;
-        PropRecord* ownerprop; // 0x88
+        struct PropRecord* ownerprop; // 0x88
         f32 unk8C; 
 
         u32 unk90;
         f32 unk94;
-        ALSoundState* sound1; // 0x98
-        ALSoundState* sound2; // 0x9C
+        struct ALSoundState* sound1; // 0x98
+        struct ALSoundState* sound2; // 0x9C
 
         u32 unkA0;
         u32 unkA4;
@@ -2819,9 +2813,9 @@ typedef union
         u8                 unkbd; /*0xbd*/
 
         // something related to rendering
-        s16                unkbe;      /*0xbe*/
-        s32                unkc0;      /*0xc0*/
-        s16                unkc4;      /*0xc4*/
+        s16                calculatedopacity;      /*0xbe*/
+        s32                TintDist;      /*0xc0*/
+        s16                CullDist;      /*0xc4*/
         s8                 soundType;  /*0xc6*/
         s8                 fadeTime60; /*0xc7*/
 
@@ -2921,6 +2915,16 @@ typedef union
             New_PropDefHeaderRecord(5), 0, pad + 0 \
         }
 
+    struct beam {
+        /*0x00*/ s8 age;
+        /*0x01*/ s8 weaponnum;
+        /*0x04*/ struct coord3d from;
+        /*0x10*/ struct coord3d dir;
+        /*0x1c*/ f32 maxdist;
+        /*0x20*/ f32 speed;
+        /*0x24*/ f32 mindist;
+        /*0x28*/ f32 dist;
+    };
 
     typedef struct AutogunRecord
     {
@@ -2970,7 +2974,7 @@ typedef union
         s32  unkC0;
         ALSoundState *unkC4;
         ALSoundState *unkC8;
-        void *unkCC; // beam struct in PD
+        struct beam *beam;
 
         /**
          * Offset 0xd0.
@@ -2980,45 +2984,31 @@ typedef union
 
         // changes when active/firing
         f32 unkD4;
-
-        //////////////////////////////////////////////////////
-        // Previously:
-        // u8       firing;
-        // u8       firecount;
-        // u16      unk64;     /*0x84*/
-        // s16      yzero;     /*0x88 */
-        // s16      ymaxleft;  /*0x8a how far gun can rotate from center. 0 = free rotate*/
-        // s16      ymaxright; /*0x8c */
-        // s16      yrot;      /*0x8e how far gun can rotate from center. 0 = free rotate*/
-        // u32      yspeed;    /*0xa0*/
-        // u16      unk98;     /*0xa4*/
-        // u16      Speed;     /*0xa6 how fast the gun turns*/
-        // u16      aimdist;   /*0xa8 distance before deactivating.*/
-        // u16      unkaa;     /*0xaa*/
-        // u32      unkac;
-
     } AutogunRecord;
 
     // PROPDEF_CCTV (6)
     typedef struct CCTVRecord
     {
-        inherits AutogunRecord;
-        // needs camrotm 40byte matrix to go in here somewhere
-        s16      UpMax;                    /*0xcc = 0 Camera cannot move vertically*/
-        s16      LeftMax;                  /*0xce how far camera can rotate from center. 0 = free rotate*/
-        s16      DownMax;                  /*0xd0 = -1 Camera cannot move vertically*/
-        s16      RightMax;                 /*0xd2 how far camera can rotate from center. 0 = free
-                     rotate*/
-        u32      unkd4;                    /*0xd4*/
-        u32      unkd8;                    /*0xd8*/
-        u16      unkdc;                    /*0xdc*/
-        u16      Speed;                    /*0xde how fast the camera turns*/
-        u32      unka0;                    /*0xe0*/
-        u32      unka4;                    /*0xe4*/
-        s16      VerticalDetectionAngle;   /*0xe8 detection arc up/down from current
-                                     position. default = -1*/
-        s16      HorizontalDetectionAngle; /*0xeA detection arc left/right from current
-                                     position. default = -100*/
+        struct ObjectRecord;
+        s32 unk80;
+        Mtxf unk84;
+        f32 unkC4;
+        f32 unkC8;
+        f32 unkCC;
+        
+        f32 unkD0;
+        s32 unkD4;
+        f32 unkD8;
+        f32 unkDC;
+        
+        s32 timer; // 0xe0
+        s32 unkE4;
+        f32 unkE8;
+        s32 unkEC;
+        
+        s32 unkF0;
+        s32 unkF4;
+        s32 unkF8;
     } CCTVRecord;
 
     #define New_CCTVRecord(pad)                    \
@@ -3434,16 +3424,16 @@ typedef union
         AIRecord *  ailist;       /*0x80*/
         u16         aioffset;     /*0x84*/
         s16         aireturnlist; /*0x86*/
-        u32         speed;        /*0x88 ?*/
-        u32         wheelxrot;    /*0x8c ? changes when onscreen*/
-        u32         wheelyrot;    /*0x90 ?*/
+        f32         speed;        /*0x88 ?*/
+        f32         wheelxrot;    /*0x8c ? changes when onscreen*/
+        f32         wheelyrot;    /*0x90 ?*/
         f32         speedaim;     /*0x94 CONFIRNMED*/
         f32         speedtime60;  /*0x98 CONFIRNMED*/
-        u32         turnrot60;    /*0x9c*/
-        u32         roty;         /*0xa0*/
+        f32         turnrot60;    /*0x9c*/
+        f32         roty;         /*0xa0*/
         PathRecord *path;         /*0xa4*/
         s32         nextstep;     /*0xa8*/
-        ALSoundState *Sound;      /*0xac*/
+        struct ALSoundState *Sound;      /*0xac*/
     } VehichleRecord;
     // VehichleRecord *pVehichleData;//not Global, local to Object or function
     // VehichleRecord *pAircraftData;//not Global, local to Object or function
@@ -3461,17 +3451,17 @@ typedef union
         AIRecord *    ailist;          /*0x80*/
         u16           aioffset;        /*0x84*/
         s16           aireturnlist;    /*0x86*/
-        u32           rotoryrot;       /*0x88 changes when onscreen even after destruction*/
+        f32           rotoryrot;       /*0x88 changes when onscreen even after destruction*/
         f32           rotaryspeed;     /*0x8c*/
         f32           rotaryspeedaim;  /*0x90 CONFIRMED*/
         f32           rotaryspeedtime; /*0x94 CONFIRMED*/
         f32           speed;           /*0x98*/
         f32           speedaim;        /*0x9c*/
         f32           speedtime60;     /*0xa0*/
-        u32           yrot;            /*0xa4*/
-        u32           nextstep;        /*0xa8*/
+        f32           yrot;            /*0xa4*/
+        f32           nextstep;        /*0xa8*/
         PathRecord   *path;            /*0xac*/
-        ALSoundState *Sound;           /*0xb0*/
+        struct ALSoundState *Sound;           /*0xb0*/
     } AircraftRecord;
     #define New_AircraftRecord(pad)                 \
         {                                           \
@@ -3509,7 +3499,7 @@ typedef union
     typedef struct TankRecord
     {
         inherits ObjectRecord;
-        s32 unk80;
+        struct collision_data *unk80;
         struct rect4f  rect;       /*0x84*/
         //s32 unk88;
         //s32 unk8C;
@@ -3559,7 +3549,7 @@ typedef union
         inherits ObjectRecord;
         s32      TintDist;
         s32      CullDist;
-        s32      unk88;
+        s32      calculatedopacity;
         s32      unk8c;
         f32      unk90;
     } TintedGlassRecord;

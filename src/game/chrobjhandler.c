@@ -5834,8 +5834,2460 @@ s32 glassCalculateOpacity(coord3d *pos, f32 xludist, f32 opadist, f32 arg3)
 
 
 #ifdef NONMATCHING
-void object_interaction(void) {
 
+
+// version US defines
+
+#define AUTOGUN_P1_ACCEL 0.000011635529f
+#define AUTOGUN_P1_DECEL AUTOGUN_P1_ACCEL
+#define AUTOGUN_P1_MAXSPEED 0.00069813174f
+
+#define AUTOGUN_P2_ACCEL 0.0000058177643f
+#define AUTOGUN_P2_DECEL AUTOGUN_P1_ACCEL
+#define AUTOGUN_P2_MAXSPEED 0.00034906587f
+
+// https://decomp.me/scratch/c9RKZ 65.91%
+s32 object_interaction(struct PropRecord *arg0)
+{
+    struct coord3d sp694;
+    s32 sp690;
+    struct PropRecord *sp684;
+    s32 sp680;
+    f32 sp67C;
+    s32 sp674;
+    s32 sp670;
+    s32 sp678;
+    s32 sp664;
+    struct coord3d sp658;
+    struct coord3d sp64C;
+    struct WeaponObjRecord *sp648;
+    struct ModelRoData_BoundingBoxRecord * sp640;
+    f32 sp63C;
+    f32 sp638;
+    struct coord3d sp62C;
+    struct coord3d sp620;
+    struct coord3d sp614;
+    s32 sp610;
+    s32 sp60C;
+    // missing: sp608
+    s32 sp604;
+    struct coord3d sp5CC;
+    Mtxf *sp58C;
+    struct coord3d sp564;
+    f32 sp550[4]; //quatf
+    struct ModelRoData_BoundingBoxRecord *sp54C;
+    s32 sp548;
+    struct coord3d sp53C;
+    struct coord3d sp530;
+    f32 sp518;
+    struct PropRecord* sp514;
+    struct coord3d sp5xx; // temp variable, unknown stack position
+    struct StandTile *sp4F0;
+    f32 sp4D8;
+    f32 sp4D4;
+    struct coord3d sp4BC;
+    f32 sp4B8;
+    f32 sp4B4;
+    f32 sp4B0;
+    s32 sp4AC;
+    s32 sp4A8;
+    s32 sp4A4;    
+    f32 sp4A0;
+    f32 sp49C;
+    f32 sp498;
+    f32 sp494;
+    struct StandTile *sp490;
+
+    f32 sp47C;
+    struct coord3d *sp478;
+    struct StandTile *sp468;
+    f32 sp460;
+    struct coord3d sp450;
+    struct StandTile *sp44C;
+    f32 sp444;
+    f32 sp440;
+    f32 sp43C;
+    f32 sp438;
+    f32 sp434;
+    f32 sp430;
+    f32 sp42C;
+    f32 sp424;
+    f32 sp420;
+    f32 sp418;
+    f32 sp414;
+    f32 sp40C;
+    f32 sp408;
+    f32 sp400;
+    Mtxf sp3A4;
+    struct DoorRecord *sp39C;
+    f32 sp394;
+    Mtxf *sp390;
+    s32 sp38C;
+    f32 sp384;
+    f32 sp380;
+    struct CCTVRecord *sp370;
+    struct coord3d sp360;
+    Mtxf sp320;
+    struct AutogunRecord *sp318;
+    struct coord3d sp308;
+    f32 sp304;
+    f32 sp300;
+    Mtxf *sp2FC;
+    s32 sp2F8;
+    Mtxf sp2AC;
+    Mtxf sp26C;
+    struct coord3d *sp260;
+    struct coord3d *sp25C;
+    struct coord3d *sp258;
+    struct coord3d *sp254;
+    f32 sp250;
+    f32 sp24C;
+    f32 sp248;
+    Mtxf sp200;
+    struct coord3d *sp1FC;
+    struct unk_joint_list sp1B0;
+    Mtxf sp16C;
+    struct coord3d *sp168;
+    struct coord3d *sp164;
+    struct coord3d *sp160;
+    struct coord3d *sp15C;
+    struct ModelRoData_BoundingBoxRecord *sp158;
+    f32 sp154;
+    s32 sp13C;
+    s32 sp138;
+    struct coord3d sp12C;
+    struct coord3d sp120;
+    s32 sp11C;
+    struct coord3d sp110;
+    struct StandTile *sp10C;
+    struct StandTile *sp108;
+    s32 sp104;
+    struct PropRecord* sp100;
+    Mtxf spB8;
+    f32 sp94;
+    struct beam *beam; //sp90
+    
+    Mtxf *sp70;                                     /* compiler-managed */
+    Mtxf *sp6C;
+    
+    struct ObjectRecord *obj;
+    struct Model *model;
+
+    f32 temp_f12;
+    s32 var_s2_2;
+    s32 var_a0;
+    struct StandTile *temp_s2;
+    f32 temp_f14_2;
+    Mtxf *temp_s2_4;
+    f32 temp_f14_3;
+    f32 temp_f20;
+    f32 temp_f14_4;
+    struct ALSoundState * sfx_state;
+    s32 var_s2_3;
+    f32 temp_f12_5;
+    s32 var_v1_3;
+    f32 temp_f0_13; // ~ sp510
+    s32 var_s2_4;
+    f32 var_f2;
+    f32 temp_f0_14;
+    f32 var_f12;
+    f32 var_f2_3;
+    struct PropRecord *temp_v0_19;
+    f32 var_f12_3;
+    s32 var_v0_3;
+    f32 var_f0_2;
+    f32 var_f12_5;
+    f32 var_f2_6;
+    f32 temp_f0_22;
+    s32 var_v1_5;
+    s32 var_s0;
+    f32 *temp_s0_5;
+    f32 *temp_v0_25;
+    s32 var_s2_5;
+    f32 var_f12_6;
+    s32 var_s0_2;
+    struct Model *temp_s0_6;
+    struct PadRecord *var_v1_4;
+    struct ModelFileHeader *temp_v0_29;
+    s32 var_s2_6;
+    struct ModelFileHeader *temp_v0_31;
+    Mtxf *temp_a1_4;
+    Mtxf *temp_s0_10;
+    f32 temp_f0_31;
+    s32 temp_v0_32;
+    Mtxf *temp_a1_6;
+    f32 var_f12_7;
+    struct coord3d *temp_s0_13;
+    struct coord3d *temp_s0_14;
+    struct ModelNode** temp_v1_7;
+    f32 var_f0_3;
+    f32 *temp_v0_40;
+    ModelNode **var_v1_7;
+    Mtxf *temp_s0_21;
+    ModelNode **temp_v1_8;
+    f32 var_f12_9;
+    s32 var_a0_6;
+    ModelNode **temp_v1_10;
+    Mtxf *temp_s2_7;
+    struct coord3d *temp_v1_11;
+    struct coord3d temp_fc3d_a;
+    struct coord3d temp_fc3d_b;
+    f32 temp_f20_4;
+    f32 temp_f0_35;
+    f32 var_f2_7;
+    f32 temp_f2_23;
+    f32 var_f4;
+
+    obj = arg0->obj;
+    model = obj->model;
+
+    sp690 = 0;
+    sp680 = 0;
+    sp67C = 0.0f;
+    sp674 = getPlayerCount();
+    sp670 = 1;
+
+    if (obj->runtime_bitflags & RUNTIMEBITFLAG_REMOVE)
+    {
+        objFree(obj, 0, obj->state & RUNTIMEBITFLAG_REMOVE);
+        
+        return 1;
+    }
+    else if (obj->runtime_bitflags & RUNTIMEBITFLAG_ISRETICK)
+    {
+        obj->runtime_bitflags &= ~RUNTIMEBITFLAG_ISRETICK;
+    }
+    else if (obj->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)
+    {
+        arg0->flags &= 0xFFFD;
+        obj->runtime_bitflags |= RUNTIMEBITFLAG_ISRETICK;
+        
+        return 3;
+    }
+
+    if (sp674 == 1)
+    {
+        sp678 = 1;
+    }
+    else
+    {
+        sp678 = sub_GAME_7F09B4D8(get_cur_playernum()) == 0;
+        
+        if (obj->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)
+        {
+            if (obj->projectile->ownerprop != NULL)
+            {
+                sp678 = g_CurrentPlayer->prop == obj->projectile->ownerprop;
+            }
+        }
+    }
+
+    // mips2c line 559
+    if (sp678)
+    {
+        if (obj->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)
+        {
+            struct Projectile *temp_s0 = obj->projectile;
+
+            temp_s0->unkE0 += g_ClockTimer;
+
+            if (temp_s0->unkE0 > 2400)
+            {
+                obj->runtime_bitflags |= RUNTIMEBITFLAG_REMOVE;
+            }
+
+            if (temp_s0->flags & 0x100)
+            {
+                struct PropRecord *projectile_prop;
+                
+                s32 var_s2 = 1;
+
+                sp648 = (struct WeaponObjRecord *)obj;
+
+                if (obj->type == PROPDEF_COLLECTABLE && sp648->weaponnum == ITEM_NULL86)
+                {
+                    var_s2 = 0;
+                }
+
+                projectile_prop = temp_s0->ownerprop;
+
+                if (projectile_prop != NULL)
+                {
+                    sub_GAME_7F03D058(projectile_prop, 0);
+                }
+
+                sp664 = sub_GAME_7F042EB4(obj, &temp_s0->unkd4, &sp64C, &sp658, 0, var_s2);
+                
+                if (projectile_prop != NULL)
+                {
+                    sub_GAME_7F03D058(projectile_prop, 1);
+                }
+                
+                if ((sp664 != 1) && (sp648 != NULL) && sp648->weaponnum == ITEM_NULL86)
+                {
+                    sp648->timer = 0;
+                }
+                
+                temp_s0->flags &= ~0x100;
+            }
+
+            sp694.f[0] = obj->runtime_pos.f[0];
+            sp694.f[1] = obj->runtime_pos.f[1];
+            sp694.f[2] = obj->runtime_pos.f[2];
+
+            if (temp_s0->refreshrate > 0)
+            {
+                temp_s0->refreshrate -= g_ClockTimer;
+            }
+
+            // mips2c line 608
+            if (obj->projectile->flags & 1)
+            {
+                struct WeaponObjRecord *temp_s1 = (struct WeaponObjRecord *)obj;
+                
+                sp640 = sub_GAME_7F040078(obj);
+                sp610 = 0;
+                sp60C = 0;
+                sp604 = 0;
+                sp638 = 1.0f;
+                temp_f20 = obj->runtime_pos.f[1];
+
+                var_s2_2 = 0;
+
+                temp_s0->unkA8 += g_ClockTimer;
+
+                sp62C.f[0] = obj->mtx.m[0][0];
+                sp62C.f[1] = obj->mtx.m[0][1];
+                sp62C.f[2] = obj->mtx.m[0][2];
+
+                if (temp_s0->flags & 0x20)
+                {
+                    if (temp_s0->unk1C < (10.0f/360.0f))
+                    {
+                        temp_s0->unkB4 += temp_s0->unk10.f[1] * g_GlobalTimerDelta;
+                        temp_s0->unkB0 += temp_s0->unkB4 * g_GlobalTimerDelta;
+                        temp_s0->unk1C += ((1.0f/90.0f) * g_GlobalTimerDelta);
+                        
+                        if (temp_s0->unk1C > (10.0f/360.0f))
+                        {
+                            temp_s0->unk1C = (10.0f/360.0f);
+                        }
+                    }
+                    else
+                    {
+                        if (sp694.f[1] < temp_s0->unkB0)
+                        {
+                            temp_s0->unkB4 += temp_s0->unk10.f[1] * g_GlobalTimerDelta;
+                            temp_s0->unkB0 += (temp_s0->unkB4 * g_GlobalTimerDelta);
+                            sp694.f[1] += 0.07f * (temp_s0->unkB0 - sp694.f[1]) * g_GlobalTimerDelta;
+                        }
+                        else
+                        {
+                            sp694.f[1] = temp_s0->unkB0;
+                            temp_s0->flags &= ~0x20;
+                            temp_s0->flags |= 0x10;
+                            temp_s0->unk1C = 0.0f;
+                            temp_s0->speed.f[1] = temp_s0->unkB4;
+                        }
+                    }
+                }
+
+                if (!(temp_s0->flags & 0x10))
+                {
+                    temp_s0->speed.f[1] += (temp_s0->unk10.f[1] + temp_s0->unk1C) * g_GlobalTimerDelta;
+                    temp_f12 = temp_s0->speed.f[1];
+                    temp_s0->speed.f[1] -= (0.2777778f * g_GlobalTimerDelta);
+                    sp694.f[1] += g_GlobalTimerDelta * (temp_f12 + temp_s0->speed.f[1]) * 0.5f;
+                }
+                else
+                {
+                    temp_s0->speed.f[1] += (temp_s0->unk10.f[1] + temp_s0->unk1C) * g_GlobalTimerDelta;
+                    sp694.f[1] += temp_s0->speed.f[1] * g_GlobalTimerDelta;
+                }
+
+                sp70 = &obj->mtx;
+                sp6C = &obj->mtx;
+                
+                temp_s0->speed.f[0] += temp_s0->unk10.f[0] * g_GlobalTimerDelta;
+                temp_s0->speed.f[2] += temp_s0->unk10.f[2] * g_GlobalTimerDelta;
+                
+                sp694.f[0] += temp_s0->speed.f[0] * g_GlobalTimerDelta;
+                sp694.f[2] += temp_s0->speed.f[2] * g_GlobalTimerDelta;
+                
+                sub_GAME_7F057DF8(sp70, sp6C, g_ClockTimer, &g_ClockTimer);
+                
+                if ((obj->type == PROPDEF_COLLECTABLE) && (((temp_s1->weaponnum == 0x1D)) || (temp_s1->weaponnum == 0x1B) || (temp_s1->weaponnum == 0x1C) || (temp_s1->weaponnum == 0x21) || (temp_s1->weaponnum == 0x2F) || (temp_s1->weaponnum == 0x30) || (temp_s1->weaponnum == 0x22)))
+                {
+                    var_s2_2 = 1;
+                }
+
+                if (temp_s0->ownerprop != NULL)
+                {
+                    sub_GAME_7F03D058(temp_s0->ownerprop, 0);
+                }
+
+                sp664 = sub_GAME_7F042EB4(obj, &sp694.f[0], &sp614, &sp620, var_s2_2, 0);
+
+                if (temp_s0->ownerprop != NULL)
+                {
+                    sub_GAME_7F03D058(temp_s0->ownerprop, 1);
+                }
+                
+                sp690 = 1;
+
+                // mps2c line 696
+                if ((sp664 == 2) && ((D_80030B0C == NULL) || (((D_80030B0C->type != 3)) && (D_80030B0C->type != 6))))
+                {
+                    var_a0 = 0;
+                    
+                    if ((D_80030B0C != NULL) && (D_80030B0C->obj->runtime_bitflags & 0x80))
+                    {
+                        var_a0 = 1;
+                    }
+
+                    if (var_a0 == 0)
+                    {
+                        projectileFree(temp_s0);
+                        
+                        obj->projectile = NULL;
+                        obj->runtime_bitflags &= ~0x80;
+                        
+                        if (arg0->flags & 8)
+                        {
+                            arg0->flags |= 0x10;
+                        }
+                        
+                        chrobjSndCreatePostEventDefault(sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, ATTACH_MINE_SFX, NULL), &arg0->pos);
+                        sub_GAME_7F0577E8(((struct WeaponObjRecord *)obj)->weaponnum, arg0->stan->room);
+                        sub_GAME_7F0439B8(obj, &sp614, arg0->stan, &sp620);
+                        
+                        if (D_80030B0C != NULL)
+                        {
+                            temp_s2 = arg0->stan;
+                            
+                            if (objEmbed(arg0, D_80030B0C, objinst, dword_CODE_bss_80075B74) != 0)
+                            {
+                                arg0->stan = temp_s2;
+                                sp680 = 5;
+                                sp604 = 1;
+                            }
+                        }
+                    }
+                }
+
+                // mpis2c line 728
+                if (sp604 == 0)
+                {
+                    if ((D_80030B0C != NULL) && (obj->type == PROPDEF_COLLECTABLE))   
+                    {
+                        struct WeaponObjRecord *temp_weap = (struct WeaponObjRecord *)obj;
+
+                        if (temp_weap->weaponnum == ITEM_THROWKNIFE)
+                        {
+                            if (D_80030B0C->type != 3)
+                            {
+                                if (D_80030B0C->type == 6 && D_80030B0C->obj != NULL)
+                                {
+                                    if (getPlayerPointerIndex(D_80030B0C) != get_cur_playernum())
+                                    {
+                                        //goto block_77;
+                                    }
+                                }
+                            }
+                            else
+                            {
+//block_77:;
+                                struct Projectile *temp_v0_8 = obj->projectile;
+
+                                if ((temp_v0_8->flags & 1)
+                                    && ((s32) temp_v0_8->unk90 <= 0)
+                                    && (obj->runtime_bitflags & 0x20)
+                                    && (handles_shot_actors(D_80030B0C->chr, bodypartshot, &flt_CODE_bss_80075B78, ((struct WeaponObjRecord *)obj)->weaponnum, 1) != 0))
+                                {
+                                    sp604 = 1;
+
+                                    if (temp_s0->unk8C > 0.0f)
+                                    {
+                                        temp_f14_2 = ((sp620.f[2] * temp_s0->speed.f[2]) + ((temp_s0->speed.f[0] * sp620.f[0]) + (temp_s0->speed.f[1] * sp620.f[1]))) * -(temp_s0->unk8C + 1.0f);
+                                        temp_s0->speed.f[0] = temp_s0->speed.f[0] + (temp_f14_2 * sp620.f[0]);
+                                        temp_s0->speed.f[1] = temp_s0->speed.f[1] + (temp_f14_2 * sp620.f[1]);
+                                        temp_s0->speed.f[2] = temp_s0->speed.f[2] + (temp_f14_2 * sp620.f[2]);
+                                    }
+
+                                    if (!(temp_s0->flags & 0x200))
+                                    {
+                                        mtxLoadRandomRotation(sp6C);
+                                    }
+
+                                    temp_s0->unk90 += 1;
+                                    recall_joy2_hits_edit_detail_edit_flag(((struct WeaponObjRecord *)obj)->weaponnum, D_80030B0C, -1);
+
+                                    if ((D_80030B0C->flags & 2) && (bodypartshot != 0x64) && (bodypartshot != 0x6E))
+                                    {
+                                        temp_s2_4 = modelFindNodeMtx(objinst, dword_CODE_bss_80075B74, 0);
+                                        
+                                        sp5CC.f[0] = sp614.f[0];
+                                        sp5CC.f[1] = sp614.f[1];
+                                        sp5CC.f[2] = sp614.f[2];
+                                        mtx4TransformVecInPlace(camGetWorldToScreenMtxf(), &sp5CC);
+                                        
+                                        sp5CC.f[0] += ((sp5CC.f[0] - temp_s2_4->m[3][0]) * 0.5f);
+                                        sp5CC.f[1] += ((sp5CC.f[1] - temp_s2_4->m[3][1]) * 0.5f);
+                                        sp5CC.f[2] += ((sp5CC.f[2] - temp_s2_4->m[3][2]) * 0.5f);
+                                        
+                                        sp5CC.f[0] -= (getjointsize(objinst, dword_CODE_bss_80075B74) * 0.5f * flt_CODE_bss_80075B88.f[0]);
+                                        sp5CC.f[1] -= (getjointsize(objinst, dword_CODE_bss_80075B74) * 0.5f * flt_CODE_bss_80075B78.f[0]);
+                                        sp5CC.f[2] -= (getjointsize(objinst, dword_CODE_bss_80075B74) * 0.5f * flt_CODE_bss_80075B88.f[0]);
+                                        
+                                        matrix_4x4_7F059E64(temp_s2_4, sp58C);
+                                        mtx4TransformVecInPlace(sp58C, &sp5CC);
+                                        sub_GAME_7F0221DC(objinst, bodypartshot, dword_CODE_bss_80075B74, &sp5CC);
+                                    }
+                                }
+                            }
+                        }
+                        // mips2c line 795
+                        else if (temp_weap->weaponnum == ITEM_NULL86)
+                        {
+                            if (D_80030B0C->type == PROP_TYPE_CHR)
+                            {
+                                sp604 = 1;
+                                chrlvExplosionDamage((ChrRecord *) D_80030B0C->chr, &obj->runtime_pos, 2.0f, 1);
+                            }
+                            else if ((D_80030B0C->type == PROP_TYPE_OBJ) || (D_80030B0C->type == PROP_TYPE_WEAPON))
+                            {
+                                maybe_detonate_object(D_80030B0C->obj, 100.0f, &obj->runtime_pos, ITEM_NULL86, (s32) ((u32) (obj->runtime_bitflags & RUNTIMEBITFLAG_OWNER) >> RUNTIMEBITSHIFT_OWNER));
+                            }
+                            
+                            ((struct WeaponObjRecord *)obj)->timer = 0;
+                        }
+                    }
+                }
+
+                // mips2c line 811
+                if (sp604 == 0)
+                {                    
+                    if (sp664 == 0)
+                    {
+                        if (temp_s0->unk8C > 0.0f)
+                        {
+                            temp_f14_3 = ((sp620.f[2] * temp_s0->speed.f[2]) + ((temp_s0->speed.f[0] * sp620.f[0]) + (temp_s0->speed.f[1] * sp620.f[1]))) * -(temp_s0->unk8C + 1.0f);
+                            
+                            temp_s0->speed.f[0] += (temp_f14_3 * sp620.f[0]);
+                            temp_s0->speed.f[1] += (temp_f14_3 * sp620.f[1]);
+                            temp_s0->speed.f[2] += (temp_f14_3 * sp620.f[2]);
+                            
+                            if ((temp_s0->speed.f[1] <= 0.0f) && ((temp_s0->speed.f[1] >= 0.0f) || (temp_f20 <= obj->runtime_pos.f[1])))
+                            {
+                                sp60C = 1;
+                            }
+                        }
+                    }
+
+                    // mips2c line 832
+                    if (!(temp_s0->flags & 8))
+                    {
+                        sp63C = stanGetPositionYValue(arg0->stan, arg0->pos.f[0], arg0->pos.f[2]);
+                        sp638 = chrpropSumMatrixPosY(sp640, &sp70[0]);
+                        sp610 = (arg0->pos.f[1] < (sp63C - sp638));
+                    }
+
+                    if ((sp610 != 0) || (sp664 == 0))
+                    {
+                        if (!(temp_s0->flags & 0x200))
+                        {
+                            mtxLoadRandomRotation(sp6C);
+                        }
+                        
+                        temp_s0->unk90 += 1;
+                    }
+
+                    if ((sp610 != 0) || (sp60C != 0))
+                    {
+                        if (sp610 != 0)
+                        {
+                            arg0->pos.f[1] = (sp63C - sp638) + 4.0f;
+                            obj->runtime_pos.f[1] = arg0->pos.f[1];
+                        }
+                        else
+                        {
+                            arg0->pos.f[1] = (sp614.f[1] - sp638) + 4.0f;
+                            obj->runtime_pos.f[1] = arg0->pos.f[1];
+                        }
+                        
+                        if (!(obj->runtime_bitflags & 0x10000))
+                        {
+                            obj->runtime_bitflags |= 0x100;
+                        }
+                        
+                        if (temp_s0->unk8C > 0.0f)
+                        {
+                            temp_s0->speed.f[1] *= -temp_s0->unk8C;
+                            if (temp_s0->speed.f[1] < 2.2222223f)
+                            {
+                                if ((temp_s0->flags & 2) && (temp_s0->unk90 == 1))
+                                {
+                                    temp_s0->speed.f[1] = 2.2222223f;
+                                }
+                                else
+                                {
+                                    sub_GAME_7F0431E4(obj, &sp62C);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            sub_GAME_7F0431E4(obj, &sp62C);
+                        }
+                    }
+
+                    //mips2c line 892
+                    if (obj->type == 8)
+                    {
+                        if (temp_s1->weaponnum == 3)
+                        {
+                            sub_GAME_7F043650(temp_s1);
+                        }
+                        else if (temp_s1->weaponnum == 0x56)
+                        {
+                            if ((sp664 == 0) || (sp610 != 0))
+                            {
+                                temp_s1->timer = 0;
+                            }
+                            else
+                            {
+                                temp_f14_4 = (temp_s0->speed.f[2] * temp_s0->speed.f[2]) + ((temp_s0->speed.f[0] * temp_s0->speed.f[0]) + (temp_s0->speed.f[1] * temp_s0->speed.f[1]));
+                                if (temp_f14_4 > 27777.773f)
+                                {
+                                    temp_s0->unk10.f[0] = 0.0f;
+                                    temp_s0->unk10.f[1] = 0.0f;
+                                    temp_s0->unk10.f[2] = 0.0f;
+                                }
+                                if ((s32) temp_s0->unkA8 >= 0x12D)
+                                {
+                                    temp_s0->unk1C = 0.0f;
+                                    temp_s0->flags &= ~0x30;
+                                }
+                                else
+                                {
+                                    sub_GAME_7F09E700(&temp_s1->runtime_pos, arg0->stan, 8, arg0->rooms, (arg0->flags & 8) != 0);
+                                }
+                            }
+                        }
+                        else if (temp_s1->weaponnum == 0x57)
+                        {
+                            if ((sp610 != 0) || (sp60C != 0))
+                            {
+                                temp_s1->timer = 0;
+                            }
+                            else
+                            {
+                                sub_GAME_7F09E700(&obj->runtime_pos, arg0->stan, 9, arg0->rooms, (arg0->flags & 8) != 0);
+                            }
+                        }
+                        
+                        if ((sp664 == 0) || (sp610 != 0))
+                        {
+                            if (temp_s0->unkAC < (D_80048380 - 2))
+                            {
+                                if ((temp_s1->weaponnum == 3) || (temp_s1->weaponnum == 2))
+                                {
+                                    sfx_state = sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, KNIFE_HIT_WALL_SFX, NULL);
+                                }
+                                else
+                                {
+                                    sfx_state = sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, DROP_GUN_SFX, NULL);
+                                }
+                                
+                                chrobjSndCreatePostEventDefault(sfx_state, &arg0->pos);
+                            }
+                            
+                            temp_s0->unkAC = D_80048380;
+                        }
+                    }
+                }
+
+                // mips2c line 960
+                if ((temp_s1->runtime_bitflags & 0x80) && (temp_s0->flags & 0x400) && !(D_80048380 & 7))
+                {
+                    struct PropRecord *temp_v0_13 = temp_s1->prop;
+                    
+                    sp564.f[0] = temp_s1->runtime_pos.f[0] + 400.0f;
+                    sp564.f[1] = temp_s1->runtime_pos.f[1] - 1800.0f;
+                    sp564.f[2] = temp_s1->runtime_pos.f[2];
+                    
+                    if (!(D_80048380 & 0xF))
+                    {
+                        sp564.f[2] += 400.0f;
+                    }
+                    else
+                    {
+                        sp564.f[2] -= 400.0f;
+                    }
+                    
+
+                    // void explosionCreate(void *, struct coord3d *pos, struct StandTile *stan, s16 /* enum EXPLOSION_DEF */ explosionType, s32 flag, s32 playernum, u8 *rooms, s32 flag2);
+                    explosionCreate(NULL, &sp564, temp_v0_13->stan, 0x14, 0, 0, temp_v0_13->rooms, 0);
+                    if (((s32) D_80048380 % 40) == 0)
+                    {
+                        // void sub_GAME_7F09E700(coord3d *pos, StandTile *stan, s16 arg2, u8 *rooms, s32 arg4);
+                        sub_GAME_7F09E700(&sp564, temp_v0_13->stan, 0xA, temp_v0_13->rooms, 1);
+                    }
+                }
+            }
+            // mips2c line 982
+            else
+            {
+                var_s2_3 = 1;
+                
+                if (temp_s0->unk60 < 1.0f)
+                {
+                    temp_s0->unk60 += (temp_s0->unk64 * g_GlobalTimerDelta);
+                    
+                    if (g_ClockTimer > 0)
+                    {
+                        temp_s0->unk64 *= 1.1f;
+                    }
+                    
+                    if ((temp_s0->unk60 > 1.0f) || (temp_s0->flags & 8))
+                    {
+                        temp_s0->unk60 = 1.0f;
+                    }
+
+                    //void quaternion_slerp(quatf q1, quatf q2, f32 t, quatf result);
+                    quaternion_slerp((f32*)&temp_s0->unk68, (f32*)&temp_s0->unk78, temp_s0->unk60, (f32*)&sp550);
+                    sp70 = &obj->mtx;
+                    
+                    // void quaternion_to_matrix(quatf q, mat44f matrix);
+                    quaternion_to_matrix((f32*)&sp550, (f32*)&obj->mtx);
+                    matrix_column_1_scalar_multiply(temp_s0->unkC0, (f32*)sp70);
+                    matrix_column_2_scalar_multiply(temp_s0->unkC4, (f32*)sp70);
+                    matrix_column_3_scalar_multiply_2(temp_s0->unkC8, (f32*)sp70);
+                    var_s2_3 = 0;
+                }
+                
+                if (((temp_s0->speed.f[0] != 0.0f) || (temp_s0->speed.f[2] != 0.0f) || (temp_s0->unk60 < 1.0f)) && !(temp_s0->flags & 8))
+                {
+                    sp70 = &obj->mtx;
+                    var_s2_3 = 0;
+                    sp54C = sub_GAME_7F040078(obj);
+
+                    for (sp548 = 0; sp548 < g_ClockTimer; sp548++)
+                    {
+                        sp694.f[0] += temp_s0->speed.f[0];
+                        sp694.f[2] += temp_s0->speed.f[2];
+                        
+                        if (temp_s0->unk60 >= 1.0f)
+                        {
+                            if (temp_s0->unk94 > 0.0f)
+                            {
+                                temp_f12_5 = (temp_s0->unk94 * g_GlobalTimerDelta) / sqrtf((temp_s0->speed.f[2] * temp_s0->speed.f[2]) + (temp_s0->speed.f[0] * temp_s0->speed.f[0]));
+                                
+                                if (temp_f12_5 >= 1.0f)
+                                {
+                                    temp_s0->speed.f[0] = 0.0f;
+                                    temp_s0->speed.f[2] = 0.0f;
+                                }
+                                else
+                                {
+                                    temp_s0->speed.f[0] -= (temp_s0->speed.f[0] * temp_f12_5);
+                                    temp_s0->speed.f[2] -= (temp_s0->speed.f[2] * temp_f12_5);
+                                }
+                            }
+                            else
+                            {
+                                temp_s0->speed.f[0] *= 0.9f;
+                                temp_s0->speed.f[2] *= 0.9f;
+                            }
+                        }
+                    }
+
+                    // s32 sub_GAME_7F042EB4(struct ObjectRecord *arg0, f32 *arg1, struct coord3d *arg2, struct coord3d *arg3, s32 arg4, s32 arg5);
+                    sub_GAME_7F042EB4(obj, &sp694.f[0], &sp530, &sp53C, 0, 0);
+                    sp690 = 1;
+
+                    arg0->pos.f[1] = stanGetPositionYValue(arg0->stan, arg0->pos.f[0], arg0->pos.f[2]) - (chrpropSumMatrixPosY(sp54C, sp70) + 4.0f);
+                    obj->runtime_pos.f[1] = arg0->pos.f[1];
+                    
+                    
+                    if ((temp_s0->speed.f[0] < 0.1f) && (temp_s0->speed.f[0] > -0.1f))
+                    {
+                        if ((temp_s0->speed.f[2] < 0.1f) && (temp_s0->speed.f[2] > -0.1f))
+                        {
+                            temp_s0->speed.f[2] = 0.0f;
+                            temp_s0->speed.f[0] = 0.0f;
+                        }
+                    }
+                }
+                
+                if ((var_s2_3 != 0) || (temp_s0->flags & 8))
+                {
+                    projectileFree(temp_s0);
+
+                    obj->projectile = NULL;
+                    obj->runtime_bitflags &= ~0x80;
+
+                    if (arg0->flags & 8)
+                    {
+                        arg0->flags |= 0x10;
+                    }
+                }
+            }
+        }
+
+        // mips2c line 1081
+        if (sp690 != 0)
+        {
+            sp70 = (Mtxf *)&obj->runtime_pos;
+            chrobjCollisionRelated(obj);
+            setupUpdateObjectRoomPosition(obj);
+            sub_GAME_7F0402B4(obj->prop, &obj->nextcol);
+            detonate_proxmine_In_range((struct coord3d *)sp70);
+        }
+
+        // mips2c line 1090
+        if (obj->type == PROPDEF_DOOR)
+        {
+            struct DoorRecord *door = (struct DoorRecord *)arg0->obj;
+            
+            sp67C = door->openPosition;
+            
+            if ((door->openedTime > 0) && (door->openedTime < (g_GlobalTimer - door->autoCloseFrames)) && (door->openstate == DOORSTATE_STATIONARY) && !(door->flags & 0x80000000))
+            {
+                doorActivate(door, DOORSTATE_CLOSING);
+            }
+            
+            if (door->openstate == DOORSTATE_WAITING)
+            {
+                struct DoorRecord *linked_door = door->linkedDoor;
+                
+                var_v1_3 = 1;
+                
+                while ((linked_door != NULL) && (linked_door != door))
+                {
+                    if ((linked_door->openstate != DOORSTATE_STATIONARY) || (linked_door->openPosition > 0.0f))
+                    {
+                        var_v1_3 = 0;
+                    }
+                    
+                    linked_door = linked_door->linkedDoor;
+                }
+                
+                if (var_v1_3 != 0)
+                {
+                    doorSetOpenState(door, DOORSTATE_OPENING);
+                }
+            }
+            
+            if ((door->doorType == 8) && (doorIsClosed(door) != 0) && (doorIsPadlockFree(door) != 0))
+            {
+                doorActivateWrapper(arg0);
+            }
+            
+            if ((door->timer < g_GlobalTimer) || (g_ClockTimer == 0))
+            {
+                sub_GAME_7F054FB4(door);
+            }
+        }
+        // mips2c line 1130
+        else if (obj->type == PROPDEF_CCTV && !(obj->flags & PROPFLAG_CCTV_DISABLED))
+        {
+            struct CCTVRecord *camera = (struct CCTVRecord *)arg0->obj;
+            // camera is temp_s0_3
+
+            if (camera->unkD4 != 0)
+            {
+                sp518 = camera->unkCC;
+            }
+            else
+            {
+                sp518 = camera->unkD0;
+            }
+
+            sp514 = get_curplayer_positiondata();
+
+            temp_f0_13 = camera->unkE8;
+            var_s2_4 = 1;
+            sp5xx.f[0] = sp514->pos.f[0] - obj->runtime_pos.f[0];
+            sp5xx.f[1] = sp514->pos.f[1] - obj->runtime_pos.f[1];
+            sp5xx.f[2] = sp514->pos.f[2] - obj->runtime_pos.f[2];
+
+            if ((temp_f0_13 > 0.0f) && ((temp_f0_13 * temp_f0_13) < ((sp5xx.f[0] * sp5xx.f[0]) + (sp5xx.f[1] * sp5xx.f[1]) + (sp5xx.f[2] * sp5xx.f[2]))))
+            {
+                var_s2_4 = 0;
+            }
+            
+            if (obj->flags & 0x20000000)
+            {
+                var_s2_4 = 0;
+            }
+
+            if (var_s2_4 != 0)
+            {
+                temp_f0_14 = atan2f(sp5xx.f[0], sp5xx.f[2]);
+                
+                var_f2 = camera->unkC8;
+                
+                if ( var_f2 < 0.0f)
+                {
+                    var_f2 += 6.2831855f;
+                }
+                else if (var_f2 >= 6.2831855f)
+                {
+                    var_f2 -= 6.2831855f;
+                }
+                
+                var_f2 += camera->unkC4;
+                if (var_f2 >= 6.2831855f)
+                {
+                    var_f2 -= 6.2831855f;
+                }
+                
+                var_f12 = temp_f0_14 - var_f2;
+                
+                if (temp_f0_14 < var_f2)
+                {
+                    var_f12 += 6.2831855f;
+                }
+                
+                var_f12 -= 3.1415927f;
+                
+                if (var_f12 < 0.0f)
+                {
+                    var_f12 += 6.2831855f;
+                }
+                
+                if (var_f12 > 3.1415927f)
+                {
+                    var_f12 -= 6.2831855f;
+                }
+                
+                if ((var_f12 > 0.7853982f) || (var_f12 < -0.7853982f))
+                {
+                    var_s2_4 = 0;
+                }
+            }
+
+            if (var_s2_4 != 0)
+            {
+                sp4F0 = arg0->stan;
+                bondviewUpdateGuardTankFlagsRelated(sp514, 0);
+                
+                if (stanTestLineUnobstructed(&sp4F0, arg0->pos.f[0], arg0->pos.f[2], sp514->pos.f[0], sp514->pos.f[2], 0x1B, 100.0f, 100.0f, 0.0f, 1.0f) != 0)
+                {
+                    camera->timer += g_ClockTimer;
+                    
+                    if (camera->timer >= (s32) (300.0f * F_80030B14))
+                    {
+                        alarmActivate();
+                        camera->timer = 0;
+                    }
+                }
+                
+                bondviewUpdateGuardTankFlagsRelated(sp514, 1);
+            }
+
+            if (camera->unkC8 < sp518)
+            {
+                if ((sp518 - ((camera->unkD8 * camera->unkD8 * 0.5f) / 0.00065449846f)) <= camera->unkC8)
+                {
+                    camera->unkD8 = (f32) (camera->unkD8 - (0.00065449846f * g_GlobalTimerDelta));
+                    
+                    if (camera->unkD8 < 0.00065449846f)
+                    {
+                        camera->unkD8 = 0.00065449846f;
+                    }
+                }
+                else
+                {
+                    if (camera->unkD8 < camera->unkDC)
+                    {
+                        var_f2_3 = camera->unkD8 + (0.00065449846f * g_GlobalTimerDelta);
+                        
+                        if (camera->unkDC < var_f2_3)
+                        {
+                            var_f2_3 = camera->unkDC;
+                        }
+                        
+                        if (camera->unkC8 < (sp518 - ((var_f2_3 * var_f2_3 * 0.5f) / 0.00065449846f)))
+                        {
+                            camera->unkD8 = var_f2_3;
+                        }
+                    }
+                }
+                
+                camera->unkC8 += (camera->unkD8 * g_GlobalTimerDelta);
+                
+                if (sp518 <= camera->unkC8)
+                {
+                    camera->unkC8 = sp518;
+                    camera->unkD8 = 0.0f;
+                    camera->unkD4 = 0;
+                }
+            }
+            else
+            {
+                if (camera->unkC8 <= (sp518 + ((camera->unkD8 * camera->unkD8 * 0.5f) / 0.00065449846f)))
+                {
+                    camera->unkD8 = (f32) (camera->unkD8 - (0.00065449846f * g_GlobalTimerDelta));
+                    
+                    if (camera->unkD8 < 0.00065449846f)
+                    {
+                        camera->unkD8 = 0.00065449846f;
+                    }
+                }
+                else
+                {
+                    if (camera->unkD8 < camera->unkDC)
+                    {
+                        var_f2_3 = camera->unkD8 + (0.00065449846f * g_GlobalTimerDelta);
+                        
+                        if (camera->unkDC < var_f2_3)
+                        {
+                            var_f2_3 = camera->unkDC;
+                        }
+                        
+                        if ((sp518 + ((var_f2_3 * var_f2_3 * 0.5f) / 0.00065449846f)) < camera->unkC8)
+                        {
+                            camera->unkD8 = var_f2_3;
+                        }
+                    }
+                }
+                
+                camera->unkC8 -= (camera->unkD8 * g_GlobalTimerDelta);
+                
+                if (camera->unkC8 <= sp518)
+                {
+                    camera->unkC8 = sp518;
+                    camera->unkD8 = 0.0f;
+                    camera->unkD4 = 1;
+                }
+            }
+        }
+        // mips2c line 1286
+        else if (obj->type == PROPDEF_AUTOGUN && !(obj->flags & PROPFLAG_IS_DRONE_GUN))
+        {
+            struct AutogunRecord *autogun = (struct AutogunRecord*)arg0->obj;
+            // autogun is temp_s0_4
+
+            temp_v0_19 = get_curplayer_positiondata();
+            sp4AC = 0;
+            sp4A8 = 0;
+            sp4A4 = 0;
+            
+            if (obj->flags2 & 0x80000000)
+            {
+                if (obj->flags2 & 0x40000000)
+                {
+                    autogun->rot_related = autogun->unk90;
+                    autogun->unk98 = autogun->unk9C;
+                }
+                else if ((autogun->rot_related == autogun->unk90) && (autogun->unk98 == autogun->unk9C))
+                {
+                    autogun->unk98 =  (((( RANDOMGETNEXT_F32() * 39.0f) + 1.0f) * 6.2831855f) / 360.0f);                   
+                    autogun->rot_related = (RANDOMGETNEXT_F32() * 6.2831855f);
+                }
+
+                chrobjCallsApplySpeed(&autogun->unk90, autogun->rot_related, &autogun->unk94, AUTOGUN_P1_ACCEL, AUTOGUN_P1_DECEL, AUTOGUN_P1_MAXSPEED);
+                chrobjCallsApplySpeed(&autogun->unk9C, autogun->unk98, &autogun->unkA0, AUTOGUN_P2_ACCEL, AUTOGUN_P2_DECEL, AUTOGUN_P2_MAXSPEED);
+            }
+            else
+            {
+                // mips2c line 1317
+                sp4BC.f[2] = temp_v0_19->pos.f[0] - obj->runtime_pos.f[0];
+                sp4BC.f[1] = (temp_v0_19->pos.f[1] - obj->runtime_pos.f[1]) - 20.0f;
+                sp4BC.f[0] = temp_v0_19->pos.f[2] - obj->runtime_pos.f[2];
+                
+                sp4B8 = (sp4BC.f[2] * sp4BC.f[2]) + (sp4BC.f[0] * sp4BC.f[0]);
+
+                sp4B0 = sqrtf(sp4B8);
+                
+                if (obj->flags & 0x08000000)
+                {
+                    sp4B8 += (sp4BC.f[1] * sp4BC.f[1]);
+                    sp4B0 = sqrtf(sp4B8);
+                }
+                
+                sp4B4 = sp4B0;
+                
+                sp4A0 = chrlvGetAimLimitAngle(sp4B8);
+                sp4D8 = autogun->rot_related;
+                sp4D4 = autogun->unk98;
+                
+                if (sp4B4 <= autogun->aimdist)
+                {
+                    // mips2c line 1339
+                    sp49C = atan2f(sp4BC.f[2], sp4BC.f[0]);
+                    sp498 = atan2f(sp4BC.f[1], sp4B0);
+
+                    if ((obj->flags & 0x40000000) || (obj->flags & 0x20000000))
+                    {
+                        sp4AC = 1;
+                    }
+                    else
+                    {
+                        var_f12_3 = sp49C - autogun->unk90;
+                        
+                        if (var_f12_3 < 0.0f)
+                        {
+                            var_f12_3 += 6.2831855f;
+                        }
+                        
+                        if (var_f12_3 > 3.1415927f)
+                        {
+                            var_f12_3 -= 6.2831855f;
+                        }
+                        
+                        if ((sp498 - autogun->unk9C) < 0.0f)
+                        {
+                            // empty
+                        }
+                        
+                        if ((var_f12_3 < 1.2217306f) && (var_f12_3 > -1.2217306f))
+                        {
+                            sp4AC = 1;
+                        }
+                    }
+                    
+                    if (sp4AC != 0)
+                    {
+                        sp494 = sp49C - autogun->rot_related;
+                        sp490 = arg0->stan;
+                        if (sp494 < -3.1415927f)
+                        {
+                            sp494 += 6.2831855f;
+                        }
+                        else if (sp494 >= 3.1415927f)
+                        {
+                            sp494 -= 6.2831855f;
+                        }
+
+                        bondviewUpdateGuardTankFlagsRelated(temp_v0_19, 0);
+
+                        if ((sp494 <= autogun->unk88)
+                            && (autogun->unk8C <= sp494)
+                            && (sub_GAME_7F0B0E24(&sp490, arg0->pos.f[0], arg0->pos.f[2], temp_v0_19->pos.f[0], temp_v0_19->pos.f[2], 0x1B, arg0->pos.f[1], arg0->pos.f[1], temp_v0_19->pos.f[1], temp_v0_19->pos.f[1]) != 0)
+                            && (sp490 == temp_v0_19->stan))
+                        {
+                            obj->flags |= 0x20000000;
+                            sp4A4 = 1;
+                            sp4D8 = sp49C;
+                            sp4D4 = sp498;
+                        }
+                        else
+                        {
+                            if ((autogun->unkB8 >= 0) && ((g_GlobalTimer - 0x78) < autogun->unkB8))
+                            {
+                                sp4D8 = autogun->unk90;
+                                sp4D4 = autogun->unk9C;
+                            }
+                            else
+                            {
+                                sp4AC = 0;
+                            }
+                        }
+
+                        bondviewUpdateGuardTankFlagsRelated(temp_v0_19, 1);
+                    }
+                }
+
+                if (sp4AC != 0)
+                {
+                    sp4A0 = chrlvGetAimLimitAngle(sp4B8);
+                }
+
+                if (autogun->is_active != 0)
+                {
+                    sp4D8 += sp4A0 * 0.8f * sinf(((f32) ((s32) g_GlobalTimer % 120) * 6.2831855f) / 120.0f);
+                    
+                    if (sp4D8 < 0.0f)
+                    {
+                        sp4D8 += 6.2831855f;
+                    }
+                    
+                    if (sp4D8 >= 6.2831855f)
+                    {
+                        sp4D8 -= 6.2831855f;
+                    }
+                }
+
+                // mips2c linee 1427
+
+                var_f0_2 = sp4D8 - autogun->rot_related;
+
+                if (var_f0_2 < -3.1415927f)
+                {
+                    var_f0_2 += 6.2831855f;
+                }
+                else if (var_f0_2 >= 3.1415927f)
+                {
+                    var_f0_2 -= 6.2831855f;
+                }
+
+                if (autogun->unk88 < var_f0_2 || var_f0_2 < autogun->unk8C)
+                {
+                    sp4D8 = autogun->rot_related + autogun->unk8C;
+                }
+
+                if (sp4D8 < 0.0f)
+                {
+                    sp4D8 += 6.2831855f;
+                }
+
+                if (sp4D8 >= 6.2831855f)
+                {
+                    sp4D8 -= 6.2831855f;
+                }
+
+                chrobjCallsApplySpeed(&autogun->unk90, sp4D8, &autogun->unk94, 0.0008726647f, 0.0008726647f, autogun->speed);
+                chrobjCallsApplySpeed(&autogun->unk9C, sp4D4, &autogun->unkA0, 0.0008726647f, 0.0008726647f, autogun->speed);
+
+                var_f12_5 = sp4D8 - autogun->unk90;
+                
+                if (var_f12_5 < 0.0f)
+                {
+                    var_f12_5 += 6.2831855f;
+                }
+
+                if (var_f12_5 > 3.1415927f)
+                {
+                    var_f12_5 -= 6.2831855f;
+                }
+
+                var_f2_6 = sp4D4 - autogun->unk9C;
+
+                if (var_f2_6 < 0.0f)
+                {
+                    var_f2_6 += 6.2831855f;
+                }
+
+                if (var_f2_6 > 3.1415927f)
+                {
+                    var_f2_6 -= 6.2831855f;
+                }
+
+                autogun->is_active = 0;
+
+                if (sp4AC != 0)
+                {
+                    if ((var_f12_5 < sp4A0) 
+                        && (-sp4A0 < var_f12_5)
+                        && (var_f2_6 < sp4A0) 
+                        && (-sp4A0 < var_f2_6))
+                    {
+                        autogun->is_active = 1;
+                        sp4A8 = 1;
+                        
+                        if (sp4A4 != 0)
+                        {
+                            autogun->unkB8 = (s32) g_GlobalTimer;
+                            autogun->unkBC = (s32) g_GlobalTimer;
+                        }
+                    }
+                    else
+                    {
+                        temp_f0_22 = 2.0f * sp4A0;
+                            
+                        if ((var_f12_5 < temp_f0_22) 
+                            && (-temp_f0_22 < var_f12_5)
+                            && (var_f2_6 < temp_f0_22) 
+                            && (-temp_f0_22 < var_f2_6))
+                        {
+                            autogun->is_active = 1;
+                            sp4A8 = 1;
+                            if (sp4A4 != 0)
+                            {
+                                autogun->unkB8 = (s32) g_GlobalTimer;
+                            }
+                        }
+                        else
+                        {
+                            if ((autogun->unkB8 >= 0) && ((g_GlobalTimer - 0x78) < autogun->unkB8))
+                            {
+                                autogun->is_active = 1;
+                                sp4A8 = 1;
+                            }
+                        }
+                    }
+                }
+                if (sp4A8 != 0)
+                {
+                    autogun->unkB0 += (0.009973311f * g_GlobalTimerDelta);
+                    
+                    if (autogun->unkB0 > 0.5983986f)
+                    {
+                        autogun->unkB0 = 0.5983986f;
+                    }
+                }
+                else if (autogun->unkB0 > 0.0f)
+                {
+                    for (var_v0_3 = 0; var_v0_3 < g_ClockTimer; var_v0_3++)
+                    {
+                        autogun->unkB0 *= 0.99f;
+                    }
+                    
+                    if (autogun->unkB0 <= 0.0001f)
+                    {
+                        autogun->unkB0 = 0.0f;
+                    }
+                }
+                if (autogun->unkB0 > 0.0f)
+                {
+                    autogun->unkB4 += (autogun->unkB0 * g_GlobalTimerDelta);
+                    
+                    while (autogun->unkB4 >= 6.2831855f)
+                    {
+                        autogun->unkB4 -= 6.2831855f;
+                    }
+                }
+            }
+        }
+        // mips2c line 1550
+        else if (obj->type == PROPDEF_VEHICHLE)
+        {
+            struct VehichleRecord *temp_s1 = (struct VehichleRecord *)obj;
+            
+            sp478 = NULL;
+            sp47C = temp_s1->roty;
+            
+            ai((PropDefHeaderRecord*)temp_s1, 1);
+            
+            if (temp_s1->speedtime60 >= 0.0f)
+            {
+                if (temp_s1->speedtime60 <= g_GlobalTimerDelta)
+                {
+                    temp_s1->speed = temp_s1->speedaim;
+                }
+                else
+                {
+                    temp_s1->speed += (((temp_s1->speedaim - temp_s1->speed) * g_GlobalTimerDelta) / temp_s1->speedtime60);
+                }
+                
+                temp_s1->speedtime60 -= g_GlobalTimerDelta;
+            }
+
+            var_s0 = 0;
+
+            // mips2c line 1570
+
+            if (!(obj->flags2 & 0x80000) && (objIsHealthy(obj) != 0) && ((temp_s1->speed > 0.0f) || (temp_s1->speedaim > 0.0f)))
+            {
+                var_s0 = sub_GAME_7F053894(&temp_s1->runtime_pos, 2000.0f, 3000.0f);
+            }
+            
+            if (var_s0 > 0)
+            {
+                if (((temp_s1->Sound == NULL) || (sndGetPlayingState(temp_s1->Sound) == 0)) && (lvlGetControlsLockedFlag() == 0))
+                {
+                    sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, TRUCK_RUN_SFX, temp_s1->Sound);
+                }
+                
+                if (temp_s1->Sound != NULL)
+                {
+                    sndCreatePostEvent(temp_s1->Sound, 8, var_s0);
+                }
+            }
+            else
+            {
+                if ((temp_s1->Sound != NULL) && (sndGetPlayingState(temp_s1->Sound) != 0))
+                {
+                    sndDeactivate(temp_s1->Sound);
+                }
+            }
+
+            // mips2c line 1595
+
+            if (temp_s1->path != NULL)
+            {
+                sp478 = &g_CurrentSetup.pads[g_CurrentSetup.pathwaypoints[temp_s1->path->waypoints[temp_s1->nextstep]].padID].pos;
+                
+                sp47C = atan2f(sp478->f[0] - temp_s1->runtime_pos.f[0], sp478->f[2] - temp_s1->runtime_pos.f[2]);
+                
+                if (temp_s1->flags & 0x20000000)
+                {
+                    temp_s1->roty = sp47C;
+                    temp_s1->flags &= 0xDFFFFFFF;
+                    sub_GAME_7F044B38(temp_s1);
+                }
+            }
+            else if (temp_s1->flags & 0x20000000)
+            {
+                temp_s1->roty = atan2f(temp_s1->mtx.m[2][0], temp_s1->mtx.m[2][2]);
+                temp_s1->flags &= 0xDFFFFFFF;
+                sub_GAME_7F044B38(temp_s1);
+            }
+
+            // mips2c line 1614
+            if (temp_s1->speed > 0.0f)
+            {
+                sp430 = 0.0f;
+                
+                sp468 = arg0->stan;
+                sp438 = temp_s1->roty;
+                sp434 = temp_s1->turnrot60;
+                
+                if (sp478 != NULL)
+                {
+                    sp430 = 0.0f;
+                    sp43C = sinf(sp438);
+                    sp440 = 0.0f;
+                    sp444 = cosf(temp_s1->roty);
+
+                    if (chrlvGeometryRelated7F02FC34(&temp_s1->runtime_pos, (struct coord3d *) &sp43C, sp478, 10.0f) != 0)
+                    {
+                        sp47C = temp_s1->roty;
+                    }
+                }
+
+                chrobjCallsApplySpeed(&temp_s1->roty, sp47C, &temp_s1->turnrot60, 0.000109083085f, 0.00021816617f, 0.006544985f);
+
+                while (temp_s1->roty >= 6.2831855f)
+                {
+                    temp_s1->roty -= 6.2831855f;
+                }
+
+                while (temp_s1->roty < 0.0f)
+                {
+                    temp_s1->roty += 6.2831855f;
+                }
+                
+                if (sp47C == temp_s1->roty)
+                {
+                    if ((temp_s1->turnrot60 <= 0.00021816617f) && (temp_s1->turnrot60 >= -0.00021816617f))
+                    {
+                        temp_s1->turnrot60 = 0.0f;
+                    }
+                }
+                
+                temp_s0_5 = (f32*)model->obj->Switches[3]->Data;
+                
+                if (g_GlobalTimerDelta > 0.0f)
+                {
+                    sp430 = (temp_s1->roty - sp438) / g_GlobalTimerDelta;
+                }
+                if (sp430 < 0.0f)
+                {
+                    sp430 += 6.2831855f;
+                }
+                
+                sp460 = sinf(sp430) * (temp_s0_5[2] * model->scale) * g_GlobalTimerDelta;
+                sp43C = sinf(temp_s1->roty);
+                sp440 = 0.0f;
+                sp444 = cosf(temp_s1->roty);
+                sp694.f[0] = (temp_s1->runtime_pos.f[0] + (temp_s1->speed * g_GlobalTimerDelta * sp43C)) - (sp444 * sp460);
+                sp694.f[1] = temp_s1->runtime_pos.f[1];
+                sp694.f[2] = (sp43C * sp460) + (temp_s1->runtime_pos.f[2] + (temp_s1->speed * g_GlobalTimerDelta * sp444));
+
+                if ((sub_GAME_7F0B0E24(&sp468, arg0->pos.f[0], arg0->pos.f[2], sp694.f[0], sp694.f[2], 0x1F, 0.0f, 1.0f, 0.0f, 1.0f) != 0) 
+                    && (sub_GAME_7F0B18B8(&sp468, sp694.f[0], sp694.f[2], 10.0f, 0x1F, 0.0f, 1.0f) < 0))
+                {
+                    sp44C = arg0->stan;
+                    sp450.f[0] = arg0->pos.f[0];
+                    sp450.f[1] = arg0->pos.f[1];
+                    sp450.f[2] = arg0->pos.f[2];
+                    arg0->stan = sp468;
+                    arg0->pos.f[0] = sp694.f[0];
+                    temp_s1->runtime_pos.f[0] = sp694.f[0];
+                    arg0->pos.f[2] = sp694.f[2];
+                    temp_s1->runtime_pos.f[2] = sp694.f[2];
+                    chrobjCollisionRelated(obj);
+                    setupUpdateObjectRoomPosition(obj);
+                    var_s2_5 = sub_GAME_7F0448A8(arg0);
+                    
+                    if (var_s2_5 != 0)
+                    {
+                        temp_v0_25 = (f32*)model->obj->Switches[7]->Data;
+                        sp424 = temp_s1->mtx.m[0][0] * temp_v0_25[1];
+                        sp42C = temp_s1->mtx.m[0][2] * temp_v0_25[1];
+                        sp418 = temp_s1->mtx.m[0][0] * temp_v0_25[2];
+                        sp420 = temp_s1->mtx.m[0][2] * temp_v0_25[2];
+                        sp40C = temp_s1->mtx.m[2][0] * temp_v0_25[5];
+                        sp414 = temp_s1->mtx.m[2][2] * temp_v0_25[5];
+                        sp400 = temp_s1->mtx.m[2][0] * temp_v0_25[6];
+                        sp408 = temp_s1->mtx.m[2][2] * temp_v0_25[6];
+                        sp468 = arg0->stan;
+                        // temp_f0_25 = arg0->pos.f[0]
+                        //temp_f2_13 = arg0->pos.f[2]
+
+                        // temp_f0_26 = arg0->pos.f[0];
+                        // temp_f2_14 = arg0->pos.f[2]
+                        // temp_f0_27 = arg0->pos.f[0] + sp418, 
+                        // temp_f2_15 = arg0->pos.f[2] + sp420
+                        // temp_f0_28 = arg0->pos.f[0], 
+                        // temp_f2_16 = arg0->pos.f[2]
+                        // temp_f0_29 = arg0->pos.f[0] + sp424, 
+                        // temp_f2_17 = arg0->pos.f[2] + sp42C,
+                    
+                        if ((walkTilesBetweenPoints_NoCallback(&sp468, arg0->pos.f[0], arg0->pos.f[2], sp40C + (arg0->pos.f[0] + sp424), sp414 + (arg0->pos.f[2] + sp42C)) == 0)
+                            || (walkTilesBetweenPoints_NoCallback(&sp468, sp40C + (arg0->pos.f[0] + sp424), sp414 + (arg0->pos.f[2] + sp42C), sp40C + (arg0->pos.f[0] + sp418), sp414 + (arg0->pos.f[2] + sp420)) == 0)
+                            || (walkTilesBetweenPoints_NoCallback(&sp468, sp40C + arg0->pos.f[0] + sp418, sp414 + arg0->pos.f[2] + sp420, sp400 + arg0->pos.f[0] + sp418, sp408 + arg0->pos.f[2] + sp420) == 0)
+                            || (walkTilesBetweenPoints_NoCallback(&sp468, sp400 + (arg0->pos.f[0] + sp418), sp408 + (arg0->pos.f[2] + sp420), sp400 + (arg0->pos.f[0] + sp424), sp408 + (arg0->pos.f[2] + sp42C)) == 0)
+                            || (walkTilesBetweenPoints_NoCallback(&sp468, sp400 + arg0->pos.f[0] + sp424, sp408 + arg0->pos.f[2] + sp42C, sp40C + arg0->pos.f[0] + sp424, sp414 + arg0->pos.f[2] + sp42C) == 0))
+                        {
+                            var_s2_5 = 0;
+                        }
+                    }
+                    
+                    if (var_s2_5 != 0)
+                    {
+                        sub_GAME_7F044B38(temp_s1);
+                        sub_GAME_7F0402B4(arg0, &temp_s1->nextcol);
+                        detonate_proxmine_In_range(&temp_s1->runtime_pos);
+                        
+                        if ((sp478 != NULL)
+                            && (chrlvIsArrivingLaterallyAtPos(&sp450, &sp694, sp478, 100.0f) != 0))
+                        {
+                            temp_s1->nextstep++;
+                            if (temp_s1->path[temp_s1->nextstep].waypoints[0] < 0)
+                            {
+                                temp_s1->path = NULL;
+                                temp_s1->speedaim = 0.0f;
+                                temp_s1->speedtime60 = 60.0f;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (temp_s1->speedtime60 < 0.0f)
+                        {
+                            temp_s1->speedaim = (f32) temp_s1->speed;
+                            temp_s1->speedtime60 = 60.0f;
+                        }
+                        
+                        temp_s1->speed = 0.0f;
+                        temp_s1->roty = sp438;
+                        temp_s1->turnrot60 = sp434;
+                        arg0->stan = sp44C;
+                        arg0->pos.f[0] = sp450.f[0];
+                        obj->runtime_pos.f[0] = sp450.f[0];
+                        arg0->pos.f[1] = sp450.f[1];
+                        obj->runtime_pos.f[1] = sp450.f[1];
+                        arg0->pos.f[2] = sp450.f[2];
+                        obj->runtime_pos.f[2] = sp450.f[2];
+                        
+                        chrobjCollisionRelated(obj);
+                        setupUpdateObjectRoomPosition(obj);
+                    }
+                }
+                else
+                {
+                    if (temp_s1->speedtime60 < 0.0f)
+                    {
+                        temp_s1->speedaim = (f32) temp_s1->speed;
+                        temp_s1->speedtime60 = 60.0f;
+                    }
+                    
+                    temp_s1->speed = 0.0f;
+                    temp_s1->roty = sp438;
+                    temp_s1->turnrot60 = sp434;
+                }
+            }
+            else if (temp_s1->flags & 0x20000000)
+            {
+                temp_s1->roty = atan2f(temp_s1->mtx.m[2][0], temp_s1->mtx.m[2][2]);
+                temp_s1->flags &= 0xDFFFFFFF;
+                sub_GAME_7F044B38(temp_s1);
+            }
+        }
+        // mips2c line 1754
+        else if (obj->type == PROPDEF_AIRCRAFT)
+        {
+            struct AircraftRecord *temp_s1 = (struct AircraftRecord*)obj;
+
+            ai((PropDefHeaderRecord*)temp_s1, 1);
+
+            temp_s0_6 = temp_s1->model;
+
+            if (temp_s0_6->anim != NULL)
+            {
+                setsuboffset(temp_s0_6, &temp_s1->runtime_pos);
+                
+                if (temp_s0_6->anim == animation_table_ptrs2[AIRCRAFT_ANIMATION_plane_runway])
+                {
+                    sub_GAME_7F06CE84(temp_s0_6, 10.438f);
+                    setsubroty(temp_s1->model, 3.1415927f);
+                }
+                else if (bossGetStageNum() == LEVELID_STATUE)
+                {
+                    sub_GAME_7F06CE84(temp_s1->model, 1.0438f);
+                    setsubroty(temp_s1->model, 2.3561945f);
+                }
+                else if (bossGetStageNum() == LEVELID_FRIGATE)
+                {
+                    sub_GAME_7F06CE84(temp_s1->model, 1.0438f);
+                    setsubroty(temp_s1->model, 3.9269907f);
+                }
+                else
+                {
+                    sub_GAME_7F06CE84(temp_s1->model, 1.0438f);
+                    setsubroty(temp_s1->model, 0.0f);
+                }
+                
+                modelTickAnimQuarterSpeed(temp_s1->model, g_ClockTimer, 1);
+                subcalcpos(temp_s1->model);
+                getsuboffset(temp_s1->model, &temp_s1->runtime_pos);
+                arg0->pos.f[0] = temp_s1->runtime_pos.f[0];
+                arg0->pos.f[2] = temp_s1->runtime_pos.f[2];
+
+                if (isNotBoundPad(temp_s1->pad))
+                {
+                    var_v1_4 = &g_CurrentSetup.pads[temp_s1->pad];
+                }
+                else
+                {
+                    var_v1_4 = (PadRecord *)&g_CurrentSetup.boundpads[getBoundPadNum(temp_s1->pad)];
+                }
+                
+                arg0->pos.f[1] = temp_s1->runtime_pos.f[1] + var_v1_4->pos.f[1];
+                temp_s1->runtime_pos.f[1] = arg0->pos.f[1];
+                setsuboffset(temp_s1->model, &temp_s1->runtime_pos);
+            }
+            
+            var_f12_6 = temp_s1->speedtime60;
+            
+            if (var_f12_6 >= 0.0f)
+            {
+                if (var_f12_6 <= g_GlobalTimerDelta)
+                {
+                    var_f12_6 = temp_s1->speedtime60;
+                    temp_s1->speed = (f32) temp_s1->speedaim;
+                }
+                else
+                {
+                    temp_s1->speed += (((temp_s1->speedaim - temp_s1->speed) * g_GlobalTimerDelta) / var_f12_6);
+                }
+                temp_s1->speedtime60 = (f32) (var_f12_6 - g_GlobalTimerDelta);
+            }
+
+            if (temp_s1->rotaryspeedtime >= 0.0f)
+            {
+                if (temp_s1->rotaryspeedtime <= g_GlobalTimerDelta)
+                {
+                    temp_s1->rotaryspeed = (f32) temp_s1->rotaryspeedaim;
+                }
+                else
+                {
+                    var_f12_6 = temp_s1->rotaryspeed;
+                    temp_s1->rotaryspeed += (((temp_s1->rotaryspeedaim - temp_s1->rotaryspeed) * g_GlobalTimerDelta) / temp_s1->rotaryspeedtime);
+                }
+                
+                temp_s1->rotaryspeedtime -= g_GlobalTimerDelta;
+            }
+            
+            var_s0_2 = 0;
+            
+            if (!(temp_s1->flags2 & 0x80000)
+                && (objIsHealthy(obj) != 0)
+                && (temp_s1->rotaryspeed != 0.0f)
+                && !(temp_s1->flags & 0x20000000))
+            {
+                var_s0_2 = sub_GAME_7F053894(&temp_s1->runtime_pos, 5000.0f, 6000.0f);
+            }
+            
+            if (var_s0_2 > 0)
+            {
+                if (((temp_s1->Sound == NULL) || (sndGetPlayingState(temp_s1->Sound) == 0)) && (lvlGetControlsLockedFlag() == 0))
+                {
+                    sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, HELI_RUN_SFX, temp_s1->Sound);
+                }
+                
+                if (temp_s1->Sound != NULL)
+                {
+                    sndCreatePostEvent(temp_s1->Sound, 8, var_s0_2);
+                }
+            }
+            else
+            {
+                if ((temp_s1->Sound != NULL) && (sndGetPlayingState(temp_s1->Sound) != 0))
+                {
+                    sndDeactivate(temp_s1->Sound);
+                }
+            }
+        }    
+    }
+
+    // mips2c line 1860
+    if (obj->type == PROPDEF_TINTED_GLASS)
+    {
+        struct TintedGlassRecord *tinted_glass = (struct TintedGlassRecord *)arg0->obj;
+
+        tinted_glass->calculatedopacity = glassCalculateOpacity(
+            &obj->runtime_pos,
+            tinted_glass->TintDist,
+            tinted_glass->CullDist,
+            tinted_glass->unk90);
+        
+        if ((tinted_glass->unk8C >= 0) && (sp674 == 1))
+        {
+            if (tinted_glass->calculatedopacity == 0xFF)
+            {
+                bgToggleDataPortalsContrlBytes1Bit1(tinted_glass->unk8C, 0);
+            }
+            else
+            {
+                bgToggleDataPortalsContrlBytes1Bit1(tinted_glass->unk8C, 1);
+            }
+        }
+        
+        sp670 = 0;
+    }
+    // mips2c line 1879
+    else if (obj->type == PROPDEF_DOOR && ((struct DoorRecord*)obj)->doorFlags & 0x2)
+    {
+        struct DoorRecord *door = (struct DoorRecord *)arg0->obj;
+
+        var_s2_6 = 1;
+        door->calculatedopacity = glassCalculateOpacity(&obj->runtime_pos, door->TintDist, door->CullDist, 0.0f);
+        
+        if (sp674 == 1)
+        {
+            if ((door->calculatedopacity != 0xFF) || (door->openPosition > 0.0f))
+            {
+                var_s2_6 = 0;
+            }
+            
+            temp_v0_29 = model->obj;
+            
+            if ((&skeleton_door == temp_v0_29->Skeleton) 
+                && ((modelGetNodeRwData(model, temp_v0_29->Switches[0]))->Header.unk00 == 0))
+            {
+                var_s2_6 = 0;
+            }
+            
+            if (var_s2_6 != 0)
+            {
+                doorDeactivatePortal(door);
+            }
+            else
+            {
+                doorActivatePortal(door);
+            }
+        }
+    }
+
+    // mips2c line 1905
+    if (obj->type == PROPDEF_TANK && (get_ptr_for_players_tank() == arg0))
+    {
+        var_v1_5 = 1;
+    }
+    else
+    {
+        if (obj->flags2 & 0x04000000)
+        {
+            var_v1_5 = 1;
+        }
+        else
+        {
+            var_v1_5 = 0;
+            
+            if (!(obj->runtime_bitflags & 0x800) && !(obj->flags2 & 0x80000))
+            {
+                var_v1_5 = sub_GAME_7F054D6C(arg0, &obj->runtime_pos, getinstsize(model), sp670);
+            }
+        }
+    }
+
+    // mips2c line 1926
+    if (var_v1_5 != 0)
+    {
+        if (sp678 != 0)
+        {
+            update_color_shading(&obj->shadecol, &obj->nextcol);
+        }
+
+        arg0->flags |= 2;
+        model->render_pos = dynAllocate(model->obj->numMatrices << 6);
+        // model->render_pos = temp_v0_30
+
+        if (obj->type == PROPDEF_DOOR)
+        {
+            sp39C = (struct DoorRecord *)arg0->obj;            
+            
+            sub_GAME_7F0526EC(sp39C, (Mtxf *)model->render_pos);
+            matrix_4x4_multiply_homogeneous_in_place(camGetWorldToScreenMtxf(), (Mtxf *)model->render_pos);
+            
+            temp_v0_31 = model->obj;
+            
+            if (&skeleton_eyelid_door == temp_v0_31->Skeleton)
+            {
+                temp_a1_4 = &model->render_pos[1].pos;
+                temp_s0_10 = (Mtxf *)temp_v0_31->Switches[0]->Data;
+
+                sp394 = 6.2831855f - ((sp39C->openPosition * 6.2831855f) / 360.0f);
+
+                matrix_4x4_set_rotation_around_x(sp394, temp_a1_4);
+                matrix_4x4_set_position((struct coord3d *)temp_s0_10, temp_a1_4);
+                matrix_4x4_multiply_in_place((Mtxf *)model->render_pos, temp_a1_4);
+                
+                temp_a1_4 = &model->render_pos[2].pos;
+                temp_s0_10 = (Mtxf *)temp_v0_31->Switches[1]->Data;
+
+                matrix_4x4_set_rotation_around_x(6.2831855f - sp394, temp_a1_4);
+                matrix_4x4_set_position((struct coord3d *)temp_s0_10, temp_a1_4);
+                matrix_4x4_multiply_in_place((Mtxf *)model->render_pos, temp_a1_4);
+            }
+            else if (&skeleton_iris_door == temp_v0_31->Skeleton)
+            {
+                sp384 = (sp39C->openPosition * 6.2831855f) / 360.0f;
+
+                temp_f0_31 = sp39C->maxFrac * 0.3f;
+                if (temp_f0_31 < sp39C->openPosition)
+                {
+                    sp380 = (((sp39C->maxFrac * (sp39C->openPosition - temp_f0_31)) / (sp39C->maxFrac - temp_f0_31)) * 6.2831855f) / 360.0f;
+
+                    if (sp678 != 0)
+                    {
+                        if (sp67C <= temp_f0_31)
+                        {
+                            chrobjSndCreatePostEventDefault(sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, METAL_SLIDE_OPEN_SFX, NULL), &arg0->pos);
+                        }
+                    }
+                }
+                else
+                {
+                    sp380 = 0.0f;
+                    
+                    if (sp678 != 0)
+                    {
+                        if (temp_f0_31 < sp67C)
+                        {
+                            chrobjSndCreatePostEventDefault(sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, METAL_SLIDE_CLOSE_SFX, NULL), &arg0->pos);
+                        }
+                    }
+                }
+
+                for (sp38C = 0; sp38C < 6; sp38C++)
+                {
+                    temp_v0_32 = sp38C * 2;                 
+                    
+                    sp390 = (Mtxf *)model->obj->Switches[temp_v0_32 + 1]->Data;
+                    temp_a1_6 = &model->render_pos[temp_v0_32 + 1].pos;
+                    matrix_4x4_set_rotation_around_z(sp380, temp_a1_6);
+                    matrix_4x4_set_position((struct coord3d *)sp390, temp_a1_6);
+                    matrix_4x4_multiply_in_place((Mtxf *)model->render_pos, temp_a1_6);
+                    
+                    sp390 = (Mtxf *)model->obj->Switches[temp_v0_32 + 2]->Data;
+                    temp_a1_6 = &model->render_pos[temp_v0_32 + 2].pos;
+                    matrix_4x4_set_rotation_around_z(sp384, temp_a1_6);
+                    matrix_4x4_set_position((struct coord3d *)sp390, temp_a1_6);
+                    matrix_4x4_multiply_in_place(temp_a1_6, temp_a1_6);
+                }
+            }
+        }
+        // mips2c line 2018
+        else
+        {
+            matrix_4x4_copy(&obj->mtx, &sp3A4);
+            matrix_4x4_set_position(&obj->runtime_pos, &sp3A4);
+            matrix_4x4_multiply_homogeneous(camGetWorldToScreenMtxf(), &sp3A4, model->render_pos);
+
+            if (obj->type == PROPDEF_CCTV)
+            {
+                struct CCTVRecord *sp370 = (struct CCTVRecord *)arg0->obj;
+                
+                var_f12_7 = sp370->unkC8;
+                temp_s0_13 = (struct coord3d *)model->obj->Switches[0]->Data;
+
+                if (var_f12_7 < 0.0f)
+                {
+                    var_f12_7 += 6.2831855f;
+                }
+                else if (var_f12_7 >= 6.2831855f)
+                {
+                    var_f12_7 -= 6.2831855f;
+                }
+
+                matrix_4x4_set_rotation_around_y(var_f12_7, &sp320);
+                
+                matrix_4x4_multiply(&sp320, &sp370->unk84, &model->render_pos[1].pos);
+                
+                sp360.f[0] = temp_s0_13->f[0];
+                sp360.f[1] = temp_s0_13->f[1];
+                sp360.f[2] = temp_s0_13->f[2];
+                
+                mtx4TransformVecInPlace(&sp3A4, &sp360);
+                matrix_4x4_set_position(&sp360, &model->render_pos[1].pos);
+                matrix_4x4_multiply_homogeneous_in_place(camGetWorldToScreenMtxf(), &model->render_pos[1].pos);
+            }
+            // mips2c line 2050
+            else if (obj->type == PROPDEF_AUTOGUN)
+            {
+                struct AutogunRecord *sp318 = (struct AutogunRecord *)arg0->obj;
+                
+                sp304 = sp318->unk90 + 1.5707964f;
+                sp300 = -sp318->unk9C;
+                if (sp304 >= 6.2831855f)
+                {
+                    sp304 -= 6.2831855f;
+                }
+                
+                temp_s0_14 = model->obj->Switches[1]->Data;
+                sp308.f[0] = temp_s0_14->f[0];
+                sp308.f[1] = temp_s0_14->f[1];
+                sp308.f[2] = temp_s0_14->f[2];
+                mtx4TransformVecInPlace(&sp3A4, &sp308);
+                matrix_4x4_set_rotation_around_y(sp304, &model->render_pos[1].pos);
+                matrix_4x4_set_position(&sp308, &model->render_pos[1].pos);
+                matrix_scalar_multiply(sp318->model->scale, sp6C->m[0]);
+                matrix_4x4_multiply_homogeneous_in_place(camGetWorldToScreenMtxf(), sp6C);
+
+                matrix_4x4_set_rotation_around_z(sp300, &model->render_pos[2].pos);
+                matrix_4x4_set_position((struct coord3d*)model->obj->Switches[2]->Data, &model->render_pos[2].pos);
+                matrix_4x4_multiply_homogeneous_in_place(sp6C, &model->render_pos[2].pos);
+
+                if (model->obj->Switches[3] != NULL)
+                {
+                    sp2FC = modelFindNodeMtx(model, model->obj->Switches[3], 0);
+                    matrix_4x4_set_rotation_around_x(sp318->unkB4, sp2FC);
+                    matrix_4x4_set_position(model->obj->Switches[3]->Data, sp2FC);
+                    matrix_4x4_multiply_homogeneous_in_place(model->obj->Switches[2]->Data, sp2FC);
+                }
+
+                if (model->obj->Switches[4] != NULL)
+                {
+                    sp2FC = modelFindNodeMtx(model, model->obj->Switches[4], 0);
+                    matrix_4x4_set_identity_and_position(model->obj->Switches[4]->Data, sp2FC);
+                    matrix_4x4_multiply_homogeneous_in_place(model->obj->Switches[2]->Data, sp2FC);
+                }
+                
+                if (model->obj->Switches[7] != NULL)
+                {
+                    sp2FC = modelFindNodeMtx(model, model->obj->Switches[7], 0);
+                    matrix_4x4_set_rotation_around_x(sp318->unkB4, sp2FC);
+                    matrix_4x4_set_position(model->obj->Switches[7]->Data, sp2FC);
+                    matrix_4x4_multiply_homogeneous_in_place(model->obj->Switches[2]->Data, sp2FC);
+                }
+            }
+            // mips2c line 2065
+            else if (obj->type == PROPDEF_COLLECTABLE)
+            {
+                for (sp2F8 = 1; sp2F8 < model->obj->numMatrices; sp2F8++)
+                {
+                    matrix_4x4_set_identity(&model->render_pos[sp2F8].pos);
+                }
+            }
+            // mips2c line 2081
+            else if (obj->type == PROPDEF_RACK)
+            {
+                matrix_4x4_set_identity_and_position(model->obj->Switches[0]->Data, &model->render_pos[1].pos);
+                matrix_4x4_multiply_homogeneous_in_place(&model->render_pos[0].pos, &model->render_pos[1].pos);
+
+                matrix_4x4_set_identity_and_position(model->obj->Switches[1]->Data, &model->render_pos[2].pos);
+                matrix_4x4_multiply_homogeneous_in_place(&model->render_pos[0].pos, &model->render_pos[2].pos);
+
+                matrix_4x4_set_identity_and_position(model->obj->Switches[2]->Data, &model->render_pos[3].pos);
+                matrix_4x4_multiply_homogeneous_in_place(&model->render_pos[0].pos, &model->render_pos[3].pos);
+
+                matrix_4x4_set_identity_and_position(model->obj->Switches[3]->Data, &model->render_pos[4].pos);
+                matrix_4x4_multiply_homogeneous_in_place(&model->render_pos[0].pos, &model->render_pos[4].pos);
+            }
+            // mips2c line 2099
+            else if (obj->type == PROPDEF_VEHICHLE)
+            {
+                struct VehichleRecord *temp_s1 = (struct VehichleRecord *)obj;
+                
+                var_f0_3 = 0.0f;
+                
+                temp_v1_7 = model->obj->Switches;
+                sp260 = temp_v1_7[1]->Data;
+                sp25C = temp_v1_7[2]->Data;
+                sp258 = temp_v1_7[3]->Data;
+                sp254 = temp_v1_7[4]->Data;
+                temp_v0_40 = temp_v1_7[5]->Data;
+                
+                if (sp678 != 0)
+                {
+                    var_f0_3 = (temp_s1->speed * g_GlobalTimerDelta * 6.2831855f) / ((temp_v0_40[4] - temp_v0_40[3]) * model->scale * 6.2831855f * 0.5f);
+                    
+                    temp_s1->wheelxrot += var_f0_3;
+                    
+                    while (temp_s1->wheelxrot >= 6.2831855f)
+                    {
+                        temp_s1->wheelxrot -= 6.2831855f;
+                    }
+                    
+                    while (temp_s1->wheelxrot < 0.0f)
+                    {
+                        temp_s1->wheelxrot += 6.2831855f;
+                    }
+                }
+                
+                temp_s1->wheelxrot += var_f0_3;
+                
+                while (temp_s1->wheelxrot >= 6.2831855f)
+                {
+                    temp_s1->wheelxrot -= 6.2831855f;
+                }
+                
+                while (temp_s1->wheelxrot < 0.0f)
+                {
+                    temp_s1->wheelxrot += 6.2831855f;
+                }
+                
+                matrix_4x4_set_rotation_around_x(temp_s1->wheelxrot, &sp2AC);
+                
+                if (temp_s1->speed > 0.0f)
+                {
+                    sp24C = temp_s1->turnrot60;
+                    sp250 = (sp258->f[2] - sp260->f[2]) * model->scale;
+                    if (sp24C < 0.0f)
+                    {
+                        sp24C = -sp24C;
+                    }
+                    
+                    sp248 = sinf(sp24C) * sp250;
+                    temp_s1->wheelyrot = atan2f(sp248, (cosf(sp24C) * sp250) - (sp250 - temp_s1->speed));
+                    
+                    if (temp_s1->wheelyrot < sp24C)
+                    {
+                        temp_s1->wheelyrot = sp24C;
+                    }
+                    
+                    if (temp_s1->turnrot60 > 0.0f)
+                    {
+                        temp_s1->wheelyrot = (6.2831855f - temp_s1->wheelyrot);
+                    }
+                }
+                
+                matrix_4x4_set_rotation_around_y(temp_s1->wheelyrot, &sp26C);
+                matrix_4x4_copy(&sp2AC, &model->render_pos[3].pos);
+                matrix_4x4_set_position(sp258, &model->render_pos[3].pos);
+                matrix_4x4_multiply_homogeneous_in_place(&model->render_pos[0].pos, &model->render_pos[3].pos);
+
+                matrix_4x4_copy(&sp2AC, &model->render_pos[4].pos);
+                matrix_4x4_set_position(sp254, &model->render_pos[4].pos);
+                matrix_4x4_multiply_homogeneous_in_place(&model->render_pos[0].pos, &model->render_pos[4].pos);
+                matrix_4x4_multiply_homogeneous_in_place(&sp26C, &sp2AC);
+
+                matrix_4x4_copy(&sp2AC, &model->render_pos[1].pos);
+                matrix_4x4_set_position(sp260, &model->render_pos[1].pos);
+                matrix_4x4_multiply_homogeneous_in_place(&model->render_pos[0].pos, &model->render_pos[1].pos);
+
+                matrix_4x4_copy(&sp2AC, &model->render_pos[2].pos);
+                matrix_4x4_set_position(sp25C, &model->render_pos[2].pos);
+                matrix_4x4_multiply_homogeneous_in_place(&model->render_pos[0].pos, &model->render_pos[2].pos);
+            }
+            // mips2c line 2187
+            else if (obj->type == PROPDEF_AIRCRAFT)
+            {
+                struct AircraftRecord *temp_s1 = (struct AircraftRecord*)obj;
+                
+                //temp_a1_19 = model->render_pos[1];
+                sp1FC = model->obj->Switches[2]->Data;
+                
+                if ((g_ClockTimer > 0) && (sp678 != 0))
+                {
+                    temp_s1->rotoryrot += temp_s1->rotaryspeed;
+                    
+                    while (temp_s1->rotoryrot >= 6.2831855f)
+                    {
+                        temp_s1->rotoryrot -= 6.2831855f;
+                    }
+                    
+                    while (temp_s1->rotoryrot < 0.0f)
+                    {
+                        temp_s1->rotoryrot += 6.2831855f;
+                    }
+                }
+                
+                if (temp_s1->model->anim != NULL)
+                {
+                    sp1B0 = D_80030B34;
+                    
+                    sp1B0.unk_matrix = camGetWorldToScreenMtxf();
+                    sp1B0.mtxlist = &model->render_pos[0].pos;
+                    subcalcmatrices(&sp1B0, temp_s1->model);
+                }
+                else
+                {
+                    matrix_4x4_copy(&model->render_pos[0].pos, &model->render_pos[1].pos);
+                }
+                
+                if (temp_s1->flags & 0x20000000)
+                {
+                    matrix_4x4_set_rotation_around_z(temp_s1->rotoryrot, &sp200);
+                }
+                else
+                {
+                    matrix_4x4_set_rotation_around_y(temp_s1->rotoryrot, &sp200);
+                }
+
+                matrix_4x4_copy(&sp200, &model->render_pos[2].pos);
+                matrix_4x4_set_position(sp1FC, &model->render_pos[2].pos);
+                matrix_4x4_multiply_homogeneous_in_place(&model->render_pos[1].pos, &model->render_pos[2].pos);
+
+                var_v1_7 = model->obj->Switches;
+                
+                if (var_v1_7[3] != NULL)
+                {
+                    temp_s0_21 = modelFindNodeMtx(model, var_v1_7[3], 0);
+                    matrix_4x4_set_rotation_around_x(temp_s1->rotoryrot, &sp200);
+                    matrix_4x4_copy(&sp200, temp_s0_21);
+                    matrix_4x4_set_position(var_v1_7[3]->Data, temp_s0_21);
+                    matrix_4x4_multiply_homogeneous_in_place(&model->render_pos[1].pos, temp_s0_21);
+                }
+
+                if (var_v1_7[4] != NULL)
+                {
+                    temp_s0_21 = modelFindNodeMtx(model, var_v1_7[4], 0);
+                    matrix_4x4_set_identity_and_position(var_v1_7[4]->Data, temp_s0_21);
+                    matrix_4x4_multiply_homogeneous_in_place(&model->render_pos[1].pos, temp_s0_21);
+                }
+            }
+            // mips2c line 2258
+            else
+            {
+                if (obj->type == PROPDEF_TANK)
+                {
+                    struct TankRecord *temp_s1 = (struct TankRecord*)obj;
+                    
+                    temp_v1_8 = model->obj->Switches;
+                    
+                    sp168 = temp_v1_8[1]->Data;
+                    sp164 = temp_v1_8[3]->Data;
+                    sp160 = temp_v1_8[4]->Data;
+                    sp15C = temp_v1_8[2]->Data;
+                    sp158 = temp_v1_8[6]->Data;
+                    
+                    sp154 = -temp_s1->turret_vertical_angle;
+                    if (sp154 < 0.0f)
+                    {
+                        sp154 += 6.2831855f;
+                    }
+                    
+                    var_f12_9 = -temp_s1->turret_orientation_angle;
+                    if (var_f12_9 < 0.0f)
+                    {
+                        var_f12_9 += 6.2831855f;
+                    }
+                    
+                    matrix_4x4_set_rotation_around_y(var_f12_9, &model->render_pos[1].pos);
+                    matrix_4x4_set_position(sp168, &model->render_pos[1].pos);
+                    matrix_4x4_multiply_homogeneous_in_place(&model->render_pos[0].pos, &model->render_pos[1].pos);
+                    
+                    matrix_4x4_set_rotation_around_x(sp154, &model->render_pos[3].pos);
+                    matrix_4x4_set_position(sp164, &model->render_pos[3].pos);
+                    matrix_4x4_multiply_homogeneous_in_place(sp6C, &model->render_pos[3].pos);
+                                        
+                    matrix_4x4_set_rotation_around_y(1.5707964f, &model->render_pos[4].pos);
+                    matrix_4x4_set_position(sp160, &model->render_pos[4].pos);
+                    matrix_4x4_multiply_homogeneous_in_place(&model->render_pos[3].pos, &model->render_pos[4].pos);
+                    
+                    matrix_4x4_set_identity_and_position(sp15C, &model->render_pos[2].pos);
+                    matrix_4x4_multiply_homogeneous_in_place(sp6C, &model->render_pos[2].pos);
+                    matrix_4x4_multiply_homogeneous(currentPlayerGetMatrix10D4(), &model->render_pos[1].pos, &sp16C);
+
+                    sub_GAME_7F03F540(sp158, &sp16C, &temp_s1->rect, temp_s1->unk80);
+                    
+                    if (model->obj->Switches[7] != NULL)
+                    {
+                        modelGetNodeRwData(model, model->obj->Switches[7])->Header.unk00 = (s16) temp_s1->is_firing_tank;
+                    }
+                    
+                    if (model->obj->Switches[8] != NULL)
+                    {
+                        modelGetNodeRwData(model, model->obj->Switches[8])->Header.unk00 = 0;
+                    }
+                }
+            }
+        }
+
+        modelUpdateRelationsQuick(model, model->obj->RootNode);
+        arg0->Unk18 = -model->render_pos[0].pos.m[3][2];        
+
+        chrobjWeaponTick(arg0);
+        
+        sp684 = arg0->child;
+
+        while (sp684 != NULL)
+        {
+            sub_GAME_7F0442DC(sp684);
+            sp684 = sp684->prev;
+        }
+    }
+    else
+    {
+        arg0->flags &= 0xFFFD;
+        
+        chrobjWeaponTick(arg0);
+        
+        sp684 = arg0->child;
+
+        while (sp684 != NULL)
+        {
+            sub_GAME_7F04424C(sp684);
+            sp684 = sp684->prev;
+        }
+    }
+
+    if (obj->runtime_bitflags & 0x100)
+    {
+        obj->runtime_bitflags &= ~0x100;
+
+        maybe_detonate_object(
+            obj,
+            (RANDOMGETNEXT_F32() * 4.0f) + 2.0f,
+            &arg0->pos,
+            ITEM_UNARMED,
+            (s32) ((u32) (obj->runtime_bitflags & RUNTIMEBITFLAG_OWNER) >> RUNTIMEBITSHIFT_OWNER));
+    }
+
+    if (sp678 != 0)
+    {
+        if (obj->type == PROPDEF_DOOR)
+        {
+            sub_GAME_7F053A3C((struct DoorRecord *)arg0->obj);
+        }
+        // mimps2c line 2355
+        else if ((obj->type == PROPDEF_AUTOGUN) && (lvlGetControlsLockedFlag() == 0))
+        {
+            struct AutogunRecord *autogun = (struct AutogunRecord*)arg0->obj;
+            // autogun is temp_s0_24
+
+            sp13C = 0;
+            sp138 = 0;
+
+            if ((autogun->is_active != 0) && !(obj->flags & 0x10000000))
+            {
+                autogun->unkAC = (autogun->unkAC + 1) & 1;
+                
+                sp13C = autogun->unkAC == 0;
+                
+                if (model->obj->Switches[5] != 0)
+                {
+                    sp138 = autogun->unkAC == 1;
+                }
+                
+                if (autogun->unkC0 < g_GlobalTimer)
+                {
+                    if ((autogun->unkC4 != NULL) && (sndGetPlayingState(autogun->unkC4) != 0))
+                    {
+                        sndDeactivate(autogun->unkC4);
+                    }
+                    
+                    if ((autogun->unkC8 != NULL) && (sndGetPlayingState(autogun->unkC8) != 0))
+                    {
+                        sndDeactivate(autogun->unkC8);
+                    }
+                    
+                    if (autogun->unkC4 == NULL)
+                    {
+                        sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, GUN_B9_CANNON_SHORT_SFX, autogun->unkC4);
+                        chrobjSndCreatePostEventDefault(autogun->unkC4, &arg0->pos);
+                    }
+                    else if (autogun->unkC8 == NULL)
+                    {
+                        sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, GUN_B9_CANNON_SHORT_SFX, autogun->unkC8);
+                        chrobjSndCreatePostEventDefault(autogun->unkC8, &arg0->pos);
+                    }
+                    
+                    autogun->unkC0 = (s32) (g_GlobalTimer + 2);
+                }
+
+                // mmips2c line 2396
+                if ((sp13C != 0) || (sp138 != 0))
+                {
+                    sp11C = 1;
+                    sp10C = NULL;
+                    sp108 = arg0->stan;
+                    sp104 = (autogun->unkAC & 3) == 0;
+                    sp100 = get_curplayer_positiondata();
+                    var_a0_6 = 5;
+                    temp_v1_10 = model->obj->Switches;
+                    
+                    if ((model->obj->Switches[7] != 0) && !(autogun->unkAC & 7))
+                    {
+                        var_a0_6 = 7;
+                    }
+                    
+                    if ((arg0->flags & 2) && temp_v1_10[var_a0_6] != NULL)
+                    {
+                        temp_s2_7 = modelFindNodeMtx(model, temp_v1_10[var_a0_6], 0);
+                        temp_v1_11 = model->obj->Switches[var_a0_6]->Data;
+                        sp12C.f[0] = temp_v1_11->f[0];
+                        sp12C.f[1] = temp_v1_11->f[1];
+                        sp12C.f[2] = temp_v1_11->f[2];
+                        matrix_4x4_multiply_homogeneous(currentPlayerGetMatrix10D4(), temp_s2_7, &spB8);
+                        mtx4TransformVecInPlace(&spB8, &sp12C);
+                        if (walkTilesBetweenPoints_NoCallback(&sp108, arg0->pos.f[0], arg0->pos.f[2], sp12C.f[0], sp12C.f[2]) == 0)
+                        {
+                            sp12C.f[0] = arg0->pos.f[0];
+                            sp12C.f[1] = arg0->pos.f[1];
+                            sp12C.f[2] = arg0->pos.f[2];
+                        }
+                    }
+                    else
+                    {
+                        sp12C.f[0] = arg0->pos.f[0];
+                        sp12C.f[1] = arg0->pos.f[1];
+                        sp12C.f[2] = arg0->pos.f[2];
+                    }
+                    
+                    sp120.f[0] = cosf(autogun->unk9C) * sinf(autogun->unk90);
+                    sp120.f[1] = sinf(autogun->unk9C);
+                    sp120.f[2] = cosf(autogun->unk9C) * cosf(autogun->unk90);
+
+                    sp110.f[0] = (sp120.f[0] * 65536.0f) + sp12C.f[0];
+                    sp110.f[1] = (sp120.f[1] * 65536.0f) + sp12C.f[1];
+                    sp110.f[2] = (sp120.f[2] * 65536.0f) + sp12C.f[2];
+                    
+                    sub_GAME_7F0B1CC4();
+
+                    // mmips2c line 2441
+                    if (sub_GAME_7F0B0E24(&sp108, sp12C.f[0], sp12C.f[2], sp110.f[0], sp110.f[2], 2, 100.0f, 100.0f, 0.0f, 1.0f) == 0)
+                    {
+                        chrlvStanLineDirIntersection(&sp12C, &sp120, &sp110);
+                        sp10C = sp108;
+                        sp110.f[0] -= 26.0f * sp120.f[0];
+                        sp110.f[1] -= 26.0f * sp120.f[1];
+                        sp110.f[2] -= 26.0f * sp120.f[2];
+                    }
+
+                    if (g_GlobalTimer == (s32) autogun->unkBC)
+                    {
+                        temp_fc3d_a.f[0] = sp100->pos.f[0] - sp12C.f[0];
+                        temp_fc3d_a.f[1] = sp100->pos.f[1] - sp12C.f[1];
+                        temp_fc3d_a.f[2] = sp100->pos.f[2] - sp12C.f[2];
+                        
+                        temp_f20_4 = (temp_fc3d_a.f[0] * temp_fc3d_a.f[0]) + (temp_fc3d_a.f[1] * temp_fc3d_a.f[1]) + (temp_fc3d_a.f[2] * temp_fc3d_a.f[2]);
+                        
+                        temp_fc3d_b.f[0] = sp110.f[0] - sp12C.f[0];
+                        temp_fc3d_b.f[1] = sp110.f[1] - sp12C.f[1];
+                        temp_fc3d_b.f[2] = sp110.f[2] - sp12C.f[2];
+                        
+                        if ((temp_f20_4 <= ((temp_fc3d_b.f[0] * temp_fc3d_b.f[0]) + (temp_fc3d_b.f[1] * temp_fc3d_b.f[1]) + (temp_fc3d_b.f[2] * temp_fc3d_b.f[2]))) 
+                            && (bondviewGetIfCurrentPlayerDamageShowTime() == 0))
+                        {
+                            temp_f0_35 = sqrtf(temp_f20_4);
+                            var_f2_7 = 0.16f * g_GlobalTimerDelta * F_80030B1C;
+                            
+                            if (temp_f0_35 > 200.0f)
+                            {
+                                var_f2_7 *= 200.0f / temp_f0_35;
+                            }
+                            
+                            autogun->unkD4 += var_f2_7;
+                            
+                            if (autogun->unkD4 >= 1.0f)
+                            {
+                                bondviewCallRecordDamageKills(bondwalkItemGetDestructionAmount(ITEM_FNP90) * 0.125f * F_80030B20, autogun->unk90, -1, 1);
+                                
+                                autogun->unkD4 = 0.0f;
+                                
+                                if (bondviewGetIfCurrentPlayerDamageShowTime() != 0)
+                                {
+                                    sp11C = 0;
+                                }
+                            }
+                        }
+                    }
+
+                    // mips2c line 2479
+                    if (sp11C != 0)
+                    {
+                        if (sp10C != NULL)
+                        {
+                            sub_GAME_7F0A3E1C(&sp110, 1, 26.0f, (s16) sp10C->room);
+                        }
+                        
+                        recall_joy2_hits_edit_flag(ITEM_FNP90, &sp110, -1);
+                    }
+                    else
+                    {
+                        sp110.f[0] = sp100->pos.f[0];
+                        sp110.f[1] = sp100->pos.f[1];
+                        sp110.f[2] = sp100->pos.f[2];
+
+                        recall_joy2_hits_edit_detail_edit_flag(ITEM_FNP90, sp100, -1);
+                    }
+
+                    // mips2c line 2494
+                    if (sp104 != 0)
+                    {
+                        beam = autogun->beam;
+                        
+                        beam->from.f[0] = sp12C.f[0];
+                        beam->from.f[1] = sp12C.f[1];
+                        beam->from.f[2] = sp12C.f[2];
+                        
+                        beam->dir.f[0] = sp110.f[0] - beam->from.f[0];
+                        beam->dir.f[1] = sp110.f[1] - beam->from.f[1];
+                        beam->dir.f[2] = sp110.f[2] - beam->from.f[2];
+                        
+                        sp94 = sqrtf((beam->dir.f[2] * beam->dir.f[2]) + ((beam->from.f[0] * beam->from.f[0]) + (beam->from.f[1] * beam->from.f[1])));
+
+                        temp_f2_23 = 1.0f / sp94;
+                        
+                        beam->dir.f[0] = (f32) (beam->dir.f[0] * temp_f2_23);
+                        beam->dir.f[1] = (f32) (beam->dir.f[1] * temp_f2_23);
+                        beam->dir.f[2] = (f32) (beam->dir.f[2] * temp_f2_23);
+                        
+                        if (sp94 > 10000.0f)
+                        {
+                            sp94 = 10000.0f;
+                        }
+                        
+                        beam->age = 0;
+                        beam->weaponnum = ITEM_FNP90;
+                        beam->maxdist = sp94;
+                        
+                        if (sp94 < 500.0f)
+                        {
+                            sp94 = 500.0f;
+                        }
+
+                        /* At some point the developers where exploring a laser auto turret */
+                        if (beam->weaponnum == ITEM_LASER)
+                        {
+                            beam->speed = 0.25f * sp94;
+                            beam->mindist = 0.6f * sp94;
+                            
+                            if (beam->mindist > 3000.0f)
+                            {
+                                beam->mindist = 3000.0f;
+                            }
+                            
+                            var_f4 = (-0.1f - (RANDOMGETNEXT_F32() * 0.3f)) * sp94;
+                        }
+                        else
+                        {
+                            beam->speed = 0.2f * sp94;
+                            beam->mindist = 0.2f * sp94;
+                            
+                            if (beam->mindist > 3000.0f)
+                            {
+                                beam->mindist = 3000.0f;
+                            }
+                            
+                            var_f4 = ((2.0f * RANDOMGETNEXT_F32()) - 1.0f) * beam->speed;
+                        }
+                        
+                        beam->dist = var_f4;
+                    }
+                }
+            }
+
+            // mmips2c line 2553
+            if (model->obj->Switches[5] != NULL)
+            {
+                modelGetNodeRwData(model, model->obj->Switches[5])->Header.unk00 = (s16) sp13C;
+            }
+
+            if (model->obj->Switches[7] != NULL)
+            {
+                modelGetNodeRwData(model, model->obj->Switches[7])->Header.unk00 = (s16) sp138;
+            }
+        }
+
+        objDropRecursively(arg0);
+    }
+
+    if (sp680 == 5)
+    {
+        arg0->stan = NULL;
+    }
+    
+    return sp680;
 }
 #else
 
@@ -25561,11 +28013,11 @@ Gfx *chrobjRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
 
         if (obj->type == PROPDEF_TINTED_GLASS)
         {
-            jlist.unk34 = ((struct TintedGlassRecord*)obj)->unk88 << 8;
+            jlist.unk34 = ((struct TintedGlassRecord*)obj)->calculatedopacity << 8;
         }
         else if ((obj->type == PROPDEF_DOOR) && ((((struct DoorRecord*)obj)->doorFlags & 2) != 0))
         {
-            jlist.unk34 = ((struct DoorRecord*)obj)->unkbe << 8;
+            jlist.unk34 = ((struct DoorRecord*)obj)->calculatedopacity << 8;
         }
         else
         {

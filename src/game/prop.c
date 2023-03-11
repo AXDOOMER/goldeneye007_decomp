@@ -1998,7 +1998,7 @@ void setupAutogun(s32 stageID, AutogunRecord *autogun, s32 cmdindex)
 #endif
 
     beam = mempAllocBytesInBank(0x30U, 4U);
-    autogun->unkCC = beam;
+    autogun->beam = beam;
     *beam = -1;
 
     autogun->is_active = FALSE;
