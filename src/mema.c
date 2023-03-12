@@ -411,6 +411,8 @@ glabel memaAlloc
 // amount. If successful, return the same address, otherwise 0.
 
 // Only regalloc problems left. Called memaGrow in PD
+
+// https://decomp.me/scratch/tGfms 93.83%
 s32 memaGrow(s32 addr, u32 amount)
 {
     memaspace *curr = &g_MemoryAllocations[2];
@@ -635,60 +637,48 @@ s32 memaGetLongestFree(void)
 	return 0;
 }
 
-// memaRealloc -> memaRealloc
-#ifdef NONMATCHING
-// Resize an existing memaspace. Either by shrinking the old one, or
-// by registering a new memaspace containing the remaining bytes.
-//
-// https://decomp.me/scratch/RoPAF 99.62%
-s32 memaRealloc(s32 addr, u32 newsize, u32 oldsize) {
-    if (newsize < oldsize) {
-        if (memaGrow((addr + newsize), (oldsize - newsize)) == 0) {
-            return 0;
-        } else {
+/**
+ * Resize an existing memaspace. Either by shrinking the old one, or
+ * by registering a new memaspace containing the remaining bytes.
+ * 
+ * US address 7000A3DC.
+*/
+s32 memaRealloc(s32 addr, u32 oldsize, u32 newsize)
+{
+    if ((newsize > oldsize))
+    {
+        if (memaGrow(addr + oldsize, newsize - oldsize) == 0)
+        {
+			return 0;
+		}
+        else
+        {
             return 1;
         }
+	}
+
+    /**
+     * Hack: the following few `if` statements are probably not what was originally
+     * here, but it shifts the temp registers enough to generate a match.
+     * https://decomp.me/scratch/RoPAF 99.62%
+    */
+
+    if (addr + 1) {}
+    else if (addr + 2) {}
+    else if (addr + 3) {}
+
+    if (oldsize + 1) {}
+    else if (oldsize + 2) {}
+    else if (oldsize + 3) {}
+
+    if (newsize + 1) {}
+    else if (newsize + 2) {}
+    else if (newsize + 3) {}
+
+    if ((oldsize > newsize))
+    {
+        memaFree(addr + newsize, oldsize - newsize);
     }
-    else {
-        if (newsize > oldsize) {
-            memaFree((addr + oldsize), (newsize - oldsize));
-        }
-        return 1;
-    }
+    
+	return 1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel memaRealloc
-/* 00AFDC 7000A3DC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 00AFE0 7000A3E0 00A6082B */  sltu  $at, $a1, $a2
-/* 00AFE4 7000A3E4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00AFE8 7000A3E8 AFA40018 */  sw    $a0, 0x18($sp)
-/* 00AFEC 7000A3EC 1020000A */  beqz  $at, .L7000A418
-/* 00AFF0 7000A3F0 00A03825 */   move  $a3, $a1
-/* 00AFF4 7000A3F4 00852021 */  addu  $a0, $a0, $a1
-/* 00AFF8 7000A3F8 0C0027EA */  jal   memaGrow
-/* 00AFFC 7000A3FC 00C52823 */   subu  $a1, $a2, $a1
-/* 00B000 7000A400 14400003 */  bnez  $v0, .L7000A410
-/* 00B004 7000A404 00000000 */   nop   
-/* 00B008 7000A408 1000000A */  b     .L7000A434
-/* 00B00C 7000A40C 00001025 */   move  $v0, $zero
-.L7000A410:
-/* 00B010 7000A410 10000008 */  b     .L7000A434
-/* 00B014 7000A414 24020001 */   li    $v0, 1
-.L7000A418:
-/* 00B018 7000A418 00C7082B */  sltu  $at, $a2, $a3
-/* 00B01C 7000A41C 10200004 */  beqz  $at, .L7000A430
-/* 00B020 7000A420 8FA90018 */   lw    $t1, 0x18($sp)
-/* 00B024 7000A424 01262021 */  addu  $a0, $t1, $a2
-/* 00B028 7000A428 0C002808 */  jal   memaFree
-/* 00B02C 7000A42C 00E62823 */   subu  $a1, $a3, $a2
-.L7000A430:
-/* 00B030 7000A430 24020001 */  li    $v0, 1
-.L7000A434:
-/* 00B034 7000A434 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 00B038 7000A438 27BD0018 */  addiu $sp, $sp, 0x18
-/* 00B03C 7000A43C 03E00008 */  jr    $ra
-/* 00B040 7000A440 00000000 */   nop   
-)
-#endif

@@ -1961,7 +1961,7 @@ Gfx* lvlRender(Gfx* DL)
             sub_GAME_7F0B4884();
             determing_type_of_object_and_detection();
             chraiUpdateOnscreenPropCount();
-            sub_GAME_7F03D78C();
+            chrpropUpdateAutoaimTarget();
             chraiCheckUseHeldItems();
 
             if (bond_pressed_reload_activate() && bond_interact_object())
@@ -2095,8 +2095,8 @@ void lvlSetMultipliersForDifficulty(void)
 
         F_80030B14 = 2.0f;
         F_80030B18 = 2.0f;
-        F_80030B1C = (0.5f * damageMultiplier);
-        F_80030B20 = (0.5f * damageMultiplier);
+        g_AutogunPendingDamageTick = (0.5f * damageMultiplier);
+        g_AutogunDamageScalar = (0.5f * damageMultiplier);
         F_80030B24 = 2.0f;
         g_AiAccuracyModifier = DEFAULT_AGENT_AI_ACCURACY_MODIFIER;
         g_AiDamageModifier = (DEFAULT_AGENT_AI_DAMAGE_MODIFIER * damageMultiplier);
@@ -2110,8 +2110,8 @@ void lvlSetMultipliersForDifficulty(void)
     {
         F_80030B14 = 1.0f;
         F_80030B18 = 1.0f;
-        F_80030B1C = 0.75f;
-        F_80030B20 = 0.75f;
+        g_AutogunPendingDamageTick = 0.75f;
+        g_AutogunDamageScalar = 0.75f;
         F_80030B24 = 1.0f;
         g_AiAccuracyModifier = DEFAULT_SECRET_AGENT_AI_ACCURACY_MODIFIER;
         g_AiDamageModifier = DEFAULT_SECRET_AGENT_AI_DAMAGE_MODIFIER;
@@ -2139,8 +2139,8 @@ void lvlSetMultipliersForDifficulty(void)
     {
         F_80030B14 = 1.0f;
         F_80030B18 = 1.0f;
-        F_80030B1C = 1.0f;
-        F_80030B20 = 1.0f;
+        g_AutogunPendingDamageTick = 1.0f;
+        g_AutogunDamageScalar = 1.0f;
         F_80030B24 = 1.0f;
         g_AiAccuracyModifier = DEFAULT_00_AGENT_AI_ACCURACY_MODIFIER;
         g_AiDamageModifier = DEFAULT_00_AGENT_AI_DAMAGE_MODIFIER;
@@ -2168,8 +2168,8 @@ void lvlSetMultipliersForDifficulty(void)
     {
         F_80030B14 = 1.0f;
         F_80030B18 = 1.0f;
-        F_80030B1C = 1.0f;
-        F_80030B20 = 1.0f;
+        g_AutogunPendingDamageTick = 1.0f;
+        g_AutogunDamageScalar = 1.0f;
         F_80030B24 = 1.0f;
         g_AiAccuracyModifier = DEFAULT_007_AI_ACCURACY_MODIFIER;
         g_AiDamageModifier = DEFAULT_007_AI_DAMAGE_MODIFIER;
@@ -5342,14 +5342,17 @@ glabel lvlManageMpGame
 
 
 /**
- * Multiplayer related. Has some debug code which passes in controller input.
+ * Assumes a debug mode is present, and handles debug edit intro, debug stan edit, debug bond "view."
+ * By default, the DEB_BOND_VIEW path is chosen without debug info.
+ * This updates the player viewport(s), and handles player movement.
  * 
+ * Multiplayer:
  * Updates distance_traveled and possibly (depending on scenario) have_token_or_goldengun.
  * 
  * US Address 0x7F0BF800.
  * EU address 7F0BEC44.
  */
-void lvlUpdateMpPlayerData(void)
+void lvlViewMoveTick(void)
 {
     s8 local_player_number;
     s32 padding;

@@ -847,9 +847,9 @@ PathRecord *pathFindById(s32 ID)
 extern void chrpropDelist(PropRecord *prop);
 extern PadRecord * dword_CODE_bss_800799F8;
 extern CutsceneRecord *gBondViewCutscene;
-extern s32 dword_CODE_bss_80079A18;
+extern enum CAMERAMODE dword_CODE_bss_80079A18;
 extern s32 dword_CODE_bss_80079A1C;
-extern vec3d flt_CODE_bss_80079990;
+extern vec3d g_ForceBondMoveOffset;
 //CODE.bss:80079A00
 extern f32 flt_CODE_bss_80079A00;
 //CODE.bss:80079A04
@@ -4073,7 +4073,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     }
                     if (!(ai->val & PLAYERFLAG_LOCKCONTROLS))
                     {
-                        sub_GAME_7F08A944(PLAYERFLAG_NOCONTROL);
+                        bondviewSetUpperTextDisplayFlag(PLAYERFLAG_NOCONTROL);
                     }
                     if (!(ai->val & PLAYERFLAG_NOTIMER))
                     {
@@ -4091,7 +4091,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     gunSetSightVisible(GUNSIGHTREASON_NOCONTROL, TRUE);
                     gunSetGunAmmoVisible(GUNAMMOREASON_NOCONTROL, TRUE);
                     hudmsgsSetOn(PLAYERFLAG_NOCONTROL);
-                    sub_GAME_7F08A928(2);
+                    bondviewClearUpperTextDisplayFlag(2);
                     countdownTimerSetVisible(16, TRUE);
                     D_800364B0 = TRUE;
                     Offset += AI_BondEnableControl_LENGTH;
@@ -4305,9 +4305,9 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     g_Vars.currentplayer->bondforcespeed.z = (s8)ai->val[2];
                     */
                     AIRecord *ai            = AiListp + Offset;
-                    flt_CODE_bss_80079990.x = (s8)ai->val[0];
-                    flt_CODE_bss_80079990.y = 0;
-                    flt_CODE_bss_80079990.z = (s8)ai->val[1];
+                    g_ForceBondMoveOffset.x = (s8)ai->val[0];
+                    g_ForceBondMoveOffset.y = 0;
+                    g_ForceBondMoveOffset.z = (s8)ai->val[1];
                     Offset += AI_BondSetLockedVelocity_LENGTH;
                     break;
                 }
@@ -4549,15 +4549,15 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
 
                         if (obj->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)
                         {
-                            obj->unk6C->flags |= 0x601;
+                            obj->projectile->flags |= 0x601;
                             projectileSetSticky(obj->prop);
-                            matrix_4x4_set_identity(&obj->unk6C->m);
-                            obj->unk6C->pos.x = 0;
-                            obj->unk6C->pos.y = 0.016666666f; //step height?
-                            obj->unk6C->pos.z = 0;
-                            obj->unk6C->vec.x = 0;
-                            obj->unk6C->vec.y = 0.29166666f; //direction to move?
-                            obj->unk6C->vec.z = 0;
+                            matrix_4x4_set_identity(&obj->projectile->mtx);
+                            obj->projectile->speed.x = 0;
+                            obj->projectile->speed.y = 0.016666666f; //step height?
+                            obj->projectile->speed.z = 0;
+                            obj->projectile->unk10.x = 0;
+                            obj->projectile->unk10.y = 0.29166666f; //direction to move?
+                            obj->projectile->unk10.z = 0;
                         }
                     }
                     Offset += AI_ObjectRocketLaunch_LENGTH;

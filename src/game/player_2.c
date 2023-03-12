@@ -14,19 +14,19 @@
 #define DEFAULT_HEADDAMP        0.9166f
 #define DEFAULT_HEADLOOKSUM_VAL 11.990406f
 #define DEFAULT_VIEWPORT_V_VAL  0x220
-#define DEFAULT_C_SCREENHEIGHT  272.0f
+#define DEFAULT_C_SCREENHEIGHT  (f32)SCREEN_HEIGHT
 #define DEFAULT_C_HALFHEIGHT    136.0f
-#define DEFAULT_SCREENYMAXF     272.0f
-#define DEFAULT_ASPECT          1.1764706f
+#define DEFAULT_SCREENYMAXF     (f32)SCREEN_HEIGHT
+#define DEFAULT_ASPECT          ASPECT_RATIO
 #elif defined(VERSION_US) || defined(VERSION_JP)
 #define DEFAULT_FIELD_3B8_Z     9.999998f
 #define DEFAULT_HEADDAMP        0.93f
 #define DEFAULT_HEADLOOKSUM_VAL 14.285716f
 #define DEFAULT_VIEWPORT_V_VAL  0x1E0
-#define DEFAULT_C_SCREENHEIGHT  240.0f
+#define DEFAULT_C_SCREENHEIGHT  (f32)SCREEN_HEIGHT
 #define DEFAULT_C_HALFHEIGHT    120.0f
-#define DEFAULT_SCREENYMAXF     240.0f
-#define DEFAULT_ASPECT          1.3333334f
+#define DEFAULT_SCREENYMAXF     (f32)SCREEN_HEIGHT
+#define DEFAULT_ASPECT          ASPECT_RATIO
 #endif
 
 //newfile per EU
@@ -144,7 +144,7 @@ void initBONDdataforPlayer(s32 player_num)
     g_playerPointers[player_num]->field_84 = 0.0f;
     g_playerPointers[player_num]->field_88 = 0.0f;
     g_playerPointers[player_num]->field_8C = 0;
-    g_playerPointers[player_num]->field_90 = 0.0f;
+    g_playerPointers[player_num]->vertical_bounce_adjust = 0.0f;
     g_playerPointers[player_num]->field_94 = 0;
     g_playerPointers[player_num]->field_98 = 0.0f;
     g_playerPointers[player_num]->swaytarget = 0.0f;
@@ -178,17 +178,20 @@ void initBONDdataforPlayer(s32 player_num)
     g_playerPointers[player_num]->insightaimmode = 0;
     g_playerPointers[player_num]->autoyaimenabled = 1;
     g_playerPointers[player_num]->autoaimy = 0.0f;
-    g_playerPointers[player_num]->autoyaimtime = 0;
+    g_playerPointers[player_num]->autoaim_target_y = NULL;
     g_playerPointers[player_num]->autoyaimtime60 = -1;
     g_playerPointers[player_num]->autoxaimenabled = 1;
     g_playerPointers[player_num]->autoaimx = 0.0f;
-    g_playerPointers[player_num]->autoxaimtime = 0;
+    g_playerPointers[player_num]->autoaim_target_x = NULL;
     g_playerPointers[player_num]->autoxaimtime60 = -1;
     g_playerPointers[player_num]->vv_theta = 0.0f;
     g_playerPointers[player_num]->speedtheta = 0.0f;
     g_playerPointers[player_num]->vv_costheta = 1.0f;
     g_playerPointers[player_num]->vv_sintheta = 0.0f;
     g_playerPointers[player_num]->vv_verta = -4.0f;
+    // @bug
+    // -229.1831 degrees = -4 radians
+    // This doesn't matter, because bondviewApplyVertaTheta overwrites vv_verta360 with the value from vv_verta
     g_playerPointers[player_num]->vv_verta360 = -229.1831f;
     g_playerPointers[player_num]->speedverta = 0.0f;
     g_playerPointers[player_num]->vv_cosverta = 1.0f;
@@ -267,44 +270,44 @@ void initBONDdataforPlayer(s32 player_num)
     g_playerPointers[player_num]->headwalkingtime60 = 0;
     g_playerPointers[player_num]->headamplitude = 1.0f;
     g_playerPointers[player_num]->sideamplitude = 1.0f;
-    g_playerPointers[player_num]->headpos[0] = 0.0f;
-    g_playerPointers[player_num]->headpos[1] = 0.0f;
-    g_playerPointers[player_num]->headpos[2] = 0.0f;
-    g_playerPointers[player_num]->headlook[0] = 0.0f;
-    g_playerPointers[player_num]->headlook[1] = 0.0f;
-    g_playerPointers[player_num]->headlook[2] = 1.0f;
-    g_playerPointers[player_num]->headup[0] = 0.0f;
-    g_playerPointers[player_num]->headup[1] = 1.0f;
-    g_playerPointers[player_num]->headup[2] = 0.0f;
-    g_playerPointers[player_num]->headpossum[0] = 0.0f;
-    g_playerPointers[player_num]->headpossum[1] = 0.0f;
-    g_playerPointers[player_num]->headpossum[2] = 0.0f;
-    g_playerPointers[player_num]->headlooksum[0] = 0.0f;
-    g_playerPointers[player_num]->headlooksum[1] = 0.0f;
-    g_playerPointers[player_num]->headlooksum[2] = DEFAULT_HEADLOOKSUM_VAL;
-    g_playerPointers[player_num]->headupsum[0] = 0.0f;
-    g_playerPointers[player_num]->headupsum[1] = DEFAULT_HEADLOOKSUM_VAL;
-    g_playerPointers[player_num]->headupsum[2] = 0.0f;
-    g_playerPointers[player_num]->headbodyoffset[0] = 0.0f;
-    g_playerPointers[player_num]->headbodyoffset[1] = 0.0f;
-    g_playerPointers[player_num]->headbodyoffset[2] = 0.0f;
+    g_playerPointers[player_num]->headpos.f[0] = 0.0f;
+    g_playerPointers[player_num]->headpos.f[1] = 0.0f;
+    g_playerPointers[player_num]->headpos.f[2] = 0.0f;
+    g_playerPointers[player_num]->headlook.f[0] = 0.0f;
+    g_playerPointers[player_num]->headlook.f[1] = 0.0f;
+    g_playerPointers[player_num]->headlook.f[2] = 1.0f;
+    g_playerPointers[player_num]->headup.f[0] = 0.0f;
+    g_playerPointers[player_num]->headup.f[1] = 1.0f;
+    g_playerPointers[player_num]->headup.f[2] = 0.0f;
+    g_playerPointers[player_num]->headpossum.f[0] = 0.0f;
+    g_playerPointers[player_num]->headpossum.f[1] = 0.0f;
+    g_playerPointers[player_num]->headpossum.f[2] = 0.0f;
+    g_playerPointers[player_num]->headlooksum.f[0] = 0.0f;
+    g_playerPointers[player_num]->headlooksum.f[1] = 0.0f;
+    g_playerPointers[player_num]->headlooksum.f[2] = DEFAULT_HEADLOOKSUM_VAL;
+    g_playerPointers[player_num]->headupsum.f[0] = 0.0f;
+    g_playerPointers[player_num]->headupsum.f[1] = DEFAULT_HEADLOOKSUM_VAL;
+    g_playerPointers[player_num]->headupsum.f[2] = 0.0f;
+    g_playerPointers[player_num]->headbodyoffset.f[0] = 0.0f;
+    g_playerPointers[player_num]->headbodyoffset.f[1] = 0.0f;
+    g_playerPointers[player_num]->headbodyoffset.f[2] = 0.0f;
     g_playerPointers[player_num]->standheight = 0.0f;
     g_playerPointers[player_num]->standbodyoffset.x = 0.0f;
     g_playerPointers[player_num]->standbodyoffset.y = 0.0f;
     g_playerPointers[player_num]->standbodyoffset.z = 0.0f;
     g_playerPointers[player_num]->standfrac = 0.0f;
-    g_playerPointers[player_num]->standlook[0][0] = 0.0f;
-    g_playerPointers[player_num]->standlook[0][1] = 0.0f;
-    g_playerPointers[player_num]->standlook[0][2] = 1.0f;
-    g_playerPointers[player_num]->standlook[1][0] = 0.0f;
-    g_playerPointers[player_num]->standlook[1][1] = 0.0f;
-    g_playerPointers[player_num]->standlook[1][2] = 1.0f;
-    g_playerPointers[player_num]->standup[0][0] = 0.0f;
-    g_playerPointers[player_num]->standup[0][1] = 1.0f;
-    g_playerPointers[player_num]->standup[0][2] = 0.0f;
-    g_playerPointers[player_num]->standup[1][0] = 0.0f;
-    g_playerPointers[player_num]->standup[1][1] = 1.0f;
-    g_playerPointers[player_num]->standup[1][2] = 0.0f;
+    g_playerPointers[player_num]->standlook[0].f[0] = 0.0f;
+    g_playerPointers[player_num]->standlook[0].f[1] = 0.0f;
+    g_playerPointers[player_num]->standlook[0].f[2] = 1.0f;
+    g_playerPointers[player_num]->standlook[1].f[0] = 0.0f;
+    g_playerPointers[player_num]->standlook[1].f[1] = 0.0f;
+    g_playerPointers[player_num]->standlook[1].f[2] = 1.0f;
+    g_playerPointers[player_num]->standup[0].f[0] = 0.0f;
+    g_playerPointers[player_num]->standup[0].f[1] = 1.0f;
+    g_playerPointers[player_num]->standup[0].f[2] = 0.0f;
+    g_playerPointers[player_num]->standup[1].f[0] = 0.0f;
+    g_playerPointers[player_num]->standup[1].f[1] = 1.0f;
+    g_playerPointers[player_num]->standup[1].f[2] = 0.0f;
     g_playerPointers[player_num]->standcnt = 0;
 
     for (i = 0; i < 2; i++)
@@ -508,7 +511,7 @@ void set_cur_player_viewport_size(u32 ulx, u32 uly) {
 }
 
 void set_cur_player_fovy(f32 fovy) {
-            #ifdef XBLADEBUG
+    #ifdef XBLADEBUG
         if (g_CurrentPlayer == NULL) {
         assertPrint_8291E690(".\\ported\\player.cpp",0x26a,"Assertion failed: g_CurrentPlayer");
     }

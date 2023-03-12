@@ -2901,7 +2901,7 @@ void modelUpdateReorderRelations(Model *model, ModelNode *node)
     sp2c.y = rodata->BSP.Point.f[1];
     sp2c.z = rodata->BSP.Point.f[2];
 
-    mtx4TransformVecInPlace(mtx, sp2c.f);
+    mtx4TransformVecInPlace(mtx, &sp2c);
 
     tmp = sp38.f[0] * sp2c.f[0] + sp38.f[1] * sp2c.f[1] + sp38.f[2] * sp2c.f[2];
 

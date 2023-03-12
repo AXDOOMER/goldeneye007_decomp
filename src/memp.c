@@ -229,6 +229,7 @@ glabel mempAllocBytesInBank
 
 #ifdef NONMATCHING
 // Mostly regalloc
+// https://decomp.me/scratch/IkY1t 98.98%
 s32 mempAddEntryOfSizeToBank(u8* ptrdata, u32 newsize, u8 bank)
 {
     s32 oldsize;

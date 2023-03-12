@@ -43,9 +43,15 @@ struct collision434 {
     coord3d collision_position;
 
     /**
+     * This affects Bond's movement, but not the viewport.
+     * This does not affect boost direction.
+     * 
+     * f[0]: forward component (sin theta) in radians 
+     * f[1]: zero
+     * f[2]: sideways component (cos theta) in radians.
      * Offset 0x10.
      */
-    struct coord3d field_10;
+    struct coord3d theta_transform;
 
     /**
      * Some kind of alternative to pos3 (in player struct).
@@ -398,9 +404,12 @@ struct player
 
   /**
    * Collision / clipping related.
+   * When Bond falls off a ladder or similar, will "overshoot" vertical default.
+   * Current offset is stored in this field.
+   * 
    * Offset 0x0090.
    */
-  /* 0x0090 */ f32 field_90;
+  /* 0x0090 */ f32 vertical_bounce_adjust;
   /* 0x0094 */ s32 field_94;
   /* 0x0098 */ f32 field_98;
   
@@ -438,11 +447,29 @@ struct player
   /* 0x00f0 */ f32 apparentarmour;
 
 #if defined(VERSION_JP) || defined (VERSION_EU)
-/* 0x00f4 */ f32 damageshowtime;
-/* 0x00f8 */ f32 healthshowtime;
+
+    /*
+    * When a non-negative integer:
+    * - hide ammo and aim sight
+    * - hide any active speech text
+    * - disable shoot and B press interact
+    * Otherwise,
+    * - undo the above.
+    * 0x00f4
+    **/
+    f32 damageshowtime;
+    
+    /**
+     * When a non-negative integer:
+     * - Show health and body armor overlay if Bond isn't dead.
+     * Otherwise,
+     * - undo the above.
+     * 0x00f8
+     **/
+    f32 healthshowtime;
 #else
-  /* 0x00f4 */ s32 damageshowtime;
-  /* 0x00f8 */ s32 healthshowtime;
+  /* See comments above. 0x00f4 */ s32 damageshowtime;
+  /* See comments above. 0x00f8 */ s32 healthshowtime;
 #endif
 
 
@@ -466,21 +493,53 @@ struct player
   /* 0x0124 */ s32 insightaimmode;
   /* 0x0128 */ s32 autoyaimenabled;
   /* 0x012c */ f32 autoaimy;
-  /* 0x0130 */ s32 autoyaimtime;
+  /* 0x0130 */ struct PropRecord *autoaim_target_y;
   /* 0x0134 */ s32 autoyaimtime60;
   /* 0x0138 */ s32 autoxaimenabled;
   /* 0x013c */ f32 autoaimx;
-  /* 0x0140 */ s32 autoxaimtime;
+  /* 0x0140 */ struct PropRecord *autoaim_target_x;
   /* 0x0144 */ s32 autoxaimtime60;
   /* 0x0148 */ f32 vv_theta;
   /* 0x014c */ f32 speedtheta;
-  /* 0x0150 */ f32 vv_costheta;
-  /* 0x0154 */ f32 vv_sintheta;
-  /* 0x0158 */ f32 vv_verta;
-  /* 0x015c */ f32 vv_verta360;
+  
+  /**
+   * Computed value from vv_theta, used to calculate boost direction.
+   * 0x0150
+   **/
+  f32 vv_costheta;
+  
+  /**
+   * Computed value from vv_theta, used to calculate boost direction.
+   * 0x0154
+   **/
+  f32 vv_sintheta;
+  
+  /**
+   * Vertical look angle.
+   * 0x0158
+   **/
+  f32 vv_verta;
+  
+  /**
+   * Vertical look angle. Computed value from vv_verta, should always be between 0 and 360 degrees.
+   * 0x015c
+   **/
+  f32 vv_verta360;
+
   /* 0x0160 */ f32 speedverta;
-  /* 0x0164 */ f32 vv_cosverta;
-  /* 0x0168 */ f32 vv_sinverta;
+  
+  /**
+   * Computed value from vv_verta360, but otherwise unused?
+   * 0x0164
+   **/
+  f32 vv_cosverta;
+  
+  /**
+   * Computed value from vv_verta360, but otherwise unused?
+   * 0x0168
+   **/
+  f32 vv_sinverta;
+
   /* 0x016c */ f32 speedsideways;
   /* 0x0170 */ f32 speedstrafe;
   /* 0x0174 */ f32 speedforwards;
@@ -754,18 +813,18 @@ struct player
   s32 headwalkingtime60; //0x4f0
   f32 headamplitude; //0x4f4
   f32 sideamplitude; //0x4f8
-  vec3 headpos;
-  vec3 headlook;
+  struct coord3d headpos;
+  struct coord3d headlook;
 
-  vec3 headup;
-  vec3 headpossum;
+  struct coord3d headup;
+  struct coord3d headpossum;
 
   // headlooksum[2] has NTSC->PAL conversion rate (5/6)
-  vec3 headlooksum;
+  struct coord3d headlooksum;
 
   // headupsum[1] has NTSC->PAL conversion rate (5/6)
-  vec3 headupsum;
-  vec3 headbodyoffset; //0x544
+  struct coord3d headupsum;
+  struct coord3d headbodyoffset; //0x544
   f32 standheight; // old name stationary_ground_offset
 
   // f32[4] ?? or 2 x f32[2] ??
@@ -773,10 +832,10 @@ struct player
   f32 standfrac; //0x560
 
   // offset 0x564
-  vec3 standlook[2];
+  struct coord3d standlook[2];
 
   // offset 0x57C
-  vec3 standup[2];
+  struct coord3d standup[2];
 
   // offset 0x594
   s32 standcnt;
@@ -2667,19 +2726,19 @@ extern s32 g_SurroundBondWithExplosionsFlag;
 //D:80036448
 extern s32 in_tank_flag;
 //D:8003644C
-extern struct PropRecord *D_8003644C;
+extern struct PropRecord *g_WorldTankProp;
 
 //D:80036450
-extern struct PropRecord *ptr_playerstank;
+extern struct PropRecord *g_PlayerTankProp;
 
 /**
- * Related to ptr_playerstank.
+ * Related to g_PlayerTankProp.
  * Address 0x80036454.
  */
 extern f32 g_PlayerTankYOffset;
 
 //D:80036458
-extern ALSoundState * SFX_80036458[2];
+extern ALSoundState * g_TankSfxState[2];
 
 //D:80036460
 extern f32 g_TankTurnSpeed;
@@ -2704,7 +2763,7 @@ extern f32 g_TankTurretAngle;
 //D:80036488
 extern f32 g_TankTurretTurn;
 //D:8003648C
-extern s32 D_8003648C;
+extern s32 g_ExplodeTankOnDeathFlag;
 //D:80036490
 extern s32 g_TankDamagePenaltyTicks;
 //D:80036494
@@ -2747,7 +2806,7 @@ extern s32 g_bondviewBondDeathAnimations[];
 //D:8003650C
 extern s32 g_bondviewBondDeathAnimationsCount;
 //D:80036510
-extern s32 D_80036510;
+extern enum CAMERAMODE D_80036510;
 //D:80036514
 extern s32 g_IntroAnimationIndex;
 /*
@@ -2850,10 +2909,10 @@ D:800367ED                     .byte 0, 0, 0x14
 D:800367F0                     .word 0x32
 */
 
-extern struct coord3d D_80036800;
-extern struct coord3d D_8003680C;
-extern struct coord3d D_80036818;
-extern struct coord3d D_80036824;
+extern struct coord3d g_DefaultFrozenPlayerPos;
+extern struct coord3d g_DefaultFrozenPlayerPos2;
+extern struct coord3d g_DefaultFrozenPlayerOffset;
+extern struct coord3d g_DefaultFrozenMoveOffset;
 
 //D:80036830
 extern s32 D_80036830;
@@ -2892,7 +2951,7 @@ extern s32 upper_text_buffer_index;
 extern s32 display_upper_text_window;
 //D:800368B0
 extern s32 upper_text_window_timer;
-extern s32 D_800368B4;
+extern s32 g_UpperTextDisplayFlag;
 /*
 D:800368D8     firing_animation_groups:firing_anim_struct <pistol_firing_animation_group1, 0, 0.1, 79.0, 87.0>
 D:800368D8                                              # DATA XREF: sub_CODE_7F08B0F0+720o
@@ -2930,7 +2989,7 @@ extern f32 D_80036AC0;
 extern f32 D_80036AC4;
 
 extern s32 startpadcount;
-extern vec3d flt_CODE_bss_80079990;
+extern vec3d g_ForceBondMoveOffset;
 extern s32 mission_timer;
 
 #if defined(VERSION_JP) || defined(VERSION_EU)
@@ -2992,6 +3051,7 @@ void jp_hudmsgBottomShow(char *string);
 // VERSION_US
 #define HUDMESSAGEBOTTOM hudmsgBottomShow
 void hudmsgBottomShow(char *string);
+void setFontTables(s32 arg0, s32 arg1);
 #endif
 
 Gfx * sub_GAME_7F087A08(Gfx *arg0);
@@ -3002,13 +3062,13 @@ Gfx * bondviewRemoved7F08BCB8(Gfx *arg0);
 s32 sub_GAME_7F078A58(coord3d *vec_scale, f32 norm_scale);
 s32 getMissiontimer(void);
 void solo_char_load(void);
-void bondviewUpdateYAutoAimTime(s32 auto_aim_time, f32 auto_aim_y);
-void bondviewUpdateXAutoAimTime(s32 auto_aim_time, f32 auto_aim_x);
+void bondviewUpdateYAutoAimTime(struct PropRecord *autoaim_target, f32 auto_aim_y);
+void bondviewUpdateXAutoAimTime(struct PropRecord *autoaim_target, f32 auto_aim_x);
 void bondviewSet3dCoord7F07CEB0(coord3d *arg0);
 f32 bondviewYPositionRelated(struct StandTile *arg0, f32 arg1, f32 arg2);
 f32 bondviewGetPlayerDuckingHeightRelated(struct player *player);
-void bondviewCollisionRadiusRelated(PropRecord* arg0, f32 *collision_radius, f32 *height, f32 *always_30);
-void bondviewUpdatePlayerClipping(s32 use_stanHeight, f32 stanHeight_offset);
+void bondviewGetCollisionRadius(PropRecord* arg0, f32 *collision_radius, f32 *height, f32 *always_30);
+void bondviewUpdatePlayerY(s32 use_stanHeight, f32 stanHeight_offset);
 void currentPlayerSetFadeColour(s32 r, s32 g, s32 b, f32 frac);
 void currentPlayerSetFadeFrac(f32 maxfadetime, f32 frac);
 void set_BONDdata_autoaim_x(s32 param_1);
@@ -3049,9 +3109,9 @@ Mtx *currentPlayerGetProjectionMatrix(void);
 Gfx *bondviewRenderProp(PropRecord *arg0, Gfx *arg1, s32 arg2);
 f32 getPlayer_c_lodscalez(void);
 f32 bondviewGetBondBreathing(void);
-void     sub_GAME_7F08A928(int param_1);
+void     bondviewClearUpperTextDisplayFlag(int param_1);
 
-void     sub_GAME_7F08A944(PLAYERFLAG flag);
+void     bondviewSetUpperTextDisplayFlag(PLAYERFLAG flag);
 void     set_camera_mode(s32 arg0);
 bool     isBondInTank(void);
 void     hudmsgTopShow(char* string);
@@ -3063,7 +3123,7 @@ struct PropRecord *get_ptr_for_players_tank(void);
 s32 bondviewGetRandomSpawnPadIndex(void);
 void change_player_pos_to_target(struct collision434* arg0, struct coord3d *arg1, struct StandTile *arg2);
 void sub_GAME_7F089718(f32);
-void sub_GAME_7F08A900(void);
+void bondviewResetUpperTextDisplay(void);
 Mtxf *currentPlayerGetProjectionMatrixF(void);
 int redirect_get_BONDdata_autoaim_x(void);
 int redirect_get_BONDdata_autoaim_y(void);

@@ -2242,10 +2242,19 @@ typedef enum TEXTBANK_LEVEL_INDEX
 
 typedef enum WATCH_ANIMATION_STATE_IDS {
     WATCH_ANIMATION_0x0 = 0,
-    WATCH_ANIMATION_0x4 = 4,
-    WATCH_ANIMATION_0x5 = 5,
-    WATCH_ANIMATION_0x6 = 6,
-    WATCH_ANIMATION_0xc = 12
+    WATCH_ANIMATION_0x1,
+    WATCH_ANIMATION_0x2,
+    WATCH_ANIMATION_0x3,
+    WATCH_ANIMATION_0x4,
+    WATCH_ANIMATION_0x5,
+    WATCH_ANIMATION_0x6,
+    WATCH_ANIMATION_0x7,
+    WATCH_ANIMATION_0x8,
+    WATCH_ANIMATION_0x9,
+    WATCH_ANIMATION_0xa,
+    WATCH_ANIMATION_0xb,
+    WATCH_ANIMATION_0xc,
+    WATCH_ANIMATION_0xd
 } WATCH_ANIMATION_STATE;
 
 typedef enum WATCH_BRIEFING_PAGE
@@ -3161,6 +3170,12 @@ typedef enum TVCMD
 #pragma endregion
 
 #pragma region Setup 
+
+    /**
+     * enums were listed in a particular order, it appears the first few are associated with the start/intro
+     * of a level:
+     *     if (g_CurrentPlayer->redbloodfinished && g_CurrentPlayer->deathanimfinished && (D_80036510 >= CAMERAMODE_SWIRL))
+    */
    typedef enum CAMERAMODE
     {
         CAMERAMODE_NONE,
@@ -3168,8 +3183,8 @@ typedef enum TVCMD
         CAMERAMODE_FADESWIRL,
         CAMERAMODE_SWIRL,
         CAMERAMODE_FP,
-        CAMERAMODE_UNK5,
-        CAMERAMODE_UNK6,
+        CAMERAMODE_DEATH_CAM_FIRST,
+        CAMERAMODE_DEATH_CAM_SECOND,
         CAMERAMODE_POSEND,
         CAMERAMODE_FP_NOINPUT,
         CAMERAMODE_MP,
@@ -3284,11 +3299,15 @@ typedef enum TVCMD
 #define NUMBER_SHOTGUN_BULLETS   5
 
 #ifdef VERSION_EU
-#define NTSC 0
-#define PAL 1
+    #define NTSC 0
+    #define PAL 1
+    #define TICKS_PER_SECOND 50
+    #define FRAMES_PER_SECOND 25
 #else
-#define NTSC 1
-#define PAL 0
+    #define NTSC 1
+    #define PAL 0
+    #define TICKS_PER_SECOND 60
+    #define FRAMES_PER_SECOND 30
 #endif
 
 #pragma endregion
@@ -3506,6 +3525,14 @@ typedef enum TVCMD
 #define ALIGN8(val)         (((val) + 0x7 | 0x7) ^ 0x7)
 #define RANDOMFRAC() ((f32) randomGetNext() * 2.3283064e-10f)
 #define MAXFLOAT ((float)3.40282346638528860e+38)
+
+#define HUDHALIGN_RIGHT  0
+#define HUDHALIGN_LEFT   1
+#define HUDHALIGN_MIDDLE 2
+
+#define HUDVALIGN_BOTTOM 0
+#define HUDVALIGN_TOP    1
+#define HUDVALIGN_MIDDLE 2
 
 #pragma endregion
 

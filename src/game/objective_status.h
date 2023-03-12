@@ -14,4 +14,5 @@ s32              objectiveGetCount(void);
 ObjectRecord *   objFindByTagId(s32 TagID);
 OBJECTIVESTATUS  get_status_of_objective(s32 objectiveNum);
 void             sub_GAME_7F057C14(coord3d *coord, Mtxf *mtx);
+void objectivestatusCheckDeposit(s32 weaponnum, s32 roomid);
 #endif

@@ -38,8 +38,8 @@ struct HitThing {
 
 extern f32 F_80030B14;
 extern f32 F_80030B18;
-extern f32 F_80030B1C;
-extern f32 F_80030B20;
+extern f32 g_AutogunPendingDamageTick;
+extern f32 g_AutogunDamageScalar;
 extern f32 F_80030B24;
 extern f32 g_SoloAmmoMultiplier;
 
@@ -60,12 +60,12 @@ extern s32 g_NextHatSlot;
 extern ObjectRecord *g_LevelLoadPropSwitch;
 extern LockDoorRecord *g_LevelLoadPropLockDoor;
 extern ObjectRecord *g_LevelLoadPropSafeItem;
-extern s32 D_80030B0C;
+extern struct PropRecord *D_80030B0C;
 extern s32 bodypartshot;
 extern f32 F_80030B14;
 extern f32 F_80030B18;
-extern f32 F_80030B1C;
-extern f32 F_80030B20;
+extern f32 g_AutogunPendingDamageTick;
+extern f32 g_AutogunDamageScalar;
 extern f32 F_80030B24;
 extern f32 g_SoloAmmoMultiplier;
 
@@ -141,9 +141,11 @@ void sub_GAME_7F043650(struct WeaponObjRecord *arg0);
 s32 sub_GAME_7F0446B8(struct rect4f *arg0, s32 arg1, struct rect4f *arg2, s32 arg3);
 s32 chrobjTestPointPolygonCollision(struct coord3d *arg0, f32 arg1, struct rect4f *arg2, s32 arg3);
 void maybe_detonate_object_and_its_children(PropRecord *arg0, f32 arg1, struct coord3d *arg2, s32 arg3, s32 owner);
-struct modeldata_unk_pos * sub_GAME_7F040078(ObjectRecord *arg0);
+struct ModelRoData_BoundingBoxRecord* chrobjGetBboxFromObjectRecord(ObjectRecord *arg0);
 void deactivate_alarm_sound_effect(void);
 s32 sub_GAME_7F03F598(coord3d* pos, f32 arg1, BoundPadRecord *boundpads);
 void sub_GAME_7F0A1DA0(f32*, f32*, f32*, f32*, f32, f32, f32, f32, f32, f32);
+void sub_GAME_7F03F90C(Model *model, f32 *arg1, f32 *arg2, f32 *arg3, f32 *arg4);
+s32 sub_GAME_7F0448A8(struct PropRecord *arg0);
 
 #endif

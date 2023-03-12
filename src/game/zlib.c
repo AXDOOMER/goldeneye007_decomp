@@ -738,6 +738,7 @@ glabel zlib_inflate_codes
 
 
 #ifdef NONMATCHING
+// https://decomp.me/scratch/mCJoe 99.81%
 s32 zlib_inflate_stored(void)
 {
 	s32 n;           /* number of bytes in block */
@@ -774,19 +775,24 @@ s32 zlib_inflate_stored(void)
          * This while loop is incorrect.* 
         */
 
-        u8 *outbuf = rz_outbuf;
+        u8 *outbuf;
+        u8 *p2;
         
 		NEEDBITS(8)
 
-        b >>= 8;
+        outbuf = &rz_outbuf[w];
+        p2 = &rz_inbuf[rz_inptr];
 
-        if ((&outbuf[w] >= &rz_inbuf[rz_inptr]) && (u32)(&outbuf[w]) - (u32)(&rz_inbuf[rz_inptr]) < WSIZE) { while(1){} }
+        if ((outbuf >= p2) && (&rz_outbuf[w] - p2) < WSIZE)
+        {
+            while(1){}
+        }
 
-		outbuf[w++] = (u8)b;
-
-        k -= 8;
+		//rz_outbuf[w++]= (u8)b;
+        *outbuf = (u8)b;
+        w++;
         
-        //DUMPBITS(8)
+        DUMPBITS(8)
 	}
 
 	/* restore the globals from the locals */
