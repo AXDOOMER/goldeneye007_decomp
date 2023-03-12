@@ -1372,7 +1372,9 @@ f32 bondwalkItemGetForceOfImpact(ITEM_IDS item)
 	return get_ptr_item_statistics(item)->ForceOfImpact;
 }
 
-
+/**
+ * Address 0x7F05DFCC
+ */
 s8 bondwalkItemGetAutomaticFiringRate(ITEM_IDS item) {
     return get_ptr_item_statistics(item)->AutomaticFiringRate;
 }

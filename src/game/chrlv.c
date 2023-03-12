@@ -5140,7 +5140,9 @@ bool actor_kneel_aim_at_actor(ChrRecord *self, s32 targettype, s32 targetid)
 
 
 
-
+/**
+ * Address 0x7F02AAF4
+*/
 bool actor_fire_or_aim_at_target_update(ChrRecord *self, s32 newtargettype, s32 newtargetid)
 {
     if (self->actiontype == ACT_ATTACK)
