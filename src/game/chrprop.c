@@ -2785,7 +2785,135 @@ s32 sub_GAME_7F03C574(PropRecord* prop)
 
 #ifdef NONMATCHING
 void handle_mp_respawn_and_some_things(void) {
+    void *prev_prop;//sp4C
+    s32 sp38;
+    s32 sp30;
+    s32 pad; // sp2C is pad
+    void *sp28;
+    s16 prop_time_to_regen; //temp_v0_3
+    s16 prop_time_to_regen_2; //temp_v0_4
+    s32 var_s2;
+    s32 var_s3;
+    s32 var_v1;
+    u8 prop_type; //temp_v0_2
+    void *temp_a0;
+    void *temp_s0;
+    ObjectRecord *temp_s0_2;
+    void *temp_s0_3;
+    PropRecord *prop; //temp_v0
+    void *temp_v0_5;
+    void *prop_s0; // var_s0
+    PropRecord *prop_s1; //var_s1
 
+    chrlvAllChrTick();
+    prop = get_ptr_obj_pos_list_current_entry();
+    prop_s1 = prop;
+    if (prop != NULL) {
+        do {
+            var_s2 = 0;
+            prev_prop = prop_s1->prev; //unk24
+            prop_type = prop_s1->type;
+            if (prop_type == 3) {
+                temp_s0 = prop_s1->obj; //unk4
+                sub_GAME_7F062B00(temp_s0 + 0x180); // function receives ChrRecord_f180
+                sub_GAME_7F062B00(temp_s0 + 0x1AC); // function receives ChrRecord_f180
+            } else if ((prop_type == PROP_TYPE_OBJ) || (prop_type == PROP_TYPE_WEAPON) || (prop_type == PROP_TYPE_DOOR)) {
+                prop_time_to_regen = prop_s1->timetoregen; //unk2
+                temp_s0_2 = prop_s1->obj; //unk4
+                var_s3 = 0;
+                if (prop_time_to_regen > 0) {
+                    var_v1 = 1;
+                    if (prop_time_to_regen >= 0x3C) {
+                        var_v1 = 0;
+                    }
+                    prop_s1->timetoregen = (s16) (prop_time_to_regen - g_ClockTimer);
+                    if ((prop_s1->timetoregen < 0x3C) && (var_v1 == 0)) {
+                        sp38 = var_v1;
+                        if (sub_GAME_7F03C574(prop_s1) == 0) {
+                            prop_s1->timetoregen = (s16) (prop_s1->timetoregen + 0x3C);
+                        }
+                    }
+                    prop_time_to_regen_2 = prop_s1->timetoregen;
+                    if (prop_time_to_regen_2 <= 0) {
+                        prop_s1->timetoregen = 0;
+                        if (temp_s0_2->state & 0x10) {
+                            temp_s0_2->runtime_bitflags = (s32) (temp_s0_2->runtime_bitflags | 0x1000);
+                        } else {
+                            temp_s0_2->runtime_bitflags = (s32) (temp_s0_2->runtime_bitflags & ~0x1000);
+                        }
+                    } else if ((prop_time_to_regen_2 < 0x3C) && (var_v1 == 0)) {
+                        if ((temp_s0_2->maxdamage == 0.0f) && !(temp_s0_2->state & 0x80)) {
+                            if (temp_s0_2->flags & 0x8000) {
+                                chrpropDeregisterRooms(prop_s1);
+                                chrpropDelist(prop_s1);
+                                temp_s0_2->runtime_bitflags = (s32) (temp_s0_2->runtime_bitflags & ~0x800);
+                                sp30 = setupGetCommandIndexByProp(prop_s1);
+                                pad = (s32) temp_s0_2->pad; 
+                                temp_v0_5 = setupCommandGetObject(lvlGetCurrentStageToLoad(), sp30 + pad);
+                                if ((temp_v0_5 != NULL) && (temp_v0_5->prop != 0)) { //unk10 is prop
+                                    temp_a0 = temp_s0_2->model; //unk14
+                                    sp28 = temp_v0_5;
+                                    modelSetScale(temp_a0, temp_a0->unk14);
+                                    chrpropReparent(temp_s0_2->unk10, sp28->unk10);
+                                    var_s3 = 1;
+                                }
+                            } else {
+                                chrpropEnable(prop_s1);
+                                sub_GAME_7F03E134(prop_s1);
+                                temp_s0_2->runtime_bitflags = (s32) (temp_s0_2->runtime_bitflags & ~0x800);
+                            }
+                        } else {
+                            if (temp_s0_2->state & 8) {
+                                temp_s0_2->flags = (s32) (temp_s0_2->flags | 0x100);
+                            } else {
+                                temp_s0_2->flags = (s32) (temp_s0_2->flags & ~0x100);
+                            }
+                            temp_s0_2->maxdamage = 0.0f;
+                            temp_s0_2->state = (u8) (temp_s0_2->state & 0xFF7F);
+                            sub_GAME_7F050DE8(temp_s0_2->model);
+                        }
+                        if (temp_s0_2->type == 0x15) {
+                            temp_s0_2->unk84 = (f32) temp_s0_2->unk80; // unk80 and unk84 invalid??
+                        }
+                        if (var_s3 == 0) {
+                            chrobjSndCreatePostEventDefault(sndPlaySfx(g_musicSfxBufferPtr, 0x52, 0), prop_s1->pos);
+                        }
+                    }
+                }
+                if (temp_s0_2->unk3 == 0xD) { // type == unk3 == 0xD ??? invald??
+                    sub_GAME_7F062B00(prop_s1->unk4->unkCC); // unkCC invalid??, function receives ChrRecord_f180
+                    // 0x04 is chr, obj, door, weapon
+                }
+            } else if (prop_type == PROP_TYPE_EXPLOSION) {
+                var_s2 = sub_GAME_7F09CEE8(prop_s1); // explosions related
+            } else if (prop_type == PROP_TYPE_SMOKE) {
+                var_s2 = sub_GAME_7F09E8AC(prop_s1); // smoke related
+            } else if (prop_type == PROP_TYPE_VIEWER) {
+                sub_GAME_7F062B00(*(&g_playerPointers + (getPlayerPointerIndex(prop_s1) * 4)) + 0xA54); // function receives ChrRecord_f180
+                sub_GAME_7F062B00(*(&g_playerPointers + (getPlayerPointerIndex(prop_s1) * 4)) + 0xDFC); // function receives ChrRecord_f180
+                if ((prop_s1->unk4 != NULL) && (getPlayerCount() >= 2)) {
+                    temp_s0_3 = prop_s1->unk4;
+                    sub_GAME_7F062B00(temp_s0_3 + 0x180); // function receives ChrRecord_f180
+                    sub_GAME_7F062B00(temp_s0_3 + 0x1AC); // function receives ChrRecord_f180
+                }
+            }
+            if (var_s2 == 5) {
+                prop_s0 = prev_prop;
+            } else {
+                prop_s0 = prop_s1->prev;
+                if (var_s2 == 3) {
+                    chrpropDelist(prop_s1);
+                    chrpropActivateThisFrame(prop_s1);
+                    if (prop_s0 == NULL) {
+                        prop_s0 = prop_s1;
+                    }
+                } else {
+                    propExecuteTickOperation(prop_s1, var_s2);
+                }
+            }
+            prop_s1 = prop_s0; // next prop in list
+        } while (prop_s0 != NULL);
+    }
 }
 #else
 
