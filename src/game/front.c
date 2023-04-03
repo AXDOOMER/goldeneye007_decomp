@@ -332,18 +332,18 @@ rgba_u8 D_8002A9BC = { 0x8C, 0x00, 0x00, 0x00 };
 struct coord3d legalpage_pos = {0.0f, 0.0f, 0.0f};
 
 struct legal_screen_text legalpage_text_array[] = {
-    {220,  30, 1, 1, TEXT(LTITLE, TITLE_STR_07), 0}, //"TWYCROSS BOARD OF GAME CLASSIFICATION\n"
-    { 34,  83, 0, 1, TEXT(LTITLE, TITLE_STR_08), 0}, //"This is to certify\n" 
-    {226,  84, 0, 1, TEXT(LTITLE, TITLE_STR_09), 0}, //"(c) 1997 Nintendo/Rare\n"
-    {226,  97, 0, 1, TEXT(LTITLE, TITLE_STR_10), 0}, //"(c) 1962, 1995 Danjaq, LLC. &\n"
-    {226, 110, 0, 1, TEXT(LTITLE, TITLE_STR_11), 0}, //"U.A.C. All Rights Reserved\n"
-    {226, 122, 0, 1, TEXT(LTITLE, TITLE_STR_12), 0}, //"(c) 1997 Eon Productions\n"
-    {227, 134, 0, 1, TEXT(LTITLE, TITLE_STR_13), 0}, //"Ltd. & Mac B. Inc.\n"
-    {219, 211, 0, 1, TEXT(LTITLE, TITLE_STR_14), 0}, //"Suitable only for 1-4 persons\n"
-    { 60, 169, 0, 1, TEXT(LTITLE, TITLE_STR_15), 0}, //"PRESIDENT\n"
-    { 60, 201, 0, 1, TEXT(LTITLE, TITLE_STR_16), 0}, //"VICE\n"
-    { 99, 266, 0, 1, TEXT(LTITLE, TITLE_STR_17), 0}, //"James Bond theme by Monty Norman.\n"
-    { 80, 280, 0, 1, TEXT(LTITLE, TITLE_STR_18), 0}  //"Used by permission of EMI Unart Catalog Inc.\n"
+    {220,  30, CENTER_ALIGN, CENTER_ALIGN, TEXT(LTITLE, TITLE_STR_07), 0}, //"TWYCROSS BOARD OF GAME CLASSIFICATION\n"
+    { 34,  83, LEFT_ALIGN, CENTER_ALIGN, TEXT(LTITLE, TITLE_STR_08), 0}, //"This is to certify\n" 
+    {226,  84, LEFT_ALIGN, CENTER_ALIGN, TEXT(LTITLE, TITLE_STR_09), 0}, //"(c) 1997 Nintendo/Rare\n"
+    {226,  97, LEFT_ALIGN, CENTER_ALIGN, TEXT(LTITLE, TITLE_STR_10), 0}, //"(c) 1962, 1995 Danjaq, LLC. &\n"
+    {226, 110, LEFT_ALIGN, CENTER_ALIGN, TEXT(LTITLE, TITLE_STR_11), 0}, //"U.A.C. All Rights Reserved\n"
+    {226, 122, LEFT_ALIGN, CENTER_ALIGN, TEXT(LTITLE, TITLE_STR_12), 0}, //"(c) 1997 Eon Productions\n"
+    {227, 134, LEFT_ALIGN, CENTER_ALIGN, TEXT(LTITLE, TITLE_STR_13), 0}, //"Ltd. & Mac B. Inc.\n"
+    {219, 211, LEFT_ALIGN, CENTER_ALIGN, TEXT(LTITLE, TITLE_STR_14), 0}, //"Suitable only for 1-4 persons\n"
+    { 60, 169, LEFT_ALIGN, CENTER_ALIGN, TEXT(LTITLE, TITLE_STR_15), 0}, //"PRESIDENT\n"
+    { 60, 201, LEFT_ALIGN, CENTER_ALIGN, TEXT(LTITLE, TITLE_STR_16), 0}, //"VICE\n"
+    { 99, 266, LEFT_ALIGN, CENTER_ALIGN, TEXT(LTITLE, TITLE_STR_17), 0}, //"James Bond theme by Monty Norman.\n"
+    { 80, 280, LEFT_ALIGN, CENTER_ALIGN, TEXT(LTITLE, TITLE_STR_18), 0}  //"Used by permission of EMI Unart Catalog Inc.\n"
 };
 
 struct unk_joint_list D_8002AABC = {NULL, 1, 3, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
@@ -869,7 +869,7 @@ Gfx *constructor_menu19_spectrum(Gfx *DL);
 void disable_all_switches(void *arg0);
 void set_item_visibility_in_objinstance(Model* objinstance, s32 item, s32 mode);
 void set_cursor_to_stage_solo(LEVEL_SOLO_SEQUENCE level);
-Gfx *display_aligned_white_text_to_screen(Gfx *dl, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u8 *arg5, s32 arg6, s32 arg7);
+Gfx *display_aligned_white_text_to_screen(Gfx *dl, s32 arg1, s32 arg2, s32 halign, s32 valign, u8 *arg5, s32 arg6, s32 arg7);
 
 // end forward declarations.
 
@@ -1386,7 +1386,7 @@ void interface_menu00_legalscreen(void)
 
 
 
-Gfx *display_aligned_white_text_to_screen(Gfx *dl, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u8 *text, s32 arg6, s32 arg7)
+Gfx *display_aligned_white_text_to_screen(Gfx *dl, s32 arg1, s32 arg2, s32 halign, s32 valign, u8 *text, s32 arg6, s32 arg7)
 {
     s32 sp4C;
     s32 sp48;
@@ -1396,8 +1396,8 @@ Gfx *display_aligned_white_text_to_screen(Gfx *dl, s32 arg1, s32 arg2, s32 arg3,
     sp48 = 0;
     sp4C = 0;
     textMeasure(&sp4C, &sp48, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0);
-    x = arg1 - ((s32) (arg3 * sp48) / 2);
-    y = arg2 - ((s32) (arg4 * sp4C) / 2);
+    x = arg1 - ((s32) (halign * sp48) / 2);
+    y = arg2 - ((s32) (valign * sp4C) / 2);
     return textRender(dl, &x, &y, text, arg6, arg7, -1, viGetX(), viGetY(), 0, 0);
 }
 
@@ -1458,8 +1458,8 @@ Gfx *constructor_menu00_legalscreen(Gfx *DL)
             DL,
             legal_text_ptr->h_pos,
             legal_text_ptr->v_pos,
-            legal_text_ptr->flag,
-            legal_text_ptr->flag2,
+            legal_text_ptr->halign,
+            legal_text_ptr->valign,
             txt,
             ptrFontZurichBoldChars,
             ptrFontZurichBold);
