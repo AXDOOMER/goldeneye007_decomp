@@ -1702,7 +1702,7 @@ void sub_GAME_7F05EB0C(ObjectRecord *arg0, coord3d *arg1, StandTile *arg2, Mtxf 
         chrpropActivate(temp_s1);
         chrpropEnable(temp_s1);
         matrix_scalar_multiply(arg0->model->scale, arg3);
-        sub_GAME_7F040754(arg0, arg1, arg3, arg2);
+        objChangeShading(arg0, arg1, arg3, arg2);
         
         // loadobjectmodel.c
         setupUpdateObjectRoomPosition(arg0);
@@ -2685,7 +2685,7 @@ glabel sub_GAME_7F05F928
 /* 094500 7F05F9D0 02002025 */  move  $a0, $s0
 /* 094504 7F05F9D4 02403025 */  move  $a2, $s2
 /* 094508 7F05F9D8 24A502E8 */  addiu $a1, $a1, 0x2e8
-/* 09450C 7F05F9DC 0FC101D5 */  jal   sub_GAME_7F040754
+/* 09450C 7F05F9DC 0FC101D5 */  jal   objChangeShading
 /* 094510 7F05F9E0 8F270014 */   lw    $a3, 0x14($t9)
 /* 094514 7F05F9E4 0FC10121 */  jal   chrobjCollisionRelated
 /* 094518 7F05F9E8 02002025 */   move  $a0, $s0
@@ -2778,7 +2778,7 @@ glabel sub_GAME_7F05F928
 /* 092878 7F05FE88 02002025 */  move  $a0, $s0
 /* 09287C 7F05FE8C 02403025 */  move  $a2, $s2
 /* 092880 7F05FE90 24A502E8 */  addiu $a1, $a1, 0x2e8
-/* 092884 7F05FE94 0FC10205 */  jal   sub_GAME_7F040754
+/* 092884 7F05FE94 0FC10205 */  jal   objChangeShading
 /* 092888 7F05FE98 8F270014 */   lw    $a3, 0x14($t9)
 /* 09288C 7F05FE9C 0FC10151 */  jal   chrobjCollisionRelated
 /* 092890 7F05FEA0 02002025 */   move  $a0, $s0

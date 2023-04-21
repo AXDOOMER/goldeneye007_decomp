@@ -1425,7 +1425,7 @@ PropRecord* objInitWithAutoModel(ObjectRecord* obj)
 }
 
 
-void sub_GAME_7F040754(ObjectRecord* obj, coord3d* pos, Mtxf* matrix, StandTile* stan) {
+void objChangeShading(ObjectRecord* obj, coord3d* pos, Mtxf* matrix, StandTile* stan) {
 
     PropRecord *prop = obj->prop;
 
@@ -1455,7 +1455,7 @@ void sub_GAME_7F0407F4(ObjectRecord* obj, coord3d* pos, Mtxf* matrix, StandTile*
     pos->y = stanGetPositionYValue(stan, pos->x, pos->z) + 4.0f;
     pos->y = pos->y - chrpropSumMatrixPosY(modelunk, matrix);
 
-    sub_GAME_7F040754(obj, pos, matrix, stan);
+    objChangeShading(obj, pos, matrix, stan);
     chrobjCollisionRelated(obj);
 }
 
@@ -1530,11 +1530,11 @@ void sub_GAME_7F04088C(ObjectRecord *baseobj, PadRecord *pad, Mtxf *matrix, Stan
 
     if (!(baseobj->flags2 & 1) && walkTilesBetweenPoints_NoCallback(&mStan, pad->pos.x, pad->pos.z, newPos.x, newPos.z))
     {
-        sub_GAME_7F040754(baseobj, &newPos, &mtxcopy, mStan);
+        objChangeShading(baseobj, &newPos, &mtxcopy, mStan);
     }
     else
     {
-        sub_GAME_7F040754(baseobj, pad, &mtxcopy, stan);
+        objChangeShading(baseobj, pad, &mtxcopy, stan);
         if ((baseobj->flags2 & 1) || (baseobj->flags & 0x1000))
         {
             baseobj->runtime_pos.x = newPos.x;
@@ -1575,11 +1575,11 @@ void sub_GAME_7F040BA0(ObjectRecord *obj, coord3d *pos, Mtxf *arg2, StandTile *a
 
     if ((!(((s32) obj->flags2) & 1)) && (walkTilesBetweenPoints_NoCallback(&spAC, pos->x, pos->z, posdiff.x, posdiff.z) != 0))
     {
-        sub_GAME_7F040754(obj, &posdiff, &sp6C, spAC);
+        objChangeShading(obj, &posdiff, &sp6C, spAC);
     }
     else
     {
-        sub_GAME_7F040754(obj, pos, &sp6C, arg3);
+        objChangeShading(obj, pos, &sp6C, arg3);
         obj->runtime_pos.x = posdiff.x;
         obj->runtime_pos.y = posdiff.y;
         obj->runtime_pos.z = posdiff.z;
@@ -4546,7 +4546,7 @@ void sub_GAME_7F0439B8(ObjectRecord* arg0, coord3d* arg1, StandTile* arg2, coord
 
     sub_GAME_7F043838(arg3, &sp28);
     matrix_scalar_multiply(arg0->model->scale, sp28.m[0]);
-    sub_GAME_7F040754(arg0, arg1, &sp28, arg2);
+    objChangeShading(arg0, arg1, &sp28, arg2);
 
     temp_f0 = chrpropBBOXGetYmin(chrobjGetBboxFromObjFile(arg0->model->obj));
 
