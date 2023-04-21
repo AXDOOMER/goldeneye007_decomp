@@ -1690,38 +1690,38 @@ void sub_GAME_7F05EA94(Model* model, s32 val)
 /**
  * Address 0x7F05EB0C.
 */
-void sub_GAME_7F05EB0C(ObjectRecord *arg0, coord3d *arg1, StandTile *arg2, Mtxf *arg3, coord3d *arg4, Mtxf *arg5, PropRecord *arg6)
+void sub_GAME_7F05EB0C(ObjectRecord *obj, coord3d *pos, StandTile *stan, Mtxf *matrix, coord3d *arg4, Mtxf *arg5, PropRecord *arg6)
 {
     PropRecord *temp_s1;
     Projectile *temp_v0;
 
-    temp_s1 = arg0->prop;
+    temp_s1 = obj->prop;
 
     if (temp_s1 != NULL)
     {
         chrpropActivate(temp_s1);
         chrpropEnable(temp_s1);
-        matrix_scalar_multiply(arg0->model->scale, arg3);
-        objChangeShading(arg0, arg1, arg3, arg2);
+        matrix_scalar_multiply(obj->model->scale, matrix);
+        objChangeShading(obj, pos, matrix, stan);
         
         // loadobjectmodel.c
-        setupUpdateObjectRoomPosition(arg0);
+        setupUpdateObjectRoomPosition(obj);
         
-        chrobjCollisionRelated(arg0);
+        chrobjCollisionRelated(obj);
         sub_GAME_7F03FDA8(temp_s1);
 
-        if (arg0->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)
+        if (obj->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)
         {
-            temp_v0 = arg0->projectile;
+            temp_v0 = obj->projectile;
             temp_v0->flags |= 0x41;
-            arg0->projectile->ownerprop = arg6;
+            obj->projectile->ownerprop = arg6;
             projectileSetSticky(temp_s1);
-            matrix_4x4_copy(arg5, &arg0->projectile->mtx);
-            arg0->projectile->speed.f[0] = arg4->f[0];
-            arg0->projectile->speed.f[1] = arg4->f[1];
-            arg0->projectile->speed.f[2] = arg4->f[2];
-            arg0->projectile->obj = arg0;
-            arg0->projectile->unkE8 = D_80048380;
+            matrix_4x4_copy(arg5, &obj->projectile->mtx);
+            obj->projectile->speed.f[0] = arg4->f[0];
+            obj->projectile->speed.f[1] = arg4->f[1];
+            obj->projectile->speed.f[2] = arg4->f[2];
+            obj->projectile->obj = obj;
+            obj->projectile->unkE8 = D_80048380;
         }
     }
 }
