@@ -40171,39 +40171,41 @@ void doorActivateWrapper(PropRecord *prop) //#MATCH
 
 
 #ifdef NONMATCHING
-// this is what it does, but can't get it to match
+// https://decomp.me/scratch/B63wV 79.17%
 s32 posIsInFrontOfDoor(PropRecord* prop, DoorRecord* door)
 {
     BoundPadRecord* pad;
-    f32 value;
-    f32 normalx;
-    f32 normaly;
-    f32 normalz;
+    f32 other;
+    struct coord3d normal;
+    f32 value = 0;
 
-    pad = &g_CurrentSetup.boundpads[door->pad];
+    pad = (BoundPadRecord*)&g_CurrentSetup.boundpads[door->pad];
+    
+    normal.f[0] = (pad->up.f[1] * pad->look.f[2]) - (pad->up.f[2] * pad->look.f[1]);
+    normal.f[1] = (pad->up.f[2] * pad->look.f[0]) - (pad->up.f[0] * pad->look.f[2]);
+    normal.f[2] = (pad->up.f[0] * pad->look.f[1]) - (pad->up.f[1] * pad->look.f[0]);
 
-    normalx = (pad->up.f[1] * pad->look.f[2]) - (pad->look.f[1] * pad->up.f[2]);
-    normaly = (pad->up.f[2] * pad->look.f[0]) - (pad->look.f[2] * pad->up.f[0]);
-    normalz = (pad->up.f[0] * pad->look.f[1]) - (pad->look.f[0] * pad->up.f[1]);
+    value += (normal.f[0] * (prop->pos.f[0] - pad->pos.f[0]));
+    value += (normal.f[1] * (prop->pos.f[1] - pad->pos.f[1]));
+    value += (normal.f[2] * (prop->pos.f[2] - pad->pos.f[2]));
 
-    value = (normalx * (prop->pos.x - pad->pos.x))
-          + (normaly * (prop->pos.y - pad->pos.y))
-          + (normalz * (prop->pos.z - pad->pos.z));
+    other = value;
 
     if (door->doorFlags & 8)
     {
-        value = -value;
+        other = -value;
     }
 
-    if (value < 0)
+    if (other < 0)
     {
         return 0;
     }
 
-    if (value > 0)
+    if (other > 0)
     {
         return 1;
     }
+
 
     return 1;
 }
