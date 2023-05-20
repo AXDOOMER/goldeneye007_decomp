@@ -258,7 +258,7 @@ s32 debug_profile_flag = 0;
 //D:80036FC4
 s32 debug_enable_taskgrab_flag = 0;
 //D:80036FC8
-s32 debug_testingmanpos_flag = 0;
+s32 g_DebugManPos = 0;
 #endif
 
 //D:80036FCC
@@ -465,10 +465,15 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
                 break;
 
             //case 50: //marg top
+            //in xbla see below
             //case 51: //marg bot
+            //in xbla see below
             //case 52: //marg left
+            //in xbla see below
             //case 53: //marg right
+            //in xbla see below
             //case 54: //marg reset
+            //in xbla see below
             case 55: // screen size
                 g_DebugHighlightedOption = get_highlighted_debug_option();
                 break;
@@ -479,6 +484,8 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
                 g_DebugHighlightedOption = get_highlighted_debug_option();
                 break;
             case 26: // port close
+                //g_DebugHighlightedOption = get_highlighted_debug_option();
+                //break;
             case 27: // port inf
             case 28: // port approx
                 debug_portal_flag ^= 1;
@@ -536,7 +543,7 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
                 debug_man_pos_flag ^= 1;
                 break;
             case 75: // testing man pos
-                debug_testingmanpos_flag ^= 1;
+                g_DebugManPos ^= 1;
                 break;
             case 6: // play title
                 bossSetLoadedStage(0x5A);
@@ -721,6 +728,48 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
         {
             switch (get_highlighted_debug_option()) // switch 2; jump table: jpt_80055830
             {
+
+            //xbla:
+            //case 50: //marg top
+            /*
+                printf("Margins: %5.2f.0F %5.2f.0F %5.2f.0F %5.2f.0F\n",
+                    Function_82395958(1.0,0.0,0),
+                    Function_82395958(1.0,(((button_pressed & 1) >> 5 & 1 ^ 1) - ((button_pressed & 2) >> 5 & 1 ^ 1)) * 4.0,1),
+                    Function_82395958(1.0,0.0,2),
+                    Function_82395958(1.0,0.0,3));
+            //*/
+            //case 51: //marg bot
+            /*
+                printf("Margins: %5.2f.0F %5.2f.0F %5.2f.0F %5.2f.0F\n",
+                    Function_82395958(1.0,0.0,0),
+                    Function_82395958(1.0,0.0,1),
+                    Function_82395958(1.0,0.0,2),
+                    Function_82395958(1.0,(((button_pressed & 1) >> 5 & 1 ^ 1) - ((button_pressed & 2) >> 5 & 1 ^ 1)) * 4.0,3));
+            //*/
+            //case 52: //marg left
+            /*
+                printf("Margins: %5.2f.0F %5.2f.0F %5.2f.0F %5.2f.0F\n",
+                    Function_82395958(1.0,(((button_pressed & 1) >> 5 & 1 ^ 1) - ((button_pressed & 2) >> 5 & 1 ^ 1)) * 4.0,0),
+                    Function_82395958(1.0,0.0,1),
+                    Function_82395958(1.0,0.0,2),
+                    Function_82395958(1.0,0.0,3));
+            //*/
+            //case 53: //marg right
+            /*
+                printf("Margins: %5.2f.0F %5.2f.0F %5.2f.0F %5.2f.0F\n",
+                    Function_82395958(1.0,0.0,0),
+                    Function_82395958(1.0,0.0,1),
+                    Function_82395958(1.0,(((button_pressed & 1) >> 5 & 1 ^ 1) - ((button_pressed & 2) >> 5 & 1 ^ 1)) * 4.0,2),
+                    Function_82395958(1.0,0.0,3));
+            //*/
+            //case 54: //marg reset
+            /*
+                printf("Margins: %5.2f.0F %5.2f.0F %5.2f.0F %5.2f.0F\n",
+                    Function_82395958(1.0,0.0,0),
+                    Function_82395958(1.0,0.0,1),
+                    Function_82395958(1.0,0.0,2),
+                    Function_82395958(1.0,0.0,3));
+            //*/
             case 0:
             case 1:
             case 2:
@@ -1174,8 +1223,8 @@ debug_printmanpos:
 /* 0C5570 7F090A40 1000010C */  b     .L7F090E74
 /* 0C5574 7F090A44 AC4A0000 */   sw    $t2, ($v0)
 debug_testingmanpos:
-/* 0C5578 7F090A48 3C028003 */  lui   $v0, %hi(debug_testingmanpos_flag)
-/* 0C557C 7F090A4C 24426FC8 */  addiu $v0, %lo(debug_testingmanpos_flag) # addiu $v0, $v0, 0x6fc8
+/* 0C5578 7F090A48 3C028003 */  lui   $v0, %hi(g_DebugManPos)
+/* 0C557C 7F090A4C 24426FC8 */  addiu $v0, %lo(g_DebugManPos) # addiu $v0, $v0, 0x6fc8
 /* 0C5580 7F090A50 8C4B0000 */  lw    $t3, ($v0)
 /* 0C5584 7F090A54 396C0001 */  xori  $t4, $t3, 1
 /* 0C5588 7F090A58 10000106 */  b     .L7F090E74
@@ -1624,7 +1673,7 @@ s32 get_debug_man_pos_flag(void) {
 
 s32 get_debug_testingmanpos_flag(void) {
 #if defined(LEFTOVERDEBUG)
-    return debug_testingmanpos_flag;
+    return g_DebugManPos;
 #else
     return 0;
 #endif
@@ -1632,7 +1681,7 @@ s32 get_debug_testingmanpos_flag(void) {
 
 void set_debug_testingmanpos_flag(s32 flag) {
 #if defined(LEFTOVERDEBUG)
-    debug_testingmanpos_flag = flag;
+    g_DebugManPos = flag;
 #endif
 }
 

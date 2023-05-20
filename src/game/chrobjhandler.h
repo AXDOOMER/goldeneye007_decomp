@@ -93,7 +93,7 @@ void                 chrobjMaybeDetonateObjectIfFlags(ObjectRecord *arg0, f32 ar
 void                 sub_GAME_7F03FDA8(PropRecord *);
 void                 projectileSetSticky(PropRecord *);
 void                 chrobjCollisionRelated(ObjectRecord *);
-void                 sub_GAME_7F040754(ObjectRecord *, coord3d *, Mtxf *, StandTile *);
+void                 objChangeShading(ObjectRecord *, coord3d *, Mtxf *, StandTile *);
 s32                  sub_GAME_7F041074(coord3d *arg0, coord3d *arg1, coord3d *arg2, f32 arg3);
 void                 sub_GAME_7F04F244(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *arg3, f32 *arg4);
 void                 doorActivate(DoorRecord *door, DOORSTATE State);

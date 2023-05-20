@@ -1425,7 +1425,8 @@ PropRecord* objInitWithAutoModel(ObjectRecord* obj)
 }
 
 
-void sub_GAME_7F040754(ObjectRecord* obj, coord3d* pos, Mtxf* matrix, StandTile* stan) {
+// Changes the color shade on the object, e.g. when walking in a darker area or under a colored light.
+void objChangeShading(ObjectRecord* obj, coord3d* pos, Mtxf* matrix, StandTile* stan) {
 
     PropRecord *prop = obj->prop;
 
@@ -1455,7 +1456,7 @@ void sub_GAME_7F0407F4(ObjectRecord* obj, coord3d* pos, Mtxf* matrix, StandTile*
     pos->y = stanGetPositionYValue(stan, pos->x, pos->z) + 4.0f;
     pos->y = pos->y - chrpropSumMatrixPosY(modelunk, matrix);
 
-    sub_GAME_7F040754(obj, pos, matrix, stan);
+    objChangeShading(obj, pos, matrix, stan);
     chrobjCollisionRelated(obj);
 }
 
@@ -1530,11 +1531,11 @@ void sub_GAME_7F04088C(ObjectRecord *baseobj, PadRecord *pad, Mtxf *matrix, Stan
 
     if (!(baseobj->flags2 & 1) && walkTilesBetweenPoints_NoCallback(&mStan, pad->pos.x, pad->pos.z, newPos.x, newPos.z))
     {
-        sub_GAME_7F040754(baseobj, &newPos, &mtxcopy, mStan);
+        objChangeShading(baseobj, &newPos, &mtxcopy, mStan);
     }
     else
     {
-        sub_GAME_7F040754(baseobj, pad, &mtxcopy, stan);
+        objChangeShading(baseobj, pad, &mtxcopy, stan);
         if ((baseobj->flags2 & 1) || (baseobj->flags & 0x1000))
         {
             baseobj->runtime_pos.x = newPos.x;
@@ -1547,39 +1548,39 @@ void sub_GAME_7F04088C(ObjectRecord *baseobj, PadRecord *pad, Mtxf *matrix, Stan
 }
 
 
-void sub_GAME_7F040BA0(ObjectRecord *obj, coord3d *pos, Mtxf *arg2, StandTile *arg3, coord3d *pos2)
+void sub_GAME_7F040BA0(ObjectRecord *obj, coord3d *pos, Mtxf *arg2, StandTile *stan2, coord3d *pos2)
 {
     Mtxf *sp6C_ptr;
     f32 (*sp6Cm_ptr)[4];
     f32 spBC;
     coord3d posdiff;
-    StandTile *spAC;
-    Mtxf sp6C;
+    StandTile *stan;
+    Mtxf matrix;
     Mtxf sp2C;
 
     spBC = chrpropBBOXGetZmin(chrobjGetBboxFromObjFile(obj->model->obj));
-    spAC = arg3;
-    sp6C_ptr = &sp6C;
+    stan = stan2;
+    sp6C_ptr = &matrix;
 
     matrix_4x4_set_rotation_around_x(4.712389f, sp6C_ptr);
 
-    sp6Cm_ptr = sp6C.m;
+    sp6Cm_ptr = matrix.m;
 
     matrix_4x4_set_rotation_around_y(M_PI_F, &sp2C);
     matrix_4x4_multiply_in_place(&sp2C, sp6C_ptr);
-    matrix_4x4_multiply_in_place(arg2, &sp6C);
+    matrix_4x4_multiply_in_place(arg2, &matrix);
 
     posdiff.x = pos2->x - (sp6Cm_ptr[2][0] * spBC);
     posdiff.y = pos2->y - (sp6Cm_ptr[2][1] * spBC);
     posdiff.z = pos2->z - (sp6Cm_ptr[2][2] * spBC);
 
-    if ((!(((s32) obj->flags2) & 1)) && (walkTilesBetweenPoints_NoCallback(&spAC, pos->x, pos->z, posdiff.x, posdiff.z) != 0))
+    if ((!(((s32) obj->flags2) & 1)) && (walkTilesBetweenPoints_NoCallback(&stan, pos->x, pos->z, posdiff.x, posdiff.z) != 0))
     {
-        sub_GAME_7F040754(obj, &posdiff, &sp6C, spAC);
+        objChangeShading(obj, &posdiff, &matrix, stan);
     }
     else
     {
-        sub_GAME_7F040754(obj, pos, &sp6C, arg3);
+        objChangeShading(obj, pos, &matrix, stan2);
         obj->runtime_pos.x = posdiff.x;
         obj->runtime_pos.y = posdiff.y;
         obj->runtime_pos.z = posdiff.z;
@@ -4539,22 +4540,22 @@ void sub_GAME_7F043838(coord3d *arg0, Mtxf *arg1)
 }
 
 
-void sub_GAME_7F0439B8(ObjectRecord* arg0, coord3d* arg1, StandTile* arg2, coord3d* arg3)
+void sub_GAME_7F0439B8(ObjectRecord* obj, coord3d* pos, StandTile* stan, coord3d* arg3)
 {
-    Mtxf sp28;
+    Mtxf matrix;
     f32 temp_f0;
 
-    sub_GAME_7F043838(arg3, &sp28);
-    matrix_scalar_multiply(arg0->model->scale, sp28.m[0]);
-    sub_GAME_7F040754(arg0, arg1, &sp28, arg2);
+    sub_GAME_7F043838(arg3, &matrix);
+    matrix_scalar_multiply(obj->model->scale, matrix.m[0]);
+    objChangeShading(obj, pos, &matrix, stan);
 
-    temp_f0 = chrpropBBOXGetYmin(chrobjGetBboxFromObjFile(arg0->model->obj));
+    temp_f0 = chrpropBBOXGetYmin(chrobjGetBboxFromObjFile(obj->model->obj));
 
-    arg0->runtime_pos.f[0] -= temp_f0 * arg0->mtx.m[1][0];
-    arg0->runtime_pos.f[1] -= temp_f0 * arg0->mtx.m[1][1];
-    arg0->runtime_pos.f[2] -= temp_f0 * arg0->mtx.m[1][2];
+    obj->runtime_pos.f[0] -= temp_f0 * obj->mtx.m[1][0];
+    obj->runtime_pos.f[1] -= temp_f0 * obj->mtx.m[1][1];
+    obj->runtime_pos.f[2] -= temp_f0 * obj->mtx.m[1][2];
 
-    chrobjCollisionRelated(arg0);
+    chrobjCollisionRelated(obj);
 }
 
 
@@ -29370,6 +29371,7 @@ s32 objDrop(PropRecord *prop)
         else
         {
             // No collision checks
+            // Helpful for throwing mines through doors during speedruns
             prop->stan = root->stan;
             matrix_4x4_set_identity(&spB8);
             matrix_scalar_multiply(model->scale, spB8.m[0]);

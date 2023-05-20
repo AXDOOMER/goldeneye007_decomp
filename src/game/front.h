@@ -7,8 +7,8 @@
 struct legal_screen_text {
     s32 h_pos;
     s32 v_pos;
-    s32 flag;
-    s32 flag2;
+    s32 halign;
+    s32 valign;
     u16 txtID;
     u16 anonymous_5;
 };
