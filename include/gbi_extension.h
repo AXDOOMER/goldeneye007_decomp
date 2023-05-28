@@ -69,6 +69,16 @@
 /***
  ***  4 Triangles
  ***/
+/**
+ * Remarks:
+ * Ryan: I've been learning a lot about PD's graphics microcode lately. It's likely that the decision to
+ * implement tri4 was to reduce memory usage in RDRAM. But to fit 4 tris in one command they had to limit
+ * themselves to 4 bits per vertex, which means they can only address up to 16 vertices. They could have
+ * fit 32 vertices in DMEM if they wanted. In stock microcodes the vertex IDs are pre-multiplied by 10
+ * which makes it easy for the RSP to calculate the vertex offset in the DMEM buffer (it can use a
+ * single shift operation). But because PD is using a compact format there's more work for the RSP to
+ * calculate it. So they've sacrificed RSP performance for memory saving.
+*/
 
 //cannot use 2tri with 4tri, so lets just make sure they are undefined so errors happen.
 #undef gSP2Triangles
