@@ -3,6 +3,9 @@
 #include "include/string.h"
 #include "include/bstring.h"
 
+/* this file comes from gzip (1.2.4, 1993-08-20 release), but 
+ * inflate.c placed in public domain by Mark Adler */
+
 #define GETBYTE()   (rz_inbuf[rz_inptr++])
 #define NEXTBYTE()  (u8)GETBYTE()
 #define NEEDBITS(n) {while(k<(n)){b|=((u32)NEXTBYTE())<<k;k+=8;}}
