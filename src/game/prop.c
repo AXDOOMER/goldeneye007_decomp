@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include <memp.h>
+#include "stan.h"
 #include "chrai.h"
 #include "chrlv.h"
 #include "chrobjhandler.h"
@@ -33,6 +34,9 @@ const u32 only_read_by_stageload[] = {
 const char aMp_[] = "mp_";
 
 
+void sub_GAME_7F001BD4(struct BoundPadRecord *pad, struct coord3d *arg1);
+void sub_GAME_7F00324C(struct BoundPadRecord *arg0, s32 *arg1, s32 *arg2, struct coord3d *arg3, struct coord3d *arg4);
+
 
 s32 load_proptype(PROPDEF_TYPE type)
 {
@@ -58,53 +62,48 @@ s32 load_proptype(PROPDEF_TYPE type)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F001BD4(void *arg0, s32 arg1, void *arg12, void *arg13) {
-    f32 sp18;
-    f32 sp20;
-    f32 sp24;
-    f32 sp28;
-    f32 sp2C;
-    f32 sp30;
-    f32 sp34;
-    f32 sp3C;
-    f32 sp40;
-    f32 sp44;
-    f32 temp_f6;
-    f32 temp_f4;
-    f32 temp_f6_2;
-    f32 temp_f2;
-    f32 temp_f10;
+
+// decomp.me 72% https://decomp.me/scratch/ygs4O
+
+// perfect dark padGetCentre (pad.c)
+void sub_GAME_7F001BD4(struct pad3d *pad, struct coord3d *arg1)
+{
     f32 temp_f12;
     f32 temp_f14;
     f32 temp_f16;
 
-    // Node 0
-    sp34 = (f32) arg0->unk2C;
-    sp30 = (f32) arg0->unk30;
-    sp2C = (f32) arg0->unk34;
-    sp28 = (f32) arg0->unk38;
-    sp24 = (f32) arg0->unk3C;
-    sp20 = (f32) arg0->unk40;
-    temp_f6 = ((arg0->unk10 * arg0->unk20) - (arg0->unk1C * arg0->unk14));
-    sp3C = temp_f6;
-    temp_f4 = ((arg0->unk14 * arg0->unk18) - (arg0->unk20 * arg0->unkC));
-    sp40 = temp_f4;
-    sp18 = temp_f6;
-    temp_f6_2 = ((arg0->unkC * arg0->unk1C) - (arg0->unk18 * arg0->unk10));
-    sp44 = temp_f6_2;
-    temp_f2 = (1.0f / sqrtf(((temp_f6_2 * temp_f6_2) + ((sp18 * sp18) + (temp_f4 * temp_f4)))));
-    temp_f10 = (sp3C * temp_f2);
-    sp3C = temp_f10;
-    sp40 = (f32) (sp40 * temp_f2);
-    temp_f12 = (sp24 + sp20);
-    sp44 = (f32) (sp44 * temp_f2);
-    temp_f14 = (sp34 + sp30);
-    temp_f16 = (sp2C + sp28);
-    *arg13 = (f32) ((((arg12->unk18 * temp_f12) + ((temp_f14 * temp_f10) + (temp_f16 * arg12->unkC))) * 0.5f) + *arg12);
-    arg13->unk4 = (f32) ((((arg12->unk1C * temp_f12) + ((temp_f14 * sp40) + (temp_f16 * arg12->unk10))) * 0.5f) + arg12->unk4);
-    arg13->unk8 = (f32) ((((arg12->unk20 * temp_f12) + ((temp_f14 * sp44) + (temp_f16 * arg12->unk14))) * 0.5f) + arg12->unk8);
-    return;
-    // (possible return value: sqrtf(((temp_f6_2 * temp_f6_2) + ((sp18 * sp18) + (temp_f4 * temp_f4)))))
+    struct coord3d normal;
+    f32 scale;
+
+    normal.f[0] = (pad->up.f[1] * pad->look.f[2]) - (pad->look.f[1] * pad->up.f[2]);
+    normal.f[1] = (pad->up.f[2] * pad->look.f[0]) - (pad->look.f[2] * pad->up.f[0]);
+    normal.f[2] = (pad->up.f[0] * pad->look.f[1]) - (pad->look.f[0] * pad->up.f[1]);
+
+    scale = 1.0f / sqrtf((normal.f[0] * normal.f[0]) + ((normal.f[1] * normal.f[1]) + (normal.f[2] * normal.f[2])));
+
+    normal.f[0] *= scale;
+    normal.f[1] *= scale;
+    normal.f[2] *= scale;
+
+    temp_f16 = pad->bbox.xmin + pad->bbox.xmax;
+    temp_f14 = pad->bbox.ymin + pad->bbox.ymax;
+    temp_f12 = pad->bbox.zmin + pad->bbox.zmax;
+
+    arg1->f[0] = pad->pos.f[0] + (
+			(temp_f16) * normal.f[0] +
+			(temp_f14) * pad->up.f[0] +
+			(temp_f12) * pad->look.f[0]) * 0.5f;
+
+	arg1->f[1] = pad->pos.f[1] + (
+			(temp_f16) * normal.f[1] +
+			(temp_f14) * pad->up.f[1] +
+			(temp_f12) * pad->look.f[1]) * 0.5f;
+
+	arg1->f[2] = pad->pos.f[2] + (
+			(temp_f16) * normal.f[2] +
+			(temp_f14) * pad->up.f[2] +
+			(temp_f12) * pad->look.f[2]) * 0.5f;
+
 }
 
 #else
@@ -2130,167 +2129,64 @@ void setupMultiMonitor(s32 stageID, MultiMonitorObjRecord* monitor, s32 cmdindex
     domakedefaultobj(stageID, monitor, cmdindex);
 }
 
+void sub_GAME_7F00324C(struct BoundPadRecord *arg0, s32 *arg1, s32 *arg2, struct coord3d *arg3, struct coord3d *arg4)
+{
+    StandTile *sp4C;
+    struct coord3d normal;    
+    s32 padding;
+    struct coord3d center;
+    StandTile *sp2C;
+    f32 scale;
 
-#ifdef NONMATCHING
-void sub_GAME_7F00324C(void) {
+    sub_GAME_7F001BD4(arg0, &center);
+    sp2C = (StandTile *)arg0->stan;
+    
+    if (walkTilesBetweenPoints_NoCallback(&sp2C, arg0->pos.f[0], arg0->pos.f[2], center.f[0], center.f[2]) == 0)
+    {
+        sp2C = (StandTile *)arg0->stan;
+        center.f[0] = arg0->pos.f[0];
+        center.f[1] = arg0->pos.f[1];
+        center.f[2] = arg0->pos.f[2];
+    }
 
+    normal.f[0] = (arg0->up.f[1] * arg0->look.f[2]) - (arg0->up.f[2] * arg0->look.f[1]);
+    normal.f[1] = (arg0->up.f[2] * arg0->look.f[0]) - (arg0->up.f[0] * arg0->look.f[2]);
+    normal.f[2] = (arg0->up.f[0] * arg0->look.f[1]) - (arg0->up.f[1] * arg0->look.f[0]);
+
+    scale = 1.0f / sqrtf(((normal.f[0] * normal.f[0]) + (normal.f[1] * normal.f[1])) + (normal.f[2] * normal.f[2]));
+    sp4C = sp2C;
+    
+    normal.f[0] *= scale;
+    normal.f[1] *= scale;
+    normal.f[2] *= scale;
+    
+    arg3->f[0] = center.f[0] + (normal.f[0] * 50.0f);
+    arg3->f[1] = center.f[1];
+    arg3->f[2] = center.f[2] + (normal.f[2] * 50.0f);
+    
+    
+    walkTilesBetweenPoints_NoCallback(&sp4C, center.f[0], center.f[2], arg3->f[0], arg3->f[2]);
+    
+    if (1);
+    
+    *arg1 = (s32) sp4C->room;
+    sp4C = sp2C;
+    
+    arg4->f[0] = center.f[0] - (normal.f[0] * 50.0f);
+    arg4->f[1] = center.f[1];
+    arg4->f[2] = center.f[2] - (normal.f[2] * 50.0f);
+    
+    walkTilesBetweenPoints_NoCallback(&sp4C, center.f[0], center.f[2], arg4->f[0], arg4->f[2]);
+    
+    if (1);
+    
+    *arg2 = (s32) sp4C->room;
+    
+    if (*arg2 == *arg1)
+    {
+        *arg2 = -1;
+    }
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_8004EF5C
-.word 0x3fc90fdb
-glabel D_8004EF60
-.word 0x3fc90fdb
-
-.text
-glabel sub_GAME_7F00324C
-/* 037D7C 7F00324C 27BDFFB0 */  addiu $sp, $sp, -0x50
-/* 037D80 7F003250 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 037D84 7F003254 AFB10020 */  sw    $s1, 0x20($sp)
-/* 037D88 7F003258 AFB0001C */  sw    $s0, 0x1c($sp)
-/* 037D8C 7F00325C AFA50054 */  sw    $a1, 0x54($sp)
-/* 037D90 7F003260 00808025 */  move  $s0, $a0
-/* 037D94 7F003264 00E08825 */  move  $s1, $a3
-/* 037D98 7F003268 AFA60058 */  sw    $a2, 0x58($sp)
-/* 037D9C 7F00326C 0FC006F5 */  jal   sub_GAME_7F001BD4
-/* 037DA0 7F003270 27A50030 */   addiu $a1, $sp, 0x30
-/* 037DA4 7F003274 8E0E0028 */  lw    $t6, 0x28($s0)
-/* 037DA8 7F003278 C7A40038 */  lwc1  $f4, 0x38($sp)
-/* 037DAC 7F00327C 27A4002C */  addiu $a0, $sp, 0x2c
-/* 037DB0 7F003280 AFAE002C */  sw    $t6, 0x2c($sp)
-/* 037DB4 7F003284 8E060008 */  lw    $a2, 8($s0)
-/* 037DB8 7F003288 8E050000 */  lw    $a1, ($s0)
-/* 037DBC 7F00328C 8FA70030 */  lw    $a3, 0x30($sp)
-/* 037DC0 7F003290 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
-/* 037DC4 7F003294 E7A40010 */   swc1  $f4, 0x10($sp)
-/* 037DC8 7F003298 5440000A */  bnezl $v0, .L7F0032C4
-/* 037DCC 7F00329C C6100010 */   lwc1  $f16, 0x10($s0)
-/* 037DD0 7F0032A0 8E0F0028 */  lw    $t7, 0x28($s0)
-/* 037DD4 7F0032A4 AFAF002C */  sw    $t7, 0x2c($sp)
-/* 037DD8 7F0032A8 C6060000 */  lwc1  $f6, ($s0)
-/* 037DDC 7F0032AC E7A60030 */  swc1  $f6, 0x30($sp)
-/* 037DE0 7F0032B0 C6080004 */  lwc1  $f8, 4($s0)
-/* 037DE4 7F0032B4 E7A80034 */  swc1  $f8, 0x34($sp)
-/* 037DE8 7F0032B8 C60A0008 */  lwc1  $f10, 8($s0)
-/* 037DEC 7F0032BC E7AA0038 */  swc1  $f10, 0x38($sp)
-/* 037DF0 7F0032C0 C6100010 */  lwc1  $f16, 0x10($s0)
-.L7F0032C4:
-/* 037DF4 7F0032C4 C6120020 */  lwc1  $f18, 0x20($s0)
-/* 037DF8 7F0032C8 C606001C */  lwc1  $f6, 0x1c($s0)
-/* 037DFC 7F0032CC C6080014 */  lwc1  $f8, 0x14($s0)
-/* 037E00 7F0032D0 46128102 */  mul.s $f4, $f16, $f18
-/* 037E04 7F0032D4 00000000 */  nop   
-/* 037E08 7F0032D8 46083282 */  mul.s $f10, $f6, $f8
-/* 037E0C 7F0032DC 460A2401 */  sub.s $f16, $f4, $f10
-/* 037E10 7F0032E0 E7B00040 */  swc1  $f16, 0x40($sp)
-/* 037E14 7F0032E4 C6060018 */  lwc1  $f6, 0x18($s0)
-/* 037E18 7F0032E8 C6120014 */  lwc1  $f18, 0x14($s0)
-/* 037E1C 7F0032EC C60A000C */  lwc1  $f10, 0xc($s0)
-/* 037E20 7F0032F0 C6040020 */  lwc1  $f4, 0x20($s0)
-/* 037E24 7F0032F4 46069202 */  mul.s $f8, $f18, $f6
-/* 037E28 7F0032F8 00000000 */  nop   
-/* 037E2C 7F0032FC 460A2482 */  mul.s $f18, $f4, $f10
-/* 037E30 7F003300 46124181 */  sub.s $f6, $f8, $f18
-/* 037E34 7F003304 E7A60044 */  swc1  $f6, 0x44($sp)
-/* 037E38 7F003308 C60A001C */  lwc1  $f10, 0x1c($s0)
-/* 037E3C 7F00330C C604000C */  lwc1  $f4, 0xc($s0)
-/* 037E40 7F003310 C6120018 */  lwc1  $f18, 0x18($s0)
-/* 037E44 7F003314 460A2202 */  mul.s $f8, $f4, $f10
-/* 037E48 7F003318 C6040010 */  lwc1  $f4, 0x10($s0)
-/* 037E4C 7F00331C 46049282 */  mul.s $f10, $f18, $f4
-/* 037E50 7F003320 460A4481 */  sub.s $f18, $f8, $f10
-/* 037E54 7F003324 46108102 */  mul.s $f4, $f16, $f16
-/* 037E58 7F003328 00000000 */  nop   
-/* 037E5C 7F00332C 46063202 */  mul.s $f8, $f6, $f6
-/* 037E60 7F003330 E7B20048 */  swc1  $f18, 0x48($sp)
-/* 037E64 7F003334 46129402 */  mul.s $f16, $f18, $f18
-/* 037E68 7F003338 46082280 */  add.s $f10, $f4, $f8
-/* 037E6C 7F00333C 0C007DF8 */  jal   sqrtf
-/* 037E70 7F003340 460A8300 */   add.s $f12, $f16, $f10
-/* 037E74 7F003344 3C014248 */  li    $at, 0x42480000 # 50.000000
-/* 037E78 7F003348 44816000 */  mtc1  $at, $f12
-/* 037E7C 7F00334C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 037E80 7F003350 44813000 */  mtc1  $at, $f6
-/* 037E84 7F003354 C7A40040 */  lwc1  $f4, 0x40($sp)
-/* 037E88 7F003358 C7B20044 */  lwc1  $f18, 0x44($sp)
-/* 037E8C 7F00335C 46003083 */  div.s $f2, $f6, $f0
-/* 037E90 7F003360 C7AA0048 */  lwc1  $f10, 0x48($sp)
-/* 037E94 7F003364 8FB8002C */  lw    $t8, 0x2c($sp)
-/* 037E98 7F003368 27B0004C */  addiu $s0, $sp, 0x4c
-/* 037E9C 7F00336C 02002025 */  move  $a0, $s0
-/* 037EA0 7F003370 AFB8004C */  sw    $t8, 0x4c($sp)
-/* 037EA4 7F003374 46022202 */  mul.s $f8, $f4, $f2
-/* 037EA8 7F003378 00000000 */  nop   
-/* 037EAC 7F00337C 46029402 */  mul.s $f16, $f18, $f2
-/* 037EB0 7F003380 C7B20030 */  lwc1  $f18, 0x30($sp)
-/* 037EB4 7F003384 46025182 */  mul.s $f6, $f10, $f2
-/* 037EB8 7F003388 E7A80040 */  swc1  $f8, 0x40($sp)
-/* 037EBC 7F00338C 460C4102 */  mul.s $f4, $f8, $f12
-/* 037EC0 7F003390 E7B00044 */  swc1  $f16, 0x44($sp)
-/* 037EC4 7F003394 E7A60048 */  swc1  $f6, 0x48($sp)
-/* 037EC8 7F003398 46122400 */  add.s $f16, $f4, $f18
-/* 037ECC 7F00339C E6300000 */  swc1  $f16, ($s1)
-/* 037ED0 7F0033A0 C7AA0034 */  lwc1  $f10, 0x34($sp)
-/* 037ED4 7F0033A4 8E270000 */  lw    $a3, ($s1)
-/* 037ED8 7F0033A8 E62A0004 */  swc1  $f10, 4($s1)
-/* 037EDC 7F0033AC C7A60048 */  lwc1  $f6, 0x48($sp)
-/* 037EE0 7F0033B0 C7A40038 */  lwc1  $f4, 0x38($sp)
-/* 037EE4 7F0033B4 460C3202 */  mul.s $f8, $f6, $f12
-/* 037EE8 7F0033B8 46044480 */  add.s $f18, $f8, $f4
-/* 037EEC 7F0033BC E6320008 */  swc1  $f18, 8($s1)
-/* 037EF0 7F0033C0 C6300008 */  lwc1  $f16, 8($s1)
-/* 037EF4 7F0033C4 8FA60038 */  lw    $a2, 0x38($sp)
-/* 037EF8 7F0033C8 8FA50030 */  lw    $a1, 0x30($sp)
-/* 037EFC 7F0033CC 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
-/* 037F00 7F0033D0 E7B00010 */   swc1  $f16, 0x10($sp)
-/* 037F04 7F0033D4 8FB9004C */  lw    $t9, 0x4c($sp)
-/* 037F08 7F0033D8 8FA90054 */  lw    $t1, 0x54($sp)
-/* 037F0C 7F0033DC 8FA20060 */  lw    $v0, 0x60($sp)
-/* 037F10 7F0033E0 93280003 */  lbu   $t0, 3($t9)
-/* 037F14 7F0033E4 3C014248 */  li    $at, 0x42480000 # 50.000000
-/* 037F18 7F0033E8 44816000 */  mtc1  $at, $f12
-/* 037F1C 7F0033EC AD280000 */  sw    $t0, ($t1)
-/* 037F20 7F0033F0 C7A60040 */  lwc1  $f6, 0x40($sp)
-/* 037F24 7F0033F4 C7AA0030 */  lwc1  $f10, 0x30($sp)
-/* 037F28 7F0033F8 8FAA002C */  lw    $t2, 0x2c($sp)
-/* 037F2C 7F0033FC 460C3202 */  mul.s $f8, $f6, $f12
-/* 037F30 7F003400 02002025 */  move  $a0, $s0
-/* 037F34 7F003404 AFAA004C */  sw    $t2, 0x4c($sp)
-/* 037F38 7F003408 46085101 */  sub.s $f4, $f10, $f8
-/* 037F3C 7F00340C E4440000 */  swc1  $f4, ($v0)
-/* 037F40 7F003410 C7B20034 */  lwc1  $f18, 0x34($sp)
-/* 037F44 7F003414 8C470000 */  lw    $a3, ($v0)
-/* 037F48 7F003418 E4520004 */  swc1  $f18, 4($v0)
-/* 037F4C 7F00341C C7A60048 */  lwc1  $f6, 0x48($sp)
-/* 037F50 7F003420 C7B00038 */  lwc1  $f16, 0x38($sp)
-/* 037F54 7F003424 460C3282 */  mul.s $f10, $f6, $f12
-/* 037F58 7F003428 460A8201 */  sub.s $f8, $f16, $f10
-/* 037F5C 7F00342C E4480008 */  swc1  $f8, 8($v0)
-/* 037F60 7F003430 C4440008 */  lwc1  $f4, 8($v0)
-/* 037F64 7F003434 8FA60038 */  lw    $a2, 0x38($sp)
-/* 037F68 7F003438 8FA50030 */  lw    $a1, 0x30($sp)
-/* 037F6C 7F00343C 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
-/* 037F70 7F003440 E7A40010 */   swc1  $f4, 0x10($sp)
-/* 037F74 7F003444 8FAB004C */  lw    $t3, 0x4c($sp)
-/* 037F78 7F003448 8FA20058 */  lw    $v0, 0x58($sp)
-/* 037F7C 7F00344C 2418FFFF */  li    $t8, -1
-/* 037F80 7F003450 916C0003 */  lbu   $t4, 3($t3)
-/* 037F84 7F003454 AC4C0000 */  sw    $t4, ($v0)
-/* 037F88 7F003458 8FAE0054 */  lw    $t6, 0x54($sp)
-/* 037F8C 7F00345C 8DCF0000 */  lw    $t7, ($t6)
-/* 037F90 7F003460 558F0003 */  bnel  $t4, $t7, .L7F003470
-/* 037F94 7F003464 8FBF0024 */   lw    $ra, 0x24($sp)
-/* 037F98 7F003468 AC580000 */  sw    $t8, ($v0)
-/* 037F9C 7F00346C 8FBF0024 */  lw    $ra, 0x24($sp)
-.L7F003470:
-/* 037FA0 7F003470 8FB0001C */  lw    $s0, 0x1c($sp)
-/* 037FA4 7F003474 8FB10020 */  lw    $s1, 0x20($sp)
-/* 037FA8 7F003478 03E00008 */  jr    $ra
-/* 037FAC 7F00347C 27BD0050 */   addiu $sp, $sp, 0x50
-)
-#endif
-
 
 #ifdef NONMATCHING
 void setupDoor(void) {
@@ -2299,9 +2195,15 @@ void setupDoor(void) {
 #else
 #ifndef VERSION_EU
 GLOBAL_ASM(
+    
 .late_rodata
+glabel D_8004EF5C
+.word 0x3fc90fdb
+glabel D_8004EF60
+.word 0x3fc90fdb
 glabel D_8004EF64
 .word 0x358637bd
+
 .text
 glabel setupDoor
 /* 037FB0 7F003480 27BDFE28 */  addiu $sp, $sp, -0x1d8
